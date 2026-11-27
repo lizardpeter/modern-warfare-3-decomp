@@ -2,46 +2,46 @@
 
 // 827C5328  error_exit  (jpeg-6/jerror.c:77)
 
-void error_exit(int *param_1)
+void error_exit(jpeg_common_struct *param_1)
 
 {
-  (**(code **)(*param_1 + 8))();
+  (*param_1->err->output_message)(param_1);
   jpeg_destroy(param_1);
-  (**(code **)(*param_1 + 0x84))();
+  (*param_1->err->exit)();
   return;
 }
 
 
 // 827C5378  output_message  (jpeg-6/jerror.c:105)
 
-void output_message(int *param_1)
+void output_message(jpeg_common_struct *param_1)
 
 {
-  undefined1 auStack_e0 [208];
+  char acStack_e0 [208];
   
-  (**(code **)(*param_1 + 0xc))(param_1,auStack_e0);
-  (**(code **)(*param_1 + 0x88))(auStack_e0);
+  (*param_1->err->format_message)(param_1,acStack_e0);
+  (*param_1->err->printf)(acStack_e0);
   return;
 }
 
 
 // 827C53C8  emit_message  (jpeg-6/jerror.c:134)
 
-void emit_message(int *param_1,int param_2)
+void emit_message(jpeg_common_struct *param_1,int param_2)
 
 {
-  int iVar1;
+  jpeg_error_mgr *pjVar1;
   
-  iVar1 = *param_1;
+  pjVar1 = param_1->err;
   if (param_2 < 0) {
-    if ((*(int *)(iVar1 + 0x6c) == 0) || (2 < *(int *)(iVar1 + 0x68))) {
-      (**(code **)(iVar1 + 8))();
+    if ((pjVar1->num_warnings == 0) || (2 < pjVar1->trace_level)) {
+      (*pjVar1->output_message)(param_1);
     }
-    *(int *)(iVar1 + 0x6c) = *(int *)(iVar1 + 0x6c) + 1;
+    pjVar1->num_warnings = pjVar1->num_warnings + 1;
     return;
   }
-  if (param_2 <= *(int *)(iVar1 + 0x68)) {
-    (**(code **)(iVar1 + 8))();
+  if (param_2 <= pjVar1->trace_level) {
+    (*pjVar1->output_message)(param_1);
   }
   return;
 }
@@ -49,93 +49,92 @@ void emit_message(int *param_1,int param_2)
 
 // 827C5458  format_message  (jpeg-6/jerror.c:163)
 
-int format_message(int *param_1,char *param_2)
+void format_message(jpeg_common_struct *param_1,char *param_2)
 
 {
   char cVar1;
-  int iVar2;
-  char *_Format;
+  jpeg_error_mgr *pjVar2;
   int iVar3;
   bool bVar4;
   char *pcVar5;
+  char *pcVar6;
   
-  iVar3 = *param_1;
-  iVar2 = *(int *)(iVar3 + 0x14);
-  if ((iVar2 < 1) || (*(int *)(iVar3 + 0x74) < iVar2)) {
-    if ((*(int *)(iVar3 + 0x78) != 0) &&
-       ((*(int *)(iVar3 + 0x7c) <= iVar2 && (iVar2 <= *(int *)(iVar3 + 0x80))))) {
-      _Format = *(char **)((iVar2 - *(int *)(iVar3 + 0x7c)) * 4 + *(int *)(iVar3 + 0x78));
+  pjVar2 = param_1->err;
+  iVar3 = pjVar2->msg_code;
+  if ((iVar3 < 1) || (pjVar2->last_jpeg_message < iVar3)) {
+    if ((pjVar2->addon_message_table != (char **)0x0) &&
+       ((pjVar2->first_addon_message <= iVar3 && (iVar3 <= pjVar2->last_addon_message)))) {
+      pcVar5 = pjVar2->addon_message_table[iVar3 - pjVar2->first_addon_message];
       goto LAB_827c54cc;
     }
   }
   else {
-    _Format = *(char **)(*(int *)(iVar3 + 0x70) + iVar2 * 4);
+    pcVar5 = pjVar2->jpeg_message_table[iVar3];
 LAB_827c54cc:
-    if (_Format != (char *)0x0) goto LAB_827c54e0;
+    if (pcVar5 != (char *)0x0) goto LAB_827c54e0;
   }
-  *(int *)(iVar3 + 0x18) = iVar2;
-  _Format = (char *)**(undefined4 **)(iVar3 + 0x70);
+  (pjVar2->msg_parm).i[0] = iVar3;
+  pcVar5 = *pjVar2->jpeg_message_table;
 LAB_827c54e0:
-  cVar1 = *_Format;
+  cVar1 = *pcVar5;
   bVar4 = false;
-  pcVar5 = _Format;
+  pcVar6 = pcVar5;
   do {
     if (cVar1 == '\0') {
 LAB_827c5528:
       if (bVar4) {
-        iVar3 = sprintf(param_2,_Format,iVar3 + 0x18);
+        sprintf(param_2,pcVar5);
       }
       else {
-        iVar3 = sprintf(param_2,_Format,(ulonglong)*(uint *)(iVar3 + 0x18),
-                        (ulonglong)*(uint *)(iVar3 + 0x1c),(ulonglong)*(uint *)(iVar3 + 0x20),
-                        (ulonglong)*(uint *)(iVar3 + 0x24),(ulonglong)*(uint *)(iVar3 + 0x28),
-                        (ulonglong)*(uint *)(iVar3 + 0x2c));
+        sprintf(param_2,pcVar5);
       }
-      return iVar3;
+      return;
     }
-    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
     if (cVar1 == '%') {
-      if (*pcVar5 == 's') {
+      if (*pcVar6 == 's') {
         bVar4 = true;
       }
       goto LAB_827c5528;
     }
-    cVar1 = *pcVar5;
+    cVar1 = *pcVar6;
   } while( true );
 }
 
 
 // 827C5588  reset_error_mgr  (jpeg-6/jerror.c:218)
 
-void reset_error_mgr(int *param_1)
+void reset_error_mgr(jpeg_common_struct *param_1)
 
 {
-  *(undefined4 *)(*param_1 + 0x6c) = 0;
-  *(undefined4 *)(*param_1 + 0x14) = 0;
+  param_1->err->num_warnings = 0;
+  param_1->err->msg_code = 0;
   return;
 }
 
 
 // 827C55A0  jpeg_std_error  (jpeg-6/jerror.c:237)
 
-void jpeg_std_error(undefined4 *param_1,undefined4 param_2,undefined4 param_3)
+jpeg_error_mgr *
+jpeg_std_error(jpeg_error_mgr *param_1,_func___cdecl_void *param_2,
+              _func___cdecl_void_char_ptr *param_3)
 
 {
-  param_1[0x22] = param_3;
-  param_1[0x21] = param_2;
-  *param_1 = error_exit;
-  param_1[0x1c] = &PTR_s_Bogus_message_code__d_821dac40;
-  param_1[0x1a] = 0;
-  param_1[1] = emit_message;
-  param_1[2] = output_message;
-  param_1[3] = format_message;
-  param_1[4] = reset_error_mgr;
-  param_1[0x1b] = 0;
-  param_1[5] = 0;
-  param_1[0x1d] = 0x7b;
-  param_1[0x1e] = 0;
-  param_1[0x1f] = 0;
-  param_1[0x20] = 0;
-  return;
+  param_1->printf = param_3;
+  param_1->exit = param_2;
+  param_1->error_exit = error_exit;
+  param_1->jpeg_message_table = jpeg_std_message_table;
+  param_1->trace_level = 0;
+  param_1->emit_message = emit_message;
+  param_1->output_message = output_message;
+  param_1->format_message = format_message;
+  param_1->reset_error_mgr = reset_error_mgr;
+  param_1->num_warnings = 0;
+  param_1->msg_code = 0;
+  param_1->last_jpeg_message = 0x7b;
+  param_1->addon_message_table = (char **)0x0;
+  param_1->first_addon_message = 0;
+  param_1->last_addon_message = 0;
+  return param_1;
 }
 

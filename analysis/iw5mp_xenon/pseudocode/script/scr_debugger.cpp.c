@@ -2,58 +2,65 @@
 
 // 825296F0  TRACK_scr_debugger  (script/scr_debugger.cpp:471)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_scr_debugger(void)
 
 {
-  track_static_alloc_internal(0xffffffff83739340,0x3d0,0xffffffff8214f618,0);
-  track_static_alloc_internal(0xffffffff83702528,0xe00,0xffffffff8214f608,0);
-  track_static_alloc_internal(0xffffffff83727338,0x12000,0xffffffff8214f5f4,0);
-  track_static_alloc_internal(0xffffffff83703328,0x24000,0xffffffff8214f5dc,0);
-  track_static_alloc_internal(0xffffffff83739710,0x12000,0xffffffff8214f5c4,0);
+  track_static_alloc_internal(&scrDebuggerGlob,0x3d0,"scrDebuggerGlob",0);
+  track_static_alloc_internal(g_breakpoints,0xe00,"g_breakpoints",0);
+  track_static_alloc_internal(g_debugCallStack,0x12000,"g_debugCallStack",0);
+  track_static_alloc_internal(g_debugCallStackEntry,0x24000,"g_debugCallStackEntry",0);
+  track_static_alloc_internal(g_debugCallStackEntry2,0x12000,"g_debugCallStackEntry2",0);
   return;
 }
 
 
 // 825297A8  Scr_FindBreakpointInfo  (script/scr_debugger.cpp:489)
 
-void Scr_FindBreakpointInfo(void)
+char * Scr_FindBreakpointInfo(char *param_1)
 
 {
   ulonglong uVar1;
+  char *pcVar2;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1f0,0,0xffffffff82000f98,0xffffffff8214f64c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x1f0
+                    ,0,"%s");
   }
-  uVar1 = uVar1 - DAT_83c4baf4;
-  if ((ulonglong)DAT_83700ffc <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8214f658,499,0,0xffffffff82000f98,0xffffffff8214f628);
-    __restgprlr_29(DAT_83739694 + uVar1);
-    return;
+  uVar1 = uVar1 - ZEXT48(scrVarPub.programBuffer);
+  if ((ulonglong)scrCompilePub.programLen <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",499,0
+                    ,"%s");
+    pcVar2 = (char *)__restgprlr_29(ZEXT48(scrDebuggerGlob.breakpoints) + uVar1);
+    return pcVar2;
   }
-  __restgprlr_29(DAT_83739694 + uVar1);
-  return;
+  pcVar2 = (char *)__restgprlr_29(ZEXT48(scrDebuggerGlob.breakpoints) + uVar1);
+  return pcVar2;
 }
 
 
 // 82529860  Scr_AddBreakpoint  (script/scr_debugger.cpp:512)
 
-void Scr_AddBreakpoint(void)
+void Scr_AddBreakpoint(uchar *param_1)
 
 {
   char *pcVar1;
   char *pcVar2;
   
-  pcVar1 = (char *)__savegprlr_28();
+  pcVar1 = (char *)__savegprlr_28(param_1);
   if (*pcVar1 == -0x67) {
-    MyAssertHandler(0xffffffff8214f658,0x207,0,0xffffffff82000f98,0xffffffff8214f6b4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x207
+                    ,0,"%s");
   }
-  pcVar2 = (char *)Scr_FindBreakpointInfo(pcVar1);
+  pcVar2 = Scr_FindBreakpointInfo(pcVar1);
   if (*pcVar2 != -0x67) {
-    MyAssertHandler(0xffffffff8214f658,0x209,0,0xffffffff82000f98,0xffffffff8214f69c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x209
+                    ,0,"%s");
   }
   *pcVar2 = *pcVar1;
-  DAT_8373970c = DAT_8373970c + 1;
+  scrDebuggerGlob.breakpointCount = scrDebuggerGlob.breakpointCount + 1;
   __restgprlr_28();
   return;
 }
@@ -61,23 +68,25 @@ void Scr_AddBreakpoint(void)
 
 // 82529900  Scr_RemoveBreakpoint  (script/scr_debugger.cpp:537)
 
-void Scr_RemoveBreakpoint(void)
+void Scr_RemoveBreakpoint(uchar *param_1)
 
 {
   char *pcVar1;
   char *pcVar2;
   
-  pcVar1 = (char *)__savegprlr_27();
-  pcVar2 = (char *)Scr_FindBreakpointInfo();
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  pcVar2 = Scr_FindBreakpointInfo(pcVar1);
   if (*pcVar2 == -0x67) {
-    MyAssertHandler(0xffffffff8214f658,0x221,0,0xffffffff82000f98,0xffffffff8214f6e8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x221
+                    ,0,"%s");
   }
   *pcVar1 = *pcVar2;
   *pcVar2 = -0x67;
-  if (DAT_8373970c == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x226,0,0xffffffff82000f98,0xffffffff8214f6c8);
+  if (scrDebuggerGlob.breakpointCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x226
+                    ,0,"%s");
   }
-  DAT_8373970c = DAT_8373970c + -1;
+  scrDebuggerGlob.breakpointCount = scrDebuggerGlob.breakpointCount + -1;
   __restgprlr_27();
   return;
 }
@@ -85,30 +94,33 @@ void Scr_RemoveBreakpoint(void)
 
 // 825299A8  Scr_AddManualBreakpoint  (script/scr_debugger.cpp:563)
 
-void Scr_AddManualBreakpoint(void)
+void Scr_AddManualBreakpoint(uchar *param_1)
 
 {
-  char *pcVar1;
+  uchar *puVar1;
   
-  pcVar1 = (char *)__savegprlr_28();
-  if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff8214f658,0x238,0,0xffffffff82000f98,0xffffffff8214f64c);
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x238
+                    ,0,"%s");
   }
-  if ((DAT_837396b0 == pcVar1) && ((*pcVar1 == -0x5f || (*pcVar1 == -0x5d)))) {
-    if (DAT_837396bc != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x23e,0,0xffffffff82000f98,0xffffffff8214f700);
+  if (((uchar *)scrDebuggerGlob.nextBreakpointCodePos == puVar1) &&
+     ((*puVar1 == 0xa1 || (*puVar1 == 0xa3)))) {
+    if (scrDebuggerGlob.nextBreakpointCodePosMasked != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x23e,0,"%s");
     }
-    DAT_837396bc = 1;
+    scrDebuggerGlob.nextBreakpointCodePosMasked = true;
     __restgprlr_28();
     return;
   }
-  if (*pcVar1 != -0x5e) {
-    Scr_AddBreakpoint(pcVar1);
-    *pcVar1 = -0x5f;
+  if (*puVar1 != 0xa2) {
+    Scr_AddBreakpoint(puVar1);
+    *puVar1 = 0xa1;
     __restgprlr_28();
     return;
   }
-  *pcVar1 = -0x5d;
+  *puVar1 = 0xa3;
   __restgprlr_28();
   return;
 }
@@ -116,340 +128,366 @@ void Scr_AddManualBreakpoint(void)
 
 // 82529A80  Scr_RemoveManualBreakpoint  (script/scr_debugger.cpp:599)
 
-void Scr_RemoveManualBreakpoint(char *param_1)
+void Scr_RemoveManualBreakpoint(uchar *param_1)
 
 {
-  if ((DAT_837396b0 == param_1) && (DAT_837396bc != '\0')) {
-    DAT_837396bc = 0;
+  if (((uchar *)scrDebuggerGlob.nextBreakpointCodePos == param_1) &&
+     (scrDebuggerGlob.nextBreakpointCodePosMasked)) {
+    scrDebuggerGlob.nextBreakpointCodePosMasked = false;
     return;
   }
-  if (*param_1 == -0x5f) {
+  if (*param_1 == 0xa1) {
     Scr_RemoveBreakpoint(param_1);
     return;
   }
-  if (*param_1 != -0x5d) {
-    MyAssertHandler(0xffffffff8214f658,0x26b,0,0xffffffff82000f98,0xffffffff8214f730);
+  if (*param_1 != 0xa3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x26b
+                    ,0,"%s");
   }
-  *param_1 = -0x5e;
+  *param_1 = 0xa2;
   return;
 }
 
 
 // 82529B40  Scr_AddAssignmentBreakpoint  (script/scr_debugger.cpp:632)
 
-void Scr_AddAssignmentBreakpoint(char *param_1)
+void Scr_AddAssignmentBreakpoint(uchar *param_1)
 
 {
-  char cVar1;
+  uchar uVar1;
   
-  if (*param_1 == -0x5f) {
-    cVar1 = -0x5d;
+  if (*param_1 == 0xa1) {
+    uVar1 = 0xa3;
   }
   else {
-    Scr_AddBreakpoint();
-    cVar1 = -0x5e;
+    Scr_AddBreakpoint(param_1);
+    uVar1 = 0xa2;
   }
-  *param_1 = cVar1;
+  *param_1 = uVar1;
   return;
 }
 
 
 // 82529B88  Scr_RemoveAssignmentBreakpoint  (script/scr_debugger.cpp:652)
 
-void Scr_RemoveAssignmentBreakpoint(char *param_1)
+void Scr_RemoveAssignmentBreakpoint(uchar *param_1)
 
 {
-  if (*param_1 == -0x5e) {
-    Scr_RemoveBreakpoint();
+  if (*param_1 == 0xa2) {
+    Scr_RemoveBreakpoint(param_1);
     return;
   }
-  if (*param_1 != -0x5d) {
-    MyAssertHandler(0xffffffff8214f658,0x293,0,0xffffffff82000f98,0xffffffff8214f730);
+  if (*param_1 != 0xa3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x293
+                    ,0,"%s");
   }
-  *param_1 = -0x5f;
+  *param_1 = 0xa1;
   return;
 }
 
 
 // 82529C08  Scr_InitBreakpoints  (script/scr_debugger.cpp:672)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_InitBreakpoints(void)
 
 {
-  undefined4 *puVar1;
+  Scr_Breakpoint **ppSVar1;
   longlong lVar2;
   
-  puVar1 = &DAT_8370253c;
+  ppSVar1 = &g_breakpoints[0].next;
   lVar2 = 0x7f;
   do {
-    *puVar1 = puVar1 + 2;
-    puVar1 = puVar1 + 7;
+    *ppSVar1 = (Scr_Breakpoint *)(ppSVar1 + 2);
+    ppSVar1 = ppSVar1 + 7;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  if (DAT_83703320 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x2a6,0,0xffffffff82000f98,0xffffffff8214f760);
-    DAT_83727330 = &DAT_83702528;
+  if (g_breakpoints[0x7f].next != (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x2a6
+                    ,0,"%s");
+    g_breakpointsHead = g_breakpoints;
     return;
   }
-  DAT_83727330 = &DAT_83702528;
+  g_breakpointsHead = g_breakpoints;
   return;
 }
 
 
 // 82529CA8  Scr_AllocBreakpoint  (script/scr_debugger.cpp:690)
 
-int Scr_AllocBreakpoint(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+Scr_Breakpoint * Scr_AllocBreakpoint(void)
 
 {
-  int iVar1;
+  Scr_Breakpoint *pSVar1;
   
-  iVar1 = DAT_83727330;
-  if (DAT_83727330 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x2b6,0,0xffffffff82000f98,0xffffffff8214f798);
+  pSVar1 = g_breakpointsHead;
+  if (g_breakpointsHead == (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x2b6
+                    ,0,"%s");
   }
-  DAT_83727330 = *(undefined4 *)(DAT_83727330 + 0x14);
-  return iVar1;
+  g_breakpointsHead = g_breakpointsHead->next;
+  return pSVar1;
 }
 
 
 // 82529D20  Scr_FreeBreakpoint  (script/scr_debugger.cpp:707)
 
-void Scr_FreeBreakpoint(int param_1)
+void Scr_FreeBreakpoint(Scr_Breakpoint *param_1)
 
 {
-  int iVar1;
+  Scr_Breakpoint *pSVar1;
   
-  iVar1 = param_1;
-  *(int *)(param_1 + 0x14) = DAT_83727330;
-  DAT_83727330 = iVar1;
+  pSVar1 = param_1;
+  param_1->next = g_breakpointsHead;
+  g_breakpointsHead = pSVar1;
   return;
 }
 
 
-// 82529D38  Scr_ScriptWindow::operator_new  (script/scr_debugger.cpp:720)
+// 82529D38  operator_new  (script/scr_debugger.cpp:720)
 
-void Scr_ScriptWindow__operator_new(undefined8 param_1)
+void * Scr_ScriptWindow::operator_new(uint param_1)
 
 {
-  Hunk_AllocDebugMem(param_1,0xffffffff8214f7a4);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Hunk_AllocDebugMem(param_1,"Scr_ScriptWindow");
+  return pvVar1;
 }
 
 
-// 8252DE08  Scr_ScriptWindow::SetScriptFile  (script/scr_debugger.cpp:769)
+// 8252DE08  SetScriptFile  (script/scr_debugger.cpp:769)
 
-void Scr_ScriptWindow__SetScriptFile(undefined8 param_1,undefined8 param_2)
+void __thiscall Scr_ScriptWindow::SetScriptFile(Scr_ScriptWindow *this,char *param_1)
 
 {
   char *pcVar1;
-  int iVar2;
+  SourceBufferInfo *pSVar2;
+  Scr_ScriptWindow *this_00;
   int iVar3;
   char *pcVar4;
-  ulonglong uVar5;
+  uint uVar5;
   int iVar6;
   uint uVar7;
-  int iVar8;
-  ulonglong uVar9;
   
-  iVar2 = __savegprlr_26();
-  uVar9 = 0;
-  uVar5 = (ulonglong)DAT_8382d8cc;
-  if (uVar5 != 0) {
-    iVar8 = 0;
+  this_00 = (Scr_ScriptWindow *)__savegprlr_26(this);
+  uVar7 = 0;
+  if (scrParserPub.sourceBufferLookupLen != 0) {
+    iVar6 = 0;
+    uVar5 = scrParserPub.sourceBufferLookupLen;
     do {
-      iVar3 = *(int *)(iVar8 + DAT_8382d8c8 + 4);
-      if (iVar3 != 0) {
-        iVar3 = I_stricmp(iVar3,param_2);
-        if (iVar3 == 0) {
-          *(undefined4 *)(iVar2 + 0x14) = 0;
-          *(int *)(iVar2 + 8) = (int)uVar9;
-          *(undefined4 *)(iVar2 + 0x18) = 0;
-          *(undefined4 *)(iVar2 + 4) = 0;
-          if ((uVar9 & 0xffffffff) != 0xfffe) {
-            if ((ulonglong)DAT_8382d8cc <= (uVar9 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff8214f658,0x9b7,0,0xffffffff8214f7d8,uVar9);
-            }
-            iVar8 = 0;
-            iVar3 = *(int *)(iVar2 + 8) * 0x2c + DAT_8382d8c8;
-            uVar7 = 0;
-            pcVar1 = *(char **)(iVar3 + 8);
-            *(undefined4 *)(iVar2 + 0x1c) = 0;
-            if (0 < *(int *)(iVar3 + 0xc)) {
-              do {
-                pcVar4 = pcVar1;
-                if (*pcVar4 == '\0') {
-                  if (*(int *)(iVar2 + 0x1c) < (int)uVar7) {
-                    *(uint *)(iVar2 + 0x1c) = uVar7;
-                  }
-                  uVar7 = 0;
-                  *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
+      pcVar1 = *(char **)((int)&(scrParserPub.sourceBufferLookup)->buf + iVar6);
+      if ((pcVar1 != (char *)0x0) &&
+         (iVar3 = I_stricmp(pcVar1,param_1), uVar5 = scrParserPub.sourceBufferLookupLen, iVar3 == 0)
+         ) {
+        this_00->breakpointHead = (Scr_Breakpoint *)0x0;
+        this_00->bufferIndex = uVar7;
+        this_00->builtinHead = (Scr_Breakpoint *)0x0;
+        this_00->_padding_ = 0;
+        if (uVar7 != 0xfffe) {
+          if (scrParserPub.sourceBufferLookupLen <= uVar7) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                            ,0x9b7,0,
+                            "bufferIndex doesn\'t index scrParserPub.sourceBufferLookupLen\n\t%i not in [0, %i)"
+                           );
+          }
+          pSVar2 = scrParserPub.sourceBufferLookup;
+          uVar7 = this_00->bufferIndex;
+          iVar6 = 0;
+          uVar5 = 0;
+          pcVar1 = scrParserPub.sourceBufferLookup[uVar7].sourceBuf;
+          this_00->numCols = 0;
+          if (0 < pSVar2[uVar7].len) {
+            do {
+              pcVar4 = pcVar1;
+              if (*pcVar4 == '\0') {
+                if (this_00->numCols < (int)uVar5) {
+                  this_00->numCols = uVar5;
+                }
+                uVar5 = 0;
+                this_00->_padding_ = this_00->_padding_ + 1;
+              }
+              else {
+                if (*pcVar4 == '\t') {
+                  iVar3 = 4 - (uVar5 + (((int)uVar5 >> 2) +
+                                        (uint)((int)uVar5 < 0 && (uVar5 & 3) != 0) & 0x3fffffff) *
+                                       -4);
                 }
                 else {
-                  if (*pcVar4 == '\t') {
-                    iVar6 = 4 - (uVar7 + (((int)uVar7 >> 2) +
-                                          (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) & 0x3fffffff) *
-                                         -4);
-                  }
-                  else {
-                    iVar6 = 1;
-                  }
-                  uVar7 = iVar6 + uVar7;
+                  iVar3 = 1;
                 }
-                iVar8 = iVar8 + 1;
-                pcVar1 = pcVar4 + 1;
-              } while (iVar8 < *(int *)(iVar3 + 0xc));
-              if ((iVar8 != 0) && (*pcVar4 != '\0')) {
-                *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
-                __restgprlr_26();
-                return;
+                uVar5 = iVar3 + uVar5;
               }
+              iVar6 = iVar6 + 1;
+              pcVar1 = pcVar4 + 1;
+            } while (iVar6 < pSVar2[uVar7].len);
+            if ((iVar6 != 0) && (*pcVar4 != '\0')) {
+              this_00->_padding_ = this_00->_padding_ + 1;
+              __restgprlr_26();
+              return;
             }
           }
-          goto LAB_8252de88;
         }
-        uVar5 = (ulonglong)DAT_8382d8cc;
+        goto LAB_8252de88;
       }
-      uVar9 = uVar9 + 1;
-      iVar8 = iVar8 + 0x2c;
-    } while ((uVar9 & 0xffffffff) < uVar5);
+      uVar7 = uVar7 + 1;
+      iVar6 = iVar6 + 0x2c;
+    } while (uVar7 < uVar5);
   }
-  *(undefined4 *)(iVar2 + 8) = 0xfffe;
-  Scr_ScriptWindow__Init(iVar2);
+  this_00->bufferIndex = 0xfffe;
+  Init(this_00);
 LAB_8252de88:
   __restgprlr_26();
   return;
 }
 
 
-// 82529D50  Scr_ScriptWindow::SetCurrentLine  (script/scr_debugger.cpp:798)
+// 82529D50  SetCurrentLine  (script/scr_debugger.cpp:798)
 
-void Scr_ScriptWindow__SetCurrentLine(undefined8 param_1,ulonglong param_2)
+void __thiscall Scr_ScriptWindow::SetCurrentLine(Scr_ScriptWindow *this,int param_1)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
+  char *pcVar3;
   int iVar4;
-  uint uVar5;
-  char *pcVar6;
+  int iVar5;
+  ulonglong uVar6;
   char *pcVar7;
-  int iVar8;
+  char *pcVar8;
   int iVar9;
   
-  iVar2 = __savegprlr_23();
+  uVar6 = (ulonglong)param_1;
+  iVar4 = __savegprlr_23(this);
   while( true ) {
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x324,0,0xffffffff82000f98,0xffffffff8214f7b8);
+    iVar5 = Sys_IsRemoteDebugServer();
+    if (iVar5 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x324,0,"%s");
     }
-    if (DAT_8382d8cc <= *(uint *)(iVar2 + 8)) {
-      MyAssertHandler(0xffffffff8214f658,0x327,0,0xffffffff8214f7d8);
+    if (scrParserPub.sourceBufferLookupLen <= *(uint *)(iVar4 + 8)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x327,0,
+                      "bufferIndex doesn\'t index scrParserPub.sourceBufferLookupLen\n\t%i not in [0, %i)"
+                     );
     }
-    iVar3 = *(int *)(iVar2 + 8) * 0x2c + DAT_8382d8c8;
-    iVar9 = (int)param_2;
-    if (iVar9 < *(int *)(iVar2 + 0xc)) break;
-    if (iVar9 <= *(int *)(iVar2 + 0xc)) goto LAB_82529f14;
-    iVar8 = *(int *)(iVar3 + 0xc);
-    iVar3 = *(int *)(iVar3 + 8);
+    iVar5 = *(int *)(iVar4 + 8);
+    iVar9 = (int)uVar6;
+    if (iVar9 < *(int *)(iVar4 + 0xc)) break;
+    if (iVar9 <= *(int *)(iVar4 + 0xc)) goto LAB_82529f14;
+    iVar2 = scrParserPub.sourceBufferLookup[iVar5].len;
+    pcVar3 = scrParserPub.sourceBufferLookup[iVar5].sourceBuf;
     while( true ) {
-      cVar1 = **(char **)(iVar2 + 0x10);
+      cVar1 = **(char **)(iVar4 + 0x10);
       while (cVar1 != '\0') {
-        pcVar6 = (char *)(*(int *)(iVar2 + 0x10) + 1);
-        *(char **)(iVar2 + 0x10) = pcVar6;
-        cVar1 = *pcVar6;
+        pcVar7 = (char *)(*(int *)(iVar4 + 0x10) + 1);
+        *(char **)(iVar4 + 0x10) = pcVar7;
+        cVar1 = *pcVar7;
       }
-      if (**(char **)(iVar2 + 0x10) != '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x348,0,0xffffffff82000f98,0xffffffff8214f828);
+      if (**(char **)(iVar4 + 0x10) != '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x348,0,"%s");
       }
-      param_2 = (ulonglong)*(uint *)(iVar2 + 0xc);
-      uVar5 = *(int *)(iVar2 + 0x10) + 1;
-      iVar4 = *(uint *)(iVar2 + 0xc) + 1;
-      *(uint *)(iVar2 + 0x10) = uVar5;
-      *(int *)(iVar2 + 0xc) = iVar4;
-      if ((uint)(iVar8 + iVar3) <= uVar5) break;
-      if (iVar9 <= iVar4) {
+      uVar6 = (ulonglong)*(uint *)(iVar4 + 0xc);
+      pcVar7 = (char *)(*(int *)(iVar4 + 0x10) + 1);
+      iVar5 = *(uint *)(iVar4 + 0xc) + 1;
+      *(char **)(iVar4 + 0x10) = pcVar7;
+      *(int *)(iVar4 + 0xc) = iVar5;
+      if (pcVar3 + iVar2 <= pcVar7) break;
+      if (iVar9 <= iVar5) {
         __restgprlr_23();
         return;
       }
     }
   }
-  iVar3 = *(int *)(iVar3 + 8);
-  while (*(int *)(iVar2 + 0x10) != iVar3) {
-    pcVar6 = (char *)(*(int *)(iVar2 + 0x10) + -1);
-    *(char **)(iVar2 + 0x10) = pcVar6;
-    if (*pcVar6 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x337,0,0xffffffff82000f98,0xffffffff8214f828);
+  pcVar3 = scrParserPub.sourceBufferLookup[iVar5].sourceBuf;
+  while (*(char **)(iVar4 + 0x10) != pcVar3) {
+    pcVar7 = *(char **)(iVar4 + 0x10) + -1;
+    *(char **)(iVar4 + 0x10) = pcVar7;
+    if (*pcVar7 != '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x337,0,"%s");
     }
-    pcVar6 = *(char **)(iVar2 + 0x10);
+    pcVar7 = *(char **)(iVar4 + 0x10);
     do {
-      pcVar7 = pcVar6;
-      pcVar6 = pcVar7 + -1;
-      *(char **)(iVar2 + 0x10) = pcVar6;
-    } while (*pcVar6 != '\0');
-    iVar8 = *(int *)(iVar2 + 0xc) + -1;
-    *(char **)(iVar2 + 0x10) = pcVar7;
-    *(int *)(iVar2 + 0xc) = iVar8;
-    if (iVar8 <= iVar9) {
+      pcVar8 = pcVar7;
+      pcVar7 = pcVar8 + -1;
+      *(char **)(iVar4 + 0x10) = pcVar7;
+    } while (*pcVar7 != '\0');
+    iVar5 = *(int *)(iVar4 + 0xc) + -1;
+    *(char **)(iVar4 + 0x10) = pcVar8;
+    *(int *)(iVar4 + 0xc) = iVar5;
+    if (iVar5 <= iVar9) {
       __restgprlr_23();
       return;
     }
   }
-  *(undefined4 *)(iVar2 + 0xc) = 0;
+  *(undefined4 *)(iVar4 + 0xc) = 0;
 LAB_82529f14:
   __restgprlr_23();
   return;
 }
 
 
-// 82529F20  Scr_ScriptWindow::GetFilename  (script/scr_debugger.cpp:861)
+// 82529F20  GetFilename  (script/scr_debugger.cpp:861)
 
-ulonglong Scr_ScriptWindow__GetFilename(int param_1)
+char * __thiscall Scr_ScriptWindow::GetFilename(Scr_ScriptWindow *this)
 
 {
-  if (*(int *)(param_1 + 8) == 0xfffe) {
-    return 0xffffffff820068af;
+  if (this->bufferIndex == 0xfffe) {
+    return "";
   }
-  return (ulonglong)*(uint *)(*(int *)(param_1 + 8) * 0x2c + DAT_8382d8c8 + 4);
+  return scrParserPub.sourceBufferLookup[this->bufferIndex].buf;
 }
 
 
-// 82529F50  Scr_ScriptWindow::AddBreakpoint  (script/scr_debugger.cpp:1043)
+// 82529F50  AddBreakpoint  (script/scr_debugger.cpp:1043)
 
-void Scr_ScriptWindow__AddBreakpoint
-               (undefined8 param_1,int *param_2,ulonglong param_3,undefined4 param_4,int param_5,
-               uint param_6)
+void __thiscall
+Scr_ScriptWindow::AddBreakpoint
+          (Scr_ScriptWindow *this,Scr_Breakpoint **param_1,char *param_2,int param_3,
+          Scr_WatchElement_s *param_4,uchar param_5)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  Scr_Breakpoint *pSVar1;
+  int iVar2;
+  int *piVar3;
+  Scr_Breakpoint *pSVar4;
+  ulonglong uVar5;
+  uint uVar6;
   
-  puVar3 = (undefined4 *)__savegprlr_24();
-  iVar1 = *param_2;
-  puVar4 = (undefined4 *)Scr_AllocBreakpoint();
-  *param_2 = (int)puVar4;
-  puVar4[6] = param_2;
-  puVar4[5] = iVar1;
-  if (iVar1 != 0) {
-    *(undefined4 **)(iVar1 + 0x18) = puVar4 + 5;
+  uVar6 = (uint)(char)param_5;
+  uVar5 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_24(this);
+  pSVar1 = *param_1;
+  pSVar4 = Scr_AllocBreakpoint();
+  *param_1 = pSVar4;
+  pSVar4->prev = param_1;
+  pSVar4->next = pSVar1;
+  if (pSVar1 != (Scr_Breakpoint *)0x0) {
+    pSVar1->prev = &pSVar4->next;
   }
-  uVar2 = *puVar3;
-  puVar4[4] = param_4;
-  puVar4[2] = (int)param_3;
-  *puVar4 = uVar2;
-  puVar4[1] = puVar3[2];
-  puVar4[3] = param_5;
-  if (*(int *)(param_5 + 0x20) != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x423,0,0xffffffff82000f98,0xffffffff8214f83c);
+  iVar2 = *piVar3;
+  pSVar4->builtinIndex = param_3;
+  pSVar4->codePos = (char *)(uchar *)uVar5;
+  pSVar4->line = iVar2;
+  pSVar4->bufferIndex = piVar3[2];
+  pSVar4->element = param_4;
+  if (param_4->breakpoint != (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x423
+                    ,0,"%s");
   }
-  *(undefined4 **)(param_5 + 0x20) = puVar4;
-  *(char *)(param_5 + 0x4c) = (char)param_6;
-  if ((3 < (param_6 & 0xff)) && ((param_6 & 0xff) < 6)) {
-    if ((param_3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x42f,0,0xffffffff82000f98,0xffffffff8214f64c);
+  param_4->breakpoint = pSVar4;
+  param_4->breakpointType = (uchar)uVar6;
+  if ((3 < (uVar6 & 0xff)) && ((uVar6 & 0xff) < 6)) {
+    if ((uVar5 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x42f,0,"%s");
     }
-    Scr_AddManualBreakpoint(param_3);
+    Scr_AddManualBreakpoint((uchar *)uVar5);
   }
   __restgprlr_24();
   return;
@@ -458,16 +496,16 @@ void Scr_ScriptWindow__AddBreakpoint
 
 // 8252A040  Scr_WriteElement  (script/scr_debugger.cpp:1087)
 
-void Scr_WriteElement(int param_1)
+void Scr_WriteElement(Scr_WatchElement_s *param_1)
 
 {
-  undefined2 uVar1;
+  uint uVar1;
   
-  if (param_1 == 0) {
+  if (param_1 == (Scr_WatchElement_s *)0x0) {
     uVar1 = 0;
   }
   else {
-    uVar1 = *(undefined2 *)(param_1 + 0x46);
+    uVar1 = (uint)param_1->id;
   }
   Sys_WriteDebugSocketInt(uVar1);
   return;
@@ -476,99 +514,112 @@ void Scr_WriteElement(int param_1)
 
 // 8252DF98  Scr_ReadElement  (script/scr_debugger.cpp:1100)
 
-undefined8 Scr_ReadElement(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+Scr_WatchElement_s * Scr_ReadElement(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 != 0) {
-    uVar1 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
-    return uVar1;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 != 0) {
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
+    return pSVar2;
   }
-  return 0;
+  return (Scr_WatchElement_s *)0x0;
 }
 
 
 // 8252A058  Scr_FreeLineBreakpoint  (script/scr_debugger.cpp:1115)
 
-void Scr_FreeLineBreakpoint(undefined8 param_1,ulonglong param_2)
+void Scr_FreeLineBreakpoint(Scr_Breakpoint *param_1,bool param_2)
 
 {
   byte bVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  Scr_WatchElement_s *pSVar2;
+  Scr_Breakpoint **ppSVar3;
+  Scr_Breakpoint *pSVar4;
+  ulonglong uVar5;
   
-  iVar4 = __savegprlr_25();
-  iVar2 = *(int *)(iVar4 + 0xc);
-  puVar3 = *(undefined4 **)(iVar4 + 0x18);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x462,0,0xffffffff82000f98,0xffffffff8214f888);
+  uVar5 = (ulonglong)param_2;
+  pSVar4 = (Scr_Breakpoint *)__savegprlr_25(param_1);
+  pSVar2 = pSVar4->element;
+  ppSVar3 = pSVar4->prev;
+  if (pSVar2 == (Scr_WatchElement_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x462
+                    ,0,"%s");
   }
-  bVar1 = *(byte *)(iVar2 + 0x4c);
-  *(undefined4 *)(iVar4 + 0xc) = 0;
-  if ((param_2 & 0xff) != 0) {
-    Scr_ScriptWatch__DeleteElementInternal(0xffffffff83739368,iVar2);
+  bVar1 = pSVar2->breakpointType;
+  pSVar4->element = (Scr_WatchElement_s *)0x0;
+  if ((uVar5 & 0xff) != 0) {
+    Scr_ScriptWatch::DeleteElementInternal(&scrDebuggerGlob.scriptWatch,pSVar2);
   }
   if ((3 < bVar1) && (bVar1 < 6)) {
-    if (*(int *)(iVar4 + 8) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x471,0,0xffffffff82000f98,0xffffffff8214f874);
+    if (pSVar4->codePos == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x471,0,"%s");
     }
-    Scr_RemoveManualBreakpoint(*(undefined4 *)(iVar4 + 8));
+    Scr_RemoveManualBreakpoint((uchar *)pSVar4->codePos);
   }
-  if (puVar3 != *(undefined4 **)(iVar4 + 0x18)) {
-    MyAssertHandler(0xffffffff8214f658,0x477,0,0xffffffff82000f98,0xffffffff8214f854);
+  if (ppSVar3 != pSVar4->prev) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x477
+                    ,0,"%s");
   }
-  if (*(int *)(iVar4 + 0x14) != 0) {
-    *(undefined4 **)(*(int *)(iVar4 + 0x14) + 0x18) = puVar3;
+  if (pSVar4->next != (Scr_Breakpoint *)0x0) {
+    pSVar4->next->prev = ppSVar3;
   }
-  *puVar3 = *(undefined4 *)(iVar4 + 0x14);
-  *(int *)(iVar4 + 0x14) = DAT_83727330;
-  DAT_83727330 = iVar4;
+  *ppSVar3 = pSVar4->next;
+  pSVar4->next = g_breakpointsHead;
+  g_breakpointsHead = pSVar4;
   __restgprlr_25();
   return;
 }
 
 
-// 8252A170  Scr_ScriptWindow::GetSourcePos  (script/scr_debugger.cpp:1158)
+// 8252A170  GetSourcePos  (script/scr_debugger.cpp:1158)
 
-void Scr_ScriptWindow__GetSourcePos(undefined8 param_1,int *param_2,int *param_3)
+void __thiscall Scr_ScriptWindow::GetSourcePos(Scr_ScriptWindow *this,uint *param_1,uint *param_2)
 
 {
   char cVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
+  int iVar2;
+  SourceBufferInfo *pSVar3;
+  int *piVar4;
+  int iVar5;
+  char *pcVar6;
   
-  piVar2 = (int *)__savegprlr_22();
-  if (*piVar2 < 0) {
-    MyAssertHandler(0xffffffff8214f658,0x48b,0,0xffffffff82000f98,0xffffffff8214f8cc);
+  piVar4 = (int *)__savegprlr_22(this);
+  if (*piVar4 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x48b
+                    ,0,"%s");
   }
-  iVar3 = 0;
-  iVar4 = piVar2[2] * 0x2c + DAT_8382d8c8;
-  pcVar5 = *(char **)(iVar4 + 8);
+  pSVar3 = scrParserPub.sourceBufferLookup;
+  iVar2 = piVar4[2];
+  iVar5 = 0;
+  pcVar6 = scrParserPub.sourceBufferLookup[iVar2].sourceBuf;
   while( true ) {
-    if (*(int *)(iVar4 + 0xc) < (int)pcVar5 - *(int *)(iVar4 + 8)) {
-      MyAssertHandler(0xffffffff8214f658,0x494,0,0xffffffff82000f98,0xffffffff8214f890);
+    if (pSVar3[iVar2].len < (int)pcVar6 - (int)pSVar3[iVar2].sourceBuf) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x494,0,"%s");
     }
-    if (iVar3 == *piVar2) break;
-    cVar1 = *pcVar5;
+    if (iVar5 == *piVar4) break;
+    cVar1 = *pcVar6;
     while (cVar1 != '\0') {
-      pcVar5 = pcVar5 + 1;
-      cVar1 = *pcVar5;
+      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar6;
     }
-    pcVar5 = pcVar5 + 1;
-    iVar3 = iVar3 + 1;
+    pcVar6 = pcVar6 + 1;
+    iVar5 = iVar5 + 1;
   }
-  *param_2 = (int)pcVar5 - *(int *)(iVar4 + 8);
-  cVar1 = *pcVar5;
+  *param_1 = (int)pcVar6 - (int)pSVar3[iVar2].sourceBuf;
+  cVar1 = *pcVar6;
   while (cVar1 != '\0') {
-    pcVar5 = pcVar5 + 1;
-    cVar1 = *pcVar5;
+    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar6;
   }
-  *param_3 = (int)pcVar5 - *(int *)(iVar4 + 8);
+  *param_2 = (int)pcVar6 - (int)pSVar3[iVar2].sourceBuf;
   __restgprlr_22();
   return;
 }
@@ -576,326 +627,365 @@ void Scr_ScriptWindow__GetSourcePos(undefined8 param_1,int *param_2,int *param_3
 
 // 8252A288  Scr_GetFuncTableIndex  (script/scr_debugger.cpp:1192)
 
-ulonglong Scr_GetFuncTableIndex(longlong param_1)
+int Scr_GetFuncTableIndex(int param_1)
 
 {
-  ulonglong uVar1;
-  
-  if ((param_1 - 1U & 0xffffffff) < 0x1c4) {
-    uVar1 = param_1 - 1;
-    if (0x1c3 < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8214f658,0x4ac,0,0xffffffff8214f920,uVar1,0x1c4);
+  if (param_1 - 1U < 0x1c4) {
+    if (0x1c3 < param_1 - 1U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x4ac,0,"builtinIndex doesn\'t index SCR_FUNC_COUNT\n\t%i not in [0, %i)");
     }
-    return uVar1;
+    return param_1 - 1U;
   }
-  if (0x30a < (param_1 - 0x8000U & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8214f658,0x4b1,0,0xffffffff8214f8e0,param_1 - 0x8000U,0x30b);
+  if (0x30a < param_1 - 0x8000U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x4b1
+                    ,0,"builtinIndex doesn\'t index SCR_METH_COUNT\n\t%i not in [0, %i)");
   }
-  return param_1 - 0x7e3c;
+  return param_1 + -0x7e3c;
 }
 
 
-// 8252F8D0  Scr_ScriptWindow::AddBreakpointAtSourcePos  (script/scr_debugger.cpp:1217)
+// 8252F8D0  AddBreakpointAtSourcePos  (script/scr_debugger.cpp:1217)
 
-void Scr_ScriptWindow__AddBreakpointAtSourcePos
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+bool __thiscall
+Scr_ScriptWindow::AddBreakpointAtSourcePos
+          (Scr_ScriptWindow *this,Scr_WatchElement_s *param_1,uchar param_2,bool param_3,
+          Scr_Breakpoint **param_4,uint param_5,uint param_6)
 
 {
   bool bVar1;
   ulonglong uVar2;
-  int iVar4;
-  char *pcVar5;
-  char *pcVar6;
-  int iVar7;
-  undefined8 uVar3;
-  ulonglong uVar8;
-  ushort *puVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  undefined4 local_60 [24];
+  Scr_ScriptWindow *this_00;
+  char *pcVar3;
+  char *pcVar4;
+  int iVar5;
+  undefined1 uVar8;
+  int iVar6;
+  Scr_WatchElement_s *pSVar7;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ushort *puVar11;
+  uint uVar12;
+  uint local_60 [24];
   
-  iVar4 = __savegprlr_22();
-  uVar2 = param_3 & 0xff;
-  uVar8 = uVar2 - 4;
-  uVar11 = 0xffffffffffffffff;
-  lVar10 = 0;
-  if ((uVar8 & 0xffffffff) < 4) {
-    bVar1 = (int)uVar8 != 0;
-    if ((uVar2 == 5 && bVar1) || ((uVar8 != 2 || !bVar1 && (!bVar1)))) {
-      pcVar5 = (char *)Scr_GetOpcodePosOfType(*(undefined4 *)(iVar4 + 8),param_6,param_7,1,local_60)
-      ;
-      if ((pcVar5 != (char *)0x0) &&
-         ((pcVar6 = (char *)Scr_FindBreakpointInfo(), *pcVar6 != -0x67 || (*pcVar5 != -0x5f)))) {
-        lVar10 = 1;
+  uVar9 = (ulonglong)(char)param_2;
+  this_00 = (Scr_ScriptWindow *)__savegprlr_22(this);
+  uVar2 = uVar9 & 0xff;
+  uVar10 = uVar2 - 4;
+  uVar12 = 0xffffffff;
+  iVar6 = 0;
+  if ((uVar10 & 0xffffffff) < 4) {
+    bVar1 = (int)uVar10 != 0;
+    if ((uVar2 == 5 && bVar1) || ((uVar10 != 2 || !bVar1 && (!bVar1)))) {
+      pcVar3 = Scr_GetOpcodePosOfType(this_00->bufferIndex,param_5,param_6,'\x01',local_60);
+      if ((pcVar3 != (char *)0x0) &&
+         ((pcVar4 = Scr_FindBreakpointInfo(pcVar3), *pcVar4 != -0x67 || (*pcVar3 != -0x5f)))) {
+        iVar6 = 1;
       }
       goto LAB_8252fa28;
     }
   }
-  else if (DAT_84013128 == 0) {
-    uVar3 = va(0xffffffff82150214,uVar2);
-    MyAssertHandler(0xffffffff8214f658,0x4ea,0,uVar3);
+  else if (alwaysfails == 0) {
+    pcVar3 = va("unreachable: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x4ea
+                    ,0,pcVar3);
   }
-  pcVar5 = (char *)Scr_GetOpcodePosOfType(*(undefined4 *)(iVar4 + 8),param_6,param_7,0x10,local_60);
-  if (pcVar5 != (char *)0x0) {
-    lVar10 = 1;
-    puVar9 = (ushort *)(pcVar5 + 1);
-    if ((*pcVar5 == 'P') || (*pcVar5 == 'W')) {
-      puVar9 = (ushort *)(pcVar5 + 2);
+  pcVar3 = Scr_GetOpcodePosOfType(this_00->bufferIndex,param_5,param_6,'\x10',local_60);
+  uVar12 = 0xffffffff;
+  if (pcVar3 != (char *)0x0) {
+    iVar6 = 1;
+    puVar11 = (ushort *)(pcVar3 + 1);
+    if ((*pcVar3 == 'P') || (*pcVar3 == 'W')) {
+      puVar11 = (ushort *)(pcVar3 + 2);
     }
-    uVar11 = (ulonglong)*puVar9;
+    uVar12 = (uint)*puVar11;
     if (uVar2 == 6) {
-      iVar7 = Scr_GetFuncTableIndex(uVar11);
-      *(int *)(&DAT_83c6fb48 + iVar7 * 0xc) = *(int *)(&DAT_83c6fb48 + iVar7 * 0xc) + 1;
+      iVar5 = Scr_GetFuncTableIndex(uVar12);
+      scrVmDebugPub.func_table[iVar5].breakpointCount =
+           scrVmDebugPub.func_table[iVar5].breakpointCount + 1;
     }
   }
-  pcVar5 = (char *)0x0;
+  pcVar3 = (char *)0x0;
 LAB_8252fa28:
-  iVar7 = Sys_IsRemoteDebugServer();
-  if (iVar7 != 0) {
-    Sys_WriteDebugSocketInt(lVar10);
+  iVar5 = Sys_IsRemoteDebugServer();
+  if (iVar5 != 0) {
+    Sys_WriteDebugSocketInt(iVar6);
   }
-  if (lVar10 == 0) {
-    __restgprlr_22(0);
-    return;
+  if (iVar6 == 0) {
+    uVar8 = __restgprlr_22(0);
+    return (bool)uVar8;
   }
-  iVar7 = Sys_IsRemoteDebugServer();
-  if (iVar7 != 0) {
-    Sys_WriteDebugSocketInt(*(undefined4 *)(iVar4 + 8));
+  iVar6 = Sys_IsRemoteDebugServer();
+  if (iVar6 != 0) {
+    Sys_WriteDebugSocketInt(this_00->bufferIndex);
     Sys_WriteDebugSocketInt(local_60[0]);
   }
-  uVar3 = Scr_ScriptWatch__CreateBreakpointElement
-                    (0xffffffff83739368,param_2,*(undefined4 *)(iVar4 + 8),local_60[0],param_4);
-  Scr_ScriptWindow__AddBreakpoint(iVar4,param_5,pcVar5,uVar11,uVar3,param_3);
-  __restgprlr_22(1);
-  return;
+  pSVar7 = Scr_ScriptWatch::CreateBreakpointElement
+                     (&scrDebuggerGlob.scriptWatch,param_1,this_00->bufferIndex,local_60[0],param_3)
+  ;
+  AddBreakpoint(this_00,param_4,pcVar3,uVar12,pSVar7,(uchar)uVar9);
+  uVar8 = __restgprlr_22(1);
+  return (bool)uVar8;
 }
 
 
-// 82530570  Scr_ScriptWindow::ToggleBreakpointInternal  (script/scr_debugger.cpp:1313)
+// 82530570  ToggleBreakpointInternal  (script/scr_debugger.cpp:1313)
 
-void Scr_ScriptWindow__ToggleBreakpointInternal
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5,ulonglong param_6)
+void __thiscall
+Scr_ScriptWindow::ToggleBreakpointInternal
+          (Scr_ScriptWindow *this,Scr_WatchElement_s *param_1,bool param_2,bool param_3,
+          uchar param_4,bool param_5)
 
 {
-  int *piVar1;
-  bool bVar2;
-  int *piVar3;
-  int iVar4;
-  undefined2 uVar6;
-  char cVar7;
+  char cVar1;
+  uint uVar2;
+  Scr_Breakpoint *pSVar3;
+  SourceBufferInfo *pSVar4;
+  Scr_ScriptWindow *this_00;
   int iVar5;
-  uint uVar8;
-  int iVar9;
-  int *piVar10;
-  char *pcVar11;
-  undefined4 local_90;
-  undefined4 local_8c [35];
+  bool bVar8;
+  Scr_WatchElement_s *pSVar6;
+  int iVar7;
+  ulonglong uVar9;
+  uchar uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  uint uVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  Scr_Breakpoint **ppSVar16;
+  char *pcVar17;
+  uint local_90;
+  uint local_8c [35];
   
-  piVar3 = (int *)__savegprlr_16();
-  if (*piVar3 < 0) {
-    MyAssertHandler(0xffffffff8214f658,0x52c,0,0xffffffff82000f98,0xffffffff8214f8cc);
+  uVar13 = (uint)param_5;
+  uVar12 = (ulonglong)(char)param_4;
+  uVar11 = (ulonglong)param_3;
+  uVar9 = (ulonglong)param_2;
+  uVar15 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWindow *)__savegprlr_16(this);
+  if (this_00->_padding_ < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x52c
+                    ,0,"%s");
   }
-  iVar9 = piVar3[2] * 0x2c + DAT_8382d8c8;
-  iVar4 = Sys_IsRemoteDebugServer();
-  if (iVar4 != 0) {
-    Sys_WriteDebugSocketInt(*(undefined4 *)(iVar9 + 0x10));
-    Sys_WriteDebugSocketInt(*piVar3);
-    if ((param_2 & 0xffffffff) == 0) {
-      uVar6 = 0;
+  pSVar4 = scrParserPub.sourceBufferLookup;
+  uVar2 = this_00->bufferIndex;
+  iVar5 = Sys_IsRemoteDebugServer();
+  pSVar6 = (Scr_WatchElement_s *)uVar15;
+  if (iVar5 != 0) {
+    Sys_WriteDebugSocketInt(pSVar4[uVar2].sortedIndex);
+    Sys_WriteDebugSocketInt(this_00->_padding_);
+    if ((uVar15 & 0xffffffff) == 0) {
+      uVar14 = 0;
     }
     else {
-      uVar6 = *(undefined2 *)((int)param_2 + 0x46);
+      uVar14 = (uint)pSVar6->id;
     }
-    Sys_WriteDebugSocketInt(uVar6);
-    Sys_WriteDebugSocketInt(param_3 & 0xff);
-    Sys_WriteDebugSocketInt(param_4 & 0xff);
-    Sys_WriteDebugSocketInt(param_5 & 0xff);
-    Sys_WriteDebugSocketInt(param_6 & 0xff);
+    Sys_WriteDebugSocketInt(uVar14);
+    Sys_WriteDebugSocketInt((uint)uVar9 & 0xff);
+    Sys_WriteDebugSocketInt((uint)uVar11 & 0xff);
+    Sys_WriteDebugSocketInt((uint)uVar12 & 0xff);
+    Sys_WriteDebugSocketInt(uVar13 & 0xff);
   }
-  uVar8 = (uint)(param_5 & 0xff);
-  if ((5 < uVar8) && (uVar8 < 8)) {
-    Scr_ScriptWindow__GetSourcePos(piVar3,local_8c,&local_90);
-    Scr_ScriptWindow__AddBreakpointAtSourcePos
-              (piVar3,param_2,param_5,param_6,piVar3 + 6,local_8c[0],local_90);
-    __restgprlr_16();
+  uVar14 = (uint)(uVar12 & 0xff);
+  uVar10 = (uchar)uVar12;
+  if ((5 < uVar14) && (uVar14 < 8)) {
+    GetSourcePos(this_00,local_8c,&local_90);
+    bVar8 = AddBreakpointAtSourcePos
+                      (this_00,pSVar6,uVar10,SUB41(uVar13,0),&this_00->builtinHead,local_8c[0],
+                       local_90);
+    __restgprlr_16(bVar8);
     return;
   }
-  if (((param_4 & 0xff) != 0) && ((param_2 & 0xffffffff) != 0)) {
-    param_2 = Scr_ScriptWatch__DeleteElementInternal(0xffffffff83739368,param_2);
+  if (((uVar11 & 0xff) != 0) && ((uVar15 & 0xffffffff) != 0)) {
+    pSVar6 = Scr_ScriptWatch::DeleteElementInternal(&scrDebuggerGlob.scriptWatch,pSVar6);
+    uVar15 = (ulonglong)(int)pSVar6;
   }
-  pcVar11 = *(char **)(iVar9 + 8);
-  iVar4 = 0;
-  piVar10 = piVar3 + 5;
-  bVar2 = false;
+  pcVar17 = pSVar4[uVar2].sourceBuf;
+  iVar5 = 0;
+  ppSVar16 = &this_00->breakpointHead;
+  bVar8 = false;
   do {
-    piVar1 = (int *)*piVar10;
-    if (piVar1 != (int *)0x0) {
+    pSVar3 = *ppSVar16;
+    if (pSVar3 != (Scr_Breakpoint *)0x0) {
       do {
-        if (*piVar3 <= *piVar1) {
-          if (*piVar1 == *piVar3) {
-            if ((param_3 & 0xff) == 0) {
-              iVar4 = piVar1[3];
-              if (iVar4 == 0) {
-                MyAssertHandler(0xffffffff8214f658,0x568,0,0xffffffff82000f98,0xffffffff82150324);
+        if (this_00->_padding_ <= pSVar3->line) {
+          if (pSVar3->line == this_00->_padding_) {
+            if ((uVar9 & 0xff) == 0) {
+              pSVar6 = pSVar3->element;
+              if (pSVar6 == (Scr_WatchElement_s *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                                ,0x568,0,"%s");
               }
-              if ((ulonglong)*(byte *)(iVar4 + 0x4c) != (param_5 & 0xff)) {
-                *(char *)(iVar4 + 0x4c) = (char)param_5;
+              if ((ulonglong)pSVar6->breakpointType != (uVar12 & 0xff)) {
+                pSVar6->breakpointType = uVar10;
                 __restgprlr_16();
                 return;
               }
-              if (!bVar2) {
-                Scr_FreeLineBreakpoint(piVar1,1);
+              if (!bVar8) {
+                Scr_FreeLineBreakpoint(pSVar3,true);
               }
               goto LAB_8253089c;
             }
-            if ((param_2 & 0xffffffff) == (ulonglong)(uint)piVar1[3]) {
-              param_2 = (ulonglong)*(uint *)((int)param_2 + 0x3c);
+            if ((uVar15 & 0xffffffff) == ZEXT48(pSVar3->element)) {
+              uVar15 = (ulonglong)*(uint *)((int)uVar15 + 0x3c);
             }
-            Scr_FreeLineBreakpoint(piVar1,1);
+            Scr_FreeLineBreakpoint(pSVar3,true);
           }
           break;
         }
-        piVar10 = piVar1 + 5;
-        piVar1 = (int *)piVar1[5];
-      } while (piVar1 != (int *)0x0);
+        ppSVar16 = &pSVar3->next;
+        pSVar3 = pSVar3->next;
+      } while (pSVar3 != (Scr_Breakpoint *)0x0);
     }
-    param_2 = -(ulonglong)((param_3 & 0xff) != 0) & param_2;
+    uVar15 = -(ulonglong)((uVar9 & 0xff) != 0) & uVar15;
     while( true ) {
-      if (*(int *)(iVar9 + 0xc) < (int)pcVar11 - *(int *)(iVar9 + 8)) {
-        MyAssertHandler(0xffffffff8214f658,0x585,0,0xffffffff82000f98,0xffffffff8214f890);
+      if (pSVar4[uVar2].len < (int)pcVar17 - (int)pSVar4[uVar2].sourceBuf) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x585,0,"%s");
       }
-      if (iVar4 == *piVar3) break;
-      cVar7 = *pcVar11;
-      while (cVar7 != '\0') {
-        pcVar11 = pcVar11 + 1;
-        cVar7 = *pcVar11;
+      if (iVar5 == this_00->_padding_) break;
+      cVar1 = *pcVar17;
+      while (cVar1 != '\0') {
+        pcVar17 = pcVar17 + 1;
+        cVar1 = *pcVar17;
       }
-      pcVar11 = pcVar11 + 1;
-      iVar4 = iVar4 + 1;
+      pcVar17 = pcVar17 + 1;
+      iVar5 = iVar5 + 1;
     }
-    iVar5 = (int)pcVar11 - *(int *)(iVar9 + 8);
-    cVar7 = *pcVar11;
-    while (cVar7 != '\0') {
-      pcVar11 = pcVar11 + 1;
-      cVar7 = *pcVar11;
+    uVar14 = (int)pcVar17 - (int)pSVar4[uVar2].sourceBuf;
+    cVar1 = *pcVar17;
+    while (cVar1 != '\0') {
+      pcVar17 = pcVar17 + 1;
+      cVar1 = *pcVar17;
     }
-    cVar7 = Scr_ScriptWindow__AddBreakpointAtSourcePos
-                      (piVar3,param_2,param_5,param_6,piVar10,iVar5,
-                       (int)pcVar11 - *(int *)(iVar9 + 8));
-    if ((cVar7 != '\0') || (piVar3[1] + -1 <= *piVar3)) {
+    bVar8 = AddBreakpointAtSourcePos
+                      (this_00,(Scr_WatchElement_s *)uVar15,uVar10,SUB41(uVar13,0),ppSVar16,uVar14,
+                       (int)pcVar17 - (int)pSVar4[uVar2].sourceBuf);
+    if ((bVar8) || (this_00->_padding_ + -1 <= this_00->_padding_)) {
 LAB_8253089c:
       __restgprlr_16();
       return;
     }
-    bVar2 = true;
-    iVar5 = Sys_IsRemoteDebugServer();
-    if (iVar5 != 0) {
-      *piVar3 = *piVar3 + 1;
+    bVar8 = true;
+    iVar7 = Sys_IsRemoteDebugServer();
+    if (iVar7 != 0) {
+      this_00->_padding_ = this_00->_padding_ + 1;
     }
-    if (*pcVar11 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x5a2,0,0xffffffff82000f98,0xffffffff8214f8c4);
+    if (*pcVar17 != '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x5a2,0,"%s");
     }
-    pcVar11 = pcVar11 + 1;
-    iVar4 = iVar4 + 1;
+    pcVar17 = pcVar17 + 1;
+    iVar5 = iVar5 + 1;
   } while( true );
 }
 
 
-// 8252A338  Scr_ScriptWindow::GetBreakpointCodePos  (script/scr_debugger.cpp:1464)
+// 8252A338  GetBreakpointCodePos  (script/scr_debugger.cpp:1464)
 
-void Scr_ScriptWindow__GetBreakpointCodePos(void)
+char * __thiscall Scr_ScriptWindow::GetBreakpointCodePos(Scr_ScriptWindow *this)
 
 {
   char cVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
-  undefined1 auStack_50 [80];
+  int iVar2;
+  SourceBufferInfo *pSVar3;
+  int *piVar4;
+  char *pcVar5;
+  char *pcVar6;
+  uint uVar7;
+  int iVar8;
+  uint auStack_50 [20];
   
-  piVar3 = (int *)__savegprlr_24();
-  if (*piVar3 < 0) {
-    MyAssertHandler(0xffffffff8214f658,0x5c5,0,0xffffffff82000f98,0xffffffff8214f8cc);
+  piVar4 = (int *)__savegprlr_24(this);
+  if (*piVar4 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x5c5
+                    ,0,"%s");
   }
-  iVar5 = 0;
-  iVar6 = piVar3[2] * 0x2c + DAT_8382d8c8;
-  pcVar7 = *(char **)(iVar6 + 8);
+  pSVar3 = scrParserPub.sourceBufferLookup;
+  iVar2 = piVar4[2];
+  iVar8 = 0;
+  pcVar6 = scrParserPub.sourceBufferLookup[iVar2].sourceBuf;
   do {
-    if (*(int *)(iVar6 + 0xc) < (int)pcVar7 - *(int *)(iVar6 + 8)) {
-      MyAssertHandler(0xffffffff8214f658,0x5cd,0,0xffffffff82000f98,0xffffffff8214f890);
+    if (pSVar3[iVar2].len < (int)pcVar6 - (int)pSVar3[iVar2].sourceBuf) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x5cd,0,"%s");
     }
-    if (iVar5 == *piVar3) {
-      iVar4 = (int)pcVar7 - *(int *)(iVar6 + 8);
-      cVar1 = *pcVar7;
+    if (iVar8 == *piVar4) {
+      uVar7 = (int)pcVar6 - (int)pSVar3[iVar2].sourceBuf;
+      cVar1 = *pcVar6;
       while (cVar1 != '\0') {
-        pcVar7 = pcVar7 + 1;
-        cVar1 = *pcVar7;
+        pcVar6 = pcVar6 + 1;
+        cVar1 = *pcVar6;
       }
-      uVar2 = Scr_GetOpcodePosOfType(piVar3[2],iVar4,(int)pcVar7 - *(int *)(iVar6 + 8),1,auStack_50)
-      ;
-      if ((uVar2 & 0xffffffff) != 0) goto LAB_8252a490;
-      if (piVar3[1] + -1 <= *piVar3) {
-        uVar2 = 0;
+      pcVar5 = Scr_GetOpcodePosOfType
+                         (piVar4[2],uVar7,(int)pcVar6 - (int)pSVar3[iVar2].sourceBuf,'\x01',
+                          auStack_50);
+      if (pcVar5 != (char *)0x0) goto LAB_8252a490;
+      if (piVar4[1] + -1 <= *piVar4) {
+        pcVar5 = (char *)0x0;
 LAB_8252a490:
-        __restgprlr_24(uVar2);
-        return;
+        pcVar6 = (char *)__restgprlr_24(pcVar5);
+        return pcVar6;
       }
-      *piVar3 = *piVar3 + 1;
-      if (*pcVar7 != '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x5de,0,0xffffffff82000f98,0xffffffff8214f8c4);
+      *piVar4 = *piVar4 + 1;
+      if (*pcVar6 != '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x5de,0,"%s");
       }
     }
-    cVar1 = *pcVar7;
+    cVar1 = *pcVar6;
     while (cVar1 != '\0') {
-      pcVar7 = pcVar7 + 1;
-      cVar1 = *pcVar7;
+      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar6;
     }
-    pcVar7 = pcVar7 + 1;
-    iVar5 = iVar5 + 1;
+    pcVar6 = pcVar6 + 1;
+    iVar8 = iVar8 + 1;
   } while( true );
 }
 
 
 // 825308A8  Scr_ToggleBreakpointRemote  (script/scr_debugger.cpp:1563)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ToggleBreakpointRemote(void)
 
 {
-  undefined4 *puVar1;
+  Scr_ScriptWindow *this;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
   int iVar6;
-  undefined4 uVar7;
-  undefined8 uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined1 uVar8;
-  longlong lVar5;
   
   __savegprlr_26();
-  iVar6 = Sys_ReadDebugSocketInt();
-  puVar1 = *(undefined4 **)(iVar6 * 4 + DAT_83739358);
-  uVar7 = Sys_ReadDebugSocketInt();
-  *puVar1 = uVar7;
-  uVar2 = Sys_ReadDebugSocketInt();
-  if ((int)uVar2 == 0) {
-    uVar2 = 0;
+  iVar1 = Sys_ReadDebugSocketInt();
+  this = *(Scr_ScriptWindow **)(iVar1 * 4 + scrDebuggerGlob.scriptList._8_4_);
+  iVar1 = Sys_ReadDebugSocketInt();
+  this->_padding_ = iVar1;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 == 0) {
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
-    uVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar2);
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
   }
-  lVar3 = Sys_ReadDebugSocketInt();
-  lVar4 = Sys_ReadDebugSocketInt();
-  uVar8 = Sys_ReadDebugSocketInt();
-  lVar5 = Sys_ReadDebugSocketInt();
+  iVar1 = Sys_ReadDebugSocketInt();
+  iVar3 = Sys_ReadDebugSocketInt();
+  iVar4 = Sys_ReadDebugSocketInt();
+  iVar5 = Sys_ReadDebugSocketInt();
   iVar6 = Sys_IsRemoteDebugServer();
   if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x62e,0,0xffffffff82000f98,0xffffffff8214fb44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x62e
+                    ,0,"%s");
   }
-  Sys_WriteDebugSocketMessageType(0x16);
-  Scr_ScriptWindow__ToggleBreakpointInternal(puVar1,uVar2,lVar3 != 0,lVar4 != 0,uVar8,lVar5 != 0);
+  Sys_WriteDebugSocketMessageType('\x16');
+  Scr_ScriptWindow::ToggleBreakpointInternal
+            (this,pSVar2,(bool)('\x01' - (iVar1 == 0)),(bool)('\x01' - (iVar3 == 0)),(uchar)iVar4,
+             (bool)('\x01' - (iVar5 == 0)));
   Sys_EndWriteDebugSocket();
   __restgprlr_26();
   return;
@@ -904,21 +994,24 @@ void Scr_ToggleBreakpointRemote(void)
 
 // 8252A498  Scr_ResumeBreakpoints  (script/scr_debugger.cpp:1637)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ResumeBreakpoints(void)
 
 {
-  int iVar1;
+  Scr_WatchElement_s *pSVar1;
   
-  DAT_837396ac = 0;
-  DAT_837396a0 = 0xfffe;
-  iVar1 = DAT_83739370;
-  if (DAT_83739370 == 0) {
+  scrDebuggerGlob.atBreakpoint = false;
+  scrDebuggerGlob.breakpointPos.bufferIndex = 0xfffe;
+  pSVar1 = scrDebuggerGlob.scriptWatch.elementHead;
+  if (scrDebuggerGlob.scriptWatch.elementHead == (Scr_WatchElement_s *)0x0) {
     return;
   }
   do {
-    *(byte *)(iVar1 + 0x4d) = *(byte *)(iVar1 + 0x4d) & 0xcf;
-    iVar1 = *(int *)(iVar1 + 0x3c);
-  } while (iVar1 != 0);
+    pSVar1->changed = false;
+    pSVar1->hitBreakpoint = false;
+    pSVar1 = pSVar1->next;
+  } while (pSVar1 != (Scr_WatchElement_s *)0x0);
   return;
 }
 
@@ -931,11 +1024,12 @@ void Scr_MonitorCommand(char *param_1)
   int iVar1;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff8214f658,0x67b,0,0xffffffff82000f98,0xffffffff82013b1c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x67b
+                    ,0,"%s");
   }
   iVar1 = _strnicmp(param_1,"map_restart",0xb);
   if ((iVar1 == 0) && ((param_1[0xb] < '!' || (param_1[0xb] == ';')))) {
-    DAT_837396ad = 1;
+    scrDebuggerGlob.abort = true;
   }
   return;
 }
@@ -943,20 +1037,21 @@ void Scr_MonitorCommand(char *param_1)
 
 // 8252A578  Scr_SetTempBreakpoint  (script/scr_debugger.cpp:1675)
 
-void Scr_SetTempBreakpoint(undefined8 param_1,undefined4 param_2,undefined4 param_3)
+void Scr_SetTempBreakpoint(char *param_1,uint param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  uchar *puVar1;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) != 0) {
-    if (DAT_837396c0 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x68f,0,0xffffffff82000f98,0xffffffff8214f960);
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if (puVar1 != (uchar *)0x0) {
+    if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x68f,0,"%s");
     }
-    DAT_837396b0 = (undefined4)uVar1;
-    DAT_837396b4 = param_3;
-    Scr_AddManualBreakpoint(uVar1);
-    DAT_837396b8 = param_2;
+    scrDebuggerGlob.nextBreakpointCodePos = (char *)puVar1;
+    scrDebuggerGlob.isReturnPos = param_3;
+    Scr_AddManualBreakpoint(puVar1);
+    scrDebuggerGlob.nextBreakpointThreadId = param_2;
   }
   __restgprlr_28();
   return;
@@ -965,46 +1060,49 @@ void Scr_SetTempBreakpoint(undefined8 param_1,undefined4 param_2,undefined4 para
 
 // 8252A5F0  Scr_Step  (script/scr_debugger.cpp:1694)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_Step(void)
 
 {
-  undefined1 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  undefined4 local_30;
-  undefined4 local_2c [11];
+  bool bVar1;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
+  int local_30;
+  uint local_2c [11];
   
   __savegprlr_29();
-  iVar3 = Sys_IsRemoteDebugServer();
-  if ((iVar3 != 0) && (DAT_837396ac != '\0')) {
+  iVar2 = Sys_IsRemoteDebugServer();
+  if ((iVar2 != 0) && (scrDebuggerGlob.atBreakpoint != false)) {
     Scr_ResumeBreakpoints();
   }
-  if (DAT_8373969c != 0) {
-    if ((DAT_837396d0 != 0) && (DAT_83ca44a8 != 0)) {
-      if (DAT_837396d0 == 3) {
-        DAT_837396d0 = 1;
-        uVar2 = Scr_GetReturnPos(local_2c);
-        local_30 = 1;
-        Scr_SetTempBreakpoint(uVar2,local_2c[0],1);
-        __restgprlr_29();
-        return;
-      }
-      if (DAT_83739704 == -1) {
-        DAT_83739708 = Scr_GetSourceBuffer(DAT_8373969c);
-        uVar2 = Scr_GetPrevSourcePos(DAT_8373969c,0);
-        DAT_83739704 = Scr_GetLineNum(DAT_83739708,uVar2);
-      }
-      uVar1 = DAT_83c4ba98;
-      DAT_83c4ba98 = 1;
-      if (DAT_83739698 < 0) {
-        MyAssertHandler(0xffffffff8214f658,0x6df,0,0xffffffff8214f984,0xffffffff8214f9b0,
-                        DAT_83739698);
-      }
-      uVar2 = Scr_GetNextCodepos(DAT_837396c8,DAT_8373969c,DAT_83739698,DAT_837396d0,local_2c,
-                                 &local_30);
-      DAT_83c4ba98 = uVar1;
-      Scr_SetTempBreakpoint(uVar2,local_2c[0],local_30);
+  if (((scrDebuggerGlob.breakpointCodePos != (char *)0x0) && (scrDebuggerGlob.step_mode != 0)) &&
+     (scrVmPub.function_count != 0)) {
+    if (scrDebuggerGlob.step_mode == 3) {
+      scrDebuggerGlob.step_mode = 1;
+      pcVar3 = Scr_GetReturnPos(local_2c);
+      local_30 = 1;
+      Scr_SetTempBreakpoint(pcVar3,local_2c[0],1);
+      __restgprlr_29();
+      return;
     }
+    if (scrDebuggerGlob.stepLineNum == -1) {
+      scrDebuggerGlob.stepBufferIndex = Scr_GetSourceBuffer(scrDebuggerGlob.breakpointCodePos);
+      uVar4 = Scr_GetPrevSourcePos(scrDebuggerGlob.breakpointCodePos,0);
+      scrDebuggerGlob.stepLineNum = Scr_GetLineNum(scrDebuggerGlob.stepBufferIndex,uVar4);
+    }
+    bVar1 = scrVarPub.evaluate;
+    scrVarPub.evaluate = true;
+    if (scrDebuggerGlob.breakpointOpcode < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x6df,0,"%s\n\t(scrDebuggerGlob.breakpointOpcode) = %i");
+    }
+    pcVar3 = Scr_GetNextCodepos(scrDebuggerGlob.breakpointTop,scrDebuggerGlob.breakpointCodePos,
+                                scrDebuggerGlob.breakpointOpcode,scrDebuggerGlob.step_mode,local_2c,
+                                &local_30);
+    scrVarPub.evaluate = bVar1;
+    Scr_SetTempBreakpoint(pcVar3,local_2c[0],local_30);
   }
   __restgprlr_29();
   return;
@@ -1013,34 +1111,36 @@ void Scr_Step(void)
 
 // 8252A740  Scr_StepRemote  (script/scr_debugger.cpp:1790)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_StepRemote(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  DAT_837396d0 = Sys_ReadDebugSocketInt();
-  lVar1 = Sys_ReadDebugSocketInt();
-  DAT_837396d4 = (uint)(lVar1 != 0);
+  scrDebuggerGlob.step_mode = Sys_ReadDebugSocketInt();
+  iVar1 = Sys_ReadDebugSocketInt();
+  scrDebuggerGlob.skip_instr = (int)(iVar1 != 0);
   Scr_Step();
   return;
 }
 
 
-// 8252A788  Scr_ScriptWindow::RunToCursor  (script/scr_debugger.cpp:1805)
+// 8252A788  RunToCursor  (script/scr_debugger.cpp:1805)
 
-void Scr_ScriptWindow__RunToCursor(undefined8 param_1)
+void __thiscall Scr_ScriptWindow::RunToCursor(Scr_ScriptWindow *this)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  iVar2 = Sys_IsRemoteDebugServer();
-  if ((iVar2 != 0) && (DAT_837396ac != '\0')) {
+  iVar1 = Sys_IsRemoteDebugServer();
+  if ((iVar1 != 0) && (scrDebuggerGlob.atBreakpoint != false)) {
     Scr_ResumeBreakpoints();
   }
-  if (DAT_83ca44a8 != 0) {
-    uVar1 = Scr_ScriptWindow__GetBreakpointCodePos(param_1);
-    Scr_SetTempBreakpoint(uVar1,0,0);
+  if (scrVmPub.function_count != 0) {
+    pcVar2 = GetBreakpointCodePos(this);
+    Scr_SetTempBreakpoint(pcVar2,0,0);
   }
   return;
 }
@@ -1048,84 +1148,86 @@ void Scr_ScriptWindow__RunToCursor(undefined8 param_1)
 
 // 8252A800  Scr_RunToCursorRemote  (script/scr_debugger.cpp:1862)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RunToCursorRemote(void)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
+  Scr_ScriptWindow *this;
+  int iVar1;
   
-  iVar2 = Sys_ReadDebugSocketInt();
-  puVar1 = *(undefined4 **)(iVar2 * 4 + DAT_83739358);
-  uVar3 = Sys_ReadDebugSocketInt();
-  *puVar1 = uVar3;
-  Scr_ScriptWindow__RunToCursor(puVar1);
+  iVar1 = Sys_ReadDebugSocketInt();
+  this = *(Scr_ScriptWindow **)(iVar1 * 4 + scrDebuggerGlob.scriptList._8_4_);
+  iVar1 = Sys_ReadDebugSocketInt();
+  this->_padding_ = iVar1;
+  Scr_ScriptWindow::RunToCursor(this);
   return;
 }
 
 
-// 82530988  Scr_ScriptWindow::EnterCallInternal  (script/scr_debugger.cpp:2067)
+// 82530988  EnterCallInternal  (script/scr_debugger.cpp:2067)
 
-void Scr_ScriptWindow__EnterCallInternal(void)
+void __thiscall Scr_ScriptWindow::EnterCallInternal(Scr_ScriptWindow *this)
 
 {
-  int *piVar1;
+  Scr_ScriptWindow *this_00;
+  char *pcVar1;
   int iVar2;
-  int iVar3;
-  undefined2 uVar4;
-  int *piVar5;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined1 auStack_38 [8];
-  undefined4 local_30;
-  undefined4 local_2c;
+  uint uVar3;
+  Scr_Breakpoint *pSVar4;
+  uint local_40;
+  uint local_3c;
+  uint auStack_38 [2];
+  Scr_SourcePos_t local_30 [4];
   
-  piVar1 = (int *)__savegprlr_29();
-  if (*piVar1 < 0) {
-    MyAssertHandler(0xffffffff8214f658,0x81d,0,0xffffffff82000f98,0xffffffff8214f8cc);
+  this_00 = (Scr_ScriptWindow *)__savegprlr_29(this);
+  if (this_00->_padding_ < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0x81d
+                    ,0,"%s");
   }
-  Scr_ScriptWindow__GetSourcePos(piVar1,&local_3c,&local_40);
-  iVar2 = Scr_GetOpcodePosOfType(piVar1[2],local_3c,local_40,0x42,auStack_38);
-  if (iVar2 != 0) {
-    piVar5 = (int *)piVar1[5];
-    if (piVar5 != (int *)0x0) {
+  GetSourcePos(this_00,&local_3c,&local_40);
+  pcVar1 = Scr_GetOpcodePosOfType(this_00->bufferIndex,local_3c,local_40,'B',auStack_38);
+  if (pcVar1 != (char *)0x0) {
+    pSVar4 = this_00->breakpointHead;
+    if (pSVar4 != (Scr_Breakpoint *)0x0) {
       do {
-        if (*piVar1 <= *piVar5) {
-          if (*piVar5 == *piVar1) {
-            iVar3 = Sys_IsRemoteDebugServer();
-            if (iVar3 == 0) goto LAB_82530aa0;
-            Sys_WriteDebugSocketMessageType(0x12);
-            if (piVar5[3] == 0) {
-              uVar4 = 0;
+        if (this_00->_padding_ <= pSVar4->line) {
+          if (pSVar4->line == this_00->_padding_) {
+            iVar2 = Sys_IsRemoteDebugServer();
+            if (iVar2 == 0) goto LAB_82530aa0;
+            Sys_WriteDebugSocketMessageType('\x12');
+            if (pSVar4->element == (Scr_WatchElement_s *)0x0) {
+              uVar3 = 0;
             }
             else {
-              uVar4 = *(undefined2 *)(piVar5[3] + 0x46);
+              uVar3 = (uint)pSVar4->element->id;
             }
-            Sys_WriteDebugSocketInt(uVar4);
+            Sys_WriteDebugSocketInt(uVar3);
             goto LAB_82530a9c;
           }
           break;
         }
-        piVar5 = (int *)piVar5[5];
-      } while (piVar5 != (int *)0x0);
+        pSVar4 = pSVar4->next;
+      } while (pSVar4 != (Scr_Breakpoint *)0x0);
     }
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
-      Sys_WriteDebugSocketMessageType(0x16);
+    iVar2 = Sys_IsRemoteDebugServer();
+    if (iVar2 != 0) {
+      Sys_WriteDebugSocketMessageType('\x16');
     }
-    Scr_ScriptWindow__ToggleBreakpointInternal(piVar1,0,0,0,4,1);
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
+    ToggleBreakpointInternal(this_00,(Scr_WatchElement_s *)0x0,false,false,'\x04',true);
+    iVar2 = Sys_IsRemoteDebugServer();
+    if (iVar2 != 0) {
 LAB_82530a9c:
       Sys_EndWriteDebugSocket();
     }
 LAB_82530aa0:
-    Scr_GetSourcePosOfType(((int)((uint)*(uint3 *)(iVar2 + 1) << 8) >> 10) + iVar2,8,1,&local_30);
+    Scr_GetSourcePosOfType
+              (pcVar1 + ((int)((uint)*(uint3 *)(pcVar1 + 1) << 8) >> 10),'\b',1,local_30);
     iVar2 = Sys_IsRemoteDebugServer();
     if (iVar2 != 0) {
-      Sys_WriteDebugSocketMessageType(0x29);
-      Sys_WriteDebugSocketInt(local_30);
-      Sys_WriteDebugSocketInt(local_2c);
+      Sys_WriteDebugSocketMessageType(')');
+      Sys_WriteDebugSocketInt(local_30[0].bufferIndex);
+      Sys_WriteDebugSocketInt(local_30[0].lineNum);
       Sys_EndWriteDebugSocket();
     }
   }
@@ -1136,73 +1238,79 @@ LAB_82530aa0:
 
 // 82530B10  Scr_EnterCallRemote  (script/scr_debugger.cpp:2172)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_EnterCallRemote(void)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
+  Scr_ScriptWindow *this;
+  int iVar1;
   
-  iVar2 = Sys_ReadDebugSocketInt();
-  puVar1 = *(undefined4 **)(iVar2 * 4 + DAT_83739358);
-  uVar3 = Sys_ReadDebugSocketInt();
-  *puVar1 = uVar3;
-  Scr_ScriptWindow__EnterCallInternal(puVar1);
+  iVar1 = Sys_ReadDebugSocketInt();
+  this = *(Scr_ScriptWindow **)(iVar1 * 4 + scrDebuggerGlob.scriptList._8_4_);
+  iVar1 = Sys_ReadDebugSocketInt();
+  this->_padding_ = iVar1;
+  Scr_ScriptWindow::EnterCallInternal(this);
   return;
 }
 
 
-// 8252A850  Scr_ScriptWindow::Init  (script/scr_debugger.cpp:2456)
+// 8252A850  Init  (script/scr_debugger.cpp:2456)
 
-void Scr_ScriptWindow__Init(void)
+void __thiscall Scr_ScriptWindow::Init(Scr_ScriptWindow *this)
 
 {
-  char *pcVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
+  int iVar1;
+  char *pcVar2;
+  SourceBufferInfo *pSVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
+  char *pcVar6;
+  int iVar7;
+  uint uVar8;
   
-  iVar2 = __savegprlr_29();
-  *(undefined4 *)(iVar2 + 0x14) = 0;
-  *(undefined4 *)(iVar2 + 0x18) = 0;
-  *(undefined4 *)(iVar2 + 4) = 0;
-  if (*(uint *)(iVar2 + 8) != 0xfffe) {
-    if (DAT_8382d8cc <= *(uint *)(iVar2 + 8)) {
-      MyAssertHandler(0xffffffff8214f658,0x9b7,0,0xffffffff8214f7d8);
+  iVar4 = __savegprlr_29(this);
+  *(undefined4 *)(iVar4 + 0x14) = 0;
+  *(undefined4 *)(iVar4 + 0x18) = 0;
+  *(undefined4 *)(iVar4 + 4) = 0;
+  if (*(uint *)(iVar4 + 8) != 0xfffe) {
+    if (scrParserPub.sourceBufferLookupLen <= *(uint *)(iVar4 + 8)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x9b7,0,
+                      "bufferIndex doesn\'t index scrParserPub.sourceBufferLookupLen\n\t%i not in [0, %i)"
+                     );
     }
-    iVar3 = 0;
-    iVar5 = *(int *)(iVar2 + 8) * 0x2c + DAT_8382d8c8;
-    uVar7 = 0;
-    pcVar1 = *(char **)(iVar5 + 8);
-    *(undefined4 *)(iVar2 + 0x1c) = 0;
-    if (0 < *(int *)(iVar5 + 0xc)) {
+    pSVar3 = scrParserPub.sourceBufferLookup;
+    iVar1 = *(int *)(iVar4 + 8);
+    iVar5 = 0;
+    uVar8 = 0;
+    pcVar2 = scrParserPub.sourceBufferLookup[iVar1].sourceBuf;
+    *(undefined4 *)(iVar4 + 0x1c) = 0;
+    if (0 < pSVar3[iVar1].len) {
       do {
-        pcVar4 = pcVar1;
-        if (*pcVar4 == '\0') {
-          if (*(int *)(iVar2 + 0x1c) < (int)uVar7) {
-            *(uint *)(iVar2 + 0x1c) = uVar7;
+        pcVar6 = pcVar2;
+        if (*pcVar6 == '\0') {
+          if (*(int *)(iVar4 + 0x1c) < (int)uVar8) {
+            *(uint *)(iVar4 + 0x1c) = uVar8;
           }
-          uVar7 = 0;
-          *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
+          uVar8 = 0;
+          *(int *)(iVar4 + 4) = *(int *)(iVar4 + 4) + 1;
         }
         else {
-          if (*pcVar4 == '\t') {
-            iVar6 = 4 - (uVar7 + (((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) &
+          if (*pcVar6 == '\t') {
+            iVar7 = 4 - (uVar8 + (((int)uVar8 >> 2) + (uint)((int)uVar8 < 0 && (uVar8 & 3) != 0) &
                                  0x3fffffff) * -4);
           }
           else {
-            iVar6 = 1;
+            iVar7 = 1;
           }
-          uVar7 = iVar6 + uVar7;
+          uVar8 = iVar7 + uVar8;
         }
-        iVar3 = iVar3 + 1;
-        pcVar1 = pcVar4 + 1;
-      } while (iVar3 < *(int *)(iVar5 + 0xc));
-      if ((iVar3 != 0) && (*pcVar4 != '\0')) {
-        *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
+        iVar5 = iVar5 + 1;
+        pcVar2 = pcVar6 + 1;
+      } while (iVar5 < pSVar3[iVar1].len);
+      if ((iVar5 != 0) && (*pcVar6 != '\0')) {
+        *(int *)(iVar4 + 4) = *(int *)(iVar4 + 4) + 1;
       }
     }
   }
@@ -1213,86 +1321,89 @@ void Scr_ScriptWindow__Init(void)
 
 // 8252A970  Scr_AllocDebugMem  (script/scr_debugger.cpp:2599)
 
-ulonglong Scr_AllocDebugMem(undefined8 param_1)
+void * Scr_AllocDebugMem(int param_1,char *param_2)
 
 {
-  ulonglong uVar1;
+  void *pvVar1;
   
-  if (DAT_83739338 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0xa2b,0,0xffffffff82000f98,0xffffffff8214f9fc);
+  if (g_debuggerMem == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0xa2b
+                    ,0,"%s");
   }
-  uVar1 = RtlAllocateHeap(DAT_83739338,0,param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
-    Sys_Error(0xffffffff8214f9d8);
+  pvVar1 = RtlAllocateHeap(g_debuggerMem,0,param_1);
+  if (pvVar1 == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("SCRIPT_DEBUGGER_HEAP_SIZE exceeded");
   }
-  return uVar1;
+  return pvVar1;
 }
 
 
 // 8252AA00  Scr_FreeDebugMem  (script/scr_debugger.cpp:2621)
 
-void Scr_FreeDebugMem(undefined8 param_1)
+void Scr_FreeDebugMem(void *param_1)
 
 {
-  if (DAT_83739338 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
+  if (g_debuggerMem == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0xa3f
+                    ,0,"%s");
   }
-  RtlFreeHeap(DAT_83739338,0,param_1);
+  RtlFreeHeap(g_debuggerMem,0,param_1);
   return;
 }
 
 
-// 8252AA78  Scr_AbstractScriptList::Init  (script/scr_debugger.cpp:2638)
+// 8252AA78  Init  (script/scr_debugger.cpp:2638)
 
-void Scr_AbstractScriptList__Init(int param_1)
+void __thiscall Scr_AbstractScriptList::Init(Scr_AbstractScriptList *this)
 
 {
-  *(undefined4 *)(param_1 + 4) = 0;
-  *(undefined4 *)(param_1 + 8) = 0;
+  this->_padding_ = 0;
+  this->scriptWindows = (Scr_ScriptWindow **)0x0;
   return;
 }
 
 
-// 8252AA88  Scr_AbstractScriptList::Shutdown  (script/scr_debugger.cpp:2655)
+// 8252AA88  Shutdown  (script/scr_debugger.cpp:2655)
 
-void Scr_AbstractScriptList__Shutdown(int param_1)
+void __thiscall Scr_AbstractScriptList::Shutdown(Scr_AbstractScriptList *this)
 
 {
-  if (*(int *)(param_1 + 8) != 0) {
-    Scr_FreeDebugMem();
-    *(undefined4 *)(param_1 + 8) = 0;
+  if (this->scriptWindows != (Scr_ScriptWindow **)0x0) {
+    Scr_FreeDebugMem(this->scriptWindows);
+    this->scriptWindows = (Scr_ScriptWindow **)0x0;
   }
   return;
 }
 
 
-// 8252DFF0  Scr_ScriptList::AddFile  (script/scr_debugger.cpp:2953)
+// 8252DFF0  AddFile  (script/scr_debugger.cpp:2953)
 
-void Scr_ScriptList__AddFile(undefined8 param_1,undefined8 param_2,int *param_3)
+void __thiscall Scr_ScriptList::AddFile(Scr_ScriptList *this,char *param_1,Scr_AddFileInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
+  Scr_ScriptWindow *this_00;
   
-  iVar1 = __savegprlr_28();
-  iVar2 = Hunk_AllocDebugMem(0x20,0xffffffff8214f7a4);
-  *(int *)(*(int *)(iVar1 + 8) + param_3[1] * 4) = iVar2;
-  Scr_ScriptWindow__SetScriptFile(iVar2,param_2);
-  if (*(int *)(iVar2 + 8) == 0xfffe) {
-    Hunk_FreeDebugMem(iVar2);
+  iVar1 = __savegprlr_28(this);
+  this_00 = Hunk_AllocDebugMem(0x20,"Scr_ScriptWindow");
+  *(Scr_ScriptWindow **)(*(int *)(iVar1 + 8) + param_2->to * 4) = this_00;
+  Scr_ScriptWindow::SetScriptFile(this_00,param_1);
+  if (this_00->bufferIndex == 0xfffe) {
+    Hunk_FreeDebugMem(this_00);
     *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) + -1;
   }
   else {
-    *(int *)(*(int *)(iVar2 + 8) * 0x2c + DAT_8382d8c8 + 0x10) = param_3[1];
-    param_3[1] = param_3[1] + 1;
-    if (*param_3 < *(int *)(iVar2 + 0x1c)) {
-      *param_3 = *(int *)(iVar2 + 0x1c);
-      param_3[2] = param_3[2] + 1;
+    scrParserPub.sourceBufferLookup[this_00->bufferIndex].sortedIndex = param_2->to;
+    param_2->to = param_2->to + 1;
+    if (param_2->maxNumCols < this_00->numCols) {
+      param_2->maxNumCols = this_00->numCols;
+      param_2->from = param_2->from + 1;
       __restgprlr_28();
       return;
     }
   }
-  param_3[2] = param_3[2] + 1;
+  param_2->from = param_2->from + 1;
   __restgprlr_28();
   return;
 }
@@ -1300,203 +1411,209 @@ void Scr_ScriptList__AddFile(undefined8 param_1,undefined8 param_2,int *param_3)
 
 // 8252AAC8  Scr_CompareScriptWindowsNames  (script/scr_debugger.cpp:2988)
 
-void Scr_CompareScriptWindowsNames(undefined4 *param_1,undefined4 *param_2)
-
-{
-  I_stricmp(*param_1,*param_2);
-  return;
-}
-
-
-// 8252E0B8  Scr_ScriptList::Init  (script/scr_debugger.cpp:3134)
-
-void Scr_ScriptList__Init(void)
-
-{
-  undefined4 *puVar2;
-  ulonglong uVar1;
-  char *pcVar3;
-  int iVar4;
-  longlong lVar5;
-  char **ppcVar6;
-  uint local_8a0;
-  int local_89c;
-  int local_898;
-  undefined1 auStack_890 [64];
-  char *local_850;
-  undefined1 local_84c [2124];
-  
-  puVar2 = (undefined4 *)__savegprlr_24();
-  puVar2[1] = 1;
-  puVar2[2] = 0;
-  lVar5 = (longlong)(int)(DAT_83700fc0 & 1) * 0xc800;
-  for (uVar1 = FindFirstSibling(); (uVar1 & 0xffffffff) != 0; uVar1 = FindNextSibling(lVar5,uVar1))
-  {
-    puVar2[1] = puVar2[1] + 1;
-  }
-  if (0x200 < (int)puVar2[1]) {
-    Com_Error(1,0xffffffff82150000);
-  }
-  local_850 = "scriptdebugger/help.txt";
-  uVar1 = FindFirstSibling(DAT_83700fc0);
-  if ((uVar1 & 0xffffffff) != 0) {
-    ppcVar6 = &local_850;
-    do {
-      GetSiblingName(lVar5,uVar1);
-      pcVar3 = (char *)SL_ConvertToString();
-      ppcVar6 = ppcVar6 + 1;
-      *ppcVar6 = pcVar3;
-      uVar1 = FindNextSibling(lVar5,uVar1);
-    } while ((uVar1 & 0xffffffff) != 0);
-  }
-  qsort(local_84c,puVar2[1] - 1,4,Scr_CompareScriptWindowsNames);
-  iVar4 = puVar2[1];
-  if (DAT_83739338 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0xa2b,0,0xffffffff82000f98,0xffffffff8214f9fc);
-  }
-  iVar4 = RtlAllocateHeap(DAT_83739338,0,iVar4 << 2);
-  if (iVar4 == 0) {
-    Sys_Error(0xffffffff8214f9d8);
-  }
-  puVar2[2] = iVar4;
-  local_8a0 = 0;
-  local_898 = 0;
-  local_89c = 0;
-  Hunk_CheckTempMemoryHighClear();
-  Scr_AddSourceBuffer(0,0xffffffff8214ffe8,0,0);
-  Hunk_ClearTempMemoryHigh();
-  Scr_ScriptList__AddFile(puVar2,0xffffffff8214ffe8,&local_8a0);
-  if (local_89c != 0) {
-    *puVar2 = 0;
-  }
-  for (uVar1 = FindFirstSibling(DAT_83700fc0); (uVar1 & 0xffffffff) != 0;
-      uVar1 = FindNextSibling(lVar5,uVar1)) {
-    Com_sprintf(auStack_890,0x40,0xffffffff8214ffe0,*(undefined4 *)(local_84c + local_898 * 4 + -4))
-    ;
-    Scr_ScriptList__AddFile(puVar2,auStack_890,&local_8a0);
-  }
-  DAT_837396f8 = Hunk_AllocDebugMem((ulonglong)local_8a0 + 1,0xffffffff8214ffc8);
-  __restgprlr_24();
-  return;
-}
-
-
-// 8252AAD8  Scr_ScriptList::Shutdown  (script/scr_debugger.cpp:3219)
-
-void Scr_ScriptList__Shutdown(void)
+int Scr_CompareScriptWindowsNames(void *param_1,void *param_2)
 
 {
   int iVar1;
+  
+  iVar1 = I_stricmp(*(char **)param_1,*(char **)param_2);
+  return iVar1;
+}
+
+
+// 8252E0B8  Init  (script/scr_debugger.cpp:3134)
+
+void __thiscall Scr_ScriptList::Init(Scr_ScriptList *this)
+
+{
+  int iVar1;
+  Scr_ScriptList *this_00;
+  uint uVar2;
+  uint uVar3;
+  char *pcVar4;
+  void *pvVar5;
+  uint uVar6;
+  char **ppcVar7;
+  Scr_AddFileInfo local_8a0;
+  char acStack_890 [64];
+  char *local_850;
+  char *local_84c [531];
+  
+  this_00 = (Scr_ScriptList *)__savegprlr_24(this);
+  *(undefined4 *)&this_00->field_0x4 = 1;
+  *(undefined4 *)&this_00->field_0x8 = 0;
+  uVar6 = (scrCompilePub.loadedscripts & 1) * 0xc800;
+  for (uVar2 = FindFirstSibling(scrCompilePub.loadedscripts); uVar2 != 0;
+      uVar2 = FindNextSibling(uVar6,uVar2)) {
+    *(int *)&this_00->field_0x4 = *(int *)&this_00->field_0x4 + 1;
+  }
+  if (0x200 < *(int *)&this_00->field_0x4) {
+    Com_Error(ERR_DROP,"MAX_SCRIPT_WINDOW_NAMES exceeded");
+  }
+  local_850 = "scriptdebugger/help.txt";
+  uVar2 = FindFirstSibling(scrCompilePub.loadedscripts);
+  if (uVar2 != 0) {
+    ppcVar7 = &local_850;
+    do {
+      uVar3 = GetSiblingName(uVar6,uVar2);
+      pcVar4 = SL_ConvertToString(uVar3);
+      ppcVar7 = ppcVar7 + 1;
+      *ppcVar7 = pcVar4;
+      uVar2 = FindNextSibling(uVar6,uVar2);
+    } while (uVar2 != 0);
+  }
+  qsort(local_84c,*(int *)&this_00->field_0x4 - 1,4,Scr_CompareScriptWindowsNames);
+  iVar1 = *(int *)&this_00->field_0x4;
+  if (g_debuggerMem == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0xa2b
+                    ,0,"%s");
+  }
+  pvVar5 = RtlAllocateHeap(g_debuggerMem,0,iVar1 << 2);
+  if (pvVar5 != (void *)0x0) {
+    *(void **)&this_00->field_0x8 = pvVar5;
+    local_8a0.maxNumCols = 0;
+    local_8a0.from = 0;
+    local_8a0.to = 0;
+    Hunk_CheckTempMemoryHighClear();
+    Scr_AddSourceBuffer((char *)0x0,"scriptdebugger/help.txt",(char *)0x0,false);
+    Hunk_ClearTempMemoryHigh();
+    AddFile(this_00,"scriptdebugger/help.txt",&local_8a0);
+    if (local_8a0.to != 0) {
+      *(undefined4 *)this_00 = 0;
+    }
+    for (uVar2 = FindFirstSibling(scrCompilePub.loadedscripts); uVar2 != 0;
+        uVar2 = FindNextSibling(uVar6,uVar2)) {
+      Com_sprintf(acStack_890,0x40,"%s.gsc");
+      AddFile(this_00,acStack_890,&local_8a0);
+    }
+    scrDebuggerGlob.colBuf = Hunk_AllocDebugMem(local_8a0.maxNumCols + 1,"Scr_ScriptList::Init3");
+    __restgprlr_24();
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("SCRIPT_DEBUGGER_HEAP_SIZE exceeded");
+}
+
+
+// 8252AAD8  Shutdown  (script/scr_debugger.cpp:3219)
+
+void __thiscall Scr_ScriptList::Shutdown(Scr_ScriptList *this)
+
+{
+  void *pvVar1;
   int iVar2;
   int iVar3;
+  int iVar4;
   
-  iVar1 = __savegprlr_26();
-  if (DAT_837396f8 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0xcae,0,0xffffffff82000f98,0xffffffff8214fa0c);
+  iVar2 = __savegprlr_26(this);
+  if (scrDebuggerGlob.colBuf == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0xcae
+                    ,0,"%s");
   }
-  Hunk_FreeDebugMem(DAT_837396f8);
-  iVar3 = 0;
-  if (0 < *(int *)(iVar1 + 4)) {
-    iVar2 = 0;
+  Hunk_FreeDebugMem(scrDebuggerGlob.colBuf);
+  iVar4 = 0;
+  if (0 < *(int *)(iVar2 + 4)) {
+    iVar3 = 0;
     do {
-      Hunk_FreeDebugMem(*(undefined4 *)(*(int *)(iVar1 + 8) + iVar2));
-      iVar3 = iVar3 + 1;
-      iVar2 = iVar2 + 4;
-    } while (iVar3 < *(int *)(iVar1 + 4));
+      Hunk_FreeDebugMem(*(void **)(*(int *)(iVar2 + 8) + iVar3));
+      iVar4 = iVar4 + 1;
+      iVar3 = iVar3 + 4;
+    } while (iVar4 < *(int *)(iVar2 + 4));
   }
-  iVar3 = *(int *)(iVar1 + 8);
-  if (iVar3 != 0) {
-    if (DAT_83739338 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
+  pvVar1 = *(void **)(iVar2 + 8);
+  if (pvVar1 != (void *)0x0) {
+    if (g_debuggerMem == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0xa3f,0,"%s");
     }
-    RtlFreeHeap(DAT_83739338,0,iVar3);
-    *(undefined4 *)(iVar1 + 8) = 0;
+    RtlFreeHeap(g_debuggerMem,0,pvVar1);
+    *(undefined4 *)(iVar2 + 8) = 0;
   }
   __restgprlr_26();
   return;
 }
 
 
-// 8252ABB8  Scr_ScriptCallStack::UpdateStack  (script/scr_debugger.cpp:3599)
+// 8252ABB8  UpdateStack  (script/scr_debugger.cpp:3599)
 
-void Scr_ScriptCallStack__UpdateStack(void)
+void __thiscall Scr_ScriptCallStack::UpdateStack(Scr_ScriptCallStack *this)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  undefined *puVar5;
-  ulonglong uVar6;
-  bool bVar7;
-  undefined4 *puVar9;
-  longlong lVar8;
+  uint uVar3;
+  uint uVar4;
+  char *pcVar5;
+  function_frame_t *pfVar6;
+  ulonglong uVar7;
+  uint *puVar8;
   
-  iVar2 = __savegprlr_19();
-  if (DAT_83ca44a8 == 0) {
-    *(undefined4 *)(iVar2 + 4) = 0;
+  iVar1 = __savegprlr_19(this);
+  if (scrVmPub.function_count == 0) {
+    *(undefined4 *)(iVar1 + 4) = 0;
     __restgprlr_19();
     return;
   }
-  *(int *)(iVar2 + 4) = DAT_83ca44a8 + 1;
-  iVar3 = 0;
-  if (-1 < DAT_83ca44a8) {
+  *(int *)(iVar1 + 4) = scrVmPub.function_count + 1;
+  iVar2 = 0;
+  if (-1 < scrVmPub.function_count) {
     do {
-      if (iVar3 == 0) {
-        puVar9 = DAT_83ca44ac;
-        if (DAT_8373969c == 0) goto LAB_8252ac58;
-        puVar5 = (undefined *)(DAT_8373969c + 1);
-        bVar7 = false;
+      if (iVar2 == 0) {
+        pfVar6 = scrVmPub.function_frame;
+        if (scrDebuggerGlob.breakpointCodePos == (char *)0x0) goto LAB_8252ac58;
+        pcVar5 = scrDebuggerGlob.breakpointCodePos + 1;
+        uVar4 = 0;
       }
       else {
-        puVar9 = &DAT_83ca44c8 + (DAT_83ca44a8 - iVar3) * 6;
+        pfVar6 = (function_frame_t *)
+                 ((int)&scrVmPub + (scrVmPub.function_count - iVar2) * 0x18 + 0x28);
 LAB_8252ac58:
-        puVar5 = (undefined *)*puVar9;
-        bVar7 = puVar9[1] == 0;
+        pcVar5 = (pfVar6->fs).pos;
+        uVar4 = (uint)LZCOUNT((pfVar6->fs).localId) >> 5;
       }
-      puVar9 = (undefined4 *)((iVar3 + 1) * 8 + iVar2);
-      if (puVar5 == &DAT_83ca8c50) {
-        *puVar9 = 0xfffffffe;
-        puVar9[1] = 0;
+      puVar8 = (uint *)((iVar2 + 1) * 8 + iVar1);
+      if (pcVar5 == &g_EndPos) {
+        *puVar8 = 0xfffffffe;
+        puVar8[1] = 0;
       }
       else {
-        uVar4 = Scr_GetSourceBuffer(puVar5 + -1);
-        *puVar9 = uVar4;
-        uVar4 = Scr_GetPrevSourcePos(puVar5 + -1,bVar7);
-        puVar9[1] = uVar4;
+        uVar3 = Scr_GetSourceBuffer(pcVar5 + -1);
+        *puVar8 = uVar3;
+        uVar4 = Scr_GetPrevSourcePos(pcVar5 + -1,uVar4);
+        puVar8[1] = uVar4;
       }
-      iVar3 = iVar3 + 1;
-    } while (iVar3 <= DAT_83ca44a8);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 <= scrVmPub.function_count);
   }
-  uVar6 = (ulonglong)*(ushort *)(&DAT_83727338 + DAT_83ca44e4 * 2);
-  if (uVar6 != 0) {
-    while (uVar1 = *(uint *)(iVar2 + 4), uVar1 < 0x61) {
-      *(uint *)(iVar2 + 4) = uVar1 + 1;
-      puVar9 = (undefined4 *)((uVar1 + 1) * 8 + iVar2);
-      if (uVar6 == 1) {
-        puVar9[1] = 0;
-        *puVar9 = 0xffffffff;
+  uVar7 = (ulonglong)g_debugCallStack[scrVmPub.function_frame_start[1].fs.localId];
+  if (uVar7 != 0) {
+    while (uVar4 = *(uint *)(iVar1 + 4), uVar4 < 0x61) {
+      *(uint *)(iVar1 + 4) = uVar4 + 1;
+      puVar8 = (uint *)((uVar4 + 1) * 8 + iVar1);
+      if (uVar7 == 1) {
+        puVar8[1] = 0;
+        *puVar8 = 0xffffffff;
         break;
       }
-      uVar1 = *(uint *)(&DAT_83703328 + (int)(uVar6 << 2));
-      uVar6 = (ulonglong)*(ushort *)(&DAT_83739710 + (int)(uVar6 << 1));
-      if (uVar1 == 0xffffffff) {
-        *puVar9 = 0xfffffffe;
-        puVar9[1] = 0;
+      uVar4 = *(uint *)((int)&g_debugCallStackEntry[0].codeOffset + (int)(uVar7 << 2));
+      uVar7 = (ulonglong)*(ushort *)((int)&g_debugCallStackEntry2[0].next + (int)(uVar7 << 1));
+      if (uVar4 == 0xffffffff) {
+        *puVar8 = 0xfffffffe;
+        puVar8[1] = 0;
       }
       else {
-        lVar8 = (ulonglong)(uVar1 >> 1) + (ulonglong)DAT_83c4baf4;
-        iVar3 = Scr_IsInOpcodeMemory(lVar8);
-        if (iVar3 == 0) {
-          MyAssertHandler(0xffffffff8214f658,0xe68,0,0xffffffff82000f98,0xffffffff8214fa24);
+        pcVar5 = scrVarPub.programBuffer + (uVar4 >> 1);
+        iVar2 = Scr_IsInOpcodeMemory(pcVar5);
+        if (iVar2 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0xe68,0,"%s");
         }
-        lVar8 = lVar8 + -1;
-        uVar4 = Scr_GetSourceBuffer(lVar8);
-        *puVar9 = uVar4;
-        uVar4 = Scr_GetPrevSourcePos(lVar8,uVar1 & 1);
-        puVar9[1] = uVar4;
+        uVar3 = Scr_GetSourceBuffer(pcVar5 + -1);
+        *puVar8 = uVar3;
+        uVar4 = Scr_GetPrevSourcePos(pcVar5 + -1,uVar4 & 1);
+        puVar8[1] = uVar4;
       }
-      if (uVar6 == 0) {
+      if (uVar7 == 0) {
         __restgprlr_19();
         return;
       }
@@ -1509,6 +1626,8 @@ LAB_8252ac58:
 
 // 8252ADD0  Scr_SelectScriptLineRemote  (script/scr_debugger.cpp:3711)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_SelectScriptLineRemote(void)
 
 {
@@ -1518,121 +1637,136 @@ void Scr_SelectScriptLineRemote(void)
 
 // 8252ADD8  Scr_GetElementRoot  (script/scr_debugger.cpp:3830)
 
-int Scr_GetElementRoot(int param_1)
+Scr_WatchElement_s * Scr_GetElementRoot(Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  iVar2 = *(int *)(param_1 + 0x30);
-  if (iVar2 == 0) {
+  pSVar1 = param_1->parent;
+  if (param_1->parent == (Scr_WatchElement_s *)0x0) {
     return param_1;
   }
   do {
-    iVar1 = iVar2;
-    iVar2 = *(int *)(iVar2 + 0x30);
-  } while (iVar2 != 0);
-  return iVar1;
+    pSVar2 = pSVar1;
+    pSVar1 = pSVar2->parent;
+  } while (pSVar1 != (Scr_WatchElement_s *)0x0);
+  return pSVar2;
 }
 
 
-// 8252ADF8  Scr_ScriptWatch::GetElementWithId_r  (script/scr_debugger.cpp:4157)
+// 8252ADF8  GetElementWithId_r  (script/scr_debugger.cpp:4157)
 
-void Scr_ScriptWatch__GetElementWithId_r(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::GetElementWithId_r(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,int param_2)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  ulonglong uVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s *pSVar3;
+  ulonglong uVar4;
   
-  uVar2 = __savegprlr_29();
-  uVar3 = param_2 & 0xffffffff;
-  while (uVar3 != 0) {
-    iVar1 = (int)param_2;
-    if ((uint)*(ushort *)(iVar1 + 0x46) == (uint)param_3) {
-      __restgprlr_29(param_2);
-      return;
+  uVar4 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this);
+  uVar2 = uVar4 & 0xffffffff;
+  while (uVar2 != 0) {
+    iVar1 = (int)uVar4;
+    if ((uint)*(ushort *)(iVar1 + 0x46) == param_2) {
+      pSVar3 = (Scr_WatchElement_s *)__restgprlr_29(uVar4);
+      return pSVar3;
     }
-    if ((*(int *)(iVar1 + 0x38) != 0) &&
-       (uVar3 = Scr_ScriptWatch__GetElementWithId_r(uVar2,*(int *)(iVar1 + 0x38),param_3),
-       (uVar3 & 0xffffffff) != 0)) goto LAB_8252ae54;
-    param_2 = (ulonglong)*(uint *)(iVar1 + 0x3c);
-    uVar3 = param_2;
+    if ((*(Scr_WatchElement_s **)(iVar1 + 0x38) != (Scr_WatchElement_s *)0x0) &&
+       (pSVar3 = GetElementWithId_r(this_00,*(Scr_WatchElement_s **)(iVar1 + 0x38),param_2),
+       pSVar3 != (Scr_WatchElement_s *)0x0)) goto LAB_8252ae54;
+    uVar4 = (ulonglong)*(uint *)(iVar1 + 0x3c);
+    uVar2 = uVar4;
   }
-  uVar3 = 0;
+  pSVar3 = (Scr_WatchElement_s *)0x0;
 LAB_8252ae54:
-  __restgprlr_29(uVar3);
-  return;
+  pSVar3 = (Scr_WatchElement_s *)__restgprlr_29(pSVar3);
+  return pSVar3;
 }
 
 
-// 8252AE68  Scr_ScriptWatch::GetElementWithId  (script/scr_debugger.cpp:4184)
+// 8252AE68  GetElementWithId  (script/scr_debugger.cpp:4184)
 
-void Scr_ScriptWatch__GetElementWithId(int param_1,undefined8 param_2)
+Scr_WatchElement_s * __thiscall Scr_ScriptWatch::GetElementWithId(Scr_ScriptWatch *this,int param_1)
 
 {
-  Scr_ScriptWatch__GetElementWithId_r(param_1,*(undefined4 *)(param_1 + 8),param_2);
-  return;
+  Scr_WatchElement_s *pSVar1;
+  
+  pSVar1 = GetElementWithId_r(this,this->elementHead,param_1);
+  return pSVar1;
 }
 
 
-// 8252AE78  Scr_ScriptWatch::GetElementRef  (script/scr_debugger.cpp:4196)
+// 8252AE78  GetElementRef  (script/scr_debugger.cpp:4196)
 
-void Scr_ScriptWatch__GetElementRef(undefined8 param_1,ulonglong param_2)
+Scr_WatchElement_s ** __thiscall
+Scr_ScriptWatch::GetElementRef(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  int *piVar3;
+  Scr_WatchElement_s **ppSVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  int *piVar5;
   
-  iVar1 = __savegprlr_27();
-  uVar2 = *(uint *)(iVar1 + 8);
-  piVar3 = (int *)(iVar1 + 8);
-  if ((ulonglong)uVar2 != (param_2 & 0xffffffff)) {
+  uVar3 = (ulonglong)(int)param_1;
+  iVar1 = __savegprlr_27(this);
+  uVar4 = *(uint *)(iVar1 + 8);
+  piVar5 = (int *)(iVar1 + 8);
+  if ((ulonglong)uVar4 != (uVar3 & 0xffffffff)) {
     do {
-      if (uVar2 == 0) {
-        MyAssertHandler(0xffffffff8214f658,0x106c,0,0xffffffff82000f98,0xffffffff8214fa44);
+      if (uVar4 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x106c,0,"%s");
       }
-      iVar1 = *piVar3;
-      piVar3 = (int *)(iVar1 + 0x3c);
-      uVar2 = *(uint *)(iVar1 + 0x3c);
-    } while ((ulonglong)uVar2 != (param_2 & 0xffffffff));
+      iVar1 = *piVar5;
+      piVar5 = (int *)(iVar1 + 0x3c);
+      uVar4 = *(uint *)(iVar1 + 0x3c);
+    } while ((ulonglong)uVar4 != (uVar3 & 0xffffffff));
   }
-  __restgprlr_27(piVar3);
-  return;
+  ppSVar2 = (Scr_WatchElement_s **)__restgprlr_27(piVar5);
+  return ppSVar2;
 }
 
 
-// 8252AEF0  Scr_ScriptWatch::GetElementPrev  (script/scr_debugger.cpp:4216)
+// 8252AEF0  GetElementPrev  (script/scr_debugger.cpp:4216)
 
-int Scr_ScriptWatch__GetElementPrev(int param_1,int param_2)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::GetElementPrev(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  iVar1 = *(int *)(param_1 + 8);
-  if (*(int *)(param_1 + 8) == param_2) {
+  pSVar1 = this->elementHead;
+  if (this->elementHead == param_1) {
 LAB_8252af54:
-    iVar2 = 0;
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
     do {
-      iVar2 = iVar1;
-      if (iVar2 == 0) {
-        if (DAT_84013128 == 0) {
-          MyAssertHandler(0xffffffff8214f658,0x1084,0,0xffffffff8202882c);
+      pSVar2 = pSVar1;
+      if (pSVar2 == (Scr_WatchElement_s *)0x0) {
+        if (alwaysfails == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x1084,0,"unreachable");
         }
         goto LAB_8252af54;
       }
-      iVar1 = *(int *)(iVar2 + 0x3c);
-    } while (*(int *)(iVar2 + 0x3c) != param_2);
+      pSVar1 = pSVar2->next;
+    } while (pSVar2->next != param_1);
   }
-  return iVar2;
+  return pSVar2;
 }
 
 
 // 8252AF68  Scr_UpdateWatchHeightRemote  (script/scr_debugger.cpp:4298)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_UpdateWatchHeightRemote(void)
 
@@ -1643,78 +1777,82 @@ void Scr_UpdateWatchHeightRemote(void)
 
 // 8252AF70  Scr_IsSortWatchElement  (script/scr_debugger.cpp:4312)
 
-byte Scr_IsSortWatchElement(int param_1)
+bool Scr_IsSortWatchElement(Scr_WatchElement_s *param_1)
 
 {
-  return *(byte *)(param_1 + 0x4d) >> 2 & 1;
+  return param_1->threadList;
 }
 
 
-// 8252FAB8  Scr_ScriptWatch::ToggleExpandElement  (script/scr_debugger.cpp:4324)
+// 8252FAB8  ToggleExpandElement  (script/scr_debugger.cpp:4324)
 
-void Scr_ScriptWatch__ToggleExpandElement(undefined8 param_1,int param_2)
+void __thiscall
+Scr_ScriptWatch::ToggleExpandElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
   ulonglong uVar1;
   int iVar2;
   
-  uVar1 = (~(ulonglong)*(byte *)(param_2 + 0x4d) & 0xffffffff) >> 6 & 1;
-  *(byte *)(param_2 + 0x4d) = (byte)(uVar1 << 6) | *(byte *)(param_2 + 0x4d) & 0xbf;
-  if (uVar1 != 0) {
-    if (*(char *)(param_2 + 0x4a) == '\0') {
-      *(byte *)(param_2 + 0x4d) = *(byte *)(param_2 + 0x4d) & 0xbf;
+  uVar1 = (~(ulonglong)(byte)param_1->field_0x4d & 0xffffffff) >> 6;
+  param_1->expand = uVar1;
+  if ((uVar1 & 1) != 0) {
+    if (param_1->objectType == '\0') {
+      param_1->expand = false;
     }
     else {
-      Scr_ScriptWatch__EvaluateWatchChildren();
+      EvaluateWatchChildren(this,param_1);
     }
   }
-  if ((*(byte *)(param_2 + 0x4d) & 0x40) == 0) {
-    Scr_FreeWatchElementChildrenStrict(param_2);
+  if (!param_1->expand) {
+    Scr_FreeWatchElementChildrenStrict(param_1);
   }
   iVar2 = Sys_IsRemoteDebugServer();
   if (iVar2 != 0) {
-    Sys_WriteDebugSocketMessageType(0x26);
+    Sys_WriteDebugSocketMessageType('&');
     Sys_EndWriteDebugSocket();
   }
   return;
 }
 
 
-// 8252FB58  Scr_ScriptWatch::ExpandElement  (script/scr_debugger.cpp:4371)
+// 8252FB58  ExpandElement  (script/scr_debugger.cpp:4371)
 
-void Scr_ScriptWatch__ExpandElement(undefined8 param_1,int param_2,byte param_3)
+void __thiscall
+Scr_ScriptWatch::ExpandElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,bool param_2)
 
 {
-  int iVar1;
+  Scr_WatchElement_s *pSVar1;
   int iVar2;
   
-  if ((*(byte *)(param_2 + 0x4d) >> 6 & 1) == param_3) {
-    if (param_3 == 0) {
-      iVar2 = *(int *)(param_2 + 0x30);
+  if (param_1->expand == param_2) {
+    if (param_2) {
+      pSVar1 = param_1->childHead;
     }
     else {
-      iVar2 = *(int *)(param_2 + 0x38);
+      pSVar1 = param_1->parent;
     }
-    if ((iVar2 != 0) && (iVar1 = Sys_IsRemoteDebugServer(), iVar1 != 0)) {
-      Sys_WriteDebugSocketMessageType(0x12);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar2 + 0x46));
+    if ((pSVar1 != (Scr_WatchElement_s *)0x0) && (iVar2 = Sys_IsRemoteDebugServer(), iVar2 != 0)) {
+      Sys_WriteDebugSocketMessageType('\x12');
+      Sys_WriteDebugSocketInt((uint)pSVar1->id);
       Sys_EndWriteDebugSocket();
     }
   }
   else {
     iVar2 = Sys_IsRemoteDebugServer();
     if (iVar2 != 0) {
-      Sys_WriteDebugSocketMessageType(0x13);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(param_2 + 0x46));
+      Sys_WriteDebugSocketMessageType('\x13');
+      Sys_WriteDebugSocketInt((uint)param_1->id);
       Sys_EndWriteDebugSocket();
     }
-    Scr_ScriptWatch__ToggleExpandElement(param_1,param_2);
+    ToggleExpandElement(this,param_1);
   }
   return;
 }
 
 
 // 8252AF80  Scr_SelectElementRemote  (script/scr_debugger.cpp:4425)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SelectElementRemote(void)
 
@@ -1725,29 +1863,34 @@ void Scr_SelectElementRemote(void)
 
 // 8252FC10  Scr_ExpandElementRemote  (script/scr_debugger.cpp:4475)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ExpandElementRemote(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 == 0) {
-    uVar2 = 0;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 == 0) {
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
-    uVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
   }
-  lVar3 = Sys_ReadDebugSocketInt();
-  if ((uVar2 & 0xffffffff) != 0) {
-    Scr_ScriptWatch__ExpandElement(0xffffffff83739368,uVar2,lVar3 != 0);
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (pSVar2 != (Scr_WatchElement_s *)0x0) {
+    Scr_ScriptWatch::ExpandElement
+              (&scrDebuggerGlob.scriptWatch,pSVar2,(bool)('\x01' - (iVar1 == 0)));
   }
   return;
 }
 
 
 // 8252AF88  Scr_ToggleExpandElementRemote  (script/scr_debugger.cpp:4495)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_ToggleExpandElementRemote(void)
 
@@ -1756,107 +1899,138 @@ void Scr_ToggleExpandElementRemote(void)
 }
 
 
-// 8252E2F0  Scr_ScriptWatch::CreateBreakpointElement  (script/scr_debugger.cpp:4516)
+// 8252E2F0  CreateBreakpointElement  (script/scr_debugger.cpp:4516)
 
-void Scr_ScriptWatch__CreateBreakpointElement
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::CreateBreakpointElement
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,uint param_2,uint param_3,bool param_4)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  longlong lVar4;
-  undefined1 auStack_1c0 [144];
-  undefined1 auStack_130 [304];
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s **ppSVar3;
+  Scr_WatchElement_s *pSVar4;
+  ulonglong uVar5;
+  char acStack_1c0 [144];
+  char acStack_130 [304];
   
-  uVar2 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) != 0) {
-    for (iVar1 = *(int *)((int)param_2 + 0x30); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x30)) {
+  uVar5 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_28(this);
+  if ((uVar5 & 0xffffffff) == 0) {
+    pSVar4 = (Scr_WatchElement_s *)0x0;
+  }
+  else {
+    pSVar2 = ((Scr_WatchElement_s *)uVar5)->parent;
+    pSVar4 = (Scr_WatchElement_s *)uVar5;
+    while (pSVar1 = pSVar2, pSVar1 != (Scr_WatchElement_s *)0x0) {
+      pSVar4 = pSVar1;
+      pSVar2 = pSVar1->parent;
     }
   }
-  uVar3 = Scr_ScriptWatch__GetElementRef(uVar2);
-  lVar4 = Scr_GetSourcePos(param_3,param_4,auStack_130,0x101);
-  Com_sprintf(auStack_1c0,0x81,0xffffffff820736a0,lVar4 + 1,
-              *(undefined4 *)((int)param_3 * 0x2c + DAT_8382d8c8 + 4));
-  lVar4 = Scr_ScriptWatch__CreateWatchElement(uVar2,auStack_1c0,uVar3,0xffffffff8215003c);
-  ReplaceString(lVar4 + 0xc,auStack_130,0xffffffff82150024,0);
-  __restgprlr_28(lVar4);
-  return;
+  ppSVar3 = GetElementRef(this_00,pSVar4);
+  Scr_GetSourcePos(param_2,param_3,acStack_130,0x101);
+  Com_sprintf(acStack_1c0,0x81,"%i %s");
+  pSVar4 = CreateWatchElement(this_00,acStack_1c0,ppSVar3,"Scr_ScriptWatch::CreateBreakpointElement"
+                             );
+  ReplaceString(&pSVar4->valueText,acStack_130,"CreateBreakpointElement",0);
+  pSVar4 = (Scr_WatchElement_s *)__restgprlr_28(pSVar4);
+  return pSVar4;
 }
 
 
-// 8252FC90  Scr_ScriptWatch::PasteNonBreakpointElement  (script/scr_debugger.cpp:4552)
+// 8252FC90  PasteNonBreakpointElement  (script/scr_debugger.cpp:4552)
 
-void Scr_ScriptWatch__PasteNonBreakpointElement
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::PasteNonBreakpointElement
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,char *param_2,bool param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s **ppSVar3;
+  Scr_WatchElement_s *pSVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) != 0) {
-    for (iVar3 = *(int *)((int)param_2 + 0x30); iVar3 != 0; iVar3 = *(int *)(iVar3 + 0x30)) {
+  lVar6 = (longlong)(int)param_2;
+  uVar5 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this,uVar5,lVar6,param_3);
+  if ((uVar5 & 0xffffffff) == 0) {
+    pSVar4 = (Scr_WatchElement_s *)0x0;
+  }
+  else {
+    pSVar2 = ((Scr_WatchElement_s *)uVar5)->parent;
+    pSVar4 = (Scr_WatchElement_s *)uVar5;
+    while (pSVar1 = pSVar2, pSVar1 != (Scr_WatchElement_s *)0x0) {
+      pSVar4 = pSVar1;
+      pSVar2 = pSVar1->parent;
     }
   }
-  uVar2 = Scr_ScriptWatch__GetElementRef(uVar1);
-  iVar3 = Scr_ScriptWatch__CreateWatchElement(uVar1,param_3,uVar2,0xffffffff8215023c);
-  if (*(int *)(iVar3 + 0x20) != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x11d3,0,0xffffffff82000f98,0xffffffff82150224);
+  ppSVar3 = GetElementRef(this_00,pSVar4);
+  pSVar4 = CreateWatchElement(this_00,(char *)lVar6,ppSVar3,
+                              "Scr_ScriptWatch::PasteNonBreakpointElement");
+  if (pSVar4->breakpoint != (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x11d3,0,"%s");
   }
-  Scr_CompileText(param_3,iVar3);
-  Scr_ScriptWatch__EvaluateWatchElement(uVar1,iVar3);
-  __restgprlr_29(iVar3);
-  return;
+  Scr_CompileText((char *)lVar6,&pSVar4->expr);
+  EvaluateWatchElement(this_00,pSVar4);
+  pSVar4 = (Scr_WatchElement_s *)__restgprlr_29(pSVar4);
+  return pSVar4;
 }
 
 
 // 82530B60  Scr_PasteElementRemote  (script/scr_debugger.cpp:4926)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_PasteElementRemote(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
+  char *pcVar3;
   int iVar4;
-  longlong lVar2;
-  int iVar5;
-  char cVar7;
-  undefined2 uVar6;
-  undefined8 uVar3;
+  uint uVar5;
+  uint uVar6;
   
   __savegprlr_27();
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 == 0) {
-    iVar4 = 0;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 == 0) {
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
-    iVar4 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
   }
-  uVar1 = Sys_ReadDebugSocketString();
-  lVar2 = Sys_ReadDebugSocketInt();
-  cVar7 = '\0';
-  iVar5 = Sys_IsRemoteDebugServer();
-  if (iVar5 != 0) {
-    cVar7 = Sys_ReadDebugSocketInt();
-    Sys_WriteDebugSocketMessageType(8);
-    if (iVar4 == 0) {
+  pcVar3 = Sys_ReadDebugSocketString();
+  iVar1 = Sys_ReadDebugSocketInt();
+  uVar5 = 0;
+  iVar4 = Sys_IsRemoteDebugServer();
+  if (iVar4 != 0) {
+    uVar5 = Sys_ReadDebugSocketInt();
+    uVar5 = uVar5 & 0xff;
+    Sys_WriteDebugSocketMessageType('\b');
+    if (pSVar2 == (Scr_WatchElement_s *)0x0) {
       uVar6 = 0;
     }
     else {
-      uVar6 = *(undefined2 *)(iVar4 + 0x46);
+      uVar6 = (uint)pSVar2->id;
     }
     Sys_WriteDebugSocketInt(uVar6);
-    Sys_WriteDebugSocketString(uVar1);
-    Sys_WriteDebugSocketInt(lVar2 != 0);
+    Sys_WriteDebugSocketString(pcVar3);
+    Sys_WriteDebugSocketInt((uint)(iVar1 != 0));
     Sys_EndWriteDebugSocket();
   }
-  uVar3 = Scr_ScriptWatch__PasteNonBreakpointElement(0xffffffff83739368,iVar4,uVar1,lVar2 != 0);
-  iVar4 = Sys_IsRemoteDebugServer();
-  if ((iVar4 != 0) && (cVar7 != '\0')) {
-    Scr_ScriptWatch__ToggleBreakpointInternal(0xffffffff83739368,uVar3,cVar7);
+  pSVar2 = Scr_ScriptWatch::PasteNonBreakpointElement
+                     (&scrDebuggerGlob.scriptWatch,pSVar2,pcVar3,iVar1 != 0);
+  iVar1 = Sys_IsRemoteDebugServer();
+  if ((iVar1 != 0) && (uVar5 != 0)) {
+    Scr_ScriptWatch::ToggleBreakpointInternal(&scrDebuggerGlob.scriptWatch,pSVar2,(uchar)uVar5);
   }
-  FreeString(uVar1,0);
+  FreeString(pcVar3,0);
   __restgprlr_27();
   return;
 }
@@ -1864,164 +2038,182 @@ void Scr_PasteElementRemote(void)
 
 // 8252FD48  Scr_InsertElementRemote  (script/scr_debugger.cpp:5001)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_InsertElementRemote(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  undefined2 uVar4;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
+  uint uVar3;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 == 0) {
-    iVar2 = 0;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 == 0) {
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
-    iVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
   }
-  iVar3 = Sys_IsRemoteDebugServer();
-  if (iVar3 != 0) {
-    Sys_WriteDebugSocketMessageType(10);
-    if (iVar2 == 0) {
-      uVar4 = 0;
+  iVar1 = Sys_IsRemoteDebugServer();
+  if (iVar1 != 0) {
+    Sys_WriteDebugSocketMessageType('\n');
+    if (pSVar2 == (Scr_WatchElement_s *)0x0) {
+      uVar3 = 0;
     }
     else {
-      uVar4 = *(undefined2 *)(iVar2 + 0x46);
+      uVar3 = (uint)pSVar2->id;
     }
-    Sys_WriteDebugSocketInt(uVar4);
+    Sys_WriteDebugSocketInt(uVar3);
     Sys_EndWriteDebugSocket();
   }
-  Scr_ScriptWatch__PasteNonBreakpointElement(0xffffffff83739368,iVar2,0xffffffff820068af,1);
+  Scr_ScriptWatch::PasteNonBreakpointElement(&scrDebuggerGlob.scriptWatch,pSVar2,"",true);
   return;
 }
 
 
-// 8252FDF0  Scr_ScriptWatch::DeleteElementInternal  (script/scr_debugger.cpp:5064)
+// 8252FDF0  DeleteElementInternal  (script/scr_debugger.cpp:5064)
 
-void Scr_ScriptWatch__DeleteElementInternal(undefined8 param_1,ulonglong param_2)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::DeleteElementInternal(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s **ppSVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x13cb,0,0xffffffff82000f98,0xffffffff8214f888);
+  uVar3 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x13cb,0,"%s");
   }
-  if (*(int *)((int)param_2 + 0x30) != 0) {
-    __restgprlr_29(param_2);
-    return;
+  pSVar1 = (Scr_WatchElement_s *)uVar3;
+  if (pSVar1->parent != (Scr_WatchElement_s *)0x0) {
+    pSVar1 = (Scr_WatchElement_s *)__restgprlr_29(uVar3);
+    return pSVar1;
   }
-  puVar2 = (undefined4 *)Scr_ScriptWatch__GetElementRef(uVar1,param_2);
-  *puVar2 = *(undefined4 *)((int)param_2 + 0x3c);
-  Scr_ScriptWatch__FreeWatchElement(uVar1,param_2);
-  __restgprlr_29(*puVar2);
-  return;
+  ppSVar2 = GetElementRef(this_00,pSVar1);
+  *ppSVar2 = pSVar1->next;
+  FreeWatchElement(this_00,pSVar1);
+  pSVar1 = (Scr_WatchElement_s *)__restgprlr_29(*ppSVar2);
+  return pSVar1;
 }
 
 
 // 8252FE78  Scr_DeleteElementRemote  (script/scr_debugger.cpp:5129)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DeleteElementRemote(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if (((int)uVar1 != 0) &&
-     (iVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1), iVar2 != 0
-     )) {
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
-      Sys_WriteDebugSocketMessageType(0xc);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar2 + 0x46));
+  iVar1 = Sys_ReadDebugSocketInt();
+  if ((iVar1 != 0) &&
+     (pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                         (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1
+                         ), pSVar2 != (Scr_WatchElement_s *)0x0)) {
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) {
+      Sys_WriteDebugSocketMessageType('\f');
+      Sys_WriteDebugSocketInt((uint)pSVar2->id);
       Sys_EndWriteDebugSocket();
     }
-    Scr_ScriptWatch__DeleteElementInternal(0xffffffff83739368,iVar2);
+    Scr_ScriptWatch::DeleteElementInternal(&scrDebuggerGlob.scriptWatch,pSVar2);
   }
   return;
 }
 
 
-// 8252FF00  Scr_ScriptWatch::BackspaceElementInternal  (script/scr_debugger.cpp:5156)
+// 8252FF00  BackspaceElementInternal  (script/scr_debugger.cpp:5156)
 
-void Scr_ScriptWatch__BackspaceElementInternal(undefined8 param_1,ulonglong param_2)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::BackspaceElementInternal(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s **ppSVar2;
+  Scr_WatchElement_s *pSVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1428,0,0xffffffff82000f98,0xffffffff8214f888);
+  uVar4 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_28(this);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1428,0,"%s");
   }
-  if (*(int *)((int)param_2 + 0x30) != 0) {
-    __restgprlr_28(param_2);
-    return;
+  pSVar1 = (Scr_WatchElement_s *)uVar4;
+  if (pSVar1->parent != (Scr_WatchElement_s *)0x0) {
+    pSVar1 = (Scr_WatchElement_s *)__restgprlr_28(uVar4);
+    return pSVar1;
   }
-  puVar3 = (undefined4 *)Scr_ScriptWatch__GetElementRef(uVar1,param_2);
-  uVar2 = Scr_ScriptWatch__GetElementPrev(uVar1,param_2);
-  *puVar3 = *(undefined4 *)((int)param_2 + 0x3c);
-  Scr_ScriptWatch__FreeWatchElement(uVar1,param_2);
-  __restgprlr_28(uVar2);
-  return;
+  ppSVar2 = GetElementRef(this_00,pSVar1);
+  pSVar3 = GetElementPrev(this_00,pSVar1);
+  *ppSVar2 = pSVar1->next;
+  FreeWatchElement(this_00,pSVar1);
+  pSVar1 = (Scr_WatchElement_s *)__restgprlr_28(pSVar3);
+  return pSVar1;
 }
 
 
 // 8252FF98  Scr_BackspaceElementRemote  (script/scr_debugger.cpp:5226)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_BackspaceElementRemote(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if (((int)uVar1 != 0) &&
-     (iVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1), iVar2 != 0
-     )) {
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
-      Sys_WriteDebugSocketMessageType(0xe);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar2 + 0x46));
+  iVar1 = Sys_ReadDebugSocketInt();
+  if ((iVar1 != 0) &&
+     (pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                         (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1
+                         ), pSVar2 != (Scr_WatchElement_s *)0x0)) {
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) {
+      Sys_WriteDebugSocketMessageType('\x0e');
+      Sys_WriteDebugSocketInt((uint)pSVar2->id);
       Sys_EndWriteDebugSocket();
     }
-    Scr_ScriptWatch__BackspaceElementInternal(0xffffffff83739368,iVar2);
+    Scr_ScriptWatch::BackspaceElementInternal(&scrDebuggerGlob.scriptWatch,pSVar2);
   }
   return;
 }
 
 
-// 8252AF90  Scr_ScriptWatch::Init  (script/scr_debugger.cpp:5482)
+// 8252AF90  Init  (script/scr_debugger.cpp:5482)
 
-void Scr_ScriptWatch__Init(int param_1)
+void __thiscall Scr_ScriptWatch::Init(Scr_ScriptWatch *this)
 
 {
-  *(undefined4 *)(param_1 + 8) = 0;
-  *(undefined4 *)(param_1 + 0x10) = 0;
-  *(undefined4 *)(param_1 + 0xc) = 0;
+  this->elementHead = (Scr_WatchElement_s *)0x0;
+  this->localId = 0;
+  this->elementId = 0;
   return;
 }
 
 
-// 82530020  Scr_ScriptWatch::Shutdown  (script/scr_debugger.cpp:5584)
+// 82530020  Shutdown  (script/scr_debugger.cpp:5584)
 
-void Scr_ScriptWatch__Shutdown(int param_1)
+void __thiscall Scr_ScriptWatch::Shutdown(Scr_ScriptWatch *this)
 
 {
-  int iVar1;
+  Scr_WatchElement_s *pSVar1;
   
-  Scr_ScriptWatch__UpdateBreakpoints(param_1,0);
+  UpdateBreakpoints(this,false);
   Scr_UnbreakAllAssignmentPos();
-  iVar1 = *(int *)(param_1 + 8);
-  while (iVar1 != 0) {
-    iVar1 = *(int *)(*(int *)(param_1 + 8) + 0x3c);
-    Scr_ScriptWatch__FreeWatchElement(param_1);
-    *(int *)(param_1 + 8) = iVar1;
+  pSVar1 = this->elementHead;
+  while (pSVar1 != (Scr_WatchElement_s *)0x0) {
+    pSVar1 = this->elementHead->next;
+    FreeWatchElement(this,this->elementHead);
+    this->elementHead = pSVar1;
   }
   return;
 }
@@ -2029,98 +2221,110 @@ void Scr_ScriptWatch__Shutdown(int param_1)
 
 // 8252AFA8  Scr_CreateWatchElement  (script/scr_debugger.cpp:5624)
 
-void Scr_CreateWatchElement(undefined8 param_1,undefined4 *param_2)
+Scr_WatchElement_s *
+Scr_CreateWatchElement(char *param_1,Scr_WatchElement_s **param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  void *_Dst;
-  undefined4 uVar2;
+  char *pcVar1;
+  void *pvVar2;
+  char *pcVar3;
+  Scr_WatchElement_s *pSVar4;
+  longlong lVar5;
+  char *pcVar6;
   
-  uVar1 = __savegprlr_28();
-  _Dst = (void *)Scr_AllocDebugMem(0x50);
-  memset(_Dst,0,0x50);
-  uVar2 = CopyString(0xffffffff820068af,0xffffffff8214fa50,0);
-  *(undefined4 *)((int)_Dst + 0xc) = uVar2;
-  uVar2 = CopyString(uVar1,0xffffffff8214fa50,0);
-  *(undefined4 *)((int)_Dst + 0x10) = uVar2;
-  *(undefined4 *)((int)_Dst + 0x3c) = *param_2;
-  *param_2 = _Dst;
-  __restgprlr_28(_Dst);
-  return;
+  lVar5 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1,lVar5,param_3);
+  pcVar6 = (char *)lVar5;
+  pvVar2 = Scr_AllocDebugMem(0x50,pcVar6);
+  memset();
+  pcVar3 = CopyString("","Scr_CreateWatchElement",0);
+  *(char **)((int)pvVar2 + 0xc) = pcVar3;
+  pcVar1 = CopyString(pcVar1,"Scr_CreateWatchElement",0);
+  *(char **)((int)pvVar2 + 0x10) = pcVar1;
+  *(undefined4 *)((int)pvVar2 + 0x3c) = *(undefined4 *)pcVar6;
+  *(void **)pcVar6 = pvVar2;
+  pSVar4 = (Scr_WatchElement_s *)__restgprlr_28(pvVar2);
+  return pSVar4;
 }
 
 
 // 8252B020  Scr_RemoveValue  (script/scr_debugger.cpp:5645)
 
-void Scr_RemoveValue(int param_1)
+void Scr_RemoveValue(Scr_WatchElement_s *param_1)
 
 {
-  if ((*(byte *)(param_1 + 0x4d) & 8) == 0) {
+  if (!param_1->valueDefined) {
     return;
   }
-  *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) & 0xf7;
-  RemoveRefToValue(*(undefined4 *)(param_1 + 0x18),*(undefined4 *)(param_1 + 0x14));
+  param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+  RemoveRefToValue((param_1->value).type,(param_1->value).u);
   return;
 }
 
 
 // 8252E3C0  Scr_FreeWatchElementChildrenStrict  (script/scr_debugger.cpp:5660)
 
-void Scr_FreeWatchElementChildrenStrict(void)
+void Scr_FreeWatchElementChildrenStrict(Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
+  Scr_WatchElement_s *pSVar1;
+  void *pvVar2;
+  ulong uVar3;
+  ulong uVar4;
+  Scr_WatchElement_s *pSVar5;
   
-  iVar3 = __savegprlr_27();
-  iVar4 = *(int *)(iVar3 + 0x38);
-  if (*(int *)(iVar3 + 0x38) != 0) {
+  uVar3 = __savegprlr_27(param_1);
+  pSVar5 = *(Scr_WatchElement_s **)(uVar3 + 0x38);
+  uVar4 = uVar3;
+  if (*(Scr_WatchElement_s **)(uVar3 + 0x38) != (Scr_WatchElement_s *)0x0) {
     do {
-      iVar1 = *(int *)(iVar4 + 0x3c);
-      Scr_FreeWatchElementText(iVar4);
-      if ((*(byte *)(iVar4 + 0x4d) & 8) != 0) {
-        *(byte *)(iVar4 + 0x4d) = *(byte *)(iVar4 + 0x4d) & 0xf7;
-        RemoveRefToValue(*(undefined4 *)(iVar4 + 0x18),*(undefined4 *)(iVar4 + 0x14));
+      pSVar1 = pSVar5->next;
+      Scr_FreeWatchElementText(pSVar5);
+      if (pSVar5->valueDefined) {
+        pSVar5->field_0x4d = pSVar5->field_0x4d & 0xf7;
+        RemoveRefToValue((pSVar5->value).type,(pSVar5->value).u);
       }
-      Scr_FreeWatchElementChildrenStrict(iVar4);
-      iVar4 = iVar1;
-    } while (iVar1 != 0);
-    if (*(int *)(iVar3 + 0x34) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x162a,0,0xffffffff82000f98,0xffffffff82150068);
+      Scr_FreeWatchElementChildrenStrict(pSVar5);
+      pSVar5 = pSVar1;
+    } while (pSVar1 != (Scr_WatchElement_s *)0x0);
+    if (*(int *)(uVar3 + 0x34) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x162a,0,"%s");
     }
-    uVar2 = *(undefined4 *)(iVar3 + 0x34);
-    if (DAT_83739338 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
+    pvVar2 = *(void **)(uVar3 + 0x34);
+    if (g_debuggerMem == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0xa3f,0,"%s");
     }
-    RtlFreeHeap(DAT_83739338,0,uVar2);
-    *(undefined2 *)(iVar3 + 0x42) = 0;
-    *(undefined4 *)(iVar3 + 0x34) = 0;
-    *(undefined4 *)(iVar3 + 0x38) = 0;
+    uVar4 = RtlFreeHeap(g_debuggerMem,0,pvVar2);
+    *(undefined2 *)(uVar3 + 0x42) = 0;
+    *(undefined4 *)(uVar3 + 0x34) = 0;
+    *(undefined4 *)(uVar3 + 0x38) = 0;
   }
-  __restgprlr_27();
+  __restgprlr_27(uVar4);
   return;
 }
 
 
 // 8252B050  Scr_FreeWatchElementText  (script/scr_debugger.cpp:5693)
 
-void Scr_FreeWatchElementText(void)
+void Scr_FreeWatchElementText(Scr_WatchElement_s *param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if (*(int *)(iVar1 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x163e,0,0xffffffff82000f98,0xffffffff8214fa7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x163e,0,"%s");
   }
-  FreeString(*(undefined4 *)(iVar1 + 0xc),0);
+  FreeString(*(char **)(iVar1 + 0xc),0);
   *(undefined4 *)(iVar1 + 0xc) = 0;
   if (*(int *)(iVar1 + 0x10) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1642,0,0xffffffff82000f98,0xffffffff8214fa68);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1642,0,"%s");
   }
-  FreeString(*(undefined4 *)(iVar1 + 0x10),0);
+  FreeString(*(char **)(iVar1 + 0x10),0);
   *(undefined4 *)(iVar1 + 0x10) = 0;
   __restgprlr_28();
   return;
@@ -2129,13 +2333,13 @@ void Scr_FreeWatchElementText(void)
 
 // 8252B0F0  Scr_FreeWatchElementChildren  (script/scr_debugger.cpp:5711)
 
-void Scr_FreeWatchElementChildren(int param_1)
+void Scr_FreeWatchElementChildren(Scr_WatchElement_s *param_1)
 
 {
-  Scr_FreeWatchElementText();
-  if ((*(byte *)(param_1 + 0x4d) & 8) != 0) {
-    *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) & 0xf7;
-    RemoveRefToValue(*(undefined4 *)(param_1 + 0x18),*(undefined4 *)(param_1 + 0x14));
+  Scr_FreeWatchElementText(param_1);
+  if (param_1->valueDefined) {
+    param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+    RemoveRefToValue((param_1->value).type,(param_1->value).u);
   }
   Scr_FreeWatchElementChildrenStrict(param_1);
   return;
@@ -2144,6 +2348,8 @@ void Scr_FreeWatchElementChildren(int param_1)
 
 // 8252B150  Scr_FreeWatchElementChildrenRemote  (script/scr_debugger.cpp:5730)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_FreeWatchElementChildrenRemote(void)
 
 {
@@ -2151,47 +2357,48 @@ void Scr_FreeWatchElementChildrenRemote(void)
 }
 
 
-// 8252E4B8  Scr_ScriptWatch::FreeWatchElement  (script/scr_debugger.cpp:5750)
+// 8252E4B8  FreeWatchElement  (script/scr_debugger.cpp:5750)
 
-void Scr_ScriptWatch__FreeWatchElement(undefined8 param_1,undefined8 param_2)
+void __thiscall Scr_ScriptWatch::FreeWatchElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  Scr_Breakpoint *pSVar1;
+  Scr_ScriptWatch *this_00;
+  int iVar2;
   
-  uVar2 = __savegprlr_29();
-  iVar3 = (int)param_2;
-  if (*(int *)(iVar3 + 0x30) != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x167a,0,0xffffffff82000f98,0xffffffff82150080);
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this);
+  if (param_1->parent != (Scr_WatchElement_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x167a,0,"%s");
   }
-  iVar1 = *(int *)(iVar3 + 0x20);
-  if (iVar1 == 0) {
-    Scr_FreeWatchElementText(param_2);
-    if ((*(byte *)(iVar3 + 0x4d) & 8) != 0) {
-      *(byte *)(iVar3 + 0x4d) = *(byte *)(iVar3 + 0x4d) & 0xf7;
-      RemoveRefToValue(*(undefined4 *)(iVar3 + 0x18),*(undefined4 *)(iVar3 + 0x14));
+  pSVar1 = param_1->breakpoint;
+  if (pSVar1 == (Scr_Breakpoint *)0x0) {
+    Scr_FreeWatchElementText(param_1);
+    if (param_1->valueDefined) {
+      param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+      RemoveRefToValue((param_1->value).type,(param_1->value).u);
     }
-    Scr_FreeWatchElementChildrenStrict(param_2);
-    if (*(char *)(iVar3 + 0x4c) != '\0') {
-      Scr_ScriptWatch__RemoveBreakpoint(uVar2,param_2);
+    Scr_FreeWatchElementChildrenStrict(param_1);
+    if (param_1->breakpointType != '\0') {
+      RemoveBreakpoint(this_00,param_1);
     }
-    Scr_FreeDebugExpr(param_2);
+    Scr_FreeDebugExpr(&param_1->expr);
   }
   else {
-    Scr_FreeWatchElementText(param_2);
-    if (*(int *)(iVar1 + 0xc) != 0) {
-      Scr_FreeLineBreakpoint(iVar1,0);
+    Scr_FreeWatchElementText(param_1);
+    if (pSVar1->element != (Scr_WatchElement_s *)0x0) {
+      Scr_FreeLineBreakpoint(pSVar1,false);
     }
-    if (*(char *)(iVar3 + 0x4c) == '\x06') {
-      iVar3 = Scr_GetFuncTableIndex(*(undefined4 *)(iVar1 + 0x10));
-      *(int *)(&DAT_83c6fb48 + iVar3 * 0xc) = *(int *)(&DAT_83c6fb48 + iVar3 * 0xc) + -1;
-      Scr_FreeDebugMem(param_2);
+    if (param_1->breakpointType == '\x06') {
+      iVar2 = Scr_GetFuncTableIndex(pSVar1->builtinIndex);
+      scrVmDebugPub.func_table[iVar2].breakpointCount =
+           scrVmDebugPub.func_table[iVar2].breakpointCount + -1;
+      Scr_FreeDebugMem(param_1);
       __restgprlr_29();
       return;
     }
   }
-  Scr_FreeDebugMem(param_2);
+  Scr_FreeDebugMem(param_1);
   __restgprlr_29();
   return;
 }
@@ -2199,211 +2406,212 @@ void Scr_ScriptWatch__FreeWatchElement(undefined8 param_1,undefined8 param_2)
 
 // 8252B158  CompareArrayIndices  (script/scr_debugger.cpp:5821)
 
-void CompareArrayIndices(undefined8 param_1,undefined4 *param_2)
+int CompareArrayIndices(void *param_1,void *param_2)
 
 {
   undefined4 *puVar2;
-  undefined8 uVar1;
-  byte *pbVar3;
+  VariableValue VVar1;
+  int iVar3;
   byte *pbVar4;
-  undefined8 *puVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  undefined4 uStack_44;
-  undefined4 local_40 [2];
-  undefined8 uStack_38;
-  uint local_30;
-  uint uStack_2c;
+  byte *pbVar5;
+  VariableValue *pVVar6;
+  uint *puVar7;
+  longlong lVar8;
+  uint uStack_44;
+  uint local_40 [2];
+  VariableValue VStack_38;
+  VariableValue local_30;
   uint local_28;
   uint local_24;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  puVar5 = &uStack_38;
-  puVar6 = &uStack_44;
-  lVar7 = 2;
+  puVar2 = (undefined4 *)__savegprlr_29(param_1);
+  pVVar6 = &VStack_38;
+  puVar7 = &uStack_44;
+  lVar8 = 2;
   local_40[0] = *puVar2;
-  local_40[1] = *param_2;
+  local_40[1] = *(undefined4 *)param_2;
   do {
-    puVar6 = puVar6 + 1;
-    uVar1 = Scr_GetArrayIndexValue(*puVar6);
-    lVar7 = lVar7 + -1;
-    puVar5 = puVar5 + 1;
-    *puVar5 = uVar1;
-  } while (lVar7 != 0);
-  if (uStack_2c != local_24) {
-    __restgprlr_29((ulonglong)uStack_2c - (ulonglong)local_24);
-    return;
+    puVar7 = puVar7 + 1;
+    VVar1 = Scr_GetArrayIndexValue(*puVar7);
+    lVar8 = lVar8 + -1;
+    pVVar6 = pVVar6 + 1;
+    *pVVar6 = VVar1;
+  } while (lVar8 != 0);
+  if (local_30.type != local_24) {
+    iVar3 = __restgprlr_29((ulonglong)(uint)local_30.type - (ulonglong)local_24);
+    return iVar3;
   }
-  if (uStack_2c == 2) {
-    pbVar3 = (byte *)SL_ConvertToString(local_28);
-    pbVar4 = (byte *)SL_ConvertToString(local_30);
+  if (local_30.type == 2) {
+    pbVar4 = (byte *)SL_ConvertToString(local_28);
+    pbVar5 = (byte *)SL_ConvertToString((uint)local_30.u);
     while( true ) {
-      lVar7 = (ulonglong)*pbVar4 - (ulonglong)*pbVar3;
-      if (*pbVar4 == 0) break;
+      lVar8 = (ulonglong)*pbVar5 - (ulonglong)*pbVar4;
+      if (*pbVar5 == 0) break;
+      pbVar5 = pbVar5 + 1;
       pbVar4 = pbVar4 + 1;
-      pbVar3 = pbVar3 + 1;
-      if ((int)lVar7 != 0) {
-        __restgprlr_29();
-        return;
+      if ((int)lVar8 != 0) {
+        iVar3 = __restgprlr_29();
+        return iVar3;
       }
     }
   }
   else {
-    if (uStack_2c != 6) {
-      MyAssertHandler(0xffffffff8214f658,0x16d1,0,0xffffffff82000f98,0xffffffff8214fa90);
+    if (local_30.type != 6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x16d1,0,"%s");
     }
-    lVar7 = (ulonglong)local_30 - (ulonglong)local_28;
+    lVar8 = (ulonglong)(uint)local_30.u - (ulonglong)local_28;
   }
-  __restgprlr_29(lVar7);
-  return;
+  iVar3 = __restgprlr_29(lVar8);
+  return iVar3;
 }
 
 
 // 8252B248  CompareThreadIndices  (script/scr_debugger.cpp:5854)
 
-longlong CompareThreadIndices(uint *param_1,uint *param_2)
+int CompareThreadIndices(void *param_1,void *param_2)
 
 {
-  return (ulonglong)*param_1 - (ulonglong)*param_2;
+  return *(int *)param_1 - *(int *)param_2;
 }
 
 
 // 8252B258  Scr_GetElementThreadPos  (script/scr_debugger.cpp:5870)
 
-ulonglong Scr_GetElementThreadPos(int param_1)
+char * Scr_GetElementThreadPos(Scr_WatchElement_s *param_1)
 
 {
+  char *pcVar2;
   ulonglong uVar1;
   
-  if ((*(char *)(param_1 + 0x4a) != '\x10') ||
-     (uVar1 = Scr_GetThreadPos(*(undefined2 *)(param_1 + 0x40)), (uVar1 & 0xffffffff) == 0)) {
-    uVar1 = (ulonglong)*(uint *)(param_1 + 0x24);
+  if (param_1->objectType == '\x10') {
+    pcVar2 = Scr_GetThreadPos((uint)param_1->objectId);
+    uVar1 = (ulonglong)(int)pcVar2;
+    if (pcVar2 != (char *)0x0) goto LAB_8252b28c;
   }
-  return -(ulonglong)(uVar1 != 0xffffffff83ca8c50) & uVar1;
+  uVar1 = ZEXT48(param_1->deadCodePos);
+LAB_8252b28c:
+  return (char *)(-(uint)(uVar1 != 0xffffffff83ca8c50) & (uint)uVar1);
 }
 
 
 // 8252B2B8  Scr_PostSetText  (script/scr_debugger.cpp:5895)
 
-void Scr_PostSetText(void)
+void Scr_PostSetText(Scr_WatchElement_s *param_1)
 
 {
   char cVar1;
-  int iVar5;
+  char cVar2;
+  Scr_WatchElement_s *pSVar3;
+  bool bVar8;
+  int iVar4;
+  char *pcVar5;
   uint uVar6;
-  char cVar9;
-  int iVar7;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined4 uVar8;
-  char *pcVar10;
-  char *pcVar11;
-  bool bVar12;
-  undefined1 auStack_140 [320];
+  uint uVar7;
+  char *pcVar9;
+  ulonglong uVar10;
+  char acStack_140 [320];
   
-  iVar5 = __savegprlr_27();
-  if ((*(byte *)(iVar5 + 0x4d) & 4) == 0) {
-    if ((*(byte *)(iVar5 + 0x4d) & 2) == 0) {
-      if (*(ushort *)(iVar5 + 0x40) == 0) {
-        uVar6 = 0;
-      }
-      else {
-        uVar6 = GetObjectType((HGDIOBJ)(uint)*(ushort *)(iVar5 + 0x40));
-      }
-      uVar6 = uVar6 & 0xff;
-      if ((0xf < uVar6) && (uVar6 < 0x14)) {
-        cVar9 = Scr_IsEndonThread(*(undefined2 *)(iVar5 + 0x40));
-        uVar6 = -(uint)(cVar9 == '\0') & 0x10;
-      }
-    }
-    else {
-      uVar6 = 0x1b;
-    }
-  }
-  else {
+  pSVar3 = (Scr_WatchElement_s *)__savegprlr_27(param_1);
+  if (pSVar3->threadList) {
     uVar6 = 0x1a;
   }
-  bVar12 = false;
+  else if (pSVar3->endonList) {
+    uVar6 = 0x1b;
+  }
+  else {
+    if (pSVar3->objectId == 0) {
+      uVar6 = 0;
+    }
+    else {
+      uVar6 = GetObjectType((uint)pSVar3->objectId);
+    }
+    uVar6 = uVar6 & 0xff;
+    if ((0xf < uVar6) && (uVar6 < 0x14)) {
+      bVar8 = Scr_IsEndonThread((uint)pSVar3->objectId);
+      uVar6 = -(uint)!bVar8 & 0x10;
+    }
+  }
+  uVar10 = 0;
   if ((((uVar6 - 0x10 < 8) && (uVar6 != 0x11)) && (uVar6 != 0x12)) && (uVar6 != 0x13)) {
     if ((uVar6 == 0x14) || (uVar6 == 0x15)) {
-      pcVar11 = *(char **)(iVar5 + 0xc);
-      pcVar10 = *(char **)(iVar5 + 0x10);
+      pcVar5 = pSVar3->valueText;
+      pcVar9 = pSVar3->refText;
       do {
-        cVar9 = *pcVar10;
-        cVar1 = *pcVar11;
-        if (cVar9 == '\0') break;
-        pcVar10 = pcVar10 + 1;
-        pcVar11 = pcVar11 + 1;
-      } while (cVar9 == cVar1);
-      bVar12 = cVar9 == cVar1;
+        cVar1 = *pcVar9;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
+        pcVar9 = pcVar9 + 1;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      uVar10 = (ulonglong)(cVar1 == cVar2);
     }
     else if (uVar6 == 0x16) {
-      pcVar11 = *(char **)(iVar5 + 0x10);
-      pcVar10 = *(char **)(iVar5 + 0xc);
+      pcVar5 = pSVar3->refText;
+      pcVar9 = pSVar3->valueText;
       do {
-        cVar9 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar9 == '\0') break;
-        pcVar11 = pcVar11 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar9 == cVar1);
-      bVar12 = cVar9 == cVar1;
-      if (bVar12) {
-        Scr_GetFieldValue(*(undefined2 *)(iVar5 + 0x40),0xffffffff8207dca0,0x101,auStack_140);
-        ReplaceString(iVar5 + 0xc,auStack_140,0xffffffff8214fab0,0);
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar9;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar1 == cVar2);
+      uVar10 = (ulonglong)(cVar1 == cVar2);
+      if (uVar10 != 0) {
+        Scr_GetFieldValue((uint)pSVar3->objectId,"classname",0x101,acStack_140);
+        ReplaceString(&pSVar3->valueText,acStack_140,"Scr_PostSetText",0);
       }
     }
     else if (uVar6 == 0x10) {
-      pcVar11 = *(char **)(iVar5 + 0x10);
-      pcVar10 = *(char **)(iVar5 + 0xc);
+      pcVar5 = pSVar3->refText;
+      pcVar9 = pSVar3->valueText;
       do {
-        cVar9 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar9 == '\0') break;
-        pcVar11 = pcVar11 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar9 == cVar1);
-      bVar12 = cVar9 == cVar1;
-      if (bVar12) {
-        ReplaceString(iVar5 + 0xc,0xffffffff820068af,0xffffffff8214fab0,0);
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar9;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar1 == cVar2);
+      uVar10 = (ulonglong)(cVar1 == cVar2);
+      if (uVar10 != 0) {
+        ReplaceString(&pSVar3->valueText,"","Scr_PostSetText",0);
       }
     }
     else {
-      bVar12 = true;
+      uVar10 = 1;
     }
   }
-  if ((*(byte *)(iVar5 + 0x4a) != uVar6) || ((bool)(*(byte *)(iVar5 + 0x4d) >> 7) != bVar12)) {
-    *(char *)(iVar5 + 0x4a) = (char)uVar6;
-    *(byte *)(iVar5 + 0x4d) = bVar12 << 7 | *(byte *)(iVar5 + 0x4d) & 0x7f;
-    iVar7 = Sys_IsRemoteDebugServer();
-    if (iVar7 != 0) {
-      Sys_WriteDebugSocketMessageType(0x1f);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar5 + 0x46));
+  if ((pSVar3->objectType != uVar6) || (pSVar3->directObject != uVar10)) {
+    pSVar3->objectType = (uchar)uVar6;
+    pSVar3->directObject = uVar10;
+    iVar4 = Sys_IsRemoteDebugServer();
+    if (iVar4 != 0) {
+      Sys_WriteDebugSocketMessageType('\x1f');
+      Sys_WriteDebugSocketInt((uint)pSVar3->id);
       Sys_WriteDebugSocketInt(uVar6);
-      Sys_WriteDebugSocketInt(bVar12);
+      Sys_WriteDebugSocketInt((int)uVar10);
       Sys_EndWriteDebugSocket();
     }
-    if ((((uVar6 == 0x10) || (uVar6 == 0x18)) && (*(char *)(iVar5 + 0x4b) != '\x10')) &&
-       (*(char *)(iVar5 + 0x4b) != '\x18')) {
-      uVar2 = Scr_GetElementThreadPos(iVar5);
-      if ((uVar2 & 0xffffffff) == 0) {
-        *(undefined2 *)(iVar5 + 0x48) = 0xfffe;
-        *(undefined4 *)(iVar5 + 0x28) = 0;
+    if ((((uVar6 == 0x10) || (uVar6 == 0x18)) && (pSVar3->oldObjectType != '\x10')) &&
+       (pSVar3->oldObjectType != '\x18')) {
+      pcVar5 = Scr_GetElementThreadPos(pSVar3);
+      if (pcVar5 == (char *)0x0) {
+        pSVar3->bufferIndex = 0xfffe;
+        pSVar3->sourcePos = 0;
       }
       else {
-        uVar3 = Scr_GetSourceBuffer(uVar2 - 1);
-        uVar4 = Scr_GetPrevSourcePos(uVar2 - 1,0);
-        *(short *)(iVar5 + 0x48) = (short)uVar3;
-        uVar8 = Scr_GetClosestSourcePosOfType(uVar3,uVar4,8);
-        *(undefined4 *)(iVar5 + 0x28) = uVar8;
+        uVar6 = Scr_GetSourceBuffer(pcVar5 + -1);
+        uVar7 = Scr_GetPrevSourcePos(pcVar5 + -1,0);
+        pSVar3->bufferIndex = (ushort)uVar6;
+        uVar6 = Scr_GetClosestSourcePosOfType(uVar6,uVar7,'\b');
+        pSVar3->sourcePos = uVar6;
       }
-      iVar7 = Sys_IsRemoteDebugServer();
-      if (iVar7 != 0) {
-        Sys_WriteDebugSocketMessageType(0x20);
-        Sys_WriteDebugSocketInt(*(undefined2 *)(iVar5 + 0x46));
-        Sys_WriteDebugSocketInt(*(undefined2 *)(iVar5 + 0x48));
-        Sys_WriteDebugSocketInt(*(undefined4 *)(iVar5 + 0x28));
+      iVar4 = Sys_IsRemoteDebugServer();
+      if (iVar4 != 0) {
+        Sys_WriteDebugSocketMessageType(' ');
+        Sys_WriteDebugSocketInt((uint)pSVar3->id);
+        Sys_WriteDebugSocketInt((uint)pSVar3->bufferIndex);
+        Sys_WriteDebugSocketInt(pSVar3->sourcePos);
         Sys_EndWriteDebugSocket();
       }
     }
@@ -2415,6 +2623,8 @@ void Scr_PostSetText(void)
 
 // 8252B5A0  Scr_SetElementObjectTypeRemote  (script/scr_debugger.cpp:6017)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_SetElementObjectTypeRemote(void)
 
 {
@@ -2423,6 +2633,8 @@ void Scr_SetElementObjectTypeRemote(void)
 
 
 // 8252B5A8  Scr_SetElementThreadStartRemote  (script/scr_debugger.cpp:6038)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SetElementThreadStartRemote(void)
 
@@ -2433,7 +2645,7 @@ void Scr_SetElementThreadStartRemote(void)
 
 // 8252B5B0  Scr_DeltaElementValueText  (script/scr_debugger.cpp:6062)
 
-void Scr_DeltaElementValueText(int param_1,char *param_2)
+void Scr_DeltaElementValueText(Scr_WatchElement_s *param_1,char *param_2)
 
 {
   char cVar1;
@@ -2442,7 +2654,7 @@ void Scr_DeltaElementValueText(int param_1,char *param_2)
   char *pcVar4;
   char *pcVar5;
   
-  pcVar5 = *(char **)(param_1 + 0xc);
+  pcVar5 = param_1->valueText;
   pcVar4 = param_2;
   do {
     cVar1 = *pcVar5;
@@ -2455,14 +2667,14 @@ void Scr_DeltaElementValueText(int param_1,char *param_2)
     iVar3 = Sys_IsRemoteDebugServer();
     if (iVar3 == 0) {
       if (*param_2 != '\0') {
-        *(undefined4 *)(param_1 + 0x2c) = 0;
-        *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) | 0x10;
+        param_1->changedTime = 0;
+        param_1->changed = true;
       }
     }
     else {
-      Sys_WriteDebugSocketMessageType(0x21);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(param_1 + 0x46));
-      Sys_WriteDebugSocketString(*(undefined4 *)(param_1 + 0xc));
+      Sys_WriteDebugSocketMessageType('!');
+      Sys_WriteDebugSocketInt((uint)param_1->id);
+      Sys_WriteDebugSocketString(param_1->valueText);
       Sys_EndWriteDebugSocket();
     }
   }
@@ -2471,6 +2683,8 @@ void Scr_DeltaElementValueText(int param_1,char *param_2)
 
 
 // 8252B668  Scr_SetElementValueTextRemote  (script/scr_debugger.cpp:6099)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SetElementValueTextRemote(void)
 
@@ -2481,66 +2695,59 @@ void Scr_SetElementValueTextRemote(void)
 
 // 8252B670  Scr_SetNonFieldElementRefText  (script/scr_debugger.cpp:6145)
 
-void Scr_SetNonFieldElementRefText(int param_1)
+void Scr_SetNonFieldElementRefText(Scr_WatchElement_s *param_1)
 
 {
   char cVar1;
   char cVar2;
   uint uVar3;
-  int iVar4;
-  undefined1 *puVar5;
-  undefined8 uVar6;
-  char *pcVar7;
-  char *pcVar8;
-  char *pcVar9;
-  undefined1 auStack_90 [128];
+  char *pcVar4;
+  char *pcVar5;
+  char acStack_90 [128];
   
-  uVar3 = *(uint *)(param_1 + 0x1c);
-  iVar4 = *(int *)(param_1 + 0x30);
+  uVar3 = param_1->fieldName;
   if (uVar3 < 5) {
     if (uVar3 == 0) {
-      Com_sprintf(auStack_90,0x80,0xffffffff8214fb14,*(undefined4 *)(iVar4 + 0x10));
-      puVar5 = auStack_90;
+      Com_sprintf(acStack_90,0x80,"%s.size");
+      pcVar4 = acStack_90;
     }
     else if (uVar3 == 1) {
-      puVar5 = *(undefined1 **)(iVar4 + 0xc);
+      pcVar4 = param_1->parent->valueText;
     }
     else {
       if (uVar3 == 2) {
-        ReplaceString(param_1 + 0x10,0xffffffff8214fae8,0xffffffff8214faf4,0);
-        *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) | 2;
+        ReplaceString(&param_1->refText,"<endons>","Scr_SetNonFieldElementRefText",0);
+        param_1->endonList = true;
         goto LAB_8252b7c4;
       }
       if (uVar3 != 3) {
-        ReplaceString(param_1 + 0x10,0xffffffff8214fac8,0xffffffff8214faf4,0);
-        *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) | 4;
+        ReplaceString(&param_1->refText,"<threads>","Scr_SetNonFieldElementRefText",0);
+        param_1->threadList = true;
         goto LAB_8252b7c4;
       }
-      pcVar7 = *(char **)(iVar4 + 0x10);
-      pcVar8 = "<locals>";
-      pcVar9 = pcVar7;
+      pcVar4 = param_1->parent->refText;
+      pcVar5 = "<locals>";
       do {
-        cVar1 = *pcVar9;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar4;
+        cVar2 = *pcVar5;
         if (cVar1 == '\0') break;
-        pcVar9 = pcVar9 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar4 = pcVar4 + 1;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        uVar6 = 0xffffffff8214fad4;
+        pcVar4 = "%s.self";
         goto LAB_8252b7a0;
       }
-      puVar5 = &DAT_8206c550;
+      pcVar4 = "self";
     }
   }
   else {
-    pcVar7 = (char *)(uVar3 - 5);
-    uVar6 = 0xffffffff8214fac0;
+    pcVar4 = "$t%i";
 LAB_8252b7a0:
-    Com_sprintf(auStack_90,0x80,uVar6,pcVar7);
-    puVar5 = auStack_90;
+    Com_sprintf(acStack_90,0x80,pcVar4);
+    pcVar4 = acStack_90;
   }
-  ReplaceString(param_1 + 0x10,puVar5,0xffffffff8214faf4,0);
+  ReplaceString(&param_1->refText,pcVar4,"Scr_SetNonFieldElementRefText",0);
 LAB_8252b7c4:
   Scr_PostSetText(param_1);
   return;
@@ -2548,6 +2755,8 @@ LAB_8252b7c4:
 
 
 // 8252B7E0  Scr_SetNonFieldRefTextRemote  (script/scr_debugger.cpp:6203)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SetNonFieldRefTextRemote(void)
 
@@ -2558,48 +2767,47 @@ void Scr_SetNonFieldRefTextRemote(void)
 
 // 8252B7E8  Scr_SetElementRefText  (script/scr_debugger.cpp:6224)
 
-void Scr_SetElementRefText(int param_1,undefined8 param_2)
+void Scr_SetElementRefText(Scr_WatchElement_s *param_1,char *param_2)
 
 {
   char cVar1;
   char cVar2;
-  int iVar3;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
-  undefined1 auStack_90 [128];
+  char acStack_90 [128];
   
-  iVar3 = *(int *)(param_1 + 0x30);
-  switch(*(undefined1 *)(iVar3 + 0x4a)) {
-  case 0x10:
-    pcVar5 = *(char **)(iVar3 + 0x10);
-    pcVar4 = "<locals>";
+  switch(param_1->parent->objectType) {
+  case '\x10':
+    pcVar4 = param_1->parent->refText;
+    pcVar3 = "<locals>";
     do {
-      cVar1 = *pcVar5;
-      cVar2 = *pcVar4;
+      cVar1 = *pcVar4;
+      cVar2 = *pcVar3;
       if (cVar1 == '\0') break;
-      pcVar5 = pcVar5 + 1;
       pcVar4 = pcVar4 + 1;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) goto switchD_8252b824_caseD_14;
-  case 0x1a:
-  case 0x1b:
-    ReplaceString(param_1 + 0x10,param_2,0xffffffff8214fb2c,0);
+  case '\x1a':
+  case '\x1b':
+    ReplaceString(&param_1->refText,param_2,"Scr_SetElementRefText",0);
     break;
   default:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1871,0,0xffffffff8202882c);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1871,0,"unreachable");
     }
     break;
-  case 0x14:
-  case 0x15:
-  case 0x16:
+  case '\x14':
+  case '\x15':
+  case '\x16':
 switchD_8252b824_caseD_14:
-    Com_sprintf(auStack_90,0x80,0xffffffff8214fb24,*(undefined4 *)(iVar3 + 0x10),param_2);
-    ReplaceString(param_1 + 0x10,auStack_90,0xffffffff8214fb2c,0);
+    Com_sprintf(acStack_90,0x80,"%s.%s");
+    ReplaceString(&param_1->refText,acStack_90,"Scr_SetElementRefText",0);
     break;
-  case 0x17:
-    Com_sprintf(auStack_90,0x80,0xffffffff8214fb1c,*(undefined4 *)(iVar3 + 0x10),param_2);
-    ReplaceString(param_1 + 0x10,auStack_90,0xffffffff8214fb2c,0);
+  case '\x17':
+    Com_sprintf(acStack_90,0x80,"%s[%s]");
+    ReplaceString(&param_1->refText,acStack_90,"Scr_SetElementRefText",0);
   }
   Scr_PostSetText(param_1);
   return;
@@ -2608,31 +2816,34 @@ switchD_8252b824_caseD_14:
 
 // 8252B960  Scr_DeltaElementRefText  (script/scr_debugger.cpp:6276)
 
-void Scr_DeltaElementRefText(undefined8 param_1,longlong param_2,undefined8 param_3)
+void Scr_DeltaElementRefText(Scr_WatchElement_s *param_1,char *param_2,char *param_3)
 
 {
   char cVar1;
   int iVar2;
   int iVar3;
-  char *pcVar4;
   char *pcVar5;
+  longlong lVar4;
+  char *pcVar6;
   
-  iVar2 = __savegprlr_29();
+  lVar4 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_29(param_1);
   iVar3 = Sys_IsRemoteDebugServer();
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1885,0,0xffffffff82000f98,0xffffffff8214fb44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1885,0,"%s");
   }
-  pcVar5 = *(char **)(iVar2 + 0x10);
+  pcVar6 = *(char **)(iVar2 + 0x10);
   do {
-    cVar1 = *pcVar5;
-    pcVar4 = (char *)param_2;
+    cVar1 = *pcVar6;
+    pcVar5 = (char *)lVar4;
     if (cVar1 == '\0') break;
-    pcVar5 = pcVar5 + 1;
-    param_2 = param_2 + 1;
-  } while (cVar1 == *pcVar4);
-  if (cVar1 != *pcVar4) {
-    Sys_WriteDebugSocketMessageType(0x23);
-    Sys_WriteDebugSocketInt(*(undefined2 *)(iVar2 + 0x46));
+    pcVar6 = pcVar6 + 1;
+    lVar4 = lVar4 + 1;
+  } while (cVar1 == *pcVar5);
+  if (cVar1 != *pcVar5) {
+    Sys_WriteDebugSocketMessageType('#');
+    Sys_WriteDebugSocketInt((uint)*(ushort *)(iVar2 + 0x46));
     Sys_WriteDebugSocketString(param_3);
     Sys_EndWriteDebugSocket();
   }
@@ -2643,6 +2854,8 @@ void Scr_DeltaElementRefText(undefined8 param_1,longlong param_2,undefined8 para
 
 // 8252BA00  Scr_SetElementRefTextRemote  (script/scr_debugger.cpp:6296)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_SetElementRefTextRemote(void)
 
 {
@@ -2652,129 +2865,139 @@ void Scr_SetElementRefTextRemote(void)
 
 // 8252BA08  CompareThreadElements  (script/scr_debugger.cpp:6318)
 
-longlong CompareThreadElements(int *param_1,int *param_2)
+int CompareThreadElements(void *param_1,void *param_2)
 
 {
   int iVar1;
   int iVar2;
   longlong lVar3;
   
-  iVar1 = *param_1;
-  iVar2 = *param_2;
-  lVar3 = (ulonglong)*(uint *)((uint)*(ushort *)(iVar1 + 0x48) * 0x2c + DAT_8382d8c8 + 0x10) -
-          (ulonglong)*(uint *)((uint)*(ushort *)(iVar2 + 0x48) * 0x2c + DAT_8382d8c8 + 0x10);
+  iVar1 = *(int *)param_1;
+  iVar2 = *(int *)param_2;
+  lVar3 = (ulonglong)(uint)scrParserPub.sourceBufferLookup[*(ushort *)(iVar1 + 0x48)].sortedIndex -
+          (ulonglong)(uint)scrParserPub.sourceBufferLookup[*(ushort *)(iVar2 + 0x48)].sortedIndex;
   if (lVar3 != 0) {
-    return lVar3;
+    return (int)lVar3;
   }
   lVar3 = (ulonglong)*(uint *)(iVar1 + 0x28) - (ulonglong)*(uint *)(iVar2 + 0x28);
   if (lVar3 != 0) {
-    return lVar3;
+    return (int)lVar3;
   }
-  return (ulonglong)*(uint *)(iVar1 + 0x1c) - (ulonglong)*(uint *)(iVar2 + 0x1c);
+  return *(int *)(iVar1 + 0x1c) - *(int *)(iVar2 + 0x1c);
 }
 
 
 // 8252BA60  Scr_ConnectElementChildren  (script/scr_debugger.cpp:6342)
 
-void Scr_ConnectElementChildren(int param_1)
+void Scr_ConnectElementChildren(Scr_WatchElement_s *param_1)
 
 {
   ushort uVar1;
-  int iVar2;
+  Scr_WatchElement_s *pSVar2;
   int iVar3;
-  int *piVar4;
+  Scr_WatchElement_s *pSVar4;
   ulonglong uVar5;
-  int *piVar6;
+  Scr_WatchElement_s **ppSVar6;
   
-  uVar1 = *(ushort *)(param_1 + 0x42);
+  uVar1 = param_1->childCount;
   uVar5 = (ulonglong)uVar1;
   iVar3 = 0;
-  iVar2 = *(int *)(param_1 + 0x34);
+  pSVar2 = param_1->childArrayHead;
   if (uVar1 != 0) {
-    piVar6 = (int *)(iVar2 + 0x3c);
+    ppSVar6 = &pSVar2->next;
     do {
-      piVar4 = piVar6 + 5;
+      pSVar4 = (Scr_WatchElement_s *)(ppSVar6 + 5);
       if ((int)(uVar1 - 1) <= iVar3) {
-        piVar4 = (int *)0x0;
+        pSVar4 = (Scr_WatchElement_s *)0x0;
       }
-      *piVar6 = (int)piVar4;
+      *ppSVar6 = pSVar4;
       iVar3 = iVar3 + 1;
-      piVar6 = piVar6 + 0x14;
+      ppSVar6 = ppSVar6 + 0x14;
       uVar5 = uVar5 - 1;
     } while (uVar5 != 0);
   }
-  *(int *)(param_1 + 0x38) = iVar2;
+  param_1->childHead = pSVar2;
   return;
 }
 
 
 // 8252BAA8  Scr_SortElementChildren  (script/scr_debugger.cpp:6364)
 
-void Scr_SortElementChildren(void)
+void Scr_SortElementChildren(Scr_WatchElement_s *param_1)
 
 {
   bool bVar1;
   ushort uVar2;
   int iVar3;
-  undefined4 *_Base;
-  int iVar4;
-  int *piVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  undefined4 *puVar4;
+  void *pvVar5;
+  ulong uVar6;
+  char *in_r4;
+  int iVar7;
+  int *piVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  iVar3 = __savegprlr_25();
-  if (DAT_837396f2 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x18e2,0,0xffffffff82000f98,0xffffffff8214fb88);
+  iVar3 = __savegprlr_25(param_1);
+  if (scrDebuggerGlob.debugger_inited_system == false) {
+    in_r4 = (char *)0x18e2;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x18e2,0,"%s");
   }
   if ((*(byte *)(iVar3 + 0x4d) & 4) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x18e3,0,0xffffffff82000f98,0xffffffff8214fb60);
+    in_r4 = (char *)0x18e3;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x18e3,0,"%s");
   }
   uVar2 = *(ushort *)(iVar3 + 0x42);
-  uVar7 = (ulonglong)uVar2;
-  iVar6 = *(int *)(iVar3 + 0x34);
-  _Base = (undefined4 *)Scr_AllocDebugMem(uVar7 << 2);
+  uVar10 = (ulonglong)uVar2;
+  iVar9 = *(int *)(iVar3 + 0x34);
+  puVar4 = Scr_AllocDebugMem((uint)uVar2 << 2,in_r4);
   if (uVar2 != 0) {
-    piVar5 = _Base + -1;
-    uVar8 = uVar7;
+    piVar8 = puVar4 + -1;
+    uVar11 = uVar10;
     do {
-      piVar5 = piVar5 + 1;
-      *piVar5 = iVar6;
-      iVar6 = iVar6 + 0x50;
-      uVar8 = uVar8 - 1;
-    } while (uVar8 != 0);
+      piVar8 = piVar8 + 1;
+      *piVar8 = iVar9;
+      iVar9 = iVar9 + 0x50;
+      uVar11 = uVar11 - 1;
+    } while (uVar11 != 0);
   }
-  qsort(_Base,(uint)uVar2,4,CompareThreadElements);
-  iVar6 = 0;
+  qsort(puVar4,(uint)uVar2,4,CompareThreadElements);
+  iVar9 = 0;
   if (uVar2 != 0) {
-    piVar5 = _Base + -1;
+    piVar8 = puVar4 + -1;
     do {
-      if (iVar6 < (int)(uVar2 - 1)) {
-        iVar4 = piVar5[2];
+      if (iVar9 < (int)(uVar2 - 1)) {
+        iVar7 = piVar8[2];
       }
       else {
-        iVar4 = 0;
+        iVar7 = 0;
       }
-      piVar5 = piVar5 + 1;
-      iVar6 = iVar6 + 1;
-      *(int *)(*piVar5 + 0x3c) = iVar4;
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+      piVar8 = piVar8 + 1;
+      iVar9 = iVar9 + 1;
+      *(int *)(*piVar8 + 0x3c) = iVar7;
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
   }
-  iVar6 = DAT_83739338;
-  bVar1 = DAT_83739338 == 0;
-  *(undefined4 *)(iVar3 + 0x38) = *_Base;
+  pvVar5 = g_debuggerMem;
+  bVar1 = g_debuggerMem == (void *)0x0;
+  *(undefined4 *)(iVar3 + 0x38) = *puVar4;
   if (bVar1) {
-    MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
-    iVar6 = DAT_83739338;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",0xa3f
+                    ,0,"%s");
+    pvVar5 = g_debuggerMem;
   }
-  RtlFreeHeap(iVar6,0,_Base);
-  __restgprlr_25();
+  uVar6 = RtlFreeHeap(pvVar5,0,puVar4);
+  __restgprlr_25(uVar6);
   return;
 }
 
 
 // 8252BBF8  Scr_SortElementChildrenRemote  (script/scr_debugger.cpp:6438)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SortElementChildrenRemote(void)
 
@@ -2783,531 +3006,568 @@ void Scr_SortElementChildrenRemote(void)
 }
 
 
-// 8252E5D0  Scr_ScriptWatch::EvaluateWatchChildren  (script/scr_debugger.cpp:6473)
+// 8252E5D0  EvaluateWatchChildren  (script/scr_debugger.cpp:6473)
 
 /* WARNING: Removing unreachable block (ram,0x8252f2b4) */
 
-void Scr_ScriptWatch__EvaluateWatchChildren(undefined8 param_1,undefined8 param_2)
+void __thiscall
+Scr_ScriptWatch::EvaluateWatchChildren(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  char cVar1;
-  byte bVar2;
-  uint uVar3;
-  uint uVar4;
-  byte bVar5;
-  byte bVar6;
-  ulonglong uVar7;
-  bool bVar8;
-  int iVar12;
-  ulonglong uVar9;
-  uint uVar13;
-  DWORD DVar14;
-  longlong lVar10;
-  int *piVar15;
-  undefined4 uVar16;
-  char cVar20;
-  void *pvVar17;
-  int iVar18;
-  int iVar19;
-  undefined8 uVar11;
-  undefined1 *puVar21;
-  size_t _Size;
-  code *_PtFuncCompare;
-  uint *puVar23;
-  longlong lVar22;
+  uchar uVar1;
+  uchar uVar2;
+  byte bVar3;
+  ushort uVar4;
+  VariableUnion VVar5;
+  Scr_WatchElement_s *pSVar6;
+  undefined4 *puVar7;
+  byte *pbVar8;
+  byte bVar9;
+  byte bVar10;
+  bool bVar11;
+  uint uVar12;
+  int iVar13;
+  uint *puVar14;
+  undefined4 *puVar15;
+  bool bVar18;
+  Scr_WatchElement_s *pSVar16;
+  int iVar17;
+  char *pcVar19;
+  code *pcVar20;
+  Scr_WatchElement_s **ppSVar21;
+  ulonglong uVar22;
+  ulonglong uVar23;
   ulonglong uVar24;
   ulonglong uVar25;
   ulonglong uVar26;
-  undefined4 *puVar27;
-  ulonglong uVar28;
-  short sVar31;
-  longlong lVar29;
-  int *piVar30;
-  longlong lVar32;
-  undefined4 *puVar33;
-  byte *pbVar34;
-  int iVar35;
-  bool bVar36;
+  uint *puVar27;
+  longlong lVar28;
+  ulonglong uVar29;
+  uint uVar30;
+  Scr_ScriptWatch *pSVar31;
+  undefined4 *puVar32;
+  longlong lVar33;
+  Scr_WatchElement_s *pSVar34;
+  Scr_WatchElement_s *pSVar35;
+  Scr_ScriptWatch *pSStack00000014;
+  Scr_WatchElement_s *pSStack0000001c;
   uint local_170;
-  void *local_164;
+  Scr_WatchElement_s *local_164;
   int local_140 [6];
-  undefined8 local_128;
-  undefined1 auStack_120 [288];
+  VariableValue local_128;
+  char acStack_120 [288];
   
-  iVar12 = __savegprlr();
-  iVar35 = (int)param_2;
-  cVar20 = *(char *)(iVar35 + 0x4b);
-  *(char *)(iVar35 + 0x4b) = *(char *)(iVar35 + 0x4a);
-  if (((*(byte *)(iVar35 + 0x4d) & 0x40) == 0) || (*(char *)(iVar35 + 0x4a) == '\0')) {
-    Scr_FreeWatchElementChildrenStrict(param_2);
+  __savegprlr();
+  uVar1 = param_1->oldObjectType;
+  param_1->oldObjectType = param_1->objectType;
+  pSStack00000014 = this;
+  pSStack0000001c = param_1;
+  if ((!param_1->expand) || (param_1->objectType == '\0')) {
+    Scr_FreeWatchElementChildrenStrict(param_1);
     goto LAB_8252f398;
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1975,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1975,0,"%s");
   }
-  cVar1 = *(char *)(iVar35 + 0x4a);
-  bVar8 = false;
+  uVar2 = param_1->objectType;
+  bVar11 = false;
   local_170 = 0;
   uVar25 = 0;
-  if (cVar1 == '\x1a') {
-    if (*(int *)(iVar35 + 0x30) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x197c,0,0xffffffff82000f98,0xffffffff8215018c);
+  if (uVar2 == '\x1a') {
+    if (param_1->parent == (Scr_WatchElement_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x197c,0,"%s");
     }
-    sVar31 = *(short *)(*(int *)(iVar35 + 0x30) + 0x40);
-    if (sVar31 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x197e,0,0xffffffff82000f98,0xffffffff82150180);
+    uVar4 = param_1->parent->objectId;
+    uVar30 = (uint)uVar4;
+    if (uVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x197e,0,"%s");
     }
-    uVar9 = Scr_FindAllThreads(sVar31,0,*(undefined4 *)(iVar12 + 0x10));
+    pcVar19 = (char *)0x0;
+    uVar12 = Scr_FindAllThreads((uint)uVar4,(uint *)0x0,this->localId);
+    uVar24 = (ulonglong)(int)uVar12;
   }
-  else if (cVar1 == '\x1b') {
-    if (*(int *)(iVar35 + 0x30) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1984,0,0xffffffff82000f98,0xffffffff8215018c);
+  else if (uVar2 == '\x1b') {
+    if (param_1->parent == (Scr_WatchElement_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1984,0,"%s");
     }
-    sVar31 = *(short *)(*(int *)(iVar35 + 0x30) + 0x40);
-    if (sVar31 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1986,0,0xffffffff82000f98,0xffffffff82150180);
+    uVar4 = param_1->parent->objectId;
+    uVar30 = (uint)uVar4;
+    if (uVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1986,0,"%s");
     }
-    uVar9 = Scr_FindAllEndons(sVar31,0);
+    pcVar19 = (char *)0x0;
+    uVar12 = Scr_FindAllEndons((uint)uVar4,(uint *)0x0);
+    uVar24 = (ulonglong)(int)uVar12;
   }
   else {
-    sVar31 = *(short *)(iVar35 + 0x40);
-    if (sVar31 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x198d,0,0xffffffff82000f98,0xffffffff82150180);
+    uVar4 = param_1->objectId;
+    uVar30 = (uint)uVar4;
+    if (uVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x198d,0,"%s");
     }
-    if ((*(byte *)(iVar35 + 0x4d) & 0x80) == 0) {
+    if (param_1->directObject) {
+      bVar3 = param_1->objectType;
+      if (bVar3 == 0x10) {
+        uVar12 = GetSafeParentLocalId((uint)param_1->objectId);
+        if (uVar12 != 0) {
+LAB_8252e85c:
+          local_140[0] = uVar12 + 5;
+          goto LAB_8252e860;
+        }
+        iVar17 = GetObjectType((uint)param_1->objectId);
+        iVar13 = scrVmPub.function_count;
+        if (iVar17 == 0x10) {
+          while( true ) {
+            if (iVar13 == 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                              ,0x19a1,0,"%s");
+            }
+            puVar14 = &scrVmPub.function_frame_start[iVar13].fs.localId;
+            if ((uint)param_1->objectId == *puVar14) break;
+            iVar13 = iVar13 + -1;
+          }
+          do {
+            puVar14 = puVar14 + -6;
+            uVar12 = *puVar14;
+            iVar13 = iVar13 + -1;
+            if (uVar12 != 0) goto LAB_8252e85c;
+          } while (iVar13 != 0);
+        }
+      }
+      else if ((0x13 < bVar3) && (bVar3 < 0x17)) {
+        local_140[0] = 4;
+        goto LAB_8252e860;
+      }
+    }
+    else {
       local_140[0] = 1;
 LAB_8252e860:
       uVar25 = 1;
       local_170 = 1;
     }
-    else {
-      bVar2 = *(byte *)(iVar35 + 0x4a);
-      if (bVar2 == 0x10) {
-        uVar13 = GetSafeParentLocalId(*(undefined2 *)(iVar35 + 0x40));
-        if (uVar13 != 0) {
-LAB_8252e85c:
-          local_140[0] = uVar13 + 5;
-          goto LAB_8252e860;
-        }
-        DVar14 = GetObjectType((HGDIOBJ)(uint)*(ushort *)(iVar35 + 0x40));
-        iVar18 = DAT_83ca44a8;
-        if (DVar14 == 0x10) {
-          while( true ) {
-            if (iVar18 == 0) {
-              MyAssertHandler(0xffffffff8214f658,0x19a1,0,0xffffffff82000f98,0xffffffff82150170);
-            }
-            puVar23 = (uint *)(&DAT_83ca44cc + iVar18 * 0x18);
-            if ((uint)*(ushort *)(iVar35 + 0x40) == *puVar23) break;
-            iVar18 = iVar18 + -1;
-          }
-          do {
-            puVar23 = puVar23 + -6;
-            uVar13 = *puVar23;
-            iVar18 = iVar18 + -1;
-            if (uVar13 != 0) goto LAB_8252e85c;
-          } while (iVar18 != 0);
-        }
-      }
-      else if ((0x13 < bVar2) && (bVar2 < 0x17)) {
-        local_140[0] = 4;
-        goto LAB_8252e860;
-      }
-    }
-    if (*(char *)(iVar35 + 0x4a) == '\x10') {
-      iVar18 = (int)uVar25;
+    if (param_1->objectType == '\x10') {
+      iVar13 = (int)uVar25;
       *(undefined4 *)((int)local_140 + (int)(uVar25 << 2)) = 2;
       uVar25 = uVar25 + 2;
-      local_140[iVar18 + 1] = 3;
+      local_140[iVar13 + 1] = 3;
 LAB_8252e8bc:
       local_170 = (uint)uVar25;
     }
-    else if (*(char *)(iVar35 + 0x4a) == '\x17') {
-      lVar10 = uVar25 << 2;
+    else if (param_1->objectType == '\x17') {
+      lVar28 = uVar25 << 2;
       uVar25 = uVar25 + 1;
-      *(undefined4 *)((int)local_140 + (int)lVar10) = 0;
+      *(undefined4 *)((int)local_140 + (int)lVar28) = 0;
       goto LAB_8252e8bc;
     }
     if (5 < uVar25) {
-      MyAssertHandler(0xffffffff8214f658,0x19d1,0,0xffffffff82000f98,0xffffffff82150140);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x19d1,0,"%s");
     }
-    lVar10 = Scr_FindAllVariableField(sVar31,0);
-    uVar9 = lVar10 + uVar25;
+    pcVar19 = (char *)0x0;
+    uVar12 = Scr_FindAllVariableField((uint)uVar4,(uint *)0x0);
+    uVar24 = (longlong)(int)uVar12 + uVar25;
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    if (*(short *)(iVar35 + 0x42) != 0) {
-      iVar12 = Sys_IsRemoteDebugServer();
-      if (iVar12 != 0) {
-        Sys_WriteDebugSocketMessageType(0x1e);
-        Sys_WriteDebugSocketInt(*(undefined2 *)(iVar35 + 0x46));
+  if ((uVar24 & 0xffffffff) == 0) {
+    if (param_1->childCount != 0) {
+      iVar13 = Sys_IsRemoteDebugServer();
+      if (iVar13 != 0) {
+        Sys_WriteDebugSocketMessageType('\x1e');
+        Sys_WriteDebugSocketInt((uint)param_1->id);
         Sys_EndWriteDebugSocket();
       }
-      Scr_FreeWatchElementChildren(param_2);
+      Scr_FreeWatchElementChildren(param_1);
       __restgprlr();
       return;
     }
   }
   else {
-    lVar32 = (uVar9 & 0x3fffffff) << 2;
-    lVar10 = Scr_AllocDebugMem(lVar32);
-    _Size = (size_t)(uVar25 * 4);
-    memcpy((void *)lVar10,local_140,_Size);
-    if (*(char *)(iVar35 + 0x4a) == '\x1a') {
-      Scr_FindAllThreads(sVar31,lVar10,*(undefined4 *)(iVar12 + 0x10));
-      _PtFuncCompare = CompareThreadIndices;
+    iVar17 = (int)((uVar24 & 0xffffffff) << 2);
+    puVar14 = Scr_AllocDebugMem(iVar17,pcVar19);
+    memcpy();
+    iVar13 = (int)(uVar25 << 2);
+    if (param_1->objectType == '\x1a') {
+      Scr_FindAllThreads(uVar30,puVar14,this->localId);
+      pcVar20 = CompareThreadIndices;
     }
-    else if (*(char *)(iVar35 + 0x4a) == '\x1b') {
-      Scr_FindAllEndons(sVar31,lVar10);
-      _PtFuncCompare = CompareArrayIndices;
+    else if (param_1->objectType == '\x1b') {
+      Scr_FindAllEndons(uVar30,puVar14);
+      pcVar20 = CompareArrayIndices;
     }
     else {
-      Scr_FindAllVariableField(sVar31,uVar25 * 4 + lVar10);
-      if (cVar1 == '\x17') {
-        _PtFuncCompare = CompareArrayIndices;
+      Scr_FindAllVariableField(uVar30,(uint *)(iVar13 + (int)puVar14));
+      if (uVar2 == '\x17') {
+        pcVar20 = CompareArrayIndices;
       }
       else {
-        _PtFuncCompare = Scr_CompareCanonicalStrings;
+        pcVar20 = Scr_CompareCanonicalStrings;
       }
     }
-    qsort((void *)(_Size + (int)(void *)lVar10),(int)uVar9 - (int)uVar25,4,_PtFuncCompare);
-    lVar29 = (uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    uVar13 = *(uint *)(iVar35 + 0x34);
-    uVar25 = (ulonglong)*(ushort *)(iVar35 + 0x42);
-    local_164 = (void *)Scr_AllocDebugMem(lVar29);
-    memset(local_164,0,(size_t)lVar29);
-    piVar15 = (int *)Scr_AllocDebugMem(lVar32);
-    if ((uVar13 == 0) || (lVar32 = 1, *(char *)(iVar35 + 0x4a) != cVar20)) {
-      lVar32 = 0;
+    pcVar19 = (char *)((int)uVar24 - (int)uVar25);
+    qsort((void *)(iVar13 + (int)puVar14),(uint)pcVar19,4,pcVar20);
+    pSVar35 = param_1->childArrayHead;
+    uVar22 = (ulonglong)param_1->childCount;
+    local_164 = Scr_AllocDebugMem((int)((uVar24 + (uVar24 & 0x3fffffff) * 4 & 0xffffffff) << 4),
+                                  pcVar19);
+    uVar25 = 0;
+    memset();
+    puVar15 = Scr_AllocDebugMem(iVar17,(char *)uVar25);
+    if ((pSVar35 == (Scr_WatchElement_s *)0x0) || (iVar13 = 1, param_1->objectType != uVar1)) {
+      iVar13 = 0;
     }
-    uVar28 = 0;
+    uVar29 = 0;
     uVar26 = 0;
-    if ((uVar9 & 0xffffffff) != 0) {
-      puVar27 = (undefined4 *)((int)local_164 + 0x10);
-      uVar24 = uVar9 & 0xffffffff;
-      lVar29 = lVar10;
-      piVar30 = piVar15;
+    if ((uVar24 & 0xffffffff) != 0) {
+      lVar28 = ZEXT48(local_164) + 0x10;
+      uVar23 = uVar24 & 0xffffffff;
+      puVar27 = puVar14;
+      puVar32 = puVar15;
+      pSVar31 = pSStack00000014;
       do {
-        puVar33 = puVar27 + -4;
-        uVar16 = CopyString(&DAT_820068af,0xffffffff821500fc,0);
-        puVar27[-1] = uVar16;
-        uVar16 = CopyString(&DAT_820068af,0xffffffff821500fc,0);
-        *puVar27 = uVar16;
-        uVar4 = -(uint)(uVar26 < local_170) & 1;
-        cVar20 = Scr_ScriptWatch__EvaluateWatchChildElement
-                           (iVar12,iVar35,*(undefined4 *)lVar29,puVar33,uVar4);
-        if (cVar20 == '\0') {
-          Scr_FreeWatchElementText(puVar33);
-        }
-        else {
-          puVar27[8] = iVar35;
-          lVar22 = (ulonglong)*(uint *)(iVar12 + 0xc) + 1;
-          *(int *)(iVar12 + 0xc) = (int)lVar22;
-          if (lVar22 == 0) {
+        puVar7 = (undefined4 *)lVar28;
+        pSVar16 = (Scr_WatchElement_s *)(puVar7 + -4);
+        pcVar19 = CopyString("","EvaluateWatchChildren",0);
+        puVar7[-1] = pcVar19;
+        pcVar19 = CopyString("","EvaluateWatchChildren",0);
+        *puVar7 = pcVar19;
+        uVar25 = ZEXT48(pSStack0000001c);
+        uVar30 = -(uint)(uVar26 < local_170) & 1;
+        bVar18 = EvaluateWatchChildElement(pSVar31,pSStack0000001c,*puVar27,pSVar16,SUB41(uVar30,0))
+        ;
+        if (bVar18) {
+          puVar7[8] = pSStack0000001c;
+          lVar33 = (ulonglong)(uint)pSVar31->elementId + 1;
+          pSVar31->elementId = (int)lVar33;
+          if (lVar33 == 0) {
+            uVar25 = 0x1a18;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
-                            ,0x1a18,0,&DAT_82000f98,0xffffffff8214fc4c);
+                            ,0x1a18,0,"%s");
           }
-          uVar3 = *(uint *)(iVar12 + 0xc);
-          *(short *)((int)puVar27 + 0x36) = (short)uVar3;
-          if ((uVar3 & 0xffff) != *(uint *)(iVar12 + 0xc)) {
+          uVar12 = pSVar31->elementId;
+          *(short *)((int)puVar7 + 0x36) = (short)uVar12;
+          if ((uVar12 & 0xffff) != pSVar31->elementId) {
+            uVar25 = 0x1a1a;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
-                            ,0x1a1a,0,&DAT_82000f98,0xffffffff82150124);
+                            ,0x1a1a,0,"%s");
           }
-          *piVar30 = 0;
-          if ((lVar32 != 0) && ((uVar28 & 0xffffffff) < uVar25)) {
-            lVar22 = (uVar28 + (uVar28 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + (ulonglong)uVar13;
+          *puVar32 = 0;
+          if ((iVar13 != 0) && ((uVar29 & 0xffffffff) < uVar22)) {
+            lVar33 = (uVar29 + (uVar29 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + ZEXT48(pSVar35);
             do {
-              uVar3 = -(uint)(uVar28 < *(ushort *)(iVar35 + 0x44)) & 1;
-              iVar18 = (int)lVar22;
-              if (uVar3 == uVar4) {
-                if (uVar4 == 0) {
-                  iVar19 = (*_PtFuncCompare)((void *)(iVar18 + 0x1c),puVar27 + 3);
+              uVar12 = -(uint)(uVar29 < pSStack0000001c->hardcodedCount) & 1;
+              pSVar34 = (Scr_WatchElement_s *)lVar33;
+              if (uVar12 == uVar30) {
+                if (uVar30 == 0) {
+                  uVar25 = lVar28 + 0xc;
+                  iVar17 = (*pcVar20)(&pSVar34->fieldName,(void *)uVar25);
                 }
                 else {
-                  iVar19 = *(int *)(iVar18 + 0x1c) - puVar27[3];
+                  iVar17 = pSVar34->fieldName - puVar7[3];
                 }
               }
               else {
-                iVar19 = uVar3 - uVar4;
+                iVar17 = uVar12 - uVar30;
               }
-              if (-1 < iVar19) {
-                if ((*(byte *)(iVar18 + 0x4d) & 8) != 0) {
-                  *(byte *)(iVar18 + 0x4d) = *(byte *)(iVar18 + 0x4d) & 0xf7;
-                  RemoveRefToValue(*(undefined4 *)(iVar18 + 0x18),*(undefined4 *)(iVar18 + 0x14));
+              if (-1 < iVar17) {
+                if (pSVar34->valueDefined) {
+                  pSVar34->field_0x4d = pSVar34->field_0x4d & 0xf7;
+                  VVar5 = (pSVar34->value).u;
+                  uVar25 = (ulonglong)VVar5.uintValue;
+                  RemoveRefToValue((pSVar34->value).type,VVar5);
                 }
-                if (iVar19 == 0) {
-                  if (*(int *)(iVar12 + 0xc) == 0) {
+                if (iVar17 == 0) {
+                  if (pSStack00000014->elementId == 0) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
-                                    ,0x1a3b,0,&DAT_82000f98,0xffffffff8214fc4c);
+                                    ,0x1a3b,0,"%s");
                   }
-                  *(int *)(iVar12 + 0xc) = *(int *)(iVar12 + 0xc) + -1;
-                  bVar2 = *(byte *)((int)puVar27 + 0x3d);
-                  bVar5 = *(byte *)(iVar18 + 0x4d) & 0x40;
-                  *(byte *)((int)puVar27 + 0x3d) = bVar5 | bVar2 & 0xbf;
-                  puVar27[9] = *(undefined4 *)(iVar18 + 0x34);
-                  puVar27[10] = *(undefined4 *)(iVar18 + 0x38);
-                  *(undefined2 *)((int)puVar27 + 0x32) = *(undefined2 *)(iVar18 + 0x42);
-                  *(undefined2 *)(puVar27 + 0xd) = *(undefined2 *)(iVar18 + 0x44);
-                  *(undefined1 *)((int)puVar27 + 0x3a) = *(undefined1 *)(iVar18 + 0x4a);
-                  *(undefined1 *)((int)puVar27 + 0x3b) = *(undefined1 *)(iVar18 + 0x4b);
-                  bVar6 = *(byte *)(iVar18 + 0x4d) & 0x80;
-                  *(byte *)((int)puVar27 + 0x3d) = bVar6 | bVar5 | bVar2 & 0x3f;
-                  *(undefined2 *)(puVar27 + 0xe) = *(undefined2 *)(iVar18 + 0x48);
-                  puVar27[6] = *(undefined4 *)(iVar18 + 0x28);
-                  *(byte *)((int)puVar27 + 0x3d) =
-                       *(byte *)(iVar18 + 0x4d) & 0x10 | bVar6 | bVar5 | bVar2 & 0x2f;
-                  puVar27[7] = *(undefined4 *)(iVar18 + 0x2c);
-                  if (*(short *)(iVar18 + 0x46) == 0) {
+                  pSStack00000014->elementId = pSStack00000014->elementId + -1;
+                  bVar3 = *(byte *)((int)puVar7 + 0x3d);
+                  bVar9 = pSVar34->field_0x4d & 0x40;
+                  *(byte *)((int)puVar7 + 0x3d) = bVar9 | bVar3 & 0xbf;
+                  puVar7[9] = pSVar34->childArrayHead;
+                  puVar7[10] = pSVar34->childHead;
+                  *(ushort *)((int)puVar7 + 0x32) = pSVar34->childCount;
+                  *(ushort *)(puVar7 + 0xd) = pSVar34->hardcodedCount;
+                  *(uchar *)((int)puVar7 + 0x3a) = pSVar34->objectType;
+                  *(uchar *)((int)puVar7 + 0x3b) = pSVar34->oldObjectType;
+                  bVar10 = pSVar34->field_0x4d & 0x80;
+                  *(byte *)((int)puVar7 + 0x3d) = bVar10 | bVar9 | bVar3 & 0x3f;
+                  *(ushort *)(puVar7 + 0xe) = pSVar34->bufferIndex;
+                  puVar7[6] = pSVar34->sourcePos;
+                  uVar25 = (ulonglong)(byte)pSVar34->field_0x4d;
+                  *(byte *)((int)puVar7 + 0x3d) =
+                       pSVar34->field_0x4d & 0x10 | bVar10 | bVar9 | bVar3 & 0x2f;
+                  puVar7[7] = pSVar34->changedTime;
+                  if (pSVar34->id == 0) {
+                    uVar25 = 0x1a49;
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
-                                    ,0x1a49,0,&DAT_82000f98,0xffffffff82150114);
+                                    ,0x1a49,0,"%s");
                   }
-                  *(undefined2 *)((int)puVar27 + 0x36) = *(undefined2 *)(iVar18 + 0x46);
-                  for (iVar19 = *(int *)(iVar18 + 0x38); iVar19 != 0;
-                      iVar19 = *(int *)(iVar19 + 0x3c)) {
-                    *(undefined4 **)(iVar19 + 0x30) = puVar33;
+                  *(ushort *)((int)puVar7 + 0x36) = pSVar34->id;
+                  for (pSVar6 = pSVar34->childHead; pSVar6 != (Scr_WatchElement_s *)0x0;
+                      pSVar6 = pSVar6->next) {
+                    pSVar6->parent = pSVar16;
                   }
-                  *piVar30 = iVar18;
-                  uVar28 = uVar28 + 1;
+                  *puVar32 = pSVar34;
+                  uVar29 = uVar29 + 1;
                 }
                 else {
-                  bVar8 = true;
+                  bVar11 = true;
                 }
                 break;
               }
-              bVar8 = true;
-              Scr_FreeWatchElementChildren(lVar22);
-              uVar28 = uVar28 + 1;
-              lVar22 = lVar22 + 0x50;
-            } while ((uVar28 & 0xffffffff) < uVar25);
+              bVar11 = true;
+              Scr_FreeWatchElementChildren(pSVar34);
+              uVar29 = uVar29 + 1;
+              lVar33 = lVar33 + 0x50;
+            } while ((uVar29 & 0xffffffff) < uVar22);
           }
           uVar26 = uVar26 + 1;
-          puVar27 = puVar27 + 0x14;
-          piVar30 = piVar30 + 1;
+          lVar28 = lVar28 + 0x50;
+          puVar32 = puVar32 + 1;
+          pSVar31 = pSStack00000014;
         }
-        uVar24 = uVar24 - 1;
-        lVar29 = lVar29 + 4;
-      } while (uVar24 != 0);
+        else {
+          Scr_FreeWatchElementText(pSVar16);
+        }
+        uVar23 = uVar23 - 1;
+        puVar27 = puVar27 + 1;
+      } while (uVar23 != 0);
     }
-    Scr_FreeDebugMem(lVar10);
-    if ((uVar28 & 0xffffffff) < uVar25) {
-      bVar8 = true;
-      lVar10 = uVar25 - uVar28;
-      lVar29 = (uVar28 + (uVar28 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + (ulonglong)uVar13 + 0x4d;
+    Scr_FreeDebugMem(puVar14);
+    pcVar19 = (char *)uVar25;
+    if ((uVar29 & 0xffffffff) < uVar22) {
+      bVar11 = true;
+      lVar28 = uVar22 - uVar29;
+      lVar33 = (uVar29 + (uVar29 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + ZEXT48(pSVar35) + 0x4d;
       do {
-        Scr_FreeWatchElementText(lVar29 + -0x4d);
-        pbVar34 = (byte *)lVar29;
-        if ((*pbVar34 & 8) != 0) {
-          *pbVar34 = *pbVar34 & 0xf7;
-          RemoveRefToValue(*(undefined4 *)(pbVar34 + -0x35),*(undefined4 *)(pbVar34 + -0x39));
+        pbVar8 = (byte *)lVar33;
+        Scr_FreeWatchElementText((Scr_WatchElement_s *)(pbVar8 + -0x4d));
+        if ((*pbVar8 & 8) != 0) {
+          *pbVar8 = *pbVar8 & 0xf7;
+          uVar25 = (ulonglong)(*(VariableUnion *)(pbVar8 + -0x39)).uintValue;
+          RemoveRefToValue(*(int *)(pbVar8 + -0x35),*(VariableUnion *)(pbVar8 + -0x39));
         }
-        Scr_FreeWatchElementChildrenStrict(lVar29 + -0x4d);
-        lVar10 = lVar10 + -1;
-        lVar29 = lVar29 + 0x50;
-      } while (lVar10 != 0);
+        Scr_FreeWatchElementChildrenStrict((Scr_WatchElement_s *)(pbVar8 + -0x4d));
+        pcVar19 = (char *)uVar25;
+        lVar28 = lVar28 + -1;
+        lVar33 = lVar33 + 0x50;
+      } while (lVar28 != 0);
     }
-    uVar9 = uVar9 & 0xffffffff;
-    if (uVar9 < (uVar26 & 0xffffffff)) {
+    uVar24 = uVar24 & 0xffffffff;
+    if (uVar24 < (uVar26 & 0xffffffff)) {
+      pcVar19 = (char *)0x1a65;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                      0x1a65,0,&DAT_82000f98,0xffffffff821500e8);
+                      0x1a65,0,"%s");
     }
-    if (uVar9 != (uVar26 & 0xffffffff)) {
-      lVar10 = (uVar26 + (uVar26 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-      pvVar17 = (void *)Scr_AllocDebugMem(lVar10);
-      memcpy(pvVar17,local_164,(size_t)lVar10);
-      if (DAT_83739338 == 0) {
+    if (uVar24 != (uVar26 & 0xffffffff)) {
+      pSVar16 = Scr_AllocDebugMem((int)((uVar26 + (uVar26 & 0x3fffffff) * 4 & 0xffffffff) << 4),
+                                  pcVar19);
+      memcpy();
+      if (g_debuggerMem == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                        0xa3f,0,&DAT_82000f98,0xffffffff8214f9fc);
+                        0xa3f,0,"%s");
       }
-      RtlFreeHeap(DAT_83739338,0,local_164);
-      uVar9 = uVar26;
-      local_164 = pvVar17;
+      RtlFreeHeap(g_debuggerMem,0,local_164);
+      uVar24 = uVar26;
+      local_164 = pSVar16;
     }
-    if (((uVar9 & 0xffffffff) == 0) ||
-       (((lVar32 != 0 && (!bVar8)) && ((uVar9 & 0xffffffff) == uVar25)))) {
-      bVar8 = false;
+    if (((uVar24 & 0xffffffff) == 0) ||
+       (((iVar13 != 0 && (!bVar11)) && ((uVar24 & 0xffffffff) == uVar22)))) {
+      bVar11 = false;
     }
     else {
-      bVar8 = true;
+      bVar11 = true;
     }
-    iVar18 = Sys_IsRemoteDebugServer();
-    if ((iVar18 != 0) && (bVar8)) {
-      Sys_WriteDebugSocketMessageType(0x24);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar35 + 0x46));
-      Sys_WriteDebugSocketInt(uVar9);
-      Sys_WriteDebugSocketInt(lVar32);
+    iVar17 = Sys_IsRemoteDebugServer();
+    pSVar16 = pSStack0000001c;
+    if ((iVar17 != 0) && (bVar11)) {
+      Sys_WriteDebugSocketMessageType('$');
+      pSVar16 = pSStack0000001c;
+      Sys_WriteDebugSocketInt((uint)pSStack0000001c->id);
+      Sys_WriteDebugSocketInt((int)uVar24);
+      Sys_WriteDebugSocketInt(iVar13);
       Sys_EndWriteDebugSocket();
-      if (lVar32 != 0) {
-        uVar28 = 0;
+      if (iVar13 != 0) {
         uVar26 = 0;
-        if ((uVar9 & 0xffffffff) != 0) {
-          pvVar17 = local_164;
+        uVar25 = 0;
+        if ((uVar24 & 0xffffffff) != 0) {
+          pSVar34 = local_164;
           do {
-            uVar24 = -(ulonglong)(uVar26 < local_170) & 1;
-            if ((uVar28 & 0xffffffff) < uVar25) {
-              lVar10 = (uVar28 + (uVar28 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + (ulonglong)uVar13 +
+            uVar30 = -(uint)(uVar25 < local_170) & 1;
+            if ((uVar26 & 0xffffffff) < uVar22) {
+              lVar28 = (uVar26 + (uVar26 & 0x3fffffff) * 4 & 0xfffffff) * 0x10 + ZEXT48(pSVar35) +
                        0x1c;
               do {
-                uVar7 = -(ulonglong)(uVar28 < *(ushort *)(iVar35 + 0x44)) & 1;
-                if (uVar7 == uVar24) {
-                  if (uVar24 == 0) {
-                    iVar18 = (*_PtFuncCompare)((uint *)lVar10,(void *)((int)pvVar17 + 0x1c));
-                    lVar32 = (longlong)iVar18;
+                uVar12 = -(uint)(uVar26 < pSVar16->hardcodedCount) & 1;
+                if (uVar12 == uVar30) {
+                  if (uVar30 == 0) {
+                    iVar13 = (*pcVar20)((int *)lVar28,&pSVar34->fieldName);
                   }
                   else {
-                    lVar32 = (ulonglong)*(uint *)lVar10 - (ulonglong)*(uint *)((int)pvVar17 + 0x1c);
+                    iVar13 = *(int *)lVar28 - pSVar34->fieldName;
                   }
                 }
                 else {
-                  lVar32 = uVar7 - uVar24;
+                  iVar13 = uVar12 - uVar30;
                 }
-                Sys_WriteDebugSocketInt(lVar32);
-                if (-1 < (int)lVar32) {
-                  if ((int)lVar32 == 0) {
-                    uVar28 = uVar28 + 1;
+                Sys_WriteDebugSocketInt(iVar13);
+                if (-1 < iVar13) {
+                  if (iVar13 == 0) {
+                    uVar26 = uVar26 + 1;
                   }
                   break;
                 }
-                uVar28 = uVar28 + 1;
-                lVar10 = lVar10 + 0x50;
-              } while ((uVar28 & 0xffffffff) < uVar25);
+                uVar26 = uVar26 + 1;
+                lVar28 = lVar28 + 0x50;
+              } while ((uVar26 & 0xffffffff) < uVar22);
             }
-            uVar26 = uVar26 + 1;
-            pvVar17 = (void *)((int)pvVar17 + 0x50);
-          } while ((uVar26 & 0xffffffff) < (uVar9 & 0xffffffff));
+            uVar25 = uVar25 + 1;
+            pSVar34 = pSVar34 + 1;
+          } while ((uVar25 & 0xffffffff) < (uVar24 & 0xffffffff));
         }
       }
     }
     uVar25 = 0;
-    if ((uVar9 & 0xffffffff) != 0) {
-      piVar30 = piVar15;
-      pvVar17 = local_164;
+    if ((uVar24 & 0xffffffff) != 0) {
+      puVar32 = puVar15;
+      pSVar34 = local_164;
       do {
-        iVar18 = *piVar30;
+        pSVar6 = (Scr_WatchElement_s *)*puVar32;
         if ((uVar25 & 0xffffffff) < (ulonglong)local_170) {
-          Scr_SetNonFieldElementRefText(pvVar17);
-          iVar19 = Sys_IsRemoteDebugServer();
-          if (iVar19 != 0) {
-            Sys_WriteDebugSocketMessageType(0x22);
-            if (pvVar17 == (void *)0x0) {
+          Scr_SetNonFieldElementRefText(pSVar34);
+          iVar13 = Sys_IsRemoteDebugServer();
+          if (iVar13 != 0) {
+            Sys_WriteDebugSocketMessageType('\"');
+            if (pSVar34 == (Scr_WatchElement_s *)0x0) {
               Sys_WriteDebugSocketInt(0);
-              Sys_WriteDebugSocketInt(uRam0000001c);
+              Sys_WriteDebugSocketInt(iRam0000001c);
               Sys_EndWriteDebugSocket();
             }
             else {
-              Sys_WriteDebugSocketInt(*(undefined2 *)((int)pvVar17 + 0x46));
-              Sys_WriteDebugSocketInt(*(undefined4 *)((int)pvVar17 + 0x1c));
+              Sys_WriteDebugSocketInt((uint)pSVar34->id);
+              Sys_WriteDebugSocketInt(pSVar34->fieldName);
               Sys_EndWriteDebugSocket();
             }
           }
         }
         else {
-          bVar2 = *(byte *)(iVar35 + 0x4a);
-          if (bVar2 == 0x17) {
-            local_128 = Scr_GetArrayIndexValue(*(undefined4 *)((int)pvVar17 + 0x1c));
-            Scr_GetValueString(0,&local_128,0x81,auStack_120);
+          bVar3 = pSVar16->objectType;
+          if (bVar3 == 0x17) {
+            local_128 = Scr_GetArrayIndexValue(pSVar34->fieldName);
+            Scr_GetValueString(0,&local_128,0x81,acStack_120);
           }
-          else if ((bVar2 < 0x1a) || (0x1b < bVar2)) {
-            uVar11 = Scr_GetCanonicalString(*(undefined4 *)((int)pvVar17 + 0x1c));
-            I_strncpyz(auStack_120,uVar11,0x81);
+          else if ((bVar3 < 0x1a) || (0x1b < bVar3)) {
+            pcVar19 = Scr_GetCanonicalString(pSVar34->fieldName);
+            I_strncpyz(acStack_120,pcVar19,0x81);
           }
           else {
-            I_strncpyz(auStack_120,*(undefined4 *)((int)pvVar17 + 0xc),0x81);
+            I_strncpyz(acStack_120,pSVar34->valueText,0x81);
           }
-          Scr_SetElementRefText(pvVar17,auStack_120);
-          iVar19 = Sys_IsRemoteDebugServer();
-          if (iVar19 != 0) {
-            puVar21 = &DAT_820068af;
-            if (iVar18 != 0) {
-              puVar21 = *(undefined1 **)(iVar18 + 0x10);
+          Scr_SetElementRefText(pSVar34,acStack_120);
+          iVar13 = Sys_IsRemoteDebugServer();
+          if (iVar13 != 0) {
+            pcVar19 = "";
+            if (pSVar6 != (Scr_WatchElement_s *)0x0) {
+              pcVar19 = pSVar6->refText;
             }
-            Scr_DeltaElementRefText(pvVar17,puVar21,auStack_120);
+            Scr_DeltaElementRefText(pSVar34,pcVar19,acStack_120);
           }
         }
-        puVar21 = &DAT_820068af;
-        if (iVar18 != 0) {
-          puVar21 = *(undefined1 **)(iVar18 + 0xc);
+        pcVar19 = "";
+        if (pSVar6 != (Scr_WatchElement_s *)0x0) {
+          pcVar19 = pSVar6->valueText;
         }
-        Scr_DeltaElementValueText(pvVar17,puVar21);
-        if (iVar18 != 0) {
-          Scr_FreeWatchElementText(iVar18);
+        Scr_DeltaElementValueText(pSVar34,pcVar19);
+        if (pSVar6 != (Scr_WatchElement_s *)0x0) {
+          Scr_FreeWatchElementText(pSVar6);
         }
         uVar25 = uVar25 + 1;
-        pvVar17 = (void *)((int)pvVar17 + 0x50);
-        piVar30 = piVar30 + 1;
-      } while ((uVar25 & 0xffffffff) < (uVar9 & 0xffffffff));
+        pSVar34 = pSVar34 + 1;
+        puVar32 = puVar32 + 1;
+      } while ((uVar25 & 0xffffffff) < (uVar24 & 0xffffffff));
     }
-    if (DAT_83739338 == 0) {
+    if (g_debuggerMem == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                      0xa3f,0,&DAT_82000f98,0xffffffff8214f9fc);
+                      0xa3f,0,"%s");
     }
-    RtlFreeHeap(DAT_83739338,0,piVar15);
-    if (uVar13 != 0) {
-      if (DAT_83739338 == 0) {
+    RtlFreeHeap(g_debuggerMem,0,puVar15);
+    if (pSVar35 != (Scr_WatchElement_s *)0x0) {
+      if (g_debuggerMem == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                        0xa3f,0,&DAT_82000f98,0xffffffff8214f9fc);
+                        0xa3f,0,"%s");
       }
-      RtlFreeHeap(DAT_83739338,0,uVar13);
+      RtlFreeHeap(g_debuggerMem,0,pSVar35);
     }
-    if ((uVar9 & 0xffffffff) == 0) {
-      if (DAT_83739338 == 0) {
+    if ((uVar24 & 0xffffffff) == 0) {
+      if (g_debuggerMem == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                        0xa3f,0,&DAT_82000f98,0xffffffff8214f9fc);
+                        0xa3f,0,"%s");
       }
-      RtlFreeHeap(DAT_83739338,0,local_164);
-      if (*(short *)(iVar35 + 0x42) != 0) {
-        iVar12 = Sys_IsRemoteDebugServer();
-        if (iVar12 != 0) {
-          Sys_WriteDebugSocketMessageType(0x1e);
-          Sys_WriteDebugSocketInt(*(undefined2 *)(iVar35 + 0x46));
+      RtlFreeHeap(g_debuggerMem,0,local_164);
+      if (pSVar16->childCount != 0) {
+        iVar13 = Sys_IsRemoteDebugServer();
+        if (iVar13 != 0) {
+          Sys_WriteDebugSocketMessageType('\x1e');
+          Sys_WriteDebugSocketInt((uint)pSVar16->id);
           Sys_EndWriteDebugSocket();
         }
-        Scr_FreeWatchElementText(iVar35);
-        if ((*(byte *)(iVar35 + 0x4d) & 8) != 0) {
-          *(byte *)(iVar35 + 0x4d) = *(byte *)(iVar35 + 0x4d) & 0xf7;
-          RemoveRefToValue(*(undefined4 *)(iVar35 + 0x18),*(undefined4 *)(iVar35 + 0x14));
+        Scr_FreeWatchElementText(pSVar16);
+        if (pSVar16->valueDefined) {
+          pSVar16->field_0x4d = pSVar16->field_0x4d & 0xf7;
+          RemoveRefToValue((pSVar16->value).type,(pSVar16->value).u);
         }
-        Scr_FreeWatchElementChildrenStrict(iVar35);
+        Scr_FreeWatchElementChildrenStrict(pSVar16);
         __restgprlr();
         return;
       }
     }
     else {
-      *(short *)(iVar35 + 0x42) = (short)uVar9;
-      if ((uVar9 & 0xffff) != (uVar9 & 0xffffffff)) {
+      pSVar16->childCount = (ushort)uVar24;
+      if ((uVar24 & 0xffff) != (uVar24 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
-                        0x1af2,0,&DAT_82000f98,0xffffffff821500c4);
+                        0x1af2,0,"%s");
       }
-      *(short *)(iVar35 + 0x44) = (short)local_170;
-      uVar9 = (ulonglong)*(ushort *)(iVar35 + 0x42);
+      pSVar16->hardcodedCount = (ushort)local_170;
+      uVar24 = (ulonglong)pSVar16->childCount;
       uVar25 = 0;
-      *(void **)(iVar35 + 0x34) = local_164;
-      if (*(ushort *)(iVar35 + 0x42) != 0) {
-        uVar26 = uVar9 - 1;
-        puVar23 = (uint *)((int)local_164 + 0x3c);
+      pSVar16->childArrayHead = local_164;
+      if (pSVar16->childCount != 0) {
+        uVar22 = uVar24 - 1;
+        ppSVar21 = &local_164->next;
         do {
-          bVar36 = uVar25 < uVar26;
-          uVar28 = uVar25 & 0xffffffff;
+          bVar18 = uVar25 < uVar22;
+          iVar13 = (int)uVar25;
           uVar25 = uVar25 + 1;
-          *puVar23 = (int)((uVar26 & 0xffffffff) >> 0x1f) - ((int)(uVar28 >> 0x1f) + (uint)bVar36) &
-                     (uint)(puVar23 + 5);
-          puVar23 = puVar23 + 0x14;
-          uVar9 = uVar9 - 1;
-        } while (uVar9 != 0);
+          *ppSVar21 = (Scr_WatchElement_s *)
+                      (-((int)uVar22 >> 0x1f) - ((uint)bVar18 - (iVar13 >> 0x1f)) &
+                      (uint)(ppSVar21 + 5));
+          ppSVar21 = ppSVar21 + 0x14;
+          uVar24 = uVar24 - 1;
+        } while (uVar24 != 0);
       }
-      *(void **)(iVar35 + 0x38) = local_164;
-      if ((*(byte *)(iVar35 + 0x4d) & 4) != 0) {
-        iVar18 = Sys_IsRemoteDebugServer();
-        if ((iVar18 != 0) && (bVar8)) {
-          Sys_WriteDebugSocketMessageType(0x2a);
-          Sys_WriteDebugSocketInt(*(undefined2 *)(iVar35 + 0x46));
+      pSVar16->childHead = local_164;
+      if (pSVar16->threadList) {
+        iVar13 = Sys_IsRemoteDebugServer();
+        if ((iVar13 != 0) && (bVar11)) {
+          Sys_WriteDebugSocketMessageType('*');
+          Sys_WriteDebugSocketInt((uint)pSVar16->id);
           Sys_EndWriteDebugSocket();
         }
-        Scr_SortElementChildren(iVar35);
+        Scr_SortElementChildren(pSVar16);
       }
-      iVar35 = *(int *)(iVar35 + 0x38);
-      if (iVar35 != 0) {
+      pSVar31 = pSStack00000014;
+      pSVar35 = pSVar16->childHead;
+      if (pSVar35 != (Scr_WatchElement_s *)0x0) {
         do {
-          Scr_ScriptWatch__EvaluateWatchChildren(iVar12,iVar35);
-          iVar35 = *(int *)(iVar35 + 0x3c);
-        } while (iVar35 != 0);
+          EvaluateWatchChildren(pSVar31,pSVar35);
+          pSVar35 = pSVar35->next;
+        } while (pSVar35 != (Scr_WatchElement_s *)0x0);
         __restgprlr();
         return;
       }
@@ -3321,6 +3581,8 @@ LAB_8252f398:
 
 // 8252BC00  Scr_SetChildCountRemote  (script/scr_debugger.cpp:6934)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_SetChildCountRemote(void)
 
 {
@@ -3328,329 +3590,364 @@ void Scr_SetChildCountRemote(void)
 }
 
 
-// 8252BC08  Scr_ScriptWatch::PostEvaluateWatchElement  (script/scr_debugger.cpp:7056)
+// 8252BC08  PostEvaluateWatchElement  (script/scr_debugger.cpp:7056)
 
-void Scr_ScriptWatch__PostEvaluateWatchElement
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+bool __thiscall
+Scr_ScriptWatch::PostEvaluateWatchElement
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,VariableValue *param_2)
 
 {
   int iVar1;
-  uint *puVar2;
-  int iVar3;
-  uint uVar4;
-  undefined1 auStack_140 [320];
+  undefined1 uVar2;
+  uint uVar3;
+  char acStack_140 [320];
   
-  iVar3 = __savegprlr_26();
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1b98,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  iVar1 = __savegprlr_26(this);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1b98,0,"%s");
   }
-  iVar1 = (int)param_2;
-  if ((*(byte *)(iVar1 + 0x4d) & 8) != 0) {
-    *(byte *)(iVar1 + 0x4d) = *(byte *)(iVar1 + 0x4d) & 0xf7;
-    RemoveRefToValue(*(undefined4 *)(iVar1 + 0x18),*(undefined4 *)(iVar1 + 0x14));
+  if (param_1->valueDefined) {
+    param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+    RemoveRefToValue((param_1->value).type,(param_1->value).u);
   }
-  puVar2 = (uint *)param_3;
-  if (DAT_83c4ba9c == 0) {
-    Scr_GetValueString(*(undefined4 *)(iVar3 + 0x10),param_3,0x101,auStack_140);
-    ReplaceString(param_2 + 0xc,auStack_140,0xffffffff8214fbd8,0);
-    if (puVar2[1] == 1) {
-      uVar4 = *puVar2;
+  if (scrVarPub.error_message == (char *)0x0) {
+    Scr_GetValueString(*(uint *)(iVar1 + 0x10),param_2,0x101,acStack_140);
+    ReplaceString(&param_1->valueText,acStack_140,"PostEvaluateWatchElement",0);
+    if (param_2->type == 1) {
+      uVar3 = (param_2->u).uintValue;
     }
     else {
-      uVar4 = 0;
+      uVar3 = 0;
     }
-    *(short *)(iVar1 + 0x40) = (short)uVar4;
-    if ((uVar4 & 0xffff) != uVar4) {
-      MyAssertHandler(0xffffffff8214f658,0x1ba2,0,0xffffffff82000f98,0xffffffff8214fbb8);
+    param_1->objectId = (ushort)uVar3;
+    if ((uVar3 & 0xffff) != uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1ba2,0,"%s");
     }
-    if (((*(short *)(iVar1 + 0x40) == 0) && (*(char *)(iVar1 + 0x4c) != '\x01')) &&
-       (*(char *)(iVar1 + 0x4c) != '\x03')) {
-      RemoveRefToValue(puVar2[1],*puVar2);
-      __restgprlr_26(1);
-      return;
+    if (((param_1->objectId == 0) && (param_1->breakpointType != '\x01')) &&
+       (param_1->breakpointType != '\x03')) {
+      RemoveRefToValue(param_2->type,(VariableUnion)*(uint *)&param_2->u);
+      uVar2 = __restgprlr_26(1);
+      return (bool)uVar2;
     }
-    *(byte *)(iVar1 + 0x4d) = *(byte *)(iVar1 + 0x4d) | 8;
-    *(uint *)(iVar1 + 0x14) = *puVar2;
-    *(uint *)(iVar1 + 0x18) = puVar2[1];
-    __restgprlr_26(1);
-    return;
+    param_1->valueDefined = true;
+    (param_1->value).u = param_2->u;
+    (param_1->value).type = param_2->type;
+    uVar2 = __restgprlr_26(1);
+    return (bool)uVar2;
   }
-  Com_sprintf(auStack_140,0x101,0xffffffff8214fbb0);
-  ReplaceString(param_2 + 0xc,auStack_140,0xffffffff8214fbd8,0);
-  *(undefined2 *)(iVar1 + 0x40) = 0;
+  Com_sprintf(acStack_140,0x101,"<%s>");
+  ReplaceString(&param_1->valueText,acStack_140,"PostEvaluateWatchElement",0);
+  param_1->objectId = 0;
   Scr_ClearErrorMessage();
-  RemoveRefToValue(puVar2[1],*puVar2);
-  __restgprlr_26(0);
-  return;
+  RemoveRefToValue(param_2->type,(VariableUnion)*(uint *)&param_2->u);
+  uVar2 = __restgprlr_26(0);
+  return (bool)uVar2;
 }
 
 
-// 8252BDB8  Scr_ScriptWatch::EvaluateWatchChildElement  (script/scr_debugger.cpp:7106)
+// 8252BDB8  EvaluateWatchChildElement  (script/scr_debugger.cpp:7106)
 
-void Scr_ScriptWatch__EvaluateWatchChildElement
-               (undefined8 param_1,int param_2,ulonglong param_3,undefined8 param_4,
-               ulonglong param_5)
+bool __thiscall
+Scr_ScriptWatch::EvaluateWatchChildElement
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,uint param_2,
+          Scr_WatchElement_s *param_3,bool param_4)
 
 {
-  bool bVar1;
-  char cVar2;
-  ushort uVar3;
-  undefined4 uVar4;
-  undefined4 uVar5;
-  undefined8 uVar6;
+  uchar uVar1;
+  int iVar2;
+  Scr_ScriptWatch *this_00;
+  ulonglong uVar3;
+  VariableUnion VVar4;
+  bool bVar5;
+  undefined1 uVar6;
   ulonglong uVar7;
-  int iVar8;
-  undefined8 local_50;
-  undefined8 local_48;
+  VariableUnion local_50;
+  int iStack_4c;
+  VariableUnion local_48;
+  int iStack_44;
   
-  uVar6 = __savegprlr_25();
-  if (*(int *)(param_2 + 0x20) != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1bc9,0,0xffffffff82000f98,0xffffffff8214f83c);
+  uVar3 = (ulonglong)param_4;
+  uVar7 = (ulonglong)(int)param_2;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_25(this);
+  if (param_1->breakpoint != (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1bc9,0,"%s");
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1bcb,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1bcb,0,"%s");
   }
-  iVar8 = (int)param_3;
-  *(int *)((int)param_4 + 0x1c) = iVar8;
-  if ((param_5 & 0xff) == 0) {
-    cVar2 = *(char *)(param_2 + 0x4a);
-    if (cVar2 == '\x17') {
-      local_50 = Scr_GetArrayIndexValue(param_3);
-      local_48._0_4_ = (undefined4)(local_50 >> 0x20);
-      uVar4 = local_48._0_4_;
-      local_48._4_4_ = (undefined4)local_50;
-      uVar5 = local_48._4_4_;
+  VVar4.intValue = (int)uVar7;
+  param_3->fieldName = (uint)VVar4;
+  if ((uVar3 & 0xff) == 0) {
+    uVar1 = param_1->objectType;
+    if (uVar1 == '\x17') {
+      _local_50 = Scr_GetArrayIndexValue(VVar4.uintValue);
       local_48 = local_50;
-      AddRefToValue(uVar5,uVar4);
-      Scr_EvalArrayVariable(*(undefined2 *)(param_2 + 0x40),&local_50);
+      iStack_44 = local_50;
+      VVar4.intValue = local_48.intValue;
+      iVar2 = iStack_44;
+      _local_48 = _local_50;
+      AddRefToValue(iVar2,VVar4);
+      Scr_EvalArrayVariable((uint)param_1->objectId,(VariableValue *)&local_50);
     }
-    else if (cVar2 == '\x1a') {
-      local_50 = CONCAT44(iVar8,1);
-      AddRefToObject(param_3);
+    else if (uVar1 == '\x1a') {
+      local_50.uintValue = VVar4.intValue;
+      iStack_4c = 1;
+      AddRefToObject(VVar4.uintValue);
     }
-    else if (cVar2 == '\x1b') {
-      local_50 = CONCAT44(iVar8,2);
-      SL_AddRefToString(param_3);
+    else if (uVar1 == '\x1b') {
+      local_50.uintValue = VVar4.intValue;
+      iStack_4c = 2;
+      SL_AddRefToString(VVar4.uintValue);
     }
     else {
-      Scr_EvalFieldVariable(param_3 & 0xffff,&local_50,*(undefined2 *)(param_2 + 0x40));
+      Scr_EvalFieldVariable
+                (VVar4.uintValue & 0xffff,(VariableValue *)&local_50,(uint)param_1->objectId);
     }
     goto LAB_8252bf70;
   }
-  uVar3 = *(ushort *)(param_2 + 0x40);
-  uVar7 = (ulonglong)uVar3;
-  local_50 = (ulonglong)CONCAT24(uVar3,1);
-  if ((param_3 & 0xffffffff) < 5) {
-    bVar1 = iVar8 != 0;
-    if (param_3 != 1 || !bVar1) {
-      if (param_3 != 2 || !bVar1) {
-        if (param_3 == 3 && bVar1) {
-          uVar7 = Scr_GetSelf();
-          local_50 = CONCAT44((int)uVar7,local_50._4_4_);
+  local_50.intValue._2_2_ = param_1->objectId;
+  uVar3 = (ulonglong)(ushort)local_50.uintValue._2_2_;
+  iStack_4c = 1;
+  local_50.intValue._0_2_ = 0;
+  if ((uVar7 & 0xffffffff) < 5) {
+    bVar5 = VVar4.intValue != 0;
+    if (uVar7 != 1 || !bVar5) {
+      if (uVar7 != 2 || !bVar5) {
+        if (uVar7 == 3 && bVar5) {
+          VVar4.uintValue = Scr_GetSelf(ZEXT24(local_50.uintValue._2_2_));
+          uVar3 = (ulonglong)VVar4.intValue;
+          local_50.uintValue = VVar4.intValue;
           goto LAB_8252bf64;
         }
-        if (!bVar1) {
-          AddRefToObject();
-          Scr_EvalSizeValue(&local_50);
+        if (!bVar5) {
+          AddRefToObject(ZEXT24(local_50.uintValue._2_2_));
+          Scr_EvalSizeValue((VariableValue *)&local_50);
           goto LAB_8252bf60;
         }
       }
-      local_50 = (ulonglong)uVar3 << 0x20;
+      _local_50 = (VariableValue)((ulonglong)(ushort)local_50.uintValue._2_2_ << 0x20);
     }
   }
   else {
-    uVar7 = param_3 - 5;
-    local_50 = CONCAT44((int)uVar7,1);
-    if (uVar7 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1c03,0,0xffffffff82000f98,0xffffffff8214fc08);
+    uVar3 = uVar7 - 5;
+    local_50.intValue = (int)uVar3;
+    iStack_4c = 1;
+    if (uVar3 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1c03,0,"%s");
 LAB_8252bf60:
-      uVar7 = local_50 >> 0x20;
+      uVar3 = (ulonglong)_local_50 >> 0x20;
     }
   }
 LAB_8252bf64:
-  AddRefToValue(local_50._4_4_,uVar7);
+  AddRefToValue(iStack_4c,(VariableUnion)(int)uVar3);
 LAB_8252bf70:
-  Scr_ScriptWatch__PostEvaluateWatchElement(uVar6,param_4,&local_50);
-  __restgprlr_25();
-  return;
+  bVar5 = PostEvaluateWatchElement(this_00,param_3,(VariableValue *)&local_50);
+  uVar6 = __restgprlr_25(bVar5);
+  return (bool)uVar6;
 }
 
 
-// 8252BF88  Scr_ScriptWatch::EvaluateWatchElementExpression  (script/scr_debugger.cpp:7193)
+// 8252BF88  EvaluateWatchElementExpression  (script/scr_debugger.cpp:7193)
 
-void Scr_ScriptWatch__EvaluateWatchElementExpression
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void __thiscall
+Scr_ScriptWatch::EvaluateWatchElementExpression
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,VariableValue *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 uVar3;
+  bool bVar2;
   
-  iVar2 = __savegprlr_27();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x20) != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1c20,0,0xffffffff82000f98,0xffffffff8214f83c);
+  iVar1 = __savegprlr_27(this);
+  if (param_1->breakpoint != (Scr_Breakpoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1c20,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1c23,0,0xffffffff82000f98,0xffffffff8214fc20);
+  if ((param_1->expr).exprHead == (debugger_sval_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1c23,0,"%s");
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1c25,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1c25,0,"%s");
   }
-  if (((*(byte *)(iVar1 + 0x4d) & 8) == 0) ||
-     ((*(char *)(iVar1 + 0x4c) != '\x01' && (*(char *)(iVar1 + 0x4c) != '\x03')))) {
-    uVar3 = 0;
+  if ((param_1->valueDefined) &&
+     ((param_1->breakpointType == '\x01' || (param_1->breakpointType == '\x03')))) {
+    bVar2 = true;
   }
   else {
-    uVar3 = 1;
+    bVar2 = false;
   }
-  Scr_EvalScriptExpression(param_2,*(undefined4 *)(iVar2 + 0x10),param_3,uVar3,0);
-  __restgprlr_27();
+  bVar2 = Scr_EvalScriptExpression(&param_1->expr,*(uint *)(iVar1 + 0x10),param_2,bVar2,false);
+  __restgprlr_27(bVar2);
   return;
 }
 
 
-// 8252F3A0  Scr_ScriptWatch::EvaluateWatchElement  (script/scr_debugger.cpp:7226)
+// 8252F3A0  EvaluateWatchElement  (script/scr_debugger.cpp:7226)
 
-void Scr_ScriptWatch__EvaluateWatchElement(undefined8 param_1,int param_2)
+void __thiscall
+Scr_ScriptWatch::EvaluateWatchElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
   char cVar1;
   int iVar2;
   char *pcVar3;
-  undefined1 auStack_130 [16];
+  VariableValue aVStack_130 [2];
   char acStack_120 [264];
   
-  Scr_ScriptWatch__EvaluateWatchElementExpression(param_1,param_2,auStack_130);
-  pcVar3 = *(char **)(param_2 + 0xc);
+  EvaluateWatchElementExpression(this,param_1,aVStack_130);
+  pcVar3 = param_1->valueText;
   iVar2 = -(int)pcVar3;
   do {
     cVar1 = *pcVar3;
     pcVar3[(int)(acStack_120 + iVar2)] = cVar1;
     pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  Scr_ScriptWatch__PostEvaluateWatchElement(param_1,param_2,auStack_130);
-  Scr_PostSetText(param_2);
-  Scr_DeltaElementValueText(param_2,acStack_120);
-  Scr_ScriptWatch__EvaluateWatchChildren(param_1,param_2);
+  PostEvaluateWatchElement(this,param_1,aVStack_130);
+  Scr_PostSetText(param_1);
+  Scr_DeltaElementValueText(param_1,acStack_120);
+  EvaluateWatchChildren(this,param_1);
   return;
 }
 
 
-// 8252C080  Scr_ScriptWatch::CreateWatchElement  (script/scr_debugger.cpp:7264)
+// 8252C080  CreateWatchElement  (script/scr_debugger.cpp:7264)
 
-void Scr_ScriptWatch__CreateWatchElement(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::CreateWatchElement
+          (Scr_ScriptWatch *this,char *param_1,Scr_WatchElement_s **param_2,char *param_3)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
+  Scr_WatchElement_s *pSVar3;
   longlong lVar4;
+  longlong lVar5;
   
-  iVar2 = __savegprlr_28();
-  iVar3 = Scr_CreateWatchElement(param_2,param_3);
-  lVar4 = (ulonglong)*(uint *)(iVar2 + 0xc) + 1;
-  *(int *)(iVar2 + 0xc) = (int)lVar4;
-  if (lVar4 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1c65,0,0xffffffff82000f98,0xffffffff8214fc4c);
+  lVar4 = (longlong)(int)param_2;
+  lVar5 = (longlong)(int)param_1;
+  iVar2 = __savegprlr_28(this,lVar5,lVar4,param_3);
+  pSVar3 = Scr_CreateWatchElement
+                     ((char *)lVar5,(Scr_WatchElement_s **)lVar4,
+                      (char *)(Scr_WatchElement_s **)lVar4);
+  lVar5 = (ulonglong)*(uint *)(iVar2 + 0xc) + 1;
+  *(int *)(iVar2 + 0xc) = (int)lVar5;
+  if (lVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1c65,0,"%s");
   }
   uVar1 = *(uint *)(iVar2 + 0xc);
-  *(short *)(iVar3 + 0x46) = (short)uVar1;
+  pSVar3->id = (ushort)uVar1;
   if ((uVar1 & 0xffff) != *(uint *)(iVar2 + 0xc)) {
-    MyAssertHandler(0xffffffff8214f658,0x1c67,0,0xffffffff82000f98,0xffffffff8214fc30);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1c67,0,"%s");
   }
-  __restgprlr_28(iVar3);
-  return;
+  pSVar3 = (Scr_WatchElement_s *)__restgprlr_28(pSVar3);
+  return pSVar3;
 }
 
 
 // 82530C50  Scr_AddTextRemote  (script/scr_debugger.cpp:7340)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_AddTextRemote(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
+  char *pcVar3;
   
   __savegprlr_29();
-  uVar1 = Sys_ReadDebugSocketInt();
-  if (((int)uVar1 != 0) &&
-     (uVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1),
-     (uVar2 & 0xffffffff) != 0)) {
-    uVar1 = Sys_ReadDebugSocketString();
-    Scr_ScriptWatch__AddElement(0xffffffff83739368,uVar2,uVar1);
-    FreeString(uVar1,0);
+  iVar1 = Sys_ReadDebugSocketInt();
+  if ((iVar1 != 0) &&
+     (pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                         (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1
+                         ), pSVar2 != (Scr_WatchElement_s *)0x0)) {
+    pcVar3 = Sys_ReadDebugSocketString();
+    Scr_ScriptWatch::AddElement(&scrDebuggerGlob.scriptWatch,pSVar2,pcVar3);
+    FreeString(pcVar3,0);
   }
   __restgprlr_29();
   return;
 }
 
 
-// 82530088  Scr_ScriptWatch::AddElement  (script/scr_debugger.cpp:7361)
+// 82530088  AddElement  (script/scr_debugger.cpp:7361)
 
-void Scr_ScriptWatch__AddElement(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void __thiscall
+Scr_ScriptWatch::AddElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,char *param_2)
 
 {
-  undefined4 *puVar1;
+  sval_u *psVar1;
+  Scr_ScriptWatch *this_00;
   int iVar2;
-  int iVar3;
-  int *local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  ulonglong uVar3;
+  sval_u local_40;
+  sval_u local_3c;
+  sval_u local_38;
   
-  iVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1cc5,0,0xffffffff82000f98,0xffffffff8214f888);
+  uVar3 = (ulonglong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_27(this);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1cc5,0,"%s");
   }
-  puVar1 = (undefined4 *)param_2;
-  if (puVar1[8] == 0) {
-    local_38 = 0;
-    Scr_CompileText(param_3,&local_40);
-    iVar3 = *local_40;
-    if (iVar3 != 0x59) {
-      if ((iVar3 < 0x5a) || (0x5b < iVar3)) {
-        if (puVar1[0xc] == 0) {
-          iVar3 = Sys_IsRemoteDebugServer();
-          if (iVar3 != 0) {
-            Sys_WriteDebugSocketMessageType(6);
-            Sys_WriteDebugSocketInt(*(undefined2 *)((int)puVar1 + 0x46));
-            Sys_WriteDebugSocketString(param_3);
-            Sys_EndWriteDebugSocket();
-          }
-          Scr_FreeDebugExpr(param_2);
-          ReplaceString(param_2 + 0x10,param_3,0xffffffff82150268,0);
-          *puVar1 = local_40;
-          puVar1[1] = local_3c;
-          puVar1[2] = local_38;
-          if ((*(byte *)((int)puVar1 + 0x4d) & 8) != 0) {
-            *(byte *)((int)puVar1 + 0x4d) = *(byte *)((int)puVar1 + 0x4d) & 0xf7;
-            RemoveRefToValue(puVar1[6],puVar1[5]);
-          }
-          Scr_ScriptWatch__EvaluateWatchElement(iVar2,param_2);
+  psVar1 = (sval_u *)uVar3;
+  if ((Scr_Breakpoint *)psVar1[8].type == (Scr_Breakpoint *)0x0) {
+    local_38.type = psVar1[8].type;
+    Scr_CompileText(param_2,(ScriptExpression_t *)&local_40);
+    iVar2 = (local_40.block)->abortLevel;
+    if (iVar2 != 0x59) {
+      if ((iVar2 < 0x5a) || (0x5b < iVar2)) {
+        if ((Scr_WatchElement_s *)psVar1[0xc].type == (Scr_WatchElement_s *)0x0) {
           iVar2 = Sys_IsRemoteDebugServer();
           if (iVar2 != 0) {
-            Sys_WriteDebugSocketMessageType(0x26);
+            Sys_WriteDebugSocketMessageType('\x06');
+            Sys_WriteDebugSocketInt((uint)*(ushort *)((int)psVar1 + 0x46));
+            Sys_WriteDebugSocketString(param_2);
+            Sys_EndWriteDebugSocket();
+          }
+          Scr_FreeDebugExpr((ScriptExpression_t *)psVar1);
+          ReplaceString(&psVar1[4].codePosValue,param_2,"Scr_ScriptWatch::AddElement",0);
+          psVar1->node = (sval_u *)local_40;
+          psVar1[1] = local_3c;
+          psVar1[2] = local_38;
+          if ((*(byte *)((int)psVar1 + 0x4d) & 8) != 0) {
+            *(byte *)((int)psVar1 + 0x4d) = *(byte *)((int)psVar1 + 0x4d) & 0xf7;
+            RemoveRefToValue(psVar1[6].type,(VariableUnion)psVar1[5]);
+          }
+          EvaluateWatchElement(this_00,(Scr_WatchElement_s *)psVar1);
+          iVar2 = Sys_IsRemoteDebugServer();
+          if (iVar2 != 0) {
+            Sys_WriteDebugSocketMessageType('&');
             Sys_EndWriteDebugSocket();
             __restgprlr_27();
             return;
           }
           goto LAB_82530254;
         }
-        Com_Printf(0x17,0xffffffff82150284);
+        Com_Printf(0x17,"Cannot change child element\n");
       }
-      Scr_FreeDebugExpr(&local_40);
+      Scr_FreeDebugExpr((ScriptExpression_t *)&local_40);
       __restgprlr_27();
       return;
     }
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x1cd4,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1cd4,0,"%s");
     }
-    DAT_83c4ba98 = 0;
-    Scr_ExecCode(local_40[1],*(undefined4 *)(iVar2 + 0x10));
-    DAT_83c4ba98 = '\x01';
+    scrVarPub.evaluate = false;
+    Scr_ExecCode((char *)(local_40.block)->localVarsCreateCount,this_00->localId);
+    scrVarPub.evaluate = true;
     SL_ShutdownSystem(2);
-    Scr_FreeDebugExpr(&local_40);
-    Scr_ScriptWatch__Evaluate(iVar2);
+    Scr_FreeDebugExpr((ScriptExpression_t *)&local_40);
+    Evaluate(this_00);
   }
 LAB_82530254:
   __restgprlr_27();
@@ -3658,96 +3955,101 @@ LAB_82530254:
 }
 
 
-// 8252C120  Scr_ScriptWatch::CloneElement  (script/scr_debugger.cpp:7502)
+// 8252C120  CloneElement  (script/scr_debugger.cpp:7502)
 
-undefined8 Scr_ScriptWatch__CloneElement(undefined8 param_1,int param_2)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::CloneElement(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  undefined8 uVar4;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
+  Scr_WatchElement_s **ppSVar3;
+  Scr_WatchElement_s *pSVar4;
   
-  iVar3 = *(int *)(param_2 + 0x30);
-  iVar2 = param_2;
-  while (iVar1 = iVar3, iVar1 != 0) {
-    iVar2 = iVar1;
-    iVar3 = *(int *)(iVar1 + 0x30);
+  pSVar2 = param_1->parent;
+  pSVar4 = param_1;
+  while (pSVar1 = pSVar2, pSVar1 != (Scr_WatchElement_s *)0x0) {
+    pSVar4 = pSVar1;
+    pSVar2 = pSVar1->parent;
   }
-  uVar4 = Scr_ScriptWatch__GetElementRef(param_1,iVar2);
-  uVar4 = Scr_ScriptWatch__CreateWatchElement
-                    (param_1,*(undefined4 *)(param_2 + 0x10),uVar4,0xffffffff8214fc58);
-  Scr_CompileText(*(undefined4 *)(param_2 + 0x10),uVar4);
-  return uVar4;
+  ppSVar3 = GetElementRef(this,pSVar4);
+  pSVar4 = CreateWatchElement(this,param_1->refText,ppSVar3,"Scr_ScriptWatch::CloneElement");
+  Scr_CompileText(param_1->refText,&pSVar4->expr);
+  return pSVar4;
 }
 
 
 // 8252F430  Scr_CloneElementRemote  (script/scr_debugger.cpp:7571)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_CloneElementRemote(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if (((int)uVar1 != 0) &&
-     (iVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1), iVar2 != 0
-     )) {
-    iVar3 = Sys_IsRemoteDebugServer();
-    if (iVar3 != 0) {
-      Sys_WriteDebugSocketMessageType(0x10);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar2 + 0x46));
+  iVar1 = Sys_ReadDebugSocketInt();
+  if ((iVar1 != 0) &&
+     (pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                         (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1
+                         ), pSVar2 != (Scr_WatchElement_s *)0x0)) {
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) {
+      Sys_WriteDebugSocketMessageType('\x10');
+      Sys_WriteDebugSocketInt((uint)pSVar2->id);
       Sys_EndWriteDebugSocket();
     }
-    uVar1 = Scr_ScriptWatch__CloneElement(0xffffffff83739368,iVar2);
-    iVar2 = Sys_IsRemoteDebugServer();
-    if (iVar2 != 0) {
-      Scr_ScriptWatch__EvaluateWatchElement(0xffffffff83739368,uVar1);
+    pSVar2 = Scr_ScriptWatch::CloneElement(&scrDebuggerGlob.scriptWatch,pSVar2);
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) {
+      Scr_ScriptWatch::EvaluateWatchElement(&scrDebuggerGlob.scriptWatch,pSVar2);
     }
   }
   return;
 }
 
 
-// 8252F4D8  Scr_ScriptWatch::Evaluate  (script/scr_debugger.cpp:7616)
+// 8252F4D8  Evaluate  (script/scr_debugger.cpp:7616)
 
-void Scr_ScriptWatch__Evaluate(void)
+void __thiscall Scr_ScriptWatch::Evaluate(Scr_ScriptWatch *this)
 
 {
   char cVar1;
-  int iVar2;
+  Scr_WatchElement_s *pSVar2;
   int iVar3;
-  int iVar4;
-  char *pcVar5;
-  undefined1 auStack_140 [16];
+  Scr_ScriptWatch *this_00;
+  char *pcVar4;
+  VariableValue aVStack_140 [2];
   char acStack_130 [304];
   
-  iVar4 = __savegprlr_28();
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1dcb,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  this_00 = (Scr_ScriptWatch *)__savegprlr_28(this);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1dcb,0,"%s");
   }
-  if (DAT_83ca44bc != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1dcc,0,0xffffffff82000f98,0xffffffff821501bc);
+  if (scrVmPub.outparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1dcc,0,"%s");
   }
-  if (DAT_83ca44b8 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1dcd,0,0xffffffff82000f98,0xffffffff821501a4);
+  if (scrVmPub.inparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1dcd,0,"%s");
   }
-  for (iVar2 = *(int *)(iVar4 + 8); iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x3c)) {
-    if (*(int *)(iVar2 + 0x20) == 0) {
-      Scr_ScriptWatch__EvaluateWatchElementExpression(iVar4,iVar2,auStack_140);
-      pcVar5 = *(char **)(iVar2 + 0xc);
-      iVar3 = -(int)pcVar5;
+  for (pSVar2 = this_00->elementHead; pSVar2 != (Scr_WatchElement_s *)0x0; pSVar2 = pSVar2->next) {
+    if (pSVar2->breakpoint == (Scr_Breakpoint *)0x0) {
+      EvaluateWatchElementExpression(this_00,pSVar2,aVStack_140);
+      pcVar4 = pSVar2->valueText;
+      iVar3 = -(int)pcVar4;
       do {
-        cVar1 = *pcVar5;
-        pcVar5[(int)(acStack_130 + iVar3)] = cVar1;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4[(int)(acStack_130 + iVar3)] = cVar1;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      Scr_ScriptWatch__PostEvaluateWatchElement(iVar4,iVar2,auStack_140);
-      Scr_PostSetText(iVar2);
-      Scr_DeltaElementValueText(iVar2,acStack_130);
-      Scr_ScriptWatch__EvaluateWatchChildren(iVar4,iVar2);
+      PostEvaluateWatchElement(this_00,pSVar2,aVStack_140);
+      Scr_PostSetText(pSVar2);
+      Scr_DeltaElementValueText(pSVar2,acStack_130);
+      EvaluateWatchChildren(this_00,pSVar2);
     }
   }
   __restgprlr_28();
@@ -3757,31 +4059,35 @@ void Scr_ScriptWatch__Evaluate(void)
 
 // 8252F610  Scr_Evaluate  (script/scr_debugger.cpp:7661)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_Evaluate(void)
 
 {
-  Scr_ScriptWatch__Evaluate(0xffffffff83739368);
+  Scr_ScriptWatch::Evaluate(&scrDebuggerGlob.scriptWatch);
   return;
 }
 
 
 // 8252C1A8  Scr_AllowBreakpoint  (script/scr_debugger.cpp:7673)
 
-bool Scr_AllowBreakpoint(void)
+bool Scr_AllowBreakpoint(char *param_1)
 
 {
-  return DAT_837396fc == '\0';
+  return !scrDebuggerGlob.disableBreakpoints;
 }
 
 
 // 8252C1C0  Scr_RemoveNextBreakpoint  (script/scr_debugger.cpp:7699)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RemoveNextBreakpoint(void)
 
 {
-  if (DAT_837396b0 != 0) {
-    Scr_RemoveManualBreakpoint();
-    DAT_837396b0 = 0;
+  if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+    Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+    scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
   }
   return;
 }
@@ -3790,36 +4096,45 @@ void Scr_RemoveNextBreakpoint(void)
 // 82532130  Scr_SpecialBreakpoint  (script/scr_debugger.cpp:7709)
 
 void Scr_SpecialBreakpoint
-               (undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined4 param_4,
-               ulonglong param_5)
+               (VariableValue *param_1,char *param_2,uint param_3,int param_4,uchar param_5)
 
 {
-  undefined4 uVar1;
+  VariableValue *pVVar1;
   int iVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  char *pcVar5;
   
-  uVar1 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e21,0,0xffffffff82000f98,0xffffffff82002114);
+  uVar4 = (ulonglong)(char)param_5;
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar1 = (VariableValue *)__savegprlr_23(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e21,0,"%s");
   }
-  if (DAT_83ca44b8 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e22,0,0xffffffff82000f98,0xffffffff821501a4);
+  if (scrVmPub.inparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e22,0,"%s");
   }
-  DAT_83ca44bc = 0;
-  if (DAT_837396b0 != 0) {
-    Scr_RemoveManualBreakpoint();
-    DAT_837396b0 = 0;
+  scrVmPub.outparamcount = 0;
+  if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+    Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+    scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
   }
-  DAT_8373969c = (undefined4)(param_2 - 1);
-  DAT_83739704 = 0xffffffff;
-  DAT_83739378 = param_3;
-  DAT_83739698 = param_4;
-  DAT_837396c8 = uVar1;
-  if ((param_5 & 0xff) == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e30,0,0xffffffff82000f98,0xffffffff820928bc);
+  pcVar5 = (char *)((int)uVar3 + -1);
+  scrDebuggerGlob.stepLineNum = -1;
+  scrDebuggerGlob.scriptWatch.localId = param_3;
+  scrDebuggerGlob.breakpointOpcode = param_4;
+  scrDebuggerGlob.breakpointCodePos = pcVar5;
+  scrDebuggerGlob.breakpointTop = pVVar1;
+  if ((uVar4 & 0xff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e30,0,"%s");
   }
-  iVar2 = Scr_GetSourcePosOfType(param_2 - 1,param_5,1,0xffffffff837396a0);
+  iVar2 = Scr_GetSourcePosOfType(pcVar5,(uchar)uVar4,1,&scrDebuggerGlob.breakpointPos);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e32,0,0xffffffff82000f98,0xffffffff821503e4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e32,0,"%s");
   }
   Scr_HitBreakpointInternal();
   __restgprlr_23();
@@ -3830,138 +4145,145 @@ void Scr_SpecialBreakpoint
 // 82532268  Scr_CheckBreakonNotify  (script/scr_debugger.cpp:7737)
 
 void Scr_CheckBreakonNotify
-               (undefined8 param_1,undefined4 param_2,longlong param_3,ulonglong param_4,
-               undefined8 param_5)
+               (uint param_1,uint param_2,VariableValue *param_3,char *param_4,uint param_5)
 
 {
-  bool bVar1;
+  Scr_WatchElement_s *pSVar1;
   bool bVar2;
-  undefined4 uVar3;
-  char cVar5;
+  bool bVar3;
+  bool bVar5;
   int iVar4;
-  longlong lVar6;
+  ulonglong uVar6;
   longlong lVar7;
-  undefined4 local_a0;
-  undefined4 local_9c;
+  VariableValue *pVVar8;
+  uint uVar9;
+  VariableUnion local_a0;
+  int local_9c;
   
-  uVar3 = __savegprlr();
-  if (DAT_83ca44b8 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e43,0,0xffffffff82000f98,0xffffffff821501a4);
+  uVar6 = (ulonglong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  __savegprlr();
+  if (scrVmPub.inparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e43,0,"%s");
   }
-  if (DAT_83ca44bc != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1e44,0,0xffffffff82000f98,0xffffffff821501bc);
+  if (scrVmPub.outparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e44,0,"%s");
   }
-  if (DAT_837396fc == '\0') {
-    DAT_83ca44b0 = (int)param_3;
-    DAT_83739378 = (undefined4)param_5;
-    lVar6 = param_3 + 4;
-    iVar4 = 0;
-    DAT_8374b710 = uVar3;
-    DAT_8374b72c = param_2;
-    if (*(int *)(DAT_83ca44b0 + 4) != 8) {
-      lVar7 = param_3 + 0x7c35b838;
-      iVar4 = 0;
-      do {
-        lVar6 = lVar6 + -8;
-        iVar4 = iVar4 + 1;
-        lVar7 = lVar7 + -8;
-        if (*(int *)lVar6 == 7) {
-          MyAssertHandler(0xffffffff8214f658,0x1e55,0,0xffffffff82150418,0xffffffff821503f4,
-                          (int)lVar7 >> 3);
-        }
-      } while (*(int *)lVar6 != 8);
+  if (scrDebuggerGlob.disableBreakpoints != false) goto LAB_825326a0;
+  pVVar8 = (VariableValue *)lVar7;
+  lVar7 = lVar7 + 4;
+  uVar9 = 0;
+  iVar4 = pVVar8->type;
+  scrVmPub.top = pVVar8;
+  g_breakonObject = param_1;
+  g_breakonString = param_2;
+  scrDebuggerGlob.scriptWatch.localId = param_5;
+  while (iVar4 != 8) {
+    lVar7 = lVar7 + -8;
+    uVar9 = uVar9 + 1;
+    if (*(int *)lVar7 == 7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1e55,0,"%s\n\t(currentValue - scrVmPub.stack) = %i");
     }
-    DAT_83ca44c0 = iVar4;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x1e5a,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    iVar4 = *(int *)lVar7;
+  }
+  scrVmPub.breakpointOutparamcount = uVar9;
+  if (scrVarPub.evaluate != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e5a,0,"%s");
+  }
+  scrVarPub.evaluate = true;
+  bVar2 = false;
+  bVar3 = false;
+  pSVar1 = scrDebuggerGlob.scriptWatch.elementHead;
+  while (pSVar1 != (Scr_WatchElement_s *)0x0) {
+    if ((pSVar1->expr).breakonExpr == 0) goto LAB_82532504;
+    if (pSVar1->breakpoint != (Scr_Breakpoint *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1e66,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    bVar1 = false;
-    bVar2 = false;
-    iVar4 = DAT_83739370;
-LAB_825323f4:
-    do {
-      if (iVar4 == 0) goto LAB_82532530;
-      if (*(int *)(iVar4 + 4) != 0) {
-        if (*(int *)(iVar4 + 0x20) != 0) {
-          MyAssertHandler(0xffffffff8214f658,0x1e66,0,0xffffffff82000f98,0xffffffff8214f83c);
-        }
-        if (*(int *)(iVar4 + 8) == 0) {
-          MyAssertHandler(0xffffffff8214f658,0x1e68,0,0xffffffff82000f98,0xffffffff8214fc20);
-        }
-        DAT_8374b724 = 0;
-        cVar5 = Scr_EvalScriptExpression(iVar4,0,&local_a0,1,1);
-        if ((cVar5 != '\0') && (!bVar1)) {
-          Scr_ClearErrorMessage();
-          RemoveRefToValue(local_9c,local_a0);
-LAB_8253251c:
-          bVar1 = true;
-          Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
-          iVar4 = DAT_83739370;
-          goto LAB_825323f4;
-        }
-        if (DAT_83c4ba9c == 0) {
-          if (DAT_8374b724 != 0) {
+    if ((pSVar1->expr).exprHead == (debugger_sval_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1e68,0,"%s");
+    }
+    g_breakonHit = 0;
+    bVar5 = Scr_EvalScriptExpression(&pSVar1->expr,0,(VariableValue *)&local_a0,true,true);
+    if ((!bVar5) || (bVar2)) {
+      if (scrVarPub.error_message == (char *)0x0) {
+        if (g_breakonHit != 0) {
 LAB_825324d0:
-            if ((*(char *)(iVar4 + 0x4c) == '\x01') &&
-               (cVar5 = Scr_ConditionalExpression(iVar4,param_5), cVar5 != '\0')) {
-              Scr_WatchElementHitBreakpoint(iVar4,1);
-              bVar2 = true;
-            }
-          }
-        }
-        else {
-          Scr_ClearErrorMessage();
-          RemoveRefToValue(local_9c,local_a0);
-          if ((*(byte *)(iVar4 + 0x4d) & 8) != 0) {
-            if (bVar1) goto LAB_825324d0;
-            goto LAB_8253251c;
+          if ((pSVar1->breakpointType == '\x01') &&
+             (bVar5 = Scr_ConditionalExpression(pSVar1,param_5), bVar5)) {
+            Scr_WatchElementHitBreakpoint(pSVar1,true);
+            bVar3 = true;
           }
         }
       }
-      iVar4 = *(int *)(iVar4 + 0x3c);
-    } while( true );
+      else {
+        Scr_ClearErrorMessage();
+        RemoveRefToValue(local_9c,local_a0);
+        if (pSVar1->valueDefined) {
+          if (!bVar2) goto LAB_8253251c;
+          goto LAB_825324d0;
+        }
+      }
+LAB_82532504:
+      pSVar1 = pSVar1->next;
+    }
+    else {
+      Scr_ClearErrorMessage();
+      RemoveRefToValue(local_9c,local_a0);
+LAB_8253251c:
+      bVar2 = true;
+      Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
+      pSVar1 = scrDebuggerGlob.scriptWatch.elementHead;
+    }
   }
-  goto LAB_825326a0;
-LAB_82532530:
-  if (bVar1) {
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
+  if (bVar2) {
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x1e96,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1e96,0,"%s");
   }
-  DAT_83c4ba98 = '\0';
-  DAT_8374b710 = 0;
-  DAT_8374b72c = 0;
-  if (!bVar2) goto LAB_825326a0;
-  if ((param_4 & 0xffffffff) != 0) {
-    Scr_SpecialBreakpoint(param_3,param_4,param_5,0x93,0x20);
+  scrVarPub.evaluate = false;
+  g_breakonObject = 0;
+  g_breakonString = 0;
+  if (!bVar3) goto LAB_825326a0;
+  if ((uVar6 & 0xffffffff) != 0) {
+    Scr_SpecialBreakpoint(pVVar8,(char *)uVar6,param_5,0x93,' ');
     __restgprlr();
     return;
   }
-  if (DAT_83ca44b8 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1ea5,0,0xffffffff82000f98,0xffffffff821501a4);
+  if (scrVmPub.inparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1ea5,0,"%s");
   }
-  if (DAT_83ca44bc != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x1ea6,0,0xffffffff82000f98,0xffffffff821501bc);
+  if (scrVmPub.outparamcount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x1ea6,0,"%s");
   }
-  if (DAT_837396b0 != 0) {
-    Scr_RemoveManualBreakpoint();
-    DAT_837396b0 = 0;
+  if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+    Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+    scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
   }
-  Scr_ScriptWatch__SortHitBreakpointsTop(0xffffffff83739368);
-  DAT_8373969c = 0;
-  DAT_83739704 = 0xffffffff;
-  if (DAT_837396ac != '\0') {
-    Scr_ScriptCallStack__UpdateStack(0xffffffff83739380);
+  Scr_ScriptWatch::SortHitBreakpointsTop(&scrDebuggerGlob.scriptWatch);
+  scrDebuggerGlob.breakpointCodePos = (char *)0x0;
+  scrDebuggerGlob.stepLineNum = -1;
+  if (scrDebuggerGlob.atBreakpoint != false) {
+    Scr_ScriptCallStack::UpdateStack(&scrDebuggerGlob.scriptCallStack);
   }
   iVar4 = Sys_IsRemoteDebugServer();
   if (iVar4 == 0) {
 LAB_82532660:
-    DAT_837396ac = '\0';
-    DAT_837396a0 = 0xfffe;
-    for (iVar4 = DAT_83739370; iVar4 != 0; iVar4 = *(int *)(iVar4 + 0x3c)) {
-      *(byte *)(iVar4 + 0x4d) = *(byte *)(iVar4 + 0x4d) & 0xcf;
+    scrDebuggerGlob.atBreakpoint = false;
+    scrDebuggerGlob.breakpointPos.bufferIndex = 0xfffe;
+    for (pSVar1 = scrDebuggerGlob.scriptWatch.elementHead; pSVar1 != (Scr_WatchElement_s *)0x0;
+        pSVar1 = pSVar1->next) {
+      pSVar1->changed = false;
+      pSVar1->hitBreakpoint = false;
     }
   }
   else {
@@ -3976,28 +4298,29 @@ LAB_825326a0:
 }
 
 
-// 8252C208  Scr_ScriptWatch::DisplayThreadPos  (script/scr_debugger.cpp:7863)
+// 8252C208  DisplayThreadPos  (script/scr_debugger.cpp:7863)
 
-void Scr_ScriptWatch__DisplayThreadPos(undefined8 param_1,int param_2)
+void __thiscall Scr_ScriptWatch::DisplayThreadPos(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  char *pcVar1;
+  uint uVar2;
+  uint uVar3;
   int iVar4;
+  int iVar5;
   
-  if ((DAT_83c4ba98 != '\0') &&
-     (((*(char *)(param_2 + 0x4a) == '\x18' ||
-       ((*(char *)(param_2 + 0x4a) == '\x10' && ((*(byte *)(param_2 + 0x4d) & 0x80) != 0)))) &&
-      (uVar1 = Scr_GetElementThreadPos(param_2), (uVar1 & 0xffffffff) != 0)))) {
-    uVar2 = Scr_GetSourceBuffer(uVar1 - 1);
-    uVar3 = Scr_GetPrevSourcePos(uVar1 - 1,0);
-    uVar3 = Scr_GetLineNum(uVar2,uVar3);
-    iVar4 = Sys_IsRemoteDebugServer();
-    if (iVar4 != 0) {
-      Sys_WriteDebugSocketMessageType(0x29);
+  if ((scrVarPub.evaluate) &&
+     (((param_1->objectType == '\x18' ||
+       ((param_1->objectType == '\x10' && (param_1->directObject)))) &&
+      (pcVar1 = Scr_GetElementThreadPos(param_1), pcVar1 != (char *)0x0)))) {
+    uVar2 = Scr_GetSourceBuffer(pcVar1 + -1);
+    uVar3 = Scr_GetPrevSourcePos(pcVar1 + -1,0);
+    iVar4 = Scr_GetLineNum(uVar2,uVar3);
+    iVar5 = Sys_IsRemoteDebugServer();
+    if (iVar5 != 0) {
+      Sys_WriteDebugSocketMessageType(')');
       Sys_WriteDebugSocketInt(uVar2);
-      Sys_WriteDebugSocketInt(uVar3);
+      Sys_WriteDebugSocketInt(iVar4);
       Sys_EndWriteDebugSocket();
     }
   }
@@ -4007,19 +4330,22 @@ void Scr_ScriptWatch__DisplayThreadPos(undefined8 param_1,int param_2)
 
 // 8252F620  Scr_DisplayThreadPosRemote  (script/scr_debugger.cpp:7915)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DisplayThreadPosRemote(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
+  scrDebuggerGlob_t *psVar3;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 != 0) {
-    lVar3 = -0x7c8c6cc0;
-    uVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
-    if ((uVar2 & 0xffffffff) != 0) {
-      Scr_ScriptWatch__DisplayThreadPos(lVar3 + 0x28,uVar2);
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 != 0) {
+    psVar3 = &scrDebuggerGlob;
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
+    if (pSVar2 != (Scr_WatchElement_s *)0x0) {
+      Scr_ScriptWatch::DisplayThreadPos(&psVar3->scriptWatch,pSVar2);
     }
   }
   return;
@@ -4028,24 +4354,27 @@ void Scr_DisplayThreadPosRemote(void)
 
 // 8252C2D0  Scr_BreakOnAllAssignmentPos  (script/scr_debugger.cpp:7958)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_BreakOnAllAssignmentPos(void)
 
 {
-  char *pcVar1;
-  undefined4 *puVar2;
+  uchar *puVar1;
+  Scr_OpcodeList_s *pSVar2;
   
   __savegprlr_28();
-  if (DAT_837396e0 == '\0') {
-    DAT_837396e0 = '\x01';
-    DAT_837396f4 = 0;
-    for (puVar2 = DAT_837396d8; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)puVar2[1]) {
-      pcVar1 = (char *)*puVar2;
-      if (*pcVar1 == -0x5f) {
-        *pcVar1 = -0x5d;
+  if (scrDebuggerGlob.assignBreakpointSet == false) {
+    scrDebuggerGlob.assignBreakpointSet = true;
+    scrDebuggerGlob.objectId = 0;
+    for (pSVar2 = scrDebuggerGlob.assignHead; pSVar2 != (Scr_OpcodeList_s *)0x0;
+        pSVar2 = pSVar2->next) {
+      puVar1 = (uchar *)pSVar2->codePos;
+      if (*puVar1 == 0xa1) {
+        *puVar1 = 0xa3;
       }
       else {
-        Scr_AddBreakpoint(pcVar1);
-        *pcVar1 = -0x5e;
+        Scr_AddBreakpoint(puVar1);
+        *puVar1 = 0xa2;
       }
     }
   }
@@ -4056,25 +4385,29 @@ void Scr_BreakOnAllAssignmentPos(void)
 
 // 8252C350  Scr_UnbreakAllAssignmentPos  (script/scr_debugger.cpp:7976)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_UnbreakAllAssignmentPos(void)
 
 {
-  char *pcVar1;
-  undefined4 *puVar2;
+  uchar *puVar1;
+  Scr_OpcodeList_s *pSVar2;
   
   __savegprlr_26();
-  if (DAT_837396e0 != '\0') {
-    DAT_837396e0 = '\0';
-    for (puVar2 = DAT_837396d8; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)puVar2[1]) {
-      pcVar1 = (char *)*puVar2;
-      if (*pcVar1 == -0x5e) {
-        Scr_RemoveBreakpoint(pcVar1);
+  if (scrDebuggerGlob.assignBreakpointSet != false) {
+    scrDebuggerGlob.assignBreakpointSet = false;
+    for (pSVar2 = scrDebuggerGlob.assignHead; pSVar2 != (Scr_OpcodeList_s *)0x0;
+        pSVar2 = pSVar2->next) {
+      puVar1 = (uchar *)pSVar2->codePos;
+      if (*puVar1 == 0xa2) {
+        Scr_RemoveBreakpoint(puVar1);
       }
       else {
-        if (*pcVar1 != -0x5d) {
-          MyAssertHandler(0xffffffff8214f658,0x293,0,0xffffffff82000f98,0xffffffff8214f730);
+        if (*puVar1 != 0xa3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x293,0,"%s");
         }
-        *pcVar1 = -0x5f;
+        *puVar1 = 0xa1;
       }
     }
   }
@@ -4085,29 +4418,32 @@ void Scr_UnbreakAllAssignmentPos(void)
 
 // 8252C3F8  Scr_IsVariableBreakpoint  (script/scr_debugger.cpp:7995)
 
-bool Scr_IsVariableBreakpoint(int param_1)
+bool Scr_IsVariableBreakpoint(uint param_1)
 
 {
-  if (DAT_837396ec == 0) {
-    MyAssertHandler(0xffffffff8214f658,8000,0,0xffffffff82000f98,0xffffffff8214fc78);
+  if (scrDebuggerGlob.variableBreakpoints == (Scr_WatchElementDoubleNode_t **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",8000,
+                    0,"%s");
   }
-  return *(int *)(param_1 * 4 + DAT_837396ec) != 0;
+  return (bool)('\x01' - (scrDebuggerGlob.variableBreakpoints[param_1] ==
+                         (Scr_WatchElementDoubleNode_t *)0x0));
 }
 
 
 // 8252C478  Scr_AddDebugRefCountChildren  (script/scr_debugger.cpp:8006)
 
-void Scr_AddDebugRefCountChildren(int param_1,int param_2)
+void Scr_AddDebugRefCountChildren(Scr_WatchElement_s *param_1,ushort *param_2)
 
 {
   int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  if (((*(byte *)(param_1 + 0x4d) & 8) != 0) && (*(int *)(param_1 + 0x18) == 1)) {
-    iVar1 = *(int *)(param_1 + 0x14) * 2;
-    *(short *)(iVar1 + param_2) = *(short *)(iVar1 + param_2) + 1;
+  if ((param_1->valueDefined) && ((param_1->value).type == 1)) {
+    iVar1 = (param_1->value).u.intValue;
+    param_2[iVar1] = param_2[iVar1] + 1;
   }
-  for (iVar1 = *(int *)(param_1 + 0x38); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-    Scr_AddDebugRefCountChildren(iVar1,param_2);
+  for (pSVar2 = param_1->childHead; pSVar2 != (Scr_WatchElement_s *)0x0; pSVar2 = pSVar2->next) {
+    Scr_AddDebugRefCountChildren(pSVar2,param_2);
   }
   return;
 }
@@ -4115,27 +4451,30 @@ void Scr_AddDebugRefCountChildren(int param_1,int param_2)
 
 // 8252C500  Scr_AddDebugRefCount  (script/scr_debugger.cpp:8025)
 
-void Scr_AddDebugRefCount(void)
+void Scr_AddDebugRefCount(ushort *param_1)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
+  Scr_WatchElement_s *pSVar2;
+  ushort *puVar3;
+  Scr_WatchElement_s *pSVar4;
   
-  iVar2 = __savegprlr_27();
-  for (iVar1 = DAT_83739370; iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-    if (*(int *)(iVar1 + 0x20) == 0) {
-      if (*(int *)(iVar1 + 8) == 0) {
-        MyAssertHandler(0xffffffff8214f658,0x1f66,0,0xffffffff82000f98,0xffffffff8214fc20);
+  puVar3 = (ushort *)__savegprlr_27(param_1);
+  for (pSVar2 = scrDebuggerGlob.scriptWatch.elementHead; pSVar2 != (Scr_WatchElement_s *)0x0;
+      pSVar2 = pSVar2->next) {
+    if (pSVar2->breakpoint == (Scr_Breakpoint *)0x0) {
+      if ((pSVar2->expr).exprHead == (debugger_sval_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x1f66,0,"%s");
       }
-      Scr_AddDebugExprRefCount(iVar2,*(undefined4 *)(iVar1 + 8));
+      Scr_AddDebugExprRefCount(puVar3,(pSVar2->expr).exprHead);
     }
-    if (((*(byte *)(iVar1 + 0x4d) & 8) != 0) && (*(int *)(iVar1 + 0x18) == 1)) {
-      iVar3 = *(int *)(iVar1 + 0x14) * 2;
-      *(short *)(iVar3 + iVar2) = *(short *)(iVar3 + iVar2) + 1;
+    if ((pSVar2->valueDefined) && ((pSVar2->value).type == 1)) {
+      iVar1 = (pSVar2->value).u.intValue;
+      puVar3[iVar1] = puVar3[iVar1] + 1;
     }
-    for (iVar3 = *(int *)(iVar1 + 0x38); iVar3 != 0; iVar3 = *(int *)(iVar3 + 0x3c)) {
-      Scr_AddDebugRefCountChildren(iVar3,iVar2);
+    for (pSVar4 = pSVar2->childHead; pSVar4 != (Scr_WatchElement_s *)0x0; pSVar4 = pSVar4->next) {
+      Scr_AddDebugRefCountChildren(pSVar4,puVar3);
     }
   }
   __restgprlr_27();
@@ -4145,159 +4484,171 @@ void Scr_AddDebugRefCount(void)
 
 // 8252C5E0  Scr_RefToVariable  (script/scr_debugger.cpp:8050)
 
-void Scr_RefToVariable(undefined8 param_1,int param_2)
+bool Scr_RefToVariable(uint param_1,int param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int *piVar4;
-  int *piVar5;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElementNode_s *pSVar2;
+  uint uVar3;
+  undefined1 uVar7;
+  Scr_WatchElementDoubleNode_t *pSVar4;
+  Scr_WatchElementNode_s *pSVar5;
   int iVar6;
-  char cVar7;
-  int iVar8;
-  undefined8 uVar9;
-  int *piVar10;
-  undefined4 local_70;
-  undefined4 local_6c;
+  bool bVar8;
+  char *pcVar9;
+  undefined8 uVar10;
+  Scr_WatchElementDoubleNode_t *pSVar11;
+  VariableUnion local_70;
+  int local_6c;
   
-  iVar3 = __savegprlr_21();
-  if (iVar3 != 0) {
-    if (param_2 == 0) {
-      iVar3 = iVar3 + 0x9000;
+  uVar3 = __savegprlr_21(param_1);
+  if (uVar3 != 0) {
+    if ((char *)param_2 == (char *)0x0) {
+      uVar3 = uVar3 + 0x9000;
     }
-    if (DAT_837396e8 != 0) {
-      __restgprlr_21(iVar3 == DAT_837396e8);
-      return;
+    if (scrDebuggerGlob.removeId != 0) {
+      uVar7 = __restgprlr_21(uVar3 == scrDebuggerGlob.removeId);
+      return (bool)uVar7;
     }
-    if (DAT_837396e4 == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1f88,0,0xffffffff82000f98,0xffffffff8214fcd4);
+    pcVar9 = (char *)param_2;
+    if (scrDebuggerGlob.currentElement == (Scr_WatchElement_s *)0x0) {
+      pcVar9 = (char *)0x1f88;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1f88,0,"%s");
     }
-    if (DAT_837396ec == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x1f8a,0,0xffffffff82000f98,0xffffffff8214fc78);
+    if (scrDebuggerGlob.variableBreakpoints == (Scr_WatchElementDoubleNode_t **)0x0) {
+      pcVar9 = (char *)0x1f8a;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x1f8a,0,"%s");
     }
-    iVar8 = iVar3 * 4;
-    piVar4 = *(int **)(iVar8 + DAT_837396ec);
-    if (piVar4 == (int *)0x0) {
-      if (DAT_837396e1 == '\0') goto LAB_8252c5fc;
-      piVar4 = (int *)Scr_AllocDebugMem(8);
-      *piVar4 = 0;
-      piVar4[1] = 0;
-      *(int **)(iVar8 + DAT_837396ec) = piVar4;
-      if (param_2 != 0) {
-        AddRefToObject(iVar3);
+    pSVar4 = scrDebuggerGlob.variableBreakpoints[uVar3];
+    if (pSVar4 == (Scr_WatchElementDoubleNode_t *)0x0) {
+      if (scrDebuggerGlob.add == false) goto LAB_8252c5fc;
+      pSVar4 = Scr_AllocDebugMem(8,pcVar9);
+      pSVar4->list = (Scr_WatchElementNode_s *)0x0;
+      pSVar4->removedList = (Scr_WatchElementNode_s *)0x0;
+      scrDebuggerGlob.variableBreakpoints[uVar3] = pSVar4;
+      if ((char *)param_2 != (char *)0x0) {
+        AddRefToObject(uVar3);
       }
     }
-    piVar5 = (int *)*piVar4;
-    piVar10 = piVar4;
-    while( true ) {
-      if ((piVar5 == (int *)0x0) || (*piVar5 == DAT_837396e4)) break;
-      piVar10 = piVar5 + 1;
-      piVar5 = (int *)piVar5[1];
+    pSVar11 = pSVar4;
+    for (pSVar5 = pSVar4->list;
+        (pSVar5 != (Scr_WatchElementNode_s *)0x0 &&
+        (pSVar5->element != scrDebuggerGlob.currentElement)); pSVar5 = pSVar5->next) {
+      pSVar11 = (Scr_WatchElementDoubleNode_t *)&pSVar5->next;
     }
-    if (DAT_837396e1 == '\0') {
-      piVar5 = (int *)*piVar10;
-      if (piVar5 != (int *)0x0) {
-        if (*piVar5 != DAT_837396e4) {
-          MyAssertHandler(0xffffffff8214f658,0x1fb0,0,0xffffffff82000f98,0xffffffff8214fc9c);
+    if (scrDebuggerGlob.add == false) {
+      pSVar5 = pSVar11->list;
+      if (pSVar5 != (Scr_WatchElementNode_s *)0x0) {
+        if (pSVar5->element != scrDebuggerGlob.currentElement) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x1fb0,0,"%s");
         }
-        *piVar10 = piVar5[1];
-        piVar5[1] = piVar4[1];
-        piVar4[1] = (int)piVar5;
-        if (*piVar4 == 0) {
-          uVar9 = 0;
-          if (param_2 != 0) {
-            if ((DAT_83c4ba98 != '\0') &&
-               ((iVar6 = Scr_GetRefCountToObject(iVar3), iVar6 == 0 ||
-                (cVar7 = IsFieldObject(iVar3), cVar7 == '\0')))) {
-              for (puVar1 = (undefined4 *)piVar4[1]; puVar1 != (undefined4 *)0x0;
-                  puVar1 = (undefined4 *)puVar1[1]) {
-                uVar2 = *puVar1;
-                DAT_837396e8 = iVar3;
-                cVar7 = Scr_RefScriptExpression(uVar2);
-                if (cVar7 != '\0') {
-                  Scr_ScriptWatch__EvaluateWatchElementExpression
-                            (0xffffffff83739368,uVar2,&local_70);
-                  if (DAT_83c4ba9c != 0) {
+        pSVar11->list = pSVar5->next;
+        pSVar5->next = pSVar4->removedList;
+        pSVar4->removedList = pSVar5;
+        if (pSVar4->list == (Scr_WatchElementNode_s *)0x0) {
+          uVar10 = 0;
+          if ((char *)param_2 != (char *)0x0) {
+            if ((scrVarPub.evaluate != false) &&
+               ((iVar6 = Scr_GetRefCountToObject(uVar3), iVar6 == 0 ||
+                (bVar8 = IsFieldObject(uVar3), !bVar8)))) {
+              for (pSVar5 = pSVar4->removedList; pSVar5 != (Scr_WatchElementNode_s *)0x0;
+                  pSVar5 = pSVar5->next) {
+                pSVar1 = pSVar5->element;
+                scrDebuggerGlob.removeId = uVar3;
+                bVar8 = Scr_RefScriptExpression(&pSVar1->expr);
+                if (bVar8) {
+                  Scr_ScriptWatch::EvaluateWatchElementExpression
+                            (&scrDebuggerGlob.scriptWatch,pSVar1,(VariableValue *)&local_70);
+                  if (scrVarPub.error_message != (char *)0x0) {
                     Scr_ClearErrorMessage();
                   }
                   RemoveRefToValue(local_6c,local_70);
                 }
-                DAT_837396e8 = 0;
+                scrDebuggerGlob.removeId = 0;
               }
             }
-            DAT_83c6fb24 = iVar3;
-            RemoveRefToObject(iVar3);
-            if (DAT_83c6fb24 == 0) {
-              uVar9 = 1;
+            scrVarPub.removeId = uVar3;
+            RemoveRefToObject(uVar3);
+            if (scrVarPub.removeId == 0) {
+              uVar10 = 1;
             }
             else {
-              DAT_83c6fb24 = 0;
+              scrVarPub.removeId = 0;
             }
           }
-          iVar3 = piVar4[1];
-          while (iVar3 != 0) {
-            iVar6 = *(int *)(iVar3 + 4);
-            if (DAT_83739338 == 0) {
-              MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
+          pSVar5 = pSVar4->removedList;
+          while (pSVar5 != (Scr_WatchElementNode_s *)0x0) {
+            pSVar2 = pSVar5->next;
+            if (g_debuggerMem == (void *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                              ,0xa3f,0,"%s");
             }
-            RtlFreeHeap(DAT_83739338,0,iVar3);
-            iVar3 = iVar6;
+            RtlFreeHeap(g_debuggerMem,0,pSVar5);
+            pSVar5 = pSVar2;
           }
-          if (DAT_83739338 == 0) {
-            MyAssertHandler(0xffffffff8214f658,0xa3f,0,0xffffffff82000f98,0xffffffff8214f9fc);
+          if (g_debuggerMem == (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                            ,0xa3f,0,"%s");
           }
-          RtlFreeHeap(DAT_83739338,0,piVar4);
-          *(undefined4 *)(iVar8 + DAT_837396ec) = 0;
-          __restgprlr_21(uVar9);
-          return;
+          RtlFreeHeap(g_debuggerMem,0,pSVar4);
+          scrDebuggerGlob.variableBreakpoints[uVar3] = (Scr_WatchElementDoubleNode_t *)0x0;
+          uVar7 = __restgprlr_21(uVar10);
+          return (bool)uVar7;
         }
       }
     }
-    else if (*piVar10 == 0) {
-      piVar5 = (int *)Scr_AllocDebugMem(8);
-      *piVar5 = DAT_837396e4;
-      piVar5[1] = *piVar4;
-      *piVar4 = (int)piVar5;
-      __restgprlr_21(0);
-      return;
+    else if (pSVar11->list == (Scr_WatchElementNode_s *)0x0) {
+      pSVar5 = Scr_AllocDebugMem(8,pcVar9);
+      pSVar5->element = scrDebuggerGlob.currentElement;
+      pSVar5->next = pSVar4->list;
+      pSVar4->list = pSVar5;
+      uVar7 = __restgprlr_21(0);
+      return (bool)uVar7;
     }
   }
 LAB_8252c5fc:
-  __restgprlr_21(0);
-  return;
+  uVar7 = __restgprlr_21(0);
+  return (bool)uVar7;
 }
 
 
-// 8252C950  Scr_ScriptWatch::UpdateBreakpoints  (script/scr_debugger.cpp:8167)
+// 8252C950  UpdateBreakpoints  (script/scr_debugger.cpp:8167)
 
-void Scr_ScriptWatch__UpdateBreakpoints(undefined8 param_1,ulonglong param_2)
+void __thiscall Scr_ScriptWatch::UpdateBreakpoints(Scr_ScriptWatch *this,bool param_1)
 
 {
-  int iVar1;
+  Scr_WatchElement_s *pSVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_24();
-  for (iVar1 = *(int *)(iVar2 + 8); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-    if ((*(char *)(iVar1 + 0x4c) == '\x01') || (*(char *)(iVar1 + 0x4c) == '\x03')) {
-      if (*(int *)(iVar1 + 0x20) != 0) {
-        MyAssertHandler(0xffffffff8214f658,0x1ff4,0,0xffffffff82000f98,0xffffffff8214f83c);
+  uVar3 = (ulonglong)param_1;
+  iVar2 = __savegprlr_24(this);
+  for (pSVar1 = *(Scr_WatchElement_s **)(iVar2 + 8); pSVar1 != (Scr_WatchElement_s *)0x0;
+      pSVar1 = pSVar1->next) {
+    if ((pSVar1->breakpointType == '\x01') || (pSVar1->breakpointType == '\x03')) {
+      if (pSVar1->breakpoint != (Scr_Breakpoint *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x1ff4,0,"%s");
       }
-      if (*(int *)(iVar1 + 8) == 0) {
-        MyAssertHandler(0xffffffff8214f658,0x1ff6,0,0xffffffff82000f98,0xffffffff8214fc20);
+      if ((debugger_sval_s *)(&(pSVar1->expr).parseData)[2].type == (debugger_sval_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x1ff6,0,"%s");
       }
-      DAT_837396e1 = (undefined1)param_2;
-      DAT_837396e8 = 0;
-      DAT_837396e4 = iVar1;
-      if (((*(byte *)(iVar1 + 0x4d) & 8) != 0) && (*(int *)(iVar1 + 0x18) == 1)) {
-        Scr_RefToVariable(*(undefined4 *)(iVar1 + 0x14),1);
+      scrDebuggerGlob.add = SUB81(uVar3,0);
+      scrDebuggerGlob.removeId = 0;
+      scrDebuggerGlob.currentElement = pSVar1;
+      if ((pSVar1->valueDefined) && ((pSVar1->value).type == 1)) {
+        Scr_RefToVariable((pSVar1->value).u.uintValue,1);
       }
-      Scr_RefScriptExpression(iVar1);
+      Scr_RefScriptExpression(&pSVar1->expr);
     }
   }
-  if ((param_2 & 0xff) != 0) {
-    for (iVar1 = *(int *)(iVar2 + 8); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-      if (*(char *)(iVar1 + 0x4c) == '\x01') {
+  if ((uVar3 & 0xff) != 0) {
+    for (iVar2 = *(int *)(iVar2 + 8); iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x3c)) {
+      if (*(char *)(iVar2 + 0x4c) == '\x01') {
         Scr_BreakOnAllAssignmentPos();
         __restgprlr_24();
         return;
@@ -4310,146 +4661,164 @@ void Scr_ScriptWatch__UpdateBreakpoints(undefined8 param_1,ulonglong param_2)
 }
 
 
-// 8252CA88  Scr_ScriptWatch::AddBreakpoint  (script/scr_debugger.cpp:8210)
+// 8252CA88  AddBreakpoint  (script/scr_debugger.cpp:8210)
 
-void Scr_ScriptWatch__AddBreakpoint(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::AddBreakpoint(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,uchar param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  Scr_ScriptWatch *this_00;
+  Scr_WatchElement_s *pSVar1;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = (int)param_2;
-  if ((ulonglong)*(byte *)(iVar2 + 0x4c) == (param_3 & 0xff)) {
-    MyAssertHandler(0xffffffff8214f658,0x2013,0,0xffffffff82000f98,0xffffffff8214fcf4);
+  uVar3 = (ulonglong)(char)param_2;
+  lVar2 = (longlong)(int)param_1;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this);
+  pSVar1 = (Scr_WatchElement_s *)lVar2;
+  if ((ulonglong)pSVar1->breakpointType == (uVar3 & 0xff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2013,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x30) != 0) {
-    iVar2 = Scr_ScriptWatch__CloneElement(uVar1,param_2);
-    *(char *)(iVar2 + 0x4c) = (char)param_3;
-    __restgprlr_29();
-    return;
+  if (pSVar1->parent != (Scr_WatchElement_s *)0x0) {
+    pSVar1 = CloneElement(this_00,pSVar1);
+    pSVar1->breakpointType = (uchar)uVar3;
+    pSVar1 = (Scr_WatchElement_s *)__restgprlr_29();
+    return pSVar1;
   }
-  *(char *)(iVar2 + 0x4c) = (char)param_3;
-  __restgprlr_29(param_2);
-  return;
+  pSVar1->breakpointType = (uchar)uVar3;
+  pSVar1 = (Scr_WatchElement_s *)__restgprlr_29(lVar2);
+  return pSVar1;
 }
 
 
-// 8252CB08  Scr_ScriptWatch::RemoveBreakpoint  (script/scr_debugger.cpp:8228)
+// 8252CB08  RemoveBreakpoint  (script/scr_debugger.cpp:8228)
 
-int Scr_ScriptWatch__RemoveBreakpoint(undefined8 param_1,int param_2)
+Scr_WatchElement_s * __thiscall
+Scr_ScriptWatch::RemoveBreakpoint(Scr_ScriptWatch *this,Scr_WatchElement_s *param_1)
 
 {
-  if (*(char *)(param_2 + 0x4c) == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2025,0,0xffffffff82000f98,0xffffffff8214fd14);
+  if (param_1->breakpointType == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2025,0,"%s");
   }
-  *(undefined1 *)(param_2 + 0x4c) = 0;
-  if ((*(byte *)(param_2 + 0x4d) & 8) != 0) {
-    *(byte *)(param_2 + 0x4d) = *(byte *)(param_2 + 0x4d) & 0xf7;
-    RemoveRefToValue(*(undefined4 *)(param_2 + 0x18),*(undefined4 *)(param_2 + 0x14));
+  param_1->breakpointType = '\0';
+  if (param_1->valueDefined) {
+    param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+    RemoveRefToValue((param_1->value).type,(param_1->value).u);
   }
-  return param_2;
+  return param_1;
 }
 
 
-// 8252F678  Scr_ScriptWatch::ToggleWatchElementBreakpoint  (script/scr_debugger.cpp:8242)
+// 8252F678  ToggleWatchElementBreakpoint  (script/scr_debugger.cpp:8242)
 
-void Scr_ScriptWatch__ToggleWatchElementBreakpoint(undefined8 param_1,int param_2,char param_3)
+void __thiscall
+Scr_ScriptWatch::ToggleWatchElementBreakpoint
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,uchar param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
+  Scr_WatchElement_s *pSVar3;
   
-  if (*(char *)(param_2 + 0x4c) == param_3) {
-    iVar3 = Scr_ScriptWatch__RemoveBreakpoint();
-    Scr_FreeDebugExpr();
-    Scr_CompileText(*(undefined4 *)(iVar3 + 0x10),iVar3);
+  if (param_1->breakpointType == param_2) {
+    pSVar3 = RemoveBreakpoint(this,param_1);
+    Scr_FreeDebugExpr(&pSVar3->expr);
+    Scr_CompileText(pSVar3->refText,&pSVar3->expr);
   }
   else {
-    iVar3 = Scr_ScriptWatch__AddBreakpoint();
+    pSVar3 = AddBreakpoint(this,param_1,param_2);
   }
-  iVar2 = *(int *)(iVar3 + 0x30);
-  while (iVar1 = iVar2, iVar1 != 0) {
-    iVar3 = iVar1;
-    iVar2 = *(int *)(iVar1 + 0x30);
+  pSVar2 = pSVar3->parent;
+  while (pSVar1 = pSVar2, pSVar1 != (Scr_WatchElement_s *)0x0) {
+    pSVar3 = pSVar1;
+    pSVar2 = pSVar1->parent;
   }
-  Scr_ScriptWatch__EvaluateWatchElement(param_1,iVar3);
+  EvaluateWatchElement(this,pSVar3);
   return;
 }
 
 
-// 82530260  Scr_ScriptWatch::ToggleBreakpointInternal  (script/scr_debugger.cpp:8280)
+// 82530260  ToggleBreakpointInternal  (script/scr_debugger.cpp:8280)
 
-void Scr_ScriptWatch__ToggleBreakpointInternal
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void __thiscall
+Scr_ScriptWatch::ToggleBreakpointInternal
+          (Scr_ScriptWatch *this,Scr_WatchElement_s *param_1,uchar param_2)
 
 {
-  char cVar1;
-  undefined8 uVar2;
+  uchar uVar1;
+  Scr_Breakpoint *pSVar2;
+  Scr_ScriptWatch *this_00;
   int iVar3;
-  int iVar4;
+  Scr_WatchElement_s *pSVar4;
+  ulonglong uVar5;
+  uchar uVar6;
   
-  uVar2 = __savegprlr_29();
-  iVar4 = (int)param_2;
-  if (((*(byte *)(iVar4 + 0x4d) & 4) == 0) && ((*(byte *)(iVar4 + 0x4d) & 2) == 0)) {
+  uVar5 = (ulonglong)(char)param_2;
+  this_00 = (Scr_ScriptWatch *)__savegprlr_29(this);
+  if ((!param_1->threadList) && (!param_1->endonList)) {
     iVar3 = Sys_IsRemoteDebugServer();
     if (iVar3 != 0) {
-      Sys_WriteDebugSocketMessageType(0x1c);
-      Sys_WriteDebugSocketInt(*(undefined2 *)(iVar4 + 0x46));
-      Sys_WriteDebugSocketInt(param_3 & 0xff);
+      Sys_WriteDebugSocketMessageType('\x1c');
+      Sys_WriteDebugSocketInt((uint)param_1->id);
+      Sys_WriteDebugSocketInt((uint)uVar5 & 0xff);
       Sys_EndWriteDebugSocket();
     }
-    iVar3 = *(int *)(iVar4 + 0x20);
-    if (iVar3 == 0) {
-      if (((param_3 & 0xff) != 6) && ((param_3 & 0xff) != 7)) {
-        Scr_ScriptWatch__ToggleWatchElementBreakpoint(uVar2,param_2,param_3);
+    pSVar2 = param_1->breakpoint;
+    uVar6 = (uchar)uVar5;
+    if (pSVar2 == (Scr_Breakpoint *)0x0) {
+      if (((uVar5 & 0xff) != 6) && ((uVar5 & 0xff) != 7)) {
+        ToggleWatchElementBreakpoint(this_00,param_1,uVar6);
       }
     }
     else {
-      cVar1 = *(char *)(iVar4 + 0x4c);
-      if (cVar1 == '\x04') {
-        if ((param_3 & 0xff) == 1) {
-          *(undefined1 *)(iVar4 + 0x4c) = 5;
+      uVar1 = param_1->breakpointType;
+      if (uVar1 == '\x04') {
+        if ((uVar5 & 0xff) == 1) {
+          param_1->breakpointType = '\x05';
           __restgprlr_29();
           return;
         }
-        if ((param_3 & 0xff) == 3) {
-          Scr_ScriptWatch__DeleteElementInternal(uVar2,param_2);
+        if ((uVar5 & 0xff) == 3) {
+          pSVar4 = DeleteElementInternal(this_00,param_1);
+          __restgprlr_29(pSVar4);
+          return;
+        }
+      }
+      else if (uVar1 == '\x06') {
+        if ((uVar5 & 0xff) == 7) {
+          param_1->breakpointType = uVar6;
+          iVar3 = Scr_GetFuncTableIndex(pSVar2->builtinIndex);
+          scrVmDebugPub.func_table[iVar3].breakpointCount =
+               scrVmDebugPub.func_table[iVar3].breakpointCount + -1;
           __restgprlr_29();
           return;
         }
       }
-      else if (cVar1 == '\x06') {
-        if ((param_3 & 0xff) == 7) {
-          *(char *)(iVar4 + 0x4c) = (char)param_3;
-          iVar4 = Scr_GetFuncTableIndex(*(undefined4 *)(iVar3 + 0x10));
-          *(int *)(&DAT_83c6fb48 + iVar4 * 0xc) = *(int *)(&DAT_83c6fb48 + iVar4 * 0xc) + -1;
-          __restgprlr_29();
-          return;
-        }
-      }
-      else if (cVar1 == '\a') {
-        if ((param_3 & 0xff) == 6) {
-          *(char *)(iVar4 + 0x4c) = (char)param_3;
-          iVar4 = Scr_GetFuncTableIndex(*(undefined4 *)(iVar3 + 0x10));
-          *(int *)(&DAT_83c6fb48 + iVar4 * 0xc) = *(int *)(&DAT_83c6fb48 + iVar4 * 0xc) + 1;
+      else if (uVar1 == '\a') {
+        if ((uVar5 & 0xff) == 6) {
+          param_1->breakpointType = uVar6;
+          iVar3 = Scr_GetFuncTableIndex(pSVar2->builtinIndex);
+          scrVmDebugPub.func_table[iVar3].breakpointCount =
+               scrVmDebugPub.func_table[iVar3].breakpointCount + 1;
           __restgprlr_29();
           return;
         }
       }
       else {
-        if (cVar1 != '\x05') {
-          MyAssertHandler(0xffffffff8214f658,0x209c,0,0xffffffff821502a4,0xffffffff821502c8);
+        if (uVar1 != '\x05') {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x209c,0,"%s\n\t(element->breakpointType) = %i");
         }
-        if ((param_3 & 0xff) == 3) {
-          *(undefined1 *)(iVar4 + 0x4c) = 4;
+        if ((uVar5 & 0xff) == 3) {
+          param_1->breakpointType = '\x04';
           __restgprlr_29();
           return;
         }
-        if ((param_3 & 0xff) == 1) {
-          Scr_ScriptWatch__DeleteElementInternal(uVar2,param_2);
-          __restgprlr_29();
+        if ((uVar5 & 0xff) == 1) {
+          pSVar4 = DeleteElementInternal(this_00,param_1);
+          __restgprlr_29(pSVar4);
           return;
         }
       }
@@ -4462,67 +4831,70 @@ void Scr_ScriptWatch__ToggleBreakpointInternal
 
 // 82530430  Scr_ToggleWatchElementBreakpointRemote  (script/scr_debugger.cpp:8402)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ToggleWatchElementBreakpointRemote(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined1 uVar3;
+  int iVar1;
+  Scr_WatchElement_s *pSVar2;
   
-  uVar1 = Sys_ReadDebugSocketInt();
-  if ((int)uVar1 == 0) {
-    uVar2 = 0;
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (iVar1 == 0) {
+    pSVar2 = (Scr_WatchElement_s *)0x0;
   }
   else {
-    uVar2 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar1);
+    pSVar2 = Scr_ScriptWatch::GetElementWithId_r
+                       (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,iVar1);
   }
-  uVar3 = Sys_ReadDebugSocketInt();
-  if ((uVar2 & 0xffffffff) != 0) {
-    Scr_ScriptWatch__ToggleBreakpointInternal(0xffffffff83739368,uVar2,uVar3);
+  iVar1 = Sys_ReadDebugSocketInt();
+  if (pSVar2 != (Scr_WatchElement_s *)0x0) {
+    Scr_ScriptWatch::ToggleBreakpointInternal(&scrDebuggerGlob.scriptWatch,pSVar2,(uchar)iVar1);
   }
   return;
 }
 
 
-// 8252CB98  Scr_ScriptWatch::SortHitBreakpointsTop  (script/scr_debugger.cpp:8416)
+// 8252CB98  SortHitBreakpointsTop  (script/scr_debugger.cpp:8416)
 
-void Scr_ScriptWatch__SortHitBreakpointsTop(int param_1)
+void __thiscall Scr_ScriptWatch::SortHitBreakpointsTop(Scr_ScriptWatch *this)
 
 {
-  int *piVar1;
-  int iVar2;
-  bool bVar3;
-  int *piVar4;
-  int *piVar5;
-  int *piVar6;
+  Scr_WatchElement_s *pSVar1;
+  bool bVar2;
+  Scr_WatchElement_s **ppSVar3;
+  int iVar4;
+  Scr_WatchElement_s **ppSVar5;
+  Scr_WatchElement_s **ppSVar6;
+  Scr_WatchElement_s **ppSVar7;
   
-  piVar6 = (int *)(param_1 + 8);
-  bVar3 = false;
-  DAT_837396ac = 1;
-  for (iVar2 = *(int *)(param_1 + 8); (iVar2 != 0 && ((*(byte *)(iVar2 + 0x4d) & 0x20) != 0));
-      iVar2 = *(int *)(iVar2 + 0x3c)) {
-    piVar6 = (int *)(iVar2 + 0x3c);
-    bVar3 = true;
+  ppSVar7 = &this->elementHead;
+  bVar2 = false;
+  scrDebuggerGlob.atBreakpoint = true;
+  for (pSVar1 = this->elementHead; (pSVar1 != (Scr_WatchElement_s *)0x0 && (pSVar1->hitBreakpoint));
+      pSVar1 = pSVar1->next) {
+    ppSVar7 = &pSVar1->next;
+    bVar2 = true;
   }
-  iVar2 = *piVar6;
-  piVar1 = piVar6;
-  while (iVar2 != 0) {
-    iVar2 = *piVar1;
-    piVar5 = (int *)(iVar2 + 0x3c);
-    piVar4 = piVar5;
-    if ((*(byte *)(iVar2 + 0x4d) & 0x20) != 0) {
-      bVar3 = true;
-      *piVar1 = *piVar5;
-      *piVar5 = *piVar6;
-      *piVar6 = iVar2;
-      piVar4 = piVar1;
-      piVar6 = piVar5;
+  pSVar1 = *ppSVar7;
+  ppSVar3 = ppSVar7;
+  while (pSVar1 != (Scr_WatchElement_s *)0x0) {
+    pSVar1 = *ppSVar3;
+    ppSVar6 = &pSVar1->next;
+    ppSVar5 = ppSVar6;
+    if (pSVar1->hitBreakpoint) {
+      bVar2 = true;
+      *ppSVar3 = *ppSVar6;
+      *ppSVar6 = *ppSVar7;
+      *ppSVar7 = pSVar1;
+      ppSVar5 = ppSVar3;
+      ppSVar7 = ppSVar6;
     }
-    piVar1 = piVar4;
-    iVar2 = *piVar4;
+    ppSVar3 = ppSVar5;
+    pSVar1 = *ppSVar5;
   }
-  if ((bVar3) && (iVar2 = Sys_IsRemoteDebugServer(), iVar2 != 0)) {
-    Sys_WriteDebugSocketMessageType(0x18);
+  if ((bVar2) && (iVar4 = Sys_IsRemoteDebugServer(), iVar4 != 0)) {
+    Sys_WriteDebugSocketMessageType('\x18');
     Sys_EndWriteDebugSocket();
   }
   return;
@@ -4531,87 +4903,98 @@ void Scr_ScriptWatch__SortHitBreakpointsTop(int param_1)
 
 // 8252CC78  Scr_InitDebuggerMain  (script/scr_debugger.cpp:8823)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_InitDebuggerMain(void)
 
 {
-  void *pvVar1;
-  short *psVar2;
-  short sVar3;
-  longlong lVar4;
+  DebugCallStackEntry2 *pDVar1;
+  ushort uVar2;
+  longlong lVar3;
   
-  pvVar1 = (void *)__savegprlr_29();
-  if (DAT_83c4ba96 != '\0') {
-    if (DAT_837396f0 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x227d,0,0xffffffff82000f98,0xffffffff8214fd54);
+  __savegprlr_29();
+  if (scrVarPub.developer != false) {
+    if (scrDebuggerGlob.debugger_inited_main != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x227d,0,"%s");
     }
-    DAT_837396ec = (void *)Hunk_AllocDebugMem(0x88000,0xffffffff8214fc78);
-    memset(DAT_837396ec,0,0x88000);
-    DAT_837396d8 = 0;
-    DAT_837396dc = 0;
-    DAT_837396fc = 0;
-    if (DAT_83739338 != (HANDLE)0x0) {
-      MyAssertHandler(0xffffffff8214f658,0x2293,0,0xffffffff82000f98,0xffffffff8214fd44);
+    scrDebuggerGlob.variableBreakpoints =
+         Hunk_AllocDebugMem(0x88000,"scrDebuggerGlob.variableBreakpoints");
+    memset();
+    scrDebuggerGlob.assignHead = (Scr_OpcodeList_s *)0x0;
+    scrDebuggerGlob.assignHeadCodePos = (char *)0x0;
+    scrDebuggerGlob.disableBreakpoints = false;
+    if (g_debuggerMem != (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2293,0,"%s");
     }
-    DAT_83739338 = HeapCreate(0,0xa0000,0xa0000);
-    if (DAT_83739338 == (HANDLE)0x0) {
-      MyAssertHandler(0xffffffff8214f658,0x2295,0,0xffffffff82000f98,0xffffffff8214f9fc);
+    g_debuggerMem = HeapCreate(0,0xa0000,0xa0000);
+    if (g_debuggerMem == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2295,0,"%s");
     }
-    pvVar1 = memset(&DAT_83727338,0,0x12000);
-    sVar3 = 2;
-    psVar2 = (short *)0x83739712;
-    lVar4 = 0x8ffd;
+    memset();
+    uVar2 = 2;
+    pDVar1 = g_debugCallStackEntry2 + 1;
+    lVar3 = 0x8ffd;
     do {
-      sVar3 = sVar3 + 1;
-      psVar2 = psVar2 + 1;
-      *psVar2 = sVar3;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    DAT_8374b70e = 0;
-    DAT_83727328 = 2;
-    DAT_83727334 = 0;
-    DAT_837396f0 = '\x01';
+      uVar2 = uVar2 + 1;
+      pDVar1 = pDVar1 + 1;
+      pDVar1->next = uVar2;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+    g_debugCallStackEntry2[0x8fff].next = 0;
+    g_freeDebugCallStack = 2;
+    g_lastKeepAliveTime = 0;
+    scrDebuggerGlob.debugger_inited_main = true;
   }
-  __restgprlr_29(pvVar1);
+  __restgprlr_29();
   return;
 }
 
 
 // 8252CDF8  Scr_ShutdownDebuggerMain  (script/scr_debugger.cpp:8872)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ShutdownDebuggerMain(void)
 
 {
-  int iVar1;
-  int iVar2;
+  Scr_OpcodeList_s *pSVar1;
+  Scr_WatchElementDoubleNode_t **ppSVar2;
+  int iVar3;
   
   __savegprlr_26();
-  if ((DAT_83c4ba96 != '\0') && (DAT_837396f0 != '\0')) {
-    DAT_837396f0 = '\0';
-    if (DAT_83739338 == (HANDLE)0x0) {
-      MyAssertHandler(0xffffffff8214f658,0x22b7,0,0xffffffff82000f98,0xffffffff8214f9fc);
+  if ((scrVarPub.developer != false) && (scrDebuggerGlob.debugger_inited_main != false)) {
+    scrDebuggerGlob.debugger_inited_main = false;
+    if (g_debuggerMem == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x22b7,0,"%s");
     }
-    HeapDestroy(DAT_83739338);
-    DAT_83739338 = (HANDLE)0x0;
-    iVar1 = 0;
-    if (DAT_837396ec != 0) {
-      iVar2 = 0;
-      iVar1 = DAT_837396ec;
+    HeapDestroy(g_debuggerMem);
+    g_debuggerMem = (void *)0x0;
+    ppSVar2 = (Scr_WatchElementDoubleNode_t **)0x0;
+    if (scrDebuggerGlob.variableBreakpoints != (Scr_WatchElementDoubleNode_t **)0x0) {
+      iVar3 = 0;
+      ppSVar2 = scrDebuggerGlob.variableBreakpoints;
       do {
-        if (*(int *)(iVar2 + iVar1) != 0) {
-          MyAssertHandler(0xffffffff8214f658,0x22c6,0,0xffffffff82000f98,0xffffffff8214fd7c);
-          iVar1 = DAT_837396ec;
+        if (*(int *)(iVar3 + (int)ppSVar2) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x22c6,0,"%s");
+          ppSVar2 = scrDebuggerGlob.variableBreakpoints;
         }
-        iVar2 = iVar2 + 4;
-      } while (iVar2 < 0x88000);
-      Hunk_FreeDebugMem();
-      DAT_837396ec = 0;
-      iVar1 = DAT_837396ec;
+        iVar3 = iVar3 + 4;
+      } while (iVar3 < 0x88000);
+      Hunk_FreeDebugMem(ppSVar2);
+      scrDebuggerGlob.variableBreakpoints = (Scr_WatchElementDoubleNode_t **)0x0;
+      ppSVar2 = scrDebuggerGlob.variableBreakpoints;
     }
-    while (DAT_837396ec = iVar1, DAT_837396d8 != 0) {
-      iVar1 = *(int *)(DAT_837396d8 + 4);
-      Hunk_FreeDebugMem();
-      DAT_837396d8 = iVar1;
-      iVar1 = DAT_837396ec;
+    while (scrDebuggerGlob.variableBreakpoints = ppSVar2,
+          scrDebuggerGlob.assignHead != (Scr_OpcodeList_s *)0x0) {
+      pSVar1 = (scrDebuggerGlob.assignHead)->next;
+      Hunk_FreeDebugMem(scrDebuggerGlob.assignHead);
+      scrDebuggerGlob.assignHead = pSVar1;
+      ppSVar2 = scrDebuggerGlob.variableBreakpoints;
     }
   }
   __restgprlr_26();
@@ -4621,19 +5004,23 @@ void Scr_ShutdownDebuggerMain(void)
 
 // 8252F708  Scr_InitDebugger  (script/scr_debugger.cpp:8920)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_InitDebugger(void)
 
 {
-  if ((DAT_83c4ba96 != '\0') && (DAT_83701002 != '\0')) {
-    if (DAT_837396f1 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x22df,0,0xffffffff82000f98,0xffffffff821501f0);
+  if ((scrVarPub.developer) && (scrCompilePub.script_loading)) {
+    if (scrDebuggerGlob.debugger_inited) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x22df,0,"%s");
     }
-    DAT_83739694 = (void *)Hunk_AllocDebugMem(DAT_83700ffc,0xffffffff821501d4);
-    memset(DAT_83739694,0x99,DAT_83700ffc);
-    Scr_ScriptList__Init(0xffffffff83739350);
-    DAT_83739360 = 0;
-    DAT_83739364 = 0;
-    DAT_837396f1 = '\x01';
+    scrDebuggerGlob.breakpoints =
+         Hunk_AllocDebugMem(scrCompilePub.programLen,"scrDebuggerGlob.breakpoints");
+    memset();
+    Scr_ScriptList::Init(&scrDebuggerGlob.scriptList);
+    scrDebuggerGlob.openScriptList._4_4_ = 0;
+    scrDebuggerGlob.openScriptList._8_4_ = 0;
+    scrDebuggerGlob.debugger_inited = true;
   }
   return;
 }
@@ -4641,21 +5028,23 @@ void Scr_InitDebugger(void)
 
 // 8252CF08  Scr_ShutdownDebugger  (script/scr_debugger.cpp:8950)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ShutdownDebugger(void)
 
 {
-  if ((DAT_83c4ba96 != '\0') && (DAT_837396f1 != '\0')) {
-    DAT_837396f1 = 0;
-    if (DAT_83739364 != 0) {
-      Scr_FreeDebugMem();
-      DAT_83739364 = 0;
+  if ((scrVarPub.developer) && (scrDebuggerGlob.debugger_inited)) {
+    scrDebuggerGlob.debugger_inited = false;
+    if (scrDebuggerGlob.openScriptList._8_4_ != 0) {
+      Scr_FreeDebugMem((void *)scrDebuggerGlob.openScriptList._8_4_);
+      scrDebuggerGlob.openScriptList._8_4_ = 0;
     }
-    Scr_ScriptList__Shutdown(0xffffffff83739350);
-    if (DAT_83739694 != 0) {
-      Hunk_FreeDebugMem();
-      DAT_83739694 = 0;
+    Scr_ScriptList::Shutdown(&scrDebuggerGlob.scriptList);
+    if (scrDebuggerGlob.breakpoints != (char *)0x0) {
+      Hunk_FreeDebugMem(scrDebuggerGlob.breakpoints);
+      scrDebuggerGlob.breakpoints = (char *)0x0;
     }
-    DAT_837396f1 = '\0';
+    scrDebuggerGlob.debugger_inited = false;
   }
   return;
 }
@@ -4663,17 +5052,20 @@ void Scr_ShutdownDebugger(void)
 
 // 8252CFA0  Scr_RestartDebuggerRemote  (script/scr_debugger.cpp:8979)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RestartDebuggerRemote(void)
 
 {
   int iVar1;
   
-  if (DAT_83c4ba96 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2314,0,0xffffffff82000f98,0xffffffff8214fda4);
+  if (!scrVarPub.developer) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2314,0,"%s");
   }
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 != 0) {
-    Sys_WriteDebugSocketMessageType(2);
+    Sys_WriteDebugSocketMessageType('\x02');
     Sys_EndWriteDebugSocket();
   }
   return;
@@ -4682,6 +5074,8 @@ void Scr_RestartDebuggerRemote(void)
 
 // 825326A8  Scr_InitDebuggerSystem  (script/scr_debugger.cpp:8993)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_InitDebuggerSystem(void)
 
 {
@@ -4689,26 +5083,28 @@ void Scr_InitDebuggerSystem(void)
   
   __savegprlr_28();
   Sys_StartRemoteDebugServer();
-  if (DAT_83c4ba96 != '\0') {
-    if (DAT_837396f2 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x232b,0,0xffffffff82000f98,0xffffffff82150444);
+  if (scrVarPub.developer != false) {
+    if (scrDebuggerGlob.debugger_inited_system != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x232b,0,"%s");
     }
     Scr_InitBreakpoints();
-    DAT_837396b0 = 0;
-    DAT_837396c0 = 0;
-    DAT_8373970c = 0;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x233a,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
+    scrDebuggerGlob.killThreadCodePos = (char *)0x0;
+    scrDebuggerGlob.breakpointCount = 0;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x233a,0,"%s");
     }
-    DAT_837396ac = 0;
-    DAT_837396a0 = 0xfffe;
-    DAT_83739378 = 0;
-    DAT_837396e0 = 0;
-    DAT_837396cc = 0;
-    DAT_83739370 = 0;
-    DAT_83739374 = 0;
-    DAT_83c4ba98 = '\0';
-    DAT_837396f2 = '\x01';
+    scrDebuggerGlob.atBreakpoint = false;
+    scrDebuggerGlob.breakpointPos.bufferIndex = 0xfffe;
+    scrDebuggerGlob.scriptWatch.localId = 0;
+    scrDebuggerGlob.assignBreakpointSet = false;
+    scrDebuggerGlob.run_debugger = false;
+    scrDebuggerGlob.scriptWatch.elementHead = (Scr_WatchElement_s *)0x0;
+    scrDebuggerGlob.scriptWatch.elementId = 0;
+    scrVarPub.evaluate = false;
+    scrDebuggerGlob.debugger_inited_system = true;
     iVar1 = Sys_IsRemoteDebugServer();
     if (iVar1 != 0) {
       Scr_SendSource();
@@ -4719,7 +5115,7 @@ void Scr_InitDebuggerSystem(void)
         return;
       }
     }
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
   }
   __restgprlr_28();
   return;
@@ -4728,23 +5124,24 @@ void Scr_InitDebuggerSystem(void)
 
 // 825304A8  Scr_ShutdownDebuggerSystem  (script/scr_debugger.cpp:9090)
 
-void Scr_ShutdownDebuggerSystem(void)
+void Scr_ShutdownDebuggerSystem(int param_1)
 
 {
-  if ((DAT_83c4ba96 != '\0') && (DAT_837396f2 != '\0')) {
-    DAT_837396f2 = '\0';
-    DAT_83c4ba98 = 0;
-    Scr_ScriptWatch__Shutdown(0xffffffff83739368);
-    if (DAT_837396b0 != 0) {
-      Scr_RemoveManualBreakpoint();
-      DAT_837396b0 = 0;
+  if ((scrVarPub.developer) && (scrDebuggerGlob.debugger_inited_system)) {
+    scrDebuggerGlob.debugger_inited_system = false;
+    scrVarPub.evaluate = false;
+    Scr_ScriptWatch::Shutdown(&scrDebuggerGlob.scriptWatch);
+    if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+      Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+      scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
     }
-    if (DAT_837396c0 != 0) {
-      Scr_RemoveManualBreakpoint();
-      DAT_837396c0 = 0;
+    if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+      Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.killThreadCodePos);
+      scrDebuggerGlob.killThreadCodePos = (char *)0x0;
     }
-    if (DAT_8373970c != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x23ab,0,0xffffffff82000f98,0xffffffff82150300);
+    if (scrDebuggerGlob.breakpointCount != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x23ab,0,"%s");
     }
   }
   return;
@@ -4753,15 +5150,18 @@ void Scr_ShutdownDebuggerSystem(void)
 
 // 825327C8  Scr_ConnectRemote  (script/scr_debugger.cpp:9138)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ConnectRemote(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_StartRemoteDebugServer();
-  if ((cVar1 != '\0') && (DAT_837396f2 != '\0')) {
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x23b9,0,0xffffffff82000f98,0xffffffff8214e7a8);
+  bVar1 = Sys_StartRemoteDebugServer();
+  if ((bVar1) && (scrDebuggerGlob.debugger_inited_system != false)) {
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x23b9,0,"%s");
     }
     Scr_ShutdownDebuggerSystem(1);
     Scr_InitDebuggerSystem();
@@ -4772,7 +5172,7 @@ void Scr_ConnectRemote(void)
 
 // 8252D010  Scr_ShutdownRemoteClient  (script/scr_debugger.cpp:9154)
 
-void Scr_ShutdownRemoteClient(void)
+void Scr_ShutdownRemoteClient(int param_1)
 
 {
   return;
@@ -4781,20 +5181,21 @@ void Scr_ShutdownRemoteClient(void)
 
 // 8252D018  Scr_AddAssignmentPos  (script/scr_debugger.cpp:9166)
 
-void Scr_AddAssignmentPos(int param_1)
+void Scr_AddAssignmentPos(char *param_1)
 
 {
-  int *piVar1;
+  Scr_OpcodeList_s *pSVar1;
   
-  if (DAT_83c4ba96 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x23d1,0,0xffffffff82000f98,0xffffffff8214fda4);
+  if (!scrVarPub.developer) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x23d1,0,"%s");
   }
-  if ((DAT_83700fe8 != 2) && (DAT_837396dc != param_1)) {
-    DAT_837396dc = param_1;
-    piVar1 = (int *)Hunk_AllocDebugMem(8,0xffffffff8214fdb8);
-    *piVar1 = param_1;
-    piVar1[1] = (int)DAT_837396d8;
-    DAT_837396d8 = piVar1;
+  if ((scrCompilePub.developer_statement != 2) && (scrDebuggerGlob.assignHeadCodePos != param_1)) {
+    scrDebuggerGlob.assignHeadCodePos = param_1;
+    pSVar1 = Hunk_AllocDebugMem(8,"Scr_AddAssignmentPos");
+    pSVar1->codePos = param_1;
+    pSVar1->next = scrDebuggerGlob.assignHead;
+    scrDebuggerGlob.assignHead = pSVar1;
   }
   return;
 }
@@ -4802,44 +5203,51 @@ void Scr_AddAssignmentPos(int param_1)
 
 // 8252D0D0  Scr_ResetAbortDebugger  (script/scr_debugger.cpp:9187)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ResetAbortDebugger(void)
 
 {
-  DAT_837396ad = 0;
+  scrDebuggerGlob.abort = false;
   return;
 }
 
 
 // 825310B0  Scr_DisplayDebuggerRemoteInternal  (script/scr_debugger.cpp:9193)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DisplayDebuggerRemoteInternal(void)
 
 {
-  undefined4 uVar1;
-  char cVar3;
+  char *pcVar1;
+  bool bVar3;
   int iVar2;
   
   __savegprlr_26();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x23ee,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x23ee,0,"%s");
   }
-  uVar1 = DAT_83c6fb14;
-  DAT_83c6fb14 = "<script debugger variable>";
-  if (DAT_83c4ba98 != '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x23f5,0,0xffffffff82000f98,0xffffffff8214e7a8);
+  pcVar1 = scrVarPub.varUsagePos;
+  scrVarPub.varUsagePos = "<script debugger variable>";
+  if (scrVarPub.evaluate != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x23f5,0,"%s");
   }
-  DAT_83c4ba98 = '\x01';
-  Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
+  scrVarPub.evaluate = true;
+  Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
   do {
-    if (DAT_837396ac == '\0') {
+    if (scrDebuggerGlob.atBreakpoint == false) {
 LAB_825311f8:
-      Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
-      if (DAT_83c4ba98 == '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x2417,0,0xffffffff82000f98,0xffffffff8214fbf4);
+      Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
+      if (scrVarPub.evaluate == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2417,0,"%s");
       }
-      DAT_83c4ba98 = 0;
-      DAT_83c6fb14 = (char *)uVar1;
+      scrVarPub.evaluate = false;
+      scrVarPub.varUsagePos = pcVar1;
       __restgprlr_26();
       return;
     }
@@ -4849,14 +5257,15 @@ LAB_825311f8:
       Scr_ResumeBreakpoints();
       goto LAB_825311f8;
     }
-    if ((DAT_837396ac != '\0') && (iVar2 = Sys_Milliseconds(), 499 < iVar2 - DAT_83727334)) {
-      DAT_83727334 = Sys_Milliseconds();
-      Sys_WriteDebugSocketMessageType(0x27);
+    if ((scrDebuggerGlob.atBreakpoint != false) &&
+       (iVar2 = Sys_Milliseconds(), 499 < iVar2 - g_lastKeepAliveTime)) {
+      g_lastKeepAliveTime = Sys_Milliseconds();
+      Sys_WriteDebugSocketMessageType('\'');
       Sys_EndWriteDebugSocket();
     }
-    if (DAT_837396ad != '\0') {
-      DAT_837396d0 = 0;
-      DAT_837396d4 = 0;
+    if (scrDebuggerGlob.abort != false) {
+      scrDebuggerGlob.step_mode = 0;
+      scrDebuggerGlob.skip_instr = 0;
       Scr_Step();
     }
     Scr_ProcessDebugMessages();
@@ -4867,81 +5276,89 @@ LAB_825311f8:
 
 // 82531248  Scr_DisplayDebuggerRemote  (script/scr_debugger.cpp:9249)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DisplayDebuggerRemote(void)
 
 {
-  undefined4 uVar1;
+  char *pcVar1;
   int iVar2;
-  char cVar3;
-  undefined4 *puVar4;
+  bool bVar4;
+  int iVar3;
+  uint *puVar5;
   
   __savegprlr_25();
   iVar2 = Sys_IsRemoteDebugServer();
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x2427,0,0xffffffff82000f98,0xffffffff8214fb44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2427,0,"%s");
   }
-  uVar1 = DAT_83c6fb14;
-  DAT_83c6fb14 = "<script debugger variable>";
-  if (DAT_83c4ba98 != '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2436,0,0xffffffff82000f98,0xffffffff8214e7a8);
+  pcVar1 = scrVarPub.varUsagePos;
+  scrVarPub.varUsagePos = "<script debugger variable>";
+  if (scrVarPub.evaluate != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2436,0,"%s");
   }
-  DAT_83c4ba98 = '\x01';
-  Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
-  Scr_ScriptWatch__Evaluate(0xffffffff83739368);
-  if (DAT_837396ac == '\0') {
-    DAT_837396ac = '\x01';
+  scrVarPub.evaluate = true;
+  Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
+  Scr_ScriptWatch::Evaluate(&scrDebuggerGlob.scriptWatch);
+  if (scrDebuggerGlob.atBreakpoint == false) {
+    scrDebuggerGlob.atBreakpoint = true;
   }
   else {
-    Sys_WriteDebugSocketMessageType(0x25);
-    Sys_WriteDebugSocketInt(DAT_83739384);
+    Sys_WriteDebugSocketMessageType('%');
+    Sys_WriteDebugSocketInt(scrDebuggerGlob.scriptCallStack._padding_);
     iVar2 = 0;
-    if (0 < DAT_83739384) {
-      puVar4 = &DAT_83739384;
+    if (0 < scrDebuggerGlob.scriptCallStack._padding_) {
+      puVar5 = (uint *)&scrDebuggerGlob.scriptCallStack._padding_;
       do {
-        Sys_WriteDebugSocketInt(puVar4[1]);
-        puVar4 = puVar4 + 2;
-        Sys_WriteDebugSocketInt(*puVar4);
+        Sys_WriteDebugSocketInt(((Scr_SourcePos2_t *)(puVar5 + 1))->bufferIndex);
+        puVar5 = puVar5 + 2;
+        Sys_WriteDebugSocketInt(*puVar5);
         iVar2 = iVar2 + 1;
-      } while (iVar2 < DAT_83739384);
+      } while (iVar2 < scrDebuggerGlob.scriptCallStack._padding_);
     }
     Sys_EndWriteDebugSocket();
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x244d,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x244d,0,"%s");
   }
-  DAT_83c4ba98 = 0;
-  Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
-  DAT_83c6fb14 = (char *)uVar1;
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
+  scrVarPub.evaluate = false;
+  Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
+  scrVarPub.varUsagePos = pcVar1;
+  bVar4 = Sys_IsMainThread();
+  if (bVar4) {
+    Scr_DisplayDebuggerRemoteInternal();
+    iVar2 = scrDebuggerGlob.disableDebuggerRemote;
+  }
+  else {
     sync(1);
-    DAT_83739700 = 1;
-    iVar2 = Sys_HaveSuspendedNetworkCompleteThread();
-    if (iVar2 != 0) {
+    scrDebuggerGlob.disableDebuggerRemote = 1;
+    iVar3 = Sys_HaveSuspendedNetworkCompleteThread();
+    if (iVar3 != 0) {
       Sys_SetServerNetworkCompletedEvent();
     }
-    while (DAT_83739700 != 0) {
+    while (scrDebuggerGlob.disableDebuggerRemote != 0) {
       Sys_DidSwap();
     }
-    uVar1 = 0;
-    if (iVar2 != 0) {
+    iVar2 = 0;
+    if (iVar3 != 0) {
       Sys_WaitAllowServerNetworkLoop();
       Sys_ResetServerNetworkCompletedEvent();
       __restgprlr_25();
       return;
     }
   }
-  else {
-    Scr_DisplayDebuggerRemoteInternal();
-    uVar1 = DAT_83739700;
-  }
-  DAT_83739700 = uVar1;
+  scrDebuggerGlob.disableDebuggerRemote = iVar2;
   __restgprlr_25();
   return;
 }
 
 
 // 8252D0E8  Scr_UpdateRemote  (script/scr_debugger.cpp:9343)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_UpdateRemote(void)
 
@@ -4952,13 +5369,15 @@ void Scr_UpdateRemote(void)
 
 // 82531418  Scr_DisplayDebugger  (script/scr_debugger.cpp:9368)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DisplayDebugger(void)
 
 {
   int iVar1;
   
-  if (DAT_837396ac != '\0') {
-    Scr_ScriptCallStack__UpdateStack(0xffffffff83739380);
+  if (scrDebuggerGlob.atBreakpoint) {
+    Scr_ScriptCallStack::UpdateStack(&scrDebuggerGlob.scriptCallStack);
   }
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 != 0) {
@@ -4975,17 +5394,17 @@ void Scr_DisplayDebugger(void)
 
 // 8252D0F0  Scr_RemoveElementValue  (script/scr_debugger.cpp:9504)
 
-void Scr_RemoveElementValue(int param_1)
+void Scr_RemoveElementValue(Scr_WatchElement_s *param_1)
 
 {
-  int iVar1;
+  Scr_WatchElement_s *pSVar1;
   
-  if ((*(byte *)(param_1 + 0x4d) & 8) != 0) {
-    *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) & 0xf7;
-    RemoveRefToValue(*(undefined4 *)(param_1 + 0x18),*(undefined4 *)(param_1 + 0x14));
+  if (param_1->valueDefined) {
+    param_1->field_0x4d = param_1->field_0x4d & 0xf7;
+    RemoveRefToValue((param_1->value).type,(param_1->value).u);
   }
-  for (iVar1 = *(int *)(param_1 + 0x38); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-    Scr_RemoveElementValue(iVar1);
+  for (pSVar1 = param_1->childHead; pSVar1 != (Scr_WatchElement_s *)0x0; pSVar1 = pSVar1->next) {
+    Scr_RemoveElementValue(pSVar1);
   }
   return;
 }
@@ -4993,26 +5412,30 @@ void Scr_RemoveElementValue(int param_1)
 
 // 8252D160  Scr_RemoveElementValues  (script/scr_debugger.cpp:9515)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RemoveElementValues(void)
 
 {
-  int iVar1;
-  int iVar2;
+  Scr_WatchElement_s *pSVar1;
+  Scr_WatchElement_s *pSVar2;
   
   __savegprlr_27();
-  for (iVar2 = DAT_83739370; iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x3c)) {
-    if ((*(byte *)(iVar2 + 0x4d) & 8) != 0) {
-      *(byte *)(iVar2 + 0x4d) = *(byte *)(iVar2 + 0x4d) & 0xf7;
-      RemoveRefToValue(*(undefined4 *)(iVar2 + 0x18),*(undefined4 *)(iVar2 + 0x14));
+  for (pSVar2 = scrDebuggerGlob.scriptWatch.elementHead; pSVar2 != (Scr_WatchElement_s *)0x0;
+      pSVar2 = pSVar2->next) {
+    if (pSVar2->valueDefined) {
+      pSVar2->field_0x4d = pSVar2->field_0x4d & 0xf7;
+      RemoveRefToValue((pSVar2->value).type,(pSVar2->value).u);
     }
-    for (iVar1 = *(int *)(iVar2 + 0x38); iVar1 != 0; iVar1 = *(int *)(iVar1 + 0x3c)) {
-      Scr_RemoveElementValue(iVar1);
+    for (pSVar1 = pSVar2->childHead; pSVar1 != (Scr_WatchElement_s *)0x0; pSVar1 = pSVar1->next) {
+      Scr_RemoveElementValue(pSVar1);
     }
-    if (*(int *)(iVar2 + 0x20) == 0) {
-      if (*(int *)(iVar2 + 8) == 0) {
-        MyAssertHandler(0xffffffff8214f658,0x2536,0,0xffffffff82000f98,0xffffffff8214fc20);
+    if (pSVar2->breakpoint == (Scr_Breakpoint *)0x0) {
+      if ((pSVar2->expr).exprHead == (debugger_sval_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2536,0,"%s");
       }
-      Scr_ClearDebugExpr(*(undefined4 *)(iVar2 + 8));
+      Scr_ClearDebugExpr((pSVar2->expr).exprHead);
     }
   }
   __restgprlr_27();
@@ -5022,35 +5445,42 @@ void Scr_RemoveElementValues(void)
 
 // 8252D230  Scr_RemoveDebuggerRefs  (script/scr_debugger.cpp:9534)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RemoveDebuggerRefs(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_26();
-  if (DAT_83c4ba96 != '\0') {
-    cVar1 = Scr_IsStackClear();
-    if (cVar1 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2542,0,0xffffffff82000f98,0xffffffff8214fdec);
+  if (scrVarPub.developer != false) {
+    bVar1 = Scr_IsStackClear();
+    if (!bVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2542,0,"%s");
     }
-    if (DAT_83ca44a8 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x2544,0,0xffffffff82000f98,0xffffffff8214fdd0);
+    if (scrVmPub.function_count != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2544,0,"%s");
     }
-    DAT_83ca44c0 = 0;
-    DAT_83739378 = 0;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2548,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    scrVmPub.breakpointOutparamcount = 0;
+    scrDebuggerGlob.scriptWatch.localId = 0;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2548,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
+    scrVarPub.evaluate = true;
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
     Scr_RemoveElementValues();
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x254e,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x254e,0,"%s");
     }
-    DAT_83c4ba98 = '\0';
-    cVar1 = Scr_IsStackClear();
-    if (cVar1 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2551,0,0xffffffff82000f98,0xffffffff8214fdec);
+    scrVarPub.evaluate = false;
+    bVar1 = Scr_IsStackClear();
+    if (!bVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2551,0,"%s");
     }
   }
   __restgprlr_26();
@@ -5060,26 +5490,31 @@ void Scr_RemoveDebuggerRefs(void)
 
 // 8252F7D8  Scr_AddDebuggerRefs  (script/scr_debugger.cpp:9558)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_AddDebuggerRefs(void)
 
 {
   __savegprlr_27();
-  if (DAT_83c4ba96 != '\0') {
-    if (DAT_83ca44a8 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x255a,0,0xffffffff82000f98,0xffffffff8214fdd0);
+  if (scrVarPub.developer != false) {
+    if (scrVmPub.function_count != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x255a,0,"%s");
     }
-    DAT_83ca44c0 = 0;
-    DAT_83739378 = 0;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x255e,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    scrVmPub.breakpointOutparamcount = 0;
+    scrDebuggerGlob.scriptWatch.localId = 0;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x255e,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    Scr_ScriptWatch__Evaluate(0xffffffff83739368);
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2564,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    scrVarPub.evaluate = true;
+    Scr_ScriptWatch::Evaluate(&scrDebuggerGlob.scriptWatch);
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2564,0,"%s");
     }
-    DAT_83c4ba98 = '\0';
+    scrVarPub.evaluate = false;
   }
   __restgprlr_27();
   return;
@@ -5087,6 +5522,8 @@ void Scr_AddDebuggerRefs(void)
 
 
 // 8252D380  Scr_RunDebuggerRemote  (script/scr_debugger.cpp:9578)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_RunDebuggerRemote(void)
 
@@ -5097,26 +5534,30 @@ void Scr_RunDebuggerRemote(void)
 
 // 82531470  Scr_RunDebugger  (script/scr_debugger.cpp:9608)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RunDebugger(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
   __savegprlr_27();
-  if (DAT_83c4ba96 == '\0') goto LAB_8253157c;
-  DAT_837396ad = 0;
-  cVar2 = Scr_IsStackClear();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2594,0,0xffffffff82000f98,0xffffffff8214fdec);
+  if (scrVarPub.developer == false) goto LAB_8253157c;
+  scrDebuggerGlob.abort = false;
+  bVar2 = Scr_IsStackClear();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2594,0,"%s");
   }
-  if (DAT_83ca44a8 != 0) {
-    MyAssertHandler(0xffffffff8214f658,0x2596,0,0xffffffff82000f98,0xffffffff8214fdd0);
+  if (scrVmPub.function_count != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2596,0,"%s");
   }
-  DAT_83739378 = 0;
-  DAT_83ca44c0 = 0;
-  if (DAT_837396ac != '\0') {
-    Scr_ScriptCallStack__UpdateStack(0xffffffff83739380);
+  scrDebuggerGlob.scriptWatch.localId = 0;
+  scrVmPub.breakpointOutparamcount = 0;
+  if (scrDebuggerGlob.atBreakpoint != false) {
+    Scr_ScriptCallStack::UpdateStack(&scrDebuggerGlob.scriptCallStack);
   }
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 == 0) {
@@ -5128,9 +5569,10 @@ LAB_82531550:
     iVar1 = Sys_IsRemoteDebugServer();
     if (iVar1 == 0) goto LAB_82531550;
   }
-  cVar2 = Scr_IsStackClear();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x259b,0,0xffffffff82000f98,0xffffffff8214fdec);
+  bVar2 = Scr_IsStackClear();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x259b,0,"%s");
   }
 LAB_8253157c:
   __restgprlr_27();
@@ -5140,6 +5582,8 @@ LAB_8253157c:
 
 // 8252D388  Scr_DisplayHitBreakpointRemote  (script/scr_debugger.cpp:9649)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_DisplayHitBreakpointRemote(void)
 
 {
@@ -5148,17 +5592,20 @@ void Scr_DisplayHitBreakpointRemote(void)
   __savegprlr_29();
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x25b2,0,0xffffffff82000f98,0xffffffff8214fb44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x25b2,0,"%s");
   }
-  if (DAT_837396a0 == 0xfffe) {
-    MyAssertHandler(0xffffffff8214f658,0x25b3,0,0xffffffff82000f98,0xffffffff8214fe20);
+  if (scrDebuggerGlob.breakpointPos.bufferIndex == 0xfffe) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x25b3,0,"%s");
   }
-  if (DAT_837396ac == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x25b4,0,0xffffffff82000f98,0xffffffff8214fe00);
+  if (scrDebuggerGlob.atBreakpoint == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x25b4,0,"%s");
   }
-  Sys_WriteDebugSocketMessageType(0x17);
-  Sys_WriteDebugSocketInt(DAT_837396a0);
-  Sys_WriteDebugSocketInt(DAT_837396a4);
+  Sys_WriteDebugSocketMessageType('\x17');
+  Sys_WriteDebugSocketInt(scrDebuggerGlob.breakpointPos.bufferIndex);
+  Sys_WriteDebugSocketInt(scrDebuggerGlob.breakpointPos.lineNum);
   Sys_EndWriteDebugSocket();
   __restgprlr_29();
   return;
@@ -5167,31 +5614,31 @@ void Scr_DisplayHitBreakpointRemote(void)
 
 // 8252D448  Scr_WatchElementHitBreakpoint  (script/scr_debugger.cpp:9663)
 
-void Scr_WatchElementHitBreakpoint(int param_1,char param_2)
+void Scr_WatchElementHitBreakpoint(Scr_WatchElement_s *param_1,bool param_2)
 
 {
   int iVar1;
-  undefined2 uVar2;
+  uint uVar2;
   
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 != 0) {
-    Sys_WriteDebugSocketMessageType(0x1d);
-    if (param_1 == 0) {
+    Sys_WriteDebugSocketMessageType('\x1d');
+    if (param_1 == (Scr_WatchElement_s *)0x0) {
       uVar2 = 0;
     }
     else {
-      uVar2 = *(undefined2 *)(param_1 + 0x46);
+      uVar2 = (uint)param_1->id;
     }
     Sys_WriteDebugSocketInt(uVar2);
-    Sys_WriteDebugSocketInt(param_2);
+    Sys_WriteDebugSocketInt((uint)param_2);
     Sys_EndWriteDebugSocket();
   }
-  if (param_2 == '\0') {
-    *(undefined4 *)(param_1 + 0x2c) = 0;
-    *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) | 0x10;
+  if (param_2) {
+    param_1->field_0x4d = param_1->field_0x4d | 0x20;
   }
   else {
-    *(byte *)(param_1 + 0x4d) = *(byte *)(param_1 + 0x4d) | 0x20;
+    param_1->changedTime = 0;
+    param_1->field_0x4d = param_1->field_0x4d | 0x10;
   }
   return;
 }
@@ -5199,111 +5646,121 @@ void Scr_WatchElementHitBreakpoint(int param_1,char param_2)
 
 // 8252D4E0  Scr_ConditionalExpression  (script/scr_debugger.cpp:9687)
 
-void Scr_ConditionalExpression(undefined8 param_1,ulonglong param_2)
+/* WARNING: Type propagation algorithm not settling */
+
+bool Scr_ConditionalExpression(Scr_WatchElement_s *param_1,uint param_2)
 
 {
-  bool bVar1;
-  char cVar2;
-  int iVar3;
-  DWORD DVar4;
-  HGDIOBJ pvVar5;
-  int iVar6;
+  char cVar1;
+  ScriptExpression_t *pSVar2;
+  int iVar4;
+  longlong lVar3;
+  uint uVar6;
   int iVar7;
-  byte bVar8;
-  longlong lVar9;
-  HGDIOBJ local_60;
+  undefined1 uVar8;
+  ulonglong uVar9;
+  byte bVar10;
+  bool bVar11;
+  VariableUnion local_60;
   int local_5c;
+  int iVar5;
   
-  iVar3 = __savegprlr_23();
-  iVar6 = *(int *)(iVar3 + 0x3c);
+  uVar9 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_23(param_1);
+  pSVar2 = *(ScriptExpression_t **)(iVar4 + 0x3c);
   do {
-    if ((iVar6 == 0) || (*(char *)(iVar6 + 0x4c) != '\x02')) {
-      cVar2 = *(char *)(iVar3 + 0x4c);
-      if (((cVar2 == '\x01') || (cVar2 == '\x05')) || (lVar9 = 0, cVar2 == '\x06')) {
-        lVar9 = 1;
+    if ((pSVar2 == (ScriptExpression_t *)0x0) || (*(char *)&pSVar2[6].breakonExpr != '\x02')) {
+      cVar1 = *(char *)(iVar4 + 0x4c);
+      if (((cVar1 == '\x01') || (cVar1 == '\x05')) || (iVar5 = 0, cVar1 == '\x06')) {
+        iVar5 = 1;
       }
-      iVar6 = Sys_IsRemoteDebugServer();
-      if (iVar6 != 0) {
-        Sys_WriteDebugSocketMessageType(0x1d);
-        Sys_WriteDebugSocketInt(*(undefined2 *)(iVar3 + 0x46));
-        Sys_WriteDebugSocketInt(lVar9);
+      iVar7 = Sys_IsRemoteDebugServer();
+      if (iVar7 != 0) {
+        Sys_WriteDebugSocketMessageType('\x1d');
+        Sys_WriteDebugSocketInt((uint)*(ushort *)(iVar4 + 0x46));
+        Sys_WriteDebugSocketInt(iVar5);
         Sys_EndWriteDebugSocket();
       }
-      if (lVar9 == 0) {
-        *(undefined4 *)(iVar3 + 0x2c) = 0;
-        bVar8 = *(byte *)(iVar3 + 0x4d) | 0x10;
+      if (iVar5 == 0) {
+        *(undefined4 *)(iVar4 + 0x2c) = 0;
+        bVar10 = *(byte *)(iVar4 + 0x4d) | 0x10;
       }
       else {
-        bVar8 = *(byte *)(iVar3 + 0x4d) | 0x20;
+        bVar10 = *(byte *)(iVar4 + 0x4d) | 0x20;
       }
-      iVar6 = *(int *)(iVar3 + 0x3c);
-      *(byte *)(iVar3 + 0x4d) = bVar8;
-      for (; (iVar6 != 0 && (*(char *)(iVar6 + 0x4c) == '\x02')); iVar6 = *(int *)(iVar6 + 0x3c)) {
-        iVar3 = Sys_IsRemoteDebugServer();
-        if (iVar3 != 0) {
-          Sys_WriteDebugSocketMessageType(0x1d);
-          Sys_WriteDebugSocketInt(*(undefined2 *)(iVar6 + 0x46));
-          Sys_WriteDebugSocketInt(lVar9);
+      iVar7 = *(int *)(iVar4 + 0x3c);
+      *(byte *)(iVar4 + 0x4d) = bVar10;
+      for (; (iVar7 != 0 && (*(char *)(iVar7 + 0x4c) == '\x02')); iVar7 = *(int *)(iVar7 + 0x3c)) {
+        iVar4 = Sys_IsRemoteDebugServer();
+        if (iVar4 != 0) {
+          Sys_WriteDebugSocketMessageType('\x1d');
+          Sys_WriteDebugSocketInt((uint)*(ushort *)(iVar7 + 0x46));
+          Sys_WriteDebugSocketInt(iVar5);
           Sys_EndWriteDebugSocket();
         }
-        if (lVar9 == 0) {
-          *(undefined4 *)(iVar6 + 0x2c) = 0;
-          bVar8 = *(byte *)(iVar6 + 0x4d) | 0x10;
+        if (iVar5 == 0) {
+          *(undefined4 *)(iVar7 + 0x2c) = 0;
+          bVar10 = *(byte *)(iVar7 + 0x4d) | 0x10;
         }
         else {
-          bVar8 = *(byte *)(iVar6 + 0x4d) | 0x20;
+          bVar10 = *(byte *)(iVar7 + 0x4d) | 0x20;
         }
-        *(byte *)(iVar6 + 0x4d) = bVar8;
+        *(byte *)(iVar7 + 0x4d) = bVar10;
       }
-      __restgprlr_23(lVar9);
-      return;
+      uVar8 = __restgprlr_23(iVar5);
+      return (bool)uVar8;
     }
-    if (*(int *)(iVar6 + 0x20) != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x25e0,0,0xffffffff82000f98,0xffffffff8214fe64);
+    if (pSVar2[2].exprHead != (debugger_sval_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x25e0,0,"%s");
     }
-    if (*(int *)(iVar6 + 8) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x25e2,0,0xffffffff82000f98,0xffffffff8214fc20);
+    if (pSVar2->exprHead == (debugger_sval_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x25e2,0,"%s");
     }
-    Scr_EvalScriptExpression(iVar6,param_2,&local_60,0,1);
+    Scr_EvalScriptExpression(pSVar2,(uint)uVar9,(VariableValue *)&local_60,false,true);
     if (local_5c == 1) {
-      RemoveRefToObject(local_60);
-      DVar4 = GetObjectType(local_60);
-      lVar9 = (longlong)(int)DVar4;
-      if (6 < (lVar9 - 0x10U & 0xffffffff)) goto LAB_8252d6f0;
-      bVar1 = (int)(lVar9 - 0x10U) != 0;
-      if ((((lVar9 == 0x11 && bVar1) || (lVar9 == 0x12 && bVar1)) || (lVar9 == 0x13 && bVar1)) ||
-         (((lVar9 != 0x14 || !bVar1 && (lVar9 != 0x15 || !bVar1)) && (!bVar1)))) {
-        if (ZEXT48(local_60) != (param_2 & 0xffffffff)) goto LAB_8252d6f0;
+      RemoveRefToObject(local_60.uintValue);
+      iVar5 = GetObjectType(local_60.uintValue);
+      lVar3 = (longlong)iVar5;
+      if (6 < (lVar3 - 0x10U & 0xffffffff)) goto LAB_8252d6f0;
+      bVar11 = (int)(lVar3 - 0x10U) != 0;
+      if ((((lVar3 == 0x11 && bVar11) || (lVar3 == 0x12 && bVar11)) || (lVar3 == 0x13 && bVar11)) ||
+         (((lVar3 != 0x14 || !bVar11 && (lVar3 != 0x15 || !bVar11)) && (!bVar11)))) {
+        if ((ulonglong)local_60.uintValue != (uVar9 & 0xffffffff)) goto LAB_8252d6f0;
       }
-      else if (((param_2 & 0xffffffff) == 0) ||
-              (pvVar5 = (HGDIOBJ)Scr_GetSelf(param_2), local_60 != pvVar5)) goto LAB_8252d6f0;
+      else if (((uVar9 & 0xffffffff) == 0) ||
+              (uVar6 = Scr_GetSelf((uint)uVar9), local_60.intValue != uVar6)) goto LAB_8252d6f0;
     }
     else {
       if (local_5c == 6) {
-        local_60 = (HGDIOBJ)(uint)(local_60 != (HGDIOBJ)0x0);
-        iVar7 = 6;
+        bVar11 = local_60.intValue != 0;
+        local_60.intValue._0_3_ = 0;
+        local_60.intValue._3_1_ = bVar11;
       }
       else {
-        Scr_CastBool_NonInteger(&local_60);
-        iVar7 = local_5c;
+        Scr_CastBool_NonInteger((VariableValue *)&local_60);
       }
-      if (DAT_83c4ba9c != 0) {
+      if (scrVarPub.error_message != (char *)0x0) {
         Scr_ClearErrorMessage();
 LAB_8252d6f0:
-        __restgprlr_23(0);
-        return;
+        uVar8 = __restgprlr_23(0);
+        return (bool)uVar8;
       }
-      if (iVar7 != 6) {
-        MyAssertHandler(0xffffffff8214f658,0x2606,0,0xffffffff82000f98,0xffffffff8214fe84);
+      if (local_5c != 6) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2606,0,"%s");
       }
-      if (local_60 == (HGDIOBJ)0x0) goto LAB_8252d6f0;
+      if (local_60.intValue == 0) goto LAB_8252d6f0;
     }
-    iVar6 = *(int *)(iVar6 + 0x3c);
+    pSVar2 = (ScriptExpression_t *)pSVar2[5].parseData.block;
   } while( true );
 }
 
 
 // 8252D780  Scr_ShowConsole  (script/scr_debugger.cpp:9748)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_ShowConsole(void)
 
@@ -5314,18 +5771,20 @@ void Scr_ShowConsole(void)
 
 // 82531588  Scr_HitBreakpointInternal  (script/scr_debugger.cpp:9759)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_HitBreakpointInternal(void)
 
 {
   int iVar1;
   
-  Scr_ScriptWatch__SortHitBreakpointsTop(0xffffffff83739368);
+  Scr_ScriptWatch::SortHitBreakpointsTop(&scrDebuggerGlob.scriptWatch);
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 != 0) {
     Scr_DisplayHitBreakpointRemote();
   }
-  if (DAT_837396ac != '\0') {
-    Scr_ScriptCallStack__UpdateStack(0xffffffff83739380);
+  if (scrDebuggerGlob.atBreakpoint != false) {
+    Scr_ScriptCallStack::UpdateStack(&scrDebuggerGlob.scriptCallStack);
   }
   iVar1 = Sys_IsRemoteDebugServer();
   if (iVar1 != 0) {
@@ -5342,184 +5801,214 @@ LAB_825315ec:
 
 // 82531608  Scr_HitBreakpoint  (script/scr_debugger.cpp:9783)
 
-void Scr_HitBreakpoint(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4)
+int Scr_HitBreakpoint(VariableValue *param_1,char *param_2,uint param_3,int param_4)
 
 {
-  bool bVar1;
+  Scr_WatchElement_s *pSVar1;
   bool bVar2;
-  char cVar3;
-  undefined4 uVar4;
-  byte *pbVar5;
-  char cVar8;
-  int iVar6;
-  int iVar7;
-  undefined8 uVar9;
+  bool bVar3;
+  bool bVar4;
+  VariableValue *pVVar5;
+  byte *pbVar6;
+  bool bVar11;
+  int iVar8;
+  int iVar9;
   uint uVar10;
-  ulonglong uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  uchar uVar14;
+  longlong lVar15;
+  uint uVar16;
+  ulonglong uVar17;
+  char *pcVar7;
   
-  uVar4 = __savegprlr_17();
-  iVar7 = (int)param_4;
-  if (DAT_83c4ba96 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2643,0,0xffffffff82000f98,0xffffffff8214fda4);
+  lVar15 = (longlong)param_4;
+  uVar13 = (ulonglong)(int)param_3;
+  lVar12 = (longlong)(int)param_2;
+  pVVar5 = (VariableValue *)__savegprlr_17(param_1);
+  iVar9 = (int)lVar15;
+  if (scrVarPub.developer == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2643,0,"%s");
   }
-  if (DAT_83ca44a8 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x2647,0,0xffffffff82000f98,0xffffffff821503cc);
+  if (scrVmPub.function_count == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2647,0,"%s");
   }
-  uVar11 = param_2 - 1;
-  pbVar5 = (byte *)Scr_FindBreakpointInfo(uVar11);
-  cVar3 = DAT_837396c4;
-  uVar10 = (uint)*pbVar5;
+  uVar17 = lVar12 - 1;
+  pcVar7 = (char *)uVar17;
+  pbVar6 = (byte *)Scr_FindBreakpointInfo(pcVar7);
+  bVar4 = scrDebuggerGlob.kill_thread;
+  uVar16 = (uint)*pbVar6;
+  bVar3 = false;
   bVar2 = false;
-  bVar1 = false;
-  if ((ulonglong)DAT_837396b0 == (uVar11 & 0xffffffff)) {
-    if ((DAT_837396b8 == 0) || ((param_3 & 0xffffffff) == (ulonglong)DAT_837396b8)) {
-      bVar2 = true;
+  if (ZEXT48(scrDebuggerGlob.nextBreakpointCodePos) == (uVar17 & 0xffffffff)) {
+    if ((scrDebuggerGlob.nextBreakpointThreadId == 0) ||
+       ((uVar13 & 0xffffffff) == (ulonglong)scrDebuggerGlob.nextBreakpointThreadId)) {
+      bVar3 = true;
     }
     else {
-      bVar1 = true;
+      bVar2 = true;
     }
   }
-  if (DAT_837396c4 == '\0') {
-    if (DAT_837396c0 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x2669,0,0xffffffff82000f98,0xffffffff8214f960);
+  if (scrDebuggerGlob.kill_thread == false) {
+    if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2669,0,"%s");
     }
   }
   else {
-    uVar10 = 0;
-    DAT_837396c4 = '\0';
-    if ((ulonglong)DAT_837396c0 != 0) {
-      if ((ulonglong)DAT_837396c0 == (uVar11 & 0xffffffff)) {
-        bVar1 = true;
+    uVar16 = 0;
+    scrDebuggerGlob.kill_thread = false;
+    if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+      if (ZEXT48(scrDebuggerGlob.killThreadCodePos) == (uVar17 & 0xffffffff)) {
+        bVar2 = true;
       }
-      Scr_RemoveManualBreakpoint();
-      DAT_837396c0 = 0;
+      Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.killThreadCodePos);
+      scrDebuggerGlob.killThreadCodePos = (char *)0x0;
     }
   }
-  if (DAT_837396fc == '\0') {
-    if (DAT_837396a0 != 0xfffe) {
-      MyAssertHandler(0xffffffff8214f658,0x266f,0,0xffffffff82000f98,0xffffffff82150388);
+  if (scrDebuggerGlob.disableBreakpoints == false) {
+    if (scrDebuggerGlob.breakpointPos.bufferIndex != 0xfffe) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x266f,0,"%s");
     }
-    if (DAT_837396ac != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2670,0,0xffffffff82000f98,0xffffffff82150368);
+    if (scrDebuggerGlob.atBreakpoint != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2670,0,"%s");
     }
-    DAT_83ca44c0 = 0;
-    DAT_83ca44b0 = uVar4;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2675,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    scrVmPub.breakpointOutparamcount = 0;
+    scrVmPub.top = pVVar5;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2675,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    for (iVar6 = DAT_83739370; iVar6 != 0; iVar6 = *(int *)(iVar6 + 0x3c)) {
-      if ((*(int *)(iVar6 + 0x20) != 0) &&
-         ((ulonglong)*(uint *)(*(int *)(iVar6 + 0x20) + 8) == (uVar11 & 0xffffffff))) {
-        bVar1 = true;
-        cVar8 = Scr_ConditionalExpression(iVar6,param_3);
-        if (cVar8 != '\0') {
-          param_4 = 1;
+    scrVarPub.evaluate = true;
+    for (pSVar1 = scrDebuggerGlob.scriptWatch.elementHead; pSVar1 != (Scr_WatchElement_s *)0x0;
+        pSVar1 = pSVar1->next) {
+      if ((pSVar1->breakpoint != (Scr_Breakpoint *)0x0) &&
+         (ZEXT48(pSVar1->breakpoint->codePos) == (uVar17 & 0xffffffff))) {
+        bVar2 = true;
+        bVar11 = Scr_ConditionalExpression(pSVar1,(uint)uVar13);
+        if (bVar11) {
+          lVar15 = 1;
         }
       }
-      iVar7 = (int)param_4;
+      iVar9 = (int)lVar15;
     }
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2686,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2686,0,"%s");
     }
-    DAT_83c4ba98 = '\0';
-    if (((iVar7 != 0) || (bVar2)) || (!bVar1)) {
-      if (DAT_837396b0 != 0) {
-        Scr_RemoveManualBreakpoint(DAT_837396b0);
-        DAT_837396b0 = 0;
+    scrVarPub.evaluate = false;
+    if (((iVar9 != 0) || (bVar3)) || (!bVar2)) {
+      if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+        Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+        scrDebuggerGlob.nextBreakpointCodePos = (char *)0x0;
       }
-      DAT_8373969c = (undefined4)uVar11;
-      if ((cVar3 != '\0') || (uVar9 = 1, DAT_837396b4 != 0)) {
-        uVar9 = 0;
+      if ((bVar4 != false) || (uVar14 = '\x01', scrDebuggerGlob.isReturnPos != 0)) {
+        uVar14 = '\0';
       }
-      DAT_83739698 = uVar10;
-      DAT_837396c8 = uVar4;
-      iVar6 = Scr_GetSourcePosOfType(uVar11,uVar9,cVar3 == '\0',0xffffffff837396a0);
-      if (iVar6 == 0) {
-        if (!bVar2) {
-          DAT_837396d0 = 4;
+      scrDebuggerGlob.breakpointOpcode = uVar16;
+      scrDebuggerGlob.breakpointCodePos = pcVar7;
+      scrDebuggerGlob.breakpointTop = pVVar5;
+      iVar8 = Scr_GetSourcePosOfType
+                        (pcVar7,uVar14,(uint)LZCOUNT((uint)bVar4) >> 5,
+                         &scrDebuggerGlob.breakpointPos);
+      if (iVar8 == 0) {
+        if (!bVar3) {
+          scrDebuggerGlob.step_mode = 4;
         }
 LAB_82531908:
         Scr_Step();
-        DAT_837396a0 = 0xfffe;
-        __restgprlr_17(uVar10);
-        return;
+        scrDebuggerGlob.breakpointPos.bufferIndex = 0xfffe;
+        iVar9 = __restgprlr_17(uVar16);
+        return iVar9;
       }
-      if (((iVar7 == 0) && (bVar2)) &&
-         ((DAT_837396d0 != 4 &&
-          ((DAT_83739704 != -1 && (iVar7 = Scr_GetSourceBuffer(uVar11), DAT_83739708 == iVar7))))))
-      {
-        uVar9 = Scr_GetPrevSourcePos(uVar11,0);
-        iVar7 = Scr_GetLineNum(DAT_83739708,uVar9);
-        if (DAT_83739704 == iVar7) goto LAB_82531908;
+      if (((iVar9 == 0) && (bVar3)) &&
+         ((scrDebuggerGlob.step_mode != 4 &&
+          ((scrDebuggerGlob.stepLineNum != -1 &&
+           (uVar10 = Scr_GetSourceBuffer(pcVar7), scrDebuggerGlob.stepBufferIndex == uVar10)))))) {
+        uVar10 = Scr_GetPrevSourcePos(pcVar7,0);
+        iVar9 = Scr_GetLineNum(scrDebuggerGlob.stepBufferIndex,uVar10);
+        if (scrDebuggerGlob.stepLineNum == iVar9) goto LAB_82531908;
       }
-      DAT_83739704 = -1;
-      *DAT_83ca44ac = (int)param_2;
-      DAT_83739378 = (undefined4)param_3;
+      scrDebuggerGlob.stepLineNum = -1;
+      ((scrVmPub.function_frame)->fs).pos = (char *)lVar12;
+      scrDebuggerGlob.scriptWatch.localId = (uint)uVar13;
       Scr_HitBreakpointInternal();
     }
   }
-  __restgprlr_17(uVar10);
-  return;
+  iVar9 = __restgprlr_17(uVar16);
+  return iVar9;
 }
 
 
 // 82532850  Scr_HitBuiltinBreakpoint  (script/scr_debugger.cpp:9910)
 
 void Scr_HitBuiltinBreakpoint
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               int param_5,undefined4 param_6)
+               (VariableValue *param_1,char *param_2,uint param_3,int param_4,int param_5,
+               uint param_6)
 
 {
-  int iVar1;
-  int iVar2;
+  Scr_Breakpoint *pSVar1;
+  Scr_WatchElement_s *pSVar2;
   bool bVar3;
-  undefined8 uVar4;
-  char cVar5;
+  bool bVar4;
+  VariableValue *pVVar5;
   bool bVar6;
   
-  uVar4 = __savegprlr_19();
-  if (DAT_83c4ba96 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x26bc,0,0xffffffff82000f98,0xffffffff8214fda4);
+  pVVar5 = (VariableValue *)__savegprlr_19(param_1);
+  if (scrVarPub.developer == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x26bc,0,"%s");
   }
-  if (DAT_83ca44a8 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x26c0,0,0xffffffff82000f98,0xffffffff821503cc);
+  if (scrVmPub.function_count == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x26c0,0,"%s");
   }
-  if (DAT_837396fc == '\0') {
-    if (DAT_837396a0 != 0xfffe) {
-      MyAssertHandler(0xffffffff8214f658,0x26c5,0,0xffffffff82000f98,0xffffffff82150388);
+  if (scrDebuggerGlob.disableBreakpoints == false) {
+    if (scrDebuggerGlob.breakpointPos.bufferIndex != 0xfffe) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x26c5,0,"%s");
     }
-    if (DAT_837396ac != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x26c6,0,0xffffffff82000f98,0xffffffff82150368);
+    if (scrDebuggerGlob.atBreakpoint != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x26c6,0,"%s");
     }
-    DAT_83ca44b0 = (undefined4)uVar4;
+    bVar4 = false;
+    scrVmPub.outparamcount = 0;
     bVar3 = false;
-    DAT_83ca44bc = 0;
-    bVar6 = false;
-    DAT_83ca44c0 = param_6;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x26cf,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    scrVmPub.top = pVVar5;
+    scrVmPub.breakpointOutparamcount = param_6;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x26cf,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    for (iVar2 = DAT_83739370; iVar2 != 0; iVar2 = *(int *)(iVar2 + 0x3c)) {
-      iVar1 = *(int *)(iVar2 + 0x20);
-      if (((iVar1 != 0) && (*(int *)(iVar1 + 8) == 0)) && (*(int *)(iVar1 + 0x10) == param_5)) {
-        bVar6 = true;
-        cVar5 = Scr_ConditionalExpression(iVar2,param_3);
-        if (cVar5 != '\0') {
-          bVar3 = true;
+    scrVarPub.evaluate = true;
+    for (pSVar2 = scrDebuggerGlob.scriptWatch.elementHead; pSVar2 != (Scr_WatchElement_s *)0x0;
+        pSVar2 = pSVar2->next) {
+      pSVar1 = pSVar2->breakpoint;
+      if (((pSVar1 != (Scr_Breakpoint *)0x0) && (pSVar1->codePos == (char *)0x0)) &&
+         (pSVar1->builtinIndex == param_5)) {
+        bVar3 = true;
+        bVar6 = Scr_ConditionalExpression(pSVar2,param_3);
+        if (bVar6) {
+          bVar4 = true;
         }
       }
     }
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x26e2,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x26e2,0,"%s");
     }
-    DAT_83c4ba98 = '\0';
-    if (!bVar6) {
-      MyAssertHandler(0xffffffff8214f658,0x26e5,0,0xffffffff82000f98,0xffffffff8215046c);
+    scrVarPub.evaluate = false;
+    if (!bVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x26e5,0,"%s");
     }
-    if (bVar3) {
-      Scr_SpecialBreakpoint(uVar4,param_2,param_3,param_4,0x10);
+    if (bVar4) {
+      Scr_SpecialBreakpoint(pVVar5,param_2,param_3,param_4,'\x10');
     }
   }
   __restgprlr_19();
@@ -5529,59 +6018,62 @@ void Scr_HitBuiltinBreakpoint
 
 // 8252D788  Scr_DebugKillThread  (script/scr_debugger.cpp:9966)
 
-void Scr_DebugKillThread(undefined8 param_1,undefined4 param_2)
+void Scr_DebugKillThread(uint param_1,char *param_2)
 
 {
-  char cVar1;
-  int iVar2;
+  uchar uVar1;
+  Scr_WatchElement_s *pSVar2;
   bool bVar3;
   uint uVar4;
-  int *piVar5;
+  Scr_WatchElementNode_s *pSVar5;
   
-  uVar4 = __savegprlr_22();
-  if (DAT_837396ec == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x26f5,0,0xffffffff82000f98,0xffffffff8214fc78);
+  uVar4 = __savegprlr_22(param_1);
+  if (scrDebuggerGlob.variableBreakpoints == (Scr_WatchElementDoubleNode_t **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x26f5,0,"%s");
   }
-  piVar5 = *(int **)(uVar4 * 4 + DAT_837396ec);
-  if ((piVar5 != (int *)0x0) && (DAT_83c4ba98 != '\0')) {
-    piVar5 = (int *)*piVar5;
+  if ((scrDebuggerGlob.variableBreakpoints[uVar4] != (Scr_WatchElementDoubleNode_t *)0x0) &&
+     (scrVarPub.evaluate != false)) {
+    pSVar5 = scrDebuggerGlob.variableBreakpoints[uVar4]->list;
     bVar3 = false;
-    if (piVar5 != (int *)0x0) {
+    if (pSVar5 != (Scr_WatchElementNode_s *)0x0) {
       do {
-        iVar2 = *piVar5;
-        if (*(char *)(iVar2 + 0x4c) == '\0') {
-          MyAssertHandler(0xffffffff8214f658,0x2702,0,0xffffffff82000f98,0xffffffff8214fd14);
+        pSVar2 = pSVar5->element;
+        if (pSVar2->breakpointType == '\0') {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x2702,0,"%s");
         }
-        cVar1 = *(char *)(iVar2 + 0x4c);
-        if (((cVar1 == '\x01') || (cVar1 == '\x03')) && (*(ushort *)(iVar2 + 0x40) == uVar4)) {
-          Scr_WatchElementHitBreakpoint(iVar2,cVar1 == '\x01');
-          *(undefined4 *)(iVar2 + 0x24) = param_2;
-          if (cVar1 == '\x01') {
+        uVar1 = pSVar2->breakpointType;
+        if (((uVar1 == '\x01') || (uVar1 == '\x03')) && (pSVar2->objectId == uVar4)) {
+          Scr_WatchElementHitBreakpoint(pSVar2,uVar1 == '\x01');
+          pSVar2->deadCodePos = param_2;
+          if (uVar1 == '\x01') {
             bVar3 = true;
           }
         }
-        piVar5 = (int *)piVar5[1];
-      } while (piVar5 != (int *)0x0);
+        pSVar5 = pSVar5->next;
+      } while (pSVar5 != (Scr_WatchElementNode_s *)0x0);
       if (bVar3) {
-        if (DAT_83ca44a8 == 0) {
-          DAT_837396cc = 1;
+        if (scrVmPub.function_count == 0) {
+          scrDebuggerGlob.run_debugger = true;
           __restgprlr_22();
           return;
         }
-        if (DAT_837396c0 != 0) {
-          if (DAT_837396c0 != *DAT_83ca44ac) {
-            MyAssertHandler(0xffffffff8214f658,0x271c,0,0xffffffff82000f98,0xffffffff8214fea8);
+        if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+          if (scrDebuggerGlob.killThreadCodePos != ((scrVmPub.function_frame)->fs).pos) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                            ,0x271c,0,"%s");
           }
-          Scr_RemoveManualBreakpoint(DAT_837396c0);
-          DAT_837396c0 = 0;
+          Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.killThreadCodePos);
+          scrDebuggerGlob.killThreadCodePos = (char *)0x0;
         }
-        if (DAT_837396b0 != 0) {
-          Scr_RemoveManualBreakpoint();
+        if (scrDebuggerGlob.nextBreakpointCodePos != (char *)0x0) {
+          Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
         }
-        DAT_837396b0 = *DAT_83ca44ac;
-        DAT_837396b4 = 0;
-        Scr_AddManualBreakpoint();
-        DAT_837396b8 = DAT_83ca44ac[1];
+        scrDebuggerGlob.nextBreakpointCodePos = ((scrVmPub.function_frame)->fs).pos;
+        scrDebuggerGlob.isReturnPos = 0;
+        Scr_AddManualBreakpoint((uchar *)scrDebuggerGlob.nextBreakpointCodePos);
+        scrDebuggerGlob.nextBreakpointThreadId = ((scrVmPub.function_frame)->fs).localId;
       }
     }
   }
@@ -5592,39 +6084,44 @@ void Scr_DebugKillThread(undefined8 param_1,undefined4 param_2)
 
 // 8252D948  Scr_DebugTerminateThread  (script/scr_debugger.cpp:10028)
 
-void Scr_DebugTerminateThread(void)
+void Scr_DebugTerminateThread(int param_1)
 
 {
-  char *pcVar1;
+  uchar *puVar1;
   int iVar2;
+  function_frame_t *pfVar3;
   
-  iVar2 = __savegprlr_26();
-  pcVar1 = (char *)(&DAT_83ca44c8)[iVar2 * 6];
-  if (pcVar1 != &DAT_83ca8c50) {
-    Scr_DebugKillThread(*(undefined4 *)(&DAT_83ca44cc + iVar2 * 0x18),pcVar1);
-    if (iVar2 != DAT_83ca44a8) {
+  iVar2 = __savegprlr_26(param_1);
+  pfVar3 = (function_frame_t *)(iVar2 * 0x18 + -0x7c35bb38);
+  puVar1 = (uchar *)scrVmPub.function_frame_start[iVar2].fs.pos;
+  if (puVar1 != (uchar *)&g_EndPos) {
+    Scr_DebugKillThread(scrVmPub.function_frame_start[iVar2].fs.localId,(char *)puVar1);
+    if (iVar2 != scrVmPub.function_count) {
 LAB_8252da28:
-      (&DAT_83ca44c8)[iVar2 * 6] = &DAT_83ca8c50;
+      (pfVar3->fs).pos = &g_EndPos;
       __restgprlr_26();
       return;
     }
-    if (DAT_83ca44ac != &DAT_83ca44c8 + iVar2 * 6) {
-      MyAssertHandler(0xffffffff8214f658,0x273b,0,0xffffffff82000f98,0xffffffff8214ff20);
+    if (scrVmPub.function_frame != pfVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x273b,0,"%s");
     }
-    if ((char *)*DAT_83ca44ac != pcVar1) {
-      MyAssertHandler(0xffffffff8214f658,0x273c,0,0xffffffff82000f98,0xffffffff8214fef0);
+    if ((uchar *)((scrVmPub.function_frame)->fs).pos != puVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x273c,0,"%s");
     }
-    if (DAT_837396c4 == '\0') {
-      DAT_837396c4 = '\x01';
-      if (DAT_837396c0 != (char *)0x0) {
-        MyAssertHandler(0xffffffff8214f658,0x2746,0,0xffffffff82000f98,0xffffffff8214f960);
+    if (scrDebuggerGlob.kill_thread == false) {
+      scrDebuggerGlob.kill_thread = true;
+      if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2746,0,"%s");
       }
-      if ((*pcVar1 != -0x5f) && (*pcVar1 != -0x5d)) {
-        DAT_837396c0 = pcVar1;
-        Scr_AddManualBreakpoint(pcVar1);
+      if ((*puVar1 != 0xa1) && (*puVar1 != 0xa3)) {
+        scrDebuggerGlob.killThreadCodePos = (char *)puVar1;
+        Scr_AddManualBreakpoint(puVar1);
       }
     }
-    else if (DAT_837396c0 != pcVar1) goto LAB_8252da28;
+    else if ((uchar *)scrDebuggerGlob.killThreadCodePos != puVar1) goto LAB_8252da28;
   }
   __restgprlr_26();
   return;
@@ -5633,44 +6130,48 @@ LAB_8252da28:
 
 // 8252DA90  Scr_SaveKillPos  (script/scr_debugger.cpp:10065)
 
-undefined8 Scr_SaveKillPos(int *param_1)
+bool Scr_SaveKillPos(char **param_1)
 
 {
   bool bVar1;
   
-  bVar1 = DAT_837396c4 == '\0';
-  *param_1 = DAT_837396c0;
-  if (bVar1) {
-    return 0;
+  bVar1 = scrDebuggerGlob.kill_thread;
+  *param_1 = scrDebuggerGlob.killThreadCodePos;
+  if (!bVar1) {
+    return false;
   }
-  DAT_837396c4 = 0;
-  if (DAT_837396c0 != 0) {
-    Scr_RemoveManualBreakpoint();
-    DAT_837396c0 = 0;
+  scrDebuggerGlob.kill_thread = false;
+  if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+    Scr_RemoveManualBreakpoint((uchar *)scrDebuggerGlob.killThreadCodePos);
+    scrDebuggerGlob.killThreadCodePos = (char *)0x0;
   }
-  return 1;
+  return true;
 }
 
 
 // 8252DB10  Scr_RestoreKillPos  (script/scr_debugger.cpp:10085)
 
-void Scr_RestoreKillPos(undefined8 param_1,ulonglong param_2)
+void Scr_RestoreKillPos(bool param_1,char *param_2)
 
 {
   char cVar1;
+  ulonglong uVar2;
   
-  cVar1 = __savegprlr_28();
+  uVar2 = (ulonglong)(int)param_2;
+  cVar1 = __savegprlr_28(param_1);
   if (cVar1 != '\0') {
-    if (DAT_837396c4 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2769,0,0xffffffff82000f98,0xffffffff8214ff68);
+    if (scrDebuggerGlob.kill_thread != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2769,0,"%s");
     }
-    DAT_837396c4 = '\x01';
-    if (DAT_837396c0 != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x276b,0,0xffffffff82000f98,0xffffffff8214f960);
+    scrDebuggerGlob.kill_thread = true;
+    if (scrDebuggerGlob.killThreadCodePos != (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x276b,0,"%s");
     }
-    if ((param_2 & 0xffffffff) != 0) {
-      DAT_837396c0 = (int)param_2;
-      Scr_AddManualBreakpoint(param_2);
+    if ((uVar2 & 0xffffffff) != 0) {
+      scrDebuggerGlob.killThreadCodePos = (char *)uVar2;
+      Scr_AddManualBreakpoint((uchar *)scrDebuggerGlob.killThreadCodePos);
     }
   }
   __restgprlr_28();
@@ -5679,6 +6180,8 @@ void Scr_RestoreKillPos(undefined8 param_1,ulonglong param_2)
 
 
 // 8252DBB8  Scr_HitBreakpointRemote  (script/scr_debugger.cpp:10102)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_HitBreakpointRemote(void)
 
@@ -5689,58 +6192,62 @@ void Scr_HitBreakpointRemote(void)
 
 // 8252DBC0  Scr_WatchElementHasSameValue  (script/scr_debugger.cpp:10116)
 
-void Scr_WatchElementHasSameValue(undefined8 param_1,undefined8 param_2)
+bool Scr_WatchElementHasSameValue(Scr_WatchElement_s *param_1,VariableValue *param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
+  VariableUnion VVar1;
+  int iVar2;
   int iVar3;
-  DWORD DVar4;
-  undefined4 *puVar5;
+  undefined1 uVar5;
+  uint uVar4;
   undefined8 uVar6;
-  undefined8 local_30;
+  VariableUnion local_30;
+  int iStack_2c;
   
-  iVar3 = __savegprlr_28();
-  puVar5 = (undefined4 *)param_2;
+  iVar3 = __savegprlr_28(param_1);
   if ((*(byte *)(iVar3 + 0x4d) & 8) == 0) {
-    RemoveRefToValue(puVar5[1],*puVar5);
-    __restgprlr_28(0);
-    return;
+    RemoveRefToValue(param_2->type,(VariableUnion)*(uint *)&param_2->u);
+    uVar5 = __restgprlr_28(0);
+    return (bool)uVar5;
   }
   uVar6 = *(undefined8 *)(iVar3 + 0x14);
-  local_30._0_4_ = (int)((ulonglong)uVar6 >> 0x20);
-  uVar1 = local_30._0_4_;
-  local_30._4_4_ = (int)uVar6;
-  uVar2 = local_30._4_4_;
-  local_30 = uVar6;
-  AddRefToValue(uVar2,uVar1);
-  Scr_EvalEquality(&local_30,param_2);
-  if (DAT_83c4ba9c == 0) {
-    if (local_30._4_4_ != 6) {
-      MyAssertHandler(0xffffffff8214f658,0x2792,0,0xffffffff82000f98,0xffffffff8214ffa8);
+  local_30.intValue = (int)((ulonglong)uVar6 >> 0x20);
+  VVar1.intValue = local_30.intValue;
+  iStack_2c = (int)uVar6;
+  iVar2 = iStack_2c;
+  _local_30 = uVar6;
+  AddRefToValue(iVar2,VVar1);
+  Scr_EvalEquality((VariableValue *)&local_30,param_2);
+  if (scrVarPub.error_message == (char *)0x0) {
+    if (iStack_2c != 6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2792,0,"%s");
     }
-    if (local_30._0_4_ != 0) {
+    if (local_30.intValue != 0) {
       if (*(int *)(iVar3 + 0x18) == 1) {
-        if (puVar5[1] != 1) {
-          MyAssertHandler(0xffffffff8214f658,0x2797,0,0xffffffff82000f98,0xffffffff8214ff88);
+        if (param_2->type != 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x2797,0,"%s");
         }
-        DVar4 = GetObjectType((HGDIOBJ)*puVar5);
-        if (DVar4 != *(byte *)(iVar3 + 0x4a)) goto LAB_8252dccc;
+        uVar4 = GetObjectType((param_2->u).uintValue);
+        if (uVar4 != *(byte *)(iVar3 + 0x4a)) goto LAB_8252dccc;
       }
-      __restgprlr_28(1);
-      return;
+      uVar5 = __restgprlr_28(1);
+      return (bool)uVar5;
     }
   }
   else {
     Scr_ClearErrorMessage();
   }
 LAB_8252dccc:
-  __restgprlr_28(0);
-  return;
+  uVar5 = __restgprlr_28(0);
+  return (bool)uVar5;
 }
 
 
 // 8252DCD8  Scr_WatchElementHitBreakpointRemote  (script/scr_debugger.cpp:10150)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_WatchElementHitBreakpointRemote(void)
 
@@ -5751,14 +6258,17 @@ void Scr_WatchElementHitBreakpointRemote(void)
 
 // 8252DCE0  Scr_SendKeepAliveIfNeeded  (script/scr_debugger.cpp:10166)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_SendKeepAliveIfNeeded(void)
 
 {
   int iVar1;
   
-  if ((DAT_837396ac != '\0') && (iVar1 = Sys_Milliseconds(), 499 < iVar1 - DAT_83727334)) {
-    DAT_83727334 = Sys_Milliseconds();
-    Sys_WriteDebugSocketMessageType(0x27);
+  if ((scrDebuggerGlob.atBreakpoint) &&
+     (iVar1 = Sys_Milliseconds(), 499 < iVar1 - g_lastKeepAliveTime)) {
+    g_lastKeepAliveTime = Sys_Milliseconds();
+    Sys_WriteDebugSocketMessageType('\'');
     Sys_EndWriteDebugSocket();
   }
   return;
@@ -5766,6 +6276,8 @@ void Scr_SendKeepAliveIfNeeded(void)
 
 
 // 8252DD48  Scr_SortHitBreakpointsTopRemote  (script/scr_debugger.cpp:10184)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SortHitBreakpointsTopRemote(void)
 
@@ -5776,88 +6288,88 @@ void Scr_SortHitBreakpointsTopRemote(void)
 
 // 82530E70  Scr_ProcessDebugMessages  (script/scr_debugger.cpp:10195)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ProcessDebugMessages(void)
 
 {
-  undefined4 *puVar1;
-  int iVar5;
-  longlong lVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined4 uVar6;
+  Scr_ScriptWindow *pSVar1;
+  int iVar2;
+  Scr_WatchElement_s *pSVar3;
   
-  iVar5 = Sys_IsRemoteDebugServer();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8214f658,0x27d6,0,0xffffffff82000f98,0xffffffff8214fb44);
+  iVar2 = Sys_IsRemoteDebugServer();
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x27d6,0,"%s");
   }
-  iVar5 = Sys_UpdateDebugSocket();
-  while (iVar5 - 5U < 0x2a) {
-    switch((&switchD_82530ee0::switchdataD_82530ee4)[iVar5 - 5U]) {
-    case (undefined *)0x82530f8c:
+  iVar2 = Sys_UpdateDebugSocket();
+  while (iVar2 - 5U < 0x2a) {
+    switch(iVar2 - 5U) {
+    case 0:
       Scr_AddTextRemote();
       break;
-    case (undefined *)0x82530f94:
+    default:
+      goto switchD_82530ee0_caseD_1;
+    case 2:
       Scr_PasteElementRemote();
       break;
-    case (undefined *)0x82530f9c:
+    case 4:
       Scr_InsertElementRemote();
       break;
-    case (undefined *)0x82530fa4:
+    case 6:
       Scr_DeleteElementRemote();
       break;
-    case (undefined *)0x82530fac:
+    case 8:
       Scr_BackspaceElementRemote();
       break;
-    case (undefined *)0x82530fb4:
+    case 10:
       Scr_CloneElementRemote();
       break;
-    case (undefined *)0x82530fbc:
+    case 0xc:
       Scr_ExpandElementRemote();
       break;
-    case (undefined *)0x82530fc4:
+    case 0x10:
       Scr_ToggleBreakpointRemote();
       break;
-    case (undefined *)0x82530fcc:
-      DAT_837396d0 = Sys_ReadDebugSocketInt();
-      lVar2 = Sys_ReadDebugSocketInt();
-      DAT_837396d4 = (uint)(lVar2 != 0);
+    case 0x14:
+      scrDebuggerGlob.step_mode = Sys_ReadDebugSocketInt();
+      iVar2 = Sys_ReadDebugSocketInt();
+      scrDebuggerGlob.skip_instr = (int)(iVar2 != 0);
       Scr_Step();
       break;
-    case (undefined *)0x82530fec:
-      iVar5 = Sys_ReadDebugSocketInt();
-      puVar1 = *(undefined4 **)(iVar5 * 4 + DAT_83739358);
-      uVar6 = Sys_ReadDebugSocketInt();
-      *puVar1 = uVar6;
-      Scr_ScriptWindow__RunToCursor(puVar1);
+    case 0x15:
+      iVar2 = Sys_ReadDebugSocketInt();
+      pSVar1 = *(Scr_ScriptWindow **)(iVar2 * 4 + scrDebuggerGlob.scriptList._8_4_);
+      iVar2 = Sys_ReadDebugSocketInt();
+      pSVar1->_padding_ = iVar2;
+      Scr_ScriptWindow::RunToCursor(pSVar1);
       break;
-    case (undefined *)0x82531010:
+    case 0x16:
       Scr_ToggleWatchElementBreakpointRemote();
       break;
-    case (undefined *)0x82531018:
+    case 0x22:
       Scr_SendKeepAliveIfNeeded();
       break;
-    case (undefined *)0x82531020:
-      uVar3 = Sys_ReadDebugSocketInt();
-      if (((int)uVar3 != 0) &&
-         (uVar4 = Scr_ScriptWatch__GetElementWithId_r(0xffffffff83739368,DAT_83739370,uVar3),
-         (uVar4 & 0xffffffff) != 0)) {
-        Scr_ScriptWatch__DisplayThreadPos(0xffffffff83739368,uVar4);
+    case 0x23:
+      iVar2 = Sys_ReadDebugSocketInt();
+      if ((iVar2 != 0) &&
+         (pSVar3 = Scr_ScriptWatch::GetElementWithId_r
+                             (&scrDebuggerGlob.scriptWatch,scrDebuggerGlob.scriptWatch.elementHead,
+                              iVar2), pSVar3 != (Scr_WatchElement_s *)0x0)) {
+        Scr_ScriptWatch::DisplayThreadPos(&scrDebuggerGlob.scriptWatch,pSVar3);
       }
       break;
-    case (undefined *)0x82531054:
-      iVar5 = Sys_ReadDebugSocketInt();
-      puVar1 = *(undefined4 **)(iVar5 * 4 + DAT_83739358);
-      uVar6 = Sys_ReadDebugSocketInt();
-      *puVar1 = uVar6;
-      Scr_ScriptWindow__EnterCallInternal(puVar1);
-      break;
-    case (undefined *)0x82531088:
-      goto switchD_82530ee0_caseD_82531088;
+    case 0x29:
+      iVar2 = Sys_ReadDebugSocketInt();
+      pSVar1 = *(Scr_ScriptWindow **)(iVar2 * 4 + scrDebuggerGlob.scriptList._8_4_);
+      iVar2 = Sys_ReadDebugSocketInt();
+      pSVar1->_padding_ = iVar2;
+      Scr_ScriptWindow::EnterCallInternal(pSVar1);
     }
     Sys_AckDebugSocket();
-    iVar5 = Sys_UpdateDebugSocket();
+    iVar2 = Sys_UpdateDebugSocket();
   }
-switchD_82530ee0_caseD_82531088:
+switchD_82530ee0_caseD_1:
   Scr_UpdateDebugSocket();
   NET_Sleep(1);
   return;
@@ -5866,21 +6378,26 @@ switchD_82530ee0_caseD_82531088:
 
 // 8252DD50  Sys_ConsolePrintRemote  (script/scr_debugger.cpp:10274)
 
-void Sys_ConsolePrintRemote(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Sys_ConsolePrintRemote(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Sys_ReadDebugSocketString();
-  CL_ConsolePrint(param_1,0x17,uVar1,0,0,0);
-  FreeString(uVar1,0);
+  pcVar1 = Sys_ReadDebugSocketString();
+  CL_ConsolePrint(param_1,0x17,pcVar1,0,0,0);
+  FreeString(pcVar1,0);
   return;
 }
 
 
 // 82530CB8  Scr_UpdateDebugSocket  (script/scr_debugger.cpp:10286)
 
-void Scr_UpdateDebugSocket(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Scr_UpdateDebugSocket(void)
 
 {
   int iVar1;
@@ -5889,15 +6406,15 @@ void Scr_UpdateDebugSocket(void)
   undefined8 uVar4;
   
   __savegprlr_28();
-  iVar1 = DAT_8373937c;
+  iVar2 = scrDebuggerGlob.scriptWatch.dirty;
   uVar4 = 0;
-  iVar2 = Sys_UpdateDebugSocket();
-  uVar3 = iVar2 - 1;
+  iVar1 = Sys_UpdateDebugSocket();
+  uVar3 = iVar1 - 1;
   if (0x2c < uVar3) {
 switchD_82530d00_caseD_82530e0c:
     Sys_FlushDebugSocketData();
-    __restgprlr_28(uVar4);
-    return;
+    iVar2 = __restgprlr_28(uVar4);
+    return iVar2;
   }
   do {
     switch((&switchD_82530d00::switchdataD_82530d04)[uVar3]) {
@@ -5923,7 +6440,7 @@ switchD_82530d00_caseD_82530e0c:
       Scr_ToggleWatchElementBreakpointRemote();
       break;
     case (undefined *)0x82530df0:
-      if ((iVar1 != 0) && (DAT_8373937c == 0)) {
+      if ((iVar2 != 0) && (scrDebuggerGlob.scriptWatch.dirty == 0)) {
         uVar4 = 1;
         Sys_AckDebugSocket();
         goto switchD_82530d00_caseD_82530e0c;
@@ -5938,19 +6455,19 @@ switchD_82530d00_caseD_82530e0c:
       Scr_SendKeepAliveIfNeeded();
       break;
     case (undefined *)0x82530e2c:
-      Sys_ConsolePrintRemote(0);
+      Sys_ConsolePrintRemote(LOCAL_CLIENT_0);
       break;
     case (undefined *)0x82530e38:
-      Cbuf_AddText(0,0xffffffff82150338);
+      Cbuf_AddText(LOCAL_CLIENT_0,"toggle cl_paused\n");
     }
     uVar4 = 1;
     Sys_AckDebugSocket();
-    iVar2 = Sys_UpdateDebugSocket();
-    uVar3 = iVar2 - 1;
+    iVar1 = Sys_UpdateDebugSocket();
+    uVar3 = iVar1 - 1;
     if (0x2c < uVar3) {
       Sys_FlushDebugSocketData();
-      __restgprlr_28(1);
-      return;
+      iVar2 = __restgprlr_28(1);
+      return iVar2;
     }
   } while( true );
 }
@@ -5958,21 +6475,25 @@ switchD_82530d00_caseD_82530e0c:
 
 // 825319B0  Scr_UpdateRemoteDebugger  (script/scr_debugger.cpp:10476)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_UpdateRemoteDebugger(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x28ed,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x28ed,0,"%s");
   }
-  if ((((DAT_83c4ba96 != '\0') && (DAT_837396f2 != '\0')) &&
-      (iVar1 = Sys_IsRemoteDebugServer(), iVar1 != 0)) && (DAT_83739700 != 0)) {
+  if ((((scrVarPub.developer != false) && (scrDebuggerGlob.debugger_inited_system != false)) &&
+      (iVar1 = Sys_IsRemoteDebugServer(), iVar1 != 0)) &&
+     (scrDebuggerGlob.disableDebuggerRemote != 0)) {
     Scr_DisplayDebuggerRemoteInternal();
     sync(1);
-    DAT_83739700 = 0;
+    scrDebuggerGlob.disableDebuggerRemote = 0;
   }
   return;
 }
@@ -5980,67 +6501,75 @@ void Scr_UpdateRemoteDebugger(void)
 
 // 82532A80  Scr_UpdateDebugger  (script/scr_debugger.cpp:10525)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_UpdateDebugger(void)
 
 {
-  bool bVar1;
+  Scr_WatchElement_s *pSVar1;
   bool bVar2;
-  undefined4 uVar3;
-  char cVar5;
+  char *pcVar3;
+  bool bVar5;
+  bool bVar6;
   int iVar4;
-  undefined4 local_60;
-  undefined4 local_5c;
+  VariableUnion local_60;
+  int local_5c;
   
   __savegprlr_22();
-  uVar3 = DAT_83c6fb14;
-  if ((DAT_83c4ba96 != '\0') && (DAT_837396f2 != '\0')) {
-    if (DAT_837396ac != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2930,0,0xffffffff82000f98,0xffffffff82150368);
+  pcVar3 = scrVarPub.varUsagePos;
+  if ((scrVarPub.developer != false) && (scrDebuggerGlob.debugger_inited_system != false)) {
+    if (scrDebuggerGlob.atBreakpoint != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2930,0,"%s");
     }
-    cVar5 = Scr_IsStackClear();
-    if (cVar5 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x2931,0,0xffffffff82000f98,0xffffffff8214fdec);
+    bVar5 = Scr_IsStackClear();
+    if (!bVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x2931,0,"%s");
     }
-    uVar3 = DAT_83c6fb14;
-    if (DAT_837396fc == '\0') {
-      DAT_83c6fb14 = "<script debugger variable>";
+    pcVar3 = scrVarPub.varUsagePos;
+    if (scrDebuggerGlob.disableBreakpoints == false) {
+      scrVarPub.varUsagePos = "<script debugger variable>";
       Scr_ConnectRemote();
-      if (DAT_83c4ba98 != '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x294a,0,0xffffffff82000f98,0xffffffff8214e7a8);
+      if (scrVarPub.evaluate != false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x294a,0,"%s");
       }
-      DAT_83c4ba98 = '\x01';
-      DAT_83739378 = 0;
-      bVar1 = false;
-      DAT_83ca44c0 = 0;
+      scrVarPub.evaluate = true;
+      scrDebuggerGlob.scriptWatch.localId = 0;
+      bVar5 = false;
+      scrVmPub.breakpointOutparamcount = 0;
       bVar2 = false;
-      iVar4 = DAT_83739370;
+      pSVar1 = scrDebuggerGlob.scriptWatch.elementHead;
 LAB_82532bb4:
       do {
-        if (iVar4 == 0) goto LAB_82532cf0;
-        if (((*(char *)(iVar4 + 0x4c) == '\x01') && (*(char *)(iVar4 + 0x4a) != '\x10')) &&
-           (*(char *)(iVar4 + 0x4a) != '\x18')) {
-          if (*(int *)(iVar4 + 0x20) != 0) {
-            MyAssertHandler(0xffffffff8214f658,0x295a,0,0xffffffff82000f98,0xffffffff8214f83c);
+        if (pSVar1 == (Scr_WatchElement_s *)0x0) goto LAB_82532cf0;
+        if (((pSVar1->breakpointType == '\x01') && (pSVar1->objectType != '\x10')) &&
+           (pSVar1->objectType != '\x18')) {
+          if (pSVar1->breakpoint != (Scr_Breakpoint *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                            ,0x295a,0,"%s");
           }
-          if (*(int *)(iVar4 + 8) == 0) {
-            MyAssertHandler(0xffffffff8214f658,0x295c,0,0xffffffff82000f98,0xffffffff8214fc20);
+          if ((pSVar1->expr).exprHead == (debugger_sval_s *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                            ,0x295c,0,"%s");
           }
-          cVar5 = Scr_EvalScriptExpression(iVar4,0,&local_60,1,1);
-          if ((cVar5 != '\0') && (!bVar1)) {
+          bVar6 = Scr_EvalScriptExpression(&pSVar1->expr,0,(VariableValue *)&local_60,true,true);
+          if ((bVar6) && (!bVar5)) {
             Scr_ClearErrorMessage();
             RemoveRefToValue(local_5c,local_60);
 LAB_82532cdc:
-            bVar1 = true;
-            Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
-            iVar4 = DAT_83739370;
+            bVar5 = true;
+            Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
+            pSVar1 = scrDebuggerGlob.scriptWatch.elementHead;
             goto LAB_82532bb4;
           }
-          if (DAT_83c4ba9c == 0) {
-            cVar5 = Scr_WatchElementHasSameValue(iVar4,&local_60);
-            if (cVar5 == '\0') {
+          if (scrVarPub.error_message == (char *)0x0) {
+            bVar6 = Scr_WatchElementHasSameValue(pSVar1,(VariableValue *)&local_60);
+            if (!bVar6) {
 LAB_82532ca8:
-              cVar5 = Scr_ConditionalExpression(iVar4,0);
-              if (cVar5 != '\0') {
+              bVar6 = Scr_ConditionalExpression(pSVar1,0);
+              if (bVar6) {
                 bVar2 = true;
               }
             }
@@ -6048,46 +6577,47 @@ LAB_82532ca8:
           else {
             Scr_ClearErrorMessage();
             RemoveRefToValue(local_5c,local_60);
-            if ((*(byte *)(iVar4 + 0x4d) & 8) != 0) {
-              if (bVar1) goto LAB_82532ca8;
+            if (pSVar1->valueDefined) {
+              if (bVar5) goto LAB_82532ca8;
               goto LAB_82532cdc;
             }
           }
         }
-        iVar4 = *(int *)(iVar4 + 0x3c);
+        pSVar1 = pSVar1->next;
       } while( true );
     }
   }
 LAB_82532db0:
-  DAT_83c6fb14 = (char *)uVar3;
+  scrVarPub.varUsagePos = pcVar3;
   __restgprlr_22();
   return;
 LAB_82532cf0:
   iVar4 = Sys_IsRemoteDebugServer();
   if (iVar4 != 0) {
-    if (!bVar1) {
-      bVar1 = true;
-      Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
+    if (!bVar5) {
+      bVar5 = true;
+      Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
     }
-    Scr_ScriptWatch__Evaluate(0xffffffff83739368);
+    Scr_ScriptWatch::Evaluate(&scrDebuggerGlob.scriptWatch);
     iVar4 = Sys_IsRemoteDebugServer();
     if (iVar4 != 0) {
       Scr_ProcessDebugMessages();
     }
   }
-  if (bVar1) {
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
+  if (bVar5) {
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
   }
-  if (DAT_83c4ba98 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x2992,0,0xffffffff82000f98,0xffffffff8214fbf4);
+  if (scrVarPub.evaluate == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x2992,0,"%s");
   }
-  DAT_83c4ba98 = '\0';
+  scrVarPub.evaluate = false;
   if (!bVar2) {
-    if (DAT_837396cc == '\0') goto LAB_82532db0;
-    DAT_837396cc = '\0';
+    if (scrDebuggerGlob.run_debugger == false) goto LAB_82532db0;
+    scrDebuggerGlob.run_debugger = false;
   }
   Scr_StackClear();
-  Scr_ScriptWatch__SortHitBreakpointsTop(0xffffffff83739368);
+  Scr_ScriptWatch::SortHitBreakpointsTop(&scrDebuggerGlob.scriptWatch);
   Scr_RunDebugger();
   goto LAB_82532db0;
 }
@@ -6095,89 +6625,103 @@ LAB_82532cf0:
 
 // 82531A58  Scr_HitAssignmentBreakpoint  (script/scr_debugger.cpp:10670)
 
-void Scr_HitAssignmentBreakpoint(undefined8 param_1,longlong param_2,ulonglong param_3,int param_4)
+int Scr_HitAssignmentBreakpoint(VariableValue *param_1,char *param_2,uint param_3,int param_4)
 
 {
   byte bVar1;
-  int iVar2;
-  int *piVar3;
-  undefined4 *puVar4;
-  bool bVar5;
-  int *piVar6;
-  byte *pbVar7;
-  char cVar8;
-  int iVar9;
-  uint uVar10;
-  undefined4 local_a8;
-  undefined4 local_a4;
+  uchar uVar2;
+  Scr_WatchElementNode_s *pSVar3;
+  Scr_WatchElement_s *pSVar4;
+  Scr_WatchElementDoubleNode_t *pSVar5;
+  undefined4 *puVar6;
+  bool bVar7;
+  byte *pbVar8;
+  uint uVar9;
+  bool bVar11;
+  int iVar10;
+  ulonglong uVar12;
+  int iStack0000002c;
+  VariableUnion local_a8;
+  int local_a4;
   
-  piVar6 = (int *)__savegprlr();
-  if (DAT_83c4ba96 == '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x29bc,0,0xffffffff82000f98,0xffffffff8214fda4);
+  uVar12 = (ulonglong)(int)param_3;
+  __savegprlr();
+  iStack0000002c = param_4;
+  if (scrVarPub.developer == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x29bc,0,"%s");
   }
-  pbVar7 = (byte *)Scr_FindBreakpointInfo(param_2 + -1);
-  bVar1 = *pbVar7;
-  if (DAT_837396fc != '\0') goto LAB_82531ae0;
-  if (DAT_837396ac != '\0') {
-    MyAssertHandler(0xffffffff8214f658,0x29c5,0,0xffffffff82000f98,0xffffffff82150368);
+  pbVar8 = (byte *)Scr_FindBreakpointInfo(param_2 + -1);
+  bVar1 = *pbVar8;
+  if (scrDebuggerGlob.disableBreakpoints != false) goto LAB_82531ae0;
+  if (scrDebuggerGlob.atBreakpoint != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                    0x29c5,0,"%s");
   }
-  DAT_83739378 = 0;
-  DAT_83ca44c0 = 0;
-  bVar5 = false;
-  iVar9 = 0;
+  scrDebuggerGlob.scriptWatch.localId = 0;
+  scrVmPub.breakpointOutparamcount = 0;
+  bVar7 = false;
+  iVar10 = 0;
   while( true ) {
-    if (DAT_837396ec == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x29cd,0,0xffffffff82000f98,0xffffffff8214fc78);
+    if (scrDebuggerGlob.variableBreakpoints == (Scr_WatchElementDoubleNode_t **)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29cd,0,"%s");
     }
-    piVar3 = *(int **)(DAT_837396f4 * 4 + DAT_837396ec);
-    if (piVar3 == (int *)0x0) break;
-    if (DAT_83c4ba98 != '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x29d1,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    pSVar5 = scrDebuggerGlob.variableBreakpoints[scrDebuggerGlob.objectId];
+    uVar9 = (uint)uVar12;
+    if (pSVar5 == (Scr_WatchElementDoubleNode_t *)0x0) break;
+    if (scrVarPub.evaluate != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29d1,0,"%s");
     }
-    DAT_83c4ba98 = '\x01';
-    piVar3 = (int *)*piVar3;
-    DAT_83ca44b0 = piVar6;
+    scrVarPub.evaluate = true;
+    pSVar3 = pSVar5->list;
+    scrVmPub.top = param_1;
 LAB_82531bdc:
-    if (piVar3 == (int *)0x0) {
-      if (DAT_83c4ba98 == '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x2a0c,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    if (pSVar3 == (Scr_WatchElementNode_s *)0x0) {
+      if (scrVarPub.evaluate == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2a0c,0,"%s");
       }
-      DAT_83c4ba98 = '\0';
+      scrVarPub.evaluate = false;
       break;
     }
-    iVar2 = *piVar3;
-    if (*(char *)(iVar2 + 0x4c) == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x29d9,0,0xffffffff82000f98,0xffffffff8214fd14);
+    pSVar4 = pSVar3->element;
+    if (pSVar4->breakpointType == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29d9,0,"%s");
     }
-    if (((*(char *)(iVar2 + 0x4c) != '\x01') || (*(char *)(iVar2 + 0x4a) == '\x10')) ||
-       ((*(char *)(iVar2 + 0x4a) == '\x18' || (*(int *)(iVar2 + 4) != 0)))) {
+    if (((pSVar4->breakpointType != '\x01') || (pSVar4->objectType == '\x10')) ||
+       ((pSVar4->objectType == '\x18' || ((pSVar4->expr).breakonExpr != 0)))) {
 LAB_82531d20:
-      piVar3 = (int *)piVar3[1];
+      pSVar3 = pSVar3->next;
       goto LAB_82531bdc;
     }
-    if (*(int *)(iVar2 + 0x20) != 0) {
-      MyAssertHandler(0xffffffff8214f658,0x29e1,0,0xffffffff82000f98,0xffffffff8214f83c);
+    if (pSVar4->breakpoint != (Scr_Breakpoint *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29e1,0,"%s");
     }
-    if (*(int *)(iVar2 + 8) == 0) {
-      MyAssertHandler(0xffffffff8214f658,0x29e3,0,0xffffffff82000f98,0xffffffff8214fc20);
+    if ((pSVar4->expr).exprHead == (debugger_sval_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29e3,0,"%s");
     }
-    cVar8 = Scr_EvalScriptExpression(iVar2,0,&local_a8,1,1);
-    if ((cVar8 == '\0') || (bVar5)) {
-      if (DAT_83c4ba9c == 0) {
-        cVar8 = Scr_WatchElementHasSameValue(iVar2,&local_a8);
-        if (cVar8 == '\0') {
+    bVar11 = Scr_EvalScriptExpression(&pSVar4->expr,0,(VariableValue *)&local_a8,true,true);
+    if ((!bVar11) || (bVar7)) {
+      if (scrVarPub.error_message == (char *)0x0) {
+        bVar11 = Scr_WatchElementHasSameValue(pSVar4,(VariableValue *)&local_a8);
+        if (!bVar11) {
 LAB_82531d04:
-          cVar8 = Scr_ConditionalExpression(iVar2,param_3);
-          if (cVar8 != '\0') {
-            iVar9 = 1;
+          bVar11 = Scr_ConditionalExpression(pSVar4,uVar9);
+          if (bVar11) {
+            iVar10 = 1;
           }
         }
       }
       else {
         Scr_ClearErrorMessage();
         RemoveRefToValue(local_a4,local_a8);
-        if ((*(byte *)(iVar2 + 0x4d) & 8) != 0) {
-          if (bVar5) goto LAB_82531d04;
+        if (pSVar4->valueDefined) {
+          if (bVar7) goto LAB_82531d04;
           goto LAB_82531d38;
         }
       }
@@ -6186,38 +6730,42 @@ LAB_82531d04:
     Scr_ClearErrorMessage();
     RemoveRefToValue(local_a4,local_a8);
 LAB_82531d38:
-    bVar5 = true;
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,0);
-    Scr_ScriptWatch__UpdateBreakpoints(0xffffffff83739368,1);
-    if (DAT_83c4ba98 == '\0') {
-      MyAssertHandler(0xffffffff8214f658,0x29f0,0,0xffffffff82000f98,0xffffffff8214fbf4);
+    bVar7 = true;
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,false);
+    Scr_ScriptWatch::UpdateBreakpoints(&scrDebuggerGlob.scriptWatch,true);
+    if (scrVarPub.evaluate == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                      0x29f0,0,"%s");
     }
-    DAT_83c4ba98 = '\0';
+    scrVarPub.evaluate = false;
   }
-  uVar10 = (uint)bVar1;
-  if (uVar10 < 0x37) {
-    if (uVar10 < 0x35) {
-      switch(uVar10) {
+  if (bVar1 < 0x37) {
+    if (bVar1 < 0x35) {
+      switch(bVar1) {
       case 0:
       case 1:
-        DAT_837396f4 = 0;
-        if (DAT_837396ec == 0) {
-          MyAssertHandler(0xffffffff8214f658,0x2a15,0,0xffffffff82000f98,0xffffffff8214fc78);
+        scrDebuggerGlob.objectId = 0;
+        if (scrDebuggerGlob.variableBreakpoints == (Scr_WatchElementDoubleNode_t **)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                          ,0x2a15,0,"%s");
         }
-        puVar4 = *(undefined4 **)((int)((param_3 & 0xffffffff) << 2) + DAT_837396ec);
-        if (puVar4 != (undefined4 *)0x0) {
-          for (piVar3 = (int *)*puVar4; piVar3 != (int *)0x0; piVar3 = (int *)piVar3[1]) {
-            iVar2 = *piVar3;
-            if (*(char *)(iVar2 + 0x4c) == '\0') {
-              MyAssertHandler(0xffffffff8214f658,0x2a1c,0,0xffffffff82000f98,0xffffffff8214fd14);
+        puVar6 = *(undefined4 **)
+                  ((int)((uVar12 & 0xffffffff) << 2) + (int)scrDebuggerGlob.variableBreakpoints);
+        if (puVar6 != (undefined4 *)0x0) {
+          for (puVar6 = (undefined4 *)*puVar6; puVar6 != (undefined4 *)0x0;
+              puVar6 = (undefined4 *)puVar6[1]) {
+            pSVar4 = (Scr_WatchElement_s *)*puVar6;
+            if (pSVar4->breakpointType == '\0') {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp"
+                              ,0x2a1c,0,"%s");
             }
-            cVar8 = *(char *)(iVar2 + 0x4c);
-            if (((cVar8 == '\x01') || (cVar8 == '\x03')) &&
-               ((ulonglong)*(ushort *)(iVar2 + 0x40) == (param_3 & 0xffffffff))) {
-              Scr_WatchElementHitBreakpoint(iVar2,cVar8 == '\x01');
-              *(byte **)(iVar2 + 0x24) = (byte *)param_2;
-              if (cVar8 == '\x01') {
-                iVar9 = 1;
+            uVar2 = pSVar4->breakpointType;
+            if (((uVar2 == '\x01') || (uVar2 == '\x03')) &&
+               ((ulonglong)pSVar4->objectId == (uVar12 & 0xffffffff))) {
+              Scr_WatchElementHitBreakpoint(pSVar4,uVar2 == '\x01');
+              pSVar4->deadCodePos = param_2;
+              if (uVar2 == '\x01') {
+                iVar10 = 1;
               }
             }
           }
@@ -6228,21 +6776,21 @@ LAB_82531d38:
       case 0x10:
       case 0x32:
 switchD_82531de8_caseD_10:
-        DAT_837396f4 = DAT_83c4bab8;
+        scrDebuggerGlob.objectId = scrVarPub.levelId;
         break;
       case 0x11:
       case 0x33:
 switchD_82531de8_caseD_11:
-        DAT_837396f4 = DAT_83c4bac0;
+        scrDebuggerGlob.objectId = scrVarPub.animId;
         break;
       case 0x18:
-        DAT_837396f4 = DAT_83c4babc + 0x9000;
+        scrDebuggerGlob.objectId = scrVarPub.gameId + 0x9000;
         break;
       case 0x26:
       case 0x27:
       case 0x28:
 switchD_82531de8_caseD_26:
-        DAT_837396f4 = (int)param_3;
+        scrDebuggerGlob.objectId = uVar9;
         break;
       case 0x29:
       case 0x2a:
@@ -6250,103 +6798,111 @@ switchD_82531de8_caseD_26:
       case 0x2d:
       case 0x34:
 switchD_82531de8_caseD_2d:
-        DAT_837396f4 = Scr_GetSelf(param_3);
+        scrDebuggerGlob.objectId = Scr_GetSelf(uVar9);
       }
     }
   }
   else {
-    if (uVar10 < 0x45) {
-      if (uVar10 == 0x44) goto switchD_82531de8_caseD_2d;
-      switch(uVar10 - 0x37) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-      case 6:
-      case 8:
+    if (bVar1 < 0x45) {
+      if (bVar1 == 0x44) goto switchD_82531de8_caseD_2d;
+      switch(bVar1) {
+      case 0x37:
+      case 0x38:
+      case 0x39:
+      case 0x3a:
+      case 0x3d:
+      case 0x3f:
         goto switchD_82531de8_caseD_26;
-      case 9:
+      case 0x40:
         goto switchD_82531de8_caseD_10;
-      case 0xc:
+      case 0x43:
         goto switchD_82531de8_caseD_11;
       }
     }
-    else if (uVar10 < 0x73) {
-      if (uVar10 == 0x72) {
+    else if (bVar1 < 0x73) {
+      if (bVar1 == 0x72) {
 LAB_8253205c:
-        if (piVar6[1] == 1) {
-          DAT_837396f4 = *piVar6;
+        if (param_1->type == 1) {
+          scrDebuggerGlob.objectId = (param_1->u).uintValue;
           goto switchD_82531de8_caseD_29;
         }
       }
-      else if (uVar10 < 0x58) {
-        if (0x50 < uVar10) goto LAB_8253205c;
-        if ((0x44 < uVar10) && (uVar10 < 0x48)) goto switchD_82531de8_caseD_26;
+      else if (bVar1 < 0x58) {
+        if (0x50 < bVar1) goto LAB_8253205c;
+        if ((0x44 < bVar1) && (bVar1 < 0x48)) goto switchD_82531de8_caseD_26;
       }
     }
-    else if (uVar10 == 0x73) {
-      if (DAT_83c4ba98 != '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x2a53,0,0xffffffff82000f98,0xffffffff8214e7a8);
+    else if (bVar1 == 0x73) {
+      if (scrVarPub.evaluate != false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2a53,0,"%s");
       }
-      DAT_83c4ba98 = '\x01';
-      DAT_837396f4 = Scr_EvalVariableObject
-                               (param_3,*(undefined4 *)(DAT_83ca44a0 + (uint)*(byte *)param_2 * -4))
-      ;
-      if (DAT_83c4ba98 == '\0') {
-        MyAssertHandler(0xffffffff8214f658,0x2a56,0,0xffffffff82000f98,0xffffffff8214fbf4);
+      scrVarPub.evaluate = true;
+      scrDebuggerGlob.objectId =
+           Scr_EvalVariableObject(uVar9,scrVmPub.localVars[-(uint)(byte)*param_2]);
+      if (scrVarPub.evaluate == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_debugger.cpp",
+                        0x2a56,0,"%s");
       }
-      DAT_83c4ba98 = '\0';
+      scrVarPub.evaluate = false;
       goto switchD_82531de8_caseD_29;
     }
 switchD_82531de8_caseD_2:
-    DAT_837396f4 = 0;
+    scrDebuggerGlob.objectId = 0;
   }
 switchD_82531de8_caseD_29:
-  if ((iVar9 != 0) || (param_4 != 0)) {
-    Scr_HitBreakpoint(piVar6,param_2,param_3,iVar9);
+  if ((iVar10 != 0) || (iStack0000002c != 0)) {
+    iVar10 = Scr_HitBreakpoint(param_1,param_2,uVar9,iVar10);
     __restgprlr();
-    return;
+    return iVar10;
   }
 LAB_82531ae0:
-  __restgprlr(bVar1);
-  return;
+  uVar9 = (uint)bVar1;
+  __restgprlr();
+  return uVar9;
 }
 
 
 // 8252DDB0  Scr_EnableBreakpoints  (script/scr_debugger.cpp:10872)
 
-void Scr_EnableBreakpoints(char param_1)
+void Scr_EnableBreakpoints(bool param_1)
 
 {
-  DAT_837396fc = param_1 == '\0';
+  scrDebuggerGlob.disableBreakpoints = !param_1;
   return;
 }
 
 
 // 8252DDD0  Scr_IgnoreErrors  (script/scr_debugger.cpp:10878)
 
-undefined1 Scr_IgnoreErrors(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Scr_IgnoreErrors(void)
 
 {
-  return DAT_837396fc;
+  return (int)scrDebuggerGlob.disableBreakpoints;
 }
 
 
 // 8252DDE0  Scr_SkipIntructions  (script/scr_debugger.cpp:10884)
 
-undefined4 Scr_SkipIntructions(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Scr_SkipIntructions(void)
 
 {
-  return DAT_837396d4;
+  return scrDebuggerGlob.skip_instr;
 }
 
 
 // 8252DDF0  Scr_ExitSkipIntructions  (script/scr_debugger.cpp:10890)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ExitSkipIntructions(void)
 
 {
-  DAT_837396d4 = 0;
+  scrDebuggerGlob.skip_instr = 0;
   return;
 }
 

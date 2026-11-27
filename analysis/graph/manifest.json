@@ -28,7 +28,7 @@
     },
     {
       "file": "iw5/functions-iw5mp_xenon.jsonl",
-      "sha256": "55b81fe467edcd02b6420338ce107ed4487d72c3f6dfcadb19e67f13c4e4e3a6",
+      "sha256": "fc0f7dbfc7c9552422a60593f33cb08e332612f332a3ab9339bc286d4fb6572a",
       "rows": 29939,
       "cypher": "UNWIND {{ROWS}} AS r MATCH (b:Build {id:r.build}) MERGE (fn:Function {key:r.key}) SET fn.name = coalesce(fn.name, r.name), fn.symbol = r.symbol MERGE (fi:FunctionInstance {id:r.id}) SET fi.build=r.build, fi.va=r.va, fi.size=r.size, fi.status=r.status, fi.type=r.type, fi.src=r.src, fi.bytes_sha256=r.sha MERGE (fi)-[:INSTANCE_OF]->(fn) MERGE (fi)-[:IN_BUILD]->(b) WITH fn, r WHERE r.source <> '' MATCH (sf:SourceFile {path:r.source}) MERGE (fn)-[d:DEFINED_IN]->(sf) SET d.line=r.line"
     },
@@ -40,8 +40,8 @@
     },
     {
       "file": "iw5/calls-iw5mp_xenon.jsonl",
-      "sha256": "c2bff793dbf9832638c3a3186c0807426de36e269e2ee8d9cd9fdbd2e1512529",
-      "rows": 116234,
+      "sha256": "d57f0888c3a11d6835c80d82c901907368b31c3bebec3ebf14370f1c093b9660",
+      "rows": 116232,
       "cypher": "UNWIND {{ROWS}} AS r MATCH (a:FunctionInstance {id:r.caller}) MATCH (c:FunctionInstance {id:r.callee}) MERGE (a)-[e:CALLS]->(c) SET e.kind=r.kind"
     }
   ]

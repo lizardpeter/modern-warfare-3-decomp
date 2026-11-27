@@ -7,7 +7,7 @@ void __unwind_72014(void)
 {
   int in_r12;
   
-  bdCommonAddr__operator_delete(*(undefined4 *)(in_r12 + -0x6c));
+  bdCommonAddr::operator_delete(*(void **)(in_r12 + -0x6c));
   return;
 }
 

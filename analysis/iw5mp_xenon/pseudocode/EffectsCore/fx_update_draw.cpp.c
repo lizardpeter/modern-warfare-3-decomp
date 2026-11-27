@@ -2,50 +2,56 @@
 
 // 824498E0  FX_IntegrateRotationFromZero  (EffectsCore/fx_update_draw.cpp:41)
 
-double FX_IntegrateRotationFromZero
-                 (double param_1,double param_2,int param_3,int param_4,int param_5)
+/* WARNING: Enum "FxRandKey": Some values do not have unique names */
+
+float FX_IntegrateRotationFromZero
+                (FxElemVisStateSample *param_1,int param_2,FxRandKey param_3,float param_4,
+                float param_5)
 
 {
   float fVar1;
-  double dVar2;
+  float fVar2;
   
-  fVar1 = *(float *)(&DAT_82066ac8 + (param_4 + param_5) * 4);
-  dVar2 = (double)((float)(param_1 * param_1) * 0.5);
-  return (double)(float)((double)(float)((double)(*(float *)(param_3 + 0x4c) * fVar1 +
-                                                 *(float *)(param_3 + 0x34)) * dVar2 +
-                                        (double)((*(float *)(param_3 + 0x1c) * fVar1 +
-                                                 *(float *)(param_3 + 4)) * (float)(param_1 - dVar2)
-                                                + *(float *)(param_3 + 0x20) * fVar1 +
-                                                  *(float *)(param_3 + 8))) * param_2);
+  fVar1 = *(float *)(&fx_randomTable + (param_2 + param_3) * 4);
+  fVar2 = param_4 * param_4 * 0.5;
+  return ((param_1[1].amplitude.rotationDelta * fVar1 + param_1[1].base.rotationDelta) * fVar2 +
+         ((param_1->amplitude).rotationDelta * fVar1 + (param_1->base).rotationDelta) *
+         (param_4 - fVar2) +
+         (param_1->amplitude).rotationTotal * fVar1 + (param_1->base).rotationTotal) * param_5;
 }
 
 
 // 82449940  FX_SetupVisualState  (EffectsCore/fx_update_draw.cpp:58)
 
-void FX_SetupVisualState(undefined8 param_1,float param_2,float param_3,undefined8 param_4,
-                        float *param_5)
+void FX_SetupVisualState(FxElemDef *param_1,FxEffect *param_2,int param_3,float param_4,
+                        FxElemPreVisualState *param_5)
 
 {
   float fVar1;
   int iVar2;
   float fVar3;
+  longlong lVar4;
+  longlong lVar5;
+  float *in_r7;
   double extraout_f1;
-  double dVar4;
-  double _X;
+  double dVar6;
+  double dVar7;
   
-  fVar3 = (float)__savegprlr_28();
-  _X = (double)(float)((double)*(byte *)((int)fVar3 + 0xb3) * extraout_f1);
-  dVar4 = floor(_X);
-  param_5[2] = fVar3;
-  param_5[3] = param_2;
-  fVar1 = (float)(_X - (double)(longlong)(int)dVar4);
-  *param_5 = fVar1;
-  param_5[1] = 1.0 - fVar1;
+  lVar5 = (longlong)param_3;
+  lVar4 = (longlong)(int)param_2;
+  fVar3 = (float)__savegprlr_28((double)param_4,param_1,lVar4,lVar5,param_5);
+  dVar7 = (double)(float)((double)*(byte *)((int)fVar3 + 0xb3) * extraout_f1);
+  dVar6 = floor(dVar7);
+  in_r7[2] = fVar3;
+  in_r7[3] = (float)lVar4;
+  fVar1 = (float)(dVar7 - (double)(longlong)(int)dVar6);
+  *in_r7 = fVar1;
+  in_r7[1] = 1.0 - fVar1;
   iVar2 = *(int *)((int)fVar3 + 0xb8);
-  param_5[5] = param_3;
-  *(undefined2 *)(param_5 + 6) = 0xff;
-  *(undefined2 *)((int)param_5 + 0x1a) = 0xff;
-  param_5[4] = (float)(iVar2 + (int)dVar4 * 0x30);
+  in_r7[5] = (float)lVar5;
+  *(undefined2 *)(in_r7 + 6) = 0xff;
+  *(undefined2 *)((int)in_r7 + 0x1a) = 0xff;
+  in_r7[4] = (float)(iVar2 + (int)dVar6 * 0x30);
   __restgprlr_28();
   return;
 }
@@ -53,102 +59,108 @@ void FX_SetupVisualState(undefined8 param_1,float param_2,float param_3,undefine
 
 // 824499F8  FX_EvaluateSize  (EffectsCore/fx_update_draw.cpp:82)
 
-void FX_EvaluateSize(float *param_1,int param_2)
+void FX_EvaluateSize(FxElemPreVisualState *param_1,FxElemVisualState *param_2)
 
 {
-  float fVar1;
+  FxElemVisStateSample *pFVar1;
+  float fVar2;
   
-  fVar1 = param_1[4];
-  fVar1 = (*(float *)((int)fVar1 + 0x54) * *(float *)(&DAT_82066b30 + (int)param_1[5] * 4) +
-          *(float *)((int)fVar1 + 0x3c)) * *param_1 +
-          (*(float *)((int)fVar1 + 0x24) * *(float *)(&DAT_82066b30 + (int)param_1[5] * 4) +
-          *(float *)((int)fVar1 + 0xc)) * param_1[1];
-  *(float *)(param_2 + 0xc) = fVar1;
-  if ((*(uint *)param_1[2] & 0x10000000) != 0) {
-    fVar1 = param_1[4];
-    *(float *)(param_2 + 0x10) =
-         (*(float *)((int)fVar1 + 0x58) * *(float *)(&DAT_82066b34 + (int)param_1[5] * 4) +
-         *(float *)((int)fVar1 + 0x40)) * *param_1 +
-         (*(float *)((int)fVar1 + 0x28) * *(float *)(&DAT_82066b34 + (int)param_1[5] * 4) +
-         *(float *)((int)fVar1 + 0x10)) * param_1[1];
+  pFVar1 = param_1->refState;
+  fVar2 = (pFVar1[1].amplitude.size[0] * *(float *)(&DAT_82066b30 + param_1->randomSeed * 4) +
+          pFVar1[1].base.size[0]) * param_1->sampleLerp +
+          ((pFVar1->amplitude).size[0] * *(float *)(&DAT_82066b30 + param_1->randomSeed * 4) +
+          (pFVar1->base).size[0]) * param_1->sampleLerpInv;
+  param_2->size[0] = fVar2;
+  if ((param_1->elemDef->flags & 0x10000000U) != 0) {
+    pFVar1 = param_1->refState;
+    param_2->size[1] =
+         (pFVar1[1].amplitude.size[1] * *(float *)(&DAT_82066b34 + param_1->randomSeed * 4) +
+         pFVar1[1].base.size[1]) * param_1->sampleLerp +
+         ((pFVar1->amplitude).size[1] * *(float *)(&DAT_82066b34 + param_1->randomSeed * 4) +
+         (pFVar1->base).size[1]) * param_1->sampleLerpInv;
     return;
   }
-  *(float *)(param_2 + 0x10) = fVar1;
+  param_2->size[1] = fVar2;
   return;
 }
 
 
 // 82449AA0  FX_InterpolateScale  (EffectsCore/fx_update_draw.cpp:92)
 
-double FX_InterpolateScale(double param_1,double param_2,int param_3,int param_4,int param_5)
+/* WARNING: Enum "FxRandKey": Some values do not have unique names */
+
+float FX_InterpolateScale(FxElemVisStateSample *param_1,int param_2,FxRandKey param_3,float param_4,
+                         float param_5)
 
 {
-  return (double)(float)((double)(*(float *)(param_3 + 0x5c) *
-                                  *(float *)(&DAT_82066ac8 + (param_4 + param_5) * 4) +
-                                 *(float *)(param_3 + 0x44)) * param_1 +
-                        (double)(float)((double)(*(float *)(param_3 + 0x2c) *
-                                                 *(float *)(&DAT_82066ac8 + (param_4 + param_5) * 4)
-                                                + *(float *)(param_3 + 0x14)) * param_2));
+  return (param_1[1].amplitude.scale * *(float *)(&fx_randomTable + (param_2 + param_3) * 4) +
+         param_1[1].base.scale) * param_4 +
+         ((param_1->amplitude).scale * *(float *)(&fx_randomTable + (param_2 + param_3) * 4) +
+         (param_1->base).scale) * param_5;
 }
 
 
 // 82449AD8  FX_EvaluateScale  (EffectsCore/fx_update_draw.cpp:105)
 
-void FX_EvaluateScale(float *param_1,int param_2)
+void FX_EvaluateScale(FxElemPreVisualState *param_1,FxElemVisualState *param_2)
 
 {
-  float fVar1;
+  FxElemVisStateSample *pFVar1;
   
-  fVar1 = param_1[4];
-  *(float *)(param_2 + 0x14) =
-       (*(float *)((int)fVar1 + 0x2c) * *(float *)(&DAT_82066b38 + (int)param_1[5] * 4) +
-       *(float *)((int)fVar1 + 0x14)) * param_1[1] +
-       (*(float *)((int)fVar1 + 0x5c) * *(float *)(&DAT_82066b38 + (int)param_1[5] * 4) +
-       *(float *)((int)fVar1 + 0x44)) * *param_1;
+  pFVar1 = param_1->refState;
+  param_2->scale =
+       ((pFVar1->amplitude).scale * *(float *)(&DAT_82066b38 + param_1->randomSeed * 4) +
+       (pFVar1->base).scale) * param_1->sampleLerpInv +
+       (pFVar1[1].amplitude.scale * *(float *)(&DAT_82066b38 + param_1->randomSeed * 4) +
+       pFVar1[1].base.scale) * param_1->sampleLerp;
   return;
 }
 
 
 // 82449B28  FX_EvaluateVisualState_DoLighting  (EffectsCore/fx_update_draw.cpp:111)
 
-void FX_EvaluateVisualState_DoLighting(undefined8 param_1,int param_2,int param_3)
+void FX_EvaluateVisualState_DoLighting
+               (FxElemPreVisualState *param_1,FxElemVisualState *param_2,FxElemDef *param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
-  int iVar5;
-  longlong lVar6;
+  uint *puVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
   
-  iVar2 = __savegprlr_21();
+  iVar2 = __savegprlr_21(param_1);
   if (*(int *)(iVar2 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff82069a20,0x77,0,0xffffffff82000f98,0xffffffff82069a08);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                    ,0x77,0,"%s");
   }
   iVar2 = *(int *)(iVar2 + 0xc);
-  iVar5 = 0;
-  piVar4 = &DAT_820699fc;
+  iVar4 = 0;
+  puVar3 = mapping;
   do {
-    iVar1 = *piVar4;
-    lVar6 = (longlong)
-            ((int)(((uint)*(byte *)(iVar5 + iVar2 + 0x1a) * 2 + -0xff) *
-                  (uint)*(byte *)(param_3 + 0xf9)) / 0xff) + 0xff;
-    if ((lVar6 < 0) || (0x1fe < (int)lVar6)) {
-      MyAssertHandler(0xffffffff82069a20,0x7f,0,0xffffffff820699e4,0xffffffff820699b8,lVar6);
+    uVar1 = *puVar3;
+    lVar5 = (longlong)
+            ((int)(((uint)*(byte *)(iVar4 + iVar2 + 0x1a) * 2 + -0xff) * (uint)param_3->lightingFrac
+                  ) / 0xff) + 0xff;
+    iVar6 = (int)lVar5;
+    if ((lVar5 < 0) || (0x1fe < iVar6)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                      ,0x7f,0,"%s\n\t(lightFactor) = %i");
     }
-    iVar3 = (int)((uint)*(byte *)(iVar1 + param_2) * (int)lVar6) / 0xff;
-    if (iVar3 < 0xff) {
-      if (iVar3 < 1) {
-        iVar3 = 0;
+    iVar6 = (int)((uint)param_2->color[uVar1] * iVar6) / 0xff;
+    if (iVar6 < 0xff) {
+      if (iVar6 < 1) {
+        iVar6 = 0;
       }
     }
     else {
-      iVar3 = 0xff;
+      iVar6 = 0xff;
     }
-    iVar5 = iVar5 + 1;
-    *(char *)(iVar1 + param_2) = (char)iVar3;
-    piVar4 = piVar4 + 1;
-  } while (iVar5 != 3);
+    iVar4 = iVar4 + 1;
+    param_2->color[uVar1] = (uchar)iVar6;
+    puVar3 = puVar3 + 1;
+  } while (iVar4 != 3);
   __restgprlr_21();
   return;
 }
@@ -156,16 +168,17 @@ void FX_EvaluateVisualState_DoLighting(undefined8 param_1,int param_2,int param_
 
 // 82449C30  FX_EvaluateVisualState  (EffectsCore/fx_update_draw.cpp:135)
 
-void FX_EvaluateVisualState(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void FX_EvaluateVisualState(FxElemPreVisualState *param_1,float param_2,FxElemVisualState *param_3)
 
 {
   float fVar1;
-  float fVar2;
-  int iVar3;
-  float fVar4;
-  float *pfVar5;
-  byte bVar6;
-  byte *pbVar7;
+  FxElemDef *pFVar2;
+  FxElemVisStateSample *pFVar3;
+  int iVar4;
+  float fVar5;
+  FxElemPreVisualState *pFVar6;
+  uchar uVar7;
+  FxElemVisualState *in_r5;
   double extraout_f1;
   double dVar8;
   double dVar9;
@@ -173,47 +186,52 @@ void FX_EvaluateVisualState(undefined8 param_1,undefined8 param_2,undefined8 par
   double dVar11;
   double dVar12;
   
-  __savegprlr_26();
-  pfVar5 = (float *)__savefpr_27();
-  fVar1 = pfVar5[2];
+  __savegprlr_26((double)param_2,param_1);
+  pFVar6 = (FxElemPreVisualState *)__savefpr_27();
+  pFVar2 = pFVar6->elemDef;
   dVar11 = extraout_f1;
-  if (fVar1 == 0.0) {
-    MyAssertHandler(0xffffffff82069a20,0x93,0,0xffffffff82000f98,0xffffffff82061c6c);
+  if (pFVar2 == (FxElemDef *)0x0) {
+    param_3 = (FxElemVisualState *)0x93;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                    ,0x93,0,"%s");
   }
-  fVar2 = pfVar5[4];
-  dVar12 = (double)*pfVar5;
-  iVar3 = (int)pfVar5[5] * 4;
-  dVar10 = (double)pfVar5[1];
-  dVar9 = (double)*(float *)(&DAT_82066b24 + iVar3);
+  pFVar3 = pFVar6->refState;
+  dVar12 = (double)pFVar6->sampleLerp;
+  iVar4 = pFVar6->randomSeed * 4;
+  dVar10 = (double)pFVar6->sampleLerpInv;
+  dVar9 = (double)*(float *)(&DAT_82066b24 + iVar4);
   dVar8 = (double)(float)(1.0 - dVar9);
-  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
-  pbVar7 = (byte *)param_3;
-  *pbVar7 = bVar6;
-  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
-  pbVar7[1] = bVar6;
-  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
-  pbVar7[2] = bVar6;
-  bVar6 = FX_InterpolateColor(dVar9,dVar8,dVar12,dVar10,fVar2);
-  pbVar7[3] = bVar6;
-  if (*(char *)((int)fVar1 + 0xf9) != '\0') {
-    FX_EvaluateVisualState_DoLighting(pfVar5,param_3,fVar1);
+  uVar7 = FX_InterpolateColor(pFVar3,*(float *)(&DAT_82066b24 + iVar4),(float)(1.0 - dVar9),
+                              pFVar6->sampleLerp,pFVar6->sampleLerpInv,(int)param_3);
+  in_r5->color[0] = uVar7;
+  uVar7 = FX_InterpolateColor(pFVar3,(float)dVar9,(float)dVar8,(float)dVar12,(float)dVar10,
+                              (int)param_3);
+  in_r5->color[1] = uVar7;
+  uVar7 = FX_InterpolateColor(pFVar3,(float)dVar9,(float)dVar8,(float)dVar12,(float)dVar10,
+                              (int)param_3);
+  in_r5->color[2] = uVar7;
+  uVar7 = FX_InterpolateColor(pFVar3,(float)dVar9,(float)dVar8,(float)dVar12,(float)dVar10,
+                              (int)param_3);
+  in_r5->color[3] = uVar7;
+  if (pFVar2->lightingFrac != '\0') {
+    FX_EvaluateVisualState_DoLighting(pFVar6,in_r5,pFVar2);
   }
-  fVar4 = *(float *)(&DAT_82066b28 + iVar3) * *(float *)((int)fVar1 + 0x94) +
-          *(float *)((int)fVar1 + 0x90);
-  *(float *)(pbVar7 + 8) = fVar4;
+  fVar5 = *(float *)(&DAT_82066b28 + iVar4) * (pFVar2->initialRotation).amplitude +
+          (pFVar2->initialRotation).base;
+  in_r5->rotationTotal = fVar5;
   dVar8 = (double)((float)(dVar12 * dVar12) * 0.5);
-  fVar1 = *(float *)(&DAT_82066b2c + iVar3);
-  *(float *)(pbVar7 + 8) =
-       (float)((double)(float)((double)(*(float *)((int)fVar2 + 0x4c) * fVar1 +
-                                       *(float *)((int)fVar2 + 0x34)) * dVar8 +
-                              (double)((*(float *)((int)fVar2 + 0x1c) * fVar1 +
-                                       *(float *)((int)fVar2 + 4)) * (float)(dVar12 - dVar8) +
-                                      *(float *)((int)fVar2 + 0x20) * fVar1 +
-                                      *(float *)((int)fVar2 + 8))) * dVar11 + (double)fVar4);
-  *pbVar7 = (byte)((ulonglong)
-                   ((longlong)
-                    (int)((uint)*(ushort *)((int)pfVar5 + 0x1a) * (uint)*(ushort *)(pfVar5 + 6)) *
-                   (longlong)(int)(uint)*pbVar7) >> 0x10);
+  fVar1 = *(float *)(&DAT_82066b2c + iVar4);
+  in_r5->rotationTotal =
+       (float)((double)(float)((double)(pFVar3[1].amplitude.rotationDelta * fVar1 +
+                                       pFVar3[1].base.rotationDelta) * dVar8 +
+                              (double)(((pFVar3->amplitude).rotationDelta * fVar1 +
+                                       (pFVar3->base).rotationDelta) * (float)(dVar12 - dVar8) +
+                                      (pFVar3->amplitude).rotationTotal * fVar1 +
+                                      (pFVar3->base).rotationTotal)) * dVar11 + (double)fVar5);
+  in_r5->color[0] =
+       (uchar)((ulonglong)
+               ((longlong)(int)((uint)pFVar6->occlusionFade * (uint)pFVar6->distanceFade) *
+               (longlong)(int)(uint)in_r5->color[0]) >> 0x10);
   __restfpr_27();
   __restgprlr_26();
   return;
@@ -222,92 +240,103 @@ void FX_EvaluateVisualState(undefined8 param_1,undefined8 param_2,undefined8 par
 
 // 82449DE0  FX_GetMsecForSamplingAxis  (EffectsCore/fx_update_draw.cpp:174)
 
-double FX_GetMsecForSamplingAxis
-                 (double param_1,double param_2,undefined8 param_3,undefined8 param_4,int param_5)
+float FX_GetMsecForSamplingAxis(float param_1,float param_2,int param_3)
 
 {
   float fVar1;
-  double dVar2;
+  float fVar2;
+  int in_r5;
   
-  dVar2 = (double)((float)((double)(longlong)param_5 * param_2) * 0.003921569);
-  fVar1 = (float)(param_1 - dVar2);
+  fVar2 = (float)(longlong)in_r5 * param_2 * 0.003921569;
+  fVar1 = param_1 - fVar2;
   if (fVar1 <= 0.0) {
     return param_1;
   }
   if (300.0 <= fVar1) {
-    return (double)(float)(dVar2 + 150.0);
+    return fVar2 + 150.0;
   }
-  return -(double)(float)((double)(fVar1 * fVar1) * 0.0016666667070239782 - param_1);
+  return -(fVar1 * fVar1 * 0.0016666667 - param_1);
 }
 
 
 // 82449E50  FX_SetPlacement  (EffectsCore/fx_update_draw.cpp:189)
 
-void FX_SetPlacement(int param_1,int param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_SetPlacement(FxDrawState *param_1,GfxScaledPlacement *param_2)
 
 {
   float fVar1;
-  double dVar2;
-  double dVar3;
-  undefined1 auStack_40 [40];
+  float fVar2;
+  float fVar3;
+  float (*in_r6) [3];
+  float afStack_40 [10];
   
-  dVar3 = (double)*(float *)(param_1 + 0x50);
-  dVar2 = (double)((float)*(byte *)(*(int *)(param_1 + 8) + 2) * *(float *)(param_1 + 0x4c) *
-                  0.003921569);
-  fVar1 = (float)(dVar3 - dVar2);
-  if (0.0 < fVar1) {
-    if (fVar1 < 300.0) {
-      dVar3 = -(double)(float)((double)(fVar1 * fVar1) * 0.0016666667070239782 - dVar3);
+  fVar1 = param_1->msecElapsed;
+  fVar3 = (float)param_1->elem->atRestFraction * param_1->msecLifeSpan * 0.003921569;
+  fVar2 = fVar1 - fVar3;
+  if (0.0 < fVar2) {
+    if (fVar2 < 300.0) {
+      fVar1 = -(fVar2 * fVar2 * 0.0016666667 - fVar1);
     }
     else {
-      dVar3 = (double)(float)(dVar2 + 150.0);
+      fVar1 = fVar3 + 150.0;
     }
   }
-  FX_GetElemAxis(dVar3,*(undefined4 *)(param_1 + 0xc),*(undefined4 *)(param_1 + 0x48),param_1 + 0x14
-                 ,param_4,auStack_40);
-  AxisToQuat(auStack_40,param_2);
-  *(undefined4 *)(param_2 + 0x10) = *(undefined4 *)(param_1 + 0x58);
-  *(undefined4 *)(param_2 + 0x14) = *(undefined4 *)(param_1 + 0x5c);
-  *(undefined4 *)(param_2 + 0x18) = *(undefined4 *)(param_1 + 0x60);
-  *(undefined4 *)(param_2 + 0x1c) = *(undefined4 *)(param_1 + 0x84);
+  FX_GetElemAxis(param_1->elemDef,param_1->randomSeed,&param_1->orient,fVar1,in_r6);
+  AxisToQuat((float (*) [3])afStack_40,(float *)param_2);
+  (param_2->base).origin[0] = param_1->posWorld[0];
+  (param_2->base).origin[1] = param_1->posWorld[1];
+  (param_2->base).origin[2] = param_1->posWorld[2];
+  param_2->scale = (param_1->visState).scale;
   return;
 }
 
 
 // 82449F40  FX_FillGenerateVertsCmd  (EffectsCore/fx_update_draw.cpp:222)
 
-void FX_FillGenerateVertsCmd(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_FillGenerateVertsCmd(FxCmd *param_1,FxGenerateVertsCmd *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  int iVar1;
+  int *piVar2;
+  FxSystem *pFVar3;
+  FxBeamInfo *pFVar4;
+  FxPostLightInfo *pFVar5;
+  FxSpriteInfo *pFVar6;
+  FxMarksSystem *pFVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
   
-  puVar2 = (uint *)__savegprlr_28();
-  if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82069a20,0xdf,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  uVar8 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_28(param_1);
+  if (piVar2 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                    ,0xdf,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82069a20,0xe0,0,0xffffffff82000f98,0xffffffff82069a6c);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                    ,0xe0,0,"%s");
   }
-  uVar3 = FX_GetSystem(puVar2[1]);
-  puVar4 = (undefined4 *)param_2;
-  *puVar4 = uVar3;
-  uVar3 = FX_Beam_GetInfo();
-  puVar4[1] = uVar3;
-  uVar3 = FX_PostLight_GetInfo();
-  puVar4[2] = uVar3;
-  uVar3 = FX_SpriteGetInfo();
-  puVar4[3] = uVar3;
-  uVar3 = FX_GetMarksSystem(puVar2[1]);
-  puVar4[4] = uVar3;
-  puVar4[5] = puVar2[1];
-  uVar1 = *puVar2;
-  puVar4[6] = *(undefined4 *)(uVar1 + 0xd4);
-  puVar4[7] = *(undefined4 *)(uVar1 + 0xd8);
-  puVar4[8] = *(undefined4 *)(uVar1 + 0xdc);
-  AxisCopy((ulonglong)*puVar2 + 0x144,param_2 + 0x24);
+  pFVar3 = FX_GetSystem(piVar2[1]);
+  puVar9 = (undefined4 *)uVar8;
+  *puVar9 = pFVar3;
+  pFVar4 = FX_Beam_GetInfo();
+  puVar9[1] = pFVar4;
+  pFVar5 = FX_PostLight_GetInfo();
+  puVar9[2] = pFVar5;
+  pFVar6 = FX_SpriteGetInfo();
+  puVar9[3] = pFVar6;
+  pFVar7 = FX_GetMarksSystem(piVar2[1]);
+  puVar9[4] = pFVar7;
+  puVar9[5] = piVar2[1];
+  iVar1 = *piVar2;
+  puVar9[6] = *(undefined4 *)(iVar1 + 0xd4);
+  puVar9[7] = *(undefined4 *)(iVar1 + 0xd8);
+  puVar9[8] = *(undefined4 *)(iVar1 + 0xdc);
+  AxisCopy((float (*) [3])(*piVar2 + 0x144),(float (*) [3])(puVar9 + 9));
   __restgprlr_28();
   return;
 }
@@ -315,20 +344,21 @@ void FX_FillGenerateVertsCmd(undefined8 param_1,ulonglong param_2)
 
 // 8244A018  FX_FillGenerateGlassVertsCmd  (EffectsCore/fx_update_draw.cpp:237)
 
-void FX_FillGenerateGlassVertsCmd(int param_1)
+void FX_FillGenerateGlassVertsCmd(FxGenerateGlassVertsCmd *param_1)
 
 {
-  undefined4 uVar1;
+  FxGlassVisInfo *pFVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82069a20,0xee,0,0xffffffff82000f98,0xffffffff82069a78);
+  if (param_1 == (FxGenerateGlassVertsCmd *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_draw.cpp"
+                    ,0xee,0,"%s");
   }
-  *(undefined4 **)(param_1 + 0x28) = &DAT_8333cac4;
-  *(undefined4 *)(param_1 + 0x34) = *(undefined4 *)(DAT_8332cbd8 + 0xc);
-  uVar1 = FX_GetGlassVisInfo();
-  *(undefined4 *)(param_1 + 0x3c) = uVar1;
-  *(undefined4 **)(param_1 + 0x2c) = &DAT_83282080;
-  *(undefined4 **)(param_1 + 0x30) = &DAT_832ee020;
+  param_1->glassSystem = &fxWorld.glassSys;
+  param_1->shatteredScale = (float)(glass_shattered_scale->current).integer;
+  pFVar1 = FX_GetGlassVisInfo();
+  param_1->visInfo = pFVar1;
+  param_1->glassDist = g_stream.glassDist;
+  param_1->glassDistUpdatedPtr = &g_stream.glassDistUpdated;
   return;
 }
 

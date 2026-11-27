@@ -2,33 +2,41 @@
 
 // 8248BA58  GScr_AllocString  (game/g_scr_main.cpp:124)
 
-void GScr_AllocString(undefined8 param_1)
+uint GScr_AllocString(char *param_1)
 
 {
-  Scr_AllocString(param_1,1);
-  return;
+  uint uVar1;
+  
+  uVar1 = Scr_AllocString(param_1,1);
+  return uVar1;
 }
 
 
 // 8248BA60  TRACK_g_scr_main  (game/g_scr_main.cpp:131)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_g_scr_main(void)
 
 {
-  track_static_alloc_internal(0xffffffff835a0b80,0x2a6,0xffffffff82076e68,7);
-  track_static_alloc_internal(0xffffffff83599838,0x3dd0,0xffffffff82076e5c,7);
+  track_static_alloc_internal(&scr_const,0x2a6,"scr_const",7);
+  track_static_alloc_internal(&g_scr_data,0x3dd0,"g_scr_data",7);
   return;
 }
 
 
 // 8248BAB8  Scr_LoadLevel  (game/g_scr_main.cpp:139)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_LoadLevel(void)
 
 {
-  if (DAT_83599838 != 0) {
-    Scr_ExecThread(DAT_83599838,0);
-    Scr_FreeThread();
+  ushort uVar1;
+  
+  if (g_scr_data.levelscript != 0) {
+    uVar1 = Scr_ExecThread(g_scr_data.levelscript,0);
+    Scr_FreeThread(uVar1);
   }
   return;
 }
@@ -36,16 +44,18 @@ void Scr_LoadLevel(void)
 
 // 8248BAF0  GScr_PostLoadScripts  (game/g_scr_main.cpp:150)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_PostLoadScripts(void)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = 0;
+  uVar1 = 0;
   do {
-    Scr_SetClassMap(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 6);
+    Scr_SetClassMap(uVar1);
+    uVar1 = uVar1 + 1;
+  } while ((int)uVar1 < 6);
   GScr_AddFieldsForEntity();
   GScr_AddFieldsForHudElems();
   VehPathScr_AddFieldsForNode();
@@ -56,156 +66,162 @@ void GScr_PostLoadScripts(void)
 
 // 8248BB40  GScr_FreeScripts  (game/g_scr_main.cpp:172)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_FreeScripts(void)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = 0;
+  uVar1 = 0;
   do {
-    Scr_RemoveClassMap(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 6);
+    Scr_RemoveClassMap(uVar1);
+    uVar1 = uVar1 + 1;
+  } while ((int)uVar1 < 6);
   return;
 }
 
 
 // 8248BB80  GetEntity  (game/g_scr_main.cpp:183)
 
-longlong GetEntity(undefined4 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * GetEntity(scr_entref_t param_1)
 
 {
-  ulonglong uVar1;
-  ushort uStack00000014;
-  short sStack00000016;
+  scr_entref_t sStack00000014;
   
-  sStack00000016 = (short)param_1;
-  _uStack00000014 = param_1;
-  if (sStack00000016 == 0) {
-    uStack00000014 = (ushort)((uint)param_1 >> 0x10);
-    uVar1 = (ulonglong)uStack00000014;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff82076e74,0xba,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    if (0x7ff < (uint)param_1 >> 0x10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xba,0,
+                      "%s");
     }
-    return uVar1 * 0x280 + -0x7cc8c980;
+    return g_entities + ((uint)param_1 >> 0x10);
   }
-  Scr_ObjectError(0xffffffff8206d360);
-  return 0;
+  Scr_ObjectError("not an entity");
+  return (gentity_s *)0x0;
 }
 
 
 // 8248BC20  GetPlayerEntity  (game/g_scr_main.cpp:197)
 
-int GetPlayerEntity(undefined4 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * GetPlayerEntity(scr_entref_t param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined2 uStack00000014;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  scr_entref_t sStack00000014;
   
-  _uStack00000014 = param_1;
-  iVar3 = GetEntity();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82076e74,200,0,0xffffffff82000f98,0xffffffff82002614);
+  sStack00000014 = param_1;
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",200,0,
+                    "%s");
   }
-  if (*(int *)(iVar3 + 0x158) == 0) {
-    if (*(short *)(iVar3 + 0x17a) == 0) {
-      uVar1 = 0xffffffff82076f14;
+  if (pgVar1->client == (gclient_s *)0x0) {
+    if (pgVar1->targetname != 0) {
+      SL_ConvertToString((uint)pgVar1->targetname);
     }
-    else {
-      uVar1 = SL_ConvertToString();
-    }
-    uVar2 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff82076eb8,uStack00000014,(double)*(float *)(iVar3 + 0x138),
-       (double)*(float *)(iVar3 + 0x13c),(double)*(float *)(iVar3 + 0x140),uVar2,uVar1);
-    Scr_Error();
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va(
+               "only valid on players; called on entity %i at %.0f %.0f %.0f classname %s targetname %s\n"
+               );
+    Scr_Error(pcVar2);
   }
-  return iVar3;
+  return pgVar1;
 }
 
 
 // 8248BD00  EntflagsAdd  (game/g_scr_main.cpp:211)
 
-void EntflagsAdd(int param_1,uint param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void EntflagsAdd(gentity_s *param_1,int param_2)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   
-  iVar1 = *(int *)(param_1 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = param_2 | *(uint *)(iVar1 + 0xf8);
+  pgVar1 = param_1->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = param_2 | (pgVar1->ps).eFlags;
     return;
   }
-  *(uint *)(param_1 + 8) = param_2 | *(uint *)(param_1 + 8);
+  (param_1->s).lerp.eFlags = param_2 | (param_1->s).lerp.eFlags;
   return;
 }
 
 
 // 8248BD30  EntflagsRemove  (game/g_scr_main.cpp:220)
 
-void EntflagsRemove(int param_1,uint param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void EntflagsRemove(gentity_s *param_1,int param_2)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   
-  iVar1 = *(int *)(param_1 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) & ~param_2;
+  pgVar1 = param_1->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags & ~param_2;
     return;
   }
-  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) & ~param_2;
+  (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & ~param_2;
   return;
 }
 
 
 // 8248BD60  GScr_StructuredDataPrintArgs  (game/g_scr_main.cpp:230)
 
-void GScr_StructuredDataPrintArgs(void)
+void GScr_StructuredDataPrintArgs(char *param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  int iVar7;
-  longlong lVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar8;
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
+  uint uVar5;
+  char acStack_430 [1072];
   
-  uVar1 = ZEXT48(&stack0x00000000);
-  uVar2 = __savegprlr_27();
-  lVar3 = Com_sprintf(uVar1 - 0x430,0x400,0xffffffff82076f40,uVar2);
-  if (-1 < (int)lVar3) {
-    uVar8 = 0;
-    iVar7 = Scr_GetNumParam();
-    if (iVar7 != 0) {
+  __savegprlr_27(param_1);
+  iVar1 = Com_sprintf(acStack_430,0x400,"In call to %s( ");
+  if (-1 < iVar1) {
+    uVar5 = 0;
+    uVar2 = Scr_GetNumParam();
+    if (uVar2 != 0) {
       do {
-        if ((uVar8 & 0xffffffff) != 0) {
-          lVar4 = Com_sprintf(lVar3 + (uVar1 - 0x430),0x400 - lVar3,0xffffffff820044d4);
-          if ((int)lVar4 < 0) goto LAB_8248be64;
-          lVar3 = lVar4 + lVar3;
+        if (uVar5 != 0) {
+          iVar3 = Com_sprintf(acStack_430 + iVar1,0x400 - iVar1,", ");
+          if (iVar3 < 0) goto LAB_8248be64;
+          iVar1 = iVar3 + iVar1;
         }
-        iVar7 = Scr_GetType(uVar8);
-        if ((iVar7 == 2) || ((4 < iVar7 && (iVar7 < 7)))) {
-          uVar5 = Scr_GetString(uVar8);
-          uVar2 = 0xffffffff82076f24;
+        iVar3 = Scr_GetType(uVar5);
+        if ((iVar3 == 2) || ((4 < iVar3 && (iVar3 < 7)))) {
+          Scr_GetString(uVar5);
+          pcVar4 = "\"%s\"";
         }
         else {
-          uVar5 = Scr_GetTypeName(uVar8);
-          uVar2 = 0xffffffff82076f2c;
+          Scr_GetTypeName(uVar5);
+          pcVar4 = "[unhandled type %s]";
         }
-        lVar4 = Com_sprintf(lVar3 + (uVar1 - 0x430),0x400 - lVar3,uVar2,uVar5);
-        if ((int)lVar4 < 0) goto LAB_8248be64;
-        lVar3 = lVar4 + lVar3;
-        uVar8 = uVar8 + 1;
-        uVar6 = Scr_GetNumParam();
-      } while ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff));
+        iVar3 = Com_sprintf(acStack_430 + iVar1,0x400 - iVar1,pcVar4);
+        if (iVar3 < 0) goto LAB_8248be64;
+        iVar1 = iVar3 + iVar1;
+        uVar5 = uVar5 + 1;
+        uVar2 = Scr_GetNumParam();
+      } while (uVar5 < uVar2);
     }
-    Com_sprintf(lVar3 + (uVar1 - 0x430),0x400 - lVar3,0xffffffff82076f20);
+    Com_sprintf(acStack_430 + iVar1,0x400 - iVar1," )\n");
   }
 LAB_8248be64:
-  Com_PrintError(0x17,uVar1 - 0x430);
+  Com_PrintError(0x17,acStack_430);
   __restgprlr_27();
   return;
 }
@@ -213,72 +229,88 @@ LAB_8248be64:
 
 // 8248B9E0  CoOp_IsClientNumLocal  (universal/coop.h:243)
 
-bool CoOp_IsClientNumLocal(ulonglong param_1)
+bool CoOp_IsClientNumLocal(int param_1)
 
 {
-  if (0x11 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82076e18,0xf4,0,0xffffffff82014c1c,param_1,0x12);
-    return (int)param_1 == 0;
+  if (0x11 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/coop.h",0xf4
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+    return param_1 == 0;
   }
-  return (int)param_1 == 0;
+  return param_1 == 0;
 }
 
 
 // 8248BE78  GScr_NavigateStructuredData  (game/g_scr_main.cpp:334)
 
 void GScr_NavigateStructuredData
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+               (StructuredDataDef *param_1,char *param_2,StructuredDataLookup *param_3,int *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  longlong lVar4;
+  StructuredDataDef *pSVar1;
+  LookupState LVar2;
+  LookupError LVar3;
+  LookupExpectation LVar4;
+  int iVar5;
+  char *pcVar6;
+  StructuredDataLookup *pSVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  uint uVar10;
   
-  uVar1 = __savegprlr_22();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x151,0,0xffffffff82000f98,0xffffffff8206070c);
+  uVar9 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  pSVar1 = (StructuredDataDef *)__savegprlr_22(param_1);
+  if (pSVar1 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x151,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x152,0,0xffffffff82000f98,0xffffffff82076fc4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x152,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x153,0,0xffffffff82000f98,0xffffffff82076fb0);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x153,0,
+                    "%s");
   }
-  StructuredData_InitializeLookup(uVar1,param_3);
-  lVar4 = -1;
+  pSVar7 = (StructuredDataLookup *)uVar8;
+  StructuredData_InitializeLookup(pSVar1,pSVar7);
+  uVar10 = 0xffffffff;
   do {
-    iVar3 = StructuredData_GetLookupState(param_3);
-    if (iVar3 == 2) {
-      if ((int)lVar4 < 0) {
-        MyAssertHandler(0xffffffff82076e74,0x15c,0,0xffffffff82000f98,0xffffffff82076f50);
+    LVar2 = StructuredData_GetLookupState(pSVar7);
+    if (LVar2 == LOOKUP_ERROR) {
+      if ((int)uVar10 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x15c
+                        ,0,"%s");
       }
       GScr_StructuredDataPrintArgs(param_2);
-      iVar3 = StructuredData_GetLookupError(param_3);
-      Scr_ParamError(lVar4,(&PTR_DAT_82992d38)[iVar3]);
+      LVar3 = StructuredData_GetLookupError(pSVar7);
+      Scr_ParamError(uVar10,*(char **)(&LookupErrorDescriptions + LVar3 * 4));
 LAB_8248bfa4:
-      MyAssertHandler(0xffffffff82076e74,0x164,0,0xffffffff82000f98,0xffffffff82076f64);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x164,0
+                      ,"%s");
     }
     else {
-      if (iVar3 == 1) {
-        *(int *)param_4 = (int)lVar4 + 1;
+      if (LVar2 == LOOKUP_FINISHED) {
+        *(int *)uVar9 = uVar10 + 1;
         __restgprlr_22();
         return;
       }
-      if (iVar3 != 0) goto LAB_8248bfa4;
+      if (LVar2 != LOOKUP_IN_PROGRESS) goto LAB_8248bfa4;
     }
-    lVar4 = lVar4 + 1;
-    uVar2 = StructuredData_GetLookupExpectedType(param_3);
-    if ((int)uVar2 == 0) {
-      uVar2 = Scr_GetInt(lVar4);
-      StructuredData_LookupWithInt(param_3,uVar2);
+    uVar10 = uVar10 + 1;
+    LVar4 = StructuredData_GetLookupExpectedType(pSVar7);
+    if (LVar4 == LOOKUP_EXPECT_INT) {
+      iVar5 = Scr_GetInt(uVar10);
+      StructuredData_LookupWithInt(pSVar7,iVar5);
     }
     else {
-      if ((int)uVar2 != 1) {
-        MyAssertHandler(0xffffffff82076e74,0x173,0,0xffffffff82076f80,uVar2,1);
+      if (LVar4 != LOOKUP_EXPECT_STRING) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x173
+                        ,0,"expectedType == LOOKUP_EXPECT_STRING\n\t%i, %i");
       }
-      uVar2 = Scr_GetString(lVar4);
-      StructuredData_LookupWithString(param_3,uVar2);
+      pcVar6 = Scr_GetString(uVar10);
+      StructuredData_LookupWithString(pSVar7,pcVar6);
     }
   } while( true );
 }
@@ -286,53 +318,55 @@ LAB_8248bfa4:
 
 // 8248C038  GScr_GetStructuredData  (game/g_scr_main.cpp:468)
 
-void GScr_GetStructuredData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void GScr_GetStructuredData(StructuredDataDef *param_1,StructuredDataBuffer *param_2,char *param_3)
 
 {
-  bool bVar1;
-  uint uVar3;
-  ulonglong uVar2;
-  undefined1 uVar5;
-  undefined2 uVar4;
+  uint uVar1;
+  LookupResultDataType LVar2;
+  int iVar3;
+  bool bVar6;
+  short sVar5;
+  char *pcVar4;
+  float fVar7;
   uint local_40 [4];
-  undefined1 auStack_30 [24];
+  StructuredDataLookup SStack_30;
   
-  GScr_NavigateStructuredData(param_1,param_3,auStack_30,local_40);
-  uVar3 = Scr_GetNumParam();
-  if (local_40[0] != uVar3) {
+  GScr_NavigateStructuredData(param_1,param_3,&SStack_30,(int *)local_40);
+  uVar1 = Scr_GetNumParam();
+  if (local_40[0] != uVar1) {
     GScr_StructuredDataPrintArgs(param_3);
-    Scr_Error(0xffffffff82076ff8);
+    Scr_Error("Too many arguments. See log.");
     return;
   }
-  uVar2 = StructuredData_GetLookupResultType(auStack_30);
-  if ((uVar2 & 0xffffffff) < 5) {
-    bVar1 = (int)uVar2 != 0;
-    if (uVar2 == 1 && bVar1) {
-      uVar5 = StructuredData_GetBool(auStack_30,param_2);
-      Scr_AddBool(uVar5);
+  LVar2 = StructuredData_GetLookupResultType(&SStack_30);
+  if (LVar2 < (LOOKUP_RESULT_SHORT|LOOKUP_RESULT_BOOL)) {
+    if (LVar2 == LOOKUP_RESULT_BOOL) {
+      bVar6 = StructuredData_GetBool(&SStack_30,param_2);
+      Scr_AddBool((uint)bVar6);
       return;
     }
-    if (uVar2 != 2 || !bVar1) {
-      if (uVar2 == 3 && bVar1) {
-        StructuredData_GetFloat(auStack_30,param_2);
-        Scr_AddFloat();
+    if (LVar2 != LOOKUP_RESULT_STRING) {
+      if (LVar2 == LOOKUP_RESULT_FLOAT) {
+        fVar7 = StructuredData_GetFloat(&SStack_30,param_2);
+        Scr_AddFloat(fVar7);
         return;
       }
-      if (!bVar1) {
-        StructuredData_GetInt(auStack_30,param_2);
-        Scr_AddInt();
+      if (LVar2 == LOOKUP_RESULT_INT) {
+        iVar3 = StructuredData_GetInt(&SStack_30,param_2);
+        Scr_AddInt(iVar3);
         return;
       }
-      uVar4 = StructuredData_GetShort(auStack_30,param_2);
-      Scr_AddInt(uVar4);
+      sVar5 = StructuredData_GetShort(&SStack_30,param_2);
+      Scr_AddInt((int)sVar5);
       return;
     }
   }
-  if ((int)uVar2 != 2) {
-    MyAssertHandler(0xffffffff82076e74,0x1fb,0,0xffffffff82076fcc,uVar2,2);
+  if (LVar2 != LOOKUP_RESULT_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1fb,0,
+                    "resultType == LOOKUP_RESULT_STRING\n\t%i, %i");
   }
-  StructuredData_GetString(auStack_30,param_2);
-  Scr_AddString();
+  pcVar4 = StructuredData_GetString(&SStack_30,param_2);
+  Scr_AddString(pcVar4);
   return;
 }
 
@@ -340,72 +374,73 @@ void GScr_GetStructuredData(undefined8 param_1,undefined8 param_2,undefined8 par
 // 8248C160  GScr_SetStructuredData  (game/g_scr_main.cpp:519)
 
 void GScr_SetStructuredData
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+               (StructuredDataDef *param_1,StructuredDataBuffer *param_2,uchar *param_3,
+               char *param_4)
 
 {
   bool bVar1;
-  undefined *puVar2;
-  undefined8 uVar3;
-  uint uVar6;
-  ulonglong uVar4;
-  int iVar7;
-  longlong lVar5;
-  undefined2 uVar8;
+  StructuredDataDef *pSVar2;
+  uint uVar3;
+  LookupResultDataType LVar4;
+  int iVar5;
+  StructuredData_SetResult SVar6;
+  char *pcVar7;
+  float fVar8;
   uint local_50 [4];
-  undefined1 auStack_40 [64];
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar3 = __savegprlr_27();
-  GScr_NavigateStructuredData(uVar3,param_4,auStack_40,local_50);
-  uVar6 = Scr_GetNumParam();
-  if (uVar6 < local_50[0] + 1) {
+  pSVar2 = (StructuredDataDef *)__savegprlr_27(param_1);
+  GScr_NavigateStructuredData(pSVar2,param_4,aSStack_40,(int *)local_50);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 < local_50[0] + 1) {
     GScr_StructuredDataPrintArgs(param_4);
-    Scr_Error(0xffffffff82077024);
+    Scr_Error("Not enough arguments. See log.");
     __restgprlr_27();
     return;
   }
-  uVar6 = Scr_GetNumParam();
-  if (local_50[0] + 1 < uVar6) {
+  uVar3 = Scr_GetNumParam();
+  if (local_50[0] + 1 < uVar3) {
     GScr_StructuredDataPrintArgs(param_4);
-    Scr_Error(0xffffffff82076ff8);
+    Scr_Error("Too many arguments. See log.");
     __restgprlr_27();
     return;
   }
-  uVar4 = StructuredData_GetLookupResultType(auStack_40);
-  if ((uVar4 & 0xffffffff) < 5) {
-    bVar1 = (int)uVar4 != 0;
-    if (uVar4 == 1 && bVar1) {
-      lVar5 = Scr_GetInt(local_50[0]);
-      iVar7 = StructuredData_SetBool_FlagModified(auStack_40,param_2,param_3,lVar5 != 0);
+  LVar4 = StructuredData_GetLookupResultType(aSStack_40);
+  if (LVar4 < (LOOKUP_RESULT_SHORT|LOOKUP_RESULT_BOOL)) {
+    if (LVar4 == LOOKUP_RESULT_BOOL) {
+      iVar5 = Scr_GetInt(local_50[0]);
+      SVar6 = StructuredData_SetBool_FlagModified
+                        (aSStack_40,param_2,param_3,(bool)('\x01' - (iVar5 == 0)));
       goto LAB_8248c2a4;
     }
-    if (uVar4 != 2 || !bVar1) {
-      if (uVar4 == 3 && bVar1) {
-        Scr_GetFloat(local_50[0]);
-        iVar7 = StructuredData_SetFloat_FlagModified(auStack_40,param_2,param_3);
+    if (LVar4 != LOOKUP_RESULT_STRING) {
+      if (LVar4 == LOOKUP_RESULT_FLOAT) {
+        fVar8 = Scr_GetFloat(local_50[0]);
+        SVar6 = StructuredData_SetFloat_FlagModified(aSStack_40,param_2,param_3,fVar8);
       }
-      else if (bVar1) {
-        uVar8 = Scr_GetInt(local_50[0]);
-        iVar7 = StructuredData_SetShort_FlagModified(auStack_40,param_2,param_3,uVar8);
+      else if (LVar4 == LOOKUP_RESULT_INT) {
+        iVar5 = Scr_GetInt(local_50[0]);
+        SVar6 = StructuredData_SetInt_FlagModified(aSStack_40,param_2,param_3,iVar5);
       }
       else {
-        uVar3 = Scr_GetInt(local_50[0]);
-        iVar7 = StructuredData_SetInt_FlagModified(auStack_40,param_2,param_3,uVar3);
+        iVar5 = Scr_GetInt(local_50[0]);
+        SVar6 = StructuredData_SetShort_FlagModified(aSStack_40,param_2,param_3,(short)iVar5);
       }
       goto LAB_8248c2a4;
     }
   }
-  uVar3 = Scr_GetString(local_50[0]);
-  iVar7 = StructuredData_SetString_FlagModified(auStack_40,param_2,param_3,uVar3);
+  pcVar7 = Scr_GetString(local_50[0]);
+  SVar6 = StructuredData_SetString_FlagModified(aSStack_40,param_2,param_3,pcVar7);
 LAB_8248c2a4:
-  if ((iVar7 == 0) || (bVar1 = false, iVar7 == 1)) {
+  if ((SVar6 == SETRESULT_SUCCESS_CHANGED) || (bVar1 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE))
+  {
     bVar1 = true;
   }
   if (!bVar1) {
     GScr_StructuredDataPrintArgs(param_4);
-    puVar2 = (&PTR_s_Value_changed_82992d4c)[iVar7];
-    uVar3 = Scr_GetString(local_50[0]);
-    uVar3 = va(0xffffffff82077018,param_4,uVar3,puVar2);
-    Scr_ParamError(local_50[0],uVar3);
+    Scr_GetString(local_50[0]);
+    pcVar7 = va("%s: \"%s\" %s");
+    Scr_ParamError(local_50[0],pcVar7);
   }
   __restgprlr_27();
   return;
@@ -414,21 +449,23 @@ LAB_8248c2a4:
 
 // 8248C318  GScr_CreatePrintChannel  (game/g_scr_main.cpp:587)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_CreatePrintChannel(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
+  uint uVar1;
+  char *pcVar2;
+  bool bVar3;
   
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    Scr_Error(0xffffffff8207708c);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("illegal call to createprintchannel()");
   }
-  uVar1 = Scr_GetString(0);
-  cVar3 = Con_OpenChannel(uVar1,1);
-  if (cVar3 == '\0') {
-    Scr_Error(0xffffffff82077048);
+  pcVar2 = Scr_GetString(0);
+  bVar3 = Con_OpenChannel(pcVar2,true);
+  if (!bVar3) {
+    Scr_Error("Unable to create new channel.  Maximum number of channels exeeded.");
   }
   return;
 }
@@ -436,50 +473,55 @@ void GScr_CreatePrintChannel(void)
 
 // 8248C378  GScr_printChannelSet  (game/g_scr_main.cpp:614)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_printChannelSet(void)
 
 {
-  undefined4 uVar1;
+  int iVar1;
+  uint uVar2;
   int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  undefined4 local_20 [2];
+  bool bVar5;
+  char *pcVar4;
+  int local_20 [2];
   
   local_20[0] = 0x18;
-  iVar3 = Scr_GetNumParam();
-  uVar1 = DAT_8358334c;
-  if (iVar3 != 1) {
-    Scr_Error(0xffffffff82077108);
+  uVar2 = Scr_GetNumParam();
+  iVar1 = level.scriptPrintChannel;
+  if (uVar2 != 1) {
+    Scr_Error("illegal call to setprintchannel()");
     return;
   }
   iVar3 = Scr_GetType(0);
   if (iVar3 == 2) {
-    uVar2 = Scr_GetString(0);
-    cVar4 = Con_GetChannel(uVar2,local_20);
-    if (cVar4 == '\0') {
-      Scr_ParamError(0,0xffffffff820770f0);
+    pcVar4 = Scr_GetString(0);
+    bVar5 = Con_GetChannel(pcVar4,local_20);
+    if (!bVar5) {
+      Scr_ParamError(0,"Invalid Print Channel");
       return;
     }
   }
   else {
     if (iVar3 != 6) {
-      Scr_ParamError(0,0xffffffff820770f0);
+      Scr_ParamError(0,"Invalid Print Channel");
       return;
     }
     local_20[0] = Scr_GetInt(0);
-    cVar4 = Con_IsChannelOpen();
-    if (cVar4 == '\0') {
-      Scr_ParamError(0,0xffffffff820770f0);
+    bVar5 = Con_IsChannelOpen(local_20[0]);
+    if (!bVar5) {
+      Scr_ParamError(0,"Invalid Print Channel");
       return;
     }
   }
-  cVar4 = Con_ScriptHasPermission(local_20[0]);
-  if (cVar4 == '\0') {
-    Scr_ParamError(0,0xffffffff820770b4);
+  bVar5 = Con_ScriptHasPermission(local_20[0]);
+  if (bVar5) {
+    level.scriptPrintChannel = local_20[0];
+    Scr_AddInt(iVar1);
   }
   else {
-    DAT_8358334c = local_20[0];
-    Scr_AddInt(uVar1);
+    Scr_ParamError(0,"Script does not have permission to print to this channel");
   }
   return;
 }
@@ -487,11 +529,14 @@ void GScr_printChannelSet(void)
 
 // 8248B980  ConfigStringFromIndex  (bgame/bg_public.h:651)
 
-undefined8 ConfigStringFromIndex(undefined8 param_1)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+ConfigString ConfigStringFromIndex(int param_1)
 
 {
-  if ((0xeea < (int)param_1) || ((int)param_1 < 0)) {
-    MyAssertHandler(0xffffffff8206c268,0x28c,0,0xffffffff82000f98,0xffffffff82076d88);
+  if ((0xeea < param_1) || (param_1 < 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x28c,0,"%s");
   }
   return param_1;
 }
@@ -499,22 +544,25 @@ undefined8 ConfigStringFromIndex(undefined8 param_1)
 
 // 8248C498  Scr_Print  (game/g_scr_main.cpp:678)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Print(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  uint uVar1;
+  uint uVar2;
   
   __savegprlr_28();
-  iVar2 = Scr_GetNumParam();
-  lVar3 = 0;
-  if (0 < iVar2) {
+  uVar1 = Scr_GetNumParam();
+  uVar2 = 0;
+  if (0 < (int)uVar1) {
     do {
-      uVar1 = Scr_GetDebugString(lVar3);
-      Com_Printf(DAT_8358334c,0xffffffff82000f98,uVar1);
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < iVar2);
+      Scr_GetDebugString(uVar2);
+      Com_Printf(level.scriptPrintChannel,"%s");
+      uVar2 = uVar2 + 1;
+    } while ((int)uVar2 < (int)uVar1);
   }
   __restgprlr_28();
   return;
@@ -523,41 +571,68 @@ void Scr_Print(void)
 
 // 8248C4F8  Scr_PrintLn  (game/g_scr_main.cpp:703)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrintLn(void)
 
 {
   Scr_Print();
-  Com_Printf(DAT_8358334c,0xffffffff820044d8);
+  Com_Printf(level.scriptPrintChannel,"\n");
+  return;
+}
+
+
+// 8248C530  Scr_LocalizationError  (game/g_scr_main.cpp:711)
+
+/* void __cdecl Scr_LocalizationError(int,char const *) */
+
+void Scr_LocalizationError(int param_1,char *param_2)
+
+{
+  scrVarPub.error_index = param_1 + 1;
+  if (scrVarPub.error_message == (char *)0x0) {
+    I_strncpyz(error_message,param_2,0x400);
+    scrVarPub.error_message = error_message;
+  }
+  Scr_ErrorInternal();
   return;
 }
 
 
 // 8248C538  Scr_ValidateLocalizedStringRef  (game/g_scr_main.cpp:721)
 
-void Scr_ValidateLocalizedStringRef(undefined8 param_1,ulonglong param_2,int param_3)
+void Scr_ValidateLocalizedStringRef(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
+  uint uVar1;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2d4,0,0xffffffff82000f98,0xffffffff820294f0);
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2d4,0,
+                    "%s");
   }
   if (param_3 < 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2d5,0,0xffffffff82000f98,0xffffffff82077194);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2d5,0,
+                    "%s");
   }
-  if ((1 < param_3) && (iVar4 = 0, 0 < param_3)) {
+  if ((1 < param_3) && (iVar5 = 0, 0 < param_3)) {
     do {
-      iVar3 = isalnum((int)*(char *)(iVar4 + (int)param_2));
-      if ((iVar3 == 0) && (*(char *)(iVar4 + (int)param_2) != '_')) {
-        uVar2 = va(0xffffffff82077130,param_2);
-        Scr_ParamError(uVar1,uVar2);
+      iVar2 = isalnum((int)*(char *)(iVar5 + (int)uVar4));
+      if ((iVar2 == 0) && (*(char *)(iVar5 + (int)uVar4) != '_')) {
+        pcVar3 = va(
+                   "Illegal localized string reference: %s must contain only alpha-numeric characters and underscores"
+                   );
+        Scr_ParamError(uVar1,pcVar3);
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < param_3);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < param_3);
   }
   __restgprlr_27();
   return;
@@ -566,100 +641,103 @@ void Scr_ValidateLocalizedStringRef(undefined8 param_1,ulonglong param_2,int par
 
 // 8248C610  Scr_VerifyWeapon  (game/g_scr_main.cpp:742)
 
-void Scr_VerifyWeapon(ulonglong param_1,char *param_2)
+void Scr_VerifyWeapon(Weapon param_1,char *param_2)
 
 {
   char cVar1;
   char cVar2;
-  int iVar4;
-  undefined8 uVar3;
-  char *pcVar5;
-  char *pcVar6;
+  int iVar3;
+  char *pcVar4;
   char local_420 [1032];
   
   if (param_2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x2e9,0,0xffffffff82000f98,0xffffffff820772bc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2e9,0,
+                    "%s");
   }
-  if ((param_1 & 0xff) == 0) {
-    iVar4 = I_stricmp(0xffffffff82003484,param_2);
-    if (iVar4 == 0) {
+  if ((param_1.data & 0xff) == 0) {
+    iVar3 = I_stricmp("none",param_2);
+    if (iVar3 == 0) {
       return;
     }
-    uVar3 = 0xffffffff82077230;
-    pcVar5 = param_2;
+    pcVar4 = 
+    "Unknown weapon name \"%s\": script may need to call PreCacheItem(\"%s\") during level init. Or add attachments to the base weapon description.\n"
+    ;
   }
   else {
-    BG_GetWeaponNameComplete(param_1,0,local_420,0x400);
-    pcVar6 = local_420;
-    pcVar5 = param_2;
+    BG_GetWeaponNameComplete(param_1,false,local_420,0x400);
+    pcVar4 = local_420;
     do {
-      cVar1 = *pcVar6;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar4;
+      cVar2 = *param_2;
       if (cVar1 == '\0') break;
-      pcVar6 = pcVar6 + 1;
-      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
+      param_2 = param_2 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
       return;
     }
-    pcVar5 = local_420;
-    uVar3 = 0xffffffff820771a8;
+    pcVar4 = 
+    "Asked for weapon \"%s\", but got weapon \"%s\" - check for missing or misspelled attachments, and make sure they are sorted alphabetically "
+    ;
   }
-  uVar3 = va(uVar3,param_2,pcVar5);
-  Scr_ParamError(0,uVar3);
+  pcVar4 = va(pcVar4);
+  Scr_ParamError(0,pcVar4);
   return;
 }
 
 
 // 8248C710  GScr_print3d  (game/g_scr_main.cpp:783)
 
-void GScr_print3d(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void GScr_print3d(void)
 
 {
   longlong lVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  double dVar5;
-  undefined4 local_50;
+  char *pcVar3;
+  char *in_r5;
+  double dVar4;
+  float fVar5;
+  float local_50;
   undefined4 local_4c;
   undefined4 local_48;
-  undefined1 auStack_40 [16];
-  undefined4 local_30;
+  float afStack_40 [4];
+  float local_30;
   undefined4 local_2c;
   undefined4 local_28;
   float local_24;
+  uint uVar2;
   
-  uVar3 = 1;
-  uVar4 = 0x3ff0000000000000;
-  local_30 = 0x3f800000;
+  dVar4 = 1.0;
+  local_30 = 1.0;
   local_2c = 0x3f800000;
   local_28 = 0x3f800000;
   local_24 = 1.0;
-  lVar1 = Scr_GetNumParam();
+  uVar2 = Scr_GetNumParam();
+  lVar1 = (longlong)(int)uVar2;
   if ((lVar1 - 2U & 0xffffffff) < 5) {
     if ((int)(lVar1 - 2U) != 0) {
       if (lVar1 != 3) {
         if (lVar1 != 4) {
           if (lVar1 != 5) {
-            uVar3 = Scr_GetInt(5);
+            Scr_GetInt(5);
           }
-          uVar4 = Scr_GetFloat(4);
+          fVar5 = Scr_GetFloat(4);
+          dVar4 = (double)fVar5;
         }
-        dVar5 = (double)Scr_GetFloat(3);
-        local_24 = (float)dVar5;
+        local_24 = Scr_GetFloat(3);
       }
       Scr_GetVector(2,&local_50);
       local_30 = local_50;
       local_2c = local_4c;
       local_28 = local_48;
     }
-    uVar2 = Scr_GetString(1);
-    Scr_GetVector(0,auStack_40);
-    G_AddDebugStringWithDuration(uVar4,auStack_40,&local_30,param_3,uVar2,uVar3);
+    pcVar3 = Scr_GetString(1);
+    Scr_GetVector(0,afStack_40);
+    G_AddDebugStringWithDuration(afStack_40,&local_30,(float)dVar4,in_r5,(int)pcVar3);
   }
   else {
-    Scr_Error(0xffffffff820772c8);
+    Scr_Error("illegal call to print3d()");
   }
   return;
 }
@@ -667,59 +745,63 @@ void GScr_print3d(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 8248C818  GScr_line  (game/g_scr_main.cpp:844)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_line(void)
 
 {
   longlong lVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  double dVar4;
-  undefined4 local_60;
+  int iVar3;
+  int iVar4;
+  float local_60;
   undefined4 local_5c;
   undefined4 local_58;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [16];
-  undefined4 local_30;
+  float afStack_50 [4];
+  float afStack_40 [4];
+  float local_30;
   undefined4 local_2c;
   undefined4 local_28;
   float local_24;
+  uint uVar2;
   
-  uVar2 = 0;
-  uVar3 = 0;
-  local_30 = 0x3f800000;
+  iVar3 = 0;
+  iVar4 = 0;
+  local_30 = 1.0;
   local_2c = 0x3f800000;
   local_28 = 0x3f800000;
   local_24 = 1.0;
-  lVar1 = Scr_GetNumParam();
+  uVar2 = Scr_GetNumParam();
+  lVar1 = (longlong)(int)uVar2;
   if ((lVar1 - 2U & 0xffffffff) < 5) {
     if ((int)(lVar1 - 2U) != 0) {
       if (lVar1 != 3) {
         if (lVar1 != 4) {
           if (lVar1 != 5) {
-            uVar2 = Scr_GetInt(5);
+            iVar3 = Scr_GetInt(5);
           }
-          uVar3 = Scr_GetInt(4);
+          iVar4 = Scr_GetInt(4);
         }
-        dVar4 = (double)Scr_GetFloat(3);
-        local_24 = (float)dVar4;
+        local_24 = Scr_GetFloat(3);
       }
       Scr_GetVector(2,&local_60);
       local_30 = local_60;
       local_2c = local_5c;
       local_28 = local_58;
     }
-    Scr_GetVector(1,auStack_50);
-    Scr_GetVector(0,auStack_40);
+    Scr_GetVector(1,afStack_50);
+    Scr_GetVector(0,afStack_40);
   }
   else {
-    Scr_Error(0xffffffff820772e4);
+    Scr_Error("illegal call to line()");
   }
-  CL_AddDebugLine(auStack_40,auStack_50,&local_30,uVar3,uVar2,1);
+  CL_AddDebugLine(afStack_40,afStack_50,&local_30,iVar4,iVar3,1);
   return;
 }
 
 
 // 8248C918  assertCmd  (game/g_scr_main.cpp:901)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void assertCmd(void)
 
@@ -728,7 +810,7 @@ void assertCmd(void)
   
   iVar1 = Scr_GetInt(0);
   if (iVar1 == 0) {
-    Scr_Error(0xffffffff820772fc);
+    Scr_Error("assert fail");
   }
   return;
 }
@@ -736,17 +818,19 @@ void assertCmd(void)
 
 // 8248C950  assertexCmd  (game/g_scr_main.cpp:922)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void assertexCmd(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  iVar2 = Scr_GetInt(0);
-  if (iVar2 == 0) {
-    uVar1 = Scr_GetString(1);
-    va(0xffffffff82077308,uVar1);
-    Scr_Error();
+  iVar1 = Scr_GetInt(0);
+  if (iVar1 == 0) {
+    Scr_GetString(1);
+    pcVar2 = va("assert fail: %s");
+    Scr_Error(pcVar2);
   }
   return;
 }
@@ -754,49 +838,56 @@ void assertexCmd(void)
 
 // 8248C998  assertmsgCmd  (game/g_scr_main.cpp:942)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void assertmsgCmd(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Scr_GetString(0);
-  va(0xffffffff82077308,uVar1);
-  Scr_Error();
+  Scr_GetString(0);
+  pcVar1 = va("assert fail: %s");
+  Scr_Error(pcVar1);
   return;
 }
 
 
 // 8248C9D0  GScr_IsDefined  (game/g_scr_main.cpp:959)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_IsDefined(void)
 
 {
-  longlong lVar1;
-  int iVar2;
-  bool bVar3;
+  int iVar1;
+  uint uVar2;
   
-  lVar1 = Scr_GetType(0);
-  if ((int)lVar1 == 1) {
-    iVar2 = Scr_GetPointerType(0);
-    if (iVar2 < 0x10) {
-      MyAssertHandler(0xffffffff82076e74,0x3c7,0,0xffffffff82000f98,0xffffffff8207732c);
+  iVar1 = Scr_GetType(0);
+  if (iVar1 == 1) {
+    iVar1 = Scr_GetPointerType(0);
+    if (iVar1 < 0x10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3c7,0
+                      ,"%s");
     }
-    if ((0x17 < iVar2) || (bVar3 = true, iVar2 == 0x15)) {
-      bVar3 = false;
+    if ((0x17 < iVar1) || (uVar2 = 1, iVar1 == 0x15)) {
+      uVar2 = 0;
     }
   }
   else {
-    if (0xf < (int)lVar1) {
-      MyAssertHandler(0xffffffff82076e74,0x3cc,0,0xffffffff82000f98,0xffffffff82077318);
+    if (0xf < iVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3cc,0
+                      ,"%s");
     }
-    bVar3 = lVar1 != 0;
+    uVar2 = (uint)(iVar1 != 0);
   }
-  Scr_AddInt(bVar3);
+  Scr_AddInt(uVar2);
   return;
 }
 
 
 // 8248CA98  GScr_IsString  (game/g_scr_main.cpp:988)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_IsString(void)
 
@@ -804,38 +895,42 @@ void GScr_IsString(void)
   int iVar1;
   
   iVar1 = Scr_GetType(0);
-  Scr_AddInt(iVar1 == 2);
+  Scr_AddInt((uint)LZCOUNT(iVar1 + -2) >> 5);
   return;
 }
 
 
 // 8248CAD0  CleanDvarValue  (game/g_scr_main.cpp:996)
 
-void CleanDvarValue(undefined8 param_1,longlong param_2,longlong param_3)
+void CleanDvarValue(char *param_1,char *param_2,int param_3)
 
 {
   int iVar1;
   char cVar2;
   char *pcVar3;
-  int iVar4;
+  longlong lVar4;
+  int iVar5;
+  longlong lVar6;
   
-  iVar1 = __savegprlr_26();
-  pcVar3 = (char *)param_2;
-  iVar4 = 0;
-  if (0 < param_3 + -1) {
+  lVar4 = (longlong)param_3;
+  lVar6 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  pcVar3 = (char *)lVar6;
+  iVar5 = 0;
+  if (0 < lVar4 + -1) {
     iVar1 = iVar1 - (int)pcVar3;
     do {
-      pcVar3 = (char *)param_2;
+      pcVar3 = (char *)lVar6;
       if (pcVar3[iVar1] == '\0') break;
-      cVar2 = I_CleanChar();
+      cVar2 = I_CleanChar(pcVar3[iVar1]);
       *pcVar3 = cVar2;
       if (cVar2 == '\"') {
         *pcVar3 = '\'';
       }
-      iVar4 = iVar4 + 1;
-      param_2 = param_2 + 1;
-      pcVar3 = (char *)param_2;
-    } while (iVar4 < (int)(param_3 + -1));
+      iVar5 = iVar5 + 1;
+      lVar6 = lVar6 + 1;
+      pcVar3 = (char *)lVar6;
+    } while (iVar5 < (int)(lVar4 + -1));
   }
   *pcVar3 = '\0';
   __restgprlr_26();
@@ -845,17 +940,20 @@ void CleanDvarValue(undefined8 param_1,longlong param_2,longlong param_3)
 
 // 8248CB38  GScr_SetDvar_Internal  (game/g_scr_main.cpp:1016)
 
-void GScr_SetDvar_Internal(undefined8 param_1,undefined8 param_2,uint param_3)
+void GScr_SetDvar_Internal(char *param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar1;
+  dvar_t *pdVar2;
   
-  uVar1 = __savegprlr_29();
-  Dvar_FindVar();
-  iVar2 = Dvar_SetFromStringByNameFromSource(uVar1,param_2,2);
-  if ((*(char *)(DAT_836673a0 + 0xc) != '\0') && ((*(ushort *)(iVar2 + 8) & param_3) == 0)) {
-    Com_PrintError(0xf,0xffffffff82077348,uVar1,*(ushort *)(iVar2 + 8),param_2);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  Dvar_FindVar(pcVar1);
+  pdVar2 = Dvar_SetFromStringByNameFromSource(pcVar1,param_2,DVAR_SOURCE_SCRIPT);
+  if (((migration_dvarErrors->current).enabled != false) && (((uint)pdVar2->flags & param_3) == 0))
+  {
+    Com_PrintError(0xf,
+                   "SetDvar: dvar \'%s\' not allowed to be modified.  flags are \'%d\'.  New value supposed to be %s.\n"
+                  );
   }
   __restgprlr_29();
   return;
@@ -864,51 +962,57 @@ void GScr_SetDvar_Internal(undefined8 param_1,undefined8 param_2,uint param_3)
 
 // 8248CBA8  GScr_SetDvar  (game/g_scr_main.cpp:1052)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SetDvar(void)
 
 {
-  undefined8 uVar1;
-  char cVar5;
+  char *pcVar1;
+  bool bVar6;
+  char *pcVar2;
   int iVar3;
-  longlong lVar2;
-  undefined1 *puVar4;
-  char *pcVar6;
+  uint uVar4;
+  char cVar7;
+  dvar_t *pdVar5;
+  char *pcVar8;
   char local_830 [1024];
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
   __savegprlr_27();
-  uVar1 = Scr_GetString(0);
-  cVar5 = Dvar_IsValidName();
-  if (cVar5 == '\0') {
-    va(0xffffffff8206d8f8,uVar1);
-    Scr_Error();
+  pcVar1 = Scr_GetString(0);
+  bVar6 = Dvar_IsValidName(pcVar1);
+  if (!bVar6) {
+    pcVar2 = va("Dvar %s has an invalid dvar name");
+    Scr_Error(pcVar2);
   }
   iVar3 = Scr_GetType(1);
   if (iVar3 == 3) {
-    lVar2 = Scr_GetNumParam();
-    Scr_ConstructMessageString(1,lVar2 + -1,0xffffffff820773a8,auStack_430,0x400);
-    puVar4 = auStack_430;
+    uVar4 = Scr_GetNumParam();
+    Scr_ConstructMessageString(1,uVar4 - 1,"Dvar Value",acStack_430,0x400);
+    pcVar2 = acStack_430;
   }
   else {
-    puVar4 = (undefined1 *)Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  pcVar6 = local_830;
+  pcVar8 = local_830;
   iVar3 = 0;
   do {
-    if (pcVar6[(int)puVar4 - (int)local_830] == '\0') break;
-    cVar5 = I_CleanChar();
-    *pcVar6 = cVar5;
-    if (cVar5 == '\"') {
-      *pcVar6 = '\'';
+    if (pcVar8[(int)pcVar2 - (int)local_830] == '\0') break;
+    cVar7 = I_CleanChar(pcVar8[(int)pcVar2 - (int)local_830]);
+    *pcVar8 = cVar7;
+    if (cVar7 == '\"') {
+      *pcVar8 = '\'';
     }
     iVar3 = iVar3 + 1;
-    pcVar6 = pcVar6 + 1;
+    pcVar8 = pcVar8 + 1;
   } while (iVar3 < 0x3ff);
-  *pcVar6 = '\0';
-  Dvar_FindVar(uVar1);
-  iVar3 = Dvar_SetFromStringByNameFromSource(uVar1,local_830,2);
-  if ((*(char *)(DAT_836673a0 + 0xc) != '\0') && ((*(ushort *)(iVar3 + 8) & 0x498) == 0)) {
-    Com_PrintError(0xf,0xffffffff82077348,uVar1,*(ushort *)(iVar3 + 8),local_830);
+  *pcVar8 = '\0';
+  Dvar_FindVar(pcVar1);
+  pdVar5 = Dvar_SetFromStringByNameFromSource(pcVar1,local_830,DVAR_SOURCE_SCRIPT);
+  if (((migration_dvarErrors->current).enabled != false) && ((pdVar5->flags & 0x498) == 0)) {
+    Com_PrintError(0xf,
+                   "SetDvar: dvar \'%s\' not allowed to be modified.  flags are \'%d\'.  New value supposed to be %s.\n"
+                  );
   }
   __restgprlr_27();
   return;
@@ -917,100 +1021,110 @@ void GScr_SetDvar(void)
 
 // 8248CCD8  GScr_SetDynamicDvar  (game/g_scr_main.cpp:1096)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SetDynamicDvar(void)
 
 {
-  undefined8 uVar1;
-  char cVar5;
+  char *pcVar1;
+  bool bVar6;
+  char *pcVar2;
   int iVar3;
-  longlong lVar2;
-  undefined1 *puVar4;
-  char *pcVar6;
+  uint uVar4;
+  char cVar7;
+  dvar_t *pdVar5;
+  char *pcVar8;
   char local_830 [1024];
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
   __savegprlr_27();
-  uVar1 = Scr_GetString(0);
-  cVar5 = Dvar_IsValidName();
-  if (cVar5 == '\0') {
-    va(0xffffffff8206d8f8,uVar1);
-    Scr_Error();
+  pcVar1 = Scr_GetString(0);
+  bVar6 = Dvar_IsValidName(pcVar1);
+  if (!bVar6) {
+    pcVar2 = va("Dvar %s has an invalid dvar name");
+    Scr_Error(pcVar2);
   }
   iVar3 = Scr_GetType(1);
   if (iVar3 == 3) {
-    lVar2 = Scr_GetNumParam();
-    Scr_ConstructMessageString(1,lVar2 + -1,0xffffffff820773a8,auStack_430,0x400);
-    puVar4 = auStack_430;
+    uVar4 = Scr_GetNumParam();
+    Scr_ConstructMessageString(1,uVar4 - 1,"Dvar Value",acStack_430,0x400);
+    pcVar2 = acStack_430;
   }
   else {
-    puVar4 = (undefined1 *)Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  pcVar6 = local_830;
+  pcVar8 = local_830;
   iVar3 = 0;
   do {
-    if (pcVar6[(int)puVar4 - (int)local_830] == '\0') break;
-    cVar5 = I_CleanChar();
-    *pcVar6 = cVar5;
-    if (cVar5 == '\"') {
-      *pcVar6 = '\'';
+    if (pcVar8[(int)pcVar2 - (int)local_830] == '\0') break;
+    cVar7 = I_CleanChar(pcVar8[(int)pcVar2 - (int)local_830]);
+    *pcVar8 = cVar7;
+    if (cVar7 == '\"') {
+      *pcVar8 = '\'';
     }
     iVar3 = iVar3 + 1;
-    pcVar6 = pcVar6 + 1;
+    pcVar8 = pcVar8 + 1;
   } while (iVar3 < 0x3ff);
-  *pcVar6 = '\0';
-  Dvar_SetFromStringByNameFromSource(uVar1,local_830,2);
-  __restgprlr_27();
+  *pcVar8 = '\0';
+  pdVar5 = Dvar_SetFromStringByNameFromSource(pcVar1,local_830,DVAR_SOURCE_SCRIPT);
+  __restgprlr_27(pdVar5);
   return;
 }
 
 
 // 8248CDC0  GScr_SetDevDvar  (game/g_scr_main.cpp:1138)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SetDevDvar(void)
 
 {
-  undefined8 uVar1;
-  char cVar5;
+  char *pcVar1;
+  bool bVar6;
+  char *pcVar2;
   int iVar3;
-  longlong lVar2;
-  undefined1 *puVar4;
-  char *pcVar6;
+  uint uVar4;
+  char cVar7;
+  dvar_t *pdVar5;
+  char *pcVar8;
   char local_830 [1024];
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
   __savegprlr_27();
-  uVar1 = Scr_GetString(0);
-  cVar5 = Dvar_IsValidName();
-  if (cVar5 == '\0') {
-    va(0xffffffff8206d8f8,uVar1);
-    Scr_Error();
+  pcVar1 = Scr_GetString(0);
+  bVar6 = Dvar_IsValidName(pcVar1);
+  if (!bVar6) {
+    pcVar2 = va("Dvar %s has an invalid dvar name");
+    Scr_Error(pcVar2);
   }
   iVar3 = Scr_GetType(1);
   if (iVar3 == 3) {
-    lVar2 = Scr_GetNumParam();
-    Scr_ConstructMessageString(1,lVar2 + -1,0xffffffff820773a8,auStack_430,0x400);
-    puVar4 = auStack_430;
+    uVar4 = Scr_GetNumParam();
+    Scr_ConstructMessageString(1,uVar4 - 1,"Dvar Value",acStack_430,0x400);
+    pcVar2 = acStack_430;
   }
   else {
-    puVar4 = (undefined1 *)Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  pcVar6 = local_830;
+  pcVar8 = local_830;
   iVar3 = 0;
   do {
-    if (pcVar6[(int)puVar4 - (int)local_830] == '\0') break;
-    cVar5 = I_CleanChar();
-    *pcVar6 = cVar5;
-    if (cVar5 == '\"') {
-      *pcVar6 = '\'';
+    if (pcVar8[(int)pcVar2 - (int)local_830] == '\0') break;
+    cVar7 = I_CleanChar(pcVar8[(int)pcVar2 - (int)local_830]);
+    *pcVar8 = cVar7;
+    if (cVar7 == '\"') {
+      *pcVar8 = '\'';
     }
     iVar3 = iVar3 + 1;
-    pcVar6 = pcVar6 + 1;
+    pcVar8 = pcVar8 + 1;
   } while (iVar3 < 0x3ff);
-  *pcVar6 = '\0';
-  Dvar_FindVar(uVar1);
-  iVar3 = Dvar_SetFromStringByNameFromSource(uVar1,local_830,2);
-  if ((*(char *)(DAT_836673a0 + 0xc) != '\0') && (*(short *)(iVar3 + 8) == 0)) {
-    Com_PrintError(0xf,0xffffffff82077348,uVar1,0,local_830);
+  *pcVar8 = '\0';
+  Dvar_FindVar(pcVar1);
+  pdVar5 = Dvar_SetFromStringByNameFromSource(pcVar1,local_830,DVAR_SOURCE_SCRIPT);
+  if (((migration_dvarErrors->current).enabled != false) && (pdVar5->flags == 0)) {
+    Com_PrintError(0xf,
+                   "SetDvar: dvar \'%s\' not allowed to be modified.  flags are \'%d\'.  New value supposed to be %s.\n"
+                  );
   }
   __restgprlr_27();
   return;
@@ -1019,31 +1133,33 @@ void GScr_SetDevDvar(void)
 
 // 8248CEE8  GScr_SetDvarIfUninitialized  (game/g_scr_main.cpp:1178)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SetDvarIfUninitialized(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
+  uint uVar1;
+  char *pcVar2;
+  dvar_t *pdVar3;
   char *pcVar4;
-  undefined8 uVar2;
+  DvarValue in_stack_ffffffa8;
   
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 2) {
-    Scr_Error(0xffffffff820773b8);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 2) {
+    Scr_Error("GScr_SetDvarIfUninitialized( dvarName, initialValue ) requires two parameters");
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  iVar3 = Dvar_FindVar();
-  if (iVar3 == 0) {
+  pcVar2 = Scr_GetString(0);
+  g_lastDvarName = pcVar2;
+  pdVar3 = Dvar_FindVar(pcVar2);
+  if (pdVar3 == (dvar_t *)0x0) {
     pcVar4 = "";
   }
   else {
-    pcVar4 = (char *)Dvar_ValueToString(iVar3,*(undefined8 *)(iVar3 + 0xc),
-                                        *(undefined8 *)(iVar3 + 0x14));
+    pcVar4 = Dvar_ValueToString(pdVar3,in_stack_ffffffa8);
   }
   if (*pcVar4 == '\0') {
-    uVar2 = Scr_GetString(1);
-    GScr_SetDvar_Internal(uVar1,uVar2,0x498);
+    pcVar4 = Scr_GetString(1);
+    GScr_SetDvar_Internal(pcVar2,pcVar4,0x498);
   }
   return;
 }
@@ -1051,31 +1167,33 @@ void GScr_SetDvarIfUninitialized(void)
 
 // 8248CF80  GScr_SetDevDvarIfUninitialized  (game/g_scr_main.cpp:1234)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SetDevDvarIfUninitialized(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
+  uint uVar1;
+  char *pcVar2;
+  dvar_t *pdVar3;
   char *pcVar4;
-  undefined8 uVar2;
+  DvarValue in_stack_ffffffa8;
   
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 2) {
-    Scr_Error(0xffffffff82077408);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 2) {
+    Scr_Error("GScr_SetDevDvarIfUninitialized( dvarName, initialValue ) requires two parameters");
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  iVar3 = Dvar_FindVar();
-  if (iVar3 == 0) {
+  pcVar2 = Scr_GetString(0);
+  g_lastDvarName = pcVar2;
+  pdVar3 = Dvar_FindVar(pcVar2);
+  if (pdVar3 == (dvar_t *)0x0) {
     pcVar4 = "";
   }
   else {
-    pcVar4 = (char *)Dvar_ValueToString(iVar3,*(undefined8 *)(iVar3 + 0xc),
-                                        *(undefined8 *)(iVar3 + 0x14));
+    pcVar4 = Dvar_ValueToString(pdVar3,in_stack_ffffffa8);
   }
   if (*pcVar4 == '\0') {
-    uVar2 = Scr_GetString(1);
-    GScr_SetDvar_Internal(uVar1,uVar2,0xffffffffffffffff);
+    pcVar4 = Scr_GetString(1);
+    GScr_SetDvar_Internal(pcVar2,pcVar4,-1);
   }
   return;
 }
@@ -1083,151 +1201,159 @@ void GScr_SetDevDvarIfUninitialized(void)
 
 // 8248D018  GScr_GetDvar  (game/g_scr_main.cpp:1294)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetDvar(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined8 uVar3;
+  uint uVar1;
+  char *pcVar2;
   
-  uVar3 = 0xffffffff820068af;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if (iVar2 != 2) {
-      Scr_Error(0xffffffff82077460);
+  pcVar2 = "";
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      Scr_Error("GetDvar( <dvar>, <default> ) takes either one or two parameters");
       return;
     }
-    uVar3 = Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  Dvar_GetVariantStringWithDefault(uVar1,uVar3);
-  Scr_AddString();
+  g_lastDvarName = Scr_GetString(0);
+  pcVar2 = Dvar_GetVariantStringWithDefault(g_lastDvarName,pcVar2);
+  Scr_AddString(pcVar2);
   return;
 }
 
 
 // 8248D0A0  GScr_GetDvarInt  (game/g_scr_main.cpp:1355)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetDvarInt(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_Str;
-  undefined8 uVar3;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
   
-  uVar3 = 0xffffffff820068af;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if (iVar2 != 2) {
-      Scr_Error(0xffffffff820774a0);
+  pcVar2 = "";
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      Scr_Error("GetDvarInt( <dvar>, <default> ) takes either one or two parameters");
       return;
     }
-    uVar3 = Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  _Str = (char *)Dvar_GetVariantStringWithDefault(uVar1,uVar3);
-  iVar2 = atoi(_Str);
-  Scr_AddInt(iVar2);
+  g_lastDvarName = Scr_GetString(0);
+  pcVar2 = Dvar_GetVariantStringWithDefault(g_lastDvarName,pcVar2);
+  iVar3 = atoi(pcVar2);
+  Scr_AddInt(iVar3);
   return;
 }
 
 
 // 8248D130  GScr_GetDvarFloat  (game/g_scr_main.cpp:1416)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetDvarFloat(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_String;
-  undefined8 uVar3;
-  double dVar4;
+  uint uVar1;
+  char *pcVar2;
+  double dVar3;
   
-  uVar3 = 0xffffffff820068af;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if (iVar2 != 2) {
-      Scr_Error(0xffffffff820774e8);
+  pcVar2 = "";
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      Scr_Error("GetDvarFloat( <dvar>, <default> ) takes either one or two parameters");
       return;
     }
-    uVar3 = Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  _String = (char *)Dvar_GetVariantStringWithDefault(uVar1,uVar3);
-  dVar4 = atof(_String);
-  Scr_AddFloat((double)(float)dVar4);
+  g_lastDvarName = Scr_GetString(0);
+  pcVar2 = Dvar_GetVariantStringWithDefault(g_lastDvarName,pcVar2);
+  dVar3 = atof(pcVar2);
+  Scr_AddFloat((float)dVar3);
   return;
 }
 
 
 // 8248D1C0  Dvar_ConvertStringToVec3  (game/g_scr_main.cpp:1466)
 
-void Dvar_ConvertStringToVec3(undefined8 param_1,longlong param_2)
+bool Dvar_ConvertStringToVec3(char *param_1,float *param_2)
 
 {
-  char *_Src;
-  int iVar1;
+  char *pcVar1;
+  int iVar2;
+  undefined1 uVar3;
   
-  _Src = (char *)__savegprlr_28();
-  iVar1 = sscanf(_Src,"(%f, %f, %f)",param_2,param_2 + 4,param_2 + 8);
-  if (iVar1 == 3) {
-    __restgprlr_28(1);
-    return;
+  pcVar1 = (char *)__savegprlr_28(param_1,param_2);
+  iVar2 = sscanf(pcVar1,"(%f, %f, %f)");
+  if (iVar2 == 3) {
+    uVar3 = __restgprlr_28(1);
+    return (bool)uVar3;
   }
-  iVar1 = sscanf(_Src,"%f %f %f",param_2,param_2 + 4,param_2 + 8);
-  __restgprlr_28(iVar1 == 3);
-  return;
+  iVar2 = sscanf(pcVar1,"%f %f %f");
+  uVar3 = __restgprlr_28(iVar2 == 3);
+  return (bool)uVar3;
 }
 
 
 // 8248D238  GScr_GetDvarVector  (game/g_scr_main.cpp:1491)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetDvarVector(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar4;
-  undefined1 auStack_30 [24];
+  uint uVar1;
+  char *pcVar2;
+  bool bVar3;
+  float afStack_30 [6];
   
-  uVar4 = 0xffffffff82077578;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if (iVar2 != 2) {
-      Scr_Error(0xffffffff820774a0);
+  pcVar2 = "0.0 0.0 0.0";
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      Scr_Error("GetDvarInt( <dvar>, <default> ) takes either one or two parameters");
       return;
     }
-    uVar4 = Scr_GetString(1);
+    pcVar2 = Scr_GetString(1);
   }
-  uVar1 = Scr_GetString(0);
-  DAT_8359d608 = (undefined4)uVar1;
-  uVar4 = Dvar_GetVariantStringWithDefault(uVar1,uVar4);
-  cVar3 = Dvar_ConvertStringToVec3(uVar4,auStack_30);
-  if (cVar3 == '\0') {
-    va(0xffffffff82077540,uVar1,uVar4);
-    Scr_Error();
+  g_lastDvarName = Scr_GetString(0);
+  pcVar2 = Dvar_GetVariantStringWithDefault(g_lastDvarName,pcVar2);
+  bVar3 = Dvar_ConvertStringToVec3(pcVar2,afStack_30);
+  if (!bVar3) {
+    pcVar2 = va("GetDvarVector: Dvar %s \'%s\' isn\'t parsable as a vector\n");
+    Scr_Error(pcVar2);
   }
-  Scr_AddVector(auStack_30);
+  Scr_AddVector(afStack_30);
   return;
 }
 
 
 // 8248D2F0  GScr_GetTime  (game/g_scr_main.cpp:1554)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_GetTime(void)
 
 {
-  Scr_AddInt(DAT_83580fac);
+  Scr_AddInt(level.time);
   return;
 }
 
 
 // 8248D300  Scr_GetEntByNum  (game/g_scr_main.cpp:1586)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Scr_GetEntByNum(void)
 
@@ -1236,8 +1362,8 @@ void Scr_GetEntByNum(void)
   
   uVar1 = Scr_GetInt(0);
   if (uVar1 < 0x800) {
-    if ((&DAT_83373783)[uVar1 * 0x280] != '\0') {
-      Scr_AddEntity();
+    if (g_entities[uVar1].r.isInUse != '\0') {
+      Scr_AddEntity(g_entities + uVar1);
     }
   }
   return;
@@ -1246,58 +1372,56 @@ void Scr_GetEntByNum(void)
 
 // 8248D358  Scr_GetWeaponModel  (game/g_scr_main.cpp:1613)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Scr_GetWeaponModel(void)
 
 {
-  char *pcVar3;
-  ulonglong uVar1;
+  bool bVar1;
+  char *pcVar2;
+  Weapon WVar3;
   int iVar4;
-  undefined8 uVar2;
   uint uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  Weapon WVar6;
   
   __savegprlr_27();
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar6 = 1, pcVar3[3] != '_')) {
-    lVar6 = 0;
+  pcVar2 = Scr_GetString(0);
+  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar6 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar1) {
+    pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  uVar7 = 0;
-  if ((uVar1 & 0xff) == 0) {
-    if ((*pcVar3 != '\0') && (iVar4 = I_stricmp(pcVar3,0xffffffff82003484), iVar4 != 0)) {
-      uVar2 = va(0xffffffff820775c0,pcVar3);
-      Scr_ParamError(0,uVar2);
+  WVar3 = G_GetWeaponForName(pcVar2);
+  iVar4 = 0;
+  if ((WVar3.data & 0xff) == 0) {
+    if ((*pcVar2 != '\0') && (iVar4 = I_stricmp(pcVar2,"none"), iVar4 != 0)) {
+      pcVar2 = va("unknown weapon \'%s\' in getWeaponModel\n");
+      Scr_ParamError(0,pcVar2);
     }
-    Scr_AddString(0xffffffff820068af);
+    Scr_AddString("");
     __restgprlr_27();
     return;
   }
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 == 2) {
-    uVar7 = Scr_GetInt(1);
-    if ((((int)uVar7 < 0) || (0xf < (int)uVar7)) ||
-       (uVar5 = BG_GetAlternateWeapon(uVar1,0),
-       *(int *)(*(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x1e0) + (int)((uVar7 & 0xffffffff) << 2))
-       == 0)) {
-      uVar7 = 0;
-    }
+  uVar5 = Scr_GetNumParam();
+  if ((uVar5 == 2) &&
+     (((iVar4 = Scr_GetInt(1), iVar4 < 0 || (0xf < iVar4)) ||
+      (WVar6 = BG_GetAlternateWeapon(WVar3,false),
+      bg_weaponDefs[WVar6.data & 0xff]->worldModel[iVar4] == (XModel *)0x0)))) {
+    iVar4 = 0;
   }
-  uVar5 = BG_GetAlternateWeapon(uVar1,lVar6);
-  if (*(int *)(*(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x1e0) + (int)((uVar7 & 0xffffffff) << 2))
-      != 0) {
-    XModelGetName();
-    Scr_AddString();
+  WVar3 = BG_GetAlternateWeapon(WVar3,bVar1);
+  if (bg_weaponDefs[WVar3.data & 0xff]->worldModel[iVar4] != (XModel *)0x0) {
+    pcVar2 = XModelGetName(bg_weaponDefs[WVar3.data & 0xff]->worldModel[iVar4]);
+    Scr_AddString(pcVar2);
     __restgprlr_27();
     return;
   }
-  uVar2 = va(0xffffffff82077584,pcVar3);
-  Com_Printf(0x11,uVar2);
-  Scr_AddString(0xffffffff820068af);
+  pcVar2 = va("getWeaponModel: weapon \'%s\' does not have a world model\n");
+  Com_Printf(0x11,pcVar2);
+  Scr_AddString("");
   __restgprlr_27();
   return;
 }
@@ -1305,45 +1429,48 @@ void Scr_GetWeaponModel(void)
 
 // 8248D4F0  Scr_GetWeaponHideTags  (game/g_scr_main.cpp:1669)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Scr_GetWeaponHideTags(void)
 
 {
-  char *pcVar3;
-  ulonglong uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  uint uVar5;
-  longlong lVar6;
-  int iVar7;
+  ushort uVar1;
+  WeaponCompleteDef *pWVar2;
+  bool bVar3;
+  char *pcVar4;
+  Weapon WVar5;
+  int iVar6;
   
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar6 = 1, pcVar3[3] != '_')) {
-    lVar6 = 0;
+  pcVar4 = Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (bVar3 = true, pcVar4[3] != '_')) {
+    bVar3 = false;
   }
-  if (lVar6 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar3) {
+    pcVar4 = pcVar4 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  if ((uVar1 & 0xff) == 0) {
-    if ((*pcVar3 != '\0') && (iVar4 = I_stricmp(pcVar3,0xffffffff82003484), iVar4 != 0)) {
-      uVar2 = va(0xffffffff820775e8,pcVar3);
-      Scr_ParamError(0,uVar2);
+  WVar5 = G_GetWeaponForName(pcVar4);
+  if ((WVar5.data & 0xff) == 0) {
+    if ((*pcVar4 != '\0') && (iVar6 = I_stricmp(pcVar4,"none"), iVar6 != 0)) {
+      pcVar4 = va("unknown weapon \'%s\' in getWeaponHideTags\n");
+      Scr_ParamError(0,pcVar4);
     }
   }
   else {
-    uVar5 = BG_GetAlternateWeapon(uVar1,lVar6);
-    iVar4 = (&DAT_829d80d8)[uVar5 & 0xff];
+    WVar5 = BG_GetAlternateWeapon(WVar5,bVar3);
+    pWVar2 = bg_weaponCompleteDefs[WVar5.data & 0xff];
     Scr_MakeArray();
-    iVar7 = 0;
+    iVar6 = 0;
     do {
-      if (*(short *)(*(int *)(iVar4 + 0xc) + iVar7) == 0) {
+      uVar1 = *(ushort *)((int)pWVar2->hideTags + iVar6);
+      if (uVar1 == 0) {
         return;
       }
-      Scr_AddConstString();
+      Scr_AddConstString((uint)uVar1);
       Scr_AddArray();
-      iVar7 = iVar7 + 2;
-    } while (iVar7 < 0x40);
+      iVar6 = iVar6 + 2;
+    } while (iVar6 < 0x40);
   }
   return;
 }
@@ -1351,150 +1478,149 @@ void Scr_GetWeaponHideTags(void)
 
 // 8248D610  GScr_GetAnimLength  (game/g_scr_main.cpp:1715)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetAnimLength(void)
 
 {
-  undefined4 uVar2;
-  undefined8 uVar1;
-  char cVar3;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_anim_s sVar1;
+  XAnim_s *pXVar2;
+  bool bVar3;
+  float fVar4;
+  ushort local_20;
   
-  uVar2 = Scr_GetAnim(0,0);
-  uStack_1e = (undefined2)uVar2;
-  uVar1 = Scr_GetAnims(uStack_1e);
-  local_20 = (undefined2)((uint)uVar2 >> 0x10);
-  cVar3 = XAnimIsPrimitive(uVar1,local_20);
-  if (cVar3 == '\0') {
-    Scr_ParamError(0,0xffffffff82077614);
+  sVar1 = Scr_GetAnim(0,(XAnimTree *)0x0);
+  pXVar2 = Scr_GetAnims((uint)sVar1.field0_0x0 & 0xffff);
+  local_20 = sVar1.field0_0x0._0_2_;
+  bVar3 = XAnimIsPrimitive(pXVar2,(uint)local_20);
+  if (!bVar3) {
+    Scr_ParamError(0,"non-primitive animation has no concept of length");
   }
-  XAnimGetLength(uVar1,local_20);
-  Scr_AddFloat();
+  fVar4 = XAnimGetLength(pXVar2,(uint)local_20);
+  Scr_AddFloat(fVar4);
   return;
 }
 
 
 // 8248D690  GScr_AnimHasNotetrack  (game/g_scr_main.cpp:1739)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AnimHasNotetrack(void)
 
 {
-  undefined4 uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 uVar4;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_anim_s sVar1;
+  uint uVar2;
+  XAnim_s *pXVar3;
+  bool bVar4;
   
-  uVar3 = Scr_GetAnim(0,0);
-  uVar1 = Scr_GetConstString(1);
-  uStack_1e = (undefined2)uVar3;
-  uVar2 = Scr_GetAnims(uStack_1e);
-  local_20 = (undefined2)((uint)uVar3 >> 0x10);
-  uVar4 = XAnimNotetrackExists(uVar2,local_20,uVar1);
-  Scr_AddBool(uVar4);
+  sVar1 = Scr_GetAnim(0,(XAnimTree *)0x0);
+  uVar2 = Scr_GetConstString(1);
+  pXVar3 = Scr_GetAnims((uint)sVar1.field0_0x0 & 0xffff);
+  bVar4 = XAnimNotetrackExists(pXVar3,(uint)sVar1.field0_0x0 >> 0x10,uVar2);
+  Scr_AddBool((uint)bVar4);
   return;
 }
 
 
 // 8248D6F0  GScr_GetNotetrackTimes  (game/g_scr_main.cpp:1761)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetNotetrackTimes(void)
 
 {
-  undefined4 uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_anim_s sVar1;
+  uint uVar2;
+  XAnim_s *pXVar3;
   
-  uVar3 = Scr_GetAnim(0,0);
-  uVar1 = Scr_GetConstString(1);
+  sVar1 = Scr_GetAnim(0,(XAnimTree *)0x0);
+  uVar2 = Scr_GetConstString(1);
   Scr_MakeArray();
-  uStack_1e = (undefined2)uVar3;
-  uVar2 = Scr_GetAnims(uStack_1e);
-  local_20 = (undefined2)((uint)uVar3 >> 0x10);
-  XAnimAddNotetrackTimesToScriptArray(uVar2,local_20,uVar1);
+  pXVar3 = Scr_GetAnims((uint)sVar1.field0_0x0 & 0xffff);
+  XAnimAddNotetrackTimesToScriptArray(pXVar3,(uint)sVar1.field0_0x0 >> 0x10,uVar2);
   return;
 }
 
 
 // 8248D748  ScrCmd_IsTouching  (game/g_scr_main.cpp:1786)
 
-void ScrCmd_IsTouching(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_IsTouching(scr_entref_t param_1)
 
 {
   float fVar1;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  undefined8 uVar2;
-  double dVar6;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_44;
-  float local_40;
-  float local_3c;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  gentity_s *pgVar4;
+  gentity_s *pgVar5;
+  int iVar6;
+  double dVar7;
+  Bounds local_50 [3];
   
-  __savegprlr_27();
-  puVar3 = (undefined4 *)GetEntity();
-  if (*(char *)((int)puVar3 + 0x101) == '\0') {
-    puVar5 = (undefined4 *)Scr_GetEntity(0);
-    puVar4 = puVar3;
+  sVar2 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar3 = GetEntity(sVar2);
+  if ((pgVar3->r).modelType == '\0') {
+    pgVar5 = Scr_GetEntity(0);
+    pgVar4 = pgVar3;
   }
   else {
-    puVar4 = (undefined4 *)Scr_GetEntity(0);
-    puVar5 = puVar3;
-    if (*(char *)((int)puVar4 + 0x101) != '\0') {
-      Scr_Error(0xffffffff82077648);
+    pgVar4 = Scr_GetEntity(0);
+    pgVar5 = pgVar3;
+    if ((pgVar4->r).modelType != '\0') {
+      Scr_Error("istouching must be called on at least one capsule entity");
     }
   }
-  dVar6 = 0.0;
-  if ((float)puVar4[0x44] < 0.0) {
-    uVar2 = SL_ConvertToString(*(undefined2 *)((int)puVar4 + 0x172));
-    uVar2 = va(0xffffffff82073824,*puVar4,(double)(float)puVar4[0x4e],(double)(float)puVar4[0x4f],
-               (double)(float)puVar4[0x50],uVar2);
-    MyAssertHandler(0xffffffff82076e74,0x70f,0,0xffffffff820011f4,0xffffffff82073804,uVar2);
+  dVar7 = 0.0;
+  if ((pgVar4->r).box.halfSize[0] < 0.0) {
+    SL_ConvertToString((uint)pgVar4->classname);
+    va("entnum: %d, origin: %g %g %g, classname: %s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x70f,0,
+                    "%s\n\t%s");
   }
-  if ((double)(float)puVar4[0x45] < dVar6) {
-    uVar2 = SL_ConvertToString(*(undefined2 *)((int)puVar4 + 0x172));
-    uVar2 = va(0xffffffff82073824,*puVar4,(double)(float)puVar4[0x4e],(double)(float)puVar4[0x4f],
-               (double)(float)puVar4[0x50],uVar2);
-    MyAssertHandler(0xffffffff82076e74,0x710,0,0xffffffff820011f4,0xffffffff820737e4,uVar2);
+  if ((double)(pgVar4->r).box.halfSize[1] < dVar7) {
+    SL_ConvertToString((uint)pgVar4->classname);
+    va("entnum: %d, origin: %g %g %g, classname: %s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x710,0,
+                    "%s\n\t%s");
   }
-  if ((double)(float)puVar4[0x46] < dVar6) {
-    uVar2 = SL_ConvertToString(*(undefined2 *)((int)puVar4 + 0x172));
-    uVar2 = va(0xffffffff82073824,*puVar4,(double)(float)puVar4[0x4e],(double)(float)puVar4[0x4f],
-               (double)(float)puVar4[0x50],uVar2);
-    MyAssertHandler(0xffffffff82076e74,0x711,0,0xffffffff820011f4,0xffffffff820737c4,uVar2);
+  if ((double)(pgVar4->r).box.halfSize[2] < dVar7) {
+    SL_ConvertToString((uint)pgVar4->classname);
+    va("entnum: %d, origin: %g %g %g, classname: %s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x711,0,
+                    "%s\n\t%s");
   }
-  local_50 = (float)puVar4[0x41] + (float)puVar4[0x4e];
-  local_4c = (float)puVar4[0x4f] + (float)puVar4[0x42];
-  local_48 = (float)puVar4[0x50] + (float)puVar4[0x43];
-  local_44 = (float)puVar4[0x44];
-  local_40 = (float)puVar4[0x45];
-  local_3c = (float)puVar4[0x46];
-  if ((double)local_44 < dVar6) {
-    MyAssertHandler(0xffffffff82073e28,0x353,0,0xffffffff82000f98,0xffffffff8200ca58);
+  local_50[0].midPoint[0] = (pgVar4->r).box.midPoint[0] + (pgVar4->r).currentOrigin[0];
+  local_50[0].midPoint[1] = (pgVar4->r).currentOrigin[1] + (pgVar4->r).box.midPoint[1];
+  local_50[0].midPoint[2] = (pgVar4->r).currentOrigin[2] + (pgVar4->r).box.midPoint[2];
+  local_50[0].halfSize[0] = (pgVar4->r).box.halfSize[0];
+  local_50[0].halfSize[1] = (pgVar4->r).box.halfSize[1];
+  local_50[0].halfSize[2] = (pgVar4->r).box.halfSize[2];
+  if ((double)local_50[0].halfSize[0] < dVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x353,0,"%s");
   }
-  if ((double)local_40 < dVar6) {
-    MyAssertHandler(0xffffffff82073e28,0x354,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  if ((double)local_50[0].halfSize[1] < dVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x354,0,"%s");
   }
-  if ((double)local_3c < dVar6) {
-    MyAssertHandler(0xffffffff82073e28,0x355,0,0xffffffff82000f98,0xffffffff8200ca20);
+  if ((double)local_50[0].halfSize[2] < dVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x355,0,"%s");
   }
-  if (local_44 - local_40 < 0.0) {
-    local_44 = local_40;
+  if (local_50[0].halfSize[0] - local_50[0].halfSize[1] < 0.0) {
+    local_50[0].halfSize[0] = local_50[0].halfSize[1];
   }
-  fVar1 = local_44;
-  if (local_44 - local_3c < 0.0) {
-    fVar1 = local_3c;
+  fVar1 = local_50[0].halfSize[0];
+  if (local_50[0].halfSize[0] - local_50[0].halfSize[2] < 0.0) {
+    fVar1 = local_50[0].halfSize[2];
   }
-  local_40 = local_44;
-  local_3c = fVar1;
-  SV_EntityContactBounds(&local_50,puVar5);
-  Scr_AddInt();
+  local_50[0].halfSize[1] = local_50[0].halfSize[0];
+  local_50[0].halfSize[2] = fVar1;
+  iVar6 = SV_EntityContactBounds(local_50,pgVar5);
+  Scr_AddInt(iVar6);
   __restgprlr_27();
   return;
 }
@@ -1502,275 +1628,320 @@ void ScrCmd_IsTouching(void)
 
 // 8248DA10  ScrCmd_SoundExists  (game/g_scr_main.cpp:1828)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrCmd_SoundExists(void)
 
 {
-  longlong lVar1;
+  char *pcVar1;
+  snd_alias_list_t *psVar2;
   
-  Scr_GetString(0);
-  lVar1 = Com_TryFindSoundAlias();
-  Scr_AddBool(lVar1 != 0);
+  pcVar1 = Scr_GetString(0);
+  psVar2 = Com_TryFindSoundAlias(pcVar1);
+  Scr_AddBool((uint)(psVar2 != (snd_alias_list_t *)0x0));
   return;
 }
 
 
 // 8248DA48  ScrCmd_StopSounds  (game/g_scr_main.cpp:1846)
 
-void ScrCmd_StopSounds(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_StopSounds(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  puVar1 = (undefined4 *)GetEntity();
-  if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x73b,1,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x73b,1,
+                    "%s");
   }
-  if (0x11 < (int)puVar1[1]) {
-    va(0xffffffff82077688,*puVar1);
-    Scr_Error();
+  if (0x11 < (pgVar1->s).eType) {
+    pcVar2 = va("StopSounds() does not support entities of type \'ET_EVENTS\' [Ent #%i].");
+    Scr_Error(pcVar2);
   }
-  *(byte *)((int)puVar1 + 0x102) = *(byte *)((int)puVar1 + 0x102) & 0xfe;
-  G_AddEvent(puVar1,5,0);
+  (pgVar1->r).svFlags = (pgVar1->r).svFlags & 0xfe;
+  G_AddEvent(pgVar1,5,0);
   return;
 }
 
 
 // 8248DAE0  GScr_RemoteControlTurret  (game/g_scr_main.cpp:1873)
 
-void GScr_RemoteControlTurret(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteControlTurret(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x753,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x753,0
+                      ,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  iVar2 = Scr_GetEntity(0);
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar3 = Scr_GetEntity(0);
+  if (pgVar3->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar3->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_ScrRemoteUse(iVar2,puVar3);
+  Turret_ScrRemoteUse(pgVar3,pgVar4);
   return;
 }
 
 
 // 8248DBD8  GScr_RemoteControlTurretOff  (game/g_scr_main.cpp:1897)
 
-void GScr_RemoteControlTurretOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteControlTurretOff(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x76b,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x76b,0
+                      ,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  iVar2 = Scr_GetEntity(0);
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar3 = Scr_GetEntity(0);
+  if (pgVar3->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar3->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_ScrStopRemoteUse(iVar2,puVar3);
+  Turret_ScrStopRemoteUse(pgVar3,pgVar4);
   return;
 }
 
 
 // 8248DCD0  GScr_StartFiring  (game/g_scr_main.cpp:1921)
 
-void GScr_StartFiring(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StartFiring(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) | 0x10;
+  pgVar1->turret->flags = pgVar1->turret->flags | 0x10;
   return;
 }
 
 
 // 8248DD38  GScr_StopFiring  (game/g_scr_main.cpp:1943)
 
-void GScr_StopFiring(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StopFiring(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) & 0xffffffef;
+  pgVar1->turret->flags = pgVar1->turret->flags & 0xffffffef;
   return;
 }
 
 
 // 8248DDA0  GScr_IsFiringTurret  (game/g_scr_main.cpp:1964)
 
-void GScr_IsFiringTurret(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_IsFiringTurret(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined1 uVar3;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  bool bVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  uVar3 = Turret_IsFiring(iVar2);
-  Scr_AddBool(uVar3);
+  bVar3 = Turret_IsFiring(pgVar1);
+  Scr_AddBool((uint)bVar3);
   return;
 }
 
 
 // 8248DE08  GScr_StartBarrelSpin  (game/g_scr_main.cpp:1986)
 
-void GScr_StartBarrelSpin(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StartBarrelSpin(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_SetManualSpinning(iVar2,1);
+  Turret_SetManualSpinning(pgVar1,1);
   return;
 }
 
 
 // 8248DE68  GScr_StopBarrelSpin  (game/g_scr_main.cpp:2013)
 
-void GScr_StopBarrelSpin(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StopBarrelSpin(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_SetManualSpinning(iVar2,0);
+  Turret_SetManualSpinning(pgVar1,0);
   return;
 }
 
 
 // 8248DEC8  GScr_GetBarrelSpinRate  (game/g_scr_main.cpp:2039)
 
-void GScr_GetBarrelSpinRate(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetBarrelSpinRate(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  float fVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_GetBarrelSpinRate(iVar2);
-  Scr_AddFloat();
+  fVar3 = Turret_GetBarrelSpinRate(pgVar1);
+  Scr_AddFloat(fVar3);
   return;
 }
 
 
 // 8248DF28  GScr_ShootTurret  (game/g_scr_main.cpp:2066)
 
-void GScr_ShootTurret(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_ShootTurret(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_Shoot(iVar2);
+  Turret_Shoot(pgVar1);
   return;
 }
 
 
 // 8248DF88  GScr_GetTurretOwner  (game/g_scr_main.cpp:2088)
 
-void GScr_GetTurretOwner(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetTurretOwner(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  EntHandle *this;
   int iVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  if (*(char *)(iVar2 + 0x16c) != '\0') {
-    iVar3 = EntHandle__isDefined(iVar2 + 0x150);
+  if (pgVar1->active != '\0') {
+    this = &(pgVar1->r).ownerNum;
+    iVar3 = EntHandle::isDefined(this);
     if (iVar3 == 0) {
-      uVar1 = 0xffffffff834b3400;
+      pgVar1 = g_entities + 0x7ff;
     }
     else {
-      uVar1 = EntHandle__ent(iVar2 + 0x150);
+      pgVar1 = EntHandle::ent(this);
     }
-    Scr_AddEntity(uVar1);
+    Scr_AddEntity(pgVar1);
   }
   return;
 }
@@ -1778,210 +1949,235 @@ void GScr_GetTurretOwner(void)
 
 // 8248E020  GScr_SetSentryOwner  (game/g_scr_main.cpp:2111)
 
-void GScr_SetSentryOwner(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetSentryOwner(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   int iVar3;
+  gentity_s *pgVar4;
   
-  puVar2 = (undefined4 *)GetEntity();
-  if (puVar2[0x57] == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)((int)puVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  if ((*(uint *)(puVar2[0x57] + 4) & 0xc) == 0) {
-    va(0xffffffff82077740,*puVar2);
-    Scr_Error();
+  if ((pgVar1->turret->flags & 0xcU) == 0) {
+    pcVar2 = va("turret number \'%i\' is not auto or sentry");
+    Scr_Error(pcVar2);
   }
   iVar3 = Scr_GetType(0);
   if (iVar3 == 0) {
-    if (*(char *)(puVar2 + 0x1c) != '\0') {
-      va(0xffffffff820776f8,*puVar2);
-      Scr_Error();
+    if ((pgVar1->s).staticState.turret.isBeingCarried != false) {
+      pcVar2 = va("turret number \'%i\' is being carried and cannot have its owner cleared.");
+      Scr_Error(pcVar2);
     }
-    uVar1 = 0;
+    pgVar4 = (gentity_s *)0x0;
   }
   else {
-    uVar1 = Scr_GetEntity(0);
+    pgVar4 = Scr_GetEntity(0);
   }
-  Turret_SetSentryOwner(puVar2,uVar1);
+  Turret_SetSentryOwner(pgVar1,pgVar4);
   return;
 }
 
 
 // 8248E0E8  GScr_SetSentryCarrier  (game/g_scr_main.cpp:2147)
 
-void GScr_SetSentryCarrier(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetSentryCarrier(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   int iVar3;
+  gentity_s *pgVar4;
   
-  puVar2 = (undefined4 *)GetEntity();
-  if (puVar2[0x57] == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)((int)puVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  if ((*(uint *)(puVar2[0x57] + 4) & 8) == 0) {
-    va(0xffffffff8207776c,*puVar2);
-    Scr_Error();
+  if ((pgVar1->turret->flags & 8U) == 0) {
+    pcVar2 = va("turret number \'%i\' is not a sentry");
+    Scr_Error(pcVar2);
   }
   iVar3 = Scr_GetType(0);
   if (iVar3 == 0) {
-    uVar1 = 0;
+    pgVar4 = (gentity_s *)0x0;
   }
   else {
-    uVar1 = Scr_GetEntity(0);
+    pgVar4 = Scr_GetEntity(0);
   }
-  Turret_ScrSetSentryCarrier(puVar2,uVar1);
+  Turret_ScrSetSentryCarrier(pgVar1,pgVar4);
   return;
 }
 
 
 // 8248E190  GScr_SetTurretMinimapVisible  (game/g_scr_main.cpp:2176)
 
-void GScr_SetTurretMinimapVisible(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetTurretMinimapVisible(scr_entref_t param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  uint uVar4;
-  undefined8 uVar2;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
   
-  iVar3 = GetEntity();
-  if (*(int *)(iVar3 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  uVar1 = 0;
-  uVar4 = Scr_GetNumParam();
-  if (1 < uVar4) {
-    uVar1 = Scr_GetString(1);
+  pcVar2 = (char *)0x0;
+  uVar3 = Scr_GetNumParam();
+  if (1 < uVar3) {
+    pcVar2 = Scr_GetString(1);
   }
-  uVar2 = Scr_GetInt(0);
-  Turret_SetMinimapVisible(iVar3,uVar2,uVar1);
+  iVar4 = Scr_GetInt(0);
+  Turret_SetMinimapVisible(pgVar1,iVar4,pcVar2);
   return;
 }
 
 
 // 8248E220  GScr_SetTargetEntity  (game/g_scr_main.cpp:2208)
 
-void GScr_SetTargetEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetTargetEntity(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  uint uVar3;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  gentity_s *pgVar4;
+  uint uVar5;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar2->classname);
+    pcVar3 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar3);
   }
-  uVar1 = Scr_GetEntity(0);
-  EntHandle__setEnt((ulonglong)*(uint *)(iVar2 + 0x15c) + 0x50,uVar1);
-  uVar3 = Scr_GetNumParam();
-  iVar2 = *(int *)(iVar2 + 0x15c);
-  if (1 < uVar3) {
-    Scr_GetVector(1,iVar2 + 0x54);
+  pgVar4 = Scr_GetEntity(0);
+  EntHandle::setEnt(&pgVar2->turret->manualTarget,pgVar4);
+  uVar5 = Scr_GetNumParam();
+  pTVar1 = pgVar2->turret;
+  if (1 < uVar5) {
+    Scr_GetVector(1,pTVar1->manualTargetOffset);
     return;
   }
-  *(undefined4 *)(iVar2 + 0x54) = 0;
-  *(undefined4 *)(iVar2 + 0x58) = 0;
-  *(undefined4 *)(iVar2 + 0x5c) = 0;
+  pTVar1->manualTargetOffset[0] = 0.0;
+  pTVar1->manualTargetOffset[1] = 0.0;
+  pTVar1->manualTargetOffset[2] = 0.0;
   return;
 }
 
 
 // 8248E2D0  GScr_SnapToTargetEntity  (game/g_scr_main.cpp:2237)
 
-void GScr_SnapToTargetEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SnapToTargetEntity(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  uint uVar4;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  gentity_s *pgVar4;
+  uint uVar5;
   
-  iVar3 = GetEntity();
-  if (*(int *)(iVar3 + 0x15c) == 0) {
-    uVar2 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff820776d0,uVar2);
-    Scr_Error();
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar2->classname);
+    pcVar3 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar3);
   }
-  uVar2 = Scr_GetEntity(0);
-  EntHandle__setEnt((ulonglong)*(uint *)(iVar3 + 0x15c) + 0x50,uVar2);
-  uVar4 = Scr_GetNumParam();
-  iVar1 = *(int *)(iVar3 + 0x15c);
-  if (uVar4 < 2) {
-    *(undefined4 *)(iVar1 + 0x54) = 0;
-    *(undefined4 *)(iVar1 + 0x58) = 0;
-    *(undefined4 *)(iVar1 + 0x5c) = 0;
+  pgVar4 = Scr_GetEntity(0);
+  EntHandle::setEnt(&pgVar2->turret->manualTarget,pgVar4);
+  uVar5 = Scr_GetNumParam();
+  pTVar1 = pgVar2->turret;
+  if (uVar5 < 2) {
+    pTVar1->manualTargetOffset[0] = 0.0;
+    pTVar1->manualTargetOffset[1] = 0.0;
+    pTVar1->manualTargetOffset[2] = 0.0;
   }
   else {
-    Scr_GetVector(1,iVar1 + 0x54);
-    iVar1 = *(int *)(iVar3 + 0x15c);
-    if ((*(uint *)(iVar1 + 0x54) & 0x7f800000) != 0x7f800000) {
-      if ((*(uint *)(iVar1 + 0x58) & 0x7f800000) != 0x7f800000) {
-        if ((*(uint *)(iVar1 + 0x5c) & 0x7f800000) != 0x7f800000) goto LAB_8248e3bc;
-      }
+    Scr_GetVector(1,pTVar1->manualTargetOffset);
+    pTVar1 = pgVar2->turret;
+    if (((((uint)pTVar1->manualTargetOffset[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)pTVar1->manualTargetOffset[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)pTVar1->manualTargetOffset[2] & 0x7f800000) == 0x7f800000)) {
+      Scr_ParamError(1,"Vector target offset has NAN");
     }
-    Scr_ParamError(1,0xffffffff82077790);
   }
-LAB_8248e3bc:
-  GScr_Turret_SnapToTarget(iVar3);
+  GScr_Turret_SnapToTarget(pgVar2);
   return;
 }
 
 
 // 8248E3D8  GScr_ClearTargetEntity  (game/g_scr_main.cpp:2274)
 
-void GScr_ClearTargetEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_ClearTargetEntity(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  EntHandle__setEnt((ulonglong)*(uint *)(iVar2 + 0x15c) + 0x50,0);
+  EntHandle::setEnt(&pgVar1->turret->manualTarget,(gentity_s *)0x0);
   return;
 }
 
 
 // 8248E440  GScr_GetTurretTarget  (game/g_scr_main.cpp:2297)
 
-void GScr_GetTurretTarget(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetTurretTarget(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   int iVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x901,0,0xffffffff82000f98,0xffffffff820777b0);
+  if (pgVar1->turret == (Turret *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x901,0,
+                    "%s");
   }
   iVar3 = Scr_GetInt(0);
-  if (((iVar3 == 0) || ((*(uint *)(*(int *)(iVar2 + 0x15c) + 4) & 0x20) != 0)) &&
-     (iVar3 = EntHandle__isDefined((ulonglong)*(uint *)(iVar2 + 0x15c) + 0x40), iVar3 != 0)) {
-    EntHandle__ent((ulonglong)*(uint *)(iVar2 + 0x15c) + 0x40);
-    Scr_AddEntity();
+  if (((iVar3 == 0) || ((pgVar1->turret->flags & 0x20U) != 0)) &&
+     (iVar3 = EntHandle::isDefined(&pgVar1->turret->target), iVar3 != 0)) {
+    pgVar1 = EntHandle::ent(&pgVar1->turret->target);
+    Scr_AddEntity(pgVar1);
   }
   return;
 }
@@ -1989,152 +2185,158 @@ void GScr_GetTurretTarget(void)
 
 // 8248E510  GScr_SetPlayerSpread  (game/g_scr_main.cpp:2328)
 
-void GScr_SetPlayerSpread(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetPlayerSpread(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  float fVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  dVar3 = (double)Scr_GetFloat(0);
-  *(float *)(*(int *)(iVar2 + 0x15c) + 0x38) = (float)dVar3;
+  fVar3 = Scr_GetFloat(0);
+  pgVar1->turret->playerSpread = fVar3;
   return;
 }
 
 
 // 8248E578  GScr_SetAiSpread  (game/g_scr_main.cpp:2352)
 
-void GScr_SetAiSpread(void)
+void GScr_SetAiSpread(scr_entref_t param_1)
 
 {
-  Scr_Error(0xffffffff820777bc);
+  Scr_Error("SetAiSpread() is not supported in multiplayer.");
   return;
 }
 
 
 // 8248E588  GScr_SetSuppressionTime  (game/g_scr_main.cpp:2385)
 
-void GScr_SetSuppressionTime(void)
+void GScr_SetSuppressionTime(scr_entref_t param_1)
 
 {
-  Scr_Error(0xffffffff820777ec);
+  Scr_Error("SetSuppressionTime() is not supported in multiplayer.");
   return;
 }
 
 
 // 8248E598  GScr_SetConvergenceTime  (game/g_scr_main.cpp:2419)
 
-void GScr_SetConvergenceTime(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetConvergenceTime(scr_entref_t param_1)
 
 {
   char cVar1;
   char cVar2;
-  int iVar4;
-  undefined8 uVar3;
-  int iVar5;
+  gentity_s *pgVar3;
+  char *pcVar4;
+  uint uVar5;
   char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  int iVar9;
-  double dVar10;
+  int iVar8;
+  float fVar9;
   
-  iVar4 = GetEntity();
-  if (*(int *)(iVar4 + 0x15c) == 0) {
-    uVar3 = SL_ConvertToString(*(undefined2 *)(iVar4 + 0x172));
-    va(0xffffffff820776d0,uVar3);
-    Scr_Error();
+  pgVar3 = GetEntity(param_1);
+  if (pgVar3->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar3->classname);
+    pcVar4 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar4);
   }
-  iVar9 = 1;
-  iVar5 = Scr_GetNumParam();
-  if (1 < iVar5) {
-    pcVar6 = (char *)Scr_GetString(1);
+  iVar8 = 1;
+  uVar5 = Scr_GetNumParam();
+  if (1 < (int)uVar5) {
+    pcVar6 = Scr_GetString(1);
     pcVar7 = "yaw";
-    pcVar8 = pcVar6;
+    pcVar4 = pcVar6;
     do {
-      cVar1 = *pcVar8;
+      cVar1 = *pcVar4;
       cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar8 = pcVar8 + 1;
+      pcVar4 = pcVar4 + 1;
       pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      iVar9 = 1;
+      iVar8 = 1;
     }
     else {
-      pcVar8 = "pitch";
+      pcVar4 = "pitch";
       do {
         cVar1 = *pcVar6;
-        cVar2 = *pcVar8;
+        cVar2 = *pcVar4;
         if (cVar1 == '\0') break;
         pcVar6 = pcVar6 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) {
-        iVar9 = 0;
+        iVar8 = 0;
       }
       else {
-        Scr_Error(0xffffffff82077824);
+        Scr_Error("Convergence type should be either \'pitch\' or \'yaw\'");
       }
     }
   }
-  dVar10 = (double)Scr_GetFloat(0);
-  *(int *)((iVar9 + 0x1e) * 4 + *(int *)(iVar4 + 0x15c)) = (int)(dVar10 * 1000.0);
+  fVar9 = Scr_GetFloat(0);
+  pgVar3->turret->convergenceTime[iVar8] = (int)(fVar9 * 1000.0);
   return;
 }
 
 
-// 8249D668  std::_Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 8249D668  _Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,int param_2,int param_3,EntityOrigin *param_4,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_5)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  char cVar8;
-  uint uVar9;
-  longlong lVar10;
-  undefined4 *puVar11;
+  longlong lVar4;
+  EntityOrigin *pEVar5;
+  longlong lVar6;
+  int iVar7;
+  bool bVar8;
+  longlong lVar9;
+  uint uVar10;
   
-  lVar7 = __savegprlr_25();
-  iVar3 = (int)param_2;
-  uVar9 = iVar3 - 1;
-  iVar1 = (int)lVar7;
-  uVar6 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar5 = uVar6, param_3 < iVar3) {
-    lVar10 = (uVar5 & 0xfffffff) * 0x10 + lVar7;
-    cVar8 = (*param_5)(lVar10,param_4);
-    if (cVar8 == '\0') break;
-    iVar4 = (int)param_2 * 0x10;
-    puVar11 = (undefined4 *)lVar10;
-    iVar3 = (int)uVar5;
-    uVar9 = iVar3 - 1;
-    iVar2 = iVar4 + iVar1;
-    *(undefined4 *)(iVar4 + iVar1) = *puVar11;
-    *(undefined4 *)(iVar2 + 4) = puVar11[1];
-    *(undefined4 *)(iVar2 + 8) = puVar11[2];
-    *(undefined4 *)(iVar2 + 0xc) = puVar11[3];
-    uVar6 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    param_2 = uVar5;
+  lVar9 = (longlong)param_2;
+  iVar7 = __savegprlr_25(param_1);
+  iVar2 = (int)lVar9;
+  uVar10 = iVar2 - 1;
+  lVar6 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
+  while (lVar4 = lVar6, param_3 < iVar2) {
+    iVar2 = (int)lVar4;
+    pEVar5 = (EntityOrigin *)(iVar2 * 0x10 + iVar7);
+    bVar8 = (*param_5)(pEVar5,param_4);
+    if (!bVar8) break;
+    iVar3 = (int)lVar9 * 0x10;
+    uVar10 = iVar2 - 1;
+    iVar1 = iVar3 + iVar7;
+    *(float *)(iVar3 + iVar7) = pEVar5->origin[0];
+    *(float *)(iVar1 + 4) = pEVar5->origin[1];
+    *(float *)(iVar1 + 8) = pEVar5->origin[2];
+    *(uint *)(iVar1 + 0xc) = pEVar5->obj;
+    lVar6 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
+    lVar9 = lVar4;
   }
-  iVar2 = (int)param_2 * 0x10;
-  puVar11 = (undefined4 *)param_4;
-  iVar3 = iVar2 + iVar1;
-  *(undefined4 *)(iVar2 + iVar1) = *puVar11;
-  *(undefined4 *)(iVar3 + 4) = puVar11[1];
-  *(undefined4 *)(iVar3 + 8) = puVar11[2];
-  *(undefined4 *)(iVar3 + 0xc) = puVar11[3];
+  iVar1 = (int)lVar9 * 0x10;
+  iVar2 = iVar1 + iVar7;
+  *(float *)(iVar1 + iVar7) = param_4->origin[0];
+  *(float *)(iVar2 + 4) = param_4->origin[1];
+  *(float *)(iVar2 + 8) = param_4->origin[2];
+  *(uint *)(iVar2 + 0xc) = param_4->obj;
   __restgprlr_25();
   return;
 }
@@ -2142,38 +2344,44 @@ void std___Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigi
 
 // 8248E6C0  GScr_SetConvergenceHeightPercent  (game/g_scr_main.cpp:2460)
 
-void GScr_SetConvergenceHeightPercent(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetConvergenceHeightPercent(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  uint uVar3;
   double dVar4;
   double dVar5;
   double dVar6;
+  float fVar7;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    Scr_Error(0xffffffff820778bc);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 1) {
+    Scr_Error("expecting one float argument");
   }
-  dVar4 = (double)Scr_GetFloat(0);
+  fVar7 = Scr_GetFloat(0);
+  dVar4 = (double)fVar7;
   dVar6 = 0.0;
   dVar5 = 1.0;
   if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    Scr_ParamError(0,0xffffffff82077894);
+    Scr_ParamError(0,"<scaler> must between 0 and 1 inclusive");
   }
   if ((dVar4 < dVar6) || (dVar5 < dVar4)) {
-    MyAssertHandler(dVar4,0xffffffff82076e74,0x9ac,0,0xffffffff82077864,dVar4,0,0x3ff0000000000000);
-    *(float *)(*(int *)(iVar2 + 0x15c) + 0x80) = (float)dVar4;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x9ac,0,
+                    "percent not in [0.f, 1.f]\n\t%g not in [%g, %g]");
+    pgVar1->turret->convergenceHeightPercent = (float)dVar4;
   }
   else {
-    *(float *)(*(int *)(iVar2 + 0x15c) + 0x80) = (float)dVar4;
+    pgVar1->turret->convergenceHeightPercent = (float)dVar4;
   }
   return;
 }
@@ -2181,155 +2389,167 @@ void GScr_SetConvergenceHeightPercent(void)
 
 // 8248E7F0  GScr_SetTurretTeam  (game/g_scr_main.cpp:2494)
 
-void GScr_SetTurretTeam(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetTurretTeam(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  short sVar3;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  sVar3 = Scr_GetConstString(0);
-  if (sVar3 == DAT_835a0b94) {
-    *(undefined4 *)(*(int *)(iVar2 + 0x15c) + 0x74) = 1;
+  uVar3 = Scr_GetConstString(0);
+  uVar3 = uVar3 & 0xffff;
+  if (uVar3 == scr_const.axis) {
+    pgVar1->turret->eTeam = TEAM_AXIS;
     return;
   }
-  if (sVar3 == DAT_835a0b8c) {
-    *(undefined4 *)(*(int *)(iVar2 + 0x15c) + 0x74) = 2;
+  if (uVar3 == scr_const.allies) {
+    pgVar1->turret->eTeam = TEAM_ALLIES;
     return;
   }
-  uVar1 = SL_ConvertToString();
-  va(0xffffffff820778dc,uVar1);
-  Scr_Error();
+  SL_ConvertToString(uVar3);
+  pcVar2 = va("unknown team \'%s\', should be \'axis\' or \'allies\'\n");
+  Scr_Error(pcVar2);
   return;
 }
 
 
 // 8248E8D0  GScr_MakeTurretSolid  (game/g_scr_main.cpp:2531)
 
-void GScr_MakeTurretSolid(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MakeTurretSolid(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff82077910,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("Entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  Turret_PlaceSentry_MakeSolid(iVar2);
+  Turret_PlaceSentry_MakeSolid(pgVar1);
   return;
 }
 
 
 // 8248E930  GScr_MakeTurretOperable  (game/g_scr_main.cpp:2554)
 
-void GScr_MakeTurretOperable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MakeTurretOperable(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) & 0xfffffdff;
+  pgVar1->turret->flags = pgVar1->turret->flags & 0xfffffdff;
   return;
 }
 
 
-// 8249D730  std::_Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 8249D730  _Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
-               code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,int param_2,int param_3,EntityOrigin *param_4,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_5)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  char cVar7;
-  int iVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar13;
-  ulonglong uVar12;
-  undefined4 *puVar14;
+  EntityOrigin *pEVar4;
+  int iVar5;
+  bool bVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int iVar9;
+  uint uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  int iVar14;
+  longlong lVar13;
   
-  lVar5 = __savegprlr_25();
-  uVar11 = (param_2 + 1 & 0x7fffffff) << 1;
-  iVar8 = (int)param_3;
-  iVar1 = (int)lVar5;
-  iVar13 = (int)uVar11;
-  uVar10 = param_2;
-  while (uVar12 = uVar11, iVar13 < iVar8) {
-    lVar6 = (uVar12 & 0xfffffff) * 0x10 + lVar5;
-    cVar7 = (*param_5)(lVar6,lVar6 + -0x10);
-    if (cVar7 != '\0') {
-      uVar12 = uVar12 - 1;
+  lVar8 = (longlong)param_3;
+  lVar7 = (longlong)param_2;
+  iVar5 = __savegprlr_25(param_1);
+  lVar12 = (lVar7 + 1U & 0x7fffffff) << 1;
+  iVar9 = (int)lVar8;
+  iVar14 = (int)lVar12;
+  lVar11 = lVar7;
+  while (lVar13 = lVar12, iVar14 < iVar9) {
+    pEVar4 = (EntityOrigin *)((int)lVar13 * 0x10 + iVar5);
+    bVar6 = (*param_5)(pEVar4,pEVar4 + -1);
+    if (bVar6) {
+      lVar13 = lVar13 + -1;
     }
-    iVar3 = (int)uVar12 * 0x10;
-    iVar4 = (int)uVar10 * 0x10;
-    iVar13 = iVar3 + iVar1;
-    iVar2 = iVar4 + iVar1;
-    uVar11 = (uVar12 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)(iVar4 + iVar1) = *(undefined4 *)(iVar3 + iVar1);
-    *(undefined4 *)(iVar2 + 4) = *(undefined4 *)(iVar13 + 4);
-    *(undefined4 *)(iVar2 + 8) = *(undefined4 *)(iVar13 + 8);
-    *(undefined4 *)(iVar2 + 0xc) = *(undefined4 *)(iVar13 + 0xc);
-    iVar13 = (int)uVar11;
-    uVar10 = uVar12;
+    iVar2 = (int)lVar13 * 0x10;
+    iVar3 = (int)lVar11 * 0x10;
+    iVar14 = iVar2 + iVar5;
+    iVar1 = iVar3 + iVar5;
+    lVar12 = (lVar13 + 1U & 0x7fffffff) << 1;
+    *(undefined4 *)(iVar3 + iVar5) = *(undefined4 *)(iVar2 + iVar5);
+    *(undefined4 *)(iVar1 + 4) = *(undefined4 *)(iVar14 + 4);
+    *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(iVar14 + 8);
+    *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)(iVar14 + 0xc);
+    iVar14 = (int)lVar12;
+    lVar11 = lVar13;
   }
-  if (iVar13 == iVar8) {
-    iVar2 = (int)uVar10 * 0x10;
-    iVar13 = iVar8 * 0x10 + iVar1;
-    iVar8 = iVar2 + iVar1;
-    uVar10 = param_3 - 1;
-    *(undefined4 *)(iVar2 + iVar1) = *(undefined4 *)(iVar13 + -0x10);
-    *(undefined4 *)(iVar8 + 4) = *(undefined4 *)(iVar13 + -0xc);
-    *(undefined4 *)(iVar8 + 8) = *(undefined4 *)(iVar13 + -8);
-    *(undefined4 *)(iVar8 + 0xc) = *(undefined4 *)(iVar13 + -4);
+  if (iVar14 == iVar9) {
+    iVar1 = (int)lVar11 * 0x10;
+    iVar14 = iVar9 * 0x10 + iVar5;
+    iVar9 = iVar1 + iVar5;
+    lVar11 = lVar8 + -1;
+    *(undefined4 *)(iVar1 + iVar5) = *(undefined4 *)(iVar14 + -0x10);
+    *(undefined4 *)(iVar9 + 4) = *(undefined4 *)(iVar14 + -0xc);
+    *(undefined4 *)(iVar9 + 8) = *(undefined4 *)(iVar14 + -8);
+    *(undefined4 *)(iVar9 + 0xc) = *(undefined4 *)(iVar14 + -4);
   }
-  iVar13 = (int)uVar10;
-  uVar9 = iVar13 - 1;
-  uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar12 = uVar11, (int)param_2 < iVar13) {
-    lVar6 = (uVar12 & 0xfffffff) * 0x10 + lVar5;
-    cVar7 = (*param_5)(lVar6,param_4);
-    if (cVar7 == '\0') break;
-    iVar2 = (int)uVar10 * 0x10;
-    puVar14 = (undefined4 *)lVar6;
-    iVar13 = (int)uVar12;
-    uVar9 = iVar13 - 1;
-    iVar8 = iVar2 + iVar1;
-    *(undefined4 *)(iVar2 + iVar1) = *puVar14;
-    *(undefined4 *)(iVar8 + 4) = puVar14[1];
-    *(undefined4 *)(iVar8 + 8) = puVar14[2];
-    *(undefined4 *)(iVar8 + 0xc) = puVar14[3];
-    uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar10 = uVar12;
+  iVar14 = (int)lVar11;
+  uVar10 = iVar14 - 1;
+  lVar12 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
+  while (lVar8 = lVar12, (int)lVar7 < iVar14) {
+    iVar14 = (int)lVar8;
+    pEVar4 = (EntityOrigin *)(iVar14 * 0x10 + iVar5);
+    bVar6 = (*param_5)(pEVar4,param_4);
+    if (!bVar6) break;
+    iVar1 = (int)lVar11 * 0x10;
+    uVar10 = iVar14 - 1;
+    iVar9 = iVar1 + iVar5;
+    *(float *)(iVar1 + iVar5) = pEVar4->origin[0];
+    *(float *)(iVar9 + 4) = pEVar4->origin[1];
+    *(float *)(iVar9 + 8) = pEVar4->origin[2];
+    *(uint *)(iVar9 + 0xc) = pEVar4->obj;
+    lVar12 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
+    lVar11 = lVar8;
   }
-  iVar8 = (int)uVar10 * 0x10;
-  puVar14 = (undefined4 *)param_4;
-  iVar13 = iVar8 + iVar1;
-  *(undefined4 *)(iVar8 + iVar1) = *puVar14;
-  *(undefined4 *)(iVar13 + 4) = puVar14[1];
-  *(undefined4 *)(iVar13 + 8) = puVar14[2];
-  *(undefined4 *)(iVar13 + 0xc) = puVar14[3];
+  iVar9 = (int)lVar11 * 0x10;
+  iVar14 = iVar9 + iVar5;
+  *(float *)(iVar9 + iVar5) = param_4->origin[0];
+  *(float *)(iVar14 + 4) = param_4->origin[1];
+  *(float *)(iVar14 + 8) = param_4->origin[2];
+  *(uint *)(iVar14 + 0xc) = param_4->obj;
   __restgprlr_25();
   return;
 }
@@ -2337,50 +2557,57 @@ void std___Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOri
 
 // 8248E998  GScr_MakeTurretInoperable  (game/g_scr_main.cpp:2576)
 
-void GScr_MakeTurretInoperable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MakeTurretInoperable(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) | 0x200;
+  pgVar1->turret->flags = pgVar1->turret->flags | 0x200;
   return;
 }
 
 
 // 8248EA00  GScr_SetTurretAccuracy  (game/g_scr_main.cpp:2588)
 
-void GScr_SetTurretAccuracy(void)
+void GScr_SetTurretAccuracy(scr_entref_t param_1)
 
 {
-  Com_PrintWarning(0x17,0xffffffff82077934);
+  Com_PrintWarning(0x17,"WARNING: Turret Accuracy no longer has any effect\n");
   return;
 }
 
 
 // 8248EA10  GScr_SetRightArc  (game/g_scr_main.cpp:2605)
 
-void GScr_SetRightArc(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetRightArc(scr_entref_t param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  iVar1 = GetEntity();
-  iVar1 = *(int *)(iVar1 + 0x15c);
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  pTVar1 = pgVar2->turret;
+  if (pTVar1 == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
   }
-  dVar2 = (double)Scr_GetFloat(0);
-  *(float *)(iVar1 + 0x10) = (float)-dVar2;
-  if (0.0 < -dVar2) {
-    *(undefined4 *)(iVar1 + 0x10) = 0;
+  fVar3 = Scr_GetFloat(0);
+  pTVar1->arcmin[1] = -fVar3;
+  if (0.0 < -fVar3) {
+    pTVar1->arcmin[1] = 0.0;
   }
   return;
 }
@@ -2388,105 +2615,106 @@ void GScr_SetRightArc(void)
 
 // 8248EA78  GScr_SetLeftArc  (game/g_scr_main.cpp:2633)
 
-void GScr_SetLeftArc(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetLeftArc(scr_entref_t param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  iVar1 = GetEntity();
-  iVar1 = *(int *)(iVar1 + 0x15c);
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  pTVar1 = pgVar2->turret;
+  if (pTVar1 == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
   }
-  dVar2 = (double)Scr_GetFloat(0);
-  *(float *)(iVar1 + 0x18) = (float)dVar2;
-  if (dVar2 < 0.0) {
-    *(undefined4 *)(iVar1 + 0x18) = 0;
+  fVar3 = Scr_GetFloat(0);
+  pTVar1->arcmax[1] = fVar3;
+  if (fVar3 < 0.0) {
+    pTVar1->arcmax[1] = 0.0;
   }
   return;
 }
 
 
-// 8249D8B8  std::_Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 8249D8B8  _Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,EntityOrigin *param_2,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_3,int *param_4,
+               EntityOrigin *param_5)
 
 {
   uint uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
+  EntityOrigin *pEVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  bool bVar5;
   longlong lVar6;
-  char cVar7;
-  ulonglong uVar8;
+  longlong lVar7;
+  int iVar8;
   ulonglong uVar9;
-  int iVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  uint uVar10;
+  ulonglong uVar11;
+  int iVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
-  undefined1 local_60 [4];
-  undefined4 local_5c;
-  uint local_58;
-  undefined4 local_54;
+  EntityOrigin local_60 [6];
   
-  lVar5 = __savegprlr_24();
-  iVar2 = (int)lVar5;
-  uVar1 = param_2 - iVar2 >> 4;
-  uVar12 = (longlong)(param_2 - iVar2 >> 5) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar12) {
-    uVar9 = (uVar12 + 1 & 0x7fffffff) << 1;
-    lVar11 = (uVar12 & 0xfffffff) * 0x10 + lVar5;
+  lVar7 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  lVar4 = __savegprlr_24(param_1,lVar6,lVar7,param_4,param_5);
+  pEVar2 = (EntityOrigin *)lVar4;
+  iVar8 = (int)lVar6 - (int)pEVar2;
+  uVar1 = iVar8 >> 4;
+  uVar11 = (longlong)(iVar8 >> 5) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar11) {
+    uVar9 = (uVar11 + 1 & 0x7fffffff) << 1;
+    lVar4 = (uVar11 & 0xfffffff) * 0x10 + lVar4;
     do {
       uVar9 = uVar9 - 2;
-      uVar12 = uVar12 - 1;
-      iVar10 = (int)lVar11;
-      local_5c = *(undefined4 *)(iVar10 + -0xc);
-      local_58 = *(uint *)(iVar10 + -8);
-      uVar8 = (ulonglong)local_58;
-      local_54 = *(undefined4 *)(iVar10 + -4);
-      iVar10 = (int)uVar9;
-      uVar15 = uVar9;
-      uVar13 = uVar12;
-      while (uVar14 = uVar15, iVar10 < (int)uVar1) {
-        lVar6 = (uVar14 & 0xfffffff) * 0x10 + lVar5;
-        cVar7 = (*(code *)param_3)(lVar6,lVar6 + -0x10);
-        if (cVar7 != '\0') {
-          uVar14 = uVar14 - 1;
+      uVar11 = uVar11 - 1;
+      local_60[0].origin[0] = *(float *)(lVar4 + -0x10);
+      iVar8 = (int)lVar4;
+      local_60[0].origin[1] = *(float *)(iVar8 + -0xc);
+      local_60[0].origin[2] = *(float *)(iVar8 + -8);
+      local_60[0].obj = *(uint *)(iVar8 + -4);
+      uVar10 = (uint)uVar9;
+      uVar14 = uVar9;
+      uVar3 = uVar11;
+      while (uVar13 = uVar14, iVar8 = (int)uVar3, (int)uVar10 < (int)uVar1) {
+        bVar5 = (*(_func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *)lVar7)
+                          (pEVar2 + (int)uVar13,pEVar2 + (int)uVar13 + -1);
+        if (bVar5) {
+          uVar13 = uVar13 - 1;
         }
-        iVar3 = (int)uVar14 * 0x10;
-        lVar6 = (uVar13 & 0xfffffff) * 0x10;
-        iVar10 = iVar3 + iVar2;
-        uVar8 = lVar6 + lVar5;
-        uVar15 = (uVar14 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)lVar6 + iVar2) = *(undefined4 *)(iVar3 + iVar2);
-        iVar3 = (int)uVar8;
-        *(undefined4 *)(iVar3 + 4) = *(undefined4 *)(iVar10 + 4);
-        *(undefined4 *)(iVar3 + 8) = *(undefined4 *)(iVar10 + 8);
-        *(undefined4 *)(iVar3 + 0xc) = *(undefined4 *)(iVar10 + 0xc);
-        iVar10 = (int)uVar15;
-        uVar13 = uVar14;
+        iVar12 = (int)uVar13;
+        uVar14 = (uVar13 + 1 & 0x7fffffff) << 1;
+        pEVar2[iVar8].origin[0] = pEVar2[iVar12].origin[0];
+        pEVar2[iVar8].origin[1] = pEVar2[iVar12].origin[1];
+        pEVar2[iVar8].origin[2] = pEVar2[iVar12].origin[2];
+        pEVar2[iVar8].obj = pEVar2[iVar12].obj;
+        uVar10 = (uint)uVar14;
+        uVar3 = uVar13;
       }
-      if ((uint)uVar14 == uVar1) {
-        iVar4 = (int)uVar13 * 0x10;
-        lVar6 = ((ulonglong)uVar1 & 0xfffffff) * 0x10 + lVar5;
-        iVar3 = iVar4 + iVar2;
-        uVar8 = lVar6 - 0x10;
-        uVar13 = (longlong)(int)uVar1 - 1;
-        iVar10 = (int)lVar6;
-        *(undefined4 *)(iVar4 + iVar2) = *(undefined4 *)(iVar10 + -0x10);
-        *(undefined4 *)(iVar3 + 4) = *(undefined4 *)(iVar10 + -0xc);
-        *(undefined4 *)(iVar3 + 8) = *(undefined4 *)(iVar10 + -8);
-        *(undefined4 *)(iVar3 + 0xc) = *(undefined4 *)(iVar10 + -4);
+      iVar12 = iVar8;
+      if (uVar10 == uVar1) {
+        iVar12 = uVar1 - 1;
+        pEVar2[iVar8].origin[0] = pEVar2[uVar1 - 1].origin[0];
+        pEVar2[iVar8].origin[1] = pEVar2[uVar1 - 1].origin[1];
+        pEVar2[iVar8].origin[2] = pEVar2[uVar1 - 1].origin[2];
+        pEVar2[iVar8].obj = pEVar2[uVar1 - 1].obj;
       }
-      std___Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                (lVar5,uVar13,uVar12,local_60,param_3,uVar8);
-      lVar11 = lVar11 + -0x10;
-    } while (0 < (int)uVar12);
+      _Push_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                (pEVar2,iVar12,(int)uVar11,local_60,
+                 (_func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *)lVar7);
+      lVar4 = lVar4 + -0x10;
+    } while (0 < (int)uVar11);
   }
   __restgprlr_24();
   return;
@@ -2495,21 +2723,25 @@ void std___Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigi
 
 // 8248EAD8  GScr_SetTopArc  (game/g_scr_main.cpp:2661)
 
-void GScr_SetTopArc(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetTopArc(scr_entref_t param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  iVar1 = GetEntity();
-  iVar1 = *(int *)(iVar1 + 0x15c);
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  pTVar1 = pgVar2->turret;
+  if (pTVar1 == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
   }
-  dVar2 = (double)Scr_GetFloat(0);
-  *(float *)(iVar1 + 0xc) = (float)-dVar2;
-  if (0.0 < -dVar2) {
-    *(undefined4 *)(iVar1 + 0xc) = 0;
+  fVar3 = Scr_GetFloat(0);
+  pTVar1->arcmin[0] = -fVar3;
+  if (0.0 < -fVar3) {
+    pTVar1->arcmin[0] = 0.0;
   }
   return;
 }
@@ -2517,60 +2749,66 @@ void GScr_SetTopArc(void)
 
 // 8248EB40  GScr_SetBottomArc  (game/g_scr_main.cpp:2689)
 
-void GScr_SetBottomArc(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetBottomArc(scr_entref_t param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  Turret *pTVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  iVar1 = GetEntity();
-  iVar1 = *(int *)(iVar1 + 0x15c);
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  pTVar1 = pgVar2->turret;
+  if (pTVar1 == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
   }
-  dVar2 = (double)Scr_GetFloat(0);
-  *(float *)(iVar1 + 0x14) = (float)dVar2;
-  if (dVar2 < 0.0) {
-    *(undefined4 *)(iVar1 + 0x14) = 0;
+  fVar3 = Scr_GetFloat(0);
+  pTVar1->arcmax[0] = fVar3;
+  if (fVar3 < 0.0) {
+    pTVar1->arcmax[0] = 0.0;
   }
   return;
 }
 
 
-// 8249E2B8  std::_Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 8249E2B8  _Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,EntityOrigin *param_2,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_3)
 
 {
   longlong lVar1;
-  undefined4 *puVar2;
+  EntityOrigin *pEVar2;
   longlong lVar3;
-  undefined4 *puVar4;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  longlong lVar4;
+  float *pfVar5;
+  EntityOrigin local_40 [4];
   
-  lVar1 = __savegprlr_27();
-  lVar3 = param_2 - lVar1;
+  lVar4 = (longlong)(int)param_2;
+  lVar1 = __savegprlr_27(param_1);
+  lVar3 = lVar4 - lVar1;
   if (0x10 < (int)((uint)lVar3 & 0xfffffff0)) {
-    param_2 = param_2 + -0x10;
+    lVar4 = lVar4 + -0x10;
     do {
-      puVar2 = (undefined4 *)lVar1;
-      puVar4 = (undefined4 *)param_2;
-      local_40 = *puVar4;
-      local_3c = puVar4[1];
-      local_38 = puVar4[2];
-      local_34 = puVar4[3];
-      *puVar4 = *puVar2;
-      puVar4[1] = puVar2[1];
-      puVar4[2] = puVar2[2];
-      puVar4[3] = puVar2[3];
-      std___Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                (lVar1,0,(int)lVar3 + -0x10 >> 4,&local_40,param_3);
-      param_2 = param_2 + -0x10;
-      lVar3 = (param_2 - lVar1) + 0x10;
+      pEVar2 = (EntityOrigin *)lVar1;
+      pfVar5 = (float *)lVar4;
+      local_40[0].origin[0] = *pfVar5;
+      local_40[0].origin[1] = pfVar5[1];
+      local_40[0].origin[2] = pfVar5[2];
+      local_40[0].obj = (uint)pfVar5[3];
+      *pfVar5 = pEVar2->origin[0];
+      pfVar5[1] = pEVar2->origin[1];
+      pfVar5[2] = pEVar2->origin[2];
+      pfVar5[3] = (float)pEVar2->obj;
+      _Adjust_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                (pEVar2,0,(int)lVar3 + -0x10 >> 4,local_40,param_3);
+      lVar4 = lVar4 + -0x10;
+      lVar3 = (lVar4 - lVar1) + 0x10;
     } while (0x10 < (int)((uint)lVar3 & 0xfffffff0));
   }
   __restgprlr_27();
@@ -2580,247 +2818,290 @@ void std___Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityO
 
 // 8248EBA0  GScr_SetAutoRotationDelay  (game/g_scr_main.cpp:2717)
 
-void GScr_SetAutoRotationDelay(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetAutoRotationDelay(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   double dVar2;
+  float fVar3;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x15c) == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
   }
-  dVar2 = (double)Scr_GetFloat(0);
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
   if (dVar2 < 0.0) {
-    Scr_Error(0xffffffff82077980);
+    Scr_Error("need a positive duration");
   }
   dVar2 = floor((double)(float)(dVar2 * 1000.0 + 0.5));
-  Turret_SetAutoRotationStopDelay(iVar1,(int)dVar2);
+  Turret_SetAutoRotationStopDelay(pgVar1,(int)dVar2);
   return;
 }
 
 
 // 8248EC48  GScr_SetDefaultDropPitch  (game/g_scr_main.cpp:2750)
 
-void GScr_SetDefaultDropPitch(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetDefaultDropPitch(scr_entref_t param_1)
 
 {
-  int iVar1;
+  uint uVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff8207799c);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("illegal call to setdefaultdroppitch()");
     return;
   }
-  iVar1 = GetEntity(param_1);
-  if (*(int *)(iVar1 + 0x15c) == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->turret == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
     return;
   }
-  Scr_GetFloat(0);
-  Turret_SetDefaultDropPitch(iVar1);
+  fVar3 = Scr_GetFloat(0);
+  Turret_SetDefaultDropPitch(pgVar2,fVar3);
   return;
 }
 
 
 // 8248ECE8  GScr_RestoreDefaultDropPitch  (game/g_scr_main.cpp:2786)
 
-void GScr_RestoreDefaultDropPitch(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RestoreDefaultDropPitch(scr_entref_t param_1)
 
 {
-  int iVar1;
+  uint uVar1;
+  gentity_s *pgVar2;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 0) {
-    Scr_Error(0xffffffff820779c4);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 0) {
+    Scr_Error("illegal call to restoredefaultdroppitch()");
     return;
   }
-  iVar1 = GetEntity(param_1);
-  if (*(int *)(iVar1 + 0x15c) == 0) {
-    Scr_Error(0xffffffff82077968);
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->turret == (Turret *)0x0) {
+    Scr_Error("entity is not a turret");
     return;
   }
-  Turret_RestoreDefaultDropPitch();
+  Turret_RestoreDefaultDropPitch(pgVar2);
   return;
 }
 
 
 // 8248ED78  GScr_TurretFireDisable  (game/g_scr_main.cpp:2818)
 
-void GScr_TurretFireDisable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_TurretFireDisable(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) | 2;
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) | 0x8000000;
+  pgVar1->turret->flags = pgVar1->turret->flags | 2;
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags | 0x8000000;
   return;
 }
 
 
 // 8248EDE8  GScr_TurretFireEnable  (game/g_scr_main.cpp:2843)
 
-void GScr_TurretFireEnable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_TurretFireEnable(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff820776d0,uVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar2);
   }
-  *(uint *)(*(int *)(iVar2 + 0x15c) + 4) = *(uint *)(*(int *)(iVar2 + 0x15c) + 4) & 0xfffffffd;
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) & 0xf7ffffff;
+  pgVar1->turret->flags = pgVar1->turret->flags & 0xfffffffd;
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags & 0xf7ffffff;
   return;
 }
 
 
 // 8248EE58  GScr_SetTurretModeChangeWait  (game/g_scr_main.cpp:2869)
 
-void GScr_SetTurretModeChangeWait(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetTurretModeChangeWait(scr_entref_t param_1)
 
 {
   uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  gentity_s *pgVar2;
+  char *pcVar3;
   int iVar4;
   uint uVar5;
   
-  iVar3 = GetEntity();
-  if (*(int *)(iVar3 + 0x15c) == 0) {
-    uVar2 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff820776d0,uVar2);
-    Scr_Error();
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->turret == (Turret *)0x0) {
+    SL_ConvertToString((uint)pgVar2->classname);
+    pcVar3 = va("entity type \'%s\' is not a turret");
+    Scr_Error(pcVar3);
   }
   iVar4 = Scr_GetInt(0);
-  uVar1 = *(uint *)(*(int *)(iVar3 + 0x15c) + 4);
+  uVar1 = pgVar2->turret->flags;
   uVar5 = uVar1 | 0x200000;
   if (iVar4 == 0) {
     uVar5 = uVar1 & 0xffdfffff;
   }
-  *(uint *)(*(int *)(iVar3 + 0x15c) + 4) = uVar5;
+  pgVar2->turret->flags = uVar5;
   return;
 }
 
 
 // 8248EED0  GScr_GetEntityNumber  (game/g_scr_main.cpp:2894)
 
-void GScr_GetEntityNumber(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetEntityNumber(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
   
-  puVar1 = (undefined4 *)GetEntity();
-  Scr_AddInt(*puVar1);
+  pgVar1 = GetEntity(param_1);
+  Scr_AddInt((pgVar1->s).number);
   return;
 }
 
 
 // 8248EEF8  GScr_GetEntityVelocity  (game/g_scr_main.cpp:2913)
 
-void GScr_GetEntityVelocity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetEntityVelocity(scr_entref_t param_1)
 
 {
-  uint *puVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
+  EntHandle *this;
   int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
+  gentity_s *pgVar4;
+  char *pcVar5;
   
-  puVar2 = (uint *)GetEntity();
-  if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0xb68,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xb68,0,
+                    "%s");
   }
-  if (puVar2[0x58] == 0) {
-    if ((ulonglong)puVar2[0x56] != 0) {
-      Scr_AddVector((ulonglong)puVar2[0x56] + 0x28);
+  if (pgVar2->vehicle == (Vehicle *)0x0) {
+    if (pgVar2->client != (gclient_s *)0x0) {
+      Scr_AddVector((pgVar2->client->ps).velocity);
       return;
     }
-    uVar4 = SL_ConvertToString(*(undefined2 *)((int)puVar2 + 0x172));
-    uVar1 = 0xffffffff820779f0;
+    SL_ConvertToString((uint)pgVar2->classname);
+    pcVar5 = "entity type \'%s\' is not a player nor a player controlled vehicle ";
   }
   else {
-    iVar3 = EntHandle__isDefined(puVar2 + 0x54);
-    if ((((iVar3 != 0) && (iVar3 = EntHandle__ent(puVar2 + 0x54), iVar3 != 0)) &&
-        (iVar3 = *(int *)(iVar3 + 0x158), iVar3 != 0)) &&
-       ((*(uint *)(iVar3 + 0xac) != 0x7ff && (*(uint *)(iVar3 + 0xac) == *puVar2)))) {
-      Scr_AddVector(iVar3 + 0xcc);
+    this = &(pgVar2->r).ownerNum;
+    iVar3 = EntHandle::isDefined(this);
+    if ((((iVar3 != 0) && (pgVar4 = EntHandle::ent(this), pgVar4 != (gentity_s *)0x0)) &&
+        (pgVar1 = pgVar4->client, pgVar1 != (gclient_s *)0x0)) &&
+       ((iVar3 = (pgVar1->ps).vehicleState.entity, iVar3 != 0x7ff && (iVar3 == (pgVar2->s).number)))
+       ) {
+      Scr_AddVector((pgVar1->ps).vehicleState.velocity);
       return;
     }
-    uVar4 = (ulonglong)*puVar2;
-    uVar1 = 0xffffffff82077a34;
+    pcVar5 = "vehicle entity %i is not being controlled by the player. ";
   }
-  va(uVar1,uVar4);
-  Scr_Error();
+  pcVar5 = va(pcVar5);
+  Scr_Error(pcVar5);
   return;
 }
 
 
 // 8248F000  GScr_EnableGrenadeTouchDamage  (game/g_scr_main.cpp:2960)
 
-void GScr_EnableGrenadeTouchDamage(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_EnableGrenadeTouchDamage(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(short *)(iVar1 + 0x172) != DAT_835a0c98) {
-    Scr_Error(0xffffffff82077a70);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->classname != scr_const.trigger_damage) {
+    Scr_Error("Currently on supported on damage triggers");
   }
-  *(uint *)(iVar1 + 0x184) = *(uint *)(iVar1 + 0x184) | 0x4000;
+  pgVar1->flags = pgVar1->flags | 0x4000;
   return;
 }
 
 
 // 8248F060  GScr_DisableGrenadeTouchDamage  (game/g_scr_main.cpp:2981)
 
-void GScr_DisableGrenadeTouchDamage(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DisableGrenadeTouchDamage(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(short *)(iVar1 + 0x172) != DAT_835a0c98) {
-    Scr_Error(0xffffffff82077a70);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->classname != scr_const.trigger_damage) {
+    Scr_Error("Currently on supported on damage triggers");
   }
-  *(uint *)(iVar1 + 0x184) = *(uint *)(iVar1 + 0x184) & 0xffffbfff;
+  pgVar1->flags = pgVar1->flags & 0xffffbfff;
   return;
 }
 
 
 // 8248F0C0  GScr_CheckRocketEntity  (game/g_scr_main.cpp:2992)
 
-void GScr_CheckRocketEntity(undefined4 *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_CheckRocketEntity(gentity_s *param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  char *pcVar1;
+  bool bVar2;
   
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0xbb1,0,0xffffffff82000f98,0xffffffff8207539c);
+  if (param_1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xbb1,0,
+                    "%s");
   }
-  if (param_1[1] != 4) {
-    va(0xffffffff82077af8,*param_1);
-    Scr_Error();
+  if ((param_1->s).eType != 4) {
+    pcVar1 = va("Entity %i is not a rocket - eType \'%i\'\n");
+    Scr_Error(pcVar1);
   }
-  if (*(short *)((int)param_1 + 0x172) != DAT_835a0c18) {
-    uVar1 = SL_ConvertToString();
-    va(0xffffffff82077acc,*param_1,uVar1);
-    Scr_Error();
+  if (param_1->classname != scr_const.rocket) {
+    SL_ConvertToString((uint)param_1->classname);
+    pcVar1 = va("Entity %i is not a rocket - classname \'%s\'\n");
+    Scr_Error(pcVar1);
   }
-  cVar2 = Missile_IsGrenade(param_1);
-  if (cVar2 != '\0') {
-    va(0xffffffff82077a9c,*param_1);
-    Scr_Error();
+  bVar2 = Missile_IsGrenade(param_1);
+  if (bVar2) {
+    pcVar1 = va("Entity %i is not a rocket - it is a grenade\n");
+    Scr_Error(pcVar1);
   }
   return;
 }
@@ -2828,29 +3109,33 @@ void GScr_CheckRocketEntity(undefined4 *param_1)
 
 // 8248F190  GScr_MissileSetTargetEnt  (game/g_scr_main.cpp:3019)
 
-void GScr_MissileSetTargetEnt(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MissileSetTargetEnt(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gentity_s *pgVar1;
+  gentity_s *pgVar2;
   uint uVar3;
   
-  iVar1 = GetEntity();
-  GScr_CheckRocketEntity();
-  iVar2 = Scr_GetEntity(0);
-  *(uint *)(iVar1 + 0x1c8) = *(uint *)(iVar1 + 0x1c8) & 0xffffffe1 | 6;
-  EntHandle__setEnt(iVar1 + 0x20c,iVar2);
-  *(undefined4 *)(iVar1 + 0x1e8) = *(undefined4 *)(iVar2 + 0x138);
-  *(undefined4 *)(iVar1 + 0x1ec) = *(undefined4 *)(iVar2 + 0x13c);
-  *(undefined4 *)(iVar1 + 0x1f0) = *(undefined4 *)(iVar2 + 0x140);
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  pgVar2 = Scr_GetEntity(0);
+  (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] =
+       (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 0xffffffe1U | 6;
+  EntHandle::setEnt(&pgVar1->missileTargetEnt,pgVar2);
+  (pgVar1->field31_0x1ac).item[3].ammoCount = (int)(pgVar2->r).currentOrigin[0];
+  (pgVar1->field31_0x1ac).item[3].clipAmmoCount[0] = (int)(pgVar2->r).currentOrigin[1];
+  (pgVar1->field31_0x1ac).item[3].clipAmmoCount[1] = (int)(pgVar2->r).currentOrigin[2];
   uVar3 = Scr_GetNumParam();
   if (uVar3 < 2) {
-    *(undefined4 *)(iVar1 + 0x1dc) = 0;
-    *(undefined4 *)(iVar1 + 0x1e0) = 0;
-    *(undefined4 *)(iVar1 + 0x1e4) = 0;
+    (pgVar1->field31_0x1ac).item[2].clipAmmoCount[1] = 0;
+    (pgVar1->field31_0x1ac).mover.angle.speed = 0.0;
+    (pgVar1->field31_0x1ac).mover.angle.midTime = 0.0;
   }
   else {
-    Scr_GetVector(1,iVar1 + 0x1dc);
+    Scr_GetVector(1,&(pgVar1->field31_0x1ac).blend.decelTime);
   }
   return;
 }
@@ -2858,179 +3143,214 @@ void GScr_MissileSetTargetEnt(void)
 
 // 8248F238  GScr_MissileSetTargetPos  (game/g_scr_main.cpp:3052)
 
-void GScr_MissileSetTargetPos(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MissileSetTargetPos(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  GScr_CheckRocketEntity();
-  *(uint *)(iVar1 + 0x1c8) = *(uint *)(iVar1 + 0x1c8) & 0xffffffe1 | 2;
-  EntHandle__setEnt(iVar1 + 0x20c,0);
-  *(undefined4 *)(iVar1 + 0x1dc) = 0;
-  *(undefined4 *)(iVar1 + 0x1e0) = 0;
-  *(undefined4 *)(iVar1 + 0x1e4) = 0;
-  Scr_GetVector(0,iVar1 + 0x1e8);
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] =
+       (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 0xffffffe1U | 2;
+  EntHandle::setEnt(&pgVar1->missileTargetEnt,(gentity_s *)0x0);
+  (pgVar1->field31_0x1ac).item[2].clipAmmoCount[1] = 0;
+  (pgVar1->field31_0x1ac).mover.angle.speed = 0.0;
+  (pgVar1->field31_0x1ac).mover.angle.midTime = 0.0;
+  Scr_GetVector(0,(float *)((int)&pgVar1->field31_0x1ac + 0x3c));
   return;
 }
 
 
 // 8248F2A8  GScr_MissileClearTarget  (game/g_scr_main.cpp:3077)
 
-void GScr_MissileClearTarget(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MissileClearTarget(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  GScr_CheckRocketEntity();
-  *(uint *)(iVar1 + 0x1c8) = *(uint *)(iVar1 + 0x1c8) & 0xffffffe9;
-  EntHandle__setEnt(iVar1 + 0x20c,0);
-  *(undefined4 *)(iVar1 + 0x1dc) = 0;
-  *(undefined4 *)(iVar1 + 0x1e0) = 0;
-  *(undefined4 *)(iVar1 + 0x1e4) = 0;
-  *(undefined4 *)(iVar1 + 0x1e8) = 0;
-  *(undefined4 *)(iVar1 + 0x1ec) = 0;
-  *(undefined4 *)(iVar1 + 0x1f0) = 0;
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] =
+       (pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 0xffffffe9;
+  EntHandle::setEnt(&pgVar1->missileTargetEnt,(gentity_s *)0x0);
+  (pgVar1->field31_0x1ac).item[2].clipAmmoCount[1] = 0;
+  (pgVar1->field31_0x1ac).mover.angle.speed = 0.0;
+  (pgVar1->field31_0x1ac).mover.angle.midTime = 0.0;
+  (pgVar1->field31_0x1ac).item[3].ammoCount = 0;
+  (pgVar1->field31_0x1ac).item[3].clipAmmoCount[0] = 0;
+  (pgVar1->field31_0x1ac).item[3].clipAmmoCount[1] = 0;
   return;
 }
 
 
 // 8248F318  MissileSetFlightmode  (game/g_scr_main.cpp:3091)
 
-void MissileSetFlightmode(undefined8 param_1,undefined4 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void MissileSetFlightmode(scr_entref_t param_1,MissileFlightMode param_2)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  puVar1 = (undefined4 *)GetEntity();
-  GScr_CheckRocketEntity();
-  if ((puVar1[0x72] & 2) == 0) {
-    va(0xffffffff82077b20,*puVar1);
-    Scr_Error();
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  if (((pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 2U) == 0) {
+    pcVar2 = va("Entity %i is not locked on to anything.");
+    Scr_Error(pcVar2);
   }
-  puVar1[0x16] = param_2;
+  (pgVar1->s).lerp.u.missile.flightMode = param_2;
   return;
 }
 
 
 // 8248F380  GScr_MissileSetFlightmodeDirect  (game/g_scr_main.cpp:3115)
 
-void GScr_MissileSetFlightmodeDirect(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MissileSetFlightmodeDirect(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  puVar1 = (undefined4 *)GetEntity();
-  GScr_CheckRocketEntity();
-  if ((puVar1[0x72] & 2) == 0) {
-    va(0xffffffff82077b20,*puVar1);
-    Scr_Error();
-    puVar1[0x16] = 1;
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  if (((pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 2U) == 0) {
+    pcVar2 = va("Entity %i is not locked on to anything.");
+    Scr_Error(pcVar2);
+    (pgVar1->s).lerp.u.turret.gunAngles[1] = 1.4013e-45;
     return;
   }
-  puVar1[0x16] = 1;
+  (pgVar1->s).lerp.u.turret.gunAngles[1] = 1.4013e-45;
   return;
 }
 
 
 // 8248F3F8  GScr_MissileSetFlightmodeTop  (game/g_scr_main.cpp:3131)
 
-void GScr_MissileSetFlightmodeTop(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MissileSetFlightmodeTop(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  puVar1 = (undefined4 *)GetEntity();
-  GScr_CheckRocketEntity();
-  if ((puVar1[0x72] & 2) == 0) {
-    va(0xffffffff82077b20,*puVar1);
-    Scr_Error();
-    puVar1[0x16] = 0;
+  pgVar1 = GetEntity(param_1);
+  GScr_CheckRocketEntity(pgVar1);
+  if (((pgVar1->field31_0x1ac).item[1].clipAmmoCount[1] & 2U) == 0) {
+    pcVar2 = va("Entity %i is not locked on to anything.");
+    Scr_Error(pcVar2);
+    (pgVar1->s).lerp.u.turret.gunAngles[1] = 0.0;
     return;
   }
-  puVar1[0x16] = 0;
+  (pgVar1->s).lerp.u.turret.gunAngles[1] = 0.0;
   return;
 }
 
 
 // 8248F470  GScr_GetMissileOwner  (game/g_scr_main.cpp:3147)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_GetMissileOwner(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  EntHandle *this;
   int iVar3;
   
-  iVar2 = Scr_GetEntity(0);
-  if (*(int *)(iVar2 + 4) != 4) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff82077b48,uVar1);
-    Scr_Error();
+  pgVar1 = Scr_GetEntity(0);
+  if ((pgVar1->s).eType != 4) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity type \'%s\' is not a missile");
+    Scr_Error(pcVar2);
   }
-  iVar3 = EntHandle__isDefined(iVar2 + 0x150);
+  this = &(pgVar1->r).ownerNum;
+  iVar3 = EntHandle::isDefined(this);
   if (iVar3 == 0) {
     Scr_AddUndefined();
     return;
   }
-  EntHandle__ent(iVar2 + 0x150);
-  Scr_AddEntity();
+  pgVar1 = EntHandle::ent(this);
+  Scr_AddEntity(pgVar1);
   return;
 }
 
 
 // 8248F500  GScr_EnableAimAssist  (game/g_scr_main.cpp:3173)
 
-void GScr_EnableAimAssist(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_EnableAimAssist(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(char *)(iVar1 + 0x101) != '\x04') {
-    Scr_Error(0xffffffff82077b6c);
+  pgVar1 = GetEntity(param_1);
+  if ((pgVar1->r).modelType != '\x04') {
+    Scr_Error("Currently only supported on entities with brush models");
   }
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x4000;
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags | 0x4000;
   return;
 }
 
 
 // 8248F550  GScr_DisableAimAssist  (game/g_scr_main.cpp:3196)
 
-void GScr_DisableAimAssist(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DisableAimAssist(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(char *)(iVar1 + 0x101) != '\x04') {
-    Scr_Error(0xffffffff82077b6c);
+  pgVar1 = GetEntity(param_1);
+  if ((pgVar1->r).modelType != '\x04') {
+    Scr_Error("Currently only supported on entities with brush models");
   }
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) & 0xffffbfff;
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags & 0xffffbfff;
   return;
 }
 
 
 // 8248F5A0  GScr_LocalToWorldCoords  (game/g_scr_main.cpp:3220)
 
-void GScr_LocalToWorldCoords(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_LocalToWorldCoords(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   float local_60;
   float local_5c;
   float local_58;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [48];
+  float afStack_50 [4];
+  float afStack_40 [12];
   
-  iVar1 = GetEntity();
-  Scr_GetVector(0,auStack_50);
-  AnglesToAxis(iVar1 + 0x144,auStack_40);
-  MatrixTransformVector(auStack_50,auStack_40,&local_60);
-  local_60 = *(float *)(iVar1 + 0x138) + local_60;
-  local_5c = *(float *)(iVar1 + 0x13c) + local_5c;
-  local_58 = *(float *)(iVar1 + 0x140) + local_58;
+  pgVar1 = GetEntity(param_1);
+  Scr_GetVector(0,afStack_50);
+  AnglesToAxis((pgVar1->r).currentAngles,(float (*) [3])afStack_40);
+  MatrixTransformVector(afStack_50,(float (*) [3])afStack_40,&local_60);
+  local_60 = (pgVar1->r).currentOrigin[0] + local_60;
+  local_5c = (pgVar1->r).currentOrigin[1] + local_5c;
+  local_58 = (pgVar1->r).currentOrigin[2] + local_58;
   Scr_AddVector(&local_60);
   return;
 }
@@ -3038,51 +3358,60 @@ void GScr_LocalToWorldCoords(void)
 
 // 8248F630  GScr_PrecacheMenu  (game/g_scr_main.cpp:3246)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_PrecacheMenu(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
-  int iVar4;
+  char *pcVar3;
+  ConfigString CVar4;
   char local_430 [1072];
   
   __savegprlr_27();
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82077c10);
+  if (level.initializing == 0) {
+    Scr_Error("precacheMenu must be called before any wait statements in the level script\n");
   }
-  uVar1 = Scr_GetString(0);
-  lVar3 = 0xbb4;
-  while( true ) {
-    iVar4 = (int)lVar3;
-    if (0xeea < iVar4) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  pcVar1 = Scr_GetString(0);
+  CVar4 = CS_SCRIPT_MENUS;
+  do {
+    if (0xeea < (int)CVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    SV_GetConfigstring(lVar3,local_430,0x400);
-    iVar2 = I_stricmp(local_430,uVar1);
-    if (iVar2 == 0) break;
-    lVar3 = lVar3 + 1;
-    if (0x1f < iVar4 + -0xbb3) {
-      lVar3 = 0;
-      do {
-        if (0x336 < (int)lVar3) {
-          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
-        }
-        SV_GetConfigstring(lVar3 + 0xbb4,local_430,0x400);
-      } while ((local_430[0] != '\0') && (lVar3 = lVar3 + 1, (int)lVar3 < 0x20));
-      if ((int)lVar3 == 0x20) {
-        va(0xffffffff82077bdc,0x20);
-        Scr_Error();
-      }
-      if (0xeea < (int)(lVar3 + 0xbb4)) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
-      }
-      SV_SetConfigstring(lVar3 + 0xbb4,uVar1);
+    SV_GetConfigstring(CVar4,local_430,0x400);
+    iVar2 = I_stricmp(local_430,pcVar1);
+    if (iVar2 == 0) {
+      Com_DPrintf(0x17,"Script tried to precache the menu \'%s\' more than once\n");
       __restgprlr_27();
       return;
     }
+    iVar2 = CVar4 - CS_SHELLSHOCKS_LAST;
+    CVar4 = CVar4 + CS_SYSTEMINFO;
+  } while (iVar2 < 0x20);
+  iVar2 = 0;
+  do {
+    if (0x336 < iVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
+    }
+    SV_GetConfigstring(iVar2 + CS_SCRIPT_MENUS,local_430,0x400);
+    if (local_430[0] == '\0') break;
+    iVar2 = iVar2 + 1;
+  } while (iVar2 < 0x20);
+  if (iVar2 == 0x20) {
+    pcVar3 = va("Too many menus precached. Max allowed menus is %i");
+    Scr_Error(pcVar3);
   }
-  Com_DPrintf(0x17,0xffffffff82077ba4,uVar1);
+  if (0xeea < (int)(iVar2 + CS_SCRIPT_MENUS)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x285,0,"%s");
+  }
+  SV_SetConfigstring(iVar2 + CS_SCRIPT_MENUS,pcVar1);
   __restgprlr_27();
   return;
 }
@@ -3090,69 +3419,79 @@ void GScr_PrecacheMenu(void)
 
 // 8248F798  GScr_GetScriptMenuIndex  (game/g_scr_main.cpp:3288)
 
-void GScr_GetScriptMenuIndex(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+int GScr_GetScriptMenuIndex(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   longlong lVar3;
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
-  uVar1 = __savegprlr_27();
+  pcVar1 = (char *)__savegprlr_27(param_1);
   lVar3 = 0;
   while( true ) {
     if (0x336 < (int)lVar3) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    SV_GetConfigstring(lVar3 + 0xbb4,auStack_430,0x400);
-    iVar2 = I_stricmp(auStack_430,uVar1);
+    SV_GetConfigstring((int)lVar3 + CS_SCRIPT_MENUS,acStack_430,0x400);
+    iVar2 = I_stricmp(acStack_430,pcVar1);
     if (iVar2 == 0) break;
     lVar3 = lVar3 + 1;
     if (0x1f < (int)lVar3) {
-      va(0xffffffff82077c5c,uVar1);
-      Scr_Error();
-      __restgprlr_27(0);
-      return;
+      pcVar1 = va("Menu \'%s\' was not precached\n");
+      Scr_Error(pcVar1);
+      iVar2 = __restgprlr_27(0);
+      return iVar2;
     }
   }
-  __restgprlr_27(lVar3);
-  return;
+  iVar2 = __restgprlr_27(lVar3);
+  return iVar2;
 }
 
 
 // 8248F840  GScr_Earthquake  (game/g_scr_main.cpp:3319)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_Earthquake(void)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  undefined1 auStack_38 [40];
+  float fVar6;
+  float afStack_38 [10];
   
-  dVar2 = (double)Scr_GetFloat(0);
-  dVar3 = (double)Scr_GetFloat(1);
-  dVar3 = floor((double)((float)(dVar3 * 1000.0) + 0.5));
-  Scr_GetVector(2,auStack_38);
-  dVar4 = (double)Scr_GetFloat(3);
+  fVar6 = Scr_GetFloat(0);
+  dVar2 = (double)fVar6;
+  fVar6 = Scr_GetFloat(1);
+  dVar3 = floor((double)(fVar6 * 1000.0 + 0.5));
+  Scr_GetVector(2,afStack_38);
+  fVar6 = Scr_GetFloat(3);
+  dVar4 = (double)fVar6;
   dVar5 = 0.0;
   if (dVar2 <= 0.0) {
-    Scr_ParamError(0,0xffffffff82077cbc);
+    Scr_ParamError(0,"Scale must be greater than 0");
   }
   if ((int)dVar3 < 1) {
-    Scr_ParamError(1,0xffffffff82077c9c);
+    Scr_ParamError(1,"duration must be greater than 0");
   }
   if (dVar4 <= dVar5) {
-    Scr_ParamError(3,0xffffffff82077c7c);
+    Scr_ParamError(3,"Radius must be greater than 0");
   }
-  if (*(char *)(DAT_834b3680 + 0xc) != '\0') {
-    iVar1 = G_TempEntity(auStack_38,0x5f);
-    *(float *)(iVar1 + 0x54) = (float)dVar2;
-    *(int *)(iVar1 + 0x5c) = (int)dVar3;
-    *(float *)(iVar1 + 0x58) = (float)dVar4;
-    *(undefined4 *)(iVar1 + 0xd8) = 0;
+  if ((g_earthquakeEnable->current).enabled != false) {
+    pgVar1 = G_TempEntity(afStack_38,0x5f);
+    (pgVar1->s).lerp.u.turret.gunAngles[0] = (float)dVar2;
+    (pgVar1->s).lerp.u.plane.friendIcon = (int)dVar3;
+    (pgVar1->s).lerp.u.turret.gunAngles[1] = (float)dVar4;
+    (pgVar1->s).un1.eventParm2 = 0;
   }
   return;
 }
@@ -3160,64 +3499,74 @@ void GScr_Earthquake(void)
 
 // 8248F958  GScr_StopShellShock  (game/g_scr_main.cpp:3363)
 
-void GScr_StopShellShock(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StopShellShock(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gentity_s *pgVar1;
+  uint uVar2;
   
-  iVar1 = GetPlayerEntity();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 0) {
-    Scr_Error(0xffffffff82077cdc);
+  pgVar1 = GetPlayerEntity(param_1);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    Scr_Error("USAGE: <player> stopshellshock()\n");
   }
-  *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x554) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x558) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x55c) = 0;
-  *(uint *)(*(int *)(iVar1 + 0x158) + 0xc) = *(uint *)(*(int *)(iVar1 + 0x158) + 0xc) & 0xffff7fff;
+  (pgVar1->client->ps).shellshockIndex = 0;
+  (pgVar1->client->ps).shellshockTime = 0;
+  (pgVar1->client->ps).shellshockDuration = 0;
+  (pgVar1->client->ps).pm_flags = (pgVar1->client->ps).pm_flags & 0xffff7fff;
   return;
 }
 
 
 // 8248F9C8  GScr_FadeOutShellShock  (game/g_scr_main.cpp:3390)
 
-void GScr_FadeOutShellShock(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_FadeOutShellShock(scr_entref_t param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  gclient_s *pgVar1;
+  int iVar2;
   uint uVar3;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
+  scr_entref_t sVar4;
+  gentity_s *pgVar5;
+  uint uVar6;
+  shellshock_parms_t *psVar7;
   
-  uVar4 = __savegprlr_28();
+  sVar4 = (scr_entref_t)__savegprlr_28(param_1);
   SV_CheckThread();
-  iVar5 = GetPlayerEntity(uVar4);
-  iVar6 = Scr_GetNumParam();
-  if (iVar6 != 0) {
-    Scr_Error(0xffffffff82077d0c);
+  pgVar5 = GetPlayerEntity(sVar4);
+  uVar6 = Scr_GetNumParam();
+  if (uVar6 != 0) {
+    Scr_Error("USAGE: <player> FadeOutShellShock()\n");
   }
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0xd4d,0,0xffffffff82000f98,0xffffffff82002614);
+  if (pgVar5 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xd4d,0,
+                    "%s");
   }
-  if (*(int *)(iVar5 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0xd4e,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (pgVar5->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xd4e,0,
+                    "%s");
   }
-  iVar6 = *(int *)(iVar5 + 0x158);
-  if (((*(uint *)(iVar6 + 0xc) & 0x8000) != 0) && (0 < *(int *)(iVar6 + 0x55c))) {
-    iVar6 = BG_GetShellshockParms(*(undefined4 *)(iVar6 + 0x554));
-    if (iVar6 == 0) {
-      MyAssertHandler(0xffffffff82076e74,0xd56,0,0xffffffff82000f98,0xffffffff82077d00);
+  pgVar1 = pgVar5->client;
+  if ((((pgVar1->ps).pm_flags & 0x8000U) != 0) && (0 < (pgVar1->ps).shellshockDuration)) {
+    psVar7 = BG_GetShellshockParms((pgVar1->ps).shellshockIndex);
+    if (psVar7 == (shellshock_parms_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xd56,0
+                      ,"%s");
     }
-    if (DAT_83580fac <
-        (*(int *)(*(int *)(iVar5 + 0x158) + 0x55c) + *(int *)(*(int *)(iVar5 + 0x158) + 0x558)) -
-        *(int *)(iVar6 + 0x14)) {
-      iVar1 = *(int *)(iVar5 + 0x158);
-      uVar2 = *(uint *)(iVar1 + 0x55c);
-      *(int *)(iVar1 + 0x55c) = (*(int *)(iVar6 + 0x14) - *(int *)(iVar1 + 0x558)) + DAT_83580fac;
-      uVar3 = *(uint *)(*(int *)(iVar5 + 0x158) + 0x55c);
-      *(uint *)(*(int *)(iVar5 + 0x158) + 0x55c) = (uVar3 - (uVar3 & 0x7f)) + (uVar2 & 0x7f);
+    iVar2 = (psVar7->view).fadeTime;
+    if (level.time <
+        ((pgVar5->client->ps).shellshockDuration + (pgVar5->client->ps).shellshockTime) - iVar2) {
+      pgVar1 = pgVar5->client;
+      uVar6 = (pgVar1->ps).shellshockDuration;
+      (pgVar1->ps).shellshockDuration = (iVar2 - (pgVar1->ps).shellshockTime) + level.time;
+      uVar3 = (pgVar5->client->ps).shellshockDuration;
+      (pgVar5->client->ps).shellshockDuration = (uVar3 - (uVar3 & 0x7f)) + (uVar6 & 0x7f);
     }
   }
   __restgprlr_28();
@@ -3227,60 +3576,67 @@ void GScr_FadeOutShellShock(void)
 
 // 8248FB18  ScrCmd_SetModel  (game/g_scr_main.cpp:3443)
 
-void ScrCmd_SetModel(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_SetModel(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  uVar1 = GetEntity();
-  uVar2 = Scr_GetString(0);
-  G_SetModel(uVar1,uVar2);
-  G_DObjUpdate(uVar1,1);
+  pgVar1 = GetEntity(param_1);
+  pcVar2 = Scr_GetString(0);
+  G_SetModel(pgVar1,pcVar2);
+  G_DObjUpdate(pgVar1,1);
   return;
 }
 
 
 // 8248FB68  GScr_Spawn  (game/g_scr_main.cpp:3482)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_Spawn(void)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   uint uVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
+  int iVar3;
+  gentity_s *pgVar4;
+  char *pcVar5;
+  float local_30;
+  float local_2c;
+  float local_28;
   
   __savegprlr_29();
   uVar1 = Scr_GetConstString(0);
   Scr_GetVector(1,&local_30);
   uVar2 = Scr_GetNumParam();
   if (uVar2 < 3) {
-    uVar3 = 0;
+    iVar3 = 0;
   }
   else {
-    uVar3 = Scr_GetInt(2);
+    iVar3 = Scr_GetInt(2);
   }
-  iVar4 = G_Spawn();
-  Scr_SetString(iVar4 + 0x174,uVar1);
-  *(undefined4 *)(iVar4 + 0x138) = local_30;
-  *(undefined4 *)(iVar4 + 0x13c) = local_2c;
-  *(undefined4 *)(iVar4 + 0x140) = local_28;
-  *(undefined4 *)(iVar4 + 0x180) = uVar3;
-  iVar5 = G_CallSpawnEntity(iVar4);
-  if (iVar5 != 0) {
-    Scr_AddEntity();
+  pgVar4 = G_Spawn();
+  Scr_SetString(&pgVar4->script_classname,uVar1);
+  (pgVar4->r).currentOrigin[0] = local_30;
+  (pgVar4->r).currentOrigin[1] = local_2c;
+  (pgVar4->r).currentOrigin[2] = local_28;
+  pgVar4->spawnflags = iVar3;
+  iVar3 = G_CallSpawnEntity(pgVar4);
+  if (iVar3 != 0) {
+    Scr_AddEntity(pgVar4);
     __restgprlr_29();
     return;
   }
-  G_FreeEntity(iVar4);
-  uVar1 = SL_ConvertToString(uVar1);
-  va(0xffffffff82077d34,uVar1);
-  Scr_Error();
+  G_FreeEntity(pgVar4);
+  SL_ConvertToString(uVar1);
+  pcVar5 = va("unable to spawn \"%s\" entity");
+  Scr_Error(pcVar5);
   __restgprlr_29();
   return;
 }
@@ -3288,34 +3644,38 @@ void GScr_Spawn(void)
 
 // 8248FC28  GScr_SpawnTurret  (game/g_scr_main.cpp:3528)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_SpawnTurret(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  int iVar4;
+  float local_30;
+  float local_2c;
+  float local_28;
   
   __savegprlr_29();
   uVar1 = Scr_GetConstString(0);
   Scr_GetVector(1,&local_30);
-  uVar2 = Scr_GetString(2);
-  iVar3 = G_Spawn();
-  Scr_SetString(iVar3 + 0x172,uVar1);
-  Scr_SetString(iVar3 + 0x174,uVar1);
-  *(undefined4 *)(iVar3 + 0x138) = local_30;
-  uVar1 = 1;
-  *(undefined4 *)(iVar3 + 0x13c) = local_2c;
-  *(undefined4 *)(iVar3 + 0x140) = local_28;
-  uVar4 = Scr_GetNumParam();
-  if (3 < uVar4) {
-    uVar1 = Scr_GetInt(3);
+  pcVar2 = Scr_GetString(2);
+  pgVar3 = G_Spawn();
+  Scr_SetString(&pgVar3->classname,uVar1);
+  Scr_SetString(&pgVar3->script_classname,uVar1);
+  (pgVar3->r).currentOrigin[0] = local_30;
+  iVar4 = 1;
+  (pgVar3->r).currentOrigin[1] = local_2c;
+  (pgVar3->r).currentOrigin[2] = local_28;
+  uVar1 = Scr_GetNumParam();
+  if (3 < uVar1) {
+    iVar4 = Scr_GetInt(3);
   }
-  G_SpawnTurret(iVar3,uVar2,uVar1);
-  Scr_AddEntity(iVar3);
+  G_SpawnTurret(pgVar3,pcVar2,iVar4);
+  Scr_AddEntity(pgVar3);
   __restgprlr_29();
   return;
 }
@@ -3323,99 +3683,119 @@ void GScr_SpawnTurret(void)
 
 // 8248FCD0  GScr_CanSpawnTurret  (game/g_scr_main.cpp:3564)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_CanSpawnTurret(void)
 
 {
-  undefined1 uVar1;
+  bool bVar1;
   
-  uVar1 = G_CanSpawnTurret();
-  Scr_AddBool(uVar1);
+  bVar1 = G_CanSpawnTurret();
+  Scr_AddBool((uint)bVar1);
   return;
 }
 
 
 // 8248FCF8  GScr_PrecacheTurret  (game/g_scr_main.cpp:3580)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_PrecacheTurret(void)
 
 {
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82077d50);
+  char *pcVar1;
+  
+  if (level.initializing == 0) {
+    Scr_Error("precacheTurret must be called before any wait statements in the level script\n");
   }
-  Scr_GetString(0);
-  G_GetWeaponForName();
+  pcVar1 = Scr_GetString(0);
+  G_GetWeaponForName(pcVar1);
   return;
 }
 
 
 // 8248FD40  AttachCmd  (game/g_scr_main.cpp:3592)
 
-void AttachCmd(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool AttachCmd(gentity_s *param_1,uint *param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  uint uVar6;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  int iVar7;
-  undefined8 uVar5;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  char *pcVar7;
+  undefined1 uVar8;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0xe0d,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = (gentity_s *)__savegprlr_27(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xe0d,0,
+                    "%s");
   }
-  uVar2 = Scr_GetString(0);
-  uVar6 = Scr_GetNumParam();
-  if (uVar6 < 2) {
-    uVar3 = (ulonglong)DAT_835a0b80;
+  pcVar2 = Scr_GetString(0);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 < 2) {
+    uVar3 = (uint)scr_const._;
   }
   else {
     uVar3 = Scr_GetConstLowercaseString(1);
   }
-  uVar6 = Scr_GetNumParam();
-  if (uVar6 < 3) {
-    uVar4 = 0;
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 < 3) {
+    iVar5 = 0;
   }
   else {
-    uVar4 = Scr_GetInt(2);
+    iVar5 = Scr_GetInt(2);
   }
-  iVar7 = G_EntDetach(uVar1,uVar2,uVar3);
-  if (iVar7 != 0) {
-    uVar5 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077dc8,uVar2,uVar5);
-    Scr_Error();
+  iVar6 = G_EntDetach(pgVar1,pcVar2,uVar3);
+  if (iVar6 != 0) {
+    SL_ConvertToString(uVar3);
+    pcVar7 = va("model \'%s\' already attached to tag \'%s\'");
+    Scr_Error(pcVar7);
   }
-  iVar7 = G_EntAttach(uVar1,uVar2,uVar3,uVar4);
-  if (iVar7 == 0) {
-    uVar4 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077da0,uVar2,uVar4);
-    Scr_Error();
+  iVar5 = G_EntAttach(pgVar1,pcVar2,uVar3,iVar5);
+  if (iVar5 == 0) {
+    SL_ConvertToString(uVar3);
+    pcVar2 = va("failed to attach model \'%s\' to tag \'%s\'");
+    Scr_Error(pcVar2);
   }
-  *param_2 = (int)uVar3;
-  __restgprlr_27(1);
-  return;
+  *param_2 = uVar3;
+  uVar8 = __restgprlr_27(1);
+  return (bool)uVar8;
 }
 
 
 // 8248FE58  ScrCmd_attach  (game/g_scr_main.cpp:3629)
 
-void ScrCmd_attach(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_attach(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_10 [16];
+  gentity_s *pgVar1;
+  uint auStack_10 [4];
   
-  uVar1 = GetEntity();
-  AttachCmd(uVar1,auStack_10);
+  pgVar1 = GetEntity(param_1);
+  AttachCmd(pgVar1,auStack_10);
   return;
 }
 
 
-// 8249DC58  std::_Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 8249DC58  _Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>
+               (EntityOrigin *param_1,EntityOrigin *param_2,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_3,EntityOrigin *param_4)
 
 {
   ulonglong uVar1;
@@ -3423,38 +3803,44 @@ void std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,E
   char cVar4;
   undefined4 *puVar3;
   ulonglong uVar5;
-  ulonglong uVar7;
+  longlong lVar6;
+  code *pcVar7;
   ulonglong uVar8;
-  int iVar9;
-  undefined4 *puVar10;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int iVar12;
+  undefined4 *puVar13;
   undefined4 local_50;
   undefined4 local_4c;
   undefined4 local_48;
   undefined4 local_44;
-  ulonglong uVar6;
+  ulonglong uVar9;
   
-  uVar2 = __savegprlr_25();
-  if (((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar8 = uVar2 + 0x10, uVar7 = uVar2, (uVar8 & 0xffffffff) != (param_2 & 0xffffffff))) {
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
+  if (((uVar2 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
+     (uVar11 = uVar2 + 0x10, uVar10 = uVar2, (uVar11 & 0xffffffff) != (uVar5 & 0xffffffff))) {
     do {
-      iVar9 = (int)uVar8;
-      local_4c = *(undefined4 *)(iVar9 + 4);
-      local_48 = *(undefined4 *)(iVar9 + 8);
-      local_44 = *(undefined4 *)(iVar9 + 0xc);
-      cVar4 = (*param_3)(&local_50,uVar2);
+      iVar12 = (int)uVar11;
+      local_4c = *(undefined4 *)(iVar12 + 4);
+      local_48 = *(undefined4 *)(iVar12 + 8);
+      local_44 = *(undefined4 *)(iVar12 + 0xc);
+      pcVar7 = (code *)lVar6;
+      cVar4 = (*pcVar7)(&local_50,uVar2);
       if (cVar4 == '\0') {
-        cVar4 = (*param_3)(&local_50,uVar7);
-        uVar5 = uVar7;
-        uVar6 = uVar8;
-        while (uVar1 = uVar5, puVar3 = (undefined4 *)uVar6, cVar4 != '\0') {
-          puVar10 = (undefined4 *)uVar1;
-          *puVar3 = *puVar10;
-          puVar3[1] = puVar10[1];
-          puVar3[2] = puVar10[2];
-          puVar3[3] = puVar10[3];
-          cVar4 = (*param_3)(&local_50,uVar1 - 0x10);
-          uVar5 = uVar1 - 0x10;
-          uVar6 = uVar1;
+        cVar4 = (*pcVar7)(&local_50,uVar10);
+        uVar8 = uVar10;
+        uVar9 = uVar11;
+        while (uVar1 = uVar8, puVar3 = (undefined4 *)uVar9, cVar4 != '\0') {
+          puVar13 = (undefined4 *)uVar1;
+          *puVar3 = *puVar13;
+          puVar3[1] = puVar13[1];
+          puVar3[2] = puVar13[2];
+          puVar3[3] = puVar13[3];
+          cVar4 = (*pcVar7)(&local_50,uVar1 - 0x10);
+          uVar8 = uVar1 - 0x10;
+          uVar9 = uVar1;
         }
         *puVar3 = local_50;
         puVar3[1] = local_4c;
@@ -3462,17 +3848,17 @@ void std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,E
         puVar3[3] = local_44;
       }
       else {
-        uVar6 = uVar8;
-        if ((uVar2 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+        uVar9 = uVar11;
+        if ((uVar2 & 0xffffffff) != (uVar11 & 0xffffffff)) {
           do {
-            uVar5 = uVar6 - 0x10;
-            puVar3 = (undefined4 *)uVar6;
-            *puVar3 = *(undefined4 *)uVar5;
+            uVar8 = uVar9 - 0x10;
+            puVar3 = (undefined4 *)uVar9;
+            *puVar3 = *(undefined4 *)uVar8;
             puVar3[1] = puVar3[-3];
             puVar3[2] = puVar3[-2];
             puVar3[3] = puVar3[-1];
-            uVar6 = uVar5;
-          } while ((uVar5 & 0xffffffff) != (uVar2 & 0xffffffff));
+            uVar9 = uVar8;
+          } while ((uVar8 & 0xffffffff) != (uVar2 & 0xffffffff));
         }
         puVar3 = (undefined4 *)uVar2;
         *puVar3 = local_50;
@@ -3480,9 +3866,9 @@ void std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,E
         puVar3[2] = local_48;
         puVar3[3] = local_44;
       }
-      uVar8 = uVar8 + 0x10;
-      uVar7 = uVar7 + 0x10;
-    } while ((uVar8 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar11 = uVar11 + 0x10;
+      uVar10 = uVar10 + 0x10;
+    } while ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff));
   }
   __restgprlr_25();
   return;
@@ -3491,88 +3877,90 @@ void std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,E
 
 // 8248FE80  ScrCmd_attachShieldModel  (game/g_scr_main.cpp:3652)
 
-void ScrCmd_attachShieldModel(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_attachShieldModel(scr_entref_t param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  undefined4 local_20 [4];
+  gentity_s *pgVar1;
+  bool bVar2;
+  uint local_20 [4];
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    Scr_Error(0xffffffff82077df0);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_Error("This function only supports player entities.");
   }
-  cVar2 = AttachCmd(iVar1,local_20);
-  if (cVar2 != '\0') {
-    *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) = *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) | 0x100;
-    Scr_SetString((ulonglong)*(uint *)(iVar1 + 0x158) + 0x3910,local_20[0]);
+  bVar2 = AttachCmd(pgVar1,local_20);
+  if (bVar2) {
+    (pgVar1->client->ps).otherFlags = (pgVar1->client->ps).otherFlags | 0x100;
+    Scr_SetString(&pgVar1->client->attachShieldTagName,local_20[0]);
   }
   return;
 }
 
 
-// 8249DA00  std::_Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 8249DA00  _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,EntityOrigin *param_2,EntityOrigin *param_3,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  undefined4 *puVar5;
-  char cVar6;
-  undefined4 *puVar7;
-  undefined4 *puVar8;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  uint uVar4;
+  EntityOrigin *pEVar5;
+  bool bVar6;
   
-  puVar5 = (undefined4 *)__savegprlr_28();
-  cVar6 = (*param_4)(param_2,puVar5);
-  puVar7 = (undefined4 *)param_2;
-  if (cVar6 != '\0') {
-    uVar1 = *puVar7;
-    uVar2 = puVar7[1];
-    uVar3 = puVar7[2];
-    uVar4 = puVar7[3];
-    *puVar7 = *puVar5;
-    puVar7[1] = puVar5[1];
-    puVar7[2] = puVar5[2];
-    puVar7[3] = puVar5[3];
-    *puVar5 = uVar1;
-    puVar5[1] = uVar2;
-    puVar5[2] = uVar3;
-    puVar5[3] = uVar4;
+  pEVar5 = (EntityOrigin *)__savegprlr_28(param_1);
+  bVar6 = (*param_4)(param_2,pEVar5);
+  if (bVar6) {
+    fVar1 = param_2->origin[0];
+    fVar2 = param_2->origin[1];
+    fVar3 = param_2->origin[2];
+    uVar4 = param_2->obj;
+    param_2->origin[0] = pEVar5->origin[0];
+    param_2->origin[1] = pEVar5->origin[1];
+    param_2->origin[2] = pEVar5->origin[2];
+    param_2->obj = pEVar5->obj;
+    pEVar5->origin[0] = fVar1;
+    pEVar5->origin[1] = fVar2;
+    pEVar5->origin[2] = fVar3;
+    pEVar5->obj = uVar4;
   }
-  cVar6 = (*param_4)(param_3,param_2);
-  if (cVar6 != '\0') {
-    puVar8 = (undefined4 *)param_3;
-    uVar1 = *puVar8;
-    uVar2 = puVar8[1];
-    uVar3 = puVar8[2];
-    uVar4 = puVar8[3];
-    *puVar8 = *puVar7;
-    puVar8[1] = puVar7[1];
-    puVar8[2] = puVar7[2];
-    puVar8[3] = puVar7[3];
-    *puVar7 = uVar1;
-    puVar7[1] = uVar2;
-    puVar7[2] = uVar3;
-    puVar7[3] = uVar4;
+  bVar6 = (*param_4)(param_3,param_2);
+  if (bVar6) {
+    fVar1 = param_3->origin[0];
+    fVar2 = param_3->origin[1];
+    fVar3 = param_3->origin[2];
+    uVar4 = param_3->obj;
+    param_3->origin[0] = param_2->origin[0];
+    param_3->origin[1] = param_2->origin[1];
+    param_3->origin[2] = param_2->origin[2];
+    param_3->obj = param_2->obj;
+    param_2->origin[0] = fVar1;
+    param_2->origin[1] = fVar2;
+    param_2->origin[2] = fVar3;
+    param_2->obj = uVar4;
   }
-  cVar6 = (*param_4)(param_2,puVar5);
-  if (cVar6 != '\0') {
-    uVar1 = *puVar7;
-    uVar2 = puVar7[1];
-    uVar3 = puVar7[2];
-    uVar4 = puVar7[3];
-    *puVar7 = *puVar5;
-    puVar7[1] = puVar5[1];
-    puVar7[2] = puVar5[2];
-    puVar7[3] = puVar5[3];
-    *puVar5 = uVar1;
-    puVar5[1] = uVar2;
-    puVar5[2] = uVar3;
-    puVar5[3] = uVar4;
+  bVar6 = (*param_4)(param_2,pEVar5);
+  if (bVar6) {
+    fVar1 = param_2->origin[0];
+    fVar2 = param_2->origin[1];
+    fVar3 = param_2->origin[2];
+    uVar4 = param_2->obj;
+    param_2->origin[0] = pEVar5->origin[0];
+    param_2->origin[1] = pEVar5->origin[1];
+    param_2->origin[2] = pEVar5->origin[2];
+    param_2->obj = pEVar5->obj;
+    pEVar5->origin[0] = fVar1;
+    pEVar5->origin[1] = fVar2;
+    pEVar5->origin[2] = fVar3;
+    pEVar5->obj = uVar4;
   }
   __restgprlr_28();
   return;
@@ -3581,70 +3969,78 @@ void std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin
 
 // 8248FF00  ScrCmd_moveShieldModel  (game/g_scr_main.cpp:3684)
 
-void ScrCmd_moveShieldModel(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_moveShieldModel(scr_entref_t param_1)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar5;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
   
-  __savegprlr_28();
-  iVar4 = GetEntity();
-  if (*(int *)(iVar4 + 0x158) == 0) {
-    Scr_Error(0xffffffff82077df0);
+  sVar1 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar2 = GetEntity(sVar1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("This function only supports player entities.");
   }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetConstLowercaseString(1);
-  uVar3 = Scr_GetConstLowercaseString(2);
-  iVar5 = G_EntChangeAttachTag(iVar4,uVar1,uVar2,uVar3);
-  if (iVar5 == 0) {
-    uVar2 = SL_ConvertToString(uVar2);
-    va(0xffffffff82077e20,uVar1,uVar2);
-    Scr_Error();
+  pcVar3 = Scr_GetString(0);
+  uVar4 = Scr_GetConstLowercaseString(1);
+  uVar5 = Scr_GetConstLowercaseString(2);
+  iVar6 = G_EntChangeAttachTag(pgVar2,pcVar3,uVar4,uVar5);
+  if (iVar6 == 0) {
+    SL_ConvertToString(uVar4);
+    pcVar3 = va("model \'%s\' not attached to tag \'%s\'");
+    Scr_Error(pcVar3);
   }
-  Scr_SetString((ulonglong)*(uint *)(iVar4 + 0x158) + 0x3910,uVar3);
+  Scr_SetString(&pgVar2->client->attachShieldTagName,uVar5);
   __restgprlr_28();
   return;
 }
 
 
-// 8249DBB0  std::_Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 8249DBB0  _Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,EntityOrigin *param_2,EntityOrigin *param_3,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint uVar5;
-  ulonglong uVar4;
-  longlong lVar6;
+  int iVar2;
+  EntityOrigin *pEVar3;
+  EntityOrigin *pEVar4;
+  uint uVar6;
+  ulonglong uVar5;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 4;
+  pEVar3 = (EntityOrigin *)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)pEVar3 >> 4;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0xfffffff;
-    uVar4 = uVar4 & 0x7ffffff;
-    lVar6 = uVar2 * 0x10 + lVar3;
-    std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-              (lVar3,lVar6,uVar4 * 0x20 + lVar3);
-    std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-              (param_2 + uVar2 * -0x10,param_2,uVar2 * 0x10 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -0x10;
-    std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-              (param_3 + uVar4 * -0x20,lVar3,param_3,param_4);
-    std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-              (lVar6,param_2,lVar3,param_4);
+    uVar6 = iVar1 + 1;
+    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
+    iVar2 = (int)((uVar5 & 0xffffffff) << 5);
+    iVar1 = (int)((uVar5 & 0xfffffff) << 4);
+    pEVar4 = (EntityOrigin *)((int)pEVar3->origin + iVar1);
+    _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+              (pEVar3,pEVar4,(EntityOrigin *)((int)pEVar3->origin + iVar2),param_4);
+    _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+              ((EntityOrigin *)((int)param_2 - iVar1),param_2,
+               (EntityOrigin *)((int)param_2->origin + iVar1),param_4);
+    _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+              ((EntityOrigin *)((int)param_3 - iVar2),(EntityOrigin *)((int)param_3 - iVar1),param_3
+               ,param_4);
+    _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+              (pEVar4,param_2,(EntityOrigin *)((int)param_3 - iVar1),param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-            (lVar3,param_2,param_3);
+  _Med3<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+            (pEVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
@@ -3652,266 +4048,280 @@ void std___Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrig
 
 // 8248FFA8  DetachCmd  (game/g_scr_main.cpp:3706)
 
-void DetachCmd(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void DetachCmd(gentity_s *param_1)
 
 {
-  short sVar1;
-  int iVar6;
-  undefined8 uVar2;
-  uint uVar7;
-  ulonglong uVar3;
-  int iVar8;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  longlong lVar9;
-  short *psVar10;
+  ushort uVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  longlong lVar7;
+  ushort *puVar8;
   
-  iVar6 = __savegprlr_25();
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0xe7f,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar2 = (gentity_s *)__savegprlr_25(param_1);
+  if (pgVar2 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xe7f,0,
+                    "%s");
   }
-  uVar2 = Scr_GetString(0);
-  uVar7 = Scr_GetNumParam();
-  if (uVar7 < 2) {
-    uVar3 = (ulonglong)DAT_835a0b80;
+  pcVar3 = Scr_GetString(0);
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 < 2) {
+    uVar4 = (uint)scr_const._;
   }
   else {
-    uVar3 = Scr_GetConstLowercaseString(1);
+    uVar4 = Scr_GetConstLowercaseString(1);
   }
-  iVar8 = G_EntDetach(iVar6,uVar2,uVar3);
-  if (iVar8 == 0) {
-    Com_Printf(0x17,0xffffffff82077e88);
-    psVar10 = (short *)(iVar6 + 0x21c);
-    lVar9 = 0x13;
+  iVar5 = G_EntDetach(pgVar2,pcVar3,uVar4);
+  if (iVar5 == 0) {
+    Com_Printf(0x17,"Current attachments:\n");
+    puVar8 = pgVar2->attachModelNames;
+    lVar7 = 0x13;
     do {
-      sVar1 = *psVar10;
-      if ((sVar1 != 0) && (psVar10[0x13] != 0)) {
-        uVar4 = SL_ConvertToString();
-        G_ModelName(sVar1);
-        uVar5 = SL_ConvertToString();
-        Com_Printf(0x17,0xffffffff82077e70,uVar5,uVar4);
+      uVar1 = *puVar8;
+      if ((uVar1 != 0) && (puVar8[0x13] != 0)) {
+        SL_ConvertToString((uint)puVar8[0x13]);
+        uVar6 = G_ModelName((uint)uVar1);
+        SL_ConvertToString(uVar6);
+        Com_Printf(0x17,"model: \'%s\', tag: \'%s\'\n");
       }
-      lVar9 = lVar9 + -1;
-      psVar10 = psVar10 + 1;
-    } while (lVar9 != 0);
-    uVar4 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077e44,uVar2,uVar4);
-    Scr_Error();
+      lVar7 = lVar7 + -1;
+      puVar8 = puVar8 + 1;
+    } while (lVar7 != 0);
+    SL_ConvertToString(uVar4);
+    pcVar3 = va("failed to detach model \'%s\' from tag \'%s\'");
+    Scr_Error(pcVar3);
   }
   __restgprlr_25();
   return;
 }
 
 
-// 8249DDD0  std::_Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 8249DDD0  _Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+pair<EntityOrigin_*,EntityOrigin_*>
+std::_Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+          (EntityOrigin *param_1,EntityOrigin *param_2,
+          _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_3)
 
 {
-  bool bVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
   undefined4 uVar5;
-  uint uVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  char cVar9;
-  int iVar11;
-  ulonglong uVar10;
-  undefined4 *puVar12;
-  ulonglong uVar13;
-  undefined4 *puVar14;
+  undefined4 uVar6;
+  undefined4 uVar7;
+  undefined4 uVar8;
+  uint uVar9;
+  EntityOrigin *pEVar10;
+  EntityOrigin *pEVar11;
+  undefined4 *puVar13;
+  bool bVar14;
+  pair<EntityOrigin_*,EntityOrigin_*> pVar12;
   ulonglong uVar15;
   ulonglong uVar16;
-  undefined4 *puVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  undefined4 *puVar21;
+  _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *in_r6;
+  int iVar18;
+  ulonglong uVar17;
+  undefined4 *puVar19;
   ulonglong uVar20;
+  float *pfVar21;
+  undefined4 *puVar22;
+  ulonglong uVar23;
+  undefined4 *puVar24;
+  ulonglong uVar25;
+  ulonglong uVar26;
+  undefined4 *puVar27;
   
-  puVar8 = (undefined4 *)__savegprlr_23();
-  iVar11 = (int)param_3 - (int)param_2;
-  uVar6 = iVar11 >> 4;
-  uVar18 = ((longlong)(iVar11 >> 5) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) & 0xfffffff) *
-           0x10 + param_2;
-  std___Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-            (param_2,uVar18,param_3 - 0x10);
-  uVar13 = uVar18 + 0x10;
-  if ((param_2 & 0xffffffff) < (uVar18 & 0xffffffff)) {
+  uVar16 = (ulonglong)(int)param_3;
+  uVar15 = (ulonglong)(int)param_2;
+  puVar13 = (undefined4 *)__savegprlr_23(param_1);
+  iVar18 = (int)uVar16 - (int)(EntityOrigin *)uVar15;
+  uVar9 = iVar18 >> 4;
+  uVar25 = ((longlong)(iVar18 >> 5) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0) & 0xfffffff) *
+           0x10 + uVar15;
+  _Median<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+            ((EntityOrigin *)uVar15,(EntityOrigin *)uVar25,(EntityOrigin *)((int)uVar16 + -0x10),
+             in_r6);
+  uVar20 = uVar25 + 0x10;
+  if ((uVar15 & 0xffffffff) < (uVar25 & 0xffffffff)) {
     do {
-      uVar16 = uVar18 - 0x10;
-      cVar9 = (*param_4)(uVar16,uVar18);
-      if ((cVar9 != '\0') || (cVar9 = (*param_4)(uVar18,uVar16), cVar9 != '\0')) break;
-      uVar18 = uVar16;
-    } while ((param_2 & 0xffffffff) < (uVar16 & 0xffffffff));
+      uVar23 = uVar25 - 0x10;
+      bVar14 = (*in_r6)((EntityOrigin *)uVar23,(EntityOrigin *)uVar25);
+      if ((bVar14) || (bVar14 = (*in_r6)((EntityOrigin *)uVar25,(EntityOrigin *)uVar23), bVar14))
+      break;
+      uVar25 = uVar23;
+    } while ((uVar15 & 0xffffffff) < (uVar23 & 0xffffffff));
   }
-  uVar16 = uVar13;
-  uVar20 = uVar18;
-  if ((uVar13 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar23 = uVar20;
+  uVar26 = uVar25;
+  if ((uVar20 & 0xffffffff) < (uVar16 & 0xffffffff)) {
     do {
-      cVar9 = (*param_4)(uVar13,uVar18);
-      uVar16 = uVar13;
-      if ((cVar9 != '\0') || (cVar9 = (*param_4)(uVar18,uVar13), cVar9 != '\0')) break;
-      uVar13 = uVar13 + 0x10;
-      uVar16 = uVar13;
-    } while ((uVar13 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar14 = (*in_r6)((EntityOrigin *)uVar20,(EntityOrigin *)uVar25);
+      uVar23 = uVar20;
+      if ((bVar14) || (bVar14 = (*in_r6)((EntityOrigin *)uVar25,(EntityOrigin *)uVar20), bVar14))
+      break;
+      uVar20 = uVar20 + 0x10;
+      uVar23 = uVar20;
+    } while ((uVar20 & 0xffffffff) < (uVar16 & 0xffffffff));
   }
   do {
-    uVar10 = uVar13;
-    if ((uVar16 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar17 = uVar20;
+    if ((uVar23 & 0xffffffff) < (uVar16 & 0xffffffff)) {
       do {
-        cVar9 = (*param_4)(uVar20,uVar16);
-        uVar13 = uVar10;
-        if (cVar9 == '\0') {
-          cVar9 = (*param_4)(uVar16,uVar20);
-          if (cVar9 != '\0') break;
-          puVar17 = (undefined4 *)uVar16;
-          uVar13 = uVar10 + 0x10;
-          puVar14 = (undefined4 *)uVar10;
-          uVar2 = *puVar14;
-          uVar3 = puVar14[1];
-          uVar4 = puVar14[2];
-          uVar5 = puVar14[3];
-          *puVar14 = *puVar17;
-          puVar14[1] = puVar17[1];
-          puVar14[2] = puVar17[2];
-          puVar14[3] = puVar17[3];
-          *puVar17 = uVar2;
-          puVar17[1] = uVar3;
-          puVar17[2] = uVar4;
-          puVar17[3] = uVar5;
+        pEVar10 = (EntityOrigin *)uVar23;
+        bVar14 = (*in_r6)((EntityOrigin *)uVar26,pEVar10);
+        uVar20 = uVar17;
+        if (!bVar14) {
+          bVar14 = (*in_r6)(pEVar10,(EntityOrigin *)uVar26);
+          if (bVar14) break;
+          uVar20 = uVar17 + 0x10;
+          pfVar21 = (float *)uVar17;
+          fVar1 = *pfVar21;
+          fVar2 = pfVar21[1];
+          fVar3 = pfVar21[2];
+          fVar4 = pfVar21[3];
+          *pfVar21 = pEVar10->origin[0];
+          pfVar21[1] = pEVar10->origin[1];
+          pfVar21[2] = pEVar10->origin[2];
+          pfVar21[3] = (float)pEVar10->obj;
+          pEVar10->origin[0] = fVar1;
+          pEVar10->origin[1] = fVar2;
+          pEVar10->origin[2] = fVar3;
+          pEVar10->obj = (uint)fVar4;
         }
-        uVar16 = uVar16 + 0x10;
-        uVar10 = uVar13;
-      } while ((uVar16 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar23 = uVar23 + 0x10;
+        uVar17 = uVar20;
+      } while ((uVar23 & 0xffffffff) < (uVar16 & 0xffffffff));
     }
-    bVar1 = (uVar18 & 0xffffffff) == (param_2 & 0xffffffff);
-    uVar19 = uVar20;
-    uVar10 = uVar18;
-    if ((param_2 & 0xffffffff) < (uVar18 & 0xffffffff)) {
+    bVar14 = (uVar25 & 0xffffffff) == (uVar15 & 0xffffffff);
+    uVar17 = uVar25;
+    if ((uVar15 & 0xffffffff) < (uVar25 & 0xffffffff)) {
       do {
-        uVar15 = uVar10 - 0x10;
-        cVar9 = (*param_4)(uVar15,uVar20);
-        uVar19 = uVar20;
-        if (cVar9 == '\0') {
-          cVar9 = (*param_4)(uVar20,uVar15);
-          if (cVar9 != '\0') break;
-          uVar19 = uVar20 - 0x10;
-          uVar2 = *(undefined4 *)uVar19;
-          iVar11 = (int)uVar20;
-          uVar3 = *(undefined4 *)(iVar11 + -0xc);
-          uVar4 = *(undefined4 *)(iVar11 + -8);
-          uVar5 = *(undefined4 *)(iVar11 + -4);
-          *(undefined4 *)uVar19 = *(undefined4 *)uVar15;
-          iVar7 = (int)uVar10;
-          *(undefined4 *)(iVar11 + -0xc) = *(undefined4 *)(iVar7 + -0xc);
-          *(undefined4 *)(iVar11 + -8) = *(undefined4 *)(iVar7 + -8);
-          *(undefined4 *)(iVar11 + -4) = *(undefined4 *)(iVar7 + -4);
-          *(undefined4 *)uVar15 = uVar2;
-          *(undefined4 *)(iVar7 + -0xc) = uVar3;
-          *(undefined4 *)(iVar7 + -8) = uVar4;
-          *(undefined4 *)(iVar7 + -4) = uVar5;
+        pEVar10 = (EntityOrigin *)(uVar17 - 0x10);
+        pEVar11 = (EntityOrigin *)uVar26;
+        bVar14 = (*in_r6)(pEVar10,pEVar11);
+        if (!bVar14) {
+          bVar14 = (*in_r6)(pEVar11,pEVar10);
+          if (bVar14) break;
+          uVar26 = uVar26 - 0x10;
+          fVar1 = *(float *)uVar26;
+          fVar2 = pEVar11[-1].origin[1];
+          fVar3 = pEVar11[-1].origin[2];
+          uVar9 = pEVar11[-1].obj;
+          *(float *)uVar26 = pEVar10->origin[0];
+          iVar18 = (int)uVar17;
+          pEVar11[-1].origin[1] = *(float *)(iVar18 + -0xc);
+          pEVar11[-1].origin[2] = *(float *)(iVar18 + -8);
+          pEVar11[-1].obj = *(uint *)(iVar18 + -4);
+          pEVar10->origin[0] = fVar1;
+          *(float *)(iVar18 + -0xc) = fVar2;
+          *(float *)(iVar18 + -8) = fVar3;
+          *(uint *)(iVar18 + -4) = uVar9;
         }
-        uVar18 = uVar18 - 0x10;
-        uVar20 = uVar19;
-        uVar10 = uVar15;
-      } while ((param_2 & 0xffffffff) < (uVar18 & 0xffffffff));
-      bVar1 = (uVar18 & 0xffffffff) == (param_2 & 0xffffffff);
+        uVar25 = uVar25 - 0x10;
+        uVar17 = uVar17 - 0x10;
+      } while ((uVar15 & 0xffffffff) < (uVar25 & 0xffffffff));
+      bVar14 = (uVar25 & 0xffffffff) == (uVar15 & 0xffffffff);
     }
-    puVar17 = (undefined4 *)uVar16;
-    puVar21 = (undefined4 *)uVar19;
-    puVar14 = (undefined4 *)uVar13;
-    if (bVar1) {
-      if ((uVar16 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar8 = puVar21;
-        puVar8[1] = puVar14;
-        __restgprlr_23(puVar8);
-        return;
+    puVar24 = (undefined4 *)uVar23;
+    puVar27 = (undefined4 *)uVar26;
+    puVar22 = (undefined4 *)uVar20;
+    if (bVar14) {
+      if ((uVar23 & 0xffffffff) == (uVar16 & 0xffffffff)) {
+        *puVar13 = puVar27;
+        puVar13[1] = puVar22;
+        pVar12 = (pair<EntityOrigin_*,EntityOrigin_*>)__restgprlr_23(puVar13);
+        return pVar12;
       }
-      if ((uVar13 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-        uVar2 = *puVar21;
-        uVar3 = puVar21[1];
-        uVar4 = puVar21[2];
-        uVar5 = puVar21[3];
-        *puVar21 = *puVar14;
-        puVar21[1] = puVar14[1];
-        puVar21[2] = puVar14[2];
-        puVar21[3] = puVar14[3];
-        *puVar14 = uVar2;
-        puVar14[1] = uVar3;
-        puVar14[2] = uVar4;
-        puVar14[3] = uVar5;
+      if ((uVar20 & 0xffffffff) != (uVar23 & 0xffffffff)) {
+        uVar5 = *puVar27;
+        uVar6 = puVar27[1];
+        uVar7 = puVar27[2];
+        uVar8 = puVar27[3];
+        *puVar27 = *puVar22;
+        puVar27[1] = puVar22[1];
+        puVar27[2] = puVar22[2];
+        puVar27[3] = puVar22[3];
+        *puVar22 = uVar5;
+        puVar22[1] = uVar6;
+        puVar22[2] = uVar7;
+        puVar22[3] = uVar8;
       }
-      uVar2 = *puVar21;
-      uVar13 = uVar13 + 0x10;
-      uVar3 = puVar21[1];
-      uVar4 = puVar21[2];
-      uVar5 = puVar21[3];
-      *puVar21 = *puVar17;
-      puVar21[1] = puVar17[1];
-      puVar21[2] = puVar17[2];
-      puVar21[3] = puVar17[3];
-      *puVar17 = uVar2;
-      puVar17[1] = uVar3;
-      puVar17[2] = uVar4;
-      puVar17[3] = uVar5;
-      uVar16 = uVar16 + 0x10;
-      uVar20 = uVar19 + 0x10;
+      uVar5 = *puVar27;
+      uVar20 = uVar20 + 0x10;
+      uVar6 = puVar27[1];
+      uVar7 = puVar27[2];
+      uVar8 = puVar27[3];
+      *puVar27 = *puVar24;
+      puVar27[1] = puVar24[1];
+      puVar27[2] = puVar24[2];
+      puVar27[3] = puVar24[3];
+      *puVar24 = uVar5;
+      puVar24[1] = uVar6;
+      puVar24[2] = uVar7;
+      puVar24[3] = uVar8;
+      uVar23 = uVar23 + 0x10;
+      uVar26 = uVar26 + 0x10;
     }
     else {
-      uVar10 = uVar18 - 0x10;
-      puVar12 = (undefined4 *)uVar10;
-      if ((uVar16 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar20 = uVar19 - 0x10;
-        puVar17 = (undefined4 *)uVar20;
-        if ((uVar10 & 0xffffffff) != (uVar20 & 0xffffffff)) {
-          uVar2 = *puVar12;
-          uVar3 = puVar12[1];
-          uVar4 = puVar12[2];
-          uVar5 = puVar12[3];
-          *puVar12 = *puVar17;
-          puVar12[1] = puVar21[-3];
-          puVar12[2] = puVar21[-2];
-          puVar12[3] = puVar21[-1];
-          *puVar17 = uVar2;
-          puVar21[-3] = uVar3;
-          puVar21[-2] = uVar4;
-          puVar21[-1] = uVar5;
+      uVar17 = uVar25 - 0x10;
+      puVar19 = (undefined4 *)uVar17;
+      if ((uVar23 & 0xffffffff) == (uVar16 & 0xffffffff)) {
+        uVar26 = uVar26 - 0x10;
+        puVar24 = (undefined4 *)uVar26;
+        if ((uVar17 & 0xffffffff) != (uVar26 & 0xffffffff)) {
+          uVar5 = *puVar19;
+          uVar6 = puVar19[1];
+          uVar7 = puVar19[2];
+          uVar8 = puVar19[3];
+          *puVar19 = *puVar24;
+          puVar19[1] = puVar27[-3];
+          puVar19[2] = puVar27[-2];
+          puVar19[3] = puVar27[-1];
+          *puVar24 = uVar5;
+          puVar27[-3] = uVar6;
+          puVar27[-2] = uVar7;
+          puVar27[-1] = uVar8;
         }
-        uVar13 = uVar13 - 0x10;
-        uVar2 = *puVar17;
-        uVar3 = puVar21[-3];
-        uVar4 = puVar21[-2];
-        uVar5 = puVar21[-1];
-        *puVar17 = *(undefined4 *)uVar13;
-        puVar21[-3] = puVar14[-3];
-        puVar21[-2] = puVar14[-2];
-        puVar21[-1] = puVar14[-1];
-        *(undefined4 *)uVar13 = uVar2;
-        puVar14[-3] = uVar3;
-        puVar14[-2] = uVar4;
-        puVar14[-1] = uVar5;
-        uVar18 = uVar10;
+        uVar20 = uVar20 - 0x10;
+        uVar5 = *puVar24;
+        uVar6 = puVar27[-3];
+        uVar7 = puVar27[-2];
+        uVar8 = puVar27[-1];
+        *puVar24 = *(undefined4 *)uVar20;
+        puVar27[-3] = puVar22[-3];
+        puVar27[-2] = puVar22[-2];
+        puVar27[-1] = puVar22[-1];
+        *(undefined4 *)uVar20 = uVar5;
+        puVar22[-3] = uVar6;
+        puVar22[-2] = uVar7;
+        puVar22[-1] = uVar8;
+        uVar25 = uVar17;
       }
       else {
-        uVar2 = *puVar17;
-        uVar3 = puVar17[1];
-        uVar4 = puVar17[2];
-        uVar5 = puVar17[3];
-        *puVar17 = *puVar12;
-        iVar11 = (int)uVar18;
-        puVar17[1] = *(undefined4 *)(iVar11 + -0xc);
-        puVar17[2] = *(undefined4 *)(iVar11 + -8);
-        puVar17[3] = *(undefined4 *)(iVar11 + -4);
-        *puVar12 = uVar2;
-        *(undefined4 *)(iVar11 + -0xc) = uVar3;
-        *(undefined4 *)(iVar11 + -8) = uVar4;
-        *(undefined4 *)(iVar11 + -4) = uVar5;
-        uVar18 = uVar10;
-        uVar16 = uVar16 + 0x10;
-        uVar20 = uVar19;
+        uVar5 = *puVar24;
+        uVar6 = puVar24[1];
+        uVar7 = puVar24[2];
+        uVar8 = puVar24[3];
+        *puVar24 = *puVar19;
+        iVar18 = (int)uVar25;
+        puVar24[1] = *(undefined4 *)(iVar18 + -0xc);
+        puVar24[2] = *(undefined4 *)(iVar18 + -8);
+        puVar24[3] = *(undefined4 *)(iVar18 + -4);
+        *puVar19 = uVar5;
+        *(undefined4 *)(iVar18 + -0xc) = uVar6;
+        *(undefined4 *)(iVar18 + -8) = uVar7;
+        *(undefined4 *)(iVar18 + -4) = uVar8;
+        uVar25 = uVar17;
+        uVar23 = uVar23 + 0x10;
       }
     }
   } while( true );
@@ -3920,243 +4330,277 @@ void std___Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const
 
 // 824900C8  ScrCmd_detach  (game/g_scr_main.cpp:3747)
 
-void ScrCmd_detach(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_detach(scr_entref_t param_1)
 
 {
-  GetEntity();
-  DetachCmd();
+  gentity_s *pgVar1;
+  
+  pgVar1 = GetEntity(param_1);
+  DetachCmd(pgVar1);
   return;
 }
 
 
 // 824900F0  ScrCmd_detachShieldModel  (game/g_scr_main.cpp:3768)
 
-void ScrCmd_detachShieldModel(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_detachShieldModel(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    Scr_Error(0xffffffff82077df0);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_Error("This function only supports player entities.");
   }
-  *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) = *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) & 0xfffffeff
-  ;
-  Scr_SetString((ulonglong)*(uint *)(iVar1 + 0x158) + 0x3910,0);
-  DetachCmd(iVar1);
+  (pgVar1->client->ps).otherFlags = (pgVar1->client->ps).otherFlags & 0xfffffeff;
+  Scr_SetString(&pgVar1->client->attachShieldTagName,0);
+  DetachCmd(pgVar1);
   return;
 }
 
 
-// 8249E360  std::_Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 8249E360  _Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+               (EntityOrigin *param_1,EntityOrigin *param_2,int param_3,
+               _func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  float fVar1;
+  EntityOrigin *pEVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int iVar7;
+  EntityOrigin *pEVar8;
+  EntityOrigin local_40 [4];
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  pEVar2 = (EntityOrigin *)__savegprlr_26(param_1);
+  pEVar8 = (EntityOrigin *)uVar3;
+  iVar5 = (int)pEVar8 - (int)pEVar2;
   do {
-    iVar2 = iVar2 >> 4;
-    if (iVar2 < 0x21) {
+    iVar5 = iVar5 >> 4;
+    if (iVar5 < 0x21) {
 LAB_8249e418:
-      if (1 < iVar2) {
-        std___Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar5) {
+        _Insertion_sort1<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&),EntityOrigin>
+                  (pEVar2,pEVar8,param_4,(EntityOrigin *)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                    (uVar1,param_2,param_4,0,0);
+    pEVar8 = (EntityOrigin *)uVar3;
+    iVar7 = (int)uVar4;
+    if (iVar7 < 1) {
+      if (0x20 < iVar5) {
+        if (1 < iVar5) {
+          _Make_heap<EntityOrigin_*,int,EntityOrigin,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                    (pEVar2,pEVar8,param_4,(int *)0x0,(EntityOrigin *)0x0);
         }
-        std___Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                  (pEVar2,pEVar8,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_8249e418;
     }
-    std___Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffff0) < (int)((int)param_2 - local_3c & 0xfffffff0)) {
-      std___Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<EntityOrigin_*,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+              (local_40,pEVar2,(_func___cdecl_bool_EntityOrigin_ptr_EntityOrigin_ptr *)pEVar8);
+    fVar1 = local_40[0].origin[1];
+    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
+    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
+    uVar6 = (ulonglong)(uint)local_40[0].origin[0];
+    if ((int)((int)local_40[0].origin[0] - (int)pEVar2 & 0xfffffff0U) <
+        (int)((int)pEVar8 - (int)local_40[0].origin[1] & 0xfffffff0U)) {
+      _Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                (pEVar2,(EntityOrigin *)local_40[0].origin[0],(int)uVar4,param_4);
+      uVar6 = uVar3;
+      pEVar2 = (EntityOrigin *)fVar1;
     }
     else {
-      std___Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+                ((EntityOrigin *)local_40[0].origin[1],pEVar8,(int)uVar4,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    pEVar8 = (EntityOrigin *)uVar6;
+    iVar5 = (int)pEVar8 - (int)pEVar2;
+    uVar3 = uVar6;
   } while( true );
 }
 
 
 // 82490160  ScrCmd_detachAll  (game/g_scr_main.cpp:3792)
 
-void ScrCmd_detachAll(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_detachAll(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0x10) = *(uint *)(iVar1 + 0x10) & 0xfffffeff;
-    Scr_SetString((ulonglong)*(uint *)(iVar2 + 0x158) + 0x3910,0);
+  pgVar2 = GetEntity(param_1);
+  pgVar1 = pgVar2->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).otherFlags = (pgVar1->ps).otherFlags & 0xfffffeff;
+    Scr_SetString(&pgVar2->client->attachShieldTagName,0);
   }
-  G_EntDetachAll(iVar2);
+  G_EntDetachAll(pgVar2);
   return;
 }
 
 
 // 824901C0  ScrCmd_GetAttachSize  (game/g_scr_main.cpp:3817)
 
-void ScrCmd_GetAttachSize(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetAttachSize(scr_entref_t param_1)
 
 {
-  int iVar1;
-  short *psVar2;
-  longlong lVar3;
+  gentity_s *pgVar1;
+  ushort *puVar2;
+  int iVar3;
   
-  iVar1 = GetEntity();
-  lVar3 = 0;
-  psVar2 = (short *)(iVar1 + 0x21c);
+  pgVar1 = GetEntity(param_1);
+  iVar3 = 0;
+  puVar2 = pgVar1->attachModelNames;
   do {
-    if (*psVar2 == 0) break;
-    lVar3 = lVar3 + 1;
-    psVar2 = psVar2 + 1;
-  } while ((int)lVar3 < 0x13);
-  Scr_AddInt(lVar3);
+    if (*puVar2 == 0) break;
+    iVar3 = iVar3 + 1;
+    puVar2 = puVar2 + 1;
+  } while (iVar3 < 0x13);
+  Scr_AddInt(iVar3);
   return;
 }
 
 
 // 82490210  ScrCmd_GetAttachModelName  (game/g_scr_main.cpp:3845)
 
-void ScrCmd_GetAttachModelName(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetAttachModelName(scr_entref_t param_1)
 
 {
-  int iVar2;
-  ulonglong uVar1;
+  gentity_s *pgVar1;
+  uint uVar2;
   
-  iVar2 = GetEntity();
-  uVar1 = Scr_GetInt(0);
-  if ((0x12 < (uVar1 & 0xffffffff)) ||
-     (*(short *)((int)((uVar1 + 0x10e & 0xffffffff) << 1) + iVar2) == 0)) {
-    Scr_ParamError(0,0xffffffff82077ea0);
+  pgVar1 = GetEntity(param_1);
+  uVar2 = Scr_GetInt(0);
+  if ((0x12 < uVar2) || (pgVar1->attachModelNames[uVar2] == 0)) {
+    Scr_ParamError(0,"bad index");
   }
-  G_ModelName(*(undefined2 *)((int)((uVar1 + 0x10e & 0xffffffff) << 1) + iVar2));
-  Scr_AddConstString();
+  uVar2 = G_ModelName((uint)pgVar1->attachModelNames[uVar2]);
+  Scr_AddConstString(uVar2);
   return;
 }
 
 
 // 82490290  ScrCmd_GetAttachTagName  (game/g_scr_main.cpp:3871)
 
-void ScrCmd_GetAttachTagName(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetAttachTagName(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar3;
-  ulonglong uVar2;
+  gentity_s *pgVar1;
+  uint uVar2;
   
-  iVar3 = GetEntity();
+  pgVar1 = GetEntity(param_1);
   uVar2 = Scr_GetInt(0);
-  if ((0x12 < (uVar2 & 0xffffffff)) ||
-     (*(short *)((int)((uVar2 + 0x10e & 0xffffffff) << 1) + iVar3) == 0)) {
-    Scr_ParamError(0,0xffffffff82077ea0);
+  if ((0x12 < uVar2) || (pgVar1->attachModelNames[uVar2] == 0)) {
+    Scr_ParamError(0,"bad index");
   }
-  iVar1 = (int)((uVar2 + 0x121 & 0xffffffff) << 1);
-  if (*(short *)(iVar1 + iVar3) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0xf28,0,0xffffffff82000f98,0xffffffff8206bd88);
+  if (pgVar1->attachTagNames[uVar2] == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0xf28,0,
+                    "%s");
   }
-  Scr_AddConstString(*(undefined2 *)(iVar1 + iVar3));
+  Scr_AddConstString((uint)pgVar1->attachTagNames[uVar2]);
   return;
 }
 
 
 // 82490340  ScrCmd_GetAttachIgnoreCollision  (game/g_scr_main.cpp:3898)
 
-void ScrCmd_GetAttachIgnoreCollision(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetAttachIgnoreCollision(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   uint uVar2;
   
-  iVar1 = GetEntity();
+  pgVar1 = GetEntity(param_1);
   uVar2 = Scr_GetInt(0);
-  if ((0x12 < uVar2) || (*(short *)((uVar2 + 0x10e) * 2 + iVar1) == 0)) {
-    Scr_ParamError(0,0xffffffff82077ea0);
+  if ((0x12 < uVar2) || (pgVar1->attachModelNames[uVar2] == 0)) {
+    Scr_ParamError(0,"bad index");
   }
-  Scr_AddBool((*(uint *)(iVar1 + 0x17c) & 1 << (uVar2 & 0x3f)) != 0);
+  Scr_AddBool((uint)((pgVar1->attachIgnoreCollision & 1 << (uVar2 & 0x3f)) != 0));
   return;
 }
 
 
 // 824903C8  ScrCmd_hidepart  (game/g_scr_main.cpp:3925)
 
-void ScrCmd_hidepart(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_hidepart(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar5;
-  uint uVar6;
-  undefined8 uVar4;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  DObj *pDVar3;
+  uint uVar4;
+  uint uVar5;
+  byte bVar7;
+  char *pcVar6;
   uint auStack_50 [20];
   
-  __savegprlr_27();
-  uVar1 = GetEntity();
-  uVar2 = Com_GetServerDObjForEnt();
-  if ((uVar2 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff82077f00);
+  sVar1 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar2 = GetEntity(sVar1);
+  pDVar3 = Com_GetServerDObjForEnt(pgVar2);
+  if (pDVar3 == (DObj *)0x0) {
+    Scr_Error("entity has no model");
   }
-  uVar3 = Scr_GetConstLowercaseString(0);
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 == 1) {
-    uVar6 = DObjGetReverseBoneIndex(uVar2,uVar3);
-    uVar6 = uVar6 & 0xff;
-    if (uVar6 != 0xff) goto LAB_8249048c;
-    uVar3 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077ed8,uVar3);
+  uVar4 = Scr_GetConstLowercaseString(0);
+  uVar5 = Scr_GetNumParam();
+  if (uVar5 == 1) {
+    bVar7 = DObjGetReverseBoneIndex(pDVar3,uVar4);
+    uVar5 = (uint)bVar7;
+    if (uVar5 != 0xff) goto LAB_8249048c;
+    SL_ConvertToString(uVar4);
+    pcVar6 = va("cannot find part \'%s\' in entity model");
   }
   else {
-    uVar4 = Scr_GetString(1);
-    uVar6 = DObjGetReverseModelBoneIndex(uVar2,uVar4,uVar3);
-    uVar6 = uVar6 & 0xff;
-    if (uVar6 != 0xff) goto LAB_8249048c;
-    uVar3 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077eac,uVar3,uVar4);
+    pcVar6 = Scr_GetString(1);
+    bVar7 = DObjGetReverseModelBoneIndex(pDVar3,pcVar6,uVar4);
+    uVar5 = (uint)bVar7;
+    if (uVar5 != 0xff) goto LAB_8249048c;
+    SL_ConvertToString(uVar4);
+    pcVar6 = va("cannot find part \'%s\' in entity model \'%s\'");
   }
-  Scr_Error();
+  Scr_Error(pcVar6);
 LAB_8249048c:
-  DObjGetHidePartBits(uVar2,auStack_50);
-  auStack_50[(int)uVar6 >> 5] = (&DAT_82992400)[uVar6 & 0x1f] | auStack_50[(int)uVar6 >> 5];
-  DObjSetHidePartBits(uVar2,auStack_50);
-  G_EntityStateSetPartBits(uVar1,auStack_50);
+  DObjGetHidePartBits(pDVar3,auStack_50);
+  auStack_50[(int)uVar5 >> 5] =
+       *(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4) | auStack_50[(int)uVar5 >> 5];
+  DObjSetHidePartBits(pDVar3,auStack_50);
+  G_EntityStateSetPartBits(pgVar2,auStack_50);
   __restgprlr_27();
   return;
 }
@@ -4164,63 +4608,64 @@ LAB_8249048c:
 
 // 824904E0  ScrCmd_hidepartAllInstances  (game/g_scr_main.cpp:3976)
 
-void ScrCmd_hidepartAllInstances(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_hidepartAllInstances(scr_entref_t param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  DObj *pDVar3;
+  uint uVar4;
+  uint uVar5;
+  char *pcVar6;
+  byte bVar7;
   int iVar8;
-  ulonglong uVar6;
-  ulonglong uVar7;
   uint auStack_50 [20];
   
-  __savegprlr_26();
-  uVar3 = GetEntity();
-  uVar4 = Com_GetServerDObjForEnt();
-  if ((uVar4 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff82077f00);
+  sVar1 = (scr_entref_t)__savegprlr_26(param_1);
+  pgVar2 = GetEntity(sVar1);
+  pDVar3 = Com_GetServerDObjForEnt(pgVar2);
+  if (pDVar3 == (DObj *)0x0) {
+    Scr_Error("entity has no model");
   }
-  uVar5 = Scr_GetConstLowercaseString(0);
-  iVar8 = Scr_GetNumParam();
-  if (iVar8 == 2) {
-    uVar6 = Scr_GetString(1);
+  uVar4 = Scr_GetConstLowercaseString(0);
+  uVar5 = Scr_GetNumParam();
+  if (uVar5 == 2) {
+    pcVar6 = Scr_GetString(1);
   }
   else {
-    uVar6 = 0;
+    pcVar6 = (char *)0x0;
   }
-  DObjGetHidePartBits(uVar4,auStack_50);
+  DObjGetHidePartBits(pDVar3,auStack_50);
   iVar8 = 0;
-  uVar7 = 0xfe;
+  bVar7 = 0xfe;
   while( true ) {
-    if ((uVar6 & 0xffffffff) == 0) {
-      uVar7 = DObjGetNextBoneIndex(uVar4,uVar5,uVar7);
+    if (pcVar6 == (char *)0x0) {
+      bVar7 = DObjGetNextBoneIndex(pDVar3,uVar4,bVar7);
     }
     else {
-      uVar7 = DObjGetNextModelBoneIndex(uVar4,uVar6,uVar5,uVar7);
+      bVar7 = DObjGetNextModelBoneIndex(pDVar3,pcVar6,uVar4,bVar7);
     }
-    uVar2 = uVar7 & 0xff;
-    if (uVar2 == 0xff) break;
-    iVar1 = (int)uVar2 >> 5;
+    if (bVar7 == 0xff) break;
     iVar8 = iVar8 + 1;
-    auStack_50[iVar1] =
-         *(uint *)((int)&DAT_82992400 + ((uint)(uVar2 << 2) & 0x7c)) | auStack_50[iVar1];
+    auStack_50[(int)(uint)bVar7 >> 5] =
+         *(uint *)(&g_bitShift + (bVar7 & 0x1f) * 4) | auStack_50[(int)(uint)bVar7 >> 5];
   }
   if (iVar8 == 0) {
-    if ((uVar6 & 0xffffffff) == 0) {
-      uVar5 = SL_ConvertToString(uVar5);
-      va(0xffffffff82077ed8,uVar5);
+    if (pcVar6 == (char *)0x0) {
+      SL_ConvertToString(uVar4);
+      pcVar6 = va("cannot find part \'%s\' in entity model");
     }
     else {
-      uVar5 = SL_ConvertToString(uVar5);
-      va(0xffffffff82077eac,uVar5,uVar6);
+      SL_ConvertToString(uVar4);
+      pcVar6 = va("cannot find part \'%s\' in entity model \'%s\'");
     }
-    Scr_Error();
+    Scr_Error(pcVar6);
   }
-  DObjSetHidePartBits(uVar4,auStack_50);
-  G_EntityStateSetPartBits(uVar3,auStack_50);
+  DObjSetHidePartBits(pDVar3,auStack_50);
+  G_EntityStateSetPartBits(pgVar2,auStack_50);
   __restgprlr_26();
   return;
 }
@@ -4228,71 +4673,80 @@ void ScrCmd_hidepartAllInstances(void)
 
 // 82490628  ScrCmd_hideallparts  (game/g_scr_main.cpp:4037)
 
-void ScrCmd_hideallparts(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_hideallparts(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 local_30;
-  undefined8 local_28;
-  undefined8 local_20;
+  gentity_s *pgVar1;
+  DObj *pDVar2;
+  uint local_30 [6];
   
-  uVar1 = GetEntity();
-  uVar2 = Com_GetServerDObjForEnt();
-  if ((uVar2 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff82077f00);
+  pgVar1 = GetEntity(param_1);
+  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
+  if (pDVar2 == (DObj *)0x0) {
+    Scr_Error("entity has no model");
   }
-  local_30 = 0xffffffffffffffff;
-  local_28 = 0xffffffffffffffff;
-  local_20 = 0xffffffffffffffff;
-  DObjSetHidePartBits(uVar2,&local_30);
-  G_EntityStateSetPartBits(uVar1,&local_30);
+  local_30[0] = 0xffffffff;
+  local_30[1] = 0xffffffff;
+  local_30[2] = 0xffffffff;
+  local_30[3] = 0xffffffff;
+  local_30[4] = 0xffffffff;
+  local_30[5] = 0xffffffff;
+  DObjSetHidePartBits(pDVar2,local_30);
+  G_EntityStateSetPartBits(pgVar1,local_30);
   return;
 }
 
 
 // 824906A8  ScrCmd_showpart  (game/g_scr_main.cpp:4069)
 
-void ScrCmd_showpart(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_showpart(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar5;
-  uint uVar6;
-  undefined8 uVar4;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  DObj *pDVar3;
+  uint uVar4;
+  uint uVar5;
+  byte bVar7;
+  char *pcVar6;
   uint auStack_50 [20];
   
-  __savegprlr_27();
-  uVar1 = GetEntity();
-  uVar2 = Com_GetServerDObjForEnt();
-  if ((uVar2 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff82077f00);
+  sVar1 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar2 = GetEntity(sVar1);
+  pDVar3 = Com_GetServerDObjForEnt(pgVar2);
+  if (pDVar3 == (DObj *)0x0) {
+    Scr_Error("entity has no model");
   }
-  uVar3 = Scr_GetConstLowercaseString(0);
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 == 1) {
-    uVar6 = DObjGetReverseBoneIndex(uVar2,uVar3);
-    uVar6 = uVar6 & 0xff;
-    if (uVar6 != 0xff) goto LAB_8249076c;
-    uVar3 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077ed8,uVar3);
+  uVar4 = Scr_GetConstLowercaseString(0);
+  uVar5 = Scr_GetNumParam();
+  if (uVar5 == 1) {
+    bVar7 = DObjGetReverseBoneIndex(pDVar3,uVar4);
+    uVar5 = (uint)bVar7;
+    if (uVar5 != 0xff) goto LAB_8249076c;
+    SL_ConvertToString(uVar4);
+    pcVar6 = va("cannot find part \'%s\' in entity model");
   }
   else {
-    uVar4 = Scr_GetString(1);
-    uVar6 = DObjGetReverseModelBoneIndex(uVar2,uVar4,uVar3);
-    uVar6 = uVar6 & 0xff;
-    if (uVar6 != 0xff) goto LAB_8249076c;
-    uVar3 = SL_ConvertToString(uVar3);
-    va(0xffffffff82077eac,uVar3,uVar4);
+    pcVar6 = Scr_GetString(1);
+    bVar7 = DObjGetReverseModelBoneIndex(pDVar3,pcVar6,uVar4);
+    uVar5 = (uint)bVar7;
+    if (uVar5 != 0xff) goto LAB_8249076c;
+    SL_ConvertToString(uVar4);
+    pcVar6 = va("cannot find part \'%s\' in entity model \'%s\'");
   }
-  Scr_Error();
+  Scr_Error(pcVar6);
 LAB_8249076c:
-  DObjGetHidePartBits(uVar2,auStack_50);
-  auStack_50[(int)uVar6 >> 5] = auStack_50[(int)uVar6 >> 5] & ~(&DAT_82992400)[uVar6 & 0x1f];
-  DObjSetHidePartBits(uVar2,auStack_50);
-  G_EntityStateSetPartBits(uVar1,auStack_50);
+  DObjGetHidePartBits(pDVar3,auStack_50);
+  auStack_50[(int)uVar5 >> 5] =
+       auStack_50[(int)uVar5 >> 5] & ~*(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4);
+  DObjSetHidePartBits(pDVar3,auStack_50);
+  G_EntityStateSetPartBits(pgVar2,auStack_50);
   __restgprlr_27();
   return;
 }
@@ -4300,47 +4754,57 @@ LAB_8249076c:
 
 // 824907C0  ScrCmd_showallparts  (game/g_scr_main.cpp:4118)
 
-void ScrCmd_showallparts(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_showallparts(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 local_30;
-  undefined8 local_28;
-  undefined8 local_20;
+  gentity_s *pgVar1;
+  DObj *pDVar2;
+  uint local_30 [6];
   
-  uVar1 = GetEntity();
-  uVar2 = Com_GetServerDObjForEnt();
-  if ((uVar2 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff82077f00);
+  pgVar1 = GetEntity(param_1);
+  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
+  if (pDVar2 == (DObj *)0x0) {
+    Scr_Error("entity has no model");
   }
-  local_30 = 0;
-  local_28 = 0;
-  local_20 = 0;
-  DObjSetHidePartBits(uVar2,&local_30);
-  G_EntityStateSetPartBits(uVar1,&local_30);
+  local_30[0] = 0;
+  local_30[1] = 0;
+  local_30[2] = 0;
+  local_30[3] = 0;
+  local_30[4] = 0;
+  local_30[5] = 0;
+  DObjSetHidePartBits(pDVar2,local_30);
+  G_EntityStateSetPartBits(pgVar1,local_30);
   return;
 }
 
 
 // 82490840  ScrCmd_SetMoveSpeedScale  (game/g_scr_main.cpp:4149)
 
-void ScrCmd_SetMoveSpeedScale(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_SetMoveSpeedScale(scr_entref_t param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  __savegprlr_29();
-  iVar1 = GetPlayerEntity();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x103a,0,0xffffffff82000f98,0xffffffff82002614);
+  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar2 = GetPlayerEntity(sVar1);
+  if (pgVar2 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x103a,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x103b,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x103b,0,
+                    "%s");
   }
-  dVar2 = (double)Scr_GetFloat(0);
-  *(float *)(*(int *)(iVar1 + 0x158) + 0x33c0) = (float)dVar2;
+  fVar3 = Scr_GetFloat(0);
+  (pgVar2->client->sess).moveSpeedScaleMultiplier = fVar3;
   __restgprlr_29();
   return;
 }
@@ -4348,76 +4812,87 @@ void ScrCmd_SetMoveSpeedScale(void)
 
 // 824908C8  ScrLinkTo_Internal  (game/g_scr_main.cpp:4166)
 
-void ScrLinkTo_Internal(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrLinkTo_Internal(scr_entref_t param_1,bool param_2)
 
 {
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar5;
-  ulonglong uVar6;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
+  char *pcVar4;
+  gentity_s *pgVar5;
+  uint uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  float afStack_50 [4];
+  float afStack_40 [16];
   
-  __savegprlr_27();
-  iVar3 = GetEntity();
-  iVar4 = Scr_GetType(0);
-  if ((iVar4 != 1) || (iVar4 = Scr_GetPointerType(0), iVar4 != 0x16)) {
-    Scr_ParamError(0,0xffffffff8206d360);
+  uVar8 = (ulonglong)param_2;
+  sVar1 = (scr_entref_t)__savegprlr_27(param_1);
+  pgVar2 = GetEntity(sVar1);
+  iVar3 = Scr_GetType(0);
+  if ((iVar3 != 1) || (iVar3 = Scr_GetPointerType(0), iVar3 != 0x16)) {
+    Scr_ParamError(0,"not an entity");
   }
-  if (*(int *)(iVar3 + 0x158) != 0) {
-    Scr_ParamError(0,0xffffffff82078040);
+  if (pgVar2->client != (gclient_s *)0x0) {
+    Scr_ParamError(0,"This function doesn\'t support player entities.");
   }
-  if ((*(uint *)(iVar3 + 0x184) & 0x1000) == 0) {
-    uVar1 = G_GetEntityTypeName(iVar3);
-    uVar2 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff82077ff8,uVar2,uVar1);
-    Scr_ObjectError();
+  if ((pgVar2->flags & 0x1000U) == 0) {
+    G_GetEntityTypeName(pgVar2);
+    SL_ConvertToString((uint)pgVar2->classname);
+    pcVar4 = va("entity (classname: \'%s\', type: \'%s\') does not currently support linkTo");
+    Scr_ObjectError(pcVar4);
   }
-  iVar4 = Scr_GetEntity(0);
-  iVar5 = Scr_GetNumParam();
-  uVar6 = 0;
-  if (iVar5 < 2) {
+  pgVar5 = Scr_GetEntity(0);
+  uVar6 = Scr_GetNumParam();
+  uVar9 = 0;
+  if ((int)uVar6 < 2) {
 LAB_82490ad4:
-    iVar5 = G_EntLinkTo(iVar3,iVar4,uVar6);
-    if (iVar5 != 0) {
-      *(char *)(*(int *)(iVar3 + 0x214) + 10) = (char)param_2;
+    iVar3 = G_EntLinkTo(pgVar2,pgVar5,(uint)uVar9);
+    if (iVar3 != 0) {
+      pgVar2->tagInfo->blendToParent = SUB81(uVar8,0);
       __restgprlr_27();
       return;
     }
   }
   else {
-    uVar6 = Scr_GetConstLowercaseString(1);
-    uVar6 = -(ulonglong)(DAT_835a0b80 != uVar6) & uVar6;
-    if ((iVar5 < 3) || ((param_2 & 0xff) != 0)) goto LAB_82490ad4;
-    Scr_GetVector(2,auStack_40);
-    Scr_GetVector(3,auStack_50);
-    iVar3 = G_EntLinkToWithOffset(iVar3,iVar4,uVar6,auStack_40,auStack_50);
+    uVar7 = Scr_GetConstLowercaseString(1);
+    uVar9 = -(ulonglong)((ulonglong)scr_const._ != (longlong)(int)uVar7) & (longlong)(int)uVar7;
+    if (((int)uVar6 < 3) || ((uVar8 & 0xff) != 0)) goto LAB_82490ad4;
+    Scr_GetVector(2,afStack_40);
+    Scr_GetVector(3,afStack_50);
+    iVar3 = G_EntLinkToWithOffset(pgVar2,pgVar5,(uint)uVar9,afStack_40,afStack_50);
     if (iVar3 != 0) goto LAB_82490acc;
   }
-  iVar3 = SV_DObjExists(iVar4);
+  iVar3 = SV_DObjExists(pgVar5);
   if (iVar3 == 0) {
-    if (*(short *)(iVar4 + 0x168) == 0) {
-      Scr_Error(0xffffffff82077fc8);
+    if (pgVar5->model == 0) {
+      Scr_Error("failed to link entity since parent has no model");
     }
-    G_ModelName(*(undefined2 *)(iVar4 + 0x168));
-    uVar1 = SL_ConvertToString();
-    va(0xffffffff82077f8c,uVar1);
-    Scr_Error();
+    uVar6 = G_ModelName((uint)pgVar5->model);
+    SL_ConvertToString(uVar6);
+    pcVar4 = va("failed to link entity since parent model \'%s\' is invalid");
+    Scr_Error(pcVar4);
   }
-  if (*(short *)(iVar4 + 0x168) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x1084,0,0xffffffff82000f98,0xffffffff82077f7c);
+  if (pgVar5->model == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1084,0,
+                    "%s");
   }
-  if (((uVar6 & 0xffffffff) != 0) && (iVar3 = SV_DObjGetBoneIndex(iVar4,uVar6), iVar3 < 0)) {
-    SV_DObjDumpInfo(iVar4);
-    G_ModelName(*(undefined2 *)(iVar4 + 0x168));
-    uVar1 = SL_ConvertToString();
-    uVar2 = SL_ConvertToString(uVar6);
-    va(0xffffffff82077f30,uVar2,uVar1);
-    Scr_Error();
+  if ((uVar9 & 0xffffffff) != 0) {
+    iVar3 = SV_DObjGetBoneIndex(pgVar5,(uint)uVar9);
+    if (iVar3 < 0) {
+      SV_DObjDumpInfo(pgVar5);
+      uVar6 = G_ModelName((uint)pgVar5->model);
+      SL_ConvertToString(uVar6);
+      SL_ConvertToString((uint)uVar9);
+      pcVar4 = va("failed to link entity since tag \'%s\' does not exist in parent model \'%s\'");
+      Scr_Error(pcVar4);
+    }
   }
-  Scr_Error(0xffffffff82077f14);
+  Scr_Error("failed to link entity");
 LAB_82490acc:
   __restgprlr_27();
   return;
@@ -4426,39 +4901,40 @@ LAB_82490acc:
 
 // 82490B00  ScrCmd_LinkTo  (game/g_scr_main.cpp:4257)
 
-void ScrCmd_LinkTo(undefined8 param_1)
+void ScrCmd_LinkTo(scr_entref_t param_1)
 
 {
-  ScrLinkTo_Internal(param_1,0);
+  ScrLinkTo_Internal(param_1,false);
   return;
 }
 
 
 // 82490B08  ScrCmd_LinkToBlendToTag  (game/g_scr_main.cpp:4277)
 
-void ScrCmd_LinkToBlendToTag(undefined8 param_1)
+void ScrCmd_LinkToBlendToTag(scr_entref_t param_1)
 
 {
-  ScrLinkTo_Internal(param_1,1);
+  ScrLinkTo_Internal(param_1,true);
   return;
 }
 
 
 // 82490B10  ScrCmd_Unlink  (game/g_scr_main.cpp:4293)
 
-void ScrCmd_Unlink(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_Unlink(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  G_EntUnlink();
-  if (*(int *)(iVar1 + 0x158) != 0) {
-    *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x367c) = 0;
-    *(uint *)(*(int *)(iVar1 + 0x158) + 0x35f8) =
-         *(uint *)(*(int *)(iVar1 + 0x158) + 0x35f8) & 0xfffffffb;
-    *(uint *)(*(int *)(iVar1 + 0x158) + 0x14) =
-         *(uint *)(*(int *)(iVar1 + 0x158) + 0x14) & 0xfffffffe;
+  pgVar1 = GetEntity(param_1);
+  G_EntUnlink(pgVar1);
+  if (pgVar1->client != (gclient_s *)0x0) {
+    pgVar1->client->linkAnglesFrac = 0.0;
+    pgVar1->client->flags = pgVar1->client->flags & 0xfffffffb;
+    (pgVar1->client->ps).linkFlags = (pgVar1->client->ps).linkFlags & 0xfffffffe;
   }
   return;
 }
@@ -4466,225 +4942,247 @@ void ScrCmd_Unlink(void)
 
 // 82490B80  ScrCmd_IsLinked  (game/g_scr_main.cpp:4329)
 
-void ScrCmd_IsLinked(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_IsLinked(scr_entref_t param_1)
 
 {
-  GetEntity();
-  G_EntIsLinked();
-  Scr_AddBool();
+  gentity_s *pgVar1;
+  int iVar2;
+  
+  pgVar1 = GetEntity(param_1);
+  iVar2 = G_EntIsLinked(pgVar1);
+  Scr_AddBool(iVar2);
   return;
 }
 
 
 // 82490BA8  ScrCmd_EnableLinkTo  (game/g_scr_main.cpp:4350)
 
-void ScrCmd_EnableLinkTo(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_EnableLinkTo(scr_entref_t param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar3 = GetEntity();
-  if ((*(uint *)(iVar3 + 0x184) & 0x1000) != 0) {
-    Scr_ObjectError(0xffffffff820780d0);
+  pgVar1 = GetEntity(param_1);
+  if ((pgVar1->flags & 0x1000U) != 0) {
+    Scr_ObjectError("entity already has linkTo enabled");
   }
-  if ((*(int *)(iVar3 + 4) != 0) || (*(char *)(iVar3 + 0x16a) != '\0')) {
-    uVar1 = G_GetEntityTypeName(iVar3);
-    uVar2 = SL_ConvertToString(*(undefined2 *)(iVar3 + 0x172));
-    va(0xffffffff82078080,uVar2,uVar1);
-    Scr_ObjectError();
+  if (((pgVar1->s).eType != 0) || (pgVar1->physicsObject != '\0')) {
+    G_GetEntityTypeName(pgVar1);
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("entity (classname: \'%s\', type: \'%s\') does not currently support enableLinkTo");
+    Scr_ObjectError(pcVar2);
   }
-  if (*(int *)(iVar3 + 0x158) != 0) {
-    MyAssertHandler(0xffffffff82076e74,0x1109,0,0xffffffff82000f98,0xffffffff82078070);
+  if (pgVar1->client != (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1109,0,
+                    "%s");
   }
-  *(uint *)(iVar3 + 0x184) = *(uint *)(iVar3 + 0x184) | 0x1000;
+  pgVar1->flags = pgVar1->flags | 0x1000;
   return;
 }
 
 
 // 82490C78  ClientmaskSetFlagVisible  (game/g_scr_main.cpp:4378)
 
-void ClientmaskSetFlagVisible(int param_1,uint param_2)
+void ClientmaskSetFlagVisible(int *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  if (0x11 < (int)param_2) {
-    MyAssertHandler(0xffffffff82076e74,0x111b,0,0xffffffff82000f98,0xffffffff82058548);
+  if (0x11 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x111b,0,
+                    "%s");
   }
-  iVar1 = ((int)param_2 >> 5) * 4;
-  *(uint *)(iVar1 + param_1) = *(uint *)(iVar1 + param_1) & ~(1 << (param_2 & 0x1f));
+  param_1[param_2 >> 5] = param_1[param_2 >> 5] & ~(1 << (param_2 & 0x1fU));
   return;
 }
 
 
 // 82490CF8  PlayerLinkTo_Internal  (game/g_scr_main.cpp:4386)
 
-void PlayerLinkTo_Internal(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerLinkTo_Internal(scr_entref_t param_1,PlayerLinkToType param_2)
 
 {
-  int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar1;
-  char cVar7;
-  ulonglong uVar8;
-  double dVar9;
+  gclient_s *pgVar1;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  int iVar4;
+  gentity_s *pgVar5;
+  uint uVar6;
+  uint uVar7;
+  char cVar8;
+  ulonglong uVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
+  float fVar15;
   
-  __savegprlr_22();
-  iVar2 = GetEntity();
-  iVar3 = Scr_GetType(0);
-  if ((iVar3 != 1) || (iVar3 = Scr_GetPointerType(0), iVar3 != 0x16)) {
-    Scr_ParamError(0,0xffffffff8206d360);
+  sVar2 = (scr_entref_t)__savegprlr_22(param_1);
+  pgVar3 = GetEntity(sVar2);
+  iVar4 = Scr_GetType(0);
+  if ((iVar4 != 1) || (iVar4 = Scr_GetPointerType(0), iVar4 != 0x16)) {
+    Scr_ParamError(0,"not an entity");
   }
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    Scr_ObjectError(0xffffffff82078178);
+  if (pgVar3->client == (gclient_s *)0x0) {
+    Scr_ObjectError("not a player entity");
   }
-  iVar3 = *(int *)(iVar2 + 0x158);
-  if ((*(uint *)(iVar2 + 0x184) & 0x1000) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x1135,0,0xffffffff82000f98,0xffffffff82078158);
+  pgVar1 = pgVar3->client;
+  if ((pgVar3->flags & 0x1000U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1135,0,
+                    "%s");
   }
-  puVar4 = (undefined4 *)Scr_GetEntity(0);
-  iVar5 = Scr_GetNumParam();
-  uVar8 = 0;
-  if ((1 < iVar5) && (iVar6 = Scr_GetType(1), iVar6 != 0)) {
-    uVar8 = Scr_GetConstLowercaseString(1);
-    uVar8 = -(ulonglong)(DAT_835a0b80 != uVar8) & uVar8;
+  pgVar5 = Scr_GetEntity(0);
+  uVar6 = Scr_GetNumParam();
+  uVar9 = 0;
+  if ((1 < (int)uVar6) && (iVar4 = Scr_GetType(1), iVar4 != 0)) {
+    uVar7 = Scr_GetConstLowercaseString(1);
+    uVar9 = -(ulonglong)((ulonglong)scr_const._ != (longlong)(int)uVar7) & (longlong)(int)uVar7;
   }
-  if (param_2 == 1) {
-    *(undefined1 *)(iVar3 + 0x3675) = 1;
-    *(uint *)(iVar3 + 0x14) = *(uint *)(iVar3 + 0x14) & 0xfffffffb;
-    if (iVar5 < 8) {
-      *(undefined1 *)(iVar3 + 0x3676) = 0;
-      *(undefined1 *)(iVar3 + 0x3677) = 0;
+  if (param_2 == PLAYERLINKTO_DELTA) {
+    uVar7 = (pgVar1->ps).linkFlags;
+    pgVar1->link_rotationMovesEyePos = true;
+    (pgVar1->ps).linkFlags = uVar7 & 0xfffffffb;
+    if ((int)uVar6 < 8) {
+      pgVar1->link_doCollision = false;
+      pgVar1->link_useTagAnglesForViewAngles = false;
     }
     else {
-      lVar1 = Scr_GetInt(7);
-      *(undefined1 *)(iVar3 + 0x3676) = 0;
-      *(char *)(iVar3 + 0x3677) = '\x01' - (lVar1 == 0);
+      iVar4 = Scr_GetInt(7);
+      pgVar1->link_doCollision = false;
+      pgVar1->link_useTagAnglesForViewAngles = (bool)('\x01' - (iVar4 == 0));
     }
   }
-  else if (param_2 == 2) {
-    if ((uVar8 & 0xffffffff) != (ulonglong)DAT_835a0c60) {
-      Scr_Error(0xffffffff82078118);
+  else if (param_2 == PLAYERLINKTO_DELTA_WEAPONVIEWONLY) {
+    if ((uVar9 & 0xffffffff) != (ulonglong)scr_const.tag_player) {
+      Scr_Error("This function only supports linking to tags named \'tag_player\'.");
     }
-    *(undefined4 *)(iVar3 + 0x1cc) = *(undefined4 *)(iVar3 + 0x158);
-    *(undefined4 *)(iVar3 + 0x1d0) = *(undefined4 *)(iVar3 + 0x15c);
-    *(undefined4 *)(iVar3 + 0x1d4) = *(undefined4 *)(iVar3 + 0x160);
-    *(undefined1 *)(iVar3 + 0x3675) = 0;
-    *(uint *)(iVar3 + 0x14) = *(uint *)(iVar3 + 0x14) | 0xc;
-    if (iVar5 < 8) {
-      cVar7 = '\0';
-    }
-    else {
-      lVar1 = Scr_GetInt(7);
-      cVar7 = '\x01' - (lVar1 == 0);
-    }
-    *(undefined1 *)(iVar3 + 0x3676) = 0;
-    *(char *)(iVar3 + 0x3677) = cVar7;
-    *(undefined4 *)(iVar3 + 0x1d8) = *puVar4;
-    if ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
-      ClientmaskSetFlagVisible(puVar4 + 0x3f,*(undefined4 *)(iVar3 + 0x150));
+    (pgVar1->ps).linkWeaponAngles[0] = (pgVar1->ps).viewangles[0];
+    (pgVar1->ps).linkWeaponAngles[1] = (pgVar1->ps).viewangles[1];
+    (pgVar1->ps).linkWeaponAngles[2] = (pgVar1->ps).viewangles[2];
+    pgVar1->link_rotationMovesEyePos = false;
+    (pgVar1->ps).linkFlags = (pgVar1->ps).linkFlags | 0xc;
+    if ((int)uVar6 < 8) {
+      cVar8 = false;
     }
     else {
-      puVar4[0x3f] = 0;
+      iVar4 = Scr_GetInt(7);
+      cVar8 = '\x01' - (iVar4 == 0);
+    }
+    pgVar1->link_doCollision = false;
+    pgVar1->link_useTagAnglesForViewAngles = (bool)cVar8;
+    (pgVar1->ps).linkWeaponEnt = (pgVar5->s).number;
+    if (((splitscreen->current).enabled == false) || ((onlinegame->current).enabled != false)) {
+      ClientmaskSetFlagVisible((pgVar5->s).clientMask,(pgVar1->ps).clientNum);
+    }
+    else {
+      (pgVar5->s).clientMask[0] = 0;
     }
   }
   else {
-    if (param_2 != 0) {
-      MyAssertHandler(0xffffffff82076e74,0x1166,0,0xffffffff82000f98,0xffffffff820780f4);
+    if (param_2 != PLAYERLINKTO_NORMAL) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1166,
+                      0,"%s");
     }
-    *(undefined1 *)(iVar3 + 0x3675) = 0;
-    *(undefined1 *)(iVar3 + 0x3677) = 1;
-    *(uint *)(iVar3 + 0x14) = *(uint *)(iVar3 + 0x14) & 0xfffffffb;
-    if (iVar5 < 8) {
-      cVar7 = '\0';
+    uVar7 = (pgVar1->ps).linkFlags;
+    pgVar1->link_rotationMovesEyePos = false;
+    pgVar1->link_useTagAnglesForViewAngles = true;
+    (pgVar1->ps).linkFlags = uVar7 & 0xfffffffb;
+    if ((int)uVar6 < 8) {
+      cVar8 = false;
     }
     else {
-      lVar1 = Scr_GetInt(7);
-      cVar7 = '\x01' - (lVar1 == 0);
+      iVar4 = Scr_GetInt(7);
+      cVar8 = '\x01' - (iVar4 == 0);
     }
-    *(char *)(iVar3 + 0x3676) = cVar7;
+    pgVar1->link_doCollision = (bool)cVar8;
   }
-  *(undefined1 *)(iVar3 + 0x3678) = 0;
-  dVar12 = 0.0;
-  dVar10 = dVar12;
-  if (2 < iVar5) {
-    dVar12 = (double)Scr_GetFloat(2);
-  }
-  *(float *)(iVar3 + 0x367c) = (float)dVar12;
-  *(uint *)(iVar3 + 0x35f8) = *(uint *)(iVar3 + 0x35f8) & 0xfffffffb;
-  dVar13 = 180.0;
-  dVar12 = dVar13;
-  if (3 < iVar5) {
-    dVar13 = (double)Scr_GetFloat(3);
-  }
-  dVar11 = dVar12;
-  if ((float)(dVar13 - dVar12) < 0.0) {
-    dVar11 = dVar13;
-  }
-  dVar9 = dVar10;
-  if (-dVar13 < 0.0) {
-    dVar9 = dVar11;
-  }
-  *(float *)(iVar3 + 0x3694) = (float)-dVar9;
-  dVar13 = dVar12;
-  if (4 < iVar5) {
-    dVar12 = (double)Scr_GetFloat(4);
-  }
+  pgVar1->link_useBaseAnglesForViewClamp = false;
+  dVar13 = 0.0;
   dVar11 = dVar13;
-  if ((float)(dVar12 - dVar13) < 0.0) {
-    dVar11 = dVar12;
+  if (2 < (int)uVar6) {
+    fVar15 = Scr_GetFloat(2);
+    dVar13 = (double)fVar15;
   }
-  dVar9 = dVar10;
-  if (-dVar12 < 0.0) {
-    dVar9 = dVar11;
+  pgVar1->linkAnglesFrac = (float)dVar13;
+  pgVar1->flags = pgVar1->flags & 0xfffffffb;
+  dVar14 = 180.0;
+  dVar13 = dVar14;
+  if (3 < (int)uVar6) {
+    fVar15 = Scr_GetFloat(3);
+    dVar14 = (double)fVar15;
   }
-  *(float *)(iVar3 + 0x36ac) = (float)dVar9;
   dVar12 = dVar13;
-  if (5 < iVar5) {
-    dVar13 = (double)Scr_GetFloat(5);
+  if ((float)(dVar14 - dVar13) < 0.0) {
+    dVar12 = dVar14;
   }
-  dVar11 = dVar12;
-  if ((float)(dVar13 - dVar12) < 0.0) {
-    dVar11 = dVar13;
+  dVar10 = dVar11;
+  if (-dVar14 < 0.0) {
+    dVar10 = dVar12;
   }
-  dVar9 = dVar10;
+  (pgVar1->link_viewClamp).min.goal[1] = (float)-dVar10;
+  dVar14 = dVar13;
+  if (4 < (int)uVar6) {
+    fVar15 = Scr_GetFloat(4);
+    dVar13 = (double)fVar15;
+  }
+  dVar12 = dVar14;
+  if ((float)(dVar13 - dVar14) < 0.0) {
+    dVar12 = dVar13;
+  }
+  dVar10 = dVar11;
   if (-dVar13 < 0.0) {
-    dVar9 = dVar11;
+    dVar10 = dVar12;
   }
-  *(float *)(iVar3 + 0x3690) = (float)-dVar9;
-  dVar13 = dVar12;
-  if (6 < iVar5) {
-    dVar12 = (double)Scr_GetFloat(6);
+  (pgVar1->link_viewClamp).max.goal[1] = (float)dVar10;
+  dVar13 = dVar14;
+  if (5 < (int)uVar6) {
+    fVar15 = Scr_GetFloat(5);
+    dVar14 = (double)fVar15;
   }
-  if ((float)(dVar12 - dVar13) < 0.0) {
-    dVar13 = dVar12;
+  dVar12 = dVar13;
+  if ((float)(dVar14 - dVar13) < 0.0) {
+    dVar12 = dVar14;
   }
-  if (-dVar12 < 0.0) {
-    dVar10 = dVar13;
+  dVar10 = dVar11;
+  if (-dVar14 < 0.0) {
+    dVar10 = dVar12;
   }
-  *(float *)(iVar3 + 0x36a8) = (float)dVar10;
-  G_SnapToViewAngleClampGoal(iVar3 + 0x3680);
-  *(undefined1 *)(iVar3 + 0x3674) = 0;
-  *(uint *)(iVar3 + 0x14) = *(uint *)(iVar3 + 0x14) & 0xfffffffe;
-  if ((puVar4[0x61] & 0x8000000) != 0) {
-    *(uint *)(iVar3 + 0xc) = *(uint *)(iVar3 + 0xc) & 0xfffffffb;
+  (pgVar1->link_viewClamp).min.goal[0] = (float)-dVar10;
+  dVar14 = dVar13;
+  if (6 < (int)uVar6) {
+    fVar15 = Scr_GetFloat(6);
+    dVar13 = (double)fVar15;
   }
-  iVar3 = G_EntLinkTo(iVar2,puVar4,uVar8);
-  if (iVar3 == 0) {
-    Scr_Error(0xffffffff82077f14);
+  if ((float)(dVar13 - dVar14) < 0.0) {
+    dVar14 = dVar13;
+  }
+  if (-dVar13 < 0.0) {
+    dVar11 = dVar14;
+  }
+  (pgVar1->link_viewClamp).max.goal[0] = (float)dVar11;
+  G_SnapToViewAngleClampGoal(&pgVar1->link_viewClamp);
+  uVar6 = (pgVar1->ps).linkFlags;
+  pgVar1->prevLinkAnglesSet = false;
+  (pgVar1->ps).linkFlags = uVar6 & 0xfffffffe;
+  if ((pgVar5->flags & 0x8000000U) != 0) {
+    (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags & 0xfffffffb;
+  }
+  iVar4 = G_EntLinkTo(pgVar3,pgVar5,(uint)uVar9);
+  if (iVar4 == 0) {
+    Scr_Error("failed to link entity");
     __restgprlr_22();
     return;
   }
-  G_InitPlayerLinkAngles(iVar2);
+  G_InitPlayerLinkAngles(pgVar3);
   __restgprlr_22();
   return;
 }
@@ -4692,78 +5190,83 @@ void PlayerLinkTo_Internal(undefined8 param_1,int param_2)
 
 // 824910D8  ScrCmd_PlayerLinkTo  (game/g_scr_main.cpp:4515)
 
-void ScrCmd_PlayerLinkTo(undefined8 param_1)
+void ScrCmd_PlayerLinkTo(scr_entref_t param_1)
 
 {
-  PlayerLinkTo_Internal(param_1,0);
+  PlayerLinkTo_Internal(param_1,PLAYERLINKTO_NORMAL);
   return;
 }
 
 
 // 824910E0  ScrCmd_PlayerLinkToDelta  (game/g_scr_main.cpp:4539)
 
-void ScrCmd_PlayerLinkToDelta(undefined8 param_1)
+void ScrCmd_PlayerLinkToDelta(scr_entref_t param_1)
 
 {
-  PlayerLinkTo_Internal(param_1,1);
+  PlayerLinkTo_Internal(param_1,PLAYERLINKTO_DELTA);
   return;
 }
 
 
 // 824910E8  ScrCmd_PlayerLinkWeaponViewToDelta  (game/g_scr_main.cpp:4563)
 
-void ScrCmd_PlayerLinkWeaponViewToDelta(undefined8 param_1)
+void ScrCmd_PlayerLinkWeaponViewToDelta(scr_entref_t param_1)
 
 {
-  PlayerLinkTo_Internal(param_1,2);
+  PlayerLinkTo_Internal(param_1,PLAYERLINKTO_DELTA_WEAPONVIEWONLY);
   return;
 }
 
 
 // 824910F0  ScrCmd_PlayerLinkToAbsolute  (game/g_scr_main.cpp:4581)
 
-void ScrCmd_PlayerLinkToAbsolute(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkToAbsolute(scr_entref_t param_1)
 
 {
-  int iVar2;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
   int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
+  gentity_s *pgVar4;
+  uint uVar5;
+  uint uVar6;
   
-  __savegprlr_29();
-  iVar2 = GetEntity();
+  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar2 = GetEntity(sVar1);
   iVar3 = Scr_GetType(0);
   if ((iVar3 != 1) || (iVar3 = Scr_GetPointerType(0), iVar3 != 0x16)) {
-    Scr_ParamError(0,0xffffffff820781b8);
+    Scr_ParamError(0,"Not an entity");
   }
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    Scr_ObjectError(0xffffffff820781a4);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_ObjectError("Not a player entity");
   }
-  if ((*(uint *)(iVar2 + 0x184) & 0x1000) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x11f3,0,0xffffffff82000f98,0xffffffff82078158);
+  if ((pgVar2->flags & 0x1000U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x11f3,0,
+                    "%s");
   }
-  uVar1 = Scr_GetEntity(0);
-  uVar4 = 0;
-  iVar3 = Scr_GetNumParam();
-  if ((1 < iVar3) && (iVar3 = Scr_GetType(1), iVar3 != 0)) {
-    uVar4 = Scr_GetConstLowercaseString(1);
-    uVar4 = -(ulonglong)(DAT_835a0b80 != uVar4) & uVar4;
+  pgVar4 = Scr_GetEntity(0);
+  uVar6 = 0;
+  uVar5 = Scr_GetNumParam();
+  if ((1 < (int)uVar5) && (iVar3 = Scr_GetType(1), iVar3 != 0)) {
+    uVar6 = Scr_GetConstLowercaseString(1);
+    uVar6 = -(uint)(scr_const._ != uVar6) & uVar6;
   }
-  *(undefined4 *)(*(int *)(iVar2 + 0x158) + 0x367c) = 0x3f800000;
-  *(uint *)(*(int *)(iVar2 + 0x158) + 0x35f8) = *(uint *)(*(int *)(iVar2 + 0x158) + 0x35f8) | 4;
-  *(uint *)(*(int *)(iVar2 + 0x158) + 0x14) = *(uint *)(*(int *)(iVar2 + 0x158) + 0x14) | 1;
-  *(uint *)(*(int *)(iVar2 + 0x158) + 0x14) = *(uint *)(*(int *)(iVar2 + 0x158) + 0x14) & 0xfffffffb
-  ;
-  *(undefined1 *)(*(int *)(iVar2 + 0x158) + 0x3675) = 1;
-  *(undefined1 *)(*(int *)(iVar2 + 0x158) + 0x3677) = 1;
-  *(undefined1 *)(*(int *)(iVar2 + 0x158) + 0x3678) = 0;
-  iVar3 = G_EntLinkTo(iVar2,uVar1,uVar4);
+  pgVar2->client->linkAnglesFrac = 1.0;
+  pgVar2->client->flags = pgVar2->client->flags | 4;
+  (pgVar2->client->ps).linkFlags = (pgVar2->client->ps).linkFlags | 1;
+  (pgVar2->client->ps).linkFlags = (pgVar2->client->ps).linkFlags & 0xfffffffb;
+  pgVar2->client->link_rotationMovesEyePos = true;
+  pgVar2->client->link_useTagAnglesForViewAngles = true;
+  pgVar2->client->link_useBaseAnglesForViewClamp = false;
+  iVar3 = G_EntLinkTo(pgVar2,pgVar4,uVar6);
   if (iVar3 != 0) {
-    G_InitPlayerLinkAngles(iVar2);
+    G_InitPlayerLinkAngles(pgVar2);
     __restgprlr_29();
     return;
   }
-  Scr_Error(0xffffffff8207818c);
+  Scr_Error("Failed to link entity");
   __restgprlr_29();
   return;
 }
@@ -4771,178 +5274,205 @@ void ScrCmd_PlayerLinkToAbsolute(void)
 
 // 82491268  ScrCmd_PlayerLinkedOffsetEnable  (game/g_scr_main.cpp:4639)
 
-void ScrCmd_PlayerLinkedOffsetEnable(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkedOffsetEnable(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1220,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1220,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  if (puVar1[0x85] == 0) {
-    Scr_Error(0xffffffff820781c8);
+  if (pgVar3->tagInfo == (tagInfo_s *)0x0) {
+    Scr_Error("Player is not linked.");
   }
-  *(uint *)(puVar1[0x56] + 0x14) = *(uint *)(puVar1[0x56] + 0x14) | 2;
+  (pgVar3->client->ps).linkFlags = (pgVar3->client->ps).linkFlags | 2;
   return;
 }
 
 
 // 82491348  ScrCmd_PlayerLinkedOffsetDisable  (game/g_scr_main.cpp:4658)
 
-void ScrCmd_PlayerLinkedOffsetDisable(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkedOffsetDisable(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1233,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1233,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  if (puVar1[0x85] == 0) {
-    Scr_Error(0xffffffff820781c8);
+  if (pgVar3->tagInfo == (tagInfo_s *)0x0) {
+    Scr_Error("Player is not linked.");
   }
-  *(uint *)(puVar1[0x56] + 0x14) = *(uint *)(puVar1[0x56] + 0x14) & 0xfffffffd;
+  (pgVar3->client->ps).linkFlags = (pgVar3->client->ps).linkFlags & 0xfffffffd;
   return;
 }
 
 
 // 82491428  ScrCmd_PlayerLinkedSetViewZnear  (game/g_scr_main.cpp:4678)
 
-void ScrCmd_PlayerLinkedSetViewZnear(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkedSetViewZnear(scr_entref_t param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
+  gentity_s *pgVar5;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1247,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1247,
+                      0,"%s");
     }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  if (puVar4[0x85] == 0) {
-    Scr_Error(0xffffffff820781c8);
+  if (pgVar5->tagInfo == (tagInfo_s *)0x0) {
+    Scr_Error("Player is not linked.");
   }
-  if ((*(uint *)(puVar4[0x56] + 0x14) & 4) == 0) {
-    Scr_Error(0xffffffff820781e0);
+  if (((pgVar5->client->ps).linkFlags & 4U) == 0) {
+    Scr_Error("Player must be linked using PlayerLinkWeaponViewToDelta()");
   }
-  iVar2 = Scr_GetInt(0);
-  uVar1 = *(uint *)(puVar4[0x56] + 0x14);
-  uVar3 = uVar1 & 0xfffffff7;
-  if (iVar2 != 0) {
-    uVar3 = uVar1 | 8;
+  iVar3 = Scr_GetInt(0);
+  uVar1 = (pgVar5->client->ps).linkFlags;
+  uVar4 = uVar1 & 0xfffffff7;
+  if (iVar3 != 0) {
+    uVar4 = uVar1 | 8;
   }
-  *(uint *)(puVar4[0x56] + 0x14) = uVar3;
+  (pgVar5->client->ps).linkFlags = uVar4;
   return;
 }
 
 
 // 82491540  ScrCmd_PlayerLinkedSetUseBaseAngleForViewClamp  (game/g_scr_main.cpp:4706)
 
-void ScrCmd_PlayerLinkedSetUseBaseAngleForViewClamp(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkedSetUseBaseAngleForViewClamp(scr_entref_t param_1)
 
 {
-  longlong lVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1263,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1263,
+                      0,"%s");
     }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  if (puVar2[0x85] == 0) {
-    Scr_Error(0xffffffff820781c8);
+  if (pgVar4->tagInfo == (tagInfo_s *)0x0) {
+    Scr_Error("Player is not linked.");
   }
-  if ((*(uint *)(puVar2[0x56] + 0x14) & 4) == 0) {
-    Scr_Error(0xffffffff820781e0);
+  if (((pgVar4->client->ps).linkFlags & 4U) == 0) {
+    Scr_Error("Player must be linked using PlayerLinkWeaponViewToDelta()");
   }
-  lVar1 = Scr_GetInt(0);
-  *(char *)(puVar2[0x56] + 0x3678) = '\x01' - (lVar1 == 0);
+  iVar3 = Scr_GetInt(0);
+  pgVar4->client->link_useBaseAnglesForViewClamp = (bool)('\x01' - (iVar3 == 0));
   return;
 }
 
 
 // 82491648  CheckTimes  (game/g_scr_main.cpp:4803)
 
-void CheckTimes(double param_1,double param_2,float *param_3)
+void CheckTimes(float *param_1,float param_2,float param_3)
 
 {
   float fVar1;
   double dVar2;
+  double dVar3;
+  double dVar4;
   
-  dVar2 = 0.0;
-  if (*param_3 < 0.0) {
-    Scr_Error(0xffffffff820782a8);
+  dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
+  dVar4 = 0.0;
+  if (*param_1 < 0.0) {
+    Scr_Error("total time must be non negative");
   }
-  if (param_1 < dVar2) {
-    Scr_Error(0xffffffff82078280);
+  if (dVar2 < dVar4) {
+    Scr_Error("acceleration time must be non negative");
   }
-  if (param_2 < dVar2) {
-    Scr_Error(0xffffffff82078258);
+  if (dVar3 < dVar4) {
+    Scr_Error("deceleration time must be non negative");
   }
-  if (*param_3 < (float)(param_1 + param_2)) {
-    fVar1 = *param_3 + 1.0000005;
-    if ((float)(param_1 + param_2) <= fVar1) {
-      *param_3 = fVar1;
+  if (*param_1 < (float)(dVar2 + dVar3)) {
+    fVar1 = *param_1 + 1.0000005;
+    if ((float)(dVar2 + dVar3) <= fVar1) {
+      *param_1 = fVar1;
     }
     else {
-      Scr_Error(0xffffffff8207821c);
+      Scr_Error("accel time plus decel time is greater than total time");
     }
   }
   return;
@@ -4951,108 +5481,117 @@ void CheckTimes(double param_1,double param_2,float *param_3)
 
 // 82491710  ScrCmd_PlayerLinkToBlend  (game/g_scr_main.cpp:4842)
 
-void ScrCmd_PlayerLinkToBlend(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayerLinkToBlend(scr_entref_t param_1)
 
 {
-  uint uVar2;
-  int iVar3;
-  undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  double dVar7;
+  gclient_s *pgVar1;
+  char *pcVar2;
+  uint uVar3;
+  gentity_s *pgVar4;
+  int iVar5;
+  uint uVar6;
+  gentity_s *pgVar7;
   double dVar8;
   double dVar9;
-  short sStack00000016;
+  double dVar10;
+  float fVar11;
+  uint uStack00000014;
   longlong local_60;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
+  float local_58;
+  float local_54;
+  float local_50;
   
-  uVar2 = __savegprlr_27();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff82076e74,0x12f3,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_27(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar3 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x12f3,
+                      0,"%s");
     }
-    puVar6 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
+    pgVar7 = g_entities + uVar3;
+    if (g_entities[uVar3].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar7 = (gentity_s *)0x0;
   }
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 < 1) {
-    Scr_Error(0xffffffff820782ec);
+  uVar3 = Scr_GetNumParam();
+  if ((int)uVar3 < 1) {
+    Scr_Error("Not enough parameters.\n");
   }
-  if ((puVar6[0x61] & 0x1000) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x12f9,0,0xffffffff82000f98,0xffffffff820782c8);
+  if ((pgVar7->flags & 0x1000U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x12f9,0,
+                    "%s");
   }
-  uVar1 = Scr_GetEntity(0);
-  uVar5 = 0;
-  if ((1 < iVar3) && (iVar4 = Scr_GetType(1), iVar4 != 0)) {
-    uVar5 = Scr_GetConstLowercaseString(1);
-    uVar5 = -(ulonglong)(DAT_835a0b80 != uVar5) & uVar5;
+  pgVar4 = Scr_GetEntity(0);
+  uVar6 = 0;
+  if ((1 < (int)uVar3) && (iVar5 = Scr_GetType(1), iVar5 != 0)) {
+    uVar6 = Scr_GetConstLowercaseString(1);
+    uVar6 = -(uint)(scr_const._ != uVar6) & uVar6;
   }
-  dVar8 = 1.0;
-  if (iVar3 < 3) {
+  dVar9 = 1.0;
+  if ((int)uVar3 < 3) {
     local_60 = CONCAT44(0x3f800000,local_60._4_4_);
   }
   else {
-    dVar7 = (double)Scr_GetFloat(2);
-    local_60 = CONCAT44((float)dVar7,local_60._4_4_);
+    fVar11 = Scr_GetFloat(2);
+    local_60 = CONCAT44(fVar11,local_60._4_4_);
   }
-  dVar9 = 0.0;
-  dVar7 = dVar9;
-  if (3 < iVar3) {
-    dVar9 = (double)Scr_GetFloat(3);
+  dVar10 = 0.0;
+  dVar8 = dVar10;
+  if (3 < (int)uVar3) {
+    fVar11 = Scr_GetFloat(3);
+    dVar10 = (double)fVar11;
   }
-  if (4 < iVar3) {
-    dVar7 = (double)Scr_GetFloat(4);
+  if (4 < (int)uVar3) {
+    fVar11 = Scr_GetFloat(4);
+    dVar8 = (double)fVar11;
   }
-  CheckTimes(dVar9,dVar7,&local_60);
-  iVar3 = puVar6[0x56];
-  local_58 = *(undefined4 *)(iVar3 + 0x158);
-  local_54 = *(undefined4 *)(iVar3 + 0x15c);
-  local_50 = *(undefined4 *)(iVar3 + 0x160);
-  if (puVar6[0x85] != 0) {
-    BG_ApplyLinkAngles(iVar3 + 0x1c0,&local_58);
+  CheckTimes((float *)&local_60,(float)dVar10,(float)dVar8);
+  pgVar1 = pgVar7->client;
+  local_58 = (pgVar1->ps).viewangles[0];
+  local_54 = (pgVar1->ps).viewangles[1];
+  local_50 = (pgVar1->ps).viewangles[2];
+  if (pgVar7->tagInfo != (tagInfo_s *)0x0) {
+    BG_ApplyLinkAngles((pgVar1->ps).linkAngles,&local_58);
   }
-  AnglesToQuat(&local_58,puVar6 + 0x71);
-  puVar6[0x6b] = puVar6[0x4e];
-  puVar6[0x6c] = puVar6[0x4f];
-  iVar4 = DAT_83580fac;
-  puVar6[0x6d] = puVar6[0x50];
-  iVar3 = puVar6[0x56];
-  puVar6[0x6e] = *(undefined4 *)(iVar3 + 0x28);
-  puVar6[0x6f] = *(undefined4 *)(iVar3 + 0x2c);
-  puVar6[0x70] = *(undefined4 *)(iVar3 + 0x30);
-  *(undefined1 *)(puVar6 + 0x75) = 1;
-  puVar6[0x76] = (float)dVar9;
-  puVar6[0x77] = (float)dVar7;
-  puVar6[0x79] = local_60._0_4_;
-  puVar6[0x78] = (float)(longlong)iVar4 * 0.001;
-  *(float *)(puVar6[0x56] + 0x367c) = (float)dVar8;
-  *(undefined1 *)(puVar6[0x56] + 0x3675) = 1;
-  *(undefined1 *)(puVar6[0x56] + 0x3677) = 1;
-  *(undefined1 *)(puVar6[0x56] + 0x3678) = 0;
-  *(undefined1 *)(puVar6[0x56] + 0x3674) = 0;
-  *(uint *)(puVar6[0x56] + 0x14) = *(uint *)(puVar6[0x56] + 0x14) | 1;
-  *(uint *)(puVar6[0x56] + 0x14) = *(uint *)(puVar6[0x56] + 0x14) & 0xfffffffb;
-  local_60 = (longlong)iVar4;
-  iVar3 = G_EntLinkTo(puVar6,uVar1,uVar5);
-  if (iVar3 == 0) {
-    Scr_Error(0xffffffff8207818c);
+  AnglesToQuat(&local_58,(pgVar7->field31_0x1ac).blend.viewQuat);
+  (pgVar7->field31_0x1ac).item[0].ammoCount = (int)(pgVar7->r).currentOrigin[0];
+  (pgVar7->field31_0x1ac).item[0].clipAmmoCount[0] = (int)(pgVar7->r).currentOrigin[1];
+  iVar5 = level.time;
+  (pgVar7->field31_0x1ac).item[0].clipAmmoCount[1] = (int)(pgVar7->r).currentOrigin[2];
+  pgVar1 = pgVar7->client;
+  (pgVar7->field31_0x1ac).item[0].weapon = (Weapon)(pgVar1->ps).velocity[0];
+  (pgVar7->field31_0x1ac).missile.surfaceNormal[1] = (pgVar1->ps).velocity[1];
+  (pgVar7->field31_0x1ac).item[1].ammoCount = (int)(pgVar1->ps).velocity[2];
+  (pgVar7->field31_0x1ac).blend.changed = true;
+  pgVar1 = pgVar7->client;
+  (pgVar7->field31_0x1ac).blend.accelTime = (float)dVar10;
+  (pgVar7->field31_0x1ac).mover.angle.decelTime = (float)dVar8;
+  (pgVar7->field31_0x1ac).mover.angle.midTime = local_60._0_4_;
+  (pgVar7->field31_0x1ac).mover.angle.speed = (float)(longlong)iVar5 * 0.001;
+  pgVar1->linkAnglesFrac = (float)dVar9;
+  pgVar7->client->link_rotationMovesEyePos = true;
+  pgVar7->client->link_useTagAnglesForViewAngles = true;
+  pgVar7->client->link_useBaseAnglesForViewClamp = false;
+  pgVar7->client->prevLinkAnglesSet = false;
+  (pgVar7->client->ps).linkFlags = (pgVar7->client->ps).linkFlags | 1;
+  (pgVar7->client->ps).linkFlags = (pgVar7->client->ps).linkFlags & 0xfffffffb;
+  local_60 = (longlong)iVar5;
+  iVar5 = G_EntLinkTo(pgVar7,pgVar4,uVar6);
+  if (iVar5 == 0) {
+    Scr_Error("Failed to link entity");
     __restgprlr_27();
     return;
   }
-  G_InitPlayerLinkAngles(puVar6);
-  *(undefined1 *)(puVar6[0x85] + 10) = 1;
+  G_InitPlayerLinkAngles(pgVar7);
+  pgVar7->tagInfo->blendToParent = true;
   __restgprlr_27();
   return;
 }
@@ -5060,27 +5599,43 @@ void ScrCmd_PlayerLinkToBlend(void)
 
 // 82491A20  SetupViewAngleClamp  (game/g_scr_main.cpp:4908)
 
-void SetupViewAngleClamp(undefined8 param_1,double param_2,double param_3,double param_4,
-                        double param_5,double param_6,double param_7)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void SetupViewAngleClamp(viewClampState *param_1,float param_2,float param_3,float param_4,
+                        float param_5,float param_6,float param_7,float param_8)
 
 {
   undefined4 *puVar1;
   double extraout_f1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  puVar1 = (undefined4 *)__savefpr_25();
-  dVar2 = extraout_f1;
+  dVar7 = (double)param_8;
+  dVar5 = (double)param_6;
+  dVar6 = (double)param_7;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  puVar1 = (undefined4 *)__savefpr_25((double)param_2,param_1);
+  dVar8 = extraout_f1;
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x132d,0,0xffffffff82000f98,0xffffffff82078304);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x132d,0,
+                    "%s");
   }
-  puVar1[0xe] = (float)dVar2;
-  puVar1[0xc] = (float)param_2;
-  puVar1[0xd] = (float)param_3;
-  puVar1[0xf] = (float)(longlong)DAT_83580fac * 0.001;
-  puVar1[10] = (float)param_7;
-  puVar1[0xb] = (float)param_5;
-  puVar1[4] = (float)param_6;
-  puVar1[5] = (float)param_4;
+  puVar1[0xe] = (float)dVar8;
+  puVar1[0xc] = (float)dVar2;
+  puVar1[0xd] = (float)dVar3;
+  puVar1[0xf] = (float)(longlong)level.time * 0.001;
+  puVar1[10] = (float)dVar7;
+  puVar1[0xb] = (float)dVar5;
+  puVar1[4] = (float)dVar6;
+  puVar1[5] = (float)dVar4;
   *puVar1 = puVar1[2];
   puVar1[1] = puVar1[3];
   puVar1[6] = puVar1[8];
@@ -5092,16 +5647,19 @@ void SetupViewAngleClamp(undefined8 param_1,double param_2,double param_3,double
 
 // 82491B10  ScrCmd_LerpViewAngleClamp  (game/g_scr_main.cpp:4950)
 
-void ScrCmd_LerpViewAngleClamp(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_LerpViewAngleClamp(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  char *pcVar1;
+  uint uVar2;
+  gentity_s *pgVar3;
   double dVar4;
   double dVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -5110,79 +5668,85 @@ void ScrCmd_LerpViewAngleClamp(void)
   double dVar13;
   double dVar14;
   double dVar15;
-  short sStack00000016;
+  float fVar16;
+  uint uStack00000014;
   float local_70 [22];
   
-  uVar1 = __savefpr_23();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff82076e74,0x1360,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savefpr_23(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1360,
+                      0,"%s");
     }
-    puVar3 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 7) {
-    Scr_Error(0xffffffff82078360);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 7) {
+    Scr_Error("Incorrect number of parameters.  See script docs.\n");
   }
-  if (*(int *)(puVar3[0x56] + 4) != 1) {
-    Scr_Error(0xffffffff82078340);
+  if ((pgVar3->client->ps).pm_type != 1) {
+    Scr_Error("Must be linked to an entity.\n");
   }
-  if ((*(uint *)(puVar3[0x56] + 0x14) & 1) != 0) {
-    Scr_Error(0xffffffff8207830c);
+  if (((pgVar3->client->ps).linkFlags & 1U) != 0) {
+    Scr_Error("Angle locked to linked entity.  View clamp is 0.\n");
   }
-  dVar5 = (double)Scr_GetFloat(0);
-  local_70[0] = (float)dVar5;
-  uVar6 = Scr_GetFloat(1);
-  uVar7 = Scr_GetFloat(2);
-  CheckTimes(uVar6,uVar7,local_70);
-  dVar8 = (double)Scr_GetFloat(3);
-  dVar5 = 180.0;
-  dVar13 = dVar5;
-  if ((float)(dVar8 - 180.0) < 0.0) {
-    dVar13 = dVar8;
+  local_70[0] = Scr_GetFloat(0);
+  fVar16 = Scr_GetFloat(1);
+  dVar5 = (double)fVar16;
+  fVar16 = Scr_GetFloat(2);
+  dVar6 = (double)fVar16;
+  CheckTimes(local_70,(float)dVar5,fVar16);
+  fVar16 = Scr_GetFloat(3);
+  dVar7 = (double)fVar16;
+  dVar15 = 180.0;
+  dVar12 = dVar15;
+  if ((float)(dVar7 - 180.0) < 0.0) {
+    dVar12 = dVar7;
   }
-  dVar9 = (double)Scr_GetFloat(4);
-  dVar15 = dVar5;
-  if ((float)(dVar9 - dVar5) < 0.0) {
-    dVar15 = dVar9;
+  fVar16 = Scr_GetFloat(4);
+  dVar8 = (double)fVar16;
+  dVar14 = dVar15;
+  if ((float)(dVar8 - dVar15) < 0.0) {
+    dVar14 = dVar8;
   }
-  dVar10 = (double)Scr_GetFloat(5);
-  dVar12 = dVar5;
-  if ((float)(dVar10 - dVar5) < 0.0) {
-    dVar12 = dVar10;
+  fVar16 = Scr_GetFloat(5);
+  dVar9 = (double)fVar16;
+  dVar11 = dVar15;
+  if ((float)(dVar9 - dVar15) < 0.0) {
+    dVar11 = dVar9;
   }
-  dVar11 = (double)Scr_GetFloat(6);
+  fVar16 = Scr_GetFloat(6);
+  dVar10 = (double)fVar16;
   dVar4 = 0.0;
-  dVar14 = dVar4;
-  if (-dVar10 < 0.0) {
-    dVar14 = dVar12;
+  dVar13 = dVar4;
+  if (-dVar9 < 0.0) {
+    dVar13 = dVar11;
+  }
+  dVar11 = dVar4;
+  if (-dVar7 < 0.0) {
+    dVar11 = dVar12;
   }
   dVar12 = dVar4;
   if (-dVar8 < 0.0) {
-    dVar12 = dVar13;
+    dVar12 = dVar14;
   }
-  dVar13 = dVar4;
-  if (-dVar9 < 0.0) {
-    dVar13 = dVar15;
+  if ((float)(dVar10 - dVar15) < 0.0) {
+    dVar15 = dVar10;
   }
-  if ((float)(dVar11 - dVar5) < 0.0) {
-    dVar5 = dVar11;
+  if (-dVar10 < 0.0) {
+    dVar4 = dVar15;
   }
-  if (-dVar11 < 0.0) {
-    dVar4 = dVar5;
-  }
-  SetupViewAngleClamp((double)local_70[0],uVar6,uVar7,-dVar12,dVar13,-dVar14,dVar4,
-                      (ulonglong)(uint)puVar3[0x56] + 0x3680);
+  SetupViewAngleClamp(&pgVar3->client->link_viewClamp,local_70[0],(float)dVar5,(float)dVar6,
+                      (float)-dVar11,(float)dVar12,(float)-dVar13,(float)dVar4);
   __restfpr_23();
   return;
 }
@@ -5190,7 +5754,7 @@ void ScrCmd_LerpViewAngleClamp(void)
 
 // 82491D00  ScrCmd_SetViewAngleResistance  (game/g_scr_main.cpp:5007)
 
-void ScrCmd_SetViewAngleResistance(void)
+void ScrCmd_SetViewAngleResistance(scr_entref_t param_1)
 
 {
   return;
@@ -5199,155 +5763,183 @@ void ScrCmd_SetViewAngleResistance(void)
 
 // 82491D08  ScrCmd_SetContents  (game/g_scr_main.cpp:5057)
 
-void ScrCmd_SetContents(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_SetContents(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  gentity_s *pgVar1;
+  int iVar2;
   
-  iVar1 = GetEntity();
-  uVar2 = Scr_GetInt(0);
-  Scr_AddInt(*(undefined4 *)(iVar1 + 0x11c));
-  *(undefined4 *)(iVar1 + 0x11c) = uVar2;
-  SV_LinkEntity(iVar1);
+  pgVar1 = GetEntity(param_1);
+  iVar2 = Scr_GetInt(0);
+  Scr_AddInt((pgVar1->r).contents);
+  (pgVar1->r).contents = iVar2;
+  SV_LinkEntity(pgVar1);
   return;
 }
 
 
 // 82491D60  ScrCmd_MakeUsable  (game/g_scr_main.cpp:5080)
 
-void ScrCmd_MakeUsable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_MakeUsable(scr_entref_t param_1)
 
 {
   int iVar1;
+  gentity_s *pgVar2;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x160) != 0) {
-    *(uint *)(iVar1 + 0x180) = *(uint *)(iVar1 + 0x180) | 1;
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->vehicle != (Vehicle *)0x0) {
+    pgVar2->spawnflags = pgVar2->spawnflags | 1;
   }
-  *(uint *)(iVar1 + 0x11c) = *(uint *)(iVar1 + 0x11c) | 0x200000;
-  if (*(int *)(iVar1 + 0xdc) == 0) {
-    *(undefined4 *)(iVar1 + 0xdc) = 1;
+  iVar1 = (pgVar2->s).un2.hintType;
+  (pgVar2->r).contents = (pgVar2->r).contents | 0x200000;
+  if (iVar1 == 0) {
+    (pgVar2->s).un2.hintType = 1;
   }
-  SV_LinkEntity();
+  SV_LinkEntity(pgVar2);
   return;
 }
 
 
 // 82491DC0  ScrCmd_MakeUnusable  (game/g_scr_main.cpp:5108)
 
-void ScrCmd_MakeUnusable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_MakeUnusable(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x160) != 0) {
-    *(uint *)(iVar1 + 0x180) = *(uint *)(iVar1 + 0x180) & 0xfffffffe;
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->vehicle != (Vehicle *)0x0) {
+    pgVar1->spawnflags = pgVar1->spawnflags & 0xfffffffe;
   }
-  *(uint *)(iVar1 + 0x11c) = *(uint *)(iVar1 + 0x11c) & 0xffdfffff;
-  SV_LinkEntity();
+  (pgVar1->r).contents = (pgVar1->r).contents & 0xffdfffff;
+  SV_LinkEntity(pgVar1);
   return;
 }
 
 
 // 82491E08  ScrCmd_MakeSoft  (game/g_scr_main.cpp:5133)
 
-void ScrCmd_MakeSoft(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_MakeSoft(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) | 0x1000000;
+  pgVar2 = GetEntity(param_1);
+  pgVar1 = pgVar2->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags | 0x1000000;
     return;
   }
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) | 0x1000000;
+  (pgVar2->s).lerp.eFlags = (pgVar2->s).lerp.eFlags | 0x1000000;
   return;
 }
 
 
 // 82491E60  ScrCmd_MakeHard  (game/g_scr_main.cpp:5152)
 
-void ScrCmd_MakeHard(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_MakeHard(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) & 0xfeffffff;
+  pgVar2 = GetEntity(param_1);
+  pgVar1 = pgVar2->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags & 0xfeffffff;
     return;
   }
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) & 0xfeffffff;
+  (pgVar2->s).lerp.eFlags = (pgVar2->s).lerp.eFlags & 0xfeffffff;
   return;
 }
 
 
 // 82491EB8  ScrCmd_EntityWillNeverChange  (game/g_scr_main.cpp:5169)
 
-void ScrCmd_EntityWillNeverChange(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_EntityWillNeverChange(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x20000000;
+  pgVar1 = GetEntity(param_1);
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags | 0x20000000;
   return;
 }
 
 
 // 82491EE8  GScr_SetCursorHint  (game/g_scr_main.cpp:5192)
 
-void GScr_SetCursorHint(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetCursorHint(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
   int iVar4;
-  undefined **ppuVar5;
+  int iVar5;
+  char **ppcVar6;
   
-  __savegprlr_26();
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 4) == 4) {
-    Scr_Error(0xffffffff82078458);
+  sVar1 = (scr_entref_t)__savegprlr_26(param_1);
+  pgVar2 = GetEntity(sVar1);
+  if ((pgVar2->s).eType == 4) {
+    Scr_Error("SetCursorHint may not be called on missile or grenade type entities");
   }
-  uVar1 = Scr_GetString(0);
-  if (((*(short *)(iVar2 + 0x172) == DAT_835a0c94) || (*(short *)(iVar2 + 0x172) == DAT_835a0c96))
-     && (iVar3 = I_stricmp(uVar1,0xffffffff82078448), iVar3 == 0)) {
-    *(undefined4 *)(iVar2 + 0xdc) = 0xffffffff;
-    __restgprlr_26();
-    return;
-  }
-  iVar3 = 1;
-  ppuVar5 = &PTR_s_HINT_NOICON_8296b304;
-  do {
-    iVar4 = I_stricmp(uVar1,*ppuVar5);
+  pcVar3 = Scr_GetString(0);
+  if ((pgVar2->classname == scr_const.trigger_use) ||
+     (pgVar2->classname == scr_const.trigger_use_touch)) {
+    iVar4 = I_stricmp(pcVar3,"HINT_INHERIT");
     if (iVar4 == 0) {
-      *(int *)(iVar2 + 0xdc) = iVar3;
+      (pgVar2->s).un2.hintType = -1;
       __restgprlr_26();
       return;
     }
-    ppuVar5 = ppuVar5 + 1;
-    iVar3 = iVar3 + 1;
-  } while ((int)ppuVar5 < -0x7d694cec);
-  Com_Printf(0x17,0xffffffff82078424);
-  if ((*(short *)(iVar2 + 0x172) == DAT_835a0c94) || (*(short *)(iVar2 + 0x172) == DAT_835a0c96)) {
-    Com_Printf(0x17,0xffffffff820783e0);
   }
-  ppuVar5 = &PTR_s_HINT_NOICON_8296b304;
+  iVar4 = 1;
+  ppcVar6 = hintStrings + 1;
   do {
-    Com_Printf(0x17,0xffffffff82004d30,*ppuVar5);
-    ppuVar5 = ppuVar5 + 1;
-  } while ((int)ppuVar5 < -0x7d694cec);
-  va(0xffffffff82078398,uVar1);
-  Scr_Error();
+    iVar5 = I_stricmp(pcVar3,*ppcVar6);
+    if (iVar5 == 0) {
+      (pgVar2->s).un2.hintType = iVar4;
+      __restgprlr_26();
+      return;
+    }
+    ppcVar6 = ppcVar6 + 1;
+    iVar4 = iVar4 + 1;
+  } while ((int)ppcVar6 < -0x7d694cec);
+  Com_Printf(0x17,"List of valid hint type strings\n");
+  if ((pgVar2->classname == scr_const.trigger_use) ||
+     (pgVar2->classname == scr_const.trigger_use_touch)) {
+    Com_Printf(0x17,"HINT_INHERIT (for trigger_use or trigger_use_touch entities only)\n");
+  }
+  iVar4 = -0x7d694cfc;
+  do {
+    Com_Printf(0x17,"%s\n");
+    iVar4 = iVar4 + 4;
+  } while (iVar4 < -0x7d694cec);
+  pcVar3 = va("%s is not a valid hint type. See above for list of valid hint types\n");
+  Scr_Error(pcVar3);
   __restgprlr_26();
   return;
 }
@@ -5355,20 +5947,21 @@ void GScr_SetCursorHint(void)
 
 // 8249CFF8  GetHintStringMessage  (game/g_scr_main.cpp:5235)
 
-undefined4 GetHintStringMessage(void)
+int GetHintStringMessage(int param_1,int param_2)
 
 {
-  longlong lVar1;
+  uint uVar1;
   int iVar2;
-  undefined4 local_420 [4];
-  undefined1 auStack_410 [1040];
+  char *pcVar3;
+  int local_420 [4];
+  char acStack_410 [1040];
   
-  lVar1 = Scr_GetNumParam();
-  Scr_ConstructMessageString(0,lVar1 + -1,0xffffffff820209b0,auStack_410,0x400);
-  iVar2 = G_GetHintStringIndex(local_420,auStack_410);
+  uVar1 = Scr_GetNumParam();
+  Scr_ConstructMessageString(0,uVar1 - 1,"Hint String",acStack_410,0x400);
+  iVar2 = G_GetHintStringIndex(local_420,acStack_410);
   if (iVar2 == 0) {
-    va(0xffffffff8207b160,0x60);
-    Scr_Error();
+    pcVar3 = va("Too many different hintstring values. Max allowed is %i different strings");
+    Scr_Error(pcVar3);
   }
   return local_420[0];
 }
@@ -5376,33 +5969,41 @@ undefined4 GetHintStringMessage(void)
 
 // 8249D060  GScr_SetHintString  (game/g_scr_main.cpp:5259)
 
-void GScr_SetHintString(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetHintString(scr_entref_t param_1)
 
 {
+  gentity_s *pgVar1;
   int iVar2;
-  int iVar3;
-  undefined8 uVar1;
+  char *pcVar3;
   uint uVar4;
+  char *in_r4;
   
-  iVar2 = GetEntity();
-  if ((((*(short *)(iVar2 + 0x172) != DAT_835a0c94) && (*(short *)(iVar2 + 0x172) != DAT_835a0c96))
-      && (*(int *)(iVar2 + 4) != 0xb)) && (*(int *)(iVar2 + 4) != 6)) {
-    Scr_Error(0xffffffff8207b1b0);
+  pgVar1 = GetEntity(param_1);
+  if ((((pgVar1->classname != scr_const.trigger_use) &&
+       (pgVar1->classname != scr_const.trigger_use_touch)) &&
+      (iVar2 = (pgVar1->s).eType, iVar2 != 0xb)) && (iVar2 != 6)) {
+    Scr_Error(
+             "The setHintString command only works on trigger_use, trigger_use_touch, turret, and script entities.\n"
+             );
   }
-  iVar3 = Scr_GetType(0);
-  if (iVar3 == 2) {
-    uVar1 = Scr_GetString(0);
-    iVar3 = I_stricmp(uVar1,0xffffffff820068af);
-    if (iVar3 == 0) {
+  iVar2 = Scr_GetType(0);
+  if (iVar2 == 2) {
+    pcVar3 = Scr_GetString(0);
+    in_r4 = "";
+    iVar2 = I_stricmp(pcVar3,"");
+    if (iVar2 == 0) {
       uVar4 = 0xff;
       goto LAB_8249d0fc;
     }
   }
-  Scr_GetNumParam();
-  uVar4 = GetHintStringMessage();
+  uVar4 = Scr_GetNumParam();
+  uVar4 = GetHintStringMessage(uVar4,(int)in_r4);
   uVar4 = uVar4 & 0xff;
 LAB_8249d0fc:
-  *(uint *)(iVar2 + 0xd8) = uVar4;
+  (pgVar1->s).un1.eventParm2 = uVar4;
   return;
 }
 
@@ -5410,243 +6011,280 @@ LAB_8249d0fc:
 // 82492038  G_GetHintStringIndex  (game/g_scr_main.cpp:5308)
 
 /* WARNING: Removing unreachable block (ram,0x82492070) */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
 
-void G_GetHintStringIndex(undefined8 param_1,undefined8 param_2)
+int G_GetHintStringIndex(int *param_1,char *param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar3;
+  ConfigString CVar4;
   char local_440 [1088];
   
-  puVar1 = (undefined4 *)__savegprlr_25();
-  lVar3 = 0;
+  piVar1 = (int *)__savegprlr_25(param_1);
+  iVar3 = 0;
   while( true ) {
-    lVar4 = lVar3 + 0xe8b;
-    SV_GetConfigstring(lVar4,local_440,0x400);
+    CVar4 = iVar3 + CS_USE_TRIG_STRINGS;
+    SV_GetConfigstring(CVar4,local_440,0x400);
     if (local_440[0] == '\0') break;
     iVar2 = I_stricmp(param_2,local_440);
     if (iVar2 == 0) goto LAB_82492108;
-    lVar3 = lVar3 + 1;
-    if (0x5f < (int)lVar3) {
-      *puVar1 = 0xffffffff;
-      __restgprlr_25(0);
-      return;
+    iVar3 = iVar3 + 1;
+    if (0x5f < iVar3) {
+      *piVar1 = -1;
+      iVar3 = __restgprlr_25(0);
+      return iVar3;
     }
   }
-  if (0xeea < (int)lVar4) {
-    MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  if (0xeea < (int)CVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x285,0,"%s");
   }
-  SV_SetConfigstring(lVar4,param_2);
+  SV_SetConfigstring(CVar4,param_2);
 LAB_82492108:
-  *puVar1 = (int)lVar3;
-  __restgprlr_25(1);
-  return;
+  *piVar1 = iVar3;
+  iVar3 = __restgprlr_25(1);
+  return iVar3;
 }
 
 
 // 8249D118  ScrCmd_ForceUseHintOn  (game/g_scr_main.cpp:5344)
 
-void ScrCmd_ForceUseHintOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ForceUseHintOn(scr_entref_t param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
-  undefined4 local_430 [4];
-  undefined1 auStack_420 [1032];
+  char *pcVar1;
+  uint uVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
+  int local_430 [4];
+  char acStack_420 [1032];
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x14e3,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x14e3,
+                      0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
   Scr_GetNumParam();
-  lVar1 = Scr_GetNumParam();
-  Scr_ConstructMessageString(0,lVar1 + -1,0xffffffff820209b0,auStack_420,0x400);
-  iVar2 = G_GetHintStringIndex(local_430,auStack_420);
-  if (iVar2 == 0) {
-    va(0xffffffff8207b160,0x60);
-    Scr_Error();
+  uVar2 = Scr_GetNumParam();
+  Scr_ConstructMessageString(0,uVar2 - 1,"Hint String",acStack_420,0x400);
+  iVar3 = G_GetHintStringIndex(local_430,acStack_420);
+  if (iVar3 == 0) {
+    pcVar1 = va("Too many different hintstring values. Max allowed is %i different strings");
+    Scr_Error(pcVar1);
   }
-  *(undefined4 *)(puVar3[0x56] + 0x3914) = 1;
-  *(undefined4 *)(puVar3[0x56] + 0x3918) = local_430[0];
+  pgVar4->client->hintForcedType = HINT_NOICON;
+  pgVar4->client->hintForcedString = local_430[0];
   return;
 }
 
 
 // 82492118  ScrCmd_ForceUseHintOff  (game/g_scr_main.cpp:5366)
 
-void ScrCmd_ForceUseHintOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ForceUseHintOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x14f7,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x14f7,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(undefined4 *)(puVar1[0x56] + 0x3914) = 0;
+  pgVar3->client->hintForcedType = HINT_NONE;
   return;
 }
 
 
 // 824921E0  ScrCmd_LaserOn  (game/g_scr_main.cpp:5383)
 
-void ScrCmd_LaserOn(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_LaserOn(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) | 0x10000;
+  pgVar2 = GetEntity(param_1);
+  pgVar1 = pgVar2->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags | 0x10000;
     return;
   }
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) | 0x10000;
+  (pgVar2->s).lerp.eFlags = (pgVar2->s).lerp.eFlags | 0x10000;
   return;
 }
 
 
 // 82492238  ScrCmd_LaserOff  (game/g_scr_main.cpp:5406)
 
-void ScrCmd_LaserOff(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_LaserOff(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) & 0xfffeffff;
+  pgVar2 = GetEntity(param_1);
+  pgVar1 = pgVar2->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags & 0xfffeffff;
     return;
   }
-  *(uint *)(iVar2 + 8) = *(uint *)(iVar2 + 8) & 0xfffeffff;
+  (pgVar2->s).lerp.eFlags = (pgVar2->s).lerp.eFlags & 0xfffeffff;
   return;
 }
 
 
 // 82492290  ScrCmd_LaserAltViewOn  (game/g_scr_main.cpp:5425)
 
-void ScrCmd_LaserAltViewOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_LaserAltViewOn(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1532,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1532,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) | 4;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags | 4;
   return;
 }
 
 
 // 82492358  ScrCmd_LaserAltViewOff  (game/g_scr_main.cpp:5442)
 
-void ScrCmd_LaserAltViewOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_LaserAltViewOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1543,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1543,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) & 0xfffffffb;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags & 0xfffffffb;
   return;
 }
 
 
 // 82492420  ScrCmd_ThermalVisionOn  (game/g_scr_main.cpp:5460)
 
-void ScrCmd_ThermalVisionOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalVisionOn(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
+  char *pcVar1;
+  uint uVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x1555,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1555,
+                      0,"%s");
     }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar2[0x56] + 0x10) = *(uint *)(puVar2[0x56] + 0x10) | 8;
-  iVar1 = Scr_GetNumParam();
-  if ((iVar1 == 1) && (iVar1 = Scr_GetInt(0), iVar1 != 0)) {
-    *(uint *)(puVar2[0x56] + 0x10) = *(uint *)(puVar2[0x56] + 0x10) | 0x100000;
+  (pgVar4->client->ps).otherFlags = (pgVar4->client->ps).otherFlags | 8;
+  uVar2 = Scr_GetNumParam();
+  if ((uVar2 == 1) && (iVar3 = Scr_GetInt(0), iVar3 != 0)) {
+    (pgVar4->client->ps).otherFlags = (pgVar4->client->ps).otherFlags | 0x100000;
   }
   return;
 }
@@ -5654,303 +6292,350 @@ void ScrCmd_ThermalVisionOn(uint param_1)
 
 // 82492518  ScrCmd_ThermalVisionOff  (game/g_scr_main.cpp:5481)
 
-void ScrCmd_ThermalVisionOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalVisionOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x156a,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x156a,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) & 0xfffffff7;
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) & 0xffefffff;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags & 0xfffffff7;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags & 0xffefffff;
   return;
 }
 
 
 // 824925F0  ScrCmd_ThermalDrawEnable  (game/g_scr_main.cpp:5501)
 
-void ScrCmd_ThermalDrawEnable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalDrawEnable(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x400;
+  pgVar1 = GetEntity(param_1);
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags | 0x400;
   return;
 }
 
 
 // 82492620  ScrCmd_ThermalDrawDisable  (game/g_scr_main.cpp:5520)
 
-void ScrCmd_ThermalDrawDisable(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalDrawDisable(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) & 0xfffffbff;
+  pgVar1 = GetEntity(param_1);
+  (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags & 0xfffffbff;
   return;
 }
 
 
 // 82492650  ScrCmd_ThermalVisionFOFOverlayOn  (game/g_scr_main.cpp:5539)
 
-void ScrCmd_ThermalVisionFOFOverlayOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalVisionFOFOverlayOn(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x15a4,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x15a4,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) | 0x10;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags | 0x10;
   return;
 }
 
 
 // 82492718  ScrCmd_ThermalVisionFOFOverlayOff  (game/g_scr_main.cpp:5556)
 
-void ScrCmd_ThermalVisionFOFOverlayOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ThermalVisionFOFOverlayOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x15b5,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x15b5,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) & 0xffffffef;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags & 0xffffffef;
   return;
 }
 
 
 // 824927E0  ScrCmd_AutoSpotOverlayOn  (game/g_scr_main.cpp:5644)
 
-void ScrCmd_AutoSpotOverlayOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_AutoSpotOverlayOn(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x160d,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x160d,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) | 0x40000;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags | 0x40000;
   return;
 }
 
 
 // 824928A8  ScrCmd_AutoSpotOverlayOff  (game/g_scr_main.cpp:5661)
 
-void ScrCmd_AutoSpotOverlayOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_AutoSpotOverlayOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x161e,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x161e,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x10) = *(uint *)(puVar1[0x56] + 0x10) & 0xfffbffff;
+  (pgVar3->client->ps).otherFlags = (pgVar3->client->ps).otherFlags & 0xfffbffff;
   return;
 }
 
 
 // 82492970  ScrCmd_GetStance  (game/g_scr_main.cpp:5681)
 
-void ScrCmd_GetStance(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetStance(scr_entref_t param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  gentity_s *pgVar2;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    Scr_Error(0xffffffff8207849c);
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("GetStance is only defined for players.");
     return;
   }
-  uVar1 = *(uint *)(*(int *)(iVar2 + 0x158) + 0xc);
+  uVar1 = (pgVar2->client->ps).pm_flags;
   if ((uVar1 & 1) != 0) {
-    Scr_AddConstString(DAT_835a0c0c);
+    Scr_AddConstString((uint)scr_const.prone);
     return;
   }
   if ((uVar1 & 2) != 0) {
-    Scr_AddConstString(DAT_835a0ba6);
+    Scr_AddConstString((uint)scr_const.crouch);
     return;
   }
-  Scr_AddConstString(DAT_835a0c32);
+  Scr_AddConstString((uint)scr_const.stand);
   return;
 }
 
 
 // 82492A20  ScrCmd_SetStance  (game/g_scr_main.cpp:5711)
 
-void ScrCmd_SetStance(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_SetStance(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar3;
-  short sVar4;
-  undefined8 uVar2;
-  undefined4 *puVar5;
-  char *pcVar6;
-  longlong lVar7;
+  gclient_s *pgVar1;
+  uint uVar2;
+  scr_entref_t sVar3;
+  gentity_s *pgVar4;
+  uint uVar5;
+  float *pfVar6;
+  undefined4 *puVar7;
+  char *pcVar8;
+  longlong lVar9;
   undefined4 uStack_94;
-  undefined1 local_90 [8];
-  undefined4 local_88;
-  undefined4 local_7c;
-  undefined1 auStack_70 [46];
-  char local_42;
+  Bounds local_90;
+  trace_t atStack_70 [2];
   
-  __savegprlr_26();
-  iVar3 = GetEntity();
-  sVar4 = Scr_GetConstString(0);
-  iVar1 = *(int *)(iVar3 + 0x158);
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff820784c4);
+  sVar3 = (scr_entref_t)__savegprlr_26(param_1);
+  pgVar4 = GetEntity(sVar3);
+  uVar5 = Scr_GetConstString(0);
+  pgVar1 = pgVar4->client;
+  uVar5 = uVar5 & 0xffff;
+  if (pgVar1 == (gclient_s *)0x0) {
+    Scr_Error("SetStance is only defined for players.");
   }
   else {
-    if (((*(uint *)(iVar1 + 0xc) & 1) != 0) && ((sVar4 == DAT_835a0ba6 || (sVar4 == DAT_835a0c32))))
-    {
-      puVar5 = &uStack_94;
-      pcVar6 = "k]";
-      lVar7 = 6;
+    if ((((pgVar1->ps).pm_flags & 1U) != 0) &&
+       ((uVar5 == scr_const.crouch || (uVar5 == scr_const.stand)))) {
+      puVar7 = &uStack_94;
+      pcVar8 = "k]";
+      lVar9 = 6;
       do {
-        pcVar6 = pcVar6 + 4;
-        puVar5 = puVar5 + 1;
-        *puVar5 = *(undefined4 *)pcVar6;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      local_88 = 0x41c80000;
-      local_7c = 0x41c80000;
-      G_TraceCapsule(auStack_70,iVar1 + 0x1c,iVar1 + 0x1c,local_90,*(undefined4 *)(iVar1 + 0x150),
-                     0x810011);
-      if (local_42 != '\0') {
-        uVar2 = SL_ConvertToString(sVar4);
-        Com_PrintWarning(0x17,0xffffffff820784f0,uVar2);
+        pcVar8 = pcVar8 + 4;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *(undefined4 *)pcVar8;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      pfVar6 = (pgVar1->ps).origin;
+      local_90.midPoint[2] = 25.0;
+      local_90.halfSize[2] = 25.0;
+      G_TraceCapsule(atStack_70,pfVar6,pfVar6,&local_90,(pgVar1->ps).clientNum,0x810011);
+      if (atStack_70[0].allsolid != false) {
+        SL_ConvertToString(uVar5);
+        Com_PrintWarning(0x17,
+                         "Warning: SetStance( \"%s\" ) could not be applied because there isn\'t enough room"
+                        );
         __restgprlr_26();
         return;
       }
     }
-    if ((((*(uint *)(iVar1 + 0xc) & 1) != 0) || ((*(uint *)(iVar1 + 0xc) & 2) != 0)) &&
-       (sVar4 == DAT_835a0c32)) {
-      puVar5 = &uStack_94;
-      pcVar6 = "k]";
-      lVar7 = 6;
+    uVar2 = (pgVar1->ps).pm_flags;
+    if ((((uVar2 & 1) != 0) || ((uVar2 & 2) != 0)) && (uVar5 == scr_const.stand)) {
+      puVar7 = &uStack_94;
+      pcVar8 = "k]";
+      lVar9 = 6;
       do {
-        pcVar6 = pcVar6 + 4;
-        puVar5 = puVar5 + 1;
-        *puVar5 = *(undefined4 *)pcVar6;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      local_7c = 0x420c0000;
-      local_88 = 0x420c0000;
-      G_TraceCapsule(auStack_70,iVar1 + 0x1c,iVar1 + 0x1c,local_90,*(undefined4 *)(iVar1 + 0x150),
-                     0x810011);
-      if (local_42 != '\0') {
-        uVar2 = SL_ConvertToString(sVar4);
-        Com_PrintWarning(0x17,0xffffffff820784f0,uVar2);
-        sVar4 = DAT_835a0ba6;
-        if ((*(uint *)(iVar1 + 0xc) & 1) == 0) goto LAB_82492cd0;
+        pcVar8 = pcVar8 + 4;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *(undefined4 *)pcVar8;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      pfVar6 = (pgVar1->ps).origin;
+      local_90.halfSize[2] = 35.0;
+      local_90.midPoint[2] = 35.0;
+      G_TraceCapsule(atStack_70,pfVar6,pfVar6,&local_90,(pgVar1->ps).clientNum,0x810011);
+      if (atStack_70[0].allsolid != false) {
+        SL_ConvertToString(uVar5);
+        Com_PrintWarning(0x17,
+                         "Warning: SetStance( \"%s\" ) could not be applied because there isn\'t enough room"
+                        );
+        if (((pgVar1->ps).pm_flags & 1U) == 0) goto LAB_82492cd0;
+        uVar5 = (uint)scr_const.crouch;
       }
     }
-    if (sVar4 == DAT_835a0c32) {
-      *(undefined4 *)(iVar1 + 0x164) = 0x3c;
-      *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xfffffffc;
-      G_AddEvent(iVar3,6,0);
+    if (uVar5 == scr_const.stand) {
+      (pgVar1->ps).viewHeightTarget = 0x3c;
+      (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags & 0xfffffffc;
+      G_AddEvent(pgVar4,6,0);
       __restgprlr_26();
       return;
     }
-    if (sVar4 == DAT_835a0ba6) {
-      *(undefined4 *)(iVar1 + 0x164) = 0x28;
-      *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xfffffffc | 2;
-      G_AddEvent(iVar3,7,0);
+    if (uVar5 == scr_const.crouch) {
+      (pgVar1->ps).viewHeightTarget = 0x28;
+      (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags & 0xfffffffcU | 2;
+      G_AddEvent(pgVar4,7,0);
       __restgprlr_26();
       return;
     }
-    if (sVar4 == DAT_835a0c0c) {
-      if ((*(uint *)(iVar1 + 0xc) & 1) == 0) {
-        if ((*(uint *)(iVar1 + 0x15c) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff82076e74,0x1689,0,0xffffffff82000f98,0xffffffff8200ca00);
+    if (uVar5 == scr_const.prone) {
+      if (((pgVar1->ps).pm_flags & 1U) == 0) {
+        if (((uint)(pgVar1->ps).viewangles[1] & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                          0x1689,0,"%s");
         }
-        *(undefined4 *)(iVar1 + 0x1ac) = *(undefined4 *)(iVar1 + 0x15c);
+        (pgVar1->ps).proneDirection = (pgVar1->ps).viewangles[1];
       }
-      *(undefined4 *)(iVar1 + 0x164) = 0xb;
-      *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xfffffffc | 1;
-      G_AddEvent(iVar3,8,0);
+      (pgVar1->ps).viewHeightTarget = 0xb;
+      (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags & 0xfffffffcU | 1;
+      G_AddEvent(pgVar4,8,0);
       __restgprlr_26();
       return;
     }
@@ -5963,58 +6648,71 @@ LAB_82492cd0:
 
 // 82492CD8  ScrCmd_Delete  (game/g_scr_main.cpp:5797)
 
-void ScrCmd_Delete(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_Delete(scr_entref_t param_1)
 
 {
-  int *piVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  piVar1 = (int *)GetEntity();
-  if (piVar1[0x56] != 0) {
-    Scr_Error(0xffffffff82078598);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client != (gclient_s *)0x0) {
+    Scr_Error("Cannot delete a client entity");
   }
-  if (DAT_835832f0 == *piVar1) {
-    va(0xffffffff8207856c);
-    Scr_Error();
+  if (level.currentEntityThink == (pgVar1->s).number) {
+    pcVar2 = va("Cannot delete entity \'%i\' during its think");
+    Scr_Error(pcVar2);
   }
-  if ((piVar1[2] & 0x20000000U) != 0) {
-    Scr_Error(0xffffffff82078540);
+  if (((pgVar1->s).lerp.eFlags & 0x20000000U) != 0) {
+    Scr_Error("Cannot delete a \'willNeverChange\' entity");
   }
-  Scr_Notify(piVar1,DAT_835a0bae,0);
-  G_FreeEntity(piVar1);
+  Scr_Notify(pgVar1,scr_const.death,0);
+  G_FreeEntity(pgVar1);
   return;
 }
 
 
 // 82492D80  ScrCmd_GetEye  (game/g_scr_main.cpp:5840)
 
-void ScrCmd_GetEye(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetEye(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined1 auStack_20 [16];
+  gentity_s *pgVar1;
+  float afStack_20 [4];
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    Scr_Error(0xffffffff820785b8);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_Error("getEye must be called on a player");
   }
-  G_GetPlayerViewOrigin(*(undefined4 *)(iVar1 + 0x158),auStack_20);
-  Scr_AddVector(auStack_20);
+  G_GetPlayerViewOrigin(&pgVar1->client->ps,afStack_20);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 82492DD8  Scr_BulletTrace  (game/g_scr_main.cpp:5876)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_BulletTrace(void)
 
 {
   float fVar1;
+  float fVar2;
   int iVar3;
   uint uVar4;
-  undefined4 *puVar5;
-  ulonglong uVar2;
-  undefined4 uVar6;
-  ulonglong uVar7;
+  gentity_s *pgVar5;
+  ushort uVar7;
+  char *pcVar6;
+  int iVar8;
+  uint uVar9;
   float local_90;
   float local_8c;
   float local_88;
@@ -6027,149 +6725,156 @@ void Scr_BulletTrace(void)
   float local_60;
   float local_5c;
   float local_58;
-  float local_50;
-  undefined1 auStack_4c [12];
-  int local_40;
+  trace_t local_50;
   
-  uVar6 = 0x7ff;
-  uVar7 = 0x2806831;
+  iVar8 = 0x7ff;
+  uVar9 = 0x2806831;
   Scr_GetVector(0,&local_90);
   Scr_GetVector(1,&local_80);
   iVar3 = Scr_GetInt(2);
   if (iVar3 == 0) {
-    uVar7 = 0x806831;
+    uVar9 = 0x806831;
   }
   uVar4 = Scr_GetNumParam();
   if (((3 < uVar4) && (iVar3 = Scr_GetType(3), iVar3 == 1)) &&
      (iVar3 = Scr_GetPointerType(3), iVar3 == 0x16)) {
-    puVar5 = (undefined4 *)Scr_GetEntity(3);
-    uVar6 = *puVar5;
+    pgVar5 = Scr_GetEntity(3);
+    iVar8 = (pgVar5->s).number;
   }
   uVar4 = Scr_GetNumParam();
   if ((4 < uVar4) && (iVar3 = Scr_GetInt(4), iVar3 != 0)) {
-    uVar7 = uVar7 | 0x400;
+    uVar9 = uVar9 | 0x400;
   }
-  G_LocationalTrace(&local_50,&local_90,&local_80,uVar6,uVar7,0);
+  G_LocationalTrace(&local_50,&local_90,&local_80,iVar8,uVar9,(uchar *)0x0);
   Scr_MakeArray();
-  Scr_AddFloat((double)local_50);
-  Scr_AddArrayStringIndexed(DAT_835a0bce);
-  local_70 = (local_80 - local_90) * local_50 + local_90;
-  local_6c = (local_7c - local_8c) * local_50 + local_8c;
-  local_68 = (local_78 - local_88) * local_50 + local_88;
+  Scr_AddFloat(local_50.fraction);
+  Scr_AddArrayStringIndexed((uint)scr_const.fraction);
+  local_70 = (local_80 - local_90) * local_50.fraction + local_90;
+  local_6c = (local_7c - local_8c) * local_50.fraction + local_8c;
+  local_68 = (local_78 - local_88) * local_50.fraction + local_88;
   Scr_AddVector(&local_70);
-  Scr_AddArrayStringIndexed(DAT_835a0c06);
-  uVar2 = Trace_GetEntityHitId(&local_50);
-  uVar7 = uVar2 & 0xffff;
+  Scr_AddArrayStringIndexed((uint)scr_const.position);
+  uVar7 = Trace_GetEntityHitId(&local_50);
   if ((uVar7 == 0x7ff) || (uVar7 == 0x7fe)) {
     Scr_AddUndefined();
   }
   else {
-    Scr_AddEntity((uVar7 + (uVar2 & 0xffff) * 4) * 0x80 + -0x7cc8c980);
+    Scr_AddEntity(g_entities + uVar7);
   }
-  Scr_AddArrayStringIndexed(DAT_835a0bc4);
-  if (1.0 <= local_50) {
+  Scr_AddArrayStringIndexed((uint)scr_const.entity);
+  if (1.0 <= local_50.fraction) {
     local_7c = local_7c - local_8c;
-    local_78 = local_78 - local_88;
-    local_80 = local_80 - local_90;
-    fVar1 = SQRT(local_80 * local_80 + local_78 * local_78 + local_7c * local_7c);
-    local_58 = 1.0;
-    if (-fVar1 < 0.0) {
-      local_58 = fVar1;
+    local_58 = local_78 - local_88;
+    local_60 = local_80 - local_90;
+    fVar2 = SQRT(local_60 * local_60 + local_58 * local_58 + local_7c * local_7c);
+    fVar1 = 1.0;
+    if (-fVar2 < 0.0) {
+      fVar1 = fVar2;
     }
-    local_58 = 1.0 / local_58;
-    local_60 = local_58 * local_80;
-    local_5c = local_7c * local_58;
-    local_58 = local_78 * local_58;
+    fVar1 = 1.0 / fVar1;
+    local_60 = fVar1 * local_60;
+    local_5c = local_7c * fVar1;
+    local_58 = local_58 * fVar1;
     Scr_AddVector(&local_60);
-    Scr_AddArrayStringIndexed(DAT_835a0bfc);
-    Scr_AddConstString(DAT_835a0bfa);
+    Scr_AddArrayStringIndexed((uint)scr_const.normal);
+    Scr_AddConstString((uint)scr_const.none);
   }
   else {
-    Scr_AddVector(auStack_4c);
-    Scr_AddArrayStringIndexed(DAT_835a0bfc);
-    Com_SurfaceTypeToName(local_40 >> 0x14 & 0x1f);
-    Scr_AddString();
+    Scr_AddVector(local_50.normal);
+    Scr_AddArrayStringIndexed((uint)scr_const.normal);
+    pcVar6 = Com_SurfaceTypeToName(local_50.surfaceFlags >> 0x14 & 0x1f);
+    Scr_AddString(pcVar6);
   }
-  Scr_AddArrayStringIndexed(DAT_835a0c38);
+  Scr_AddArrayStringIndexed((uint)scr_const.surfacetype);
   return;
 }
 
 
 // 82493020  Scr_BulletTracePassed  (game/g_scr_main.cpp:5967)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_BulletTracePassed(void)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  undefined4 uVar4;
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [24];
+  gentity_s *pgVar2;
+  int iVar3;
+  int iVar4;
+  float afStack_40 [4];
+  float afStack_30 [6];
   
-  uVar4 = 0x7ff;
-  uVar3 = 0x2806831;
-  Scr_GetVector(0,auStack_30);
-  Scr_GetVector(1,auStack_40);
+  iVar3 = 0x7ff;
+  iVar4 = 0x2806831;
+  Scr_GetVector(0,afStack_30);
+  Scr_GetVector(1,afStack_40);
   iVar1 = Scr_GetInt(2);
   if (iVar1 == 0) {
-    uVar3 = 0x806831;
+    iVar4 = 0x806831;
   }
   iVar1 = Scr_GetType(3);
   if ((iVar1 == 1) && (iVar1 = Scr_GetPointerType(3), iVar1 == 0x16)) {
-    puVar2 = (undefined4 *)Scr_GetEntity(3);
-    uVar4 = *puVar2;
+    pgVar2 = Scr_GetEntity(3);
+    iVar3 = (pgVar2->s).number;
   }
-  G_LocationalTracePassed(auStack_30,auStack_40,uVar4,0x7ff,uVar3,0);
-  Scr_AddBool();
+  iVar3 = G_LocationalTracePassed(afStack_30,afStack_40,iVar3,0x7ff,iVar4,(uchar *)0x0);
+  Scr_AddBool(iVar3);
   return;
 }
 
 
 // 824930D8  Scr_SightTracePassed  (game/g_scr_main.cpp:6007)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_SightTracePassed(void)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  gentity_s *pgVar2;
   uint uVar3;
-  undefined8 uVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
+  int iVar4;
+  int iVar5;
+  int iVar6;
   int local_50 [2];
-  undefined1 auStack_48 [16];
-  undefined1 auStack_38 [56];
+  float afStack_48 [4];
+  float afStack_38 [14];
   
   __savegprlr_29();
-  uVar5 = 0x7ff;
-  uVar6 = 0x7ff;
-  uVar4 = 0x2801803;
-  Scr_GetVector(0,auStack_38);
-  Scr_GetVector(1,auStack_48);
+  iVar5 = 0x7ff;
+  iVar6 = 0x7ff;
+  iVar4 = 0x2801803;
+  Scr_GetVector(0,afStack_38);
+  Scr_GetVector(1,afStack_48);
   iVar1 = Scr_GetInt(2);
   if (iVar1 == 0) {
-    uVar4 = 0x801803;
+    iVar4 = 0x801803;
   }
   iVar1 = Scr_GetType(3);
   if ((iVar1 == 1) && (iVar1 = Scr_GetPointerType(3), iVar1 == 0x16)) {
-    puVar2 = (undefined4 *)Scr_GetEntity(3);
-    uVar5 = *puVar2;
+    pgVar2 = Scr_GetEntity(3);
+    iVar5 = (pgVar2->s).number;
   }
   uVar3 = Scr_GetNumParam();
   if (((4 < uVar3) && (iVar1 = Scr_GetType(4), iVar1 == 1)) &&
      (iVar1 = Scr_GetPointerType(4), iVar1 == 0x16)) {
-    puVar2 = (undefined4 *)Scr_GetEntity(4);
-    uVar6 = *puVar2;
+    pgVar2 = Scr_GetEntity(4);
+    iVar6 = (pgVar2->s).number;
   }
-  G_SightTrace(local_50,auStack_38,auStack_48,uVar5,uVar6,uVar4);
-  Scr_AddBool(local_50[0] == 0);
+  G_SightTrace(local_50,afStack_38,afStack_48,iVar5,iVar6,iVar4);
+  Scr_AddBool((uint)LZCOUNT(local_50[0]) >> 5);
   __restgprlr_29();
   return;
 }
 
 
 // 824931C0  Scr_PhysicsTrace  (game/g_scr_main.cpp:6061)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_PhysicsTrace(void)
 
@@ -6183,20 +6888,22 @@ void Scr_PhysicsTrace(void)
   float local_50;
   float local_4c;
   float local_48;
-  float local_40 [16];
+  trace_t local_40;
   
   Scr_GetVector(0,&local_70);
   Scr_GetVector(1,&local_60);
-  G_TraceCapsule(local_40,&local_70,&local_60,0xffffffff82174a3c,0x7ff,0x820015);
-  local_50 = (local_60 - local_70) * local_40[0] + local_70;
-  local_4c = (local_5c - local_6c) * local_40[0] + local_6c;
-  local_48 = (local_58 - local_68) * local_40[0] + local_68;
+  G_TraceCapsule(&local_40,&local_70,&local_60,&bounds_origin,0x7ff,0x820015);
+  local_50 = (local_60 - local_70) * local_40.fraction + local_70;
+  local_4c = (local_5c - local_6c) * local_40.fraction + local_6c;
+  local_48 = (local_58 - local_68) * local_40.fraction + local_68;
   Scr_AddVector(&local_50);
   return;
 }
 
 
 // 82493260  Scr_PlayerPhysicsTrace  (game/g_scr_main.cpp:6088)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_PlayerPhysicsTrace(void)
 
@@ -6210,20 +6917,22 @@ void Scr_PlayerPhysicsTrace(void)
   float local_50;
   float local_4c;
   float local_48;
-  float local_40 [16];
+  trace_t local_40;
   
   Scr_GetVector(0,&local_70);
   Scr_GetVector(1,&local_60);
-  G_TraceCapsule(local_40,&local_70,&local_60,0xffffffff8200c2a0,0x7ff,0x810011);
-  local_50 = (local_60 - local_70) * local_40[0] + local_70;
-  local_4c = (local_5c - local_6c) * local_40[0] + local_6c;
-  local_48 = (local_58 - local_68) * local_40[0] + local_68;
+  G_TraceCapsule(&local_40,&local_70,&local_60,&playerBox,0x7ff,0x810011);
+  local_50 = (local_60 - local_70) * local_40.fraction + local_70;
+  local_4c = (local_5c - local_6c) * local_40.fraction + local_6c;
+  local_48 = (local_58 - local_68) * local_40.fraction + local_68;
   Scr_AddVector(&local_50);
   return;
 }
 
 
 // 82493300  Scr_GetGroundPosition  (game/g_scr_main.cpp:6117)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_GetGroundPosition(void)
 
@@ -6233,6 +6942,7 @@ void Scr_GetGroundPosition(void)
   double dVar3;
   double dVar4;
   double dVar5;
+  float fVar6;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -6245,55 +6955,52 @@ void Scr_GetGroundPosition(void)
   float local_80;
   float local_7c;
   float local_78;
-  undefined4 local_70;
-  undefined4 local_6c;
-  float local_68;
-  float local_64;
-  float local_60;
-  float local_5c;
-  float local_50 [11];
-  char local_21;
+  Bounds local_70;
+  trace_t local_50;
   
   Scr_GetVector(0,&local_b0);
-  dVar3 = (double)Scr_GetFloat(1);
+  fVar6 = Scr_GetFloat(1);
+  dVar3 = (double)fVar6;
   uVar1 = Scr_GetNumParam();
   if (uVar1 < 3) {
-    dVar4 = 1000.0;
+    fVar6 = 1000.0;
   }
   else {
-    dVar4 = (double)Scr_GetFloat(2);
+    fVar6 = Scr_GetFloat(2);
   }
+  dVar5 = (double)fVar6;
   uVar1 = Scr_GetNumParam();
   if (uVar1 < 4) {
-    dVar5 = dVar3;
+    dVar4 = dVar3;
     if ((float)(dVar3 - 64.0) < 0.0) {
-      dVar5 = 64.0;
+      dVar4 = 64.0;
     }
   }
   else {
-    dVar5 = (double)Scr_GetFloat(3);
+    fVar6 = Scr_GetFloat(3);
+    dVar4 = (double)fVar6;
   }
   local_90 = local_b0;
-  local_88 = (float)((double)local_a8 - dVar4);
+  local_88 = (float)((double)local_a8 - dVar5);
   local_a0 = local_b0;
-  local_98 = (float)((double)local_a8 + dVar5);
+  local_98 = (float)((double)local_a8 + dVar4);
   local_8c = local_ac;
   local_9c = local_ac;
-  local_70 = 0;
-  local_6c = 0;
-  local_68 = (float)dVar3;
-  local_64 = (float)dVar3;
-  local_60 = (float)dVar3;
-  local_5c = (float)dVar3;
-  G_TraceCapsule(local_50,&local_a0,&local_90,&local_70,0x7ff,0x820015);
-  if (local_21 == '\0') {
+  local_70.midPoint[0] = 0.0;
+  local_70.midPoint[1] = 0.0;
+  local_70.midPoint[2] = (float)dVar3;
+  local_70.halfSize[0] = (float)dVar3;
+  local_70.halfSize[1] = (float)dVar3;
+  local_70.halfSize[2] = (float)dVar3;
+  G_TraceCapsule(&local_50,&local_a0,&local_90,&local_70,0x7ff,0x820015);
+  if (local_50.startsolid == false) {
     pfVar2 = &local_80;
-    local_80 = (local_90 - local_a0) * local_50[0] + local_a0;
-    local_7c = (local_8c - local_9c) * local_50[0] + local_9c;
-    local_78 = (local_88 - local_98) * local_50[0] + local_98;
+    local_80 = (local_90 - local_a0) * local_50.fraction + local_a0;
+    local_7c = (local_8c - local_9c) * local_50.fraction + local_9c;
+    local_78 = (local_88 - local_98) * local_50.fraction + local_98;
   }
   else {
-    Com_PrintWarning(0x17,0xffffffff820785dc,(double)local_b0,(double)local_ac,(double)local_a8);
+    Com_PrintWarning(0x17,"GetGroundPosition started in solid at (%g %g %g)\n");
     pfVar2 = &local_b0;
   }
   Scr_AddVector(pfVar2);
@@ -6303,388 +7010,454 @@ void Scr_GetGroundPosition(void)
 
 // 82493490  Scr_RandomInt  (game/g_scr_main.cpp:6173)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RandomInt(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   
-  uVar1 = Scr_GetInt(0);
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    Scr_Error(0xffffffff82078654);
+  iVar1 = Scr_GetInt(0);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 1) {
+    Scr_Error("RandomInt takes 1 parameter");
   }
-  if ((int)uVar1 < 1) {
-    Com_Printf(0x17,0xffffffff8207863c,uVar1);
-    Scr_Error(0xffffffff82078610);
+  if (iVar1 < 1) {
+    Com_Printf(0x17,"RandomInt parm: %d  ");
+    Scr_Error("RandomInt parm must be positive integer.\n");
     return;
   }
-  G_irand(0,uVar1);
-  Scr_AddInt();
+  iVar1 = G_irand(0,iVar1);
+  Scr_AddInt(iVar1);
   return;
 }
 
 
 // 82493528  Scr_RandomFloat  (game/g_scr_main.cpp:6200)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RandomFloat(void)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  float fVar2;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff82078670);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("RandomFloat takes 1 parameter");
   }
-  uVar2 = Scr_GetFloat(0);
-  G_flrand(0,uVar2);
-  Scr_AddFloat();
+  fVar2 = Scr_GetFloat(0);
+  fVar2 = G_flrand(0.0,fVar2);
+  Scr_AddFloat(fVar2);
   return;
 }
 
 
 // 82493578  Scr_RandomIntRange  (game/g_scr_main.cpp:6222)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RandomIntRange(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  int iVar2;
   
-  uVar1 = Scr_GetInt(0);
-  uVar2 = Scr_GetInt(1);
-  if ((int)uVar2 <= (int)uVar1) {
-    Com_Printf(0x17,0xffffffff820786d4,uVar1,uVar2);
-    Scr_Error(0xffffffff82078690);
+  iVar1 = Scr_GetInt(0);
+  iVar2 = Scr_GetInt(1);
+  if (iVar2 <= iVar1) {
+    Com_Printf(0x17,"RandomIntRange parms: %d %d ");
+    Scr_Error("RandomIntRange\'s second parameter must be greater than the first.\n");
   }
-  G_irand(uVar1,uVar2);
-  Scr_AddInt();
+  iVar1 = G_irand(iVar1,iVar2);
+  Scr_AddInt(iVar1);
   return;
 }
 
 
 // 824935F8  Scr_RandomFloatRange  (game/g_scr_main.cpp:6247)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_RandomFloatRange(void)
 
 {
   double dVar1;
   double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar2 = (double)Scr_GetFloat(1);
+  fVar3 = Scr_GetFloat(0);
+  dVar1 = (double)fVar3;
+  fVar3 = Scr_GetFloat(1);
+  dVar2 = (double)fVar3;
   if (dVar2 <= dVar1) {
-    Com_Printf(dVar1,dVar2,0x17,0xffffffff82078744,dVar1,dVar2);
-    Scr_Error(0xffffffff820786f8);
+    Com_Printf(0x17,"Scr_RandomFloatRange parms: %d %d ");
+    Scr_Error("Scr_RandomFloatRange\'s second parameter must be greater than the first.\n");
   }
-  G_flrand(dVar1,dVar2);
-  Scr_AddFloat();
+  fVar3 = G_flrand((float)dVar1,(float)dVar2);
+  Scr_AddFloat(fVar3);
   return;
 }
 
 
 // 82493688  GScr_sin  (game/g_scr_main.cpp:6271)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_sin(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = sin((double)(float)(dVar1 * 0.01745329238474369));
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = sin((double)(fVar2 * 0.017453292));
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 824936C8  GScr_cos  (game/g_scr_main.cpp:6287)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_cos(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = cos((double)(float)(dVar1 * 0.01745329238474369));
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = cos((double)(fVar2 * 0.017453292));
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82493708  GScr_tan  (game/g_scr_main.cpp:6303)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_tan(void)
 
 {
   double dVar1;
   double dVar2;
-  double _X;
+  double dVar3;
+  float fVar4;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  _X = (double)(float)(dVar1 * 0.01745329238474369);
-  dVar1 = sin(_X);
+  fVar4 = Scr_GetFloat(0);
+  dVar3 = (double)(fVar4 * 0.017453292);
+  dVar1 = sin(dVar3);
   dVar2 = (double)(float)dVar1;
-  dVar1 = cos(_X);
+  dVar1 = cos(dVar3);
   dVar1 = (double)(float)dVar1;
   if (dVar1 == 0.0) {
-    Scr_Error(0xffffffff82078768);
+    Scr_Error("divide by 0");
   }
-  Scr_AddFloat((double)(float)(dVar2 / dVar1));
+  Scr_AddFloat((float)(dVar2 / dVar1));
   return;
 }
 
 
 // 82493788  GScr_asin  (game/g_scr_main.cpp:6324)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_asin(void)
 
 {
-  double dVar1;
+  char *pcVar1;
+  double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  if ((dVar1 < -1.0) || (1.0 < dVar1)) {
-    va(dVar1,0xffffffff82078774,dVar1);
-    Scr_Error();
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
+  if ((dVar2 < -1.0) || (1.0 < dVar2)) {
+    pcVar1 = va("%g out of range");
+    Scr_Error(pcVar1);
   }
-  dVar1 = asin(dVar1);
-  Scr_AddFloat((double)((float)dVar1 * 57.295776));
+  dVar2 = asin(dVar2);
+  Scr_AddFloat((float)dVar2 * 57.295776);
   return;
 }
 
 
 // 82493810  GScr_acos  (game/g_scr_main.cpp:6345)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_acos(void)
 
 {
-  double dVar1;
+  char *pcVar1;
+  double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  if ((dVar1 < -1.0) || (1.0 < dVar1)) {
-    va(dVar1,0xffffffff82078774,dVar1);
-    Scr_Error();
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
+  if ((dVar2 < -1.0) || (1.0 < dVar2)) {
+    pcVar1 = va("%g out of range");
+    Scr_Error(pcVar1);
   }
-  dVar1 = acos(dVar1);
-  Scr_AddFloat((double)((float)dVar1 * 57.295776));
+  dVar2 = acos(dVar2);
+  Scr_AddFloat((float)dVar2 * 57.295776);
   return;
 }
 
 
 // 82493898  GScr_atan  (game/g_scr_main.cpp:6366)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_atan(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = atan(dVar1);
-  Scr_AddFloat((double)((float)dVar1 * 57.295776));
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = atan((double)fVar2);
+  Scr_AddFloat((float)dVar1 * 57.295776);
   return;
 }
 
 
 // 824938D8  GScr_CastInt  (game/g_scr_main.cpp:6382)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_CastInt(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_Str;
-  double dVar3;
+  int iVar1;
+  char *pcVar2;
+  float fVar3;
   
-  iVar2 = Scr_GetType(0);
-  if (iVar2 == 2) {
-    _Str = (char *)Scr_GetString(0);
-    iVar2 = atoi(_Str);
-    Scr_AddInt(iVar2);
+  iVar1 = Scr_GetType(0);
+  if (iVar1 == 2) {
+    pcVar2 = Scr_GetString(0);
+    iVar1 = atoi(pcVar2);
+    Scr_AddInt(iVar1);
     return;
   }
-  if (iVar2 != 5) {
-    if (iVar2 != 6) {
-      uVar1 = Scr_GetTypeName();
-      uVar1 = va(0xffffffff82078784,uVar1);
-      Scr_ParamError(0,uVar1);
+  if (iVar1 != 5) {
+    if (iVar1 != 6) {
+      Scr_GetTypeName(0);
+      pcVar2 = va("cannot cast %s to int");
+      Scr_ParamError(0,pcVar2);
       return;
     }
-    Scr_GetInt(0);
-    Scr_AddInt();
+    iVar1 = Scr_GetInt(0);
+    Scr_AddInt(iVar1);
     return;
   }
-  dVar3 = (double)Scr_GetFloat(0);
-  Scr_AddInt((int)dVar3);
+  fVar3 = Scr_GetFloat(0);
+  Scr_AddInt((int)fVar3);
   return;
 }
 
 
 // 82493998  GScr_CastFloat  (game/g_scr_main.cpp:6413)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_CastFloat(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_String;
+  int iVar1;
+  char *pcVar2;
   double dVar3;
+  float fVar4;
   
-  iVar2 = Scr_GetType(0);
-  if (iVar2 == 2) {
-    _String = (char *)Scr_GetString(0);
-    dVar3 = atof(_String);
-    Scr_AddFloat((double)(float)dVar3);
+  iVar1 = Scr_GetType(0);
+  if (iVar1 == 2) {
+    pcVar2 = Scr_GetString(0);
+    dVar3 = atof(pcVar2);
+    Scr_AddFloat((float)dVar3);
     return;
   }
-  if (iVar2 != 5) {
-    if (iVar2 != 6) {
-      uVar1 = Scr_GetTypeName();
-      uVar1 = va(0xffffffff8207879c,uVar1);
-      Scr_ParamError(0,uVar1);
+  if (iVar1 != 5) {
+    if (iVar1 != 6) {
+      Scr_GetTypeName(0);
+      pcVar2 = va("cannot cast %s to float");
+      Scr_ParamError(0,pcVar2);
       return;
     }
-    iVar2 = Scr_GetInt(0);
-    Scr_AddFloat((double)(longlong)iVar2);
+    iVar1 = Scr_GetInt(0);
+    Scr_AddFloat((float)(longlong)iVar1);
     return;
   }
-  Scr_GetFloat(0);
-  Scr_AddFloat();
+  fVar4 = Scr_GetFloat(0);
+  Scr_AddFloat(fVar4);
   return;
 }
 
 
 // 82493A68  GScr_abs  (game/g_scr_main.cpp:6444)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_abs(void)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  Scr_AddFloat(ABS(dVar1));
+  fVar1 = Scr_GetFloat(0);
+  Scr_AddFloat(ABS(fVar1));
   return;
 }
 
 
 // 82493A98  GScr_min  (game/g_scr_main.cpp:6461)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_min(void)
 
 {
   double dVar1;
   double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(1);
-  dVar2 = (double)Scr_GetFloat(0);
-  if ((float)(dVar1 - dVar2) < 0.0) {
+  fVar3 = Scr_GetFloat(1);
+  dVar1 = (double)fVar3;
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
+  if ((float)(dVar1 - (double)fVar3) < 0.0) {
     dVar2 = dVar1;
   }
-  Scr_AddFloat(dVar2);
+  Scr_AddFloat((float)dVar2);
   return;
 }
 
 
 // 82493AE0  GScr_max  (game/g_scr_main.cpp:6478)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_max(void)
 
 {
   double dVar1;
   double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(1);
-  dVar2 = (double)Scr_GetFloat(0);
-  if ((float)(dVar2 - dVar1) < 0.0) {
+  fVar3 = Scr_GetFloat(1);
+  dVar1 = (double)fVar3;
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
+  if ((float)((double)fVar3 - dVar1) < 0.0) {
     dVar2 = dVar1;
   }
-  Scr_AddFloat(dVar2);
+  Scr_AddFloat((float)dVar2);
   return;
 }
 
 
 // 82493B28  GScr_floor  (game/g_scr_main.cpp:6494)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_floor(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = floor(dVar1);
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = floor((double)fVar2);
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82493B58  GScr_ceil  (game/g_scr_main.cpp:6510)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_ceil(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = ceil(dVar1);
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = ceil((double)fVar2);
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82493B88  GScr_exp  (game/g_scr_main.cpp:6526)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_exp(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = exp(dVar1);
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = exp((double)fVar2);
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82493BB8  GScr_log  (game/g_scr_main.cpp:6542)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_log(void)
 
 {
   double dVar1;
+  float fVar2;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar1 = log(dVar1);
-  Scr_AddFloat((double)(float)dVar1);
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = log((double)fVar2);
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82493BE8  GScr_sqrt  (game/g_scr_main.cpp:6558)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_sqrt(void)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  Scr_AddFloat((double)(float)SQRT(dVar1));
+  fVar1 = Scr_GetFloat(0);
+  Scr_AddFloat(SQRT(fVar1));
   return;
 }
 
 
 // 82493C18  GScr_squared  (game/g_scr_main.cpp:6574)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_squared(void)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  Scr_AddFloat((double)(float)(dVar1 * dVar1));
+  fVar1 = Scr_GetFloat(0);
+  Scr_AddFloat(fVar1 * fVar1);
   return;
 }
 
 
 // 82493C48  GScr_clamp  (game/g_scr_main.cpp:6593)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_clamp(void)
 
@@ -6692,50 +7465,63 @@ void GScr_clamp(void)
   double dVar1;
   double dVar2;
   double dVar3;
+  float fVar4;
   
-  dVar1 = (double)Scr_GetFloat(2);
-  dVar2 = (double)Scr_GetFloat(1);
-  dVar3 = (double)Scr_GetFloat(0);
+  fVar4 = Scr_GetFloat(2);
+  dVar1 = (double)fVar4;
+  fVar4 = Scr_GetFloat(1);
+  dVar2 = (double)fVar4;
+  fVar4 = Scr_GetFloat(0);
+  dVar3 = (double)fVar4;
   if ((float)(dVar3 - dVar1) < 0.0) {
     dVar1 = dVar3;
   }
   if ((float)(dVar2 - dVar3) < 0.0) {
     dVar2 = dVar1;
   }
-  Scr_AddFloat(dVar2);
+  Scr_AddFloat((float)dVar2);
   return;
 }
 
 
 // 82493CA8  GScr_AngleClamp360  (game/g_scr_main.cpp:6609)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AngleClamp360(void)
 
 {
-  Scr_GetFloat(0);
-  AngleNormalize360();
-  Scr_AddFloat();
+  float fVar1;
+  
+  fVar1 = Scr_GetFloat(0);
+  fVar1 = AngleNormalize360(fVar1);
+  Scr_AddFloat(fVar1);
   return;
 }
 
 
 // 82493CD8  GScr_AngleClamp180  (game/g_scr_main.cpp:6625)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AngleClamp180(void)
 
 {
   double dVar1;
   double dVar2;
+  float fVar3;
   
-  dVar1 = (double)Scr_GetFloat(0);
-  dVar2 = (double)(float)(dVar1 * 0.0027777778450399637);
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)(fVar3 * 0.0027777778);
   dVar1 = floor((double)(float)(dVar2 + 0.5));
-  Scr_AddFloat((double)((float)(dVar2 - (double)(float)dVar1) * 360.0));
+  Scr_AddFloat((float)(dVar2 - (double)(float)dVar1) * 360.0);
   return;
 }
 
 
 // 82493D38  GScr_VectorFromLineToPoint  (game/g_scr_main.cpp:6770)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_VectorFromLineToPoint(void)
 
@@ -6767,7 +7553,7 @@ void GScr_VectorFromLineToPoint(void)
   dVar1 = (double)(float)(dVar2 * dVar2 +
                          (double)(float)(dVar3 * dVar3 + (double)(float)(dVar4 * dVar4)));
   if (dVar1 == 0.0) {
-    Scr_ParamError(0,0xffffffff820787b4);
+    Scr_ParamError(0,"The two points on the line must be different from each other");
   }
   dVar1 = -(double)(float)((double)(float)((double)(local_48 - local_68) * dVar3 +
                                           (double)(float)((double)(local_4c - local_6c) * dVar4 +
@@ -6784,6 +7570,8 @@ void GScr_VectorFromLineToPoint(void)
 
 
 // 82493E30  GScr_PointOnSegmentNearestToPoint  (game/g_scr_main.cpp:6815)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_PointOnSegmentNearestToPoint(void)
 
@@ -6824,7 +7612,7 @@ void GScr_PointOnSegmentNearestToPoint(void)
   dVar6 = (double)(float)(dVar7 * dVar7 +
                          (double)(float)(dVar8 * dVar8 + (double)(float)(dVar9 * dVar9)));
   if (dVar6 == 0.0) {
-    Scr_ParamError(0,0xffffffff820787f4);
+    Scr_ParamError(0,"Line segment must not have zero length");
     dVar4 = (double)local_68;
     dVar3 = (double)local_6c;
     dVar2 = (double)local_70;
@@ -6855,6 +7643,8 @@ void GScr_PointOnSegmentNearestToPoint(void)
 
 // 82493F50  Scr_Distance  (game/g_scr_main.cpp:6869)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_Distance(void)
 
 {
@@ -6867,30 +7657,35 @@ void Scr_Distance(void)
   
   Scr_GetVector(0,&local_30);
   Scr_GetVector(1,&local_20);
-  Scr_AddFloat((double)SQRT((local_1c - local_2c) * (local_1c - local_2c) +
-                            (local_18 - local_28) * (local_18 - local_28) +
-                            (local_20 - local_30) * (local_20 - local_30)));
+  Scr_AddFloat(SQRT((local_1c - local_2c) * (local_1c - local_2c) +
+                    (local_18 - local_28) * (local_18 - local_28) +
+                    (local_20 - local_30) * (local_20 - local_30)));
   return;
 }
 
 
 // 82493FC0  Scr_Distance2D  (game/g_scr_main.cpp:6891)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_Distance2D(void)
 
 {
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  float fVar1;
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  Scr_GetVector(0,auStack_20);
-  Scr_GetVector(1,auStack_30);
-  Vec2Distance(auStack_20,auStack_30);
-  Scr_AddFloat();
+  Scr_GetVector(0,afStack_20);
+  Scr_GetVector(1,afStack_30);
+  fVar1 = Vec2Distance(afStack_20,afStack_30);
+  Scr_AddFloat(fVar1);
   return;
 }
 
 
 // 82494008  Scr_DistanceSquared  (game/g_scr_main.cpp:6913)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_DistanceSquared(void)
 
@@ -6904,14 +7699,16 @@ void Scr_DistanceSquared(void)
   
   Scr_GetVector(0,&local_30);
   Scr_GetVector(1,&local_20);
-  Scr_AddFloat((double)((local_1c - local_2c) * (local_1c - local_2c) +
-                       (local_18 - local_28) * (local_18 - local_28) +
-                       (local_20 - local_30) * (local_20 - local_30)));
+  Scr_AddFloat((local_1c - local_2c) * (local_1c - local_2c) +
+               (local_18 - local_28) * (local_18 - local_28) +
+               (local_20 - local_30) * (local_20 - local_30));
   return;
 }
 
 
 // 82494070  Scr_Length  (game/g_scr_main.cpp:6934)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_Length(void)
 
@@ -6921,12 +7718,14 @@ void Scr_Length(void)
   float local_18;
   
   Scr_GetVector(0,&local_20);
-  Scr_AddFloat((double)SQRT(local_18 * local_18 + local_1c * local_1c + local_20 * local_20));
+  Scr_AddFloat(SQRT(local_18 * local_18 + local_1c * local_1c + local_20 * local_20));
   return;
 }
 
 
 // 824940B8  Scr_LengthSquared  (game/g_scr_main.cpp:6953)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_LengthSquared(void)
 
@@ -6936,12 +7735,14 @@ void Scr_LengthSquared(void)
   float local_18;
   
   Scr_GetVector(0,&local_20);
-  Scr_AddFloat((double)(local_18 * local_18 + local_1c * local_1c + local_20 * local_20));
+  Scr_AddFloat(local_18 * local_18 + local_1c * local_1c + local_20 * local_20);
   return;
 }
 
 
 // 82494100  Scr_Closer  (game/g_scr_main.cpp:6974)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_Closer(void)
 
@@ -6959,17 +7760,19 @@ void Scr_Closer(void)
   Scr_GetVector(0,&local_40);
   Scr_GetVector(1,&local_30);
   Scr_GetVector(2,&local_20);
-  Scr_AddInt((local_3c - local_2c) * (local_3c - local_2c) +
-             (local_38 - local_28) * (local_38 - local_28) +
-             (local_40 - local_30) * (local_40 - local_30) <
-             (local_40 - local_20) * (local_40 - local_20) +
-             (local_38 - local_18) * (local_38 - local_18) +
-             (local_3c - local_1c) * (local_3c - local_1c));
+  Scr_AddInt((uint)((local_3c - local_2c) * (local_3c - local_2c) +
+                    (local_38 - local_28) * (local_38 - local_28) +
+                    (local_40 - local_30) * (local_40 - local_30) <
+                   (local_40 - local_20) * (local_40 - local_20) +
+                   (local_38 - local_18) * (local_38 - local_18) +
+                   (local_3c - local_1c) * (local_3c - local_1c)));
   return;
 }
 
 
 // 824941A8  Scr_VectorDot  (game/g_scr_main.cpp:7004)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_VectorDot(void)
 
@@ -6983,18 +7786,20 @@ void Scr_VectorDot(void)
   
   Scr_GetVector(0,&local_30);
   Scr_GetVector(1,&local_20);
-  Scr_AddFloat((double)(local_28 * local_18 + local_2c * local_1c + local_20 * local_30));
+  Scr_AddFloat(local_28 * local_18 + local_2c * local_1c + local_20 * local_30);
   return;
 }
 
 
 // 82494208  Scr_VectorNormalize  (game/g_scr_main.cpp:7025)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_VectorNormalize(void)
 
 {
   float fVar1;
-  int iVar2;
+  uint uVar2;
   float local_30;
   float local_2c;
   float local_28;
@@ -7002,9 +7807,9 @@ void Scr_VectorNormalize(void)
   float local_1c;
   float local_18;
   
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    Scr_Error(0xffffffff8207881c);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 1) {
+    Scr_Error("wrong number of arguments to vectornormalize!");
   }
   Scr_GetVector(0,&local_30);
   fVar1 = SQRT(local_2c * local_2c + local_28 * local_28 + local_30 * local_30);
@@ -7023,50 +7828,57 @@ void Scr_VectorNormalize(void)
 
 // 82494298  Scr_VectorToAngles  (game/g_scr_main.cpp:7050)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_VectorToAngles(void)
 
 {
-  int iVar1;
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  uint uVar1;
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff8207884c);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("wrong number of arguments to vectortoangle!");
   }
-  Scr_GetVector(0,auStack_30);
-  vectoangles(auStack_30,auStack_20);
-  Scr_AddVector(auStack_20);
+  Scr_GetVector(0,afStack_30);
+  vectoangles(afStack_30,afStack_20);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 824942F0  Scr_VectorToYaw  (game/g_scr_main.cpp:7075)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_VectorToYaw(void)
 
 {
-  int iVar1;
-  undefined1 auStack_20 [32];
+  uint uVar1;
+  float fVar2;
+  float afStack_20 [8];
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff82078878);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("wrong number of arguments to vectortoyaw!");
   }
-  Scr_GetVector(0,auStack_20);
-  vectoyaw(auStack_20);
-  Scr_AddFloat();
+  Scr_GetVector(0,afStack_20);
+  fVar2 = vectoyaw(afStack_20);
+  Scr_AddFloat(fVar2);
   return;
 }
 
 
 // 82494340  Scr_VectorLerp  (game/g_scr_main.cpp:7099)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_VectorLerp(void)
 
 {
-  int iVar1;
-  double dVar2;
+  uint uVar1;
+  float fVar2;
   float local_40;
   float local_3c;
   float local_38;
@@ -7077,19 +7889,16 @@ void Scr_VectorLerp(void)
   float local_1c;
   float local_18;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 3) {
-    Scr_Error(0xffffffff820788a4);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 3) {
+    Scr_Error("wrong number of arguments to vectorlerp");
   }
   Scr_GetVector(0,&local_40);
   Scr_GetVector(1,&local_30);
-  dVar2 = (double)Scr_GetFloat(2);
-  local_20 = (float)((double)(float)((double)local_30 - (double)local_40) * dVar2 + (double)local_40
-                    );
-  local_1c = (float)((double)(float)((double)local_2c - (double)local_3c) * dVar2 + (double)local_3c
-                    );
-  local_18 = (float)((double)(float)((double)local_28 - (double)local_38) * dVar2 + (double)local_38
-                    );
+  fVar2 = Scr_GetFloat(2);
+  local_20 = (local_30 - local_40) * fVar2 + local_40;
+  local_1c = (local_2c - local_3c) * fVar2 + local_3c;
+  local_18 = (local_28 - local_38) * fVar2 + local_38;
   Scr_AddVector(&local_20);
   return;
 }
@@ -7097,182 +7906,198 @@ void Scr_VectorLerp(void)
 
 // 824943D8  Scr_AnglesToUp  (game/g_scr_main.cpp:7127)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_AnglesToUp(void)
 
 {
-  int iVar1;
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  uint uVar1;
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff820788cc);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("wrong number of arguments to anglestoup!");
   }
-  Scr_GetVector(0,auStack_30);
-  AngleVectors(auStack_30,0,0,auStack_20);
-  Scr_AddVector(auStack_20);
+  Scr_GetVector(0,afStack_30);
+  AngleVectors(afStack_30,(float *)0x0,(float *)0x0,afStack_20);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 82494438  Scr_AnglesToRight  (game/g_scr_main.cpp:7153)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_AnglesToRight(void)
 
 {
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  Scr_GetVector(0,auStack_30);
-  AngleVectors(auStack_30,0,auStack_20,0);
-  Scr_AddVector(auStack_20);
+  Scr_GetVector(0,afStack_30);
+  AngleVectors(afStack_30,(float *)0x0,afStack_20,(float *)0x0);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 82494480  Scr_AnglesToForward  (game/g_scr_main.cpp:7174)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_AnglesToForward(void)
 
 {
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  Scr_GetVector(0,auStack_30);
-  AngleVectors(auStack_30,auStack_20,0,0);
-  Scr_AddVector(auStack_20);
+  Scr_GetVector(0,afStack_30);
+  AngleVectors(afStack_30,afStack_20,(float *)0x0,(float *)0x0);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 824944C8  Scr_CombineAngles  (game/g_scr_main.cpp:7196)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_CombineAngles(void)
 
 {
-  undefined1 auStack_c0 [16];
-  undefined1 auStack_b0 [16];
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [48];
-  undefined1 auStack_60 [48];
-  undefined1 auStack_30 [48];
+  float afStack_c0 [4];
+  float afStack_b0 [4];
+  float afStack_a0 [4];
+  float afStack_90 [12];
+  float afStack_60 [12];
+  float afStack_30 [12];
   
-  Scr_GetVector(0,auStack_a0);
-  Scr_GetVector(1,auStack_b0);
-  AnglesToAxis(auStack_a0,auStack_90);
-  AnglesToAxis(auStack_b0,auStack_60);
-  MatrixMultiply(auStack_60,auStack_90,auStack_30);
-  AxisToAngles(auStack_30,auStack_c0);
-  Scr_AddVector(auStack_c0);
+  Scr_GetVector(0,afStack_a0);
+  Scr_GetVector(1,afStack_b0);
+  AnglesToAxis(afStack_a0,(float (*) [3])afStack_90);
+  AnglesToAxis(afStack_b0,(float (*) [3])afStack_60);
+  MatrixMultiply((float (*) [3])afStack_60,(float (*) [3])afStack_90,(float (*) [3])afStack_30);
+  AxisToAngles((float (*) [3])afStack_30,afStack_c0);
+  Scr_AddVector(afStack_c0);
   return;
 }
 
 
 // 82494538  Scr_TransformMove  (game/g_scr_main.cpp:7237)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_TransformMove(void)
 
 {
-  undefined1 auStack_140 [16];
-  undefined1 auStack_130 [36];
-  undefined1 auStack_10c [12];
-  undefined1 auStack_100 [36];
-  undefined1 auStack_dc [12];
-  undefined1 auStack_d0 [36];
-  undefined1 auStack_ac [12];
-  undefined1 auStack_a0 [36];
-  undefined1 auStack_7c [12];
-  undefined1 auStack_70 [48];
-  undefined1 auStack_40 [48];
+  float afStack_140 [4];
+  float afStack_130 [9];
+  float afStack_10c [3];
+  float afStack_100 [9];
+  float afStack_dc [3];
+  float afStack_d0 [9];
+  float afStack_ac [3];
+  float afStack_a0 [9];
+  float afStack_7c [3];
+  float afStack_70 [12];
+  float afStack_40 [12];
   
-  Scr_GetVector(0,auStack_10c);
-  Scr_GetVector(1,auStack_140);
-  AnglesToAxis(auStack_140,auStack_130);
-  Scr_GetVector(2,auStack_7c);
-  Scr_GetVector(3,auStack_140);
-  AnglesToAxis(auStack_140,auStack_a0);
-  Scr_GetVector(4,auStack_ac);
-  Scr_GetVector(5,auStack_140);
-  AnglesToAxis(auStack_140,auStack_d0);
-  MatrixInverseOrthogonal43(auStack_a0,auStack_70);
-  MatrixMultiply43(auStack_d0,auStack_70,auStack_40);
-  MatrixMultiply43(auStack_40,auStack_130,auStack_100);
+  Scr_GetVector(0,afStack_10c);
+  Scr_GetVector(1,afStack_140);
+  AnglesToAxis(afStack_140,(float (*) [3])afStack_130);
+  Scr_GetVector(2,afStack_7c);
+  Scr_GetVector(3,afStack_140);
+  AnglesToAxis(afStack_140,(float (*) [3])afStack_a0);
+  Scr_GetVector(4,afStack_ac);
+  Scr_GetVector(5,afStack_140);
+  AnglesToAxis(afStack_140,(float (*) [3])afStack_d0);
+  MatrixInverseOrthogonal43((float (*) [3])afStack_a0,(float (*) [3])afStack_70);
+  MatrixMultiply43((float (*) [3])afStack_d0,(float (*) [3])afStack_70,(float (*) [3])afStack_40);
+  MatrixMultiply43((float (*) [3])afStack_40,(float (*) [3])afStack_130,(float (*) [3])afStack_100);
   Scr_MakeArray();
-  Scr_AddVector(auStack_dc);
-  Scr_AddArrayStringIndexed(DAT_835a0bfe);
-  AxisToAngles(auStack_100,auStack_140);
-  Scr_AddVector(auStack_140);
-  Scr_AddArrayStringIndexed(DAT_835a0b8e);
+  Scr_AddVector(afStack_dc);
+  Scr_AddArrayStringIndexed((uint)scr_const.origin);
+  AxisToAngles((float (*) [3])afStack_100,afStack_140);
+  Scr_AddVector(afStack_140);
+  Scr_AddArrayStringIndexed((uint)scr_const.angles);
   return;
 }
 
 
 // 82494630  Scr_IsSubStr  (game/g_scr_main.cpp:7283)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_IsSubStr(void)
 
 {
   char *pcVar1;
-  char *_Str;
+  char *pcVar2;
   
-  pcVar1 = (char *)Scr_GetString(1);
-  _Str = (char *)Scr_GetString(0);
-  pcVar1 = strstr(_Str,pcVar1);
-  Scr_AddBool(pcVar1 != (char *)0x0);
+  pcVar1 = Scr_GetString(1);
+  pcVar2 = Scr_GetString(0);
+  pcVar1 = strstr(pcVar2,pcVar1);
+  Scr_AddBool((uint)(pcVar1 != (char *)0x0));
   return;
 }
 
 
 // 82494680  Scr_IsEndStr  (game/g_scr_main.cpp:7297)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_IsEndStr(void)
 
 {
   char cVar1;
   char cVar2;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
-  undefined8 uVar3;
+  int iVar5;
   char *pcVar6;
   char *pcVar7;
   
-  pcVar4 = (char *)Scr_GetString(0);
-  pcVar5 = (char *)Scr_GetString(1);
-  pcVar6 = pcVar4;
+  pcVar3 = Scr_GetString(0);
+  pcVar4 = Scr_GetString(1);
+  pcVar6 = pcVar3;
   do {
     cVar1 = *pcVar6;
     pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  pcVar7 = pcVar5;
+  pcVar7 = pcVar4;
   do {
     cVar1 = *pcVar7;
     pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  if (pcVar7 + (-1 - (int)pcVar5) <= pcVar6 + (-1 - (int)pcVar4)) {
-    pcVar4 = pcVar4 + ((int)(pcVar6 + (-1 - (int)pcVar4)) - (int)(pcVar7 + (-1 - (int)pcVar5)));
+  if (pcVar7 + (-1 - (int)pcVar4) <= pcVar6 + (-1 - (int)pcVar3)) {
+    pcVar3 = pcVar3 + ((int)(pcVar6 + (-1 - (int)pcVar3)) - (int)(pcVar7 + (-1 - (int)pcVar4)));
     do {
-      cVar1 = *pcVar4;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar3;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
+      pcVar3 = pcVar3 + 1;
       pcVar4 = pcVar4 + 1;
-      pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
-    uVar3 = 1;
+    iVar5 = 1;
     if (cVar1 == cVar2) goto LAB_8249472c;
   }
-  uVar3 = 0;
+  iVar5 = 0;
 LAB_8249472c:
-  Scr_AddBool(uVar3);
+  Scr_AddBool(iVar5);
   return;
 }
 
 
 // 82494748  Scr_GetSubStr  (game/g_scr_main.cpp:7323)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_GetSubStr(void)
 
 {
-  int iVar1;
+  char *pcVar1;
   int iVar2;
   uint uVar3;
   int iVar4;
@@ -7281,7 +8106,7 @@ void Scr_GetSubStr(void)
   char local_440 [1088];
   
   __savegprlr_26();
-  iVar1 = Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   iVar2 = Scr_GetInt(1);
   uVar3 = Scr_GetNumParam();
   if (uVar3 < 3) {
@@ -7295,10 +8120,10 @@ void Scr_GetSubStr(void)
     iVar6 = iVar2;
     do {
       if (0x3ff < iVar5) {
-        Scr_Error(0xffffffff820788f8);
+        Scr_Error("string too long");
       }
-      if (*(char *)(iVar6 + iVar1) == '\0') break;
-      local_440[iVar6 - iVar2] = *(char *)(iVar6 + iVar1);
+      if (pcVar1[iVar6] == '\0') break;
+      local_440[iVar6 - iVar2] = pcVar1[iVar6];
       iVar6 = iVar6 + 1;
       iVar5 = iVar5 + 1;
     } while (iVar6 < iVar4);
@@ -7312,12 +8137,14 @@ void Scr_GetSubStr(void)
 
 // 824947F8  Scr_ToLower  (game/g_scr_main.cpp:7362)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_ToLower(void)
 
 {
   char cVar1;
   bool bVar2;
-  undefined8 uVar3;
+  uint uVar3;
   char *pcVar4;
   int iVar5;
   char cVar6;
@@ -7326,7 +8153,7 @@ void Scr_ToLower(void)
   
   __savegprlr_27();
   uVar3 = Scr_GetConstString(0);
-  pcVar4 = (char *)SL_ConvertToString();
+  pcVar4 = SL_ConvertToString(uVar3);
   bVar2 = false;
   iVar7 = 0;
   do {
@@ -7350,7 +8177,7 @@ void Scr_ToLower(void)
     iVar7 = iVar7 + 1;
     pcVar4 = pcVar4 + 1;
   } while (iVar7 < 0x400);
-  Scr_Error(0xffffffff820788f8);
+  Scr_Error("string too long");
   __restgprlr_27();
   return;
 }
@@ -7358,40 +8185,42 @@ void Scr_ToLower(void)
 
 // 824948B8  Scr_StrTok  (game/g_scr_main.cpp:7411)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_StrTok(void)
 
 {
-  char cVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  uint uVar1;
+  uint uVar2;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
+  char cVar5;
   char *pcVar6;
   int iVar7;
   int iVar8;
   char local_450 [1104];
   
   __savegprlr_24();
-  uVar2 = Scr_GetConstString(0);
-  uVar3 = Scr_GetConstString(1);
-  pcVar4 = (char *)SL_ConvertToString(uVar2);
-  pcVar5 = (char *)SL_ConvertToString(uVar3);
+  uVar1 = Scr_GetConstString(0);
+  uVar2 = Scr_GetConstString(1);
+  pcVar3 = SL_ConvertToString(uVar1);
+  pcVar4 = SL_ConvertToString(uVar2);
+  SL_AddRefToString(uVar1);
   SL_AddRefToString(uVar2);
-  SL_AddRefToString(uVar3);
-  pcVar6 = pcVar5;
+  pcVar6 = pcVar4;
   do {
-    cVar1 = *pcVar6;
+    cVar5 = *pcVar6;
     pcVar6 = pcVar6 + 1;
-  } while (cVar1 != '\0');
+  } while (cVar5 != '\0');
   iVar8 = 0;
   Scr_MakeArray();
-  cVar1 = *pcVar4;
-  if (cVar1 != '\0') {
+  cVar5 = *pcVar3;
+  if (cVar5 != '\0') {
     do {
       iVar7 = 0;
-      if (0 < (int)(pcVar6 + (-1 - (int)pcVar5))) {
+      if (0 < (int)(pcVar6 + (-1 - (int)pcVar4))) {
         do {
-          if (cVar1 == pcVar5[iVar7]) {
+          if (cVar5 == pcVar4[iVar7]) {
             if (iVar8 != 0) {
               local_450[iVar8] = '\0';
               Scr_AddString(local_450);
@@ -7401,27 +8230,27 @@ void Scr_StrTok(void)
             goto LAB_8249499c;
           }
           iVar7 = iVar7 + 1;
-        } while (iVar7 < (int)(pcVar6 + (-1 - (int)pcVar5)));
+        } while (iVar7 < (int)(pcVar6 + (-1 - (int)pcVar4)));
       }
-      local_450[iVar8] = cVar1;
+      local_450[iVar8] = cVar5;
       iVar8 = iVar8 + 1;
       if (0x3ff < iVar8) {
+        SL_RemoveRefToString(uVar1);
         SL_RemoveRefToString(uVar2);
-        SL_RemoveRefToString(uVar3);
-        Scr_Error(0xffffffff820788f8);
+        Scr_Error("string too long");
       }
 LAB_8249499c:
-      pcVar4 = pcVar4 + 1;
-      cVar1 = *pcVar4;
-    } while (cVar1 != '\0');
+      pcVar3 = pcVar3 + 1;
+      cVar5 = *pcVar3;
+    } while (cVar5 != '\0');
     if (iVar8 != 0) {
       local_450[iVar8] = '\0';
       Scr_AddString(local_450);
       Scr_AddArray();
     }
   }
+  SL_RemoveRefToString(uVar1);
   SL_RemoveRefToString(uVar2);
-  SL_RemoveRefToString(uVar3);
   __restgprlr_24();
   return;
 }
@@ -7429,54 +8258,68 @@ LAB_8249499c:
 
 // 82494A08  Scr_StrICmp  (game/g_scr_main.cpp:7491)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_StrICmp(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  uint uVar2;
+  char *pcVar3;
+  char *pcVar4;
+  int iVar5;
   
   uVar1 = Scr_GetConstString(0);
   uVar2 = Scr_GetConstString(1);
-  uVar1 = SL_ConvertToString(uVar1);
-  uVar2 = SL_ConvertToString(uVar2);
-  I_stricmp(uVar1,uVar2);
-  Scr_AddInt();
+  pcVar3 = SL_ConvertToString(uVar1);
+  pcVar4 = SL_ConvertToString(uVar2);
+  iVar5 = I_stricmp(pcVar3,pcVar4);
+  Scr_AddInt(iVar5);
   return;
 }
 
 
 // 82494A70  GScr_UseTriggerRequireLookAt  (game/g_scr_main.cpp:7520)
 
-void GScr_UseTriggerRequireLookAt(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_UseTriggerRequireLookAt(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(short *)(iVar1 + 0x172) != DAT_835a0c94) {
-    Scr_Error(0xffffffff82078908);
-    *(undefined1 *)(iVar1 + 0x1bc) = 1;
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->classname != scr_const.trigger_use) {
+    Scr_Error("The UseTriggerRequireLookAt command only works on trigger_use entities.\n");
+    (pgVar1->field31_0x1ac).item[0].dualWieldItem = true;
     return;
   }
-  *(undefined1 *)(iVar1 + 0x1bc) = 1;
+  (pgVar1->field31_0x1ac).item[0].dualWieldItem = true;
   return;
 }
 
 
 // 82494AE8  Scr_ErrorOnDefaultAsset  (game/g_scr_main.cpp:7536)
 
-void Scr_ErrorOnDefaultAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Scr_ErrorOnDefaultAsset(XAssetType param_1,char *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
   DB_FindXAssetHeader(param_1,param_2,1);
-  iVar2 = DB_IsXAssetDefault(param_1,param_2);
-  if (iVar2 != 0) {
-    uVar1 = DB_GetXAssetTypeName(param_1);
-    va(0xffffffff82078954,uVar1,param_2);
-    Scr_NeverTerminalError();
+  iVar1 = DB_IsXAssetDefault(param_1,param_2);
+  if (iVar1 != 0) {
+    DB_GetXAssetTypeName(param_1);
+    pcVar2 = va("precache %s \'%s\' failed");
+    Scr_NeverTerminalError(pcVar2);
   }
   return;
 }
@@ -7484,19 +8327,26 @@ void Scr_ErrorOnDefaultAsset(undefined8 param_1,undefined8 param_2)
 
 // 82494B58  Scr_PrecacheModel  (game/g_scr_main.cpp:7556)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheModel(void)
 
 {
   char *pcVar1;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078988);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "precacheModel must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  pcVar1 = (char *)Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   if (*pcVar1 == '\0') {
-    Scr_ParamError(0,0xffffffff8207896c);
+    Scr_ParamError(0,"Model name string is empty");
   }
-  Scr_ErrorOnDefaultAsset(4,pcVar1);
+  Scr_ErrorOnDefaultAsset(ASSET_TYPE_XMODEL,pcVar1);
   G_ModelIndex(pcVar1);
   return;
 }
@@ -7504,48 +8354,55 @@ void Scr_PrecacheModel(void)
 
 // 82494BD8  GScr_PrecacheLocationSelector  (game/g_scr_main.cpp:7590)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void GScr_PrecacheLocationSelector(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
-  int iVar4;
+  char *pcVar3;
+  ConfigString CVar4;
   char local_430 [1072];
   
   __savegprlr_27();
-  uVar1 = Scr_GetString(0);
-  lVar3 = 0x401;
-  while( true ) {
-    iVar4 = (int)lVar3;
-    if (0xeea < iVar4) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  pcVar1 = Scr_GetString(0);
+  CVar4 = CS_LOC_SEL_MTLS;
+  do {
+    if (0xeea < (int)CVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    SV_GetConfigstring(lVar3,local_430,0x400);
-    iVar2 = I_stricmp(local_430,uVar1);
-    if (iVar2 == 0) break;
-    lVar3 = lVar3 + 1;
-    if (2 < iVar4 + -0x400) {
-      lVar3 = 0;
-      do {
-        if (0xae9 < (int)lVar3) {
-          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
-        }
-        SV_GetConfigstring(lVar3 + 0x401,local_430,0x400);
-      } while ((local_430[0] != '\0') && (lVar3 = lVar3 + 1, (int)lVar3 < 3));
-      if ((int)lVar3 == 3) {
-        va(0xffffffff82078a2c,3);
-        Scr_Error();
-      }
-      if (0xeea < (int)(lVar3 + 0x401)) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
-      }
-      SV_SetConfigstring(lVar3 + 0x401,uVar1);
+    SV_GetConfigstring(CVar4,local_430,0x400);
+    iVar2 = I_stricmp(local_430,pcVar1);
+    if (iVar2 == 0) {
+      Com_DPrintf(0x17,"Script tried to precache the location selector \'%s\' more than once\n");
       __restgprlr_27();
       return;
     }
+    iVar2 = CVar4 - CS_VISIONSET_PAIN;
+    CVar4 = CVar4 + CS_SYSTEMINFO;
+  } while (iVar2 < 3);
+  iVar2 = 0;
+  do {
+    if (0xae9 < iVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
+    }
+    SV_GetConfigstring(iVar2 + CS_LOC_SEL_MTLS,local_430,0x400);
+    if (local_430[0] == '\0') break;
+    iVar2 = iVar2 + 1;
+  } while (iVar2 < 3);
+  if (iVar2 == 3) {
+    pcVar3 = va("Too many location selectors precached. Max allowed is %i");
+    Scr_Error(pcVar3);
   }
-  Com_DPrintf(0x17,0xffffffff820789e8,uVar1);
+  if (0xeea < (int)(iVar2 + CS_LOC_SEL_MTLS)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x285,0,"%s");
+  }
+  SV_SetConfigstring(iVar2 + CS_LOC_SEL_MTLS,pcVar1);
   __restgprlr_27();
   return;
 }
@@ -7553,113 +8410,134 @@ void GScr_PrecacheLocationSelector(void)
 
 // 82494D20  GScr_GetLocSelIndex  (game/g_scr_main.cpp:7628)
 
-void GScr_GetLocSelIndex(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+int GScr_GetLocSelIndex(char *param_1)
 
 {
   char *pcVar1;
   int iVar2;
   longlong lVar3;
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
-  pcVar1 = (char *)__savegprlr_27();
+  pcVar1 = (char *)__savegprlr_27(param_1);
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x1dd0,0,0xffffffff82000f98,0xffffffff82078a94);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1dd0,0,
+                    "%s");
   }
   if (*pcVar1 != '\0') {
     lVar3 = 0;
     do {
       if (0xae9 < (int)lVar3) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstring(lVar3 + 0x401,auStack_430,0x400);
-      iVar2 = I_stricmp(auStack_430,pcVar1);
+      SV_GetConfigstring((int)lVar3 + CS_LOC_SEL_MTLS,acStack_430,0x400);
+      iVar2 = I_stricmp(acStack_430,pcVar1);
       if (iVar2 == 0) {
-        __restgprlr_27(lVar3 + 1);
-        return;
+        iVar2 = __restgprlr_27(lVar3 + 1);
+        return iVar2;
       }
       lVar3 = lVar3 + 1;
     } while ((int)lVar3 < 3);
-    va(0xffffffff82078a68,pcVar1);
-    Scr_Error();
+    pcVar1 = va("Location selector \'%s\' was not precached\n");
+    Scr_Error(pcVar1);
   }
-  __restgprlr_27(0);
-  return;
+  iVar2 = __restgprlr_27(0);
+  return iVar2;
 }
 
 
 // 82494E00  Scr_PrecacheShellShock  (game/g_scr_main.cpp:7662)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheShellShock(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  int iVar2;
   int iVar3;
+  shellshock_parms_t *psVar4;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078ad0);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "precacheShellShock must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_ShellShockIndex();
-  iVar3 = BG_LoadShellShockDvars(uVar1);
+  pcVar1 = Scr_GetString(0);
+  iVar2 = G_ShellShockIndex(pcVar1);
+  iVar3 = BG_LoadShellShockDvars(pcVar1);
   if (iVar3 == 0) {
-    Com_Error(1,0xffffffff82078a9c,uVar1);
+    Com_Error(ERR_DROP,"\x15couldn\'t find shell shock \'%s\' -- see console\n");
   }
-  BG_GetShellshockParms(uVar2);
-  BG_SetShellShockParmsFromDvars();
+  psVar4 = BG_GetShellshockParms(iVar2);
+  BG_SetShellShockParmsFromDvars(psVar4);
   return;
 }
 
 
 // 82494E90  ScrCmd_StopLoopSound  (game/g_scr_main.cpp:7695)
 
-void ScrCmd_StopLoopSound(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_StopLoopSound(scr_entref_t param_1)
 
 {
-  int iVar1;
+  byte bVar1;
+  gentity_s *pgVar2;
   
-  iVar1 = GetEntity();
-  *(undefined4 *)(iVar1 + 0x84) = 0;
-  *(byte *)(iVar1 + 0x102) = *(byte *)(iVar1 + 0x102) & 0xfe;
+  pgVar2 = GetEntity(param_1);
+  bVar1 = (pgVar2->r).svFlags;
+  (pgVar2->s).loopSound = 0;
+  (pgVar2->r).svFlags = bVar1 & 0xfe;
   return;
 }
 
 
 // 82494EC8  ScrCmd_PlayRumbleOnEntity_Internal  (game/g_scr_main.cpp:7716)
 
-void ScrCmd_PlayRumbleOnEntity_Internal(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayRumbleOnEntity_Internal(scr_entref_t param_1,int param_2)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
+  gclient_s *pgVar1;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  char *pcVar4;
+  uint uVar5;
+  uint uVar6;
   
-  __savegprlr_28();
-  iVar3 = GetEntity();
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_RumbleIndex();
-  if ((int)uVar2 == 0) {
-    uVar1 = va(0xffffffff82078b30,uVar1);
-    Scr_ParamError(0,uVar1);
+  sVar2 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar3 = GetEntity(sVar2);
+  pcVar4 = Scr_GetString(0);
+  uVar5 = G_RumbleIndex(pcVar4);
+  if (uVar5 == 0) {
+    pcVar4 = va("unknown rumble name \'%s\'");
+    Scr_ParamError(0,pcVar4);
   }
-  *(byte *)(iVar3 + 0x102) = *(byte *)(iVar3 + 0x102) & 0xfe;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 1) {
-    Scr_Error(0xffffffff8206d414);
+  (pgVar3->r).svFlags = (pgVar3->r).svFlags & 0xfe;
+  uVar6 = Scr_GetNumParam();
+  if (uVar6 != 1) {
+    Scr_Error("Incorrect number of parameters.\n");
     __restgprlr_28();
     return;
   }
-  if ((int)param_2 == 0x67) {
-    iVar4 = *(int *)(iVar3 + 0x158);
-    if (iVar4 == 0) {
-      *(uint *)(iVar3 + 8) = *(uint *)(iVar3 + 8) | 0x8000;
+  if (param_2 == 0x67) {
+    pgVar1 = pgVar3->client;
+    if (pgVar1 == (gclient_s *)0x0) {
+      (pgVar3->s).lerp.eFlags = (pgVar3->s).lerp.eFlags | 0x8000;
     }
     else {
-      *(uint *)(iVar4 + 0xf8) = *(uint *)(iVar4 + 0xf8) | 0x8000;
+      (pgVar1->ps).eFlags = (pgVar1->ps).eFlags | 0x8000;
     }
   }
-  G_AddEvent(iVar3,param_2,uVar2);
+  G_AddEvent(pgVar3,param_2,uVar5);
   __restgprlr_28();
   return;
 }
@@ -7667,30 +8545,34 @@ void ScrCmd_PlayRumbleOnEntity_Internal(undefined8 param_1,undefined8 param_2)
 
 // 82494F90  ScrCmd_PlayRumbleOnEntity  (game/g_scr_main.cpp:7766)
 
-void ScrCmd_PlayRumbleOnEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_PlayRumbleOnEntity(scr_entref_t param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  uint uVar4;
+  uint uVar5;
   
-  __savegprlr_29();
-  iVar3 = GetEntity();
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_RumbleIndex();
-  if ((int)uVar2 == 0) {
-    uVar1 = va(0xffffffff82078b30,uVar1);
-    Scr_ParamError(0,uVar1);
+  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar2 = GetEntity(sVar1);
+  pcVar3 = Scr_GetString(0);
+  uVar4 = G_RumbleIndex(pcVar3);
+  if (uVar4 == 0) {
+    pcVar3 = va("unknown rumble name \'%s\'");
+    Scr_ParamError(0,pcVar3);
   }
-  *(byte *)(iVar3 + 0x102) = *(byte *)(iVar3 + 0x102) & 0xfe;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 1) {
-    Scr_Error(0xffffffff8206d414);
+  (pgVar2->r).svFlags = (pgVar2->r).svFlags & 0xfe;
+  uVar5 = Scr_GetNumParam();
+  if (uVar5 != 1) {
+    Scr_Error("Incorrect number of parameters.\n");
     __restgprlr_29();
     return;
   }
-  G_AddEvent(iVar3,0x65,uVar2);
+  G_AddEvent(pgVar2,0x65,uVar4);
   __restgprlr_29();
   return;
 }
@@ -7698,7 +8580,7 @@ void ScrCmd_PlayRumbleOnEntity(void)
 
 // 82495020  ScrCmd_PlayRumbleLoopOnEntity  (game/g_scr_main.cpp:7785)
 
-void ScrCmd_PlayRumbleLoopOnEntity(undefined8 param_1)
+void ScrCmd_PlayRumbleLoopOnEntity(scr_entref_t param_1)
 
 {
   ScrCmd_PlayRumbleOnEntity_Internal(param_1,0x67);
@@ -7708,26 +8590,29 @@ void ScrCmd_PlayRumbleLoopOnEntity(undefined8 param_1)
 
 // 82495028  Scr_PlayRumbleOnPosition_Internal  (game/g_scr_main.cpp:7794)
 
-void Scr_PlayRumbleOnPosition_Internal(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_PlayRumbleOnPosition_Internal(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
+  gentity_s *pgVar4;
+  float afStack_30 [12];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = Scr_GetString(0);
-  iVar3 = G_RumbleIndex();
-  if (iVar3 == 0) {
-    uVar2 = va(0xffffffff82078b30,uVar2);
-    Scr_ParamError(0,uVar2);
+  iVar1 = __savegprlr_29(param_1);
+  pcVar2 = Scr_GetString(0);
+  uVar3 = G_RumbleIndex(pcVar2);
+  if (uVar3 == 0) {
+    pcVar2 = va("unknown rumble name \'%s\'");
+    Scr_ParamError(0,pcVar2);
   }
-  Scr_GetVector(1,auStack_30);
-  iVar4 = G_TempEntity(auStack_30,uVar1);
-  *(int *)(iVar4 + 0xa0) = iVar3;
-  *(undefined4 *)(iVar4 + 0xd8) = 0;
+  Scr_GetVector(1,afStack_30);
+  pgVar4 = G_TempEntity(afStack_30,iVar1);
+  (pgVar4->s).eventParm = uVar3;
+  (pgVar4->s).un1.eventParm2 = 0;
   __restgprlr_29();
   return;
 }
@@ -7735,14 +8620,16 @@ void Scr_PlayRumbleOnPosition_Internal(void)
 
 // 824950A0  Scr_PlayRumbleOnPosition  (game/g_scr_main.cpp:7827)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_PlayRumbleOnPosition(void)
 
 {
-  int iVar1;
+  uint uVar1;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 2) {
-    Scr_ParamError(0,0xffffffff82078b4c);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 2) {
+    Scr_ParamError(0,"PlayRumbleOnPosition [rumble name] [pos]");
   }
   Scr_PlayRumbleOnPosition_Internal(0x66);
   return;
@@ -7751,14 +8638,16 @@ void Scr_PlayRumbleOnPosition(void)
 
 // 824950E0  Scr_PlayRumbleLoopOnPosition  (game/g_scr_main.cpp:7849)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_PlayRumbleLoopOnPosition(void)
 
 {
-  int iVar1;
+  uint uVar1;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 2) {
-    Scr_ParamError(0,0xffffffff82078b78);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 2) {
+    Scr_ParamError(0,"PlayRumbleLoopOnPosition [rumble name] [pos]");
   }
   Scr_PlayRumbleOnPosition_Internal(0x68);
   return;
@@ -7767,57 +8656,64 @@ void Scr_PlayRumbleLoopOnPosition(void)
 
 // 82495120  Scr_StopAllRumbles  (game/g_scr_main.cpp:7869)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_StopAllRumbles(void)
 
 {
-  int iVar1;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
+  gentity_s *pgVar1;
+  float local_20 [8];
   
-  local_20 = 0;
-  local_1c = 0;
-  local_18 = 0;
-  iVar1 = G_TempEntity(&local_20,0x6a);
-  *(undefined4 *)(iVar1 + 0xd8) = 0;
-  *(undefined4 *)(iVar1 + 0xa0) = 0;
+  local_20[0] = 0.0;
+  local_20[1] = 0.0;
+  local_20[2] = 0.0;
+  pgVar1 = G_TempEntity(local_20,0x6a);
+  (pgVar1->s).un1.eventParm2 = 0;
+  (pgVar1->s).eventParm = 0;
   return;
 }
 
 
 // 82495168  ScrCmd_StopRumble  (game/g_scr_main.cpp:7896)
 
-void ScrCmd_StopRumble(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_StopRumble(scr_entref_t param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
+  gclient_s *pgVar1;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  char *pcVar4;
+  uint uVar5;
+  uint uVar6;
   
-  __savegprlr_29();
-  iVar3 = GetEntity();
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_RumbleIndex();
-  if ((int)uVar2 == 0) {
-    uVar1 = va(0xffffffff82078b30,uVar1);
-    Scr_ParamError(0,uVar1);
+  sVar2 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar3 = GetEntity(sVar2);
+  pcVar4 = Scr_GetString(0);
+  uVar5 = G_RumbleIndex(pcVar4);
+  if (uVar5 == 0) {
+    pcVar4 = va("unknown rumble name \'%s\'");
+    Scr_ParamError(0,pcVar4);
   }
-  *(byte *)(iVar3 + 0x102) = *(byte *)(iVar3 + 0x102) & 0xfe;
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 1) {
-    Scr_Error(0xffffffff82078ba8);
+  (pgVar3->r).svFlags = (pgVar3->r).svFlags & 0xfe;
+  uVar6 = Scr_GetNumParam();
+  if (uVar6 != 1) {
+    Scr_Error("USAGE: StopRumble( <rumblename> )  The rumble name is required.\n");
     __restgprlr_29();
     return;
   }
-  iVar4 = *(int *)(iVar3 + 0x158);
-  if (iVar4 == 0) {
-    *(uint *)(iVar3 + 8) = *(uint *)(iVar3 + 8) & 0xffff7fff;
+  pgVar1 = pgVar3->client;
+  if (pgVar1 == (gclient_s *)0x0) {
+    (pgVar3->s).lerp.eFlags = (pgVar3->s).lerp.eFlags & 0xffff7fff;
   }
   else {
-    *(uint *)(iVar4 + 0xf8) = *(uint *)(iVar4 + 0xf8) & 0xffff7fff;
+    (pgVar1->ps).eFlags = (pgVar1->ps).eFlags & 0xffff7fff;
   }
-  G_AddEvent(iVar3,0x69,uVar2);
+  G_AddEvent(pgVar3,0x69,uVar5);
   __restgprlr_29();
   return;
 }
@@ -7825,26 +8721,30 @@ void ScrCmd_StopRumble(void)
 
 // 82495220  GScr_WeaponClipSize  (game/g_scr_main.cpp:7945)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_WeaponClipSize(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  Weapon WVar3;
+  int iVar4;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar3 = 1, pcVar2[3] != '_')) {
-    lVar3 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar3 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  BG_GetClipSize(0,uVar1,lVar3);
-  Scr_AddInt();
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  iVar4 = BG_GetClipSize((playerState_s *)0x0,WVar3,bVar1);
+  Scr_AddInt(iVar4);
   __restgprlr_29();
   return;
 }
@@ -7852,66 +8752,71 @@ void GScr_WeaponClipSize(void)
 
 // 824952B0  ScrCmd_ItemWeaponSetAmmo  (game/g_scr_main.cpp:7976)
 
-void ScrCmd_ItemWeaponSetAmmo(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_ItemWeaponSetAmmo(scr_entref_t param_1)
 
 {
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar5;
+  Weapon WVar1;
+  bool bVar2;
+  scr_entref_t sVar3;
+  gentity_s *pgVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  undefined8 uVar1;
+  uint uVar7;
   int iVar8;
-  bool bVar9;
+  int iVar9;
+  char *pcVar10;
+  int iVar11;
   
-  __savegprlr_25();
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 4) != 3) {
-    Scr_Error(0xffffffff82078c78);
+  sVar3 = (scr_entref_t)__savegprlr_25(param_1);
+  pgVar4 = GetEntity(sVar3);
+  if ((pgVar4->s).eType != 3) {
+    Scr_Error("Entity is not an item.");
   }
-  iVar3 = Scr_GetInt(0);
-  if (iVar3 < 0) {
-    Scr_ParamError(0,0xffffffff82078c58);
+  iVar5 = Scr_GetInt(0);
+  if (iVar5 < 0) {
+    Scr_ParamError(0,"Ammo count must not be negative");
   }
-  iVar4 = Scr_GetInt(1);
-  if (iVar4 < 0) {
-    Scr_ParamError(1,0xffffffff82078c58);
+  iVar6 = Scr_GetInt(1);
+  if (iVar6 < 0) {
+    Scr_ParamError(1,"Ammo count must not be negative");
   }
-  uVar5 = Scr_GetNumParam();
-  iVar6 = iVar3;
-  if ((2 < uVar5) && (iVar6 = Scr_GetInt(2), iVar6 < 0)) {
-    Scr_ParamError(0,0xffffffff82078c58);
+  uVar7 = Scr_GetNumParam();
+  iVar8 = iVar5;
+  if ((2 < uVar7) && (iVar8 = Scr_GetInt(2), iVar8 < 0)) {
+    Scr_ParamError(0,"Ammo count must not be negative");
   }
-  iVar7 = 0;
-  uVar5 = Scr_GetNumParam();
-  if (3 < uVar5) {
-    iVar7 = Scr_GetInt(3);
-    if ((iVar7 < 0) || (1 < iVar7)) {
-      uVar1 = va(0xffffffff82078c28,2);
-      Scr_ParamError(3,uVar1);
+  iVar9 = 0;
+  uVar7 = Scr_GetNumParam();
+  if (3 < uVar7) {
+    iVar9 = Scr_GetInt(3);
+    if ((iVar9 < 0) || (1 < iVar9)) {
+      pcVar10 = va("Value out of range.  Allowed values: 0 to %i");
+      Scr_ParamError(3,pcVar10);
     }
   }
-  uVar5 = *(uint *)((iVar7 + 0x16) * 0x14 + iVar2);
-  if ((uVar5 & 0xff) != 0) {
-    bVar9 = iVar7 != 0;
-    iVar8 = BG_GetClipSize(0,uVar5,bVar9);
-    if (iVar8 < 0) {
-      MyAssertHandler(0xffffffff82076e74,0x1f54,0,0xffffffff82000f98,0xffffffff82078bec);
+  WVar1 = *(Weapon *)(pgVar4->attachModelNames + iVar9 * 10 + -0x32);
+  if ((WVar1.data & 0xff) != 0) {
+    bVar2 = (bool)('\x01' - (iVar9 == 0));
+    iVar11 = BG_GetClipSize((playerState_s *)0x0,WVar1,bVar2);
+    if (iVar11 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1f54,
+                      0,"%s");
     }
-    iVar8 = BG_GetClipSize(0,uVar5,bVar9);
-    if (iVar8 < iVar3) {
-      iVar3 = iVar8;
+    iVar11 = BG_GetClipSize((playerState_s *)0x0,WVar1,bVar2);
+    if (iVar11 < iVar5) {
+      iVar5 = iVar11;
     }
-    iVar2 = iVar7 * 0x14 + iVar2;
-    *(int *)(iVar2 + 0x1ac) = iVar4;
-    *(int *)(iVar2 + 0x1b0) = iVar3;
-    if (*(char *)(iVar2 + 0x1bc) != '\0') {
-      iVar3 = BG_GetClipSize(0,uVar5,bVar9);
-      if (iVar3 < iVar6) {
-        iVar6 = iVar3;
+    *(int *)(pgVar4->attachModelNames + iVar9 * 10 + -0x38) = iVar6;
+    *(int *)(pgVar4->attachModelNames + iVar9 * 10 + -0x36) = iVar5;
+    if (*(char *)(pgVar4->attachModelNames + iVar9 * 10 + -0x30) != '\0') {
+      iVar5 = BG_GetClipSize((playerState_s *)0x0,WVar1,bVar2);
+      if (iVar5 < iVar8) {
+        iVar8 = iVar5;
       }
-      *(int *)(iVar2 + 0x1b4) = iVar6;
+      *(int *)(pgVar4->attachModelNames + iVar9 * 10 + -0x34) = iVar8;
     }
   }
   __restgprlr_25();
@@ -7921,34 +8826,41 @@ void ScrCmd_ItemWeaponSetAmmo(void)
 
 // 82495468  GScr_GetAmmoCount  (game/g_scr_main.cpp:8046)
 
-void GScr_GetAmmoCount(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetAmmoCount(scr_entref_t param_1)
 
 {
-  int iVar2;
-  char *pcVar3;
-  undefined8 uVar1;
-  longlong lVar4;
+  bool bVar1;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  char *pcVar4;
+  Weapon WVar5;
+  int iVar6;
   
-  __savegprlr_28();
-  iVar2 = GetPlayerEntity();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x1f76,0,0xffffffff82000f98,0xffffffff82002614);
+  sVar2 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar3 = GetPlayerEntity(sVar2);
+  if (pgVar3 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1f76,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x1f77,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (pgVar3->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x1f77,0,
+                    "%s");
   }
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar4 = 1, pcVar3[3] != '_')) {
-    lVar4 = 0;
+  pcVar4 = Scr_GetString(0);
+  if ((((*pcVar4 != 'a') || (pcVar4[1] != 'l')) || (pcVar4[2] != 't')) ||
+     (bVar1 = true, pcVar4[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar1) {
+    pcVar4 = pcVar4 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  Scr_VerifyWeapon(uVar1,pcVar3);
-  BG_WeaponAmmo(*(undefined4 *)(iVar2 + 0x158),uVar1,lVar4);
-  Scr_AddInt();
+  WVar5 = G_GetWeaponForName(pcVar4);
+  Scr_VerifyWeapon(WVar5,pcVar4);
+  iVar6 = BG_WeaponAmmo(&pgVar3->client->ps,WVar5,bVar1);
+  Scr_AddInt(iVar6);
   __restgprlr_28();
   return;
 }
@@ -7956,34 +8868,39 @@ void GScr_GetAmmoCount(void)
 
 // 82495560  GScr_WeaponIsAuto  (game/g_scr_main.cpp:8079)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void GScr_WeaponIsAuto(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  int iVar3;
-  longlong lVar4;
+  Weapon WVar3;
+  weapFireType_t wVar4;
+  weapType_t wVar5;
+  int iVar6;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar4 = 1, pcVar2[3] != '_')) {
-    lVar4 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  iVar3 = BG_GetWeaponFireType(uVar1,lVar4);
-  if (iVar3 == 0) {
-    iVar3 = BG_GetWeaponType(uVar1,lVar4);
-    uVar1 = 1;
-    if (iVar3 == 1) goto LAB_82495604;
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  wVar4 = BG_GetWeaponFireType(WVar3,bVar1);
+  if (wVar4 == WEAPON_FIRETYPE_FULLAUTO) {
+    wVar5 = BG_GetWeaponType(WVar3,bVar1);
+    iVar6 = 1;
+    if (wVar5 == WEAPTYPE_BULLET) goto LAB_82495604;
   }
-  uVar1 = 0;
+  iVar6 = 0;
 LAB_82495604:
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar6);
   __restgprlr_29();
   return;
 }
@@ -7991,34 +8908,39 @@ LAB_82495604:
 
 // 82495610  GScr_WeaponIsSemiAuto  (game/g_scr_main.cpp:8108)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void GScr_WeaponIsSemiAuto(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  int iVar3;
-  longlong lVar4;
+  Weapon WVar3;
+  weapFireType_t wVar4;
+  weapType_t wVar5;
+  int iVar6;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar4 = 1, pcVar2[3] != '_')) {
-    lVar4 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  iVar3 = BG_GetWeaponFireType(uVar1,lVar4);
-  if ((iVar3 == 1) || (iVar3 == 5)) {
-    iVar3 = BG_GetWeaponType(uVar1,lVar4);
-    uVar1 = 1;
-    if (iVar3 == 1) goto LAB_824956bc;
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  wVar4 = BG_GetWeaponFireType(WVar3,bVar1);
+  if ((wVar4 == WEAPON_FIRETYPE_SINGLESHOT) || (wVar4 == WEAPON_FIRETYPE_DOUBLEBARREL)) {
+    wVar5 = BG_GetWeaponType(WVar3,bVar1);
+    iVar6 = 1;
+    if (wVar5 == WEAPTYPE_BULLET) goto LAB_824956bc;
   }
-  uVar1 = 0;
+  iVar6 = 0;
 LAB_824956bc:
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar6);
   __restgprlr_29();
   return;
 }
@@ -8026,29 +8948,33 @@ LAB_824956bc:
 
 // 824956C8  GScr_WeaponBurstCount  (game/g_scr_main.cpp:8140)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void GScr_WeaponBurstCount(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  Weapon WVar3;
+  weapFireType_t wVar4;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar3 = 1, pcVar2[3] != '_')) {
-    lVar3 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar3 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  uVar1 = BG_GetWeaponFireType(uVar1,lVar3);
-  if (((int)uVar1 < 2) || (4 < (int)uVar1)) {
-    uVar1 = 0;
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  wVar4 = BG_GetWeaponFireType(WVar3,bVar1);
+  if (((int)wVar4 < 2) || (4 < (int)wVar4)) {
+    wVar4 = WEAPON_FIRETYPE_FULLAUTO;
   }
-  Scr_AddInt(uVar1);
+  Scr_AddInt(wVar4);
   __restgprlr_29();
   return;
 }
@@ -8056,27 +8982,28 @@ void GScr_WeaponBurstCount(void)
 
 // 82495768  GScr_WeaponIsBoltAction  (game/g_scr_main.cpp:8173)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponIsBoltAction(void)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
-  undefined1 uVar3;
-  longlong lVar4;
+  char *pcVar1;
+  Weapon WVar2;
+  bool bVar3;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
-  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar4 = 1, pcVar2[3] != '_')) {
-    lVar4 = 0;
+  pcVar1 = Scr_GetString(0);
+  if ((((*pcVar1 != 'a') || (pcVar1[1] != 'l')) || (pcVar1[2] != 't')) ||
+     (bVar3 = true, pcVar1[3] != '_')) {
+    bVar3 = false;
   }
-  if (lVar4 != 0) {
-    pcVar2 = pcVar2 + 4;
+  if (bVar3) {
+    pcVar1 = pcVar1 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  uVar3 = BG_IsBoltAction(uVar1,lVar4);
-  Scr_AddInt(uVar3);
+  WVar2 = G_GetWeaponForName(pcVar1);
+  Scr_VerifyWeapon(WVar2,pcVar1);
+  bVar3 = BG_IsBoltAction(WVar2,bVar3);
+  Scr_AddInt((uint)bVar3);
   __restgprlr_29();
   return;
 }
@@ -8084,32 +9011,33 @@ void GScr_WeaponIsBoltAction(void)
 
 // 824957F8  GScr_WeaponInheritsPerks  (game/g_scr_main.cpp:8200)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponInheritsPerks(void)
 
 {
-  char *pcVar2;
-  ulonglong uVar1;
-  undefined1 uVar3;
-  longlong lVar4;
+  char *pcVar1;
+  Weapon WVar2;
+  bool bVar3;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
-  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar4 = 1, pcVar2[3] != '_')) {
-    lVar4 = 0;
+  pcVar1 = Scr_GetString(0);
+  if ((((*pcVar1 != 'a') || (pcVar1[1] != 'l')) || (pcVar1[2] != 't')) ||
+     (bVar3 = true, pcVar1[3] != '_')) {
+    bVar3 = false;
   }
-  if (lVar4 != 0) {
-    pcVar2 = pcVar2 + 4;
+  if (bVar3) {
+    pcVar1 = pcVar1 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  if ((uVar1 & 0xff) == 0) {
+  WVar2 = G_GetWeaponForName(pcVar1);
+  if ((WVar2.data & 0xff) == 0) {
     Scr_AddInt(1);
     __restgprlr_29();
     return;
   }
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  uVar3 = BG_InheritsPerks(uVar1,lVar4);
-  Scr_AddInt(uVar3);
+  Scr_VerifyWeapon(WVar2,pcVar1);
+  bVar3 = BG_InheritsPerks(WVar2,bVar3);
+  Scr_AddInt((uint)bVar3);
   __restgprlr_29();
   return;
 }
@@ -8117,27 +9045,30 @@ void GScr_WeaponInheritsPerks(void)
 
 // 824958A8  GScr_WeaponType  (game/g_scr_main.cpp:8232)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponType(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  Weapon WVar3;
+  weapType_t wVar4;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar3 = 1, pcVar2[3] != '_')) {
-    lVar3 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar3 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  BG_GetWeaponType(uVar1,lVar3);
-  BG_GetWeaponTypeName();
-  Scr_AddString();
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  wVar4 = BG_GetWeaponType(WVar3,bVar1);
+  pcVar2 = BG_GetWeaponTypeName(wVar4);
+  Scr_AddString(pcVar2);
   __restgprlr_29();
   return;
 }
@@ -8145,62 +9076,66 @@ void GScr_WeaponType(void)
 
 // 82495938  GScr_WeaponClass  (game/g_scr_main.cpp:8259)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponClass(void)
 
 {
-  char *pcVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  longlong lVar4;
+  bool bVar1;
+  char *pcVar2;
+  Weapon WVar3;
+  weapClass_t wVar4;
   
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar4 = 1, pcVar3[3] != '_')) {
-    lVar4 = 0;
+  pcVar2 = Scr_GetString(0);
+  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar1) {
+    pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  if ((uVar1 & 0xff) == 0) {
-    uVar2 = 0xffffffff82003484;
+  WVar3 = G_GetWeaponForName(pcVar2);
+  if ((WVar3.data & 0xff) == 0) {
+    pcVar2 = "none";
   }
   else {
-    BG_GetWeaponClass(uVar1,lVar4);
-    uVar2 = BG_GetWeaponClassName();
+    wVar4 = BG_GetWeaponClass(WVar3,bVar1);
+    pcVar2 = BG_GetWeaponClassName(wVar4);
   }
-  Scr_AddString(uVar2);
+  Scr_AddString(pcVar2);
   return;
 }
 
 
 // 824959D8  GScr_WeaponInventoryType  (game/g_scr_main.cpp:8291)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void GScr_WeaponInventoryType(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  uint uVar3;
-  bool bVar4;
+  Weapon WVar3;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (bVar4 = true, pcVar2[3] != '_')) {
-    bVar4 = false;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (bVar4) {
-    BG_GetWeaponInventoryTypeName(3);
-    Scr_AddString();
+  if (bVar1) {
+    pcVar2 = BG_GetWeaponInventoryTypeName(WEAPINVENTORY_ALTMODE);
+    Scr_AddString(pcVar2);
     __restgprlr_29();
     return;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  uVar3 = BG_GetAlternateWeapon(uVar1,0);
-  BG_GetWeaponInventoryTypeName(*(undefined4 *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38));
-  Scr_AddString();
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  WVar3 = BG_GetAlternateWeapon(WVar3,false);
+  pcVar2 = BG_GetWeaponInventoryTypeName(bg_weaponDefs[WVar3.data & 0xff]->inventoryType);
+  Scr_AddString(pcVar2);
   __restgprlr_29();
   return;
 }
@@ -8208,26 +9143,29 @@ void GScr_WeaponInventoryType(void)
 
 // 82495A90  GScr_WeaponStartAmmo  (game/g_scr_main.cpp:8324)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponStartAmmo(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  Weapon WVar3;
+  int iVar4;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar3 = 1, pcVar2[3] != '_')) {
-    lVar3 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar3 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  BG_StartAmmo(uVar1,lVar3);
-  Scr_AddInt();
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  iVar4 = BG_StartAmmo(WVar3,bVar1);
+  Scr_AddInt(iVar4);
   __restgprlr_29();
   return;
 }
@@ -8235,26 +9173,29 @@ void GScr_WeaponStartAmmo(void)
 
 // 82495B20  GScr_WeaponMaxAmmo  (game/g_scr_main.cpp:8351)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponMaxAmmo(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  undefined8 uVar1;
-  longlong lVar3;
+  Weapon WVar3;
+  int iVar4;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar3 = 1, pcVar2[3] != '_')) {
-    lVar3 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar3 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  BG_MaxAmmo(uVar1,lVar3);
-  Scr_AddInt();
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  iVar4 = BG_MaxAmmo(WVar3,bVar1);
+  Scr_AddInt(iVar4);
   __restgprlr_29();
   return;
 }
@@ -8262,66 +9203,63 @@ void GScr_WeaponMaxAmmo(void)
 
 // 82495BB0  GScr_WeaponAltWeaponName  (game/g_scr_main.cpp:8378)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponAltWeaponName(void)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
-  char cVar3;
-  undefined1 local_420;
-  undefined1 local_41f;
-  undefined1 local_41e;
-  undefined1 local_41d;
-  undefined1 auStack_41c [1028];
+  char *pcVar1;
+  Weapon WVar2;
+  Weapon WVar3;
+  char local_420 [1032];
   
-  pcVar2 = (char *)Scr_GetString(0);
-  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) || (pcVar2[3] != '_')) {
-    uVar1 = G_GetWeaponForName(pcVar2);
-    Scr_VerifyWeapon(uVar1,pcVar2);
-    cVar3 = BG_GetAltWeapon(uVar1);
-    if (cVar3 != '\0') {
-      local_420 = 0x61;
-      local_41f = 0x6c;
-      local_41e = 0x74;
-      local_41d = 0x5f;
-      BG_GetWeaponNameComplete(uVar1,0,auStack_41c,0x3fc);
-      Scr_AddString(&local_420);
+  pcVar1 = Scr_GetString(0);
+  if ((((*pcVar1 != 'a') || (pcVar1[1] != 'l')) || (pcVar1[2] != 't')) || (pcVar1[3] != '_')) {
+    WVar2 = G_GetWeaponForName(pcVar1);
+    Scr_VerifyWeapon(WVar2,pcVar1);
+    WVar3 = BG_GetAltWeapon(WVar2);
+    if ((WVar3.data & 0xff) != 0) {
+      builtin_strncpy(local_420,"alt_",4);
+      BG_GetWeaponNameComplete(WVar2,false,local_420 + 4,0x3fc);
+      Scr_AddString(local_420);
       return;
     }
   }
-  Scr_AddConstString(DAT_835a0bfa);
+  Scr_AddConstString((uint)scr_const.none);
   return;
 }
 
 
 // 82495C90  GScr_WeaponFireTime  (game/g_scr_main.cpp:8424)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponFireTime(void)
 
 {
-  char *pcVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  longlong lVar4;
+  bool bVar1;
+  char *pcVar2;
+  Weapon WVar3;
+  bool bVar4;
   int local_30;
-  undefined1 auStack_2c [4];
+  int iStack_2c;
   longlong local_28;
   
   __savegprlr_29();
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar4 = 1, pcVar3[3] != '_')) {
-    lVar4 = 0;
+  pcVar2 = Scr_GetString(0);
+  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar1) {
+    pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  Scr_VerifyWeapon(uVar1,pcVar3);
-  uVar2 = BG_WeaponIsDualWield(uVar1);
-  BG_GetFireTime(uVar1,lVar4,uVar2,&local_30,auStack_2c);
+  WVar3 = G_GetWeaponForName(pcVar2);
+  Scr_VerifyWeapon(WVar3,pcVar2);
+  bVar4 = BG_WeaponIsDualWield(WVar3);
+  BG_GetFireTime(WVar3,bVar1,bVar4,&local_30,&iStack_2c);
   local_28 = (longlong)local_30;
-  Scr_AddFloat((double)((float)local_28 * 0.001));
+  Scr_AddFloat((float)local_28 * 0.001);
   __restgprlr_29();
   return;
 }
@@ -8329,60 +9267,64 @@ void GScr_WeaponFireTime(void)
 
 // 82495D58  GScr_IsWeaponClipOnly  (game/g_scr_main.cpp:8456)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_IsWeaponClipOnly(void)
 
 {
-  char *pcVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  longlong lVar4;
+  bool bVar1;
+  char *pcVar2;
+  Weapon WVar3;
+  int iVar4;
   
-  pcVar3 = (char *)Scr_GetString(0);
-  if ((((*pcVar3 != 'a') || (pcVar3[1] != 'l')) || (pcVar3[2] != 't')) ||
-     (lVar4 = 1, pcVar3[3] != '_')) {
-    lVar4 = 0;
+  pcVar2 = Scr_GetString(0);
+  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar4 != 0) {
-    pcVar3 = pcVar3 + 4;
+  if (bVar1) {
+    pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar3);
-  if ((uVar1 & 0xff) == 0) {
-    uVar2 = 0;
+  WVar3 = G_GetWeaponForName(pcVar2);
+  if ((WVar3.data & 0xff) == 0) {
+    iVar4 = 0;
   }
   else {
-    uVar2 = BG_WeaponIsClipOnly(uVar1,lVar4);
+    iVar4 = BG_WeaponIsClipOnly(WVar3,bVar1);
   }
-  Scr_AddBool(uVar2);
+  Scr_AddBool(iVar4);
   return;
 }
 
 
 // 82495DF0  GScr_IsWeaponDetonationTimed  (game/g_scr_main.cpp:8486)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void GScr_IsWeaponDetonationTimed(void)
 
 {
+  bool bVar1;
   char *pcVar2;
-  ulonglong uVar1;
-  uint uVar3;
-  undefined1 uVar4;
-  longlong lVar5;
+  Weapon WVar3;
+  uint uVar4;
   
-  pcVar2 = (char *)Scr_GetString(0);
+  pcVar2 = Scr_GetString(0);
   if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar5 = 1, pcVar2[3] != '_')) {
-    lVar5 = 0;
+     (bVar1 = true, pcVar2[3] != '_')) {
+    bVar1 = false;
   }
-  if (lVar5 != 0) {
+  if (bVar1) {
     pcVar2 = pcVar2 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  if ((uVar1 & 0xff) == 0) {
+  WVar3 = G_GetWeaponForName(pcVar2);
+  if ((WVar3.data & 0xff) == 0) {
     uVar4 = 0;
   }
   else {
-    uVar3 = BG_GetAlternateWeapon(uVar1,lVar5);
-    uVar4 = *(undefined1 *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x790);
+    WVar3 = BG_GetAlternateWeapon(WVar3,bVar1);
+    uVar4 = (uint)bg_weaponDefs[WVar3.data & 0xff]->timedDetonation;
   }
   Scr_AddBool(uVar4);
   return;
@@ -8391,27 +9333,28 @@ void GScr_IsWeaponDetonationTimed(void)
 
 // 82495EA0  GScr_WeaponHasThermalScope  (game/g_scr_main.cpp:8520)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_WeaponHasThermalScope(void)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
-  undefined1 uVar3;
-  longlong lVar4;
+  char *pcVar1;
+  Weapon WVar2;
+  bool bVar3;
   
   __savegprlr_29();
-  pcVar2 = (char *)Scr_GetString(0);
-  if ((((*pcVar2 != 'a') || (pcVar2[1] != 'l')) || (pcVar2[2] != 't')) ||
-     (lVar4 = 1, pcVar2[3] != '_')) {
-    lVar4 = 0;
+  pcVar1 = Scr_GetString(0);
+  if ((((*pcVar1 != 'a') || (pcVar1[1] != 'l')) || (pcVar1[2] != 't')) ||
+     (bVar3 = true, pcVar1[3] != '_')) {
+    bVar3 = false;
   }
-  if (lVar4 != 0) {
-    pcVar2 = pcVar2 + 4;
+  if (bVar3) {
+    pcVar1 = pcVar1 + 4;
   }
-  uVar1 = G_GetWeaponForName(pcVar2);
-  Scr_VerifyWeapon(uVar1,pcVar2);
-  uVar3 = BG_HasThermalScope(uVar1,lVar4);
-  Scr_AddInt(uVar3);
+  WVar2 = G_GetWeaponForName(pcVar1);
+  Scr_VerifyWeapon(WVar2,pcVar1);
+  bVar3 = BG_HasThermalScope(WVar2,bVar3);
+  Scr_AddInt((uint)bVar3);
   __restgprlr_29();
   return;
 }
@@ -8419,15 +9362,19 @@ void GScr_WeaponHasThermalScope(void)
 
 // 82495F30  GScr_CheckAllowedToReadPersistentData  (game/g_scr_main.cpp:8537)
 
-void GScr_CheckAllowedToReadPersistentData(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_CheckAllowedToReadPersistentData(gentity_s *param_1)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  iVar1 = *(int *)(param_1 + 0x158);
-  if (*(int *)(iVar1 + 0x332c) != 2) {
-    va(0xffffffff82078c90,iVar1 + 0x3414,*(undefined4 *)(iVar1 + 0x332c));
-    Scr_ObjectError();
+  if ((param_1->client->sess).connected != CON_CONNECTED) {
+    pcVar1 = va(
+               "cannot read persistent data: player has not finished connecting, or ExitLevel has been called. (%s, %d)"
+               );
+    Scr_ObjectError(pcVar1);
   }
   return;
 }
@@ -8435,23 +9382,28 @@ void GScr_CheckAllowedToReadPersistentData(int param_1)
 
 // 82495F78  GScr_CheckAllowedToSetPersistentData  (game/g_scr_main.cpp:8557)
 
-void GScr_CheckAllowedToSetPersistentData(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_CheckAllowedToSetPersistentData(gentity_s *param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  bool bVar2;
+  char *pcVar1;
   
-  cVar2 = Scr_LoadedImpureScript();
-  if (cVar2 != '\0') {
-    Scr_Error(0xffffffff82078d34);
+  bVar2 = Scr_LoadedImpureScript();
+  if (bVar2) {
+    Scr_Error("cannot set persistent data: impure scripts loaded.");
   }
-  if ((*(int *)(DAT_8365e118 + 0xc) == 0) && (*(char *)(DAT_83667354 + 0xc) != '\0')) {
-    Scr_Error(0xffffffff82078cf8);
+  if (((com_developer->current).integer == 0) && ((com_developer_script->current).enabled != false))
+  {
+    Scr_Error("cannot set persistent data: developer_script must be false.");
   }
-  iVar1 = *(int *)(param_1 + 0x158);
-  if (*(int *)(iVar1 + 0x332c) != 2) {
-    va(0xffffffff82078c90,iVar1 + 0x3414,*(undefined4 *)(iVar1 + 0x332c));
-    Scr_ObjectError();
+  if ((param_1->client->sess).connected != CON_CONNECTED) {
+    pcVar1 = va(
+               "cannot read persistent data: player has not finished connecting, or ExitLevel has been called. (%s, %d)"
+               );
+    Scr_ObjectError(pcVar1);
   }
   return;
 }
@@ -8459,44 +9411,49 @@ void GScr_CheckAllowedToSetPersistentData(int param_1)
 
 // 82496020  GScr_IsItemUnlocked  (game/g_scr_main.cpp:8587)
 
-void GScr_IsItemUnlocked(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_IsItemUnlocked(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined4 *puVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined4 local_30 [2];
-  undefined1 auStack_28 [40];
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  char *pcVar3;
+  uchar *puVar4;
+  int iVar5;
+  bool bVar6;
+  StringTable *local_30 [2];
+  StructuredDataBuffer aSStack_28 [5];
   
-  __savegprlr_29();
-  puVar4 = (undefined4 *)GetEntity();
-  if (puVar4[0x56] == 0) {
-    Scr_Error(0xffffffff82078d68);
+  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar2 = GetEntity(sVar1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("entity must be a player");
   }
-  if (*(char *)(DAT_84253bb8 + 0xc) != '\0') {
+  if ((xblive_privatematch->current).enabled != false) {
     Scr_AddInt(1);
     __restgprlr_29();
     return;
   }
-  iVar1 = puVar4[0x56];
-  if (*(int *)(iVar1 + 0x332c) != 2) {
-    va(0xffffffff82078c90,iVar1 + 0x3414,*(undefined4 *)(iVar1 + 0x332c));
-    Scr_ObjectError();
+  if ((pgVar2->client->sess).connected != CON_CONNECTED) {
+    pcVar3 = va(
+               "cannot read persistent data: player has not finished connecting, or ExitLevel has been called. (%s, %d)"
+               );
+    Scr_ObjectError(pcVar3);
   }
-  uVar2 = Scr_GetString(0);
-  uVar3 = SV_GetClientPersistentDataBuffer(*puVar4);
-  StringTable_GetAsset(0xffffffff82026898,local_30);
-  uVar2 = StringTable_LookupRowNumForValue(local_30[0],0,uVar2);
-  if ((int)uVar2 < 0) {
+  pcVar3 = Scr_GetString(0);
+  puVar4 = SV_GetClientPersistentDataBuffer((pgVar2->s).number);
+  StringTable_GetAsset("mp/unlocktable.csv",local_30);
+  iVar5 = StringTable_LookupRowNumForValue(local_30[0],0,pcVar3);
+  if (iVar5 < 0) {
     Scr_AddInt(2);
     __restgprlr_29();
     return;
   }
-  StructuredData_MakeBuffer(auStack_28,uVar3,0x2ffc);
-  cVar5 = LiveStorage_IsItemUnlockedFromTable(auStack_28,local_30[0],uVar2);
-  Scr_AddInt(cVar5 != '\0');
+  StructuredData_MakeBuffer(aSStack_28,puVar4,0x2ffc);
+  bVar6 = LiveStorage_IsItemUnlockedFromTable(aSStack_28,local_30[0],iVar5);
+  Scr_AddInt((uint)bVar6);
   __restgprlr_29();
   return;
 }
@@ -8504,20 +9461,26 @@ void GScr_IsItemUnlocked(void)
 
 // 82496130  Scr_PrecacheItem  (game/g_scr_main.cpp:8649)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheItem(void)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  char *pcVar1;
+  Weapon WVar2;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078d98);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "precacheItem must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  uVar1 = Scr_GetString(0);
-  cVar2 = G_FindItem(uVar1,0);
-  if (cVar2 == '\0') {
-    uVar1 = va(0xffffffff82078d80,uVar1);
-    Scr_ParamError(0,uVar1);
+  pcVar1 = Scr_GetString(0);
+  WVar2 = G_FindItem(pcVar1,0);
+  if ((WVar2.data & 0xff) == 0) {
+    pcVar1 = va("unknown item \'%s\'");
+    Scr_ParamError(0,pcVar1);
   }
   return;
 }
@@ -8525,19 +9488,26 @@ void Scr_PrecacheItem(void)
 
 // 824961B0  Scr_PrecacheMaterial  (game/g_scr_main.cpp:8678)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheMaterial(void)
 
 {
   char *pcVar1;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078e10);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "precacheShader must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  pcVar1 = (char *)Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   if (*pcVar1 == '\0') {
-    Scr_ParamError(0,0xffffffff82078df0);
+    Scr_ParamError(0,"Shader name string is empty");
   }
-  Scr_ErrorOnDefaultAsset(5,pcVar1);
+  Scr_ErrorOnDefaultAsset(ASSET_TYPE_MATERIAL,pcVar1);
   G_MaterialIndex(pcVar1);
   return;
 }
@@ -8545,33 +9515,46 @@ void Scr_PrecacheMaterial(void)
 
 // 82496230  Scr_PrecacheLeaderboards  (game/g_scr_main.cpp:8708)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheLeaderboards(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078e70);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "preacheLeaderboards must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  uVar1 = Scr_GetString(0);
-  SV_SetConfigstring(0xe8a,uVar1);
+  pcVar1 = Scr_GetString(0);
+  SV_SetConfigstring(CS_LEADERBOARDS,pcVar1);
   return;
 }
 
 
 // 82496280  Scr_PrecacheString  (game/g_scr_main.cpp:8731)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheString(void)
 
 {
   char *pcVar1;
   
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078ed0);
+  if (level.initializing == 0) {
+    Scr_Error(
+             "precacheString must be called before any wait statements in the gametype or level script\n"
+             );
   }
-  pcVar1 = (char *)Scr_GetIString(0);
+  pcVar1 = Scr_GetIString(0);
   if (*pcVar1 != '\0') {
-    G_LocalizedStringIndex();
+    G_LocalizedStringIndex(pcVar1);
   }
   return;
 }
@@ -8579,14 +9562,20 @@ void Scr_PrecacheString(void)
 
 // 824962D8  Scr_PrecacheRumble  (game/g_scr_main.cpp:8764)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_PrecacheRumble(void)
 
 {
-  if (DAT_83580b1c == 0) {
-    Scr_Error(0xffffffff82078f30);
+  char *pcVar1;
+  
+  if (level.initializing == 0) {
+    Scr_Error("precacheRumble must be called before any wait statements in the level script\n");
   }
-  Scr_GetString(0);
-  G_RumbleIndex();
+  pcVar1 = Scr_GetString(0);
+  G_RumbleIndex(pcVar1);
   return;
 }
 
@@ -8594,148 +9583,159 @@ void Scr_PrecacheRumble(void)
 // 82496320  Scr_AmbientPlay  (game/g_scr_main.cpp:8788)
 
 /* WARNING: Removing unreachable block (ram,0x824965a4) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
 
 void Scr_AmbientPlay(void)
 
 {
   bool bVar1;
-  longlong lVar2;
-  undefined8 uVar3;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
   char *pcVar5;
   char *pcVar6;
   int iVar7;
-  undefined8 uVar4;
-  ulonglong uVar8;
-  int iVar9;
-  undefined8 uVar10;
-  int iVar11;
-  int iVar12;
-  ulonglong uVar13;
+  ConfigString CVar8;
+  ulonglong uVar9;
+  int iVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
+  float fVar16;
   
   __savegprlr_16();
-  iVar9 = 0;
-  iVar11 = 1000;
-  uVar10 = 1;
+  iVar7 = 0;
+  iVar3 = 1000;
+  iVar10 = 1;
   bVar1 = false;
-  lVar2 = Scr_GetNumParam();
-  uVar8 = lVar2 - 1;
-  if (3 < (uVar8 & 0xffffffff)) {
-    va(0xffffffff82078f80);
-    Scr_Error();
+  uVar2 = Scr_GetNumParam();
+  uVar9 = (longlong)(int)uVar2 - 1;
+  if (3 < (uVar9 & 0xffffffff)) {
+    pcVar4 = va("USAGE: AmbientPlay(<alias>, <fadeTime>, <volumeScale>, <isExclusive>);\n");
+    Scr_Error(pcVar4);
     goto LAB_82496728;
   }
-  dVar15 = 0.5;
-  dVar16 = 1000.0;
-  if ((int)uVar8 != 0) {
-    if (lVar2 != 2) {
-      if (uVar8 != 2) {
-        uVar3 = Scr_GetInt(3);
-        if ((int)uVar3 < 1) {
-          uVar10 = 0;
-          if ((int)uVar3 < 1) goto LAB_824963a4;
+  dVar14 = 0.5;
+  dVar15 = 1000.0;
+  if ((int)uVar9 != 0) {
+    if ((longlong)(int)uVar2 != 2) {
+      if (uVar9 != 2) {
+        iVar3 = Scr_GetInt(3);
+        if (iVar3 < 1) {
+          iVar10 = 0;
+          if (iVar3 < 1) goto LAB_824963a4;
         }
         else {
-          uVar3 = 1;
+          iVar3 = 1;
         }
-        uVar10 = uVar3;
+        iVar10 = iVar3;
       }
 LAB_824963a4:
-      dVar14 = (double)Scr_GetFloat(2);
-      dVar14 = floor((double)(float)((double)(float)(dVar14 * dVar16) + dVar15));
-      iVar11 = (int)dVar14;
+      fVar16 = Scr_GetFloat(2);
+      dVar13 = floor((double)(float)((double)(float)((double)fVar16 * dVar15) + dVar14));
+      iVar3 = (int)dVar13;
     }
-    dVar14 = (double)Scr_GetFloat(1);
-    dVar15 = floor((double)(float)((double)(float)(dVar14 * dVar16) + dVar15));
-    iVar9 = (int)dVar15;
+    fVar16 = Scr_GetFloat(1);
+    dVar14 = floor((double)(float)((double)(float)((double)fVar16 * dVar15) + dVar14));
+    iVar7 = (int)dVar14;
   }
-  pcVar5 = (char *)Scr_GetString(0);
-  if (*pcVar5 == '\0') {
-    va(0xffffffff82079124);
-    Scr_Error();
+  pcVar4 = Scr_GetString(0);
+  if (*pcVar4 == '\0') {
+    pcVar5 = va("AmbientPlay: alias name must not be the empty string.\n");
+    Scr_Error(pcVar5);
   }
-  if (iVar9 < 0) {
-    va(0xffffffff82079100);
-    Scr_Error();
+  if (iVar7 < 0) {
+    pcVar5 = va("AmbientPlay: fadeTime must be >= 0\n");
+    Scr_Error(pcVar5);
   }
-  if ((iVar11 < 0) || (1000 < iVar11)) {
-    va(0xffffffff820790cc);
-    Scr_Error();
+  if ((iVar3 < 0) || (1000 < iVar3)) {
+    pcVar5 = va("AmbientPlay: volumeScale must be >= 0.0 and <= 1.0\n");
+    Scr_Error(pcVar5);
   }
-  uVar8 = 0xffffffffffffffff;
-  iVar12 = 0;
-  lVar2 = 0x3d6;
-  uVar13 = 0;
+  uVar9 = 0xffffffffffffffff;
+  iVar3 = 0;
+  lVar11 = 0x3d6;
+  uVar12 = 0;
   do {
-    uVar3 = SND_GetAmbientConfigString(uVar13);
-    pcVar6 = (char *)Info_ValueForKey(uVar3,0xffffffff82012c64);
+    pcVar5 = SND_GetAmbientConfigString((int)uVar12);
+    pcVar6 = Info_ValueForKey(pcVar5,"s");
     iVar7 = atoi(pcVar6);
-    pcVar6 = (char *)Info_ValueForKey(uVar3,0xffffffff8201d924);
-    if ((iVar7 == 0) && (*pcVar6 != '\0')) {
-      iVar7 = I_strcmp(pcVar5,pcVar6);
+    pcVar5 = Info_ValueForKey(pcVar5,"n");
+    if ((iVar7 == 0) && (*pcVar5 != '\0')) {
+      iVar7 = I_strcmp(pcVar4,pcVar5);
       if (iVar7 == 0) {
         if (bVar1) {
-          MyAssertHandler(0xffffffff82076e74,0x22aa,0,0xffffffff82000f98,0xffffffff820790b4);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                          0x22aa,0,"%s");
         }
         bVar1 = true;
-        lVar2 = ConfigStringOffset(0x3d6,uVar13);
+        CVar8 = ConfigStringOffset(CS_AMBIENT,(int)uVar12);
+        lVar11 = (longlong)(int)CVar8;
       }
     }
     else {
-      iVar12 = iVar12 + 1;
-      uVar8 = uVar13;
+      iVar3 = iVar3 + 1;
+      uVar9 = uVar12;
     }
-    uVar13 = uVar13 + 1;
-  } while ((int)uVar13 < 2);
+    iVar7 = (int)uVar9;
+    uVar12 = uVar12 + 1;
+  } while ((int)uVar12 < 2);
   if (bVar1) {
-    uVar8 = (lVar2 + -0x3d6) - (lVar2 + -0x3d7 + (ulonglong)(lVar2 + -0x3d6 == 0));
+    iVar7 = (int)(lVar11 + -0x3d6) - ((int)lVar11 + -0x3d7 + (uint)(lVar11 + -0x3d6 == 0));
   }
-  else if (iVar12 == 0) {
-    uVar8 = SND_GetOldestAmbientTrack();
-    lVar2 = uVar8 + 0x3d6;
-    if (0xeea < (int)lVar2) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  else if (iVar3 == 0) {
+    iVar7 = SND_GetOldestAmbientTrack();
+    lVar11 = (longlong)iVar7 + 0x3d6;
+    if (0xeea < (int)lVar11) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
   }
   else {
-    if (1 < (uVar8 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff82076e74,0x22b2,0,0xffffffff82079070,uVar8,2);
+    if (1 < (uVar9 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x22b2,
+                      0,"freeTrack doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
     }
-    lVar2 = uVar8 + 0x3d6;
-    if (0xeea < (int)lVar2) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    lVar11 = uVar9 + 0x3d6;
+    if (0xeea < (int)lVar11) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
   }
-  uVar3 = va(0xffffffff82079048,pcVar5,iVar9,iVar11,uVar10);
-  if ((int)uVar8 == -1) {
-    MyAssertHandler(0xffffffff82076e74,0x22c3,0,0xffffffff82000f98,0xffffffff8207902c);
+  pcVar4 = va("n\\%s\\t\\%i\\v\\%i\\e\\%i");
+  if (iVar7 == -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x22c3,0,
+                    "%s");
   }
-  SND_SetAmbientConfigString(uVar8,uVar3);
-  SV_SetConfigstring(lVar2,uVar3);
-  if ((int)uVar10 != 0) {
-    if ((int)lVar2 == 0x3d6) {
-      uVar10 = 0x3d7;
-      uVar3 = 1;
+  SND_SetAmbientConfigString(iVar7,pcVar4);
+  CVar8 = (ConfigString)lVar11;
+  SV_SetConfigstring(CVar8,pcVar4);
+  if (iVar10 != 0) {
+    if (CVar8 == CS_AMBIENT) {
+      CVar8 = CS_AMBIENT_LAST;
+      iVar3 = 1;
     }
     else {
-      if ((int)lVar2 != 0x3d7) {
-        MyAssertHandler(0xffffffff82076e74,0x22cc,0,0xffffffff82000f98,0xffffffff82078fd8);
+      if (CVar8 != CS_AMBIENT_LAST) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                        0x22cc,0,"%s");
       }
-      uVar10 = 0x3d6;
-      uVar3 = 0;
+      CVar8 = CS_AMBIENT;
+      iVar3 = 0;
     }
-    uVar4 = SND_GetAmbientConfigString(uVar3);
-    pcVar5 = (char *)Info_ValueForKey(uVar4,0xffffffff8201d924);
-    if (*pcVar5 == '\0') {
-      uVar4 = 0xffffffff820068af;
+    pcVar4 = SND_GetAmbientConfigString(iVar3);
+    pcVar4 = Info_ValueForKey(pcVar4,"n");
+    if (*pcVar4 == '\0') {
+      pcVar4 = "";
     }
     else {
-      uVar4 = va(0xffffffff82078fc8,iVar9,pcVar5,1);
+      pcVar4 = va("t\\%i\\n\\%s\\s\\%i");
     }
-    SND_SetAmbientConfigString(uVar3,uVar4);
-    SV_SetConfigstring(uVar10,uVar4);
+    SND_SetAmbientConfigString(iVar3,pcVar4);
+    SV_SetConfigstring(CVar8,pcVar4);
     __restgprlr_16();
     return;
   }
@@ -8747,82 +9747,86 @@ LAB_82496728:
 
 // 82496738  Scr_AmbientStop  (game/g_scr_main.cpp:8947)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void Scr_AmbientStop(void)
 
 {
   bool bVar1;
-  uint uVar3;
+  uint uVar2;
+  char *pcVar3;
   char *pcVar4;
-  undefined8 uVar2;
-  char *_Str;
-  int iVar5;
+  char *pcVar5;
   int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  int iVar7;
+  int iVar8;
+  ConfigString CVar9;
   double dVar10;
+  float fVar11;
   
   __savegprlr_17();
-  iVar6 = 0;
-  pcVar4 = "";
-  lVar7 = -1;
-  lVar9 = 0x3d6;
-  uVar3 = Scr_GetNumParam();
-  if (uVar3 != 0) {
-    if (uVar3 != 1) {
-      if (2 < uVar3) {
-        va(0xffffffff820791a4);
-        Scr_Error();
+  pcVar3 = "";
+  iVar7 = -1;
+  CVar9 = CS_AMBIENT;
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    if (uVar2 != 1) {
+      if (2 < uVar2) {
+        pcVar3 = va("USAGE: AmbientStop(<fadeTime>, <alias>);\n");
+        Scr_Error(pcVar3);
         __restgprlr_17();
         return;
       }
-      pcVar4 = (char *)Scr_GetString(1);
+      pcVar3 = Scr_GetString(1);
     }
-    dVar10 = (double)Scr_GetFloat(0);
-    dVar10 = floor((double)((float)(dVar10 * 1000.0) + 0.5));
-    iVar6 = (int)dVar10;
-    if (iVar6 < 0) {
-      va(0xffffffff8207917c);
-      Scr_Error();
+    fVar11 = Scr_GetFloat(0);
+    dVar10 = floor((double)(fVar11 * 1000.0 + 0.5));
+    if ((int)dVar10 < 0) {
+      pcVar4 = va("AmbientStop: fade time must be >= 0\n");
+      Scr_Error(pcVar4);
     }
   }
-  if (*pcVar4 != '\0') {
+  if (*pcVar3 != '\0') {
     bVar1 = false;
-    lVar8 = 0;
+    iVar8 = 0;
     do {
-      uVar2 = SND_GetAmbientConfigString(lVar8);
-      _Str = (char *)Info_ValueForKey(uVar2,0xffffffff82012c64);
-      iVar5 = atoi(_Str);
-      uVar2 = Info_ValueForKey(uVar2,0xffffffff8201d924);
-      if ((iVar5 == 0) && (iVar5 = I_strcmp(pcVar4,uVar2), iVar5 == 0)) {
+      pcVar4 = SND_GetAmbientConfigString(iVar8);
+      pcVar5 = Info_ValueForKey(pcVar4,"s");
+      iVar6 = atoi(pcVar5);
+      pcVar4 = Info_ValueForKey(pcVar4,"n");
+      if ((iVar6 == 0) && (iVar6 = I_strcmp(pcVar3,pcVar4), iVar6 == 0)) {
         if (bVar1) {
-          MyAssertHandler(0xffffffff82076e74,0x2337,0,0xffffffff82000f98,0xffffffff8207915c);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                          0x2337,0,"%s");
         }
-        lVar9 = lVar8 + 0x3d6;
+        CVar9 = iVar8 + CS_AMBIENT;
         bVar1 = true;
-        lVar7 = lVar8;
-        if (0xeea < (int)lVar9) {
-          MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        iVar7 = iVar8;
+        if (0xeea < (int)CVar9) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                          ,0x285,0,"%s");
         }
       }
-      lVar8 = lVar8 + 1;
-    } while ((int)lVar8 < 2);
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < 2);
     if (bVar1) {
-      if ((int)lVar7 == -1) {
-        MyAssertHandler(0xffffffff82076e74,0x2340,0,0xffffffff82000f98,0xffffffff8207902c);
+      if (iVar7 == -1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                        0x2340,0,"%s");
       }
-      uVar2 = va(0xffffffff82078fc8,iVar6,pcVar4,1);
-      SND_SetAmbientConfigString(lVar7,uVar2);
-      SV_SetConfigstring(lVar9,uVar2);
+      pcVar3 = va("t\\%i\\n\\%s\\s\\%i");
+      SND_SetAmbientConfigString(iVar7,pcVar3);
+      SV_SetConfigstring(CVar9,pcVar3);
     }
     __restgprlr_17();
     return;
   }
-  uVar2 = va(0xffffffff82079174,iVar6);
-  SV_SetConfigstring(0x3d6,uVar2);
-  SV_SetConfigstring(0x3d7,0xffffffff820068af);
-  SND_SetAmbientConfigString(0,uVar2);
-  SND_SetAmbientConfigString(1,0xffffffff820068af);
+  pcVar3 = va("t\\%i");
+  SV_SetConfigstring(CS_AMBIENT,pcVar3);
+  SV_SetConfigstring(CS_AMBIENT_LAST,"");
+  SND_SetAmbientConfigString(0,pcVar3);
+  SND_SetAmbientConfigString(1,"");
   __restgprlr_17();
   return;
 }
@@ -8830,41 +9834,52 @@ void Scr_AmbientStop(void)
 
 // 82496988  GScr_RadiusDamageInternal  (game/g_scr_main.cpp:9044)
 
-void GScr_RadiusDamageInternal(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RadiusDamageInternal(gentity_s *param_1)
 
 {
-  undefined8 uVar1;
+  gentity_s *pgVar1;
   uint uVar2;
   int iVar3;
-  undefined8 uVar4;
-  double dVar5;
+  gentity_s *pgVar4;
+  char *pcVar5;
+  float *in_r6;
+  gentity_s *in_r7;
+  meansOfDeath_t in_r8;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  undefined1 auStack_70 [112];
+  double dVar10;
+  float fVar11;
+  float afStack_70 [28];
   
-  __savegprlr_27();
-  uVar1 = __savefpr_27();
-  Scr_GetVector(0,auStack_70);
-  dVar5 = (double)Scr_GetFloat(1);
-  dVar9 = 0.0;
-  if (dVar5 < 0.0) {
-    Scr_Error(0xffffffff820793b0);
+  __savegprlr_27(param_1);
+  pgVar1 = (gentity_s *)__savefpr_27();
+  Scr_GetVector(0,afStack_70);
+  fVar11 = Scr_GetFloat(1);
+  dVar6 = (double)fVar11;
+  dVar10 = 0.0;
+  if (dVar6 < 0.0) {
+    Scr_Error("Invalid <range> value specified for radius damage ( parameter 2 ).\n");
   }
-  dVar6 = (double)Scr_GetFloat(2);
-  dVar8 = 2147483648.0;
-  if ((dVar6 < dVar9) || (2147483648.0 <= dVar6)) {
-    Scr_Error(0xffffffff82079360);
+  fVar11 = Scr_GetFloat(2);
+  dVar7 = (double)fVar11;
+  dVar9 = 2147483648.0;
+  if ((dVar7 < dVar10) || (2147483648.0 <= dVar7)) {
+    Scr_Error("Invalid <max_damage> value specified for radius damage ( parameter 3 ).\n");
   }
-  dVar7 = (double)Scr_GetFloat(3);
-  if ((dVar7 < dVar9) || (dVar8 <= dVar7)) {
-    Scr_Error(0xffffffff82079310);
+  fVar11 = Scr_GetFloat(3);
+  dVar8 = (double)fVar11;
+  if ((dVar8 < dVar10) || (dVar9 <= dVar8)) {
+    Scr_Error("Invalid <min_damage> value specified for radius damage ( parameter 4 ).\n");
   }
-  uVar4 = 0xffffffff834b3180;
+  pgVar4 = g_entities + 0x7fe;
   uVar2 = Scr_GetNumParam();
   if ((4 < uVar2) && (iVar3 = Scr_GetType(4), iVar3 != 0)) {
-    uVar4 = Scr_GetEntity(4);
+    pgVar4 = Scr_GetEntity(4);
   }
   uVar2 = Scr_GetNumParam();
   if ((5 < uVar2) && (iVar3 = Scr_GetType(5), iVar3 != 0)) {
@@ -8872,25 +9887,29 @@ void GScr_RadiusDamageInternal(void)
   }
   uVar2 = Scr_GetNumParam();
   if ((6 < uVar2) && (iVar3 = Scr_GetType(6), iVar3 != 0)) {
-    Scr_GetString(6);
-    G_GetWeaponForName();
+    pcVar5 = Scr_GetString(6);
+    G_GetWeaponForName(pcVar5);
   }
-  DAT_835832e0 = DAT_835832e4;
-  G_RadiusDamage(dVar6,dVar7,dVar5,0x3ff0000000000000,auStack_70,uVar1,uVar4);
-  DAT_835832e0 = 0;
-  iVar3 = G_TempEntity(auStack_70,0x5d);
-  *(undefined4 *)(iVar3 + 0xd8) = 0;
-  *(int *)(iVar3 + 0x5c) = (int)dVar6;
-  *(float *)(iVar3 + 0x54) = (float)dVar5;
-  *(int *)(iVar3 + 0x58) = (int)dVar7;
-  if (dVar5 < dVar9) {
-    MyAssertHandler(dVar5,0xffffffff82076e74,0x2383,1,0xffffffff820792a8,0xffffffff820792dc,dVar5);
+  level.bPlayerIgnoreRadiusDamage = level.bPlayerIgnoreRadiusDamageLatched;
+  G_RadiusDamage(afStack_70,pgVar1,pgVar4,(float)dVar7,(float)dVar8,(float)dVar6,1.0,in_r6,in_r7,
+                 in_r8,(Weapon)0x82000000,false);
+  level.bPlayerIgnoreRadiusDamage = 0;
+  pgVar1 = G_TempEntity(afStack_70,0x5d);
+  (pgVar1->s).un1.eventParm2 = 0;
+  (pgVar1->s).lerp.u.plane.friendIcon = (int)dVar7;
+  (pgVar1->s).lerp.u.turret.gunAngles[0] = (float)dVar6;
+  (pgVar1->s).lerp.u.loopFx.period = (int)dVar8;
+  if (dVar6 < dVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2383,1,
+                    "%s\n\t(eventEnt->s.lerp.u.radiusDamage.range) = %g");
   }
-  if (*(int *)(iVar3 + 0x5c) < 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2384,1,0xffffffff8207923c,0xffffffff82079274);
+  if ((pgVar1->s).lerp.u.plane.friendIcon < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2384,1,
+                    "%s\n\t(eventEnt->s.lerp.u.radiusDamage.damageMax) = %i");
   }
-  if (*(int *)(iVar3 + 0x58) < 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2385,1,0xffffffff820791d0,0xffffffff82079208);
+  if ((pgVar1->s).lerp.u.loopFx.period < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2385,1,
+                    "%s\n\t(eventEnt->s.lerp.u.radiusDamage.damageMin) = %i");
   }
   __restfpr_27();
   __restgprlr_27();
@@ -8900,19 +9919,21 @@ void GScr_RadiusDamageInternal(void)
 
 // 82496BE8  GScr_IsExplosiveDamageMOD  (game/g_scr_main.cpp:9130)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_IsExplosiveDamageMOD(void)
 
 {
   uint uVar1;
   int iVar2;
-  undefined **ppuVar3;
+  ushort **ppuVar3;
   
   uVar1 = Scr_GetConstString(0);
   iVar2 = 0;
-  ppuVar3 = &PTR_DAT_82969440;
+  ppuVar3 = modNames;
   do {
-    if (*(ushort *)*ppuVar3 == uVar1) {
-      Scr_AddBool((&DAT_82969f00)[iVar2]);
+    if (**ppuVar3 == uVar1) {
+      Scr_AddBool((uint)modExplosiveFlags[iVar2]);
       return;
     }
     ppuVar3 = ppuVar3 + 1;
@@ -8925,54 +9946,71 @@ void GScr_IsExplosiveDamageMOD(void)
 
 // 82496C68  GScr_RadiusDamage  (game/g_scr_main.cpp:9164)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void GScr_RadiusDamage(void)
 
 {
-  GScr_RadiusDamageInternal(0);
+  GScr_RadiusDamageInternal((gentity_s *)0x0);
   return;
 }
 
 
 // 82496C70  GScr_EntityRadiusDamage  (game/g_scr_main.cpp:9187)
 
-void GScr_EntityRadiusDamage(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_EntityRadiusDamage(scr_entref_t param_1)
 
 {
-  GetEntity();
-  GScr_RadiusDamageInternal();
+  gentity_s *pgVar1;
+  
+  pgVar1 = GetEntity(param_1);
+  GScr_RadiusDamageInternal(pgVar1);
   return;
 }
 
 
 // 82496C98  GScr_GlassRadiusDamage  (game/g_scr_main.cpp:9209)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GlassRadiusDamage(void)
 
 {
-  double dVar1;
+  float *pfVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  undefined1 auStack_40 [64];
+  double dVar6;
+  float fVar7;
+  float afStack_40 [16];
   
   __savefpr_27();
-  Scr_GetVector(0,auStack_40);
-  dVar1 = (double)Scr_GetFloat(1);
-  dVar5 = 0.0;
-  if (dVar1 < 0.0) {
-    Scr_Error(0xffffffff820793b0);
+  pfVar1 = afStack_40;
+  Scr_GetVector(0,pfVar1);
+  fVar7 = Scr_GetFloat(1);
+  dVar2 = (double)fVar7;
+  dVar6 = 0.0;
+  if (dVar2 < 0.0) {
+    Scr_Error("Invalid <range> value specified for radius damage ( parameter 2 ).\n");
   }
-  dVar2 = (double)Scr_GetFloat(2);
-  dVar4 = 2147483648.0;
-  if ((dVar2 < dVar5) || (2147483648.0 <= dVar2)) {
-    Scr_Error(0xffffffff82079360);
+  fVar7 = Scr_GetFloat(2);
+  dVar3 = (double)fVar7;
+  dVar5 = 2147483648.0;
+  if ((dVar3 < dVar6) || (2147483648.0 <= dVar3)) {
+    Scr_Error("Invalid <max_damage> value specified for radius damage ( parameter 3 ).\n");
   }
-  dVar3 = (double)Scr_GetFloat(3);
-  if ((dVar3 < dVar5) || (dVar4 <= dVar3)) {
-    Scr_Error(0xffffffff82079310);
+  fVar7 = Scr_GetFloat(3);
+  dVar4 = (double)fVar7;
+  if ((dVar4 < dVar6) || (dVar5 <= dVar4)) {
+    Scr_Error("Invalid <min_damage> value specified for radius damage ( parameter 4 ).\n");
   }
-  G_Glass_RadiusDamage(dVar1,dVar5,dVar2,dVar3,auStack_40);
+  G_Glass_RadiusDamage(afStack_40,(float)dVar2,(float)dVar6,pfVar1,(float)dVar3,(float)dVar4);
   __restfpr_27();
   return;
 }
@@ -8980,72 +10018,85 @@ void GScr_GlassRadiusDamage(void)
 
 // 82496D70  GScr_Detonate  (game/g_scr_main.cpp:9244)
 
-void GScr_Detonate(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void GScr_Detonate(scr_entref_t param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  gentity_s *pgVar1;
+  Weapon WVar2;
+  weapType_t wVar3;
+  uint uVar4;
+  int iVar5;
+  gentity_s *pgVar6;
   
-  iVar1 = GetEntity();
-  uVar2 = BG_GetAlternateWeapon(*(undefined4 *)(iVar1 + 200),0);
-  if (*(int *)(iVar1 + 4) == 4) {
-    if (((&DAT_829d84a0)[uVar2 & 0xff] != 0) &&
-       (iVar3 = BG_GetWeaponType(*(undefined4 *)(iVar1 + 200),0), iVar3 == 2)) goto LAB_82496ddc;
+  pgVar1 = GetEntity(param_1);
+  WVar2 = BG_GetAlternateWeapon((pgVar1->s).weapon,false);
+  if ((((pgVar1->s).eType != 4) || (bg_weaponDefs[WVar2.data & 0xff] == (WeaponDef *)0x0)) ||
+     (wVar3 = BG_GetWeaponType((pgVar1->s).weapon,false), wVar3 != WEAPTYPE_GRENADE)) {
+    Scr_ObjectError("entity is not a grenade");
   }
-  Scr_ObjectError(0xffffffff8207940c);
-LAB_82496ddc:
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 0) {
-    iVar3 = Scr_GetType(0);
-    if (iVar3 == 0) {
-      puVar4 = &DAT_834b3180;
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 != 0) {
+    iVar5 = Scr_GetType(0);
+    if (iVar5 == 0) {
+      pgVar6 = g_entities + 0x7fe;
     }
     else {
-      puVar4 = (undefined4 *)Scr_GetEntity(0);
-      if (puVar4[0x56] == 0) {
-        Scr_ParamError(0,0xffffffff820793f4);
+      pgVar6 = Scr_GetEntity(0);
+      if (pgVar6->client == (gclient_s *)0x0) {
+        Scr_ParamError(0,"Entity is not a player");
       }
     }
-    EntHandle__setEnt(iVar1 + 0x194,puVar4);
+    EntHandle::setEnt(&pgVar1->parent,pgVar6);
   }
-  G_ExplodeMissile(iVar1);
+  G_ExplodeMissile(pgVar1);
   return;
 }
 
 
 // 82496E60  GScr_SetPlayerIgnoreRadiusDamage  (game/g_scr_main.cpp:9286)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_SetPlayerIgnoreRadiusDamage(void)
 
 {
-  DAT_835832e4 = Scr_GetInt(0);
+  level.bPlayerIgnoreRadiusDamageLatched = Scr_GetInt(0);
   return;
 }
 
 
 // 82496E90  GScr_DamageConeTraceInternal  (game/g_scr_main.cpp:9292)
 
-void GScr_DamageConeTraceInternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DamageConeTraceInternal(scr_entref_t param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  undefined1 auStack_30 [48];
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  gentity_s *pgVar4;
+  float *in_r6;
+  float fVar5;
+  float afStack_30 [12];
   
-  __savegprlr_29();
-  uVar1 = GetEntity();
-  uVar3 = 0;
-  uVar2 = Scr_GetNumParam();
-  if (1 < uVar2) {
-    uVar3 = Scr_GetEntity(1);
+  sVar1 = (scr_entref_t)__savegprlr_29(param_1,param_2);
+  pgVar2 = GetEntity(sVar1);
+  pgVar4 = (gentity_s *)0x0;
+  uVar3 = Scr_GetNumParam();
+  if (1 < uVar3) {
+    pgVar4 = Scr_GetEntity(1);
   }
-  Scr_GetVector(0,auStack_30);
-  CanDamage(0x3ff0000000000000,uVar1,uVar3,auStack_30,param_4,0,param_2);
-  Scr_AddFloat();
+  Scr_GetVector(0,afStack_30);
+  fVar5 = CanDamage(pgVar2,pgVar4,afStack_30,1.0,in_r6,0);
+  Scr_AddFloat(fVar5);
   __restgprlr_29();
   return;
 }
@@ -9053,116 +10104,133 @@ void GScr_DamageConeTraceInternal
 
 // 82496F00  GScr_DamageConeTrace  (game/g_scr_main.cpp:9328)
 
-void GScr_DamageConeTrace(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DamageConeTrace(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
+  gentity_s *pgVar1;
   uint uVar2;
-  undefined8 in_r6;
-  undefined8 uVar3;
-  undefined1 auStack_30 [24];
+  gentity_s *pgVar3;
+  float *in_r6;
+  float fVar4;
+  float afStack_30 [6];
   
-  uVar1 = GetEntity();
-  uVar3 = 0;
+  pgVar1 = GetEntity(param_1);
+  pgVar3 = (gentity_s *)0x0;
   uVar2 = Scr_GetNumParam();
   if (1 < uVar2) {
-    uVar3 = Scr_GetEntity(1);
+    pgVar3 = Scr_GetEntity(1);
   }
-  Scr_GetVector(0,auStack_30);
-  CanDamage(0x3ff0000000000000,uVar1,uVar3,auStack_30,in_r6,0,0x802011);
-  Scr_AddFloat();
+  Scr_GetVector(0,afStack_30);
+  fVar4 = CanDamage(pgVar1,pgVar3,afStack_30,1.0,in_r6,0);
+  Scr_AddFloat(fVar4);
   return;
 }
 
 
 // 82496F88  GScr_SightConeTrace  (game/g_scr_main.cpp:9346)
 
-void GScr_SightConeTrace(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SightConeTrace(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
+  gentity_s *pgVar1;
   uint uVar2;
-  undefined8 in_r6;
-  undefined8 uVar3;
-  undefined1 auStack_30 [24];
+  gentity_s *pgVar3;
+  float *in_r6;
+  float fVar4;
+  float afStack_30 [6];
   
-  uVar1 = GetEntity();
-  uVar3 = 0;
+  pgVar1 = GetEntity(param_1);
+  pgVar3 = (gentity_s *)0x0;
   uVar2 = Scr_GetNumParam();
   if (1 < uVar2) {
-    uVar3 = Scr_GetEntity(1);
+    pgVar3 = Scr_GetEntity(1);
   }
-  Scr_GetVector(0,auStack_30);
-  CanDamage(0x3ff0000000000000,uVar1,uVar3,auStack_30,in_r6,0,0x801);
-  Scr_AddFloat();
+  Scr_GetVector(0,afStack_30);
+  fVar4 = CanDamage(pgVar1,pgVar3,afStack_30,1.0,in_r6,0);
+  Scr_AddFloat(fVar4);
   return;
 }
 
 
 // 82497008  GScr_ShellShock  (game/g_scr_main.cpp:9368)
 
-void GScr_ShellShock(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GScr_ShellShock(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  char *pcVar4;
+  int iVar5;
+  uint *puVar6;
   undefined8 in_r13;
-  int *piVar4;
-  longlong lVar5;
-  double dVar6;
-  double dVar7;
-  undefined1 auStack_440 [1088];
+  int *piVar7;
+  int iVar8;
+  double dVar9;
+  float fVar10;
+  char acStack_440 [1088];
   
-  uVar1 = __savegprlr_26();
+  sVar1 = (scr_entref_t)__savegprlr_26(param_1);
   SV_CheckThread();
-  iVar2 = GetPlayerEntity(uVar1);
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 2) {
-    Scr_Error(0xffffffff82079494);
+  pgVar2 = GetPlayerEntity(sVar1);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 2) {
+    Scr_Error("USAGE: <player> shellshock(<shellshockname>, <duration>)\n");
   }
-  uVar1 = Scr_GetString(0);
-  lVar5 = 1;
+  pcVar4 = Scr_GetString(0);
+  iVar8 = 1;
   while( true ) {
-    if (0x346 < (int)lVar5) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    if (0x346 < iVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    SV_GetConfigstring(lVar5 + 0xba4,auStack_440,0x400);
-    iVar3 = I_stricmp(auStack_440,uVar1);
-    piVar4 = (int *)in_r13;
-    if (iVar3 == 0) break;
-    lVar5 = lVar5 + 1;
-    if (0xf < (int)lVar5) {
-      va(0xffffffff82079470,uVar1);
-      Scr_Error();
+    SV_GetConfigstring(iVar8 + CS_SHELLSHOCKS,acStack_440,0x400);
+    iVar5 = I_stricmp(acStack_440,pcVar4);
+    piVar7 = (int *)in_r13;
+    if (iVar5 == 0) break;
+    iVar8 = iVar8 + 1;
+    if (0xf < iVar8) {
+      pcVar4 = va("shellshock \'%s\' was not precached\n");
+      Scr_Error(pcVar4);
 LAB_824970d0:
       __restgprlr_26();
       return;
     }
   }
-  dVar6 = (double)Scr_GetFloat(1);
-  dVar6 = floor((double)((float)(dVar6 * 1000.0) + 0.5));
-  dVar7 = 0.0010000000474974513;
-  iVar3 = (int)dVar6;
-  if (iVar3 < 0) {
-    uVar1 = va(0xffffffff82079454,(double)(float)((double)(longlong)iVar3 * 0.0010000000474974513));
-    Scr_ParamError(1,uVar1);
+  fVar10 = Scr_GetFloat(1);
+  dVar9 = floor((double)(fVar10 * 1000.0 + 0.5));
+  iVar5 = (int)dVar9;
+  if (iVar5 < 0) {
+    pcVar4 = va("duration %g should be >= 0");
+    Scr_ParamError(1,pcVar4);
   }
-  if (60000 < iVar3) {
-    uVar1 = va(0xffffffff82079438,(double)(float)((double)(longlong)iVar3 * dVar7));
-    Scr_ParamError(1,uVar1);
+  if (60000 < iVar5) {
+    pcVar4 = va("duration %g should be <= 60");
+    Scr_ParamError(1,pcVar4);
   }
-  *(int *)(*(int *)(iVar2 + 0x158) + 0x554) = (int)lVar5;
-  *(undefined4 *)(*(int *)(iVar2 + 0x158) + 0x558) = DAT_83580fac;
-  *(int *)(*(int *)(iVar2 + 0x158) + 0x55c) = iVar3;
-  if (0 < *(int *)(iVar2 + 0x19c)) {
-    iVar3 = *piVar4;
-    *(uint *)(*(int *)(iVar2 + 0x158) + 0xc) = *(uint *)(*(int *)(iVar2 + 0x158) + 0xc) | 0x8000;
-    *(undefined **)(iVar3 + 8) = &DAT_834b36a8;
-    uVar1 = G_GetRandomSeed();
-    BG_AnimScriptEvent(*(undefined4 *)(iVar2 + 0x158),0x14,0,1,uVar1);
-    if (*(undefined **)(iVar3 + 8) != &DAT_834b36a8) {
-      MyAssertHandler(0xffffffff82076e74,0x24cc,0,0xffffffff82000f98,0xffffffff82079424);
+  (pgVar2->client->ps).shellshockIndex = iVar8;
+  (pgVar2->client->ps).shellshockTime = level.time;
+  (pgVar2->client->ps).shellshockDuration = iVar5;
+  if (0 < pgVar2->health) {
+    iVar8 = *piVar7;
+    (pgVar2->client->ps).pm_flags = (pgVar2->client->ps).pm_flags | 0x8000;
+    *(bgs_t **)(iVar8 + 8) = &level_bgs;
+    puVar6 = G_GetRandomSeed();
+    BG_AnimScriptEvent(&pgVar2->client->ps,ANIM_ET_SHELLSHOCK,0,1,puVar6);
+    if (*(bgs_t **)(iVar8 + 8) != &level_bgs) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x24cc,
+                      0,"%s");
       __restgprlr_26();
       return;
     }
@@ -9173,65 +10241,72 @@ LAB_824970d0:
 
 // 82497248  GScr_StunPlayer  (game/g_scr_main.cpp:9445)
 
-void GScr_StunPlayer(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_StunPlayer(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  double dVar4;
+  gentity_s *pgVar1;
+  char *pcVar2;
+  double dVar3;
+  float fVar4;
   
-  iVar3 = GetPlayerEntity();
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar4 = floor((double)((float)(dVar4 * 1000.0) + 0.5));
-  iVar1 = (int)dVar4;
-  if (iVar1 < 0) {
-    uVar2 = va(0xffffffff82079454,(double)((float)(longlong)iVar1 * 0.001));
-    Scr_ParamError(0,uVar2);
+  pgVar1 = GetPlayerEntity(param_1);
+  fVar4 = Scr_GetFloat(0);
+  dVar3 = floor((double)(fVar4 * 1000.0 + 0.5));
+  if ((int)dVar3 < 0) {
+    pcVar2 = va("duration %g should be >= 0");
+    Scr_ParamError(0,pcVar2);
   }
-  *(int *)(*(int *)(iVar3 + 0x158) + 0x32e4) = DAT_83580fac + iVar1;
+  (pgVar1->client->ps).stunTime = level.time + (int)dVar3;
   return;
 }
 
 
 // 82497310  GScr_GetMoveDelta  (game/g_scr_main.cpp:9470)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetMoveDelta(void)
 
 {
-  int iVar2;
-  undefined4 uVar3;
-  undefined8 uVar1;
+  uint uVar1;
+  scr_anim_s sVar2;
+  XAnim_s *pXVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  undefined2 local_50;
-  undefined2 uStack_4e;
-  undefined1 auStack_48 [8];
-  undefined1 auStack_40 [64];
+  float fVar8;
+  float afStack_48 [2];
+  float afStack_40 [16];
   
   __savefpr_28();
   dVar7 = 0.0;
   dVar6 = 1.0;
   dVar4 = dVar6;
   dVar5 = dVar7;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if ((iVar2 != 2) && ((dVar4 = (double)Scr_GetFloat(2), dVar4 < dVar7 || (dVar6 < dVar4)))) {
-      Scr_ParamError(2,0xffffffff820794f4);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      fVar8 = Scr_GetFloat(2);
+      dVar4 = (double)fVar8;
+      if ((dVar4 < dVar7) || (dVar6 < dVar4)) {
+        Scr_ParamError(2,"end time must be between 0 and 1");
+      }
     }
-    dVar5 = (double)Scr_GetFloat(1);
+    fVar8 = Scr_GetFloat(1);
+    dVar5 = (double)fVar8;
     if ((dVar5 < dVar7) || (dVar6 < dVar5)) {
-      Scr_ParamError(1,0xffffffff820794d0);
+      Scr_ParamError(1,"start time must be between 0 and 1");
     }
   }
-  uVar3 = Scr_GetAnim(0,0);
-  uStack_4e = (undefined2)uVar3;
-  uVar1 = Scr_GetAnims(uStack_4e);
-  local_50 = (undefined2)((uint)uVar3 >> 0x10);
-  XAnimGetRelDelta(dVar5,dVar4,uVar1,local_50,auStack_48,auStack_40);
-  Scr_AddVector(auStack_40);
+  sVar2 = Scr_GetAnim(0,(XAnimTree *)0x0);
+  pXVar3 = Scr_GetAnims((uint)sVar2.field0_0x0 & 0xffff);
+  XAnimGetRelDelta(pXVar3,(uint)sVar2.field0_0x0 >> 0x10,afStack_48,afStack_40,(float)dVar5,
+                   (float)dVar4);
+  Scr_AddVector(afStack_40);
   __restfpr_28();
   return;
 }
@@ -9239,43 +10314,48 @@ void GScr_GetMoveDelta(void)
 
 // 824973F8  GScr_GetAngleDelta  (game/g_scr_main.cpp:9516)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetAngleDelta(void)
 
 {
-  int iVar2;
-  undefined4 uVar3;
-  undefined8 uVar1;
+  uint uVar1;
+  scr_anim_s sVar2;
+  XAnim_s *pXVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  undefined2 local_50;
-  undefined2 uStack_4e;
-  undefined1 auStack_48 [8];
-  undefined1 auStack_40 [64];
+  float fVar8;
+  float afStack_48 [2];
+  float afStack_40 [16];
   
   __savefpr_28();
   dVar7 = 0.0;
   dVar6 = 1.0;
   dVar4 = dVar6;
   dVar5 = dVar7;
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    if ((iVar2 != 2) && ((dVar4 = (double)Scr_GetFloat(2), dVar4 < dVar7 || (dVar6 < dVar4)))) {
-      Scr_ParamError(2,0xffffffff820794f4);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    if (uVar1 != 2) {
+      fVar8 = Scr_GetFloat(2);
+      dVar4 = (double)fVar8;
+      if ((dVar4 < dVar7) || (dVar6 < dVar4)) {
+        Scr_ParamError(2,"end time must be between 0 and 1");
+      }
     }
-    dVar5 = (double)Scr_GetFloat(1);
+    fVar8 = Scr_GetFloat(1);
+    dVar5 = (double)fVar8;
     if ((dVar5 < dVar7) || (dVar6 < dVar5)) {
-      Scr_ParamError(1,0xffffffff820794d0);
+      Scr_ParamError(1,"start time must be between 0 and 1");
     }
   }
-  uVar3 = Scr_GetAnim(0,0);
-  uStack_4e = (undefined2)uVar3;
-  uVar1 = Scr_GetAnims(uStack_4e);
-  local_50 = (undefined2)((uint)uVar3 >> 0x10);
-  XAnimGetRelDelta(dVar5,dVar4,uVar1,local_50,auStack_48,auStack_40);
-  RotationToYaw(auStack_48);
-  Scr_AddFloat();
+  sVar2 = Scr_GetAnim(0,(XAnimTree *)0x0);
+  pXVar3 = Scr_GetAnims((uint)sVar2.field0_0x0 & 0xffff);
+  XAnimGetRelDelta(pXVar3,(uint)sVar2.field0_0x0 >> 0x10,afStack_48,afStack_40,(float)dVar5,
+                   (float)dVar4);
+  fVar8 = RotationToYaw(afStack_48);
+  Scr_AddFloat(fVar8);
   __restfpr_28();
   return;
 }
@@ -9283,96 +10363,103 @@ void GScr_GetAngleDelta(void)
 
 // 824974E8  GScr_GetNorthYaw  (game/g_scr_main.cpp:9560)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void GScr_GetNorthYaw(void)
 
 {
   double dVar1;
   char acStack_30 [48];
   
-  SV_GetConfigstring(0x3f9,acStack_30,0x20);
+  SV_GetConfigstring(CS_NORTHYAW,acStack_30,0x20);
   dVar1 = atof(acStack_30);
-  Scr_AddFloat((double)(float)dVar1);
+  Scr_AddFloat((float)dVar1);
   return;
 }
 
 
 // 82497528  GScr_SetNorthYaw  (game/g_scr_main.cpp:9578)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_SetNorthYaw(void)
 
 {
   double dVar1;
-  double _X;
-  undefined1 auStack_40 [48];
+  double dVar2;
+  float fVar3;
+  char acStack_40 [48];
   
-  dVar1 = (double)Scr_GetFloat(0);
-  Com_sprintf(auStack_40,0x20,0xffffffff820181dc,dVar1);
-  SV_SetConfigstring(0x3f9,auStack_40);
-  _X = (double)(float)(dVar1 * 0.01745329238474369);
-  dVar1 = sin(_X);
-  DAT_83583364 = (float)dVar1;
-  dVar1 = cos(_X);
-  DAT_83583360 = (float)dVar1;
+  fVar3 = Scr_GetFloat(0);
+  dVar1 = (double)fVar3;
+  Com_sprintf(acStack_40,0x20,"%g");
+  SV_SetConfigstring(CS_NORTHYAW,acStack_40);
+  dVar2 = (double)(float)(dVar1 * 0.01745329238474369);
+  dVar1 = sin(dVar2);
+  level.compassNorth[1] = (float)dVar1;
+  dVar1 = cos(dVar2);
+  level.compassNorth[0] = (float)dVar1;
   return;
 }
 
 
 // 824975C0  Scr_SetFxAngles  (game/g_scr_main.cpp:9592)
 
-void Scr_SetFxAngles(undefined8 param_1,longlong param_2,undefined8 param_3)
+void Scr_SetFxAngles(int param_1,float (*param_2) [3],float *param_3)
 
 {
-  undefined4 *puVar1;
-  float *pfVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
-  float fVar7;
-  undefined8 uVar8;
-  int iVar9;
+  int iVar6;
+  char *pcVar7;
   
-  uVar8 = __savegprlr_29();
-  iVar9 = (int)uVar8;
-  if ((iVar9 < 0) || (2 < iVar9)) {
-    MyAssertHandler(0xffffffff82076e74,0x257b,0,0xffffffff82079564,uVar8,0,2);
+  iVar6 = __savegprlr_29(param_1);
+  if ((iVar6 < 0) || (2 < iVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x257b,0,
+                    "givenAxisCount not in [0, 2]\n\t%i not in [%i, %i]");
   }
-  if (iVar9 != 1) {
-    if (iVar9 != 2) {
-      puVar1 = (undefined4 *)param_3;
-      puVar1[1] = 0;
-      puVar1[2] = 0;
-      *puVar1 = 0x43870000;
+  if (iVar6 != 1) {
+    if (iVar6 != 2) {
+      param_3[1] = 0.0;
+      param_3[2] = 0.0;
+      *param_3 = 270.0;
       __restgprlr_29();
       return;
     }
-    pfVar2 = (float *)param_2;
-    fVar4 = -(pfVar2[2] * pfVar2[8] + pfVar2[6] * *pfVar2 + pfVar2[1] * pfVar2[7]);
-    fVar3 = *pfVar2 * fVar4 + pfVar2[6];
-    pfVar2[6] = fVar3;
-    fVar5 = pfVar2[1] * fVar4 + pfVar2[7];
-    pfVar2[7] = fVar5;
-    fVar4 = pfVar2[2] * fVar4 + pfVar2[8];
-    pfVar2[8] = fVar4;
-    fVar7 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar5 * fVar5);
-    fVar6 = 1.0;
-    if (-fVar7 < 0.0) {
-      fVar6 = fVar7;
+    fVar2 = -((*param_2)[2] * param_2[2][2] +
+             param_2[2][0] * (*param_2)[0] + (*param_2)[1] * param_2[2][1]);
+    fVar1 = (*param_2)[0] * fVar2 + param_2[2][0];
+    param_2[2][0] = fVar1;
+    fVar3 = (*param_2)[1] * fVar2 + param_2[2][1];
+    param_2[2][1] = fVar3;
+    fVar2 = (*param_2)[2] * fVar2 + param_2[2][2];
+    param_2[2][2] = fVar2;
+    fVar5 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+    fVar4 = 1.0;
+    if (-fVar5 < 0.0) {
+      fVar4 = fVar5;
     }
-    fVar6 = 1.0 / fVar6;
-    pfVar2[6] = fVar3 * fVar6;
-    pfVar2[7] = fVar5 * fVar6;
-    pfVar2[8] = fVar4 * fVar6;
-    if (fVar7 == 0.0) {
-      va(0xffffffff82079518);
-      Scr_Error();
+    fVar4 = 1.0 / fVar4;
+    param_2[2][0] = fVar1 * fVar4;
+    param_2[2][1] = fVar3 * fVar4;
+    param_2[2][2] = fVar2 * fVar4;
+    if (fVar5 == 0.0) {
+      pcVar7 = va("forward and up vectors are the same direction or exact opposite directions");
+      Scr_Error(pcVar7);
     }
-    Vec3Cross(param_2 + 0x18,param_2,param_2 + 0xc);
+    Vec3Cross(param_2[2],*param_2,param_2[1]);
     AxisToAngles(param_2,param_3);
     __restgprlr_29();
     return;
   }
-  vectoangles(param_2,param_3);
+  vectoangles(*param_2,param_3);
   __restgprlr_29();
   return;
 }
@@ -9380,50 +10467,62 @@ void Scr_SetFxAngles(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 // 82497730  Scr_LoadFX  (game/g_scr_main.cpp:9631)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_LoadFX(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  int iVar2;
   
-  uVar1 = Scr_GetString(0);
-  uVar2 = I_strncmp(uVar1,0xffffffff82026dc4,3);
-  if ((int)uVar2 == 0) {
-    Scr_ParamError(uVar2,0xffffffff82079600);
+  pcVar1 = Scr_GetString(0);
+  iVar2 = I_strncmp(pcVar1,"fx/",3);
+  if (iVar2 == 0) {
+    Scr_ParamError(0,"effect name should start after the \'fx\' folder.");
   }
-  uVar1 = G_EffectIndex(uVar1);
-  if (((int)uVar1 == 0) && (DAT_83580b1c == 0)) {
-    Scr_Error(0xffffffff82079598);
+  iVar2 = G_EffectIndex(pcVar1);
+  if ((iVar2 == 0) && (level.initializing == 0)) {
+    Scr_Error(
+             "loadFx must be called before any wait statements in the level script, or on an already loaded effect\n"
+             );
   }
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar2);
   return;
 }
 
 
 // 824977C0  Scr_FxParamError  (game/g_scr_main.cpp:9647)
 
-void Scr_FxParamError(undefined8 param_1,ulonglong param_2,longlong param_3)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void Scr_FxParamError(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_430 [1072];
+  uint uVar1;
+  char *pcVar2;
+  ulonglong uVar3;
+  char acStack_430 [1072];
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x25b2,0,0xffffffff82000f98,0xffffffff8207965c);
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x25b2,0,
+                    "%s");
   }
-  if ((int)param_3 == 0) {
-    memcpy(auStack_430,"not successfully loaded",0x18);
+  if (param_3 == 0) {
+    memcpy();
   }
   else {
-    if (0xeea < (int)(param_3 + 0x9a4)) {
-      MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    if (0xeea < (int)(param_3 + CS_EFFECT_NAMES)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    SV_GetConfigstring(param_3 + 0x9a4,auStack_430,0x400);
+    SV_GetConfigstring(param_3 + CS_EFFECT_NAMES,acStack_430,0x400);
   }
-  uVar2 = va(0xffffffff82079630,param_2,auStack_430);
-  Scr_ParamError(uVar1,uVar2);
+  pcVar2 = va("%s (effect = %s)\n");
+  Scr_ParamError(uVar1,pcVar2);
   __restgprlr_28();
   return;
 }
@@ -9431,18 +10530,23 @@ void Scr_FxParamError(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 // 82497890  Scr_PlayFXInternal  (game/g_scr_main.cpp:9662)
 
-void Scr_PlayFXInternal(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * Scr_PlayFXInternal(int param_1,float *param_2,float (*param_3) [3],float (*param_4) [3])
 
 {
   float fVar1;
   float *pfVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
+  uint uVar3;
+  char *pcVar4;
+  gentity_s *pgVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
+  double dVar11;
   float local_60;
   float local_5c;
   float local_58;
@@ -9450,150 +10554,161 @@ void Scr_PlayFXInternal(undefined8 param_1,undefined8 param_2,ulonglong param_3,
   float local_44;
   float local_40;
   
-  uVar3 = __savegprlr_28();
-  iVar4 = (int)uVar3;
-  if ((iVar4 < 1) || (0xff < iVar4)) {
-    va(0xffffffff820796ec,uVar3);
-    Scr_Error();
+  uVar7 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar3 = __savegprlr_28(param_1);
+  if (((int)uVar3 < 1) || (0xff < (int)uVar3)) {
+    pcVar4 = va("Scr_PlayFX: invalid effect id %d");
+    Scr_Error(pcVar4);
   }
-  iVar5 = G_TempEntity(param_2,0x56);
-  if (*(int *)(iVar5 + 0x30) != 0) {
-    MyAssertHandler(0xffffffff82076e74,0x25df,1,0xffffffff82000f98,0xffffffff820796c0);
+  pgVar5 = G_TempEntity(param_2,0x56);
+  if ((pgVar5->s).lerp.apos.trType != TR_STATIONARY) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x25df,1,
+                    "%s");
   }
-  *(int *)(iVar5 + 0xa0) = iVar4;
-  *(undefined4 *)(iVar5 + 0xd8) = 0;
-  if ((param_3 & 0xffffffff) == 0) {
-    *(undefined4 *)(iVar5 + 0x40) = 0;
-    *(undefined4 *)(iVar5 + 0x44) = 0;
-    *(undefined4 *)(iVar5 + 0x3c) = 0x43870000;
-    __restgprlr_28(iVar5);
-    return;
+  (pgVar5->s).eventParm = uVar3;
+  (pgVar5->s).un1.eventParm2 = 0;
+  if ((uVar6 & 0xffffffff) == 0) {
+    (pgVar5->s).lerp.apos.trBase[1] = 0.0;
+    (pgVar5->s).lerp.apos.trBase[2] = 0.0;
+    (pgVar5->s).lerp.apos.trBase[0] = 270.0;
+    pgVar5 = (gentity_s *)__restgprlr_28(pgVar5);
+    return pgVar5;
   }
-  pfVar2 = (float *)param_3;
+  pfVar2 = (float *)uVar6;
   local_5c = pfVar2[1];
   local_58 = pfVar2[2];
   local_60 = *pfVar2;
-  dVar8 = 0.0;
-  dVar9 = 1.0;
-  dVar7 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-  dVar6 = dVar9;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  dVar10 = 0.0;
+  dVar11 = 1.0;
+  dVar9 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+  dVar8 = dVar11;
+  if (-dVar9 < 0.0) {
+    dVar8 = dVar9;
   }
-  fVar1 = (float)(1.0 / dVar6);
+  fVar1 = (float)(1.0 / dVar8);
   *pfVar2 = local_60 * fVar1;
   pfVar2[1] = local_5c * fVar1;
   pfVar2[2] = local_58 * fVar1;
-  if (dVar7 == 0.0) {
-    Scr_FxParamError(2,0xffffffff82079690,uVar3);
+  if (dVar9 == 0.0) {
+    Scr_FxParamError(2,"playFx called with (0 0 0) forward direction",uVar3);
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    vectoangles(&local_60,iVar5 + 0x3c);
-    __restgprlr_28(iVar5);
-    return;
+  if ((uVar7 & 0xffffffff) == 0) {
+    vectoangles(&local_60,(pgVar5->s).lerp.apos.trBase);
+    pgVar5 = (gentity_s *)__restgprlr_28(pgVar5);
+    return pgVar5;
   }
-  pfVar2 = (float *)param_4;
+  pfVar2 = (float *)uVar7;
   local_44 = pfVar2[1];
   local_40 = pfVar2[2];
   local_48 = *pfVar2;
-  dVar7 = (double)SQRT(local_48 * local_48 + local_40 * local_40 + local_44 * local_44);
-  dVar6 = dVar9;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  dVar9 = (double)SQRT(local_48 * local_48 + local_40 * local_40 + local_44 * local_44);
+  dVar8 = dVar11;
+  if (-dVar9 < 0.0) {
+    dVar8 = dVar9;
   }
-  fVar1 = (float)(dVar9 / dVar6);
+  fVar1 = (float)(dVar11 / dVar8);
   local_48 = local_48 * fVar1;
   local_44 = local_44 * fVar1;
   local_40 = local_40 * fVar1;
-  if (dVar7 == dVar8) {
-    Scr_FxParamError(3,0xffffffff82079668,uVar3);
+  if (dVar9 == dVar10) {
+    Scr_FxParamError(3,"playFx called with (0 0 0) up direction",uVar3);
   }
-  Scr_SetFxAngles(2,&local_60,iVar5 + 0x3c);
-  __restgprlr_28(iVar5);
-  return;
+  Scr_SetFxAngles(2,(float (*) [3])&local_60,(pgVar5->s).lerp.apos.trBase);
+  pgVar5 = (gentity_s *)__restgprlr_28(pgVar5);
+  return pgVar5;
 }
 
 
 // 82497A78  Scr_PlayFX  (game/g_scr_main.cpp:9739)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PlayFX(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined1 *puVar4;
-  undefined1 *puVar5;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [24];
+  uint uVar1;
+  int iVar2;
+  gentity_s *pgVar3;
+  float (*pafVar4) [3];
+  float (*pafVar5) [3];
+  float afStack_50 [4];
+  float afStack_40 [4];
+  float afStack_30 [6];
   
   uVar1 = Scr_GetNumParam();
-  iVar3 = (int)uVar1;
-  if ((iVar3 < 2) || (4 < iVar3)) {
-    Scr_Error(0xffffffff8206e424);
+  if (((int)uVar1 < 2) || (4 < (int)uVar1)) {
+    Scr_Error("Incorrect number of parameters");
   }
-  uVar2 = Scr_GetInt(0);
-  Scr_GetVector(1,auStack_50);
-  if (iVar3 < 3) {
-    puVar4 = (undefined1 *)0x0;
+  iVar2 = Scr_GetInt(0);
+  Scr_GetVector(1,afStack_50);
+  if ((int)uVar1 < 3) {
+    pafVar4 = (float (*) [3])0x0;
   }
   else {
-    if ((iVar3 != 3) && (iVar3 != 4)) {
-      MyAssertHandler(0xffffffff82076e74,0x261e,1,0xffffffff8206e3e8,0xffffffff8206e400,uVar1);
+    if ((uVar1 != 3) && (uVar1 != 4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x261e,
+                      1,"%s\n\t(numParams) = %i");
     }
-    Scr_GetVector(2,auStack_40);
-    if (3 < iVar3) {
-      Scr_GetVector(3,auStack_30);
-      puVar5 = auStack_30;
-      puVar4 = auStack_40;
+    Scr_GetVector(2,afStack_40);
+    if (3 < (int)uVar1) {
+      Scr_GetVector(3,afStack_30);
+      pafVar5 = (float (*) [3])afStack_30;
+      pafVar4 = (float (*) [3])afStack_40;
       goto LAB_82497b44;
     }
-    puVar4 = auStack_40;
+    pafVar4 = (float (*) [3])afStack_40;
   }
-  puVar5 = (undefined1 *)0x0;
+  pafVar5 = (float (*) [3])0x0;
 LAB_82497b44:
-  iVar3 = Scr_PlayFXInternal(uVar2,auStack_50,puVar4,puVar5);
-  *(undefined4 *)(iVar3 + 0xfc) = 0;
-  Scr_AddEntity();
+  pgVar3 = Scr_PlayFXInternal(iVar2,afStack_50,pafVar4,pafVar5);
+  (pgVar3->s).clientMask[0] = 0;
+  Scr_AddEntity(pgVar3);
   return;
 }
 
 
 // 82497B78  Scr_PlayFxOnTagInternal  (game/g_scr_main.cpp:9789)
 
-void Scr_PlayFxOnTagInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void Scr_PlayFxOnTagInternal(gentity_s *param_1,int param_2,uint param_3)
 
 {
+  gentity_s *pgVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
+  uint uVar4;
   
-  iVar3 = __savegprlr_28();
-  if (((int)param_2 < 1) || (0xff < (int)param_2)) {
-    uVar1 = va(0xffffffff820797a0,param_2);
-    Scr_ParamError(0,uVar1);
+  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
+  if ((param_2 < 1) || (0xff < param_2)) {
+    pcVar2 = va("effect id %i is invalid\n");
+    Scr_ParamError(0,pcVar2);
   }
-  if (*(short *)(iVar3 + 0x168) == 0) {
-    Scr_ParamError(1,0xffffffff82079778);
+  if (pgVar1->model == 0) {
+    Scr_ParamError(1,"cannot play fx on entity with no model");
   }
-  iVar4 = SV_DObjGetBoneIndex(iVar3,param_3);
-  if (iVar4 < 0) {
-    SV_DObjDumpInfo(iVar3);
-    G_ModelName(*(undefined2 *)(iVar3 + 0x168));
-    uVar1 = SL_ConvertToString();
-    uVar2 = SL_ConvertToString(param_3);
-    uVar1 = va(0xffffffff82079744,uVar2,uVar1);
-    Scr_ParamError(2,uVar1);
+  iVar3 = SV_DObjGetBoneIndex(pgVar1,param_3);
+  if (iVar3 < 0) {
+    SV_DObjDumpInfo(pgVar1);
+    uVar4 = G_ModelName((uint)pgVar1->model);
+    SL_ConvertToString(uVar4);
+    SL_ConvertToString(param_3);
+    pcVar2 = va("tag \'%s\' does not exist on entity with model \'%s\'");
+    Scr_ParamError(2,pcVar2);
   }
-  uVar1 = SL_ConvertToString(param_3);
-  uVar1 = va(0xffffffff8207973c,param_2,uVar1);
-  uVar1 = G_FindConfigstringIndex(uVar1,0xaa4,0x100,1,0);
-  if (((int)uVar1 < 1) || (0xff < (int)uVar1)) {
-    MyAssertHandler(0xffffffff82076e74,0x264f,0,0xffffffff82000f98,0xffffffff82079710);
+  SL_ConvertToString(param_3);
+  pcVar2 = va("%03d%s");
+  uVar4 = G_FindConfigstringIndex(pcVar2,CS_EFFECT_TAGS,0x100,1,(char *)0x0);
+  if (((int)uVar4 < 1) || (0xff < (int)uVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x264f,0,
+                    "%s");
   }
-  G_AddEvent(iVar3,0x57,uVar1);
+  G_AddEvent(pgVar1,0x57,uVar4);
   __restgprlr_28();
   return;
 }
@@ -9601,39 +10716,42 @@ void Scr_PlayFxOnTagInternal(undefined8 param_1,undefined8 param_2,undefined8 pa
 
 // 82497CB0  Scr_PlayFxOnTagForClientsInternal  (game/g_scr_main.cpp:9838)
 
-void Scr_PlayFxOnTagForClientsInternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void Scr_PlayFxOnTagForClientsInternal(int param_1,gentity_s *param_2,int param_3,uint param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
+  char *pcVar1;
+  int iVar2;
+  uint uVar3;
   
-  uVar1 = __savegprlr_27();
-  if (((int)param_3 < 1) || (0xff < (int)param_3)) {
-    uVar2 = va(0xffffffff820797a0,param_3);
-    Scr_ParamError(0,uVar2);
+  __savegprlr_27(param_1);
+  if ((param_3 < 1) || (0xff < param_3)) {
+    pcVar1 = va("effect id %i is invalid\n");
+    Scr_ParamError(0,pcVar1);
   }
-  if (*(short *)((int)param_2 + 0x168) == 0) {
-    Scr_ParamError(1,0xffffffff82079778);
+  if (param_2->model == 0) {
+    Scr_ParamError(1,"cannot play fx on entity with no model");
   }
-  iVar4 = SV_DObjGetBoneIndex(param_2,param_4);
-  if (iVar4 < 0) {
+  iVar2 = SV_DObjGetBoneIndex(param_2,param_4);
+  if (iVar2 < 0) {
     SV_DObjDumpInfo(param_2);
-    G_ModelName(*(undefined2 *)((int)param_2 + 0x168));
-    uVar2 = SL_ConvertToString();
-    uVar3 = SL_ConvertToString(param_4);
-    uVar2 = va(0xffffffff82079744,uVar3,uVar2);
-    Scr_ParamError(2,uVar2);
+    uVar3 = G_ModelName((uint)param_2->model);
+    SL_ConvertToString(uVar3);
+    SL_ConvertToString(param_4);
+    pcVar1 = va("tag \'%s\' does not exist on entity with model \'%s\'");
+    Scr_ParamError(2,pcVar1);
   }
-  uVar2 = SL_ConvertToString(param_4);
-  uVar1 = va(0xffffffff820797bc,uVar1,param_3,uVar2);
-  uVar1 = G_FindConfigstringIndex(uVar1,0xaa4,0x100,1,0);
-  if (((int)uVar1 < 1) || (0xff < (int)uVar1)) {
-    MyAssertHandler(0xffffffff82076e74,0x2683,0,0xffffffff82000f98,0xffffffff82079710);
+  SL_ConvertToString(param_4);
+  pcVar1 = va("%08x%03d%s");
+  uVar3 = G_FindConfigstringIndex(pcVar1,CS_EFFECT_TAGS,0x100,1,(char *)0x0);
+  if (((int)uVar3 < 1) || (0xff < (int)uVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2683,0,
+                    "%s");
   }
-  G_AddEvent(param_2,0x59,uVar1);
+  G_AddEvent(param_2,0x59,uVar3);
   __restgprlr_27();
   return;
 }
@@ -9641,29 +10759,34 @@ void Scr_PlayFxOnTagForClientsInternal
 
 // 82497DF0  Scr_PlayFXOnTag  (game/g_scr_main.cpp:9902)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PlayFXOnTag(void)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  uint uVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  ulonglong uVar1;
   char *pcVar5;
   
   __savegprlr_29();
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 3) {
-    Scr_Error(0xffffffff8206e424);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 3) {
+    Scr_Error("Incorrect number of parameters");
   }
-  uVar1 = Scr_GetInt(0);
-  uVar2 = Scr_GetEntity(1);
-  uVar3 = Scr_GetConstLowercaseString(2);
-  pcVar5 = (char *)SL_ConvertToString();
-  pcVar5 = strchr(pcVar5,0x22);
-  if (pcVar5 != (char *)0x0) {
-    Scr_ParamError(2,0xffffffff820797c8);
+  iVar3 = Scr_GetInt(0);
+  pgVar4 = Scr_GetEntity(1);
+  uVar2 = Scr_GetConstLowercaseString(2);
+  pcVar5 = SL_ConvertToString(uVar2);
+  uVar1 = (ulonglong)(int)pcVar5;
+  strchr();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Scr_ParamError(2,"cannot use \" characters in tag names\n");
   }
-  Scr_PlayFxOnTagInternal(uVar2,uVar1,uVar3);
+  Scr_PlayFxOnTagInternal(pgVar4,iVar3,uVar2);
   __restgprlr_29();
   return;
 }
@@ -9671,53 +10794,59 @@ void Scr_PlayFXOnTag(void)
 
 // 82497E78  Scr_StopFXOnTag  (game/g_scr_main.cpp:9937)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void Scr_StopFXOnTag(void)
 
 {
-  int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char *pcVar6;
-  int iVar7;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
+  gentity_s *pgVar5;
+  ulonglong uVar1;
+  uint uVar6;
   
   __savegprlr_28();
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 != 3) {
-    Scr_Error(0xffffffff8206e424);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 3) {
+    Scr_Error("Incorrect number of parameters");
   }
-  uVar1 = Scr_GetInt(0);
-  if (((int)uVar1 < 1) || (0xff < (int)uVar1)) {
-    uVar2 = va(0xffffffff820797a0,uVar1);
-    Scr_ParamError(0,uVar2);
+  iVar3 = Scr_GetInt(0);
+  if ((iVar3 < 1) || (0xff < iVar3)) {
+    pcVar4 = va("effect id %i is invalid\n");
+    Scr_ParamError(0,pcVar4);
   }
-  iVar5 = Scr_GetEntity(1);
-  if (*(short *)(iVar5 + 0x168) == 0) {
-    Scr_ParamError(1,0xffffffff820797f0);
+  pgVar5 = Scr_GetEntity(1);
+  if (pgVar5->model == 0) {
+    Scr_ParamError(1,"cannot stop-fx-on-tag on entity with no model");
   }
   uVar2 = Scr_GetConstLowercaseString(2);
-  pcVar6 = (char *)SL_ConvertToString();
-  pcVar6 = strchr(pcVar6,0x22);
-  if (pcVar6 != (char *)0x0) {
-    Scr_ParamError(2,0xffffffff820797c8);
+  pcVar4 = SL_ConvertToString(uVar2);
+  uVar1 = (ulonglong)(int)pcVar4;
+  strchr();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Scr_ParamError(2,"cannot use \" characters in tag names\n");
   }
-  iVar7 = SV_DObjGetBoneIndex(iVar5,uVar2);
-  if (iVar7 < 0) {
-    SV_DObjDumpInfo(iVar5);
-    G_ModelName(*(undefined2 *)(iVar5 + 0x168));
-    uVar3 = SL_ConvertToString();
-    uVar4 = SL_ConvertToString(uVar2);
-    uVar3 = va(0xffffffff82079744,uVar4,uVar3);
-    Scr_ParamError(2,uVar3);
+  iVar3 = SV_DObjGetBoneIndex(pgVar5,uVar2);
+  if (iVar3 < 0) {
+    SV_DObjDumpInfo(pgVar5);
+    uVar6 = G_ModelName((uint)pgVar5->model);
+    SL_ConvertToString(uVar6);
+    SL_ConvertToString(uVar2);
+    pcVar4 = va("tag \'%s\' does not exist on entity with model \'%s\'");
+    Scr_ParamError(2,pcVar4);
   }
-  uVar2 = SL_ConvertToString(uVar2);
-  uVar1 = va(0xffffffff8207973c,uVar1,uVar2);
-  uVar1 = G_FindConfigstringIndex(uVar1,0xaa4,0x100,1,0);
-  if (((int)uVar1 < 1) || (0xff < (int)uVar1)) {
-    MyAssertHandler(0xffffffff82076e74,0x26f2,0,0xffffffff82000f98,0xffffffff82079710);
+  SL_ConvertToString(uVar2);
+  pcVar4 = va("%03d%s");
+  uVar2 = G_FindConfigstringIndex(pcVar4,CS_EFFECT_TAGS,0x100,1,(char *)0x0);
+  if (((int)uVar2 < 1) || (0xff < (int)uVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x26f2,0,
+                    "%s");
   }
-  G_AddEvent(iVar5,0x58,uVar1);
+  G_AddEvent(pgVar5,0x58,uVar2);
   __restgprlr_28();
   return;
 }
@@ -9725,91 +10854,97 @@ void Scr_StopFXOnTag(void)
 
 // 8249D238  Scr_PlayFXOnTagForClients  (game/g_scr_main.cpp:9989)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PlayFXOnTagForClients(void)
 
 {
+  uint uVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  ulonglong uVar1;
+  int iVar6;
   uint uVar7;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char *pcVar8;
-  int iVar9;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  uint *puVar10;
-  undefined4 *puVar11;
-  uint uVar12;
+  scr_entref_t sVar8;
+  gentity_s *pgVar9;
+  uint uVar10;
+  uint *puVar11;
   uint local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8 [2];
-  undefined4 local_b0 [44];
+  uint local_bc;
+  uint local_b8 [2];
+  uint local_b0 [44];
+  char *pcVar5;
   
   __savegprlr_21();
-  uVar7 = Scr_GetNumParam();
-  if (uVar7 < 4) {
-    Scr_Error(0xffffffff8206e424);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 < 4) {
+    Scr_Error("Incorrect number of parameters");
   }
-  uVar1 = Scr_GetInt(0);
-  uVar2 = Scr_GetEntity(1);
-  uVar3 = Scr_GetConstLowercaseString(2);
-  pcVar8 = (char *)SL_ConvertToString();
-  pcVar8 = strchr(pcVar8,0x22);
-  if (pcVar8 != (char *)0x0) {
-    Scr_ParamError(2,0xffffffff820797c8);
+  iVar3 = Scr_GetInt(0);
+  pgVar4 = Scr_GetEntity(1);
+  uVar2 = Scr_GetConstLowercaseString(2);
+  pcVar5 = SL_ConvertToString(uVar2);
+  uVar1 = (ulonglong)(int)pcVar5;
+  strchr();
+  if ((uVar1 & 0xffffffff) != 0) {
+    Scr_ParamError(2,"cannot use \" characters in tag names\n");
   }
-  iVar9 = Scr_GetPointerType(3);
-  uVar7 = 0;
-  if (iVar9 == 0x17) {
-    uVar4 = GScr_GetArrayObject(3);
-    uVar5 = GetArraySize();
-    local_c0 = (uint)uVar5;
-    if (0x12 < (uVar5 & 0xffffffff)) {
-      uVar6 = va(0xffffffff8207b2e8,uVar5,0x12);
-      Scr_ParamError(3,uVar6);
+  iVar6 = Scr_GetPointerType(3);
+  uVar10 = 0;
+  if (iVar6 == 0x17) {
+    uVar7 = GScr_GetArrayObject(3);
+    local_c0 = GetArraySize(uVar7);
+    if (0x12 < local_c0) {
+      pcVar5 = va("array is too large (%d > %d)");
+      Scr_ParamError(3,pcVar5);
     }
-    iVar9 = Scr_GetEntityArray(uVar4,0x12,local_b0,&local_c0,local_b8,&local_bc);
-    if (iVar9 == 0) {
-      uVar4 = Scr_GetNameForType(local_bc);
-      uVar4 = va(0xffffffff8207b2b8,local_b8[0],uVar4);
-      Scr_ParamError(3,uVar4);
+    iVar6 = Scr_GetEntityArray(uVar7,0x12,local_b0,&local_c0,local_b8,&local_bc);
+    if (iVar6 == 0) {
+      Scr_GetNameForType(local_bc);
+      pcVar5 = va("element %i of array: type %s is not an entity");
+      Scr_ParamError(3,pcVar5);
     }
-    uVar12 = 0;
+    uVar7 = 0;
     if (local_c0 != 0) {
       puVar11 = local_b0;
       do {
-        Scr_GetEntityIdRef(*puVar11);
-        puVar10 = (uint *)GetEntity();
-        if (puVar10[0x56] == 0) {
-          va(0xffffffff8207b254,*puVar10);
-          Scr_Error();
+        sVar8 = Scr_GetEntityIdRef(*puVar11);
+        pgVar9 = GetEntity(sVar8);
+        if (pgVar9->client == (gclient_s *)0x0) {
+          pcVar5 = va("Entity number %i is not a client");
+          Scr_Error(pcVar5);
         }
-        if (0x11 < *puVar10) {
-          MyAssertHandler(0xffffffff82076e74,0x2734,0,0xffffffff8207b278,*puVar10,0x12);
+        if (0x11 < (uint)(pgVar9->s).number) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                          0x2734,0,
+                          "player->s.number doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        uVar12 = uVar12 + 1;
+        uVar7 = uVar7 + 1;
         puVar11 = puVar11 + 1;
-        uVar7 = 1 << (*puVar10 & 0x3f) | uVar7;
-      } while (uVar12 < local_c0);
+        uVar10 = 1 << ((pgVar9->s).number & 0x3fU) | uVar10;
+      } while (uVar7 < local_c0);
     }
   }
-  else if (iVar9 == 0x16) {
-    puVar10 = (uint *)Scr_GetEntity();
-    if (puVar10[0x56] == 0) {
-      uVar4 = va(0xffffffff8207b254,*puVar10);
-      Scr_ParamError(3,uVar4);
+  else if (iVar6 == 0x16) {
+    pgVar9 = Scr_GetEntity(3);
+    if (pgVar9->client == (gclient_s *)0x0) {
+      pcVar5 = va("Entity number %i is not a client");
+      Scr_ParamError(3,pcVar5);
     }
-    if (0x11 < *puVar10) {
-      MyAssertHandler(0xffffffff82076e74,0x273e,0,0xffffffff8207b278,*puVar10,0x12);
+    if (0x11 < (uint)(pgVar9->s).number) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x273e,
+                      0,"player->s.number doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    uVar7 = 1 << (*puVar10 & 0x3f);
+    uVar10 = 1 << ((pgVar9->s).number & 0x3fU);
   }
   else {
-    uVar4 = Scr_GetTypeName(3);
-    uVar4 = va(0xffffffff8207b218,uVar4);
-    Scr_ParamError(3,uVar4);
+    Scr_GetTypeName(3);
+    pcVar5 = va("Parameter (%s) must be either \'array\' or player \'entity\'\n");
+    Scr_ParamError(3,pcVar5);
   }
-  Scr_PlayFxOnTagForClientsInternal(uVar7,uVar2,uVar1,uVar3);
+  Scr_PlayFxOnTagForClientsInternal(uVar10,pgVar4,iVar3,uVar2);
   __restgprlr_21();
   return;
 }
@@ -9817,769 +10952,250 @@ void Scr_PlayFXOnTagForClients(void)
 
 // 82498000  Scr_PhysicsExplosionSphere  (game/g_scr_main.cpp:10072)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PhysicsExplosionSphere(void)
 
 {
-  int iVar1;
-  double dVar2;
-  undefined1 auStack_30 [24];
+  uint uVar1;
+  gentity_s *pgVar2;
+  undefined1 uVar3;
+  float *in_r5;
+  double dVar4;
+  float fVar5;
+  float fVar6;
+  float afStack_30 [6];
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 4) {
-    Scr_Error(0xffffffff8206e424);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 4) {
+    Scr_Error("Incorrect number of parameters");
   }
-  Scr_GetVector(0,auStack_30);
-  iVar1 = G_TempEntity(auStack_30,0x5a);
-  *(undefined4 *)(iVar1 + 0xd8) = 0;
-  dVar2 = (double)Scr_GetFloat(1);
-  *(float *)(iVar1 + 0x58) = (float)dVar2;
-  dVar2 = (double)Scr_GetFloat(2);
-  *(float *)(iVar1 + 0x54) = (float)dVar2;
-  dVar2 = 0.0;
-  if (*(float *)(iVar1 + 0x58) < 0.0) {
-    Scr_ParamError(1,0xffffffff8207984c);
+  Scr_GetVector(0,afStack_30);
+  uVar3 = 0x5a;
+  pgVar2 = G_TempEntity(afStack_30,0x5a);
+  (pgVar2->s).un1.eventParm2 = 0;
+  fVar5 = Scr_GetFloat(1);
+  (pgVar2->s).lerp.u.turret.gunAngles[1] = fVar5;
+  fVar6 = Scr_GetFloat(2);
+  fVar5 = (pgVar2->s).lerp.u.turret.gunAngles[1];
+  (pgVar2->s).lerp.u.turret.gunAngles[0] = fVar6;
+  dVar4 = 0.0;
+  if (fVar5 < 0.0) {
+    uVar3 = 0x4c;
+    Scr_ParamError(1,"Radius is negative");
   }
-  if ((double)*(float *)(iVar1 + 0x54) < dVar2) {
-    Scr_ParamError(2,0xffffffff8207984c);
+  if ((double)(pgVar2->s).lerp.u.turret.gunAngles[0] < dVar4) {
+    uVar3 = 0x4c;
+    Scr_ParamError(2,"Radius is negative");
   }
-  if (*(float *)(iVar1 + 0x58) < *(float *)(iVar1 + 0x54)) {
-    Scr_Error(0xffffffff82079820);
+  if ((pgVar2->s).lerp.u.turret.gunAngles[1] < (pgVar2->s).lerp.u.turret.gunAngles[0]) {
+    Scr_Error("Inner radius is outside the outer radius");
   }
-  dVar2 = (double)Scr_GetFloat(3);
-  *(float *)(iVar1 + 0x5c) = (float)dVar2;
+  fVar5 = Scr_GetFloat(3);
+  (pgVar2->s).lerp.u.turret.gunAngles[2] = fVar5;
   Vehicle_ExplosionEvent
-            ((double)*(float *)(iVar1 + 0x54),(double)*(float *)(iVar1 + 0x58),dVar2,auStack_30);
+            (afStack_30,(pgVar2->s).lerp.u.turret.gunAngles[0],
+             (pgVar2->s).lerp.u.turret.gunAngles[1],(bool)uVar3,fVar5,in_r5);
   return;
 }
 
 
 // 82498110  Scr_PhysicsRadiusJolt  (game/g_scr_main.cpp:10113)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PhysicsRadiusJolt(void)
 
 {
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  undefined1 auStack_38 [32];
+  uint uVar1;
+  gentity_s *pgVar2;
+  float *pfVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float fVar9;
+  float afStack_38 [8];
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 4) {
-    Scr_Error(0xffffffff8206e424);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 4) {
+    Scr_Error("Incorrect number of parameters");
   }
-  Scr_GetVector(0,auStack_38);
-  iVar1 = G_TempEntity(auStack_38,0x5c);
-  *(undefined4 *)(iVar1 + 0xd8) = 0;
-  dVar2 = (double)Scr_GetFloat(1);
-  dVar4 = 0.5;
-  dVar2 = floor((double)(float)(dVar2 + 0.5));
-  dVar3 = (double)(longlong)(int)dVar2;
-  dVar2 = (double)Scr_GetFloat(2);
-  dVar2 = floor((double)(float)(dVar2 + dVar4));
-  *(float *)(iVar1 + 0x58) = (float)dVar3;
-  dVar4 = 0.0;
-  *(float *)(iVar1 + 0x54) = (float)(longlong)(int)dVar2;
-  if (dVar3 < 0.0) {
-    Scr_ParamError(1,0xffffffff8207984c);
+  Scr_GetVector(0,afStack_38);
+  pgVar2 = G_TempEntity(afStack_38,0x5c);
+  (pgVar2->s).un1.eventParm2 = 0;
+  fVar9 = Scr_GetFloat(1);
+  dVar8 = 0.5;
+  dVar6 = floor((double)(fVar9 + 0.5));
+  dVar7 = (double)(longlong)(int)dVar6;
+  fVar9 = Scr_GetFloat(2);
+  dVar6 = floor((double)(float)((double)fVar9 + dVar8));
+  (pgVar2->s).lerp.u.turret.gunAngles[1] = (float)dVar7;
+  dVar8 = 0.0;
+  pfVar5 = (float *)(int)dVar6;
+  lVar4 = (longlong)(int)pfVar5;
+  (pgVar2->s).lerp.u.turret.gunAngles[0] = (float)lVar4;
+  if (dVar7 < 0.0) {
+    Scr_ParamError(1,"Radius is negative");
+    pfVar5 = (float *)lVar4;
   }
-  if ((double)*(float *)(iVar1 + 0x54) < dVar4) {
-    Scr_ParamError(2,0xffffffff8207984c);
+  if ((double)(pgVar2->s).lerp.u.turret.gunAngles[0] < dVar8) {
+    Scr_ParamError(2,"Radius is negative");
   }
-  if (*(float *)(iVar1 + 0x58) < *(float *)(iVar1 + 0x54)) {
-    Scr_Error(0xffffffff82079820);
+  if ((pgVar2->s).lerp.u.turret.gunAngles[1] < (pgVar2->s).lerp.u.turret.gunAngles[0]) {
+    Scr_Error("Inner radius is outside the outer radius");
   }
-  Scr_GetVector(3,(undefined4 *)(iVar1 + 0x5c));
-  if (((*(float *)(iVar1 + 0x5c) == 0.0) && (*(float *)(iVar1 + 0x60) == 0.0)) &&
-     (*(float *)(iVar1 + 100) == 0.0)) {
-    *(undefined4 *)(iVar1 + 0x5c) = 0x800000;
+  lVar4 = (longlong)(int)pgVar2 + 0x5c;
+  pfVar3 = (float *)lVar4;
+  Scr_GetVector(3,pfVar3);
+  if ((((pgVar2->s).lerp.u.turret.gunAngles[2] == 0.0) &&
+      ((pgVar2->s).lerp.u.primaryLight.cosHalfFovOuter == 0.0)) &&
+     ((pgVar2->s).lerp.u.primaryLight.cosHalfFovInner == 0.0)) {
+    *pfVar3 = 1.1754944e-38;
   }
   Vehicle_ExplosionEvent
-            ((double)*(float *)(iVar1 + 0x54),(double)*(float *)(iVar1 + 0x58),0x3ff0000000000000,
-             auStack_38);
+            (afStack_38,(pgVar2->s).lerp.u.turret.gunAngles[0],
+             (pgVar2->s).lerp.u.turret.gunAngles[1],SUB81(lVar4,0),1.0,pfVar5);
   return;
 }
 
 
 // 824982D0  Scr_PhysicsRadiusJitter  (game/g_scr_main.cpp:10169)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Scr_PhysicsRadiusJitter(void)
 
 {
   uint uVar1;
-  int iVar2;
+  gentity_s *pgVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  undefined1 auStack_38 [32];
+  float fVar6;
+  float fVar7;
+  float afStack_38 [8];
   
   uVar1 = Scr_GetNumParam();
   if ((uVar1 < 5) || (uVar1 = Scr_GetNumParam(), 6 < uVar1)) {
-    Scr_Error(0xffffffff8206e424);
+    Scr_Error("Incorrect number of parameters");
   }
-  Scr_GetVector(0,auStack_38);
-  iVar2 = G_TempEntity(auStack_38,0x5e);
-  *(undefined4 *)(iVar2 + 0xd8) = 0;
-  dVar3 = (double)Scr_GetFloat(1);
+  Scr_GetVector(0,afStack_38);
+  pgVar2 = G_TempEntity(afStack_38,0x5e);
+  (pgVar2->s).un1.eventParm2 = 0;
+  fVar6 = Scr_GetFloat(1);
   dVar5 = 0.5;
-  dVar3 = floor((double)(float)(dVar3 + 0.5));
+  dVar3 = floor((double)(fVar6 + 0.5));
   dVar4 = (double)(longlong)(int)dVar3;
-  dVar3 = (double)Scr_GetFloat(2);
-  dVar3 = floor((double)(float)(dVar3 + dVar5));
-  *(float *)(iVar2 + 0x58) = (float)dVar4;
+  fVar6 = Scr_GetFloat(2);
+  dVar3 = floor((double)(float)((double)fVar6 + dVar5));
+  (pgVar2->s).lerp.u.turret.gunAngles[1] = (float)dVar4;
   dVar5 = 0.0;
-  *(float *)(iVar2 + 0x54) = (float)(longlong)(int)dVar3;
+  (pgVar2->s).lerp.u.turret.gunAngles[0] = (float)(longlong)(int)dVar3;
   if (dVar4 < 0.0) {
-    Scr_ParamError(1,0xffffffff8207984c);
+    Scr_ParamError(1,"Radius is negative");
   }
-  if ((double)*(float *)(iVar2 + 0x54) < dVar5) {
-    Scr_ParamError(2,0xffffffff8207984c);
+  if ((double)(pgVar2->s).lerp.u.turret.gunAngles[0] < dVar5) {
+    Scr_ParamError(2,"Radius is negative");
   }
-  if (*(float *)(iVar2 + 0x58) < *(float *)(iVar2 + 0x54)) {
-    Scr_Error(0xffffffff82079820);
+  if ((pgVar2->s).lerp.u.turret.gunAngles[1] < (pgVar2->s).lerp.u.turret.gunAngles[0]) {
+    Scr_Error("Inner radius is outside the outer radius");
   }
-  dVar3 = (double)Scr_GetFloat(3);
-  *(float *)(iVar2 + 0x5c) = (float)dVar3;
-  dVar3 = (double)Scr_GetFloat(4);
-  *(float *)(iVar2 + 0x60) = (float)dVar3;
-  if (dVar3 < (double)*(float *)(iVar2 + 0x5c)) {
-    Scr_Error(0xffffffff82079860);
+  fVar6 = Scr_GetFloat(3);
+  (pgVar2->s).lerp.u.turret.gunAngles[2] = fVar6;
+  fVar7 = Scr_GetFloat(4);
+  fVar6 = (pgVar2->s).lerp.u.turret.gunAngles[2];
+  (pgVar2->s).lerp.u.primaryLight.cosHalfFovOuter = fVar7;
+  if (fVar7 < fVar6) {
+    Scr_Error("Maximum jitter is less than minimum jitter");
   }
   Phys_AddJitterRegion
-            ((double)*(float *)(iVar2 + 0x54),(double)*(float *)(iVar2 + 0x58),
-             (double)*(float *)(iVar2 + 0x5c),(double)*(float *)(iVar2 + 0x60),3,auStack_38);
+            (PHYS_WORLD_FIRST_SERVER_WORLD,afStack_38,(pgVar2->s).lerp.u.turret.gunAngles[0],
+             (pgVar2->s).lerp.u.turret.gunAngles[1],(pgVar2->s).lerp.u.turret.gunAngles[2],
+             (pgVar2->s).lerp.u.primaryLight.cosHalfFovOuter);
   return;
 }
 
 
 // 82498470  Scr_PhysicsExplosionCylinder  (game/g_scr_main.cpp:10232)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_PhysicsExplosionCylinder(void)
 
 {
-  int iVar1;
-  char cVar2;
-  double dVar3;
+  uint uVar1;
+  bool bVar4;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  undefined1 uVar5;
+  float *in_r5;
+  double dVar6;
+  float fVar7;
+  float fVar8;
   float local_30;
   float local_2c;
-  float local_28;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 4) {
-    Scr_Error(0xffffffff8206e424);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 4) {
+    Scr_Error("Incorrect number of parameters");
   }
   Scr_GetVector(0,&local_30);
-  cVar2 = SV_CheckOriginIsInPlayableBounds(&local_30);
-  if (cVar2 == '\0') {
-    va(0xffffffff8207988c,(double)local_30,(double)local_2c,(double)local_28);
-    Scr_Error();
+  bVar4 = SV_CheckOriginIsInPlayableBounds(&local_30);
+  if (!bVar4) {
+    in_r5 = SUB84((double)local_2c,0);
+    pcVar2 = va("Cylinder origin is outside playable bounds - (%f, %f, %f)");
+    Scr_Error(pcVar2);
   }
-  iVar1 = G_TempEntity(&local_30,0x5b);
-  *(undefined4 *)(iVar1 + 0xd8) = 0;
-  dVar3 = (double)Scr_GetFloat(1);
-  *(float *)(iVar1 + 0x58) = (float)dVar3;
-  dVar3 = (double)Scr_GetFloat(2);
-  *(float *)(iVar1 + 0x54) = (float)dVar3;
-  dVar3 = 0.0;
-  if (*(float *)(iVar1 + 0x58) < 0.0) {
-    Scr_ParamError(1,0xffffffff8207984c);
+  uVar5 = 0x5b;
+  pgVar3 = G_TempEntity(&local_30,0x5b);
+  (pgVar3->s).un1.eventParm2 = 0;
+  fVar7 = Scr_GetFloat(1);
+  (pgVar3->s).lerp.u.turret.gunAngles[1] = fVar7;
+  fVar8 = Scr_GetFloat(2);
+  fVar7 = (pgVar3->s).lerp.u.turret.gunAngles[1];
+  (pgVar3->s).lerp.u.turret.gunAngles[0] = fVar8;
+  dVar6 = 0.0;
+  if (fVar7 < 0.0) {
+    uVar5 = 0x4c;
+    Scr_ParamError(1,"Radius is negative");
   }
-  if ((double)*(float *)(iVar1 + 0x54) < dVar3) {
-    Scr_ParamError(2,0xffffffff8207984c);
+  if ((double)(pgVar3->s).lerp.u.turret.gunAngles[0] < dVar6) {
+    uVar5 = 0x4c;
+    Scr_ParamError(2,"Radius is negative");
   }
-  if (*(float *)(iVar1 + 0x58) < *(float *)(iVar1 + 0x54)) {
-    Scr_Error(0xffffffff82079820);
+  if ((pgVar3->s).lerp.u.turret.gunAngles[1] < (pgVar3->s).lerp.u.turret.gunAngles[0]) {
+    Scr_Error("Inner radius is outside the outer radius");
   }
-  dVar3 = (double)Scr_GetFloat(3);
-  *(float *)(iVar1 + 0x5c) = (float)dVar3;
+  fVar7 = Scr_GetFloat(3);
+  (pgVar3->s).lerp.u.turret.gunAngles[2] = fVar7;
   Vehicle_ExplosionEvent
-            ((double)*(float *)(iVar1 + 0x54),(double)*(float *)(iVar1 + 0x58),dVar3,&local_30);
+            (&local_30,(pgVar3->s).lerp.u.turret.gunAngles[0],(pgVar3->s).lerp.u.turret.gunAngles[1]
+             ,(bool)uVar5,fVar7,in_r5);
   return;
 }
 
 
 // 824985C8  Scr_SetFog  (game/g_scr_main.cpp:10266)
 
-void Scr_SetFog(undefined8 param_1,undefined8 param_2,double param_3,double param_4,double param_5,
-               undefined8 param_6,double param_7,double param_8,double param_9,double param_10,
-               double param_11,double param_12,double param_13)
+void Scr_SetFog(char *param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,bool param_9,float param_10,float param_11,float param_12
+               ,float *param_13,float param_14,float param_15,float param_16,int param_17)
 
 {
-  undefined8 uVar1;
-  double extraout_f1;
+  char *pcVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
-  char in_stack_00000057;
-  undefined4 in_stack_00000094;
-  
-  uVar1 = __savefpr_17();
-  dVar4 = 0.0;
-  dVar3 = extraout_f1;
-  if (extraout_f1 < 0.0) {
-    va(0xffffffff82079a70,uVar1);
-    Scr_Error();
-  }
-  dVar2 = 1.0;
-  if ((((param_3 < dVar4) || (1.0 < param_3)) || (param_4 < dVar4)) ||
-     (((1.0 < param_4 || (param_5 < dVar4)) || (1.0 < param_5)))) {
-    va(0xffffffff82079a30,uVar1);
-    Scr_Error();
-  }
-  if (param_7 < dVar4) {
-    va(0xffffffff82079a00,uVar1);
-    Scr_Error();
-  }
-  if (in_stack_00000057 != '\0') {
-    if (((param_8 < dVar4) || (dVar2 < param_8)) ||
-       ((param_9 < dVar4 || (((dVar2 < param_9 || (param_10 < dVar4)) || (dVar2 < param_10)))))) {
-      va(0xffffffff820799b8,uVar1);
-      Scr_Error();
-    }
-    if (((param_11 < dVar4) || (180.0 < param_11)) || ((param_12 < dVar4 || (180.0 < param_12)))) {
-      va(0xffffffff82079984,uVar1);
-      Scr_Error();
-    }
-    if (param_12 <= param_11) {
-      va(0xffffffff82079950,uVar1);
-      Scr_Error();
-    }
-    if (param_13 < dVar4) {
-      va(0xffffffff82079918,uVar1);
-      Scr_Error();
-    }
-    if (in_stack_00000057 != '\0') {
-      uVar1 = va(dVar3,param_2,param_3,param_4,param_5,param_6,(double)(float)(param_7 * 1000.0),
-                 param_8,param_9,param_10,0xffffffff820798e4,dVar3,param_2,param_3,param_4,param_5,
-                 param_6,(double)(float)(param_7 * 1000.0));
-      goto LAB_82498888;
-    }
-  }
-  uVar1 = va(dVar3,param_2,param_3,param_4,param_5,param_6,0xffffffff820798c8,dVar3,param_2,param_3,
-             param_4,param_5,param_6,(double)(float)(param_7 * 1000.0));
-LAB_82498888:
-  G_setfog(uVar1,in_stack_00000094);
-  __restfpr_17();
-  return;
-}
-
-
-// 824988B0  Scr_SetExponentialFog  (game/g_scr_main.cpp:10328)
-
-void Scr_SetExponentialFog(void)
-
-{
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  double dVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float local_90;
-  float local_8c;
-  float local_88;
-  
-  __savefpr_18();
-  iVar1 = Scr_GetNumParam();
-  if ((iVar1 != 7) && (iVar1 = Scr_GetNumParam(), iVar1 != 0xe)) {
-    Scr_Error(0xffffffff82079b68);
-  }
-  dVar2 = (double)Scr_GetFloat(0);
-  dVar15 = 0.0;
-  if (dVar2 < 0.0) {
-    Scr_Error(0xffffffff82079b30);
-  }
-  dVar3 = (double)Scr_GetFloat(1);
-  if (dVar3 <= dVar15) {
-    Scr_Error(0xffffffff82079b00);
-  }
-  dVar12 = (double)(float)(0.6931471824645996 / dVar3);
-  uVar4 = Scr_GetFloat(2);
-  uVar5 = Scr_GetFloat(3);
-  uVar6 = Scr_GetFloat(4);
-  dVar7 = (double)Scr_GetFloat(5);
-  dVar13 = 1.0;
-  if ((dVar7 < dVar15) || (1.0 < dVar7)) {
-    Scr_Error(0xffffffff82079ad0);
-  }
-  uVar8 = Scr_GetFloat(6);
-  Dvar_SetColor(uVar4,uVar5,uVar6,dVar13,DAT_8353feb8);
-  Dvar_SetFloat(dVar7,DAT_8353ff6c);
-  Dvar_SetFloat(dVar2,DAT_8353ff60);
-  Dvar_SetFloat(dVar3,DAT_8353fef4);
-  if ((dVar12 <= dVar15) || (dVar13 <= dVar12)) {
-    MyAssertHandler(dVar12,0xffffffff82076e74,0x2887,0,0xffffffff82079a9c,0xffffffff82079ab0,dVar12)
-    ;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 == 0xe) {
-    uVar9 = Scr_GetFloat(7);
-    uVar10 = Scr_GetFloat(8);
-    uVar11 = Scr_GetFloat(9);
-    Scr_GetVector(10,&local_90);
-    dVar15 = (double)Scr_GetFloat(0xb);
-    dVar3 = (double)Scr_GetFloat(0xc);
-    dVar14 = dVar13;
-    dVar13 = (double)Scr_GetFloat(0xd);
-    Dvar_SetBool(DAT_8353ff70,1);
-    Dvar_SetColor(uVar9,uVar10,uVar11,dVar14,DAT_8353ff4c);
-    Dvar_SetVec3((double)local_90,(double)local_8c,(double)local_88,DAT_8337361c);
-    Dvar_SetFloat(dVar15,DAT_83373624);
-    Dvar_SetFloat(dVar3,DAT_8353ff7c);
-    Dvar_SetFloat(dVar13,DAT_8353ff8c);
-  }
-  else {
-    local_90 = (float)dVar15;
-    local_8c = (float)dVar15;
-    local_88 = (float)dVar15;
-    uVar11 = uVar6;
-    uVar10 = uVar5;
-    uVar9 = uVar4;
-    dVar3 = dVar15;
-    Dvar_SetBool(DAT_8353ff70,0);
-  }
-  Scr_SetFog(dVar2,dVar12,uVar4,uVar5,uVar6,dVar7,uVar8,uVar9,uVar10,uVar11,dVar15,dVar3,dVar13,
-             0xffffffff82079a90);
-  __restfpr_18();
-  return;
-}
-
-
-// 82498BB0  Scr_PlayerSetExponentialFog  (game/g_scr_main.cpp:10441)
-
-void Scr_PlayerSetExponentialFog(void)
-
-{
-  int iVar1;
-  double dVar2;
-  double dVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  double dVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  undefined8 uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float local_a0;
-  float local_9c;
-  float local_98;
-  
-  __savefpr_18();
-  iVar1 = GetPlayerEntity();
-  if ((iVar1 == 0) || (*(int *)(iVar1 + 0x158) == 0)) {
-    Scr_Error(0xffffffff82079c54);
-  }
-  iVar1 = Scr_GetNumParam();
-  if ((iVar1 != 7) && (iVar1 = Scr_GetNumParam(), iVar1 != 0xe)) {
-    Scr_Error(0xffffffff82079b68);
-  }
-  dVar2 = (double)Scr_GetFloat(0);
-  dVar15 = 0.0;
-  if (dVar2 < 0.0) {
-    Scr_Error(0xffffffff82079b30);
-  }
-  dVar3 = (double)Scr_GetFloat(1);
-  if (dVar3 <= dVar15) {
-    Scr_Error(0xffffffff82079b00);
-  }
-  dVar12 = (double)(float)(0.6931471824645996 / dVar3);
-  uVar4 = Scr_GetFloat(2);
-  uVar5 = Scr_GetFloat(3);
-  uVar6 = Scr_GetFloat(4);
-  dVar7 = (double)Scr_GetFloat(5);
-  dVar13 = 1.0;
-  if ((dVar7 < dVar15) || (1.0 < dVar7)) {
-    Scr_Error(0xffffffff82079ad0);
-  }
-  uVar8 = Scr_GetFloat(6);
-  Dvar_SetColor(uVar4,uVar5,uVar6,dVar13,DAT_8353feb8);
-  Dvar_SetFloat(dVar7,DAT_8353ff6c);
-  Dvar_SetFloat(dVar2,DAT_8353ff60);
-  Dvar_SetFloat(dVar3,DAT_8353fef4);
-  if ((dVar12 <= dVar15) || (dVar13 <= dVar12)) {
-    MyAssertHandler(dVar12,0xffffffff82076e74,0x28fe,0,0xffffffff82079a9c,0xffffffff82079ab0,dVar12)
-    ;
-  }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 == 0xe) {
-    uVar9 = Scr_GetFloat(7);
-    uVar10 = Scr_GetFloat(8);
-    uVar11 = Scr_GetFloat(9);
-    Scr_GetVector(10,&local_a0);
-    dVar15 = (double)Scr_GetFloat(0xb);
-    dVar3 = (double)Scr_GetFloat(0xc);
-    dVar14 = dVar13;
-    dVar13 = (double)Scr_GetFloat(0xd);
-    Dvar_SetBool(DAT_8353ff70,1);
-    Dvar_SetColor(uVar9,uVar10,uVar11,dVar14,DAT_8353ff4c);
-    Dvar_SetVec3((double)local_a0,(double)local_9c,(double)local_98,DAT_8337361c);
-    Dvar_SetFloat(dVar15,DAT_83373624);
-    Dvar_SetFloat(dVar3,DAT_8353ff7c);
-    Dvar_SetFloat(dVar13,DAT_8353ff8c);
-  }
-  else {
-    local_a0 = (float)dVar15;
-    local_9c = (float)dVar15;
-    local_98 = (float)dVar15;
-    uVar11 = uVar6;
-    uVar10 = uVar5;
-    uVar9 = uVar4;
-    dVar3 = dVar15;
-    Dvar_SetBool(DAT_8353ff70,0);
-  }
-  Scr_SetFog(dVar2,dVar12,uVar4,uVar5,uVar6,dVar7,uVar8,uVar9,uVar10,uVar11,dVar15,dVar3,dVar13,
-             0xffffffff82079a90);
-  __restfpr_18();
-  return;
-}
-
-
-// 82498EE0  GScr_GetNumParts  (game/g_scr_main.cpp:10542)
-
-void GScr_GetNumParts(void)
-
-{
-  int iVar1;
-  
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 1) {
-    Scr_Error(0xffffffff82079c84);
-  }
-  Scr_GetString(0);
-  SV_XModelGet();
-  XModelNumBones();
-  Scr_AddInt();
-  return;
-}
-
-
-// 82498F28  GScr_GetPartName  (game/g_scr_main.cpp:10565)
-
-void GScr_GetPartName(void)
-
-{
-  short sVar1;
-  int iVar4;
-  undefined8 uVar2;
-  uint uVar5;
-  uint uVar6;
-  undefined8 uVar3;
-  
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 2) {
-    Scr_Error(0xffffffff82079ccc);
-  }
-  Scr_GetString(0);
-  uVar2 = SV_XModelGet();
-  uVar5 = Scr_GetInt(1);
-  uVar6 = XModelNumBones(uVar2);
-  if (uVar6 <= uVar5) {
-    uVar3 = va(0xffffffff82079cb0,uVar6 - 1);
-    Scr_ParamError(1,uVar3);
-  }
-  iVar4 = XModelBoneNames(uVar2);
-  sVar1 = *(short *)(iVar4 + uVar5 * 2);
-  if (sVar1 == 0) {
-    Scr_ParamError(0,0xffffffff82079ca4);
-  }
-  Scr_AddConstString(sVar1);
-  return;
-}
-
-
-// 82498FE8  Scr_TableLookupInternal  (game/g_scr_main.cpp:10591)
-
-void Scr_TableLookupInternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
-
-{
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 local_30 [12];
-  
-  uVar1 = __savegprlr_28();
-  StringTable_GetAsset(uVar1,local_30);
-  iVar2 = DB_IsXAssetDefault(0x26,uVar1);
-  if (iVar2 != 0) {
-    va(0xffffffff82079cf0,uVar1);
-    Scr_Error();
-  }
-  StringTable_Lookup(local_30[0],param_2,param_3,param_4);
-  __restgprlr_28();
-  return;
-}
-
-
-// 82499050  Scr_TableLookup  (game/g_scr_main.cpp:10621)
-
-void Scr_TableLookup(void)
-
-{
-  uint uVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar6;
-  undefined4 local_30 [12];
-  
-  __savegprlr_28();
-  uVar5 = Scr_GetNumParam();
-  if (uVar5 < 4) {
-    Scr_Error(0xffffffff82079d28);
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  uVar3 = Scr_GetString(2);
-  uVar4 = Scr_GetInt(3);
-  StringTable_GetAsset(uVar1,local_30);
-  iVar6 = DB_IsXAssetDefault(0x26,uVar1);
-  if (iVar6 != 0) {
-    va(0xffffffff82079cf0,uVar1);
-    Scr_Error();
-  }
-  StringTable_Lookup(local_30[0],uVar2,uVar3,uVar4);
-  Scr_AddString();
-  __restgprlr_28();
-  return;
-}
-
-
-// 824990F8  Scr_TableLookupIString  (game/g_scr_main.cpp:10667)
-
-void Scr_TableLookupIString(void)
-
-{
-  uint uVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar6;
-  undefined4 local_30 [12];
-  
-  __savegprlr_28();
-  uVar5 = Scr_GetNumParam();
-  if (uVar5 < 3) {
-    Scr_Error(0xffffffff82079d28);
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  uVar3 = Scr_GetString(2);
-  uVar4 = Scr_GetInt(3);
-  StringTable_GetAsset(uVar1,local_30);
-  iVar6 = DB_IsXAssetDefault(0x26,uVar1);
-  if (iVar6 != 0) {
-    va(0xffffffff82079cf0,uVar1);
-    Scr_Error();
-  }
-  StringTable_Lookup(local_30[0],uVar2,uVar3,uVar4);
-  Scr_AddIString();
-  __restgprlr_28();
-  return;
-}
-
-
-// 824991A0  Scr_TableLookupRowNum  (game/g_scr_main.cpp:10712)
-
-void Scr_TableLookupRowNum(void)
-
-{
-  uint uVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 local_30 [12];
-  
-  __savegprlr_29();
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 3) {
-    Scr_Error(0xffffffff82079d80);
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  uVar3 = Scr_GetString(2);
-  StringTable_GetAsset(uVar1,local_30);
-  StringTable_LookupRowNumForValue(local_30[0],uVar2,uVar3);
-  Scr_AddInt();
-  __restgprlr_29();
-  return;
-}
-
-
-// 82499210  Scr_TableLookupByRowInternal  (game/g_scr_main.cpp:10747)
-
-void Scr_TableLookupByRowInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  undefined4 local_20 [2];
-  
-  StringTable_GetAsset(param_1,local_20);
-  StringTable_GetColumnValueForRow(local_20[0],param_2,param_3);
-  return;
-}
-
-
-// 82499260  Scr_TableLookupByRow  (game/g_scr_main.cpp:10769)
-
-void Scr_TableLookupByRow(void)
-
-{
-  uint uVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 local_30 [12];
-  
-  __savegprlr_29();
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 3) {
-    Scr_Error(0xffffffff82079dc8);
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  uVar3 = Scr_GetInt(2);
-  StringTable_GetAsset(uVar1,local_30);
-  StringTable_GetColumnValueForRow(local_30[0],uVar2,uVar3);
-  Scr_AddString();
-  __restgprlr_29();
-  return;
-}
-
-
-// 824992D0  Scr_TableLookupIStringByRow  (game/g_scr_main.cpp:10812)
-
-void Scr_TableLookupIStringByRow(void)
-
-{
-  uint uVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 local_30 [12];
-  
-  __savegprlr_29();
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 3) {
-    Scr_Error(0xffffffff82079dc8);
-  }
-  uVar1 = Scr_GetString(0);
-  uVar2 = Scr_GetInt(1);
-  uVar3 = Scr_GetInt(2);
-  StringTable_GetAsset(uVar1,local_30);
-  StringTable_GetColumnValueForRow(local_30[0],uVar2,uVar3);
-  Scr_AddString();
-  __restgprlr_29();
-  return;
-}
-
-
-// 82499340  GScr_UpdateTagInternal  (game/g_scr_main.cpp:10846)
-
-void GScr_UpdateTagInternal(undefined8 param_1,ulonglong param_2,longlong param_3,int param_4)
-
-{
-  int *piVar1;
-  int *piVar4;
-  int iVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  
-  piVar4 = (int *)__savegprlr_27();
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x2a5f,0,0xffffffff82000f98,0xffffffff82002614);
-  }
-  piVar1 = (int *)param_3;
-  if (((*piVar4 != piVar1[1]) || (DAT_83580fac != *piVar1)) ||
-     ((param_2 & 0xffffffff) != (ulonglong)*(ushort *)(piVar1 + 2))) {
-    iVar5 = SV_DObjExists(piVar4);
-    if (iVar5 == 0) {
-      if (param_4 != 0) {
-        uVar2 = SL_ConvertToString(*(undefined2 *)((int)piVar4 + 0x172));
-        va(0xffffffff82079e54,uVar2);
-        Scr_ObjectError();
-      }
-      __restgprlr_27(0);
-      return;
-    }
-    iVar5 = G_DObjGetWorldTagMatrix(piVar4,param_2,param_3 + 0xc);
-    if (iVar5 == 0) {
-      if (param_4 != 0) {
-        SV_DObjDumpInfo(piVar4);
-        G_ModelName(*(undefined2 *)(piVar4 + 0x5a));
-        uVar2 = SL_ConvertToString();
-        uVar3 = SL_ConvertToString(param_2);
-        uVar2 = va(0xffffffff82079e10,uVar3,uVar2,0xffffffff820068af);
-        Scr_ParamError(0,uVar2);
-      }
-      __restgprlr_27(0);
-      return;
-    }
-    piVar1[1] = *piVar4;
-    *piVar1 = DAT_83580fac;
-    Scr_SetString(param_3 + 8,param_2);
-  }
-  __restgprlr_27(1);
-  return;
-}
-
-
-// 824994A0  GScr_GetTagOrigin  (game/g_scr_main.cpp:10904)
-
-void GScr_GetTagOrigin(void)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  
-  uVar1 = GetEntity();
-  uVar2 = Scr_GetConstLowercaseString(0);
-  GScr_UpdateTagInternal(uVar1,uVar2,0xffffffff83583310,1);
-  Scr_AddVector(0xffffffff83583340);
-  return;
-}
-
-
-// 82499500  GScr_GetTagAngles  (game/g_scr_main.cpp:10928)
-
-void GScr_GetTagAngles(void)
-
-{
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_30 [24];
-  
-  uVar1 = GetEntity();
-  uVar2 = Scr_GetConstLowercaseString(0);
-  GScr_UpdateTagInternal(uVar1,uVar2,0xffffffff83583310,1);
-  AxisToAngles(0xffffffff8358331c,auStack_30);
-  Scr_AddVector(auStack_30);
-  return;
-}
-
-
-// 82499570  GScr_SetDepthOfField  (game/g_scr_main.cpp:10960)
-
-void GScr_SetDepthOfField(void)
-
-{
-  int iVar2;
-  int iVar3;
-  undefined8 uVar1;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -10588,56 +11204,749 @@ void GScr_SetDepthOfField(void)
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
+  double dVar13;
+  char in_stack_00000057;
+  int in_stack_00000094;
   
-  __savefpr_25();
-  iVar2 = GetPlayerEntity();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 6) {
-    Scr_Error(0xffffffff82079fc0);
+  dVar12 = (double)param_16;
+  dVar9 = (double)param_12;
+  dVar11 = (double)param_15;
+  dVar10 = (double)param_14;
+  dVar8 = (double)param_11;
+  dVar5 = (double)param_6;
+  dVar6 = (double)param_8;
+  dVar7 = (double)param_10;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)__savefpr_17((double)param_2,param_1,param_9,param_13,param_17);
+  dVar13 = 0.0;
+  if (dVar2 < 0.0) {
+    pcVar1 = va("%s: near distance must be >= 0");
+    Scr_Error(pcVar1);
   }
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar5 = (double)Scr_GetFloat(1);
-  dVar6 = (double)Scr_GetFloat(2);
-  dVar7 = (double)Scr_GetFloat(3);
-  dVar8 = (double)Scr_GetFloat(4);
-  dVar9 = (double)Scr_GetFloat(5);
-  dVar11 = 0.0;
-  if (dVar4 < 0.0) {
-    Scr_ParamError(0,0xffffffff82079fa8);
+  dVar2 = 1.0;
+  if ((((dVar3 < dVar13) || (1.0 < dVar3)) || (dVar4 < dVar13)) ||
+     (((1.0 < dVar4 || (dVar5 < dVar13)) || (1.0 < dVar5)))) {
+    pcVar1 = va("%s: red/green/blue color components must be in the range [0, 1]");
+    Scr_Error(pcVar1);
   }
-  if (dVar5 < dVar11) {
-    Scr_ParamError(1,0xffffffff82079f90);
+  if (dVar6 < dVar13) {
+    pcVar1 = va("%s: transition time must be >= 0 seconds");
+    Scr_Error(pcVar1);
   }
-  if (dVar6 < dVar11) {
-    Scr_ParamError(2,0xffffffff82079f78);
+  if (in_stack_00000057 != '\0') {
+    if (((dVar7 < dVar13) || (dVar2 < dVar7)) ||
+       ((dVar8 < dVar13 || (((dVar2 < dVar8 || (dVar9 < dVar13)) || (dVar2 < dVar9)))))) {
+      pcVar1 = va("%s: sun fog red/green/blue color components must be in the range [0, 1]");
+      Scr_Error(pcVar1);
+    }
+    if (((dVar10 < dVar13) || (180.0 < dVar10)) || ((dVar11 < dVar13 || (180.0 < dVar11)))) {
+      pcVar1 = va("%s: sun begin/end fade must be in the range [0,180]");
+      Scr_Error(pcVar1);
+    }
+    if (dVar11 <= dVar10) {
+      pcVar1 = va("%s: sun begin fade must be less than sun end fade");
+      Scr_Error(pcVar1);
+    }
+    if (dVar12 < dVar13) {
+      pcVar1 = va("%s: sun fog scale must be greater than or equal to 0.0");
+      Scr_Error(pcVar1);
+    }
+    if (in_stack_00000057 != '\0') {
+      pcVar1 = va("%g %g %g %g %g %g %.0f 1 %g %g %g %g %g %g %g %g %g");
+      goto LAB_82498888;
+    }
   }
-  if (dVar7 < dVar11) {
-    Scr_ParamError(3,0xffffffff82079f60);
+  pcVar1 = va("%g %g %g %g %g %g %.0f 0");
+LAB_82498888:
+  G_setfog(pcVar1,in_stack_00000094);
+  __restfpr_17();
+  return;
+}
+
+
+// 824988B0  Scr_SetExponentialFog  (game/g_scr_main.cpp:10328)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void Scr_SetExponentialFog(void)
+
+{
+  uint uVar1;
+  undefined1 uVar2;
+  float *in_r5;
+  char *in_r6;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float fVar17;
+  float local_90;
+  float local_8c;
+  float local_88;
+  
+  __savefpr_18();
+  uVar1 = Scr_GetNumParam();
+  if ((uVar1 != 7) && (uVar1 = Scr_GetNumParam(), uVar1 != 0xe)) {
+    Scr_Error(
+             "Incorrect number of parameters\nUSAGE: setExpFog(<startDist>, <halfwayDist>, <red>, <green>, <blue>, <maxOpacity>, <transition time>, <sunRed>, <sunGreen>, <sunBlue>, <sunMaxOpacity>, <sunDir>, <sunBeginFadeAngle>, <sunEndFadeAngle> )\n"
+             );
   }
-  if ((dVar8 < 4.0) || (10.0 < dVar8)) {
-    uVar1 = va(0xffffffff82079f28,0x4010000000000000,0x4024000000000000);
-    Scr_ParamError(4,uVar1);
+  fVar17 = Scr_GetFloat(0);
+  dVar3 = (double)fVar17;
+  dVar16 = 0.0;
+  if (dVar3 < 0.0) {
+    Scr_Error("setExpFog: startDist must be greater or equal to 0");
   }
-  if ((dVar9 < dVar11) || (dVar8 < dVar9)) {
-    uVar1 = va(0xffffffff82079efc,0);
-    Scr_ParamError(5,uVar1);
+  fVar17 = Scr_GetFloat(1);
+  dVar4 = (double)fVar17;
+  if (dVar4 <= dVar16) {
+    Scr_Error("setExpFog: halfwayDist must be greater than 0");
   }
-  if (dVar5 <= dVar4) {
-    dVar4 = dVar11;
-    dVar5 = dVar11;
+  dVar13 = (double)(float)(0.6931471824645996 / dVar4);
+  fVar17 = Scr_GetFloat(2);
+  dVar5 = (double)fVar17;
+  fVar17 = Scr_GetFloat(3);
+  dVar6 = (double)fVar17;
+  fVar17 = Scr_GetFloat(4);
+  dVar7 = (double)fVar17;
+  fVar17 = Scr_GetFloat(5);
+  dVar8 = (double)fVar17;
+  dVar14 = 1.0;
+  if ((dVar8 < dVar16) || (1.0 < dVar8)) {
+    Scr_Error("setExpFog: maxOpacity must be between 0 and 1");
   }
-  dVar10 = dVar11;
-  if (((dVar6 < dVar7) && (dVar9 != dVar11)) && (dVar11 = dVar7, dVar10 = dVar6, dVar6 < dVar5)) {
-    Scr_ParamError(2,0xffffffff82079e88);
+  fVar17 = Scr_GetFloat(6);
+  dVar9 = (double)fVar17;
+  Dvar_SetColor(g_fogColorReadOnly,(float)dVar5,(float)dVar6,(float)dVar7,(float)dVar14);
+  Dvar_SetFloat(g_fogMaxOpacityReadOnly,(float)dVar8);
+  Dvar_SetFloat(g_fogStartDistReadOnly,(float)dVar3);
+  Dvar_SetFloat(g_fogHalfDistReadOnly,(float)dVar4);
+  if ((dVar13 <= dVar16) || (dVar14 <= dVar13)) {
+    in_r6 = "%s\n\t(density) = %g";
+    in_r5 = (float *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2887,0,
+                    "%s\n\t(density) = %g");
+  }
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 == 0xe) {
+    fVar17 = Scr_GetFloat(7);
+    dVar10 = (double)fVar17;
+    fVar17 = Scr_GetFloat(8);
+    dVar11 = (double)fVar17;
+    fVar17 = Scr_GetFloat(9);
+    dVar4 = (double)fVar17;
+    Scr_GetVector(10,&local_90);
+    fVar17 = Scr_GetFloat(0xb);
+    dVar16 = (double)fVar17;
+    fVar17 = Scr_GetFloat(0xc);
+    dVar12 = (double)fVar17;
+    dVar15 = dVar14;
+    fVar17 = Scr_GetFloat(0xd);
+    dVar14 = (double)fVar17;
+    uVar2 = 1;
+    Dvar_SetBool(g_sunFogEnabledReadOnly,true);
+    Dvar_SetColor(g_sunFogColorReadOnly,(float)dVar10,(float)dVar11,(float)dVar4,(float)dVar15);
+    Dvar_SetVec3(g_sunFogDirReadOnly,local_90,local_8c,local_88);
+    Dvar_SetFloat(g_sunFogBeginFadeAngleReadOnly,(float)dVar16);
+    Dvar_SetFloat(g_sunFogEndFadeAngleReadOnly,(float)dVar12);
+    in_r6 = (char *)g_clients;
+    Dvar_SetFloat(g_sunFogScaleReadOnly,(float)dVar14);
+  }
+  else {
+    local_90 = (float)dVar16;
+    local_8c = (float)dVar16;
+    uVar2 = 0;
+    local_88 = (float)dVar16;
+    dVar4 = dVar7;
+    dVar11 = dVar6;
+    dVar10 = dVar5;
+    dVar12 = dVar16;
+    Dvar_SetBool(g_sunFogEnabledReadOnly,false);
+  }
+  Scr_SetFog("setExpFog",(float)dVar3,(float)dVar13,(float)dVar5,(float)dVar6,(float)dVar7,
+             (float)dVar8,(float)dVar9,(bool)uVar2,(float)dVar10,(float)dVar11,(float)dVar4,in_r5,
+             (float)dVar16,(float)dVar12,(float)dVar14,(int)in_r6);
+  __restfpr_18();
+  return;
+}
+
+
+// 82498BB0  Scr_PlayerSetExponentialFog  (game/g_scr_main.cpp:10441)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_PlayerSetExponentialFog(scr_entref_t param_1)
+
+{
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  undefined1 uVar4;
+  float *in_r5;
+  char *in_r6;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  float fVar19;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  
+  sVar1 = (scr_entref_t)__savefpr_18(param_1);
+  pgVar2 = GetPlayerEntity(sVar1);
+  if ((pgVar2 == (gentity_s *)0x0) || (pgVar2->client == (gclient_s *)0x0)) {
+    Scr_Error("PlayerSetExpFog called on non-player entity.");
+  }
+  uVar3 = Scr_GetNumParam();
+  if ((uVar3 != 7) && (uVar3 = Scr_GetNumParam(), uVar3 != 0xe)) {
+    Scr_Error(
+             "Incorrect number of parameters\nUSAGE: setExpFog(<startDist>, <halfwayDist>, <red>, <green>, <blue>, <maxOpacity>, <transition time>, <sunRed>, <sunGreen>, <sunBlue>, <sunMaxOpacity>, <sunDir>, <sunBeginFadeAngle>, <sunEndFadeAngle> )\n"
+             );
+  }
+  fVar19 = Scr_GetFloat(0);
+  dVar5 = (double)fVar19;
+  dVar18 = 0.0;
+  if (dVar5 < 0.0) {
+    Scr_Error("setExpFog: startDist must be greater or equal to 0");
+  }
+  fVar19 = Scr_GetFloat(1);
+  dVar6 = (double)fVar19;
+  if (dVar6 <= dVar18) {
+    Scr_Error("setExpFog: halfwayDist must be greater than 0");
+  }
+  dVar15 = (double)(float)(0.6931471824645996 / dVar6);
+  fVar19 = Scr_GetFloat(2);
+  dVar7 = (double)fVar19;
+  fVar19 = Scr_GetFloat(3);
+  dVar8 = (double)fVar19;
+  fVar19 = Scr_GetFloat(4);
+  dVar9 = (double)fVar19;
+  fVar19 = Scr_GetFloat(5);
+  dVar10 = (double)fVar19;
+  dVar16 = 1.0;
+  if ((dVar10 < dVar18) || (1.0 < dVar10)) {
+    Scr_Error("setExpFog: maxOpacity must be between 0 and 1");
+  }
+  fVar19 = Scr_GetFloat(6);
+  dVar11 = (double)fVar19;
+  Dvar_SetColor(g_fogColorReadOnly,(float)dVar7,(float)dVar8,(float)dVar9,(float)dVar16);
+  Dvar_SetFloat(g_fogMaxOpacityReadOnly,(float)dVar10);
+  Dvar_SetFloat(g_fogStartDistReadOnly,(float)dVar5);
+  Dvar_SetFloat(g_fogHalfDistReadOnly,(float)dVar6);
+  if ((dVar15 <= dVar18) || (dVar16 <= dVar15)) {
+    in_r6 = "%s\n\t(density) = %g";
+    in_r5 = (float *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x28fe,0,
+                    "%s\n\t(density) = %g");
+  }
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 == 0xe) {
+    fVar19 = Scr_GetFloat(7);
+    dVar12 = (double)fVar19;
+    fVar19 = Scr_GetFloat(8);
+    dVar13 = (double)fVar19;
+    fVar19 = Scr_GetFloat(9);
+    dVar6 = (double)fVar19;
+    Scr_GetVector(10,&local_a0);
+    fVar19 = Scr_GetFloat(0xb);
+    dVar18 = (double)fVar19;
+    fVar19 = Scr_GetFloat(0xc);
+    dVar14 = (double)fVar19;
+    dVar17 = dVar16;
+    fVar19 = Scr_GetFloat(0xd);
+    dVar16 = (double)fVar19;
+    uVar4 = 1;
+    Dvar_SetBool(g_sunFogEnabledReadOnly,true);
+    Dvar_SetColor(g_sunFogColorReadOnly,(float)dVar12,(float)dVar13,(float)dVar6,(float)dVar17);
+    Dvar_SetVec3(g_sunFogDirReadOnly,local_a0,local_9c,local_98);
+    Dvar_SetFloat(g_sunFogBeginFadeAngleReadOnly,(float)dVar18);
+    Dvar_SetFloat(g_sunFogEndFadeAngleReadOnly,(float)dVar14);
+    in_r6 = (char *)g_clients;
+    Dvar_SetFloat(g_sunFogScaleReadOnly,(float)dVar16);
+  }
+  else {
+    local_a0 = (float)dVar18;
+    local_9c = (float)dVar18;
+    uVar4 = 0;
+    local_98 = (float)dVar18;
+    dVar6 = dVar9;
+    dVar13 = dVar8;
+    dVar12 = dVar7;
+    dVar14 = dVar18;
+    Dvar_SetBool(g_sunFogEnabledReadOnly,false);
+  }
+  Scr_SetFog("setExpFog",(float)dVar5,(float)dVar15,(float)dVar7,(float)dVar8,(float)dVar9,
+             (float)dVar10,(float)dVar11,(bool)uVar4,(float)dVar12,(float)dVar13,(float)dVar6,in_r5,
+             (float)dVar18,(float)dVar14,(float)dVar16,(int)in_r6);
+  __restfpr_18();
+  return;
+}
+
+
+// 82498EE0  GScr_GetNumParts  (game/g_scr_main.cpp:10542)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void GScr_GetNumParts(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  XModel *pXVar3;
+  int iVar4;
+  
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Incorrect use of getnumparts()");
+  }
+  pcVar2 = Scr_GetString(0);
+  pXVar3 = SV_XModelGet(pcVar2);
+  iVar4 = XModelNumBones(pXVar3);
+  Scr_AddInt(iVar4);
+  return;
+}
+
+
+// 82498F28  GScr_GetPartName  (game/g_scr_main.cpp:10565)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void GScr_GetPartName(void)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  char *pcVar3;
+  XModel *pXVar4;
+  uint uVar5;
+  ushort *puVar6;
+  
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 2) {
+    Scr_Error("Incorrect usage for getpartname()");
+  }
+  pcVar3 = Scr_GetString(0);
+  pXVar4 = SV_XModelGet(pcVar3);
+  uVar2 = Scr_GetInt(1);
+  uVar5 = XModelNumBones(pXVar4);
+  if (uVar5 <= uVar2) {
+    pcVar3 = va("index out of range (0 - %d)");
+    Scr_ParamError(1,pcVar3);
+  }
+  puVar6 = XModelBoneNames(pXVar4);
+  uVar1 = puVar6[uVar2];
+  if (uVar1 == 0) {
+    Scr_ParamError(0,"bad model");
+  }
+  Scr_AddConstString((uint)uVar1);
+  return;
+}
+
+
+// 82498FE8  Scr_TableLookupInternal  (game/g_scr_main.cpp:10591)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+char * Scr_TableLookupInternal(char *param_1,int param_2,char *param_3,int param_4)
+
+{
+  char *pcVar1;
+  int iVar2;
+  StringTable *local_30 [12];
+  
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  StringTable_GetAsset(pcVar1,local_30);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,pcVar1);
+  if (iVar2 != 0) {
+    pcVar1 = va("Unable to find the lookup table \'%s\' in the fastfile");
+    Scr_Error(pcVar1);
+  }
+  pcVar1 = StringTable_Lookup(local_30[0],param_2,param_3,param_4);
+  pcVar1 = (char *)__restgprlr_28(pcVar1);
+  return pcVar1;
+}
+
+
+// 82499050  Scr_TableLookup  (game/g_scr_main.cpp:10621)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void Scr_TableLookup(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  int iVar6;
+  StringTable *local_30 [12];
+  
+  __savegprlr_28();
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 < 4) {
+    Scr_Error("USAGE: tableLookup( filename, searchColumnNum, searchValue, returnValueColumnNum )\n"
+             );
+  }
+  pcVar2 = Scr_GetString(0);
+  iVar3 = Scr_GetInt(1);
+  pcVar4 = Scr_GetString(2);
+  iVar5 = Scr_GetInt(3);
+  StringTable_GetAsset(pcVar2,local_30);
+  iVar6 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,pcVar2);
+  if (iVar6 != 0) {
+    pcVar2 = va("Unable to find the lookup table \'%s\' in the fastfile");
+    Scr_Error(pcVar2);
+  }
+  pcVar2 = StringTable_Lookup(local_30[0],iVar3,pcVar4,iVar5);
+  Scr_AddString(pcVar2);
+  __restgprlr_28();
+  return;
+}
+
+
+// 824990F8  Scr_TableLookupIString  (game/g_scr_main.cpp:10667)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void Scr_TableLookupIString(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  int iVar6;
+  StringTable *local_30 [12];
+  
+  __savegprlr_28();
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 < 3) {
+    Scr_Error("USAGE: tableLookup( filename, searchColumnNum, searchValue, returnValueColumnNum )\n"
+             );
+  }
+  pcVar2 = Scr_GetString(0);
+  iVar3 = Scr_GetInt(1);
+  pcVar4 = Scr_GetString(2);
+  iVar5 = Scr_GetInt(3);
+  StringTable_GetAsset(pcVar2,local_30);
+  iVar6 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,pcVar2);
+  if (iVar6 != 0) {
+    pcVar2 = va("Unable to find the lookup table \'%s\' in the fastfile");
+    Scr_Error(pcVar2);
+  }
+  pcVar2 = StringTable_Lookup(local_30[0],iVar3,pcVar4,iVar5);
+  Scr_AddIString(pcVar2);
+  __restgprlr_28();
+  return;
+}
+
+
+// 824991A0  Scr_TableLookupRowNum  (game/g_scr_main.cpp:10712)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Scr_TableLookupRowNum(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
+  StringTable *local_30 [12];
+  
+  __savegprlr_29();
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 < 3) {
+    Scr_Error("USAGE: tableLookupRowNum( filename, searchColumnNum, searchValue )\n");
+  }
+  pcVar2 = Scr_GetString(0);
+  iVar3 = Scr_GetInt(1);
+  pcVar4 = Scr_GetString(2);
+  StringTable_GetAsset(pcVar2,local_30);
+  iVar3 = StringTable_LookupRowNumForValue(local_30[0],iVar3,pcVar4);
+  Scr_AddInt(iVar3);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82499210  Scr_TableLookupByRowInternal  (game/g_scr_main.cpp:10747)
+
+char * Scr_TableLookupByRowInternal(char *param_1,int param_2,int param_3)
+
+{
+  char *pcVar1;
+  StringTable *local_20 [2];
+  
+  StringTable_GetAsset(param_1,local_20);
+  pcVar1 = StringTable_GetColumnValueForRow(local_20[0],param_2,param_3);
+  return pcVar1;
+}
+
+
+// 82499260  Scr_TableLookupByRow  (game/g_scr_main.cpp:10769)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Scr_TableLookupByRow(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  StringTable *local_30 [12];
+  
+  __savegprlr_29();
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 < 3) {
+    Scr_Error("USAGE: tableLookupByRow( filename, rowNum, returnValueColumnNum )\n");
+  }
+  pcVar2 = Scr_GetString(0);
+  iVar3 = Scr_GetInt(1);
+  iVar4 = Scr_GetInt(2);
+  StringTable_GetAsset(pcVar2,local_30);
+  pcVar2 = StringTable_GetColumnValueForRow(local_30[0],iVar3,iVar4);
+  Scr_AddString(pcVar2);
+  __restgprlr_29();
+  return;
+}
+
+
+// 824992D0  Scr_TableLookupIStringByRow  (game/g_scr_main.cpp:10812)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Scr_TableLookupIStringByRow(void)
+
+{
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  StringTable *local_30 [12];
+  
+  __savegprlr_29();
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 < 3) {
+    Scr_Error("USAGE: tableLookupByRow( filename, rowNum, returnValueColumnNum )\n");
+  }
+  pcVar2 = Scr_GetString(0);
+  iVar3 = Scr_GetInt(1);
+  iVar4 = Scr_GetInt(2);
+  StringTable_GetAsset(pcVar2,local_30);
+  pcVar2 = StringTable_GetColumnValueForRow(local_30[0],iVar3,iVar4);
+  Scr_AddString(pcVar2);
+  __restgprlr_29();
+  return;
+}
+
+
+// 82499340  GScr_UpdateTagInternal  (game/g_scr_main.cpp:10846)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int GScr_UpdateTagInternal(gentity_s *param_1,uint param_2,cached_tag_mat_t *param_3,int param_4)
+
+{
+  gentity_s *pgVar1;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  
+  uVar5 = (ulonglong)(int)param_2;
+  pgVar1 = (gentity_s *)__savegprlr_27(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2a5f,0,
+                    "%s");
+  }
+  if ((((pgVar1->s).number != param_3->entnum) || (level.time != param_3->time)) ||
+     ((uVar5 & 0xffffffff) != (ulonglong)param_3->name)) {
+    iVar2 = SV_DObjExists(pgVar1);
+    if (iVar2 == 0) {
+      if (param_4 != 0) {
+        SL_ConvertToString((uint)pgVar1->classname);
+        pcVar3 = va("entity has no model defined (classname \'%s\')");
+        Scr_ObjectError(pcVar3);
+      }
+      iVar2 = __restgprlr_27(0);
+      return iVar2;
+    }
+    uVar6 = (uint)uVar5;
+    iVar2 = G_DObjGetWorldTagMatrix(pgVar1,uVar6,param_3->tagMat);
+    if (iVar2 == 0) {
+      if (param_4 != 0) {
+        SV_DObjDumpInfo(pgVar1);
+        uVar4 = G_ModelName((uint)pgVar1->model);
+        SL_ConvertToString(uVar4);
+        SL_ConvertToString(uVar6);
+        pcVar3 = va("tag \'%s\' does not exist in model \'%s\'%s(or any attached submodels)");
+        Scr_ParamError(0,pcVar3);
+      }
+      iVar2 = __restgprlr_27(0);
+      return iVar2;
+    }
+    param_3->entnum = (pgVar1->s).number;
+    param_3->time = level.time;
+    Scr_SetString(&param_3->name,uVar6);
+  }
+  iVar2 = __restgprlr_27(1);
+  return iVar2;
+}
+
+
+// 824994A0  GScr_GetTagOrigin  (game/g_scr_main.cpp:10904)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetTagOrigin(scr_entref_t param_1)
+
+{
+  gentity_s *pgVar1;
+  uint uVar2;
+  
+  pgVar1 = GetEntity(param_1);
+  uVar2 = Scr_GetConstLowercaseString(0);
+  GScr_UpdateTagInternal(pgVar1,uVar2,&level.cachedTagMat,1);
+  Scr_AddVector(level.cachedTagMat.tagMat[3]);
+  return;
+}
+
+
+// 82499500  GScr_GetTagAngles  (game/g_scr_main.cpp:10928)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetTagAngles(scr_entref_t param_1)
+
+{
+  gentity_s *pgVar1;
+  uint uVar2;
+  float afStack_30 [6];
+  
+  pgVar1 = GetEntity(param_1);
+  uVar2 = Scr_GetConstLowercaseString(0);
+  GScr_UpdateTagInternal(pgVar1,uVar2,&level.cachedTagMat,1);
+  AxisToAngles(level.cachedTagMat.tagMat,afStack_30);
+  Scr_AddVector(afStack_30);
+  return;
+}
+
+
+// 82499570  GScr_SetDepthOfField  (game/g_scr_main.cpp:10960)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetDepthOfField(scr_entref_t param_1)
+
+{
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  char *pcVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
+  
+  sVar1 = (scr_entref_t)__savefpr_25(param_1);
+  pgVar2 = GetPlayerEntity(sVar1);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 6) {
+    Scr_Error("Incorrect number of parameters\n");
+  }
+  fVar13 = Scr_GetFloat(0);
+  dVar5 = (double)fVar13;
+  fVar13 = Scr_GetFloat(1);
+  dVar6 = (double)fVar13;
+  fVar13 = Scr_GetFloat(2);
+  dVar7 = (double)fVar13;
+  fVar13 = Scr_GetFloat(3);
+  dVar8 = (double)fVar13;
+  fVar13 = Scr_GetFloat(4);
+  dVar9 = (double)fVar13;
+  fVar13 = Scr_GetFloat(5);
+  dVar10 = (double)fVar13;
+  dVar12 = 0.0;
+  if (dVar5 < 0.0) {
+    Scr_ParamError(0,"near start must be >= 0");
+  }
+  if (dVar6 < dVar12) {
+    Scr_ParamError(1,"near end must be >= 0");
+  }
+  if (dVar7 < dVar12) {
+    Scr_ParamError(2,"far start must be >= 0");
+  }
+  if (dVar8 < dVar12) {
+    Scr_ParamError(3,"far end must be >= 0");
+  }
+  if ((dVar9 < 4.0) || (10.0 < dVar9)) {
+    pcVar4 = va("near blur should be between %g and %g");
+    Scr_ParamError(4,pcVar4);
+  }
+  if ((dVar10 < dVar12) || (dVar9 < dVar10)) {
+    pcVar4 = va("far blur should be >= %g and <= near blur");
+    Scr_ParamError(5,pcVar4);
+  }
+  if (dVar6 <= dVar5) {
+    dVar5 = dVar12;
+    dVar6 = dVar12;
+  }
+  dVar11 = dVar12;
+  if (((dVar7 < dVar8) && (dVar10 != dVar12)) && (dVar12 = dVar8, dVar11 = dVar7, dVar7 < dVar6)) {
+    Scr_ParamError(2,
+                   "far start must be >= near end, or far depth of field should be disabled with far start >= far end or far blur == 0"
+                  );
+    dVar12 = dVar8;
     dVar11 = dVar7;
-    dVar10 = dVar6;
   }
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x564) = (float)dVar4;
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x568) = (float)dVar5;
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x56c) = (float)dVar10;
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x570) = (float)dVar11;
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x574) = (float)dVar8;
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x578) = (float)dVar9;
+  (pgVar2->client->ps).dofNearStart = (float)dVar5;
+  (pgVar2->client->ps).dofNearEnd = (float)dVar6;
+  (pgVar2->client->ps).dofFarStart = (float)dVar11;
+  (pgVar2->client->ps).dofFarEnd = (float)dVar12;
+  (pgVar2->client->ps).dofNearBlur = (float)dVar9;
+  (pgVar2->client->ps).dofFarBlur = (float)dVar10;
   __restfpr_25();
   return;
 }
@@ -10645,37 +11954,43 @@ void GScr_SetDepthOfField(void)
 
 // 82499778  GScr_SetViewModelDepthOfField  (game/g_scr_main.cpp:11033)
 
-void GScr_SetViewModelDepthOfField(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetViewModelDepthOfField(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   double dVar2;
   double dVar3;
   double dVar4;
+  float fVar5;
   
-  iVar1 = GetPlayerEntity();
-  dVar2 = (double)Scr_GetFloat(0);
-  dVar3 = (double)Scr_GetFloat(1);
+  pgVar1 = GetPlayerEntity(param_1);
+  fVar5 = Scr_GetFloat(0);
+  dVar2 = (double)fVar5;
+  fVar5 = Scr_GetFloat(1);
+  dVar3 = (double)fVar5;
   dVar4 = 0.0;
   if (dVar2 < 0.0) {
-    Scr_ParamError(0,0xffffffff82079ff4);
+    Scr_ParamError(0,"start must be >= 0");
   }
   if (dVar3 < dVar4) {
-    Scr_ParamError(1,0xffffffff82079fe0);
+    Scr_ParamError(1,"end must be >= 0");
   }
   if (dVar3 <= dVar2) {
     dVar2 = dVar4;
     dVar3 = dVar4;
   }
-  *(float *)(*(int *)(iVar1 + 0x158) + 0x57c) = (float)dVar2;
-  *(float *)(*(int *)(iVar1 + 0x158) + 0x580) = (float)dVar3;
+  (pgVar1->client->ps).dofViewmodelStart = (float)dVar2;
+  (pgVar1->client->ps).dofViewmodelEnd = (float)dVar3;
   return;
 }
 
 
 // 82499830  GScr_SetMotionBlurMoveScale  (game/g_scr_main.cpp:11074)
 
-void GScr_SetMotionBlurMoveScale(void)
+void GScr_SetMotionBlurMoveScale(scr_entref_t param_1)
 
 {
   return;
@@ -10684,7 +11999,7 @@ void GScr_SetMotionBlurMoveScale(void)
 
 // 82499838  GScr_SetMotionBlurTurnScale  (game/g_scr_main.cpp:11096)
 
-void GScr_SetMotionBlurTurnScale(void)
+void GScr_SetMotionBlurTurnScale(scr_entref_t param_1)
 
 {
   return;
@@ -10693,7 +12008,7 @@ void GScr_SetMotionBlurTurnScale(void)
 
 // 82499840  GScr_SetMotionBlurZoomScale  (game/g_scr_main.cpp:11118)
 
-void GScr_SetMotionBlurZoomScale(void)
+void GScr_SetMotionBlurZoomScale(scr_entref_t param_1)
 
 {
   return;
@@ -10702,157 +12017,168 @@ void GScr_SetMotionBlurZoomScale(void)
 
 // 82499848  GScr_ViewKick  (game/g_scr_main.cpp:11141)
 
-void GScr_ViewKick(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_ViewKick(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined8 uVar3;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  int iVar4;
+  char *pcVar5;
   float local_20;
   float local_1c;
   float local_18;
   
-  iVar1 = GetPlayerEntity();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 2) {
-    Scr_Error(0xffffffff8207a024);
+  pgVar2 = GetPlayerEntity(param_1);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 2) {
+    Scr_Error("USAGE: <player> viewkick <force 0-127> <source position>\n");
   }
-  iVar2 = Scr_GetInt(0);
-  *(int *)(*(int *)(iVar1 + 0x158) + 0x362c) = (iVar2 * *(int *)(iVar1 + 0x1a0) + 0x32) / 100;
-  if (*(int *)(*(int *)(iVar1 + 0x158) + 0x362c) < 0) {
-    uVar3 = Scr_GetFloat(0);
-    va(0xffffffff8207a008,uVar3);
-    Scr_Error();
+  iVar4 = Scr_GetInt(0);
+  pgVar2->client->damage_blood = (iVar4 * pgVar2->maxHealth + 0x32) / 100;
+  if (pgVar2->client->damage_blood < 0) {
+    Scr_GetFloat(0);
+    pcVar5 = va("viewkick: damage %g < 0\n");
+    Scr_Error(pcVar5);
   }
   Scr_GetVector(1,&local_20);
-  iVar1 = *(int *)(iVar1 + 0x158);
-  *(float *)(iVar1 + 0x3634) = *(float *)(iVar1 + 0x1c) - local_20;
-  *(float *)(iVar1 + 0x3638) = *(float *)(iVar1 + 0x20) - local_1c;
-  *(float *)(iVar1 + 0x363c) = *(float *)(iVar1 + 0x24) - local_18;
+  pgVar1 = pgVar2->client;
+  pgVar1->damage_from[0] = (pgVar1->ps).origin[0] - local_20;
+  pgVar1->damage_from[1] = (pgVar1->ps).origin[1] - local_1c;
+  pgVar1->damage_from[2] = (pgVar1->ps).origin[2] - local_18;
   return;
 }
 
 
 // 82499920  GScr_OpenFile  (game/g_scr_main.cpp:11173)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_OpenFile(void)
 
 {
   char cVar1;
-  uint uVar4;
-  undefined8 uVar2;
+  char cVar2;
+  uint uVar3;
+  char *pcVar4;
   char *pcVar5;
-  undefined8 uVar3;
-  char cVar7;
+  bool bVar8;
   int iVar6;
-  char *pcVar8;
+  void *pvVar7;
   char *pcVar9;
-  int *piVar10;
-  int iVar11;
-  undefined4 local_50 [20];
+  char *pcVar10;
+  com_parse_mark_t *pcVar11;
+  int iVar12;
+  void **ppvVar13;
+  void *local_50 [20];
   
   __savegprlr_25();
-  uVar4 = Scr_GetNumParam();
-  if (1 < uVar4) {
-    uVar2 = Scr_GetString(0);
-    pcVar5 = (char *)Scr_GetString(1);
-    iVar11 = 0;
-    piVar10 = &DAT_835832f4;
+  uVar3 = Scr_GetNumParam();
+  if (1 < uVar3) {
+    pcVar4 = Scr_GetString(0);
+    pcVar5 = Scr_GetString(1);
+    iVar12 = 0;
+    pcVar11 = (com_parse_mark_t *)level.openScriptIOFileHandles;
     do {
-      if (*piVar10 == 0) {
-        piVar10 = &DAT_835832f4 + iVar11;
-        if (piVar10 != (int *)0x0) {
-          pcVar8 = "read";
-          pcVar9 = pcVar5;
+      if ((char *)pcVar11->lines == (char *)0x0) {
+        ppvVar13 = level.openScriptIOFileHandles + iVar12;
+        if (ppvVar13 != (void **)0x0) {
+          pcVar9 = "read";
+          pcVar10 = pcVar5;
           goto LAB_824999c4;
         }
         break;
       }
-      piVar10 = piVar10 + 1;
-      iVar11 = iVar11 + 1;
-    } while ((int)piVar10 < -0x7ca7cd08);
-    Com_Printf(0x17,0xffffffff8207a0d4,1);
-    Scr_AddInt(0xffffffffffffffff);
+      pcVar11 = (com_parse_mark_t *)&pcVar11->text;
+      iVar12 = iVar12 + 1;
+    } while ((int)pcVar11 < -0x7ca7cd08);
+    Com_Printf(0x17,"OpenFile failed.  %i files already open\n");
+    Scr_AddInt(-1);
     __restgprlr_25();
     return;
   }
   goto LAB_82499bb0;
   while( true ) {
+    pcVar10 = pcVar10 + 1;
     pcVar9 = pcVar9 + 1;
-    pcVar8 = pcVar8 + 1;
-    if (cVar7 != cVar1) break;
+    if (cVar1 != cVar2) break;
 LAB_824999c4:
-    cVar7 = *pcVar9;
-    cVar1 = *pcVar8;
-    if (cVar7 == '\0') break;
+    cVar1 = *pcVar10;
+    cVar2 = *pcVar9;
+    if (cVar1 == '\0') break;
   }
-  if (cVar7 == cVar1) {
-    uVar3 = va(0xffffffff8207a0b8,0xffffffff8207a0c0,uVar2);
-    cVar7 = FS_IsUsingRemotePCSharing();
-    if (cVar7 == '\0') {
-      iVar6 = FS_FOpenFileByMode(uVar3,local_50,0);
+  if (cVar1 == cVar2) {
+    pcVar5 = va("%s/%s");
+    bVar8 = FS_IsUsingRemotePCSharing();
+    if (bVar8) {
+      iVar6 = FS_FOpenFileReadRemote(pcVar5,(char *)0x0,local_50);
     }
     else {
-      iVar6 = FS_FOpenFileReadRemote(uVar3,0,local_50);
+      iVar6 = FS_FOpenFileByMode(pcVar5,local_50,FS_READ);
     }
     if (-1 < iVar6) {
-      uVar3 = Z_VirtualAlloc(iVar6 + 1,0xffffffff8207a0a8,10);
-      (&DAT_835832f8)[iVar11] = (int)uVar3;
-      FS_Read(uVar3,iVar6,local_50[0]);
+      pcVar5 = Z_VirtualAlloc(iVar6 + 1,"GScr_OpenFile",10);
+      level.openScriptIOFileBuffers[iVar12] = pcVar5;
+      FS_Read(pcVar5,iVar6,local_50[0]);
       FS_FCloseFile(local_50[0]);
-      *(undefined1 *)((&DAT_835832f8)[iVar11] + iVar6) = 0;
-      Com_BeginParseSession(uVar2);
+      level.openScriptIOFileBuffers[iVar12][iVar6] = '\0';
+      Com_BeginParseSession(pcVar4);
       Com_SetCSV(1);
-      (&DAT_835832fc)[iVar11 * 5] = 0;
-      Scr_AddInt(iVar11);
+      level.currentScriptIOLineMark[iVar12].lines = 0;
+      Scr_AddInt(iVar12);
       __restgprlr_25();
       return;
     }
   }
   else {
-    pcVar8 = "write";
-    pcVar9 = pcVar5;
+    pcVar10 = "write";
+    pcVar4 = pcVar5;
     do {
-      cVar7 = *pcVar9;
-      cVar1 = *pcVar8;
-      if (cVar7 == '\0') break;
-      pcVar9 = pcVar9 + 1;
-      pcVar8 = pcVar8 + 1;
-    } while (cVar7 == cVar1);
-    if (cVar7 == cVar1) {
-      va(0xffffffff8207a0b8,0xffffffff8207a0c0,uVar2);
-      iVar6 = FS_FOpenTextFileWrite();
-      *piVar10 = iVar6;
-      if (iVar6 != 0) {
-        Scr_AddInt(iVar11);
+      cVar1 = *pcVar4;
+      cVar2 = *pcVar10;
+      if (cVar1 == '\0') break;
+      pcVar4 = pcVar4 + 1;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      pcVar4 = va("%s/%s");
+      pvVar7 = FS_FOpenTextFileWrite(pcVar4);
+      *ppvVar13 = pvVar7;
+      if (pvVar7 != (void *)0x0) {
+        Scr_AddInt(iVar12);
         __restgprlr_25();
         return;
       }
     }
     else {
-      pcVar9 = "append";
+      pcVar4 = "append";
       do {
-        cVar7 = *pcVar5;
-        cVar1 = *pcVar9;
-        if (cVar7 == '\0') break;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar4;
+        if (cVar1 == '\0') break;
         pcVar5 = pcVar5 + 1;
-        pcVar9 = pcVar9 + 1;
-      } while (cVar7 == cVar1);
-      if (cVar7 == cVar1) {
-        uVar2 = va(0xffffffff8207a0b8,0xffffffff8207a0c0,uVar2);
-        iVar6 = FS_FOpenFileByMode(uVar2,piVar10,2);
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
+        pcVar4 = va("%s/%s");
+        iVar6 = FS_FOpenFileByMode(pcVar4,ppvVar13,FS_APPEND);
         if (-1 < iVar6) {
-          Scr_AddInt(iVar11);
+          Scr_AddInt(iVar12);
           __restgprlr_25();
           return;
         }
       }
       else {
-        Com_Printf(0x17,0xffffffff8207a060);
+        Com_Printf(0x17,"Valid openfile modes are \'write\', \'read\', and \'append\'\n");
       }
     }
   }
-  Scr_AddInt(0xffffffffffffffff);
+  Scr_AddInt(-1);
 LAB_82499bb0:
   __restgprlr_25();
   return;
@@ -10861,42 +12187,49 @@ LAB_82499bb0:
 
 // 82499BB8  GScr_CloseFile  (game/g_scr_main.cpp:11282)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_CloseFile(void)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  int iVar2;
+  char *pcVar3;
   
   __savegprlr_28();
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 0) {
-    iVar1 = Scr_GetInt(0);
-    if ((iVar1 < 0) || (1 < iVar1)) {
-      uVar2 = 0xffffffff8207a100;
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 0) {
+    iVar2 = Scr_GetInt(0);
+    if ((iVar2 < 0) || (1 < iVar2)) {
+      pcVar3 = "CloseFile failed, invalid file number %i\n";
     }
     else {
-      if (((&DAT_835832f4)[iVar1] != 0) && ((&DAT_835832f8)[iVar1] != 0)) {
-        MyAssertHandler(0xffffffff82076e74,0x2c23,0,0xffffffff82000f98,0xffffffff8207a160);
+      if ((level.openScriptIOFileHandles[iVar2] != (void *)0x0) &&
+         (level.openScriptIOFileBuffers[iVar2] != (char *)0x0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",
+                        0x2c23,0,"%s");
       }
-      if ((&DAT_835832f4)[iVar1] != 0) {
-        FS_FCloseFile();
-        (&DAT_835832f4)[iVar1] = 0;
+      if (level.openScriptIOFileHandles[iVar2] != (void *)0x0) {
+        FS_FCloseFile(level.openScriptIOFileHandles[iVar2]);
+        level.openScriptIOFileHandles[iVar2] = (void *)0x0;
         Scr_AddInt(1);
         __restgprlr_28();
         return;
       }
-      if ((&DAT_835832f8)[iVar1] != 0) {
+      if (level.openScriptIOFileBuffers[iVar2] != (char *)0x0) {
         Com_EndParseSession();
-        Z_VirtualFree((&DAT_835832f8)[iVar1],10);
-        (&DAT_835832f8)[iVar1] = 0;
+        Z_VirtualFree(level.openScriptIOFileBuffers[iVar2],10);
+        level.openScriptIOFileBuffers[iVar2] = (char *)0x0;
         Scr_AddInt(1);
         __restgprlr_28();
         return;
       }
-      uVar2 = 0xffffffff8207a12c;
+      pcVar3 = "CloseFile failed, file number %i was not open\n";
     }
-    Com_Printf(0x17,uVar2,iVar1);
-    Scr_AddInt(0xffffffffffffffff);
+    Com_Printf(0x17,pcVar3);
+    Scr_AddInt(-1);
   }
   __restgprlr_28();
   return;
@@ -10905,62 +12238,62 @@ void GScr_CloseFile(void)
 
 // 82499CD0  Scr_FPrint_internal  (game/g_scr_main.cpp:11327)
 
-void Scr_FPrint_internal(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void Scr_FPrint_internal(bool param_1)
 
 {
   char cVar1;
-  char cVar7;
-  uint uVar4;
-  int iVar5;
+  char cVar5;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
   char *pcVar6;
-  ulonglong uVar2;
-  longlong lVar3;
-  undefined8 uVar8;
-  char *pcVar9;
-  ulonglong uVar10;
+  uint uVar7;
   
-  cVar7 = __savegprlr_27();
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 2) {
-    Com_Printf(0x17,0xffffffff8207a230);
-    Scr_AddInt(0xffffffffffffffff);
+  cVar5 = __savegprlr_27(param_1);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 < 2) {
+    Com_Printf(0x17,"fprintln requires at least 2 parameters (file, output)\n");
+    Scr_AddInt(-1);
     __restgprlr_27();
     return;
   }
-  iVar5 = Scr_GetInt(0);
-  if ((iVar5 < 0) || (1 < iVar5)) {
-    uVar8 = 0xffffffff8207a1c8;
+  iVar3 = Scr_GetInt(0);
+  if ((iVar3 < 0) || (1 < iVar3)) {
+    pcVar6 = "FPrintln failed, invalid file number %i\n";
   }
   else {
-    if ((&DAT_835832f4)[iVar5] != 0) {
-      uVar10 = 1;
-      uVar4 = Scr_GetNumParam();
-      if (1 < uVar4) {
+    if (level.openScriptIOFileHandles[iVar3] != (void *)0x0) {
+      uVar7 = 1;
+      uVar2 = Scr_GetNumParam();
+      if (1 < uVar2) {
         do {
-          pcVar6 = (char *)Scr_GetString(uVar10);
-          pcVar9 = pcVar6;
+          pcVar4 = Scr_GetString(uVar7);
+          pcVar6 = pcVar4;
           do {
-            cVar1 = *pcVar9;
-            pcVar9 = pcVar9 + 1;
+            cVar1 = *pcVar6;
+            pcVar6 = pcVar6 + 1;
           } while (cVar1 != '\0');
-          FS_Write(pcVar6,pcVar9 + (-1 - (int)pcVar6),(&DAT_835832f4)[iVar5]);
-          if (cVar7 != '\0') {
-            FS_Write(0xffffffff82003480,1,(&DAT_835832f4)[iVar5]);
+          FS_Write(pcVar4,(int)(pcVar6 + (-1 - (int)pcVar4)),level.openScriptIOFileHandles[iVar3]);
+          if (cVar5 != '\0') {
+            FS_Write(&s__,1,level.openScriptIOFileHandles[iVar3]);
           }
-          uVar10 = uVar10 + 1;
+          uVar7 = uVar7 + 1;
           uVar2 = Scr_GetNumParam();
-        } while ((uVar10 & 0xffffffff) < (uVar2 & 0xffffffff));
+        } while (uVar7 < uVar2);
       }
-      FS_Write(0xffffffff820044d8,1,(&DAT_835832f4)[iVar5]);
-      lVar3 = Scr_GetNumParam();
-      Scr_AddInt(lVar3 + -1);
+      FS_Write("\n",1,level.openScriptIOFileHandles[iVar3]);
+      uVar2 = Scr_GetNumParam();
+      Scr_AddInt(uVar2 - 1);
       __restgprlr_27();
       return;
     }
-    uVar8 = 0xffffffff8207a1f4;
+    pcVar6 = "FPrintln failed, file number %i was not open for writing\n";
   }
-  Com_Printf(0x17,uVar8);
-  Scr_AddInt(0xffffffffffffffff);
+  Com_Printf(0x17,pcVar6);
+  Scr_AddInt(-1);
   __restgprlr_27();
   return;
 }
@@ -10968,81 +12301,93 @@ void Scr_FPrint_internal(void)
 
 // 82499E10  GScr_FPrintln  (game/g_scr_main.cpp:11385)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_FPrintln(void)
 
 {
-  Scr_FPrint_internal(0);
+  Scr_FPrint_internal(false);
   return;
 }
 
 
 // 82499E18  GScr_FPrintFields  (game/g_scr_main.cpp:11404)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_FPrintFields(void)
 
 {
-  Scr_FPrint_internal(1);
+  Scr_FPrint_internal(true);
   return;
 }
 
 
 // 82499E20  GScr_FReadLn  (game/g_scr_main.cpp:11421)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_FReadLn(void)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar4;
-  byte *pbVar5;
-  undefined8 uVar3;
-  undefined4 *puVar6;
-  int local_20 [4];
+  uint uVar2;
+  int iVar3;
+  byte *pbVar4;
+  char *pcVar5;
+  com_parse_mark_t *pcVar6;
+  char *local_20 [4];
   
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 == 0) {
-    Com_Printf(0x17,0xffffffff8207a2cc);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 == 0) {
+    Com_Printf(0x17,"freadln requires a parameter - the file to read from\n");
   }
   else {
-    iVar4 = Scr_GetInt(0);
-    if ((iVar4 < 0) || (1 < iVar4)) {
-      uVar3 = 0xffffffff8207a268;
+    iVar3 = Scr_GetInt(0);
+    if ((iVar3 < 0) || (1 < iVar3)) {
+      pcVar5 = "freadln failed, invalid file number %i\n";
     }
     else {
-      iVar2 = (&DAT_835832f8)[iVar4];
-      if (iVar2 != 0) {
-        puVar6 = &DAT_835832fc + iVar4 * 5;
-        local_20[0] = iVar2;
-        if ((&DAT_835832fc)[iVar4 * 5] == 0) {
-          Com_ParseSetMark();
-          uVar3 = Com_GetArgCountOnLine(local_20);
+      pcVar5 = level.openScriptIOFileBuffers[iVar3];
+      if (pcVar5 != (char *)0x0) {
+        pcVar6 = level.currentScriptIOLineMark + iVar3;
+        local_20[0] = pcVar5;
+        if (level.currentScriptIOLineMark[iVar3].lines == 0) {
+          Com_ParseSetMark(local_20,pcVar6);
+          iVar3 = Com_GetArgCountOnLine(local_20);
           goto LAB_82499f34;
         }
-        Com_ParseReturnToMark(local_20,puVar6);
+        Com_ParseReturnToMark(local_20,pcVar6);
         Com_SkipRestOfLine(local_20);
-        Com_ParseSetMark(local_20,puVar6);
-        pbVar5 = (byte *)Com_Parse(local_20);
-        bVar1 = *pbVar5;
-        Com_ParseReturnToMark(local_20,puVar6);
+        Com_ParseSetMark(local_20,pcVar6);
+        pbVar4 = (byte *)Com_Parse(local_20);
+        bVar1 = *pbVar4;
+        Com_ParseReturnToMark(local_20,pcVar6);
         if ((uint)LZCOUNT((uint)bVar1) >> 5 == 0) {
-          uVar3 = Com_GetArgCountOnLine(local_20);
+          iVar3 = Com_GetArgCountOnLine(local_20);
           goto LAB_82499f34;
         }
         goto LAB_82499f30;
       }
-      uVar3 = 0xffffffff8207a290;
+      pcVar5 = "freadln failed, file number %i was not open for reading\n";
     }
-    Com_Printf(0x17,uVar3);
+    Com_Printf(0x17,pcVar5);
   }
 LAB_82499f30:
-  uVar3 = 0xffffffffffffffff;
+  iVar3 = -1;
 LAB_82499f34:
-  Scr_AddInt(uVar3);
+  Scr_AddInt(iVar3);
   return;
 }
 
 
 // 82499F50  GScr_FGetArg  (game/g_scr_main.cpp:11503)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void GScr_FGetArg(void)
 
@@ -11051,53 +12396,52 @@ void GScr_FGetArg(void)
   int iVar2;
   int iVar3;
   char *pcVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  int local_30 [12];
+  char *local_30 [12];
   
   __savegprlr_29();
   uVar1 = Scr_GetNumParam();
   if (uVar1 < 2) {
-    Com_Printf(0x17,0xffffffff8207a3f4);
-    Scr_AddString(0xffffffff820068af);
+    Com_Printf(0x17,"freadline requires at least 2 parameters (file, string)\n");
+    Scr_AddString("");
     __restgprlr_29();
     return;
   }
   iVar2 = Scr_GetInt(0);
   iVar3 = Scr_GetInt(1);
   if ((iVar2 < 0) || (1 < iVar2)) {
-    uVar5 = 0xffffffff8207a304;
+    pcVar4 = "freadline failed, invalid file number %i\n";
   }
   else if (iVar3 < 0) {
-    uVar5 = 0xffffffff8207a3c4;
-    iVar2 = iVar3;
+    pcVar4 = "freadline failed, invalid argument number %i\n";
   }
   else {
-    local_30[0] = (&DAT_835832f8)[iVar2];
-    if (local_30[0] != 0) {
+    local_30[0] = level.openScriptIOFileBuffers[iVar2];
+    if (local_30[0] != (char *)0x0) {
       pcVar4 = (char *)0x0;
-      Com_ParseReturnToMark(local_30,&DAT_835832fc + iVar2 * 5);
-      lVar6 = 0;
+      Com_ParseReturnToMark(local_30,level.currentScriptIOLineMark + iVar2);
+      iVar2 = 0;
       if (-1 < iVar3) {
         do {
-          pcVar4 = (char *)Com_ParseOnLine(local_30);
+          pcVar4 = Com_ParseOnLine(local_30);
           if (*pcVar4 == '\0') {
-            Com_Printf(0x17,0xffffffff8207a330,iVar3 + 1,lVar6);
-            Scr_AddString(0xffffffff820068af);
+            Com_Printf(0x17,
+                       "freadline failed, there aren\'t %i arguments on this line, there are only %i arguments\n"
+                      );
+            Scr_AddString("");
             __restgprlr_29();
             return;
           }
-          lVar6 = lVar6 + 1;
-        } while ((int)lVar6 <= iVar3);
+          iVar2 = iVar2 + 1;
+        } while (iVar2 <= iVar3);
       }
       Scr_AddString(pcVar4);
       __restgprlr_29();
       return;
     }
-    uVar5 = 0xffffffff8207a388;
+    pcVar4 = "freadline failed, file number %i was not open for reading\n";
   }
-  Com_Printf(0x17,uVar5,iVar2);
-  Scr_AddString(0xffffffff820068af);
+  Com_Printf(0x17,pcVar4);
+  Scr_AddString("");
   __restgprlr_29();
   return;
 }
@@ -11105,47 +12449,61 @@ void GScr_FGetArg(void)
 
 // 8249A0B0  GScr_SetMiniMap  (game/g_scr_main.cpp:11580)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_SetMiniMap(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  uint uVar1;
+  char *pcVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double _X;
+  double dVar9;
+  float fVar10;
   char acStack_70 [88];
   
   __savefpr_26();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 5) {
-    Scr_Error(0xffffffff8207a4c0);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 5) {
+    Scr_Error("Expecting 5 arguments");
   }
-  uVar1 = Scr_GetString(0);
-  dVar3 = (double)Scr_GetFloat(1);
-  dVar4 = (double)Scr_GetFloat(2);
-  dVar5 = (double)Scr_GetFloat(3);
-  dVar6 = (double)Scr_GetFloat(4);
-  SV_GetConfigstring(0x3f9,acStack_70,0x20);
+  Scr_GetString(0);
+  fVar10 = Scr_GetFloat(1);
+  dVar3 = (double)fVar10;
+  fVar10 = Scr_GetFloat(2);
+  dVar4 = (double)fVar10;
+  fVar10 = Scr_GetFloat(3);
+  dVar5 = (double)fVar10;
+  fVar10 = Scr_GetFloat(4);
+  dVar6 = (double)fVar10;
+  SV_GetConfigstring(CS_NORTHYAW,acStack_70,0x20);
   dVar7 = atof(acStack_70);
-  _X = (double)((float)dVar7 * 0.017453292);
-  dVar7 = sin(_X);
+  dVar9 = (double)((float)dVar7 * 0.017453292);
+  dVar7 = sin(dVar9);
   dVar8 = (double)(float)dVar7;
-  dVar7 = cos(_X);
-  DAT_83583358 = (float)(dVar8 * (double)(float)(dVar5 - dVar3) -
-                        (double)(float)((double)(float)dVar7 * (double)(float)(dVar6 - dVar4)));
-  DAT_8358335c = -(float)((double)(float)(dVar6 - dVar4) * dVar8 -
-                         -(double)(float)((double)(float)dVar7 * (double)(float)(dVar5 - dVar3)));
-  if ((DAT_83583358 < 0.0) || (DAT_8358335c < 0.0)) {
-    Scr_Error(0xffffffff8207a448);
+  dVar7 = cos(dVar9);
+  level.compassMapWorldSize[0] =
+       (float)(dVar8 * (double)(float)(dVar5 - dVar3) -
+              (double)(float)((double)(float)dVar7 * (double)(float)(dVar6 - dVar4)));
+  level.compassMapWorldSize[1] =
+       -(float)((double)(float)(dVar6 - dVar4) * dVar8 -
+               -(double)(float)((double)(float)dVar7 * (double)(float)(dVar5 - dVar3)));
+  if ((level.compassMapWorldSize[0] < 0.0) || (level.compassMapWorldSize[1] < 0.0)) {
+    Scr_Error(
+             "lower-right X and Y coordinates must be both south and east of upper-left X and Y coordinates in terms of the northyaw"
+             );
   }
-  DAT_83583350 = (float)dVar3;
-  DAT_83583354 = (float)dVar4;
-  uVar1 = va(dVar3,dVar4,dVar5,dVar6,0xffffffff8207a430,uVar1,dVar3,dVar4,dVar5,dVar6);
-  SV_SetConfigstring(0x3fa,uVar1);
+  level.compassMapUpperLeft[0] = (float)dVar3;
+  level.compassMapUpperLeft[1] = (float)dVar4;
+  pcVar2 = va("\"%s\" %f %f %f %f");
+  SV_SetConfigstring(CS_MINIMAP,pcVar2);
   __restfpr_26();
   return;
 }
@@ -11153,186 +12511,211 @@ void GScr_SetMiniMap(void)
 
 // 8249A228  GScr_SetThermalBodyMaterial  (game/g_scr_main.cpp:11635)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void GScr_SetThermalBodyMaterial(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Scr_GetString(0);
-  SV_SetConfigstring(0x3fb,uVar1);
+  pcVar1 = Scr_GetString(0);
+  SV_SetConfigstring(CS_MATERIAL_THERMALBODY,pcVar1);
   return;
 }
 
 
 // 8249A258  GScr_GetArrayObject  (game/g_scr_main.cpp:11644)
 
-void GScr_GetArrayObject(undefined8 param_1)
+uint GScr_GetArrayObject(uint param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = Scr_GetPointerType();
-  if (iVar2 != 0x17) {
-    uVar1 = Scr_GetTypeName(param_1);
-    uVar1 = va(0xffffffff8207a4d8,uVar1);
-    Scr_ParamError(param_1,uVar1);
+  iVar1 = Scr_GetPointerType(param_1);
+  if (iVar1 != 0x17) {
+    Scr_GetTypeName(param_1);
+    pcVar2 = va("Parameter (%s) must be an array");
+    Scr_ParamError(param_1,pcVar2);
   }
-  Scr_GetObject(param_1);
-  return;
+  uVar3 = Scr_GetObject(param_1);
+  return uVar3;
 }
 
 
 // 8249A2B8  GScr_GetArrayKeys  (game/g_scr_main.cpp:11662)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetArrayKeys(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = Scr_GetPointerType(0);
-  if (iVar2 != 0x17) {
-    uVar1 = Scr_GetTypeName(0);
-    uVar1 = va(0xffffffff8207a4d8,uVar1);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetPointerType(0);
+  if (iVar1 != 0x17) {
+    Scr_GetTypeName(0);
+    pcVar2 = va("Parameter (%s) must be an array");
+    Scr_ParamError(0,pcVar2);
   }
-  Scr_GetObject(0);
-  Scr_AddArrayKeys();
+  uVar3 = Scr_GetObject(0);
+  Scr_AddArrayKeys(uVar3);
   return;
 }
 
 
 // 8249A318  GScr_GetFirstArrayKey  (game/g_scr_main.cpp:11681)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetFirstArrayKey(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = Scr_GetPointerType(0);
-  if (iVar2 != 0x17) {
-    uVar1 = Scr_GetTypeName(0);
-    uVar1 = va(0xffffffff8207a4d8,uVar1);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetPointerType(0);
+  if (iVar1 != 0x17) {
+    Scr_GetTypeName(0);
+    pcVar2 = va("Parameter (%s) must be an array");
+    Scr_ParamError(0,pcVar2);
   }
-  Scr_GetObject(0);
-  Scr_AddFirstArrayKey();
+  uVar3 = Scr_GetObject(0);
+  Scr_AddFirstArrayKey(uVar3);
   return;
 }
 
 
 // 8249A378  GScr_GetNextArrayKey  (game/g_scr_main.cpp:11700)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetNextArrayKey(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
+  VariableValue *pVVar4;
   
-  iVar3 = Scr_GetPointerType(0);
-  if (iVar3 != 0x17) {
-    uVar1 = Scr_GetTypeName(0);
-    uVar1 = va(0xffffffff8207a4d8,uVar1);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetPointerType(0);
+  if (iVar1 != 0x17) {
+    Scr_GetTypeName(0);
+    pcVar2 = va("Parameter (%s) must be an array");
+    Scr_ParamError(0,pcVar2);
   }
-  uVar1 = Scr_GetObject(0);
-  uVar2 = Scr_GetVariable(1);
-  Scr_AddNextArrayKey(uVar1,uVar2);
+  uVar3 = Scr_GetObject(0);
+  pVVar4 = Scr_GetVariable(1);
+  Scr_AddNextArrayKey(uVar3,pVVar4);
   return;
 }
 
 
 // 8249A3F0  CompareScriptObjectDistanceIncreasing  (game/g_scr_main.cpp:11719)
 
-bool CompareScriptObjectDistanceIncreasing(float *param_1,float *param_2)
+bool CompareScriptObjectDistanceIncreasing(EntityOrigin *param_1,EntityOrigin *param_2)
 
 {
-  return (DAT_8359d610 - param_1[1]) * (DAT_8359d610 - param_1[1]) +
-         (DAT_8359d60c - *param_1) * (DAT_8359d60c - *param_1) +
-         (DAT_8359d614 - param_1[2]) * (DAT_8359d614 - param_1[2]) <
-         (DAT_8359d610 - param_2[1]) * (DAT_8359d610 - param_2[1]) +
-         (DAT_8359d60c - *param_2) * (DAT_8359d60c - *param_2) +
-         (DAT_8359d614 - param_2[2]) * (DAT_8359d614 - param_2[2]);
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  
+  fVar3 = g_entitySortOrigin[0] - param_1->origin[0];
+  fVar4 = g_entitySortOrigin[0] - param_2->origin[0];
+  fVar2 = g_entitySortOrigin[2] - param_2->origin[2];
+  fVar1 = g_entitySortOrigin[2] - param_1->origin[2];
+  fVar5 = g_entitySortOrigin[1] - param_1->origin[1];
+  fVar6 = g_entitySortOrigin[1] - param_2->origin[1];
+  return fVar5 * fVar5 + fVar3 * fVar3 + fVar1 * fVar1 <
+         fVar6 * fVar6 + fVar4 * fVar4 + fVar2 * fVar2;
 }
 
 
 // 8249D498  GScr_SortByDistance  (game/g_scr_main.cpp:11740)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SortByDistance(void)
 
 {
+  uint *puVar1;
+  EntityOrigin *pEVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar1;
+  char *pcVar4;
+  uint uVar5;
   uint uVar6;
-  undefined8 uVar2;
-  undefined4 *puVar7;
-  uint uVar8;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined1 auStack_48 [8];
-  undefined1 auStack_40 [64];
+  EntityOrigin *pEVar8;
+  longlong lVar7;
+  uint local_50;
+  uint local_4c;
+  LargeLocal LStack_48;
+  LargeLocal aLStack_40 [8];
   
   __savegprlr_26();
-  LargeLocal__LargeLocal(auStack_40,0x2000);
-  iVar3 = LargeLocal__GetBuf(auStack_40);
-  LargeLocal__LargeLocal(auStack_48,0x8000);
-  iVar4 = LargeLocal__GetBuf(auStack_48);
-  iVar5 = Scr_GetPointerType(0);
-  if (iVar5 != 0x17) {
-    uVar1 = Scr_GetTypeName(0);
-    uVar1 = va(0xffffffff8207a4d8,uVar1);
-    Scr_ParamError(0,uVar1);
+  LargeLocal::LargeLocal(aLStack_40,0x2000);
+  puVar1 = LargeLocal::GetBuf(aLStack_40);
+  LargeLocal::LargeLocal(&LStack_48,0x8000);
+  pEVar2 = LargeLocal::GetBuf(&LStack_48);
+  iVar3 = Scr_GetPointerType(0);
+  if (iVar3 != 0x17) {
+    Scr_GetTypeName(0);
+    pcVar4 = va("Parameter (%s) must be an array");
+    Scr_ParamError(0,pcVar4);
   }
-  uVar1 = Scr_GetObject(0);
-  uVar6 = GetArraySize();
+  uVar5 = Scr_GetObject(0);
+  uVar6 = GetArraySize(uVar5);
+  lVar7 = (longlong)(int)uVar6;
   if (0x800 < uVar6) {
-    uVar2 = va(0xffffffff8207b378,uVar6,0x800);
-    Scr_ParamError(0,uVar2);
+    pcVar4 = va("array is too large (%d > %d), need to increase sortable array size");
+    Scr_ParamError(0,pcVar4);
   }
-  iVar5 = Scr_GetObjectArray(uVar1,0x800,iVar3,&local_4c,&local_50);
-  if (iVar5 == 0) {
-    uVar1 = Scr_GetNameForType(local_50);
-    uVar1 = va(0xffffffff8207b348,local_4c,uVar1);
-    Scr_ParamError(0,uVar1);
+  iVar3 = Scr_GetObjectArray(uVar5,0x800,puVar1,&local_4c,&local_50);
+  if (iVar3 == 0) {
+    Scr_GetNameForType(local_50);
+    pcVar4 = va("element %i of array: type %s is not an object");
+    Scr_ParamError(0,pcVar4);
   }
-  Scr_GetVector(1,0xffffffff8359d60c);
+  Scr_GetVector(1,g_entitySortOrigin);
   Scr_ClearOutParams();
-  uVar8 = 0;
+  uVar5 = 0;
   if (uVar6 != 0) {
-    puVar7 = (undefined4 *)(iVar3 + -4);
-    iVar3 = iVar4;
+    puVar1 = puVar1 + -1;
+    pEVar8 = pEVar2;
     do {
-      iVar5 = Scr_GetObjectOrigin(puVar7[1],iVar3);
-      if (iVar5 == 0) {
-        uVar1 = va(0xffffffff8207b308,uVar8);
-        Scr_ParamError(0,uVar1);
+      iVar3 = Scr_GetObjectOrigin(puVar1[1],pEVar8->origin);
+      if (iVar3 == 0) {
+        pcVar4 = va("element %i of array: object\'s origin property is not a vector");
+        Scr_ParamError(0,pcVar4);
       }
-      puVar7 = puVar7 + 1;
-      uVar8 = uVar8 + 1;
-      *(undefined4 *)(iVar3 + 0xc) = *puVar7;
-      iVar3 = iVar3 + 0x10;
-    } while (uVar8 < uVar6);
+      puVar1 = puVar1 + 1;
+      uVar5 = uVar5 + 1;
+      pEVar8->obj = *puVar1;
+      pEVar8 = pEVar8 + 1;
+    } while (uVar5 < uVar6);
   }
-  iVar3 = uVar6 * 0x10 + iVar4;
-  std___Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
-            (iVar4,iVar3,iVar3 - iVar4 >> 4,0xffffffff8249a3f0);
+  std::_Sort<EntityOrigin_*,int,bool_(__cdecl*)(EntityOrigin_const_&,EntityOrigin_const_&)>
+            (pEVar2,pEVar2 + uVar6,(int)(pEVar2 + uVar6) - (int)pEVar2 >> 4,
+             CompareScriptObjectDistanceIncreasing);
   Scr_MakeArray();
   if (uVar6 != 0) {
-    puVar7 = (undefined4 *)(iVar4 + -4);
+    puVar1 = &pEVar2[-1].obj;
     do {
-      puVar7 = puVar7 + 4;
-      Scr_AddObject(*puVar7);
+      puVar1 = puVar1 + 4;
+      Scr_AddObject(*puVar1);
       Scr_AddArray();
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  LargeLocal___LargeLocal(auStack_48);
-  LargeLocal___LargeLocal(auStack_40);
+  LargeLocal::~LargeLocal(&LStack_48);
+  LargeLocal::~LargeLocal(aLStack_40);
   __restgprlr_26();
   return;
 }
@@ -11340,102 +12723,119 @@ void GScr_SortByDistance(void)
 
 // 8249A468  GScr_SetupLightEntity  (game/g_scr_main.cpp:11781)
 
-int GScr_SetupLightEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * GScr_SetupLightEntity(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  char *pcVar2;
   
-  iVar2 = GetEntity();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2e09,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2e09,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 4) != 10) {
-    uVar1 = SL_ConvertToString(*(undefined2 *)(iVar2 + 0x172));
-    va(0xffffffff8207a4f8,uVar1);
-    Scr_Error();
+  if ((pgVar1->s).eType != 10) {
+    SL_ConvertToString((uint)pgVar1->classname);
+    pcVar2 = va("Function can only be called on a \'light\' entity; actual classname is \'%s\'\n");
+    Scr_Error(pcVar2);
   }
-  return iVar2;
+  return pgVar1;
 }
 
 
 // 8249A4F0  GScr_GetLightIntensity  (game/g_scr_main.cpp:11804)
 
-void GScr_GetLightIntensity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetLightIntensity(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GScr_SetupLightEntity();
-  Scr_AddFloat((double)*(float *)(iVar1 + 0x58));
+  pgVar1 = GScr_SetupLightEntity(param_1);
+  Scr_AddFloat((pgVar1->s).lerp.u.turret.gunAngles[1]);
   return;
 }
 
 
 // 8249A518  GScr_SetLightIntensity  (game/g_scr_main.cpp:11824)
 
-void GScr_SetLightIntensity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetLightIntensity(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   double dVar2;
+  float fVar3;
   
-  iVar1 = GScr_SetupLightEntity();
-  dVar2 = (double)Scr_GetFloat(0);
+  pgVar1 = GScr_SetupLightEntity(param_1);
+  fVar3 = Scr_GetFloat(0);
+  dVar2 = (double)fVar3;
   if (dVar2 < -0.0010000000474974513) {
-    Scr_ParamError(0,0xffffffff8207a544);
+    Scr_ParamError(0,"intensity must be >= 0");
   }
   if (dVar2 < 0.0) {
     dVar2 = 0.0;
   }
-  *(float *)(iVar1 + 0x58) = (float)dVar2;
+  (pgVar1->s).lerp.u.turret.gunAngles[1] = (float)dVar2;
   return;
 }
 
 
 // 8249A598  GScr_IsRagdoll  (game/g_scr_main.cpp:11847)
 
-void GScr_IsRagdoll(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_IsRagdoll(scr_entref_t param_1)
 
 {
-  longlong lVar1;
-  undefined1 uVar2;
+  gentity_s *pgVar1;
+  bool bVar2;
   
-  lVar1 = GetEntity();
-  uVar2 = Com_IsRagdollTrajectory(lVar1 + 0xc);
-  Scr_AddInt(uVar2);
+  pgVar1 = GetEntity(param_1);
+  bVar2 = Com_IsRagdollTrajectory(&(pgVar1->s).lerp.pos);
+  Scr_AddInt((uint)bVar2);
   return;
 }
 
 
 // 8249A5C8  Scr_GetWeaponArray  (game/g_scr_main.cpp:11870)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_GetWeaponArray(void)
 
 {
-  ushort uVar1;
+  gentity_s *pgVar1;
   longlong lVar2;
-  ushort *puVar3;
+  EntHandle *this;
   
   __savegprlr_26();
   Scr_MakeArray();
-  puVar3 = &DAT_83581a48;
+  this = level.droppedWeaponCue;
   lVar2 = 0x20;
   do {
-    uVar1 = *puVar3;
-    if ((ulonglong)uVar1 != 0) {
-      if ((&DAT_83373503)[(uint)uVar1 * 0x280] == '\0') {
-        MyAssertHandler(0xffffffff8206b6f8,0x186,0,0xffffffff8206b6b0,0xffffffff8206b6c8,
-                        (ulonglong)uVar1 - 1);
-      }
+    if ((this->number != 0) &&
+       (*(char *)((int)&g_dummyHudCurrent + (uint)this->number * 0x280 + 0xb) == '\0')) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",0x186
+                      ,0,"%s\n\t(number - 1) = %i");
     }
-    if (*puVar3 != 0) {
-      EntHandle__ent(puVar3);
-      Scr_AddEntity();
+    if (this->number != 0) {
+      pgVar1 = EntHandle::ent(this);
+      Scr_AddEntity(pgVar1);
       Scr_AddArray();
     }
     lVar2 = lVar2 + -1;
-    puVar3 = puVar3 + 2;
+    this = this + 1;
   } while (lVar2 != 0);
   __restgprlr_26();
   return;
@@ -11444,23 +12844,23 @@ void Scr_GetWeaponArray(void)
 
 // 8249A680  Scr_SetOrigin  (game/g_scr_main.cpp:11887)
 
-void Scr_SetOrigin(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_SetOrigin(gentity_s *param_1,int param_2)
 
 {
-  uint local_28;
+  float local_28;
   uint local_24;
   uint local_20;
   
   Scr_GetVector(0,&local_28);
-  if ((local_28 & 0x7f800000) != 0x7f800000) {
-    if ((local_24 & 0x7f800000) != 0x7f800000) {
-      if ((local_20 & 0x7f800000) != 0x7f800000) goto LAB_8249a6f8;
-    }
+  if (((((uint)local_28 & 0x7f800000) == 0x7f800000) || ((local_24 & 0x7f800000) == 0x7f800000)) ||
+     ((local_20 & 0x7f800000) == 0x7f800000)) {
+    Scr_Error("origin being set to NAN.");
   }
-  Scr_Error(0xffffffff8207a55c);
-LAB_8249a6f8:
   G_SetOrigin(param_1,&local_28);
-  if (*(char *)(param_1 + 0x100) != '\0') {
+  if ((param_1->r).isLinked != '\0') {
     SV_LinkEntity(param_1);
   }
   return;
@@ -11469,109 +12869,124 @@ LAB_8249a6f8:
 
 // 8249A730  Scr_SetAngles  (game/g_scr_main.cpp:11914)
 
-void Scr_SetAngles(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_SetAngles(gentity_s *param_1,int param_2)
 
 {
-  undefined1 auStack_20 [16];
+  float afStack_20 [4];
   
-  Scr_GetVector(0,auStack_20);
-  G_SetAngle(param_1,auStack_20);
+  Scr_GetVector(0,afStack_20);
+  G_SetAngle(param_1,afStack_20);
   return;
 }
 
 
 // 8249A770  GScr_CameraLinkTo  (game/g_scr_main.cpp:11940)
 
-void GScr_CameraLinkTo(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_CameraLinkTo(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 uVar3;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
+  gentity_s *pgVar3;
+  char *pcVar4;
+  int iVar5;
   
-  iVar1 = GetPlayerEntity();
-  puVar2 = (undefined4 *)Scr_GetEntity(0);
-  iVar1 = *(int *)(iVar1 + 0x158);
-  *(uint *)(iVar1 + 0x10) = *(uint *)(iVar1 + 0x10) | 2;
-  *(undefined4 *)(iVar1 + 0x44) = *puVar2;
-  Scr_GetString(1);
-  uVar3 = G_TagIndex();
-  *(undefined4 *)(iVar1 + 0x48) = uVar3;
+  pgVar2 = GetPlayerEntity(param_1);
+  pgVar3 = Scr_GetEntity(0);
+  pgVar1 = pgVar2->client;
+  (pgVar1->ps).otherFlags = (pgVar1->ps).otherFlags | 2;
+  (pgVar1->ps).remoteEyesEnt = (pgVar3->s).number;
+  pcVar4 = Scr_GetString(1);
+  iVar5 = G_TagIndex(pcVar4);
+  (pgVar1->ps).remoteEyesTagname = iVar5;
   return;
 }
 
 
 // 8249A7D0  GScr_CameraUnlink  (game/g_scr_main.cpp:11969)
 
-void GScr_CameraUnlink(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_CameraUnlink(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetPlayerEntity();
-  *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) = *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) & 0xfffffffd
-  ;
+  pgVar1 = GetPlayerEntity(param_1);
+  (pgVar1->client->ps).otherFlags = (pgVar1->client->ps).otherFlags & 0xfffffffd;
   return;
 }
 
 
 // 8249A800  GScrCmd_SetWaterSheeting  (game/g_scr_main.cpp:11991)
 
-void GScrCmd_SetWaterSheeting(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScrCmd_SetWaterSheeting(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  double dVar4;
+  gentity_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  iVar2 = GetEntity();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2edd,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2edd,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 4) != 1) {
-    Scr_Error(0xffffffff8207a578);
+  if ((pgVar1->s).eType != 1) {
+    Scr_Error("SetWaterSheeting called on an ent that\'s not a player.");
   }
-  uVar1 = Scr_GetInt(0);
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 == 2) {
-    dVar4 = (double)Scr_GetFloat(1);
-    iVar3 = (int)(dVar4 * 1000.0);
+  Scr_GetInt(0);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 == 2) {
+    Scr_GetFloat(1);
   }
-  else {
-    iVar3 = 0;
-  }
-  uVar1 = va(0xffffffff8206eae0,0x50,uVar1,iVar3);
-  SV_GameSendServerCommand(*(undefined4 *)(iVar2 + 0x90),1,uVar1);
+  pcVar3 = va("%c %i %i");
+  SV_GameSendServerCommand((pgVar1->s).clientNum,SV_CMD_RELIABLE,pcVar3);
   return;
 }
 
 
 // 8249A8E0  GScr_ControlsLinkTo  (game/g_scr_main.cpp:12029)
 
-void GScr_ControlsLinkTo(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_ControlsLinkTo(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   int iVar2;
-  undefined4 *puVar3;
+  scr_entref_t sVar3;
+  gentity_s *pgVar4;
+  gentity_s *pgVar5;
   
-  __savegprlr_29();
-  iVar2 = GetPlayerEntity();
-  iVar1 = *(int *)(iVar2 + 0x158);
-  puVar3 = (undefined4 *)Scr_GetEntity(0);
-  if ((*(uint *)(iVar1 + 0xc) & 0x80000) != 0) {
-    Scr_Error(0xffffffff8207a5b0);
+  sVar3 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar4 = GetPlayerEntity(sVar3);
+  pgVar1 = pgVar4->client;
+  pgVar5 = Scr_GetEntity(0);
+  if (((pgVar1->ps).pm_flags & 0x80000U) != 0) {
+    Scr_Error("Player\'s controls are already linked.");
   }
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 0x80000;
-  *(undefined4 *)(iVar1 + 0x4c) = *puVar3;
-  EntHandle__setEnt(puVar3 + 0x84,iVar2);
-  iVar1 = puVar3[1];
-  if (iVar1 == 4) {
-    puVar3[0x72] = puVar3[0x72] | 0x80;
+  (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags | 0x80000;
+  (pgVar1->ps).remoteControlEnt = (pgVar5->s).number;
+  EntHandle::setEnt(&pgVar5->remoteControlledOwner,pgVar4);
+  iVar2 = (pgVar5->s).eType;
+  if (iVar2 == 4) {
+    (pgVar5->field31_0x1ac).item[1].clipAmmoCount[1] =
+         (pgVar5->field31_0x1ac).item[1].clipAmmoCount[1] | 0x80;
   }
-  else if ((iVar1 == 0xc) || (iVar1 == 0xe)) {
-    VEH_PlayerRemoteControl(puVar3,iVar2);
+  else if ((iVar2 == 0xc) || (iVar2 == 0xe)) {
+    VEH_PlayerRemoteControl(pgVar5,pgVar4);
     __restgprlr_29();
     return;
   }
@@ -11582,40 +12997,46 @@ void GScr_ControlsLinkTo(void)
 
 // 8249A988  GScr_ControlsUnlink  (game/g_scr_main.cpp:12071)
 
-void GScr_ControlsUnlink(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_ControlsUnlink(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
+  scr_entref_t sVar4;
+  gentity_s *pgVar5;
   
-  __savegprlr_29();
-  iVar4 = GetPlayerEntity();
-  iVar1 = *(int *)(iVar4 + 0x158);
-  if ((*(uint *)(iVar1 + 0xc) & 0x80000) == 0) {
-    Com_PrintWarning(0x17,0xffffffff8207a608);
+  sVar4 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar5 = GetPlayerEntity(sVar4);
+  pgVar1 = pgVar5->client;
+  if (((pgVar1->ps).pm_flags & 0x80000U) == 0) {
+    Com_PrintWarning(0x17,
+                     "WARNING: ControlsUnlink() called on a player who\'s controls were not linked.\n"
+                    );
     __restgprlr_29();
     return;
   }
-  if (0x7ff < *(uint *)(iVar1 + 0x4c)) {
-    MyAssertHandler(0xffffffff82076e74,0x2f35,0,0xffffffff82000f98,0xffffffff8207a5d8);
+  if (0x7ff < (uint)(pgVar1->ps).remoteControlEnt) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2f35,0,
+                    "%s");
   }
-  iVar2 = *(int *)(iVar1 + 0x4c);
-  iVar5 = iVar2 * 0x280;
-  if ((&DAT_83373783)[iVar5] != '\0') {
-    EntHandle__setEnt(iVar5 + -0x7cc8c770,0);
-    iVar3 = (&DAT_83373684)[iVar2 * 0xa0];
+  iVar2 = (pgVar1->ps).remoteControlEnt;
+  if (g_entities[iVar2].r.isInUse != '\0') {
+    EntHandle::setEnt(&g_entities[iVar2].remoteControlledOwner,(gentity_s *)0x0);
+    iVar3 = g_entities[iVar2].s.eType;
     if (iVar3 == 4) {
-      *(uint *)(&DAT_83373848 + iVar5) = *(uint *)(&DAT_83373848 + iVar5) & 0xffffff7f;
+      g_entities[iVar2].field31_0x1ac.item[1].clipAmmoCount[1] =
+           g_entities[iVar2].field31_0x1ac.item[1].clipAmmoCount[1] & 0xffffff7f;
     }
     else if ((iVar3 == 0xc) || (iVar3 == 0xe)) {
-      VEH_PlayerRemoteControlOff(&DAT_83373680 + iVar2 * 0xa0,iVar4);
+      VEH_PlayerRemoteControlOff(g_entities + iVar2,pgVar5);
     }
   }
-  *(undefined4 *)(iVar1 + 0x4c) = 0x7ff;
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xfff7ffff;
+  (pgVar1->ps).remoteControlEnt = 0x7ff;
+  (pgVar1->ps).pm_flags = (pgVar1->ps).pm_flags & 0xfff7ffff;
   __restgprlr_29();
   return;
 }
@@ -11623,13 +13044,19 @@ void GScr_ControlsUnlink(void)
 
 // 8249AA80  SetupVehicleCollsion  (game/g_scr_main.cpp:12111)
 
-void SetupVehicleCollsion(double param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SetupVehicleCollsion(gentity_s *param_1,float param_2)
 
 {
-  float fVar1;
+  byte bVar1;
   uint uVar2;
-  double dVar3;
-  double dVar4;
+  int iVar3;
+  float *pfVar4;
+  double dVar5;
+  double dVar6;
+  float fVar7;
   float local_50;
   float local_4c;
   float local_48;
@@ -11637,22 +13064,25 @@ void SetupVehicleCollsion(double param_1,int param_2)
   float local_3c;
   float local_38;
   
-  uVar2 = *(uint *)(param_2 + 0x78);
-  *(undefined4 *)(param_2 + 0x18c) = 0x800211;
-  *(byte *)(param_2 + 0x102) = *(byte *)(param_2 + 0x102) | 4;
-  *(uint *)(param_2 + 0x11c) = *(uint *)(param_2 + 0x11c) | 0x8020c0;
-  if (uVar2 != 0) {
-    dVar3 = (double)Vec2DistanceSq((float *)(param_2 + 0x138),
-                                   ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 &
-                                   0x1ffffff) * 0x80 + -0x7cc8c848);
-    dVar4 = (double)(float)(param_1 + 15.125);
-    if (dVar3 < (double)(float)(dVar4 * dVar4)) {
-      AngleVectors(param_2 + 0x144,&local_50,0,0);
-      fVar1 = (float)(dVar4 - (double)(float)SQRT(dVar3));
-      local_40 = local_50 * fVar1 + *(float *)(param_2 + 0x138);
-      local_3c = fVar1 * local_4c + *(float *)(param_2 + 0x13c);
-      local_38 = local_48 * fVar1 + *(float *)(param_2 + 0x140);
-      G_SetOrigin(param_2,&local_40);
+  dVar6 = (double)param_2;
+  uVar2 = (param_1->r).contents;
+  bVar1 = (param_1->r).svFlags;
+  iVar3 = (param_1->s).otherEntityNum;
+  param_1->clipmask = 0x800211;
+  (param_1->r).svFlags = bVar1 | 4;
+  (param_1->r).contents = uVar2 | 0x8020c0;
+  if (iVar3 != 0) {
+    pfVar4 = (param_1->r).currentOrigin;
+    fVar7 = Vec2DistanceSq(pfVar4,g_entities[iVar3].r.currentOrigin);
+    dVar5 = (double)fVar7;
+    dVar6 = (double)(float)(dVar6 + 15.125);
+    if (dVar5 < (double)(float)(dVar6 * dVar6)) {
+      AngleVectors((param_1->r).currentAngles,&local_50,(float *)0x0,(float *)0x0);
+      fVar7 = (float)(dVar6 - (double)(float)SQRT(dVar5));
+      local_40 = local_50 * fVar7 + *pfVar4;
+      local_3c = fVar7 * local_4c + (param_1->r).currentOrigin[1];
+      local_38 = local_48 * fVar7 + (param_1->r).currentOrigin[2];
+      G_SetOrigin(param_1,&local_40);
     }
   }
   return;
@@ -11661,114 +13091,132 @@ void SetupVehicleCollsion(double param_1,int param_2)
 
 // 8249AB98  GScr_MakeVehicleSolidCapsule  (game/g_scr_main.cpp:12152)
 
-void GScr_MakeVehicleSolidCapsule(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MakeVehicleSolidCapsule(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   uint uVar2;
   double dVar3;
   double dVar4;
   double dVar5;
+  float fVar6;
   
-  iVar1 = GetEntity();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2f7f,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2f7f,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0x160) == 0) {
-    Scr_Error(0xffffffff8207a69c);
+  if (pgVar1->vehicle == (Vehicle *)0x0) {
+    Scr_Error("MakeVehicleSolidCapsule must be called on a vehicle entity.\n");
   }
   uVar2 = Scr_GetNumParam();
   if (uVar2 < 3) {
-    Scr_Error(0xffffffff8207a65c);
+    Scr_Error("Usage: MakeVehicleSolidCapsule( <radius>, <midz>, <height> ).");
   }
-  dVar3 = (double)Scr_GetFloat(0);
-  dVar4 = (double)Scr_GetFloat(1);
-  dVar5 = (double)Scr_GetFloat(2);
-  SetupVehicleCollsion(dVar3,iVar1);
-  *(float *)(iVar1 + 0x10c) = (float)dVar4;
-  *(undefined4 *)(iVar1 + 0x104) = 0;
-  *(undefined4 *)(iVar1 + 0x108) = 0;
-  *(float *)(iVar1 + 0x110) = (float)dVar3;
-  *(float *)(iVar1 + 0x114) = (float)dVar3;
-  *(float *)(iVar1 + 0x118) = (float)dVar5;
-  SV_LinkEntity(iVar1);
+  fVar6 = Scr_GetFloat(0);
+  dVar3 = (double)fVar6;
+  fVar6 = Scr_GetFloat(1);
+  dVar4 = (double)fVar6;
+  fVar6 = Scr_GetFloat(2);
+  dVar5 = (double)fVar6;
+  SetupVehicleCollsion(pgVar1,(float)dVar3);
+  (pgVar1->r).box.midPoint[2] = (float)dVar4;
+  (pgVar1->r).box.midPoint[0] = 0.0;
+  (pgVar1->r).box.midPoint[1] = 0.0;
+  (pgVar1->r).box.halfSize[0] = (float)dVar3;
+  (pgVar1->r).box.halfSize[1] = (float)dVar3;
+  (pgVar1->r).box.halfSize[2] = (float)dVar5;
+  SV_LinkEntity(pgVar1);
   return;
 }
 
 
 // 8249AC98  GScr_MakeVehicleSolidSphere  (game/g_scr_main.cpp:12191)
 
-void GScr_MakeVehicleSolidSphere(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_MakeVehicleSolidSphere(scr_entref_t param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
+  gentity_s *pgVar1;
+  uint uVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
+  float fVar6;
   
-  iVar1 = GetEntity();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x2fa5,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x2fa5,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0x160) == 0) {
-    Scr_Error(0xffffffff8207a708);
+  if (pgVar1->vehicle == (Vehicle *)0x0) {
+    Scr_Error("MakeVehicleSolidSphere must be called on a vehicle entity.\n");
   }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 == 0) {
-    Scr_Error(0xffffffff8207a6dc);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 == 0) {
+    Scr_Error("Usage: MakeVehicleSolidSphere( <radius> ).");
   }
-  dVar4 = (double)Scr_GetFloat(0);
-  dVar5 = 0.0;
-  dVar6 = dVar5;
-  uVar3 = Scr_GetNumParam();
-  if (1 < uVar3) {
-    dVar5 = (double)Scr_GetFloat(1);
+  fVar6 = Scr_GetFloat(0);
+  dVar3 = (double)fVar6;
+  dVar4 = 0.0;
+  dVar5 = dVar4;
+  uVar2 = Scr_GetNumParam();
+  if (1 < uVar2) {
+    fVar6 = Scr_GetFloat(1);
+    dVar4 = (double)fVar6;
   }
-  SetupVehicleCollsion(dVar4,iVar1);
-  *(float *)(iVar1 + 0x104) = (float)dVar6;
-  *(float *)(iVar1 + 0x108) = (float)dVar6;
-  *(float *)(iVar1 + 0x10c) = (float)dVar5;
-  *(float *)(iVar1 + 0x110) = (float)dVar4;
-  *(float *)(iVar1 + 0x114) = (float)dVar4;
-  *(float *)(iVar1 + 0x118) = (float)dVar4;
-  SV_LinkEntity(iVar1);
+  SetupVehicleCollsion(pgVar1,(float)dVar3);
+  (pgVar1->r).box.midPoint[0] = (float)dVar5;
+  (pgVar1->r).box.midPoint[1] = (float)dVar5;
+  (pgVar1->r).box.midPoint[2] = (float)dVar4;
+  (pgVar1->r).box.halfSize[0] = (float)dVar3;
+  (pgVar1->r).box.halfSize[1] = (float)dVar3;
+  (pgVar1->r).box.halfSize[2] = (float)dVar3;
+  SV_LinkEntity(pgVar1);
   return;
 }
 
 
 // 8249AD98  GScr_RemoteControlVehicle  (game/g_scr_main.cpp:12232)
 
-void GScr_RemoteControlVehicle(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteControlVehicle(scr_entref_t param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  gclient_s *pgVar2;
+  scr_entref_t sVar3;
+  gentity_s *pgVar4;
+  gentity_s *pgVar5;
   
-  __savegprlr_28();
-  iVar3 = GetPlayerEntity();
-  puVar4 = (undefined4 *)Scr_GetEntity(0);
-  if ((puVar4[1] != 0xe) && (puVar4[1] != 0xc)) {
-    Scr_ParamError(0,0xffffffff8207a744);
+  sVar3 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar4 = GetPlayerEntity(sVar3);
+  pgVar5 = Scr_GetEntity(0);
+  iVar1 = (pgVar5->s).eType;
+  if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
+    Scr_ParamError(0,"Cannot control an entity that isn\'t a vehicle or helicopter");
   }
-  iVar1 = *(int *)(iVar3 + 0x158);
-  uVar2 = *(uint *)(iVar1 + 0xac);
-  if (uVar2 != 0x7ff) {
-    EntHandle__setEnt(((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-                      -0x7cc8c830,0);
+  pgVar2 = pgVar4->client;
+  iVar1 = (pgVar2->ps).vehicleState.entity;
+  if (iVar1 != 0x7ff) {
+    EntHandle::setEnt(&g_entities[iVar1].r.ownerNum,(gentity_s *)0x0);
   }
-  memset((undefined4 *)(iVar1 + 0xac),0,0x48);
-  *(undefined4 *)(iVar1 + 0xac) = *puVar4;
-  EntHandle__setEnt(puVar4 + 0x54,iVar3);
-  *(undefined4 *)(iVar1 + 0xb4) = puVar4[0x4e];
-  *(undefined4 *)(iVar1 + 0xb8) = puVar4[0x4f];
-  *(undefined4 *)(iVar1 + 0xbc) = puVar4[0x50];
-  *(undefined4 *)(iVar1 + 0xc0) = puVar4[0x51];
-  *(undefined4 *)(iVar1 + 0xc4) = puVar4[0x52];
-  *(undefined4 *)(iVar1 + 200) = puVar4[0x53];
+  memset();
+  (pgVar2->ps).vehicleState.entity = (pgVar5->s).number;
+  EntHandle::setEnt(&(pgVar5->r).ownerNum,pgVar4);
+  (pgVar2->ps).vehicleState.origin[0] = (pgVar5->r).currentOrigin[0];
+  (pgVar2->ps).vehicleState.origin[1] = (pgVar5->r).currentOrigin[1];
+  (pgVar2->ps).vehicleState.origin[2] = (pgVar5->r).currentOrigin[2];
+  (pgVar2->ps).vehicleState.angles[0] = (pgVar5->r).currentAngles[0];
+  (pgVar2->ps).vehicleState.angles[1] = (pgVar5->r).currentAngles[1];
+  (pgVar2->ps).vehicleState.angles[2] = (pgVar5->r).currentAngles[2];
   __restgprlr_28();
   return;
 }
@@ -11776,79 +13224,94 @@ void GScr_RemoteControlVehicle(void)
 
 // 8249AE70  GScr_RemoteControlVehicleOff  (game/g_scr_main.cpp:12274)
 
-void GScr_RemoteControlVehicleOff(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteControlVehicleOff(scr_entref_t param_1)
 
 {
-  uint uVar1;
+  gclient_s *pgVar1;
   int iVar2;
+  gentity_s *pgVar3;
   
-  iVar2 = GetPlayerEntity();
-  iVar2 = *(int *)(iVar2 + 0x158);
-  uVar1 = *(uint *)(iVar2 + 0xac);
-  if (uVar1 != 0x7ff) {
-    EntHandle__setEnt(((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-                      -0x7cc8c830,0);
-    *(undefined4 *)(iVar2 + 0xac) = 0x7ff;
+  pgVar3 = GetPlayerEntity(param_1);
+  pgVar1 = pgVar3->client;
+  iVar2 = (pgVar1->ps).vehicleState.entity;
+  if (iVar2 != 0x7ff) {
+    EntHandle::setEnt(&g_entities[iVar2].r.ownerNum,(gentity_s *)0x0);
+    (pgVar1->ps).vehicleState.entity = 0x7ff;
     return;
   }
-  *(undefined4 *)(iVar2 + 0xac) = 0x7ff;
+  (pgVar1->ps).vehicleState.entity = 0x7ff;
   return;
 }
 
 
 // 8249AEF0  GScr_IsFiringVehicleTurret  (game/g_scr_main.cpp:12304)
 
-void GScr_IsFiringVehicleTurret(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_IsFiringVehicleTurret(scr_entref_t param_1)
 
 {
+  gentity_s *pgVar1;
   int iVar2;
-  undefined8 uVar1;
+  int iVar3;
   
-  iVar2 = GetEntity();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x3014,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3014,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x15c) == 0) {
-    Scr_Error(0xffffffff8207a780);
+  if (pgVar1->turret == (Turret *)0x0) {
+    Scr_Error("IsVehicleTurretFiring must be called on a turret entity\n");
   }
-  if (*(char *)(*(int *)(iVar2 + 0x15c) + 0xa8) != '\0') {
-    iVar2 = Turret_CanShoot(iVar2);
-    uVar1 = 1;
+  if (pgVar1->turret->triggerDown != false) {
+    iVar2 = Turret_CanShoot(pgVar1);
+    iVar3 = 1;
     if (iVar2 != 0) goto LAB_8249af74;
   }
-  uVar1 = 0;
+  iVar3 = 0;
 LAB_8249af74:
-  Scr_AddBool(uVar1);
+  Scr_AddBool(iVar3);
   return;
 }
 
 
 // 8249AF90  GScr_DriveVehicleAndControlTurret  (game/g_scr_main.cpp:12330)
 
-void GScr_DriveVehicleAndControlTurret(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DriveVehicleAndControlTurret(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  Vehicle *pVVar1;
+  scr_entref_t sVar2;
+  gentity_s *pgVar3;
+  gentity_s *pgVar4;
   
-  __savegprlr_28();
-  uVar2 = GetPlayerEntity();
-  iVar3 = Scr_GetEntity(0);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x3030,0,0xffffffff82000f98,0xffffffff8207a7f0);
+  sVar2 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar3 = GetPlayerEntity(sVar2);
+  pgVar4 = Scr_GetEntity(0);
+  if (pgVar4 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3030,0,
+                    "%s");
   }
-  if (*(int *)(iVar3 + 4) == 0xe) {
-    VEH_LinkPlayerTurretControlOnly(iVar3,uVar2);
-    iVar1 = *(int *)(iVar3 + 0x160);
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82076e74,0x3039,0,0xffffffff82000f98,0xffffffff82026d30);
+  if ((pgVar4->s).eType == 0xe) {
+    VEH_LinkPlayerTurretControlOnly(pgVar4,pgVar3);
+    pVVar1 = pgVar4->vehicle;
+    if (pVVar1 == (Vehicle *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3039,
+                      0,"%s");
     }
-    *(undefined4 *)(iVar1 + 4) = 5;
-    if ((*(uint *)(iVar3 + 0x18c) & 0x10000) == 0) {
-      MyAssertHandler(0xffffffff82076e74,0x303d,0,0xffffffff82000f98,0xffffffff8207a7bc);
+    pVVar1->drivingState = VEH_DRIVE_PLAYER;
+    if ((pgVar4->clipmask & 0x10000U) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x303d,
+                      0,"%s");
     }
-    *(uint *)(iVar3 + 0x18c) = *(uint *)(iVar3 + 0x18c) & 0xfffeffff;
+    pgVar4->clipmask = pgVar4->clipmask & 0xfffeffff;
   }
   __restgprlr_28();
   return;
@@ -11857,22 +13320,26 @@ void GScr_DriveVehicleAndControlTurret(void)
 
 // 8249B070  GScr_DriveVehicleAndControlTurretOff  (game/g_scr_main.cpp:12373)
 
-void GScr_DriveVehicleAndControlTurretOff(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_DriveVehicleAndControlTurretOff(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  gentity_s *pgVar1;
+  gentity_s *pgVar2;
   
-  uVar1 = GetPlayerEntity();
-  iVar2 = Scr_GetEntity(0);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x305b,0,0xffffffff82000f98,0xffffffff8207a7f0);
+  pgVar1 = GetPlayerEntity(param_1);
+  pgVar2 = Scr_GetEntity(0);
+  if (pgVar2 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x305b,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 4) == 0xe) {
-    if (*(int *)(*(int *)(iVar2 + 0x160) + 4) == 5) {
-      *(undefined4 *)(*(int *)(iVar2 + 0x160) + 4) = 0;
+  if ((pgVar2->s).eType == 0xe) {
+    if (pgVar2->vehicle->drivingState == VEH_DRIVE_PLAYER) {
+      pgVar2->vehicle->drivingState = VEH_DRIVE_NONE;
     }
-    VEH_UnlinkPlayer(iVar2,uVar1);
+    VEH_UnlinkPlayer(pgVar2,pgVar1);
   }
   return;
 }
@@ -11880,28 +13347,32 @@ void GScr_DriveVehicleAndControlTurretOff(void)
 
 // 8249B110  GScr_GetPlayerSetting  (game/g_scr_main.cpp:12412)
 
-void GScr_GetPlayerSetting(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetPlayerSetting(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  iVar2 = GetPlayerEntity();
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    Scr_Error(0xffffffff8207a858);
+  pgVar1 = GetPlayerEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_Error("GetPlayerSetting must be called on a client entity\n");
   }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 < 1) {
-    Scr_Error(0xffffffff8207a820);
+  uVar2 = Scr_GetNumParam();
+  if ((int)uVar2 < 1) {
+    Scr_Error("GetPlayerSetting() requires the name of the setting\n");
   }
-  uVar1 = Scr_GetString(0);
-  iVar2 = GamerProfile_GetDvarSettingByName();
-  if (iVar2 != 0) {
-    Scr_AddString();
+  pcVar3 = Scr_GetString(0);
+  pcVar3 = GamerProfile_GetDvarSettingByName(pcVar3);
+  if (pcVar3 != (char *)0x0) {
+    Scr_AddString(pcVar3);
     return;
   }
-  uVar1 = va(0xffffffff8207a800,uVar1);
-  Scr_ParamError(0,uVar1);
+  pcVar3 = va("%s is not a valid setting name!");
+  Scr_ParamError(0,pcVar3);
   Scr_AddUndefined();
   return;
 }
@@ -11909,67 +13380,71 @@ void GScr_GetPlayerSetting(void)
 
 // 8249B1B8  GScr_GetLocalPlayerProfileData  (game/g_scr_main.cpp:12553)
 
-void GScr_GetLocalPlayerProfileData(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GScr_GetLocalPlayerProfileData(scr_entref_t param_1)
 
 {
-  undefined4 *puVar4;
-  char cVar6;
+  gentity_s *pgVar2;
+  bool bVar6;
+  uint uVar3;
+  char *pcVar4;
   int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  uint local_20;
-  float fStack_1c;
+  GamerProfileData GVar1;
+  GamerProfileDataType local_20;
+  GamerProfileDataUnion GStack_1c;
   
-  puVar4 = (undefined4 *)GetPlayerEntity();
-  if (puVar4[0x56] == 0) {
-    Scr_Error(0xffffffff8207a928);
+  pgVar2 = GetPlayerEntity(param_1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("GetLocalPlayerProfileData() must be called on a client entity\n");
   }
-  cVar6 = CoOp_IsClientNumLocal(*puVar4);
-  if (cVar6 != '\0') {
-    iVar5 = Scr_GetNumParam();
-    if (iVar5 == 0) {
-      Scr_Error(0xffffffff8207a8e8);
+  bVar6 = CoOp_IsClientNumLocal((pgVar2->s).number);
+  if (bVar6) {
+    uVar3 = Scr_GetNumParam();
+    if (uVar3 == 0) {
+      Scr_Error("GetLocalPlayerProfileData() requires the name of the setting\n");
     }
-    uVar1 = Scr_GetString(0);
-    uVar2 = CL_ControllerIndexFromClientNum(*puVar4);
-    uVar3 = GamerProfile_GetDataByName(uVar2,uVar1);
-    local_20 = (uint)(uVar3 >> 0x20);
+    pcVar4 = Scr_GetString(0);
+    iVar5 = CL_ControllerIndexFromClientNum((pgVar2->s).number);
+    GVar1 = GamerProfile_GetDataByName(iVar5,pcVar4);
+    local_20 = GVar1.type;
     if (local_20 < 8) {
-      if (local_20 == 0) {
-        uVar1 = va(0xffffffff8207a88c,uVar1);
+      if (local_20 == TYPE_INVALID) {
+        pcVar4 = va("Invalid profile data %s for GetLocalPlayerProfileData()");
       }
       else {
-        fStack_1c._0_1_ = (undefined1)(uVar3 >> 0x18);
-        if (local_20 == 1) {
-          Scr_AddInt(fStack_1c._0_1_);
+        GStack_1c._0_1_ = GVar1.u._0_1_;
+        if (local_20 == TYPE_BYTE) {
+          Scr_AddInt((uint)(byte)GStack_1c._0_1_);
           return;
         }
-        if (local_20 == 2) {
-          Scr_AddBool(fStack_1c._0_1_);
+        if (local_20 == TYPE_BOOL) {
+          Scr_AddBool((uint)(byte)GStack_1c._0_1_);
           return;
         }
-        if (local_20 == 3) {
-          fStack_1c._0_2_ = (undefined2)(uVar3 >> 0x10);
-          Scr_AddInt(fStack_1c._0_2_);
+        if (local_20 == TYPE_SHORT) {
+          GStack_1c._0_2_ = GVar1.u._0_2_;
+          Scr_AddInt(SEXT24(GStack_1c.intVal._0_2_));
           return;
         }
-        fStack_1c = (float)uVar3;
-        if (local_20 == 4) {
-          Scr_AddInt(uVar3 & 0xffffffff);
+        GStack_1c = GVar1.u;
+        if (local_20 == TYPE_INT) {
+          Scr_AddInt(GStack_1c.intVal);
           return;
         }
-        if (local_20 == 5) {
-          Scr_AddFloat((double)fStack_1c);
+        if (local_20 == TYPE_FLOAT) {
+          Scr_AddFloat(GStack_1c.floatVal);
           return;
         }
-        if (local_20 == 6) {
-          Scr_AddString(uVar3 & 0xffffffff);
+        if (local_20 == TYPE_STRING) {
+          Scr_AddString(GStack_1c.stringVal);
           return;
         }
-        uVar1 = 0xffffffff8207a8c4;
+        pcVar4 = "Cannot get bitfields from profile";
       }
-      Scr_Error(uVar1);
+      Scr_Error(pcVar4);
     }
   }
   return;
@@ -11978,83 +13453,90 @@ void GScr_GetLocalPlayerProfileData(void)
 
 // 8249B350  GScr_SetLocalPlayerProfileData  (game/g_scr_main.cpp:12653)
 
-void GScr_SetLocalPlayerProfileData(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GScr_SetLocalPlayerProfileData(scr_entref_t param_1)
 
 {
-  bool bVar1;
-  float fVar2;
-  undefined4 *puVar7;
-  char cVar11;
-  uint uVar8;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  undefined2 uVar10;
-  undefined4 uVar9;
-  double dVar12;
+  GamerProfileData GVar1;
+  scr_entref_t sVar3;
+  gentity_s *pgVar4;
+  bool bVar10;
+  uint uVar5;
+  char *pcVar6;
+  int iVar7;
+  longlong lVar2;
+  int iVar9;
+  float fVar11;
   char cStack_2c;
   undefined1 uStack_2b;
   undefined2 uStack_2a;
+  GamerProfileDataType GVar8;
   
-  __savegprlr_29();
-  puVar7 = (undefined4 *)GetPlayerEntity();
-  if (puVar7[0x56] == 0) {
-    Scr_Error(0xffffffff8207aa08);
+  sVar3 = (scr_entref_t)__savegprlr_29(param_1);
+  pgVar4 = GetPlayerEntity(sVar3);
+  if (pgVar4->client == (gclient_s *)0x0) {
+    Scr_Error("SetLocalPlayerProfileData() must be called on a client entity\n");
   }
-  cVar11 = CoOp_IsClientNumLocal(*puVar7);
-  if (cVar11 != '\0') {
-    uVar8 = Scr_GetNumParam();
-    if (uVar8 < 2) {
-      Scr_Error(0xffffffff8207a9c0);
+  bVar10 = CoOp_IsClientNumLocal((pgVar4->s).number);
+  if (bVar10) {
+    uVar5 = Scr_GetNumParam();
+    if (uVar5 < 2) {
+      Scr_Error("SetLocalPlayerProfileData() requires the name of the setting and value\n");
     }
-    uVar3 = Scr_GetString(0);
-    uVar4 = GamerProfile_GetDataIndexByName();
-    if ((int)uVar4 < 0) {
-      va(0xffffffff8207a988,uVar3);
-      Scr_Error();
+    pcVar6 = Scr_GetString(0);
+    iVar7 = GamerProfile_GetDataIndexByName(pcVar6);
+    if (iVar7 < 0) {
+      pcVar6 = va("invalid setting %s for SetLocalPlayerProfileData()");
+      Scr_Error(pcVar6);
     }
-    lVar5 = GamerProfile_GetDataType(uVar4);
-    if ((lVar5 - 1U & 0xffffffff) < 7) {
-      bVar1 = (int)(lVar5 - 1U) != 0;
-      if (lVar5 == 2 && bVar1) {
-        lVar6 = Scr_GetInt(1);
-        cStack_2c = '\x01' - (lVar6 == 0);
+    GVar8 = GamerProfile_GetDataType(iVar7);
+    lVar2 = (longlong)(int)GVar8;
+    if ((lVar2 - 1U & 0xffffffff) < 7) {
+      bVar10 = (int)(lVar2 - 1U) != 0;
+      if (lVar2 == 2 && bVar10) {
+        iVar9 = Scr_GetInt(1);
+        cStack_2c = '\x01' - (iVar9 == 0);
       }
-      else if (lVar5 == 3 && bVar1) {
-        uVar10 = Scr_GetInt(1);
-        cStack_2c = (char)((ushort)uVar10 >> 8);
-        uStack_2b = (undefined1)uVar10;
+      else if (lVar2 == 3 && bVar10) {
+        iVar9 = Scr_GetInt(1);
+        cStack_2c = (char)((uint)iVar9 >> 8);
+        uStack_2b = (undefined1)iVar9;
       }
-      else if (lVar5 == 4 && bVar1) {
-        uVar9 = Scr_GetInt(1);
-        cStack_2c = (char)((uint)uVar9 >> 0x18);
-        uStack_2b = (undefined1)((uint)uVar9 >> 0x10);
-        uStack_2a = (undefined2)uVar9;
+      else if (lVar2 == 4 && bVar10) {
+        iVar9 = Scr_GetInt(1);
+        cStack_2c = (char)((uint)iVar9 >> 0x18);
+        uStack_2b = (undefined1)((uint)iVar9 >> 0x10);
+        uStack_2a = (undefined2)iVar9;
       }
-      else if (lVar5 == 5 && bVar1) {
-        dVar12 = (double)Scr_GetFloat(1);
-        fVar2 = (float)dVar12;
-        cStack_2c = (char)((uint)fVar2 >> 0x18);
-        uStack_2b = (undefined1)((uint)fVar2 >> 0x10);
-        uStack_2a = SUB42(fVar2,0);
+      else if (lVar2 == 5 && bVar10) {
+        fVar11 = Scr_GetFloat(1);
+        cStack_2c = (char)((uint)fVar11 >> 0x18);
+        uStack_2b = (undefined1)((uint)fVar11 >> 0x10);
+        uStack_2a = SUB42(fVar11,0);
       }
-      else if (lVar5 == 6 && bVar1) {
-        uVar9 = Scr_GetString(1);
-        cStack_2c = (char)((uint)uVar9 >> 0x18);
-        uStack_2b = (undefined1)((uint)uVar9 >> 0x10);
-        uStack_2a = (undefined2)uVar9;
+      else if (lVar2 == 6 && bVar10) {
+        pcVar6 = Scr_GetString(1);
+        cStack_2c = (char)((uint)pcVar6 >> 0x18);
+        uStack_2b = (undefined1)((uint)pcVar6 >> 0x10);
+        uStack_2a = SUB42(pcVar6,0);
       }
-      else if (bVar1) {
-        Scr_Error(0xffffffff8207a968);
+      else if (bVar10) {
+        Scr_Error("Cannot set bitfields in profile");
       }
       else {
-        cStack_2c = Scr_GetInt(1);
+        iVar9 = Scr_GetInt(1);
+        cStack_2c = (char)iVar9;
       }
     }
-    uVar3 = CL_ControllerIndexFromClientNum(*puVar7);
-    GamerProfile_SetData
-              (uVar3,uVar4,CONCAT62(CONCAT51(CONCAT41((int)lVar5,cStack_2c),uStack_2b),uStack_2a));
+    iVar9 = CL_ControllerIndexFromClientNum((pgVar4->s).number);
+    GVar1.type = GVar8;
+    GVar1.u.byteVal = cStack_2c;
+    GVar1.u.shortVal._1_1_ = uStack_2b;
+    GVar1.u.intVal._2_2_ = uStack_2a;
+    GamerProfile_SetData(iVar9,iVar7,GVar1);
   }
   __restgprlr_29();
   return;
@@ -12063,149 +13545,148 @@ void GScr_SetLocalPlayerProfileData(void)
 
 // 8249B4A0  Scr_MagicBullet  (game/g_scr_main.cpp:12746)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Scr_MagicBullet(void)
 
 {
   float fVar1;
   float fVar2;
-  int iVar6;
-  undefined4 *puVar7;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  uint uVar8;
-  ulonglong uVar5;
-  undefined4 *puVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  uint uVar3;
+  gentity_s *pgVar4;
+  char *pcVar5;
+  Weapon WVar6;
+  Weapon WVar7;
+  weapType_t wVar8;
+  weapClass_t wVar9;
+  gentity_s *pgVar10;
+  weaponParms *pwVar11;
+  weaponParms *pwVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   float local_b0;
   float local_ac;
   float local_a8;
   float local_a0;
   float local_9c;
   float local_98;
-  float local_90;
-  float local_8c;
-  float local_88;
-  undefined4 local_84;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined4 local_74;
-  undefined4 local_70;
-  float local_6c;
-  float local_68;
-  float local_64;
-  undefined4 local_54;
-  undefined1 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
+  weaponParms local_90;
   
   __savegprlr_28();
-  iVar6 = Scr_GetNumParam();
-  if (iVar6 < 3) {
-    Scr_Error(0xffffffff8207ab28);
+  uVar3 = Scr_GetNumParam();
+  if ((int)uVar3 < 3) {
+    Scr_Error("MagicBullet invalid parameters\n");
   }
-  puVar7 = (undefined4 *)0x0;
-  if ((3 < iVar6) && (puVar7 = (undefined4 *)Scr_GetEntity(3), puVar7[0x56] == 0)) {
-    Scr_Error(0xffffffff8207ab0c);
+  pgVar4 = (gentity_s *)0x0;
+  if ((3 < (int)uVar3) && (pgVar4 = Scr_GetEntity(3), pgVar4->client == (gclient_s *)0x0)) {
+    Scr_Error("Owner must be a player.\n");
   }
-  uVar3 = Scr_GetString(0);
-  uVar4 = G_GetWeaponForName();
-  if ((uVar4 & 0xff) == 0) {
-    va(0xffffffff8207aadc,uVar3);
-    Scr_Error();
+  pcVar5 = Scr_GetString(0);
+  WVar6 = G_GetWeaponForName(pcVar5);
+  if ((WVar6.data & 0xff) == 0) {
+    pcVar5 = va("MagicBullet called with unknown weapon name %s\n");
+    Scr_Error(pcVar5);
   }
   Scr_GetVector(1,&local_b0);
   local_a0 = local_b0;
   local_9c = local_ac;
   local_98 = local_a8;
   Scr_GetVector(2,&local_b0);
-  local_50 = 0;
-  dVar12 = (double)local_b0;
-  dVar11 = (double)local_ac;
-  dVar10 = (double)local_a8;
-  local_54 = (int)uVar4;
-  uVar8 = BG_GetAlternateWeapon(uVar4,0);
-  local_4c = (&DAT_829d84a0)[uVar8 & 0xff];
-  uVar8 = BG_GetAlternateWeapon(uVar4,0);
-  local_8c = (float)(dVar11 - (double)local_9c);
-  local_88 = (float)(dVar10 - (double)local_98);
-  local_90 = (float)(dVar12 - (double)local_a0);
-  local_68 = local_9c;
-  local_64 = local_98;
-  local_6c = local_a0;
-  local_48 = (&DAT_829d80d8)[uVar8 & 0xff];
-  uVar3 = 0;
-  local_84 = 0;
-  local_80 = 0;
-  local_7c = 0;
-  local_78 = 0;
-  local_74 = 0;
-  local_70 = 0;
-  fVar2 = SQRT(local_90 * local_90 + local_88 * local_88 + local_8c * local_8c);
+  local_90.isAlternate = false;
+  dVar15 = (double)local_b0;
+  dVar14 = (double)local_ac;
+  dVar13 = (double)local_a8;
+  local_90.weapon = WVar6;
+  WVar7 = BG_GetAlternateWeapon(WVar6,false);
+  local_90.weapDef = bg_weaponDefs[WVar7.data & 0xff];
+  WVar7 = BG_GetAlternateWeapon(WVar6,false);
+  local_90.forward[1] = (float)(dVar14 - (double)local_9c);
+  local_90.forward[2] = (float)(dVar13 - (double)local_98);
+  local_90.forward[0] = (float)(dVar15 - (double)local_a0);
+  local_90.muzzleTrace[1] = local_9c;
+  pwVar12 = (weaponParms *)((WVar7.data & 0xff) * 4);
+  local_90.muzzleTrace[2] = local_98;
+  local_90.muzzleTrace[0] = local_a0;
+  local_90.weapCompleteDef = (WeaponCompleteDef *)pwVar12[-0x1a65941].muzzleTrace[0];
+  dVar13 = 0.0;
+  local_90.right[0] = 0.0;
+  local_90.right[1] = 0.0;
+  local_90.right[2] = 0.0;
+  local_90.up[0] = 0.0;
+  local_90.up[1] = 0.0;
+  local_90.up[2] = 0.0;
+  fVar2 = SQRT(local_90.forward[0] * local_90.forward[0] +
+               local_90.forward[2] * local_90.forward[2] + local_90.forward[1] * local_90.forward[1]
+              );
   fVar1 = 1.0;
   if (-fVar2 < 0.0) {
     fVar1 = fVar2;
   }
   fVar1 = 1.0 / fVar1;
-  local_90 = fVar1 * local_90;
-  local_8c = local_8c * fVar1;
-  local_88 = local_88 * fVar1;
-  iVar6 = BG_GetWeaponType(local_54,local_50);
-  if (iVar6 == 2) {
-    Scr_Error(0xffffffff8207aaa4);
+  local_90.forward[0] = fVar1 * local_90.forward[0];
+  local_90.forward[1] = local_90.forward[1] * fVar1;
+  local_90.forward[2] = local_90.forward[2] * fVar1;
+  wVar8 = BG_GetWeaponType(local_90.weapon,local_90.isAlternate);
+  if (wVar8 == WEAPTYPE_GRENADE) {
+    Scr_Error("MagicBullet() does not work with grenade-type weapons.\n");
   }
-  iVar6 = BG_GetWeaponType(local_54,local_50);
-  if (iVar6 == 1) {
-    if (puVar7 == (undefined4 *)0x0) {
-      puVar7 = &DAT_834b3180;
+  pwVar11 = (weaponParms *)(uint)local_90.isAlternate;
+  wVar8 = BG_GetWeaponType(local_90.weapon,local_90.isAlternate);
+  if (wVar8 == WEAPTYPE_BULLET) {
+    if (pgVar4 == (gentity_s *)0x0) {
+      pgVar4 = g_entities + 0x7fe;
     }
-    Bullet_Fire(uVar3,puVar7);
+    Bullet_Fire(pgVar4,(float)dVar13,pwVar11,(gentity_s *)&local_90,WEAPON_HAND_DEFAULT,0);
   }
-  else if (iVar6 == 3) {
-    iVar6 = BG_GetWeaponClass(local_54,local_50);
-    if (iVar6 == 6) {
-      puVar9 = puVar7;
-      if (puVar7 == (undefined4 *)0x0) {
-        puVar9 = &DAT_834b3180;
+  else if (wVar8 == WEAPTYPE_PROJECTILE) {
+    wVar9 = BG_GetWeaponClass(local_90.weapon,local_90.isAlternate);
+    if (wVar9 == WEAPCLASS_GRENADE) {
+      pgVar10 = pgVar4;
+      if (pgVar4 == (gentity_s *)0x0) {
+        pgVar10 = g_entities + 0x7fe;
       }
-      uVar5 = Weapon_GrenadeLauncher_Fire(puVar9,uVar4,&local_90);
+      pgVar10 = Weapon_GrenadeLauncher_Fire(pgVar10,WVar6,&local_90);
     }
     else {
-      iVar6 = BG_GetWeaponClass(local_54,local_50);
-      if (iVar6 != 7) {
-        uVar3 = 0xffffffff8207aa48;
+      wVar9 = BG_GetWeaponClass(local_90.weapon,local_90.isAlternate);
+      if (wVar9 != WEAPCLASS_ROCKETLAUNCHER) {
+        pcVar5 = "MagicBullet(): Unhandled projectile weapClass.\n";
         goto LAB_8249b69c;
       }
-      puVar9 = puVar7;
-      if (puVar7 == (undefined4 *)0x0) {
-        puVar9 = &DAT_834b3180;
+      pgVar10 = pgVar4;
+      if (pgVar4 == (gentity_s *)0x0) {
+        pgVar10 = g_entities + 0x7fe;
       }
-      uVar5 = Weapon_RocketLauncher_Fire(uVar3,puVar9,uVar4);
+      pgVar10 = Weapon_RocketLauncher_Fire
+                          (pgVar10,WVar6,(float)dVar13,pwVar12,local_90.forward,
+                           (missileFireParms *)vec3_origin,false);
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      Scr_AddEntity();
-      if (puVar7 != (undefined4 *)0x0) {
-        EntHandle__setEnt(uVar5 + 0x150,puVar7);
-        EntHandle__setEnt(uVar5 + 0x194,puVar7);
+    if (pgVar10 != (gentity_s *)0x0) {
+      Scr_AddEntity(pgVar10);
+      if (pgVar4 != (gentity_s *)0x0) {
+        EntHandle::setEnt(&(pgVar10->r).ownerNum,pgVar4);
+        EntHandle::setEnt(&pgVar10->parent,pgVar4);
       }
       goto LAB_8249b6a4;
     }
   }
   else {
-    BG_GetWeaponType();
-    uVar3 = BG_GetWeaponTypeName();
-    uVar3 = va(0xffffffff8207aa78,uVar3);
+    wVar8 = BG_GetWeaponType(local_90.weapon,local_90.isAlternate);
+    BG_GetWeaponTypeName(wVar8);
+    pcVar5 = va("MagicBullet(): Unhandled weapType \"%s\".\n");
 LAB_8249b69c:
-    Scr_Error(uVar3);
+    Scr_Error(pcVar5);
   }
   Scr_AddUndefined();
 LAB_8249b6a4:
-  iVar6 = G_TempEntity(&local_a0,0x1e);
-  *(undefined4 *)(iVar6 + 0xd8) = 0;
-  *(int *)(iVar6 + 200) = (int)uVar4;
-  *(undefined4 *)(((*(uint *)(iVar6 + 0xa4) & 3) + 0x2e) * 4 + iVar6) = 0;
+  pgVar4 = G_TempEntity(&local_a0,0x1e);
+  (pgVar4->s).un1.eventParm2 = 0;
+  (pgVar4->s).weapon = WVar6;
+  (pgVar4->s).eventParms[(pgVar4->s).eventSequence & 3] = 0;
   __restgprlr_28();
   return;
 }
@@ -12213,196 +13694,220 @@ LAB_8249b6a4:
 
 // 8249B7F8  Scr_GetWeaponFlashTagname  (game/g_scr_main.cpp:12850)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Scr_GetWeaponFlashTagname(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined2 uVar3;
+  char *pcVar1;
+  Weapon WVar2;
+  ushort uVar3;
   
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  if ((uVar2 & 0xff) == 0) {
-    va(0xffffffff8207ab48,uVar1);
-    Scr_Error();
+  pcVar1 = Scr_GetString(0);
+  WVar2 = G_GetWeaponForName(pcVar1);
+  if ((WVar2.data & 0xff) == 0) {
+    pcVar1 = va("Unknown weapon name \"%s\"\n");
+    Scr_Error(pcVar1);
   }
-  uVar3 = BG_GetWeaponFlashTagname(uVar2,0);
-  Scr_AddConstString(uVar3);
+  uVar3 = BG_GetWeaponFlashTagname(WVar2,false);
+  Scr_AddConstString((uint)uVar3);
   return;
 }
 
 
 // 8249B870  GScr_RemoteCameraSoundscapeOn  (game/g_scr_main.cpp:12876)
 
-void GScr_RemoteCameraSoundscapeOn(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteCameraSoundscapeOn(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    Scr_ObjectError(0xffffffff82078178);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_ObjectError("not a player entity");
   }
-  *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) = *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) | 0x20;
+  (pgVar1->client->ps).otherFlags = (pgVar1->client->ps).otherFlags | 0x20;
   return;
 }
 
 
 // 8249B8C8  GScr_RemoteCameraSoundscapeOff  (game/g_scr_main.cpp:12898)
 
-void GScr_RemoteCameraSoundscapeOff(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_RemoteCameraSoundscapeOff(scr_entref_t param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   
-  iVar1 = GetEntity();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    Scr_ObjectError(0xffffffff82078178);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_ObjectError("not a player entity");
   }
-  *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) = *(uint *)(*(int *)(iVar1 + 0x158) + 0x10) & 0xffffffdf
-  ;
+  (pgVar1->client->ps).otherFlags = (pgVar1->client->ps).otherFlags & 0xffffffdf;
   return;
 }
 
 
 // 8249B920  ScrCmd_RadarJamOn  (game/g_scr_main.cpp:12921)
 
-void ScrCmd_RadarJamOn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_RadarJamOn(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x327a,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x327a,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0xf8) = *(uint *)(puVar1[0x56] + 0xf8) | 0x400000;
+  (pgVar3->client->ps).eFlags = (pgVar3->client->ps).eFlags | 0x400000;
   return;
 }
 
 
 // 8249B9E8  ScrCmd_RadarJamOff  (game/g_scr_main.cpp:12938)
 
-void ScrCmd_RadarJamOff(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_RadarJamOff(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x328b,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x328b,
+                      0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0xf8) = *(uint *)(puVar1[0x56] + 0xf8) & 0xffbfffff;
+  (pgVar3->client->ps).eFlags = (pgVar3->client->ps).eFlags & 0xffbfffff;
   return;
 }
 
 
 // 8249BAB0  ScrCmd_SetMotionTrackerVisible  (game/g_scr_main.cpp:12957)
 
-void ScrCmd_SetMotionTrackerVisible(void)
+void ScrCmd_SetMotionTrackerVisible(scr_entref_t param_1)
 
 {
-  Scr_Error(0xffffffff8207ab64);
+  Scr_Error("May not call SetMotionTrackerVisible in multiplayer.");
   return;
 }
 
 
 // 8249BAC0  ScrCmd_GetMotionTrackerVisible  (game/g_scr_main.cpp:12995)
 
-void ScrCmd_GetMotionTrackerVisible(void)
+void ScrCmd_GetMotionTrackerVisible(scr_entref_t param_1)
 
 {
-  Scr_Error(0xffffffff8207ab9c);
+  Scr_Error("May not call GetMotionTrackerVisible in multiplayer.");
   return;
 }
 
 
 // 8249BAD0  GScrCmd_SetWeaponHudIconOverride  (game/g_scr_main.cpp:13039)
 
-void GScrCmd_SetWeaponHudIconOverride(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScrCmd_SetWeaponHudIconOverride(scr_entref_t param_1)
 
 {
-  uint uVar4;
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined **ppuVar5;
-  undefined4 *puVar6;
-  short sStack00000016;
+  char *pcVar1;
+  uint uVar2;
+  uint uVar3;
+  ushort **ppuVar4;
+  gentity_s *pgVar5;
+  uint uVar6;
+  uint uStack00000014;
   
-  uVar4 = __savegprlr_27();
-  sStack00000016 = (short)uVar4;
-  if (sStack00000016 == 0) {
-    uVar4 = uVar4 >> 0x10;
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff82076e74,0x32f7,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_27(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x32f7,
+                      0,"%s");
     }
-    puVar6 = &DAT_83373680 + uVar4 * 0xa0;
-    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar4);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  uVar1 = Scr_GetConstString(0);
-  uVar2 = Scr_GetConstString(1);
-  ppuVar5 = &PTR_DAT_82969f10;
-  uVar4 = 0;
+  uVar2 = Scr_GetConstString(0);
+  uVar3 = Scr_GetConstString(1);
+  ppuVar4 = WeapHudIconTypeNames;
+  uVar6 = 0;
   do {
-    if ((uVar1 & 0xffffffff) == (ulonglong)*(ushort *)*ppuVar5) break;
-    uVar4 = uVar4 + 1;
-    ppuVar5 = ppuVar5 + 1;
-  } while (uVar4 < 6);
-  if (uVar4 == 6) {
-    uVar3 = SL_ConvertToString(uVar1);
-    uVar3 = va(0xffffffff8207ac64,uVar3);
-    Scr_ParamError(0,uVar3);
+    if (uVar2 == **ppuVar4) break;
+    uVar6 = uVar6 + 1;
+    ppuVar4 = ppuVar4 + 1;
+  } while (uVar6 < 6);
+  if (uVar6 == 6) {
+    SL_ConvertToString(uVar2);
+    pcVar1 = va("\"%s\" is not a valid weapon hud icon type to override");
+    Scr_ParamError(0,pcVar1);
   }
-  else if (uVar4 < 6) goto LAB_8249bc04;
-  MyAssertHandler(0xffffffff82076e74,0x3304,0,0xffffffff8207ac20,uVar4,6);
+  else if (uVar6 < 6) goto LAB_8249bc04;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3304,0,
+                  "weaponTypeIndex doesn\'t index WEAPHUDICON_COUNT\n\t%i not in [0, %i)");
 LAB_8249bc04:
-  if ((uVar2 & 0xffffffff) == (ulonglong)DAT_835a0bfa) {
-    uVar1 = 0;
+  if (uVar3 == scr_const.none) {
+    uVar2 = 0;
   }
   else {
-    SL_ConvertToString(uVar2);
-    uVar1 = G_MaterialIndex();
-    if (0xff < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff82076e74,0x3311,0,0xffffffff8207abd8,uVar1,0x100);
+    pcVar1 = SL_ConvertToString(uVar3);
+    uVar2 = G_MaterialIndex(pcVar1);
+    if (0xff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3311,
+                      0,"materialIndex doesn\'t index MAX_SERVER_MATERIALS\n\t%i not in [0, %i)");
     }
   }
-  *(int *)((uVar4 + 0xd32) * 4 + puVar6[0x56]) = (int)uVar1;
+  (pgVar5->client->sess).weaponHudIconOverrides[uVar6] = uVar2;
   __restgprlr_27();
   return;
 }
@@ -12410,65 +13915,70 @@ LAB_8249bc04:
 
 // 8249BC70  GScrCmd_GetWeaponHudIconOverride  (game/g_scr_main.cpp:13094)
 
-void GScrCmd_GetWeaponHudIconOverride(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScrCmd_GetWeaponHudIconOverride(scr_entref_t param_1)
 
 {
+  char *pcVar1;
   uint uVar2;
-  undefined8 uVar1;
-  undefined **ppuVar3;
-  undefined4 *puVar4;
-  uint uVar6;
-  ulonglong uVar5;
-  short sStack00000016;
+  ushort **ppuVar3;
+  gentity_s *pgVar4;
+  uint uVar5;
+  uint uStack00000014;
   
-  uVar2 = __savegprlr_28();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
+  uStack00000014 = __savegprlr_28(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
     if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff82076e74,0x332c,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x332c,
+                      0,"%s");
     }
-    puVar4 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
   uVar2 = Scr_GetConstString(0);
-  uVar6 = 0;
-  ppuVar3 = &PTR_DAT_82969f10;
+  uVar5 = 0;
+  ppuVar3 = WeapHudIconTypeNames;
   do {
-    if (uVar2 == *(ushort *)*ppuVar3) break;
-    uVar6 = uVar6 + 1;
+    if (uVar2 == **ppuVar3) break;
+    uVar5 = uVar5 + 1;
     ppuVar3 = ppuVar3 + 1;
-  } while (uVar6 < 6);
-  if (uVar6 == 6) {
-    uVar1 = SL_ConvertToString();
-    uVar1 = va(0xffffffff8207ac64,uVar1);
-    Scr_ParamError(0,uVar1);
+  } while (uVar5 < 6);
+  if (uVar5 == 6) {
+    SL_ConvertToString(uVar2);
+    pcVar1 = va("\"%s\" is not a valid weapon hud icon type to override");
+    Scr_ParamError(0,pcVar1);
   }
-  else if (uVar6 < 6) goto LAB_8249bd94;
-  MyAssertHandler(0xffffffff82076e74,0x3338,0,0xffffffff8207ac20,uVar6,6);
+  else if (uVar5 < 6) goto LAB_8249bd94;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3338,0,
+                  "weaponTypeIndex doesn\'t index WEAPHUDICON_COUNT\n\t%i not in [0, %i)");
 LAB_8249bd94:
-  uVar2 = *(uint *)((uVar6 + 0xd32) * 4 + puVar4[0x56]);
-  uVar5 = (ulonglong)uVar2;
-  if (0xff < uVar5) {
-    MyAssertHandler(0xffffffff82076e74,0x3340,0,0xffffffff8207abd8,uVar5,0x100);
+  uVar2 = (pgVar4->client->sess).weaponHudIconOverrides[uVar5];
+  if (0xff < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x3340,0,
+                    "materialIndex doesn\'t index MAX_SERVER_MATERIALS\n\t%i not in [0, %i)");
   }
   if (uVar2 == 0) {
-    Scr_AddConstString(DAT_835a0bfa);
+    Scr_AddConstString((uint)scr_const.none);
     __restgprlr_28();
     return;
   }
-  if (0xeea < (int)(uVar5 + 0xbd4)) {
-    MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  if (0xeea < (int)(uVar2 + CS_SERVER_MATERIALS)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x285,0,"%s");
   }
-  SV_GetConfigstringConst(uVar5 + 0xbd4);
-  Scr_AddConstString();
+  uVar2 = SV_GetConfigstringConst(uVar2 + CS_SERVER_MATERIALS);
+  Scr_AddConstString(uVar2);
   __restgprlr_28();
   return;
 }
@@ -12476,116 +13986,139 @@ LAB_8249bd94:
 
 // 8249BE30  GScr_SetEMPJammed  (game/g_scr_main.cpp:13142)
 
-void GScr_SetEMPJammed(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetEMPJammed(scr_entref_t param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  gentity_s *pgVar2;
   int iVar3;
   uint uVar4;
   
-  iVar2 = GetEntity();
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    Scr_Error(0xffffffff8207ac9c);
+  pgVar2 = GetEntity(param_1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("SetEMPJammed: Entity must be a player entity");
   }
   iVar3 = Scr_GetInt(0);
-  uVar1 = *(uint *)(*(int *)(iVar2 + 0x158) + 0x10);
+  uVar1 = (pgVar2->client->ps).otherFlags;
   uVar4 = uVar1 & 0xfffffbff;
   if (iVar3 != 0) {
     uVar4 = uVar1 | 0x400;
   }
-  *(uint *)(*(int *)(iVar2 + 0x158) + 0x10) = uVar4;
+  (pgVar2->client->ps).otherFlags = uVar4;
   return;
 }
 
 
 // 8249BE98  ScrCmd_WorldPointInReticle_Circle  (game/g_scr_main.cpp:13170)
 
-void ScrCmd_WorldPointInReticle_Circle(uint param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ScrCmd_WorldPointInReticle_Circle(scr_entref_t param_1)
 
 {
-  byte bVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  double dVar4;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  bool bVar4;
+  int iVar3;
+  float *in_r5;
+  gentity_s *pgVar5;
+  double dVar6;
+  double dVar7;
+  float fVar8;
+  scr_entref_t sStack00000014;
   float local_80;
   float local_7c;
-  undefined1 auStack_70 [16];
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [56];
+  float afStack_70 [4];
+  float afStack_60 [4];
+  float afStack_50 [14];
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff82076e74,0x337f,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      in_r5 = (float *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x337f,
+                      0,"%s");
     }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  Scr_GetVector(0,auStack_70);
-  uVar3 = Scr_GetFloat(1);
-  dVar4 = (double)Scr_GetFloat(2);
-  G_GetPlayerViewOrigin(puVar2[0x56],auStack_60);
-  AnglesToAxis((ulonglong)(uint)puVar2[0x56] + 0x158,auStack_50);
-  bVar1 = G_WorldPointToScreenPos(uVar3,auStack_60,auStack_50);
-  if ((float)bVar1 != 0.0) {
-    uVar3 = 1;
-    if (local_80 * local_80 + local_7c * local_7c < (float)(dVar4 * dVar4)) goto LAB_8249bfe0;
+  Scr_GetVector(0,afStack_70);
+  fVar8 = Scr_GetFloat(1);
+  dVar6 = (double)fVar8;
+  fVar8 = Scr_GetFloat(2);
+  dVar7 = (double)fVar8;
+  G_GetPlayerViewOrigin(&pgVar5->client->ps,afStack_60);
+  AnglesToAxis((pgVar5->client->ps).viewangles,(float (*) [3])afStack_50);
+  bVar4 = G_WorldPointToScreenPos
+                    (afStack_60,(float (*) [3])afStack_50,(float)dVar6,in_r5,afStack_70);
+  if (((float)(longlong)bVar4 == 0.0) ||
+     (iVar3 = 1, (float)(dVar7 * dVar7) <= local_80 * local_80 + local_7c * local_7c)) {
+    iVar3 = 0;
   }
-  uVar3 = 0;
-LAB_8249bfe0:
-  Scr_AddBool(uVar3);
+  Scr_AddBool(iVar3);
   return;
 }
 
 
 // 8249C008  ScrCmd_GetPointInBounds  (game/g_scr_main.cpp:13227)
 
-void ScrCmd_GetPointInBounds(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_GetPointInBounds(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined1 auStack_30 [32];
+  gentity_s *pgVar1;
+  float *in_r4;
+  double dVar2;
+  double dVar3;
+  float fVar4;
+  float afStack_30 [8];
   
-  uVar1 = GetEntity();
-  uVar2 = Scr_GetFloat(0);
-  uVar3 = Scr_GetFloat(1);
-  uVar4 = Scr_GetFloat(2);
-  G_GetEntityBoundsPoint(uVar2,uVar3,uVar4,uVar1);
-  Scr_AddVector(auStack_30);
+  pgVar1 = GetEntity(param_1);
+  fVar4 = Scr_GetFloat(0);
+  dVar2 = (double)fVar4;
+  fVar4 = Scr_GetFloat(1);
+  dVar3 = (double)fVar4;
+  fVar4 = Scr_GetFloat(2);
+  G_GetEntityBoundsPoint(pgVar1,(float)dVar2,(float)dVar3,fVar4,in_r4);
+  Scr_AddVector(afStack_30);
   return;
 }
 
 
 // 8249C088  ScrCmd_TransferMarksToNewScriptModel  (game/g_scr_main.cpp:13257)
 
-void ScrCmd_TransferMarksToNewScriptModel(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_TransferMarksToNewScriptModel(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
+  gentity_s *pgVar1;
+  gentity_s *pgVar2;
   
-  puVar1 = (undefined4 *)GetEntity();
-  iVar2 = Scr_GetEntity(0);
-  if (*(int *)(iVar2 + 4) == 6) {
-    *(undefined4 *)(iVar2 + 0x54) = *puVar1;
+  pgVar1 = GetEntity(param_1);
+  pgVar2 = Scr_GetEntity(0);
+  if ((pgVar2->s).eType == 6) {
+    (pgVar2->s).lerp.u.soundBlend.lerp = (float)(pgVar1->s).number;
   }
   else {
-    Scr_Error(0xffffffff8207acd0);
-    *(undefined4 *)(iVar2 + 0x54) = *puVar1;
+    Scr_Error("Only script model/movers are allowed to be passed to this function.");
+    (pgVar2->s).lerp.u.soundBlend.lerp = (float)(pgVar1->s).number;
   }
   return;
 }
@@ -12593,64 +14126,71 @@ void ScrCmd_TransferMarksToNewScriptModel(void)
 
 // 8249C0F8  SummarizeArrayPoints  (game/g_scr_main.cpp:13272)
 
-void SummarizeArrayPoints(undefined8 param_1,ulonglong param_2)
+void SummarizeArrayPoints(uint *param_1,float *param_2)
 
 {
   float *pfVar1;
-  undefined4 *puVar5;
-  int iVar6;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  undefined4 *puVar7;
-  float *pfVar8;
+  uint *puVar2;
+  int iVar3;
+  char *pcVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  VariableUnion *pVVar8;
   ulonglong uVar9;
+  float *pfVar10;
+  uint uVar11;
   
-  puVar5 = (undefined4 *)__savegprlr_24();
-  if (puVar5 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82076e74,0x33d9,0,0xffffffff82000f98,0xffffffff8207ad64);
+  uVar9 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_24(param_1);
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x33d9,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82076e74,0x33da,0,0xffffffff82000f98,0xffffffff8207ad58);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x33da,0,
+                    "%s");
   }
-  iVar6 = Scr_GetPointerType(0);
-  if (iVar6 != 0x17) {
-    uVar2 = Scr_GetTypeName(0);
-    uVar2 = va(0xffffffff8207a4d8,uVar2);
-    Scr_ParamError(0,uVar2);
+  iVar3 = Scr_GetPointerType(0);
+  if (iVar3 != 0x17) {
+    Scr_GetTypeName(0);
+    pcVar4 = va("Parameter (%s) must be an array");
+    Scr_ParamError(0,pcVar4);
   }
-  uVar2 = Scr_GetObject(0);
-  uVar3 = GetArraySize();
-  if ((uVar3 & 0xffffffff) == 0) {
-    Scr_Error(0xffffffff8207ad38);
+  uVar5 = Scr_GetObject(0);
+  uVar6 = GetArraySize(uVar5);
+  if (uVar6 == 0) {
+    Scr_Error("An empty array is not valid.");
   }
-  uVar9 = 0;
-  pfVar8 = (float *)param_2;
-  *pfVar8 = 0.0;
-  pfVar8[1] = 0.0;
-  pfVar8[2] = 0.0;
-  if ((uVar3 & 0xffffffff) != 0) {
+  uVar11 = 0;
+  pfVar10 = (float *)uVar9;
+  *pfVar10 = 0.0;
+  pfVar10[1] = 0.0;
+  pfVar10[2] = 0.0;
+  if (uVar6 != 0) {
     do {
-      uVar4 = GetArrayVariable(uVar2,uVar9);
-      iVar6 = GetValueType((longlong)(int)((uint)uVar2 & 1) * 0xc800,uVar4);
-      if (iVar6 != 4) {
-        Scr_Error(0xffffffff8207ad14);
+      uVar7 = GetArrayVariable(uVar5,uVar11);
+      iVar3 = GetValueType((uVar5 & 1) * 0xc800,uVar7);
+      if (iVar3 != 4) {
+        Scr_Error("All elements need to be 3d points.");
       }
-      puVar7 = (undefined4 *)GetVariableValueAddress(uVar2,uVar4);
-      pfVar1 = (float *)*puVar7;
-      uVar9 = uVar9 + 1;
-      *pfVar8 = *pfVar1 + *pfVar8;
-      pfVar8[1] = pfVar1[1] + pfVar8[1];
-      pfVar8[2] = pfVar1[2] + pfVar8[2];
-    } while ((uVar9 & 0xffffffff) < (uVar3 & 0xffffffff));
+      pVVar8 = GetVariableValueAddress(uVar5,uVar7);
+      pfVar1 = pVVar8->vectorValue;
+      uVar11 = uVar11 + 1;
+      *pfVar10 = *pfVar1 + *pfVar10;
+      pfVar10[1] = pfVar1[1] + pfVar10[1];
+      pfVar10[2] = pfVar1[2] + pfVar10[2];
+    } while (uVar11 < uVar6);
   }
-  *puVar5 = (int)uVar3;
+  *puVar2 = uVar6;
   __restgprlr_24();
   return;
 }
 
 
 // 8249C280  GScr_AveragePoint  (game/g_scr_main.cpp:13316)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_AveragePoint(void)
 
@@ -12661,7 +14201,7 @@ void GScr_AveragePoint(void)
   float local_14;
   float local_10;
   
-  SummarizeArrayPoints(&local_20,&local_18);
+  SummarizeArrayPoints((uint *)&local_20,&local_18);
   local_20 = (ulonglong)local_20._0_4_;
   fVar1 = 1.0 / (float)local_20;
   local_18 = fVar1 * local_18;
@@ -12674,12 +14214,14 @@ void GScr_AveragePoint(void)
 
 // 8249C2F8  GScr_AverageNormal  (game/g_scr_main.cpp:13340)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AverageNormal(void)
 
 {
   float fVar1;
   float fVar2;
-  undefined1 auStack_20 [8];
+  uint auStack_20 [2];
   float local_18;
   float local_14;
   float local_10;
@@ -12701,27 +14243,29 @@ void GScr_AverageNormal(void)
 
 // 8249C370  GScr_GetGlass  (game/g_scr_main.cpp:13361)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetGlass(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined2 *puVar3;
+  uint uVar1;
+  ushort *puVar2;
+  char *pcVar3;
   uint local_20 [2];
   
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    Scr_Error(0xffffffff8207adb8);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to GetGlass( targetname )");
   }
   uVar1 = Scr_GetConstString(0);
-  puVar3 = (undefined2 *)G_Glass_GetIndicesFromName(uVar1,local_20);
+  puVar2 = G_Glass_GetIndicesFromName(uVar1,local_20);
   if (local_20[0] != 0) {
     if (1 < local_20[0]) {
-      uVar1 = SL_ConvertToString(uVar1);
-      va(0xffffffff8207ad70,uVar1);
-      Scr_Error();
+      SL_ConvertToString(uVar1);
+      pcVar3 = va("GetGlass used with more than one piece of glass (\"targetname\" = \"%s\")");
+      Scr_Error(pcVar3);
     }
-    Scr_AddInt(*puVar3);
+    Scr_AddInt((uint)*puVar2);
   }
   return;
 }
@@ -12729,31 +14273,31 @@ void GScr_GetGlass(void)
 
 // 8249C408  GScr_GetGlassArray  (game/g_scr_main.cpp:13392)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetGlassArray(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined2 *puVar3;
-  uint uVar4;
+  uint uVar1;
+  ushort *puVar2;
   uint local_20 [2];
   
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 1) {
-    Scr_Error(0xffffffff8207adf0);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to GetGlassArray( targetname )");
   }
   uVar1 = Scr_GetConstString(0);
-  iVar2 = G_Glass_GetIndicesFromName(uVar1,local_20);
+  puVar2 = G_Glass_GetIndicesFromName(uVar1,local_20);
   Scr_MakeArray();
-  uVar4 = 0;
+  uVar1 = 0;
   if (local_20[0] != 0) {
-    puVar3 = (undefined2 *)(iVar2 + -2);
+    puVar2 = puVar2 + -1;
     do {
-      puVar3 = puVar3 + 1;
-      Scr_AddInt(*puVar3);
+      puVar2 = puVar2 + 1;
+      Scr_AddInt((uint)*puVar2);
       Scr_AddArray();
-      uVar4 = uVar4 + 1;
-    } while (uVar4 < local_20[0]);
+      uVar1 = uVar1 + 1;
+    } while (uVar1 < local_20[0]);
   }
   return;
 }
@@ -12761,117 +14305,119 @@ void GScr_GetGlassArray(void)
 
 // 8249C498  GScr_GetGlassOrigin  (game/g_scr_main.cpp:13424)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetGlassOrigin(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
-  undefined1 auStack_20 [16];
+  uint uVar1;
+  bool bVar3;
+  char *pcVar2;
+  float afStack_20 [4];
   
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    Scr_Error(0xffffffff8207ae40);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to GetGlassOrigin( glassID )");
   }
   uVar1 = Scr_GetInt(0);
-  cVar4 = G_Glass_IsIndexValid();
-  if (cVar4 == '\0') {
-    uVar2 = va(0xffffffff8207ae2c,uVar1);
-    Scr_ParamError(0,uVar2);
+  bVar3 = G_Glass_IsIndexValid(uVar1);
+  if (!bVar3) {
+    pcVar2 = va("Invalid glass ID %i");
+    Scr_ParamError(0,pcVar2);
   }
-  G_Glass_GetPieceOrigin(uVar1,auStack_20);
-  Scr_AddVector(auStack_20);
+  G_Glass_GetPieceOrigin(uVar1,afStack_20);
+  Scr_AddVector(afStack_20);
   return;
 }
 
 
 // 8249C520  GScr_IsGlassDestroyed  (game/g_scr_main.cpp:13451)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_IsGlassDestroyed(void)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  bool bVar4;
+  char *pcVar2;
+  GlassPieceState GVar3;
   
-  iVar4 = Scr_GetNumParam();
-  if (iVar4 != 1) {
-    Scr_Error(0xffffffff8207ae78);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to IsGlassDestroyed( glassID )");
   }
   uVar1 = Scr_GetInt(0);
-  cVar5 = G_Glass_IsIndexValid();
-  if (cVar5 == '\0') {
-    uVar2 = va(0xffffffff8207ae2c,uVar1);
-    Scr_ParamError(0,uVar2);
+  bVar4 = G_Glass_IsIndexValid(uVar1);
+  if (!bVar4) {
+    pcVar2 = va("Invalid glass ID %i");
+    Scr_ParamError(0,pcVar2);
   }
-  uVar3 = G_Glass_GetPieceState(uVar1);
-  Scr_AddBool((longlong)((int)uVar3 >> 0x1f) + (ulonglong)(1 < uVar3));
+  GVar3 = G_Glass_GetPieceState(uVar1);
+  Scr_AddBool(((int)GVar3 >> 0x1f) + (uint)(GLASS_DAMAGED < GVar3));
   return;
 }
 
 
 // 8249C5B8  GScr_DestroyGlass  (game/g_scr_main.cpp:13479)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_DestroyGlass(void)
 
 {
-  int iVar3;
-  uint uVar4;
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined1 auStack_20 [16];
+  uint uVar1;
+  bool bVar4;
+  char *pcVar2;
+  uint uVar3;
+  float local_30 [4];
+  float afStack_20 [4];
   
-  iVar3 = Scr_GetNumParam();
-  if ((iVar3 == 0) && (uVar4 = Scr_GetNumParam(), 2 < uVar4)) {
-    Scr_Error(0xffffffff8207aeb8);
+  uVar1 = Scr_GetNumParam();
+  if ((uVar1 == 0) && (uVar1 = Scr_GetNumParam(), 2 < uVar1)) {
+    Scr_Error("Wrong number of parameters to DestroyGlass( glassID, direction )");
   }
   uVar1 = Scr_GetInt(0);
-  cVar5 = G_Glass_IsIndexValid();
-  if (cVar5 == '\0') {
-    uVar2 = va(0xffffffff8207ae2c,uVar1);
-    Scr_ParamError(0,uVar2);
+  bVar4 = G_Glass_IsIndexValid(uVar1);
+  if (!bVar4) {
+    pcVar2 = va("Invalid glass ID %i");
+    Scr_ParamError(0,pcVar2);
   }
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 < 2) {
-    local_30 = 0;
-    local_2c = 0;
-    local_28 = 0;
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 < 2) {
+    local_30[0] = 0.0;
+    local_30[1] = 0.0;
+    local_30[2] = 0.0;
   }
   else {
-    Scr_GetVector(1,&local_30);
+    Scr_GetVector(1,local_30);
   }
-  G_Glass_GetPieceOrigin(uVar1,auStack_20);
-  G_Glass_DestroyPiece(uVar1,auStack_20,&local_30);
+  G_Glass_GetPieceOrigin(uVar1,afStack_20);
+  G_Glass_DestroyPiece(uVar1,afStack_20,local_30);
   return;
 }
 
 
 // 8249C688  GScr_DeleteGlass  (game/g_scr_main.cpp:13512)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_DeleteGlass(void)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar3;
+  char *pcVar2;
   
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    Scr_Error(0xffffffff8207aefc);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to DeleteGlass( glassID )");
   }
   uVar1 = Scr_GetInt(0);
-  cVar4 = G_Glass_IsIndexValid();
-  if (cVar4 == '\0') {
-    uVar2 = va(0xffffffff8207ae2c,uVar1);
-    Scr_ParamError(0,uVar2);
+  bVar3 = G_Glass_IsIndexValid(uVar1);
+  if (!bVar3) {
+    pcVar2 = va("Invalid glass ID %i");
+    Scr_ParamError(0,pcVar2);
   }
   G_Glass_DeletePiece(uVar1);
   return;
@@ -12880,145 +14426,166 @@ void GScr_DeleteGlass(void)
 
 // 8249C708  GScr_Shutdown  (game/g_scr_main.cpp:13528)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_Shutdown(void)
 
 {
-  if (DAT_83583318 == 0) {
+  if (level.cachedTagMat.name == 0) {
     return;
   }
-  Scr_SetString(0xffffffff83583318,0);
+  Scr_SetString(&level.cachedTagMat.name,0);
   return;
 }
 
 
 // 8249C730  ScrCmd_SetSlowMotion  (game/g_scr_main.cpp:13547)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrCmd_SetSlowMotion(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  double dVar4;
-  undefined8 uVar5;
+  uint uVar1;
+  char *pcVar2;
   
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 == 0) {
-    Scr_Error(0xffffffff8207af34);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 == 0) {
+    Scr_Error("SetSlowMotion requires at least 1 parameter.");
   }
-  iVar1 = 1000;
-  uVar5 = 0x3ff0000000000000;
-  uVar3 = Scr_GetFloat(0);
-  uVar2 = Scr_GetNumParam();
-  if (1 < uVar2) {
-    uVar5 = Scr_GetFloat(1);
+  Scr_GetFloat(0);
+  uVar1 = Scr_GetNumParam();
+  if (1 < uVar1) {
+    Scr_GetFloat(1);
   }
-  uVar2 = Scr_GetNumParam();
-  if (2 < uVar2) {
-    dVar4 = (double)Scr_GetFloat(2);
-    iVar1 = (int)(dVar4 * 1000.0);
+  uVar1 = Scr_GetNumParam();
+  if (2 < uVar1) {
+    Scr_GetFloat(2);
   }
-  uVar3 = va(uVar3,uVar5,0xffffffff82023800,DAT_83580fac,iVar1,uVar3,uVar5);
-  SV_SetConfigstring(0xe88,uVar3);
+  pcVar2 = va("%i %i %g %g");
+  SV_SetConfigstring(CS_TIMESCALE,pcVar2);
   return;
 }
 
 
 // 8249C818  GScr_GetEntChannelsCount  (game/g_scr_main.cpp:13596)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetEntChannelsCount(void)
 
 {
-  SND_GetEntChannelCount();
-  Scr_AddInt();
+  int iVar1;
+  
+  iVar1 = SND_GetEntChannelCount();
+  Scr_AddInt(iVar1);
   return;
 }
 
 
 // 8249C840  GScr_GetEntChannelName  (game/g_scr_main.cpp:13612)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_GetEntChannelName(void)
 
 {
+  uint uVar1;
+  int iVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar4;
   
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 1) {
-    Scr_Error(0xffffffff8207af80);
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 != 1) {
+    Scr_Error("Wrong number of parameters to GetEntChannelName( <index> )");
   }
-  uVar1 = Scr_GetInt(0);
-  if (((int)uVar1 < 0) || (iVar3 = SND_GetEntChannelCount(), iVar3 <= (int)uVar1)) {
-    uVar2 = va(0xffffffff8207af64,uVar1);
-    Scr_ParamError(0,uVar2);
+  iVar2 = Scr_GetInt(0);
+  if ((iVar2 < 0) || (iVar3 = SND_GetEntChannelCount(), iVar3 <= iVar2)) {
+    pcVar4 = va("Invalid channel index %i");
+    Scr_ParamError(0,pcVar4);
   }
-  SND_GetEntChannelName(uVar1);
-  Scr_AddString();
+  pcVar4 = SND_GetEntChannelName(iVar2);
+  Scr_AddString(pcVar4);
   return;
 }
 
 
 // 8249C8C8  GScr_SpawnLoopingSound  (game/g_scr_main.cpp:13628)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_SpawnLoopingSound(void)
 
 {
-  Scr_Error(0xffffffff8207afbc);
+  Scr_Error("May not call GScr_SpawnLoopingSound in multiplayer.");
   return;
 }
 
 
 // 8249C8D8  GScr_GetPlayerData  (game/g_scr_main.cpp:13647)
 
-void GScr_GetPlayerData(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_GetPlayerData(scr_entref_t param_1)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
-  uint local_20 [2];
+  gentity_s *pgVar1;
+  StructuredDataDef *pSVar2;
+  StructuredDataBuffer local_20;
   
-  puVar2 = (undefined4 *)GetEntity();
-  if (puVar2[0x56] == 0) {
-    Scr_Error(0xffffffff8207b000);
+  pgVar1 = GetEntity(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    Scr_Error("GetPlayerData: entity must be a player entity");
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  local_20[0] = SV_GetClientPersistentDataBuffer(*puVar2);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff82076dc0,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  local_20.data = SV_GetClientPersistentDataBuffer((pgVar1->s).number);
+  if (local_20.data == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_20[1] = 0x2ffc;
-  GScr_GetStructuredData(uVar1,local_20,0xffffffff8207aff0);
+  local_20.size = 0x2ffc;
+  GScr_GetStructuredData(pSVar2,&local_20,"GetPlayerData");
   return;
 }
 
 
 // 8249C990  GScr_SetPlayerData  (game/g_scr_main.cpp:13680)
 
-void GScr_SetPlayerData(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetPlayerData(scr_entref_t param_1)
 
 {
-  undefined4 *puVar3;
-  undefined8 uVar1;
-  uint uVar4;
-  undefined8 uVar2;
-  uint local_30 [12];
+  scr_entref_t sVar1;
+  gentity_s *pgVar2;
+  StructuredDataDef *pSVar3;
+  uchar *puVar4;
+  uchar *puVar5;
+  StructuredDataBuffer local_30 [6];
   
-  __savegprlr_28();
-  puVar3 = (undefined4 *)GetEntity();
-  if (puVar3[0x56] == 0) {
-    Scr_Error(0xffffffff8207b040);
+  sVar1 = (scr_entref_t)__savegprlr_28(param_1);
+  pgVar2 = GetEntity(sVar1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    Scr_Error("setstat: entity must be a player entity");
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  uVar4 = SV_GetClientPersistentDataBuffer(*puVar3);
-  uVar2 = SV_GetClientPersistentDataModifiedFlags(*puVar3);
-  if (uVar4 == 0) {
-    MyAssertHandler(0xffffffff82076dc0,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  puVar4 = SV_GetClientPersistentDataBuffer((pgVar2->s).number);
+  puVar5 = SV_GetClientPersistentDataModifiedFlags((pgVar2->s).number);
+  if (puVar4 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_30[1] = 0x2ffc;
-  local_30[0] = uVar4;
-  GScr_SetStructuredData(uVar1,local_30,uVar2,0xffffffff8207b030);
-  SV_SetClientPersistentDataModified(*puVar3);
+  local_30[0].size = 0x2ffc;
+  local_30[0].data = puVar4;
+  GScr_SetStructuredData(pSVar3,local_30,puVar5,"SetPlayerData");
+  SV_SetClientPersistentDataModified((pgVar2->s).number);
   __restgprlr_28();
   return;
 }
@@ -13026,57 +14593,67 @@ void GScr_SetPlayerData(void)
 
 // 8249CA48  PrecacheConfigstring  (game/g_scr_main.cpp:13786)
 
-void PrecacheConfigstring(undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void PrecacheConfigstring(char *param_1,ConfigString param_2,int param_3,char *param_4)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
-  int iVar4;
+  char *pcVar3;
+  ConfigString CVar4;
   int iVar5;
+  ConfigString CVar8;
   longlong lVar6;
+  longlong lVar7;
   char local_450 [1104];
   
-  uVar1 = __savegprlr_23();
-  lVar3 = param_3 - param_2;
-  if (lVar3 < 1) {
-    MyAssertHandler(0xffffffff82076e74,0x35de,0,0xffffffff82000f98,0xffffffff8207b0c8);
+  lVar6 = (longlong)param_3;
+  lVar7 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_23(param_1,lVar7,lVar6,param_4);
+  if (lVar6 - lVar7 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x35de,0,
+                    "%s");
   }
-  iVar4 = (int)param_3;
-  iVar5 = (int)param_2;
-  lVar6 = param_2;
+  CVar4 = (ConfigString)lVar6;
+  iVar5 = (int)lVar7;
+  lVar6 = lVar7;
   iVar2 = iVar5;
-  while (iVar2 < iVar4) {
-    if ((0xeea < (int)lVar6) || ((int)lVar6 < 0)) {
-      MyAssertHandler(0xffffffff8206c268,0x28c,0,0xffffffff82000f98,0xffffffff82076d88);
+  while (iVar2 < (int)CVar4) {
+    CVar8 = (ConfigString)lVar6;
+    if ((0xeea < (int)CVar8) || ((int)CVar8 < 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x28c,0,"%s");
     }
-    SV_GetConfigstring(lVar6,local_450,0x400);
-    iVar2 = I_stricmp(local_450,uVar1);
+    SV_GetConfigstring(CVar8,local_450,0x400);
+    iVar2 = I_stricmp(local_450,pcVar1);
     if (iVar2 == 0) {
-      Com_DPrintf(0x17,0xffffffff8207b068,param_4,uVar1);
+      Com_DPrintf(0x17,"Script tried to precache \'%s\' \'%s\' more than once\n");
       __restgprlr_23();
       return;
     }
     lVar6 = lVar6 + 1;
     iVar2 = (int)lVar6;
   }
-  while (iVar2 = (int)param_2, iVar5 < iVar4) {
-    if ((0xeea < iVar2) || (iVar2 < 0)) {
-      MyAssertHandler(0xffffffff8206c268,0x28c,0,0xffffffff82000f98,0xffffffff82076d88);
+  while (CVar8 = (ConfigString)lVar7, iVar5 < (int)CVar4) {
+    if ((0xeea < (int)CVar8) || ((int)CVar8 < 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                      ,0x28c,0,"%s");
     }
-    SV_GetConfigstring(param_2,local_450,0x400);
+    SV_GetConfigstring(CVar8,local_450,0x400);
     if (local_450[0] == '\0') break;
-    param_2 = param_2 + 1;
-    iVar5 = (int)param_2;
+    lVar7 = lVar7 + 1;
+    iVar5 = (int)lVar7;
   }
-  if (iVar2 == iVar4) {
-    va(0xffffffff8207b09c,param_4,lVar3);
-    Scr_Error();
+  if (CVar8 == CVar4) {
+    pcVar3 = va("Too many %s precached. Max allowed is %i");
+    Scr_Error(pcVar3);
   }
-  if ((0xeea < iVar2) || (iVar2 < 0)) {
-    MyAssertHandler(0xffffffff8206c268,0x28c,0,0xffffffff82000f98,0xffffffff82076d88);
+  if ((0xeea < (int)CVar8) || ((int)CVar8 < 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x28c,0,"%s");
   }
-  SV_SetConfigstring(param_2,uVar1);
+  SV_SetConfigstring(CVar8,pcVar1);
   __restgprlr_23();
   return;
 }
@@ -13084,137 +14661,210 @@ void PrecacheConfigstring(undefined8 param_1,longlong param_2,longlong param_3,u
 
 // 8249CBE0  GScr_PrecacheHeadIcon  (game/g_scr_main.cpp:13831)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
 void GScr_PrecacheHeadIcon(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Scr_GetString(0);
-  PrecacheConfigstring(uVar1,0xe0b,0xe1a,0xffffffff8207b0d8);
+  pcVar1 = Scr_GetString(0);
+  PrecacheConfigstring(pcVar1,CS_HEAD_ICONS,0xe1a,"player head icon");
   return;
 }
 
 
 // 8249CC18  GScr_GetHeadIconIndex  (game/g_scr_main.cpp:13841)
 
-void GScr_GetHeadIconIndex(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+int GScr_GetHeadIconIndex(char *param_1)
 
 {
   char *pcVar1;
   int iVar2;
   longlong lVar3;
-  undefined1 auStack_430 [1072];
+  char acStack_430 [1072];
   
-  pcVar1 = (char *)__savegprlr_27();
+  pcVar1 = (char *)__savegprlr_27(param_1);
   if (*pcVar1 != '\0') {
     lVar3 = 0;
     do {
       if (0xdf < (int)lVar3) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstring(lVar3 + 0xe0b,auStack_430,0x400);
-      iVar2 = I_stricmp(auStack_430,pcVar1);
+      SV_GetConfigstring((int)lVar3 + CS_HEAD_ICONS,acStack_430,0x400);
+      iVar2 = I_stricmp(acStack_430,pcVar1);
       if (iVar2 == 0) {
-        __restgprlr_27(lVar3 + 1);
-        return;
+        iVar2 = __restgprlr_27(lVar3 + 1);
+        return iVar2;
       }
       lVar3 = lVar3 + 1;
     } while ((int)lVar3 < 0xf);
-    va(0xffffffff8207b0ec,pcVar1);
-    Scr_Error();
+    pcVar1 = va("Head icon \'%s\' was not precached\n");
+    Scr_Error(pcVar1);
   }
-  __restgprlr_27(0);
-  return;
+  iVar2 = __restgprlr_27(0);
+  return iVar2;
 }
 
 
 // 8249CCD0  ScrCmd_TrackerUpdate  (game/g_scr_main.cpp:13862)
 
-void ScrCmd_TrackerUpdate(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ScrCmd_TrackerUpdate(scr_entref_t param_1)
 
 {
+  uint uVar1;
+  char *pcVar3;
   uint uVar4;
   int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 *puVar6;
-  short sStack00000016;
+  ulong64 uVar2;
+  gentity_s *pgVar6;
+  uint uStack00000014;
   
-  uVar4 = __savegprlr_29();
-  sStack00000016 = (short)uVar4;
-  if (sStack00000016 == 0) {
-    uVar4 = uVar4 >> 0x10;
-    if (0x7ff < uVar4) {
-      MyAssertHandler(0xffffffff82076e74,0x362a,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_29(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x362a,
+                      0,"%s");
     }
-    puVar6 = &DAT_83373680 + uVar4 * 0xa0;
-    if ((&DAT_833737d8)[uVar4 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar4);
-      Scr_ObjectError();
+    pgVar6 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar3 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar3);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar6 = (gentity_s *)0x0;
   }
-  uVar4 = *(uint *)(puVar6[0x56] + 0x150);
-  if (0x11 < uVar4) {
-    MyAssertHandler(0xffffffff82076e74,0x362e,0,0xffffffff82014c1c,uVar4,0x12);
+  uVar1 = (pgVar6->client->ps).clientNum;
+  if (0x11 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x362e,0,
+                    "clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar5 = Scr_GetNumParam();
-  if (iVar5 != 2) {
-    Com_PrintError(0x10,0xffffffff8207b110);
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 != 2) {
+    Com_PrintError(0x10,
+                   "Invalid param count. usage: self/player trackerupdate( <columnName>, <value> )\n"
+                  );
     __restgprlr_29();
     return;
   }
-  uVar1 = Scr_GetInt(1);
-  uVar2 = Session_GetXuid(0xffffffff844c7860,uVar4);
-  uVar3 = Scr_GetString(0);
-  LiveTracker_WriteByName(uVar3,uVar2,uVar1);
-  __restgprlr_29();
+  iVar5 = Scr_GetInt(1);
+  uVar2 = Session_GetXuid(&g_serverSession,uVar1);
+  pcVar3 = Scr_GetString(0);
+  iVar5 = LiveTracker_WriteByName(pcVar3,uVar2,iVar5);
+  __restgprlr_29(iVar5);
   return;
 }
 
 
 // 8249CE00  Common_GetFunction  (game/g_scr_main.cpp:14136)
 
-void Common_GetFunction(undefined8 param_1,undefined4 *param_2)
+uint Common_GetFunction(char **param_1,int *param_2)
 
 {
   char cVar1;
   char cVar2;
-  undefined **ppuVar3;
-  undefined **ppuVar4;
+  ushort **ppuVar3;
+  ushort **ppuVar4;
   undefined4 *puVar5;
+  uint uVar6;
+  int iVar7;
+  BuiltinFunctionDef *pBVar8;
+  char *pcVar9;
+  char *pcVar10;
+  longlong lVar11;
+  ushort **ppuVar12;
+  
+  puVar5 = (undefined4 *)__savegprlr_29(param_1);
+  if (puVar5 == (undefined4 *)0x0) {
+    lVar11 = 0xb7;
+    ppuVar12 = WeapHudIconTypeNames + 3;
+    do {
+      ppuVar3 = ppuVar12 + 4;
+      ppuVar4 = ppuVar12 + 5;
+      ppuVar12 = ppuVar12 + 3;
+      Scr_RegisterFunction((int)*ppuVar3,(int)*ppuVar4,(uint)*ppuVar12);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    uVar6 = __restgprlr_29(0);
+    return uVar6;
+  }
+  pBVar8 = functions;
+  iVar7 = 0;
+  uVar6 = 0;
+  do {
+    pcVar9 = g_scr_opaque_strings[pBVar8->name + 0x824f];
+    pcVar10 = (char *)*puVar5;
+    do {
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar9;
+      if (cVar1 == '\0') break;
+      pcVar10 = pcVar10 + 1;
+      pcVar9 = pcVar9 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      *puVar5 = g_scr_opaque_strings[functions[iVar7].name + 0x824f];
+      *param_2 = functions[iVar7].type;
+      uVar6 = __restgprlr_29(functions[iVar7].name);
+      return uVar6;
+    }
+    uVar6 = uVar6 + 0xc;
+    iVar7 = iVar7 + 1;
+    pBVar8 = pBVar8 + 1;
+    if (0x893 < uVar6) {
+      uVar6 = __restgprlr_29(0);
+      return uVar6;
+    }
+  } while( true );
+}
+
+
+// 8249CF00  Common_GetMethod  (game/g_scr_main.cpp:14408)
+
+uint Common_GetMethod(char **param_1)
+
+{
+  char cVar1;
+  char cVar2;
+  uint *puVar3;
+  undefined4 *puVar4;
+  uint uVar5;
   int iVar6;
-  int *piVar7;
+  BuiltinMethodDef *pBVar7;
   char *pcVar8;
   char *pcVar9;
   longlong lVar10;
-  undefined **ppuVar11;
-  uint uVar12;
+  uint *puVar11;
   
-  puVar5 = (undefined4 *)__savegprlr_29();
-  if (puVar5 == (undefined4 *)0x0) {
-    lVar10 = 0xb7;
-    ppuVar11 = &PTR_DAT_82969f1c;
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
+  if (puVar4 == (undefined4 *)0x0) {
+    lVar10 = 0xa8;
+    puVar11 = (uint *)0x8207659c;
     do {
-      ppuVar3 = ppuVar11 + 4;
-      ppuVar4 = ppuVar11 + 5;
-      ppuVar11 = ppuVar11 + 3;
-      Scr_RegisterFunction(*ppuVar3,*ppuVar4,*ppuVar11);
+      puVar3 = puVar11 + 4;
+      puVar11 = puVar11 + 3;
+      Scr_RegisterFunction(*puVar3,0,*puVar11);
       lVar10 = lVar10 + -1;
     } while (lVar10 != 0);
-    __restgprlr_29(0);
-    return;
+    uVar5 = __restgprlr_29(0);
+    return uVar5;
   }
-  piVar7 = &DAT_82969f28;
+  pBVar7 = methods;
   iVar6 = 0;
-  uVar12 = 0;
+  uVar5 = 0;
   do {
-    pcVar8 = (&PTR_s_flash_killed_8298db24)[*piVar7];
-    pcVar9 = (char *)*puVar5;
+    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
+    pcVar9 = (char *)*puVar4;
     do {
       cVar1 = *pcVar9;
       cVar2 = *pcVar8;
@@ -13223,74 +14873,16 @@ void Common_GetFunction(undefined8 param_1,undefined4 *param_2)
       pcVar8 = pcVar8 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar5 = (&PTR_s_flash_killed_8298db24)[(&DAT_82969f28)[iVar6 * 3]];
-      *param_2 = (&DAT_82969f30)[iVar6 * 3];
-      __restgprlr_29((&DAT_82969f28)[iVar6 * 3]);
-      return;
+      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (methods[iVar6].name - 0x8000) * 4);
+      uVar5 = __restgprlr_29(methods[iVar6].name);
+      return uVar5;
     }
-    uVar12 = uVar12 + 0xc;
+    uVar5 = uVar5 + 0xc;
     iVar6 = iVar6 + 1;
-    piVar7 = piVar7 + 3;
-    if (0x893 < uVar12) {
-      __restgprlr_29(0);
-      return;
-    }
-  } while( true );
-}
-
-
-// 8249CF00  Common_GetMethod  (game/g_scr_main.cpp:14408)
-
-void Common_GetMethod(void)
-
-{
-  char cVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  uint uVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
-  longlong lVar8;
-  char *pcVar9;
-  
-  puVar3 = (undefined4 *)__savegprlr_29();
-  if (puVar3 == (undefined4 *)0x0) {
-    lVar8 = 0xa8;
-    pcVar9 = "ize()";
-    do {
-      pcVar7 = pcVar9 + 0x10;
-      pcVar9 = pcVar9 + 0xc;
-      Scr_RegisterFunction(*(undefined4 *)pcVar7,0,*(undefined4 *)pcVar9);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    __restgprlr_29(0);
-    return;
-  }
-  piVar6 = &DAT_820765a8;
-  iVar5 = 0;
-  uVar4 = 0;
-  do {
-    pcVar9 = (&PTR_s_attach_8298e238)[*piVar6 + -0x8000];
-    pcVar7 = (char *)*puVar3;
-    do {
-      cVar1 = *pcVar7;
-      cVar2 = *pcVar9;
-      if (cVar1 == '\0') break;
-      pcVar7 = pcVar7 + 1;
-      pcVar9 = pcVar9 + 1;
-    } while (cVar1 == cVar2);
-    if (cVar1 == cVar2) {
-      *puVar3 = (&PTR_s_attach_8298e238)[(&DAT_820765a8)[iVar5 * 3] + -0x8000];
-      __restgprlr_29((&DAT_820765a8)[iVar5 * 3]);
-      return;
-    }
-    uVar4 = uVar4 + 0xc;
-    iVar5 = iVar5 + 1;
-    piVar6 = piVar6 + 3;
-    if (0x7df < uVar4) {
-      __restgprlr_29(0);
-      return;
+    pBVar7 = pBVar7 + 1;
+    if (0x7df < uVar5) {
+      uVar5 = __restgprlr_29(0);
+      return uVar5;
     }
   } while( true );
 }

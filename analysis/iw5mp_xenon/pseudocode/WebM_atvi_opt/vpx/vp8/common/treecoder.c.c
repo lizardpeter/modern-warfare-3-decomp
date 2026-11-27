@@ -2,29 +2,30 @@
 
 // 8281BAB0  tree2tok  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:30)
 
-void tree2tok(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
-             longlong param_5)
+void tree2tok(vp8_token_struct *param_1,char *param_2,int param_3,int param_4,int param_5)
 
 {
   char cVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  vp8_token_struct *pvVar2;
+  longlong lVar3;
   longlong lVar4;
   ulonglong uVar5;
   
-  iVar2 = __savegprlr_27();
-  uVar5 = (param_4 & 0x7fffffff) << 1;
-  lVar4 = param_2 + param_3 + -1;
+  uVar5 = (ulonglong)param_4;
+  lVar4 = (longlong)param_3;
+  lVar3 = (longlong)(int)param_2;
+  pvVar2 = (vp8_token_struct *)__savegprlr_27(param_1);
+  uVar5 = (uVar5 & 0x7fffffff) << 1;
+  lVar4 = lVar3 + lVar4 + -1;
   do {
     lVar4 = lVar4 + 1;
     cVar1 = *(char *)lVar4;
-    if (cVar1 < '\x01') {
-      puVar3 = (undefined4 *)(iVar2 - (int)(((longlong)cVar1 & 0xffffffffU) << 3));
-      *puVar3 = (int)uVar5;
-      puVar3[1] = (int)(param_5 + 1);
+    if (cVar1 < 1) {
+      pvVar2[-((int)cVar1 & 0x1fffffffU)].value = (int)uVar5;
+      pvVar2[-((int)cVar1 & 0x1fffffffU)].Len = param_5 + 1;
     }
     else {
-      tree2tok(iVar2,param_2,(longlong)cVar1,uVar5,param_5 + 1);
+      tree2tok(pvVar2,(char *)lVar3,(int)cVar1,(int)uVar5,param_5 + 1);
     }
     uVar5 = uVar5 + 1;
   } while ((uVar5 & 1) != 0);
@@ -35,7 +36,7 @@ void tree2tok(undefined8 param_1,longlong param_2,longlong param_3,ulonglong par
 
 // 8281BB28  vp8_tokens_from_tree  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:50)
 
-void vp8_tokens_from_tree(undefined8 param_1,undefined8 param_2)
+void vp8_tokens_from_tree(vp8_token_struct *param_1,char *param_2)
 
 {
   tree2tok(param_1,param_2,0,0,0);
@@ -45,58 +46,63 @@ void vp8_tokens_from_tree(undefined8 param_1,undefined8 param_2)
 
 // 8281BB38  vp8_tokens_from_tree_offset  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:56)
 
-void vp8_tokens_from_tree_offset(longlong param_1,undefined8 param_2,ulonglong param_3)
+void vp8_tokens_from_tree_offset(vp8_token_struct *param_1,char *param_2,int param_3)
 
 {
-  tree2tok(param_1 + (param_3 & 0x1fffffff) * -8,param_2,0,0,0);
+  tree2tok(param_1 + -param_3,param_2,0,0,0);
   return;
 }
 
 
 // 8281BB50  branch_counts  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:67)
 
-void branch_counts(undefined8 param_1,longlong param_2,int param_3,longlong param_4,longlong param_5
-                  )
+void branch_counts(int param_1,vp8_token_struct *param_2,char *param_3,uint (*param_4) [2],
+                  uint *param_5)
 
 {
-  char cVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
   uint uVar4;
   int iVar5;
-  int iVar6;
+  longlong lVar6;
   longlong lVar7;
   uint uVar8;
   int iVar9;
   int iVar10;
+  longlong lVar11;
+  longlong lVar12;
   
-  iVar6 = __savegprlr_27();
+  lVar11 = (longlong)(int)param_5;
+  lVar6 = (longlong)(int)param_4;
+  lVar12 = (longlong)(int)param_2;
+  iVar5 = __savegprlr_27(param_1);
   iVar9 = 0;
-  lVar7 = param_4 + -8;
+  lVar7 = lVar6 + -8;
   do {
     iVar9 = iVar9 + 1;
     *(undefined4 *)((int)lVar7 + 0xc) = 0;
     lVar7 = lVar7 + 8;
     *(undefined4 *)lVar7 = 0;
-  } while (iVar9 < iVar6 + -1);
+  } while (iVar9 < iVar5 + -1);
   iVar9 = 0;
   do {
-    uVar8 = ((int *)param_2)[1];
+    uVar8 = ((int *)lVar12)[1];
     iVar10 = 0;
-    iVar2 = *(int *)param_2;
-    iVar3 = *(int *)param_5;
+    iVar1 = *(int *)lVar12;
+    iVar2 = *(int *)lVar11;
     do {
       uVar8 = uVar8 - 1;
-      uVar4 = iVar2 >> (uVar8 & 0x3f) & 1;
-      iVar5 = ((iVar10 >> 1) * 2 + uVar4) * 4;
-      *(int *)(iVar5 + (int)param_4) = *(int *)(iVar5 + (int)param_4) + iVar3;
-      cVar1 = *(char *)(iVar10 + uVar4 + param_3);
-      iVar10 = (int)cVar1;
-    } while ('\0' < cVar1);
+      uVar4 = iVar1 >> (uVar8 & 0x3f) & 1;
+      iVar3 = iVar10 + uVar4;
+      iVar10 = ((iVar10 >> 1) * 2 + uVar4) * 4;
+      *(int *)(iVar10 + (int)lVar6) = *(int *)(iVar10 + (int)lVar6) + iVar2;
+      iVar10 = (int)param_3[iVar3];
+    } while ('\0' < param_3[iVar3]);
     iVar9 = iVar9 + 1;
-    param_2 = param_2 + 8;
-    param_5 = param_5 + 4;
-  } while (iVar9 < iVar6);
+    lVar12 = lVar12 + 8;
+    lVar11 = lVar11 + 4;
+  } while (iVar9 < iVar5);
   __restgprlr_27();
   return;
 }
@@ -104,50 +110,51 @@ void branch_counts(undefined8 param_1,longlong param_2,int param_3,longlong para
 
 // 8281BBF0  vp8_tree_probs_from_distribution  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:123)
 
-void vp8_tree_probs_from_distribution(void)
+void vp8_tree_probs_from_distribution
+               (int param_1,vp8_token_struct *param_2,char *param_3,uchar *param_4,
+               uint (*param_5) [2],uint *param_6,uint param_7,int param_8)
 
 {
   uint uVar1;
   int iVar2;
-  int in_r6;
-  longlong in_r7;
-  int in_r9;
-  ulonglong uVar3;
-  int in_r10;
+  longlong lVar3;
   ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar5;
+  int iVar6;
   
-  iVar2 = __savegprlr_27();
-  iVar5 = 0;
-  branch_counts();
+  lVar3 = (longlong)(int)param_5;
+  iVar2 = __savegprlr_27(param_1);
+  iVar6 = 0;
+  branch_counts(iVar2,param_2,param_3,(uint (*) [2])lVar3,param_6);
   do {
-    uVar1 = *(uint *)in_r7;
-    uVar4 = (ulonglong)((uint *)in_r7)[1] + (ulonglong)uVar1;
-    if (uVar4 == 0) {
-      *(undefined1 *)(iVar5 + in_r6) = 0x80;
+    uVar1 = *(uint *)lVar3;
+    uVar5 = (ulonglong)((uint *)lVar3)[1] + (ulonglong)uVar1;
+    if (uVar5 == 0) {
+      param_4[iVar6] = 0x80;
     }
     else {
-      uVar3 = (uVar4 & 0xffffffff) >> 1;
-      if (in_r10 == 0) {
-        uVar3 = 0;
+      uVar4 = (uVar5 & 0xffffffff) >> 1;
+      if (param_8 == 0) {
+        uVar4 = 0;
       }
-      trapWord(6,uVar4,0);
-      uVar4 = ((longlong)(int)uVar1 * (longlong)in_r9 + uVar3 & 0xffffffff) / (uVar4 & 0xffffffff);
-      if (uVar4 < 0x100) {
-        if (uVar4 == 0) {
-          *(undefined1 *)(iVar5 + in_r6) = 1;
+      trapWord(6,uVar5,0);
+      uVar5 = ((longlong)(int)uVar1 * (longlong)(int)param_7 + uVar4 & 0xffffffff) /
+              (uVar5 & 0xffffffff);
+      if (uVar5 < 0x100) {
+        if (uVar5 == 0) {
+          param_4[iVar6] = '\x01';
           goto LAB_8281bc84;
         }
       }
       else {
-        uVar4 = 0xff;
+        uVar5 = 0xff;
       }
-      *(char *)(iVar5 + in_r6) = (char)uVar4;
+      param_4[iVar6] = (uchar)uVar5;
     }
 LAB_8281bc84:
-    iVar5 = iVar5 + 1;
-    in_r7 = in_r7 + 8;
-    if (iVar2 + -1 <= iVar5) {
+    iVar6 = iVar6 + 1;
+    lVar3 = lVar3 + 8;
+    if (iVar2 + -1 <= iVar6) {
       __restgprlr_27();
       return;
     }

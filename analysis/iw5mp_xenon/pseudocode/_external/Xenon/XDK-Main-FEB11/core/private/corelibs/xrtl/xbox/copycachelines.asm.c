@@ -2,11 +2,16 @@
 
 // 828B4E40  CopyMisalignedCachelines  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xbox/copycachelines.asm:58)
 
-void CopyMisalignedCachelines(longlong param_1,longlong param_2,uint param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void CopyMisalignedCachelines(void)
 
 {
   uint uVar1;
   undefined8 in_r0;
+  longlong in_r3;
+  longlong in_r4;
+  uint in_r5;
   undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   undefined1 auVar4 [16];
@@ -18,18 +23,18 @@ void CopyMisalignedCachelines(longlong param_1,longlong param_2,uint param_3)
   undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   
-  auVar2 = loadVectorForShiftLeft(in_r0,param_2);
-  if (param_3 < 0x80) {
+  auVar2 = loadVectorForShiftLeft(in_r0,in_r4);
+  if (in_r5 < 0x80) {
     return;
   }
   do {
-    if (0xff < param_3) {
-      if (0x400 < param_3) {
-        dataCacheBlockTouch(param_2 + 0x400);
+    if (0xff < in_r5) {
+      if (0x400 < in_r5) {
+        dataCacheBlockTouch(in_r4 + 0x400);
       }
-      dataCacheBlockClearToZero128(param_1 + 0x80);
+      dataCacheBlockClearToZero128(in_r3 + 0x80);
     }
-    uVar1 = (uint)param_2;
+    uVar1 = (uint)in_r4;
     auVar4 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
     auVar5 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
     auVar3 = vectorPermute(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar4,auVar2);
@@ -45,20 +50,20 @@ void CopyMisalignedCachelines(longlong param_1,longlong param_2,uint param_3)
     auVar8 = vectorPermute(auVar8,auVar9,auVar2);
     auVar11 = *(undefined1 (*) [16])(uVar1 + 0x7f & 0xfffffff0);
     auVar9 = vectorPermute(auVar9,auVar10,auVar2);
-    uVar1 = (uint)param_1;
+    uVar1 = (uint)in_r3;
     *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar3;
     auVar3 = vectorPermute(auVar10,auVar11,auVar2);
     *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar4;
     *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar5;
-    param_2 = param_2 + 0x80;
+    in_r4 = in_r4 + 0x80;
     *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar6;
-    param_1 = param_1 + 0x80;
+    in_r3 = in_r3 + 0x80;
     *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar7;
-    param_3 = param_3 - 0x80;
+    in_r5 = in_r5 - 0x80;
     *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar8;
     *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar9;
     *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar3;
-  } while (0x7f < param_3);
+  } while (0x7f < in_r5);
   return;
 }
 

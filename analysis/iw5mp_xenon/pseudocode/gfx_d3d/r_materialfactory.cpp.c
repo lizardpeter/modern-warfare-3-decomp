@@ -2,6 +2,8 @@
 
 // 827581B8  MaterialFactory_PublicSymbolToAvoidWarning  (gfx_d3d/r_materialfactory.cpp:3238)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MaterialFactory_PublicSymbolToAvoidWarning(void)
 
 {

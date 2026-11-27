@@ -2,25 +2,37 @@
 
 // 828B4FD0  XapipCreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapipcreatethread.c:49)
 
-void XapipCreateThread(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                      ulonglong param_5,uint param_6,undefined8 param_7)
+void * XapipCreateThread(void *param_1,ulong param_2,_func___cdecl_ulong_void_ptr *param_3,
+                        void *param_4,ulong param_5,ulong param_6,ulong *param_7)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  long lVar1;
+  void *pvVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   undefined4 local_40 [16];
   
-  __savegprlr_26();
-  uVar2 = (param_5 & 0xffffffff) >> 2 & 1;
-  if (param_6 != 0xffffffff) {
-    uVar2 = ((ulonglong)(uint)(1 << (param_6 & 0x3f)) & 0xff) << 0x18 | uVar2;
+  lVar7 = (longlong)(int)param_7;
+  lVar6 = (longlong)(int)param_6;
+  uVar8 = (ulonglong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  __savegprlr_26(param_1,lVar3,lVar4,lVar5,uVar8,lVar6,lVar7);
+  uVar8 = (uVar8 & 0xffffffff) >> 2 & 1;
+  if ((uint)lVar6 != 0xffffffff) {
+    uVar8 = ((ulonglong)(uint)(1 << ((uint)lVar6 & 0x3f)) & 0xff) << 0x18 | uVar8;
   }
-  iVar1 = ExCreateThread(local_40,param_2,param_7,0xffffffff828b5a50,param_3,param_4,uVar2);
-  if (iVar1 < 0) {
-    RtlSetLastNTError();
+  lVar1 = ExCreateThread(local_40,lVar3,lVar7,0xffffffff828b5a50,lVar4,lVar5,uVar8);
+  if (lVar1 < 0) {
+    RtlSetLastNTError(lVar1);
     local_40[0] = 0;
   }
-  __restgprlr_26(local_40[0]);
-  return;
+  pvVar2 = (void *)__restgprlr_26(local_40[0]);
+  return pvVar2;
 }
 

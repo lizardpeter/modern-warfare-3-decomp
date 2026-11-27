@@ -2,12 +2,12 @@
 
 // 828A9198  XCloseHandle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xclose.c:22)
 
-BOOL XCloseHandle(HANDLE param_1)
+int XCloseHandle(void *param_1)
 
 {
-  BOOL BVar1;
+  int iVar1;
   
-  BVar1 = CloseHandle(param_1);
-  return BVar1;
+  iVar1 = CloseHandle(param_1);
+  return iVar1;
 }
 

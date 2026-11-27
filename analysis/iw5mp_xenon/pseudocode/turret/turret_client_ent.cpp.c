@@ -2,19 +2,23 @@
 
 // 826E0528  CG_Turret_Reset  (turret/turret_client_ent.cpp:22)
 
-void CG_Turret_Reset(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_Turret_Reset(centity_s *param_1)
 
 {
   int iVar1;
   undefined4 *puVar2;
   longlong lVar3;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x19,0,0xffffffff82000f98,0xffffffff82002118);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x19,0,"%s");
   }
   if (*(int *)(iVar1 + 200) != 0xb) {
-    MyAssertHandler(0xffffffff821a7b68,0x1a,0,0xffffffff82000f98,0xffffffff82012a64);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x1a,0,"%s");
   }
   puVar2 = (undefined4 *)(iVar1 + 0x28);
   lVar3 = 9;
@@ -30,28 +34,36 @@ void CG_Turret_Reset(void)
 
 // 826E05B8  CG_Turret_StopSounds  (turret/turret_client_ent.cpp:34)
 
-void CG_Turret_StopSounds(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_Turret_StopSounds(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  centity_s *pcVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a7b68,0x27,0,0xffffffff8201de38,param_2,0x800);
+  uVar3 = (ulonglong)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if (0x7ff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x27,0,"entNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  iVar2 = CG_GetEntity(uVar1,param_2);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x2a,0,0xffffffff82000f98,0xffffffff82002118);
+  pcVar2 = CG_GetEntity(LVar1,(int)uVar3);
+  if (pcVar2 == (centity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x2a,0,"%s");
   }
-  if (*(char *)(iVar2 + 2) != '\v') {
-    MyAssertHandler(0xffffffff821a7b68,0x2b,0,0xffffffff82000f98,0xffffffff821a7bb0);
+  if ((pcVar2->pose).eType != '\v') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x2b,0,"%s");
   }
-  *(undefined1 *)(iVar2 + 0x44) = 0;
-  *(undefined1 *)(iVar2 + 0x45) = 0;
-  *(undefined4 *)(iVar2 + 0x48) = 0;
-  *(undefined1 *)(iVar2 + 0x4c) = 0;
-  CG_StopSoundsOnEnt(uVar1,param_2);
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndLastRotating = false;
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndNotified = false;
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndTime = 0;
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex = '\0';
+  CG_StopSoundsOnEnt(LVar1,(int)uVar3);
   __restgprlr_27();
   return;
 }
@@ -59,23 +71,29 @@ void CG_Turret_StopSounds(undefined8 param_1,ulonglong param_2)
 
 // 826E0688  CG_Turret_SoundNotify  (turret/turret_client_ent.cpp:58)
 
-void CG_Turret_SoundNotify(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_Turret_SoundNotify(centity_s *param_1,int param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x3e,0,0xffffffff82000f98,0xffffffff82002118);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x3e,0,"%s");
   }
   if (*(int *)(iVar1 + 200) != 0xb) {
-    MyAssertHandler(0xffffffff821a7b68,0x3f,0,0xffffffff82000f98,0xffffffff82012a64);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x3f,0,"%s");
   }
   if (*(char *)(iVar1 + 0x45) != '\0') {
-    MyAssertHandler(0xffffffff821a7b68,0x43,0,0xffffffff82000f98,0xffffffff821a7c18);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x43,0,"%s");
   }
   if (*(int *)(iVar1 + 0x48) < 1) {
-    MyAssertHandler(0xffffffff821a7b68,0x44,0,0xffffffff821a7bd0,0xffffffff821a7bf8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x44,0,"%s\n\t(turret->barrelRollSndTime) = %i");
   }
   *(undefined1 *)(iVar1 + 0x45) = 1;
   *(int *)(iVar1 + 0x48) = *(int *)(iVar1 + 0x48) + param_2;
@@ -86,147 +104,178 @@ void CG_Turret_SoundNotify(undefined8 param_1,int param_2)
 
 // 826E0770  CG_Turret_GetSpinSoundCount  (turret/turret_client_ent.cpp:78)
 
-void CG_Turret_GetSpinSoundCount(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+uchar CG_Turret_GetSpinSoundCount(centity_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
+  snd_alias_list_t *psVar1;
+  WeaponDef *pWVar2;
+  int iVar3;
+  Weapon WVar4;
+  uchar uVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_27();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x52,0,0xffffffff82000f98,0xffffffff82002118);
+  iVar3 = __savegprlr_27(param_1);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x52,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0x1c4) & 1) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x53,0,0xffffffff82000f98,0xffffffff82012adc);
+  if ((*(uint *)(iVar3 + 0x1c4) & 1) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x53,0,"%s");
   }
-  uVar3 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-  iVar2 = (&DAT_829d84a0)[uVar3 & 0xff];
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x56,1,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar4 = BG_GetAlternateWeapon(*(Weapon *)(iVar3 + 0x18c),false);
+  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar2 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x56,1,"%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x70c);
-  uVar3 = 0;
-  while (((iVar1 != 0 && (*(int *)((uVar3 + 0x1c7) * 4 + iVar2) != 0)) && (uVar3 < 4))) {
-    uVar3 = uVar3 + 1 & 0xff;
-    iVar1 = *(int *)((uVar3 + 0x1c3) * 4 + iVar2);
+  psVar1 = pWVar2->turretBarrelSpinUpSnd[0];
+  uVar6 = 0;
+  while (((psVar1 != (snd_alias_list_t *)0x0 &&
+          (pWVar2->turretBarrelSpinDownSnd[uVar6] != (snd_alias_list_t *)0x0)) && (uVar6 < 4))) {
+    uVar6 = uVar6 + 1 & 0xff;
+    psVar1 = pWVar2->turretBarrelSpinUpSnd[uVar6];
   }
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x5d,0,0xffffffff821a7ca4,0xffffffff821a7cbc,0);
+  if (uVar6 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x5d,0,"%s\n\t(numSounds) = %i");
   }
-  if (*(int *)((uVar3 + 0x1c2) * 4 + iVar2) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x5e,0,0xffffffff82000f98,0xffffffff821a7c70);
+  if (pWVar2->turretBarrelSpinUpSnd[uVar6 - 1] == (snd_alias_list_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x5e,0,"%s");
   }
-  if (*(int *)((uVar3 + 0x1c6) * 4 + iVar2) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x5f,0,0xffffffff82000f98,0xffffffff821a7c38);
+  if (pWVar2->turretBarrelSpinUpSnd[uVar6 + 3] == (snd_alias_list_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x5f,0,"%s");
   }
-  __restgprlr_27(uVar3);
-  return;
+  uVar5 = __restgprlr_27(uVar6);
+  return uVar5;
 }
 
 
 // 826E0910  CG_Turret_UpdateBarrelSpinSound  (turret/turret_client_ent.cpp:102)
 
-void CG_Turret_UpdateBarrelSpinSound(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_Turret_UpdateBarrelSpinSound(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  int iVar4;
-  bool bVar5;
-  undefined8 uVar6;
-  uint uVar8;
-  int iVar9;
-  char cVar10;
-  byte bVar11;
-  byte bVar12;
-  undefined8 uVar7;
-  undefined4 uVar13;
-  undefined1 uVar14;
-  double dVar15;
+  WeaponDef *pWVar1;
+  centity_s *pcVar2;
+  LocalClientNum_t LVar3;
+  Weapon WVar4;
+  cg_s *pcVar5;
+  bool bVar7;
+  byte bVar8;
+  byte bVar9;
+  int iVar6;
+  ulonglong uVar10;
+  snd_alias_list_t *psVar11;
+  uchar uVar12;
+  uint uVar13;
+  double dVar14;
+  float fVar15;
   
-  uVar6 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x73,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar10 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_24(param_1);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x73,0,"%s");
   }
-  iVar4 = (int)param_2;
-  if ((*(uint *)(iVar4 + 0x1c4) & 1) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x74,0,0xffffffff82000f98,0xffffffff82012adc);
+  pcVar2 = (centity_s *)uVar10;
+  if ((pcVar2->flags & 1U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x74,0,"%s");
   }
-  uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(iVar4 + 0x18c),0);
-  iVar3 = (&DAT_829d84a0)[uVar8 & 0xff];
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x7d,1,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar4 = BG_GetAlternateWeapon((pcVar2->nextState).weapon,false);
+  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x7d,1,"%s");
   }
-  if (*(char *)(iVar3 + 0x796) == '\0') goto LAB_826e0c18;
-  iVar9 = CG_GetLocalClientGlobals(uVar6);
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x83,0,0xffffffff82000f98,0xffffffff82002798);
+  if (pWVar1->turretBarrelSpinEnabled == false) goto LAB_826e0c18;
+  pcVar5 = CG_GetLocalClientGlobals(LVar3);
+  if (pcVar5 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x83,0,"%s");
   }
-  if (((*(uint *)(iVar9 + 0xf8) & 0x3800) == 0) ||
-     (bVar5 = true, *(int *)(iVar9 + 0x1bc) != *(int *)(iVar4 + 0xc4))) {
-    bVar5 = false;
+  if ((((pcVar5->predictedPlayerState).eFlags & 0x3800U) == 0) ||
+     (bVar7 = true, (pcVar5->predictedPlayerState).viewlocked_entNum != (pcVar2->nextState).number))
+  {
+    bVar7 = false;
   }
-  if ((((*(uint *)(iVar4 + 0xcc) & 0x3800) != 0) && (!bVar5)) &&
-     (cVar10 = CL_IsRenderingSplitScreen(), cVar10 != '\0')) goto LAB_826e0c18;
-  iVar1 = *(int *)(iVar4 + 0x48);
-  if (((0 < iVar1) && (*(char *)(iVar4 + 0x44) == *(char *)(iVar4 + 0x130))) &&
-     ((*(char *)(iVar4 + 0x45) == '\0' ||
-      (*(int *)(iVar9 + 0x6b988) + *(int *)(iVar9 + 0x6b98c) + -1 < iVar1)))) goto LAB_826e0c18;
-  if (iVar1 == 0) {
-    dVar15 = (double)BG_Turret_ComputeBarrelSpinRate
-                               (iVar3,param_2 + 0x118,
-                                (ulonglong)*(uint *)(iVar9 + 0x6b98c) -
-                                (ulonglong)*(uint *)(iVar9 + 0xa04));
-    if (*(char *)(iVar4 + 0x130) == '\0') {
-      bVar11 = CG_Turret_GetSpinSoundCount(param_2);
-      dVar15 = floor((double)(float)((double)bVar11 * dVar15));
-      uVar14 = (undefined1)(int)dVar15;
+  if (((((pcVar2->nextState).lerp.eFlags & 0x3800U) != 0) && (!bVar7)) &&
+     (bVar7 = CL_IsRenderingSplitScreen(), bVar7)) goto LAB_826e0c18;
+  iVar6 = (pcVar2->pose).field9_0x2c.turret.barrelRollSndTime;
+  if (((0 < iVar6) &&
+      ((pcVar2->pose).field9_0x2c.turret.barrelRollSndLastRotating ==
+       (pcVar2->nextState).lerp.u.turret.isBarrelRotating)) &&
+     (((pcVar2->pose).field9_0x2c.turret.barrelRollSndNotified == false ||
+      (pcVar5->frametime + pcVar5->time + -1 < iVar6)))) goto LAB_826e0c18;
+  if (iVar6 == 0) {
+    fVar15 = BG_Turret_ComputeBarrelSpinRate
+                       (pWVar1,&(pcVar2->nextState).lerp.u.turret,
+                        pcVar5->time - (pcVar5->predictedPlayerState).deltaTime);
+    dVar14 = (double)fVar15;
+    if ((pcVar2->nextState).lerp.u.turret.isBarrelRotating == false) {
+      bVar8 = CG_Turret_GetSpinSoundCount(pcVar2);
+      dVar14 = floor((double)(float)((double)bVar8 * dVar14));
+      uVar12 = (uchar)(int)dVar14;
     }
     else {
-      bVar11 = CG_Turret_GetSpinSoundCount(param_2);
-      dVar15 = ceil((double)(float)((double)bVar11 * dVar15));
-      uVar14 = (undefined1)(int)dVar15;
+      bVar8 = CG_Turret_GetSpinSoundCount(pcVar2);
+      dVar14 = ceil((double)(float)((double)bVar8 * dVar14));
+      uVar12 = (uchar)(int)dVar14;
     }
-    *(undefined1 *)(iVar4 + 0x4c) = uVar14;
+    (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex = uVar12;
   }
-  *(undefined1 *)(iVar4 + 0x44) = *(undefined1 *)(iVar4 + 0x130);
-  uVar13 = *(undefined4 *)(iVar9 + 0x6b98c);
-  *(undefined1 *)(iVar4 + 0x45) = 0;
-  bVar11 = *(byte *)(iVar4 + 0x4c);
-  *(undefined4 *)(iVar4 + 0x48) = uVar13;
-  bVar12 = CG_Turret_GetSpinSoundCount(param_2);
-  if (bVar12 < bVar11) {
-    MyAssertHandler(0xffffffff821a7b68,0xb1,0,0xffffffff821a7ccc,0xffffffff821a7cf8,bVar11);
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndLastRotating =
+       (pcVar2->nextState).lerp.u.turret.isBarrelRotating;
+  iVar6 = pcVar5->time;
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndNotified = false;
+  bVar8 = (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex;
+  (pcVar2->pose).field9_0x2c.turret.barrelRollSndTime = iVar6;
+  bVar9 = CG_Turret_GetSpinSoundCount(pcVar2);
+  if (bVar9 < bVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0xb1,0,"%s\n\t(turret->barrelRollSndIndex) = %i");
   }
-  if (*(char *)(iVar4 + 0x44) == '\0') {
-    if (*(char *)(iVar4 + 0x4c) == '\0') {
-      CG_StopSoundAlias(uVar6,*(undefined4 *)(iVar4 + 0xc4),*(undefined4 *)(iVar3 + 0x708));
+  if ((pcVar2->pose).field9_0x2c.turret.barrelRollSndLastRotating == false) {
+    uVar12 = (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex;
+    if (uVar12 == '\0') {
+      CG_StopSoundAlias(LVar3,(pcVar2->nextState).number,pWVar1->turretBarrelSpinMaxSnd);
       __restgprlr_24();
       return;
     }
-    bVar11 = *(char *)(iVar4 + 0x4c) - 1;
-    *(byte *)(iVar4 + 0x4c) = bVar11;
-    uVar2 = *(undefined4 *)((bVar11 + 0x1c7) * 4 + iVar3);
-    uVar13 = *(undefined4 *)(iVar4 + 0xc4);
+    bVar8 = uVar12 - 1;
+    (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex = bVar8;
+    psVar11 = pWVar1->turretBarrelSpinDownSnd[bVar8];
+    iVar6 = (pcVar2->nextState).number;
 LAB_826e0bf0:
-    uVar7 = CG_PlaySoundAlias(uVar6,uVar13,param_2 + 0x14,uVar2);
+    iVar6 = CG_PlaySoundAlias(LVar3,iVar6,(pcVar2->pose).origin,psVar11);
   }
   else {
-    bVar11 = *(byte *)(iVar4 + 0x4c);
-    bVar12 = CG_Turret_GetSpinSoundCount(param_2);
-    uVar13 = *(undefined4 *)(iVar4 + 0xc4);
-    if (bVar12 <= bVar11) {
-      uVar2 = *(undefined4 *)(iVar3 + 0x708);
+    uVar13 = (uint)(pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex;
+    bVar8 = CG_Turret_GetSpinSoundCount(pcVar2);
+    iVar6 = (pcVar2->nextState).number;
+    if (bVar8 <= uVar13) {
+      psVar11 = pWVar1->turretBarrelSpinMaxSnd;
       goto LAB_826e0bf0;
     }
-    uVar7 = CG_PlaySoundAlias(uVar6,uVar13,param_2 + 0x14,
-                              *(undefined4 *)((bVar11 + 0x1c3) * 4 + iVar3));
-    *(char *)(iVar4 + 0x4c) = *(char *)(iVar4 + 0x4c) + '\x01';
+    iVar6 = CG_PlaySoundAlias(LVar3,iVar6,(pcVar2->pose).origin,
+                              pWVar1->turretBarrelSpinUpSnd[uVar13]);
+    (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex =
+         (pcVar2->pose).field9_0x2c.turret.barrelRollSndIndex + '\x01';
   }
-  if ((int)uVar7 != -1) {
-    SND_AddLengthNotify(uVar7,CONCAT22((short)uVar6,(short)*(undefined4 *)(iVar4 + 0xc4)),1,0);
+  if (iVar6 != -1) {
+    SND_AddLengthNotify(iVar6,(void *)CONCAT22((short)LVar3,(short)(pcVar2->nextState).number),
+                        SndLengthNotify_EntityCustom,0);
   }
 LAB_826e0c18:
   __restgprlr_24();
@@ -236,42 +285,52 @@ LAB_826e0c18:
 
 // 826E0C70  CG_Turret_UpdateBarrelSpinRumble  (turret/turret_client_ent.cpp:221)
 
-void CG_Turret_UpdateBarrelSpinRumble(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_Turret_UpdateBarrelSpinRumble(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  int iVar1;
+  WeaponDef *pWVar1;
   int iVar2;
-  undefined8 uVar3;
-  uint uVar4;
-  int iVar5;
-  double dVar6;
+  LocalClientNum_t LVar3;
+  Weapon WVar4;
+  cg_s *pcVar5;
+  ulonglong uVar6;
+  float fVar7;
   
-  uVar3 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0xe4,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar6 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0xe4,0,"%s");
   }
-  iVar2 = (int)param_2;
+  iVar2 = (int)uVar6;
   if ((*(uint *)(iVar2 + 0x1c4) & 1) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0xe5,0,0xffffffff82000f98,0xffffffff82012adc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0xe5,0,"%s");
   }
-  uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0xe8,1,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar4 = BG_GetAlternateWeapon(*(Weapon *)(iVar2 + 0x18c),false);
+  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0xe8,1,"%s");
   }
-  if (((*(char *)(iVar1 + 0x796) != '\0') && (*(char **)(iVar1 + 0x6f8) != (char *)0x0)) &&
-     (**(char **)(iVar1 + 0x6f8) != '\0')) {
-    iVar5 = CG_GetLocalClientGlobals(uVar3);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff821a7b68,0xf1,1,0xffffffff82000f98,0xffffffff82002798);
+  if (((pWVar1->turretBarrelSpinEnabled != false) && (pWVar1->turretBarrelSpinRumble != (char *)0x0)
+      ) && (*pWVar1->turretBarrelSpinRumble != '\0')) {
+    pcVar5 = CG_GetLocalClientGlobals(LVar3);
+    if (pcVar5 == (cg_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp"
+                      ,0xf1,1,"%s");
     }
-    if ((((*(uint *)(iVar5 + 0xf8) & 0x3800) != 0) &&
-        (*(int *)(iVar5 + 0x1bc) == *(int *)(iVar2 + 0xc4))) &&
-       (dVar6 = (double)BG_Turret_ComputeBarrelSpinRate
-                                  (iVar1,param_2 + 0x118,
-                                   (ulonglong)*(uint *)(iVar5 + 0x6b98c) -
-                                   (ulonglong)*(uint *)(iVar5 + 0xa04)), 0.0 < dVar6)) {
-      CG_PlayRumbleOnClientScaledWithUpdate(uVar3,*(undefined4 *)(iVar1 + 0x6f8));
+    if (((((pcVar5->predictedPlayerState).eFlags & 0x3800U) != 0) &&
+        ((pcVar5->predictedPlayerState).viewlocked_entNum == *(int *)(iVar2 + 0xc4))) &&
+       (fVar7 = BG_Turret_ComputeBarrelSpinRate
+                          (pWVar1,(LerpEntityStateTurret *)(iVar2 + 0x118),
+                           pcVar5->time - (pcVar5->predictedPlayerState).deltaTime), 0.0 < fVar7)) {
+      CG_PlayRumbleOnClientScaledWithUpdate(LVar3,pWVar1->turretBarrelSpinRumble,fVar7);
     }
   }
   __restgprlr_26();
@@ -281,40 +340,52 @@ void CG_Turret_UpdateBarrelSpinRumble(undefined8 param_1,ulonglong param_2)
 
 // 826E0DE0  CG_Turret_UpdateHeat  (turret/turret_client_ent.cpp:263)
 
-void CG_Turret_UpdateHeat(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_Turret_UpdateHeat(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  int iVar1;
+  WeaponDef *pWVar1;
   int iVar2;
-  undefined8 uVar3;
-  uint uVar4;
-  int iVar5;
+  LocalClientNum_t LVar3;
+  Weapon WVar4;
+  cg_s *pcVar5;
+  ulonglong uVar6;
   
-  uVar3 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x10d,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar6 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x10d,0,"%s");
   }
-  iVar2 = (int)param_2;
+  iVar2 = (int)uVar6;
   if ((*(uint *)(iVar2 + 0x1c4) & 1) == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x10e,0,0xffffffff82000f98,0xffffffff82012adc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x10e,0,"%s");
   }
-  uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x18c),0);
-  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a7b68,0x111,1,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar4 = BG_GetAlternateWeapon(*(Weapon *)(iVar2 + 0x18c),false);
+  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp",
+                    0x111,1,"%s");
   }
-  if ((0.0 < *(float *)(iVar1 + 0x6e4)) && (0.0 < *(float *)(iVar1 + 0x6e8))) {
-    iVar5 = CG_GetLocalClientGlobals(uVar3);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff821a7b68,0x118,1,0xffffffff82000f98,0xffffffff82002798);
+  if ((0.0 < pWVar1->turretOverheatUpRate) && (0.0 < pWVar1->turretOverheatDownRate)) {
+    pcVar5 = CG_GetLocalClientGlobals(LVar3);
+    if (pcVar5 == (cg_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_client_ent.cpp"
+                      ,0x118,1,"%s");
     }
     if ((*(char *)(iVar2 + 0x131) != '\0') && (*(char *)(iVar2 + 0x4d) == '\0')) {
-      if (*(int *)(iVar1 + 0x6f0) != 0) {
-        CG_PlaySoundAlias(uVar3,*(undefined4 *)(iVar2 + 0xc4),param_2 + 0x14);
+      if (pWVar1->turretOverheatSound != (snd_alias_list_t *)0x0) {
+        CG_PlaySoundAlias(LVar3,*(int *)(iVar2 + 0xc4),(float *)(iVar2 + 0x14),
+                          pWVar1->turretOverheatSound);
       }
-      if (*(int *)(iVar1 + 0x6f4) != 0) {
-        FX_PlayBoltedEffect(uVar3,*(int *)(iVar1 + 0x6f4),*(undefined4 *)(iVar5 + 0x6b98c),
-                            *(undefined4 *)(iVar2 + 0xc4),*(undefined1 *)(iVar2 + 0x3d));
+      if (pWVar1->turretOverheatEffect != (FxEffectDef *)0x0) {
+        FX_PlayBoltedEffect(LVar3,pWVar1->turretOverheatEffect,pcVar5->time,*(int *)(iVar2 + 0xc4),
+                            (uint)*(byte *)(iVar2 + 0x3d));
       }
     }
     *(undefined1 *)(iVar2 + 0x4d) = *(undefined1 *)(iVar2 + 0x131);

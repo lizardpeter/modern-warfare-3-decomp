@@ -5,10 +5,10 @@
 void FUN_82918604(void)
 
 {
-  FILE *pFVar1;
+  _iobuf *p_Var1;
   
-  pFVar1 = __iob_func();
-  _unlock_file2(1,pFVar1 + 1);
+  p_Var1 = __iob_func();
+  _unlock_file2(1,p_Var1 + 1);
   return;
 }
 
@@ -30,7 +30,7 @@ void FUN_829197e4(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x14));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x14));
   return;
 }
 
@@ -40,7 +40,7 @@ void FUN_829197e4(void)
 void FUN_82919804(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -54,7 +54,7 @@ void FUN_82919b44(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x2c));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x2c));
   return;
 }
 
@@ -64,7 +64,7 @@ void FUN_82919b44(void)
 void FUN_82919b64(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -78,7 +78,7 @@ void FUN_82919cac(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + -0x4c));
+  _unlock_file(*(_iobuf **)(in_r12 + -0x4c));
   return;
 }
 
@@ -88,7 +88,7 @@ void FUN_82919cac(void)
 void FUN_82919ccc(void)
 
 {
-  FILE *unaff_r28;
+  _iobuf *unaff_r28;
   
   _unlock_file(unaff_r28);
   return;
@@ -130,7 +130,7 @@ void FUN_8291aeb8(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + -0x28));
+  _unlock_file(*(_iobuf **)(in_r12 + -0x28));
   return;
 }
 
@@ -152,7 +152,7 @@ void FUN_8291b6e0(void)
 {
   int in_r12;
   
-  _unlock_file2(*(int *)(in_r12 + -0x40),*(void **)(*(int *)(in_r12 + -0x40) * 4 + DAT_84897ec0));
+  _unlock_file2(*(int *)(in_r12 + -0x40),__piob[*(int *)(in_r12 + -0x40)]);
   return;
 }
 
@@ -177,7 +177,7 @@ void FUN_8291b814(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x14));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x14));
   return;
 }
 
@@ -187,7 +187,7 @@ void FUN_8291b814(void)
 void FUN_8291b834(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -201,7 +201,7 @@ void FUN_8291bbc4(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x34));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x34));
   return;
 }
 
@@ -211,7 +211,7 @@ void FUN_8291bbc4(void)
 void FUN_8291bbe4(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -225,7 +225,7 @@ void FUN_8291bd9c(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x14));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x14));
   return;
 }
 
@@ -235,7 +235,7 @@ void FUN_8291bd9c(void)
 void FUN_8291bdbc(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -249,7 +249,7 @@ void FUN_8291c0a4(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + 0x14));
+  _unlock_file(*(_iobuf **)(in_r12 + 0x14));
   return;
 }
 
@@ -259,7 +259,7 @@ void FUN_8291c0a4(void)
 void FUN_8291c0c4(void)
 
 {
-  FILE *unaff_r30;
+  _iobuf *unaff_r30;
   
   _unlock_file(unaff_r30);
   return;
@@ -280,15 +280,16 @@ int FUN_8291c688(_EXCEPTION_POINTERS *param_1)
 
 // 8291D430  FUN_8291d430  (line unknown)
 
-void FUN_8291d430(undefined8 param_1)
+int FUN_8291d430(_EXCEPTION_POINTERS *param_1)
 
 {
+  int iVar1;
   int in_r12;
   
-  __SehTransFilter(param_1,*(undefined4 *)(in_r12 + 0x14),*(undefined4 *)(in_r12 + 0x1c),
-                   *(undefined4 *)(in_r12 + 0x24),*(undefined4 *)(in_r12 + 0x2c),
-                   *(undefined4 *)(in_r12 + 0x34),in_r12 + -0x30);
-  return;
+  iVar1 = __SehTransFilter(param_1,*(EHExceptionRecord **)(in_r12 + 0x14),*(ulong **)(in_r12 + 0x1c)
+                           ,*(_CONTEXT **)(in_r12 + 0x24),*(_xDISPATCHER_CONTEXT **)(in_r12 + 0x2c),
+                           *(_s_FuncInfo **)(in_r12 + 0x34),(int *)(in_r12 + -0x30));
+  return iVar1;
 }
 
 
@@ -299,7 +300,7 @@ void FUN_8291d90c(void)
 {
   int in_r12;
   
-  _unlock_file(*(FILE **)(in_r12 + -0x4c));
+  _unlock_file(*(_iobuf **)(in_r12 + -0x4c));
   return;
 }
 
@@ -330,8 +331,8 @@ void FUN_8291dac4(void)
   int in_r12;
   
   if (*(int *)(in_r12 + -0x40) == 0) {
-    __ArrayUnwind(*(undefined4 *)(in_r12 + 0x14),*(undefined4 *)(in_r12 + 0x1c),
-                  *(undefined4 *)(in_r12 + 0x24),*(undefined4 *)(in_r12 + 0x2c));
+    __ArrayUnwind(*(void **)(in_r12 + 0x14),*(uint *)(in_r12 + 0x1c),*(int *)(in_r12 + 0x24),
+                  *(_func___cdecl_void_void_ptr **)(in_r12 + 0x2c));
   }
   return;
 }
@@ -343,10 +344,10 @@ void FUN_8291dafc(void)
 
 {
   int in_r12;
-  undefined8 unaff_r27;
-  undefined8 unaff_r28;
-  undefined8 unaff_r29;
-  undefined8 unaff_r30;
+  _func___cdecl_void_void_ptr *unaff_r27;
+  int unaff_r28;
+  void *unaff_r29;
+  uint unaff_r30;
   
   if (*(int *)(in_r12 + -0x40) == 0) {
     __ArrayUnwind(unaff_r29,unaff_r30,unaff_r28,unaff_r27);
@@ -363,8 +364,8 @@ void FUN_8291dbf0(void)
   int in_r12;
   
   if (*(int *)(in_r12 + -0x3c) == 0) {
-    __ArrayUnwind(*(undefined4 *)(in_r12 + 0x14),*(undefined4 *)(in_r12 + 0x1c),
-                  *(undefined4 *)(in_r12 + -0x40),*(undefined4 *)(in_r12 + 0x34));
+    __ArrayUnwind(*(void **)(in_r12 + 0x14),*(uint *)(in_r12 + 0x1c),*(int *)(in_r12 + -0x40),
+                  *(_func___cdecl_void_void_ptr **)(in_r12 + 0x34));
   }
   return;
 }
@@ -376,12 +377,12 @@ void FUN_8291dc20(void)
 
 {
   int in_r12;
-  undefined8 unaff_r28;
-  undefined8 unaff_r29;
-  undefined8 unaff_r30;
+  int unaff_r28;
+  uint unaff_r29;
+  void *unaff_r30;
   
   if (*(int *)(in_r12 + -0x3c) == 0) {
-    __ArrayUnwind(unaff_r30,unaff_r29,unaff_r28,*(undefined4 *)(in_r12 + 0x34));
+    __ArrayUnwind(unaff_r30,unaff_r29,unaff_r28,*(_func___cdecl_void_void_ptr **)(in_r12 + 0x34));
   }
   return;
 }

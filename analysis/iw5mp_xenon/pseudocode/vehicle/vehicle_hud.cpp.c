@@ -2,119 +2,148 @@
 
 // 826BFF28  VehicleHud_DrawCompass  (vehicle/vehicle_hud.cpp:19)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void VehicleHud_DrawCompass
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined4 *param_5)
+               (LocalClientNum_t param_1,CompassType param_2,rectDef_s *param_3,rectDef_s *param_4,
+               float *param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  int iVar5;
-  char cVar8;
-  int iVar6;
-  int iVar7;
-  double dVar9;
-  undefined8 uVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  team_t tVar1;
+  team_t tVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  VehicleClient *pVVar5;
+  bool bVar10;
+  VehicleDef *pVVar6;
+  centity_s *pcVar7;
+  int iVar8;
+  ScreenPlacement *pSVar9;
+  cg_s *pcVar11;
+  rectDef_s *prVar12;
+  float *pfVar13;
+  Material *pMVar14;
   double dVar15;
   double dVar16;
   double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  float fVar24;
+  rectDef_s *prStack0000002c;
   int local_140;
   float local_138;
   float local_134;
-  undefined1 auStack_130 [8];
+  float afStack_130 [2];
   longlong local_128;
   longlong local_120;
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined4 local_108;
+  float local_110;
+  float local_10c;
+  float local_108;
   float local_104;
-  float local_100;
-  float local_fc;
-  float local_f8;
-  float local_f4 [61];
+  rectDef_s local_100 [12];
   
   __savegprlr();
-  uVar3 = __savefpr_23();
-  iVar4 = CG_GetLocalClientGlobals();
-  if (((*(int *)(iVar4 + 0x335c) != 0) &&
-      (dVar9 = (double)Compass_GetIconFadeAlpha(uVar3,*(undefined4 *)(iVar4 + 0x79808),param_2),
-      dVar9 != 0.0)) && ((DAT_82a15ebc == 0 || (*(char *)(DAT_82a15ebc + 0xc) == '\0')))) {
-    CG_CompassCalcDimensions(param_2,iVar4,param_3,param_4,&local_100,&local_fc,&local_f8,local_f4);
-    local_110 = *param_5;
-    local_10c = param_5[1];
-    local_108 = param_5[2];
-    local_104 = (float)param_5[3];
-    dVar15 = 0.5;
-    dVar14 = (double)(local_f8 * 0.5 + local_100);
-    dVar13 = (double)(local_f4[0] * 0.5 + local_fc);
-    CG_CompassUpYawVector(iVar4,auStack_130);
-    local_140 = 0;
-    do {
-      iVar5 = VehicleCl_GetClientFromIndex(uVar3,local_140);
-      cVar8 = VehicleCl_IsClientValid(uVar3,iVar5);
-      if (cVar8 != '\0') {
-        iVar6 = VehicleCl_GetClientDef(iVar5);
-        iVar7 = CG_GetEntity(uVar3,*(undefined4 *)(iVar5 + 8));
-        if ((*(uint *)(iVar7 + 0x1c4) & 1) == 0) {
-          MyAssertHandler(0xffffffff821a0430,0x40,0,0xffffffff82000f98,0xffffffff82012adc);
-        }
-        if (0x11 < *(uint *)(iVar4 + 0x3334)) {
-          MyAssertHandler(0xffffffff821a0430,0x43,0,0xffffffff82012648,*(uint *)(iVar4 + 0x3334),
-                          0x12);
-        }
-        if (0x11 < *(uint *)(iVar5 + 0x38)) {
-          MyAssertHandler(0xffffffff821a0430,0x44,0,0xffffffff8219fdec,*(uint *)(iVar5 + 0x38),0x12)
-          ;
-        }
-        iVar1 = *(int *)(*(int *)(iVar4 + 0x3334) * 0x590 + iVar4 + 0x100bb4);
-        iVar2 = *(int *)(*(int *)(iVar5 + 0x38) * 0x590 + iVar4 + 0x100bb4);
-        CL_ControllerIndexFromClientNum(uVar3);
-        cVar8 = GamerProfile_IsColorBlind();
-        if (((iVar1 == 0) && (*(int *)(iVar4 + 0x3334) != *(int *)(iVar5 + 0x38))) ||
-           (iVar1 != iVar2)) {
-          if ((cVar8 == '\0') || (iVar5 = *(int *)(iVar6 + 0x2e4), iVar5 == 0)) {
-            iVar5 = *(int *)(iVar6 + 0x2dc);
+  LVar3 = __savefpr_23();
+  prStack0000002c = param_4;
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  if (pcVar4->nextSnap != (snapshot_s *)0x0) {
+    fVar24 = Compass_GetIconFadeAlpha(LVar3,pcVar4->compassFadeTime,param_2);
+    dVar15 = (double)fVar24;
+    if ((dVar15 != 0.0) &&
+       ((compassHideVehicles == (dvar_t *)0x0 || ((compassHideVehicles->current).enabled == false)))
+       ) {
+      CG_CompassCalcDimensions
+                (param_2,pcVar4,param_3,param_4,&local_100[0].x,&local_100[0].y,&local_100[0].w,
+                 &local_100[0].h);
+      local_110 = *param_5;
+      local_10c = param_5[1];
+      local_108 = param_5[2];
+      local_104 = param_5[3];
+      dVar21 = 0.5;
+      dVar20 = (double)(local_100[0].w * 0.5 + local_100[0].x);
+      dVar19 = (double)(local_100[0].h * 0.5 + local_100[0].y);
+      CG_CompassUpYawVector(pcVar4,afStack_130);
+      local_140 = 0;
+      do {
+        pVVar5 = VehicleCl_GetClientFromIndex(LVar3,local_140);
+        bVar10 = VehicleCl_IsClientValid(LVar3,pVVar5);
+        if (bVar10) {
+          pVVar6 = VehicleCl_GetClientDef(pVVar5);
+          pcVar7 = CG_GetEntity(LVar3,pVVar5->entIndex);
+          if ((pcVar7->flags & 1U) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_hud.cpp"
+                            ,0x40,0,"%s");
+          }
+          if (0x11 < (uint)pcVar4->clientNum) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_hud.cpp"
+                            ,0x43,0,
+                            "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+          }
+          if (0x11 < (uint)pVVar5->playerIndex) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_hud.cpp"
+                            ,0x44,0,
+                            "veh->playerIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+          }
+          tVar1 = (pcVar4->bgs).clientinfo[pcVar4->clientNum].team;
+          tVar2 = (pcVar4->bgs).clientinfo[pVVar5->playerIndex].team;
+          iVar8 = CL_ControllerIndexFromClientNum(LVar3);
+          bVar10 = GamerProfile_IsColorBlind(iVar8);
+          if (((tVar1 == TEAM_FREE) && (pcVar4->clientNum != pVVar5->playerIndex)) ||
+             (tVar1 != tVar2)) {
+            if ((!bVar10) || (pMVar14 = pVVar6->compassEnemyAltIcon, pMVar14 == (Material *)0x0)) {
+              pMVar14 = pVVar6->compassEnemyIcon;
+            }
+          }
+          else if ((!bVar10) ||
+                  (pMVar14 = pVVar6->compassFriendlyAltIcon, pMVar14 == (Material *)0x0)) {
+            pMVar14 = pVVar6->compassFriendlyIcon;
+          }
+          if (pMVar14 != (Material *)0x0) {
+            pMVar14 = (Material *)(pcVar4->refdef).view.org;
+            pfVar13 = afStack_130;
+            prVar12 = local_100;
+            pcVar11 = pcVar4;
+            bVar10 = CG_WorldPosToCompass
+                               (param_2,pcVar4,prVar12,pfVar13,(float *)pMVar14,
+                                (pcVar7->pose).origin,(float *)0x0,&local_138);
+            if ((!bVar10) || ((compassClampIcons->current).enabled != false)) {
+              local_120 = (longlong)pVVar6->compassIconWidth;
+              local_128 = (longlong)pVVar6->compassIconHeight;
+              dVar22 = (double)((float)local_128 * (compassSize->current).value);
+              dVar23 = (double)((float)local_120 * (compassSize->current).value);
+              local_134 = -(float)(dVar22 * dVar21 - dVar19) + local_134;
+              local_138 = -(float)(dVar23 * dVar21 - dVar20) + local_138;
+              if ((param_2 == COMPASS_TYPE_PARTIAL) && ((compassRotation->current).enabled != false)
+                 ) {
+                iVar8 = 460000;
+              }
+              else {
+                iVar8 = 0x797e8;
+              }
+              fVar24 = AngleNormalize360(*(float *)((int)(pcVar4->predictedPlayerState).origin +
+                                                   iVar8 + -0x1c) - (pcVar7->pose).angles[1]);
+              dVar16 = (double)fVar24;
+              if (dVar15 < (double)local_104) {
+                local_104 = (float)dVar15;
+              }
+              dVar18 = (double)local_134;
+              dVar17 = (double)local_138;
+              pSVar9 = ScrPlace_GetActivePlacement(LVar3);
+              CG_DrawRotatedPic(pSVar9,(float)dVar17,(float)dVar18,(float)dVar23,(float)dVar22,
+                                (int)pcVar11,(int)prVar12,(float)dVar16,pfVar13,pMVar14);
+            }
           }
         }
-        else if ((cVar8 == '\0') || (iVar5 = *(int *)(iVar6 + 0x2e0), iVar5 == 0)) {
-          iVar5 = *(int *)(iVar6 + 0x2d8);
-        }
-        if ((iVar5 != 0) &&
-           ((cVar8 = CG_WorldPosToCompass
-                               (param_2,iVar4,&local_100,auStack_130,iVar4 + 0x6b9c8,iVar7 + 0x14,0,
-                                &local_138), cVar8 == '\0' ||
-            (*(char *)(DAT_82a15e5c + 0xc) != '\0')))) {
-          local_120 = (longlong)*(int *)(iVar6 + 0x2e8);
-          local_128 = (longlong)*(int *)(iVar6 + 0x2ec);
-          dVar16 = (double)((float)local_128 * *(float *)(DAT_82a15e24 + 0xc));
-          dVar17 = (double)((float)local_120 * *(float *)(DAT_82a15e24 + 0xc));
-          local_134 = -(float)(dVar16 * dVar15 - dVar13) + local_134;
-          local_138 = -(float)(dVar17 * dVar15 - dVar14) + local_138;
-          if (((int)param_2 == 0) && (*(char *)(DAT_82a15e6c + 0xc) != '\0')) {
-            iVar5 = 460000;
-          }
-          else {
-            iVar5 = 0x797e8;
-          }
-          uVar10 = AngleNormalize360((double)(*(float *)(iVar4 + iVar5) - *(float *)(iVar7 + 0x24)))
-          ;
-          if (dVar9 < (double)local_104) {
-            local_104 = (float)dVar9;
-          }
-          dVar12 = (double)local_134;
-          dVar11 = (double)local_138;
-          ScrPlace_GetActivePlacement(uVar3);
-          CG_DrawRotatedPic(dVar11,dVar12,dVar17,dVar16,uVar10);
-        }
-      }
-      local_140 = local_140 + 1;
-    } while (local_140 < 8);
+        local_140 = local_140 + 1;
+      } while (local_140 < 8);
+    }
   }
   __restfpr_23();
   __restgprlr();
@@ -124,52 +153,53 @@ void VehicleHud_DrawCompass
 
 // 826C0318  VehicleHud_HostilesCallback  (vehicle/vehicle_hud.cpp:119)
 
-void VehicleHud_HostilesCallback(undefined8 param_1,code *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void VehicleHud_HostilesCallback
+               (LocalClientNum_t param_1,
+               _func___cdecl_void_LocalClientNum_t_DObj_ptr_float_ptr *param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  int iVar5;
-  int iVar6;
-  char cVar7;
-  ulonglong uVar4;
-  longlong lVar8;
+  team_t tVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  VehicleClient *pVVar4;
+  bool bVar7;
+  centity_s *pcVar5;
+  DObj *pDVar6;
+  int iVar8;
   
-  uVar3 = __savegprlr_22();
-  iVar5 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar5 + 0x335c) != 0) {
-    lVar8 = 0;
-    iVar1 = *(int *)(*(int *)(iVar5 + 0x3334) * 0x590 + iVar5 + 0x100bb4);
+  LVar2 = __savegprlr_22(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (pcVar3->nextSnap != (snapshot_s *)0x0) {
+    iVar8 = 0;
+    tVar1 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
     do {
-      iVar6 = VehicleCl_GetClientFromIndex(uVar3,lVar8);
-      cVar7 = VehicleCl_IsClientValid(uVar3,iVar6);
-      if (cVar7 != '\0') {
-        if (*(int *)(iVar6 + 0x38) != *(int *)(iVar5 + 0x3334)) {
-          if (iVar1 == 0) {
-LAB_826c03cc:
-            bVar2 = false;
+      pVVar4 = VehicleCl_GetClientFromIndex(LVar2,iVar8);
+      bVar7 = VehicleCl_IsClientValid(LVar2,pVVar4);
+      if ((bVar7) && (pVVar4->playerIndex != pcVar3->clientNum)) {
+        if ((tVar1 == TEAM_FREE) ||
+           (bVar7 = true, tVar1 != (pcVar3->bgs).clientinfo[pVVar4->playerIndex].team)) {
+          bVar7 = false;
+        }
+        if (!bVar7) {
+          pcVar5 = CG_GetEntity(LVar2,pVVar4->entIndex);
+          if ((pcVar5->flags & 1U) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_hud.cpp"
+                            ,0x95,0,"%s");
           }
-          else {
-            bVar2 = true;
-            if (iVar1 != *(int *)(*(int *)(iVar6 + 0x38) * 0x590 + iVar5 + 0x100bb4))
-            goto LAB_826c03cc;
-          }
-          if (!bVar2) {
-            iVar6 = CG_GetEntity(uVar3,*(undefined4 *)(iVar6 + 8));
-            if ((*(uint *)(iVar6 + 0x1c4) & 1) == 0) {
-              MyAssertHandler(0xffffffff821a0430,0x95,0,0xffffffff82000f98,0xffffffff82012adc);
-            }
-            if (((*(uint *)(iVar6 + 0xcc) & 0x20) == 0) &&
-               (uVar4 = Com_GetClientDObj(*(undefined4 *)(iVar6 + 0xc4),uVar3),
-               (uVar4 & 0xffffffff) != 0)) {
-              (*param_2)(uVar3,uVar4,iVar6 + 0x14);
+          if (((pcVar5->nextState).lerp.eFlags & 0x20U) == 0) {
+            pDVar6 = Com_GetClientDObj((pcVar5->nextState).number,LVar2);
+            if (pDVar6 != (DObj *)0x0) {
+              (*param_2)(LVar2,pDVar6,(pcVar5->pose).origin);
             }
           }
         }
       }
-      lVar8 = lVar8 + 1;
-    } while ((int)lVar8 < 8);
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < 8);
   }
   __restgprlr_22();
   return;

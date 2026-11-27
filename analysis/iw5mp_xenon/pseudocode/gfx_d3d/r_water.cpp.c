@@ -2,26 +2,28 @@
 
 // 82789178  TRACK_r_water  (gfx_d3d/r_water.cpp:72)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_water(void)
 
 {
-  track_static_alloc_internal(0xffffffff847f0a00,0x9000,0xffffffff821d3ce0,0x12);
+  track_static_alloc_internal(&waterGlob,0x9000,"waterGlob",0x12);
   return;
 }
 
 
 // 82789168  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 82789170  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(int param_1,int param_2)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
@@ -30,7 +32,7 @@ void __stvx(int param_1,int param_2)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -41,7 +43,7 @@ void __stvx(int param_1,int param_2)
 
 // 82789198  WaterFrequenciesAtTime  (gfx_d3d/r_water.cpp:291)
 
-void WaterFrequenciesAtTime(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void WaterFrequenciesAtTime(float *param_1,float *param_2,water_t *param_3,float param_4)
 
 {
   int iVar1;
@@ -52,76 +54,90 @@ void WaterFrequenciesAtTime(undefined8 param_1,ulonglong param_2,ulonglong param
   ulonglong uVar6;
   ulonglong uVar7;
   longlong lVar8;
+  ulonglong uVar9;
   double extraout_f1;
-  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
   
-  __savegprlr_16();
+  uVar5 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  __savegprlr_16((double)param_4,param_1);
   iVar4 = __savefpr_26();
-  dVar10 = extraout_f1;
+  dVar11 = extraout_f1;
   if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x12d,0,0xffffffff82000f98,0xffffffff821d3da0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12d,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x12e,0,0xffffffff82000f98,0xffffffff821d3d9c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12e,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x12f,0,0xffffffff82000f98,0xffffffff820ce658);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x12f,0,
+                    "%s");
   }
-  iVar1 = (int)param_3;
+  iVar1 = (int)uVar5;
   lVar8 = (longlong)*(int *)(iVar1 + 0x14) * (longlong)*(int *)(iVar1 + 0x10);
-  dVar10 = (double)(float)(dVar10 * 162.9746551513672);
+  dVar11 = (double)(float)(dVar11 * 162.9746551513672);
   if (0x1000 < (int)lVar8) {
-    MyAssertHandler(0xffffffff821d3da4,0x134,0,0xffffffff821d3d64,0xffffffff821d3d7c,lVar8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x134,0,
+                    "%s\n\t(vecKCount) = %i");
   }
   uVar7 = (ulonglong)*(uint *)(iVar1 + 0xc);
   uVar6 = (ulonglong)*(uint *)(iVar1 + 4);
   uVar5 = (ulonglong)*(uint *)(iVar1 + 8);
   if (0 < (int)lVar8) {
-    dVar9 = 0.0;
-    iVar4 = iVar4 - (int)param_2;
+    dVar10 = 0.0;
+    iVar4 = iVar4 - (int)uVar9;
     do {
       dataCacheBlockTouch(uVar7 + 0x200);
       dataCacheBlockTouch(uVar6 + 0x200);
       dataCacheBlockTouch(uVar5 + 0x200);
-      pfVar2 = (float *)param_2;
+      pfVar2 = (float *)uVar9;
       if (*(float *)uVar7 == 0.0) {
-        *(float *)(iVar4 + (int)pfVar2) = (float)dVar9;
-        *pfVar2 = (float)dVar9;
+        *(float *)(iVar4 + (int)pfVar2) = (float)dVar10;
+        *pfVar2 = (float)dVar10;
       }
       else {
-        dVar14 = (double)*(float *)uVar6;
-        uVar3 = (longlong)((double)*(float *)uVar7 * dVar10) & 0x3ff;
-        dVar13 = (double)*(float *)((int)&DAT_847eee00 + (int)(uVar3 << 2));
-        dVar12 = (double)*(float *)((int)&DAT_847eee00 + (((int)uVar3 + 0xff) * 4 & 0xffcU));
+        dVar15 = (double)*(float *)uVar6;
+        uVar3 = (longlong)((double)*(float *)uVar7 * dVar11) & 0x3ff;
+        dVar14 = (double)*(float *)((int)waterGlobStatic.sinTable + (int)(uVar3 << 2));
+        dVar13 = (double)*(float *)((int)waterGlobStatic.sinTable +
+                                   (((int)uVar3 + 0xff) * 4 & 0xffcU));
         if (((uint)*(float *)uVar6 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x146,0,0xffffffff82000f98,0xffffffff821d3cec);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x146,0,"%s");
         }
-        dVar11 = (double)*(float *)uVar5;
+        dVar12 = (double)*(float *)uVar5;
         if (((uint)*(float *)uVar5 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x147,0,0xffffffff82000f98,0xffffffff821d3cfc);
-        }
-        if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x148,0,0xffffffff82000f98,0xffffffff821d3d0c);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x147,0,"%s");
         }
         if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x149,0,0xffffffff82000f98,0xffffffff821d3d20);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x148,0,"%s");
         }
-        *(float *)(iVar4 + (int)pfVar2) = (float)(dVar14 * dVar12);
-        *pfVar2 = (float)(dVar11 * dVar13);
-        if (((uint)(float)(dVar14 * dVar12) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x14d,0,0xffffffff82000f98,0xffffffff821d3d34);
+        if (((uint)(float)dVar14 & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x149,0,"%s");
+        }
+        *(float *)(iVar4 + (int)pfVar2) = (float)(dVar15 * dVar13);
+        *pfVar2 = (float)(dVar12 * dVar14);
+        if (((uint)(float)(dVar15 * dVar13) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x14d,0,"%s");
         }
         if (((uint)*pfVar2 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821d3da4,0x14e,0,0xffffffff82000f98,0xffffffff821d3d4c);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",
+                          0x14e,0,"%s");
         }
       }
       lVar8 = lVar8 + -1;
-      param_2 = param_2 + 4;
+      uVar9 = uVar9 + 4;
       uVar7 = uVar7 + 4;
       uVar6 = uVar6 + 4;
       uVar5 = uVar5 + 4;
@@ -135,7 +151,7 @@ void WaterFrequenciesAtTime(undefined8 param_1,ulonglong param_2,ulonglong param
 
 // 82789488  TransposeArray  (gfx_d3d/r_water.cpp:341)
 
-void TransposeArray(undefined8 param_1,ulonglong param_2)
+void TransposeArray(float *param_1,uint param_2)
 
 {
   uint uVar1;
@@ -168,19 +184,22 @@ void TransposeArray(undefined8 param_1,ulonglong param_2)
   undefined1 auVar28 [16];
   undefined1 auVar29 [16];
   
-  uVar9 = __savegprlr_23();
+  uVar14 = (ulonglong)(int)param_2;
+  uVar9 = __savegprlr_23(param_1);
   if ((uVar9 & 0xf) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x167,0,0xffffffff82000f98,0xffffffff821d3df4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x167,0,
+                    "%s");
   }
-  if ((param_2 & 3) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x168,0,0xffffffff82000f98,0xffffffff821d3de4);
+  if ((uVar14 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x168,0,
+                    "%s");
   }
-  lVar16 = (param_2 & 0x3fffffff) * 4;
-  lVar17 = (param_2 & 0x1fffffff) * 8;
+  lVar16 = (uVar14 & 0x3fffffff) * 4;
+  lVar17 = (uVar14 & 0x1fffffff) * 8;
   iVar8 = (int)lVar16;
-  iVar6 = iVar8 + (int)param_2 * 8;
-  if ((param_2 & 0x3fffffff) != 0) {
-    lVar10 = (param_2 & 0xfffffff) * 0x10;
+  iVar6 = iVar8 + (int)uVar14 * 8;
+  if ((uVar14 & 0x3fffffff) != 0) {
+    lVar10 = (uVar14 & 0xfffffff) * 0x10;
     iVar5 = (int)lVar17;
     iVar2 = iVar6 - iVar5;
     lVar15 = 0;
@@ -244,76 +263,94 @@ void TransposeArray(undefined8 param_1,ulonglong param_2)
 
 // 82789608  WaterAmplitudesFromFrequencies  (gfx_d3d/r_water.cpp:409)
 
-void WaterAmplitudesFromFrequencies(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void WaterAmplitudesFromFrequencies(float *param_1,float *param_2,water_t *param_3)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
   int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  int iVar8;
+  float *pfVar4;
+  int iVar5;
+  float *pfVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulong uVar9;
+  ulonglong uVar10;
+  int iVar11;
   
-  uVar4 = __savegprlr_21();
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x19e,0,0xffffffff82000f98,0xffffffff821d3da0);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  pfVar6 = (float *)__savegprlr_21(param_1);
+  if (pfVar6 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x19e,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x19f,0,0xffffffff82000f98,0xffffffff821d3d9c);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x19f,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1a0,0,0xffffffff82000f98,0xffffffff820ce658);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1a0,0,
+                    "%s");
   }
-  iVar3 = (int)param_3;
+  iVar3 = (int)uVar8;
   if (*(int *)(iVar3 + 0x10) != *(int *)(iVar3 + 0x14)) {
-    MyAssertHandler(0xffffffff821d3da4,0x1a1,0,0xffffffff82000f98,0xffffffff821d3e28);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1a1,0,
+                    "%s");
   }
-  lVar7 = 0;
-  uVar5 = 1;
+  uVar9 = 0;
+  uVar8 = 1;
   if (*(uint *)(iVar3 + 0x10) != 1) {
     do {
-      uVar1 = uVar5 << 1;
-      uVar2 = uVar5 >> 0x1f;
-      uVar5 = uVar1 & 0xffffffff | uVar2;
-      lVar7 = lVar7 + 1;
+      uVar1 = uVar8 << 1;
+      uVar2 = uVar8 >> 0x1f;
+      uVar8 = uVar1 & 0xffffffff | uVar2;
+      uVar9 = uVar9 + 1;
     } while (*(uint *)(iVar3 + 0x10) != ((uint)uVar1 | (uint)uVar2));
   }
-  iVar8 = 0;
+  iVar11 = 0;
+  pfVar4 = (float *)uVar10;
   if (0 < *(int *)(iVar3 + 0x14)) {
     do {
-      uVar5 = (longlong)*(int *)(iVar3 + 0x10) * (longlong)iVar8;
-      if ((longlong)uVar5 < 0) {
-        MyAssertHandler(0xffffffff821d3da4,0x1ab,0,0xffffffff82000f98,0xffffffff821d3e04);
+      uVar10 = (longlong)*(int *)(iVar3 + 0x10) * (longlong)iVar11;
+      if ((longlong)uVar10 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1ab
+                        ,0,"%s");
       }
-      if (0xfff < (int)uVar5) {
-        MyAssertHandler(0xffffffff821d3da4,0x1ac,0,0xffffffff82000f98,0xffffffff821d3e14);
+      if (0xfff < (int)uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1ac
+                        ,0,"%s");
       }
-      lVar6 = (uVar5 & 0x3fffffff) * 4;
-      FFT(lVar6 + uVar4,lVar6 + param_2,lVar7,0xffffffff847f0600,0xffffffff847efe00);
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < *(int *)(iVar3 + 0x14));
+      iVar5 = (int)((uVar10 & 0xffffffff) << 2);
+      FFT((float *)(iVar5 + (int)pfVar6),(float *)(iVar5 + (int)pfVar4),uVar9,
+          waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
+      iVar11 = iVar11 + 1;
+    } while (iVar11 < *(int *)(iVar3 + 0x14));
   }
-  TransposeArray(uVar4,*(undefined4 *)(iVar3 + 0x10));
-  TransposeArray(param_2,*(undefined4 *)(iVar3 + 0x10));
-  iVar8 = 0;
-  if (0 < *(int *)(iVar3 + 0x10)) {
+  TransposeArray(pfVar6,*(uint *)(iVar3 + 0x10));
+  TransposeArray(pfVar4,*(uint *)(iVar3 + 0x10));
+  uVar7 = *(uint *)(iVar3 + 0x10);
+  iVar11 = 0;
+  if (0 < (int)uVar7) {
     do {
-      uVar5 = (longlong)*(int *)(iVar3 + 0x14) * (longlong)iVar8;
-      if ((longlong)uVar5 < 0) {
-        MyAssertHandler(0xffffffff821d3da4,0x1b8,0,0xffffffff82000f98,0xffffffff821d3e04);
+      uVar10 = (longlong)*(int *)(iVar3 + 0x14) * (longlong)iVar11;
+      if ((longlong)uVar10 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1b8
+                        ,0,"%s");
       }
-      if (0xfff < (int)uVar5) {
-        MyAssertHandler(0xffffffff821d3da4,0x1b9,0,0xffffffff82000f98,0xffffffff821d3e14);
+      if (0xfff < (int)uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1b9
+                        ,0,"%s");
       }
-      lVar6 = (uVar5 & 0x3fffffff) * 4;
-      FFT(lVar6 + uVar4,lVar6 + param_2,lVar7,0xffffffff847f0600,0xffffffff847efe00);
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < *(int *)(iVar3 + 0x10));
+      iVar5 = (int)((uVar10 & 0xffffffff) << 2);
+      FFT((float *)(iVar5 + (int)pfVar6),(float *)(iVar5 + (int)pfVar4),uVar9,
+          waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
+      uVar7 = *(uint *)(iVar3 + 0x10);
+      iVar11 = iVar11 + 1;
+    } while (iVar11 < (int)uVar7);
   }
-  TransposeArray(uVar4);
-  TransposeArray(param_2,*(undefined4 *)(iVar3 + 0x10));
+  TransposeArray(pfVar6,uVar7);
+  TransposeArray(pfVar4,*(uint *)(iVar3 + 0x10));
   __restgprlr_21();
   return;
 }
@@ -321,39 +358,37 @@ void WaterAmplitudesFromFrequencies(undefined8 param_1,ulonglong param_2,ulonglo
 
 // 8293F5F0  `dynamic_initializer_for_'g_selectByteFromInt''  (gfx_d3d/r_water.cpp:451)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_selectByteFromInt__(void)
 
 {
-  _DAT_847f9a00 = 0x3070b0f;
-  uRam847f9a04 = 0x13171b1f;
-  uRam847f9a08 = 0;
-  uRam847f9a0c = 0;
+  g_selectByteFromInt.field0_0x0.vector4_f32[0] = (float)0x3070b0f;
+  g_selectByteFromInt.field0_0x0.vector4_f32[1] = (float)0x13171b1f;
+  g_selectByteFromInt.field0_0x0.vector4_f32[2] = (float)0;
+  g_selectByteFromInt.field0_0x0.vector4_f32[3] = (float)0;
   return;
 }
 
 
 // 82789838  WaterPixelsFromAmplitudes  (gfx_d3d/r_water.cpp:455)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void WaterPixelsFromAmplitudes(undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4)
+void WaterPixelsFromAmplitudes(uchar *param_1,float *param_2,float *param_3,water_t *param_4)
 
 {
   uint uVar1;
-  uint uVar2;
-  undefined1 auVar3 [16];
-  undefined1 auVar4 [16];
-  undefined1 auVar5 [16];
-  undefined1 auVar6 [16];
-  undefined1 auVar7 [16];
-  uint uVar8;
-  longlong lVar9;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
+  __vector4 _Var5;
+  __vector4 _Var6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   longlong lVar10;
   longlong lVar11;
-  ulonglong uVar12;
-  undefined1 auVar13 [16];
+  longlong lVar12;
+  uint uVar13;
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
@@ -363,100 +398,112 @@ void WaterPixelsFromAmplitudes(undefined8 param_1,ulonglong param_2,ulonglong pa
   undefined1 auVar20 [16];
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
   
-  uVar8 = __savegprlr_26();
-  if (uVar8 == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1d5,0,0xffffffff82000f98,0xffffffff821c4338);
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  uVar7 = __savegprlr_26(param_1);
+  if (uVar7 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d5,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1d6,0,0xffffffff82000f98,0xffffffff821d3da0);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d6,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1d7,0,0xffffffff82000f98,0xffffffff821d3d9c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d7,0,
+                    "%s");
   }
-  if (*(int *)(param_4 + 0x10) != *(int *)(param_4 + 0x14)) {
-    MyAssertHandler(0xffffffff821d3da4,0x1d8,0,0xffffffff82000f98,0xffffffff821d3e28);
-  }
-  if ((param_2 & 0xf) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1d9,0,0xffffffff82000f98,0xffffffff821d3e70);
-  }
-  if ((param_3 & 0xf) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1da,0,0xffffffff82000f98,0xffffffff821d3e5c);
+  if (param_4->M != param_4->N) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d8,0,
+                    "%s");
   }
   if ((uVar8 & 0xf) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1db,0,0xffffffff82000f98,0xffffffff821d3e44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1d9,0,
+                    "%s");
   }
-  uVar12 = (longlong)*(int *)(param_4 + 0x14) * (longlong)*(int *)(param_4 + 0x10);
-  if ((uVar12 & 3) != 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x1de,0,0xffffffff8216c964,0xffffffff8217c538,uVar12);
+  if ((uVar9 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1da,0,
+                    "%s");
   }
-  auVar7 = _DAT_847f9a00;
-  auVar6 = _DAT_8404f820;
-  auVar5 = _DAT_8404f790;
-  auVar4 = _DAT_8404f600;
-  auVar3 = _DAT_8217a050;
-  auVar22 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x40);
-  auVar21 = loadVectorLeftIndexed(0xffffffff821d3e40);
-  auVar21 = vectorSplatWord(auVar21,0);
+  if ((uVar7 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1db,0,
+                    "%s");
+  }
+  uVar13 = param_4->N * param_4->M;
+  if ((uVar13 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x1de,0,
+                    "%s\n\t(count) = %i");
+  }
+  _Var6.field0_0x0 = g_selectByteFromInt.field0_0x0;
+  _Var5.field0_0x0 = g_negativeZero.field0_0x0;
+  _Var4.field0_0x0 = g_XYxy.field0_0x0;
+  _Var3.field0_0x0 = g_fltMin.field0_0x0;
+  _Var2.field0_0x0 = g_one.field0_0x0;
+  auVar23 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x40);
+  auVar22 = loadVectorLeftIndexed(0xffffffff821d3e40);
   auVar22 = vectorSplatWord(auVar22,0);
-  if ((uVar12 & 0xffffffff) != 0) {
-    lVar9 = ((uVar12 - 1 & 0xffffffff) >> 4) + 1;
-    lVar10 = param_2 + 0x30;
-    lVar11 = param_3 + 0x10;
+  auVar23 = vectorSplatWord(auVar23,0);
+  if (uVar13 != 0) {
+    lVar10 = (ulonglong)(uVar13 - 1 >> 4) + 1;
+    lVar11 = uVar8 + 0x30;
+    lVar12 = uVar9 + 0x10;
     do {
-      uVar1 = (uint)lVar10;
-      auVar18 = *(undefined1 (*) [16])(uVar1 - 0x30 & 0xfffffff0);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar18,auVar18,auVar4);
-      uVar2 = (uint)lVar11;
-      auVar18 = *(undefined1 (*) [16])(((int)param_2 - (int)param_3) + uVar2 & 0xfffffff0);
-      auVar14 = vectorMultiplyAddFloatingPoint(auVar18,auVar18,auVar4);
-      auVar18 = *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0);
-      auVar13 = vectorMultiplyAddFloatingPoint(auVar18,auVar18,auVar4);
-      auVar18 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar1 & 0xfffffff0),
-                           *(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar4);
-      auVar19 = *(undefined1 (*) [16])(uVar2 - 0x10 & 0xfffffff0);
-      lVar10 = lVar10 + 0x40;
-      auVar17 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,auVar15);
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
-                           *(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar14);
-      auVar14 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-      auVar19 = vectorMultiplyAddFloatingPoint(auVar14,auVar14,auVar13);
-      auVar13 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-      auVar20 = vectorMultiplyAddFloatingPoint(auVar13,auVar13,auVar18);
+      uVar13 = (uint)lVar11;
+      auVar19 = *(undefined1 (*) [16])(uVar13 - 0x30 & 0xfffffff0);
+      auVar16 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
+      uVar1 = (uint)lVar12;
+      auVar19 = *(undefined1 (*) [16])(((int)uVar8 - (int)uVar9) + uVar1 & 0xfffffff0);
+      auVar15 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
+      auVar19 = *(undefined1 (*) [16])(uVar13 - 0x10 & 0xfffffff0);
+      auVar14 = vectorMultiplyAddFloatingPoint(auVar19,auVar19,(undefined1  [16])_Var3.field0_0x0);
+      auVar19 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar13 & 0xfffffff0),
+                           *(undefined1 (*) [16])(uVar13 & 0xfffffff0),
+                           (undefined1  [16])_Var3.field0_0x0);
+      auVar20 = *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0);
       lVar11 = lVar11 + 0x40;
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar20,auVar20,auVar16);
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar1 & 0xfffffff0),
+                           *(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar15);
+      auVar15 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
+      auVar20 = vectorMultiplyAddFloatingPoint(auVar15,auVar15,auVar14);
+      auVar14 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar14,auVar14,auVar19);
+      lVar12 = lVar12 + 0x40;
+      auVar15 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar18);
       auVar14 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar17);
-      auVar13 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar16);
-      auVar18 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar19);
-      auVar15 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar20);
-      auVar14 = vectorMultiplyAddFloatingPoint(auVar17,auVar14,auVar6);
-      auVar13 = vectorMultiplyAddFloatingPoint(auVar16,auVar13,auVar6);
-      auVar18 = vectorMultiplyAddFloatingPoint(auVar19,auVar18,auVar6);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar20,auVar15,auVar6);
-      auVar19 = vectorMultiplyFloatingPoint(auVar14,auVar22);
-      auVar13 = vectorMultiplyFloatingPoint(auVar13,auVar22);
-      auVar14 = vectorMultiplyFloatingPoint(auVar18,auVar22);
-      auVar18 = vectorMultiplyFloatingPoint(auVar15,auVar22);
-      auVar15 = vectorMinimumFloatingPoint128(auVar3,auVar19);
-      auVar13 = vectorMinimumFloatingPoint128(auVar3,auVar13);
-      auVar14 = vectorMinimumFloatingPoint128(auVar3,auVar14);
-      auVar18 = vectorMinimumFloatingPoint128(auVar3,auVar18);
-      auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar21);
-      auVar13 = vectorMultiplyFloatingPoint(auVar13,auVar21);
-      auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar21);
-      auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar21);
-      auVar15 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar15,0);
-      auVar13 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar13,0);
+      auVar19 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar20);
+      auVar16 = vectorReciprocalSquareRootEstimateFloatingPoint(auVar21);
+      auVar15 = vectorMultiplyAddFloatingPoint(auVar18,auVar15,(undefined1  [16])_Var5.field0_0x0);
+      auVar14 = vectorMultiplyAddFloatingPoint(auVar17,auVar14,(undefined1  [16])_Var5.field0_0x0);
+      auVar19 = vectorMultiplyAddFloatingPoint(auVar20,auVar19,(undefined1  [16])_Var5.field0_0x0);
+      auVar16 = vectorMultiplyAddFloatingPoint(auVar21,auVar16,(undefined1  [16])_Var5.field0_0x0);
+      auVar20 = vectorMultiplyFloatingPoint(auVar15,auVar23);
+      auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar23);
+      auVar15 = vectorMultiplyFloatingPoint(auVar19,auVar23);
+      auVar19 = vectorMultiplyFloatingPoint(auVar16,auVar23);
+      auVar16 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar20);
+      auVar14 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar14);
+      auVar15 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar15);
+      auVar19 = vectorMinimumFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar19);
+      auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar22);
+      auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar22);
+      auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar22);
+      auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar22);
+      auVar16 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar16,0);
       auVar14 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar14,0);
-      auVar18 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar18,0);
-      auVar13 = vectorPermute128(auVar15,auVar13,auVar7);
-      auVar18 = vectorPermute128(auVar14,auVar18,auVar7);
-      auVar18 = vectorPermute128(auVar13,auVar18,auVar5);
-      *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar18;
-      uVar8 = uVar8 + 0x10;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      auVar15 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar15,0);
+      auVar19 = vectorConvertToUnsignedFixedPointWordSaturate128(auVar19,0);
+      auVar14 = vectorPermute128(auVar16,auVar14,(undefined1  [16])_Var6.field0_0x0);
+      auVar19 = vectorPermute128(auVar15,auVar19,(undefined1  [16])_Var6.field0_0x0);
+      auVar19 = vectorPermute128(auVar14,auVar19,(undefined1  [16])_Var4.field0_0x0);
+      *(undefined1 (*) [16])(uVar7 & 0xfffffff0) = auVar19;
+      uVar7 = uVar7 + 0x10;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
   }
   __restgprlr_26();
   return;
@@ -465,125 +512,146 @@ void WaterPixelsFromAmplitudes(undefined8 param_1,ulonglong param_2,ulonglong pa
 
 // 82789B28  GenerateMipMaps  (gfx_d3d/r_water.cpp:588)
 
-void GenerateMipMaps(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void GenerateMipMaps(_D3DFORMAT param_1,uchar *param_2,water_t *param_3)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  undefined8 uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
+  int iVar1;
+  uint uVar2;
+  undefined8 uVar3;
+  int iVar4;
+  _D3DFORMAT _Var5;
+  int iVar6;
+  uchar *puVar7;
+  void *pvVar8;
   ulonglong uVar9;
-  uint *puVar10;
+  ulonglong uVar10;
+  undefined4 *puVar11;
+  uint uVar12;
+  uint *puVar13;
   
-  uVar4 = __savegprlr_18();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x250,0,0xffffffff82000f98,0xffffffff821c4338);
+  uVar10 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  _Var5 = __savegprlr_18(param_1);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x250,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d3da4,0x251,0,0xffffffff82000f98,0xffffffff820ce658);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x251,0,
+                    "%s");
   }
-  iVar3 = (int)param_3;
-  if (*(int *)(iVar3 + 0x10) != *(int *)(iVar3 + 0x14)) {
-    MyAssertHandler(0xffffffff821d3da4,0x252,0,0xffffffff82000f98,0xffffffff821d3e28);
+  iVar4 = (int)uVar10;
+  if (*(int *)(iVar4 + 0x10) != *(int *)(iVar4 + 0x14)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x252,0,
+                    "%s");
   }
   Profile_Begin(0x7a);
-  Image_UploadData(*(undefined4 *)(iVar3 + 0x44),0x28000102,0,0,0xffffffff847f8a00);
-  Profile_EndInternal(0);
-  lVar8 = 1;
-  uVar1 = *(uint *)(iVar3 + 0x10);
-  uVar9 = (ulonglong)uVar1;
-  while (1 < (int)uVar1) {
-    R_DownsampleMipMapBilinear(param_2,uVar9,uVar9,1,param_2);
-    iVar5 = Sys_GetValue(0);
-    puVar10 = (uint *)(iVar5 + 0x173c);
-    if (2 < *(int *)(iVar5 + 0x173c) + 1U) {
-      MyAssertHandler(0xffffffff8205cc00,0xee,0,0xffffffff820010a8,(ulonglong)*puVar10 + 1,3);
+  Image_UploadData(*(GfxImage **)(iVar4 + 0x44),D3DFMT_L8,D3DCUBEMAP_FACE_POSITIVE_X,0,
+                   waterGlob.pixels);
+  iVar6 = Profile_EndInternal((double *)0x0);
+  uVar12 = 1;
+  for (iVar1 = *(int *)(iVar4 + 0x10); 1 < iVar1; iVar1 = iVar1 >> 1) {
+    puVar7 = (uchar *)uVar9;
+    R_DownsampleMipMapBilinear(puVar7,iVar1,iVar1,1,puVar7);
+    pvVar8 = Sys_GetValue(0);
+    puVar13 = (uint *)((int)pvVar8 + 0x173c);
+    if (2 < *(int *)((int)pvVar8 + 0x173c) + 1U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
+                      ,0xee,0,
+                      "p->write.nesting + 1 doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
+                     );
     }
-    uVar6 = (ulonglong)*puVar10 + 1;
-    *puVar10 = (uint)uVar6;
-    if (2 < (uVar6 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8205cc00,0xf0,0,0xffffffff82001058,uVar6,3);
+    uVar2 = *puVar13;
+    *puVar13 = uVar2 + 1;
+    if (2 < uVar2 + 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
+                      ,0xf0,0,
+                      "p->write.nesting doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
+                     );
     }
-    if (*(uint *)(iVar5 + 0x428) < iVar5 + 0x28U) {
-      MyAssertHandler(0xffffffff8205cc00,0xf2,0,0xffffffff82000f98,0xffffffff82001020);
+    if (*(uint *)((int)pvVar8 + 0x428) < (int)pvVar8 + 0x28U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
+                      ,0xf2,0,"%s");
     }
-    puVar7 = (undefined4 *)(*(int *)(iVar5 + 0x428) + 4);
-    *(undefined4 **)(iVar5 + 0x428) = puVar7;
-    *puVar7 = puVar10;
-    if (*(uint *)(iVar5 + 0x428) <= iVar5 + 0x28U) {
-      MyAssertHandler(0xffffffff8205cc00,0xf5,0,0xffffffff82000f98,0xffffffff82000fec);
+    puVar11 = (undefined4 *)(*(int *)((int)pvVar8 + 0x428) + 4);
+    *(undefined4 **)((int)pvVar8 + 0x428) = puVar11;
+    *puVar11 = puVar13;
+    if (*(uint *)((int)pvVar8 + 0x428) <= (int)pvVar8 + 0x28U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../universal/profile.h"
+                      ,0xf5,0,"%s");
     }
-    uVar2 = TBLr;
-    puVar10[*puVar10 + 2] = (uint)uVar2;
-    Image_UploadData(*(undefined4 *)(iVar3 + 0x44),uVar4,0,lVar8,param_2);
-    Profile_EndInternal(0);
-    uVar1 = (int)uVar9 >> 1;
-    uVar9 = (ulonglong)(int)uVar1;
-    lVar8 = lVar8 + 1;
+    uVar3 = TBLr;
+    puVar13[*puVar13 + 2] = (uint)uVar3;
+    Image_UploadData(*(GfxImage **)(iVar4 + 0x44),_Var5,D3DCUBEMAP_FACE_POSITIVE_X,uVar12,puVar7);
+    iVar6 = Profile_EndInternal((double *)0x0);
+    uVar12 = uVar12 + 1;
   }
-  __restgprlr_18();
+  __restgprlr_18(iVar6);
   return;
 }
 
 
 // 82789D60  R_UploadWaterTextureInternal  (gfx_d3d/r_water.cpp:626)
 
-void R_UploadWaterTextureInternal(undefined4 *param_1)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_UploadWaterTextureInternal(void *param_1)
 
 {
-  float *pfVar1;
+  water_t *pwVar1;
   
   Profile_Begin(0x73);
-  pfVar1 = (float *)*param_1;
+  pwVar1 = *(water_t **)param_1;
   Profile_Begin(0x76);
-  WaterFrequenciesAtTime((double)*pfVar1,0xffffffff847f0a00,0xffffffff847f4a00,pfVar1);
-  Profile_EndInternal(0);
+  WaterFrequenciesAtTime(waterGlob.HX,waterGlob.HY,pwVar1,(pwVar1->writable).floatTime);
+  Profile_EndInternal((double *)0x0);
   Profile_Begin(0x77);
-  WaterAmplitudesFromFrequencies(0xffffffff847f0a00,0xffffffff847f4a00,pfVar1);
-  Profile_EndInternal(0);
+  WaterAmplitudesFromFrequencies(waterGlob.HX,waterGlob.HY,pwVar1);
+  Profile_EndInternal((double *)0x0);
   Profile_Begin(0x78);
-  WaterPixelsFromAmplitudes(0xffffffff847f8a00,0xffffffff847f0a00,0xffffffff847f4a00,pfVar1);
-  Profile_EndInternal(0);
+  WaterPixelsFromAmplitudes(waterGlob.pixels,waterGlob.HX,waterGlob.HY,pwVar1);
+  Profile_EndInternal((double *)0x0);
   Profile_Begin(0x7b);
-  GenerateMipMaps(0x28000102,0xffffffff847f8a00,pfVar1);
-  Profile_EndInternal(0);
-  Profile_EndInternal(0);
+  GenerateMipMaps(D3DFMT_L8,waterGlob.pixels,pwVar1);
+  Profile_EndInternal((double *)0x0);
+  Profile_EndInternal((double *)0x0);
   sync(1);
-  if (DAT_847eed80 != 1) {
-    MyAssertHandler(0xffffffff821d3da4,0x2b1,0,0xffffffff821d3e84,0xffffffff821d3e9c,DAT_847eed80);
+  if (g_waterLock != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_water.cpp",0x2b1,0,
+                    "%s\n\t(g_waterLock) = %i");
   }
-  DAT_847eed80 = 0;
+  g_waterLock = 0;
   return;
 }
 
 
 // 82789E88  R_InitWater  (gfx_d3d/r_water.cpp:710)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_InitWater(void)
 
 {
   int iVar1;
-  float *pfVar2;
+  WaterGlobStatic *pWVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   
   __savegprlr_29();
-  pfVar2 = (float *)&DAT_847eee00;
+  pWVar2 = &waterGlobStatic;
   iVar1 = 0;
   dVar5 = 0.3515625;
   dVar4 = 0.01745329238474369;
   do {
     dVar3 = sin((double)(float)((double)(float)((double)(longlong)iVar1 * dVar5) * dVar4));
-    *pfVar2 = (float)dVar3;
-    pfVar2 = pfVar2 + 1;
+    pWVar2->sinTable[0] = (float)dVar3;
+    pWVar2 = (WaterGlobStatic *)(pWVar2->sinTable + 1);
     iVar1 = iVar1 + 1;
-  } while ((int)pfVar2 < -0x7b810200);
-  FFT_Init(0xffffffff847f0600,0xffffffff847efe00);
+  } while ((int)pWVar2 < -0x7b810200);
+  FFT_Init(waterGlobStatic.fftBitswap,waterGlobStatic.fftTrigTable);
   __restgprlr_29();
   return;
 }
@@ -591,7 +659,7 @@ void R_InitWater(void)
 
 // 82789F18  Load_PicmipWater  (gfx_d3d/r_water.cpp:721)
 
-void Load_PicmipWater(void)
+void Load_PicmipWater(water_t **param_1)
 
 {
   return;

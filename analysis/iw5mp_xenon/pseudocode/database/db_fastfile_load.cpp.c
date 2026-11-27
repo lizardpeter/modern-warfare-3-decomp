@@ -2,14 +2,21 @@
 
 // 823A3118  Load_XAssetListCustom  (database/db_fastfile_load.cpp:75)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Load_XAssetListCustom(void)
 
 {
-  DAT_82cc6380 = &DAT_82c0773c;
-  DB_ReadXFile(0xffffffff82c0773c,0x10,0);
+  varXAssetList = &g_varXAssetList;
+  DB_ReadXFile((uchar *)&g_varXAssetList,0x10,0);
   DB_PushStreamPos(3);
-  DAT_82cc6974 = DAT_82cc6380;
-  Load_ScriptStringList(0);
+  varScriptStringList = &varXAssetList->stringList;
+  Load_ScriptStringList(false);
   DB_PopStreamPos();
   return;
 }
@@ -17,21 +24,27 @@ void Load_XAssetListCustom(void)
 
 // 823A3180  Load_XAssetArrayCustom  (database/db_fastfile_load.cpp:88)
 
-void Load_XAssetArrayCustom(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_XAssetArrayCustom(int param_1)
 
 {
   ulonglong uVar1;
-  int iVar2;
+  XAsset *pXVar2;
   
-  uVar1 = __savegprlr_29();
-  Load_Stream(1,DAT_82cc60f4,(uVar1 & 0x1fffffff) << 3);
-  iVar2 = DAT_82cc60f4;
+  uVar1 = __savegprlr_29(param_1);
+  Load_Stream(true,varXAsset,(int)((uVar1 & 0xffffffff) << 3));
+  pXVar2 = varXAsset;
   if (0 < (int)uVar1) {
     do {
-      DAT_82cc60f4 = iVar2;
-      Load_XAsset(0);
+      varXAsset = pXVar2;
+      Load_XAsset(false);
       uVar1 = uVar1 - 1;
-      iVar2 = iVar2 + 8;
+      pXVar2 = pXVar2 + 1;
     } while (uVar1 != 0);
   }
   __restgprlr_29();
@@ -41,147 +54,158 @@ void Load_XAssetArrayCustom(void)
 
 // 823A31D0  DB_LoadXFile  (database/db_fastfile_load.cpp:106)
 
-void DB_LoadXFile(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
 
 {
   byte bVar1;
   byte bVar2;
-  uint uVar3;
-  undefined8 uVar4;
-  char cVar7;
-  int iVar5;
-  undefined4 uVar6;
-  undefined8 uVar8;
+  XZoneMemory *pXVar3;
+  bool bVar6;
+  ClientDemoPlayingFlag CVar4;
+  XAsset *pXVar5;
+  char *pcVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
+  byte *pbVar10;
   byte *pbVar11;
   byte *pbVar12;
-  byte *pbVar13;
-  ulonglong uVar14;
-  longlong lVar15;
+  uint uVar13;
+  uint uVar14;
+  XAssetStreamFile *pXVar15;
   longlong lVar16;
-  char local_d0 [4];
+  uchar local_d0 [4];
   uint local_cc;
   uint local_c8;
   int local_c4;
-  undefined1 auStack_c0 [4];
-  undefined1 auStack_bc [4];
-  undefined1 auStack_b8 [8];
+  uchar auStack_c0 [4];
+  uchar auStack_bc [4];
+  uchar auStack_b8 [8];
   byte local_b0 [8];
   byte abStack_a8 [8];
-  undefined1 auStack_a0 [4];
+  uchar auStack_a0 [4];
   int local_9c;
-  undefined1 auStack_98 [152];
+  uint auStack_98 [38];
   
-  uVar4 = __savegprlr_19();
+  pXVar3 = (XZoneMemory *)__savegprlr_19(param_1);
   DB_InitLoadXFile(param_2,0);
   DB_ReadXFileUncompressed(local_b0,8);
-  pbVar13 = local_b0;
-  pbVar11 = &DAT_820595e8;
+  pbVar11 = local_b0;
+  pbVar10 = &s_IWff0100;
   do {
-    bVar1 = *pbVar13;
-    bVar2 = *pbVar11;
+    bVar1 = *pbVar11;
+    bVar2 = *pbVar10;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar13 = pbVar13 + 1;
     pbVar11 = pbVar11 + 1;
-  } while (pbVar13 != abStack_a8);
-  pbVar11 = &DAT_820595dc;
+    pbVar10 = pbVar10 + 1;
+  } while (pbVar11 != abStack_a8);
+  pbVar10 = &s_IWffu100;
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
     pbVar12 = local_b0;
-    pbVar13 = pbVar11;
+    pbVar11 = pbVar10;
     do {
       bVar1 = *pbVar12;
-      bVar2 = *pbVar13;
+      bVar2 = *pbVar11;
       if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
       pbVar12 = pbVar12 + 1;
-      pbVar13 = pbVar13 + 1;
+      pbVar11 = pbVar11 + 1;
     } while (pbVar12 != abStack_a8);
     if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
       DB_DirtyDiscError();
     }
   }
-  DB_ReadXFileUncompressed(&local_c8,4);
+  DB_ReadXFileUncompressed((uchar *)&local_c8,4);
   if (local_c8 != 0x70) {
-    if (*(int *)param_2 == 0) {
-      if (((int *)param_2)[2] == 0) {
-        MyAssertHandler(0xffffffff82059580,0x8d,0,0xffffffff82000f98,0xffffffff820595c8);
+    if ((param_2->handle).handle == (void *)0x0) {
+      if (param_2->memoryBuffer == (uchar *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                        ,0x8d,0,"%s");
       }
       DB_FinishLoadXFile();
       __restgprlr_19();
       return;
     }
     if (local_c8 < 0x70) {
-      uVar8 = 0xffffffff82059538;
+      pcVar7 = "Fastfile for zone \'%s\' is out of date (version %d, expecting %d)";
     }
     else {
-      uVar8 = 0xffffffff820594e0;
+      pcVar7 = "Fastfile for zone \'%s\' is newer than client executable (version %d, expecting %d)"
+      ;
     }
-    Com_Error(1,uVar8,param_2 + 0xc,local_c8,0x70);
+    Com_Error(ERR_DROP,pcVar7);
   }
   DB_ReadXFileUncompressed(local_d0,1);
   DB_ReadXFileUncompressed(auStack_c0,4);
   DB_ReadXFileUncompressed(auStack_bc,4);
   if (local_d0[0] == '\0') {
-    LiveStorage_SetShouldDownloadFFotD(0);
+    LiveStorage_SetShouldDownloadFFotD(false);
   }
-  DB_ReadXFileUncompressed(&local_cc,4);
-  uVar10 = (ulonglong)local_cc;
-  if (uVar10 == 0) {
-    MyAssertHandler(0xffffffff82059580,0xae,0,0xffffffff82000f98,0xffffffff820594d0);
-    uVar10 = (ulonglong)local_cc;
+  DB_ReadXFileUncompressed((uchar *)&local_cc,4);
+  uVar9 = (ulonglong)local_cc;
+  if (uVar9 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0xae,0,"%s");
+    uVar9 = (ulonglong)local_cc;
   }
-  if ((DAT_82c07758 == 0) && (DAT_82c07758 = (uint)uVar10, (uVar10 - 1 & uVar10) != 0)) {
-    MyAssertHandler(0xffffffff82059580,0xb3,0,0xffffffff82059488,0xffffffff820594a0);
-    uVar10 = (ulonglong)local_cc;
+  if ((DAT_82c07758 == 0) && (DAT_82c07758 = (uint)uVar9, (uVar9 - 1 & uVar9) != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0xb3,0,"%s\n\t(db_language) = %i");
+    uVar9 = (ulonglong)local_cc;
   }
-  if ((DAT_82c07758 & uVar10) == 0) {
-    Com_Error(1,0xffffffff82059460);
-    uVar10 = (ulonglong)local_cc;
+  if ((DAT_82c07758 & uVar9) == 0) {
+    Com_Error(ERR_DROP,"Language mismatch on download content.");
+    uVar9 = (ulonglong)local_cc;
   }
-  if (DAT_8296752c != 1) {
-    MyAssertHandler(0xffffffff82059580,0xbb,0,0xffffffff82059424,0xffffffff82059444,DAT_8296752c);
-    uVar10 = (ulonglong)local_cc;
+  if (db_soundFileCount != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0xbb,0,"%s\n\t(db_soundFileCount) = %i");
+    uVar9 = (ulonglong)local_cc;
   }
-  uVar9 = 1;
-  DAT_8296752c = 0;
-  DAT_82fcc42c = 0;
+  uVar8 = 1;
+  db_soundFileCount = 0;
+  db_soundLanguage = 0;
   lVar16 = 0xf;
   do {
-    if ((uVar9 & uVar10) != 0) {
-      if (uVar9 == DAT_82c07758) {
-        DAT_82fcc42c = DAT_8296752c;
+    if ((uVar8 & uVar9) != 0) {
+      if (uVar8 == DAT_82c07758) {
+        db_soundLanguage = db_soundFileCount;
       }
-      DAT_8296752c = DAT_8296752c + 1;
+      db_soundFileCount = db_soundFileCount + 1;
     }
-    uVar9 = (uVar9 & 0x7fffffff) << 1 | uVar9 >> 0x1f;
+    uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
     lVar16 = lVar16 + -1;
   } while (lVar16 != 0);
-  DB_ReadXFileUncompressed(0xffffffff82c45b64,4);
-  uVar10 = (ulonglong)DAT_82c45b64;
-  if (0x5300 < uVar10) {
+  DB_ReadXFileUncompressed((uchar *)&db_imageCount,4);
+  if (0x5300 < db_imageCount) {
     DB_DirtyDiscError();
-    uVar10 = (ulonglong)DAT_82c45b64;
   }
-  if (uVar10 != 0) {
+  if (db_imageCount != 0) {
     uVar9 = 1;
     lVar16 = 0xf;
+    uVar13 = db_imageCount;
     do {
       if ((uVar9 & local_cc) != 0) {
         if (uVar9 == DAT_82c07758) {
           uVar14 = 0;
-          lVar15 = -0x7d3f88a0;
-          if (uVar10 != 0) {
+          pXVar15 = db_imageStreamFile;
+          if (uVar13 != 0) {
             do {
-              DB_ReadXFileUncompressed(lVar15,0xc);
-              uVar10 = (ulonglong)DAT_82c45b64;
+              DB_ReadXFileUncompressed((uchar *)pXVar15,0xc);
               uVar14 = uVar14 + 1;
-              lVar15 = lVar15 + 0xc;
-            } while ((uVar14 & 0xffffffff) < uVar10);
+              pXVar15 = pXVar15 + 1;
+              uVar13 = db_imageCount;
+            } while (uVar14 < db_imageCount);
           }
         }
         else {
-          DB_ReadXFileUncompressed(0,(uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-          uVar10 = (ulonglong)DAT_82c45b64;
+          DB_ReadXFileUncompressed((uchar *)0x0,uVar13 * 0xc);
+          uVar13 = db_imageCount;
         }
       }
       lVar16 = lVar16 + -1;
@@ -189,67 +213,68 @@ void DB_LoadXFile(undefined8 param_1,longlong param_2)
     } while (lVar16 != 0);
   }
   DB_ReadXFileUncompressed(auStack_b8,4);
-  DB_ReadXFileUncompressed(&local_c4,4);
-  pbVar13 = local_b0;
-  DAT_82c45b60 = 0;
+  DB_ReadXFileUncompressed((uchar *)&local_c4,4);
+  pbVar11 = local_b0;
+  db_imageIndex = 0;
   do {
-    bVar1 = *pbVar13;
-    bVar2 = *pbVar11;
+    bVar1 = *pbVar11;
+    bVar2 = *pbVar10;
     if (bVar1 != bVar2) break;
-    pbVar13 = pbVar13 + 1;
     pbVar11 = pbVar11 + 1;
-  } while (pbVar13 != abStack_a8);
-  DB_InflateInit(bVar1 != bVar2);
+    pbVar10 = pbVar10 + 1;
+  } while (pbVar11 != abStack_a8);
+  DB_InflateInit((uint)(bVar1 != bVar2));
   DB_ReadXFile(auStack_a0,0x24,0);
   if ((DAT_82c07754 != 0) && (0xfffff < (uint)(local_9c + local_c4))) {
-    DAT_82c07750 = local_c4 - DAT_82c45b90;
-    cVar7 = CL_Demo_IsPlaying(0);
-    if ((cVar7 == '\0') || (iVar5 = CL_Demo_GetPlayingFlag(), iVar5 != 2)) {
-      uVar3 = DAT_82c07750 * 7;
-      DAT_82c07750 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0) + DAT_82c07750;
+    g_totalSize = local_c4 - g_loadedSize;
+    bVar6 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+    if ((bVar6) && (CVar4 = CL_Demo_GetPlayingFlag(), CVar4 == CLIENT_DEMO_PLAYING_FLAG_RENDER)) {
+      g_totalSize = (g_totalSize >> 1) + (uint)(g_totalSize < 0 && (g_totalSize & 1U) != 0) +
+                    g_totalSize * 2;
     }
     else {
-      DAT_82c07750 = ((int)DAT_82c07750 >> 1) +
-                     (uint)((int)DAT_82c07750 < 0 && (DAT_82c07750 & 1) != 0) + DAT_82c07750 * 2;
+      uVar13 = g_totalSize * 7;
+      g_totalSize = ((int)uVar13 >> 3) + (uint)((int)uVar13 < 0 && (uVar13 & 7) != 0) + g_totalSize;
     }
-    DAT_82c45b90 = 0;
-    DAT_82c0775c = local_9c - DAT_82c07738;
-    DAT_82c45b8c = 0x40000;
-    DAT_82c07738 = 0;
+    g_loadedSize = 0;
+    g_totalExternalBytes = local_9c - g_loadedExternalBytes;
+    g_loadedSizeInc = 0x40000;
+    g_loadedExternalBytes = 0;
   }
-  DB_AllocXZoneMemory(auStack_98,param_2 + 0xc,uVar4);
-  DB_InitStreams(uVar4);
-  DAT_82cc6380 = &DAT_82c0773c;
-  DB_ReadXFile(0xffffffff82c0773c,0x10,0);
+  DB_AllocXZoneMemory(auStack_98,param_2->name,pXVar3);
+  DB_InitStreams(pXVar3);
+  varXAssetList = &g_varXAssetList;
+  DB_ReadXFile((uchar *)&g_varXAssetList,0x10,0);
   DB_PushStreamPos(3);
-  DAT_82cc6974 = DAT_82cc6380;
-  Load_ScriptStringList(0);
+  varScriptStringList = &varXAssetList->stringList;
+  Load_ScriptStringList(false);
   DB_PopStreamPos();
   DB_PushStreamPos(3);
-  if (*(int *)(DAT_82cc6380 + 0xc) != 0) {
-    uVar6 = AllocLoad_XAsset();
-    *(undefined4 *)(DAT_82cc6380 + 0xc) = uVar6;
-    DAT_82cc60f4 = *(int *)(DAT_82cc6380 + 0xc);
-    uVar3 = *(uint *)(DAT_82cc6380 + 8);
-    uVar10 = (ulonglong)uVar3;
-    Load_Stream(1,DAT_82cc60f4,uVar3 << 3);
-    iVar5 = DAT_82cc60f4;
-    if (0 < (int)uVar3) {
+  if (varXAssetList->assets != (XAsset *)0x0) {
+    pXVar5 = AllocLoad_XAsset();
+    varXAssetList->assets = pXVar5;
+    varXAsset = varXAssetList->assets;
+    uVar13 = varXAssetList->assetCount;
+    uVar9 = (ulonglong)uVar13;
+    Load_Stream(true,varXAsset,uVar13 << 3);
+    pXVar5 = varXAsset;
+    if (0 < (int)uVar13) {
       do {
-        DAT_82cc60f4 = iVar5;
-        Load_XAsset(0);
-        uVar10 = uVar10 - 1;
-        iVar5 = iVar5 + 8;
-      } while (uVar10 != 0);
+        varXAsset = pXVar5;
+        Load_XAsset(false);
+        uVar9 = uVar9 - 1;
+        pXVar5 = pXVar5 + 1;
+      } while (uVar9 != 0);
     }
   }
   DB_PopStreamPos();
-  if (DAT_82c45b60 != DAT_82c45b64) {
-    MyAssertHandler(0xffffffff82059580,0x13b,0,0xffffffff82000f98,0xffffffff82059404);
+  if (db_imageIndex != db_imageCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0x13b,0,"%s");
   }
   DB_InflateShutdown();
   DB_FinishLoadXFile();
-  DAT_8296752c = 1;
+  db_soundFileCount = 1;
   __restgprlr_19();
   return;
 }
@@ -257,81 +282,87 @@ void DB_LoadXFile(undefined8 param_1,longlong param_2)
 
 // 823A3758  DB_ResetZoneSize  (database/db_fastfile_load.cpp:337)
 
-void DB_ResetZoneSize(undefined4 param_1)
+void DB_ResetZoneSize(int param_1,uint param_2)
 
 {
-  DAT_82c07750 = 0;
-  DAT_82c45b90 = 0;
-  DAT_82c0775c = 0;
+  g_totalSize = 0;
+  g_loadedSize = 0;
+  g_totalExternalBytes = 0;
   DAT_82c07754 = param_1;
-  DAT_82c45b8c = 0;
-  DAT_82c07738 = 0;
+  g_loadedSizeInc = 0;
+  g_loadedExternalBytes = 0;
   return;
 }
 
 
 // 823A3788  DB_GetLoadedFraction  (database/db_fastfile_load.cpp:351)
 
-double DB_GetLoadedFraction(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float DB_GetLoadedFraction(void)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
+  long lVar2;
+  long lVar3;
   int iVar4;
   
-  iVar4 = DAT_82c45b90;
-  iVar2 = DAT_82c07750;
-  if (DAT_82c07750 == 0) {
+  iVar4 = g_loadedSize;
+  lVar2 = g_totalSize;
+  if (g_totalSize == 0) {
     fVar1 = 0.0;
   }
   else {
-    if (DAT_82c45b90 < 0) {
-      MyAssertHandler(0xffffffff82059580,0x16b,0,0xffffffff82000f98,0xffffffff820595f4);
+    if (g_loadedSize < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                      ,0x16b,0,"%s");
     }
-    if (iVar2 < iVar4) {
-      iVar4 = iVar2;
+    if (lVar2 < iVar4) {
+      iVar4 = lVar2;
     }
-    iVar3 = DAT_82c07738;
-    if (DAT_82c0775c < DAT_82c07738) {
-      iVar3 = DAT_82c0775c;
+    lVar3 = g_loadedExternalBytes;
+    if (g_totalExternalBytes < g_loadedExternalBytes) {
+      lVar3 = g_totalExternalBytes;
     }
-    fVar1 = (float)((double)(longlong)(iVar3 + iVar4) / (double)(longlong)(DAT_82c0775c + iVar2));
+    fVar1 = (float)((double)(longlong)(lVar3 + iVar4) /
+                   (double)(longlong)(g_totalExternalBytes + lVar2));
   }
-  return (double)fVar1;
+  return fVar1;
 }
 
 
 // 823A3860  DB_SetRemainingLoadAmount  (database/db_fastfile_load.cpp:387)
 
-void DB_SetRemainingLoadAmount(void)
+void DB_SetRemainingLoadAmount(int param_1)
 
 {
-  int iVar1;
+  long lVar1;
   int iVar2;
-  int iVar3;
+  long lVar3;
   int iVar4;
   
-  iVar2 = __savegprlr_29();
-  iVar4 = DAT_82c45b90;
-  iVar1 = DAT_82c07750;
+  iVar2 = __savegprlr_29(param_1);
+  iVar4 = g_loadedSize;
+  lVar1 = g_totalSize;
   if (iVar2 == 0) {
-    DAT_82c45b8c = 0x40000;
+    g_loadedSizeInc = 0x40000;
     __restgprlr_29();
     return;
   }
-  if (DAT_82c45b90 < 0) {
-    MyAssertHandler(0xffffffff82059580,0x193,0,0xffffffff82000f98,0xffffffff820595f4);
+  if (g_loadedSize < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0x193,0,"%s");
   }
-  if (iVar1 < iVar4) {
-    iVar4 = iVar1;
+  if (lVar1 < iVar4) {
+    iVar4 = lVar1;
   }
-  iVar3 = DAT_82c07738;
-  if (DAT_82c0775c < DAT_82c07738) {
-    iVar3 = DAT_82c0775c;
+  lVar3 = g_loadedExternalBytes;
+  if (g_totalExternalBytes < g_loadedExternalBytes) {
+    lVar3 = g_totalExternalBytes;
   }
-  DAT_82c45b8c = (int)(((double)(longlong)(((DAT_82c0775c - iVar3) - iVar4) + iVar1) /
-                       (double)(longlong)iVar2) * 60293.12109375);
+  g_loadedSizeInc =
+       (int)(((double)(longlong)(((g_totalExternalBytes - lVar3) - iVar4) + lVar1) /
+             (double)(longlong)iVar2) * 60293.12109375);
   __restgprlr_29();
   return;
 }
@@ -339,7 +370,7 @@ void DB_SetRemainingLoadAmount(void)
 
 // 823A3948  DB_LoadedExternalData  (database/db_fastfile_load.cpp:421)
 
-void DB_LoadedExternalData(longlong param_1)
+void DB_LoadedExternalData(int param_1)
 
 {
   char in_RESERVE;
@@ -347,8 +378,10 @@ void DB_LoadedExternalData(longlong param_1)
   
   do {
     if (in_RESERVE != '\0') {
-      DAT_82c07738 = storeWordConditionalIndexed
-                               (param_1 + (ulonglong)DAT_82c07738,0,0xffffffff82c07738);
+      g_loadedExternalBytes =
+           storeWordConditionalIndexed
+                     ((longlong)param_1 + (ulonglong)(uint)g_loadedExternalBytes,0,
+                      0xffffffff82c07738);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -358,17 +391,19 @@ void DB_LoadedExternalData(longlong param_1)
 
 // 823A3970  DB_GetNextImageStreamFile  (database/db_fastfile_load.cpp:429)
 
-longlong DB_GetNextImageStreamFile(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+XAssetStreamFile * DB_GetNextImageStreamFile(void)
 
 {
-  ulonglong uVar1;
+  XAssetStreamFile *pXVar1;
   
-  uVar1 = (ulonglong)DAT_82c45b60;
-  if (DAT_82c45b64 <= uVar1) {
-    MyAssertHandler(0xffffffff82059580,0x1b0,0,0xffffffff82059618);
-    uVar1 = (ulonglong)DAT_82c45b60;
+  if (db_imageCount <= db_imageIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
+                    ,0x1b0,0,"db_imageIndex doesn\'t index db_imageCount\n\t%i not in [0, %i)");
   }
-  DAT_82c45b60 = (int)uVar1 + 1;
-  return (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7d3f88a0;
+  pXVar1 = db_imageStreamFile + db_imageIndex;
+  db_imageIndex = db_imageIndex + 1;
+  return pXVar1;
 }
 

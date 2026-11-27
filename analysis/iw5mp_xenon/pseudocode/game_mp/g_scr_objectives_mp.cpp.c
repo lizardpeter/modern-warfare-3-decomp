@@ -2,24 +2,28 @@
 
 // 824A9A88  G_InitObjectives  (game_mp/g_scr_objectives_mp.cpp:48)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void G_InitObjectives(void)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
   lVar2 = 0x20;
-  puVar1 = &DAT_83580b20;
+  piVar1 = &level.clientIsSpawning;
   do {
-    puVar1[1] = 0;
-    puVar1[2] = 0;
-    puVar1[3] = 0;
-    puVar1[4] = 0;
-    puVar1[5] = 0x7ff;
-    puVar1[6] = 0;
-    puVar1[7] = 0xffffffff;
-    puVar1 = puVar1 + 9;
-    *puVar1 = 0;
+    ((objective_t *)(piVar1 + 1))->state = OBJST_EMPTY;
+    piVar1[2] = 0;
+    piVar1[3] = 0;
+    piVar1[4] = 0;
+    piVar1[5] = 0x7ff;
+    piVar1[6] = 0;
+    piVar1[7] = -1;
+    piVar1 = piVar1 + 9;
+    *piVar1 = 0;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
   return;
@@ -28,91 +32,88 @@ void G_InitObjectives(void)
 
 // 824A8DA0  ObjectiveStateIndexFromString  (game_mp/g_scr_objectives_mp.cpp:59)
 
-undefined8 ObjectiveStateIndexFromString(undefined4 *param_1,uint param_2)
+int ObjectiveStateIndexFromString(objectiveState_t *param_1,uint param_2)
 
 {
-  if (param_2 == DAT_835a0bba) {
-    *param_1 = 0;
+  if (param_2 == scr_const.empty) {
+    *param_1 = OBJST_EMPTY;
     return 1;
   }
-  if (param_2 == DAT_835a0be8) {
-    *param_1 = 2;
+  if (param_2 == scr_const.invisible) {
+    *param_1 = OBJST_INVISIBLE;
     return 1;
   }
-  if (param_2 == DAT_835a0ba8) {
-    *param_1 = 4;
+  if (param_2 == scr_const.current) {
+    *param_1 = OBJST_CURRENT;
     return 1;
   }
-  if (param_2 == DAT_835a0b82) {
-    *param_1 = 1;
+  if (param_2 == scr_const.active) {
+    *param_1 = OBJST_ACTIVE;
     return 1;
   }
-  *param_1 = 0;
+  *param_1 = OBJST_EMPTY;
   return 0;
 }
 
 
 // 824A8E30  ClearObjective_OnEntity  (game_mp/g_scr_objectives_mp.cpp:79)
 
-void ClearObjective_OnEntity(int param_1)
+void ClearObjective_OnEntity(objective_t *param_1)
 
 {
-  if (*(int *)(param_1 + 0x10) == 0x7ff) {
+  if (param_1->entNum == 0x7ff) {
     return;
   }
-  *(undefined4 *)(param_1 + 0x10) = 0x7ff;
+  param_1->entNum = 0x7ff;
   return;
 }
 
 
 // 824A8E48  ClearObjective  (game_mp/g_scr_objectives_mp.cpp:96)
 
-void ClearObjective(undefined4 *param_1)
+void ClearObjective(objective_t *param_1)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = 0;
-  param_1[3] = 0;
-  param_1[4] = 0x7ff;
-  param_1[5] = 0;
-  param_1[6] = 0xffffffff;
-  param_1[8] = 0;
+  param_1->state = OBJST_EMPTY;
+  param_1->origin[0] = 0.0;
+  param_1->origin[1] = 0.0;
+  param_1->origin[2] = 0.0;
+  param_1->entNum = 0x7ff;
+  param_1->teamNum = 0;
+  param_1->clientNum = -1;
+  param_1->icon = 0;
   return;
 }
 
 
 // 824A8E80  SetObjectiveIcon  (game_mp/g_scr_objectives_mp.cpp:107)
 
-void SetObjectiveIcon(undefined8 param_1,undefined8 param_2)
+void SetObjectiveIcon(objective_t *param_1,int param_2)
 
 {
-  char cVar1;
-  int iVar3;
-  char *pcVar4;
-  undefined8 uVar2;
-  undefined4 uVar5;
-  int iVar6;
+  int iVar1;
+  char *pcVar2;
+  char *pcVar3;
+  int iVar4;
   
-  iVar3 = __savegprlr_28();
-  pcVar4 = (char *)Scr_GetString(param_2);
-  iVar6 = 0;
-  if (*pcVar4 != '\0') {
+  iVar1 = __savegprlr_28(param_1);
+  pcVar2 = Scr_GetString(param_2);
+  iVar4 = 0;
+  if (*pcVar2 != '\0') {
     do {
-      cVar1 = pcVar4[iVar6];
-      if ((cVar1 < ' ') || ('~' < cVar1)) {
-        uVar2 = va(0xffffffff8207d32c,cVar1,cVar1,pcVar4);
-        Scr_ParamError(3,uVar2);
+      if ((pcVar2[iVar4] < ' ') || ('~' < pcVar2[iVar4])) {
+        pcVar3 = va("Illegal character \'%c\'(ascii %i) in objective icon name: %s\n");
+        Scr_ParamError(3,pcVar3);
       }
-      iVar6 = iVar6 + 1;
-    } while (pcVar4[iVar6] != '\0');
-    if (0x3f < iVar6) {
-      uVar2 = va(0xffffffff8207d300,0x3f,pcVar4);
-      Scr_ParamError(3,uVar2);
+      iVar4 = iVar4 + 1;
+    } while (pcVar2[iVar4] != '\0');
+    if (0x3f < iVar4) {
+      pcVar3 = va("Objective icon name is too long (> %i): %s\n");
+      Scr_ParamError(3,pcVar3);
     }
   }
-  uVar5 = G_MaterialIndex(pcVar4);
-  *(undefined4 *)(iVar3 + 0x20) = uVar5;
+  iVar4 = G_MaterialIndex(pcVar2);
+  *(int *)(iVar1 + 0x20) = iVar4;
   __restgprlr_28();
   return;
 }
@@ -120,53 +121,66 @@ void SetObjectiveIcon(undefined8 param_1,undefined8 param_2)
 
 // 824A8F38  Scr_Objective_Add  (game_mp/g_scr_objectives_mp.cpp:127)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_Add(void)
 
 {
-  int iVar3;
+  float fVar1;
+  float fVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar5;
+  char *pcVar5;
+  uint uVar6;
+  int iVar7;
   longlong local_30;
   longlong local_28;
   
   __savegprlr_29();
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 < 2) {
-    Scr_Error(0xffffffff8207d418);
+  uVar3 = Scr_GetNumParam();
+  if ((int)uVar3 < 2) {
+    Scr_Error(
+             "objective_add needs at least the first two parameters out of its parameter list of: index state [string] [position]\n"
+             );
   }
   iVar4 = Scr_GetInt(0);
   if ((iVar4 < 0) || (0x1f < iVar4)) {
-    uVar1 = va(0xffffffff8207d3d0,iVar4,0x1f);
-    Scr_ParamError(0,uVar1);
+    pcVar5 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar5);
   }
-  if ((&DAT_83580b34)[iVar4 * 9] != 0x7ff) {
-    (&DAT_83580b34)[iVar4 * 9] = 0x7ff;
+  if (level.objectives[iVar4].entNum != 0x7ff) {
+    level.objectives[iVar4].entNum = 0x7ff;
   }
-  uVar2 = Scr_GetConstString(1);
-  uVar2 = uVar2 & 0xffff;
-  iVar5 = ObjectiveStateIndexFromString(&local_30);
-  if (iVar5 == 0) {
-    uVar1 = SL_ConvertToString(uVar2);
-    uVar1 = va(0xffffffff8207d370,uVar1);
-    Scr_ParamError(1,uVar1);
+  uVar6 = Scr_GetConstString(1);
+  uVar6 = uVar6 & 0xffff;
+  iVar7 = ObjectiveStateIndexFromString((objectiveState_t *)&local_30,uVar6);
+  if (iVar7 == 0) {
+    SL_ConvertToString(uVar6);
+    pcVar5 = va(
+               "Illegal objective state \"%s\". Valid states are \"empty\", \"invisible\", \"current\", \"active\"\n"
+               );
+    Scr_ParamError(1,pcVar5);
   }
-  (&DAT_83580b24)[iVar4 * 9] = local_30._0_4_;
-  if (2 < iVar3) {
-    Scr_GetVector(2,&DAT_83580b28 + iVar4 * 9);
-    local_30 = (longlong)(int)(float)(&DAT_83580b2c)[iVar4 * 9];
-    (&DAT_83580b34)[iVar4 * 9] = 0x7ff;
-    local_28 = (longlong)(int)(float)(&DAT_83580b30)[iVar4 * 9];
-    (&DAT_83580b30)[iVar4 * 9] = (float)local_28;
-    (&DAT_83580b2c)[iVar4 * 9] = (float)(longlong)(int)(float)(&DAT_83580b2c)[iVar4 * 9];
-    (&DAT_83580b28)[iVar4 * 9] = (float)(longlong)(int)(float)(&DAT_83580b28)[iVar4 * 9];
-    if (3 < iVar3) {
-      SetObjectiveIcon(&DAT_83580b24 + iVar4 * 9,3);
+  level.objectives[iVar4].state = local_30._0_4_;
+  if (2 < (int)uVar3) {
+    Scr_GetVector(2,level.objectives[iVar4].origin);
+    fVar1 = level.objectives[iVar4].origin[0];
+    iVar7 = (int)level.objectives[iVar4].origin[1];
+    local_30 = (longlong)iVar7;
+    fVar2 = level.objectives[iVar4].origin[2];
+    level.objectives[iVar4].entNum = 0x7ff;
+    local_28 = (longlong)(int)fVar2;
+    level.objectives[iVar4].origin[2] = (float)local_28;
+    level.objectives[iVar4].origin[1] = (float)(longlong)iVar7;
+    level.objectives[iVar4].origin[0] = (float)(longlong)(int)fVar1;
+    if (3 < (int)uVar3) {
+      SetObjectiveIcon(level.objectives + iVar4,3);
     }
   }
-  (&DAT_83580b38)[iVar4 * 9] = 0;
-  (&DAT_83580b3c)[iVar4 * 9] = 0xffffffff;
+  level.objectives[iVar4].teamNum = 0;
+  level.objectives[iVar4].clientNum = -1;
   __restgprlr_29();
   return;
 }
@@ -174,60 +188,69 @@ void Scr_Objective_Add(void)
 
 // 824A90D8  Scr_Objective_Delete  (game_mp/g_scr_objectives_mp.cpp:168)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_Delete(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
-  if ((&DAT_83580b34)[iVar2 * 9] != 0x7ff) {
-    (&DAT_83580b34)[iVar2 * 9] = 0x7ff;
+  if (level.objectives[iVar1].entNum != 0x7ff) {
+    level.objectives[iVar1].entNum = 0x7ff;
   }
-  (&DAT_83580b24)[iVar2 * 9] = 0;
-  (&DAT_83580b28)[iVar2 * 9] = 0;
-  (&DAT_83580b2c)[iVar2 * 9] = 0;
-  (&DAT_83580b30)[iVar2 * 9] = 0;
-  (&DAT_83580b34)[iVar2 * 9] = 0x7ff;
-  (&DAT_83580b38)[iVar2 * 9] = 0;
-  (&DAT_83580b3c)[iVar2 * 9] = 0xffffffff;
-  (&DAT_83580b44)[iVar2 * 9] = 0;
+  level.objectives[iVar1].state = OBJST_EMPTY;
+  level.objectives[iVar1].origin[0] = 0.0;
+  level.objectives[iVar1].origin[1] = 0.0;
+  level.objectives[iVar1].origin[2] = 0.0;
+  level.objectives[iVar1].entNum = 0x7ff;
+  level.objectives[iVar1].teamNum = 0;
+  level.objectives[iVar1].clientNum = -1;
+  level.objectives[iVar1].icon = 0;
   return;
 }
 
 
 // 824A9198  Scr_Objective_State  (game_mp/g_scr_objectives_mp.cpp:181)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_State(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined2 uVar4;
-  int iVar3;
-  int local_20 [4];
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  objectiveState_t local_20 [4];
   
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
-  uVar4 = Scr_GetConstString(1);
-  iVar3 = ObjectiveStateIndexFromString(local_20,uVar4);
-  if (iVar3 == 0) {
-    uVar1 = Scr_GetString(1);
-    uVar1 = va(0xffffffff8207d370,uVar1);
-    Scr_ParamError(1,uVar1);
+  uVar3 = Scr_GetConstString(1);
+  iVar4 = ObjectiveStateIndexFromString(local_20,uVar3 & 0xffff);
+  if (iVar4 == 0) {
+    Scr_GetString(1);
+    pcVar2 = va(
+               "Illegal objective state \"%s\". Valid states are \"empty\", \"invisible\", \"current\", \"active\"\n"
+               );
+    Scr_ParamError(1,pcVar2);
   }
-  (&DAT_83580b24)[iVar2 * 9] = local_20[0];
-  if (((local_20[0] == 0) || (local_20[0] == 2)) && ((&DAT_83580b34)[iVar2 * 9] != 0x7ff)) {
-    (&DAT_83580b34)[iVar2 * 9] = 0x7ff;
+  level.objectives[iVar1].state = local_20[0];
+  if (((local_20[0] == OBJST_EMPTY) || (local_20[0] == OBJST_INVISIBLE)) &&
+     (level.objectives[iVar1].entNum != 0x7ff)) {
+    level.objectives[iVar1].entNum = 0x7ff;
   }
   return;
 }
@@ -235,122 +258,142 @@ void Scr_Objective_State(void)
 
 // 824A9280  Scr_Objective_Icon  (game_mp/g_scr_objectives_mp.cpp:206)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_Icon(void)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = Scr_GetInt(0);
-  if (((int)uVar1 < 0) || (0x1f < (int)uVar1)) {
-    uVar2 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar2);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
-  SetObjectiveIcon((uVar1 + (uVar1 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + -0x7ca7f4dc,1);
+  SetObjectiveIcon(level.objectives + iVar1,1);
   return;
 }
 
 
 // 824A9308  Scr_Objective_Position  (game_mp/g_scr_objectives_mp.cpp:218)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_Position(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  char *pcVar4;
   
-  iVar2 = Scr_GetInt(0);
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,iVar2,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar3 = Scr_GetInt(0);
+  if ((iVar3 < 0) || (0x1f < iVar3)) {
+    pcVar4 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar4);
   }
-  if ((&DAT_83580b34)[iVar2 * 9] != 0x7ff) {
-    (&DAT_83580b34)[iVar2 * 9] = 0x7ff;
+  if (level.objectives[iVar3].entNum != 0x7ff) {
+    level.objectives[iVar3].entNum = 0x7ff;
   }
-  Scr_GetVector(1,&DAT_83580b28 + iVar2 * 9);
-  (&DAT_83580b30)[iVar2 * 9] = (float)(longlong)(int)(float)(&DAT_83580b30)[iVar2 * 9];
-  (&DAT_83580b2c)[iVar2 * 9] = (float)(longlong)(int)(float)(&DAT_83580b2c)[iVar2 * 9];
-  (&DAT_83580b28)[iVar2 * 9] = (float)(longlong)(int)(float)(&DAT_83580b28)[iVar2 * 9];
+  Scr_GetVector(1,level.objectives[iVar3].origin);
+  fVar1 = level.objectives[iVar3].origin[0];
+  fVar2 = level.objectives[iVar3].origin[1];
+  level.objectives[iVar3].origin[2] = (float)(longlong)(int)level.objectives[iVar3].origin[2];
+  level.objectives[iVar3].origin[1] = (float)(longlong)(int)fVar2;
+  level.objectives[iVar3].origin[0] = (float)(longlong)(int)fVar1;
   return;
 }
 
 
 // 824A9420  Scr_Objective_OnEntity  (game_mp/g_scr_objectives_mp.cpp:234)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_Objective_OnEntity(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  int iVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
   
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
-  if ((&DAT_83580b34)[iVar2 * 9] != 0x7ff) {
-    (&DAT_83580b34)[iVar2 * 9] = 0x7ff;
+  if (level.objectives[iVar1].entNum != 0x7ff) {
+    level.objectives[iVar1].entNum = 0x7ff;
   }
-  puVar3 = (undefined4 *)Scr_GetEntity(1);
-  (&DAT_83580b34)[iVar2 * 9] = *puVar3;
+  pgVar3 = Scr_GetEntity(1);
+  level.objectives[iVar1].entNum = (pgVar3->s).number;
   return;
 }
 
 
 // 824A94C0  Scr_Objective_Current  (game_mp/g_scr_objectives_mp.cpp:257)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Scr_Objective_Current(void)
 
 {
+  uint uVar1;
   int iVar2;
-  int iVar3;
-  undefined8 uVar1;
+  char *pcVar3;
   int *piVar4;
   undefined8 *puVar5;
-  int *piVar6;
-  longlong lVar7;
+  objective_t *poVar6;
+  uint uVar7;
+  longlong lVar8;
   undefined8 uStack_b8;
   int local_b0 [44];
   
   __savegprlr_27();
-  iVar2 = Scr_GetNumParam();
+  uVar1 = Scr_GetNumParam();
   puVar5 = &uStack_b8;
-  lVar7 = 0x10;
+  lVar8 = 0x10;
   do {
     puVar5 = puVar5 + 1;
     *puVar5 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  lVar7 = 0;
-  if (0 < iVar2) {
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  uVar7 = 0;
+  if (0 < (int)uVar1) {
     do {
-      iVar3 = Scr_GetInt(lVar7);
-      if ((iVar3 < 0) || (0x1f < iVar3)) {
-        uVar1 = va(0xffffffff8207d3d0,iVar3,0x1f);
-        Scr_ParamError(lVar7,uVar1);
+      iVar2 = Scr_GetInt(uVar7);
+      if ((iVar2 < 0) || (0x1f < iVar2)) {
+        pcVar3 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+        Scr_ParamError(uVar7,pcVar3);
       }
-      lVar7 = lVar7 + 1;
-      local_b0[iVar3] = 1;
-    } while ((int)lVar7 < iVar2);
+      uVar7 = uVar7 + 1;
+      local_b0[iVar2] = 1;
+    } while ((int)uVar7 < (int)uVar1);
   }
   piVar4 = local_b0;
-  lVar7 = 0x20;
-  piVar6 = &DAT_83580b24;
+  lVar8 = 0x20;
+  poVar6 = level.objectives;
   do {
     if (*piVar4 == 0) {
-      if (*piVar6 == 4) {
-        *piVar6 = 1;
+      if (poVar6->state == OBJST_CURRENT) {
+        poVar6->state = OBJST_ACTIVE;
       }
     }
     else {
-      *piVar6 = 4;
+      poVar6->state = OBJST_CURRENT;
     }
-    piVar6 = piVar6 + 9;
+    poVar6 = poVar6 + 1;
     piVar4 = piVar4 + 1;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
   __restgprlr_27();
   return;
 }
@@ -358,94 +401,109 @@ void Scr_Objective_Current(void)
 
 // 824A95A8  GScr_Objective_Team  (game_mp/g_scr_objectives_mp.cpp:297)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_Objective_Team(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  short sVar3;
+  int iVar1;
+  char *pcVar2;
+  uint uVar3;
   
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
-  sVar3 = Scr_GetConstString(1);
-  if (sVar3 == DAT_835a0b8c) {
-    (&DAT_83580b38)[iVar2 * 9] = 2;
+  uVar3 = Scr_GetConstString(1);
+  uVar3 = uVar3 & 0xffff;
+  if (uVar3 == scr_const.allies) {
+    level.objectives[iVar1].teamNum = 2;
   }
-  else if (sVar3 == DAT_835a0b94) {
-    (&DAT_83580b38)[iVar2 * 9] = 1;
+  else if (uVar3 == scr_const.axis) {
+    level.objectives[iVar1].teamNum = 1;
   }
-  else if (sVar3 == DAT_835a0bfa) {
-    (&DAT_83580b38)[iVar2 * 9] = 0;
+  else if (uVar3 == scr_const.none) {
+    level.objectives[iVar1].teamNum = 0;
   }
   else {
-    uVar1 = SL_ConvertToString();
-    uVar1 = va(0xffffffff8207c094,uVar1);
-    Scr_ParamError(1,uVar1);
+    SL_ConvertToString(uVar3);
+    pcVar2 = va("Illegal team string \'%s\'. Must be allies, axis, or none.");
+    Scr_ParamError(1,pcVar2);
   }
-  (&DAT_83580b3c)[iVar2 * 9] = 0xffffffff;
+  level.objectives[iVar1].clientNum = -1;
   return;
 }
 
 
 // 824A96B0  GScr_Objective_Player  (game_mp/g_scr_objectives_mp.cpp:332)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_Objective_Player(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
   
-  iVar2 = Scr_GetInt(0);
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,iVar2,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
   iVar3 = Scr_GetInt(1);
   if ((iVar3 < 0) || (0x12 < iVar3)) {
-    Scr_ParamError(1,0xffffffff8207d490);
+    Scr_ParamError(1,"Illegal player ID.");
   }
-  (&DAT_83580b3c)[iVar2 * 9] = iVar3;
-  (&DAT_83580b40)[iVar2 * 9] = 0;
+  level.objectives[iVar1].clientNum = iVar3;
+  level.objectives[iVar1].invertVisibilityByClientNum = 0;
   return;
 }
 
 
 // 824A9770  GScr_Objective_PlayerTeam  (game_mp/g_scr_objectives_mp.cpp:363)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_Objective_PlayerTeam(void)
 
 {
-  undefined8 uVar1;
+  team_t tVar1;
   int iVar2;
-  int iVar3;
+  char *pcVar3;
+  int iVar4;
   
   __savegprlr_29();
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
+  iVar2 = Scr_GetInt(0);
   if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+    pcVar3 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar3);
   }
-  iVar3 = Scr_GetInt(1);
-  if ((iVar3 < 0) || (0x12 < iVar3)) {
-    Scr_ParamError(1,0xffffffff8207d490);
+  iVar4 = Scr_GetInt(1);
+  if ((iVar4 < 0) || (0x12 < iVar4)) {
+    Scr_ParamError(1,"Illegal player ID.");
   }
-  if ((&DAT_83539a90)[iVar3 * 0x164] == 0) {
-    MyAssertHandler(0xffffffff8207d4a8,0x17b,0,0xffffffff82000f98,0xffffffff8202b76c);
+  if (level_bgs.clientinfo[iVar4].infoValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_scr_objectives_mp.cpp"
+                    ,0x17b,0,"%s");
   }
-  if (*(int *)(&DAT_83539abc + iVar3 * 0x590) == 0) {
-    (&DAT_83580b3c)[iVar2 * 9] = iVar3;
-    (&DAT_83580b40)[iVar2 * 9] = 0;
+  tVar1 = level_bgs.clientinfo[iVar4].team;
+  if (tVar1 == TEAM_FREE) {
+    level.objectives[iVar2].clientNum = iVar4;
+    level.objectives[iVar2].invertVisibilityByClientNum = 0;
     __restgprlr_29();
     return;
   }
-  (&DAT_83580b38)[iVar2 * 9] = *(int *)(&DAT_83539abc + iVar3 * 0x590);
-  (&DAT_83580b3c)[iVar2 * 9] = 0xffffffff;
+  level.objectives[iVar2].teamNum = tVar1;
+  level.objectives[iVar2].clientNum = -1;
   __restgprlr_29();
   return;
 }
@@ -453,37 +511,42 @@ void GScr_Objective_PlayerTeam(void)
 
 // 824A9878  GScr_Objective_PlayerEnemyTeam  (game_mp/g_scr_objectives_mp.cpp:410)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void GScr_Objective_PlayerEnemyTeam(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  int iVar4;
+  team_t tVar4;
   
   __savegprlr_29();
-  uVar1 = Scr_GetInt(0);
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x1f < iVar2)) {
-    uVar1 = va(0xffffffff8207d3d0,uVar1,0x1f);
-    Scr_ParamError(0,uVar1);
+  iVar1 = Scr_GetInt(0);
+  if ((iVar1 < 0) || (0x1f < iVar1)) {
+    pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
+    Scr_ParamError(0,pcVar2);
   }
   iVar3 = Scr_GetInt(1);
   if ((iVar3 < 0) || (0x12 < iVar3)) {
-    Scr_ParamError(1,0xffffffff8207d490);
+    Scr_ParamError(1,"Illegal player ID.");
   }
-  if ((&DAT_83539a90)[iVar3 * 0x164] == 0) {
-    MyAssertHandler(0xffffffff8207d4a8,0x1aa,0,0xffffffff82000f98,0xffffffff8202b76c);
+  if (level_bgs.clientinfo[iVar3].infoValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_scr_objectives_mp.cpp"
+                    ,0x1aa,0,"%s");
   }
-  iVar4 = Com_EnemyTeam(*(undefined4 *)(&DAT_83539abc + iVar3 * 0x590));
-  if (iVar4 == 0) {
-    (&DAT_83580b3c)[iVar2 * 9] = iVar3;
-    (&DAT_83580b40)[iVar2 * 9] = 1;
+  tVar4 = Com_EnemyTeam(level_bgs.clientinfo[iVar3].team);
+  if (tVar4 == TEAM_FREE) {
+    level.objectives[iVar1].clientNum = iVar3;
+    level.objectives[iVar1].invertVisibilityByClientNum = 1;
     __restgprlr_29();
     return;
   }
-  (&DAT_83580b38)[iVar2 * 9] = iVar4;
-  (&DAT_83580b3c)[iVar2 * 9] = 0xffffffff;
+  level.objectives[iVar1].teamNum = tVar4;
+  level.objectives[iVar1].clientNum = -1;
   __restgprlr_29();
   return;
 }
@@ -491,61 +554,61 @@ void GScr_Objective_PlayerEnemyTeam(void)
 
 // 824A9988  Objectives_GetFunction  (game_mp/g_scr_objectives_mp.cpp:463)
 
-void Objectives_GetFunction(undefined8 param_1,undefined4 *param_2)
+uint Objectives_GetFunction(char **param_1,int *param_2)
 
 {
   char cVar1;
   char cVar2;
-  undefined **ppuVar3;
-  undefined **ppuVar4;
+  char **ppcVar3;
+  char **ppcVar4;
   undefined4 *puVar5;
-  int iVar6;
-  int *piVar7;
-  char *pcVar8;
+  uint uVar6;
+  int iVar7;
+  BuiltinFunctionDef *pBVar8;
   char *pcVar9;
-  longlong lVar10;
-  undefined **ppuVar11;
-  uint uVar12;
+  char *pcVar10;
+  longlong lVar11;
+  char **ppcVar12;
   
-  puVar5 = (undefined4 *)__savegprlr_29();
+  puVar5 = (undefined4 *)__savegprlr_29(param_1);
   if (puVar5 == (undefined4 *)0x0) {
-    lVar10 = 0xb;
-    ppuVar11 = &PTR_caseD_11_8296afec;
+    lVar11 = 0xb;
+    ppcVar12 = WeaponStateNames + 0x1d;
     do {
-      ppuVar3 = ppuVar11 + 4;
-      ppuVar4 = ppuVar11 + 5;
-      ppuVar11 = ppuVar11 + 3;
-      Scr_RegisterFunction(*ppuVar3,*ppuVar4,*ppuVar11);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    __restgprlr_29(0);
-    return;
+      ppcVar3 = ppcVar12 + 4;
+      ppcVar4 = ppcVar12 + 5;
+      ppcVar12 = ppcVar12 + 3;
+      Scr_RegisterFunction((int)*ppcVar3,(int)*ppcVar4,(uint)*ppcVar12);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    uVar6 = __restgprlr_29(0);
+    return uVar6;
   }
-  piVar7 = &DAT_8296aff8;
-  iVar6 = 0;
-  uVar12 = 0;
+  pBVar8 = functions;
+  iVar7 = 0;
+  uVar6 = 0;
   do {
-    pcVar8 = (&PTR_s_flash_killed_8298db24)[*piVar7];
-    pcVar9 = (char *)*puVar5;
+    pcVar9 = g_scr_opaque_strings[pBVar8->name + 0x824f];
+    pcVar10 = (char *)*puVar5;
     do {
-      cVar1 = *pcVar9;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar9;
       if (cVar1 == '\0') break;
+      pcVar10 = pcVar10 + 1;
       pcVar9 = pcVar9 + 1;
-      pcVar8 = pcVar8 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar5 = (&PTR_s_flash_killed_8298db24)[(&DAT_8296aff8)[iVar6 * 3]];
-      *param_2 = (&DAT_8296b000)[iVar6 * 3];
-      __restgprlr_29((&DAT_8296aff8)[iVar6 * 3]);
-      return;
+      *puVar5 = g_scr_opaque_strings[functions[iVar7].name + 0x824f];
+      *param_2 = functions[iVar7].type;
+      uVar6 = __restgprlr_29(functions[iVar7].name);
+      return uVar6;
     }
-    uVar12 = uVar12 + 0xc;
-    iVar6 = iVar6 + 1;
-    piVar7 = piVar7 + 3;
-    if (0x83 < uVar12) {
-      __restgprlr_29(0);
-      return;
+    uVar6 = uVar6 + 0xc;
+    iVar7 = iVar7 + 1;
+    pBVar8 = pBVar8 + 1;
+    if (0x83 < uVar6) {
+      uVar6 = __restgprlr_29(0);
+      return uVar6;
     }
   } while( true );
 }

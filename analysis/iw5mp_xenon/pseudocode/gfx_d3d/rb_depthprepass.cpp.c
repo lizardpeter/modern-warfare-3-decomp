@@ -2,28 +2,34 @@
 
 // 8279B918  R_DepthPrepassLitOpaqueSegmentCallback  (gfx_d3d/rb_depthprepass.cpp:164)
 
-void R_DepthPrepassLitOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DepthPrepassLitOpaqueSegmentCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  int *piVar3;
-  int iStack00000018;
+  int iVar2;
+  GfxCmdBufSourceState *pGVar3;
+  int *piVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_27();
-  iVar1 = *piVar3;
-  uVar2 = piVar3[2];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar4 = (int *)__savegprlr_27(param_1);
+  iVar1 = *piVar4;
+  iVar2 = piVar4[2];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar3 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(uint *)(iStack00000018 + 0x174c) = uVar2;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) +
-                              ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x7fffffff) * 2 & 0x1ffffff) *
-                              0x80 + 0x2f50,piVar3[1],0);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar3->drawListId = iVar2;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Prepass(param_2,((pGVar3->input).data)->prepassIterGroup + iVar2,
+                      (GfxDrawList *)piVar4[1],TECHNIQUE_DEPTH_PREPASS);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_27();
   return;
@@ -32,29 +38,38 @@ void R_DepthPrepassLitOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2
 
 // 8279B9C8  R_DepthPrepassLitOpaqueSegment  (gfx_d3d/rb_depthprepass.cpp:208)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_DepthPrepassLitOpaqueSegment
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,ulonglong param_4)
+               (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,uint param_4)
 
 {
-  int iVar1;
-  int local_17a0;
-  undefined4 local_179c;
+  GfxViewParms *pGVar1;
+  ulonglong uVar2;
+  GfxViewParms *local_17a0;
+  GfxDrawList *local_179c;
   undefined4 local_1798;
-  undefined1 auStack_1790 [6032];
+  GfxCmdBufSourceState GStack_1790;
   
-  iVar1 = __savegprlr_28();
-  if (0xe < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821d59a0,0xd4,0,0xffffffff821d59e8,param_4,0xf);
+  uVar2 = (ulonglong)(int)param_4;
+  pGVar1 = (GfxViewParms *)__savegprlr_28(param_1);
+  if (0xe < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_depthprepass.cpp",
+                    0xd4,0,
+                    "drawListType doesn\'t index DRAWLIST_LIT_PREPASS_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(char *)(iVar1 + 0x918) == '\0') {
-    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821d598c,param_4 != 0);
-    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
-    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
-    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
-    local_1798 = (undefined4)param_4;
-    local_17a0 = iVar1;
+  if (*(char *)pGVar1[6].camera.subWindowMaxs == '\0') {
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,"Prepass Opaque%d",(uint)(uVar2 != 0));
+    R_InitCmdBufSourceState(&GStack_1790,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1)
+    ;
+    R_SetRenderTargetSize(&GStack_1790,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+    R_SetViewportStruct(&GStack_1790,(GfxViewport *)(pGVar1 + 1));
+    local_17a0 = pGVar1;
     local_179c = param_2;
-    R_DrawCall(0xffffffff8279b918,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    local_1798 = (int)uVar2;
+    R_DrawCall(R_DepthPrepassLitOpaqueSegmentCallback,&local_17a0,&GStack_1790,
+               (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
     PIXEndNamedEvent();
   }
   __restgprlr_28();
@@ -64,28 +79,34 @@ void R_DepthPrepassLitOpaqueSegment
 
 // 8279BA98  R_DepthPrepassLightmapOpaqueSegmentCallback  (gfx_d3d/rb_depthprepass.cpp:247)
 
-void R_DepthPrepassLightmapOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DepthPrepassLightmapOpaqueSegmentCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  int *piVar3;
-  int iStack00000018;
+  int iVar2;
+  GfxCmdBufSourceState *pGVar3;
+  int *piVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_27();
-  iVar1 = *piVar3;
-  uVar2 = piVar3[2];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar4 = (int *)__savegprlr_27(param_1);
+  iVar1 = *piVar4;
+  iVar2 = piVar4[2];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar3 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(uint *)(iStack00000018 + 0x174c) = uVar2;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) +
-                              ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x7fffffff) * 2 & 0x1ffffff) *
-                              0x80 + 0x2f50,piVar3[1],0);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar3->drawListId = iVar2;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Prepass(param_2,((pGVar3->input).data)->prepassIterGroup + iVar2,
+                      (GfxDrawList *)piVar4[1],TECHNIQUE_DEPTH_PREPASS);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_27();
   return;
@@ -94,29 +115,38 @@ void R_DepthPrepassLightmapOpaqueSegmentCallback(undefined8 param_1,ulonglong pa
 
 // 8279BB48  R_DepthPrepassLightmapOpaqueSegment  (gfx_d3d/rb_depthprepass.cpp:291)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_DepthPrepassLightmapOpaqueSegment
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,ulonglong param_4)
+               (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,uint param_4)
 
 {
-  int iVar1;
-  int local_17a0;
-  undefined4 local_179c;
-  undefined4 local_1798;
-  undefined1 auStack_1790 [6032];
+  GfxViewParms *pGVar1;
+  ulonglong uVar2;
+  GfxViewParms *local_17a0;
+  GfxDrawList *local_179c;
+  int local_1798;
+  GfxCmdBufSourceState GStack_1790;
   
-  iVar1 = __savegprlr_28();
-  if (0xe < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821d59a0,0x127,0,0xffffffff821d59e8,param_4,0xf);
+  uVar2 = (ulonglong)(int)param_4;
+  pGVar1 = (GfxViewParms *)__savegprlr_28(param_1);
+  if (0xe < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_depthprepass.cpp",
+                    0x127,0,
+                    "drawListType doesn\'t index DRAWLIST_LIT_PREPASS_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(char *)(iVar1 + 0x919) == '\0') {
-    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821d5a34,param_4 - 1);
-    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
-    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
-    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
-    local_1798 = (undefined4)param_4;
-    local_17a0 = iVar1;
+  if (*(char *)((int)pGVar1[6].camera.subWindowMaxs + 1) == '\0') {
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,"Prepass LightMap Opaque%d",(int)uVar2 + -1);
+    R_InitCmdBufSourceState(&GStack_1790,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1)
+    ;
+    R_SetRenderTargetSize(&GStack_1790,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+    R_SetViewportStruct(&GStack_1790,(GfxViewport *)(pGVar1 + 1));
+    local_17a0 = pGVar1;
     local_179c = param_2;
-    R_DrawCall(0xffffffff8279ba98,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    local_1798 = (int)uVar2;
+    R_DrawCall(R_DepthPrepassLightmapOpaqueSegmentCallback,&local_17a0,&GStack_1790,
+               (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
     PIXEndNamedEvent();
   }
   __restgprlr_28();
@@ -126,24 +156,32 @@ void R_DepthPrepassLightmapOpaqueSegment
 
 // 8279BC18  R_DepthPrepassLitTransCallback  (gfx_d3d/rb_depthprepass.cpp:336)
 
-void R_DepthPrepassLitTransCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DepthPrepassLitTransCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  int *piVar2;
-  int iStack00000018;
+  GfxCmdBufSourceState *pGVar2;
+  int *piVar3;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar2 = (int *)__savegprlr_28();
-  iVar1 = *piVar2;
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar3 = (int *)__savegprlr_28(param_1);
+  iVar1 = *piVar3;
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar2 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(undefined4 *)(iStack00000018 + 0x174c) = 0x26;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Prepass(param_2,(ulonglong)*(uint *)(iStack00000018 + 0x13ec) + 0x4450,piVar2[1],0);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar2->drawListId = 0x26;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Prepass(param_2,((pGVar2->input).data)->prepassIterGroup + 0xe,
+                      (GfxDrawList *)piVar3[1],TECHNIQUE_DEPTH_PREPASS);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_28();
   return;
@@ -152,23 +190,28 @@ void R_DepthPrepassLitTransCallback(undefined8 param_1,ulonglong param_2)
 
 // 8279BCB8  R_DepthPrepassLitTrans  (gfx_d3d/rb_depthprepass.cpp:374)
 
-void R_DepthPrepassLitTrans(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DepthPrepassLitTrans(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
-  int iVar1;
-  int local_1790;
-  undefined4 local_178c;
-  undefined1 auStack_1780 [6016];
+  GfxViewParms *pGVar1;
+  GfxViewParms *local_1790;
+  GfxDrawList *local_178c;
+  GfxCmdBufSourceState GStack_1780;
   
-  iVar1 = __savegprlr_29();
-  if (*(char *)(iVar1 + 0x918) == '\0') {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d5a50);
-    R_InitCmdBufSourceState(auStack_1780,iVar1 + 0x330,1);
-    R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(iVar1 + 0x920));
-    R_SetViewportStruct(auStack_1780,iVar1 + 0x150);
-    local_1790 = iVar1;
+  pGVar1 = (GfxViewParms *)__savegprlr_29(param_1);
+  if (*(char *)pGVar1[6].camera.subWindowMaxs == '\0') {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Prepass Trans/DynLights");
+    R_InitCmdBufSourceState(&GStack_1780,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1)
+    ;
+    R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+    R_SetViewportStruct(&GStack_1780,(GfxViewport *)(pGVar1 + 1));
+    local_1790 = pGVar1;
     local_178c = param_2;
-    R_DrawCall(0xffffffff8279bc18,&local_1790,auStack_1780,iVar1 + 0x180,iVar1,param_3);
+    R_DrawCall(R_DepthPrepassLitTransCallback,&local_1790,&GStack_1780,
+               (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
     PIXEndNamedEvent();
   }
   __restgprlr_29();

@@ -2,24 +2,29 @@
 
 // 828A9FD0  XInputGetCapabilities  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:28)
 
-void XInputGetCapabilities(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+ulong XInputGetCapabilities(ulong param_1,ulong param_2,_XINPUT_CAPABILITIES *param_3)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_29();
-  uVar1 = XamInputGetCapabilities(uVar1,param_2,param_3);
-  __restgprlr_29(uVar1);
-  return;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
+  uVar1 = XamInputGetCapabilities(uVar1,lVar3,lVar4);
+  uVar2 = __restgprlr_29(uVar1);
+  return uVar2;
 }
 
 
 // 828AA010  XInputGetState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:64)
 
-undefined8 XInputGetState(undefined8 param_1,undefined8 param_2)
+ulong XInputGetState(ulong param_1,_XINPUT_STATE *param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamInputGetState(param_1,1,param_2);
   return uVar1;
@@ -30,56 +35,62 @@ undefined8 XInputGetState(undefined8 param_1,undefined8 param_2)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-undefined8 XInputSetState(undefined8 param_1,undefined4 *param_2)
+ulong XInputSetState(ulong param_1,_XINPUT_VIBRATION *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 local_40;
+  int iVar1;
+  ulong uVar2;
+  _XINPUT_VIBRATION local_40 [4];
   undefined1 uStack_30;
   char local_2f;
   ushort local_2e;
   
-  local_40 = *param_2;
+  local_40[0] = *param_2;
   if (((_DAT_00000158 == 2) && (_DAT_0000015a == 0)) && (_DAT_0000015c < 0x15eb)) {
-    iVar2 = XamInputGetCapabilities(param_1,1,&uStack_30);
-    if ((iVar2 == 0) && (local_2f == '\x02')) {
+    iVar1 = XamInputGetCapabilities(param_1,1,&uStack_30);
+    if ((iVar1 == 0) && (local_2f == '\x02')) {
       if (((local_2e & 1) != 0) && ((local_2e & 2) != 0)) {
-        local_40 = CONCAT22(*(undefined2 *)((int)param_2 + 2),*(undefined2 *)param_2);
+        local_40[0].wLeftMotorSpeed = param_2->wRightMotorSpeed;
+        local_40[0].wRightMotorSpeed = param_2->wLeftMotorSpeed;
       }
     }
   }
-  uVar1 = XamInputSetState(param_1,0,&local_40,0,0,0);
-  return uVar1;
+  uVar2 = XamInputSetState(param_1,0,local_40,0,0,0);
+  return uVar2;
 }
 
 
 // 828AA148  XInputGetKeystrokeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:129)
 
-void XInputGetKeystrokeEx(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+ulong XInputGetKeystrokeEx(ulong *param_1,ulong param_2,_XINPUT_KEYSTROKE *param_3)
 
 {
   int *piVar2;
   undefined8 uVar1;
+  ulong uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   
-  piVar2 = (int *)__savegprlr_29();
+  lVar4 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_29(param_1,uVar5,lVar4);
   if (*piVar2 == 0xff) {
-    param_2 = param_2 | 0x40000000;
+    uVar5 = uVar5 | 0x40000000;
     *piVar2 = 0;
   }
-  uVar1 = XamInputGetKeystrokeEx(piVar2,param_2,param_3);
-  __restgprlr_29(uVar1);
-  return;
+  uVar1 = XamInputGetKeystrokeEx(piVar2,uVar5,lVar4);
+  uVar3 = __restgprlr_29(uVar1);
+  return uVar3;
 }
 
 
 // 828AA1A0  XInputGetKeystroke  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:150)
 
-undefined8 XInputGetKeystroke(undefined4 param_1,undefined8 param_2,undefined8 param_3)
+ulong XInputGetKeystroke(ulong param_1,ulong param_2,_XINPUT_KEYSTROKE *param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uStack00000014;
+  ulong uVar1;
+  ulong uStack00000014;
   
   uStack00000014 = param_1;
   uVar1 = XInputGetKeystrokeEx(&stack0x00000014,param_2,param_3);

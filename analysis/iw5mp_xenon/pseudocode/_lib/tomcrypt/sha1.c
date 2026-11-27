@@ -21,26 +21,25 @@ undefined8 sha1_init(undefined8 *param_1)
 void sha1_process(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 {
-  uint uVar1;
-  longlong *plVar3;
-  undefined8 uVar2;
-  int iVar4;
-  ulonglong uVar5;
+  longlong *plVar2;
+  undefined8 uVar1;
+  int iVar3;
+  ulonglong uVar4;
   
-  plVar3 = (longlong *)__savegprlr_27();
-  if (0x40 < *(uint *)((int)plVar3 + 0x1c)) {
+  plVar2 = (longlong *)__savegprlr_27();
+  if (0x40 < *(uint *)((int)plVar2 + 0x1c)) {
     __restgprlr_27(0x10);
     return;
   }
 joined_r0x822541a4:
   if ((param_3 & 0xffffffff) == 0) {
-    uVar2 = 0;
+    uVar1 = 0;
   }
   else {
-    uVar1 = *(uint *)((int)plVar3 + 0x1c);
-    if (((ulonglong)uVar1 != 0) || ((param_3 & 0xffffffff) < 0x40)) goto LAB_822541e0;
-    uVar2 = sha1_compress(plVar3,param_2);
-    if ((int)uVar2 == 0) {
+    if (((ulonglong)*(uint *)((int)plVar2 + 0x1c) != 0) || ((param_3 & 0xffffffff) < 0x40))
+    goto LAB_822541e0;
+    uVar1 = sha1_compress(plVar2,param_2);
+    if ((int)uVar1 == 0) {
       param_2 = param_2 + 0x40;
       param_3 = param_3 - 0x40;
       goto LAB_82254238;
@@ -48,25 +47,25 @@ joined_r0x822541a4:
   }
   goto LAB_82254250;
 LAB_822541e0:
-  uVar5 = 0x40 - (ulonglong)uVar1;
-  if ((param_3 & 0xffffffff) < (uVar5 & 0xffffffff)) {
-    uVar5 = param_3;
+  uVar4 = 0x40 - (ulonglong)*(uint *)((int)plVar2 + 0x1c);
+  if ((param_3 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+    uVar4 = param_3;
   }
-  memcpy((void *)((int)plVar3 + uVar1 + 0x20),(void *)param_2,(size_t)uVar5);
-  param_2 = uVar5 + param_2;
-  iVar4 = (size_t)uVar5 + *(int *)((int)plVar3 + 0x1c);
-  param_3 = param_3 - uVar5;
-  *(int *)((int)plVar3 + 0x1c) = iVar4;
-  if (iVar4 == 0x40) {
-    uVar2 = sha1_compress(plVar3,plVar3 + 4);
-    if ((int)uVar2 != 0) {
+  memcpy();
+  param_2 = uVar4 + param_2;
+  iVar3 = (int)uVar4 + *(int *)((int)plVar2 + 0x1c);
+  param_3 = param_3 - uVar4;
+  *(int *)((int)plVar2 + 0x1c) = iVar3;
+  if (iVar3 == 0x40) {
+    uVar1 = sha1_compress(plVar2,plVar2 + 4);
+    if ((int)uVar1 != 0) {
 LAB_82254250:
-      __restgprlr_27(uVar2);
+      __restgprlr_27(uVar1);
       return;
     }
-    *(undefined4 *)((int)plVar3 + 0x1c) = 0;
+    *(undefined4 *)((int)plVar2 + 0x1c) = 0;
 LAB_82254238:
-    *plVar3 = *plVar3 + 0x200;
+    *plVar2 = *plVar2 + 0x200;
   }
   goto joined_r0x822541a4;
 }

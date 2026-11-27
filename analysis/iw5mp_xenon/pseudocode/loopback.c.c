@@ -2,32 +2,32 @@
 
 // 828BD3A8  LoopbackCreateWrapper  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:74)
 
-undefined8
-LoopbackCreateWrapper(undefined8 param_1,undefined8 param_2,char param_3,undefined8 param_4)
+undefined4 LoopbackCreateWrapper(XHVENGINE *param_1,void *param_2,uchar param_3,IProcMode **param_4)
 
 {
-  undefined8 uVar1;
+  T_HRESULT TVar1;
   
   if (param_3 == '\0') {
-    uVar1 = LoopbackCreate(param_1,param_2,param_4);
-    return uVar1;
+    TVar1 = LoopbackCreate(param_1,param_2,param_4);
+    return TVar1;
   }
-  return 0xffffffff80070057;
+  return 0x80070057;
 }
 
 
 // 828BCE60  LBpSubmitCodecPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:140)
 
-void LBpSubmitCodecPacket(int param_1,undefined4 *param_2)
+void LBpSubmitCodecPacket(LOOPBACK_EXTENSION *param_1,XMEDIAPACKET *param_2)
 
 {
   int iVar1;
   
-  XMemSet(param_2[2],0,param_2[1]);
-  iVar1 = CodecSubmit(*(undefined4 *)(param_1 + 8),*(undefined4 *)(param_1 + 0xc),param_2);
+  XMemSet(param_2->Buffer,0,param_2->Offset);
+  iVar1 = CodecSubmit((param_1->field0_0x0).ProcMode.Codec,(param_1->field0_0x0).ProcMode.QueueIndex
+                      ,param_2);
   if (iVar1 < 0) {
-    *param_2 = 0;
-    param_2[1] = param_2[3];
+    param_2->Status = 0;
+    param_2->Offset = param_2->Length;
   }
   return;
 }
@@ -35,235 +35,254 @@ void LBpSubmitCodecPacket(int param_1,undefined4 *param_2)
 
 // 828BCF38  LoopbackStart  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:182)
 
-void LoopbackStart(void)
+undefined4 LoopbackStart(PROCMODE *param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  PROCMODE *pPVar2;
   int iVar3;
-  ulonglong uVar4;
+  undefined4 uVar4;
+  ulonglong uVar5;
   code *local_30 [2];
   ulonglong local_28 [5];
   
-  iVar2 = __savegprlr_29();
+  pPVar2 = (PROCMODE *)__savegprlr_29(param_1);
   local_30[0] = VoiceChatCreateWrapper;
-  iVar3 = ProcModeStart();
+  iVar3 = ProcModeStart(pPVar2);
   if (-1 < iVar3) {
     XMemSet(local_28,0,8);
-    local_28[0] = (ulonglong)**(uint **)(iVar2 + 4) | 0xfbdf00ddeadbeef0;
-    iVar3 = RemoteTalkerRegister(*(undefined4 *)(iVar2 + 0x2c),local_28[0],0,0,0,0);
+    local_28[0] = (ulonglong)((pPVar2->field1_0x4).LocalTalker)->Port | 0xfbdf00ddeadbeef0;
+    iVar3 = RemoteTalkerRegister
+                      ((REMOTETALKER *)pPVar2[1].QueueIndex,local_28[0],(XAUDIOVOICEFXCHAIN *)0x0,
+                       (XAUDIOVOICEFXCHAIN *)0x0,(void *)0x0,0);
     if (-1 < iVar3) {
-      uVar4 = 0;
-      uVar1 = **(uint **)(iVar2 + 4);
+      uVar5 = 0;
+      uVar1 = ((pPVar2->field1_0x4).LocalTalker)->Port;
       do {
         iVar3 = RemoteTalkerSetPlaybackPriority
-                          (*(undefined4 *)(iVar2 + 0x2c),uVar4,-(ulonglong)(uVar1 != uVar4));
+                          ((REMOTETALKER *)pPVar2[1].QueueIndex,(ulong)uVar5,-(uint)(uVar1 != uVar5)
+                          );
         if (iVar3 < 0) goto LAB_828bd004;
-        uVar4 = uVar4 + 1;
-      } while ((uVar4 & 0xffffffff) < 4);
-      RemoteTalkerStartModes(*(undefined4 *)(iVar2 + 0x2c),local_30,1);
+        uVar5 = uVar5 + 1;
+      } while ((uVar5 & 0xffffffff) < 4);
+      iVar3 = RemoteTalkerStartModes((REMOTETALKER *)pPVar2[1].QueueIndex,local_30,1);
     }
   }
 LAB_828bd004:
-  __restgprlr_29();
-  return;
+  uVar4 = __restgprlr_29(iVar3);
+  return uVar4;
 }
 
 
 // 828BCED0  LoopbackStop  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:267)
 
-void LoopbackStop(int param_1)
+int LoopbackStop(PROCMODE *param_1)
 
 {
   int iVar1;
   code *local_20 [4];
   
   local_20[0] = VoiceChatCreateWrapper;
-  iVar1 = ProcModeStop();
+  iVar1 = ProcModeStop(param_1);
   if (-1 < iVar1) {
-    RemoteTalkerStopModes(*(undefined4 *)(param_1 + 0x2c),local_20,1);
+    iVar1 = RemoteTalkerStopModes((REMOTETALKER *)param_1[1].QueueIndex,local_20,1);
   }
-  return;
+  return iVar1;
 }
 
 
 // 828BD010  LoopbackProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:310)
 
-void LoopbackProcess(void)
+undefined4 LoopbackProcess(PROCMODE *param_1)
 
 {
-  char cVar1;
+  uchar uVar1;
   ushort uVar2;
-  uint uVar3;
-  ushort uVar4;
-  int iVar5;
-  ushort *puVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
+  PACKET_BUFFER *pPVar3;
+  XMEDIAPACKET *pXVar4;
+  uint uVar5;
+  ushort uVar6;
+  LOOPBACK_EXTENSION *pLVar7;
+  undefined4 uVar8;
+  ushort *puVar9;
   uint uVar10;
-  int iVar11;
-  int local_30 [12];
+  ulong uVar11;
+  int iVar12;
+  long lVar13;
+  uint uVar14;
+  XMEDIAPACKET *pXVar15;
+  ulong local_30 [12];
   
-  iVar5 = __savegprlr_29();
-  uVar10 = 0;
-  iVar9 = *(int *)(*(int *)(iVar5 + 0x10) + 4);
-  iVar8 = *(int *)(*(int *)(iVar5 + 0x10) + 8) * *(int *)(iVar5 + 0x24);
-  iVar11 = iVar8 + iVar9;
-  iVar9 = *(int *)(iVar8 + iVar9);
-  while ((iVar9 != 0x103 && (uVar10 < *(uint *)(iVar5 + 0x14)))) {
-    if (iVar9 == 0) {
-      iVar9 = *(int *)(iVar5 + 4);
-      puVar6 = (ushort *)(*(int *)(iVar11 + 8) + -2);
-      cVar1 = *(char *)(*(int *)(iVar9 + 4) + 0x8c);
-      if (*(char *)(iVar5 + 0x28) != cVar1) {
-        *(char *)(iVar5 + 0x28) = cVar1;
+  pLVar7 = (LOOPBACK_EXTENSION *)__savegprlr_29(param_1);
+  pPVar3 = (pLVar7->field0_0x0).ProcMode.Packets;
+  uVar14 = 0;
+  pXVar4 = pPVar3->Packets;
+  iVar12 = pPVar3->PacketDescriptorSize * pLVar7->CurrentPacket;
+  pXVar15 = (XMEDIAPACKET *)((int)&pXVar4->Status + iVar12);
+  lVar13 = *(long *)((int)&pXVar4->Status + iVar12);
+  while ((lVar13 != 0x103 && (uVar14 < (pLVar7->field0_0x0).ProcMode.NumPackets))) {
+    if (lVar13 == 0) {
+      iVar12 = *(int *)((int)&pLVar7->field0_0x0 + 4);
+      puVar9 = (ushort *)(pXVar15->Buffer + -2);
+      uVar1 = *(uchar *)(*(int *)(iVar12 + 4) + 0x8c);
+      if (pLVar7->LastTalkspurt != uVar1) {
+        pLVar7->LastTalkspurt = uVar1;
       }
-      if (0x7ff < *(ushort *)(iVar5 + 0x2a)) {
-        *(undefined2 *)(iVar5 + 0x2a) = 0;
+      if (0x7ff < pLVar7->SequenceNumber) {
+        pLVar7->SequenceNumber = 0;
       }
-      uVar2 = *puVar6;
-      uVar4 = (ushort)*(byte *)(iVar5 + 0x28) << 0xc;
-      *puVar6 = uVar4 | uVar2 & 0xfff;
-      *puVar6 = (*(ushort *)(iVar5 + 0x2a) & 0x7ff) << 1 | uVar4 | uVar2 & 1;
-      *(short *)(iVar5 + 0x2a) = *(short *)(iVar5 + 0x2a) + 1;
-      *puVar6 = (ushort)((*(uint *)(iVar9 + 0xc4) & 0xf0000) == 0x10000) | *puVar6 & 0xfffe;
-      local_30[0] = *(int *)(iVar11 + 0xc) + 2;
-      RemoteTalkerSubmitChatData(*(undefined4 *)(iVar5 + 0x2c),puVar6,local_30);
+      uVar2 = *puVar9;
+      uVar6 = (ushort)pLVar7->LastTalkspurt << 0xc;
+      *puVar9 = uVar6 | uVar2 & 0xfff;
+      *puVar9 = (pLVar7->SequenceNumber & 0x7ff) << 1 | uVar6 | uVar2 & 1;
+      pLVar7->SequenceNumber = pLVar7->SequenceNumber + 1;
+      *puVar9 = (ushort)((*(uint *)(iVar12 + 0xc4) & 0xf0000) == 0x10000) | *puVar9 & 0xfffe;
+      local_30[0] = pXVar15->Length + 2;
+      RemoteTalkerSubmitChatData(pLVar7->LoopbackTalker,(uchar *)puVar9,local_30);
     }
-    LBpSubmitCodecPacket(iVar5,iVar11);
-    uVar3 = *(uint *)(iVar5 + 0x14);
-    uVar10 = uVar10 + 1;
-    uVar7 = *(int *)(iVar5 + 0x24) + 1;
-    trapWord(6,(ulonglong)uVar3,0);
-    iVar8 = uVar7 - (uVar7 / uVar3) * uVar3;
-    *(int *)(iVar5 + 0x24) = iVar8;
-    iVar8 = *(int *)(*(int *)(iVar5 + 0x10) + 8) * iVar8;
-    iVar9 = *(int *)(*(int *)(iVar5 + 0x10) + 4);
-    iVar11 = iVar8 + iVar9;
-    iVar9 = *(int *)(iVar8 + iVar9);
+    LBpSubmitCodecPacket(pLVar7,pXVar15);
+    uVar5 = (pLVar7->field0_0x0).ProcMode.NumPackets;
+    uVar14 = uVar14 + 1;
+    uVar10 = pLVar7->CurrentPacket + 1;
+    pPVar3 = (pLVar7->field0_0x0).ProcMode.Packets;
+    trapWord(6,(ulonglong)uVar5,0);
+    uVar11 = uVar10 - (uVar10 / uVar5) * uVar5;
+    pLVar7->CurrentPacket = uVar11;
+    iVar12 = pPVar3->PacketDescriptorSize * uVar11;
+    pXVar4 = pPVar3->Packets;
+    pXVar15 = (XMEDIAPACKET *)((int)&pXVar4->Status + iVar12);
+    lVar13 = *(long *)((int)&pXVar4->Status + iVar12);
   }
-  __restgprlr_29(0);
-  return;
+  uVar8 = __restgprlr_29(0);
+  return uVar8;
 }
 
 
 // 828BCF20  LoopbackGetCodecInfo  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:415)
 
-void LoopbackGetCodecInfo(undefined8 param_1,undefined4 *param_2)
+void LoopbackGetCodecInfo(PROCMODE *param_1,PROCMODE_CODEC_INFO *param_2)
 
 {
-  param_2[1] = 10;
-  *param_2 = &PTR_NCIEncoderCreate_829af950;
+  param_2->MaxPackets = 10;
+  param_2->CodecType = &NCIEncoderType;
   return;
 }
 
 
 // 828BD3C8  LoopbackGetCreationWrapper  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:435)
 
-undefined8 LoopbackGetCreationWrapper(void)
+_func___cdecl_T_HRESULT_XHVENGINE_ptr_void_ptr_uchar_IProcMode_ptr_ptr *
+LoopbackGetCreationWrapper(PROCMODE *param_1)
 
 {
-  return 0xffffffff828bd3a8;
+  return LoopbackCreateWrapper;
 }
 
 
 // 828BD320  LoopbackCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:454)
 
-void LoopbackCreate(undefined8 param_1,undefined4 param_2,undefined4 *param_3)
+undefined4 LoopbackCreate(XHVENGINE *param_1,LOCALTALKER *param_2,IProcMode **param_3)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
+  IProcModeVtbl *pIVar1;
+  IProcMode *pIVar2;
+  undefined4 uVar3;
+  undefined8 uVar4;
   
-  uVar1 = __savegprlr_28();
-  uVar3 = 0;
-  puVar2 = (undefined4 *)XMemAlloc(0x30,0x618a800e);
-  if (puVar2 == (undefined4 *)0x0) {
-    uVar3 = 0xffffffff8007000e;
-    LoopbackDestroy();
-    puVar2 = (undefined4 *)0x0;
+  pIVar1 = (IProcModeVtbl *)__savegprlr_28(param_1);
+  uVar4 = 0;
+  pIVar2 = XMemAlloc(0x30,0x618a800e);
+  if (pIVar2 == (IProcMode *)0x0) {
+    uVar4 = 0xffffffff8007000e;
+    LoopbackDestroy((PROCMODE *)0x0);
+    pIVar2 = (IProcMode *)0x0;
   }
   else {
-    puVar2[1] = param_2;
-    puVar2[7] = 1;
-    puVar2[8] = uVar1;
-    puVar2[5] = 10;
-    *puVar2 = &PTR_LoopbackInitialize_829af8e4;
-    *(undefined1 *)(puVar2 + 10) = 0xff;
+    pIVar2[1].lpVtbl = (IProcModeVtbl *)param_2;
+    pIVar2[7].lpVtbl = (IProcModeVtbl *)0x1;
+    pIVar2[8].lpVtbl = pIVar1;
+    pIVar2[5].lpVtbl = (IProcModeVtbl *)0xa;
+    pIVar2->lpVtbl = &LoopbackVtbl;
+    *(undefined1 *)&pIVar2[10].lpVtbl = 0xff;
   }
-  *param_3 = puVar2;
-  __restgprlr_28(uVar3);
-  return;
+  *param_3 = pIVar2;
+  uVar3 = __restgprlr_28(uVar4);
+  return uVar3;
 }
 
 
 // 828BD158  LoopbackInitialize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:506)
 
-void LoopbackInitialize(undefined8 param_1,undefined8 param_2,int param_3,undefined4 param_4)
+undefined4
+LoopbackInitialize(PROCMODE *param_1,XHVENGINE *param_2,CODEC_PROCESSOR *param_3,ulong param_4)
 
 {
-  int iVar1;
+  PACKET_BUFFER *pPVar1;
+  int iVar2;
   int iVar3;
-  longlong lVar2;
-  ulonglong uVar4;
-  undefined4 *puVar5;
-  uint uVar6;
+  undefined4 uVar4;
+  REMOTETALKER **ppRVar5;
+  ulong uVar6;
+  uint uVar7;
   code *local_50 [2];
   ulonglong local_48 [9];
   
-  iVar3 = __savegprlr_26();
-  *(int *)(iVar3 + 8) = param_3;
-  *(undefined4 *)(iVar3 + 0xc) = param_4;
+  iVar2 = __savegprlr_26(param_1);
+  *(CODEC_PROCESSOR **)(iVar2 + 8) = param_3;
+  *(ulong *)(iVar2 + 0xc) = param_4;
   local_50[0] = VoiceChatCreateWrapper;
-  lVar2 = PacketBufferCreate((ulonglong)*(uint *)(*(int *)(param_3 + 0x18) + 0x1c) + 2,0x18,
-                             *(undefined4 *)(iVar3 + 0x14),2,(int *)(iVar3 + 0x10));
-  if (-1 < lVar2) {
-    puVar5 = (undefined4 *)(iVar3 + 0x2c);
-    lVar2 = RemoteTalkerCreate(param_2,local_50,1,0,0,puVar5);
-    if (-1 < lVar2) {
+  iVar3 = PacketBufferCreate(param_3->CodecType->OutputFrameSize + 2,0x18,*(ulong *)(iVar2 + 0x14),2
+                             ,(PACKET_BUFFER **)(iVar2 + 0x10));
+  if (-1 < iVar3) {
+    ppRVar5 = (REMOTETALKER **)(iVar2 + 0x2c);
+    iVar3 = RemoteTalkerCreate(param_2,local_50,1,(XAUDIOVOICEFXCHAIN *)0x0,
+                               (XAUDIOVOICEFXCHAIN *)0x0,ppRVar5);
+    if (-1 < iVar3) {
       XMemSet(local_48,0,8);
-      local_48[0] = (ulonglong)**(uint **)(iVar3 + 4) | 0xfbdf00ddeadbeef0;
-      lVar2 = RemoteTalkerRegister(*puVar5,local_48[0],0,0,0,0);
-      if (-1 < lVar2) {
-        uVar4 = 0;
-        do {
-          lVar2 = RemoteTalkerSetPlaybackPriority(*puVar5,uVar4,0xffffffffffffffff);
-          if (lVar2 < 0) goto LAB_828bd2b4;
-          uVar4 = uVar4 + 1;
-        } while ((uVar4 & 0xffffffff) < 4);
-        XHVEngineAddRemoteTalker(param_2,*puVar5);
+      local_48[0] = (ulonglong)**(uint **)(iVar2 + 4) | 0xfbdf00ddeadbeef0;
+      iVar3 = RemoteTalkerRegister
+                        (*ppRVar5,local_48[0],(XAUDIOVOICEFXCHAIN *)0x0,(XAUDIOVOICEFXCHAIN *)0x0,
+                         (void *)0x0,0);
+      if (-1 < iVar3) {
         uVar6 = 0;
-        if (*(int *)(iVar3 + 0x14) != 0) {
+        do {
+          iVar3 = RemoteTalkerSetPlaybackPriority(*ppRVar5,uVar6,0xffffffff);
+          if (iVar3 < 0) goto LAB_828bd2b4;
+          uVar6 = uVar6 + 1;
+        } while (uVar6 < 4);
+        XHVEngineAddRemoteTalker(param_2,*ppRVar5);
+        uVar7 = 0;
+        if (*(int *)(iVar2 + 0x14) != 0) {
           do {
-            iVar1 = *(int *)(iVar3 + 0x10);
-            lVar2 = CodecSubmit(*(undefined4 *)(iVar3 + 8),*(undefined4 *)(iVar3 + 0xc),
-                                (longlong)*(int *)(iVar1 + 8) * (longlong)(int)uVar6 +
-                                (ulonglong)*(uint *)(iVar1 + 4));
-            if (lVar2 < 0) break;
-            uVar6 = uVar6 + 1;
-          } while (uVar6 < *(uint *)(iVar3 + 0x14));
+            pPVar1 = *(PACKET_BUFFER **)(iVar2 + 0x10);
+            iVar3 = CodecSubmit(*(CODEC_PROCESSOR **)(iVar2 + 8),*(ulong *)(iVar2 + 0xc),
+                                (XMEDIAPACKET *)
+                                ((int)&pPVar1->Packets->Status +
+                                pPVar1->PacketDescriptorSize * uVar7));
+            if (iVar3 < 0) break;
+            uVar7 = uVar7 + 1;
+          } while (uVar7 < *(uint *)(iVar2 + 0x14));
         }
-        *(undefined4 *)(iVar3 + 0x24) = 0;
+        *(undefined4 *)(iVar2 + 0x24) = 0;
       }
     }
   }
 LAB_828bd2b4:
-  __restgprlr_26(lVar2);
-  return;
+  uVar4 = __restgprlr_26(iVar3);
+  return uVar4;
 }
 
 
 // 828BD2C0  LoopbackDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/loopback.c:657)
 
-void LoopbackDestroy(int param_1)
+void LoopbackDestroy(PROCMODE *param_1)
 
 {
-  if (param_1 != 0) {
-    XHVEngineRemoveRemoteTalker(*(undefined4 *)(param_1 + 0x20),*(undefined4 *)(param_1 + 0x2c));
-    RemoteTalkerDestroy(*(undefined4 *)(param_1 + 0x2c));
-    PacketBufferDestroy(*(undefined4 *)(param_1 + 0x10));
+  if (param_1 != (PROCMODE *)0x0) {
+    XHVEngineRemoveRemoteTalker
+              ((XHVENGINE *)param_1[1].lpVtbl,(REMOTETALKER *)param_1[1].QueueIndex);
+    RemoteTalkerDestroy((REMOTETALKER *)param_1[1].QueueIndex);
+    PacketBufferDestroy(param_1->Packets);
     XMemFree(param_1,0x618a800e);
   }
   return;

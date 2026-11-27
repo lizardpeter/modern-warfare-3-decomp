@@ -2,6 +2,8 @@
 
 // 8273E7A0  TRACK_r_fog  (gfx_d3d/r_fog.cpp:10)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_fog(void)
 
 {
@@ -11,154 +13,147 @@ void TRACK_r_fog(void)
 
 // 8273E7A8  R_ClearFogs  (gfx_d3d/r_fog.cpp:16)
 
-void * R_ClearFogs(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void R_ClearFogs(void)
 
 {
-  void *pvVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  float *pfVar1;
+  float *pfVar2;
+  longlong lVar3;
   
-  pvVar1 = memset(&DAT_84617ac4,0,0x540);
-  puVar2 = (undefined4 *)0x84618000;
-  puVar3 = (undefined4 *)0x84617ac0;
-  lVar4 = 4;
+  memset();
+  pfVar1 = &rg.fogSettings[3][5].sunFogScale;
+  pfVar2 = (float *)&rg.totalImageMemory;
+  lVar3 = 4;
   do {
-    puVar3[0xe] = 0x3f800000;
-    puVar3[0x1c] = 0x3f800000;
-    puVar3[0x2a] = 0x3f800000;
-    puVar3[0x38] = 0x3f800000;
-    puVar3[0x46] = 0x3f800000;
-    puVar3 = puVar3 + 0x54;
-    *puVar3 = 0x3f800000;
-    puVar2 = puVar2 + 1;
-    *puVar2 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  return pvVar1;
+    pfVar2[0xe] = 1.0;
+    pfVar2[0x1c] = 1.0;
+    pfVar2[0x2a] = 1.0;
+    pfVar2[0x38] = 1.0;
+    pfVar2[0x46] = 1.0;
+    pfVar2 = pfVar2 + 0x54;
+    *pfVar2 = 1.0;
+    pfVar1 = pfVar1 + 1;
+    *pfVar1 = 0.0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  return;
 }
 
 
 // 8273E820  R_SetFogFromServer  (gfx_d3d/r_fog.cpp:33)
 
-void R_SetFogFromServer(double param_1,double param_2,double param_3,double param_4,double param_5,
-                       double param_6,int param_7,undefined8 param_8,uint param_9,uint param_10,
-                       uint param_11,undefined8 param_12,undefined8 param_13,undefined1 param_14)
+void R_SetFogFromServer(int param_1,float param_2,uchar param_3,uchar param_4,uchar param_5,
+                       float param_6,float param_7,bool param_8,uchar param_9,uchar param_10,
+                       uchar param_11,float *param_12,float param_13,float param_14,float param_15)
 
 {
-  int iVar1;
   undefined1 in_stack_00000057;
   undefined1 in_stack_0000005f;
   undefined1 in_stack_00000067;
-  undefined4 *in_stack_0000006c;
+  float *in_stack_0000006c;
   
-  iVar1 = param_7 * 0x150;
-  *(float *)(&DAT_84617b08 + iVar1) = (float)param_1;
-  *(float *)(&DAT_84617b0c + iVar1) = (float)param_2;
-  *(uint *)(&DAT_84617b04 + iVar1) =
-       (((param_11 & 0xff) << 8 | param_10 & 0xff) << 8 | param_9 & 0xff) << 8 | 0xff;
-  *(float *)(&DAT_84617b10 + iVar1) = (float)param_3;
-  (&DAT_84617b14)[iVar1] = param_14;
-  *(uint *)(&DAT_84617b18 + iVar1) =
+  rg.fogSettings[param_1][1].fogStart = param_2;
+  rg.fogSettings[param_1][1].density = param_6;
+  rg.fogSettings[param_1][1].color.packed =
+       (uint)CONCAT21(CONCAT11(param_8,param_5),param_4) << 8 | 0xff;
+  rg.fogSettings[param_1][1].fogMaxOpacity = param_7;
+  rg.fogSettings[param_1][1].sunFogEnabled = (bool)param_11;
+  rg.fogSettings[param_1][1].sunColor.packed =
        (uint)CONCAT21(CONCAT11(in_stack_00000067,in_stack_0000005f),in_stack_00000057) << 8 | 0xff;
-  *(undefined4 *)(&DAT_84617b1c + iVar1) = *in_stack_0000006c;
-  *(undefined4 *)(&DAT_84617b20 + iVar1) = in_stack_0000006c[1];
-  *(undefined4 *)(&DAT_84617b24 + iVar1) = in_stack_0000006c[2];
-  *(float *)(&DAT_84617b28 + iVar1) = (float)param_4;
-  *(float *)(&DAT_84617b2c + iVar1) = (float)param_5;
-  (&DAT_84617b30)[param_7 * 0x54] = (float)param_6;
+  rg.fogSettings[param_1][1].sunDir[0] = *in_stack_0000006c;
+  rg.fogSettings[param_1][1].sunDir[1] = in_stack_0000006c[1];
+  rg.fogSettings[param_1][1].sunDir[2] = in_stack_0000006c[2];
+  rg.fogSettings[param_1][1].sunBeginFadeAngle = param_13;
+  rg.fogSettings[param_1][1].sunEndFadeAngle = param_14;
+  rg.fogSettings[param_1][1].sunFogScale = param_15;
   return;
 }
 
 
 // 8273E8B8  R_SetFog3rdPerson  (gfx_d3d/r_fog.cpp:51)
 
-void R_SetFog3rdPerson(double param_1,double param_2,double param_3,double param_4,double param_5,
-                      double param_6,int param_7,undefined8 param_8,uint param_9,uint param_10,
-                      uint param_11,undefined8 param_12,undefined8 param_13,undefined1 param_14)
+void R_SetFog3rdPerson(int param_1,float param_2,uchar param_3,uchar param_4,uchar param_5,
+                      float param_6,float param_7,bool param_8,uchar param_9,uchar param_10,
+                      uchar param_11,float *param_12,float param_13,float param_14,float param_15)
 
 {
-  int iVar1;
   undefined1 in_stack_00000057;
   undefined1 in_stack_0000005f;
   undefined1 in_stack_00000067;
-  undefined4 *in_stack_0000006c;
+  float *in_stack_0000006c;
   
-  iVar1 = param_7 * 0x150;
-  *(float *)(&DAT_84617be8 + iVar1) = (float)param_1;
-  *(float *)(&DAT_84617bec + iVar1) = (float)param_2;
-  *(uint *)(&DAT_84617be4 + iVar1) =
-       (((param_11 & 0xff) << 8 | param_10 & 0xff) << 8 | param_9 & 0xff) << 8 | 0xff;
-  *(float *)(&DAT_84617bf0 + iVar1) = (float)param_3;
-  (&DAT_84617bf4)[iVar1] = param_14;
-  *(uint *)(&DAT_84617bf8 + iVar1) =
+  rg.fogSettings[param_1][5].fogStart = param_2;
+  rg.fogSettings[param_1][5].density = param_6;
+  rg.fogSettings[param_1][5].color.packed =
+       (uint)CONCAT21(CONCAT11(param_8,param_5),param_4) << 8 | 0xff;
+  rg.fogSettings[param_1][5].fogMaxOpacity = param_7;
+  rg.fogSettings[param_1][5].sunFogEnabled = (bool)param_11;
+  rg.fogSettings[param_1][5].sunColor.packed =
        (uint)CONCAT21(CONCAT11(in_stack_00000067,in_stack_0000005f),in_stack_00000057) << 8 | 0xff;
-  *(undefined4 *)(&DAT_84617bfc + iVar1) = *in_stack_0000006c;
-  *(undefined4 *)(&DAT_84617c00 + iVar1) = in_stack_0000006c[1];
-  *(undefined4 *)(&DAT_84617c04 + iVar1) = in_stack_0000006c[2];
-  *(float *)(&DAT_84617c08 + iVar1) = (float)param_4;
-  *(float *)(&DAT_84617c0c + iVar1) = (float)param_5;
-  (&DAT_84617c10)[param_7 * 0x54] = (float)param_6;
+  rg.fogSettings[param_1][5].sunDir[0] = *in_stack_0000006c;
+  rg.fogSettings[param_1][5].sunDir[1] = in_stack_0000006c[1];
+  rg.fogSettings[param_1][5].sunDir[2] = in_stack_0000006c[2];
+  rg.fogSettings[param_1][5].sunBeginFadeAngle = param_13;
+  rg.fogSettings[param_1][5].sunEndFadeAngle = param_14;
+  rg.fogSettings[param_1][5].sunFogScale = param_15;
   return;
 }
 
 
 // 8273E950  R_GetFogFromServer  (gfx_d3d/r_fog.cpp:70)
 
-longlong R_GetFogFromServer(longlong param_1)
+GfxFog * R_GetFogFromServer(int param_1)
 
 {
-  return param_1 * 0x150 + -0x7b9e8504;
+  return rg.fogSettings[param_1] + 1;
 }
 
 
 // 8273E968  R_SwitchFog  (gfx_d3d/r_fog.cpp:76)
 
-void R_SwitchFog(undefined8 param_1,undefined8 param_2,int param_3,int param_4)
+void R_SwitchFog(int param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  int *_Dst;
-  void *pvVar3;
-  int iVar4;
+  GfxFog *pGVar2;
   
-  iVar2 = __savegprlr_25();
-  iVar4 = (int)param_2;
-  if ((iVar4 < 0) || (5 < iVar4)) {
-    MyAssertHandler(0xffffffff821c31fc,0x4f,0,0xffffffff821c3238,0xffffffff821c324c,param_2);
+  iVar1 = __savegprlr_25(param_1);
+  if ((param_2 < 0) || (5 < param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fog.cpp",0x4f,0,
+                    "%s\n\t(fogvar) = %i");
   }
-  iVar1 = iVar2 * 0x150;
-  (&DAT_84618004)[iVar2] = iVar4;
-  if ((float)(&DAT_84617b44)[iVar2 * 0x54] == 0.0) {
-    memcpy((void *)(iVar1 + -0x7b9e8494),&DAT_84617ac4 + iVar4 * 0x38 + iVar1,0x38);
+  rg.fogIndex[iVar1] = param_2;
+  if (rg.fogSettings[iVar1][2].density == 0.0) {
+    memcpy();
     param_4 = 0;
   }
   else {
-    memcpy((void *)(iVar1 + -0x7b9e8494),(void *)(iVar1 + -0x7b9e84cc),0x38);
+    memcpy();
   }
-  _Dst = (int *)(&DAT_84617ba4 + iVar1);
-  pvVar3 = memcpy(_Dst,&DAT_84617ac4 + (&DAT_84618004)[iVar2] * 0x38 + iVar1,0x38);
+  pGVar2 = rg.fogSettings[iVar1] + 4;
+  memcpy();
   if (param_4 == 0) {
-    *_Dst = 0;
-    *(undefined4 *)(&DAT_84617ba8 + iVar1) = 0;
-    __restgprlr_25(pvVar3);
+    pGVar2->startTime = 0;
+    rg.fogSettings[iVar1][4].finishTime = 0;
+    __restgprlr_25();
     return;
   }
-  *_Dst = param_3;
-  *(int *)(&DAT_84617ba8 + iVar1) = param_3 + param_4;
-  __restgprlr_25(pvVar3);
+  pGVar2->startTime = param_3;
+  rg.fogSettings[iVar1][4].finishTime = param_3 + param_4;
+  __restgprlr_25();
   return;
 }
 
 
 // 8273EA60  R_ArchiveFogState  (gfx_d3d/r_fog.cpp:108)
 
-void R_ArchiveFogState(undefined8 param_1)
+void R_ArchiveFogState(MemoryFile *param_1)
 
 {
-  MemFile_ArchiveData(param_1,0x540,0xffffffff84617ac4);
-  MemFile_ArchiveData(param_1,0x10,0xffffffff84618004);
+  MemFile_ArchiveData(param_1,0x540,rg.fogSettings);
+  MemFile_ArchiveData(param_1,0x10,rg.fogIndex);
   return;
 }
 

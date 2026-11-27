@@ -2,7 +2,7 @@
 
 // 827FA958  vpx_init  (mjpeg/vpx.cpp:181)
 
-void vpx_init(void)
+void vpx_init(char *param_1,int param_2,int param_3)
 
 {
   return;
@@ -11,7 +11,7 @@ void vpx_init(void)
 
 // 827FA960  vpx_encode_frame  (mjpeg/vpx.cpp:185)
 
-void vpx_encode_frame(void)
+void vpx_encode_frame(uchar *param_1,uchar *param_2,uchar *param_3,bool param_4)
 
 {
   return;
@@ -19,6 +19,8 @@ void vpx_encode_frame(void)
 
 
 // 827FA968  vpx_shutdown  (mjpeg/vpx.cpp:189)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void vpx_shutdown(void)
 

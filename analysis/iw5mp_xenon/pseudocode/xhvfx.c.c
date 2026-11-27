@@ -2,10 +2,10 @@
 
 // 828BDFB0  XHVOutputEffectSize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:40)
 
-undefined8 XHVOutputEffectSize(undefined8 param_1,undefined4 *param_2)
+undefined4 XHVOutputEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 {
-  if (param_2 != (undefined4 *)0x0) {
+  if (param_2 != (ulong *)0x0) {
     *param_2 = 0x181c;
   }
   return 0;
@@ -14,33 +14,37 @@ undefined8 XHVOutputEffectSize(undefined8 param_1,undefined4 *param_2)
 
 // 828BE088  XHVOutputEffectCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:70)
 
-void XHVOutputEffectCreate(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+undefined4
+XHVOutputEffectCreate(XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
+  IXAudioEffect *pIVar2;
+  undefined4 uVar3;
+  longlong lVar4;
+  undefined8 uVar5;
   
-  iVar1 = __savegprlr_29();
-  uVar3 = 0;
-  puVar2 = (undefined4 *)(**(code **)(*(int *)param_2 + 0x14))(param_2,0x181c);
-  if (puVar2 == (undefined4 *)0x0) {
-    uVar3 = 0xffffffff8007000e;
+  lVar4 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  uVar5 = 0;
+  pIVar2 = (IXAudioEffect *)(**(code **)(*(int *)lVar4 + 0x14))(lVar4,0x181c);
+  if (pIVar2 == (IXAudioEffect *)0x0) {
+    uVar5 = 0xffffffff8007000e;
   }
   else {
-    puVar2[1] = 1;
-    *puVar2 = &PTR_XHVOutputEffectAddRef_829af934;
-    puVar2[2] = *(undefined4 *)(iVar1 + 4);
+    pIVar2[1].lpVtbl = (IXAudioEffectVtbl *)0x1;
+    pIVar2->lpVtbl = &XHVOutputEffectVtbl;
+    pIVar2[2].lpVtbl = *(IXAudioEffectVtbl **)(iVar1 + 4);
   }
-  *param_3 = puVar2;
-  __restgprlr_29(uVar3);
-  return;
+  *param_3 = pIVar2;
+  uVar3 = __restgprlr_29(uVar5);
+  return uVar3;
 }
 
 
 // 828BDFC8  XHVOutputEffectAddRef  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:107)
 
-longlong XHVOutputEffectAddRef(longlong param_1)
+ulong XHVOutputEffectAddRef(XHVOUTPUTEFFECT *param_1)
 
 {
   uint uVar1;
@@ -50,21 +54,21 @@ longlong XHVOutputEffectAddRef(longlong param_1)
   byte in_cr0;
   
   do {
-    puVar3 = (uint *)(param_1 + 4);
+    puVar3 = (uint *)((longlong)(int)param_1 + 4);
     lVar2 = (ulonglong)*puVar3 + 1;
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed(lVar2,0,param_1 + 4);
+      uVar1 = storeWordConditionalIndexed(lVar2,0,(longlong)(int)param_1 + 4);
       *puVar3 = uVar1;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  return lVar2;
+  return (ulong)lVar2;
 }
 
 
 // 828BDFF0  XHVOutputEffectRelease  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:115)
 
-longlong XHVOutputEffectRelease(longlong param_1)
+ulong XHVOutputEffectRelease(XHVOUTPUTEFFECT *param_1)
 
 {
   uint uVar1;
@@ -74,26 +78,26 @@ longlong XHVOutputEffectRelease(longlong param_1)
   byte in_cr0;
   
   do {
-    puVar3 = (uint *)(param_1 + 4);
+    puVar3 = (uint *)((longlong)(int)param_1 + 4);
     lVar2 = (ulonglong)*puVar3 - 1;
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed(lVar2,0,param_1 + 4);
+      uVar1 = storeWordConditionalIndexed(lVar2,0,(longlong)(int)param_1 + 4);
       *puVar3 = uVar1;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  return lVar2;
+  return (ulong)lVar2;
 }
 
 
 // 828BE018  XHVOutputEffectGetInfo  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:138)
 
-undefined8 XHVOutputEffectGetInfo(undefined8 param_1,undefined1 *param_2)
+undefined4 XHVOutputEffectGetInfo(XHVOUTPUTEFFECT *param_1,XAUDIOFXINFO *param_2)
 
 {
-  if (param_2 != (undefined1 *)0x0) {
-    *param_2 = 1;
-    *(undefined2 *)(param_2 + 2) = 0;
+  if (param_2 != (XAUDIOFXINFO *)0x0) {
+    param_2->DataFlow = '\x01';
+    param_2->TrailFrames = 0;
   }
   return 0;
 }
@@ -101,24 +105,26 @@ undefined8 XHVOutputEffectGetInfo(undefined8 param_1,undefined1 *param_2)
 
 // 828BE038  XHVOutputEffectGetParam  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:155)
 
-undefined8 XHVOutputEffectGetParam(void)
+undefined4
+XHVOutputEffectGetParam(XHVOUTPUTEFFECT *param_1,uchar param_2,uchar param_3,XAUDIOFXPARAM *param_4)
 
 {
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
 // 828BE048  XHVOutputEffectSetParam  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:166)
 
-undefined8 XHVOutputEffectSetParam(int param_1,char param_2,undefined8 param_3,undefined4 *param_4)
+undefined4
+XHVOutputEffectSetParam(XHVOUTPUTEFFECT *param_1,uchar param_2,uchar param_3,XAUDIOFXPARAM *param_4)
 
 {
-  undefined8 uVar1;
+  undefined4 uVar1;
   
-  uVar1 = 0xffffffff80070057;
+  uVar1 = 0x80070057;
   if (param_2 == '\0') {
     uVar1 = 0;
-    *(undefined4 *)(param_1 + 8) = *param_4;
+    param_1->XHVEngine = (XHVENGINE *)param_4->Value;
   }
   return uVar1;
 }
@@ -126,11 +132,11 @@ undefined8 XHVOutputEffectSetParam(int param_1,char param_2,undefined8 param_3,u
 
 // 828BE070  XHVOutputEffectGetContext  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:193)
 
-undefined8 XHVOutputEffectGetContext(int param_1,undefined4 *param_2)
+undefined4 XHVOutputEffectGetContext(XHVOUTPUTEFFECT *param_1,void **param_2)
 
 {
-  if (param_2 != (undefined4 *)0x0) {
-    *param_2 = *(undefined4 *)(param_1 + 8);
+  if (param_2 != (void **)0x0) {
+    *param_2 = param_1->XHVEngine;
   }
   return 0;
 }
@@ -138,78 +144,80 @@ undefined8 XHVOutputEffectGetContext(int param_1,undefined4 *param_2)
 
 // 828BE100  XHVOutputEffectProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvfx.c:226)
 
-void XHVOutputEffectProcess(undefined8 param_1,undefined8 param_2)
+undefined4
+XHVOutputEffectProcess
+          (XHVOUTPUTEFFECT *param_1,IXAudioFrameBuffer *param_2,IXAudioFrameBuffer *param_3)
 
 {
   float fVar1;
   uint uVar2;
-  int iVar3;
+  LOCALTALKER *pLVar3;
+  int iVar4;
   int iVar5;
-  undefined8 uVar4;
-  int iVar6;
-  float *pfVar7;
-  undefined2 *puVar8;
-  int iVar9;
-  int iVar10;
+  undefined4 uVar6;
+  int iVar7;
+  float *pfVar8;
+  undefined2 *puVar9;
+  short *psVar10;
   uint uVar11;
   uint *puVar12;
   longlong lVar13;
   double dVar14;
-  undefined1 auStack_68 [8];
-  int local_60;
+  XAUDIOFRAMEBUFDATA aXStack_68 [8];
   
-  iVar5 = __savegprlr_24();
-  uVar4 = 0;
-  if (*(int *)(iVar5 + 8) != 0) {
-    uVar4 = XAudioFrameBuffer_GetProcessingData(param_2,auStack_68);
-    if (-1 < (int)uVar4) {
-      iVar10 = 0;
+  lVar13 = (longlong)(int)param_2;
+  iVar4 = __savegprlr_24(param_1,lVar13,param_3);
+  iVar5 = 0;
+  if (*(int *)(iVar4 + 8) != 0) {
+    iVar5 = XAudioFrameBuffer_GetProcessingData((IXAudioFrameBuffer *)lVar13,aXStack_68);
+    if (-1 < iVar5) {
+      iVar5 = 0;
       uVar11 = 0;
-      puVar12 = (uint *)(iVar5 + 0x180c);
-      iVar9 = iVar5 + 0xc;
+      puVar12 = (uint *)(iVar4 + 0x180c);
+      psVar10 = (short *)(iVar4 + 0xc);
       dVar14 = 32768.0;
       do {
-        iVar3 = *(int *)((int)puVar12 + *(int *)(iVar5 + 8) + (-0x13b4 - iVar5));
-        if ((iVar3 == 0) || ((*(uint *)(iVar3 + 0xc4) & 4) != 4)) {
+        pLVar3 = *(LOCALTALKER **)((int)puVar12 + *(int *)(iVar4 + 8) + (-0x13b4 - iVar4));
+        if ((pLVar3 == (LOCALTALKER *)0x0) || ((pLVar3->VoiceSettings & 4) != 4)) {
           *puVar12 = 0;
         }
         else {
-          fVar1 = *(float *)(iVar3 + 0xb8);
-          pfVar7 = (float *)(uVar11 + local_60);
+          fVar1 = pLVar3->Volume;
+          pfVar8 = (float *)(uVar11 + (int)aXStack_68[0].pSampleBuffer);
           lVar13 = 0x100;
-          puVar8 = (undefined2 *)((iVar10 + *puVar12) * 0x200 + iVar5 + 0xc);
+          puVar9 = (undefined2 *)((iVar5 + *puVar12) * 0x200 + iVar4 + 0xc);
           do {
-            iVar6 = (int)((double)(*pfVar7 * fVar1) * dVar14);
-            if (iVar6 < 0x7fff) {
-              if (iVar6 < -0x7fff) {
-                iVar6 = -0x7fe2;
+            iVar7 = (int)((double)(*pfVar8 * fVar1) * dVar14);
+            if (iVar7 < 0x7fff) {
+              if (iVar7 < -0x7fff) {
+                iVar7 = -0x7fe2;
               }
             }
             else {
-              iVar6 = 0x7fff;
+              iVar7 = 0x7fff;
             }
-            *puVar8 = (short)iVar6;
-            puVar8 = puVar8 + 1;
-            pfVar7 = pfVar7 + 1;
+            *puVar9 = (short)iVar7;
+            puVar9 = puVar9 + 1;
+            pfVar8 = pfVar8 + 1;
             lVar13 = lVar13 + -1;
           } while (lVar13 != 0);
           uVar2 = *puVar12;
           *puVar12 = uVar2 + 1;
           if (2 < uVar2 + 1) {
             *puVar12 = 0;
-            XHVResamplerProcess(iVar3 + 200,iVar9,iVar9,0x300,2);
-            LocalTalkerHeadphoneWrite(iVar3,iVar9,0x100);
+            XHVResamplerProcess(&pLVar3->Resampler,psVar10,psVar10,0x300,2);
+            LocalTalkerHeadphoneWrite(pLVar3,(uchar *)psVar10,0x100);
           }
         }
         uVar11 = uVar11 + 0x400;
         puVar12 = puVar12 + 1;
-        iVar10 = iVar10 + 3;
-        iVar9 = iVar9 + 0x600;
+        iVar5 = iVar5 + 3;
+        psVar10 = psVar10 + 0x300;
       } while (uVar11 < 0x1000);
-      uVar4 = 0;
+      iVar5 = 0;
     }
   }
-  __restgprlr_24(uVar4);
-  return;
+  uVar6 = __restgprlr_24(iVar5);
+  return uVar6;
 }
 

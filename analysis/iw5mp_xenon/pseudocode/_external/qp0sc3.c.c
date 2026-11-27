@@ -2,19 +2,20 @@
 
 // 828C7E80  NellyQuanPitchSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/qp0sc3.c:77)
 
-int NellyQuanPitchSC3(double param_1)
+int NellyQuanPitchSC3(float param_1)
 
 {
   float fVar1;
   double dVar2;
   
-  if (param_1 <= 8.0) {
-    param_1 = 8.0;
+  dVar2 = (double)param_1;
+  if ((double)param_1 <= 8.0) {
+    dVar2 = 8.0;
   }
-  if (160.0 < param_1) {
-    param_1 = 160.0;
+  if (160.0 < dVar2) {
+    dVar2 = 160.0;
   }
-  dVar2 = log(param_1);
+  dVar2 = log(dVar2);
   fVar1 = (float)(5.075173854827881 - dVar2) * 85.12109;
   if (fVar1 <= 0.0) {
     fVar1 = fVar1 - 0.5;
@@ -28,12 +29,12 @@ int NellyQuanPitchSC3(double param_1)
 
 // 828C7F20  NellyUnQuanPitchSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/qp0sc3.c:130)
 
-double NellyUnQuanPitchSC3(int param_1)
+float NellyUnQuanPitchSC3(int param_1)
 
 {
   double dVar1;
   
   dVar1 = exp(-(double)((float)(longlong)param_1 * 0.01174797 - 5.075174));
-  return (double)(float)dVar1;
+  return (float)dVar1;
 }
 

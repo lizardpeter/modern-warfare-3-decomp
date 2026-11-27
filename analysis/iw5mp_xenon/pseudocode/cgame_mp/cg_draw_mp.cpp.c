@@ -2,32 +2,37 @@
 
 // 822BA688  TRACK_cg_draw  (cgame_mp/cg_draw_mp.cpp:145)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cg_draw(void)
 
 {
-  track_static_alloc_internal(0xffffffff82a1f208,0x1020,0xffffffff82014b7c,9);
-  track_static_alloc_internal(0xffffffff82a1ed88,0x480,0xffffffff82014b6c,10);
+  track_static_alloc_internal(s_centerPrint,0x1020,"s_centerPrint",9);
+  track_static_alloc_internal(overheadFade,0x480,"overheadFade",10);
   return;
 }
 
 
 // 822BA6E8  CG_PriorityCenterPrint  (cgame_mp/cg_draw_mp.cpp:268)
 
-void CG_PriorityCenterPrint(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_PriorityCenterPrint(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined1 auStack_120 [288];
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  char acStack_120 [288];
   
-  iVar1 = __savegprlr_29();
-  iVar2 = iVar1 * 0x408;
-  if ((*(int *)(&DAT_82a1f208 + iVar2) == 0) || (*(int *)(&DAT_82a1f60c + iVar2) <= param_3)) {
-    CG_TranslateHudElemMessage(iVar1);
-    I_strncpyz(iVar2 + -0x7d5e0df4,auStack_120,0x100);
-    *(int *)(&DAT_82a1f60c + iVar2) = param_3;
-    iVar1 = CG_GetLocalClientGlobals(iVar1);
-    *(undefined4 *)(&DAT_82a1f208 + iVar2) = *(undefined4 *)(iVar1 + 0x6b98c);
+  LVar1 = __savegprlr_29(param_1);
+  if ((s_centerPrint[LVar1].time == 0) || (s_centerPrint[LVar1].priority <= param_3)) {
+    CG_TranslateHudElemMessage(LVar1,param_2,"Center Print",acStack_120,0x100);
+    I_strncpyz(s_centerPrint[LVar1].text,acStack_120,0x100);
+    s_centerPrint[LVar1].priority = param_3;
+    pcVar2 = CG_GetLocalClientGlobals(LVar1);
+    s_centerPrint[LVar1].time = pcVar2->time;
   }
   __restgprlr_29();
   return;
@@ -36,7 +41,9 @@ void CG_PriorityCenterPrint(undefined8 param_1,undefined8 param_2,int param_3)
 
 // 822BA770  CG_CenterPrint  (cgame_mp/cg_draw_mp.cpp:293)
 
-void CG_CenterPrint(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_CenterPrint(LocalClientNum_t param_1,char *param_2)
 
 {
   CG_PriorityCenterPrint(param_1,param_2,0);
@@ -46,60 +53,77 @@ void CG_CenterPrint(undefined8 param_1,undefined8 param_2)
 
 // 822BA778  CG_ClearCenterPrint  (cgame_mp/cg_draw_mp.cpp:299)
 
-void CG_ClearCenterPrint(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ClearCenterPrint(LocalClientNum_t param_1)
 
 {
-  *(undefined4 *)(&DAT_82a1f208 + param_1 * 0x408) = 0;
+  s_centerPrint[param_1].time = 0;
   return;
 }
 
 
 // 822BA790  CG_DrawCenterString  (cgame_mp/cg_draw_mp.cpp:304)
 
-void CG_DrawCenterString(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,
-                        float *param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawCenterString(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+                        float *param_5,int param_6)
 
 {
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  int iVar5;
-  undefined8 uVar1;
+  byte bVar1;
+  byte bVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  float *pfVar5;
   int iVar6;
-  undefined8 extraout_f1;
-  double dVar7;
-  double dVar8;
-  undefined8 uVar9;
+  ScreenPlacement *pSVar7;
+  longlong lVar8;
+  float *pfVar9;
+  longlong lVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   
-  iVar2 = __savegprlr_25();
-  uVar9 = extraout_f1;
-  iVar3 = CG_GetLocalClientGlobals();
-  iVar6 = iVar2 * 0x408;
-  iVar5 = *(int *)(&DAT_82a1f208 + iVar6);
-  if (*(int *)(iVar3 + 0x6b98c) < iVar5) {
-    *(undefined4 *)(&DAT_82a1f208 + iVar6) = 0;
+  lVar8 = (longlong)(int)param_3;
+  lVar10 = (longlong)(int)param_2;
+  LVar3 = __savegprlr_25((double)param_4,param_1,lVar10,lVar8,param_5);
+  dVar13 = extraout_f1;
+  pfVar9 = (float *)param_6;
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  iVar6 = s_centerPrint[LVar3].time;
+  if (pcVar4->time < iVar6) {
+    s_centerPrint[LVar3].time = 0;
     __restgprlr_25();
     return;
   }
-  if (iVar5 != 0) {
-    pfVar4 = (float *)CG_FadeColor(*(int *)(iVar3 + 0x6b98c),iVar5,
-                                   (int)(*(float *)(DAT_82a38388 + 0xc) * 1000.0),100);
-    if (pfVar4 == (float *)0x0) {
-      *(undefined4 *)(&DAT_82a1f208 + iVar6) = 0;
-      *(undefined4 *)(&DAT_82a1f60c + iVar6) = 0;
+  if (iVar6 != 0) {
+    pfVar5 = CG_FadeColor(pcVar4->time,iVar6,(int)((cg_centertime->current).value * 1000.0),100);
+    if (pfVar5 == (float *)0x0) {
+      s_centerPrint[LVar3].time = 0;
+      s_centerPrint[LVar3].priority = 0;
       __restgprlr_25();
       return;
     }
-    *param_5 = *param_5 * *pfVar4;
-    param_5[1] = pfVar4[1] * param_5[1];
-    param_5[2] = pfVar4[2] * param_5[2];
-    param_5[3] = pfVar4[3] * param_5[3];
-    iVar5 = UI_TextWidth(uVar9,iVar6 + -0x7d5e0df4,0,param_3);
-    dVar7 = floor((double)((float)(longlong)iVar5 * 0.5 + 0.5));
-    dVar8 = (double)param_2[1];
-    dVar7 = (double)(*param_2 - (float)(longlong)(int)dVar7);
-    uVar1 = ScrPlace_GetActivePlacement(iVar2);
-    UI_DrawText(dVar7,dVar8,uVar9,uVar1,iVar6 + -0x7d5e0df4,0x7fffffff,param_3);
+    *(float *)param_6 = *(float *)param_6 * *pfVar5;
+    *(float *)(param_6 + 4) = pfVar5[1] * *(float *)(param_6 + 4);
+    *(float *)(param_6 + 8) = pfVar5[2] * *(float *)(param_6 + 8);
+    *(float *)(param_6 + 0xc) = pfVar5[3] * *(float *)(param_6 + 0xc);
+    iVar6 = UI_TextWidth(s_centerPrint[LVar3].text,0,(Font_s *)lVar8,(float)dVar13);
+    dVar11 = floor((double)((float)(longlong)iVar6 * 0.5 + 0.5));
+    pfVar5 = (float *)lVar10;
+    bVar1 = *(byte *)((int)pfVar5 + 0x11);
+    bVar2 = *(byte *)(pfVar5 + 4);
+    dVar12 = (double)pfVar5[1];
+    lVar10 = (longlong)(int)dVar11;
+    dVar11 = (double)(*pfVar5 - (float)lVar10);
+    pSVar7 = ScrPlace_GetActivePlacement(LVar3);
+    UI_DrawText(pSVar7,s_centerPrint[LVar3].text,0x7fffffff,(Font_s *)lVar8,(float)dVar11,
+                (float)dVar12,(int)pfVar9,(int)lVar10,(float)dVar13,(float *)(uint)bVar2,(uint)bVar1
+               );
   }
   __restgprlr_25();
   return;
@@ -108,41 +132,47 @@ void CG_DrawCenterString(undefined8 param_1,float *param_2,undefined8 param_3,un
 
 // 822BA968  CG_ClearOverheadFade  (cgame_mp/cg_draw_mp.cpp:336)
 
-void * CG_ClearOverheadFade(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void CG_ClearOverheadFade(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_82a1ed88,0,0x480);
-  return pvVar1;
+  memset();
+  return;
 }
 
 
 // 822BA980  CG_GetViewAxisProjections  (cgame_mp/cg_draw_mp.cpp:342)
 
-void CG_GetViewAxisProjections(int param_1,float *param_2,float *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_GetViewAxisProjections(refdef_t *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   
-  fVar1 = *param_2 - *(float *)(param_1 + 0x18);
-  fVar2 = param_2[1] - *(float *)(param_1 + 0x1c);
-  fVar3 = param_2[2] - *(float *)(param_1 + 0x20);
-  *param_3 = *(float *)(param_1 + 0x2c) * fVar3 +
-             *(float *)(param_1 + 0x28) * fVar2 + *(float *)(param_1 + 0x24) * fVar1;
-  param_3[1] = *(float *)(param_1 + 0x38) * fVar3 +
-               *(float *)(param_1 + 0x34) * fVar2 + *(float *)(param_1 + 0x30) * fVar1;
-  param_3[2] = *(float *)(param_1 + 0x44) * fVar3 +
-               *(float *)(param_1 + 0x40) * fVar2 + *(float *)(param_1 + 0x3c) * fVar1;
+  fVar1 = *param_2 - (param_1->view).org[0];
+  fVar2 = param_2[1] - (param_1->view).org[1];
+  fVar3 = param_2[2] - (param_1->view).org[2];
+  *param_3 = (param_1->view).axis[0][2] * fVar3 +
+             (param_1->view).axis[0][1] * fVar2 + (param_1->view).axis[0][0] * fVar1;
+  param_3[1] = (param_1->view).axis[1][2] * fVar3 +
+               (param_1->view).axis[1][1] * fVar2 + (param_1->view).axis[1][0] * fVar1;
+  param_3[2] = (param_1->view).axis[2][2] * fVar3 +
+               (param_1->view).axis[2][1] * fVar2 + (param_1->view).axis[2][0] * fVar1;
   return;
 }
 
 
 // 822BAA00  CG_CalcNamePosition  (cgame_mp/cg_draw_mp.cpp:361)
 
-void CG_CalcNamePosition(undefined8 param_1,float *param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool CG_CalcNamePosition(LocalClientNum_t param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
@@ -152,184 +182,210 @@ void CG_CalcNamePosition(undefined8 param_1,float *param_2,ulonglong param_3,ulo
   float fVar5;
   float fVar6;
   float fVar7;
-  undefined8 uVar8;
-  int iVar9;
-  int iVar10;
+  LocalClientNum_t LVar8;
+  cg_s *pcVar9;
+  ScreenPlacement *pSVar10;
+  undefined1 uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
   
-  uVar8 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x172,0,0xffffffff82000f98,0xffffffff82014ba4);
+  uVar13 = (ulonglong)(int)param_4;
+  uVar12 = (ulonglong)(int)param_3;
+  LVar8 = __savegprlr_26(param_1);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x172
+                    ,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x173,0,0xffffffff82000f98,0xffffffff82014b9c);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x173
+                    ,0,"%s");
   }
-  iVar9 = CG_GetLocalClientGlobals(uVar8);
-  iVar10 = ScrPlace_GetActivePlacement(uVar8);
-  fVar4 = *param_2 - *(float *)(iVar9 + 0x6b9c8);
-  fVar5 = param_2[1] - *(float *)(iVar9 + 0x6b9cc);
-  fVar6 = param_2[2] - *(float *)(iVar9 + 0x6b9d0);
-  fVar1 = *(float *)(iVar9 + 0x6b9ec);
-  fVar2 = *(float *)(iVar9 + 0x6b9f0);
-  fVar3 = *(float *)(iVar9 + 0x6b9f4);
-  fVar7 = *(float *)(iVar9 + 0x6b9dc) * fVar6 +
-          *(float *)(iVar9 + 0x6b9d8) * fVar5 + *(float *)(iVar9 + 0x6b9d4) * fVar4;
+  pcVar9 = CG_GetLocalClientGlobals(LVar8);
+  pSVar10 = ScrPlace_GetActivePlacement(LVar8);
+  fVar4 = *param_2 - (pcVar9->refdef).view.org[0];
+  fVar5 = param_2[1] - (pcVar9->refdef).view.org[1];
+  fVar6 = param_2[2] - (pcVar9->refdef).view.org[2];
+  fVar1 = (pcVar9->refdef).view.axis[2][0];
+  fVar2 = (pcVar9->refdef).view.axis[2][1];
+  fVar3 = (pcVar9->refdef).view.axis[2][2];
+  fVar7 = (pcVar9->refdef).view.axis[0][2] * fVar6 +
+          (pcVar9->refdef).view.axis[0][1] * fVar5 + (pcVar9->refdef).view.axis[0][0] * fVar4;
   if (fVar7 < 0.0) {
-    *(float *)param_3 = 0.0;
-    *(float *)param_4 = 0.0;
-    __restgprlr_26(0);
-    return;
+    *(float *)uVar12 = 0.0;
+    *(float *)uVar13 = 0.0;
+    uVar11 = __restgprlr_26(0);
+    return (bool)uVar11;
   }
   fVar7 = 1.0 / fVar7;
-  *(float *)param_3 =
-       -(((*(float *)(iVar9 + 0x6b9e8) * fVar6 +
-          *(float *)(iVar9 + 0x6b9e4) * fVar5 + *(float *)(iVar9 + 0x6b9e0) * fVar4) /
-         *(float *)(iVar9 + 0x6b9c0)) * fVar7 - 1.0) * *(float *)(iVar10 + 0x20) * 0.5;
-  *(float *)param_4 =
-       -(((fVar3 * fVar6 + fVar2 * fVar5 + fVar1 * fVar4) / *(float *)(iVar9 + 0x6b9c4)) * fVar7 -
-        1.0) * *(float *)(iVar10 + 0x24) * 0.5;
-  __restgprlr_26(1);
-  return;
+  *(float *)uVar12 =
+       -((((pcVar9->refdef).view.axis[1][2] * fVar6 +
+          (pcVar9->refdef).view.axis[1][1] * fVar5 + (pcVar9->refdef).view.axis[1][0] * fVar4) /
+         (pcVar9->refdef).view.tanHalfFovX) * fVar7 - 1.0) * pSVar10->realViewportSize[0] * 0.5;
+  *(float *)uVar13 =
+       -(((fVar3 * fVar6 + fVar2 * fVar5 + fVar1 * fVar4) / (pcVar9->refdef).view.tanHalfFovY) *
+         fVar7 - 1.0) * pSVar10->realViewportSize[1] * 0.5;
+  uVar11 = __restgprlr_26(1);
+  return (bool)uVar11;
 }
 
 
 // 822BAB78  CG_DrawOverheadNames  (cgame_mp/cg_draw_mp.cpp:397)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
-void CG_DrawOverheadNames(undefined8 param_1,undefined8 param_2)
+void CG_DrawOverheadNames(LocalClientNum_t param_1,centity_s *param_2,float param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  undefined8 uVar5;
-  int iVar9;
-  undefined8 uVar6;
-  ulonglong uVar7;
-  int iVar10;
-  char cVar12;
-  int iVar11;
-  undefined8 uVar8;
+  LocalClientNum_t LVar4;
+  cg_s *pcVar5;
+  Font_s *pFVar6;
+  DObj *pDVar7;
+  int iVar8;
+  bool bVar11;
+  char *pcVar9;
+  float *pfVar10;
+  Material *pMVar12;
+  IMAGE_DOS_HEADER *pIVar13;
+  Material *pMVar14;
   double extraout_f1;
-  double dVar13;
-  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float fVar22;
+  int in_stack_fffffe98;
+  int in_stack_fffffe9c;
+  int in_stack_fffffea0;
+  int in_stack_fffffea4;
   float local_e0;
   float local_dc;
-  float local_d8 [3];
-  int local_cc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  Material *local_cc;
   longlong local_c8;
   float local_c0;
   float local_bc;
   float local_b8;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  float local_a4;
-  undefined1 auStack_a0 [12];
+  undefined1 local_b0 [8];
+  GfxDrawSurf local_a8;
+  float afStack_a0 [3];
   float local_94;
-  undefined1 auStack_90 [144];
+  char acStack_90 [144];
   
-  __savegprlr_28();
-  uVar5 = __savefpr_25();
+  __savegprlr_28((double)param_3,param_1);
+  LVar4 = __savefpr_25();
   if (0.0010000000474974513 < extraout_f1) {
-    dVar15 = extraout_f1;
-    iVar9 = CG_GetLocalClientGlobals();
-    dVar18 = 1.0;
-    uVar6 = UI_GetFontHandle(0x3ff0000000000000,0,*(undefined4 *)(DAT_82a383ac + 0xc));
-    iVar11 = (int)param_2;
-    uVar7 = Com_GetClientDObj(*(undefined4 *)(iVar11 + 0xc4),uVar5);
-    if (((uVar7 & 0xffffffff) == 0) ||
-       (iVar10 = CG_DObjGetWorldTagPos(param_2,uVar7,DAT_835a0d34,&local_c0), iVar10 == 0)) {
-      local_c0 = *(float *)(iVar11 + 0x14);
-      local_bc = *(float *)(iVar11 + 0x18);
-      local_b8 = *(float *)(iVar11 + 0x1c) + 82.0;
+    dVar18 = extraout_f1;
+    pcVar5 = CG_GetLocalClientGlobals(LVar4);
+    dVar21 = 1.0;
+    pFVar6 = UI_GetFontHandle((ScreenPlacement *)0x0,(cg_overheadNamesFont->current).integer,1.0);
+    pDVar7 = Com_GetClientDObj((param_2->nextState).number,LVar4);
+    if ((pDVar7 == (DObj *)0x0) ||
+       (iVar8 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar7,(uint)scr_const.j_head,&local_c0),
+       iVar8 == 0)) {
+      local_c0 = (param_2->pose).origin[0];
+      local_bc = (param_2->pose).origin[1];
+      local_b8 = (param_2->pose).origin[2] + 82.0;
     }
     else {
       local_b8 = local_b8 + 10.0;
     }
-    iVar10 = CL_GetClientName(uVar5,*(undefined4 *)(iVar11 + 0x154),auStack_90,0x2a);
-    if (iVar10 == 0) {
-      Com_sprintf(auStack_90,0x2a,0xffffffff82014c14);
+    iVar8 = CL_GetClientName(LVar4,(param_2->nextState).clientNum,acStack_90,0x2a);
+    if (iVar8 == 0) {
+      Com_sprintf(acStack_90,0x2a,"?");
     }
     CG_RelativeTeamColor
-              (uVar5,*(undefined4 *)(iVar11 + 0x154),0xffffffff82014bf4,0xffffffff82014c04,&local_b0
+              (LVar4,(param_2->nextState).clientNum,"cg_TeamColor","cg_ColorBlind",(float *)local_b0
               );
-    local_a4 = (float)dVar15;
-    cVar12 = CG_CalcNamePosition(uVar5,&local_c0,&local_c8,&local_dc);
-    if (cVar12 != '\0') {
-      dVar16 = 0.5;
-      dVar13 = floor((double)(local_c8._0_4_ + 0.5));
-      dVar17 = (double)(float)dVar13;
-      dVar13 = floor((double)(float)((double)local_dc + dVar16));
-      local_dc = (float)dVar13;
-      fVar2 = local_bc - *(float *)(iVar9 + 0x6b9cc);
-      fVar3 = local_b8 - *(float *)(iVar9 + 0x6b9d0);
-      fVar4 = local_c0 - *(float *)(iVar9 + 0x6b9c8);
-      fVar2 = fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2;
-      dVar13 = dVar18;
-      if (*(float *)(DAT_82a3825c + 0xc) * *(float *)(DAT_82a3825c + 0xc) <= fVar2) {
-        if (fVar2 <= *(float *)(DAT_82a38348 + 0xc) * *(float *)(DAT_82a38348 + 0xc)) {
-          dVar13 = (double)((SQRT(fVar2) - *(float *)(DAT_82a3825c + 0xc)) /
-                           (*(float *)(DAT_82a38348 + 0xc) - *(float *)(DAT_82a3825c + 0xc)));
-          dVar13 = (double)(float)((double)*(float *)(DAT_82a3831c + 0xc) * dVar13 +
-                                  (double)(float)(dVar18 - dVar13));
+    local_a8.packed._4_4_ = (undefined4)dVar18;
+    bVar11 = CG_CalcNamePosition(LVar4,&local_c0,(float *)&local_c8,&local_dc);
+    if (bVar11) {
+      dVar19 = 0.5;
+      dVar15 = floor((double)(local_c8._0_4_ + 0.5));
+      dVar20 = (double)(float)dVar15;
+      dVar15 = floor((double)(float)((double)local_dc + dVar19));
+      local_dc = (float)dVar15;
+      fVar22 = local_bc - (pcVar5->refdef).view.org[1];
+      fVar2 = local_b8 - (pcVar5->refdef).view.org[2];
+      fVar3 = local_c0 - (pcVar5->refdef).view.org[0];
+      fVar22 = fVar3 * fVar3 + fVar2 * fVar2 + fVar22 * fVar22;
+      dVar15 = dVar21;
+      if ((cg_overheadNamesNearDist->current).value * (cg_overheadNamesNearDist->current).value <=
+          fVar22) {
+        if (fVar22 <= (cg_overheadNamesFarDist->current).value *
+                      (cg_overheadNamesFarDist->current).value) {
+          dVar15 = (double)((SQRT(fVar22) - (cg_overheadNamesNearDist->current).value) /
+                           ((cg_overheadNamesFarDist->current).value -
+                           (cg_overheadNamesNearDist->current).value));
+          dVar15 = (double)(float)((double)(cg_overheadNamesFarScale->current).value * dVar15 +
+                                  (double)(float)(dVar21 - dVar15));
         }
         else {
-          dVar13 = (double)*(float *)(DAT_82a3831c + 0xc);
+          dVar15 = (double)(cg_overheadNamesFarScale->current).value;
         }
       }
-      local_d8[0] = (float)dVar13;
-      dVar13 = (double)R_NormalizedTextScale
-                                 ((double)(float)((double)*(float *)(DAT_82a38384 + 0xc) * dVar13),
-                                  uVar6);
-      local_d8[2] = (float)dVar13;
-      iVar10 = R_TextWidth(auStack_90,0x20,uVar6);
-      local_c8 = (longlong)iVar10;
-      dVar13 = floor((double)(float)((double)((float)local_c8 * local_d8[2]) * dVar16));
-      local_e0 = (float)(dVar17 - (double)(float)dVar13);
-      Dvar_GetUnpackedColor(DAT_82a3d490,auStack_a0);
-      local_94 = (float)((double)local_94 * dVar15);
-      uVar5 = 0;
-      local_d8[1] = 0.0;
-      ScrPlace_HiResApplyRect(&local_e0,&local_dc,local_d8 + 2,local_d8 + 1);
+      local_d8 = (float)dVar15;
+      local_d0 = R_NormalizedTextScale
+                           (pFVar6,(float)((double)(cg_overheadNamesSize->current).value * dVar15));
+      iVar8 = R_TextWidth(acStack_90,0x20,pFVar6);
+      local_c8 = (longlong)iVar8;
+      dVar15 = floor((double)(float)((double)((float)local_c8 * local_d0) * dVar19));
+      pMVar14 = (Material *)(g_mdlprv.model.clones[0x18].objBuf + 4);
+      local_e0 = (float)(dVar20 - (double)(float)dVar15);
+      Dvar_GetUnpackedColor(cg_overheadNamesGlow,afStack_a0);
+      pIVar13 = &IMAGE_DOS_HEADER_82000000;
+      pfVar10 = &local_d4;
+      local_94 = (float)((double)local_94 * dVar18);
+      dVar15 = 0.0;
+      local_d4 = 0.0;
+      ScrPlace_HiResApplyRect(&local_e0,&local_dc,&local_d0,pfVar10);
       CL_DrawTextPhysicalWithEffects
-                ((double)local_e0,(double)local_dc,(double)local_d8[2],auStack_90,0x2a,uVar6);
-      iVar9 = *(int *)(iVar11 + 0x154) * 0x590 + iVar9;
-      uVar1 = *(undefined4 *)(iVar9 + 0x100bbc);
-      CL_GetRankIcon(uVar1,*(undefined4 *)(iVar9 + 0x100bc0),&local_cc);
-      if (local_cc != 0) {
-        ScrPlace_HiResScaleRect(local_d8,local_d8 + 1,local_d8 + 1,local_d8 + 1);
-        iVar11 = R_TextHeight(uVar6);
-        local_c8 = (longlong)iVar11;
-        dVar14 = (double)((float)local_c8 * local_d8[2]);
-        dVar17 = (double)(float)((double)*(float *)(DAT_82a3d6a8 + 0xc) * dVar14);
-        dVar13 = (double)R_NormalizedTextScale
-                                   ((double)(*(float *)(DAT_82a383c8 + 0xc) * local_d8[0]),uVar6);
-        uVar8 = CL_GetRankDataMP(uVar1,0xe);
-        iVar11 = R_TextWidth(uVar8,0x20,uVar6);
-        local_c8 = (longlong)iVar11;
-        local_b0 = (float)dVar18;
-        local_ac = (float)dVar18;
-        local_a8 = (float)dVar18;
-        local_a4 = (float)dVar15;
+                (acStack_90,0x2a,pFVar6,local_e0,local_dc,local_d0,local_d0,pfVar10,(int)afStack_a0,
+                 (float *)pIVar13,pMVar14,(Material *)local_b0,in_stack_fffffe98,in_stack_fffffe9c,
+                 in_stack_fffffea0,in_stack_fffffea4);
+      iVar8 = (param_2->nextState).clientNum;
+      iVar1 = (pcVar5->bgs).clientinfo[iVar8].rank_mp;
+      CL_GetRankIcon(iVar1,(pcVar5->bgs).clientinfo[iVar8].prestige_mp,&local_cc);
+      if (local_cc != (Material *)0x0) {
+        ScrPlace_HiResScaleRect(&local_d8,&local_d4,&local_d4,&local_d4);
+        iVar8 = R_TextHeight(pFVar6);
+        local_c8 = (longlong)iVar8;
+        dVar17 = (double)((float)local_c8 * local_d0);
+        dVar16 = (double)(float)((double)(cg_overheadIconSize->current).value * dVar17);
+        fVar22 = R_NormalizedTextScale(pFVar6,(cg_overheadRankSize->current).value * local_d8);
+        dVar20 = (double)fVar22;
+        pcVar9 = CL_GetRankDataMP(iVar1,RANKTABLE_DISPLAYLEVEL);
+        pMVar12 = (Material *)0x20;
+        pfVar10 = (float *)R_TextWidth(pcVar9,0x20,pFVar6);
+        local_c8 = (longlong)(int)pfVar10;
+        pIVar13 = &IMAGE_DOS_HEADER_82000000;
+        local_b0._0_4_ = (undefined4)dVar21;
+        local_b0._4_4_ = (undefined4)dVar21;
+        local_a8.packed._0_4_ = (undefined4)dVar21;
+        local_a8.packed._4_4_ = (undefined4)dVar18;
         local_e0 = local_e0 -
-                   (float)((double)(float)((double)local_c8 * dVar13 + (double)(local_d8[0] * 2.0))
-                          + dVar17);
+                   (float)((double)(float)((double)local_c8 * dVar20 + (double)(local_d8 * 2.0)) +
+                          dVar16);
+        pMVar14 = local_cc;
         CL_DrawStretchPicPhysical
-                  ((double)local_e0,
-                   -(double)(float)((double)(float)(dVar17 + dVar14) * dVar16 - (double)local_dc),
-                   dVar17,dVar17,uVar5,uVar5,dVar18,dVar18);
-        iVar11 = R_TextHeight(uVar6);
-        local_c8 = (longlong)iVar11;
-        local_e0 = (float)(dVar17 + (double)local_e0);
-        CL_DrawTextPhysical((double)local_e0,
-                            (double)((float)((double)local_c8 * dVar13) * 0.25 + local_dc),dVar13,
-                            dVar13,uVar8,3,uVar6);
+                  (local_e0,-(float)((double)(float)(dVar16 + dVar17) * dVar19 - (double)local_dc),
+                   (float)dVar16,(float)dVar16,(float)dVar15,(float)dVar15,(float)dVar21,
+                   (float)dVar21,pfVar10,pMVar12);
+        iVar8 = R_TextHeight(pFVar6);
+        local_c8 = (longlong)iVar8;
+        local_e0 = (float)(dVar16 + (double)local_e0);
+        CL_DrawTextPhysical(pcVar9,3,pFVar6,local_e0,
+                            (float)((double)local_c8 * dVar20) * 0.25 + local_dc,(float)dVar20,
+                            (float)dVar20,(float *)pMVar14,(int)pIVar13);
       }
     }
   }
@@ -341,16 +397,20 @@ void CG_DrawOverheadNames(undefined8 param_1,undefined8 param_2)
 
 // 822BB030  StartScanForCrosshairEntity  (cgame_mp/cg_draw_mp.cpp:532)
 
-void StartScanForCrosshairEntity(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void StartScanForCrosshairEntity(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  bool bVar5;
+  cg_s *pcVar2;
   int iVar3;
-  uint uVar4;
-  undefined4 uVar6;
-  double dVar7;
+  Weapon WVar4;
+  float fVar6;
   float local_60;
   float local_5c;
   float local_58;
@@ -361,57 +421,63 @@ void StartScanForCrosshairEntity(void)
   float local_3c;
   float local_38;
   
-  uVar1 = __savegprlr_27();
-  DAT_82a20280 = 0;
-  cVar5 = Sys_IsMainThread();
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff82014bb0,0x21b,0,0xffffffff82000f98,0xffffffff82010b48);
+  LVar1 = __savegprlr_27(param_1);
+  g_crosshairTrace.valid = 0;
+  bVar5 = Sys_IsMainThread();
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x21b
+                    ,0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x21e,0,0xffffffff82000f98,0xffffffff82002798);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if (pcVar2 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x21e
+                    ,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x21f,0,0xffffffff82000f98,0xffffffff82002858);
+  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x21f
+                    ,0,"%s");
   }
-  *(uint *)(iVar2 + 0x374) = *(uint *)(iVar2 + 0x374) & 0xffffffe7;
-  *(undefined4 *)(iVar2 + 0x76e7c) = 0xffffffff;
-  *(undefined4 *)(iVar2 + 0x76e80) = 0;
-  if (*(char *)(iVar2 + 0x108039) == '\0') {
-    iVar3 = CG_GetFlashbangedRemainingTime(uVar1);
+  bVar5 = (pcVar2->cvsData).remoteMissileCam;
+  (pcVar2->predictedPlayerState).weapCommon.weapFlags =
+       (pcVar2->predictedPlayerState).weapCommon.weapFlags & 0xffffffe7;
+  pcVar2->crosshairClientNum = -1;
+  pcVar2->crosshairTraceDistance = 0;
+  if (bVar5 == false) {
+    iVar3 = CG_GetFlashbangedRemainingTime(LVar1);
     if (iVar3 < 1) {
-      uVar6 = 0;
+      iVar3 = 0;
     }
     else {
-      uVar6 = 1;
-      uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x370),0);
-      if (*(char *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x76b) == '\0') goto LAB_822bb270;
+      iVar3 = 1;
+      WVar4 = BG_GetAlternateWeapon((pcVar2->predictedPlayerState).weapCommon.weapon,false);
+      if (bg_weaponDefs[WVar4.data & 0xff]->isAirburstWeapon == false) goto LAB_822bb270;
     }
-    local_60 = *(float *)(iVar2 + 0x6b9c8);
-    local_5c = *(float *)(iVar2 + 0x6b9cc);
-    local_58 = *(float *)(iVar2 + 0x6b9d0);
-    DAT_82a20284 = uVar6;
-    dVar7 = (double)CG_GetCrosshairVerticalOffset(iVar2);
-    if (dVar7 == 0.0) {
-      DAT_82a20294 = *(float *)(iVar2 + 0x6b9d4) * 8192.0 + local_60;
-      DAT_82a20298 = *(float *)(iVar2 + 0x6b9d8) * 8192.0 + local_5c;
-      local_38 = *(float *)(iVar2 + 0x6b9dc);
+    local_60 = (pcVar2->refdef).view.org[0];
+    local_5c = (pcVar2->refdef).view.org[1];
+    local_58 = (pcVar2->refdef).view.org[2];
+    g_crosshairTrace.isFlashed = iVar3;
+    fVar6 = CG_GetCrosshairVerticalOffset(&pcVar2->predictedPlayerState);
+    if (fVar6 == 0.0) {
+      g_crosshairTrace.end[0] = (pcVar2->refdef).view.axis[0][0] * 8192.0 + local_60;
+      g_crosshairTrace.end[1] = (pcVar2->refdef).view.axis[0][1] * 8192.0 + local_5c;
+      local_38 = (pcVar2->refdef).view.axis[0][2];
     }
     else {
-      AngleVectors(iVar2 + 0x704e8,&local_40,0,0);
-      DAT_82a20294 = local_40 * 8192.0 + local_60;
-      DAT_82a20298 = local_3c * 8192.0 + local_5c;
+      AngleVectors(pcVar2->baseGunAngles,&local_40,(float *)0x0,(float *)0x0);
+      g_crosshairTrace.end[0] = local_40 * 8192.0 + local_60;
+      g_crosshairTrace.end[1] = local_3c * 8192.0 + local_5c;
     }
-    DAT_82a20290 = local_58;
-    DAT_82a2029c = local_38 * 8192.0 + local_58;
-    DAT_82a20288 = local_60;
-    DAT_82a2028c = local_5c;
-    local_50 = DAT_82a20294;
-    local_4c = DAT_82a20298;
-    local_48 = DAT_82a2029c;
+    g_crosshairTrace.end[2] = local_38 * 8192.0 + local_58;
+    g_crosshairTrace.start[0] = local_60;
+    g_crosshairTrace.start[1] = local_5c;
+    g_crosshairTrace.start[2] = local_58;
+    local_50 = g_crosshairTrace.end[0];
+    local_4c = g_crosshairTrace.end[1];
+    local_48 = g_crosshairTrace.end[2];
     CG_StartWorkerPointTraceInView
-              (0xffffffff82a20300,&local_60,&local_50,*(undefined4 *)(iVar2 + 0x150),0x2807821,1,1);
-    DAT_82a20280 = 1;
+              (&g_crosshairTrace.workerTrace,&local_60,&local_50,
+               (pcVar2->predictedPlayerState).clientNum,0x2807821,true,true);
+    g_crosshairTrace.valid = 1;
   }
 LAB_822bb270:
   __restgprlr_27();
@@ -421,24 +487,28 @@ LAB_822bb270:
 
 // 822BB278  FinishScanForCrosshairEntity  (cgame_mp/cg_draw_mp.cpp:580)
 
-void FinishScanForCrosshairEntity(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void FinishScanForCrosshairEntity(LocalClientNum_t param_1)
 
 {
-  bool bVar1;
+  team_t tVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  undefined8 uVar5;
-  char cVar9;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar10;
-  uint uVar11;
+  uint uVar4;
+  LocalClientNum_t LVar5;
+  bool bVar9;
+  cg_s *pcVar6;
+  ushort uVar8;
+  centity_s *pcVar7;
+  uint uVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
+  float fVar15;
   float local_70;
   float local_6c;
   float local_68;
@@ -446,67 +516,70 @@ void FinishScanForCrosshairEntity(void)
   float local_5c;
   float local_58;
   
-  __savegprlr_27();
-  uVar5 = __savefpr_28();
-  cVar9 = Sys_IsMainThread();
-  if (cVar9 == '\0') {
-    MyAssertHandler(0xffffffff82014bb0,0x24e,0,0xffffffff82000f98,0xffffffff82010b48);
+  __savegprlr_27(param_1);
+  LVar5 = __savefpr_28();
+  bVar9 = Sys_IsMainThread();
+  if (!bVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x24e
+                    ,0,"%s");
   }
-  if (DAT_82a20280 == 0) goto LAB_822bb4c8;
-  iVar6 = CG_GetLocalClientGlobals(uVar5);
-  local_70 = DAT_82a20288;
-  local_6c = DAT_82a2028c;
-  local_68 = DAT_82a20290;
-  dVar14 = (double)DAT_82a20294;
-  dVar13 = (double)DAT_82a20298;
-  dVar12 = (double)DAT_82a2029c;
-  CG_WaitWorkerTrace(0xffffffff82a20300);
-  dVar15 = (double)DAT_82a20300;
-  if (dVar15 < 1.0) {
-    *(int *)(iVar6 + 0x76e80) = (int)(longlong)(dVar15 * 8192.0);
+  if (g_crosshairTrace.valid != 0) {
+    pcVar6 = CG_GetLocalClientGlobals(LVar5);
+    local_70 = g_crosshairTrace.start[0];
+    local_6c = g_crosshairTrace.start[1];
+    local_68 = g_crosshairTrace.start[2];
+    dVar13 = (double)g_crosshairTrace.end[0];
+    dVar12 = (double)g_crosshairTrace.end[1];
+    dVar11 = (double)g_crosshairTrace.end[2];
+    CG_WaitWorkerTrace(&g_crosshairTrace.workerTrace);
+    dVar14 = (double)g_crosshairTrace.workerTrace.trace.fraction;
+    if (dVar14 < 1.0) {
+      pcVar6->crosshairTraceDistance = (uint)(longlong)(dVar14 * 8192.0);
+    }
+    uVar8 = Trace_GetEntityHitId(&g_crosshairTrace.workerTrace.trace);
+    uVar4 = (uint)uVar8;
+    if ((uVar4 < 0x12) && (g_crosshairTrace.isFlashed == 0)) {
+      local_60 = (float)((double)(float)(dVar13 - (double)local_70) * dVar14 + (double)local_70);
+      local_5c = (float)((double)(float)(dVar12 - (double)local_6c) * dVar14 + (double)local_6c);
+      local_58 = (float)((double)(float)(dVar11 - (double)local_68) * dVar14 + (double)local_68);
+      bVar9 = FX_ClientVisibilityTest(LVar5,&local_70,&local_60);
+      if (bVar9) {
+        if (0x11 < (uint)(pcVar6->predictedPlayerState).clientNum) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp"
+                          ,0x267,0,
+                          "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
+                         );
+        }
+        tVar1 = (pcVar6->bgs).clientinfo[(pcVar6->predictedPlayerState).clientNum].team;
+        if (tVar1 != TEAM_SPECTATOR) {
+          if ((tVar1 == TEAM_FREE) || (bVar9 = true, tVar1 != (pcVar6->bgs).clientinfo[uVar4].team))
+          {
+            bVar9 = false;
+          }
+          if (bVar9) {
+            uVar10 = (pcVar6->predictedPlayerState).weapCommon.weapFlags | 8;
+          }
+          else {
+            bVar9 = BG_HasPerk((pcVar6->bgs).clientinfo[uVar4].perks,0x29);
+            if (bVar9) goto LAB_822bb4c8;
+            pcVar7 = CG_GetEntity(LVar5,uVar4);
+            fVar15 = (pcVar7->pose).origin[1] - local_6c;
+            fVar2 = (pcVar7->pose).origin[2] - local_68;
+            fVar3 = (pcVar7->pose).origin[0] - local_70;
+            dVar11 = (double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar15 * fVar15);
+            fVar15 = BG_GetEnemyCrossHairRange
+                               ((pcVar6->predictedPlayerState).weapCommon.weapon,
+                                (bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon.
+                                                    weapFlags >> 0xf) & 1));
+            if ((double)(fVar15 * fVar15) < dVar11) goto LAB_822bb4c8;
+            uVar10 = (pcVar6->predictedPlayerState).weapCommon.weapFlags | 0x10;
+          }
+          (pcVar6->predictedPlayerState).weapCommon.weapFlags = uVar10;
+        }
+        pcVar6->crosshairClientNum = uVar4;
+      }
+    }
   }
-  uVar7 = Trace_GetEntityHitId(0xffffffff82a20300);
-  uVar7 = uVar7 & 0xffff;
-  if ((0x11 < uVar7) || (DAT_82a20284 != 0)) goto LAB_822bb4c8;
-  local_60 = (float)((double)(float)(dVar14 - (double)local_70) * dVar15 + (double)local_70);
-  local_5c = (float)((double)(float)(dVar13 - (double)local_6c) * dVar15 + (double)local_6c);
-  local_58 = (float)((double)(float)(dVar12 - (double)local_68) * dVar15 + (double)local_68);
-  cVar9 = FX_ClientVisibilityTest(uVar5,&local_70,&local_60);
-  if (cVar9 == '\0') goto LAB_822bb4c8;
-  if (0x11 < *(uint *)(iVar6 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x267,0,0xffffffff82002658,*(uint *)(iVar6 + 0x150),0x12);
-  }
-  iVar8 = *(int *)(*(int *)(iVar6 + 0x150) * 0x590 + iVar6 + 0x100bb4);
-  if (iVar8 != 3) {
-    iVar10 = uVar7 * 0x590 + iVar6;
-    if (iVar8 == 0) {
-LAB_822bb420:
-      bVar1 = false;
-    }
-    else {
-      bVar1 = true;
-      if (iVar8 != *(int *)(iVar10 + 0x100bb4)) goto LAB_822bb420;
-    }
-    if (bVar1) {
-      uVar11 = *(uint *)(iVar6 + 0x374) | 8;
-    }
-    else {
-      cVar9 = BG_HasPerk(iVar10 + 0x100bcc,0x29);
-      if (cVar9 != '\0') goto LAB_822bb4c8;
-      iVar8 = CG_GetEntity(uVar5,uVar7);
-      fVar2 = *(float *)(iVar8 + 0x18) - local_6c;
-      fVar3 = *(float *)(iVar8 + 0x1c) - local_68;
-      fVar4 = *(float *)(iVar8 + 0x14) - local_70;
-      dVar13 = (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-      dVar12 = (double)BG_GetEnemyCrossHairRange
-                                 (*(undefined4 *)(iVar6 + 0x370),*(uint *)(iVar6 + 0x374) >> 0xf & 1
-                                 );
-      if ((double)(float)(dVar12 * dVar12) < dVar13) goto LAB_822bb4c8;
-      uVar11 = *(uint *)(iVar6 + 0x374) | 0x10;
-    }
-    *(uint *)(iVar6 + 0x374) = uVar11;
-  }
-  *(uint *)(iVar6 + 0x76e7c) = uVar7;
 LAB_822bb4c8:
   __restfpr_28();
   __restgprlr_27();
@@ -516,22 +589,29 @@ LAB_822bb4c8:
 
 // 822BB4D8  ScanForCrosshairEntity  (cgame_mp/cg_draw_mp.cpp:645)
 
-void ScanForCrosshairEntity(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void ScanForCrosshairEntity(LocalClientNum_t param_1)
 
 {
-  bool bVar1;
-  float fVar2;
-  float fVar3;
+  uint uVar1;
+  uint uVar2;
+  team_t tVar3;
   float fVar4;
-  undefined8 uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
-  char cVar9;
-  int iVar10;
-  uint *puVar11;
-  double dVar12;
-  double dVar13;
+  float fVar5;
+  LocalClientNum_t LVar6;
+  cg_s *pcVar7;
+  int iVar8;
+  Weapon WVar9;
+  ushort uVar11;
+  bool bVar12;
+  centity_s *pcVar10;
+  int *piVar13;
+  double dVar14;
+  float fVar15;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -544,95 +624,104 @@ void ScanForCrosshairEntity(void)
   float local_90;
   float local_8c;
   float local_88;
-  float local_80 [32];
+  trace_t local_80 [2];
   
-  uVar5 = __savegprlr_26();
-  iVar6 = CG_GetLocalClientGlobals();
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x292,0,0xffffffff82000f98,0xffffffff82002798);
+  LVar6 = __savegprlr_26(param_1);
+  pcVar7 = CG_GetLocalClientGlobals(LVar6);
+  if (pcVar7 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x292
+                    ,0,"%s");
   }
-  if (*(int *)(iVar6 + 0x335c) == 0) {
-    MyAssertHandler(0xffffffff82014bb0,0x293,0,0xffffffff82000f98,0xffffffff82002858);
+  if (pcVar7->nextSnap == (snapshot_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x293
+                    ,0,"%s");
   }
-  puVar11 = (uint *)(iVar6 + 0x76e7c);
-  *puVar11 = 0xffffffff;
-  *(undefined4 *)(iVar6 + 0x76e80) = 0;
-  *(uint *)(iVar6 + 0x374) = *(uint *)(iVar6 + 0x374) & 0xffffffe7;
-  if (*(char *)(iVar6 + 0x108039) != '\0') goto LAB_822bb878;
-  iVar7 = CG_GetFlashbangedRemainingTime(uVar5);
-  if (iVar7 < 1) {
-    bVar1 = false;
-  }
-  else {
-    bVar1 = true;
-    uVar8 = BG_GetAlternateWeapon(*(undefined4 *)(iVar6 + 0x370),0);
-    if (*(char *)((&DAT_829d84a0)[uVar8 & 0xff] + 0x76b) == '\0') goto LAB_822bb878;
-  }
-  local_c0 = *(float *)(iVar6 + 0x6b9c8);
-  local_bc = *(float *)(iVar6 + 0x6b9cc);
-  local_b8 = *(float *)(iVar6 + 0x6b9d0);
-  dVar12 = (double)CG_GetCrosshairVerticalOffset(iVar6);
-  if (dVar12 == 0.0) {
-    local_b0 = *(float *)(iVar6 + 0x6b9d4) * 8192.0 + local_c0;
-    local_ac = *(float *)(iVar6 + 0x6b9d8) * 8192.0 + local_bc;
-    local_a8 = *(float *)(iVar6 + 0x6b9dc) * 8192.0 + local_b8;
-  }
-  else {
-    AngleVectors(iVar6 + 0x704e8,&local_a0,0,0);
-    local_b0 = local_a0 * 8192.0 + local_c0;
-    local_ac = local_9c * 8192.0 + local_bc;
-    local_a8 = local_98 * 8192.0 + local_b8;
-  }
-  dVar12 = 8192.0;
-  CG_LocationalTrace(local_80,&local_c0,&local_b0,*(undefined4 *)(iVar6 + 0x150),0x2807821);
-  if ((double)local_80[0] < 1.0) {
-    *(undefined4 *)(iVar6 + 0x76e80) = (int)(longlong)((double)local_80[0] * dVar12);
-  }
-  uVar8 = Trace_GetEntityHitId(local_80);
-  uVar8 = uVar8 & 0xffff;
-  if ((0x11 < uVar8) || (bVar1)) goto LAB_822bb878;
-  local_90 = (local_b0 - local_c0) * local_80[0] + local_c0;
-  local_8c = (local_ac - local_bc) * local_80[0] + local_bc;
-  local_88 = (local_a8 - local_b8) * local_80[0] + local_b8;
-  cVar9 = FX_ClientVisibilityTest(uVar5,&local_c0,&local_90);
-  if (cVar9 == '\0') goto LAB_822bb878;
-  if (0x11 < *(uint *)(iVar6 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x2ba,0,0xffffffff82002658,*(uint *)(iVar6 + 0x150),0x12);
-  }
-  iVar7 = *(int *)(*(int *)(iVar6 + 0x150) * 0x590 + iVar6 + 0x100bb4);
-  if (iVar7 != 3) {
-    iVar10 = uVar8 * 0x590 + iVar6;
-    if (iVar7 == 0) {
-LAB_822bb7c8:
-      bVar1 = false;
+  uVar1 = (pcVar7->predictedPlayerState).weapCommon.weapFlags;
+  piVar13 = &pcVar7->crosshairClientNum;
+  bVar12 = (pcVar7->cvsData).remoteMissileCam;
+  *piVar13 = -1;
+  pcVar7->crosshairTraceDistance = 0;
+  (pcVar7->predictedPlayerState).weapCommon.weapFlags = uVar1 & 0xffffffe7;
+  if (bVar12 == false) {
+    iVar8 = CG_GetFlashbangedRemainingTime(LVar6);
+    if (iVar8 < 1) {
+      bVar12 = false;
     }
     else {
-      bVar1 = true;
-      if (iVar7 != *(int *)(iVar10 + 0x100bb4)) goto LAB_822bb7c8;
+      bVar12 = true;
+      WVar9 = BG_GetAlternateWeapon((pcVar7->predictedPlayerState).weapCommon.weapon,false);
+      if (bg_weaponDefs[WVar9.data & 0xff]->isAirburstWeapon == false) goto LAB_822bb878;
     }
-    if (!bVar1) {
-      cVar9 = BG_HasPerk(iVar10 + 0x100bcc,0x29);
-      if (cVar9 == '\0') {
-        iVar7 = CG_GetEntity(uVar5,uVar8);
-        fVar2 = *(float *)(iVar7 + 0x18) - local_bc;
-        fVar3 = *(float *)(iVar7 + 0x1c) - local_b8;
-        fVar4 = *(float *)(iVar7 + 0x14) - local_c0;
-        dVar13 = (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-        dVar12 = (double)BG_GetEnemyCrossHairRange
-                                   (*(undefined4 *)(iVar6 + 0x370),
-                                    *(uint *)(iVar6 + 0x374) >> 0xf & 1);
-        if (dVar13 <= (double)(float)(dVar12 * dVar12)) {
-          *puVar11 = uVar8;
-          *(uint *)(iVar6 + 0x374) = *(uint *)(iVar6 + 0x374) | 0x10;
-          __restgprlr_26();
-          return;
+    local_c0 = (pcVar7->refdef).view.org[0];
+    local_bc = (pcVar7->refdef).view.org[1];
+    local_b8 = (pcVar7->refdef).view.org[2];
+    fVar15 = CG_GetCrosshairVerticalOffset(&pcVar7->predictedPlayerState);
+    if (fVar15 == 0.0) {
+      local_b0 = (pcVar7->refdef).view.axis[0][0] * 8192.0 + local_c0;
+      local_ac = (pcVar7->refdef).view.axis[0][1] * 8192.0 + local_bc;
+      local_a8 = (pcVar7->refdef).view.axis[0][2] * 8192.0 + local_b8;
+    }
+    else {
+      AngleVectors(pcVar7->baseGunAngles,&local_a0,(float *)0x0,(float *)0x0);
+      local_b0 = local_a0 * 8192.0 + local_c0;
+      local_ac = local_9c * 8192.0 + local_bc;
+      local_a8 = local_98 * 8192.0 + local_b8;
+    }
+    dVar14 = 8192.0;
+    CG_LocationalTrace(local_80,&local_c0,&local_b0,(pcVar7->predictedPlayerState).clientNum,
+                       0x2807821);
+    if ((double)local_80[0].fraction < 1.0) {
+      pcVar7->crosshairTraceDistance = (uint)(longlong)((double)local_80[0].fraction * dVar14);
+    }
+    uVar11 = Trace_GetEntityHitId(local_80);
+    uVar1 = (uint)uVar11;
+    if ((uVar1 < 0x12) && (!bVar12)) {
+      local_90 = (local_b0 - local_c0) * local_80[0].fraction + local_c0;
+      local_8c = (local_ac - local_bc) * local_80[0].fraction + local_bc;
+      local_88 = (local_a8 - local_b8) * local_80[0].fraction + local_b8;
+      bVar12 = FX_ClientVisibilityTest(LVar6,&local_c0,&local_90);
+      if (bVar12) {
+        if (0x11 < (uint)(pcVar7->predictedPlayerState).clientNum) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp"
+                          ,0x2ba,0,
+                          "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
+                         );
         }
+        tVar3 = (pcVar7->bgs).clientinfo[(pcVar7->predictedPlayerState).clientNum].team;
+        if (tVar3 != TEAM_SPECTATOR) {
+          if ((tVar3 == TEAM_FREE) || (bVar12 = true, tVar3 != (pcVar7->bgs).clientinfo[uVar1].team)
+             ) {
+            bVar12 = false;
+          }
+          if (!bVar12) {
+            bVar12 = BG_HasPerk((pcVar7->bgs).clientinfo[uVar1].perks,0x29);
+            if (!bVar12) {
+              pcVar10 = CG_GetEntity(LVar6,uVar1);
+              fVar15 = (pcVar10->pose).origin[1] - local_bc;
+              fVar4 = (pcVar10->pose).origin[2] - local_b8;
+              fVar5 = (pcVar10->pose).origin[0] - local_c0;
+              dVar14 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar15 * fVar15);
+              fVar15 = BG_GetEnemyCrossHairRange
+                                 ((pcVar7->predictedPlayerState).weapCommon.weapon,
+                                  (bool)((byte)((uint)(pcVar7->predictedPlayerState).weapCommon.
+                                                      weapFlags >> 0xf) & 1));
+              if (dVar14 <= (double)(fVar15 * fVar15)) {
+                uVar2 = (pcVar7->predictedPlayerState).weapCommon.weapFlags;
+                *piVar13 = uVar1;
+                (pcVar7->predictedPlayerState).weapCommon.weapFlags = uVar2 | 0x10;
+                __restgprlr_26();
+                return;
+              }
+            }
+            goto LAB_822bb878;
+          }
+          (pcVar7->predictedPlayerState).weapCommon.weapFlags =
+               (pcVar7->predictedPlayerState).weapCommon.weapFlags | 8;
+        }
+        *piVar13 = uVar1;
       }
-      goto LAB_822bb878;
     }
-    *(uint *)(iVar6 + 0x374) = *(uint *)(iVar6 + 0x374) | 8;
   }
-  *puVar11 = uVar8;
 LAB_822bb878:
   __restgprlr_26();
   return;
@@ -641,98 +730,105 @@ LAB_822bb878:
 
 // 822BB888  CG_FadeCrosshairNameAlpha  (cgame_mp/cg_draw_mp.cpp:732)
 
-double CG_FadeCrosshairNameAlpha(int param_1,int param_2,int param_3,int param_4,int param_5)
+float CG_FadeCrosshairNameAlpha(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
   if (param_5 <= param_1 - param_3) {
     return 0.0;
   }
   if (param_3 - param_2 < param_4) {
-    return (double)((float)(longlong)(param_3 - param_2) / (float)(longlong)param_4);
+    return (float)(longlong)(param_3 - param_2) / (float)(longlong)param_4;
   }
-  return (double)((float)(longlong)(param_5 - (param_1 - param_3)) / (float)(longlong)param_5);
+  return (float)(longlong)(param_5 - (param_1 - param_3)) / (float)(longlong)param_5;
 }
 
 
 // 822BB910  CG_ApplyFadeAndDrawOverheadNames  (cgame_mp/cg_draw_mp.cpp:754)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void CG_ApplyFadeAndDrawOverheadNames
-               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4)
+               (LocalClientNum_t param_1,int param_2,team_t param_3,bool param_4)
 
 {
-  bool bVar1;
-  bool bVar2;
-  undefined8 uVar3;
+  undefined1 uVar1;
+  int iVar2;
+  bool bVar3;
+  LocalClientNum_t LVar4;
+  cg_s *pcVar5;
+  bool bVar9;
   int iVar6;
-  char cVar7;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  undefined4 *puVar8;
-  ulonglong uVar9;
-  undefined8 uVar10;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
+  int iVar7;
+  centity_s *pcVar8;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int *piVar12;
+  double dVar13;
+  float fVar14;
+  int local_60 [24];
   
-  uVar3 = __savegprlr_25();
-  local_60 = *(undefined4 *)(DAT_82a38298 + 0xc);
-  local_5c = *(undefined4 *)(DAT_82a3d474 + 0xc);
-  local_58 = *(undefined4 *)(DAT_82a38344 + 0xc);
-  local_54 = *(undefined4 *)(DAT_82a38284 + 0xc);
-  local_50 = *(undefined4 *)(DAT_82a38238 + 0xc);
-  local_4c = *(undefined4 *)(DAT_82a2f814 + 0xc);
-  iVar6 = CG_GetLocalClientGlobals();
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82014bb0,0x308,0,0xffffffff82014c1c,param_2,0x12);
+  uVar10 = (ulonglong)param_4;
+  uVar11 = (ulonglong)param_2;
+  LVar4 = __savegprlr_25(param_1);
+  local_60[0] = (cg_flashbangNameFadeIn->current).integer;
+  local_60[1] = (cg_flashbangNameFadeOut->current).integer;
+  local_60[2] = (cg_friendlyNameFadeIn->current).integer;
+  local_60[3] = (cg_friendlyNameFadeOut->current).integer;
+  local_60[4] = (cg_enemyNameFadeIn->current).integer;
+  local_60[5] = (cg_enemyNameFadeOut->current).integer;
+  pcVar5 = CG_GetLocalClientGlobals(LVar4);
+  if (0x11 < (uVar11 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x308
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (param_3 != 3) {
-    if ((param_3 == 0) ||
-       (bVar1 = true, param_3 != *(int *)((int)param_2 * 0x590 + iVar6 + 0x100bb4))) {
-      bVar1 = false;
+  iVar2 = (int)uVar11;
+  if (param_3 != TEAM_SPECTATOR) {
+    if ((param_3 == TEAM_FREE) || (bVar9 = true, param_3 != (pcVar5->bgs).clientinfo[iVar2].team)) {
+      bVar9 = false;
     }
-    bVar2 = false;
-    if (!bVar1) goto LAB_822bba0c;
+    bVar3 = false;
+    if (!bVar9) goto LAB_822bba0c;
   }
-  bVar2 = true;
+  bVar3 = true;
 LAB_822bba0c:
-  uVar9 = (ulonglong)*(uint *)(iVar6 + 0x6b98c);
-  cVar7 = CL_Demo_IsPlaying(uVar3);
-  if (cVar7 != '\0') {
-    uVar9 = Sys_Milliseconds();
+  iVar6 = pcVar5->time;
+  bVar9 = CL_Demo_IsPlaying(LVar4);
+  if (bVar9) {
+    iVar6 = Sys_Milliseconds();
   }
-  uVar4 = CG_GetFlashbangedRemainingTime(uVar3);
-  cVar7 = CL_Demo_IsFreeCamera(uVar3);
-  uVar4 = -(ulonglong)(cVar7 == '\0') & uVar4;
-  iVar6 = ((int)uVar3 * 0x12 + (int)param_2) * 0x10;
-  if (((ulonglong)(*(uint *)(DAT_82a38298 + 0xc) >> 0x1f) -
-       (((uVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar4 < *(uint *)(DAT_82a38298 + 0xc))) &
-       param_4 & 0xff) == 0) {
-    (&DAT_82a1ed90)[iVar6] = (&DAT_82a1ed90)[iVar6] & 0x7f;
-  }
-  else {
-    if (((&DAT_82a1ed90)[iVar6] & 0x80) == 0) {
-      *(int *)(&DAT_82a1ed8c + iVar6) = (int)uVar9;
-      (&DAT_82a1ed90)[iVar6] = (&DAT_82a1ed90)[iVar6] & 0x7f | 0x80;
-    }
-    *(int *)(&DAT_82a1ed88 + iVar6) = (int)uVar9;
-  }
-  if ((int)uVar4 < 1) {
-    puVar8 = &local_58;
-    if (!bVar2) {
-      puVar8 = &local_50;
-    }
+  iVar7 = CG_GetFlashbangedRemainingTime(LVar4);
+  bVar9 = CL_Demo_IsFreeCamera(LVar4);
+  uVar11 = -(ulonglong)!bVar9 & (longlong)iVar7;
+  if (((ulonglong)((cg_flashbangNameFadeIn->current).unsignedInt >> 0x1f) -
+       (((uVar11 & 0xffffffff) >> 0x1f) +
+       (ulonglong)(uVar11 < (cg_flashbangNameFadeIn->current).unsignedInt)) & uVar10 & 0xff) == 0) {
+    overheadFade[LVar4][iVar2].field_0x8 = overheadFade[LVar4][iVar2].field_0x8 & 0x7f;
   }
   else {
-    puVar8 = &local_60;
+    uVar1 = overheadFade[LVar4][iVar2].field_0x8;
+    if (overheadFade[LVar4][iVar2].visible == '\0') {
+      overheadFade[LVar4][iVar2].startTime = iVar6;
+      overheadFade[LVar4][iVar2].field_0x8 = uVar1 & 0x7f | 0x80;
+    }
+    overheadFade[LVar4][iVar2].lastTime = iVar6;
   }
-  uVar10 = CG_FadeCrosshairNameAlpha
-                     (uVar9,*(undefined4 *)(&DAT_82a1ed8c + iVar6),
-                      *(undefined4 *)(&DAT_82a1ed88 + iVar6),*puVar8,puVar8[1]);
-  uVar5 = CG_GetEntity(uVar3,param_2);
-  CG_DrawOverheadNames(uVar10,uVar3,uVar5);
+  if ((int)uVar11 < 1) {
+    piVar12 = local_60 + 2;
+    if (!bVar3) {
+      piVar12 = local_60 + 4;
+    }
+  }
+  else {
+    piVar12 = local_60;
+  }
+  fVar14 = CG_FadeCrosshairNameAlpha
+                     (iVar6,overheadFade[LVar4][iVar2].startTime,overheadFade[LVar4][iVar2].lastTime
+                      ,*piVar12,piVar12[1]);
+  dVar13 = (double)fVar14;
+  pcVar8 = CG_GetEntity(LVar4,iVar2);
+  CG_DrawOverheadNames(LVar4,pcVar8,(float)dVar13);
   __restgprlr_25();
   return;
 }
@@ -740,74 +836,76 @@ LAB_822bba0c:
 
 // 822BBB40  CG_StartVisibleNameTrace  (cgame_mp/cg_draw_mp.cpp:826)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void CG_StartVisibleNameTrace
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined4 param_4,char *param_5,
-               undefined8 param_6)
+               (LocalClientNum_t param_1,OverheadFade *param_2,centity_s *param_3,int param_4,
+               bool *param_5,int param_6)
 
 {
-  byte bVar1;
-  byte extraout_var;
-  int iVar3;
-  int iVar4;
+  undefined1 uVar1;
   ulonglong uVar2;
-  int iVar5;
-  char cVar6;
-  byte bVar7;
-  undefined1 local_a0 [16];
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined1 local_80 [16];
-  undefined1 local_70 [16];
-  undefined1 local_60 [96];
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  DObj *pDVar5;
+  int iVar6;
+  bool bVar8;
+  uint uVar7;
+  byte bVar9;
+  float local_a0 [4];
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80 [4];
+  float local_70 [4];
+  float local_60 [24];
   
-  iVar3 = __savegprlr_23();
-  iVar4 = CG_GetLocalClientGlobals();
-  local_90 = *(undefined4 *)(iVar4 + 0x6b9c8);
-  local_8c = *(undefined4 *)(iVar4 + 0x6b9cc);
-  local_88 = *(undefined4 *)(iVar4 + 0x6b9d0);
-  uVar2 = Com_GetClientDObj(*(undefined4 *)((int)param_3 + 0xc4),iVar3);
-  if ((uVar2 & 0xffffffff) != 0) {
-    iVar5 = CG_DObjGetWorldTagPos(param_3,uVar2,DAT_835a0d34,local_a0);
-    if (iVar5 == 0) {
-      Com_Error(1,0xffffffff82014c9c);
+  LVar3 = __savegprlr_23(param_1);
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  local_90 = (pcVar4->refdef).view.org[0];
+  local_8c = (pcVar4->refdef).view.org[1];
+  local_88 = (pcVar4->refdef).view.org[2];
+  pDVar5 = Com_GetClientDObj((param_3->nextState).number,LVar3);
+  if (pDVar5 != (DObj *)0x0) {
+    iVar6 = CG_DObjGetWorldTagPos(&param_3->pose,pDVar5,(uint)scr_const.j_head,local_a0);
+    if (iVar6 == 0) {
+      Com_Error(ERR_DROP,"\x15CG_StartVisibleNameTrace: Couldn\'t find [j_head] on player\n");
     }
-    iVar5 = CG_DObjGetWorldTagPos(param_3,uVar2,DAT_835a0d66,local_70);
-    if (iVar5 == 0) {
-      Com_Error(1,0xffffffff82014c58);
+    iVar6 = CG_DObjGetWorldTagPos(&param_3->pose,pDVar5,(uint)scr_const.j_mainroot,local_70);
+    if (iVar6 == 0) {
+      Com_Error(ERR_DROP,"\x15CG_StartVisibleNameTrace: Couldn\'t find [j_mainroot] on player\n");
     }
-    bVar7 = *(byte *)(param_2 + 8);
-    iVar5 = CG_BrushModelSightTrace
-                      (*(undefined4 *)(param_2 + 0xc),&local_90,local_80,0xffffffff82174a3c,0,
-                       param_6);
-    bVar1 = (byte)((uint)-iVar5 >> 0x18) & ~(byte)((uint)iVar5 >> 0x18);
-    *(int *)(param_2 + 0xc) = iVar5;
-    if ((bVar7 & 1) == 0) {
-      bVar7 = (bVar1 >> 7) << 1 | *(byte *)(param_2 + 8) & 0xfd;
+    iVar6 = CG_BrushModelSightTrace(param_2->lastHitNum,&local_90,local_80,&bounds_origin,0,param_6)
+    ;
+    param_2->lastHitNum = iVar6;
+    uVar2 = (-(longlong)iVar6 & ~(longlong)iVar6 & 0xffffffffU) >> 0x1f;
+    if (param_2->worldTraceHeadOrPelvis == 0) {
+      bVar9 = (byte)(uVar2 << 1) | param_2->field_0x8 & 0xfd;
     }
     else {
-      bVar7 = (bVar1 >> 7) << 2 | *(byte *)(param_2 + 8) & 0xfb;
+      bVar9 = (byte)(uVar2 << 2) | param_2->field_0x8 & 0xfb;
     }
-    *(byte *)(param_2 + 8) = bVar7;
-    *(byte *)(param_2 + 8) = bVar7 & 0xfe | ~bVar7 & 1;
-    cVar6 = FX_ClientVisibilityTest(iVar3,&local_90,local_a0);
-    *(byte *)(param_2 + 9) = (cVar6 == '\0') << 6 | *(byte *)(param_2 + 9) & 0xbf;
-    if ((((*(byte *)(param_2 + 8) & 4) == 0) || ((*(byte *)(param_2 + 8) & 2) == 0)) ||
-       (cVar6 != '\0')) {
-      CG_PointSightTraceToEntitiesBBox
-                (&local_90,local_a0,*(undefined4 *)((int)param_3 + 0x154),param_6);
-      *(byte *)(param_2 + 9) = extraout_var & 0x80 | *(byte *)(param_2 + 9) & 0x7f;
-      uVar2 = CM_PointSightTraceStaticModelsBBox(&local_90,local_a0,param_6);
-      uVar2 = ((uVar2 & 0xffffffff) >> 0x18 & 0x80 | 0x7f) & (ulonglong)*(byte *)(param_2 + 9);
-      *(char *)(param_2 + 9) = (char)uVar2;
-      if (((uVar2 & 0x80) == 0) && (*param_5 == '\0')) {
-        *param_5 = '\x01';
-        *(byte *)(param_2 + 8) = *(byte *)(param_2 + 8) | 0x40;
+    param_2->field_0x8 = bVar9;
+    param_2->field_0x8 = bVar9 & 0xfe | ~bVar9 & 1;
+    bVar8 = FX_ClientVisibilityTest(LVar3,&local_90,local_a0);
+    param_2->fxRejectHead = !bVar8;
+    if (((param_2->worldRejectHead == '\0') || (param_2->worldRejectPelvis == '\0')) || (bVar8)) {
+      iVar6 = CG_PointSightTraceToEntitiesBBox
+                        (&local_90,local_a0,(param_3->nextState).clientNum,param_6);
+      param_2->bboxAcceptHead = (uint)iVar6 >> 0x1f;
+      uVar7 = CM_PointSightTraceStaticModelsBBox(&local_90,local_a0,param_6);
+      uVar7 = (uVar7 >> 0x18 & 0x80 | 0x7f) & (uint)(byte)param_2->field_0x9;
+      param_2->field_0x9 = (char)uVar7;
+      if (((uVar7 & 0x80) == 0) && (*param_5 == false)) {
+        *param_5 = true;
+        param_2->locTraceThisFrame = '\x01';
         CG_StartWorkerPointTraceInView
-                  (0xffffffff82a20500,&local_90,local_60,*(undefined4 *)(iVar4 + 0x150),param_6,1,1)
-        ;
-        *(byte *)(param_2 + 8) = ~*(byte *)(param_2 + 8) & 0x20 | *(byte *)(param_2 + 8) & 0xdf;
-        *(undefined4 *)(&DAT_82a204b0 + iVar3 * 4) = param_4;
+                  (&overheadFadeGlob.workerTrace,&local_90,local_60,
+                   (pcVar4->predictedPlayerState).clientNum,param_6,true,true);
+        param_2->locTraceHeadOrPelvis = (byte)~param_2->field_0x8 >> 5;
+        overheadFadeGlob.locTracePriorVisIndex[LVar3] = param_4;
       }
     }
   }
@@ -818,31 +916,31 @@ void CG_StartVisibleNameTrace
 
 // 822BBDE0  CG_WaitVisibleNameTrace  (cgame_mp/cg_draw_mp.cpp:909)
 
-void CG_WaitVisibleNameTrace(undefined8 param_1,uint param_2)
+void CG_WaitVisibleNameTrace(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  byte bVar4;
+  undefined1 uVar1;
+  int iVar2;
+  ushort uVar3;
+  longlong lVar4;
+  byte bVar5;
   
-  iVar1 = __savegprlr_29();
-  iVar1 = (iVar1 * 0x12 + param_2) * 0x10;
-  if (((&DAT_82a1ed90)[iVar1] & 0x40) != 0) {
-    CG_WaitWorkerTrace(0xffffffff82a20500);
-    uVar2 = Trace_GetEntityHitId(0xffffffff82a20500);
-    if (((uVar2 & 0xffff) == 0x7ff) || (lVar3 = 0, (uVar2 & 0xffff) == param_2)) {
-      lVar3 = 1;
+  iVar2 = __savegprlr_29(param_1);
+  if (overheadFade[iVar2][param_2].locTraceThisFrame != '\0') {
+    CG_WaitWorkerTrace(&overheadFadeGlob.workerTrace);
+    uVar3 = Trace_GetEntityHitId(&overheadFadeGlob.workerTrace.trace);
+    if ((uVar3 == 0x7ff) || (lVar4 = 0, (uint)uVar3 == param_2)) {
+      lVar4 = 1;
     }
-    bVar4 = (&DAT_82a1ed90)[iVar1];
-    if ((bVar4 & 0x20) == 0) {
-      bVar4 = (byte)(lVar3 << 3) | bVar4 & 0xf7;
+    uVar1 = overheadFade[iVar2][param_2].field_0x8;
+    if (overheadFade[iVar2][param_2].locTraceHeadOrPelvis == '\0') {
+      bVar5 = (byte)(lVar4 << 3) | uVar1 & 0xf7;
     }
     else {
-      bVar4 = (byte)(lVar3 << 4) | bVar4 & 0xef;
+      bVar5 = (byte)(lVar4 << 4) | uVar1 & 0xef;
     }
-    (&DAT_82a1ed90)[iVar1] = bVar4;
-    (&DAT_82a1ed90)[iVar1] = bVar4 & 0xbf;
+    overheadFade[iVar2][param_2].field_0x8 = bVar5;
+    overheadFade[iVar2][param_2].field_0x8 = bVar5 & 0xbf;
   }
   __restgprlr_29();
   return;
@@ -851,24 +949,26 @@ void CG_WaitVisibleNameTrace(undefined8 param_1,uint param_2)
 
 // 822BBE90  CG_AddPotentiallyVisibleName  (cgame_mp/cg_draw_mp.cpp:934)
 
-void CG_AddPotentiallyVisibleName(undefined8 param_1,undefined4 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_AddPotentiallyVisibleName(LocalClientNum_t param_1,int param_2)
 
 {
   uint uVar1;
   int iVar2;
   ulonglong uVar3;
   
-  uVar3 = __savegprlr_26();
+  uVar3 = __savegprlr_26(param_1);
   iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-  uVar1 = *(uint *)(&DAT_82a204a0 + iVar2);
+  uVar1 = *(uint *)((int)overheadFadeGlob.visCount + iVar2);
   if (0x11 < (int)uVar1) {
-    MyAssertHandler(0xffffffff82014bb0,0x3aa,0,0xffffffff82000f98,0xffffffff82014cdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x3aa
+                    ,0,"%s");
   }
-  *(undefined4 *)
-   (&DAT_82a20380 +
-   (int)(((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0x7fffffff) * 2 + (ulonglong)uVar1 & 0xffffffff) << 2)
-   ) = param_2;
-  *(uint *)(&DAT_82a204a0 + iVar2) = uVar1 + 1;
+  *(int *)((int)overheadFadeGlob.visList[0] +
+          (int)(((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0x7fffffff) * 2 + (ulonglong)uVar1 & 0xffffffff
+                ) << 2)) = param_2;
+  *(uint *)((int)overheadFadeGlob.visCount + iVar2) = uVar1 + 1;
   __restgprlr_26();
   return;
 }
@@ -876,144 +976,164 @@ void CG_AddPotentiallyVisibleName(undefined8 param_1,undefined4 param_2)
 
 // 822BBF10  CG_SetNotPotentiallyVisibleName  (cgame_mp/cg_draw_mp.cpp:946)
 
-void CG_SetNotPotentiallyVisibleName(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_SetNotPotentiallyVisibleName(LocalClientNum_t param_1,int param_2)
 
 {
-  int iVar1;
+  byte bVar1;
   
-  iVar1 = (param_1 * 0x12 + param_2) * 0x10;
-  (&DAT_82a1ed91)[iVar1] = (&DAT_82a1ed91)[iVar1] & 0x3f | 0x40;
-  (&DAT_82a1ed90)[iVar1] = (&DAT_82a1ed90)[iVar1] & 0xe1 | 6;
+  bVar1 = overheadFade[param_1][param_2].field_0x8;
+  overheadFade[param_1][param_2].field_0x9 = overheadFade[param_1][param_2].field_0x9 & 0x3f | 0x40;
+  overheadFade[param_1][param_2].field_0x8 = bVar1 & 0xe1 | 6;
   return;
 }
 
 
 // 822BBF58  CG_FindPotentiallyVisibleNames  (cgame_mp/cg_draw_mp.cpp:961)
 
-void CG_FindPotentiallyVisibleNames(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_FindPotentiallyVisibleNames(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  byte bVar1;
+  snapshot_s *psVar2;
   uint uVar3;
-  int iVar4;
-  bool bVar5;
-  bool bVar6;
-  uint uVar7;
+  uint uVar4;
+  team_t tVar5;
+  team_t tVar6;
+  bool bVar7;
   int iVar8;
-  char cVar11;
-  int iVar9;
-  int iVar10;
-  int iVar12;
-  bool bVar13;
-  bool bVar14;
-  uint *puVar15;
+  bool bVar9;
+  ulonglong uVar10;
+  cg_s *pcVar11;
+  bool bVar15;
+  bool bVar16;
+  centity_s *pcVar13;
+  team_t tVar14;
+  entityState_s *peVar17;
   int local_a4;
+  LocalClientNum_t LVar12;
   
-  uVar7 = __savegprlr();
-  iVar8 = CG_GetLocalClientGlobals();
-  iVar1 = *(int *)(iVar8 + 0x335c);
-  if (0x11 < *(uint *)(iVar8 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x3d7,0,0xffffffff82004624,*(uint *)(iVar8 + 0x150),0x12);
+  uVar10 = (ulonglong)(int)param_1;
+  __savegprlr();
+  LVar12 = (LocalClientNum_t)uVar10;
+  pcVar11 = CG_GetLocalClientGlobals(LVar12);
+  psVar2 = pcVar11->nextSnap;
+  if (0x11 < (uint)(pcVar11->predictedPlayerState).clientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x3d7
+                    ,0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar4 = *(int *)(*(int *)(iVar8 + 0x150) * 0x590 + iVar8 + 0x100bb4);
-  bVar5 = *(char *)(iVar8 + 0x108039) != '\0';
-  if ((bVar5) || (bVar6 = true, *(char *)(DAT_82a3d4b4 + 0xc) == '\0')) {
-    bVar6 = false;
+  tVar6 = (pcVar11->bgs).clientinfo[(pcVar11->predictedPlayerState).clientNum].team;
+  bVar7 = (pcVar11->cvsData).remoteMissileCam != false;
+  if ((bVar7) || (bVar9 = true, (cg_drawFriendlyNames->current).enabled == false)) {
+    bVar9 = false;
   }
-  if (bVar5) {
+  if (bVar7) {
 LAB_822bc028:
-    bVar5 = false;
+    bVar7 = false;
   }
   else {
-    cVar11 = CG_PlayerHasAutoSpot(uVar7);
-    bVar5 = true;
-    if (cVar11 == '\0') goto LAB_822bc028;
+    bVar15 = CG_PlayerHasAutoSpot(LVar12);
+    bVar7 = true;
+    if (!bVar15) goto LAB_822bc028;
   }
-  *(undefined4 *)(&DAT_82a204a0 + uVar7 * 4) = 0;
-  cVar11 = CL_Demo_IsFollowCamera(uVar7);
-  if (cVar11 == '\0') {
-    cVar11 = CL_Demo_IsFreeCamera(uVar7);
-    bVar14 = false;
-    if (cVar11 == '\0') goto LAB_822bc078;
+  *(undefined4 *)((int)overheadFadeGlob.visCount + (int)((uVar10 & 0xffffffff) << 2)) = 0;
+  bVar15 = CL_Demo_IsFollowCamera(LVar12);
+  if (!bVar15) {
+    bVar16 = CL_Demo_IsFreeCamera(LVar12);
+    bVar15 = false;
+    if (!bVar16) goto LAB_822bc078;
   }
-  bVar14 = true;
+  bVar15 = true;
 LAB_822bc078:
-  iVar9 = CG_GetEntity(uVar7,*(undefined4 *)(iVar8 + 0x150));
-  if ((((*(uint *)(iVar9 + 0x1c4) & 1) == 0) || (*(int *)(iVar9 + 200) != 1)) ||
-     (bVar13 = true, (*(uint *)(iVar9 + 0xcc) & 0x20) != 0)) {
-    bVar13 = false;
+  pcVar13 = CG_GetEntity(LVar12,(pcVar11->predictedPlayerState).clientNum);
+  if ((((pcVar13->flags & 1U) == 0) || ((pcVar13->nextState).eType != 1)) ||
+     (bVar16 = true, ((pcVar13->nextState).lerp.eFlags & 0x20U) != 0)) {
+    bVar16 = false;
   }
-  if ((bVar14) && (bVar13)) {
-    CG_AddPotentiallyVisibleName(uVar7,*(undefined4 *)(iVar8 + 0x150));
+  if ((bVar15) && (bVar16)) {
+    CG_AddPotentiallyVisibleName(LVar12,(pcVar11->predictedPlayerState).clientNum);
   }
   else {
-    iVar9 = (uVar7 * 0x12 + *(int *)(iVar8 + 0x150)) * 0x10;
-    (&DAT_82a1ed91)[iVar9] = (&DAT_82a1ed91)[iVar9] & 0x3f | 0x40;
-    (&DAT_82a1ed90)[iVar9] = (&DAT_82a1ed90)[iVar9] & 0xe1 | 6;
+    iVar8 = (pcVar11->predictedPlayerState).clientNum;
+    bVar1 = overheadFade[LVar12][iVar8].field_0x8;
+    overheadFade[LVar12][iVar8].field_0x9 = overheadFade[LVar12][iVar8].field_0x9 & 0x3f | 0x40;
+    overheadFade[LVar12][iVar8].field_0x8 = bVar1 & 0xe1 | 6;
   }
   local_a4 = 0;
-  if (0 < *(int *)(iVar1 + 0x330c)) {
-    puVar15 = (uint *)(iVar1 + 0x3314);
+  if (0 < psVar2->numEntities) {
+    peVar17 = psVar2->entities;
     do {
-      uVar2 = *puVar15;
-      if (0x7ff < uVar2) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar2,0x800);
+      uVar3 = peVar17->number;
+      if (0x7ff < uVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if (DAT_82a38328 <= uVar7) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar7,DAT_82a38328);
+      if ((ulonglong)(uint)cg_maxLocalClients <= (uVar10 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b9,0,
+                        "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
       }
-      iVar9 = (uVar7 * 0x800 + uVar2) * 0x1ec + DAT_82a3ce28;
-      if ((*(uint *)(iVar9 + 0x1c4) & 1) == 0) {
+      pcVar13 = cg_entitiesArray;
+      iVar8 = LVar12 * 0x800 + uVar3;
+      if ((cg_entitiesArray[iVar8].flags & 1U) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",
-                        0x3ee,0,0xffffffff82000f98,0xffffffff82012adc);
+                        0x3ee,0,"%s");
       }
-      if ((*(int *)(iVar9 + 200) == 1) && ((*(uint *)(iVar9 + 0xcc) & 0x20) == 0)) {
-        uVar3 = *(uint *)(iVar9 + 0x154);
-        if (0x11 < uVar3) {
+      if ((pcVar13[iVar8].nextState.eType == 1) &&
+         ((pcVar13[iVar8].nextState.lerp.eFlags & 0x20U) == 0)) {
+        uVar4 = pcVar13[iVar8].nextState.clientNum;
+        if (0x11 < uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp"
-                          ,0x3f5,0,0xffffffff82014c1c,uVar3,0x12);
+                          ,0x3f5,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        iVar12 = uVar3 * 0x590 + iVar8;
-        if (*(char *)(iVar9 + 3) == '\x02') {
-          cVar11 = CL_Demo_IsFreeCamera(uVar7);
-          if ((cVar11 == '\0') || (iVar4 == 3)) {
-            if (bVar6) {
-              if ((iVar4 == 0) || (bVar14 = true, iVar4 != *(int *)(iVar12 + 0x100bb4))) {
-                bVar14 = false;
+        if (pcVar13[iVar8].pose.cullIn == '\x02') {
+          bVar15 = CL_Demo_IsFreeCamera(LVar12);
+          if ((bVar15) && (tVar6 != TEAM_SPECTATOR)) {
+            CG_AddPotentiallyVisibleName(LVar12,uVar4);
+          }
+          else {
+            if (bVar9) {
+              if ((tVar6 == TEAM_FREE) ||
+                 (bVar15 = true, tVar6 != (pcVar11->bgs).clientinfo[uVar4].team)) {
+                bVar15 = false;
               }
-              if (bVar14) {
-                if (((*(uint *)(iVar8 + 0x10) & 0x1800) == 0) ||
-                   (bVar14 = true, uVar2 != *(uint *)(iVar8 + 0x150))) {
-                  bVar14 = false;
+              if (bVar15) {
+                if ((((pcVar11->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+                   (bVar15 = true, uVar3 != (pcVar11->predictedPlayerState).clientNum)) {
+                  bVar15 = false;
                 }
-                if ((!bVar14) || (*(int *)(iVar8 + 0x6b9a0) != 0)) {
-                  CG_AddPotentiallyVisibleName(uVar7,uVar3);
+                if ((!bVar15) || (pcVar11->renderingThirdPerson != 0)) {
+                  CG_AddPotentiallyVisibleName(LVar12,uVar4);
                   goto LAB_822bc3b4;
                 }
               }
             }
-            if (((!bVar5) ||
-                (iVar9 = *(int *)(iVar12 + 0x100bb4), iVar10 = Com_EnemyTeam(), iVar9 != iVar10)) ||
-               ((*(int *)(iVar12 + 0x100b88) != 0 &&
-                (cVar11 = BG_HasPerk(iVar12 + 0x100bcc,0x26), cVar11 != '\0')))) goto LAB_822bc378;
-            CG_AddPotentiallyVisibleName(uVar7,uVar3);
-          }
-          else {
-            CG_AddPotentiallyVisibleName(uVar7,uVar3);
+            if (((!bVar7) ||
+                (tVar5 = (pcVar11->bgs).clientinfo[uVar4].team, tVar14 = Com_EnemyTeam(tVar6),
+                tVar5 != tVar14)) ||
+               (((pcVar11->bgs).clientinfo[uVar4].infoValid != 0 &&
+                (bVar15 = BG_HasPerk((pcVar11->bgs).clientinfo[uVar4].perks,0x26), bVar15))))
+            goto LAB_822bc378;
+            CG_AddPotentiallyVisibleName(LVar12,uVar4);
           }
         }
         else {
 LAB_822bc378:
-          iVar9 = (uVar7 * 0x12 + uVar3) * 0x10;
-          (&DAT_82a1ed91)[iVar9] = (&DAT_82a1ed91)[iVar9] & 0x3f | 0x40;
-          (&DAT_82a1ed90)[iVar9] = (&DAT_82a1ed90)[iVar9] & 0xe1 | 6;
+          bVar1 = overheadFade[LVar12][uVar4].field_0x8;
+          overheadFade[LVar12][uVar4].field_0x9 =
+               overheadFade[LVar12][uVar4].field_0x9 & 0x3f | 0x40;
+          overheadFade[LVar12][uVar4].field_0x8 = bVar1 & 0xe1 | 6;
         }
       }
 LAB_822bc3b4:
-      puVar15 = puVar15 + 0x40;
+      peVar17 = peVar17 + 1;
       local_a4 = local_a4 + 1;
-    } while (local_a4 < *(int *)(iVar1 + 0x330c));
+    } while (local_a4 < psVar2->numEntities);
   }
   __restgprlr();
   return;
@@ -1022,48 +1142,55 @@ LAB_822bc3b4:
 
 // 822BC3E0  CG_StartDrawVisibleNames  (cgame_mp/cg_draw_mp.cpp:1060)
 
-void CG_StartDrawVisibleNames(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_StartDrawVisibleNames(LocalClientNum_t param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  int iVar3;
   ulonglong uVar4;
   longlong lVar5;
   ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined1 local_90 [144];
+  bool local_90 [144];
   
-  uVar3 = __savegprlr_17();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82014cf4);
-  CG_FindPotentiallyVisibleNames(uVar3);
-  iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-  local_90[0] = 0;
-  uVar1 = *(uint *)(&DAT_82a204a0 + iVar2);
-  uVar6 = (ulonglong)uVar1;
-  uVar8 = (ulonglong)*(uint *)(&DAT_82a204b0 + iVar2);
+  uVar4 = __savegprlr_17(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"start draw visible names");
+  CG_FindPotentiallyVisibleNames((LocalClientNum_t)uVar4);
+  iVar3 = (int)((uVar4 & 0xffffffff) << 2);
+  local_90[0] = false;
+  uVar1 = *(uint *)((int)overheadFadeGlob.visCount + iVar3);
+  uVar7 = (ulonglong)*(uint *)((int)overheadFadeGlob.locTracePriorVisIndex + iVar3);
   if (0 < (int)uVar1) {
-    lVar5 = (uVar3 + (uVar3 & 0x1fffffff) * 8 & 0x7fffffff) * 2;
-    uVar7 = uVar6;
+    lVar5 = (uVar4 + (uVar4 & 0x1fffffff) * 8 & 0x7fffffff) * 2;
+    uVar6 = (ulonglong)uVar1;
     do {
-      uVar4 = uVar8 + 1;
-      uVar8 = (ulonglong)(uVar1 >> 0x1f) -
-              (((uVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar4 < uVar6)) & uVar4;
-      uVar9 = (ulonglong)*(uint *)(&DAT_82a20380 + (int)((lVar5 + uVar8 & 0xffffffff) << 2));
-      if (0x7ff < uVar9) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar9,0x800,uVar4 - uVar6);
+      uVar7 = uVar7 + 1;
+      uVar7 = (ulonglong)(uVar1 >> 0x1f) -
+              (((uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar7 < uVar1)) & uVar7;
+      uVar2 = *(uint *)((int)overheadFadeGlob.visList[0] + (int)((lVar5 + uVar7 & 0xffffffff) << 2))
+      ;
+      if (0x7ff < (ulonglong)uVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if ((ulonglong)DAT_82a38328 <= (uVar3 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar3);
+      if ((ulonglong)(uint)cg_maxLocalClients <= (uVar4 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b9,0,
+                        "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
       }
       CG_StartVisibleNameTrace
-                (uVar3,(lVar5 + uVar9 & 0xfffffff) * 0x10 + -0x7d5e1278,
-                 ((uVar3 & 0x1fffff) * 0x800 + uVar9) * 0x1ec + (ulonglong)DAT_82a3ce28,uVar8,
-                 local_90,0x2807821);
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+                ((LocalClientNum_t)uVar4,
+                 (OverheadFade *)
+                 ((int)&overheadFade[0][0].lastTime +
+                 (int)((lVar5 + (ulonglong)uVar2 & 0xffffffff) << 4)),
+                 cg_entitiesArray + (int)((uVar4 & 0xffffffff) << 0xb) + uVar2,(int)uVar7,local_90,
+                 0x2807821);
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
   }
   PIXEndNamedEvent();
   __restgprlr_17();
@@ -1073,56 +1200,63 @@ void CG_StartDrawVisibleNames(void)
 
 // 822BC528  CG_FinishDrawVisibleNames  (cgame_mp/cg_draw_mp.cpp:1096)
 
-void CG_FinishDrawVisibleNames(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_FinishDrawVisibleNames(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  team_t tVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
+  undefined1 *puVar4;
+  undefined1 *puVar5;
   int iVar6;
-  undefined8 uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  ulonglong uVar7;
+  cg_s *pcVar8;
+  bool bVar10;
+  longlong lVar11;
+  longlong lVar12;
+  LocalClientNum_t LVar9;
   
-  uVar5 = __savegprlr_22();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82014d10);
-  iVar6 = CG_GetLocalClientGlobals(uVar5);
-  if (0x11 < *(uint *)(iVar6 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x457,0,0xffffffff82004624,*(uint *)(iVar6 + 0x150),0x12);
+  uVar7 = __savegprlr_22(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"finish draw visible names");
+  LVar9 = (LocalClientNum_t)uVar7;
+  pcVar8 = CG_GetLocalClientGlobals(LVar9);
+  if (0x11 < (uint)(pcVar8->predictedPlayerState).clientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x457
+                    ,0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = *(int *)(iVar6 + 0x76e7c);
-  uVar2 = *(undefined4 *)(*(int *)(iVar6 + 0x150) * 0x590 + iVar6 + 0x100bb4);
+  iVar1 = pcVar8->crosshairClientNum;
+  tVar2 = (pcVar8->bgs).clientinfo[(pcVar8->predictedPlayerState).clientNum].team;
   if (iVar1 != -1) {
-    CG_ApplyFadeAndDrawOverheadNames(uVar5,iVar1,uVar2,1);
+    CG_ApplyFadeAndDrawOverheadNames(LVar9,iVar1,tVar2,true);
   }
-  lVar9 = 0;
-  iVar1 = *(int *)(&DAT_82a204a0 + (int)((uVar5 & 0xffffffff) << 2));
+  lVar12 = 0;
+  iVar1 = *(int *)((int)overheadFadeGlob.visCount + (int)((uVar7 & 0xffffffff) << 2));
   if (0 < iVar1) {
-    lVar8 = (uVar5 + (uVar5 & 0x1fffffff) * 8 & 0x7fffffff) * 2;
+    lVar11 = (uVar7 + (uVar7 & 0x1fffffff) * 8 & 0x7fffffff) * 2;
     do {
-      iVar3 = *(int *)(&DAT_82a20380 + (int)((lVar8 + lVar9 & 0xffffffffU) << 2));
-      iVar4 = ((int)lVar8 + iVar3) * 0x10;
-      if (((&DAT_82a1ed90)[iVar4] & 0x40) != 0) {
-        CG_WaitVisibleNameTrace(uVar5,iVar3);
+      iVar3 = *(int *)((int)overheadFadeGlob.visList[0] +
+                      (int)((lVar11 + lVar12 & 0xffffffffU) << 2));
+      iVar6 = (int)lVar11 + iVar3;
+      if (overheadFade[0][iVar6].locTraceThisFrame != '\0') {
+        CG_WaitVisibleNameTrace(LVar9,iVar3);
       }
-      if (iVar3 != *(int *)(iVar6 + 0x76e7c)) {
-        if (((&DAT_82a1ed91)[iVar4] & 0x80) == 0) {
-          if ((((&DAT_82a1ed90)[iVar4] & 0x10) != 0) || (((&DAT_82a1ed90)[iVar4] & 8) != 0))
-          goto LAB_822bc65c;
-LAB_822bc688:
-          uVar7 = 0;
+      if (iVar3 != pcVar8->crosshairClientNum) {
+        if ((((overheadFade[0][iVar6].bboxAcceptHead == '\0') &&
+             (overheadFade[0][iVar6].locAcceptHead == '\0')) &&
+            (overheadFade[0][iVar6].locAcceptPelvis == '\0')) ||
+           (((overheadFade[0][iVar6].worldRejectHead != '\0' &&
+             (overheadFade[0][iVar6].worldRejectPelvis != '\0')) ||
+            (bVar10 = true, overheadFade[0][iVar6].fxRejectHead != '\0')))) {
+          bVar10 = false;
         }
-        else {
-LAB_822bc65c:
-          if (((((&DAT_82a1ed90)[iVar4] & 4) != 0) && (((&DAT_82a1ed90)[iVar4] & 2) != 0)) ||
-             (uVar7 = 1, ((&DAT_82a1ed91)[iVar4] & 0x40) != 0)) goto LAB_822bc688;
-        }
-        CG_ApplyFadeAndDrawOverheadNames(uVar5,iVar3,uVar2,uVar7);
+        CG_ApplyFadeAndDrawOverheadNames(LVar9,iVar3,tVar2,bVar10);
       }
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < iVar1);
+      lVar12 = lVar12 + 1;
+    } while ((int)lVar12 < iVar1);
   }
   PIXEndNamedEvent();
   __restgprlr_22();
@@ -1132,157 +1266,169 @@ LAB_822bc65c:
 
 // 822BC6B8  CG_DrawVisibleNames  (cgame_mp/cg_draw_mp.cpp:1147)
 
-void CG_DrawVisibleNames(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawVisibleNames(LocalClientNum_t param_1)
 
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  snapshot_s *psVar1;
+  uint uVar2;
+  team_t tVar3;
+  team_t tVar4;
+  centity_s *pcVar5;
   bool bVar6;
   bool bVar7;
   ulonglong uVar8;
-  int iVar9;
-  char cVar11;
-  int iVar10;
-  char cVar12;
-  char cVar13;
-  undefined8 uVar14;
-  uint *puVar15;
-  int iVar16;
+  cg_s *pcVar9;
+  bool bVar12;
+  team_t tVar11;
+  bool bVar13;
+  bool bVar14;
+  bool bVar15;
+  bool bVar16;
   bool bVar17;
-  bool bVar18;
-  ulonglong uVar19;
-  longlong lVar20;
+  entityState_s *peVar18;
+  int iVar19;
+  LocalClientNum_t LVar10;
   
-  uVar8 = __savegprlr();
-  iVar9 = CG_GetLocalClientGlobals();
-  iVar2 = *(int *)(iVar9 + 0x335c);
-  if (0x11 < *(uint *)(iVar9 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x487,0,0xffffffff82004624,*(uint *)(iVar9 + 0x150),0x12);
+  uVar8 = (ulonglong)(int)param_1;
+  __savegprlr();
+  LVar10 = (LocalClientNum_t)uVar8;
+  pcVar9 = CG_GetLocalClientGlobals(LVar10);
+  psVar1 = pcVar9->nextSnap;
+  if (0x11 < (uint)(pcVar9->predictedPlayerState).clientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x487
+                    ,0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar13 = *(char *)(DAT_82a3d4b4 + 0xc);
-  iVar3 = *(int *)(*(int *)(iVar9 + 0x150) * 0x590 + iVar9 + 0x100bb4);
-  cVar11 = CG_PlayerHasAutoSpot(uVar8);
-  cVar1 = *(char *)(iVar9 + 0x108039);
-  if (0x11 < *(uint *)(iVar9 + 0x150)) {
-    MyAssertHandler(0xffffffff82014bb0,0x492,0,0xffffffff82002658,*(uint *)(iVar9 + 0x150),0x12);
+  bVar16 = (cg_drawFriendlyNames->current).enabled;
+  tVar3 = (pcVar9->bgs).clientinfo[(pcVar9->predictedPlayerState).clientNum].team;
+  bVar12 = CG_PlayerHasAutoSpot(LVar10);
+  bVar17 = (pcVar9->cvsData).remoteMissileCam;
+  if (0x11 < (uint)(pcVar9->predictedPlayerState).clientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",0x492
+                    ,0,
+                    "cgameGlob->predictedPlayerState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
+                   );
   }
-  if (((((*(char *)(DAT_82a3d4b8 + 0xc) == '\0') || (*(int *)(iVar9 + 0x6b9a0) != 0)) ||
-       (iVar16 = *(int *)(iVar9 + 0x76e7c), iVar16 == -1)) ||
-      ((0x12 < iVar16 || (*(int *)(*(int *)(iVar9 + 0x150) * 0x590 + iVar9 + 0x100b88) == 0)))) ||
-     (bVar7 = true, *(int *)(iVar16 * 0x590 + iVar9 + 0x100b88) == 0)) {
+  if ((((((cg_drawCrosshairNames->current).enabled == false) || (pcVar9->renderingThirdPerson != 0))
+       || (iVar19 = pcVar9->crosshairClientNum, iVar19 == -1)) ||
+      ((0x12 < iVar19 ||
+       ((pcVar9->bgs).clientinfo[(pcVar9->predictedPlayerState).clientNum].infoValid == 0)))) ||
+     (bVar7 = true, (pcVar9->bgs).clientinfo[iVar19].infoValid == 0)) {
     bVar7 = false;
   }
-  iVar16 = 0;
-  if (0 < *(int *)(iVar2 + 0x330c)) {
-    puVar15 = (uint *)(iVar2 + 0x3314);
+  iVar19 = 0;
+  if (0 < psVar1->numEntities) {
+    peVar18 = psVar1->entities;
     do {
-      uVar19 = (ulonglong)*puVar15;
-      if (0x7ff < uVar19) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,
-                        "entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)",uVar19,0x800
-                       );
+      uVar2 = peVar18->number;
+      if (0x7ff < uVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if ((ulonglong)DAT_82a38328 <= (uVar8 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,
-                        "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)",
-                        uVar8,DAT_82a38328);
+      if ((ulonglong)(uint)cg_maxLocalClients <= (uVar8 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                        0x6b9,0,
+                        "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
       }
-      bVar17 = false;
-      lVar20 = ((uVar8 & 0x1fffff) * 0x800 + uVar19) * 0x1ec + (ulonglong)DAT_82a3ce28;
-      iVar5 = (int)lVar20;
-      if ((*(uint *)(iVar5 + 0x1c4) & 1) == 0) {
+      bVar6 = false;
+      pcVar5 = cg_entitiesArray + LVar10 * 0x800 + uVar2;
+      if ((pcVar5->flags & 1U) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp",
-                        0x4a3,0,0xffffffff82000f98,0xffffffff82012adc);
+                        0x4a3,0,"%s");
       }
-      if ((*(int *)(iVar5 + 200) == 1) && ((*(uint *)(iVar5 + 0xcc) & 0x20) == 0)) {
-        if (0x11 < *(uint *)(iVar5 + 0x154)) {
+      if (((pcVar5->nextState).eType == 1) && (((pcVar5->nextState).lerp.eFlags & 0x20U) == 0)) {
+        if (0x11 < (uint)(pcVar5->nextState).clientNum) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_draw_mp.cpp"
-                          ,0x4a7,0,0xffffffff82014d30,*(uint *)(iVar5 + 0x154),0x12);
+                          ,0x4a7,0,
+                          "cent->nextState.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
+                         );
         }
-        if ((iVar3 == 0) ||
-           (bVar18 = true, iVar3 != *(int *)(*(int *)(iVar5 + 0x154) * 0x590 + iVar9 + 0x100bb4))) {
-          bVar18 = false;
+        if ((tVar3 == TEAM_FREE) ||
+           (bVar15 = true, tVar3 != (pcVar9->bgs).clientinfo[(pcVar5->nextState).clientNum].team)) {
+          bVar15 = false;
         }
-        iVar4 = *(int *)(*(int *)(iVar5 + 0x154) * 0x590 + iVar9 + 0x100bb4);
-        iVar10 = Com_EnemyTeam(iVar3);
+        tVar4 = (pcVar9->bgs).clientinfo[(pcVar5->nextState).clientNum].team;
+        tVar11 = Com_EnemyTeam(tVar3);
         if (bVar7) {
-          bVar17 = *(int *)(iVar9 + 0x76e7c) == *(int *)(iVar5 + 0x154);
+          bVar6 = pcVar9->crosshairClientNum == (pcVar5->nextState).clientNum;
         }
-        if ((cVar1 == '\0') && (bVar17 == false)) {
-          if (((*(uint *)(iVar9 + 0x10) & 0x1800) == 0) ||
-             (bVar17 = true, *(int *)(iVar5 + 0xc4) != *(int *)(iVar9 + 0x150))) {
-            bVar17 = false;
-          }
-          if ((!bVar17) || (bVar17 = false, *(int *)(iVar9 + 0x6b9a0) != 0)) {
-            bVar17 = true;
-          }
-          if ((cVar13 == '\0') || (!bVar18)) {
-LAB_822bca44:
-            bVar18 = false;
-          }
-          else {
-            cVar12 = CG_CanSeePlayer(uVar8,lVar20,0x2807821);
-            bVar18 = true;
-            if (cVar12 == '\0') goto LAB_822bca44;
-          }
-          if ((cVar11 == '\0') || (iVar10 != iVar4)) {
-LAB_822bca7c:
+        if ((bVar17 == false) && (!bVar6)) {
+          if ((((pcVar9->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+             (bVar6 = true, (pcVar5->nextState).number != (pcVar9->predictedPlayerState).clientNum))
+          {
             bVar6 = false;
           }
-          else {
-            cVar12 = CG_CanAutospotPlayer(uVar8,lVar20);
+          if ((!bVar6) || (bVar6 = false, pcVar9->renderingThirdPerson != 0)) {
             bVar6 = true;
-            if (cVar12 == '\0') goto LAB_822bca7c;
           }
-          if (((bVar17) && (iVar3 != 3)) && ((bVar18 || (bVar6)))) {
-            bVar17 = true;
+          if ((bVar16 == false) || (!bVar15)) {
+LAB_822bca44:
+            bVar15 = false;
           }
           else {
-            bVar17 = false;
+            bVar13 = CG_CanSeePlayer(LVar10,pcVar5,0x2807821);
+            bVar15 = true;
+            if (!bVar13) goto LAB_822bca44;
           }
-          cVar12 = CL_Demo_IsFreeCamera(uVar8);
-          if (cVar12 != '\0') {
-            if (iVar3 != 3) {
-              cVar12 = CG_CanSeePlayer(uVar8,lVar20,0x2807821);
-              bVar17 = true;
-              if (cVar12 != '\0') goto LAB_822bcb08;
+          if ((bVar12) && (tVar11 == tVar4)) {
+            bVar14 = CG_CanAutospotPlayer(LVar10,pcVar5);
+            bVar13 = true;
+            if (!bVar14) goto LAB_822bca7c;
+          }
+          else {
+LAB_822bca7c:
+            bVar13 = false;
+          }
+          if (((bVar6) && (tVar3 != TEAM_SPECTATOR)) && ((bVar15 || (bVar13)))) {
+            bVar6 = true;
+          }
+          else {
+            bVar6 = false;
+          }
+          bVar15 = CL_Demo_IsFreeCamera(LVar10);
+          if (bVar15) {
+            if (tVar3 != TEAM_SPECTATOR) {
+              bVar15 = CG_CanSeePlayer(LVar10,pcVar5,0x2807821);
+              bVar6 = true;
+              if (bVar15) goto LAB_822bcb08;
             }
-            bVar17 = false;
+            bVar6 = false;
           }
         }
 LAB_822bcb08:
-        CG_ApplyFadeAndDrawOverheadNames(uVar8,*(undefined4 *)(iVar5 + 0x154),iVar3,bVar17);
+        CG_ApplyFadeAndDrawOverheadNames(LVar10,(pcVar5->nextState).clientNum,tVar3,bVar6);
       }
-      iVar16 = iVar16 + 1;
-      puVar15 = puVar15 + 0x40;
-    } while (iVar16 < *(int *)(iVar2 + 0x330c));
+      iVar19 = iVar19 + 1;
+      peVar18 = peVar18 + 1;
+    } while (iVar19 < psVar1->numEntities);
   }
-  cVar13 = CL_Demo_IsFollowCamera(uVar8);
-  if ((cVar13 == '\0') && (cVar13 = CL_Demo_IsFreeCamera(uVar8), cVar13 == '\0')) goto LAB_822bcc10;
-  uVar19 = (ulonglong)*(uint *)(iVar9 + 0x150);
-  if (0x7ff < uVar19) {
-    MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,
-                    "entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)",uVar19,0x800);
+  bVar16 = CL_Demo_IsFollowCamera(LVar10);
+  if ((!bVar16) && (bVar16 = CL_Demo_IsFreeCamera(LVar10), !bVar16)) goto LAB_822bcc10;
+  uVar2 = (pcVar9->predictedPlayerState).clientNum;
+  if (0x7ff < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",0x6b4,
+                    0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)DAT_82a38328 <= (uVar8 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,
-                    "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)",uVar8);
+  if ((ulonglong)(uint)cg_maxLocalClients <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",0x6b9,
+                    0,"localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
   }
-  lVar20 = ((uVar8 & 0x1fffff) * 0x800 + uVar19) * 0x1ec + (ulonglong)DAT_82a3ce28;
-  if ((*(uint *)((int)lVar20 + 0x1c4) & 1) == 0) goto LAB_822bcc10;
-  if (iVar3 == 3) {
+  if ((cg_entitiesArray[(int)((uVar8 & 0xffffffff) << 0xb) + uVar2].flags & 1U) == 0)
+  goto LAB_822bcc10;
+  if (tVar3 == TEAM_SPECTATOR) {
 LAB_822bcbf8:
-    uVar14 = 0;
+    bVar17 = false;
   }
   else {
-    cVar13 = CG_CanSeePlayer(uVar8,lVar20,0x2807821);
-    uVar14 = 1;
-    if (cVar13 == '\0') goto LAB_822bcbf8;
+    bVar16 = CG_CanSeePlayer(LVar10,cg_entitiesArray + (int)((uVar8 & 0xffffffff) << 0xb) + uVar2,
+                             0x2807821);
+    bVar17 = true;
+    if (!bVar16) goto LAB_822bcbf8;
   }
-  CG_ApplyFadeAndDrawOverheadNames(uVar8,*(undefined4 *)(iVar9 + 0x150),iVar3,uVar14);
+  CG_ApplyFadeAndDrawOverheadNames(LVar10,(pcVar9->predictedPlayerState).clientNum,tVar3,bVar17);
 LAB_822bcc10:
   __restgprlr();
   return;
@@ -1291,34 +1437,23 @@ LAB_822bcc10:
 
 // 822BCC18  CG_CheckPlayerMovement  (cgame_mp/cg_draw_mp.cpp:1242)
 
-undefined8 CG_CheckPlayerMovement(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int CG_CheckPlayerMovement(usercmd_s param_1,usercmd_s param_2)
 
 {
-  byte bVar1;
-  byte bVar2;
-  undefined8 in_r10;
-  byte *pbVar3;
-  byte *pbVar4;
-  undefined8 uStack00000018;
-  undefined8 uStack00000020;
-  undefined8 uStack00000048;
-  char cStack0000005c;
-  char cStack0000005d;
+  longlong lVar1;
+  Weapon *pWVar2;
+  int *piVar3;
   
-  pbVar4 = (byte *)&stack0x00000018;
-  uStack00000018 = param_2;
-  uStack00000020 = param_3;
-  uStack00000048 = in_r10;
-  pbVar3 = (byte *)&stack0x00000048;
+  piVar3 = param_1.angles + 2;
+  pWVar2 = &param_2.weapon;
   do {
-    bVar1 = *pbVar4;
-    bVar2 = *pbVar3;
-    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar4 = pbVar4 + 1;
-    pbVar3 = pbVar3 + 1;
-  } while (pbVar4 != (byte *)((int)register0x0000000c + 0x24));
-  if ((((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) && (cStack0000005c == '\0')) &&
-     (cStack0000005d == '\0')) {
+    lVar1 = (ulonglong)*(byte *)piVar3 - (ulonglong)(pWVar2->_s_0).padding;
+    if (lVar1 != 0) break;
+    piVar3 = (int *)((int)piVar3 + 1);
+    pWVar2 = (Weapon *)((int)pWVar2 + 1);
+  } while (piVar3 != (int *)&param_1.forwardmove);
+  if ((((int)lVar1 == 0) && (param_2.remoteControlMove[0] == '\0')) &&
+     (param_2.remoteControlMove[1] == '\0')) {
     return 0;
   }
   return 1;
@@ -1327,73 +1462,91 @@ undefined8 CG_CheckPlayerMovement(undefined8 param_1,undefined8 param_2,undefine
 
 // 822BCC90  CG_CheckPlayerTryReload  (cgame_mp/cg_draw_mp.cpp:1278)
 
-undefined8 CG_CheckPlayerTryReload(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CheckPlayerTryReload(LocalClientNum_t param_1,int param_2)
 
 {
+  cg_s *pcVar1;
   int iVar2;
-  undefined8 uVar1;
   
-  if ((((param_2 & 0x30) == 0) ||
-      (iVar2 = CG_GetLocalClientGlobals(), (*(uint *)(iVar2 + 0xc) & 4) != 0)) ||
-     (uVar1 = 1, (*(uint *)(iVar2 + 0xf8) & 0x3800) != 0)) {
-    uVar1 = 0;
+  if ((((param_2 & 0x30U) == 0) ||
+      (pcVar1 = CG_GetLocalClientGlobals(param_1),
+      ((pcVar1->predictedPlayerState).pm_flags & 4U) != 0)) ||
+     (iVar2 = 1, ((pcVar1->predictedPlayerState).eFlags & 0x3800U) != 0)) {
+    iVar2 = 0;
   }
-  return uVar1;
+  return iVar2;
 }
 
 
 // 822BCCE8  CG_CheckPlayerFireNonTurret  (cgame_mp/cg_draw_mp.cpp:1298)
 
-undefined8 CG_CheckPlayerFireNonTurret(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CheckPlayerFireNonTurret(LocalClientNum_t param_1,int param_2)
 
 {
   bool bVar1;
+  cg_s *pcVar2;
   int iVar3;
-  undefined8 uVar2;
   
-  iVar3 = CG_GetLocalClientGlobals();
-  if (((param_2 & 1) == 0) && (((param_2 & 0x800) == 0 || (*(int *)(iVar3 + 0x390) != 1)))) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (((param_2 & 1U) == 0) &&
+     (((param_2 & 0x800U) == 0 ||
+      ((pcVar2->predictedPlayerState).weapCommon.lastWeaponHand != WEAPON_HAND_LEFT)))) {
     bVar1 = false;
   }
   else {
     bVar1 = true;
   }
-  if ((!bVar1) || (uVar2 = 1, (*(uint *)(iVar3 + 0xf8) & 0x3800) != 0)) {
-    uVar2 = 0;
+  if ((!bVar1) || (iVar3 = 1, ((pcVar2->predictedPlayerState).eFlags & 0x3800U) != 0)) {
+    iVar3 = 0;
   }
-  return uVar2;
+  return iVar3;
 }
 
 
 // 822BCD68  CG_CheckPlayerWeaponUsage  (cgame_mp/cg_draw_mp.cpp:1320)
 
-undefined8 CG_CheckPlayerWeaponUsage(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CheckPlayerWeaponUsage(LocalClientNum_t param_1,int param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  cg_s *pcVar2;
   
-  iVar2 = CG_CheckPlayerFireNonTurret();
-  if ((iVar2 == 0) &&
-     ((((param_2 & 0x30) == 0 ||
-       (iVar2 = CG_GetLocalClientGlobals(param_1), (*(uint *)(iVar2 + 0xc) & 4) != 0)) ||
-      ((*(uint *)(iVar2 + 0xf8) & 0x3800) != 0)))) {
-    uVar1 = 0;
+  iVar1 = CG_CheckPlayerFireNonTurret(param_1,param_2);
+  if ((iVar1 == 0) &&
+     ((((param_2 & 0x30U) == 0 ||
+       (pcVar2 = CG_GetLocalClientGlobals(param_1),
+       ((pcVar2->predictedPlayerState).pm_flags & 4U) != 0)) ||
+      (((pcVar2->predictedPlayerState).eFlags & 0x3800U) != 0)))) {
+    iVar1 = 0;
   }
   else {
     CG_MenuShowNotify(param_1,1);
-    uVar1 = 1;
+    iVar1 = 1;
   }
-  return uVar1;
+  return iVar1;
 }
 
 
 // 822BCDF8  CG_CheckPlayerOffHandUsage  (cgame_mp/cg_draw_mp.cpp:1331)
 
-undefined8 CG_CheckPlayerOffHandUsage(undefined8 param_1,uint param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_CheckPlayerOffHandUsage(LocalClientNum_t param_1,int param_2)
 
 {
-  if ((param_2 & 0xc000) != 0) {
+  if ((param_2 & 0xc000U) != 0) {
     CG_MenuShowNotify(param_1,3);
     return 1;
   }
@@ -1403,60 +1556,50 @@ undefined8 CG_CheckPlayerOffHandUsage(undefined8 param_1,uint param_2)
 
 // 822BCE40  CG_CheckPlayerMiscInput  (cgame_mp/cg_draw_mp.cpp:1342)
 
-ulonglong CG_CheckPlayerMiscInput(ulonglong param_1)
+int CG_CheckPlayerMiscInput(int param_1)
 
 {
-  return (param_1 & 0xfffffcff) << 0x20 | param_1 & 0xffffecff;
+  return param_1 & 0xffffecff;
 }
 
 
 // 822BCE50  CG_CheckForPlayerInput  (cgame_mp/cg_draw_mp.cpp:1349)
 
-void CG_CheckForPlayerInput(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_CheckForPlayerInput(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  longlong lVar4;
-  int iVar5;
-  int iVar6;
-  undefined1 auStack_b0 [32];
-  undefined4 local_90;
-  uint uStack_8c;
-  undefined8 local_88;
-  undefined8 local_80;
-  undefined8 local_78;
-  undefined8 local_70;
-  uint local_68;
-  undefined4 local_60;
-  uint uStack_5c;
-  undefined8 local_58;
-  undefined1 auStack_50 [80];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  usercmd_s in_stack_ffffff08;
+  usercmd_s in_stack_ffffff34;
+  usercmd_s local_90;
+  usercmd_s local_60 [2];
   
-  uVar3 = __savegprlr_28();
-  lVar4 = CL_GetCurrentCmdNumber();
-  if (1 < (int)lVar4) {
-    CL_GetUserCmd(uVar3,lVar4 + -1,&local_90);
-    CL_GetUserCmd(uVar3,lVar4,&local_60);
-    uVar2 = uStack_5c;
-    uVar1 = uStack_5c ^ uStack_8c;
-    memcpy(auStack_b0,auStack_50,0x1c);
-    iVar5 = CG_CheckPlayerMovement
-                      (CONCAT44(local_90,uStack_8c),local_88,local_80,local_78,local_70,
-                       (ulonglong)local_68 << 0x20,CONCAT44(local_60,uStack_5c),local_58);
-    iVar6 = CG_CheckPlayerWeaponUsage(uVar3,uVar2);
-    if (iVar6 != 0) {
-      iVar5 = 1;
+  LVar1 = __savegprlr_28(param_1);
+  iVar2 = CL_GetCurrentCmdNumber(LVar1);
+  if (1 < iVar2) {
+    CL_GetUserCmd(LVar1,iVar2 + -1,&local_90);
+    CL_GetUserCmd(LVar1,iVar2,local_60);
+    iVar2 = local_60[0].buttons;
+    uVar4 = local_60[0].buttons ^ local_90.buttons;
+    memcpy();
+    iVar3 = CG_CheckPlayerMovement(in_stack_ffffff08,in_stack_ffffff34);
+    iVar2 = CG_CheckPlayerWeaponUsage(LVar1,iVar2);
+    if (iVar2 != 0) {
+      iVar3 = 1;
     }
-    if ((uStack_5c & 0xc000) != 0) {
-      CG_MenuShowNotify(uVar3,3);
-      CG_MenuShowNotify(uVar3,2);
+    if ((local_60[0].buttons & 0xc000U) != 0) {
+      CG_MenuShowNotify(LVar1,3);
+      CG_MenuShowNotify(LVar1,2);
       __restgprlr_28();
       return;
     }
-    if ((iVar5 != 0) || ((uVar1 & 0xffffecff) != 0)) {
-      CG_MenuShowNotify(uVar3,2);
+    if ((iVar3 != 0) || ((uVar4 & 0xffffecff) != 0)) {
+      CG_MenuShowNotify(LVar1,2);
     }
   }
   __restgprlr_28();
@@ -1466,38 +1609,42 @@ void CG_CheckForPlayerInput(void)
 
 // 822BCF50  CG_CheckHudHealthDisplay  (cgame_mp/cg_draw_mp.cpp:1392)
 
-void CG_CheckHudHealthDisplay(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudHealthDisplay(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  int *piVar3;
-  double dVar4;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  int iVar3;
+  int *piVar4;
+  float fVar5;
   
-  lVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  dVar4 = (double)CG_CalcPlayerHealth();
-  if (dVar4 < (double)*(float *)(DAT_82a4d20c + 0xc)) {
-    CG_MenuShowNotify(lVar1,0);
+  LVar1 = __savegprlr_29(param_1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  fVar5 = CG_CalcPlayerHealth(&pcVar2->predictedPlayerState);
+  if (fVar5 < (hud_health_startpulse_injured->current).value) {
+    CG_MenuShowNotify(LVar1,0);
     __restgprlr_29();
     return;
   }
-  if (*(float *)(DAT_82a4d224 + 0xc) != 0.0) {
-    piVar3 = (int *)(iVar2 + 0x7980c);
-    if (*piVar3 != 0) {
-      if (*(float *)(DAT_82a4d224 + 0xc) * 1000.0 <
-          (float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *piVar3)) {
-        iVar2 = CL_GetLocalClientActiveCount();
-        lVar1 = lVar1 * 0x2284 + -0x7d5d07e8;
-        if (iVar2 == 1) {
-          Menus_HideByName(lVar1,0xffffffff82014d84);
-          *piVar3 = 0;
-          __restgprlr_29();
-          return;
-        }
-        Menus_HideByName(lVar1,0xffffffff82014d78);
-        *piVar3 = 0;
+  if ((hud_fade_healthbar->current).value != 0.0) {
+    piVar4 = &pcVar2->healthFadeTime;
+    if ((*piVar4 != 0) &&
+       ((hud_fade_healthbar->current).value * 1000.0 < (float)(longlong)(pcVar2->time - *piVar4))) {
+      iVar3 = CL_GetLocalClientActiveCount();
+      if (iVar3 == 1) {
+        Menus_HideByName(cgDC + LVar1,"Health");
+        *piVar4 = 0;
+        __restgprlr_29();
+        return;
       }
+      Menus_HideByName(cgDC + LVar1,"Health_mp");
+      *piVar4 = 0;
     }
   }
   __restgprlr_29();
@@ -1507,37 +1654,42 @@ void CG_CheckHudHealthDisplay(void)
 
 // 822BD050  CG_CheckHudAmmoDisplay  (cgame_mp/cg_draw_mp.cpp:1417)
 
-void CG_CheckHudAmmoDisplay(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudAmmoDisplay(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  char cVar3;
-  int *piVar4;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  bool bVar4;
+  int iVar3;
+  int *piVar5;
   
-  lVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  cVar3 = CG_CheckPlayerForLowAmmo();
-  if ((cVar3 != '\0') || (cVar3 = CG_CheckPlayerForLowClip(iVar2,0), cVar3 != '\0')) {
-    CG_MenuShowNotify(lVar1,1);
+  LVar1 = __savegprlr_29(param_1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  bVar4 = CG_CheckPlayerForLowAmmo(pcVar2);
+  if ((bVar4) || (bVar4 = CG_CheckPlayerForLowClip(pcVar2,WEAPON_HAND_DEFAULT), bVar4)) {
+    CG_MenuShowNotify(LVar1,1);
   }
-  if (*(float *)(DAT_82a4d208 + 0xc) != 0.0) {
-    piVar4 = (int *)(iVar2 + 0x79810);
-    if (*piVar4 != 0) {
-      if (*(float *)(DAT_82a4d208 + 0xc) * 1000.0 <
-          (float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *piVar4)) {
-        iVar2 = CL_GetLocalClientActiveCount();
-        if (iVar2 == 1) {
-          lVar1 = lVar1 * 0x2284 + -0x7d5d07e8;
-          Menus_HideByName(lVar1,0xffffffff82014db0);
-          Menus_HideByName(lVar1,0xffffffff82014d9c);
-          *piVar4 = 0;
-          __restgprlr_29();
-          return;
-        }
-        Menus_HideByName(lVar1 * 0x2284 + -0x7d5d07e8,0xffffffff82014d8c);
-        *piVar4 = 0;
+  if ((hud_fade_ammodisplay->current).value != 0.0) {
+    piVar5 = &pcVar2->ammoFadeTime;
+    if ((*piVar5 != 0) &&
+       ((hud_fade_ammodisplay->current).value * 1000.0 < (float)(longlong)(pcVar2->time - *piVar5)))
+    {
+      iVar3 = CL_GetLocalClientActiveCount();
+      if (iVar3 == 1) {
+        Menus_HideByName(cgDC + LVar1,"weaponinfo");
+        Menus_HideByName(cgDC + LVar1,"weaponinfo_lowdef");
+        *piVar5 = 0;
+        __restgprlr_29();
+        return;
       }
+      Menus_HideByName(cgDC + LVar1,"weaponinfo_mp");
+      *piVar5 = 0;
     }
   }
   __restgprlr_29();
@@ -1547,29 +1699,33 @@ void CG_CheckHudAmmoDisplay(void)
 
 // 822BD170  CG_CheckHudCompassDisplay  (cgame_mp/cg_draw_mp.cpp:1447)
 
-void CG_CheckHudCompassDisplay(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudCompassDisplay(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   int iVar2;
-  undefined8 uVar3;
+  char *pcVar3;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(float *)(DAT_82a4d218 + 0xc) != 0.0) {
-    iVar2 = *(int *)(iVar1 + 0x79808);
-    if (iVar2 != 0) {
-      if (*(float *)(DAT_82a4d218 + 0xc) * 1000.0 <
-          (float)(longlong)(*(int *)(iVar1 + 0x6b98c) - iVar2)) {
-        iVar2 = CL_GetLocalClientActiveCount();
-        if (iVar2 == 1) {
-          uVar3 = 0xffffffff82014dc8;
-        }
-        else {
-          uVar3 = 0xffffffff82014dbc;
-        }
-        Menus_HideByName(param_1 * 0x2284 + -0x7d5d07e8,uVar3);
-        *(int *)(iVar1 + 0x79808) = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((hud_fade_compass->current).value != 0.0) {
+    iVar2 = pcVar1->compassFadeTime;
+    if ((iVar2 != 0) &&
+       ((hud_fade_compass->current).value * 1000.0 < (float)(longlong)(pcVar1->time - iVar2))) {
+      iVar2 = CL_GetLocalClientActiveCount();
+      if (iVar2 == 1) {
+        pcVar3 = "Compass";
       }
+      else {
+        pcVar3 = "Compass_mp";
+      }
+      Menus_HideByName(cgDC + param_1,pcVar3);
+      pcVar1->compassFadeTime = 0;
     }
   }
   return;
@@ -1578,7 +1734,9 @@ void CG_CheckHudCompassDisplay(longlong param_1)
 
 // 822BD248  CG_CheckHudStanceDisplay  (cgame_mp/cg_draw_mp.cpp:1468)
 
-void CG_CheckHudStanceDisplay(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_CheckHudStanceDisplay(LocalClientNum_t param_1)
 
 {
   return;
@@ -1587,43 +1745,48 @@ void CG_CheckHudStanceDisplay(void)
 
 // 822BD250  CG_CheckHudSprintDisplay  (cgame_mp/cg_draw_mp.cpp:1502)
 
-void CG_CheckHudSprintDisplay(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudSprintDisplay(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
   int iVar3;
   int iVar4;
   int *piVar5;
   
-  lVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar2 + 4) != 8) {
-    iVar3 = BG_GetMaxSprintTime();
-    iVar4 = PM_GetSprintLeft(iVar2,*(undefined4 *)(iVar2 + 0x6b98c));
+  LVar1 = __savegprlr_28(param_1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if ((pcVar2->predictedPlayerState).pm_type != 8) {
+    iVar3 = BG_GetMaxSprintTime(&pcVar2->predictedPlayerState);
+    iVar4 = PM_GetSprintLeft(&pcVar2->predictedPlayerState,pcVar2->time);
     if (iVar4 < iVar3) {
-      CG_MenuShowNotify(lVar1,5);
+      CG_MenuShowNotify(LVar1,5);
     }
   }
-  if ((*(int *)(iVar2 + 4) != 8) && (*(int *)(iVar2 + 0x218) < *(int *)(iVar2 + 0x214))) {
-    CG_MenuShowNotify(lVar1,5);
+  if (((pcVar2->predictedPlayerState).pm_type != 8) &&
+     ((pcVar2->predictedPlayerState).sprintState.lastSprintEnd <
+      (pcVar2->predictedPlayerState).sprintState.lastSprintStart)) {
+    CG_MenuShowNotify(LVar1,5);
   }
-  if (*(float *)(DAT_82a4d1ec + 0xc) != 0.0) {
-    piVar5 = (int *)(iVar2 + 0x79814);
-    if (*piVar5 != 0) {
-      if (*(float *)(DAT_82a4d1ec + 0xc) * 1000.0 <
-          (float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *piVar5)) {
-        iVar2 = CL_GetLocalClientActiveCount();
-        lVar1 = lVar1 * 0x2284 + -0x7d5d07e8;
-        if (iVar2 == 1) {
-          Menus_HideByName(lVar1,0xffffffff82014de0);
-          *piVar5 = 0;
-          __restgprlr_28();
-          return;
-        }
-        Menus_HideByName(lVar1,0xffffffff82014dd0);
+  if ((hud_fade_sprint->current).value != 0.0) {
+    piVar5 = &pcVar2->sprintFadeTime;
+    if ((*piVar5 != 0) &&
+       ((hud_fade_sprint->current).value * 1000.0 < (float)(longlong)(pcVar2->time - *piVar5))) {
+      iVar3 = CL_GetLocalClientActiveCount();
+      if (iVar3 == 1) {
+        Menus_HideByName(cgDC + LVar1,"sprintMeter");
         *piVar5 = 0;
+        __restgprlr_28();
+        return;
       }
+      Menus_HideByName(cgDC + LVar1,"sprintMeter_mp");
+      *piVar5 = 0;
     }
   }
   __restgprlr_28();
@@ -1633,29 +1796,33 @@ void CG_CheckHudSprintDisplay(void)
 
 // 822BD380  CG_CheckHudOffHandDisplay  (cgame_mp/cg_draw_mp.cpp:1543)
 
-void CG_CheckHudOffHandDisplay(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudOffHandDisplay(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   int iVar2;
-  undefined8 uVar3;
+  char *pcVar3;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(float *)(DAT_82a4d1fc + 0xc) != 0.0) {
-    iVar2 = *(int *)(iVar1 + 0x79818);
-    if (iVar2 != 0) {
-      if (*(float *)(DAT_82a4d1fc + 0xc) * 1000.0 <
-          (float)(longlong)(*(int *)(iVar1 + 0x6b98c) - iVar2)) {
-        iVar2 = CL_GetLocalClientActiveCount();
-        if (iVar2 == 1) {
-          uVar3 = 0xffffffff82014dfc;
-        }
-        else {
-          uVar3 = 0xffffffff82014dec;
-        }
-        Menus_HideByName(param_1 * 0x2284 + -0x7d5d07e8,uVar3);
-        *(int *)(iVar1 + 0x79818) = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((hud_fade_offhand->current).value != 0.0) {
+    iVar2 = pcVar1->offhandFadeTime;
+    if ((iVar2 != 0) &&
+       ((hud_fade_offhand->current).value * 1000.0 < (float)(longlong)(pcVar1->time - iVar2))) {
+      iVar2 = CL_GetLocalClientActiveCount();
+      if (iVar2 == 1) {
+        pcVar3 = "offhandinfo";
       }
+      else {
+        pcVar3 = "offhandinfo_mp";
+      }
+      Menus_HideByName(cgDC + param_1,pcVar3);
+      pcVar1->offhandFadeTime = 0;
     }
   }
   return;
@@ -1664,17 +1831,22 @@ void CG_CheckHudOffHandDisplay(longlong param_1)
 
 // 822BD458  CG_CheckHudObjectiveDisplay  (cgame_mp/cg_draw_mp.cpp:1565)
 
-void CG_CheckHudObjectiveDisplay(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckHudObjectiveDisplay(LocalClientNum_t param_1)
 
 {
   int iVar1;
+  cg_s *pcVar2;
   
-  iVar1 = CG_IsScoreboardDisplayed();
-  if (iVar1 != 0) {
-    iVar1 = CG_GetLocalClientGlobals(param_1);
-    if (100 < *(int *)(iVar1 + 0x6b98c) - *(int *)(iVar1 + 0x76e4c)) {
-      Menus_HideByName(param_1 * 0x2284 + -0x7d5d07e8,0xffffffff82014e08);
-    }
+  iVar1 = CG_IsScoreboardDisplayed(param_1);
+  if ((iVar1 != 0) &&
+     (pcVar2 = CG_GetLocalClientGlobals(param_1), 100 < pcVar2->time - pcVar2->scoreFadeTime)) {
+    Menus_HideByName(cgDC + param_1,"objectiveinfo");
   }
   return;
 }
@@ -1682,19 +1854,23 @@ void CG_CheckHudObjectiveDisplay(longlong param_1)
 
 // 822BD4D8  CG_CheckTimedMenus  (cgame_mp/cg_draw_mp.cpp:1580)
 
-void CG_CheckTimedMenus(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_CheckTimedMenus(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  int iVar2;
+  cg_s *pcVar2;
   
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar1 = *(int *)(iVar2 + 0x76ec8);
-  if (iVar1 != 0) {
-    if (0x9c4 < *(int *)(iVar2 + 0x6b98c) - iVar1) {
-      Menus_CloseByName(param_1 * 0x2284 + -0x7d5d07e8,0xffffffff82014e18);
-      *(int *)(iVar2 + 0x76ec8) = 0;
-    }
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar1 = pcVar2->voiceTime;
+  if ((iVar1 != 0) && (0x9c4 < pcVar2->time - iVar1)) {
+    Menus_CloseByName(cgDC + param_1,"voiceMenu");
+    pcVar2->voiceTime = 0;
   }
   CG_CheckForPlayerInput(param_1);
   CG_CheckHudHealthDisplay(param_1);
@@ -1709,85 +1885,105 @@ void CG_CheckTimedMenus(longlong param_1)
 
 // 822BD598  CG_DrawMiniConsole  (cgame_mp/cg_draw_mp.cpp:1609)
 
-void CG_DrawMiniConsole(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawMiniConsole(LocalClientNum_t param_1)
 
 {
-  if (*(char *)(DAT_82a383a4 + 0xc) == '\0') {
+  if ((cg_minicon->current).enabled == false) {
     return;
   }
-  Con_DrawMiniConsole(0x3ff0000000000000,param_1,2,4);
+  Con_DrawMiniConsole(param_1,2,4,1.0);
   return;
 }
 
 
 // 822BD5C8  CG_DrawErrorMessages  (cgame_mp/cg_draw_mp.cpp:1618)
 
-void CG_DrawErrorMessages(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawErrorMessages(LocalClientNum_t param_1)
 
 {
-  Con_DrawErrors(0x3ff0000000000000,param_1,2,300);
+  Con_DrawErrors(param_1,2,300,1.0);
   return;
 }
 
 
 // 822BD5E0  DrawIntermission  (cgame_mp/cg_draw_mp.cpp:1711)
 
-void DrawIntermission(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void DrawIntermission(LocalClientNum_t param_1)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar5;
-  int iVar4;
+  LocalClientNum_t LVar2;
+  uiMenuCommand_t uVar3;
+  char *pcVar4;
+  cg_s *pcVar5;
+  bool bVar6;
   
-  uVar2 = __savegprlr_29();
-  iVar3 = UI_GetActiveMenu();
-  if ((iVar3 != 5) || (iVar3 = UI_GetTopActiveMenuName(uVar2), iVar3 == 0)) {
-    iVar3 = CG_GetLocalClientGlobals(uVar2);
+  LVar2 = __savegprlr_29(param_1);
+  uVar3 = UI_GetActiveMenu(LVar2);
+  if ((uVar3 != UIMENU_SCRIPT_POPUP) ||
+     (pcVar4 = UI_GetTopActiveMenuName(LVar2), pcVar4 == (char *)0x0)) {
+    pcVar5 = CG_GetLocalClientGlobals(LVar2);
     bVar1 = false;
-    *(undefined4 *)(iVar3 + 0x76e4c) = *(undefined4 *)(iVar3 + 0x6b98c);
-    cVar5 = CL_Demo_IsPlaying(uVar2);
-    if ((cVar5 != '\0') && (cVar5 = CL_Demo_IsPauseMenuOpen(uVar2), cVar5 != '\0')) {
+    pcVar5->scoreFadeTime = pcVar5->time;
+    bVar6 = CL_Demo_IsPlaying(LVar2);
+    if ((bVar6) && (bVar6 = CL_Demo_IsPauseMenuOpen(LVar2), bVar6)) {
       bVar1 = true;
     }
-    iVar4 = UI_GetActiveMenu(uVar2);
-    if ((iVar4 != 6) && (!bVar1)) {
-      UI_CloseAllMenus(uVar2);
-      UI_SetActiveMenu(uVar2,6);
-      *(undefined4 *)(iVar3 + 0x76e5c) = 0;
+    uVar3 = UI_GetActiveMenu(LVar2);
+    if ((uVar3 != UIMENU_SCOREBOARD) && (!bVar1)) {
+      UI_CloseAllMenus(LVar2);
+      UI_SetActiveMenu(LVar2,6);
+      pcVar5->selectedGamerIndex = 0;
     }
-    iVar3 = UI_GetActiveMenu(uVar2);
-    if (iVar3 != 6) goto LAB_822bd6b4;
+    uVar3 = UI_GetActiveMenu(LVar2);
+    if (uVar3 != UIMENU_SCOREBOARD) goto LAB_822bd6b4;
   }
-  CG_DrawScoreboard(uVar2);
+  uVar3 = CG_DrawScoreboard(LVar2);
 LAB_822bd6b4:
-  __restgprlr_29();
+  __restgprlr_29(uVar3);
   return;
 }
 
 
 // 822BD6D8  CG_DrawViewportUI  (cgame_mp/cg_draw_mp.cpp:1777)
 
-void CG_DrawViewportUI(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_DrawViewportUI(LocalClientNum_t param_1)
 
 {
-  Menu_PaintViewport(param_1 * 0x2284 + -0x7d5d07e8);
+  Menu_PaintViewport(cgDC + param_1);
   return;
 }
 
 
 // 822BD6F0  CG_DrawFullScreenUI  (cgame_mp/cg_draw_mp.cpp:1783)
 
-void CG_DrawFullScreenUI(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_DrawFullScreenUI(LocalClientNum_t param_1)
 
 {
-  Menu_PaintFullscreen(param_1 * 0x2284 + -0x7d5d07e8);
+  Menu_PaintFullscreen(cgDC + param_1);
   return;
 }
 
 
 // 822BD708  CG_EndSceneCmds  (cgame_mp/cg_draw_mp.cpp:1790)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_EndSceneCmds(void)
 
@@ -1798,19 +1994,24 @@ void CG_EndSceneCmds(void)
 
 // 822BD710  CG_UpdateScissor  (cgame_mp/cg_draw_mp.cpp:1805)
 
-void CG_UpdateScissor(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_UpdateScissor(LocalClientNum_t param_1)
 
 {
   int iVar1;
   int iVar2;
+  cg_s *pcVar3;
   
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar1 = *(int *)(iVar2 + 4);
-  *(undefined4 *)(iVar2 + 0x79840) = 0;
-  if ((((((iVar1 != 4) && (*(int *)(iVar2 + 0x3340) == 0)) &&
-        (*(char *)(DAT_82a38338 + 0xc) != '\0')) &&
-       ((iVar2 = *(int *)(DAT_82a9a00c + 0xc), iVar2 != 1 && (iVar2 != 2)))) &&
-      ((iVar2 != 3 && ((iVar2 != 5 && (*(int *)(DAT_836b93ac + 0xc) == 0)))))) &&
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  iVar1 = (pcVar3->predictedPlayerState).pm_type;
+  (pcVar3->shellshock).hasScissor = 0;
+  if ((((((iVar1 != 4) && (pcVar3->cubemapShot == CUBEMAPSHOT_NONE)) &&
+        ((cg_draw2D->current).enabled != false)) &&
+       ((iVar2 = (debugOverlay->current).integer, iVar2 != 1 && (iVar2 != 2)))) &&
+      ((iVar2 != 3 && ((iVar2 != 5 && ((net_showprofile->current).integer == 0)))))) &&
      ((iVar1 != 6 && ((iVar1 != 5 && (iVar1 < 8)))))) {
     CG_UpdateWeapReticleScissor(param_1);
   }
@@ -1820,33 +2021,37 @@ void CG_UpdateScissor(undefined8 param_1)
 
 // 822BD7D8  CG_PreDraw2D  (cgame_mp/cg_draw_mp.cpp:1861)
 
-void CG_PreDraw2D(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_PreDraw2D(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  cg_s *pcVar1;
+  bool bVar2;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((((*(int *)(iVar1 + 4) != 4) && (*(int *)(iVar1 + 0x3340) == 0)) &&
-      (*(char *)(DAT_82a38338 + 0xc) != '\0')) && (*(int *)(DAT_82a9a00c + 0xc) == 0)) {
-    cVar2 = CG_ShouldDrawHud(param_1);
-    if (*(int *)(iVar1 + 4) == 5) {
-      if (cVar2 == '\0') {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((((pcVar1->predictedPlayerState).pm_type != 4) && (pcVar1->cubemapShot == CUBEMAPSHOT_NONE))
+      && ((cg_draw2D->current).enabled != false)) && ((debugOverlay->current).integer == 0)) {
+    bVar2 = CG_ShouldDrawHud(param_1);
+    if ((pcVar1->predictedPlayerState).pm_type == 5) {
+      if (!bVar2) {
         return;
       }
-      if (*(char *)(DAT_82a1ed84 + 0xc) != '\0') {
+      if ((cg_crosshairTraceAsync->current).enabled != false) {
         StartScanForCrosshairEntity(param_1);
       }
     }
     else {
-      if (*(char *)(DAT_82a1ed84 + 0xc) != '\0') {
+      if ((cg_crosshairTraceAsync->current).enabled != false) {
         StartScanForCrosshairEntity(param_1);
       }
-      if (cVar2 == '\0') {
+      if (!bVar2) {
         return;
       }
     }
-    if (*(char *)(DAT_82a1ed80 + 0xc) != '\0') {
+    if ((cg_playerNameTraceAsync->current).enabled != false) {
       CG_StartDrawVisibleNames(param_1);
     }
   }
@@ -1856,17 +2061,18 @@ void CG_PreDraw2D(undefined8 param_1)
 
 // 822BA600  Com_EnemyTeam  (universal/q_shared.h:1872)
 
-undefined4 Com_EnemyTeam(int param_1)
+team_t Com_EnemyTeam(team_t param_1)
 
 {
-  undefined4 local_20 [4];
+  team_t local_20 [4];
   
-  local_20[0] = 0;
+  local_20[0] = TEAM_FREE;
   local_20[1] = 2;
   local_20[2] = 1;
   local_20[3] = 0;
-  if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff82014af8,0x75a,0,0xffffffff82000f98,0xffffffff82014b44);
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/q_shared.h"
+                    ,0x75a,0,"%s");
   }
   return local_20[param_1];
 }
@@ -1874,148 +2080,155 @@ undefined4 Com_EnemyTeam(int param_1)
 
 // 822BD8D8  CG_Draw2D  (cgame_mp/cg_draw_mp.cpp:1923)
 
-void CG_Draw2D(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void CG_Draw2D(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  char cVar4;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  bool bVar4;
   int iVar3;
-  undefined8 uVar5;
+  double dVar5;
   
-  lVar1 = __savegprlr_28();
-  CG_CompassIncreaseRadarTime();
-  iVar2 = CG_GetLocalClientGlobals(lVar1);
-  if (((*(int *)(iVar2 + 4) == 4) || (*(int *)(iVar2 + 0x3340) != 0)) ||
-     (*(char *)(DAT_82a38338 + 0xc) == '\0')) goto LAB_822bdcc4;
-  iVar3 = *(int *)(DAT_82a9a00c + 0xc);
+  LVar1 = __savegprlr_28(param_1);
+  CG_CompassIncreaseRadarTime(LVar1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if ((((pcVar2->predictedPlayerState).pm_type == 4) || (pcVar2->cubemapShot != CUBEMAPSHOT_NONE))
+     || ((cg_draw2D->current).enabled == false)) goto LAB_822bdcc4;
+  iVar3 = (debugOverlay->current).integer;
   if (iVar3 == 1) {
-    CG_Debug_DrawViewmodelInfo();
+    CG_Debug_DrawViewmodelInfo(LVar1);
     __restgprlr_28();
     return;
   }
   if (iVar3 == 2) {
-    CG_Debug_DrawPSFlags();
+    CG_Debug_DrawPSFlags(LVar1);
     __restgprlr_28();
     return;
   }
   if (iVar3 == 3) {
-    CG_Debug_DrawGameETCounts();
+    CG_Debug_DrawGameETCounts(LVar1);
     __restgprlr_28();
     return;
   }
   if (iVar3 == 5) {
-    CG_Debug_DrawFontTest();
+    CG_Debug_DrawFontTest(LVar1);
     __restgprlr_28();
     return;
   }
-  if (*(int *)(DAT_836b93ac + 0xc) != 0) {
-    CG_DrawSnapshotAnalysis();
-    CG_DrawPingAnalysis(lVar1);
-    CG_DrawSnapshotEntityAnalysis(lVar1);
+  if ((net_showprofile->current).integer != 0) {
+    CG_DrawSnapshotAnalysis(LVar1);
+    CG_DrawPingAnalysis(LVar1);
+    CG_DrawSnapshotEntityAnalysis(LVar1);
     __restgprlr_28();
     return;
   }
-  cVar4 = CG_ShouldDrawHud(lVar1);
-  if (*(int *)(iVar2 + 4) == 6) {
-    DrawIntermission();
-    cVar4 = CL_Demo_IsPlaying(lVar1);
-    if (cVar4 != '\0') {
-      Menu_PaintViewport(lVar1 * 0x2284 + -0x7d5d07e8);
+  bVar4 = CG_ShouldDrawHud(LVar1);
+  if ((pcVar2->predictedPlayerState).pm_type == 6) {
+    DrawIntermission(LVar1);
+    bVar4 = CL_Demo_IsPlaying(LVar1);
+    if (bVar4) {
+      Menu_PaintViewport(cgDC + LVar1);
       __restgprlr_28();
       return;
     }
     goto LAB_822bdcc4;
   }
-  CG_CompassUpdateActors(lVar1);
-  if (*(int *)(iVar2 + 4) == 5) {
-    if (cVar4 != '\0') {
-      if (*(char *)(DAT_82a1ed84 + 0xc) == '\0') {
-        ScanForCrosshairEntity(lVar1);
+  CG_CompassUpdateActors(LVar1);
+  if ((pcVar2->predictedPlayerState).pm_type == 5) {
+    if (bVar4) {
+      if ((cg_crosshairTraceAsync->current).enabled == false) {
+        ScanForCrosshairEntity(LVar1);
       }
       else {
-        FinishScanForCrosshairEntity();
+        FinishScanForCrosshairEntity(LVar1);
       }
-      CG_Draw2dHudElems(lVar1,0);
-      if (cVar4 != '\0') {
-        CG_Draw2dHudElems(lVar1,1);
-        if (*(char *)(DAT_82a1ed80 + 0xc) == '\0') {
-          CG_DrawVisibleNames(lVar1);
-        }
-        else {
-          CG_FinishDrawVisibleNames();
-        }
-        goto LAB_822bdba4;
+      CG_Draw2dHudElems(LVar1,0);
+      CG_Draw2dHudElems(LVar1,1);
+      if ((cg_playerNameTraceAsync->current).enabled == false) {
+        CG_DrawVisibleNames(LVar1);
       }
+      else {
+        CG_FinishDrawVisibleNames(LVar1);
+      }
+LAB_822bdba4:
+      Menu_PaintViewport(cgDC + LVar1);
+      goto LAB_822bdbb8;
     }
   }
   else {
-    iVar3 = CG_KillCamDefaultView(lVar1);
+    iVar3 = CG_KillCamDefaultView(LVar1);
     if (iVar3 == 0) {
-      CG_DrawNightVisionOverlay(lVar1);
+      CG_DrawNightVisionOverlay(LVar1);
     }
-    if (*(char *)(DAT_82a1ed84 + 0xc) == '\0') {
-      ScanForCrosshairEntity(lVar1);
+    if ((cg_crosshairTraceAsync->current).enabled == false) {
+      ScanForCrosshairEntity(LVar1);
     }
     else {
-      FinishScanForCrosshairEntity();
+      FinishScanForCrosshairEntity(LVar1);
     }
-    CG_CheckTimedMenus(lVar1);
-    if (((cVar4 != '\0') && (CG_Draw2dHudElems(lVar1,0), cVar4 != '\0')) &&
-       (CG_Draw2dHudElems(lVar1,1), *(int *)(iVar2 + 4) < 8)) {
-      if (*(char *)(DAT_82a1ed80 + 0xc) == '\0') {
-        CG_DrawVisibleNames(lVar1);
-      }
-      else {
-        CG_FinishDrawVisibleNames();
+    CG_CheckTimedMenus(LVar1);
+    if (bVar4) {
+      CG_Draw2dHudElems(LVar1,0);
+      CG_Draw2dHudElems(LVar1,1);
+      if ((pcVar2->predictedPlayerState).pm_type < 8) {
+        if ((cg_playerNameTraceAsync->current).enabled == false) {
+          CG_DrawVisibleNames(LVar1);
+        }
+        else {
+          CG_FinishDrawVisibleNames(LVar1);
+        }
       }
     }
-    iVar3 = CG_KillCamDefaultView(lVar1);
+    iVar3 = CG_KillCamDefaultView(LVar1);
     if (iVar3 == 0) {
-      if (*(char *)(iVar2 + 0x108039) != '\0') {
-        CG_DrawRemoteMissileOverlay(lVar1);
+      if ((pcVar2->cvsData).remoteMissileCam != false) {
+        CG_DrawRemoteMissileOverlay(LVar1);
       }
-      if ((*(uint *)(iVar2 + 0x10) & 0x10) != 0) {
-        CG_DrawFriendOrFoeTargetBoxes(lVar1);
+      if (((pcVar2->predictedPlayerState).otherFlags & 0x10U) != 0) {
+        CG_DrawFriendOrFoeTargetBoxes(LVar1);
       }
     }
-    if (*(int *)(iVar2 + 4) < 8) {
-      CG_DrawCrosshair(lVar1);
+    if ((pcVar2->predictedPlayerState).pm_type < 8) {
+      CG_DrawCrosshair(LVar1);
     }
-    if (cVar4 != '\0') {
-LAB_822bdba4:
-      Menu_PaintViewport(lVar1 * 0x2284 + -0x7d5d07e8);
-    }
-    CG_Draw2dHudElems(lVar1,2);
+    if (bVar4) goto LAB_822bdba4;
+LAB_822bdbb8:
+    CG_Draw2dHudElems(LVar1,2);
   }
-  iVar3 = CG_DrawScoreboard(lVar1);
-  if (cVar4 != '\0') {
-    cVar4 = CG_KillCamEntityEnabled(lVar1);
-    if (cVar4 == '\0') {
-      CG_ScreenBlur(lVar1);
-      CG_DrawFlashDamage(iVar2);
-      if (*(char *)(DAT_82a383c4 + 0xc) != '\0') {
-        CG_DrawDamageDirectionIndicators(lVar1);
+  iVar3 = CG_DrawScoreboard(LVar1);
+  if (bVar4) {
+    bVar4 = CG_KillCamEntityEnabled(LVar1);
+    if (!bVar4) {
+      CG_ScreenBlur(LVar1);
+      CG_DrawFlashDamage(pcVar2);
+      if ((cg_drawDamageDirection->current).enabled != false) {
+        CG_DrawDamageDirectionIndicators(LVar1);
       }
     }
-    CG_DrawGrenadeIndicators(lVar1);
-    CG_DrawLagometer(lVar1);
-    CG_DrawEntityCount(lVar1);
-    CG_DrawServerBandwidth(lVar1);
-    CG_DrawServerKillcamData(lVar1);
-    CG_DrawSnapshotAnalysis(lVar1);
-    CG_DrawPingAnalysis(lVar1);
-    CG_DrawSnapshotEntityAnalysis(lVar1);
+    CG_DrawGrenadeIndicators(LVar1);
+    CG_DrawLagometer(LVar1);
+    CG_DrawEntityCount(LVar1);
+    CG_DrawServerBandwidth(LVar1);
+    CG_DrawServerKillcamData(LVar1);
+    CG_DrawSnapshotAnalysis(LVar1);
+    CG_DrawPingAnalysis(LVar1);
+    CG_DrawSnapshotEntityAnalysis(LVar1);
     Profile_Begin(0x155);
-    CG_DrawDebugOverlays(lVar1);
-    Profile_EndInternal(0);
-    CL_Demo_DrawTransitionScreen(lVar1);
+    CG_DrawDebugOverlays(LVar1);
+    Profile_EndInternal((double *)0x0);
+    CL_Demo_DrawTransitionScreen(LVar1);
     if (iVar3 == 0) {
-      uVar5 = 0x3ff0000000000000;
-      if (*(char *)(DAT_82a383a4 + 0xc) != '\0') {
-        Con_DrawMiniConsole(0x3ff0000000000000,lVar1,2,4);
+      dVar5 = 1.0;
+      if ((cg_minicon->current).enabled != false) {
+        Con_DrawMiniConsole(LVar1,2,4,1.0);
       }
-      Con_DrawErrors(uVar5,lVar1,2,300);
+      Con_DrawErrors(LVar1,2,300,(float)dVar5);
     }
   }
 LAB_822bdcc4:
@@ -2026,47 +2239,141 @@ LAB_822bdcc4:
 
 // 822BDCD0  CG_DrawActive  (cgame_mp/cg_draw_mp.cpp:2204)
 
-void CG_DrawActive(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawActive(LocalClientNum_t param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
   float local_40;
   float local_3c;
   float local_38;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  dVar3 = (double)*(float *)(iVar2 + 0x76584);
-  if ((double)*(float *)(iVar2 + 0x7982c) != 0.0) {
-    dVar3 = (double)(float)((double)*(float *)(iVar2 + 0x7982c) * dVar3);
+  LVar3 = __savegprlr_28(param_1);
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  fVar1 = (pcVar4->shellshock).sensitivity;
+  fVar2 = pcVar4->zoomSensitivity;
+  if (fVar1 != 0.0) {
+    fVar2 = fVar1 * fVar2;
   }
-  CL_SetFOVSensitivityScale(dVar3,uVar1);
-  local_40 = *(float *)(iVar2 + 0x79794) + *(float *)(iVar2 + 0x79788);
-  local_3c = *(float *)(iVar2 + 0x7978c) + *(float *)(iVar2 + 0x79798);
-  local_38 = *(float *)(iVar2 + 0x79790) + *(float *)(iVar2 + 0x7979c);
-  CL_SetUserCmdAimValues(uVar1,&local_40);
-  BG_AssertOffhandIndexOrNone(*(undefined4 *)(iVar2 + 0x79420));
-  CL_SetUserCmdWeapons
-            (uVar1,*(undefined4 *)(iVar2 + 0x76ecc),*(undefined4 *)(iVar2 + 0x79420),
-             *(undefined4 *)(iVar2 + 0x76ed0));
-  CL_SetExtraButtons(uVar1,*(undefined4 *)(iVar2 + 0x108040));
-  *(undefined4 *)(iVar2 + 0x108040) = 0;
+  CL_SetFOVSensitivityScale(LVar3,fVar2);
+  local_40 = pcVar4->offsetAngles[0] + pcVar4->kickAngles[0];
+  local_3c = pcVar4->kickAngles[1] + pcVar4->offsetAngles[1];
+  local_38 = pcVar4->kickAngles[2] + pcVar4->offsetAngles[2];
+  CL_SetUserCmdAimValues(LVar3,&local_40);
+  BG_AssertOffhandIndexOrNone(pcVar4->equippedOffHand);
+  CL_SetUserCmdWeapons(LVar3,pcVar4->weaponSelect,pcVar4->equippedOffHand,pcVar4->weaponSelectInAlt)
+  ;
+  CL_SetExtraButtons(LVar3,pcVar4->extraButtons);
+  pcVar4->extraButtons = 0;
   CL_UpdateDebugClientData();
   CL_FlushDebugClientData();
-  CL_RenderScene(uVar1,iVar2 + 0x6b9b0,param_2);
+  CL_RenderScene(LVar3,&pcVar4->refdef,param_2);
   __restgprlr_28();
+  return;
+}
+
+
+// 822BDDE0  CG_AddSceneTracerBeams  (cgame_mp/cg_draw_mp.cpp:2243)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* void __cdecl CG_AddSceneTracerBeams(enum LocalClientNum_t) */
+
+void CG_AddSceneTracerBeams(LocalClientNum_t param_1)
+
+{
+  localEntity_s *plVar1;
+  uint uVar2;
+  uint uVar3;
+  localEntity_s *plVar4;
+  LocalClientNum_t LVar5;
+  cg_s *pcVar6;
+  int iVar7;
+  ulonglong uVar8;
+  char in_RESERVE;
+  byte in_cr0;
+  
+  LVar5 = __savegprlr_17(param_1);
+  Profile_Begin(0x11);
+  do {
+    uVar8 = (ulonglong)(uint)g_localEntThread;
+    if (in_RESERVE != '\0') {
+      g_localEntThread = storeWordConditionalIndexed(uVar8 + 1,0,0xffffffff82a22e48);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)(uVar8 + 1) != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_localents.cpp",0xa8,0
+                    ,"%s");
+  }
+  pcVar6 = CG_GetLocalClientGlobals(LVar5);
+  uVar3 = pcVar6->time;
+  plVar4 = cg_activeLocalEntities[LVar5].prev;
+  while (plVar4 != cg_activeLocalEntities + LVar5) {
+    plVar1 = plVar4->prev;
+    if (plVar4->leType != LE_MOVING_TRACER) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_localents.cpp",0xb3
+                      ,0,"%s\n\t(le->leType) = %i");
+    }
+    if ((plVar4->pos).trType != TR_LINEAR) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_localents.cpp",0xb4
+                      ,0,"%s\n\t(le->pos.trType) = %i");
+    }
+    if ((int)uVar3 < plVar4->endTime) {
+      uVar2 = (plVar4->pos).trTime;
+      uVar8 = ((~(ulonglong)(uVar2 ^ uVar3) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar3) & 1
+      ;
+    }
+    else {
+      uVar8 = 1;
+    }
+    if (uVar8 == 0) {
+      CG_AddMovingTracer(pcVar6,plVar4);
+      plVar4 = plVar1;
+    }
+    else {
+      if (plVar4->prev == (localEntity_s *)0x0) {
+        Com_Error(ERR_DROP,"\x15CG_FreeLocalEntity: not active");
+      }
+      plVar4->prev->next = plVar4->next;
+      plVar4->next->prev = plVar4->prev;
+      plVar4->next = cg_freeLocalEntities[LVar5];
+      cg_freeLocalEntities[LVar5] = plVar4;
+      plVar4 = plVar1;
+    }
+  }
+  do {
+    uVar8 = (ulonglong)(uint)g_localEntThread;
+    if (in_RESERVE != '\0') {
+      g_localEntThread = storeWordConditionalIndexed(uVar8 - 1,0,0xffffffff82a22e48);
+      in_cr0 = 2;
+    }
+  } while (!(bool)(in_cr0 >> 1 & 1));
+  if ((int)(uVar8 - 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_localents.cpp",0xbe,0
+                    ,"%s");
+  }
+  iVar7 = Profile_EndInternal((double *)0x0);
+  __restgprlr_17(iVar7);
   return;
 }
 
 
 // 822BDDE8  CG_GenerateSceneVerts  (cgame_mp/cg_draw_mp.cpp:2249)
 
-void CG_GenerateSceneVerts(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_GenerateSceneVerts(LocalClientNum_t param_1)
 
 {
-  CG_AddAllPlayerSpriteDrawSurfs();
+  CG_AddAllPlayerSpriteDrawSurfs(param_1);
   CG_AddDrawSurfsFor3dHudElems(param_1);
   return;
 }

@@ -2,11 +2,13 @@
 
 // 82613530  InitTiming  (universal/timing.cpp:73)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void InitTiming(void)
 
 {
-  DAT_841db430 = 0x3ef5062a1eb9a24e;
-  DAT_841db438 = 0x3f94880522014880;
+  msecPerRawTimerTick = 2.0050125313283208e-05;
+  usecPerRawTimerTick = 0.020050125313283207;
   return;
 }
 

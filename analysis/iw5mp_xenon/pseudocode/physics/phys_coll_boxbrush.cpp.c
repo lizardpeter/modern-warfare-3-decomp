@@ -2,32 +2,36 @@
 
 // 8265F1D0  Phys_DrawPoly  (physics/phys_coll_boxbrush.cpp:49)
 
-void Phys_DrawPoly(undefined8 param_1,uint *param_2,undefined8 param_3)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void Phys_DrawPoly(PhysWorld param_1,Poly *param_2,float *param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint uVar4;
-  longlong lVar5;
+  float *pfVar2;
+  float *pfVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_27();
-  uVar4 = 0;
-  uVar2 = (ulonglong)param_2[1] - 1;
-  if ((ulonglong)param_2[1] != 0) {
-    lVar3 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar5 = 0;
+  iVar1 = __savegprlr_27(param_1);
+  uVar5 = 0;
+  if (param_2->ptCount != 0) {
+    iVar4 = (param_2->ptCount - 1) * 0xc;
+    iVar6 = 0;
     do {
+      pfVar3 = (float *)((int)*param_2->pts + iVar6);
+      pfVar2 = (float *)((int)*param_2->pts + iVar4);
       if (iVar1 < 3) {
-        CG_DebugLine(lVar3 + (ulonglong)*param_2,lVar5 + (ulonglong)*param_2,param_3,0,8);
+        CG_DebugLine(pfVar2,pfVar3,param_3,0,8);
       }
       else {
-        G_DebugLine();
+        G_DebugLine(pfVar2,pfVar3,param_3,0);
       }
-      uVar4 = uVar4 + 1;
-      lVar3 = lVar5;
-      lVar5 = lVar5 + 0xc;
-    } while (uVar4 < param_2[1]);
+      uVar5 = uVar5 + 1;
+      iVar4 = iVar6;
+      iVar6 = iVar6 + 0xc;
+    } while (uVar5 < param_2->ptCount);
   }
   __restgprlr_27();
   return;
@@ -36,16 +40,16 @@ void Phys_DrawPoly(undefined8 param_1,uint *param_2,undefined8 param_3)
 
 // 8265F258  Phys_DrawPolyTransformed  (physics/phys_coll_boxbrush.cpp:65)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_DrawPolyTransformed
-               (undefined8 param_1,uint *param_2,undefined8 param_3,float *param_4,
-               undefined8 param_5)
+               (PhysWorld param_1,Poly *param_2,float *param_3,float *param_4,float (*param_5) [3])
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint uVar4;
-  longlong lVar5;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
   float local_60;
   float local_5c;
   float local_58;
@@ -53,18 +57,17 @@ void Phys_DrawPolyTransformed
   float local_4c;
   float local_48;
   
-  iVar1 = __savegprlr_25();
-  uVar4 = 0;
-  uVar2 = (ulonglong)param_2[1] - 1;
-  if ((ulonglong)param_2[1] != 0) {
-    lVar3 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar5 = 0;
+  iVar1 = __savegprlr_25(param_1);
+  uVar3 = 0;
+  if (param_2->ptCount != 0) {
+    iVar2 = (param_2->ptCount - 1) * 0xc;
+    iVar4 = 0;
     do {
-      MatrixTransformVector((ulonglong)*param_2 + lVar3,param_5,&local_50);
+      MatrixTransformVector((float *)((int)*param_2->pts + iVar2),param_5,&local_50);
       local_50 = *param_4 + local_50;
       local_4c = local_4c + param_4[1];
       local_48 = local_48 + param_4[2];
-      MatrixTransformVector((ulonglong)*param_2 + lVar5,param_5,&local_60);
+      MatrixTransformVector((float *)((int)*param_2->pts + iVar4),param_5,&local_60);
       local_60 = *param_4 + local_60;
       local_5c = local_5c + param_4[1];
       local_58 = local_58 + param_4[2];
@@ -72,12 +75,12 @@ void Phys_DrawPolyTransformed
         CG_DebugLine(&local_50,&local_60,param_3,0,8);
       }
       else {
-        G_DebugLine();
+        G_DebugLine(&local_50,&local_60,param_3,0);
       }
-      uVar4 = uVar4 + 1;
-      lVar3 = lVar5;
-      lVar5 = lVar5 + 0xc;
-    } while (uVar4 < param_2[1]);
+      uVar3 = uVar3 + 1;
+      iVar2 = iVar4;
+      iVar4 = iVar4 + 0xc;
+    } while (uVar3 < param_2->ptCount);
   }
   __restgprlr_25();
   return;
@@ -86,23 +89,24 @@ void Phys_DrawPolyTransformed
 
 // 8265F370  AddContact  (physics/phys_coll_boxbrush.cpp:90)
 
-longlong AddContact(uint *param_1)
+dContactGeom * AddContact(Results *param_1)
 
 {
-  uint uVar1;
+  int iVar1;
   
-  if ((int)param_1[2] <= (int)param_1[1]) {
-    MyAssertHandler(0xffffffff821925d8,0x5d,0,0xffffffff82000f98,0xffffffff82192624);
+  if (param_1->maxContacts <= param_1->contactCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x5d,0,"%s");
   }
-  uVar1 = param_1[1];
-  param_1[1] = uVar1 + 1;
-  return (longlong)(int)param_1[3] * (longlong)(int)uVar1 + (ulonglong)*param_1;
+  iVar1 = param_1->contactCount;
+  param_1->contactCount = iVar1 + 1;
+  return (dContactGeom *)((int)param_1->contacts->pos + param_1->stride * iVar1);
 }
 
 
 // 8265ED90  Phys_GetPlaneForTriangle  (physics/phys_coll_local.h:94)
 
-void Phys_GetPlaneForTriangle(float *param_1,float *param_2)
+void Phys_GetPlaneForTriangle(float (*param_1) [3],float *param_2)
 
 {
   float fVar1;
@@ -117,12 +121,12 @@ void Phys_GetPlaneForTriangle(float *param_1,float *param_2)
   float local_20;
   float local_1c;
   
-  local_30 = *param_1 - param_1[3];
-  local_24 = param_1[6] - *param_1;
-  local_2c = param_1[1] - param_1[4];
-  local_28 = param_1[2] - param_1[5];
-  local_20 = param_1[7] - param_1[1];
-  local_1c = param_1[8] - param_1[2];
+  local_30 = (*param_1)[0] - param_1[1][0];
+  local_24 = param_1[2][0] - (*param_1)[0];
+  local_2c = (*param_1)[1] - param_1[1][1];
+  local_28 = (*param_1)[2] - param_1[1][2];
+  local_20 = param_1[2][1] - (*param_1)[1];
+  local_1c = param_1[2][2] - (*param_1)[2];
   Vec3Cross(&local_30,&local_24,param_2);
   fVar1 = param_2[1];
   fVar2 = *param_2;
@@ -136,93 +140,93 @@ void Phys_GetPlaneForTriangle(float *param_1,float *param_2)
   *param_2 = fVar2 * fVar4;
   param_2[1] = fVar1 * fVar4;
   param_2[2] = fVar3 * fVar4;
-  param_2[3] = param_1[2] * fVar3 * fVar4 + param_1[1] * fVar1 * fVar4 + *param_1 * fVar2 * fVar4;
+  param_2[3] = (*param_1)[2] * fVar3 * fVar4 +
+               (*param_1)[1] * fVar1 * fVar4 + (*param_1)[0] * fVar2 * fVar4;
   return;
 }
 
 
 // 8265F3E8  Phys_AddContactData  (physics/phys_coll_boxbrush.cpp:103)
 
-void Phys_AddContactData(undefined8 param_1,undefined8 param_2,float *param_3,uint *param_4,
-                        uint param_5)
+bool Phys_AddContactData(Results *param_1,float param_2,float *param_3,float *param_4,int param_5)
 
 {
-  uint uVar1;
-  int iVar3;
-  uint *puVar4;
-  undefined8 uVar2;
+  float fVar1;
+  Results *pRVar2;
+  undefined1 uVar4;
+  dContactGeom *pdVar3;
+  int in_r7;
   double extraout_f1;
   double dVar5;
   
-  iVar3 = __savegprlr_25();
+  pRVar2 = (Results *)__savegprlr_25((double)param_2,param_1,param_3);
   dVar5 = extraout_f1;
-  if (((uint)*param_3 & 0x7f800000) == 0x7f800000) {
-LAB_8265f468:
-    MyAssertHandler(0xffffffff821925d8,0x6a,0,0xffffffff82000f98,0xffffffff821926e0);
+  if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_4[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x6a,0,"%s");
   }
-  else {
-    if (((uint)param_3[1] & 0x7f800000) == 0x7f800000) goto LAB_8265f468;
-    if (((uint)param_3[2] & 0x7f800000) == 0x7f800000) goto LAB_8265f468;
+  if (((((uint)*(float *)param_5 & 0x7f800000) == 0x7f800000) ||
+      (((uint)*(float *)(param_5 + 4) & 0x7f800000) == 0x7f800000)) ||
+     (((uint)*(float *)(param_5 + 8) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x6b,0,"%s");
   }
-  if ((*param_4 & 0x7f800000) != 0x7f800000) {
-    if ((param_4[1] & 0x7f800000) != 0x7f800000) {
-      if ((param_4[2] & 0x7f800000) != 0x7f800000) goto LAB_8265f4e8;
-    }
-  }
-  MyAssertHandler(0xffffffff821925d8,0x6b,0,0xffffffff82000f98,0xffffffff821926a0);
-LAB_8265f4e8:
   if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff821925d8,0x6c,0,0xffffffff82000f98,0xffffffff82192690);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x6c,0,"%s");
   }
-  if (*(int *)(iVar3 + 8) <= *(int *)(iVar3 + 4)) {
-    __restgprlr_25(0);
-    return;
+  if (pRVar2->maxContacts <= pRVar2->contactCount) {
+    uVar4 = __restgprlr_25(0);
+    return (bool)uVar4;
   }
-  puVar4 = (uint *)AddContact(iVar3);
-  puVar4[6] = (uint)(float)dVar5;
-  puVar4[3] = (uint)*param_3;
-  puVar4[4] = (uint)param_3[1];
-  puVar4[5] = (uint)param_3[2];
-  *puVar4 = *param_4;
-  puVar4[1] = param_4[1];
-  uVar1 = param_4[2];
-  puVar4[7] = param_5;
-  puVar4[2] = uVar1;
-  if (0.002 <= ABS(((float)puVar4[5] * (float)puVar4[5] +
-                   (float)puVar4[3] * (float)puVar4[3] + (float)puVar4[4] * (float)puVar4[4]) - 1.0)
-     ) {
-    uVar2 = va(0xffffffff82192678,(double)*param_3,(double)param_3[1],(double)param_3[2]);
-    MyAssertHandler(0xffffffff821925d8,0x77,0,0xffffffff820011f4,0xffffffff82192654,uVar2);
+  pdVar3 = AddContact(pRVar2);
+  pdVar3->depth = (float)dVar5;
+  pdVar3->normal[0] = *param_4;
+  pdVar3->normal[1] = param_4[1];
+  pdVar3->normal[2] = param_4[2];
+  pdVar3->pos[0] = *(float *)param_5;
+  pdVar3->pos[1] = *(float *)(param_5 + 4);
+  fVar1 = *(float *)(param_5 + 8);
+  pdVar3->surfFlags = in_r7;
+  pdVar3->pos[2] = fVar1;
+  if (0.002 <= ABS((pdVar3->normal[2] * pdVar3->normal[2] +
+                   pdVar3->normal[0] * pdVar3->normal[0] + pdVar3->normal[1] * pdVar3->normal[1]) -
+                   1.0)) {
+    va("normal: (%f, %f, %f)");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x77,0,"%s\n\t%s");
   }
-  __restgprlr_25(((~(ulonglong)(*(uint *)(iVar3 + 8) ^ *(uint *)(iVar3 + 4)) & 0xffffffff) >> 0x1f)
-                 + (ulonglong)(*(uint *)(iVar3 + 8) <= *(uint *)(iVar3 + 4)) & 1);
-  return;
+  uVar4 = __restgprlr_25(((~(ulonglong)(uint)(pRVar2->maxContacts ^ pRVar2->contactCount) &
+                          0xffffffff) >> 0x1f) +
+                         (ulonglong)((uint)pRVar2->maxContacts <= (uint)pRVar2->contactCount) & 1);
+  return (bool)uVar4;
 }
 
 
 // 8265EE90  Phys_GetPlaneForTriangleNotCulledBySphere  (physics/phys_coll_local.h:106)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void Phys_GetPlaneForTriangleNotCulledBySphere
-               (undefined8 param_1,longlong param_2,longlong param_3,longlong param_4,
-               undefined8 param_5,undefined8 param_6)
+int Phys_GetPlaneForTriangleNotCulledBySphere
+              (float *param_1,float *param_2,float *param_3,float *param_4,float param_5,
+              float *param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  float fVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  float *pfVar8;
+  float fVar4;
+  longlong lVar5;
+  int iVar6;
+  float *pfVar7;
+  longlong lVar8;
   float *pfVar9;
-  float *pfVar10;
+  longlong lVar10;
+  float *pfVar11;
+  longlong lVar12;
+  float *pfVar13;
+  float *in_r8;
   double extraout_f1;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -231,234 +235,255 @@ void Phys_GetPlaneForTriangleNotCulledBySphere
   double dVar19;
   double dVar20;
   double dVar21;
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
+  double dVar22;
+  double dVar23;
+  double dVar24;
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
   undefined1 auVar27 [16];
   undefined1 auVar28 [16];
   undefined1 auVar29 [16];
   undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
   float local_b0;
   float local_a8;
   float local_a4;
   float local_a0;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_84;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
   
-  uVar6 = ZEXT48(&stack0x00000000);
-  __savegprlr_27();
-  lVar7 = __savefpr_26();
-  auVar29 = loadVectorLeftIndexed(param_2);
-  auVar30 = loadVectorLeftIndexed(lVar7);
-  auVar28 = loadVectorLeftIndexed(param_3);
-  auVar27 = loadVectorLeftIndexed(param_4);
-  auVar26 = vectorSplatImmediateSignedWord(0xff);
-  auVar24 = loadVectorRightIndexed(param_2 + 0x10);
-  auVar25 = loadVectorRightIndexed(lVar7 + 0x10);
-  auVar23 = loadVectorRightIndexed(param_3 + 0x10);
-  auVar22 = vectorShiftLeftWord128(auVar26,auVar26);
-  auVar24 = (auVar29 | auVar24) & _DAT_8404f950;
-  auVar29 = loadVectorRightIndexed(param_4 + 0x10);
-  auVar25 = (auVar30 | auVar25) & _DAT_8404f950;
-  auVar26 = (auVar28 | auVar23) & _DAT_8404f950;
-  dVar21 = (double)(float)(extraout_f1 * extraout_f1);
-  auVar23 = vectorMinimumFloatingPoint128(auVar25,auVar24);
-  auVar24 = vectorMaximumFloatingPoint128(auVar25,auVar24);
-  auVar25 = vectorMinimumFloatingPoint128(auVar26,auVar23);
-  auVar24 = vectorMaximumFloatingPoint128(auVar26,auVar24);
-  auVar24 = vectorAddFloatingPoint128(auVar25,auVar24);
-  auVar24 = vectorMultiplyFloatingPoint(auVar24,_DAT_8217a060);
-  auVar23 = vectorSubtractFloatingPoint128((auVar27 | auVar29) & _DAT_8404f950,auVar24);
-  auVar24 = vectorSubtractFloatingPoint128(auVar24,auVar25);
-  auVar24 = vectorSubtractFloatingPoint128(auVar23 & ~auVar22,auVar24);
-  auVar24 = vectorMaximumFloatingPoint128(auVar24,_DAT_8217a030);
-  auVar24 = vectorMultiplySum3FloatingPoint(auVar24,auVar24);
-  auVar24 = vectorSplatWord(auVar24,0);
-  storeVectorElementWordIndexed(auVar24,uVar6 - 0xb0);
-  if ((double)local_b0 <= dVar21) {
-    pfVar8 = (float *)lVar7;
-    pfVar9 = (float *)param_2;
-    Vec3Cross(uVar6 - 0x90,uVar6 - 0x84,param_6);
-    pfVar10 = (float *)param_4;
-    dVar20 = (double)(*pfVar10 - *pfVar8);
-    pfVar4 = (float *)param_6;
-    dVar14 = (double)pfVar4[1];
-    dVar13 = (double)*pfVar4;
-    dVar19 = (double)(pfVar10[1] - pfVar8[1]);
-    dVar18 = (double)(pfVar10[2] - pfVar8[2]);
-    dVar11 = (double)pfVar4[2];
-    dVar17 = (double)(float)(dVar11 * dVar11 +
-                            (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14)));
-    fVar1 = (float)(dVar11 * dVar18 +
-                   (double)(float)(dVar14 * dVar19 + (double)(float)(dVar13 * dVar20)));
-    if (fVar1 * fVar1 < (float)(dVar17 * dVar21)) {
-      Vec3Cross(param_6,uVar6 - 0x90,uVar6 - 0xa8);
-      dVar14 = (double)local_a8;
-      dVar16 = (double)local_a0;
-      dVar15 = (double)local_a4;
-      dVar13 = 0.0;
-      dVar12 = (double)(float)(dVar16 * dVar18 +
-                              (double)(float)(dVar15 * dVar19 + (double)(float)(dVar20 * dVar14)));
-      dVar11 = dVar13;
-      if (dVar12 < 0.0) {
-        dVar11 = dVar12;
+  lVar12 = (longlong)(int)param_4;
+  lVar10 = (longlong)(int)param_3;
+  lVar8 = (longlong)(int)param_2;
+  __savegprlr_27((double)param_5,param_1);
+  lVar5 = __savefpr_26();
+  auVar32 = loadVectorLeftIndexed(lVar8);
+  auVar33 = loadVectorLeftIndexed(lVar5);
+  auVar31 = loadVectorLeftIndexed(lVar10);
+  auVar30 = loadVectorLeftIndexed(lVar12);
+  auVar29 = vectorSplatImmediateSignedWord(0xff);
+  auVar27 = loadVectorRightIndexed(lVar8 + 0x10);
+  auVar28 = loadVectorRightIndexed(lVar5 + 0x10);
+  auVar26 = loadVectorRightIndexed(lVar10 + 0x10);
+  auVar25 = vectorShiftLeftWord128(auVar29,auVar29);
+  auVar27 = (auVar32 | auVar27) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar32 = loadVectorRightIndexed(lVar12 + 0x10);
+  auVar28 = (auVar33 | auVar28) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar29 = (auVar31 | auVar26) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  dVar24 = (double)(float)(extraout_f1 * extraout_f1);
+  auVar26 = vectorMinimumFloatingPoint128(auVar28,auVar27);
+  auVar27 = vectorMaximumFloatingPoint128(auVar28,auVar27);
+  auVar28 = vectorMinimumFloatingPoint128(auVar29,auVar26);
+  auVar27 = vectorMaximumFloatingPoint128(auVar29,auVar27);
+  auVar27 = vectorAddFloatingPoint128(auVar28,auVar27);
+  auVar27 = vectorMultiplyFloatingPoint(auVar27,(undefined1  [16])g_oneHalf.field0_0x0);
+  auVar26 = vectorSubtractFloatingPoint128
+                      ((auVar30 | auVar32) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar27);
+  auVar27 = vectorSubtractFloatingPoint128(auVar27,auVar28);
+  auVar27 = vectorSubtractFloatingPoint128(auVar26 & ~auVar25,auVar27);
+  auVar27 = vectorMaximumFloatingPoint128(auVar27,(undefined1  [16])g_zero.field0_0x0);
+  auVar27 = vectorMultiplySum3FloatingPoint(auVar27,auVar27);
+  auVar27 = vectorSplatWord(auVar27,0);
+  storeVectorElementWordIndexed(auVar27,ZEXT48(&stack0x00000000) - 0xb0);
+  if ((double)local_b0 <= dVar24) {
+    pfVar7 = (float *)lVar5;
+    pfVar9 = (float *)lVar8;
+    pfVar11 = (float *)lVar10;
+    local_90 = *pfVar7 - *pfVar9;
+    local_84 = *pfVar11 - *pfVar7;
+    local_8c = pfVar7[1] - pfVar9[1];
+    local_88 = pfVar7[2] - pfVar9[2];
+    local_80 = pfVar11[1] - pfVar7[1];
+    local_7c = pfVar11[2] - pfVar7[2];
+    Vec3Cross(&local_90,&local_84,in_r8);
+    pfVar13 = (float *)lVar12;
+    dVar23 = (double)(*pfVar13 - *pfVar7);
+    dVar17 = (double)in_r8[1];
+    dVar16 = (double)*in_r8;
+    dVar22 = (double)(pfVar13[1] - pfVar7[1]);
+    dVar21 = (double)(pfVar13[2] - pfVar7[2]);
+    dVar14 = (double)in_r8[2];
+    dVar20 = (double)(float)(dVar14 * dVar14 +
+                            (double)(float)(dVar16 * dVar16 + (double)(float)(dVar17 * dVar17)));
+    fVar1 = (float)(dVar14 * dVar21 +
+                   (double)(float)(dVar17 * dVar22 + (double)(float)(dVar16 * dVar23)));
+    if (fVar1 * fVar1 < (float)(dVar20 * dVar24)) {
+      Vec3Cross(in_r8,&local_90,&local_a8);
+      dVar17 = (double)local_a8;
+      dVar19 = (double)local_a0;
+      dVar18 = (double)local_a4;
+      dVar16 = 0.0;
+      dVar15 = (double)(float)(dVar19 * dVar21 +
+                              (double)(float)(dVar18 * dVar22 + (double)(float)(dVar23 * dVar17)));
+      dVar14 = dVar16;
+      if (dVar15 < 0.0) {
+        dVar14 = dVar15;
       }
-      if ((float)(dVar11 * dVar11) <
-          (float)((double)(float)(dVar14 * dVar14 +
-                                 (double)(float)(dVar15 * dVar15 + (double)(float)(dVar16 * dVar16))
-                                 ) * dVar21)) {
-        Vec3Cross(param_6,uVar6 - 0x84,uVar6 - 0xa8);
-        dVar14 = (double)local_a8;
-        dVar15 = (double)local_a0;
-        dVar12 = (double)local_a4;
-        dVar18 = (double)(float)(dVar15 * dVar18 +
-                                (double)(float)(dVar12 * dVar19 + (double)(float)(dVar20 * dVar14)))
+      if ((float)(dVar14 * dVar14) <
+          (float)((double)(float)(dVar17 * dVar17 +
+                                 (double)(float)(dVar18 * dVar18 + (double)(float)(dVar19 * dVar19))
+                                 ) * dVar24)) {
+        Vec3Cross(in_r8,&local_84,&local_a8);
+        dVar17 = (double)local_a8;
+        dVar18 = (double)local_a0;
+        dVar15 = (double)local_a4;
+        dVar21 = (double)(float)(dVar18 * dVar21 +
+                                (double)(float)(dVar15 * dVar22 + (double)(float)(dVar23 * dVar17)))
         ;
-        dVar11 = dVar13;
-        if (dVar18 < 0.0) {
-          dVar11 = dVar18;
+        dVar14 = dVar16;
+        if (dVar21 < 0.0) {
+          dVar14 = dVar21;
         }
-        if ((float)(dVar11 * dVar11) <
-            (float)((double)(float)(dVar14 * dVar14 +
-                                   (double)(float)(dVar12 * dVar12 +
-                                                  (double)(float)(dVar15 * dVar15))) * dVar21)) {
-          dVar12 = (double)(*pfVar10 - *pfVar9);
-          dVar20 = (double)(pfVar10[1] - pfVar9[1]);
-          dVar14 = (double)(pfVar10[2] - pfVar9[2]);
-          Vec3Cross(param_6,uVar6 - 0x78,uVar6 - 0xa8);
-          dVar11 = (double)local_a8;
-          dVar19 = (double)local_a0;
-          dVar18 = (double)local_a4;
-          dVar14 = (double)(float)(dVar19 * dVar14 +
-                                  (double)(float)(dVar18 * dVar20 + (double)(float)(dVar12 * dVar11)
+        if ((float)(dVar14 * dVar14) <
+            (float)((double)(float)(dVar17 * dVar17 +
+                                   (double)(float)(dVar15 * dVar15 +
+                                                  (double)(float)(dVar18 * dVar18))) * dVar24)) {
+          local_78 = *pfVar9 - *pfVar11;
+          local_74 = pfVar9[1] - pfVar11[1];
+          local_70 = pfVar9[2] - pfVar11[2];
+          dVar15 = (double)(*pfVar13 - *pfVar9);
+          dVar23 = (double)(pfVar13[1] - pfVar9[1]);
+          dVar17 = (double)(pfVar13[2] - pfVar9[2]);
+          Vec3Cross(in_r8,&local_78,&local_a8);
+          dVar14 = (double)local_a8;
+          dVar22 = (double)local_a0;
+          dVar21 = (double)local_a4;
+          dVar17 = (double)(float)(dVar22 * dVar17 +
+                                  (double)(float)(dVar21 * dVar23 + (double)(float)(dVar15 * dVar14)
                                                  ));
-          if (dVar14 < 0.0) {
-            dVar13 = dVar14;
+          if (dVar17 < 0.0) {
+            dVar16 = dVar17;
           }
-          if ((float)(dVar13 * dVar13) <
-              (float)((double)(float)(dVar11 * dVar11 +
-                                     (double)(float)(dVar18 * dVar18 +
-                                                    (double)(float)(dVar19 * dVar19))) * dVar21)) {
-            fVar1 = *pfVar4;
-            fVar2 = pfVar4[1];
-            fVar3 = pfVar4[2];
-            fVar5 = 1.0 / (float)SQRT(dVar17);
-            *pfVar4 = fVar5 * fVar1;
-            pfVar4[1] = fVar5 * fVar2;
-            pfVar4[2] = fVar5 * fVar3;
-            pfVar4[3] = fVar5 * fVar3 * pfVar8[2] +
-                        fVar5 * fVar2 * pfVar8[1] + *pfVar8 * fVar5 * fVar1;
+          if ((float)(dVar16 * dVar16) <
+              (float)((double)(float)(dVar14 * dVar14 +
+                                     (double)(float)(dVar21 * dVar21 +
+                                                    (double)(float)(dVar22 * dVar22))) * dVar24)) {
+            fVar1 = *in_r8;
+            fVar2 = in_r8[1];
+            fVar3 = in_r8[2];
+            fVar4 = 1.0 / (float)SQRT(dVar20);
+            *in_r8 = fVar4 * fVar1;
+            in_r8[1] = fVar4 * fVar2;
+            in_r8[2] = fVar4 * fVar3;
+            in_r8[3] = fVar4 * fVar3 * pfVar7[2] +
+                       fVar4 * fVar2 * pfVar7[1] + *pfVar7 * fVar4 * fVar1;
             __restfpr_26(1);
-            __restgprlr_27();
-            return;
+            iVar6 = __restgprlr_27();
+            return iVar6;
           }
         }
       }
     }
   }
   __restfpr_26(0);
-  __restgprlr_27();
-  return;
+  iVar6 = __restgprlr_27();
+  return iVar6;
 }
 
 
 // 8265F630  CircularRemoveRange  (physics/phys_coll_boxbrush.cpp:126)
 
-void CircularRemoveRange(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
+int CircularRemoveRange(float (*param_1) [3],int param_2,int param_3,int param_4)
 
 {
-  void *_Dst;
   ulonglong uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  int iVar8;
   
-  uVar1 = __savegprlr_27();
+  uVar5 = (ulonglong)param_4;
+  lVar4 = (longlong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_27(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x7f,0,0xffffffff82000f98,0xffffffff82082270);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x7f,0,"%s");
   }
-  iVar4 = (int)param_2;
-  iVar3 = (int)param_3;
-  if ((iVar4 <= iVar3) || (iVar3 < 0)) {
-    MyAssertHandler(0xffffffff821925d8,0x80,0,0xffffffff82192758,0xffffffff8219276c,param_3);
+  iVar7 = (int)uVar3;
+  iVar2 = (int)lVar4;
+  if ((iVar7 <= iVar2) || (iVar2 < 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x80,0,"%s\n\t(begin) = %i");
   }
-  iVar5 = (int)param_4;
-  if ((iVar4 <= iVar5) || (iVar5 < 0)) {
-    MyAssertHandler(0xffffffff821925d8,0x81,0,0xffffffff82192728,0xffffffff82192738,param_4);
+  iVar8 = (int)uVar5;
+  if ((iVar7 <= iVar8) || (iVar8 < 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x81,0,"%s\n\t(end) = %i");
   }
-  uVar2 = param_3 + 1;
-  trapWord(6,param_2,0);
-  trapWord(5,param_2 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  if ((int)uVar2 - ((int)uVar2 / iVar4) * iVar4 == iVar5) {
-    __restgprlr_27(param_2);
-    return;
+  uVar6 = lVar4 + 1;
+  trapWord(6,uVar3,0);
+  trapWord(5,uVar3 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if ((int)uVar6 - ((int)uVar6 / iVar7) * iVar7 == iVar8) {
+    iVar2 = __restgprlr_27(uVar3);
+    return iVar2;
   }
-  _Dst = (void *)uVar1;
-  if (iVar3 < iVar5) {
-    param_2 = param_2 - param_4;
-    memmove((void *)((int)((param_3 + 1U + (param_3 + 1U & 0x7fffffff) * 2 & 0xffffffff) << 2) +
-                    (int)_Dst),
-            (void *)((int)((param_4 + (param_4 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)_Dst),
-            (size_t)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-    __restgprlr_27(param_2 + param_3 + 1);
-    return;
+  if (iVar2 < iVar8) {
+    memmove();
+    iVar2 = __restgprlr_27((uVar3 - uVar5) + lVar4 + 1);
+    return iVar2;
   }
-  uVar2 = (param_4 + (param_4 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + uVar1;
-  if ((uVar1 & 0xffffffff) != (uVar2 & 0xffffffff)) {
-    uVar1 = (param_3 - param_4) + 1;
-    memmove(_Dst,(void *)uVar2,(size_t)((uVar1 + (uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+  if ((uVar1 & 0xffffffff) !=
+      ((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + uVar1 & 0xffffffff)) {
+    memmove();
   }
-  __restgprlr_27((param_3 - param_4) + 1);
-  return;
+  iVar2 = __restgprlr_27((lVar4 - uVar5) + 1);
+  return iVar2;
 }
 
 
 // 8265F7B0  InsertPoint  (physics/phys_coll_boxbrush.cpp:148)
 
-void InsertPoint(undefined8 param_1,longlong param_2,int param_3,longlong param_4)
+void InsertPoint(float (*param_1) [3],int param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  void *pvVar3;
-  int iVar4;
+  int iVar1;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = uVar1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar2 = MyAssertHandler(0xffffffff821925d8,0x95,0,0xffffffff82000f98,0xffffffff82082270);
+  iVar1 = __savegprlr_26(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x95,0,"%s");
   }
-  iVar4 = (int)param_2;
-  if (iVar4 <= (int)param_4) {
-    uVar2 = MyAssertHandler(0xffffffff821925d8,0x96,0,0xffffffff82000f98,0xffffffff821927a8);
+  if (param_2 <= param_4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x96,0,"%s");
   }
-  if (param_3 <= iVar4) {
-    uVar2 = MyAssertHandler(0xffffffff821925d8,0x97,0,0xffffffff82000f98,0xffffffff82192790);
+  if (param_3 <= param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x97,0,"%s");
   }
-  if ((int)param_4 + 1 != iVar4) {
-    uVar2 = (param_2 - param_4) - 1;
-    pvVar3 = memmove((void *)((int)((param_4 + 2U + (param_4 + 2U & 0x7fffffff) * 2 & 0xffffffff) <<
-                                   2) + (int)uVar1),
-                     (void *)((int)((param_4 + 1U + (param_4 + 1U & 0x7fffffff) * 2 & 0xffffffff) <<
-                                   2) + (int)uVar1),
-                     (size_t)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-    uVar2 = (ulonglong)(int)pvVar3;
+  if (param_4 + 1 != param_2) {
+    memmove();
   }
-  __restgprlr_26(uVar2);
+  __restgprlr_26();
   return;
 }
 
 
 // 8265F8A0  GetPolyOrientation  (physics/phys_coll_boxbrush.cpp:161)
 
-void GetPolyOrientation(undefined8 param_1,longlong param_2,ulonglong param_3)
+PolyOrientation GetPolyOrientation(float *param_1,float (*param_2) [3],uint param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
-  ulonglong uVar3;
-  double dVar4;
+  PolyOrientation PVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  double dVar7;
   float local_60;
   float local_5c;
   float local_58;
@@ -469,46 +494,48 @@ void GetPolyOrientation(undefined8 param_1,longlong param_2,ulonglong param_3)
   float local_3c;
   float local_38;
   
-  pfVar2 = (float *)__savegprlr_28();
-  if ((param_3 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821925d8,0xa8,0,0xffffffff82000f98,0xffffffff82184620);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  pfVar2 = (float *)__savegprlr_28(param_1);
+  if ((uVar4 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0xa8,0,"%s");
   }
-  pfVar1 = (float *)param_2;
-  uVar3 = 1;
+  pfVar1 = (float *)lVar6;
+  uVar5 = 1;
   local_60 = pfVar1[3] - *pfVar1;
   local_5c = pfVar1[4] - pfVar1[1];
   local_58 = pfVar1[5] - pfVar1[2];
-  if (1 < (param_3 - 1 & 0xffffffff)) {
-    param_2 = param_2 + 0x20;
-    dVar4 = 0.009999999776482582;
+  if (1 < (uVar4 - 1 & 0xffffffff)) {
+    lVar6 = lVar6 + 0x20;
+    dVar7 = 0.009999999776482582;
     do {
-      pfVar1 = (float *)param_2;
+      pfVar1 = (float *)lVar6;
       local_50 = pfVar1[-2] - pfVar1[-5];
       local_4c = pfVar1[-1] - pfVar1[-4];
       local_48 = *pfVar1 - pfVar1[-3];
       Vec3Cross(&local_60,&local_50,&local_40);
-      if (dVar4 < (double)(local_40 * local_40 + local_3c * local_3c + local_38 * local_38)) {
+      if (dVar7 < (double)(local_40 * local_40 + local_3c * local_3c + local_38 * local_38)) {
         if (pfVar2[2] * local_38 + pfVar2[1] * local_3c + *pfVar2 * local_40 < 0.0) {
-          __restgprlr_28(1);
-          return;
+          PVar3 = __restgprlr_28(1);
+          return PVar3;
         }
-        __restgprlr_28(0);
-        return;
+        PVar3 = __restgprlr_28(0);
+        return PVar3;
       }
-      uVar3 = uVar3 + 1;
-      param_2 = param_2 + 0xc;
-    } while ((uVar3 & 0xffffffff) < (param_3 - 1 & 0xffffffff));
+      uVar5 = uVar5 + 1;
+      lVar6 = lVar6 + 0xc;
+    } while ((uVar5 & 0xffffffff) < (uVar4 - 1 & 0xffffffff));
   }
-  __restgprlr_28(2);
-  return;
+  PVar3 = __restgprlr_28(2);
+  return PVar3;
 }
 
 
 // 8265FA00  Phys_GetChoppingPlaneForPolyEdge  (physics/phys_coll_boxbrush.cpp:195)
 
-undefined8
-Phys_GetChoppingPlaneForPolyEdge
-          (float *param_1,float *param_2,float *param_3,char param_4,float *param_5)
+bool Phys_GetChoppingPlaneForPolyEdge
+               (float *param_1,float *param_2,float *param_3,bool param_4,float *param_5)
 
 {
   float fVar1;
@@ -526,12 +553,12 @@ Phys_GetChoppingPlaneForPolyEdge
   local_34 = param_3[1] - param_2[1];
   dVar6 = 0.10000000149011612;
   if (0.1 <= local_34 * local_34 + local_30 * local_30 + local_38 * local_38) {
-    if (param_4 == '\0') {
-      pfVar5 = &local_38;
-    }
-    else {
+    if (param_4) {
       pfVar5 = param_1;
       param_1 = &local_38;
+    }
+    else {
+      pfVar5 = &local_38;
     }
     Vec3Cross(pfVar5,param_1,param_5);
     fVar1 = param_5[1];
@@ -543,22 +570,23 @@ Phys_GetChoppingPlaneForPolyEdge
       if ((((((uint)fVar2 & 0x7f800000) == 0x7f800000) || (((uint)fVar1 & 0x7f800000) == 0x7f800000)
            ) || (((uint)fVar3 & 0x7f800000) == 0x7f800000)) ||
          (((uint)fVar4 & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821925d8,0xd3,0,0xffffffff82000f98,0xffffffff821927c8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0xd3,0,"%s");
       }
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 8265FB70  Phys_ClipLineSegmentAgainstPlane  (physics/phys_coll_boxbrush.cpp:218)
 
-undefined8 Phys_ClipLineSegmentAgainstPlane(float *param_1,float *param_2,float *param_3)
+uint Phys_ClipLineSegmentAgainstPlane(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  undefined8 uVar2;
+  uint uVar2;
   double dVar3;
   double dVar4;
   
@@ -573,7 +601,8 @@ undefined8 Phys_ClipLineSegmentAgainstPlane(float *param_1,float *param_2,float 
     else {
       dVar3 = (double)(float)(dVar4 - dVar3);
       if (0.0 <= dVar3) {
-        MyAssertHandler(0xffffffff821925d8,0xf0,1,0xffffffff82000f98,0xffffffff82192830);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0xf0,1,"%s");
       }
       fVar1 = (float)(dVar4 / dVar3);
       uVar2 = 2;
@@ -585,7 +614,8 @@ undefined8 Phys_ClipLineSegmentAgainstPlane(float *param_1,float *param_2,float 
   else if (0.0 < dVar4) {
     dVar4 = (double)(float)(dVar3 - dVar4);
     if (0.0 <= dVar4) {
-      MyAssertHandler(0xffffffff821925d8,0xe7,1,0xffffffff82000f98,0xffffffff82192848);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0xe7,1,"%s");
     }
     fVar1 = (float)(dVar3 / dVar4);
     uVar2 = 2;
@@ -602,263 +632,284 @@ undefined8 Phys_ClipLineSegmentAgainstPlane(float *param_1,float *param_2,float 
 
 // 8265FD18  Phys_ClipPolyAgainstPlane  (physics/phys_coll_boxbrush.cpp:254)
 
-void Phys_ClipPolyAgainstPlane
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,float *param_4)
+uint Phys_ClipPolyAgainstPlane(float (*param_1) [3],uint param_2,uint param_3,float *param_4)
 
 {
   float fVar1;
-  float fVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  float (*pafVar2) [3];
+  float *pfVar3;
+  float fVar4;
   float fVar5;
   bool bVar6;
-  float fVar7;
+  bool bVar7;
   bool bVar8;
-  bool bVar9;
-  int iVar11;
-  undefined8 uVar10;
-  longlong lVar12;
-  float *pfVar13;
-  float *pfVar14;
-  ulonglong uVar15;
+  uint uVar10;
+  char *pcVar11;
+  ulonglong uVar9;
+  int iVar12;
+  float (*pafVar13) [3];
+  float (*pafVar14) [3];
+  float (*pafVar15) [3];
+  ulonglong uVar16;
   ulonglong uVar17;
   int iVar18;
   ulonglong uVar19;
   int iVar20;
   ulonglong uVar21;
-  int iVar22;
-  ulonglong uVar23;
+  ulonglong uVar22;
   ulonglong uVar24;
-  float *pfVar25;
+  longlong lVar25;
   ulonglong uVar26;
   ulonglong uVar27;
-  undefined4 *puVar28;
-  bool bVar29;
-  int iVar16;
+  bool bVar28;
+  uint uStack00000024;
+  int iVar23;
   
-  iVar11 = __savegprlr();
-  if ((param_2 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x10b,0,0xffffffff82000f98,0xffffffff82192a94);
+  uVar21 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  lVar25 = (longlong)(int)param_1;
+  __savegprlr();
+  uStack00000024 = (uint)uVar21;
+  if ((uVar9 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x10b,0,"%s");
   }
-  if ((param_3 & 0xffffffff) < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x10c,0,0xffffffff82000f98,0xffffffff82192a7c);
+  if ((uVar21 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x10c,0,"%s");
   }
   if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
       (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
      (((uint)param_4[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821925d8,0x10d,0,0xffffffff82000f98,0xffffffff82192a20);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x10d,0,"%s");
   }
   if (((uint)param_4[3] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff821925d8,0x10e,0,0xffffffff82000f98,0xffffffff82192a00);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x10e,0,"%s");
   }
-  uVar23 = param_2 - 1;
+  uVar24 = uVar9 - 1;
   uVar17 = 0xffffffffffffffff;
   iVar18 = -1;
-  uVar21 = 0xffffffffffffffff;
+  uVar22 = 0xffffffffffffffff;
+  iVar23 = -1;
   uVar19 = 0xffffffffffffffff;
-  iVar20 = (int)uVar23 * 0xc;
-  uVar15 = 0xffffffffffffffff;
-  iVar16 = -1;
-  pfVar25 = (float *)(iVar20 + iVar11);
+  uVar16 = 0xffffffffffffffff;
+  iVar12 = -1;
+  pafVar15 = (float (*) [3])lVar25;
+  pafVar2 = pafVar15 + (int)uVar24;
   bVar6 = false;
-  if ((((*(uint *)(iVar20 + iVar11) & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar25[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar25[2] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821925d8,0x118,0,0xffffffff82000f98,0xffffffff82192998);
+  if (((((uint)pafVar15[(int)uVar24][0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(*pafVar2)[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(*pafVar2)[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x118,0,"%s");
   }
-  bVar29 = pfVar25[2] * param_4[2] + pfVar25[1] * param_4[1] + *pfVar25 * *param_4 <= param_4[3];
-  if ((param_2 & 0xffffffff) != 0) {
-    pfVar25 = (float *)(iVar11 + 8);
-    uVar24 = uVar23;
+  bVar28 = (*pafVar2)[2] * param_4[2] + (*pafVar2)[1] * param_4[1] + (*pafVar2)[0] * *param_4 <=
+           param_4[3];
+  if ((uVar9 & 0xffffffff) != 0) {
+    lVar25 = lVar25 + 8;
+    uVar21 = uVar24;
     uVar26 = 0;
-    bVar8 = bVar29;
+    bVar7 = bVar28;
     do {
-      if (((((uint)pfVar25[-2] & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar25[-1] & 0x7f800000) == 0x7f800000)) ||
-         (((uint)*pfVar25 & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821925d8,0x11e,0,0xffffffff82000f98,0xffffffff82192938);
+      pfVar3 = (float *)lVar25;
+      if (((((uint)pfVar3[-2] & 0x7f800000) == 0x7f800000) ||
+          (((uint)pfVar3[-1] & 0x7f800000) == 0x7f800000)) ||
+         (((uint)*pfVar3 & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x11e,0,"%s");
       }
-      bVar9 = bVar29;
-      if ((uVar26 & 0xffffffff) != (uVar23 & 0xffffffff)) {
-        bVar9 = param_4[2] * *pfVar25 + pfVar25[-2] * *param_4 + pfVar25[-1] * param_4[1] <=
-                param_4[3];
+      bVar8 = bVar28;
+      if ((uVar26 & 0xffffffff) != (uVar24 & 0xffffffff)) {
+        bVar8 = param_4[2] * *pfVar3 + pfVar3[-2] * *param_4 + pfVar3[-1] * param_4[1] <= param_4[3]
+        ;
       }
-      if (bVar8) {
+      if (bVar7) {
         bVar6 = true;
-        if (!bVar9) {
-          uVar17 = uVar24;
-          uVar21 = uVar26;
+        if (!bVar8) {
+          uVar17 = uVar21;
+          uVar22 = uVar26;
         }
       }
-      else if (bVar9) {
-        uVar15 = uVar26;
-        uVar19 = uVar24;
+      else if (bVar8) {
+        uVar16 = uVar26;
+        uVar19 = uVar21;
       }
+      iVar23 = (int)uVar22;
       iVar18 = (int)uVar17;
-      iVar16 = (int)uVar15;
+      iVar12 = (int)uVar16;
       uVar27 = uVar26 + 1;
-      pfVar25 = pfVar25 + 3;
-      uVar24 = uVar26;
+      lVar25 = lVar25 + 0xc;
+      uVar21 = uVar26;
       uVar26 = uVar27;
-      bVar8 = bVar9;
-    } while ((uVar27 & 0xffffffff) < (param_2 & 0xffffffff));
-    param_3 = param_3 & 0xffffffff;
+      bVar7 = bVar8;
+    } while ((uVar27 & 0xffffffff) < (uVar9 & 0xffffffff));
+    uVar21 = (ulonglong)uStack00000024;
   }
   if (!bVar6) {
-    __restgprlr(0);
-    return;
+    uVar10 = 0;
+    __restgprlr();
+    return uVar10;
   }
   iVar20 = (int)uVar19;
+  uVar10 = (uint)uVar9;
   if (iVar18 == -1) {
     if (iVar20 != -1) {
-      MyAssertHandler(0xffffffff821925d8,0x140,0,0xffffffff82000f98,0xffffffff82192920);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x140,0,"%s");
     }
-    __restgprlr(param_2);
-    return;
+    __restgprlr();
+    return uVar10;
   }
   if (iVar20 == -1) {
-    Com_PrintError(0x14,0xffffffff82192900);
-    uVar10 = va(0xffffffff821928dc,param_2);
-    Com_PrintError(0x14,uVar10);
-    uVar15 = 0;
-    if ((param_2 & 0xffffffff) != 0) {
-      puVar28 = (undefined4 *)(iVar11 + -4);
+    Com_PrintError(0x14,"Physics poly-clipping bug!!\n");
+    pcVar11 = va("    polyCount: %i. poly points:\n");
+    Com_PrintError(0x14,pcVar11);
+    uVar16 = 0;
+    if ((uVar9 & 0xffffffff) != 0) {
       do {
-        puVar3 = puVar28 + 1;
-        puVar4 = puVar28 + 2;
-        puVar28 = puVar28 + 3;
-        uVar10 = va(0xffffffff821928c4,uVar15,*puVar3,*puVar4,*puVar28);
-        Com_PrintError(0x14,uVar10);
-        uVar15 = uVar15 + 1;
-      } while ((uVar15 & 0xffffffff) < (param_2 & 0xffffffff));
+        pcVar11 = va(" %i) 0x%x, 0x%x, 0x%x\n");
+        Com_PrintError(0x14,pcVar11);
+        uVar16 = uVar16 + 1;
+      } while ((uVar16 & 0xffffffff) < (uVar9 & 0xffffffff));
     }
-    uVar10 = va(0xffffffff82192898,*param_4,param_4[1],param_4[2],param_4[3]);
-    Com_PrintError(0x14,uVar10);
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821925d8,0x151,0,0xffffffff82192878);
+    pcVar11 = va(" choppingPlane: (0x%x, 0x%x, 0x%x), 0x%x\n");
+    Com_PrintError(0x14,pcVar11);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x151,0,"Physics poly-clipping assert");
     }
   }
-  iVar22 = (int)uVar21;
-  if (iVar22 == iVar20) {
-    if ((param_3 & 0xffffffff) <= (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821925d8,0x157,0,0xffffffff82000f98,0xffffffff82192860);
+  if (iVar23 == iVar20) {
+    if ((uVar21 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x157,0,"%s");
     }
-    InsertPoint(iVar11,param_2,param_3,uVar21);
-    param_2 = param_2 + 1;
-    trapWord(6,param_2,0);
-    lVar12 = (uVar19 + 1) -
-             (longlong)(int)((uVar19 + 1 & 0xffffffff) / (param_2 & 0xffffffff)) *
-             (longlong)(int)param_2;
-    trapWord(6,param_2,0);
-    uVar15 = lVar12 + 1;
-    if (iVar22 < iVar18) {
+    InsertPoint(pafVar15,uVar10,(int)uVar21,iVar23);
+    uVar9 = uVar9 + 1;
+    trapWord(6,uVar9,0);
+    lVar25 = (uVar19 + 1) -
+             (longlong)(int)((uVar19 + 1 & 0xffffffff) / (uVar9 & 0xffffffff)) *
+             (longlong)(int)uVar9;
+    trapWord(6,uVar9,0);
+    uVar21 = lVar25 + 1;
+    if (iVar23 < iVar18) {
       iVar18 = iVar18 + 1;
     }
-    pfVar14 = (float *)(((int)uVar15 -
-                        (int)((uVar15 & 0xffffffff) / (param_2 & 0xffffffff)) * (int)param_2) * 0xc
-                       + iVar11);
-    pfVar25 = (float *)(iVar22 * 0xc + iVar11);
-    fVar2 = *(float *)(iVar22 * 0xc + iVar11);
-    fVar1 = *pfVar14;
-    fVar7 = fVar2 - fVar1;
-    fVar5 = param_4[2] * (pfVar25[2] - pfVar14[2]) +
-            param_4[1] * (pfVar25[1] - pfVar14[1]) + *param_4 * fVar7;
-    iVar20 = (int)lVar12;
+    pafVar14 = pafVar15 +
+               ((int)uVar21 - (int)((uVar21 & 0xffffffff) / (uVar9 & 0xffffffff)) * (int)uVar9);
+    pafVar2 = pafVar15 + iVar23;
+    fVar1 = (*pafVar14)[0];
+    fVar4 = pafVar15[iVar23][0] - fVar1;
+    fVar5 = param_4[2] * ((*pafVar2)[2] - (*pafVar14)[2]) +
+            param_4[1] * ((*pafVar2)[1] - (*pafVar14)[1]) + *param_4 * fVar4;
+    iVar12 = (int)lVar25;
     if (fVar5 == 0.0) {
-      pfVar14 = (float *)(iVar20 * 0xc + iVar11);
-      *pfVar14 = fVar2;
-      pfVar14[1] = pfVar25[1];
-      pfVar14[2] = pfVar25[2];
+      pafVar14 = pafVar15 + iVar12;
+      (*pafVar14)[0] = pafVar15[iVar23][0];
+      (*pafVar14)[1] = (*pafVar2)[1];
+      (*pafVar14)[2] = (*pafVar2)[2];
     }
     else {
-      pfVar13 = (float *)(iVar20 * 0xc + iVar11);
-      fVar5 = (param_4[3] - (param_4[2] * pfVar14[2] + param_4[1] * pfVar14[1] + *param_4 * fVar1))
-              / fVar5;
-      *pfVar13 = fVar7 * fVar5 + fVar1;
-      pfVar13[1] = (pfVar25[1] - pfVar14[1]) * fVar5 + pfVar14[1];
-      pfVar13[2] = (pfVar25[2] - pfVar14[2]) * fVar5 + pfVar14[2];
+      pafVar13 = pafVar15 + iVar12;
+      fVar5 = (param_4[3] -
+              (param_4[2] * (*pafVar14)[2] + param_4[1] * (*pafVar14)[1] + *param_4 * fVar1)) /
+              fVar5;
+      (*pafVar13)[0] = fVar4 * fVar5 + fVar1;
+      (*pafVar13)[1] = ((*pafVar2)[1] - (*pafVar14)[1]) * fVar5 + (*pafVar14)[1];
+      (*pafVar13)[2] = ((*pafVar2)[2] - (*pafVar14)[2]) * fVar5 + (*pafVar14)[2];
     }
-    pfVar14 = (float *)(iVar18 * 0xc + iVar11);
-    fVar1 = *pfVar14;
-    fVar2 = param_4[2] * (pfVar25[2] - pfVar14[2]) +
-            param_4[1] * (pfVar25[1] - pfVar14[1]) + *param_4 * (*pfVar25 - fVar1);
-    if (fVar2 != 0.0) {
-      fVar2 = (param_4[3] - (param_4[2] * pfVar14[2] + param_4[1] * pfVar14[1] + *param_4 * fVar1))
-              / fVar2;
-      *pfVar25 = (*pfVar25 - fVar1) * fVar2 + fVar1;
-      pfVar25[1] = (pfVar25[1] - pfVar14[1]) * fVar2 + pfVar14[1];
-      pfVar25[2] = (pfVar25[2] - pfVar14[2]) * fVar2 + pfVar14[2];
+    pafVar15 = pafVar15 + iVar18;
+    fVar1 = (*pafVar15)[0];
+    fVar5 = (*pafVar2)[0] - fVar1;
+    fVar4 = param_4[2] * ((*pafVar2)[2] - (*pafVar15)[2]) +
+            param_4[1] * ((*pafVar2)[1] - (*pafVar15)[1]) + *param_4 * fVar5;
+    if (fVar4 != 0.0) {
+      fVar4 = (param_4[3] -
+              (param_4[2] * (*pafVar15)[2] + param_4[1] * (*pafVar15)[1] + *param_4 * fVar1)) /
+              fVar4;
+      (*pafVar2)[0] = fVar5 * fVar4 + fVar1;
+      (*pafVar2)[1] = ((*pafVar2)[1] - (*pafVar15)[1]) * fVar4 + (*pafVar15)[1];
+      (*pafVar2)[2] = ((*pafVar2)[2] - (*pafVar15)[2]) * fVar4 + (*pafVar15)[2];
       __restgprlr();
-      return;
+      return (uint)uVar9;
     }
   }
   else {
-    pfVar14 = (float *)(iVar18 * 0xc + iVar11);
-    pfVar25 = (float *)(iVar22 * 0xc + iVar11);
-    fVar1 = *pfVar14;
-    fVar5 = *(float *)(iVar22 * 0xc + iVar11) - fVar1;
-    fVar2 = param_4[2] * (pfVar25[2] - pfVar14[2]) +
-            param_4[1] * (pfVar25[1] - pfVar14[1]) + *param_4 * fVar5;
-    if (fVar2 != 0.0) {
-      fVar2 = (param_4[3] - (param_4[2] * pfVar14[2] + param_4[1] * pfVar14[1] + *param_4 * fVar1))
-              / fVar2;
-      *pfVar25 = fVar5 * fVar2 + fVar1;
-      pfVar25[1] = (pfVar25[1] - pfVar14[1]) * fVar2 + pfVar14[1];
-      pfVar25[2] = (pfVar25[2] - pfVar14[2]) * fVar2 + pfVar14[2];
+    pafVar14 = pafVar15 + iVar18;
+    pafVar2 = pafVar15 + iVar23;
+    fVar1 = (*pafVar14)[0];
+    fVar4 = pafVar15[iVar23][0] - fVar1;
+    fVar5 = param_4[2] * ((*pafVar2)[2] - (*pafVar14)[2]) +
+            param_4[1] * ((*pafVar2)[1] - (*pafVar14)[1]) + *param_4 * fVar4;
+    if (fVar5 != 0.0) {
+      fVar5 = (param_4[3] -
+              (param_4[2] * (*pafVar14)[2] + param_4[1] * (*pafVar14)[1] + *param_4 * fVar1)) /
+              fVar5;
+      (*pafVar2)[0] = fVar4 * fVar5 + fVar1;
+      (*pafVar2)[1] = ((*pafVar2)[1] - (*pafVar14)[1]) * fVar5 + (*pafVar14)[1];
+      (*pafVar2)[2] = ((*pafVar2)[2] - (*pafVar14)[2]) * fVar5 + (*pafVar14)[2];
     }
-    pfVar14 = (float *)(iVar16 * 0xc + iVar11);
-    pfVar25 = (float *)(iVar20 * 0xc + iVar11);
-    fVar1 = *pfVar14;
-    fVar5 = *(float *)(iVar20 * 0xc + iVar11) - fVar1;
-    fVar2 = param_4[2] * (pfVar25[2] - pfVar14[2]) +
-            param_4[1] * (pfVar25[1] - pfVar14[1]) + *param_4 * fVar5;
-    if (fVar2 != 0.0) {
-      fVar2 = (param_4[3] - (param_4[2] * pfVar14[2] + param_4[1] * pfVar14[1] + *param_4 * fVar1))
-              / fVar2;
-      *pfVar25 = fVar5 * fVar2 + fVar1;
-      pfVar25[1] = (pfVar25[1] - pfVar14[1]) * fVar2 + pfVar14[1];
-      pfVar25[2] = (pfVar25[2] - pfVar14[2]) * fVar2 + pfVar14[2];
+    pafVar14 = pafVar15 + iVar12;
+    pafVar2 = pafVar15 + iVar20;
+    fVar1 = (*pafVar14)[0];
+    fVar5 = pafVar15[iVar20][0] - fVar1;
+    fVar4 = param_4[2] * ((*pafVar2)[2] - (*pafVar14)[2]) +
+            param_4[1] * ((*pafVar2)[1] - (*pafVar14)[1]) + *param_4 * fVar5;
+    if (fVar4 != 0.0) {
+      fVar4 = (param_4[3] -
+              (param_4[2] * (*pafVar14)[2] + param_4[1] * (*pafVar14)[1] + *param_4 * fVar1)) /
+              fVar4;
+      (*pafVar2)[0] = fVar5 * fVar4 + fVar1;
+      (*pafVar2)[1] = ((*pafVar2)[1] - (*pafVar14)[1]) * fVar4 + (*pafVar14)[1];
+      (*pafVar2)[2] = ((*pafVar2)[2] - (*pafVar14)[2]) * fVar4 + (*pafVar14)[2];
     }
-    CircularRemoveRange(iVar11,param_2,uVar21,uVar19);
+    iVar12 = CircularRemoveRange(pafVar15,uVar10,iVar23,iVar20);
+    uVar9 = (ulonglong)iVar12;
   }
+  uVar10 = (uint)uVar9;
   __restgprlr();
-  return;
+  return uVar10;
 }
 
 
 // 8265ECE8  Phys_AxisToOdeMatrix3  (physics/phys_local.h:330)
 
-void Phys_AxisToOdeMatrix3(undefined8 param_1,longlong param_2)
+void Phys_AxisToOdeMatrix3(float (*param_1) [3],float *param_2)
 
 {
   float fVar1;
   int iVar2;
   longlong lVar3;
-  int iVar4;
+  longlong lVar4;
   int iVar5;
-  float *pfVar6;
-  double dVar7;
+  int iVar6;
+  float *pfVar7;
+  double dVar8;
   
-  iVar2 = __savegprlr_23();
-  dVar7 = 0.0;
-  iVar4 = 0;
-  lVar3 = param_2 + -4;
+  lVar3 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_23(param_1);
+  dVar8 = 0.0;
+  iVar5 = 0;
+  lVar4 = lVar3 + -4;
   do {
-    iVar5 = 0;
-    pfVar6 = (float *)(iVar4 + iVar2);
+    iVar6 = 0;
+    pfVar7 = (float *)(iVar5 + iVar2);
     do {
-      fVar1 = *pfVar6;
-      *(float *)((iVar4 + iVar5) * 4 + (int)param_2) = fVar1;
-      if (fVar1 != *pfVar6) {
-        MyAssertHandler(0xffffffff8219251c,0x152,0,0xffffffff82000f98,0xffffffff821924f4);
+      fVar1 = *pfVar7;
+      *(float *)((iVar5 + iVar6) * 4 + (int)lVar3) = fVar1;
+      if (fVar1 != *pfVar7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_local.h",
+                        0x152,0,"%s");
       }
-      iVar5 = iVar5 + 1;
-      pfVar6 = pfVar6 + 3;
-    } while (iVar5 < 3);
-    iVar4 = iVar4 + 4;
-    lVar3 = lVar3 + 0x10;
-    *(float *)lVar3 = (float)dVar7;
-  } while (iVar4 < 0xc);
+      iVar6 = iVar6 + 1;
+      pfVar7 = pfVar7 + 3;
+    } while (iVar6 < 3);
+    iVar5 = iVar5 + 4;
+    lVar4 = lVar4 + 0x10;
+    *(float *)lVar4 = (float)dVar8;
+  } while (iVar5 < 0xc);
   __restgprlr_23();
   return;
 }
@@ -866,130 +917,167 @@ void Phys_AxisToOdeMatrix3(undefined8 param_1,longlong param_2)
 
 // 826604B8  ClipPolys  (physics/phys_coll_boxbrush.cpp:408)
 
-void ClipPolys(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-              ulonglong param_5,ulonglong param_6,ulonglong param_7)
+int ClipPolys(float *param_1,float (*param_2) [3],uint param_3,float (*param_4) [3],uint param_5,
+             float (*param_6) [3],uint param_7)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  undefined1 auStack_60 [96];
+  float *pfVar1;
+  PolyOrientation PVar2;
+  int iVar3;
+  bool bVar5;
+  uint uVar4;
+  float (*pafVar6) [3];
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  float afStack_60 [24];
   
-  uVar1 = __savegprlr_23();
-  if ((param_3 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x19f,0,0xffffffff82000f98,0xffffffff82192b0c);
+  uVar11 = (ulonglong)(int)param_7;
+  uVar10 = (ulonglong)(int)param_6;
+  uVar9 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar13 = (ulonglong)(int)param_2;
+  pfVar1 = (float *)__savegprlr_23(param_1);
+  uVar4 = (uint)uVar9;
+  if ((uVar7 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x19f,0,"%s");
   }
-  if ((param_5 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x1a0,0,0xffffffff82000f98,0xffffffff82192afc);
+  if ((uVar9 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a0,0,"%s");
   }
-  if ((param_7 & 0xffffffff) < (param_3 + param_5 + 1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x1a1,0,0xffffffff82000f98,0xffffffff82192ad4);
+  if ((uVar11 & 0xffffffff) < (uVar7 + uVar9 + 1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a1,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1a2,0,0xffffffff82000f98,0xffffffff82192acc);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a2,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1a3,0,0xffffffff82000f98,0xffffffff82192ac4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a3,0,"%s");
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1a4,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a4,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x1a5,0,0xffffffff82000f98,0xffffffff82192ab4);
+  if ((uVar13 & 0xffffffff) == (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a5,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x1a6,0,0xffffffff82000f98,0xffffffff82192aa4);
+  if ((uVar8 & 0xffffffff) == (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1a6,0,"%s");
   }
-  memcpy((void *)param_6,(void *)param_4,
-         (size_t)((param_5 + (param_5 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  iVar2 = GetPolyOrientation(uVar1,param_2,param_3);
-  if (iVar2 == 2) {
+  memcpy();
+  pafVar6 = (float (*) [3])uVar13;
+  PVar2 = GetPolyOrientation(pfVar1,pafVar6,(uint)uVar7);
+  if (PVar2 == POLY_ERROR) {
 LAB_82660648:
-    __restgprlr_23(0);
-    return;
+    iVar3 = __restgprlr_23(0);
+    return iVar3;
   }
-  uVar5 = 0;
-  if ((param_3 & 0xffffffff) != 0) {
-    lVar4 = ((param_3 - 1) + (param_3 - 1 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar6 = 0;
+  uVar13 = 0;
+  if ((uVar7 & 0xffffffff) != 0) {
+    lVar12 = ((uVar7 - 1) + (uVar7 - 1 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    lVar14 = 0;
     do {
-      cVar3 = Phys_GetChoppingPlaneForPolyEdge
-                        (uVar1,lVar4 + param_2,lVar6 + param_2,iVar2 == 1,auStack_60);
-      if ((cVar3 != '\0') &&
-         (param_5 = Phys_ClipPolyAgainstPlane(param_6,param_5,param_7,auStack_60),
-         (param_5 & 0xffffffff) < 3)) goto LAB_82660648;
-      uVar5 = uVar5 + 1;
-      lVar4 = lVar6;
-      lVar6 = lVar6 + 0xc;
-    } while ((uVar5 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar5 = Phys_GetChoppingPlaneForPolyEdge
+                        (pfVar1,(float *)((int)*pafVar6 + (int)lVar12),
+                         (float *)((int)*pafVar6 + (int)lVar14),PVar2 == POLY_CLOCKWISE,afStack_60);
+      if (bVar5) {
+        uVar4 = Phys_ClipPolyAgainstPlane((float (*) [3])uVar10,(uint)uVar9,(uint)uVar11,afStack_60)
+        ;
+        uVar9 = (ulonglong)(int)uVar4;
+        if (uVar4 < 3) goto LAB_82660648;
+      }
+      uVar4 = (uint)uVar9;
+      uVar13 = uVar13 + 1;
+      lVar12 = lVar14;
+      lVar14 = lVar14 + 0xc;
+    } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
-  uVar5 = Phys_ClipPolyAgainstPlane(param_6,param_5,param_7,uVar1);
-  __restgprlr_23(3 - ((ulonglong)(2 < uVar5) + 3) & uVar5);
-  return;
+  uVar4 = Phys_ClipPolyAgainstPlane((float (*) [3])uVar10,uVar4,(uint)uVar11,pfVar1);
+  iVar3 = __restgprlr_23(3 - ((ulonglong)(2 < (ulonglong)(longlong)(int)uVar4) + 3) &
+                         (longlong)(int)uVar4);
+  return iVar3;
 }
 
 
 // 82660708  Phys_ClipLineSegmentAgainstPoly  (physics/phys_coll_boxbrush.cpp:451)
 
-void Phys_ClipLineSegmentAgainstPoly
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5)
+uint Phys_ClipLineSegmentAgainstPoly
+               (float *param_1,float (*param_2) [3],uint param_3,float *param_4,float *param_5)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  char cVar5;
-  int iVar4;
-  longlong lVar2;
+  float *pfVar1;
+  PolyOrientation PVar2;
+  uint uVar3;
+  bool bVar4;
+  float (*pafVar5) [3];
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  undefined1 auStack_60 [96];
+  ulonglong uVar9;
+  float afStack_60 [24];
   
-  uVar1 = __savegprlr_24();
-  if ((param_3 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x1c9,0,0xffffffff82000f98,0xffffffff82192a94);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  pfVar1 = (float *)__savegprlr_24(param_1);
+  if ((uVar6 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1c9,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1ca,0,0xffffffff82000f98,0xffffffff82192b1c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1ca,0,"%s");
   }
-  iVar3 = GetPolyOrientation(uVar1,param_2,param_3);
-  if (iVar3 != 2) {
-    uVar6 = 0;
-    uVar8 = param_2;
-    if ((param_3 & 0xffffffff) != 0) {
+  pafVar5 = (float (*) [3])uVar9;
+  PVar2 = GetPolyOrientation(pfVar1,pafVar5,(uint)uVar6);
+  if (PVar2 != POLY_ERROR) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
       do {
-        uVar6 = uVar6 + 1;
-        uVar7 = uVar6 - (longlong)(int)((uVar6 & 0xffffffff) / (param_3 & 0xffffffff)) *
-                        (longlong)(int)param_3;
-        trapWord(6,param_3,0);
-        cVar5 = Phys_GetChoppingPlaneForPolyEdge
-                          (uVar1,uVar8,(uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_2
-                           ,iVar3 == 1,auStack_60);
-        if ((cVar5 != '\0') &&
-           (iVar4 = Phys_ClipLineSegmentAgainstPlane(param_4,param_5,auStack_60), iVar4 == 0))
+        uVar7 = uVar7 + 1;
+        uVar8 = uVar7 - (longlong)(int)((uVar7 & 0xffffffff) / (uVar6 & 0xffffffff)) *
+                        (longlong)(int)(uint)uVar6;
+        trapWord(6,uVar6,0);
+        bVar4 = Phys_GetChoppingPlaneForPolyEdge
+                          (pfVar1,(float *)uVar9,
+                           (float *)((int)*pafVar5 +
+                                    (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 2)),
+                           PVar2 == POLY_CLOCKWISE,afStack_60);
+        if ((bVar4) &&
+           (uVar3 = Phys_ClipLineSegmentAgainstPlane(param_4,param_5,afStack_60), uVar3 == 0))
         goto LAB_82660798;
-        uVar8 = uVar8 + 0xc;
-      } while ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar9 = uVar9 + 0xc;
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
-    lVar2 = Phys_ClipLineSegmentAgainstPlane(param_4,param_5,uVar1);
-    __restgprlr_24(-(lVar2 != 0) & 2);
-    return;
+    uVar3 = Phys_ClipLineSegmentAgainstPlane(param_4,param_5,pfVar1);
+    uVar3 = __restgprlr_24(-(uVar3 != 0) & 2);
+    return uVar3;
   }
 LAB_82660798:
-  __restgprlr_24(0);
-  return;
+  uVar3 = __restgprlr_24(0);
+  return uVar3;
 }
 
 
 // 82660858  Phys_ProjectBoxFaceOntoBrushFaceAndClip  (physics/phys_coll_boxbrush.cpp:483)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_ProjectBoxFaceOntoBrushFaceAndClip
-               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,ulonglong param_5
-               ,undefined8 param_6,ulonglong param_7)
+               (objInfo *param_1,int param_2,int param_3,float *param_4,Poly *param_5,int param_6,
+               Results *param_7,float *param_8)
 
 {
   float fVar1;
@@ -999,29 +1087,33 @@ void Phys_ProjectBoxFaceOntoBrushFaceAndClip
   float fVar5;
   float fVar6;
   int *piVar7;
-  int iVar8;
+  float fVar8;
   float fVar9;
   float fVar10;
   float fVar11;
-  float fVar12;
+  int iVar12;
   int iVar13;
-  ulonglong uVar14;
+  int iVar14;
   int iVar15;
-  char cVar17;
-  uint uVar16;
-  float *pfVar18;
-  longlong lVar19;
-  int iVar20;
-  int iVar21;
-  undefined4 *puVar22;
-  ulonglong uVar23;
-  longlong lVar24;
-  uint uVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
+  PolyOrientation PVar16;
+  bool bVar19;
+  uint uVar17;
+  uint uVar18;
+  ulonglong uVar20;
+  float *pfVar21;
+  ulonglong uVar22;
+  int iVar23;
+  undefined4 *puVar24;
+  ulonglong uVar25;
+  ulonglong uVar26;
+  longlong lVar27;
+  float *pfVar28;
+  longlong lVar29;
   double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
   float local_d00 [4];
   float local_cf0 [4];
   float local_ce0;
@@ -1034,78 +1126,85 @@ void Phys_ProjectBoxFaceOntoBrushFaceAndClip
   float local_cc4;
   float local_cc0 [816];
   
-  __savegprlr_18();
-  uVar14 = __savefpr_23();
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,499,0,0xffffffff82000f98,0xffffffff82082330);
+  uVar22 = (ulonglong)(int)param_7;
+  uVar25 = (ulonglong)(int)param_5;
+  uVar26 = (ulonglong)(int)param_4;
+  uVar20 = (ulonglong)param_2;
+  __savegprlr_18(param_1);
+  iVar15 = __savefpr_23();
+  if ((uVar25 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,499,0,"%s");
   }
-  piVar7 = (int *)param_5;
+  piVar7 = (int *)uVar25;
   if ((uint)piVar7[1] < 3) {
-    MyAssertHandler(0xffffffff821925d8,500,0,0xffffffff82192b80,piVar7[1],2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,500,0,"winding->ptCount > 2\n\t%i, %i");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1f5,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if (iVar15 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1f5,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1f6,0,0xffffffff82000f98,0xffffffff82192b74);
+  if ((uVar26 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1f6,0,"%s");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x1f7,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar22 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x1f7,0,"%s");
   }
-  iVar8 = (int)uVar14;
-  local_d00[0] = *(float *)(iVar8 + 0x88);
-  local_d00[1] = *(float *)(iVar8 + 0x8c);
-  local_d00[2] = *(float *)(iVar8 + 0x90);
-  lVar19 = (longlong)(int)(param_2 + 1);
-  uVar23 = lVar19 / 3 + (lVar19 >> 0x3f);
-  uVar23 = (uVar23 & 0xffffffff) + ((uVar23 & 0xffffffff) >> 0x1f);
-  lVar24 = (param_2 + 1) - (uVar23 + (uVar23 & 0x7fffffff) * 2);
-  lVar19 = (longlong)(int)(lVar24 + 1);
-  uVar23 = lVar19 / 3 + (lVar19 >> 0x3f);
-  uVar23 = (uVar23 & 0xffffffff) + ((uVar23 & 0xffffffff) >> 0x1f);
-  uVar23 = (lVar24 + 1) - (uVar23 + (uVar23 & 0x7fffffff) * 2);
+  local_d00[0] = *(float *)(iVar15 + 0x88);
+  local_d00[1] = *(float *)(iVar15 + 0x8c);
+  local_d00[2] = *(float *)(iVar15 + 0x90);
+  lVar27 = (longlong)(int)(uVar20 + 1);
+  uVar25 = lVar27 / 3 + (lVar27 >> 0x3f);
+  uVar25 = (uVar25 & 0xffffffff) + ((uVar25 & 0xffffffff) >> 0x1f);
+  lVar29 = (uVar20 + 1) - (uVar25 + (uVar25 & 0x7fffffff) * 2);
+  lVar27 = (longlong)(int)(lVar29 + 1);
+  uVar25 = lVar27 / 3 + (lVar27 >> 0x3f);
+  uVar25 = (uVar25 & 0xffffffff) + ((uVar25 & 0xffffffff) >> 0x1f);
+  lVar27 = (lVar29 + 1) - (uVar25 + (uVar25 & 0x7fffffff) * 2);
   if (param_3 != 0) {
-    iVar15 = (int)((param_2 & 0xffffffff) << 2);
-    *(float *)((int)local_d00 + iVar15) = -*(float *)((int)local_d00 + iVar15);
+    iVar12 = (int)((uVar20 & 0xffffffff) << 2);
+    *(float *)((int)local_d00 + iVar12) = -*(float *)((int)local_d00 + iVar12);
   }
-  MatrixTransformVector(local_d00,uVar14 + 0x40,local_cf0);
-  lVar19 = (lVar24 + 0x22U & 0x3fffffff) << 2;
-  local_ccc = *(float *)(iVar8 + 0x34);
-  pfVar18 = (float *)param_4;
-  fVar1 = *pfVar18;
-  fVar2 = *(float *)(iVar8 + 0x38);
-  fVar6 = *(float *)((int)lVar19 + iVar8);
+  MatrixTransformVector(local_d00,(float (*) [3])(iVar15 + 0x40),local_cf0);
+  local_ccc = *(float *)(iVar15 + 0x34);
+  pfVar21 = (float *)uVar26;
+  fVar1 = *pfVar21;
+  fVar2 = *(float *)(iVar15 + 0x38);
+  fVar6 = *(float *)((int)((lVar29 + 0x22U & 0xffffffff) << 2) + iVar15);
   fVar4 = fVar6 * -2.0;
-  iVar15 = (int)lVar24 * 0xc + iVar8;
+  iVar12 = (int)lVar29 * 0xc + iVar15;
   fVar6 = fVar6 * 2.0;
-  lVar24 = (uVar23 + (uVar23 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + uVar14;
-  fVar11 = *(float *)(iVar15 + 0x44) * fVar4 + local_cf0[1];
-  uVar16 = piVar7[1];
-  fVar12 = *(float *)((int)((uVar23 + 0x22 & 0xffffffff) << 2) + iVar8) * -2.0;
-  local_cc4 = *(float *)(iVar8 + 0x3c);
-  fVar9 = *(float *)(iVar15 + 0x40) * fVar4 + local_cf0[0];
-  fVar3 = pfVar18[1];
-  fVar10 = *(float *)(iVar15 + 0x48) * fVar4 + local_cf0[2];
-  iVar20 = (int)lVar24;
-  local_ce0 = fVar2 + fVar11;
-  fVar4 = pfVar18[2];
-  fVar5 = pfVar18[3];
-  fVar11 = *(float *)(iVar20 + 0x44) * fVar12 + fVar11;
-  local_cf0[3] = local_ccc + fVar9;
-  fVar9 = fVar12 * *(float *)(iVar20 + 0x40) + fVar9;
-  local_cdc = local_cc4 + fVar10;
-  fVar10 = *(float *)(iVar20 + 0x48) * fVar12 + fVar10;
-  local_cd4 = fVar2 + fVar11;
-  local_cd8 = local_ccc + fVar9;
-  local_cd0 = local_cc4 + fVar10;
-  local_cc8 = fVar2 + *(float *)(iVar15 + 0x44) * fVar6 + fVar11;
-  fVar11 = -(((local_cc4 + local_cf0[2]) * fVar4 +
+  iVar23 = (int)lVar27 * 0xc + iVar15;
+  fVar10 = *(float *)(iVar12 + 0x44) * fVar4 + local_cf0[1];
+  uVar18 = piVar7[1];
+  uVar26 = (ulonglong)uVar18;
+  fVar11 = *(float *)((int)((lVar27 + 0x22U & 0xffffffff) << 2) + iVar15) * -2.0;
+  local_cc4 = *(float *)(iVar15 + 0x3c);
+  fVar8 = *(float *)(iVar12 + 0x40) * fVar4 + local_cf0[0];
+  fVar3 = pfVar21[1];
+  fVar9 = *(float *)(iVar12 + 0x48) * fVar4 + local_cf0[2];
+  local_ce0 = fVar2 + fVar10;
+  fVar4 = pfVar21[2];
+  fVar5 = pfVar21[3];
+  fVar10 = *(float *)(iVar23 + 0x44) * fVar11 + fVar10;
+  local_cf0[3] = local_ccc + fVar8;
+  fVar8 = fVar11 * *(float *)(iVar23 + 0x40) + fVar8;
+  local_cdc = local_cc4 + fVar9;
+  fVar9 = *(float *)(iVar23 + 0x48) * fVar11 + fVar9;
+  local_cd4 = fVar2 + fVar10;
+  local_cd8 = local_ccc + fVar8;
+  local_cd0 = local_cc4 + fVar9;
+  local_cc8 = fVar2 + *(float *)(iVar12 + 0x44) * fVar6 + fVar10;
+  fVar10 = -(((local_cc4 + local_cf0[2]) * fVar4 +
              (fVar2 + local_cf0[1]) * fVar3 + fVar1 * (local_ccc + local_cf0[0])) - fVar5);
-  local_cf0[0] = fVar11 * fVar1 + local_ccc + local_cf0[0];
-  local_cf0[1] = fVar11 * fVar3 + fVar2 + local_cf0[1];
-  local_cf0[2] = fVar11 * fVar4 + local_cc4 + local_cf0[2];
-  local_ccc = local_ccc + *(float *)(iVar15 + 0x40) * fVar6 + fVar9;
-  local_cc4 = local_cc4 + *(float *)(iVar15 + 0x48) * fVar6 + fVar10;
+  local_cf0[0] = fVar10 * fVar1 + local_ccc + local_cf0[0];
+  local_cf0[1] = fVar10 * fVar3 + fVar2 + local_cf0[1];
+  local_cf0[2] = fVar10 * fVar4 + local_cc4 + local_cf0[2];
+  local_ccc = local_ccc + *(float *)(iVar12 + 0x40) * fVar6 + fVar8;
+  local_cc4 = local_cc4 + *(float *)(iVar12 + 0x48) * fVar6 + fVar9;
   fVar2 = -((local_cdc * fVar4 + local_cf0[3] * fVar1 + local_ce0 * fVar3) - fVar5);
   local_ce0 = fVar2 * fVar3 + local_ce0;
   local_cf0[3] = fVar2 * fVar1 + local_cf0[3];
@@ -1118,102 +1217,112 @@ void Phys_ProjectBoxFaceOntoBrushFaceAndClip
   local_ccc = fVar2 * fVar1 + local_ccc;
   local_cc8 = fVar2 * fVar3 + local_cc8;
   local_cc4 = fVar2 * fVar4 + local_cc4;
-  if (uVar16 < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x20d,0,0xffffffff82000f98,0xffffffff82192b64,lVar19,
-                    lVar24 + 0x40);
+  if (uVar26 < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x20d,0,"%s");
   }
-  if (0x100 < uVar16 + 5) {
-    MyAssertHandler(0xffffffff821925d8,0x20e,0,0xffffffff82000f98,0xffffffff82192b30);
+  if (0x100 < (uVar26 + 5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x20e,0,"%s");
   }
   uVar25 = 0;
-  if (3 < (int)uVar16) {
-    iVar15 = *piVar7;
-    iVar20 = 0;
+  if (3 < (int)uVar18) {
+    iVar12 = *piVar7;
+    iVar23 = 0;
     do {
-      iVar21 = iVar20 + iVar15;
-      puVar22 = (undefined4 *)((int)local_cc0 + iVar20 + 8);
+      iVar13 = iVar23 + iVar12;
+      puVar24 = (undefined4 *)((int)local_cc0 + iVar23 + 8);
       uVar25 = uVar25 + 4;
-      *(undefined4 *)((int)local_cc0 + iVar20) = *(undefined4 *)(iVar20 + iVar15);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 4) = *(undefined4 *)(iVar21 + 4);
-      *puVar22 = *(undefined4 *)(iVar21 + 8);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0xc) = *(undefined4 *)(iVar21 + 0xc);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x10) = *(undefined4 *)(iVar21 + 0x10);
-      iVar13 = (0x18 - (int)(local_cc0 + 2)) + iVar15;
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x14) = *(undefined4 *)(iVar21 + 0x14);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x18) =
-           *(undefined4 *)((int)puVar22 + (0x18 - (int)(local_cc0 + 2)) + iVar15);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x1c) = *(undefined4 *)((int)puVar22 + iVar13 + 4);
-      iVar21 = (0x24 - (int)(local_cc0 + 2)) + iVar15;
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x20) = *(undefined4 *)((int)puVar22 + iVar13 + 8);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x24) =
-           *(undefined4 *)((int)puVar22 + (0x24 - (int)(local_cc0 + 2)) + iVar15);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x28) = *(undefined4 *)((int)puVar22 + iVar21 + 4);
-      *(undefined4 *)((int)local_cc0 + iVar20 + 0x2c) = *(undefined4 *)((int)puVar22 + iVar21 + 8);
-      iVar20 = iVar20 + 0x30;
-    } while (uVar25 < uVar16 - 3);
+      *(undefined4 *)((int)local_cc0 + iVar23) = *(undefined4 *)(iVar23 + iVar12);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 4) = *(undefined4 *)(iVar13 + 4);
+      *puVar24 = *(undefined4 *)(iVar13 + 8);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0xc) = *(undefined4 *)(iVar13 + 0xc);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x10) = *(undefined4 *)(iVar13 + 0x10);
+      iVar14 = (0x18 - (int)(local_cc0 + 2)) + iVar12;
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x14) = *(undefined4 *)(iVar13 + 0x14);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x18) =
+           *(undefined4 *)((int)puVar24 + (0x18 - (int)(local_cc0 + 2)) + iVar12);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x1c) = *(undefined4 *)((int)puVar24 + iVar14 + 4);
+      iVar13 = (0x24 - (int)(local_cc0 + 2)) + iVar12;
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x20) = *(undefined4 *)((int)puVar24 + iVar14 + 8);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x24) =
+           *(undefined4 *)((int)puVar24 + (0x24 - (int)(local_cc0 + 2)) + iVar12);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x28) = *(undefined4 *)((int)puVar24 + iVar13 + 4);
+      *(undefined4 *)((int)local_cc0 + iVar23 + 0x2c) = *(undefined4 *)((int)puVar24 + iVar13 + 8);
+      iVar23 = iVar23 + 0x30;
+    } while ((uVar25 & 0xffffffff) < (uVar26 - 3 & 0xffffffff));
   }
-  if (uVar25 < uVar16) {
-    iVar15 = *piVar7;
-    iVar21 = uVar16 - uVar25;
-    iVar20 = uVar25 * 0xc;
+  if ((uVar25 & 0xffffffff) < (ulonglong)uVar18) {
+    iVar12 = *piVar7;
+    lVar27 = uVar26 - uVar25;
+    lVar29 = (uVar25 + (uVar25 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
     do {
-      puVar22 = (undefined4 *)(iVar15 + iVar20);
-      *(undefined4 *)((int)local_cc0 + iVar20) = *puVar22;
-      *(undefined4 *)((int)local_cc0 + iVar20 + 4) = puVar22[1];
-      *(undefined4 *)((int)local_cc0 + iVar20 + 8) = puVar22[2];
-      iVar21 = iVar21 + -1;
-      iVar20 = iVar20 + 0xc;
-    } while (iVar21 != 0);
+      iVar23 = (int)lVar29;
+      puVar24 = (undefined4 *)(iVar12 + iVar23);
+      lVar29 = lVar29 + 0xc;
+      *(undefined4 *)((int)local_cc0 + iVar23) = *puVar24;
+      *(undefined4 *)((int)local_cc0 + iVar23 + 4) = puVar24[1];
+      *(undefined4 *)((int)local_cc0 + iVar23 + 8) = puVar24[2];
+      lVar27 = lVar27 + -1;
+    } while (lVar27 != 0);
   }
-  iVar15 = GetPolyOrientation(param_4,local_cf0,4);
-  if (iVar15 != 2) {
-    uVar25 = 0;
-    pfVar18 = local_cf0;
+  PVar16 = GetPolyOrientation(pfVar21,(float (*) [3])local_cf0,4);
+  if (PVar16 != POLY_ERROR) {
+    uVar18 = 0;
+    pfVar28 = local_cf0;
     do {
-      uVar25 = uVar25 + 1;
-      cVar17 = Phys_GetChoppingPlaneForPolyEdge
-                         (param_4,pfVar18,
+      uVar18 = uVar18 + 1;
+      bVar19 = Phys_GetChoppingPlaneForPolyEdge
+                         (pfVar21,pfVar28,
                           local_cf0 +
-                          (uVar25 + (((int)uVar25 >> 2) +
-                                     (uint)((int)uVar25 < 0 && (uVar25 & 3) != 0) & 0x3fffffff) * -4
-                          ) * 3,iVar15 == 1,local_d00);
-      if ((cVar17 != '\0') &&
-         (uVar16 = Phys_ClipPolyAgainstPlane(local_cc0,uVar16,0x100,local_d00), uVar16 < 3))
-      goto LAB_82660e9c;
-      pfVar18 = pfVar18 + 3;
-    } while ((int)uVar25 < 4);
-    if (uVar16 == 0) {
-      MyAssertHandler(0xffffffff821925d8,0x223,0,0xffffffff82000f98,0xffffffff82192b24);
+                          (uVar18 + (((int)uVar18 >> 2) +
+                                     (uint)((int)uVar18 < 0 && (uVar18 & 3) != 0) & 0x3fffffff) * -4
+                          ) * 3,PVar16 == POLY_CLOCKWISE,local_d00);
+      if (bVar19) {
+        uVar17 = Phys_ClipPolyAgainstPlane((float (*) [3])local_cc0,(uint)uVar26,0x100,local_d00);
+        uVar26 = (ulonglong)(int)uVar17;
+        if (uVar17 < 3) goto LAB_82660e9c;
+      }
+      pfVar28 = pfVar28 + 3;
+    } while ((int)uVar18 < 4);
+    if ((uVar26 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x223,0,"%s");
     }
-    iVar15 = (int)param_2 * 0xc + iVar8;
-    local_d00[0] = *(float *)(iVar15 + 0x40);
-    local_d00[1] = *(float *)(iVar15 + 0x44);
-    local_d00[2] = *(float *)(iVar15 + 0x48);
+    iVar12 = (int)uVar20 * 0xc + iVar15;
+    local_d00[0] = *(float *)(iVar12 + 0x40);
+    local_d00[1] = *(float *)(iVar12 + 0x44);
+    local_d00[2] = *(float *)(iVar12 + 0x48);
     if (param_3 != 0) {
       local_d00[0] = -local_d00[0];
       local_d00[1] = -local_d00[1];
       local_d00[2] = -local_d00[2];
     }
-    local_d00[3] = *(float *)(iVar8 + 0x3c) * local_d00[2] +
-                   *(float *)(iVar8 + 0x38) * local_d00[1] + *(float *)(iVar8 + 0x34) * local_d00[0]
-                   + *(float *)((int)((param_2 + 0x22 & 0xffffffff) << 2) + iVar8);
-    uVar16 = Phys_ClipPolyAgainstPlane(local_cc0,uVar16,0x100,local_d00);
-    if ((2 < uVar16) && (uVar25 = 0, uVar16 != 0)) {
-      dVar29 = (double)local_d00[3];
-      dVar28 = (double)local_d00[2];
-      pfVar18 = local_cc0;
-      dVar27 = (double)local_d00[1];
-      dVar26 = (double)local_d00[0];
-      dVar30 = -0.5;
+    local_d00[3] = *(float *)(iVar15 + 0x3c) * local_d00[2] +
+                   *(float *)(iVar15 + 0x38) * local_d00[1] +
+                   *(float *)(iVar15 + 0x34) * local_d00[0] +
+                   *(float *)((int)((uVar20 + 0x22 & 0xffffffff) << 2) + iVar15);
+    uVar18 = Phys_ClipPolyAgainstPlane((float (*) [3])local_cc0,(uint)uVar26,0x100,local_d00);
+    if ((2 < uVar18) && (uVar17 = 0, uVar18 != 0)) {
+      dVar33 = (double)local_d00[3];
+      dVar32 = (double)local_d00[2];
+      pfVar21 = local_cc0;
+      dVar31 = (double)local_d00[1];
+      dVar30 = (double)local_d00[0];
+      dVar34 = -0.5;
       do {
-        if ((dVar30 < (double)(float)(dVar29 - (double)(float)((double)pfVar18[2] * dVar28 +
-                                                              (double)(float)((double)pfVar18[1] *
-                                                                              dVar27 + (double)(
-                                                  float)((double)*pfVar18 * dVar26))))) &&
-           (cVar17 = Phys_AddContactData(param_7), cVar17 == '\0')) break;
-        uVar25 = uVar25 + 1;
-        pfVar18 = pfVar18 + 3;
-      } while (uVar25 < uVar16);
+        fVar1 = (float)(dVar33 - (double)(float)((double)pfVar21[2] * dVar32 +
+                                                (double)(float)((double)pfVar21[1] * dVar31 +
+                                                               (double)(float)((double)*pfVar21 *
+                                                                              dVar30))));
+        if (dVar34 < (double)fVar1) {
+          bVar19 = Phys_AddContactData((Results *)uVar22,fVar1,(float *)uVar26,param_8,(int)pfVar21)
+          ;
+          if (!bVar19) break;
+        }
+        uVar17 = uVar17 + 1;
+        pfVar21 = pfVar21 + 3;
+      } while (uVar17 < uVar18);
     }
   }
 LAB_82660e9c:
@@ -1226,56 +1335,77 @@ LAB_82660e9c:
 // 82660EB0  Phys_ProjectFaceOntoFaceAndClip  (physics/phys_coll_boxbrush.cpp:574)
 
 void Phys_ProjectFaceOntoFaceAndClip
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               ulonglong param_5,ulonglong param_6)
+               (float *param_1,Poly *param_2,Poly *param_3,int param_4,Results *param_5,
+               float *param_6)
 
 {
   undefined4 *puVar1;
   undefined4 *puVar2;
-  float *pfVar3;
-  uint uVar4;
-  char cVar5;
-  uint uVar6;
-  float *pfVar7;
-  double dVar8;
+  float fVar3;
+  float *pfVar4;
+  uint uVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  float *pfVar12;
+  double dVar13;
   float local_c50 [788];
   
-  pfVar3 = (float *)__savegprlr_24();
-  if (pfVar3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821925d8,0x244,0,0xffffffff82000f98,0xffffffff82192c00);
+  uVar10 = (ulonglong)(int)param_6;
+  uVar9 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  pfVar4 = (float *)__savegprlr_24(param_1,uVar7,uVar8,param_4);
+  if (pfVar4 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x244,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x245,0,0xffffffff82000f98,0xffffffff82192bf0);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x245,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x246,0,0xffffffff82000f98,0xffffffff82192ac4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x246,0,"%s");
   }
-  puVar1 = (undefined4 *)param_2;
+  puVar1 = (undefined4 *)uVar7;
   if ((uint)puVar1[1] < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x247,0,0xffffffff82192bcc,puVar1[1],2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x247,0,"referencePoly->ptCount > 2\n\t%i, %i");
   }
-  puVar2 = (undefined4 *)param_3;
+  puVar2 = (undefined4 *)uVar8;
   if ((uint)puVar2[1] < 3) {
-    MyAssertHandler(0xffffffff821925d8,0x248,0,0xffffffff82192bb0,puVar2[1],2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x248,0,"poly2->ptCount > 2\n\t%i, %i");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x249,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x249,0,"%s");
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x24a,0,0xffffffff82000f98,0xffffffff82192ba0);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x24a,0,"%s");
   }
-  uVar4 = ClipPolys(pfVar3,*puVar1,puVar1[1],*puVar2,puVar2[1],local_c50,0x100);
-  uVar6 = 0;
-  if (uVar4 != 0) {
-    pfVar7 = local_c50;
-    dVar8 = -0.5;
+  uVar7 = ZEXT48((float (*) [3])*puVar1);
+  uVar5 = ClipPolys(pfVar4,(float (*) [3])*puVar1,puVar1[1],(float (*) [3])*puVar2,puVar2[1],
+                    (float (*) [3])local_c50,0x100);
+  uVar11 = 0;
+  if (uVar5 != 0) {
+    pfVar12 = local_c50;
+    dVar13 = -0.5;
     do {
-      if ((dVar8 < (double)(pfVar3[3] -
-                           (pfVar7[2] * pfVar3[2] + pfVar7[1] * pfVar3[1] + *pfVar3 * *pfVar7))) &&
-         (cVar5 = Phys_AddContactData(param_5), cVar5 == '\0')) break;
-      uVar6 = uVar6 + 1;
-      pfVar7 = pfVar7 + 3;
-    } while (uVar6 < uVar4);
+      fVar3 = pfVar4[3] - (pfVar12[2] * pfVar4[2] + pfVar12[1] * pfVar4[1] + *pfVar4 * *pfVar12);
+      if (dVar13 < (double)fVar3) {
+        bVar6 = Phys_AddContactData((Results *)uVar9,fVar3,(float *)uVar7,(float *)uVar10,
+                                    (int)pfVar12);
+        if (!bVar6) break;
+      }
+      uVar11 = uVar11 + 1;
+      pfVar12 = pfVar12 + 3;
+    } while (uVar11 < uVar5);
   }
   __restgprlr_24();
   return;
@@ -1284,8 +1414,8 @@ void Phys_ProjectFaceOntoFaceAndClip
 
 // 82661098  GetClosestBrushFace  (physics/phys_coll_boxbrush.cpp:603)
 
-void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,int param_4,
-                        float *param_5)
+int GetClosestBrushFace(float *param_1,Bounds *param_2,cbrush_t *param_3,Poly *param_4,
+                       float *param_5)
 
 {
   float *pfVar1;
@@ -1293,8 +1423,8 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
   float fVar3;
   float *pfVar5;
   longlong lVar4;
-  ulonglong uVar6;
-  int iVar7;
+  int iVar6;
+  ulonglong uVar7;
   float local_90;
   float local_8c;
   float local_88;
@@ -1320,11 +1450,11 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
   float local_38;
   float local_34;
   
-  pfVar5 = (float *)__savegprlr_28();
-  CM_BuildAxialPlanes(param_2,&local_90);
+  pfVar5 = (float *)__savegprlr_28(param_1);
+  CM_BuildAxialPlanes(param_2,(float (*) [4])&local_90);
   lVar4 = -1;
   fVar2 = -0.1;
-  if (*(int *)(param_4 + 4) != 0) {
+  if (param_4->ptCount != 0) {
     fVar3 = pfVar5[2] * local_88 + pfVar5[1] * local_8c + *pfVar5 * local_90;
     if (fVar3 < -0.1) {
       *param_5 = local_90;
@@ -1335,7 +1465,7 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  if (*(int *)(param_4 + 0xc) != 0) {
+  if (param_4[1].ptCount != 0) {
     fVar3 = pfVar5[2] * local_78 + pfVar5[1] * local_7c + *pfVar5 * local_80;
     if (fVar3 < fVar2) {
       *param_5 = local_80;
@@ -1346,7 +1476,7 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  if (*(int *)(param_4 + 0x14) != 0) {
+  if (param_4[2].ptCount != 0) {
     fVar3 = pfVar5[2] * local_68 + pfVar5[1] * local_6c + *pfVar5 * local_70;
     if (fVar3 < fVar2) {
       *param_5 = local_70;
@@ -1357,7 +1487,7 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  if (*(int *)(param_4 + 0x1c) != 0) {
+  if (param_4[3].ptCount != 0) {
     fVar3 = pfVar5[2] * local_58 + pfVar5[1] * local_5c + *pfVar5 * local_60;
     if (fVar3 < fVar2) {
       *param_5 = local_60;
@@ -1368,7 +1498,7 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  if (*(int *)(param_4 + 0x24) != 0) {
+  if (param_4[4].ptCount != 0) {
     fVar3 = pfVar5[2] * local_48 + pfVar5[1] * local_4c + *pfVar5 * local_50;
     if (fVar3 < fVar2) {
       *param_5 = local_50;
@@ -1379,7 +1509,7 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  if (*(int *)(param_4 + 0x2c) != 0) {
+  if (param_4[5].ptCount != 0) {
     fVar3 = pfVar5[2] * local_38 + pfVar5[1] * local_3c + *pfVar5 * local_40;
     if (fVar3 < fVar2) {
       *param_5 = local_40;
@@ -1390,128 +1520,137 @@ void GetClosestBrushFace(undefined8 param_1,undefined8 param_2,ushort *param_3,i
       fVar2 = fVar3;
     }
   }
-  uVar6 = 0;
-  if (*param_3 != 0) {
-    iVar7 = 0;
+  uVar7 = 0;
+  if (param_3->numsides != 0) {
+    iVar6 = 0;
     do {
-      if (*(int *)(param_4 + 0x34 + iVar7) != 0) {
-        pfVar1 = *(float **)(*(int *)(param_3 + 2) + iVar7);
+      if (*(int *)((int)&param_4[6].ptCount + iVar6) != 0) {
+        pfVar1 = *(float **)((int)&param_3->sides->plane + iVar6);
         fVar3 = pfVar5[2] * pfVar1[2] + pfVar5[1] * pfVar1[1] + *pfVar1 * *pfVar5;
         if (fVar3 < fVar2) {
           *param_5 = *pfVar1;
-          lVar4 = uVar6 + 6;
+          lVar4 = uVar7 + 6;
           param_5[1] = pfVar1[1];
           param_5[2] = pfVar1[2];
           param_5[3] = pfVar1[3];
           fVar2 = fVar3;
         }
       }
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 8;
-    } while ((uVar6 & 0xffffffff) < (ulonglong)*param_3);
+      uVar7 = uVar7 + 1;
+      iVar6 = iVar6 + 8;
+    } while ((uVar7 & 0xffffffff) < (ulonglong)param_3->numsides);
   }
-  __restgprlr_28(lVar4);
-  return;
+  iVar6 = __restgprlr_28(lVar4);
+  return iVar6;
 }
 
 
 // 82661360  GetClosestOrientedBrushFace  (physics/phys_coll_boxbrush.cpp:661)
 
-void GetClosestOrientedBrushFace
-               (undefined8 param_1,ushort *param_2,longlong param_3,longlong param_4,float *param_5)
+int GetClosestOrientedBrushFace
+              (float *param_1,cbrush_t *param_2,Poly *param_3,float (*param_4) [4],float *param_5)
 
 {
-  float *pfVar1;
-  float fVar2;
+  float fVar1;
+  float *pfVar2;
   float fVar3;
   float *pfVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  pfVar4 = (float *)__savegprlr_29();
-  uVar6 = 0xffffffffffffffff;
-  fVar3 = 2.0;
-  uVar5 = 0;
-  if ((ulonglong)*param_2 != 0xfffffffffffffffa) {
-    param_4 = param_4 + 8;
-    param_3 = param_3 + 4;
+  lVar8 = (longlong)(int)param_4;
+  lVar6 = (longlong)(int)param_3;
+  pfVar4 = (float *)__savegprlr_29(param_1);
+  uVar9 = 0xffffffffffffffff;
+  fVar1 = 2.0;
+  uVar7 = 0;
+  if ((ulonglong)param_2->numsides != 0xfffffffffffffffa) {
+    lVar8 = lVar8 + 8;
+    lVar6 = lVar6 + 4;
     do {
-      if (*(int *)param_3 != 0) {
-        pfVar1 = (float *)param_4;
-        fVar2 = pfVar4[2] * *pfVar1 + pfVar4[1] * pfVar1[-1] + *pfVar4 * pfVar1[-2];
-        if (fVar2 < fVar3) {
-          *param_5 = pfVar1[-2];
-          param_5[1] = pfVar1[-1];
-          param_5[2] = *pfVar1;
-          param_5[3] = pfVar1[1];
-          uVar6 = uVar5;
-          fVar3 = fVar2;
+      if (*(int *)lVar6 != 0) {
+        pfVar2 = (float *)lVar8;
+        fVar3 = pfVar4[2] * *pfVar2 + pfVar4[1] * pfVar2[-1] + *pfVar4 * pfVar2[-2];
+        if (fVar3 < fVar1) {
+          *param_5 = pfVar2[-2];
+          param_5[1] = pfVar2[-1];
+          param_5[2] = *pfVar2;
+          param_5[3] = pfVar2[1];
+          uVar9 = uVar7;
+          fVar1 = fVar3;
         }
       }
-      uVar5 = uVar5 + 1;
-      param_3 = param_3 + 8;
-      param_4 = param_4 + 0x10;
-    } while ((uVar5 & 0xffffffff) < (ulonglong)*param_2 + 6);
-    if (fVar3 < 2.0) goto LAB_82661440;
+      uVar7 = uVar7 + 1;
+      lVar6 = lVar6 + 8;
+      lVar8 = lVar8 + 0x10;
+    } while ((uVar7 & 0xffffffff) < (ulonglong)param_2->numsides + 6);
+    if (fVar1 < 2.0) goto LAB_82661440;
   }
-  MyAssertHandler(0xffffffff821925d8,0x2ac,1,0xffffffff82000f98,0xffffffff82192c28);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp",
+                  0x2ac,1,"%s");
 LAB_82661440:
-  if ((int)uVar6 < 0) {
-    MyAssertHandler(0xffffffff821925d8,0x2ad,1,0xffffffff82000f98,0xffffffff82192c14);
+  if ((int)uVar9 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x2ad,1,"%s");
   }
-  __restgprlr_29(uVar6);
-  return;
+  iVar5 = __restgprlr_29(uVar9);
+  return iVar5;
 }
 
 
 // 82661470  GetClosestBoxFace  (physics/phys_coll_boxbrush.cpp:692)
 
-void GetClosestBoxFace(int param_1,float *param_2,undefined4 *param_3,undefined4 *param_4)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void GetClosestBoxFace(objInfo *param_1,float *param_2,int *param_3,int *param_4)
 
 {
   float fVar1;
   float fVar2;
   
-  *param_3 = 0xffffffff;
+  *param_3 = -1;
   *param_4 = 0;
-  fVar1 = *(float *)(param_1 + 0x48) * param_2[2] +
-          *(float *)(param_1 + 0x44) * param_2[1] + *param_2 * *(float *)(param_1 + 0x40);
+  fVar1 = param_1->R[0][2] * param_2[2] +
+          param_1->R[0][1] * param_2[1] + *param_2 * param_1->R[0][0];
   fVar2 = 1.0;
   if (fVar1 < 1.0) {
     *param_3 = 0;
     *param_4 = 0;
     fVar2 = fVar1;
   }
-  fVar1 = -(*(float *)(param_1 + 0x48) * param_2[2] +
-           *(float *)(param_1 + 0x44) * param_2[1] + *param_2 * *(float *)(param_1 + 0x40));
+  fVar1 = -(param_1->R[0][2] * param_2[2] +
+           param_1->R[0][1] * param_2[1] + *param_2 * param_1->R[0][0]);
   if (fVar1 < fVar2) {
     *param_3 = 0;
     *param_4 = 1;
     fVar2 = fVar1;
   }
-  fVar1 = *(float *)(param_1 + 0x54) * param_2[2] +
-          *(float *)(param_1 + 0x50) * param_2[1] + *param_2 * *(float *)(param_1 + 0x4c);
+  fVar1 = param_1->R[1][2] * param_2[2] +
+          param_1->R[1][1] * param_2[1] + *param_2 * param_1->R[1][0];
   if (fVar1 < fVar2) {
     *param_3 = 1;
     *param_4 = 0;
     fVar2 = fVar1;
   }
-  fVar1 = -(*(float *)(param_1 + 0x54) * param_2[2] +
-           *(float *)(param_1 + 0x50) * param_2[1] + *param_2 * *(float *)(param_1 + 0x4c));
+  fVar1 = -(param_1->R[1][2] * param_2[2] +
+           param_1->R[1][1] * param_2[1] + *param_2 * param_1->R[1][0]);
   if (fVar1 < fVar2) {
     *param_3 = 1;
     *param_4 = 1;
     fVar2 = fVar1;
   }
-  fVar1 = *(float *)(param_1 + 0x60) * param_2[2] +
-          *(float *)(param_1 + 0x5c) * param_2[1] + *param_2 * *(float *)(param_1 + 0x58);
+  fVar1 = param_1->R[2][2] * param_2[2] +
+          param_1->R[2][1] * param_2[1] + *param_2 * param_1->R[2][0];
   if (fVar1 < fVar2) {
     *param_3 = 2;
     *param_4 = 0;
     fVar2 = fVar1;
   }
-  fVar1 = -(*(float *)(param_1 + 0x60) * param_2[2] +
-           *(float *)(param_1 + 0x5c) * param_2[1] + *param_2 * *(float *)(param_1 + 0x58));
+  fVar1 = -(param_1->R[2][2] * param_2[2] +
+           param_1->R[2][1] * param_2[1] + *param_2 * param_1->R[2][0]);
   if (fVar1 < fVar2) {
     *param_3 = 2;
     *param_4 = 1;
@@ -1520,14 +1659,15 @@ void GetClosestBoxFace(int param_1,float *param_2,undefined4 *param_3,undefined4
   if (fVar2 < 0.0) {
     return;
   }
-  MyAssertHandler(0xffffffff821925d8,0x2cd,1,0xffffffff82000f98,0xffffffff82192c34);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp",
+                  0x2cd,1,"%s");
   return;
 }
 
 
 // 82661630  IntersectPlanesSinglePrecision  (physics/phys_coll_boxbrush.cpp:722)
 
-undefined8 IntersectPlanesSinglePrecision(float *param_1,float *param_2)
+int IntersectPlanesSinglePrecision(float (*param_1) [4],float *param_2)
 
 {
   float fVar1;
@@ -1535,21 +1675,23 @@ undefined8 IntersectPlanesSinglePrecision(float *param_1,float *param_2)
   float fVar3;
   float fVar4;
   
-  fVar2 = param_1[1] * param_1[6] - param_1[2] * param_1[5];
-  fVar3 = param_1[2] * param_1[9] - param_1[1] * param_1[10];
-  fVar1 = param_1[5] * param_1[10] - param_1[6] * param_1[9];
-  fVar4 = param_1[8] * fVar2 + param_1[4] * fVar3 + *param_1 * fVar1;
+  fVar2 = (*param_1)[1] * param_1[1][2] - (*param_1)[2] * param_1[1][1];
+  fVar3 = (*param_1)[2] * param_1[2][1] - (*param_1)[1] * param_1[2][2];
+  fVar1 = param_1[1][1] * param_1[2][2] - param_1[1][2] * param_1[2][1];
+  fVar4 = param_1[2][0] * fVar2 + param_1[1][0] * fVar3 + (*param_1)[0] * fVar1;
   if (ABS(fVar4) < 0.001) {
     return 0;
   }
   fVar4 = 1.0 / fVar4;
-  *param_2 = (param_1[0xb] * fVar2 + param_1[7] * fVar3 + param_1[3] * fVar1) * fVar4;
-  param_2[1] = ((param_1[2] * param_1[4] - param_1[6] * *param_1) * param_1[0xb] +
-                (param_1[10] * *param_1 - param_1[2] * param_1[8]) * param_1[7] +
-               (param_1[6] * param_1[8] - param_1[4] * param_1[10]) * param_1[3]) * fVar4;
-  param_2[2] = ((param_1[5] * *param_1 - param_1[1] * param_1[4]) * param_1[0xb] +
-                (param_1[1] * param_1[8] - param_1[9] * *param_1) * param_1[7] +
-               (param_1[9] * param_1[4] - param_1[5] * param_1[8]) * param_1[3]) * fVar4;
+  *param_2 = (param_1[2][3] * fVar2 + param_1[1][3] * fVar3 + (*param_1)[3] * fVar1) * fVar4;
+  param_2[1] = (((*param_1)[2] * param_1[1][0] - param_1[1][2] * (*param_1)[0]) * param_1[2][3] +
+                (param_1[2][2] * (*param_1)[0] - (*param_1)[2] * param_1[2][0]) * param_1[1][3] +
+               (param_1[1][2] * param_1[2][0] - param_1[1][0] * param_1[2][2]) * (*param_1)[3]) *
+               fVar4;
+  param_2[2] = ((param_1[1][1] * (*param_1)[0] - (*param_1)[1] * param_1[1][0]) * param_1[2][3] +
+                ((*param_1)[1] * param_1[2][0] - param_1[2][1] * (*param_1)[0]) * param_1[1][3] +
+               (param_1[2][1] * param_1[1][0] - param_1[1][1] * param_1[2][0]) * (*param_1)[3]) *
+               fVar4;
   return 1;
 }
 
@@ -1557,8 +1699,8 @@ undefined8 IntersectPlanesSinglePrecision(float *param_1,float *param_2)
 // 82661798  Phys_GetWindingForBrushFace  (physics/phys_coll_boxbrush.cpp:761)
 
 void Phys_GetWindingForBrushFace
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5,int param_6)
+               (Bounds *param_1,cbrush_t *param_2,float (*param_3) [4],uint param_4,Poly *param_5,
+               int param_6,float (*param_7) [4])
 
 {
   float fVar1;
@@ -1566,18 +1708,18 @@ void Phys_GetWindingForBrushFace
   float fVar3;
   byte bVar4;
   byte bVar5;
-  float fVar6;
-  int iVar7;
+  byte bVar6;
+  float fVar7;
   int iVar8;
-  float *pfVar9;
+  ulonglong uVar9;
   ushort *puVar10;
-  int iVar11;
-  int *piVar12;
-  float *pfVar13;
-  float *pfVar14;
-  uint uVar15;
-  double dVar16;
-  double dVar17;
+  ulonglong uVar11;
+  int iVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  int *piVar15;
+  float *pfVar16;
+  uint uVar17;
   double dVar18;
   double dVar19;
   double dVar20;
@@ -1594,175 +1736,184 @@ void Phys_GetWindingForBrushFace
   double dVar31;
   double dVar32;
   double dVar33;
+  double dVar34;
+  int iStack00000024;
   uint local_15c;
   int local_158;
   
+  uVar14 = (ulonglong)(int)param_5;
+  uVar13 = (ulonglong)(int)param_4;
+  uVar11 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
   __savegprlr();
-  pfVar9 = (float *)__savefpr();
-  iVar11 = (int)param_3;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x307,0,0xffffffff82000f98,0xffffffff82082224);
+  __savefpr();
+  iVar12 = (int)uVar11;
+  iStack00000024 = iVar12;
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x307,0,"%s");
   }
-  puVar10 = (ushort *)param_2;
-  if ((ulonglong)*puVar10 + 6 <= (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x308,0,0xffffffff82000f98,0xffffffff82192eb8);
+  puVar10 = (ushort *)uVar9;
+  if ((ulonglong)*puVar10 + 6 <= (uVar13 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x308,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x309,0,0xffffffff82000f98,0xffffffff82192eac);
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x309,0,"%s");
   }
-  piVar12 = (int *)param_5;
-  if (*piVar12 == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x30a,0,0xffffffff82000f98,0xffffffff82192e9c);
+  piVar15 = (int *)uVar14;
+  if (*piVar15 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x30a,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x30b,0,0xffffffff82000f98,0xffffffff82192e90);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x30b,0,"%s");
   }
-  uVar15 = (uint)param_4;
-  if ((param_4 & 0xffffffff) < 6) {
-    iVar7 = (int)((param_4 & 0xffffffff) >> 1);
-    pfVar13 = (float *)(uVar15 * 0x10 + iVar11);
-    fVar6 = *(float *)(uVar15 * 0x10 + iVar11);
-    bVar4 = *(byte *)(((uVar15 & 1) + 10) * 3 + iVar7 + (int)puVar10);
-    bVar5 = *(byte *)(((uVar15 & 1) + 8) * 3 + iVar7 + (int)puVar10);
+  uVar17 = (uint)uVar13;
+  if ((uVar13 & 0xffffffff) < 6) {
+    iVar8 = (int)((uVar13 & 0xffffffff) >> 1);
+    pfVar16 = (float *)(uVar17 * 0x10 + iVar12);
+    fVar7 = *(float *)(uVar17 * 0x10 + iVar12);
+    bVar5 = *(byte *)(((uVar17 & 1) + 10) * 3 + iVar8 + (int)puVar10);
+    bVar6 = *(byte *)(((uVar17 & 1) + 8) * 3 + iVar8 + (int)puVar10);
   }
   else {
     if (*(int *)(puVar10 + 2) == 0) {
-      MyAssertHandler(0xffffffff821925d8,0x315,0,0xffffffff82000f98,0xffffffff82192e80);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x315,0,"%s");
     }
-    pfVar13 = (float *)(uVar15 * 0x10 + iVar11);
-    iVar7 = (int)((param_4 - 6 & 0xffffffff) << 3) + *(int *)(puVar10 + 2);
-    fVar6 = *pfVar13;
-    bVar4 = *(byte *)(iVar7 + 7);
-    bVar5 = *(byte *)(iVar7 + 6);
+    pfVar16 = (float *)(uVar17 * 0x10 + iVar12);
+    iVar8 = (int)((uVar13 - 6 & 0xffffffff) << 3) + *(int *)(puVar10 + 2);
+    fVar7 = *pfVar16;
+    bVar5 = *(byte *)(iVar8 + 7);
+    bVar6 = *(byte *)(iVar8 + 6);
   }
-  local_15c = (uint)bVar4;
-  dVar29 = (double)fVar6;
-  dVar24 = (double)pfVar13[3];
-  uVar15 = (uint)bVar4;
-  dVar19 = (double)pfVar13[2];
-  dVar20 = (double)pfVar13[1];
-  if ((uVar15 < 3) || (param_6 < (int)uVar15)) {
-    piVar12[1] = 0;
+  local_15c = (uint)bVar5;
+  dVar30 = (double)fVar7;
+  dVar26 = (double)pfVar16[3];
+  dVar21 = (double)pfVar16[2];
+  dVar22 = (double)pfVar16[1];
+  if ((bVar5 < 3) || (param_6 < (int)(uint)bVar5)) {
+    piVar15[1] = 0;
   }
   else {
     if (*(int *)(puVar10 + 4) == 0) {
-      MyAssertHandler(0xffffffff821925d8,0x324,0,0xffffffff82000f98,0xffffffff82192e68);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x324,0,"%s");
     }
-    iVar7 = *(int *)(puVar10 + 4);
-    bVar4 = *(byte *)(iVar7 + (uint)bVar5 + (uint)bVar4 + -1);
+    iVar8 = *(int *)(puVar10 + 4);
+    bVar4 = *(byte *)(iVar8 + (uint)bVar6 + (uint)bVar5 + -1);
     if ((ulonglong)*puVar10 + 6 <= (ulonglong)bVar4) {
-      MyAssertHandler(0xffffffff821925d8,0x329,0,0xffffffff82192e2c,(ulonglong)bVar4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x329,0,"side1 doesn\'t index brush->numsides + 6\n\t%i not in [0, %i)");
     }
-    pfVar13 = (float *)((uint)bVar4 * 0x10 + iVar11);
+    pfVar16 = (float *)((uint)bVar4 * 0x10 + iVar12);
     local_158 = 0;
-    dVar32 = (double)*pfVar13;
-    dVar27 = (double)pfVar13[1];
-    dVar25 = (double)pfVar13[2];
-    dVar30 = (double)pfVar13[3];
-    piVar12[1] = 0;
-    if (uVar15 != 0) {
+    dVar33 = (double)*pfVar16;
+    dVar28 = (double)pfVar16[1];
+    dVar27 = (double)pfVar16[2];
+    dVar31 = (double)pfVar16[3];
+    piVar15[1] = 0;
+    if (bVar5 != 0) {
       do {
-        uVar15 = (uint)*(byte *)(local_158 + iVar7 + (uint)bVar5);
-        dVar26 = dVar25;
-        dVar28 = dVar27;
-        dVar33 = dVar32;
-        if (*puVar10 + 6 <= uVar15) {
+        uVar17 = (uint)*(byte *)(local_158 + iVar8 + (uint)bVar6);
+        dVar18 = dVar27;
+        dVar29 = dVar28;
+        dVar34 = dVar33;
+        if (*puVar10 + 6 <= uVar17) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
-                          ,0x330,0,0xffffffff82192c40,uVar15);
-          dVar26 = dVar25;
-          dVar28 = dVar27;
-          dVar33 = dVar32;
+                          ,0x330,0,"side2 doesn\'t index brush->numsides + 6\n\t%i not in [0, %i)");
+          dVar18 = dVar27;
+          dVar29 = dVar28;
+          dVar34 = dVar33;
         }
-        pfVar13 = (float *)(uVar15 * 0x10 + iVar11);
-        dVar25 = (double)pfVar13[2];
-        dVar27 = (double)pfVar13[1];
-        dVar32 = (double)*pfVar13;
-        dVar31 = (double)pfVar13[3];
-        pfVar13 = (float *)(piVar12[1] * 0xc + *piVar12);
-        dVar23 = (double)(float)(dVar26 * dVar20 - (double)(float)(dVar28 * dVar19));
-        dVar22 = (double)(float)(dVar27 * dVar19 - (double)(float)(dVar25 * dVar20));
-        dVar21 = (double)(float)(dVar25 * dVar28 - (double)(float)(dVar27 * dVar26));
-        fVar6 = (float)(dVar23 * dVar32) + (float)(dVar22 * dVar33) + (float)(dVar21 * dVar29);
-        if (0.001 <= ABS(fVar6)) {
-          fVar6 = 1.0 / fVar6;
-          dVar18 = (double)(float)(dVar25 * dVar29 - (double)(float)(dVar32 * dVar19));
-          dVar17 = (double)(float)(dVar33 * dVar19 - (double)(float)(dVar26 * dVar29));
-          fVar1 = (float)(dVar32 * dVar20 - (double)(float)(dVar27 * dVar29));
-          fVar2 = (float)(dVar28 * dVar29 - (double)(float)(dVar33 * dVar20));
-          dVar16 = (double)(float)(dVar32 * dVar26 - (double)(float)(dVar25 * dVar33));
-          fVar3 = (float)(dVar27 * dVar33 - (double)(float)(dVar32 * dVar28));
-          *pfVar13 = ((float)(dVar23 * dVar31) + (float)(dVar22 * dVar30) + (float)(dVar21 * dVar24)
-                     ) * fVar6;
-          pfVar13[1] = ((float)(dVar17 * dVar31) + (float)(dVar18 * dVar30) +
-                       (float)(dVar16 * dVar24)) * fVar6;
-          pfVar13[2] = ((float)((double)fVar2 * dVar31) + (float)((double)fVar1 * dVar30) +
-                       (float)((double)fVar3 * dVar24)) * fVar6;
-          pfVar13 = (float *)(piVar12[1] * 0xc + *piVar12);
-          if ((((*(uint *)(piVar12[1] * 0xc + *piVar12) & 0x7f800000) == 0x7f800000) ||
-              (((uint)pfVar13[1] & 0x7f800000) == 0x7f800000)) ||
-             (((uint)pfVar13[2] & 0x7f800000) == 0x7f800000)) {
-            Com_PrintError(0x14,0xffffffff82192c7c);
-            Com_PrintError(0x14,0xffffffff82192ca0,(double)*pfVar13,(double)pfVar13[1],
-                           (double)pfVar13[2]);
-            Com_PrintError(dVar29,dVar20,dVar19,dVar24,0x14,0xffffffff82192cc0,dVar29,dVar20,dVar19,
-                           dVar24);
-            Com_PrintError(dVar33,dVar28,dVar26,dVar30,0x14,0xffffffff82192cdc,dVar33,dVar28,dVar26,
-                           dVar30);
-            Com_PrintError(dVar32,dVar27,dVar25,dVar31,0x14,0xffffffff82192cf8,dVar32,dVar27,dVar25,
-                           dVar31);
-            Com_PrintError(0x14,0xffffffff82192d14,(double)*pfVar9,(double)pfVar9[1],
-                           (double)pfVar9[2],(double)pfVar9[3],(double)pfVar9[4],(double)pfVar9[5]);
-            Com_PrintError(0x14,0xffffffff82192d48,*puVar10);
-            Com_PrintError(0x14,0xffffffff82192d5c,param_4);
-            pfVar14 = (float *)(piVar12[1] * 0xc + *piVar12);
-            fVar6 = (float)(dVar23 * dVar32) + (float)(dVar22 * dVar33) + (float)(dVar21 * dVar29);
-            if (0.001 <= ABS(fVar6)) {
-              fVar6 = 1.0 / fVar6;
-              *pfVar14 = ((float)(dVar23 * dVar31) + (float)(dVar22 * dVar30) +
-                         (float)(dVar21 * dVar24)) * fVar6;
-              pfVar14[1] = ((float)(dVar17 * dVar31) + (float)(dVar18 * dVar30) +
-                           (float)(dVar16 * dVar24)) * fVar6;
-              pfVar14[2] = ((float)((double)fVar2 * dVar31) + (float)((double)fVar1 * dVar30) +
-                           (float)((double)fVar3 * dVar24)) * fVar6;
+        pfVar16 = (float *)(uVar17 * 0x10 + iStack00000024);
+        dVar27 = (double)pfVar16[2];
+        dVar28 = (double)pfVar16[1];
+        dVar33 = (double)*pfVar16;
+        dVar32 = (double)pfVar16[3];
+        pfVar16 = (float *)(piVar15[1] * 0xc + *piVar15);
+        dVar25 = (double)(float)(dVar18 * dVar22 - (double)(float)(dVar29 * dVar21));
+        dVar24 = (double)(float)(dVar28 * dVar21 - (double)(float)(dVar27 * dVar22));
+        dVar23 = (double)(float)(dVar27 * dVar29 - (double)(float)(dVar28 * dVar18));
+        fVar7 = (float)(dVar25 * dVar33) + (float)(dVar24 * dVar34) + (float)(dVar23 * dVar30);
+        if (0.001 <= ABS(fVar7)) {
+          fVar7 = 1.0 / fVar7;
+          dVar20 = (double)(float)(dVar27 * dVar30 - (double)(float)(dVar33 * dVar21));
+          dVar19 = (double)(float)(dVar34 * dVar21 - (double)(float)(dVar18 * dVar30));
+          fVar1 = (float)(dVar33 * dVar22 - (double)(float)(dVar28 * dVar30));
+          fVar2 = (float)(dVar29 * dVar30 - (double)(float)(dVar34 * dVar22));
+          dVar18 = (double)(float)(dVar33 * dVar18 - (double)(float)(dVar27 * dVar34));
+          fVar3 = (float)(dVar28 * dVar34 - (double)(float)(dVar33 * dVar29));
+          *pfVar16 = ((float)(dVar25 * dVar32) + (float)(dVar24 * dVar31) + (float)(dVar23 * dVar26)
+                     ) * fVar7;
+          pfVar16[1] = ((float)(dVar19 * dVar32) + (float)(dVar20 * dVar31) +
+                       (float)(dVar18 * dVar26)) * fVar7;
+          pfVar16[2] = ((float)((double)fVar2 * dVar32) + (float)((double)fVar1 * dVar31) +
+                       (float)((double)fVar3 * dVar26)) * fVar7;
+          iVar12 = piVar15[1] * 0xc + *piVar15;
+          if ((((*(uint *)(piVar15[1] * 0xc + *piVar15) & 0x7f800000) == 0x7f800000) ||
+              ((*(uint *)(iVar12 + 4) & 0x7f800000) == 0x7f800000)) ||
+             ((*(uint *)(iVar12 + 8) & 0x7f800000) == 0x7f800000)) {
+            Com_PrintError(0x14,"Bad intersection of three planes:\n");
+            Com_PrintError(0x14,"Resulting point: (%f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 0: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 1: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 2: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"brush center/halfsize: (%f, %f, %f) (%f, %f, %f)\n");
+            Com_PrintError(0x14,"brush numsides: %i\n");
+            Com_PrintError(0x14,"brushside: %i\n");
+            pfVar16 = (float *)(piVar15[1] * 0xc + *piVar15);
+            fVar7 = (float)(dVar25 * dVar33) + (float)(dVar24 * dVar34) + (float)(dVar23 * dVar30);
+            if (0.001 <= ABS(fVar7)) {
+              fVar7 = 1.0 / fVar7;
+              *pfVar16 = ((float)(dVar25 * dVar32) + (float)(dVar24 * dVar31) +
+                         (float)(dVar23 * dVar26)) * fVar7;
+              pfVar16[1] = ((float)(dVar19 * dVar32) + (float)(dVar20 * dVar31) +
+                           (float)(dVar18 * dVar26)) * fVar7;
+              pfVar16[2] = ((float)((double)fVar2 * dVar32) + (float)((double)fVar1 * dVar31) +
+                           (float)((double)fVar3 * dVar26)) * fVar7;
             }
-            Com_PrintError(0x14,0xffffffff82192d70);
-            Com_PrintError(0x14,0xffffffff82192ca0,(double)*pfVar13,(double)pfVar13[1],
-                           (double)pfVar13[2]);
-            Com_PrintError(dVar29,dVar20,dVar19,dVar24,0x14,0xffffffff82192cc0,dVar29,dVar20,dVar19,
-                           dVar24);
-            Com_PrintError(dVar33,dVar28,dVar26,dVar30,0x14,0xffffffff82192cdc,dVar33,dVar28,dVar26,
-                           dVar30);
-            Com_PrintError(dVar32,dVar27,dVar25,dVar31,0x14,0xffffffff82192cf8,dVar32,dVar27,dVar25,
-                           dVar31);
-            if (DAT_84013128 == 0) {
+            Com_PrintError(0x14,
+                           "Second try (if these results differ, there is a race condition affecting physics collision):\n"
+                          );
+            Com_PrintError(0x14,"Resulting point: (%f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 0: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 1: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 2: (%f, %f, %f, %f)\n");
+            if (alwaysfails == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
-                              ,0x34a,0,0xffffffff82192dd0);
+                              ,0x34a,0,
+                              "Phys_GetWindingForBrushFace: bad intersection.  Please include console log in bug report."
+                             );
             }
           }
-          iVar8 = piVar12[1];
-          if ((iVar8 == 0) ||
-             (pfVar13 = (float *)(iVar8 * 0xc + *piVar12),
-             1.0 <= (pfVar13[-3] - *pfVar13) * (pfVar13[-3] - *pfVar13) +
-                    (pfVar13[-1] - pfVar13[2]) * (pfVar13[-1] - pfVar13[2]) +
-                    (pfVar13[-2] - pfVar13[1]) * (pfVar13[-2] - pfVar13[1]))) {
-            piVar12[1] = iVar8 + 1;
+          iVar12 = piVar15[1];
+          if ((iVar12 == 0) ||
+             (pfVar16 = (float *)(iVar12 * 0xc + *piVar15),
+             1.0 <= (pfVar16[-3] - *pfVar16) * (pfVar16[-3] - *pfVar16) +
+                    (pfVar16[-1] - pfVar16[2]) * (pfVar16[-1] - pfVar16[2]) +
+                    (pfVar16[-2] - pfVar16[1]) * (pfVar16[-2] - pfVar16[1]))) {
+            piVar15[1] = iVar12 + 1;
           }
         }
-        dVar30 = dVar31;
+        dVar31 = dVar32;
         local_158 = local_158 + 1;
       } while (local_158 < (int)local_15c);
     }
-    uVar15 = piVar12[1];
-    if (1 < uVar15) {
-      pfVar9 = (float *)*piVar12;
-      if ((pfVar9[1] - pfVar9[uVar15 * 3 + -2]) * (pfVar9[1] - pfVar9[uVar15 * 3 + -2]) +
-          (pfVar9[2] - pfVar9[uVar15 * 3 + -1]) * (pfVar9[2] - pfVar9[uVar15 * 3 + -1]) +
-          (*pfVar9 - pfVar9[uVar15 * 3 + -3]) * (*pfVar9 - pfVar9[uVar15 * 3 + -3]) < 1.0) {
-        piVar12[1] = uVar15 - 1;
+    uVar17 = piVar15[1];
+    if (1 < uVar17) {
+      pfVar16 = (float *)*piVar15;
+      if ((pfVar16[1] - pfVar16[uVar17 * 3 + -2]) * (pfVar16[1] - pfVar16[uVar17 * 3 + -2]) +
+          (pfVar16[2] - pfVar16[uVar17 * 3 + -1]) * (pfVar16[2] - pfVar16[uVar17 * 3 + -1]) +
+          (*pfVar16 - pfVar16[uVar17 * 3 + -3]) * (*pfVar16 - pfVar16[uVar17 * 3 + -3]) < 1.0) {
+        piVar15[1] = uVar17 - 1;
       }
     }
-    if ((uint)piVar12[1] < 3) {
-      piVar12[1] = 0;
+    if ((uint)piVar15[1] < 3) {
+      piVar15[1] = 0;
       __restfpr();
       __restgprlr();
       return;
@@ -1777,8 +1928,8 @@ void Phys_GetWindingForBrushFace
 // 82662048  Phys_GetWindingForBrushFace2  (physics/phys_coll_boxbrush.cpp:871)
 
 void Phys_GetWindingForBrushFace2
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,int param_5
-               ,int param_6)
+               (Bounds *param_1,cbrush_t *param_2,uint param_3,Poly *param_4,int param_5,
+               float (*param_6) [4])
 
 {
   byte bVar1;
@@ -1792,703 +1943,17 @@ void Phys_GetWindingForBrushFace2
   int iVar9;
   float fVar10;
   float fVar11;
-  float *pfVar12;
+  ulonglong uVar12;
   ushort *puVar13;
-  int *piVar14;
-  undefined4 *puVar15;
-  float *pfVar16;
-  float *pfVar17;
-  uint uVar18;
-  double dVar19;
-  double dVar20;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  int *piVar16;
+  undefined4 *puVar17;
+  float (*pafVar18) [4];
+  uint uVar19;
+  float *pfVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
-  double dVar36;
-  uint local_158;
-  int local_154;
-  
-  __savegprlr();
-  pfVar12 = (float *)__savefpr();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x377,0,0xffffffff82000f98,0xffffffff82082224);
-  }
-  puVar13 = (ushort *)param_2;
-  if ((ulonglong)*puVar13 + 6 <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x378,0,0xffffffff82000f98,0xffffffff82192eb8);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x379,0,0xffffffff82000f98,0xffffffff82192eac);
-  }
-  piVar14 = (int *)param_4;
-  if (*piVar14 == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x37a,0,0xffffffff82000f98,0xffffffff82192e9c);
-  }
-  uVar18 = (uint)param_3;
-  if ((param_3 & 0xffffffff) < 6) {
-    iVar8 = (int)((param_3 & 0xffffffff) >> 1);
-    iVar9 = uVar18 * 0x10 + param_6;
-    fVar7 = *(float *)(uVar18 * 0x10 + param_6);
-    bVar2 = *(byte *)(((uVar18 & 1) + 10) * 3 + iVar8 + (int)puVar13);
-    bVar3 = *(byte *)(((uVar18 & 1) + 8) * 3 + iVar8 + (int)puVar13);
-    fVar4 = *(float *)(iVar9 + 4);
-    fVar5 = *(float *)(iVar9 + 8);
-    fVar6 = *(float *)(iVar9 + 0xc);
-  }
-  else {
-    if (*(int *)(puVar13 + 2) == 0) {
-      MyAssertHandler(0xffffffff821925d8,900,0,0xffffffff82000f98,0xffffffff82192e80);
-    }
-    puVar15 = (undefined4 *)((uVar18 - 6) * 8 + *(int *)(puVar13 + 2));
-    pfVar16 = (float *)*puVar15;
-    bVar2 = *(byte *)((int)puVar15 + 7);
-    bVar3 = *(byte *)((int)puVar15 + 6);
-    fVar7 = *pfVar16;
-    fVar4 = pfVar16[1];
-    fVar5 = pfVar16[2];
-    fVar6 = pfVar16[3];
-  }
-  local_158 = (uint)bVar2;
-  uVar18 = (uint)bVar2;
-  dVar32 = (double)fVar7;
-  dVar27 = (double)fVar6;
-  dVar23 = (double)fVar4;
-  dVar22 = (double)fVar5;
-  if ((uVar18 < 3) || (param_5 < (int)uVar18)) {
-    piVar14[1] = 0;
-  }
-  else {
-    if (*(int *)(puVar13 + 4) == 0) {
-      MyAssertHandler(0xffffffff821925d8,0x396,0,0xffffffff82000f98,0xffffffff82192e68);
-    }
-    iVar9 = *(int *)(puVar13 + 4);
-    bVar1 = *(byte *)(iVar9 + (uint)bVar3 + uVar18 + -1);
-    uVar18 = (uint)bVar1;
-    if (*puVar13 + 6 <= uVar18) {
-      MyAssertHandler(0xffffffff821925d8,0x39b,0,0xffffffff82192e2c,uVar18);
-    }
-    if (bVar1 < 6) {
-      pfVar16 = (float *)((uint)bVar1 * 0x10 + param_6);
-      fVar7 = *pfVar16;
-      fVar4 = pfVar16[1];
-      fVar5 = pfVar16[2];
-      fVar6 = pfVar16[3];
-    }
-    else {
-      if (*(int *)(puVar13 + 2) == 0) {
-        MyAssertHandler(0xffffffff821925d8,0x3a2,0,0xffffffff82000f98,0xffffffff82192e80);
-      }
-      pfVar16 = *(float **)((uVar18 - 6) * 8 + *(int *)(puVar13 + 2));
-      fVar7 = *pfVar16;
-      fVar4 = pfVar16[1];
-      fVar5 = pfVar16[2];
-      fVar6 = pfVar16[3];
-    }
-    dVar35 = (double)fVar7;
-    dVar33 = (double)fVar6;
-    dVar30 = (double)fVar4;
-    dVar28 = (double)fVar5;
-    local_154 = 0;
-    piVar14[1] = 0;
-    if (bVar2 != 0) {
-      do {
-        bVar2 = *(byte *)(local_154 + iVar9 + (uint)bVar3);
-        uVar18 = (uint)bVar2;
-        dVar29 = dVar28;
-        dVar31 = dVar30;
-        dVar34 = dVar33;
-        dVar36 = dVar35;
-        if (*puVar13 + 6 <= uVar18) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
-                          ,0x3b0,0,0xffffffff82192c40,uVar18);
-          dVar29 = dVar28;
-          dVar31 = dVar30;
-          dVar34 = dVar33;
-          dVar36 = dVar35;
-        }
-        if (bVar2 < 6) {
-          pfVar16 = (float *)(uVar18 * 0x10 + param_6);
-          fVar7 = *pfVar16;
-          fVar4 = pfVar16[1];
-          fVar5 = pfVar16[2];
-          fVar6 = pfVar16[3];
-        }
-        else {
-          if (*(int *)(puVar13 + 2) == 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
-                            ,0x3b7,0,&DAT_82000f98,"brush->sides");
-          }
-          pfVar16 = *(float **)((uVar18 - 6) * 8 + *(int *)(puVar13 + 2));
-          fVar7 = *pfVar16;
-          fVar4 = pfVar16[1];
-          fVar5 = pfVar16[2];
-          fVar6 = pfVar16[3];
-        }
-        dVar35 = (double)fVar7;
-        dVar33 = (double)fVar6;
-        dVar30 = (double)fVar4;
-        dVar28 = (double)fVar5;
-        pfVar16 = (float *)(piVar14[1] * 0xc + *piVar14);
-        dVar26 = (double)(float)(dVar30 * dVar22 - (double)(float)(dVar28 * dVar23));
-        dVar25 = (double)(float)(dVar29 * dVar23 - (double)(float)(dVar31 * dVar22));
-        dVar24 = (double)(float)(dVar28 * dVar31 - (double)(float)(dVar30 * dVar29));
-        fVar7 = (float)(dVar25 * dVar35) + (float)(dVar26 * dVar36) + (float)(dVar24 * dVar32);
-        if (0.001 <= ABS(fVar7)) {
-          fVar7 = 1.0 / fVar7;
-          dVar21 = (double)(float)(dVar28 * dVar32 - (double)(float)(dVar35 * dVar22));
-          dVar20 = (double)(float)(dVar36 * dVar22 - (double)(float)(dVar29 * dVar32));
-          fVar4 = (float)(dVar35 * dVar23 - (double)(float)(dVar30 * dVar32));
-          fVar5 = (float)(dVar31 * dVar32 - (double)(float)(dVar36 * dVar23));
-          dVar19 = (double)(float)(dVar35 * dVar29 - (double)(float)(dVar28 * dVar36));
-          fVar6 = (float)(dVar30 * dVar36 - (double)(float)(dVar35 * dVar31));
-          fVar10 = ((float)(dVar25 * dVar33) + (float)(dVar26 * dVar34) + (float)(dVar24 * dVar27))
-                   * fVar7;
-          *pfVar16 = fVar10;
-          fVar11 = ((float)(dVar20 * dVar33) + (float)(dVar21 * dVar34) + (float)(dVar19 * dVar27))
-                   * fVar7;
-          pfVar16[1] = fVar11;
-          fVar7 = ((float)((double)fVar5 * dVar33) + (float)((double)fVar4 * dVar34) +
-                  (float)((double)fVar6 * dVar27)) * fVar7;
-          pfVar16[2] = fVar7;
-          if (((((uint)fVar10 & 0x7f800000) == 0x7f800000) ||
-              (((uint)fVar11 & 0x7f800000) == 0x7f800000)) ||
-             (((uint)fVar7 & 0x7f800000) == 0x7f800000)) {
-            Com_PrintError(0x14,0xffffffff82192c7c);
-            Com_PrintError(0x14,0xffffffff82192ca0,(double)*pfVar16,(double)pfVar16[1],
-                           (double)pfVar16[2]);
-            Com_PrintError(dVar32,dVar23,dVar22,dVar27,0x14,0xffffffff82192cc0,dVar32,dVar23,dVar22,
-                           dVar27);
-            Com_PrintError(dVar36,dVar31,dVar29,dVar34,0x14,0xffffffff82192cdc,dVar36,dVar31,dVar29,
-                           dVar34);
-            Com_PrintError(dVar35,dVar30,dVar28,dVar33,0x14,0xffffffff82192cf8,dVar35,dVar30,dVar28,
-                           dVar33);
-            Com_PrintError(0x14,0xffffffff82192d14,(double)*pfVar12,(double)pfVar12[1],
-                           (double)pfVar12[2],(double)pfVar12[3],(double)pfVar12[4],
-                           (double)pfVar12[5]);
-            Com_PrintError(0x14,0xffffffff82192d48,*puVar13);
-            Com_PrintError(0x14,0xffffffff82192d5c,param_3);
-            pfVar17 = (float *)(piVar14[1] * 0xc + *piVar14);
-            fVar7 = (float)(dVar25 * dVar35) + (float)(dVar26 * dVar36) + (float)(dVar24 * dVar32);
-            if (0.001 <= ABS(fVar7)) {
-              fVar7 = 1.0 / fVar7;
-              *pfVar17 = ((float)(dVar25 * dVar33) + (float)(dVar26 * dVar34) +
-                         (float)(dVar24 * dVar27)) * fVar7;
-              pfVar17[1] = ((float)(dVar20 * dVar33) + (float)(dVar21 * dVar34) +
-                           (float)(dVar19 * dVar27)) * fVar7;
-              pfVar17[2] = ((float)((double)fVar5 * dVar33) + (float)((double)fVar4 * dVar34) +
-                           (float)((double)fVar6 * dVar27)) * fVar7;
-            }
-            Com_PrintError(0x14,0xffffffff82192d70);
-            Com_PrintError(0x14,0xffffffff82192ca0,(double)*pfVar16,(double)pfVar16[1],
-                           (double)pfVar16[2]);
-            Com_PrintError(dVar32,dVar23,dVar22,dVar27,0x14,0xffffffff82192cc0,dVar32,dVar23,dVar22,
-                           dVar27);
-            Com_PrintError(dVar36,dVar31,dVar29,dVar34,0x14,0xffffffff82192cdc,dVar36,dVar31,dVar29,
-                           dVar34);
-            Com_PrintError(dVar35,dVar30,dVar28,dVar33,0x14,0xffffffff82192cf8,dVar35,dVar30,dVar28,
-                           dVar33);
-            if (DAT_84013128 == 0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
-                              ,0x3d8,0,0xffffffff82192ef0);
-            }
-          }
-          iVar8 = piVar14[1];
-          if ((iVar8 == 0) ||
-             (pfVar16 = (float *)(iVar8 * 0xc + *piVar14),
-             1.0 <= (pfVar16[-3] - *pfVar16) * (pfVar16[-3] - *pfVar16) +
-                    (pfVar16[-1] - pfVar16[2]) * (pfVar16[-1] - pfVar16[2]) +
-                    (pfVar16[-2] - pfVar16[1]) * (pfVar16[-2] - pfVar16[1]))) {
-            piVar14[1] = iVar8 + 1;
-          }
-        }
-        local_154 = local_154 + 1;
-      } while (local_154 < (int)local_158);
-    }
-    uVar18 = piVar14[1];
-    if (1 < uVar18) {
-      pfVar12 = (float *)*piVar14;
-      if ((pfVar12[1] - pfVar12[uVar18 * 3 + -2]) * (pfVar12[1] - pfVar12[uVar18 * 3 + -2]) +
-          (pfVar12[2] - pfVar12[uVar18 * 3 + -1]) * (pfVar12[2] - pfVar12[uVar18 * 3 + -1]) +
-          (*pfVar12 - pfVar12[uVar18 * 3 + -3]) * (*pfVar12 - pfVar12[uVar18 * 3 + -3]) < 1.0) {
-        piVar14[1] = uVar18 - 1;
-      }
-    }
-    if ((uint)piVar14[1] < 3) {
-      piVar14[1] = 0;
-      __restfpr();
-      __restgprlr();
-      return;
-    }
-  }
-  __restfpr();
-  __restgprlr();
-  return;
-}
-
-
-// 82662970  Phys_BuildWindingsForBrush  (physics/phys_coll_boxbrush.cpp:1013)
-
-void Phys_BuildWindingsForBrush
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,
-               ulonglong param_5,int param_6,ulonglong param_7)
-
-{
-  undefined8 uVar1;
-  ushort *puVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  undefined1 auStack_c0 [192];
-  
-  uVar1 = __savegprlr_21();
-  Profile_Begin(0x184);
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x3fc,0,0xffffffff82000f98,0xffffffff8200d070);
-  }
-  CM_BuildAxialPlanes(uVar1,auStack_c0);
-  puVar2 = (ushort *)param_2;
-  if ((param_5 & 0xffffffff) < (ulonglong)*puVar2 + 6) {
-    MyAssertHandler(0xffffffff821925d8,0x400,0,0xffffffff82192f64,(ulonglong)*puVar2 + 6,param_5);
-  }
-  uVar4 = 0;
-  uVar3 = 0;
-  if ((ulonglong)*puVar2 != 0xfffffffffffffffa) {
-    do {
-      *(int *)param_4 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2) + param_6;
-      Phys_GetWindingForBrushFace(uVar1,param_2,param_3,uVar3,param_4,param_7 - uVar4);
-      uVar4 = (uint)((int *)param_4)[1] + uVar4;
-      if ((param_7 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821925d8,0x407,0,0xffffffff82000f98,0xffffffff82192f4c);
-      }
-      uVar3 = uVar3 + 1;
-      param_4 = param_4 + 8;
-    } while ((uVar3 & 0xffffffff) < (ulonglong)*puVar2 + 6);
-  }
-  Profile_EndInternal(0);
-  __restgprlr_21(uVar4);
-  return;
-}
-
-
-// 82662AB0  Phys_BuildWindingsForBrush2  (physics/phys_coll_boxbrush.cpp:1040)
-
-void Phys_BuildWindingsForBrush2
-               (undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,int param_5
-               ,ulonglong param_6)
-
-{
-  undefined8 uVar1;
-  ushort *puVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  undefined1 auStack_c0 [192];
-  
-  uVar1 = __savegprlr_22();
-  Profile_Begin(0x184);
-  CM_BuildAxialPlanes(uVar1,auStack_c0);
-  puVar2 = (ushort *)param_2;
-  if ((param_4 & 0xffffffff) < (ulonglong)*puVar2 + 6) {
-    MyAssertHandler(0xffffffff821925d8,0x419,0,0xffffffff82192f64,(ulonglong)*puVar2 + 6,param_4);
-  }
-  uVar4 = 0;
-  uVar3 = 0;
-  if ((ulonglong)*puVar2 != 0xfffffffffffffffa) {
-    do {
-      *(int *)param_3 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2) + param_5;
-      Phys_GetWindingForBrushFace2(uVar1,param_2,uVar3,param_3,param_6 - uVar4,auStack_c0);
-      uVar4 = (uint)((int *)param_3)[1] + uVar4;
-      if ((param_6 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821925d8,0x420,0,0xffffffff82000f98,0xffffffff82192f4c);
-      }
-      uVar3 = uVar3 + 1;
-      param_3 = param_3 + 8;
-    } while ((uVar3 & 0xffffffff) < (ulonglong)*puVar2 + 6);
-  }
-  Profile_EndInternal(0);
-  __restgprlr_22(uVar4);
-  return;
-}
-
-
-// 82662BC8  Phys_TestBoxAgainstEachBrushPlane  (physics/phys_coll_boxbrush.cpp:1065)
-
-void Phys_TestBoxAgainstEachBrushPlane
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5,ulonglong param_6)
-
-{
-  float fVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  ushort *puVar5;
-  float *pfVar6;
-  float *pfVar7;
-  uint *puVar8;
-  uint uVar9;
-  int iVar10;
-  bool bVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float local_f8;
-  float local_f4;
-  float local_f0;
-  float local_e0;
-  float local_dc;
-  float local_d8;
-  float local_d4;
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  float local_c4;
-  float local_c0;
-  
-  __savegprlr();
-  pfVar6 = (float *)__savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x43a,0,0xffffffff82000f98,0xffffffff82082224);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x43b,0,0xffffffff82000f98,0xffffffff82021a7c);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x43c,0,0xffffffff82000f98,0xffffffff82193050);
-  }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x43d,0,0xffffffff82000f98,0xffffffff82193040);
-  }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x43e,0,0xffffffff82000f98,0xffffffff8219302c);
-  }
-  puVar8 = (uint *)param_5;
-  *puVar8 = 0xffffffff;
-  dVar17 = 0.0;
-  pfVar7 = (float *)param_4;
-  *pfVar7 = 0.0;
-  pfVar7[1] = 0.0;
-  pfVar7[2] = 0.0;
-  pfVar7[3] = 0.0;
-  iVar4 = (int)param_3;
-  local_d4 = ABS(*(float *)(iVar4 + 0x4c));
-  local_d0 = ABS(*(float *)(iVar4 + 0x50));
-  local_cc = ABS(*(float *)(iVar4 + 0x54));
-  local_c8 = ABS(*(float *)(iVar4 + 0x58));
-  local_d8 = ABS(*(float *)(iVar4 + 0x48));
-  local_dc = ABS(*(float *)(iVar4 + 0x44));
-  local_e0 = ABS(*(float *)(iVar4 + 0x40));
-  local_c4 = ABS(*(float *)(iVar4 + 0x5c));
-  local_c0 = ABS(*(float *)(iVar4 + 0x60));
-  MatrixTransformVector(param_3 + 0x88,&local_e0,&local_f8);
-  fVar1 = *pfVar6;
-  dVar12 = (double)(float)((double)*(float *)(iVar4 + 0x34) - (double)fVar1);
-  fVar2 = pfVar6[3];
-  dVar15 = -3.4028234663852886e+38;
-  dVar13 = -1.0;
-  dVar14 = 1.0;
-  dVar16 = (double)(float)(ABS(dVar12) - (double)fVar2);
-  puVar5 = (ushort *)param_2;
-  if (dVar17 < dVar16) {
-    dVar16 = (double)(float)(dVar16 - (double)local_f8);
-    if (dVar17 <= dVar16) goto LAB_82662da8;
-    if ((*(char *)(((dVar17 <= dVar12) + 10) * 3 + (int)puVar5) != '\0') &&
-       (-3.4028234663852886e+38 < dVar16)) {
-      dVar15 = dVar14;
-      if (dVar12 < 0.0) {
-        dVar15 = dVar13;
-      }
-      *pfVar7 = (float)dVar15;
-      pfVar7[1] = (float)dVar17;
-      pfVar7[2] = (float)dVar17;
-      pfVar7[3] = (float)((double)fVar1 * dVar15 + (double)fVar2);
-      *puVar8 = (uint)(dVar17 <= dVar12);
-      dVar15 = dVar16;
-    }
-  }
-  fVar1 = pfVar6[1];
-  dVar12 = (double)(float)((double)*(float *)(iVar4 + 0x38) - (double)fVar1);
-  fVar2 = pfVar6[4];
-  dVar16 = (double)(float)(ABS(dVar12) - (double)fVar2);
-  if (dVar17 < dVar16) {
-    dVar16 = (double)(float)(dVar16 - (double)local_f4);
-    if (dVar17 <= dVar16) goto LAB_82662da8;
-    bVar11 = dVar17 <= dVar12;
-    if ((*(char *)((int)puVar5 + (uint)bVar11 + (uint)bVar11 * 2 + 0x1f) != '\0') &&
-       (dVar15 < dVar16)) {
-      dVar15 = dVar14;
-      if (dVar12 < 0.0) {
-        dVar15 = dVar13;
-      }
-      *pfVar7 = (float)dVar17;
-      pfVar7[1] = (float)dVar15;
-      pfVar7[2] = (float)dVar17;
-      pfVar7[3] = (float)((double)fVar1 * dVar15 + (double)fVar2);
-      *puVar8 = bVar11 + 2;
-      dVar15 = dVar16;
-    }
-  }
-  fVar1 = pfVar6[2];
-  dVar12 = (double)(float)((double)*(float *)(iVar4 + 0x3c) - (double)fVar1);
-  fVar2 = pfVar6[5];
-  dVar16 = (double)(float)(ABS(dVar12) - (double)fVar2);
-  if (dVar17 < dVar16) {
-    dVar16 = (double)(float)(dVar16 - (double)local_f0);
-    if (dVar17 <= dVar16) {
-LAB_82662da8:
-      __restfpr_28(0);
-      __restgprlr();
-      return;
-    }
-    bVar11 = dVar17 <= dVar12;
-    if ((*(char *)((int)puVar5 + (uint)bVar11 + (uint)bVar11 * 2 + 0x20) != '\0') &&
-       (dVar15 < dVar16)) {
-      if (dVar12 < 0.0) {
-        dVar14 = dVar13;
-      }
-      *pfVar7 = (float)dVar17;
-      pfVar7[1] = (float)dVar17;
-      pfVar7[2] = (float)dVar14;
-      pfVar7[3] = (float)((double)fVar1 * dVar14 + (double)fVar2);
-      *puVar8 = bVar11 + 4;
-      dVar15 = dVar16;
-    }
-  }
-  uVar9 = 0;
-  if (*puVar5 != 0) {
-    iVar10 = 0;
-    do {
-      iVar3 = *(int *)(puVar5 + 2);
-      pfVar6 = *(float **)(iVar10 + iVar3);
-      if (((uint)pfVar6[3] & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff821925d8,0x493,0,0xffffffff82000f98,0xffffffff82192fa4);
-      }
-      if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
-          (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
-         (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821925d8,0x494,0,0xffffffff82000f98,0xffffffff82192fc0);
-      }
-      MatrixTransformVector(pfVar6,param_3 + 100,&local_f8);
-      fVar1 = (*(float *)(iVar4 + 0x3c) * pfVar6[2] +
-              *(float *)(iVar4 + 0x38) * pfVar6[1] + *pfVar6 * *(float *)(iVar4 + 0x34)) - pfVar6[3]
-      ;
-      dVar12 = (double)fVar1;
-      dVar14 = (double)(ABS(local_f8) * *(float *)(param_3 + 0x88) +
-                       ABS(local_f0) * *(float *)(iVar4 + 0x90) +
-                       ABS(local_f4) * *(float *)(iVar4 + 0x8c));
-      if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff821925d8,0x49b,0,0xffffffff82000f98,0xffffffff82082644);
-      }
-      if (dVar17 < dVar12) {
-        dVar14 = (double)(float)(dVar12 - dVar14);
-        if (dVar17 <= dVar14) goto LAB_82662da8;
-        if ((*(char *)(iVar10 + iVar3 + 7) != '\0') && (dVar15 < dVar14)) {
-          *pfVar7 = *pfVar6;
-          pfVar7[1] = pfVar6[1];
-          pfVar7[2] = pfVar6[2];
-          pfVar7[3] = pfVar6[3];
-          *puVar8 = uVar9 + 6;
-          dVar15 = dVar14;
-        }
-      }
-      uVar9 = uVar9 + 1;
-      iVar10 = iVar10 + 8;
-    } while (uVar9 < *puVar5);
-  }
-  *(float *)param_6 = (float)dVar15;
-  __restfpr_28(1);
-  __restgprlr();
-  return;
-}
-
-
-// 82663100  Phys_CollideBoxWithBrushFace  (physics/phys_coll_boxbrush.cpp:1206)
-
-void Phys_CollideBoxWithBrushFace
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               longlong param_5,undefined8 param_6,undefined8 param_7)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  ushort *puVar7;
-  undefined8 uVar6;
-  float *pfVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  uint local_a0 [2];
-  float *local_98 [6];
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_74;
-  float local_70;
-  float local_6c;
-  float local_68;
-  float local_64;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_54;
-  
-  puVar7 = (ushort *)__savegprlr_23();
-  if ((ulonglong)*puVar7 + 6 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x4be,0,0xffffffff82193060,param_2);
-  }
-  pfVar8 = (float *)param_3;
-  pfVar9 = (float *)param_7;
-  *pfVar9 = -*pfVar8;
-  pfVar9[1] = -pfVar8[1];
-  pfVar9[2] = -pfVar8[2];
-  GetClosestBoxFace(param_5,param_3,local_a0,local_98);
-  iVar5 = (int)param_5;
-  pfVar8 = *(float **)(iVar5 + 0x88);
-  local_98[1] = *(float **)(iVar5 + 0x8c);
-  local_98[2] = *(float **)(iVar5 + 0x90);
-  lVar11 = (longlong)(int)((ulonglong)local_a0[0] + 1);
-  uVar10 = lVar11 / 3 + (lVar11 >> 0x3f);
-  uVar10 = (uVar10 & 0xffffffff) + ((uVar10 & 0xffffffff) >> 0x1f);
-  lVar12 = ((ulonglong)local_a0[0] + 1) - (uVar10 + (uVar10 & 0x7fffffff) * 2);
-  lVar11 = (longlong)(int)(lVar12 + 1);
-  uVar10 = lVar11 / 3 + (lVar11 >> 0x3f);
-  uVar10 = (uVar10 & 0xffffffff) + ((uVar10 & 0xffffffff) >> 0x1f);
-  lVar11 = (lVar12 + 1) - (uVar10 + (uVar10 & 0x7fffffff) * 2);
-  if (local_98[0] != (float *)0x0) {
-    local_98[local_a0[0]] = (float *)-(float)local_98[local_a0[0]];
-  }
-  local_98[0] = pfVar8;
-  MatrixTransformVector(local_98,param_5 + 0x40,&local_80);
-  local_80 = *(float *)(iVar5 + 0x34) + local_80;
-  fVar1 = *(float *)((int)((lVar12 + 0x22U & 0xffffffff) << 2) + iVar5);
-  fVar2 = fVar1 * -2.0;
-  fVar1 = fVar1 * 2.0;
-  local_7c = *(float *)(iVar5 + 0x38) + local_7c;
-  iVar4 = (int)lVar12 * 0xc + iVar5;
-  local_78 = *(float *)(iVar5 + 0x3c) + local_78;
-  fVar3 = *(float *)((int)((lVar11 + 0x22U & 0xffffffff) << 2) + iVar5) * -2.0;
-  local_74 = *(float *)(iVar4 + 0x40) * fVar2 + local_80;
-  local_70 = *(float *)(iVar4 + 0x44) * fVar2 + local_7c;
-  iVar5 = (int)lVar11 * 0xc + iVar5;
-  local_6c = fVar2 * *(float *)(iVar4 + 0x48) + local_78;
-  local_68 = *(float *)(iVar5 + 0x40) * fVar3 + local_74;
-  local_64 = *(float *)(iVar5 + 0x44) * fVar3 + local_70;
-  local_60 = *(float *)(iVar5 + 0x48) * fVar3 + local_6c;
-  local_5c = *(float *)(iVar4 + 0x40) * fVar1 + local_68;
-  local_58 = *(float *)(iVar4 + 0x44) * fVar1 + local_64;
-  local_54 = fVar1 * *(float *)(iVar4 + 0x48) + local_60;
-  uVar6 = Phys_GetSurfaceFlagsFromBrush(puVar7,param_2);
-  local_98[0] = &local_80;
-  local_98[1] = (float *)0x4;
-  Phys_ProjectFaceOntoFaceAndClip(param_3,param_4,local_98,uVar6,param_6,param_7);
-  __restgprlr_23();
-  return;
-}
-
-
-// 82663360  Phys_DoesPolyIntersectBox  (physics/phys_coll_boxbrush.cpp:1238)
-
-void Phys_DoesPolyIntersectBox(undefined8 param_1,longlong param_2)
-
-{
-  float *pfVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  longlong lVar6;
-  double dVar7;
-  float local_c50;
-  float local_c4c;
-  float local_c48;
-  float local_c44;
-  undefined1 auStack_c40 [3136];
-  
-  puVar3 = (undefined4 *)__savegprlr_27();
-  if (0x100 < (uint)puVar3[1]) {
-    MyAssertHandler(0xffffffff821925d8,0x4dd,0,0xffffffff82000f98,0xffffffff821930bc);
-  }
-  uVar4 = (ulonglong)(uint)puVar3[1];
-  memcpy(auStack_c40,(void *)*puVar3,
-         (size_t)((uVar4 + ((ulonglong)(uint)puVar3[1] & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  iVar2 = (int)param_2;
-  lVar6 = param_2 + 0x88;
-  uVar5 = 0;
-  param_2 = param_2 + 0x48;
-  while( true ) {
-    pfVar1 = (float *)param_2;
-    local_c4c = pfVar1[-1];
-    local_c50 = pfVar1[-2];
-    local_c48 = *pfVar1;
-    dVar7 = (double)(*(float *)(iVar2 + 0x3c) * local_c48 +
-                    *(float *)(iVar2 + 0x34) * local_c50 + *(float *)(iVar2 + 0x38) * local_c4c);
-    local_c44 = (float)((double)*(float *)lVar6 + dVar7);
-    uVar4 = Phys_ClipPolyAgainstPlane(auStack_c40,uVar4,0x100,&local_c50);
-    if ((uVar4 & 0xffffffff) == 0) break;
-    local_c50 = -local_c50;
-    local_c4c = -local_c4c;
-    local_c48 = -local_c48;
-    local_c44 = (float)((double)*(float *)lVar6 - dVar7);
-    uVar4 = Phys_ClipPolyAgainstPlane(auStack_c40,uVar4,0x100,&local_c50);
-    if ((uVar4 & 0xffffffff) == 0) break;
-    uVar5 = uVar5 + 1;
-    lVar6 = lVar6 + 4;
-    param_2 = param_2 + 0xc;
-    if (2 < uVar5) {
-      __restgprlr_27(1);
-      return;
-    }
-  }
-  __restgprlr_27(0);
-  return;
-}
-
-
-// 826634B8  Phys_CollideBoxWithBrush  (physics/phys_coll_boxbrush.cpp:1270)
-
-void Phys_CollideBoxWithBrush
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  int iVar1;
-  float *pfVar3;
-  char cVar5;
-  uint uVar4;
-  undefined8 uVar2;
-  ushort *puVar6;
-  undefined1 *puVar7;
-  float *pfVar8;
-  longlong lVar9;
-  float *pfVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  undefined4 *puVar15;
-  int iVar16;
-  ulonglong uVar17;
-  undefined1 *puVar18;
-  undefined1 *puVar20;
-  longlong lVar19;
-  undefined1 *puVar21;
-  ulonglong uVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -2504,8 +1969,757 @@ void Phys_CollideBoxWithBrush
   double dVar35;
   double dVar36;
   double dVar37;
+  float (*pafStack0000003c) [4];
+  uint local_158;
+  int local_154;
+  
+  uVar15 = (ulonglong)(int)param_4;
+  uVar14 = (ulonglong)(int)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  __savegprlr();
+  __savefpr();
+  pafStack0000003c = param_6;
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x377,0,"%s");
+  }
+  puVar13 = (ushort *)uVar12;
+  if ((ulonglong)*puVar13 + 6 <= (uVar14 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x378,0,"%s");
+  }
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x379,0,"%s");
+  }
+  piVar16 = (int *)uVar15;
+  if (*piVar16 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x37a,0,"%s");
+  }
+  uVar19 = (uint)uVar14;
+  if ((uVar14 & 0xffffffff) < 6) {
+    iVar8 = (int)((uVar14 & 0xffffffff) >> 1);
+    fVar7 = param_6[uVar19][0];
+    bVar2 = *(byte *)(((uVar19 & 1) + 10) * 3 + iVar8 + (int)puVar13);
+    bVar3 = *(byte *)(((uVar19 & 1) + 8) * 3 + iVar8 + (int)puVar13);
+    fVar4 = param_6[uVar19][1];
+    fVar5 = param_6[uVar19][2];
+    fVar6 = param_6[uVar19][3];
+  }
+  else {
+    if (*(int *)(puVar13 + 2) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,900,0,"%s");
+    }
+    puVar17 = (undefined4 *)((uVar19 - 6) * 8 + *(int *)(puVar13 + 2));
+    pfVar20 = (float *)*puVar17;
+    bVar2 = *(byte *)((int)puVar17 + 7);
+    bVar3 = *(byte *)((int)puVar17 + 6);
+    fVar7 = *pfVar20;
+    fVar4 = pfVar20[1];
+    fVar5 = pfVar20[2];
+    fVar6 = pfVar20[3];
+  }
+  local_158 = (uint)bVar2;
+  dVar33 = (double)fVar7;
+  dVar29 = (double)fVar6;
+  dVar25 = (double)fVar4;
+  dVar24 = (double)fVar5;
+  if ((bVar2 < 3) || (param_5 < (int)(uint)bVar2)) {
+    piVar16[1] = 0;
+  }
+  else {
+    if (*(int *)(puVar13 + 4) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x396,0,"%s");
+    }
+    iVar8 = *(int *)(puVar13 + 4);
+    bVar1 = *(byte *)(iVar8 + (uint)bVar3 + (uint)bVar2 + -1);
+    if (*puVar13 + 6 <= (uint)bVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x39b,0,"side1 doesn\'t index brush->numsides + 6\n\t%i not in [0, %i)");
+    }
+    if (bVar1 < 6) {
+      pafVar18 = param_6 + bVar1;
+      fVar7 = (*pafVar18)[0];
+      fVar4 = (*pafVar18)[1];
+      fVar5 = (*pafVar18)[2];
+      fVar6 = (*pafVar18)[3];
+    }
+    else {
+      if (*(int *)(puVar13 + 2) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x3a2,0,"%s");
+      }
+      pfVar20 = *(float **)((bVar1 - 6) * 8 + *(int *)(puVar13 + 2));
+      fVar7 = *pfVar20;
+      fVar4 = pfVar20[1];
+      fVar5 = pfVar20[2];
+      fVar6 = pfVar20[3];
+    }
+    dVar36 = (double)fVar7;
+    dVar34 = (double)fVar6;
+    dVar31 = (double)fVar4;
+    dVar30 = (double)fVar5;
+    local_154 = 0;
+    piVar16[1] = 0;
+    if (bVar2 != 0) {
+      do {
+        bVar2 = *(byte *)(local_154 + iVar8 + (uint)bVar3);
+        uVar19 = (uint)bVar2;
+        dVar21 = dVar30;
+        dVar32 = dVar31;
+        dVar35 = dVar34;
+        dVar37 = dVar36;
+        if (*puVar13 + 6 <= uVar19) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                          ,0x3b0,0,"side2 doesn\'t index brush->numsides + 6\n\t%i not in [0, %i)");
+          dVar21 = dVar30;
+          dVar32 = dVar31;
+          dVar35 = dVar34;
+          dVar37 = dVar36;
+        }
+        if (bVar2 < 6) {
+          pafVar18 = pafStack0000003c + uVar19;
+          fVar7 = (*pafVar18)[0];
+          fVar4 = (*pafVar18)[1];
+          fVar5 = (*pafVar18)[2];
+          fVar6 = (*pafVar18)[3];
+        }
+        else {
+          if (*(int *)(puVar13 + 2) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                            ,0x3b7,0,"%s");
+          }
+          pfVar20 = *(float **)((uVar19 - 6) * 8 + *(int *)(puVar13 + 2));
+          fVar7 = *pfVar20;
+          fVar4 = pfVar20[1];
+          fVar5 = pfVar20[2];
+          fVar6 = pfVar20[3];
+        }
+        dVar36 = (double)fVar7;
+        dVar34 = (double)fVar6;
+        dVar31 = (double)fVar4;
+        dVar30 = (double)fVar5;
+        pfVar20 = (float *)(piVar16[1] * 0xc + *piVar16);
+        dVar28 = (double)(float)(dVar31 * dVar24 - (double)(float)(dVar30 * dVar25));
+        dVar27 = (double)(float)(dVar21 * dVar25 - (double)(float)(dVar32 * dVar24));
+        dVar26 = (double)(float)(dVar30 * dVar32 - (double)(float)(dVar31 * dVar21));
+        fVar7 = (float)(dVar27 * dVar36) + (float)(dVar28 * dVar37) + (float)(dVar26 * dVar33);
+        if (0.001 <= ABS(fVar7)) {
+          fVar7 = 1.0 / fVar7;
+          dVar23 = (double)(float)(dVar30 * dVar33 - (double)(float)(dVar36 * dVar24));
+          dVar22 = (double)(float)(dVar37 * dVar24 - (double)(float)(dVar21 * dVar33));
+          fVar4 = (float)(dVar36 * dVar25 - (double)(float)(dVar31 * dVar33));
+          fVar5 = (float)(dVar32 * dVar33 - (double)(float)(dVar37 * dVar25));
+          dVar21 = (double)(float)(dVar36 * dVar21 - (double)(float)(dVar30 * dVar37));
+          fVar6 = (float)(dVar31 * dVar37 - (double)(float)(dVar36 * dVar32));
+          fVar10 = ((float)(dVar27 * dVar34) + (float)(dVar28 * dVar35) + (float)(dVar26 * dVar29))
+                   * fVar7;
+          *pfVar20 = fVar10;
+          fVar11 = ((float)(dVar22 * dVar34) + (float)(dVar23 * dVar35) + (float)(dVar21 * dVar29))
+                   * fVar7;
+          pfVar20[1] = fVar11;
+          fVar7 = ((float)((double)fVar5 * dVar34) + (float)((double)fVar4 * dVar35) +
+                  (float)((double)fVar6 * dVar29)) * fVar7;
+          pfVar20[2] = fVar7;
+          if (((((uint)fVar10 & 0x7f800000) == 0x7f800000) ||
+              (((uint)fVar11 & 0x7f800000) == 0x7f800000)) ||
+             (((uint)fVar7 & 0x7f800000) == 0x7f800000)) {
+            Com_PrintError(0x14,"Bad intersection of three planes:\n");
+            Com_PrintError(0x14,"Resulting point: (%f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 0: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 1: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 2: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"brush center/halfsize: (%f, %f, %f) (%f, %f, %f)\n");
+            Com_PrintError(0x14,"brush numsides: %i\n");
+            Com_PrintError(0x14,"brushside: %i\n");
+            pfVar20 = (float *)(piVar16[1] * 0xc + *piVar16);
+            fVar7 = (float)(dVar27 * dVar36) + (float)(dVar28 * dVar37) + (float)(dVar26 * dVar33);
+            if (0.001 <= ABS(fVar7)) {
+              fVar7 = 1.0 / fVar7;
+              *pfVar20 = ((float)(dVar27 * dVar34) + (float)(dVar28 * dVar35) +
+                         (float)(dVar26 * dVar29)) * fVar7;
+              pfVar20[1] = ((float)(dVar22 * dVar34) + (float)(dVar23 * dVar35) +
+                           (float)(dVar21 * dVar29)) * fVar7;
+              pfVar20[2] = ((float)((double)fVar5 * dVar34) + (float)((double)fVar4 * dVar35) +
+                           (float)((double)fVar6 * dVar29)) * fVar7;
+            }
+            Com_PrintError(0x14,
+                           "Second try (if these results differ, there is a race condition affecting physics collision):\n"
+                          );
+            Com_PrintError(0x14,"Resulting point: (%f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 0: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 1: (%f, %f, %f, %f)\n");
+            Com_PrintError(0x14,"plane 2: (%f, %f, %f, %f)\n");
+            if (alwaysfails == 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                              ,0x3d8,0,
+                              "Phys_GetWindingForBrushFace2: bad intersection.  Please include console log in bug report."
+                             );
+            }
+          }
+          iVar9 = piVar16[1];
+          if ((iVar9 == 0) ||
+             (pfVar20 = (float *)(iVar9 * 0xc + *piVar16),
+             1.0 <= (pfVar20[-3] - *pfVar20) * (pfVar20[-3] - *pfVar20) +
+                    (pfVar20[-1] - pfVar20[2]) * (pfVar20[-1] - pfVar20[2]) +
+                    (pfVar20[-2] - pfVar20[1]) * (pfVar20[-2] - pfVar20[1]))) {
+            piVar16[1] = iVar9 + 1;
+          }
+        }
+        local_154 = local_154 + 1;
+      } while (local_154 < (int)local_158);
+    }
+    uVar19 = piVar16[1];
+    if (1 < uVar19) {
+      pfVar20 = (float *)*piVar16;
+      if ((pfVar20[1] - pfVar20[uVar19 * 3 + -2]) * (pfVar20[1] - pfVar20[uVar19 * 3 + -2]) +
+          (pfVar20[2] - pfVar20[uVar19 * 3 + -1]) * (pfVar20[2] - pfVar20[uVar19 * 3 + -1]) +
+          (*pfVar20 - pfVar20[uVar19 * 3 + -3]) * (*pfVar20 - pfVar20[uVar19 * 3 + -3]) < 1.0) {
+        piVar16[1] = uVar19 - 1;
+      }
+    }
+    if ((uint)piVar16[1] < 3) {
+      piVar16[1] = 0;
+      __restfpr();
+      __restgprlr();
+      return;
+    }
+  }
+  __restfpr();
+  __restgprlr();
+  return;
+}
+
+
+// 82662970  Phys_BuildWindingsForBrush  (physics/phys_coll_boxbrush.cpp:1013)
+
+uint Phys_BuildWindingsForBrush
+               (Bounds *param_1,cbrush_t *param_2,float (*param_3) [4],Poly *param_4,uint param_5,
+               float (*param_6) [3],uint param_7)
+
+{
+  Bounds *pBVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  Poly *pPVar7;
+  longlong lVar6;
+  ulonglong uVar8;
+  float afStack_c0 [48];
+  
+  uVar4 = (ulonglong)(int)param_7;
+  uVar8 = (ulonglong)(int)param_5;
+  lVar6 = (longlong)(int)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  pBVar1 = (Bounds *)__savegprlr_21(param_1);
+  uVar5 = uVar4;
+  Profile_Begin(0x184);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x3fc,0,"%s");
+  }
+  CM_BuildAxialPlanes(pBVar1,(float (*) [4])afStack_c0);
+  if ((uVar8 & 0xffffffff) < (ulonglong)param_2->numsides + 6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x400,0,"static_cast< uint >( brush->numsides ) + 6 <= maxPolys\n\t%i, %i");
+  }
+  uVar8 = 0;
+  uVar2 = 0;
+  if ((ulonglong)param_2->numsides != 0xfffffffffffffffa) {
+    do {
+      pPVar7 = (Poly *)lVar6;
+      pPVar7->pts = (float (*) [3])
+                    ((int)*param_6 + (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+      Phys_GetWindingForBrushFace
+                (pBVar1,param_2,(float (*) [4])uVar3,uVar2,pPVar7,(int)uVar4 - (int)uVar8,
+                 (float (*) [4])uVar5);
+      uVar8 = pPVar7->ptCount + uVar8;
+      if ((uVar4 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x407,0,"%s");
+      }
+      uVar2 = uVar2 + 1;
+      lVar6 = lVar6 + 8;
+    } while (uVar2 < param_2->numsides + 6);
+  }
+  Profile_EndInternal((double *)0x0);
+  uVar2 = __restgprlr_21(uVar8);
+  return uVar2;
+}
+
+
+// 82662AB0  Phys_BuildWindingsForBrush2  (physics/phys_coll_boxbrush.cpp:1040)
+
+uint Phys_BuildWindingsForBrush2
+               (Bounds *param_1,cbrush_t *param_2,Poly *param_3,uint param_4,float (*param_5) [3],
+               uint param_6)
+
+{
+  Bounds *pBVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  Poly *pPVar5;
+  longlong lVar4;
+  ulonglong uVar6;
+  float afStack_c0 [48];
+  
+  uVar3 = (ulonglong)(int)param_6;
+  uVar6 = (ulonglong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  pBVar1 = (Bounds *)__savegprlr_22(param_1);
+  Profile_Begin(0x184);
+  CM_BuildAxialPlanes(pBVar1,(float (*) [4])afStack_c0);
+  if ((uVar6 & 0xffffffff) < (ulonglong)param_2->numsides + 6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x419,0,"static_cast< uint >( brush->numsides ) + 6 <= maxPolys\n\t%i, %i");
+  }
+  uVar6 = 0;
+  uVar2 = 0;
+  if ((ulonglong)param_2->numsides != 0xfffffffffffffffa) {
+    do {
+      pPVar5 = (Poly *)lVar4;
+      pPVar5->pts = (float (*) [3])
+                    ((int)*param_5 + (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+      Phys_GetWindingForBrushFace2
+                (pBVar1,param_2,uVar2,pPVar5,(int)uVar3 - (int)uVar6,(float (*) [4])afStack_c0);
+      uVar6 = pPVar5->ptCount + uVar6;
+      if ((uVar3 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x420,0,"%s");
+      }
+      uVar2 = uVar2 + 1;
+      lVar4 = lVar4 + 8;
+    } while (uVar2 < param_2->numsides + 6);
+  }
+  Profile_EndInternal((double *)0x0);
+  uVar2 = __restgprlr_22(uVar6);
+  return uVar2;
+}
+
+
+// 82662BC8  Phys_TestBoxAgainstEachBrushPlane  (physics/phys_coll_boxbrush.cpp:1065)
+
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+bool Phys_TestBoxAgainstEachBrushPlane
+               (Bounds *param_1,cbrush_t *param_2,objInfo *param_3,float *param_4,int *param_5,
+               float *param_6)
+
+{
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  ushort *puVar4;
+  int iVar5;
+  float *pfVar6;
+  undefined1 uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  float *pfVar11;
+  ulonglong uVar12;
+  uint *puVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  int iVar16;
+  bool bVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  float local_f8;
+  float local_f4;
+  float local_f0;
+  float local_e0;
+  float local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  float local_cc;
+  float local_c8;
+  float local_c4;
+  float local_c0;
+  
+  uVar14 = (ulonglong)(int)param_6;
+  uVar12 = (ulonglong)(int)param_5;
+  uVar10 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  __savegprlr();
+  pfVar6 = (float *)__savefpr_28();
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x43a,0,"%s");
+  }
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x43b,0,"%s");
+  }
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x43c,0,"%s");
+  }
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x43d,0,"%s");
+  }
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x43e,0,"%s");
+  }
+  iVar5 = (int)uVar9;
+  puVar13 = (uint *)uVar12;
+  *puVar13 = 0xffffffff;
+  dVar23 = 0.0;
+  pfVar11 = (float *)uVar10;
+  *pfVar11 = 0.0;
+  pfVar11[1] = 0.0;
+  pfVar11[2] = 0.0;
+  pfVar11[3] = 0.0;
+  local_d4 = ABS(*(float *)(iVar5 + 0x4c));
+  local_d0 = ABS(*(float *)(iVar5 + 0x50));
+  local_cc = ABS(*(float *)(iVar5 + 0x54));
+  local_c8 = ABS(*(float *)(iVar5 + 0x58));
+  local_d8 = ABS(*(float *)(iVar5 + 0x48));
+  local_dc = ABS(*(float *)(iVar5 + 0x44));
+  local_e0 = ABS(*(float *)(iVar5 + 0x40));
+  local_c4 = ABS(*(float *)(iVar5 + 0x5c));
+  local_c0 = ABS(*(float *)(iVar5 + 0x60));
+  MatrixTransformVector((float *)(iVar5 + 0x88),(float (*) [3])&local_e0,&local_f8);
+  fVar1 = *pfVar6;
+  dVar18 = (double)(float)((double)*(float *)(iVar5 + 0x34) - (double)fVar1);
+  fVar2 = pfVar6[3];
+  dVar21 = -3.4028234663852886e+38;
+  dVar19 = -1.0;
+  dVar20 = 1.0;
+  dVar22 = (double)(float)(ABS(dVar18) - (double)fVar2);
+  puVar4 = (ushort *)uVar8;
+  if (dVar23 < dVar22) {
+    dVar22 = (double)(float)(dVar22 - (double)local_f8);
+    if (dVar23 <= dVar22) goto LAB_82662da8;
+    if ((*(char *)(((dVar23 <= dVar18) + 10) * 3 + (int)puVar4) != '\0') &&
+       (-3.4028234663852886e+38 < dVar22)) {
+      dVar21 = dVar20;
+      if (dVar18 < 0.0) {
+        dVar21 = dVar19;
+      }
+      *pfVar11 = (float)dVar21;
+      pfVar11[1] = (float)dVar23;
+      pfVar11[2] = (float)dVar23;
+      pfVar11[3] = (float)((double)fVar1 * dVar21 + (double)fVar2);
+      *puVar13 = (uint)(dVar23 <= dVar18);
+      dVar21 = dVar22;
+    }
+  }
+  fVar1 = pfVar6[1];
+  dVar18 = (double)(float)((double)*(float *)(iVar5 + 0x38) - (double)fVar1);
+  fVar2 = pfVar6[4];
+  dVar22 = (double)(float)(ABS(dVar18) - (double)fVar2);
+  if (dVar23 < dVar22) {
+    dVar22 = (double)(float)(dVar22 - (double)local_f4);
+    if (dVar23 <= dVar22) goto LAB_82662da8;
+    bVar17 = dVar23 <= dVar18;
+    if ((*(char *)((int)puVar4 + (uint)bVar17 + (uint)bVar17 * 2 + 0x1f) != '\0') &&
+       (dVar21 < dVar22)) {
+      dVar21 = dVar20;
+      if (dVar18 < 0.0) {
+        dVar21 = dVar19;
+      }
+      *pfVar11 = (float)dVar23;
+      pfVar11[1] = (float)dVar21;
+      pfVar11[2] = (float)dVar23;
+      pfVar11[3] = (float)((double)fVar1 * dVar21 + (double)fVar2);
+      *puVar13 = bVar17 + 2;
+      dVar21 = dVar22;
+    }
+  }
+  fVar1 = pfVar6[2];
+  dVar18 = (double)(float)((double)*(float *)(iVar5 + 0x3c) - (double)fVar1);
+  fVar2 = pfVar6[5];
+  dVar22 = (double)(float)(ABS(dVar18) - (double)fVar2);
+  if (dVar23 < dVar22) {
+    dVar22 = (double)(float)(dVar22 - (double)local_f0);
+    if (dVar23 <= dVar22) {
+LAB_82662da8:
+      uVar7 = __restfpr_28(0);
+      __restgprlr();
+      return (bool)uVar7;
+    }
+    bVar17 = dVar23 <= dVar18;
+    if ((*(char *)((int)puVar4 + (uint)bVar17 + (uint)bVar17 * 2 + 0x20) != '\0') &&
+       (dVar21 < dVar22)) {
+      if (dVar18 < 0.0) {
+        dVar20 = dVar19;
+      }
+      *pfVar11 = (float)dVar23;
+      pfVar11[1] = (float)dVar23;
+      pfVar11[2] = (float)dVar20;
+      pfVar11[3] = (float)((double)fVar1 * dVar20 + (double)fVar2);
+      *puVar13 = bVar17 + 4;
+      dVar21 = dVar22;
+    }
+  }
+  uVar15 = 0;
+  if (*puVar4 != 0) {
+    iVar16 = 0;
+    do {
+      iVar3 = *(int *)(puVar4 + 2);
+      pfVar6 = *(float **)(iVar16 + iVar3);
+      if (((uint)pfVar6[3] & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x493,0,"%s");
+      }
+      if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
+          (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
+         (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x494,0,"%s");
+      }
+      MatrixTransformVector(pfVar6,(float (*) [3])(iVar5 + 100),&local_f8);
+      fVar1 = (*(float *)(iVar5 + 0x3c) * pfVar6[2] +
+              *(float *)(iVar5 + 0x38) * pfVar6[1] + *pfVar6 * *(float *)(iVar5 + 0x34)) - pfVar6[3]
+      ;
+      dVar18 = (double)fVar1;
+      dVar20 = (double)(ABS(local_f8) * *(float *)(iVar5 + 0x88) +
+                       ABS(local_f0) * *(float *)(iVar5 + 0x90) +
+                       ABS(local_f4) * *(float *)(iVar5 + 0x8c));
+      if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x49b,0,"%s");
+      }
+      if (dVar23 < dVar18) {
+        dVar20 = (double)(float)(dVar18 - dVar20);
+        if (dVar23 <= dVar20) goto LAB_82662da8;
+        if ((*(char *)(iVar16 + iVar3 + 7) != '\0') && (dVar21 < dVar20)) {
+          *pfVar11 = *pfVar6;
+          pfVar11[1] = pfVar6[1];
+          pfVar11[2] = pfVar6[2];
+          pfVar11[3] = pfVar6[3];
+          *puVar13 = uVar15 + 6;
+          dVar21 = dVar20;
+        }
+      }
+      uVar15 = uVar15 + 1;
+      iVar16 = iVar16 + 8;
+    } while (uVar15 < *puVar4);
+  }
+  *(float *)uVar14 = (float)dVar21;
+  uVar7 = __restfpr_28(1);
+  __restgprlr();
+  return (bool)uVar7;
+}
+
+
+// 82663100  Phys_CollideBoxWithBrushFace  (physics/phys_coll_boxbrush.cpp:1206)
+
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void Phys_CollideBoxWithBrushFace
+               (cbrush_t *param_1,int param_2,float *param_3,Poly *param_4,objInfo *param_5,
+               Results *param_6,float *param_7)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int iVar4;
+  float (*pafVar5) [3];
+  cbrush_t *pcVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  longlong lVar11;
+  uint local_a0 [2];
+  Poly local_98;
+  float local_90;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float local_74;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_54;
+  
+  uVar8 = (ulonglong)param_2;
+  pcVar6 = (cbrush_t *)__savegprlr_23(param_1);
+  if ((ulonglong)pcVar6->numsides + 6 <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x4be,0,
+                    "brushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
+                   );
+  }
+  *param_7 = -*param_3;
+  param_7[1] = -param_3[1];
+  param_7[2] = -param_3[2];
+  GetClosestBoxFace(param_5,param_3,(int *)local_a0,(int *)&local_98);
+  pafVar5 = local_98.pts;
+  local_98.pts = (float (*) [3])(param_5->u).sideExtents[0];
+  local_98.ptCount = (uint)(param_5->u).sideExtents[1];
+  local_90 = (param_5->u).sideExtents[2];
+  lVar10 = (longlong)(int)((ulonglong)local_a0[0] + 1);
+  uVar9 = lVar10 / 3 + (lVar10 >> 0x3f);
+  uVar9 = (uVar9 & 0xffffffff) + ((uVar9 & 0xffffffff) >> 0x1f);
+  lVar11 = ((ulonglong)local_a0[0] + 1) - (uVar9 + (uVar9 & 0x7fffffff) * 2);
+  lVar10 = (longlong)(int)(lVar11 + 1);
+  uVar9 = lVar10 / 3 + (lVar10 >> 0x3f);
+  uVar9 = (uVar9 & 0xffffffff) + ((uVar9 & 0xffffffff) >> 0x1f);
+  lVar10 = (lVar11 + 1) - (uVar9 + (uVar9 & 0x7fffffff) * 2);
+  if (pafVar5 != (float (*) [3])0x0) {
+    (&local_98.pts)[local_a0[0]] = (float (*) [3])-(float)(&local_98.pts)[local_a0[0]];
+  }
+  MatrixTransformVector((float *)&local_98,param_5->R,&local_80);
+  local_80 = param_5->pos[0] + local_80;
+  iVar7 = (int)lVar11;
+  fVar1 = *(float *)((int)(param_5->bounds).midPoint +
+                    (int)((lVar11 + 0x22U & 0xffffffff) << 2) + -0x14);
+  fVar2 = fVar1 * -2.0;
+  fVar1 = fVar1 * 2.0;
+  local_7c = param_5->pos[1] + local_7c;
+  local_78 = param_5->pos[2] + local_78;
+  iVar4 = (int)lVar10;
+  fVar3 = *(float *)((int)(param_5->bounds).midPoint +
+                    (int)((lVar10 + 0x22U & 0xffffffff) << 2) + -0x14) * -2.0;
+  local_74 = param_5->R[iVar7][0] * fVar2 + local_80;
+  local_70 = param_5->R[iVar7][1] * fVar2 + local_7c;
+  local_6c = fVar2 * param_5->R[iVar7][2] + local_78;
+  local_68 = param_5->R[iVar4][0] * fVar3 + local_74;
+  local_64 = param_5->R[iVar4][1] * fVar3 + local_70;
+  local_60 = param_5->R[iVar4][2] * fVar3 + local_6c;
+  local_5c = param_5->R[iVar7][0] * fVar1 + local_68;
+  local_58 = param_5->R[iVar7][1] * fVar1 + local_64;
+  local_54 = fVar1 * param_5->R[iVar7][2] + local_60;
+  iVar7 = Phys_GetSurfaceFlagsFromBrush(pcVar6,(int)uVar8);
+  local_98.pts = (float (*) [3])&local_80;
+  local_98.ptCount = 4;
+  Phys_ProjectFaceOntoFaceAndClip(param_3,param_4,&local_98,iVar7,param_6,param_7);
+  __restgprlr_23();
+  return;
+}
+
+
+// 82663360  Phys_DoesPolyIntersectBox  (physics/phys_coll_boxbrush.cpp:1238)
+
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+bool Phys_DoesPolyIntersectBox(Poly *param_1,objInfo *param_2)
+
+{
+  float *pfVar1;
+  int iVar2;
+  uint uVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  double dVar8;
+  float local_c50;
+  float local_c4c;
+  float local_c48;
+  float local_c44;
+  float afStack_c40 [784];
+  
+  lVar7 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_27(param_1);
+  if (0x100 < *(uint *)(iVar2 + 4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x4dd,0,"%s");
+  }
+  uVar3 = *(uint *)(iVar2 + 4);
+  memcpy();
+  iVar2 = (int)lVar7;
+  lVar6 = lVar7 + 0x88;
+  uVar5 = 0;
+  lVar7 = lVar7 + 0x48;
+  while( true ) {
+    pfVar1 = (float *)lVar7;
+    local_c4c = pfVar1[-1];
+    local_c50 = pfVar1[-2];
+    local_c48 = *pfVar1;
+    dVar8 = (double)(*(float *)(iVar2 + 0x3c) * local_c48 +
+                    *(float *)(iVar2 + 0x34) * local_c50 + *(float *)(iVar2 + 0x38) * local_c4c);
+    local_c44 = (float)((double)*(float *)lVar6 + dVar8);
+    uVar3 = Phys_ClipPolyAgainstPlane((float (*) [3])afStack_c40,uVar3,0x100,&local_c50);
+    if (uVar3 == 0) break;
+    local_c50 = -local_c50;
+    local_c4c = -local_c4c;
+    local_c48 = -local_c48;
+    local_c44 = (float)((double)*(float *)lVar6 - dVar8);
+    uVar3 = Phys_ClipPolyAgainstPlane((float (*) [3])afStack_c40,uVar3,0x100,&local_c50);
+    if (uVar3 == 0) break;
+    uVar5 = uVar5 + 1;
+    lVar6 = lVar6 + 4;
+    lVar7 = lVar7 + 0xc;
+    if (2 < uVar5) {
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
+    }
+  }
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
+}
+
+
+// 826634B8  Phys_CollideBoxWithBrush  (physics/phys_coll_boxbrush.cpp:1270)
+
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void Phys_CollideBoxWithBrush(Bounds *param_1,cbrush_t *param_2,objInfo *param_3,Results *param_4)
+
+{
+  ushort uVar1;
+  Results *pRVar2;
+  Bounds *pBVar3;
+  bool bVar6;
+  uint uVar4;
+  int iVar5;
+  cbrush_t *pcVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  objInfo *poVar10;
+  float *pfVar11;
+  Poly *pPVar12;
+  longlong lVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  Poly *pPVar18;
+  float *pfVar19;
+  int iVar20;
+  uint uVar21;
+  longlong lVar22;
+  uint uVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  double dVar36;
+  double dVar37;
   double dVar38;
-  undefined1 local_1590 [16];
+  double dVar39;
+  float local_1590;
+  float local_158c;
+  float local_1588;
   float local_1580 [8];
   float local_1560;
   float local_155c;
@@ -2513,88 +2727,105 @@ void Phys_CollideBoxWithBrush
   float local_1554;
   uint local_1550;
   float local_154c [3];
-  undefined1 auStack_1540 [16];
-  undefined1 auStack_1530 [96];
-  undefined4 local_14d0;
-  int local_14cc;
-  undefined1 auStack_14c8 [40];
-  undefined1 auStack_14a0 [2000];
-  undefined1 local_cd0 [3280];
+  float afStack_1540 [4];
+  float afStack_1530 [24];
+  Poly local_14d0 [6];
+  Poly aPStack_14a0 [249];
+  float afStack_cd4 [821];
   
-  __savegprlr_17();
-  pfVar3 = (float *)__savefpr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x517,0,0xffffffff82000f98,0xffffffff82082224);
+  uVar15 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar17 = (ulonglong)(int)param_2;
+  __savegprlr_17(param_1);
+  pBVar3 = (Bounds *)__savefpr_22();
+  if ((uVar17 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x517,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x518,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x518,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x519,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x519,0,"%s");
   }
-  if (*(int *)((int)param_4 + 8) <= *(int *)((int)param_4 + 4)) {
-    MyAssertHandler(0xffffffff821925d8,0x51a,0,0xffffffff82000f98,0xffffffff82192624);
+  pRVar2 = (Results *)uVar15;
+  if (pRVar2->maxContacts <= pRVar2->contactCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x51a,0,"%s");
   }
-  cVar5 = Phys_TestBoxAgainstEachBrushPlane
-                    (pfVar3,param_2,param_3,&stack0x00000000 + -0x1540,&stack0x00000000 + -0x1550,
-                     &stack0x00000000 + -0x154c);
-  if (cVar5 != '\0') {
+  pcVar7 = (cbrush_t *)uVar17;
+  poVar10 = (objInfo *)uVar9;
+  bVar6 = Phys_TestBoxAgainstEachBrushPlane
+                    (pBVar3,pcVar7,poVar10,afStack_1540,(int *)&local_1550,local_154c);
+  if (bVar6) {
     Profile_Begin(0x184);
-    puVar6 = (ushort *)param_2;
-    iVar1 = (int)param_3;
-    dVar32 = -(double)*(float *)(iVar1 + 0x88);
-    uVar13 = (ulonglong)*puVar6 + 6;
-    dVar31 = -(double)*(float *)(iVar1 + 0x8c);
-    dVar29 = 0.0;
+    uVar1 = pcVar7->numsides;
+    dVar33 = -(double)(poVar10->u).sideExtents[0];
+    uVar17 = (ulonglong)uVar1 + 6;
+    dVar32 = -(double)(poVar10->u).sideExtents[1];
+    dVar30 = 0.0;
     local_1580[0] = 0.0;
     local_1580[1] = 0.0;
     local_1580[2] = 0.0;
     local_1580[3] = 0.0;
     local_1580[4] = 0.0;
     local_1580[5] = 0.0;
-    dVar30 = -(double)*(float *)(iVar1 + 0x90);
-    dVar38 = dVar29;
-    dVar33 = dVar29;
-    dVar34 = dVar29;
-    dVar35 = dVar29;
-    dVar36 = dVar29;
-    dVar37 = dVar29;
-    if (0x100 < uVar13) {
-      MyAssertHandler(0xffffffff821925d8,0x527,0,0xffffffff8219314c,uVar13,0x100);
+    dVar31 = -(double)(poVar10->u).sideExtents[2];
+    dVar39 = dVar30;
+    dVar34 = dVar30;
+    dVar35 = dVar30;
+    dVar36 = dVar30;
+    dVar37 = dVar30;
+    dVar38 = dVar30;
+    if (0x100 < uVar17) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x527,0,"brushSideCount <= ARRAY_COUNT( brushWindings )\n\t%i, %i");
     }
-    uVar22 = 0;
-    CM_BuildAxialPlanes(pfVar3,&stack0x00000000 + -0x1530);
-    uVar14 = 0;
-    if (uVar13 != 0) {
-      puVar15 = (undefined4 *)(&stack0x00000000 + -0x14d0);
+    uVar23 = 0;
+    CM_BuildAxialPlanes(pBVar3,(float (*) [4])afStack_1530);
+    uVar4 = 0;
+    if ((ulonglong)uVar1 != 0xfffffffffffffffa) {
+      pPVar18 = local_14d0;
+      uVar8 = uVar23;
       do {
-        *puVar15 = local_cd0 + (int)uVar22 * 0xc;
+        pPVar18->pts = (float (*) [3])(afStack_cd4 + uVar8 * 3 + 1);
         Phys_GetWindingForBrushFace2
-                  (pfVar3,param_2,uVar14,puVar15,0x100 - uVar22,&stack0x00000000 + -0x1530);
-        uVar17 = (ulonglong)(uint)puVar15[1];
-        uVar22 = uVar17 + uVar22;
-        if (0x100 < (uVar22 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821925d8,0x531,0,0xffffffff82000f98,0xffffffff82193124);
+                  (pBVar3,pcVar7,uVar4,pPVar18,0x100 - uVar8,(float (*) [4])afStack_1530);
+        uVar21 = pPVar18->ptCount;
+        uVar23 = uVar21 + uVar8;
+        if (0x100 < uVar23) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                          ,0x531,0,"%s");
         }
-        if (uVar17 != 0) {
+        if (uVar21 != 0) {
+          pfVar19 = afStack_cd4 + uVar8 * 3;
           do {
-            MatrixTransformVector
-                      (&stack0x00000000 + -0x1590,param_3 + 100,&stack0x00000000 + -0x1560);
-            dVar25 = (double)(float)(dVar32 - (double)local_1560);
-            dVar24 = (double)(float)(dVar31 - (double)local_155c);
-            dVar23 = (double)(float)(dVar30 - (double)local_1558);
-            uVar17 = uVar17 - 1;
-            dVar28 = (double)(float)((double)local_1560 + dVar32);
-            dVar27 = (double)(float)((double)local_155c + dVar31);
-            dVar26 = (double)(float)((double)local_1558 + dVar30);
+            pfVar11 = pfVar19 + 2;
+            local_1590 = pfVar19[1] - poVar10->pos[0];
+            pfVar19 = pfVar19 + 3;
+            local_158c = *pfVar11 - poVar10->pos[1];
+            local_1588 = *pfVar19 - poVar10->pos[2];
+            MatrixTransformVector(&local_1590,poVar10->RTransposed,&local_1560);
+            dVar26 = (double)(float)(dVar33 - (double)local_1560);
+            dVar25 = (double)(float)(dVar32 - (double)local_155c);
+            dVar24 = (double)(float)(dVar31 - (double)local_1558);
+            uVar21 = uVar21 - 1;
+            dVar29 = (double)(float)((double)local_1560 + dVar33);
+            dVar28 = (double)(float)((double)local_155c + dVar32);
+            dVar27 = (double)(float)((double)local_1558 + dVar31);
+            if ((float)(dVar26 - dVar35) < 0.0) {
+              dVar35 = dVar26;
+            }
             if ((float)(dVar25 - dVar34) < 0.0) {
               dVar34 = dVar25;
             }
-            if ((float)(dVar24 - dVar33) < 0.0) {
-              dVar33 = dVar24;
+            if ((float)(dVar24 - dVar39) < 0.0) {
+              dVar39 = dVar24;
             }
-            if ((float)(dVar23 - dVar38) < 0.0) {
-              dVar38 = dVar23;
+            if ((float)(dVar29 - dVar38) < 0.0) {
+              dVar38 = dVar29;
             }
             if ((float)(dVar28 - dVar37) < 0.0) {
               dVar37 = dVar28;
@@ -2602,140 +2833,149 @@ void Phys_CollideBoxWithBrush
             if ((float)(dVar27 - dVar36) < 0.0) {
               dVar36 = dVar27;
             }
-            if ((float)(dVar26 - dVar35) < 0.0) {
-              dVar35 = dVar26;
-            }
-          } while (uVar17 != 0);
+          } while (uVar21 != 0);
         }
-        uVar14 = uVar14 + 1;
-        puVar15 = puVar15 + 2;
-      } while ((uVar14 & 0xffffffff) < uVar13);
-      local_1580[5] = (float)dVar38;
-      local_1580[4] = (float)dVar33;
-      local_1580[3] = (float)dVar34;
-      local_1580[2] = (float)dVar35;
-      local_1580[1] = (float)dVar36;
-      local_1580[0] = (float)dVar37;
+        uVar4 = uVar4 + 1;
+        pPVar18 = pPVar18 + 1;
+        uVar8 = uVar23;
+      } while (uVar4 < uVar17);
+      local_1580[5] = (float)dVar39;
+      local_1580[4] = (float)dVar34;
+      local_1580[3] = (float)dVar35;
+      local_1580[2] = (float)dVar36;
+      local_1580[1] = (float)dVar37;
+      local_1580[0] = (float)dVar38;
     }
-    Profile_EndInternal(0);
-    if ((uVar22 & 0xffffffff) != 0) {
-      if ((*(char *)(DAT_8427b8e0 + 0xc) != '\0') &&
-         (uVar4 = 0, (ulonglong)*puVar6 != 0xfffffffffffffffa)) {
-        puVar20 = &stack0x00000000 + -0x14d0;
+    Profile_EndInternal((double *)0x0);
+    if (uVar23 != 0) {
+      if (((phys_drawCollisionWorld->current).enabled != false) &&
+         (uVar4 = 0, (ulonglong)pcVar7->numsides != 0xfffffffffffffffa)) {
+        pPVar18 = local_14d0;
         do {
-          Phys_DrawPoly(*(undefined4 *)(iVar1 + 0xa4),puVar20,0xffffffff82181878);
+          Phys_DrawPoly(poVar10->worldIndex,pPVar18,colorCyan);
           uVar4 = uVar4 + 1;
-          puVar20 = puVar20 + 8;
-        } while (uVar4 < *puVar6 + 6);
+          pPVar18 = pPVar18 + 1;
+        } while (uVar4 < pcVar7->numsides + 6);
       }
-      lVar19 = 0;
-      uVar13 = 0;
-      lVar9 = 0;
-      pfVar8 = (float *)(&stack0x00000000 + -0x1580);
+      lVar22 = 0;
+      uVar17 = 0;
+      lVar13 = 0;
+      pfVar19 = local_1580;
       do {
-        uVar14 = 0;
-        lVar11 = uVar13 + (uVar13 & 0x7fffffff) * 2;
-        lVar12 = 0;
-        pfVar10 = pfVar8;
+        uVar15 = 0;
+        lVar14 = uVar17 + (uVar17 & 0x7fffffff) * 2;
+        lVar16 = 0;
+        pfVar11 = pfVar19;
         do {
-          if (dVar29 <= (double)*pfVar10) goto LAB_82663bc4;
-          if ((double)*(float *)((int)local_1580 + (int)((lVar11 + lVar19 & 0xffffffffU) << 2)) <
-              (double)*pfVar10) {
-            lVar11 = lVar12;
-            lVar19 = lVar9;
-            uVar13 = uVar14;
+          if (dVar30 <= (double)*pfVar11) goto LAB_82663bc4;
+          if ((double)*(float *)((int)local_1580 + (int)((lVar14 + lVar22 & 0xffffffffU) << 2)) <
+              (double)*pfVar11) {
+            lVar14 = lVar16;
+            lVar22 = lVar13;
+            uVar17 = uVar15;
           }
-          lVar12 = lVar12 + 3;
-          uVar14 = uVar14 + 1;
-          pfVar10 = pfVar10 + 3;
-        } while ((int)lVar12 < 6);
-        lVar9 = lVar9 + 1;
-        pfVar8 = pfVar8 + 1;
-      } while ((int)lVar9 < 3);
-      dVar38 = (double)*(float *)((int)local_1580 +
-                                 (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 + lVar19 & 0xffffffff) <<
+          lVar16 = lVar16 + 3;
+          uVar15 = uVar15 + 1;
+          pfVar11 = pfVar11 + 3;
+        } while ((int)lVar16 < 6);
+        lVar13 = lVar13 + 1;
+        pfVar19 = pfVar19 + 1;
+      } while ((int)lVar13 < 3);
+      dVar39 = (double)*(float *)((int)local_1580 +
+                                 (int)((uVar17 + (uVar17 & 0x7fffffff) * 2 + lVar22 & 0xffffffff) <<
                                       2));
-      if (dVar29 <= dVar38) {
-        MyAssertHandler(dVar38,0xffffffff821925d8,0x568,0,0xffffffff821930e8,0xffffffff82193108,
-                        dVar38);
+      if (dVar30 <= dVar39) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x568,0,"%s\n\t(boxPlaneSeparation) = %g");
       }
-      if ((((double)local_154c[0] < dVar38) || (local_1550 == 0xffffffff)) ||
-         ((&local_14cc)[local_1550 * 2] == 0)) {
-        uVar4 = GetClosestBrushFace(&stack0x00000000 + -0x1590,pfVar3,param_2,
-                                    &stack0x00000000 + -0x14d0,&stack0x00000000 + -0x1540);
+      if ((((double)local_154c[0] < dVar39) || (local_1550 == 0xffffffff)) ||
+         (local_14d0[local_1550].ptCount == 0)) {
+        iVar20 = (int)lVar22;
+        local_1590 = poVar10->R[iVar20][0];
+        local_158c = poVar10->R[iVar20][1];
+        if ((int)uVar17 == 0) {
+          local_1588 = poVar10->R[iVar20][2];
+        }
+        else {
+          local_1590 = -local_1590;
+          local_158c = -local_158c;
+          local_1588 = -poVar10->R[iVar20][2];
+        }
+        uVar4 = GetClosestBrushFace(&local_1590,pBVar3,pcVar7,local_14d0,afStack_1540);
         if (-1 < (int)uVar4) {
-          if (*puVar6 + 6 <= uVar4) {
-            MyAssertHandler(0xffffffff821925d8,0x574,0,0xffffffff82193060,uVar4);
+          if (pcVar7->numsides + 6 <= uVar4) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                            ,0x574,0,
+                            "brushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
+                           );
           }
-          uVar2 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar4);
+          iVar5 = Phys_GetSurfaceFlagsFromBrush(pcVar7,uVar4);
           Phys_ProjectBoxFaceOntoBrushFaceAndClip
-                    (param_3,lVar19,uVar13,&stack0x00000000 + -0x1540,
-                     &stack0x00000000 + uVar4 * 8 + -0x14d0,uVar2,param_4,&stack0x00000000 + -0x1590
-                    );
+                    (poVar10,iVar20,(int)uVar17,afStack_1540,local_14d0 + uVar4,iVar5,pRVar2,
+                     &local_1590);
         }
       }
       else {
         Phys_CollideBoxWithBrushFace
-                  (param_2,local_1550,&stack0x00000000 + -0x1540,
-                   &stack0x00000000 + local_1550 * 8 + -0x14d0,param_3,param_4,
-                   &stack0x00000000 + -0x1590);
+                  (pcVar7,local_1550,afStack_1540,local_14d0 + local_1550,poVar10,pRVar2,&local_1590
+                  );
         uVar4 = local_1550;
       }
-      if (*(char *)(iVar1 + 0xa0) != '\0') {
-        uVar13 = 0;
-        puVar20 = &stack0x00000000 + -0x1530;
-        puVar21 = &stack0x00000000 + -0x14c8;
-        lVar19 = param_3 + 0x34;
+      if (poVar10->isNarrow != false) {
+        uVar23 = 0;
+        pfVar19 = afStack_1530;
+        pPVar18 = local_14d0 + 1;
+        lVar22 = uVar9 + 0x34;
         do {
-          if ((*(int *)(puVar21 + -4) == 0) || (*pfVar3 - pfVar3[3] <= *(float *)lVar19)) {
-            if (((*(int *)(puVar21 + 4) != 0) &&
-                ((*pfVar3 + pfVar3[3] < *(float *)lVar19 && ((uint)(uVar13 + 1) != uVar4)))) &&
-               (cVar5 = Phys_DoesPolyIntersectBox(puVar21,param_3), cVar5 != '\0')) {
-              uVar14 = uVar13 + 1;
-              puVar18 = puVar21;
-              puVar7 = puVar20 + 0x10;
+          if ((pPVar18[-1].ptCount == 0) ||
+             (pBVar3->midPoint[0] - pBVar3->halfSize[0] <= *(float *)lVar22)) {
+            if (((pPVar18->ptCount != 0) &&
+                ((pBVar3->midPoint[0] + pBVar3->halfSize[0] < *(float *)lVar22 &&
+                 (uVar23 + 1 != uVar4)))) &&
+               (bVar6 = Phys_DoesPolyIntersectBox(pPVar18,poVar10), bVar6)) {
+              uVar8 = uVar23 + 1;
+              pfVar11 = pfVar19 + 4;
+              pPVar12 = pPVar18;
 LAB_82663abc:
-              Phys_CollideBoxWithBrushFace
-                        (param_2,uVar14,puVar7,puVar18,param_3,param_4,&stack0x00000000 + -0x1590);
+              Phys_CollideBoxWithBrushFace(pcVar7,uVar8,pfVar11,pPVar12,poVar10,pRVar2,&local_1590);
             }
           }
-          else if ((uint)uVar13 != uVar4) {
-            puVar18 = puVar21 + -8;
-            cVar5 = Phys_DoesPolyIntersectBox(puVar18,param_3);
-            uVar14 = uVar13;
-            puVar7 = puVar20;
-            if (cVar5 != '\0') goto LAB_82663abc;
+          else if (uVar23 != uVar4) {
+            pPVar12 = pPVar18 + -1;
+            bVar6 = Phys_DoesPolyIntersectBox(pPVar12,poVar10);
+            uVar8 = uVar23;
+            pfVar11 = pfVar19;
+            if (bVar6) goto LAB_82663abc;
           }
-          uVar13 = uVar13 + 2;
-          puVar20 = puVar20 + 0x20;
-          puVar21 = puVar21 + 0x10;
-          lVar19 = lVar19 + 4;
-          pfVar3 = pfVar3 + 1;
-        } while ((uVar13 & 0xffffffff) < 6);
-        if (*puVar6 != 0) {
-          iVar16 = 0;
-          puVar20 = &stack0x00000000 + -0x14a0;
-          lVar19 = 6;
+          uVar23 = uVar23 + 2;
+          pfVar19 = pfVar19 + 8;
+          pPVar18 = pPVar18 + 2;
+          lVar22 = lVar22 + 4;
+          pBVar3 = (Bounds *)(pBVar3->midPoint + 1);
+        } while (uVar23 < 6);
+        if (pcVar7->numsides != 0) {
+          iVar20 = 0;
+          pPVar18 = aPStack_14a0;
+          uVar23 = 6;
           do {
-            if ((((uVar4 != (uint)lVar19) && (*(int *)(puVar20 + 4) != 0)) &&
-                (pfVar3 = *(float **)(*(int *)(puVar6 + 2) + iVar16),
-                pfVar3[3] <
-                *(float *)(iVar1 + 0x3c) * pfVar3[2] +
-                *(float *)(iVar1 + 0x38) * pfVar3[1] + *(float *)(param_3 + 0x34) * *pfVar3)) &&
-               (cVar5 = Phys_DoesPolyIntersectBox(puVar20,param_3), cVar5 != '\0')) {
-              local_1560 = *pfVar3;
-              local_155c = pfVar3[1];
-              local_1558 = pfVar3[2];
-              local_1554 = pfVar3[3];
+            if ((((uVar4 != uVar23) && (pPVar18->ptCount != 0)) &&
+                (pfVar19 = *(float **)((int)&pcVar7->sides->plane + iVar20),
+                pfVar19[3] <
+                poVar10->pos[2] * pfVar19[2] +
+                poVar10->pos[1] * pfVar19[1] + *(float *)(uVar9 + 0x34) * *pfVar19)) &&
+               (bVar6 = Phys_DoesPolyIntersectBox(pPVar18,poVar10), bVar6)) {
+              local_1560 = *pfVar19;
+              local_155c = pfVar19[1];
+              local_1558 = pfVar19[2];
+              local_1554 = pfVar19[3];
               Phys_CollideBoxWithBrushFace
-                        (param_2,lVar19,&stack0x00000000 + -0x1560,puVar20,param_3,param_4,
-                         &stack0x00000000 + -0x1590);
+                        (pcVar7,uVar23,&local_1560,pPVar18,poVar10,pRVar2,&local_1590);
             }
-            puVar20 = puVar20 + 8;
-            uVar13 = lVar19 - 5;
-            iVar16 = iVar16 + 8;
-            lVar19 = lVar19 + 1;
-          } while ((uVar13 & 0xffffffff) < (ulonglong)*puVar6);
+            pPVar18 = pPVar18 + 1;
+            uVar8 = uVar23 - 5;
+            iVar20 = iVar20 + 8;
+            uVar23 = uVar23 + 1;
+          } while (uVar8 < pcVar7->numsides);
         }
       }
     }
@@ -2749,27 +2989,27 @@ LAB_82663bc4:
 
 // 82663BD8  Phys_TestVertsAgainstPlane  (physics/phys_coll_boxbrush.cpp:1462)
 
-double Phys_TestVertsAgainstPlane(int param_1,uint param_2,float *param_3)
+float Phys_TestVertsAgainstPlane(float (*param_1) [3],uint param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  float *pfVar8;
-  float *pfVar9;
-  float *pfVar10;
-  float *pfVar11;
-  float *pfVar12;
-  float *pfVar13;
-  float *pfVar14;
-  float *pfVar15;
+  float (*pafVar5) [3];
+  float (*pafVar6) [3];
+  float (*pafVar7) [3];
+  float (*pafVar8) [3];
+  float (*pafVar9) [3];
+  float (*pafVar10) [3];
+  float (*pafVar11) [3];
+  float (*pafVar12) [3];
+  float (*pafVar13) [3];
+  float (*pafVar14) [3];
+  float (*pafVar15) [3];
   int iVar16;
   uint uVar17;
-  float *pfVar18;
+  float (*pafVar18) [3];
   double dVar19;
   double dVar20;
   double dVar21;
@@ -2781,27 +3021,31 @@ double Phys_TestVertsAgainstPlane(int param_1,uint param_2,float *param_3)
   if (3 < (int)param_2) {
     fVar1 = param_3[1];
     fVar2 = *param_3;
-    pfVar18 = (float *)(param_1 + -0xc);
+    pafVar18 = param_1 + -1;
     fVar3 = param_3[2];
     fVar4 = param_3[3];
     do {
-      pfVar5 = pfVar18 + 4;
+      pafVar8 = pafVar18 + 1;
       uVar17 = uVar17 + 4;
-      pfVar6 = pfVar18 + 7;
-      pfVar7 = pfVar18 + 3;
-      pfVar8 = pfVar18 + 6;
-      pfVar9 = pfVar18 + 10;
-      pfVar10 = pfVar18 + 0xd;
-      pfVar11 = pfVar18 + 5;
-      pfVar12 = pfVar18 + 8;
-      pfVar13 = pfVar18 + 9;
-      pfVar14 = pfVar18 + 0xb;
-      pfVar15 = pfVar18 + 0xe;
-      pfVar18 = pfVar18 + 0xc;
-      dVar22 = (double)((fVar3 * *pfVar11 + fVar2 * *pfVar7 + fVar1 * *pfVar5) - fVar4);
-      dVar21 = (double)((fVar3 * *pfVar12 + fVar2 * *pfVar8 + fVar1 * *pfVar6) - fVar4);
-      dVar20 = (double)((fVar3 * *pfVar14 + fVar2 * *pfVar13 + fVar1 * *pfVar9) - fVar4);
-      dVar19 = (double)((fVar3 * *pfVar15 + fVar2 * *pfVar18 + fVar1 * *pfVar10) - fVar4);
+      pafVar9 = pafVar18 + 2;
+      pafVar5 = pafVar18 + 1;
+      pafVar6 = pafVar18 + 2;
+      pafVar10 = pafVar18 + 3;
+      pafVar11 = pafVar18 + 4;
+      pafVar12 = pafVar18 + 1;
+      pafVar13 = pafVar18 + 2;
+      pafVar7 = pafVar18 + 3;
+      pafVar14 = pafVar18 + 3;
+      pafVar15 = pafVar18 + 4;
+      pafVar18 = pafVar18 + 4;
+      dVar22 = (double)((fVar3 * (*pafVar12)[2] + fVar2 * (*pafVar5)[0] + fVar1 * (*pafVar8)[1]) -
+                       fVar4);
+      dVar21 = (double)((fVar3 * (*pafVar13)[2] + fVar2 * (*pafVar6)[0] + fVar1 * (*pafVar9)[1]) -
+                       fVar4);
+      dVar20 = (double)((fVar3 * (*pafVar14)[2] + fVar2 * (*pafVar7)[0] + fVar1 * (*pafVar10)[1]) -
+                       fVar4);
+      dVar19 = (double)((fVar3 * (*pafVar15)[2] + fVar2 * (*pafVar18)[0] + fVar1 * (*pafVar11)[1]) -
+                       fVar4);
       if ((float)(dVar22 - dVar23) < 0.0) {
         dVar23 = dVar22;
       }
@@ -2818,13 +3062,13 @@ double Phys_TestVertsAgainstPlane(int param_1,uint param_2,float *param_3)
   }
   if (uVar17 < param_2) {
     iVar16 = param_2 - uVar17;
-    pfVar18 = (float *)(uVar17 * 0xc + param_1 + -0xc);
+    pafVar18 = param_1 + (uVar17 - 1);
     do {
-      pfVar5 = pfVar18 + 4;
-      pfVar6 = pfVar18 + 5;
-      pfVar18 = pfVar18 + 3;
-      dVar19 = (double)((param_3[2] * *pfVar6 + *pfVar18 * *param_3 + param_3[1] * *pfVar5) -
-                       param_3[3]);
+      pafVar5 = pafVar18 + 1;
+      pafVar6 = pafVar18 + 1;
+      pafVar18 = pafVar18 + 1;
+      dVar19 = (double)((param_3[2] * (*pafVar6)[2] +
+                        (*pafVar18)[0] * *param_3 + param_3[1] * (*pafVar5)[1]) - param_3[3]);
       if ((float)(dVar19 - dVar23) < 0.0) {
         dVar23 = dVar19;
       }
@@ -2832,30 +3076,34 @@ double Phys_TestVertsAgainstPlane(int param_1,uint param_2,float *param_3)
     } while (iVar16 != 0);
   }
   if (((uint)(float)dVar23 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff821925d8,0x5c3,0,0xffffffff82000f98,0xffffffff82193184);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x5c3,0,"%s");
   }
-  return dVar23;
+  return (float)dVar23;
 }
 
 
 // 82663D70  Phys_TestVertsAgainstPlane_Wrapper  (physics/phys_coll_boxbrush.cpp:1481)
 
-void Phys_TestVertsAgainstPlane_Wrapper(undefined8 param_1,undefined4 *param_2)
+float Phys_TestVertsAgainstPlane_Wrapper(float *param_1,Poly *param_2)
 
 {
-  Phys_TestVertsAgainstPlane(*param_2,param_2[1],param_1);
-  return;
+  float fVar1;
+  
+  fVar1 = Phys_TestVertsAgainstPlane(param_2->pts,param_2->ptCount,param_1);
+  return fVar1;
 }
 
 
 // 82663D88  Phys_TestTriangleAgainstBrushPlane  (physics/phys_coll_boxbrush.cpp:1487)
 
-double Phys_TestTriangleAgainstBrushPlane(float *param_1,float *param_2)
+float Phys_TestTriangleAgainstBrushPlane(float *param_1,float (*param_2) [3])
 
 {
   double dVar1;
   double dVar2;
   double dVar3;
+  float fVar4;
   float local_60;
   float local_5c;
   float local_58;
@@ -2866,17 +3114,18 @@ double Phys_TestTriangleAgainstBrushPlane(float *param_1,float *param_2)
   float local_40;
   float local_3c;
   
-  dVar1 = (double)Phys_TestVertsAgainstPlane(param_2,3,param_1);
+  fVar4 = Phys_TestVertsAgainstPlane(param_2,3,param_1);
+  dVar1 = (double)fVar4;
   dVar2 = 0.0;
   if (dVar1 < 0.0) {
-    local_4c = param_2[4] - param_2[1];
-    local_48 = param_2[5] - param_2[2];
-    local_50 = param_2[3] - *param_2;
+    local_4c = param_2[1][1] - (*param_2)[1];
+    local_48 = param_2[1][2] - (*param_2)[2];
+    local_50 = param_2[1][0] - (*param_2)[0];
     dVar3 = 0.009999999776482582;
     if (0.01 < local_50 * local_50 + local_48 * local_48 + local_4c * local_4c) {
-      local_40 = param_2[7] - param_2[1];
-      local_3c = param_2[8] - param_2[2];
-      local_44 = param_2[6] - *param_2;
+      local_40 = param_2[2][1] - (*param_2)[1];
+      local_3c = param_2[2][2] - (*param_2)[2];
+      local_44 = param_2[2][0] - (*param_2)[0];
       if (((0.01 < local_44 * local_44 + local_3c * local_3c + local_40 * local_40) &&
           (Vec3Cross(&local_44,&local_50,&local_60),
           dVar3 < (double)(local_60 * local_60 + local_5c * local_5c + local_58 * local_58))) &&
@@ -2885,79 +3134,91 @@ double Phys_TestTriangleAgainstBrushPlane(float *param_1,float *param_2)
       }
     }
   }
-  return dVar1;
+  return (float)dVar1;
 }
 
 
 // 82663EE0  Phys_TestVertsAgainstPlanes  (physics/phys_coll_boxbrush.cpp:1516)
 
-void Phys_TestVertsAgainstPlanes
-               (undefined8 param_1,undefined8 param_2,ushort *param_3,longlong param_4,
-               undefined4 *param_5,uint *param_6,ulonglong param_7)
+bool Phys_TestVertsAgainstPlanes
+               (float (*param_1) [3],uint param_2,cbrush_t *param_3,float (*param_4) [4],
+               float *param_5,int *param_6,float *param_7)
 
 {
-  char cVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  int iVar4;
-  uint uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  uchar uVar1;
+  float *pfVar2;
+  float (*pafVar3) [3];
+  undefined1 uVar4;
+  ulonglong uVar5;
+  int iVar6;
+  longlong lVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float fVar12;
   
-  uVar3 = __savegprlr_22();
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x5f4,0,0xffffffff82000f98,0xffffffff8219302c);
+  uVar5 = (ulonglong)(int)param_7;
+  lVar7 = (longlong)(int)param_4;
+  pafVar3 = (float (*) [3])__savegprlr_22(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x5f4,0,"%s");
   }
-  uVar5 = 0;
+  uVar8 = 0;
   *param_6 = 0xffffffff;
-  dVar8 = -3.4028234663852886e+38;
-  if ((ulonglong)*param_3 != 0xfffffffffffffffa) {
-    iVar4 = 0;
-    param_4 = param_4 + 8;
-    dVar7 = 0.0;
+  dVar11 = -3.4028234663852886e+38;
+  if ((ulonglong)param_3->numsides != 0xfffffffffffffffa) {
+    iVar6 = 0;
+    lVar7 = lVar7 + 8;
+    dVar10 = 0.0;
     do {
-      dVar6 = (double)Phys_TestVertsAgainstPlane(uVar3,param_2,param_4 + -8);
-      if (dVar7 <= dVar6) {
-        *(float *)param_7 = (float)dVar7;
-        __restgprlr_22(0);
-        return;
+      pfVar2 = (float *)lVar7;
+      fVar12 = Phys_TestVertsAgainstPlane(pafVar3,param_2,pfVar2 + -2);
+      dVar9 = (double)fVar12;
+      if (dVar10 <= dVar9) {
+        *(float *)uVar5 = (float)dVar10;
+        uVar4 = __restgprlr_22(0);
+        return (bool)uVar4;
       }
-      if (uVar5 < 6) {
-        cVar1 = *(char *)(((uVar5 & 1) + 10) * 3 + (uVar5 >> 1) + (int)param_3);
+      if (uVar8 < 6) {
+        uVar1 = param_3->edgeCount[uVar8 & 1][uVar8 >> 1];
       }
       else {
-        cVar1 = *(char *)(*(int *)(param_3 + 2) + iVar4 + -0x29);
+        uVar1 = *(uchar *)((int)param_3->sides + iVar6 + -0x29);
       }
-      if ((cVar1 != '\0') && (dVar8 < dVar6)) {
-        *param_6 = uVar5;
-        *param_5 = *(undefined4 *)(param_4 + -8);
-        puVar2 = (undefined4 *)param_4;
-        param_5[1] = puVar2[-1];
-        param_5[2] = *puVar2;
-        param_5[3] = puVar2[1];
-        dVar8 = dVar6;
+      if ((uVar1 != '\0') && (dVar11 < dVar9)) {
+        *param_6 = uVar8;
+        *param_5 = pfVar2[-2];
+        param_5[1] = pfVar2[-1];
+        param_5[2] = *pfVar2;
+        param_5[3] = pfVar2[1];
+        dVar11 = dVar9;
       }
-      uVar5 = uVar5 + 1;
-      iVar4 = iVar4 + 8;
-      param_4 = param_4 + 0x10;
-    } while (uVar5 < *param_3 + 6);
+      uVar8 = uVar8 + 1;
+      iVar6 = iVar6 + 8;
+      lVar7 = lVar7 + 0x10;
+    } while (uVar8 < param_3->numsides + 6);
   }
-  *(float *)param_7 = (float)dVar8;
-  __restgprlr_22(1);
-  return;
+  *(float *)uVar5 = (float)dVar11;
+  uVar4 = __restgprlr_22(1);
+  return (bool)uVar4;
 }
 
 
 // 82664040  Phys_TransformPlane  (physics/phys_coll_boxbrush.cpp:1565)
 
-void Phys_TransformPlane(double param_1,undefined8 param_2,undefined8 param_3,float *param_4,
-                        undefined8 param_5,float *param_6)
+void Phys_TransformPlane(float *param_1,float param_2,float *param_3,float (*param_4) [3],
+                        float *param_5)
 
 {
-  MatrixTransformVector(param_2,param_5,param_6);
-  param_6[3] = (float)((double)(param_4[2] * param_6[2] +
-                               param_4[1] * param_6[1] + *param_4 * *param_6) + param_1);
+  float *in_r7;
+  double dVar1;
+  
+  dVar1 = (double)param_2;
+  MatrixTransformVector(param_1,(float (*) [3])param_5,in_r7);
+  in_r7[3] = (float)((double)((*param_4)[2] * in_r7[2] +
+                             (*param_4)[1] * in_r7[1] + (*param_4)[0] * *in_r7) + dVar1);
   return;
 }
 
@@ -2965,36 +3226,42 @@ void Phys_TransformPlane(double param_1,undefined8 param_2,undefined8 param_3,fl
 // 826640B8  Phys_CollideOrientedBrushAgainstFixedBrushFace  (physics/phys_coll_boxbrush.cpp:1572)
 
 void Phys_CollideOrientedBrushAgainstFixedBrushFace
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
-               undefined8 param_5,longlong param_6,undefined8 param_7,undefined8 param_8)
+               (cbrush_t *param_1,int param_2,float *param_3,Poly *param_4,cbrush_t *param_5,
+               Poly *param_6,float (*param_7) [4],Results *param_8)
 
 {
-  ushort *puVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  float *pfVar4;
+  cbrush_t *pcVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_60 [96];
+  float afStack_60 [24];
   
-  puVar3 = (ushort *)__savegprlr_23();
-  if ((ulonglong)*puVar3 + 6 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x62a,0,0xffffffff82193208,param_2);
+  uVar4 = (ulonglong)param_2;
+  pcVar1 = (cbrush_t *)__savegprlr_23(param_1);
+  if ((ulonglong)pcVar1->numsides + 6 <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x62a,0,
+                    "fixedBrushSideIndex doesn\'t index static_cast< int >( fixedBrush->numsides ) + 6\n\t%i not in [0, %i)"
+                   );
   }
-  pfVar4 = (float *)param_3;
-  local_70 = -*pfVar4;
-  local_6c = -pfVar4[1];
-  local_68 = -pfVar4[2];
-  uVar1 = GetClosestOrientedBrushFace(param_3,param_5,param_6,param_7,auStack_60);
-  if (-1 < (int)uVar1) {
-    if ((ulonglong)*(ushort *)param_5 + 6 <= (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821925d8,0x62f,0,0xffffffff82193198,uVar1);
+  local_70 = -*param_3;
+  local_6c = -param_3[1];
+  local_68 = -param_3[2];
+  uVar2 = GetClosestOrientedBrushFace(param_3,param_5,param_6,param_7,afStack_60);
+  if (-1 < (int)uVar2) {
+    if (param_5->numsides + 6 <= uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x62f,0,
+                      "orientedBrushSideIndex doesn\'t index static_cast< int >( orientedBrush->numsides ) + 6\n\t%i not in [0, %i)"
+                     );
     }
-    uVar2 = Phys_GetSurfaceFlagsFromBrush(puVar3,param_2);
+    iVar3 = Phys_GetSurfaceFlagsFromBrush(pcVar1,(int)uVar4);
     Phys_ProjectFaceOntoFaceAndClip
-              (param_3,(param_2 & 0x1fffffff) * 8 + param_4,(uVar1 & 0x1fffffff) * 8 + param_6,uVar2
-               ,param_8,&local_70);
+              (param_3,(Poly *)((int)&param_4->pts + (int)((uVar4 & 0xffffffff) << 3)),
+               param_6 + uVar2,iVar3,param_8,&local_70);
   }
   __restgprlr_23();
   return;
@@ -3003,105 +3270,117 @@ void Phys_CollideOrientedBrushAgainstFixedBrushFace
 
 // 826641C8  Phys_CollideBrushAgainstBrushFace  (physics/phys_coll_boxbrush.cpp:1590)
 
-void Phys_CollideBrushAgainstBrushFace
-               (undefined8 param_1,undefined8 param_2,longlong param_3,ushort *param_4,
-               ulonglong param_5,undefined8 param_6,longlong param_7,undefined8 param_8)
+int Phys_CollideBrushAgainstBrushFace
+              (Bounds *param_1,cbrush_t *param_2,Poly *param_3,cbrush_t *param_4,int param_5,
+              float *param_6,Poly *param_7,Results *param_8)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined1 auStack_60 [96];
+  Bounds *pBVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float afStack_60 [24];
   
-  uVar1 = __savegprlr_24();
-  if ((ulonglong)*param_4 + 6 <= (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821925d8,0x63c,0,0xffffffff821932d0);
+  uVar4 = (ulonglong)param_5;
+  pBVar1 = (Bounds *)__savegprlr_24(param_1);
+  if ((ulonglong)param_4->numsides + 6 <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x63c,0,
+                    "referenceBrushSideIndex doesn\'t index static_cast< int >( referenceBrush->numsides ) + 6\n\t%i not in [0, %i)"
+                   );
   }
-  puVar3 = (undefined4 *)param_6;
-  local_70 = *puVar3;
-  local_6c = puVar3[1];
-  local_68 = puVar3[2];
-  uVar2 = GetClosestBrushFace(&local_70,uVar1,param_2,param_3,auStack_60);
+  local_70 = *param_6;
+  local_6c = param_6[1];
+  local_68 = param_6[2];
+  uVar2 = GetClosestBrushFace(&local_70,pBVar1,param_2,param_3,afStack_60);
   if (-1 < (int)uVar2) {
-    if ((ulonglong)*(ushort *)param_2 + 6 <= (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821925d8,0x641,0,0xffffffff82193270,uVar2);
+    if (param_2->numsides + 6 <= uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                      ,0x641,0,
+                      "fixedBrushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
+                     );
     }
-    uVar1 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar2);
+    iVar3 = Phys_GetSurfaceFlagsFromBrush(param_2,uVar2);
     Phys_ProjectFaceOntoFaceAndClip
-              (param_6,(param_5 & 0x1fffffff) * 8 + param_7,(uVar2 & 0x1fffffff) * 8 + param_3,uVar1
-               ,param_8,&local_70);
+              (param_6,(Poly *)((int)&param_7->pts + (int)((uVar4 & 0xffffffff) << 3)),
+               param_3 + uVar2,iVar3,param_8,&local_70);
   }
-  __restgprlr_24(uVar2);
-  return;
+  iVar3 = __restgprlr_24(uVar2);
+  return iVar3;
 }
 
 
 // 826642C8  Phys_DoesPolyIntersectOrientedBrush  (physics/phys_coll_boxbrush.cpp:1611)
 
-void Phys_DoesPolyIntersectOrientedBrush(undefined8 param_1,longlong param_2,ulonglong param_3)
+bool Phys_DoesPolyIntersectOrientedBrush(Poly *param_1,float (*param_2) [4],uint param_3)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  undefined1 auStack_c30 [3120];
+  int iVar1;
+  uint uVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  float afStack_c30 [780];
   
-  puVar1 = (undefined4 *)__savegprlr_28();
-  if (0x100 < (uint)puVar1[1]) {
-    MyAssertHandler(0xffffffff821925d8,0x650,0,0xffffffff82000f98,0xffffffff821930bc);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar5 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  if (0x100 < *(uint *)(iVar1 + 4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x650,0,"%s");
   }
-  uVar2 = (ulonglong)(uint)puVar1[1];
-  memcpy(auStack_c30,(void *)*puVar1,
-         (size_t)((uVar2 + ((ulonglong)(uint)puVar1[1] & 0x7fffffff) * 2 & 0xffffffff) << 2));
-  uVar3 = 0;
-  if ((param_3 & 0xffffffff) != 0) {
+  uVar2 = *(uint *)(iVar1 + 4);
+  memcpy();
+  uVar6 = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
     do {
-      uVar2 = Phys_ClipPolyAgainstPlane(auStack_c30,uVar2,0x100,param_2);
-      if ((uVar2 & 0xffffffff) == 0) {
-        __restgprlr_28(0);
-        return;
+      uVar2 = Phys_ClipPolyAgainstPlane((float (*) [3])afStack_c30,uVar2,0x100,(float *)lVar5);
+      if (uVar2 == 0) {
+        uVar3 = __restgprlr_28(0);
+        return (bool)uVar3;
       }
-      uVar3 = uVar3 + 1;
-      param_2 = param_2 + 0x10;
-    } while ((uVar3 & 0xffffffff) < (param_3 & 0xffffffff));
+      uVar6 = uVar6 + 1;
+      lVar5 = lVar5 + 0x10;
+    } while ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff));
   }
-  __restgprlr_28(1);
-  return;
+  uVar3 = __restgprlr_28(1);
+  return (bool)uVar3;
 }
 
 
 // 82664458  Phys_CollideOrientedBrushWithBrush  (physics/phys_coll_boxbrush.cpp:1632)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_CollideOrientedBrushWithBrush
-               (undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4,
-               longlong param_5,undefined8 param_6)
+               (Bounds *param_1,cbrush_t *param_2,Bounds *param_3,cbrush_t *param_4,objInfo *param_5
+               ,Results *param_6)
 
 {
   ushort uVar1;
-  int iVar2;
-  ushort *puVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  char cVar6;
-  ushort *puVar7;
-  float *pfVar8;
+  cbrushside_t *pcVar2;
+  cbrush_t *pcVar3;
+  int iVar4;
+  bool bVar5;
+  Bounds *pBVar6;
+  uint uVar7;
   bool bVar9;
-  bool bVar10;
+  uint uVar8;
+  float *pfVar10;
   ulonglong uVar11;
-  int iVar12;
+  longlong lVar12;
   longlong lVar13;
   float *pfVar14;
-  undefined1 *puVar15;
-  float *pfVar16;
-  int iVar17;
-  uint uVar19;
-  uint uVar20;
-  ulonglong uVar18;
+  longlong lVar15;
+  Poly *pPVar16;
+  uint uVar17;
+  float *pfVar18;
+  int iVar19;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -3110,7 +3389,7 @@ void Phys_CollideOrientedBrushWithBrush
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
+  float fVar29;
   float local_39b0;
   float local_39ac;
   float local_39a8;
@@ -3121,10 +3400,7 @@ void Phys_CollideOrientedBrushWithBrush
   float local_3994;
   int local_3990;
   float local_398c [3];
-  float local_3980;
-  float local_397c;
-  float local_3978;
-  float local_3974 [4];
+  float local_3980 [7];
   float local_3964;
   float local_3960;
   float local_395c;
@@ -3142,14 +3418,7 @@ void Phys_CollideOrientedBrushWithBrush
   float local_392c;
   float local_3928;
   float local_3924;
-  undefined4 local_3920;
-  undefined4 local_391c;
-  float local_3918;
-  float local_3914;
-  undefined4 local_3910;
-  undefined4 local_390c;
-  undefined4 local_3908;
-  float local_3904;
+  float local_3920 [8];
   undefined4 local_3900;
   undefined4 local_38fc;
   undefined4 local_38f8;
@@ -3166,95 +3435,104 @@ void Phys_CollideOrientedBrushWithBrush
   undefined4 local_38cc;
   undefined4 local_38c8;
   float local_38c4;
-  undefined1 auStack_38c0 [4];
-  int local_38bc [11];
-  undefined1 auStack_3890 [4];
-  int local_388c [499];
-  undefined1 auStack_30c0 [4];
-  int aiStack_30bc [511];
-  float local_28c0 [26];
-  float local_2858 [998];
-  undefined1 auStack_18c0 [3072];
-  undefined1 auStack_cc0 [3264];
+  Poly PStack_38c0;
+  uint auStack_38b4 [9];
+  Poly aPStack_3890 [250];
+  Poly aPStack_30c0 [256];
+  float local_28c0 [24];
+  float local_2860 [1000];
+  float afStack_18c0 [768];
+  float afStack_cc0 [816];
   
-  __savegprlr_17();
-  uVar4 = __savefpr_24();
-  if (*(int *)((int)param_6 + 8) <= *(int *)((int)param_6 + 4)) {
-    MyAssertHandler(0xffffffff821925d8,0x679,0,0xffffffff82000f98,0xffffffff82192624);
+  lVar12 = (longlong)(int)param_5;
+  uVar11 = (ulonglong)(int)param_4;
+  lVar15 = (longlong)(int)param_3;
+  __savegprlr_17(param_1);
+  pBVar6 = (Bounds *)__savefpr_24();
+  if (param_6->maxContacts <= param_6->contactCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x679,0,"%s");
   }
-  puVar7 = (ushort *)param_2;
-  if (0xff < *puVar7) {
-    MyAssertHandler(0xffffffff821925d8,0x67c,0,0xffffffff821933b8,*puVar7,0x100);
+  if (0xff < param_2->numsides) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x67c,0,
+                    "orientedBrush->numsides doesn\'t index ARRAY_COUNT( transformedPlanes )\n\t%i not in [0, %i)"
+                   );
   }
-  CM_BuildAxialPlanes(uVar4,&local_3980);
-  lVar13 = param_5 + 0x34;
-  uVar19 = 0;
+  CM_BuildAxialPlanes(pBVar6,(float (*) [4])local_3980);
+  lVar13 = lVar12 + 0x34;
+  iVar4 = (int)lVar12;
+  uVar7 = 0;
   do {
-    MatrixTransformVector((int)&local_3980 + uVar19,param_5 + 0x40,(int)local_28c0 + uVar19);
+    MatrixTransformVector
+              ((float *)((int)local_3980 + uVar7),(float (*) [3])(iVar4 + 0x40),
+               (float *)((int)local_28c0 + uVar7));
     pfVar14 = (float *)lVar13;
-    iVar2 = (int)param_5;
-    uVar20 = uVar19 + 0x10;
-    *(float *)((int)local_28c0 + uVar19 + 0xc) =
-         *(float *)(iVar2 + 0x3c) * *(float *)((int)local_28c0 + uVar19 + 8) +
-         *(float *)((int)local_28c0 + uVar19 + 4) * *(float *)(iVar2 + 0x38) +
-         *(float *)((int)local_28c0 + uVar19) * *pfVar14 + *(float *)((int)local_3974 + uVar19);
-    uVar19 = uVar20;
-  } while (uVar20 < 0x60);
-  uVar19 = 0;
-  if (*puVar7 != 0) {
-    iVar12 = 0;
-    pfVar8 = local_2858;
+    uVar8 = uVar7 + 0x10;
+    *(float *)((int)local_28c0 + uVar7 + 0xc) =
+         *(float *)(iVar4 + 0x3c) * *(float *)((int)local_28c0 + uVar7 + 8) +
+         *(float *)((int)local_28c0 + uVar7 + 4) * *(float *)(iVar4 + 0x38) +
+         *(float *)((int)local_28c0 + uVar7) * *pfVar14 + *(float *)((int)local_3980 + uVar7 + 0xc);
+    uVar7 = uVar8;
+  } while (uVar8 < 0x60);
+  uVar7 = 0;
+  if (param_2->numsides != 0) {
+    iVar19 = 0;
+    pfVar18 = local_2860 + 2;
     do {
-      dVar28 = (double)*(float *)(*(int *)(iVar12 + *(int *)(puVar7 + 2)) + 0xc);
-      MatrixTransformVector(*(int *)(iVar12 + *(int *)(puVar7 + 2)),param_5 + 0x40,pfVar8 + -2);
-      uVar1 = *puVar7;
-      uVar19 = uVar19 + 1;
-      iVar12 = iVar12 + 8;
-      pfVar8[1] = (float)((double)(*(float *)(iVar2 + 0x3c) * *pfVar8 +
-                                  pfVar8[-1] * *(float *)(iVar2 + 0x38) + *pfVar14 * pfVar8[-2]) +
-                         dVar28);
-      pfVar8 = pfVar8 + 4;
-    } while (uVar19 < uVar1);
+      pfVar10 = *(float **)((int)&param_2->sides->plane + iVar19);
+      dVar27 = (double)pfVar10[3];
+      MatrixTransformVector(pfVar10,(float (*) [3])(iVar4 + 0x40),pfVar18 + -2);
+      uVar1 = param_2->numsides;
+      uVar7 = uVar7 + 1;
+      iVar19 = iVar19 + 8;
+      pfVar18[1] = (float)((double)(*(float *)(iVar4 + 0x3c) * *pfVar18 +
+                                   pfVar18[-1] * *(float *)(iVar4 + 0x38) + *pfVar14 * pfVar18[-2])
+                          + dVar27);
+      pfVar18 = pfVar18 + 4;
+    } while (uVar7 < uVar1);
   }
-  uVar5 = Phys_BuildWindingsForBrush(uVar4,param_2,local_28c0,auStack_30c0,0x100,auStack_18c0,0x100)
-  ;
-  if ((uVar5 & 0xffffffff) != 0) {
-    if ((*(char *)(DAT_8427b90c + 0xc) != '\0') &&
-       (uVar19 = 0, (ulonglong)*puVar7 != 0xfffffffffffffffa)) {
-      puVar15 = auStack_30c0;
+  uVar7 = Phys_BuildWindingsForBrush
+                    (pBVar6,param_2,(float (*) [4])local_28c0,aPStack_30c0,0x100,
+                     (float (*) [3])afStack_18c0,0x100);
+  if (uVar7 != 0) {
+    if (((phys_drawCollisionObj->current).enabled != false) &&
+       (uVar8 = 0, (ulonglong)param_2->numsides != 0xfffffffffffffffa)) {
+      pPVar16 = aPStack_30c0;
       do {
-        Phys_DrawPoly(*(undefined4 *)(iVar2 + 0xa4),puVar15,0xffffffff82181808);
-        uVar19 = uVar19 + 1;
-        puVar15 = puVar15 + 8;
-      } while (uVar19 < *puVar7 + 6);
+        Phys_DrawPoly(*(PhysWorld *)(iVar4 + 0xa4),pPVar16,colorLtGreen);
+        uVar8 = uVar8 + 1;
+        pPVar16 = pPVar16 + 1;
+      } while (uVar8 < param_2->numsides + 6);
     }
-    if ((param_4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82192560,0xbb,0,0xffffffff82000f98,0xffffffff82082224);
+    if ((uVar11 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
+                      0xbb,0,"%s");
     }
-    pfVar8 = (float *)param_3;
-    local_3914 = pfVar8[3] - *pfVar8;
-    dVar28 = -3.4028234663852886e+38;
-    local_3904 = *pfVar8 + pfVar8[3];
-    dVar29 = 0.0;
-    local_38f4 = pfVar8[4] - pfVar8[1];
-    dVar23 = -1.0;
-    local_38e4 = pfVar8[1] + pfVar8[4];
-    dVar22 = 1.0;
-    local_38d4 = pfVar8[5] - pfVar8[2];
-    local_38c4 = pfVar8[2] + pfVar8[5];
+    pBVar6 = (Bounds *)lVar15;
+    local_3920[3] = pBVar6->halfSize[0] - pBVar6->midPoint[0];
+    dVar27 = -3.4028234663852886e+38;
+    local_3920[7] = pBVar6->midPoint[0] + pBVar6->halfSize[0];
+    dVar28 = 0.0;
+    local_38f4 = pBVar6->halfSize[1] - pBVar6->midPoint[1];
+    dVar21 = -1.0;
+    local_38e4 = pBVar6->midPoint[1] + pBVar6->halfSize[1];
+    dVar20 = 1.0;
+    local_38d4 = pBVar6->halfSize[2] - pBVar6->midPoint[2];
+    local_38c4 = pBVar6->midPoint[2] + pBVar6->halfSize[2];
     local_39b0 = 0.0;
     local_39ac = 0.0;
-    uVar11 = 0xffffffffffffffff;
+    uVar8 = 0xffffffff;
     local_39a8 = 0.0;
-    uVar18 = 0;
+    uVar17 = 0;
     local_39a4 = 0.0;
-    pfVar16 = &local_3918;
-    local_3920 = 0xbf800000;
-    local_391c = 0;
-    local_3918 = 0.0;
-    local_3910 = 0x3f800000;
-    local_390c = 0;
-    local_3908 = 0;
+    pfVar18 = local_3920 + 2;
+    local_3920[0] = -1.0;
+    local_3920[1] = 0.0;
+    local_3920[2] = 0.0;
+    local_3920[4] = 1.0;
+    local_3920[5] = 0.0;
+    local_3920[6] = 0.0;
     local_3900 = 0;
     local_38fc = 0xbf800000;
     local_38f8 = 0;
@@ -3268,172 +3546,178 @@ void Phys_CollideOrientedBrushWithBrush
     local_38cc = 0;
     local_38c8 = 0x3f800000;
     do {
-      dVar21 = (double)Phys_TestVertsAgainstPlane(auStack_18c0,uVar5,pfVar16 + -2);
-      if (dVar29 <= dVar21) goto LAB_82664d0c;
-      if (5 < (uVar18 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82192560,0xa1,0,0xffffffff821925a4,uVar18,6);
-        MyAssertHandler(0xffffffff82192560,0xa8,0,0xffffffff821925a4,uVar18,6);
+      fVar29 = Phys_TestVertsAgainstPlane((float (*) [3])afStack_18c0,uVar7,pfVar18 + -2);
+      dVar26 = (double)fVar29;
+      if (dVar28 <= dVar26) goto LAB_82664d0c;
+      if (5 < uVar17) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h"
+                        ,0xa1,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h"
+                        ,0xa8,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
       }
-      puVar3 = (ushort *)param_4;
-      if ((*(char *)((((uint)uVar18 & 1) + 10) * 3 + (int)((uVar18 & 0xffffffff) >> 1) + (int)puVar3
-                    ) != '\0') && (dVar28 < dVar21)) {
-        local_39b0 = pfVar16[-2];
-        local_39ac = pfVar16[-1];
-        local_39a8 = *pfVar16;
-        local_39a4 = pfVar16[1];
-        uVar11 = uVar18;
-        dVar28 = dVar21;
+      pcVar3 = (cbrush_t *)uVar11;
+      if ((pcVar3->edgeCount[uVar17 & 1][uVar17 >> 1] != '\0') && (dVar27 < dVar26)) {
+        local_39b0 = pfVar18[-2];
+        local_39ac = pfVar18[-1];
+        local_39a8 = *pfVar18;
+        local_39a4 = pfVar18[1];
+        dVar27 = dVar26;
+        uVar8 = uVar17;
       }
-      uVar18 = uVar18 + 1;
-      pfVar16 = pfVar16 + 4;
-    } while ((uVar18 & 0xffffffff) < 6);
-    uVar18 = 0;
-    if (*puVar3 != 0) {
-      iVar12 = 0;
+      uVar17 = uVar17 + 1;
+      pfVar18 = pfVar18 + 4;
+    } while (uVar17 < 6);
+    uVar17 = 0;
+    if (pcVar3->numsides != 0) {
+      iVar19 = 0;
       do {
-        iVar17 = *(int *)(puVar3 + 2);
-        pfVar16 = *(float **)(iVar17 + iVar12);
-        local_39a0 = *pfVar16;
-        dVar27 = (double)local_39a0;
-        local_399c = pfVar16[1];
-        dVar26 = (double)local_399c;
-        local_3998 = pfVar16[2];
-        dVar25 = (double)local_3998;
-        local_3994 = pfVar16[3];
-        dVar24 = (double)local_3994;
-        dVar21 = (double)Phys_TestVertsAgainstPlane(auStack_18c0,uVar5,&local_39a0);
-        if (dVar29 <= dVar21) goto LAB_82664d0c;
-        if ((*(char *)(iVar17 + iVar12 + 7) != '\0') && (dVar28 < dVar21)) {
-          local_39b0 = (float)dVar27;
-          local_39ac = (float)dVar26;
-          uVar11 = uVar18 + 6;
-          local_39a8 = (float)dVar25;
-          local_39a4 = (float)dVar24;
-          dVar28 = dVar21;
+        pcVar2 = pcVar3->sides;
+        pfVar18 = *(float **)((int)&pcVar2->plane + iVar19);
+        local_39a0 = *pfVar18;
+        dVar25 = (double)local_39a0;
+        local_399c = pfVar18[1];
+        dVar24 = (double)local_399c;
+        local_3998 = pfVar18[2];
+        dVar23 = (double)local_3998;
+        local_3994 = pfVar18[3];
+        dVar22 = (double)local_3994;
+        fVar29 = Phys_TestVertsAgainstPlane((float (*) [3])afStack_18c0,uVar7,&local_39a0);
+        dVar26 = (double)fVar29;
+        if (dVar28 <= dVar26) goto LAB_82664d0c;
+        if (((&pcVar2->edgeCount)[iVar19] != '\0') && (dVar27 < dVar26)) {
+          local_39b0 = (float)dVar25;
+          local_39ac = (float)dVar24;
+          uVar8 = uVar17 + 6;
+          local_39a8 = (float)dVar23;
+          local_39a4 = (float)dVar22;
+          dVar27 = dVar26;
         }
-        uVar18 = uVar18 + 1;
-        iVar12 = iVar12 + 8;
-      } while ((uVar18 & 0xffffffff) < (ulonglong)*puVar3);
+        uVar17 = uVar17 + 1;
+        iVar19 = iVar19 + 8;
+      } while (uVar17 < pcVar3->numsides);
     }
-    uVar5 = Phys_BuildWindingsForBrush2(param_3,param_4,auStack_38c0,0x100,auStack_cc0,0x100);
-    if ((uVar5 & 0xffffffff) != 0) {
-      if ((*(char *)(DAT_8427b8e0 + 0xc) != '\0') &&
-         (uVar19 = 0, (ulonglong)*puVar3 != 0xfffffffffffffffa)) {
-        puVar15 = auStack_38c0;
+    uVar7 = Phys_BuildWindingsForBrush2
+                      (pBVar6,pcVar3,&PStack_38c0,0x100,(float (*) [3])afStack_cc0,0x100);
+    if (uVar7 != 0) {
+      if (((phys_drawCollisionWorld->current).enabled != false) &&
+         (uVar17 = 0, (ulonglong)pcVar3->numsides != 0xfffffffffffffffa)) {
+        pPVar16 = &PStack_38c0;
         do {
-          Phys_DrawPoly(*(undefined4 *)(iVar2 + 0xa4),puVar15,0xffffffff82181878);
-          uVar19 = uVar19 + 1;
-          puVar15 = puVar15 + 8;
-        } while (uVar19 < *puVar3 + 6);
+          Phys_DrawPoly(*(PhysWorld *)(iVar4 + 0xa4),pPVar16,colorCyan);
+          uVar17 = uVar17 + 1;
+          pPVar16 = pPVar16 + 1;
+        } while (uVar17 < pcVar3->numsides + 6);
       }
-      cVar6 = Phys_TestVertsAgainstPlanes
-                        (auStack_cc0,uVar5,param_2,local_28c0,&local_39a0,&local_3990,local_398c);
-      if (cVar6 != '\0') {
-        if (((int)uVar11 == -1) ||
-           (bVar9 = true, *(int *)((int)local_38bc + (int)((uVar11 & 0xffffffff) << 3)) == 0)) {
+      bVar9 = Phys_TestVertsAgainstPlanes
+                        ((float (*) [3])afStack_cc0,uVar7,param_2,(float (*) [4])local_28c0,
+                         &local_39a0,&local_3990,local_398c);
+      if (bVar9) {
+        if ((uVar8 == 0xffffffff) || (bVar9 = true, (&PStack_38c0)[uVar8].ptCount == 0)) {
           bVar9 = false;
         }
-        if ((local_3990 == -1) || (bVar10 = true, aiStack_30bc[local_3990 * 2] == 0)) {
-          bVar10 = false;
+        if ((local_3990 == -1) || (bVar5 = true, aPStack_30c0[local_3990].ptCount == 0)) {
+          bVar5 = false;
         }
-        if ((bVar9) || (bVar10)) {
-          dVar21 = (double)local_398c[0];
-          if ((!bVar9) || ((dVar28 <= dVar21 && (bVar10)))) {
-            if (!bVar10) {
-              MyAssertHandler(0xffffffff821925d8,0x6b7,1,0xffffffff82000f98,0xffffffff82193398);
+        if ((bVar9) || (bVar5)) {
+          dVar26 = (double)local_398c[0];
+          if ((!bVar9) || ((dVar27 <= dVar26 && (bVar5)))) {
+            if (!bVar5) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                              ,0x6b7,1,"%s");
             }
-            if ((dVar21 < dVar28) && (bVar9)) {
-              MyAssertHandler(0xffffffff821925d8,0x6b8,1,0xffffffff82000f98,0xffffffff82193340);
+            if ((dVar26 < dVar27) && (bVar9)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                              ,0x6b8,1,"%s");
             }
-            uVar11 = Phys_CollideBrushAgainstBrushFace
-                               (param_3,param_4,auStack_38c0,param_2,local_3990,&local_39a0,
-                                auStack_30c0,param_6);
+            uVar8 = Phys_CollideBrushAgainstBrushFace
+                              (pBVar6,pcVar3,&PStack_38c0,param_2,local_3990,&local_39a0,
+                               aPStack_30c0,param_6);
           }
           else {
             Phys_CollideOrientedBrushAgainstFixedBrushFace
-                      (param_4,uVar11,&local_39b0,auStack_38c0,param_2,auStack_30c0,local_28c0,
-                       param_6);
+                      (pcVar3,uVar8,&local_39b0,&PStack_38c0,param_2,aPStack_30c0,
+                       (float (*) [4])local_28c0,param_6);
           }
-          if (*(char *)(iVar2 + 0xa0) != '\0') {
-            uVar5 = 0;
-            pfVar16 = local_3974 + 1;
-            local_3974[0] = pfVar8[3] - *pfVar8;
-            local_3964 = pfVar8[3] + *pfVar8;
-            local_3954 = pfVar8[4] - pfVar8[1];
-            local_3944 = pfVar8[1] + pfVar8[4];
-            local_3934 = pfVar8[5] - pfVar8[2];
-            local_3980 = (float)dVar23;
-            local_3924 = pfVar8[2] + pfVar8[5];
-            local_397c = (float)dVar29;
-            local_3978 = (float)dVar29;
-            puVar15 = auStack_38c0;
-            local_3974[1] = (float)dVar22;
-            local_3974[2] = (float)dVar29;
-            local_3974[3] = (float)dVar29;
-            local_3960 = (float)dVar29;
-            local_395c = (float)dVar23;
-            local_3958 = (float)dVar29;
-            local_3950 = (float)dVar29;
-            local_394c = (float)dVar22;
-            local_3948 = (float)dVar29;
-            local_3940 = (float)dVar29;
-            local_393c = (float)dVar29;
-            local_3938 = (float)dVar23;
-            local_3930 = (float)dVar29;
-            local_392c = (float)dVar29;
-            local_3928 = (float)dVar22;
+          if (*(char *)(iVar4 + 0xa0) != '\0') {
+            uVar7 = 0;
+            pfVar18 = local_3980 + 4;
+            local_3980[0] = (float)dVar21;
+            local_3980[1] = (float)dVar28;
+            local_3980[2] = (float)dVar28;
+            pPVar16 = &PStack_38c0;
+            local_3980[3] = pBVar6->halfSize[0] - pBVar6->midPoint[0];
+            local_3980[4] = (float)dVar20;
+            local_3980[5] = (float)dVar28;
+            local_3980[6] = (float)dVar28;
+            local_3964 = pBVar6->halfSize[0] + pBVar6->midPoint[0];
+            local_3960 = (float)dVar28;
+            local_395c = (float)dVar21;
+            local_3958 = (float)dVar28;
+            local_3954 = pBVar6->halfSize[1] - pBVar6->midPoint[1];
+            local_3950 = (float)dVar28;
+            local_394c = (float)dVar20;
+            local_3948 = (float)dVar28;
+            local_3944 = pBVar6->midPoint[1] + pBVar6->halfSize[1];
+            local_3940 = (float)dVar28;
+            local_393c = (float)dVar28;
+            local_3938 = (float)dVar21;
+            local_3934 = pBVar6->halfSize[2] - pBVar6->midPoint[2];
+            local_3930 = (float)dVar28;
+            local_392c = (float)dVar28;
+            local_3928 = (float)dVar20;
+            local_3924 = pBVar6->midPoint[2] + pBVar6->halfSize[2];
             do {
-              iVar12 = (int)uVar11;
-              pfVar8 = (float *)param_3;
-              if ((*(int *)(puVar15 + 4) == 0) || (*pfVar8 - pfVar8[3] <= *(float *)lVar13)) {
-                if ((*(int *)(puVar15 + 0xc) != 0) &&
-                   (((*pfVar8 + pfVar8[3] < *(float *)lVar13 &&
-                     (uVar18 = uVar5 + 1, (int)uVar18 != iVar12)) &&
-                    (cVar6 = Phys_DoesPolyIntersectOrientedBrush
-                                       (puVar15 + 8,local_28c0,(ulonglong)*puVar7 + 6),
-                    pfVar8 = pfVar16, cVar6 != '\0')))) goto LAB_82664bf4;
+              pfVar10 = (float *)lVar15;
+              if ((pPVar16->ptCount == 0) || (*pfVar10 - pfVar10[3] <= *(float *)lVar13)) {
+                if ((pPVar16[1].ptCount != 0) &&
+                   (((*pfVar10 + pfVar10[3] < *(float *)lVar13 &&
+                     (uVar17 = uVar7 + 1, uVar17 != uVar8)) &&
+                    (bVar9 = Phys_DoesPolyIntersectOrientedBrush
+                                       (pPVar16 + 1,(float (*) [4])local_28c0,param_2->numsides + 6)
+                    , pfVar10 = pfVar18, bVar9)))) goto LAB_82664bf4;
               }
-              else if (((int)uVar5 != iVar12) &&
-                      (cVar6 = Phys_DoesPolyIntersectOrientedBrush
-                                         (puVar15,local_28c0,(ulonglong)*puVar7 + 6), cVar6 != '\0')
-                      ) {
-                uVar18 = uVar5;
-                pfVar8 = pfVar16 + 0xfffffffc;
+              else if ((uVar7 != uVar8) &&
+                      (bVar9 = Phys_DoesPolyIntersectOrientedBrush
+                                         (pPVar16,(float (*) [4])local_28c0,param_2->numsides + 6),
+                      bVar9)) {
+                uVar17 = uVar7;
+                pfVar10 = pfVar18 + -4;
 LAB_82664bf4:
                 Phys_CollideOrientedBrushAgainstFixedBrushFace
-                          (param_4,uVar18,pfVar8,auStack_38c0,param_2,auStack_30c0,local_28c0,
-                           param_6);
+                          (pcVar3,uVar17,pfVar10,&PStack_38c0,param_2,aPStack_30c0,
+                           (float (*) [4])local_28c0,param_6);
               }
-              uVar5 = uVar5 + 2;
+              uVar7 = uVar7 + 2;
               lVar13 = lVar13 + 4;
-              param_3 = param_3 + 4;
-              puVar15 = puVar15 + 0x10;
-              pfVar16 = pfVar16 + 8;
-            } while ((uVar5 & 0xffffffff) < 6);
-            if (*puVar3 != 0) {
-              iVar17 = 0;
-              lVar13 = 6;
+              lVar15 = lVar15 + 4;
+              pPVar16 = pPVar16 + 2;
+              pfVar18 = pfVar18 + 8;
+            } while (uVar7 < 6);
+            if (pcVar3->numsides != 0) {
+              iVar19 = 0;
+              uVar7 = 6;
               do {
-                if ((((int)lVar13 != iVar12) && (*(int *)((int)local_388c + iVar17) != 0)) &&
-                   ((pfVar8 = *(float **)(*(int *)(puVar3 + 2) + iVar17),
-                    pfVar8[3] <
-                    *(float *)(iVar2 + 0x3c) * pfVar8[2] +
-                    pfVar8[1] * *(float *)(iVar2 + 0x38) + *pfVar14 * *pfVar8 &&
-                    (cVar6 = Phys_DoesPolyIntersectOrientedBrush
-                                       (auStack_3890 + iVar17,local_28c0,(ulonglong)*puVar7 + 6),
-                    cVar6 != '\0')))) {
-                  local_39a0 = *pfVar8;
-                  local_399c = pfVar8[1];
-                  local_3998 = pfVar8[2];
-                  local_3994 = pfVar8[3];
+                if (((uVar7 != uVar8) && (*(int *)((int)&aPStack_3890[0].ptCount + iVar19) != 0)) &&
+                   ((pfVar18 = *(float **)((int)&pcVar3->sides->plane + iVar19),
+                    pfVar18[3] <
+                    *(float *)(iVar4 + 0x3c) * pfVar18[2] +
+                    pfVar18[1] * *(float *)(iVar4 + 0x38) + *pfVar14 * *pfVar18 &&
+                    (bVar9 = Phys_DoesPolyIntersectOrientedBrush
+                                       ((Poly *)((int)&aPStack_3890[0].pts + iVar19),
+                                        (float (*) [4])local_28c0,param_2->numsides + 6), bVar9))))
+                {
+                  local_39a0 = *pfVar18;
+                  local_399c = pfVar18[1];
+                  local_3998 = pfVar18[2];
+                  local_3994 = pfVar18[3];
                   Phys_CollideOrientedBrushAgainstFixedBrushFace
-                            (param_4,lVar13,&local_39a0,auStack_38c0,param_2,auStack_30c0,local_28c0
-                             ,param_6);
+                            (pcVar3,uVar7,&local_39a0,&PStack_38c0,param_2,aPStack_30c0,
+                             (float (*) [4])local_28c0,param_6);
                 }
-                iVar17 = iVar17 + 8;
-                uVar5 = lVar13 - 5;
-                lVar13 = lVar13 + 1;
-              } while ((uVar5 & 0xffffffff) < (ulonglong)*puVar3);
+                iVar19 = iVar19 + 8;
+                uVar17 = uVar7 - 5;
+                uVar7 = uVar7 + 1;
+              } while (uVar17 < pcVar3->numsides);
             }
           }
         }
@@ -3449,17 +3733,29 @@ LAB_82664d0c:
 
 // 82664D20  Phys_CollideOrientedBrushWithBrush_Wrapper  (physics/phys_coll_boxbrush.cpp:1777)
 
-void Phys_CollideOrientedBrushWithBrush_Wrapper(ulonglong param_1,undefined4 *param_2)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void Phys_CollideOrientedBrushWithBrush_Wrapper(uint param_1,void *param_2)
 
 {
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821925d8,0x6f5,0,0xffffffff82000f98,0xffffffff82193414);
+  Results *pRVar1;
+  
+  if (param_2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x6f5,0,"%s");
   }
-  if (*(int *)(param_2[3] + 4) < *(int *)(param_2[3] + 8)) {
+  pRVar1 = *(Results **)((int)param_2 + 0xc);
+  if (pRVar1->contactCount < pRVar1->maxContacts) {
     Phys_CollideOrientedBrushWithBrush
-              ((param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + (ulonglong)DAT_835a28c0,
-               (param_1 + (param_1 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + (ulonglong)DAT_835a28bc,
-               *param_2,param_2[1],param_2[2]);
+              ((Bounds *)
+               ((int)(cm.info.brushBounds)->midPoint +
+               (int)(((longlong)(int)param_1 + ((ulonglong)param_1 & 0x7fffffff) * 2 & 0xffffffff)
+                    << 3)),
+               (cbrush_t *)
+               ((int)&((cbrush_t *)((cm.info.brushes)->axialMaterialNum + -2))->numsides +
+               (int)(((longlong)(int)param_1 + ((ulonglong)param_1 & 0x1fffffff) * 8 & 0xffffffff)
+                    << 2)),*(Bounds **)param_2,*(cbrush_t **)((int)param_2 + 4),
+               *(objInfo **)((int)param_2 + 8),pRVar1);
   }
   return;
 }
@@ -3467,40 +3763,36 @@ void Phys_CollideOrientedBrushWithBrush_Wrapper(ulonglong param_1,undefined4 *pa
 
 // 82664DD8  Phys_CollideOrientedBrushModelWithBrush  (physics/phys_coll_boxbrush.cpp:1794)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideOrientedBrushModelWithBrush
-               (undefined8 param_1,undefined4 param_2,int param_3,int param_4)
+               (Bounds *param_1,cbrush_t *param_2,objInfo *param_3,Results *param_4)
 
 {
-  uint uVar1;
   undefined1 auStack_50 [4];
-  undefined4 local_4c;
-  int local_48;
-  int local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
-  undefined4 local_30;
-  undefined4 local_2c;
+  cbrush_t *local_4c;
+  objInfo *local_48;
+  Results *local_44;
+  Bounds local_40 [2];
   
-  __savegprlr_29();
-  if (*(int *)(param_4 + 8) <= *(int *)(param_4 + 4)) {
-    MyAssertHandler(0xffffffff821925d8,0x706,0,0xffffffff82000f98,0xffffffff82192624);
-  }
-  local_40 = 0;
-  local_3c = 0;
-  local_38 = 0;
-  local_34 = 0x7f7fffff;
-  local_30 = 0x7f7fffff;
-  local_2c = 0x7f7fffff;
-  uVar1 = *(uint *)(*(int *)(param_3 + 0x88) + 0x44);
+  local_44 = param_4;
   local_4c = param_2;
   local_48 = param_3;
-  local_44 = param_4;
+  __savegprlr_29(param_1);
+  if (local_44->maxContacts <= local_44->contactCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x706,0,"%s");
+  }
+  local_40[0].midPoint[0] = 0.0;
+  local_40[0].midPoint[1] = 0.0;
+  local_40[0].midPoint[2] = 0.0;
+  local_40[0].halfSize[0] = 3.4028235e+38;
+  local_40[0].halfSize[1] = 3.4028235e+38;
+  local_40[0].halfSize[2] = 3.4028235e+38;
   CM_ForEachBrushInLeafBrushNode_r
-            (*(undefined4 *)(param_3 + 0xa4),
-             ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 +
-             (ulonglong)DAT_835a28ac,&local_40,0,0,0xffffffff82664d20,auStack_50);
+            (local_48->worldIndex,
+             cm.info.leafbrushNodes + (((local_48->u).brushModel)->leaf).leafBrushNode,local_40,
+             false,0,Phys_CollideOrientedBrushWithBrush_Wrapper,auStack_50);
   __restgprlr_29();
   return;
 }
@@ -3508,126 +3800,193 @@ void Phys_CollideOrientedBrushModelWithBrush
 
 // 82664EA8  Phys_CollideFixedBrushWithTriangle  (physics/phys_coll_boxbrush.cpp:1811)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideFixedBrushWithTriangle
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+               (Bounds *param_1,cbrush_t *param_2,float (*param_3) [3],BrushTrimeshData *param_4)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  int iVar3;
+  Results *pRVar2;
+  cbrushside_t *pcVar3;
   int iVar4;
-  ushort *puVar5;
-  undefined8 uVar6;
-  ulonglong uVar7;
+  cbrush_t *pcVar5;
+  Bounds *pBVar6;
+  uint uVar7;
   uint uVar8;
-  undefined1 *puVar9;
-  int iVar10;
-  uint uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  undefined1 local_1560 [16];
-  undefined1 local_1550 [16];
-  undefined1 local_1540 [16];
-  undefined1 local_1530 [16];
-  undefined1 local_1520 [8];
-  undefined1 local_1518 [88];
-  undefined1 auStack_14c0 [4];
-  int aiStack_14bc [511];
-  undefined1 auStack_cc0 [3264];
+  ulonglong uVar9;
+  ulonglong uVar10;
+  float *pfVar11;
+  int iVar12;
+  uint uVar13;
+  Poly *pPVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  float fVar25;
+  float local_1560;
+  float local_155c;
+  float local_1558;
+  float local_1554;
+  float local_1550;
+  float local_154c;
+  float local_1548;
+  float local_1544;
+  float local_1540;
+  float local_153c;
+  float local_1538;
+  Poly local_1530 [2];
+  float local_1520 [24];
+  Poly aPStack_14c0 [256];
+  float afStack_cc0 [816];
   
-  __savegprlr_18();
-  uVar6 = __savefpr_23();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x723,0,0xffffffff82000f98,0xffffffff8201f49c);
+  uVar10 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_2;
+  __savegprlr_18(param_1);
+  pBVar6 = (Bounds *)__savefpr_23();
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x723,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821925d8,0x724,0,0xffffffff82000f98,0xffffffff82082224);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x724,0,"%s");
   }
-  iVar4 = (int)param_4;
+  iVar4 = (int)uVar10;
   iVar1 = *(int *)(iVar4 + 0xc);
-  uVar2 = *(undefined4 *)(iVar4 + 0x14);
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82192560,0xbb,0,0xffffffff82000f98,0xffffffff82082224);
+  pRVar2 = *(Results **)(iVar4 + 0x14);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
+                    0xbb,0,"%s");
   }
   uVar8 = 0xffffffff;
-  dVar13 = 0.0;
-  dVar14 = -3.4028234663852886e+38;
-  CM_BuildAxialPlanes(uVar6,&stack0x00000000 + -0x1520);
-  uVar11 = 0;
-  puVar9 = &stack0x00000000 + -0x1518;
+  dVar18 = 0.0;
+  dVar24 = -3.4028234663852886e+38;
+  local_1554 = 0.0;
+  local_1560 = 0.0;
+  local_155c = 0.0;
+  local_1558 = 0.0;
+  dVar16 = dVar18;
+  dVar17 = dVar18;
+  dVar19 = dVar18;
+  CM_BuildAxialPlanes(pBVar6,(float (*) [4])local_1520);
+  uVar7 = 0;
+  pfVar11 = local_1520 + 2;
   do {
-    dVar12 = (double)Phys_TestTriangleAgainstBrushPlane(puVar9 + -8,param_3);
-    if (dVar13 <= dVar12) goto LAB_82665308;
-    if (5 < uVar11) {
-      MyAssertHandler(0xffffffff82192560,0xa1,0,0xffffffff821925a4,uVar11,6);
-      MyAssertHandler(0xffffffff82192560,0xa8,0,0xffffffff821925a4,uVar11,6);
+    fVar25 = Phys_TestTriangleAgainstBrushPlane(pfVar11 + -2,param_3);
+    dVar15 = (double)fVar25;
+    if (dVar19 <= dVar15) goto LAB_826652fc;
+    if (5 < uVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
+                      0xa1,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_local.h",
+                      0xa8,0,"axialSide doesn\'t index 6\n\t%i not in [0, %i)");
     }
-    puVar5 = (ushort *)param_2;
-    if ((*(char *)(((uVar11 & 1) + 10) * 3 + (uVar11 >> 1) + (int)puVar5) != '\0') &&
-       (dVar14 < dVar12)) {
-      dVar14 = dVar12;
-      uVar8 = uVar11;
+    pcVar5 = (cbrush_t *)uVar9;
+    if ((pcVar5->edgeCount[uVar7 & 1][uVar7 >> 1] != '\0') && (dVar24 < dVar15)) {
+      local_1554 = pfVar11[1];
+      dVar17 = (double)pfVar11[-2];
+      dVar16 = (double)pfVar11[-1];
+      dVar18 = (double)*pfVar11;
+      dVar24 = dVar15;
+      uVar8 = uVar7;
     }
-    uVar11 = uVar11 + 1;
-    puVar9 = puVar9 + 0x10;
-  } while (uVar11 < 6);
-  uVar11 = 0;
-  if (*puVar5 != 0) {
-    iVar10 = 0;
+    uVar7 = uVar7 + 1;
+    pfVar11 = pfVar11 + 4;
+  } while (uVar7 < 6);
+  local_1558 = (float)dVar18;
+  local_155c = (float)dVar16;
+  uVar7 = 0;
+  local_1560 = (float)dVar17;
+  if (pcVar5->numsides != 0) {
+    iVar12 = 0;
     do {
-      iVar3 = *(int *)(puVar5 + 2);
-      dVar12 = (double)Phys_TestTriangleAgainstBrushPlane(&stack0x00000000 + -0x1550,param_3);
-      if (dVar13 <= dVar12) goto LAB_82665308;
-      if ((*(char *)(iVar10 + iVar3 + 7) != '\0') && (dVar14 < dVar12)) {
-        uVar8 = uVar11 + 6;
-        dVar14 = dVar12;
+      pcVar3 = pcVar5->sides;
+      pfVar11 = *(float **)((int)&pcVar3->plane + iVar12);
+      local_1550 = *pfVar11;
+      dVar23 = (double)local_1550;
+      local_154c = pfVar11[1];
+      dVar22 = (double)local_154c;
+      local_1548 = pfVar11[2];
+      dVar21 = (double)local_1548;
+      local_1544 = pfVar11[3];
+      dVar20 = (double)local_1544;
+      fVar25 = Phys_TestTriangleAgainstBrushPlane(&local_1550,param_3);
+      dVar15 = (double)fVar25;
+      if (dVar19 <= dVar15) goto LAB_826652fc;
+      if (((&pcVar3->edgeCount)[iVar12] != '\0') && (dVar24 < dVar15)) {
+        local_1554 = (float)dVar20;
+        uVar8 = uVar7 + 6;
+        dVar18 = dVar21;
+        dVar16 = dVar22;
+        dVar17 = dVar23;
+        dVar24 = dVar15;
       }
-      uVar11 = uVar11 + 1;
-      iVar10 = iVar10 + 8;
-    } while (uVar11 < *puVar5);
+      uVar7 = uVar7 + 1;
+      iVar12 = iVar12 + 8;
+    } while (uVar7 < pcVar5->numsides);
+    local_1558 = (float)dVar18;
+    local_155c = (float)dVar16;
+    local_1560 = (float)dVar17;
   }
   uVar7 = Phys_BuildWindingsForBrush2
-                    (uVar6,param_2,&stack0x00000000 + -0x14c0,0x100,&stack0x00000000 + -0xcc0,0x100)
-  ;
-  if ((uVar7 & 0xffffffff) != 0) {
-    if ((*(char *)(DAT_8427b90c + 0xc) != '\0') &&
-       (uVar11 = 0, (ulonglong)*puVar5 != 0xfffffffffffffffa)) {
-      puVar9 = &stack0x00000000 + -0x14c0;
+                    (pBVar6,pcVar5,aPStack_14c0,0x100,(float (*) [3])afStack_cc0,0x100);
+  if (uVar7 != 0) {
+    if (((phys_drawCollisionObj->current).enabled != false) &&
+       (uVar13 = 0, (ulonglong)pcVar5->numsides != 0xfffffffffffffffa)) {
+      pPVar14 = aPStack_14c0;
       do {
         Phys_DrawPolyTransformed
-                  (*(undefined4 *)(iVar1 + 0xa4),puVar9,0xffffffff82181808,iVar1 + 0x34,iVar1 + 0x40
-                  );
-        uVar11 = uVar11 + 1;
-        puVar9 = puVar9 + 8;
-      } while (uVar11 < *puVar5 + 6);
+                  (*(PhysWorld *)(iVar1 + 0xa4),pPVar14,colorLtGreen,(float *)(iVar1 + 0x34),
+                   (float (*) [3])(iVar1 + 0x40));
+        uVar13 = uVar13 + 1;
+        pPVar14 = pPVar14 + 1;
+      } while (uVar13 < pcVar5->numsides + 6);
     }
-    Phys_GetPlaneForTriangle(param_3,&stack0x00000000 + -0x1550);
-    dVar12 = (double)Phys_TestVertsAgainstPlane
-                               (&stack0x00000000 + -0xcc0,uVar7,&stack0x00000000 + -0x1550);
-    if (dVar12 < dVar13) {
-      if (((dVar12 < dVar14) && (uVar8 != 0xffffffff)) && (aiStack_14bc[uVar8 * 2] != 0)) {
-        if (*puVar5 + 6 <= uVar8) {
-          MyAssertHandler(0xffffffff821925d8,0x747,0,0xffffffff82193060,uVar8);
+    Phys_GetPlaneForTriangle(param_3,&local_1550);
+    fVar25 = Phys_TestVertsAgainstPlane((float (*) [3])afStack_cc0,uVar7,&local_1550);
+    if ((double)fVar25 < dVar19) {
+      local_1530[0].ptCount = 3;
+      local_1530[0].pts = param_3;
+      if ((((double)fVar25 < dVar24) && (uVar8 != 0xffffffff)) && (aPStack_14c0[uVar8].ptCount != 0)
+         ) {
+        if (pcVar5->numsides + 6 <= uVar8) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                          ,0x747,0,
+                          "brushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
+                         );
         }
+        local_1540 = (float)dVar17;
+        local_153c = (float)dVar16;
+        local_1538 = (float)dVar18;
         Phys_ProjectFaceOntoFaceAndClip
-                  (&stack0x00000000 + -0x1560,&stack0x00000000 + uVar8 * 8 + -0x14c0,
-                   &stack0x00000000 + -0x1530,*(undefined4 *)(iVar4 + 0x10),uVar2,
-                   &stack0x00000000 + -0x1540);
+                  (&local_1560,aPStack_14c0 + uVar8,local_1530,*(int *)(iVar4 + 0x10),pRVar2,
+                   &local_1540);
         __restfpr_23();
         __restgprlr_18();
         return;
       }
-      uVar8 = GetClosestBrushFace(&stack0x00000000 + -0x1550,uVar6,param_2,
-                                  &stack0x00000000 + -0x14c0,&stack0x00000000 + -0x1560);
+      local_1540 = -local_1550;
+      local_153c = -local_154c;
+      local_1538 = -local_1548;
+      uVar8 = GetClosestBrushFace(&local_1550,pBVar6,pcVar5,aPStack_14c0,&local_1560);
       if (-1 < (int)uVar8) {
-        if (*puVar5 + 6 <= uVar8) {
-          MyAssertHandler(0xffffffff821925d8,0x751,0,0xffffffff82193060,uVar8);
+        if (pcVar5->numsides + 6 <= uVar8) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                          ,0x751,0,
+                          "brushSideIndex doesn\'t index static_cast< int >( brush->numsides ) + 6\n\t%i not in [0, %i)"
+                         );
         }
         Phys_ProjectFaceOntoFaceAndClip
-                  (&stack0x00000000 + -0x1550,&stack0x00000000 + -0x1530,
-                   &stack0x00000000 + uVar8 * 8 + -0x14c0,*(undefined4 *)(iVar4 + 0x10),uVar2,
-                   &stack0x00000000 + -0x1540);
+                  (&local_1550,local_1530,aPStack_14c0 + uVar8,*(int *)(iVar4 + 0x10),pRVar2,
+                   &local_1540);
         __restfpr_23();
         __restgprlr_18();
         return;
@@ -3638,79 +3997,84 @@ LAB_82665308:
   __restfpr_23();
   __restgprlr_18();
   return;
+LAB_826652fc:
+  local_1560 = (float)dVar17;
+  local_155c = (float)dVar16;
+  local_1558 = (float)dVar18;
+  goto LAB_82665308;
 }
 
 
 // 82665318  Phys_CollideOrientedBrushWithTriangle  (physics/phys_coll_boxbrush.cpp:1880)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideOrientedBrushWithTriangle
-               (undefined8 param_1,undefined8 param_2,float *param_3,float *param_4,float *param_5,
-               undefined8 param_6)
+               (Bounds *param_1,cbrush_t *param_2,float *param_3,float *param_4,float *param_5,
+               BrushTrimeshData *param_6)
 
 {
-  int iVar1;
-  int *piVar2;
-  uint uVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  int iVar6;
-  float *pfVar7;
+  float fVar1;
+  objInfo *poVar2;
+  Results *pRVar3;
+  uint uVar4;
+  Bounds *pBVar5;
+  float (*pafVar6) [3];
+  longlong lVar7;
+  dContactGeom *pdVar8;
   float local_98;
   float local_94;
   float local_90;
-  undefined1 auStack_80 [12];
-  undefined1 auStack_74 [12];
-  undefined1 auStack_68 [104];
+  float afStack_80 [3];
+  float afStack_74 [3];
+  float afStack_68 [26];
   
-  uVar4 = __savegprlr_23();
-  iVar1 = *(int *)((int)param_6 + 0xc);
-  iVar6 = iVar1 + 100;
-  piVar2 = *(int **)((int)param_6 + 0x14);
-  local_98 = *param_3 - *(float *)(iVar1 + 0x34);
-  local_94 = param_3[1] - *(float *)(iVar1 + 0x38);
-  local_90 = param_3[2] - *(float *)(iVar1 + 0x3c);
-  MatrixTransformVector(&local_98,iVar6,auStack_80);
-  local_98 = *param_4 - *(float *)(iVar1 + 0x34);
-  local_94 = param_4[1] - *(float *)(iVar1 + 0x38);
-  local_90 = param_4[2] - *(float *)(iVar1 + 0x3c);
-  MatrixTransformVector(&local_98,iVar6,auStack_74);
-  local_98 = *param_5 - *(float *)(iVar1 + 0x34);
-  local_94 = param_5[1] - *(float *)(iVar1 + 0x38);
-  local_90 = param_5[2] - *(float *)(iVar1 + 0x3c);
-  MatrixTransformVector(&local_98,iVar6,auStack_68);
-  uVar3 = piVar2[1];
-  Phys_CollideFixedBrushWithTriangle(uVar4,param_2,auStack_80,param_6);
-  pfVar7 = (float *)(uVar3 * 0x20 + *piVar2);
-  lVar5 = (ulonglong)(uint)piVar2[1] - (ulonglong)uVar3;
-  if (lVar5 != 0) {
+  pBVar5 = (Bounds *)__savegprlr_23(param_1);
+  poVar2 = param_6->input;
+  pafVar6 = poVar2->RTransposed;
+  pRVar3 = param_6->results;
+  local_98 = *param_3 - poVar2->pos[0];
+  local_94 = param_3[1] - poVar2->pos[1];
+  local_90 = param_3[2] - poVar2->pos[2];
+  MatrixTransformVector(&local_98,pafVar6,afStack_80);
+  local_98 = *param_4 - poVar2->pos[0];
+  local_94 = param_4[1] - poVar2->pos[1];
+  local_90 = param_4[2] - poVar2->pos[2];
+  MatrixTransformVector(&local_98,pafVar6,afStack_74);
+  local_98 = *param_5 - poVar2->pos[0];
+  local_94 = param_5[1] - poVar2->pos[1];
+  local_90 = param_5[2] - poVar2->pos[2];
+  MatrixTransformVector(&local_98,pafVar6,afStack_68);
+  uVar4 = pRVar3->contactCount;
+  Phys_CollideFixedBrushWithTriangle(pBVar5,param_2,&afStack_80,param_6);
+  pdVar8 = pRVar3->contacts + uVar4;
+  lVar7 = (ulonglong)(uint)pRVar3->contactCount - (ulonglong)uVar4;
+  if (lVar7 != 0) {
     do {
-      MatrixTransformVector(pfVar7 + 3,iVar1 + 0x40,&local_98);
-      pfVar7[3] = local_98;
-      pfVar7[4] = local_94;
-      pfVar7[5] = local_90;
-      MatrixTransformVector(pfVar7,iVar1 + 0x40,&local_98);
-      *pfVar7 = *(float *)(iVar1 + 0x34) + local_98;
-      pfVar7[1] = *(float *)(iVar1 + 0x38) + local_94;
-      pfVar7[2] = *(float *)(iVar1 + 0x3c) + local_90;
-      if (((uint)pfVar7[3] & 0x7f800000) == 0x7f800000) {
-LAB_82665518:
-        MyAssertHandler(0xffffffff821925d8,0x77d,0,0xffffffff82000f98,0xffffffff82193420);
+      MatrixTransformVector(pdVar8->normal,poVar2->R,&local_98);
+      pdVar8->normal[0] = local_98;
+      pdVar8->normal[1] = local_94;
+      pdVar8->normal[2] = local_90;
+      MatrixTransformVector(pdVar8->pos,poVar2->R,&local_98);
+      fVar1 = pdVar8->normal[0];
+      pdVar8->pos[0] = poVar2->pos[0] + local_98;
+      pdVar8->pos[1] = poVar2->pos[1] + local_94;
+      pdVar8->pos[2] = poVar2->pos[2] + local_90;
+      if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) ||
+          (((uint)pdVar8->normal[1] & 0x7f800000) == 0x7f800000)) ||
+         (((uint)pdVar8->normal[2] & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x77d,0,"%s");
       }
-      else {
-        if (((uint)pfVar7[4] & 0x7f800000) == 0x7f800000) goto LAB_82665518;
-        if (((uint)pfVar7[5] & 0x7f800000) == 0x7f800000) goto LAB_82665518;
+      if (((((uint)pdVar8->pos[0] & 0x7f800000) == 0x7f800000) ||
+          (((uint)pdVar8->pos[1] & 0x7f800000) == 0x7f800000)) ||
+         (((uint)pdVar8->pos[2] & 0x7f800000) == 0x7f800000)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                        ,0x77e,0,"%s");
       }
-      if (((uint)*pfVar7 & 0x7f800000) == 0x7f800000) {
-LAB_82665578:
-        MyAssertHandler(0xffffffff821925d8,0x77e,0,0xffffffff82000f98,0xffffffff82193480);
-      }
-      else {
-        if (((uint)pfVar7[1] & 0x7f800000) == 0x7f800000) goto LAB_82665578;
-        if (((uint)pfVar7[2] & 0x7f800000) == 0x7f800000) goto LAB_82665578;
-      }
-      lVar5 = lVar5 + -1;
-      pfVar7 = pfVar7 + 8;
-    } while (lVar5 != 0);
+      lVar7 = lVar7 + -1;
+      pdVar8 = pdVar8 + 1;
+    } while (lVar7 != 0);
   }
   __restgprlr_23();
   return;
@@ -3719,68 +4083,66 @@ LAB_82665578:
 
 // 826655A8  Phys_CollideOrientedBrushWithTriangleList  (physics/phys_coll_boxbrush.cpp:1926)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideOrientedBrushWithTriangleList
-               (undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4,int param_5,
-               int param_6,undefined4 param_7,int param_8)
+               (Bounds *param_1,cbrush_t *param_2,ushort *param_3,float (*param_4) [3],int param_5,
+               objInfo *param_6,int param_7,Results *param_8)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  float *pfVar7;
+  ushort uVar1;
+  ushort uVar2;
+  Bounds *pBVar3;
+  float (*pafVar4) [3];
+  int iVar5;
+  int iVar6;
   ushort *puVar8;
+  longlong lVar7;
   double dVar9;
   double dVar10;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  undefined4 local_a8;
+  float local_b0;
+  float local_ac;
+  float local_a8;
   float local_a0;
   float local_9c;
   float local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
-  int local_88;
-  int local_84;
-  undefined4 local_80;
-  int local_7c;
+  BrushTrimeshData local_90 [6];
   
-  uVar1 = __savegprlr_21();
-  local_b0 = *(undefined4 *)(param_6 + 0x34);
-  local_ac = *(undefined4 *)(param_6 + 0x38);
-  local_a8 = *(undefined4 *)(param_6 + 0x3c);
-  dVar9 = (double)*(float *)(param_6 + 0x2c);
-  iVar3 = 0;
-  local_90 = (undefined4)param_3;
-  local_8c = (undefined4)param_4;
-  local_88 = param_5;
-  local_84 = param_6;
-  local_80 = param_7;
-  local_7c = param_8;
+  lVar7 = (longlong)(int)param_3;
+  local_90[0].surfaceFlags = param_7;
+  pBVar3 = (Bounds *)__savegprlr_21(param_1);
+  local_b0 = param_6->pos[0];
+  local_ac = param_6->pos[1];
+  local_a8 = param_6->pos[2];
+  dVar9 = (double)param_6->radius;
+  iVar6 = 0;
+  local_90[0].indices = (ushort *)lVar7;
+  local_90[0].verts = param_4;
+  local_90[0].triCount = param_5;
+  local_90[0].input = param_6;
+  local_90[0].results = param_8;
   if (0 < param_5) {
     dVar10 = 0.0;
     do {
-      if (*(int *)(param_8 + 8) <= *(int *)(param_8 + 4)) break;
-      puVar8 = (ushort *)param_3;
-      lVar6 = (ulonglong)*puVar8 * 0xc + param_4;
-      lVar5 = (ulonglong)puVar8[1] * 0xc + param_4;
-      lVar4 = (ulonglong)puVar8[2] * 0xc + param_4;
-      param_3 = param_3 + 6;
-      iVar2 = Phys_GetPlaneForTriangleNotCulledBySphere
-                        (dVar9,lVar6,lVar5,lVar4,&local_b0,(ulonglong)*puVar8,&local_a0);
-      if (iVar2 != 0) {
-        pfVar7 = (float *)lVar6;
-        if (dVar10 < (double)((*(float *)(param_6 + 0x9c) * local_98 +
-                              *(float *)(param_6 + 0x98) * local_9c +
-                              *(float *)(param_6 + 0x94) * local_a0) -
-                             (pfVar7[2] * local_98 + pfVar7[1] * local_9c + local_a0 * *pfVar7))) {
-          Phys_CollideOrientedBrushWithTriangle(uVar1,param_2,lVar6,lVar5,lVar4,&local_90);
-        }
+      if (param_8->maxContacts <= param_8->contactCount) break;
+      puVar8 = (ushort *)lVar7;
+      uVar1 = puVar8[1];
+      uVar2 = puVar8[2];
+      pafVar4 = param_4 + *puVar8;
+      lVar7 = lVar7 + 6;
+      iVar5 = Phys_GetPlaneForTriangleNotCulledBySphere
+                        (*pafVar4,param_4[uVar1],param_4[uVar2],&local_b0,(float)dVar9,
+                         (float *)(uint)*puVar8);
+      if ((iVar5 != 0) &&
+         (dVar10 < (double)((param_6->bodyCenter[2] * local_98 +
+                            param_6->bodyCenter[1] * local_9c + param_6->bodyCenter[0] * local_a0) -
+                           ((*pafVar4)[2] * local_98 +
+                           (*pafVar4)[1] * local_9c + local_a0 * (*pafVar4)[0])))) {
+        Phys_CollideOrientedBrushWithTriangle
+                  (pBVar3,param_2,*pafVar4,param_4[uVar1],param_4[uVar2],local_90);
       }
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < param_5);
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < param_5);
   }
   __restgprlr_21();
   return;
@@ -3789,49 +4151,54 @@ void Phys_CollideOrientedBrushWithTriangleList
 
 // 82665720  Phys_CollideOrientedBrushWithTriangleList_Wrapper  (physics/phys_coll_boxbrush.cpp:1969)
 
-void Phys_CollideOrientedBrushWithTriangleList_Wrapper(ulonglong param_1,undefined4 *param_2)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void Phys_CollideOrientedBrushWithTriangleList_Wrapper(uint param_1,void *param_2)
 
 {
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821925d8,0x7b4,0,0xffffffff82000f98,0xffffffff82193414);
+  if (param_2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_boxbrush.cpp"
+                    ,0x7b4,0,"%s");
   }
   Phys_CollideOrientedBrushWithTriangleList
-            ((param_1 + (param_1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + (ulonglong)DAT_835a28c0,
-             (param_1 + (param_1 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + (ulonglong)DAT_835a28bc,
-             *param_2,param_2[1],param_2[2],param_2[3],param_2[4],param_2[5]);
+            ((Bounds *)
+             ((int)(cm.info.brushBounds)->midPoint +
+             (int)(((longlong)(int)param_1 + ((ulonglong)param_1 & 0x7fffffff) * 2 & 0xffffffff) <<
+                  3)),(cbrush_t *)
+                      ((int)&((cbrush_t *)((cm.info.brushes)->axialMaterialNum + -2))->numsides +
+                      (int)(((longlong)(int)param_1 + ((ulonglong)param_1 & 0x1fffffff) * 8 &
+                            0xffffffff) << 2)),*(ushort **)param_2,
+             *(float (**) [3])((int)param_2 + 4),*(int *)((int)param_2 + 8),
+             *(objInfo **)((int)param_2 + 0xc),*(int *)((int)param_2 + 0x10),
+             *(Results **)((int)param_2 + 0x14));
   return;
 }
 
 
 // 826657D0  Phys_CollideOrientedBrushModelWithTriangleList  (physics/phys_coll_boxbrush.cpp:1980)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideOrientedBrushModelWithTriangleList
-               (undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4,
-               undefined4 param_5,int param_6)
+               (ushort *param_1,float (*param_2) [3],int param_3,objInfo *param_4,int param_5,
+               Results *param_6)
 
 {
-  uint uVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  int local_34;
-  undefined4 local_30;
-  int local_2c;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
+  ushort *local_40;
+  float (*local_3c) [3];
+  int local_38;
+  objInfo *local_34;
+  int local_30;
+  Results *local_2c;
+  Bounds local_20;
   
-  if (*(int *)(param_6 + 4) < *(int *)(param_6 + 8)) {
-    local_20 = 0;
-    local_1c = 0;
-    local_18 = 0;
-    local_14 = 0x7f7fffff;
-    local_10 = 0x7f7fffff;
-    local_c = 0x7f7fffff;
-    uVar1 = *(uint *)(*(int *)(param_4 + 0x88) + 0x44);
+  if (param_6->contactCount < param_6->maxContacts) {
+    local_20.midPoint[0] = 0.0;
+    local_20.midPoint[1] = 0.0;
+    local_20.midPoint[2] = 0.0;
+    local_20.halfSize[0] = 3.4028235e+38;
+    local_20.halfSize[1] = 3.4028235e+38;
+    local_20.halfSize[2] = 3.4028235e+38;
     local_40 = param_1;
     local_3c = param_2;
     local_38 = param_3;
@@ -3839,9 +4206,9 @@ void Phys_CollideOrientedBrushModelWithTriangleList
     local_30 = param_5;
     local_2c = param_6;
     CM_ForEachBrushInLeafBrushNode_r
-              (*(undefined4 *)(param_4 + 0xa4),
-               ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 +
-               (ulonglong)DAT_835a28ac,&local_20,0,0,0xffffffff82665720,&local_40);
+              (param_4->worldIndex,
+               cm.info.leafbrushNodes + (((param_4->u).brushModel)->leaf).leafBrushNode,&local_20,
+               false,0,Phys_CollideOrientedBrushWithTriangleList_Wrapper,&local_40);
   }
   return;
 }
@@ -3849,43 +4216,43 @@ void Phys_CollideOrientedBrushModelWithTriangleList
 
 // 82664388  Phys_CollideBoxWithTriangleList  (physics/phys_coll_boxbrush.cpp:2002)
 
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
 void Phys_CollideBoxWithTriangleList
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
-               undefined4 param_5,int *param_6)
+               (ushort *param_1,float (*param_2) [3],uint param_3,objInfo *param_4,int param_5,
+               Results *param_6)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
+  ushort *puVar1;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
-  undefined1 auStack_70 [112];
+  dContactGeom *in_stack_ffffff28;
+  int in_stack_ffffff2c;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float afStack_70 [28];
   
-  uVar2 = __savegprlr_26();
-  Phys_AxisToOdeMatrix3(param_4 + 0x40,auStack_70);
-  iVar4 = (int)param_4;
-  local_80 = *(undefined4 *)(iVar4 + 0x34);
-  local_7c = *(undefined4 *)(iVar4 + 0x38);
-  local_78 = *(undefined4 *)(iVar4 + 0x3c);
-  uVar1 = param_6[1];
-  uVar6 = (ulonglong)uVar1;
-  iVar5 = uVar1 * 0x20;
-  iVar3 = dCollideBoxTriangleList
-                    (uVar2,param_2,param_3,auStack_70,&local_80,param_4 + 0x88,param_4 + 0x94,
-                     (uint)param_6[2] - uVar6);
-  iVar4 = param_6[1];
-  param_6[1] = iVar3 + iVar4;
-  if ((int)uVar1 < iVar3 + iVar4) {
+  puVar1 = (ushort *)__savegprlr_26(param_1);
+  Phys_AxisToOdeMatrix3(param_4->R,afStack_70);
+  local_80 = param_4->pos[0];
+  local_7c = param_4->pos[1];
+  local_78 = param_4->pos[2];
+  iVar4 = param_6->contactCount;
+  iVar3 = iVar4 << 5;
+  iVar2 = dCollideBoxTriangleList
+                    (puVar1,param_2,param_3,afStack_70,&local_80,(param_4->u).sideExtents,
+                     param_4->bodyCenter,param_6->maxContacts - iVar4,in_stack_ffffff28,
+                     in_stack_ffffff2c);
+  iVar2 = iVar2 + param_6->contactCount;
+  param_6->contactCount = iVar2;
+  if (iVar4 < iVar2) {
     do {
-      uVar6 = uVar6 + 1;
-      iVar4 = iVar5 + *param_6;
-      iVar5 = iVar5 + 0x20;
-      *(undefined4 *)(iVar4 + 0x1c) = param_5;
-    } while ((int)uVar6 < param_6[1]);
+      iVar4 = iVar4 + 1;
+      *(int *)((int)param_6->contacts->normal + iVar3 + 0x10) = param_5;
+      iVar3 = iVar3 + 0x20;
+    } while (iVar4 < param_6->contactCount);
   }
   __restgprlr_26();
   return;

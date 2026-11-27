@@ -2,334 +2,352 @@
 
 // 824453C8  TRACK_fx_system  (EffectsCore/fx_system_init.cpp:48)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void TRACK_fx_system(void)
 
 {
-  track_static_alloc_internal(0xffffffff83334180,0x40e0,0xffffffff82069164,8);
-  track_static_alloc_internal(0xffffffff83338280,0x4810,0xffffffff82069154,8);
-  track_static_alloc_internal(0xffffffff8333ca94,4,0xffffffff82069144,8);
-  track_static_alloc_internal(0xffffffff8333ca98,4,0xffffffff82069130,8);
-  track_static_alloc_internal(0xffffffff8333ca9c,4,0xffffffff82069118,8);
+  track_static_alloc_internal(fx_marksSystemPool,0x40e0,"fx_marksSystemPool",8);
+  track_static_alloc_internal(&fx_glassVisInfo,0x4810,"fx_glassVisInfo",8);
+  track_static_alloc_internal(&fx_systemPool,4,"fx_systemPool",8);
+  track_static_alloc_internal(&fx_systemBufferPool,4,"fx_systemBufferPool",8);
+  track_static_alloc_internal(&fx_systemCommandPool,4,"fx_systemCommandPool",8);
   return;
 }
 
 
 // 82445890  FXI_InitPool_Generic<FxElem>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxElem>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxElem>(int *param_1,FxPool<FxElem> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxElem> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x20);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x7ff;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 8;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x20 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 824458C0  FXI_InitPool_Generic<FxBolt>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxBolt>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxBolt>(int *param_1,FxPool<FxBolt> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxBolt> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x20);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0xfe;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 8;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x20 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 824458F0  FXI_InitPool_Generic<FxSparkCloud>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxSparkCloud>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxSparkCloud>(int *param_1,FxPool<FxSparkCloud> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxSparkCloud> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x810);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x1f;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 0x204;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x810 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 82445920  FXI_InitPool_Generic<FxSparkFountain>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxSparkFountain>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxSparkFountain>(int *param_1,FxPool<FxSparkFountain> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxSparkFountain> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x40);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x3f;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 0x10;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x40 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 82445950  FXI_InitPool_Generic<FxSparkFountainCluster>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxSparkFountainCluster>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxSparkFountainCluster>
+               (int *param_1,FxPool<FxSparkFountainCluster> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxSparkFountainCluster> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x1c00);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x5f;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 0x700;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x1c00 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 82445980  FXI_InitPool_Generic<FxTrailElem>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxTrailElem>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxTrailElem>(int *param_1,FxPool<FxTrailElem> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxTrailElem> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x20);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x7ff;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 8;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x20 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 824459B0  FXI_InitPool_Generic<FxTrail>  (EffectsCore/fx_system_init.cpp:59)
 
-void FXI_InitPool_Generic<FxTrail>(undefined4 *param_1,int param_2)
+void FXI_InitPool_Generic<FxTrail>(int *param_1,FxPool<FxTrail> *param_2)
 
 {
-  int *piVar1;
+  FxPool<FxTrail> *pFVar1;
   int iVar2;
   longlong lVar3;
   
   iVar2 = 0;
-  piVar1 = (int *)(param_2 + -0x10);
+  pFVar1 = param_2 + -1;
   *param_1 = 0;
   lVar3 = 0x7f;
   do {
     iVar2 = iVar2 + 1;
-    piVar1 = piVar1 + 4;
-    *piVar1 = iVar2;
+    pFVar1 = pFVar1 + 1;
+    (pFVar1->field0_0x0).nextFree = iVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined4 *)(iVar2 * 0x10 + param_2) = 0xffffffff;
+  param_2[iVar2].field0_0x0.nextFree = -1;
   return;
 }
 
 
 // 824459E0  FX_ResetSystem  (EffectsCore/fx_system_init.cpp:73)
 
-void FX_ResetSystem(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_ResetSystem(FxSystem *param_1)
 
 {
-  int iVar1;
-  undefined2 uVar2;
-  int *piVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
+  FxPool<FxElem> *pFVar1;
+  FxPool<FxBolt> *pFVar2;
+  FxPool<FxSparkCloud> *pFVar3;
+  FxPool<FxSparkFountain> *pFVar4;
+  FxPool<FxSparkFountainCluster> *pFVar5;
+  FxPool<FxTrailElem> *pFVar6;
+  FxPool<FxTrail> *pFVar7;
+  FxSystem *pFVar8;
+  ushort uVar9;
+  FxPool<FxSparkFountainCluster> *pFVar10;
+  FxPool<FxTrailElem> *pFVar11;
+  FxPool<FxElem> *pFVar12;
+  FxPool<FxBolt> *pFVar13;
+  FxPool<FxSparkCloud> *pFVar14;
+  FxPool<FxSparkFountain> *pFVar15;
+  FxPool<FxTrail> *pFVar16;
+  int iVar17;
+  int iVar18;
+  int iVar19;
+  longlong lVar20;
   
-  iVar1 = __savegprlr_27();
-  iVar7 = 0;
-  lVar8 = 0;
-  **(undefined4 **)(iVar1 + 0x10) = 0;
+  pFVar8 = (FxSystem *)__savegprlr_27(param_1);
+  iVar17 = 0;
+  iVar19 = 0;
+  pFVar8->effects->def = (FxEffectDef *)0x0;
   do {
-    uVar2 = FX_EffectToHandle(iVar1,lVar8 + (ulonglong)*(uint *)(iVar1 + 0x10));
-    lVar8 = lVar8 + 0x90;
-    *(undefined2 *)(iVar7 + *(int *)(iVar1 + 0x74)) = uVar2;
-    iVar7 = iVar7 + 2;
-  } while ((int)lVar8 < 0x24000);
-  iVar7 = *(int *)(iVar1 + 0x3c);
-  *(undefined4 *)(iVar1 + 0x68) = 0;
-  iVar4 = 0;
-  *(undefined4 *)(iVar1 + 0x6c) = 0;
-  piVar3 = (int *)(iVar7 + -0x20);
-  *(undefined4 *)(iVar1 + 0x70) = 0;
-  *(undefined4 *)(iVar1 + 0x4c) = 0;
-  lVar8 = 0x7ff;
+    uVar9 = FX_EffectToHandle(pFVar8,(FxEffect *)
+                                     ((int)pFVar8->effects->firstElemHandle + iVar19 + -8));
+    iVar19 = iVar19 + 0x90;
+    *(ushort *)(iVar17 + (int)pFVar8->allEffectHandles) = uVar9;
+    iVar17 = iVar17 + 2;
+  } while (iVar19 < 0x24000);
+  pFVar1 = pFVar8->elems;
+  pFVar8->firstActiveEffect = 0;
+  iVar17 = 0;
+  pFVar8->firstNewEffect = 0;
+  pFVar12 = pFVar1 + -1;
+  pFVar8->firstFreeEffect = 0;
+  pFVar8->firstFreeElem = 0;
+  lVar20 = 0x7ff;
   do {
-    iVar4 = iVar4 + 1;
-    piVar3 = piVar3 + 8;
-    *piVar3 = iVar4;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar5 = 0;
-  *(undefined4 *)(iVar4 * 0x20 + iVar7) = 0xffffffff;
-  iVar7 = *(int *)(iVar1 + 0x18);
-  lVar8 = 0xfe;
-  *(undefined4 *)(iVar1 + 0x28) = 0;
-  piVar3 = (int *)(iVar7 + -0x20);
+    iVar17 = iVar17 + 1;
+    pFVar12 = pFVar12 + 1;
+    (pFVar12->field0_0x0).nextFree = iVar17;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  iVar19 = 0;
+  pFVar1[iVar17].field0_0x0.nextFree = -1;
+  pFVar2 = pFVar8->bolts;
+  lVar20 = 0xfe;
+  pFVar8->firstFreeBolt = 0;
+  pFVar13 = pFVar2 + -1;
   do {
-    iVar5 = iVar5 + 1;
-    piVar3 = piVar3 + 8;
-    *piVar3 = iVar5;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar4 = 0;
-  *(undefined4 *)(iVar5 * 0x20 + iVar7) = 0xffffffff;
-  iVar7 = *(int *)(iVar1 + 0x34);
-  lVar8 = 0x1f;
-  *(undefined4 *)(iVar1 + 0x50) = 0;
-  piVar3 = (int *)(iVar7 + -0x810);
+    iVar19 = iVar19 + 1;
+    pFVar13 = pFVar13 + 1;
+    (pFVar13->field0_0x0).nextFree = iVar19;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  iVar17 = 0;
+  pFVar2[iVar19].field0_0x0.nextFree = -1;
+  pFVar3 = pFVar8->sparkClouds;
+  lVar20 = 0x1f;
+  pFVar8->firstFreeSparkCloud = 0;
+  pFVar14 = pFVar3 + -1;
   do {
-    iVar4 = iVar4 + 1;
-    piVar3 = piVar3 + 0x204;
-    *piVar3 = iVar4;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *(undefined4 *)(iVar4 * 0x810 + iVar7) = 0xffffffff;
-  iVar7 = *(int *)(iVar1 + 0x1c);
-  *(undefined4 *)(iVar1 + 0x2c) = 0;
-  iVar4 = 0;
-  lVar8 = 0x3f;
-  piVar3 = (int *)(iVar7 + -0x40);
+    iVar17 = iVar17 + 1;
+    pFVar14 = pFVar14 + 1;
+    (pFVar14->field0_0x0).nextFree = iVar17;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  pFVar3[iVar17].field0_0x0.nextFree = -1;
+  pFVar4 = pFVar8->sparkFountains;
+  pFVar8->firstFreeSparkFountain = 0;
+  iVar17 = 0;
+  lVar20 = 0x3f;
+  pFVar15 = pFVar4 + -1;
   do {
-    iVar4 = iVar4 + 1;
-    piVar3 = piVar3 + 0x10;
-    *piVar3 = iVar4;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar5 = 0;
-  *(undefined4 *)(iVar4 * 0x40 + iVar7) = 0xffffffff;
-  lVar8 = 0x5f;
-  *(undefined4 *)(iVar1 + 0x30) = 0;
-  iVar7 = *(int *)(iVar1 + 0x20);
-  piVar3 = (int *)(iVar7 + -0x1c00);
+    iVar17 = iVar17 + 1;
+    pFVar15 = pFVar15 + 1;
+    (pFVar15->field0_0x0).nextFree = iVar17;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  iVar19 = 0;
+  pFVar4[iVar17].field0_0x0.nextFree = -1;
+  lVar20 = 0x5f;
+  pFVar8->firstFreeSparkFountainCluster = 0;
+  pFVar5 = pFVar8->sparkFountainClusters;
+  pFVar10 = pFVar5 + -1;
   do {
-    iVar5 = iVar5 + 1;
-    piVar3 = piVar3 + 0x700;
-    *piVar3 = iVar5;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *(undefined4 *)(iVar5 * 0x1c00 + iVar7) = 0xffffffff;
-  iVar7 = *(int *)(iVar1 + 0x38);
-  *(undefined4 *)(iVar1 + 0x54) = 0;
-  iVar4 = 0;
-  lVar8 = 0x7ff;
-  piVar3 = (int *)(iVar7 + -0x20);
+    iVar19 = iVar19 + 1;
+    pFVar10 = pFVar10 + 1;
+    (pFVar10->field0_0x0).nextFree = iVar19;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  pFVar5[iVar19].field0_0x0.nextFree = -1;
+  pFVar6 = pFVar8->trailElems;
+  pFVar8->firstFreeTrailElem = 0;
+  iVar17 = 0;
+  lVar20 = 0x7ff;
+  pFVar11 = pFVar6 + -1;
   do {
-    iVar4 = iVar4 + 1;
-    piVar3 = piVar3 + 8;
-    *piVar3 = iVar4;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar5 = 0;
-  *(undefined4 *)(iVar4 * 0x20 + iVar7) = 0xffffffff;
-  lVar8 = 0x7f;
-  *(undefined4 *)(iVar1 + 0x24) = 0;
-  iVar7 = *(int *)(iVar1 + 0x14);
-  piVar3 = (int *)(iVar7 + -0x10);
+    iVar17 = iVar17 + 1;
+    pFVar11 = pFVar11 + 1;
+    (pFVar11->field0_0x0).nextFree = iVar17;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  iVar19 = 0;
+  pFVar6[iVar17].field0_0x0.nextFree = -1;
+  lVar20 = 0x7f;
+  pFVar8->firstFreeTrail = 0;
+  pFVar7 = pFVar8->trails;
+  pFVar16 = pFVar7 + -1;
   do {
-    iVar5 = iVar5 + 1;
-    piVar3 = piVar3 + 4;
-    *piVar3 = iVar5;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar6 = 1;
-  iVar4 = 0;
-  *(undefined4 *)(iVar5 * 0x10 + iVar7) = 0xffffffff;
-  *(undefined4 *)(iVar1 + 0x244) = 0;
-  *(undefined4 *)(iVar1 + 0x238) = 0;
-  *(undefined4 *)(iVar1 + 0x248) = 0;
-  *(undefined4 *)(iVar1 + 0x23c) = 0;
-  *(undefined4 *)(iVar1 + 0x240) = 0;
-  *(undefined4 *)(iVar1 + 0x24c) = 0;
-  *(undefined4 *)(iVar1 + 0x234) = 0;
-  *(undefined4 *)(iVar1 + 0x250) = 0;
-  *(undefined4 *)(iVar1 + 0x254) = 0;
-  *(undefined4 *)(iVar1 + 600) = 0;
-  *(undefined4 *)(iVar1 + 0x25c) = 0;
-  *(undefined4 *)(iVar1 + 0x78) = 0;
-  *(undefined4 *)(iVar1 + 0x7c) = 0;
-  *(undefined4 *)(iVar1 + 0x58) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0x5c) + 0x1000) = 0;
-  *(int *)(iVar1 + 100) = *(int *)(iVar1 + 0x5c) + 0x1010;
-  *(int *)(iVar1 + 0x60) = *(int *)(iVar1 + 0x5c);
+    iVar19 = iVar19 + 1;
+    pFVar16 = pFVar16 + 1;
+    (pFVar16->field0_0x0).nextFree = iVar19;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  iVar18 = 1;
+  pFVar7[iVar19].field0_0x0.nextFree = -1;
+  pFVar8->activeElemCount = 0;
+  pFVar8->activeBoltCount = 0;
+  pFVar8->activeSparkCloudCount = 0;
+  pFVar8->activeSparkFountainCount = 0;
+  pFVar8->activeSparkFountainClusterCount = 0;
+  pFVar8->activeTrailElemCount = 0;
+  pFVar8->activeTrailCount = 0;
+  pFVar8->numProf0PPU = 0;
+  pFVar8->numProf0SPU = 0;
+  pFVar8->numProf1PPU = 0;
+  pFVar8->numProf1SPU = 0;
+  pFVar8->activeSpotLightEffectCount = 0;
+  pFVar8->activeSpotLightElemCount = 0;
+  pFVar8->gfxCloudCount = 0;
+  pFVar8->visState->blockerCount = 0;
+  pFVar8->visStateBufferWrite = pFVar8->visState + 1;
+  pFVar8->visStateBufferRead = pFVar8->visState;
+  iVar17 = 0;
   do {
-    iVar7 = iVar4 + *(int *)(iVar1 + 0xa4);
-    iVar4 = iVar4 + 0x80;
-    *(int *)(iVar7 + 0x70) = iVar6;
-    iVar6 = iVar6 + 1;
-  } while (iVar6 < 0x400);
-  *(undefined4 *)(*(int *)(iVar1 + 0xa4) + 0x1fff0) = 0xffffffff;
-  **(undefined4 **)(iVar1 + 0xa8) = 0xffffffff;
-  **(undefined4 **)(iVar1 + 0xac) = 0;
-  **(undefined4 **)(iVar1 + 0xb0) = 0;
-  *(undefined4 *)(iVar1 + 0xc0) = 0;
-  *(undefined4 *)(iVar1 + 200) = 0;
-  *(undefined4 *)(iVar1 + 0xd0) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e3c) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e40) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e44) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34e48) = 0;
-  *(undefined4 *)(*(int *)(iVar1 + 0xb8) + 0x34d80) = 0;
+    *(int *)(pFVar8->spawnCmdList->pad + iVar17 + -4) = iVar18;
+    iVar18 = iVar18 + 1;
+    iVar17 = iVar17 + 0x80;
+  } while (iVar18 < 0x400);
+  pFVar8->spawnCmdList[0x3ff].nextCmd = -1;
+  *pFVar8->spawnCmdRead = -1;
+  *pFVar8->spawnCmdWrite = 0;
+  pFVar8->lock->data = 0;
+  pFVar8->numDeleteElementRequest = 0;
+  pFVar8->numSpawnElementRequest = 0;
+  pFVar8->numUpdateElement = 0;
+  pFVar8->command->numStopBoltedEffectsRequest = 0;
+  pFVar8->command->numThroughWithEffectIndex = 0;
+  pFVar8->command->numKillEffectDefIndex = 0;
+  pFVar8->command->numRetriggerEffectRequest = 0;
+  pFVar8->command->requestIndex = 0;
   __restgprlr_27();
   return;
 }
@@ -337,126 +355,147 @@ void FX_ResetSystem(void)
 
 // 82445C78  FX_InitSystem  (EffectsCore/fx_system_init.cpp:150)
 
-void FX_InitSystem(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_InitSystem(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  void *pvVar4;
-  ulonglong uVar2;
-  void *_Dst;
-  ulonglong uVar3;
+  LocalClientNum_t LVar1;
+  FxSystem *pFVar2;
+  FxSystemBuffers *pFVar3;
+  FxSystemCommand *pFVar4;
   
-  uVar1 = __savegprlr_26();
-  pvVar4 = (void *)FX_GetSystem();
-  if (pvVar4 == (void *)0x0) {
-    MyAssertHandler(0xffffffff82069178,0xa1,0,0xffffffff82000f98,0xffffffff82038694);
+  LVar1 = __savegprlr_26(param_1);
+  pFVar2 = FX_GetSystem(LVar1);
+  if (pFVar2 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xa1,0,"%s");
   }
-  memset(pvVar4,0,0x260);
-  uVar2 = FX_GetSystemBuffers(uVar1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82069178,0xa4,0,0xffffffff82000f98,0xffffffff82060e04);
+  memset();
+  pFVar3 = FX_GetSystemBuffers(LVar1);
+  if (pFVar3 == (FxSystemBuffers *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xa4,0,"%s");
   }
-  _Dst = (void *)uVar2;
-  memset(_Dst,0,0x106280);
-  memset((void *)((int)_Dst + 0x35800),0xff,0x1000);
-  memset((void *)((int)_Dst + 0x36800),0xff,0x1000);
-  memset((void *)((int)_Dst + 0x34800),0xff,0x1000);
-  uVar3 = FX_GetSystemCommand(uVar1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82069178,0xaa,0,0xffffffff82000f98,0xffffffff82060df4);
+  memset();
+  memset();
+  memset();
+  memset();
+  pFVar4 = FX_GetSystemCommand(LVar1);
+  if (pFVar4 == (FxSystemCommand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xaa,0,"%s");
   }
-  memset((void *)uVar3,0,0x34e80);
-  FX_LinkSystemBuffers(pvVar4,uVar2,uVar3);
+  memset();
+  FX_LinkSystemBuffers(pFVar2,pFVar3,pFVar4);
   FX_InitRandom();
-  FX_ResetSystem(pvVar4);
-  *(undefined4 *)((int)pvVar4 + 0x88) = 0;
-  *(undefined4 *)((int)pvVar4 + 0x90) = 0xffffffff;
-  if (*(int *)((int)pvVar4 + 0x218) != 0) {
-    MyAssertHandler(0xffffffff82069178,0xb5,0,0xffffffff82000f98,0xffffffff820692b0);
+  FX_ResetSystem(pFVar2);
+  pFVar2->msecNow = 0;
+  pFVar2->msecDraw = -1;
+  if (pFVar2->cameraPrevArray[0].frustumPlaneCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xb5,0,"%s");
   }
-  *(undefined4 *)((int)pvVar4 + 400) = 0;
-  *(undefined4 *)((int)pvVar4 + 0x94) = 1;
-  if (*(int *)((int)pvVar4 + 0x68) != 0) {
-    MyAssertHandler(0xffffffff82069178,0xb9,1,0xffffffff82000f98,0xffffffff82069290);
+  pFVar2->cameraPrevArray[0].isValid = 0;
+  pFVar2->frameCount = 1;
+  if (pFVar2->firstActiveEffect != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xb9,1,"%s");
   }
-  if (*(int *)((int)pvVar4 + 0x6c) != 0) {
-    MyAssertHandler(0xffffffff82069178,0xba,1,0xffffffff82000f98,0xffffffff82069274);
+  if (pFVar2->firstNewEffect != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xba,1,"%s");
   }
-  if (*(int *)((int)pvVar4 + 0x70) != 0) {
-    MyAssertHandler(0xffffffff82069178,0xbb,1,0xffffffff82000f98,0xffffffff82069254);
+  if (pFVar2->firstFreeEffect != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0xbb,1,"%s");
   }
-  FX_InitMarksSystem(uVar1);
-  *(int *)((int)pvVar4 + 0x98) = (int)uVar1;
-  *(undefined4 *)((int)pvVar4 + 0xb4) = 0x10;
-  pvVar4 = memset(&DAT_83338280,0,0x4810);
-  __restgprlr_26(pvVar4);
+  FX_InitMarksSystem(LVar1);
+  pFVar2->localClientNum = LVar1;
+  pFVar2->systemFlags = 0x10;
+  memset();
+  __restgprlr_26();
   return;
 }
 
 
 // 82445EA0  FX_ShutdownSystem  (EffectsCore/fx_system_init.cpp:206)
 
-void FX_ShutdownSystem(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_ShutdownSystem(LocalClientNum_t param_1)
 
 {
-  void *pvVar1;
-  void *_Dst;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxSystemBuffers *pFVar3;
   
-  pvVar1 = (void *)__savegprlr_28();
-  if (DAT_8333ca94 != 0) {
-    _Dst = (void *)FX_GetSystem();
-    if (_Dst == (void *)0x0) {
-      MyAssertHandler(0xffffffff82069178,0xd6,0,0xffffffff82000f98,0xffffffff82038694);
+  iVar1 = __savegprlr_28(param_1);
+  if (fx_systemPool != (FxSystem *)0x0) {
+    pFVar2 = FX_GetSystem(iVar1);
+    if (pFVar2 == (FxSystem *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                      ,0xd6,0,"%s");
     }
-    pvVar1 = (void *)FX_GetSystemBuffers(pvVar1);
-    if (pvVar1 == (void *)0x0) {
-      MyAssertHandler(0xffffffff82069178,0xd8,0,0xffffffff82000f98,0xffffffff82060e04);
+    pFVar3 = FX_GetSystemBuffers(iVar1);
+    if (pFVar3 == (FxSystemBuffers *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                      ,0xd8,0,"%s");
     }
-    if ((*(uint *)((int)_Dst + 0xb4) & 0x10) != 0) {
-      if (*(int *)((int)_Dst + 0xb0) == 0) {
-        MyAssertHandler(0xffffffff82069178,0xdc,0,0xffffffff82000f98,0xffffffff82069348);
+    if ((pFVar2->systemFlags & 0x10) != 0) {
+      if (pFVar2->lock == (FxAccessLock *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                        ,0xdc,0,"%s");
       }
-      if (*(char *)(*(int *)((int)_Dst + 0xb0) + 2) != *(char *)(*(int *)((int)_Dst + 0xb0) + 1)) {
-        MyAssertHandler(0xffffffff82069178,0xdd,0,0xffffffff82000f98,0xffffffff82069318);
+      if ((pFVar2->lock->m).read != (pFVar2->lock->m).request) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                        ,0xdd,0,"%s");
       }
-      if (*(char *)(*(int *)((int)_Dst + 0xb0) + 2) != *(char *)(*(int *)((int)_Dst + 0xb0) + 3)) {
-        MyAssertHandler(0xffffffff82069178,0xde,0,0xffffffff82000f98,0xffffffff820692e8);
+      if ((pFVar2->lock->m).read != (pFVar2->lock->m).write) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                        ,0xde,0,"%s");
       }
     }
-    memset(_Dst,0,0x260);
-    pvVar1 = memset(pvVar1,0,0x106280);
+    memset();
+    memset();
   }
-  __restgprlr_28(pvVar1);
+  __restgprlr_28();
   return;
 }
 
 
 // 82445FF0  FX_ErrorCleanup  (EffectsCore/fx_system_init.cpp:235)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void FX_ErrorCleanup(void)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  uint uVar2;
   int iVar3;
   
   __savegprlr_23();
-  if (DAT_8333ca94 != 0) {
+  if (fx_systemPool != (FxSystem *)0x0) {
     uVar2 = 0;
-    if (0 < (int)DAT_8333ca90) {
+    if (0 < fx_maxLocalClients) {
       iVar1 = 0;
       do {
-        if ((ulonglong)DAT_8333ca90 <= (uVar2 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff82069178,0x15a,0,0xffffffff820691c8,uVar2);
+        if ((uint)fx_maxLocalClients <= uVar2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                          ,0x15a,0,
+                          "clientIndex doesn\'t index FX_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
         }
-        iVar3 = iVar1 + DAT_8333ca94;
+        iVar3 = (int)&(fx_systemPool->sprite).indices + iVar1;
         if (iVar3 == 0) {
-          MyAssertHandler(0xffffffff82069178,0xf5,0,0xffffffff82000f98,0xffffffff82038694);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                          ,0xf5,0,"%s");
         }
         uVar2 = uVar2 + 1;
         iVar1 = iVar1 + 0x260;
         *(uint *)(iVar3 + 0xb4) = *(uint *)(iVar3 + 0xb4) & 0xffffffdf;
-      } while ((int)uVar2 < (int)DAT_8333ca90);
+      } while ((int)uVar2 < fx_maxLocalClients);
     }
   }
   __restgprlr_23();
@@ -466,136 +505,156 @@ void FX_ErrorCleanup(void)
 
 // 82445470  FX_AllocateClientMemory  (EffectsCore/fx_system_init.cpp:256)
 
-void FX_AllocateClientMemory(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_AllocateClientMemory(int param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  void *pvVar3;
+  int iVar1;
   
-  lVar1 = __savegprlr_27();
-  iVar2 = (int)lVar1;
-  DAT_8333ca90 = iVar2;
-  DAT_8333ca94 = (void *)PMem_AllocFromSource_NoDebug(lVar1 * 0x260,0x80,4,1);
-  DAT_8333ca98 = (void *)PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0x106280,0x80,4,1);
-  DAT_8333ca9c = (void *)PMem_AllocFromSource_NoDebug((longlong)iVar2 * 0x34e80,0x80,4,1);
-  memset(DAT_8333ca94,0,(size_t)(lVar1 * 0x260));
-  memset(DAT_8333ca98,0,(size_t)((longlong)iVar2 * 0x106280));
-  pvVar3 = memset(DAT_8333ca9c,0,(size_t)((longlong)iVar2 * 0x34e80));
-  __restgprlr_27(pvVar3);
+  iVar1 = __savegprlr_27(param_1);
+  fx_maxLocalClients = iVar1;
+  fx_systemPool = PMem_AllocFromSource_NoDebug(iVar1 * 0x260,0x80,4,PMEM_SOURCE_DATABASE);
+  fx_systemBufferPool = PMem_AllocFromSource_NoDebug(iVar1 * 0x106280,0x80,4,PMEM_SOURCE_DATABASE);
+  fx_systemCommandPool = PMem_AllocFromSource_NoDebug(iVar1 * 0x34e80,0x80,4,PMEM_SOURCE_DATABASE);
+  memset();
+  memset();
+  memset();
+  __restgprlr_27();
   return;
 }
 
 
 // 82445530  FX_FreeClientMemory  (EffectsCore/fx_system_init.cpp:271)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void FX_FreeClientMemory(void)
 
 {
-  DAT_8333ca9c = 0;
-  DAT_8333ca90 = 0;
-  DAT_8333ca94 = 0;
-  DAT_8333ca98 = 0;
+  fx_systemCommandPool = (FxSystemCommand *)0x0;
+  fx_maxLocalClients = 0;
+  fx_systemPool = (FxSystem *)0x0;
+  fx_systemBufferPool = (FxSystemBuffers *)0x0;
   return;
 }
 
 
 // 82445558  FX_GetGlassVisInfo  (EffectsCore/fx_system_init.cpp:282)
 
-undefined8 FX_GetGlassVisInfo(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+FxGlassVisInfo * FX_GetGlassVisInfo(void)
 
 {
-  return 0xffffffff83338280;
+  return &fx_glassVisInfo;
 }
 
 
 // 82445568  FX_LinkSystemBuffers  (EffectsCore/fx_system_init.cpp:288)
 
-void FX_LinkSystemBuffers(int param_1,int param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_LinkSystemBuffers(FxSystem *param_1,FxSystemBuffers *param_2,FxSystemCommand *param_3)
 
 {
-  *(int *)(param_1 + 0x74) = param_2;
-  *(int *)(param_1 + 0xa4) = param_3;
-  *(int *)(param_1 + 0xb8) = param_3;
-  *(int *)(param_1 + 0x14) = param_2 + 0x37800;
-  *(int *)(param_1 + 0x18) = param_2 + 0x48000;
-  *(int *)(param_1 + 0x34) = param_2 + 0x4a000;
-  *(int *)(param_1 + 0x20) = param_2 + 0x5b200;
-  *(int *)(param_1 + 0x3c) = param_2 + 0x24800;
-  *(int *)(param_1 + 0x10) = param_2 + 0x800;
-  *(int *)(param_1 + 0x1c) = param_2 + 0x5a200;
-  *(int *)(param_1 + 0x40) = param_2 + 0x34800;
-  *(int *)(param_1 + 0x44) = param_2 + 0x35800;
-  *(int *)(param_1 + 0x48) = param_2 + 0x36800;
-  *(int *)(param_1 + 0x5c) = param_2 + 0x103200;
-  *(int *)(param_1 + 0x38) = param_2 + 0x38000;
-  *(int *)(param_1 + 0x9c) = param_2 + 0x105280;
-  *(int *)(param_1 + 0xa8) = param_3 + 0x20000;
-  *(int *)(param_1 + 0xac) = param_3 + 0x20080;
-  *(int *)(param_1 + 0xb0) = param_3 + 0x20100;
-  *(int *)(param_1 + 0xbc) = param_3 + 0x21180;
-  *(int *)(param_1 + 0xc4) = param_3 + 0x25180;
-  *(int *)(param_1 + 0xcc) = param_3 + 0x2b180;
+  param_1->allEffectHandles = param_2->allEffectHandles;
+  param_1->spawnCmdList = param_3->spawnCmdList;
+  param_1->command = param_3;
+  param_1->trails = param_2->trails;
+  param_1->bolts = param_2->bolts;
+  param_1->sparkClouds = param_2->sparkClouds;
+  param_1->sparkFountainClusters = param_2->sparkFountainClusters;
+  param_1->elems = param_2->elems;
+  param_1->effects = param_2->effects;
+  param_1->sparkFountains = param_2->sparkFountains;
+  param_1->elemChild = param_2->elemChild;
+  param_1->nextElemHandleInEffect = param_2->nextElemHandleInEffect;
+  param_1->prevElemHandleInEffect = param_2->prevElemHandleInEffect;
+  param_1->visState = param_2->visState;
+  param_1->trailElems = param_2->trailElems;
+  param_1->restartEffectsList = param_2->restartEffectsList;
+  param_1->spawnCmdRead = &param_3->spawnCmdRead;
+  param_1->spawnCmdWrite = &param_3->spawnCmdWrite;
+  param_1->lock = &param_3->accessLock;
+  param_1->deleteElementRequest = param_3->deleteElementRequest;
+  param_1->spawnElementRequest = param_3->spawnElementRequest;
+  param_1->updateElement = param_3->updateElement;
   return;
 }
 
 
 // 82445658  FX_GetSystemConst  (EffectsCore/fx_system_init.cpp:329)
 
-longlong FX_GetSystemConst(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+FxSystem * FX_GetSystemConst(int param_1)
 
 {
-  if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82069178,0x14e,0,0xffffffff820691c8,param_1);
+  if ((uint)fx_maxLocalClients <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0x14e,0,"clientIndex doesn\'t index FX_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  return param_1 * 0x260 + (ulonglong)DAT_8333ca94;
+  return fx_systemPool + param_1;
 }
 
 
 // 824456D0  FX_GetSystem  (EffectsCore/fx_system_init.cpp:341)
 
-longlong FX_GetSystem(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+FxSystem * FX_GetSystem(int param_1)
 
 {
-  if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82069178,0x15a,0,0xffffffff820691c8,param_1);
+  if ((uint)fx_maxLocalClients <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0x15a,0,"clientIndex doesn\'t index FX_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  return param_1 * 0x260 + (ulonglong)DAT_8333ca94;
+  return fx_systemPool + param_1;
 }
 
 
 // 82445748  FX_GetSystemBuffers  (EffectsCore/fx_system_init.cpp:353)
 
-longlong FX_GetSystemBuffers(ulonglong param_1)
+FxSystemBuffers * FX_GetSystemBuffers(int param_1)
 
 {
-  if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82069178,0x166,0,0xffffffff820691c8,param_1);
+  if ((uint)fx_maxLocalClients <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0x166,0,"clientIndex doesn\'t index FX_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  return (longlong)(int)param_1 * 0x106280 + (ulonglong)DAT_8333ca98;
+  return fx_systemBufferPool + param_1;
 }
 
 
 // 824457B8  FX_GetSystemCommand  (EffectsCore/fx_system_init.cpp:365)
 
-longlong FX_GetSystemCommand(ulonglong param_1)
+FxSystemCommand * FX_GetSystemCommand(int param_1)
 
 {
-  if ((ulonglong)DAT_8333ca90 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82069178,0x172,0,0xffffffff820691c8,param_1);
+  if ((uint)fx_maxLocalClients <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0x172,0,"clientIndex doesn\'t index FX_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  return (longlong)(int)param_1 * 0x34e80 + (ulonglong)DAT_8333ca9c;
+  return fx_systemCommandPool + param_1;
 }
 
 
 // 82445828  FX_GetMarksSystem  (EffectsCore/fx_system_init.cpp:377)
 
-longlong FX_GetMarksSystem(ulonglong param_1)
+FxMarksSystem * FX_GetMarksSystem(int param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82069178,0x17e,0,0xffffffff82069210,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_init.cpp"
+                    ,0x17e,0,"clientIndex doesn\'t index FX_MARKS_SYSTEM_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  return param_1 * 0x1038 + -0x7cccbe80;
+  return fx_marksSystemPool + param_1;
 }
 

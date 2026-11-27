@@ -2,140 +2,146 @@
 
 // 82740630  R_HW_InsertCallback  (gfx_d3d/r_callback_xbox.h:6)
 
-void R_HW_InsertCallback(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_HW_InsertCallback(_func___cdecl_void_ulong *param_1,ulong param_2)
 
 {
   int iVar1;
   
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821c3970,7,0,0xffffffff82000f98,0xffffffff8217d420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_callback_xbox.h",7,0
+                    ,"%s");
   }
-  D3DDevice_InsertCallback(DAT_84616688,0,param_1,param_2);
+  D3DDevice_InsertCallback(dx.device,0,param_1,param_2);
   return;
 }
 
 
 // 827406B0  R_Perf_InitTimerFrameHistory  (gfx_d3d/r_perf_timer.h:103)
 
-void * R_Perf_InitTimerFrameHistory(void *param_1,undefined4 param_2)
+void R_Perf_InitTimerFrameHistory(PerfTimerFrameHistory *param_1,uint param_2)
 
 {
-  void *pvVar1;
-  
-  if (param_1 == (void *)0x0) {
-    MyAssertHandler(0xffffffff821c39b8,0x68,0,0xffffffff82000f98,0xffffffff821c39fc);
+  if (param_1 == (PerfTimerFrameHistory *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.h",0x68,0
+                    ,"%s");
   }
-  pvVar1 = memset(param_1,0,21000);
-  *(undefined4 *)((int)param_1 + 4) = param_2;
-  return pvVar1;
+  memset();
+  param_1->frameCount = param_2;
+  return;
 }
 
 
 // 82740728  R_GPU_BeginTimerCallback  (gfx_d3d/r_gpu_timer.cpp:381)
 
-void R_GPU_BeginTimerCallback(int param_1)
+void R_GPU_BeginTimerCallback(ulong param_1)
 
 {
   undefined8 uVar1;
   
   uVar1 = TBLr;
-  (&DAT_845aa918)[param_1 * 5 + DAT_829a2824 * 0x90] = (int)uVar1;
+  *(int *)(s_timerFrames[s_callbackIndex].timers + param_1) = (int)uVar1;
   return;
 }
 
 
 // 82740768  R_GPU_EndTimerCallback  (gfx_d3d/r_gpu_timer.cpp:387)
 
-void R_GPU_EndTimerCallback(int param_1)
+void R_GPU_EndTimerCallback(ulong param_1)
 
 {
   undefined8 uVar1;
   
   uVar1 = TBLr;
-  (&DAT_845aa91c)[param_1 * 5 + DAT_829a2824 * 0x90] =
-       ((&DAT_845aa91c)[param_1 * 5 + DAT_829a2824 * 0x90] -
-       (&DAT_845aa918)[param_1 * 5 + DAT_829a2824 * 0x90]) + (int)uVar1;
+  *(int *)&s_timerFrames[s_callbackIndex].timers[param_1].field_0x4 =
+       (*(int *)&s_timerFrames[s_callbackIndex].timers[param_1].field_0x4 -
+       *(int *)(s_timerFrames[s_callbackIndex].timers + param_1)) + (int)uVar1;
   return;
 }
 
 
 // 827407C0  R_GPU_ConvertTimeToMsec  (gfx_d3d/r_gpu_timer.cpp:444)
 
-double R_GPU_ConvertTimeToMsec(uint param_1)
+float R_GPU_ConvertTimeToMsec(uint param_1)
 
 {
-  return (double)(float)((double)param_1 * DAT_841db430);
+  return (float)((double)param_1 * msecPerRawTimerTick);
 }
 
 
 // 827407E8  R_GPU_CalcDerivedTimers  (gfx_d3d/r_gpu_timer.cpp:454)
 
-void R_GPU_CalcDerivedTimers(void)
+/* WARNING: Enum "GPUTimerId": Some values do not have unique names */
+
+void R_GPU_CalcDerivedTimers(GPUTimerFrame *param_1)
 
 {
-  undefined4 uVar1;
-  int iVar2;
+  GPUTimerId GVar1;
+  undefined4 uVar2;
   int iVar3;
-  int *piVar4;
-  longlong lVar5;
+  GPUTimerId *pGVar4;
+  int iVar5;
+  int *piVar6;
+  longlong lVar7;
   
-  iVar2 = __savegprlr_29();
-  if (*(char *)(DAT_845b8b64 + 0xc) == '\0') {
-    *(int *)(iVar2 + 0x118) = *(int *)(iVar2 + 0x118) + *(int *)(iVar2 + 0xdc);
-    *(undefined4 *)(iVar2 + 0xdc) = 0;
-    *(undefined1 *)(iVar2 + 0xea) = 1;
-    *(int *)(iVar2 + 300) = *(int *)(iVar2 + 300) + *(int *)(iVar2 + 0xf0);
-    *(undefined4 *)(iVar2 + 0xf0) = 0;
-    *(undefined1 *)(iVar2 + 0xfe) = 1;
-    *(int *)(iVar2 + 0x140) = *(int *)(iVar2 + 0x140) + *(int *)(iVar2 + 0x104);
-    *(undefined4 *)(iVar2 + 0x104) = 0;
-    *(undefined1 *)(iVar2 + 0x112) = 1;
+  iVar3 = __savegprlr_29(param_1);
+  if ((r_gpuTimersShowPrepass->current).enabled == false) {
+    *(int *)(iVar3 + 0x118) = *(int *)(iVar3 + 0x118) + *(int *)(iVar3 + 0xdc);
+    *(undefined4 *)(iVar3 + 0xdc) = 0;
+    *(undefined1 *)(iVar3 + 0xea) = 1;
+    *(int *)(iVar3 + 300) = *(int *)(iVar3 + 300) + *(int *)(iVar3 + 0xf0);
+    *(undefined4 *)(iVar3 + 0xf0) = 0;
+    *(undefined1 *)(iVar3 + 0xfe) = 1;
+    *(int *)(iVar3 + 0x140) = *(int *)(iVar3 + 0x140) + *(int *)(iVar3 + 0x104);
+    *(undefined4 *)(iVar3 + 0x104) = 0;
+    *(undefined1 *)(iVar3 + 0x112) = 1;
   }
-  piVar4 = &DAT_829a2828;
-  lVar5 = 0x17;
+  pGVar4 = s_timerOrder;
+  lVar7 = 0x17;
   do {
-    iVar3 = *piVar4;
-    piVar4 = piVar4 + 1;
-    iVar3 = iVar3 * 0x14 + iVar2;
-    *(int *)(*piVar4 * 0x14 + iVar2 + 0x10) = *(int *)(iVar3 + 0x14) + *(int *)(iVar3 + 0x10);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  piVar4 = &DAT_829a2824;
-  lVar5 = 4;
-  uVar1 = *(undefined4 *)(DAT_829a2828 * 0x14 + iVar2 + 0x10);
-  *(undefined4 *)(iVar2 + 8) = 0;
-  *(undefined4 *)(iVar2 + 4) = uVar1;
+    GVar1 = *pGVar4;
+    pGVar4 = pGVar4 + 1;
+    iVar5 = GVar1 * 0x14 + iVar3;
+    *(int *)(*pGVar4 * 0x14 + iVar3 + 0x10) = *(int *)(iVar5 + 0x14) + *(int *)(iVar5 + 0x10);
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  piVar6 = &s_callbackIndex;
+  lVar7 = 4;
+  uVar2 = *(undefined4 *)(s_timerOrder[0] * 0x14 + iVar3 + 0x10);
+  *(undefined4 *)(iVar3 + 8) = 0;
+  *(undefined4 *)(iVar3 + 4) = uVar2;
   do {
-    iVar3 = *(int *)((piVar4[1] + 1) * 0x14 + iVar2) + *(int *)(iVar2 + 8);
-    *(int *)(iVar2 + 8) = iVar3;
-    iVar3 = *(int *)((piVar4[2] + 1) * 0x14 + iVar2) + iVar3;
-    *(int *)(iVar2 + 8) = iVar3;
-    iVar3 = *(int *)((piVar4[3] + 1) * 0x14 + iVar2) + iVar3;
-    *(int *)(iVar2 + 8) = iVar3;
-    iVar3 = *(int *)((piVar4[4] + 1) * 0x14 + iVar2) + iVar3;
-    *(int *)(iVar2 + 8) = iVar3;
-    iVar3 = *(int *)((piVar4[5] + 1) * 0x14 + iVar2) + iVar3;
-    *(int *)(iVar2 + 8) = iVar3;
-    piVar4 = piVar4 + 6;
-    *(int *)(iVar2 + 8) = *(int *)((*piVar4 + 1) * 0x14 + iVar2) + iVar3;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  DAT_845b8b60 = *(undefined4 *)(iVar2 + 8);
-  *(undefined4 *)(iVar2 + 0x10) = *(undefined4 *)(iVar2 + 0x24);
-  *(undefined4 *)(iVar2 + 0x9c) = *(undefined4 *)(iVar2 + 0xb0);
-  *(undefined4 *)(iVar2 + 0x150) = *(undefined4 *)(iVar2 + 0x164);
-  *(int *)(iVar2 + 0x14) =
-       *(int *)(iVar2 + 0x8c) + *(int *)(iVar2 + 0x78) + *(int *)(iVar2 + 100) +
-       *(int *)(iVar2 + 0x50) + *(int *)(iVar2 + 0x3c) + *(int *)(iVar2 + 0x28);
-  *(int *)(iVar2 + 0xa0) =
-       *(int *)(iVar2 + 0x140) + *(int *)(iVar2 + 300) + *(int *)(iVar2 + 0x118) +
-       *(int *)(iVar2 + 0x104) + *(int *)(iVar2 + 0xf0) + *(int *)(iVar2 + 0xdc) +
-       *(int *)(iVar2 + 200) + *(int *)(iVar2 + 0xb4);
-  *(int *)(iVar2 + 0x154) =
-       *(int *)(iVar2 + 0x1e0) + *(int *)(iVar2 + 0x1cc) + *(int *)(iVar2 + 0x1b8) +
-       *(int *)(iVar2 + 0x1a4) + *(int *)(iVar2 + 400) + *(int *)(iVar2 + 0x17c) +
-       *(int *)(iVar2 + 0x168);
+    iVar5 = *(int *)((piVar6[1] + 1) * 0x14 + iVar3) + *(int *)(iVar3 + 8);
+    *(int *)(iVar3 + 8) = iVar5;
+    iVar5 = *(int *)((piVar6[2] + 1) * 0x14 + iVar3) + iVar5;
+    *(int *)(iVar3 + 8) = iVar5;
+    iVar5 = *(int *)((piVar6[3] + 1) * 0x14 + iVar3) + iVar5;
+    *(int *)(iVar3 + 8) = iVar5;
+    iVar5 = *(int *)((piVar6[4] + 1) * 0x14 + iVar3) + iVar5;
+    *(int *)(iVar3 + 8) = iVar5;
+    iVar5 = *(int *)((piVar6[5] + 1) * 0x14 + iVar3) + iVar5;
+    *(int *)(iVar3 + 8) = iVar5;
+    piVar6 = piVar6 + 6;
+    *(int *)(iVar3 + 8) = *(int *)((*piVar6 + 1) * 0x14 + iVar3) + iVar5;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  s_totalTime = *(uint *)(iVar3 + 8);
+  *(undefined4 *)(iVar3 + 0x10) = *(undefined4 *)(iVar3 + 0x24);
+  *(undefined4 *)(iVar3 + 0x9c) = *(undefined4 *)(iVar3 + 0xb0);
+  *(undefined4 *)(iVar3 + 0x150) = *(undefined4 *)(iVar3 + 0x164);
+  *(int *)(iVar3 + 0x14) =
+       *(int *)(iVar3 + 0x8c) + *(int *)(iVar3 + 0x78) + *(int *)(iVar3 + 100) +
+       *(int *)(iVar3 + 0x50) + *(int *)(iVar3 + 0x3c) + *(int *)(iVar3 + 0x28);
+  *(int *)(iVar3 + 0xa0) =
+       *(int *)(iVar3 + 0x140) + *(int *)(iVar3 + 300) + *(int *)(iVar3 + 0x118) +
+       *(int *)(iVar3 + 0x104) + *(int *)(iVar3 + 0xf0) + *(int *)(iVar3 + 0xdc) +
+       *(int *)(iVar3 + 200) + *(int *)(iVar3 + 0xb4);
+  *(int *)(iVar3 + 0x154) =
+       *(int *)(iVar3 + 0x1e0) + *(int *)(iVar3 + 0x1cc) + *(int *)(iVar3 + 0x1b8) +
+       *(int *)(iVar3 + 0x1a4) + *(int *)(iVar3 + 400) + *(int *)(iVar3 + 0x17c) +
+       *(int *)(iVar3 + 0x168);
   __restgprlr_29();
   return;
 }
@@ -143,7 +149,7 @@ void R_GPU_CalcDerivedTimers(void)
 
 // 82740A68  R_GPU_EndFrameCallback  (gfx_d3d/r_gpu_timer.cpp:592)
 
-void R_GPU_EndFrameCallback(void)
+void R_GPU_EndFrameCallback(ulong param_1)
 
 {
   uint uVar1;
@@ -153,16 +159,17 @@ void R_GPU_EndFrameCallback(void)
   longlong lVar5;
   
   iVar4 = 0;
-  uVar1 = DAT_829a2824 + 1;
+  uVar1 = s_callbackIndex + 1;
   lVar5 = 0x1c;
-  DAT_845b8b6c = DAT_829a2824;
-  DAT_829a2824 = uVar1 + (((int)uVar1 >> 6) + (uint)((int)uVar1 < 0 && (uVar1 & 0x3f) != 0) &
-                         0x3ffffff) * -0x40;
-  iVar2 = DAT_829a2824 * 0x240;
+  s_readIndex = s_callbackIndex;
+  s_callbackIndex =
+       uVar1 + (((int)uVar1 >> 6) + (uint)((int)uVar1 < 0 && (uVar1 & 0x3f) != 0) & 0x3ffffff) *
+               -0x40;
+  iVar2 = s_callbackIndex * 0x240;
   iVar3 = iVar2;
   do {
     iVar4 = iVar4 + 0x14;
-    *(undefined4 *)((int)&DAT_845aa91c + iVar3) = 0;
+    *(undefined4 *)(&s_timerFrames[0].timers[0].field_0x4 + iVar3) = 0;
     iVar3 = iVar4 + iVar2;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
@@ -172,7 +179,7 @@ void R_GPU_EndFrameCallback(void)
 
 // 82740AD0  R_GPU_AddPaddingCallback  (gfx_d3d/r_gpu_timer.cpp:604)
 
-void R_GPU_AddPaddingCallback(void)
+void R_GPU_AddPaddingCallback(ulong param_1)
 
 {
   return;
@@ -181,69 +188,70 @@ void R_GPU_AddPaddingCallback(void)
 
 // 82740AD8  R_GPU_InitTimers  (gfx_d3d/r_gpu_timer.cpp:628)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GPU_InitTimers(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
+  longlong lVar3;
+  undefined4 *puVar4;
   undefined4 *puVar5;
-  undefined4 *puVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  longlong lVar9;
+  int iVar6;
+  undefined4 *puVar7;
+  longlong lVar8;
   
   __savegprlr_28();
-  R_Perf_InitTimerFrameHistory(0xffffffff845b3958,0x40);
-  iVar2 = 0;
-  lVar4 = 0x40;
-  puVar5 = &DAT_845aa920;
+  R_Perf_InitTimerFrameHistory((PerfTimerFrameHistory *)&DAT_845b3958,0x40);
+  iVar1 = 0;
+  lVar3 = 0x40;
+  puVar4 = (undefined4 *)&s_timerFrames[0].timers[0].field_0x8;
   do {
-    *(undefined1 *)(puVar5 + -3) = 0;
-    iVar7 = 0;
-    lVar9 = 0x1c;
-    puVar8 = puVar5;
+    *(undefined1 *)(puVar4 + -3) = 0;
+    iVar6 = 0;
+    lVar8 = 0x1c;
+    puVar7 = puVar4;
     do {
-      iVar3 = iVar2 + iVar7;
-      puVar8[-2] = 0;
-      puVar8[-1] = 0;
-      *puVar8 = 0;
-      *(undefined1 *)(puVar8 + 2) = 0;
-      puVar6 = puVar8 + -2;
-      *(undefined1 *)((int)puVar8 + 9) = 0;
-      puVar8[1] = 0;
-      iVar7 = iVar7 + 1;
-      puVar8 = puVar8 + 5;
-      (&DAT_845b3968)[iVar3] = puVar6;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    lVar4 = lVar4 + -1;
-    puVar5 = puVar5 + 0x90;
-    iVar2 = iVar2 + 0x52;
-  } while (lVar4 != 0);
-  if (DAT_845b8b74 == '\0') {
-    R_UTIL_SwizzleColorArrayXBOXfromPS3(0xffffffff829a2610,0x1c);
-    DAT_845b8b74 = '\x01';
+      iVar2 = iVar1 + iVar6;
+      puVar7[-2] = 0;
+      puVar7[-1] = 0;
+      *puVar7 = 0;
+      *(undefined1 *)(puVar7 + 2) = 0;
+      puVar5 = puVar7 + -2;
+      *(undefined1 *)((int)puVar7 + 9) = 0;
+      puVar7[1] = 0;
+      iVar6 = iVar6 + 1;
+      puVar7 = puVar7 + 5;
+      (&DAT_845b3968)[iVar2] = puVar5;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    lVar3 = lVar3 + -1;
+    puVar4 = puVar4 + 0x90;
+    iVar1 = iVar1 + 0x52;
+  } while (lVar3 != 0);
+  if (isColorPaletteSwizzled == false) {
+    R_UTIL_SwizzleColorArrayXBOXfromPS3(s_colorPalette,0x1c);
+    isColorPaletteSwizzled = true;
   }
-  uVar1 = R_RegisterFont(0xffffffff82031290,3);
-  DAT_845b390c = (undefined4)uVar1;
-  iVar2 = R_TextWidth(0xffffffff821c3a6c,1,uVar1);
-  DAT_845b3910 = (float)(longlong)iVar2;
-  iVar2 = R_TextHeight(DAT_845b390c);
-  DAT_845b3930 = &DAT_829a2610;
-  DAT_845b3914 = (float)(longlong)iVar2;
-  DAT_845b3938 = 0x41855555;
-  DAT_845b3944 = 0;
-  DAT_845b392c = &PTR_s_ShadowTotal_829a2680;
-  DAT_845b3934 = 0x41f00000;
-  DAT_845b3920 = R_GPU_ConvertTimeToMsec;
-  DAT_845b3940 = 1;
-  DAT_845b393c = 0x44200000;
-  DAT_845b3924 = 0x1c;
-  DAT_845b3928 = 0x10;
-  DAT_845b394c = Dvar_RegisterEnum(0xffffffff821c3a44,0xffffffff829a26f0,0,0,0xffffffff821c3a50);
-  DAT_845b8b64 = Dvar_RegisterBool(0xffffffff821c3a10,0,0,0xffffffff821c3a28);
+  s_gpuTimerStyle.font = R_RegisterFont("fonts/consoleFont",3);
+  iVar1 = R_TextWidth("#",1,s_gpuTimerStyle.font);
+  s_gpuTimerStyle.fontWidth = (float)(longlong)iVar1;
+  iVar1 = R_TextHeight(s_gpuTimerStyle.font);
+  s_gpuTimerStyle.timerColors = s_colorPalette;
+  s_gpuTimerStyle.fontHeight = (float)(longlong)iVar1;
+  s_gpuTimerStyle.budgetMs = 16.666666;
+  s_gpuTimerStyle.bucketNames = (char **)0x0;
+  s_gpuTimerStyle.timerNames = g_gpuTimerNames;
+  s_gpuTimerStyle.totalBarY = 30.0;
+  s_gpuTimerStyle.convertTime = R_GPU_ConvertTimeToMsec;
+  s_gpuTimerStyle.bucketCount = 1;
+  s_gpuTimerStyle.budgetPixels = 640.0;
+  s_gpuTimerStyle.timerCount = 0x1c;
+  s_gpuTimerStyle.timerNameCharCount = 0x10;
+  r_gpuTimers = Dvar_RegisterEnum("r_gpuTimers",s_displayModeNames,0,0,"GPU Timers to display");
+  r_gpuTimersShowPrepass =
+       Dvar_RegisterBool("r_gpuTimersShowPrepass",false,0,"Show prepass in GPU Timers");
   __restgprlr_28();
   return;
 }
@@ -251,55 +259,65 @@ void R_GPU_InitTimers(void)
 
 // 82740CB0  R_GPU_IsProfileEnabled  (gfx_d3d/r_gpu_timer.cpp:689)
 
-bool R_GPU_IsProfileEnabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int R_GPU_IsProfileEnabled(void)
 
 {
-  return DAT_845b3948 != 0;
+  return (uint)(s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED);
 }
 
 
 // 82740CC8  R_GPU_GetTimerIdForDrawListType  (gfx_d3d/r_gpu_timer.cpp:695)
 
-undefined4 R_GPU_GetTimerIdForDrawListType(uint param_1)
+/* WARNING: Enum "GPUTimerId": Some values do not have unique names */
+
+GPUTimerId R_GPU_GetTimerIdForDrawListType(uint param_1)
 
 {
   if (0x26 < param_1) {
-    MyAssertHandler(0xffffffff821c3a70,0x2b8,0,0xffffffff821c3ab8,param_1,0x27);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",0x2b8
+                    ,0,
+                    "drawListType doesn\'t index ARRAY_COUNT( s_GPUTimerIdForDrawListType )\n\t%i not in [0, %i)"
+                   );
   }
-  return *(undefined4 *)(&DAT_829a2788 + param_1 * 4);
+  return s_GPUTimerIdForDrawListType[param_1];
 }
 
 
 // 82740D30  R_GPU_BeginFrame  (gfx_d3d/r_gpu_timer.cpp:702)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GPU_BeginFrame(void)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  undefined1 *puVar3;
+  short *psVar3;
   longlong lVar4;
   
-  iVar1 = DAT_845b8b68;
-  DAT_845b3948 = *(int *)(DAT_845b394c + 0xc);
-  if (DAT_845b3948 == 0) {
-    DAT_845b8b68 = 0;
+  uVar1 = s_frameIndex;
+  iVar2 = s_writeIndex;
+  s_displayMode = (r_gpuTimers->current).unsignedInt;
+  if (s_displayMode == GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    s_frameIndex = 0;
   }
   else {
-    iVar2 = DAT_829a2784 * 0x240;
-    *(int *)(&DAT_845aa908 + iVar2) = DAT_845b8b68;
-    if ((&DAT_845aa914)[iVar2] != '\0') {
-      MyAssertHandler(0xffffffff821c3a70,0x2c7,0,0xffffffff82000f98,0xffffffff821c3b14);
-      iVar1 = DAT_845b8b68;
+    s_timerFrames[s_writeIndex].frameIndex = s_frameIndex;
+    if (s_timerFrames[iVar2].isCurrent != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x2c7,0,"%s");
+      uVar1 = s_frameIndex;
     }
-    DAT_845b8b68 = iVar1 + 1;
-    puVar3 = (undefined1 *)(iVar2 + -0x7ba556ea);
-    (&DAT_845aa914)[iVar2] = 1;
+    s_frameIndex = uVar1 + 1;
+    psVar3 = &s_timerFrames[iVar2]._padding_;
+    s_timerFrames[iVar2].isCurrent = true;
     lVar4 = 0x1c;
     do {
-      puVar3[0x13] = 0;
-      puVar3 = puVar3 + 0x14;
-      *puVar3 = 0;
+      *(undefined1 *)((int)psVar3 + 0x13) = 0;
+      psVar3 = psVar3 + 10;
+      *(undefined1 *)psVar3 = 0;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
@@ -309,6 +327,8 @@ void R_GPU_BeginFrame(void)
 
 // 82740E10  R_GPU_EndFrame  (gfx_d3d/r_gpu_timer.cpp:733)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GPU_EndFrame(void)
 
 {
@@ -316,19 +336,21 @@ void R_GPU_EndFrame(void)
   uint uVar2;
   
   __savegprlr_28();
-  if (DAT_845b3948 != 0) {
-    if (DAT_845b8b70 != 0) {
-      MyAssertHandler(0xffffffff821c3a70,0x2e2,0,0xffffffff82000f98,0xffffffff821c3b44);
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    if (s_currentTimer != (GPUTimer *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x2e2,0,"%s");
     }
-    iVar1 = DAT_829a2784 * 0x240;
-    if ((&DAT_845aa914)[iVar1] == '\0') {
-      MyAssertHandler(0xffffffff821c3a70,0x2e4,0,0xffffffff82000f98,0xffffffff821c3b2c);
+    iVar1 = s_writeIndex;
+    if (s_timerFrames[s_writeIndex].isCurrent == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x2e4,0,"%s");
     }
-    uVar2 = DAT_829a2784 + 1;
-    (&DAT_845aa914)[iVar1] = 0;
-    DAT_829a2784 = uVar2 + (((int)uVar2 >> 6) + (uint)((int)uVar2 < 0 && (uVar2 & 0x3f) != 0)) *
+    uVar2 = s_writeIndex + 1;
+    s_timerFrames[iVar1].isCurrent = false;
+    s_writeIndex = uVar2 + (((int)uVar2 >> 6) + (uint)((int)uVar2 < 0 && (uVar2 & 0x3f) != 0)) *
                            -0x40;
-    R_HW_InsertCallback(0xffffffff82740a68,0);
+    R_HW_InsertCallback(R_GPU_EndFrameCallback,0);
   }
   __restgprlr_28();
   return;
@@ -337,36 +359,40 @@ void R_GPU_EndFrame(void)
 
 // 82740EF0  R_GPU_BeginTimer  (gfx_d3d/r_gpu_timer.cpp:755)
 
-void R_GPU_BeginTimer(void)
+/* WARNING: Enum "GPUTimerId": Some values do not have unique names */
+
+void R_GPU_BeginTimer(GPUTimerId param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  undefined *puVar3;
+  int iVar1;
+  ulong uVar2;
+  GPUTimer *pGVar3;
   
-  uVar1 = __savegprlr_26();
-  if (DAT_845b3948 != 0) {
-    iVar2 = DAT_829a2784 * 0x240;
-    if ((&DAT_845aa914)[iVar2] == '\0') {
-      MyAssertHandler(0xffffffff821c3a70,0x2fd,0,0xffffffff82000f98,0xffffffff821c3b2c);
+  uVar2 = __savegprlr_26(param_1);
+  iVar1 = s_writeIndex;
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    if (s_timerFrames[s_writeIndex].isCurrent == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x2fd,0,"%s");
     }
-    if (((int)uVar1 < 0) || (0x1b < uVar1)) {
-      MyAssertHandler(0xffffffff821c3a70,0x2fe,0,0xffffffff82000f98,0xffffffff821c3b70);
+    if (((int)uVar2 < 0) || (0x1b < uVar2)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x2fe,0,"%s");
     }
-    iVar2 = uVar1 * 0x14 + iVar2;
-    puVar3 = &DAT_845aa908 + iVar2 + 0x10;
-    if (DAT_845b8b70 != (undefined *)0x0) {
-      if (DAT_845b8b70 == puVar3) {
-        MyAssertHandler(0xffffffff821c3a70,0x303,0,0xffffffff82000f98,0xffffffff821c3b54);
+    pGVar3 = s_timerFrames[iVar1].timers + uVar2;
+    if (s_currentTimer != (GPUTimer *)0x0) {
+      if (s_currentTimer == pGVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                        0x303,0,"%s");
       }
-      DAT_845b8b70[0x10] = 1;
+      s_currentTimer->field_0x10 = 1;
     }
-    *(undefined **)(&DAT_845aa908 + iVar2 + 0x18) = DAT_845b8b70;
-    (&DAT_845aa908)[iVar2 + 0x21] = 1;
-    (&DAT_845aa908)[iVar2 + 0x20] = 0;
-    (&DAT_845aa908)[iVar2 + 0x23] = 0;
-    DAT_845b8b70 = puVar3;
-    R_HW_InsertCallback(0xffffffff82740728,uVar1);
+    *(GPUTimer **)&s_timerFrames[iVar1].timers[uVar2].field_0x8 = s_currentTimer;
+    s_timerFrames[iVar1].timers[uVar2].field_0x11 = 1;
+    s_timerFrames[iVar1].timers[uVar2].field_0x10 = 0;
+    s_timerFrames[iVar1].timers[uVar2].field_0x13 = 0;
+    s_currentTimer = pGVar3;
+    R_HW_InsertCallback(R_GPU_BeginTimerCallback,uVar2);
   }
   __restgprlr_26();
   return;
@@ -375,23 +401,27 @@ void R_GPU_BeginTimer(void)
 
 // 82741018  R_GPU_EndTimer  (gfx_d3d/r_gpu_timer.cpp:794)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GPU_EndTimer(void)
 
 {
-  int iVar1;
+  GPUTimerFrame *pGVar1;
   
   __savegprlr_28();
-  if (DAT_845b3948 != 0) {
-    if (DAT_845b8b70 == 0) {
-      MyAssertHandler(0xffffffff821c3a70,0x325,0,0xffffffff82000f98,0xffffffff821c3bb4);
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    if (s_currentTimer == (GPUTimer *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x325,0,"%s");
     }
-    iVar1 = DAT_829a2784 * 0x240;
-    if ((&DAT_845aa914)[iVar1] == '\0') {
-      MyAssertHandler(0xffffffff821c3a70,0x328,0,0xffffffff82000f98,0xffffffff821c3b2c);
+    pGVar1 = s_timerFrames + s_writeIndex;
+    if (s_timerFrames[s_writeIndex].isCurrent == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
+                      0x328,0,"%s");
     }
-    R_HW_InsertCallback(0xffffffff82740768,
-                        ((DAT_845b8b70 - (int)(&DAT_845aa908 + iVar1)) + -0x10) / 0x14);
-    DAT_845b8b70 = *(int *)(DAT_845b8b70 + 8);
+    R_HW_InsertCallback(R_GPU_EndTimerCallback,((int)s_currentTimer + (-0x10 - (int)pGVar1)) / 0x14)
+    ;
+    s_currentTimer = *(GPUTimer **)&s_currentTimer->field_0x8;
   }
   __restgprlr_28();
   return;
@@ -400,23 +430,26 @@ void R_GPU_EndTimer(void)
 
 // 827410F0  R_GPU_AddPaddingCount  (gfx_d3d/r_gpu_timer.cpp:825)
 
-void R_GPU_AddPaddingCount(void)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_GPU_AddPaddingCount(uint param_1)
 
 {
   ulonglong uVar1;
   int iVar2;
   ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_845b3948 != 0) {
+  uVar1 = __savegprlr_27(param_1);
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
     uVar1 = uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xfffffff;
     uVar3 = uVar1 << 4;
     while (uVar1 != 0) {
       iVar2 = R_HasDeviceOwnership();
       if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff821c3970,7,0,0xffffffff82000f98,0xffffffff8217d420);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_callback_xbox.h"
+                        ,7,0,"%s");
       }
-      D3DDevice_InsertCallback(DAT_84616688,0,0xffffffff82740ad0,0);
+      D3DDevice_InsertCallback(dx.device,0,R_GPU_AddPaddingCallback,0);
       uVar3 = uVar3 - 1;
       uVar1 = uVar3;
     }
@@ -428,23 +461,23 @@ void R_GPU_AddPaddingCount(void)
 
 // 82741190  R_GPU_DrawTimers  (gfx_d3d/r_gpu_timer.cpp:842)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GPU_DrawTimers(void)
 
 {
   int iVar1;
-  int iVar2;
   
   __savegprlr_29();
-  iVar1 = DAT_845b8b6c;
-  if (DAT_845b3948 != 0) {
-    iVar2 = DAT_845b8b6c * 0x240;
-    R_GPU_CalcDerivedTimers(&DAT_845aa908 + iVar2);
+  iVar1 = s_readIndex;
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    R_GPU_CalcDerivedTimers(s_timerFrames + s_readIndex);
     DAT_845b3958 = iVar1;
-    *(undefined4 *)(&DAT_845b3960 + iVar1 * 0x148) = *(undefined4 *)(&DAT_845aa90c + iVar2);
-    DAT_845b3918 = *(undefined4 *)(&DAT_829a2724 + DAT_845b3948 * 4);
-    DAT_845b391c = *(undefined4 *)(&DAT_829a2754 + DAT_845b3948 * 4);
-    *(undefined4 *)(&DAT_845b3964 + DAT_845b3958 * 0x148) = *(undefined4 *)(&DAT_845aa910 + iVar2);
-    R_Perf_DrawTimers(0xffffffff845b3958,0xffffffff845b390c);
+    *(uint *)(&DAT_845b3960 + iVar1 * 0x148) = s_timerFrames[iVar1].beginTime;
+    s_gpuTimerStyle.displayMode = s_gpuPerfMode[s_displayMode];
+    s_gpuTimerStyle.displayType = s_gpuPerfType[s_displayMode];
+    *(uint *)(&DAT_845b3964 + DAT_845b3958 * 0x148) = s_timerFrames[iVar1].totalTime;
+    R_Perf_DrawTimers((PerfTimerFrameHistory *)&DAT_845b3958,&s_gpuTimerStyle);
   }
   __restgprlr_29();
   return;
@@ -453,27 +486,31 @@ void R_GPU_DrawTimers(void)
 
 // 827414F0  R_GPU_GetMilliseconds  (gfx_d3d/r_gpu_timer.cpp:877)
 
-ulonglong R_GPU_GetMilliseconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint R_GPU_GetMilliseconds(void)
 
 {
-  ulonglong uVar1;
+  ulong64 uVar1;
   
   uVar1 = R_GPU_GetMicroseconds();
-  return uVar1 / 1000 & 0xffffffff;
+  return (uint)(uVar1 / 1000);
 }
 
 
 // 82741240  R_GPU_GetMicroseconds  (gfx_d3d/r_gpu_timer.cpp:883)
 
-longlong R_GPU_GetMicroseconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong64 R_GPU_GetMicroseconds(void)
 
 {
-  double dVar1;
+  double in_f1;
   
-  if (DAT_845b3948 != 0) {
-    DAT_845b3950 = (ulonglong)DAT_845b8b60 + DAT_845b3950;
-    dVar1 = (double)__u64tod();
-    return (longlong)(dVar1 * DAT_841db438);
+  if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
+    DAT_845b3950 = (ulonglong)s_totalTime + DAT_845b3950;
+    __u64tod();
+    return (longlong)(in_f1 * usecPerRawTimerTick);
   }
   return 0;
 }
@@ -481,106 +518,110 @@ longlong R_GPU_GetMicroseconds(void)
 
 // 827412B0  R_GPU_GetLastFrameTimesUSec  (gfx_d3d/r_gpu_timer.cpp:900)
 
-void R_GPU_GetLastFrameTimesUSec(undefined8 param_1,ulonglong param_2)
+uint R_GPU_GetLastFrameTimesUSec(uint *param_1,uint param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  longlong lVar7;
+  ulonglong uVar7;
   longlong lVar8;
-  ulonglong uVar9;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   undefined4 uStack_44;
   undefined4 uStack_34;
   
-  uVar2 = __savegprlr_29();
+  uVar11 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_29(param_1);
   if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c3a70,0x389,0,0xffffffff82000f98,0xffffffff820134d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",0x389
+                    ,0,"%s");
   }
-  if (0x40 < (param_2 + 1 & 0xffffffff)) {
-    param_2 = 0x3f;
+  if (0x40 < (uVar11 + 1 & 0xffffffff)) {
+    uVar11 = 0x3f;
   }
-  uVar6 = (ulonglong)DAT_845b8b68;
-  if ((uVar6 < (param_2 + 1 & 0xffffffff)) && (param_2 = uVar6 - 1, uVar6 == 0)) {
-    param_2 = 0;
+  uVar7 = (ulonglong)s_frameIndex;
+  if ((uVar7 < (uVar11 + 1 & 0xffffffff)) && (uVar11 = uVar7 - 1, uVar7 == 0)) {
+    uVar11 = 0;
   }
-  uVar3 = (ulonglong)DAT_845b8b6c;
-  uVar6 = 0;
-  if (3 < (int)param_2) {
-    lVar7 = uVar2 - 4;
-    uVar9 = uVar3 + 0x3e;
+  uVar4 = (ulonglong)(uint)s_readIndex;
+  uVar7 = 0;
+  if (3 < (int)uVar11) {
+    lVar8 = uVar2 - 4;
+    uVar10 = uVar4 + 0x3e;
     do {
-      uVar4 = uVar9 - 0x3e;
-      if ((longlong)uVar4 < 0) {
-        uVar4 = uVar9 + 2;
+      uVar5 = uVar10 - 0x3e;
+      if ((longlong)uVar5 < 0) {
+        uVar5 = uVar10 + 2;
       }
-      uVar5 = uVar9 - 0x3f;
+      uVar6 = uVar10 - 0x3f;
       uStack_44 = (undefined4)
                   (longlong)
-                  ((double)*(uint *)(&DAT_845aa910 +
-                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
-                  DAT_841db438);
-      iVar1 = (int)lVar7;
+                  ((double)*(uint *)((int)s_timerFrames[0].timers +
+                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    ) * usecPerRawTimerTick);
+      iVar1 = (int)lVar8;
       *(undefined4 *)(iVar1 + 4) = uStack_44;
-      if ((longlong)uVar5 < 0) {
-        uVar5 = uVar9 + 1;
+      if ((longlong)uVar6 < 0) {
+        uVar6 = uVar10 + 1;
       }
       uStack_44 = (undefined4)
                   (longlong)
-                  ((double)*(uint *)(&DAT_845aa910 +
-                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
-                  DAT_841db438);
+                  ((double)*(uint *)((int)s_timerFrames[0].timers +
+                                    (int)((uVar6 + (uVar6 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    ) * usecPerRawTimerTick);
       *(undefined4 *)(iVar1 + 8) = uStack_44;
-      uVar4 = uVar9 - 0x40;
-      if ((longlong)(uVar9 - 0x40) < 0) {
-        uVar4 = uVar9;
+      uVar5 = uVar10 - 0x40;
+      if ((longlong)(uVar10 - 0x40) < 0) {
+        uVar5 = uVar10;
       }
-      uVar5 = uVar9 - 0x41;
+      uVar6 = uVar10 - 0x41;
       uStack_44 = (undefined4)
                   (longlong)
-                  ((double)*(uint *)(&DAT_845aa910 +
-                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
-                  DAT_841db438);
+                  ((double)*(uint *)((int)s_timerFrames[0].timers +
+                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    ) * usecPerRawTimerTick);
       *(undefined4 *)(iVar1 + 0xc) = uStack_44;
-      if ((longlong)uVar5 < 0) {
-        uVar5 = uVar9 - 1;
+      if ((longlong)uVar6 < 0) {
+        uVar6 = uVar10 - 1;
       }
-      uVar6 = uVar6 + 4;
-      uVar9 = uVar9 - 4;
+      uVar7 = uVar7 + 4;
+      uVar10 = uVar10 - 4;
       uStack_44 = (undefined4)
                   (longlong)
-                  ((double)*(uint *)(&DAT_845aa910 +
-                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
-                  DAT_841db438);
-      lVar7 = lVar7 + 0x10;
-      *(undefined4 *)lVar7 = uStack_44;
-    } while ((uVar6 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
+                  ((double)*(uint *)((int)s_timerFrames[0].timers +
+                                    (int)((uVar6 + (uVar6 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    ) * usecPerRawTimerTick);
+      lVar8 = lVar8 + 0x10;
+      *(undefined4 *)lVar8 = uStack_44;
+    } while ((uVar7 & 0xffffffff) < (uVar11 - 3 & 0xffffffff));
   }
-  if ((uVar6 & 0xffffffff) < (param_2 & 0xffffffff)) {
-    lVar8 = param_2 - uVar6;
-    uVar3 = uVar3 - uVar6;
-    lVar7 = (uVar6 & 0x3fffffff) * 4 + uVar2 + -4;
-    uVar6 = lVar8 + uVar6;
+  if ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+    lVar9 = uVar11 - uVar7;
+    uVar4 = uVar4 - uVar7;
+    lVar8 = (uVar7 & 0x3fffffff) * 4 + uVar2 + -4;
+    uVar7 = lVar9 + uVar7;
     do {
-      uVar2 = uVar3;
-      if ((int)uVar3 < 0) {
-        uVar2 = uVar3 + 0x40;
+      uVar2 = uVar4;
+      if ((int)uVar4 < 0) {
+        uVar2 = uVar4 + 0x40;
       }
-      uVar3 = uVar3 - 1;
+      uVar4 = uVar4 - 1;
       uStack_34 = (undefined4)
                   (longlong)
-                  ((double)*(uint *)(&DAT_845aa910 +
-                                    (int)((uVar2 + (uVar2 & 0x1fffffff) * 8 & 0xffffffff) << 6)) *
-                  DAT_841db438);
-      lVar7 = lVar7 + 4;
-      *(undefined4 *)lVar7 = uStack_34;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+                  ((double)*(uint *)((int)s_timerFrames[0].timers +
+                                    (int)((uVar2 + (uVar2 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    ) * usecPerRawTimerTick);
+      lVar8 = lVar8 + 4;
+      *(undefined4 *)lVar8 = uStack_34;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
-  __restgprlr_29(uVar6);
-  return;
+  uVar3 = __restgprlr_29(uVar7);
+  return uVar3;
 }
 

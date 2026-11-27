@@ -2,45 +2,45 @@
 
 // 823F6770  DB_InitStreams  (database/db_stream.cpp:28)
 
-void DB_InitStreams(undefined4 *param_1)
+void DB_InitStreams(XZoneMemory *param_1)
 
 {
-  DAT_83231bf4 = param_1;
-  DAT_83231c1c = 0;
-  DAT_83231bf0 = 0;
-  DAT_83231bfc = *param_1;
-  DAT_83231c00 = *param_1;
-  DAT_83231c04 = param_1[2];
-  DAT_83231c08 = param_1[4];
-  DAT_83231c0c = param_1[6];
-  DAT_83231c10 = param_1[8];
-  DAT_83231c14 = param_1[10];
-  DAT_83231c18 = param_1[0xc];
+  g_streamZoneMem = param_1;
+  g_streamPosIndex = 0;
+  g_streamPosStackIndex = 0;
+  g_streamPos = param_1->blocks[0].data;
+  g_streamPosArray[0] = param_1->blocks[0].data;
+  g_streamPosArray[1] = param_1->blocks[1].data;
+  g_streamPosArray[2] = param_1->blocks[2].data;
+  g_streamPosArray[3] = param_1->blocks[3].data;
+  g_streamPosArray[4] = param_1->blocks[4].data;
+  g_streamPosArray[5] = param_1->blocks[5].data;
+  g_streamPosArray[6] = param_1->blocks[6].data;
   return;
 }
 
 
 // 823F67E0  DB_SetStreamIndex  (database/db_stream.cpp:62)
 
-void DB_SetStreamIndex(int param_1)
+void DB_SetStreamIndex(uint param_1)
 
 {
-  undefined4 *puVar1;
+  uchar **ppuVar1;
   
-  if (param_1 == DAT_83231c1c) {
+  if (param_1 == g_streamPosIndex) {
     return;
   }
-  puVar1 = &DAT_83231c00 + DAT_83231c1c;
-  DAT_83231c1c = param_1;
-  *puVar1 = DAT_83231bfc;
-  DAT_83231bfc = (&DAT_83231c00)[param_1];
+  ppuVar1 = g_streamPosArray + g_streamPosIndex;
+  g_streamPosIndex = param_1;
+  *ppuVar1 = g_streamPos;
+  g_streamPos = g_streamPosArray[param_1];
   return;
 }
 
 
 // 823F6820  DB_PushStreamPos  (database/db_stream.cpp:78)
 
-void DB_PushStreamPos(void)
+void DB_PushStreamPos(uint param_1)
 
 {
   bool bVar1;
@@ -48,28 +48,31 @@ void DB_PushStreamPos(void)
   uint uVar3;
   ulonglong uVar4;
   
-  uVar3 = __savegprlr_27();
+  uVar3 = __savegprlr_27(param_1);
   if (6 < uVar3) {
-    MyAssertHandler(0xffffffff8205c890,0x4f,0,0xffffffff82000f98,0xffffffff8205c864);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x4f,0
+                    ,"%s");
   }
-  if (6 < DAT_83231c1c) {
-    MyAssertHandler(0xffffffff8205c890,0x50,0,0xffffffff82000f98,0xffffffff8205c830);
+  if (6 < g_streamPosIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x50,0
+                    ,"%s");
   }
-  uVar4 = (ulonglong)DAT_83231bf0;
+  uVar4 = (ulonglong)g_streamPosStackIndex;
   if (0x3f < uVar4) {
-    MyAssertHandler(0xffffffff8205c890,0x51,0,0xffffffff82000f98,0xffffffff8205c7f8);
-    uVar4 = (ulonglong)DAT_83231bf0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x51,0
+                    ,"%s");
+    uVar4 = (ulonglong)g_streamPosStackIndex;
   }
-  uVar2 = DAT_83231c1c;
-  bVar1 = uVar3 != DAT_83231c1c;
-  DAT_83231bf0 = (uint)(uVar4 + 1);
-  *(uint *)(&DAT_83231c24 + (int)(uVar4 << 3)) = DAT_83231c1c;
+  uVar2 = g_streamPosIndex;
+  bVar1 = uVar3 != g_streamPosIndex;
+  g_streamPosStackIndex = (uint)(uVar4 + 1);
+  *(uint *)(&DAT_83231c24 + (int)(uVar4 << 3)) = g_streamPosIndex;
   if (bVar1) {
-    DAT_83231c1c = uVar3;
-    (&DAT_83231c00)[uVar2] = DAT_83231bfc;
-    DAT_83231bfc = (&DAT_83231c00)[uVar3];
+    g_streamPosIndex = uVar3;
+    g_streamPosArray[uVar2] = g_streamPos;
+    g_streamPos = g_streamPosArray[uVar3];
   }
-  *(undefined4 *)((int)&DAT_83231c18 + (int)((uVar4 + 1 & 0xffffffff) << 3)) = DAT_83231bfc;
+  *(uchar **)((int)g_streamPosArray + (int)((uVar4 + 1 & 0xffffffff) << 3) + 0x18) = g_streamPos;
   __restgprlr_27();
   return;
 }
@@ -77,29 +80,28 @@ void DB_PushStreamPos(void)
 
 // 823F6930  DB_PopStreamPos  (database/db_stream.cpp:91)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_PopStreamPos(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  uchar **ppuVar2;
   
-  uVar3 = (ulonglong)DAT_83231bf0;
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff8205c890,0x60,0,0xffffffff8205c8d4,0xffffffff8205c8f8);
-    uVar3 = (ulonglong)DAT_83231bf0;
+  if (g_streamPosStackIndex == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x60,0
+                    ,"%s\n\t(g_streamPosStackIndex) = %i");
   }
-  uVar3 = uVar3 - 1;
-  DAT_83231bf0 = (uint)uVar3;
-  if (DAT_83231c1c == 0) {
-    DAT_83231bfc = *(undefined4 *)(&DAT_83231c20 + (int)((uVar3 & 0xffffffff) << 3));
+  g_streamPosStackIndex = g_streamPosStackIndex - 1;
+  if (g_streamPosIndex == 0) {
+    g_streamPos = *(uchar **)(&DAT_83231c20 + g_streamPosStackIndex * 8);
   }
-  iVar1 = *(int *)(&DAT_83231c24 + (int)((uVar3 & 0xffffffff) << 3));
-  if (iVar1 != DAT_83231c1c) {
-    puVar2 = &DAT_83231c00 + DAT_83231c1c;
-    DAT_83231c1c = iVar1;
-    *puVar2 = DAT_83231bfc;
-    DAT_83231bfc = (&DAT_83231c00)[iVar1];
+  uVar1 = *(uint *)(&DAT_83231c24 + g_streamPosStackIndex * 8);
+  if (uVar1 != g_streamPosIndex) {
+    ppuVar2 = g_streamPosArray + g_streamPosIndex;
+    g_streamPosIndex = uVar1;
+    *ppuVar2 = g_streamPos;
+    g_streamPos = g_streamPosArray[uVar1];
   }
   return;
 }
@@ -107,40 +109,46 @@ void DB_PopStreamPos(void)
 
 // 823F69F8  DB_GetStreamPos  (database/db_stream.cpp:116)
 
-undefined4 DB_GetStreamPos(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uchar * DB_GetStreamPos(void)
 
 {
-  return DAT_83231bfc;
+  return g_streamPos;
 }
 
 
 // 823F6A08  DB_AllocStreamPos  (database/db_stream.cpp:122)
 
-void DB_AllocStreamPos(uint param_1)
+uchar * DB_AllocStreamPos(int param_1)
 
 {
-  DAT_83231bfc = DAT_83231bfc + param_1 & ~param_1;
-  return;
+  uchar *puVar1;
+  
+  puVar1 = g_streamPos + param_1;
+  g_streamPos = (uchar *)((uint)puVar1 & ~param_1);
+  return (uchar *)((uint)puVar1 & ~param_1);
 }
 
 
 // 823F6A20  DB_IncStreamPos  (database/db_stream.cpp:129)
 
-void DB_IncStreamPos(void)
+void DB_IncStreamPos(int param_1)
 
 {
   int iVar1;
-  int *piVar2;
   
-  iVar1 = __savegprlr_28();
-  if (DAT_83231bfc == 0) {
-    MyAssertHandler(0xffffffff8205c890,0x82,0,0xffffffff82000f98,0xffffffff8205c990);
+  iVar1 = __savegprlr_28(param_1);
+  if (g_streamPos == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x82,0
+                    ,"%s");
   }
-  piVar2 = (int *)(DAT_83231c1c * 8 + DAT_83231bf4);
-  if ((uint)(piVar2[1] + *piVar2) < (uint)(DAT_83231bfc + iVar1)) {
-    MyAssertHandler(0xffffffff8205c890,0x84,0,0xffffffff82000f98,0xffffffff8205c918);
+  if (g_streamZoneMem->blocks[g_streamPosIndex].data +
+      g_streamZoneMem->blocks[g_streamPosIndex].size < g_streamPos + iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x84,0
+                    ,"%s");
   }
-  DAT_83231bfc = DAT_83231bfc + iVar1;
+  g_streamPos = g_streamPos + iVar1;
   __restgprlr_28();
   return;
 }
@@ -148,16 +156,18 @@ void DB_IncStreamPos(void)
 
 // 823F6AD0  DB_InsertPointer  (database/db_stream.cpp:144)
 
-uint DB_InsertPointer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void ** DB_InsertPointer(void)
 
 {
-  uint uVar1;
+  void **ppvVar1;
   
   DB_PushStreamPos(3);
-  uVar1 = DAT_83231bfc + 3 & 0xfffffffc;
-  DAT_83231bfc = uVar1;
+  g_streamPos = (uchar *)((uint)(g_streamPos + 3) & 0xfffffffc);
+  ppvVar1 = (void **)g_streamPos;
   DB_IncStreamPos(4);
   DB_PopStreamPos();
-  return uVar1;
+  return ppvVar1;
 }
 

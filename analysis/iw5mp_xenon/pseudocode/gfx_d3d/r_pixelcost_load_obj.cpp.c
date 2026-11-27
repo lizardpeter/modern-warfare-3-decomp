@@ -2,26 +2,21 @@
 
 // 82761A60  R_PixelCost_PrintColorCodeKey  (gfx_d3d/r_pixelcost_load_obj.cpp:75)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_PixelCost_PrintColorCodeKey(void)
 
 {
-  byte *pbVar1;
-  longlong lVar2;
-  char *pcVar3;
-  double dVar4;
+  longlong lVar1;
   
   __savegprlr_29();
-  Com_Printf(8,0xffffffff821ca6c4);
-  lVar2 = 6;
-  pcVar3 = "ow";
-  dVar4 = 1.5625;
+  Com_Printf(8,"\n---- PIXEL COST KEY ----\n");
+  lVar1 = 6;
   do {
-    pbVar1 = (byte *)(pcVar3 + 4);
-    pcVar3 = pcVar3 + 8;
-    Com_Printf(8,0xffffffff821ca6b4,(double)(float)((double)*pbVar1 * dVar4),*(undefined4 *)pcVar3);
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
-  Com_Printf(8,0xffffffff821ca698);
+    Com_Printf(8,"  %3.0f%%: %s\n");
+    lVar1 = lVar1 + -1;
+  } while (lVar1 != 0);
+  Com_Printf(8,"----------------------\n\n");
   __restgprlr_29();
   return;
 }

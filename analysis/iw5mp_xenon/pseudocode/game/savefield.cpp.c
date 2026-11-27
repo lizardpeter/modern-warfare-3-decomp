@@ -2,50 +2,54 @@
 
 // 824BA9F8  WriteCStyleString  (game/savefield.cpp:65)
 
-void WriteCStyleString(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void WriteCStyleString(char *param_1,int param_2,MemoryFile *param_3)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined8 uVar3;
-  undefined2 *puVar4;
-  char *pcVar5;
-  int iVar6;
+  int iVar3;
+  ulonglong uVar4;
+  undefined2 *puVar5;
+  char *pcVar6;
   undefined1 local_40 [2];
   undefined2 local_3e [31];
   
-  pcVar2 = (char *)__savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208003c,0x46,0,0xffffffff82000f98,0xffffffff82001348);
+  uVar4 = (ulonglong)(int)param_3;
+  pcVar2 = (char *)__savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x46,0,
+                    "%s");
   }
   if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff8208003c,0x47,0,0xffffffff82000f98,0xffffffff82080038);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x47,0,
+                    "%s");
   }
-  iVar6 = (int)param_2;
-  pcVar5 = pcVar2;
-  if (0x10000 < iVar6) {
-    MyAssertHandler(0xffffffff8208003c,0x48,0,0xffffffff82080010,0xffffffff82080024,param_2);
+  pcVar6 = pcVar2;
+  if (0x10000 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x48,0,
+                    "%s\n\t(maxlen) = %i");
   }
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  pcVar5 = pcVar5 + (-1 - (int)pcVar2);
-  if (iVar6 <= (int)pcVar5) {
-    MyAssertHandler(0xffffffff8208003c,0x4a,0,0xffffffff8207fff8,pcVar5,param_2);
+  pcVar6 = pcVar6 + (-1 - (int)pcVar2);
+  if (param_2 <= (int)pcVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x4a,0,
+                    "len < maxlen\n\t%i, %i");
   }
-  if (iVar6 < 0x101) {
-    puVar4 = (undefined2 *)local_40;
-    local_40[0] = SUB41(pcVar5,0);
-    uVar3 = 1;
+  if (param_2 < 0x101) {
+    puVar5 = (undefined2 *)local_40;
+    local_40[0] = SUB41(pcVar6,0);
+    iVar3 = 1;
   }
   else {
-    puVar4 = local_3e;
-    local_3e[0] = SUB42(pcVar5,0);
-    uVar3 = 2;
+    puVar5 = local_3e;
+    local_3e[0] = SUB42(pcVar6,0);
+    iVar3 = 2;
   }
-  MemFile_WriteData(param_3,uVar3,puVar4);
-  MemFile_WriteData(param_3,pcVar5,pcVar2);
+  MemFile_WriteData((MemoryFile *)uVar4,iVar3,puVar5);
+  MemFile_WriteData((MemoryFile *)uVar4,(int)pcVar6,pcVar2);
   __restgprlr_27();
   return;
 }
@@ -53,33 +57,33 @@ void WriteCStyleString(undefined8 param_1,undefined8 param_2,ulonglong param_3)
 
 // 824BAB28  ReadCStyleString  (game/savefield.cpp:95)
 
-void ReadCStyleString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void ReadCStyleString(char *param_1,int param_2,MemoryFile *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
+  void *pvVar1;
+  uint uVar2;
   byte local_30 [2];
   ushort local_2e [23];
   
-  iVar1 = __savegprlr_28();
-  iVar2 = (int)param_2;
-  if (0x10000 < iVar2) {
-    MyAssertHandler(0xffffffff8208003c,100,0,0xffffffff82080010,0xffffffff82080024,param_2);
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  if (0x10000 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",100,0,
+                    "%s\n\t(maxlen) = %i");
   }
-  if (iVar2 < 0x101) {
+  if (param_2 < 0x101) {
     MemFile_ReadData(param_3,1,local_30);
-    uVar3 = (uint)local_30[0];
+    uVar2 = (uint)local_30[0];
   }
   else {
     MemFile_ReadData(param_3,2,local_2e);
-    uVar3 = (uint)local_2e[0];
+    uVar2 = (uint)local_2e[0];
   }
-  if (iVar2 <= (int)uVar3) {
-    Sys_Error(0xffffffff82038a98);
+  if (param_2 <= (int)uVar2) {
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("GAME_ERR_SAVEGAME_BAD");
   }
-  MemFile_ReadData(param_3,uVar3,iVar1);
-  *(undefined1 *)(uVar3 + iVar1) = 0;
+  MemFile_ReadData(param_3,uVar2,pvVar1);
+  *(undefined1 *)(uVar2 + (int)pvVar1) = 0;
   __restgprlr_28();
   return;
 }
@@ -87,21 +91,24 @@ void ReadCStyleString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 824BABD8  Scr_FreeFields  (game/savefield.cpp:125)
 
-void Scr_FreeFields(uint *param_1,longlong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_FreeFields(saveField_t *param_1,uchar *param_2)
 
 {
-  uint uVar1;
+  saveFieldtype_t sVar1;
   
-  uVar1 = param_1[1];
-  while (uVar1 != 0) {
-    if (param_1[1] == 1) {
-      Scr_SetString((ulonglong)*param_1 + param_2,0);
+  sVar1 = param_1->type;
+  while (sVar1 != SF_NONE) {
+    if (param_1->type == SF_STRING) {
+      Scr_SetString((ushort *)(param_2 + param_1->ofs),0);
     }
-    else if (param_1[1] == 4) {
-      EntHandle__setEnt((ulonglong)*param_1 + param_2,0);
+    else if (param_1->type == SF_ENTHANDLE) {
+      EntHandle::setEnt((EntHandle *)(param_2 + param_1->ofs),(gentity_s *)0x0);
     }
-    uVar1 = param_1[3];
-    param_1 = param_1 + 2;
+    sVar1 = param_1[1].type;
+    param_1 = param_1 + 1;
   }
   return;
 }
@@ -109,147 +116,163 @@ void Scr_FreeFields(uint *param_1,longlong param_2)
 
 // 824BAC68  WriteField1  (game/savefield.cpp:151)
 
-void WriteField1(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void WriteField1(saveField_t *param_1,uchar *param_2,uchar *param_3)
 
 {
-  uint *puVar2;
-  int iVar3;
-  short sVar5;
-  ulonglong uVar1;
+  int *piVar1;
+  int iVar2;
+  PhysWorld PVar3;
   uint uVar4;
-  uint *puVar6;
-  longlong lVar7;
+  ushort uVar7;
+  XAnim_s *pXVar5;
+  EntHandle EVar6;
+  longlong lVar8;
+  EntHandle *this;
   
-  puVar2 = (uint *)__savegprlr_28();
-  param_2 = (ulonglong)*puVar2 + param_2;
-  puVar6 = (uint *)param_2;
-  switch(puVar2[1]) {
+  lVar8 = (longlong)(int)param_2;
+  piVar1 = (int *)__savegprlr_28(param_1,lVar8,param_3);
+  this = (EntHandle *)(*piVar1 + (int)lVar8);
+  switch(piVar1[1]) {
   case 1:
-    if (*(short *)puVar6 != 0) {
-      *(short *)puVar6 = 1;
+    if (this->number != 0) {
+      this->number = 1;
       __restgprlr_28();
       return;
     }
     break;
   case 2:
-    if (*puVar6 != 0) {
-      *puVar6 = 1;
+    if (*this != (EntHandle)0x0) {
+      this->number = 0;
+      this->infoIndex = 1;
       __restgprlr_28();
       return;
     }
     break;
   case 3:
-    if (*puVar6 != 0) {
-      lVar7 = (longlong)((int)(*puVar6 + 0x7cc8c980) / 0x280) + 1;
-      uVar4 = (uint)lVar7;
-      if ((0x800 < (int)uVar4) || ((int)uVar4 < 0)) {
-        Com_Error(1,0xffffffff82080160,lVar7);
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)(((int)*this + 0x7cc8c980) / 0x280 + 1);
+      if ((0x800 < (int)EVar6) || ((int)EVar6 < 0)) {
+        Com_Error(ERR_DROP,"\x15WriteField1: entity out of range (%i)");
       }
-      *puVar6 = uVar4;
+      *this = EVar6;
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 4:
-    iVar3 = EntHandle__isDefined(param_2);
-    if (iVar3 != 0) {
-      lVar7 = EntHandle__entnum(param_2);
-      uVar4 = (uint)(lVar7 + 1);
-      if ((0x800 < (int)uVar4) || ((int)uVar4 < 0)) {
-        Com_Error(1,0xffffffff82080160,lVar7 + 1);
+    iVar2 = EntHandle::isDefined(this);
+    if (iVar2 != 0) {
+      uVar4 = EntHandle::entnum(this);
+      EVar6 = (EntHandle)(uVar4 + 1);
+      if ((0x800 < (int)EVar6) || ((int)EVar6 < 0)) {
+        Com_Error(ERR_DROP,"\x15WriteField1: entity out of range (%i)");
       }
-      *puVar6 = uVar4;
+      *this = EVar6;
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 5:
-    if (*puVar6 != 0) {
-      lVar7 = (longlong)((int)(*puVar6 - DAT_83580b00) / 0x3980) + 1;
-      uVar4 = (uint)lVar7;
-      if ((0x12 < (int)uVar4) || ((int)uVar4 < 0)) {
-        Com_Error(1,0xffffffff82080138,lVar7);
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)(((int)*this - (int)level.clients) / 0x3980 + 1);
+      if ((0x12 < (int)EVar6) || ((int)EVar6 < 0)) {
+        Com_Error(ERR_DROP,"\x15WriteField1: client out of range (%i)");
       }
-      *puVar6 = uVar4;
+      *this = EVar6;
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 6:
-    if (*puVar6 != 0) {
-      lVar7 = (longlong)((int)(*puVar6 - DAT_83583368) / 0x438) + 1;
-      uVar4 = (uint)lVar7;
-      if ((8 < (int)uVar4) || ((int)uVar4 < 0)) {
-        Com_Error(1,0xffffffff82080110,lVar7);
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)(((int)*this - (int)level.vehicles) / 0x438 + 1);
+      if ((8 < (int)EVar6) || ((int)EVar6 < 0)) {
+        Com_Error(ERR_DROP,"\x15WriteField1: vehicle out of range (%i)");
       }
-      *puVar6 = uVar4;
+      *this = EVar6;
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 7:
-    if (*puVar6 != 0) {
-      uVar1 = (longlong)((int)(*puVar6 - DAT_83580b14) / 0xcc) + 1;
-      if (0x20 < (uVar1 & 0xffffffff)) {
-        Com_Error(1,0xffffffff820800e8,uVar1);
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)(((int)*this - (int)level.turrets) / 0xcc + 1);
+      if (0x20 < (uint)EVar6) {
+        Com_Error(ERR_DROP,"\x15WriteField1: turret out of range (%i)");
       }
-      *puVar6 = (uint)uVar1;
+      *this = EVar6;
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 8:
-    sVar5 = Scr_ConvertThreadToSave(*(short *)puVar6);
-    *(short *)puVar6 = sVar5;
+    uVar7 = Scr_ConvertThreadToSave(this->number);
+    this->number = uVar7;
     __restgprlr_28();
     return;
   case 9:
-    if (*puVar6 != 0) {
-      iVar3 = Phys_ObjGetWorld();
-      if (iVar3 != 4) {
-        MyAssertHandler(0xffffffff8208003c,0xff,0,0xffffffff82000f98,0xffffffff820800a0);
+    if (*this != (EntHandle)0x0) {
+      PVar3 = Phys_ObjGetWorld((int)*this);
+      if (PVar3 != PHYS_WORLD_LAST_SERVER_WORLD) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0xff,0
+                        ,"%s");
       }
-      iVar3 = Phys_ObjGetSaveIndex(*puVar6);
-      *puVar6 = iVar3 + 1;
+      uVar4 = Phys_ObjGetSaveIndex((int)*this);
+      *this = (EntHandle)(uVar4 + 1);
       __restgprlr_28();
       return;
     }
-    *puVar6 = 0;
+    this->number = 0;
+    this->infoIndex = 0;
     __restgprlr_28();
     return;
   case 10:
-    if (*puVar6 == 0) {
-      *puVar6 = 0;
+    if (*this == (EntHandle)0x0) {
+      this->number = 0;
+      this->infoIndex = 0;
       __restgprlr_28();
       return;
     }
-    uVar1 = XAnimGetAnims();
-    if ((uVar1 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8208003c,300,0,0xffffffff82000f98,0xffffffff8202a360);
+    pXVar5 = XAnimGetAnims((XAnimTree *)*this);
+    if (pXVar5 == (XAnim_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",300,0,
+                      "%s");
     }
-    uVar4 = Scr_GetAnimsIndex(uVar1);
-    if (uVar4 == 0) {
-      MyAssertHandler(0xffffffff8208003c,0x12e,0,0xffffffff82000f98,0xffffffff8207e3ec);
+    EVar6 = (EntHandle)Scr_GetAnimsIndex(pXVar5);
+    if (EVar6 == (EntHandle)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x12e,0,
+                      "%s");
     }
-    *puVar6 = uVar4;
+    *this = EVar6;
     __restgprlr_28();
     return;
   case 0xb:
-    *puVar6 = (uint)(*puVar6 != 0);
+    EVar6._0_3_ = 0;
+    EVar6.infoIndex._1_1_ = *this != (EntHandle)0x0;
+    *this = EVar6;
     __restgprlr_28();
     return;
   default:
-    Com_Error(1,0xffffffff8208007c);
+    Com_Error(ERR_DROP,"\x15WriteField1: unknown field type");
   }
   __restgprlr_28();
   return;
@@ -258,53 +281,59 @@ void WriteField1(undefined8 param_1,longlong param_2)
 
 // 824BB030  WriteField2  (game/savefield.cpp:334)
 
-void WriteField2(undefined8 param_1,int param_2,ulonglong param_3)
+void WriteField2(saveField_t *param_1,uchar *param_2,MemoryFile *param_3)
 
 {
   int iVar1;
   int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  undefined1 auStack_a0 [160];
+  int *piVar3;
+  uint uVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  MemoryFile *pMVar7;
+  uchar auStack_a0 [160];
   
-  piVar4 = (int *)__savegprlr_28();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208003c,0x151);
+  uVar6 = (ulonglong)(int)param_3;
+  piVar3 = (int *)__savegprlr_28(param_1);
+  pMVar7 = (MemoryFile *)uVar6;
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x151,
+                    (int)pMVar7,"%s");
   }
-  iVar1 = piVar4[1];
-  iVar2 = *piVar4;
+  iVar1 = piVar3[1];
+  iVar2 = *piVar3;
   if (iVar1 == 1) {
-    uVar3 = MemFile_GetUsedSize(param_3);
-    ProfMem_Begin(0xffffffff820181d4,uVar3);
-    if (*(short *)(iVar2 + param_2) != 0) {
-      uVar3 = SL_ConvertToString();
+    uVar4 = MemFile_GetUsedSize(pMVar7);
+    ProfMem_Begin("string",uVar4);
+    if (*(ushort *)(param_2 + iVar2) != 0) {
+      pcVar5 = SL_ConvertToString((uint)*(ushort *)(param_2 + iVar2));
 LAB_824bb144:
-      MemFile_WriteCString(param_3,uVar3);
+      MemFile_WriteCString(pMVar7,pcVar5);
     }
   }
   else {
     if (iVar1 != 2) {
-      if ((iVar1 == 0xb) && (*(void **)(iVar2 + param_2) != (void *)0x0)) {
-        memcpy(auStack_a0,*(void **)(iVar2 + param_2),0x70);
-        uVar3 = MemFile_GetUsedSize(param_3);
-        ProfMem_Begin(0xffffffff8207f818,uVar3);
-        G_WriteStruct(0xffffffff8207ffd8,*(undefined4 *)(iVar2 + param_2),auStack_a0,0x70,param_3);
-        MemFile_GetUsedSize(param_3);
-        ProfMem_End();
+      if ((iVar1 == 0xb) && (*(int *)(param_2 + iVar2) != 0)) {
+        memcpy();
+        uVar4 = MemFile_GetUsedSize(pMVar7);
+        ProfMem_Begin("tagInfo",uVar4);
+        G_WriteStruct(tagInfoFields,*(uchar **)(param_2 + iVar2),auStack_a0,0x70,pMVar7);
+        uVar4 = MemFile_GetUsedSize(pMVar7);
+        ProfMem_End(uVar4);
         __restgprlr_28();
         return;
       }
       goto LAB_824bb15c;
     }
-    uVar3 = MemFile_GetUsedSize(param_3);
-    ProfMem_Begin(0xffffffff820181d4,uVar3);
-    if (*(int *)(iVar2 + param_2) != 0) {
-      uVar3 = XModelGetName();
+    uVar4 = MemFile_GetUsedSize(pMVar7);
+    ProfMem_Begin("string",uVar4);
+    if (*(XModel **)(param_2 + iVar2) != (XModel *)0x0) {
+      pcVar5 = XModelGetName(*(XModel **)(param_2 + iVar2));
       goto LAB_824bb144;
     }
   }
-  MemFile_GetUsedSize(param_3);
-  ProfMem_End();
+  uVar4 = MemFile_GetUsedSize(pMVar7);
+  ProfMem_End(uVar4);
 LAB_824bb15c:
   __restgprlr_28();
   return;
@@ -313,190 +342,212 @@ LAB_824bb15c:
 
 // 824BB168  ReadField  (game/savefield.cpp:401)
 
-void ReadField(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+char * ReadField(saveField_t *param_1,uchar *param_2,SaveGame *param_3)
 
 {
-  uint uVar1;
-  uint *puVar4;
-  short sVar6;
-  ulonglong uVar2;
-  uint uVar5;
-  undefined8 uVar3;
-  uint *puVar7;
+  int *piVar1;
+  SaveGame *pSVar2;
+  uint uVar3;
+  MemoryFile *pMVar4;
+  ushort uVar8;
+  XAnim_s *pXVar5;
+  EntHandle EVar6;
+  char *pcVar7;
+  ulonglong uVar9;
+  EntHandle *this;
   char in_RESERVE;
   byte in_cr0;
   
-  puVar4 = (uint *)__savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208003c,0x196,0,0xffffffff82000f98,0xffffffff82075e4c);
+  uVar9 = (ulonglong)(int)param_3;
+  piVar1 = (int *)__savegprlr_27(param_1);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x196,0,
+                    "%s");
   }
-  uVar5 = *puVar4;
-  puVar7 = (uint *)((ulonglong)uVar5 + param_2);
-  switch(puVar4[1]) {
+  this = (EntHandle *)(param_2 + *piVar1);
+  pSVar2 = (SaveGame *)uVar9;
+  switch(piVar1[1]) {
   case 1:
-    if (*(short *)puVar7 != 0) {
-      SaveMemory_GetMemoryFile(param_3);
-      uVar3 = MemFile_ReadCString();
-      sVar6 = SL_GetString(uVar3,0);
-      *(short *)puVar7 = sVar6;
-      __restgprlr_27(0);
-      return;
+    if (this->number != 0) {
+      pMVar4 = SaveMemory_GetMemoryFile(pSVar2);
+      pcVar7 = MemFile_ReadCString(pMVar4);
+      uVar3 = SL_GetString(pcVar7,0);
+      this->number = (ushort)uVar3;
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     goto LAB_824bb540;
   case 2:
-    if (*puVar7 != 0) {
-      SaveMemory_GetMemoryFile(param_3);
-      MemFile_ReadCString();
-      uVar5 = SV_XModelGet();
-      *puVar7 = uVar5;
-      __restgprlr_27(0);
-      return;
+    if (*this != (EntHandle)0x0) {
+      pMVar4 = SaveMemory_GetMemoryFile(pSVar2);
+      pcVar7 = MemFile_ReadCString(pMVar4);
+      EVar6 = (EntHandle)SV_XModelGet(pcVar7);
+      *this = EVar6;
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     goto LAB_824bb540;
   case 3:
-    uVar5 = *puVar7;
-    if ((0x800 < (int)uVar5) || ((int)uVar5 < 0)) {
+    EVar6 = *this;
+    if ((0x800 < (int)EVar6) || ((int)EVar6 < 0)) {
 LAB_824bb2b0:
-      va(0xffffffff820801f0);
-      __restgprlr_27();
-      return;
+      pcVar7 = va("entity out of range (%i)");
+      pcVar7 = (char *)__restgprlr_27(pcVar7);
+      return pcVar7;
     }
-    if (uVar5 != 0) {
-      *puVar7 = uVar5 * 0x280 + 0x83373400;
-      __restgprlr_27(0);
-      return;
+    if (EVar6 != (EntHandle)0x0) {
+      *this = (EntHandle)((int)EVar6 * 0x280 + -0x7cc8cc00);
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 4:
-    uVar1 = *puVar7;
-    if ((0x800 < (int)uVar1) || ((int)uVar1 < 0)) goto LAB_824bb2b0;
-    *puVar7 = 0;
-    if (uVar1 != 0) {
-      EntHandle__setEnt((ulonglong)uVar5 + param_2,
-                        ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80
-                        + -0x7cc8cc00);
-      __restgprlr_27(0);
-      return;
+    EVar6 = *this;
+    if ((0x800 < (int)EVar6) || ((int)EVar6 < 0)) goto LAB_824bb2b0;
+    this->number = 0;
+    this->infoIndex = 0;
+    if (EVar6 != (EntHandle)0x0) {
+      EntHandle::setEnt(this,(gentity_s *)((int)g_hudelems + (int)EVar6 * 0x280 + 0x2cf10));
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     goto LAB_824bb540;
   case 5:
-    uVar5 = *puVar7;
-    if ((0x12 < (int)uVar5) || ((int)uVar5 < 0)) {
-      va(0xffffffff820801d4);
-      __restgprlr_27();
-      return;
+    EVar6 = *this;
+    if ((0x12 < (int)EVar6) || ((int)EVar6 < 0)) {
+      pcVar7 = va("client out of range (%i)");
+      pcVar7 = (char *)__restgprlr_27(pcVar7);
+      return pcVar7;
     }
-    if (uVar5 != 0) {
-      *puVar7 = (uVar5 * 0x3980 + DAT_83580b00) - 0x3980;
-      __restgprlr_27(0);
-      return;
+    if (EVar6 != (EntHandle)0x0) {
+      *this = (EntHandle)(level.clients + (int)EVar6 + -1);
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 6:
-    uVar5 = *puVar7;
-    if ((8 < (int)uVar5) || ((int)uVar5 < 0)) {
-      va(0xffffffff820801b8);
-      __restgprlr_27();
-      return;
+    EVar6 = *this;
+    if ((8 < (int)EVar6) || ((int)EVar6 < 0)) {
+      pcVar7 = va("vehicle out of range (%i)");
+      pcVar7 = (char *)__restgprlr_27(pcVar7);
+      return pcVar7;
     }
-    if (uVar5 != 0) {
-      *puVar7 = (uVar5 * 0x438 + DAT_83583368) - 0x438;
-      __restgprlr_27(0);
-      return;
+    if (EVar6 != (EntHandle)0x0) {
+      *this = (EntHandle)(level.vehicles + (int)EVar6 + -1);
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 7:
-    uVar5 = *puVar7;
-    if (0x20 < uVar5) {
-      va(0xffffffff8208019c);
-      __restgprlr_27();
-      return;
+    EVar6 = *this;
+    if (0x20 < (uint)EVar6) {
+      pcVar7 = va("turret out of range (%i)");
+      pcVar7 = (char *)__restgprlr_27(pcVar7);
+      return pcVar7;
     }
-    if (uVar5 != 0) {
-      *puVar7 = (uVar5 * 0xcc + DAT_83580b14) - 0xcc;
-      __restgprlr_27(0);
-      return;
+    if (EVar6 != (EntHandle)0x0) {
+      *this = (EntHandle)(level.turrets + ((int)EVar6 - 1));
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 8:
-    sVar6 = Scr_ConvertThreadFromLoad(*(short *)puVar7);
-    *(short *)puVar7 = sVar6;
-    __restgprlr_27(0);
-    return;
+    uVar8 = Scr_ConvertThreadFromLoad(this->number);
+    this->number = uVar8;
+    pcVar7 = (char *)__restgprlr_27(0);
+    return pcVar7;
   case 9:
-    if (*puVar7 != 0) {
-      uVar5 = Phys_ObjFromSaveIndex(4,(ulonglong)*puVar7 - 1);
-      *puVar7 = uVar5;
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)Phys_ObjFromSaveIndex(PHYS_WORLD_LAST_SERVER_WORLD,(int)*this - 1);
+      *this = EVar6;
       do {
         if (in_RESERVE != '\0') {
-          DAT_8427b910 = storeWordConditionalIndexed
-                                   ((ulonglong)DAT_8427b910 + 1,0,0xffffffff8427b910);
+          g_entPhysObjCount =
+               storeWordConditionalIndexed
+                         ((ulonglong)(uint)g_entPhysObjCount + 1,0,0xffffffff8427b910);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      __restgprlr_27(0);
-      return;
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 10:
-    if (*puVar7 != 0) {
-      uVar2 = Scr_GetAnims();
-      if ((uVar2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff8208003c,0x22b,0,0xffffffff82000f98,0xffffffff8202a360);
+    if (*this != (EntHandle)0x0) {
+      pXVar5 = Scr_GetAnims((uint)*this);
+      if (pXVar5 == (XAnim_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x22b,
+                        0,"%s");
       }
-      uVar5 = Com_XAnimCreateSmallTree(uVar2);
-      *puVar7 = uVar5;
-      __restgprlr_27(0);
-      return;
+      EVar6 = (EntHandle)Com_XAnimCreateSmallTree(pXVar5);
+      *this = EVar6;
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     break;
   case 0xb:
-    if (*puVar7 != 0) {
-      uVar3 = MT_Alloc(0x70,0x12);
-      *puVar7 = (uint)uVar3;
-      G_ReadStruct(0xffffffff8207ffd8,uVar3,0x70,param_3);
-      __restgprlr_27(0);
-      return;
+    if (*this != (EntHandle)0x0) {
+      EVar6 = (EntHandle)MT_Alloc(0x70,0x12);
+      *this = EVar6;
+      G_ReadStruct(tagInfoFields,(uchar *)EVar6,0x70,pSVar2);
+      pcVar7 = (char *)__restgprlr_27(0);
+      return pcVar7;
     }
     goto LAB_824bb540;
   default:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8208003c,0x24e,0,0xffffffff82080188);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x24e,0,
+                      "unknown field type");
     }
 LAB_824bb540:
-    __restgprlr_27(0);
-    return;
+    pcVar7 = (char *)__restgprlr_27(0);
+    return pcVar7;
   }
-  *puVar7 = 0;
-  __restgprlr_27(0);
-  return;
+  this->number = 0;
+  this->infoIndex = 0;
+  pcVar7 = (char *)__restgprlr_27(0);
+  return pcVar7;
 }
 
 
 // 824BB550  ClearField  (game/savefield.cpp:605)
 
-void ClearField(int *param_1,int param_2)
+void ClearField(saveField_t *param_1,uchar *param_2)
 
 {
-  switch(param_1[1]) {
-  case 1:
-  case 8:
-    *(undefined2 *)(*param_1 + param_2) = 0;
+  int iVar1;
+  uchar *puVar2;
+  
+  iVar1 = param_1->ofs;
+  switch(param_1->type) {
+  case SF_STRING:
+  case SF_THREAD:
+    (param_2 + iVar1)[0] = '\0';
+    (param_2 + iVar1)[1] = '\0';
     break;
-  case 2:
-  case 3:
-  case 4:
-  case 5:
-  case 6:
-  case 7:
-  case 9:
-  case 10:
-  case 0xb:
-    *(undefined4 *)(*param_1 + param_2) = 0;
+  case SF_MODEL:
+  case SF_ENTITY:
+  case SF_ENTHANDLE:
+  case SF_CLIENT:
+  case SF_VEHICLE:
+  case SF_TURRET:
+  case SF_PHYS_OBJ:
+  case SF_ANIMTREE:
+  case SF_TYPE_TAG_INFO:
+    puVar2 = param_2 + iVar1;
+    puVar2[0] = '\0';
+    puVar2[1] = '\0';
+    puVar2[2] = '\0';
+    puVar2[3] = '\0';
     return;
   default:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8208003c,0x282,0,0xffffffff82080188);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x282,0,
+                      "unknown field type");
       return;
     }
   }
@@ -506,36 +557,41 @@ void ClearField(int *param_1,int param_2)
 
 // 824BB5F0  G_WriteStruct  (game/savefield.cpp:654)
 
-void G_WriteStruct(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                  ulonglong param_5)
+void G_WriteStruct(saveField_t *param_1,uchar *param_2,uchar *param_3,int param_4,
+                  MemoryFile *param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar4;
-  undefined8 uVar3;
+  saveFieldtype_t sVar1;
+  saveField_t *psVar2;
+  saveField_t *psVar3;
+  uint uVar4;
+  ulonglong uVar6;
+  MemoryFile *pMVar5;
   
-  iVar4 = __savegprlr_26();
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208003c,0x291,0,0xffffffff82000f98,0xffffffff82001348);
+  uVar6 = (ulonglong)(int)param_5;
+  psVar3 = (saveField_t *)__savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x291,0,
+                    "%s");
   }
-  iVar1 = *(int *)(iVar4 + 4);
-  iVar2 = iVar4;
-  while (iVar1 != 0) {
-    WriteField1(iVar2,param_3,param_2);
-    iVar1 = *(int *)(iVar2 + 0xc);
-    iVar2 = iVar2 + 8;
+  sVar1 = psVar3->type;
+  psVar2 = psVar3;
+  while (sVar1 != SF_NONE) {
+    WriteField1(psVar2,param_3,param_2);
+    sVar1 = psVar2[1].type;
+    psVar2 = psVar2 + 1;
   }
-  uVar3 = MemFile_GetUsedSize(param_5);
-  ProfMem_Begin(0xffffffff8208020c,uVar3);
-  MemFile_WriteData(param_5,param_4,param_3);
-  MemFile_GetUsedSize(param_5);
-  ProfMem_End();
-  iVar1 = *(int *)(iVar4 + 4);
-  while (iVar1 != 0) {
-    WriteField2(iVar4,param_2,param_5);
-    iVar1 = *(int *)(iVar4 + 0xc);
-    iVar4 = iVar4 + 8;
+  pMVar5 = (MemoryFile *)uVar6;
+  uVar4 = MemFile_GetUsedSize(pMVar5);
+  ProfMem_Begin("writestruct struct",uVar4);
+  MemFile_WriteData(pMVar5,param_4,param_3);
+  uVar4 = MemFile_GetUsedSize(pMVar5);
+  ProfMem_End(uVar4);
+  sVar1 = psVar3->type;
+  while (sVar1 != SF_NONE) {
+    WriteField2(psVar3,param_2,pMVar5);
+    sVar1 = psVar3[1].type;
+    psVar3 = psVar3 + 1;
   }
   __restgprlr_26();
   return;
@@ -544,55 +600,67 @@ void G_WriteStruct(undefined8 param_1,undefined8 param_2,undefined8 param_3,unde
 
 // 824BB6D8  G_ReadStruct  (game/savefield.cpp:678)
 
-void G_ReadStruct(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+void G_ReadStruct(saveField_t *param_1,uchar *param_2,int param_3,SaveGame *param_4)
 
 {
-  int iVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  int *piVar4;
+  saveFieldtype_t sVar1;
+  int iVar2;
+  uchar *puVar3;
+  saveField_t *psVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  saveFieldtype_t *psVar7;
   
-  piVar3 = (int *)__savegprlr_22();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208003c,0x2aa,0,0xffffffff82000f98,0xffffffff82075e4c);
+  uVar6 = (ulonglong)(int)param_4;
+  psVar4 = (saveField_t *)__savegprlr_22(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",0x2aa,0,
+                    "%s");
   }
-  SaveMemory_LoadRead(param_2,param_3,param_4);
-  piVar4 = piVar3 + 1;
-  iVar1 = *piVar4;
-  while (iVar1 != 0) {
-    uVar2 = ReadField(piVar3,param_2,param_4);
-    if ((uVar2 & 0xffffffff) != 0) {
-      iVar1 = *piVar4;
-      while (iVar1 != 0) {
-        switch(iVar1) {
-        case 1:
-        case 8:
-          *(undefined2 *)(*piVar3 + (int)param_2) = 0;
+  SaveMemory_LoadRead(param_2,param_3,(SaveGame *)uVar6);
+  psVar7 = &psVar4->type;
+  sVar1 = *psVar7;
+  while (sVar1 != SF_NONE) {
+    pcVar5 = ReadField(psVar4,param_2,(SaveGame *)uVar6);
+    if (pcVar5 != (char *)0x0) {
+      sVar1 = *psVar7;
+      while (sVar1 != SF_NONE) {
+        iVar2 = psVar4->ofs;
+        switch(sVar1) {
+        case SF_STRING:
+        case SF_THREAD:
+          (param_2 + iVar2)[0] = '\0';
+          (param_2 + iVar2)[1] = '\0';
           break;
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 9:
-        case 10:
-        case 0xb:
-          *(undefined4 *)(*piVar3 + (int)param_2) = 0;
+        case SF_MODEL:
+        case SF_ENTITY:
+        case SF_ENTHANDLE:
+        case SF_CLIENT:
+        case SF_VEHICLE:
+        case SF_TURRET:
+        case SF_PHYS_OBJ:
+        case SF_ANIMTREE:
+        case SF_TYPE_TAG_INFO:
+          puVar3 = param_2 + iVar2;
+          puVar3[0] = '\0';
+          puVar3[1] = '\0';
+          puVar3[2] = '\0';
+          puVar3[3] = '\0';
           break;
         default:
-          if (DAT_84013128 == 0) {
-            MyAssertHandler(0xffffffff8208003c,0x282,0,0xffffffff82080188);
+          if (alwaysfails == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savefield.cpp",
+                            0x282,0,"unknown field type");
           }
         }
-        iVar1 = piVar3[3];
-        piVar3 = piVar3 + 2;
+        sVar1 = psVar4[1].type;
+        psVar4 = psVar4 + 1;
       }
-      Com_Error(1,0xffffffff82080220,uVar2);
+      Com_Error(ERR_DROP,"\x15ReadField: %s");
     }
-    piVar4 = piVar3 + 3;
-    iVar1 = piVar3[3];
-    piVar3 = piVar3 + 2;
+    psVar7 = &psVar4[1].type;
+    sVar1 = psVar4[1].type;
+    psVar4 = psVar4 + 1;
   }
   __restgprlr_22();
   return;

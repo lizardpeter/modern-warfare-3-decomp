@@ -17899,7 +17899,7 @@ LAB_824ec794:
   824EC794  38210090             addi r1,r1,0x90
   824EC798  48429F68             b 0x82916700
 
-; 824EEFC8  dwFileTask::operator=  (line unknown)
+; 824EEFC8  operator=  (line unknown)
   824EEFC8  80C40000             lwz r6,0x0(r4)
   824EEFCC  39000080             li r8,0x80
   824EEFD0  39640018             addi r11,r4,0x18

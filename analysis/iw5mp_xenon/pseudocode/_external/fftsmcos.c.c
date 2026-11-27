@@ -5,9 +5,8 @@
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-void FftSumCosOlAdd(undefined8 param_1,undefined8 param_2,double param_3,undefined8 param_4,
-                   longlong param_5,int param_6,longlong param_7,undefined8 param_8,longlong param_9
-                   ,longlong param_10,int param_11)
+void FftSumCosOlAdd(float param_1,int param_2,int param_3,short *param_4,float *param_5,
+                   float *param_6,float *param_7,float *param_8,float param_9,float param_10)
 
 {
   double dVar1;
@@ -15,28 +14,32 @@ void FftSumCosOlAdd(undefined8 param_1,undefined8 param_2,double param_3,undefin
   float fVar3;
   undefined4 uVar4;
   int iVar5;
-  int iVar6;
+  uint uVar6;
   float fVar7;
   float fVar8;
   float fVar9;
   float fVar10;
   float fVar11;
-  undefined *puVar12;
-  undefined *puVar13;
-  float *pfVar14;
-  undefined4 *puVar15;
+  int iVar12;
+  float *pfVar13;
+  undefined4 *puVar14;
+  float *pfVar15;
   undefined4 *puVar16;
-  float *pfVar17;
-  undefined1 (*pauVar18) [16];
-  float *pfVar20;
+  int in_r10;
+  undefined1 (*pauVar17) [16];
   float *pfVar21;
+  longlong lVar18;
+  float *pfVar22;
   longlong lVar19;
-  longlong lVar22;
-  double dVar23;
-  double dVar24;
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
+  longlong lVar20;
+  longlong lVar23;
+  longlong lVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
   undefined1 local_9e0 [16];
   undefined1 local_9d0 [16];
   float local_9c0 [79];
@@ -47,101 +50,108 @@ void FftSumCosOlAdd(undefined8 param_1,undefined8 param_2,double param_3,undefin
   float local_470 [215];
   float afStack_114 [69];
   
-  auVar27 = local_9e0;
-  __savegprlr_25();
-  dVar23 = (double)__savefpr_28();
-  dVar24 = dVar23;
-  (*DAT_848958c8)(local_880,0,0x404);
-  (*DAT_848958c8)(local_470,0,0x404);
-  puVar13 = PTR_DAT_829afe88;
-  puVar12 = PTR_DAT_829afe84;
-  if (0 < (int)param_5) {
-    iVar5 = (int)param_10;
+  auVar30 = local_9e0;
+  dVar26 = (double)param_10;
+  lVar18 = (longlong)(int)param_8;
+  lVar20 = (longlong)(int)param_7;
+  lVar19 = (longlong)(int)param_5;
+  lVar24 = (longlong)(int)param_4;
+  lVar23 = (longlong)param_3;
+  __savegprlr_25((double)param_1,param_2,lVar23,lVar24,lVar19,param_6);
+  iVar12 = (int)lVar24;
+  dVar25 = (double)__savefpr_28();
+  dVar27 = dVar25;
+  (*memsetfunc)(local_880,0,0x404);
+  (*memsetfunc)(local_470,0,0x404);
+  pfVar13 = cosTBL_32;
+  pfVar15 = sinTBL_32;
+  if (0 < (int)lVar23) {
+    iVar5 = (int)lVar18;
     do {
-      pfVar20 = (float *)param_10;
-      dVar1 = dVar24 + 0.5;
-      fVar7 = *(float *)((param_11 - iVar5) + (int)pfVar20) * 0.5;
-      dVar24 = (double)(float)(dVar24 + dVar23);
-      param_10 = param_10 + 4;
-      iVar6 = ((int)(*pfVar20 * 40.743664 + 0.5) & 0xffU) * 4;
-      local_880[(int)dVar1] = *(float *)(puVar13 + iVar6) * fVar7;
-      local_470[(int)dVar1] = *(float *)(puVar12 + iVar6) * fVar7;
-      param_5 = param_5 + -1;
-    } while (param_5 != 0);
+      pfVar21 = (float *)lVar18;
+      dVar1 = dVar27 + 0.5;
+      fVar7 = *(float *)((in_r10 - iVar5) + (int)pfVar21) * 0.5;
+      dVar27 = (double)(float)(dVar27 + dVar25);
+      lVar18 = lVar18 + 4;
+      uVar6 = (int)(*pfVar21 * 40.743664 + 0.5) & 0xff;
+      local_880[(int)dVar1] = pfVar13[uVar6] * fVar7;
+      local_470[(int)dVar1] = pfVar15[uVar6] * fVar7;
+      lVar23 = lVar23 + -1;
+    } while (lVar23 != 0);
   }
   inverseRealFft(local_880,local_470,0x200);
   fVar7 = 1.0;
   fVar11 = 0.0;
   fVar9 = fVar11;
-  if (0 < param_6 >> 1) {
-    local_9e0._0_4_ = param_6 >> 0x1f;
-    fVar9 = 1.0 / (float)CONCAT44(local_9e0._0_4_,param_6 >> 1);
+  if (0 < iVar12 >> 1) {
+    local_9e0._0_4_ = iVar12 >> 0x1f;
+    fVar9 = 1.0 / (float)CONCAT44(local_9e0._0_4_,iVar12 >> 1);
   }
-  pfVar20 = afStack_524;
-  pfVar14 = afStack_114;
-  pfVar17 = local_9c0;
-  lVar22 = 0x28;
-  lVar19 = param_9;
+  pfVar15 = afStack_524;
+  pfVar13 = afStack_114;
+  pfVar21 = local_9c0;
+  lVar24 = 0x28;
+  lVar23 = lVar20;
   do {
     fVar10 = fVar11 + fVar9;
-    pfVar20 = pfVar20 + 1;
-    pfVar14 = pfVar14 + 1;
-    fVar2 = *pfVar14;
+    pfVar15 = pfVar15 + 1;
+    pfVar13 = pfVar13 + 1;
+    fVar2 = *pfVar13;
     fVar8 = fVar7 - fVar9;
-    pfVar21 = (float *)lVar19;
-    fVar3 = pfVar21[1];
-    lVar19 = lVar19 + 8;
-    *pfVar17 = *pfVar21 * fVar7 + *pfVar20 * fVar11;
+    pfVar22 = (float *)lVar23;
+    fVar3 = pfVar22[1];
+    lVar23 = lVar23 + 8;
+    *pfVar21 = *pfVar22 * fVar7 + *pfVar15 * fVar11;
     fVar11 = fVar10 + fVar9;
     fVar7 = fVar8 - fVar9;
-    pfVar17[1] = fVar3 * fVar8 + fVar2 * fVar10;
-    pfVar17 = pfVar17 + 2;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
-  pauVar18 = (undefined1 (*) [16])local_9c0;
-  lVar19 = 0x14;
-  if (param_3 == 32767.0) {
+    pfVar21[1] = fVar3 * fVar8 + fVar2 * fVar10;
+    pfVar21 = pfVar21 + 2;
+    lVar24 = lVar24 + -1;
+  } while (lVar24 != 0);
+  pauVar17 = (undefined1 (*) [16])local_9c0;
+  lVar23 = 0x14;
+  if (dVar26 == 32767.0) {
     do {
-      auVar27 = vectorConvertToSignedFixedPointWordSaturate128(*pauVar18,0);
-      pauVar18 = pauVar18 + 1;
-      auVar25 = vectorPackSignedWordSignedSaturate(auVar27,auVar27);
-      auVar27 = vectorSplatWord(auVar25,0);
-      auVar25 = vectorSplatWord(auVar25,1);
-      storeVectorElementWordIndexed(auVar27,param_7);
-      storeVectorElementWordIndexed(auVar25,param_7 + 4);
-      param_7 = param_7 + 8;
-      lVar19 = lVar19 + -1;
-    } while (lVar19 != 0);
+      auVar30 = vectorConvertToSignedFixedPointWordSaturate128(*pauVar17,0);
+      pauVar17 = pauVar17 + 1;
+      auVar28 = vectorPackSignedWordSignedSaturate(auVar30,auVar30);
+      auVar30 = vectorSplatWord(auVar28,0);
+      auVar28 = vectorSplatWord(auVar28,1);
+      storeVectorElementWordIndexed(auVar30,lVar19);
+      storeVectorElementWordIndexed(auVar28,lVar19 + 4);
+      lVar19 = lVar19 + 8;
+      lVar23 = lVar23 + -1;
+    } while (lVar23 != 0);
   }
   else {
     do {
-      auVar25 = *pauVar18;
-      pauVar18 = pauVar18 + 1;
-      auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar27);
-      auVar25 = vectorMultiplyFloatingPoint(auVar25,_DAT_82202b00);
-      auVar25 = vectorMultiplyFloatingPoint(auVar25,local_9d0);
-      auVar25 = vectorConvertToSignedFixedPointWordSaturate128(auVar25,0);
-      auVar26 = vectorPackSignedWordSignedSaturate(auVar25,auVar25);
-      auVar25 = vectorSplatWord(auVar26,0);
-      auVar26 = vectorSplatWord(auVar26,1);
-      storeVectorElementWordIndexed(auVar25,param_7);
-      storeVectorElementWordIndexed(auVar26,param_7 + 4);
-      param_7 = param_7 + 8;
-      lVar19 = lVar19 + -1;
-    } while (lVar19 != 0);
+      auVar28 = *pauVar17;
+      pauVar17 = pauVar17 + 1;
+      auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar30);
+      auVar28 = vectorMultiplyFloatingPoint(auVar28,___vmx_38000100380001003800010038000100);
+      auVar28 = vectorMultiplyFloatingPoint(auVar28,local_9d0);
+      auVar28 = vectorConvertToSignedFixedPointWordSaturate128(auVar28,0);
+      auVar29 = vectorPackSignedWordSignedSaturate(auVar28,auVar28);
+      auVar28 = vectorSplatWord(auVar29,0);
+      auVar29 = vectorSplatWord(auVar29,1);
+      storeVectorElementWordIndexed(auVar28,lVar19);
+      storeVectorElementWordIndexed(auVar29,lVar19 + 4);
+      lVar19 = lVar19 + 8;
+      lVar23 = lVar23 + -1;
+    } while (lVar23 != 0);
   }
   puVar16 = &uStack_474;
-  puVar15 = &uStack_884;
-  lVar19 = 0x28;
+  puVar14 = &uStack_884;
+  lVar23 = 0x28;
   do {
-    puVar15 = puVar15 + 1;
+    puVar14 = puVar14 + 1;
     puVar16 = puVar16 + 1;
     uVar4 = *puVar16;
-    *(undefined4 *)param_9 = *puVar15;
-    ((undefined4 *)param_9)[1] = uVar4;
-    param_9 = param_9 + 8;
-    lVar19 = lVar19 + -1;
-  } while (lVar19 != 0);
+    *(undefined4 *)lVar20 = *puVar14;
+    ((undefined4 *)lVar20)[1] = uVar4;
+    lVar20 = lVar20 + 8;
+    lVar23 = lVar23 + -1;
+  } while (lVar23 != 0);
   __restfpr_28();
   __restgprlr_25();
   return;

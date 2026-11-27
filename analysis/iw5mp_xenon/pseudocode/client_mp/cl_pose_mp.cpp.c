@@ -2,102 +2,122 @@
 
 // 823524B0  CL_AllocSkelMemory  (client_mp/cl_pose_mp.cpp:26)
 
-void CL_AllocSkelMemory(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+char * CL_AllocSkelMemory(uint param_1)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
+  char *pcVar2;
   ulonglong uVar3;
+  ulonglong uVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar1 = __savegprlr_27();
+  uVar1 = __savegprlr_27(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82036210,0x1e,0,0xffffffff82000f98,0xffffffff82036204);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x1e
+                    ,0,"%s");
   }
   uVar1 = uVar1 + 0xf & 0xfffffff0;
   if (0x3fff0 < uVar1) {
-    MyAssertHandler(0xffffffff82036210,0x21,0,0xffffffff82000f98,0xffffffff820361d0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x21
+                    ,0,"%s");
   }
-  if (DAT_82ae30ec == 0) {
-    MyAssertHandler(0xffffffff82036210,0x23,0,0xffffffff82000f98,0xffffffff820361b4);
+  if (cls.skelMemoryStart == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x23
+                    ,0,"%s");
   }
   do {
-    uVar3 = (ulonglong)DAT_82aa30e8;
+    uVar4 = (ulonglong)(uint)cls.skelMemPos;
     if (in_RESERVE != '\0') {
-      DAT_82aa30e8 = storeWordConditionalIndexed(uVar1 + uVar3,0,0xffffffff82aa30e8);
+      cls.skelMemPos = storeWordConditionalIndexed(uVar1 + uVar4,0,0xffffffff82aa30e8);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar2 = (ulonglong)DAT_82ae30ec;
-  if (0x3fff0 < (uVar3 + uVar1 & 0xffffffff)) {
-    __restgprlr_27(0);
-    return;
+  uVar3 = ZEXT48(cls.skelMemoryStart);
+  if (0x3fff0 < (uVar4 + uVar1 & 0xffffffff)) {
+    pcVar2 = (char *)__restgprlr_27(0);
+    return pcVar2;
   }
-  if ((uVar2 + uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82036210,0x2e,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar3 + uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x2e
+                    ,0,"%s");
   }
-  __restgprlr_27(uVar2 + uVar3);
-  return;
+  pcVar2 = (char *)__restgprlr_27(uVar3 + uVar4);
+  return pcVar2;
 }
 
 
 // 823525E0  CL_GetSkelTimeStamp  (client_mp/cl_pose_mp.cpp:54)
 
-undefined4 CL_GetSkelTimeStamp(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CL_GetSkelTimeStamp(void)
 
 {
-  if (DAT_82aa30dc == 0) {
-    MyAssertHandler(0xffffffff82036210,0x37,0,0xffffffff82000f98,0xffffffff82036254);
+  if (cls.skelValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x37
+                    ,0,"%s");
   }
-  return DAT_82aa30e4;
+  return cls.skelTimeStamp;
 }
 
 
 // 82352640  CL_DObjCreateSkelForBones  (client_mp/cl_pose_mp.cpp:68)
 
-void CL_DObjCreateSkelForBones(undefined8 param_1,undefined8 param_2,int *param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CL_DObjCreateSkelForBones(DObj *param_1,int *param_2,DObjAnimMat **param_3)
 
 {
-  undefined4 uVar1;
-  ulonglong uVar2;
-  int iVar4;
-  ulonglong uVar3;
+  DObj *pDVar1;
+  int iVar2;
+  int iVar3;
+  DObjAnimMat *pDVar4;
+  uint uVar5;
   
-  uVar2 = __savegprlr_26();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82036210,0x49,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = (DObj *)__savegprlr_26(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x49
+                    ,0,"%s");
   }
-  iVar4 = DObjNumBones(uVar2);
-  if (iVar4 < 1) {
-    MyAssertHandler(0xffffffff82036210,0x4a,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  iVar2 = DObjNumBones(pDVar1);
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x4a
+                    ,0,"%s");
   }
-  if (DAT_82aa30dc == 0) {
-    MyAssertHandler(0xffffffff82036210,0x37,0,0xffffffff82000f98,0xffffffff82036254);
+  if (cls.skelValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x37
+                    ,0,"%s");
   }
-  uVar1 = DAT_82aa30e4;
-  iVar4 = DObjSkelExists(uVar2,DAT_82aa30e4);
-  if (iVar4 != 0) {
-    iVar4 = I_dmaGetDObjSkel();
-    *param_3 = iVar4;
-    if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff82036210,0x51,0,0xffffffff82000f98,0xffffffff8203626c);
+  iVar2 = cls.skelTimeStamp;
+  iVar3 = DObjSkelExists(pDVar1,cls.skelTimeStamp);
+  if (iVar3 != 0) {
+    pDVar4 = I_dmaGetDObjSkel(pDVar1);
+    *param_3 = pDVar4;
+    if (pDVar4 == (DObjAnimMat *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",
+                      0x51,0,"%s");
     }
-    DObjSkelAreBonesUpToDate(uVar2,param_2);
-    __restgprlr_26();
-    return;
+    iVar2 = DObjSkelAreBonesUpToDate(pDVar1,param_2);
+    iVar2 = __restgprlr_26(iVar2);
+    return iVar2;
   }
-  DObjGetAllocSkelSize(uVar2);
-  uVar3 = CL_AllocSkelMemory();
-  if ((uVar3 & 0xffffffff) != 0) {
-    *param_3 = (int)uVar3;
-    DObjCreateSkel(uVar2,uVar3,uVar1);
-    __restgprlr_26(0);
-    return;
+  uVar5 = DObjGetAllocSkelSize(pDVar1);
+  pDVar4 = (DObjAnimMat *)CL_AllocSkelMemory(uVar5);
+  if (pDVar4 != (DObjAnimMat *)0x0) {
+    *param_3 = pDVar4;
+    DObjCreateSkel(pDVar1,(char *)pDVar4,iVar2);
+    iVar2 = __restgprlr_26(0);
+    return iVar2;
   }
-  *param_3 = 0;
-  Sys_Error(0xffffffff8202c480,uVar3);
-  __restgprlr_26(1);
-  return;
+  *param_3 = (DObjAnimMat *)0x0;
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("TOO MANY ANIMATED BONES - check if the total game bone count can be reduced");
 }
 

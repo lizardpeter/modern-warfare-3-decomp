@@ -2,86 +2,104 @@
 
 // 827358B8  GammaToLinear_Srgb  (universal/gamma.h:6)
 
-double GammaToLinear_Srgb(double param_1)
+float GammaToLinear_Srgb(float param_1)
 
 {
   double dVar1;
   
-  if (param_1 <= 0.0392800010740757) {
-    return (double)(float)(param_1 * 0.07739938050508499);
+  if (param_1 <= 0.03928) {
+    return param_1 * 0.07739938;
   }
-  dVar1 = pow((double)((float)(param_1 + 0.054999999701976776) * 0.94786733),2.4000000953674316);
-  return (double)(float)dVar1;
+  dVar1 = pow((double)((param_1 + 0.055) * 0.94786733),2.4000000953674316);
+  return (float)dVar1;
 }
 
 
 // 82735928  R_DoesSceneLightHaveShadowMap  (gfx_d3d/r_draw_shadowablelight.cpp:31)
 
-void R_DoesSceneLightHaveShadowMap(longlong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_DoesSceneLightHaveShadowMap(GfxBackEndData *param_1,uint param_2)
 
 {
-  Com_BitCheckAssert(param_1 + 0x1524,param_2,0x20);
-  return;
+  int iVar1;
+  
+  iVar1 = Com_BitCheckAssert(param_1->sceneLightHasShadowMap,param_2,0x20);
+  return iVar1;
 }
 
 
 // 82735938  R_SetLightColor  (gfx_d3d/r_draw_shadowablelight.cpp:40)
 
-void R_SetLightColor(undefined8 param_1,float *param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetLightColor(GfxCmdBufSourceState *param_1,GfxLightScale *param_2,GfxLight *param_3)
 
 {
   float fVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
+  int iVar2;
+  GfxCmdBufSourceState *pGVar3;
+  ulonglong uVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
+  float fVar11;
   
-  __savegprlr_28();
-  iVar4 = __savefpr_26();
-  if (*(int *)(iVar4 + 0x16fc) != 1) {
-    MyAssertHandler(0xffffffff821be6a0,0x2e,0,0xffffffff821be65c,0xffffffff821be678);
+  uVar4 = (ulonglong)(int)param_3;
+  __savegprlr_28(param_1);
+  pGVar3 = (GfxCmdBufSourceState *)__savefpr_26();
+  if (pGVar3->viewMode != VIEW_MODE_3D) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x2e,0,"%s\n\t(source->viewMode) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821be6a0,0x2f,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x2f,0,"%s");
   }
-  fVar1 = *(float *)(DAT_845aa6f4 + 0xc);
-  fVar2 = *(float *)(DAT_845aa5e8 + 0xc);
-  if (*(char *)(iVar4 + 0x1751) != '\0') {
-    fVar1 = *param_2 * fVar1;
-    fVar2 = param_2[1] * fVar2;
+  fVar11 = (r_diffuseColorScale->current).value;
+  fVar1 = (r_specularColorScale->current).value;
+  if (pGVar3->useHeroLighting != false) {
+    fVar11 = param_2->diffuseScale * fVar11;
+    fVar1 = param_2->specularScale * fVar1;
   }
-  if (*(char *)(iVar4 + 0x1753) != '\0') {
-    fVar1 = param_2[2] * fVar1;
-    fVar2 = param_2[3] * fVar2;
+  if (pGVar3->viewModelRender != false) {
+    fVar11 = param_2[1].diffuseScale * fVar11;
+    fVar1 = param_2[1].specularScale * fVar1;
   }
-  iVar3 = (int)param_3;
-  dVar10 = (double)(*(float *)(iVar3 + 8) * fVar1);
-  dVar9 = (double)(*(float *)(iVar3 + 0xc) * fVar1);
-  dVar8 = (double)(*(float *)(iVar3 + 4) * fVar2);
-  dVar7 = (double)(*(float *)(iVar3 + 8) * fVar2);
-  dVar6 = (double)(*(float *)(iVar3 + 0xc) * fVar2);
-  dVar5 = (double)GammaToLinear_Srgb((double)(*(float *)(iVar3 + 4) * fVar1));
-  dVar10 = (double)GammaToLinear_Srgb(dVar10);
-  dVar9 = (double)GammaToLinear_Srgb(dVar9);
-  dVar8 = (double)GammaToLinear_Srgb(dVar8);
-  dVar7 = (double)GammaToLinear_Srgb(dVar7);
-  dVar6 = (double)GammaToLinear_Srgb(dVar6);
-  *(float *)(iVar4 + 0xe14) = (float)dVar10;
-  *(float *)(iVar4 + 0xe18) = (float)dVar9;
-  *(float *)(iVar4 + 0xe10) = (float)dVar5;
-  dVar5 = 1.0;
-  *(undefined4 *)(iVar4 + 0xe1c) = 0x3f800000;
-  R_DirtyCodeConstant(iVar4,1);
-  *(float *)(iVar4 + 0xe20) = (float)dVar8;
-  *(float *)(iVar4 + 0xe24) = (float)dVar7;
-  *(float *)(iVar4 + 0xe28) = (float)dVar6;
-  *(float *)(iVar4 + 0xe2c) = (float)dVar5;
-  R_DirtyCodeConstant(iVar4,2);
+  iVar2 = (int)uVar4;
+  dVar9 = (double)(*(float *)(iVar2 + 8) * fVar11);
+  dVar8 = (double)(*(float *)(iVar2 + 0xc) * fVar11);
+  dVar7 = (double)(*(float *)(iVar2 + 4) * fVar1);
+  dVar6 = (double)(*(float *)(iVar2 + 8) * fVar1);
+  dVar5 = (double)(*(float *)(iVar2 + 0xc) * fVar1);
+  fVar11 = GammaToLinear_Srgb(*(float *)(iVar2 + 4) * fVar11);
+  dVar10 = (double)fVar11;
+  fVar11 = GammaToLinear_Srgb((float)dVar9);
+  dVar9 = (double)fVar11;
+  fVar11 = GammaToLinear_Srgb((float)dVar8);
+  dVar8 = (double)fVar11;
+  fVar11 = GammaToLinear_Srgb((float)dVar7);
+  dVar7 = (double)fVar11;
+  fVar11 = GammaToLinear_Srgb((float)dVar6);
+  dVar6 = (double)fVar11;
+  fVar11 = GammaToLinear_Srgb((float)dVar5);
+  dVar5 = (double)fVar11;
+  (pGVar3->input).consts[1][1] = (float)dVar9;
+  (pGVar3->input).consts[1][2] = (float)dVar8;
+  (pGVar3->input).consts[1][0] = (float)dVar10;
+  dVar10 = 1.0;
+  (pGVar3->input).consts[1][3] = 1.0;
+  R_DirtyCodeConstant(pGVar3,1);
+  (pGVar3->input).consts[2][0] = (float)dVar7;
+  (pGVar3->input).consts[2][1] = (float)dVar6;
+  (pGVar3->input).consts[2][2] = (float)dVar5;
+  (pGVar3->input).consts[2][3] = (float)dVar10;
+  R_DirtyCodeConstant(pGVar3,2);
   __restfpr_26();
   __restgprlr_28();
   return;
@@ -90,89 +108,107 @@ void R_SetLightColor(undefined8 param_1,float *param_2,ulonglong param_3)
 
 // 82735AC0  R_SetLightProperties  (gfx_d3d/r_draw_shadowablelight.cpp:84)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_SetLightProperties
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,int param_6,int param_7,undefined8 param_8,undefined8 param_9,
-               ulonglong param_10)
+               (GfxCmdBufSourceState *param_1,GfxLightScale *param_2,GfxLight *param_3,
+               GfxLightDef *param_4,LightHasShadowMap param_5,float param_6,float param_7,
+               uint param_8)
 
 {
   byte bVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
-  int iVar7;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  GfxImage *pGVar8;
   int iVar9;
-  undefined8 uVar8;
-  char *pcVar10;
+  GfxCmdBufSourceState *pGVar10;
+  ulonglong uVar11;
+  GfxLight *pGVar12;
+  ulonglong in_r10;
   double extraout_f1;
-  double dVar11;
-  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   
-  iVar9 = __savegprlr_20();
-  dVar11 = extraout_f1;
-  if (*(int *)(iVar9 + 0x16fc) != 1) {
-    MyAssertHandler(0xffffffff821be6a0,0x5a,0,0xffffffff821be65c,0xffffffff821be678);
+  dVar13 = (double)param_7;
+  uVar11 = (ulonglong)(int)param_3;
+  pGVar10 = (GfxCmdBufSourceState *)__savegprlr_20((double)param_6,param_1);
+  dVar14 = extraout_f1;
+  if (pGVar10->viewMode != VIEW_MODE_3D) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x5a,0,"%s\n\t(source->viewMode) = %i");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821be6a0,0x5b,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x5b,0,"%s");
   }
-  pcVar10 = (char *)param_5;
-  if ((*pcVar10 != '\x03') && (*pcVar10 != '\x02')) {
-    MyAssertHandler(0xffffffff821be6a0,0x5c,0,0xffffffff82000f98,0xffffffff821be760);
+  pGVar12 = (GfxLight *)uVar11;
+  if ((pGVar12->type != '\x03') && (pGVar12->type != '\x02')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x5c,0,"%s");
   }
-  if ((double)*(float *)(pcVar10 + 0x34) <= 0.0) {
-    MyAssertHandler(0xffffffff821be6a0,0x5d,0,0xffffffff821be728,0xffffffff821be744,
-                    (double)*(float *)(pcVar10 + 0x34));
+  if (pGVar12->radius <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x5d,0,"%s\n\t(light->radius) = %g");
   }
-  *(undefined4 *)(iVar9 + 0x1354) = *(undefined4 *)(param_6 + 4);
-  bVar1 = *(byte *)(param_6 + 8);
+  (pGVar10->input).codeImages[0xd] = (param_4->attenuation).image;
+  bVar1 = (param_4->attenuation).samplerState;
   if ((bVar1 & 7) == 0) {
-    uVar8 = va(0xffffffff821be5d8,0xd,bVar1);
-    MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar8);
+    va("R_SetCodeImageSamplerState %d %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2d8,0,
+                    "%s\n\t%s");
   }
-  *(byte *)(iVar9 + 0x13a5) = bVar1;
-  if (*(int *)(param_6 + 0xc) != 0) {
-    *(int *)(iVar9 + 0x1358) = *(int *)(param_6 + 0xc);
-    bVar1 = *(byte *)(param_6 + 0x10);
+  (pGVar10->input).codeImageSamplerStates[0xd] = bVar1;
+  pGVar8 = (param_4->cucoloris).image;
+  if (pGVar8 != (GfxImage *)0x0) {
+    (pGVar10->input).codeImages[0xe] = pGVar8;
+    bVar1 = (param_4->cucoloris).samplerState;
     if ((bVar1 & 7) == 0) {
-      uVar8 = va(0xffffffff821be5d8,0xe,bVar1);
-      MyAssertHandler(0xffffffff821bda94,0x2d8,0,0xffffffff820011f4,0xffffffff821be5b4,uVar8);
+      va("R_SetCodeImageSamplerState %d %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2d8,0,
+                      "%s\n\t%s");
     }
-    *(byte *)(iVar9 + 0x13a6) = bVar1;
+    (pGVar10->input).codeImageSamplerStates[0xe] = bVar1;
   }
-  fVar2 = *(float *)(pcVar10 + 0x28);
-  fVar3 = *(float *)(pcVar10 + 0x2c);
-  fVar4 = *(float *)(pcVar10 + 0x30);
-  dVar12 = 1.0;
-  *(float *)(iVar9 + 0xe0c) = 1.0 / *(float *)(pcVar10 + 0x34);
-  *(float *)(iVar9 + 0xe00) = fVar2 - *(float *)(iVar9 + 0x1540);
-  *(float *)(iVar9 + 0xe04) = fVar3 - *(float *)(iVar9 + 0x1544);
-  *(float *)(iVar9 + 0xe08) = fVar4 - *(float *)(iVar9 + 0x1548);
-  R_DirtyCodeConstant(iVar9,0);
-  uVar5 = *(undefined4 *)(pcVar10 + 0x18);
-  uVar6 = *(undefined4 *)(pcVar10 + 0x14);
-  *(undefined4 *)(iVar9 + 0xe30) = *(undefined4 *)(pcVar10 + 0x10);
-  *(undefined4 *)(iVar9 + 0xe34) = uVar6;
-  *(undefined4 *)(iVar9 + 0xe38) = uVar5;
-  *(float *)(iVar9 + 0xe3c) = (float)((double)(param_10 & 0xffffffff) + param_2);
-  R_DirtyCodeConstant(iVar9,3);
-  R_SetLightColor(iVar9,param_4,param_5);
-  if ((*pcVar10 == '\x02') || (param_7 == 0)) {
-    if ((double)*(float *)(pcVar10 + 0x3c) <= (double)*(float *)(pcVar10 + 0x38)) {
-      MyAssertHandler(0xffffffff821be6a0,0x7b,0,0xffffffff821be6f0,
-                      (double)*(float *)(pcVar10 + 0x3c),(double)*(float *)(pcVar10 + 0x38));
+  fVar2 = pGVar12->origin[0];
+  fVar3 = pGVar10->eyeOffset[0];
+  fVar4 = pGVar12->origin[1];
+  fVar5 = pGVar10->eyeOffset[1];
+  fVar6 = pGVar12->origin[2];
+  fVar7 = pGVar10->eyeOffset[2];
+  dVar15 = 1.0;
+  (pGVar10->input).consts[0][3] = 1.0 / pGVar12->radius;
+  (pGVar10->input).consts[0][0] = fVar2 - fVar3;
+  (pGVar10->input).consts[0][1] = fVar4 - fVar5;
+  (pGVar10->input).consts[0][2] = fVar6 - fVar7;
+  R_DirtyCodeConstant(pGVar10,0);
+  fVar2 = pGVar12->dir[2];
+  fVar3 = pGVar12->dir[1];
+  (pGVar10->input).consts[3][0] = pGVar12->dir[0];
+  (pGVar10->input).consts[3][1] = fVar3;
+  (pGVar10->input).consts[3][2] = fVar2;
+  (pGVar10->input).consts[3][3] = (float)((double)(in_r10 & 0xffffffff) + dVar13);
+  R_DirtyCodeConstant(pGVar10,3);
+  R_SetLightColor(pGVar10,param_2,pGVar12);
+  if ((pGVar12->type == '\x02') || (param_5 == LIGHT_HAS_SHADOWMAP)) {
+    if (pGVar12->cosHalfFovInner <= pGVar12->cosHalfFovOuter) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                      ,0x7b,0,"light->cosHalfFovInner > light->cosHalfFovOuter\n\t%g, %g");
     }
-    iVar7 = *(int *)(pcVar10 + 0x40);
-    fVar3 = *(float *)(pcVar10 + 0x38);
-    fVar2 = *(float *)(pcVar10 + 0x3c);
-    *(float *)(iVar9 + 0xe4c) = (float)dVar11;
-    fVar2 = (float)(dVar12 / (double)(fVar2 - fVar3));
-    *(float *)(iVar9 + 0xe40) = fVar2;
-    *(float *)(iVar9 + 0xe44) = -(fVar3 * fVar2);
-    *(float *)(iVar9 + 0xe48) = (float)(longlong)iVar7;
-    R_DirtyCodeConstant(iVar9,4);
+    iVar9 = pGVar12->exponent;
+    fVar3 = pGVar12->cosHalfFovOuter;
+    fVar2 = pGVar12->cosHalfFovInner;
+    (pGVar10->input).consts[4][3] = (float)dVar14;
+    fVar2 = (float)(dVar15 / (double)(fVar2 - fVar3));
+    (pGVar10->input).consts[4][0] = fVar2;
+    (pGVar10->input).consts[4][1] = -(fVar3 * fVar2);
+    (pGVar10->input).consts[4][2] = (float)(longlong)iVar9;
+    R_DirtyCodeConstant(pGVar10,4);
   }
   __restgprlr_20();
   return;
@@ -181,33 +217,41 @@ void R_SetLightProperties
 
 // 82735DC8  R_SetDirLightProperties  (gfx_d3d/r_draw_shadowablelight.cpp:133)
 
-void R_SetDirLightProperties(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetDirLightProperties(GfxCmdBufSourceState *param_1,GfxLightScale *param_2,GfxLight *param_3)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  int iVar3;
-  char *pcVar4;
+  float fVar1;
+  float fVar2;
+  GfxCmdBufSourceState *pGVar3;
+  ulonglong uVar4;
+  GfxLight *pGVar5;
   
-  iVar3 = __savegprlr_27();
-  if (*(int *)(iVar3 + 0x16fc) != 1) {
-    MyAssertHandler(0xffffffff821be6a0,0x86,0,0xffffffff821be65c,0xffffffff821be678);
+  uVar4 = (ulonglong)(int)param_3;
+  pGVar3 = (GfxCmdBufSourceState *)__savegprlr_27(param_1);
+  if (pGVar3->viewMode != VIEW_MODE_3D) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x86,0,"%s\n\t(source->viewMode) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821be6a0,0x87,0,0xffffffff82000f98,0xffffffff8207d5a0);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x87,0,"%s");
   }
-  pcVar4 = (char *)param_3;
-  if (*pcVar4 != '\x01') {
-    MyAssertHandler(0xffffffff821be6a0,0x88,0,0xffffffff82000f98,0xffffffff821be7ac);
+  pGVar5 = (GfxLight *)uVar4;
+  if (pGVar5->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0x88,0,"%s");
   }
-  uVar1 = *(undefined4 *)(pcVar4 + 0x18);
-  uVar2 = *(undefined4 *)(pcVar4 + 0x14);
-  *(undefined4 *)(iVar3 + 0xe00) = *(undefined4 *)(pcVar4 + 0x10);
-  *(undefined4 *)(iVar3 + 0xe04) = uVar2;
-  *(undefined4 *)(iVar3 + 0xe08) = uVar1;
-  *(undefined4 *)(iVar3 + 0xe0c) = 0;
-  R_DirtyCodeConstant(iVar3,0);
-  R_SetLightColor(iVar3,param_2,param_3);
+  fVar1 = pGVar5->dir[2];
+  fVar2 = pGVar5->dir[1];
+  (pGVar3->input).consts[0][0] = pGVar5->dir[0];
+  (pGVar3->input).consts[0][1] = fVar2;
+  (pGVar3->input).consts[0][2] = fVar1;
+  (pGVar3->input).consts[0][3] = 0.0;
+  R_DirtyCodeConstant(pGVar3,0);
+  R_SetLightColor(pGVar3,param_2,pGVar5);
   __restgprlr_27();
   return;
 }
@@ -215,138 +259,158 @@ void R_SetDirLightProperties(undefined8 param_1,undefined8 param_2,ulonglong par
 
 // 82735EB0  R_SetSceneLight  (gfx_d3d/r_draw_shadowablelight.cpp:148)
 
-void R_SetSceneLight(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                    longlong param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetSceneLight(GfxCmdBufSourceState *param_1,uint param_2,bool param_3,bool param_4,
+                    GfxViewInfo *param_5)
 
 {
-  int iVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
+  GfxBackEndData *pGVar1;
+  GfxLightDef *pGVar2;
+  uint uVar3;
+  float fVar4;
+  ulonglong uVar5;
+  GfxCmdBufSourceState *pGVar6;
+  int iVar7;
   ulonglong uVar8;
-  longlong lVar9;
-  char *pcVar10;
-  undefined4 uVar11;
-  undefined8 uVar12;
-  bool bVar13;
-  bool bVar14;
-  double dVar15;
-  double dVar16;
+  GfxLightScale *pGVar9;
+  ulonglong uVar10;
+  GfxLight *pGVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  uint uVar14;
+  uint uVar15;
+  LightHasShadowMap LVar16;
+  bool bVar17;
+  bool bVar18;
+  double dVar19;
+  double dVar20;
   
-  iVar4 = __savegprlr_22();
-  if (0xfc < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821be6a0,0xac,0,0xffffffff821be820,param_2,0xfd);
+  uVar12 = (ulonglong)param_4;
+  uVar10 = (ulonglong)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  pGVar6 = (GfxCmdBufSourceState *)__savegprlr_22(param_1);
+  if (0xfc < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0xac,0,
+                    "sceneLightIndex doesn\'t index GFX_MAX_SCENE_LIGHTS\n\t%i not in [0, %i)");
   }
-  uVar8 = param_3 & 0xff;
-  bVar13 = param_2 == *(uint *)(iVar4 + 0x1748);
-  dVar15 = 0.0;
-  bVar14 = uVar8 != *(byte *)(iVar4 + 0x1751);
-  if (bVar14) {
-    if (uVar8 == 0) {
-      *(undefined4 *)(iVar4 + 0xe94) = 0;
-      *(undefined4 *)(iVar4 + 0xe98) = 0;
-      *(undefined4 *)(iVar4 + 0xe9c) = 0;
-      dVar16 = 1.0;
-      *(undefined4 *)(iVar4 + 0xe90) = 0x3f800000;
-      R_DirtyCodeConstant(iVar4,9);
-      *(float *)(iVar4 + 0xea0) = (float)dVar15;
-      *(float *)(iVar4 + 0xea4) = (float)dVar16;
-      *(float *)(iVar4 + 0xea8) = (float)dVar15;
-      *(float *)(iVar4 + 0xeac) = (float)dVar15;
-      R_DirtyCodeConstant(iVar4,10);
-      *(float *)(iVar4 + 0xeb0) = (float)dVar15;
-      *(float *)(iVar4 + 0xeb4) = (float)dVar15;
-      *(float *)(iVar4 + 0xeb8) = (float)dVar16;
-      *(float *)(iVar4 + 0xebc) = (float)dVar15;
+  uVar5 = uVar10 & 0xff;
+  bVar17 = uVar8 == pGVar6->sceneLightIndex;
+  dVar19 = 0.0;
+  bVar18 = uVar5 != pGVar6->useHeroLighting;
+  if (bVar18) {
+    if (uVar5 == 0) {
+      (pGVar6->input).consts[9][1] = 0.0;
+      (pGVar6->input).consts[9][2] = 0.0;
+      (pGVar6->input).consts[9][3] = 0.0;
+      dVar20 = 1.0;
+      (pGVar6->input).consts[9][0] = 1.0;
+      R_DirtyCodeConstant(pGVar6,9);
+      (pGVar6->input).consts[10][0] = (float)dVar19;
+      (pGVar6->input).consts[10][1] = (float)dVar20;
+      (pGVar6->input).consts[10][2] = (float)dVar19;
+      (pGVar6->input).consts[10][3] = (float)dVar19;
+      R_DirtyCodeConstant(pGVar6,10);
+      (pGVar6->input).consts[0xb][0] = (float)dVar19;
+      (pGVar6->input).consts[0xb][1] = (float)dVar19;
+      (pGVar6->input).consts[0xb][2] = (float)dVar20;
+      (pGVar6->input).consts[0xb][3] = (float)dVar19;
     }
     else {
-      *(undefined4 *)(iVar4 + 0xe90) = *(undefined4 *)(iVar4 + 0x13b8);
-      *(undefined4 *)(iVar4 + 0xe94) = *(undefined4 *)(iVar4 + 0x13bc);
-      *(undefined4 *)(iVar4 + 0xe98) = *(undefined4 *)(iVar4 + 0x13c0);
-      *(undefined4 *)(iVar4 + 0xe9c) = *(undefined4 *)(iVar4 + 0x13c4);
-      R_DirtyCodeConstant(iVar4,9);
-      *(undefined4 *)(iVar4 + 0xea0) = *(undefined4 *)(iVar4 + 0x13c8);
-      *(undefined4 *)(iVar4 + 0xea4) = *(undefined4 *)(iVar4 + 0x13cc);
-      *(undefined4 *)(iVar4 + 0xea8) = *(undefined4 *)(iVar4 + 0x13d0);
-      *(undefined4 *)(iVar4 + 0xeac) = *(undefined4 *)(iVar4 + 0x13d4);
-      R_DirtyCodeConstant(iVar4,10);
-      *(undefined4 *)(iVar4 + 0xeb0) = *(undefined4 *)(iVar4 + 0x13d8);
-      *(undefined4 *)(iVar4 + 0xeb4) = *(undefined4 *)(iVar4 + 0x13dc);
-      *(undefined4 *)(iVar4 + 0xeb8) = *(undefined4 *)(iVar4 + 0x13e0);
-      *(undefined4 *)(iVar4 + 0xebc) = *(undefined4 *)(iVar4 + 0x13e4);
+      (pGVar6->input).consts[9][0] = (pGVar6->input).colorSat[0][0];
+      (pGVar6->input).consts[9][1] = (pGVar6->input).colorSat[0][1];
+      (pGVar6->input).consts[9][2] = (pGVar6->input).colorSat[0][2];
+      (pGVar6->input).consts[9][3] = (pGVar6->input).colorSat[0][3];
+      R_DirtyCodeConstant(pGVar6,9);
+      (pGVar6->input).consts[10][0] = (pGVar6->input).colorSat[1][0];
+      (pGVar6->input).consts[10][1] = (pGVar6->input).colorSat[1][1];
+      (pGVar6->input).consts[10][2] = (pGVar6->input).colorSat[1][2];
+      (pGVar6->input).consts[10][3] = (pGVar6->input).colorSat[1][3];
+      R_DirtyCodeConstant(pGVar6,10);
+      (pGVar6->input).consts[0xb][0] = (pGVar6->input).colorSat[2][0];
+      (pGVar6->input).consts[0xb][1] = (pGVar6->input).colorSat[2][1];
+      (pGVar6->input).consts[0xb][2] = (pGVar6->input).colorSat[2][2];
+      (pGVar6->input).consts[0xb][3] = (pGVar6->input).colorSat[2][3];
     }
-    R_DirtyCodeConstant(iVar4,0xb);
+    R_DirtyCodeConstant(pGVar6,0xb);
   }
-  if ((((bVar13) && (!bVar14)) && ((ulonglong)*(byte *)(iVar4 + 0x1753) == (param_4 & 0xff))) ||
-     ((param_2 & 0xffffffff) == 0)) {
+  if ((((bVar17) && (!bVar18)) && ((ulonglong)pGVar6->viewModelRender == (uVar12 & 0xff))) ||
+     ((uVar8 & 0xffffffff) == 0)) {
 LAB_82736284:
     __restgprlr_22();
     return;
   }
-  *(char *)(iVar4 + 0x1751) = (char)param_3;
-  uVar11 = (undefined4)param_2;
-  *(undefined4 *)(iVar4 + 0x1748) = uVar11;
-  *(char *)(iVar4 + 0x1753) = (char)param_4;
-  if ((ulonglong)*(uint *)((int)param_5 + 0x1b0) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821be6a0,0xd0,0,0xffffffff821be288,param_2);
+  pGVar6->useHeroLighting = SUB81(uVar10,0);
+  uVar15 = (uint)uVar8;
+  pGVar6->sceneLightIndex = uVar15;
+  pGVar6->viewModelRender = SUB81(uVar12,0);
+  if ((ulonglong)param_5->sceneLightCount <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                    ,0xd0,0,
+                    "sceneLightIndex doesn\'t index viewInfo->sceneLightCount\n\t%i not in [0, %i)")
+    ;
   }
-  uVar8 = (ulonglong)*(uint *)(iVar4 + 0x13ec);
-  lVar7 = param_5 + 0x26c;
-  lVar9 = (param_2 + 0x1d00) * 0x4c + uVar8;
-  if (bVar13) {
-    R_SetLightColor(iVar4,lVar7,lVar9);
+  pGVar1 = (pGVar6->input).data;
+  pGVar9 = &param_5->charPrimaryLightScale;
+  pGVar11 = pGVar1->sceneLights + uVar15;
+  if (bVar17) {
+    R_SetLightColor(pGVar6,pGVar9,pGVar11);
     goto LAB_82736284;
   }
-  if (*(char *)((int)param_5 + 0x924) != '\0') {
-    iVar5 = Com_BitCheckAssert(uVar8 + 0x1524,param_2,0x20);
-    bVar13 = true;
-    if (iVar5 != 0) goto LAB_827360c0;
+  if (param_5->useShadows != false) {
+    iVar7 = Com_BitCheckAssert(pGVar1->sceneLightHasShadowMap,uVar15,0x20);
+    bVar17 = true;
+    if (iVar7 != 0) goto LAB_827360c0;
   }
-  bVar13 = false;
+  bVar17 = false;
 LAB_827360c0:
-  pcVar10 = (char *)lVar9;
-  if (*pcVar10 == '\x01') {
-    if ((bVar13) && ((ulonglong)*(uint *)(iVar4 + 0x16c0) != (param_2 & 0xffffffff))) {
-      *(undefined4 *)(iVar4 + 0x16c0) = uVar11;
-      R_SetShadowLookupMatrix(iVar4,uVar8 + 0x23f0);
+  if (pGVar11->type == '\x01') {
+    if ((bVar17) && ((ulonglong)pGVar6->sceneLightForShadowLookupMatrix != (uVar8 & 0xffffffff))) {
+      pGVar6->sceneLightForShadowLookupMatrix = uVar15;
+      R_SetShadowLookupMatrix(pGVar6,&(pGVar1->sunShadow).lookupMatrix);
     }
-    R_SetDirLightProperties(iVar4,lVar7,lVar9);
+    R_SetDirLightProperties(pGVar6,pGVar9,pGVar11);
     __restgprlr_22();
     return;
   }
-  iVar5 = *(int *)(pcVar10 + 0x48);
-  fVar2 = (float)*(ushort *)(*(int *)(iVar5 + 4) + 0x40) * 0.001953125;
-  fVar3 = (float)(longlong)*(int *)(iVar5 + 0x14) * 0.001953125;
-  if (((*(float *)(iVar4 + 0xe50) != fVar2) || ((double)*(float *)(iVar4 + 0xe54) != dVar15)) ||
-     ((*(float *)(iVar4 + 0xe58) != fVar3 || ((double)*(float *)(iVar4 + 0xe5c) != dVar15)))) {
-    *(float *)(iVar4 + 0xe50) = fVar2;
-    *(float *)(iVar4 + 0xe54) = (float)dVar15;
-    *(float *)(iVar4 + 0xe58) = fVar3;
-    *(float *)(iVar4 + 0xe5c) = (float)dVar15;
-    R_DirtyCodeConstant(iVar4,5);
+  pGVar2 = pGVar11->def;
+  uVar14 = pGVar2->lmapLookupStart;
+  lVar13 = (longlong)(int)uVar14;
+  fVar4 = (float)((pGVar2->attenuation).image)->width * 0.001953125;
+  if ((((pGVar6->input).consts[5][0] != fVar4) || ((double)(pGVar6->input).consts[5][1] != dVar19))
+     || (((pGVar6->input).consts[5][2] != (float)lVar13 * 0.001953125 ||
+         ((double)(pGVar6->input).consts[5][3] != dVar19)))) {
+    (pGVar6->input).consts[5][0] = fVar4;
+    (pGVar6->input).consts[5][1] = (float)dVar19;
+    (pGVar6->input).consts[5][2] = (float)lVar13 * 0.001953125;
+    (pGVar6->input).consts[5][3] = (float)dVar19;
+    R_DirtyCodeConstant(pGVar6,5);
+    uVar14 = (uint)lVar13;
   }
-  uVar12 = 1;
-  dVar16 = dVar15;
-  if (bVar13) {
-    if (3 < *(uint *)(pcVar10 + 0x44)) {
-      MyAssertHandler(0xffffffff821be6a0,0xff,0,0xffffffff821be7d0,*(uint *)(pcVar10 + 0x44),4);
+  LVar16 = LIGHT_HAS_NO_SHADOWMAP;
+  dVar20 = dVar19;
+  if (bVar17) {
+    if (3 < pGVar11->spotShadowIndex) {
+      uVar14 = 4;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                      ,0xff,0,
+                      "light->spotShadowIndex doesn\'t index R_SPOTSHADOW_LIMIT\n\t%i not in [0, %i)"
+                     );
     }
-    lVar6 = (ulonglong)*(uint *)(pcVar10 + 0x44) * 0x1d0 + uVar8;
-    if ((ulonglong)*(uint *)(iVar4 + 0x16c0) != (param_2 & 0xffffffff)) {
-      *(undefined4 *)(iVar4 + 0x16c0) = uVar11;
-      R_SetShadowLookupMatrix(iVar4,lVar6 + 0x2810);
+    uVar3 = pGVar11->spotShadowIndex;
+    if ((ulonglong)pGVar6->sceneLightForShadowLookupMatrix != (uVar8 & 0xffffffff)) {
+      pGVar6->sceneLightForShadowLookupMatrix = uVar15;
+      R_SetShadowLookupMatrix(pGVar6,(GfxMatrix *)(pGVar1->spotShadows + uVar3));
     }
-    iVar1 = (int)lVar6;
-    dVar15 = (double)*(float *)(iVar1 + 0x2850);
-    dVar16 = (double)*(float *)(iVar1 + 0x2854);
-    *(undefined4 *)(iVar4 + 0x133c) = *(undefined4 *)(iVar1 + 0x285c);
-    uVar12 = 0;
-    R_UpdateCodeConstantFromVec4(iVar4,0x39,lVar6 + 0x29cc);
+    dVar19 = (double)pGVar1->spotShadows[uVar3].sceneLight.fade;
+    dVar20 = (double)pGVar1->spotShadows[uVar3].sceneLight.tileBias;
+    (pGVar6->input).codeImages[7] = pGVar1->spotShadows[uVar3].sceneLight.image;
+    LVar16 = LIGHT_HAS_SHADOWMAP;
+    R_UpdateCodeConstantFromVec4(pGVar6,0x39,pGVar1->spotShadows[uVar3].pixelAdjust);
   }
-  R_SetLightProperties(dVar15,dVar16,iVar4,lVar7,lVar9,iVar5,uVar12);
+  R_SetLightProperties(pGVar6,pGVar9,pGVar11,pGVar2,LVar16,(float)dVar19,(float)dVar20,uVar14);
   __restgprlr_22();
   return;
 }
@@ -354,30 +418,40 @@ LAB_827360c0:
 
 // 82736298  R_SetDrawSurfsSceneLight  (gfx_d3d/r_draw_shadowablelight.cpp:291)
 
-void R_SetDrawSurfsSceneLight(undefined8 param_1,ulonglong param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetDrawSurfsSceneLight(GfxCmdBufSourceState *param_1,uint param_2,GfxViewInfo *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
+  GfxBackEndData *pGVar1;
+  GfxLight *pGVar2;
+  GfxCmdBufSourceState *pGVar3;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) != 0) {
-    uVar1 = *(uint *)(iVar2 + 0x13ec);
-    if ((ulonglong)*(uint *)((int)param_3 + 0x1b0) <= (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821be6a0,0x12f,0,0xffffffff821be288,param_2);
+  uVar5 = (ulonglong)(int)param_2;
+  pGVar3 = (GfxCmdBufSourceState *)__savegprlr_28(param_1);
+  if ((uVar5 & 0xffffffff) != 0) {
+    pGVar1 = (pGVar3->input).data;
+    if ((ulonglong)param_3->sceneLightCount <= (uVar5 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_shadowablelight.cpp"
+                      ,0x12f,0,
+                      "sceneLightIndex doesn\'t index viewInfo->sceneLightCount\n\t%i not in [0, %i)"
+                     );
     }
-    iVar3 = Com_BitCheckAssert((ulonglong)uVar1 + 0x1524,param_2,0x20);
-    if (iVar3 != 0) {
-      R_SetSceneLight(iVar2,param_2,0,0,param_3);
+    uVar6 = (uint)uVar5;
+    iVar4 = Com_BitCheckAssert(pGVar1->sceneLightHasShadowMap,uVar6,0x20);
+    if (iVar4 != 0) {
+      R_SetSceneLight(pGVar3,uVar6,false,false,param_3);
       __restgprlr_28();
       return;
     }
-    lVar4 = (param_2 + 0x1d00) * 0x4c + (ulonglong)uVar1;
+    pGVar2 = pGVar1->sceneLights + uVar6;
     R_SetLightProperties
-              (0,iVar2,param_3 + 0x26c,lVar4,*(undefined4 *)((int)lVar4 + 0x48),1,param_2 + 0x1d00,
-               0xffffffff82000000,1);
+              (pGVar3,&param_3->charPrimaryLightScale,pGVar2,pGVar2->def,LIGHT_HAS_NO_SHADOWMAP,0.0,
+               0.0,uVar6 + 0x1d00);
   }
   __restgprlr_28();
   return;
@@ -386,17 +460,20 @@ void R_SetDrawSurfsSceneLight(undefined8 param_1,ulonglong param_2,longlong para
 
 // 82735860  R_UpdateCodeConstantFromVec4  (gfx_d3d/r_state.h:704)
 
-void R_UpdateCodeConstantFromVec4(int param_1,int param_2,float *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_UpdateCodeConstantFromVec4(GfxCmdBufSourceState *param_1,uint param_2,float *param_3)
 
 {
-  float *pfVar1;
+  float (*pafVar1) [4];
   
-  pfVar1 = (float *)((param_2 + 0xe0) * 0x10 + param_1);
-  if ((((*pfVar1 == *param_3) && (pfVar1[1] == param_3[1])) && (pfVar1[2] == param_3[2])) &&
-     (pfVar1[3] == param_3[3])) {
+  pafVar1 = (param_1->input).consts + param_2;
+  if (((((*pafVar1)[0] == *param_3) && ((*pafVar1)[1] == param_3[1])) &&
+      ((*pafVar1)[2] == param_3[2])) && ((*pafVar1)[3] == param_3[3])) {
     return;
   }
-  R_SetCodeConstantFromVec4();
+  R_SetCodeConstantFromVec4(param_1,param_2,param_3);
   return;
 }
 

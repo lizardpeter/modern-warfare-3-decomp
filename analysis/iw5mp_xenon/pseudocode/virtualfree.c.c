@@ -2,25 +2,25 @@
 
 // 828A9978  VirtualFree  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/virtualfree.c:22)
 
-BOOL VirtualFree(LPVOID lpAddress,SIZE_T dwSize,DWORD dwFreeType)
+int VirtualFree(void *param_1,ulong param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  LPVOID pvStack00000014;
-  SIZE_T SStack0000001c;
+  long lVar1;
+  void *pvStack00000014;
+  ulong uStack0000001c;
   
-  pvStack00000014 = lpAddress;
-  SStack0000001c = dwSize;
-  if (((dwFreeType & 0x8000) == 0) || (dwSize == 0)) {
-    uVar1 = NtFreeVirtualMemory(&stack0x00000014,&stack0x0000001c,dwFreeType,0);
-    if (-1 < (int)uVar1) {
+  pvStack00000014 = param_1;
+  uStack0000001c = param_2;
+  if (((param_3 & 0x8000) == 0) || (param_2 == 0)) {
+    lVar1 = NtFreeVirtualMemory(&stack0x00000014,&stack0x0000001c,param_3,0);
+    if (-1 < lVar1) {
       return 1;
     }
   }
   else {
-    uVar1 = 0xffffffffc000000d;
+    lVar1 = -0x3ffffff3;
   }
-  RtlSetLastNTError(uVar1);
+  RtlSetLastNTError(lVar1);
   return 0;
 }
 

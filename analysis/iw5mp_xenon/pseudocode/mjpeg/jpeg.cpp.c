@@ -2,9 +2,9 @@
 
 // 827E67C0  vec_join4  (mjpeg/jpeg.cpp:70)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void vec_join4(void)
+__vector4 *
+vec_join4(__vector4 *__return_storage_ptr__,__vector4 param_1,__vector4 param_2,__vector4 param_3,
+         __vector4 param_4)
 
 {
   undefined1 in_vs33 [16];
@@ -14,23 +14,21 @@ void vec_join4(void)
   undefined1 auVar1 [16];
   undefined1 auVar2 [16];
   
-  auVar2 = vectorPermute128(in_vs33,in_vs34,_DAT_821df2f0);
-  auVar1 = vectorPermute128(in_vs35,in_vs36,_DAT_821df2f0);
-  vectorPermute128(auVar2,auVar1,_DAT_821df2e0);
-  return;
+  auVar2 = vectorPermute128(in_vs33,in_vs34,(undefined1  [16])joinPerm0101);
+  auVar1 = vectorPermute128(in_vs35,in_vs36,(undefined1  [16])joinPerm0101);
+  vectorPermute128(auVar2,auVar1,(undefined1  [16])joinPerm0011);
+  return __return_storage_ptr__;
 }
 
 
-// 827E67E8  jpeg_encode::dct_vmx  (mjpeg/jpeg.cpp:87)
+// 827E67E8  dct_vmx  (mjpeg/jpeg.cpp:87)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void jpeg_encode__dct_vmx(undefined8 param_1,uint param_2,uint param_3,uint param_4)
+void __thiscall jpeg_encode::dct_vmx(jpeg_encode *this,short *param_1,uchar *param_2,float *param_3)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
-  undefined1 auVar3 [16];
+  __vector4 _Var3;
   undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
@@ -75,430 +73,451 @@ void jpeg_encode__dct_vmx(undefined8 param_1,uint param_2,uint param_3,uint para
   undefined1 auVar45 [16];
   undefined1 auVar46 [16];
   
-  __savegprlr_18();
-  auVar3 = _DAT_829a4ae0;
+  __savegprlr_18(this);
+  _Var3 = quant_add;
   uVar1 = TBLr;
-  auVar44 = vectorUnpackHighSignedByte(*(undefined1 (*) [16])(param_3 & 0xfffffff0));
-  auVar39 = vectorUnpackLowSignedByte(*(undefined1 (*) [16])(param_3 & 0xfffffff0));
-  auVar37 = *(undefined1 (*) [16])(param_3 + 0x10 & 0xfffffff0);
-  auVar35 = vectorUnpackHighSignedByte(auVar37);
-  auVar32 = vectorUnpackLowSignedByte(auVar37);
-  auVar30 = *(undefined1 (*) [16])(param_3 + 0x20 & 0xfffffff0);
-  auVar28 = *(undefined1 (*) [16])(param_3 + 0x30 & 0xfffffff0);
-  auVar26 = vectorUnpackHighSignedByte(auVar30);
-  auVar37 = vectorSubtractSignedHalfWordSaturate(auVar44 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar24 = vectorUnpackLowSignedByte(auVar30);
-  auVar39 = vectorSubtractSignedHalfWordSaturate(auVar39 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar22 = vectorUnpackHighSignedByte(auVar28);
-  auVar35 = vectorSubtractSignedHalfWordSaturate(auVar35 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar20 = vectorUnpackLowSignedByte(auVar28);
-  auVar30 = vectorSubtractSignedHalfWordSaturate(auVar32 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar32 = vectorUnpackLowSignedByte(auVar37);
-  auVar28 = vectorUnpackLowSignedByte(auVar39);
-  auVar37 = vectorUnpackHighSignedByte(auVar37);
-  auVar44 = vectorUnpackLowSignedByte(auVar35);
-  auVar13 = vectorConvertFromSignedFixedPointWord128(auVar32,0);
-  auVar32 = vectorUnpackLowSignedByte(auVar30);
-  auVar11 = vectorConvertFromSignedFixedPointWord128(auVar28,0);
-  auVar28 = vectorSubtractSignedHalfWordSaturate(auVar26 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar9 = vectorConvertFromSignedFixedPointWord128(auVar37,0);
-  auVar37 = vectorSubtractSignedHalfWordSaturate(auVar24 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar24 = vectorConvertFromSignedFixedPointWord128(auVar44,0);
-  auVar44 = vectorSubtractSignedHalfWordSaturate(auVar22 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar22 = vectorConvertFromSignedFixedPointWord128(auVar32,0);
-  auVar32 = vectorSubtractSignedHalfWordSaturate(auVar20 & _DAT_829a4a70,_DAT_829a4a80);
-  auVar15 = vectorUnpackHighSignedByte(auVar39);
-  auVar6 = vectorUnpackHighSignedByte(auVar35);
-  auVar26 = vectorUnpackHighSignedByte(auVar30);
-  auVar20 = vectorUnpackLowSignedByte(auVar28);
-  auVar39 = vectorUnpackLowSignedByte(auVar37);
-  auVar15 = vectorConvertFromSignedFixedPointWord128(auVar15,0);
-  auVar35 = vectorUnpackHighSignedByte(auVar28);
-  auVar28 = vectorConvertFromSignedFixedPointWord128(auVar6,0);
-  auVar30 = vectorUnpackHighSignedByte(auVar37);
-  auVar33 = vectorConvertFromSignedFixedPointWord128(auVar26,0);
-  auVar37 = vectorPermute128(auVar13,_DAT_84872a60,_DAT_829a4a90);
-  auVar46 = vectorConvertFromSignedFixedPointWord128(auVar20,0);
-  auVar6 = vectorUnpackLowSignedByte(auVar44);
-  auVar38 = vectorConvertFromSignedFixedPointWord128(auVar39,0);
-  auVar20 = vectorUnpackLowSignedByte(auVar32);
-  auVar13 = vectorConvertFromSignedFixedPointWord128(auVar35,0);
-  auVar40 = vectorUnpackHighSignedByte(auVar44);
-  auVar26 = vectorConvertFromSignedFixedPointWord128(auVar30,0);
-  auVar11 = vectorPermute128(auVar11,_DAT_84872a60,_DAT_829a4a90);
-  auVar18 = vectorAddFloatingPoint128(auVar9,auVar37);
-  auVar30 = vectorConvertFromSignedFixedPointWord128(auVar6,0);
-  auVar39 = vectorPermute128(auVar24,_DAT_84872a60,_DAT_829a4a90);
-  auVar44 = vectorPermute128(auVar22,_DAT_84872a60,_DAT_829a4a90);
-  auVar16 = vectorSubtractFloatingPoint128(auVar9,auVar37);
-  auVar35 = vectorUnpackHighSignedByte(auVar32);
-  auVar37 = vectorConvertFromSignedFixedPointWord128(auVar20,0);
-  auVar10 = vectorSubtractFloatingPoint128(auVar15,auVar11);
-  auVar12 = vectorAddFloatingPoint128(auVar15,auVar11);
-  auVar22 = vectorConvertFromSignedFixedPointWord128(auVar40,0);
-  auVar30 = vectorPermute128(auVar30,_DAT_84872a60,_DAT_829a4a90);
-  auVar5 = vectorAddFloatingPoint128(auVar28,auVar39);
-  auVar32 = vectorPermute128(auVar46,_DAT_84872a60,_DAT_829a4a90);
-  auVar46 = vectorSubtractFloatingPoint128(auVar28,auVar39);
-  auVar39 = vectorPermute128(auVar38,_DAT_84872a60,_DAT_829a4a90);
-  auVar38 = vectorAddFloatingPoint128(auVar33,auVar44);
-  auVar33 = vectorSubtractFloatingPoint128(auVar33,auVar44);
-  auVar44 = vectorConvertFromSignedFixedPointWord128(auVar35,0);
-  auVar37 = vectorPermute128(auVar37,_DAT_84872a60,_DAT_829a4a90);
-  auVar35 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a4aa0);
-  auVar34 = vectorAddFloatingPoint128(auVar26,auVar39);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a5420);
-  auVar6 = vectorAddFloatingPoint128(auVar13,auVar32);
-  auVar21 = vectorSubtractFloatingPoint128(auVar26,auVar39);
-  auVar29 = vectorSubtractFloatingPoint128(auVar13,auVar32);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a5420);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar12,_DAT_829a4aa0);
-  auVar25 = vectorAddFloatingPoint128(auVar22,auVar30);
-  auVar17 = vectorSubtractFloatingPoint128(auVar22,auVar30);
-  auVar13 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a4aa0);
-  auVar9 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a5420);
-  auVar26 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a4aa0);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar33,_DAT_829a5420);
-  auVar4 = vectorAddFloatingPoint128(auVar44,auVar37);
-  auVar40 = vectorSubtractFloatingPoint128(auVar44,auVar37);
-  auVar30 = vectorMultiplySum4FloatingPoint(auVar34,_DAT_829a4aa0);
-  auVar39 = vectorMultiplySum4FloatingPoint(auVar6,_DAT_829a4aa0);
-  auVar24 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a53c0);
-  auVar27 = vectorMultiplySum4FloatingPoint(auVar29,_DAT_829a5420);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar12,_DAT_829a53c0);
-  auVar37 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a53c0);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar25,_DAT_829a4aa0);
-  auVar44 = vectorMultiplySum4FloatingPoint(auVar17,_DAT_829a5420);
-  auVar31 = vectorPermute128(auVar28,auVar32,_DAT_821df2f0);
-  auVar15 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a53c0);
-  auVar11 = vectorPermute128(auVar35,auVar11,_DAT_821df2f0);
-  auVar36 = vectorMultiplySum4FloatingPoint(auVar21,_DAT_829a5420);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar25,_DAT_829a53c0);
-  auVar35 = vectorMultiplySum4FloatingPoint(auVar4,_DAT_829a4aa0);
-  auVar41 = vectorMultiplySum4FloatingPoint(auVar40,_DAT_829a5420);
-  auVar23 = vectorPermute128(auVar13,auVar26,_DAT_821df2f0);
-  auVar14 = vectorMultiplySum4FloatingPoint(auVar6,_DAT_829a53c0);
-  auVar8 = vectorPermute128(auVar9,auVar20,_DAT_821df2f0);
-  auVar19 = vectorMultiplySum4FloatingPoint(auVar34,_DAT_829a53c0);
-  auVar26 = vectorMultiplySum4FloatingPoint(auVar33,_DAT_829a5380);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a5380);
-  auVar13 = vectorPermute128(auVar30,auVar39,_DAT_821df2f0);
-  auVar39 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a5380);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar4,_DAT_829a53c0);
-  auVar30 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a5380);
-  auVar15 = vectorPermute128(auVar24,auVar15,_DAT_821df2f0);
-  auVar9 = vectorPermute128(auVar36,auVar27,_DAT_821df2f0);
-  auVar27 = vectorPermute128(auVar37,auVar22,_DAT_821df2f0);
-  auVar37 = vectorPermute128(auVar41,auVar44,_DAT_821df2f0);
-  auVar19 = vectorPermute128(auVar19,auVar14,_DAT_821df2f0);
-  auVar14 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a4ab0);
-  auVar35 = vectorPermute128(auVar35,auVar7,_DAT_821df2f0);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a4ab0);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a4ab0);
-  auVar24 = vectorMultiplySum4FloatingPoint(auVar12,_DAT_829a4ab0);
-  auVar15 = vectorPermute128(auVar27,auVar15,_DAT_821df2e0);
-  auVar36 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a5400);
-  auVar11 = vectorPermute128(auVar11,auVar23,_DAT_821df2e0);
-  auVar8 = vectorPermute128(auVar31,auVar8,_DAT_821df2e0);
-  auVar38 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a5400);
-  auVar31 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a5370);
-  auVar13 = vectorPermute128(auVar35,auVar13,_DAT_821df2e0);
-  auVar23 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a5370);
-  auVar9 = vectorPermute128(auVar37,auVar9,_DAT_821df2e0);
-  auVar44 = vectorMultiplySum4FloatingPoint(auVar6,_DAT_829a4ab0);
-  auVar35 = vectorMultiplySum4FloatingPoint(auVar34,_DAT_829a4ab0);
-  auVar37 = vectorPermute(auVar28,auVar32,_DAT_821df2f0);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar25,_DAT_829a4ab0);
-  auVar14 = vectorPermute128(auVar7,auVar14,_DAT_821df2f0);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar4,_DAT_829a4ab0);
-  auVar20 = vectorPermute128(auVar20,auVar26,_DAT_821df2f0);
-  auVar5 = vectorPermute128(auVar30,auVar39,_DAT_821df2f0);
-  auVar30 = vectorAddFloatingPoint128(auVar8,auVar9);
-  auVar26 = vectorPermute128(auVar37,auVar19,_DAT_821df2e0);
-  auVar19 = vectorSubtractFloatingPoint128(auVar8,auVar9);
-  auVar9 = vectorMultiplySum4FloatingPoint(auVar25,_DAT_829a5400);
-  auVar34 = vectorMultiplySum4FloatingPoint(auVar34,_DAT_829a5400);
-  auVar39 = vectorAddFloatingPoint128(auVar11,auVar13);
-  auVar27 = vectorPermute128(auVar5,auVar20,_DAT_821df2e0);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar6,_DAT_829a5400);
-  auVar5 = vectorSubtractFloatingPoint128(auVar11,auVar13);
-  auVar6 = vectorPermute128(auVar22,auVar24,_DAT_821df2f0);
-  auVar24 = vectorMultiplySum4FloatingPoint(auVar29,_DAT_829a5380);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar12,_DAT_829a5400);
-  auVar37 = vectorAddFloatingPoint128(auVar15,auVar26);
-  auVar12 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a5400);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar21,_DAT_829a5370);
-  auVar25 = vectorPermute128(auVar6,auVar14,_DAT_821df2e0);
-  auVar14 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a5390);
-  auVar13 = vectorPermute128(auVar38,auVar36,_DAT_821df2f0);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar21,_DAT_829a5380);
-  auVar8 = vectorPermute128(auVar31,auVar23,_DAT_821df2f0);
-  auVar38 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a5390);
-  auVar31 = vectorMultiplySum4FloatingPoint(auVar17,_DAT_829a5380);
-  auVar35 = vectorPermute(auVar35,auVar44,_DAT_821df2f0);
-  auVar23 = vectorMultiplySum4FloatingPoint(auVar40,_DAT_829a5380);
-  auVar18 = vectorMultiplySum4FloatingPoint(auVar33,_DAT_829a5370);
-  auVar28 = vectorPermute(auVar28,auVar32,_DAT_821df2f0);
-  auVar10 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a5370);
-  auVar41 = vectorMultiplySum4FloatingPoint(auVar29,_DAT_829a5370);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar17,_DAT_829a5370);
-  auVar42 = vectorMultiplySum4FloatingPoint(auVar4,_DAT_829a5400);
-  auVar6 = vectorPermute128(auVar28,auVar35,_DAT_821df2e0);
-  auVar45 = vectorMultiplySum4FloatingPoint(auVar40,_DAT_829a5370);
-  auVar28 = vectorPermute128(auVar34,auVar20,_DAT_821df2f0);
-  auVar21 = vectorMultiplySum4FloatingPoint(auVar21,_DAT_829a5390);
-  auVar16 = vectorMultiplySum4FloatingPoint(auVar17,_DAT_829a5390);
-  auVar44 = vectorMultiplySum4FloatingPoint(auVar33,_DAT_829a5390);
-  auVar35 = vectorPermute128(auVar12,auVar7,_DAT_821df2f0);
-  auVar33 = vectorMultiplySum4FloatingPoint(auVar29,_DAT_829a5390);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a5390);
-  auVar4 = vectorPermute128(auVar11,auVar24,_DAT_821df2f0);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar40,_DAT_829a5390);
-  auVar13 = vectorPermute128(auVar35,auVar13,_DAT_821df2e0);
-  auVar35 = vectorPermute128(auVar23,auVar31,_DAT_821df2f0);
-  auVar24 = vectorPermute128(auVar10,auVar18,_DAT_821df2f0);
-  auVar36 = vectorSubtractFloatingPoint128(auVar15,auVar26);
-  auVar46 = vectorSubtractFloatingPoint128(auVar25,auVar6);
-  auVar26 = vectorPermute128(auVar35,auVar4,_DAT_821df2e0);
-  auVar10 = vectorAddFloatingPoint128(auVar25,auVar6);
-  auVar6 = vectorPermute128(auVar42,auVar9,_DAT_821df2f0);
-  auVar35 = vectorPermute128(auVar22,auVar41,_DAT_821df2f0);
-  auVar22 = vectorPermute128(auVar45,auVar32,_DAT_821df2f0);
-  auVar32 = vectorPermute128(auVar8,auVar24,_DAT_821df2e0);
-  auVar24 = vectorPermute128(auVar6,auVar28,_DAT_821df2e0);
-  auVar35 = vectorPermute128(auVar22,auVar35,_DAT_821df2e0);
-  auVar28 = vectorPermute128(auVar38,auVar14,_DAT_821df2f0);
-  auVar23 = vectorSubtractFloatingPoint128(auVar27,auVar26);
-  auVar18 = vectorAddFloatingPoint128(auVar32,auVar35);
-  auVar6 = vectorPermute128(auVar21,auVar33,_DAT_821df2f0);
-  auVar27 = vectorAddFloatingPoint128(auVar27,auVar26);
-  auVar44 = vectorPermute128(auVar20,auVar44,_DAT_821df2f0);
-  auVar22 = vectorPermute128(auVar11,auVar16,_DAT_821df2f0);
-  auVar41 = vectorAddFloatingPoint128(auVar13,auVar24);
-  auVar14 = vectorSubtractFloatingPoint128(auVar13,auVar24);
-  auVar44 = vectorPermute128(auVar28,auVar44,_DAT_821df2e0);
-  auVar28 = vectorPermute128(auVar22,auVar6,_DAT_821df2e0);
-  auVar16 = vectorSubtractFloatingPoint128(auVar32,auVar35);
-  auVar38 = vectorAddFloatingPoint128(auVar44,auVar28);
-  auVar42 = vectorSubtractFloatingPoint128(auVar44,auVar28);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar39,_DAT_829a4ad0);
-  auVar44 = vectorMultiplySum4FloatingPoint(auVar30,_DAT_829a53d0);
-  auVar21 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a4ac0);
-  auVar26 = vectorMultiplySum4FloatingPoint(auVar19,_DAT_829a53e0);
-  auVar24 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a53e0);
-  auVar9 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a4ac0);
-  auVar15 = vectorMultiplySum4FloatingPoint(auVar37,_DAT_829a53d0);
-  auVar17 = vectorMultiplySum4FloatingPoint(auVar30,_DAT_829a4ad0);
-  auVar6 = vectorMultiplySum4FloatingPoint(auVar27,_DAT_829a53d0);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar23,_DAT_829a53b0);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a53b0);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar36,_DAT_829a53e0);
-  auVar8 = vectorMultiplySum4FloatingPoint(auVar19,_DAT_829a53f0);
-  auVar12 = vectorMultiplySum4FloatingPoint(auVar37,_DAT_829a4ad0);
-  auVar4 = vectorMultiplySum4FloatingPoint(auVar39,_DAT_829a53a0);
-  auVar35 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a53f0);
-  auVar33 = vectorMultiplySum4FloatingPoint(auVar41,_DAT_829a4ac0);
-  auVar13 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a53b0);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a53d0);
-  auVar26 = vectorPermute128(auVar20,auVar26,_DAT_821df2f0);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar23,_DAT_829a53e0);
-  auVar44 = vectorPermute128(auVar44,auVar24,_DAT_821df2f0);
-  auVar40 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a53e0);
-  auVar21 = vectorPermute128(auVar9,auVar21,_DAT_821df2f0);
-  auVar9 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a53d0);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar14,_DAT_829a53b0);
-  auVar24 = vectorPermute128(auVar44,auVar26,_DAT_821df2e0);
-  auVar44 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a4ac0);
-  auVar26 = vectorPermute128(auVar15,auVar22,_DAT_821df2f0);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar30,_DAT_829a53a0);
-  auVar32 = vectorPermute128(auVar32,auVar6,_DAT_821df2f0);
-  auVar15 = vectorMultiplySum4FloatingPoint(auVar36,_DAT_829a53f0);
-  auVar17 = vectorPermute128(auVar28,auVar17,_DAT_821df2f0);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar27,_DAT_829a4ad0);
-  auVar6 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a4ad0);
-  auVar12 = vectorPermute128(auVar8,auVar12,_DAT_821df2f0);
-  auVar8 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a5410);
-  auVar34 = vectorPermute128(auVar26,auVar21,_DAT_821df2e0);
-  auVar31 = vectorMultiplySum4FloatingPoint(auVar23,_DAT_829a53f0);
-  auVar35 = vectorPermute128(auVar35,auVar4,_DAT_821df2f0);
-  auVar26 = vectorMultiplySum4FloatingPoint(auVar37,_DAT_829a53a0);
-  auVar29 = vectorPermute128(auVar32,auVar17,_DAT_821df2e0);
-  auVar32 = vectorMultiplySum4FloatingPoint(auVar19,_DAT_829a5410);
-  auVar25 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a53d0);
-  auVar21 = vectorPermute128(auVar35,auVar12,_DAT_821df2e0);
-  auVar12 = vectorMultiplySum4FloatingPoint(auVar42,_DAT_829a53b0);
-  auVar17 = vectorPermute128(auVar22,auVar8,_DAT_821df2f0);
-  auVar22 = vectorMultiplySum4FloatingPoint(auVar27,_DAT_829a53a0);
-  auVar24 = vectorRoundToFloatingPointIntegerTowardZero(auVar24);
-  auVar35 = vectorMultiplySum4FloatingPoint(auVar36,_DAT_829a53b0);
-  auVar9 = vectorPermute128(auVar9,auVar40,_DAT_821df2f0);
-  auVar27 = vectorMultiplySum4FloatingPoint(auVar27,_DAT_829a4ac0);
-  auVar40 = vectorPermute128(auVar44,auVar20,_DAT_821df2f0);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar41,_DAT_829a53d0);
-  auVar44 = vectorRoundToFloatingPointIntegerTowardZero(auVar34);
-  auVar4 = vectorMultiplySum4FloatingPoint(auVar39,_DAT_829a53d0);
-  auVar15 = vectorPermute128(auVar28,auVar15,_DAT_821df2f0);
-  auVar28 = vectorMultiplySum4FloatingPoint(auVar37,_DAT_829a4ac0);
-  auVar19 = vectorMultiplySum4FloatingPoint(auVar19,_DAT_829a53b0);
-  auVar8 = vectorPermute128(auVar40,auVar9,_DAT_821df2e0);
-  auVar34 = vectorMultiplySum4FloatingPoint(auVar5,_DAT_829a53b0);
-  auVar9 = vectorPermute128(auVar31,auVar6,_DAT_821df2f0);
-  auVar40 = vectorMultiplySum4FloatingPoint(auVar30,_DAT_829a4ac0);
-  auVar17 = vectorPermute128(auVar15,auVar17,_DAT_821df2e0);
-  auVar45 = vectorMultiplySum4FloatingPoint(auVar39,_DAT_829a4ac0);
-  auVar39 = vectorPermute(auVar13,auVar33,_DAT_821df2f0);
-  auVar30 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a53e0);
-  auVar15 = vectorPermute128(auVar7,auVar11,_DAT_821df2f0);
-  auVar33 = vectorMultiplySum4FloatingPoint(auVar10,_DAT_829a53a0);
-  auVar37 = vectorPermute(auVar32,auVar26,_DAT_821df2f0);
-  auVar43 = vectorMultiplySum4FloatingPoint(auVar14,_DAT_829a53e0);
-  auVar6 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a4ad0);
-  auVar31 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a4ad0);
-  auVar13 = vectorPermute128(auVar15,auVar39,_DAT_821df2e0);
-  auVar10 = vectorPermute128(auVar12,auVar25,_DAT_821df2f0);
-  auVar5 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a53f0);
-  auVar26 = vectorMultiplySum4FloatingPoint(auVar42,_DAT_829a53e0);
-  auVar25 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a53f0);
-  auVar15 = vectorMultiplySum4FloatingPoint(auVar14,_DAT_829a53f0);
-  auVar35 = vectorPermute128(auVar27,auVar35,_DAT_821df2f0);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar23,_DAT_829a5410);
-  auVar9 = vectorPermute128(auVar37,auVar9,_DAT_821df2e0);
-  auVar23 = vectorMultiplySum4FloatingPoint(auVar36,_DAT_829a5410);
-  auVar32 = vectorRoundToFloatingPointIntegerTowardZero(auVar21);
-  auVar27 = vectorMultiplySum4FloatingPoint(auVar41,_DAT_829a4ad0);
-  auVar37 = vectorPermute128(auVar19,auVar28,_DAT_821df2f0);
-  auVar19 = vectorMultiplySum4FloatingPoint(auVar41,_DAT_829a53a0);
-  auVar4 = vectorPermute128(auVar34,auVar4,_DAT_821df2f0);
-  auVar14 = vectorMultiplySum4FloatingPoint(auVar14,_DAT_829a5410);
-  auVar39 = vectorRoundToFloatingPointIntegerTowardZero(auVar29);
-  auVar11 = vectorPermute128(auVar45,auVar40,_DAT_821df2f0);
-  auVar21 = vectorMultiplySum4FloatingPoint(auVar42,_DAT_829a5410);
-  auVar28 = vectorPermute128(auVar37,auVar35,_DAT_821df2e0);
-  auVar12 = vectorMultiplySum4FloatingPoint(auVar38,_DAT_829a53a0);
-  auVar37 = vectorPermute(auVar30,auVar20,_DAT_821df2f0);
-  auVar30 = vectorRoundToFloatingPointIntegerTowardZero(auVar8);
-  auVar35 = vectorRoundToFloatingPointIntegerTowardZero(auVar13);
-  auVar8 = vectorPermute128(auVar43,auVar31,_DAT_821df2f0);
-  auVar28 = vectorRoundToFloatingPointIntegerTowardZero(auVar28);
-  auVar40 = vectorPermute128(auVar33,auVar5,_DAT_821df2f0);
-  auVar33 = vectorMultiplySum4FloatingPoint(auVar42,_DAT_829a53f0);
-  auVar38 = vectorPermute128(auVar11,auVar4,_DAT_821df2e0);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar46,_DAT_829a5410);
-  auVar5 = vectorPermute128(auVar25,auVar22,_DAT_821df2f0);
-  auVar13 = vectorMultiplySum4FloatingPoint(auVar16,_DAT_829a5410);
-  auVar6 = vectorPermute128(auVar6,auVar15,_DAT_821df2f0);
-  auVar20 = vectorMultiplySum4FloatingPoint(auVar18,_DAT_829a53a0);
-  auVar46 = vectorPermute128(auVar37,auVar10,_DAT_821df2e0);
-  auVar22 = vectorPermute128(auVar23,auVar7,_DAT_821df2f0);
-  auVar37 = vectorRoundToFloatingPointIntegerTowardZero(auVar38);
-  auVar26 = vectorPermute128(auVar27,auVar26,_DAT_821df2f0);
-  auVar15 = vectorPermute128(auVar8,auVar5,_DAT_821df2e0);
-  auVar5 = vectorPermute128(auVar22,auVar40,_DAT_821df2e0);
-  auVar26 = vectorPermute128(auVar26,auVar6,_DAT_821df2e0);
-  auVar6 = vectorMultiplyAddFloatingPoint
-                     (auVar28,*(undefined1 (*) [16])(param_4 + 0x10 & 0xfffffff0),_DAT_829a4ae0);
-  auVar40 = vectorPermute128(auVar14,auVar21,_DAT_821df2f0);
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar37,*(undefined1 (*) [16])(param_4 & 0xfffffff0),_DAT_829a4ae0);
-  auVar38 = vectorPermute128(auVar13,auVar19,_DAT_821df2f0);
-  auVar28 = vectorRoundToFloatingPointIntegerTowardZero(auVar17);
-  auVar13 = vectorPermute128(auVar20,auVar11,_DAT_821df2f0);
-  auVar22 = vectorPermute128(auVar33,auVar12,_DAT_821df2f0);
-  auVar11 = vectorRoundToFloatingPointIntegerTowardZero(auVar9);
-  auVar15 = vectorRoundToFloatingPointIntegerTowardZero(auVar15);
-  auVar20 = vectorRoundToFloatingPointIntegerTowardZero(auVar26);
-  auVar26 = vectorRoundToFloatingPointIntegerTowardZero(auVar5);
-  auVar22 = vectorPermute128(auVar22,auVar40,_DAT_821df2e0);
-  auVar9 = vectorRoundToFloatingPointIntegerTowardZero(auVar46);
-  auVar33 = vectorPermute128(auVar13,auVar38,_DAT_821df2e0);
-  auVar22 = vectorRoundToFloatingPointIntegerTowardZero(auVar22);
-  auVar13 = vectorConvertToSignedFixedPointWordSaturate128(auVar6,0);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar6 = vectorRoundToFloatingPointIntegerTowardZero(auVar33);
-  auVar13 = vectorShiftRightAlgebraicWord128(auVar13,_DAT_829a4af0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar13);
-  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar24,*(undefined1 (*) [16])(param_4 + 0x20 & 0xfffffff0),auVar3);
+  auVar44 = vectorUnpackHighSignedByte(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0));
+  auVar39 = vectorUnpackLowSignedByte(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0));
+  auVar36 = vectorUnpackHighSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x10) & 0xfffffff0));
+  auVar33 = vectorUnpackLowSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x10) & 0xfffffff0));
+  auVar29 = vectorUnpackHighSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x20) & 0xfffffff0));
+  auVar44 = vectorSubtractSignedHalfWordSaturate
+                      (auVar44 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar27 = vectorUnpackLowSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x20) & 0xfffffff0));
+  auVar4 = vectorSubtractSignedHalfWordSaturate
+                     (auVar39 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar25 = vectorUnpackHighSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x30) & 0xfffffff0));
+  auVar39 = vectorSubtractSignedHalfWordSaturate
+                      (auVar36 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar23 = vectorUnpackLowSignedByte(*(undefined1 (*) [16])((uint)(param_2 + 0x30) & 0xfffffff0));
+  auVar36 = vectorSubtractSignedHalfWordSaturate
+                      (auVar33 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar21 = vectorUnpackLowSignedByte(auVar44);
+  auVar33 = vectorUnpackLowSignedByte(auVar4);
+  auVar44 = vectorUnpackHighSignedByte(auVar44);
+  auVar6 = vectorUnpackLowSignedByte(auVar39);
+  auVar15 = vectorConvertFromSignedFixedPointWord128(auVar21,0);
+  auVar21 = vectorUnpackLowSignedByte(auVar36);
+  auVar13 = vectorConvertFromSignedFixedPointWord128(auVar33,0);
+  auVar33 = vectorSubtractSignedHalfWordSaturate
+                      (auVar29 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar11 = vectorConvertFromSignedFixedPointWord128(auVar44,0);
+  auVar44 = vectorSubtractSignedHalfWordSaturate
+                      (auVar27 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar27 = vectorConvertFromSignedFixedPointWord128(auVar6,0);
+  auVar6 = vectorSubtractSignedHalfWordSaturate
+                     (auVar25 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar25 = vectorConvertFromSignedFixedPointWord128(auVar21,0);
+  auVar21 = vectorSubtractSignedHalfWordSaturate
+                      (auVar23 & (undefined1  [16])rem_sign,(undefined1  [16])short128);
+  auVar17 = vectorUnpackHighSignedByte(auVar4);
+  auVar8 = vectorUnpackHighSignedByte(auVar39);
+  auVar29 = vectorUnpackHighSignedByte(auVar36);
+  auVar23 = vectorUnpackLowSignedByte(auVar33);
+  auVar4 = vectorUnpackLowSignedByte(auVar44);
+  auVar17 = vectorConvertFromSignedFixedPointWord128(auVar17,0);
+  auVar39 = vectorUnpackHighSignedByte(auVar33);
+  auVar33 = vectorConvertFromSignedFixedPointWord128(auVar8,0);
+  auVar36 = vectorUnpackHighSignedByte(auVar44);
+  auVar34 = vectorConvertFromSignedFixedPointWord128(auVar29,0);
+  auVar44 = vectorPermute128(auVar15,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar46 = vectorConvertFromSignedFixedPointWord128(auVar23,0);
+  auVar8 = vectorUnpackLowSignedByte(auVar6);
+  auVar38 = vectorConvertFromSignedFixedPointWord128(auVar4,0);
+  auVar23 = vectorUnpackLowSignedByte(auVar21);
+  auVar15 = vectorConvertFromSignedFixedPointWord128(auVar39,0);
+  auVar40 = vectorUnpackHighSignedByte(auVar6);
+  auVar29 = vectorConvertFromSignedFixedPointWord128(auVar36,0);
+  auVar13 = vectorPermute128(auVar13,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar20 = vectorAddFloatingPoint128(auVar11,auVar44);
+  auVar36 = vectorConvertFromSignedFixedPointWord128(auVar8,0);
+  auVar4 = vectorPermute128(auVar27,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar6 = vectorPermute128(auVar25,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar18 = vectorSubtractFloatingPoint128(auVar11,auVar44);
+  auVar39 = vectorUnpackHighSignedByte(auVar21);
+  auVar44 = vectorConvertFromSignedFixedPointWord128(auVar23,0);
+  auVar12 = vectorSubtractFloatingPoint128(auVar17,auVar13);
+  auVar14 = vectorAddFloatingPoint128(auVar17,auVar13);
+  auVar25 = vectorConvertFromSignedFixedPointWord128(auVar40,0);
+  auVar36 = vectorPermute128(auVar36,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar7 = vectorAddFloatingPoint128(auVar33,auVar4);
+  auVar21 = vectorPermute128(auVar46,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar46 = vectorSubtractFloatingPoint128(auVar33,auVar4);
+  auVar4 = vectorPermute128(auVar38,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar38 = vectorAddFloatingPoint128(auVar34,auVar6);
+  auVar34 = vectorSubtractFloatingPoint128(auVar34,auVar6);
+  auVar6 = vectorConvertFromSignedFixedPointWord128(auVar39,0);
+  auVar44 = vectorPermute128(auVar44,(undefined1  [16])zero,(undefined1  [16])revPerm);
+  auVar39 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_1111.field0_0x0);
+  auVar35 = vectorAddFloatingPoint128(auVar29,auVar4);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar8 = vectorAddFloatingPoint128(auVar15,auVar21);
+  auVar24 = vectorSubtractFloatingPoint128(auVar29,auVar4);
+  auVar31 = vectorSubtractFloatingPoint128(auVar15,auVar21);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar13 = vectorMultiplySum4FloatingPoint(auVar14,(undefined1  [16])_1111.field0_0x0);
+  auVar28 = vectorAddFloatingPoint128(auVar25,auVar36);
+  auVar19 = vectorSubtractFloatingPoint128(auVar25,auVar36);
+  auVar15 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_1111.field0_0x0);
+  auVar11 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar29 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_1111.field0_0x0);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar34,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar5 = vectorAddFloatingPoint128(auVar6,auVar44);
+  auVar40 = vectorSubtractFloatingPoint128(auVar6,auVar44);
+  auVar36 = vectorMultiplySum4FloatingPoint(auVar35,(undefined1  [16])_1111.field0_0x0);
+  auVar4 = vectorMultiplySum4FloatingPoint(auVar8,(undefined1  [16])_1111.field0_0x0);
+  auVar27 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar30 = vectorMultiplySum4FloatingPoint(auVar31,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar14,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar44 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar28,(undefined1  [16])_1111.field0_0x0);
+  auVar6 = vectorMultiplySum4FloatingPoint(auVar19,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar32 = vectorPermute128(auVar33,auVar21,(undefined1  [16])joinPerm0101);
+  auVar17 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar13 = vectorPermute128(auVar39,auVar13,(undefined1  [16])joinPerm0101);
+  auVar37 = vectorMultiplySum4FloatingPoint(auVar24,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar28,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar39 = vectorMultiplySum4FloatingPoint(auVar5,(undefined1  [16])_1111.field0_0x0);
+  auVar41 = vectorMultiplySum4FloatingPoint(auVar40,(undefined1  [16])_c1c3c5c7.field0_0x0);
+  auVar26 = vectorPermute128(auVar15,auVar29,(undefined1  [16])joinPerm0101);
+  auVar16 = vectorMultiplySum4FloatingPoint(auVar8,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar10 = vectorPermute128(auVar11,auVar23,(undefined1  [16])joinPerm0101);
+  auVar22 = vectorMultiplySum4FloatingPoint(auVar35,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar29 = vectorMultiplySum4FloatingPoint(auVar34,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar15 = vectorPermute128(auVar36,auVar4,(undefined1  [16])joinPerm0101);
+  auVar4 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar5,(undefined1  [16])_c2c6nc6c2.field0_0x0);
+  auVar36 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar17 = vectorPermute128(auVar27,auVar17,(undefined1  [16])joinPerm0101);
+  auVar11 = vectorPermute128(auVar37,auVar30,(undefined1  [16])joinPerm0101);
+  auVar30 = vectorPermute128(auVar44,auVar25,(undefined1  [16])joinPerm0101);
+  auVar44 = vectorPermute128(auVar41,auVar6,(undefined1  [16])joinPerm0101);
+  auVar22 = vectorPermute128(auVar22,auVar16,(undefined1  [16])joinPerm0101);
+  auVar16 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar39 = vectorPermute128(auVar39,auVar9,(undefined1  [16])joinPerm0101);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar27 = vectorMultiplySum4FloatingPoint(auVar14,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar17 = vectorPermute128(auVar30,auVar17,(undefined1  [16])joinPerm0011);
+  auVar37 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar13 = vectorPermute128(auVar13,auVar26,(undefined1  [16])joinPerm0011);
+  auVar10 = vectorPermute128(auVar32,auVar10,(undefined1  [16])joinPerm0011);
+  auVar38 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar32 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar15 = vectorPermute128(auVar39,auVar15,(undefined1  [16])joinPerm0011);
+  auVar26 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar11 = vectorPermute128(auVar44,auVar11,(undefined1  [16])joinPerm0011);
+  auVar6 = vectorMultiplySum4FloatingPoint(auVar8,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar39 = vectorMultiplySum4FloatingPoint(auVar35,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar44 = vectorPermute(auVar33,auVar21,(undefined1  [16])joinPerm0101);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar28,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar16 = vectorPermute128(auVar9,auVar16,(undefined1  [16])joinPerm0101);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar5,(undefined1  [16])_1n1n11.field0_0x0);
+  auVar23 = vectorPermute128(auVar23,auVar29,(undefined1  [16])joinPerm0101);
+  auVar7 = vectorPermute128(auVar36,auVar4,(undefined1  [16])joinPerm0101);
+  auVar36 = vectorAddFloatingPoint128(auVar10,auVar11);
+  auVar29 = vectorPermute128(auVar44,auVar22,(undefined1  [16])joinPerm0011);
+  auVar22 = vectorSubtractFloatingPoint128(auVar10,auVar11);
+  auVar11 = vectorMultiplySum4FloatingPoint(auVar28,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar35 = vectorMultiplySum4FloatingPoint(auVar35,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar4 = vectorAddFloatingPoint128(auVar13,auVar15);
+  auVar30 = vectorPermute128(auVar7,auVar23,(undefined1  [16])joinPerm0011);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar8,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar7 = vectorSubtractFloatingPoint128(auVar13,auVar15);
+  auVar8 = vectorPermute128(auVar25,auVar27,(undefined1  [16])joinPerm0101);
+  auVar27 = vectorMultiplySum4FloatingPoint(auVar31,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar14,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar44 = vectorAddFloatingPoint128(auVar17,auVar29);
+  auVar14 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar24,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar28 = vectorPermute128(auVar8,auVar16,(undefined1  [16])joinPerm0011);
+  auVar16 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar15 = vectorPermute128(auVar38,auVar37,(undefined1  [16])joinPerm0101);
+  auVar13 = vectorMultiplySum4FloatingPoint(auVar24,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar10 = vectorPermute128(auVar32,auVar26,(undefined1  [16])joinPerm0101);
+  auVar38 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar32 = vectorMultiplySum4FloatingPoint(auVar19,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar39 = vectorPermute(auVar39,auVar6,(undefined1  [16])joinPerm0101);
+  auVar26 = vectorMultiplySum4FloatingPoint(auVar40,(undefined1  [16])_c3nc7nc1nc5.field0_0x0);
+  auVar20 = vectorMultiplySum4FloatingPoint(auVar34,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar33 = vectorPermute(auVar33,auVar21,(undefined1  [16])joinPerm0101);
+  auVar12 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar41 = vectorMultiplySum4FloatingPoint(auVar31,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar19,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar42 = vectorMultiplySum4FloatingPoint(auVar5,(undefined1  [16])_c6nc2c2nc6.field0_0x0);
+  auVar8 = vectorPermute128(auVar33,auVar39,(undefined1  [16])joinPerm0011);
+  auVar45 = vectorMultiplySum4FloatingPoint(auVar40,(undefined1  [16])_c5nc1c7c3.field0_0x0);
+  auVar33 = vectorPermute128(auVar35,auVar23,(undefined1  [16])joinPerm0101);
+  auVar24 = vectorMultiplySum4FloatingPoint(auVar24,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar18 = vectorMultiplySum4FloatingPoint(auVar19,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar6 = vectorMultiplySum4FloatingPoint(auVar34,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar39 = vectorPermute128(auVar14,auVar9,(undefined1  [16])joinPerm0101);
+  auVar34 = vectorMultiplySum4FloatingPoint(auVar31,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar5 = vectorPermute128(auVar13,auVar27,(undefined1  [16])joinPerm0101);
+  auVar13 = vectorMultiplySum4FloatingPoint(auVar40,(undefined1  [16])_c7nc5c3nc1.field0_0x0);
+  auVar15 = vectorPermute128(auVar39,auVar15,(undefined1  [16])joinPerm0011);
+  auVar39 = vectorPermute128(auVar26,auVar32,(undefined1  [16])joinPerm0101);
+  auVar27 = vectorPermute128(auVar12,auVar20,(undefined1  [16])joinPerm0101);
+  auVar37 = vectorSubtractFloatingPoint128(auVar17,auVar29);
+  auVar46 = vectorSubtractFloatingPoint128(auVar28,auVar8);
+  auVar29 = vectorPermute128(auVar39,auVar5,(undefined1  [16])joinPerm0011);
+  auVar12 = vectorAddFloatingPoint128(auVar28,auVar8);
+  auVar8 = vectorPermute128(auVar42,auVar11,(undefined1  [16])joinPerm0101);
+  auVar39 = vectorPermute128(auVar25,auVar41,(undefined1  [16])joinPerm0101);
+  auVar25 = vectorPermute128(auVar45,auVar21,(undefined1  [16])joinPerm0101);
+  auVar21 = vectorPermute128(auVar10,auVar27,(undefined1  [16])joinPerm0011);
+  auVar27 = vectorPermute128(auVar8,auVar33,(undefined1  [16])joinPerm0011);
+  auVar39 = vectorPermute128(auVar25,auVar39,(undefined1  [16])joinPerm0011);
+  auVar33 = vectorPermute128(auVar38,auVar16,(undefined1  [16])joinPerm0101);
+  auVar26 = vectorSubtractFloatingPoint128(auVar30,auVar29);
+  auVar20 = vectorAddFloatingPoint128(auVar21,auVar39);
+  auVar8 = vectorPermute128(auVar24,auVar34,(undefined1  [16])joinPerm0101);
+  auVar30 = vectorAddFloatingPoint128(auVar30,auVar29);
+  auVar6 = vectorPermute128(auVar23,auVar6,(undefined1  [16])joinPerm0101);
+  auVar25 = vectorPermute128(auVar13,auVar18,(undefined1  [16])joinPerm0101);
+  auVar41 = vectorAddFloatingPoint128(auVar15,auVar27);
+  auVar16 = vectorSubtractFloatingPoint128(auVar15,auVar27);
+  auVar6 = vectorPermute128(auVar33,auVar6,(undefined1  [16])joinPerm0011);
+  auVar33 = vectorPermute128(auVar25,auVar8,(undefined1  [16])joinPerm0011);
+  auVar18 = vectorSubtractFloatingPoint128(auVar21,auVar39);
+  auVar38 = vectorAddFloatingPoint128(auVar6,auVar33);
+  auVar42 = vectorSubtractFloatingPoint128(auVar6,auVar33);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar4,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar6 = vectorMultiplySum4FloatingPoint(auVar36,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar24 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_2_1111.field0_0x0);
+  auVar29 = vectorMultiplySum4FloatingPoint(auVar22,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar27 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar11 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_2_1111.field0_0x0);
+  auVar17 = vectorMultiplySum4FloatingPoint(auVar44,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar19 = vectorMultiplySum4FloatingPoint(auVar36,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar8 = vectorMultiplySum4FloatingPoint(auVar30,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar26,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar37,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar10 = vectorMultiplySum4FloatingPoint(auVar22,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar14 = vectorMultiplySum4FloatingPoint(auVar44,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar5 = vectorMultiplySum4FloatingPoint(auVar4,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar39 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar34 = vectorMultiplySum4FloatingPoint(auVar41,(undefined1  [16])_2_1111.field0_0x0);
+  auVar15 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar13 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar29 = vectorPermute128(auVar23,auVar29,(undefined1  [16])joinPerm0101);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar26,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar6 = vectorPermute128(auVar6,auVar27,(undefined1  [16])joinPerm0101);
+  auVar40 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar24 = vectorPermute128(auVar11,auVar24,(undefined1  [16])joinPerm0101);
+  auVar11 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar16,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar27 = vectorPermute128(auVar6,auVar29,(undefined1  [16])joinPerm0011);
+  auVar6 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_2_1111.field0_0x0);
+  auVar29 = vectorPermute128(auVar17,auVar25,(undefined1  [16])joinPerm0101);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar36,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar21 = vectorPermute128(auVar21,auVar8,(undefined1  [16])joinPerm0101);
+  auVar17 = vectorMultiplySum4FloatingPoint(auVar37,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar19 = vectorPermute128(auVar33,auVar19,(undefined1  [16])joinPerm0101);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar30,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar8 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar14 = vectorPermute128(auVar10,auVar14,(undefined1  [16])joinPerm0101);
+  auVar10 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar35 = vectorPermute128(auVar29,auVar24,(undefined1  [16])joinPerm0011);
+  auVar32 = vectorMultiplySum4FloatingPoint(auVar26,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar39 = vectorPermute128(auVar39,auVar5,(undefined1  [16])joinPerm0101);
+  auVar29 = vectorMultiplySum4FloatingPoint(auVar44,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar31 = vectorPermute128(auVar21,auVar19,(undefined1  [16])joinPerm0011);
+  auVar21 = vectorMultiplySum4FloatingPoint(auVar22,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar28 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar24 = vectorPermute128(auVar39,auVar14,(undefined1  [16])joinPerm0011);
+  auVar14 = vectorMultiplySum4FloatingPoint(auVar42,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar19 = vectorPermute128(auVar25,auVar10,(undefined1  [16])joinPerm0101);
+  auVar25 = vectorMultiplySum4FloatingPoint(auVar30,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar27 = vectorRoundToFloatingPointIntegerTowardZero(auVar27);
+  auVar39 = vectorMultiplySum4FloatingPoint(auVar37,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar11 = vectorPermute128(auVar11,auVar40,(undefined1  [16])joinPerm0101);
+  auVar30 = vectorMultiplySum4FloatingPoint(auVar30,(undefined1  [16])_2_1111.field0_0x0);
+  auVar40 = vectorPermute128(auVar6,auVar23,(undefined1  [16])joinPerm0101);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar41,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar6 = vectorRoundToFloatingPointIntegerTowardZero(auVar35);
+  auVar5 = vectorMultiplySum4FloatingPoint(auVar4,(undefined1  [16])_2_c2c6nc6c2.field0_0x0);
+  auVar17 = vectorPermute128(auVar33,auVar17,(undefined1  [16])joinPerm0101);
+  auVar33 = vectorMultiplySum4FloatingPoint(auVar44,(undefined1  [16])_2_1111.field0_0x0);
+  auVar22 = vectorMultiplySum4FloatingPoint(auVar22,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar10 = vectorPermute128(auVar40,auVar11,(undefined1  [16])joinPerm0011);
+  auVar35 = vectorMultiplySum4FloatingPoint(auVar7,(undefined1  [16])_2_c1c3c5c7.field0_0x0);
+  auVar11 = vectorPermute128(auVar32,auVar8,(undefined1  [16])joinPerm0101);
+  auVar40 = vectorMultiplySum4FloatingPoint(auVar36,(undefined1  [16])_2_1111.field0_0x0);
+  auVar19 = vectorPermute128(auVar17,auVar19,(undefined1  [16])joinPerm0011);
+  auVar45 = vectorMultiplySum4FloatingPoint(auVar4,(undefined1  [16])_2_1111.field0_0x0);
+  auVar4 = vectorPermute(auVar15,auVar34,(undefined1  [16])joinPerm0101);
+  auVar36 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar17 = vectorPermute128(auVar9,auVar13,(undefined1  [16])joinPerm0101);
+  auVar34 = vectorMultiplySum4FloatingPoint(auVar12,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar44 = vectorPermute(auVar21,auVar29,(undefined1  [16])joinPerm0101);
+  auVar43 = vectorMultiplySum4FloatingPoint(auVar16,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar8 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar32 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar15 = vectorPermute128(auVar17,auVar4,(undefined1  [16])joinPerm0011);
+  auVar12 = vectorPermute128(auVar14,auVar28,(undefined1  [16])joinPerm0101);
+  auVar7 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar29 = vectorMultiplySum4FloatingPoint(auVar42,(undefined1  [16])_2_c3nc7nc1nc5.field0_0x0);
+  auVar28 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar17 = vectorMultiplySum4FloatingPoint(auVar16,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar39 = vectorPermute128(auVar30,auVar39,(undefined1  [16])joinPerm0101);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar26,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar11 = vectorPermute128(auVar44,auVar11,(undefined1  [16])joinPerm0011);
+  auVar26 = vectorMultiplySum4FloatingPoint(auVar37,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar21 = vectorRoundToFloatingPointIntegerTowardZero(auVar24);
+  auVar30 = vectorMultiplySum4FloatingPoint(auVar41,(undefined1  [16])_2_1n1n11.field0_0x0);
+  auVar44 = vectorPermute128(auVar22,auVar33,(undefined1  [16])joinPerm0101);
+  auVar22 = vectorMultiplySum4FloatingPoint(auVar41,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar5 = vectorPermute128(auVar35,auVar5,(undefined1  [16])joinPerm0101);
+  auVar16 = vectorMultiplySum4FloatingPoint(auVar16,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar4 = vectorRoundToFloatingPointIntegerTowardZero(auVar31);
+  auVar13 = vectorPermute128(auVar45,auVar40,(undefined1  [16])joinPerm0101);
+  auVar24 = vectorMultiplySum4FloatingPoint(auVar42,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar33 = vectorPermute128(auVar44,auVar39,(undefined1  [16])joinPerm0011);
+  auVar14 = vectorMultiplySum4FloatingPoint(auVar38,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar44 = vectorPermute(auVar36,auVar23,(undefined1  [16])joinPerm0101);
+  auVar36 = vectorRoundToFloatingPointIntegerTowardZero(auVar10);
+  auVar39 = vectorRoundToFloatingPointIntegerTowardZero(auVar15);
+  auVar10 = vectorPermute128(auVar43,auVar32,(undefined1  [16])joinPerm0101);
+  auVar33 = vectorRoundToFloatingPointIntegerTowardZero(auVar33);
+  auVar40 = vectorPermute128(auVar34,auVar7,(undefined1  [16])joinPerm0101);
+  auVar34 = vectorMultiplySum4FloatingPoint(auVar42,(undefined1  [16])_2_c5nc1c7c3.field0_0x0);
+  auVar38 = vectorPermute128(auVar13,auVar5,(undefined1  [16])joinPerm0011);
+  auVar13 = vectorMultiplySum4FloatingPoint(auVar46,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar7 = vectorPermute128(auVar28,auVar25,(undefined1  [16])joinPerm0101);
+  auVar15 = vectorMultiplySum4FloatingPoint(auVar18,(undefined1  [16])_2_c7nc5c3nc1.field0_0x0);
+  auVar8 = vectorPermute128(auVar8,auVar17,(undefined1  [16])joinPerm0101);
+  auVar23 = vectorMultiplySum4FloatingPoint(auVar20,(undefined1  [16])_2_c6nc2c2nc6.field0_0x0);
+  auVar46 = vectorPermute128(auVar44,auVar12,(undefined1  [16])joinPerm0011);
+  auVar25 = vectorPermute128(auVar26,auVar9,(undefined1  [16])joinPerm0101);
+  auVar44 = vectorRoundToFloatingPointIntegerTowardZero(auVar38);
+  auVar29 = vectorPermute128(auVar30,auVar29,(undefined1  [16])joinPerm0101);
+  auVar17 = vectorPermute128(auVar10,auVar7,(undefined1  [16])joinPerm0011);
+  auVar7 = vectorPermute128(auVar25,auVar40,(undefined1  [16])joinPerm0011);
+  auVar29 = vectorPermute128(auVar29,auVar8,(undefined1  [16])joinPerm0011);
+  auVar8 = vectorMultiplyAddFloatingPoint
+                     (auVar33,*(undefined1 (*) [16])((uint)(param_3 + 4) & 0xfffffff0),
+                      (undefined1  [16])quant_add.field0_0x0);
+  auVar40 = vectorPermute128(auVar16,auVar24,(undefined1  [16])joinPerm0101);
   auVar44 = vectorMultiplyAddFloatingPoint
-                      (auVar44,*(undefined1 (*) [16])(param_4 + 0x30 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
+                      (auVar44,*(undefined1 (*) [16])((uint)param_3 & 0xfffffff0),
+                       (undefined1  [16])quant_add.field0_0x0);
+  auVar38 = vectorPermute128(auVar15,auVar22,(undefined1  [16])joinPerm0101);
+  auVar33 = vectorRoundToFloatingPointIntegerTowardZero(auVar19);
+  auVar15 = vectorPermute128(auVar23,auVar13,(undefined1  [16])joinPerm0101);
+  auVar25 = vectorPermute128(auVar34,auVar14,(undefined1  [16])joinPerm0101);
+  auVar13 = vectorRoundToFloatingPointIntegerTowardZero(auVar11);
+  auVar17 = vectorRoundToFloatingPointIntegerTowardZero(auVar17);
+  auVar23 = vectorRoundToFloatingPointIntegerTowardZero(auVar29);
+  auVar29 = vectorRoundToFloatingPointIntegerTowardZero(auVar7);
+  auVar25 = vectorPermute128(auVar25,auVar40,(undefined1  [16])joinPerm0011);
+  auVar11 = vectorRoundToFloatingPointIntegerTowardZero(auVar46);
+  auVar34 = vectorPermute128(auVar15,auVar38,(undefined1  [16])joinPerm0011);
+  auVar25 = vectorRoundToFloatingPointIntegerTowardZero(auVar25);
+  auVar15 = vectorConvertToSignedFixedPointWordSaturate128(auVar8,0);
   auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar44);
-  *(undefined1 (*) [16])(param_2 + 0x10 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar32,*(undefined1 (*) [16])(param_4 + 0x50 & 0xfffffff0),auVar3);
-  auVar39 = vectorMultiplyAddFloatingPoint
-                      (auVar39,*(undefined1 (*) [16])(param_4 + 0x40 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar32 = vectorConvertToSignedFixedPointWordSaturate128(auVar39,0);
-  auVar39 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar32,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar39);
-  *(undefined1 (*) [16])(param_2 + 0x20 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar35,*(undefined1 (*) [16])(param_4 + 0x60 & 0xfffffff0),auVar3);
-  auVar30 = vectorMultiplyAddFloatingPoint
-                      (auVar30,*(undefined1 (*) [16])(param_4 + 0x70 & 0xfffffff0),auVar3);
-  auVar35 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar30,0);
-  auVar30 = vectorShiftRightAlgebraicWord128(auVar35,_DAT_829a4af0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar30,auVar37);
-  *(undefined1 (*) [16])(param_2 + 0x30 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar28,*(undefined1 (*) [16])(param_4 + 0x80 & 0xfffffff0),auVar3);
-  auVar28 = vectorMultiplyAddFloatingPoint
-                      (auVar11,*(undefined1 (*) [16])(param_4 + 0x90 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar28 = vectorConvertToSignedFixedPointWordSaturate128(auVar28,0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar28 = vectorShiftRightAlgebraicWord128(auVar28,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar28);
-  *(undefined1 (*) [16])(param_2 + 0x40 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar9,*(undefined1 (*) [16])(param_4 + 0xa0 & 0xfffffff0),auVar3);
-  auVar28 = vectorMultiplyAddFloatingPoint
-                      (auVar15,*(undefined1 (*) [16])(param_4 + 0xb0 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar28 = vectorConvertToSignedFixedPointWordSaturate128(auVar28,0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar28 = vectorShiftRightAlgebraicWord128(auVar28,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar28);
-  *(undefined1 (*) [16])(param_2 + 0x50 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar26,*(undefined1 (*) [16])(param_4 + 0xc0 & 0xfffffff0),auVar3);
-  auVar28 = vectorMultiplyAddFloatingPoint
-                      (auVar20,*(undefined1 (*) [16])(param_4 + 0xd0 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar28 = vectorConvertToSignedFixedPointWordSaturate128(auVar28,0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar28 = vectorShiftRightAlgebraicWord128(auVar28,_DAT_829a4af0);
-  auVar37 = vectorPackSignedWordSignedSaturate(auVar37,auVar28);
-  *(undefined1 (*) [16])(param_2 + 0x60 & 0xfffffff0) = auVar37;
-  auVar37 = vectorMultiplyAddFloatingPoint
-                      (auVar22,*(undefined1 (*) [16])(param_4 + 0xf0 & 0xfffffff0),auVar3);
-  auVar3 = vectorMultiplyAddFloatingPoint
-                     (auVar6,*(undefined1 (*) [16])(param_4 + 0xe0 & 0xfffffff0),auVar3);
-  auVar37 = vectorConvertToSignedFixedPointWordSaturate128(auVar37,0);
-  auVar3 = vectorConvertToSignedFixedPointWordSaturate128(auVar3,0);
-  auVar37 = vectorShiftRightAlgebraicWord128(auVar37,_DAT_829a4af0);
-  auVar3 = vectorShiftRightAlgebraicWord128(auVar3,_DAT_829a4af0);
-  auVar3 = vectorPackSignedWordSignedSaturate(auVar3,auVar37);
-  *(undefined1 (*) [16])(param_2 + 0x70 & 0xfffffff0) = auVar3;
+  auVar8 = vectorRoundToFloatingPointIntegerTowardZero(auVar34);
+  auVar15 = vectorShiftRightAlgebraicWord128(auVar15,(undefined1  [16])quant_shift);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar15);
+  *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar27,*(undefined1 (*) [16])((uint)(param_3 + 8) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar6 = vectorMultiplyAddFloatingPoint
+                     (auVar6,*(undefined1 (*) [16])((uint)(param_3 + 0xc) & 0xfffffff0),
+                      (undefined1  [16])_Var3.field0_0x0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar6 = vectorConvertToSignedFixedPointWordSaturate128(auVar6,0);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar6 = vectorShiftRightAlgebraicWord128(auVar6,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar6);
+  *(undefined1 (*) [16])((uint)(param_1 + 8) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar21,*(undefined1 (*) [16])((uint)(param_3 + 0x14) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar4 = vectorMultiplyAddFloatingPoint
+                     (auVar4,*(undefined1 (*) [16])((uint)(param_3 + 0x10) & 0xfffffff0),
+                      (undefined1  [16])_Var3.field0_0x0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar21 = vectorConvertToSignedFixedPointWordSaturate128(auVar4,0);
+  auVar4 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar21,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar4);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x10) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar39,*(undefined1 (*) [16])((uint)(param_3 + 0x18) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar36 = vectorMultiplyAddFloatingPoint
+                      (auVar36,*(undefined1 (*) [16])((uint)(param_3 + 0x1c) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar39 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar36,0);
+  auVar36 = vectorShiftRightAlgebraicWord128(auVar39,(undefined1  [16])quant_shift);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar36,auVar44);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x18) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar33,*(undefined1 (*) [16])((uint)(param_3 + 0x20) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar33 = vectorMultiplyAddFloatingPoint
+                      (auVar13,*(undefined1 (*) [16])((uint)(param_3 + 0x24) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar33 = vectorConvertToSignedFixedPointWordSaturate128(auVar33,0);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar33 = vectorShiftRightAlgebraicWord128(auVar33,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar33);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x20) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar11,*(undefined1 (*) [16])((uint)(param_3 + 0x28) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar33 = vectorMultiplyAddFloatingPoint
+                      (auVar17,*(undefined1 (*) [16])((uint)(param_3 + 0x2c) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar33 = vectorConvertToSignedFixedPointWordSaturate128(auVar33,0);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar33 = vectorShiftRightAlgebraicWord128(auVar33,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar33);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x28) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar29,*(undefined1 (*) [16])((uint)(param_3 + 0x30) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar33 = vectorMultiplyAddFloatingPoint
+                      (auVar23,*(undefined1 (*) [16])((uint)(param_3 + 0x34) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar33 = vectorConvertToSignedFixedPointWordSaturate128(auVar33,0);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar33 = vectorShiftRightAlgebraicWord128(auVar33,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar33);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x30) & 0xfffffff0) = auVar44;
+  auVar44 = vectorMultiplyAddFloatingPoint
+                      (auVar25,*(undefined1 (*) [16])((uint)(param_3 + 0x3c) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar33 = vectorMultiplyAddFloatingPoint
+                      (auVar8,*(undefined1 (*) [16])((uint)(param_3 + 0x38) & 0xfffffff0),
+                       (undefined1  [16])_Var3.field0_0x0);
+  auVar36 = vectorConvertToSignedFixedPointWordSaturate128(auVar44,0);
+  auVar44 = vectorConvertToSignedFixedPointWordSaturate128(auVar33,0);
+  auVar33 = vectorShiftRightAlgebraicWord128(auVar36,(undefined1  [16])quant_shift);
+  auVar44 = vectorShiftRightAlgebraicWord128(auVar44,(undefined1  [16])quant_shift);
+  auVar44 = vectorPackSignedWordSignedSaturate(auVar44,auVar33);
+  *(undefined1 (*) [16])((uint)(param_1 + 0x38) & 0xfffffff0) = auVar44;
   uVar2 = TBLr;
-  DAT_84872a40 = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + DAT_84872a40;
+  ticks_dct = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + ticks_dct;
   __restgprlr_18();
   return;
 }
 
 
-// 827E7030  jpeg_encode::dct  (mjpeg/jpeg.cpp:285)
+// 827E7030  dct  (mjpeg/jpeg.cpp:285)
 
-void jpeg_encode__dct(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
+void __thiscall jpeg_encode::dct(jpeg_encode *this,short *param_1,uchar *param_2,int param_3)
 
 {
   byte *pbVar1;
@@ -507,109 +526,112 @@ void jpeg_encode__dct(undefined8 param_1,longlong param_2,longlong param_3,longl
   short sVar4;
   short *psVar5;
   int iVar6;
-  int iVar7;
+  longlong lVar7;
   int iVar8;
   int iVar9;
   int iVar10;
-  undefined2 *puVar11;
-  short *psVar12;
-  int iVar13;
-  int iVar14;
+  int iVar11;
+  undefined2 *puVar12;
+  short *psVar13;
+  longlong lVar14;
   int iVar15;
   int iVar16;
   int iVar17;
-  longlong lVar18;
-  longlong lVar19;
+  int iVar18;
+  int iVar19;
+  longlong lVar20;
+  longlong lVar21;
   undefined2 auStack_12e [7];
-  short local_120 [7];
-  short local_112;
-  short local_110 [8];
+  short local_120 [16];
   short asStack_100 [8];
   short asStack_f0 [8];
   short asStack_e0 [8];
   short asStack_d0 [104];
   
+  lVar21 = (longlong)param_3;
+  lVar14 = (longlong)(int)param_2;
+  lVar7 = (longlong)(int)param_1;
   __savegprlr();
-  puVar11 = auStack_12e;
-  param_3 = param_3 + 6;
-  lVar18 = 8;
+  puVar12 = auStack_12e;
+  lVar14 = lVar14 + 6;
+  lVar20 = 8;
   do {
-    pbVar1 = (byte *)param_3;
-    iVar16 = (uint)pbVar1[-6] - (uint)pbVar1[1];
-    iVar14 = (uint)pbVar1[-3] - (uint)pbVar1[-2];
-    iVar13 = (uint)pbVar1[-5] - (uint)*pbVar1;
-    iVar10 = (uint)pbVar1[-4] - (uint)pbVar1[-1];
+    pbVar1 = (byte *)lVar14;
+    iVar18 = (uint)pbVar1[-6] - (uint)pbVar1[1];
+    iVar16 = (uint)pbVar1[-3] - (uint)pbVar1[-2];
+    iVar15 = (uint)pbVar1[-5] - (uint)*pbVar1;
+    iVar11 = (uint)pbVar1[-4] - (uint)pbVar1[-1];
     iVar6 = (uint)pbVar1[-5] + (uint)*pbVar1 + -0x100;
-    iVar17 = (uint)pbVar1[-4] + (uint)pbVar1[-1] + -0x100;
-    iVar7 = (uint)pbVar1[-3] + (uint)pbVar1[-2] + -0x100;
-    iVar8 = (uint)pbVar1[-6] + (uint)pbVar1[1] + -0x100;
-    iVar2 = iVar8 - iVar7;
-    iVar9 = iVar6 - iVar17;
-    sVar3 = (short)iVar7 + (short)iVar8;
-    sVar4 = (short)iVar17 + (short)iVar6;
-    puVar11[9] = (short)(iVar2 * 0x53a + iVar9 * 0x22a >> 10);
-    puVar11[0xd] = (short)(iVar2 * 0x22a + iVar9 * -0x53a >> 10);
-    puVar11[7] = sVar3 + sVar4;
-    puVar11[0xb] = sVar3 - sVar4;
-    puVar11[0xe] = (short)(iVar10 * 0x4b4 + iVar14 * -0x58c + iVar13 * -0x325 + iVar16 * 0x11b >> 10
+    iVar19 = (uint)pbVar1[-4] + (uint)pbVar1[-1] + -0x100;
+    iVar8 = (uint)pbVar1[-3] + (uint)pbVar1[-2] + -0x100;
+    iVar9 = (uint)pbVar1[-6] + (uint)pbVar1[1] + -0x100;
+    iVar2 = iVar9 - iVar8;
+    iVar10 = iVar6 - iVar19;
+    sVar3 = (short)iVar8 + (short)iVar9;
+    sVar4 = (short)iVar19 + (short)iVar6;
+    puVar12[9] = (short)(iVar2 * 0x53a + iVar10 * 0x22a >> 10);
+    puVar12[0xd] = (short)(iVar2 * 0x22a + iVar10 * -0x53a >> 10);
+    puVar12[7] = sVar3 + sVar4;
+    puVar12[0xb] = sVar3 - sVar4;
+    puVar12[0xe] = (short)(iVar11 * 0x4b4 + iVar16 * -0x58c + iVar15 * -0x325 + iVar18 * 0x11b >> 10
                           );
-    puVar11[0xc] = (short)(iVar14 * 0x4b4 + iVar13 * -0x58c + iVar16 * 0x325 + iVar10 * 0x11b >> 10)
+    puVar12[0xc] = (short)(iVar16 * 0x4b4 + iVar15 * -0x58c + iVar18 * 0x325 + iVar11 * 0x11b >> 10)
     ;
-    puVar11[10] = (short)(iVar16 * 0x4b4 + iVar10 * -0x58c + iVar14 * -0x325 + iVar13 * -0x11b >> 10
+    puVar12[10] = (short)(iVar18 * 0x4b4 + iVar11 * -0x58c + iVar16 * -0x325 + iVar15 * -0x11b >> 10
                          );
-    param_3 = param_3 + param_4;
-    puVar11 = puVar11 + 8;
-    *puVar11 = (short)(iVar16 * 0x58c + iVar13 * 0x4b4 + iVar10 * 0x325 + iVar14 * 0x11b >> 10);
-    lVar18 = lVar18 + -1;
-  } while (lVar18 != 0);
-  lVar19 = 8;
-  psVar12 = &local_112;
-  lVar18 = param_2 + 0x20;
-  iVar2 = (int)param_2;
+    lVar14 = lVar14 + lVar21;
+    puVar12 = puVar12 + 8;
+    *puVar12 = (short)(iVar18 * 0x58c + iVar15 * 0x4b4 + iVar11 * 0x325 + iVar16 * 0x11b >> 10);
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  lVar21 = 8;
+  psVar13 = local_120 + 7;
+  lVar14 = lVar7 + 0x20;
+  iVar2 = (int)lVar7;
   do {
-    psVar5 = psVar12 + -7;
-    puVar11 = (undefined2 *)lVar18;
-    iVar10 = (int)*(short *)(((int)asStack_100 - iVar2) + (int)puVar11);
-    iVar9 = (int)*(short *)(((int)local_110 - iVar2) + (int)puVar11);
-    psVar12 = psVar12 + 1;
-    iVar8 = (int)*(short *)(((int)asStack_e0 - iVar2) + (int)puVar11);
-    iVar17 = (int)*(short *)(((int)local_120 - iVar2) + (int)puVar11);
-    iVar7 = (int)*(short *)(((int)asStack_d0 - iVar2) + (int)puVar11);
-    iVar6 = (int)*(short *)(((int)asStack_f0 - iVar2) + (int)puVar11);
-    iVar15 = iVar9 - iVar10;
-    iVar16 = *psVar12 - iVar8;
-    iVar9 = iVar9 + iVar10;
-    iVar8 = *psVar12 + iVar8;
-    iVar10 = *psVar5 + iVar7;
-    iVar14 = iVar17 - iVar6;
-    iVar17 = iVar17 + iVar6;
-    iVar7 = *psVar5 - iVar7;
-    iVar6 = iVar10 - iVar9;
-    iVar13 = iVar8 - iVar17;
-    iVar9 = iVar9 + iVar10;
-    iVar17 = iVar17 + iVar8;
-    puVar11[-0x10] = (short)(iVar9 + iVar17 >> 3);
-    puVar11[0x10] = (short)(iVar9 - iVar17 >> 3);
-    *puVar11 = (short)(iVar6 * 0x53a + iVar13 * 0x22a >> 0xd);
-    puVar11[0x28] =
-         (short)(iVar14 * 0x4b4 + iVar15 * -0x58c + iVar16 * -0x325 + iVar7 * 0x11b >> 0xd);
-    puVar11[8] = (short)(iVar7 * 0x4b4 + iVar14 * -0x58c + iVar15 * -0x325 + iVar16 * -0x11b >> 0xd)
+    psVar5 = psVar13 + -7;
+    puVar12 = (undefined2 *)lVar14;
+    iVar11 = (int)*(short *)(((int)asStack_100 - iVar2) + (int)puVar12);
+    iVar10 = (int)*(short *)((int)local_120 + (0x10 - iVar2) + (int)puVar12);
+    psVar13 = psVar13 + 1;
+    iVar9 = (int)*(short *)(((int)asStack_e0 - iVar2) + (int)puVar12);
+    iVar19 = (int)*(short *)(((int)local_120 - iVar2) + (int)puVar12);
+    iVar8 = (int)*(short *)(((int)asStack_d0 - iVar2) + (int)puVar12);
+    iVar6 = (int)*(short *)(((int)asStack_f0 - iVar2) + (int)puVar12);
+    iVar17 = iVar10 - iVar11;
+    iVar18 = *psVar13 - iVar9;
+    iVar10 = iVar10 + iVar11;
+    iVar9 = *psVar13 + iVar9;
+    iVar11 = *psVar5 + iVar8;
+    iVar16 = iVar19 - iVar6;
+    iVar19 = iVar19 + iVar6;
+    iVar8 = *psVar5 - iVar8;
+    iVar6 = iVar11 - iVar10;
+    iVar15 = iVar9 - iVar19;
+    iVar10 = iVar10 + iVar11;
+    iVar19 = iVar19 + iVar9;
+    puVar12[-0x10] = (short)(iVar10 + iVar19 >> 3);
+    puVar12[0x10] = (short)(iVar10 - iVar19 >> 3);
+    *puVar12 = (short)(iVar6 * 0x53a + iVar15 * 0x22a >> 0xd);
+    puVar12[0x28] =
+         (short)(iVar16 * 0x4b4 + iVar17 * -0x58c + iVar18 * -0x325 + iVar8 * 0x11b >> 0xd);
+    puVar12[8] = (short)(iVar8 * 0x4b4 + iVar16 * -0x58c + iVar17 * -0x325 + iVar18 * -0x11b >> 0xd)
     ;
-    puVar11[0x20] = (short)(iVar6 * 0x22a + iVar13 * -0x53a >> 0xd);
-    puVar11[0x18] =
-         (short)(iVar15 * 0x4b4 + iVar16 * -0x58c + iVar7 * 0x325 + iVar14 * 0x11b >> 0xd);
-    puVar11[-8] = (short)(iVar7 * 0x58c + iVar16 * 0x4b4 + iVar14 * 0x325 + iVar15 * 0x11b >> 0xd);
-    lVar18 = lVar18 + 2;
-    lVar19 = lVar19 + -1;
-  } while (lVar19 != 0);
+    puVar12[0x20] = (short)(iVar6 * 0x22a + iVar15 * -0x53a >> 0xd);
+    puVar12[0x18] =
+         (short)(iVar17 * 0x4b4 + iVar18 * -0x58c + iVar8 * 0x325 + iVar16 * 0x11b >> 0xd);
+    puVar12[-8] = (short)(iVar8 * 0x58c + iVar18 * 0x4b4 + iVar16 * 0x325 + iVar17 * 0x11b >> 0xd);
+    lVar14 = lVar14 + 2;
+    lVar21 = lVar21 + -1;
+  } while (lVar21 != 0);
   __restgprlr();
   return;
 }
 
 
-// 827E7328  jpeg_encode::init_quant  (mjpeg/jpeg.cpp:542)
+// 827E7328  init_quant  (mjpeg/jpeg.cpp:542)
 
-void jpeg_encode__init_quant(undefined8 param_1,int param_2)
+void __thiscall jpeg_encode::init_quant(jpeg_encode *this,int param_1)
 
 {
   byte bVar1;
@@ -619,13 +641,13 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
   int iVar5;
   longlong lVar6;
   
-  iVar3 = __savegprlr_29();
+  iVar3 = __savegprlr_29(this);
   iVar5 = 0;
   lVar6 = 8;
   iVar2 = iVar3 + 0x40;
   do {
-    bVar1 = (&DAT_829a4cb0)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5430)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -636,7 +658,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5470)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -647,9 +669,9 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5431)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 1] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
-    bVar1 = (&DAT_829a4cb1)[iVar5];
+    bVar1 = jpeg_zigzag_table[iVar5 + 1];
     if (uVar4 == 0) {
       uVar4 = 1;
     }
@@ -659,7 +681,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5471)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 1] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -670,8 +692,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
     trapWord(6,uVar4,0);
-    bVar1 = (&DAT_829a4cb2)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5432)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 2];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 2] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -682,7 +704,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5472)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 2] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -693,8 +715,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
     trapWord(6,uVar4,0);
-    bVar1 = (&DAT_829a4cb3)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5433)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 3];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 3] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -705,7 +727,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5473)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 3] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -716,8 +738,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    bVar1 = (&DAT_829a4cb4)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5434)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 4];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 4] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -728,7 +750,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
     trapWord(6,uVar4,0);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5474)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 4] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -739,8 +761,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    bVar1 = (&DAT_829a4cb5)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5435)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 5];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 5] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -751,7 +773,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5475)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 5] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -762,8 +784,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    bVar1 = (&DAT_829a4cb6)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5436)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 6];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 6] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -774,7 +796,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5476)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 6] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -785,8 +807,8 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)(iVar2 + (uint)bVar1) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x60) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    bVar1 = (&DAT_829a4cb7)[iVar5];
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5437)[iVar5] * (longlong)param_2 + 0x200U &
+    bVar1 = jpeg_zigzag_table[iVar5 + 7];
+    uVar4 = ((longlong)(int)(uint)luminance_quant_table[iVar5 + 7] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -797,7 +819,7 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
     *(char *)((uint)bVar1 + iVar3) = (char)uVar4;
     trapWord(6,uVar4,0);
     *(float *)((bVar1 + 0x20) * 4 + iVar3) = (float)(0x8000 / uVar4);
-    uVar4 = ((longlong)(int)(uint)(byte)(&DAT_829a5477)[iVar5] * (longlong)param_2 + 0x200U &
+    uVar4 = ((longlong)(int)(uint)chrominance_quant_table[iVar5 + 7] * (longlong)param_1 + 0x200U &
             0xffffffff) >> 10;
     if (uVar4 == 0) {
       uVar4 = 1;
@@ -816,9 +838,9 @@ void jpeg_encode__init_quant(undefined8 param_1,int param_2)
 }
 
 
-// 827E7968  jpeg_encode::quant  (mjpeg/jpeg.cpp:606)
+// 827E7968  quant  (mjpeg/jpeg.cpp:606)
 
-void jpeg_encode__quant(undefined8 param_1,int param_2,int param_3,int param_4)
+void __thiscall jpeg_encode::quant(jpeg_encode *this,short *param_1,short *param_2,ushort *param_3)
 
 {
   ulonglong uVar1;
@@ -830,35 +852,36 @@ void jpeg_encode__quant(undefined8 param_1,int param_2,int param_3,int param_4)
   longlong lVar7;
   
   uVar1 = TBLr;
-  puVar6 = (ushort *)(param_4 + 2);
-  psVar5 = (short *)(param_3 + -2);
+  puVar6 = param_3 + 1;
+  psVar5 = param_2 + -1;
   lVar7 = 0x10;
   iVar4 = 0;
   do {
-    *(short *)((uint)(byte)(&DAT_829a4cb0)[iVar4] * 2 + param_2) =
+    param_1[jpeg_zigzag_table[iVar4]] =
          (short)((int)((uint)puVar6[-1] * (int)psVar5[1] + 0x4000) >> 0xf);
-    *(short *)((uint)(byte)(&DAT_829a4cb1)[iVar4] * 2 + param_2) =
-         (short)((int)((int)*(short *)((param_3 - param_4) + (int)puVar6) * (uint)*puVar6 + 0x4000)
-                >> 0xf);
-    *(short *)((uint)(byte)(&DAT_829a4cb2)[iVar4] * 2 + param_2) =
+    param_1[jpeg_zigzag_table[iVar4 + 1]] =
+         (short)((int)((int)*(short *)(((int)param_2 - (int)param_3) + (int)puVar6) * (uint)*puVar6
+                      + 0x4000) >> 0xf);
+    param_1[jpeg_zigzag_table[iVar4 + 2]] =
          (short)((int)((uint)puVar6[1] * (int)psVar5[3] + 0x4000) >> 0xf);
     puVar3 = puVar6 + 2;
     puVar6 = puVar6 + 4;
     psVar5 = psVar5 + 4;
-    *(short *)((uint)(byte)(&DAT_829a4cb3)[iVar4] * 2 + param_2) =
+    param_1[jpeg_zigzag_table[iVar4 + 3]] =
          (short)((int)((uint)*puVar3 * (int)*psVar5 + 0x4000) >> 0xf);
     lVar7 = lVar7 + -1;
     iVar4 = iVar4 + 4;
   } while (lVar7 != 0);
   uVar2 = TBLr;
-  DAT_84872a50 = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + DAT_84872a50;
+  ticks_quant = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + ticks_quant;
   return;
 }
 
 
-// 827E7A68  jpeg_encode::huffman  (mjpeg/jpeg.cpp:647)
+// 827E7A68  huffman  (mjpeg/jpeg.cpp:647)
 
-void jpeg_encode__huffman(undefined8 param_1,longlong param_2,longlong param_3,int param_4)
+uchar * __thiscall
+jpeg_encode::huffman(jpeg_encode *this,uchar *param_1,short *param_2,jpeg_encode_state *param_3)
 
 {
   ushort uVar1;
@@ -866,292 +889,299 @@ void jpeg_encode__huffman(undefined8 param_1,longlong param_2,longlong param_3,i
   ushort uVar3;
   ulonglong uVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  short sVar9;
+  uchar *puVar6;
+  ulonglong uVar7;
   uint uVar8;
   short sVar10;
-  ushort uVar15;
-  uint uVar14;
-  ulonglong uVar11;
-  longlong lVar12;
+  uint uVar9;
+  short sVar11;
+  ushort uVar17;
+  uint uVar16;
+  ulonglong uVar12;
   longlong lVar13;
-  longlong lVar16;
+  longlong lVar14;
+  longlong lVar15;
+  longlong lVar18;
   
-  iVar5 = __savegprlr_22();
+  lVar14 = (longlong)(int)param_2;
+  lVar15 = (longlong)(int)param_1;
+  iVar5 = __savegprlr_22(this);
   uVar4 = TBLr;
-  uVar15 = *(short *)param_3 - *(short *)(param_4 + 0x14);
-  uVar6 = (ulonglong)(short)uVar15;
-  *(short *)(param_4 + 0x14) = *(short *)param_3;
-  uVar14 = 0;
-  if ((short)uVar15 < 0) {
-    uVar15 = uVar15 - 1;
-    uVar6 = -uVar6;
+  uVar17 = *(short *)lVar14 - param_3->ldc;
+  uVar7 = (ulonglong)(short)uVar17;
+  param_3->ldc = *(short *)lVar14;
+  uVar16 = 0;
+  if ((short)uVar17 < 0) {
+    uVar17 = uVar17 - 1;
+    uVar7 = -uVar7;
   }
-  for (uVar6 = uVar6 & 0xffff; uVar6 != 0; uVar6 = uVar6 >> 1) {
-    uVar14 = uVar14 + 1 & 0xffff;
+  for (uVar7 = uVar7 & 0xffff; uVar7 != 0; uVar7 = uVar7 >> 1) {
+    uVar16 = uVar16 + 1 & 0xffff;
   }
-  uVar8 = *(ushort *)(*(int *)(param_4 + 8) + uVar14 * 2) + uVar14;
+  uVar9 = param_3->DcSize[uVar16] + uVar16;
   uVar1 = *(ushort *)(iVar5 + 0x284);
-  sVar10 = (short)uVar8;
-  sVar9 = uVar1 + sVar10 + -0x20;
-  uVar7 = (int)(short)((short)(1 << (uVar14 & 0x3f)) - 1U & uVar15) |
-          (uint)*(ushort *)(*(int *)(param_4 + 4) + uVar14 * 2) << (uVar14 & 0x3f);
-  uVar14 = 0;
-  if (sVar9 < 0) {
-    *(ushort *)(iVar5 + 0x284) = uVar1 + sVar10;
-    *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar8 & 0x3f) | uVar7;
+  sVar11 = (short)uVar9;
+  sVar10 = uVar1 + sVar11 + -0x20;
+  uVar8 = (int)(short)((short)(1 << (uVar16 & 0x3f)) - 1U & uVar17) |
+          (uint)param_3->DcCode[uVar16] << (uVar16 & 0x3f);
+  uVar16 = 0;
+  if (sVar10 < 0) {
+    *(ushort *)(iVar5 + 0x284) = uVar1 + sVar11;
+    *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar9 & 0x3f) | uVar8;
   }
   else {
-    uVar8 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f) | uVar7 >> ((int)sVar9 & 0x3fU);
-    lVar16 = param_2 + 1;
+    uVar9 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f) | uVar8 >> ((int)sVar10 & 0x3fU);
+    lVar18 = lVar15 + 1;
+    *(uint *)(iVar5 + 0x280) = uVar9;
+    *(undefined1 *)lVar15 = (char)(uVar9 >> 0x18);
+    if (uVar9 >> 0x18 == 0xff) {
+      *(undefined1 *)lVar18 = 0;
+      lVar18 = lVar15 + 2;
+    }
+    uVar17 = *(ushort *)(iVar5 + 0x280);
+    *(undefined1 *)lVar18 = (char)uVar17;
+    lVar15 = lVar18 + 1;
+    if ((uVar17 & 0xff) == 0xff) {
+      *(undefined1 *)lVar15 = 0;
+      lVar15 = lVar18 + 2;
+    }
+    uVar9 = *(uint *)(iVar5 + 0x280);
+    *(undefined1 *)lVar15 = (char)(uVar9 >> 8);
+    lVar18 = lVar15 + 1;
+    if ((uVar9 >> 8 & 0xff) == 0xff) {
+      *(undefined1 *)lVar18 = 0;
+      lVar18 = lVar15 + 2;
+    }
+    uVar9 = *(uint *)(iVar5 + 0x280);
+    lVar15 = lVar18 + 1;
+    *(undefined1 *)lVar18 = (char)uVar9;
+    if ((uVar9 & 0xff) == 0xff) {
+      *(undefined1 *)lVar15 = 0;
+      lVar15 = lVar18 + 2;
+    }
     *(uint *)(iVar5 + 0x280) = uVar8;
-    *(undefined1 *)param_2 = (char)(uVar8 >> 0x18);
-    if (uVar8 >> 0x18 == 0xff) {
-      *(undefined1 *)lVar16 = 0;
-      lVar16 = param_2 + 2;
-    }
-    uVar15 = *(ushort *)(iVar5 + 0x280);
-    *(undefined1 *)lVar16 = (char)uVar15;
-    lVar13 = lVar16 + 1;
-    if ((uVar15 & 0xff) == 0xff) {
-      *(undefined1 *)lVar13 = 0;
-      lVar13 = lVar16 + 2;
-    }
-    uVar8 = *(uint *)(iVar5 + 0x280);
-    *(undefined1 *)lVar13 = (char)(uVar8 >> 8);
-    lVar16 = lVar13 + 1;
-    if ((uVar8 >> 8 & 0xff) == 0xff) {
-      *(undefined1 *)lVar16 = 0;
-      lVar16 = lVar13 + 2;
-    }
-    uVar8 = *(uint *)(iVar5 + 0x280);
-    param_2 = lVar16 + 1;
-    *(undefined1 *)lVar16 = (char)uVar8;
-    if ((uVar8 & 0xff) == 0xff) {
-      *(undefined1 *)param_2 = 0;
-      param_2 = lVar16 + 2;
-    }
-    *(uint *)(iVar5 + 0x280) = uVar7;
-    *(short *)(iVar5 + 0x284) = sVar9;
+    *(short *)(iVar5 + 0x284) = sVar10;
   }
-  lVar16 = 0x3f;
+  lVar18 = 0x3f;
   do {
-    param_3 = param_3 + 2;
-    uVar15 = *(ushort *)param_3;
-    uVar6 = (ulonglong)(short)uVar15;
-    if (uVar15 == 0) {
-      uVar14 = uVar14 + 1 & 0xffff;
+    lVar14 = lVar14 + 2;
+    uVar17 = *(ushort *)lVar14;
+    uVar7 = (ulonglong)(short)uVar17;
+    if (uVar17 == 0) {
+      uVar16 = uVar16 + 1 & 0xffff;
     }
     else {
-      while (0xf < uVar14) {
+      while (0xf < uVar16) {
         uVar1 = *(ushort *)(iVar5 + 0x284);
-        uVar14 = uVar14 + 0xfff0 & 0xffff;
-        uVar2 = *(ushort *)(*(int *)(param_4 + 0x10) + 0x142);
-        uVar3 = *(ushort *)(*(int *)(param_4 + 0xc) + 0x142);
-        sVar9 = uVar1 + uVar2 + -0x20;
-        if (sVar9 < 0) {
+        uVar16 = uVar16 + 0xfff0 & 0xffff;
+        uVar2 = param_3->AcSize[0xa1];
+        uVar3 = param_3->AcCode[0xa1];
+        sVar10 = uVar1 + uVar2 + -0x20;
+        if (sVar10 < 0) {
           *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar2 & 0x3f) | (uint)uVar3;
           *(ushort *)(iVar5 + 0x284) = uVar1 + uVar2;
         }
         else {
-          uVar7 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f);
-          lVar13 = param_2 + 1;
-          *(uint *)(iVar5 + 0x280) = uVar7 | uVar3 >> ((int)sVar9 & 0x3fU);
-          *(undefined1 *)param_2 = (char)(uVar7 >> 0x18);
-          if (uVar7 >> 0x18 == 0xff) {
+          uVar8 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f);
+          lVar13 = lVar15 + 1;
+          *(uint *)(iVar5 + 0x280) = uVar8 | uVar3 >> ((int)sVar10 & 0x3fU);
+          *(undefined1 *)lVar15 = (char)(uVar8 >> 0x18);
+          if (uVar8 >> 0x18 == 0xff) {
             *(undefined1 *)lVar13 = 0;
-            lVar13 = param_2 + 2;
+            lVar13 = lVar15 + 2;
           }
           uVar1 = *(ushort *)(iVar5 + 0x280);
           *(undefined1 *)lVar13 = (char)uVar1;
-          lVar12 = lVar13 + 1;
+          lVar15 = lVar13 + 1;
           if ((uVar1 & 0xff) == 0xff) {
-            *(undefined1 *)lVar12 = 0;
-            lVar12 = lVar13 + 2;
+            *(undefined1 *)lVar15 = 0;
+            lVar15 = lVar13 + 2;
           }
-          uVar7 = *(uint *)(iVar5 + 0x280);
-          *(undefined1 *)lVar12 = (char)(uVar7 >> 8);
-          lVar13 = lVar12 + 1;
-          if ((uVar7 >> 8 & 0xff) == 0xff) {
+          uVar8 = *(uint *)(iVar5 + 0x280);
+          *(undefined1 *)lVar15 = (char)(uVar8 >> 8);
+          lVar13 = lVar15 + 1;
+          if ((uVar8 >> 8 & 0xff) == 0xff) {
             *(undefined1 *)lVar13 = 0;
-            lVar13 = lVar12 + 2;
+            lVar13 = lVar15 + 2;
           }
-          uVar7 = *(uint *)(iVar5 + 0x280);
-          param_2 = lVar13 + 1;
-          *(undefined1 *)lVar13 = (char)uVar7;
-          if ((uVar7 & 0xff) == 0xff) {
-            *(undefined1 *)param_2 = 0;
-            param_2 = lVar13 + 2;
+          uVar8 = *(uint *)(iVar5 + 0x280);
+          lVar15 = lVar13 + 1;
+          *(undefined1 *)lVar13 = (char)uVar8;
+          if ((uVar8 & 0xff) == 0xff) {
+            *(undefined1 *)lVar15 = 0;
+            lVar15 = lVar13 + 2;
           }
           *(uint *)(iVar5 + 0x280) = (uint)uVar3;
-          *(short *)(iVar5 + 0x284) = sVar9;
+          *(short *)(iVar5 + 0x284) = sVar10;
         }
       }
-      if ((short)uVar15 < 0) {
-        uVar15 = uVar15 - 1;
-        uVar6 = -uVar6;
+      if ((short)uVar17 < 0) {
+        uVar17 = uVar17 - 1;
+        uVar7 = -uVar7;
       }
-      uVar11 = (uVar6 & 0xffffffff) >> 8 & 0xff;
-      if (uVar11 == 0) {
-        uVar7 = (uint)(byte)(&DAT_829a5270)[(uint)uVar6 & 0xffff];
+      uVar12 = (uVar7 & 0xffffffff) >> 8 & 0xff;
+      if (uVar12 == 0) {
+        uVar8 = (uint)jpeg_bitsize[(uint)uVar7 & 0xffff];
       }
       else {
-        uVar7 = (byte)(&DAT_829a5270)[(int)uVar11] + 8;
+        uVar8 = jpeg_bitsize[(int)uVar12] + 8;
       }
       uVar1 = *(ushort *)(iVar5 + 0x284);
-      uVar14 = (uVar14 * 10 + uVar7) * 2 & 0x1fffe;
-      uVar8 = *(ushort *)(*(int *)(param_4 + 0x10) + uVar14) + uVar7;
-      uVar14 = (int)(short)((short)(1 << (uVar7 & 0x3f)) - 1U & uVar15) |
-               (uint)*(ushort *)(*(int *)(param_4 + 0xc) + uVar14) << (uVar7 & 0x3f);
-      sVar10 = (short)uVar8;
-      sVar9 = uVar1 + sVar10 + -0x20;
-      if (sVar9 < 0) {
-        *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar8 & 0x3f) | uVar14;
-        uVar14 = 0;
-        *(ushort *)(iVar5 + 0x284) = uVar1 + sVar10;
+      uVar16 = (uVar16 * 10 + uVar8) * 2 & 0x1fffe;
+      uVar9 = *(ushort *)((int)param_3->AcSize + uVar16) + uVar8;
+      uVar16 = (int)(short)((short)(1 << (uVar8 & 0x3f)) - 1U & uVar17) |
+               (uint)*(ushort *)((int)param_3->AcCode + uVar16) << (uVar8 & 0x3f);
+      sVar11 = (short)uVar9;
+      sVar10 = uVar1 + sVar11 + -0x20;
+      if (sVar10 < 0) {
+        *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar9 & 0x3f) | uVar16;
+        uVar16 = 0;
+        *(ushort *)(iVar5 + 0x284) = uVar1 + sVar11;
       }
       else {
-        lVar13 = param_2 + 1;
-        uVar7 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f) | uVar14 >> ((int)sVar9 & 0x3fU);
-        *(uint *)(iVar5 + 0x280) = uVar7;
-        *(undefined1 *)param_2 = (char)(uVar7 >> 0x18);
-        if (uVar7 >> 0x18 == 0xff) {
+        lVar13 = lVar15 + 1;
+        uVar8 = *(int *)(iVar5 + 0x280) << (0x20 - uVar1 & 0x3f) | uVar16 >> ((int)sVar10 & 0x3fU);
+        *(uint *)(iVar5 + 0x280) = uVar8;
+        *(undefined1 *)lVar15 = (char)(uVar8 >> 0x18);
+        if (uVar8 >> 0x18 == 0xff) {
           *(undefined1 *)lVar13 = 0;
-          lVar13 = param_2 + 2;
+          lVar13 = lVar15 + 2;
         }
-        uVar15 = *(ushort *)(iVar5 + 0x280);
-        *(undefined1 *)lVar13 = (char)uVar15;
-        lVar12 = lVar13 + 1;
-        if ((uVar15 & 0xff) == 0xff) {
-          *(undefined1 *)lVar12 = 0;
-          lVar12 = lVar13 + 2;
+        uVar17 = *(ushort *)(iVar5 + 0x280);
+        *(undefined1 *)lVar13 = (char)uVar17;
+        lVar15 = lVar13 + 1;
+        if ((uVar17 & 0xff) == 0xff) {
+          *(undefined1 *)lVar15 = 0;
+          lVar15 = lVar13 + 2;
         }
-        uVar7 = *(uint *)(iVar5 + 0x280);
-        *(undefined1 *)lVar12 = (char)(uVar7 >> 8);
-        lVar13 = lVar12 + 1;
-        if ((uVar7 >> 8 & 0xff) == 0xff) {
+        uVar8 = *(uint *)(iVar5 + 0x280);
+        *(undefined1 *)lVar15 = (char)(uVar8 >> 8);
+        lVar13 = lVar15 + 1;
+        if ((uVar8 >> 8 & 0xff) == 0xff) {
           *(undefined1 *)lVar13 = 0;
-          lVar13 = lVar12 + 2;
+          lVar13 = lVar15 + 2;
         }
-        uVar7 = *(uint *)(iVar5 + 0x280);
-        param_2 = lVar13 + 1;
-        *(undefined1 *)lVar13 = (char)uVar7;
-        if ((uVar7 & 0xff) == 0xff) {
-          *(undefined1 *)param_2 = 0;
-          param_2 = lVar13 + 2;
+        uVar8 = *(uint *)(iVar5 + 0x280);
+        lVar15 = lVar13 + 1;
+        *(undefined1 *)lVar13 = (char)uVar8;
+        if ((uVar8 & 0xff) == 0xff) {
+          *(undefined1 *)lVar15 = 0;
+          lVar15 = lVar13 + 2;
         }
-        *(uint *)(iVar5 + 0x280) = uVar14;
-        uVar14 = 0;
-        *(short *)(iVar5 + 0x284) = sVar9;
+        *(uint *)(iVar5 + 0x280) = uVar16;
+        uVar16 = 0;
+        *(short *)(iVar5 + 0x284) = sVar10;
       }
     }
-    lVar16 = lVar16 + -1;
-  } while (lVar16 != 0);
-  if (uVar14 != 0) {
-    uVar15 = *(ushort *)(iVar5 + 0x284);
-    uVar1 = **(ushort **)(param_4 + 0x10);
-    uVar2 = **(ushort **)(param_4 + 0xc);
-    sVar9 = uVar15 + uVar1 + -0x20;
-    if (sVar9 < 0) {
-      *(ushort *)(iVar5 + 0x284) = uVar15 + uVar1;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  if (uVar16 != 0) {
+    uVar17 = *(ushort *)(iVar5 + 0x284);
+    uVar1 = *param_3->AcSize;
+    uVar2 = *param_3->AcCode;
+    sVar10 = uVar17 + uVar1 + -0x20;
+    if (sVar10 < 0) {
+      *(ushort *)(iVar5 + 0x284) = uVar17 + uVar1;
       *(uint *)(iVar5 + 0x280) = *(int *)(iVar5 + 0x280) << (uVar1 & 0x3f) | (uint)uVar2;
     }
     else {
-      uVar14 = *(int *)(iVar5 + 0x280) << (0x20 - uVar15 & 0x3f);
-      lVar16 = param_2 + 1;
-      *(uint *)(iVar5 + 0x280) = uVar14 | uVar2 >> ((int)sVar9 & 0x3fU);
-      *(undefined1 *)param_2 = (char)(uVar14 >> 0x18);
-      if (uVar14 >> 0x18 == 0xff) {
-        *(undefined1 *)lVar16 = 0;
-        lVar16 = param_2 + 2;
+      uVar16 = *(int *)(iVar5 + 0x280) << (0x20 - uVar17 & 0x3f);
+      lVar14 = lVar15 + 1;
+      *(uint *)(iVar5 + 0x280) = uVar16 | uVar2 >> ((int)sVar10 & 0x3fU);
+      *(undefined1 *)lVar15 = (char)(uVar16 >> 0x18);
+      if (uVar16 >> 0x18 == 0xff) {
+        *(undefined1 *)lVar14 = 0;
+        lVar14 = lVar15 + 2;
       }
-      uVar15 = *(ushort *)(iVar5 + 0x280);
-      *(undefined1 *)lVar16 = (char)uVar15;
-      lVar13 = lVar16 + 1;
-      if ((uVar15 & 0xff) == 0xff) {
-        *(undefined1 *)lVar13 = 0;
-        lVar13 = lVar16 + 2;
+      uVar17 = *(ushort *)(iVar5 + 0x280);
+      *(undefined1 *)lVar14 = (char)uVar17;
+      lVar15 = lVar14 + 1;
+      if ((uVar17 & 0xff) == 0xff) {
+        *(undefined1 *)lVar15 = 0;
+        lVar15 = lVar14 + 2;
       }
-      uVar14 = *(uint *)(iVar5 + 0x280);
-      *(undefined1 *)lVar13 = (char)(uVar14 >> 8);
-      lVar16 = lVar13 + 1;
-      if ((uVar14 >> 8 & 0xff) == 0xff) {
-        *(undefined1 *)lVar16 = 0;
-        lVar16 = lVar13 + 2;
+      uVar16 = *(uint *)(iVar5 + 0x280);
+      *(undefined1 *)lVar15 = (char)(uVar16 >> 8);
+      lVar14 = lVar15 + 1;
+      if ((uVar16 >> 8 & 0xff) == 0xff) {
+        *(undefined1 *)lVar14 = 0;
+        lVar14 = lVar15 + 2;
       }
-      uVar14 = *(uint *)(iVar5 + 0x280);
-      param_2 = lVar16 + 1;
-      *(undefined1 *)lVar16 = (char)uVar14;
-      if ((uVar14 & 0xff) == 0xff) {
-        *(undefined1 *)param_2 = 0;
-        param_2 = lVar16 + 2;
+      uVar16 = *(uint *)(iVar5 + 0x280);
+      lVar15 = lVar14 + 1;
+      *(undefined1 *)lVar14 = (char)uVar16;
+      if ((uVar16 & 0xff) == 0xff) {
+        *(undefined1 *)lVar15 = 0;
+        lVar15 = lVar14 + 2;
       }
       *(uint *)(iVar5 + 0x280) = (uint)uVar2;
-      *(short *)(iVar5 + 0x284) = sVar9;
+      *(short *)(iVar5 + 0x284) = sVar10;
     }
   }
-  uVar6 = TBLr;
-  DAT_84872a48 = ((uVar6 & 0xffffffff) - (uVar4 & 0xffffffff)) + DAT_84872a48;
-  __restgprlr_22(param_2);
-  return;
+  uVar7 = TBLr;
+  ticks_huffman = ((uVar7 & 0xffffffff) - (uVar4 & 0xffffffff)) + ticks_huffman;
+  puVar6 = (uchar *)__restgprlr_22(lVar15);
+  return puVar6;
 }
 
 
-// 827E8008  jpeg_encode::do_block  (mjpeg/jpeg.cpp:713)
+// 827E8008  do_block  (mjpeg/jpeg.cpp:713)
 
-void jpeg_encode__do_block
-               (undefined8 param_1,undefined8 param_2,undefined8 *param_3,ulonglong param_4,
-               undefined8 param_5)
+uchar * __thiscall
+jpeg_encode::do_block
+          (jpeg_encode *this,uchar *param_1,uchar *param_2,int param_3,jpeg_encode_state *param_4)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  int iVar2;
+  jpeg_encode *this_00;
+  ulonglong uVar3;
   int iVar4;
-  undefined8 *puVar5;
+  uchar *puVar5;
   
-  uVar3 = __savegprlr_28();
+  uVar3 = (ulonglong)param_3;
+  this_00 = (jpeg_encode *)__savegprlr_28(this);
   uVar1 = TBLr;
-  DAT_84872af0 = *param_3;
-  iVar4 = ((int)param_4 >> 3) + (uint)((int)param_4 < 0 && (param_4 & 7) != 0);
-  puVar5 = param_3 + iVar4 * 2;
-  DAT_84872af8 = param_3[iVar4];
-  DAT_84872b00 = *puVar5;
-  puVar5 = puVar5 + iVar4;
-  DAT_84872b08 = *puVar5;
-  puVar5 = puVar5 + iVar4;
-  DAT_84872b10 = *puVar5;
-  puVar5 = puVar5 + iVar4;
-  DAT_84872b18 = *puVar5;
-  DAT_84872b20 = puVar5[iVar4];
-  DAT_84872b28 = (puVar5 + iVar4)[iVar4];
-  uVar2 = TBLr;
-  DAT_84872a58 = ((uVar2 & 0xffffffff) - (uVar1 & 0xffffffff)) + DAT_84872a58;
-  jpeg_encode__dct_vmx(uVar3,0xffffffff84872a70,0xffffffff84872af0,*(undefined4 *)param_5);
-  jpeg_encode__huffman(uVar3,param_2,0xffffffff84872a70,param_5);
-  __restgprlr_28();
-  return;
+  block._0_8_ = *(undefined8 *)param_2;
+  iVar4 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0);
+  iVar2 = iVar4 * 8;
+  puVar5 = param_2 + iVar4 * 0x10;
+  block._8_8_ = *(undefined8 *)(param_2 + iVar2);
+  block._16_8_ = *(undefined8 *)puVar5;
+  puVar5 = puVar5 + iVar2;
+  block._24_8_ = *(undefined8 *)puVar5;
+  puVar5 = puVar5 + iVar2;
+  block._32_8_ = *(undefined8 *)puVar5;
+  puVar5 = puVar5 + iVar2;
+  block._40_8_ = *(undefined8 *)puVar5;
+  block._48_8_ = *(undefined8 *)(puVar5 + iVar2);
+  block._56_8_ = *(undefined8 *)(puVar5 + iVar2 + iVar2);
+  uVar3 = TBLr;
+  ticks_copy = ((uVar3 & 0xffffffff) - (uVar1 & 0xffffffff)) + ticks_copy;
+  dct_vmx(this_00,block_quant,block,param_4->qt);
+  puVar5 = huffman(this_00,param_1,block_quant,param_4);
+  puVar5 = (uchar *)__restgprlr_28(puVar5);
+  return puVar5;
 }
 
 
 // 827E80D8  Out32  (mjpeg/jpeg.cpp:749)
 
-void Out32(int *param_1,undefined8 param_2)
+void Out32(uchar **param_1,uint param_2)
 
 {
-  int iVar1;
+  uchar *puVar1;
   
-  *(char *)*param_1 = (char)((ulonglong)param_2 >> 0x18);
-  iVar1 = *param_1;
-  *param_1 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((ulonglong)param_2 >> 0x10);
-  iVar1 = *param_1;
-  *param_1 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((ulonglong)param_2 >> 8);
-  iVar1 = *param_1;
-  *param_1 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)param_2;
+  **param_1 = (uchar)(param_2 >> 0x18);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)(param_2 >> 0x10);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)(param_2 >> 8);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)param_2;
   *param_1 = *param_1 + 1;
   return;
 }
@@ -1159,825 +1189,823 @@ void Out32(int *param_1,undefined8 param_2)
 
 // 827E8130  OutRational  (mjpeg/jpeg.cpp:757)
 
-void OutRational(double param_1,int *param_2,undefined8 param_3,int param_4)
+void OutRational(uchar **param_1,float param_2,int param_3)
 
 {
-  int iVar1;
+  uchar *puVar1;
+  int in_r5;
   longlong lVar2;
   
-  lVar2 = (longlong)((double)(longlong)param_4 * param_1);
-  *(char *)*param_2 = (char)((ulonglong)lVar2 >> 0x18);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((ulonglong)lVar2 >> 0x10);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((ulonglong)lVar2 >> 8);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)lVar2;
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((uint)param_4 >> 0x18);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((uint)param_4 >> 0x10);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)((uint)param_4 >> 8);
-  iVar1 = *param_2;
-  *param_2 = iVar1 + 1;
-  *(char *)(iVar1 + 1) = (char)param_4;
-  *param_2 = *param_2 + 1;
+  lVar2 = (longlong)((float)(longlong)in_r5 * param_2);
+  **param_1 = (uchar)((ulonglong)lVar2 >> 0x18);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)((ulonglong)lVar2 >> 0x10);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)((ulonglong)lVar2 >> 8);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)lVar2;
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)((uint)in_r5 >> 0x18);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)((uint)in_r5 >> 0x10);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)((uint)in_r5 >> 8);
+  puVar1 = *param_1;
+  *param_1 = puVar1 + 1;
+  puVar1[1] = (uchar)in_r5;
+  *param_1 = *param_1 + 1;
   return;
 }
 
 
-// 827E81F8  jpeg_encode::write_header  (mjpeg/jpeg.cpp:763)
+// 827E81F8  write_header  (mjpeg/jpeg.cpp:763)
 
-void jpeg_encode__write_header
-               (undefined8 param_1,longlong param_2,undefined4 param_3,undefined4 param_4,
-               ulonglong param_5,ulonglong param_6,ulonglong param_7)
+uchar * __thiscall
+jpeg_encode::write_header
+          (jpeg_encode *this,uchar *param_1,int param_2,int param_3,bool param_4,bool param_5,
+          jpeg_exif *param_6)
 
 {
   char cVar1;
   float fVar2;
   float *pfVar3;
-  float *pfVar4;
-  float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  bool bVar9;
+  bool bVar4;
+  uchar *puVar5;
+  undefined1 *puVar7;
+  ulonglong uVar6;
+  char cVar8;
+  ulonglong uVar9;
   int iVar10;
-  undefined1 *puVar12;
   ulonglong uVar11;
-  undefined2 uVar13;
-  char cVar14;
-  undefined2 uVar15;
-  int iVar16;
-  float fVar17;
-  undefined4 *puVar18;
-  undefined1 uVar19;
-  char *pcVar20;
-  undefined1 *puVar21;
+  float fVar12;
+  undefined4 *puVar13;
+  undefined1 uVar14;
+  char *pcVar15;
+  undefined1 *puVar16;
+  longlong lVar17;
+  longlong lVar18;
+  longlong lVar19;
+  undefined1 *puVar23;
+  ulonglong uVar20;
+  longlong lVar21;
   longlong lVar22;
-  longlong lVar23;
-  longlong lVar24;
-  undefined1 *puVar28;
-  ulonglong uVar25;
-  longlong lVar26;
-  longlong lVar27;
-  char *pcVar29;
-  int iVar30;
-  int iVar31;
-  uint *puVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
+  char *pcVar24;
+  int iVar25;
+  int iVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
+  int iStack00000024;
+  int iStack0000002c;
   int iStack_bc;
   
-  uVar13 = (undefined2)((uint)param_3 >> 8);
-  uVar15 = (undefined2)((uint)param_4 >> 8);
-  iVar10 = __savegprlr();
-  if ((param_7 & 0xffffffff) == 0) goto LAB_827e8dc4;
-  pfVar3 = (float *)param_7;
-  dVar35 = (double)pfVar3[1];
-  dVar34 = (double)*pfVar3;
-  dVar33 = cos((double)(float)(dVar35 * 0.01745329238474369));
-  fVar17 = pfVar3[2];
+  uVar6 = (ulonglong)(int)param_6;
+  uVar11 = (ulonglong)param_5;
+  uVar9 = (ulonglong)param_4;
+  lVar22 = (longlong)(int)param_1;
+  __savegprlr();
+  iStack00000024 = param_2;
+  iStack0000002c = param_3;
+  if ((uVar6 & 0xffffffff) == 0) goto LAB_827e8dc4;
+  pfVar3 = (float *)uVar6;
+  dVar29 = (double)pfVar3[1];
+  dVar28 = (double)*pfVar3;
+  dVar27 = cos((double)(float)(dVar29 * 0.01745329238474369));
+  fVar12 = pfVar3[2];
   fVar2 = pfVar3[3];
-  puVar12 = (undefined1 *)param_2;
-  *puVar12 = 0xff;
-  puVar12[1] = 0xe1;
-  lVar22 = param_2 + 2;
-  puVar12[4] = 0x45;
-  puVar12[5] = 0x78;
-  cVar14 = '\x01';
-  uVar11 = 0;
-  puVar12[6] = 0x69;
-  puVar12[7] = 0x66;
-  puVar12[8] = 0;
-  dVar35 = (double)(float)((double)fVar2 * 2.822130591084715e-05 + dVar35);
-  puVar12[9] = 0;
-  lVar23 = param_2 + 10;
-  dVar33 = (double)(float)((double)fVar17 * (double)(-360.0 / ((float)dVar33 * 1.275632e+07)) +
-                          dVar34);
-  *(undefined1 *)lVar23 = 0x4d;
-  puVar12[0xb] = 0x4d;
-  puVar12[0xc] = 0;
-  puVar12[0xd] = 0x2a;
-  puVar12[0xe] = 0;
-  puVar12[0xf] = 0;
-  puVar12[0x10] = 0;
-  puVar12[0x11] = 8;
-  puVar12[0x12] = 0;
-  puVar12[0x13] = '\0';
-  puVar12[0x14] = 0x88;
-  puVar12[0x15] = 0x25;
-  puVar12[0x16] = 0;
-  puVar12[0x17] = 4;
-  puVar12[0x18] = 0;
-  puVar12[0x19] = 0;
-  puVar12[0x1a] = 0;
-  puVar12[0x1b] = 1;
-  lVar24 = param_2 + 0x20;
+  puVar7 = (undefined1 *)lVar22;
+  *puVar7 = 0xff;
+  puVar7[1] = 0xe1;
+  lVar17 = lVar22 + 2;
+  puVar7[4] = 0x45;
+  puVar7[5] = 0x78;
+  cVar8 = '\x01';
+  uVar6 = 0;
+  puVar7[6] = 0x69;
+  puVar7[7] = 0x66;
+  puVar7[8] = 0;
+  dVar29 = (double)(float)((double)fVar2 * 2.822130591084715e-05 + dVar29);
+  puVar7[9] = 0;
+  lVar18 = lVar22 + 10;
+  dVar27 = (double)(float)((double)fVar12 * (double)(-360.0 / ((float)dVar27 * 1.275632e+07)) +
+                          dVar28);
+  *(undefined1 *)lVar18 = 0x4d;
+  puVar7[0xb] = 0x4d;
+  puVar7[0xc] = 0;
+  puVar7[0xd] = 0x2a;
+  puVar7[0xe] = 0;
+  puVar7[0xf] = 0;
+  puVar7[0x10] = 0;
+  puVar7[0x11] = 8;
+  puVar7[0x12] = 0;
+  puVar7[0x13] = '\0';
+  puVar7[0x14] = 0x88;
+  puVar7[0x15] = 0x25;
+  puVar7[0x16] = 0;
+  puVar7[0x17] = 4;
+  puVar7[0x18] = 0;
+  puVar7[0x19] = 0;
+  puVar7[0x1a] = 0;
+  puVar7[0x1b] = 1;
+  lVar19 = lVar22 + 0x20;
   if (pfVar3[4] != 0.0) {
-    *(undefined1 *)lVar24 = 1;
-    cVar14 = '\x02';
-    puVar12[0x21] = 0xe;
-    puVar12[0x22] = 0;
-    puVar12[0x23] = 2;
-    uVar11 = (ulonglong)(uint)pfVar3[4];
+    *(undefined1 *)lVar19 = 1;
+    cVar8 = '\x02';
+    puVar7[0x21] = 0xe;
+    puVar7[0x22] = 0;
+    puVar7[0x23] = 2;
+    uVar6 = (ulonglong)(uint)pfVar3[4];
     do {
-      pcVar20 = (char *)uVar11;
-      uVar11 = uVar11 + 1;
-    } while (*pcVar20 != '\0');
-    lVar24 = ((uVar11 - (uint)pfVar3[4]) - 1 & 0xffffffff) + 1;
-    puVar12[0x24] = (char)((ulonglong)lVar24 >> 0x18);
-    puVar12[0x25] = (char)((ulonglong)lVar24 >> 0x10);
-    puVar12[0x26] = (char)((ulonglong)lVar24 >> 8);
-    puVar12[0x27] = (char)lVar24;
-    uVar11 = param_2 + 0x28;
-    lVar24 = param_2 + 0x2c;
+      pcVar15 = (char *)uVar6;
+      uVar6 = uVar6 + 1;
+    } while (*pcVar15 != '\0');
+    lVar19 = ((uVar6 - (uint)pfVar3[4]) - 1 & 0xffffffff) + 1;
+    puVar7[0x24] = (char)((ulonglong)lVar19 >> 0x18);
+    puVar7[0x25] = (char)((ulonglong)lVar19 >> 0x10);
+    puVar7[0x26] = (char)((ulonglong)lVar19 >> 8);
+    puVar7[0x27] = (char)lVar19;
+    uVar6 = lVar22 + 0x28;
+    lVar19 = lVar22 + 0x2c;
   }
-  puVar21 = (undefined1 *)0x0;
-  puVar28 = (undefined1 *)lVar24;
+  puVar16 = (undefined1 *)0x0;
+  puVar23 = (undefined1 *)lVar19;
   if (pfVar3[5] == 0.0) {
     if (pfVar3[7] != 0.0) {
-      *puVar28 = 1;
-      puVar28[1] = 0x3b;
-      pcVar20 = (char *)0x0;
-      puVar28[2] = 0;
-      puVar28[3] = 2;
-      uVar25 = (ulonglong)(uint)pfVar3[7];
+      *puVar23 = 1;
+      puVar23[1] = 0x3b;
+      pcVar15 = (char *)0x0;
+      puVar23[2] = 0;
+      puVar23[3] = 2;
+      uVar20 = (ulonglong)(uint)pfVar3[7];
       if (0 < (int)pfVar3[7]) {
-        iVar30 = 0;
-        fVar17 = pfVar3[8];
-        pcVar20 = (char *)0x0;
+        iVar25 = 0;
+        fVar12 = pfVar3[8];
+        pcVar15 = (char *)0x0;
         do {
-          puVar18 = (undefined4 *)((int)fVar17 + 0x10);
-          pcVar29 = (char *)*puVar18;
+          puVar13 = (undefined4 *)((int)fVar12 + 0x10);
+          pcVar24 = (char *)*puVar13;
           do {
-            cVar1 = *pcVar29;
-            pcVar29 = pcVar29 + 1;
+            cVar1 = *pcVar24;
+            pcVar24 = pcVar24 + 1;
           } while (cVar1 != '\0');
-          iVar30 = iVar30 + 0x14;
-          fVar17 = (float)((int)pfVar3[8] + iVar30);
-          pcVar20 = pcVar29 + ((int)pcVar20 - (int)*puVar18);
-          uVar25 = uVar25 - 1;
-        } while (uVar25 != 0);
+          iVar25 = iVar25 + 0x14;
+          fVar12 = (float)((int)pfVar3[8] + iVar25);
+          pcVar15 = pcVar24 + ((int)pcVar15 - (int)*puVar13);
+          uVar20 = uVar20 - 1;
+        } while (uVar20 != 0);
       }
-      puVar28[4] = (char)((uint)pcVar20 >> 0x18);
-      puVar28[5] = (char)((uint)pcVar20 >> 0x10);
-      puVar28[6] = (char)((uint)pcVar20 >> 8);
-      puVar28[7] = (char)pcVar20;
+      puVar23[4] = (char)((uint)pcVar15 >> 0x18);
+      puVar23[5] = (char)((uint)pcVar15 >> 0x10);
+      puVar23[6] = (char)((uint)pcVar15 >> 8);
+      puVar23[7] = (char)pcVar15;
       goto LAB_827e8510;
     }
   }
   else {
-    *puVar28 = 1;
-    puVar28[1] = 0x3b;
-    pcVar20 = (char *)0x0;
-    puVar28[2] = 0;
-    puVar28[3] = 2;
-    uVar25 = (ulonglong)(uint)pfVar3[5];
+    *puVar23 = 1;
+    puVar23[1] = 0x3b;
+    pcVar15 = (char *)0x0;
+    puVar23[2] = 0;
+    puVar23[3] = 2;
+    uVar20 = (ulonglong)(uint)pfVar3[5];
     if (0 < (int)pfVar3[5]) {
-      iVar30 = 0;
-      pcVar20 = (char *)0x0;
+      iVar25 = 0;
+      pcVar15 = (char *)0x0;
       do {
-        puVar18 = (undefined4 *)((int)pfVar3[6] + iVar30);
-        pcVar29 = (char *)*puVar18;
+        puVar13 = (undefined4 *)((int)pfVar3[6] + iVar25);
+        pcVar24 = (char *)*puVar13;
         do {
-          cVar1 = *pcVar29;
-          pcVar29 = pcVar29 + 1;
+          cVar1 = *pcVar24;
+          pcVar24 = pcVar24 + 1;
         } while (cVar1 != '\0');
-        iVar30 = iVar30 + 4;
-        pcVar20 = pcVar29 + ((int)pcVar20 - (int)*puVar18);
-        uVar25 = uVar25 - 1;
-      } while (uVar25 != 0);
+        iVar25 = iVar25 + 4;
+        pcVar15 = pcVar24 + ((int)pcVar15 - (int)*puVar13);
+        uVar20 = uVar20 - 1;
+      } while (uVar20 != 0);
     }
-    puVar28[4] = (char)((uint)pcVar20 >> 0x18);
-    puVar28[5] = (char)((uint)pcVar20 >> 0x10);
-    puVar28[6] = (char)((uint)pcVar20 >> 8);
-    puVar28[7] = (char)pcVar20;
+    puVar23[4] = (char)((uint)pcVar15 >> 0x18);
+    puVar23[5] = (char)((uint)pcVar15 >> 0x10);
+    puVar23[6] = (char)((uint)pcVar15 >> 8);
+    puVar23[7] = (char)pcVar15;
 LAB_827e8510:
-    puVar21 = puVar28 + 8;
-    cVar14 = cVar14 + '\x01';
-    lVar24 = lVar24 + 0xc;
+    puVar16 = puVar23 + 8;
+    cVar8 = cVar8 + '\x01';
+    lVar19 = lVar19 + 0xc;
   }
-  puVar28 = (undefined1 *)lVar24;
-  *puVar28 = 0;
-  puVar28[1] = 0;
-  puVar28[2] = 0;
-  lVar27 = lVar24 + 3;
-  *(undefined1 *)lVar27 = 0;
-  puVar12[0x12] = 0;
-  lVar24 = lVar24 + 4;
-  puVar12[0x13] = cVar14;
-  if ((uVar11 & 0xffffffff) != 0) {
-    lVar26 = lVar24 - lVar23;
-    puVar28 = (undefined1 *)uVar11;
-    *puVar28 = (char)((ulonglong)lVar26 >> 0x18);
-    puVar28[1] = (char)((ulonglong)lVar26 >> 0x10);
-    puVar28[2] = (char)((ulonglong)lVar26 >> 8);
-    puVar28[3] = (char)lVar26;
-    pcVar20 = (char *)((int)pfVar3[4] + -1);
+  puVar23 = (undefined1 *)lVar19;
+  *puVar23 = 0;
+  puVar23[1] = 0;
+  puVar23[2] = 0;
+  lVar22 = lVar19 + 3;
+  *(undefined1 *)lVar22 = 0;
+  puVar7[0x12] = 0;
+  lVar19 = lVar19 + 4;
+  puVar7[0x13] = cVar8;
+  if ((uVar6 & 0xffffffff) != 0) {
+    lVar21 = lVar19 - lVar18;
+    puVar23 = (undefined1 *)uVar6;
+    *puVar23 = (char)((ulonglong)lVar21 >> 0x18);
+    puVar23[1] = (char)((ulonglong)lVar21 >> 0x10);
+    puVar23[2] = (char)((ulonglong)lVar21 >> 8);
+    puVar23[3] = (char)lVar21;
+    pcVar15 = (char *)((int)pfVar3[4] + -1);
     do {
-      pcVar20 = pcVar20 + 1;
-      cVar14 = *pcVar20;
-      lVar27 = lVar27 + 1;
-      *(char *)lVar27 = cVar14;
-      lVar26 = lVar24;
-    } while (cVar14 != '\0');
+      pcVar15 = pcVar15 + 1;
+      cVar8 = *pcVar15;
+      lVar22 = lVar22 + 1;
+      *(char *)lVar22 = cVar8;
+      lVar21 = lVar19;
+    } while (cVar8 != '\0');
     do {
-      pcVar20 = (char *)lVar26;
-      lVar26 = lVar26 + 1;
-    } while (*pcVar20 != '\0');
-    lVar24 = ((lVar26 - lVar24) - 1U & 0xffffffff) + lVar24 + 1;
+      pcVar15 = (char *)lVar21;
+      lVar21 = lVar21 + 1;
+    } while (*pcVar15 != '\0');
+    lVar19 = ((lVar21 - lVar19) - 1U & 0xffffffff) + lVar19 + 1;
   }
   if (pfVar3[5] == 0.0) {
     if (pfVar3[7] != 0.0) {
-      lVar27 = lVar24 - lVar23;
-      iVar30 = 0;
-      *puVar21 = (char)((ulonglong)lVar27 >> 0x18);
-      puVar21[1] = (char)((ulonglong)lVar27 >> 0x10);
-      puVar21[2] = (char)((ulonglong)lVar27 >> 8);
-      puVar21[3] = (char)lVar27;
+      lVar22 = lVar19 - lVar18;
+      iVar25 = 0;
+      *puVar16 = (char)((ulonglong)lVar22 >> 0x18);
+      puVar16[1] = (char)((ulonglong)lVar22 >> 0x10);
+      puVar16[2] = (char)((ulonglong)lVar22 >> 8);
+      puVar16[3] = (char)lVar22;
       if (0 < (int)pfVar3[7]) {
-        iVar31 = 0;
         do {
-          sprintf((char *)lVar24,"%s;",(ulonglong)*(uint *)(iVar31 + (int)pfVar3[8] + 0x10));
-          lVar27 = lVar24;
+          sprintf((char *)lVar19,"%s;");
+          lVar22 = lVar19;
           do {
-            pcVar20 = (char *)lVar27;
-            lVar27 = lVar27 + 1;
-          } while (*pcVar20 != '\0');
-          iVar30 = iVar30 + 1;
-          iVar31 = iVar31 + 0x14;
-          lVar24 = ((lVar27 - lVar24) - 1U & 0xffffffff) + lVar24;
-        } while (iVar30 < (int)pfVar3[7]);
+            pcVar15 = (char *)lVar22;
+            lVar22 = lVar22 + 1;
+          } while (*pcVar15 != '\0');
+          iVar25 = iVar25 + 1;
+          lVar19 = ((lVar22 - lVar19) - 1U & 0xffffffff) + lVar19;
+        } while (iVar25 < (int)pfVar3[7]);
       }
       goto LAB_827e86d4;
     }
   }
   else {
-    lVar27 = lVar24 - lVar23;
-    iVar30 = 0;
-    *puVar21 = (char)((ulonglong)lVar27 >> 0x18);
-    puVar21[1] = (char)((ulonglong)lVar27 >> 0x10);
-    puVar21[2] = (char)((ulonglong)lVar27 >> 8);
-    puVar21[3] = (char)lVar27;
+    lVar22 = lVar19 - lVar18;
+    iVar25 = 0;
+    *puVar16 = (char)((ulonglong)lVar22 >> 0x18);
+    puVar16[1] = (char)((ulonglong)lVar22 >> 0x10);
+    puVar16[2] = (char)((ulonglong)lVar22 >> 8);
+    puVar16[3] = (char)lVar22;
     if (0 < (int)pfVar3[5]) {
-      iVar31 = 0;
       do {
-        sprintf((char *)lVar24,"%s;",(ulonglong)*(uint *)((int)pfVar3[6] + iVar31));
-        lVar27 = lVar24;
+        sprintf((char *)lVar19,"%s;");
+        lVar22 = lVar19;
         do {
-          pcVar20 = (char *)lVar27;
-          lVar27 = lVar27 + 1;
-        } while (*pcVar20 != '\0');
-        iVar30 = iVar30 + 1;
-        iVar31 = iVar31 + 4;
-        lVar24 = ((lVar27 - lVar24) - 1U & 0xffffffff) + lVar24;
-      } while (iVar30 < (int)pfVar3[5]);
+          pcVar15 = (char *)lVar22;
+          lVar22 = lVar22 + 1;
+        } while (*pcVar15 != '\0');
+        iVar25 = iVar25 + 1;
+        lVar19 = ((lVar22 - lVar19) - 1U & 0xffffffff) + lVar19;
+      } while (iVar25 < (int)pfVar3[5]);
     }
 LAB_827e86d4:
-    *(undefined1 *)((int)lVar24 + -1) = 0;
+    *(undefined1 *)((int)lVar19 + -1) = 0;
   }
-  lVar27 = lVar24 - lVar23;
-  puVar12[0x1c] = (char)((ulonglong)lVar27 >> 0x18);
-  puVar12[0x1d] = (char)((ulonglong)lVar27 >> 0x10);
-  uVar19 = 0x4e;
-  puVar12[0x1e] = (char)((ulonglong)lVar27 >> 8);
-  puVar12[0x1f] = (char)lVar27;
-  puVar12 = (undefined1 *)lVar24;
-  *puVar12 = 0;
-  puVar12[1] = 5;
-  puVar12[2] = 0;
-  puVar12[3] = 0;
-  puVar12[4] = 0;
-  puVar12[5] = 1;
-  puVar12[6] = 0;
-  puVar12[7] = 0;
-  puVar12[8] = 0;
-  puVar12[9] = 4;
-  puVar12[10] = 2;
-  puVar12[0xb] = 2;
-  puVar12[0xc] = 0;
-  puVar12[0xd] = 0;
-  puVar12[0xe] = 0;
-  puVar12[0xf] = 1;
-  puVar12[0x10] = 0;
-  puVar12[0x11] = 2;
-  puVar12[0x12] = 0;
-  puVar12[0x13] = 0;
-  puVar12[0x14] = 0;
-  puVar12[0x15] = 2;
-  if (dVar33 <= 0.0) {
-    uVar19 = 0x53;
+  lVar22 = lVar19 - lVar18;
+  puVar7[0x1c] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x1d] = (char)((ulonglong)lVar22 >> 0x10);
+  uVar14 = 0x4e;
+  puVar7[0x1e] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x1f] = (char)lVar22;
+  puVar7 = (undefined1 *)lVar19;
+  *puVar7 = 0;
+  puVar7[1] = 5;
+  puVar7[2] = 0;
+  puVar7[3] = 0;
+  puVar7[4] = 0;
+  puVar7[5] = 1;
+  puVar7[6] = 0;
+  puVar7[7] = 0;
+  puVar7[8] = 0;
+  puVar7[9] = 4;
+  puVar7[10] = 2;
+  puVar7[0xb] = 2;
+  puVar7[0xc] = 0;
+  puVar7[0xd] = 0;
+  puVar7[0xe] = 0;
+  puVar7[0xf] = 1;
+  puVar7[0x10] = 0;
+  puVar7[0x11] = 2;
+  puVar7[0x12] = 0;
+  puVar7[0x13] = 0;
+  puVar7[0x14] = 0;
+  puVar7[0x15] = 2;
+  if (dVar27 <= 0.0) {
+    uVar14 = 0x53;
   }
-  puVar12[0x16] = uVar19;
-  puVar12[0x17] = 0;
-  uVar19 = 0x45;
-  puVar12[0x18] = 0;
-  puVar12[0x19] = 0;
-  puVar12[0x1a] = 0;
-  puVar12[0x1b] = 2;
-  puVar12[0x1c] = 0;
-  puVar12[0x1d] = 5;
-  puVar12[0x1e] = 0;
-  puVar12[0x1f] = 0;
-  puVar12[0x20] = 0;
-  puVar12[0x21] = 3;
-  puVar12[0x26] = 0;
-  puVar12[0x27] = 3;
-  puVar12[0x28] = 0;
-  puVar12[0x29] = 2;
-  puVar12[0x2a] = 0;
-  puVar12[0x2b] = 0;
-  puVar12[0x2c] = 0;
-  puVar12[0x2d] = 2;
-  if (dVar35 <= 0.0) {
-    uVar19 = 0x57;
+  puVar7[0x16] = uVar14;
+  puVar7[0x17] = 0;
+  uVar14 = 0x45;
+  puVar7[0x18] = 0;
+  puVar7[0x19] = 0;
+  puVar7[0x1a] = 0;
+  puVar7[0x1b] = 2;
+  puVar7[0x1c] = 0;
+  puVar7[0x1d] = 5;
+  puVar7[0x1e] = 0;
+  puVar7[0x1f] = 0;
+  puVar7[0x20] = 0;
+  puVar7[0x21] = 3;
+  puVar7[0x26] = 0;
+  puVar7[0x27] = 3;
+  puVar7[0x28] = 0;
+  puVar7[0x29] = 2;
+  puVar7[0x2a] = 0;
+  puVar7[0x2b] = 0;
+  puVar7[0x2c] = 0;
+  puVar7[0x2d] = 2;
+  if (dVar29 <= 0.0) {
+    uVar14 = 0x57;
   }
-  puVar12[0x2e] = uVar19;
-  puVar12[0x2f] = 0;
-  puVar12[0x30] = 0;
-  puVar12[0x31] = 0;
-  puVar12[0x32] = 0;
-  puVar12[0x33] = 4;
-  puVar12[0x34] = 0;
-  puVar12[0x35] = 5;
-  puVar12[0x36] = 0;
-  puVar12[0x37] = 0;
-  puVar12[0x38] = 0;
-  puVar12[0x39] = 3;
-  if (dVar33 < 0.0) {
-    dVar33 = -dVar33;
+  puVar7[0x2e] = uVar14;
+  puVar7[0x2f] = 0;
+  puVar7[0x30] = 0;
+  puVar7[0x31] = 0;
+  puVar7[0x32] = 0;
+  puVar7[0x33] = 4;
+  puVar7[0x34] = 0;
+  puVar7[0x35] = 5;
+  puVar7[0x36] = 0;
+  puVar7[0x37] = 0;
+  puVar7[0x38] = 0;
+  puVar7[0x39] = 3;
+  if (dVar27 < 0.0) {
+    dVar27 = -dVar27;
   }
-  lVar26 = (longlong)dVar33;
-  iStack_bc = (int)lVar26;
-  lVar27 = (lVar24 + 0x3e) - lVar23;
-  puVar12[0x22] = (char)((ulonglong)lVar27 >> 0x18);
-  puVar12[0x23] = (char)((ulonglong)lVar27 >> 0x10);
-  puVar12[0x24] = (char)((ulonglong)lVar27 >> 8);
-  puVar12[0x25] = (char)lVar27;
-  *(undefined1 *)(lVar24 + 0x3e) = (char)((ulonglong)lVar26 >> 0x18);
-  puVar12[0x3f] = (char)((ulonglong)lVar26 >> 0x10);
-  fVar17 = (float)(dVar33 - (double)(longlong)iStack_bc) * 60.0;
-  puVar12[0x40] = (char)((ulonglong)lVar26 >> 8);
-  puVar12[0x41] = (char)lVar26;
-  lVar27 = (longlong)fVar17;
-  iStack_bc = (int)lVar27;
-  puVar12[0x42] = 0;
-  puVar12[0x43] = 0;
-  puVar12[0x44] = 0;
-  puVar12[0x45] = 1;
-  puVar12[0x46] = (char)((ulonglong)lVar27 >> 0x18);
-  puVar12[0x47] = (char)((ulonglong)lVar27 >> 0x10);
-  puVar12[0x48] = (char)((ulonglong)lVar27 >> 8);
-  puVar12[0x49] = (char)lVar27;
-  puVar12[0x4a] = 0;
-  puVar12[0x4b] = 0;
-  lVar27 = (longlong)((fVar17 - (float)(longlong)iStack_bc) * 60.0 * 1000.0);
-  puVar12[0x4c] = 0;
-  puVar12[0x4d] = 1;
-  puVar12[0x4e] = (char)((ulonglong)lVar27 >> 0x18);
-  puVar12[0x4f] = (char)((ulonglong)lVar27 >> 0x10);
-  puVar12[0x50] = (char)((ulonglong)lVar27 >> 8);
-  puVar12[0x51] = (char)lVar27;
-  puVar12[0x52] = 0;
-  puVar12[0x53] = 0;
-  puVar12[0x54] = 3;
-  puVar12[0x55] = 0xe8;
-  if (dVar35 < 0.0) {
-    dVar35 = -dVar35;
+  lVar21 = (longlong)dVar27;
+  iStack_bc = (int)lVar21;
+  lVar22 = (lVar19 + 0x3e) - lVar18;
+  puVar7[0x22] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x23] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x24] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x25] = (char)lVar22;
+  *(undefined1 *)(lVar19 + 0x3e) = (char)((ulonglong)lVar21 >> 0x18);
+  puVar7[0x3f] = (char)((ulonglong)lVar21 >> 0x10);
+  fVar12 = (float)(dVar27 - (double)(longlong)iStack_bc) * 60.0;
+  puVar7[0x40] = (char)((ulonglong)lVar21 >> 8);
+  puVar7[0x41] = (char)lVar21;
+  lVar22 = (longlong)fVar12;
+  iStack_bc = (int)lVar22;
+  puVar7[0x42] = 0;
+  puVar7[0x43] = 0;
+  puVar7[0x44] = 0;
+  puVar7[0x45] = 1;
+  puVar7[0x46] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x47] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x48] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x49] = (char)lVar22;
+  puVar7[0x4a] = 0;
+  puVar7[0x4b] = 0;
+  lVar22 = (longlong)((fVar12 - (float)(longlong)iStack_bc) * 60.0 * 1000.0);
+  puVar7[0x4c] = 0;
+  puVar7[0x4d] = 1;
+  puVar7[0x4e] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x4f] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x50] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x51] = (char)lVar22;
+  puVar7[0x52] = 0;
+  puVar7[0x53] = 0;
+  puVar7[0x54] = 3;
+  puVar7[0x55] = 0xe8;
+  if (dVar29 < 0.0) {
+    dVar29 = -dVar29;
   }
-  lVar27 = (longlong)dVar35;
-  lVar23 = (lVar24 + 0x56) - lVar23;
-  puVar12[0x3a] = (char)((ulonglong)lVar23 >> 0x18);
-  puVar12[0x3b] = (char)((ulonglong)lVar23 >> 0x10);
-  puVar12[0x3c] = (char)((ulonglong)lVar23 >> 8);
-  iStack_bc = (int)lVar27;
-  puVar12[0x3d] = (char)lVar23;
-  *(undefined1 *)(lVar24 + 0x56) = (char)((ulonglong)lVar27 >> 0x18);
-  puVar12[0x57] = (char)((ulonglong)lVar27 >> 0x10);
-  puVar12[0x58] = (char)((ulonglong)lVar27 >> 8);
-  puVar12[0x59] = (char)lVar27;
-  puVar12[0x5a] = 0;
-  fVar17 = (float)(dVar35 - (double)(longlong)iStack_bc) * 60.0;
-  puVar12[0x5b] = 0;
-  puVar12[0x5c] = 0;
-  lVar23 = (longlong)fVar17;
-  iStack_bc = (int)lVar23;
-  puVar12[0x5d] = 1;
-  puVar12[0x5e] = (char)((ulonglong)lVar23 >> 0x18);
-  puVar12[0x5f] = (char)((ulonglong)lVar23 >> 0x10);
-  puVar12[0x60] = (char)((ulonglong)lVar23 >> 8);
-  puVar12[0x61] = (char)lVar23;
-  puVar12[0x62] = 0;
-  puVar12[99] = 0;
-  puVar12[100] = 0;
-  puVar12[0x65] = 1;
-  lVar23 = (longlong)((fVar17 - (float)(longlong)iStack_bc) * 60.0 * 1000.0);
-  puVar12[0x66] = (char)((ulonglong)lVar23 >> 0x18);
-  puVar12[0x67] = (char)((ulonglong)lVar23 >> 0x10);
-  puVar12[0x68] = (char)((ulonglong)lVar23 >> 8);
-  puVar12[0x69] = (char)lVar23;
-  puVar12[0x6a] = 0;
-  puVar12[0x6b] = 0;
-  puVar12[0x6c] = 3;
-  puVar12[0x6d] = 0xe8;
-  param_2 = lVar24 + 0x6e;
-  lVar23 = param_2 - lVar22;
-  puVar21 = (undefined1 *)lVar22;
-  puVar21[1] = (char)lVar23;
-  *puVar21 = (char)((ulonglong)lVar23 >> 8);
+  lVar22 = (longlong)dVar29;
+  lVar18 = (lVar19 + 0x56) - lVar18;
+  puVar7[0x3a] = (char)((ulonglong)lVar18 >> 0x18);
+  puVar7[0x3b] = (char)((ulonglong)lVar18 >> 0x10);
+  puVar7[0x3c] = (char)((ulonglong)lVar18 >> 8);
+  iStack_bc = (int)lVar22;
+  puVar7[0x3d] = (char)lVar18;
+  *(undefined1 *)(lVar19 + 0x56) = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x57] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x58] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x59] = (char)lVar22;
+  puVar7[0x5a] = 0;
+  fVar12 = (float)(dVar29 - (double)(longlong)iStack_bc) * 60.0;
+  puVar7[0x5b] = 0;
+  puVar7[0x5c] = 0;
+  lVar22 = (longlong)fVar12;
+  iStack_bc = (int)lVar22;
+  puVar7[0x5d] = 1;
+  puVar7[0x5e] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x5f] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x60] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x61] = (char)lVar22;
+  puVar7[0x62] = 0;
+  puVar7[99] = 0;
+  puVar7[100] = 0;
+  puVar7[0x65] = 1;
+  lVar22 = (longlong)((fVar12 - (float)(longlong)iStack_bc) * 60.0 * 1000.0);
+  puVar7[0x66] = (char)((ulonglong)lVar22 >> 0x18);
+  puVar7[0x67] = (char)((ulonglong)lVar22 >> 0x10);
+  puVar7[0x68] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[0x69] = (char)lVar22;
+  puVar7[0x6a] = 0;
+  puVar7[0x6b] = 0;
+  puVar7[0x6c] = 3;
+  puVar7[0x6d] = 0xe8;
+  lVar22 = lVar19 + 0x6e;
+  lVar18 = lVar22 - lVar17;
+  puVar16 = (undefined1 *)lVar17;
+  puVar16[1] = (char)lVar18;
+  *puVar16 = (char)((ulonglong)lVar18 >> 8);
   if ((pfVar3[7] != 0.0) || (pfVar3[5] != 0.0)) {
-    *(undefined1 *)param_2 = 0xff;
-    puVar12[0x6f] = 0xe1;
-    lVar22 = lVar24 + 0x72;
-    memcpy((void *)lVar22,"http://ns.adobe.com/xap/1.0/",0x1d);
-    lVar23 = lVar22;
+    *(undefined1 *)lVar22 = 0xff;
+    puVar7[0x6f] = 0xe1;
+    lVar18 = lVar19 + 0x72;
+    memcpy();
+    lVar22 = lVar18;
     do {
-      pcVar20 = (char *)lVar23;
-      lVar23 = lVar23 + 1;
-    } while (*pcVar20 != '\0');
-    param_2 = ((lVar23 - lVar22) - 1U & 0xffffffff) + lVar22 + 1;
-    memcpy((void *)param_2,&DAT_821df6a0,0x9d);
-    lVar23 = param_2;
+      pcVar15 = (char *)lVar22;
+      lVar22 = lVar22 + 1;
+    } while (*pcVar15 != '\0');
+    lVar22 = ((lVar22 - lVar18) - 1U & 0xffffffff) + lVar18 + 1;
+    memcpy();
+    lVar18 = lVar22;
     do {
-      pcVar20 = (char *)lVar23;
-      lVar23 = lVar23 + 1;
-    } while (*pcVar20 != '\0');
-    fVar17 = pfVar3[8];
-    param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
+      pcVar15 = (char *)lVar18;
+      lVar18 = lVar18 + 1;
+    } while (*pcVar15 != '\0');
+    fVar12 = pfVar3[8];
+    lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
     if (pfVar3[7] != 0.0) {
-      memcpy((void *)param_2,
-             "<rdf:Description rdf:about=\"\" xmlns:MP=\"http://ns.microsoft.com/photo/1.2/\"><MP:RegionInfo><rdf:Description xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><MPRI:Regions xmlns:MPRI=\"http://ns.microsoft.com/photo/1.2/t/RegionInfo#\"><rdf:Bag xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n"
-             ,0x132);
-      lVar23 = param_2;
+      memcpy();
+      lVar18 = lVar22;
       do {
-        pcVar20 = (char *)lVar23;
-        lVar23 = lVar23 + 1;
-      } while (*pcVar20 != '\0');
-      iVar30 = 0;
-      param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
+        pcVar15 = (char *)lVar18;
+        lVar18 = lVar18 + 1;
+      } while (*pcVar15 != '\0');
+      iVar25 = 0;
+      lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
       if (0 < (int)pfVar3[7]) {
-        puVar32 = (uint *)((int)fVar17 + -4);
         do {
-          pfVar4 = (float *)(puVar32 + 4);
-          pfVar5 = (float *)(puVar32 + 1);
-          pfVar6 = (float *)(puVar32 + 2);
-          pfVar7 = (float *)(puVar32 + 3);
-          puVar32 = puVar32 + 5;
-          sprintf((char *)param_2,
+          sprintf((char *)lVar22,
                   "<rdf:li><rdf:Description xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><MPReg:Rectangle xmlns:MPReg=\"http://ns.microsoft.com/photo/1.2/t/Region#\">%f, %f, %f, %f</MPReg:Rectangle><MPReg:PersonDisplayName xmlns:MPReg=\"http://ns.microsoft.com/photo/1.2/t/Region#\">%s</MPReg:PersonDisplayName></rdf:Description></rdf:li>\n"
-                  ,(double)*pfVar5,(double)*pfVar6,(double)*pfVar7,(double)*pfVar4,
-                  (ulonglong)*puVar32);
-          lVar23 = param_2;
+                 );
+          lVar18 = lVar22;
           do {
-            pcVar20 = (char *)lVar23;
-            lVar23 = lVar23 + 1;
-          } while (*pcVar20 != '\0');
-          iVar30 = iVar30 + 1;
-          param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
-        } while (iVar30 < (int)pfVar3[7]);
+            pcVar15 = (char *)lVar18;
+            lVar18 = lVar18 + 1;
+          } while (*pcVar15 != '\0');
+          iVar25 = iVar25 + 1;
+          lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
+        } while (iVar25 < (int)pfVar3[7]);
       }
-      sprintf((char *)param_2,
+      sprintf((char *)lVar22,
               "</rdf:Bag></MPRI:Regions></rdf:Description></MP:RegionInfo></rdf:Description>\n");
-      lVar23 = param_2;
+      lVar18 = lVar22;
       do {
-        pcVar20 = (char *)lVar23;
-        lVar23 = lVar23 + 1;
-      } while (*pcVar20 != '\0');
-      param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
+        pcVar15 = (char *)lVar18;
+        lVar18 = lVar18 + 1;
+      } while (*pcVar15 != '\0');
+      lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
     }
-    sprintf((char *)param_2,
+    sprintf((char *)lVar22,
             "<rdf:Description rdf:about=\'\'xmlns:dc=\'http://purl.org/dc/elements/1.1/\'><dc:subject><rdf:Bag>\n"
            );
-    lVar23 = param_2;
+    lVar18 = lVar22;
     do {
-      pcVar20 = (char *)lVar23;
-      lVar23 = lVar23 + 1;
-    } while (*pcVar20 != '\0');
-    iVar30 = 0;
-    param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
+      pcVar15 = (char *)lVar18;
+      lVar18 = lVar18 + 1;
+    } while (*pcVar15 != '\0');
+    iVar25 = 0;
+    lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
     if (0 < (int)pfVar3[7]) {
-      puVar32 = (uint *)((int)fVar17 + -4);
       do {
-        puVar32 = puVar32 + 5;
-        sprintf((char *)param_2,"<rdf:li>%s</rdf:li>\n",(ulonglong)*puVar32);
-        lVar23 = param_2;
+        sprintf((char *)lVar22,"<rdf:li>%s</rdf:li>\n");
+        lVar18 = lVar22;
         do {
-          pcVar20 = (char *)lVar23;
-          lVar23 = lVar23 + 1;
-        } while (*pcVar20 != '\0');
-        iVar30 = iVar30 + 1;
-        param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
-      } while (iVar30 < (int)pfVar3[7]);
+          pcVar15 = (char *)lVar18;
+          lVar18 = lVar18 + 1;
+        } while (*pcVar15 != '\0');
+        iVar25 = iVar25 + 1;
+        lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
+      } while (iVar25 < (int)pfVar3[7]);
     }
-    iVar30 = 0;
+    iVar25 = 0;
     if (0 < (int)pfVar3[5]) {
-      iVar31 = 0;
+      iVar26 = 0;
       do {
-        bVar9 = true;
-        iVar16 = 0;
+        bVar4 = true;
+        iVar10 = 0;
         if (0 < (int)pfVar3[7]) {
-          puVar18 = (undefined4 *)((int)fVar17 + 0x10);
+          puVar13 = (undefined4 *)((int)fVar12 + 0x10);
           do {
-            pcVar20 = (char *)*puVar18;
-            pcVar29 = *(char **)((int)pfVar3[6] + iVar31);
+            pcVar15 = (char *)*puVar13;
+            pcVar24 = *(char **)((int)pfVar3[6] + iVar26);
             do {
-              cVar14 = *pcVar29;
-              cVar1 = *pcVar20;
-              if (cVar14 == '\0') break;
-              pcVar29 = pcVar29 + 1;
-              pcVar20 = pcVar20 + 1;
-            } while (cVar14 == cVar1);
-            if (cVar14 == cVar1) {
-              bVar9 = false;
+              cVar8 = *pcVar24;
+              cVar1 = *pcVar15;
+              if (cVar8 == '\0') break;
+              pcVar24 = pcVar24 + 1;
+              pcVar15 = pcVar15 + 1;
+            } while (cVar8 == cVar1);
+            if (cVar8 == cVar1) {
+              bVar4 = false;
               break;
             }
-            iVar16 = iVar16 + 1;
-            puVar18 = puVar18 + 5;
-          } while (iVar16 < (int)pfVar3[7]);
+            iVar10 = iVar10 + 1;
+            puVar13 = puVar13 + 5;
+          } while (iVar10 < (int)pfVar3[7]);
         }
-        if (bVar9) {
-          sprintf((char *)param_2,"<rdf:li>%s</rdf:li>\n",
-                  (ulonglong)*(uint *)((int)pfVar3[6] + iVar31));
-          lVar23 = param_2;
+        if (bVar4) {
+          sprintf((char *)lVar22,"<rdf:li>%s</rdf:li>\n");
+          lVar18 = lVar22;
           do {
-            pcVar20 = (char *)lVar23;
-            lVar23 = lVar23 + 1;
-          } while (*pcVar20 != '\0');
-          param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
+            pcVar15 = (char *)lVar18;
+            lVar18 = lVar18 + 1;
+          } while (*pcVar15 != '\0');
+          lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
         }
-        iVar30 = iVar30 + 1;
-        iVar31 = iVar31 + 4;
-      } while (iVar30 < (int)pfVar3[5]);
+        iVar25 = iVar25 + 1;
+        iVar26 = iVar26 + 4;
+      } while (iVar25 < (int)pfVar3[5]);
     }
-    sprintf((char *)param_2,
+    sprintf((char *)lVar22,
             "</rdf:Bag></dc:subject></rdf:Description>\n</rdf:RDF></x:xmpmeta><?xpacket end=\'w\'?>\n"
            );
-    lVar23 = param_2;
+    lVar18 = lVar22;
     do {
-      pcVar20 = (char *)lVar23;
-      lVar23 = lVar23 + 1;
-    } while (*pcVar20 != '\0');
-    param_2 = ((lVar23 - param_2) - 1U & 0xffffffff) + param_2;
-    lVar23 = param_2 - (lVar24 + 0x70);
-    puVar12 = (undefined1 *)(lVar24 + 0x70);
-    puVar12[1] = (char)lVar23;
-    *puVar12 = (char)((ulonglong)lVar23 >> 8);
+      pcVar15 = (char *)lVar18;
+      lVar18 = lVar18 + 1;
+    } while (*pcVar15 != '\0');
+    lVar22 = ((lVar18 - lVar22) - 1U & 0xffffffff) + lVar22;
+    lVar18 = lVar22 - (lVar19 + 0x70);
+    puVar7 = (undefined1 *)(lVar19 + 0x70);
+    puVar7[1] = (char)lVar18;
+    *puVar7 = (char)((ulonglong)lVar18 >> 8);
   }
 LAB_827e8dc4:
-  param_5 = param_5 & 0xff;
-  uVar11 = -(ulonglong)(param_5 != 0) & 0xfffffffe;
-  uVar25 = uVar11 + 3;
-  if ((param_6 & 0xff) != 0) {
-    puVar12 = (undefined1 *)param_2;
-    *puVar12 = 0xff;
-    puVar12[1] = 0xdb;
-    iVar30 = 0;
-    puVar12[2] = 0;
+  puVar7 = (undefined1 *)lVar22;
+  uVar9 = uVar9 & 0xff;
+  uVar6 = -(ulonglong)(uVar9 != 0) & 0xfffffffe;
+  uVar20 = uVar6 + 3;
+  if ((uVar11 & 0xff) != 0) {
+    *puVar7 = 0xff;
+    puVar7[1] = 0xdb;
+    iVar25 = 0;
+    puVar7[2] = 0;
+    lVar18 = 0x40;
+    puVar7[3] = 0x84;
+    puVar7[4] = 0;
+    lVar22 = lVar22 + 5;
+    do {
+      lVar17 = lVar22;
+      puVar5 = this->jpeg_Lqt + iVar25;
+      iVar25 = iVar25 + 1;
+      *(uchar *)lVar17 = *puVar5;
+      lVar18 = lVar18 + -1;
+      lVar22 = lVar17 + 1;
+    } while (lVar18 != 0);
+    *(undefined1 *)(lVar17 + 1) = 1;
+    lVar17 = lVar17 + 2;
+    iVar25 = 0;
     lVar22 = 0x40;
-    puVar12[3] = 0x84;
-    puVar12[4] = 0;
-    lVar23 = param_2 + 5;
     do {
-      param_2 = lVar23;
-      puVar12 = (undefined1 *)(iVar30 + iVar10);
-      iVar30 = iVar30 + 1;
-      *(undefined1 *)param_2 = *puVar12;
+      puVar5 = this->jpeg_Cqt + iVar25;
+      iVar25 = iVar25 + 1;
+      *(uchar *)lVar17 = *puVar5;
+      lVar17 = lVar17 + 1;
       lVar22 = lVar22 + -1;
-      lVar23 = param_2 + 1;
     } while (lVar22 != 0);
-    *(undefined1 *)(param_2 + 1) = 1;
-    param_2 = param_2 + 2;
-    iVar30 = 0;
-    lVar23 = 0x40;
+    iVar25 = 0;
+    lVar22 = 0x1b0;
     do {
-      puVar12 = (undefined1 *)(iVar10 + 0x40 + iVar30);
-      iVar30 = iVar30 + 1;
-      *(undefined1 *)param_2 = *puVar12;
-      param_2 = param_2 + 1;
-      lVar23 = lVar23 + -1;
-    } while (lVar23 != 0);
-    iVar10 = 0;
-    lVar23 = 0x1b0;
-    do {
-      puVar12 = &DAT_829a4b00 + iVar10;
-      iVar10 = iVar10 + 1;
-      *(undefined1 *)param_2 = *puVar12;
-      param_2 = param_2 + 1;
-      lVar23 = lVar23 + -1;
-    } while (lVar23 != 0);
+      puVar5 = jpeg_markerdata + iVar25;
+      iVar25 = iVar25 + 1;
+      *(uchar *)lVar17 = *puVar5;
+      lVar17 = lVar17 + 1;
+      puVar7 = (undefined1 *)lVar17;
+      lVar22 = lVar22 + -1;
+    } while (lVar22 != 0);
   }
-  puVar12 = (undefined1 *)param_2;
-  *puVar12 = 0xff;
-  puVar12[1] = 0xc0;
-  uVar8 = uVar25 + (uVar25 & 0x7fffffff) * 2 + 8 & 0xffff;
-  puVar12[2] = (char)(uVar8 >> 8);
-  puVar12[3] = (char)uVar8;
-  puVar12[4] = 8;
-  puVar12[5] = (char)((ushort)uVar15 >> 8);
-  puVar12[6] = (char)uVar15;
-  puVar12[7] = (char)((ushort)uVar13 >> 8);
-  puVar12[8] = (char)uVar13;
-  puVar12[9] = (char)uVar25;
-  puVar12[10] = 1;
-  if (param_5 == 0) {
-    puVar12[0xb] = 0x22;
-    puVar12[0xc] = 0;
-    puVar12[0xd] = 2;
-    puVar12[0xe] = 0x11;
-    puVar12[0xf] = 1;
-    puVar12[0x10] = 3;
-    puVar12[0x11] = 0x11;
-    param_2 = param_2 + 0x12;
-    *(undefined1 *)param_2 = 1;
+  *puVar7 = 0xff;
+  puVar7[1] = 0xc0;
+  uVar11 = uVar20 + (uVar20 & 0x7fffffff) * 2 + 8 & 0xffff;
+  puVar7[2] = (char)(uVar11 >> 8);
+  puVar7[3] = (char)uVar11;
+  puVar7[4] = 8;
+  puVar7[5] = (char)((uint)iStack0000002c >> 8);
+  puVar7[6] = (char)iStack0000002c;
+  puVar7[7] = (char)((uint)iStack00000024 >> 8);
+  puVar7[8] = (char)iStack00000024;
+  puVar7[9] = (char)uVar20;
+  puVar7[10] = 1;
+  if (uVar9 == 0) {
+    puVar7[0xb] = 0x22;
+    puVar7[0xc] = 0;
+    puVar7[0xd] = 2;
+    puVar7[0xe] = 0x11;
+    puVar7[0xf] = 1;
+    puVar7[0x10] = 3;
+    puVar7[0x11] = 0x11;
+    puVar7 = puVar7 + 0x12;
+    *puVar7 = 1;
   }
   else {
-    puVar12[0xb] = 0x11;
-    param_2 = param_2 + 0xc;
-    *(undefined1 *)param_2 = 0;
+    puVar7[0xb] = 0x11;
+    puVar7 = puVar7 + 0xc;
+    *puVar7 = 0;
   }
-  iVar10 = (int)param_2;
-  lVar23 = (uVar11 + 6 & 0x7fff) << 1;
-  *(undefined1 *)(iVar10 + 1) = 0xff;
-  *(undefined1 *)(iVar10 + 2) = 0xda;
-  *(char *)(iVar10 + 3) = (char)((ulonglong)lVar23 >> 8);
-  *(char *)(iVar10 + 4) = (char)lVar23;
-  *(char *)(iVar10 + 5) = (char)uVar25;
-  *(undefined1 *)(iVar10 + 6) = 1;
-  lVar23 = param_2 + 7;
-  *(undefined1 *)lVar23 = 0;
-  if (param_5 == 0) {
-    *(undefined1 *)(iVar10 + 8) = 2;
-    *(undefined1 *)(iVar10 + 9) = 0x11;
-    *(undefined1 *)(iVar10 + 10) = 3;
-    lVar23 = param_2 + 0xb;
-    *(undefined1 *)lVar23 = 0x11;
+  lVar22 = (uVar6 + 6 & 0x7fff) << 1;
+  puVar7[1] = 0xff;
+  puVar7[2] = 0xda;
+  puVar7[3] = (char)((ulonglong)lVar22 >> 8);
+  puVar7[4] = (char)lVar22;
+  puVar7[5] = (char)uVar20;
+  puVar7[6] = 1;
+  puVar16 = puVar7 + 7;
+  *puVar16 = 0;
+  if (uVar9 == 0) {
+    puVar7[8] = 2;
+    puVar7[9] = 0x11;
+    puVar7[10] = 3;
+    puVar16 = puVar7 + 0xb;
+    *puVar16 = 0x11;
   }
-  iVar10 = (int)lVar23;
-  *(undefined1 *)(iVar10 + 1) = 0;
-  *(undefined1 *)(iVar10 + 2) = 0x3f;
-  *(undefined1 *)(iVar10 + 3) = 0;
-  __restgprlr(lVar23 + 4);
-  return;
+  puVar16[1] = 0;
+  puVar16[2] = 0x3f;
+  puVar16[3] = 0;
+  puVar5 = puVar16 + 4;
+  __restgprlr();
+  return puVar5;
 }
 
 
-// 827E8FA0  jpeg_encode::begin  (mjpeg/jpeg.cpp:1105)
+// 827E8FA0  begin  (mjpeg/jpeg.cpp:1105)
 
-void jpeg_encode__begin(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7)
+uchar * __thiscall
+jpeg_encode::begin(jpeg_encode *this,uchar *param_1,int param_2,int param_3,int param_4,bool param_5
+                  ,jpeg_exif *param_6)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  jpeg_encode *this_00;
+  jpeg_encode *this_01;
+  uchar *puVar1;
   
-  iVar2 = __savegprlr_25();
-  *(undefined4 *)(iVar2 + 0x280) = 0;
-  *(undefined2 *)(iVar2 + 0x284) = 0;
-  uVar1 = jpeg_encode__init_quant(iVar2,param_5);
-  *(undefined1 *)param_2 = 0xff;
-  ((undefined1 *)param_2)[1] = 0xd8;
-  jpeg_encode__write_header(uVar1,param_2 + 2,param_3,param_4,0,param_6,param_7);
-  *(undefined2 *)(iVar2 + 0x29c) = 0;
-  *(undefined2 *)(iVar2 + 0x2b4) = 0;
-  *(undefined2 *)(iVar2 + 0x2cc) = 0;
-  *(undefined **)(iVar2 + 0x2b0) = &DAT_829a5128;
-  *(int *)(iVar2 + 0x2a0) = iVar2 + 0x180;
-  *(int *)(iVar2 + 0x2b8) = iVar2 + 0x180;
-  *(undefined **)(iVar2 + 0x28c) = &DAT_829a4cf0;
-  *(undefined **)(iVar2 + 0x290) = &DAT_829a4d08;
-  *(undefined **)(iVar2 + 0x294) = &DAT_829a4d50;
-  *(undefined **)(iVar2 + 0x298) = &DAT_829a4e98;
-  *(undefined **)(iVar2 + 0x2a4) = &DAT_829a4d20;
-  *(undefined **)(iVar2 + 0x2a8) = &DAT_829a4d38;
-  *(undefined **)(iVar2 + 0x2ac) = &DAT_829a4fe0;
-  *(undefined **)(iVar2 + 700) = &DAT_829a4d20;
-  *(undefined **)(iVar2 + 0x2c0) = &DAT_829a4d38;
-  *(int *)(iVar2 + 0x288) = iVar2 + 0x80;
-  *(undefined **)(iVar2 + 0x2c4) = &DAT_829a4fe0;
-  *(undefined **)(iVar2 + 0x2c8) = &DAT_829a5128;
-  __restgprlr_25();
-  return;
+  this_00 = (jpeg_encode *)__savegprlr_25(this);
+  this_00->jpeg_lcode = 0;
+  this_00->jpeg_bitindex = 0;
+  this_01 = this_00;
+  init_quant(this_00,param_4);
+  *param_1 = 0xff;
+  param_1[1] = 0xd8;
+  puVar1 = write_header(this_01,param_1 + 2,param_2,param_3,false,param_5,param_6);
+  (this_00->jpeg_encode_block_state_y).ldc = 0;
+  (this_00->jpeg_encode_block_state_u).ldc = 0;
+  (this_00->jpeg_encode_block_state_v).ldc = 0;
+  (this_00->jpeg_encode_block_state_u).AcSize = jpeg_chrominance_ac_size_table;
+  (this_00->jpeg_encode_block_state_u).qt = this_00->jpeg_ICqt;
+  (this_00->jpeg_encode_block_state_v).qt = this_00->jpeg_ICqt;
+  (this_00->jpeg_encode_block_state_y).DcCode = jpeg_luminance_dc_code_table;
+  (this_00->jpeg_encode_block_state_y).DcSize = jpeg_luminance_dc_size_table;
+  (this_00->jpeg_encode_block_state_y).AcCode = jpeg_luminance_ac_code_table;
+  (this_00->jpeg_encode_block_state_y).AcSize = jpeg_luminance_ac_size_table;
+  (this_00->jpeg_encode_block_state_u).DcCode = jpeg_chrominance_dc_code_table;
+  (this_00->jpeg_encode_block_state_u).DcSize = jpeg_chrominance_dc_size_table;
+  (this_00->jpeg_encode_block_state_u).AcCode = jpeg_chrominance_ac_code_table;
+  (this_00->jpeg_encode_block_state_v).DcCode = jpeg_chrominance_dc_code_table;
+  (this_00->jpeg_encode_block_state_v).DcSize = jpeg_chrominance_dc_size_table;
+  (this_00->jpeg_encode_block_state_y).qt = this_00->jpeg_ILqt;
+  (this_00->jpeg_encode_block_state_v).AcCode = jpeg_chrominance_ac_code_table;
+  (this_00->jpeg_encode_block_state_v).AcSize = jpeg_chrominance_ac_size_table;
+  puVar1 = (uchar *)__restgprlr_25(puVar1);
+  return puVar1;
 }
 
 
-// 827E9090  jpeg_encode::end  (mjpeg/jpeg.cpp:1141)
+// 827E9090  end  (mjpeg/jpeg.cpp:1141)
 
-char * jpeg_encode__end(int param_1,char *param_2)
+uchar * __thiscall jpeg_encode::end(jpeg_encode *this,uchar *param_1)
 
 {
-  char cVar1;
+  uchar uVar1;
   ushort uVar2;
-  char *pcVar3;
+  uchar *puVar3;
   longlong lVar4;
   
-  uVar2 = *(ushort *)(param_1 + 0x284);
+  uVar2 = this->jpeg_bitindex;
   if (uVar2 != 0) {
-    *(int *)(param_1 + 0x280) = *(int *)(param_1 + 0x280) << (0x20 - uVar2 & 0x3f);
+    this->jpeg_lcode = this->jpeg_lcode << (0x20 - uVar2 & 0x3f);
     for (lVar4 = (longlong)((int)(uVar2 + 7) >> 3); lVar4 != 0; lVar4 = lVar4 + -1) {
-      cVar1 = *(char *)(param_1 + 0x280);
-      *param_2 = cVar1;
-      pcVar3 = param_2 + 1;
-      if (cVar1 == -1) {
-        *pcVar3 = '\0';
-        pcVar3 = param_2 + 2;
+      uVar1 = *(uchar *)&this->jpeg_lcode;
+      *param_1 = uVar1;
+      puVar3 = param_1 + 1;
+      if (uVar1 == 0xff) {
+        *puVar3 = '\0';
+        puVar3 = param_1 + 2;
       }
-      *(int *)(param_1 + 0x280) = *(int *)(param_1 + 0x280) << 8;
-      param_2 = pcVar3;
+      this->jpeg_lcode = this->jpeg_lcode << 8;
+      param_1 = puVar3;
     }
   }
-  *param_2 = -1;
-  param_2[1] = -0x27;
-  return param_2 + 2;
+  *param_1 = 0xff;
+  param_1[1] = 0xd9;
+  return param_1 + 2;
 }
 
 
-// 827E9108  jpeg_encode::encode  (mjpeg/jpeg.cpp:1162)
+// 827E9108  encode  (mjpeg/jpeg.cpp:1162)
 
-void jpeg_encode__encode(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        ,ulonglong param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
+uchar * __thiscall
+jpeg_encode::encode(jpeg_encode *this,uchar *param_1,int param_2,int param_3,int param_4,int param_5
+                   ,uchar *param_6,uchar *param_7,uchar *param_8,bool param_9,jpeg_exif *param_10)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  int iVar1;
+  uchar *puVar2;
+  uchar *puVar3;
   ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  jpeg_encode_state *pjVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
-  double dVar10;
+  uint uVar10;
+  ulonglong uVar11;
+  int iVar12;
+  int iVar13;
+  ulonglong uVar14;
   uint in_stack_00000054;
-  undefined1 in_stack_0000005f;
-  undefined4 in_stack_00000064;
-  undefined4 local_a0;
+  bool in_stack_0000005f;
+  jpeg_exif *in_stack_00000064;
+  uint local_a0;
   
-  lVar1 = __savegprlr();
-  DAT_84872a48 = 0;
-  DAT_84872a50 = 0;
-  DAT_84872a40 = 0;
-  DAT_84872a58 = 0;
-  if ((param_7 & 7) != 0) {
-    MyAssertHandler(0xffffffff821df7dc,0x48f,0,0xffffffff82000f98,0xffffffff821df7c8);
+  uVar8 = (ulonglong)(int)param_7;
+  uVar9 = (ulonglong)(int)param_6;
+  uVar4 = (ulonglong)param_4;
+  __savegprlr();
+  ticks_huffman = 0;
+  ticks_quant = 0;
+  ticks_dct = 0;
+  ticks_copy = 0;
+  if ((uVar9 & 7) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\jpeg.cpp",0x48f,0,"%s");
   }
-  if ((param_8 & 7) != 0) {
-    MyAssertHandler(0xffffffff821df7dc,0x490,0,0xffffffff82000f98,0xffffffff821df7b4);
+  if ((uVar8 & 7) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\jpeg.cpp",0x490,0,"%s");
   }
-  uVar3 = (ulonglong)in_stack_00000054;
+  uVar7 = (ulonglong)in_stack_00000054;
   if ((in_stack_00000054 & 7) != 0) {
-    MyAssertHandler(0xffffffff821df7dc,0x491,0,0xffffffff82000f98,0xffffffff821df7a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\jpeg.cpp",0x491,0,"%s");
   }
-  uVar2 = jpeg_encode__begin(lVar1,param_2,param_3,param_4,param_6,in_stack_0000005f,
-                             in_stack_00000064);
-  if (0 < (int)param_4) {
-    uVar4 = (longlong)((int)param_5 >> 1) + (ulonglong)((int)param_5 < 0 && (param_5 & 1) != 0);
-    local_a0 = ((int)param_4 - 1U >> 4) + 1;
+  puVar2 = begin(this,param_1,param_2,param_3,param_5,in_stack_0000005f,in_stack_00000064);
+  if (0 < param_3) {
+    iVar13 = (int)uVar4;
+    uVar10 = (iVar13 >> 1) + (uint)(iVar13 < 0 && (uVar4 & 1) != 0);
+    local_a0 = (param_3 - 1U >> 4) + 1;
     do {
-      lVar7 = 0;
-      if (0 < (int)param_3) {
-        lVar5 = (param_5 & 0x1fffffff) * 8;
-        lVar8 = lVar1 + 0x288;
-        uVar6 = param_8;
-        uVar9 = param_7;
+      iVar12 = 0;
+      if (0 < param_2) {
+        iVar1 = (int)((uVar4 & 0xffffffff) << 3);
+        pjVar5 = &this->jpeg_encode_block_state_y;
+        uVar11 = uVar8;
+        uVar14 = uVar9;
         do {
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,uVar9,param_5,lVar8);
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,param_7 + 8 + lVar7,param_5,lVar8);
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,lVar5 + uVar9,param_5,lVar8);
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,lVar5 + 8 + uVar9,param_5,lVar8);
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,uVar6,uVar4,lVar1 + 0x2a0);
-          uVar2 = jpeg_encode__do_block(lVar1,uVar2,(uVar3 - param_8) + uVar6,uVar4,lVar1 + 0x2b8);
-          lVar7 = lVar7 + 0x10;
-          uVar6 = uVar6 + 8;
-          uVar9 = uVar9 + 0x10;
-        } while ((int)lVar7 < (int)param_3);
+          puVar3 = (uchar *)uVar14;
+          puVar2 = do_block(this,puVar2,puVar3,iVar13,pjVar5);
+          puVar2 = do_block(this,puVar2,(uchar *)((int)uVar9 + 8 + iVar12),iVar13,pjVar5);
+          puVar2 = do_block(this,puVar2,puVar3 + iVar1,iVar13,pjVar5);
+          puVar2 = do_block(this,puVar2,puVar3 + iVar1 + 8,iVar13,pjVar5);
+          puVar2 = do_block(this,puVar2,(uchar *)uVar11,uVar10,&this->jpeg_encode_block_state_u);
+          puVar2 = do_block(this,puVar2,(uchar *)uVar11 + ((int)uVar7 - (int)uVar8),uVar10,
+                            &this->jpeg_encode_block_state_v);
+          iVar12 = iVar12 + 0x10;
+          uVar11 = uVar11 + 8;
+          uVar14 = uVar14 + 0x10;
+        } while (iVar12 < param_2);
       }
-      lVar7 = (uVar4 & 0x1fffffff) * 8;
-      uVar6 = (ulonglong)local_a0;
-      param_8 = lVar7 + param_8;
-      uVar3 = lVar7 + uVar3;
-      local_a0 = (uint)(uVar6 - 1);
-      param_7 = (param_5 & 0xfffffff) * 0x10 + param_7;
-    } while (uVar6 - 1 != 0);
+      lVar6 = ((ulonglong)uVar10 & 0x1fffffff) * 8;
+      uVar11 = (ulonglong)local_a0;
+      uVar8 = lVar6 + uVar8;
+      uVar7 = lVar6 + uVar7;
+      local_a0 = (uint)(uVar11 - 1);
+      uVar9 = (uVar4 & 0xfffffff) * 0x10 + uVar9;
+    } while (uVar11 - 1 != 0);
   }
-  uVar2 = jpeg_encode__end(lVar1);
-  dVar10 = (double)__u64tod(DAT_84872a58);
-  PIXSetMarker(0,0xffffffff821df794,dVar10 * DAT_841db430);
-  dVar10 = (double)__u64tod(DAT_84872a40);
-  PIXSetMarker(0,0xffffffff821df788,dVar10 * DAT_841db430);
-  dVar10 = (double)__u64tod(DAT_84872a50);
-  PIXSetMarker(0,0xffffffff821df77c,dVar10 * DAT_841db430);
-  dVar10 = (double)__u64tod(DAT_84872a48);
-  PIXSetMarker(0,0xffffffff821df76c,dVar10 * DAT_841db430);
-  __restgprlr(uVar2);
-  return;
+  puVar2 = end(this,puVar2);
+  __u64tod();
+  PIXSetMarker(0,"copy:%.2f");
+  __u64tod();
+  PIXSetMarker(0,"dct:%.2f");
+  __u64tod();
+  PIXSetMarker(0,"quant:%.2f");
+  __u64tod();
+  PIXSetMarker(0,"huffman:%.2f");
+  __restgprlr();
+  return puVar2;
 }
 

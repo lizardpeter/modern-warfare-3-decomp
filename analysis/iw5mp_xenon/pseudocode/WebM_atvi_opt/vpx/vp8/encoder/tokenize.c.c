@@ -2,27 +2,27 @@
 
 // 8283B6A8  vp8_AllocToken  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:47)
 
-void vp8_AllocToken(code *param_1)
+void vp8_AllocToken(_func___cdecl_void_ptr_uint *param_1)
 
 {
-  DAT_848979f0 = (*param_1)(0x4000);
-  DAT_848979e4 = (*param_1)(0x4000);
+  vp8_dct_value_tokens = (*param_1)(0x4000);
+  vp8_dct_value_cost = (*param_1)(0x4000);
   return;
 }
 
 
 // 8283B700  vp8_FreeToken  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:52)
 
-void vp8_FreeToken(code *param_1)
+void vp8_FreeToken(_func___cdecl_void_void_ptr *param_1)
 
 {
-  if (DAT_848979f0 != 0) {
-    (*param_1)();
-    DAT_848979f0 = 0;
+  if (vp8_dct_value_tokens != (TOKENVALUE *)0x0) {
+    (*param_1)(vp8_dct_value_tokens);
+    vp8_dct_value_tokens = (TOKENVALUE *)0x0;
   }
-  if (DAT_848979e4 != 0) {
-    (*param_1)();
-    DAT_848979e4 = 0;
+  if (vp8_dct_value_cost != (int *)0x0) {
+    (*param_1)(vp8_dct_value_cost);
+    vp8_dct_value_cost = (int *)0x0;
   }
   return;
 }
@@ -30,69 +30,72 @@ void vp8_FreeToken(code *param_1)
 
 // 8283B770  fill_value_tokens  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:68)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void fill_value_tokens(void)
 
 {
-  int iVar1;
-  longlong lVar2;
+  short sVar1;
+  TOKENVALUE *pTVar2;
   int iVar3;
-  ushort uVar4;
-  int *piVar5;
-  short *psVar6;
-  int iVar7;
-  int iVar8;
-  ushort uVar9;
-  longlong lVar10;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  ushort uVar7;
+  int *piVar8;
+  TOKENVALUE *pTVar9;
+  ushort uVar10;
+  longlong lVar11;
   
   __savegprlr_24();
-  lVar10 = -0x800;
-  uVar9 = 1;
-  iVar8 = DAT_848979f0 + 0x2000;
+  pTVar2 = vp8_dct_value_tokens;
+  lVar11 = -0x800;
+  uVar10 = 1;
   do {
-    iVar1 = (int)lVar10;
-    if (iVar1 == 0) {
-      uVar9 = 0;
+    iVar4 = (int)lVar11;
+    if (iVar4 == 0) {
+      uVar10 = 0;
 LAB_8283b7c0:
-      lVar2 = lVar10;
+      lVar5 = lVar11;
     }
     else {
-      lVar2 = -lVar10;
-      if (uVar9 == 0) goto LAB_8283b7c0;
+      lVar5 = -lVar11;
+      if (uVar10 == 0) goto LAB_8283b7c0;
     }
-    if ((int)lVar2 < 5) {
-      psVar6 = (short *)(iVar1 * 4 + iVar8);
-      *psVar6 = (short)lVar2;
-      uVar4 = uVar9;
+    if ((int)lVar5 < 5) {
+      pTVar9 = pTVar2 + iVar4 + 0x800;
+      pTVar9->Token = (short)lVar5;
+      uVar7 = uVar10;
     }
     else {
-      piVar5 = &DAT_829a5b00;
-      iVar7 = 4;
+      piVar8 = &vp8_extra_bits[4].base_val;
+      iVar3 = 4;
       do {
-        iVar3 = iVar7;
-        piVar5 = piVar5 + 5;
-        if (-0x7d65a475 < (int)piVar5) break;
-        iVar7 = iVar3 + 1;
-      } while (*piVar5 <= (int)lVar2);
-      psVar6 = (short *)(iVar1 * 4 + iVar8);
-      *psVar6 = (short)iVar3;
-      uVar4 = (ushort)((lVar2 - (ulonglong)*(uint *)(&DAT_829a5ab0 + iVar3 * 0x14) & 0x7fffffff) <<
-                      1) | uVar9;
+        iVar6 = iVar3;
+        piVar8 = piVar8 + 5;
+        if (-0x7d65a475 < (int)piVar8) break;
+        iVar3 = iVar6 + 1;
+      } while (*piVar8 <= (int)lVar5);
+      pTVar9 = pTVar2 + iVar4 + 0x800;
+      pTVar9->Token = (short)iVar6;
+      uVar7 = (ushort)((lVar5 - (ulonglong)(uint)vp8_extra_bits[iVar6].base_val & 0x7fffffff) << 1)
+              | uVar10;
     }
-    iVar1 = 0;
-    psVar6[1] = uVar4;
-    iVar7 = *psVar6 * 0x14;
-    if (*(int *)(&DAT_829a5ab0 + iVar7) != 0) {
-      if ((&DAT_829a5aac)[*psVar6 * 5] != 0) {
-        iVar1 = vp8_treed_cost(*(undefined4 *)(&DAT_829a5aa0 + iVar7),
-                               *(undefined4 *)(&DAT_829a5aa4 + iVar7),(short)uVar4 >> 1);
+    sVar1 = pTVar9->Token;
+    iVar4 = 0;
+    pTVar9->Extra = uVar7;
+    if (vp8_extra_bits[sVar1].base_val != 0) {
+      if (vp8_extra_bits[sVar1].Len != 0) {
+        iVar4 = vp8_treed_cost(vp8_extra_bits[sVar1].tree,vp8_extra_bits[sVar1].prob,
+                               (int)(short)uVar7 >> 1,vp8_extra_bits[sVar1].Len);
       }
-      *(int *)((int)((lVar10 + 0x800U & 0xffffffff) << 2) + DAT_848979e4) =
-           (&DAT_821ea840)[((uVar4 & 1) == 0) + 0x7f] + iVar1;
+      *(uint *)((int)((lVar11 + 0x800U & 0xffffffff) << 2) + (int)vp8_dct_value_cost) =
+           vp8_prob_cost[((uVar7 & 1) == 0) + 0x7f] + iVar4;
     }
-    lVar10 = lVar10 + 1;
-    if (0x7ff < (int)lVar10) {
-      DAT_848979e8 = DAT_848979f0 + 0x2000;
-      DAT_848979ec = DAT_848979e4 + 0x2000;
+    lVar11 = lVar11 + 1;
+    if (0x7ff < (int)lVar11) {
+      vp8_dct_value_tokens_ptr = vp8_dct_value_tokens + 0x800;
+      vp8_dct_value_cost_ptr = vp8_dct_value_cost + 0x800;
       __restgprlr_24();
       return;
     }
@@ -102,93 +105,100 @@ LAB_8283b7c0:
 
 // 8283B650  vp8_treed_cost  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.h:92)
 
-longlong vp8_treed_cost(int param_1,int param_2,int param_3,uint param_4)
+int vp8_treed_cost(char *param_1,uchar *param_2,int param_3,int param_4)
 
 {
   uint uVar1;
-  longlong lVar2;
+  int iVar2;
   char cVar4;
   uint uVar3;
   
-  lVar2 = 0;
+  iVar2 = 0;
   cVar4 = '\0';
   do {
     param_4 = param_4 - 1;
-    uVar1 = param_3 >> (param_4 & 0x3f) & 1;
-    uVar3 = (uint)*(byte *)(((int)cVar4 >> 1) + param_2);
+    uVar1 = param_3 >> (param_4 & 0x3fU) & 1;
+    uVar3 = (uint)param_2[(int)cVar4 >> 1];
     if (uVar1 != 0) {
       uVar3 = 0xff - uVar3;
     }
-    cVar4 = *(char *)((int)cVar4 + uVar1 + param_1);
-    lVar2 = (ulonglong)(uint)(&DAT_821ea840)[uVar3] + lVar2;
+    cVar4 = param_1[(int)cVar4 + uVar1];
+    iVar2 = vp8_prob_cost[uVar3] + iVar2;
   } while (param_4 != 0);
-  return lVar2;
+  return iVar2;
 }
 
 
 // 8283B8E8  tokenize2nd_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:136)
 
-void tokenize2nd_order_b(undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4,
-                        char *param_5,char *param_6,int param_7)
+/* WARNING: Type propagation algorithm not settling */
+
+void tokenize2nd_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
+                        char *param_5,char *param_6,VP8_COMP *param_7)
 
 {
   byte bVar1;
-  int iVar2;
+  short sVar2;
   int iVar3;
-  char cVar4;
-  int *piVar5;
-  uint uVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  int *piVar10;
-  int iVar11;
+  int iVar4;
+  char cVar5;
+  int *piVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  ulonglong uVar10;
+  longlong lVar11;
   ulonglong uVar12;
+  TOKENEXTRA *pTVar13;
+  int iVar14;
+  ulonglong uVar15;
   
-  piVar5 = (int *)__savegprlr_17();
-  iVar2 = piVar5[0xc];
-  iVar3 = *piVar5;
-  piVar10 = &DAT_821e74b0;
-  piVar5 = (int *)*param_2;
-  uVar12 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
-  uVar6 = 0;
+  uVar10 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)param_3;
+  piVar6 = (int *)__savegprlr_17(param_1);
+  iVar3 = piVar6[0xc];
+  iVar4 = *piVar6;
+  piVar6 = vp8_default_zig_zag1d;
+  pTVar13 = *param_2;
+  uVar15 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
+  uVar7 = 0;
   do {
-    bVar1 = (&DAT_821e7490)[uVar6];
-    if ((int)uVar6 < iVar2) {
-      iVar7 = *(short *)(*piVar10 * 2 + iVar3) * 4;
-      piVar5[1] = (int)*(short *)(iVar7 + DAT_848979e8 + 2);
-      lVar8 = (longlong)*(short *)(iVar7 + DAT_848979e8);
+    bVar1 = ""[uVar7];
+    if ((int)uVar7 < iVar3) {
+      sVar2 = *(short *)(*piVar6 * 2 + iVar4);
+      pTVar13->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
+      lVar11 = (longlong)vp8_dct_value_tokens_ptr[sVar2].Token;
     }
     else {
-      lVar8 = 0xb;
+      lVar11 = 0xb;
     }
-    uVar9 = (param_3 & 0x1fffffff) * 8 + (ulonglong)bVar1;
-    *piVar5 = (int)lVar8;
-    uVar9 = uVar9 + (uVar9 & 0x7fffffff) * 2 + uVar12;
-    piVar5[4] = ((uint)LZCOUNT(uVar6) >> 5) +
-                (int)(((param_4 & 0x3fffffff) * 4 + param_3 & 0xffffffff) << 1);
-    piVar5[2] = (int)uVar9 * 0xb + param_7 + 0x217ce;
-    iVar7 = (int)param_3;
-    if (((int)uVar12 == 0) && (((bVar1 != 0 && (0 < iVar7)) || ((1 < bVar1 && (iVar7 == 0)))))) {
-      iVar11 = 1;
+    uVar12 = (uVar8 & 0x1fffffff) * 8 + (ulonglong)bVar1;
+    pTVar13->Token = (int)lVar11;
+    uVar12 = uVar12 + (uVar12 & 0x7fffffff) * 2 + uVar15;
+    pTVar13->section =
+         ((uint)LZCOUNT(uVar7) >> 5) + (int)(((uVar10 & 0x3fffffff) * 4 + uVar8 & 0xffffffff) << 1);
+    pTVar13->context_tree = (param_7->common).fc.coef_probs[0][0][(int)uVar12];
+    iVar9 = (int)uVar8;
+    if (((int)uVar15 == 0) && (((bVar1 != 0 && (0 < iVar9)) || ((1 < bVar1 && (iVar9 == 0)))))) {
+      iVar14 = 1;
     }
     else {
-      iVar11 = 0;
+      iVar14 = 0;
     }
-    piVar5[3] = iVar11;
-    piVar5 = piVar5 + 5;
-    iVar11 = (int)(((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + 0xabff &
+    pTVar13->skip_eob_node = iVar14;
+    pTVar13 = pTVar13 + 1;
+    iVar14 = (int)(((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar11 + 0xabff &
                    0xffffffff) << 2);
-    *(int *)(iVar11 + param_7) = *(int *)(iVar11 + param_7) + 1;
-    uVar12 = (ulonglong)(byte)(&DAT_821e74a0)[(int)lVar8];
-    if (iVar2 <= (int)uVar6) break;
-    piVar10 = piVar10 + 1;
-    uVar6 = uVar6 + 1;
-  } while ((int)piVar10 < -0x7de18b10);
-  *param_2 = piVar5;
-  cVar4 = '\x01' - ((iVar7 == 0) == uVar6);
-  *param_6 = cVar4;
-  *param_5 = cVar4;
+    *(int *)((int)param_7->Y1quant[0] + iVar14) = *(int *)((int)param_7->Y1quant[0] + iVar14) + 1;
+    uVar15 = (ulonglong)""[(int)lVar11];
+    if (iVar3 <= (int)uVar7) break;
+    piVar6 = piVar6 + 1;
+    uVar7 = uVar7 + 1;
+  } while ((int)piVar6 < -0x7de18b10);
+  *param_2 = pTVar13;
+  cVar5 = '\x01' - ((iVar9 == 0) == uVar7);
+  *param_6 = cVar5;
+  *param_5 = cVar5;
   __restgprlr_17();
   return;
 }
@@ -196,68 +206,76 @@ void tokenize2nd_order_b(undefined8 param_1,undefined4 *param_2,ulonglong param_
 
 // 8283BA80  tokenize1st_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:189)
 
-void tokenize1st_order_b(undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4,
-                        char *param_5,char *param_6,int param_7)
+/* WARNING: Type propagation algorithm not settling */
+
+void tokenize1st_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
+                        char *param_5,char *param_6,VP8_COMP *param_7)
 
 {
   byte bVar1;
-  int iVar2;
+  short sVar2;
   int iVar3;
-  char cVar4;
-  int *piVar6;
-  longlong lVar5;
-  int iVar7;
+  int iVar4;
+  char cVar5;
+  int *piVar7;
+  longlong lVar6;
   ulonglong uVar8;
-  uint uVar9;
-  int *piVar10;
-  byte *pbVar11;
-  int iVar12;
-  ulonglong uVar13;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  TOKENEXTRA *pTVar13;
+  byte *pbVar14;
+  int iVar15;
+  ulonglong uVar16;
   
-  piVar6 = (int *)__savegprlr_17();
-  iVar7 = (int)param_3;
-  piVar10 = (int *)*param_2;
-  iVar2 = piVar6[0xc];
-  iVar3 = *piVar6;
-  uVar9 = (uint)(iVar7 == 0);
-  uVar13 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
-  pbVar11 = &DAT_821e7490 + uVar9;
-  piVar6 = &DAT_821e74b0 + uVar9;
+  uVar10 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)param_3;
+  piVar7 = (int *)__savegprlr_17(param_1);
+  iVar9 = (int)uVar8;
+  pTVar13 = *param_2;
+  iVar3 = piVar7[0xc];
+  iVar4 = *piVar7;
+  uVar12 = (uint)(iVar9 == 0);
+  uVar16 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
+  pbVar14 = "" + uVar12;
+  piVar7 = vp8_default_zig_zag1d + uVar12;
   do {
-    bVar1 = *pbVar11;
-    lVar5 = 0xb;
-    if ((int)uVar9 < iVar2) {
-      iVar12 = *(short *)(*piVar6 * 2 + iVar3) * 4;
-      piVar10[1] = (int)*(short *)(iVar12 + DAT_848979e8 + 2);
-      lVar5 = (longlong)*(short *)(iVar12 + DAT_848979e8);
+    bVar1 = *pbVar14;
+    lVar6 = 0xb;
+    if ((int)uVar12 < iVar3) {
+      sVar2 = *(short *)(*piVar7 * 2 + iVar4);
+      pTVar13->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
+      lVar6 = (longlong)vp8_dct_value_tokens_ptr[sVar2].Token;
     }
-    uVar8 = (param_3 & 0x1fffffff) * 8 + (ulonglong)bVar1;
-    *piVar10 = (int)lVar5;
-    uVar8 = uVar8 + (uVar8 & 0x7fffffff) * 2 + uVar13;
-    piVar10[4] = ((uint)LZCOUNT(uVar9) >> 5) +
-                 (int)(((param_4 & 0x3fffffff) * 4 + param_3 & 0xffffffff) << 1);
-    piVar10[2] = (int)uVar8 * 0xb + param_7 + 0x217ce;
-    if (((int)uVar13 == 0) && (((bVar1 != 0 && (0 < iVar7)) || ((1 < bVar1 && (iVar7 == 0)))))) {
-      iVar12 = 1;
+    uVar11 = (uVar8 & 0x1fffffff) * 8 + (ulonglong)bVar1;
+    pTVar13->Token = (int)lVar6;
+    uVar11 = uVar11 + (uVar11 & 0x7fffffff) * 2 + uVar16;
+    pTVar13->section =
+         ((uint)LZCOUNT(uVar12) >> 5) + (int)(((uVar10 & 0x3fffffff) * 4 + uVar8 & 0xffffffff) << 1)
+    ;
+    pTVar13->context_tree = (param_7->common).fc.coef_probs[0][0][(int)uVar11];
+    if (((int)uVar16 == 0) && (((bVar1 != 0 && (0 < iVar9)) || ((1 < bVar1 && (iVar9 == 0)))))) {
+      iVar15 = 1;
     }
     else {
-      iVar12 = 0;
+      iVar15 = 0;
     }
-    piVar10[3] = iVar12;
-    piVar10 = piVar10 + 5;
-    iVar12 = (int)(((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar5 + 0xabff &
+    pTVar13->skip_eob_node = iVar15;
+    pTVar13 = pTVar13 + 1;
+    iVar15 = (int)(((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar6 + 0xabff &
                    0xffffffff) << 2);
-    *(int *)(iVar12 + param_7) = *(int *)(iVar12 + param_7) + 1;
-    uVar13 = (ulonglong)(byte)(&DAT_821e74a0)[(int)lVar5];
-    if (iVar2 <= (int)uVar9) break;
-    piVar6 = piVar6 + 1;
-    uVar9 = uVar9 + 1;
-    pbVar11 = pbVar11 + 1;
-  } while ((int)piVar6 < -0x7de18b10);
-  *param_2 = piVar10;
-  cVar4 = '\x01' - ((iVar7 == 0) == uVar9);
-  *param_6 = cVar4;
-  *param_5 = cVar4;
+    *(int *)((int)param_7->Y1quant[0] + iVar15) = *(int *)((int)param_7->Y1quant[0] + iVar15) + 1;
+    uVar16 = (ulonglong)""[(int)lVar6];
+    if (iVar3 <= (int)uVar12) break;
+    piVar7 = piVar7 + 1;
+    uVar12 = uVar12 + 1;
+    pbVar14 = pbVar14 + 1;
+  } while ((int)piVar7 < -0x7de18b10);
+  *param_2 = pTVar13;
+  cVar5 = '\x01' - ((iVar9 == 0) == uVar12);
+  *param_6 = cVar5;
+  *param_5 = cVar5;
   __restgprlr_17();
   return;
 }
@@ -265,7 +283,7 @@ void tokenize1st_order_b(undefined8 param_1,undefined4 *param_2,ulonglong param_
 
 // 8283BC28  mb_is_skippable  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:233)
 
-void mb_is_skippable(void)
+int mb_is_skippable(MACROBLOCKD *param_1)
 
 {
   uint uVar1;
@@ -280,7 +298,7 @@ void mb_is_skippable(void)
   int *piVar10;
   longlong lVar11;
   
-  iVar6 = __savegprlr_28();
+  iVar6 = __savegprlr_28(param_1);
   uVar5 = 1;
   uVar7 = 0;
   if ((**(int **)(iVar6 + 0x1140) == 4) || (**(int **)(iVar6 + 0x1140) == 9)) {
@@ -314,80 +332,83 @@ void mb_is_skippable(void)
       iVar9 = iVar9 + -1;
     } while (iVar9 != 0);
   }
-  __restgprlr_28(uVar5);
-  return;
+  iVar6 = __restgprlr_28(uVar5);
+  return iVar6;
 }
 
 
 // 8283C460  vp8_tokenize_mb  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:254)
 
-void vp8_tokenize_mb(undefined8 param_1,longlong param_2,undefined8 param_3)
+void vp8_tokenize_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
 
 {
-  int *piVar1;
-  int iVar2;
-  int iVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  undefined8 uVar7;
+  ENTROPY_CONTEXT_PLANES *pEVar1;
+  ENTROPY_CONTEXT_PLANES *pEVar2;
+  MODE_INFO *pMVar3;
+  MB_PREDICTION_MODE MVar4;
+  MACROBLOCKD *pMVar5;
+  VP8_COMP *pVVar6;
+  int iVar7;
   longlong lVar8;
-  int iVar9;
+  longlong lVar9;
+  int iVar10;
   
-  iVar3 = __savegprlr_22();
-  iVar2 = (int)param_2;
-  uVar6 = (ulonglong)*(uint *)(iVar2 + 0x1154);
-  uVar5 = (ulonglong)*(uint *)(iVar2 + 0x1158);
-  *(undefined1 *)(*(int *)(iVar2 + 0x1140) + 0x12) = 1;
-  uVar4 = mb_is_skippable(param_2);
-  *(undefined1 *)(*(int *)(iVar2 + 0x1140) + 0x11) = uVar4;
-  if (*(char *)(*(int *)(iVar2 + 0x1140) + 0x11) == '\0') {
-    *(int *)(iVar3 + 0x30174) = *(int *)(iVar3 + 0x30174) + 1;
-    if ((**(int **)(iVar2 + 0x1140) == 4) || (**(int **)(iVar2 + 0x1140) == 9)) {
-      uVar7 = 3;
+  lVar8 = (longlong)(int)param_2;
+  pVVar6 = (VP8_COMP *)__savegprlr_22(param_1);
+  pMVar5 = (MACROBLOCKD *)lVar8;
+  pEVar1 = pMVar5->above_context;
+  pEVar2 = pMVar5->left_context;
+  (pMVar5->mode_info_context->mbmi).dc_diff = '\x01';
+  iVar7 = mb_is_skippable(pMVar5);
+  (pMVar5->mode_info_context->mbmi).mb_skip_coeff = (uchar)iVar7;
+  if ((pMVar5->mode_info_context->mbmi).mb_skip_coeff == '\0') {
+    pVVar6->skip_false_count = pVVar6->skip_false_count + 1;
+    MVar4 = (pMVar5->mode_info_context->mbmi).mode;
+    if ((MVar4 == B_PRED) || (MVar4 == SPLITMV)) {
+      iVar7 = 3;
     }
     else {
-      tokenize2nd_order_b(param_2 + 0x109c,param_3,1,*(undefined4 *)(iVar2 + 0x1148),uVar6 + 8,
-                          uVar5 + 8,iVar3);
-      uVar7 = 0;
+      tokenize2nd_order_b(pMVar5->block + 0x18,param_3,1,pMVar5->frame_type,&pEVar1->y2,&pEVar2->y2,
+                          pVVar6);
+      iVar7 = 0;
     }
-    iVar9 = 0;
-    lVar8 = param_2 + 0xafc;
+    iVar10 = 0;
+    lVar9 = lVar8 + 0xafc;
     do {
-      tokenize1st_order_b(lVar8,param_3,uVar7,*(undefined4 *)(iVar2 + 0x1148),
-                          (byte)(&DAT_821e6fb0)[iVar9] + uVar6,(byte)(&DAT_821e6f94)[iVar9] + uVar5,
-                          iVar3);
-      iVar9 = iVar9 + 1;
+      tokenize1st_order_b((BLOCKD *)lVar9,param_3,iVar7,pMVar5->frame_type,pEVar1->y1 + ""[iVar10],
+                          pEVar2->y1 + ""[iVar10],pVVar6);
+      iVar10 = iVar10 + 1;
+      lVar9 = lVar9 + 0x3c;
+    } while (iVar10 < 0x10);
+    lVar8 = lVar8 + 0xebc;
+    iVar7 = 0;
+    lVar9 = 8;
+    do {
+      tokenize1st_order_b((BLOCKD *)lVar8,param_3,2,pMVar5->frame_type,pEVar1->y1 + ""[iVar7 + 0x10]
+                          ,pEVar2->y1 + ""[iVar7 + 0x10],pVVar6);
+      lVar9 = lVar9 + -1;
+      iVar7 = iVar7 + 1;
       lVar8 = lVar8 + 0x3c;
-    } while (iVar9 < 0x10);
-    param_2 = param_2 + 0xebc;
-    iVar9 = 0;
-    lVar8 = 8;
-    do {
-      tokenize1st_order_b(param_2,param_3,2,*(undefined4 *)(iVar2 + 0x1148),
-                          (byte)(&DAT_821e6fc0)[iVar9] + uVar6,(byte)(&DAT_821e6fa4)[iVar9] + uVar5,
-                          iVar3);
-      lVar8 = lVar8 + -1;
-      iVar9 = iVar9 + 1;
-      param_2 = param_2 + 0x3c;
-    } while (lVar8 != 0);
+    } while (lVar9 != 0);
     __restgprlr_22();
     return;
   }
-  *(int *)(iVar3 + 0x30170) = *(int *)(iVar3 + 0x30170) + 1;
-  if (*(int *)(iVar3 + 0x1e714) == 0) {
-    vp8_stuff_mb(iVar3,param_2,param_3);
+  iVar7 = (pVVar6->common).mb_no_coeff_skip;
+  pVVar6->skip_true_count = pVVar6->skip_true_count + 1;
+  if (iVar7 == 0) {
+    vp8_stuff_mb(pVVar6,pMVar5,param_3);
   }
   else {
-    vp8_fix_contexts(param_2);
+    vp8_fix_contexts(pMVar5);
   }
-  piVar1 = *(int **)(iVar2 + 0x1140);
-  if ((*piVar1 != 4) && (*piVar1 != 9)) {
-    *(undefined1 *)((int)piVar1 + 0x12) = 0;
+  pMVar3 = pMVar5->mode_info_context;
+  MVar4 = (pMVar3->mbmi).mode;
+  if ((MVar4 != B_PRED) && (MVar4 != SPLITMV)) {
+    (pMVar3->mbmi).dc_diff = '\0';
     __restgprlr_22();
     return;
   }
-  *(undefined1 *)((int)piVar1 + 0x12) = 1;
+  (pMVar3->mbmi).dc_diff = '\x01';
   __restgprlr_22();
   return;
 }
@@ -395,261 +416,276 @@ void vp8_tokenize_mb(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 // 8283BD38  stuff2nd_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:457)
 
-void stuff2nd_order_b(undefined4 *param_1,char *param_2,char *param_3,int param_4)
+void stuff2nd_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
+                     char *param_5,char *param_6,VP8_COMP *param_7)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
+  short *psVar3;
   int iVar4;
   int *piVar5;
   
-  cVar1 = *param_2;
-  puVar3 = (undefined4 *)*param_1;
-  cVar2 = *param_3;
-  *puVar3 = 0xb;
-  puVar3[4] = 0xb;
-  puVar3[3] = 0;
+  cVar1 = *(char *)param_2;
+  psVar3 = param_1->qcoeff;
+  cVar2 = *(char *)param_3;
+  psVar3[0] = 0;
+  psVar3[1] = 0xb;
+  psVar3[8] = 0;
+  psVar3[9] = 0xb;
+  psVar3[6] = 0;
+  psVar3[7] = 0;
   iVar4 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-  puVar3[2] = iVar4 * 0xb + param_4 + 0x218d6;
+  *(FRAME_TYPE *)(psVar3 + 4) = iVar4 * 0xb + param_4 + 0x218d6;
   piVar5 = (int *)(iVar4 * 0x30 + param_4 + 0x2b4a8);
   *piVar5 = *piVar5 + 1;
-  *param_1 = puVar3 + 5;
-  *param_3 = '\0';
-  *param_2 = '\0';
+  param_1->qcoeff = psVar3 + 10;
+  *(undefined1 *)param_3 = 0;
+  *(undefined1 *)param_2 = 0;
   return;
 }
 
 
 // 8283BDC8  stuff1st_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:488)
 
-void stuff1st_order_b(undefined4 *param_1,char *param_2,char *param_3,int param_4)
+void stuff1st_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
+                     char *param_5,char *param_6,VP8_COMP *param_7)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
+  short *psVar3;
   int *piVar4;
   int iVar5;
   
-  cVar1 = *param_2;
-  cVar2 = *param_3;
-  puVar3 = (undefined4 *)*param_1;
-  *puVar3 = 0xb;
-  puVar3[4] = 8;
+  cVar1 = *(char *)param_2;
+  cVar2 = *(char *)param_3;
+  psVar3 = param_1->qcoeff;
+  psVar3[0] = 0;
+  psVar3[1] = 0xb;
+  psVar3[8] = 0;
+  psVar3[9] = 8;
   iVar5 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-  puVar3[3] = 0;
-  puVar3[2] = iVar5 * 0xb + param_4 + 0x217ef;
+  psVar3[6] = 0;
+  psVar3[7] = 0;
+  *(FRAME_TYPE *)(psVar3 + 4) = iVar5 * 0xb + param_4 + 0x217ef;
   piVar4 = (int *)(iVar5 * 0x30 + param_4 + 0x2b0b8);
   *piVar4 = *piVar4 + 1;
-  *param_1 = puVar3 + 5;
-  *param_3 = '\0';
-  *param_2 = '\0';
+  param_1->qcoeff = psVar3 + 10;
+  *(undefined1 *)param_3 = 0;
+  *(undefined1 *)param_2 = 0;
   return;
 }
 
 
 // 8283BE58  stuff1st_order_buv  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:518)
 
-void stuff1st_order_buv(undefined4 *param_1,char *param_2,char *param_3,int param_4)
+void stuff1st_order_buv(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
+                       char *param_5,char *param_6,VP8_COMP *param_7)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
+  short *psVar3;
   int *piVar4;
   int iVar5;
   
-  cVar1 = *param_2;
-  cVar2 = *param_3;
-  puVar3 = (undefined4 *)*param_1;
-  *puVar3 = 0xb;
-  puVar3[4] = 0xd;
+  cVar1 = *(char *)param_2;
+  cVar2 = *(char *)param_3;
+  psVar3 = param_1->qcoeff;
+  psVar3[0] = 0;
+  psVar3[1] = 0xb;
+  psVar3[8] = 0;
+  psVar3[9] = 0xd;
   iVar5 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-  puVar3[3] = 0;
-  puVar3[2] = iVar5 * 0xb + param_4 + 0x219de;
+  psVar3[6] = 0;
+  psVar3[7] = 0;
+  *(FRAME_TYPE *)(psVar3 + 4) = iVar5 * 0xb + param_4 + 0x219de;
   piVar4 = (int *)(iVar5 * 0x30 + param_4 + 0x2b928);
   *piVar4 = *piVar4 + 1;
-  *param_1 = puVar3 + 5;
-  *param_3 = '\0';
-  *param_2 = '\0';
+  param_1->qcoeff = psVar3 + 10;
+  *(undefined1 *)param_3 = 0;
+  *(undefined1 *)param_2 = 0;
   return;
 }
 
 
 // 8283BEE8  vp8_stuff_mb  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:539)
 
-void vp8_stuff_mb(undefined8 param_1,int param_2,undefined4 *param_3)
+void vp8_stuff_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
 
 {
   char cVar1;
   char cVar2;
   byte bVar3;
   byte bVar4;
-  int iVar5;
-  int iVar6;
-  undefined4 *puVar7;
-  int iVar8;
-  int iVar9;
+  ENTROPY_CONTEXT_PLANES *pEVar5;
+  ENTROPY_CONTEXT_PLANES *pEVar6;
+  TOKENEXTRA *pTVar7;
+  MODE_INFO *pMVar8;
+  MB_PREDICTION_MODE MVar9;
   int iVar10;
-  int *piVar11;
-  longlong lVar12;
+  int iVar11;
+  int iVar12;
+  int *piVar13;
+  longlong lVar14;
   
-  iVar8 = __savegprlr_16();
-  iVar5 = *(int *)(param_2 + 0x1154);
-  iVar6 = *(int *)(param_2 + 0x1158);
-  puVar7 = (undefined4 *)*param_3;
-  cVar1 = *(char *)(iVar5 + 8);
-  cVar2 = *(char *)(iVar6 + 8);
-  *puVar7 = 0xb;
-  puVar7[4] = 0xb;
-  puVar7[3] = 0;
-  iVar9 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-  puVar7[2] = iVar9 * 0xb + iVar8 + 0x218d6;
-  piVar11 = (int *)(iVar9 * 0x30 + iVar8 + 0x2b4a8);
-  *piVar11 = *piVar11 + 1;
-  *param_3 = puVar7 + 5;
-  *(undefined1 *)(iVar6 + 8) = 0;
-  *(undefined1 *)(iVar5 + 8) = 0;
-  piVar11 = *(int **)(param_2 + 0x1140);
-  if ((*piVar11 == 4) || (*piVar11 == 9)) {
-    *(undefined1 *)((int)piVar11 + 0x12) = 1;
+  iVar10 = __savegprlr_16(param_1);
+  pEVar5 = param_2->above_context;
+  pEVar6 = param_2->left_context;
+  pTVar7 = *param_3;
+  cVar1 = pEVar5->y2;
+  cVar2 = pEVar6->y2;
+  pTVar7->Token = 0xb;
+  pTVar7->section = 0xb;
+  pTVar7->skip_eob_node = 0;
+  iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+  pTVar7->context_tree = (uchar *)(iVar11 * 0xb + iVar10 + 0x218d6);
+  piVar13 = (int *)(iVar11 * 0x30 + iVar10 + 0x2b4a8);
+  *piVar13 = *piVar13 + 1;
+  *param_3 = pTVar7 + 1;
+  pEVar6->y2 = '\0';
+  pEVar5->y2 = '\0';
+  pMVar8 = param_2->mode_info_context;
+  MVar9 = (pMVar8->mbmi).mode;
+  if ((MVar9 == B_PRED) || (MVar9 == SPLITMV)) {
+    (pMVar8->mbmi).dc_diff = '\x01';
   }
   else {
-    *(undefined1 *)((int)piVar11 + 0x12) = 0;
+    (pMVar8->mbmi).dc_diff = '\0';
   }
-  iVar9 = 0;
-  lVar12 = 4;
+  iVar11 = 0;
+  lVar14 = 4;
   do {
-    bVar3 = (&DAT_821e6fb0)[iVar9];
-    bVar4 = (&DAT_821e6f94)[iVar9];
-    puVar7 = (undefined4 *)*param_3;
-    cVar1 = *(char *)((uint)bVar3 + iVar5);
-    cVar2 = *(char *)((uint)bVar4 + iVar6);
-    *puVar7 = 0xb;
-    puVar7[4] = 8;
-    puVar7[3] = 0;
-    iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x217ef;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b0b8);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar4 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar3 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fb1)[iVar9];
-    bVar4 = (&DAT_821e6f95)[iVar9];
-    cVar1 = *(char *)((uint)bVar4 + iVar6);
-    puVar7 = (undefined4 *)*param_3;
-    cVar2 = *(char *)((uint)bVar3 + iVar5);
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x217ef;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b0b8);
-    puVar7[4] = 8;
-    puVar7[3] = 0;
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar4 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar3 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fb2)[iVar9];
-    bVar4 = (&DAT_821e6f96)[iVar9];
-    puVar7 = (undefined4 *)*param_3;
-    cVar1 = *(char *)((uint)bVar3 + iVar5);
-    cVar2 = *(char *)((uint)bVar4 + iVar6);
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b0b8);
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x217ef;
-    puVar7[4] = 8;
-    puVar7[3] = 0;
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar4 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar3 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fb3)[iVar9];
-    bVar4 = (&DAT_821e6f97)[iVar9];
-    iVar9 = iVar9 + 4;
-    puVar7 = (undefined4 *)*param_3;
-    cVar1 = *(char *)((uint)bVar3 + iVar5);
-    cVar2 = *(char *)((uint)bVar4 + iVar6);
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x217ef;
-    puVar7[4] = 8;
-    puVar7[3] = 0;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b0b8);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar4 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar3 + iVar5) = 0;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  iVar9 = 0;
-  lVar12 = 2;
+    bVar3 = ""[iVar11];
+    bVar4 = ""[iVar11];
+    pTVar7 = *param_3;
+    cVar1 = pEVar5->y1[bVar3];
+    cVar2 = pEVar6->y1[bVar4];
+    pTVar7->Token = 0xb;
+    pTVar7->section = 8;
+    pTVar7->skip_eob_node = 0;
+    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar4] = '\0';
+    pEVar5->y1[bVar3] = '\0';
+    bVar3 = ""[iVar11 + 1];
+    bVar4 = ""[iVar11 + 1];
+    cVar1 = pEVar6->y1[bVar4];
+    pTVar7 = *param_3;
+    cVar2 = pEVar5->y1[bVar3];
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
+    pTVar7->section = 8;
+    pTVar7->skip_eob_node = 0;
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar4] = '\0';
+    pEVar5->y1[bVar3] = '\0';
+    bVar3 = ""[iVar11 + 2];
+    bVar4 = ""[iVar11 + 2];
+    pTVar7 = *param_3;
+    cVar1 = pEVar5->y1[bVar3];
+    cVar2 = pEVar6->y1[bVar4];
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    pTVar7->section = 8;
+    pTVar7->skip_eob_node = 0;
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar4] = '\0';
+    pEVar5->y1[bVar3] = '\0';
+    bVar3 = ""[iVar11 + 3];
+    bVar4 = ""[iVar11 + 3];
+    iVar11 = iVar11 + 4;
+    pTVar7 = *param_3;
+    cVar1 = pEVar5->y1[bVar3];
+    cVar2 = pEVar6->y1[bVar4];
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    pTVar7->section = 8;
+    pTVar7->skip_eob_node = 0;
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar4] = '\0';
+    pEVar5->y1[bVar3] = '\0';
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  iVar11 = 0;
+  lVar14 = 2;
   do {
-    puVar7 = (undefined4 *)*param_3;
-    bVar3 = (&DAT_821e6fc0)[iVar9];
-    bVar4 = (&DAT_821e6fa4)[iVar9];
-    cVar1 = *(char *)((uint)bVar3 + iVar5);
-    cVar2 = *(char *)((uint)bVar4 + iVar6);
-    *puVar7 = 0xb;
-    puVar7[4] = 0xd;
-    puVar7[3] = 0;
-    iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x219de;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b928);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar4 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar3 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fa5)[iVar9];
-    cVar1 = *(char *)((uint)bVar3 + iVar6);
-    bVar4 = (&DAT_821e6fc1)[iVar9];
-    cVar2 = *(char *)((uint)bVar4 + iVar5);
-    puVar7 = (undefined4 *)*param_3;
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x219de;
-    puVar7[4] = 0xd;
-    puVar7[3] = 0;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b928);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar3 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar4 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fa6)[iVar9];
-    bVar4 = (&DAT_821e6fc2)[iVar9];
-    puVar7 = (undefined4 *)*param_3;
-    cVar1 = *(char *)((uint)bVar4 + iVar5);
-    cVar2 = *(char *)((uint)bVar3 + iVar6);
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x219de;
-    puVar7[4] = 0xd;
-    puVar7[3] = 0;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b928);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar3 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar4 + iVar5) = 0;
-    bVar3 = (&DAT_821e6fa7)[iVar9];
-    bVar4 = (&DAT_821e6fc3)[iVar9];
-    iVar9 = iVar9 + 4;
-    cVar1 = *(char *)((uint)bVar3 + iVar6);
-    cVar2 = *(char *)((uint)bVar4 + iVar5);
-    puVar7 = (undefined4 *)*param_3;
-    *puVar7 = 0xb;
-    iVar10 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    puVar7[2] = iVar10 * 0xb + iVar8 + 0x219de;
-    puVar7[4] = 0xd;
-    puVar7[3] = 0;
-    piVar11 = (int *)(iVar10 * 0x30 + iVar8 + 0x2b928);
-    *piVar11 = *piVar11 + 1;
-    *param_3 = puVar7 + 5;
-    *(undefined1 *)((uint)bVar3 + iVar6) = 0;
-    *(undefined1 *)((uint)bVar4 + iVar5) = 0;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
+    pTVar7 = *param_3;
+    bVar3 = ""[iVar11 + 0x10];
+    bVar4 = ""[iVar11 + 0x10];
+    cVar1 = pEVar5->y1[bVar3];
+    cVar2 = pEVar6->y1[bVar4];
+    pTVar7->Token = 0xb;
+    pTVar7->section = 0xd;
+    pTVar7->skip_eob_node = 0;
+    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar4] = '\0';
+    pEVar5->y1[bVar3] = '\0';
+    bVar3 = ""[iVar11 + 0x11];
+    cVar1 = pEVar6->y1[bVar3];
+    bVar4 = ""[iVar11 + 0x11];
+    cVar2 = pEVar5->y1[bVar4];
+    pTVar7 = *param_3;
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    pTVar7->section = 0xd;
+    pTVar7->skip_eob_node = 0;
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar3] = '\0';
+    pEVar5->y1[bVar4] = '\0';
+    bVar3 = ""[iVar11 + 0x12];
+    bVar4 = ""[iVar11 + 0x12];
+    pTVar7 = *param_3;
+    cVar1 = pEVar5->y1[bVar4];
+    cVar2 = pEVar6->y1[bVar3];
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    pTVar7->section = 0xd;
+    pTVar7->skip_eob_node = 0;
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar3] = '\0';
+    pEVar5->y1[bVar4] = '\0';
+    bVar3 = ""[iVar11 + 0x13];
+    bVar4 = ""[iVar11 + 0x13];
+    iVar11 = iVar11 + 4;
+    cVar1 = pEVar6->y1[bVar3];
+    cVar2 = pEVar5->y1[bVar4];
+    pTVar7 = *param_3;
+    pTVar7->Token = 0xb;
+    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    pTVar7->section = 0xd;
+    pTVar7->skip_eob_node = 0;
+    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
+    *piVar13 = *piVar13 + 1;
+    *param_3 = pTVar7 + 1;
+    pEVar6->y1[bVar3] = '\0';
+    pEVar5->y1[bVar4] = '\0';
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
   __restgprlr_16();
   return;
 }
@@ -657,21 +693,22 @@ void vp8_stuff_mb(undefined8 param_1,int param_2,undefined4 *param_3)
 
 // 8283C3E8  vp8_fix_contexts  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:568)
 
-void * vp8_fix_contexts(int param_1)
+void vp8_fix_contexts(MACROBLOCKD *param_1)
 
 {
-  void *pvVar1;
-  size_t _Size;
+  MB_PREDICTION_MODE MVar1;
+  uint uVar2;
   
-  if ((**(int **)(param_1 + 0x1140) == 4) || (**(int **)(param_1 + 0x1140) == 9)) {
-    vpx_memset(*(void **)(param_1 + 0x1154),0,8);
-    _Size = 8;
+  MVar1 = (param_1->mode_info_context->mbmi).mode;
+  if ((MVar1 == B_PRED) || (MVar1 == SPLITMV)) {
+    vpx_memset(param_1->above_context,0,8);
+    uVar2 = 8;
   }
   else {
-    vpx_memset(*(void **)(param_1 + 0x1154),0,9);
-    _Size = 9;
+    vpx_memset(param_1->above_context,0,9);
+    uVar2 = 9;
   }
-  pvVar1 = vpx_memset(*(void **)(param_1 + 0x1158),0,_Size);
-  return pvVar1;
+  vpx_memset(param_1->left_context,0,uVar2);
+  return;
 }
 

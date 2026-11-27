@@ -2,17 +2,49 @@
 
 // 826D28F8  LB_LoadDef_FastFile  (leaderboard/leaderboard_load_obj.cpp:308)
 
-uint LB_LoadDef_FastFile(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+LeaderboardDef * LB_LoadDef_FastFile(char *param_1)
 
 {
-  undefined4 *puVar2;
-  longlong lVar1;
+  XAssetHeader XVar1;
+  int iVar2;
   
-  puVar2 = (undefined4 *)DB_FindXAssetHeader(0x27,param_1,1);
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2f00,0x138,0,0xffffffff82000f98,0xffffffff821a21c8);
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_LEADERBOARD,param_1,1);
+  if (XVar1.physPreset == (PhysPreset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard_load_obj.cpp"
+                    ,0x138,0,"%s");
   }
-  lVar1 = DB_IsXAssetDefault(0x27,*puVar2);
-  return -(uint)(lVar1 == 0) & (uint)puVar2;
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_LEADERBOARD,(XVar1.physPreset)->name);
+  return -(uint)(iVar2 == 0) & XVar1.leaderboardDef;
+}
+
+
+// 826D2978  LB_LoadDef  (leaderboard/leaderboard_load_obj.cpp:323)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* struct LeaderboardDef * __cdecl LB_LoadDef(char const *) */
+
+LeaderboardDef * LB_LoadDef(char *param_1)
+
+{
+  XAssetHeader XVar1;
+  int iVar2;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_LEADERBOARD,param_1,1);
+  if (XVar1.physPreset == (PhysPreset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard_load_obj.cpp"
+                    ,0x138,0,"%s");
+  }
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_LEADERBOARD,(XVar1.physPreset)->name);
+  return -(uint)(iVar2 == 0) & XVar1.leaderboardDef;
 }
 

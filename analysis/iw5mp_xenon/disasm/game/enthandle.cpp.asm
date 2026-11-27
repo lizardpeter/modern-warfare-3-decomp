@@ -24,7 +24,7 @@
   82454648  7D8803A6             mtspr LR,r12
   8245464C  4E800020             blr
 
-; 82454650  EntHandle::Init  (game/enthandle.cpp:55)
+; 82454650  Init  (game/enthandle.cpp:55)
   82454650  7D8802A6             mfspr r12,LR
   82454654  9181FFF8             stw r12,-0x8(r1)
   82454658  FBC1FFE8             std r30,-0x18(r1)
@@ -62,7 +62,7 @@ LAB_82454680:
   824546D4  EBE1FFF0             ld r31,-0x10(r1)
   824546D8  4E800020             blr
 
-; 824546E0  EntHandle::Shutdown  (game/enthandle.cpp:81)
+; 824546E0  Shutdown  (game/enthandle.cpp:81)
   824546E0  7D8802A6             mfspr r12,LR
   824546E4  484C1FD1             bl 0x829166b4
   824546E8  9421FF80             stwu r1,-0x80(r1)
@@ -353,7 +353,7 @@ LAB_82454af0:
   82454B00  38210080             addi r1,r1,0x80
   82454B04  484C1C04             b 0x82916708
 
-; 82454B08  EntHandle::setEnt  (game/enthandle.cpp:257)
+; 82454B08  setEnt  (game/enthandle.cpp:257)
   82454B08  7D8802A6             mfspr r12,LR
   82454B0C  484C1BA9             bl 0x829166b4
   82454B10  9421FF80             stwu r1,-0x80(r1)
@@ -401,7 +401,7 @@ LAB_82454bac:
   82454BAC  38210080             addi r1,r1,0x80
   82454BB0  484C1B54             b 0x82916704
 
-; 824544B0  EntHandle::isDefined  (game_mp/g_public_mp.h:388)
+; 824544B0  isDefined  (game_mp/g_public_mp.h:388)
   824544B0  7D8802A6             mfspr r12,LR
   824544B4  9181FFF8             stw r12,-0x8(r1)
   824544B8  FBE1FFF0             std r31,-0x10(r1)
@@ -440,7 +440,7 @@ LAB_82454520:
   82454538  EBE1FFF0             ld r31,-0x10(r1)
   8245453C  4E800020             blr
 
-; 82454540  EntHandle::ent  (game_mp/g_public_mp.h:397)
+; 82454540  ent  (game_mp/g_public_mp.h:397)
   82454540  7D8802A6             mfspr r12,LR
   82454544  484C2179             bl 0x829166bc
   82454548  9421FF90             stwu r1,-0x70(r1)

@@ -2,122 +2,167 @@
 
 // 82328B00  CG_OffhandRegisterDvars  (cgame/offhandweapons.cpp:40)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_OffhandRegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  ushort in_r4;
+  char *in_r5;
+  double dVar1;
+  double dVar2;
   
-  uVar2 = 0x403e000000000000;
-  uVar1 = 0;
-  DAT_82a77208 = Dvar_RegisterFloat(0x4000000000000000,0,0x403e000000000000,0xffffffff8202bfa0);
-  DAT_82a77200 = Dvar_RegisterFloat(0x3fe0000000000000,uVar1,uVar2,0xffffffff8202bf20);
+  dVar2 = 30.0;
+  dVar1 = 0.0;
+  DAT_82a77208 = Dvar_RegisterFloat("hud_flash_time_offhand",2.0,0.0,30.0,in_r4,in_r5);
+  hud_flash_period_offhand =
+       Dvar_RegisterFloat("hud_flash_period_offhand",0.5,(float)dVar1,(float)dVar2,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
   return;
 }
 
 
 // 82328BA8  GetBestOffhand  (cgame/offhandweapons.cpp:50)
 
-void GetBestOffhand(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+Weapon GetBestOffhand(playerState_s *param_1,int param_2)
 
 {
-  char cVar1;
+  Weapon WVar1;
   
-  cVar1 = BG_GetFirstAvailableOffhand();
-  if (cVar1 == '\0') {
-    BG_GetFirstEquippedOffhand(param_1,param_2);
+  WVar1 = BG_GetFirstAvailableOffhand(param_1,param_2);
+  if ((WVar1.data & 0xff) == 0) {
+    WVar1 = BG_GetFirstEquippedOffhand(param_1,param_2);
   }
-  return;
+  return (Weapon)WVar1.data;
 }
 
 
 // 82328BF8  IsOffHandDisplayVisible  (cgame/offhandweapons.cpp:65)
 
-ulonglong IsOffHandDisplayVisible(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool IsOffHandDisplayVisible(cg_s *param_1)
 
 {
-  if ((*(int *)(param_1 + 4) < 8) && ((*(uint *)(param_1 + 0x374) & 0x80) == 0)) {
-    return (~(ulonglong)*(uint *)(param_1 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+  if (((param_1->predictedPlayerState).pm_type < 8) &&
+     (((param_1->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0)) {
+    return (bool)((byte)((~(ulonglong)(uint)(param_1->predictedPlayerState).eFlags & 0xffffffff) >>
+                        0x15) & 1);
   }
-  return 0;
+  return false;
 }
 
 
 // 82328C30  CG_DrawOffHandIcon  (cgame/offhandweapons.cpp:96)
 
-void CG_DrawOffHandIcon(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_DrawOffHandIcon(LocalClientNum_t param_1,rectDef_s *param_2,float param_3,float *param_4,
+                       Material *param_5,OffhandClass param_6,int param_7)
 
 {
   float *pfVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar5;
-  uint uVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  Material *pMVar4;
+  Weapon WVar5;
+  Weapon WVar6;
+  ScreenPlacement *pSVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  float *pfVar10;
+  char *pcVar11;
+  int in_r9;
+  ulonglong uVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   
-  __savegprlr_23();
-  uVar2 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x68,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  uVar9 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_2;
+  pcVar11 = (char *)param_6;
+  __savegprlr_23((double)param_3,param_1);
+  LVar2 = __savefpr_28();
+  pfVar10 = (float *)uVar9;
+  if ((uVar8 & 0xffffffff) == 0) {
+    pcVar11 = "rect";
+    param_4 = (float *)0x0;
+    pfVar10 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0x68
+                    ,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x69,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    pcVar11 = "color";
+    param_4 = (float *)0x0;
+    pfVar10 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0x69
+                    ,0,"%s");
   }
-  uVar7 = 0;
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar6 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+  WVar6.data = 0;
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if ((pcVar3->predictedPlayerState).pm_type < 8) {
+    if (((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+      uVar12 = (~(ulonglong)(uint)(pcVar3->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
     }
     else {
-      uVar6 = 0;
+      uVar12 = 0;
     }
   }
   else {
-    uVar6 = 0;
+    uVar12 = 0;
   }
-  if ((uVar6 == 0) || (*(float *)((int)param_4 + 0xc) == 0.0)) goto LAB_82328e80;
-  if ((int)param_7 == 0) {
-    iVar8 = (int)param_6;
-    if (iVar8 == 0) goto LAB_82328e80;
-    if (iVar8 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x83,0,0xffffffff82000f98,0xffffffff8202bfdc);
+  if ((uVar12 == 0) || (((float *)uVar9)[3] == 0.0)) goto LAB_82328e80;
+  if (in_r9 == 0) {
+    if (param_7 == OFFHAND_CLASS_NONE) goto LAB_82328e80;
+    if (param_7 < 1) {
+      pcVar11 = "weaponType > OFFHAND_CLASS_NONE";
+      param_4 = (float *)0x0;
+      pfVar10 = (float *)"%s";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x83,0,"%s");
     }
-    if (5 < iVar8) {
-      MyAssertHandler(0xffffffff8202c000,0x84,0,0xffffffff82000f98,0xffffffff8202bfb8);
+    if (5 < param_7) {
+      pcVar11 = "weaponType < OFFHAND_CLASS_COUNT";
+      param_4 = (float *)0x0;
+      pfVar10 = (float *)"%s";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x84,0,"%s");
     }
-    cVar5 = GetBestOffhand(iVar3,param_6);
-    if (cVar5 == '\0') goto LAB_82328e80;
-    uVar4 = *(uint *)(iVar3 + 0x79420);
-    if (((uVar4 & 0xff) != 0) &&
-       (uVar4 = BG_GetAlternateWeapon(uVar4,0),
-       *(int *)((&DAT_829d84a0)[uVar4 & 0xff] + 0x40) == iVar8)) {
-      uVar7 = (ulonglong)*(uint *)(iVar3 + 0x79420);
+    WVar5 = GetBestOffhand(&pcVar3->predictedPlayerState,param_7);
+    if ((WVar5.data & 0xff) == 0) goto LAB_82328e80;
+    WVar5 = pcVar3->equippedOffHand;
+    if (((WVar5.data & 0xff) != 0) &&
+       (WVar5 = BG_GetAlternateWeapon(WVar5,false),
+       bg_weaponDefs[WVar5.data & 0xff]->offhandClass == param_7)) {
+      WVar6 = pcVar3->equippedOffHand;
     }
-    if ((uVar7 & 0xff) == 0) {
-      uVar7 = GetBestOffhand(iVar3,param_6);
+    if ((WVar6.data & 0xff) == 0) {
+      WVar6 = GetBestOffhand(&pcVar3->predictedPlayerState,param_7);
     }
-    if ((uVar7 & 0xff) == 0) goto LAB_82328e80;
-    BG_GetAlternateWeapon(uVar7,0);
+    if ((WVar6.data & 0xff) == 0) goto LAB_82328e80;
+    in_r9 = 0;
+    BG_GetAlternateWeapon(WVar6,false);
   }
   else {
-    iVar3 = CG_MaterialHandleForIndex(uVar2,param_7);
-    if (iVar3 == 0) goto LAB_82328e80;
+    pMVar4 = CG_MaterialHandleForIndex(LVar2,in_r9);
+    if (pMVar4 == (Material *)0x0) goto LAB_82328e80;
   }
-  pfVar1 = (float *)param_2;
-  dVar12 = (double)pfVar1[3];
-  dVar11 = (double)pfVar1[2];
-  dVar10 = (double)pfVar1[1];
-  dVar9 = (double)*pfVar1;
-  ScrPlace_GetActivePlacement(uVar2);
-  UI_DrawHandlePic(dVar9,dVar10,dVar11,dVar12);
+  pfVar1 = (float *)uVar8;
+  dVar16 = (double)pfVar1[3];
+  dVar15 = (double)pfVar1[2];
+  dVar14 = (double)pfVar1[1];
+  dVar13 = (double)*pfVar1;
+  pSVar7 = ScrPlace_GetActivePlacement(LVar2);
+  UI_DrawHandlePic(pSVar7,(float)dVar13,(float)dVar14,(float)dVar15,(float)dVar16,in_r9,(int)param_4
+                   ,pfVar10,(Material *)pcVar11);
 LAB_82328e80:
   __restfpr_28();
   __restgprlr_23();
@@ -127,46 +172,59 @@ LAB_82328e80:
 
 // 82328E90  OffHandFlash  (cgame/offhandweapons.cpp:163)
 
-void OffHandFlash(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void OffHandFlash(cg_s *param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
   int iVar2;
-  undefined4 *puVar3;
+  ulonglong uVar3;
   undefined4 *puVar4;
-  int iVar5;
-  double dVar6;
+  ulonglong uVar5;
+  undefined4 *puVar6;
+  dvar_t *pdVar7;
+  double dVar8;
   
-  iVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xa8,0,0xffffffff82000f98,0xffffffff8202c080);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0xa8
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xa9,0,0xffffffff82000f98,0xffffffff8202c074);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0xa9
+                    ,0,"%s");
   }
   if (DAT_82a77208 == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xaa,0,0xffffffff82000f98,0xffffffff8202bfa0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0xaa
+                    ,0,"%s");
   }
-  if (DAT_82a77200 == 0) {
-    MyAssertHandler(0xffffffff8202c000,0xab,0,0xffffffff82000f98,0xffffffff8202bf20);
+  if (hud_flash_period_offhand == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",0xab
+                    ,0,"%s");
   }
-  iVar5 = DAT_82a77200;
-  puVar3 = (undefined4 *)param_2;
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = *puVar3;
-  puVar4[1] = puVar3[1];
+  pdVar7 = hud_flash_period_offhand;
+  puVar4 = (undefined4 *)uVar3;
+  puVar6 = (undefined4 *)uVar5;
+  *puVar6 = *puVar4;
+  puVar6[1] = puVar4[1];
   iVar1 = DAT_82a77208;
-  puVar4[2] = puVar3[2];
-  puVar4[3] = puVar3[3];
-  dVar6 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x7981c)) * 0.001)
+  puVar6[2] = puVar4[2];
+  puVar6[3] = puVar4[3];
+  dVar8 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x7981c)) * 0.001)
   ;
-  if (dVar6 < (double)*(float *)(iVar1 + 0xc)) {
-    if (*(float *)(iVar5 + 0xc) <= 0.0) {
-      MyAssertHandler(0xffffffff8202c000,0xb2,0,0xffffffff82000f98,0xffffffff8202c044);
-      iVar5 = DAT_82a77200;
+  if (dVar8 < (double)*(float *)(iVar1 + 0xc)) {
+    if ((pdVar7->current).value <= 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0xb2,0,"%s");
+      pdVar7 = hud_flash_period_offhand;
     }
-    dVar6 = cos((double)((float)(dVar6 / (double)*(float *)(iVar5 + 0xc)) * 6.2831855));
-    puVar4[3] = (float)puVar3[3] * ((float)dVar6 + 1.0) * 0.5;
+    dVar8 = cos((double)((float)(dVar8 / (double)(pdVar7->current).value) * 6.2831855));
+    puVar6[3] = (float)puVar4[3] * ((float)dVar8 + 1.0) * 0.5;
   }
   __restgprlr_26();
   return;
@@ -175,109 +233,123 @@ void OffHandFlash(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82329050  CalcOffHandAmmo  (cgame/offhandweapons.cpp:192)
 
-void CalcOffHandAmmo(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int CalcOffHandAmmo(playerState_s *param_1,int param_2)
 
 {
-  int iVar1;
+  WeaponDef *pWVar1;
+  playerState_s *ppVar2;
+  uint uVar3;
+  Weapon WVar4;
   int iVar5;
-  ulonglong uVar2;
-  uint uVar6;
-  longlong lVar3;
-  uint uVar7;
-  longlong lVar4;
+  Weapon WVar6;
+  longlong lVar7;
   longlong lVar8;
-  uint *puVar9;
-  ulonglong uVar10;
+  Weapon *pWVar9;
+  uint uVar10;
   
-  iVar5 = __savegprlr_21();
-  lVar8 = 0;
-  if ((DAT_8337367c == 0) || (*(char *)(DAT_8337367c + 0xc) == '\0')) {
-    puVar9 = (uint *)(iVar5 + 0x274);
-    lVar3 = 0xf;
+  ppVar2 = (playerState_s *)__savegprlr_21(param_1);
+  lVar7 = 0;
+  if ((g_giveAll == (dvar_t *)0x0) || ((g_giveAll->current).enabled == false)) {
+    pWVar9 = ppVar2->weaponsEquipped;
+    lVar8 = 0xf;
     do {
-      uVar6 = *puVar9;
-      if ((uVar6 & 0xff) != 0) {
-        uVar7 = BG_GetAlternateWeapon(uVar6,0);
-        iVar1 = (&DAT_829d84a0)[uVar7 & 0xff];
-        if (iVar1 == 0) {
-          MyAssertHandler(0xffffffff8202c000,0xe3,0,0xffffffff82000f98,0xffffffff8200a88c);
+      WVar4 = *pWVar9;
+      if ((WVar4.data & 0xff) != 0) {
+        WVar6 = BG_GetAlternateWeapon(WVar4,false);
+        pWVar1 = bg_weaponDefs[WVar6.data & 0xff];
+        if (pWVar1 == (WeaponDef *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp"
+                          ,0xe3,0,"%s");
         }
-        if (*(int *)(iVar1 + 0x40) == param_2) {
-          lVar4 = BG_GetAmmoInClipForWeapon(iVar5,uVar6,0,0);
-          lVar8 = lVar4 + lVar8;
+        if (pWVar1->offhandClass == param_2) {
+          iVar5 = BG_GetAmmoInClipForWeapon(ppVar2,WVar4,false,WEAPON_HAND_DEFAULT);
+          lVar7 = iVar5 + lVar7;
         }
       }
-      lVar3 = lVar3 + -1;
-      puVar9 = puVar9 + 1;
-    } while (lVar3 != 0);
+      lVar8 = lVar8 + -1;
+      pWVar9 = pWVar9 + 1;
+    } while (lVar8 != 0);
   }
   else {
-    uVar2 = BG_GetNumWeapons();
+    uVar3 = BG_GetNumWeapons();
     uVar10 = 1;
-    if (1 < (uVar2 & 0xffffffff)) {
+    if (1 < uVar3) {
       do {
-        uVar6 = BG_GetAlternateWeapon(uVar10 & 0xffffffff000000ff,0);
-        iVar1 = (&DAT_829d84a0)[uVar6 & 0xff];
-        if (iVar1 == 0) {
-          MyAssertHandler(0xffffffff8202c000,0xd3,0,0xffffffff82000f98,0xffffffff8200a88c);
+        WVar4 = BG_GetAlternateWeapon(uVar10 & 0xff,false);
+        pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+        if (pWVar1 == (WeaponDef *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp"
+                          ,0xd3,0,"%s");
         }
-        if (*(int *)(iVar1 + 0x40) == param_2) {
-          lVar3 = BG_GetAmmoInClipForWeapon(iVar5,uVar10 & 0xffffffff000000ff,0,0);
-          lVar8 = lVar3 + lVar8;
+        if (pWVar1->offhandClass == param_2) {
+          iVar5 = BG_GetAmmoInClipForWeapon
+                            (ppVar2,(Weapon)(uVar10 & 0xff),false,WEAPON_HAND_DEFAULT);
+          lVar7 = iVar5 + lVar7;
         }
         uVar10 = uVar10 + 1;
-      } while ((uVar10 & 0xffffffff) < (uVar2 & 0xffffffff));
-      __restgprlr_21(lVar8);
-      return;
+      } while (uVar10 < uVar3);
+      iVar5 = __restgprlr_21(lVar7);
+      return iVar5;
     }
   }
-  __restgprlr_21(lVar8);
-  return;
+  iVar5 = __restgprlr_21(lVar7);
+  return iVar5;
 }
 
 
 // 823291E0  CG_GetOffHandAmmo  (cgame/offhandweapons.cpp:241)
 
-undefined8 CG_GetOffHandAmmo(int param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int CG_GetOffHandAmmo(playerState_s *param_1,OffhandClass param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  Weapon WVar1;
+  int iVar2;
   
-  if ((((int)param_2 == *(int *)(param_1 + 0x368)) && (*(int *)(param_1 + 0x538) != 0)) ||
-     (((int)param_2 == *(int *)(param_1 + 0x36c) && (*(int *)(param_1 + 0x53c) != 0)))) {
-    uVar1 = 1;
+  if (((param_2 == (param_1->weapCommon).offhandPrimary) &&
+      (param_1->weaponHudIconOverrides[0] != 0)) ||
+     ((param_2 == (param_1->weapCommon).offhandSecondary &&
+      (param_1->weaponHudIconOverrides[1] != 0)))) {
+    iVar2 = 1;
   }
   else {
-    cVar2 = BG_GetFirstAvailableOffhand(param_1,param_2);
-    if (cVar2 == '\0') {
-      cVar2 = BG_GetFirstEquippedOffhand(param_1,param_2);
+    WVar1 = BG_GetFirstAvailableOffhand(param_1,param_2);
+    if ((WVar1.data & 0xff) == 0) {
+      WVar1 = BG_GetFirstEquippedOffhand(param_1,param_2);
     }
-    if (cVar2 == '\0') {
-      uVar1 = 0;
+    if ((WVar1.data & 0xff) == 0) {
+      iVar2 = 0;
     }
     else {
-      uVar1 = CalcOffHandAmmo(param_1,param_2);
+      iVar2 = CalcOffHandAmmo(param_1,param_2);
     }
   }
-  return uVar1;
+  return iVar2;
 }
 
 
 // 82329290  CG_GetOffHandPrimaryAmmo  (cgame/offhandweapons.cpp:258)
 
-undefined8 CG_GetOffHandPrimaryAmmo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_GetOffHandPrimaryAmmo(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  OffhandClass OVar1;
+  cg_s *pcVar2;
   int iVar3;
-  undefined8 uVar2;
   ulonglong uVar4;
   
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar4 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar2->predictedPlayerState).pm_type < 8) {
+    if (((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+      uVar4 = (~(ulonglong)(uint)(pcVar2->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
     }
     else {
       uVar4 = 0;
@@ -286,31 +358,40 @@ undefined8 CG_GetOffHandPrimaryAmmo(void)
   else {
     uVar4 = 0;
   }
-  if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x368), iVar1 != 0)) {
-    if (5 < iVar1) {
-      MyAssertHandler(0xffffffff8202c000,0x114,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
-    }
-    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-    return uVar2;
+  if ((uVar4 == 0) ||
+     (OVar1 = (pcVar2->predictedPlayerState).weapCommon.offhandPrimary, OVar1 == OFFHAND_CLASS_NONE)
+     ) {
+    iVar3 = 0;
   }
-  return 0;
+  else {
+    if (5 < (int)OVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x114,0,"%s\n\t(weaponType) = %i");
+    }
+    iVar3 = CG_GetOffHandAmmo(&pcVar2->predictedPlayerState,OVar1);
+  }
+  return iVar3;
 }
 
 
 // 82329358  CG_GetOffHandSecondaryAmmo  (cgame/offhandweapons.cpp:286)
 
-undefined8 CG_GetOffHandSecondaryAmmo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_GetOffHandSecondaryAmmo(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  OffhandClass OVar1;
+  cg_s *pcVar2;
   int iVar3;
-  undefined8 uVar2;
   ulonglong uVar4;
   
-  iVar3 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar4 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar2->predictedPlayerState).pm_type < 8) {
+    if (((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+      uVar4 = (~(ulonglong)(uint)(pcVar2->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
     }
     else {
       uVar4 = 0;
@@ -319,103 +400,128 @@ undefined8 CG_GetOffHandSecondaryAmmo(void)
   else {
     uVar4 = 0;
   }
-  if ((uVar4 != 0) && (iVar1 = *(int *)(iVar3 + 0x36c), iVar1 != 0)) {
-    if (5 < iVar1) {
-      MyAssertHandler(0xffffffff8202c000,0x130,0,0xffffffff8202c08c,0xffffffff8202c0a4,iVar1);
-    }
-    uVar2 = CG_GetOffHandAmmo(iVar3,iVar1);
-    return uVar2;
+  if ((uVar4 == 0) ||
+     (OVar1 = (pcVar2->predictedPlayerState).weapCommon.offhandSecondary,
+     OVar1 == OFFHAND_CLASS_NONE)) {
+    iVar3 = 0;
   }
-  return 0;
+  else {
+    if (5 < (int)OVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x130,0,"%s\n\t(weaponType) = %i");
+    }
+    iVar3 = CG_GetOffHandAmmo(&pcVar2->predictedPlayerState,OVar1);
+  }
+  return iVar3;
 }
 
 
 // 82329420  CG_DrawOffHandHighlight  (cgame/offhandweapons.cpp:314)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_DrawOffHandHighlight
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6)
+               (LocalClientNum_t param_1,rectDef_s *param_2,float param_3,float *param_4,
+               Material *param_5,OffhandClass param_6)
 
 {
-  undefined4 *puVar1;
-  float *pfVar2;
-  undefined8 uVar3;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  Weapon WVar3;
   int iVar4;
-  char cVar7;
-  uint uVar5;
-  int iVar6;
-  ulonglong uVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  undefined4 local_80;
-  undefined4 local_7c;
-  undefined4 local_78;
+  ScreenPlacement *pSVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
+  float *pfVar10;
+  Material *pMVar11;
+  Material *in_r8;
+  ulonglong uVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  float local_80;
+  float local_7c;
+  float local_78;
   float local_74;
-  undefined1 auStack_70 [112];
+  float afStack_70 [28];
   
-  __savegprlr_25();
-  uVar3 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x140,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  uVar12 = (ulonglong)(int)param_5;
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_25((double)param_3,param_1,uVar6,param_4);
+  LVar1 = __savefpr_28();
+  pfVar9 = (float *)uVar12;
+  pfVar10 = pfVar9;
+  if ((uVar6 & 0xffffffff) == 0) {
+    pfVar10 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x140,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x141,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar12 & 0xffffffff) == 0) {
+    pfVar10 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x141,0,"%s");
   }
-  iVar6 = (int)param_6;
-  if (iVar6 != 0) {
-    if (iVar6 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x146,0,0xffffffff82000f98,0xffffffff8202bfdc);
+  if (in_r8 != (Material *)0x0) {
+    if ((int)in_r8 < 1) {
+      pfVar10 = (float *)"%s";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x146,0,"%s");
     }
-    if (5 < iVar6) {
-      MyAssertHandler(0xffffffff8202c000,0x147,0,0xffffffff82000f98,0xffffffff8202bfb8);
+    if (5 < (int)in_r8) {
+      pfVar10 = (float *)"%s";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x147,0,"%s");
     }
-    iVar4 = CG_GetLocalClientGlobals(uVar3);
-    if (*(int *)(iVar4 + 4) < 8) {
-      if ((*(uint *)(iVar4 + 0x374) & 0x80) == 0) {
-        uVar8 = (~(ulonglong)*(uint *)(iVar4 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+    pcVar2 = CG_GetLocalClientGlobals(LVar1);
+    if ((pcVar2->predictedPlayerState).pm_type < 8) {
+      if (((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+        uVar12 = (~(ulonglong)(uint)(pcVar2->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
       }
       else {
-        uVar8 = 0;
+        uVar12 = 0;
       }
     }
     else {
-      uVar8 = 0;
+      uVar12 = 0;
     }
-    if (uVar8 != 0) {
-      cVar7 = BG_GetFirstAvailableOffhand(iVar4,param_6);
-      if (cVar7 == '\0') {
-        cVar7 = BG_GetFirstEquippedOffhand(iVar4,param_6);
+    if (uVar12 != 0) {
+      WVar3 = BG_GetFirstAvailableOffhand(&pcVar2->predictedPlayerState,(int)in_r8);
+      if ((WVar3.data & 0xff) == 0) {
+        WVar3 = BG_GetFirstEquippedOffhand(&pcVar2->predictedPlayerState,(int)in_r8);
       }
-      if (cVar7 != '\0') {
-        if ((*(uint *)(iVar4 + 0x79420) & 0xff) != 0) {
-          puVar1 = (undefined4 *)param_4;
-          local_74 = (float)puVar1[3];
-          if (local_74 != 0.0) {
-            uVar5 = BG_GetAlternateWeapon(*(uint *)(iVar4 + 0x79420),0);
-            if (iVar6 == *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x40)) {
-              iVar6 = CalcOffHandAmmo(iVar4,param_6);
-              if (iVar6 == 0) {
-                local_80 = 0x3f63d70a;
-                local_7c = 0x3e3851ec;
-                local_78 = 0x3c23d70a;
-              }
-              else {
-                local_80 = *puVar1;
-                local_7c = puVar1[1];
-                local_78 = puVar1[2];
-              }
-              OffHandFlash(iVar4,&local_80,auStack_70);
-              pfVar2 = (float *)param_2;
-              dVar12 = (double)pfVar2[3];
-              dVar11 = (double)pfVar2[2];
-              dVar10 = (double)pfVar2[1];
-              dVar9 = (double)*pfVar2;
-              ScrPlace_GetActivePlacement(uVar3);
-              UI_DrawHandlePic(dVar9,dVar10,dVar11,dVar12);
-            }
+      if ((((WVar3.data & 0xff) != 0) && (((pcVar2->equippedOffHand).data & 0xff) != 0)) &&
+         (local_74 = pfVar9[3], local_74 != 0.0)) {
+        WVar3 = BG_GetAlternateWeapon(pcVar2->equippedOffHand,false);
+        pMVar11 = (Material *)bg_weaponDefs[WVar3.data & 0xff]->offhandClass;
+        if (in_r8 == pMVar11) {
+          iVar4 = CalcOffHandAmmo(&pcVar2->predictedPlayerState,(int)in_r8);
+          if (iVar4 == 0) {
+            local_80 = 0.89;
+            local_7c = 0.18;
+            local_78 = 0.01;
           }
+          else {
+            local_80 = *pfVar9;
+            local_7c = pfVar9[1];
+            local_78 = pfVar9[2];
+          }
+          pfVar8 = afStack_70;
+          pfVar7 = &local_80;
+          OffHandFlash(pcVar2,pfVar7,pfVar8);
+          pfVar9 = (float *)uVar6;
+          dVar16 = (double)pfVar9[3];
+          dVar15 = (double)pfVar9[2];
+          dVar14 = (double)pfVar9[1];
+          dVar13 = (double)*pfVar9;
+          pSVar5 = ScrPlace_GetActivePlacement(LVar1);
+          UI_DrawHandlePic(pSVar5,(float)dVar13,(float)dVar14,(float)dVar15,(float)dVar16,
+                           (int)pfVar7,(int)pfVar8,pfVar10,pMVar11);
         }
       }
     }
@@ -428,60 +534,88 @@ void CG_DrawOffHandHighlight
 
 // 82329670  CG_DrawOffHandAmmo  (cgame/offhandweapons.cpp:363)
 
-void CG_DrawOffHandAmmo(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       ulonglong param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawOffHandAmmo(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+                       float *param_5,int param_6,OffhandClass param_7)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
+  byte bVar1;
+  byte bVar2;
+  float *pfVar3;
+  LocalClientNum_t LVar4;
+  cg_s *pcVar5;
+  Weapon WVar6;
+  char *pcVar7;
+  ScreenPlacement *pSVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  char *pcVar12;
+  int in_r9;
+  ulonglong uVar13;
+  double extraout_f1;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   
-  uVar1 = __savegprlr_24();
-  uVar8 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x171,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  uVar11 = (ulonglong)param_6;
+  lVar10 = (longlong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  LVar4 = __savegprlr_24((double)param_4,param_1,uVar9,lVar10,param_5);
+  dVar16 = extraout_f1;
+  pcVar12 = (char *)uVar11;
+  if ((uVar9 & 0xffffffff) == 0) {
+    pcVar12 = "rect";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x171,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x172,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar11 & 0xffffffff) == 0) {
+    pcVar12 = "color";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x172,0,"%s");
   }
-  iVar3 = (int)param_7;
-  if (iVar3 != 0) {
-    if (iVar3 < 1) {
-      MyAssertHandler(0xffffffff8202c000,0x177,0,0xffffffff82000f98,0xffffffff8202bfdc);
+  if (in_r9 != 0) {
+    if (in_r9 < 1) {
+      pcVar12 = "weaponType > OFFHAND_CLASS_NONE";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x177,0,"%s");
     }
-    if (5 < iVar3) {
-      MyAssertHandler(0xffffffff8202c000,0x178,0,0xffffffff82000f98,0xffffffff8202bfb8);
+    if (5 < in_r9) {
+      pcVar12 = "weaponType < OFFHAND_CLASS_COUNT";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x178,0,"%s");
     }
-    iVar3 = CG_GetLocalClientGlobals(uVar1);
-    if (*(int *)(iVar3 + 4) < 8) {
-      if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-        uVar5 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+    pcVar5 = CG_GetLocalClientGlobals(LVar4);
+    if ((pcVar5->predictedPlayerState).pm_type < 8) {
+      if (((pcVar5->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+        uVar13 = (~(ulonglong)(uint)(pcVar5->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
       }
       else {
-        uVar5 = 0;
+        uVar13 = 0;
       }
     }
     else {
-      uVar5 = 0;
+      uVar13 = 0;
     }
-    if (uVar5 != 0) {
-      cVar4 = BG_GetFirstAvailableOffhand(iVar3,param_7);
-      if (cVar4 == '\0') {
-        cVar4 = BG_GetFirstEquippedOffhand(iVar3,param_7);
+    if (uVar13 != 0) {
+      WVar6 = BG_GetFirstAvailableOffhand(&pcVar5->predictedPlayerState,in_r9);
+      if ((WVar6.data & 0xff) == 0) {
+        WVar6 = BG_GetFirstEquippedOffhand(&pcVar5->predictedPlayerState,in_r9);
       }
-      if ((cVar4 != '\0') && (*(float *)((int)param_5 + 0xc) != 0.0)) {
-        uVar2 = CalcOffHandAmmo(iVar3,param_7);
-        uVar2 = va(0xffffffff8200c28c,uVar2);
-        dVar7 = (double)((float *)param_2)[1];
-        dVar6 = (double)*(float *)param_2;
-        uVar1 = ScrPlace_GetActivePlacement(uVar1);
-        UI_DrawText(dVar6,dVar7,uVar8,uVar1,uVar2,0x7fffffff,param_3);
+      if (((WVar6.data & 0xff) != 0) && (*(float *)((char *)uVar11 + 0xc) != 0.0)) {
+        CalcOffHandAmmo(&pcVar5->predictedPlayerState,in_r9);
+        pcVar7 = va("%i");
+        pfVar3 = (float *)uVar9;
+        bVar1 = *(byte *)((int)pfVar3 + 0x11);
+        bVar2 = *(byte *)(pfVar3 + 4);
+        dVar15 = (double)pfVar3[1];
+        dVar14 = (double)*pfVar3;
+        pSVar8 = ScrPlace_GetActivePlacement(LVar4);
+        UI_DrawText(pSVar8,pcVar7,0x7fffffff,(Font_s *)lVar10,(float)dVar14,(float)dVar15,
+                    (int)pcVar12,param_7,(float)dVar16,(float *)(uint)bVar2,(uint)bVar1);
       }
     }
   }
@@ -492,53 +626,84 @@ void CG_DrawOffHandAmmo(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 823298A0  CG_DrawOffHandName  (cgame/offhandweapons.cpp:406)
 
-void CG_DrawOffHandName(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       ulonglong param_5,undefined8 param_6,ulonglong param_7)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawOffHandName(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param_3,float param_4,
+                       float *param_5,int param_6,OffhandClass param_7)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  undefined8 extraout_f1;
-  double dVar6;
-  double dVar7;
-  undefined8 uVar8;
+  byte bVar1;
+  byte bVar2;
+  float *pfVar3;
+  LocalClientNum_t LVar4;
+  cg_s *pcVar5;
+  Weapon WVar6;
+  char *pcVar7;
+  ScreenPlacement *pSVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  char *pcVar11;
+  ulonglong in_r9;
+  ulonglong uVar12;
+  double extraout_f1;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  undefined4 local_70;
+  undefined4 local_6c;
+  undefined4 local_68;
+  float local_64;
   
-  uVar1 = __savegprlr_24();
-  uVar8 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x19b,0,0xffffffff82000f98,0xffffffff8200fd5c);
+  uVar12 = (ulonglong)param_6;
+  lVar10 = (longlong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  LVar4 = __savegprlr_24((double)param_4,param_1,uVar9,lVar10,param_5);
+  pcVar7 = (char *)uVar12;
+  dVar15 = extraout_f1;
+  pcVar11 = pcVar7;
+  if ((uVar9 & 0xffffffff) == 0) {
+    pcVar11 = "rect";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x19b,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202c000,0x19c,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar12 & 0xffffffff) == 0) {
+    pcVar11 = "color";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x19c,0,"%s");
   }
-  iVar3 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)(iVar3 + 4) < 8) {
-    if ((*(uint *)(iVar3 + 0x374) & 0x80) == 0) {
-      uVar5 = (~(ulonglong)*(uint *)(iVar3 + 0xf8) & 0xffffffff) >> 0x15 & 1;
+  pcVar5 = CG_GetLocalClientGlobals(LVar4);
+  if ((pcVar5->predictedPlayerState).pm_type < 8) {
+    if (((pcVar5->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0) {
+      uVar12 = (~(ulonglong)(uint)(pcVar5->predictedPlayerState).eFlags & 0xffffffff) >> 0x15 & 1;
     }
     else {
-      uVar5 = 0;
+      uVar12 = 0;
     }
   }
   else {
-    uVar5 = 0;
+    uVar12 = 0;
   }
-  if (uVar5 != 0) {
-    cVar4 = BG_GetFirstAvailableOffhand(iVar3,param_7);
-    if (cVar4 == '\0') {
-      cVar4 = BG_GetFirstEquippedOffhand(iVar3,param_7);
+  if (uVar12 != 0) {
+    WVar6 = BG_GetFirstAvailableOffhand(&pcVar5->predictedPlayerState,(int)in_r9);
+    if ((WVar6.data & 0xff) == 0) {
+      WVar6 = BG_GetFirstEquippedOffhand(&pcVar5->predictedPlayerState,(int)in_r9);
     }
-    if ((cVar4 != '\0') && (*(float *)((int)param_5 + 0xc) != 0.0)) {
-      uVar2 = UI_SafeTranslateString
-                        (*(undefined4 *)
-                          ((int)&PTR_DAT_82964308 + (int)((param_7 & 0xffffffff) << 2)));
-      dVar7 = (double)((float *)param_2)[1];
-      dVar6 = (double)*(float *)param_2;
-      uVar1 = ScrPlace_GetActivePlacement(uVar1);
-      UI_DrawText(dVar6,dVar7,uVar8,uVar1,uVar2,0x7fffffff,param_3);
+    if (((WVar6.data & 0xff) != 0) && (local_64 = *(float *)(pcVar7 + 0xc), local_64 != 0.0)) {
+      local_70 = *(undefined4 *)pcVar7;
+      local_6c = *(undefined4 *)(pcVar7 + 4);
+      local_68 = *(undefined4 *)(pcVar7 + 8);
+      pcVar7 = UI_SafeTranslateString
+                         (*(char **)((int)offhandStrings + (int)((in_r9 & 0xffffffff) << 2)));
+      pfVar3 = (float *)uVar9;
+      bVar1 = *(byte *)((int)pfVar3 + 0x11);
+      bVar2 = *(byte *)(pfVar3 + 4);
+      dVar14 = (double)pfVar3[1];
+      dVar13 = (double)*pfVar3;
+      pSVar8 = ScrPlace_GetActivePlacement(LVar4);
+      UI_DrawText(pSVar8,pcVar7,0x7fffffff,(Font_s *)lVar10,(float)dVar13,(float)dVar14,(int)pcVar11
+                  ,(int)&local_70,(float)dVar15,(float *)(uint)bVar2,(uint)bVar1);
     }
   }
   __restgprlr_24();
@@ -548,26 +713,31 @@ void CG_DrawOffHandName(undefined8 param_1,ulonglong param_2,undefined8 param_3,
 
 // 82329D60  CG_SwitchOffHandCmd  (cgame/offhandweapons.cpp:437)
 
-void CG_SwitchOffHandCmd(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_SwitchOffHandCmd(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar3;
+  WeaponDef *pWVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  Weapon WVar4;
   
-  uVar2 = __savegprlr_29();
-  iVar4 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar4 + 0x79420) & 0xff) != 0) {
-    uVar5 = BG_GetAlternateWeapon(*(uint *)(iVar4 + 0x79420),0);
-    iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
-    if (*(int *)(iVar1 + 0x40) == 0) {
-      MyAssertHandler(0xffffffff8202c000,0x1c0,0,0xffffffff82000f98,0xffffffff8202c12c);
+  LVar2 = __savegprlr_29(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (((pcVar3->equippedOffHand).data & 0xff) != 0) {
+    WVar4 = BG_GetAlternateWeapon(pcVar3->equippedOffHand,false);
+    pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+    if (pWVar1->offhandClass == OFFHAND_CLASS_NONE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x1c0,0,"%s");
     }
-    uVar3 = BG_GetFirstAvailableOffhand(iVar4,*(undefined4 *)(iVar1 + 0x40));
-    if ((uVar3 & 0xff) != 0) {
-      CG_SetEquippedOffHand(uVar2,uVar3);
+    WVar4 = BG_GetFirstAvailableOffhand(&pcVar3->predictedPlayerState,pWVar1->offhandClass);
+    if ((WVar4.data & 0xff) != 0) {
+      CG_SetEquippedOffHand(LVar2,WVar4);
     }
   }
   __restgprlr_29();
@@ -577,120 +747,145 @@ void CG_SwitchOffHandCmd(void)
 
 // 82329A58  CG_PrepOffHand  (cgame/offhandweapons.cpp:461)
 
-void CG_PrepOffHand(undefined8 param_1,undefined4 *param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_PrepOffHand(LocalClientNum_t param_1,entityState_s *param_2,Weapon param_3,bool param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  Weapon WVar1;
+  uint uVar2;
+  Weapon WVar3;
   ulonglong uVar4;
-  uint uVar5;
+  snd_alias_list_t *psVar5;
+  ulonglong uVar6;
   
-  uVar3 = __savegprlr_27();
-  if (param_2[1] == 1) {
-    uVar2 = param_3 & 0xff;
-    if ((uVar2 == 0) || (uVar4 = BG_GetNumWeapons(), (uVar4 & 0xffffffff) <= uVar2)) {
-      MyAssertHandler(0xffffffff8202c000,0x1d7,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar2);
+  uVar6 = (ulonglong)param_4;
+  uVar4 = (ulonglong)(int)param_3.data;
+  WVar1.data = __savegprlr_27(param_1);
+  WVar3.data = WVar1.data;
+  if (param_2->eType == 1) {
+    if (((uVar4 & 0xff) == 0) || (uVar2 = BG_GetNumWeapons(), (ulonglong)uVar2 <= (uVar4 & 0xff))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                      0x1d7,0,"%s\n\t(weapon.weaponIdx) = %i");
     }
-    uVar5 = BG_GetAlternateWeapon(param_3,0);
-    if ((param_4 & 0xff) == 0) {
-      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 100);
+    WVar3 = BG_GetAlternateWeapon((uint)uVar4,false);
+    if ((uVar6 & 0xff) == 0) {
+      psVar5 = bg_weaponDefs[WVar3.data & 0xff]->pullbackSound;
     }
     else {
-      iVar1 = *(int *)((&DAT_829d84a0)[uVar5 & 0xff] + 0x68);
+      psVar5 = bg_weaponDefs[WVar3.data & 0xff]->pullbackSoundPlayer;
     }
-    if (iVar1 != 0) {
-      CG_PlayEntitySoundAlias(uVar3,*param_2);
+    if (psVar5 != (snd_alias_list_t *)0x0) {
+      WVar3.data = CG_PlayEntitySoundAlias(WVar1.data,param_2->number,psVar5);
     }
   }
-  __restgprlr_27();
+  __restgprlr_27(WVar3.data);
   return;
 }
 
 
 // 82329B10  CG_UseOffHand  (cgame/offhandweapons.cpp:492)
 
-void CG_UseOffHand(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4,
-                  ulonglong param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CG_UseOffHand(LocalClientNum_t param_1,centity_s *param_2,Weapon param_3,bool param_4,
+                  bool param_5)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int *piVar7;
-  undefined2 uVar9;
-  longlong lVar6;
+  LocalClientNum_t LVar1;
+  uint uVar2;
+  Weapon WVar3;
+  cg_s *pcVar4;
+  snd_alias_list_t *psVar5;
+  WeaponHand *pWVar6;
+  ushort uVar10;
+  centity_s *pcVar7;
   int iVar8;
-  undefined1 auStack_50 [80];
+  LocalClientNum_t LVar9;
+  DObj *pDVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  float afStack_50 [20];
   
-  uVar2 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 200) != 1) {
+  uVar13 = (ulonglong)param_5;
+  uVar12 = (ulonglong)(int)param_3.data;
+  LVar1 = __savegprlr_25(param_1);
+  LVar9 = LVar1;
+  if ((param_2->nextState).eType != 1) {
 LAB_82329c80:
-    __restgprlr_25();
+    __restgprlr_25(LVar9);
     return;
   }
-  uVar5 = param_3 & 0xff;
-  if ((uVar5 == 0) || (uVar3 = BG_GetNumWeapons(), (uVar3 & 0xffffffff) <= uVar5)) {
-    MyAssertHandler(0xffffffff8202c000,0x1f6,0,0xffffffff8202c0c8,0xffffffff8202c0e8,uVar5);
+  if (((uVar12 & 0xff) == 0) || (uVar2 = BG_GetNumWeapons(), (ulonglong)uVar2 <= (uVar12 & 0xff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x1f6,0,"%s\n\t(weapon.weaponIdx) = %i");
   }
-  if ((param_5 & 0xff) == 0) {
-    uVar5 = BG_FireSound(param_3,param_4);
-    if ((uVar5 & 0xffffffff) != 0) {
-      CG_PlayEntitySoundAlias(uVar2,*(undefined4 *)(iVar1 + 0xc4),uVar5);
+  WVar3.data = (uint)uVar12;
+  if ((uVar13 & 0xff) == 0) {
+    psVar5 = BG_FireSound(WVar3,param_4);
+    LVar9 = LOCAL_CLIENT_0;
+    if (psVar5 != (snd_alias_list_t *)0x0) {
+      LVar9 = CG_PlayEntitySoundAlias(LVar1,(param_2->nextState).number,psVar5);
     }
     goto LAB_82329c80;
   }
-  lVar4 = CG_GetLocalClientGlobals(uVar2);
-  uVar5 = BG_FireSoundPlayer(param_3,param_4);
-  if ((uVar5 & 0xffffffff) == 0) goto LAB_82329c80;
-  piVar7 = (int *)CG_GetLocalClientViewModelHand(uVar2,0);
-  uVar9 = BG_GetWeaponFlashTagname(param_3,param_4);
-  if (*(int *)(iVar1 + 0xc4) == *(int *)((int)lVar4 + 0x150)) {
-    iVar8 = *piVar7;
-    CG_UpdateViewModelPose(iVar8,uVar2);
-    if (iVar8 != 0) {
-      lVar6 = lVar4 + 0x106fa8;
+  pcVar4 = CG_GetLocalClientGlobals(LVar1);
+  psVar5 = BG_FireSoundPlayer(WVar3,param_4);
+  LVar9 = LOCAL_CLIENT_0;
+  if (psVar5 == (snd_alias_list_t *)0x0) goto LAB_82329c80;
+  pWVar6 = CG_GetLocalClientViewModelHand(LVar1,0);
+  uVar10 = BG_GetWeaponFlashTagname(WVar3,param_4);
+  if ((param_2->nextState).number == (pcVar4->predictedPlayerState).clientNum) {
+    pDVar11 = pWVar6->viewModelDObj;
+    CG_UpdateViewModelPose(pDVar11,LVar1);
+    if (pDVar11 != (DObj *)0x0) {
+      pcVar7 = (centity_s *)&pcVar4->viewModelPose;
 LAB_82329c14:
-      iVar8 = CG_DObjGetWorldTagPos(lVar6,iVar8,uVar9,auStack_50);
+      iVar8 = CG_DObjGetWorldTagPos(&pcVar7->pose,pDVar11,(uint)uVar10,afStack_50);
       if (iVar8 != 0) goto LAB_82329c40;
     }
   }
   else {
-    iVar8 = *piVar7;
-    lVar6 = param_2;
-    if (iVar8 != 0) goto LAB_82329c14;
+    pDVar11 = pWVar6->viewModelDObj;
+    pcVar7 = param_2;
+    if (pDVar11 != (DObj *)0x0) goto LAB_82329c14;
   }
-  BG_EvaluateTrajectory(param_2 + 0xd0,*(undefined4 *)((int)lVar4 + 0x6b98c),auStack_50);
+  BG_EvaluateTrajectory(&(param_2->nextState).lerp.pos,pcVar4->time,afStack_50);
 LAB_82329c40:
-  CG_PlaySoundAlias(uVar2,*(undefined4 *)(iVar1 + 0xc4),auStack_50,uVar5);
-  __restgprlr_25();
+  iVar8 = CG_PlaySoundAlias(LVar1,(param_2->nextState).number,afStack_50,psVar5);
+  __restgprlr_25(iVar8);
   return;
 }
 
 
 // 82329C88  CG_SetEquippedOffHand  (cgame/offhandweapons.cpp:555)
 
-void CG_SetEquippedOffHand(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_SetEquippedOffHand(LocalClientNum_t param_1,Weapon param_2)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined1 auStack_420 [1032];
+  Weapon WVar1;
+  cg_s *pcVar2;
+  char acStack_420 [1032];
   
-  if ((param_2 & 0xff) != 0) {
-    uVar2 = BG_GetAlternateWeapon(param_2,0);
-    if (*(int *)((&DAT_829d84a0)[uVar2 & 0xff] + 0x40) == 0) {
-      uVar1 = BG_GetWeaponName(param_2,auStack_420,0x400);
-      uVar1 = va(0xffffffff8200dc8c,uVar1);
-      MyAssertHandler(0xffffffff8202c000,0x231,0,0xffffffff820011f4,0xffffffff8200dc28,uVar1);
-    }
+  if (((param_2.data & 0xff) != 0) &&
+     (WVar1 = BG_GetAlternateWeapon(param_2,false),
+     bg_weaponDefs[WVar1.data & 0xff]->offhandClass == OFFHAND_CLASS_NONE)) {
+    BG_GetWeaponName(param_2,acStack_420,0x400);
+    va("offHand = %s\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\offhandweapons.cpp",
+                    0x231,0,"%s\n\t%s");
   }
-  iVar3 = CG_GetLocalClientGlobals(param_1);
-  *(int *)(iVar3 + 0x79420) = (int)param_2;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  pcVar2->equippedOffHand = param_2;
   CG_MenuShowNotify(param_1,3);
   return;
 }

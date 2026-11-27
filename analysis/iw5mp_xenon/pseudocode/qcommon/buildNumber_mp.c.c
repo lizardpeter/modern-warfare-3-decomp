@@ -2,17 +2,21 @@
 
 // 824C3AA0  getBuildNumber  (qcommon/buildNumber_mp.c:6)
 
-undefined8 getBuildNumber(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * getBuildNumber(void)
 
 {
-  sprintf(&DAT_84897cc0,"%s %s",0xffffffff82081b50,0xffffffff82081b54);
-  return 0xffffffff84897cc0;
+  sprintf(buf,"%s %s");
+  return buf;
 }
 
 
 // 824C3AF0  getBuildNumberAsInt  (qcommon/buildNumber_mp.c:12)
 
-undefined8 getBuildNumberAsInt(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint getBuildNumberAsInt(void)
 
 {
   return 0x1c4;

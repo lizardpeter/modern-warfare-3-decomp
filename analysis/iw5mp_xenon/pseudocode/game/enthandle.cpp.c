@@ -2,77 +2,76 @@
 
 // 824545F8  TRACK_enthandle  (game/enthandle.cpp:44)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_enthandle(void)
 
 {
-  track_static_alloc_internal(0xffffffff8333db50,0x8000,0xffffffff8206b7b0,9);
-  track_static_alloc_internal(0xffffffff8333cb40,0x1000,0xffffffff8206b798,9);
+  track_static_alloc_internal(g_entHandleInfoArray,0x8000,"g_entHandleInfoArray",9);
+  track_static_alloc_internal(g_entitiesHandleList,0x1000,"g_entitiesHandleList",9);
   return;
 }
 
 
-// 82454650  EntHandle::Init  (game/enthandle.cpp:55)
+// 82454650  Init  (game/enthandle.cpp:55)
 
-void * EntHandle__Init(void)
+void EntHandle::Init(void)
 
 {
-  void *pvVar1;
-  short sVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  ushort uVar1;
+  EntHandleInfo *pEVar2;
+  longlong lVar3;
   
-  puVar3 = (undefined4 *)&DAT_8333db50;
-  sVar2 = 1;
-  lVar4 = 0xfff;
+  pEVar2 = g_entHandleInfoArray;
+  uVar1 = 1;
+  lVar3 = 0xfff;
   do {
-    sVar2 = sVar2 + 1;
-    *(short *)(puVar3 + 3) = sVar2;
-    puVar3 = puVar3 + 2;
-    *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  DAT_83345b4c = 0;
-  DAT_8333db44 = 1;
-  pvVar1 = memset(&DAT_8333cb40,0,0x1000);
-  DAT_8333db40 = 0;
-  return pvVar1;
+    uVar1 = uVar1 + 1;
+    pEVar2[1].next = uVar1;
+    pEVar2 = pEVar2 + 1;
+    pEVar2->handle = (void *)0x0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  g_entHandleInfoArray[0xfff].next = 0;
+  g_entHandleInfoHead = 1;
+  memset();
+  g_usedEntHandle = 0;
+  return;
 }
 
 
-// 824546E0  EntHandle::Shutdown  (game/enthandle.cpp:81)
+// 824546E0  Shutdown  (game/enthandle.cpp:81)
 
-void EntHandle__Shutdown(void)
+void EntHandle::Shutdown(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int *piVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  EntHandleInfo *pEVar1;
+  longlong lVar2;
+  uint uVar3;
   
   __savegprlr_27();
-  piVar3 = (int *)&DAT_8333db50;
-  if (DAT_8333db40 != 0) {
-    Com_Printf(1,0xffffffff8206b878);
-    uVar5 = 0;
-    lVar4 = 0xfff;
+  pEVar1 = g_entHandleInfoArray;
+  if (g_usedEntHandle != 0) {
+    Com_Printf(1,"EntHandle BEGIN\n");
+    uVar3 = 0;
+    lVar2 = 0xfff;
     do {
-      piVar3 = piVar3 + 2;
-      if (*piVar3 != 0) {
-        Com_Printf(1,0xffffffff8206b874,piVar3);
-        uVar5 = uVar5 + 1;
+      pEVar1 = pEVar1 + 1;
+      if (pEVar1->handle != (void *)0x0) {
+        Com_Printf(1,"%p\n");
+        uVar3 = uVar3 + 1;
       }
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    Com_Printf(1,0xffffffff8206b864);
-    uVar2 = (ulonglong)DAT_8333db40;
-    if ((uVar5 & 0xffffffff) != uVar2) {
-      uVar1 = va(0xffffffff8206b81c,uVar5,uVar2);
-      MyAssertHandler(0xffffffff8206b824,0x67,0,0xffffffff820011f4,0xffffffff8206b7f8,uVar1);
-      uVar2 = (ulonglong)DAT_8333db40;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+    Com_Printf(1,"EntHandle END\n");
+    if (uVar3 != g_usedEntHandle) {
+      va("%d %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x67,0,
+                      "%s\n\t%s");
     }
-    if (uVar2 != 0) {
-      MyAssertHandler(0xffffffff8206b824,0x68,0,0xffffffff8206b7c8,0xffffffff8206b7e4);
+    if (g_usedEntHandle != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x68,0,
+                      "%s\n\t(g_usedEntHandle) = %i");
     }
   }
   __restgprlr_27();
@@ -82,44 +81,41 @@ void EntHandle__Shutdown(void)
 
 // 824547E0  EntHandleDissociateInternal  (game/enthandle.cpp:120)
 
-void EntHandleDissociateInternal(void)
+void EntHandleDissociateInternal(EntHandleList *param_1)
 
 {
   bool bVar1;
   ushort uVar2;
-  ushort *puVar4;
-  undefined8 uVar3;
-  uint uVar5;
-  int iVar6;
-  undefined2 uVar7;
-  uint uVar8;
-  undefined4 *puVar9;
+  ushort *puVar3;
+  uint uVar4;
+  ushort uVar5;
+  uint uVar6;
   
-  puVar4 = (ushort *)__savegprlr_21();
-  uVar2 = *puVar4;
-  uVar8 = (uint)uVar2;
-  if (uVar8 != 0) {
-    *puVar4 = 0;
-    uVar5 = uVar8;
+  puVar3 = (ushort *)__savegprlr_21(param_1);
+  uVar2 = *puVar3;
+  uVar6 = (uint)uVar2;
+  if (uVar6 != 0) {
+    *puVar3 = 0;
+    uVar4 = uVar6;
     do {
-      iVar6 = uVar5 * 8;
-      puVar9 = (undefined4 *)(&DAT_8333db50 + iVar6);
-      if (*(int *)(&DAT_8333db50 + iVar6) == 0) {
-        uVar3 = va(0xffffffff8206b88c,uVar5,puVar9);
-        MyAssertHandler(0xffffffff8206b824,0x89,0,0xffffffff820011f4,0xffffffff8206b894,uVar3);
+      if (g_entHandleInfoArray[uVar4].handle == (void *)0x0) {
+        va("%d %p");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x89,0
+                        ,"%s\n\t%s");
       }
-      bVar1 = DAT_8333db40 == 0;
-      *(undefined4 *)*puVar9 = 0;
-      *puVar9 = 0;
+      bVar1 = g_usedEntHandle == 0;
+      *(undefined4 *)g_entHandleInfoArray[uVar4].handle = 0;
+      g_entHandleInfoArray[uVar4].handle = (void *)0x0;
       if (bVar1) {
-        MyAssertHandler(0xffffffff8206b824,0x8e,0,0xffffffff82000f98,0xffffffff8206b8a4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x8e,0
+                        ,"%s");
       }
-      uVar5 = (uint)*(ushort *)(&DAT_8333db54 + iVar6);
-      DAT_8333db40 = DAT_8333db40 + -1;
-    } while (uVar5 != uVar8);
-    uVar7 = (undefined2)DAT_8333db44;
-    DAT_8333db44 = (uint)uVar2;
-    *(undefined2 *)(&DAT_8333db54 + (uint)*(ushort *)(&DAT_8333db56 + (uint)uVar2 * 8) * 8) = uVar7;
+      uVar4 = (uint)g_entHandleInfoArray[uVar4].next;
+      g_usedEntHandle = g_usedEntHandle - 1;
+    } while (uVar4 != uVar6);
+    uVar5 = (ushort)g_entHandleInfoHead;
+    g_entHandleInfoHead = (uint)uVar2;
+    g_entHandleInfoArray[g_entHandleInfoArray[uVar2].prev].next = uVar5;
   }
   __restgprlr_21();
   return;
@@ -128,52 +124,54 @@ void EntHandleDissociateInternal(void)
 
 // 824548F0  EntHandleDissociate  (game/enthandle.cpp:161)
 
-void EntHandleDissociate(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void EntHandleDissociate(gentity_s *param_1)
 
 {
   EntHandleDissociateInternal
-            (((ulonglong)(uint)((param_1 + 0x7cc8c980) / 0x280) & 0x7fffffff) * 2 + -0x7ccc34c0);
+            (g_entitiesHandleList + (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280);
   return;
 }
 
 
 // 82454918  RemoveEntHandleInfo  (game/enthandle.cpp:175)
 
-void RemoveEntHandleInfo(undefined8 param_1,ulonglong param_2)
+void RemoveEntHandleInfo(EntHandleList *param_1,uint param_2)
 
 {
   ushort uVar1;
-  undefined4 uVar2;
+  uint uVar2;
+  uint uVar3;
   ushort *puVar4;
-  undefined8 uVar3;
-  longlong lVar5;
-  longlong lVar6;
-  undefined4 *puVar7;
+  ulonglong uVar5;
   
-  puVar4 = (ushort *)__savegprlr_27();
-  if ((param_2 & 0xffffffff) != 0) {
-    if ((ulonglong)*puVar4 == (param_2 & 0xffffffff)) {
-      *puVar4 = -(ushort)(param_2 != *(ushort *)(&DAT_8333db54 + (int)((param_2 & 0xffffffff) << 3))
-                         ) & *(ushort *)(&DAT_8333db54 + (int)((param_2 & 0xffffffff) << 3));
+  uVar5 = (ulonglong)(int)param_2;
+  puVar4 = (ushort *)__savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) != 0) {
+    if ((ulonglong)*puVar4 == (uVar5 & 0xffffffff)) {
+      uVar1 = *(ushort *)((int)&g_entHandleInfoArray[0].next + (int)((uVar5 & 0xffffffff) << 3));
+      *puVar4 = -(ushort)(uVar5 != uVar1) & uVar1;
     }
-    lVar5 = (param_2 & 0x1fffffff) * 8;
-    lVar6 = lVar5 + -0x7ccc24b0;
-    if (*(int *)(&DAT_8333db50 + (int)lVar5) == 0) {
-      uVar3 = va(0xffffffff8206b88c,param_2,lVar6);
-      MyAssertHandler(0xffffffff8206b824,0xc2,0,0xffffffff820011f4,0xffffffff8206b894,uVar3);
+    uVar2 = (uint)uVar5;
+    if (g_entHandleInfoArray[uVar2].handle == (void *)0x0) {
+      va("%d %p");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0xc2,0,
+                      "%s\n\t%s");
     }
-    puVar7 = (undefined4 *)lVar6;
-    *puVar7 = 0;
-    if (DAT_8333db40 == 0) {
-      MyAssertHandler(0xffffffff8206b824,0xc4,0,0xffffffff82000f98,0xffffffff8206b8a4);
+    g_entHandleInfoArray[uVar2].handle = (void *)0x0;
+    if (g_usedEntHandle == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0xc4,0,
+                      "%s");
     }
-    uVar2 = DAT_8333db44;
-    uVar1 = *(ushort *)((int)puVar7 + 6);
-    DAT_8333db40 = DAT_8333db40 + -1;
-    DAT_8333db44 = (undefined4)param_2;
-    *(ushort *)(&DAT_8333db56 + (uint)*(ushort *)(puVar7 + 1) * 8) = uVar1;
-    *(undefined2 *)(&DAT_8333db54 + (uint)uVar1 * 8) = *(undefined2 *)(puVar7 + 1);
-    *(short *)(puVar7 + 1) = (short)uVar2;
+    uVar3 = g_entHandleInfoHead;
+    uVar1 = g_entHandleInfoArray[uVar2].prev;
+    g_usedEntHandle = g_usedEntHandle - 1;
+    g_entHandleInfoHead = uVar2;
+    g_entHandleInfoArray[g_entHandleInfoArray[uVar2].next].prev = uVar1;
+    g_entHandleInfoArray[uVar1].next = g_entHandleInfoArray[uVar2].next;
+    g_entHandleInfoArray[uVar2].next = (ushort)uVar3;
   }
   __restgprlr_27();
   return;
@@ -182,117 +180,125 @@ void RemoveEntHandleInfo(undefined8 param_1,ulonglong param_2)
 
 // 82454A38  AddEntHandleInfo  (game/enthandle.cpp:213)
 
-void AddEntHandleInfo(undefined8 param_1,undefined4 param_2)
+uint AddEntHandleInfo(EntHandleList *param_1,void *param_2)
 
 {
   ushort uVar1;
-  undefined2 uVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  ushort *puVar6;
-  ushort uVar7;
+  ushort *puVar2;
+  uint uVar3;
+  ushort uVar4;
+  uint uVar5;
   
-  puVar6 = (ushort *)__savegprlr_28();
-  iVar5 = DAT_8333db44;
-  if (DAT_8333db44 == 0) {
-    Com_Error(1,0xffffffff8206b8b4);
+  puVar2 = (ushort *)__savegprlr_28(param_1);
+  uVar3 = g_entHandleInfoHead;
+  if (g_entHandleInfoHead == 0) {
+    Com_Error(ERR_DROP,"ENT_HANDLE_COUNT exceeded - increase size");
   }
-  iVar3 = iVar5 * 8;
-  DAT_8333db40 = DAT_8333db40 + 1;
-  DAT_8333db44 = (uint)*(ushort *)(&DAT_8333db54 + iVar3);
-  if (DAT_8333db48 < DAT_8333db40) {
-    DAT_8333db48 = DAT_8333db40;
+  g_usedEntHandle = g_usedEntHandle + 1;
+  g_entHandleInfoHead = (uint)g_entHandleInfoArray[uVar3].next;
+  if ((int)g_maxUsedEntHandle < (int)g_usedEntHandle) {
+    g_maxUsedEntHandle = g_usedEntHandle;
   }
-  *(undefined4 *)(&DAT_8333db50 + iVar3) = param_2;
-  uVar1 = *puVar6;
-  uVar7 = (ushort)iVar5;
-  if (uVar1 != 0) {
-    iVar4 = (uint)uVar1 * 8;
-    uVar2 = *(undefined2 *)(&DAT_8333db54 + iVar4);
-    *(ushort *)(&DAT_8333db56 + iVar3) = uVar1;
-    *(undefined2 *)(&DAT_8333db54 + iVar3) = uVar2;
-    *(ushort *)(&DAT_8333db56 + (uint)*(ushort *)(&DAT_8333db54 + iVar4) * 8) = uVar7;
-    *(ushort *)(&DAT_8333db54 + iVar4) = uVar7;
-    __restgprlr_28(iVar5);
-    return;
+  g_entHandleInfoArray[uVar3].handle = param_2;
+  uVar5 = (uint)*puVar2;
+  uVar4 = (ushort)uVar3;
+  if (uVar5 != 0) {
+    uVar1 = g_entHandleInfoArray[uVar5].next;
+    g_entHandleInfoArray[uVar3].prev = *puVar2;
+    g_entHandleInfoArray[uVar3].next = uVar1;
+    g_entHandleInfoArray[g_entHandleInfoArray[uVar5].next].prev = uVar4;
+    g_entHandleInfoArray[uVar5].next = uVar4;
+    uVar3 = __restgprlr_28(uVar3);
+    return uVar3;
   }
-  *(ushort *)(&DAT_8333db54 + iVar3) = uVar7;
-  *(ushort *)(&DAT_8333db56 + iVar3) = uVar7;
-  *puVar6 = uVar7;
-  __restgprlr_28(iVar5);
-  return;
+  g_entHandleInfoArray[uVar3].next = uVar4;
+  g_entHandleInfoArray[uVar3].prev = uVar4;
+  *puVar2 = uVar4;
+  uVar3 = __restgprlr_28(uVar3);
+  return uVar3;
 }
 
 
-// 82454B08  EntHandle::setEnt  (game/enthandle.cpp:257)
+// 82454B08  setEnt  (game/enthandle.cpp:257)
 
-void EntHandle__setEnt(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void __thiscall EntHandle::setEnt(EntHandle *this,gentity_s *param_1)
 
 {
-  uint uVar1;
-  short *psVar3;
-  int iVar4;
-  ulonglong uVar2;
-  short sVar5;
+  EntHandle *this_00;
+  int iVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
+  ulonglong uVar4;
   
-  psVar3 = (short *)__savegprlr_27();
-  iVar4 = EntHandle__isDefined();
-  if (iVar4 == 0) {
-    if ((param_2 & 0xffffffff) == 0) goto LAB_82454bac;
+  uVar4 = (ulonglong)(int)param_1;
+  this_00 = (EntHandle *)__savegprlr_27(this);
+  iVar1 = isDefined(this_00);
+  if (iVar1 == 0) {
+    if ((uVar4 & 0xffffffff) == 0) goto LAB_82454bac;
   }
   else {
-    uVar2 = EntHandle__ent(psVar3);
-    if ((param_2 & 0xffffffff) == (uVar2 & 0xffffffff)) goto LAB_82454bac;
-    RemoveEntHandleInfo(((ulonglong)(uint)(((int)uVar2 + 0x7cc8c980) / 0x280) & 0x7fffffff) * 2 +
-                        -0x7ccc34c0,psVar3[1]);
-    if ((param_2 & 0xffffffff) == 0) {
-      *psVar3 = 0;
-      psVar3[1] = 0;
+    pgVar2 = ent(this_00);
+    if ((uVar4 & 0xffffffff) == ZEXT48(pgVar2)) goto LAB_82454bac;
+    RemoveEntHandleInfo(g_entitiesHandleList + (int)&pgVar2[0x31e9ea].s.groundEntityNum / 0x280,
+                        (uint)this_00->infoIndex);
+    if ((uVar4 & 0xffffffff) == 0) {
+      this_00->number = 0;
+      this_00->infoIndex = 0;
       __restgprlr_27();
       return;
     }
   }
-  uVar1 = ((int)param_2 + 0x7cc8c980) / 0x280;
-  sVar5 = AddEntHandleInfo(((ulonglong)uVar1 & 0x7fffffff) * 2 + -0x7ccc34c0,psVar3);
-  psVar3[1] = sVar5;
-  *psVar3 = (short)uVar1 + 1;
+  iVar1 = ((int)uVar4 + 0x7cc8c980) / 0x280;
+  uVar3 = AddEntHandleInfo(g_entitiesHandleList + iVar1,this_00);
+  this_00->infoIndex = (ushort)uVar3;
+  this_00->number = (short)iVar1 + 1;
 LAB_82454bac:
   __restgprlr_27();
   return;
 }
 
 
-// 824544B0  EntHandle::isDefined  (game_mp/g_public_mp.h:388)
+// 824544B0  isDefined  (game_mp/g_public_mp.h:388)
 
-bool EntHandle__isDefined(ushort *param_1)
+int __thiscall EntHandle::isDefined(EntHandle *this)
 
 {
-  uint uVar1;
+  ushort uVar1;
   
-  uVar1 = (uint)*param_1;
-  if ((uVar1 != 0) && ((&DAT_83373503)[uVar1 * 0x280] == '\0')) {
-    MyAssertHandler(0xffffffff8206b6f8,0x186,0,0xffffffff8206b6b0,0xffffffff8206b6c8,uVar1 - 1);
+  if ((this->number != 0) &&
+     (*(char *)((int)&g_dummyHudCurrent + (uint)this->number * 0x280 + 0xb) == '\0')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",0x186,0
+                    ,"%s\n\t(number - 1) = %i");
   }
-  return *param_1 != 0;
+  uVar1 = this->number;
+  return (uint)uVar1 + (-(uint)(uVar1 == 0) - (uVar1 - 1));
 }
 
 
-// 82454540  EntHandle::ent  (game_mp/g_public_mp.h:397)
+// 82454540  ent  (game_mp/g_public_mp.h:397)
 
-void EntHandle__ent(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * __thiscall EntHandle::ent(EntHandle *this)
 
 {
   ushort *puVar1;
+  gentity_s *pgVar2;
   
-  puVar1 = (ushort *)__savegprlr_29();
-  if (0x7fe < ((ulonglong)*puVar1 - 1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8206b6f8,0x18e,0,0xffffffff8206b75c,(ulonglong)*puVar1 - 1,0x7ff);
+  puVar1 = (ushort *)__savegprlr_29(this);
+  if (0x7fe < *puVar1 - 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",0x18e,0
+                    ,"number - 1 doesn\'t index ENTITYNUM_NONE\n\t%i not in [0, %i)");
   }
-  if ((&DAT_83373503)[(uint)*puVar1 * 0x280] == '\0') {
-    MyAssertHandler(0xffffffff8206b6f8,400,0,0xffffffff8206b6b0,0xffffffff8206b738,*puVar1 - 1);
+  if (*(char *)((int)&g_dummyHudCurrent + (uint)*puVar1 * 0x280 + 0xb) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",400,0,
+                    "%s\n\t(number - 1) = %i");
   }
-  __restgprlr_29((ulonglong)*puVar1 * 0x280 + -0x7cc8cc00);
-  return;
+  pgVar2 = (gentity_s *)__restgprlr_29((ulonglong)*puVar1 * 0x280 + -0x7cc8cc00);
+  return pgVar2;
 }
 

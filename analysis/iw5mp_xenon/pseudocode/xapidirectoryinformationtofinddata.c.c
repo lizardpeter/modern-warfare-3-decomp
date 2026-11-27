@@ -2,23 +2,22 @@
 
 // 828B3C40  XapiDirectoryInformationToFindData  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapidirectoryinformationtofinddata.c:20)
 
-void * XapiDirectoryInformationToFindData(int param_1,undefined4 *param_2)
+void XapiDirectoryInformationToFindData
+               (_FILE_DIRECTORY_INFORMATION *param_1,_WIN32_FIND_DATAA *param_2)
 
 {
-  void *pvVar1;
-  
-  *param_2 = *(undefined4 *)(param_1 + 0x38);
-  param_2[1] = *(undefined4 *)(param_1 + 8);
-  param_2[2] = *(undefined4 *)(param_1 + 0xc);
-  param_2[3] = *(undefined4 *)(param_1 + 0x10);
-  param_2[4] = *(undefined4 *)(param_1 + 0x14);
-  param_2[5] = *(undefined4 *)(param_1 + 0x18);
-  param_2[6] = *(undefined4 *)(param_1 + 0x1c);
-  param_2[7] = *(undefined4 *)(param_1 + 0x28);
-  param_2[8] = *(undefined4 *)(param_1 + 0x2c);
-  pvVar1 = memcpy(param_2 + 0xb,(void *)(param_1 + 0x40),*(size_t *)(param_1 + 0x3c));
-  *(undefined1 *)((int)param_2 + *(int *)(param_1 + 0x3c) + 0x2c) = 0;
-  *(undefined1 *)(param_2 + 0x4c) = 0;
-  return pvVar1;
+  param_2->dwFileAttributes = param_1->FileAttributes;
+  (param_2->ftCreationTime).dwHighDateTime = (param_1->CreationTime)._s_0.HighPart;
+  (param_2->ftCreationTime).dwLowDateTime = (param_1->CreationTime)._s_0.LowPart;
+  (param_2->ftLastAccessTime).dwHighDateTime = (param_1->LastAccessTime)._s_0.HighPart;
+  (param_2->ftLastAccessTime).dwLowDateTime = (param_1->LastAccessTime)._s_0.LowPart;
+  (param_2->ftLastWriteTime).dwHighDateTime = (param_1->LastWriteTime)._s_0.HighPart;
+  (param_2->ftLastWriteTime).dwLowDateTime = (param_1->LastWriteTime)._s_0.LowPart;
+  param_2->nFileSizeHigh = (param_1->EndOfFile)._s_0.HighPart;
+  param_2->nFileSizeLow = (param_1->EndOfFile)._s_0.LowPart;
+  memcpy();
+  param_2->cFileName[param_1->FileNameLength] = '\0';
+  param_2->cAlternateFileName[0] = '\0';
+  return;
 }
 

@@ -2,130 +2,141 @@
 
 // 826F3020  dwGetAntiCheat  (DW/dwUtils.cpp:79)
 
-undefined8 dwGetAntiCheat(void)
+bdAntiCheat * dwGetAntiCheat(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdAntiCheat *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdAntiCheat *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getAntiCheat(uVar1);
+    pbVar2 = bdLobbyService::getAntiCheat(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F3080  dwGetMessaging  (DW/dwUtils.cpp:90)
 
-undefined8 dwGetMessaging(void)
+bdMessaging * dwGetMessaging(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  Status SVar1;
+  bdMessaging *pbVar2;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getStatus(), iVar3 != 2)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (SVar1 = bdLobbyService::getStatus(this), SVar1 != BD_CONNECTED)) {
+    pbVar2 = (bdMessaging *)0x0;
   }
   else {
-    uVar2 = bdLobbyService__getMessaging(uVar1);
+    pbVar2 = bdLobbyService::getMessaging(this);
   }
-  return uVar2;
+  return pbVar2;
 }
 
 
 // 826F44D8  bdStrlcpy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:149)
 
-void bdStrlcpy(undefined8 param_1,void *param_2,ulonglong param_3)
+uint bdStrlcpy(char *param_1,char *param_2,uint param_3)
 
 {
-  void *_Dst;
-  char *pcVar3;
   ulonglong uVar1;
-  ulonglong uVar2;
-  size_t _Size;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  char *pcVar8;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar9;
   
-  _Dst = (void *)__savegprlr_29();
-  uVar1 = ZEXT48(param_2);
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  lVar6 = lVar4;
   do {
-    pcVar3 = (char *)uVar1;
-    uVar1 = uVar1 + 1;
-  } while (*pcVar3 != '\0');
-  uVar2 = (uVar1 - ZEXT48(param_2)) - 1;
-  uVar1 = uVar2 & 0xffffffff;
-  if (((param_3 & 0xffffffff) != 0) && (_Dst != (void *)0x0)) {
-    _Size = (size_t)(param_3 - 1);
-    if (uVar1 < (param_3 - 1 & 0xffffffff)) {
-      _Size = (size_t)uVar2;
+    pcVar8 = (char *)lVar6;
+    lVar6 = lVar6 + 1;
+  } while (*pcVar8 != '\0');
+  uVar7 = (lVar6 - lVar4) - 1;
+  uVar1 = uVar7 & 0xffffffff;
+  if (((uVar5 & 0xffffffff) != 0) && (iVar2 != 0)) {
+    iVar9 = (int)(uVar5 - 1);
+    if (uVar1 < (uVar5 - 1 & 0xffffffff)) {
+      iVar9 = (int)uVar7;
     }
-    memcpy(_Dst,param_2,_Size);
-    *(undefined1 *)(_Size + (int)_Dst) = 0;
+    memcpy();
+    *(undefined1 *)(iVar9 + iVar2) = 0;
   }
-  __restgprlr_29(uVar1);
-  return;
+  uVar3 = __restgprlr_29(uVar1);
+  return uVar3;
 }
 
 
 // 826F30E0  dwGetTitleUtilities  (DW/dwUtils.cpp:674)
 
-undefined8 dwGetTitleUtilities(void)
+bdTitleUtilities * dwGetTitleUtilities(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  bdLobbyService *this;
+  bdTitleUtilities *pbVar1;
   
-  iVar2 = dwGetLobbyService();
-  if (iVar2 != 0) {
-    uVar1 = bdLobbyService__getTitleUtilities();
-    return uVar1;
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
+    pbVar1 = bdLobbyService::getTitleUtilities(this);
+    return pbVar1;
   }
-  return 0;
+  return (bdTitleUtilities *)0x0;
 }
 
 
 // 826F3130  dwGetConnectionID  (DW/dwUtils.cpp:685)
 
-undefined8 dwGetConnectionID(undefined8 param_1,undefined8 *param_2)
+bool dwGetConnectionID(int param_1,ulong64 *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  bdLobbyService *this;
+  bdRemoteTaskManager *pbVar2;
+  ulong64 uVar1;
+  bool bVar3;
   
-  uVar1 = dwGetLobbyService();
-  if (((uVar1 & 0xffffffff) == 0) || (iVar3 = bdLobbyService__getTaskManager(), iVar3 == 0)) {
-    uVar2 = 0;
+  this = dwGetLobbyService(param_1);
+  if ((this == (bdLobbyService *)0x0) ||
+     (pbVar2 = bdLobbyService::getTaskManager(this), pbVar2 == (bdRemoteTaskManager *)0x0)) {
+    bVar3 = false;
   }
   else {
-    bdLobbyService__getTaskManager(uVar1);
-    uVar2 = bdRemoteTaskManager__getConnectionID();
-    *param_2 = uVar2;
-    uVar2 = 1;
+    pbVar2 = bdLobbyService::getTaskManager(this);
+    uVar1 = bdRemoteTaskManager::getConnectionID(pbVar2);
+    *param_2 = uVar1;
+    bVar3 = true;
   }
-  return uVar2;
+  return bVar3;
 }
 
 
 // 826F3300  dwLobbyErrorCodeToString  (DW/dwUtils.cpp:700)
 
-void dwLobbyErrorCodeToString(undefined8 param_1,void *param_2,int param_3)
+void dwLobbyErrorCodeToString(bdLobbyErrorCode param_1,char *param_2,uint param_3)
 
 {
   char cVar1;
   bool bVar2;
-  int iVar3;
-  char *pcVar4;
-  char *_Src;
-  uint uVar5;
+  char *pcVar3;
+  uint uVar4;
+  char *pcVar5;
   char *pcVar6;
-  char *_Size;
-  int local_690 [192];
+  bdLobbyErrorCode bStack00000014;
+  char *pcStack0000001c;
+  uint uStack00000024;
+  bdLobbyErrorCode local_690 [192];
   char *local_390 [4];
   char *local_380;
   char *local_37c;
@@ -313,9 +324,9 @@ void dwLobbyErrorCodeToString(undefined8 param_1,void *param_2,int param_3)
   char *local_a4;
   char *local_a0;
   
-  iVar3 = __savegprlr();
+  __savegprlr();
   local_690[2] = 2;
-  local_690[0] = 0;
+  local_690[0] = BD_NO_ERROR;
   local_690[3] = 3;
   local_690[1] = 1;
   local_690[4] = 4;
@@ -676,9 +687,9 @@ void dwLobbyErrorCodeToString(undefined8 param_1,void *param_2,int param_3)
   local_e8 = "BD_CRUX_PASSWORD_INVALID";
   local_e4 = "BD_CRUX_PLATFORM_ID_INVALID";
   local_e0 = "BD_CRUX_PLATFORM_UID_EXISTS";
-  pcVar6 = "Unknown bdLobbyErrorCode";
+  pcVar5 = "Unknown bdLobbyErrorCode";
   local_10c = "BD_FACEBOOK_VIDEO_DOES_NOT_EXIST";
-  uVar5 = 0;
+  uVar4 = 0;
   local_dc = "BD_CRUX_COMMUNITY_ID_INVALID";
   local_d8 = "BD_CRUX_COMMUNITY_USERNAME_INVALID";
   local_d4 = "BD_CRUX_COMMUNITY_USERNAME_EXISTS";
@@ -691,109 +702,113 @@ void dwLobbyErrorCodeToString(undefined8 param_1,void *param_2,int param_3)
   local_b8 = "BD_INVALID_USERGROUP_MEMBER_TYPE";
   local_b4 = "BD_TOO_MANY_MEMBERS_REQUESTED";
   local_b0 = "BD_RICH_PRESENCE_DATA_TOO_LARGE";
-  pcVar4 = "BD_RICH_PRESENCE_TOO_MANY_USERS";
   local_a0 = "BD_MAX_ERROR_CODE";
   local_a8 = "BD_SUBSCRIPTION_TOO_MANY_USERS";
   local_ac = "BD_RICH_PRESENCE_TOO_MANY_USERS";
   local_a4 = "BD_SUBSCRIPTION_TICKET_PARSE_ERROR";
   do {
-    _Src = pcVar6;
-    if (0x2f3 < uVar5) break;
-    if (*(int *)((int)local_690 + uVar5) == iVar3) {
+    pcVar3 = pcVar5;
+    if (0x2f3 < uVar4) break;
+    if (*(bdLobbyErrorCode *)((int)local_690 + uVar4) == param_1) {
       bVar2 = true;
-      pcVar6 = *(char **)((int)local_390 + uVar5);
+      pcVar5 = *(char **)((int)local_390 + uVar4);
     }
-    uVar5 = uVar5 + 4;
-    _Src = pcVar6;
+    uVar4 = uVar4 + 4;
+    pcVar3 = pcVar5;
   } while (!bVar2);
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  if ((param_3 != 0) && (param_2 != (void *)0x0)) {
-    _Size = (char *)(param_3 + -1);
-    if (pcVar6 + (-1 - (int)_Src) < (char *)(param_3 - 1U)) {
-      _Size = pcVar6 + (-1 - (int)_Src);
+  bStack00000014 = param_1;
+  pcStack0000001c = param_2;
+  uStack00000024 = param_3;
+  if ((param_3 != 0) && (param_2 != (char *)0x0)) {
+    pcVar6 = (char *)(param_3 - 1);
+    if (pcVar5 + (-1 - (int)pcVar3) < (char *)(param_3 - 1)) {
+      pcVar6 = pcVar5 + (-1 - (int)pcVar3);
     }
-    pcVar4 = memcpy(param_2,_Src,(size_t)_Size);
-    _Size[(int)param_2] = '\0';
+    memcpy();
+    param_2[(int)pcVar6] = '\0';
   }
-  __restgprlr(pcVar4);
+  __restgprlr();
   return;
 }
 
 
 // 826F3198  dwConnectionErrorHandler  (DW/dwUtils.cpp:744)
 
-void dwConnectionErrorHandler(undefined8 param_1)
+void dwConnectionErrorHandler(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_210 [512];
+  char *pcVar1;
+  char acStack_210 [512];
   
-  uVar1 = UI_SafeTranslateString(0xffffffff821ad34c);
-  uVar1 = UI_ReplaceConversionInt(uVar1,param_1);
-  I_strncpyz(auStack_210,uVar1,0x200);
-  Com_Error(1,0xffffffff82000f98,auStack_210);
+  pcVar1 = UI_SafeTranslateString("XBOXLIVE_LOBBY_CONNECTION_ERR");
+  pcVar1 = UI_ReplaceConversionInt(pcVar1,param_1);
+  I_strncpyz(acStack_210,pcVar1,0x200);
+  Com_Error(ERR_DROP,"%s");
   return;
 }
 
 
 // 826F31F8  dwTaskStatusConvert  (DW/dwUtils.cpp:756)
 
-byte dwTaskStatusConvert(longlong param_1,int param_2)
+taskCompleteResults dwTaskStatusConvert(bdStatus param_1,bdLobbyErrorCode param_2)
 
 {
-  if ((int)param_1 != 2) {
-    return -(param_1 != 1) & 2;
+  if (param_1 != BD_DONE) {
+    return -(uint)(param_1 != BD_PENDING) & TASK_ERROR;
   }
-  if (param_2 != 0) {
-    return 2;
+  if (param_2 != BD_NO_ERROR) {
+    return TASK_ERROR;
   }
-  return 1;
+  return TASK_COMPLETE;
 }
 
 
 // 826F3230  dwLobbyGetError  (DW/dwUtils.cpp:771)
 
-undefined8 dwLobbyGetError(int param_1)
+uint dwLobbyGetError(bdLobbyService *param_1)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  if (param_1 != 0) {
-    uVar1 = bdLobbyService__getErrorCode();
+  if (param_1 != (bdLobbyService *)0x0) {
+    uVar1 = bdLobbyService::getErrorCode(param_1);
     return uVar1;
   }
   return 0;
 }
 
 
-// 826F4438  DWLogging::publish  (DW/dwUtils.cpp:798)
+// 826F4438  publish  (DW/dwUtils.cpp:798)
 
-void DWLogging__publish(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6)
+void __thiscall
+DWLogging::publish(DWLogging *this,bdLogMessageType param_1,char *param_2,char *param_3,
+                  char *param_4,uint param_5,char *param_6)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
+  uVar2 = (ulonglong)(int)param_1;
+  iVar1 = __savegprlr_28(this,uVar2,param_2,param_3,param_4,param_5,param_6);
+  if ((uVar2 & 0xffffffff) == 0) {
     if (*(int *)(iVar1 + 0x24) == -1) goto LAB_826f44d0;
-    Com_Printf(*(int *)(iVar1 + 0x24),0xffffffff821ad38c);
-    uVar2 = *(undefined4 *)(iVar1 + 0x24);
+    Com_Printf(*(int *)(iVar1 + 0x24),"DW : (%s) %s\n");
+    iVar1 = *(int *)(iVar1 + 0x24);
   }
-  else if ((param_2 & 0xffffffff) == 1) {
-    Com_Printf(0x19,0xffffffff821ad39c);
-    uVar2 = 0x19;
+  else if ((uVar2 & 0xffffffff) == 1) {
+    Com_Printf(0x19,"DW *WARN (%s) %s\n");
+    iVar1 = 0x19;
   }
   else {
-    if (2 < (param_2 & 0xffffffff)) goto LAB_826f44d0;
-    Com_Printf(1,0xffffffff821ad3b0);
-    uVar2 = 0x19;
+    if (2 < (uVar2 & 0xffffffff)) goto LAB_826f44d0;
+    Com_Printf(1,"DW *ERR (%s) %s\n");
+    iVar1 = 0x19;
   }
-  Com_Printf(uVar2,0xffffffff821ad374,param_4,param_5,param_6);
+  Com_Printf(iVar1,"\tfile:%s func:%s : %d\n");
 LAB_826f44d0:
   __restgprlr_28();
   return;
@@ -802,76 +817,84 @@ LAB_826f44d0:
 
 // 8293EC90  `dynamic_initializer_for_'g_logSubscriber''  (DW/dwUtils.cpp:822)
 
-int _dynamic_initializer_for__g_logSubscriber__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_logSubscriber__(void)
 
 {
-  int iVar1;
-  
-  bdLogSubscriber__bdLogSubscriber(0xffffffff844f6960);
-  DAT_844f6984 = 0xffffffff;
-  DAT_844f6960 = &PTR_DWLogging___scalar_deleting_destructor__821ad36c;
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_logSubscriber__);
-  return iVar1;
+  bdLogSubscriber::bdLogSubscriber((bdLogSubscriber *)&g_logSubscriber);
+  g_logSubscriber.m_channel_id = -1;
+  g_logSubscriber._padding_ = (int)&DWLogging::_vftable_;
+  atexit(_dynamic_atexit_destructor_for__g_logSubscriber__);
+  return;
 }
 
 
 // 826F3248  SetupDWLogging  (DW/dwUtils.cpp:826)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SetupDWLogging(void)
 
 {
-  bdLogSubscriber__addChannel(0xffffffff844f6960,0xffffffff821ad3c8);
-  bdLogSubscriber__addChannel(0xffffffff844f6960,0xffffffff821ad3c4);
-  bdLogSubscriber__addChannel(0xffffffff844f6960,0xffffffff82021a7c);
+  bdLogSubscriber::addChannel((bdLogSubscriber *)&g_logSubscriber,"warn");
+  bdLogSubscriber::addChannel((bdLogSubscriber *)&g_logSubscriber,"err");
+  bdLogSubscriber::addChannel((bdLogSubscriber *)&g_logSubscriber,"info");
   return;
 }
 
 
 // 826F32A8  dwStopAllDemonWareReconnects  (DW/dwUtils.cpp:837)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void dwStopAllDemonWareReconnects(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = 0;
-  DAT_844f6955 = 1;
+  iVar1 = 0;
+  g_disableLSGReconnect = true;
   do {
-    Live_DemonwareDisconnectCleanup(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 4);
+    Live_DemonwareDisconnectCleanup(iVar1);
+    iVar1 = iVar1 + 1;
+  } while (iVar1 < 4);
   return;
 }
 
 
 // 826F32F0  dwAllDemonWareReconnectsDisabled  (DW/dwUtils.cpp:852)
 
-undefined1 dwAllDemonWareReconnectsDisabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool dwAllDemonWareReconnectsDisabled(void)
 
 {
-  return DAT_844f6955;
+  return g_disableLSGReconnect;
 }
 
 
-// 826F4548  DWLogging::`scalar_deleting_destructor'  (line unknown)
+// 826F4548  `scalar_deleting_destructor'  (line unknown)
 
-undefined8 DWLogging___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
+void * __thiscall DWLogging::_scalar_deleting_destructor_(DWLogging *this,uint param_1)
 
 {
-  bdLogSubscriber___bdLogSubscriber();
-  if ((param_2 & 1) != 0) {
-    operator_delete((void *)param_1);
+  bdLogSubscriber::~bdLogSubscriber((bdLogSubscriber *)this);
+  if ((param_1 & 1) != 0) {
+    ::operator_delete(this);
   }
-  return param_1;
+  return this;
 }
 
 
 // 829404F0  `dynamic_atexit_destructor_for_'g_logSubscriber''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_logSubscriber__(void)
 
 {
-  bdLogSubscriber___bdLogSubscriber(0xffffffff844f6960);
+  bdLogSubscriber::~bdLogSubscriber((bdLogSubscriber *)&g_logSubscriber);
   return;
 }
 

@@ -2,6 +2,8 @@
 
 // 8277B128  R_BeginSparkMeshVerts  (gfx_d3d/r_sparksurf.cpp:16)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_BeginSparkMeshVerts(void)
 
 {
@@ -10,7 +12,9 @@ void R_BeginSparkMeshVerts(void)
   
   do {
     if (in_RESERVE != '\0') {
-      DAT_847eeb60 = storeWordConditionalIndexed((ulonglong)DAT_847eeb60 + 1,0,0xffffffff847eeb60);
+      g_processSparkMesh =
+           storeWordConditionalIndexed((ulonglong)(uint)g_processSparkMesh + 1,0,0xffffffff847eeb60)
+      ;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -20,6 +24,8 @@ void R_BeginSparkMeshVerts(void)
 
 // 8277B150  R_EndSparkMeshVerts  (gfx_d3d/r_sparksurf.cpp:34)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_EndSparkMeshVerts(void)
 
 {
@@ -28,7 +34,9 @@ void R_EndSparkMeshVerts(void)
   
   do {
     if (in_RESERVE != '\0') {
-      DAT_847eeb60 = storeWordConditionalIndexed((ulonglong)DAT_847eeb60 - 1,0,0xffffffff847eeb60);
+      g_processSparkMesh =
+           storeWordConditionalIndexed((ulonglong)(uint)g_processSparkMesh - 1,0,0xffffffff847eeb60)
+      ;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -38,126 +46,142 @@ void R_EndSparkMeshVerts(void)
 
 // 8277B178  R_ReserveSparkMeshVerts  (gfx_d3d/r_sparksurf.cpp:52)
 
-void R_ReserveSparkMeshVerts(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+bool R_ReserveSparkMeshVerts(int param_1,int *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  ulonglong uVar3;
+  int iVar1;
+  bool bVar2;
+  undefined1 uVar3;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_847eeb60 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x35,0,0xffffffff82000f98,0xffffffff821cf698);
+  iVar1 = __savegprlr_27(param_1);
+  if (g_processSparkMesh == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x35,
+                    0,"%s");
   }
-  uVar3 = (ulonglong)DAT_84628b00;
-  if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x36,0,0xffffffff82000f98,0xffffffff821bb4cc);
-    uVar3 = (ulonglong)DAT_84628b00;
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x36,
+                    0,"%s");
   }
-  cVar2 = R_ReserveMeshVerts(uVar3 + 0x14b0,uVar1,param_2);
-  if (cVar2 == '\0') {
-    R_WarnOncePerFrame(0x2f);
-    __restgprlr_27(0);
-    return;
+  bVar2 = R_ReserveMeshVerts(frontEndDataOut->mesh + 4,iVar1,param_2);
+  if (!bVar2) {
+    R_WarnOncePerFrame(R_WARN_MAX_SPARK_VERTS);
+    uVar3 = __restgprlr_27(0);
+    return (bool)uVar3;
   }
-  __restgprlr_27(1);
-  return;
+  uVar3 = __restgprlr_27(1);
+  return (bool)uVar3;
 }
 
 
 // 8277B238  R_GetSparkMeshVerts  (gfx_d3d/r_sparksurf.cpp:66)
 
-void R_GetSparkMeshVerts(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+GfxPosTexVertex * R_GetSparkMeshVerts(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  uchar *puVar2;
+  GfxPosTexVertex *pGVar3;
   
-  uVar1 = __savegprlr_28();
-  if (DAT_847eeb60 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x43,0,0xffffffff82000f98,0xffffffff821cf698);
+  iVar1 = __savegprlr_28(param_1);
+  if (g_processSparkMesh == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x43,
+                    0,"%s");
   }
-  uVar2 = (ulonglong)DAT_84628b00;
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x44,0,0xffffffff82000f98,0xffffffff821bb4cc);
-    uVar2 = (ulonglong)DAT_84628b00;
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x44,
+                    0,"%s");
   }
-  R_GetMeshVerts(uVar2 + 0x14b0,uVar1);
-  __restgprlr_28();
-  return;
+  puVar2 = R_GetMeshVerts(frontEndDataOut->mesh + 4,iVar1);
+  pGVar3 = (GfxPosTexVertex *)__restgprlr_28(puVar2);
+  return pGVar3;
 }
 
 
 // 8277B3A8  R_AddSparkSurf  (gfx_d3d/r_sparksurf.cpp:74)
 
-void R_AddSparkSurf(undefined8 param_1,undefined4 param_2,ulonglong param_3,undefined4 param_4,
-                   void *param_5)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddSparkSurf(Material *param_1,r_double_index_t *param_2,uint param_3,uint param_4,
+                   GfxParticleCloud *param_5)
 
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  char cVar7;
-  undefined2 uVar6;
-  uint *puVar8;
-  ulonglong uVar9;
+  GfxBackEndData *pGVar3;
+  Material *pMVar4;
+  Material *pMVar5;
+  bool bVar7;
+  ushort uVar6;
+  ulonglong uVar8;
+  uint *puVar9;
   ulonglong uVar10;
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_24();
-  puVar4 = (undefined4 *)Material_FromHandle();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x51,0,0xffffffff82000f98,0xffffffff821bb904);
+  uVar8 = (ulonglong)(int)param_3;
+  pMVar4 = (Material *)__savegprlr_24(param_1);
+  pMVar4 = Material_FromHandle(pMVar4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x51,
+                    0,"%s");
   }
-  if (DAT_847eeb60 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x52,0,0xffffffff82000f98,0xffffffff821cf698);
+  if (g_processSparkMesh == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x52,
+                    0,"%s");
   }
-  puVar5 = (undefined4 *)R_GetSortedMaterial(*(ulonglong *)(puVar4 + 2) >> 0x1d & 0xfff);
-  if (puVar5 != puVar4) {
-    MyAssertHandler(0xffffffff821cf6b0,0x53,0,0xffffffff82000f98,0xffffffff821bb8a8);
+  pMVar5 = R_GetSortedMaterial((uint)((pMVar4->info).drawSurf.packed >> 0x1d) & 0xfff);
+  if (pMVar5 != pMVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x53,
+                    0,"%s");
   }
-  cVar7 = Material_HasTechnique(puVar4,DAT_845aa510);
-  if ((cVar7 == '\0') || ((*(byte *)(puVar4 + 1) & 2) != 0)) {
-    if (DAT_845aa714 == 0) {
-      MyAssertHandler(0xffffffff821cf6b0,0x57,0,0xffffffff82000f98,0xffffffff821bb758);
+  bVar7 = Material_HasTechnique(pMVar4,gfxDrawMethod.emissiveTechType);
+  if ((!bVar7) || (((pMVar4->info).gameFlags & 2) != 0)) {
+    if (r_fullbright == (dvar_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",
+                      0x57,0,"%s");
     }
-    if (*(char *)(DAT_845aa714 + 0xc) == '\0') {
-      R_WarnOncePerFrame(0x1c,*puVar4);
+    if ((r_fullbright->current).enabled == false) {
+      R_WarnOncePerFrame(R_WARN_NONEMISSIVE_FX_MATERIAL);
     }
     __restgprlr_24();
     return;
   }
-  uVar10 = (ulonglong)DAT_84628b00;
+  uVar10 = ZEXT48(frontEndDataOut);
   if (uVar10 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x5d,0,0xffffffff82000f98,0xffffffff821bb4cc);
-    uVar10 = (ulonglong)DAT_84628b00;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x5d,
+                    0,"%s");
+    uVar10 = ZEXT48(frontEndDataOut);
   }
   do {
-    puVar8 = (uint *)(uVar10 + 0x156c);
-    uVar1 = *puVar8;
-    uVar9 = (ulonglong)uVar1;
+    puVar9 = (uint *)(uVar10 + 0x156c);
+    uVar1 = *puVar9;
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed(uVar9 + 1,0,uVar10 + 0x156c);
-      *puVar8 = uVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 1,0,uVar10 + 0x156c);
+      *puVar9 = uVar2;
       in_cr0 = 2;
     }
+    pGVar3 = frontEndDataOut;
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (0x3f < uVar9) {
-    R_WarnOncePerFrame(0x19);
+  if (0x3f < (ulonglong)uVar1) {
+    R_WarnOncePerFrame(R_WARN_GFX_SPARK_SURF_LIMIT);
     __restgprlr_24();
     return;
   }
-  iVar3 = uVar1 * 0x50 + DAT_84628b00;
-  *(int *)(iVar3 + 0x64800) = (int)((param_3 & 0xffffffff) / 3);
-  *(undefined4 *)(iVar3 + 0x64804) = param_2;
-  *(undefined4 *)(iVar3 + 0x64808) = param_4;
-  memcpy((void *)(iVar3 + 0x64810),param_5,0x40);
-  *(ushort *)(&DAT_847b9500 + uVar1 * 4) = (ushort)(*(ulonglong *)(puVar4 + 2) >> 0x1d) & 0xfff;
-  uVar6 = truncate_cast<unsigned_short>(uVar9);
-  *(undefined2 *)(&DAT_847b9502 + uVar1 * 4) = uVar6;
+  frontEndDataOut->sparkData[uVar1].triCount = (uint)((uVar8 & 0xffffffff) / 3);
+  pGVar3->sparkData[uVar1].indices = param_2->value;
+  pGVar3->sparkData[uVar1].baseVertex = param_4;
+  memcpy();
+  scene.sparkSurfs[uVar1].fields.materialSortedIndex =
+       (ushort)((pMVar4->info).drawSurf.packed >> 0x1d) & 0xfff;
+  uVar6 = truncate_cast<unsigned_short>(uVar1);
+  *(ushort *)((int)scene.sparkSurfs + uVar1 * 4 + 2) = uVar6;
   __restgprlr_24();
   return;
 }
@@ -165,63 +189,70 @@ void R_AddSparkSurf(undefined8 param_1,undefined4 param_2,ulonglong param_3,unde
 
 // 8277B2C8  R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
-void R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
-               (ushort *param_1,ulonglong param_2,uint param_3,uint param_4,int param_5,int param_6)
+uint R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
+               (GfxSparkSurf *param_1,uint param_2,uint param_3,uint param_4,GfxSparkSurf *param_5,
+               uint param_6)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
+  GfxSparkSurf *pGVar1;
+  GfxSparkSurf *pGVar2;
   uint uVar3;
-  int iVar4;
-  undefined4 *puVar5;
+  uint uVar4;
+  GfxSparkSurf *pGVar5;
+  longlong lVar6;
   
-  if ((param_2 & 0xffffffff) != 0) {
-    iVar2 = param_6 * 4 + param_5 + -4;
+  lVar6 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pGVar2 = param_5 + (param_6 - 1);
     do {
-      uVar3 = (uint)*param_1;
+      uVar3 = (uint)(param_1->fields).materialSortedIndex;
       if ((param_3 <= uVar3) && (uVar3 < param_4)) {
-        iVar4 = param_6;
+        uVar4 = param_6;
         if (param_6 != 0) {
-          puVar5 = (undefined4 *)(iVar2 + 8);
+          pGVar5 = pGVar2 + 2;
           do {
-            if (*(ushort *)(puVar5 + -2) <= uVar3) break;
-            puVar1 = puVar5 + -2;
-            iVar4 = iVar4 + -1;
-            puVar5 = puVar5 + -1;
-            *puVar5 = *puVar1;
-          } while (iVar4 != 0);
+            if (pGVar5[-2].fields.materialSortedIndex <= uVar3) break;
+            pGVar1 = pGVar5 + -2;
+            uVar4 = uVar4 - 1;
+            pGVar5 = pGVar5 + -1;
+            *pGVar5 = *pGVar1;
+          } while (uVar4 != 0);
         }
         param_6 = param_6 + 1;
-        iVar2 = iVar2 + 4;
-        *(undefined4 *)(iVar4 * 4 + param_5) = *(undefined4 *)param_1;
+        pGVar2 = pGVar2 + 1;
+        param_5[uVar4] = *param_1;
       }
-      param_1 = param_1 + 2;
-      param_2 = param_2 - 1;
-    } while (param_2 != 0);
+      param_1 = param_1 + 1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  return;
+  return param_6;
 }
 
 
 // 8277B358  R_CopySortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>  (gfx_d3d/r_sortsurfs.h:128)
 
-int R_CopySortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
-              (ushort *param_1,longlong param_2,uint param_3,uint param_4,int param_5,int param_6)
+uint R_CopySortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
+               (GfxSparkSurf *param_1,uint param_2,uint param_3,uint param_4,GfxSparkSurf *param_5,
+               uint param_6)
 
 {
-  undefined4 *puVar1;
+  GfxSparkSurf *pGVar1;
+  longlong lVar2;
   
-  if ((int)param_2 != 0) {
-    puVar1 = (undefined4 *)(param_6 * 4 + param_5 + -4);
+  lVar2 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pGVar1 = param_5 + (param_6 - 1);
     do {
-      if ((param_3 <= *param_1) && (*param_1 < param_4)) {
+      if ((param_3 <= (param_1->fields).materialSortedIndex) &&
+         ((param_1->fields).materialSortedIndex < param_4)) {
         param_6 = param_6 + 1;
-        puVar1 = puVar1 + 1;
-        *puVar1 = *(undefined4 *)param_1;
+        pGVar1 = pGVar1 + 1;
+        *pGVar1 = *param_1;
       }
-      param_1 = param_1 + 2;
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      param_1 = param_1 + 1;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
   return param_6;
 }
@@ -229,27 +260,36 @@ int R_CopySortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
 
 // 8277B5D0  R_EmitSparkSurfs  (gfx_d3d/r_sparksurf.cpp:130)
 
-void R_EmitSparkSurfs(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_EmitSparkSurfs(GfxSparkSurfList *param_1,int param_2)
 
 {
-  int *piVar2;
-  ulonglong uVar1;
+  int *piVar1;
+  uint uVar2;
+  ulonglong uVar3;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (piVar2[1] != 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x85,0,0xffffffff82000f98,0xffffffff821cf744);
+  uVar3 = (ulonglong)param_2;
+  piVar1 = (int *)__savegprlr_28(param_1);
+  if (piVar1[1] != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x85,
+                    0,"%s");
   }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff821cf6b0,0x86,0,0xffffffff82000f98,0xffffffff821cf724);
+  if (*piVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x86,
+                    0,"%s");
   }
-  if ((int)*(uint *)(DAT_84628b00 + 0x156c) <= (int)param_2) {
-    param_2 = (ulonglong)*(uint *)(DAT_84628b00 + 0x156c);
+  if (frontEndDataOut->sparkSurfCount <= (int)uVar3) {
+    uVar3 = (ulonglong)(uint)frontEndDataOut->sparkSurfCount;
   }
-  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortSparkSurfsInterface,GfxSparkSurf>
-                    (0xffffffff847b9500,param_2,*(undefined4 *)(DAT_8461658c + 0x2c),*piVar2);
-  piVar2[1] = (int)uVar1;
-  if ((uVar1 & 0xffffffff) != (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cf6b0,0x8a,0,0xffffffff821cf6f4,uVar1,param_2);
+  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortSparkSurfsInterface,GfxSparkSurf>
+                    (scene.sparkSurfs,(uint)uVar3,(rgp.world)->sortKeyEffectAuto,
+                     (GfxSparkSurf *)*piVar1);
+  piVar1[1] = uVar2;
+  if ((ulonglong)uVar2 != (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurf.cpp",0x8a,
+                    0,"sparkSurfList->count == sparkSurfCount\n\t%i, %i");
   }
   __restgprlr_28();
   return;
@@ -258,38 +298,50 @@ void R_EmitSparkSurfs(undefined8 param_1,ulonglong param_2)
 
 // 8277B6C0  R_StableSortSurfs_ExcludeKey<GfxSortSparkSurfsInterface,GfxSparkSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
-void R_StableSortSurfs_ExcludeKey<GfxSortSparkSurfsInterface,GfxSparkSurf>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4)
+uint R_StableSortSurfs_ExcludeKey<GfxSortSparkSurfsInterface,GfxSparkSurf>
+               (GfxSparkSurf *param_1,uint param_2,uint param_3,GfxSparkSurf *param_4)
 
 {
-  int iVar1;
-  ushort *puVar3;
-  ulonglong uVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  ushort *puVar6;
-  ulonglong uVar7;
+  ushort uVar1;
+  ushort uVar2;
+  int iVar3;
+  GfxSparkSurf *pGVar4;
+  uint uVar5;
+  uint uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  GfxSparkSurf *pGVar10;
+  ulonglong uVar11;
   
-  puVar3 = (ushort *)__savegprlr_29();
-  iVar1 = (int)((param_3 & 0xffffffff) << 1);
-  uVar4 = (ulonglong)*(ushort *)((int)&DAT_84616480 + iVar1);
-  uVar7 = (ulonglong)*(ushort *)((int)&DAT_84616482 + iVar1);
-  uVar2 = R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>();
-  if ((param_2 & 0xffffffff) != 0) {
-    lVar5 = (uVar2 & 0x3fffffff) * 4 + param_4 + -4;
-    uVar2 = param_2;
-    puVar6 = puVar3;
+  lVar7 = (longlong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar11 = (ulonglong)(int)param_2;
+  pGVar4 = (GfxSparkSurf *)__savegprlr_29(param_1);
+  iVar3 = (int)((uVar8 & 0xffffffff) << 1);
+  uVar1 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3);
+  uVar8 = (ulonglong)uVar1;
+  uVar2 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3 + 2);
+  uVar6 = (uint)uVar11;
+  uVar5 = R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
+                    (pGVar4,uVar6,0,(uint)uVar1,(GfxSparkSurf *)lVar7,0);
+  if ((uVar11 & 0xffffffff) != 0) {
+    lVar9 = ((ulonglong)uVar5 & 0x3fffffff) * 4 + lVar7 + -4;
+    pGVar10 = pGVar4;
     do {
-      if (((uVar4 & 0xffffffff) <= (ulonglong)*puVar6) && (*puVar6 < uVar7)) {
-        lVar5 = lVar5 + 4;
-        *(undefined4 *)lVar5 = *(undefined4 *)puVar6;
+      if (((uVar8 & 0xffffffff) <= (ulonglong)(pGVar10->fields).materialSortedIndex) &&
+         ((ulonglong)(pGVar10->fields).materialSortedIndex < (ulonglong)uVar2)) {
+        uVar5 = uVar5 + 1;
+        lVar9 = lVar9 + 4;
+        *(GfxSparkSurf *)lVar9 = *pGVar10;
       }
-      puVar6 = puVar6 + 2;
-      uVar2 = uVar2 - 1;
-    } while (uVar2 != 0);
+      pGVar10 = pGVar10 + 1;
+      uVar11 = uVar11 - 1;
+    } while (uVar11 != 0);
   }
-  R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>(puVar3,param_2,uVar7,0x1660);
-  __restgprlr_29();
-  return;
+  uVar5 = R_InsertSortSurfsInRange<GfxSortSparkSurfsInterface,GfxSparkSurf>
+                    (pGVar4,uVar6,(uint)uVar2,0x1660,(GfxSparkSurf *)lVar7,uVar5);
+  uVar5 = __restgprlr_29(uVar5);
+  return uVar5;
 }
 

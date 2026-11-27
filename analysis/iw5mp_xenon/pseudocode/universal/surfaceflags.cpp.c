@@ -2,52 +2,53 @@
 
 // 82612EE8  Com_SurfaceTypeFromName  (universal/surfaceflags.cpp:113)
 
-void Com_SurfaceTypeFromName(void)
+int Com_SurfaceTypeFromName(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   int iVar3;
-  undefined **ppuVar4;
+  undefined4 *puVar4;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = I_stricmp(uVar1,0xffffffff8200352c);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  iVar2 = I_stricmp(pcVar1,"default");
   if (iVar2 == 0) {
-    __restgprlr_28();
-    return;
+    iVar2 = __restgprlr_28();
+    return iVar2;
   }
   iVar2 = 0;
-  ppuVar4 = &PTR_DAT_82994070;
+  puVar4 = (undefined4 *)&infoParms;
   do {
-    iVar3 = I_stricmp(uVar1,*ppuVar4);
+    iVar3 = I_stricmp(pcVar1,(char *)*puVar4);
     if (iVar3 == 0) {
-      __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
-      return;
+      iVar2 = __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
+      return iVar2;
     }
-    ppuVar4 = ppuVar4 + 5;
+    puVar4 = puVar4 + 5;
     iVar2 = iVar2 + 1;
-  } while ((int)ppuVar4 < -0x7d66bd38);
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  } while ((int)puVar4 < -0x7d66bd38);
+  iVar2 = __restgprlr_28(0xffffffffffffffff);
+  return iVar2;
 }
 
 
 // 82612F80  Com_SurfaceTypeToName  (universal/surfaceflags.cpp:139)
 
-ulonglong Com_SurfaceTypeToName(uint param_1)
+char * Com_SurfaceTypeToName(int param_1)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   
-  if (((int)param_1 < 1) || (0x1e < (int)param_1)) {
-    uVar1 = 0xffffffff8200352c;
+  if ((param_1 < 1) || (0x1e < param_1)) {
+    pcVar1 = "default";
   }
   else {
-    if (((int)(&PTR_caseD_33_82994064)[param_1 * 5] >> 0x14 & 0x1fU) != param_1) {
-      MyAssertHandler(0xffffffff821840c8,0x90,0,0xffffffff82000f98,0xffffffff8202c4e8);
+    if (((int)demoExeModeNames[param_1 * 5 + 3] >> 0x14 & 0x1fU) != param_1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\surfaceflags.cpp",
+                      0x90,0,"%s");
     }
-    uVar1 = ZEXT48((&PTR_DAT_8299405c)[param_1 * 5]);
+    pcVar1 = demoExeModeNames[param_1 * 5 + 1];
   }
-  return uVar1;
+  return pcVar1;
 }
 

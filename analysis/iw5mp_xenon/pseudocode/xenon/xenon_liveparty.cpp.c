@@ -2,104 +2,119 @@
 
 // 8293E4F0  `dynamic_initializer_for_'tasks''  (xenon/xenon_liveparty.cpp:50)
 
-int _dynamic_initializer_for__tasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__tasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  char *pcVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x84257e90;
+  lVar2 = 0x20;
+  pcVar1 = s_partyUserList.Users[0x1f].GamerTag;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__tasks__);
-  return iVar1;
+    pcVar1 = pcVar1 + 0xa0;
+    pcVar1[0] = '\0';
+    pcVar1[1] = '\0';
+    pcVar1[2] = '\0';
+    pcVar1[3] = '\0';
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__tasks__);
+  return;
 }
 
 
 // 8264CBF8  LiveParty_Initialize  (xenon/xenon_liveparty.cpp:78)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveParty_Initialize(void)
 
 {
-  memset(&DAT_84256ff8,0,0xf08);
-  DAT_84257f00 = 0;
-  DAT_84255b68 = 0;
-  DAT_84257f08 = 0;
-  DAT_84257f10 = 0;
-  DAT_84257f18 = 0;
-  DAT_84255b70 = 0;
-  TaskManager_ConstructTaskSet(0xffffffff84257f20,0xffffffff8218e584);
+  memset();
+  s_partyGlobals.lastInvite = 0;
+  s_partyGlobals.currentIndex = 0;
+  s_partyPresence.dirty = false;
+  s_partyGlobals.currentStartPos = 0;
+  s_partyGlobals._12_4_ = 0;
+  s_partyGlobals.currentMemberId = 0;
+  s_partyGlobals.storedMemberId = 0;
+  s_partyPresence.count = 0;
+  TaskManager_ConstructTaskSet(&tasks,"LiveParty_Initialize");
   return;
 }
 
 
 // 8264DD18  LiveParty_Update  (xenon/xenon_liveparty.cpp:92)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveParty_Update(void)
 
 {
   int iVar1;
   
-  iVar1 = XPartyGetUserList(0xffffffff84256ff8);
+  iVar1 = XPartyGetUserList(&s_partyUserList);
   if (iVar1 == -0x7f82fffd) {
-    DAT_84256ff8 = 0;
-    Com_Printf(0x10,0xffffffff8218eae8);
-    DAT_84255b68 = 1;
+    s_partyUserList.dwUserCount = 0;
+    Com_Printf(0x10,"LiveParty: Current player is not in our party \n");
+    s_partyPresence.dirty = true;
     return;
   }
-  DAT_84255b68 = 1;
+  s_partyPresence.dirty = true;
   return;
 }
 
 
 // 8264CC70  LiveParty_GetCount  (xenon/xenon_liveparty.cpp:108)
 
-undefined4 LiveParty_GetCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int LiveParty_GetCount(void)
 
 {
-  return DAT_84256ff8;
+  return s_partyUserList.dwUserCount;
 }
 
 
 // 8264CC80  LiveParty_MarkPresenceForUpdate  (xenon/xenon_liveparty.cpp:114)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveParty_MarkPresenceForUpdate(void)
 
 {
-  DAT_84255b68 = 1;
+  s_partyPresence.dirty = true;
   return;
 }
 
 
 // 8264CC90  LiveParty_InviteAll  (xenon/xenon_liveparty.cpp:122)
 
-void LiveParty_InviteAll(void)
+void LiveParty_InviteAll(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  ulong uVar1;
+  bool bVar5;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
   
-  uVar1 = __savegprlr_28();
-  cVar4 = Live_IsUserSignedInToLive();
-  if (((cVar4 != '\0') && (DAT_84256ff8 != 0)) &&
-     (cVar4 = TaskManager_TaskIsInProgress(0xffffffff84257f20,0), cVar4 == '\0')) {
-    TaskManager_GetOpenTaskSlot(0xffffffff84257f20,uVar1,0);
-    uVar2 = TaskManager_TaskToXOverlapped();
-    uVar3 = XPartySendGameInvites(uVar1,uVar2);
-    if ((uVar3 & 0xffffffff) != 0x3e5) {
-      cVar4 = Live_IsUserSignedInToLive(uVar1);
-      if (cVar4 != '\0') {
-        Com_PrintError(1,0xffffffff8218e59c,uVar3);
+  uVar1 = __savegprlr_28(param_1);
+  bVar5 = Live_IsUserSignedInToLive(uVar1);
+  if (((bVar5) && (s_partyUserList.dwUserCount != 0)) &&
+     (bVar5 = TaskManager_TaskIsInProgress(&tasks,0), !bVar5)) {
+    poVar2 = TaskManager_GetOpenTaskSlot(&tasks,uVar1,0);
+    p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+    uVar4 = XPartySendGameInvites(uVar1,p_Var3);
+    if (uVar4 != 0x3e5) {
+      bVar5 = Live_IsUserSignedInToLive(uVar1);
+      if (bVar5) {
+        Com_PrintError(1,"Microsoft error: XPartySendGameInvites failed with error %llx\n");
       }
-      TaskManager_TaskFromXOverlapped(0xffffffff84257f20,uVar2);
-      TaskManager_ClearTask();
+      poVar2 = TaskManager_TaskFromXOverlapped(&tasks,p_Var3);
+      TaskManager_ClearTask(poVar2);
     }
   }
   __restgprlr_28();
@@ -109,220 +124,232 @@ void LiveParty_InviteAll(void)
 
 // 8264CD50  LiveParty_UpdatePresence  (xenon/xenon_liveparty.cpp:146)
 
-void LiveParty_UpdatePresence(void)
+void LiveParty_UpdatePresence(int param_1)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  BOOL BVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
+  ulong uVar1;
+  bool bVar4;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong64 *puVar5;
+  ulong uVar6;
   uint uVar7;
-  undefined8 *puVar8;
+  _XPARTY_USER_INFO *p_Var8;
   uint local_160 [2];
-  undefined8 uStack_158;
-  undefined1 local_150 [336];
+  ulong64 uStack_158;
+  ulong64 local_150 [42];
   
-  uVar1 = __savegprlr_24();
-  uVar2 = uVar1;
-  if (DAT_84255b6c == (HANDLE)0x0) {
-    uVar2 = Live_IsUserSignedInToLive();
-    if ((uVar2 & 0xff) != 0) {
-      if (0x20 < DAT_84256ff8) {
-        uVar2 = MyAssertHandler(0xffffffff8218e708,0x9c,0,0xffffffff8218e6b8,DAT_84256ff8,0,0x20);
-      }
-      if (DAT_84256ff8 == 0) {
-        DAT_84255b70 = 0;
-        DAT_84255b68 = 0;
-        __restgprlr_24();
-        return;
-      }
-      lVar6 = 0;
-      uVar7 = 0;
-      if (DAT_84256ff8 != 0) {
-        puVar8 = &DAT_84257000;
-        puVar5 = &uStack_158;
-        do {
-          uVar2 = Xenon_PresenceIsSubscribed(uVar1,*puVar8);
-          if ((uVar2 & 0xff) == 0) goto LAB_8264cf7c;
-          uVar2 = Live_XUIDIsLocalPlayer(*puVar8);
-          if (((uVar2 & 0xff) == 0) &&
-             (uVar2 = Friends_IsFriendByID(uVar1,*puVar8), (uVar2 & 0xff) == 0)) {
-            lVar6 = lVar6 + 1;
-            puVar5 = puVar5 + 1;
-            *puVar5 = *puVar8;
-          }
-          uVar7 = uVar7 + 1;
-          puVar8 = puVar8 + 0xf;
-        } while (uVar7 < DAT_84256ff8);
-        if ((int)lVar6 != 0) {
-          TaskManager_GetOpenTaskSlot(0xffffffff84257f20,uVar1,1);
-          uVar3 = TaskManager_TaskToXOverlapped();
-          uVar2 = XPresenceCreateEnumerator
-                            (uVar1,lVar6,local_150,0,0x20,local_160,0xffffffff84255b6c);
-          if ((uVar2 & 0xffffffff) == 0) {
-            if (DAT_84255b6c == (HANDLE)0x0) {
-              MyAssertHandler(0xffffffff8218e708,200,0,0xffffffff82000f98,0xffffffff8218e640);
-            }
-            if (0x1480 < local_160[0]) {
-              MyAssertHandler(0xffffffff8218e708,0xc9,0,0xffffffff82000f98,0xffffffff8218e608);
-            }
-            uVar2 = XEnumerate(DAT_84255b6c,0xffffffff84255b74,local_160[0],0,uVar3);
-            if ((uVar2 & 0xffffffff) == 0x3e5) goto LAB_8264cf7c;
-            Com_PrintError(0x10,0xffffffff8218e5dc,uVar2);
-          }
-          else {
-            Com_PrintError(0x10,0xffffffff8218e660,uVar1,uVar2);
-          }
-          TaskManager_TaskFromXOverlapped(0xffffffff84257f20,uVar3);
-          TaskManager_ClearTask();
-          BVar4 = CloseHandle(DAT_84255b6c);
-          uVar2 = (ulonglong)BVar4;
-          DAT_84255b6c = (HANDLE)0x0;
+  uVar1 = __savegprlr_24(param_1);
+  if ((s_partyPresence.handle == (void *)0x0) && (bVar4 = Live_IsUserSignedInToLive(uVar1), bVar4))
+  {
+    if (0x20 < s_partyUserList.dwUserCount) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                      0x9c,0,
+                      "s_partyUserList.dwUserCount not in [0, XPARTY_MAX_USERS]\n\t%i not in [%i, %i]"
+                     );
+    }
+    if (s_partyUserList.dwUserCount == 0) {
+      s_partyPresence.count = 0;
+      s_partyPresence.dirty = false;
+      __restgprlr_24();
+      return;
+    }
+    uVar6 = 0;
+    uVar7 = 0;
+    if (s_partyUserList.dwUserCount != 0) {
+      p_Var8 = s_partyUserList.Users;
+      puVar5 = &uStack_158;
+      do {
+        bVar4 = Xenon_PresenceIsSubscribed(uVar1,p_Var8->Xuid);
+        if (!bVar4) goto LAB_8264cf7c;
+        bVar4 = Live_XUIDIsLocalPlayer(p_Var8->Xuid);
+        if ((!bVar4) && (bVar4 = Friends_IsFriendByID(uVar1,p_Var8->Xuid), !bVar4)) {
+          uVar6 = uVar6 + 1;
+          puVar5 = puVar5 + 1;
+          *puVar5 = p_Var8->Xuid;
         }
+        uVar7 = uVar7 + 1;
+        p_Var8 = p_Var8 + 1;
+      } while (uVar7 < s_partyUserList.dwUserCount);
+      if (uVar6 != 0) {
+        poVar2 = TaskManager_GetOpenTaskSlot(&tasks,uVar1,1);
+        p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+        uVar1 = XPresenceCreateEnumerator
+                          (uVar1,uVar6,local_150,0,0x20,local_160,&s_partyPresence.handle);
+        if (uVar1 == 0) {
+          if (s_partyPresence.handle == (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp"
+                            ,200,0,"%s");
+          }
+          if (0x1480 < local_160[0]) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp"
+                            ,0xc9,0,"%s");
+          }
+          uVar1 = XEnumerate(s_partyPresence.handle,s_partyPresence.presence,local_160[0],
+                             (ulong *)0x0,p_Var3);
+          if (uVar1 == 0x3e5) goto LAB_8264cf7c;
+          Com_PrintError(0x10,"MS Error: enumeration failed with error %x\n");
+        }
+        else {
+          Com_PrintError(0x10,
+                         "MS Error: Unable to get presence enumerator for Xbox Live Party members %i: 0x%x\n"
+                        );
+        }
+        poVar2 = TaskManager_TaskFromXOverlapped(&tasks,p_Var3);
+        TaskManager_ClearTask(poVar2);
+        CloseHandle(s_partyPresence.handle);
+        s_partyPresence.handle = (void *)0x0;
       }
     }
   }
 LAB_8264cf7c:
-  __restgprlr_24(uVar2);
+  __restgprlr_24();
   return;
 }
 
 
 // 8264CF88  LiveParty_PresenceBusy  (xenon/xenon_liveparty.cpp:217)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool LiveParty_PresenceBusy(void)
 
 {
-  return DAT_84255b6c != 0;
+  return (bool)('\x01' - (s_partyPresence.handle == (void *)0x0));
 }
 
 
 // 8264CFA0  LiveParty_UpdatePresenceComplete  (xenon/xenon_liveparty.cpp:223)
 
-void LiveParty_UpdatePresenceComplete(void)
+taskCompleteResults LiveParty_UpdatePresenceComplete(overlappedTask *param_1)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined4 local_30 [12];
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  taskCompleteResults tVar4;
+  undefined8 uVar5;
+  ulong local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218e708,0xe5,0,0xffffffff82000f98,0xffffffff8208b598);
+  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
+  if (poVar1 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0xe5,0,"%s");
   }
-  uVar2 = TaskManager_TaskToXOverlapped(uVar1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218e708,0xe8,0,0xffffffff82000f98,0xffffffff8218e7c4);
+  p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0xe8,0,"%s");
   }
-  XGetOverlappedResult(uVar2,local_30,0);
-  uVar2 = XGetOverlappedExtendedError(uVar2);
-  if (((uVar2 & 0xffffffff) == 0) || ((uVar2 & 0xffffffff) == 0x80070012)) {
-    DAT_84255b70 = local_30[0];
-    uVar3 = 1;
-    DAT_84255b68 = 0;
+  XGetOverlappedResult(p_Var2,local_30,0);
+  uVar3 = XGetOverlappedExtendedError(p_Var2);
+  if ((uVar3 == 0) || (uVar3 == 0x80070012)) {
+    uVar5 = 1;
+    s_partyPresence.dirty = false;
+    s_partyPresence.count = local_30[0];
   }
   else {
-    Com_PrintError(1,0xffffffff8218e750,uVar2);
-    uVar3 = 2;
+    Com_PrintError(1,
+                   "Microsoft error - Async fetch of party presence failed with error code %llx in LiveParty_UpdatePresenceComplete()\n"
+                  );
+    uVar5 = 2;
   }
-  TaskManager_ClearTask(uVar1);
-  CloseHandle(DAT_84255b6c);
-  DAT_84255b6c = (HANDLE)0x0;
-  __restgprlr_28(uVar3);
-  return;
+  TaskManager_ClearTask(poVar1);
+  CloseHandle(s_partyPresence.handle);
+  s_partyPresence.handle = (void *)0x0;
+  tVar4 = __restgprlr_28(uVar5);
+  return tVar4;
 }
 
 
 // 8264D0A0  LiveParty_GetPresence  (xenon/xenon_liveparty.cpp:257)
 
-int LiveParty_GetPresence(longlong param_1)
+_XONLINE_PRESENCE * LiveParty_GetPresence(ulong64 param_1)
 
 {
-  longlong *plVar1;
+  _XONLINE_PRESENCE *p_Var1;
   int iVar2;
   
   iVar2 = 0;
-  if (0 < DAT_84255b70) {
-    plVar1 = &DAT_84255b74;
+  if (0 < (int)s_partyPresence.count) {
+    p_Var1 = s_partyPresence.presence;
     do {
-      if (*plVar1 == param_1) {
-        return (int)&DAT_84255b74 + iVar2 * 0xa4;
+      if (p_Var1->xuid == param_1) {
+        return s_partyPresence.presence + iVar2;
       }
       iVar2 = iVar2 + 1;
-      plVar1 = (longlong *)((int)plVar1 + 0xa4);
-    } while (iVar2 < DAT_84255b70);
+      p_Var1 = p_Var1 + 1;
+    } while (iVar2 < (int)s_partyPresence.count);
   }
-  return 0;
+  return (_XONLINE_PRESENCE *)0x0;
 }
 
 
 // 8264DDA0  LiveParty_GetPresenceString  (xenon/xenon_liveparty.cpp:276)
 
-void LiveParty_GetPresenceString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void LiveParty_GetPresenceString(_XONLINE_PRESENCE *param_1,char *param_2,int param_3)
 
 {
-  uint uVar1;
-  undefined8 *puVar3;
-  int iVar4;
-  char cVar5;
-  undefined8 uVar2;
-  undefined8 uVar6;
+  ulong64 uVar1;
+  ulong64 *puVar2;
+  int iVar3;
+  bool bVar4;
+  char *pcVar5;
   
-  puVar3 = (undefined8 *)__savegprlr_27();
-  if (puVar3 == (undefined8 *)0x0) {
-    MyAssertHandler(0xffffffff8218e708,0x115,0,0xffffffff82000f98,0xffffffff8218ae50);
+  puVar2 = (ulong64 *)__savegprlr_27(param_1);
+  if (puVar2 == (ulong64 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x115,0,"%s");
   }
-  iVar4 = LiveParty_GetPositionByXuid(*puVar3);
-  uVar6 = 0xffffffff8218adfc;
-  if (iVar4 < 0) {
-    *(undefined1 *)param_2 = 0;
+  iVar3 = LiveParty_GetPositionByXuid(*puVar2);
+  pcVar5 = "XBOXLIVE_ONLINE";
+  if (iVar3 < 0) {
+    *param_2 = '\0';
   }
-  else if ((*(int *)((int)puVar3 + 0x14) == 0x415608cb) &&
-          ((*(int *)(puVar3 + 4) == 0 ||
-           (cVar5 = MakeWideCharNameSafeForAllLanguages(param_2,(int)puVar3 + 0x24,param_3),
-           cVar5 == '\0')))) {
-    uVar2 = SEH_SafeTranslateString(0xffffffff8218adfc);
-    Com_sprintf(param_2,param_3,0xffffffff82000f98,uVar2);
+  else if ((*(int *)((int)puVar2 + 0x14) == 0x415608cb) &&
+          ((*(int *)(puVar2 + 4) == 0 ||
+           (bVar4 = MakeWideCharNameSafeForAllLanguages
+                              (param_2,(wchar_t *)((int)puVar2 + 0x24),param_3), !bVar4)))) {
+    SEH_SafeTranslateString("XBOXLIVE_ONLINE");
+    Com_sprintf(param_2,param_3,"%s");
   }
-  uVar1 = *(uint *)(puVar3 + 1);
-  if ((uVar1 & 1) != 0) {
-    if ((uVar1 & 0xf0000) == 0x10000) {
-      uVar6 = 0xffffffff8218adec;
+  uVar1 = puVar2[1];
+  if ((uVar1 & 0x100000000) != 0) {
+    if ((uVar1 & 0xf000000000000) == 0x1000000000000) {
+      pcVar5 = "XBOXLIVE_AWAY";
       goto LAB_8264decc;
     }
-    if ((uVar1 & 1) != 0) {
-      if ((uVar1 & 0xf0000) == 0x20000) {
-        uVar6 = 0xffffffff8218addc;
+    if ((uVar1 & 0x100000000) != 0) {
+      if ((uVar1 & 0xf000000000000) == 0x2000000000000) {
+        pcVar5 = "XBOXLIVE_BUSY";
         goto LAB_8264decc;
       }
-      if ((uVar1 & 1) != 0) goto LAB_8264decc;
+      if ((uVar1 & 0x100000000) != 0) goto LAB_8264decc;
     }
   }
-  uVar6 = 0xffffffff8218adc8;
+  pcVar5 = "XBOXLIVE_OFFLINE";
 LAB_8264decc:
-  uVar6 = SEH_SafeTranslateString(uVar6);
-  Com_sprintf(param_2,param_3,0xffffffff82000f98,uVar6);
-  __restgprlr_27();
+  SEH_SafeTranslateString(pcVar5);
+  iVar3 = Com_sprintf(param_2,param_3,"%s");
+  __restgprlr_27(iVar3);
   return;
 }
 
 
 // 8264D0F0  LiveParty_OpenUI  (xenon/xenon_liveparty.cpp:300)
 
-void LiveParty_OpenUI(ulonglong param_1)
+void LiveParty_OpenUI(int param_1)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x12f,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x12f,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   uVar1 = XShowPartyUI(param_1);
-  if ((int)uVar1 != 0) {
-    Com_PrintError(1,0xffffffff8218e7cc,uVar1);
+  if (uVar1 != 0) {
+    Com_PrintError(1,"Microsoft error: XShowPartyUI failed with error %llx\n");
   }
   return;
 }
@@ -330,88 +357,101 @@ void LiveParty_OpenUI(ulonglong param_1)
 
 // 8264D168  LiveParty_InviteAllComplete  (xenon/xenon_liveparty.cpp:312)
 
-void LiveParty_InviteAllComplete(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults LiveParty_InviteAllComplete(overlappedTask *param_1)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  undefined1 auStack_30 [48];
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  LocalClientNum_t LVar4;
+  taskCompleteResults tVar5;
+  undefined8 uVar6;
+  ulong auStack_30 [12];
   
-  iVar3 = __savegprlr_28();
-  if (*(int *)(iVar3 + 0x90) != 0) {
-    MyAssertHandler(0xffffffff8218e708,0x13e,0,0xffffffff82000f98,0xffffffff8218e890);
+  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
+  if (poVar1->type != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x13e,0,"%s");
   }
-  if (*(char *)(iVar3 + 0x94) == '\0') {
-    MyAssertHandler(0xffffffff8218e708,0x13f,0,0xffffffff82000f98,0xffffffff820851b0);
+  if (poVar1->active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x13f,0,"%s");
   }
-  uVar1 = TaskManager_TaskToXOverlapped(iVar3);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218e708,0x142,0,0xffffffff82000f98,0xffffffff8218e7c4);
+  p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x142,0,"%s");
   }
-  iVar4 = XGetOverlappedResult(uVar1,auStack_30,0);
-  if ((iVar4 == 0) || (iVar4 == -0x7ff8ffee)) {
-    uVar2 = CL_LocalClientNumFromControllerIndex(*(undefined1 *)(iVar3 + 0x95));
-    UI_OpenMenu(uVar2,0xffffffff8218bb6c);
-    uVar2 = 1;
+  uVar3 = XGetOverlappedResult(p_Var2,auStack_30,0);
+  if ((uVar3 == 0) || (uVar3 == 0x80070012)) {
+    LVar4 = CL_LocalClientNumFromControllerIndex((uint)poVar1->controllerIndex);
+    UI_OpenMenu(LVar4,"popup_friend_invite_sent");
+    uVar6 = 1;
   }
   else {
-    Com_PrintError(1,0xffffffff8218e828);
-    Com_SetErrorMessage(0xffffffff8218e814);
-    uVar2 = CL_LocalClientNumFromControllerIndex(*(undefined1 *)(iVar3 + 0x95));
-    UI_CloseMenu(uVar2,0xffffffff8218e804);
-    uVar2 = CL_LocalClientNumFromControllerIndex(*(undefined1 *)(iVar3 + 0x95));
-    UI_OpenMenu(uVar2,0xffffffff8216c490);
-    uVar2 = 2;
+    Com_PrintError(1,
+                   "Microsoft error - XPartySendGameInvites failed with error code %llx in LiveParty_InviteAllComplete()\n"
+                  );
+    Com_SetErrorMessage("MENU_SENDING_INVITE");
+    LVar4 = CL_LocalClientNumFromControllerIndex((uint)poVar1->controllerIndex);
+    UI_CloseMenu(LVar4,"popup_friends");
+    LVar4 = CL_LocalClientNumFromControllerIndex((uint)poVar1->controllerIndex);
+    UI_OpenMenu(LVar4,"error_popmenu_submenu");
+    uVar6 = 2;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff84257f20,uVar1);
-  TaskManager_ClearTask();
-  __restgprlr_28(uVar2);
-  return;
+  poVar1 = TaskManager_TaskFromXOverlapped(&tasks,p_Var2);
+  TaskManager_ClearTask(poVar1);
+  tVar5 = __restgprlr_28(uVar6);
+  return tVar5;
 }
 
 
 // 8264D2B8  LiveParty_CheckOngoingTasks  (xenon/xenon_liveparty.cpp:347)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveParty_CheckOngoingTasks(void)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  uint uVar3;
-  undefined *puVar4;
+  _XOVERLAPPED *p_Var1;
+  char *pcVar2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
   
   __savegprlr_21();
-  puVar4 = &DAT_84257f28;
+  poVar4 = tasks.tasks;
   do {
-    if (puVar4[0x94] != '\0') {
-      piVar2 = (int *)TaskManager_TaskToXOverlapped(puVar4);
-      if (piVar2 == (int *)0x0) {
-        MyAssertHandler(0xffffffff8218e708,0x167,0,0xffffffff82000f98,0xffffffff8208b66c);
+    if (poVar4->active != false) {
+      p_Var1 = TaskManager_TaskToXOverlapped(poVar4);
+      if (p_Var1 == (_XOVERLAPPED *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp"
+                        ,0x167,0,"%s");
       }
-      if (*piVar2 == 0x3e5) break;
-      if (*(int *)(puVar4 + 0x90) == 0) {
-        uVar3 = LiveParty_InviteAllComplete(puVar4);
-        uVar1 = 0xffffffff8218e8b0;
+      if (p_Var1->InternalLow == 0x3e5) break;
+      if (poVar4->type == 0) {
+        tVar3 = LiveParty_InviteAllComplete(poVar4);
+        pcVar2 = "Error inviting all party members\n";
       }
-      else if (*(int *)(puVar4 + 0x90) == 1) {
-        uVar3 = LiveParty_UpdatePresenceComplete(puVar4);
-        uVar1 = 0xffffffff8218e8d4;
+      else if (poVar4->type == 1) {
+        tVar3 = LiveParty_UpdatePresenceComplete(poVar4);
+        pcVar2 = "Error fetching presence for party members\n";
       }
       else {
-        uVar3 = 2;
-        uVar1 = va(0xffffffff8217b05c);
-        if (DAT_84013128 == 0) {
-          MyAssertHandler(0xffffffff8218e708,0x17d,0,uVar1);
+        tVar3 = TASK_ERROR;
+        pcVar2 = va("Unknown session task type %i\n");
+        if (alwaysfails == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp"
+                          ,0x17d,0,pcVar2);
         }
       }
-      if (1 < uVar3) {
-        Com_PrintError(0x10,uVar1);
+      if (TASK_COMPLETE < tVar3) {
+        Com_PrintError(0x10,pcVar2);
       }
     }
-    puVar4 = puVar4 + 0xa0;
-  } while ((int)puVar4 < -0x7bda6cd8);
+    poVar4 = poVar4 + 1;
+  } while ((int)poVar4 < -0x7bda6cd8);
   __restgprlr_21();
   return;
 }
@@ -419,19 +459,19 @@ void LiveParty_CheckOngoingTasks(void)
 
 // 8264D3D8  LiveParty_Frame  (xenon/xenon_liveparty.cpp:398)
 
-void LiveParty_Frame(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveParty_Frame(int param_1)
 
 {
-  char cVar1;
-  undefined4 local_20 [4];
+  bool bVar1;
+  LocalClientNum_t local_20 [4];
   
   LiveParty_CheckOngoingTasks();
-  cVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20);
-  if ((cVar1 != '\0') && (DAT_84255b68 != '\0')) {
-    cVar1 = Menu_IsMenuOpenAndVisible(local_20[0],0xffffffff8218e804);
-    if (cVar1 != '\0') {
-      LiveParty_UpdatePresence(param_1);
-    }
+  bVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20);
+  if (((bVar1) && (s_partyPresence.dirty != false)) &&
+     (bVar1 = Menu_IsMenuOpenAndVisible(local_20[0],"popup_friends"), bVar1)) {
+    LiveParty_UpdatePresence(param_1);
   }
   return;
 }
@@ -439,29 +479,39 @@ void LiveParty_Frame(undefined8 param_1)
 
 // 8264D450  LiveParty_FeederItemText  (xenon/xenon_liveparty.cpp:414)
 
-void LiveParty_FeederItemText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+char * LiveParty_FeederItemText(int param_1,int param_2,int param_3,Font_s *param_4,float param_5)
 
 {
-  __savegprlr_28();
-  if ((ulonglong)DAT_84256ff8 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x19f,0,0xffffffff8218e978,param_2);
+  char *pcVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)param_3;
+  uVar2 = (ulonglong)param_2;
+  __savegprlr_28((double)param_5,param_1,uVar2,uVar3,param_4);
+  if ((ulonglong)s_partyUserList.dwUserCount <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x19f,0,"row doesn\'t index LiveParty_GetCount()\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x1a0,0,0xffffffff8218e930,param_3,3);
+  if (2 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x1a0,0,
+                    "column doesn\'t index NUM_LIVE_PARTY_FEEDER_COLUMNS\n\t%i not in [0, %i)");
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    if (((param_3 & 0xffffffff) != 1) && (2 < (param_3 & 0xffffffff))) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff8218e708,0x1ae,0,0xffffffff8218e900);
+  if ((uVar3 & 0xffffffff) != 0) {
+    if (((uVar3 & 0xffffffff) != 1) && (2 < (uVar3 & 0xffffffff))) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp"
+                        ,0x1ae,0,"MeetPlayer_FeederItemText -- unknown column");
       }
-      __restgprlr_28(0);
-      return;
+      pcVar1 = (char *)__restgprlr_28(0);
+      return pcVar1;
     }
-    __restgprlr_28(0xffffffff820068af);
-    return;
+    pcVar1 = (char *)__restgprlr_28(0xffffffff820068af);
+    return pcVar1;
   }
-  __restgprlr_28(param_2 * 0x78 + -0x7bda8ff8);
-  return;
+  pcVar1 = (char *)__restgprlr_28(uVar2 * 0x78 + -0x7bda8ff8);
+  return pcVar1;
 }
 
 
@@ -470,106 +520,110 @@ void LiveParty_FeederItemText(undefined8 param_1,ulonglong param_2,ulonglong par
 void LiveParty_FeederSelection(int param_1)
 
 {
-  DAT_84257f00._4_4_ = param_1;
-  DAT_84257f10 = (&DAT_84257000)[param_1 * 0xf];
+  s_partyGlobals.currentIndex = param_1;
+  s_partyGlobals.currentMemberId = s_partyUserList.Users[param_1].Xuid;
   return;
 }
 
 
 // 8264D560  LiveParty_StoreXUID  (xenon/xenon_liveparty.cpp:443)
 
-void LiveParty_StoreXUID(void)
+void LiveParty_StoreXUID(int param_1)
 
 {
-  DAT_84257f18 = DAT_84257f10;
+  s_partyGlobals.storedMemberId = s_partyGlobals.currentMemberId;
   return;
 }
 
 
 // 8264D578  LiveParty_ClearXUID  (xenon/xenon_liveparty.cpp:449)
 
-void LiveParty_ClearXUID(void)
+void LiveParty_ClearXUID(int param_1)
 
 {
-  DAT_84257f18 = 0;
+  s_partyGlobals.storedMemberId = 0;
   return;
 }
 
 
 // 8264DEF0  LiveParty_FeederGamerTag  (xenon/xenon_liveparty.cpp:455)
 
-longlong LiveParty_FeederGamerTag(void)
+char * LiveParty_FeederGamerTag(int param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = LiveParty_GetPositionByXuid(DAT_84257f18);
+  uVar1 = LiveParty_GetPositionByXuid(s_partyGlobals.storedMemberId);
   if ((int)uVar1 < 0) {
-    return -0x7dff9751;
+    return "";
   }
-  if (0x1f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x1ce,0,0xffffffff8218eb18,uVar1,0x20);
+  if (0x1f < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x1ce,0,"playerIndex doesn\'t index XPARTY_MAX_USERS\n\t%i not in [0, %i)");
   }
-  return uVar1 * 0x78 + -0x7bda8ff8;
+  return s_partyUserList.Users[uVar1].GamerTag;
 }
 
 
 // 8264D590  LiveParty_IsMe  (xenon/xenon_liveparty.cpp:468)
 
-undefined8 LiveParty_IsMe(ulonglong param_1)
+bool LiveParty_IsMe(int param_1)
 
 {
   int iVar1;
-  int *piVar2;
+  ulong *puVar2;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x1d9,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x1d9,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   iVar1 = 0;
-  if (0 < DAT_84256ff8) {
-    piVar2 = &DAT_84257018;
+  if (0 < (int)s_partyUserList.dwUserCount) {
+    puVar2 = &s_partyUserList.Users[0].dwUserIndex;
     do {
-      if ((((piVar2[3] & 1U) != 0) && (*piVar2 == (int)param_1)) &&
-         (*(longlong *)(piVar2 + -6) == DAT_84257f18)) {
-        return 1;
+      if ((((puVar2[3] & 1) != 0) && (*puVar2 == param_1)) &&
+         (((_XPARTY_USER_INFO *)(puVar2 + -6))->Xuid == s_partyGlobals.storedMemberId)) {
+        return true;
       }
       iVar1 = iVar1 + 1;
-      piVar2 = piVar2 + 0x1e;
-    } while (iVar1 < DAT_84256ff8);
+      puVar2 = puVar2 + 0x1e;
+    } while (iVar1 < (int)s_partyUserList.dwUserCount);
   }
-  return 0;
+  return false;
 }
 
 
 // 8264DF90  LiveParty_IsLocal  (xenon/xenon_liveparty.cpp:491)
 
-uint LiveParty_IsLocal(ulonglong param_1)
+bool LiveParty_IsLocal(int param_1)
 
 {
   int iVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x1ef,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x1ef,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((DAT_84257f18 != 0) && (iVar1 = LiveParty_GetPositionByXuid(), -1 < iVar1)) {
-    return (&DAT_84257024)[iVar1 * 0x1e] & 1;
+  if ((s_partyGlobals.storedMemberId != 0) &&
+     (iVar1 = LiveParty_GetPositionByXuid(s_partyGlobals.storedMemberId), -1 < iVar1)) {
+    return (bool)((byte)s_partyUserList.Users[iVar1].dwFlags & 1);
   }
-  return 0;
+  return false;
 }
 
 
 // 8264D660  LiveParty_FeederOnShowCard  (xenon/xenon_liveparty.cpp:510)
 
-void LiveParty_FeederOnShowCard(undefined8 param_1)
+void LiveParty_FeederOnShowCard(int param_1)
 
 {
-  char cVar2;
-  ulonglong uVar1;
+  bool bVar2;
+  ulong uVar1;
   
-  cVar2 = Live_IsUserSignedInToLive();
-  if ((((cVar2 != '\0') && (DAT_84256ff8 != 0)) && (DAT_84257f18 != 0)) &&
-     (uVar1 = XShowGamerCardUI(param_1), (uVar1 & 0xffffffff) != 0)) {
-    Com_PrintError(0x16,0xffffffff8218aec8,uVar1);
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if ((((bVar2) && (s_partyUserList.dwUserCount != 0)) && (s_partyGlobals.storedMemberId != 0)) &&
+     (uVar1 = XShowGamerCardUI(param_1,s_partyGlobals.storedMemberId), uVar1 != 0)) {
+    Com_PrintError(0x16,"Microsoft error %i from XShowGamerCardUI()\n");
   }
   return;
 }
@@ -577,24 +631,33 @@ void LiveParty_FeederOnShowCard(undefined8 param_1)
 
 // 8264E028  LiveParty_FeederOnReportRequest  (xenon/xenon_liveparty.cpp:527)
 
-void LiveParty_FeederOnReportRequest(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveParty_FeederOnReportRequest(int param_1,ReportOffense param_2)
 
 {
-  char cVar2;
+  bool bVar3;
   int iVar1;
-  undefined1 auStack_20 [8];
+  char *pcVar2;
+  ulong64 uVar4;
+  LocalClientNum_t aLStack_20 [2];
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x212,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x212,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar2 = Live_IsUserSignedInToLive(param_1);
-  if (((cVar2 != '\0') && (DAT_84256ff8 != 0)) &&
-     (iVar1 = LiveParty_GetPositionByXuid(DAT_84257f18), -1 < iVar1)) {
-    LiveAntiCheat_ReportPlayer(param_1,param_2);
-    cVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,auStack_20);
-    if (cVar2 != '\0') {
-      FriendsMenu_GetReportSubmitString(param_2);
-      FriendsMenu_ShowErrorMessage();
+  bVar3 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar3) && (s_partyUserList.dwUserCount != 0)) {
+    uVar4 = s_partyGlobals.storedMemberId;
+    iVar1 = LiveParty_GetPositionByXuid(s_partyGlobals.storedMemberId);
+    if (-1 < iVar1) {
+      LiveAntiCheat_ReportPlayer(param_1,param_2,uVar4);
+      bVar3 = CL_DoesControllerIndexHaveALocalClientNum(param_1,aLStack_20);
+      if (bVar3) {
+        pcVar2 = FriendsMenu_GetReportSubmitString(param_2);
+        FriendsMenu_ShowErrorMessage(pcVar2);
+      }
     }
   }
   return;
@@ -603,41 +666,55 @@ void LiveParty_FeederOnReportRequest(ulonglong param_1,undefined8 param_2)
 
 // 8264D6E0  LiveParty_JoinPartyMember  (xenon/xenon_liveparty.cpp:552)
 
-void LiveParty_JoinPartyMember(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveParty_JoinPartyMember(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  int iVar2;
+  int iVar1;
+  bool bVar3;
+  PartyData *pPVar2;
   longlong lVar4;
   undefined4 *puVar5;
   longlong lVar6;
   longlong lVar7;
   byte *pbVar8;
-  longlong lVar9;
-  byte local_30 [8];
-  byte abStack_28 [40];
+  _XSESSION_INFO *p_Var9;
+  longlong lVar10;
+  byte local_30 [48];
   
-  uVar1 = __savegprlr_29();
-  cVar3 = Live_IsUserSignedInToLive();
-  if ((((cVar3 != '\0') && (DAT_84256ff8 != 0)) && (-1 < (int)param_2)) &&
-     ((int)param_2 < DAT_84256ff8)) {
-    lVar6 = param_2 * 0x78;
-    if ((*(int *)(&DAT_84257020 + (int)lVar6) == 0x415608cb) &&
-       ((*(uint *)((int)&DAT_84257024 + (int)lVar6) & 1) == 0)) {
-      lVar9 = lVar6 + -0x7bda8fd8;
+  lVar6 = (longlong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  bVar3 = Live_IsUserSignedInToLive(iVar1);
+  if ((((bVar3) && (s_partyUserList.dwUserCount != 0)) && (-1 < (int)lVar6)) &&
+     ((int)lVar6 < (int)s_partyUserList.dwUserCount)) {
+    lVar6 = lVar6 * 0x78;
+    if ((*(int *)((int)(&s_partyUserList.Users[0].SessionInfo.sessionID + -1) + (int)lVar6) ==
+         0x415608cb) &&
+       ((*(uint *)(s_partyUserList.Users[0].SessionInfo.sessionID.ab + (int)lVar6 + -4) & 1) == 0))
+    {
+      lVar10 = lVar6 + -0x7bda8fd8;
       pbVar8 = local_30;
-      lVar7 = lVar9;
+      local_30[0] = 0;
+      local_30[1] = 0;
+      local_30[2] = 0;
+      local_30[3] = 0;
+      local_30[4] = 0;
+      local_30[5] = 0;
+      local_30[6] = 0;
+      local_30[7] = 0;
+      lVar7 = lVar10;
       do {
         lVar4 = (ulonglong)*pbVar8 - (ulonglong)*(byte *)lVar7;
         if (lVar4 != 0) break;
         pbVar8 = pbVar8 + 1;
         lVar7 = lVar7 + 1;
-      } while (pbVar8 != abStack_28);
+      } while (pbVar8 != local_30 + 8);
       if ((int)lVar4 != 0) {
-        DAT_8425a058 = Live_GetXuid(uVar1);
+        g_launchData.invitedXUID = Live_GetXuid(iVar1);
         lVar6 = lVar6 + -0x7bda8fdc;
-        puVar5 = (undefined4 *)((int)&DAT_8425a058 + 4);
+        puVar5 = (undefined4 *)((int)&g_launchData.invitedXUID + 4);
         lVar7 = 0xf;
         do {
           lVar6 = lVar6 + 4;
@@ -645,34 +722,34 @@ void LiveParty_JoinPartyMember(undefined8 param_1,longlong param_2)
           *puVar5 = *(undefined4 *)lVar6;
           lVar7 = lVar7 + -1;
         } while (lVar7 != 0);
-        DAT_8425a09c = 1;
-        DAT_8425a054 = 0;
+        g_launchData.fromGameInvite = true;
+        g_launchData.inviteState = INVITE_NONE;
         XSetLaunchData(0xffffffff84259cc8,1000);
-        if (DAT_844c7870 != 0) {
-          pbVar8 = &DAT_844c7874;
+        if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+          p_Var9 = &g_serverSession.dyn.sessionInfo;
           do {
-            lVar6 = (ulonglong)*pbVar8 - (ulonglong)*(byte *)lVar9;
+            lVar6 = (ulonglong)(p_Var9->sessionID).ab[0] - (ulonglong)*(byte *)lVar10;
             if (lVar6 != 0) break;
-            pbVar8 = pbVar8 + 1;
-            lVar9 = lVar9 + 1;
-          } while (pbVar8 != &DAT_844c787c);
+            p_Var9 = (_XSESSION_INFO *)((p_Var9->sessionID).ab + 1);
+            lVar10 = lVar10 + 1;
+          } while (p_Var9 != (_XSESSION_INFO *)&g_serverSession.dyn.sessionInfo.hostAddress);
           if ((int)lVar6 == 0) {
-            cVar3 = CL_AllLocalClientsDisconnected();
-            if (cVar3 != '\0') {
-              Lobby_GetPartyData();
-              iVar2 = Party_InParty();
-              if (iVar2 == 0) goto LAB_8264d868;
+            bVar3 = CL_AllLocalClientsDisconnected();
+            if (bVar3) {
+              pPVar2 = Lobby_GetPartyData();
+              iVar1 = Party_InParty(pPVar2);
+              if (iVar1 == 0) goto LAB_8264d868;
             }
-            Com_Printf(0x10,0xffffffff8218af48);
+            Com_Printf(0x10,"Received invite to current session.  Not doing anything about it\n");
             __restgprlr_29();
             return;
           }
         }
 LAB_8264d868:
-        cVar3 = CL_AllLocalClientsDisconnected();
-        if (((cVar3 != '\0') && (iVar2 = Party_InParty(0xffffffff82b55118), iVar2 != 0)) &&
-           (cVar3 = PartyUI_ShouldShowInviteWarning(0xffffffff82b55118), cVar3 != '\0')) {
-          UI_ShowAcceptInviteWarning(0);
+        bVar3 = CL_AllLocalClientsDisconnected();
+        if (((bVar3) && (iVar1 = Party_InParty(&g_partyData), iVar1 != 0)) &&
+           (bVar3 = PartyUI_ShouldShowInviteWarning(&g_partyData), bVar3)) {
+          UI_ShowAcceptInviteWarning(LOCAL_CLIENT_0);
           __restgprlr_29();
           return;
         }
@@ -680,8 +757,10 @@ LAB_8264d868:
         __restgprlr_29();
         return;
       }
-      Com_PrintError(0x10,0xffffffff8218e9b8,param_2);
-      Live_ThrowError(1,0xffffffff8203252c);
+      Com_PrintError(0x10,
+                     "LiveParty_FeederOnJoinRequest found session but session id is blank, party member index: %llu\n"
+                    );
+      Live_ThrowError(ERR_DROP,"EXE_HOSTUNREACH");
     }
   }
   __restgprlr_29();
@@ -691,24 +770,23 @@ LAB_8264d868:
 
 // 8264E0F8  LiveParty_InvitePartyMember  (xenon/xenon_liveparty.cpp:607)
 
-void LiveParty_InvitePartyMember(undefined8 param_1,undefined8 param_2)
+void LiveParty_InvitePartyMember(int param_1,ulong64 param_2)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
-  int iVar3;
-  undefined4 *puVar4;
+  ulong uVar3;
+  _XPARTY_USER_LIST *p_Var4;
   
-  cVar2 = Live_IsUserSignedInToLive();
-  if (cVar2 != '\0') {
-    puVar4 = &DAT_84256ff8;
-    if (DAT_84256ff8 != 0) {
-      iVar3 = DAT_84256ff8;
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if (bVar2) {
+    p_Var4 = &s_partyUserList;
+    if (s_partyUserList.dwUserCount != 0) {
+      uVar3 = s_partyUserList.dwUserCount;
       iVar1 = LiveParty_GetPositionByXuid(param_2);
-      if ((-1 < iVar1) && (iVar1 < iVar3)) {
-        if ((puVar4[iVar1 * 0x1e + 10] == 0x415608cb) && ((puVar4[iVar1 * 0x1e + 0xb] & 1) == 0)) {
-          Live_SendInvite(param_1,param_2);
-        }
+      if ((((-1 < iVar1) && (iVar1 < (int)uVar3)) && (p_Var4->Users[iVar1].dwTitleId == 0x415608cb))
+         && ((p_Var4->Users[iVar1].dwFlags & 1) == 0)) {
+        Live_SendInvite(param_1,param_2);
       }
     }
   }
@@ -718,35 +796,43 @@ void LiveParty_InvitePartyMember(undefined8 param_1,undefined8 param_2)
 
 // 8264E1A8  LiveParty_FeederOnInviteRequest  (xenon/xenon_liveparty.cpp:634)
 
-void LiveParty_FeederOnInviteRequest(void)
+void LiveParty_FeederOnInviteRequest(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar3;
+  int iVar1;
+  bool bVar3;
   int iVar2;
-  undefined4 local_30 [12];
+  ulong64 uVar4;
+  char *local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  cVar3 = Live_IsUserSignedInToLive();
-  if (cVar3 != '\0') {
-    cVar3 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
-    if (cVar3 == '\0') {
-      Com_PrintError(0x10,0xffffffff8218ebb0);
+  iVar1 = __savegprlr_29(param_1);
+  bVar3 = Live_IsUserSignedInToLive(iVar1);
+  if (bVar3) {
+    bVar3 = FriendsMenu_IsAllowedToInvite(iVar1,local_30);
+    if (!bVar3) {
+      Com_PrintError(0x10,
+                     "LiveParty_FeederOnInviteRequest() failed because we are not allowed to invite anyone right now.\n"
+                    );
       FriendsMenu_ShowErrorMessage(local_30[0]);
       __restgprlr_29();
       return;
     }
-    iVar2 = LiveParty_GetPositionByXuid(DAT_84257f18);
-    if ((-1 < iVar2) && (iVar2 < DAT_84256ff8)) {
-      cVar3 = Social_IsAlreadyConnected(uVar1,*(undefined8 *)(&DAT_84257028 + iVar2 * 0x78));
-      if (cVar3 != '\0') {
-        Com_PrintError(0x10,0xffffffff8218eb58);
+    uVar4 = s_partyGlobals.storedMemberId;
+    iVar2 = LiveParty_GetPositionByXuid(s_partyGlobals.storedMemberId);
+    if ((-1 < iVar2) && (iVar2 < (int)s_partyUserList.dwUserCount)) {
+      bVar3 = Social_IsAlreadyConnected
+                        (iVar1,(XNKID)*&s_partyUserList.Users[iVar2].SessionInfo.sessionID.ab,uVar4,
+                         local_30);
+      if (bVar3) {
+        Com_PrintError(0x10,
+                       "LiveParty_FeederOnInviteRequest() failed because the player is already connected.\n"
+                      );
         FriendsMenu_ShowErrorMessage(local_30[0]);
         __restgprlr_29();
         return;
       }
-      if ((DAT_84256ff8 != 0) && (DAT_84257f18 != 0)) {
-        LiveParty_InvitePartyMember(uVar1);
+      if ((s_partyUserList.dwUserCount != 0) && (s_partyGlobals.storedMemberId != 0)) {
+        LiveParty_InvitePartyMember(iVar1,s_partyGlobals.storedMemberId);
       }
     }
   }
@@ -757,19 +843,22 @@ void LiveParty_FeederOnInviteRequest(void)
 
 // 8264D8F0  LiveParty_FeederOnJoinRequest  (xenon/xenon_liveparty.cpp:669)
 
-void LiveParty_FeederOnJoinRequest(ulonglong param_1)
+void LiveParty_FeederOnJoinRequest(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   char *local_20 [2];
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x2a0,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2a0,0,
+                    "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (((DAT_84256ff8 != 0) && (DAT_84257f18 != 0)) &&
-     (cVar1 = FriendsMenu_JoinOnPresence(param_1,DAT_84257f18,local_20), cVar1 == '\0')) {
+  if (((s_partyUserList.dwUserCount != 0) && (s_partyGlobals.storedMemberId != 0)) &&
+     (bVar1 = FriendsMenu_JoinOnPresence(param_1,s_partyGlobals.storedMemberId,local_20), !bVar1)) {
     if (*local_20[0] == '\0') {
-      MyAssertHandler(0xffffffff8218e708,0x2a7,0,0xffffffff82000f98,0xffffffff8218ea18);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                      0x2a7,0,"%s");
     }
     FriendsMenu_ShowErrorMessage(local_20[0]);
   }
@@ -779,34 +868,36 @@ void LiveParty_FeederOnJoinRequest(ulonglong param_1)
 
 // 8264D9C8  LiveParty_GetPlayer  (xenon/xenon_liveparty.cpp:686)
 
-undefined8 LiveParty_GetPlayer(ulonglong param_1)
+ulong64 LiveParty_GetPlayer(int param_1)
 
 {
-  if ((ulonglong)DAT_84256ff8 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x2af,0,0xffffffff8218ea28,param_1);
+  if (s_partyUserList.dwUserCount <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2af,0,
+                    "playerIndex doesn\'t index s_partyUserList.dwUserCount\n\t%i not in [0, %i)");
   }
-  return (&DAT_84257000)[(int)param_1 * 0xf];
+  return s_partyUserList.Users[param_1].Xuid;
 }
 
 
 // 8264DA38  LiveParty_GetPositionByXuid  (xenon/xenon_liveparty.cpp:693)
 
-longlong LiveParty_GetPositionByXuid(longlong param_1)
+int LiveParty_GetPositionByXuid(ulong64 param_1)
 
 {
-  longlong *plVar1;
-  longlong lVar2;
+  _XPARTY_USER_INFO *p_Var1;
+  int iVar2;
   
-  lVar2 = 0;
-  if (0 < DAT_84256ff8) {
-    plVar1 = &DAT_84257000;
+  iVar2 = 0;
+  if (0 < (int)s_partyUserList.dwUserCount) {
+    p_Var1 = s_partyUserList.Users;
     do {
-      if (*plVar1 == param_1) {
-        return lVar2;
+      if (p_Var1->Xuid == param_1) {
+        return iVar2;
       }
-      lVar2 = lVar2 + 1;
-      plVar1 = plVar1 + 0xf;
-    } while ((int)lVar2 < DAT_84256ff8);
+      iVar2 = iVar2 + 1;
+      p_Var1 = p_Var1 + 1;
+    } while (iVar2 < (int)s_partyUserList.dwUserCount);
   }
   return -1;
 }
@@ -814,70 +905,76 @@ longlong LiveParty_GetPositionByXuid(longlong param_1)
 
 // 8264DA80  LiveParty_FeederOverrideCursorPos  (xenon/xenon_liveparty.cpp:710)
 
-void LiveParty_FeederOverrideCursorPos(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void LiveParty_FeederOverrideCursorPos(int param_1,int *param_2,int *param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   uint uVar2;
-  uint *puVar3;
+  ulonglong uVar3;
   uint *puVar4;
-  ulonglong uVar5;
+  uint *puVar5;
   ulonglong uVar6;
-  int iVar7;
   
-  uVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2c9,0,0xffffffff82000f98,0xffffffff8218eadc);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_24(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2c9,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2ca,0,0xffffffff82000f98,0xffffffff82182238);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2ca,0,"%s");
   }
-  puVar3 = (uint *)param_2;
-  if ((int)*puVar3 < 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2cb,0,0xffffffff82000f98,0xffffffff8218eacc);
-  }
-  puVar4 = (uint *)param_3;
+  puVar4 = (uint *)uVar3;
   if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2cc,0,0xffffffff82000f98,0xffffffff8218eabc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2cb,0,"%s");
   }
-  uVar2 = LiveParty_GetPositionByXuid(DAT_84257f10);
-  if ((ulonglong)DAT_84256ff8 == 0) {
-    DAT_84257f00._4_4_ = 0;
-    DAT_84257f08._0_4_ = 0;
-    DAT_84257f10 = 0;
+  puVar5 = (uint *)uVar6;
+  if ((int)*puVar5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2cc,0,"%s");
+  }
+  uVar2 = LiveParty_GetPositionByXuid(s_partyGlobals.currentMemberId);
+  if ((ulonglong)s_partyUserList.dwUserCount == 0) {
+    s_partyGlobals.currentIndex = 0;
+    s_partyGlobals.currentStartPos = 0;
+    s_partyGlobals.currentMemberId = 0;
   }
   else if ((int)uVar2 < 0) {
-    uVar5 = (ulonglong)DAT_84256ff8 - 1;
-    uVar6 = (ulonglong)*puVar3;
-    if ((int)uVar5 <= (int)*puVar3) {
-      uVar6 = uVar5;
+    uVar6 = (ulonglong)s_partyUserList.dwUserCount - 1;
+    uVar3 = (ulonglong)*puVar4;
+    if ((int)uVar6 <= (int)*puVar4) {
+      uVar3 = uVar6;
     }
-    DAT_84257f00._4_4_ = -((int)(uint)uVar6 >> 0x1f) - (uint)(uVar6 != 0) & (uint)uVar6;
-    *puVar3 = DAT_84257f00._4_4_;
-    DAT_84257f10 = (&DAT_84257000)[*puVar3 * 0xf];
+    s_partyGlobals.currentIndex = -((int)(uint)uVar3 >> 0x1f) - (uint)(uVar3 != 0) & (uint)uVar3;
+    *puVar4 = s_partyGlobals.currentIndex;
+    s_partyGlobals.currentMemberId = s_partyUserList.Users[*puVar4].Xuid;
   }
   else {
-    *puVar3 = uVar2;
+    *puVar4 = uVar2;
   }
-  uVar2 = *puVar3;
-  if ((int)*puVar4 <= (int)uVar2) {
-    iVar7 = uVar2 - (int)uVar1;
-    if (iVar7 < (int)*puVar4) goto LAB_8264dc00;
-    uVar2 = iVar7 + 1;
+  uVar2 = *puVar4;
+  if ((int)*puVar5 <= (int)uVar2) {
+    if ((int)(uVar2 - uVar1) < (int)*puVar5) goto LAB_8264dc00;
+    uVar2 = (uVar2 - uVar1) + 1;
   }
-  *puVar4 = uVar2;
+  *puVar5 = uVar2;
 LAB_8264dc00:
-  if ((int)*puVar3 < 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2e7,1,0xffffffff82000f98,0xffffffff8218eacc);
-  }
   if ((int)*puVar4 < 0) {
-    MyAssertHandler(0xffffffff8218e708,0x2e8,1,0xffffffff82000f98,0xffffffff8218eabc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2e7,1,"%s");
   }
-  if ((uVar1 & 0xffffffff) <= ((ulonglong)*puVar3 - (ulonglong)*puVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218e708,0x2e9,1,0xffffffff8218ea78,
-                    (ulonglong)*puVar3 - (ulonglong)*puVar4,uVar1);
+  if ((int)*puVar5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2e8,1,"%s");
   }
-  DAT_84257f08._0_4_ = *puVar4;
+  if (uVar1 <= *puVar4 - *puVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_liveparty.cpp",
+                    0x2e9,1,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
+  }
+  s_partyGlobals.currentStartPos = *puVar5;
   __restgprlr_24();
   return;
 }
@@ -885,81 +982,89 @@ LAB_8264dc00:
 
 // 8264DC88  LiveParty_IsSlotSelected  (xenon/xenon_liveparty.cpp:752)
 
-bool LiveParty_IsSlotSelected(undefined8 param_1,int param_2)
+bool LiveParty_IsSlotSelected(int param_1,int param_2)
 
 {
-  if (DAT_84256ff8 == 0) {
+  if (s_partyUserList.dwUserCount == 0) {
     return false;
   }
-  return param_2 == DAT_84257f00._4_4_ - DAT_84257f08._0_4_;
+  return param_2 == s_partyGlobals.currentIndex - s_partyGlobals.currentStartPos;
 }
 
 
 // 8264E2A0  LiveParty_GetPresenceForSlot  (xenon/xenon_liveparty.cpp:764)
 
-void LiveParty_GetPresenceForSlot(undefined8 param_1,longlong param_2)
+char * LiveParty_GetPresenceForSlot(int param_1,int param_2)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  char cVar5;
+  int iVar2;
+  _XONLINE_PRESENCE *p_Var3;
+  char *pcVar4;
+  int iVar5;
+  bool bVar6;
+  longlong lVar7;
+  ulong64 uVar8;
   
-  uVar2 = __savegprlr_29();
-  if ((ulonglong)DAT_84256ff8 <= ((ulonglong)DAT_84257f08._0_4_ + param_2 & 0xffffffff)) {
-    __restgprlr_29(0xffffffff820068af);
-    return;
+  lVar7 = (longlong)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  if ((ulonglong)s_partyUserList.dwUserCount <=
+      ((ulonglong)(uint)s_partyGlobals.currentStartPos + lVar7 & 0xffffffff)) {
+    pcVar4 = (char *)__restgprlr_29(0xffffffff820068af);
+    return pcVar4;
   }
-  iVar1 = (int)((ulonglong)DAT_84257f08._0_4_ + param_2);
-  uVar3 = LiveParty_GetPresence((&DAT_84257000)[iVar1 * 0xf]);
-  if ((uVar3 & 0xffffffff) != 0) {
-    LiveParty_GetPresenceString(uVar3,PTR_DAT_82995910,0x80);
-    __restgprlr_29(PTR_DAT_82995910);
-    return;
+  iVar1 = (int)((ulonglong)(uint)s_partyGlobals.currentStartPos + lVar7);
+  uVar8 = s_partyUserList.Users[iVar1].Xuid;
+  p_Var3 = LiveParty_GetPresence(uVar8);
+  if (p_Var3 != (_XONLINE_PRESENCE *)0x0) {
+    LiveParty_GetPresenceString(p_Var3,g_partyFeederText,0x80);
+    pcVar4 = (char *)__restgprlr_29(g_partyFeederText);
+    return pcVar4;
   }
-  iVar4 = Friends_FindIndex(uVar2);
-  if (iVar4 != -1) {
-    Friends_GetPresence_Platform(uVar2,(&DAT_84257000)[iVar1 * 0xf],PTR_DAT_82995910,0x80);
-    __restgprlr_29(PTR_DAT_82995910);
-    return;
+  iVar5 = Friends_FindIndex(iVar2,uVar8);
+  if (iVar5 != -1) {
+    Friends_GetPresence_Platform(iVar2,s_partyUserList.Users[iVar1].Xuid,g_partyFeederText,0x80);
+    pcVar4 = (char *)__restgprlr_29(g_partyFeederText);
+    return pcVar4;
   }
-  cVar5 = Live_XUIDIsLocalPlayer((&DAT_84257000)[iVar1 * 0xf]);
-  if ((cVar5 == '\0') && (*(int *)(&DAT_84257020 + iVar1 * 0x78) != 0x415608cb)) {
-    SEH_SafeTranslateString(0xffffffff8218adec);
-    __restgprlr_29();
-    return;
+  bVar6 = Live_XUIDIsLocalPlayer(s_partyUserList.Users[iVar1].Xuid);
+  if ((!bVar6) && (s_partyUserList.Users[iVar1].dwTitleId != 0x415608cb)) {
+    pcVar4 = SEH_SafeTranslateString("XBOXLIVE_AWAY");
+    pcVar4 = (char *)__restgprlr_29(pcVar4);
+    return pcVar4;
   }
-  SEH_SafeTranslateString(0xffffffff8218adfc);
-  __restgprlr_29();
-  return;
+  pcVar4 = SEH_SafeTranslateString("XBOXLIVE_ONLINE");
+  pcVar4 = (char *)__restgprlr_29(pcVar4);
+  return pcVar4;
 }
 
 
 // 8264DCC8  LiveParty_GetCurrentIndexName  (xenon/xenon_liveparty.cpp:817)
 
-longlong LiveParty_GetCurrentIndexName(void)
+char * LiveParty_GetCurrentIndexName(int param_1)
 
 {
-  return (ulonglong)DAT_84257f00._4_4_ * 0x78 + -0x7bda8ff8;
+  return s_partyUserList.Users[s_partyGlobals.currentIndex].GamerTag;
 }
 
 
 // 8264DCF0  LiveParty_GetCurrentIndexXUID  (xenon/xenon_liveparty.cpp:824)
 
-undefined8 LiveParty_GetCurrentIndexXUID(void)
+ulong64 LiveParty_GetCurrentIndexXUID(int param_1)
 
 {
-  return (&DAT_84257000)[DAT_84257f00._4_4_ * 0xf];
+  return s_partyUserList.Users[s_partyGlobals.currentIndex].Xuid;
 }
 
 
 // 82940108  `dynamic_atexit_destructor_for_'tasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__tasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff84257f20);
+  OverlappedTaskSet::~OverlappedTaskSet(&tasks);
   return;
 }
 

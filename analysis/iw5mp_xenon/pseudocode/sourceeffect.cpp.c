@@ -2,223 +2,263 @@
 
 // 828D34F0  XAudioQuerySourceEffectSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:39)
 
-undefined8 XAudioQuerySourceEffectSize(int param_1)
+undefined4 XAudioQuerySourceEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 {
-  undefined8 uVar1;
+  T_HRESULT TVar1;
   
-  if (*(byte *)(param_1 + 8) < 4) {
-    uVar1 = XAudioQueryPCMSourceEffectSize();
-    return uVar1;
+  if (param_1[1].EffectId < 4) {
+    TVar1 = XAudioQueryPCMSourceEffectSize(param_1,param_2);
+    return TVar1;
   }
-  if (*(byte *)(param_1 + 8) == 4) {
-    uVar1 = XAudioQueryXMASourceEffectSize();
-    return uVar1;
+  if (param_1[1].EffectId == 4) {
+    TVar1 = XAudioQueryXMASourceEffectSize(param_1,param_2);
+    return TVar1;
   }
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
 // 828D3518  XAudioCreateSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:88)
 
-undefined8 XAudioCreateSourceEffect(int param_1)
+undefined4
+XAudioCreateSourceEffect
+          (XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
-  undefined8 uVar1;
+  T_HRESULT TVar1;
   
-  if (*(byte *)(param_1 + 8) < 4) {
-    uVar1 = XAudioCreatePCMSourceEffect();
-    return uVar1;
+  if (param_1[1].EffectId < 4) {
+    TVar1 = XAudioCreatePCMSourceEffect(param_1,param_2,param_3);
+    return TVar1;
   }
-  if (*(byte *)(param_1 + 8) == 4) {
-    uVar1 = XAudioCreateXMASourceEffect();
-    return uVar1;
+  if (param_1[1].EffectId == 4) {
+    TVar1 = XAudioCreateXMASourceEffect(param_1,param_2,param_3);
+    return TVar1;
   }
-  return 0xffffffff80004001;
+  return 0x80004001;
 }
 
 
-// 828D3540  XAUDIO::CSourceEffect::CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:136)
+// 828D35B0  FlushSourceBuffers  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcestream.h:97)
 
-undefined4 * XAUDIO__CSourceEffect__CSourceEffect(undefined4 *param_1,int param_2)
-
-{
-  param_1[1] = 1;
-  *param_1 = &PTR_XAUDIO__CEffect___scalar_deleting_destructor__8220735c;
-  param_1[2] = *(undefined4 *)(param_2 + 4);
-  XAUDIO__CSourceStream__CSourceStream(param_1 + 3);
-  *param_1 = &PTR_XAUDIO__CSourceEffect___scalar_deleting_destructor__82207490;
-  param_1[3] = &PTR__thunk__XAUDIO__CSourceEffect___vector_deleting_destructor__82207430;
-  return param_1;
-}
-
-
-// 828D35B8  XAUDIO::CSourceEffect::~CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:159)
-
-void XAUDIO__CSourceEffect___CSourceEffect(undefined4 *param_1)
-
-{
-  *param_1 = &PTR_XAUDIO__CSourceEffect___scalar_deleting_destructor__82207490;
-  param_1[3] = &PTR__thunk__XAUDIO__CSourceEffect___vector_deleting_destructor__82207430;
-  XAUDIO__CSourceStream___CSourceStream(param_1 + 3);
-  *param_1 = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
-  return;
-}
-
-
-// 828D32D0  XAUDIO::CSourceEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
-
-void XAUDIO__CSourceEffect__Initialize(int param_1,int param_2,undefined8 param_3)
-
-{
-  *(undefined4 *)(param_1 + 0xac) = *(undefined4 *)(param_2 + 0x48);
-  *(undefined4 *)(param_1 + 0xb0) = *(undefined4 *)(param_2 + 0x4c);
-  XAUDIO__CSourceStream__Initialize
-            (param_1 + 0xc,param_2 + 8,*(undefined1 *)(param_2 + 0x44),
-             *(undefined1 *)(param_2 + 0x45),param_3);
-  return;
-}
-
-
-// 828D3698  XAUDIO::CSourceEffect::CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
-
-void XAUDIO__CSourceEffect__CompletePacket(undefined8 param_1,undefined8 param_2,undefined4 param_3)
+undefined4 __thiscall XAUDIO::CSourceStream::FlushSourceBuffers(CSourceStream *this)
 
 {
   int iVar1;
-  int iVar2;
+  
+  if ((this->m_State & 1) != 0) {
+    return 0x8000ffff;
+  }
+  do {
+    iVar1 = (**(code **)(this->_padding_ + 0x5c))(this,0,0xffffffff80004004);
+  } while (iVar1 != 0);
+  (**(code **)(this->_padding_ + 0x54))(this,0x18,0);
+  this->m_dwStreamPosition = 0;
+  return 0;
+}
+
+
+// 828D3540  CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:136)
+
+CSourceEffect * __thiscall
+XAUDIO::CSourceEffect::CSourceEffect
+          (CSourceEffect *this,XAUDIOSOURCEFXINIT *param_1,IXAudioBatchAllocator *param_2)
+
+{
+  this->_padding_ = 1;
+  this->_padding_ = (int)&CEffect::_vftable_;
+  this->_padding_ = (int)(param_1->EffectHeader).pContext;
+  CSourceStream::CSourceStream((CSourceStream *)&this->_padding_);
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CSourceStream__;
+  return this;
+}
+
+
+// 828D35B8  ~CSourceEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:159)
+
+void __thiscall XAUDIO::CSourceEffect::~CSourceEffect(CSourceEffect *this)
+
+{
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CSourceStream__;
+  CSourceStream::~CSourceStream((CSourceStream *)&this->_padding_);
+  this->_padding_ = (int)&CObjectRefCount::_vftable_;
+  return;
+}
+
+
+// 828D32D0  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:185)
+
+void __thiscall
+XAUDIO::CSourceEffect::Initialize
+          (CSourceEffect *this,XAUDIOSOURCEFXINIT *param_1,IXAudioBatchAllocator *param_2)
+
+{
+  this->m_pfnPacketCompletionCallback = param_1->pfnPacketCompletionCallback;
+  this->m_pfnPacketLoopCallback = param_1->pfnPacketLoopCallback;
+  CSourceStream::Initialize
+            ((CSourceStream *)&this->_padding_,&param_1->Format,param_1->MaxPacketCount,
+             param_1->Flags,param_2);
+  return;
+}
+
+
+// 828D3698  CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
+
+XAUDIOPACKETCTX * __thiscall
+XAUDIO::CSourceEffect::CompletePacket
+          (CSourceEffect *this,XAUDIOPACKETCTX *param_1,undefined4 param_2)
+
+{
+  CSourceStream *this_00;
+  XAUDIOPACKETCTX *pXVar1;
   undefined4 local_30;
-  undefined4 local_2c;
+  void *local_2c;
   undefined4 local_28;
   
-  iVar1 = __savegprlr_29();
-  iVar2 = XAUDIO__CSourceStream__CompletePacket();
-  if ((iVar2 != 0) && (*(code **)(iVar1 + 0xa0) != (code *)0x0)) {
-    local_30 = *(undefined4 *)(iVar1 + -4);
-    local_2c = *(undefined4 *)(iVar2 + 0x24);
-    local_28 = param_3;
-    (**(code **)(iVar1 + 0xa0))(&local_30);
+  this_00 = (CSourceStream *)__savegprlr_29(this);
+  pXVar1 = CSourceStream::CompletePacket(this_00,param_1,param_2);
+  if ((pXVar1 != (XAUDIOPACKETCTX *)0x0) && ((code *)this_00[1]._padding_ != (code *)0x0)) {
+    local_30._0_1_ = this_00[-0xffffffff00000001].m_State;
+    local_30._1_1_ = this_00[-0xffffffff00000001].m_Flags;
+    local_30._2_2_ = this_00[-0xffffffff00000001].m_VolumeFadeFrameRemaining;
+    local_2c = (pXVar1->Packet).pContext;
+    local_28 = param_2;
+    (*(code *)this_00[1]._padding_)(&local_30);
   }
-  __restgprlr_29(iVar2);
-  return;
+  pXVar1 = (XAUDIOPACKETCTX *)__restgprlr_29(pXVar1);
+  return pXVar1;
 }
 
 
-// 828D3300  XAUDIO::CSourceEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
+// 828D3300  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:267)
 
-undefined8 XAUDIO__CSourceEffect__GetParam(int param_1,char param_2,char param_3,uint *param_4)
+undefined4 __thiscall
+XAUDIO::CSourceEffect::GetParam
+          (CSourceEffect *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
-  undefined8 uVar1;
+  undefined4 uVar1;
   
-  if ((param_2 == '\x02') && (param_3 == '\x03')) {
-    if (param_4[1] == 0x38) {
+  if ((param_1 == '\x02') && (param_2 == '\x03')) {
+    if ((param_3->Data).BufferSize == 0x38) {
                     /* WARNING: Could not recover jumptable at 0x828d333c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x34))((int *)(param_1 + 0xc),*param_4,0);
+      uVar1 = (**(code **)(this->_padding_ + 0x34))(&this->_padding_,param_3->Value,0);
       return uVar1;
     }
-    if (param_4[1] == 0x3c) {
+    if ((param_3->Data).BufferSize == 0x3c) {
                     /* WARNING: Could not recover jumptable at 0x828d3360. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x34))
-                        ((int *)(param_1 + 0xc),(ulonglong)*param_4,(ulonglong)*param_4 + 0x38);
+      uVar1 = (**(code **)(this->_padding_ + 0x34))
+                        (&this->_padding_,(ulonglong)param_3->Flags,(ulonglong)param_3->Flags + 0x38
+                        );
       return uVar1;
     }
   }
   else {
-    if ((param_2 == '\0') && (param_3 == '\x01')) {
+    if ((param_1 == '\0') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d338c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x3c))((int *)(param_1 + 0xc),param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x3c))(&this->_padding_,param_3);
       return uVar1;
     }
-    if ((param_2 == '\x01') && (param_3 == '\x01')) {
+    if ((param_1 == '\x01') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d33b8. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x44))((int *)(param_1 + 0xc),param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x44))(&this->_padding_,param_3);
       return uVar1;
     }
-    if ((param_2 == '\x03') && (param_3 == '\x01')) {
+    if ((param_1 == '\x03') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d33e4. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x4c))((int *)(param_1 + 0xc),param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x4c))(&this->_padding_,param_3);
       return uVar1;
     }
   }
-  return 0xffffffff80070057;
+  return 0x80070057;
 }
 
 
-// 828D33F8  XAUDIO::CSourceEffect::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:331)
+// 828D33F8  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:331)
 
-undefined8 XAUDIO__CSourceEffect__SetParam(int param_1,char param_2,char param_3,float *param_4)
+undefined4 __thiscall
+XAUDIO::CSourceEffect::SetParam
+          (CSourceEffect *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
-  undefined8 uVar1;
+  undefined4 uVar1;
   
-  if ((param_2 == '\x02') && (param_3 == '\x03')) {
-    if (param_4[1] == 7.84727e-44) {
+  if ((param_1 == '\x02') && (param_2 == '\x03')) {
+    if ((param_3->Data).BufferSize == 0x38) {
                     /* WARNING: Could not recover jumptable at 0x828d3434. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x38))((int *)(param_1 + 0xc),*param_4,0);
+      uVar1 = (**(code **)(this->_padding_ + 0x38))(&this->_padding_,param_3->Value,0);
       return uVar1;
     }
-    if (param_4[1] == 8.40779e-44) {
+    if ((param_3->Data).BufferSize == 0x3c) {
                     /* WARNING: Could not recover jumptable at 0x828d3458. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x38))
-                        ((int *)(param_1 + 0xc),*param_4,*(undefined1 *)((int)*param_4 + 0x38));
+      uVar1 = (**(code **)(this->_padding_ + 0x38))
+                        (&this->_padding_,param_3->Flags,*(undefined1 *)(param_3->Flags + 0x38));
       return uVar1;
     }
   }
   else {
-    if ((param_2 == '\0') && (param_3 == '\x01')) {
+    if ((param_1 == '\0') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d3484. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x40))((double)*param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x40))((double)param_3->Value);
       return uVar1;
     }
-    if ((param_2 == '\x01') && (param_3 == '\x01')) {
+    if ((param_1 == '\x01') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d34b0. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x48))((double)*param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x48))((double)param_3->Value);
       return uVar1;
     }
-    if ((param_2 == '\x03') && (param_3 == '\x01')) {
+    if ((param_1 == '\x03') && (param_2 == '\x01')) {
                     /* WARNING: Could not recover jumptable at 0x828d34dc. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-      uVar1 = (**(code **)(*(int *)(param_1 + 0xc) + 0x50))((double)*param_4);
+      uVar1 = (**(code **)(this->_padding_ + 0x50))((double)param_3->Value);
       return uVar1;
     }
   }
-  return 0xffffffff80070057;
+  return 0x80070057;
 }
 
 
-// 828D35A8  [thunk]:XAUDIO::CSourceEffect::`vector_deleting_destructor'  (line unknown)
+// 828D35A8  `vector_deleting_destructor'`adjustor{12}'  (line unknown)
 
-void _thunk__XAUDIO__CSourceEffect___vector_deleting_destructor_(longlong param_1)
+/* [thunk]:public: virtual void * __cdecl XAUDIO::CSourceEffect::`vector deleting
+   destructor'`adjustor{12}' (unsigned int) */
+
+void * __thiscall
+XAUDIO::CSourceEffect::_vector_deleting_destructor__adjustor_12__(CSourceEffect *this,uint param_1)
 
 {
-  XAUDIO__CSourceEffect___scalar_deleting_destructor_(param_1 + -0xc);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = _scalar_deleting_destructor_((CSourceEffect *)&this[-1]._padding_,param_1);
+  return pvVar1;
 }
 
 
-// 828D3610  XAUDIO::CSourceEffect::`scalar_deleting_destructor'  (line unknown)
+// 828D3610  `scalar_deleting_destructor'  (line unknown)
 
-undefined4 *
-XAUDIO__CSourceEffect___scalar_deleting_destructor_(undefined4 *param_1,ulonglong param_2)
+void * __thiscall
+XAUDIO::CSourceEffect::_scalar_deleting_destructor_(CSourceEffect *this,uint param_1)
 
 {
-  *param_1 = &PTR_XAUDIO__CSourceEffect___scalar_deleting_destructor__82207490;
-  param_1[3] = &PTR__thunk__XAUDIO__CSourceEffect___vector_deleting_destructor__82207430;
-  XAUDIO__CSourceStream___CSourceStream(param_1 + 3);
-  *param_1 = &PTR_XAUDIO__CObjectRefCount___scalar_deleting_destructor__82207330;
-  if ((param_2 & 1) != 0) {
-    XAUDIO__CXMemMemoryManager__XMemFree(0xffffffff8489594c,param_1,0x61820000);
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CSourceStream__;
+  CSourceStream::~CSourceStream((CSourceStream *)&this->_padding_);
+  this->_padding_ = (int)&CObjectRefCount::_vftable_;
+  if ((param_1 & 1) != 0) {
+    CXMemMemoryManager::XMemFree(&g_MemoryManager,this,0x61820000);
   }
-  return param_1;
+  return this;
 }
 

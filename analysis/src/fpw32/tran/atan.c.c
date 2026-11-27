@@ -2,7 +2,7 @@
 
 // 82917208  atan  (<external>/bt/278379/vctools/crt/src/fpw32/tran/atan.c:179)
 
-double atan(double _X)
+double atan(double param_1)
 
 {
   uint uVar1;
@@ -10,45 +10,44 @@ double atan(double _X)
   double dVar3;
   double dVar4;
   
-  dVar2 = ABS(_X);
-  dVar4 = (double)DAT_829b0048;
+  dVar2 = ABS(param_1);
+  dVar4 = (double)gConsts.one;
   if (dVar2 <= dVar4) {
     uVar1 = 0;
     dVar3 = dVar2;
   }
   else {
-    dVar3 = DAT_829affa0;
-    if (DAT_829affc8 < dVar2) goto LAB_829172d4;
+    dVar3 = gConsts.PI_OVER_TWO;
+    if (gConsts.MAX_ARG < dVar2) goto LAB_829172d4;
     uVar1 = 2;
     dVar3 = dVar4 / dVar2;
   }
-  if (DAT_829affb0 < dVar3) {
+  if (gConsts.TWO_M_SQRT3 < dVar3) {
     uVar1 = uVar1 + 1;
-    dVar3 = (DAT_829affc0 * dVar3 - dVar4) / (DAT_829affc0 + dVar3);
+    dVar3 = (gConsts.SQRT3 * dVar3 - dVar4) / (gConsts.SQRT3 + dVar3);
   }
   dVar4 = dVar3 * dVar3;
-  dVar3 = ((((DAT_829affe8 * dVar4 + DAT_829affe0) * dVar4 + DAT_829affd8) * dVar4 + DAT_829affd0) *
-           dVar4 * dVar3) /
-          ((((DAT_829b0008 + dVar4) * dVar4 + DAT_829b0000) * dVar4 + DAT_829afff8) * dVar4 +
-          DAT_829afff0) + dVar3;
+  dVar3 = ((((gConsts.p3 * dVar4 + gConsts.p2) * dVar4 + gConsts.p1) * dVar4 + gConsts.p0) * dVar4 *
+          dVar3) / ((((gConsts.q3 + dVar4) * dVar4 + gConsts.q2) * dVar4 + gConsts.q1) * dVar4 +
+                   gConsts.q0) + dVar3;
   if (1 < uVar1) {
     dVar3 = -dVar3;
   }
-  dVar3 = *(double *)(uVar1 * 8 + -0x7d64ffe8) + dVar3;
+  dVar3 = gConsts.a[uVar1] + dVar3;
 LAB_829172d4:
   if (dVar2 != 0.0) {
-    if (_X < 0.0) {
+    if (param_1 < 0.0) {
       dVar3 = -dVar3;
     }
     return dVar3;
   }
-  return _X;
+  return param_1;
 }
 
 
 // 829172F0  atan2  (<external>/bt/278379/vctools/crt/src/fpw32/tran/atan.c:211)
 
-double atan2(double _Y,double _X)
+double atan2(double param_1,double param_2)
 
 {
   uint uVar1;
@@ -56,22 +55,22 @@ double atan2(double _Y,double _X)
   double dVar3;
   double dVar4;
   
-  if (_X == (double)DAT_829b0040) {
-    dVar3 = DAT_829affa0;
-    if (_Y == (double)DAT_829b0040) {
-      if (((ulonglong)_X & 0x8000000000000000) == 0) {
-        return _Y;
+  if (param_2 == (double)gConsts.zero) {
+    dVar3 = gConsts.PI_OVER_TWO;
+    if (param_1 == (double)gConsts.zero) {
+      if (((ulonglong)param_2 & 0x8000000000000000) == 0) {
+        return param_1;
       }
-      if (((ulonglong)_Y & 0x8000000000000000) == 0) {
-        return DAT_829affa8;
+      if (((ulonglong)param_1 & 0x8000000000000000) == 0) {
+        return gConsts.PI;
       }
-      return -DAT_829affa8;
+      return -gConsts.PI;
     }
   }
   else {
-    dVar4 = ABS(_X);
+    dVar4 = ABS(param_2);
     uVar1 = 0;
-    dVar2 = ABS(_Y);
+    dVar2 = ABS(param_1);
     dVar3 = dVar2;
     if (dVar4 < dVar2) {
       uVar1 = 2;
@@ -79,24 +78,24 @@ double atan2(double _Y,double _X)
       dVar4 = dVar2;
     }
     dVar3 = dVar3 / dVar4;
-    if (DAT_829affb0 < dVar3) {
+    if (gConsts.TWO_M_SQRT3 < dVar3) {
       uVar1 = uVar1 + 1;
-      dVar3 = (DAT_829affc0 * dVar3 - (double)DAT_829b0048) / (DAT_829affc0 + dVar3);
+      dVar3 = (gConsts.SQRT3 * dVar3 - (double)gConsts.one) / (gConsts.SQRT3 + dVar3);
     }
     dVar4 = dVar3 * dVar3;
-    dVar3 = ((((DAT_829affe8 * dVar4 + DAT_829affe0) * dVar4 + DAT_829affd8) * dVar4 + DAT_829affd0)
-             * dVar4 * dVar3) /
-            ((((DAT_829b0008 + dVar4) * dVar4 + DAT_829b0000) * dVar4 + DAT_829afff8) * dVar4 +
-            DAT_829afff0) + dVar3;
+    dVar3 = ((((gConsts.p3 * dVar4 + gConsts.p2) * dVar4 + gConsts.p1) * dVar4 + gConsts.p0) * dVar4
+            * dVar3) /
+            ((((gConsts.q3 + dVar4) * dVar4 + gConsts.q2) * dVar4 + gConsts.q1) * dVar4 + gConsts.q0
+            ) + dVar3;
     if (1 < uVar1) {
       dVar3 = -dVar3;
     }
-    dVar3 = *(double *)(uVar1 * 8 + -0x7d64ffe8) + dVar3;
+    dVar3 = gConsts.a[uVar1] + dVar3;
   }
-  if (_X < 0.0) {
-    dVar3 = DAT_829affa8 - dVar3;
+  if (param_2 < 0.0) {
+    dVar3 = gConsts.PI - dVar3;
   }
-  if (((ulonglong)_Y & 0x8000000000000000) != 0) {
+  if (((ulonglong)param_1 & 0x8000000000000000) != 0) {
     return -dVar3;
   }
   return dVar3;

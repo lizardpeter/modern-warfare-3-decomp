@@ -2,51 +2,61 @@
 
 // 827536F0  R_BeginMarkMeshVerts  (gfx_d3d/r_marksurf.cpp:44)
 
-undefined8 R_BeginMarkMeshVerts(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+bool R_BeginMarkMeshVerts(void)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  undefined8 in_MSR;
+  long lVar1;
+  bool bVar2;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    uVar1 = DAT_847b9680;
-    if (DAT_847b9680 != 0) {
+    lVar1 = scene.markMeshGuard;
+    if (scene.markMeshGuard != 0) {
       if (in_RESERVE != '\0') {
-        DAT_847b9680 = storeWordConditionalIndexed((ulonglong)DAT_847b9680,0,0xffffffff847b9680);
+        scene.markMeshGuard =
+             storeWordConditionalIndexed((ulonglong)(uint)scene.markMeshGuard,0,0xffffffff847b9680);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_847b9680 = storeWordConditionalIndexed(1,0,0xffffffff847b9680);
+      scene.markMeshGuard = storeWordConditionalIndexed(1,0,0xffffffff847b9680);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar1 == 0) {
-    if (DAT_84628b00 == 0) {
-      MyAssertHandler(0xffffffff821c7540,0x44,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  if (lVar1 == 0) {
+    if (frontEndDataOut == (GfxBackEndData *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x44
+                      ,0,"%s");
     }
-    uVar2 = 1;
-    DAT_84618240 = DAT_847b968c;
-    DAT_84618244 = *(uint *)(DAT_84628b00 + 0x1480) / 0x2c;
-    DAT_84618248 = *(undefined4 *)(DAT_84628b00 + 0x1454);
-    DAT_8461824c = *(undefined4 *)(DAT_84628b00 + 0x14a8);
-    DAT_84618250 = *(undefined4 *)(DAT_84628b00 + 0x147c);
-    DAT_84618254 = 1;
+    bVar2 = true;
+    g_markVertGlob.surfCount = scene.markSurfCount;
+    g_markVertGlob.vertCount = (uint)frontEndDataOut->mesh[3].vb.used / 0x2c;
+    g_markVertGlob.indexCount = frontEndDataOut->mesh[3].indexCount;
+    g_markVertGlob.verts = (GfxWorldVertex *)frontEndDataOut->mesh[3].vb.verts;
+    g_markVertGlob.indices = frontEndDataOut->mesh[3].indices;
+    g_markVertGlob.allowProcess = true;
   }
   else {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821c7540,0x3c,0,0xffffffff821c7588,1,0,in_MSR);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x3c
+                      ,0,"Two simultaneous users of R_BeginMarkMeshVerts: shouldn\'t happen.");
     }
-    uVar2 = 0;
+    bVar2 = false;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 82753828  R_EndMarkMeshVerts  (gfx_d3d/r_marksurf.cpp:99)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_EndMarkMeshVerts(void)
 
@@ -56,106 +66,132 @@ void R_EndMarkMeshVerts(void)
   
   do {
     if (in_RESERVE != '\0') {
-      DAT_847b9680 = storeWordConditionalIndexed((ulonglong)DAT_847b9680 - 1,0,0xffffffff847b9680);
+      scene.markMeshGuard =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)scene.markMeshGuard - 1,0,0xffffffff847b9680);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821c7540,0x6a,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x6a,0
+                    ,"%s");
   }
-  DAT_847b968c = DAT_84618240;
-  *(int *)(DAT_84628b00 + 0x1480) = DAT_84618244 * 0x2c;
-  *(undefined4 *)(DAT_84628b00 + 0x1454) = DAT_84618248;
-  DAT_84618254 = 0;
+  scene.markSurfCount = g_markVertGlob.surfCount;
+  frontEndDataOut->mesh[3].vb.used = g_markVertGlob.vertCount * 0x2c;
+  frontEndDataOut->mesh[3].indexCount = g_markVertGlob.indexCount;
+  g_markVertGlob.allowProcess = false;
   return;
 }
 
 
 // 82753B58  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
-void R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-               (undefined8 param_1,ulonglong param_2,uint param_3,uint param_4,longlong param_5,
-               ulonglong param_6)
+uint R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+               (GfxMarkSurf *param_1,uint param_2,uint param_3,uint param_4,GfxMarkSurf *param_5,
+               uint param_6)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
+  ulonglong uVar3;
   int iVar4;
   int iVar5;
   ulonglong uVar6;
   uint *puVar7;
-  ulonglong uVar8;
-  uint *puVar10;
-  longlong lVar9;
-  longlong lVar11;
+  uint uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  uint *puVar16;
+  longlong lVar15;
+  longlong lVar17;
   
-  puVar7 = (uint *)__savegprlr_26();
-  if ((param_2 & 0xffffffff) != 0) {
-    lVar11 = (param_6 & 0xfffffff) * 0x10 + param_5 + -0x10;
+  uVar13 = (ulonglong)(int)param_6;
+  lVar12 = (longlong)(int)param_5;
+  uVar11 = (ulonglong)(int)param_4;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  puVar7 = (uint *)__savegprlr_26(param_1);
+  if ((uVar9 & 0xffffffff) != 0) {
+    lVar17 = (uVar13 & 0xfffffff) * 0x10 + lVar12 + -0x10;
     do {
-      uVar1 = *puVar7 >> 0x12;
-      if ((param_3 <= uVar1) && (uVar1 < param_4)) {
-        uVar8 = param_6;
-        uVar6 = param_6 & 0xffffffff;
-        for (lVar9 = lVar11; (uVar6 != 0 && (puVar10 = (uint *)lVar9, uVar1 < *puVar10 >> 0x12));
-            lVar9 = lVar9 + -0x10) {
-          uVar8 = uVar8 - 1;
-          puVar10[4] = *puVar10;
-          puVar10[5] = puVar10[1];
-          puVar10[6] = puVar10[2];
-          puVar10[7] = puVar10[3];
-          uVar6 = uVar8;
+      uVar3 = (ulonglong)(*puVar7 >> 0x12);
+      if (((uVar10 & 0xffffffff) <= uVar3) && (uVar3 < (uVar11 & 0xffffffff))) {
+        uVar14 = uVar13;
+        lVar15 = lVar17;
+        uVar6 = uVar13 & 0xffffffff;
+        while ((uVar6 != 0 && (puVar16 = (uint *)lVar15, uVar3 < *puVar16 >> 0x12))) {
+          uVar14 = uVar14 - 1;
+          lVar15 = lVar15 + -0x10;
+          puVar16[4] = *puVar16;
+          puVar16[5] = puVar16[1];
+          puVar16[6] = puVar16[2];
+          puVar16[7] = puVar16[3];
+          uVar6 = uVar14;
         }
-        iVar5 = (int)uVar8 * 0x10;
-        uVar1 = puVar7[1];
-        param_6 = param_6 + 1;
-        uVar2 = puVar7[2];
-        iVar4 = iVar5 + (int)param_5;
-        uVar3 = puVar7[3];
-        lVar11 = lVar11 + 0x10;
-        *(uint *)(iVar5 + (int)param_5) = *puVar7;
-        *(uint *)(iVar4 + 4) = uVar1;
-        *(uint *)(iVar4 + 8) = uVar2;
-        *(uint *)(iVar4 + 0xc) = uVar3;
+        iVar5 = (int)uVar14 * 0x10;
+        uVar8 = puVar7[1];
+        uVar13 = uVar13 + 1;
+        uVar1 = puVar7[2];
+        iVar4 = iVar5 + (int)lVar12;
+        uVar2 = puVar7[3];
+        lVar17 = lVar17 + 0x10;
+        *(uint *)(iVar5 + (int)lVar12) = *puVar7;
+        *(uint *)(iVar4 + 4) = uVar8;
+        *(uint *)(iVar4 + 8) = uVar1;
+        *(uint *)(iVar4 + 0xc) = uVar2;
       }
-      param_2 = param_2 - 1;
+      uVar9 = uVar9 - 1;
       puVar7 = puVar7 + 4;
-    } while (param_2 != 0);
+    } while (uVar9 != 0);
   }
-  __restgprlr_26(param_6);
-  return;
+  uVar8 = __restgprlr_26(uVar13);
+  return uVar8;
 }
 
 
 // 82753C28  R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:128)
 
-int R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-              (uint *param_1,ulonglong param_2,uint param_3,uint param_4,int param_5,int param_6)
+uint R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+               (GfxMarkSurf *param_1,uint param_2,uint param_3,uint param_4,GfxMarkSurf *param_5,
+               uint param_6)
 
 {
-  uint uVar1;
-  uint uVar2;
+  ushort *puVar1;
+  GfxMarkSurfLighting GVar2;
   uint uVar3;
-  uint *puVar4;
+  ushort uVar4;
+  uchar uVar5;
+  uchar uVar6;
+  longlong lVar7;
+  GfxMarkSurf *pGVar8;
   
-  if ((param_2 & 0xffffffff) != 0) {
-    puVar4 = (uint *)(param_6 * 0x10 + param_5);
+  lVar7 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pGVar8 = param_5 + param_6;
     do {
-      if ((param_3 <= *param_1 >> 0x12) && (*param_1 >> 0x12 < param_4)) {
+      uVar3 = (param_1->drawGroup).packed >> 0x12;
+      if ((param_3 <= uVar3) && (uVar3 < param_4)) {
         param_6 = param_6 + 1;
-        uVar1 = param_1[1];
-        uVar2 = param_1[2];
-        uVar3 = param_1[3];
-        *puVar4 = *param_1;
-        puVar4[1] = uVar1;
-        puVar4[2] = uVar2;
-        puVar4[3] = uVar3;
-        puVar4 = puVar4 + 4;
+        puVar1 = param_1->indices;
+        uVar4 = param_1->triCount;
+        uVar5 = param_1->modelType;
+        uVar6 = param_1->pad;
+        GVar2 = param_1->lighting;
+        pGVar8->drawGroup = param_1->drawGroup;
+        pGVar8->indices = puVar1;
+        pGVar8->triCount = uVar4;
+        pGVar8->modelType = uVar5;
+        pGVar8->pad = uVar6;
+        pGVar8->lighting = GVar2;
+        pGVar8 = pGVar8 + 1;
       }
-      param_2 = param_2 - 1;
-      param_1 = param_1 + 4;
-    } while (param_2 != 0);
+      lVar7 = lVar7 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar7 != 0);
   }
   return param_6;
 }
@@ -163,78 +199,87 @@ int R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
 
 // 827538F0  R_ReserveMarkMeshIndices  (gfx_d3d/r_marksurf.cpp:129)
 
-void R_ReserveMarkMeshIndices(undefined8 param_1,int *param_2)
+bool R_ReserveMarkMeshIndices(int param_1,r_double_index_t **param_2)
 
 {
   int iVar1;
-  int iVar2;
+  undefined1 uVar2;
+  r_double_index_t *prVar3;
   
-  iVar2 = __savegprlr_29();
-  if (DAT_84618254 == '\0') {
-    MyAssertHandler(0xffffffff821c7540,0x82,0,0xffffffff82000f98,0xffffffff821c75cc);
+  iVar1 = __savegprlr_29(param_1);
+  if (g_markVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x82,0
+                    ,"%s");
   }
-  if (0x2400 < DAT_84618248 + iVar2) {
-    R_WarnOncePerFrame(0x2c);
-    __restgprlr_29(0);
-    return;
+  if (0x2400 < g_markVertGlob.indexCount + iVar1) {
+    R_WarnOncePerFrame(R_WARN_MAX_MARK_INDS);
+    uVar2 = __restgprlr_29(0);
+    return (bool)uVar2;
   }
-  iVar1 = DAT_84618248 * 2;
-  DAT_84618248 = DAT_84618248 + iVar2;
-  *param_2 = iVar1 + DAT_84618250;
-  __restgprlr_29(1);
-  return;
+  prVar3 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
+  g_markVertGlob.indexCount = g_markVertGlob.indexCount + iVar1;
+  *param_2 = prVar3;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 82753980  R_MarkMeshVertIter_Begin  (gfx_d3d/r_marksurf.cpp:145)
 
-longlong R_MarkMeshVertIter_Begin(ulonglong param_1)
+GfxWorldVertex * R_MarkMeshVertIter_Begin(ushort param_1)
 
 {
-  if (DAT_84618254 == '\0') {
-    MyAssertHandler(0xffffffff821c7540,0x94,0,0xffffffff82000f98,0xffffffff821c75cc);
+  if (!g_markVertGlob.allowProcess) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x94,0
+                    ,"%s");
   }
-  return (param_1 & 0xffff) * 0x2c + (ulonglong)DAT_8461824c;
+  return g_markVertGlob.verts + param_1;
 }
 
 
 // 82753F38  R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
-void R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
+uint R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
+               (GfxMarkSurf *param_1,uint param_2,uint param_3,GfxMarkSurf *param_4)
 
 {
-  undefined2 uVar1;
-  undefined2 uVar2;
+  ushort uVar1;
+  ushort uVar2;
   int iVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  GfxMarkSurf *pGVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  GfxMarkSurf *pGVar7;
   
-  uVar4 = __savegprlr_27();
-  iVar3 = (int)((param_3 & 0xffffffff) << 1);
-  uVar1 = *(undefined2 *)((int)&DAT_84616480 + iVar3);
-  uVar2 = *(undefined2 *)((int)&DAT_84616482 + iVar3);
-  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>();
-  uVar5 = R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>(uVar4,param_2,uVar1,uVar2);
-  R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
-            (uVar4,param_2,uVar2,0x1660,param_4,uVar5);
-  __restgprlr_27();
-  return;
+  uVar6 = (ulonglong)(int)param_3;
+  pGVar4 = (GfxMarkSurf *)__savegprlr_27(param_1);
+  iVar3 = (int)((uVar6 & 0xffffffff) << 1);
+  uVar1 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3);
+  uVar2 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3 + 2);
+  pGVar7 = param_4;
+  uVar5 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (pGVar4,param_2,0,(uint)uVar1,param_4,0);
+  uVar5 = R_CopySortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (pGVar4,param_2,(uint)uVar1,(uint)uVar2,pGVar7,uVar5);
+  uVar5 = R_InsertSortSurfsInRange<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (pGVar4,param_2,(uint)uVar2,0x1660,param_4,uVar5);
+  uVar5 = __restgprlr_27(uVar5);
+  return uVar5;
 }
 
 
 // 827539F8  R_MarkMeshVertIter_Next  (gfx_d3d/r_marksurf.cpp:156)
 
-longlong R_MarkMeshVertIter_Next(longlong param_1)
+GfxWorldVertex * R_MarkMeshVertIter_Next(GfxWorldVertex *param_1)
 
 {
-  return param_1 + 0x2c;
+  return param_1 + 1;
 }
 
 
 // 82753A00  R_MarkMeshVertIter_End  (gfx_d3d/r_marksurf.cpp:165)
 
-void R_MarkMeshVertIter_End(void)
+void R_MarkMeshVertIter_End(GfxWorldVertex *param_1)
 
 {
   return;
@@ -243,113 +288,136 @@ void R_MarkMeshVertIter_End(void)
 
 // 82753A08  R_ReserveMarkMeshVerts  (gfx_d3d/r_marksurf.cpp:174)
 
-void R_ReserveMarkMeshVerts(undefined8 param_1,undefined2 *param_2)
+bool R_ReserveMarkMeshVerts(int param_1,ushort *param_2)
 
 {
   int iVar1;
-  undefined2 uVar2;
+  undefined1 uVar2;
+  ushort uVar3;
   
-  iVar1 = __savegprlr_29();
-  if (DAT_84618254 == '\0') {
-    MyAssertHandler(0xffffffff821c7540,0xaf,0,0xffffffff82000f98,0xffffffff821c75cc);
+  iVar1 = __savegprlr_29(param_1);
+  if (g_markVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xaf,0
+                    ,"%s");
   }
-  if (0x1800 < DAT_84618244 + iVar1) {
-    R_WarnOncePerFrame(0x2d);
-    __restgprlr_29(0);
-    return;
+  if (0x1800 < g_markVertGlob.vertCount + iVar1) {
+    R_WarnOncePerFrame(R_WARN_MAX_MARK_VERTS);
+    uVar2 = __restgprlr_29(0);
+    return (bool)uVar2;
   }
-  uVar2 = (undefined2)DAT_84618244;
-  DAT_84618244 = DAT_84618244 + iVar1;
-  *param_2 = uVar2;
-  __restgprlr_29(1);
-  return;
+  uVar3 = (ushort)g_markVertGlob.vertCount;
+  g_markVertGlob.vertCount = g_markVertGlob.vertCount + iVar1;
+  *param_2 = uVar3;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 82753A90  R_ReserveMarkMeshVertsAndIndices  (gfx_d3d/r_marksurf.cpp:194)
 
-void R_ReserveMarkMeshVertsAndIndices
-               (undefined8 param_1,undefined2 *param_2,longlong param_3,int *param_4)
+bool R_ReserveMarkMeshVertsAndIndices
+               (int param_1,ushort *param_2,int param_3,r_double_index_t **param_4)
 
 {
   int iVar1;
-  int iVar2;
-  undefined2 uVar3;
+  undefined1 uVar2;
+  longlong lVar3;
+  r_double_index_t *prVar4;
+  ushort uVar5;
   
-  iVar1 = __savegprlr_27();
-  if (DAT_84618254 == '\0') {
-    MyAssertHandler(0xffffffff821c7540,0xc3,0,0xffffffff82000f98,0xffffffff821c75cc);
+  lVar3 = (longlong)param_3;
+  iVar1 = __savegprlr_27(param_1);
+  if (g_markVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xc3,0
+                    ,"%s");
   }
-  if (0x1800 < DAT_84618244 + iVar1) {
-    R_WarnOncePerFrame(0x2d);
-    __restgprlr_27(0);
-    return;
+  if (0x1800 < g_markVertGlob.vertCount + iVar1) {
+    R_WarnOncePerFrame(R_WARN_MAX_MARK_VERTS);
+    uVar2 = __restgprlr_27(0);
+    return (bool)uVar2;
   }
-  if (0x2400 < ((ulonglong)DAT_84618248 + param_3 & 0xffffffff)) {
-    R_WarnOncePerFrame(0x2c);
-    __restgprlr_27(0);
-    return;
+  if (0x2400 < ((ulonglong)g_markVertGlob.indexCount + lVar3 & 0xffffffff)) {
+    R_WarnOncePerFrame(R_WARN_MAX_MARK_INDS);
+    uVar2 = __restgprlr_27(0);
+    return (bool)uVar2;
   }
-  iVar2 = DAT_84618248 * 2 + DAT_84618250;
-  uVar3 = (undefined2)DAT_84618244;
-  DAT_84618244 = DAT_84618244 + iVar1;
-  *param_2 = uVar3;
-  DAT_84618248 = (uint)((ulonglong)DAT_84618248 + param_3);
-  *param_4 = iVar2;
-  __restgprlr_27(1);
-  return;
+  prVar4 = (r_double_index_t *)(g_markVertGlob.indices + g_markVertGlob.indexCount);
+  uVar5 = (ushort)g_markVertGlob.vertCount;
+  g_markVertGlob.vertCount = g_markVertGlob.vertCount + iVar1;
+  *param_2 = uVar5;
+  g_markVertGlob.indexCount = (uint)((ulonglong)g_markVertGlob.indexCount + lVar3);
+  *param_4 = prVar4;
+  uVar2 = __restgprlr_27(1);
+  return (bool)uVar2;
 }
 
 
 // 82753C98  R_AddMarkSurf  (gfx_d3d/r_marksurf.cpp:222)
 
-void R_AddMarkSurf(undefined8 param_1,undefined1 *param_2,undefined4 param_3,ulonglong param_4)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddMarkSurf(Material *param_1,GfxMarkContext *param_2,ushort *param_3,uint param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  GfxMarkSurf *pGVar2;
+  GfxMarkSurf *pGVar3;
   uint uVar4;
+  Material *pMVar5;
+  Material *pMVar6;
+  MaterialTechniqueSet *pMVar7;
+  ulonglong uVar8;
+  uint uVar9;
   
-  iVar1 = __savegprlr_24();
-  if (DAT_84618254 == '\0') {
-    MyAssertHandler(0xffffffff821c7540,0xe6,0,0xffffffff82000f98,0xffffffff821c75cc);
+  uVar8 = (ulonglong)(int)param_4;
+  pMVar5 = (Material *)__savegprlr_24(param_1);
+  if (g_markVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xe6,0
+                    ,"%s");
   }
-  iVar2 = R_GetSortedMaterial(*(ulonglong *)(iVar1 + 8) >> 0x1d & 0xfff);
-  if (iVar2 != iVar1) {
-    MyAssertHandler(0xffffffff821c7540,0xe9,0,0xffffffff82000f98,0xffffffff821bb8a8);
+  pMVar6 = R_GetSortedMaterial((uint)((pMVar5->info).drawSurf.packed >> 0x1d) & 0xfff);
+  if (pMVar6 != pMVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0xe9,0
+                    ,"%s");
   }
-  uVar4 = (uint)DAT_845aa55c;
-  iVar2 = Material_GetTechniqueSet(iVar1);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  uVar9 = (uint)gfxDrawMethod.litTechType[9][0];
+  pMVar7 = Material_GetTechniqueSet(pMVar5);
+  if (pMVar7 == (MaterialTechniqueSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_inline.h",
+                    0x76,0,"%s");
   }
-  if (*(int *)((uVar4 + 3) * 4 + iVar2) == 0) {
-    R_WarnOncePerFrame(0x1d);
+  if (pMVar7->techniques[uVar9] == (MaterialTechnique *)0x0) {
+    R_WarnOncePerFrame(R_WARN_NONLIT_MARK_MATERIAL);
   }
-  if (0x5ff < DAT_84618240) {
-    R_WarnOncePerFrame(0x18);
+  uVar9 = g_markVertGlob.surfCount;
+  if (0x5ff < g_markVertGlob.surfCount) {
+    R_WarnOncePerFrame(R_WARN_GFX_MARK_SURF_LIMIT);
     __restgprlr_24();
     return;
   }
-  iVar2 = DAT_84618240 * 0x10;
-  uVar3 = (param_4 & 0xffffffff) / 3;
-  DAT_84618240 = DAT_84618240 + 1;
-  *(uint *)(&DAT_8476ca00 + iVar2) =
-       (uint)((*(ulonglong *)(iVar1 + 8) >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 |
-       *(uint *)(&DAT_8476ca00 + iVar2) & 0x3ffff;
-  (&DAT_8476ca02)[iVar2] = param_2[5];
-  *(undefined4 *)(&DAT_8476ca04 + iVar2) = param_3;
-  *(uint *)(&DAT_8476ca00 + iVar2) = *(uint *)(&DAT_8476ca00 + iVar2) & 0xfffcff00 | 0x12;
-  if ((int)uVar3 != (int)(uVar3 & 0xffff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar3 & 0xffff);
+  uVar8 = (uVar8 & 0xffffffff) / 3;
+  pGVar2 = scene.markSurfs + g_markVertGlob.surfCount;
+  uVar4 = (uint)uVar8;
+  pGVar3 = scene.markSurfs + g_markVertGlob.surfCount;
+  g_markVertGlob.surfCount = g_markVertGlob.surfCount + 1;
+  (pGVar3->drawGroup).packed =
+       (uint)(((pMVar5->info).drawSurf.packed >> 0x1d & 0xffffffff) << 0x12) & 0x3ffc0000 |
+       (pGVar2->drawGroup).packed & 0x3ffff;
+  scene.markSurfs[uVar9].drawGroup.fields.sceneLightIndex = param_2->primaryLightIndex;
+  uVar1 = scene.markSurfs[uVar9].drawGroup.packed;
+  scene.markSurfs[uVar9].indices = param_3;
+  scene.markSurfs[uVar9].drawGroup.packed = uVar1 & 0xfffcff00 | 0x12;
+  if (uVar4 != (uVar4 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  *(short *)(&DAT_8476ca08 + iVar2) = (short)uVar3;
-  (&DAT_8476ca0a)[iVar2] = *param_2;
-  (&DAT_8476ca0b)[iVar2] = 0;
-  (&DAT_8476ca0c)[iVar2] = param_2[1];
-  (&DAT_8476ca0d)[iVar2] = param_2[6];
-  *(undefined2 *)(&DAT_8476ca0e + iVar2) = *(undefined2 *)(param_2 + 2);
+  scene.markSurfs[uVar9].triCount = (ushort)uVar8;
+  scene.markSurfs[uVar9].modelType = param_2->modelType;
+  scene.markSurfs[uVar9].pad = '\0';
+  scene.markSurfs[uVar9].lighting.fields.lmapIndex = (uchar)param_2->field1_0x1;
+  scene.markSurfs[uVar9].lighting.fields.reflectionProbeIndex = param_2->reflectionProbeIndex;
+  scene.markSurfs[uVar9].lighting.fields.modelIndex = (ushort)param_2->typeSpecificIndex;
   __restgprlr_24();
   return;
 }
@@ -357,28 +425,31 @@ void R_AddMarkSurf(undefined8 param_1,undefined1 *param_2,undefined4 param_3,ulo
 
 // 82753E68  R_EmitMarkSurfs  (gfx_d3d/r_marksurf.cpp:291)
 
-void R_EmitMarkSurfs(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_EmitMarkSurfs(GfxMarkSurfList *param_1,int param_2)
 
 {
   int *piVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1[1] != 0) {
-    MyAssertHandler(0xffffffff821c7540,0x126,0,0xffffffff82000f98,0xffffffff821c7604);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x126,
+                    0,"%s");
   }
   if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff821c7540,0x127,0,0xffffffff82000f98,0xffffffff821c75e8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_marksurf.cpp",0x127,
+                    0,"%s");
   }
-  uVar3 = (ulonglong)DAT_847b968c;
-  if ((int)param_2 < (int)DAT_847b968c) {
-    uVar3 = param_2;
+  uVar2 = scene.markSurfCount;
+  if (param_2 < (int)scene.markSurfCount) {
+    uVar2 = param_2;
   }
-  iVar2 = R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
-                    (0xffffffff8476ca00,uVar3,*(undefined4 *)(DAT_8461658c + 0x28),*piVar1);
-  piVar1[1] = iVar2;
-  DAT_847b968c = 0;
+  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortMarkSurfsInterface,GfxMarkSurf>
+                    (scene.markSurfs,uVar2,(rgp.world)->sortKeyEffectDecal,(GfxMarkSurf *)*piVar1);
+  piVar1[1] = uVar2;
+  scene.markSurfCount = 0;
   __restgprlr_28();
   return;
 }

@@ -2,9 +2,11 @@
 
 // 828B3D70  GetProcessHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/getprocessheap.c:35)
 
-HANDLE GetProcessHeap(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * GetProcessHeap(void)
 
 {
-  return DAT_84897d50;
+  return XapiProcessHeap;
 }
 

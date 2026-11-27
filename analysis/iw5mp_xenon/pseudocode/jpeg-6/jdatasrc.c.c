@@ -2,34 +2,34 @@
 
 // 827BC160  init_source  (jpeg-6/jdatasrc.c:43)
 
-void init_source(int param_1)
+void init_source(jpeg_decompress_struct *param_1)
 
 {
-  *(undefined1 *)(*(int *)(param_1 + 0x20) + 0x1c) = 1;
+  *(undefined1 *)&param_1->src[1].next_input_byte = 1;
   return;
 }
 
 
 // 827BC170  skip_input_data  (jpeg-6/jdatasrc.c:130)
 
-void skip_input_data(int param_1,int param_2)
+void skip_input_data(jpeg_decompress_struct *param_1,long param_2)
 
 {
-  int *piVar1;
+  jpeg_source_mgr *pjVar1;
   
-  piVar1 = *(int **)(param_1 + 0x20);
+  pjVar1 = param_1->src;
   if (param_2 < 1) {
     return;
   }
-  *piVar1 = *piVar1 + param_2;
-  piVar1[1] = piVar1[1] - param_2;
+  pjVar1->next_input_byte = pjVar1->next_input_byte + param_2;
+  pjVar1->bytes_in_buffer = pjVar1->bytes_in_buffer - param_2;
   return;
 }
 
 
 // 827BC198  term_source  (jpeg-6/jdatasrc.c:172)
 
-void term_source(void)
+void term_source(jpeg_decompress_struct *param_1)
 
 {
   return;
@@ -38,14 +38,14 @@ void term_source(void)
 
 // 827BC1A0  jpeg_memory_src  (jpeg-6/jdatasrc.c:227)
 
-void jpeg_memory_src(undefined8 param_1,undefined4 param_2,undefined4 param_3)
+void jpeg_memory_src(jpeg_decompress_struct *param_1,uchar *param_2,int param_3)
 
 {
   undefined4 *puVar1;
   int iVar2;
   undefined4 uVar3;
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   if (*(int *)(iVar2 + 0x20) == 0) {
     uVar3 = (*(code *)**(undefined4 **)(iVar2 + 4))(iVar2,0,0x20);
     *(undefined4 *)(iVar2 + 0x20) = uVar3;

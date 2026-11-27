@@ -127,7 +127,7 @@ LAB_82401218:
   82401060  102321C3             stvx128 v1,r3,r4
   82401064  4E800020             blr
 
-; 82403C98  SpuBitArrayIterator::Advance  (spu/spu_array.h:113)
+; 82403C98  Advance  (spu/spu_array.h:113)
   82403C98  7D8802A6             mfspr r12,LR
   82403C9C  9181FFF8             stw r12,-0x8(r1)
   82403CA0  FBC1FFE8             std r30,-0x18(r1)

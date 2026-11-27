@@ -7,11 +7,11 @@
 void __tzset(void)
 
 {
-  if (DAT_84895ecc == 0) {
+  if (first_time == 0) {
     _lock(6);
-    if (DAT_84895ecc == 0) {
-      tzset_nolock();
-      DAT_84895ecc = DAT_84895ecc + 1;
+    if (first_time == 0) {
+      _tzset_nolock();
+      first_time = first_time + 1;
     }
     FUN_82923354();
   }
@@ -19,20 +19,18 @@ void __tzset(void)
 }
 
 
-// 82922BB8  tzset_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:124)
+// 82922BB8  _tzset_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:124)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* tzset_nolock */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-void __cdecl tzset_nolock(void)
+void _tzset_nolock(void)
 
 {
   long lVar1;
   int iVar2;
-  errno_t eVar3;
-  DWORD DVar4;
-  long *plVar5;
-  int *piVar6;
+  ulong uVar3;
+  long *plVar4;
+  int *piVar5;
   long local_30;
   int local_2c;
   long local_28 [10];
@@ -43,48 +41,48 @@ void __cdecl tzset_nolock(void)
   local_28[0] = 0;
   _lock(7);
   __tzname();
-  eVar3 = _get_timezone(&local_30);
-  if (eVar3 != 0) {
+  iVar2 = _get_timezone(&local_30);
+  if (iVar2 != 0) {
                     /* WARNING: Subroutine does not return */
     _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
   }
-  eVar3 = _get_daylight(&local_2c);
-  if (eVar3 == 0) {
-    eVar3 = _get_dstbias(local_28);
-    if (eVar3 == 0) {
+  iVar2 = _get_daylight(&local_2c);
+  if (iVar2 == 0) {
+    iVar2 = _get_dstbias(local_28);
+    if (iVar2 == 0) {
       ___lc_codepage_func();
       DAT_84895ec4 = 0;
-      DAT_829b081c = 0xffffffff;
-      DAT_829b0810 = 0xffffffff;
-      if (DAT_84895ec8 != (void *)0x0) {
-        free(DAT_84895ec8);
-        DAT_84895ec8 = (void *)0x0;
+      dstend.yr = -1;
+      dststart.yr = -1;
+      if (lastTZ != (char *)0x0) {
+        free(lastTZ);
+        lastTZ = (char *)0x0;
       }
-      DVar4 = GetTimeZoneInformation((LPTIME_ZONE_INFORMATION)&DAT_84895e18);
-      if (DVar4 != 0xffffffff) {
-        local_30 = DAT_84895e18 * 0x3c;
+      uVar3 = GetTimeZoneInformation(&tzinfo);
+      if (uVar3 != 0xffffffff) {
+        local_30 = tzinfo.Bias * 0x3c;
         DAT_84895ec4 = 1;
-        if (DAT_84895e5e != 0) {
-          local_30 = DAT_84895e6c * 0x3c + local_30;
+        if (tzinfo.StandardDate.wMonth != 0) {
+          local_30 = tzinfo.StandardBias * 0x3c + local_30;
         }
-        if ((DAT_84895eb2 == 0) || (DAT_84895ec0 == 0)) {
+        if ((tzinfo.DaylightDate.wMonth == 0) || (tzinfo.DaylightBias == 0)) {
           local_2c = 0;
           local_28[0] = 0;
         }
         else {
-          local_28[0] = (DAT_84895ec0 - DAT_84895e6c) * 0x3c;
+          local_28[0] = (tzinfo.DaylightBias - tzinfo.StandardBias) * 0x3c;
           local_2c = 1;
         }
       }
       lVar1 = local_30;
-      plVar5 = __timezone();
+      plVar4 = __timezone();
       iVar2 = local_2c;
-      *plVar5 = lVar1;
-      piVar6 = __daylight();
+      *plVar4 = lVar1;
+      piVar5 = __daylight();
       lVar1 = local_28[0];
-      *piVar6 = iVar2;
-      plVar5 = __dstbias();
-      *plVar5 = lVar1;
+      *piVar5 = iVar2;
+      plVar4 = __dstbias();
+      *plVar4 = lVar1;
       FUN_82922d5c();
       __restgprlr_29();
       return;
@@ -101,94 +99,97 @@ void __cdecl tzset_nolock(void)
 
 /* WARNING: Removing unreachable block (ram,0x82922f98) */
 
-void cvtdate(undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4,int param_5,
-            int param_6,int param_7,int param_8)
+void cvtdate(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7,
+            int param_8,int param_9,int param_10,int param_11)
 
 {
   int iVar1;
-  errno_t eVar2;
-  int iVar3;
+  ulonglong uVar2;
+  ulonglong uVar3;
   int iVar4;
-  undefined4 *puVar5;
-  uint uVar6;
-  longlong lVar7;
+  int iVar5;
+  int_0_ *piVar6;
+  uint uVar7;
   int iVar8;
+  longlong lVar9;
+  int iVar10;
   int in_stack_00000054;
   int in_stack_0000005c;
   int in_stack_00000064;
   long local_40 [16];
   
-  iVar1 = __savegprlr_26();
+  uVar3 = (ulonglong)param_4;
+  uVar2 = (ulonglong)param_3;
+  iVar1 = __savegprlr_26(param_1);
   local_40[0] = 0;
-  iVar8 = (int)param_3;
+  iVar10 = (int)uVar2;
   if (param_2 == 1) {
-    lVar7 = param_3 + ((longlong)(iVar8 >> 2) + (ulonglong)(iVar8 < 0 && (param_3 & 3) != 0) &
-                      0x3fffffff) * -4;
-    iVar4 = (int)param_4;
-    if (((lVar7 == 0) && (param_3 != (longlong)(iVar8 / 100) * 100)) ||
-       (param_3 + 0x76c == (longlong)((int)(param_3 + 0x76c) / 400) * 400)) {
-      puVar5 = &DAT_829b08c0 + iVar4;
+    lVar9 = uVar2 + ((longlong)(iVar10 >> 2) + (ulonglong)(iVar10 < 0 && (uVar2 & 3) != 0) &
+                    0x3fffffff) * -4;
+    iVar5 = (int)uVar3;
+    if (((lVar9 == 0) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
+       (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
+      piVar6 = &_lpdays + iVar5 * 4;
     }
     else {
-      puVar5 = (undefined4 *)(&DAT_829b08f4 + iVar4 * 4);
+      piVar6 = &_days + iVar5 * 4;
     }
-    uVar6 = iVar8 - 1;
-    iVar3 = (int)(((iVar8 + 299) / 400 - (int)uVar6 / 100) +
-                  ((int)uVar6 >> 2) + (uint)((int)uVar6 < 0 && (uVar6 & 3) != 0) + iVar8 * 0x16d +
-                  puVar5[-1] + 1 + -0x63db) % 7;
-    param_7 = (param_5 * 7 - iVar3) + puVar5[-1] + 1 + param_6;
-    if (iVar3 <= param_6) {
-      param_7 = param_7 + -7;
+    uVar7 = iVar10 - 1;
+    iVar4 = (int)(((iVar10 + 299) / 400 - (int)uVar7 / 100) +
+                  ((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) + iVar10 * 0x16d +
+                  *(int *)(piVar6 + -4) + 1 + -0x63db) % 7;
+    iVar8 = (param_5 * 7 - iVar4) + *(int *)(piVar6 + -4) + 1 + param_6;
+    if (iVar4 <= param_6) {
+      iVar8 = iVar8 + -7;
     }
     if (param_5 == 5) {
-      if ((((int)lVar7 == 0) && (param_3 != (longlong)(iVar8 / 100) * 100)) ||
-         (param_3 + 0x76c == (longlong)((int)(param_3 + 0x76c) / 400) * 400)) {
-        iVar4 = (&DAT_829b08c0)[iVar4];
+      if ((((int)lVar9 == 0) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
+         (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
+        iVar5 = *(int *)(&_lpdays + iVar5 * 4);
       }
       else {
-        iVar4 = *(int *)(&DAT_829b08f4 + iVar4 * 4);
+        iVar5 = *(int *)(&_days + iVar5 * 4);
       }
-      if (iVar4 < param_7) {
-        param_7 = param_7 + -7;
+      if (iVar5 < iVar8) {
+        iVar8 = iVar8 + -7;
       }
     }
   }
   else {
-    if (((param_3 ==
-          ((longlong)(iVar8 >> 2) + (ulonglong)(iVar8 < 0 && (param_3 & 3) != 0) & 0x3fffffff) << 2)
-        && (param_3 != (longlong)(iVar8 / 100) * 100)) ||
-       (param_3 + 0x76c == (longlong)((int)(param_3 + 0x76c) / 400) * 400)) {
-      puVar5 = &DAT_829b08c0;
+    if (((uVar2 == ((longlong)(iVar10 >> 2) + (ulonglong)(iVar10 < 0 && (uVar2 & 3) != 0) &
+                   0x3fffffff) << 2) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
+       (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
+      piVar6 = &_lpdays;
     }
     else {
-      puVar5 = (undefined4 *)&DAT_829b08f4;
+      piVar6 = &_days;
     }
-    param_7 = *(int *)((int)puVar5 + (int)((param_4 & 0xffffffff) << 2) + -4) + param_7;
+    iVar8 = *(int *)(piVar6 + (int)((uVar3 & 0xffffffff) << 2) + -4) + param_7;
   }
-  in_stack_00000064 =
-       ((param_8 * 0x3c + in_stack_00000054) * 0x3c + in_stack_0000005c) * 1000 + in_stack_00000064;
-  iVar4 = iVar8;
+  iVar4 = ((param_8 * 0x3c + in_stack_00000054) * 0x3c + in_stack_0000005c) * 1000 +
+          in_stack_00000064;
+  iVar5 = iVar10;
   if (iVar1 != 1) {
-    DAT_829b0820 = param_7;
-    DAT_829b0824 = in_stack_00000064;
-    eVar2 = _get_dstbias(local_40);
-    if (eVar2 != 0) {
+    dstend.yd = iVar8;
+    dstend.ms = iVar4;
+    iVar1 = _get_dstbias(local_40);
+    if (iVar1 != 0) {
                     /* WARNING: Subroutine does not return */
       _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
     }
-    DAT_829b0824 = local_40[0] * 1000 + DAT_829b0824;
-    iVar4 = DAT_829b0810;
-    param_7 = DAT_829b0814;
-    in_stack_00000064 = DAT_829b0818;
-    DAT_829b081c = iVar8;
-    if (86399999 < DAT_829b0824) {
-      DAT_829b0820 = DAT_829b0820 + 1;
-      DAT_829b0824 = DAT_829b0824 + -86400000;
+    dstend.ms = local_40[0] * 1000 + dstend.ms;
+    iVar5 = dststart.yr;
+    iVar8 = dststart.yd;
+    iVar4 = dststart.ms;
+    dstend.yr = iVar10;
+    if (86399999 < dstend.ms) {
+      dstend.yd = dstend.yd + 1;
+      dstend.ms = dstend.ms + -86400000;
     }
   }
-  DAT_829b0818 = in_stack_00000064;
-  DAT_829b0814 = param_7;
-  DAT_829b0810 = iVar4;
+  dststart.ms = iVar4;
+  dststart.yd = iVar8;
+  dststart.yr = iVar5;
   __restgprlr_26();
   return;
 }
@@ -196,89 +197,97 @@ void cvtdate(undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4,
 
 // 82923380  _isindst  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:412)
 
-int _isindst(tm *_Time)
+int _isindst(tm *param_1)
 
 {
   int iVar1;
   
   _lock(6);
-  iVar1 = isindst_nolock(_Time);
+  iVar1 = _isindst_nolock(param_1);
   FUN_829233dc();
   return iVar1;
 }
 
 
-// 82922FF8  isindst_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:428)
+// 82922FF8  _isindst_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:428)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* isindst_nolock */
-
-void __cdecl isindst_nolock(void)
+int _isindst_nolock(tm *param_1)
 
 {
   uint uVar1;
   uint *puVar3;
-  errno_t eVar4;
+  int iVar4;
   ulonglong uVar2;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int in_stack_ffffff58;
+  int in_stack_ffffff5c;
+  int in_stack_ffffff60;
   int local_40 [16];
   
-  puVar3 = (uint *)__savegprlr_27();
+  puVar3 = (uint *)__savegprlr_27(param_1);
   local_40[0] = 0;
-  eVar4 = _get_daylight(local_40);
-  if (eVar4 != 0) {
+  iVar4 = _get_daylight(local_40);
+  if (iVar4 != 0) {
                     /* WARNING: Subroutine does not return */
     _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
   }
   if (local_40[0] != 0) {
     uVar1 = puVar3[5];
-    if ((uVar1 != DAT_829b0810) || (uVar1 != DAT_829b081c)) {
+    if ((uVar1 != dststart.yr) || (uVar1 != dstend.yr)) {
       if (DAT_84895ec4 == 0) {
-        uVar5 = 3;
-        uVar6 = 2;
-        uVar8 = 0xb;
-        uVar7 = 1;
+        iVar4 = 3;
+        iVar5 = 2;
+        iVar7 = 0xb;
+        iVar6 = 1;
         if ((int)uVar1 < 0x6b) {
-          uVar5 = 4;
-          uVar6 = 1;
-          uVar8 = 10;
-          uVar7 = 5;
+          iVar4 = 4;
+          iVar5 = 1;
+          iVar7 = 10;
+          iVar6 = 5;
         }
-        cvtdate(1,1,uVar1,uVar5,uVar6,0,0,2);
-        cvtdate(0,1,puVar3[5],uVar8,uVar7,0,0,2);
+        cvtdate(1,1,uVar1,iVar4,iVar5,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
+        cvtdate(0,1,puVar3[5],iVar7,iVar6,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,
+                in_stack_ffffff60);
       }
       else {
-        if (DAT_84895eb0 == 0) {
-          cvtdate(1,1,uVar1,DAT_84895eb2,DAT_84895eb6,DAT_84895eb4,0,DAT_84895eb8);
+        if (tzinfo.DaylightDate.wYear == 0) {
+          cvtdate(1,1,uVar1,(uint)tzinfo.DaylightDate.wMonth,(uint)tzinfo.DaylightDate.wDay,
+                  (uint)tzinfo.DaylightDate.wDayOfWeek,0,(uint)tzinfo.DaylightDate.wHour,
+                  in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
         }
         else {
-          cvtdate(1,0,uVar1,DAT_84895eb2,0,0,DAT_84895eb6,DAT_84895eb8);
+          cvtdate(1,0,uVar1,(uint)tzinfo.DaylightDate.wMonth,0,0,(uint)tzinfo.DaylightDate.wDay,
+                  (uint)tzinfo.DaylightDate.wHour,in_stack_ffffff58,in_stack_ffffff5c,
+                  in_stack_ffffff60);
         }
-        if (DAT_84895e5c == 0) {
-          cvtdate(0,1,puVar3[5],DAT_84895e5e,DAT_84895e62,DAT_84895e60,0,DAT_84895e64);
+        if (tzinfo.StandardDate.wYear == 0) {
+          cvtdate(0,1,puVar3[5],(uint)tzinfo.StandardDate.wMonth,(uint)tzinfo.StandardDate.wDay,
+                  (uint)tzinfo.StandardDate.wDayOfWeek,0,(uint)tzinfo.StandardDate.wHour,
+                  in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
         }
         else {
-          cvtdate(0,0,puVar3[5],DAT_84895e5e,0,0,DAT_84895e62,DAT_84895e64);
+          cvtdate(0,0,puVar3[5],(uint)tzinfo.StandardDate.wMonth,0,0,(uint)tzinfo.StandardDate.wDay,
+                  (uint)tzinfo.StandardDate.wHour,in_stack_ffffff58,in_stack_ffffff5c,
+                  in_stack_ffffff60);
         }
       }
     }
     uVar1 = puVar3[7];
-    if ((int)DAT_829b0814 < DAT_829b0820) {
-      if (((int)DAT_829b0814 <= (int)uVar1) && ((int)uVar1 <= DAT_829b0820)) {
-        if (((int)uVar1 <= (int)DAT_829b0814) || (DAT_829b0820 <= (int)uVar1)) {
+    if (dststart.yd < dstend.yd) {
+      if ((dststart.yd <= (int)uVar1) && ((int)uVar1 <= dstend.yd)) {
+        if (((int)uVar1 <= dststart.yd) || (dstend.yd <= (int)uVar1)) {
 LAB_82923260:
           uVar2 = (((ulonglong)puVar3[2] * 0x3c + (ulonglong)puVar3[1]) * 0x3c + (ulonglong)*puVar3)
                   * 1000;
-          if (uVar1 == DAT_829b0814) {
-            uVar2 = (ulonglong)(DAT_829b0818 >> 0x1f) + (longlong)((int)uVar2 >> 0x1f) +
-                    (ulonglong)(DAT_829b0818 <= uVar2);
+          if (uVar1 == dststart.yd) {
+            uVar2 = (ulonglong)((uint)dststart.ms >> 0x1f) + (longlong)((int)uVar2 >> 0x1f) +
+                    (ulonglong)((uint)dststart.ms <= uVar2);
           }
           else {
-            uVar2 = ((~(DAT_829b0824 ^ uVar2) & 0xffffffff) >> 0x1f) +
-                    (ulonglong)(DAT_829b0824 <= uVar2) & 1;
+            uVar2 = ((~((uint)dstend.ms ^ uVar2) & 0xffffffff) >> 0x1f) +
+                    (ulonglong)((uint)dstend.ms <= uVar2) & 1;
           }
           goto LAB_82923030;
         }
@@ -288,13 +297,13 @@ LAB_82923238:
       }
     }
     else {
-      if (((int)uVar1 < DAT_829b0820) || ((int)DAT_829b0814 < (int)uVar1)) goto LAB_82923238;
-      if (((int)uVar1 <= DAT_829b0820) || ((int)DAT_829b0814 <= (int)uVar1)) goto LAB_82923260;
+      if (((int)uVar1 < dstend.yd) || (dststart.yd < (int)uVar1)) goto LAB_82923238;
+      if (((int)uVar1 <= dstend.yd) || (dststart.yd <= (int)uVar1)) goto LAB_82923260;
     }
   }
   uVar2 = 0;
 LAB_82923030:
-  __restgprlr_27(uVar2);
-  return;
+  iVar4 = __restgprlr_27(uVar2);
+  return iVar4;
 }
 

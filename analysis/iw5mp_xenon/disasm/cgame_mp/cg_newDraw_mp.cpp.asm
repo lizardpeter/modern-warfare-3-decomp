@@ -6412,7 +6412,7 @@ LAB_822ebac4:
   822EBAE4  7C0903A6             mtspr CTR,r0
 switchD:
   822EBAE8  4E800420             bctr
-caseD_1:
+caseD_6:
   822EBE28  38810060             addi r4,r1,0x60
   822EBE2C  80C1019C             lwz r6,0x19c(r1)
   822EBE30  7FE3FB78             or r3,r31,r31
@@ -6422,7 +6422,7 @@ caseD_1:
   822EBE40  3981FFC0             subi r12,r1,0x40
   822EBE44  4862A995             bl 0x829167d8
   822EBE48  4862A8B4             b 0x829166fc
-caseD_0:
+caseD_5:
   822EBE4C  38810060             addi r4,r1,0x60
   822EBE50  810101A4             lwz r8,0x1a4(r1)
   822EBE54  7FE3FB78             or r3,r31,r31
@@ -6434,7 +6434,7 @@ caseD_0:
   822EBE6C  3981FFC0             subi r12,r1,0x40
   822EBE70  4862A969             bl 0x829167d8
   822EBE74  4862A888             b 0x829166fc
-caseD_41:
+caseD_46:
   822EBE78  38810060             addi r4,r1,0x60
   822EBE7C  80E101A4             lwz r7,0x1a4(r1)
   822EBE80  7FE3FB78             or r3,r31,r31
@@ -6445,7 +6445,7 @@ caseD_41:
   822EBE94  3981FFC0             subi r12,r1,0x40
   822EBE98  4862A941             bl 0x829167d8
   822EBE9C  4862A860             b 0x829166fc
-caseD_42:
+caseD_47:
   822EBEA0  38810060             addi r4,r1,0x60
   822EBEA4  80E101A4             lwz r7,0x1a4(r1)
   822EBEA8  7FE3FB78             or r3,r31,r31
@@ -6456,7 +6456,7 @@ caseD_42:
   822EBEBC  3981FFC0             subi r12,r1,0x40
   822EBEC0  4862A919             bl 0x829167d8
   822EBEC4  4862A838             b 0x829166fc
-caseD_4b:
+caseD_50:
   822EBEC8  38810060             addi r4,r1,0x60
   822EBECC  810101A4             lwz r8,0x1a4(r1)
   822EBED0  7FE3FB78             or r3,r31,r31
@@ -6468,7 +6468,7 @@ caseD_4b:
   822EBEE8  3981FFC0             subi r12,r1,0x40
   822EBEEC  4862A8ED             bl 0x829167d8
   822EBEF0  4862A80C             b 0x829166fc
-caseD_43:
+caseD_48:
   822EBEF4  38810060             addi r4,r1,0x60
   822EBEF8  810101A4             lwz r8,0x1a4(r1)
   822EBEFC  7FE3FB78             or r3,r31,r31
@@ -6480,7 +6480,7 @@ caseD_43:
   822EBF14  3981FFC0             subi r12,r1,0x40
   822EBF18  4862A8C1             bl 0x829167d8
   822EBF1C  4862A7E0             b 0x829166fc
-caseD_37:
+caseD_3c:
   822EBF20  38810060             addi r4,r1,0x60
   822EBF24  812101AC             lwz r9,0x1ac(r1)
   822EBF28  7FE3FB78             or r3,r31,r31
@@ -6493,7 +6493,7 @@ caseD_37:
   822EBF44  3981FFC0             subi r12,r1,0x40
   822EBF48  4862A891             bl 0x829167d8
   822EBF4C  4862A7B0             b 0x829166fc
-caseD_38:
+caseD_3d:
   822EBF50  38810060             addi r4,r1,0x60
   822EBF54  812101AC             lwz r9,0x1ac(r1)
   822EBF58  7FE3FB78             or r3,r31,r31
@@ -6506,7 +6506,7 @@ caseD_38:
   822EBF74  3981FFC0             subi r12,r1,0x40
   822EBF78  4862A861             bl 0x829167d8
   822EBF7C  4862A780             b 0x829166fc
-caseD_4c:
+caseD_51:
   822EBF80  38810060             addi r4,r1,0x60
   822EBF84  810101A4             lwz r8,0x1a4(r1)
   822EBF88  7FE3FB78             or r3,r31,r31
@@ -6518,7 +6518,7 @@ caseD_4c:
   822EBFA0  3981FFC0             subi r12,r1,0x40
   822EBFA4  4862A835             bl 0x829167d8
   822EBFA8  4862A754             b 0x829166fc
-caseD_4d:
+caseD_52:
   822EBFAC  38810060             addi r4,r1,0x60
   822EBFB0  8101019C             lwz r8,0x19c(r1)
   822EBFB4  7FE3FB78             or r3,r31,r31
@@ -6530,7 +6530,7 @@ caseD_4d:
   822EBFCC  3981FFC0             subi r12,r1,0x40
   822EBFD0  4862A809             bl 0x829167d8
   822EBFD4  4862A728             b 0x829166fc
-caseD_4e:
+caseD_53:
   822EBFD8  38810060             addi r4,r1,0x60
   822EBFDC  810101A4             lwz r8,0x1a4(r1)
   822EBFE0  7FE3FB78             or r3,r31,r31
@@ -6542,7 +6542,7 @@ caseD_4e:
   822EBFF8  3981FFC0             subi r12,r1,0x40
   822EBFFC  4862A7DD             bl 0x829167d8
   822EC000  4862A6FC             b 0x829166fc
-caseD_4f:
+caseD_54:
   822EC004  38810060             addi r4,r1,0x60
   822EC008  8101019C             lwz r8,0x19c(r1)
   822EC00C  7FE3FB78             or r3,r31,r31
@@ -6554,7 +6554,7 @@ caseD_4f:
   822EC024  3981FFC0             subi r12,r1,0x40
   822EC028  4862A7B1             bl 0x829167d8
   822EC02C  4862A6D0             b 0x829166fc
-caseD_6d:
+caseD_72:
   822EC030  38810060             addi r4,r1,0x60
   822EC034  80C10194             lwz r6,0x194(r1)
   822EC038  7FE3FB78             or r3,r31,r31
@@ -6564,7 +6564,7 @@ caseD_6d:
   822EC048  3981FFC0             subi r12,r1,0x40
   822EC04C  4862A78D             bl 0x829167d8
   822EC050  4862A6AC             b 0x829166fc
-caseD_6e:
+caseD_73:
   822EC054  38810060             addi r4,r1,0x60
   822EC058  80C10194             lwz r6,0x194(r1)
   822EC05C  7FE3FB78             or r3,r31,r31
@@ -6574,7 +6574,7 @@ caseD_6e:
   822EC06C  3981FFC0             subi r12,r1,0x40
   822EC070  4862A769             bl 0x829167d8
   822EC074  4862A688             b 0x829166fc
-caseD_92:
+caseD_97:
   822EC078  38C10060             addi r6,r1,0x60
   822EC07C  81010194             lwz r8,0x194(r1)
   822EC080  38A10110             addi r5,r1,0x110
@@ -6586,7 +6586,7 @@ caseD_92:
   822EC098  3981FFC0             subi r12,r1,0x40
   822EC09C  4862A73D             bl 0x829167d8
   822EC0A0  4862A65C             b 0x829166fc
-caseD_9b:
+caseD_a0:
   822EC0A4  38C10060             addi r6,r1,0x60
   822EC0A8  814101A4             lwz r10,0x1a4(r1)
   822EC0AC  38A10110             addi r5,r1,0x110
@@ -6600,7 +6600,7 @@ caseD_9b:
   822EC0CC  3981FFC0             subi r12,r1,0x40
   822EC0D0  4862A709             bl 0x829167d8
   822EC0D4  4862A628             b 0x829166fc
-caseD_9c:
+caseD_a1:
   822EC0D8  38C10060             addi r6,r1,0x60
   822EC0DC  814101A4             lwz r10,0x1a4(r1)
   822EC0E0  38A10110             addi r5,r1,0x110
@@ -6614,7 +6614,7 @@ caseD_9c:
   822EC100  3981FFC0             subi r12,r1,0x40
   822EC104  4862A6D5             bl 0x829167d8
   822EC108  4862A5F4             b 0x829166fc
-caseD_9d:
+caseD_a2:
   822EC10C  38C10060             addi r6,r1,0x60
   822EC110  814101A4             lwz r10,0x1a4(r1)
   822EC114  38A10110             addi r5,r1,0x110
@@ -6628,7 +6628,7 @@ caseD_9d:
   822EC134  3981FFC0             subi r12,r1,0x40
   822EC138  4862A6A1             bl 0x829167d8
   822EC13C  4862A5C0             b 0x829166fc
-caseD_9e:
+caseD_a3:
   822EC140  38C10060             addi r6,r1,0x60
   822EC144  814101A4             lwz r10,0x1a4(r1)
   822EC148  38A10110             addi r5,r1,0x110
@@ -6642,7 +6642,7 @@ caseD_9e:
   822EC168  3981FFC0             subi r12,r1,0x40
   822EC16C  4862A66D             bl 0x829167d8
   822EC170  4862A58C             b 0x829166fc
-caseD_9a:
+caseD_9f:
   822EC174  38C10060             addi r6,r1,0x60
   822EC178  81010194             lwz r8,0x194(r1)
   822EC17C  38A10110             addi r5,r1,0x110
@@ -6654,7 +6654,7 @@ caseD_9a:
   822EC194  3981FFC0             subi r12,r1,0x40
   822EC198  4862A641             bl 0x829167d8
   822EC19C  4862A560             b 0x829166fc
-caseD_a1:
+caseD_a6:
   822EC1A0  38810060             addi r4,r1,0x60
   822EC1A4  80C10194             lwz r6,0x194(r1)
   822EC1A8  7FE3FB78             or r3,r31,r31
@@ -6664,7 +6664,7 @@ caseD_a1:
   822EC1B8  3981FFC0             subi r12,r1,0x40
   822EC1BC  4862A61D             bl 0x829167d8
   822EC1C0  4862A53C             b 0x829166fc
-caseD_93:
+caseD_98:
   822EC1C4  38C10060             addi r6,r1,0x60
   822EC1C8  81010194             lwz r8,0x194(r1)
   822EC1CC  38A10110             addi r5,r1,0x110
@@ -6676,7 +6676,7 @@ caseD_93:
   822EC1E4  3981FFC0             subi r12,r1,0x40
   822EC1E8  4862A5F1             bl 0x829167d8
   822EC1EC  4862A510             b 0x829166fc
-caseD_8c:
+caseD_91:
   822EC1F0  816101A4             lwz r11,0x1a4(r1)
   822EC1F4  39400001             li r10,0x1
   822EC1F8  38C10060             addi r6,r1,0x60
@@ -6694,7 +6694,7 @@ caseD_8c:
   822EC228  3981FFC0             subi r12,r1,0x40
   822EC22C  4862A5AD             bl 0x829167d8
   822EC230  4862A4CC             b 0x829166fc
-caseD_8d:
+caseD_92:
   822EC234  816101A4             lwz r11,0x1a4(r1)
   822EC238  39400000             li r10,0x0
   822EC23C  38C10060             addi r6,r1,0x60
@@ -6712,7 +6712,7 @@ caseD_8d:
   822EC26C  3981FFC0             subi r12,r1,0x40
   822EC270  4862A569             bl 0x829167d8
   822EC274  4862A488             b 0x829166fc
-caseD_99:
+caseD_9e:
   822EC278  38C10060             addi r6,r1,0x60
   822EC27C  80E10194             lwz r7,0x194(r1)
   822EC280  38A10110             addi r5,r1,0x110
@@ -6723,7 +6723,7 @@ caseD_99:
   822EC294  3981FFC0             subi r12,r1,0x40
   822EC298  4862A541             bl 0x829167d8
   822EC29C  4862A460             b 0x829166fc
-caseD_aa:
+caseD_af:
   822EC2A0  38C10060             addi r6,r1,0x60
   822EC2A4  80E10194             lwz r7,0x194(r1)
   822EC2A8  38A10110             addi r5,r1,0x110
@@ -6734,7 +6734,7 @@ caseD_aa:
   822EC2BC  3981FFC0             subi r12,r1,0x40
   822EC2C0  4862A519             bl 0x829167d8
   822EC2C4  4862A438             b 0x829166fc
-caseD_91:
+caseD_96:
   822EC2C8  38C10060             addi r6,r1,0x60
   822EC2CC  80E10194             lwz r7,0x194(r1)
   822EC2D0  38A10110             addi r5,r1,0x110
@@ -6745,10 +6745,10 @@ caseD_91:
   822EC2E4  3981FFC0             subi r12,r1,0x40
   822EC2E8  4862A4F1             bl 0x829167d8
   822EC2EC  4862A410             b 0x829166fc
-caseD_96:
+caseD_9b:
   822EC2F0  38800000             li r4,0x0
   822EC2F4  4800075C             b 0x822eca50
-caseD_97:
+caseD_9c:
   822EC2F8  38C10060             addi r6,r1,0x60
   822EC2FC  80E10194             lwz r7,0x194(r1)
   822EC300  38A10110             addi r5,r1,0x110
@@ -6759,7 +6759,7 @@ caseD_97:
   822EC314  3981FFC0             subi r12,r1,0x40
   822EC318  4862A4C1             bl 0x829167d8
   822EC31C  4862A3E0             b 0x829166fc
-caseD_a0:
+caseD_a5:
   822EC320  38C10060             addi r6,r1,0x60
   822EC324  80E10194             lwz r7,0x194(r1)
   822EC328  38A10110             addi r5,r1,0x110
@@ -6770,7 +6770,7 @@ caseD_a0:
   822EC33C  3981FFC0             subi r12,r1,0x40
   822EC340  4862A499             bl 0x829167d8
   822EC344  4862A3B8             b 0x829166fc
-caseD_98:
+caseD_9d:
   822EC348  38C10060             addi r6,r1,0x60
   822EC34C  80E10194             lwz r7,0x194(r1)
   822EC350  38A10110             addi r5,r1,0x110
@@ -6781,7 +6781,7 @@ caseD_98:
   822EC364  3981FFC0             subi r12,r1,0x40
   822EC368  4862A471             bl 0x829167d8
   822EC36C  4862A390             b 0x829166fc
-caseD_a3:
+caseD_a8:
   822EC370  38C10060             addi r6,r1,0x60
   822EC374  80E10194             lwz r7,0x194(r1)
   822EC378  38A10110             addi r5,r1,0x110
@@ -6792,7 +6792,7 @@ caseD_a3:
   822EC38C  3981FFC0             subi r12,r1,0x40
   822EC390  4862A449             bl 0x829167d8
   822EC394  4862A368             b 0x829166fc
-caseD_72:
+caseD_77:
   822EC398  38810060             addi r4,r1,0x60
   822EC39C  812101A4             lwz r9,0x1a4(r1)
   822EC3A0  7FE3FB78             or r3,r31,r31
@@ -6805,7 +6805,7 @@ caseD_72:
   822EC3BC  3981FFC0             subi r12,r1,0x40
   822EC3C0  4862A419             bl 0x829167d8
   822EC3C4  4862A338             b 0x829166fc
-caseD_a5:
+caseD_aa:
   822EC3C8  38810060             addi r4,r1,0x60
   822EC3CC  80C1019C             lwz r6,0x19c(r1)
   822EC3D0  7FE3FB78             or r3,r31,r31
@@ -6815,7 +6815,7 @@ caseD_a5:
   822EC3E0  3981FFC0             subi r12,r1,0x40
   822EC3E4  4862A3F5             bl 0x829167d8
   822EC3E8  4862A314             b 0x829166fc
-caseD_a6:
+caseD_ab:
   822EC3EC  816101AC             lwz r11,0x1ac(r1)
   822EC3F0  38FBFF55             subi r7,r27,0xab
   822EC3F4  814101A4             lwz r10,0x1a4(r1)
@@ -6833,7 +6833,7 @@ caseD_a6:
   822EC424  3981FFC0             subi r12,r1,0x40
   822EC428  4862A3B1             bl 0x829167d8
   822EC42C  4862A2D0             b 0x829166fc
-caseD_6f:
+caseD_74:
   822EC430  38810060             addi r4,r1,0x60
   822EC434  80C1019C             lwz r6,0x19c(r1)
   822EC438  7FE3FB78             or r3,r31,r31
@@ -6843,7 +6843,7 @@ caseD_6f:
   822EC448  3981FFC0             subi r12,r1,0x40
   822EC44C  4862A38D             bl 0x829167d8
   822EC450  4862A2AC             b 0x829166fc
-caseD_70:
+caseD_75:
   822EC454  38C00000             li r6,0x0
   822EC458  80A10194             lwz r5,0x194(r1)
   822EC45C  38810060             addi r4,r1,0x60
@@ -6853,7 +6853,7 @@ caseD_70:
   822EC46C  3981FFC0             subi r12,r1,0x40
   822EC470  4862A369             bl 0x829167d8
   822EC474  4862A288             b 0x829166fc
-caseD_74:
+caseD_79:
   822EC478  38C00001             li r6,0x1
   822EC47C  80A10194             lwz r5,0x194(r1)
   822EC480  38810060             addi r4,r1,0x60
@@ -6863,7 +6863,7 @@ caseD_74:
   822EC490  3981FFC0             subi r12,r1,0x40
   822EC494  4862A345             bl 0x829167d8
   822EC498  4862A264             b 0x829166fc
-caseD_71:
+caseD_76:
   822EC49C  38810060             addi r4,r1,0x60
   822EC4A0  80A10194             lwz r5,0x194(r1)
   822EC4A4  7FE3FB78             or r3,r31,r31
@@ -6872,7 +6872,7 @@ caseD_71:
   822EC4B0  3981FFC0             subi r12,r1,0x40
   822EC4B4  4862A325             bl 0x829167d8
   822EC4B8  4862A244             b 0x829166fc
-caseD_73:
+caseD_78:
   822EC4BC  8161019C             lwz r11,0x19c(r1)
   822EC4C0  38810060             addi r4,r1,0x60
   822EC4C4  7FE3FB78             or r3,r31,r31
@@ -6888,7 +6888,7 @@ caseD_73:
   822EC4EC  3981FFC0             subi r12,r1,0x40
   822EC4F0  4862A2E9             bl 0x829167d8
   822EC4F4  4862A208             b 0x829166fc
-caseD_4a:
+caseD_4f:
   822EC4F8  38810060             addi r4,r1,0x60
   822EC4FC  80C10194             lwz r6,0x194(r1)
   822EC500  7FE3FB78             or r3,r31,r31
@@ -6898,7 +6898,7 @@ caseD_4a:
   822EC510  3981FFC0             subi r12,r1,0x40
   822EC514  4862A2C5             bl 0x829167d8
   822EC518  4862A1E4             b 0x829166fc
-caseD_5d:
+caseD_62:
   822EC51C  38810060             addi r4,r1,0x60
   822EC520  80C10194             lwz r6,0x194(r1)
   822EC524  7FE3FB78             or r3,r31,r31
@@ -6908,7 +6908,7 @@ caseD_5d:
   822EC534  3981FFC0             subi r12,r1,0x40
   822EC538  4862A2A1             bl 0x829167d8
   822EC53C  4862A1C0             b 0x829166fc
-caseD_6b:
+caseD_70:
   822EC540  38810060             addi r4,r1,0x60
   822EC544  80C10194             lwz r6,0x194(r1)
   822EC548  7FE3FB78             or r3,r31,r31
@@ -6918,7 +6918,7 @@ caseD_6b:
   822EC558  3981FFC0             subi r12,r1,0x40
   822EC55C  4862A27D             bl 0x829167d8
   822EC560  4862A19C             b 0x829166fc
-caseD_62:
+caseD_67:
   822EC564  7F88E378             or r8,r28,r28
   822EC568  813E0538             lwz r9,0x538(r30)
   822EC56C  38810060             addi r4,r1,0x60
@@ -6931,7 +6931,7 @@ caseD_62:
   822EC588  3981FFC0             subi r12,r1,0x40
   822EC58C  4862A24D             bl 0x829167d8
   822EC590  4862A16C             b 0x829166fc
-caseD_64:
+caseD_69:
   822EC594  7F89E378             or r9,r28,r28
   822EC598  810101A4             lwz r8,0x1a4(r1)
   822EC59C  38810060             addi r4,r1,0x60
@@ -6944,7 +6944,7 @@ caseD_64:
   822EC5B8  3981FFC0             subi r12,r1,0x40
   822EC5BC  4862A21D             bl 0x829167d8
   822EC5C0  4862A13C             b 0x829166fc
-caseD_66:
+caseD_6b:
   822EC5C4  7F89E378             or r9,r28,r28
   822EC5C8  810101A4             lwz r8,0x1a4(r1)
   822EC5CC  38810060             addi r4,r1,0x60
@@ -6957,7 +6957,7 @@ caseD_66:
   822EC5E8  3981FFC0             subi r12,r1,0x40
   822EC5EC  4862A1ED             bl 0x829167d8
   822EC5F0  4862A10C             b 0x829166fc
-caseD_68:
+caseD_6d:
   822EC5F4  7F88E378             or r8,r28,r28
   822EC5F8  80E1019C             lwz r7,0x19c(r1)
   822EC5FC  38810060             addi r4,r1,0x60
@@ -6969,7 +6969,7 @@ caseD_68:
   822EC614  3981FFC0             subi r12,r1,0x40
   822EC618  4862A1C1             bl 0x829167d8
   822EC61C  4862A0E0             b 0x829166fc
-caseD_63:
+caseD_68:
   822EC620  7FA8EB78             or r8,r29,r29
   822EC624  813E053C             lwz r9,0x53c(r30)
   822EC628  38810060             addi r4,r1,0x60
@@ -6982,7 +6982,7 @@ caseD_63:
   822EC644  3981FFC0             subi r12,r1,0x40
   822EC648  4862A191             bl 0x829167d8
   822EC64C  4862A0B0             b 0x829166fc
-caseD_65:
+caseD_6a:
   822EC650  7FA9EB78             or r9,r29,r29
   822EC654  810101A4             lwz r8,0x1a4(r1)
   822EC658  38810060             addi r4,r1,0x60
@@ -6995,7 +6995,7 @@ caseD_65:
   822EC674  3981FFC0             subi r12,r1,0x40
   822EC678  4862A161             bl 0x829167d8
   822EC67C  4862A080             b 0x829166fc
-caseD_67:
+caseD_6c:
   822EC680  7FA9EB78             or r9,r29,r29
   822EC684  810101A4             lwz r8,0x1a4(r1)
   822EC688  38810060             addi r4,r1,0x60
@@ -7008,7 +7008,7 @@ caseD_67:
   822EC6A4  3981FFC0             subi r12,r1,0x40
   822EC6A8  4862A131             bl 0x829167d8
   822EC6AC  4862A050             b 0x829166fc
-caseD_69:
+caseD_6e:
   822EC6B0  7FA8EB78             or r8,r29,r29
   822EC6B4  80E1019C             lwz r7,0x19c(r1)
   822EC6B8  38810060             addi r4,r1,0x60
@@ -7020,7 +7020,7 @@ caseD_69:
   822EC6D0  3981FFC0             subi r12,r1,0x40
   822EC6D4  4862A105             bl 0x829167d8
   822EC6D8  4862A024             b 0x829166fc
-caseD_6c:
+caseD_71:
   822EC6DC  38810060             addi r4,r1,0x60
   822EC6E0  810101A4             lwz r8,0x1a4(r1)
   822EC6E4  7FE3FB78             or r3,r31,r31
@@ -7032,7 +7032,7 @@ caseD_6c:
   822EC6FC  3981FFC0             subi r12,r1,0x40
   822EC700  4862A0D9             bl 0x829167d8
   822EC704  48629FF8             b 0x829166fc
-caseD_55:
+caseD_5a:
   822EC708  38810060             addi r4,r1,0x60
   822EC70C  810101A4             lwz r8,0x1a4(r1)
   822EC710  7FE3FB78             or r3,r31,r31
@@ -7044,7 +7044,7 @@ caseD_55:
   822EC728  3981FFC0             subi r12,r1,0x40
   822EC72C  4862A0AD             bl 0x829167d8
   822EC730  48629FCC             b 0x829166fc
-caseD_cc:
+caseD_d1:
   822EC734  38810060             addi r4,r1,0x60
   822EC738  80C1019C             lwz r6,0x19c(r1)
   822EC73C  7FE3FB78             or r3,r31,r31
@@ -7054,7 +7054,7 @@ caseD_cc:
   822EC74C  3981FFC0             subi r12,r1,0x40
   822EC750  4862A089             bl 0x829167d8
   822EC754  48629FA8             b 0x829166fc
-caseD_cd:
+caseD_d2:
   822EC758  38810060             addi r4,r1,0x60
   822EC75C  80C1019C             lwz r6,0x19c(r1)
   822EC760  7FE3FB78             or r3,r31,r31
@@ -7064,7 +7064,7 @@ caseD_cd:
   822EC770  3981FFC0             subi r12,r1,0x40
   822EC774  4862A065             bl 0x829167d8
   822EC778  48629F84             b 0x829166fc
-caseD_ce:
+caseD_d3:
   822EC77C  38810060             addi r4,r1,0x60
   822EC780  80A10194             lwz r5,0x194(r1)
   822EC784  7FE3FB78             or r3,r31,r31
@@ -7073,7 +7073,7 @@ caseD_ce:
   822EC790  3981FFC0             subi r12,r1,0x40
   822EC794  4862A045             bl 0x829167d8
   822EC798  48629F64             b 0x829166fc
-caseD_c6:
+caseD_cb:
   822EC79C  38A10060             addi r5,r1,0x60
   822EC7A0  812101A4             lwz r9,0x1a4(r1)
   822EC7A4  389BFF35             subi r4,r27,0xcb
@@ -7086,7 +7086,7 @@ caseD_c6:
   822EC7C0  3981FFC0             subi r12,r1,0x40
   822EC7C4  4862A015             bl 0x829167d8
   822EC7C8  48629F34             b 0x829166fc
-caseD_2:
+caseD_7:
   822EC7CC  7FE3FB78             or r3,r31,r31
   822EC7D0  4BF74931             bl 0x82261100
   822EC7D4  3D600007             lis r11,0x7
@@ -7109,7 +7109,7 @@ LAB_822ec7f8:
   822EC814  7C0903A6             mtspr CTR,r0
 switchD:
   822EC818  4E800420             bctr
-caseD_0:
+caseD_b4:
   822EC858  38C10060             addi r6,r1,0x60
   822EC85C  81010194             lwz r8,0x194(r1)
   822EC860  38A10110             addi r5,r1,0x110
@@ -7121,7 +7121,7 @@ caseD_0:
   822EC878  3981FFC0             subi r12,r1,0x40
   822EC87C  48629F5D             bl 0x829167d8
   822EC880  48629E7C             b 0x829166fc
-caseD_1:
+caseD_b5:
   822EC884  38C10060             addi r6,r1,0x60
   822EC888  81010194             lwz r8,0x194(r1)
   822EC88C  38A10110             addi r5,r1,0x110
@@ -7133,7 +7133,7 @@ caseD_1:
   822EC8A4  3981FFC0             subi r12,r1,0x40
   822EC8A8  48629F31             bl 0x829167d8
   822EC8AC  48629E50             b 0x829166fc
-caseD_6:
+caseD_ba:
   822EC8B0  38C10060             addi r6,r1,0x60
   822EC8B4  81010194             lwz r8,0x194(r1)
   822EC8B8  38A10110             addi r5,r1,0x110
@@ -7145,7 +7145,7 @@ caseD_6:
   822EC8D0  3981FFC0             subi r12,r1,0x40
   822EC8D4  48629F05             bl 0x829167d8
   822EC8D8  48629E24             b 0x829166fc
-caseD_2:
+caseD_b6:
   822EC8DC  38C10060             addi r6,r1,0x60
   822EC8E0  81010194             lwz r8,0x194(r1)
   822EC8E4  38A10110             addi r5,r1,0x110
@@ -7157,7 +7157,7 @@ caseD_2:
   822EC8FC  3981FFC0             subi r12,r1,0x40
   822EC900  48629ED9             bl 0x829167d8
   822EC904  48629DF8             b 0x829166fc
-caseD_5:
+caseD_b9:
   822EC908  38C10060             addi r6,r1,0x60
   822EC90C  80E10194             lwz r7,0x194(r1)
   822EC910  38A10110             addi r5,r1,0x110
@@ -7168,7 +7168,7 @@ caseD_5:
   822EC924  3981FFC0             subi r12,r1,0x40
   822EC928  48629EB1             bl 0x829167d8
   822EC92C  48629DD0             b 0x829166fc
-caseD_8:
+caseD_bc:
   822EC930  38C10060             addi r6,r1,0x60
   822EC934  80E10194             lwz r7,0x194(r1)
   822EC938  38A10110             addi r5,r1,0x110
@@ -7179,7 +7179,7 @@ caseD_8:
   822EC94C  3981FFC0             subi r12,r1,0x40
   822EC950  48629E89             bl 0x829167d8
   822EC954  48629DA8             b 0x829166fc
-caseD_3:
+caseD_b7:
   822EC958  38C10060             addi r6,r1,0x60
   822EC95C  80E10194             lwz r7,0x194(r1)
   822EC960  38A10110             addi r5,r1,0x110
@@ -7190,7 +7190,7 @@ caseD_3:
   822EC974  3981FFC0             subi r12,r1,0x40
   822EC978  48629E61             bl 0x829167d8
   822EC97C  48629D80             b 0x829166fc
-caseD_9:
+caseD_bd:
   822EC980  38C10060             addi r6,r1,0x60
   822EC984  80E10194             lwz r7,0x194(r1)
   822EC988  38A10110             addi r5,r1,0x110
@@ -7201,7 +7201,7 @@ caseD_9:
   822EC99C  3981FFC0             subi r12,r1,0x40
   822EC9A0  48629E39             bl 0x829167d8
   822EC9A4  48629D58             b 0x829166fc
-caseD_c:
+caseD_c0:
   822EC9A8  38C10060             addi r6,r1,0x60
   822EC9AC  80E10194             lwz r7,0x194(r1)
   822EC9B0  38A10110             addi r5,r1,0x110
@@ -7212,7 +7212,7 @@ caseD_c:
   822EC9C4  3981FFC0             subi r12,r1,0x40
   822EC9C8  48629E11             bl 0x829167d8
   822EC9CC  48629D30             b 0x829166fc
-caseD_e:
+caseD_c2:
   822EC9D0  38C10060             addi r6,r1,0x60
   822EC9D4  80E10194             lwz r7,0x194(r1)
   822EC9D8  38A10110             addi r5,r1,0x110
@@ -7223,7 +7223,7 @@ caseD_e:
   822EC9EC  3981FFC0             subi r12,r1,0x40
   822EC9F0  48629DE9             bl 0x829167d8
   822EC9F4  48629D08             b 0x829166fc
-caseD_7:
+caseD_bb:
   822EC9F8  38C10060             addi r6,r1,0x60
   822EC9FC  81010194             lwz r8,0x194(r1)
   822ECA00  38A10110             addi r5,r1,0x110
@@ -7235,7 +7235,7 @@ caseD_7:
   822ECA18  3981FFC0             subi r12,r1,0x40
   822ECA1C  48629DBD             bl 0x829167d8
   822ECA20  48629CDC             b 0x829166fc
-caseD_b:
+caseD_bf:
   822ECA24  38C10060             addi r6,r1,0x60
   822ECA28  80E10194             lwz r7,0x194(r1)
   822ECA2C  38A10110             addi r5,r1,0x110
@@ -7246,7 +7246,7 @@ caseD_b:
   822ECA40  3981FFC0             subi r12,r1,0x40
   822ECA44  48629D95             bl 0x829167d8
   822ECA48  48629CB4             b 0x829166fc
-caseD_a:
+caseD_be:
   822ECA4C  38800001             li r4,0x1
 LAB_822eca50:
   822ECA50  38C10060             addi r6,r1,0x60
@@ -7254,7 +7254,7 @@ LAB_822eca50:
   822ECA58  38A10110             addi r5,r1,0x110
   822ECA5C  7FE3FB78             or r3,r31,r31
   822ECA60  483D34C9             bl 0x826bff28
-caseD_a2:
+caseD_a7:
   822ECA64  382100F0             addi r1,r1,0xf0
   822ECA68  3981FFC0             subi r12,r1,0x40
   822ECA6C  48629D6D             bl 0x829167d8

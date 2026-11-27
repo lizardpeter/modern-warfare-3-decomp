@@ -2,12 +2,14 @@
 
 // 82628F90  XAnim_SetTime  (xanim/xanim_calc.cpp:33)
 
-void XAnim_SetTime(double param_1,undefined8 param_2,int param_3,float *param_4)
+void XAnim_SetTime(float param_1,int param_2,XAnimTime *param_3)
 
 {
-  *param_4 = (float)param_1;
-  param_4[1] = (float)((double)(longlong)param_3 * param_1);
-  param_4[2] = (float)(int)((double)(longlong)param_3 * param_1);
+  float *in_r5;
+  
+  *in_r5 = param_1;
+  in_r5[1] = (float)(longlong)(int)param_3 * param_1;
+  in_r5[2] = (float)(int)((float)(longlong)(int)param_3 * param_1);
   return;
 }
 
@@ -15,7 +17,7 @@ void XAnim_SetTime(double param_1,undefined8 param_2,int param_3,float *param_4)
 // 826294C0  XAnim_GetTimeIndex<unsigned_char>  (xanim/xanim_calc.cpp:41)
 
 void XAnim_GetTimeIndex<unsigned_char>
-               (undefined8 param_1,int param_2,ulonglong param_3,uint *param_4,float *param_5)
+               (XAnimTime *param_1,uchar *param_2,int param_3,int *param_4,float *param_5)
 
 {
   byte bVar1;
@@ -27,53 +29,53 @@ void XAnim_GetTimeIndex<unsigned_char>
   ulonglong uVar7;
   uint uVar8;
   ulonglong uVar9;
-  double dVar10;
   
-  pfVar5 = (float *)__savegprlr_24();
+  uVar7 = (ulonglong)param_3;
+  pfVar5 = (float *)__savegprlr_24(param_1);
   fVar3 = pfVar5[2];
-  uVar8 = (uint)((float)(longlong)(int)param_3 * *pfVar5);
+  uVar8 = (uint)((float)(longlong)(int)uVar7 * *pfVar5);
   uVar9 = (ulonglong)uVar8;
-  if ((uint)fVar3 < (uint)*(byte *)(uVar8 + param_2)) {
+  if ((uint)fVar3 < (uint)param_2[uVar8]) {
     lVar6 = 0;
     do {
       uVar7 = uVar9 - 1;
       uVar8 = (uint)uVar7;
-      if ((uint)*(byte *)(uVar8 + param_2) <= (uint)fVar3) break;
+      if ((uint)param_2[uVar8] <= (uint)fVar3) break;
       uVar9 = (uVar7 + lVar6 & 0xffffffff) >> 1;
       uVar8 = (uint)uVar9;
-    } while (((uint)fVar3 < (uint)*(byte *)(uVar8 + param_2)) ||
-            (lVar6 = uVar9 + 1, uVar9 = uVar7, (uint)*(byte *)((int)lVar6 + param_2) <= (uint)fVar3)
-            );
+    } while (((uint)fVar3 < (uint)param_2[uVar8]) ||
+            (lVar6 = uVar9 + 1, uVar9 = uVar7, (uint)param_2[(int)lVar6] <= (uint)fVar3));
   }
-  else if ((uint)*(byte *)(uVar8 + param_2 + 1) <= (uint)fVar3) {
+  else if ((uint)param_2[uVar8 + 1] <= (uint)fVar3) {
     lVar6 = uVar9 + 1;
     do {
-      uVar9 = param_3;
+      uVar9 = uVar7;
       uVar8 = (uint)lVar6;
       lVar6 = lVar6 + 1;
-      if ((uint)fVar3 < (uint)*(byte *)((int)lVar6 + param_2)) break;
-      param_3 = (uVar9 + lVar6 & 0xffffffff) >> 1;
-      uVar8 = (uint)param_3;
-    } while (((uint)fVar3 < (uint)*(byte *)(uVar8 + param_2)) ||
-            (lVar6 = param_3 + 1, param_3 = uVar9,
-            (uint)*(byte *)((int)lVar6 + param_2) <= (uint)fVar3));
+      if ((uint)fVar3 < (uint)param_2[(int)lVar6]) break;
+      uVar7 = (uVar9 + lVar6 & 0xffffffff) >> 1;
+      uVar8 = (uint)uVar7;
+    } while (((uint)fVar3 < (uint)param_2[uVar8]) ||
+            (lVar6 = uVar7 + 1, uVar7 = uVar9, (uint)param_2[(int)lVar6] <= (uint)fVar3));
   }
-  pbVar4 = (byte *)(uVar8 + param_2);
-  if ((uint)fVar3 < (uint)*(byte *)(uVar8 + param_2)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6b,0,0xffffffff82000f98,0xffffffff8218704c);
+  pbVar4 = param_2 + uVar8;
+  if ((uint)fVar3 < (uint)param_2[uVar8]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6b,0,
+                    "%s");
   }
   if ((uint)pbVar4[1] <= (uint)fVar3) {
-    MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6c,0,
+                    "%s");
   }
   bVar1 = *pbVar4;
   fVar3 = pfVar5[1];
   bVar2 = pbVar4[1];
   *param_4 = uVar8;
   fVar3 = (fVar3 - (float)bVar1) / (float)(longlong)(int)((uint)bVar2 - (uint)bVar1);
-  dVar10 = (double)fVar3;
   *param_5 = fVar3;
-  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
-    MyAssertHandler(0xffffffff82186f8c,0x70,1,0xffffffff82186ff0,dVar10,0,0x3ff0000000000000);
+  if ((fVar3 < 0.0) || (1.0 < fVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x70,1,
+                    "*keyFrameLerpFrac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
   __restgprlr_24();
   return;
@@ -83,66 +85,66 @@ void XAnim_GetTimeIndex<unsigned_char>
 // 826296C8  XAnim_GetTimeIndex<unsigned_short>  (xanim/xanim_calc.cpp:41)
 
 void XAnim_GetTimeIndex<unsigned_short>
-               (undefined8 param_1,int param_2,ulonglong param_3,uint *param_4,float *param_5)
+               (XAnimTime *param_1,ushort *param_2,int param_3,int *param_4,float *param_5)
 
 {
   ushort uVar1;
   ushort uVar2;
   float fVar3;
   float *pfVar4;
-  longlong lVar5;
-  ushort *puVar7;
-  ulonglong uVar6;
-  ulonglong uVar9;
-  double dVar10;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ushort *puVar9;
+  ulonglong uVar10;
   uint uVar8;
   
-  pfVar4 = (float *)__savegprlr_24();
+  uVar7 = (ulonglong)param_3;
+  pfVar4 = (float *)__savegprlr_24(param_1);
   fVar3 = pfVar4[2];
-  uVar8 = (uint)((float)(longlong)(int)param_3 * *pfVar4);
-  uVar9 = (ulonglong)uVar8;
-  puVar7 = (ushort *)(uVar8 * 2 + param_2);
-  if ((uint)fVar3 < (uint)*puVar7) {
-    lVar5 = 0;
+  uVar8 = (uint)((float)(longlong)(int)uVar7 * *pfVar4);
+  uVar10 = (ulonglong)uVar8;
+  if ((uint)fVar3 < (uint)param_2[uVar8]) {
+    lVar6 = 0;
     do {
-      uVar6 = uVar9 - 1;
-      uVar8 = (uint)uVar6;
-      if ((uint)*(ushort *)((int)((uVar6 & 0xffffffff) << 1) + param_2) <= (uint)fVar3) break;
-      uVar9 = (uVar6 + lVar5 & 0xffffffff) >> 1;
-      uVar8 = (uint)uVar9;
-    } while (((uint)fVar3 < (uint)*(ushort *)((int)(uVar9 << 1) + param_2)) ||
-            (lVar5 = uVar9 + 1, uVar9 = uVar6,
-            (uint)*(ushort *)((int)lVar5 * 2 + param_2) <= (uint)fVar3));
+      uVar7 = uVar10 - 1;
+      uVar8 = (uint)uVar7;
+      if ((uint)*(ushort *)((int)((uVar7 & 0xffffffff) << 1) + (int)param_2) <= (uint)fVar3) break;
+      uVar10 = (uVar7 + lVar6 & 0xffffffff) >> 1;
+      uVar8 = (uint)uVar10;
+    } while (((uint)fVar3 < (uint)*(ushort *)((int)(uVar10 << 1) + (int)param_2)) ||
+            (lVar6 = uVar10 + 1, uVar10 = uVar7, (uint)param_2[(int)lVar6] <= (uint)fVar3));
   }
-  else if ((uint)puVar7[1] <= (uint)fVar3) {
-    uVar9 = uVar9 + 1;
+  else if ((uint)(param_2 + uVar8)[1] <= (uint)fVar3) {
+    uVar10 = uVar10 + 1;
     do {
-      uVar6 = param_3;
-      uVar8 = (uint)uVar9;
-      uVar9 = uVar9 + 1;
-      if ((uint)fVar3 < (uint)*(ushort *)((int)((uVar9 & 0xffffffff) << 1) + param_2)) break;
-      param_3 = (uVar6 + uVar9 & 0xffffffff) >> 1;
-      uVar8 = (uint)param_3;
-    } while (((uint)fVar3 < (uint)*(ushort *)((int)(param_3 << 1) + param_2)) ||
-            (uVar9 = param_3 + 1, param_3 = uVar6,
-            (uint)*(ushort *)((int)uVar9 * 2 + param_2) <= (uint)fVar3));
+      uVar5 = uVar7;
+      uVar8 = (uint)uVar10;
+      uVar10 = uVar10 + 1;
+      if ((uint)fVar3 < (uint)*(ushort *)((int)((uVar10 & 0xffffffff) << 1) + (int)param_2)) break;
+      uVar7 = (uVar5 + uVar10 & 0xffffffff) >> 1;
+      uVar8 = (uint)uVar7;
+    } while (((uint)fVar3 < (uint)*(ushort *)((int)(uVar7 << 1) + (int)param_2)) ||
+            (uVar10 = uVar7 + 1, uVar7 = uVar5, (uint)param_2[(int)uVar10] <= (uint)fVar3));
   }
-  puVar7 = (ushort *)(uVar8 * 2 + param_2);
-  if ((uint)fVar3 < (uint)*puVar7) {
-    MyAssertHandler(0xffffffff82186f8c,0x6b,0,0xffffffff82000f98,0xffffffff8218704c);
+  puVar9 = param_2 + uVar8;
+  if ((uint)fVar3 < (uint)*puVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6b,0,
+                    "%s");
   }
-  if ((uint)puVar7[1] <= (uint)fVar3) {
-    MyAssertHandler(0xffffffff82186f8c,0x6c,0,0xffffffff82000f98,0xffffffff8218702c);
+  if ((uint)puVar9[1] <= (uint)fVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6c,0,
+                    "%s");
   }
-  uVar1 = *puVar7;
+  uVar1 = *puVar9;
   fVar3 = pfVar4[1];
-  uVar2 = puVar7[1];
+  uVar2 = puVar9[1];
   *param_4 = uVar8;
   fVar3 = (fVar3 - (float)uVar1) / (float)(longlong)(int)((uint)uVar2 - (uint)uVar1);
-  dVar10 = (double)fVar3;
   *param_5 = fVar3;
-  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
-    MyAssertHandler(0xffffffff82186f8c,0x70,1,0xffffffff82186ff0,dVar10,0,0x3ff0000000000000);
+  if ((fVar3 < 0.0) || (1.0 < fVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x70,1,
+                    "*keyFrameLerpFrac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
   __restgprlr_24();
   return;
@@ -151,16 +153,16 @@ void XAnim_GetTimeIndex<unsigned_short>
 
 // 82628F80  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 82628F88  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(int param_1,int param_2)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
@@ -169,7 +171,7 @@ void __stvx(int param_1,int param_2)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -180,54 +182,60 @@ void __stvx(int param_1,int param_2)
 
 // 82628FC0  IsInfoAdditive  (xanim/xanim_calc.cpp:138)
 
-undefined8 IsInfoAdditive(int param_1)
+bool IsInfoAdditive(XAnimInfo *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x8b,0,0xffffffff82000f98,0xffffffff82021a7c);
+  if (param_1 == (XAnimInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x8b,0,
+                    "%s");
   }
-  if ((*(short *)(param_1 + 0x12) != 0) || (uVar1 = 1, (*(ushort *)(param_1 + 0x1c) & 0x10) == 0)) {
-    uVar1 = 0;
+  if ((param_1->animToModel != 0) ||
+     (bVar1 = true, ((param_1->field12_0x1c).animParent.flags & 0x10) == 0)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8262A320  XAnimClearRotTransArray  (xanim/xanim_calc.cpp:145)
 
-void XAnimClearRotTransArray(undefined8 param_1,longlong param_2,int param_3)
+void XAnimClearRotTransArray(DObj *param_1,DObjAnimMat *param_2,XAnimCalcAnimInfo *param_3)
 
 {
   float *pfVar1;
   int iVar2;
-  uint uVar3;
-  double dVar4;
+  longlong lVar3;
+  uint uVar4;
+  double dVar5;
   
-  iVar2 = __savegprlr_24();
-  uVar3 = 0;
+  lVar3 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_24(param_1);
+  uVar4 = 0;
   if (*(char *)(iVar2 + 10) != '\0') {
-    dVar4 = 0.0;
-    param_2 = param_2 + 0x18;
+    dVar5 = 0.0;
+    lVar3 = lVar3 + 0x18;
     do {
-      if (0xbf < uVar3) {
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      if (0xbf < uVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)(((uVar3 >> 5) + 0x2406) * 4 + param_3) & (&DAT_82992400)[uVar3 & 0x1f]) == 0) {
-        pfVar1 = (float *)param_2;
-        pfVar1[-6] = (float)dVar4;
-        pfVar1[-5] = (float)dVar4;
-        pfVar1[-4] = (float)dVar4;
-        pfVar1[-3] = (float)dVar4;
-        pfVar1[1] = (float)dVar4;
-        pfVar1[-2] = (float)dVar4;
-        pfVar1[-1] = (float)dVar4;
-        *pfVar1 = (float)dVar4;
+      if (((param_3->ignorePartBits).array[uVar4 >> 5] & *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4)
+          ) == 0) {
+        pfVar1 = (float *)lVar3;
+        pfVar1[-6] = (float)dVar5;
+        pfVar1[-5] = (float)dVar5;
+        pfVar1[-4] = (float)dVar5;
+        pfVar1[-3] = (float)dVar5;
+        pfVar1[1] = (float)dVar5;
+        pfVar1[-2] = (float)dVar5;
+        pfVar1[-1] = (float)dVar5;
+        *pfVar1 = (float)dVar5;
       }
-      uVar3 = uVar3 + 1;
-      param_2 = param_2 + 0x20;
-    } while ((int)uVar3 < (int)(uint)*(byte *)(iVar2 + 10));
+      uVar4 = uVar4 + 1;
+      lVar3 = lVar3 + 0x20;
+    } while ((int)uVar4 < (int)(uint)*(byte *)(iVar2 + 10));
   }
   __restgprlr_24();
   return;
@@ -237,54 +245,57 @@ void XAnimClearRotTransArray(undefined8 param_1,longlong param_2,int param_3)
 // 82629040  XAnimWeightedAccumLerpedRot  (xanim/xanim_calc.cpp:161)
 
 void XAnimWeightedAccumLerpedRot
-               (uint param_1,uint param_2,undefined8 param_3,undefined8 param_4,uint param_5)
+               (__vector4 *param_1,__vector4 *param_2,float param_3,float param_4,
+               DObjAnimMat *param_5)
 
 {
+  uint in_r7;
   undefined1 auVar1 [16];
   undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   
   auVar1 = vectorSubtractFloatingPoint128
-                     (*(undefined1 (*) [16])(param_2 & 0xfffffff0),
-                      *(undefined1 (*) [16])(param_1 & 0xfffffff0));
+                     (*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0));
   auVar2 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x2c);
   auVar3 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x24);
   auVar3 = vectorSplatWord(auVar3,0);
   auVar1 = vectorMultiplyAddFloatingPoint
-                     (auVar3,auVar1,*(undefined1 (*) [16])(param_1 & 0xfffffff0));
+                     (auVar3,auVar1,*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0));
   auVar3 = vectorSplatWord(auVar2,0);
-  auVar1 = vectorMultiplyAddFloatingPoint
-                     (auVar3,auVar1,*(undefined1 (*) [16])(param_5 & 0xfffffff0));
-  *(undefined1 (*) [16])(param_5 & 0xfffffff0) = auVar1;
+  auVar1 = vectorMultiplyAddFloatingPoint(auVar3,auVar1,*(undefined1 (*) [16])(in_r7 & 0xfffffff0));
+  *(undefined1 (*) [16])(in_r7 & 0xfffffff0) = auVar1;
   return;
 }
 
 
 // 82629080  XAnimWeightedAccumRot  (xanim/xanim_calc.cpp:186)
 
-void XAnimWeightedAccumRot(undefined8 param_1,uint param_2)
+void XAnimWeightedAccumRot(__vector4 param_1,float param_2,DObjAnimMat *param_3)
 
 {
+  uint in_r4;
   undefined1 in_vs33 [16];
   undefined1 auVar1 [16];
   
   auVar1 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x24);
   auVar1 = vectorSplatWord(auVar1,0);
-  auVar1 = vectorMultiplyAddFloatingPoint
-                     (auVar1,in_vs33,*(undefined1 (*) [16])(param_2 & 0xfffffff0));
-  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar1;
+  auVar1 = vectorMultiplyAddFloatingPoint(auVar1,in_vs33,*(undefined1 (*) [16])(in_r4 & 0xfffffff0))
+  ;
+  *(undefined1 (*) [16])(in_r4 & 0xfffffff0) = auVar1;
   return;
 }
 
 
 // 826290A0  XAnimWeightedAccumLerpedTrans  (xanim/xanim_calc.cpp:200)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void XAnimWeightedAccumLerpedTrans
-               (undefined8 param_1,undefined8 param_2,longlong param_3,int param_4)
+               (__vector4 param_1,__vector4 param_2,float param_3,float param_4,int *param_5,
+               DObjAnimMat *param_6)
 
 {
+  longlong in_r5;
+  int in_r6;
   undefined1 in_vs33 [16];
   undefined1 in_vs34 [16];
   undefined1 auVar1 [16];
@@ -294,51 +305,53 @@ void XAnimWeightedAccumLerpedTrans
   undefined1 auVar5 [16];
   
   auVar1 = vectorSubtractFloatingPoint(in_vs34,in_vs33);
-  auVar5 = loadVectorLeftIndexed(param_3);
+  auVar5 = loadVectorLeftIndexed(in_r5);
   auVar4 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
   auVar4 = vectorSplatWord(auVar4,0);
   auVar4 = vectorMultiplyAddFloatingPoint(auVar4,auVar1,in_vs33);
-  auVar3 = loadVectorLeftIndexed(param_3 + 0xc);
-  auVar2 = loadVectorRightIndexed(param_3 + 0x1c);
-  auVar1 = loadVectorRightIndexed(param_3 + 0x10);
-  auVar1 = vectorPermute128(auVar5 | auVar1,_DAT_8217a050,_DAT_8404f6e0);
+  auVar3 = loadVectorLeftIndexed(in_r5 + 0xc);
+  auVar2 = loadVectorRightIndexed(in_r5 + 0x1c);
+  auVar1 = loadVectorRightIndexed(in_r5 + 0x10);
+  auVar1 = vectorPermute128(auVar5 | auVar1,(undefined1  [16])g_one.field0_0x0,
+                            (undefined1  [16])g_XYZx.field0_0x0);
   auVar5 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x3c);
   auVar5 = vectorSplatWord(auVar5,0);
-  auVar4 = vectorMultiplyAddFloatingPoint((auVar3 | auVar2) & _DAT_8404f950,auVar4,auVar1);
   auVar4 = vectorMultiplyAddFloatingPoint
-                     (auVar5,auVar4,*(undefined1 (*) [16])(param_4 + 0x10U & 0xfffffff0));
-  *(undefined1 (*) [16])(param_4 + 0x10U & 0xfffffff0) = auVar4;
+                     ((auVar3 | auVar2) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar4,auVar1);
+  auVar4 = vectorMultiplyAddFloatingPoint
+                     (auVar5,auVar4,*(undefined1 (*) [16])(in_r6 + 0x10U & 0xfffffff0));
+  *(undefined1 (*) [16])(in_r6 + 0x10U & 0xfffffff0) = auVar4;
   return;
 }
 
 
 // 82629130  XAnimWeightedAccumTrans  (xanim/xanim_calc.cpp:235)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void XAnimWeightedAccumTrans(undefined8 param_1,longlong param_2,int param_3)
+void XAnimWeightedAccumTrans(float param_1,int *param_2,DObjAnimMat *param_3)
 
 {
+  int in_r5;
   undefined1 auVar1 [16];
   undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   undefined1 auVar4 [16];
   
-  auVar4 = loadVectorLeftIndexed(param_2);
-  auVar3 = loadVectorRightIndexed(param_2 + 0x10);
+  auVar4 = loadVectorLeftIndexed((longlong)(int)param_3);
+  auVar3 = loadVectorRightIndexed((longlong)(int)param_3 + 0x10);
   auVar2 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x14);
   auVar1 = vectorSplatWord(auVar2,0);
-  auVar2 = vectorPermute128(auVar4 | auVar3,_DAT_8217a050,_DAT_8404f6e0);
+  auVar2 = vectorPermute128(auVar4 | auVar3,(undefined1  [16])g_one.field0_0x0,
+                            (undefined1  [16])g_XYZx.field0_0x0);
   auVar2 = vectorMultiplyAddFloatingPoint
-                     (auVar1,auVar2,*(undefined1 (*) [16])(param_3 + 0x10U & 0xfffffff0));
-  *(undefined1 (*) [16])(param_3 + 0x10U & 0xfffffff0) = auVar2;
+                     (auVar1,auVar2,*(undefined1 (*) [16])(in_r5 + 0x10U & 0xfffffff0));
+  *(undefined1 (*) [16])(in_r5 + 0x10U & 0xfffffff0) = auVar2;
   return;
 }
 
 
 // 82629180  XAnimMovePastFrameIndices  (xanim/xanim_calc.cpp:255)
 
-void XAnimMovePastFrameIndices(uint param_1,int *param_2,int *param_3,int param_4)
+void XAnimMovePastFrameIndices(uint param_1,uchar **param_2,short **param_3,int param_4)
 
 {
   if (param_4 != 0) {
@@ -346,601 +359,671 @@ void XAnimMovePastFrameIndices(uint param_1,int *param_2,int *param_3,int param_
     return;
   }
   if (param_1 < 0x40) {
-    *param_3 = (param_1 + 1) * 2 + *param_3;
+    *param_3 = *param_3 + param_1 + 1;
     return;
   }
-  *param_3 = (((uint)((ulonglong)param_1 - 1 >> 8) & 0xffffff) + 2) * 2 + *param_3;
+  *param_3 = *param_3 + (param_1 - 1 >> 8) + 2;
   return;
 }
 
 
 // 8262A3F8  XAnimCalcNonLoopEnd  (xanim/xanim_calc.cpp:278)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void XAnimCalcNonLoopEnd(undefined8 param_1,int param_2,undefined8 param_3,int param_4,int param_5)
+void XAnimCalcNonLoopEnd(XAnimParts *param_1,uchar *param_2,float param_3,DObjAnimMat *param_4,
+                        bitarray<192> *param_5)
 
 {
   byte bVar1;
   byte bVar2;
   ushort uVar3;
+  uchar *puVar4;
+  bitarray<192> *pbVar5;
   undefined8 in_r0;
-  ulonglong uVar4;
-  int iVar5;
-  uint uVar6;
+  ulonglong uVar6;
   int iVar7;
   uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  uint uVar12;
-  uint uVar16;
-  ulonglong uVar13;
+  int in_r7;
+  uint uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  uint uVar13;
+  uint uVar17;
+  uint uVar18;
   ulonglong uVar14;
-  byte *pbVar17;
-  longlong lVar15;
-  uint uVar20;
-  longlong lVar18;
-  ulonglong uVar19;
-  bool bVar21;
+  ulonglong uVar15;
+  byte *pbVar19;
+  longlong lVar16;
+  longlong lVar20;
+  ulonglong uVar21;
+  bool bVar22;
   double extraout_f1;
-  double dVar22;
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
+  double dVar23;
+  __vector4_u_0 _Var24;
+  __vector4_u_0 _Var25;
+  __vector4_u_0 _Var26;
   undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
+  __vector4_u_0 _Var28;
+  __vector4_u_0 _Var29;
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  int iStack00000014;
+  uchar *puStack0000001c;
+  float fStack00000024;
+  bitarray<192> *pbStack0000002c;
+  int iStack00000034;
   ushort *local_160;
   byte *local_15c;
   uint local_144;
   uint local_13c;
   undefined1 local_f0 [16];
   
-  uVar4 = ZEXT48(&stack0x00000000);
+  uVar6 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  iVar5 = __savefpr_28();
-  dVar22 = extraout_f1;
-  if ((*(byte *)(iVar5 + 0x10) & 1) != 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x127,0,0xffffffff82000f98,0xffffffff82185fe4);
+  iVar7 = __savefpr_28();
+  fStack00000024 = (float)extraout_f1;
+  dVar23 = extraout_f1;
+  iStack00000014 = iVar7;
+  puStack0000001c = param_2;
+  pbStack0000002c = param_5;
+  iStack00000034 = in_r7;
+  if ((*(byte *)(iVar7 + 0x10) & 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x127,0,
+                    "%s");
   }
-  local_15c = *(byte **)(iVar5 + 0x34);
-  uVar6 = *(uint *)(iVar5 + 0x44);
-  bVar21 = 0xff < *(ushort *)(iVar5 + 0xe);
-  local_13c = *(uint *)(iVar5 + 0x40);
-  uVar12 = *(uint *)(iVar5 + 0x48);
-  local_160 = *(ushort **)(iVar5 + 0x38);
-  uVar16 = (uint)*(byte *)(iVar5 + 0x11);
-  local_144 = *(uint *)(iVar5 + 0x3c);
-  uVar8 = 0;
-  if (uVar16 != 0) {
+  local_15c = *(byte **)(iVar7 + 0x34);
+  uVar8 = *(uint *)(iVar7 + 0x44);
+  bVar22 = 0xff < *(ushort *)(iVar7 + 0xe);
+  local_13c = *(uint *)(iVar7 + 0x40);
+  uVar9 = *(uint *)(iVar7 + 0x48);
+  local_160 = *(ushort **)(iVar7 + 0x38);
+  uVar17 = (uint)*(byte *)(iVar7 + 0x11);
+  local_144 = *(uint *)(iVar7 + 0x3c);
+  uVar10 = 0;
+  if (uVar17 != 0) {
     do {
-      bVar1 = *(byte *)(uVar8 + param_2);
-      uVar20 = (uint)bVar1;
-      if (0xbf < uVar20) {
-        MyAssertHandler(0xffffffff82186f8c,0x140,0,0xffffffff821870d0,uVar20,0xc0);
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      bVar1 = param_2[uVar10];
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x140,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar20 & 0x1f]) == 0) {
-        iVar7 = (uint)bVar1 * 0x20 + param_4;
-        *(float *)(iVar7 + 0xc) = (float)((double)*(float *)(iVar7 + 0xc) + dVar22);
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_r7) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        *(float *)((int)param_5 + (uint)bVar1 * 0x20 + 0xc) =
+             (float)((double)*(float *)((int)param_5 + (uint)bVar1 * 0x20 + 0xc) + dVar23);
       }
-      uVar8 = uVar8 + 1;
-    } while (uVar8 < uVar16);
+      uVar10 = uVar10 + 1;
+    } while (uVar10 < uVar17);
   }
-  uVar16 = *(byte *)(iVar5 + 0x12) + uVar16;
-  auVar27 = _DAT_8404f5c0;
-  auVar25 = _DAT_8404f5e0;
-  auVar23 = _DAT_8404f7b0;
-  auVar26 = _DAT_8404fa00;
-  for (; uVar8 < uVar16; uVar8 = uVar8 + 1) {
-    bVar1 = *(byte *)(uVar8 + param_2);
-    uVar20 = (uint)bVar1;
-    if (0xbf < uVar20) {
+  uVar17 = *(byte *)(iVar7 + 0x12) + uVar17;
+  _Var24 = g_packMantissa.field0_0x0;
+  _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+  _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+  _Var25 = g_ZZZZ.field0_0x0;
+  for (; uVar10 < uVar17; uVar10 = uVar10 + 1) {
+    bVar1 = puStack0000001c[uVar10];
+    uVar18 = (uint)bVar1;
+    if (0xbf < uVar18) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x157,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar20,
-                      0xc0);
-      auVar27 = _DAT_8404f5c0;
-      auVar26 = _DAT_8404fa00;
-      auVar23 = _DAT_8404f7b0;
-      auVar25 = _DAT_8404f5e0;
+                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var25 = g_ZZZZ.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
     }
     uVar3 = *local_160;
-    uVar11 = (uint)uVar3;
+    uVar13 = (uint)uVar3;
     local_160 = local_160 + 1;
-    if (bVar21) {
-      if (uVar11 < 0x40) {
-        iVar7 = uVar11 + 1;
+    if (bVar22) {
+      if (uVar13 < 0x40) {
+        iVar7 = uVar13 + 1;
       }
       else {
-        iVar7 = (uVar11 - 1 >> 8) + 2;
+        iVar7 = (uVar13 - 1 >> 8) + 2;
       }
       local_160 = local_160 + iVar7;
     }
     else {
-      local_15c = local_15c + uVar11 + 1;
+      local_15c = local_15c + uVar13 + 1;
     }
-    if (0xbf < uVar20) {
+    if (0xbf < uVar18) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      auVar27 = _DAT_8404f5c0;
-      auVar26 = _DAT_8404fa00;
-      auVar23 = _DAT_8404f7b0;
-      auVar25 = _DAT_8404f5e0;
+                      ,0x42,0,"%s");
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var25 = g_ZZZZ.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
     }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar20 & 0x1f]) == 0) {
-      lVar18 = ((ulonglong)CONCAT24(uVar3,uVar11) & 0x7fffffff) * 2 + (ulonglong)local_13c;
-      if (lVar18 == 0) {
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      lVar20 = ((ulonglong)CONCAT24(uVar3,uVar13) & 0x7fffffff) * 2 + (ulonglong)local_13c;
+      if (lVar20 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x162,0,&DAT_82000f98,"rotLastFrame");
-        auVar27 = _DAT_8404f5c0;
-        auVar26 = _DAT_8404fa00;
-        auVar23 = _DAT_8404f7b0;
-        auVar25 = _DAT_8404f5e0;
+                        0x162,0,"%s");
+        _Var24 = g_packMantissa.field0_0x0;
+        _Var25 = g_ZZZZ.field0_0x0;
+        _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
       }
-      auVar32 = loadVectorLeftIndexed(lVar18);
-      auVar31 = vectorSplatWord(auVar32,0);
-      auVar30 = vectorShiftRightWord128(auVar31,_DAT_8404f920);
-      uVar20 = uVar20 * 0x20 + param_4;
-      auVar29 = vectorShiftLeftWord128(auVar30,_DAT_8404f7c0);
-      auVar31 = loadVectorLeftIndexed(uVar4 + 0x24);
-      auVar28 = vectorSplatWord(auVar32 & _DAT_8404f780,0);
-      auVar32 = vectorAddUnsignedWordSaturate(auVar30 & _DAT_8404f620,auVar27);
-      auVar24 = vectorSplatWord(auVar31,0);
-      auVar31 = vectorPermute128(auVar30 & _DAT_8404f7a0,auVar30 & _DAT_8404f7a0,auVar23);
-      auVar32 = vectorSubtractUnsignedWordSaturate(auVar32,auVar29 & _DAT_8404f750);
-      auVar31 = vectorAddUnsignedWordSaturate(auVar25,auVar31);
-      auVar32 = vectorAddFloatingPoint128(auVar32 & _DAT_8404f9c0,_DAT_8217a560);
-      auVar29 = vectorMultiplyFloatingPoint(auVar32,_DAT_8217a550);
-      auVar32 = vectorMultiplySum4FloatingPoint(auVar29,auVar29);
-      auVar32 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar32);
-      auVar32 = vectorMultiplyFloatingPoint(auVar29,auVar32);
-      auVar29 = vectorMultiplyFloatingPoint(auVar32,auVar28 | _DAT_8217a050);
-      auVar32 = vectorPermute128(auVar29,auVar29,auVar26);
-      auVar31 = vectorPermute128(auVar29,auVar32,auVar31);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar24,auVar31,*(undefined1 (*) [16])(uVar20 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar20 & 0xfffffff0) = auVar31;
+      auVar36 = loadVectorLeftIndexed(lVar20);
+      auVar35 = vectorSplatWord(auVar36,0);
+      auVar34 = vectorShiftRightWord128
+                          (auVar35,(undefined1  [16])g_unpackShiftSimpleQuat.field0_0x0);
+      uVar18 = uVar18 * 0x20 + (int)pbStack0000002c;
+      auVar31 = vectorShiftLeftWord128(auVar34,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0);
+      auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+      auVar30 = vectorSplatWord(auVar36 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+      auVar36 = vectorAddUnsignedWordSaturate
+                          (auVar34 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                           (undefined1  [16])_Var24);
+      auVar27 = vectorSplatWord(auVar35,0);
+      auVar35 = vectorPermute128(auVar34 & (undefined1  [16])g_unpackSimpleQuatRotateMask.field0_0x0
+                                 ,auVar34 & (undefined1  [16])
+                                            g_unpackSimpleQuatRotateMask.field0_0x0,
+                                 (undefined1  [16])_Var26);
+      auVar36 = vectorSubtractUnsignedWordSaturate
+                          (auVar36,auVar31 & (undefined1  [16])g_unpackSignBitSimpleQuat.field0_0x0)
+      ;
+      auVar35 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var29,auVar35);
+      auVar36 = vectorAddFloatingPoint128
+                          (auVar36 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+      auVar31 = vectorMultiplyFloatingPoint
+                          (auVar36,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+      auVar36 = vectorMultiplySum4FloatingPoint(auVar31,auVar31);
+      auVar36 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar36);
+      auVar36 = vectorMultiplyFloatingPoint(auVar31,auVar36);
+      auVar31 = vectorMultiplyFloatingPoint(auVar36,auVar30 | (undefined1  [16])g_one.field0_0x0);
+      auVar36 = vectorPermute128(auVar31,auVar31,(undefined1  [16])_Var25);
+      auVar35 = vectorPermute128(auVar31,auVar36,auVar35);
+      auVar35 = vectorMultiplyAddFloatingPoint
+                          (auVar27,auVar35,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar35;
     }
-    local_13c = (uVar11 + 1) * 2 + local_13c;
+    local_13c = (uVar13 + 1) * 2 + local_13c;
   }
-  uVar16 = *(byte *)(iVar5 + 0x13) + uVar16;
-  auVar31 = _DAT_8404f640;
-  for (; uVar8 < uVar16; uVar8 = uVar8 + 1) {
-    bVar1 = *(byte *)(uVar8 + param_2);
-    uVar20 = (uint)bVar1;
-    if (0xbf < uVar20) {
+  uVar17 = *(byte *)(iStack00000014 + 0x13) + uVar17;
+  _Var28 = g_unpackQuatRotateAdd.field0_0x0;
+  for (; uVar10 < uVar17; uVar10 = uVar10 + 1) {
+    bVar1 = puStack0000001c[uVar10];
+    uVar18 = (uint)bVar1;
+    if (0xbf < uVar18) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x172,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar20,
-                      0xc0);
-      auVar27 = _DAT_8404f5c0;
-      auVar23 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
+                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var28 = g_unpackQuatRotateAdd.field0_0x0;
     }
     uVar3 = *local_160;
-    uVar11 = (uint)uVar3;
+    uVar13 = (uint)uVar3;
     local_160 = local_160 + 1;
-    if (bVar21) {
-      if (uVar11 < 0x40) {
-        iVar7 = uVar11 + 1;
+    if (bVar22) {
+      if (uVar13 < 0x40) {
+        iVar7 = uVar13 + 1;
       }
       else {
-        iVar7 = (uVar11 - 1 >> 8) + 2;
+        iVar7 = (uVar13 - 1 >> 8) + 2;
       }
       local_160 = local_160 + iVar7;
     }
     else {
-      local_15c = local_15c + uVar11 + 1;
+      local_15c = local_15c + uVar13 + 1;
     }
-    if (0xbf < uVar20) {
+    if (0xbf < uVar18) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      auVar27 = _DAT_8404f5c0;
-      auVar23 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
+                      ,0x42,0,"%s");
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var28 = g_unpackQuatRotateAdd.field0_0x0;
     }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar20 & 0x1f]) == 0) {
-      lVar18 = ((ulonglong)CONCAT24(uVar3,uVar11) & 0x3fffffff) * 4 + (ulonglong)uVar12;
-      if (lVar18 == 0) {
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      lVar20 = ((ulonglong)CONCAT24(uVar3,uVar13) & 0x3fffffff) * 4 + (ulonglong)uVar9;
+      if (lVar20 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x17d,0,&DAT_82000f98,"rotLastFrame");
-        auVar27 = _DAT_8404f5c0;
-        auVar23 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
+                        0x17d,0,"%s");
+        _Var24 = g_packMantissa.field0_0x0;
+        _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var28 = g_unpackQuatRotateAdd.field0_0x0;
       }
-      auVar26 = loadVectorLeftIndexed(lVar18);
-      auVar25 = vectorSplatWord(auVar26,0);
-      auVar28 = vectorShiftRightWord128(auVar25,_DAT_8404f940);
-      uVar20 = uVar20 * 0x20 + param_4;
-      auVar24 = vectorShiftLeftWord128(auVar28,_DAT_8404f7c0);
-      auVar25 = loadVectorLeftIndexed(uVar4 + 0x24);
-      auVar29 = vectorSplatWord(auVar26 & _DAT_8404f780,0);
-      auVar26 = vectorAddUnsignedWordSaturate(auVar28 & _DAT_8404f770,auVar27);
-      auVar32 = vectorSplatWord(auVar25,0);
-      auVar25 = vectorPermute128(auVar28 & _DAT_8404f6b0,auVar28 & _DAT_8404f6b0,auVar23);
-      auVar26 = vectorSubtractUnsignedWordSaturate(auVar26,auVar24 & _DAT_8404f6a0);
-      auVar25 = vectorAddUnsignedWordSaturate(auVar31,auVar25);
-      auVar26 = vectorAddFloatingPoint128(auVar26 & _DAT_8404f630,_DAT_8217a500);
-      auVar24 = vectorMultiplyFloatingPoint(auVar26,_DAT_8217a4f0);
-      auVar26 = vectorMultiplySum4FloatingPoint(auVar24,auVar24);
-      auVar26 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar26);
-      auVar26 = vectorMultiplyFloatingPoint(auVar24,auVar26);
-      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar29 | _DAT_8217a050);
-      auVar25 = vectorPermute128(auVar26,auVar26,auVar25);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar32,auVar25,*(undefined1 (*) [16])(uVar20 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar20 & 0xfffffff0) = auVar25;
+      auVar36 = loadVectorLeftIndexed(lVar20);
+      auVar35 = vectorSplatWord(auVar36,0);
+      auVar34 = vectorShiftRightWord128(auVar35,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+      uVar18 = uVar18 * 0x20 + (int)pbStack0000002c;
+      auVar31 = vectorShiftLeftWord128(auVar34,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0);
+      auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+      auVar30 = vectorSplatWord(auVar36 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+      auVar36 = vectorAddUnsignedWordSaturate
+                          (auVar34 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                           (undefined1  [16])_Var24);
+      auVar27 = vectorSplatWord(auVar35,0);
+      auVar35 = vectorPermute128(auVar34 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                 auVar34 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                 (undefined1  [16])_Var26);
+      auVar36 = vectorSubtractUnsignedWordSaturate
+                          (auVar36,auVar31 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+      auVar35 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var28,auVar35);
+      auVar36 = vectorAddFloatingPoint128
+                          (auVar36 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddQuat.field0_0x0);
+      auVar31 = vectorMultiplyFloatingPoint(auVar36,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+      auVar36 = vectorMultiplySum4FloatingPoint(auVar31,auVar31);
+      auVar36 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar36);
+      auVar36 = vectorMultiplyFloatingPoint(auVar31,auVar36);
+      auVar36 = vectorMultiplyFloatingPoint(auVar36,auVar30 | (undefined1  [16])g_one.field0_0x0);
+      auVar35 = vectorPermute128(auVar36,auVar36,auVar35);
+      auVar35 = vectorMultiplyAddFloatingPoint
+                          (auVar27,auVar35,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar35;
     }
-    uVar12 = (uVar11 + 1) * 4 + uVar12;
-    auVar26 = _DAT_8404fa00;
-    auVar25 = _DAT_8404f5e0;
+    uVar9 = (uVar13 + 1) * 4 + uVar9;
+    _Var25 = g_ZZZZ.field0_0x0;
+    _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
   }
-  uVar16 = *(byte *)(iVar5 + 0x14) + uVar16;
-  if (uVar8 < uVar16) {
-    uVar19 = ZEXT48(local_160);
+  uVar17 = *(byte *)(iStack00000014 + 0x14) + uVar17;
+  if (uVar10 < uVar17) {
+    uVar21 = ZEXT48(local_160);
     do {
-      bVar1 = *(byte *)(uVar8 + param_2);
-      uVar12 = (uint)bVar1;
-      if (0xbf < uVar12) {
+      bVar1 = puStack0000001c[uVar10];
+      uVar9 = (uint)bVar1;
+      if (0xbf < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x18d,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar12,0xc0);
+                        0x18d,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
       }
-      uVar3 = *(ushort *)uVar19;
-      uVar13 = (ulonglong)uVar3;
-      uVar19 = uVar19 + 2;
-      local_160 = (ushort *)uVar19;
-      if (bVar21) {
-        if (uVar13 < 0x40) {
-          lVar18 = uVar13 + 1;
+      uVar3 = *(ushort *)uVar21;
+      uVar14 = (ulonglong)uVar3;
+      uVar21 = uVar21 + 2;
+      local_160 = (ushort *)uVar21;
+      if (bVar22) {
+        if (uVar14 < 0x40) {
+          lVar20 = uVar14 + 1;
         }
         else {
-          lVar18 = ((uVar13 - 1 & 0xffffffff) >> 8) + 2;
+          lVar20 = ((uVar14 - 1 & 0xffffffff) >> 8) + 2;
         }
-        uVar19 = lVar18 * 2 + uVar19;
-        local_160 = (ushort *)uVar19;
+        uVar21 = lVar20 * 2 + uVar21;
+        local_160 = (ushort *)uVar21;
       }
       else {
         local_15c = local_15c + uVar3 + 1;
       }
-      if (0xbf < uVar12) {
+      if (0xbf < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar12 & 0x1f]) == 0) {
-        if (uVar13 * 6 + (ulonglong)local_13c == 0) {
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        if (uVar14 * 6 + (ulonglong)local_13c == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x198,0,&DAT_82000f98,"rotLastFrame");
+                          0x198,0,"%s");
         }
-        uVar12 = uVar12 * 0x20 + param_4;
-        auVar27 = loadVectorLeftIndexed(uVar4 + 0x24);
-        auVar27 = vectorSplatWord(auVar27,0);
-        uVar19 = ZEXT48(local_160);
-        auVar27 = vectorMultiplyAddFloatingPoint
-                            (auVar27,local_f0,*(undefined1 (*) [16])(uVar12 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar27;
+        uVar9 = uVar9 * 0x20 + (int)pbStack0000002c;
+        auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+        auVar35 = vectorSplatWord(auVar35,0);
+        uVar21 = ZEXT48(local_160);
+        auVar35 = vectorMultiplyAddFloatingPoint
+                            (auVar35,local_f0,*(undefined1 (*) [16])(uVar9 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
       }
-      uVar8 = uVar8 + 1;
+      uVar10 = uVar10 + 1;
       local_13c = (uVar3 + 1) * 6 + local_13c;
-      auVar27 = _DAT_8404f5c0;
-      auVar26 = _DAT_8404fa00;
-      auVar23 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
-      auVar25 = _DAT_8404f5e0;
-    } while (uVar8 < uVar16);
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var25 = g_ZZZZ.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var28 = g_unpackQuatRotateAdd.field0_0x0;
+      _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+    } while (uVar10 < uVar17);
   }
-  uVar16 = *(byte *)(iVar5 + 0x15) + uVar16;
-  if (uVar8 < uVar16) {
-    uVar19 = ZEXT48(local_160);
+  uVar17 = *(byte *)(iStack00000014 + 0x15) + uVar17;
+  if (uVar10 < uVar17) {
+    uVar21 = ZEXT48(local_160);
     do {
-      bVar1 = *(byte *)(uVar8 + param_2);
-      uVar12 = (uint)bVar1;
-      if (0xbf < uVar12) {
+      bVar1 = puStack0000001c[uVar10];
+      uVar9 = (uint)bVar1;
+      if (0xbf < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x1a7,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar12,0xc0);
+                        0x1a7,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        auVar27 = _DAT_8404f5c0;
-        auVar26 = _DAT_8404fa00;
-        auVar23 = _DAT_8404f7b0;
-        auVar25 = _DAT_8404f5e0;
+                        ,0x42,0,"%s");
+        _Var24 = g_packMantissa.field0_0x0;
+        _Var25 = g_ZZZZ.field0_0x0;
+        _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var29 = g_unpackSimpleQuatRotateAdd.field0_0x0;
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar12 & 0x1f]) == 0) {
-        auVar28 = loadVectorLeftIndexed(uVar19);
-        auVar31 = vectorSplatWord(auVar28,0);
-        auVar31 = vectorShiftRightWord128(auVar31,_DAT_8404f920);
-        auVar29 = vectorShiftLeftWord128(auVar31,_DAT_8404f7c0);
-        auVar24 = loadVectorLeftIndexed(uVar4 + 0x24);
-        auVar32 = vectorAddUnsignedWordSaturate(auVar31 & _DAT_8404f620,auVar27);
-        uVar12 = uVar12 * 0x20 + param_4;
-        auVar24 = vectorSplatWord(auVar24,0);
-        auVar28 = vectorSplatWord(auVar28 & _DAT_8404f780,0);
-        auVar31 = vectorPermute128(auVar31 & _DAT_8404f7a0,auVar31 & _DAT_8404f7a0,auVar23);
-        auVar32 = vectorSubtractUnsignedWordSaturate(auVar32,auVar29 & _DAT_8404f750);
-        auVar31 = vectorAddUnsignedWordSaturate(auVar25,auVar31);
-        auVar32 = vectorAddFloatingPoint128(auVar32 & _DAT_8404f9c0,_DAT_8217a560);
-        auVar29 = vectorMultiplyFloatingPoint(auVar32,_DAT_8217a550);
-        auVar32 = vectorMultiplySum4FloatingPoint(auVar29,auVar29);
-        auVar32 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar32);
-        auVar32 = vectorMultiplyFloatingPoint(auVar29,auVar32);
-        auVar29 = vectorMultiplyFloatingPoint(auVar32,auVar28 | _DAT_8217a050);
-        auVar32 = vectorPermute128(auVar29,auVar29,auVar26);
-        auVar31 = vectorPermute128(auVar29,auVar32,auVar31);
-        auVar31 = vectorMultiplyAddFloatingPoint
-                            (auVar24,auVar31,*(undefined1 (*) [16])(uVar12 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar31;
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+          *(uint *)(&g_bitShift + (uVar9 & 0x1f) * 4)) == 0) {
+        auVar30 = loadVectorLeftIndexed(uVar21);
+        auVar35 = vectorSplatWord(auVar30,0);
+        auVar35 = vectorShiftRightWord128
+                            (auVar35,(undefined1  [16])g_unpackShiftSimpleQuat.field0_0x0);
+        auVar31 = vectorShiftLeftWord128(auVar35,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0)
+        ;
+        auVar27 = loadVectorLeftIndexed(uVar6 + 0x24);
+        auVar36 = vectorAddUnsignedWordSaturate
+                            (auVar35 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                             (undefined1  [16])_Var24);
+        uVar9 = uVar9 * 0x20 + (int)pbStack0000002c;
+        auVar27 = vectorSplatWord(auVar27,0);
+        auVar30 = vectorSplatWord(auVar30 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+        auVar35 = vectorPermute128(auVar35 & (undefined1  [16])
+                                             g_unpackSimpleQuatRotateMask.field0_0x0,
+                                   auVar35 & (undefined1  [16])
+                                             g_unpackSimpleQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])_Var26);
+        auVar36 = vectorSubtractUnsignedWordSaturate
+                            (auVar36,auVar31 & (undefined1  [16])
+                                               g_unpackSignBitSimpleQuat.field0_0x0);
+        auVar35 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var29,auVar35);
+        auVar36 = vectorAddFloatingPoint128
+                            (auVar36 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+        auVar31 = vectorMultiplyFloatingPoint
+                            (auVar36,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+        auVar36 = vectorMultiplySum4FloatingPoint(auVar31,auVar31);
+        auVar36 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar36);
+        auVar36 = vectorMultiplyFloatingPoint(auVar31,auVar36);
+        auVar31 = vectorMultiplyFloatingPoint(auVar36,auVar30 | (undefined1  [16])g_one.field0_0x0);
+        auVar36 = vectorPermute128(auVar31,auVar31,(undefined1  [16])_Var25);
+        auVar35 = vectorPermute128(auVar31,auVar36,auVar35);
+        auVar35 = vectorMultiplyAddFloatingPoint
+                            (auVar27,auVar35,*(undefined1 (*) [16])(uVar9 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
       }
-      uVar8 = uVar8 + 1;
-      uVar19 = uVar19 + 2;
-    } while (uVar8 < uVar16);
-    local_160 = (ushort *)uVar19;
-    auVar31 = _DAT_8404f640;
+      uVar10 = uVar10 + 1;
+      uVar21 = uVar21 + 2;
+    } while (uVar10 < uVar17);
+    local_160 = (ushort *)uVar21;
+    _Var28 = g_unpackQuatRotateAdd.field0_0x0;
   }
-  uVar16 = *(byte *)(iVar5 + 0x16) + uVar16;
-  for (; uVar8 < uVar16; uVar8 = uVar8 + 1) {
-    bVar1 = *(byte *)(uVar8 + param_2);
-    uVar12 = (uint)bVar1;
-    if (0xbf < uVar12) {
+  pbVar5 = pbStack0000002c;
+  uVar17 = *(byte *)(iStack00000014 + 0x16) + uVar17;
+  for (; uVar10 < uVar17; uVar10 = uVar10 + 1) {
+    bVar1 = puStack0000001c[uVar10];
+    if (0xbf < bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x1b7,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar12,
-                      0xc0);
+                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      auVar27 = _DAT_8404f5c0;
-      auVar23 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
+                      ,0x42,0,"%s");
+      _Var24 = g_packMantissa.field0_0x0;
+      _Var26 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var28 = g_unpackQuatRotateAdd.field0_0x0;
     }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar12 & 0x1f]) == 0) {
-      auVar28 = loadVectorLeftIndexed((ulonglong)local_144);
-      auVar25 = vectorSplatWord(auVar28,0);
-      uVar12 = (uint)bVar1 * 0x20 + param_4;
-      auVar29 = vectorShiftRightWord128(auVar25,_DAT_8404f940);
-      auVar24 = vectorShiftLeftWord128(auVar29,_DAT_8404f7c0);
-      auVar25 = loadVectorLeftIndexed(uVar4 + 0x24);
-      auVar32 = vectorSplatWord(auVar25,0);
-      auVar26 = vectorAddUnsignedWordSaturate(auVar29 & _DAT_8404f770,auVar27);
-      auVar25 = vectorPermute128(auVar29 & _DAT_8404f6b0,auVar29 & _DAT_8404f6b0,auVar23);
-      auVar29 = vectorSplatWord(auVar28 & _DAT_8404f780,0);
-      auVar26 = vectorSubtractUnsignedWordSaturate(auVar26,auVar24 & _DAT_8404f6a0);
-      auVar25 = vectorAddUnsignedWordSaturate(auVar31,auVar25);
-      auVar26 = vectorAddFloatingPoint128(auVar26 & _DAT_8404f630,_DAT_8217a500);
-      auVar26 = vectorMultiplyFloatingPoint(auVar26,_DAT_8217a4f0);
-      auVar24 = vectorMultiplySum4FloatingPoint(auVar26,auVar26);
-      auVar24 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar24);
-      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar24);
-      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar29 | _DAT_8217a050);
-      auVar25 = vectorPermute128(auVar26,auVar26,auVar25);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar32,auVar25,*(undefined1 (*) [16])(uVar12 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar25;
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      auVar34 = loadVectorLeftIndexed((ulonglong)local_144);
+      auVar35 = vectorSplatWord(auVar34,0);
+      uVar9 = (uint)bVar1 * 0x20 + (int)pbVar5;
+      auVar30 = vectorShiftRightWord128(auVar35,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+      auVar31 = vectorShiftLeftWord128(auVar30,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0);
+      auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+      auVar27 = vectorSplatWord(auVar35,0);
+      auVar36 = vectorAddUnsignedWordSaturate
+                          (auVar30 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                           (undefined1  [16])_Var24);
+      auVar35 = vectorPermute128(auVar30 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                 auVar30 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                 (undefined1  [16])_Var26);
+      auVar30 = vectorSplatWord(auVar34 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+      auVar36 = vectorSubtractUnsignedWordSaturate
+                          (auVar36,auVar31 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+      auVar35 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var28,auVar35);
+      auVar36 = vectorAddFloatingPoint128
+                          (auVar36 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddQuat.field0_0x0);
+      auVar36 = vectorMultiplyFloatingPoint(auVar36,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+      auVar31 = vectorMultiplySum4FloatingPoint(auVar36,auVar36);
+      auVar31 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar31);
+      auVar36 = vectorMultiplyFloatingPoint(auVar36,auVar31);
+      auVar36 = vectorMultiplyFloatingPoint(auVar36,auVar30 | (undefined1  [16])g_one.field0_0x0);
+      auVar35 = vectorPermute128(auVar36,auVar36,auVar35);
+      auVar35 = vectorMultiplyAddFloatingPoint
+                          (auVar27,auVar35,*(undefined1 (*) [16])(uVar9 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
     }
     local_144 = local_144 + 4;
   }
-  bVar1 = *(byte *)(iVar5 + 0x17);
-  uVar19 = ZEXT48(local_160);
-  for (; uVar8 < bVar1 + uVar16; uVar8 = uVar8 + 1) {
-    bVar2 = *(byte *)(uVar8 + param_2);
-    uVar12 = (uint)bVar2;
-    if (0xbf < uVar12) {
+  bVar1 = *(byte *)(iStack00000014 + 0x17);
+  uVar21 = ZEXT48(local_160);
+  for (; uVar10 < bVar1 + uVar17; uVar10 = uVar10 + 1) {
+    bVar2 = puStack0000001c[uVar10];
+    uVar9 = (uint)bVar2;
+    if (0xbf < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x1c7,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar12,
-                      0xc0);
+                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                      ,0x42,0,"%s");
     }
-    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar12 & 0x1f]) == 0) {
-      auVar27 = loadVectorLeftIndexed(uVar4 + 0x24);
-      auVar27 = vectorSplatWord(auVar27,0);
-      uVar12 = uVar12 * 0x20 + param_4;
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar27,local_f0,*(undefined1 (*) [16])(uVar12 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar27;
+    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iStack00000034) &
+        *(uint *)(&g_bitShift + (uVar9 & 0x1f) * 4)) == 0) {
+      auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+      auVar35 = vectorSplatWord(auVar35,0);
+      uVar9 = uVar9 * 0x20 + (int)pbVar5;
+      auVar35 = vectorMultiplyAddFloatingPoint
+                          (auVar35,local_f0,*(undefined1 (*) [16])(uVar9 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
     }
-    uVar19 = uVar19 + 6;
+    uVar21 = uVar21 + 6;
   }
-  uVar14 = ZEXT48(local_15c);
-  uVar9 = (ulonglong)*(byte *)(iVar5 + 0x18);
-  uVar10 = 0;
-  for (uVar13 = uVar9; uVar13 != 0; uVar13 = uVar13 - 1) {
-    pbVar17 = (byte *)uVar14;
-    uVar14 = uVar14 + 1;
-    local_15c = (byte *)uVar14;
-    bVar1 = *(byte *)((uint)*pbVar17 + param_2);
-    uVar12 = (uint)bVar1;
-    if (0xbf < uVar12) {
+  uVar15 = ZEXT48(local_15c);
+  uVar11 = (ulonglong)*(byte *)(iStack00000014 + 0x18);
+  uVar12 = 0;
+  for (uVar14 = uVar11; uVar14 != 0; uVar14 = uVar14 - 1) {
+    pbVar19 = (byte *)uVar15;
+    uVar15 = uVar15 + 1;
+    local_15c = (byte *)uVar15;
+    bVar1 = puStack0000001c[*pbVar19];
+    uVar9 = (uint)bVar1;
+    if (0xbf < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x243,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar12,
-                      0xc0);
+                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)");
     }
-    uVar3 = *(ushort *)uVar19;
-    uVar10 = (ulonglong)uVar3;
-    uVar19 = uVar19 + 2;
-    local_160 = (ushort *)uVar19;
-    if (bVar21) {
-      if (uVar10 < 0x40) {
-        lVar18 = uVar10 + 1;
+    uVar3 = *(ushort *)uVar21;
+    uVar12 = (ulonglong)uVar3;
+    uVar21 = uVar21 + 2;
+    local_160 = (ushort *)uVar21;
+    if (bVar22) {
+      if (uVar12 < 0x40) {
+        lVar20 = uVar12 + 1;
       }
       else {
-        lVar18 = ((uVar10 - 1 & 0xffffffff) >> 8) + 2;
+        lVar20 = ((uVar12 - 1 & 0xffffffff) >> 8) + 2;
       }
-      uVar19 = lVar18 * 2 + uVar19;
-      local_160 = (ushort *)uVar19;
+      uVar21 = lVar20 * 2 + uVar21;
+      local_160 = (ushort *)uVar21;
     }
     else {
-      uVar14 = uVar10 + uVar14 + 1;
-      local_15c = (byte *)uVar14;
+      uVar15 = uVar12 + uVar15 + 1;
+      local_15c = (byte *)uVar15;
     }
-    if (0xbf < uVar12) {
+    if (0xbf < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                      ,0x42,0,"%s");
     }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-      iVar7 = uVar12 * 0x20 + param_4;
-      lVar18 = uVar10 * 3 + (ulonglong)uVar6;
-      auVar27 = *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0);
-      if (lVar18 == 0) {
+    pbVar5 = pbStack0000002c;
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      uVar10 = (int)pbStack0000002c + uVar9 * 0x20 + 0x10;
+      lVar20 = uVar12 * 3 + (ulonglong)uVar8;
+      auVar35 = *(undefined1 (*) [16])(uVar10 & 0xfffffff0);
+      if (lVar20 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x252,0,&DAT_82000f98,0xffffffff821870b4);
+                        0x252,0,"%s");
       }
-      auVar25 = ZEXT416(0);
-      auVar25 = auVar25 | auVar25 << 0x20 | auVar25 << 0x40 | auVar25 << 0x60;
-      uVar14 = (ulonglong)local_144;
-      auVar23 = loadVectorForShiftLeft(in_r0,lVar18);
-      auVar23 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar18 & 0xfffffff0),
-                                 *(undefined1 (*) [16])((uint)lVar18 + 7 & 0xfffffff0),auVar23);
-      uVar19 = ZEXT48(local_160);
-      auVar29 = loadVectorLeftIndexed(uVar14);
-      auVar24 = loadVectorRightIndexed(uVar14 + 0x10);
-      auVar23 = vectorMergeHighByte(auVar25,auVar23);
-      auVar32 = loadVectorLeftIndexed(uVar14 + 0xc);
-      auVar31 = loadVectorRightIndexed(uVar14 + 0x1c);
-      auVar26 = loadVectorLeftIndexed(uVar4 + 0x24);
-      auVar25 = vectorMergeHighHalfWord(auVar25,auVar23);
-      auVar23 = vectorSplatWord(auVar26,0);
-      auVar25 = vectorConvertFromUnsignedFixedPointWord128(auVar25,0);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          ((auVar32 | auVar31) & _DAT_8404f950,auVar25 & _DAT_8404f950,
-                           (auVar29 | auVar24) & _DAT_8404f950);
-      auVar27 = vectorMultiplyAddFloatingPoint128(auVar23,auVar25,auVar27);
-      *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0) = auVar27;
-      *(float *)(iVar7 + 0x1c) = (float)(dVar22 + (double)*(float *)(iVar7 + 0x1c));
-      uVar14 = ZEXT48(local_15c);
+      auVar36 = ZEXT416(0);
+      auVar36 = auVar36 | auVar36 << 0x20 | auVar36 << 0x40 | auVar36 << 0x60;
+      uVar15 = (ulonglong)local_144;
+      auVar27 = loadVectorForShiftLeft(in_r0,lVar20);
+      auVar27 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar20 & 0xfffffff0),
+                                 *(undefined1 (*) [16])((uint)lVar20 + 7 & 0xfffffff0),auVar27);
+      uVar21 = ZEXT48(local_160);
+      auVar33 = loadVectorLeftIndexed(uVar15);
+      auVar32 = loadVectorRightIndexed(uVar15 + 0x10);
+      auVar27 = vectorMergeHighByte(auVar36,auVar27);
+      auVar34 = loadVectorLeftIndexed(uVar15 + 0xc);
+      auVar30 = loadVectorRightIndexed(uVar15 + 0x1c);
+      auVar31 = loadVectorLeftIndexed(uVar6 + 0x24);
+      auVar36 = vectorMergeHighHalfWord(auVar36,auVar27);
+      auVar27 = vectorSplatWord(auVar31,0);
+      auVar36 = vectorConvertFromUnsignedFixedPointWord128(auVar36,0);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          ((auVar34 | auVar30) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                           auVar36 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                           (auVar33 | auVar32) & (undefined1  [16])g_keepXYZ.field0_0x0);
+      auVar35 = vectorMultiplyAddFloatingPoint128(auVar27,auVar36,auVar35);
+      *(undefined1 (*) [16])(uVar10 & 0xfffffff0) = auVar35;
+      *(float *)((int)pbVar5 + uVar9 * 0x20 + 0x1c) =
+           (float)(dVar23 + (double)*(float *)((int)pbVar5 + uVar9 * 0x20 + 0x1c));
+      uVar15 = ZEXT48(local_15c);
     }
     local_144 = local_144 + 0x18;
-    uVar6 = (uVar3 + 1) * 3 + uVar6;
-    uVar10 = uVar9;
+    uVar8 = (uVar3 + 1) * 3 + uVar8;
+    uVar12 = uVar11;
   }
-  uVar9 = *(byte *)(iVar5 + 0x19) + uVar9;
-  if (uVar10 < uVar9) {
-    lVar18 = uVar9 - uVar10;
-    uVar10 = lVar18 + uVar10;
+  uVar11 = *(byte *)(iStack00000014 + 0x19) + uVar11;
+  if (uVar12 < uVar11) {
+    lVar20 = uVar11 - uVar12;
+    uVar12 = lVar20 + uVar12;
     do {
-      pbVar17 = (byte *)uVar14;
-      uVar14 = uVar14 + 1;
-      local_15c = (byte *)uVar14;
-      bVar1 = *(byte *)((uint)*pbVar17 + param_2);
-      uVar6 = (uint)bVar1;
-      if (0xbf < uVar6) {
+      pbVar19 = (byte *)uVar15;
+      uVar15 = uVar15 + 1;
+      local_15c = (byte *)uVar15;
+      bVar1 = puStack0000001c[*pbVar19];
+      uVar8 = (uint)bVar1;
+      if (0xbf < uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x26d,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar6,0xc0);
+                        0x26d,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
       }
-      uVar3 = *(ushort *)uVar19;
-      uVar13 = (ulonglong)uVar3;
-      uVar19 = uVar19 + 2;
-      local_160 = (ushort *)uVar19;
-      if (bVar21) {
-        if (uVar13 < 0x40) {
-          lVar15 = uVar13 + 1;
+      uVar3 = *(ushort *)uVar21;
+      uVar14 = (ulonglong)uVar3;
+      uVar21 = uVar21 + 2;
+      local_160 = (ushort *)uVar21;
+      if (bVar22) {
+        if (uVar14 < 0x40) {
+          lVar16 = uVar14 + 1;
         }
         else {
-          lVar15 = ((uVar13 - 1 & 0xffffffff) >> 8) + 2;
+          lVar16 = ((uVar14 - 1 & 0xffffffff) >> 8) + 2;
         }
-        uVar19 = lVar15 * 2 + uVar19;
-        local_160 = (ushort *)uVar19;
+        uVar21 = lVar16 * 2 + uVar21;
+        local_160 = (ushort *)uVar21;
       }
       else {
-        uVar14 = uVar13 + uVar14 + 1;
-        local_15c = (byte *)uVar14;
+        uVar15 = uVar14 + uVar15 + 1;
+        local_15c = (byte *)uVar15;
       }
-      if (0xbf < uVar6) {
+      if (0xbf < uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-        iVar7 = uVar6 * 0x20 + param_4;
-        lVar15 = uVar13 * 6 + (ulonglong)local_13c;
-        auVar27 = *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0);
-        if (lVar15 == 0) {
+      pbVar5 = pbStack0000002c;
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        uVar9 = (int)pbStack0000002c + uVar8 * 0x20 + 0x10;
+        lVar16 = uVar14 * 6 + (ulonglong)local_13c;
+        auVar35 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+        if (lVar16 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x27c,0,&DAT_82000f98,0xffffffff821870a8);
+                          0x27c,0,"%s");
         }
-        auVar23 = loadVectorRightIndexed(lVar15 + 8);
-        auVar25 = ZEXT416(0);
-        auVar29 = loadVectorLeftIndexed(lVar15);
-        uVar13 = (ulonglong)local_144;
-        auVar23 = vectorShiftLeftDoubleByOctetImmediate(auVar23,auVar23,8);
-        uVar14 = ZEXT48(local_15c);
-        auVar24 = loadVectorLeftIndexed(uVar13);
-        auVar32 = loadVectorRightIndexed(uVar13 + 0x10);
-        uVar19 = ZEXT48(local_160);
-        auVar31 = loadVectorLeftIndexed(uVar13 + 0xc);
-        auVar26 = loadVectorRightIndexed(uVar13 + 0x1c);
-        auVar23 = vectorMergeHighHalfWord
-                            (auVar25 | auVar25 << 0x20 | auVar25 << 0x40 | auVar25 << 0x60,
-                             auVar29 | auVar23);
-        auVar25 = loadVectorLeftIndexed(uVar4 + 0x24);
-        auVar25 = vectorSplatWord(auVar25,0);
-        auVar23 = vectorConvertFromUnsignedFixedPointWord128(auVar23,0);
-        auVar23 = vectorMultiplyAddFloatingPoint
-                            ((auVar31 | auVar26) & _DAT_8404f950,auVar23 & _DAT_8404f950,
-                             (auVar24 | auVar32) & _DAT_8404f950);
-        auVar27 = vectorMultiplyAddFloatingPoint128(auVar23,auVar25,auVar27);
-        *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0) = auVar27;
-        *(float *)(iVar7 + 0x1c) = (float)(dVar22 + (double)*(float *)(iVar7 + 0x1c));
+        auVar27 = loadVectorRightIndexed(lVar16 + 8);
+        auVar36 = ZEXT416(0);
+        auVar33 = loadVectorLeftIndexed(lVar16);
+        uVar14 = (ulonglong)local_144;
+        auVar27 = vectorShiftLeftDoubleByOctetImmediate(auVar27,auVar27,8);
+        uVar15 = ZEXT48(local_15c);
+        auVar32 = loadVectorLeftIndexed(uVar14);
+        auVar34 = loadVectorRightIndexed(uVar14 + 0x10);
+        uVar21 = ZEXT48(local_160);
+        auVar30 = loadVectorLeftIndexed(uVar14 + 0xc);
+        auVar31 = loadVectorRightIndexed(uVar14 + 0x1c);
+        auVar27 = vectorMergeHighHalfWord
+                            (auVar36 | auVar36 << 0x20 | auVar36 << 0x40 | auVar36 << 0x60,
+                             auVar33 | auVar27);
+        auVar36 = loadVectorLeftIndexed(uVar6 + 0x24);
+        auVar36 = vectorSplatWord(auVar36,0);
+        auVar27 = vectorConvertFromUnsignedFixedPointWord128(auVar27,0);
+        auVar27 = vectorMultiplyAddFloatingPoint
+                            ((auVar30 | auVar31) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             auVar27 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             (auVar32 | auVar34) & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar35 = vectorMultiplyAddFloatingPoint128(auVar27,auVar36,auVar35);
+        *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
+        *(float *)((int)pbVar5 + uVar8 * 0x20 + 0x1c) =
+             (float)(dVar23 + (double)*(float *)((int)pbVar5 + uVar8 * 0x20 + 0x1c));
       }
-      lVar18 = lVar18 + -1;
+      lVar20 = lVar20 + -1;
       local_144 = local_144 + 0x18;
       local_13c = (uVar3 + 1) * 6 + local_13c;
-    } while (lVar18 != 0);
+    } while (lVar20 != 0);
   }
-  uVar9 = *(byte *)(iVar5 + 0x1a) + uVar9;
-  if ((uVar10 & 0xffffffff) < uVar9) {
-    lVar18 = uVar9 - uVar10;
-    uVar19 = (ulonglong)local_144;
-    uVar10 = lVar18 + uVar10;
+  pbVar5 = pbStack0000002c;
+  puVar4 = puStack0000001c;
+  iVar7 = iStack00000014;
+  uVar11 = *(byte *)(iStack00000014 + 0x1a) + uVar11;
+  if ((uVar12 & 0xffffffff) < uVar11) {
+    lVar20 = uVar11 - uVar12;
+    uVar21 = (ulonglong)local_144;
+    uVar12 = lVar20 + uVar12;
     do {
-      bVar1 = *(byte *)((uint)*local_15c + param_2);
-      uVar6 = (uint)bVar1;
-      if (0xbf < uVar6) {
+      bVar1 = puVar4[*local_15c];
+      uVar8 = (uint)bVar1;
+      if (0xbf < uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x292,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar6,0xc0);
+                        0x292,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar6 & 0x1f]) == 0) {
-        auVar25 = loadVectorLeftIndexed(uVar19);
-        auVar23 = loadVectorRightIndexed(uVar19 + 0x10);
-        iVar7 = uVar6 * 0x20 + param_4;
-        auVar27 = loadVectorLeftIndexed(uVar4 + 0x24);
-        auVar27 = vectorSplatWord(auVar27,0);
-        auVar27 = vectorMultiplyAddFloatingPoint
-                            (auVar27,(auVar25 | auVar23) & _DAT_8404f950,
-                             *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0));
-        *(undefined1 (*) [16])(iVar7 + 0x10U & 0xfffffff0) = auVar27;
-        *(float *)(iVar7 + 0x1c) = (float)(dVar22 + (double)*(float *)(iVar7 + 0x1c));
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+          *(uint *)(&g_bitShift + (uVar8 & 0x1f) * 4)) == 0) {
+        auVar36 = loadVectorLeftIndexed(uVar21);
+        auVar27 = loadVectorRightIndexed(uVar21 + 0x10);
+        uVar9 = (int)pbVar5 + uVar8 * 0x20 + 0x10;
+        auVar35 = loadVectorLeftIndexed(uVar6 + 0x24);
+        auVar35 = vectorSplatWord(auVar35,0);
+        auVar35 = vectorMultiplyAddFloatingPoint
+                            (auVar35,(auVar36 | auVar27) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             *(undefined1 (*) [16])(uVar9 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar35;
+        *(float *)((int)pbVar5 + uVar8 * 0x20 + 0x1c) =
+             (float)(dVar23 + (double)*(float *)((int)pbVar5 + uVar8 * 0x20 + 0x1c));
       }
-      lVar18 = lVar18 + -1;
+      lVar20 = lVar20 + -1;
       local_15c = local_15c + 1;
-      uVar19 = uVar19 + 0xc;
-    } while (lVar18 != 0);
+      uVar21 = uVar21 + 0xc;
+    } while (lVar20 != 0);
   }
-  uVar9 = *(byte *)(iVar5 + 0x1b) + uVar9;
-  if ((uVar10 & 0xffffffff) < uVar9) {
-    lVar18 = uVar9 - uVar10;
+  uVar11 = *(byte *)(iVar7 + 0x1b) + uVar11;
+  if ((uVar12 & 0xffffffff) < uVar11) {
+    lVar20 = uVar11 - uVar12;
     do {
-      bVar1 = *(byte *)((uint)*local_15c + param_2);
-      uVar6 = (uint)bVar1;
-      if (0xbf < uVar6) {
+      bVar1 = puVar4[*local_15c];
+      if (0xbf < bVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x2a6,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar6,0xc0);
+                        0x2a6,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_5) & (&DAT_82992400)[uVar6 & 0x1f]) == 0) {
-        iVar5 = (uint)bVar1 * 0x20 + param_4;
-        *(float *)(iVar5 + 0x1c) = (float)(dVar22 + (double)*(float *)(iVar5 + 0x1c));
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack00000034) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        *(float *)((int)pbVar5 + (uint)bVar1 * 0x20 + 0x1c) =
+             (float)(dVar23 + (double)*(float *)((int)pbVar5 + (uint)bVar1 * 0x20 + 0x1c));
       }
-      lVar18 = lVar18 + -1;
+      lVar20 = lVar20 + -1;
       local_15c = local_15c + 1;
-    } while (lVar18 != 0);
+    } while (lVar20 != 0);
   }
   __restfpr_28();
   __restgprlr();
@@ -953,11 +1036,10 @@ void XAnimCalcNonLoopEnd(undefined8 param_1,int param_2,undefined8 param_3,int p
 /* WARNING: Removing unreachable block (ram,0x8262c8ec) */
 /* WARNING: Removing unreachable block (ram,0x8262c604) */
 /* WARNING: Removing unreachable block (ram,0x8262d774) */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void XAnimCalcParts<unsigned_char>
-               (undefined8 param_1,double param_2,undefined8 param_3,int param_4,undefined8 param_5,
-               undefined8 param_6,int param_7,int param_8)
+               (XAnimParts *param_1,uchar *param_2,float param_3,float param_4,DObjAnimMat *param_5,
+               bitarray<192> *param_6)
 
 {
   byte bVar1;
@@ -968,36 +1050,38 @@ void XAnimCalcParts<unsigned_char>
   undefined8 in_r0;
   ulonglong uVar6;
   int iVar7;
-  uint uVar8;
+  int in_r7;
+  ulonglong uVar8;
+  uint6 *puVar10;
   ulonglong uVar9;
-  ushort *puVar11;
-  ulonglong uVar10;
-  ulonglong uVar12;
-  uint uVar13;
-  longlong lVar14;
-  undefined *puVar15;
-  undefined *puVar16;
-  uint uVar17;
-  ulonglong uVar18;
+  int in_r8;
+  ulonglong uVar11;
+  byte *pbVar12;
+  ushort *puVar13;
+  float fVar14;
+  __vector4 *p_Var15;
+  __vector4 *p_Var16;
+  __vector4 *p_Var17;
+  __vector4 *p_Var18;
   ulonglong uVar19;
-  uint uVar20;
-  uint uVar22;
+  ulonglong uVar20;
   longlong lVar21;
-  uint6 *puVar23;
-  byte *pbVar24;
+  uint uVar22;
+  uint uVar23;
+  uint uVar24;
+  uint uVar25;
+  longlong lVar26;
+  longlong lVar27;
   double extraout_f1;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  __vector4_u_0 _Var32;
+  __vector4_u_0 _Var33;
+  __vector4_u_0 _Var34;
+  __vector4_u_0 _Var35;
+  __vector4_u_0 _Var36;
   undefined1 auVar37 [16];
   undefined1 auVar38 [16];
   undefined1 auVar39 [16];
@@ -1005,640 +1089,806 @@ void XAnimCalcParts<unsigned_char>
   undefined1 auVar41 [16];
   undefined1 auVar42 [16];
   undefined1 auVar43 [16];
+  undefined1 auVar44 [16];
+  undefined1 auVar45 [16];
+  undefined1 auVar46 [16];
+  undefined1 auVar47 [16];
+  __vector4_u_0 _Var48;
+  int iStack00000014;
+  uchar *puStack0000001c;
+  float fStack0000002c;
+  int iStack00000034;
+  int iStack0000003c;
+  ushort *local_1a8;
   uint local_1a4;
   byte *local_1a0;
   uint local_18c;
-  uint local_16c;
-  uint local_160;
+  __vector4 *local_188;
+  char *local_184;
+  longlong local_180;
+  uint local_178;
+  char *local_174;
+  float local_170;
+  char *local_16c;
+  float local_168;
+  char *local_164;
+  float local_160;
+  uint local_15c;
+  __vector4 *local_158;
+  float local_150;
+  float local_14c;
+  float local_148;
+  float local_144;
+  __vector4 *local_140;
+  __vector4 *local_13c;
+  __vector4 *local_138;
+  __vector4 *local_134;
+  XAnimTime local_130;
   undefined1 local_120 [16];
-  float local_f0 [4];
-  undefined *local_e0;
-  undefined *local_dc;
-  undefined *local_d4;
-  undefined4 local_d0;
-  undefined4 uStack_cc;
-  undefined4 uStack_c8;
-  undefined4 uStack_c4;
+  __vector4 *local_110;
+  longlong local_108;
+  __vector4 *local_100;
+  __vector4 *local_fc;
+  __vector4 *local_f8;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  __vector4 *local_e0;
+  __vector4 *local_dc;
+  float fStack_d8;
+  __vector4 *local_d4;
+  undefined1 local_d0 [16];
   longlong local_c0;
   
+  dVar28 = (double)param_4;
   uVar6 = ZEXT48(&stack0x00000000);
   __savegprlr();
   iVar7 = __savefpr_28();
-  dVar26 = extraout_f1;
+  fStack0000002c = (float)dVar28;
+  dVar30 = extraout_f1;
+  iStack00000014 = iVar7;
+  puStack0000001c = param_2;
+  iStack00000034 = in_r7;
+  iStack0000003c = in_r8;
   if (*(short *)(iVar7 + 0xe) == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x305,0,0xffffffff82000f98,0xffffffff8218717c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x305,0,
+                    "%s");
   }
-  if (dVar26 < 0.0) {
-    MyAssertHandler(dVar26,0xffffffff82186f8c,0x306,0,0xffffffff82028794,0xffffffff82185f94,dVar26);
+  if (dVar30 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x306,0,
+                    "%s\n\t(time) = %g");
   }
-  dVar25 = 1.0;
-  if (1.0 <= dVar26) {
-    MyAssertHandler(dVar26,0xffffffff82186f8c,0x307,0,0xffffffff82028794,0xffffffff82185f84,dVar26);
+  dVar29 = 1.0;
+  if (1.0 <= dVar30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x307,0,
+                    "%s\n\t(time) = %g");
   }
   local_1a0 = *(byte **)(iVar7 + 0x34);
-  uVar8 = *(uint *)(iVar7 + 0x44);
+  local_15c = *(uint *)(iVar7 + 0x44);
   local_18c = *(uint *)(iVar7 + 0x40);
-  uVar13 = *(uint *)(iVar7 + 0x48);
-  puVar11 = *(ushort **)(iVar7 + 0x38);
-  uVar20 = (uint)*(byte *)(iVar7 + 0x11);
-  uVar17 = 0;
+  local_178 = *(uint *)(iVar7 + 0x48);
+  local_1a8 = *(ushort **)(iVar7 + 0x38);
+  uVar23 = (uint)*(byte *)(iVar7 + 0x11);
+  local_130.time = (float)dVar30;
+  uVar25 = 0;
   local_1a4 = *(uint *)(iVar7 + 0x3c);
-  if (uVar20 != 0) {
+  dVar30 = (double)*(ushort *)(iVar7 + 0xe) * dVar30;
+  local_130.frameFrac = (float)dVar30;
+  local_184 = "modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)";
+  local_130.frameIndex = (int)dVar30;
+  local_180 = (longlong)local_130.frameIndex;
+  if (uVar23 != 0) {
     do {
-      bVar1 = *(byte *)(uVar17 + param_4);
-      uVar22 = (uint)bVar1;
-      if (0xbf < uVar22) {
-        MyAssertHandler(0xffffffff82186f8c,0x321,0,0xffffffff821870d0,uVar22,0xc0);
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
-      }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar22 & 0x1f]) == 0) {
-        iVar4 = (uint)bVar1 * 0x20 + param_7;
-        *(float *)(iVar4 + 0xc) = (float)((double)*(float *)(iVar4 + 0xc) + param_2);
-      }
-      uVar17 = uVar17 + 1;
-    } while (uVar17 < uVar20);
-  }
-  uVar20 = *(byte *)(iVar7 + 0x12) + uVar20;
-  puVar15 = &DAT_8404f7c0;
-  local_e0 = &DAT_8404f9c0;
-  local_dc = &DAT_8404f7c0;
-  auVar37 = _DAT_8217a050;
-  auVar39 = _DAT_8404f5c0;
-  auVar31 = _DAT_8404f5e0;
-  auVar28 = _DAT_8404f7b0;
-  auVar32 = _DAT_8404fa00;
-  for (; uVar17 < uVar20; uVar17 = uVar17 + 1) {
-    bVar1 = *(byte *)(uVar17 + param_4);
-    uVar22 = (uint)bVar1;
-    if (0xbf < uVar22) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x33a,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar22,
-                      0xc0);
-      auVar39 = _DAT_8404f5c0;
-      auVar32 = _DAT_8404fa00;
-      auVar28 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f5e0;
-      auVar37 = _DAT_8217a050;
-    }
-    uVar3 = *puVar11;
-    if (0xbf < uVar22) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      auVar39 = _DAT_8404f5c0;
-      auVar32 = _DAT_8404fa00;
-      auVar28 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f5e0;
-      auVar37 = _DAT_8217a050;
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar22 & 0x1f]) == 0) {
-      XAnim_GetTimeIndex<unsigned_char>
-                (uVar6 - 0x130,local_1a0,(uint)uVar3,uVar6 - 0x16c,uVar6 - 0x174);
-      lVar21 = ((ulonglong)local_16c & 0x7fffffff) * 2 + (ulonglong)local_18c;
-      if (lVar21 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x343,0,&DAT_82000f98,"frame");
-      }
-      auVar32 = _DAT_8404fa00;
-      auVar28 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f5e0;
-      auVar39 = _DAT_8404f5c0;
-      auVar37 = _DAT_8217a050;
-      auVar43 = loadVectorLeftIndexed(lVar21);
-      auVar42 = loadVectorLeftIndexed(lVar21 + 2);
-      auVar40 = vectorSplatWord(auVar43,0);
-      auVar38 = vectorSplatWord(auVar42,0);
-      auVar36 = vectorShiftRightWord128(auVar40,_DAT_8404f920);
-      auVar35 = vectorShiftRightWord128(auVar38,_DAT_8404f920);
-      auVar34 = vectorShiftLeftWord128(auVar36,_DAT_8404f7c0);
-      auVar33 = vectorShiftLeftWord128(auVar35,_DAT_8404f7c0);
-      auVar40 = vectorAddUnsignedWordSaturate(auVar36 & _DAT_8404f620,_DAT_8404f5c0);
-      auVar30 = loadVectorLeftIndexed(uVar6 - 0x174);
-      auVar29 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      uVar22 = uVar22 * 0x20 + param_7;
-      auVar38 = vectorAddUnsignedWordSaturate(auVar35 & _DAT_8404f620,_DAT_8404f5c0);
-      auVar30 = vectorSplatWord(auVar30,0);
-      auVar40 = vectorSubtractUnsignedWordSaturate(auVar40,auVar34 & _DAT_8404f750);
-      auVar29 = vectorSplatWord(auVar29,0);
-      auVar38 = vectorSubtractUnsignedWordSaturate(auVar38,auVar33 & _DAT_8404f750);
-      auVar41 = vectorSplatWord(auVar42 & _DAT_8404f780,0);
-      auVar42 = vectorAddFloatingPoint128(auVar40 & _DAT_8404f9c0,_DAT_8217a560);
-      auVar33 = vectorSplatWord(auVar43 & _DAT_8404f780,0);
-      auVar34 = vectorAddFloatingPoint128(auVar38 & _DAT_8404f9c0,_DAT_8217a560);
-      auVar38 = vectorPermute128(auVar36 & _DAT_8404f7a0,auVar36 & _DAT_8404f7a0,_DAT_8404f7b0);
-      auVar40 = vectorAddUnsignedWordSaturate(_DAT_8404f5e0,auVar38);
-      auVar38 = vectorPermute128(auVar35 & _DAT_8404f7a0,auVar35 & _DAT_8404f7a0,_DAT_8404f7b0);
-      auVar42 = vectorMultiplyFloatingPoint(auVar42,_DAT_8217a550);
-      auVar38 = vectorAddUnsignedWordSaturate(_DAT_8404f5e0,auVar38);
-      auVar36 = vectorMultiplyFloatingPoint(auVar34,_DAT_8217a550);
-      auVar35 = vectorMultiplySum4FloatingPoint(auVar42,auVar42);
-      auVar34 = vectorMultiplySum4FloatingPoint(auVar36,auVar36);
-      auVar35 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar35);
-      auVar34 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar34);
-      auVar35 = vectorMultiplyFloatingPoint(auVar42,auVar35);
-      auVar34 = vectorMultiplyFloatingPoint(auVar36,auVar34);
-      auVar36 = vectorMultiplyFloatingPoint(auVar35,auVar33 | _DAT_8217a050);
-      auVar35 = vectorMultiplyFloatingPoint(auVar34,auVar41 | _DAT_8217a050);
-      auVar34 = vectorPermute128(auVar36,auVar36,_DAT_8404fa00);
-      auVar33 = vectorPermute128(auVar35,auVar35,_DAT_8404fa00);
-      auVar40 = vectorPermute128(auVar36,auVar34,auVar40);
-      auVar38 = vectorPermute128(auVar35,auVar33,auVar38);
-      auVar38 = vectorSubtractFloatingPoint128(auVar38,auVar40);
-      auVar38 = vectorMultiplyAddFloatingPoint(auVar30,auVar38,auVar40);
-      auVar38 = vectorMultiplyAddFloatingPoint
-                          (auVar29,auVar38,*(undefined1 (*) [16])(uVar22 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar22 & 0xfffffff0) = auVar38;
-    }
-    local_18c = (uVar3 + 1) * 2 + local_18c;
-    local_1a0 = local_1a0 + uVar3 + 1;
-    puVar11 = puVar11 + 1;
-  }
-  uVar20 = *(byte *)(iVar7 + 0x13) + uVar20;
-  puVar16 = &DAT_8404f6b0;
-  local_d4 = &DAT_8404f6b0;
-  auVar38 = _DAT_8404f640;
-  for (; uVar17 < uVar20; uVar17 = uVar17 + 1) {
-    bVar1 = *(byte *)(uVar17 + param_4);
-    uVar22 = (uint)bVar1;
-    if (0xbf < bVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x357,
-                      0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
-      auVar39 = _DAT_8404f5c0;
-      auVar28 = _DAT_8404f7b0;
-      auVar38 = _DAT_8404f640;
-      auVar37 = _DAT_8217a050;
-    }
-    uVar3 = *puVar11;
-    if (0xbf < uVar22) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      auVar39 = _DAT_8404f5c0;
-      auVar28 = _DAT_8404f7b0;
-      auVar38 = _DAT_8404f640;
-      auVar37 = _DAT_8217a050;
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar22 & 0x1f]) == 0) {
-      XAnim_GetTimeIndex<unsigned_char>
-                (uVar6 - 0x130,local_1a0,(uint)uVar3,uVar6 - 0x160,uVar6 - 0x170);
-      lVar21 = ((ulonglong)local_160 & 0x3fffffff) * 4 + (ulonglong)uVar13;
-      if (lVar21 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x360,0,&DAT_82000f98,"frame");
-      }
-      auVar28 = _DAT_8404f7b0;
-      auVar38 = _DAT_8404f640;
-      auVar39 = _DAT_8404f5c0;
-      auVar37 = _DAT_8217a050;
-      auVar34 = loadVectorLeftIndexed(lVar21);
-      auVar36 = loadVectorLeftIndexed(lVar21 + 4);
-      auVar32 = vectorSplatWord(auVar34,0);
-      auVar31 = vectorSplatWord(auVar36,0);
-      auVar33 = vectorShiftRightWord128(auVar32,_DAT_8404f940);
-      auVar30 = vectorShiftRightWord128(auVar31,_DAT_8404f940);
-      auVar29 = vectorShiftLeftWord128(auVar33,_DAT_8404f7c0);
-      auVar35 = loadVectorLeftIndexed(uVar6 - 0x170);
-      auVar42 = vectorShiftLeftWord128(auVar30,_DAT_8404f7c0);
-      auVar32 = vectorAddUnsignedWordSaturate(auVar33 & _DAT_8404f770,_DAT_8404f5c0);
-      auVar40 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      auVar31 = vectorAddUnsignedWordSaturate(auVar30 & _DAT_8404f770,_DAT_8404f5c0);
-      uVar22 = uVar22 * 0x20 + param_7;
-      auVar32 = vectorSubtractUnsignedWordSaturate(auVar32,auVar29 & _DAT_8404f6a0);
-      auVar29 = vectorSplatWord(auVar40,0);
-      auVar31 = vectorSubtractUnsignedWordSaturate(auVar31,auVar42 & _DAT_8404f6a0);
-      auVar40 = vectorSplatWord(auVar35,0);
-      auVar42 = vectorSplatWord(auVar34 & _DAT_8404f780,0);
-      auVar35 = vectorAddFloatingPoint128(auVar32 & _DAT_8404f630,_DAT_8217a500);
-      auVar34 = vectorAddFloatingPoint128(auVar31 & _DAT_8404f630,_DAT_8217a500);
-      auVar31 = vectorPermute128(auVar33 & _DAT_8404f6b0,auVar33 & _DAT_8404f6b0,_DAT_8404f7b0);
-      auVar31 = vectorAddUnsignedWordSaturate(_DAT_8404f640,auVar31);
-      auVar32 = vectorPermute128(auVar30 & _DAT_8404f6b0,auVar30 & _DAT_8404f6b0,_DAT_8404f7b0);
-      auVar36 = vectorSplatWord(auVar36 & _DAT_8404f780,0);
-      auVar35 = vectorMultiplyFloatingPoint(auVar35,_DAT_8217a4f0);
-      auVar32 = vectorAddUnsignedWordSaturate(_DAT_8404f640,auVar32);
-      auVar34 = vectorMultiplyFloatingPoint(auVar34,_DAT_8217a4f0);
-      auVar30 = vectorMultiplySum4FloatingPoint(auVar35,auVar35);
-      auVar33 = vectorMultiplySum4FloatingPoint(auVar34,auVar34);
-      auVar30 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar30);
-      auVar41 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar33);
-      auVar33 = vectorMultiplyFloatingPoint(auVar35,auVar30);
-      auVar30 = vectorMultiplyFloatingPoint(auVar34,auVar41);
-      auVar34 = vectorMultiplyFloatingPoint(auVar33,auVar42 | _DAT_8217a050);
-      auVar33 = vectorMultiplyFloatingPoint(auVar30,auVar36 | _DAT_8217a050);
-      auVar30 = vectorPermute128(auVar34,auVar34,auVar31);
-      auVar31 = vectorPermute128(auVar33,auVar33,auVar32);
-      auVar31 = vectorSubtractFloatingPoint128(auVar31,auVar30);
-      auVar31 = vectorMultiplyAddFloatingPoint(auVar40,auVar31,auVar30);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar29,auVar31,*(undefined1 (*) [16])(uVar22 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar22 & 0xfffffff0) = auVar31;
-    }
-    uVar13 = (uVar3 + 1) * 4 + uVar13;
-    auVar32 = _DAT_8404fa00;
-    auVar31 = _DAT_8404f5e0;
-    puVar11 = puVar11 + 1;
-    local_1a0 = local_1a0 + uVar3 + 1;
-  }
-  dVar26 = 256.015625;
-  dVar27 = 3.0;
-  uVar20 = *(byte *)(iVar7 + 0x14) + uVar20;
-  for (; uVar17 < uVar20; uVar17 = uVar17 + 1) {
-    bVar1 = *(byte *)(uVar17 + param_4);
-    uVar22 = (uint)bVar1;
-    if (0xbf < bVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x375,
-                      0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
-    }
-    uVar3 = *puVar11;
-    if (0xbf < uVar22) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar22 & 0x1f]) == 0) {
-      XAnim_GetTimeIndex<unsigned_char>
-                (uVar6 - 0x130,local_1a0,(uint)uVar3,uVar6 - 0x178,uVar6 - 0xd8);
-      puVar23 = (uint6 *)(uVar13 * 6 + local_18c);
-      if (puVar23 == (uint6 *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x37e,0,&DAT_82000f98,"frame");
-      }
-      uVar5 = *(uint *)puVar23;
-      uVar9 = (ulonglong)(*puVar23 >> 0xf) & 0x7fff;
-      local_c0 = (longlong)(int)(1 - (uVar5 >> 0x1e & 2));
-      uVar12 = (ulonglong)(uVar5 >> 0x1d) & 3;
-      local_f0[1] = (float)((double)(float)((double)(float)(((int)uVar9 -
-                                                            ((uint)(uVar9 << 1) & 0x8000)) +
-                                                           0x40400000) - dVar27) * dVar26);
-      local_f0[2] = (float)((double)(float)((double)(float)((uVar5 >> 0xe & 0x7fff) +
-                                                            (uVar5 >> 0xe & 0x4000) * -2 +
-                                                           0x40400000) - dVar27) * dVar26);
-      local_f0[0] = (float)((double)(float)((double)(float)(((ushort)*puVar23 & 0x7fff) +
-                                                            ((ushort)*puVar23 & 0x4000) * -2 +
-                                                           0x40400000) - dVar27) * dVar26);
-      local_f0[3] = (float)local_c0 /
-                    SQRT((float)((double)(local_f0[0] * local_f0[0] +
-                                         local_f0[2] * local_f0[2] + local_f0[1] * local_f0[1]) +
-                                dVar25));
-      local_f0[2] = local_f0[3] * local_f0[2];
-      local_f0[0] = local_f0[3] * local_f0[0];
-      local_f0[1] = local_f0[3] * local_f0[1];
-      uStack_c4 = *(undefined4 *)((int)local_f0 + ((uint)((uVar12 - 1 & 0xffffffff) << 2) & 0xc));
-      uStack_cc = *(undefined4 *)((int)local_f0 + (((int)uVar12 + 1) * 4 & 0xcU));
-      local_d0 = *(undefined4 *)((int)local_f0 + (int)(uVar12 << 2));
-      uStack_c8 = *(undefined4 *)((int)local_f0 + ((uint)((uVar12 - 2 & 0xffffffff) << 2) & 0xc));
-      uVar22 = uVar22 * 0x20 + param_7;
-      auVar39 = loadVectorLeftIndexed(uVar6 - 0xd8);
-      auVar37 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      auVar39 = vectorSplatWord(auVar39,0);
-      auVar28 = vectorSplatWord(auVar37,0);
-      auVar37._0_4_ = local_d0;
-      auVar37._4_4_ = uStack_cc;
-      auVar37._8_4_ = uStack_c8;
-      auVar37._12_4_ = uStack_c4;
-      auVar31 = vectorSubtractFloatingPoint128(local_120,auVar37);
-      auVar37 = vectorMultiplyAddFloatingPoint(auVar39,auVar31,auVar37);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar28,auVar37,*(undefined1 (*) [16])(uVar22 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar22 & 0xfffffff0) = auVar37;
-      puVar16 = local_d4;
-      puVar15 = local_dc;
-    }
-    local_18c = (uVar3 + 1) * 6 + local_18c;
-    auVar39 = _DAT_8404f5c0;
-    auVar32 = _DAT_8404fa00;
-    auVar28 = _DAT_8404f7b0;
-    auVar38 = _DAT_8404f640;
-    auVar31 = _DAT_8404f5e0;
-    auVar37 = _DAT_8217a050;
-    puVar11 = puVar11 + 1;
-    local_1a0 = local_1a0 + uVar3 + 1;
-  }
-  uVar9 = ZEXT48(puVar11);
-  uVar20 = *(byte *)(iVar7 + 0x15) + uVar20;
-  for (; uVar17 < uVar20; uVar17 = uVar17 + 1) {
-    bVar1 = *(byte *)(uVar17 + param_4);
-    uVar13 = (uint)bVar1;
-    if (0xbf < uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x38e,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar13,
-                      0xc0);
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar9 = ZEXT48(puVar11);
-      auVar39 = _DAT_8404f5c0;
-      auVar32 = _DAT_8404fa00;
-      auVar28 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f5e0;
-      auVar37 = _DAT_8217a050;
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-      auVar33 = loadVectorLeftIndexed(uVar9);
-      auVar38 = vectorSplatWord(auVar33,0);
-      auVar34 = vectorShiftRightWord128(auVar38,_DAT_8404f920);
-      auVar30 = vectorShiftLeftWord128(auVar34,*(undefined1 (*) [16])((uint)puVar15 & 0xfffffff0));
-      auVar40 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      uVar13 = uVar13 * 0x20 + param_7;
-      auVar38 = vectorAddUnsignedWordSaturate(auVar34 & _DAT_8404f620,auVar39);
-      auVar29 = vectorSplatWord(auVar40,0);
-      auVar33 = vectorSplatWord(auVar33 & _DAT_8404f780,0);
-      auVar40 = vectorSubtractUnsignedWordSaturate(auVar38,auVar30 & _DAT_8404f750);
-      auVar38 = vectorPermute128(auVar34 & _DAT_8404f7a0,auVar34 & _DAT_8404f7a0,auVar28);
-      auVar38 = vectorAddUnsignedWordSaturate(auVar31,auVar38);
-      auVar40 = vectorAddFloatingPoint128
-                          (auVar40 & *(undefined1 (*) [16])((uint)local_e0 & 0xfffffff0),
-                           _DAT_8217a560);
-      auVar30 = vectorMultiplyFloatingPoint(auVar40,_DAT_8217a550);
-      auVar40 = vectorMultiplySum4FloatingPoint(auVar30,auVar30);
-      auVar40 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar40);
-      auVar40 = vectorMultiplyFloatingPoint(auVar30,auVar40);
-      auVar30 = vectorMultiplyFloatingPoint(auVar40,auVar33 | auVar37);
-      auVar40 = vectorPermute128(auVar30,auVar30,auVar32);
-      auVar38 = vectorPermute128(auVar30,auVar40,auVar38);
-      auVar38 = vectorMultiplyAddFloatingPoint
-                          (auVar29,auVar38,*(undefined1 (*) [16])(uVar13 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar13 & 0xfffffff0) = auVar38;
-    }
-    uVar9 = uVar9 + 2;
-    puVar11 = (ushort *)uVar9;
-    auVar38 = _DAT_8404f640;
-  }
-  uVar12 = (ulonglong)local_1a4;
-  uVar20 = *(byte *)(iVar7 + 0x16) + uVar20;
-  for (; uVar17 < uVar20; uVar17 = uVar17 + 1) {
-    bVar1 = *(byte *)(uVar17 + param_4);
-    uVar13 = (uint)bVar1;
-    if (0xbf < uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x39e,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar13,
-                      0xc0);
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar12 = (ulonglong)local_1a4;
-      uVar9 = ZEXT48(puVar11);
-      auVar39 = _DAT_8404f5c0;
-      auVar28 = _DAT_8404f7b0;
-      auVar38 = _DAT_8404f640;
-      auVar37 = _DAT_8217a050;
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-      auVar30 = loadVectorLeftIndexed(uVar12);
-      auVar31 = vectorSplatWord(auVar30,0);
-      auVar32 = vectorShiftRightWord128(auVar31,_DAT_8404f940);
-      uVar13 = uVar13 * 0x20 + param_7;
-      auVar31 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      auVar29 = vectorShiftLeftWord128(auVar32,*(undefined1 (*) [16])((uint)puVar15 & 0xfffffff0));
-      auVar33 = auVar32 & *(undefined1 (*) [16])((uint)puVar16 & 0xfffffff0);
-      auVar40 = vectorSplatWord(auVar31,0);
-      auVar30 = vectorSplatWord(auVar30 & _DAT_8404f780,0);
-      auVar32 = vectorAddUnsignedWordSaturate(auVar32 & _DAT_8404f770,auVar39);
-      auVar31 = vectorPermute128(auVar33,auVar33,auVar28);
-      auVar32 = vectorSubtractUnsignedWordSaturate(auVar32,auVar29 & _DAT_8404f6a0);
-      auVar31 = vectorAddUnsignedWordSaturate(auVar38,auVar31);
-      auVar32 = vectorAddFloatingPoint128(auVar32 & _DAT_8404f630,_DAT_8217a500);
-      auVar29 = vectorMultiplyFloatingPoint(auVar32,_DAT_8217a4f0);
-      auVar32 = vectorMultiplySum4FloatingPoint(auVar29,auVar29);
-      auVar32 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar32);
-      auVar32 = vectorMultiplyFloatingPoint(auVar29,auVar32);
-      auVar32 = vectorMultiplyFloatingPoint(auVar32,auVar30 | auVar37);
-      auVar31 = vectorPermute128(auVar32,auVar32,auVar31);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar40,auVar31,*(undefined1 (*) [16])(uVar13 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar13 & 0xfffffff0) = auVar31;
-    }
-    uVar12 = uVar12 + 4;
-    local_1a4 = (uint)uVar12;
-  }
-  bVar1 = *(byte *)(iVar7 + 0x17);
-  for (; uVar17 < bVar1 + uVar20; uVar17 = uVar17 + 1) {
-    bVar2 = *(byte *)(uVar17 + param_4);
-    uVar13 = (uint)bVar2;
-    if (0xbf < uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x3ae,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar13,
-                      0xc0);
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar12 = (ulonglong)local_1a4;
-      uVar9 = ZEXT48(puVar11);
-    }
-    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[bVar2 & 0x1f]) == 0) {
-      auVar37 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      uVar13 = uVar13 * 0x20 + param_7;
-      auVar37 = vectorSplatWord(auVar37,0);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar37,local_120,*(undefined1 (*) [16])(uVar13 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar13 & 0xfffffff0) = auVar37;
-    }
-    uVar9 = uVar9 + 6;
-    puVar11 = (ushort *)uVar9;
-    auVar37 = _DAT_8217a050;
-  }
-  uVar18 = (ulonglong)*(byte *)(iVar7 + 0x18);
-  uVar10 = 0;
-  auVar39 = _DAT_8404f6e0;
-  for (uVar19 = uVar18; uVar19 != 0; uVar19 = uVar19 - 1) {
-    pbVar24 = local_1a0 + 1;
-    bVar1 = *(byte *)((uint)*local_1a0 + param_4);
-    uVar13 = (uint)bVar1;
-    if (0xbf < uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x433,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar13,
-                      0xc0);
-      uVar12 = (ulonglong)local_1a4;
-      uVar9 = ZEXT48(puVar11);
-      auVar39 = _DAT_8404f6e0;
-      auVar37 = _DAT_8217a050;
-    }
-    uVar3 = *(ushort *)uVar9;
-    uVar10 = uVar9 + 2;
-    puVar11 = (ushort *)uVar10;
-    local_1a0 = pbVar24 + uVar3 + 1;
-    uVar9 = uVar10;
-    if (0xbf < uVar13) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar12 = (ulonglong)local_1a4;
-      uVar9 = uVar10 & 0xffffffff;
-      auVar39 = _DAT_8404f6e0;
-      auVar37 = _DAT_8217a050;
-    }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-      XAnim_GetTimeIndex<unsigned_char>
-                (uVar6 - 0x130,pbVar24,(uint)uVar3,uVar6 - 0x188,uVar6 - 0x180);
-      lVar21 = (ulonglong)uVar8 + 0x8c0ee6e0;
-      if (lVar21 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x43c,0,&DAT_82000f98,0xffffffff821870b4);
-      }
-      auVar39 = _DAT_8404f6e0;
-      auVar37 = _DAT_8217a050;
-      uVar12 = (ulonglong)local_1a4;
-      uVar9 = uVar10 & 0xffffffff;
-      lVar14 = (ulonglong)uVar8 + 0x8c0ee6e3;
-      auVar31 = ZEXT416(0);
-      auVar31 = auVar31 | auVar31 << 0x20 | auVar31 << 0x40 | auVar31 << 0x60;
-      auVar28 = loadVectorForShiftLeft(in_r0,lVar21);
-      auVar28 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar21 & 0xfffffff0),
-                                 *(undefined1 (*) [16])((uint)lVar21 + 7 & 0xfffffff0),auVar28);
-      uVar17 = (uint)lVar14;
-      auVar32 = loadVectorForShiftLeft(in_r0,lVar14);
-      auVar28 = vectorMergeHighByte(auVar31,auVar28);
-      auVar38 = loadVectorLeftIndexed(uVar6 - 0x180);
-      auVar32 = vectorPermute128(*(undefined1 (*) [16])(uVar17 & 0xfffffff0),
-                                 *(undefined1 (*) [16])(uVar17 + 7 & 0xfffffff0),auVar32);
-      auVar34 = loadVectorLeftIndexed(uVar12);
-      auVar38 = vectorSplatWord(auVar38,0);
-      auVar29 = loadVectorRightIndexed(uVar12 + 0x10);
-      auVar33 = loadVectorRightIndexed(uVar12 + 0x1c);
-      auVar28 = vectorMergeHighHalfWord(auVar31,auVar28);
-      auVar30 = loadVectorLeftIndexed(uVar12 + 0xc);
-      auVar40 = vectorMergeHighByte(auVar31,auVar32);
-      auVar32 = vectorPermute128(auVar34 | auVar29,_DAT_8217a050,_DAT_8404f6e0);
-      auVar29 = vectorConvertFromUnsignedFixedPointWord128(auVar28,0);
-      auVar31 = vectorMergeHighHalfWord(auVar31,auVar40);
-      uVar13 = uVar13 * 0x20 + param_7 + 0x10;
-      auVar28 = loadVectorLeftIndexed(uVar6 + 0x2c);
-      auVar31 = vectorConvertFromUnsignedFixedPointWord128(auVar31,0);
-      auVar28 = vectorSplatWord(auVar28,0);
-      auVar31 = vectorSubtractFloatingPoint128(auVar31 & _DAT_8404f950,auVar29 & _DAT_8404f950);
-      auVar31 = vectorMultiplyAddFloatingPoint(auVar38,auVar31,auVar29 & _DAT_8404f950);
-      auVar31 = vectorMultiplyAddFloatingPoint((auVar30 | auVar33) & _DAT_8404f950,auVar31,auVar32);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar28,auVar31,*(undefined1 (*) [16])(uVar13 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar13 & 0xfffffff0) = auVar31;
-    }
-    uVar12 = uVar12 + 0x18;
-    local_1a4 = (uint)uVar12;
-    uVar8 = (uVar3 + 1) * 3 + uVar8;
-    uVar10 = uVar18;
-  }
-  uVar18 = *(byte *)(iVar7 + 0x19) + uVar18;
-  if (uVar10 < uVar18) {
-    lVar14 = uVar18 - uVar10;
-    lVar21 = uVar9 - 2;
-    uVar10 = lVar14 + uVar10;
-    do {
-      pbVar24 = local_1a0 + 1;
-      bVar1 = *(byte *)((uint)*local_1a0 + param_4);
-      uVar8 = (uint)bVar1;
-      if (0xbf < uVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x452,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar8,0xc0);
-        uVar12 = (ulonglong)local_1a4;
-        auVar39 = _DAT_8404f6e0;
-        auVar37 = _DAT_8217a050;
-      }
-      lVar21 = lVar21 + 2;
-      uVar3 = *(ushort *)lVar21;
-      local_1a0 = pbVar24 + uVar3 + 1;
-      if (0xbf < uVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        uVar12 = (ulonglong)local_1a4;
-        auVar39 = _DAT_8404f6e0;
-        auVar37 = _DAT_8217a050;
-      }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[bVar1 & 0x1f]) == 0) {
-        XAnim_GetTimeIndex<unsigned_char>
-                  (uVar6 - 0x130,pbVar24,(uint)uVar3,uVar6 - 0x188,uVar6 - 0x180);
-        uVar9 = (ulonglong)local_18c;
-        if (uVar9 + 0x181dcdc0 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x45b,0,&DAT_82000f98,0xffffffff821870a8);
-        }
-        auVar39 = _DAT_8404f6e0;
-        auVar37 = _DAT_8217a050;
-        uVar12 = (ulonglong)local_1a4;
-        auVar28 = loadVectorRightIndexed(uVar9 + 0x181dcdc8);
-        auVar29 = loadVectorLeftIndexed(uVar9 + 0x181dcdc0);
-        auVar31 = ZEXT416(0);
-        auVar31 = auVar31 | auVar31 << 0x20 | auVar31 << 0x40 | auVar31 << 0x60;
-        auVar38 = vectorShiftLeftDoubleByOctetImmediate(auVar28,auVar28,8);
-        auVar40 = loadVectorLeftIndexed(uVar12);
-        auVar28 = loadVectorRightIndexed(uVar9 + 0x181dcdce);
-        auVar34 = loadVectorLeftIndexed(uVar9 + 0x181dcdc6);
-        auVar33 = vectorShiftLeftDoubleByOctetImmediate(auVar28,auVar28,8);
-        auVar32 = loadVectorRightIndexed(uVar12 + 0x10);
-        auVar28 = loadVectorLeftIndexed(uVar6 - 0x180);
-        auVar30 = loadVectorLeftIndexed(uVar12 + 0xc);
-        auVar38 = vectorMergeHighHalfWord(auVar31,auVar29 | auVar38);
-        auVar29 = loadVectorRightIndexed(uVar12 + 0x1c);
-        auVar28 = vectorSplatWord(auVar28,0);
-        auVar32 = vectorPermute128(auVar40 | auVar32,_DAT_8217a050,_DAT_8404f6e0);
-        auVar40 = vectorConvertFromUnsignedFixedPointWord128(auVar38,0);
-        auVar31 = vectorMergeHighHalfWord(auVar31,auVar34 | auVar33);
-        uVar8 = uVar8 * 0x20 + param_7 + 0x10;
-        auVar31 = vectorConvertFromUnsignedFixedPointWord128(auVar31,0);
-        auVar38 = loadVectorLeftIndexed(uVar6 + 0x2c);
-        auVar38 = vectorSplatWord(auVar38,0);
-        auVar31 = vectorSubtractFloatingPoint128(auVar31 & _DAT_8404f950,auVar40 & _DAT_8404f950);
-        auVar31 = vectorMultiplyAddFloatingPoint(auVar28,auVar31,auVar40 & _DAT_8404f950);
-        auVar31 = vectorMultiplyAddFloatingPoint
-                            ((auVar30 | auVar29) & _DAT_8404f950,auVar31,auVar32);
-        auVar31 = vectorMultiplyAddFloatingPoint
-                            (auVar38,auVar31,*(undefined1 (*) [16])(uVar8 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar31;
-      }
-      uVar12 = uVar12 + 0x18;
-      lVar14 = lVar14 + -1;
-      local_1a4 = (uint)uVar12;
-      local_18c = (uVar3 + 1) * 6 + local_18c;
-    } while (lVar14 != 0);
-  }
-  uVar18 = *(byte *)(iVar7 + 0x1a) + uVar18;
-  if ((uVar10 & 0xffffffff) < uVar18) {
-    lVar21 = uVar18 - uVar10;
-    uVar10 = lVar21 + uVar10;
-    do {
-      bVar1 = *(byte *)((uint)*local_1a0 + param_4);
-      uVar8 = (uint)bVar1;
-      if (0xbf < uVar8) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x46a,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar8,0xc0);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        uVar12 = (ulonglong)local_1a4;
-        auVar39 = _DAT_8404f6e0;
-        auVar37 = _DAT_8217a050;
-      }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar8 & 0x1f]) == 0) {
-        auVar32 = loadVectorLeftIndexed(uVar12);
-        auVar31 = loadVectorRightIndexed(uVar12 + 0x10);
-        uVar8 = uVar8 * 0x20 + param_7 + 0x10;
-        auVar28 = loadVectorLeftIndexed(uVar6 + 0x2c);
-        auVar31 = vectorPermute128(auVar32 | auVar31,auVar37,auVar39);
-        auVar28 = vectorSplatWord(auVar28,0);
-        auVar31 = vectorMultiplyAddFloatingPoint
-                            (auVar28,auVar31,*(undefined1 (*) [16])(uVar8 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar31;
-      }
-      uVar12 = uVar12 + 0xc;
-      lVar21 = lVar21 + -1;
-      local_1a0 = local_1a0 + 1;
-      local_1a4 = (uint)uVar12;
-    } while (lVar21 != 0);
-  }
-  uVar18 = *(byte *)(iVar7 + 0x1b) + uVar18;
-  if ((uVar10 & 0xffffffff) < uVar18) {
-    lVar21 = uVar18 - uVar10;
-    do {
-      bVar1 = *(byte *)((uint)*local_1a0 + param_4);
-      uVar8 = (uint)bVar1;
+      bVar1 = param_2[uVar25];
       if (0xbf < bVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x478,0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
-      }
-      if (0xbf < uVar8) {
+                        0x321,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar8 & 0x1f]) == 0) {
-        iVar7 = uVar8 * 0x20 + param_7;
-        *(float *)(iVar7 + 0x1c) = (float)(param_2 + (double)*(float *)(iVar7 + 0x1c));
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_r8) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        iVar4 = (uint)bVar1 * 0x20 + in_r7;
+        *(float *)(iVar4 + 0xc) = (float)((double)*(float *)(iVar4 + 0xc) + dVar28);
       }
+      uVar25 = uVar25 + 1;
+    } while (uVar25 < uVar23);
+  }
+  uVar23 = *(byte *)(iVar7 + 0x12) + uVar23;
+  local_140 = &g_unpackSimpleQuatRotateAdd;
+  local_13c = &g_ZZZZ;
+  local_180 = CONCAT44(&g_unpackMulSimpleQuat,local_180._4_4_);
+  local_f8 = &g_unpackAddSimpleQuat;
+  p_Var15 = &g_unpackSignShiftQuat;
+  local_e0 = &g_unpackAndSimpleQuat;
+  local_100 = &g_unpackSignBitSimpleQuat;
+  local_138 = &g_packedMaskSimpleQuat;
+  local_188 = &g_unpackSimpleQuatRotateMask;
+  local_dc = &g_unpackSignShiftQuat;
+  local_134 = &g_unpackShiftSimpleQuat;
+  local_158 = &g_unpackQuatSignBit;
+  local_164 = "frame";
+  _Var48 = g_one.field0_0x0;
+  _Var32 = g_packMantissa.field0_0x0;
+  _Var36 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+  _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+  _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+  _Var33 = g_ZZZZ.field0_0x0;
+  for (; g_unpackQuatRotateAdd.field0_0x0 = _Var35, uVar25 < uVar23; uVar25 = uVar25 + 1) {
+    bVar1 = puStack0000001c[uVar25];
+    uVar24 = (uint)bVar1;
+    if (0xbf < uVar24) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x33a,
+                      0,local_184);
+      _Var32 = g_packMantissa.field0_0x0;
+      _Var33 = g_ZZZZ.field0_0x0;
+      _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var36 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    uVar22 = (uint)*local_1a8;
+    if (0xbf < uVar24) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                      ,0x42,0,"%s");
+      _Var32 = g_packMantissa.field0_0x0;
+      _Var33 = g_ZZZZ.field0_0x0;
+      _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var36 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      XAnim_GetTimeIndex<unsigned_char>
+                (&local_130,local_1a0,uVar22,(int *)&local_16c,(float *)&local_174);
+      lVar26 = (ZEXT48(local_16c) & 0x7fffffff) * 2 + (ulonglong)local_18c;
+      if (lVar26 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x343,0,"%s");
+      }
+      _Var33 = g_ZZZZ.field0_0x0;
+      _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var36 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+      _Var32 = g_packMantissa.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+      auVar47 = loadVectorLeftIndexed(lVar26);
+      auVar46 = loadVectorLeftIndexed(lVar26 + 2);
+      auVar44 = vectorSplatWord(auVar47,0);
+      auVar43 = vectorSplatWord(auVar46,0);
+      auVar42 = vectorShiftRightWord128
+                          (auVar44,*(undefined1 (*) [16])((uint)local_134 & 0xfffffff0));
+      auVar41 = vectorShiftRightWord128
+                          (auVar43,*(undefined1 (*) [16])((uint)local_134 & 0xfffffff0));
+      auVar40 = vectorShiftLeftWord128(auVar42,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0);
+      auVar39 = vectorShiftLeftWord128(auVar41,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0);
+      auVar44 = vectorAddUnsignedWordSaturate
+                          (auVar42 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_packMantissa.field0_0x0);
+      auVar38 = loadVectorLeftIndexed(uVar6 - 0x174);
+      auVar37 = loadVectorLeftIndexed(uVar6 + 0x2c);
+      uVar24 = uVar24 * 0x20 + iStack00000034;
+      auVar43 = vectorAddUnsignedWordSaturate
+                          (auVar41 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_packMantissa.field0_0x0);
+      auVar38 = vectorSplatWord(auVar38,0);
+      auVar44 = vectorSubtractUnsignedWordSaturate
+                          (auVar44,auVar40 & (undefined1  [16])g_unpackSignBitSimpleQuat.field0_0x0)
+      ;
+      auVar37 = vectorSplatWord(auVar37,0);
+      auVar43 = vectorSubtractUnsignedWordSaturate
+                          (auVar43,auVar39 & (undefined1  [16])g_unpackSignBitSimpleQuat.field0_0x0)
+      ;
+      auVar45 = vectorSplatWord(auVar46 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+      auVar42 = auVar42 & *(undefined1 (*) [16])((uint)local_188 & 0xfffffff0);
+      auVar46 = vectorAddFloatingPoint128
+                          (auVar44 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+      auVar39 = vectorSplatWord(auVar47 & (undefined1  [16])g_unpackQuatSignBit.field0_0x0,0);
+      auVar40 = vectorAddFloatingPoint128
+                          (auVar43 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+      auVar43 = vectorPermute128(auVar42,auVar42,(undefined1  [16])g_PPPPPPPPPPPPPPPP.field0_0x0);
+      auVar41 = auVar41 & *(undefined1 (*) [16])((uint)local_188 & 0xfffffff0);
+      auVar44 = vectorAddUnsignedWordSaturate
+                          ((undefined1  [16])g_unpackSimpleQuatRotateAdd.field0_0x0,auVar43);
+      auVar43 = vectorPermute128(auVar41,auVar41,(undefined1  [16])g_PPPPPPPPPPPPPPPP.field0_0x0);
+      auVar46 = vectorMultiplyFloatingPoint
+                          (auVar46,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+      auVar43 = vectorAddUnsignedWordSaturate
+                          ((undefined1  [16])g_unpackSimpleQuatRotateAdd.field0_0x0,auVar43);
+      auVar42 = vectorMultiplyFloatingPoint
+                          (auVar40,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+      auVar41 = vectorMultiplySum4FloatingPoint(auVar46,auVar46);
+      auVar40 = vectorMultiplySum4FloatingPoint(auVar42,auVar42);
+      auVar41 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar41);
+      auVar40 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar40);
+      auVar41 = vectorMultiplyFloatingPoint(auVar46,auVar41);
+      auVar40 = vectorMultiplyFloatingPoint(auVar42,auVar40);
+      auVar42 = vectorMultiplyFloatingPoint(auVar41,auVar39 | (undefined1  [16])g_one.field0_0x0);
+      auVar41 = vectorMultiplyFloatingPoint(auVar40,auVar45 | (undefined1  [16])g_one.field0_0x0);
+      auVar40 = vectorPermute128(auVar42,auVar42,(undefined1  [16])g_ZZZZ.field0_0x0);
+      auVar39 = vectorPermute128(auVar41,auVar41,(undefined1  [16])g_ZZZZ.field0_0x0);
+      auVar44 = vectorPermute128(auVar42,auVar40,auVar44);
+      auVar43 = vectorPermute128(auVar41,auVar39,auVar43);
+      auVar43 = vectorSubtractFloatingPoint128(auVar43,auVar44);
+      auVar43 = vectorMultiplyAddFloatingPoint(auVar38,auVar43,auVar44);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar37,auVar43,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar43;
+    }
+    local_18c = (uVar22 + 1) * 2 + local_18c;
+    local_1a0 = local_1a0 + uVar22 + 1;
+    local_1a8 = local_1a8 + 1;
+    _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+  }
+  p_Var18 = &g_packedMaskQuat;
+  uVar23 = *(byte *)(iStack00000014 + 0x13) + uVar23;
+  local_110 = &g_packedMaskQuat;
+  p_Var17 = &g_unpackQuatRotateMask;
+  local_d4 = &g_unpackQuatRotateMask;
+  p_Var16 = &g_unpackShiftQuat;
+  local_fc = &g_unpackShiftQuat;
+  local_16c = "modelPartIndex < DOBJ_MAX_PARTS";
+  local_174 = "modelPartIndex >= 0";
+  if (uVar25 < uVar23) {
+    do {
+      bVar1 = puStack0000001c[uVar25];
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x357,0,"%s");
+        _Var32 = g_packMantissa.field0_0x0;
+        _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+      }
+      puVar13 = local_1a8 + 1;
+      uVar24 = (uint)*local_1a8;
+      pbVar12 = local_1a0 + uVar24 + 1;
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
+        _Var32 = g_packMantissa.field0_0x0;
+        _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        XAnim_GetTimeIndex<unsigned_char>(&local_130,local_1a0,uVar24,(int *)&local_160,&local_170);
+        lVar26 = ((ulonglong)(uint)local_160 & 0x3fffffff) * 4 + (ulonglong)local_178;
+        if (lVar26 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                          0x360,0,"%s");
+        }
+        _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+        _Var32 = g_packMantissa.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+        auVar41 = loadVectorLeftIndexed(lVar26);
+        auVar46 = loadVectorLeftIndexed(lVar26 + 4);
+        auVar44 = vectorSplatWord(auVar41,0);
+        auVar43 = vectorSplatWord(auVar46,0);
+        auVar40 = vectorShiftRightWord128(auVar44,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+        auVar39 = vectorShiftRightWord128(auVar43,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+        auVar38 = vectorShiftLeftWord128(auVar40,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0)
+        ;
+        auVar42 = loadVectorLeftIndexed(uVar6 - 0x170);
+        auVar45 = vectorShiftLeftWord128(auVar39,(undefined1  [16])g_unpackSignShiftQuat.field0_0x0)
+        ;
+        auVar44 = vectorAddUnsignedWordSaturate
+                            (auVar40 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                             (undefined1  [16])g_packMantissa.field0_0x0);
+        auVar37 = loadVectorLeftIndexed(uVar6 + 0x2c);
+        auVar43 = vectorAddUnsignedWordSaturate
+                            (auVar39 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                             (undefined1  [16])g_packMantissa.field0_0x0);
+        uVar22 = (uint)bVar1 * 0x20 + iStack00000034;
+        auVar44 = vectorSubtractUnsignedWordSaturate
+                            (auVar44,auVar38 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+        auVar38 = vectorSplatWord(auVar37,0);
+        auVar43 = vectorSubtractUnsignedWordSaturate
+                            (auVar43,auVar45 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+        auVar37 = vectorSplatWord(auVar42,0);
+        auVar45 = vectorSplatWord(auVar41 & *(undefined1 (*) [16])((uint)local_158 & 0xfffffff0),0);
+        auVar42 = vectorAddFloatingPoint128
+                            (auVar44 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddQuat.field0_0x0);
+        auVar41 = vectorAddFloatingPoint128
+                            (auVar43 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddQuat.field0_0x0);
+        auVar43 = vectorPermute128(auVar40 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   auVar40 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])g_PPPPPPPPPPPPPPPP.field0_0x0);
+        auVar43 = vectorAddUnsignedWordSaturate
+                            ((undefined1  [16])g_unpackQuatRotateAdd.field0_0x0,auVar43);
+        auVar44 = vectorPermute128(auVar39 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   auVar39 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])g_PPPPPPPPPPPPPPPP.field0_0x0);
+        auVar46 = vectorSplatWord(auVar46 & *(undefined1 (*) [16])((uint)local_158 & 0xfffffff0),0);
+        auVar42 = vectorMultiplyFloatingPoint(auVar42,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+        auVar44 = vectorAddUnsignedWordSaturate
+                            ((undefined1  [16])g_unpackQuatRotateAdd.field0_0x0,auVar44);
+        auVar41 = vectorMultiplyFloatingPoint(auVar41,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+        auVar39 = vectorMultiplySum4FloatingPoint(auVar42,auVar42);
+        auVar40 = vectorMultiplySum4FloatingPoint(auVar41,auVar41);
+        auVar39 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar39);
+        auVar47 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar40);
+        auVar40 = vectorMultiplyFloatingPoint(auVar42,auVar39);
+        auVar39 = vectorMultiplyFloatingPoint(auVar41,auVar47);
+        auVar41 = vectorMultiplyFloatingPoint(auVar40,auVar45 | (undefined1  [16])g_one.field0_0x0);
+        auVar40 = vectorMultiplyFloatingPoint(auVar39,auVar46 | (undefined1  [16])g_one.field0_0x0);
+        auVar39 = vectorPermute128(auVar41,auVar41,auVar43);
+        auVar43 = vectorPermute128(auVar40,auVar40,auVar44);
+        auVar43 = vectorSubtractFloatingPoint128(auVar43,auVar39);
+        auVar43 = vectorMultiplyAddFloatingPoint(auVar37,auVar43,auVar39);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            (auVar38,auVar43,*(undefined1 (*) [16])(uVar22 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar22 & 0xfffffff0) = auVar43;
+      }
+      uVar25 = uVar25 + 1;
+      local_178 = (uVar24 + 1) * 4 + local_178;
+      local_1a8 = puVar13;
+      local_1a0 = pbVar12;
+    } while (uVar25 < uVar23);
+    _Var33 = *(__vector4_u_0 *)((uint)local_13c & 0xfffffff0);
+    _Var36 = *(__vector4_u_0 *)((uint)local_140 & 0xfffffff0);
+  }
+  dVar30 = 256.015625;
+  dVar31 = 3.0;
+  uVar23 = *(byte *)(iStack00000014 + 0x14) + uVar23;
+  if (uVar25 < uVar23) {
+    do {
+      bVar1 = puStack0000001c[uVar25];
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x375,0,"%s");
+      }
+      puVar13 = local_1a8 + 1;
+      uVar3 = *local_1a8;
+      pbVar12 = local_1a0 + uVar3 + 1;
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        XAnim_GetTimeIndex<unsigned_char>
+                  (&local_130,local_1a0,(uint)uVar3,(int *)&local_178,&fStack_d8);
+        puVar10 = (uint6 *)(local_178 * 6 + local_18c);
+        if (puVar10 == (uint6 *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                          0x37e,0,"%s");
+        }
+        uVar24 = *(uint *)((int)puVar10 + 6);
+        uVar22 = *(uint *)puVar10 >> 0xe;
+        uVar8 = (ulonglong)(*puVar10 >> 0xf) & 0x7fff;
+        local_160 = (float)(((int)uVar8 - ((uint)(uVar8 << 1) & 0x8000)) + 0x40400000);
+        local_c0 = (longlong)(int)(1 - (*(uint *)puVar10 >> 0x1e & 2));
+        local_ec = (float)((double)(float)((double)local_160 - dVar31) * dVar30);
+        uVar5 = uVar24 >> 0xe;
+        local_e8 = (float)((double)(float)((double)(float)((uVar22 & 0x7fff) +
+                                                           (uVar22 & 0x4000) * -2 + 0x40400000) -
+                                          dVar31) * dVar30);
+        local_150 = (float)((double)(float)((double)(float)((*(ushort *)((int)puVar10 + 10) & 0x7fff
+                                                            ) + (*(ushort *)((int)puVar10 + 10) &
+                                                                0x4000) * -2 + 0x40400000) - dVar31)
+                           * dVar30);
+        local_f0 = (float)((double)(float)((double)(float)(((ushort)*puVar10 & 0x7fff) +
+                                                           ((ushort)*puVar10 & 0x4000) * -2 +
+                                                          0x40400000) - dVar31) * dVar30);
+        local_e4 = (float)local_c0 /
+                   SQRT((float)((double)(local_f0 * local_f0 +
+                                        local_e8 * local_e8 + local_ec * local_ec) + dVar29));
+        local_e8 = local_e4 * local_e8;
+        local_f0 = local_e4 * local_f0;
+        uVar8 = (ulonglong)(*(uint6 *)((int)puVar10 + 6) >> 0xf) & 0x7fff;
+        local_ec = local_e4 * local_ec;
+        local_168 = (float)(((int)uVar8 - ((uint)(uVar8 << 1) & 0x8000)) + 0x40400000);
+        local_170 = (float)((uVar5 & 0x7fff) + (uVar5 & 0x4000) * -2 + 0x40400000);
+        local_14c = (float)((double)(float)((double)local_168 - dVar31) * dVar30);
+        local_148 = (float)((double)(float)((double)local_170 - dVar31) * dVar30);
+        local_108 = (longlong)(int)(1 - (uVar24 >> 0x1e & 2));
+        uVar24 = (uint)bVar1 * 0x20 + iStack00000034;
+        auVar43 = loadVectorLeftIndexed(uVar6 - 0xd8);
+        auVar44 = loadVectorLeftIndexed(uVar6 + 0x2c);
+        auVar43 = vectorSplatWord(auVar43,0);
+        auVar37 = vectorSplatWord(auVar44,0);
+        local_144 = (float)local_108 /
+                    SQRT((float)((double)(local_150 * local_150 +
+                                         local_148 * local_148 + local_14c * local_14c) + dVar29));
+        local_14c = local_144 * local_14c;
+        local_148 = local_144 * local_148;
+        local_150 = local_144 * local_150;
+        auVar44 = vectorSubtractFloatingPoint128(local_120,local_d0);
+        auVar43 = vectorMultiplyAddFloatingPoint(auVar43,auVar44,local_d0);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            (auVar37,auVar43,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar43;
+        p_Var18 = local_110;
+        p_Var17 = local_d4;
+        p_Var16 = local_fc;
+        p_Var15 = local_dc;
+      }
+      uVar25 = uVar25 + 1;
+      local_18c = (uVar3 + 1) * 6 + local_18c;
+      local_1a8 = puVar13;
+      local_1a0 = pbVar12;
+    } while (uVar25 < uVar23);
+    _Var33 = *(__vector4_u_0 *)((uint)local_13c & 0xfffffff0);
+    _Var36 = *(__vector4_u_0 *)((uint)local_140 & 0xfffffff0);
+    _Var32 = g_packMantissa.field0_0x0;
+    _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+    _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+    _Var48 = g_one.field0_0x0;
+  }
+  uVar8 = ZEXT48(local_1a8);
+  uVar23 = *(byte *)(iStack00000014 + 0x15) + uVar23;
+  for (; uVar25 < uVar23; uVar25 = uVar25 + 1) {
+    bVar1 = puStack0000001c[uVar25];
+    if (0xbf < bVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x38e,
+                      0,local_184);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                      ,0x42,0,"%s");
+      uVar8 = ZEXT48(local_1a8);
+      _Var33 = *(__vector4_u_0 *)((uint)local_13c & 0xfffffff0);
+      _Var36 = *(__vector4_u_0 *)((uint)local_140 & 0xfffffff0);
+      _Var32 = g_packMantissa.field0_0x0;
+      _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      auVar39 = loadVectorLeftIndexed(uVar8);
+      auVar43 = vectorSplatWord(auVar39,0);
+      auVar40 = vectorShiftRightWord128
+                          (auVar43,*(undefined1 (*) [16])((uint)local_134 & 0xfffffff0));
+      auVar38 = vectorShiftLeftWord128(auVar40,*(undefined1 (*) [16])((uint)p_Var15 & 0xfffffff0));
+      auVar44 = loadVectorLeftIndexed(uVar6 + 0x2c);
+      uVar24 = (uint)bVar1 * 0x20 + iStack00000034;
+      auVar43 = vectorAddUnsignedWordSaturate
+                          (auVar40 & *(undefined1 (*) [16])((uint)local_138 & 0xfffffff0),
+                           (undefined1  [16])_Var32);
+      auVar37 = vectorSplatWord(auVar44,0);
+      auVar40 = auVar40 & *(undefined1 (*) [16])((uint)local_188 & 0xfffffff0);
+      auVar39 = vectorSplatWord(auVar39 & *(undefined1 (*) [16])((uint)local_158 & 0xfffffff0),0);
+      auVar44 = vectorSubtractUnsignedWordSaturate
+                          (auVar43,auVar38 & *(undefined1 (*) [16])((uint)local_100 & 0xfffffff0));
+      auVar43 = vectorPermute128(auVar40,auVar40,(undefined1  [16])_Var34);
+      auVar43 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var36,auVar43);
+      auVar44 = vectorAddFloatingPoint128
+                          (auVar44 & *(undefined1 (*) [16])((uint)local_e0 & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)local_f8 & 0xfffffff0));
+      auVar38 = vectorMultiplyFloatingPoint
+                          (auVar44,*(undefined1 (*) [16])((uint)local_180._0_4_ & 0xfffffff0));
+      auVar44 = vectorMultiplySum4FloatingPoint(auVar38,auVar38);
+      auVar44 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar44);
+      auVar44 = vectorMultiplyFloatingPoint(auVar38,auVar44);
+      auVar38 = vectorMultiplyFloatingPoint(auVar44,auVar39 | (undefined1  [16])_Var48);
+      auVar44 = vectorPermute128(auVar38,auVar38,(undefined1  [16])_Var33);
+      auVar43 = vectorPermute128(auVar38,auVar44,auVar43);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar37,auVar43,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar43;
+    }
+    uVar8 = uVar8 + 2;
+    local_1a8 = (ushort *)uVar8;
+    _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+  }
+  uVar11 = (ulonglong)local_1a4;
+  uVar23 = *(byte *)(iStack00000014 + 0x16) + uVar23;
+  for (; uVar25 < uVar23; uVar25 = uVar25 + 1) {
+    bVar1 = puStack0000001c[uVar25];
+    if (0xbf < bVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x39e,
+                      0,local_184);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                      ,0x42,0,"%s");
+      uVar11 = (ulonglong)local_1a4;
+      uVar8 = ZEXT48(local_1a8);
+      _Var32 = g_packMantissa.field0_0x0;
+      _Var34 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var35 = g_unpackQuatRotateAdd.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      auVar39 = loadVectorLeftIndexed(uVar11);
+      auVar43 = vectorSplatWord(auVar39,0);
+      auVar44 = vectorShiftRightWord128(auVar43,*(undefined1 (*) [16])((uint)p_Var16 & 0xfffffff0));
+      uVar24 = (uint)bVar1 * 0x20 + iStack00000034;
+      auVar43 = loadVectorLeftIndexed(uVar6 + 0x2c);
+      auVar38 = vectorShiftLeftWord128(auVar44,*(undefined1 (*) [16])((uint)p_Var15 & 0xfffffff0));
+      auVar40 = auVar44 & *(undefined1 (*) [16])((uint)p_Var17 & 0xfffffff0);
+      auVar37 = vectorSplatWord(auVar43,0);
+      auVar39 = vectorSplatWord(auVar39 & *(undefined1 (*) [16])((uint)local_158 & 0xfffffff0),0);
+      auVar44 = vectorAddUnsignedWordSaturate
+                          (auVar44 & *(undefined1 (*) [16])((uint)p_Var18 & 0xfffffff0),
+                           (undefined1  [16])_Var32);
+      auVar43 = vectorPermute128(auVar40,auVar40,(undefined1  [16])_Var34);
+      auVar44 = vectorSubtractUnsignedWordSaturate
+                          (auVar44,auVar38 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+      auVar43 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var35,auVar43);
+      auVar44 = vectorAddFloatingPoint128
+                          (auVar44 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddQuat.field0_0x0);
+      auVar38 = vectorMultiplyFloatingPoint(auVar44,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+      auVar44 = vectorMultiplySum4FloatingPoint(auVar38,auVar38);
+      auVar44 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar44);
+      auVar44 = vectorMultiplyFloatingPoint(auVar38,auVar44);
+      auVar44 = vectorMultiplyFloatingPoint(auVar44,auVar39 | (undefined1  [16])_Var48);
+      auVar43 = vectorPermute128(auVar44,auVar44,auVar43);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar37,auVar43,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar43;
+    }
+    uVar11 = uVar11 + 4;
+    local_1a4 = (uint)uVar11;
+  }
+  bVar1 = *(byte *)(iStack00000014 + 0x17);
+  for (; uVar25 < bVar1 + uVar23; uVar25 = uVar25 + 1) {
+    bVar2 = puStack0000001c[uVar25];
+    if (0xbf < bVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x3ae,
+                      0,local_184);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                      ,0x42,0,"%s");
+      uVar11 = (ulonglong)local_1a4;
+      uVar8 = ZEXT48(local_1a8);
+    }
+    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iStack0000003c) &
+        *(uint *)(&g_bitShift + (bVar2 & 0x1f) * 4)) == 0) {
+      puVar10 = (uint6 *)uVar8;
+      auVar43 = loadVectorLeftIndexed(uVar6 + 0x2c);
+      uVar22 = (uint)bVar2 * 0x20 + iStack00000034;
+      auVar43 = vectorSplatWord(auVar43,0);
+      uVar24 = *(uint *)puVar10 >> 0xe;
+      uVar20 = (ulonglong)(*puVar10 >> 0xf) & 0x7fff;
+      fVar14 = (float)(((ushort)*puVar10 & 0x7fff) + ((ushort)*puVar10 & 0x4000) * -2 + 0x40400000);
+      local_148 = (float)((double)(float)((double)(float)((uVar24 & 0x7fff) + (uVar24 & 0x4000) * -2
+                                                         + 0x40400000) - dVar31) * dVar30);
+      local_180 = CONCAT44(fVar14,local_180._4_4_);
+      local_14c = (float)((double)(float)((double)(float)(((int)uVar20 -
+                                                          ((uint)(uVar20 << 1) & 0x8000)) +
+                                                         0x40400000) - dVar31) * dVar30);
+      local_150 = (float)((double)(float)((double)fVar14 - dVar31) * dVar30);
+      local_108 = (longlong)(int)(1 - (*(uint *)puVar10 >> 0x1e & 2));
+      local_144 = (float)local_108 /
+                  SQRT((float)((double)(local_150 * local_150 +
+                                       local_148 * local_148 + local_14c * local_14c) + dVar29));
+      local_150 = local_144 * local_150;
+      local_148 = local_144 * local_148;
+      local_14c = local_144 * local_14c;
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar43,local_120,*(undefined1 (*) [16])(uVar22 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar22 & 0xfffffff0) = auVar43;
+    }
+    uVar8 = uVar8 + 6;
+    local_1a8 = (ushort *)uVar8;
+    _Var48 = g_one.field0_0x0;
+  }
+  uVar19 = (ulonglong)*(byte *)(iStack00000014 + 0x18);
+  uVar9 = 0;
+  _Var32 = g_XYZx.field0_0x0;
+  for (uVar20 = uVar19; uVar20 != 0; uVar20 = uVar20 - 1) {
+    pbVar12 = local_1a0 + 1;
+    bVar1 = puStack0000001c[*local_1a0];
+    uVar25 = (uint)bVar1;
+    if (0xbf < uVar25) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x433,
+                      0,local_184);
+      uVar11 = (ulonglong)local_1a4;
+      uVar8 = ZEXT48(local_1a8);
+      _Var32 = g_XYZx.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    uVar3 = *(ushort *)uVar8;
+    uVar9 = uVar8 + 2;
+    local_1a8 = (ushort *)uVar9;
+    local_1a0 = pbVar12 + uVar3 + 1;
+    uVar8 = uVar9;
+    if (0xbf < uVar25) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                      ,0x42,0,"%s");
+      uVar11 = (ulonglong)local_1a4;
+      uVar8 = uVar9 & 0xffffffff;
+      _Var32 = g_XYZx.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+    }
+    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+        *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+      XAnim_GetTimeIndex<unsigned_char>
+                (&local_130,pbVar12,(uint)uVar3,(int *)&local_188,(float *)&local_180);
+      lVar26 = ZEXT48(local_188) + (ZEXT48(local_188) & 0x7fffffff) * 2 + (ulonglong)local_15c;
+      if (lVar26 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x43c,0,"%s");
+      }
+      _Var32 = g_XYZx.field0_0x0;
+      _Var48 = g_one.field0_0x0;
+      uVar11 = (ulonglong)local_1a4;
+      uVar8 = uVar9 & 0xffffffff;
+      auVar43 = ZEXT416(0);
+      auVar43 = auVar43 | auVar43 << 0x20 | auVar43 << 0x40 | auVar43 << 0x60;
+      auVar44 = loadVectorForShiftLeft(in_r0,lVar26);
+      auVar44 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar26 & 0xfffffff0),
+                                 *(undefined1 (*) [16])((uint)lVar26 + 7 & 0xfffffff0),auVar44);
+      uVar23 = (uint)(lVar26 + 3);
+      auVar37 = loadVectorForShiftLeft(in_r0,lVar26 + 3);
+      auVar44 = vectorMergeHighByte(auVar43,auVar44);
+      auVar38 = loadVectorLeftIndexed(uVar6 - 0x180);
+      auVar37 = vectorPermute128(*(undefined1 (*) [16])(uVar23 & 0xfffffff0),
+                                 *(undefined1 (*) [16])(uVar23 + 7 & 0xfffffff0),auVar37);
+      auVar46 = loadVectorLeftIndexed(uVar11);
+      auVar38 = vectorSplatWord(auVar38,0);
+      auVar40 = loadVectorRightIndexed(uVar11 + 0x10);
+      auVar42 = loadVectorRightIndexed(uVar11 + 0x1c);
+      auVar44 = vectorMergeHighHalfWord(auVar43,auVar44);
+      auVar41 = loadVectorLeftIndexed(uVar11 + 0xc);
+      auVar39 = vectorMergeHighByte(auVar43,auVar37);
+      auVar37 = vectorPermute128(auVar46 | auVar40,(undefined1  [16])g_one.field0_0x0,
+                                 (undefined1  [16])g_XYZx.field0_0x0);
+      auVar40 = vectorConvertFromUnsignedFixedPointWord128(auVar44,0);
+      auVar43 = vectorMergeHighHalfWord(auVar43,auVar39);
+      uVar25 = uVar25 * 0x20 + iStack00000034 + 0x10;
+      auVar44 = loadVectorLeftIndexed(uVar6 + 0x2c);
+      auVar43 = vectorConvertFromUnsignedFixedPointWord128(auVar43,0);
+      auVar44 = vectorSplatWord(auVar44,0);
+      auVar43 = vectorSubtractFloatingPoint128
+                          (auVar43 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                           auVar40 & (undefined1  [16])g_keepXYZ.field0_0x0);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar38,auVar43,auVar40 & (undefined1  [16])g_keepXYZ.field0_0x0);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          ((auVar41 | auVar42) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar43,
+                           auVar37);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar44,auVar43,*(undefined1 (*) [16])(uVar25 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar25 & 0xfffffff0) = auVar43;
+    }
+    uVar11 = uVar11 + 0x18;
+    local_1a4 = (uint)uVar11;
+    local_15c = (uVar3 + 1) * 3 + local_15c;
+    uVar9 = uVar19;
+  }
+  uVar19 = *(byte *)(iStack00000014 + 0x19) + uVar19;
+  if (uVar9 < uVar19) {
+    lVar21 = uVar19 - uVar9;
+    lVar26 = uVar8 - 2;
+    uVar9 = lVar21 + uVar9;
+    do {
+      pbVar12 = local_1a0 + 1;
+      bVar1 = puStack0000001c[*local_1a0];
+      uVar25 = (uint)bVar1;
+      if (0xbf < uVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x452,0,local_184);
+        uVar11 = (ulonglong)local_1a4;
+        _Var32 = g_XYZx.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+      }
+      lVar26 = lVar26 + 2;
+      uVar3 = *(ushort *)lVar26;
+      local_1a0 = pbVar12 + uVar3 + 1;
+      if (0xbf < uVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
+        uVar11 = (ulonglong)local_1a4;
+        _Var32 = g_XYZx.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        XAnim_GetTimeIndex<unsigned_char>
+                  (&local_130,pbVar12,(uint)uVar3,(int *)&local_188,(float *)&local_180);
+        lVar27 = (ZEXT48(local_188) + (ZEXT48(local_188) & 0x7fffffff) * 2 & 0x7fffffff) * 2 +
+                 (ulonglong)local_18c;
+        if (lVar27 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                          0x45b,0,"%s");
+        }
+        _Var32 = g_XYZx.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+        uVar11 = (ulonglong)local_1a4;
+        auVar44 = loadVectorRightIndexed(lVar27 + 8);
+        auVar40 = loadVectorLeftIndexed(lVar27);
+        auVar43 = ZEXT416(0);
+        auVar43 = auVar43 | auVar43 << 0x20 | auVar43 << 0x40 | auVar43 << 0x60;
+        auVar38 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
+        auVar39 = loadVectorLeftIndexed(uVar11);
+        auVar44 = loadVectorRightIndexed(lVar27 + 0xe);
+        auVar46 = loadVectorLeftIndexed(lVar27 + 6);
+        auVar42 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
+        auVar37 = loadVectorRightIndexed(uVar11 + 0x10);
+        auVar44 = loadVectorLeftIndexed(uVar6 - 0x180);
+        auVar41 = loadVectorLeftIndexed(uVar11 + 0xc);
+        auVar38 = vectorMergeHighHalfWord(auVar43,auVar40 | auVar38);
+        auVar40 = loadVectorRightIndexed(uVar11 + 0x1c);
+        auVar44 = vectorSplatWord(auVar44,0);
+        auVar37 = vectorPermute128(auVar39 | auVar37,(undefined1  [16])g_one.field0_0x0,
+                                   (undefined1  [16])g_XYZx.field0_0x0);
+        auVar39 = vectorConvertFromUnsignedFixedPointWord128(auVar38,0);
+        auVar43 = vectorMergeHighHalfWord(auVar43,auVar46 | auVar42);
+        uVar25 = uVar25 * 0x20 + iStack00000034 + 0x10;
+        auVar43 = vectorConvertFromUnsignedFixedPointWord128(auVar43,0);
+        auVar38 = loadVectorLeftIndexed(uVar6 + 0x2c);
+        auVar38 = vectorSplatWord(auVar38,0);
+        auVar43 = vectorSubtractFloatingPoint128
+                            (auVar43 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             auVar39 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            (auVar44,auVar43,auVar39 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            ((auVar41 | auVar40) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar43,
+                             auVar37);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            (auVar38,auVar43,*(undefined1 (*) [16])(uVar25 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar25 & 0xfffffff0) = auVar43;
+      }
+      uVar11 = uVar11 + 0x18;
       lVar21 = lVar21 + -1;
-      local_1a0 = local_1a0 + 1;
+      local_1a4 = (uint)uVar11;
+      local_18c = (uVar3 + 1) * 6 + local_18c;
     } while (lVar21 != 0);
+  }
+  uVar19 = *(byte *)(iStack00000014 + 0x1a) + uVar19;
+  if ((uVar9 & 0xffffffff) < uVar19) {
+    lVar26 = uVar19 - uVar9;
+    uVar9 = lVar26 + uVar9;
+    do {
+      bVar1 = puStack0000001c[*local_1a0];
+      uVar25 = (uint)bVar1;
+      if (0xbf < uVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x46a,0,local_184);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
+        uVar11 = (ulonglong)local_1a4;
+        _Var32 = g_XYZx.field0_0x0;
+        _Var48 = g_one.field0_0x0;
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(&g_bitShift + (uVar25 & 0x1f) * 4)) == 0) {
+        auVar37 = loadVectorLeftIndexed(uVar11);
+        auVar43 = loadVectorRightIndexed(uVar11 + 0x10);
+        uVar25 = uVar25 * 0x20 + iStack00000034 + 0x10;
+        auVar44 = loadVectorLeftIndexed(uVar6 + 0x2c);
+        auVar43 = vectorPermute128(auVar37 | auVar43,(undefined1  [16])_Var48,
+                                   (undefined1  [16])_Var32);
+        auVar44 = vectorSplatWord(auVar44,0);
+        auVar43 = vectorMultiplyAddFloatingPoint
+                            (auVar44,auVar43,*(undefined1 (*) [16])(uVar25 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar25 & 0xfffffff0) = auVar43;
+      }
+      uVar11 = uVar11 + 0xc;
+      lVar26 = lVar26 + -1;
+      local_1a0 = local_1a0 + 1;
+      local_1a4 = (uint)uVar11;
+    } while (lVar26 != 0);
+  }
+  uVar19 = *(byte *)(iStack00000014 + 0x1b) + uVar19;
+  if ((uVar9 & 0xffffffff) < uVar19) {
+    lVar26 = uVar19 - uVar9;
+    do {
+      bVar1 = puStack0000001c[*local_1a0];
+      uVar25 = (uint)bVar1;
+      if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x478,0,"%s");
+      }
+      if (0xbf < uVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(&g_bitShift + (uVar25 & 0x1f) * 4)) == 0) {
+        iVar7 = uVar25 * 0x20 + iStack00000034;
+        *(float *)(iVar7 + 0x1c) = (float)(dVar28 + (double)*(float *)(iVar7 + 0x1c));
+      }
+      lVar26 = lVar26 + -1;
+      local_1a0 = local_1a0 + 1;
+    } while (lVar26 != 0);
   }
   __restfpr_28();
   __restgprlr();
@@ -1651,895 +1901,1117 @@ void XAnimCalcParts<unsigned_char>
 /* WARNING: Removing unreachable block (ram,0x8262e388) */
 /* WARNING: Removing unreachable block (ram,0x8262df78) */
 /* WARNING: Removing unreachable block (ram,0x8262f550) */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void XAnimCalcParts<unsigned_short>
-               (undefined8 param_1,double param_2,undefined8 param_3,int param_4,undefined8 param_5,
-               undefined8 param_6,int param_7,int param_8)
+               (XAnimParts *param_1,uchar *param_2,float param_3,float param_4,DObjAnimMat *param_5,
+               bitarray<192> *param_6)
 
 {
   byte bVar1;
   byte bVar2;
   ushort uVar3;
-  bool bVar4;
+  int iVar4;
+  bool bVar5;
+  char *pcVar6;
+  __vector4 *p_Var7;
+  __vector4 *p_Var8;
+  __vector4 *p_Var9;
   undefined8 in_r0;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
-  byte *pbVar8;
-  ushort *puVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar14;
-  ulonglong uVar13;
-  uint uVar18;
-  longlong lVar15;
-  longlong lVar16;
-  longlong lVar17;
-  uint uVar19;
+  int iVar11;
+  float in_r7;
+  uchar *puVar12;
+  int in_r8;
+  uint_0_ *puVar13;
+  byte *pbVar14;
+  uint uVar15;
+  ushort *puVar16;
+  int iVar17;
+  char *pcVar18;
+  __vector4 *p_Var19;
+  char *pcVar21;
+  ulonglong uVar20;
+  ulonglong uVar22;
+  ulonglong uVar23;
+  uint uVar24;
+  ulonglong uVar25;
+  char *pcVar26;
+  __vector4 *p_Var27;
+  longlong lVar28;
+  uint6 *puVar30;
+  float fVar31;
+  longlong lVar29;
   double extraout_f1;
-  double dVar20;
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  float in_stack_0000002c;
-  int in_stack_00000034;
-  int in_stack_0000003c;
-  uint local_1b0;
+  double dVar32;
+  double dVar33;
+  double dVar34;
+  double dVar35;
+  __vector4_u_0 _Var36;
+  __vector4_u_0 _Var37;
+  __vector4_u_0 _Var38;
+  undefined1 auVar39 [16];
+  __vector4_u_0 _Var40;
+  __vector4_u_0 _Var41;
+  undefined1 auVar42 [16];
+  undefined1 auVar43 [16];
+  undefined1 auVar44 [16];
+  undefined1 auVar45 [16];
+  undefined1 auVar46 [16];
+  undefined1 auVar47 [16];
+  undefined1 auVar48 [16];
+  undefined1 auVar49 [16];
+  undefined1 auVar50 [16];
+  undefined1 auVar51 [16];
+  __vector4_u_0 _Var52;
+  int iStack00000014;
+  uchar *puStack0000001c;
+  undefined4 uStack0000002c;
+  undefined4 uStack00000034;
+  int iStack0000003c;
+  char *local_1b0;
+  char *local_1ac;
   ushort *local_1a8;
-  uint local_1a0;
+  __vector4 *local_1a4;
+  int local_1a0;
+  char *local_19c;
+  uint_0_ *local_198;
+  char *local_194;
+  char *local_190;
   uint local_18c;
   uint local_188;
   uint local_184;
-  undefined *local_180;
-  uint local_164;
+  __vector4 *local_180;
+  __vector4 *local_17c;
+  char *local_178;
+  XAnimTime local_170;
+  char *local_164;
   byte *local_160;
-  uint local_154;
-  uint local_14c;
+  char *local_15c;
+  float local_158;
+  float local_154;
+  __vector4 *local_150;
+  float local_14c;
+  __vector4 *local_148;
+  __vector4 *local_144;
+  longlong local_140;
+  __vector4 *local_138;
+  __vector4 *local_134;
+  float local_130;
+  float local_12c;
+  float local_128;
+  float local_124;
+  char *local_120;
   uint local_11c;
+  ulonglong local_118;
   undefined1 local_110 [16];
+  __vector4 *local_100;
+  float local_fc;
+  float local_f8;
+  float local_f0;
+  float local_ec;
+  float local_e8;
+  float local_e4;
+  __vector4 *local_e0;
+  __vector4 *local_dc;
+  __vector4 *local_d8;
+  float local_d4;
   undefined1 local_d0 [16];
+  longlong local_c0;
   
-  uVar5 = ZEXT48(&stack0x00000000);
+  dVar32 = (double)param_4;
+  uVar10 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  iVar6 = __savefpr_28();
-  in_stack_0000002c = (float)param_2;
-  dVar20 = extraout_f1;
-  in_stack_00000034 = param_7;
-  in_stack_0000003c = param_8;
-  if (*(short *)(iVar6 + 0xe) == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x305,0,0xffffffff82000f98,0xffffffff8218717c);
+  iVar11 = __savefpr_28();
+  uStack0000002c = (undefined4)dVar32;
+  local_19c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp";
+  local_1ac = "%s";
+  dVar34 = extraout_f1;
+  iStack00000014 = iVar11;
+  puStack0000001c = param_2;
+  uStack00000034 = in_r7;
+  iStack0000003c = in_r8;
+  if (*(short *)(iVar11 + 0xe) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x305,0,
+                    "%s");
   }
-  if (dVar20 < 0.0) {
-    MyAssertHandler(dVar20,0xffffffff82186f8c,0x306,0,0xffffffff82028794,0xffffffff82185f94,dVar20);
+  if (dVar34 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x306,0,
+                    "%s\n\t(time) = %g");
   }
-  if (1.0 <= dVar20) {
-    MyAssertHandler(dVar20,0xffffffff82186f8c,0x307,0,0xffffffff82028794,0xffffffff82185f84,dVar20);
+  dVar33 = 1.0;
+  if (1.0 <= dVar34) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x307,0,
+                    "%s\n\t(time) = %g");
   }
-  local_160 = *(byte **)(iVar6 + 0x34);
-  local_11c = *(uint *)(iVar6 + 0x44);
-  local_184 = *(uint *)(iVar6 + 0x40);
-  local_18c = *(uint *)(iVar6 + 0x48);
-  local_1a8 = *(ushort **)(iVar6 + 0x38);
-  local_1a0 = *(uint *)(iVar6 + 0x4c);
-  uVar19 = 0;
-  uVar14 = (uint)*(byte *)(iVar6 + 0x11);
-  local_188 = *(uint *)(iVar6 + 0x3c);
-  local_1b0 = 0;
-  if (uVar14 != 0) {
+  local_160 = *(byte **)(iVar11 + 0x34);
+  local_11c = *(uint *)(iVar11 + 0x44);
+  local_184 = *(uint *)(iVar11 + 0x40);
+  local_18c = *(uint *)(iVar11 + 0x48);
+  local_1a8 = *(ushort **)(iVar11 + 0x38);
+  local_1a0 = *(int *)(iVar11 + 0x4c);
+  pcVar21 = (char *)0x0;
+  pcVar26 = (char *)(uint)*(byte *)(iVar11 + 0x11);
+  local_170.time = (float)dVar34;
+  local_188 = *(uint *)(iVar11 + 0x3c);
+  dVar34 = (double)*(ushort *)(iVar11 + 0xe) * dVar34;
+  local_170.frameFrac = (float)dVar34;
+  local_1b0 = (char *)0x0;
+  local_190 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h";
+  local_194 = "pos < BIT_COUNT";
+  local_198 = &g_bitShift;
+  local_178 = "modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)";
+  local_170.frameIndex = (int)dVar34;
+  local_140 = (longlong)local_170.frameIndex;
+  pcVar18 = local_1b0;
+  if (pcVar26 != (char *)0x0) {
     do {
-      bVar1 = *(byte *)(uVar19 + param_4);
-      uVar18 = (uint)bVar1;
-      if (0xbf < uVar18) {
-        MyAssertHandler(0xffffffff82186f8c,0x321,0,0xffffffff821870d0,uVar18,0xc0);
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
-      }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + param_8) & (&DAT_82992400)[uVar18 & 0x1f]) == 0) {
-        iVar7 = (uint)bVar1 * 0x20 + param_7;
-        *(float *)(iVar7 + 0xc) = (float)((double)*(float *)(iVar7 + 0xc) + param_2);
-      }
-      uVar19 = uVar19 + 1;
-      local_1b0 = uVar19;
-    } while (uVar19 < uVar14);
-  }
-  uVar14 = *(byte *)(iVar6 + 0x12) + uVar14;
-  local_180 = &DAT_8404f7a0;
-  auVar32 = _DAT_8404f5c0;
-  auVar25 = _DAT_8404fa00;
-  auVar22 = _DAT_8404f7b0;
-  auVar26 = _DAT_8404f5e0;
-  auVar36 = _DAT_8217a050;
-  if (local_1b0 < uVar14) {
-    uVar10 = (ulonglong)local_1a0;
-    uVar19 = local_1b0;
-    do {
-      bVar1 = *(byte *)(uVar19 + param_4);
-      uVar12 = (ulonglong)bVar1;
-      if (0xbf < uVar12) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x33a,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar12,0xc0);
-        auVar32 = _DAT_8404f5c0;
-        auVar25 = _DAT_8404fa00;
-        auVar22 = _DAT_8404f7b0;
-        auVar26 = _DAT_8404f5e0;
-        auVar36 = _DAT_8217a050;
-      }
-      uVar3 = *local_1a8;
-      uVar13 = (ulonglong)uVar3;
-      puVar9 = local_1a8 + 1;
-      if (uVar3 < 0x40) {
-        lVar16 = uVar13 << 1;
-        local_1a8 = (ushort *)((int)puVar9 + (int)lVar16 + 2);
-        if (0xbf < uVar12) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f5c0;
-          auVar25 = _DAT_8404fa00;
-          auVar22 = _DAT_8404f7b0;
-          auVar26 = _DAT_8404f5e0;
-          auVar36 = _DAT_8217a050;
-        }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar12 & 0x1f) << 2))) == 0) {
-          XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,uVar13,uVar5 - 0x1b0,uVar5 - 0x15c);
-LAB_8262dd14:
-          bVar4 = true;
-          auVar32 = _DAT_8404f5c0;
-          auVar25 = _DAT_8404fa00;
-          auVar22 = _DAT_8404f7b0;
-          auVar26 = _DAT_8404f5e0;
-          auVar36 = _DAT_8217a050;
-        }
-        else {
-          bVar4 = false;
-        }
-      }
-      else {
-        iVar7 = (int)(uVar3 - 1) >> 8;
-        local_1a8 = puVar9 + iVar7 + 2;
-        if (0xbf < uVar12) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f5c0;
-          auVar25 = _DAT_8404fa00;
-          auVar22 = _DAT_8404f7b0;
-          auVar26 = _DAT_8404f5e0;
-          auVar36 = _DAT_8217a050;
-        }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar12 & 0x1f) << 2))) == 0) {
-          XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,iVar7 + 1,uVar5 - 0x164,uVar5 - 0x170);
-          uVar11 = (ulonglong)local_164;
-          uVar12 = uVar11 & 0xffffff;
-          local_164 = (int)uVar12 * 0x100;
-          lVar16 = uVar13 + uVar12 * -0x100;
-          if (0x100 < (int)lVar16) {
-            lVar16 = 0x100;
-          }
-          XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,(uVar11 & 0x7fffff) * 0x200 + uVar10,lVar16,uVar5 - 0x1b0,
-                     uVar5 - 0x15c);
-          lVar16 = uVar13 * 2;
-          uVar10 = lVar16 + uVar10 + 2;
-          local_1b0 = local_164 + local_1b0;
-          goto LAB_8262dd14;
-        }
-        lVar16 = uVar13 * 2;
-        bVar4 = false;
-        uVar10 = lVar16 + uVar10 + 2;
-      }
-      if (bVar4) {
-        lVar15 = ((ulonglong)local_1b0 & 0x7fffffff) * 2 + (ulonglong)local_184;
-        if (lVar15 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x343,0,&DAT_82000f98,"frame");
-          auVar32 = _DAT_8404f5c0;
-          auVar25 = _DAT_8404fa00;
-          auVar22 = _DAT_8404f7b0;
-          auVar26 = _DAT_8404f5e0;
-          auVar36 = _DAT_8217a050;
-        }
-        auVar35 = loadVectorLeftIndexed(lVar15);
-        auVar34 = loadVectorLeftIndexed(lVar15 + 2);
-        auVar33 = vectorSplatWord(auVar35,0);
-        auVar31 = vectorSplatWord(auVar34,0);
-        auVar30 = vectorShiftRightWord128(auVar33,_DAT_8404f920);
-        auVar29 = vectorShiftRightWord128(auVar31,_DAT_8404f920);
-        auVar28 = vectorShiftLeftWord128(auVar30,_DAT_8404f7c0);
-        auVar24 = loadVectorLeftIndexed(uVar5 - 0x15c);
-        auVar27 = vectorShiftLeftWord128(auVar29,_DAT_8404f7c0);
-        auVar33 = vectorAddUnsignedWordSaturate(auVar30 & _DAT_8404f620,auVar32);
-        auVar23 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        uVar18 = (uint)bVar1 * 0x20 + in_stack_00000034;
-        auVar31 = vectorAddUnsignedWordSaturate(auVar29 & _DAT_8404f620,auVar32);
-        auVar28 = vectorSubtractUnsignedWordSaturate(auVar33,auVar28 & _DAT_8404f750);
-        auVar21 = vectorSplatWord(auVar23,0);
-        auVar33 = vectorSubtractUnsignedWordSaturate(auVar31,auVar27 & _DAT_8404f750);
-        auVar23 = vectorSplatWord(auVar24,0);
-        auVar24 = vectorSplatWord(auVar35 & _DAT_8404f780,0);
-        auVar31 = vectorPermute128(auVar30 & _DAT_8404f7a0,auVar30 & _DAT_8404f7a0,auVar22);
-        auVar27 = vectorAddFloatingPoint128(auVar28 & _DAT_8404f9c0,_DAT_8217a560);
-        auVar28 = vectorAddFloatingPoint128(auVar33 & _DAT_8404f9c0,_DAT_8217a560);
-        auVar33 = vectorAddUnsignedWordSaturate(auVar26,auVar31);
-        auVar31 = vectorPermute128(auVar29 & _DAT_8404f7a0,auVar29 & _DAT_8404f7a0,auVar22);
-        auVar34 = vectorSplatWord(auVar34 & _DAT_8404f780,0);
-        auVar31 = vectorAddUnsignedWordSaturate(auVar26,auVar31);
-        auVar30 = vectorMultiplyFloatingPoint(auVar27,_DAT_8217a550);
-        auVar29 = vectorMultiplyFloatingPoint(auVar28,_DAT_8217a550);
-        auVar27 = vectorMultiplySum4FloatingPoint(auVar30,auVar30);
-        auVar28 = vectorMultiplySum4FloatingPoint(auVar29,auVar29);
-        auVar27 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar27);
-        auVar28 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar28);
-        auVar27 = vectorMultiplyFloatingPoint(auVar30,auVar27);
-        auVar28 = vectorMultiplyFloatingPoint(auVar29,auVar28);
-        auVar29 = vectorMultiplyFloatingPoint(auVar27,auVar24 | auVar36);
-        auVar27 = vectorMultiplyFloatingPoint(auVar28,auVar34 | auVar36);
-        auVar24 = vectorPermute128(auVar29,auVar29,auVar25);
-        auVar28 = vectorPermute128(auVar27,auVar27,auVar25);
-        auVar33 = vectorPermute128(auVar29,auVar24,auVar33);
-        auVar31 = vectorPermute128(auVar27,auVar28,auVar31);
-        auVar31 = vectorSubtractFloatingPoint128(auVar31,auVar33);
-        auVar31 = vectorMultiplyAddFloatingPoint(auVar23,auVar31,auVar33);
-        auVar31 = vectorMultiplyAddFloatingPoint
-                            (auVar21,auVar31,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar31;
-      }
-      uVar19 = uVar19 + 1;
-      local_184 = (int)lVar16 + local_184 + 2;
-    } while (uVar19 < uVar14);
-    local_1a0 = (uint)uVar10;
-    local_1b0 = uVar19;
-  }
-  uVar14 = *(byte *)(iVar6 + 0x13) + uVar14;
-  auVar31 = _DAT_8404f640;
-  for (uVar19 = local_1b0; uVar19 < uVar14; uVar19 = uVar19 + 1) {
-    bVar1 = *(byte *)(uVar19 + param_4);
-    if (0xbf < bVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x357,
-                      0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
-      auVar32 = _DAT_8404f5c0;
-      auVar22 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
-      auVar36 = _DAT_8217a050;
-    }
-    uVar3 = *local_1a8;
-    puVar9 = local_1a8 + 1;
-    if (uVar3 < 0x40) {
-      local_1a8 = puVar9 + uVar3 + 1;
+      bVar1 = param_2[(int)pcVar21];
       if (0xbf < bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x321,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)")
+        ;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        auVar32 = _DAT_8404f5c0;
-        auVar22 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
-        auVar36 = _DAT_8217a050;
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-          *(uint *)((int)&DAT_82992400 + (int)(((ulonglong)bVar1 & 0x1f) << 2))) == 0) {
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_r8) &
+          *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4)) == 0) {
+        iVar17 = (uint)bVar1 * 0x20 + (int)in_r7;
+        *(float *)(iVar17 + 0xc) = (float)((double)*(float *)(iVar17 + 0xc) + dVar32);
+      }
+      pcVar21 = pcVar21 + 1;
+      pcVar18 = pcVar21;
+    } while (pcVar21 < pcVar26);
+  }
+  local_1b0 = pcVar18;
+  bVar1 = *(byte *)(iVar11 + 0x12);
+  local_134 = &g_unpackSimpleQuatRotateAdd;
+  local_138 = &g_ZZZZ;
+  local_1a4 = &g_one;
+  local_100 = &g_unpackMulSimpleQuat;
+  local_d8 = &g_unpackAddSimpleQuat;
+  local_dc = &g_unpackAndSimpleQuat;
+  local_150 = &g_unpackSignBitSimpleQuat;
+  local_140 = CONCAT44(&g_packedMaskSimpleQuat,local_140._4_4_);
+  local_180 = &g_unpackSimpleQuatRotateMask;
+  local_148 = &g_unpackSignShiftQuat;
+  local_17c = &g_unpackShiftSimpleQuat;
+  local_144 = &g_unpackQuatSignBit;
+  local_120 = "frame";
+  _Var52 = g_one.field0_0x0;
+  _Var36 = g_packMantissa.field0_0x0;
+  _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+  _Var40 = g_unpackQuatRotateAdd.field0_0x0;
+  _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+  _Var37 = g_ZZZZ.field0_0x0;
+  p_Var27 = local_1a4;
+  pcVar21 = local_1ac;
+  puVar16 = local_1a8;
+  iVar11 = local_1a0;
+  for (pcVar18 = local_1b0; g_unpackQuatRotateAdd.field0_0x0 = _Var40, local_1ac = pcVar21,
+      local_1a8 = puVar16, local_1a4 = p_Var27, pcVar18 < pcVar26 + bVar1; pcVar18 = pcVar18 + 1) {
+    bVar2 = puStack0000001c[(int)pcVar18];
+    uVar24 = (uint)bVar2;
+    if (0xbf < uVar24) {
+      MyAssertHandler(local_19c,0x33a,0,local_178);
+      _Var36 = g_packMantissa.field0_0x0;
+      _Var37 = g_ZZZZ.field0_0x0;
+      _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+      _Var52 = g_one.field0_0x0;
+    }
+    uVar3 = *puVar16;
+    puVar16 = puVar16 + 1;
+    if (uVar3 < 0x40) {
+      iVar17 = (uint)uVar3 * 2;
+      local_1a8 = puVar16 + uVar3 + 1;
+      if (0xbf < uVar24) {
+        MyAssertHandler(local_190,0x42,0,local_1ac);
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var37 = g_ZZZZ.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+        _Var52 = g_one.field0_0x0;
+      }
+      if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(local_198 + (bVar2 & 0x1f) * 4)) == 0) {
         XAnim_GetTimeIndex<unsigned_short>
-                  (uVar5 - 0x170,puVar9,(ulonglong)uVar3,uVar5 - 0x1b0,uVar5 - 0x154);
-LAB_8262e184:
-        bVar4 = true;
-        auVar32 = _DAT_8404f5c0;
-        auVar22 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
-        auVar36 = _DAT_8217a050;
+                  (&local_170,puVar16,(uint)uVar3,(int *)&local_1b0,(float *)&local_15c);
+LAB_8262dd14:
+        bVar5 = true;
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var37 = g_ZZZZ.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+        _Var52 = g_one.field0_0x0;
       }
       else {
-        bVar4 = false;
+        bVar5 = false;
       }
     }
     else {
-      iVar7 = (int)(uVar3 - 1) >> 8;
-      local_1a8 = puVar9 + iVar7 + 2;
-      if (0xbf < bVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        auVar32 = _DAT_8404f5c0;
-        auVar22 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
-        auVar36 = _DAT_8217a050;
+      iVar17 = (int)(uVar3 - 1) >> 8;
+      local_1a8 = puVar16 + iVar17 + 2;
+      if (0xbf < uVar24) {
+        MyAssertHandler(local_190,0x42,0,local_1ac);
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var37 = g_ZZZZ.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+        _Var52 = g_one.field0_0x0;
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-          *(uint *)((int)&DAT_82992400 + (int)(((ulonglong)bVar1 & 0x1f) << 2))) == 0) {
+      if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(local_198 + (bVar2 & 0x1f) * 4)) == 0) {
         XAnim_GetTimeIndex<unsigned_short>
-                  (uVar5 - 0x170,puVar9,iVar7 + 1,uVar5 - 0x14c,uVar5 - 0x170);
-        uVar12 = (ulonglong)local_14c;
-        uVar10 = uVar12 & 0xffffff;
-        local_14c = (int)uVar10 * 0x100;
-        lVar16 = (ulonglong)uVar3 + uVar10 * -0x100;
-        if (0x100 < (int)lVar16) {
-          lVar16 = 0x100;
+                  (&local_170,puVar16,iVar17 + 1,(int *)&local_164,&local_170.time);
+        pcVar21 = (char *)((int)local_164 * 0x100);
+        iVar17 = (uint)uVar3 + ((uint)local_164 & 0xffffff) * -0x100;
+        if (0x100 < iVar17) {
+          iVar17 = 0x100;
         }
+        iVar4 = (int)local_164 * 0x200;
+        local_164 = pcVar21;
         XAnim_GetTimeIndex<unsigned_short>
-                  (uVar5 - 0x170,(uVar12 & 0x7fffff) * 0x200 + (ulonglong)local_1a0,lVar16,
-                   uVar5 - 0x1b0,uVar5 - 0x154);
-        local_1b0 = local_14c + local_1b0;
-        local_1a0 = (uVar3 + 1) * 2 + local_1a0;
-        goto LAB_8262e184;
+                  (&local_170,(ushort *)(iVar4 + iVar11),iVar17,(int *)&local_1b0,
+                   (float *)&local_15c);
+        iVar17 = (uint)uVar3 * 2;
+        iVar11 = iVar17 + iVar11 + 2;
+        local_1b0 = pcVar21 + (int)local_1b0;
+        goto LAB_8262dd14;
       }
-      bVar4 = false;
-      local_1a0 = (uVar3 + 1) * 2 + local_1a0;
+      iVar17 = (uint)uVar3 * 2;
+      bVar5 = false;
+      iVar11 = iVar17 + iVar11 + 2;
     }
-    if (bVar4) {
-      lVar16 = ((ulonglong)local_1b0 & 0x3fffffff) * 4 + (ulonglong)local_18c;
-      if (lVar16 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x360,0,&DAT_82000f98,"frame");
-        auVar32 = _DAT_8404f5c0;
-        auVar22 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
-        auVar36 = _DAT_8217a050;
+    if (bVar5) {
+      lVar28 = (ZEXT48(local_1b0) & 0x7fffffff) * 2 + (ulonglong)local_184;
+      if (lVar28 == 0) {
+        MyAssertHandler(local_19c,0x343,0,local_1ac);
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var37 = g_ZZZZ.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var41 = g_unpackSimpleQuatRotateAdd.field0_0x0;
+        _Var52 = g_one.field0_0x0;
       }
-      auVar24 = loadVectorLeftIndexed(lVar16);
-      auVar29 = loadVectorLeftIndexed(lVar16 + 4);
-      auVar26 = vectorSplatWord(auVar24,0);
-      auVar25 = vectorSplatWord(auVar29,0);
-      auVar21 = vectorShiftRightWord128(auVar26,_DAT_8404f940);
-      auVar23 = vectorShiftRightWord128(auVar25,_DAT_8404f940);
-      auVar28 = vectorShiftLeftWord128(auVar21,_DAT_8404f7c0);
-      auVar30 = vectorShiftLeftWord128(auVar23,_DAT_8404f7c0);
-      auVar27 = loadVectorLeftIndexed(uVar5 - 0x154);
-      auVar26 = vectorAddUnsignedWordSaturate(auVar21 & _DAT_8404f770,auVar32);
-      auVar25 = vectorAddUnsignedWordSaturate(auVar23 & _DAT_8404f770,auVar32);
-      auVar33 = loadVectorLeftIndexed(uVar5 + 0x2c);
-      uVar18 = (uint)bVar1 * 0x20 + in_stack_00000034;
-      auVar26 = vectorSubtractUnsignedWordSaturate(auVar26,auVar28 & _DAT_8404f6a0);
-      auVar28 = vectorSplatWord(auVar33,0);
-      auVar25 = vectorSubtractUnsignedWordSaturate(auVar25,auVar30 & _DAT_8404f6a0);
-      auVar33 = vectorSplatWord(auVar27,0);
-      auVar30 = vectorSplatWord(auVar24 & _DAT_8404f780,0);
-      auVar27 = vectorAddFloatingPoint128(auVar26 & _DAT_8404f630,_DAT_8217a500);
-      auVar24 = vectorAddFloatingPoint128(auVar25 & _DAT_8404f630,_DAT_8217a500);
-      auVar25 = vectorPermute128(auVar21 & _DAT_8404f6b0,auVar21 & _DAT_8404f6b0,auVar22);
-      auVar25 = vectorAddUnsignedWordSaturate(auVar31,auVar25);
-      auVar26 = vectorPermute128(auVar23 & _DAT_8404f6b0,auVar23 & _DAT_8404f6b0,auVar22);
-      auVar29 = vectorSplatWord(auVar29 & _DAT_8404f780,0);
-      auVar27 = vectorMultiplyFloatingPoint(auVar27,_DAT_8217a4f0);
-      auVar26 = vectorAddUnsignedWordSaturate(auVar31,auVar26);
-      auVar24 = vectorMultiplyFloatingPoint(auVar24,_DAT_8217a4f0);
-      auVar23 = vectorMultiplySum4FloatingPoint(auVar27,auVar27);
-      auVar21 = vectorMultiplySum4FloatingPoint(auVar24,auVar24);
-      auVar23 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar23);
-      auVar34 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar21);
-      auVar21 = vectorMultiplyFloatingPoint(auVar27,auVar23);
-      auVar23 = vectorMultiplyFloatingPoint(auVar24,auVar34);
-      auVar24 = vectorMultiplyFloatingPoint(auVar21,auVar30 | auVar36);
-      auVar21 = vectorMultiplyFloatingPoint(auVar23,auVar29 | auVar36);
-      auVar23 = vectorPermute128(auVar24,auVar24,auVar25);
-      auVar25 = vectorPermute128(auVar21,auVar21,auVar26);
-      auVar25 = vectorSubtractFloatingPoint128(auVar25,auVar23);
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar33,auVar25,auVar23);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar28,auVar25,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar25;
+      auVar51 = loadVectorLeftIndexed(lVar28);
+      auVar50 = loadVectorLeftIndexed(lVar28 + 2);
+      auVar49 = vectorSplatWord(auVar51,0);
+      auVar48 = vectorSplatWord(auVar50,0);
+      auVar47 = vectorShiftRightWord128
+                          (auVar49,*(undefined1 (*) [16])((uint)local_17c & 0xfffffff0));
+      auVar46 = vectorShiftRightWord128
+                          (auVar48,*(undefined1 (*) [16])((uint)local_17c & 0xfffffff0));
+      auVar45 = vectorShiftLeftWord128(auVar47,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0))
+      ;
+      auVar43 = loadVectorLeftIndexed(uVar10 - 0x15c);
+      auVar44 = vectorShiftLeftWord128(auVar46,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0))
+      ;
+      auVar49 = vectorAddUnsignedWordSaturate
+                          (auVar47 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                           (undefined1  [16])_Var36);
+      auVar42 = loadVectorLeftIndexed(uVar10 + 0x2c);
+      uVar24 = uVar24 * 0x20 + uStack00000034;
+      auVar48 = vectorAddUnsignedWordSaturate
+                          (auVar46 & (undefined1  [16])g_packedMaskSimpleQuat.field0_0x0,
+                           (undefined1  [16])_Var36);
+      auVar45 = vectorSubtractUnsignedWordSaturate
+                          (auVar49,auVar45 & (undefined1  [16])g_unpackSignBitSimpleQuat.field0_0x0)
+      ;
+      auVar39 = vectorSplatWord(auVar42,0);
+      auVar49 = vectorSubtractUnsignedWordSaturate
+                          (auVar48,auVar44 & (undefined1  [16])g_unpackSignBitSimpleQuat.field0_0x0)
+      ;
+      auVar42 = vectorSplatWord(auVar43,0);
+      auVar47 = auVar47 & *(undefined1 (*) [16])((uint)local_180 & 0xfffffff0);
+      auVar43 = vectorSplatWord(auVar51 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+      auVar48 = vectorPermute128(auVar47,auVar47,(undefined1  [16])_Var38);
+      auVar44 = vectorAddFloatingPoint128
+                          (auVar45 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+      auVar46 = auVar46 & *(undefined1 (*) [16])((uint)local_180 & 0xfffffff0);
+      auVar45 = vectorAddFloatingPoint128
+                          (auVar49 & (undefined1  [16])g_unpackAndSimpleQuat.field0_0x0,
+                           (undefined1  [16])g_unpackAddSimpleQuat.field0_0x0);
+      auVar49 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var41,auVar48);
+      auVar48 = vectorPermute128(auVar46,auVar46,(undefined1  [16])_Var38);
+      auVar50 = vectorSplatWord(auVar50 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+      auVar48 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var41,auVar48);
+      auVar47 = vectorMultiplyFloatingPoint
+                          (auVar44,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+      auVar46 = vectorMultiplyFloatingPoint
+                          (auVar45,(undefined1  [16])g_unpackMulSimpleQuat.field0_0x0);
+      auVar44 = vectorMultiplySum4FloatingPoint(auVar47,auVar47);
+      auVar45 = vectorMultiplySum4FloatingPoint(auVar46,auVar46);
+      auVar44 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar44);
+      auVar45 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar45);
+      auVar44 = vectorMultiplyFloatingPoint(auVar47,auVar44);
+      auVar45 = vectorMultiplyFloatingPoint(auVar46,auVar45);
+      auVar46 = vectorMultiplyFloatingPoint(auVar44,auVar43 | (undefined1  [16])_Var52);
+      auVar44 = vectorMultiplyFloatingPoint(auVar45,auVar50 | (undefined1  [16])_Var52);
+      auVar43 = vectorPermute128(auVar46,auVar46,(undefined1  [16])_Var37);
+      auVar45 = vectorPermute128(auVar44,auVar44,(undefined1  [16])_Var37);
+      auVar49 = vectorPermute128(auVar46,auVar43,auVar49);
+      auVar48 = vectorPermute128(auVar44,auVar45,auVar48);
+      auVar48 = vectorSubtractFloatingPoint128(auVar48,auVar49);
+      auVar48 = vectorMultiplyAddFloatingPoint(auVar42,auVar48,auVar49);
+      auVar48 = vectorMultiplyAddFloatingPoint
+                          (auVar39,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
     }
-    local_18c = (uVar3 + 1) * 4 + local_18c;
-    auVar25 = _DAT_8404fa00;
-    auVar26 = _DAT_8404f5e0;
+    local_184 = iVar17 + local_184 + 2;
+    _Var40 = g_unpackQuatRotateAdd.field0_0x0;
+    p_Var27 = local_1a4;
+    pcVar21 = local_1ac;
+    puVar16 = local_1a8;
   }
-  uVar14 = *(byte *)(iVar6 + 0x14) + uVar14;
-  local_1b0 = uVar19;
-  if (uVar19 < uVar14) {
-    uVar10 = (ulonglong)local_18c;
+  p_Var19 = &g_unpackShiftQuat;
+  pcVar26 = pcVar26 + bVar1 + *(byte *)(iStack00000014 + 0x13);
+  local_e0 = &g_unpackShiftQuat;
+  local_15c = "modelPartIndex < DOBJ_MAX_PARTS";
+  local_164 = "modelPartIndex >= 0";
+  local_1b0 = pcVar18;
+  local_1a0 = iVar11;
+  if (pcVar18 < pcVar26) {
     do {
-      bVar1 = *(byte *)(local_1b0 + param_4);
+      bVar1 = puStack0000001c[(int)pcVar18];
       if (0xbf < bVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x375,0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
+        MyAssertHandler(local_19c,0x357,0,pcVar21);
+        _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var40 = g_unpackQuatRotateAdd.field0_0x0;
       }
       uVar3 = *local_1a8;
-      puVar9 = local_1a8 + 1;
+      puVar16 = local_1a8 + 1;
       if (uVar3 < 0x40) {
-        local_1a8 = puVar9 + uVar3 + 1;
+        local_1a8 = puVar16 + uVar3 + 1;
         if (0xbf < bVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+          MyAssertHandler(local_190,0x42,0,pcVar21);
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          _Var36 = g_packMantissa.field0_0x0;
+          _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+          _Var40 = g_unpackQuatRotateAdd.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)(((ulonglong)bVar1 & 0x1f) << 2))) == 0) {
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,(ulonglong)uVar3,uVar5 - 0x18c,uVar5 - 0x14c);
-          uVar10 = (ulonglong)local_18c;
-LAB_8262e544:
-          bVar4 = true;
+                    (&local_170,puVar16,(uint)uVar3,(int *)&local_1b0,&local_154);
+LAB_8262e184:
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          bVar5 = true;
+          _Var36 = g_packMantissa.field0_0x0;
+          _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+          _Var40 = g_unpackQuatRotateAdd.field0_0x0;
         }
         else {
-          bVar4 = false;
+          bVar5 = false;
         }
       }
       else {
-        iVar7 = (int)(uVar3 - 1) >> 8;
-        local_1a8 = puVar9 + iVar7 + 2;
+        iVar11 = (int)(uVar3 - 1) >> 8;
+        local_1a8 = puVar16 + iVar11 + 2;
         if (0xbf < bVar1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+          _Var36 = g_packMantissa.field0_0x0;
+          _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+          _Var40 = g_unpackQuatRotateAdd.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)(((ulonglong)bVar1 & 0x1f) << 2))) == 0) {
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,iVar7 + 1,uVar5 - 0x154,uVar5 - 0x170);
-          uVar12 = (ulonglong)local_154;
-          uVar10 = uVar12 & 0xffffff;
-          lVar15 = uVar10 * 0x100;
-          lVar16 = (ulonglong)uVar3 + uVar10 * -0x100;
-          local_154 = (uint)lVar15;
-          if (0x100 < (int)lVar16) {
-            lVar16 = 0x100;
+                    (&local_170,puVar16,iVar11 + 1,(int *)&local_14c,&local_170.time);
+          iVar11 = local_1a0;
+          fVar31 = (float)((int)local_14c * 0x100);
+          iVar17 = (uint)uVar3 + ((uint)local_14c & 0xffffff) * -0x100;
+          if (0x100 < iVar17) {
+            iVar17 = 0x100;
+          }
+          iVar4 = (int)local_14c * 0x200;
+          local_14c = fVar31;
+          XAnim_GetTimeIndex<unsigned_short>
+                    (&local_170,(ushort *)(iVar4 + local_1a0),iVar17,(int *)&local_1b0,&local_154);
+          local_1b0 = local_1b0 + (int)fVar31;
+          local_1a0 = (uVar3 + 1) * 2 + iVar11;
+          pcVar21 = local_1ac;
+          p_Var27 = local_1a4;
+          goto LAB_8262e184;
+        }
+        bVar5 = false;
+        local_1a0 = (uVar3 + 1) * 2 + local_1a0;
+        pcVar21 = local_1ac;
+        p_Var27 = local_1a4;
+      }
+      if (bVar5) {
+        lVar28 = (ZEXT48(local_1b0) & 0x3fffffff) * 4 + (ulonglong)local_18c;
+        if (lVar28 == 0) {
+          MyAssertHandler(local_19c,0x360,0,pcVar21);
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          _Var36 = g_packMantissa.field0_0x0;
+          _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+          _Var40 = g_unpackQuatRotateAdd.field0_0x0;
+        }
+        auVar44 = loadVectorLeftIndexed(lVar28);
+        auVar47 = loadVectorLeftIndexed(lVar28 + 4);
+        auVar49 = vectorSplatWord(auVar44,0);
+        auVar48 = vectorSplatWord(auVar47,0);
+        auVar43 = vectorShiftRightWord128(auVar49,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+        auVar39 = vectorShiftRightWord128(auVar48,(undefined1  [16])g_unpackShiftQuat.field0_0x0);
+        auVar42 = vectorShiftLeftWord128
+                            (auVar43,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0));
+        auVar50 = vectorShiftLeftWord128
+                            (auVar39,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0));
+        auVar46 = loadVectorLeftIndexed(uVar10 - 0x154);
+        auVar49 = vectorAddUnsignedWordSaturate
+                            (auVar43 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                             (undefined1  [16])_Var36);
+        auVar48 = vectorAddUnsignedWordSaturate
+                            (auVar39 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                             (undefined1  [16])_Var36);
+        auVar45 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        uVar24 = (uint)bVar1 * 0x20 + uStack00000034;
+        auVar49 = vectorSubtractUnsignedWordSaturate
+                            (auVar49,auVar42 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+        auVar42 = vectorSplatWord(auVar45,0);
+        auVar48 = vectorSubtractUnsignedWordSaturate
+                            (auVar48,auVar50 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+        auVar45 = vectorSplatWord(auVar46,0);
+        auVar50 = vectorSplatWord(auVar44 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+        auVar46 = vectorAddFloatingPoint128
+                            (auVar49 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddQuat.field0_0x0);
+        auVar44 = vectorAddFloatingPoint128
+                            (auVar48 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddQuat.field0_0x0);
+        auVar48 = vectorPermute128(auVar43 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   auVar43 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])_Var38);
+        auVar48 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var40,auVar48);
+        auVar49 = vectorPermute128(auVar39 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   auVar39 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])_Var38);
+        auVar47 = vectorSplatWord(auVar47 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+        auVar46 = vectorMultiplyFloatingPoint(auVar46,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+        auVar49 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var40,auVar49);
+        auVar44 = vectorMultiplyFloatingPoint(auVar44,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+        auVar39 = vectorMultiplySum4FloatingPoint(auVar46,auVar46);
+        auVar43 = vectorMultiplySum4FloatingPoint(auVar44,auVar44);
+        auVar39 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar39);
+        auVar51 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar43);
+        auVar43 = vectorMultiplyFloatingPoint(auVar46,auVar39);
+        auVar39 = vectorMultiplyFloatingPoint(auVar44,auVar51);
+        auVar44 = vectorMultiplyFloatingPoint(auVar43,auVar50 | (undefined1  [16])_Var52);
+        auVar43 = vectorMultiplyFloatingPoint(auVar39,auVar47 | (undefined1  [16])_Var52);
+        auVar39 = vectorPermute128(auVar44,auVar44,auVar48);
+        auVar48 = vectorPermute128(auVar43,auVar43,auVar49);
+        auVar48 = vectorSubtractFloatingPoint128(auVar48,auVar39);
+        auVar48 = vectorMultiplyAddFloatingPoint(auVar45,auVar48,auVar39);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar42,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
+      }
+      pcVar18 = pcVar18 + 1;
+      local_18c = (uVar3 + 1) * 4 + local_18c;
+    } while (pcVar18 < pcVar26);
+    _Var37 = *(__vector4_u_0 *)((uint)local_138 & 0xfffffff0);
+    _Var41 = *(__vector4_u_0 *)((uint)local_134 & 0xfffffff0);
+    local_1b0 = pcVar18;
+  }
+  pcVar26 = pcVar26 + *(byte *)(iStack00000014 + 0x14);
+  dVar34 = 256.015625;
+  dVar35 = 3.0;
+  if (local_1b0 < pcVar26) {
+    uVar22 = (ulonglong)local_18c;
+    do {
+      pcVar18 = local_1b0;
+      bVar1 = puStack0000001c[(int)local_1b0];
+      if (0xbf < bVar1) {
+        MyAssertHandler(local_19c,0x375,0,local_1ac);
+      }
+      uVar3 = *local_1a8;
+      puVar16 = local_1a8 + 1;
+      if (uVar3 < 0x40) {
+        local_1a8 = puVar16 + uVar3 + 1;
+        if (0xbf < bVar1) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+        }
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
+          XAnim_GetTimeIndex<unsigned_short>
+                    (&local_170,puVar16,(uint)uVar3,(int *)&local_18c,&local_14c);
+          uVar22 = (ulonglong)local_18c;
+LAB_8262e544:
+          bVar5 = true;
+        }
+        else {
+          bVar5 = false;
+        }
+      }
+      else {
+        iVar11 = (int)(uVar3 - 1) >> 8;
+        local_1a8 = puVar16 + iVar11 + 2;
+        if (0xbf < bVar1) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+        }
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
+          XAnim_GetTimeIndex<unsigned_short>
+                    (&local_170,puVar16,iVar11 + 1,(int *)&local_154,&local_170.time);
+          iVar11 = local_1a0;
+          uVar22 = (ulonglong)(uint)local_154;
+          lVar28 = (uVar22 & 0xffffff) * 0x100;
+          local_154 = (float)lVar28;
+          iVar17 = (uint)uVar3 - (int)local_154;
+          if (0x100 < iVar17) {
+            iVar17 = 0x100;
           }
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,(uVar12 & 0x7fffff) * 0x200 + (ulonglong)local_1a0,lVar16,
-                     uVar5 - 0x18c,uVar5 - 0x14c);
-          uVar10 = lVar15 + (ulonglong)local_18c;
-          local_1a0 = (uVar3 + 1) * 2 + local_1a0;
-          local_18c = (uint)uVar10;
+                    (&local_170,(ushort *)((int)((uVar22 & 0xffffff) << 9) + local_1a0),iVar17,
+                     (int *)&local_18c,&local_14c);
+          uVar22 = lVar28 + (ulonglong)local_18c;
+          local_1a0 = (uVar3 + 1) * 2 + iVar11;
+          local_18c = (uint)uVar22;
           goto LAB_8262e544;
         }
-        bVar4 = false;
+        bVar5 = false;
         local_1a0 = (uVar3 + 1) * 2 + local_1a0;
       }
-      if (bVar4) {
-        if ((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + (ulonglong)local_184 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x37e,0,&DAT_82000f98,"frame");
+      if (bVar5) {
+        lVar28 = (uVar22 + (uVar22 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + (ulonglong)local_184;
+        if (lVar28 == 0) {
+          MyAssertHandler(local_19c,0x37e,0,local_1ac);
         }
-        auVar32 = loadVectorLeftIndexed(uVar5 - 0x14c);
-        auVar32 = vectorSplatWord(auVar32,0);
-        auVar25 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        auVar22 = vectorSplatWord(auVar25,0);
-        uVar19 = (uint)bVar1 * 0x20 + in_stack_00000034;
-        auVar25 = vectorSubtractFloatingPoint128(local_110,local_d0);
-        auVar32 = vectorMultiplyAddFloatingPoint(auVar32,auVar25,local_d0);
-        auVar32 = vectorMultiplyAddFloatingPoint
-                            (auVar22,auVar32,*(undefined1 (*) [16])(uVar19 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar32;
+        puVar30 = (uint6 *)lVar28;
+        uVar24 = *(uint *)((int)puVar30 + 6);
+        uVar15 = *(uint *)puVar30 >> 0xe;
+        uVar25 = (ulonglong)(*puVar30 >> 0xf) & 0x7fff;
+        local_fc = (float)(((int)uVar25 - ((uint)(uVar25 << 1) & 0x8000)) + 0x40400000);
+        local_f8 = (float)((uVar15 & 0x7fff) + (uVar15 & 0x4000) * -2 + 0x40400000);
+        local_d4 = (float)((*(ushort *)((int)puVar30 + 10) & 0x7fff) +
+                           (*(ushort *)((int)puVar30 + 10) & 0x4000) * -2 + 0x40400000);
+        local_c0 = (longlong)(int)(1 - (*(uint *)puVar30 >> 0x1e & 2));
+        local_130 = (float)((double)(float)((double)local_d4 - dVar35) * dVar34);
+        uVar25 = (ulonglong)(*(uint6 *)((int)puVar30 + 6) >> 0xf) & 0x7fff;
+        local_ec = (float)((double)(float)((double)local_fc - dVar35) * dVar34);
+        local_e8 = (float)((double)(float)((double)local_f8 - dVar35) * dVar34);
+        local_f0 = (float)((double)(float)((double)(float)(((ushort)*puVar30 & 0x7fff) +
+                                                           ((ushort)*puVar30 & 0x4000) * -2 +
+                                                          0x40400000) - dVar35) * dVar34);
+        local_e4 = (float)local_c0 /
+                   SQRT((float)((double)(local_f0 * local_f0 +
+                                        local_e8 * local_e8 + local_ec * local_ec) + dVar33));
+        local_e8 = local_e4 * local_e8;
+        local_f0 = local_e4 * local_f0;
+        local_ec = local_e4 * local_ec;
+        uVar15 = uVar24 >> 0xe;
+        local_158 = (float)((uVar15 & 0x7fff) + (uVar15 & 0x4000) * -2 + 0x40400000);
+        auVar48 = loadVectorLeftIndexed(uVar10 - 0x14c);
+        local_12c = (float)((double)(float)((double)(float)(((int)uVar25 -
+                                                            ((uint)(uVar25 << 1) & 0x8000)) +
+                                                           0x40400000) - dVar35) * dVar34);
+        local_128 = (float)((double)(float)((double)local_158 - dVar35) * dVar34);
+        local_118 = (ulonglong)(int)(1 - (uVar24 >> 0x1e & 2));
+        auVar48 = vectorSplatWord(auVar48,0);
+        auVar49 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        auVar45 = vectorSplatWord(auVar49,0);
+        uVar24 = (uint)bVar1 * 0x20 + uStack00000034;
+        local_124 = (float)(longlong)local_118 /
+                    SQRT((float)((double)(local_130 * local_130 +
+                                         local_128 * local_128 + local_12c * local_12c) + dVar33));
+        local_12c = local_124 * local_12c;
+        local_128 = local_124 * local_128;
+        local_130 = local_124 * local_130;
+        auVar49 = vectorSubtractFloatingPoint128(local_110,local_d0);
+        auVar48 = vectorMultiplyAddFloatingPoint(auVar48,auVar49,local_d0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar45,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
+        pcVar18 = local_1b0;
+        p_Var19 = local_e0;
       }
-      local_1b0 = local_1b0 + 1;
+      local_1b0 = pcVar18 + 1;
       local_184 = (uVar3 + 1) * 6 + local_184;
-      auVar32 = _DAT_8404f5c0;
-      auVar25 = _DAT_8404fa00;
-      auVar22 = _DAT_8404f7b0;
-      auVar31 = _DAT_8404f640;
-      auVar26 = _DAT_8404f5e0;
-      auVar36 = _DAT_8217a050;
-    } while (local_1b0 < uVar14);
+    } while (local_1b0 < pcVar26);
+    _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+    _Var37 = *(__vector4_u_0 *)((uint)local_138 & 0xfffffff0);
+    _Var41 = *(__vector4_u_0 *)((uint)local_134 & 0xfffffff0);
+    _Var36 = g_packMantissa.field0_0x0;
+    _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+    _Var40 = g_unpackQuatRotateAdd.field0_0x0;
   }
-  uVar10 = ZEXT48(local_1a8);
-  uVar14 = *(byte *)(iVar6 + 0x15) + uVar14;
-  iVar7 = in_stack_0000003c;
-  for (uVar19 = local_1b0; uVar19 < uVar14; uVar19 = uVar19 + 1) {
-    bVar1 = *(byte *)(uVar19 + param_4);
-    uVar18 = (uint)bVar1;
-    if (0xbf < uVar18) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x38e,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar18,
-                      0xc0);
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar10 = ZEXT48(local_1a8);
-      auVar32 = _DAT_8404f5c0;
-      auVar25 = _DAT_8404fa00;
-      auVar22 = _DAT_8404f7b0;
-      auVar26 = _DAT_8404f5e0;
-      auVar36 = _DAT_8217a050;
-      iVar7 = in_stack_0000003c;
+  p_Var9 = local_d8;
+  p_Var8 = local_dc;
+  p_Var7 = local_100;
+  p_Var27 = local_150;
+  uVar22 = ZEXT48(local_1a8);
+  bVar1 = *(byte *)(iStack00000014 + 0x15);
+  iVar11 = iStack00000014;
+  puVar12 = puStack0000001c;
+  iVar17 = iStack0000003c;
+  puVar13 = local_198;
+  for (pcVar18 = local_1b0; pcVar18 < pcVar26 + bVar1; pcVar18 = pcVar18 + 1) {
+    bVar2 = puVar12[(int)pcVar18];
+    if (0xbf < bVar2) {
+      MyAssertHandler(local_19c,0x38e,0,local_178);
+      MyAssertHandler(local_190,0x42,0,local_1ac);
+      uVar22 = ZEXT48(local_1a8);
+      _Var41 = *(__vector4_u_0 *)((uint)local_134 & 0xfffffff0);
+      _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+      _Var37 = *(__vector4_u_0 *)((uint)local_138 & 0xfffffff0);
+      _Var36 = g_packMantissa.field0_0x0;
+      _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+      iVar17 = iStack0000003c;
+      iVar11 = iStack00000014;
+      puVar12 = puStack0000001c;
+      puVar13 = local_198;
     }
-    if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iVar7) & (&DAT_82992400)[uVar18 & 0x1f]) == 0) {
-      auVar23 = loadVectorLeftIndexed(uVar10);
-      auVar31 = vectorSplatWord(auVar23,0);
-      auVar28 = vectorShiftRightWord128(auVar31,_DAT_8404f920);
-      auVar33 = vectorShiftLeftWord128(auVar28,_DAT_8404f7c0);
-      uVar18 = uVar18 * 0x20 + in_stack_00000034;
-      auVar31 = vectorAddUnsignedWordSaturate(auVar28 & _DAT_8404f620,auVar32);
-      auVar21 = vectorSplatWord(auVar23 & _DAT_8404f780,0);
-      auVar33 = vectorSubtractUnsignedWordSaturate(auVar31,auVar33 & _DAT_8404f750);
-      auVar31 = vectorPermute128(auVar28 & _DAT_8404f7a0,auVar28 & _DAT_8404f7a0,auVar22);
-      auVar31 = vectorAddUnsignedWordSaturate(auVar26,auVar31);
-      auVar33 = vectorAddFloatingPoint128(auVar33 & _DAT_8404f9c0,_DAT_8217a560);
-      auVar23 = vectorMultiplyFloatingPoint(auVar33,_DAT_8217a550);
-      auVar33 = loadVectorLeftIndexed(ZEXT48(&stack0x0000002c));
-      auVar33 = vectorSplatWord(auVar33,0);
-      auVar28 = vectorMultiplySum4FloatingPoint(auVar23,auVar23);
-      auVar28 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar28);
-      auVar28 = vectorMultiplyFloatingPoint(auVar23,auVar28);
-      auVar23 = vectorMultiplyFloatingPoint(auVar28,auVar21 | auVar36);
-      auVar28 = vectorPermute128(auVar23,auVar23,auVar25);
-      auVar31 = vectorPermute128(auVar23,auVar28,auVar31);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar33,auVar31,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar31;
+    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iVar17) & *(uint *)(puVar13 + (bVar2 & 0x1f) * 4)) ==
+        0) {
+      auVar42 = loadVectorLeftIndexed(uVar22);
+      auVar48 = vectorSplatWord(auVar42,0);
+      local_150 = (__vector4 *)&stack0x0000002c;
+      auVar45 = vectorShiftRightWord128
+                          (auVar48,*(undefined1 (*) [16])((uint)local_17c & 0xfffffff0));
+      auVar49 = vectorShiftLeftWord128(auVar45,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0))
+      ;
+      uVar24 = (uint)bVar2 * 0x20 + uStack00000034;
+      auVar48 = vectorAddUnsignedWordSaturate
+                          (auVar45 & *(undefined1 (*) [16])(local_140._0_4_ & 0xfffffff0),
+                           (undefined1  [16])_Var36);
+      auVar39 = vectorSplatWord(auVar42 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+      auVar45 = auVar45 & *(undefined1 (*) [16])((uint)local_180 & 0xfffffff0);
+      auVar49 = vectorSubtractUnsignedWordSaturate
+                          (auVar48,auVar49 & *(undefined1 (*) [16])((uint)p_Var27 & 0xfffffff0));
+      auVar48 = vectorPermute128(auVar45,auVar45,(undefined1  [16])_Var38);
+      auVar48 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var41,auVar48);
+      auVar49 = vectorAddFloatingPoint128
+                          (auVar49 & *(undefined1 (*) [16])((uint)p_Var8 & 0xfffffff0),
+                           *(undefined1 (*) [16])((uint)p_Var9 & 0xfffffff0));
+      auVar42 = vectorMultiplyFloatingPoint
+                          (auVar49,*(undefined1 (*) [16])((uint)p_Var7 & 0xfffffff0));
+      auVar49 = loadVectorLeftIndexed(ZEXT48(local_150));
+      auVar49 = vectorSplatWord(auVar49,0);
+      auVar45 = vectorMultiplySum4FloatingPoint(auVar42,auVar42);
+      auVar45 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar45);
+      auVar45 = vectorMultiplyFloatingPoint(auVar42,auVar45);
+      auVar42 = vectorMultiplyFloatingPoint(auVar45,auVar39 | (undefined1  [16])_Var52);
+      auVar45 = vectorPermute128(auVar42,auVar42,(undefined1  [16])_Var37);
+      auVar48 = vectorPermute128(auVar42,auVar45,auVar48);
+      auVar48 = vectorMultiplyAddFloatingPoint
+                          (auVar49,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+      *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
+      local_118 = uVar22;
     }
-    uVar10 = uVar10 + 2;
-    local_1a8 = (ushort *)uVar10;
-    auVar31 = _DAT_8404f640;
+    uVar22 = uVar22 + 2;
+    local_1a8 = (ushort *)uVar22;
+    _Var40 = g_unpackQuatRotateAdd.field0_0x0;
   }
-  uVar14 = *(byte *)(iVar6 + 0x16) + uVar14;
-  if (uVar19 < uVar14) {
-    uVar12 = (ulonglong)local_188;
+  pcVar21 = pcVar26 + bVar1 + *(byte *)(iVar11 + 0x16);
+  if (pcVar18 < pcVar21) {
+    uVar25 = (ulonglong)local_188;
     do {
-      bVar1 = *(byte *)(uVar19 + param_4);
-      uVar18 = (uint)bVar1;
-      if (0xbf < uVar18) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x39e,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar18,0xc0);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        uVar10 = ZEXT48(local_1a8);
-        auVar32 = _DAT_8404f5c0;
-        auVar22 = _DAT_8404f7b0;
-        auVar31 = _DAT_8404f640;
-        auVar36 = _DAT_8217a050;
-        iVar7 = in_stack_0000003c;
+      bVar1 = puVar12[(int)pcVar18];
+      if (0xbf < bVar1) {
+        MyAssertHandler(local_19c,0x39e,0,local_178);
+        MyAssertHandler(local_190,0x42,0,local_1ac);
+        uVar22 = ZEXT48(local_1a8);
+        _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+        _Var36 = g_packMantissa.field0_0x0;
+        _Var38 = g_PPPPPPPPPPPPPPPP.field0_0x0;
+        _Var40 = g_unpackQuatRotateAdd.field0_0x0;
+        iVar17 = iStack0000003c;
+        iVar11 = iStack00000014;
+        puVar12 = puStack0000001c;
+        puVar13 = local_198;
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iVar7) & (&DAT_82992400)[uVar18 & 0x1f]) == 0) {
-        auVar26 = loadVectorLeftIndexed(uVar12);
-        auVar25 = vectorSplatWord(auVar26,0);
-        auVar21 = vectorShiftRightWord128(auVar25,_DAT_8404f940);
-        uVar18 = uVar18 * 0x20 + in_stack_00000034;
-        auVar25 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        auVar28 = vectorShiftLeftWord128(auVar21,_DAT_8404f7c0);
-        auVar33 = vectorSplatWord(auVar25,0);
-        auVar23 = vectorSplatWord(auVar26 & _DAT_8404f780,0);
-        auVar26 = vectorAddUnsignedWordSaturate(auVar21 & _DAT_8404f770,auVar32);
-        auVar25 = vectorPermute128(auVar21 & _DAT_8404f6b0,auVar21 & _DAT_8404f6b0,auVar22);
-        auVar26 = vectorSubtractUnsignedWordSaturate(auVar26,auVar28 & _DAT_8404f6a0);
-        auVar25 = vectorAddUnsignedWordSaturate(auVar31,auVar25);
-        auVar26 = vectorAddFloatingPoint128(auVar26 & _DAT_8404f630,_DAT_8217a500);
-        auVar28 = vectorMultiplyFloatingPoint(auVar26,_DAT_8217a4f0);
-        auVar26 = vectorMultiplySum4FloatingPoint(auVar28,auVar28);
-        auVar26 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar26);
-        auVar26 = vectorMultiplyFloatingPoint(auVar28,auVar26);
-        auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar23 | auVar36);
-        auVar25 = vectorPermute128(auVar26,auVar26,auVar25);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            (auVar33,auVar25,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar25;
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iVar17) & *(uint *)(puVar13 + (bVar1 & 0x1f) * 4))
+          == 0) {
+        auVar49 = loadVectorLeftIndexed(uVar25);
+        auVar48 = vectorSplatWord(auVar49,0);
+        auVar43 = vectorShiftRightWord128
+                            (auVar48,*(undefined1 (*) [16])((uint)p_Var19 & 0xfffffff0));
+        uVar24 = (uint)bVar1 * 0x20 + uStack00000034;
+        auVar48 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        auVar42 = vectorShiftLeftWord128
+                            (auVar43,*(undefined1 (*) [16])((uint)local_148 & 0xfffffff0));
+        auVar45 = vectorSplatWord(auVar48,0);
+        auVar39 = vectorSplatWord(auVar49 & *(undefined1 (*) [16])((uint)local_144 & 0xfffffff0),0);
+        auVar49 = vectorAddUnsignedWordSaturate
+                            (auVar43 & (undefined1  [16])g_packedMaskQuat.field0_0x0,
+                             (undefined1  [16])_Var36);
+        auVar48 = vectorPermute128(auVar43 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   auVar43 & (undefined1  [16])g_unpackQuatRotateMask.field0_0x0,
+                                   (undefined1  [16])_Var38);
+        auVar49 = vectorSubtractUnsignedWordSaturate
+                            (auVar49,auVar42 & (undefined1  [16])g_unpackSignBitQuat.field0_0x0);
+        auVar48 = vectorAddUnsignedWordSaturate((undefined1  [16])_Var40,auVar48);
+        auVar49 = vectorAddFloatingPoint128
+                            (auVar49 & (undefined1  [16])g_unpackAndQuat.field0_0x0,
+                             (undefined1  [16])g_unpackAddQuat.field0_0x0);
+        auVar42 = vectorMultiplyFloatingPoint(auVar49,(undefined1  [16])g_unpackMulQuat.field0_0x0);
+        auVar49 = vectorMultiplySum4FloatingPoint(auVar42,auVar42);
+        auVar49 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar49);
+        auVar49 = vectorMultiplyFloatingPoint(auVar42,auVar49);
+        auVar49 = vectorMultiplyFloatingPoint(auVar49,auVar39 | (undefined1  [16])_Var52);
+        auVar48 = vectorPermute128(auVar49,auVar49,auVar48);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar45,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
       }
-      uVar19 = uVar19 + 1;
-      uVar12 = uVar12 + 4;
-    } while (uVar19 < uVar14);
-    local_188 = (uint)uVar12;
+      pcVar18 = pcVar18 + 1;
+      uVar25 = uVar25 + 4;
+    } while (pcVar18 < pcVar21);
+    local_188 = (uint)uVar25;
   }
-  bVar1 = *(byte *)(iVar6 + 0x17);
-  auVar32 = _DAT_8404f6e0;
-  for (; _DAT_8404f6e0 = auVar32, uVar19 < bVar1 + uVar14; uVar19 = uVar19 + 1) {
-    bVar2 = *(byte *)(uVar19 + param_4);
-    uVar18 = (uint)bVar2;
-    if (0xbf < uVar18) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x3ae,
-                      0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",uVar18,
-                      0xc0);
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                      ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-      uVar10 = ZEXT48(local_1a8);
-      iVar7 = in_stack_0000003c;
-    }
-    if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iVar7) & (&DAT_82992400)[uVar18 & 0x1f]) == 0) {
-      auVar32 = loadVectorLeftIndexed(uVar5 + 0x2c);
-      uVar18 = uVar18 * 0x20 + in_stack_00000034;
-      auVar32 = vectorSplatWord(auVar32,0);
-      auVar32 = vectorMultiplyAddFloatingPoint
-                          (auVar32,local_110,*(undefined1 (*) [16])(uVar18 & 0xfffffff0));
-      *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar32;
-    }
-    uVar10 = uVar10 + 6;
-    local_1a8 = (ushort *)uVar10;
-    auVar36 = _DAT_8217a050;
-    auVar32 = _DAT_8404f6e0;
-  }
-  uVar12 = (ulonglong)*(byte *)(iVar6 + 0x18);
-  uVar10 = 0;
-  if (uVar12 != 0) {
-    uVar11 = (ulonglong)local_1b0;
-    uVar13 = uVar12;
+  bVar1 = *(byte *)(iVar11 + 0x17);
+  if (pcVar18 < pcVar21 + bVar1) {
     do {
-      pbVar8 = local_160 + 1;
-      bVar1 = *(byte *)((uint)*local_160 + param_4);
-      uVar10 = (ulonglong)bVar1;
-      if (0xbf < uVar10) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x433,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar10,0xc0);
-        auVar32 = _DAT_8404f6e0;
-        auVar36 = _DAT_8217a050;
+      bVar2 = puVar12[(int)pcVar18];
+      if (0xbf < bVar2) {
+        MyAssertHandler(local_19c,0x3ae,0,local_178);
+        MyAssertHandler(local_190,0x42,0,local_1ac);
+        uVar22 = ZEXT48(local_1a8);
+        iVar17 = iStack0000003c;
+        iVar11 = iStack00000014;
+        puVar12 = puStack0000001c;
+        puVar13 = local_198;
+      }
+      if ((*(uint *)((bVar2 >> 3 & 0x1ffffffc) + iVar17) & *(uint *)(puVar13 + (bVar2 & 0x1f) * 4))
+          == 0) {
+        puVar30 = (uint6 *)uVar22;
+        auVar48 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        uVar15 = (uint)bVar2 * 0x20 + uStack00000034;
+        auVar48 = vectorSplatWord(auVar48,0);
+        uVar24 = *(uint *)puVar30 >> 0xe;
+        local_130 = (float)((double)(float)((double)(float)(((ushort)*puVar30 & 0x7fff) +
+                                                            ((ushort)*puVar30 & 0x4000) * -2 +
+                                                           0x40400000) - dVar35) * dVar34);
+        local_150 = (__vector4 *)((uVar24 & 0x7fff) + (uVar24 & 0x4000) * -2 + 0x40400000);
+        uVar25 = (ulonglong)(*puVar30 >> 0xf) & 0x7fff;
+        local_128 = (float)((double)(float)((double)(float)local_150 - dVar35) * dVar34);
+        fVar31 = (float)(((int)uVar25 - ((uint)(uVar25 << 1) & 0x8000)) + 0x40400000);
+        local_140 = CONCAT44(fVar31,local_140._4_4_);
+        local_12c = (float)((double)(float)((double)fVar31 - dVar35) * dVar34);
+        local_118 = (ulonglong)(int)(1 - (*(uint *)puVar30 >> 0x1e & 2));
+        local_124 = (float)(longlong)local_118 /
+                    SQRT((float)((double)(local_130 * local_130 +
+                                         local_128 * local_128 + local_12c * local_12c) + dVar33));
+        local_128 = local_124 * local_128;
+        local_130 = local_124 * local_130;
+        local_12c = local_124 * local_12c;
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar48,local_110,*(undefined1 (*) [16])(uVar15 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar15 & 0xfffffff0) = auVar48;
+      }
+      pcVar18 = pcVar18 + 1;
+      uVar22 = uVar22 + 6;
+      local_1a8 = (ushort *)uVar22;
+    } while (pcVar18 < pcVar21 + bVar1);
+    _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+  }
+  uVar25 = (ulonglong)*(byte *)(iVar11 + 0x18);
+  uVar22 = 0;
+  _Var36 = g_XYZx.field0_0x0;
+  if (uVar25 != 0) {
+    uVar23 = ZEXT48(local_1b0);
+    uVar20 = uVar25;
+    do {
+      pbVar14 = local_160 + 1;
+      bVar1 = puStack0000001c[*local_160];
+      uVar24 = (uint)bVar1;
+      local_160 = pbVar14;
+      if (0xbf < uVar24) {
+        MyAssertHandler(local_19c,0x433,0,local_178);
+        _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+        _Var36 = g_XYZx.field0_0x0;
       }
       uVar3 = *local_1a8;
-      puVar9 = local_1a8 + 1;
+      puVar16 = local_1a8 + 1;
       if (uVar3 < 0x40) {
-        local_1a8 = puVar9 + uVar3 + 1;
-        if (0xbf < uVar10) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+        local_1a8 = puVar16 + uVar3 + 1;
+        if (0xbf < uVar24) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar10 & 0x1f) << 2))) == 0) {
+        p_Var27 = local_1a4;
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,(ulonglong)uVar3,uVar5 - 0x1b0,uVar5 - 0x17c);
-          uVar11 = (ulonglong)local_1b0;
+                    (&local_170,puVar16,(uint)uVar3,(int *)&local_1b0,(float *)&local_17c);
+          uVar23 = ZEXT48(local_1b0);
 LAB_8262ef9c:
-          bVar4 = true;
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          bVar5 = true;
+          _Var36 = g_XYZx.field0_0x0;
         }
         else {
-          bVar4 = false;
+          bVar5 = false;
         }
       }
       else {
-        iVar7 = (int)(uVar3 - 1) >> 8;
-        local_1a8 = puVar9 + iVar7 + 2;
-        if (0xbf < uVar10) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+        iVar11 = (int)(uVar3 - 1) >> 8;
+        local_1a8 = puVar16 + iVar11 + 2;
+        if (0xbf < uVar24) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar10 & 0x1f) << 2))) == 0) {
+        p_Var27 = local_1a4;
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,iVar7 + 1,uVar5 - 0x180,uVar5 - 0x170);
-          uVar11 = ZEXT48(local_180);
-          uVar10 = uVar11 & 0xffffff;
-          lVar15 = uVar10 * 0x100;
-          lVar16 = (ulonglong)uVar3 + uVar10 * -0x100;
-          local_180 = (undefined *)lVar15;
-          if (0x100 < (int)lVar16) {
-            lVar16 = 0x100;
+                    (&local_170,puVar16,iVar11 + 1,(int *)&local_180,&local_170.time);
+          iVar11 = local_1a0;
+          uVar22 = ZEXT48(local_180);
+          lVar28 = (uVar22 & 0xffffff) * 0x100;
+          local_180 = (__vector4 *)lVar28;
+          iVar17 = (uint)uVar3 - (int)local_180;
+          if (0x100 < iVar17) {
+            iVar17 = 0x100;
           }
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,(uVar11 & 0x7fffff) * 0x200 + (ulonglong)local_1a0,lVar16,
-                     uVar5 - 0x1b0,uVar5 - 0x17c);
-          uVar11 = lVar15 + (ulonglong)local_1b0;
-          local_1a0 = (uVar3 + 1) * 2 + local_1a0;
-          local_1b0 = (uint)uVar11;
+                    (&local_170,(ushort *)((int)((uVar22 & 0xffffff) << 9) + local_1a0),iVar17,
+                     (int *)&local_1b0,(float *)&local_17c);
+          uVar23 = lVar28 + ZEXT48(local_1b0);
+          local_1a0 = (uVar3 + 1) * 2 + iVar11;
+          local_1b0 = (char *)uVar23;
           goto LAB_8262ef9c;
         }
-        bVar4 = false;
+        bVar5 = false;
         local_1a0 = (uVar3 + 1) * 2 + local_1a0;
       }
-      if (bVar4) {
-        lVar16 = uVar11 + (uVar11 & 0x7fffffff) * 2 + (ulonglong)local_11c;
-        if (lVar16 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x43c,0,&DAT_82000f98,0xffffffff821870b4);
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+      if (bVar5) {
+        lVar28 = uVar23 + (uVar23 & 0x7fffffff) * 2 + (ulonglong)local_11c;
+        if (lVar28 == 0) {
+          MyAssertHandler(local_19c,0x43c,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        auVar25 = ZEXT416(0);
-        auVar25 = auVar25 | auVar25 << 0x20 | auVar25 << 0x40 | auVar25 << 0x60;
-        auVar22 = loadVectorForShiftLeft(in_r0,lVar16);
-        uVar10 = (ulonglong)local_188;
-        auVar22 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar16 & 0xfffffff0),
-                                   *(undefined1 (*) [16])((uint)lVar16 + 7 & 0xfffffff0),auVar22);
-        uVar19 = (uint)(lVar16 + 3);
-        auVar26 = loadVectorForShiftLeft(in_r0,lVar16 + 3);
-        auVar22 = vectorMergeHighByte(auVar25,auVar22);
-        auVar31 = loadVectorLeftIndexed(uVar5 - 0x17c);
-        auVar26 = vectorPermute128(*(undefined1 (*) [16])(uVar19 & 0xfffffff0),
-                                   *(undefined1 (*) [16])(uVar19 + 7 & 0xfffffff0),auVar26);
-        auVar24 = loadVectorLeftIndexed(uVar10);
-        auVar31 = vectorSplatWord(auVar31,0);
-        auVar28 = loadVectorRightIndexed(uVar10 + 0x10);
-        auVar21 = loadVectorRightIndexed(uVar10 + 0x1c);
-        auVar22 = vectorMergeHighHalfWord(auVar25,auVar22);
-        auVar23 = loadVectorLeftIndexed(uVar10 + 0xc);
-        auVar33 = vectorMergeHighByte(auVar25,auVar26);
-        auVar26 = vectorPermute128(auVar24 | auVar28,auVar36,auVar32);
-        auVar28 = vectorConvertFromUnsignedFixedPointWord128(auVar22,0);
-        auVar25 = vectorMergeHighHalfWord(auVar25,auVar33);
-        uVar19 = (uint)bVar1 * 0x20 + in_stack_00000034 + 0x10;
-        auVar22 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        auVar25 = vectorConvertFromUnsignedFixedPointWord128(auVar25,0);
-        auVar22 = vectorSplatWord(auVar22,0);
-        auVar25 = vectorSubtractFloatingPoint128(auVar25 & _DAT_8404f950,auVar28 & _DAT_8404f950);
-        auVar25 = vectorMultiplyAddFloatingPoint(auVar31,auVar25,auVar28 & _DAT_8404f950);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            ((auVar23 | auVar21) & _DAT_8404f950,auVar25,auVar26);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            (auVar22,auVar25,*(undefined1 (*) [16])(uVar19 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar25;
+        auVar48 = ZEXT416(0);
+        auVar48 = auVar48 | auVar48 << 0x20 | auVar48 << 0x40 | auVar48 << 0x60;
+        auVar49 = loadVectorForShiftLeft(in_r0,lVar28);
+        uVar22 = (ulonglong)local_188;
+        auVar49 = vectorPermute128(*(undefined1 (*) [16])((uint)lVar28 & 0xfffffff0),
+                                   *(undefined1 (*) [16])((uint)lVar28 + 7 & 0xfffffff0),auVar49);
+        uVar15 = (uint)(lVar28 + 3);
+        auVar45 = loadVectorForShiftLeft(in_r0,lVar28 + 3);
+        auVar49 = vectorMergeHighByte(auVar48,auVar49);
+        auVar42 = loadVectorLeftIndexed(uVar10 - 0x17c);
+        auVar45 = vectorPermute128(*(undefined1 (*) [16])(uVar15 & 0xfffffff0),
+                                   *(undefined1 (*) [16])(uVar15 + 7 & 0xfffffff0),auVar45);
+        auVar47 = loadVectorLeftIndexed(uVar22);
+        auVar42 = vectorSplatWord(auVar42,0);
+        auVar43 = loadVectorRightIndexed(uVar22 + 0x10);
+        auVar46 = loadVectorRightIndexed(uVar22 + 0x1c);
+        auVar49 = vectorMergeHighHalfWord(auVar48,auVar49);
+        auVar44 = loadVectorLeftIndexed(uVar22 + 0xc);
+        auVar39 = vectorMergeHighByte(auVar48,auVar45);
+        auVar45 = vectorPermute128(auVar47 | auVar43,(undefined1  [16])_Var52,
+                                   (undefined1  [16])_Var36);
+        auVar43 = vectorConvertFromUnsignedFixedPointWord128(auVar49,0);
+        auVar48 = vectorMergeHighHalfWord(auVar48,auVar39);
+        uVar24 = uVar24 * 0x20 + uStack00000034 + 0x10;
+        auVar49 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        auVar48 = vectorConvertFromUnsignedFixedPointWord128(auVar48,0);
+        auVar49 = vectorSplatWord(auVar49,0);
+        auVar48 = vectorSubtractFloatingPoint128
+                            (auVar48 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             auVar43 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar42,auVar48,auVar43 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            ((auVar44 | auVar46) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar48,
+                             auVar45);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar49,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
       }
       local_188 = local_188 + 0x18;
-      uVar13 = uVar13 - 1;
+      uVar20 = uVar20 - 1;
       local_11c = (uVar3 + 1) * 3 + local_11c;
-      uVar10 = uVar12;
-      local_160 = pbVar8;
-    } while (uVar13 != 0);
+      uVar22 = uVar25;
+      iVar11 = iStack00000014;
+    } while (uVar20 != 0);
   }
-  uVar12 = *(byte *)(iVar6 + 0x19) + uVar12;
-  if (uVar10 < uVar12) {
-    lVar16 = uVar12 - uVar10;
-    uVar13 = (ulonglong)local_1b0;
-    uVar10 = lVar16 + uVar10;
+  uVar25 = *(byte *)(iVar11 + 0x19) + uVar25;
+  if (uVar22 < uVar25) {
+    lVar28 = uVar25 - uVar22;
+    uVar20 = ZEXT48(local_1b0);
+    uVar22 = lVar28 + uVar22;
     do {
-      pbVar8 = local_160 + 1;
-      bVar1 = *(byte *)((uint)*local_160 + param_4);
-      uVar11 = (ulonglong)bVar1;
-      if (0xbf < uVar11) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x452,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar11,0xc0);
-        auVar32 = _DAT_8404f6e0;
-        auVar36 = _DAT_8217a050;
+      pbVar14 = local_160 + 1;
+      bVar1 = puStack0000001c[*local_160];
+      uVar24 = (uint)bVar1;
+      local_160 = pbVar14;
+      if (0xbf < uVar24) {
+        MyAssertHandler(local_19c,0x452,0,local_178);
+        _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+        _Var36 = g_XYZx.field0_0x0;
       }
       uVar3 = *local_1a8;
-      puVar9 = local_1a8 + 1;
+      puVar16 = local_1a8 + 1;
       if (uVar3 < 0x40) {
-        local_1a8 = puVar9 + uVar3 + 1;
-        if (0xbf < uVar11) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+        local_1a8 = puVar16 + uVar3 + 1;
+        if (0xbf < uVar24) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar11 & 0x1f) << 2))) == 0) {
+        p_Var27 = local_1a4;
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,(ulonglong)uVar3,uVar5 - 0x1b0,uVar5 - 0x17c);
-          uVar13 = (ulonglong)local_1b0;
+                    (&local_170,puVar16,(uint)uVar3,(int *)&local_1b0,(float *)&local_17c);
+          uVar20 = ZEXT48(local_1b0);
 LAB_8262f2f4:
-          bVar4 = true;
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          bVar5 = true;
+          _Var36 = g_XYZx.field0_0x0;
         }
         else {
-          bVar4 = false;
+          bVar5 = false;
         }
       }
       else {
-        iVar7 = (int)(uVar3 - 1) >> 8;
-        local_1a8 = puVar9 + iVar7 + 2;
-        if (0xbf < uVar11) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                          ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+        iVar11 = (int)(uVar3 - 1) >> 8;
+        local_1a8 = puVar16 + iVar11 + 2;
+        if (0xbf < uVar24) {
+          MyAssertHandler(local_190,0x42,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)local_1a4 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) &
-            *(uint *)((int)&DAT_82992400 + (int)((uVar11 & 0x1f) << 2))) == 0) {
+        p_Var27 = local_1a4;
+        if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+            *(uint *)(local_198 + (bVar1 & 0x1f) * 4)) == 0) {
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,puVar9,iVar7 + 1,uVar5 - 0x180,uVar5 - 0x170);
-          uVar11 = ZEXT48(local_180);
-          uVar13 = uVar11 & 0xffffff;
-          lVar17 = uVar13 * 0x100;
-          lVar15 = (ulonglong)uVar3 + uVar13 * -0x100;
-          local_180 = (undefined *)lVar17;
-          if (0x100 < (int)lVar15) {
-            lVar15 = 0x100;
+                    (&local_170,puVar16,iVar11 + 1,(int *)&local_180,&local_170.time);
+          iVar11 = local_1a0;
+          uVar20 = ZEXT48(local_180);
+          lVar29 = (uVar20 & 0xffffff) * 0x100;
+          local_180 = (__vector4 *)lVar29;
+          iVar17 = (uint)uVar3 - (int)local_180;
+          if (0x100 < iVar17) {
+            iVar17 = 0x100;
           }
           XAnim_GetTimeIndex<unsigned_short>
-                    (uVar5 - 0x170,(uVar11 & 0x7fffff) * 0x200 + (ulonglong)local_1a0,lVar15,
-                     uVar5 - 0x1b0,uVar5 - 0x17c);
-          uVar13 = lVar17 + (ulonglong)local_1b0;
-          local_1a0 = (uVar3 + 1) * 2 + local_1a0;
-          local_1b0 = (uint)uVar13;
+                    (&local_170,(ushort *)((int)((uVar20 & 0xffffff) << 9) + local_1a0),iVar17,
+                     (int *)&local_1b0,(float *)&local_17c);
+          uVar20 = lVar29 + ZEXT48(local_1b0);
+          local_1a0 = (uVar3 + 1) * 2 + iVar11;
+          local_1b0 = (char *)uVar20;
           goto LAB_8262f2f4;
         }
-        bVar4 = false;
+        bVar5 = false;
         local_1a0 = (uVar3 + 1) * 2 + local_1a0;
       }
-      if (bVar4) {
-        lVar15 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + (ulonglong)local_184;
-        if (lVar15 == 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                          0x45b,0,&DAT_82000f98,0xffffffff821870a8);
-          auVar32 = _DAT_8404f6e0;
-          auVar36 = _DAT_8217a050;
+      if (bVar5) {
+        lVar29 = (uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x7fffffff) * 2 + (ulonglong)local_184;
+        if (lVar29 == 0) {
+          MyAssertHandler(local_19c,0x45b,0,local_1ac);
+          _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+          _Var36 = g_XYZx.field0_0x0;
         }
-        auVar22 = loadVectorRightIndexed(lVar15 + 8);
-        auVar33 = loadVectorLeftIndexed(lVar15);
-        auVar25 = ZEXT416(0);
-        auVar25 = auVar25 | auVar25 << 0x20 | auVar25 << 0x40 | auVar25 << 0x60;
-        auVar26 = vectorShiftLeftDoubleByOctetImmediate(auVar22,auVar22,8);
-        uVar11 = (ulonglong)local_188;
-        auVar22 = loadVectorRightIndexed(lVar15 + 0xe);
-        auVar27 = loadVectorLeftIndexed(lVar15 + 6);
-        auVar31 = vectorShiftLeftDoubleByOctetImmediate(auVar22,auVar22,8);
-        auVar22 = loadVectorLeftIndexed(uVar5 - 0x17c);
-        auVar24 = loadVectorLeftIndexed(uVar11);
-        auVar26 = vectorMergeHighHalfWord(auVar25,auVar33 | auVar26);
-        auVar21 = loadVectorRightIndexed(uVar11 + 0x10);
-        auVar22 = vectorSplatWord(auVar22,0);
-        auVar23 = loadVectorLeftIndexed(uVar11 + 0xc);
-        auVar28 = loadVectorRightIndexed(uVar11 + 0x1c);
-        auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar26,0);
-        auVar25 = vectorMergeHighHalfWord(auVar25,auVar27 | auVar31);
-        auVar31 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        auVar26 = vectorPermute128(auVar24 | auVar21,auVar36,auVar32);
-        uVar19 = (uint)bVar1 * 0x20 + in_stack_00000034 + 0x10;
-        auVar31 = vectorSplatWord(auVar31,0);
-        auVar25 = vectorConvertFromUnsignedFixedPointWord128(auVar25,0);
-        auVar25 = vectorSubtractFloatingPoint128(auVar25 & _DAT_8404f950,auVar33 & _DAT_8404f950);
-        auVar25 = vectorMultiplyAddFloatingPoint(auVar22,auVar25,auVar33 & _DAT_8404f950);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            ((auVar23 | auVar28) & _DAT_8404f950,auVar25,auVar26);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            (auVar31,auVar25,*(undefined1 (*) [16])(uVar19 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar25;
+        auVar49 = loadVectorRightIndexed(lVar29 + 8);
+        auVar39 = loadVectorLeftIndexed(lVar29);
+        auVar48 = ZEXT416(0);
+        auVar48 = auVar48 | auVar48 << 0x20 | auVar48 << 0x40 | auVar48 << 0x60;
+        auVar45 = vectorShiftLeftDoubleByOctetImmediate(auVar49,auVar49,8);
+        uVar23 = (ulonglong)local_188;
+        auVar49 = loadVectorRightIndexed(lVar29 + 0xe);
+        auVar50 = loadVectorLeftIndexed(lVar29 + 6);
+        auVar42 = vectorShiftLeftDoubleByOctetImmediate(auVar49,auVar49,8);
+        auVar49 = loadVectorLeftIndexed(uVar10 - 0x17c);
+        auVar47 = loadVectorLeftIndexed(uVar23);
+        auVar45 = vectorMergeHighHalfWord(auVar48,auVar39 | auVar45);
+        auVar46 = loadVectorRightIndexed(uVar23 + 0x10);
+        auVar49 = vectorSplatWord(auVar49,0);
+        auVar44 = loadVectorLeftIndexed(uVar23 + 0xc);
+        auVar43 = loadVectorRightIndexed(uVar23 + 0x1c);
+        auVar39 = vectorConvertFromUnsignedFixedPointWord128(auVar45,0);
+        auVar48 = vectorMergeHighHalfWord(auVar48,auVar50 | auVar42);
+        auVar42 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        auVar45 = vectorPermute128(auVar47 | auVar46,(undefined1  [16])_Var52,
+                                   (undefined1  [16])_Var36);
+        uVar24 = uVar24 * 0x20 + uStack00000034 + 0x10;
+        auVar42 = vectorSplatWord(auVar42,0);
+        auVar48 = vectorConvertFromUnsignedFixedPointWord128(auVar48,0);
+        auVar48 = vectorSubtractFloatingPoint128
+                            (auVar48 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             auVar39 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar49,auVar48,auVar39 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            ((auVar44 | auVar43) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar48,
+                             auVar45);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar42,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
       }
       local_188 = local_188 + 0x18;
-      lVar16 = lVar16 + -1;
+      lVar28 = lVar28 + -1;
       local_184 = (uVar3 + 1) * 6 + local_184;
-      local_160 = pbVar8;
-    } while (lVar16 != 0);
+    } while (lVar28 != 0);
   }
-  iVar7 = in_stack_00000034;
-  uVar12 = *(byte *)(iVar6 + 0x1a) + uVar12;
-  if ((uVar10 & 0xffffffff) < uVar12) {
-    lVar16 = uVar12 - uVar10;
-    uVar13 = (ulonglong)local_188;
-    uVar10 = lVar16 + uVar10;
+  pcVar6 = local_178;
+  pcVar26 = local_190;
+  puVar13 = local_198;
+  pcVar21 = local_19c;
+  p_Var27 = local_1a4;
+  pcVar18 = local_1ac;
+  puVar12 = puStack0000001c;
+  iVar11 = iStack00000014;
+  uVar25 = *(byte *)(iStack00000014 + 0x1a) + uVar25;
+  pbVar14 = local_160;
+  if ((uVar22 & 0xffffffff) < uVar25) {
+    lVar28 = uVar25 - uVar22;
+    uVar20 = (ulonglong)local_188;
+    uVar22 = lVar28 + uVar22;
     do {
-      bVar1 = *(byte *)((uint)*local_160 + param_4);
-      uVar19 = (uint)bVar1;
-      if (0xbf < uVar19) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x46a,0,"modelPartIndex doesn\'t index DOBJ_MAX_PARTS\n\t%i not in [0, %i)",
-                        uVar19,0xc0);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
-        auVar32 = _DAT_8404f6e0;
-        auVar36 = _DAT_8217a050;
-      }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) & (&DAT_82992400)[uVar19 & 0x1f]
-          ) == 0) {
-        auVar26 = loadVectorLeftIndexed(uVar13);
-        auVar25 = loadVectorRightIndexed(uVar13 + 0x10);
-        uVar19 = (uint)bVar1 * 0x20 + iVar7 + 0x10;
-        auVar22 = loadVectorLeftIndexed(uVar5 + 0x2c);
-        auVar25 = vectorPermute128(auVar26 | auVar25,auVar36,auVar32);
-        auVar22 = vectorSplatWord(auVar22,0);
-        auVar25 = vectorMultiplyAddFloatingPoint
-                            (auVar22,auVar25,*(undefined1 (*) [16])(uVar19 & 0xfffffff0));
-        *(undefined1 (*) [16])(uVar19 & 0xfffffff0) = auVar25;
-      }
-      lVar16 = lVar16 + -1;
-      local_160 = local_160 + 1;
-      uVar13 = uVar13 + 0xc;
-    } while (lVar16 != 0);
-  }
-  uVar12 = *(byte *)(iVar6 + 0x1b) + uVar12;
-  if ((uVar10 & 0xffffffff) < uVar12) {
-    lVar16 = uVar12 - uVar10;
-    do {
-      bVar1 = *(byte *)((uint)*local_160 + param_4);
-      uVar19 = (uint)bVar1;
+      bVar1 = puVar12[*pbVar14];
       if (0xbf < bVar1) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
-                        0x478,0,&DAT_82000f98,"modelPartIndex < DOBJ_MAX_PARTS");
+        MyAssertHandler(pcVar21,0x46a,0,pcVar6);
+        MyAssertHandler(pcVar26,0x42,0,pcVar18);
+        _Var52 = *(__vector4_u_0 *)((uint)p_Var27 & 0xfffffff0);
+        _Var36 = g_XYZx.field0_0x0;
       }
-      if (0xbf < uVar19) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                        ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(puVar13 + (bVar1 & 0x1f) * 4)) == 0) {
+        auVar45 = loadVectorLeftIndexed(uVar20);
+        auVar48 = loadVectorRightIndexed(uVar20 + 0x10);
+        uVar24 = (uint)bVar1 * 0x20 + uStack00000034 + 0x10;
+        auVar49 = loadVectorLeftIndexed(uVar10 + 0x2c);
+        auVar48 = vectorPermute128(auVar45 | auVar48,(undefined1  [16])_Var52,
+                                   (undefined1  [16])_Var36);
+        auVar49 = vectorSplatWord(auVar49,0);
+        auVar48 = vectorMultiplyAddFloatingPoint
+                            (auVar49,auVar48,*(undefined1 (*) [16])(uVar24 & 0xfffffff0));
+        *(undefined1 (*) [16])(uVar24 & 0xfffffff0) = auVar48;
       }
-      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + in_stack_0000003c) & (&DAT_82992400)[uVar19 & 0x1f]
-          ) == 0) {
-        iVar6 = uVar19 * 0x20 + iVar7;
-        *(float *)(iVar6 + 0x1c) = (float)((double)*(float *)(iVar6 + 0x1c) + param_2);
+      lVar28 = lVar28 + -1;
+      pbVar14 = pbVar14 + 1;
+      uVar20 = uVar20 + 0xc;
+    } while (lVar28 != 0);
+  }
+  uVar25 = *(byte *)(iVar11 + 0x1b) + uVar25;
+  if ((uVar22 & 0xffffffff) < uVar25) {
+    lVar28 = uVar25 - uVar22;
+    do {
+      bVar1 = puVar12[*pbVar14];
+      uVar24 = (uint)bVar1;
+      if (0xbf < bVar1) {
+        MyAssertHandler(pcVar21,0x478,0,pcVar18);
       }
-      lVar16 = lVar16 + -1;
-      local_160 = local_160 + 1;
-    } while (lVar16 != 0);
+      if (0xbf < uVar24) {
+        MyAssertHandler(pcVar26,0x42,0,pcVar18);
+      }
+      if ((*(uint *)((bVar1 >> 3 & 0x1ffffffc) + iStack0000003c) &
+          *(uint *)(puVar13 + (uVar24 & 0x1f) * 4)) == 0) {
+        iVar11 = uVar24 * 0x20 + uStack00000034;
+        *(float *)(iVar11 + 0x1c) = (float)((double)*(float *)(iVar11 + 0x1c) + dVar32);
+      }
+      lVar28 = lVar28 + -1;
+      pbVar14 = pbVar14 + 1;
+    } while (lVar28 != 0);
   }
   __restfpr_28();
   __restgprlr();
@@ -2549,109 +3021,130 @@ LAB_8262f2f4:
 
 // 82630A28  Short2LerpAsVec2  (universal/com_vector.h:841)
 
-void Short2LerpAsVec2(double param_1,short *param_2,short *param_3,undefined8 param_4,float *param_5
-                     )
+void Short2LerpAsVec2(short *param_1,short *param_2,float param_3,float *param_4)
 
 {
-  *param_5 = (float)((double)(longlong)((int)*param_3 - (int)*param_2) * param_1 +
-                    (double)(longlong)(int)*param_2);
-  param_5[1] = (float)((double)(longlong)((int)param_3[1] - (int)param_2[1]) * param_1 +
-                      (double)(longlong)(int)param_2[1]);
+  float *in_r6;
+  
+  *in_r6 = (float)(longlong)((int)*param_2 - (int)*param_1) * param_3 +
+           (float)(longlong)(int)*param_1;
+  in_r6[1] = (float)(longlong)((int)param_2[1] - (int)param_1[1]) * param_3 +
+             (float)(longlong)(int)param_1[1];
   return;
 }
 
 
 // 82630AB8  Short4LerpAsVec4  (universal/com_vector.h:848)
 
-void Short4LerpAsVec4(double param_1,short *param_2,short *param_3,undefined8 param_4,float *param_5
-                     )
+void Short4LerpAsVec4(short *param_1,short *param_2,float param_3,float *param_4)
 
 {
-  *param_5 = (float)((double)(longlong)((int)*param_3 - (int)*param_2) * param_1 +
-                    (double)(longlong)(int)*param_2);
-  param_5[1] = (float)((double)(longlong)((int)param_3[1] - (int)param_2[1]) * param_1 +
-                      (double)(longlong)(int)param_2[1]);
-  param_5[2] = (float)((double)(longlong)((int)param_3[2] - (int)param_2[2]) * param_1 +
-                      (double)(longlong)(int)param_2[2]);
-  param_5[3] = (float)((double)(longlong)((int)param_3[3] - (int)param_2[3]) * param_1 +
-                      (double)(longlong)(int)param_2[3]);
+  float *in_r6;
+  
+  *in_r6 = (float)(longlong)((int)*param_2 - (int)*param_1) * param_3 +
+           (float)(longlong)(int)*param_1;
+  in_r6[1] = (float)(longlong)((int)param_2[1] - (int)param_1[1]) * param_3 +
+             (float)(longlong)(int)param_1[1];
+  in_r6[2] = (float)(longlong)((int)param_2[2] - (int)param_1[2]) * param_3 +
+             (float)(longlong)(int)param_1[2];
+  in_r6[3] = (float)(longlong)((int)param_2[3] - (int)param_1[3]) * param_3 +
+             (float)(longlong)(int)param_1[3];
   return;
 }
 
 
 // 8262F5F8  XAnimCalcLeaf  (xanim/xanim_calc.cpp:1156)
 
-void XAnimCalcLeaf(void)
+void XAnimCalcLeaf(XAnimInfo *param_1,float param_2,DObjAnimMat *param_3,XAnimCalcAnimInfo *param_4)
 
 {
-  int iVar1;
+  XAnimParts *pXVar1;
   uint uVar2;
   uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  int iVar8;
-  uint *puVar9;
-  undefined8 uVar7;
+  uint *puVar7;
+  DObjAnimMat *pDVar8;
   int in_r6;
-  undefined8 extraout_f1;
-  undefined8 uVar10;
+  char *pcVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
+  XAnimCalcAnimInfo *pXStack00000024;
   
-  iVar8 = __savegprlr();
-  uVar10 = extraout_f1;
-  if (*(char *)(iVar8 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82186f8c,0x48b,0,0xffffffff82000f98,0xffffffff82185e68);
+  dVar10 = (double)param_2;
+  __savegprlr();
+  pXStack00000024 = param_4;
+  if (param_1->inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x48b,0,
+                    "%s");
   }
-  iVar1 = *(int *)(iVar8 + 0x1c);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x48f,0,0xffffffff82000f98,0xffffffff8213fd58);
+  pXVar1 = (param_1->field12_0x1c).parts;
+  if (pXVar1 == (XAnimParts *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x48f,0,
+                    "%s");
   }
-  if (*(short *)(iVar8 + 0x12) == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x491,0,0xffffffff82000f98,0xffffffff82185e44);
+  if (param_1->animToModel == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x491,0,
+                    "%s");
   }
-  puVar9 = (uint *)SL_ConvertToString(*(undefined2 *)(iVar8 + 0x12));
-  if ((*(short *)(iVar8 + 0x12) != 0) && (puVar9 == (uint *)0x0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x495,0,0xffffffff82000f98,0xffffffff82187190);
+  puVar7 = (uint *)SL_ConvertToString((uint)param_1->animToModel);
+  if ((param_1->animToModel != 0) && (puVar7 == (uint *)0x0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x495,0,
+                    "%s");
   }
-  dVar12 = (double)*(float *)(iVar8 + 0x20);
-  uVar2 = puVar9[3];
-  uVar3 = puVar9[2];
-  uVar4 = puVar9[1];
-  uVar5 = puVar9[4];
-  uVar6 = puVar9[5];
-  *(uint *)(in_r6 + 0x9000) = *puVar9 & ~*(uint *)(in_r6 + 0x9018) | *(uint *)(in_r6 + 0x9000);
+  dVar12 = (double)(param_1->state).currentAnimTime;
+  uVar2 = puVar7[3];
+  uVar3 = puVar7[2];
+  uVar4 = puVar7[1];
+  uVar5 = puVar7[4];
+  uVar6 = puVar7[5];
+  *(uint *)(in_r6 + 0x9000) = *puVar7 & ~*(uint *)(in_r6 + 0x9018) | *(uint *)(in_r6 + 0x9000);
   *(uint *)(in_r6 + 0x9004) = uVar4 & ~*(uint *)(in_r6 + 0x901c) | *(uint *)(in_r6 + 0x9004);
   *(uint *)(in_r6 + 0x9008) = uVar3 & ~*(uint *)(in_r6 + 0x9020) | *(uint *)(in_r6 + 0x9008);
+  pcVar9 = (char *)(uVar6 & ~*(uint *)(in_r6 + 0x902c) | *(uint *)(in_r6 + 0x9014));
   *(uint *)(in_r6 + 0x900c) = uVar2 & ~*(uint *)(in_r6 + 0x9024) | *(uint *)(in_r6 + 0x900c);
   *(uint *)(in_r6 + 0x9010) = uVar5 & ~*(uint *)(in_r6 + 0x9028) | *(uint *)(in_r6 + 0x9010);
-  *(uint *)(in_r6 + 0x9014) = uVar6 & ~*(uint *)(in_r6 + 0x902c) | *(uint *)(in_r6 + 0x9014);
+  *(uint *)(in_r6 + 0x9014) = (uint)pcVar9;
   if (dVar12 < 0.0) {
-    MyAssertHandler(dVar12,0xffffffff82186f8c,0x49b,0,0xffffffff82028794,0xffffffff82185f94,dVar12);
+    pcVar9 = "%s\n\t(time) = %g";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x49b,0,
+                    "%s\n\t(time) = %g");
   }
+  pDVar8 = (DObjAnimMat *)(pXVar1->flags & 1);
   dVar11 = 1.0;
-  if ((*(byte *)(iVar1 + 0x10) & 1) == 0) {
+  if ((pXVar1->flags & 1) == 0) {
     if (dVar12 <= 1.0) goto LAB_8262f880;
   }
   else if (dVar12 < 1.0) goto LAB_8262f880;
-  uVar7 = va(dVar12,0xffffffff82186d78,dVar12);
-  MyAssertHandler(0xffffffff82186f8c,0x49d,0,0xffffffff820011f4,0xffffffff82186d3c,uVar7);
+  va("time: %f, loop: %d");
+  pcVar9 = "%s\n\t%s";
+  pDVar8 = (DObjAnimMat *)0x0;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x49d,0,
+                  "%s\n\t%s");
 LAB_8262f880:
-  if ((dVar12 != dVar11) && (*(ushort *)(iVar1 + 0xe) != 0)) {
-    if (0xff < *(ushort *)(iVar1 + 0xe)) {
-      XAnimCalcParts<unsigned_short>(dVar12,uVar10,iVar1,(int)puVar9 + 0x19);
+  if ((dVar12 != dVar11) && (pXVar1->numframes != 0)) {
+    if (0xff < pXVar1->numframes) {
+      XAnimCalcParts<unsigned_short>
+                (pXVar1,(uchar *)((int)puVar7 + 0x19),(float)dVar12,(float)dVar10,pDVar8,
+                 (bitarray<192> *)pcVar9);
       __restgprlr();
       return;
     }
-    XAnimCalcParts<unsigned_char>();
+    XAnimCalcParts<unsigned_char>
+              (pXVar1,(uchar *)((int)puVar7 + 0x19),(float)dVar12,(float)dVar10,pDVar8,
+               (bitarray<192> *)pcVar9);
     __restgprlr();
     return;
   }
-  if ((*(byte *)(iVar1 + 0x10) & 1) != 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x4a1,0,0xffffffff82000f98,0xffffffff82185fe4);
+  if ((pXVar1->flags & 1) != 0) {
+    pDVar8 = (DObjAnimMat *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x4a1,0,
+                    "%s");
   }
-  XAnimCalcNonLoopEnd(uVar10,iVar1,(int)puVar9 + 0x19);
+  XAnimCalcNonLoopEnd(pXVar1,(uchar *)((int)puVar7 + 0x19),(float)dVar10,pDVar8,
+                      (bitarray<192> *)pXStack00000024);
   __restgprlr();
   return;
 }
@@ -2659,49 +3152,53 @@ LAB_8262f880:
 
 // 826291D8  XAnimGetCalcBuffer  (xanim/xanim_calc.cpp:1198)
 
-longlong XAnimGetCalcBuffer(longlong param_1,int param_2,uint *param_3)
+DObjAnimMat * XAnimGetCalcBuffer(XAnimCalcAnimInfo *param_1,DObj *param_2,int *param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
+  int iVar1;
+  int iVar2;
   
-  uVar1 = *param_3;
-  uVar2 = *(byte *)(param_2 + 10) + uVar1;
-  if (0x480 < (int)uVar2) {
-    Com_PrintWarning(0x13,0xffffffff82186fcc);
-    DObjDisplayAnim(param_2,0xffffffff820068af);
-    return 0;
+  iVar1 = *param_3;
+  iVar2 = (uint)param_2->numBones + iVar1;
+  if (0x480 < iVar2) {
+    Com_PrintWarning(0x13,"max calculation buffer exceeded\n");
+    DObjDisplayAnim(param_2,"");
+    return (DObjAnimMat *)0x0;
   }
-  *param_3 = uVar2;
-  return ((ulonglong)uVar1 & 0x7ffffff) * 0x20 + param_1;
+  *param_3 = iVar2;
+  return param_1->rotTransArray + iVar1;
 }
 
 
 // 8262B778  XAnimScaleRotTransArray  (xanim/xanim_calc.cpp:1222)
 
-void XAnimScaleRotTransArray(undefined8 param_1,int param_2,longlong param_3)
+void XAnimScaleRotTransArray(int param_1,XAnimCalcAnimInfo *param_2,DObjAnimMat *param_3)
 
 {
   float fVar1;
   float *pfVar2;
   int iVar3;
-  uint uVar4;
-  double dVar5;
+  longlong lVar4;
+  uint uVar5;
   double dVar6;
+  double dVar7;
   
-  iVar3 = __savegprlr_24();
-  uVar4 = 0;
+  lVar4 = (longlong)(int)param_3;
+  iVar3 = __savegprlr_24(param_1);
+  uVar5 = 0;
   if (0 < iVar3) {
-    dVar5 = 1.0;
-    dVar6 = 0.0;
-    param_3 = param_3 + 0x18;
+    dVar6 = 1.0;
+    dVar7 = 0.0;
+    lVar4 = lVar4 + 0x18;
     do {
-      if (0xbf < uVar4) {
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      if (0xbf < uVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if (((*(uint *)(((uVar4 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar4 & 0x1f]) == 0)
-         && (pfVar2 = (float *)param_3, (double)pfVar2[1] != dVar6)) {
-        fVar1 = (float)(dVar5 / (double)pfVar2[1]);
+      if ((((param_2->ignorePartBits).array[uVar5 >> 5] &
+           *(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4)) == 0) &&
+         (pfVar2 = (float *)lVar4, (double)pfVar2[1] != dVar7)) {
+        fVar1 = (float)(dVar6 / (double)pfVar2[1]);
         pfVar2[-6] = pfVar2[-6] * fVar1;
         pfVar2[-5] = pfVar2[-5] * fVar1;
         pfVar2[-4] = pfVar2[-4] * fVar1;
@@ -2710,9 +3207,9 @@ void XAnimScaleRotTransArray(undefined8 param_1,int param_2,longlong param_3)
         pfVar2[-1] = pfVar2[-1] * fVar1;
         *pfVar2 = *pfVar2 * fVar1;
       }
-      uVar4 = uVar4 + 1;
-      param_3 = param_3 + 0x20;
-    } while ((int)uVar4 < iVar3);
+      uVar5 = uVar5 + 1;
+      lVar4 = lVar4 + 0x20;
+    } while ((int)uVar5 < iVar3);
   }
   __restgprlr_24();
   return;
@@ -2722,51 +3219,55 @@ void XAnimScaleRotTransArray(undefined8 param_1,int param_2,longlong param_3)
 // 8262B8A0  XAnimNormalizeRotScaleTransArray  (xanim/xanim_calc.cpp:1242)
 
 void XAnimNormalizeRotScaleTransArray
-               (undefined8 param_1,int param_2,undefined8 param_3,longlong param_4)
+               (int param_1,XAnimCalcAnimInfo *param_2,float param_3,DObjAnimMat *param_4)
 
 {
-  float fVar1;
-  float *pfVar2;
-  int iVar3;
+  float *pfVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong in_r6;
   uint uVar4;
   double extraout_f1;
   double dVar5;
   double dVar6;
-  double dVar7;
+  float fVar7;
   
-  iVar3 = __savegprlr_24();
+  lVar3 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_24((double)param_3,param_1,lVar3,param_4);
   uVar4 = 0;
-  if (0 < iVar3) {
-    dVar6 = 0.0;
-    param_4 = param_4 + 0x18;
-    dVar7 = extraout_f1;
+  if (0 < iVar2) {
+    dVar5 = 0.0;
+    in_r6 = in_r6 + 0x18;
+    dVar6 = extraout_f1;
     do {
       if (0xbf < uVar4) {
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)(((uVar4 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar4 & 0x1f]) == 0) {
-        pfVar2 = (float *)param_4;
-        if ((double)(pfVar2[-5] * pfVar2[-5] +
-                    pfVar2[-4] * pfVar2[-4] + pfVar2[-6] * pfVar2[-6] + pfVar2[-3] * pfVar2[-3]) !=
-            dVar6) {
-          dVar5 = (double)I_rsqrt();
-          fVar1 = (float)(dVar5 * dVar7);
-          pfVar2[-6] = pfVar2[-6] * fVar1;
-          pfVar2[-5] = pfVar2[-5] * fVar1;
-          pfVar2[-4] = pfVar2[-4] * fVar1;
-          pfVar2[-3] = pfVar2[-3] * fVar1;
+      if ((*(uint *)(((uVar4 >> 5) + 0x2406) * 4 + (int)lVar3) &
+          *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4)) == 0) {
+        pfVar1 = (float *)in_r6;
+        fVar7 = pfVar1[-5] * pfVar1[-5] +
+                pfVar1[-4] * pfVar1[-4] + pfVar1[-6] * pfVar1[-6] + pfVar1[-3] * pfVar1[-3];
+        if ((double)fVar7 != dVar5) {
+          fVar7 = I_rsqrt(fVar7);
+          fVar7 = (float)((double)fVar7 * dVar6);
+          pfVar1[-6] = pfVar1[-6] * fVar7;
+          pfVar1[-5] = pfVar1[-5] * fVar7;
+          pfVar1[-4] = pfVar1[-4] * fVar7;
+          pfVar1[-3] = pfVar1[-3] * fVar7;
         }
-        if ((double)pfVar2[1] != dVar6) {
-          fVar1 = (float)(dVar7 / (double)pfVar2[1]);
-          pfVar2[-2] = pfVar2[-2] * fVar1;
-          pfVar2[-1] = pfVar2[-1] * fVar1;
-          *pfVar2 = *pfVar2 * fVar1;
-          pfVar2[1] = (float)dVar7;
+        if ((double)pfVar1[1] != dVar5) {
+          fVar7 = (float)(dVar6 / (double)pfVar1[1]);
+          pfVar1[-2] = pfVar1[-2] * fVar7;
+          pfVar1[-1] = pfVar1[-1] * fVar7;
+          *pfVar1 = *pfVar1 * fVar7;
+          pfVar1[1] = (float)dVar6;
         }
       }
       uVar4 = uVar4 + 1;
-      param_4 = param_4 + 0x20;
-    } while ((int)uVar4 < iVar3);
+      in_r6 = in_r6 + 0x20;
+    } while ((int)uVar4 < iVar2);
   }
   __restgprlr_24();
   return;
@@ -2776,7 +3277,8 @@ void XAnimNormalizeRotScaleTransArray
 // 8262B9F8  XAnimMadRotTransArray  (xanim/xanim_calc.cpp:1262)
 
 void XAnimMadRotTransArray
-               (undefined8 param_1,int param_2,undefined8 param_3,longlong param_4,longlong param_5)
+               (int param_1,XAnimCalcAnimInfo *param_2,float param_3,DObjAnimMat *param_4,
+               DObjAnimMat *param_5)
 
 {
   float fVar1;
@@ -2785,64 +3287,69 @@ void XAnimMadRotTransArray
   float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
-  float *pfVar8;
-  int iVar9;
-  float *pfVar10;
-  int iVar11;
+  float *pfVar7;
+  int iVar8;
+  float *pfVar9;
+  int iVar10;
+  longlong lVar11;
+  longlong in_r7;
   uint uVar12;
   longlong lVar13;
+  longlong lVar14;
   double extraout_f1;
-  double dVar14;
   double dVar15;
   double dVar16;
+  float fVar17;
   
-  iVar11 = __savegprlr_22();
+  lVar13 = (longlong)(int)param_5;
+  lVar11 = (longlong)(int)param_2;
+  iVar10 = __savegprlr_22((double)param_3,param_1,lVar11,param_4);
   uVar12 = 0;
-  if (0 < iVar11) {
-    lVar13 = param_5 + 0x18;
-    iVar9 = ((int)param_5 - (int)param_4) + -4;
+  if (0 < iVar10) {
+    lVar14 = in_r7 + 0x18;
+    iVar8 = ((int)in_r7 - (int)lVar13) + -4;
     dVar15 = 0.0;
-    param_4 = param_4 + 4;
+    lVar13 = lVar13 + 4;
     dVar16 = extraout_f1;
     do {
       if (0xbf < uVar12) {
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)(((uVar12 >> 5) + 0x2406) * 4 + param_2) & (&DAT_82992400)[uVar12 & 0x1f]) == 0)
-      {
-        pfVar8 = (float *)param_4;
-        pfVar10 = (float *)lVar13;
-        if ((double)(pfVar8[1] * pfVar8[1] +
-                    pfVar8[2] * pfVar8[2] + *pfVar8 * *pfVar8 + pfVar8[-1] * pfVar8[-1]) != dVar15)
-        {
-          dVar14 = (double)I_rsqrt();
-          fVar1 = (float)(dVar14 * dVar16);
-          fVar2 = pfVar10[-5];
-          fVar3 = pfVar10[-4];
-          fVar4 = pfVar10[-3];
-          fVar5 = *pfVar8;
-          fVar6 = pfVar8[1];
-          fVar7 = pfVar8[2];
-          *(float *)((int)pfVar8 + iVar9) = pfVar8[-1] * fVar1 + *(float *)((int)pfVar8 + iVar9);
-          pfVar10[-5] = fVar1 * fVar5 + fVar2;
-          pfVar10[-4] = fVar6 * fVar1 + fVar3;
-          pfVar10[-3] = fVar7 * fVar1 + fVar4;
+      if ((*(uint *)(((uVar12 >> 5) + 0x2406) * 4 + (int)lVar11) &
+          *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4)) == 0) {
+        pfVar7 = (float *)lVar13;
+        fVar17 = pfVar7[1] * pfVar7[1] +
+                 pfVar7[2] * pfVar7[2] + *pfVar7 * *pfVar7 + pfVar7[-1] * pfVar7[-1];
+        pfVar9 = (float *)lVar14;
+        if ((double)fVar17 != dVar15) {
+          fVar17 = I_rsqrt(fVar17);
+          fVar17 = (float)((double)fVar17 * dVar16);
+          fVar1 = pfVar9[-5];
+          fVar2 = pfVar9[-4];
+          fVar3 = pfVar9[-3];
+          fVar4 = *pfVar7;
+          fVar5 = pfVar7[1];
+          fVar6 = pfVar7[2];
+          *(float *)((int)pfVar7 + iVar8) = pfVar7[-1] * fVar17 + *(float *)((int)pfVar7 + iVar8);
+          pfVar9[-5] = fVar17 * fVar4 + fVar1;
+          pfVar9[-4] = fVar5 * fVar17 + fVar2;
+          pfVar9[-3] = fVar6 * fVar17 + fVar3;
         }
-        if ((double)pfVar8[6] != dVar15) {
-          fVar1 = (float)(dVar16 / (double)pfVar8[6]);
-          fVar2 = pfVar8[4];
-          fVar3 = pfVar8[5];
-          pfVar10[-2] = pfVar8[3] * fVar1 + pfVar10[-2];
-          pfVar10[-1] = fVar2 * fVar1 + pfVar10[-1];
-          *pfVar10 = fVar1 * fVar3 + *pfVar10;
-          pfVar10[1] = (float)((double)pfVar10[1] + dVar16);
+        if ((double)pfVar7[6] != dVar15) {
+          fVar17 = (float)(dVar16 / (double)pfVar7[6]);
+          fVar1 = pfVar7[4];
+          fVar2 = pfVar7[5];
+          pfVar9[-2] = pfVar7[3] * fVar17 + pfVar9[-2];
+          pfVar9[-1] = fVar1 * fVar17 + pfVar9[-1];
+          *pfVar9 = fVar17 * fVar2 + *pfVar9;
+          pfVar9[1] = (float)((double)pfVar9[1] + dVar16);
         }
       }
       uVar12 = uVar12 + 1;
-      param_4 = param_4 + 0x20;
       lVar13 = lVar13 + 0x20;
-    } while ((int)uVar12 < iVar11);
+      lVar14 = lVar14 + 0x20;
+    } while ((int)uVar12 < iVar10);
   }
   __restgprlr_22();
   return;
@@ -2851,8 +3358,8 @@ void XAnimMadRotTransArray
 
 // 8262BB80  XAnimApplyAdditives  (xanim/xanim_calc.cpp:1282)
 
-void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,int param_4,
-                        int param_5)
+void XAnimApplyAdditives(DObjAnimMat *param_1,DObjAnimMat *param_2,float param_3,int param_4,
+                        XAnimCalcAnimInfo *param_5)
 
 {
   float fVar1;
@@ -2860,11 +3367,12 @@ void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,
   float *pfVar3;
   int iVar4;
   float *pfVar5;
-  uint uVar6;
-  float *pfVar7;
-  longlong lVar8;
+  longlong lVar6;
+  int in_r7;
+  uint uVar7;
+  float *pfVar8;
+  longlong lVar9;
   double extraout_f1;
-  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -2874,55 +3382,55 @@ void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,
   float local_78;
   float local_74;
   
-  iVar4 = __savegprlr_22();
-  uVar6 = 0;
-  if (0 < param_4) {
+  lVar6 = (longlong)(int)param_2;
+  iVar4 = __savegprlr_22((double)param_3,param_1,lVar6,param_4);
+  uVar7 = 0;
+  if (0 < (int)param_5) {
     dVar13 = 1.0;
     dVar11 = 0.0;
-    lVar8 = param_2 + 4;
-    pfVar7 = (float *)(iVar4 + 0x14);
+    lVar9 = lVar6 + 4;
+    pfVar8 = (float *)(iVar4 + 0x14);
     dVar12 = extraout_f1;
     do {
-      if (0xbf < uVar6) {
-        MyAssertHandler(0xffffffff821858f8,0x42,0,0xffffffff82000f98,0xffffffff82185940);
+      if (0xbf < uVar7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                        ,0x42,0,"%s");
       }
-      if ((*(uint *)((uVar6 >> 3 & 0x1ffffffc) + param_5 + 0x9018) & (&DAT_82992400)[uVar6 & 0x1f])
-          == 0) {
-        pfVar3 = (float *)lVar8;
+      if ((*(uint *)((uVar7 >> 3 & 0x1ffffffc) + in_r7 + 0x9018) &
+          *(uint *)(&g_bitShift + (uVar7 & 0x1f) * 4)) == 0) {
+        pfVar3 = (float *)lVar9;
         fVar2 = pfVar3[-1];
+        pfVar5 = pfVar3 + -1;
         dVar10 = (double)(*pfVar3 * *pfVar3 +
                          pfVar3[2] * pfVar3[2] + pfVar3[1] * pfVar3[1] + fVar2 * fVar2);
         if (dVar10 != dVar11) {
           dVar10 = (double)(float)SQRT(dVar10);
           fVar1 = (float)(dVar13 / dVar10);
-          dVar9 = (double)(float)(dVar10 * dVar12);
-          dVar10 = (double)(fVar2 * fVar1);
-          pfVar5 = (float *)(lVar8 + -4);
+          dVar10 = (double)(float)(dVar10 * dVar12);
           *pfVar5 = fVar2 * fVar1;
           *pfVar3 = *pfVar3 * fVar1;
           pfVar3[1] = pfVar3[1] * fVar1;
-          fVar2 = (float)(dVar10 * dVar9);
           pfVar3[2] = pfVar3[2] * fVar1;
-          *pfVar5 = fVar2;
-          *pfVar3 = (float)((double)*pfVar3 * dVar9);
-          pfVar3[1] = (float)((double)pfVar3[1] * dVar9);
-          pfVar3[2] = (float)((double)pfVar3[2] * dVar9 + (double)(float)(dVar13 - dVar9));
-          QuatMultiply((double)fVar2,dVar10,lVar8 + -4,pfVar7 + -5,&local_80);
-          pfVar7[-5] = local_80;
-          pfVar7[-4] = local_7c;
-          pfVar7[-3] = local_78;
-          pfVar7[-2] = local_74;
+          *pfVar5 = (float)((double)(fVar2 * fVar1) * dVar10);
+          *pfVar3 = (float)((double)*pfVar3 * dVar10);
+          pfVar3[1] = (float)((double)pfVar3[1] * dVar10);
+          pfVar3[2] = (float)((double)pfVar3[2] * dVar10 + (double)(float)(dVar13 - dVar10));
+          QuatMultiply(pfVar5,pfVar8 + -5,&local_80);
+          pfVar8[-5] = local_80;
+          pfVar8[-4] = local_7c;
+          pfVar8[-3] = local_78;
+          pfVar8[-2] = local_74;
         }
-        pfVar7[-1] = (float)((double)pfVar3[3] * dVar12 + (double)pfVar7[-1]);
+        pfVar8[-1] = (float)((double)pfVar3[3] * dVar12 + (double)pfVar8[-1]);
         fVar2 = pfVar3[5];
-        *pfVar7 = (float)((double)*(float *)(((int)param_2 - iVar4) + (int)pfVar7) * dVar12 +
-                         (double)*pfVar7);
-        pfVar7[1] = (float)((double)fVar2 * dVar12 + (double)pfVar7[1]);
+        *pfVar8 = (float)((double)*(float *)(((int)lVar6 - iVar4) + (int)pfVar8) * dVar12 +
+                         (double)*pfVar8);
+        pfVar8[1] = (float)((double)fVar2 * dVar12 + (double)pfVar8[1]);
       }
-      uVar6 = uVar6 + 1;
-      lVar8 = lVar8 + 0x20;
-      pfVar7 = pfVar7 + 8;
-    } while ((int)uVar6 < param_4);
+      uVar7 = uVar7 + 1;
+      lVar9 = lVar9 + 0x20;
+      pfVar8 = pfVar8 + 8;
+    } while ((int)uVar7 < (int)param_5);
   }
   __restgprlr_22();
   return;
@@ -2931,85 +3439,124 @@ void XAnimApplyAdditives(undefined8 param_1,longlong param_2,undefined8 param_3,
 
 // 8262F940  XAnimCalc  (xanim/xanim_calc.cpp:1325)
 
-void XAnimCalc(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-              ulonglong param_5,longlong param_6,ulonglong param_7,ulonglong param_8)
+void XAnimCalc(DObj *param_1,XAnimInfo *param_2,float param_3,bool param_4,bool param_5,
+              XAnimCalcAnimInfo *param_6,int param_7,DObjAnimMat *param_8)
 
 {
-  int *piVar1;
-  bool bVar2;
-  bool bVar3;
+  float fVar1;
+  ushort uVar2;
+  XAnimTree *pXVar3;
   bool bVar4;
-  int *piVar5;
-  int iVar6;
-  char cVar8;
-  int iVar7;
-  ulonglong uVar9;
-  short sVar10;
-  undefined8 extraout_f1;
-  undefined8 uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  uint in_stack_00000044;
+  bool bVar5;
+  DObj *pDVar6;
+  XAnimInfo *pXVar7;
+  bool bVar10;
+  XAnimInfo *pXVar8;
+  DObjAnimMat *pDVar9;
+  XAnimCalcAnimInfo *pXVar11;
+  ulonglong uVar12;
+  XAnimCalcAnimInfo *pXVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  ulonglong in_r10;
+  XAnimCalcAnimInfo *pXVar18;
+  ulonglong uVar17;
+  DObjAnimMat *pDVar19;
+  ulonglong uVar20;
+  uint uVar21;
+  double extraout_f1;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  uint uStack00000044;
   
+  uVar17 = (ulonglong)(int)param_8;
+  lVar16 = (longlong)param_7;
+  uVar15 = (ulonglong)(int)param_6;
+  uVar14 = (ulonglong)param_5;
+  uVar12 = (ulonglong)param_4;
   __savegprlr();
-  piVar5 = (int *)__savefpr_28();
-  piVar1 = (int *)*piVar5;
-  in_stack_00000044 = (uint)param_7;
-  uVar11 = extraout_f1;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82186f8c,0x543,0,0xffffffff82000f98,0xffffffff821813e0);
+  pDVar6 = (DObj *)__savefpr_28();
+  pXVar18 = (XAnimCalcAnimInfo *)in_r10;
+  pXVar3 = pDVar6->tree;
+  uStack00000044 = (uint)uVar17;
+  dVar22 = extraout_f1;
+  pXVar11 = (XAnimCalcAnimInfo *)param_2;
+  if (pXVar3 == (XAnimTree *)0x0) {
+    uVar12 = 0;
+    pXVar11 = (XAnimCalcAnimInfo *)0x543;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x543,0,
+                    "%s");
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x544,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar3->anims == (XAnim_s *)0x0) {
+    uVar12 = 0;
+    pXVar11 = (XAnimCalcAnimInfo *)0x544;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x544,0,
+                    "%s");
   }
-  iVar6 = (int)param_2;
-  if (*(int **)(iVar6 + 0x18) != piVar1) {
-    MyAssertHandler(0xffffffff82186f8c,0x549,0,0xffffffff82000f98,0xffffffff82185e74);
+  if ((XAnimTree *)((XAnimCalcAnimInfo *)param_2)->rotTransArray[0].trans[2] != pXVar3) {
+    uVar12 = 0;
+    pXVar11 = (XAnimCalcAnimInfo *)0x549;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x549,0,
+                    "%s");
   }
-  if (*(char *)(iVar6 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82186f8c,0x54b,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (*(bool *)(((XAnimCalcAnimInfo *)param_2)->rotTransArray[0].trans + 1) == false) {
+    uVar12 = 0;
+    pXVar11 = (XAnimCalcAnimInfo *)0x54b;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x54b,0,
+                    "%s");
   }
-  if (*(short *)(iVar6 + 0x12) != 0) {
-    if ((param_4 & 0xff) != 0) {
-      XAnimClearRotTransArray(piVar5,param_8,param_6);
+  pXVar13 = (XAnimCalcAnimInfo *)lVar16;
+  if (*(ushort *)((int)((XAnimCalcAnimInfo *)param_2)->rotTransArray[0].trans + 2) != 0) {
+    if ((uVar14 & 0xff) != 0) {
+      pXVar11 = pXVar18;
+      XAnimClearRotTransArray(pDVar6,pXVar18->rotTransArray,pXVar13);
     }
-    XAnimCalcLeaf(uVar11,param_2);
+    XAnimCalcLeaf(param_2,(float)dVar22,pXVar11->rotTransArray,pXVar18);
     __restfpr_28();
     __restgprlr();
     return;
   }
-  sVar10 = *(short *)(iVar6 + 0xc);
-  if (sVar10 != 0) {
-    dVar12 = 0.0;
+  uVar21 = (uint)*(ushort *)(((XAnimCalcAnimInfo *)param_2)->rotTransArray[0].quat + 3);
+  if (uVar21 != 0) {
+    dVar23 = 0.0;
     do {
-      iVar6 = GetAnimInfo(sVar10);
-      if (iVar6 == 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x562,0,0xffffffff82000f98,0xffffffff82187230);
+      pXVar7 = GetAnimInfo(uVar21);
+      if (pXVar7 == (XAnimInfo *)0x0) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x562,0,"%s");
       }
-      if (*(int **)(iVar6 + 0x18) != piVar1) {
-        MyAssertHandler(0xffffffff82186f8c,0x565,0,0xffffffff82000f98,0xffffffff8218723c);
+      if (pXVar7->tree != pXVar3) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x565,0,"%s");
       }
-      if (*(char *)(iVar6 + 0x14) == '\0') {
-        MyAssertHandler(0xffffffff82186f8c,0x567,0,0xffffffff82000f98,0xffffffff82187254);
+      if (pXVar7->inuse == false) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x567,0,"%s");
       }
-      dVar13 = (double)*(float *)(iVar6 + 0x34);
-      if (dVar13 != dVar12) {
-        cVar8 = IsInfoAdditive(iVar6);
-        if ((cVar8 == '\0') && (sVar10 != 0)) {
-          sVar10 = *(short *)(iVar6 + 10);
-          bVar3 = false;
-          uVar9 = 0;
-          bVar4 = false;
+      dVar24 = (double)(pXVar7->state).weight;
+      if (dVar24 != dVar23) {
+        bVar10 = IsInfoAdditive(pXVar7);
+        if ((!bVar10) && (uVar21 != 0)) {
+          uVar2 = pXVar7->next;
+          bVar10 = false;
+          uVar20 = 0;
+          pDVar9 = (DObjAnimMat *)0x0;
+          bVar5 = false;
           goto joined_r0x8262fba8;
         }
         break;
       }
-      sVar10 = *(short *)(iVar6 + 10);
-    } while (sVar10 != 0);
+      uVar21 = (uint)pXVar7->next;
+    } while (uVar21 != 0);
   }
-  if ((param_4 & 0xff) != 0) {
-    XAnimClearRotTransArray(piVar5,param_8,param_6);
+  if ((uVar14 & 0xff) != 0) {
+    XAnimClearRotTransArray(pDVar6,pXVar18->rotTransArray,pXVar13);
     __restfpr_28();
     __restgprlr();
     return;
@@ -3019,99 +3566,133 @@ LAB_8262ff74:
   __restgprlr();
   return;
 joined_r0x8262fba8:
-  if (sVar10 == 0) goto LAB_8262fd24;
-  iVar7 = GetAnimInfo(sVar10);
-  if (iVar7 == 0) {
-    MyAssertHandler(0xffffffff82186f8c,0x589,0,0xffffffff82000f98,0xffffffff821871f4);
+  uVar21 = (uint)uVar2;
+  if (uVar21 == 0) goto LAB_8262fd24;
+  pDVar9 = (DObjAnimMat *)uVar20;
+  pXVar8 = GetAnimInfo(uVar21);
+  if (pXVar8 == (XAnimInfo *)0x0) {
+    uVar12 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x589,0,
+                    "%s");
   }
-  if (*(int **)(iVar7 + 0x18) != piVar1) {
-    MyAssertHandler(0xffffffff82186f8c,0x58c,0,0xffffffff82000f98,0xffffffff82187200);
+  if (pXVar8->tree != pXVar3) {
+    uVar12 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x58c,0,
+                    "%s");
   }
-  if (*(char *)(iVar7 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82186f8c,0x58e,0,0xffffffff82000f98,0xffffffff8218721c);
+  if (pXVar8->inuse == false) {
+    uVar12 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x58e,0,
+                    "%s");
   }
-  dVar14 = (double)*(float *)(iVar7 + 0x34);
-  if (dVar14 != dVar12) {
-    if ((*(short *)(iVar7 + 0x12) != 0) || (bVar2 = true, (*(ushort *)(iVar7 + 0x1c) & 0x10) == 0))
-    {
-      bVar2 = false;
+  dVar25 = (double)(pXVar8->state).weight;
+  if (dVar25 != dVar23) {
+    if ((pXVar8->animToModel != 0) ||
+       (bVar4 = true, ((pXVar8->field12_0x1c).animParent.flags & 0x10) == 0)) {
+      bVar4 = false;
     }
-    if (bVar2) goto LAB_8262fd24;
-    if (!bVar3) {
-      bVar3 = true;
-      uVar9 = param_8;
-      if ((param_4 & 0xff) == 0) {
-        uVar9 = XAnimGetCalcBuffer(param_6,piVar5,&stack0x00000044);
-        if ((uVar9 & 0xffffffff) == 0) goto LAB_8262ff74;
-        param_7 = (ulonglong)in_stack_00000044;
-        bVar4 = true;
+    if (bVar4) goto LAB_8262fd24;
+    if (!bVar10) {
+      bVar10 = true;
+      uVar20 = in_r10;
+      if ((uVar14 & 0xff) == 0) {
+        uVar12 = ZEXT48(&stack0x00000000) + 0x44;
+        pDVar9 = XAnimGetCalcBuffer(pXVar13,pDVar6,(int *)uVar12);
+        if (pDVar9 == (DObjAnimMat *)0x0) goto LAB_8262ff74;
+        uVar17 = (ulonglong)uStack00000044;
+        bVar5 = true;
+        uVar20 = (longlong)(int)pDVar9;
       }
-      XAnimCalc(dVar13,piVar5,iVar6);
+      XAnimCalc(pDVar6,pXVar7,(float)dVar24,SUB81(uVar12,0),true,(XAnimCalcAnimInfo *)0x1,
+                (int)pXVar13,(DObjAnimMat *)uVar17);
     }
-    if ((uVar9 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82186f8c,0x5b4,0,0xffffffff82000f98,0xffffffff821871e8);
+    if ((uVar20 & 0xffffffff) == 0) {
+      uVar12 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x5b4,
+                      0,"%s");
     }
-    XAnimCalc(dVar14,piVar5,iVar7);
+    XAnimCalc(pDVar6,pXVar8,(float)dVar25,SUB81(uVar12,0),false,(XAnimCalcAnimInfo *)0x1,
+              (int)pXVar13,(DObjAnimMat *)uVar17);
   }
-  sVar10 = *(short *)(iVar7 + 10);
+  pDVar9 = (DObjAnimMat *)uVar20;
+  uVar2 = pXVar8->next;
   goto joined_r0x8262fba8;
 LAB_8262fd24:
-  if (bVar3) {
-    if ((param_5 & 0xff) == 0) {
-      if ((param_4 & 0xff) == 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x5bb,0,0xffffffff82000f98,0xffffffff821871d4);
+  pDVar19 = (DObjAnimMat *)uVar17;
+  if (bVar10) {
+    if ((uVar15 & 0xff) == 0) {
+      if ((uVar14 & 0xff) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x5bb,0,"%s");
       }
-      XAnimScaleRotTransArray(*(undefined1 *)((int)piVar5 + 10),param_6,param_8);
+      XAnimScaleRotTransArray((uint)pDVar6->numBones,pXVar13,pXVar18->rotTransArray);
+      uVar12 = in_r10;
     }
-    else if ((param_4 & 0xff) == 0) {
-      XAnimMadRotTransArray(uVar11,*(undefined1 *)((int)piVar5 + 10),param_6);
+    else if ((uVar14 & 0xff) == 0) {
+      XAnimMadRotTransArray
+                ((uint)pDVar6->numBones,pXVar13,(float)dVar22,(DObjAnimMat *)uVar12,pDVar9);
     }
     else {
-      XAnimNormalizeRotScaleTransArray();
+      XAnimNormalizeRotScaleTransArray
+                ((uint)pDVar6->numBones,pXVar13,(float)dVar22,(DObjAnimMat *)uVar12);
     }
   }
   else {
-    XAnimCalc(uVar11,piVar5,iVar6);
+    XAnimCalc(pDVar6,pXVar7,(float)dVar22,SUB81(uVar12,0),SUB81(uVar14,0),
+              (XAnimCalcAnimInfo *)uVar15,(int)pXVar13,pDVar19);
   }
-  if (sVar10 != 0) {
-    if (!bVar4) {
-      uVar9 = (param_7 & 0x7ffffff) * 0x20 + param_6;
-      if (0x480 < (int)((uint)*(byte *)((int)piVar5 + 10) + (int)param_7)) {
-        Com_PrintWarning(0x13,0xffffffff82186fcc);
-        DObjDisplayAnim(piVar5,0xffffffff820068af);
+  if (uVar21 != 0) {
+    if (!bVar5) {
+      pDVar19 = (DObjAnimMat *)((int)pDVar19->quat + (uint)pDVar6->numBones);
+      uVar17 = (uVar17 & 0x7ffffff) * 0x20 + lVar16;
+      pDVar9 = (DObjAnimMat *)uVar17;
+      if (0x480 < (int)pDVar19) {
+        Com_PrintWarning(0x13,"max calculation buffer exceeded\n");
+        DObjDisplayAnim(pDVar6,"");
         __restfpr_28();
         __restgprlr();
         return;
       }
-      if ((uVar9 & 0xffffffff) == 0) goto LAB_8262ff74;
+      if ((uVar17 & 0xffffffff) == 0) goto LAB_8262ff74;
     }
-    bVar3 = false;
+    bVar10 = false;
     do {
-      iVar6 = GetAnimInfo(sVar10);
-      if (iVar6 == 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x5e3,0,0xffffffff82000f98,0xffffffff821871f4);
+      pXVar7 = GetAnimInfo(uVar21);
+      if (pXVar7 == (XAnimInfo *)0x0) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x5e3,0,"%s");
       }
-      if (*(int **)(iVar6 + 0x18) != piVar1) {
-        MyAssertHandler(0xffffffff82186f8c,0x5e6,0,0xffffffff82000f98,0xffffffff82187200);
+      if (pXVar7->tree != pXVar3) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x5e6,0,"%s");
       }
-      if (*(char *)(iVar6 + 0x14) == '\0') {
-        MyAssertHandler(0xffffffff82186f8c,0x5e8,0,0xffffffff82000f98,0xffffffff8218721c);
+      if (pXVar7->inuse == false) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x5e8,0,"%s");
       }
-      if ((*(short *)(iVar6 + 0x12) != 0) || (bVar4 = true, (*(ushort *)(iVar6 + 0x1c) & 0x10) == 0)
-         ) {
-        bVar4 = false;
+      if ((pXVar7->animToModel != 0) ||
+         (bVar5 = true, ((pXVar7->field12_0x1c).animParent.flags & 0x10) == 0)) {
+        bVar5 = false;
       }
-      if (!bVar4) {
-        MyAssertHandler(0xffffffff82186f8c,0x5eb,0,0xffffffff82000f98,0xffffffff821871b4);
+      if (!bVar5) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x5eb,0,"%s");
       }
-      if ((double)*(float *)(iVar6 + 0x34) != dVar12) {
-        XAnimCalc(piVar5,iVar6);
-        bVar3 = true;
+      fVar1 = (pXVar7->state).weight;
+      if ((double)fVar1 != dVar23) {
+        XAnimCalc(pDVar6,pXVar7,fVar1,SUB81(uVar12,0),!bVar10,(XAnimCalcAnimInfo *)0x1,(int)pXVar13,
+                  pDVar19);
+        bVar10 = true;
       }
-      sVar10 = *(short *)(iVar6 + 10);
-    } while (sVar10 != 0);
-    if (bVar3) {
-      XAnimApplyAdditives(uVar11,param_8,uVar9);
+      uVar21 = (uint)pXVar7->next;
+    } while (uVar21 != 0);
+    if (bVar10) {
+      XAnimApplyAdditives(pXVar18->rotTransArray,pDVar9,(float)dVar22,(int)uVar12,
+                          (XAnimCalcAnimInfo *)(uint)pDVar6->numBones);
     }
   }
   goto LAB_8262ff74;
@@ -3120,298 +3701,323 @@ LAB_8262fd24:
 
 // 8262FF88  DObjCalcAnim  (xanim/xanim_calc.cpp:1540)
 
-void DObjCalcAnim(undefined8 param_1,uint *param_2,longlong param_3)
+void DObjCalcAnim(DObj *param_1,int *param_2,XAnimCalcAnimInfo *param_3)
 
 {
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  bool bVar4;
-  int iVar5;
-  uint *puVar9;
-  ulonglong uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 uVar10;
+  uint uVar4;
+  XAnimTree *pXVar5;
+  XModel *pXVar6;
+  bool bVar7;
+  int iVar8;
+  DObj *pDVar9;
+  XAnimInfo *pXVar10;
   int iVar11;
-  uint *puVar12;
-  float *pfVar13;
-  uint uVar14;
-  int *piVar15;
-  longlong lVar16;
-  longlong lVar17;
-  uint uVar18;
-  uint *puVar19;
+  undefined1 uVar12;
+  int iVar13;
+  longlong lVar14;
+  uint *puVar15;
+  DObjAnimMat *pDVar16;
+  XModel **ppXVar17;
+  uint uVar19;
+  ulonglong uVar18;
   float *pfVar20;
-  uint *puVar21;
-  undefined8 in_MSR;
+  longlong lVar21;
+  uint *puVar22;
   char in_RESERVE;
-  byte bVar22;
-  double dVar23;
+  byte bVar23;
   double dVar24;
-  undefined1 auVar25 [16];
+  double dVar25;
   undefined1 auVar26 [16];
   undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  DObj *pDStack00000014;
   
-  puVar9 = (uint *)__savegprlr();
+  lVar21 = (longlong)(int)param_3;
+  uVar18 = (ulonglong)(int)param_1;
+  __savegprlr();
+  pDVar9 = (DObj *)uVar18;
+  pDStack00000014 = pDVar9;
   Profile_Begin(0x130);
-  if (puVar9 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82186f8c,0x619,0,0xffffffff82000f98,0xffffffff820040b4);
+  if ((uVar18 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x619,0,
+                    "%s");
   }
-  puVar12 = puVar9 + 5;
-  bVar22 = (puVar12 == (uint *)0x0) << 1;
-  if (puVar12 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82186f8c,0x61c,0,0xffffffff82000f98,0xffffffff82185264);
+  lVar14 = uVar18 + 0x14;
+  bVar23 = (lVar14 == 0) << 1;
+  if (lVar14 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x61c,0,
+                    "%s");
   }
-  iVar5 = (int)param_3;
-  param_3 = param_3 + 0x9000;
-  puVar21 = (uint *)param_3;
-  *puVar21 = *param_2;
-  *(uint *)(iVar5 + 0x9004) = param_2[1];
-  *(uint *)(iVar5 + 0x9008) = param_2[2];
-  iVar11 = 0;
-  *(uint *)(iVar5 + 0x900c) = param_2[3];
-  *(uint *)(iVar5 + 0x9010) = param_2[4];
-  *(uint *)(iVar5 + 0x9014) = param_2[5];
-  uVar14 = *(uint *)(iVar5 + 0x900c);
-  uVar18 = *(uint *)(iVar5 + 0x9010);
-  uVar1 = *(uint *)(iVar5 + 0x9014);
-  uVar2 = *puVar21;
-  uVar3 = *(uint *)(iVar5 + 0x9004);
-  *(uint *)(iVar5 + 0x9008) = ~*(uint *)(iVar5 + 0x9008);
-  *(uint *)(iVar5 + 0x900c) = ~uVar14;
-  *(uint *)(iVar5 + 0x9010) = ~uVar18;
-  *(uint *)(iVar5 + 0x9014) = ~uVar1;
-  *(uint *)(iVar5 + 0x9004) = ~uVar3;
-  *puVar21 = ~uVar2;
-  uVar2 = *(uint *)(iVar5 + 0x9008);
-  *puVar21 = *puVar21 | *puVar12;
-  *(uint *)(iVar5 + 0x9004) = puVar9[6] | ~uVar3;
-  *(uint *)(iVar5 + 0x9008) = puVar9[7] | uVar2;
-  *(uint *)(iVar5 + 0x900c) = ~uVar14 | puVar9[8];
-  *(uint *)(iVar5 + 0x9010) = puVar9[9] | ~uVar18;
-  *(uint *)(iVar5 + 0x9014) = ~uVar1 | puVar9[10];
+  iVar8 = (int)lVar21;
+  lVar21 = lVar21 + 0x9000;
+  puVar22 = (uint *)lVar21;
+  *puVar22 = *param_2;
+  *(uint *)(iVar8 + 0x9004) = param_2[1];
+  *(uint *)(iVar8 + 0x9008) = param_2[2];
+  iVar13 = 0;
+  *(uint *)(iVar8 + 0x900c) = param_2[3];
+  *(uint *)(iVar8 + 0x9010) = param_2[4];
+  *(uint *)(iVar8 + 0x9014) = param_2[5];
+  uVar19 = *(uint *)(iVar8 + 0x900c);
+  uVar1 = *(uint *)(iVar8 + 0x9010);
+  uVar2 = *(uint *)(iVar8 + 0x9014);
+  uVar3 = *puVar22;
+  uVar4 = *(uint *)(iVar8 + 0x9004);
+  *(uint *)(iVar8 + 0x9008) = ~*(uint *)(iVar8 + 0x9008);
+  *(uint *)(iVar8 + 0x900c) = ~uVar19;
+  *(uint *)(iVar8 + 0x9010) = ~uVar1;
+  *(uint *)(iVar8 + 0x9014) = ~uVar2;
+  *(uint *)(iVar8 + 0x9004) = ~uVar4;
+  *puVar22 = ~uVar3;
+  uVar3 = *(uint *)(iVar8 + 0x9008);
+  puVar15 = (uint *)lVar14;
+  *puVar22 = *puVar22 | *puVar15;
+  *(uint *)(iVar8 + 0x9004) = (pDVar9->skel).partBits.anim[1] | ~uVar4;
+  *(uint *)(iVar8 + 0x9008) = (pDVar9->skel).partBits.anim[2] | uVar3;
+  *(uint *)(iVar8 + 0x900c) = ~uVar19 | (pDVar9->skel).partBits.anim[3];
+  *(uint *)(iVar8 + 0x9010) = (pDVar9->skel).partBits.anim[4] | ~uVar1;
+  *(uint *)(iVar8 + 0x9014) = ~uVar2 | (pDVar9->skel).partBits.anim[5];
   do {
-    if (*(int *)param_3 != -1) {
-      bVar4 = false;
+    if (*(int *)lVar21 != -1) {
+      bVar7 = false;
       goto LAB_82630144;
     }
-    iVar11 = iVar11 + 1;
-    param_3 = param_3 + 4;
-  } while (iVar11 < 6);
-  bVar4 = true;
+    iVar13 = iVar13 + 1;
+    lVar21 = lVar21 + 4;
+  } while (iVar13 < 6);
+  bVar7 = true;
 LAB_82630144:
-  if (!bVar4) {
-    uVar14 = puVar9[0x1e];
-    uVar18 = 0;
-    if (*(char *)((int)puVar9 + 10) != '\0') {
-      puVar19 = (uint *)(uVar14 + 8);
+  if (!bVar7) {
+    pDVar16 = (pDVar9->skel).mat;
+    uVar19 = 0;
+    if (pDVar9->numBones != '\0') {
+      pfVar20 = pDVar16->quat + 2;
       do {
-        if (0xbf < uVar18) {
-          MyAssertHandler(0xffffffff821858f8,0x42,0,&DAT_82000f98,0xffffffff82185940);
+        if (0xbf < uVar19) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                          ,0x42,0,"%s");
         }
-        if ((*(uint *)((uVar18 >> 3 & 0x1ffffffc) + (int)puVar12) & (&DAT_82992400)[uVar18 & 0x1f])
-            != 0) {
-          if (((((puVar19[-2] & 0x7f800000) == 0x7f800000) ||
-               ((puVar19[-1] & 0x7f800000) == 0x7f800000)) ||
-              ((*puVar19 & 0x7f800000) == 0x7f800000)) || ((puVar19[1] & 0x7f800000) == 0x7f800000))
-          {
-            MyAssertHandler(0xffffffff82186f8c,0x635,0,&DAT_82000f98,0xffffffff82187380);
+        if ((*(uint *)((uVar19 >> 3 & 0x1ffffffc) + (int)puVar15) &
+            *(uint *)(&g_bitShift + (uVar19 & 0x1f) * 4)) != 0) {
+          if ((((((uint)((DObjAnimMat *)(pfVar20 + -2))->quat[0] & 0x7f800000) == 0x7f800000) ||
+               (((uint)pfVar20[-1] & 0x7f800000) == 0x7f800000)) ||
+              (((uint)*pfVar20 & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar20[1] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                            0x635,0,"%s");
           }
-          if ((((puVar19[2] & 0x7f800000) == 0x7f800000) ||
-              ((puVar19[3] & 0x7f800000) == 0x7f800000)) ||
-             ((puVar19[4] & 0x7f800000) == 0x7f800000)) {
-            MyAssertHandler(0xffffffff82186f8c,0x636,0,&DAT_82000f98,0xffffffff82187400);
+          if (((((uint)pfVar20[2] & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar20[3] & 0x7f800000) == 0x7f800000)) ||
+             (((uint)pfVar20[4] & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                            0x636,0,"%s");
           }
         }
-        uVar18 = uVar18 + 1;
-        puVar19 = puVar19 + 8;
-      } while ((int)uVar18 < (int)(uint)*(byte *)((int)puVar9 + 10));
+        uVar19 = uVar19 + 1;
+        pfVar20 = pfVar20 + 8;
+      } while ((int)uVar19 < (int)(uint)pDStack00000014->numBones);
     }
-    if ((uVar14 & 0xf) != 0) {
-      MyAssertHandler(0xffffffff82186f8c,0x63c,0,&DAT_82000f98,0xffffffff82187354);
+    if (((uint)pDVar16 & 0xf) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x63c,
+                      0,"%s");
     }
-    *puVar12 = *puVar12 | *param_2;
-    dVar23 = 1.0;
-    puVar9[6] = puVar9[6] | param_2[1];
-    puVar9[7] = puVar9[7] | param_2[2];
-    puVar9[8] = param_2[3] | puVar9[8];
-    puVar9[9] = puVar9[9] | param_2[4];
-    puVar9[10] = puVar9[10] | param_2[5];
-    *(uint *)(iVar5 + 0x9024) = *(uint *)(iVar5 + 0x900c);
-    *(uint *)(iVar5 + 0x9018) = *puVar21;
-    *(uint *)(iVar5 + 0x901c) = *(uint *)(iVar5 + 0x9004);
-    *(uint *)(iVar5 + 0x9020) = *(uint *)(iVar5 + 0x9008);
-    *(uint *)(iVar5 + 0x9028) = *(uint *)(iVar5 + 0x9010);
-    *(uint *)(iVar5 + 0x902c) = *(uint *)(iVar5 + 0x9014);
-    uVar14 = *puVar9;
-    if (((ulonglong)uVar14 != 0) && (*(short *)(uVar14 + 0x10) != 0)) {
-      lVar16 = (ulonglong)uVar14 + 8;
+    uVar19 = (pDVar9->skel).partBits.anim[1];
+    uVar1 = (pDVar9->skel).partBits.anim[2];
+    uVar2 = (pDVar9->skel).partBits.anim[3];
+    *puVar15 = *puVar15 | *param_2;
+    dVar24 = 1.0;
+    (pDVar9->skel).partBits.anim[1] = uVar19 | param_2[1];
+    (pDVar9->skel).partBits.anim[2] = uVar1 | param_2[2];
+    uVar19 = (pDVar9->skel).partBits.anim[4];
+    uVar1 = (pDVar9->skel).partBits.anim[5];
+    (pDVar9->skel).partBits.anim[3] = param_2[3] | uVar2;
+    (pDVar9->skel).partBits.anim[4] = uVar19 | param_2[4];
+    (pDVar9->skel).partBits.anim[5] = uVar1 | param_2[5];
+    *(uint *)(iVar8 + 0x9024) = *(uint *)(iVar8 + 0x900c);
+    uVar12 = (undefined1)*puVar22;
+    *(uint *)(iVar8 + 0x9018) = *puVar22;
+    *(uint *)(iVar8 + 0x901c) = *(uint *)(iVar8 + 0x9004);
+    *(uint *)(iVar8 + 0x9020) = *(uint *)(iVar8 + 0x9008);
+    *(uint *)(iVar8 + 0x9028) = *(uint *)(iVar8 + 0x9010);
+    *(uint *)(iVar8 + 0x902c) = *(uint *)(iVar8 + 0x9014);
+    pXVar5 = pDStack00000014->tree;
+    if ((ZEXT48(pXVar5) != 0) && (pXVar5->children != 0)) {
+      lVar21 = ZEXT48(pXVar5) + 8;
       do {
-        puVar21 = (uint *)lVar16;
+        puVar22 = (uint *)lVar21;
         if (in_RESERVE != '\0') {
-          uVar18 = storeWordConditionalIndexed((ulonglong)*puVar21 + 1,0,lVar16);
-          *puVar21 = uVar18;
-          bVar22 = 2;
+          uVar19 = storeWordConditionalIndexed((ulonglong)*puVar22 + 1,0,lVar21);
+          *puVar22 = uVar19;
+          bVar23 = 2;
         }
-      } while (!(bool)(bVar22 >> 1 & 1));
-      if (*(int *)(uVar14 + 0xc) != 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x64a,0,&DAT_82000f98,0xffffffff8218733c,0x901c,
-                        *(int *)(uVar14 + 0xc),in_MSR);
+      } while (!(bool)(bVar23 >> 1 & 1));
+      if (pXVar5->modifyRefCount != 0) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x64a,0,"%s");
       }
-      *(uint *)(iVar5 + 0x902c) = *(uint *)(iVar5 + 0x902c) | DAT_8299247c;
-      uVar6 = GetAnimInfo(*(undefined2 *)(uVar14 + 0x10));
-      if ((uVar6 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x650,0,&DAT_82000f98,0xffffffff82021a7c);
+      *(uint *)(iVar8 + 0x902c) = *(uint *)(iVar8 + 0x902c) | DAT_8299247c;
+      pXVar10 = GetAnimInfo((uint)pXVar5->children);
+      if (pXVar10 == (XAnimInfo *)0x0) {
+        uVar12 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x650,0,"%s");
       }
-      XAnimCalc(dVar23,puVar9,uVar6);
-      if (*(int *)(uVar14 + 0xc) != 0) {
-        MyAssertHandler(0xffffffff82186f8c,0x654,0,&DAT_82000f98,0xffffffff8218733c);
+      XAnimCalc(pDStack00000014,pXVar10,(float)dVar24,(bool)uVar12,true,(XAnimCalcAnimInfo *)0x0,
+                iVar8,(DObjAnimMat *)0x0);
+      if (pXVar5->modifyRefCount != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",
+                        0x654,0,"%s");
       }
       do {
         if (in_RESERVE != '\0') {
-          uVar14 = storeWordConditionalIndexed((ulonglong)*puVar21 - 1,0,lVar16);
-          *puVar21 = uVar14;
-          bVar22 = 2;
+          uVar19 = storeWordConditionalIndexed((ulonglong)*puVar22 - 1,0,lVar21);
+          *puVar22 = uVar19;
+          bVar23 = 2;
         }
-      } while (!(bool)(bVar22 >> 1 & 1));
+      } while (!(bool)(bVar23 >> 1 & 1));
     }
-    piVar15 = (int *)puVar9[0x26];
-    uVar14 = 0;
-    pfVar13 = (float *)puVar9[0x1e];
-    if (piVar15 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82186f8c,0x661,0,&DAT_82000f98,0xffffffff82185950);
+    ppXVar17 = pDStack00000014->models;
+    uVar19 = 0;
+    pDVar16 = (pDVar9->skel).mat;
+    if (ppXVar17 == (XModel **)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x661,
+                      0,"%s");
     }
-    lVar16 = 0;
-    if (*(char *)((int)puVar9 + 9) != '\0') {
-      dVar24 = 0.0;
+    iVar13 = 0;
+    if (pDStack00000014->numModels != '\0') {
+      dVar25 = 0.0;
       do {
-        iVar11 = *piVar15;
-        uVar6 = (ulonglong)*(byte *)(iVar11 + 5);
-        if (*(byte *)(iVar11 + 5) != 0) {
-          pfVar20 = pfVar13 + 6;
+        pXVar6 = *ppXVar17;
+        uVar18 = (ulonglong)pXVar6->numRootBones;
+        if (pXVar6->numRootBones != 0) {
+          pfVar20 = pDVar16->trans + 2;
           do {
-            if (0xbf < uVar14) {
+            if (0xbf < uVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                              ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                              ,0x42,0,"%s");
             }
-            if ((*(uint *)(((uVar14 >> 5) + 0x2400) * 4 + iVar5) & (&DAT_82992400)[uVar14 & 0x1f])
+            iVar11 = (uVar19 & 0x1f) * 4;
+            if ((*(uint *)(((uVar19 >> 5) + 0x2400) * 4 + iVar8) & *(uint *)(&g_bitShift + iVar11))
                 == 0) {
-              *pfVar13 = (float)dVar24;
-              pfVar20[-5] = (float)dVar24;
-              pfVar20[-4] = (float)dVar24;
-              pfVar20[-3] = (float)dVar23;
-              pfVar20[-2] = (float)dVar24;
-              pfVar20[-1] = (float)dVar24;
-              *pfVar20 = (float)dVar24;
-              pfVar20[1] = (float)dVar24;
+              pDVar16->quat[0] = (float)dVar25;
+              pfVar20[-5] = (float)dVar25;
+              pfVar20[-4] = (float)dVar25;
+              pfVar20[-3] = (float)dVar24;
+              pfVar20[-2] = (float)dVar25;
+              pfVar20[-1] = (float)dVar25;
+              *pfVar20 = (float)dVar25;
+              pfVar20[1] = (float)dVar25;
             }
             else {
-              if (0xbf < uVar14) {
+              if (0xbf < uVar19) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                                ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                                ,0x42,0,"%s");
               }
-              if ((puVar12[uVar14 >> 5] & (&DAT_82992400)[uVar14 & 0x1f]) != 0) {
-                if ((int)(uint)*(byte *)((int)puVar9 + 10) <= (int)uVar14) {
-                  uVar7 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                  MyAssertHandler(0xffffffff82186f8c,0x66f,0,0xffffffff820011f4,
-                                  "boneIndex < obj->numBones",uVar7);
+              if ((puVar15[uVar19 >> 5] & *(uint *)(&g_bitShift + iVar11)) != 0) {
+                if ((int)(uint)pDStack00000014->numBones <= (int)uVar19) {
+                  va("model %d: \'%s\'");
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp"
+                                  ,0x66f,0,"%s\n\t%s");
                 }
-                if ((((((uint)*pfVar13 & 0x7f800000) == 0x7f800000) ||
+                if ((((((uint)pDVar16->quat[0] & 0x7f800000) == 0x7f800000) ||
                      (((uint)pfVar20[-5] & 0x7f800000) == 0x7f800000)) ||
                     (((uint)pfVar20[-4] & 0x7f800000) == 0x7f800000)) ||
                    (((uint)pfVar20[-3] & 0x7f800000) == 0x7f800000)) {
-                  uVar7 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                  MyAssertHandler(0xffffffff82186f8c,0x670,0,0xffffffff820011f4,0xffffffff82187278,
-                                  uVar7);
+                  va("model %d: \'%s\'");
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp"
+                                  ,0x670,0,"%s\n\t%s");
                 }
                 if (((((uint)pfVar20[-2] & 0x7f800000) == 0x7f800000) ||
                     (((uint)pfVar20[-1] & 0x7f800000) == 0x7f800000)) ||
                    (((uint)*pfVar20 & 0x7f800000) == 0x7f800000)) {
-                  uVar7 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                  MyAssertHandler(0xffffffff82186f8c,0x671,0,0xffffffff820011f4,0xffffffff821872e8,
-                                  uVar7);
+                  va("model %d: \'%s\'");
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp"
+                                  ,0x671,0,"%s\n\t%s");
                 }
               }
             }
-            uVar6 = uVar6 - 1;
-            pfVar13 = pfVar13 + 8;
+            uVar18 = uVar18 - 1;
+            pDVar16 = pDVar16 + 1;
             pfVar20 = pfVar20 + 8;
-            uVar14 = uVar14 + 1;
-          } while (uVar6 != 0);
+            uVar19 = uVar19 + 1;
+          } while (uVar18 != 0);
         }
-        uVar6 = (ulonglong)*(uint *)(iVar11 + 0x2c);
-        lVar17 = (ulonglong)*(byte *)(iVar11 + 4) - (ulonglong)*(byte *)(iVar11 + 5);
-        if (lVar17 != 0) {
-          pfVar20 = pfVar13 + 6;
+        uVar18 = ZEXT48(pXVar6->quats);
+        lVar21 = (ulonglong)pXVar6->numBones - (ulonglong)pXVar6->numRootBones;
+        if (lVar21 != 0) {
+          pfVar20 = pDVar16->trans + 2;
           do {
-            if (0xbf < uVar14) {
+            if (0xbf < uVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                              ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                              ,0x42,0,"%s");
             }
-            if ((*(uint *)(((uVar14 >> 5) + 0x2400) * 4 + iVar5) & (&DAT_82992400)[uVar14 & 0x1f])
+            iVar11 = (uVar19 & 0x1f) * 4;
+            if ((*(uint *)(((uVar19 >> 5) + 0x2400) * 4 + iVar8) & *(uint *)(&g_bitShift + iVar11))
                 == 0) {
-              auVar27 = loadVectorLeftIndexed(uVar6);
-              auVar26 = loadVectorLeftIndexed(0xffffffff82067624);
-              auVar25 = vectorSplatWord(auVar26,0);
-              auVar26 = loadVectorRightIndexed(uVar6 + 8);
-              auVar26 = vectorShiftLeftDoubleByOctetImmediate(auVar26,auVar26,8);
-              auVar26 = vectorUnpackHighSignedByte(auVar27 | auVar26);
-              auVar26 = vectorConvertFromSignedFixedPointWord128(auVar26,0);
-              auVar26 = vectorMultiplyFloatingPoint(auVar25,auVar26);
-              *(undefined1 (*) [16])((uint)pfVar13 & 0xfffffff0) = auVar26;
-              pfVar20[-2] = (float)dVar24;
-              *pfVar20 = (float)dVar24;
-              pfVar20[-1] = (float)dVar24;
-              pfVar20[1] = (float)dVar24;
-              if (((((uint)*pfVar13 & 0x7f800000) == 0x7f800000) ||
+              auVar28 = loadVectorLeftIndexed(uVar18);
+              auVar27 = loadVectorLeftIndexed(0xffffffff82067624);
+              auVar26 = vectorSplatWord(auVar27,0);
+              auVar27 = loadVectorRightIndexed(uVar18 + 8);
+              auVar27 = vectorShiftLeftDoubleByOctetImmediate(auVar27,auVar27,8);
+              auVar27 = vectorUnpackHighSignedByte(auVar28 | auVar27);
+              auVar27 = vectorConvertFromSignedFixedPointWord128(auVar27,0);
+              auVar27 = vectorMultiplyFloatingPoint(auVar26,auVar27);
+              *(undefined1 (*) [16])((uint)pDVar16 & 0xfffffff0) = auVar27;
+              pfVar20[-2] = (float)dVar25;
+              *pfVar20 = (float)dVar25;
+              pfVar20[-1] = (float)dVar25;
+              pfVar20[1] = (float)dVar25;
+              if (((((uint)pDVar16->quat[0] & 0x7f800000) == 0x7f800000) ||
                   (((uint)pfVar20[-5] & 0x7f800000) == 0x7f800000)) ||
                  ((((uint)pfVar20[-4] & 0x7f800000) == 0x7f800000 ||
                   (((uint)pfVar20[-3] & 0x7f800000) == 0x7f800000)))) {
-                uVar8 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                uVar7 = 0xffffffff82187278;
-                uVar10 = 0x698;
+                va("model %d: \'%s\'");
+                iVar11 = 0x698;
 LAB_826309c8:
-                MyAssertHandler(0xffffffff82186f8c,uVar10,0,0xffffffff820011f4,uVar7,uVar8);
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp"
+                                ,iVar11,0,"%s\n\t%s");
               }
             }
             else {
-              if (0xbf < uVar14) {
+              if (0xbf < uVar19) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
-                                ,0x42,0,&DAT_82000f98,"pos < BIT_COUNT");
+                                ,0x42,0,"%s");
               }
-              if ((puVar12[uVar14 >> 5] & (&DAT_82992400)[uVar14 & 0x1f]) != 0) {
-                if ((((((uint)*pfVar13 & 0x7f800000) == 0x7f800000) ||
+              if ((puVar15[uVar19 >> 5] & *(uint *)(&g_bitShift + iVar11)) != 0) {
+                if ((((((uint)pDVar16->quat[0] & 0x7f800000) == 0x7f800000) ||
                      (((uint)pfVar20[-5] & 0x7f800000) == 0x7f800000)) ||
                     (((uint)pfVar20[-4] & 0x7f800000) == 0x7f800000)) ||
                    (((uint)pfVar20[-3] & 0x7f800000) == 0x7f800000)) {
-                  uVar7 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                  MyAssertHandler(0xffffffff82186f8c,0x68a,0,0xffffffff820011f4,0xffffffff82187278,
-                                  uVar7);
+                  va("model %d: \'%s\'");
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp"
+                                  ,0x68a,0,"%s\n\t%s");
                 }
                 if (((((uint)pfVar20[-2] & 0x7f800000) == 0x7f800000) ||
                     (((uint)pfVar20[-1] & 0x7f800000) == 0x7f800000)) ||
                    (((uint)*pfVar20 & 0x7f800000) == 0x7f800000)) {
-                  uVar8 = va(0xffffffff82187268,lVar16,*(undefined4 *)*piVar15);
-                  uVar10 = 0x68b;
-                  uVar7 = 0xffffffff821872e8;
+                  va("model %d: \'%s\'");
+                  iVar11 = 0x68b;
                   goto LAB_826309c8;
                 }
               }
             }
-            lVar17 = lVar17 + -1;
-            pfVar13 = pfVar13 + 8;
+            lVar21 = lVar21 + -1;
+            pDVar16 = pDVar16 + 1;
             pfVar20 = pfVar20 + 8;
-            uVar14 = uVar14 + 1;
-            uVar6 = uVar6 + 8;
-          } while (lVar17 != 0);
+            uVar19 = uVar19 + 1;
+            uVar18 = uVar18 + 8;
+          } while (lVar21 != 0);
         }
-        lVar16 = lVar16 + 1;
-        piVar15 = piVar15 + 1;
-      } while ((int)lVar16 < (int)(uint)*(byte *)((int)puVar9 + 9));
+        iVar13 = iVar13 + 1;
+        ppXVar17 = ppXVar17 + 1;
+      } while (iVar13 < (int)(uint)pDStack00000014->numModels);
     }
   }
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   __restgprlr();
   return;
 }
@@ -3420,46 +4026,51 @@ LAB_826309c8:
 // 826298F0  XAnim_CalcRotDeltaDuring<unsigned_char>  (xanim/xanim_calc.cpp:1705)
 
 void XAnim_CalcRotDeltaDuring<unsigned_char>
-               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,float *param_4)
 
 {
-  short *psVar1;
+  ushort uVar1;
+  ushort *puVar2;
   int iVar3;
-  longlong lVar2;
+  short *psVar4;
+  float *pfVar5;
+  float *in_r6;
   double extraout_f1;
-  double dVar4;
+  double dVar6;
   float local_50 [2];
-  ulonglong local_48;
-  float local_40;
-  float local_3c;
-  int local_38;
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  iVar3 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6ac,0,0xffffffff82000f98,0xffffffff8218706c);
+  iVar3 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar6 = extraout_f1;
+  if ((param_4 == (float *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6ac,0,
+                    "%s");
   }
-  psVar1 = *(short **)(iVar3 + 4);
-  if (psVar1 != (short *)0x0) {
-    if (*psVar1 == 0) {
-      *param_4 = (float)(longlong)psVar1[2];
-      local_48 = (ulonglong)psVar1[3];
-      param_4[1] = (float)(longlong)local_48;
+  puVar2 = *(ushort **)(iVar3 + 4);
+  if (puVar2 != (ushort *)0x0) {
+    uVar1 = *puVar2;
+    pfVar5 = (float *)(uint)uVar1;
+    if (uVar1 == 0) {
+      *in_r6 = (float)(longlong)(short)puVar2[2];
+      local_48 = (longlong)(short)puVar2[3];
+      in_r6[1] = (float)local_48;
       __restgprlr_29();
       return;
     }
-    local_40 = (float)dVar4;
-    local_3c = (float)((double)(longlong)param_3 * dVar4);
-    local_38 = (int)((double)(longlong)param_3 * dVar4);
-    local_48 = (ulonglong)local_38;
-    XAnim_GetTimeIndex<unsigned_char>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
-    lVar2 = (local_48 >> 0x20 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(psVar1 + 2);
-    Short2LerpAsVec2((double)local_50[0],lVar2,lVar2 + 4);
+    local_40[0].time = (float)dVar6;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar6);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar6);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_char>
+              (local_40,(uchar *)(puVar2 + 4),(uint)uVar1,(int *)&local_48,local_50);
+    psVar4 = (short *)(local_48._0_4_ * 4 + *(int *)(puVar2 + 2));
+    Short2LerpAsVec2(psVar4,psVar4 + 2,local_50[0],pfVar5);
     __restgprlr_29();
     return;
   }
-  *param_4 = 0.0;
-  param_4[1] = 32767.0;
+  *in_r6 = 0.0;
+  in_r6[1] = 32767.0;
   __restgprlr_29();
   return;
 }
@@ -3468,46 +4079,50 @@ void XAnim_CalcRotDeltaDuring<unsigned_char>
 // 82629C78  XAnim_CalcRotDeltaDuring<unsigned_short>  (xanim/xanim_calc.cpp:1705)
 
 void XAnim_CalcRotDeltaDuring<unsigned_short>
-               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,float *param_4)
 
 {
-  short *psVar1;
+  ushort uVar1;
+  ushort *puVar2;
   int iVar3;
-  longlong lVar2;
+  short *psVar4;
+  float *pfVar5;
+  float *in_r6;
   double extraout_f1;
-  double dVar4;
+  double dVar6;
   float local_50 [2];
-  ulonglong local_48;
-  float local_40;
-  float local_3c;
-  int local_38;
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  iVar3 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6ac,0,0xffffffff82000f98,0xffffffff8218706c);
+  iVar3 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar6 = extraout_f1;
+  if ((param_4 == (float *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6ac,0,
+                    "%s");
   }
-  psVar1 = *(short **)(iVar3 + 4);
-  if (psVar1 != (short *)0x0) {
-    if (*psVar1 == 0) {
-      *param_4 = (float)(longlong)psVar1[2];
-      local_48 = (ulonglong)psVar1[3];
-      param_4[1] = (float)(longlong)local_48;
+  puVar2 = *(ushort **)(iVar3 + 4);
+  if (puVar2 != (ushort *)0x0) {
+    uVar1 = *puVar2;
+    pfVar5 = (float *)(uint)uVar1;
+    if (uVar1 == 0) {
+      *in_r6 = (float)(longlong)(short)puVar2[2];
+      local_48 = (longlong)(short)puVar2[3];
+      in_r6[1] = (float)local_48;
       __restgprlr_29();
       return;
     }
-    local_40 = (float)dVar4;
-    local_3c = (float)((double)(longlong)param_3 * dVar4);
-    local_38 = (int)((double)(longlong)param_3 * dVar4);
-    local_48 = (ulonglong)local_38;
-    XAnim_GetTimeIndex<unsigned_short>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
-    lVar2 = (local_48 >> 0x20 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(psVar1 + 2);
-    Short2LerpAsVec2((double)local_50[0],lVar2,lVar2 + 4);
+    local_40[0].time = (float)dVar6;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar6);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar6);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_short>(local_40,puVar2 + 4,(uint)uVar1,(int *)&local_48,local_50);
+    psVar4 = (short *)(local_48._0_4_ * 4 + *(int *)(puVar2 + 2));
+    Short2LerpAsVec2(psVar4,psVar4 + 2,local_50[0],pfVar5);
     __restgprlr_29();
     return;
   }
-  *param_4 = 0.0;
-  param_4[1] = 32767.0;
+  *in_r6 = 0.0;
+  in_r6[1] = 32767.0;
   __restgprlr_29();
   return;
 }
@@ -3516,50 +4131,55 @@ void XAnim_CalcRotDeltaDuring<unsigned_short>
 // 8262A000  XAnim_CalcRotDelta3DDuring<unsigned_char>  (xanim/xanim_calc.cpp:1741)
 
 void XAnim_CalcRotDelta3DDuring<unsigned_char>
-               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,float *param_4)
 
 {
-  short *psVar1;
+  ushort uVar1;
+  ushort *puVar2;
   int iVar3;
-  longlong lVar2;
+  short *psVar4;
+  float *pfVar5;
+  float *in_r6;
   double extraout_f1;
-  double dVar4;
+  double dVar6;
   float local_50 [2];
-  ulonglong local_48;
-  float local_40;
-  float local_3c;
-  int local_38;
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  iVar3 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6d0,0,0xffffffff82000f98,0xffffffff8218706c);
+  iVar3 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar6 = extraout_f1;
+  if ((param_4 == (float *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6d0,0,
+                    "%s");
   }
-  psVar1 = *(short **)(iVar3 + 8);
-  if (psVar1 != (short *)0x0) {
-    if (*psVar1 == 0) {
-      *param_4 = (float)(longlong)psVar1[2];
-      param_4[1] = (float)(longlong)psVar1[3];
-      param_4[2] = (float)(longlong)psVar1[4];
-      local_48 = (ulonglong)psVar1[5];
-      param_4[3] = (float)(longlong)local_48;
+  puVar2 = *(ushort **)(iVar3 + 8);
+  if (puVar2 != (ushort *)0x0) {
+    uVar1 = *puVar2;
+    pfVar5 = (float *)(uint)uVar1;
+    if (uVar1 == 0) {
+      *in_r6 = (float)(longlong)(short)puVar2[2];
+      in_r6[1] = (float)(longlong)(short)puVar2[3];
+      in_r6[2] = (float)(longlong)(short)puVar2[4];
+      local_48 = (longlong)(short)puVar2[5];
+      in_r6[3] = (float)local_48;
       __restgprlr_29();
       return;
     }
-    local_40 = (float)dVar4;
-    local_3c = (float)((double)(longlong)param_3 * dVar4);
-    local_38 = (int)((double)(longlong)param_3 * dVar4);
-    local_48 = (ulonglong)local_38;
-    XAnim_GetTimeIndex<unsigned_char>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
-    lVar2 = (local_48 >> 0x20 & 0x1fffffff) * 8 + (ulonglong)*(uint *)(psVar1 + 2);
-    Short4LerpAsVec4((double)local_50[0],lVar2,lVar2 + 8);
+    local_40[0].time = (float)dVar6;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar6);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar6);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_char>
+              (local_40,(uchar *)(puVar2 + 4),(uint)uVar1,(int *)&local_48,local_50);
+    psVar4 = (short *)(local_48._0_4_ * 8 + *(int *)(puVar2 + 2));
+    Short4LerpAsVec4(psVar4,psVar4 + 4,local_50[0],pfVar5);
     __restgprlr_29();
     return;
   }
-  *param_4 = 0.0;
-  param_4[1] = 0.0;
-  param_4[2] = 0.0;
-  param_4[3] = 32767.0;
+  *in_r6 = 0.0;
+  in_r6[1] = 0.0;
+  in_r6[2] = 0.0;
+  in_r6[3] = 32767.0;
   __restgprlr_29();
   return;
 }
@@ -3568,50 +4188,54 @@ void XAnim_CalcRotDelta3DDuring<unsigned_char>
 // 8262A190  XAnim_CalcRotDelta3DDuring<unsigned_short>  (xanim/xanim_calc.cpp:1741)
 
 void XAnim_CalcRotDelta3DDuring<unsigned_short>
-               (undefined8 param_1,undefined8 param_2,int param_3,float *param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,float *param_4)
 
 {
-  short *psVar1;
+  ushort uVar1;
+  ushort *puVar2;
   int iVar3;
-  longlong lVar2;
+  short *psVar4;
+  float *pfVar5;
+  float *in_r6;
   double extraout_f1;
-  double dVar4;
+  double dVar6;
   float local_50 [2];
-  ulonglong local_48;
-  float local_40;
-  float local_3c;
-  int local_38;
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  iVar3 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6d0,0,0xffffffff82000f98,0xffffffff8218706c);
+  iVar3 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar6 = extraout_f1;
+  if ((param_4 == (float *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6d0,0,
+                    "%s");
   }
-  psVar1 = *(short **)(iVar3 + 8);
-  if (psVar1 != (short *)0x0) {
-    if (*psVar1 == 0) {
-      *param_4 = (float)(longlong)psVar1[2];
-      param_4[1] = (float)(longlong)psVar1[3];
-      param_4[2] = (float)(longlong)psVar1[4];
-      local_48 = (ulonglong)psVar1[5];
-      param_4[3] = (float)(longlong)local_48;
+  puVar2 = *(ushort **)(iVar3 + 8);
+  if (puVar2 != (ushort *)0x0) {
+    uVar1 = *puVar2;
+    pfVar5 = (float *)(uint)uVar1;
+    if (uVar1 == 0) {
+      *in_r6 = (float)(longlong)(short)puVar2[2];
+      in_r6[1] = (float)(longlong)(short)puVar2[3];
+      in_r6[2] = (float)(longlong)(short)puVar2[4];
+      local_48 = (longlong)(short)puVar2[5];
+      in_r6[3] = (float)local_48;
       __restgprlr_29();
       return;
     }
-    local_40 = (float)dVar4;
-    local_3c = (float)((double)(longlong)param_3 * dVar4);
-    local_38 = (int)((double)(longlong)param_3 * dVar4);
-    local_48 = (ulonglong)local_38;
-    XAnim_GetTimeIndex<unsigned_short>(&local_40,psVar1 + 4,*psVar1,&local_48,local_50);
-    lVar2 = (local_48 >> 0x20 & 0x1fffffff) * 8 + (ulonglong)*(uint *)(psVar1 + 2);
-    Short4LerpAsVec4((double)local_50[0],lVar2,lVar2 + 8);
+    local_40[0].time = (float)dVar6;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar6);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar6);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_short>(local_40,puVar2 + 4,(uint)uVar1,(int *)&local_48,local_50);
+    psVar4 = (short *)(local_48._0_4_ * 8 + *(int *)(puVar2 + 2));
+    Short4LerpAsVec4(psVar4,psVar4 + 4,local_50[0],pfVar5);
     __restgprlr_29();
     return;
   }
-  *param_4 = 0.0;
-  param_4[1] = 0.0;
-  param_4[2] = 0.0;
-  param_4[3] = 32767.0;
+  *in_r6 = 0.0;
+  in_r6[1] = 0.0;
+  in_r6[2] = 0.0;
+  in_r6[3] = 32767.0;
   __restgprlr_29();
   return;
 }
@@ -3619,25 +4243,24 @@ void XAnim_CalcRotDelta3DDuring<unsigned_short>
 
 // 82629A40  XAnim_CalcPosDeltaDuring<unsigned_char>  (xanim/xanim_calc.cpp:1783)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void XAnim_CalcPosDeltaDuring<unsigned_char>
-               (undefined8 param_1,undefined8 param_2,int param_3,uint param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,__vector4 *param_4)
 
 {
-  short *psVar1;
+  ushort *puVar1;
   uint uVar2;
   uint uVar3;
   undefined8 in_r0;
-  ulonglong uVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  undefined4 *puVar4;
+  uint in_r6;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
   double extraout_f1;
+  double dVar11;
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
@@ -3645,38 +4268,47 @@ void XAnim_CalcPosDeltaDuring<unsigned_char>
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
-  uint local_50;
+  uint local_50 [2];
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  uVar4 = ZEXT48(&stack0x00000000);
-  puVar5 = (undefined4 *)__savegprlr_29();
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6fa,0,0xffffffff82000f98,0xffffffff8218708c);
+  puVar4 = (undefined4 *)__savegprlr_29((double)param_2,param_1,param_3);
+  dVar11 = extraout_f1;
+  if ((param_4 == (__vector4 *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6fa,0,
+                    "%s");
   }
-  psVar1 = (short *)*puVar5;
-  uVar11 = ZEXT48(psVar1);
-  if (uVar11 != 0) {
-    if (*psVar1 == 0) {
-      auVar18 = loadVectorLeftIndexed(uVar11 + 4);
-      auVar17 = loadVectorRightIndexed(uVar11 + 0x14);
-      *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar18 | auVar17;
-      *(undefined1 (*) [16])(param_4 & 0xfffffff0) = (auVar18 | auVar17) & _DAT_8404f950;
+  puVar1 = (ushort *)*puVar4;
+  uVar10 = ZEXT48(puVar1);
+  if (uVar10 != 0) {
+    if (*puVar1 == 0) {
+      auVar18 = loadVectorLeftIndexed(uVar10 + 4);
+      auVar17 = loadVectorRightIndexed(uVar10 + 0x14);
+      *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar18 | auVar17;
+      *(undefined1 (*) [16])(in_r6 & 0xfffffff0) =
+           (auVar18 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
       __restgprlr_29();
       return;
     }
-    XAnim_GetTimeIndex<unsigned_char>(uVar4 - 0x40,uVar11 + 0x20,*psVar1,uVar4 - 0x50,uVar4 - 0x48);
+    local_40[0].time = (float)dVar11;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar11);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar11);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_char>
+              (local_40,(uchar *)(puVar1 + 0x10),(uint)*puVar1,(int *)local_50,(float *)&local_48);
     auVar17 = ZEXT416(0);
     auVar17 = auVar17 | auVar17 << 0x20 | auVar17 << 0x40 | auVar17 << 0x60;
-    uVar8 = (ulonglong)local_50 + 1;
-    uVar10 = (ulonglong)local_50 + ((ulonglong)local_50 & 0x7fffffff) * 2;
-    uVar8 = uVar8 + (uVar8 & 0x7fffffff) * 2;
-    uVar6 = (ulonglong)*(uint *)(psVar1 + 0xe);
-    if (*(char *)(psVar1 + 1) == '\0') {
-      lVar9 = (uVar10 & 0x7fffffff) * 2 + uVar6;
-      lVar7 = (uVar8 & 0x7fffffff) * 2 + uVar6;
-      auVar14 = loadVectorLeftIndexed(lVar9);
-      auVar13 = loadVectorLeftIndexed(lVar7);
-      auVar12 = loadVectorRightIndexed(lVar9 + 8);
-      auVar18 = loadVectorRightIndexed(lVar7 + 8);
+    uVar7 = (ulonglong)local_50[0] + 1;
+    uVar9 = (ulonglong)local_50[0] + ((ulonglong)local_50[0] & 0x7fffffff) * 2;
+    uVar7 = uVar7 + (uVar7 & 0x7fffffff) * 2;
+    uVar5 = (ulonglong)*(uint *)(puVar1 + 0xe);
+    if (*(char *)(puVar1 + 1) == '\0') {
+      lVar8 = (uVar9 & 0x7fffffff) * 2 + uVar5;
+      lVar6 = (uVar7 & 0x7fffffff) * 2 + uVar5;
+      auVar14 = loadVectorLeftIndexed(lVar8);
+      auVar13 = loadVectorLeftIndexed(lVar6);
+      auVar12 = loadVectorRightIndexed(lVar8 + 8);
+      auVar18 = loadVectorRightIndexed(lVar6 + 8);
       auVar12 = vectorShiftLeftDoubleByOctetImmediate(auVar12,auVar12,8);
       auVar18 = vectorShiftLeftDoubleByOctetImmediate(auVar18,auVar18,8);
       auVar12 = vectorMergeHighHalfWord(auVar17,auVar14 | auVar12);
@@ -3685,12 +4317,12 @@ void XAnim_CalcPosDeltaDuring<unsigned_char>
       auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar18,0);
     }
     else {
-      lVar9 = uVar10 + uVar6;
-      lVar7 = uVar8 + uVar6;
-      uVar2 = (uint)lVar9;
-      uVar3 = (uint)lVar7;
-      auVar18 = loadVectorForShiftLeft(in_r0,lVar9);
-      auVar12 = loadVectorForShiftLeft(in_r0,lVar7);
+      lVar8 = uVar9 + uVar5;
+      lVar6 = uVar7 + uVar5;
+      uVar2 = (uint)lVar8;
+      uVar3 = (uint)lVar6;
+      auVar18 = loadVectorForShiftLeft(in_r0,lVar8);
+      auVar12 = loadVectorForShiftLeft(in_r0,lVar6);
       auVar18 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
                                  *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar18);
       auVar12 = vectorPermute128(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),
@@ -3702,23 +4334,26 @@ void XAnim_CalcPosDeltaDuring<unsigned_char>
       auVar17 = vectorConvertFromUnsignedFixedPointWord128(auVar18,0);
       auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar12,0);
     }
-    auVar12 = vectorSubtractFloatingPoint128(auVar18 & _DAT_8404f950,auVar17 & _DAT_8404f950);
-    auVar18 = loadVectorLeftIndexed(uVar4 - 0x48);
+    auVar12 = vectorSubtractFloatingPoint128
+                        (auVar18 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                         auVar17 & (undefined1  [16])g_keepXYZ.field0_0x0);
+    auVar18 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x48);
     auVar18 = vectorSplatWord(auVar18,0);
-    auVar16 = loadVectorLeftIndexed(uVar11 + 4);
-    auVar15 = loadVectorLeftIndexed(uVar11 + 0x10);
-    auVar14 = loadVectorRightIndexed(uVar11 + 0x14);
-    auVar13 = loadVectorRightIndexed(uVar11 + 0x20);
-    auVar17 = vectorMultiplyAddFloatingPoint(auVar18,auVar12,auVar17 & _DAT_8404f950);
+    auVar16 = loadVectorLeftIndexed(uVar10 + 4);
+    auVar15 = loadVectorLeftIndexed(uVar10 + 0x10);
+    auVar14 = loadVectorRightIndexed(uVar10 + 0x14);
+    auVar13 = loadVectorRightIndexed(uVar10 + 0x20);
     auVar17 = vectorMultiplyAddFloatingPoint
-                        ((auVar15 | auVar13) & _DAT_8404f950,auVar17,
-                         (auVar16 | auVar14) & _DAT_8404f950);
-    *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar17;
+                        (auVar18,auVar12,auVar17 & (undefined1  [16])g_keepXYZ.field0_0x0);
+    auVar17 = vectorMultiplyAddFloatingPoint
+                        ((auVar15 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar17,
+                         (auVar16 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0);
+    *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar17;
     __restgprlr_29();
     return;
   }
   auVar17 = vectorSplatImmediateSignedWord(0);
-  *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar17;
+  *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar17;
   __restgprlr_29();
   return;
 }
@@ -3726,25 +4361,24 @@ void XAnim_CalcPosDeltaDuring<unsigned_char>
 
 // 82629DC8  XAnim_CalcPosDeltaDuring<unsigned_short>  (xanim/xanim_calc.cpp:1783)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void XAnim_CalcPosDeltaDuring<unsigned_short>
-               (undefined8 param_1,undefined8 param_2,int param_3,uint param_4)
+               (XAnimDeltaPart *param_1,float param_2,int param_3,__vector4 *param_4)
 
 {
-  short *psVar1;
+  ushort *puVar1;
   uint uVar2;
   uint uVar3;
   undefined8 in_r0;
-  ulonglong uVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  undefined4 *puVar4;
+  uint in_r6;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
   double extraout_f1;
+  double dVar11;
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
@@ -3752,39 +4386,47 @@ void XAnim_CalcPosDeltaDuring<unsigned_short>
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
-  uint local_50;
+  uint local_50 [2];
+  longlong local_48;
+  XAnimTime local_40 [5];
   
-  uVar4 = ZEXT48(&stack0x00000000);
-  puVar5 = (undefined4 *)__savegprlr_29();
-  if ((param_3 == 0) || (extraout_f1 == 1.0)) {
-    MyAssertHandler(0xffffffff82186f8c,0x6fa,0,0xffffffff82000f98,0xffffffff8218708c);
+  puVar4 = (undefined4 *)__savegprlr_29((double)param_2,param_1,param_3);
+  dVar11 = extraout_f1;
+  if ((param_4 == (__vector4 *)0x0) || (extraout_f1 == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x6fa,0,
+                    "%s");
   }
-  psVar1 = (short *)*puVar5;
-  uVar11 = ZEXT48(psVar1);
-  if (uVar11 != 0) {
-    if (*psVar1 == 0) {
-      auVar18 = loadVectorLeftIndexed(uVar11 + 4);
-      auVar17 = loadVectorRightIndexed(uVar11 + 0x14);
-      *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar18 | auVar17;
-      *(undefined1 (*) [16])(param_4 & 0xfffffff0) = (auVar18 | auVar17) & _DAT_8404f950;
+  puVar1 = (ushort *)*puVar4;
+  uVar10 = ZEXT48(puVar1);
+  if (uVar10 != 0) {
+    if (*puVar1 == 0) {
+      auVar18 = loadVectorLeftIndexed(uVar10 + 4);
+      auVar17 = loadVectorRightIndexed(uVar10 + 0x14);
+      *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar18 | auVar17;
+      *(undefined1 (*) [16])(in_r6 & 0xfffffff0) =
+           (auVar18 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
       __restgprlr_29();
       return;
     }
-    XAnim_GetTimeIndex<unsigned_short>(uVar4 - 0x40,uVar11 + 0x20,*psVar1,uVar4 - 0x50,uVar4 - 0x48)
-    ;
+    local_40[0].time = (float)dVar11;
+    local_40[0].frameFrac = (float)((double)(longlong)(int)param_4 * dVar11);
+    local_40[0].frameIndex = (int)((double)(longlong)(int)param_4 * dVar11);
+    local_48 = (longlong)local_40[0].frameIndex;
+    XAnim_GetTimeIndex<unsigned_short>
+              (local_40,puVar1 + 0x10,(uint)*puVar1,(int *)local_50,(float *)&local_48);
     auVar17 = ZEXT416(0);
     auVar17 = auVar17 | auVar17 << 0x20 | auVar17 << 0x40 | auVar17 << 0x60;
-    uVar8 = (ulonglong)local_50 + 1;
-    uVar10 = (ulonglong)local_50 + ((ulonglong)local_50 & 0x7fffffff) * 2;
-    uVar8 = uVar8 + (uVar8 & 0x7fffffff) * 2;
-    uVar6 = (ulonglong)*(uint *)(psVar1 + 0xe);
-    if (*(char *)(psVar1 + 1) == '\0') {
-      lVar9 = (uVar10 & 0x7fffffff) * 2 + uVar6;
-      lVar7 = (uVar8 & 0x7fffffff) * 2 + uVar6;
-      auVar14 = loadVectorLeftIndexed(lVar9);
-      auVar13 = loadVectorLeftIndexed(lVar7);
-      auVar12 = loadVectorRightIndexed(lVar9 + 8);
-      auVar18 = loadVectorRightIndexed(lVar7 + 8);
+    uVar7 = (ulonglong)local_50[0] + 1;
+    uVar9 = (ulonglong)local_50[0] + ((ulonglong)local_50[0] & 0x7fffffff) * 2;
+    uVar7 = uVar7 + (uVar7 & 0x7fffffff) * 2;
+    uVar5 = (ulonglong)*(uint *)(puVar1 + 0xe);
+    if (*(char *)(puVar1 + 1) == '\0') {
+      lVar8 = (uVar9 & 0x7fffffff) * 2 + uVar5;
+      lVar6 = (uVar7 & 0x7fffffff) * 2 + uVar5;
+      auVar14 = loadVectorLeftIndexed(lVar8);
+      auVar13 = loadVectorLeftIndexed(lVar6);
+      auVar12 = loadVectorRightIndexed(lVar8 + 8);
+      auVar18 = loadVectorRightIndexed(lVar6 + 8);
       auVar12 = vectorShiftLeftDoubleByOctetImmediate(auVar12,auVar12,8);
       auVar18 = vectorShiftLeftDoubleByOctetImmediate(auVar18,auVar18,8);
       auVar12 = vectorMergeHighHalfWord(auVar17,auVar14 | auVar12);
@@ -3793,12 +4435,12 @@ void XAnim_CalcPosDeltaDuring<unsigned_short>
       auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar18,0);
     }
     else {
-      lVar9 = uVar10 + uVar6;
-      lVar7 = uVar8 + uVar6;
-      uVar2 = (uint)lVar9;
-      uVar3 = (uint)lVar7;
-      auVar18 = loadVectorForShiftLeft(in_r0,lVar9);
-      auVar12 = loadVectorForShiftLeft(in_r0,lVar7);
+      lVar8 = uVar9 + uVar5;
+      lVar6 = uVar7 + uVar5;
+      uVar2 = (uint)lVar8;
+      uVar3 = (uint)lVar6;
+      auVar18 = loadVectorForShiftLeft(in_r0,lVar8);
+      auVar12 = loadVectorForShiftLeft(in_r0,lVar6);
       auVar18 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
                                  *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar18);
       auVar12 = vectorPermute128(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),
@@ -3810,23 +4452,26 @@ void XAnim_CalcPosDeltaDuring<unsigned_short>
       auVar17 = vectorConvertFromUnsignedFixedPointWord128(auVar18,0);
       auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar12,0);
     }
-    auVar12 = vectorSubtractFloatingPoint128(auVar18 & _DAT_8404f950,auVar17 & _DAT_8404f950);
-    auVar18 = loadVectorLeftIndexed(uVar4 - 0x48);
+    auVar12 = vectorSubtractFloatingPoint128
+                        (auVar18 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                         auVar17 & (undefined1  [16])g_keepXYZ.field0_0x0);
+    auVar18 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x48);
     auVar18 = vectorSplatWord(auVar18,0);
-    auVar16 = loadVectorLeftIndexed(uVar11 + 4);
-    auVar15 = loadVectorLeftIndexed(uVar11 + 0x10);
-    auVar14 = loadVectorRightIndexed(uVar11 + 0x14);
-    auVar13 = loadVectorRightIndexed(uVar11 + 0x20);
-    auVar17 = vectorMultiplyAddFloatingPoint(auVar18,auVar12,auVar17 & _DAT_8404f950);
+    auVar16 = loadVectorLeftIndexed(uVar10 + 4);
+    auVar15 = loadVectorLeftIndexed(uVar10 + 0x10);
+    auVar14 = loadVectorRightIndexed(uVar10 + 0x14);
+    auVar13 = loadVectorRightIndexed(uVar10 + 0x20);
     auVar17 = vectorMultiplyAddFloatingPoint
-                        ((auVar15 | auVar13) & _DAT_8404f950,auVar17,
-                         (auVar16 | auVar14) & _DAT_8404f950);
-    *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar17;
+                        (auVar18,auVar12,auVar17 & (undefined1  [16])g_keepXYZ.field0_0x0);
+    auVar17 = vectorMultiplyAddFloatingPoint
+                        ((auVar15 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar17,
+                         (auVar16 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0);
+    *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar17;
     __restgprlr_29();
     return;
   }
   auVar17 = vectorSplatImmediateSignedWord(0);
-  *(undefined1 (*) [16])(param_4 & 0xfffffff0) = auVar17;
+  *(undefined1 (*) [16])(in_r6 & 0xfffffff0) = auVar17;
   __restgprlr_29();
   return;
 }
@@ -3834,21 +4479,22 @@ void XAnim_CalcPosDeltaDuring<unsigned_short>
 
 // 82629258  XAnim_CalcRotDeltaEntire  (xanim/xanim_calc.cpp:1841)
 
-void XAnim_CalcRotDeltaEntire(int param_1,float *param_2)
+void XAnim_CalcRotDeltaEntire(XAnimDeltaPart *param_1,float *param_2)
 
 {
-  ushort *puVar1;
+  XAnimDeltaPartQuat2 *pXVar1;
+  XAnimDeltaPartQuatData2 *pXVar2;
   
-  puVar1 = *(ushort **)(param_1 + 4);
-  if (puVar1 != (ushort *)0x0) {
-    if (*puVar1 == 0) {
-      puVar1 = puVar1 + 2;
+  pXVar1 = param_1->quat2;
+  if (pXVar1 != (XAnimDeltaPartQuat2 *)0x0) {
+    if (pXVar1->size == 0) {
+      pXVar2 = &pXVar1->u;
     }
     else {
-      puVar1 = (ushort *)((uint)*puVar1 * 4 + *(int *)(puVar1 + 2));
+      pXVar2 = (XAnimDeltaPartQuatData2 *)((pXVar1->u).frames.frames + pXVar1->size);
     }
-    *param_2 = (float)(longlong)(short)*puVar1;
-    param_2[1] = (float)(longlong)(short)puVar1[1];
+    *param_2 = (float)(longlong)pXVar2->frame0[0];
+    param_2[1] = (float)(longlong)pXVar2->frame0[1];
     return;
   }
   *param_2 = 0.0;
@@ -3859,23 +4505,24 @@ void XAnim_CalcRotDeltaEntire(int param_1,float *param_2)
 
 // 826292E0  XAnim_CalcRotDelta3DEntire  (xanim/xanim_calc.cpp:1864)
 
-void XAnim_CalcRotDelta3DEntire(int param_1,float *param_2)
+void XAnim_CalcRotDelta3DEntire(XAnimDeltaPart *param_1,float *param_2)
 
 {
-  ushort *puVar1;
+  XAnimDeltaPartQuat *pXVar1;
+  XAnimDeltaPartQuatData *pXVar2;
   
-  puVar1 = *(ushort **)(param_1 + 8);
-  if (puVar1 != (ushort *)0x0) {
-    if (*puVar1 == 0) {
-      puVar1 = puVar1 + 2;
+  pXVar1 = param_1->quat;
+  if (pXVar1 != (XAnimDeltaPartQuat *)0x0) {
+    if (pXVar1->size == 0) {
+      pXVar2 = &pXVar1->u;
     }
     else {
-      puVar1 = (ushort *)((uint)*puVar1 * 8 + *(int *)(puVar1 + 2));
+      pXVar2 = (XAnimDeltaPartQuatData *)((pXVar1->u).frames.frames + pXVar1->size);
     }
-    *param_2 = (float)(longlong)(short)*puVar1;
-    param_2[1] = (float)(longlong)(short)puVar1[1];
-    param_2[2] = (float)(longlong)(short)puVar1[2];
-    param_2[3] = (float)(longlong)(short)puVar1[3];
+    *param_2 = (float)(longlong)pXVar2->frame0[0];
+    param_2[1] = (float)(longlong)pXVar2->frame0[1];
+    param_2[2] = (float)(longlong)pXVar2->frame0[2];
+    param_2[3] = (float)(longlong)pXVar2->frame0[3];
     return;
   }
   *param_2 = 0.0;
@@ -3888,109 +4535,115 @@ void XAnim_CalcRotDelta3DEntire(int param_1,float *param_2)
 
 // 826293A8  XAnim_CalcPosDeltaEntire  (xanim/xanim_calc.cpp:1892)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void XAnim_CalcPosDeltaEntire(undefined4 *param_1,uint param_2)
+void XAnim_CalcPosDeltaEntire(XAnimDeltaPart *param_1,__vector4 *param_2)
 
 {
-  ushort *puVar1;
+  XAnimPartTrans *pXVar1;
   uint uVar2;
   undefined8 in_r0;
-  longlong lVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
+  longlong lVar4;
   ulonglong uVar5;
-  undefined1 auVar6 [16];
+  ulonglong uVar6;
   undefined1 auVar7 [16];
   undefined1 auVar8 [16];
   undefined1 auVar9 [16];
   undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
   
-  puVar1 = (ushort *)*param_1;
-  uVar5 = ZEXT48(puVar1);
+  pXVar1 = param_1->trans;
+  uVar6 = ZEXT48(pXVar1);
+  if (uVar6 == 0) {
+    auVar10 = vectorSplatImmediateSignedWord(0);
+    *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar10;
+    return;
+  }
+  uVar5 = (ulonglong)pXVar1->size;
   if (uVar5 == 0) {
-    auVar9 = vectorSplatImmediateSignedWord(0);
-    *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar9;
+    auVar11 = loadVectorLeftIndexed(uVar6 + 4);
+    auVar10 = loadVectorRightIndexed(uVar6 + 0x14);
+    *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar11 | auVar10;
+    *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) =
+         (auVar11 | auVar10) & (undefined1  [16])g_keepXYZ.field0_0x0;
     return;
   }
-  uVar4 = (ulonglong)*puVar1;
-  if (uVar4 == 0) {
-    auVar10 = loadVectorLeftIndexed(uVar5 + 4);
-    auVar9 = loadVectorRightIndexed(uVar5 + 0x14);
-    *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar10 | auVar9;
-    *(undefined1 (*) [16])(param_2 & 0xfffffff0) = (auVar10 | auVar9) & _DAT_8404f950;
-    return;
-  }
-  auVar9 = ZEXT416(0);
-  auVar9 = auVar9 | auVar9 << 0x20 | auVar9 << 0x40 | auVar9 << 0x60;
-  if (*(char *)(puVar1 + 1) == '\0') {
-    lVar3 = uVar4 * 6 + (ulonglong)*(uint *)(puVar1 + 0xe);
-    auVar10 = loadVectorRightIndexed(lVar3 + 8);
-    auVar6 = loadVectorLeftIndexed(lVar3);
-    auVar10 = vectorShiftLeftDoubleByOctetImmediate(auVar10,auVar10,8);
-    auVar9 = vectorMergeHighHalfWord(auVar9,auVar6 | auVar10);
-    auVar9 = vectorConvertFromUnsignedFixedPointWord128(auVar9,0);
+  auVar10 = ZEXT416(0);
+  auVar10 = auVar10 | auVar10 << 0x20 | auVar10 << 0x40 | auVar10 << 0x60;
+  uVar3 = (ulonglong)(uint)(pXVar1->u).frames.frames;
+  if (pXVar1->smallTrans == '\0') {
+    lVar4 = uVar5 * 6 + uVar3;
+    auVar11 = loadVectorRightIndexed(lVar4 + 8);
+    auVar7 = loadVectorLeftIndexed(lVar4);
+    auVar11 = vectorShiftLeftDoubleByOctetImmediate(auVar11,auVar11,8);
+    auVar10 = vectorMergeHighHalfWord(auVar10,auVar7 | auVar11);
+    auVar10 = vectorConvertFromUnsignedFixedPointWord128(auVar10,0);
   }
   else {
-    lVar3 = uVar4 * 3 + (ulonglong)*(uint *)(puVar1 + 0xe);
-    uVar2 = (uint)lVar3;
-    auVar10 = loadVectorForShiftLeft(in_r0,lVar3);
-    auVar10 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
-                               *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar10);
-    auVar10 = vectorMergeHighByte(auVar9,auVar10);
-    auVar9 = vectorMergeHighHalfWord(auVar9,auVar10);
-    auVar9 = vectorConvertFromUnsignedFixedPointWord128(auVar9,0);
+    lVar4 = uVar5 * 3 + uVar3;
+    uVar2 = (uint)lVar4;
+    auVar11 = loadVectorForShiftLeft(in_r0,lVar4);
+    auVar11 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
+                               *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar11);
+    auVar11 = vectorMergeHighByte(auVar10,auVar11);
+    auVar10 = vectorMergeHighHalfWord(auVar10,auVar11);
+    auVar10 = vectorConvertFromUnsignedFixedPointWord128(auVar10,0);
   }
-  auVar8 = loadVectorLeftIndexed(uVar5 + 4);
-  auVar7 = loadVectorRightIndexed(uVar5 + 0x14);
-  auVar6 = loadVectorLeftIndexed(uVar5 + 0x10);
-  auVar10 = loadVectorRightIndexed(uVar5 + 0x20);
-  auVar9 = vectorMultiplyAddFloatingPoint
-                     ((auVar6 | auVar10) & _DAT_8404f950,auVar9 & _DAT_8404f950,
-                      (auVar8 | auVar7) & _DAT_8404f950);
-  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar9;
+  auVar9 = loadVectorLeftIndexed(uVar6 + 4);
+  auVar8 = loadVectorRightIndexed(uVar6 + 0x14);
+  auVar7 = loadVectorLeftIndexed(uVar6 + 0x10);
+  auVar11 = loadVectorRightIndexed(uVar6 + 0x20);
+  auVar10 = vectorMultiplyAddFloatingPoint
+                      ((auVar7 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       auVar10 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       (auVar9 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0);
+  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar10;
   return;
 }
 
 
 // 8262BD48  XAnim_CalcDeltaForTime  (xanim/xanim_calc.cpp:1941)
 
-void XAnim_CalcDeltaForTime
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void XAnim_CalcDeltaForTime(XAnimParts *param_1,float param_2,float *param_3,__vector4 *param_4)
 
 {
-  undefined4 uVar1;
+  ushort uVar1;
   bool bVar2;
-  int iVar4;
-  undefined8 uVar3;
+  int iVar3;
+  XAnimDeltaPart *pXVar4;
+  __vector4 *in_r6;
   double extraout_f1;
   double dVar5;
   double dVar6;
   
-  iVar4 = __savegprlr_28();
+  iVar3 = __savegprlr_28((double)param_2,param_1);
   dVar5 = 1.0;
   dVar6 = extraout_f1;
   if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
-    MyAssertHandler(extraout_f1,0xffffffff82186f8c,0x79a,0,0xffffffff82187110,extraout_f1,0,
-                    0x3ff0000000000000);
+    param_3 = (float *)0x79a;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x79a,0,
+                    "time not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  uVar1 = *(undefined4 *)(iVar4 + 0x54);
-  if ((dVar6 == dVar5) || (bVar2 = false, *(ushort *)(iVar4 + 0xe) == 0)) {
+  pXVar4 = *(XAnimDeltaPart **)(iVar3 + 0x54);
+  uVar1 = *(ushort *)(iVar3 + 0xe);
+  if ((dVar6 == dVar5) || (bVar2 = false, uVar1 == 0)) {
     bVar2 = true;
   }
   if (bVar2) {
-    uVar3 = XAnim_CalcRotDeltaEntire(uVar1,param_3);
-    XAnim_CalcPosDeltaEntire(uVar3,param_4);
+    XAnim_CalcRotDeltaEntire(pXVar4,(float *)param_4);
+    XAnim_CalcPosDeltaEntire(pXVar4,in_r6);
     __restgprlr_28();
     return;
   }
-  if (*(ushort *)(iVar4 + 0xe) < 0x100) {
-    XAnim_CalcRotDeltaDuring<unsigned_char>();
-    XAnim_CalcPosDeltaDuring<unsigned_char>(dVar6,uVar1);
+  if (uVar1 < 0x100) {
+    XAnim_CalcRotDeltaDuring<unsigned_char>(pXVar4,(float)dVar6,(int)param_3,(float *)(uint)uVar1);
+    XAnim_CalcPosDeltaDuring<unsigned_char>
+              (pXVar4,(float)dVar6,(int)param_3,(__vector4 *)(uint)uVar1);
     __restgprlr_28();
     return;
   }
-  XAnim_CalcRotDeltaDuring<unsigned_short>(dVar6,uVar1);
-  XAnim_CalcPosDeltaDuring<unsigned_short>(dVar6,uVar1);
+  XAnim_CalcRotDeltaDuring<unsigned_short>(pXVar4,(float)dVar6,(int)param_3,(float *)(uint)uVar1);
+  XAnim_CalcPosDeltaDuring<unsigned_short>
+            (pXVar4,(float)dVar6,(int)param_3,(__vector4 *)(uint)uVar1);
   __restgprlr_28();
   return;
 }
@@ -3998,42 +4651,48 @@ void XAnim_CalcDeltaForTime
 
 // 8262BE88  XAnim_CalcDelta3DForTime  (xanim/xanim_calc.cpp:1974)
 
-void XAnim_CalcDelta3DForTime
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void XAnim_CalcDelta3DForTime(XAnimParts *param_1,float param_2,float *param_3,__vector4 *param_4)
 
 {
-  undefined4 uVar1;
-  bool bVar2;
-  int iVar3;
+  ushort uVar1;
+  XAnimDeltaPart *pXVar2;
+  bool bVar3;
+  int iVar4;
+  __vector4 *in_r6;
   double extraout_f1;
-  double dVar4;
   double dVar5;
+  double dVar6;
   
-  iVar3 = __savegprlr_28();
-  dVar4 = 1.0;
-  dVar5 = extraout_f1;
+  iVar4 = __savegprlr_28((double)param_2,param_1);
+  dVar5 = 1.0;
+  dVar6 = extraout_f1;
   if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
-    MyAssertHandler(extraout_f1,0xffffffff82186f8c,0x7bb,0,0xffffffff82187110,extraout_f1,0,
-                    0x3ff0000000000000);
+    param_3 = (float *)0x7bb;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp",0x7bb,0,
+                    "time not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  uVar1 = *(undefined4 *)(iVar3 + 0x54);
-  if ((dVar5 == dVar4) || (bVar2 = false, *(ushort *)(iVar3 + 0xe) == 0)) {
-    bVar2 = true;
+  pXVar2 = *(XAnimDeltaPart **)(iVar4 + 0x54);
+  uVar1 = *(ushort *)(iVar4 + 0xe);
+  if ((dVar6 == dVar5) || (bVar3 = false, uVar1 == 0)) {
+    bVar3 = true;
   }
-  if (bVar2) {
-    XAnim_CalcRotDelta3DEntire(uVar1,param_3);
-    XAnim_CalcPosDeltaEntire(uVar1,param_4);
+  if (bVar3) {
+    XAnim_CalcRotDelta3DEntire(pXVar2,(float *)param_4);
+    XAnim_CalcPosDeltaEntire(pXVar2,in_r6);
     __restgprlr_28();
     return;
   }
-  if (*(ushort *)(iVar3 + 0xe) < 0x100) {
-    XAnim_CalcRotDelta3DDuring<unsigned_char>();
-    XAnim_CalcPosDeltaDuring<unsigned_char>(dVar5,uVar1);
+  if (uVar1 < 0x100) {
+    XAnim_CalcRotDelta3DDuring<unsigned_char>(pXVar2,(float)dVar6,(int)param_3,(float *)(uint)uVar1)
+    ;
+    XAnim_CalcPosDeltaDuring<unsigned_char>
+              (pXVar2,(float)dVar6,(int)param_3,(__vector4 *)(uint)uVar1);
     __restgprlr_28();
     return;
   }
-  XAnim_CalcRotDelta3DDuring<unsigned_short>(dVar5,uVar1);
-  XAnim_CalcPosDeltaDuring<unsigned_short>(dVar5,uVar1);
+  XAnim_CalcRotDelta3DDuring<unsigned_short>(pXVar2,(float)dVar6,(int)param_3,(float *)(uint)uVar1);
+  XAnim_CalcPosDeltaDuring<unsigned_short>
+            (pXVar2,(float)dVar6,(int)param_3,(__vector4 *)(uint)uVar1);
   __restgprlr_28();
   return;
 }

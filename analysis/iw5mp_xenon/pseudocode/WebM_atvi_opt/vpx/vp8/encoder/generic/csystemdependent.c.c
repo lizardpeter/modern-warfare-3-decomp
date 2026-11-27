@@ -2,69 +2,91 @@
 
 // 8283CF58  vp8_cmachine_specific_config  (WebM_atvi_opt/vpx/vp8/encoder/generic/csystemdependent.c:38)
 
-void vp8_cmachine_specific_config(void)
+void vp8_cmachine_specific_config(VP8_COMP *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr();
-  *(undefined4 *)(iVar1 + 0x30540) = 0;
-  *(undefined4 *)(iVar1 + 0x304cc) = 0;
-  *(undefined4 *)(iVar1 + 0x304d0) = 0;
-  *(int *)(iVar1 + 0x304c8) = iVar1 + 0x21c68;
-  *(undefined4 *)(iVar1 + 0x30544) = 0;
-  *(undefined4 *)(iVar1 + 0x30530) = 0;
-  *(undefined4 *)(iVar1 + 0x30534) = 0;
-  *(undefined4 *)(iVar1 + 0x30538) = 0;
-  *(undefined4 *)(iVar1 + 0x30548) = 0;
-  *(undefined4 *)(iVar1 + 0x3053c) = 0;
-  *(undefined4 *)(iVar1 + 0x3054c) = 0;
-  *(undefined4 *)(iVar1 + 0x30550) = 0;
-  *(undefined4 *)(iVar1 + 0x304d4) = 0;
-  *(undefined4 *)(iVar1 + 0x30554) = 0;
-  *(undefined4 *)(iVar1 + 0x304dc) = 0;
-  *(undefined4 *)(iVar1 + 0x30558) = 0;
-  *(undefined4 *)(iVar1 + 0x3055c) = 0;
-  *(undefined4 *)(iVar1 + 0x304d8) = 0;
-  *(undefined4 *)(iVar1 + 0x304e0) = 0;
-  *(undefined4 *)(iVar1 + 0x30564) = 0;
-  *(undefined4 *)(iVar1 + 0x30560) = 0;
-  *(undefined4 *)(iVar1 + 0x304ec) = 0;
-  *(undefined4 *)(iVar1 + 0x304e4) = 0;
-  *(undefined4 *)(iVar1 + 0x304e8) = 0;
-  *(undefined4 *)(iVar1 + 0x30568) = 0;
-  *(undefined4 *)(iVar1 + 0x304f0) = 0;
-  *(undefined4 *)(iVar1 + 0x304f4) = 0;
-  *(undefined4 *)(iVar1 + 0x304f8) = 0;
-  *(undefined4 *)(iVar1 + 0x30518) = 0;
-  *(undefined4 *)(iVar1 + 0x30500) = 0;
-  *(code **)(iVar1 + 0x3050c) = vp8_variance_halfpixvar16x16_v_c;
-  *(code **)(iVar1 + 0x30520) = vp8_get16x16pred_error_c;
-  *(code **)(iVar1 + 0x3051c) = vp8_mse16x16_c;
-  *(code **)(iVar1 + 0x3056c) = vp8_short_fdct4x4_c;
-  *(undefined4 *)(iVar1 + 0x30524) = 0;
-  *(undefined4 *)(iVar1 + 0x30528) = 0;
-  *(code **)(iVar1 + 0x30510) = vp8_variance_halfpixvar16x16_hv_c;
-  *(undefined4 *)(iVar1 + 0x304fc) = 0;
-  *(code **)(iVar1 + 0x3052c) = vp8_get4x4sse_cs_c;
-  *(code **)(iVar1 + 0x30508) = vp8_variance_halfpixvar16x16_h_c;
-  *(undefined4 *)(iVar1 + 0x30504) = 0;
-  *(undefined4 *)(iVar1 + 0x30514) = 0;
-  *(code **)(iVar1 + 0x30570) = vp8_short_fdct8x4_c;
-  *(code **)(iVar1 + 0x30574) = vp8_short_fdct4x4_c;
-  *(code **)(iVar1 + 0x30578) = vp8_short_fdct8x4_c;
-  *(code **)(iVar1 + 0x30580) = vp8_block_error_c;
-  *(code **)(iVar1 + 0x3057c) = vp8_short_walsh4x4_c;
-  *(code **)(iVar1 + 0x30584) = vp8_mbblock_error_c;
-  *(code **)(iVar1 + 0x30588) = vp8_mbuverror_c;
-  *(code **)(iVar1 + 0x3058c) = vp8_subtract_b_c;
-  *(code **)(iVar1 + 0x30598) = vp8_regular_quantize_b;
-  *(code **)(iVar1 + 0x30590) = vp8_subtract_mby_c;
-  *(undefined4 *)(iVar1 + 0x3059c) = 0;
-  *(code **)(iVar1 + 0x30594) = vp8_subtract_mbuv_c;
-  *(code **)(iVar1 + 0x305a4) = vp8_diamond_search_sad;
-  DAT_848979e0 = vp8_yv12_copy_partial_frame;
-  vp8_arch_xenon_encoder_init();
+  __savegprlr();
+  (param_1->rtcd).variance.sad4x4x3 = (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0
+  ;
+  (param_1->rtcd).variance.sad4x4 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
+  (param_1->rtcd).variance.sad8x8 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
+  (param_1->rtcd).common = &(param_1->common).rtcd;
+  (param_1->rtcd).variance.sad16x16x8 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_ushort_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x16x3 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x8x3 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x16x3 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x8x8 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_ushort_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x8x3 = (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0
+  ;
+  (param_1->rtcd).variance.sad8x16x8 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_ushort_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x8x8 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_ushort_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x16 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
+  (param_1->rtcd).variance.sad4x4x8 =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_ushort_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x16 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
+  (param_1->rtcd).variance.sad16x16x4d =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x8x4d =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad16x8 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
+  (param_1->rtcd).variance.var4x4 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x8x4d =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad8x16x4d =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.var16x8 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.var8x8 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.var8x16 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.sad4x4x4d =
+       (_func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.var16x16 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0
+  ;
+  (param_1->rtcd).variance.subpixvar4x4 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.subpixvar8x8 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.getmbss = (_func___cdecl_uint_short_ptr *)0x0;
+  (param_1->rtcd).variance.subpixvar16x8 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.halfpixvar16x16_v = vp8_variance_halfpixvar16x16_v_c;
+  (param_1->rtcd).variance.get16x16prederror = vp8_get16x16pred_error_c;
+  (param_1->rtcd).variance.mse16x16 = vp8_mse16x16_c;
+  (param_1->rtcd).fdct.short4x4 = vp8_short_fdct4x4_c;
+  (param_1->rtcd).variance.get8x8var =
+       (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr_int_ptr *)0x0;
+  (param_1->rtcd).variance.get16x16var =
+       (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr_int_ptr *)0x0;
+  (param_1->rtcd).variance.halfpixvar16x16_hv = vp8_variance_halfpixvar16x16_hv_c;
+  (param_1->rtcd).variance.subpixvar8x16 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.get4x4sse_cs = vp8_get4x4sse_cs_c;
+  (param_1->rtcd).variance.halfpixvar16x16_h = vp8_variance_halfpixvar16x16_h_c;
+  (param_1->rtcd).variance.subpixvar16x16 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).variance.subpixmse16x16 =
+       (_func___cdecl_uint_uchar_ptr_int_int_int_uchar_ptr_int_uint_ptr *)0x0;
+  (param_1->rtcd).fdct.short8x4 = vp8_short_fdct8x4_c;
+  (param_1->rtcd).fdct.fast4x4 = vp8_short_fdct4x4_c;
+  (param_1->rtcd).fdct.fast8x4 = vp8_short_fdct8x4_c;
+  (param_1->rtcd).encodemb.berr = vp8_block_error_c;
+  (param_1->rtcd).fdct.walsh_short4x4 = vp8_short_walsh4x4_c;
+  (param_1->rtcd).encodemb.mberr = vp8_mbblock_error_c;
+  (param_1->rtcd).encodemb.mbuverr = vp8_mbuverror_c;
+  (param_1->rtcd).encodemb.subb = vp8_subtract_b_c;
+  (param_1->rtcd).quantize.quantb = vp8_regular_quantize_b;
+  (param_1->rtcd).encodemb.submby = vp8_subtract_mby_c;
+  (param_1->rtcd).quantize.fastquantb = (_func___cdecl_void_BLOCK_ptr_BLOCKD_ptr *)0x0;
+  (param_1->rtcd).encodemb.submbuv = vp8_subtract_mbuv_c;
+  (param_1->rtcd).search.diamond_search = vp8_diamond_search_sad;
+  vp8_yv12_copy_partial_frame_ptr = vp8_yv12_copy_partial_frame;
+  vp8_arch_xenon_encoder_init(param_1);
   __restgprlr();
   return;
 }

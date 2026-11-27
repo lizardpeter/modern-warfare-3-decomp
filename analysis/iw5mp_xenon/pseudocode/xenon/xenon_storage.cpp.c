@@ -2,213 +2,233 @@
 
 // 82656828  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 {
-  Com_BlockChecksumKey32(param_1,param_2,0);
-  return;
+  uint uVar1;
+  
+  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
+  return uVar1;
 }
 
 
 // 82656830  LiveStorage_LoadPlaylistsFromFastfile  (xenon/xenon_storage.cpp:67)
 
-undefined8 LiveStorage_LoadPlaylistsFromFastfile(undefined8 param_1)
+bool LiveStorage_LoadPlaylistsFromFastfile(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_20 [16];
+  char *pcVar1;
+  LargeLocal aLStack_20 [2];
   
-  LargeLocal__LargeLocal(auStack_20,0x18000);
-  uVar1 = LargeLocal__GetBuf(auStack_20);
-  DB_ReadRawFile(*(undefined4 *)(DAT_836672fc + 0xc),uVar1,0x18000);
-  DAT_8365b1b9 = 1;
-  Playlist_ParsePlaylists();
+  LargeLocal::LargeLocal(aLStack_20,0x18000);
+  pcVar1 = LargeLocal::GetBuf(aLStack_20);
+  pcVar1 = DB_ReadRawFile((playlistFilename->current).string,pcVar1,0x18000);
+  g_playlistsFetched = true;
+  Playlist_ParsePlaylists(pcVar1);
   Live_SetPlaylistVersion(param_1);
   Playlist_ValidatePlaylistNum();
-  LargeLocal___LargeLocal(auStack_20);
-  return 1;
+  LargeLocal::~LargeLocal(aLStack_20);
+  return true;
 }
 
 
 // 826568B8  LiveStorage_WritingStats  (xenon/xenon_storage.cpp:189)
 
-void LiveStorage_WritingStats(undefined8 param_1)
+bool LiveStorage_WritingStats(int param_1)
 
 {
-  TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,7,param_1);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgressForController(&storageTasks,7,param_1);
+  return bVar1;
 }
 
 
 // 826568D0  LiveStorage_IsStatsValidUser  (xenon/xenon_storage.cpp:195)
 
-bool LiveStorage_IsStatsValidUser(undefined8 param_1)
+int LiveStorage_IsStatsValidUser(int param_1)
 
 {
-  char cVar1;
-  char cVar2;
+  ulong uVar1;
+  byte *pbVar2;
   int iVar3;
-  char *pcVar4;
-  char *pcVar5;
-  char local_20 [16];
+  byte *pbVar4;
+  byte local_20 [16];
   
-  iVar3 = XUserGetName(param_1,local_20,0x10);
-  if (iVar3 != 0) {
-    return false;
+  uVar1 = XUserGetName(param_1,(char *)local_20,0x10);
+  if (uVar1 != 0) {
+    return 0;
   }
-  pcVar4 = (char *)Live_GetLocalClientName(param_1);
-  pcVar5 = local_20;
+  pbVar2 = (byte *)Live_GetLocalClientName(param_1);
+  pbVar4 = local_20;
   do {
-    cVar1 = *pcVar5;
-    cVar2 = *pcVar4;
-    if (cVar1 == '\0') break;
-    pcVar5 = pcVar5 + 1;
-    pcVar4 = pcVar4 + 1;
-  } while (cVar1 == cVar2);
-  return cVar1 == cVar2;
+    iVar3 = (uint)*pbVar4 - (uint)*pbVar2;
+    if (*pbVar4 == 0) break;
+    pbVar4 = pbVar4 + 1;
+    pbVar2 = pbVar2 + 1;
+  } while (iVar3 == 0);
+  return (uint)LZCOUNT(iVar3) >> 5;
 }
 
 
 // 82656960  GetStatsFilename  (xenon/xenon_storage.cpp:211)
 
-void GetStatsFilename(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void GetStatsFilename(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   char *pcVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) < 0x1a) {
-    MyAssertHandler(0xffffffff82190b08,0xd5,0,0xffffffff82190ab0,param_3,0x1a);
+  uVar3 = (ulonglong)param_3;
+  iVar1 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) < 0x1a) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0xd5,
+                    0,
+                    "buflen >= sizeof( PERSISTENT_STATS_FILENAME ) + 1 + XUID_STRING_LENGTH + 1\n\t%i, %i"
+                   );
   }
-  pcVar2 = (char *)Live_GetLocalClientOfflineXuidString(uVar1);
+  pcVar2 = Live_GetLocalClientOfflineXuidString(iVar1);
   if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82190b08,0xd7,0,0xffffffff82000f98,0xffffffff82190aa0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0xd7,
+                    0,"%s");
   }
   if (*pcVar2 == '\0') {
-    MyAssertHandler(0xffffffff82190b08,0xd8,0,0xffffffff82000f98,0xffffffff82190a90);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0xd8,
+                    0,"%s");
   }
-  Com_sprintf(param_2,param_3,0xffffffff8200e440,0xffffffff8208aba8,pcVar2);
-  __restgprlr_27();
+  iVar1 = Com_sprintf(param_2,(int)uVar3,"%s_%s");
+  __restgprlr_27(iVar1);
   return;
 }
 
 
 // 82656A30  GetStatsFileDescription  (xenon/xenon_storage.cpp:222)
 
-void GetStatsFileDescription(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void GetStatsFileDescription(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) < 0x15) {
-    MyAssertHandler(0xffffffff82190b08,0xdf,0,0xffffffff82190b64,param_3,0x14);
+  uVar2 = (ulonglong)param_3;
+  iVar1 = __savegprlr_29(param_1);
+  if ((uVar2 & 0xffffffff) < 0x15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0xdf,
+                    0,"buflen > sizeof( \"GAME_OFFLINE_STATS\" ) + 1\n\t%i, %i");
   }
-  uVar1 = Live_GetLocalClientName(uVar1);
-  Com_sprintf(param_2,param_3,0xffffffff82190b4c,uVar1);
-  __restgprlr_29();
+  Live_GetLocalClientName(iVar1);
+  iVar1 = Com_sprintf(param_2,(int)uVar2,"GAME_OFFLINE_STATS\x15%s");
+  __restgprlr_29(iVar1);
   return;
 }
 
 
 // 82656AA0  LiveStorage_ReadStats  (xenon/xenon_storage.cpp:229)
 
-void LiveStorage_ReadStats(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ReadStats(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar8;
-  int iVar6;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  char *pcVar7;
-  ulonglong uVar5;
-  int iVar9;
-  char local_30c0 [8];
-  undefined4 local_30b8;
-  undefined1 auStack_30b0 [48];
-  undefined1 auStack_3080 [64];
+  int iVar1;
+  LocalClientNum_t LVar2;
+  bool bVar7;
+  int iVar3;
+  void *pvVar4;
+  MemcardError *pMVar5;
+  uint uVar6;
+  MemcardError local_30c0;
+  char acStack_30b0 [48];
+  char acStack_3080 [64];
   int local_3040;
   undefined1 auStack_303c [12348];
   
-  uVar1 = __savegprlr_26();
-  uVar2 = CL_LocalClientNumFromControllerIndex();
-  ClosePopupGettingData(0);
-  cVar8 = LiveStorage_MaySetPersistentData_ControllerIndex(uVar1);
-  if (cVar8 != '\0') {
-    cVar8 = Live_IsSignedIn(uVar1);
-    if (cVar8 == '\0') {
-      iVar6 = (int)uVar1 * 0x9238;
-      (&DAT_8363c8d5)[iVar6] = 1;
-      (&DAT_8363c8d8)[iVar6] = 1;
-      (&DAT_8363c8d9)[iVar6] = 0;
-      Com_Printf(0x10,0xffffffff82190d88,uVar1);
-      LiveStorage_ResetStats(uVar1,1);
+  iVar1 = __savegprlr_26(param_1);
+  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+  ClosePopupGettingData(LOCAL_CLIENT_0);
+  bVar7 = LiveStorage_MaySetPersistentData_ControllerIndex(iVar1);
+  if (bVar7) {
+    bVar7 = Live_IsSignedIn(iVar1);
+    if (!bVar7) {
+      controllerStatData[iVar1].playerStats[1].statsFetched = true;
+      controllerStatData[iVar1].playerStats[1].firstTimeRunning = true;
+      controllerStatData[iVar1].playerStats[1].allowSavingProgress = false;
+      Com_Printf(0x10,"Controller %i is not signed in; clearing stats\n");
+      LiveStorage_ResetStats(iVar1,STATS_OFFLINE);
       __restgprlr_26();
       return;
     }
-    UI_BeginReadingDeviceUI(uVar2);
-    iVar9 = (int)uVar1 * 0x9238;
-    (&DAT_8363c8d5)[iVar9] = 1;
-    (&DAT_8363c8d8)[iVar9] = 1;
-    iVar6 = LiveStorage_IsStatsValidUser(uVar1);
-    if ((iVar6 == 0) || (cVar8 = Memcard_SelectSaveDevice(uVar1,0,0x3005), cVar8 == '\0')) {
-      Com_Printf(0x10,0xffffffff82190b98,uVar1);
-      (&DAT_8363c8d9)[iVar9] = 0;
-      UI_EndReadingSaveDeviceUI(uVar2);
+    UI_BeginReadingDeviceUI(LVar2);
+    controllerStatData[iVar1].playerStats[1].statsFetched = true;
+    controllerStatData[iVar1].playerStats[1].firstTimeRunning = true;
+    iVar3 = LiveStorage_IsStatsValidUser(iVar1);
+    if ((iVar3 == 0) || (bVar7 = Memcard_SelectSaveDevice(iVar1,false,0x3005), !bVar7)) {
+      Com_Printf(0x10,"No save device set up for controller %i; clearing stats\n");
+      controllerStatData[iVar1].playerStats[1].allowSavingProgress = false;
+      UI_EndReadingSaveDeviceUI(LVar2);
     }
     else {
-      (&DAT_8363c8d9)[iVar9] = 1;
-      GetStatsFilename(uVar1,auStack_30b0,0x21);
-      uVar3 = Live_GetLocalClientName(uVar1);
-      Com_sprintf(auStack_3080,0x40,0xffffffff82190b4c,uVar3);
-      uVar4 = OpenContextFile(auStack_30b0,auStack_3080,0,uVar1);
-      pcVar7 = (char *)Memcard_GetOpenError();
-      if (*pcVar7 == '\0') {
-        uVar5 = ReadFromMemoryCard(uVar4,&local_3040,0x3005,local_30c0);
-        CloseContextFile(uVar4);
-        if ((3 < (uVar5 & 0xffffffff)) && (local_3040 != 2)) {
-          Com_Printf(0x10,0xffffffff82190cb8,local_3040,2,uVar1);
-          UI_EndReadingSaveDeviceUI(uVar2);
-          LiveStorage_ResetStatsWithConfirmation(uVar1,1,2);
+      controllerStatData[iVar1].playerStats[1].allowSavingProgress = true;
+      GetStatsFilename(iVar1,acStack_30b0,0x21);
+      Live_GetLocalClientName(iVar1);
+      Com_sprintf(acStack_3080,0x40,"GAME_OFFLINE_STATS\x15%s");
+      pvVar4 = OpenContextFile(acStack_30b0,acStack_3080,MEMCARD_READ,iVar1);
+      pMVar5 = Memcard_GetOpenError();
+      if (pMVar5->isError == false) {
+        uVar6 = ReadFromMemoryCard(pvVar4,&local_3040,0x3005,&local_30c0);
+        CloseContextFile(pvVar4);
+        if ((3 < uVar6) && (local_3040 != 2)) {
+          Com_Printf(0x10,
+                     "Offline stats file version of %i differs from expected version of %i for controller %i; clearing stats\n"
+                    );
+          UI_EndReadingSaveDeviceUI(LVar2);
+          LiveStorage_ResetStatsWithConfirmation
+                    (iVar1,STATS_OFFLINE,RESET_STATS_REASON_BAD_FILE_VERSION);
           __restgprlr_26();
           return;
         }
-        if (local_30c0[0] == '\0') {
-          if ((uVar5 & 0xffffffff) == 0x3005) {
-            Com_Memcpy(&DAT_836398d5 + iVar9,auStack_303c,0x3000);
-            Com_Printf(0x10,0xffffffff82190c78,0x3005,auStack_30b0,uVar1);
-            LiveStorage_FinalizeStatsRead(uVar1,1,0);
-            UI_EndReadingSaveDeviceUI(uVar2);
+        if (local_30c0.isError == false) {
+          if (uVar6 == 0x3005) {
+            Com_Memcpy(controllerStatData[iVar1].playerStats + 1,auStack_303c,0x3000);
+            Com_Printf(0x10,"Read %i bytes of stats data from file \"%s\" for controller %i.\n");
+            LiveStorage_FinalizeStatsRead(iVar1,STATS_OFFLINE,(StructuredDataDef *)0x0);
+            UI_EndReadingSaveDeviceUI(LVar2);
             __restgprlr_26();
             return;
           }
-          Com_Printf(0x10,0xffffffff82190bd8,uVar5,auStack_30b0,0x3005,uVar1);
+          Com_Printf(0x10,
+                     "Read %i bytes from file \"%s\" but expected to read %i for controller %i; clearing stats\n"
+                    );
         }
         else {
-          Com_Printf(0x10,0xffffffff82190c30,local_30b8,auStack_30b0,uVar1);
+          Com_Printf(0x10,
+                     "Error \"%s\" when reading file \"%s\" for controller %i; clearing stats\n");
         }
-        UI_EndReadingSaveDeviceUI(uVar2);
-        LiveStorage_ResetStatsWithConfirmation(uVar1,1,0);
+        UI_EndReadingSaveDeviceUI(LVar2);
+        LiveStorage_ResetStatsWithConfirmation
+                  (iVar1,STATS_OFFLINE,RESET_STATS_REASON_CORRUPT_OFFLINE);
         __restgprlr_26();
         return;
       }
-      iVar6 = Memcard_GetOpenError();
-      Com_Printf(0x10,0xffffffff82190d30,auStack_30b0,uVar1,*(undefined4 *)(iVar6 + 8));
-      if ((uVar4 & 0xffffffff) != 0) {
-        MyAssertHandler(0xffffffff82190b08,0x128,0,0xffffffff82000f98,0xffffffff82190d20);
+      Memcard_GetOpenError();
+      Com_Printf(0x10,
+                 "Unable to open stats file \"%s\" for read for controller %i (error: %s); clearing stats\n"
+                );
+      if (pvVar4 != (void *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                        0x128,0,"%s");
       }
-      UI_EndReadingSaveDeviceUI(uVar2);
-      iVar6 = Memcard_GetOpenError();
-      if (*(int *)(iVar6 + 4) != 0) {
-        LiveStorage_ResetStatsWithConfirmation(uVar1,1,0);
+      UI_EndReadingSaveDeviceUI(LVar2);
+      pMVar5 = Memcard_GetOpenError();
+      if (pMVar5->extendedErrorCode != 0) {
+        LiveStorage_ResetStatsWithConfirmation
+                  (iVar1,STATS_OFFLINE,RESET_STATS_REASON_CORRUPT_OFFLINE);
         __restgprlr_26();
         return;
       }
     }
-    LiveStorage_ResetStats(uVar1,1);
+    LiveStorage_ResetStats(iVar1,STATS_OFFLINE);
   }
   __restgprlr_26();
   return;
@@ -217,29 +237,23 @@ void LiveStorage_ReadStats(void)
 
 // 82656E00  LiveStorage_WriteStats_Thread  (xenon/xenon_storage.cpp:359)
 
-void LiveStorage_WriteStats_Thread(void)
+ulong LiveStorage_WriteStats_Thread(void *param_1)
 
 {
-  undefined4 uVar1;
+  ulong uVar1;
   int iVar2;
-  HANDLE hEvent;
-  longlong lVar3;
-  char *pcVar7;
-  undefined8 uVar4;
-  int iVar8;
-  longlong lVar5;
-  BOOL BVar9;
-  longlong lVar6;
-  int iVar10;
-  HANDLE local_130;
+  void *pvVar3;
+  char *pcVar4;
+  int iVar5;
+  void *local_130;
   char *local_12c;
   char *local_128;
   char *local_124;
   char *local_120;
-  DWORD local_11c;
+  ulong local_11c;
   char *local_118;
-  undefined1 auStack_110 [48];
-  undefined1 auStack_e0 [224];
+  char acStack_110 [48];
+  char acStack_e0 [224];
   
   __savegprlr();
   Sys_InitThread(0xb);
@@ -249,91 +263,98 @@ void LiveStorage_WriteStats_Thread(void)
   local_120 = "Failed to write stats into file \"%s\" for controller %i";
   local_124 = "Unable to open stats file \"%s\" for write for controller %i (error: %s)\n";
   do {
-    if (DAT_8427b398 == (HANDLE)0x0) {
-      MyAssertHandler(0xffffffff82190b08,0x176,0,0xffffffff82000f98,0xffffffff82190db8);
+    if (g_saveStatsEvent == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                      0x176,0,"%s");
     }
-    WaitForSingleObject(DAT_8427b398,0xffffffff);
-    Sys_EnterCriticalSection(0x24);
-    lVar3 = Sys_Milliseconds();
-    iVar2 = DAT_836368c8;
-    iVar10 = DAT_836368c8 * 0x9238;
-    uVar1 = *(undefined4 *)(&DAT_8363f8e4 + iVar10);
-    pcVar7 = (char *)Live_GetLocalClientOfflineXuidString(DAT_836368c8);
-    if (pcVar7 == (char *)0x0) {
-      MyAssertHandler(0xffffffff82190b08,0xd7,0,0xffffffff82000f98,local_12c);
+    WaitForSingleObject(g_saveStatsEvent,0xffffffff);
+    Sys_EnterCriticalSection(CRITSECT_STATS_WRITE);
+    Sys_Milliseconds();
+    iVar2 = g_saveStatsControllerIndex;
+    uVar1 = controllerStatData[g_saveStatsControllerIndex].deviceId;
+    pcVar4 = Live_GetLocalClientOfflineXuidString(g_saveStatsControllerIndex);
+    if (pcVar4 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                      0xd7,0,"%s");
     }
-    if (*pcVar7 == '\0') {
-      MyAssertHandler(0xffffffff82190b08,0xd8,0,0xffffffff82000f98,local_128);
+    if (*pcVar4 == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                      0xd8,0,"%s");
     }
-    Com_sprintf(auStack_110,0x21,0xffffffff8200e440,0xffffffff8208aba8,pcVar7);
-    uVar4 = Live_GetLocalClientName(iVar2);
-    Com_sprintf(auStack_e0,0x40,0xffffffff82190b4c,uVar4);
-    Memcard_OpenFile(&local_130,auStack_110,auStack_e0,1,iVar2,uVar1);
-    if (local_130 == (HANDLE)0xffffffff) {
-      iVar8 = Memcard_GetOpenError();
-      Com_Printf(0x10,local_124,auStack_110,iVar2,*(undefined4 *)(iVar8 + 8));
+    Com_sprintf(acStack_110,0x21,"%s_%s");
+    Live_GetLocalClientName(iVar2);
+    Com_sprintf(acStack_e0,0x40,"GAME_OFFLINE_STATS\x15%s");
+    Memcard_OpenFile(&local_130,acStack_110,acStack_e0,MEMCARD_WRITE,iVar2,uVar1);
+    if (local_130 == (void *)0xffffffff) {
+      Memcard_GetOpenError();
+      Com_Printf(0x10,local_124);
     }
     else {
-      lVar5 = Sys_Milliseconds();
-      BVar9 = WriteFile(local_130,&DAT_8363c8dc + iVar10,0x3005,&local_11c,(LPOVERLAPPED)0x0);
+      Sys_Milliseconds();
+      iVar5 = WriteFile(local_130,controllerStatData[iVar2].writeStatsBuffer,0x3005,&local_11c,
+                        (_OVERLAPPED *)0x0);
       CloseContextFile(local_130);
-      if (BVar9 == 0) {
-        Com_Printf(0x10,local_120,auStack_110,iVar2);
+      if (iVar5 == 0) {
+        Com_Printf(0x10,local_120);
       }
       else {
         if (local_11c != 0x3005) {
-          MyAssertHandler(0xffffffff82190b08,0x197,0,0xffffffff82190e24,0xffffffff82190dd0);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp"
+                          ,0x197,0,"%s\n\t(bytesWritten) = %i");
         }
-        lVar6 = Sys_Milliseconds();
-        Com_Printf(0x10,0xffffffff82190e40,auStack_110,iVar2,lVar5 - lVar3,lVar6 - lVar3);
+        Sys_Milliseconds();
+        Com_Printf(0x10,
+                   "Saved stats into file \"%s\" for controller %i. (%i msec to open, %i msec total)\n"
+                  );
       }
     }
     sync(1);
-    if ((&DAT_8363c8da)[iVar10] == '\0') {
-      MyAssertHandler(0xffffffff82190b08,0x19e,0,0xffffffff82000f98,local_118);
+    if (controllerStatData[iVar2].writeStatsBufferInUse == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                      0x19e,0,"%s");
     }
-    hEvent = DAT_8427b398;
-    (&DAT_8363c8da)[iVar10] = 0;
-    ResetEvent(hEvent);
-    Sys_LeaveCriticalSection(0x24);
+    pvVar3 = g_saveStatsEvent;
+    controllerStatData[iVar2].writeStatsBufferInUse = false;
+    ResetEvent(pvVar3);
+    Sys_LeaveCriticalSection(CRITSECT_STATS_WRITE);
   } while( true );
 }
 
 
 // 826570B0  LiveStorage_InitWriteStatsThread  (xenon/xenon_storage.cpp:425)
 
-HANDLE LiveStorage_InitWriteStatsThread(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void LiveStorage_InitWriteStatsThread(void)
 
 {
-  HANDLE pvVar1;
-  
-  if (DAT_8427b398 != (HANDLE)0x0) {
-    MyAssertHandler(0xffffffff82190b08,0x1aa,0,0xffffffff82000f98,0xffffffff82190f4c);
+  if (g_saveStatsEvent != (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0x1aa
+                    ,0,"%s");
   }
-  DAT_8427b398 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
-  pvVar1 = CreateThread((LPSECURITY_ATTRIBUTES)0x0,0,LiveStorage_WriteStats_Thread,(LPVOID)0x0,0,
-                        (LPDWORD)0x0);
-  return pvVar1;
+  g_saveStatsEvent = CreateEventA((void *)0x0,1,0,(char *)0x0);
+  CreateThread((void *)0x0,0,LiveStorage_WriteStats_Thread,(void *)0x0,0,(ulong *)0x0);
+  return;
 }
 
 
 // 82657140  LiveStorage_LocalClientProfileCanSave  (xenon/xenon_storage.cpp:433)
 
-bool LiveStorage_LocalClientProfileCanSave(undefined8 param_1)
+bool LiveStorage_LocalClientProfileCanSave(int param_1)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Live_IsSignedIn();
-  if ((cVar2 == '\0') || (cVar2 = Live_UserIsGuest(param_1), cVar2 != '\0')) {
-    Com_Printf(6,0xffffffff82190f60,param_1);
+  bVar2 = Live_IsSignedIn(param_1);
+  if ((!bVar2) || (bVar2 = Live_UserIsGuest(param_1), bVar2)) {
+    Com_Printf(6,"Not writing stats: not signed in (cont %i)\n");
   }
   else {
     iVar1 = LiveStorage_IsStatsValidUser(param_1);
     if (iVar1 != 0) {
-      cVar2 = Memcard_SelectSaveDevice(param_1,0,0x3005);
-      return cVar2 != '\0';
+      bVar2 = Memcard_SelectSaveDevice(param_1,false,0x3005);
+      return (bool)('\x01' - !bVar2);
     }
   }
   return false;
@@ -342,59 +363,65 @@ bool LiveStorage_LocalClientProfileCanSave(undefined8 param_1)
 
 // 826571E8  LiveStorage_LocalClientOfflineProfileCanSave  (xenon/xenon_storage.cpp:457)
 
-undefined8 LiveStorage_LocalClientOfflineProfileCanSave(undefined8 param_1)
+bool LiveStorage_LocalClientOfflineProfileCanSave(int param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  StatsSource SVar1;
+  bool bVar2;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  if (iVar1 == 1) {
-    cVar2 = Live_IsSignedIn(param_1);
-    if (cVar2 == '\0') {
-      Com_Printf(6,0xffffffff82190f60,param_1);
-      return 0;
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if (SVar1 == STATS_OFFLINE) {
+    bVar2 = Live_IsSignedIn(param_1);
+    if (!bVar2) {
+      Com_Printf(6,"Not writing stats: not signed in (cont %i)\n");
+      return false;
     }
-    if ((&DAT_8363c8d9)[(int)param_1 * 0x9238] == '\0') {
-      Com_Printf(6,0xffffffff82190f90,param_1);
-      return 0;
+    if (controllerStatData[param_1].playerStats[1].allowSavingProgress == false) {
+      Com_Printf(6,"Not writing stats: allowSavingProgress(no save device selected) (cont %i)\n");
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 826572B0  LiveStorage_CheckForLostDevice  (xenon/xenon_storage.cpp:485)
 
-void LiveStorage_CheckForLostDevice(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_CheckForLostDevice(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar3;
-  int iVar2;
+  uint uVar1;
+  bool bVar5;
+  LocalClientNum_t LVar2;
+  StatsSource SVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82190b08,0x1e9,0,0xffffffff82031880,uVar1,4);
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0x1e9
+                    ,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar2 = (int)uVar1 * 0x9238;
-  if (((&DAT_8363c8d9)[iVar2] != '\0') &&
-     (cVar3 = Memcard_HasLostSelectedSaveDevice(uVar1), cVar3 != '\0')) {
-    (&DAT_8363c8d9)[iVar2] = 0;
-    Com_Printf(0x10,0xffffffff821910a4,uVar1);
-    CL_LocalClientNumFromControllerIndex(uVar1);
-    cVar3 = CL_IsLocalClientActive();
-    if ((cVar3 != '\0') && (cVar3 = LiveStorage_ShouldReadOfflineStats(uVar1), cVar3 != '\0')) {
-      iVar2 = LiveStorage_GetActiveStatsSource(uVar1);
-      if (iVar2 != 1) {
-        MyAssertHandler(0xffffffff82190b08,0x1f9,0,0xffffffff82000f98,0xffffffff82191060);
+  if ((controllerStatData[uVar1].playerStats[1].allowSavingProgress != false) &&
+     (bVar5 = Memcard_HasLostSelectedSaveDevice(uVar1), bVar5)) {
+    controllerStatData[uVar1].playerStats[1].allowSavingProgress = false;
+    Com_Printf(0x10,"Save device lost for controller %i; stats will not get saved\n");
+    LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+    bVar5 = CL_IsLocalClientActive(LVar2);
+    if ((bVar5) && (bVar5 = LiveStorage_ShouldReadOfflineStats(uVar1), bVar5)) {
+      SVar3 = LiveStorage_GetActiveStatsSource(uVar1);
+      if (SVar3 != STATS_OFFLINE) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                        0x1f9,0,"%s");
       }
-      if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
-         (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) &&
-          (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 == 0)))) {
-        MyAssertHandler(0xffffffff82190b08,0x1fb,0,0xffffffff82000f98,0xffffffff82190fe0);
+      if (((systemlink->current).enabled == false) &&
+         ((((splitscreen->current).enabled == false || ((onlinegame->current).enabled != false)) &&
+          (iVar4 = Live_OnlinePlayEvenIfDown(), iVar4 == 0)))) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                        0x1fb,0,"%s");
       }
-      Com_Error(1,0xffffffff8208baf8);
+      Com_Error(ERR_DROP,"PLATFORM_SAVE_DEVICE_LOST");
     }
   }
   __restgprlr_28();
@@ -404,81 +431,87 @@ void LiveStorage_CheckForLostDevice(void)
 
 // 82657420  LiveStorage_WriteStats  (xenon/xenon_storage.cpp:515)
 
-void LiveStorage_WriteStats(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_WriteStats(int param_1)
 
 {
-  HANDLE hHandle;
-  undefined8 uVar1;
-  char cVar7;
-  undefined4 uVar3;
-  undefined8 uVar2;
-  int iVar4;
-  DWORD DVar5;
-  BOOL BVar6;
-  int iVar8;
+  void *pvVar1;
+  PlayerStatNetworkData *pPVar2;
+  int iVar3;
+  bool bVar8;
+  uint uVar4;
+  LocalClientNum_t LVar5;
+  int iVar6;
+  ulong uVar7;
   
-  uVar1 = __savegprlr_24();
-  iVar8 = (int)uVar1 * 0x9238;
-  if ((&DAT_8363c8d5)[iVar8] == '\0') {
-    Com_Printf(6,0xffffffff821911c0,uVar1);
+  iVar3 = __savegprlr_24(param_1);
+  if (controllerStatData[iVar3].playerStats[1].statsFetched == false) {
+    Com_Printf(6,"Not writing stats: stats not fetched (cont %i)\n");
     __restgprlr_24();
     return;
   }
-  if ((&DAT_8363c8d7)[iVar8] == '\0') {
-    Com_Printf(6,0xffffffff8219118c,uVar1);
+  if (controllerStatData[iVar3].playerStats[1].statWriteNeeded == false) {
+    Com_Printf(6,"Not writing stats: no statWriteNeeded (cont %i)\n");
     __restgprlr_24();
     return;
   }
-  if ((&DAT_8363c8d9)[iVar8] == '\0') {
-    Com_Printf(6,0xffffffff82190f90,uVar1);
+  if (controllerStatData[iVar3].playerStats[1].allowSavingProgress == false) {
+    Com_Printf(6,"Not writing stats: allowSavingProgress(no save device selected) (cont %i)\n");
     __restgprlr_24();
     return;
   }
-  cVar7 = Live_IsSignedIn(uVar1);
-  if (cVar7 != '\0') {
-    if ((&DAT_8363c8da)[iVar8] != '\0') {
-      Com_Printf(6,0xffffffff82191158,uVar1);
+  bVar8 = Live_IsSignedIn(iVar3);
+  if (bVar8) {
+    if (controllerStatData[iVar3].writeStatsBufferInUse != false) {
+      Com_Printf(6,"Not writing stats: writeStatsBufferInUse (cont %i)\n");
       __restgprlr_24();
       return;
     }
     sync(1);
-    uVar3 = Com_BlockChecksumKey32(iVar8 + -0x7c9c6727,0x2ffc,0);
-    *(undefined4 *)(&DAT_836398d5 + iVar8) = uVar3;
-    uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
-    UI_ShowReadingSaveDevicePopup();
-    iVar4 = LiveStorage_IsStatsValidUser(uVar1);
-    if ((iVar4 != 0) && (cVar7 = Memcard_SelectSaveDevice(uVar1,0,0x3005), cVar7 != '\0')) {
-      UI_HideReadingSaveDevicePopup(uVar2);
-      Com_Printf(0x10,0xffffffff82191124,uVar1);
-      (&DAT_8363c8da)[iVar8] = 1;
-      *(undefined4 *)(&DAT_8363c8dc + iVar8) = 2;
-      Com_Memcpy(iVar8 + -0x7c9c3720,&DAT_836398d5 + iVar8,0x3000);
-      uVar3 = Memcard_GetSelectedDeviceID(uVar1);
-      hHandle = DAT_8427b398;
-      *(undefined4 *)(&DAT_8363f8e4 + iVar8) = uVar3;
-      (&DAT_8363c8d7)[iVar8] = 0;
-      (&DAT_8363c8d8)[iVar8] = 0;
-      if (hHandle == (HANDLE)0x0) {
-        MyAssertHandler(0xffffffff82190b08,0x25c,0,0xffffffff82000f98,0xffffffff82190db8);
-        hHandle = DAT_8427b398;
+    uVar4 = Com_BlockChecksumKey32(controllerStatData[iVar3].playerStats[1].data + 4,0x2ffc,0);
+    *(uint *)controllerStatData[iVar3].playerStats[1].data = uVar4;
+    LVar5 = CL_LocalClientNumFromControllerIndex(iVar3);
+    UI_ShowReadingSaveDevicePopup(LVar5);
+    iVar6 = LiveStorage_IsStatsValidUser(iVar3);
+    if ((iVar6 != 0) && (bVar8 = Memcard_SelectSaveDevice(iVar3,false,0x3005), bVar8)) {
+      UI_HideReadingSaveDevicePopup(LVar5);
+      Com_Printf(0x10,"Beginning stats write into file for controller %i\n");
+      pPVar2 = controllerStatData + iVar3;
+      controllerStatData[iVar3].writeStatsBufferInUse = true;
+      pPVar2->writeStatsBuffer[0] = '\0';
+      pPVar2->writeStatsBuffer[1] = '\0';
+      pPVar2->writeStatsBuffer[2] = '\0';
+      pPVar2->writeStatsBuffer[3] = '\x02';
+      Com_Memcpy(controllerStatData[iVar3].writeStatsBuffer + 4,
+                 controllerStatData[iVar3].playerStats + 1,0x3000);
+      uVar7 = Memcard_GetSelectedDeviceID(iVar3);
+      pvVar1 = g_saveStatsEvent;
+      controllerStatData[iVar3].deviceId = uVar7;
+      controllerStatData[iVar3].playerStats[1].statWriteNeeded = false;
+      controllerStatData[iVar3].playerStats[1].firstTimeRunning = false;
+      if (pvVar1 == (void *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",
+                        0x25c,0,"%s");
+        pvVar1 = g_saveStatsEvent;
       }
-      DVar5 = WaitForSingleObject(hHandle,0);
-      while (DVar5 == 0) {
+      uVar7 = WaitForSingleObject(pvVar1,0);
+      while (uVar7 == 0) {
         Sys_Sleep(1);
-        DVar5 = WaitForSingleObject(DAT_8427b398,0);
+        uVar7 = WaitForSingleObject(g_saveStatsEvent,0);
       }
-      DAT_836368c8 = (int)uVar1;
-      BVar6 = SetEvent(DAT_8427b398);
-      __restgprlr_24(BVar6);
+      g_saveStatsControllerIndex = iVar3;
+      iVar3 = SetEvent(g_saveStatsEvent);
+      __restgprlr_24(iVar3);
       return;
     }
-    (&DAT_8363c8d7)[iVar8] = 0;
-    Com_Printf(0x10,0xffffffff821910e4);
-    UI_HideReadingSaveDevicePopup(uVar2);
+    controllerStatData[iVar3].playerStats[1].statWriteNeeded = false;
+    Com_Printf(0x10,"Not writing stats: no save device selected; won\'t try again\n");
+    UI_HideReadingSaveDevicePopup(LVar5);
     __restgprlr_24();
     return;
   }
-  Com_Printf(6,0xffffffff82190f60,uVar1);
+  Com_Printf(6,"Not writing stats: not signed in (cont %i)\n");
   __restgprlr_24();
   return;
 }
@@ -486,28 +519,30 @@ void LiveStorage_WriteStats(void)
 
 // 82657698  LiveStorage_SplitScreenReselectSaveDevice  (xenon/xenon_storage.cpp:614)
 
-void LiveStorage_SplitScreenReselectSaveDevice(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_SplitScreenReselectSaveDevice(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar2;
+  int iVar1;
+  bool bVar3;
+  LocalClientNum_t LVar2;
   
-  uVar1 = __savegprlr_29();
-  cVar3 = Live_IsSignedIn();
-  if (cVar3 != '\0') {
-    uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
-    UI_BeginReadingDeviceUI();
-    cVar3 = Memcard_SelectSaveDevice(uVar1,1,0x3005);
-    UI_EndReadingSaveDeviceUI(uVar2);
-    if (cVar3 != '\0') {
-      cVar3 = LiveStorage_ShouldReadOnlineStats(uVar1);
-      if ((cVar3 != '\0') && (cVar3 = LiveStorage_DoWeHaveStatsForSource(uVar1,0), cVar3 == '\0')) {
-        LiveStorage_DownloadStats(uVar1);
+  iVar1 = __savegprlr_29(param_1);
+  bVar3 = Live_IsSignedIn(iVar1);
+  if (bVar3) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+    UI_BeginReadingDeviceUI(LVar2);
+    bVar3 = Memcard_SelectSaveDevice(iVar1,true,0x3005);
+    UI_EndReadingSaveDeviceUI(LVar2);
+    if (bVar3) {
+      bVar3 = LiveStorage_ShouldReadOnlineStats(iVar1);
+      if ((bVar3) && (bVar3 = LiveStorage_DoWeHaveStatsForSource(iVar1,STATS_ONLINE), !bVar3)) {
+        LiveStorage_DownloadStats(iVar1);
       }
-      cVar3 = LiveStorage_ShouldReadOfflineStats(uVar1);
-      if (cVar3 != '\0') {
-        LiveStorage_ReadStats(uVar1);
+      bVar3 = LiveStorage_ShouldReadOfflineStats(iVar1);
+      if (bVar3) {
+        LiveStorage_ReadStats(iVar1);
       }
     }
   }
@@ -518,57 +553,67 @@ void LiveStorage_SplitScreenReselectSaveDevice(void)
 
 // 82657748  LiveStorage_FirstTimeRunning  (xenon/xenon_storage.cpp:654)
 
-undefined1 LiveStorage_FirstTimeRunning(int param_1)
+bool LiveStorage_FirstTimeRunning(int param_1)
 
 {
-  int iVar1;
+  StatsSource SVar1;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  return (&DAT_836398d3)[iVar1 * 0x3005 + param_1 * 0x9238];
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  return controllerStatData[param_1].playerStats[SVar1].firstTimeRunning;
 }
 
 
 // 82657798  Xenon_StorageBuildServerPath  (xenon/xenon_storage.cpp:667)
 
-void Xenon_StorageBuildServerPath
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5)
+int Xenon_StorageBuildServerPath
+              (int param_1,char *param_2,_XSTORAGE_FACILITY param_3,wchar_t *param_4,ulong *param_5)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  WCHAR aWStack_240 [255];
+  ulong uVar1;
+  _XUSER_SIGNIN_STATE _Var2;
+  int iVar3;
+  ulong uVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  wchar_t awStack_240 [255];
   undefined2 local_42;
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82190b08,0x29f,0,0xffffffff82000f98,0xffffffff8208e528);
+  uVar8 = (ulonglong)(int)param_5;
+  uVar7 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0x29f
+                    ,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82190b08,0x2a0,0,0xffffffff82000f98,0xffffffff821912c0);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0x2a0
+                    ,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82190b08,0x2a1,0,0xffffffff82000f98,0xffffffff821912ac);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_storage.cpp",0x2a1
+                    ,0,"%s");
   }
-  MultiByteToWideChar(0xfde9,0,(LPCSTR)param_2,-1,aWStack_240,0x100);
+  MultiByteToWideChar(0xfde9,0,(char *)uVar6,-1,(ushort *)awStack_240,0x100);
   local_42 = 0;
-  iVar4 = XUserGetSigninState(uVar1);
-  if (iVar4 != 2) {
-    Com_PrintError(0x10,0xffffffff82191268,uVar1);
-    __restgprlr_25(0);
-    return;
+  _Var2 = XUserGetSigninState(uVar1);
+  if (_Var2 != eXUserSigninState_SignedInToLive) {
+    Com_PrintError(0x10,"Not building storage path: controller %i is not signed in to live.\n");
+    iVar3 = __restgprlr_25(0);
+    return iVar3;
   }
-  uVar2 = XStorageBuildServerPath(uVar1,param_3,0,0,aWStack_240,param_4,param_5);
-  if ((uVar2 & 0xffffffff) != 0) {
-    Com_PrintError(0x10,0xffffffff8219122c,uVar2);
-    uVar3 = va(0xffffffff821911f0,uVar2);
-    LSP_LogString(uVar1,uVar3);
-    __restgprlr_25(0);
-    return;
+  uVar4 = XStorageBuildServerPath
+                    (uVar1,param_3,(void *)0x0,0,awStack_240,(wchar_t *)uVar7,(ulong *)uVar8);
+  if (uVar4 != 0) {
+    Com_PrintError(0x10,"Microsoft error %i building storage path to the stats file\n");
+    pcVar5 = va("Microsoft error %i building storage path to the stats file");
+    LSP_LogString(uVar1,pcVar5);
+    iVar3 = __restgprlr_25(0);
+    return iVar3;
   }
-  __restgprlr_25(1);
-  return;
+  iVar3 = __restgprlr_25(1);
+  return iVar3;
 }
 

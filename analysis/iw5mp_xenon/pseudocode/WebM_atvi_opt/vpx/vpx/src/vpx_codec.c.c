@@ -2,7 +2,9 @@
 
 // 8283D3D8  vpx_codec_version  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:28)
 
-undefined8 vpx_codec_version(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int vpx_codec_version(void)
 
 {
   return 0x905;
@@ -11,126 +13,143 @@ undefined8 vpx_codec_version(void)
 
 // 8283D3E0  vpx_codec_version_str  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:34)
 
-undefined8 vpx_codec_version_str(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * vpx_codec_version_str(void)
 
 {
-  return 0xffffffff821ede3c;
+  return "v0.9.5";
 }
 
 
 // 8283D3F0  vpx_codec_version_extra_str  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:40)
 
-undefined8 vpx_codec_version_extra_str(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * vpx_codec_version_extra_str(void)
 
 {
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 8283D400  vpx_codec_iface_name  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:46)
 
-ulonglong vpx_codec_iface_name(uint *param_1)
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
+char * vpx_codec_iface_name(vpx_codec_iface *param_1)
 
 {
-  if (param_1 != (uint *)0x0) {
-    return (ulonglong)*param_1;
+  if (param_1 != (vpx_codec_iface *)0x0) {
+    return param_1->name;
   }
-  return 0xffffffff821ede44;
+  return "<invalid interface>";
 }
 
 
 // 8283D420  vpx_codec_err_to_string  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:51)
 
-undefined8 vpx_codec_err_to_string(undefined4 param_1)
+char * vpx_codec_err_to_string(vpx_codec_err_t param_1)
 
 {
   switch(param_1) {
-  case 0:
-    return 0xffffffff821edf94;
-  case 1:
-    return 0xffffffff821edf78;
-  case 2:
-    return 0xffffffff821edf60;
-  case 3:
-    return 0xffffffff821edf48;
-  case 4:
-    return 0xffffffff821edf18;
-  case 5:
-    return 0xffffffff821edef0;
-  case 6:
-    return 0xffffffff821edeb4;
-  case 7:
-    return 0xffffffff821ede9c;
-  case 8:
-    return 0xffffffff821ede88;
-  case 9:
-    return 0xffffffff821ede70;
+  case VPX_CODEC_OK:
+    return "Success";
+  case VPX_CODEC_ERROR:
+    return "Unspecified internal error";
+  case VPX_CODEC_MEM_ERROR:
+    return "Memory allocation error";
+  case VPX_CODEC_ABI_MISMATCH:
+    return "ABI version mismatch";
+  case VPX_CODEC_INCAPABLE:
+    return "Codec does not implement requested capability";
+  case VPX_CODEC_UNSUP_BITSTREAM:
+    return "Bitstream not supported by this decoder";
+  case VPX_CODEC_UNSUP_FEATURE:
+    return "Bitstream required feature not supported by this decoder";
+  case VPX_CODEC_CORRUPT_FRAME:
+    return "Corrupt frame detected";
+  case VPX_CODEC_INVALID_PARAM:
+    return "Invalid parameter";
+  case VPX_CODEC_LIST_END:
+    return "End of iterated list";
   default:
-    return 0xffffffff821ede58;
+    return "Unrecognized error code";
   }
 }
 
 
 // 8283D4F0  vpx_codec_error  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:80)
 
-undefined8 vpx_codec_error(int param_1)
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
+char * vpx_codec_error(vpx_codec_ctx *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (param_1 != 0) {
-    uVar1 = vpx_codec_err_to_string(*(undefined4 *)(param_1 + 8));
-    return uVar1;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    pcVar1 = vpx_codec_err_to_string(param_1->err);
+    return pcVar1;
   }
-  return 0xffffffff821ede88;
+  return "Invalid parameter";
 }
 
 
 // 8283D510  vpx_codec_error_detail  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:86)
 
-undefined4 vpx_codec_error_detail(int param_1)
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
+char * vpx_codec_error_detail(vpx_codec_ctx *param_1)
 
 {
-  if ((param_1 != 0) && (*(int *)(param_1 + 8) != 0)) {
-    if (*(int *)(param_1 + 0x18) != 0) {
-      return *(undefined4 *)(*(int *)(param_1 + 0x18) + 0xc);
+  if ((param_1 != (vpx_codec_ctx *)0x0) && (param_1->err != VPX_CODEC_OK)) {
+    if (param_1->priv != (vpx_codec_priv *)0x0) {
+      return param_1->priv->err_detail;
     }
-    return *(undefined4 *)(param_1 + 0xc);
+    return param_1->err_detail;
   }
-  return 0;
+  return (char *)0x0;
 }
 
 
 // 8283D548  vpx_codec_destroy  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:95)
 
-undefined8 vpx_codec_destroy(undefined4 *param_1)
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
+vpx_codec_err_t vpx_codec_destroy(vpx_codec_ctx *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    return 8;
+  vpx_codec_alg_priv *pvVar1;
+  
+  if (param_1 == (vpx_codec_ctx *)0x0) {
+    return VPX_CODEC_INVALID_PARAM;
   }
-  if ((param_1[1] != 0) && (param_1[6] != 0)) {
-    if (*(int *)(param_1[6] + 8) != 0) {
-      (**(code **)(param_1[1] + 0x10))();
+  if ((param_1->iface != (vpx_codec_iface *)0x0) && (param_1->priv != (vpx_codec_priv *)0x0)) {
+    pvVar1 = param_1->priv->alg_priv;
+    if (pvVar1 != (vpx_codec_alg_priv *)0x0) {
+      (*param_1->iface->destroy)(pvVar1);
     }
-    param_1[1] = 0;
-    *param_1 = 0;
-    param_1[6] = 0;
-    param_1[2] = 0;
-    return 0;
+    param_1->iface = (vpx_codec_iface *)0x0;
+    param_1->name = (char *)0x0;
+    param_1->priv = (vpx_codec_priv *)0x0;
+    param_1->err = VPX_CODEC_OK;
+    return VPX_CODEC_OK;
   }
-  param_1[2] = 1;
-  return 1;
+  param_1->err = VPX_CODEC_ERROR;
+  return VPX_CODEC_ERROR;
 }
 
 
 // 8283D5F8  vpx_codec_get_caps  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:118)
 
-undefined4 vpx_codec_get_caps(int param_1)
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
+long vpx_codec_get_caps(vpx_codec_iface *param_1)
 
 {
-  if (param_1 != 0) {
-    return *(undefined4 *)(param_1 + 8);
+  if (param_1 != (vpx_codec_iface *)0x0) {
+    return param_1->caps;
   }
   return 0;
 }
@@ -139,50 +158,38 @@ undefined4 vpx_codec_get_caps(int param_1)
 // 8283D610  vpx_codec_control_  (WebM_atvi_opt/vpx/vpx/src/vpx_codec.c:126)
 
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
-void vpx_codec_control_(int param_1,int param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+vpx_codec_err_t vpx_codec_control_(vpx_codec_ctx *param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  int *piVar2;
+  vpx_codec_err_t vVar1;
+  vpx_codec_ctrl_fn_map_t *pvVar2;
   int iStack0000001c;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
   
-  if ((param_1 == 0) || (param_2 == 0)) {
-    uVar1 = 8;
+  if ((param_1 == (vpx_codec_ctx *)0x0) || (param_2 == 0)) {
+    vVar1 = VPX_CODEC_INVALID_PARAM;
   }
-  else if (((*(int *)(param_1 + 4) == 0) || (*(int *)(param_1 + 0x18) == 0)) ||
-          (piVar2 = *(int **)(*(int *)(param_1 + 4) + 0x14), piVar2 == (int *)0x0)) {
-    uVar1 = 1;
+  else if (((param_1->iface == (vpx_codec_iface *)0x0) || (param_1->priv == (vpx_codec_priv *)0x0))
+          || (pvVar2 = param_1->iface->ctrl_maps, pvVar2 == (vpx_codec_ctrl_fn_map_t *)0x0)) {
+    vVar1 = VPX_CODEC_ERROR;
   }
   else {
-    uVar1 = 1;
+    vVar1 = VPX_CODEC_ERROR;
     do {
-      if ((code *)piVar2[1] == (code *)0x0) break;
-      if ((*piVar2 == 0) || (*piVar2 == param_2)) {
-        uStack00000020 = param_3;
-        uStack00000028 = param_4;
-        uStack00000030 = param_5;
-        uStack00000038 = param_6;
-        uStack00000040 = param_7;
-        uStack00000048 = param_8;
+      if (pvVar2->fn == (_func___cdecl_vpx_codec_err_t_vpx_codec_alg_priv_ptr_int_char_ptr *)0x0)
+      break;
+      if ((pvVar2->ctrl_id == 0) || (pvVar2->ctrl_id == param_2)) {
         iStack0000001c = param_2;
-        uVar1 = (*(code *)piVar2[1])
-                          (*(undefined4 *)(*(int *)(param_1 + 0x18) + 8),param_2,&stack0x00000020);
+        vVar1 = (*pvVar2->fn)(param_1->priv->alg_priv,param_2,&stack0x00000020);
         break;
       }
-      piVar2 = piVar2 + 2;
-    } while (piVar2 != (int *)0x0);
+      pvVar2 = pvVar2 + 1;
+    } while (pvVar2 != (vpx_codec_ctrl_fn_map_t *)0x0);
   }
-  if (param_1 != 0) {
-    *(undefined4 *)(param_1 + 8) = uVar1;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    param_1->err = vVar1;
   }
-  return;
+  return vVar1;
 }
 

@@ -2,23 +2,29 @@
 
 // 82403DA8  Load_ScriptStringCustom  (database/db_stringtable_load.cpp:11)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Load_ScriptStringCustom(ushort *param_1)
 
 {
-  *param_1 = (ushort)*(undefined4 *)((uint)*param_1 * 4 + *(int *)(DAT_82cc6380 + 4));
+  *param_1 = (ushort)(varXAssetList->stringList).strings[*param_1];
   return;
 }
 
 
 // 82403DC8  Mark_ScriptStringCustom  (database/db_stringtable_load.cpp:17)
 
-void Mark_ScriptStringCustom(short *param_1)
+void Mark_ScriptStringCustom(ushort *param_1)
 
 {
   if (*param_1 == 0) {
     return;
   }
-  SL_AddUser(*param_1,4);
+  SL_AddUser((uint)*param_1,4);
   return;
 }
 

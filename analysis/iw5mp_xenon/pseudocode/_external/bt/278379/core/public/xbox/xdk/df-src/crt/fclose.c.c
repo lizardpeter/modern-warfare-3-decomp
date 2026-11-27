@@ -2,28 +2,28 @@
 
 // 82919740  fclose  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fclose.c:43)
 
-int fclose(FILE *_File)
+int fclose(_iobuf *param_1)
 
 {
   int *piVar1;
-  FILE *pFStack00000014;
+  _iobuf *p_Stack00000014;
   int local_20;
   
   local_20 = -1;
-  pFStack00000014 = _File;
-  if (_File == (FILE *)0x0) {
+  p_Stack00000014 = param_1;
+  if (param_1 == (_iobuf *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     local_20 = -1;
   }
-  else if ((_File->_flag & 0x40U) == 0) {
-    _lock_file(_File);
-    local_20 = _fclose_nolock(_File);
+  else if ((param_1->_flag & 0x40U) == 0) {
+    _lock_file(param_1);
+    local_20 = _fclose_nolock(param_1);
     FUN_82919804();
   }
   else {
-    _File->_flag = 0;
+    param_1->_flag = 0;
   }
   return local_20;
 }
@@ -31,39 +31,39 @@ int fclose(FILE *_File)
 
 // 82919698  _fclose_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fclose.c:85)
 
-int _fclose_nolock(FILE *_File)
+int _fclose_nolock(_iobuf *param_1)
 
 {
-  FILE *_File_00;
-  int *piVar1;
-  int iVar2;
+  _iobuf *p_Var1;
+  int *piVar2;
   int iVar3;
+  int iVar4;
   
-  _File_00 = (FILE *)__savegprlr_29(_File);
-  iVar3 = -1;
-  if (_File_00 == (FILE *)0x0) {
-    piVar1 = _errno();
-    *piVar1 = 0x16;
+  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
+  iVar4 = -1;
+  if (p_Var1 == (_iobuf *)0x0) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    iVar3 = -1;
+    iVar4 = -1;
   }
   else {
-    if ((_File_00->_flag & 0x83U) != 0) {
-      iVar3 = _flush(_File_00);
-      _freebuf(_File_00);
-      iVar2 = _fileno(_File_00);
-      iVar2 = _close(iVar2);
-      if (iVar2 < 0) {
-        iVar3 = -1;
+    if ((p_Var1->_flag & 0x83U) != 0) {
+      iVar4 = _flush(p_Var1);
+      _freebuf(p_Var1);
+      iVar3 = _fileno(p_Var1);
+      iVar3 = _close(iVar3);
+      if (iVar3 < 0) {
+        iVar4 = -1;
       }
-      else if (_File_00->_tmpfname != (char *)0x0) {
-        free(_File_00->_tmpfname);
-        _File_00->_tmpfname = (char *)0x0;
+      else if (p_Var1->_tmpfname != (char *)0x0) {
+        free(p_Var1->_tmpfname);
+        p_Var1->_tmpfname = (char *)0x0;
       }
     }
-    _File_00->_flag = 0;
+    p_Var1->_flag = 0;
   }
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  iVar4 = __restgprlr_29(iVar4);
+  return iVar4;
 }
 

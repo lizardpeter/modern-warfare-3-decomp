@@ -2,53 +2,57 @@
 
 // 824FC520  Live_GetNecessaryBandwidth  (qcommon/console_mp.cpp:36)
 
-undefined4 Live_GetNecessaryBandwidth(int param_1)
+int Live_GetNecessaryBandwidth(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
   if (param_1 < 3) {
-    return *(undefined4 *)(DAT_836662f0 + 0xc);
+    return (band_2players->current).integer;
   }
   if (param_1 < 5) {
-    return *(undefined4 *)(DAT_83667308 + 0xc);
+    return (band_4players->current).integer;
   }
   if (param_1 < 9) {
-    return *(undefined4 *)(DAT_8366738c + 0xc);
+    return (band_8players->current).integer;
   }
   if (param_1 < 0xd) {
-    return *(undefined4 *)(DAT_8366617c + 0xc);
+    return (band_12players->current).integer;
   }
-  if ((0x12 < param_1) && (DAT_84013128 == 0)) {
-    uVar1 = va(0xffffffff8208d2b4);
-    MyAssertHandler(0xffffffff8208d270,0x32,0,uVar1);
+  if ((0x12 < param_1) && (alwaysfails == 0)) {
+    pcVar1 = va("Invalid player count %i in Live_GetNecessaryBandwidth()");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\console_mp.cpp",0x32,0
+                    ,pcVar1);
   }
-  return *(undefined4 *)(DAT_83666204 + 0xc);
+  return (band_18players->current).integer;
 }
 
 
 // 824FC618  Live_HowManyPlayersCanWeHost  (qcommon/console_mp.cpp:72)
 
-undefined8 Live_HowManyPlayersCanWeHost(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_HowManyPlayersCanWeHost(void)
 
 {
   int iVar1;
   
   iVar1 = Live_GetUploadSpeed();
-  if (iVar1 < *(int *)(DAT_83667308 + 0xc)) {
+  if (iVar1 < (band_4players->current).integer) {
     return 2;
   }
-  if (iVar1 < *(int *)(DAT_8366738c + 0xc)) {
+  if (iVar1 < (band_8players->current).integer) {
     return 4;
   }
-  if (iVar1 < *(int *)(DAT_8366617c + 0xc)) {
+  if (iVar1 < (band_12players->current).integer) {
     return 8;
   }
-  if (iVar1 < *(int *)(DAT_83666204 + 0xc)) {
+  if (iVar1 < (band_18players->current).integer) {
     return 0xc;
   }
-  if (iVar1 <= *(int *)(DAT_83666204 + 0xc)) {
-    MyAssertHandler(0xffffffff8208d270,0x66,0,0xffffffff8208d2ec,0xffffffff8208d304);
+  if (iVar1 <= (band_18players->current).integer) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\console_mp.cpp",0x66,0
+                    ,"%s\n\t(bandwidth) = %i");
   }
   return 0x12;
 }
@@ -56,23 +60,26 @@ undefined8 Live_HowManyPlayersCanWeHost(void)
 
 // 824FC708  Live_CloseMpOnlineMenus  (qcommon/console_mp.cpp:111)
 
-void Live_CloseMpOnlineMenus(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_CloseMpOnlineMenus(char *param_1)
 
 {
-  UI_CloseMenu(0,0xffffffff8208d368);
-  UI_CloseMenu(0,0xffffffff82056c00);
-  UI_CloseMenu(0,0xffffffff820861dc);
-  UI_CloseMenu(0,0xffffffff82057c28);
-  UI_CloseMenu(0,0xffffffff82057c38);
-  UI_CloseMenu(0,0xffffffff82057c14);
-  if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-    Dvar_SetBool(DAT_82b3ecb8,0);
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_connecting");
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_acceptinginvite");
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_gettingdata");
+  UI_CloseMenu(LOCAL_CLIENT_0,"menu_xboxlive");
+  UI_CloseMenu(LOCAL_CLIENT_0,"menu_systemlink");
+  UI_CloseMenu(LOCAL_CLIENT_0,"savegame_error_mp");
+  if ((onlinegame->current).enabled != false) {
+    Dvar_SetBool(splitscreen,false);
   }
-  Dvar_SetBool(DAT_82aa1af8,0);
-  Dvar_SetBool(DAT_82aa1ae4,0);
-  Party_ClosePartyUI(0xffffffff82b55118,param_1);
-  Party_StopParty(0xffffffff82b55118);
-  Cbuf_AddText(0,0xffffffff8208d334);
+  Dvar_SetBool(onlinegame,false);
+  Dvar_SetBool(systemlink,false);
+  Party_ClosePartyUI(&g_partyData,param_1);
+  Party_StopParty(&g_partyData);
+  Cbuf_AddText(LOCAL_CLIENT_0,"forcesplitscreencontrol Live_CloseMpOnlineMenus;");
   return;
 }
 

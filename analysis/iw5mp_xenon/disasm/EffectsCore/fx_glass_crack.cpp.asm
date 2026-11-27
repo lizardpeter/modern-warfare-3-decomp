@@ -6042,7 +6042,7 @@ LAB_82423ea8:
   82423EB0  CBE1FFF8             lfd f31,-0x8(r1)
   82423EB4  4E800020             blr
 
-; 82426D48  std::_Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 82426D48  _Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   82426D48  7D8802A6             mfspr r12,LR
   82426D4C  484EF961             bl 0x829166ac
   82426D50  9421FF70             stwu r1,-0x90(r1)
@@ -6453,7 +6453,7 @@ LAB_82426244:
   82426258  484F0571             bl 0x829167c8
   8242625C  484F0494             b 0x829166f0
 
-; 82426EB0  std::_Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 82426EB0  _Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   82426EB0  7D8802A6             mfspr r12,LR
   82426EB4  484EF7F9             bl 0x829166ac
   82426EB8  9421FF70             stwu r1,-0x90(r1)
@@ -6817,7 +6817,7 @@ LAB_8242406c:
   824243E8  382100A0             addi r1,r1,0xa0
   824243EC  484F2308             b 0x829166f4
 
-; 82426FC0  std::_Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 82426FC0  _Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   82426FC0  7D8802A6             mfspr r12,LR
   82426FC4  484EF6E5             bl 0x829166a8
   82426FC8  9421FF60             stwu r1,-0xa0(r1)
@@ -6983,7 +6983,7 @@ LAB_824263d8:
   824263E0  38210080             addi r1,r1,0x80
   824263E4  484F0320             b 0x82916704
 
-; 82427558  std::_Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82427558  _Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82427558  7D8802A6             mfspr r12,LR
   8242755C  484EF15D             bl 0x829166b8
   82427560  9421FF80             stwu r1,-0x80(r1)
@@ -8009,7 +8009,7 @@ LAB_8242670c:
   82426734  382144D0             addi r1,r1,0x44d0
   82426738  484EFFBC             b 0x829166f4
 
-; 824270A0  std::_Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 824270A0  _Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   824270A0  7D8802A6             mfspr r12,LR
   824270A4  484EF605             bl 0x829166a8
   824270A8  9421FF60             stwu r1,-0xa0(r1)
@@ -8077,7 +8077,7 @@ LAB_82427188:
   82427188  382100A0             addi r1,r1,0xa0
   8242718C  484EF56C             b 0x829166f8
 
-; 82427190  std::_Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 82427190  _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   82427190  7D8802A6             mfspr r12,LR
   82427194  484EF525             bl 0x829166b8
   82427198  9421FF80             stwu r1,-0x80(r1)
@@ -8124,7 +8124,7 @@ LAB_82427230:
   82427230  38210080             addi r1,r1,0x80
   82427234  484EF4D4             b 0x82916708
 
-; 82427238  std::_Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82427238  _Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82427238  7D8802A6             mfspr r12,LR
   8242723C  484EF475             bl 0x829166b0
   82427240  9421FF70             stwu r1,-0x90(r1)
@@ -8169,7 +8169,7 @@ LAB_824272cc:
   824272D8  38210090             addi r1,r1,0x90
   824272DC  484EF424             b 0x82916700
 
-; 824272E0  std::_Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 824272E0  _Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   824272E0  7D8802A6             mfspr r12,LR
   824272E4  484EF3C1             bl 0x829166a4
   824272E8  9421FF60             stwu r1,-0xa0(r1)
@@ -8345,7 +8345,7 @@ LAB_82427540:
   8242754C  382100A0             addi r1,r1,0xa0
   82427550  484EF1A4             b 0x829166f4
 
-; 824275C8  std::_Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824275C8  _Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824275C8  7D8802A6             mfspr r12,LR
   824275CC  484EF0E5             bl 0x829166b0
   824275D0  9421FF70             stwu r1,-0x90(r1)

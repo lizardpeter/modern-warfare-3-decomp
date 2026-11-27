@@ -2,73 +2,149 @@
 
 // 8241C0E0  FX_RegisterDvars  (EffectsCore/fx_dvars.cpp:70)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FX_RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  ushort uVar1;
+  char *pcVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
   __savefpr_27();
-  DAT_8332cba8 = Dvar_RegisterBool(0xffffffff82062d40,1,4,0xffffffff82062d4c);
-  DAT_8332cc28 = Dvar_RegisterBool(0xffffffff82062d0c,1,4,0xffffffff82062d14);
-  DAT_8332cbec = Dvar_RegisterBool(0xffffffff82062cf8,1,4,0xffffffff82062d14);
-  DAT_8332cbd0 = Dvar_RegisterBool(0xffffffff82062ce4,1,4,0xffffffff82062d14);
-  DAT_8332cc38 = Dvar_RegisterBool(0xffffffff82062cd0,1,0,0xffffffff82062cb0);
-  DAT_8332cbe4 = Dvar_RegisterBool(0xffffffff82062c7c,1,0,0xffffffff82062c90);
-  DAT_8332cc18 = Dvar_RegisterBool(0xffffffff82062c48,1,0,0xffffffff82062c54);
-  DAT_8332cb9c = Dvar_RegisterBool(0xffffffff82062bf8,1,0,0xffffffff82062c0c);
-  DAT_8332cc3c = Dvar_RegisterBool(0xffffffff82062bb4,1,0,0xffffffff82062bc4);
-  DAT_8332cbf8 = Dvar_RegisterBool(0xffffffff82062ba8,0,4,0xffffffff82062b98);
-  uVar5 = 0;
-  uVar3 = 0x408f400000000000;
-  DAT_8332cbfc = Dvar_RegisterFloat(0,0,0x408f400000000000,0xffffffff82062b88);
-  DAT_8332cc00 = Dvar_RegisterBool(0xffffffff82062b54,0,4,0xffffffff82062b60);
-  DAT_8332cc08 = Dvar_RegisterFloat(0x4054000000000000,uVar5,uVar3,0xffffffff82062b40);
-  DAT_8332cbd4 = Dvar_RegisterEnum(0xffffffff82062ae8,0xffffffff829684c0,0,4,0xffffffff82062af8);
-  DAT_8332cc30 = Dvar_RegisterInt(0xffffffff82062ad8,0,0,1000,4,0xffffffff82062a90);
-  DAT_8332cbc4 = Dvar_RegisterString(0xffffffff82062a40,0xffffffff820068af,4,0xffffffff82062a54);
-  DAT_8332cc2c = Dvar_RegisterInt(0xffffffff820629e0,0,0,4,4,0xffffffff820629f0);
-  DAT_8332cb98 = Dvar_RegisterInt(0xffffffff82062974,0,0,4,4,0xffffffff82062988);
-  DAT_8332cc0c = Dvar_RegisterBool(0xffffffff8206293c,1,4,0xffffffff8206294c);
-  DAT_8332cc20 = Dvar_RegisterBool(0xffffffff820628f0,1,4,0xffffffff82062900);
-  DAT_8332cc40 = Dvar_RegisterBool(0xffffffff820628b8,1,4,0xffffffff820628c8);
-  DAT_8332cc44 = Dvar_RegisterBool(0xffffffff82062834,1,4,0xffffffff82062850);
-  DAT_8332cbb8 = Dvar_RegisterInt(0xffffffff820627b8,0,0,0x100,0x44,0xffffffff820627d0);
-  DAT_8332cbbc = Dvar_RegisterInt(0xffffffff8206275c,0,0,0x7fffffff,4,0xffffffff82062768);
-  DAT_8332cba0 = Dvar_RegisterBool(0xffffffff82062720,0,0,0xffffffff8206272c);
-  DAT_8332cc14 = Dvar_RegisterBool(0xffffffff820626e4,1,4,0xffffffff820626f0);
-  uVar1 = 0x40c3880000000000;
-  DAT_8332cc04 = Dvar_RegisterVec2(0x4069000000000000,0x4079000000000000,uVar5,0x40c3880000000000,
-                                   0xffffffff82062690);
-  uVar3 = 0x4014000000000000;
-  DAT_8332cbac = Dvar_RegisterVec2(0x4014000000000000,0x4041800000000000,uVar5,0x4066800000000000,
-                                   0xffffffff8206263c);
-  DAT_8332cbcc = Dvar_RegisterVec2(uVar3,0x4024000000000000,uVar5,0x4056800000000000,
-                                   0xffffffff820625d4);
-  DAT_8332cba4 = Dvar_RegisterVec2(0x3ff8000000000000,0x4008000000000000,uVar5,0x4059000000000000,
-                                   0xffffffff820625c0);
-  uVar3 = 0x3fc99999a0000000;
-  DAT_8332cbc8 = Dvar_RegisterVec2(0x3fc99999a0000000,0x3fecccccc0000000,uVar5,0x403e000000000000,
-                                   0xffffffff820624e4);
-  uVar4 = 0x47efffffe0000000;
-  DAT_8332cbf4 = Dvar_RegisterFloat(0x4089000000000000,0xc7efffffe0000000,0x47efffffe0000000,
-                                    0xffffffff820624ac);
-  uVar2 = 0x3ff0000000000000;
-  DAT_8332cbb0 = Dvar_RegisterFloat(0x3fd0000000000000,uVar5,0x3ff0000000000000,0xffffffff8206249c);
-  DAT_8332cbe0 = Dvar_RegisterFloat(0x4049000000000000,uVar5,uVar1,0xffffffff820623e8);
-  DAT_8332cbb4 = Dvar_RegisterInt(0xffffffff820623cc,100,1,0x7fffffff,0,0xffffffff82062370);
-  DAT_8332cc24 = Dvar_RegisterInt(0xffffffff820622e8,6,1,0x7fffffff,0,0xffffffff82062308);
-  DAT_8332cc1c = Dvar_RegisterFloat(0x4072c00000000000,uVar2,uVar4,0xffffffff82062258);
-  DAT_8332cbdc = Dvar_RegisterFloat(0x4062c00000000000,uVar5,uVar1,0xffffffff820621c4);
-  DAT_8332cbc0 = Dvar_RegisterFloat(uVar3,uVar5,uVar2,0xffffffff820621a8);
-  DAT_8332cbf0 = Dvar_RegisterInt(0xffffffff820620e4,100,1,0x7fffffff,0,0xffffffff82062100);
-  DAT_8332cc10 = Dvar_RegisterFloat(0x3fc3333340000000,uVar5,uVar2,0xffffffff820620cc);
-  DAT_8332cbe8 = Dvar_RegisterFloat(0x4080000000000000,uVar5,uVar4,0xffffffff82062038);
-  DAT_8332cbd8 = Dvar_RegisterFloat(0x4048000000000000,0x3810000000000000,uVar4,0xffffffff8205ce60);
-  DAT_8332cc34 = Dvar_RegisterBool(0xffffffff82061fe4,0,0,0xffffffff82061ff0);
+  fx_enable = Dvar_RegisterBool("fx_enable",true,4,"Toggles all effects processing");
+  fx_draw = Dvar_RegisterBool("fx_draw",true,4,"Toggles drawing of effects after processing");
+  fx_draw_spotLight =
+       Dvar_RegisterBool("fx_draw_spotLight",true,4,"Toggles drawing of effects after processing");
+  fx_draw_omniLight =
+       Dvar_RegisterBool("fx_draw_omniLight",true,4,"Toggles drawing of effects after processing");
+  fx_cull_elem_spawn =
+       Dvar_RegisterBool("fx_cull_elem_spawn",true,0,"Culls effect elems for spawning");
+  fx_cull_elem_draw = Dvar_RegisterBool("fx_cull_elem_draw",true,0,"Culls effect elems for drawing")
+  ;
+  fx_marks = Dvar_RegisterBool("fx_marks",true,0,"Toggles whether bullet hits leave marks");
+  fx_marks_smodels =
+       Dvar_RegisterBool("fx_marks_smodels",true,0,
+                         "Toggles whether bullet hits leave marks on static models");
+  fx_marks_ents =
+       Dvar_RegisterBool("fx_marks_ents",true,0,
+                         "Toggles whether bullet hits leave marks on entities");
+  pcVar2 = &DAT_00000004;
+  fx_freeze = Dvar_RegisterBool("fx_freeze",false,4,"Freeze effects");
+  dVar8 = 0.0;
+  dVar6 = 1000.0;
+  fx_debugBolt = Dvar_RegisterFloat("fx_debugBolt",0.0,0.0,1000.0,0,pcVar2);
+  uVar1 = 0;
+  pcVar2 = &DAT_00000004;
+  fx_count = Dvar_RegisterBool("fx_count",false,4,"Debug effects count");
+  fx_visMinTraceDist =
+       Dvar_RegisterFloat("fx_visMinTraceDist",80.0,(float)dVar8,(float)dVar6,uVar1,pcVar2);
+  fx_profileSort =
+       Dvar_RegisterEnum("fx_profileSort",(char **)&fx_profileSortStrings,0,4,
+                         "Choose sort criteria for FX profiling");
+  fx_profileSkip =
+       Dvar_RegisterInt("fx_profileSkip",0,0,1000,4,
+                        "Skip the first n lines in FX profile (to see ones off bottom of screen)");
+  fx_profileFilter =
+       Dvar_RegisterString("fx_profileFilter","",4,
+                           "Only show effects with this as a substring in FX profile");
+  fx_profile = Dvar_RegisterInt("fx_profile",0,0,4,4,
+                                "Turn on FX profiling (specify which local client, with \'1\' being the first.)"
+                               );
+  fx_mark_profile =
+       Dvar_RegisterInt("fx_mark_profile",0,0,4,4,
+                        "Turn on FX profiling for marks (specify which local client, with \'1\' being the first.)"
+                       );
+  fx_drawClouds = Dvar_RegisterBool("fx_drawClouds",true,4,"Toggles the drawing of particle clouds")
+  ;
+  fx_deferelem = Dvar_RegisterBool("fx_deferelem",true,4,
+                                   "Toggles deferred processing of elements instead of effects");
+  fx_draw_simd = Dvar_RegisterBool("fx_draw_simd",true,4,"Draw effects using SIMD / Vector code.");
+  fx_killEffectOnRewind =
+       Dvar_RegisterBool("fx_killEffectOnRewind",true,4,
+                         "Causes effects that have been marked for a soft kill (fade out) to be killed immediately on a rewind."
+                        );
+  fx_alphaThreshold =
+       Dvar_RegisterInt("fx_alphaThreshold",0,0,0x100,0x44,
+                        "Don\'t draw billboard sprites, oriented sprites or tails with alpha below this threshold (0-256)."
+                       );
+  fx_debug3D = Dvar_RegisterInt("fx_debug3D",0,0,0x7fffffff,4,
+                                "Turn on effect system debug information, <int> parameter is culling distance"
+                               );
+  glass_spam = Dvar_RegisterBool("glass_spam",false,0,
+                                 "Toggle extra spam to help repro glass asserts");
+  glass_break = Dvar_RegisterBool("glass_break",true,4,
+                                  "Toggle whether or not glass breaks when shot");
+  uVar1 = 0;
+  dVar4 = 10000.0;
+  glass_linear_vel =
+       Dvar_RegisterVec2("glass_linear_vel",200.0,400.0,(float)dVar8,10000.0,0,
+                         "_CreatePhysObj: Unable to create physic object.");
+  pcVar2 = "_CreatePhysObj: Unable to create physic object.";
+  dVar6 = 5.0;
+  glass_angular_vel =
+       Dvar_RegisterVec2("glass_angular_vel",5.0,35.0,(float)dVar8,180.0,uVar1,
+                         "_CreatePhysObj: Unable to create physic object.");
+  glass_edge_angle =
+       Dvar_RegisterVec2("glass_edge_angle",(float)dVar6,10.0,(float)dVar8,90.0,0,pcVar2);
+  glass_fall_ratio =
+       Dvar_RegisterVec2("glass_fall_ratio",1.5,3.0,(float)dVar8,100.0,0,
+                         (char *)(g_fxMarkPoints[0x19c].lmapCoord + 1));
+  dVar6 = 0.20000000298023224;
+  glass_fall_delay =
+       Dvar_RegisterVec2("glass_fall_delay",0.2,0.9,(float)dVar8,30.0,0,"c\\cgame_mp\\cg_local_mp.h"
+                        );
+  pcVar2 = "_CreatePhysObj: Unable to create physic object.";
+  uVar1 = 0;
+  dVar7 = 3.4028234663852886e+38;
+  glass_fall_gravity =
+       Dvar_RegisterFloat("glass_fall_gravity",800.0,-3.4028235e+38,3.4028235e+38,0,
+                          "_CreatePhysObj: Unable to create physic object.");
+  dVar5 = 1.0;
+  glass_fx_chance = Dvar_RegisterFloat("glass_fx_chance",0.25,(float)dVar8,1.0,uVar1,pcVar2);
+  glass_hinge_friction =
+       Dvar_RegisterFloat("glass_hinge_friction",50.0,(float)dVar8,(float)dVar4,0,
+                          "c\\cgame_mp\\cg_local_mp.h");
+  glass_max_pieces_per_frame =
+       Dvar_RegisterInt("glass_max_pieces_per_frame",100,1,0x7fffffff,0,
+                        "Maximum number of pieces to create in one frame. This is a guideline and not a hard limit."
+                       );
+  pcVar2 = (char *)0x1;
+  uVar1 = 6;
+  glass_max_shatter_fx_per_frame =
+       Dvar_RegisterInt("glass_max_shatter_fx_per_frame",6,1,0x7fffffff,0,
+                        "Maximum number of shatter effects to play in one frame This is a guideline and not a hard limit."
+                       );
+  glass_shard_maxsize =
+       Dvar_RegisterFloat("glass_shard_maxsize",300.0,(float)dVar5,(float)dVar7,uVar1,pcVar2);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  glass_fringe_maxsize =
+       Dvar_RegisterFloat("glass_fringe_maxsize",150.0,(float)dVar8,(float)dVar4,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  glass_fringe_maxcoverage =
+       Dvar_RegisterFloat("glass_fringe_maxcoverage",(float)dVar6,(float)dVar8,(float)dVar5,uVar1,
+                          pIVar3->e_magic);
+  pcVar2 = (char *)0x1;
+  uVar1 = 100;
+  glass_trace_interval =
+       Dvar_RegisterInt("glass_trace_interval",100,1,0x7fffffff,0,
+                        "The length of time, in milliseconds, between glass piece traces");
+  glass_physics_chance =
+       Dvar_RegisterFloat("glass_physics_chance",0.15,(float)dVar8,(float)dVar5,uVar1,pcVar2);
+  uVar1 = 0;
+  glass_physics_maxdist =
+       Dvar_RegisterFloat("glass_physics_maxdist",512.0,(float)dVar8,(float)dVar7,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  glass_shattered_scale =
+       Dvar_RegisterFloat("glass_shattered_scale",48.0,1.1754944e-38,(float)dVar7,uVar1,
+                          "_CreatePhysObj: Unable to create physic object.");
+  glass_debug = Dvar_RegisterBool("glass_debug",false,0,"Shows debug info for glass");
   __restfpr_27();
   return;
 }

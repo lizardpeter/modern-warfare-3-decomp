@@ -2,27 +2,27 @@
 
 // 8292A650  _ValidateRead  (<external>/bt/278379/vctools/crt/src/crtw32/eh/validate.cpp:63)
 
-byte _ValidateRead(longlong param_1)
+int _ValidateRead(void *param_1,uint param_2)
 
 {
-  return -(param_1 != 0) & 1;
+  return -(uint)(param_1 != (void *)0x0) & 1;
 }
 
 
 // 8292A668  _ValidateWrite  (<external>/bt/278379/vctools/crt/src/crtw32/eh/validate.cpp:74)
 
-byte _ValidateWrite(longlong param_1)
+int _ValidateWrite(void *param_1,uint param_2)
 
 {
-  return -(param_1 != 0) & 1;
+  return -(uint)(param_1 != (void *)0x0) & 1;
 }
 
 
 // 8292A680  _ValidateExecute  (<external>/bt/278379/vctools/crt/src/crtw32/eh/validate.cpp:85)
 
-byte _ValidateExecute(longlong param_1)
+int _ValidateExecute(_func___cdecl_int *param_1)
 
 {
-  return -(param_1 != 0) & 1;
+  return -(uint)(param_1 != (_func___cdecl_int *)0x0) & 1;
 }
 

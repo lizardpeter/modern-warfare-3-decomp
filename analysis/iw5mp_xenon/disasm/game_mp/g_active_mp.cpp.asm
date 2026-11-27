@@ -909,7 +909,7 @@ LAB_824557e8:
   82455824  90AB3614             stw r5,0x3614(r11)
   82455828  4E800020             blr
 
-; 82454BB8  EntHandle::entnum  (game_mp/g_public_mp.h:407)
+; 82454BB8  entnum  (game_mp/g_public_mp.h:407)
   82454BB8  7D8802A6             mfspr r12,LR
   82454BBC  9181FFF8             stw r12,-0x8(r1)
   82454BC0  FBC1FFE8             std r30,-0x18(r1)

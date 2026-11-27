@@ -2,14 +2,18 @@
 
 // 82488CA0  CheckSavedEntity  (game_mp/g_save_mp.cpp:60)
 
-void CheckSavedEntity(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CheckSavedEntity(gentity_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x3d,0,0xffffffff82000f98,0xffffffff82002614);
+  if (param_1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x3d,0,
+                    "%s");
   }
-  if (*(char *)(param_1 + 0x103) != '\0') {
-    SV_ValidateEntityState(param_1);
+  if ((param_1->r).isInUse != '\0') {
+    SV_ValidateEntityState(&param_1->s);
   }
   return;
 }
@@ -17,22 +21,27 @@ void CheckSavedEntity(int param_1)
 
 // 82488D08  CheckSavedEntities  (game_mp/g_save_mp.cpp:70)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void CheckSavedEntities(void)
 
 {
-  undefined4 *puVar1;
+  gentity_s *pgVar1;
   
   __savegprlr_27();
-  puVar1 = &DAT_83373680;
+  pgVar1 = g_entities;
   do {
-    if (puVar1 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff82075db8,0x3d,0,0xffffffff82000f98,0xffffffff82002614);
+    if (pgVar1 == (gentity_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x3d,
+                      0,"%s");
     }
-    if (*(char *)((int)puVar1 + 0x103) != '\0') {
-      SV_ValidateEntityState(puVar1);
+    if ((pgVar1->r).isInUse != '\0') {
+      SV_ValidateEntityState(&pgVar1->s);
     }
-    puVar1 = puVar1 + 0xa0;
-  } while (puVar1 != &DAT_834b3680);
+    pgVar1 = pgVar1 + 1;
+  } while (pgVar1 != (gentity_s *)&g_earthquakeEnable);
   __restgprlr_27();
   return;
 }
@@ -40,32 +49,42 @@ void CheckSavedEntities(void)
 
 // 82488D88  SV_SaveConfigstrings  (game_mp/g_save_mp.cpp:80)
 
-void SV_SaveConfigstrings(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void SV_SaveConfigstrings(ConfigString param_1,int param_2,MemoryFile *param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  undefined8 uVar3;
+  ConfigString CVar1;
+  uint uVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  ConfigString CVar6;
   
-  lVar2 = __savegprlr_25();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x54,0,0xffffffff82000f98,0xffffffff82001348);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar5 = (longlong)param_2;
+  CVar1 = __savegprlr_25(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x54,0,
+                    "%s");
   }
-  iVar1 = (int)lVar2;
-  if (0xeeb < iVar1 + (int)param_2) {
-    MyAssertHandler(0xffffffff82075db8,0x55,0,0xffffffff82000f98,0xffffffff82075df8);
+  if (0xeeb < (int)(CVar1 + (int)lVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x55,0,
+                    "%s");
   }
-  if (0 < (int)param_2) {
+  CVar6 = CVar1;
+  if (0 < (int)lVar5) {
     do {
-      if ((0xeea < (int)lVar2) || (iVar1 < 0)) {
-        MyAssertHandler(0xffffffff82075d68,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      if ((0xeea < (int)CVar6) || ((int)CVar1 < 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstringConst(lVar2);
-      uVar3 = SL_ConvertToString();
-      WriteCStyleString(uVar3,0x400,param_3);
-      param_2 = param_2 + -1;
-      lVar2 = lVar2 + 1;
-    } while (param_2 != 0);
+      uVar2 = SV_GetConfigstringConst(CVar6);
+      pcVar3 = SL_ConvertToString(uVar2);
+      WriteCStyleString(pcVar3,0x400,(MemoryFile *)uVar4);
+      lVar5 = lVar5 + -1;
+      CVar6 = CVar6 + CS_SYSTEMINFO;
+    } while (lVar5 != 0);
   }
   __restgprlr_25();
   return;
@@ -74,41 +93,53 @@ void SV_SaveConfigstrings(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 // 82488E70  SV_LoadConfigstrings  (game_mp/g_save_mp.cpp:100)
 
-void SV_LoadConfigstrings(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_LoadConfigstrings(ConfigString param_1,int param_2,MemoryFile *param_3)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  longlong lVar3;
-  char cVar4;
-  undefined1 auStack_450 [1104];
+  ConfigString CVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  ConfigString CVar5;
+  longlong lVar6;
+  char acStack_450 [1104];
   
-  lVar3 = __savegprlr_23();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x69,0,0xffffffff82000f98,0xffffffff82001348);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar6 = (longlong)param_2;
+  CVar2 = __savegprlr_23(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x69,0,
+                    "%s");
   }
-  iVar1 = (int)lVar3;
-  if (0xeeb < iVar1 + (int)param_2) {
-    MyAssertHandler(0xffffffff82075db8,0x6a,0,0xffffffff82000f98,0xffffffff82075df8);
+  if (0xeeb < (int)(CVar2 + (int)lVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x6a,0,
+                    "%s");
   }
-  cVar4 = SV_Loaded();
-  if (cVar4 != '\0') {
-    MyAssertHandler(0xffffffff82075db8,0x71,0,0xffffffff82000f98,0xffffffff82075e1c);
+  bVar3 = SV_Loaded();
+  if (bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x71,0,
+                    "%s");
   }
-  uVar2 = DAT_83ced71c;
-  DAT_83ced71c = 0;
-  if (0 < (int)param_2) {
+  iVar1 = sv.restarting;
+  sv.restarting = 0;
+  CVar5 = CVar2;
+  if (0 < (int)lVar6) {
     do {
-      ReadCStyleString(auStack_450,0x400,param_3);
-      if ((0xeea < (int)lVar3) || (iVar1 < 0)) {
-        MyAssertHandler(0xffffffff82075d68,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      ReadCStyleString(acStack_450,0x400,(MemoryFile *)uVar4);
+      if ((0xeea < (int)CVar5) || ((int)CVar2 < 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_SetConfigstring(lVar3,auStack_450);
-      param_2 = param_2 + -1;
-      lVar3 = lVar3 + 1;
-    } while (param_2 != 0);
+      SV_SetConfigstring(CVar5,acStack_450);
+      lVar6 = lVar6 + -1;
+      CVar5 = CVar5 + CS_SYSTEMINFO;
+    } while (lVar6 != 0);
   }
-  DAT_83ced71c = uVar2;
+  sv.restarting = iVar1;
   __restgprlr_23();
   return;
 }
@@ -116,35 +147,38 @@ void SV_LoadConfigstrings(undefined8 param_1,longlong param_2,ulonglong param_3)
 
 // 82488FA0  SaveWeapons  (game_mp/g_save_mp.cpp:134)
 
-void SaveWeapons(void)
+void SaveWeapons(MemoryFile *param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  uint uVar3;
-  byte bVar4;
+  MemoryFile *pMVar1;
+  uint uVar2;
+  char *pcVar3;
+  uint uVar4;
+  Weapon WVar5;
   uint local_130 [4];
-  undefined1 auStack_120 [288];
+  char acStack_120 [288];
   
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x8b,0,0xffffffff82000f98,0xffffffff82001348);
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  if (pMVar1 == (MemoryFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x8b,0,
+                    "%s");
   }
-  uVar2 = MemFile_GetUsedSize(uVar1);
-  ProfMem_Begin(0xffffffff8206edf4,uVar2);
-  uVar3 = BG_GetNumWeapons();
-  local_130[0] = uVar3;
-  MemFile_WriteData(uVar1,4,local_130);
-  bVar4 = 1;
-  if (1 < uVar3) {
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_Begin("weapons",uVar2);
+  uVar2 = BG_GetNumWeapons();
+  local_130[0] = uVar2;
+  MemFile_WriteData(pMVar1,4,local_130);
+  WVar5.data = 1;
+  if (1 < uVar2) {
     do {
-      uVar2 = BG_GetWeaponName(bVar4,auStack_120,0x100);
-      WriteCStyleString(uVar2,0x100,uVar1);
-      bVar4 = bVar4 + 1;
-    } while (bVar4 < uVar3);
+      pcVar3 = BG_GetWeaponName(WVar5,acStack_120,0x100);
+      WriteCStyleString(pcVar3,0x100,pMVar1);
+      uVar4 = WVar5.data + 1;
+      WVar5.data = uVar4 & 0xff;
+    } while ((uVar4 & 0xff) < uVar2);
   }
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_End(uVar2);
   __restgprlr_29();
   return;
 }
@@ -152,83 +186,99 @@ void SaveWeapons(void)
 
 // 82489068  LoadWeapons  (game_mp/g_save_mp.cpp:154)
 
-void LoadWeapons(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int LoadWeapons(MemoryFile *param_1)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  uint uVar3;
+  MemoryFile *pMVar1;
+  Weapon WVar2;
+  int iVar3;
+  uint uVar4;
   uint local_130 [4];
-  undefined1 auStack_120 [288];
+  char acStack_120 [288];
   
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x9f,0,0xffffffff82000f98,0xffffffff82001348);
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  if (pMVar1 == (MemoryFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x9f,0,
+                    "%s");
   }
-  MemFile_ReadData(uVar1,4,local_130);
-  uVar3 = 1;
+  MemFile_ReadData(pMVar1,4,local_130);
+  uVar4 = 1;
   if (1 < local_130[0]) {
     do {
-      ReadCStyleString(auStack_120,0x100,uVar1);
-      uVar2 = BG_GetWeaponForName(auStack_120,0xffffffff82476788);
-      if ((uVar2 & 0xff) != uVar3) {
-        Com_Printf(10,0xffffffff82075e2c,auStack_120);
-        __restgprlr_29(0);
-        return;
+      ReadCStyleString(acStack_120,0x100,pMVar1);
+      WVar2 = BG_GetWeaponForName(acStack_120,G_RegisterWeapon);
+      if ((WVar2.data & 0xff) != uVar4) {
+        Com_Printf(10,"Weapon index mismatch for \'%s\'\n");
+        iVar3 = __restgprlr_29(0);
+        return iVar3;
       }
-      uVar3 = uVar3 + 1;
-    } while (uVar3 < local_130[0]);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < local_130[0]);
   }
-  DAT_835832e8 = 0;
-  DAT_835832ec = 0;
-  __restgprlr_29(1);
-  return;
+  level.registerWeapons = 0;
+  level.bRegisterItems = 0;
+  iVar3 = __restgprlr_29(1);
+  return iVar3;
 }
 
 
 // 82489140  WriteEntity  (game_mp/g_save_mp.cpp:224)
 
-void WriteEntity(int param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void WriteEntity(gentity_s *param_1,MemoryFile *param_2)
 
 {
   undefined8 *puVar1;
-  undefined8 *puVar2;
+  int *piVar2;
   longlong lVar3;
   undefined8 uStack_2a8;
-  undefined1 local_2a0 [648];
+  uchar local_2a0 [648];
   
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0xe3,0,0xffffffff82000f98,0xffffffff82001348);
+  if (param_2 == (MemoryFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0xe3,0,
+                    "%s");
   }
   puVar1 = &uStack_2a8;
-  puVar2 = (undefined8 *)(param_1 + -8);
+  piVar2 = param_1[-1].padding + 1;
   lVar3 = 0x50;
   do {
-    puVar2 = puVar2 + 1;
+    piVar2 = piVar2 + 2;
     puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    *puVar1 = *(undefined8 *)piVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  G_WriteStruct(0xffffffff82075c20,param_1,local_2a0,0x280,param_2);
+  G_WriteStruct(gentityFields,(uchar *)param_1,local_2a0,0x280,param_2);
   return;
 }
 
 
 // 824891D8  ReadEntity  (game_mp/g_save_mp.cpp:238)
 
-void ReadEntity(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ReadEntity(gentity_s *param_1,SaveGame *param_2)
 
 {
-  ulonglong uVar1;
+  uchar *puVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0xef,0,0xffffffff82000f98,0xffffffff82075e4c);
+  uVar2 = (ulonglong)(int)param_2;
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0xef,0,
+                    "%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0xf0,0,0xffffffff82000f98,0xffffffff82002614);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0xf0,0,
+                    "%s");
   }
-  G_ReadStruct(0xffffffff82075c20,uVar1,0x280,param_2);
+  G_ReadStruct(gentityFields,puVar1,0x280,(SaveGame *)uVar2);
   __restgprlr_28();
   return;
 }
@@ -236,30 +286,40 @@ void ReadEntity(undefined8 param_1,ulonglong param_2)
 
 // 82489268  WriteClient  (game_mp/g_save_mp.cpp:257)
 
-void WriteClient(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void WriteClient(int param_1,gclient_s *param_2,MemoryFile *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_39b0 [13268];
+  uint uVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  uchar auStack_39b0 [13268];
   int local_5dc;
   
-  uVar1 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x104,0,0xffffffff82000f98,0xffffffff82001348);
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x104,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x105,0,0xffffffff82000f98,0xffffffff820386a4);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x105,0
+                    ,"%s");
   }
-  memcpy(auStack_39b0,(void *)param_2,0x3980);
-  cVar2 = SV_HasAssignedTeam_Internal(uVar1);
-  if (cVar2 != '\0') {
+  memcpy();
+  bVar2 = SV_HasAssignedTeam_Internal(uVar1);
+  if (bVar2) {
     local_5dc = SV_GetAssignedTeam_Internal(uVar1);
     if (local_5dc == 0) {
-      MyAssertHandler(0xffffffff82075db8,0x10b,0,0xffffffff82000f98,0xffffffff82075e54);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x10b
+                      ,0,"%s");
     }
   }
-  G_WriteStruct(0xffffffff82075d38,param_2,auStack_39b0,0x3980,param_3);
+  G_WriteStruct(gclientFields,(uchar *)uVar3,auStack_39b0,0x3980,(MemoryFile *)uVar4);
   __restgprlr_27();
   return;
 }
@@ -267,33 +327,38 @@ void WriteClient(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82489360  ReadClient  (game_mp/g_save_mp.cpp:275)
 
-void ReadClient(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ReadClient(gclient_s *param_1,SaveGame *param_2)
 
 {
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x114,0,0xffffffff82000f98,0xffffffff82075e4c);
+  if (param_2 == (SaveGame *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x114,0
+                    ,"%s");
   }
-  G_ReadStruct(0xffffffff82075d38,param_1,0x3980,param_2);
+  G_ReadStruct(gclientFields,(uchar *)param_1,0x3980,param_2);
   return;
 }
 
 
 // 824893D8  WriteTurretInfo  (game_mp/g_save_mp.cpp:300)
 
-void WriteTurretInfo(byte *param_1,ulonglong param_2)
+void WriteTurretInfo(Turret *param_1,MemoryFile *param_2)
 
 {
   uint local_100 [4];
-  undefined1 auStack_f0 [216];
+  uchar auStack_f0 [216];
   
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x130,0,0xffffffff82000f98,0xffffffff82001348);
+  if (param_2 == (MemoryFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x130,0
+                    ,"%s");
   }
-  memcpy(auStack_f0,param_1,0xcc);
-  local_100[0] = (uint)*param_1;
+  memcpy();
+  local_100[0] = (uint)param_1->inuse;
   MemFile_WriteData(param_2,4,local_100);
   if (local_100[0] != 0) {
-    G_WriteStruct(0xffffffff82075d50,param_1,auStack_f0,0xcc,param_2);
+    G_WriteStruct(turretFields,&param_1->inuse,auStack_f0,0xcc,param_2);
   }
   return;
 }
@@ -301,24 +366,26 @@ void WriteTurretInfo(byte *param_1,ulonglong param_2)
 
 // 82489488  ReadTurretInfo  (game_mp/g_save_mp.cpp:317)
 
-void ReadTurretInfo(undefined8 param_1,ulonglong param_2)
+void ReadTurretInfo(Turret *param_1,SaveGame *param_2)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
+  uchar *puVar1;
+  MemoryFile *pMVar2;
+  ulonglong uVar3;
   int local_30 [12];
   
-  pcVar2 = (char *)__savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x140,0,0xffffffff82000f98,0xffffffff82075e4c);
+  uVar3 = (ulonglong)(int)param_2;
+  puVar1 = (uchar *)__savegprlr_28(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x140,0
+                    ,"%s");
   }
-  uVar1 = SaveMemory_GetMemoryFile(param_2);
-  MemFile_ReadData(uVar1,4,local_30);
-  if (local_30[0] != 0) {
-    G_ReadStruct(0xffffffff82075d50,pcVar2,0xcc,param_2);
-    if (*pcVar2 == '\0') {
-      MyAssertHandler(0xffffffff82075db8,0x146,0,0xffffffff82000f98,0xffffffff82075e7c);
-    }
+  pMVar2 = SaveMemory_GetMemoryFile((SaveGame *)uVar3);
+  MemFile_ReadData(pMVar2,4,local_30);
+  if ((local_30[0] != 0) &&
+     (G_ReadStruct(turretFields,puVar1,0xcc,(SaveGame *)uVar3), *puVar1 == '\0')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x146,0
+                    ,"%s");
   }
   __restgprlr_28();
   return;
@@ -327,58 +394,64 @@ void ReadTurretInfo(undefined8 param_1,ulonglong param_2)
 
 // 82489538  Scr_FreeClientFields  (game_mp/g_save_mp.cpp:336)
 
-void Scr_FreeClientFields(undefined8 param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void Scr_FreeClientFields(gclient_s *param_1)
 
 {
-  Scr_FreeFields(0xffffffff82075d38,param_1);
+  Scr_FreeFields(gclientFields,(uchar *)param_1);
   return;
 }
 
 
 // 82489548  Scr_FreeEntityFields  (game_mp/g_save_mp.cpp:347)
 
-void Scr_FreeEntityFields(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_FreeEntityFields(gentity_s *param_1)
 
 {
-  Scr_FreeFields(0xffffffff82075c20,param_1);
+  Scr_FreeFields(gentityFields,(uchar *)param_1);
   return;
 }
 
 
 // 82489558  Scr_FreeTurretFields  (game_mp/g_save_mp.cpp:358)
 
-void Scr_FreeTurretFields(undefined8 param_1)
+void Scr_FreeTurretFields(Turret *param_1)
 
 {
-  Scr_FreeFields(0xffffffff82075d50,param_1);
+  Scr_FreeFields(turretFields,&param_1->inuse);
   return;
 }
 
 
 // 82489568  SavePlayerCorpses  (game_mp/g_save_mp.cpp:365)
 
-void SavePlayerCorpses(void)
+void SavePlayerCorpses(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  MemoryFile *pMVar1;
+  uint uVar2;
   int *piVar3;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = MemFile_GetUsedSize();
-  ProfMem_Begin(0xffffffff82075e8c,uVar2);
-  piVar3 = &DAT_8359a90c;
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_Begin("player corpses",uVar2);
+  piVar3 = &g_scr_data.playerCorpseInfo[0].entnum;
   do {
-    MemFile_WriteData(uVar1,4,piVar3);
+    MemFile_WriteData(pMVar1,4,piVar3);
     if (*piVar3 != -1) {
-      MemFile_WriteData(uVar1,4,piVar3 + 1);
-      MemFile_WriteData(uVar1,0x590,piVar3 + 2);
-      MemFile_WriteData(uVar1,1,piVar3 + 0x166);
+      MemFile_WriteData(pMVar1,4,piVar3 + 1);
+      MemFile_WriteData(pMVar1,0x590,(clientInfo_t *)(piVar3 + 2));
+      MemFile_WriteData(pMVar1,1,piVar3 + 0x166);
     }
     piVar3 = piVar3 + 0x168;
   } while ((int)piVar3 < -0x7ca629f4);
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_End(uVar2);
   __restgprlr_29();
   return;
 }
@@ -386,21 +459,21 @@ void SavePlayerCorpses(void)
 
 // 82489608  LoadPlayerCorpses  (game_mp/g_save_mp.cpp:386)
 
-void LoadPlayerCorpses(void)
+void LoadPlayerCorpses(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
+  MemoryFile *pMVar1;
   int *piVar2;
   
-  uVar1 = __savegprlr_29();
-  piVar2 = &DAT_8359a90c;
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  piVar2 = &g_scr_data.playerCorpseInfo[0].entnum;
   do {
-    MemFile_ReadData(uVar1,4,piVar2);
+    MemFile_ReadData(pMVar1,4,piVar2);
     if (*piVar2 != -1) {
-      MemFile_ReadData(uVar1,4,piVar2 + 1);
-      MemFile_ReadData(uVar1,0x590,piVar2 + 2);
-      MemFile_ReadData(uVar1,1,piVar2 + 0x166);
-      piVar2[0x148] = piVar2[-1];
+      MemFile_ReadData(pMVar1,4,piVar2 + 1);
+      MemFile_ReadData(pMVar1,0x590,(clientInfo_t *)(piVar2 + 2));
+      MemFile_ReadData(pMVar1,1,piVar2 + 0x166);
+      piVar2[0x148] = (int)((corpseInfo_t *)(piVar2 + -1))->tree;
     }
     piVar2 = piVar2 + 0x168;
   } while ((int)piVar2 < -0x7ca629f4);
@@ -411,24 +484,25 @@ void LoadPlayerCorpses(void)
 
 // 82489690  WriteLerpFrame  (game_mp/g_save_mp.cpp:407)
 
-void WriteLerpFrame(undefined8 param_1,void *param_2)
+void WriteLerpFrame(MemoryFile *param_1,lerpFrame_t *param_2)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
+  MemoryFile *pMVar1;
   undefined1 auStack_60 [20];
   int local_4c;
   
-  uVar2 = __savegprlr_28();
-  memcpy(auStack_60,param_2,0x30);
-  if (*(int *)((int)param_2 + 0x14) != 0) {
-    uVar1 = (*(int *)((int)param_2 + 0x14) + 0x7cb4c958) / 0x68;
-    if (0x1ff < uVar1) {
-      MyAssertHandler(0xffffffff82075db8,0x19d,0,0xffffffff82075ea0,uVar1,0x200);
+  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
+  memcpy();
+  if (param_2->animation != (animation_s *)0x0) {
+    if (0x1ff < (uint)((int)(param_2->animation + 0x132f817) / 0x68)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x19d
+                      ,0,
+                      "lerpFrame->animation - level_bgs.animScriptData.animations doesn\'t index MAX_MODEL_ANIMATIONS\n\t%i not in [0, %i)"
+                     );
     }
-    local_4c = (*(int *)((int)param_2 + 0x14) + 0x7cb4c958) / 0x68 + 1;
+    local_4c = (int)(param_2->animation + 0x132f817) / 0x68 + 1;
   }
-  MemFile_WriteData(uVar2,0x30,auStack_60);
+  MemFile_WriteData(pMVar1,0x30,auStack_60);
   __restgprlr_28();
   return;
 }
@@ -436,18 +510,23 @@ void WriteLerpFrame(undefined8 param_1,void *param_2)
 
 // 82489728  ReadLerpFrame  (game_mp/g_save_mp.cpp:422)
 
-void ReadLerpFrame(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ReadLerpFrame(MemoryFile *param_1,lerpFrame_t *param_2)
 
 {
-  ulonglong uVar1;
-  
   MemFile_ReadData(param_1,0x30,param_2);
-  uVar1 = (ulonglong)*(uint *)(param_2 + 0x14);
-  if (uVar1 != 0) {
-    if (0x1ff < (uVar1 - 1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff82075db8,0x1aa,0,0xffffffff82075f18,uVar1 - 1,0x200);
+  if (param_2->animation != (animation_s *)0x0) {
+    if ((undefined1 *)0x1ff < &param_2->animation[-1].field_0x67) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x1aa
+                      ,0,
+                      "(int)lerpFrame->animation - 1 doesn\'t index MAX_MODEL_ANIMATIONS\n\t%i not in [0, %i)"
+                     );
     }
-    *(int *)(param_2 + 0x14) = *(int *)(param_2 + 0x14) * 0x68 + -0x7cb4c9c0;
+    param_2->animation =
+         (animation_s *)(g_entities[0x7ff].attachModelNames + (int)param_2->animation * 0x34 + 0x12)
+    ;
   }
   return;
 }
@@ -455,48 +534,46 @@ void ReadLerpFrame(undefined8 param_1,int param_2)
 
 // 824897B8  WriteClientInfo  (game_mp/g_save_mp.cpp:433)
 
-void WriteClientInfo(undefined8 param_1,longlong param_2)
+void WriteClientInfo(MemoryFile *param_1,clientInfo_t *param_2)
 
 {
-  WriteLerpFrame(param_1,param_2 + 0x3b8);
-  WriteLerpFrame(param_1,param_2 + 1000);
-  MemFile_WriteData(param_1,4,param_2 + 0x524);
-  MemFile_WriteData(param_1,4,param_2 + 0x528);
-  MemFile_WriteData(param_1,1,param_2 + 0x52c);
-  MemFile_WriteData(param_1,0x90,param_2 + 0x488);
-  MemFile_WriteData(param_1,4,param_2 + 0x430);
-  MemFile_WriteData(param_1,4,param_2 + 0x434);
+  WriteLerpFrame(param_1,&param_2->legs);
+  WriteLerpFrame(param_1,&param_2->torso);
+  MemFile_WriteData(param_1,4,&param_2->stanceTransitionTime);
+  MemFile_WriteData(param_1,4,&param_2->turnAnimEndTime);
+  MemFile_WriteData(param_1,1,&param_2->turnAnimType);
+  MemFile_WriteData(param_1,0x90,param_2->clientConditions);
+  MemFile_WriteData(param_1,4,&param_2->fTorsoPitch);
+  MemFile_WriteData(param_1,4,&param_2->fWaistPitch);
   return;
 }
 
 
 // 82489860  ReadClientInfo  (game_mp/g_save_mp.cpp:446)
 
-void ReadClientInfo(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ReadClientInfo(MemoryFile *param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  longlong lVar4;
+  XAnimTree *pXVar1;
+  MemoryFile *pMVar2;
   
-  uVar3 = __savegprlr_28();
-  lVar4 = param_2 * 0x590;
-  iVar2 = (int)lVar4;
-  uVar1 = *(undefined4 *)((int)&DAT_83539fa8 + iVar2);
-  memset((undefined4 *)((int)&DAT_83539a90 + iVar2),0,0x590);
-  ReadLerpFrame(uVar3,lVar4 + -0x7cac61b8);
-  ReadLerpFrame(uVar3,lVar4 + -0x7cac6188);
-  MemFile_ReadData(uVar3,4,lVar4 + -0x7cac604c);
-  MemFile_ReadData(uVar3,4,lVar4 + -0x7cac6048);
-  MemFile_ReadData(uVar3,1,lVar4 + -0x7cac6044);
-  MemFile_ReadData(uVar3,0x90,lVar4 + -0x7cac60e8);
-  MemFile_ReadData(uVar3,4,lVar4 + -0x7cac6140);
-  MemFile_ReadData(uVar3,4,lVar4 + -0x7cac613c);
-  *(undefined4 *)((int)&DAT_83539fa8 + iVar2) = uVar1;
-  *(int *)(&DAT_83539a98 + iVar2) = (int)param_2;
-  *(undefined4 *)((int)&DAT_83539a90 + iVar2) = 1;
-  *(undefined4 *)(&DAT_83539a94 + iVar2) = 1;
+  pMVar2 = (MemoryFile *)__savegprlr_28(param_1);
+  pXVar1 = level_bgs.clientinfo[param_2].pXAnimTree;
+  memset();
+  ReadLerpFrame(pMVar2,&level_bgs.clientinfo[param_2].legs);
+  ReadLerpFrame(pMVar2,&level_bgs.clientinfo[param_2].torso);
+  MemFile_ReadData(pMVar2,4,&level_bgs.clientinfo[param_2].stanceTransitionTime);
+  MemFile_ReadData(pMVar2,4,&level_bgs.clientinfo[param_2].turnAnimEndTime);
+  MemFile_ReadData(pMVar2,1,&level_bgs.clientinfo[param_2].turnAnimType);
+  MemFile_ReadData(pMVar2,0x90,level_bgs.clientinfo[param_2].clientConditions);
+  MemFile_ReadData(pMVar2,4,&level_bgs.clientinfo[param_2].fTorsoPitch);
+  MemFile_ReadData(pMVar2,4,&level_bgs.clientinfo[param_2].fWaistPitch);
+  level_bgs.clientinfo[param_2].pXAnimTree = pXVar1;
+  level_bgs.clientinfo[param_2].clientNum = param_2;
+  level_bgs.clientinfo[param_2].infoValid = 1;
+  level_bgs.clientinfo[param_2].nextValid = 1;
   __restgprlr_28();
   return;
 }
@@ -504,58 +581,66 @@ void ReadClientInfo(undefined8 param_1,longlong param_2)
 
 // 82489938  G_SaveInitState  (game_mp/g_save_mp.cpp:473)
 
-void G_SaveInitState(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_SaveInitState(MemoryFile *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  int iVar4;
+  client_t *pcVar1;
+  MemoryFile *pMVar2;
+  uint uVar3;
+  longlong lVar4;
   int iVar5;
-  undefined4 local_60 [24];
+  int iVar6;
+  int local_60 [24];
   
-  uVar1 = __savegprlr_22();
-  uVar2 = MemFile_GetUsedSize();
-  ProfMem_Begin(0xffffffff82075fa0,uVar2);
-  Dvar_SaveDvars(uVar1,0x80);
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
-  uVar2 = MemFile_GetUsedSize(uVar1);
-  ProfMem_Begin(0xffffffff82075f90,uVar2);
-  Scr_SaveSource(uVar1);
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
-  MemFile_StartSegment(uVar1,1);
-  local_60[0] = DAT_83f11400;
-  MemFile_WriteData(uVar1,4,local_60);
-  local_60[0] = DAT_83f11404;
-  MemFile_WriteData(uVar1,4,local_60);
-  local_60[0] = DAT_83f1140c;
-  MemFile_WriteData(uVar1,4,local_60);
-  uVar2 = MemFile_GetUsedSize(uVar1);
-  ProfMem_Begin(0xffffffff82075f80,uVar2);
-  SV_SaveConfigstrings(0,0xeeb,uVar1);
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
-  Scr_SavePre(param_2);
-  iVar3 = 0;
-  if (0 < DAT_83f11410) {
-    iVar4 = 0;
+  lVar4 = (longlong)param_2;
+  pMVar2 = (MemoryFile *)__savegprlr_22(param_1,lVar4,param_3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("server demo dvars",uVar3);
+  Dvar_SaveDvars(pMVar2,0x80);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("script source",uVar3);
+  Scr_SaveSource(pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  MemFile_StartSegment(pMVar2,1);
+  local_60[0] = svs.initialized;
+  MemFile_WriteData(pMVar2,4,local_60);
+  local_60[0] = svs.time;
+  MemFile_WriteData(pMVar2,4,local_60);
+  local_60[0] = svs.snapFlagServerBit;
+  MemFile_WriteData(pMVar2,4,local_60);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("config strings",uVar3);
+  SV_SaveConfigstrings(CS_FIRST,0xeeb,pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  Scr_SavePre((int)lVar4);
+  iVar5 = 0;
+  if (0 < svs.clientCount) {
+    iVar6 = 0;
     do {
-      iVar5 = iVar4 + DAT_83f11414;
-      if (2 < *(int *)(iVar4 + DAT_83f11414)) {
-        if (*(int *)(iVar5 + 0x660) != 0) {
-          MyAssertHandler(0xffffffff82075db8,0x1f9,0,0xffffffff82000f98,0xffffffff82075f6c);
+      pcVar1 = svs.clients;
+      if (2 < *(int *)(((svs.clients)->header).netchan.remoteAddress.ip + iVar6 + -0x2c)) {
+        if (*(int *)((svs.clients)->userinfo + iVar6 + -4) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                          0x1f9,0,"%s");
         }
-        if (*(short *)(iVar5 + 0x31cbe) != 0) {
-          Scr_ConvertObjectToSave();
+        if (*(ushort *)(pcVar1->stats + iVar6 + -0xf) != 0) {
+          Scr_ConvertObjectToSave((uint)*(ushort *)(pcVar1->stats + iVar6 + -0xf));
         }
       }
-      iVar3 = iVar3 + 1;
-      iVar4 = iVar4 + 0x68b00;
-    } while (iVar3 < DAT_83f11410);
+      iVar5 = iVar5 + 1;
+      iVar6 = iVar6 + 0x68b00;
+    } while (iVar5 < svs.clientCount);
   }
-  Scr_SavePre2(param_2);
+  Scr_SavePre2((int)lVar4);
   __restgprlr_22();
   return;
 }
@@ -563,23 +648,28 @@ void G_SaveInitState(undefined8 param_1,undefined8 param_2)
 
 // 82489B18  G_LoadInitState  (game_mp/g_save_mp.cpp:518)
 
-void G_LoadInitState(int param_1)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_LoadInitState(MemoryFile *param_1)
 
 {
-  undefined4 local_20 [2];
+  int local_20 [2];
   
   Com_FreeWeaponInfoMemory(1);
   MemFile_MoveToSegment(param_1,1);
   MemFile_ReadData(param_1,4,local_20);
-  DAT_83f11400 = local_20[0];
+  svs.initialized = local_20[0];
   MemFile_ReadData(param_1,4,local_20);
-  DAT_83f11404 = local_20[0];
+  svs.time = local_20[0];
   MemFile_ReadData(param_1,4,local_20);
-  DAT_83f1140c = local_20[0];
-  SV_LoadConfigstrings(0,0xeeb,param_1);
-  MemFile_MoveToSegment(param_1,0xffffffffffffffff);
-  if (*(char *)(param_1 + 0x1d) != '\0') {
-    G_SaveError(1,0xffffffff82075fb4);
+  svs.snapFlagServerBit = local_20[0];
+  SV_LoadConfigstrings(CS_FIRST,0xeeb,param_1);
+  MemFile_MoveToSegment(param_1,-1);
+  if (param_1->memoryOverflow != false) {
+    G_SaveError(SAVE_ERROR_CORRUPT_SAVE,"\x15The save file has become corrupted.\n");
   }
   G_ReloadCachedModels();
   return;
@@ -588,193 +678,205 @@ void G_LoadInitState(int param_1)
 
 // 82489C00  G_LoadLevelState  (game_mp/g_save_mp.cpp:540)
 
-void G_LoadLevelState(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void G_LoadLevelState(SaveGame *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   char *pcVar2;
-  undefined *puVar3;
-  int iVar5;
-  undefined8 uVar4;
-  ulonglong uVar6;
-  longlong lVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  int iVar10;
-  int *piVar11;
-  undefined4 *puVar12;
+  char *pcVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  MemoryFile *pMVar6;
+  PartyData *pPVar8;
+  DObj *pDVar9;
+  PhysWorld PVar10;
+  gentity_s *pgVar11;
+  gclient_s *pgVar12;
+  int *piVar13;
+  gentity_s *pgVar15;
+  client_t *pcVar16;
+  longlong lVar14;
   uint local_d0;
   char *local_cc;
-  undefined *local_c8;
-  undefined *local_c4;
-  undefined *local_c0;
+  char *local_c8;
+  char *local_c4;
+  saveField_t *local_c0;
   char *local_bc;
-  undefined4 *local_b8;
+  gentity_s *local_b8;
   int iStack_b4;
-  undefined1 local_b0 [176];
+  uint local_b0 [44];
+  SaveGame *pSVar7;
   
-  iVar5 = __savegprlr();
-  uVar4 = SaveMemory_GetMemoryFile();
-  DAT_83580b1c = 1;
-  MemFile_ReadData(uVar4,4,0xffffffff83580b08);
-  MemFile_ReadData(uVar4,4,0xffffffff83580fa8);
-  MemFile_ReadData(uVar4,4,0xffffffff83580fb8);
-  MemFile_ReadData(uVar4,4,0xffffffff83581a44);
-  MemFile_ReadData(uVar4,4,0xffffffff83581ad0);
-  MemFile_ReadData(uVar4,0x10,0xffffffff83580fbc);
-  MemFile_ReadData(uVar4,4,0xffffffff83580fd0);
-  MemFile_ReadData(uVar4,4,0xffffffff83580fec);
-  MemFile_ReadData(uVar4,0x48,0xffffffff83580ff0);
-  MemFile_ReadData(uVar4,0x2d000,0xffffffff833464f0);
-  MemFile_ReadData(uVar4,8,0xffffffff83583350);
-  MemFile_ReadData(uVar4,8,0xffffffff83583358);
-  MemFile_ReadData(uVar4,8,0xffffffff83583360);
-  MemFile_ReadData(uVar4,4,0xffffffff8358336c);
-  MemFile_ReadData(uVar4,4,0xffffffff835832d4);
-  MemFile_ReadData(uVar4,((ulonglong)DAT_835832d4 + ((ulonglong)DAT_835832d4 & 0x7fffffff) * 2 &
-                         0x3fffffff) << 2,0xffffffff83581ad4);
-  Dvar_LoadScriptInfo(uVar4);
-  SV_LoadConfigstrings(0x3d6,2,uVar4);
-  SV_LoadConfigstrings(0x3d8,1,uVar4);
-  SV_LoadConfigstrings(0xd,1,uVar4);
-  SV_LoadConfigstrings(8,1,uVar4);
-  LoadPlayerCorpses(uVar4);
-  Cmd_LoadNotifications(uVar4);
-  Phys_ArchiveState(uVar4);
-  Vehicle_ReadSaveGame(iVar5);
-  lVar7 = 0;
+  uVar5 = (ulonglong)(int)param_1;
+  __savegprlr();
+  pSVar7 = (SaveGame *)uVar5;
+  pMVar6 = SaveMemory_GetMemoryFile(pSVar7);
+  level.initializing = 1;
+  MemFile_ReadData(pMVar6,4,&level.num_entities);
+  MemFile_ReadData(pMVar6,4,&level.framenum);
+  MemFile_ReadData(pMVar6,4,&level.startTime);
+  MemFile_ReadData(pMVar6,4,&level.savepersist);
+  MemFile_ReadData(pMVar6,4,&level.currentPlayerClone);
+  MemFile_ReadData(pMVar6,0x10,level.teamScores);
+  MemFile_ReadData(pMVar6,4,level.teamHasRadar);
+  MemFile_ReadData(pMVar6,4,&level.numConnectedClients);
+  MemFile_ReadData(pMVar6,0x48,level.sortedClients);
+  MemFile_ReadData(pMVar6,0x2d000,g_hudelems);
+  MemFile_ReadData(pMVar6,8,level.compassMapUpperLeft);
+  MemFile_ReadData(pMVar6,8,level.compassMapWorldSize);
+  MemFile_ReadData(pMVar6,8,level.compassNorth);
+  MemFile_ReadData(pMVar6,4,&level.hudElemLastAssignedSoundID);
+  MemFile_ReadData(pMVar6,4,&level.pendingTriggerListSize);
+  MemFile_ReadData(pMVar6,level.pendingTriggerListSize * 0xc,level.pendingTriggerList);
+  Dvar_LoadScriptInfo(pMVar6);
+  SV_LoadConfigstrings(CS_AMBIENT,2,pMVar6);
+  SV_LoadConfigstrings(CS_AMBIENT_AC130,1,pMVar6);
+  SV_LoadConfigstrings(CS_FOGVARS,1,pMVar6);
+  SV_LoadConfigstrings(CS_SUNLIGHT,1,pMVar6);
+  LoadPlayerCorpses(pMVar6);
+  Cmd_LoadNotifications(pMVar6);
+  Phys_ArchiveState(pMVar6);
+  Vehicle_ReadSaveGame(pSVar7);
   local_d0 = 0;
   do {
-    ReadTurretInfo(lVar7 * 0xcc + (ulonglong)DAT_83580b14,iVar5);
-    lVar7 = (ulonglong)local_d0 + 1;
-    local_d0 = (uint)lVar7;
+    ReadTurretInfo(level.turrets + local_d0,pSVar7);
+    local_d0 = local_d0 + 1;
   } while ((int)local_d0 < 0x20);
-  MemFile_ReadData(uVar4,4,&local_d0);
+  MemFile_ReadData(pMVar6,4,&local_d0);
   while (-1 < (int)local_d0) {
-    uVar6 = (ulonglong)local_d0;
     if (0x1f < (int)local_d0) {
-      Com_Error(1,0xffffffff82076144,uVar6,0x20);
-      uVar6 = (ulonglong)local_d0;
+      Com_Error(ERR_DROP,"\x15SV_LoadHistoryState: objectivenum out of range (%i, MAX = %i)");
     }
-    MemFile_ReadData(uVar4,0x24,(uVar6 + (uVar6 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + -0x7ca7f4dc);
-    MemFile_ReadData(uVar4,4,&local_d0);
+    MemFile_ReadData(pMVar6,0x24,level.objectives + local_d0);
+    MemFile_ReadData(pMVar6,4,&local_d0);
   }
   local_d0 = 0;
   local_cc = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp";
-  local_c8 = &DAT_82000f98;
-  local_b8 = &DAT_83373680;
+  local_c8 = "%s";
+  local_b8 = g_entities;
   do {
-    if ((&DAT_83373783)[local_d0 * 0x280] != '\0') {
-      MyAssertHandler(0xffffffff82075db8,0x261,0,0xffffffff82000f98,0xffffffff82076128);
+    if (g_entities[local_d0].r.isInUse != '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x261
+                      ,0,"%s");
     }
     local_d0 = local_d0 + 1;
   } while (local_d0 != 0x800);
-  MemFile_ReadData(uVar4,4,&local_d0);
-  local_c0 = &DAT_82075c20;
-  local_c4 = &DAT_82075e4c;
+  MemFile_ReadData(pMVar6,4,&local_d0);
+  local_c0 = gentityFields;
+  local_c4 = "save";
   local_bc = "ent->r.isInUse";
   while (-1 < (int)local_d0) {
     if (0x7ff < (int)local_d0) {
-      Com_Error(1,0xffffffff820760ec,local_d0,0x800);
+      Com_Error(ERR_DROP,"\x15SV_LoadHistoryState: entitynum out of range (%i, MAX = %i)");
     }
-    iVar10 = local_d0 * 0x280;
-    puVar12 = &DAT_83373680 + local_d0 * 0xa0;
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff82075db8,0xef,0,0xffffffff82000f98,local_c4);
+    uVar4 = local_d0;
+    pgVar15 = g_entities + local_d0;
+    if ((uVar5 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0xef,
+                      0,"%s");
     }
-    if (puVar12 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff82075db8,0xf0,0,0xffffffff82000f98,0xffffffff82002614);
+    if (pgVar15 == (gentity_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0xf0,
+                      0,"%s");
     }
-    G_ReadStruct(local_c0,puVar12,0x280,iVar5);
-    if ((&DAT_83373783)[iVar10] == '\0') {
-      MyAssertHandler(0xffffffff82075db8,0x270,0,0xffffffff82000f98,local_bc);
+    G_ReadStruct(local_c0,(uchar *)pgVar15,0x280,pSVar7);
+    if (g_entities[uVar4].r.isInUse == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x270
+                      ,0,"%s");
     }
-    if ((&DAT_83373783)[iVar10] != '\0') {
-      SV_ValidateEntityState(puVar12);
+    if (g_entities[uVar4].r.isInUse != '\0') {
+      SV_ValidateEntityState(&pgVar15->s);
     }
-    MemFile_ReadData(uVar4,4,&local_d0);
+    MemFile_ReadData(pMVar6,4,&local_d0);
   }
   CheckSavedEntities();
-  MemFile_ReadData(uVar4,4,&local_d0);
-  puVar12 = &DAT_83373680;
+  MemFile_ReadData(pMVar6,4,&local_d0);
   pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp";
-  puVar3 = &DAT_82000f98;
+  pcVar3 = "%s";
+  pgVar15 = g_entities;
   while (-1 < (int)local_d0) {
-    if (DAT_83f11410 < (int)local_d0) {
-      Com_Error(1,0xffffffff82076084);
+    if (svs.clientCount < (int)local_d0) {
+      Com_Error(ERR_DROP,"\x15SV_LoadHistoryState: clientnum out of range");
     }
-    iVar10 = local_d0 * 0x3980 + DAT_83580b00;
-    if (iVar5 == 0) {
-      MyAssertHandler(local_cc,0x114,0,local_c8,local_c4);
+    pgVar12 = level.clients + local_d0;
+    if ((uVar5 & 0xffffffff) == 0) {
+      MyAssertHandler(local_cc,0x114,0,local_c8);
     }
-    G_ReadStruct(local_c0 + 0x118,iVar10,0x3980,iVar5);
-    if (*(uint *)(iVar10 + 0x33d0) != local_d0) {
-      MyAssertHandler(local_cc,0x285,0,local_c8,0xffffffff820760b4);
+    G_ReadStruct(local_c0 + 0x23,(uchar *)pgVar12,0x3980,pSVar7);
+    if ((pgVar12->sess).cs.clientIndex != local_d0) {
+      MyAssertHandler(local_cc,0x285,0,local_c8);
     }
-    puVar12 = (undefined4 *)(local_d0 * 0x68b00 + DAT_83f11414);
-    iVar8 = local_d0 * 0x280 + DAT_83cfc500;
-    puVar12[0x8506] = iVar8;
-    if (*(char *)(iVar8 + 0x103) == '\0') {
-      MyAssertHandler(local_cc,0x289,0,local_c8,0xffffffff820760d4);
+    pcVar16 = svs.clients + local_d0;
+    pgVar15 = sv.gentities + local_d0;
+    pcVar16->gentity = pgVar15;
+    if ((pgVar15->r).isInUse == '\0') {
+      MyAssertHandler(local_cc,0x289,0,local_c8);
     }
-    *(undefined2 *)(iVar10 + 0x3328) = *(undefined2 *)((int)puVar12 + 0x31cbe);
-    ReadClientInfo(uVar4,local_d0);
-    if (*(char *)(iVar5 + 0x10) == '\0') {
-      uVar1 = *puVar12;
-      *puVar12 = 2;
-      puVar12[0x193] = uVar1;
-      puVar12[0xc732] = DAT_83ced688;
-      puVar12[0x8523] = DAT_83f11404;
-      puVar12[0x8524] = DAT_83f11404;
-      *(undefined4 *)(iVar10 + 0x60) = *(undefined4 *)(iVar10 + 0x158);
-      *(undefined4 *)(iVar10 + 100) = *(undefined4 *)(iVar10 + 0x15c);
-      *(undefined4 *)(iVar10 + 0x68) = *(undefined4 *)(iVar10 + 0x160);
-      SV_SetAssignedTeam(local_d0,*(undefined4 *)(iVar10 + 0x33d4));
+    (pgVar12->sess).scriptPersId = pcVar16->scriptId;
+    ReadClientInfo(pMVar6,local_d0);
+    if ((pSVar7->header).demoPlayback == false) {
+      iVar1 = (pcVar16->header).state;
+      (pcVar16->header).state = 2;
+      (pcVar16->header).migrationState = iVar1;
+      pcVar16->serverId = sv_serverId_value;
+      pcVar16->lastPacketTime = svs.time;
+      pcVar16->lastConnectTime = svs.time;
+      (pgVar12->ps).delta_angles[0] = (pgVar12->ps).viewangles[0];
+      (pgVar12->ps).delta_angles[1] = (pgVar12->ps).viewangles[1];
+      (pgVar12->ps).delta_angles[2] = (pgVar12->ps).viewangles[2];
+      SV_SetAssignedTeam(local_d0,(pgVar12->sess).cs.team);
     }
     else {
       ClientUserinfoChanged(local_d0);
     }
-    MemFile_ReadData(uVar4,4,&local_d0);
-    puVar12 = local_b8;
+    MemFile_ReadData(pMVar6,4,&local_d0);
     pcVar2 = local_cc;
-    puVar3 = local_c8;
+    pcVar3 = local_c8;
+    pgVar15 = local_b8;
   }
-  Lobby_GetPartyData();
-  PartyHost_CheckTeams();
-  MemFile_ReadData(uVar4,4,&local_d0);
+  pPVar8 = Lobby_GetPartyData();
+  PartyHost_CheckTeams(pPVar8);
+  MemFile_ReadData(pMVar6,4,&local_d0);
   while (-1 < (int)local_d0) {
     if (0x800 < (int)local_d0) {
-      Com_Error(1,0xffffffff82075fdc);
+      Com_Error(ERR_DROP,"\x15SV_LoadHistoryState: entnum out of range: %i\n");
     }
-    puVar9 = puVar12 + local_d0 * 0xa0;
-    if (*(char *)((int)puVar9 + 0x103) == '\0') {
-      MyAssertHandler(pcVar2,0x2ae,0,puVar3,local_bc);
+    pgVar11 = pgVar15 + local_d0;
+    if ((pgVar11->r).isInUse == '\0') {
+      MyAssertHandler(pcVar2,0x2ae,0,pcVar3);
     }
-    G_DObjLoad(puVar9);
-    uVar6 = Com_GetServerDObjForEntnum(local_d0);
-    if ((uVar6 & 0xffffffff) == 0) {
-      Com_Error(1,0xffffffff8207600c,local_d0);
+    G_DObjLoad(pgVar11);
+    pDVar9 = Com_GetServerDObjForEntnum(local_d0);
+    if (pDVar9 == (DObj *)0x0) {
+      Com_Error(ERR_DROP,"\x15SV_LoadHistoryState: DObj expected for entnum %i\n");
     }
-    XAnimLoadAnimTree(uVar6,uVar4);
-    lVar7 = 6;
-    piVar11 = &iStack_b4;
+    XAnimLoadAnimTree(pDVar9,pMVar6);
+    lVar14 = 6;
+    piVar13 = &iStack_b4;
     do {
-      MemFile_ReadData(uVar4,4,&local_b8);
-      lVar7 = lVar7 + -1;
-      piVar11 = piVar11 + 1;
-      *piVar11 = (int)local_b8;
-    } while (lVar7 != 0);
-    DObjSetHidePartBits(uVar6,local_b0);
-    if (puVar9[0x59] != 0) {
-      iVar5 = Phys_ObjGetWorld();
-      if (iVar5 != 4) {
-        MyAssertHandler(pcVar2,0x2bd,0,puVar3,0xffffffff82076040);
+      MemFile_ReadData(pMVar6,4,&local_b8);
+      lVar14 = lVar14 + -1;
+      piVar13 = piVar13 + 1;
+      *piVar13 = (int)local_b8;
+    } while (lVar14 != 0);
+    DObjSetHidePartBits(pDVar9,local_b0);
+    if (pgVar11->physObjId != 0) {
+      PVar10 = Phys_ObjGetWorld(pgVar11->physObjId);
+      if (PVar10 != PHYS_WORLD_LAST_SERVER_WORLD) {
+        MyAssertHandler(pcVar2,0x2bd,0,pcVar3);
       }
-      Phys_ObjSetCollisionFromDObj(uVar6,4,puVar9[0x59],1);
+      Phys_ObjSetCollisionFromDObj(pDVar9,PHYS_WORLD_LAST_SERVER_WORLD,pgVar11->physObjId,true);
     }
-    MemFile_ReadData(uVar4,4,&local_d0);
+    MemFile_ReadData(pMVar6,4,&local_d0);
   }
-  DAT_83580b1c = 0;
+  level.initializing = 0;
   __restgprlr();
   return;
 }
@@ -782,198 +884,204 @@ void G_LoadLevelState(void)
 
 // 8248A370  G_SaveLevelState  (game_mp/g_save_mp.cpp:711)
 
-void G_SaveLevelState(void)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void G_SaveLevelState(MemoryFile *param_1)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  char cVar6;
-  undefined8 uVar3;
-  int iVar5;
-  ulonglong uVar4;
+  clientConnected_t cVar1;
+  MemoryFile *pMVar2;
+  bool bVar6;
+  uint uVar3;
+  int iVar4;
+  DObj *pDVar5;
   undefined8 *puVar7;
-  longlong lVar8;
-  undefined8 *puVar9;
-  int iVar10;
-  undefined4 *puVar11;
-  uint local_340;
+  dvar_t **ppdVar8;
+  gclient_s *pgVar9;
+  undefined4 *puVar10;
+  gentity_s *pgVar11;
+  longlong lVar12;
+  int local_340;
   undefined4 local_33c [2];
   undefined4 uStack_334;
-  undefined1 local_330 [24];
+  uint local_330 [6];
   undefined8 uStack_318;
-  undefined1 local_310 [784];
+  uchar local_310 [784];
   
-  uVar2 = __savegprlr_15();
-  cVar6 = MemFile_IsWriting();
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff82075db8,0x2cf,0,0xffffffff82000f98,0xffffffff820762c8);
+  pMVar2 = (MemoryFile *)__savegprlr_15(param_1);
+  bVar6 = MemFile_IsWriting(pMVar2);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x2cf,0
+                    ,"%s");
   }
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff820762b4,uVar3);
-  MemFile_WriteData(uVar2,4,0xffffffff83580b08);
-  MemFile_WriteData(uVar2,4,0xffffffff83580fa8);
-  MemFile_WriteData(uVar2,4,0xffffffff83580fb8);
-  MemFile_WriteData(uVar2,4,0xffffffff83581a44);
-  MemFile_WriteData(uVar2,4,0xffffffff83581ad0);
-  MemFile_WriteData(uVar2,0x10,0xffffffff83580fbc);
-  MemFile_WriteData(uVar2,4,0xffffffff83580fd0);
-  MemFile_WriteData(uVar2,4,0xffffffff83580fec);
-  MemFile_WriteData(uVar2,0x48,0xffffffff83580ff0);
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82070400,uVar3);
-  MemFile_WriteData(uVar2,0x2d000,0xffffffff833464f0);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  MemFile_WriteData(uVar2,8,0xffffffff83583350);
-  MemFile_WriteData(uVar2,8,0xffffffff83583358);
-  MemFile_WriteData(uVar2,8,0xffffffff83583360);
-  MemFile_WriteData(uVar2,4,0xffffffff8358336c);
-  MemFile_WriteData(uVar2,4,0xffffffff835832d4);
-  MemFile_WriteData(uVar2,((ulonglong)DAT_835832d4 + ((ulonglong)DAT_835832d4 & 0x7fffffff) * 2 &
-                          0x3fffffff) << 2,0xffffffff83581ad4);
-  if (DAT_835832d8 != 0) {
-    MyAssertHandler(0xffffffff82075db8,0x2e7,0,0xffffffff82000f98,0xffffffff82073a44);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("level struct data",uVar3);
+  MemFile_WriteData(pMVar2,4,&level.num_entities);
+  MemFile_WriteData(pMVar2,4,&level.framenum);
+  MemFile_WriteData(pMVar2,4,&level.startTime);
+  MemFile_WriteData(pMVar2,4,&level.savepersist);
+  MemFile_WriteData(pMVar2,4,&level.currentPlayerClone);
+  MemFile_WriteData(pMVar2,0x10,level.teamScores);
+  MemFile_WriteData(pMVar2,4,level.teamHasRadar);
+  MemFile_WriteData(pMVar2,4,&level.numConnectedClients);
+  MemFile_WriteData(pMVar2,0x48,level.sortedClients);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("g_hudelems",uVar3);
+  MemFile_WriteData(pMVar2,0x2d000,g_hudelems);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  MemFile_WriteData(pMVar2,8,level.compassMapUpperLeft);
+  MemFile_WriteData(pMVar2,8,level.compassMapWorldSize);
+  MemFile_WriteData(pMVar2,8,level.compassNorth);
+  MemFile_WriteData(pMVar2,4,&level.hudElemLastAssignedSoundID);
+  MemFile_WriteData(pMVar2,4,&level.pendingTriggerListSize);
+  MemFile_WriteData(pMVar2,level.pendingTriggerListSize * 0xc,level.pendingTriggerList);
+  if (level.currentTriggerListSize != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x2e7,0
+                    ,"%s");
   }
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff820762a0,uVar3);
-  Dvar_SaveDvars(uVar2,0x10);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  SV_SaveConfigstrings(0x3d6,2,uVar2);
-  SV_SaveConfigstrings(0x3d8,1,uVar2);
-  SV_SaveConfigstrings(0xd,1,uVar2);
-  SV_SaveConfigstrings(8,1,uVar2);
-  SavePlayerCorpses(uVar2);
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff8207628c,uVar3);
-  Cmd_SaveNotifications(uVar2);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff8207627c,uVar3);
-  Phys_ArchiveState(uVar2);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82076270,uVar3);
-  Vehicle_WriteSaveGame(uVar2);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82076268,uVar3);
-  lVar8 = 0;
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("script info dvas",uVar3);
+  Dvar_SaveDvars(pMVar2,0x10);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  SV_SaveConfigstrings(CS_AMBIENT,2,pMVar2);
+  SV_SaveConfigstrings(CS_AMBIENT_AC130,1,pMVar2);
+  SV_SaveConfigstrings(CS_FOGVARS,1,pMVar2);
+  SV_SaveConfigstrings(CS_SUNLIGHT,1,pMVar2);
+  SavePlayerCorpses(pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("cmd notifications",uVar3);
+  Cmd_SaveNotifications(pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("physics state",uVar3);
+  Phys_ArchiveState(pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("vehichles",uVar3);
+  Vehicle_WriteSaveGame(pMVar2);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("turrets",uVar3);
   local_340 = 0;
   do {
-    WriteTurretInfo(lVar8 * 0xcc + (ulonglong)DAT_83580b14,uVar2);
-    lVar8 = (ulonglong)local_340 + 1;
-    local_340 = (uint)lVar8;
-  } while ((int)local_340 < 0x20);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff8207625c,uVar3);
+    WriteTurretInfo(level.turrets + local_340,pMVar2);
+    local_340 = local_340 + 1;
+  } while (local_340 < 0x20);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("objectives",uVar3);
   local_340 = 0;
   do {
-    if ((&DAT_83580b24)[local_340 * 9] != 0) {
-      MemFile_WriteData(uVar2,4,&local_340);
-      MemFile_WriteData(uVar2,0x24,
-                        ((ulonglong)local_340 + ((ulonglong)local_340 & 0x1fffffff) * 8 & 0x3fffffff
-                        ) * 4 + -0x7ca7f4dc);
+    if (level.objectives[local_340].state != OBJST_EMPTY) {
+      MemFile_WriteData(pMVar2,4,&local_340);
+      MemFile_WriteData(pMVar2,0x24,level.objectives + local_340);
     }
     local_340 = local_340 + 1;
-  } while ((int)local_340 < 0x20);
-  local_340 = 0xffffffff;
-  MemFile_WriteData(uVar2,4,&local_340);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82076250,uVar3);
+  } while (local_340 < 0x20);
+  local_340 = -1;
+  MemFile_WriteData(pMVar2,4,&local_340);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("entities",uVar3);
   local_340 = 0;
   do {
-    uVar1 = local_340;
-    iVar5 = local_340 * 0x280;
-    iVar10 = local_340 * 0xa0;
-    if ((&DAT_83373783)[iVar5] != '\0') {
-      MemFile_WriteData(uVar2,4,&local_340);
-      if ((&DAT_83373783)[iVar5] != '\0') {
-        SV_ValidateEntityState(&DAT_83373680 + iVar10);
+    iVar4 = local_340;
+    pgVar11 = g_entities + local_340;
+    if (g_entities[local_340].r.isInUse != '\0') {
+      MemFile_WriteData(pMVar2,4,&local_340);
+      if (g_entities[iVar4].r.isInUse != '\0') {
+        SV_ValidateEntityState(&pgVar11->s);
       }
-      if ((uVar2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82075db8,0xe3,0,0xffffffff82000f98,0xffffffff82001348);
+      if (pMVar2 == (MemoryFile *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                        0xe3,0,"%s");
       }
       puVar7 = &uStack_318;
-      puVar9 = (undefined8 *)(&DAT_83373678 + uVar1 * 0xa0);
-      lVar8 = 0x50;
+      ppdVar8 = &g_hardcore + iVar4 * 0xa0;
+      lVar12 = 0x50;
       do {
-        puVar9 = puVar9 + 1;
+        ppdVar8 = ppdVar8 + 2;
         puVar7 = puVar7 + 1;
-        *puVar7 = *puVar9;
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
-      G_WriteStruct(0xffffffff82075c20,&DAT_83373680 + iVar10,local_310,0x280,uVar2);
+        *puVar7 = *(undefined8 *)ppdVar8;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      G_WriteStruct(gentityFields,(uchar *)pgVar11,local_310,0x280,pMVar2);
     }
     local_340 = local_340 + 1;
-  } while ((int)local_340 < 0x800);
-  local_340 = 0xffffffff;
-  MemFile_WriteData(uVar2,4,&local_340);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82014e8c,uVar3);
+  } while (local_340 < 0x800);
+  local_340 = -1;
+  MemFile_WriteData(pMVar2,4,&local_340);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("clients",uVar3);
   local_340 = 0;
   do {
-    iVar10 = local_340 * 0x3980 + DAT_83580b00;
-    if ((DAT_83f11410 <= (int)local_340) || (iVar5 = SV_IsTestClient(local_340), iVar5 == 0)) {
-      iVar5 = *(int *)(iVar10 + 0x332c);
-      cVar6 = Session_IsUserRegistered(0xffffffff844c7860,local_340);
-      if ((bool)cVar6 != (iVar5 != 0)) {
-        uVar3 = va(0xffffffff82076190,local_340,iVar5);
-        MyAssertHandler(0xffffffff82075db8,0x339,0,0xffffffff820011f4,0xffffffff820761b0,uVar3);
-      }
+    pgVar9 = level.clients + local_340;
+    if (((svs.clientCount <= local_340) || (iVar4 = SV_IsTestClient(local_340), iVar4 == 0)) &&
+       (cVar1 = (pgVar9->sess).connected,
+       bVar6 = Session_IsUserRegistered(&g_serverSession,local_340),
+       bVar6 != (cVar1 != CON_DISCONNECTED))) {
+      va("%i cl->sess.connected = %i\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x339
+                      ,0,"%s\n\t%s");
     }
-    if (*(int *)(iVar10 + 0x332c) != 0) {
-      if (*(char *)(local_340 * 0x280 + DAT_83cfc500 + 0x103) == '\0') {
-        MyAssertHandler(0xffffffff82075db8,0x340,0,0xffffffff82000f98,0xffffffff82076210);
+    if ((pgVar9->sess).connected != CON_DISCONNECTED) {
+      if (sv.gentities[local_340].r.isInUse == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                        0x340,0,"%s");
       }
-      MemFile_WriteData(uVar2,4,&local_340);
-      WriteClient(local_340,iVar10,uVar2);
-      WriteClientInfo(uVar2,(ulonglong)local_340 * 0x590 + -0x7cac6570);
-      if (*(uint *)(iVar10 + 0x33d0) != local_340) {
-        MyAssertHandler(0xffffffff82075db8,0x345,0,0xffffffff82000f98,0xffffffff82076230);
+      MemFile_WriteData(pMVar2,4,&local_340);
+      WriteClient(local_340,pgVar9,pMVar2);
+      WriteClientInfo(pMVar2,level_bgs.clientinfo + local_340);
+      if ((pgVar9->sess).cs.clientIndex != local_340) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                        0x345,0,"%s");
       }
     }
     local_340 = local_340 + 1;
-  } while ((int)local_340 < 0x12);
-  local_340 = 0xffffffff;
-  MemFile_WriteData(uVar2,4,&local_340);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  uVar3 = MemFile_GetUsedSize(uVar2);
-  ProfMem_Begin(0xffffffff82076184,uVar3);
+  } while (local_340 < 0x12);
+  local_340 = -1;
+  MemFile_WriteData(pMVar2,4,&local_340);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_Begin("xanim info",uVar3);
   local_340 = 0;
   do {
-    if (((&DAT_83373783)[local_340 * 0x280] != '\0') &&
-       (uVar4 = Com_GetServerDObjForEntnum(), (uVar4 & 0xffffffff) != 0)) {
-      MemFile_WriteData(uVar2,4,&local_340);
-      XAnimSaveAnimTree(uVar4,uVar2);
-      DObjGetHidePartBits(uVar4,local_330);
-      lVar8 = 6;
-      puVar11 = &uStack_334;
+    if ((g_entities[local_340].r.isInUse != '\0') &&
+       (pDVar5 = Com_GetServerDObjForEntnum(local_340), pDVar5 != (DObj *)0x0)) {
+      MemFile_WriteData(pMVar2,4,&local_340);
+      XAnimSaveAnimTree(pDVar5,pMVar2);
+      DObjGetHidePartBits(pDVar5,local_330);
+      lVar12 = 6;
+      puVar10 = &uStack_334;
       do {
-        puVar11 = puVar11 + 1;
-        local_33c[0] = *puVar11;
-        MemFile_WriteData(uVar2,4,local_33c);
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
+        puVar10 = puVar10 + 1;
+        local_33c[0] = *puVar10;
+        MemFile_WriteData(pMVar2,4,local_33c);
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
     }
     local_340 = local_340 + 1;
-  } while ((int)local_340 < 0x800);
-  local_340 = 0xffffffff;
-  MemFile_WriteData(uVar2,4,&local_340);
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
-  MemFile_GetUsedSize(uVar2);
-  ProfMem_End();
+  } while (local_340 < 0x800);
+  local_340 = -1;
+  MemFile_WriteData(pMVar2,4,&local_340);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
+  uVar3 = MemFile_GetUsedSize(pMVar2);
+  ProfMem_End(uVar3);
   __restgprlr_15();
   return;
 }
@@ -981,103 +1089,109 @@ void G_SaveLevelState(void)
 
 // 8248AAE8  G_SaveMainState  (game_mp/g_save_mp.cpp:870)
 
-void G_SaveMainState(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_SaveMainState(MemoryFile *param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
+  client_t *pcVar1;
+  int iVar2;
+  uint uVar3;
   undefined2 uVar4;
-  undefined8 uVar3;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
+  int iVar5;
   uint local_a0 [40];
   
-  uVar1 = __savegprlr();
-  MemFile_StartSegment(uVar1,2);
+  __savegprlr();
+  MemFile_StartSegment(param_1,2);
   if (param_2 != 0) {
-    local_a0[0] = DAT_83f11418;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f1141c;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f11428;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f1142c;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f0ee04;
-    MemFile_WriteData(uVar1,4,local_a0);
-    lVar2 = SV_ArchiveEnabled();
-    local_a0[0] = -(uint)(lVar2 != 0) & DAT_83f0ee00;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f11434;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f11438;
-    MemFile_WriteData(uVar1,4,local_a0);
-    local_a0[0] = DAT_83f1143c;
-    MemFile_WriteData(uVar1,4,local_a0);
-    MemFile_WriteData(uVar1,0xc000,0xffffffff83f11448);
-    MemFile_WriteData(uVar1,0x5e0,0xffffffff83f1d448);
+    local_a0[0] = svs.numSnapshotEntities;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.numSnapshotClients;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.nextSnapshotEntities;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.nextSnapshotClients;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.archive.nextArchivedSnapshotFrames;
+    MemFile_WriteData(param_1,4,local_a0);
+    iVar2 = SV_ArchiveEnabled();
+    local_a0[0] = -(uint)(iVar2 != 0) & svs.archive.nextArchivedSnapshotBuffer;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.nextCachedSnapshotEntities;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.nextCachedSnapshotClients;
+    MemFile_WriteData(param_1,4,local_a0);
+    local_a0[0] = svs.nextCachedSnapshotFrames;
+    MemFile_WriteData(param_1,4,local_a0);
+    MemFile_WriteData(param_1,0xc000,svs.challenges);
+    MemFile_WriteData(param_1,0x5e0,&svs.OOBProf);
   }
-  SaveWeapons(uVar1);
-  iVar6 = 0;
-  if (0 < DAT_83f11410) {
-    iVar7 = 0;
+  SaveWeapons(param_1);
+  iVar2 = 0;
+  if (0 < svs.clientCount) {
+    iVar5 = 0;
     do {
-      iVar8 = iVar7 + DAT_83f11414;
-      uVar5 = (ulonglong)*(uint *)(iVar7 + DAT_83f11414);
-      local_a0[0] = CONCAT13((char)*(uint *)(iVar7 + DAT_83f11414),local_a0[0]._1_3_);
-      MemFile_WriteData(uVar1,1,local_a0,uVar5 - 3);
-      if ((((~uVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(2 < uVar5) & 1) == 0) {
-        if (*(int *)(iVar8 + 0x660) != 0) {
-          MyAssertHandler(0xffffffff82075db8,0x38f,0,0xffffffff82000f98,0xffffffff82075f6c);
+      pcVar1 = svs.clients;
+      uVar3 = *(uint *)(((svs.clients)->header).netchan.remoteAddress.ip + iVar5 + -0x2c);
+      local_a0[0] = CONCAT13((char)uVar3,local_a0[0]._1_3_);
+      MemFile_WriteData(param_1,1,local_a0);
+      if ((((~(ulonglong)uVar3 & 0xffffffff) >> 0x1f) + (ulonglong)(2 < (ulonglong)uVar3) & 1) == 0)
+      {
+        if (*(int *)(pcVar1->userinfo + iVar5 + -4) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                          0x38f,0,"%s");
         }
-        if (*(short *)(iVar8 + 0x31cbe) == 0) {
+        if (*(ushort *)(pcVar1->stats + iVar5 + -0xf) == 0) {
           uVar4 = 0;
         }
         else {
-          uVar4 = Scr_ConvertObjectToSave();
+          uVar3 = Scr_ConvertObjectToSave((uint)*(ushort *)(pcVar1->stats + iVar5 + -0xf));
+          uVar4 = (undefined2)uVar3;
         }
         local_a0[0] = CONCAT22(uVar4,local_a0[0]._2_2_);
-        MemFile_WriteData(uVar1,2,local_a0);
+        MemFile_WriteData(param_1,2,local_a0);
         if (param_2 == 0) {
-          uVar3 = MemFile_GetUsedSize(uVar1);
-          ProfMem_Begin(0xffffffff820762e8,uVar3);
-          MemFile_WriteData(uVar1,0x3000,iVar8 + 0x31ccd);
-          local_a0[0] = CONCAT22(*(undefined2 *)(iVar8 + 0x352ce),local_a0[0]._2_2_);
-          MemFile_WriteData(uVar1,2,local_a0);
-          MemFile_WriteData(uVar1,0x600,iVar8 + 0x34ccd);
-          local_a0[0] = CONCAT13(*(undefined1 *)(iVar8 + 0x352cd),local_a0[0]._1_3_);
-          MemFile_WriteData(uVar1,1,local_a0);
-          MemFile_GetUsedSize(uVar1);
-          ProfMem_End();
+          uVar3 = MemFile_GetUsedSize(param_1);
+          ProfMem_Begin("stat block",uVar3);
+          MemFile_WriteData(param_1,0x3000,pcVar1->stats + iVar5);
+          local_a0[0] = CONCAT22(*(undefined2 *)((int)pcVar1->frames[0].ps.origin + iVar5 + -0x4e),
+                                 local_a0[0]._2_2_);
+          MemFile_WriteData(param_1,2,local_a0);
+          MemFile_WriteData(param_1,0x600,pcVar1->statsModifiedFlags + iVar5);
+          local_a0[0] = CONCAT13(*(undefined1 *)((int)pcVar1->frames[0].ps.origin + iVar5 + -0x4f),
+                                 local_a0[0]._1_3_);
+          MemFile_WriteData(param_1,1,local_a0);
+          uVar3 = MemFile_GetUsedSize(param_1);
+          ProfMem_End(uVar3);
         }
       }
-      iVar6 = iVar6 + 1;
-      iVar7 = iVar7 + 0x68b00;
-    } while (iVar6 < DAT_83f11410);
+      iVar2 = iVar2 + 1;
+      iVar5 = iVar5 + 0x68b00;
+    } while (iVar2 < svs.clientCount);
   }
-  local_a0[0] = DAT_83f11444;
-  MemFile_WriteData(uVar1,4,local_a0);
-  MemFile_WriteData(uVar1,0xc,0xffffffff83f1da28);
-  MemFile_WriteData(uVar1,0xc,0xffffffff83f1da40);
-  MemFile_WriteData(uVar1,0xc,0xffffffff83f1da34);
-  local_a0[0] = CONCAT22(DAT_83f1da4c,local_a0[0]._2_2_);
-  MemFile_WriteData(uVar1,2,local_a0);
-  MemFile_StartSegment(uVar1,3);
-  Scr_SavePost(uVar1,param_3);
-  MemFile_StartSegment(uVar1,4);
-  WriteCStyleString(0xffffffff83cfc7c4,0x40,uVar1);
-  MemFile_WriteData(uVar1,0xe900,0xffffffff83cfc804);
-  WriteCStyleString(0xffffffff83d0b104,0x40,uVar1);
-  MemFile_WriteData(uVar1,0x400,0xffffffff83d0b144);
-  if ((int)param_3 != 0) {
-    G_SaveLevelState(uVar1);
+  local_a0[0] = svs.nextStatusResponseTime;
+  MemFile_WriteData(param_1,4,local_a0);
+  MemFile_WriteData(param_1,0xc,svs.mapCenter);
+  MemFile_WriteData(param_1,0xc,svs.mapCenterBoundsMax);
+  MemFile_WriteData(param_1,0xc,svs.mapCenterBoundsMin);
+  local_a0[0] = CONCAT22(svs.botport,local_a0[0]._2_2_);
+  MemFile_WriteData(param_1,2,local_a0);
+  MemFile_StartSegment(param_1,3);
+  Scr_SavePost(param_1,param_3);
+  MemFile_StartSegment(param_1,4);
+  WriteCStyleString(sv.matchDataDef,0x40,param_1);
+  MemFile_WriteData(param_1,0xe900,sv.matchData);
+  WriteCStyleString(sv.clientMatchData.def,0x40,param_1);
+  MemFile_WriteData(param_1,0x400,sv.clientMatchData.data);
+  if (param_3 != 0) {
+    G_SaveLevelState(param_1);
   }
-  G_SaveGlass(uVar1);
-  MemFile_StartSegment(uVar1,5);
+  G_SaveGlass(param_1);
+  MemFile_StartSegment(param_1,5);
   local_a0[0] = local_a0[0] & 0xffffff;
-  MemFile_WriteData(uVar1,1,local_a0);
+  MemFile_WriteData(param_1,1,local_a0);
   __restgprlr();
   return;
 }
@@ -1085,129 +1199,143 @@ void G_SaveMainState(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 8248AF58  G_LoadMainState  (game_mp/g_save_mp.cpp:981)
 
-void G_LoadMainState(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_LoadMainState(SaveGame *param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  char cVar5;
-  undefined2 uVar4;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
-  uint *puVar9;
+  MemoryFile *pMVar1;
+  bool bVar3;
+  uint uVar2;
+  int iVar4;
+  int iVar5;
+  uchar *puVar6;
+  SaveGame *pSStack00000014;
+  int iStack00000024;
   byte local_a0;
   undefined1 local_9f;
   short local_9e;
   int local_9c [39];
   
-  uVar2 = __savegprlr();
-  iVar3 = SaveMemory_GetMemoryFile();
-  MemFile_MoveToSegment(iVar3,3);
-  Scr_LoadPre(iVar3,param_2);
-  MemFile_MoveToSegment(iVar3,2);
+  __savegprlr();
+  pSStack00000014 = param_1;
+  iStack00000024 = param_3;
+  pMVar1 = SaveMemory_GetMemoryFile(param_1);
+  MemFile_MoveToSegment(pMVar1,3);
+  Scr_LoadPre(pMVar1,param_2);
+  MemFile_MoveToSegment(pMVar1,2);
   if (param_3 != 0) {
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f11418 = local_9c[0];
-    uVar1 = DAT_83f1e024 * 0x12 | (uint)(DAT_83f1e024 * 9) >> 0x1f;
-    if ((int)((((int)uVar1 >> 2) + (uint)((int)uVar1 < 0 && (DAT_83f1e024 * 0x12 & 2U) != 0)) * 400)
-        < local_9c[0]) {
-      MyAssertHandler(0xffffffff82075db8,0x3e6,0,0xffffffff82076380,0xffffffff820763a8);
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.numSnapshotEntities = local_9c[0];
+    uVar2 = svs.packetBackupCount * 0x12 | (uint)(svs.packetBackupCount * 9) >> 0x1f;
+    if ((int)((((int)uVar2 >> 2) +
+              (uint)((int)uVar2 < 0 && (svs.packetBackupCount * 0x12 & 2U) != 0)) * 400) <
+        local_9c[0]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x3e6
+                      ,0,"%s\n\t(svs.numSnapshotEntities) = %i");
     }
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f1141c = local_9c[0];
-    if (DAT_83f1e024 * 0x144 < local_9c[0]) {
-      MyAssertHandler(0xffffffff82075db8,0x3e9,0,0xffffffff8207631c,0xffffffff82076340);
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.numSnapshotClients = local_9c[0];
+    if (svs.packetBackupCount * 0x144 < local_9c[0]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x3e9
+                      ,0,"%s\n\t(svs.numSnapshotClients) = %i");
     }
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f11428 = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f1142c = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f0ee04 = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f0ee00 = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f11434 = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f11438 = local_9c[0];
-    MemFile_ReadData(iVar3,4,local_9c);
-    DAT_83f1143c = local_9c[0];
-    MemFile_ReadData(iVar3,0xc000,0xffffffff83f11448);
-    MemFile_ReadData(iVar3,0x5e0,0xffffffff83f1d448);
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.nextSnapshotEntities = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.nextSnapshotClients = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.archive.nextArchivedSnapshotFrames = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.archive.nextArchivedSnapshotBuffer = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.nextCachedSnapshotEntities = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.nextCachedSnapshotClients = local_9c[0];
+    MemFile_ReadData(pMVar1,4,local_9c);
+    svs.nextCachedSnapshotFrames = local_9c[0];
+    MemFile_ReadData(pMVar1,0xc000,svs.challenges);
+    MemFile_ReadData(pMVar1,0x5e0,&svs.OOBProf);
   }
-  LoadWeapons(iVar3);
-  iVar7 = 0;
-  if (0 < DAT_83f11410) {
-    iVar6 = 0;
+  LoadWeapons(pMVar1);
+  iVar4 = 0;
+  if (0 < svs.clientCount) {
+    iVar5 = 0;
     do {
-      iVar7 = iVar7 + 1;
-      *(undefined4 *)(iVar6 + DAT_83f11414) = 0;
-      iVar6 = iVar6 + 0x68b00;
-    } while (iVar7 < DAT_83f11410);
+      iVar4 = iVar4 + 1;
+      puVar6 = ((svs.clients)->header).netchan.remoteAddress.ip + iVar5 + -0x2c;
+      puVar6[0] = '\0';
+      puVar6[1] = '\0';
+      puVar6[2] = '\0';
+      puVar6[3] = '\0';
+      iVar5 = iVar5 + 0x68b00;
+    } while (iVar4 < svs.clientCount);
   }
-  lVar8 = 0;
-  if (0 < DAT_83f11410) {
-    iVar7 = 0;
+  iVar4 = 0;
+  if (0 < svs.clientCount) {
+    iVar5 = 0;
     do {
-      puVar9 = (uint *)(iVar7 + DAT_83f11414);
-      MemFile_ReadData(iVar3,1,&local_a0);
-      *puVar9 = (uint)local_a0;
-      cVar5 = Session_IsUserRegistered(0xffffffff844c7860,lVar8);
-      if (cVar5 == '\0') {
-LAB_8248b2a8:
-        if (2 < (int)*puVar9) goto LAB_8248b2b4;
-      }
-      else {
-        if ((int)*puVar9 < 3) {
-          MyAssertHandler(0xffffffff82075db8,0x407,0,0xffffffff82000f98,0xffffffff820762f4);
+      puVar6 = ((svs.clients)->header).netchan.remoteAddress.ip + iVar5 + -0x2c;
+      MemFile_ReadData(pMVar1,1,&local_a0);
+      *(uint *)puVar6 = (uint)local_a0;
+      bVar3 = Session_IsUserRegistered(&g_serverSession,iVar4);
+      if (bVar3) {
+        if (*(int *)puVar6 < 3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",
+                          0x407,0,"%s");
           goto LAB_8248b2a8;
         }
 LAB_8248b2b4:
-        MemFile_ReadData(iVar3,2,&local_9e);
-        if (local_9e != 0) {
-          uVar4 = Scr_ConvertObjectFromLoad();
-          *(undefined2 *)((int)puVar9 + 0x31cbe) = uVar4;
+        MemFile_ReadData(pMVar1,2,&local_9e);
+        if ((int)local_9e != 0) {
+          uVar2 = Scr_ConvertObjectFromLoad((int)local_9e);
+          *(short *)(puVar6 + 0x31cbe) = (short)uVar2;
         }
-        if (param_3 == 0) {
-          MemFile_ReadData(iVar3,0x3000,(int)puVar9 + 0x31ccd);
-          MemFile_ReadData(iVar3,2,local_9c);
-          *(undefined2 *)((int)puVar9 + 0x352ce) = local_9c[0]._0_2_;
-          MemFile_ReadData(iVar3,0x600,(int)puVar9 + 0x34ccd);
-          MemFile_ReadData(iVar3,1,&local_9f);
-          *(undefined1 *)((int)puVar9 + 0x352cd) = local_9f;
+        if (iStack00000024 == 0) {
+          MemFile_ReadData(pMVar1,0x3000,puVar6 + 0x31ccd);
+          MemFile_ReadData(pMVar1,2,local_9c);
+          *(ushort *)(puVar6 + 0x352ce) = local_9c[0]._0_2_;
+          MemFile_ReadData(pMVar1,0x600,puVar6 + 0x34ccd);
+          MemFile_ReadData(pMVar1,1,&local_9f);
+          puVar6[0x352cd] = local_9f;
         }
         else {
-          Netchan_SetUpBuffers(puVar9 + 6,puVar9 + 0x852b,0x10000,puVar9 + 0xc52b,0x800);
+          Netchan_SetUpBuffers
+                    ((netchan_t *)(puVar6 + 0x18),puVar6 + 0x214ac,0x10000,puVar6 + 0x314ac,0x800);
         }
       }
-      lVar8 = lVar8 + 1;
-      iVar7 = iVar7 + 0x68b00;
-    } while ((int)lVar8 < DAT_83f11410);
-    uVar2 = uVar2 & 0xffffffff;
+      else {
+LAB_8248b2a8:
+        if (2 < *(int *)puVar6) goto LAB_8248b2b4;
+      }
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 0x68b00;
+      param_1 = pSStack00000014;
+    } while (iVar4 < svs.clientCount);
   }
-  MemFile_ReadData(iVar3,4,local_9c);
-  DAT_83f11444 = local_9c[0];
-  MemFile_ReadData(iVar3,0xc,0xffffffff83f1da28);
-  MemFile_ReadData(iVar3,0xc,0xffffffff83f1da40);
-  MemFile_ReadData(iVar3,0xc,0xffffffff83f1da34);
-  MemFile_ReadData(iVar3,2,local_9c);
-  DAT_83f1da4c = local_9c[0]._0_2_;
-  MemFile_MoveToSegment(iVar3,4);
-  ReadCStyleString(0xffffffff83cfc7c4,0x40,iVar3);
-  MemFile_ReadData(iVar3,0xe900,0xffffffff83cfc804);
-  ReadCStyleString(0xffffffff83d0b104,0x40,iVar3);
-  MemFile_ReadData(iVar3,0x400,0xffffffff83d0b144);
-  if ((int)param_2 != 0) {
-    G_LoadLevelState(uVar2);
+  MemFile_ReadData(pMVar1,4,local_9c);
+  svs.nextStatusResponseTime = local_9c[0];
+  MemFile_ReadData(pMVar1,0xc,svs.mapCenter);
+  MemFile_ReadData(pMVar1,0xc,svs.mapCenterBoundsMax);
+  MemFile_ReadData(pMVar1,0xc,svs.mapCenterBoundsMin);
+  MemFile_ReadData(pMVar1,2,local_9c);
+  svs.botport = local_9c[0]._0_2_;
+  MemFile_MoveToSegment(pMVar1,4);
+  ReadCStyleString(sv.matchDataDef,0x40,pMVar1);
+  MemFile_ReadData(pMVar1,0xe900,sv.matchData);
+  ReadCStyleString(sv.clientMatchData.def,0x40,pMVar1);
+  MemFile_ReadData(pMVar1,0x400,sv.clientMatchData.data);
+  if (param_2 != 0) {
+    G_LoadLevelState(param_1);
   }
-  G_LoadGlass(iVar3);
-  MemFile_MoveToSegment(iVar3,5);
-  MemFile_ReadData(iVar3,1,&local_9f);
-  MemFile_MoveToSegment(iVar3,0xffffffffffffffff);
-  if (*(char *)(iVar3 + 0x1d) != '\0') {
-    G_SaveError(1,0xffffffff82075fb4);
+  G_LoadGlass(pMVar1);
+  MemFile_MoveToSegment(pMVar1,5);
+  MemFile_ReadData(pMVar1,1,&local_9f);
+  MemFile_MoveToSegment(pMVar1,-1);
+  if (pMVar1->memoryOverflow != false) {
+    G_SaveError(SAVE_ERROR_CORRUPT_SAVE,"\x15The save file has become corrupted.\n");
   }
   Scr_LoadShutdown(param_2);
   __restgprlr();
@@ -1217,28 +1345,30 @@ LAB_8248b2b4:
 
 // 8248B4C8  G_SaveState  (game_mp/g_save_mp.cpp:1105)
 
-void G_SaveState(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void G_SaveState(MemoryFile *param_1,int param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  MemoryFile *pMVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x452,0,0xffffffff82000f98,0xffffffff82001348);
+  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
+  if (pMVar1 == (MemoryFile *)0x0) {
+    param_3 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x452,0
+                    ,"%s");
   }
   CheckSavedEntities();
-  uVar2 = MemFile_GetUsedSize(uVar1);
-  ProfMem_Begin(0xffffffff82076410,uVar2);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff82076400);
-  G_SaveInitState(uVar1,param_4);
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_Begin("SaveState",uVar2);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"G_SaveInitState");
+  G_SaveInitState(pMVar1,param_4,param_3);
   PIXEndNamedEvent();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff820763f0);
-  G_SaveMainState(uVar1,param_2,param_4);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"G_SaveMainState");
+  G_SaveMainState(pMVar1,param_2,param_4);
   PIXEndNamedEvent();
-  MemFile_GetUsedSize(uVar1);
-  ProfMem_End();
-  ProfMem_PrintTree(0);
+  uVar2 = MemFile_GetUsedSize(pMVar1);
+  ProfMem_End(uVar2);
+  ProfMem_PrintTree(false);
   __restgprlr_28();
   return;
 }
@@ -1246,18 +1376,21 @@ void G_SaveState(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefi
 
 // 8248B590  G_LoadGame  (game_mp/g_save_mp.cpp:1129)
 
-void G_LoadGame(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_LoadGame(int param_1,SaveGame *param_2,int param_3,int param_4)
 
 {
-  char *pcVar1;
+  entityShared_t *peVar1;
   
-  __savegprlr_28();
-  if ((int)param_3 != 0) {
+  __savegprlr_28(param_1);
+  if (param_3 != 0) {
     G_FreeEntities();
     HudElem_DestroyAll();
     VehPathScr_FreeScriptInfo();
-    memset(&DAT_83580b24,0,0x480);
-    Scr_ShutdownSystem(1);
+    memset();
+    Scr_ShutdownSystem('\x01');
     Scr_FreeGameVariable();
     Scr_FreeObjects();
   }
@@ -1265,15 +1398,15 @@ void G_LoadGame(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefin
   G_LoadMainState(param_2,param_3,param_4);
   CheckSavedEntities();
   Vehicle_LoadServerDefs();
-  if ((int)param_3 != 0) {
-    pcVar1 = &DAT_83373780;
+  if (param_3 != 0) {
+    peVar1 = &g_entities[0].r;
     do {
-      if ((pcVar1[3] != '\0') && (*pcVar1 != '\0')) {
-        SV_LinkEntity(pcVar1 + -0x100);
+      if ((peVar1->isInUse != '\0') && (peVar1->isLinked != '\0')) {
+        SV_LinkEntity((gentity_s *)((int)(peVar1 + -3) + 8));
       }
-      pcVar1 = pcVar1 + 0x280;
-    } while ((int)pcVar1 < -0x7cb4c880);
-    SV_LocateGameData(DAT_83580b04,DAT_83580b08,DAT_83580b00,0x3980);
+      peVar1 = (entityShared_t *)((int)(peVar1 + 7) + 0x18);
+    } while ((int)peVar1 < -0x7cb4c880);
+    SV_LocateGameData(level.gentities,level.num_entities,&(level.clients)->ps,0x3980);
     Scr_HostMigration();
   }
   CheckSavedEntities();
@@ -1284,39 +1417,42 @@ void G_LoadGame(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefin
 
 // 8248B670  VerifySaveGame  (game_mp/g_save_mp.cpp:1232)
 
-void VerifySaveGame(undefined8 param_1,ulonglong param_2)
+void VerifySaveGame(SaveGame *param_1,SaveHeader *param_2)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  uint uVar5;
-  ulonglong uVar3;
-  undefined2 uVar6;
-  undefined8 uVar4;
-  int *piVar7;
+  SaveGame *pSVar1;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int *piVar5;
   
-  uVar2 = __savegprlr_28();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x4d3,0,0xffffffff82000f98,0xffffffff82076500);
+  uVar4 = (ulonglong)(int)param_2;
+  pSVar1 = (SaveGame *)__savegprlr_28(param_1);
+  if (pSVar1 == (SaveGame *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x4d3,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82075db8,0x4d4,0,0xffffffff82000f98,0xffffffff82058e00);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x4d4,0
+                    ,"%s");
   }
-  piVar7 = (int *)param_2;
-  if (*piVar7 != 0x3fc) {
-    G_SaveError(1,0xffffffff820764c0,*piVar7,0x3fc,param_2 + 0x120);
+  piVar5 = (int *)uVar4;
+  if (*piVar5 != 0x3fc) {
+    G_SaveError(SAVE_ERROR_CORRUPT_SAVE,
+                "\x15G_PreLoadGame: savegame is wrong version (%i, should be %i)\n%s");
   }
-  uVar5 = Sys_GetSaveProtocolVersion();
-  uVar1 = piVar7[0xac];
-  if (uVar1 != uVar5) {
-    uVar3 = Sys_GetSaveProtocolVersion();
-    uVar6 = Sys_GetSaveProtocolVersion();
-    G_SaveError(1,0xffffffff82076468,uVar1 & 0xffff,uVar1 >> 0x10,uVar6,(uVar3 & 0xffffffff) >> 0x10
-                ,param_2 + 0x120);
+  uVar2 = Sys_GetSaveProtocolVersion();
+  if (piVar5[0xac] != uVar2) {
+    Sys_GetSaveProtocolVersion();
+    Sys_GetSaveProtocolVersion();
+    G_SaveError(SAVE_ERROR_CORRUPT_SAVE,
+                "\x15G_PreLoadGame: savegame has wrong network protocol version (%i.%i, should be %i.%i)\n%s"
+               );
   }
-  uVar4 = SaveMemory_CalculateChecksum(uVar2);
-  if (piVar7[2] != (int)uVar4) {
-    G_SaveError(1,0xffffffff82076420,uVar4,piVar7[2],param_2 + 0x120);
+  iVar3 = SaveMemory_CalculateChecksum(pSVar1);
+  if (piVar5[2] != iVar3) {
+    G_SaveError(SAVE_ERROR_CORRUPT_SAVE,
+                "\x15G_PreLoadGame: savegame has wrong checksum (%i, should be %i)\n%s");
   }
   __restgprlr_28();
   return;
@@ -1325,66 +1461,75 @@ void VerifySaveGame(undefined8 param_1,ulonglong param_2)
 
 // 8248B778  G_CacheSplitscreenNetworkedInfo  (game_mp/g_save_mp.cpp:1257)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void G_CacheSplitscreenNetworkedInfo(void)
 
 {
-  Com_Printf(0xf,0xffffffff8207650c,*(undefined1 *)(DAT_82b3ecb8 + 0xc),
-             *(undefined1 *)(DAT_82b3ecac + 0xc));
-  DAT_83599834 = *(undefined1 *)(DAT_82b3ecb8 + 0xc);
-  DAT_83599835 = *(undefined1 *)(DAT_82b3ecac + 0xc);
+  Com_Printf(0xf,"Caching splitscreen data for migration: %i, %i.\n");
+  s_splitscreenOnlineCache.splitscreen = (splitscreen->current).enabled;
+  s_splitscreenOnlineCache.splitscreen_ingame = (splitscreen_ingame->current).enabled;
   return;
 }
 
 
 // 8248B7F0  G_RestoreSplitscreenNetworkedInfo  (game_mp/g_save_mp.cpp:1265)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void G_RestoreSplitscreenNetworkedInfo(void)
 
 {
-  Com_Printf(0xf,0xffffffff82076540,DAT_83599834,DAT_83599835);
-  Dvar_SetBool(DAT_82b3ecb8,DAT_83599834);
-  Dvar_SetBool(DAT_82b3ecac,DAT_83599835);
+  Com_Printf(0xf,"Restoring splitscreen data for migration: %i, %i.\n");
+  Dvar_SetBool(splitscreen,s_splitscreenOnlineCache.splitscreen);
+  Dvar_SetBool(splitscreen_ingame,s_splitscreenOnlineCache.splitscreen_ingame);
   return;
 }
 
 
 // 8248B860  G_PreLoadGame  (game_mp/g_save_mp.cpp:1275)
 
-void G_PreLoadGame(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_PreLoadGame(SaveGame **param_1,int *param_2)
 
 {
-  int *piVar3;
+  undefined4 *puVar1;
+  SaveGame *pSVar2;
+  MemoryFile *pMVar3;
   int iVar4;
-  undefined8 uVar1;
-  int iVar5;
-  undefined8 uVar2;
+  uchar *puVar5;
   
-  piVar3 = (int *)__savegprlr_26();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82075db8,0x502,0,0xffffffff82000f98,0xffffffff82076500);
+  puVar1 = (undefined4 *)__savegprlr_26(param_1);
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x502,0
+                    ,"%s");
   }
   Profile_Begin(0xec);
   G_ClearLowHunk();
-  iVar4 = SaveMemory_GetSaveHandle(0);
-  *piVar3 = iVar4;
-  SV_MigrationUpdateCount(*(undefined4 *)(iVar4 + 0xc));
-  uVar1 = SaveMemory_GetMemoryFile(iVar4);
-  iVar5 = Migration_GetBufferSize();
-  if (iVar5 < *(int *)(iVar4 + 0x45c)) {
-    MyAssertHandler(0xffffffff82075db8,0x51c,0,0xffffffff82000f98,0xffffffff82076574);
+  pSVar2 = SaveMemory_GetSaveHandle(SAVE_MIGRATION_HANDLE);
+  *puVar1 = pSVar2;
+  SV_MigrationUpdateCount((pSVar2->header).saveId);
+  pMVar3 = SaveMemory_GetMemoryFile(pSVar2);
+  iVar4 = Migration_GetBufferSize();
+  if (iVar4 < (pSVar2->header).bodySize) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_save_mp.cpp",0x51c,0
+                    ,"%s");
   }
-  uVar2 = Migration_GetBuffer();
-  MemFile_InitForReading(uVar1,*(undefined4 *)(iVar4 + 0x45c),uVar2,1);
-  VerifySaveGame(*piVar3,iVar4);
+  puVar5 = Migration_GetBuffer();
+  MemFile_InitForReading(pMVar3,(pSVar2->header).bodySize,puVar5,true);
+  VerifySaveGame((SaveGame *)*puVar1,&pSVar2->header);
   G_CacheSplitscreenNetworkedInfo();
-  Dvar_LoadDvars(uVar1);
-  Dvar_ClearModified(DAT_83d0b55c);
+  Dvar_LoadDvars(pMVar3);
+  Dvar_ClearModified(sv_maxclients);
   G_RestoreSplitscreenNetworkedInfo();
-  Scr_SkipSource(uVar1,0);
-  G_LoadInitState(uVar1);
-  *param_2 = DAT_83f11404;
-  Profile_EndInternal(0);
-  __restgprlr_26();
+  Scr_SkipSource(pMVar3,(void *)0x0);
+  G_LoadInitState(pMVar3);
+  *param_2 = svs.time;
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_26(iVar4);
   return;
 }
 

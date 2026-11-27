@@ -2,28 +2,35 @@
 
 // 82734200  R_DrawLightMapOpaqueSegmentCallback  (gfx_d3d/r_draw_lit.cpp:59)
 
-void R_DrawLightMapOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawLightMapOpaqueSegmentCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  int iVar2;
+  GfxDrawList *pGVar2;
   int iVar3;
-  int *piVar4;
-  int iStack00000018;
+  GfxCmdBufSourceState *pGVar4;
+  int *piVar5;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar4 = (int *)__savegprlr_27();
-  iVar1 = *piVar4;
-  iVar2 = piVar4[1];
-  iVar3 = piVar4[2];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar5 = (int *)__savegprlr_27(param_1);
+  iVar1 = *piVar5;
+  pGVar2 = (GfxDrawList *)piVar5[1];
+  iVar3 = piVar5[2];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar4 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(int *)(iStack00000018 + 0x174c) = iVar3;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Camera_NoSunShadows(param_2,iVar2);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar4->drawListId = iVar3;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Camera_NoSunShadows(param_2,pGVar2);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_27();
   return;
@@ -32,29 +39,32 @@ void R_DrawLightMapOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
 
 // 82734298  R_DrawLightMapOpaqueSegment  (gfx_d3d/r_draw_lit.cpp:97)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_DrawLightMapOpaqueSegment
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,longlong param_4)
+               (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,uint param_4)
 
 {
-  int iVar1;
-  int local_17a0;
-  undefined4 local_179c;
-  undefined4 local_1798;
-  undefined1 auStack_1790 [5097];
-  undefined1 local_3a7;
-  undefined1 local_3c;
+  GfxViewParms *pGVar1;
+  GfxViewParms *local_17a0;
+  GfxDrawList *local_179c;
+  uint local_1798;
+  GfxCmdBufSourceState GStack_1790;
   
-  iVar1 = __savegprlr_28();
-  if (*(char *)(DAT_845aa898 + 0xc) == '\0') {
-    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821bded8,param_4 + -1);
-    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
-    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
-    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
-    local_1798 = (undefined4)param_4;
-    local_3c = local_3a7;
-    local_17a0 = iVar1;
+  pGVar1 = (GfxViewParms *)__savegprlr_28(param_1);
+  if ((r_hideOpaque->current).enabled == false) {
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,"LightMap Opaque%d",param_4 - 1);
+    R_InitCmdBufSourceState(&GStack_1790,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1)
+    ;
+    R_SetRenderTargetSize(&GStack_1790,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+    R_SetViewportStruct(&GStack_1790,(GfxViewport *)(pGVar1 + 1));
+    GStack_1790.forceDepthWrite = GStack_1790.input.noLightMapPrepass;
+    local_17a0 = pGVar1;
     local_179c = param_2;
-    R_DrawCall(0xffffffff82734200,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    local_1798 = param_4;
+    R_DrawCall(R_DrawLightMapOpaqueSegmentCallback,&local_17a0,&GStack_1790,
+               (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
     PIXEndNamedEvent();
   }
   __restgprlr_28();
@@ -64,26 +74,33 @@ void R_DrawLightMapOpaqueSegment
 
 // 82734348  R_DrawDepthHackCallback  (gfx_d3d/r_draw_lit.cpp:141)
 
-void R_DrawDepthHackCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawDepthHackCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  int iStack00000018;
+  GfxDrawList *pGVar2;
+  GfxCmdBufSourceState *pGVar3;
+  int *piVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_28();
-  iVar1 = *piVar3;
-  iVar2 = piVar3[1];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar4 = (int *)__savegprlr_28(param_1);
+  iVar1 = *piVar4;
+  pGVar2 = (GfxDrawList *)piVar4[1];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar3 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(undefined4 *)(iStack00000018 + 0x174c) = 0x10;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Camera(param_2,iVar2);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar3->drawListId = 0x10;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Camera(param_2,pGVar2);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_28();
   return;
@@ -92,7 +109,10 @@ void R_DrawDepthHackCallback(undefined8 param_1,ulonglong param_2)
 
 // 827343E0  R_SetDepthHackFogScaled  (gfx_d3d/r_draw_lit.cpp:170)
 
-void R_SetDepthHackFogScaled(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetDepthHackFogScaled(GfxCmdBufSourceState *param_1,GfxCmdBufInput *param_2)
 
 {
   float fVar1;
@@ -100,17 +120,17 @@ void R_SetDepthHackFogScaled(int param_1,int param_2)
   float fVar3;
   float fVar4;
   
-  fVar1 = *(float *)(DAT_845aa70c + 0xc);
+  fVar1 = (r_fog_depthhack_scale->current).value;
   if (fVar1 < 0.0) {
     return;
   }
-  fVar2 = *(float *)(param_2 + 0x294);
-  fVar3 = *(float *)(param_2 + 0x298);
-  fVar4 = *(float *)(param_2 + 0x29c);
-  *(float *)(param_1 + 0x1090) = fVar1 * *(float *)(param_2 + 0x290);
-  *(float *)(param_1 + 0x1098) = fVar3 * fVar1;
-  *(float *)(param_1 + 0x109c) = fVar4 * fVar1;
-  *(float *)(param_1 + 0x1094) = (fVar2 - 1.0) * fVar1 + 1.0;
+  fVar2 = param_2->consts[0x29][1];
+  fVar3 = param_2->consts[0x29][2];
+  fVar4 = param_2->consts[0x29][3];
+  (param_1->input).consts[0x29][0] = fVar1 * param_2->consts[0x29][0];
+  (param_1->input).consts[0x29][2] = fVar3 * fVar1;
+  (param_1->input).consts[0x29][3] = fVar4 * fVar1;
+  (param_1->input).consts[0x29][1] = (fVar2 - 1.0) * fVar1 + 1.0;
   R_DirtyCodeConstant(param_1,0x29);
   return;
 }
@@ -118,37 +138,37 @@ void R_SetDepthHackFogScaled(int param_1,int param_2)
 
 // 82734448  R_DrawDepthHack  (gfx_d3d/r_draw_lit.cpp:191)
 
-void R_DrawDepthHack(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawDepthHack(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
   float fVar1;
-  int iVar2;
-  int local_1790;
-  undefined4 local_178c;
-  undefined1 auStack_1780 [4240];
-  float local_6f0;
-  float local_6ec;
-  float local_6e8;
-  float local_6e4;
-  undefined1 local_2c;
+  GfxViewParms *pGVar2;
+  GfxViewParms *local_1790;
+  GfxDrawList *local_178c;
+  GfxCmdBufSourceState GStack_1780;
   
-  iVar2 = __savegprlr_29();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bdeec);
-  R_InitCmdBufSourceState(auStack_1780,iVar2 + 0x330,1);
-  R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(iVar2 + 0x920));
-  R_SetViewportStruct(auStack_1780,iVar2 + 0x150);
-  local_2c = 1;
-  fVar1 = *(float *)(DAT_845aa70c + 0xc);
-  local_1790 = iVar2;
+  pGVar2 = (GfxViewParms *)__savegprlr_29(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Depth Hack");
+  R_InitCmdBufSourceState(&GStack_1780,(GfxCmdBufInput *)(pGVar2[2].viewProjectionMatrix.m + 1),1);
+  R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)pGVar2[6].camera.tanHalfFovX);
+  R_SetViewportStruct(&GStack_1780,(GfxViewport *)(pGVar2 + 1));
+  GStack_1780.forceDepthWrite = true;
+  fVar1 = (r_fog_depthhack_scale->current).value;
+  local_1790 = pGVar2;
   local_178c = param_2;
   if (0.0 <= fVar1) {
-    local_6f0 = *(float *)(iVar2 + 0x5c0) * fVar1;
-    local_6e8 = *(float *)(iVar2 + 0x5c8) * fVar1;
-    local_6e4 = *(float *)(iVar2 + 0x5cc) * fVar1;
-    local_6ec = (*(float *)(iVar2 + 0x5c4) - 1.0) * fVar1 + 1.0;
-    R_DirtyCodeConstant(auStack_1780,0x29);
+    GStack_1780.input.consts[0x29][0] = pGVar2[4].viewProjectionMatrix.m[0][0] * fVar1;
+    GStack_1780.input.consts[0x29][2] = pGVar2[4].viewProjectionMatrix.m[0][2] * fVar1;
+    GStack_1780.input.consts[0x29][3] = pGVar2[4].viewProjectionMatrix.m[0][3] * fVar1;
+    GStack_1780.input.consts[0x29][1] = (pGVar2[4].viewProjectionMatrix.m[0][1] - 1.0) * fVar1 + 1.0
+    ;
+    R_DirtyCodeConstant(&GStack_1780,0x29);
   }
-  R_DrawCall(0xffffffff82734348,&local_1790,auStack_1780,iVar2 + 0x180,iVar2,param_3);
+  R_DrawCall(R_DrawDepthHackCallback,&local_1790,&GStack_1780,
+             (GfxSceneDef *)(pGVar2[1].viewMatrix.m + 3),pGVar2,param_3);
   PIXEndNamedEvent();
   __restgprlr_29();
   return;
@@ -157,28 +177,35 @@ void R_DrawDepthHack(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 // 82734540  R_DrawLitOpaqueSegmentCallback  (gfx_d3d/r_draw_lit.cpp:224)
 
-void R_DrawLitOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawLitOpaqueSegmentCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  int iVar2;
+  GfxDrawList *pGVar2;
   int iVar3;
-  int *piVar4;
-  int iStack00000018;
+  GfxCmdBufSourceState *pGVar4;
+  int *piVar5;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar4 = (int *)__savegprlr_27();
-  iVar1 = *piVar4;
-  iVar2 = piVar4[1];
-  iVar3 = piVar4[2];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar5 = (int *)__savegprlr_27(param_1);
+  iVar1 = *piVar5;
+  pGVar2 = (GfxDrawList *)piVar5[1];
+  iVar3 = piVar5[2];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar4 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(int *)(iStack00000018 + 0x174c) = iVar3;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_Camera(param_2,iVar2);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar4->drawListId = iVar3;
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  R_DrawSurfs_Camera(param_2,pGVar2);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_27();
   return;
@@ -187,29 +214,34 @@ void R_DrawLitOpaqueSegmentCallback(undefined8 param_1,ulonglong param_2)
 
 // 827345D8  R_DrawLitOpaqueSegment  (gfx_d3d/r_draw_lit.cpp:262)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_DrawLitOpaqueSegment
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,longlong param_4)
+               (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,uint param_4)
 
 {
-  int iVar1;
-  int local_17a0;
-  undefined4 local_179c;
+  GfxViewParms *pGVar1;
+  longlong lVar2;
+  GfxViewParms *local_17a0;
+  GfxDrawList *local_179c;
   undefined4 local_1798;
-  undefined1 auStack_1790 [5096];
-  undefined1 local_3a8;
-  undefined1 local_3c;
+  GfxCmdBufSourceState GStack_1790;
   
-  iVar1 = __savegprlr_28();
-  if (*(char *)(DAT_845aa898 + 0xc) == '\0') {
-    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,0xffffffff821bdef8,param_4 != 0);
-    R_InitCmdBufSourceState(auStack_1790,iVar1 + 0x330,1);
-    R_SetRenderTargetSize(auStack_1790,*(undefined4 *)(iVar1 + 0x920));
-    R_SetViewportStruct(auStack_1790,iVar1 + 0x150);
-    local_1798 = (undefined4)param_4;
-    local_3c = local_3a8;
-    local_17a0 = iVar1;
+  lVar2 = (longlong)(int)param_4;
+  pGVar1 = (GfxViewParms *)__savegprlr_28(param_1);
+  if ((r_hideOpaque->current).enabled == false) {
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,"Opaque%d",(uint)(lVar2 != 0));
+    R_InitCmdBufSourceState(&GStack_1790,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1)
+    ;
+    R_SetRenderTargetSize(&GStack_1790,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+    R_SetViewportStruct(&GStack_1790,(GfxViewport *)(pGVar1 + 1));
+    GStack_1790.forceDepthWrite = GStack_1790.input.noLitPrepass;
+    local_17a0 = pGVar1;
     local_179c = param_2;
-    R_DrawCall(0xffffffff82734540,&local_17a0,auStack_1790,iVar1 + 0x180,iVar1,param_3);
+    local_1798 = (int)lVar2;
+    R_DrawCall(R_DrawLitOpaqueSegmentCallback,&local_17a0,&GStack_1790,
+               (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
     PIXEndNamedEvent();
   }
   __restgprlr_28();
@@ -219,31 +251,38 @@ void R_DrawLitOpaqueSegment
 
 // 82734690  R_DrawLitTransCallback  (gfx_d3d/r_draw_lit.cpp:309)
 
-void R_DrawLitTransCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawLitTransCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  int iStack00000018;
+  GfxViewInfo *pGVar1;
+  GfxDrawList *pGVar2;
+  GfxCmdBufSourceState *pGVar3;
+  undefined4 *puVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_28();
-  iVar1 = *piVar3;
-  iVar2 = piVar3[1];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  puVar4 = (undefined4 *)__savegprlr_28(param_1);
+  pGVar1 = (GfxViewInfo *)*puVar4;
+  pGVar2 = (GfxDrawList *)puVar4[1];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,pGVar1->renderTargetId);
+  pGVar3 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(undefined4 *)(iStack00000018 + 0x174c) = 0xe;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  if (*(int *)(iVar1 + 0x934) == 0) {
-    R_DrawSurfs_LitTransAndDynLights(iVar1,param_2,iVar2);
+  pGVar3->drawListId = 0xe;
+  R_HW_EnableScissor(param_2,&pGVar1->scissorViewport);
+  if (pGVar1->isSplitTrans == 0) {
+    R_DrawSurfs_LitTransAndDynLights(pGVar1,param_2,pGVar2);
   }
   else {
-    R_DrawSurfs_Camera(param_2,iVar2);
+    R_DrawSurfs_Camera(param_2,pGVar2);
   }
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_28();
   return;
@@ -252,27 +291,32 @@ void R_DrawLitTransCallback(undefined8 param_1,ulonglong param_2)
 
 // 82734748  R_DrawLitTrans  (gfx_d3d/r_draw_lit.cpp:362)
 
-void R_DrawLitTrans(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawLitTrans(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
-  undefined8 uVar1;
-  int local_1790;
-  undefined4 local_178c;
-  undefined1 auStack_1780 [6016];
+  char *pcVar1;
+  GfxViewParms *local_1790;
+  GfxDrawList *local_178c;
+  GfxCmdBufSourceState GStack_1780;
   
-  local_1790 = __savegprlr_29();
-  if (*(int *)(local_1790 + 0x934) == 0) {
-    uVar1 = 0xffffffff821bdf04;
+  local_178c = param_2;
+  local_1790 = (GfxViewParms *)__savegprlr_29(param_1);
+  if (local_1790[7].viewMatrix.m[0][1] == 0.0) {
+    pcVar1 = "Trans/DynLights";
   }
   else {
-    uVar1 = 0xffffffff821bdf14;
+    pcVar1 = "Trans";
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,uVar1);
-  R_InitCmdBufSourceState(auStack_1780,local_1790 + 0x330,1);
-  R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(local_1790 + 0x920));
-  R_SetViewportStruct(auStack_1780,local_1790 + 0x150);
-  local_178c = param_2;
-  R_DrawCall(0xffffffff82734690,&local_1790,auStack_1780,local_1790 + 0x180,local_1790,param_3);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar1);
+  R_InitCmdBufSourceState
+            (&GStack_1780,(GfxCmdBufInput *)(local_1790[2].viewProjectionMatrix.m + 1),1);
+  R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)local_1790[6].camera.tanHalfFovX);
+  R_SetViewportStruct(&GStack_1780,(GfxViewport *)(local_1790 + 1));
+  R_DrawCall(R_DrawLitTransCallback,&local_1790,&GStack_1780,
+             (GfxSceneDef *)(local_1790[1].viewMatrix.m + 3),local_1790,param_3);
   PIXEndNamedEvent();
   __restgprlr_29();
   return;
@@ -281,26 +325,33 @@ void R_DrawLitTrans(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 // 827347E8  R_DrawLitTransFxCallback  (gfx_d3d/r_draw_lit.cpp:408)
 
-void R_DrawLitTransFxCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawLitTransFxCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  int iStack00000018;
+  GfxViewInfo *pGVar1;
+  GfxDrawList *pGVar2;
+  GfxCmdBufSourceState *pGVar3;
+  undefined4 *puVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_28();
-  iVar1 = *piVar3;
-  iVar2 = piVar3[1];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  puVar4 = (undefined4 *)__savegprlr_28(param_1);
+  pGVar1 = (GfxViewInfo *)*puVar4;
+  pGVar2 = (GfxDrawList *)puVar4[1];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,pGVar1->renderTargetId);
+  pGVar3 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(undefined4 *)(iStack00000018 + 0x174c) = 0xf;
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  R_DrawSurfs_LitTransAndDynLights(iVar1,param_2,iVar2);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  pGVar3->drawListId = 0xf;
+  R_HW_EnableScissor(param_2,&pGVar1->scissorViewport);
+  R_DrawSurfs_LitTransAndDynLights(pGVar1,param_2,pGVar2);
+  R_HW_DisableScissor(pGStack0000001c);
   R_EndDrawList(param_2);
   __restgprlr_28();
   return;
@@ -309,22 +360,26 @@ void R_DrawLitTransFxCallback(undefined8 param_1,ulonglong param_2)
 
 // 82734888  R_DrawLitTransFx  (gfx_d3d/r_draw_lit.cpp:440)
 
-void R_DrawLitTransFx(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawLitTransFx(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
-  int iVar1;
-  int local_1790;
-  undefined4 local_178c;
-  undefined1 auStack_1780 [6016];
+  GfxViewParms *pGVar1;
+  GfxViewParms *local_1790;
+  GfxDrawList *local_178c;
+  GfxCmdBufSourceState GStack_1780;
   
-  iVar1 = __savegprlr_29();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bdf1c);
-  R_InitCmdBufSourceState(auStack_1780,iVar1 + 0x330,1);
-  R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(iVar1 + 0x920));
-  R_SetViewportStruct(auStack_1780,iVar1 + 0x150);
-  local_1790 = iVar1;
+  pGVar1 = (GfxViewParms *)__savegprlr_29(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"DynLights");
+  R_InitCmdBufSourceState(&GStack_1780,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1);
+  R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+  R_SetViewportStruct(&GStack_1780,(GfxViewport *)(pGVar1 + 1));
+  local_1790 = pGVar1;
   local_178c = param_2;
-  R_DrawCall(0xffffffff827347e8,&local_1790,auStack_1780,iVar1 + 0x180,iVar1,param_3);
+  R_DrawCall(R_DrawLitTransFxCallback,&local_1790,&GStack_1780,
+             (GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,param_3);
   PIXEndNamedEvent();
   __restgprlr_29();
   return;
@@ -333,83 +388,92 @@ void R_DrawLitTransFx(undefined8 param_1,undefined4 param_2,undefined8 param_3)
 
 // 82734910  R_DrawLitOpaqueCmd  (gfx_d3d/r_draw_lit.cpp:474)
 
-void R_DrawLitOpaqueCmd(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_DrawLitOpaqueCmd(void *param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
-  int *piVar5;
-  uint uVar6;
-  uint *puVar7;
-  DWORD DVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
+  GfxBackEndData *pGVar3;
+  GfxViewInfo *pGVar4;
+  GfxCmdRingBuf *pGVar5;
+  undefined4 *puVar6;
+  ulong uVar7;
+  int iVar8;
+  GfxDrawCallOutput *pGVar9;
+  GfxDrawList *pGVar10;
+  longlong lVar11;
+  uint *puVar12;
+  uint uVar13;
+  longlong lVar14;
   char in_RESERVE;
   byte in_cr0;
   
-  puVar7 = (uint *)__savegprlr_22();
+  puVar6 = (undefined4 *)__savegprlr_22(param_1);
   Profile2_UpdateEntry(3);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e04 = storeWordConditionalIndexed((ulonglong)DAT_84184e04 + 1,0,0xffffffff84184e04);
+      g_prof2_begin_count[3] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[3] + 1,0,0xffffffff84184e04);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (puVar7 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821be000,0x1e8,0,0xffffffff82000f98,0xffffffff8201f49c);
+  if (puVar6 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",0x1e8,
+                    0,"%s");
   }
-  uVar2 = puVar7[2];
-  uVar12 = (ulonglong)uVar2;
-  uVar3 = *puVar7;
-  uVar14 = (ulonglong)puVar7[1];
-  lVar13 = (uVar12 + 0x168 & 0xfffffff) * 0x10 + (ulonglong)uVar3;
-  lVar10 = lVar13 + 0xc;
+  uVar2 = puVar6[2];
+  pGVar3 = (GfxBackEndData *)*puVar6;
+  pGVar4 = (GfxViewInfo *)puVar6[1];
+  lVar14 = ((ulonglong)(uVar2 + 0x168) & 0xfffffff) * 0x10 + ZEXT48(pGVar3);
+  lVar11 = lVar14 + 0xc;
   do {
-    puVar7 = (uint *)lVar10;
-    uVar1 = *puVar7;
+    puVar12 = (uint *)lVar11;
+    uVar1 = *puVar12;
     if (uVar1 != 1) {
       if (in_RESERVE != '\0') {
-        uVar6 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar10);
-        *puVar7 = uVar6;
+        uVar13 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar11);
+        *puVar12 = uVar13;
         in_cr0 = 2;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      uVar6 = storeWordConditionalIndexed(0,0,lVar10);
-      *puVar7 = uVar6;
+      uVar13 = storeWordConditionalIndexed(0,0,lVar11);
+      *puVar12 = uVar13;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
+  pGVar9 = (GfxDrawCallOutput *)lVar14;
   if (uVar1 != 0) {
-    DVar8 = GetCurrentProcessorNumber();
-    piVar5 = *(int **)(&DAT_846177e4 + DVar8 * 4);
-    if (piVar5 == (int *)0x0) {
-      MyAssertHandler(0xffffffff821be000,0x1f5,0,0xffffffff82000f98,0xffffffff821bdff8);
+    uVar7 = GetCurrentProcessorNumber();
+    pGVar5 = dx.cmdBufForProcId[uVar7];
+    if (pGVar5 == (GfxCmdRingBuf *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",
+                      0x1f5,0,"%s");
     }
-    iVar4 = piVar5[1];
-    *piVar5 = 0;
-    piVar5[2] = iVar4 + 0x40000;
-    iVar9 = R_CmdBuf_Exceeded(piVar5);
-    if (iVar9 != 0) {
-      MyAssertHandler(0xffffffff821be000,0x1fb,0,0xffffffff82000f98,0xffffffff821bdfd8);
+    uVar1 = pGVar5->memoryPos;
+    pGVar5->drawListIter = (GfxDrawListIter *)0x0;
+    pGVar5->maxMemoryPos = uVar1 + 0x40000;
+    iVar8 = R_CmdBuf_Exceeded(pGVar5);
+    if (iVar8 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",
+                      0x1fb,0,"%s");
     }
-    R_InitCmdBuf((ulonglong)uVar3,lVar13);
-    uVar11 = uVar12;
-    if (0x17 < uVar12) {
-      uVar11 = uVar12 - 0x18;
+    R_InitCmdBuf(pGVar3,&pGVar9->cmdBuf);
+    uVar13 = uVar2;
+    if (0x17 < uVar2) {
+      uVar13 = uVar2 - 0x18;
     }
-    lVar10 = uVar11 * 0x1f8 + uVar14 + 0x958;
+    pGVar10 = pGVar4->drawList + uVar13;
     switch(uVar2) {
     case 0:
     case 0xd:
-      R_DrawLitOpaqueSegment(uVar14,lVar10,lVar13,uVar12);
+      R_DrawLitOpaqueSegment(pGVar4,pGVar10,pGVar9,uVar2);
       break;
     case 1:
     case 2:
@@ -423,33 +487,33 @@ void R_DrawLitOpaqueCmd(void)
     case 10:
     case 0xb:
     case 0xc:
-      R_DrawLightMapOpaqueSegment(uVar14,lVar10,lVar13,uVar12);
+      R_DrawLightMapOpaqueSegment(pGVar4,pGVar10,pGVar9,uVar2);
       break;
     case 0xe:
-      R_DrawLitTrans(uVar14,lVar10,lVar13);
+      R_DrawLitTrans(pGVar4,pGVar10,pGVar9);
       break;
     case 0xf:
-      R_DrawLitTransFx(uVar14,lVar10,lVar13);
+      R_DrawLitTransFx(pGVar4,pGVar10,pGVar9);
       break;
     case 0x10:
-      R_DrawDepthHack(uVar14,lVar10,lVar13);
+      R_DrawDepthHack(pGVar4,pGVar10,pGVar9);
       break;
     case 0x11:
     case 0x12:
-      R_DrawSunShadowMap(uVar14,lVar10,uVar12 - 0x11,lVar13);
+      R_DrawSunShadowMap(pGVar4,pGVar10,uVar2 - 0x11,pGVar9);
       break;
     case 0x13:
-      R_DrawEmissive(uVar14,lVar10,lVar13);
+      R_DrawEmissive(pGVar4,pGVar10,pGVar9);
       break;
     case 0x14:
     case 0x15:
     case 0x16:
     case 0x17:
-      R_DrawSpotShadowMap(uVar14,lVar10,uVar12 - 0x14,lVar13);
+      R_DrawSpotShadowMap(pGVar4,pGVar10,uVar2 - 0x14,pGVar9);
       break;
     case 0x18:
     case 0x25:
-      R_DepthPrepassLitOpaqueSegment(uVar14,lVar10,lVar13,uVar12 - 0x18);
+      R_DepthPrepassLitOpaqueSegment(pGVar4,pGVar10,pGVar9,uVar2 - 0x18);
       break;
     case 0x19:
     case 0x1a:
@@ -463,39 +527,42 @@ void R_DrawLitOpaqueCmd(void)
     case 0x22:
     case 0x23:
     case 0x24:
-      R_DepthPrepassLightmapOpaqueSegment(uVar14,lVar10,lVar13,uVar12 - 0x18);
+      R_DepthPrepassLightmapOpaqueSegment(pGVar4,pGVar10,pGVar9,uVar2 - 0x18);
       break;
     case 0x26:
-      R_DepthPrepassLitTrans(uVar14,lVar10,lVar13);
+      R_DepthPrepassLitTrans(pGVar4,pGVar10,pGVar9);
     }
-    R_ShutdownCmdBuf(lVar13);
-    if (*piVar5 == 0) {
-      MyAssertHandler(0xffffffff821be000,0x265,0,0xffffffff821bdfa8,0xffffffff821bdfc0,uVar12);
+    R_ShutdownCmdBuf(&pGVar9->cmdBuf);
+    if (pGVar5->drawListIter == (GfxDrawListIter *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",
+                      0x265,0,"%s\n\t(drawListType) = %i");
     }
-    if (*(int *)*piVar5 == 0) {
-      piVar5[1] = iVar4;
+    if (pGVar5->drawListIter->addedPrimitive == 0) {
+      pGVar5->memoryPos = uVar1;
     }
     else {
-      ((int *)*piVar5)[1] = (int)piVar5;
-      if (0x7f < (uint)(piVar5[4] - piVar5[6])) {
-        MyAssertHandler(0xffffffff821be000,0x270,0,0xffffffff82000f98,0xffffffff821bdf68);
+      pGVar5->drawListIter->cmdBuf = pGVar5;
+      if (0x7f < pGVar5->fencePosIndex - pGVar5->availIndex) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",
+                        0x270,0,"%s");
       }
-      piVar5[(piVar5[4] & 0x7fU) + 10] = piVar5[1];
-      piVar5[4] = piVar5[4] + 1;
+      pGVar5->fencePos[pGVar5->fencePosIndex & 0x7f] = pGVar5->memoryPos;
+      pGVar5->fencePosIndex = pGVar5->fencePosIndex + 1;
     }
   }
   R_ReleaseCmdRingBuf();
-  iVar4 = (int)lVar13;
-  if (*(int *)(iVar4 + 8) != 1) {
-    MyAssertHandler(0xffffffff821be000,0x278,0,0xffffffff821bdf28,0xffffffff821bdf48,
-                    *(undefined4 *)(iVar4 + 8));
+  if (pGVar9->cmdCount != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_lit.cpp",0x278,
+                    0,"%s\n\t(drawOutput->cmdCount) = %i");
   }
   sync(1);
-  *(undefined4 *)(iVar4 + 8) = 0;
+  pGVar9->cmdCount = 0;
   Profile2_UpdateEntry(3);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e04 = storeWordConditionalIndexed((ulonglong)DAT_84184e04 - 1,0,0xffffffff84184e04);
+      g_prof2_begin_count[3] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[3] - 1,0,0xffffffff84184e04);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -506,38 +573,46 @@ void R_DrawLitOpaqueCmd(void)
 
 // 82734100  R_DirtyCodeConstant  (gfx_d3d/r_state.h:591)
 
-void R_DirtyCodeConstant(int param_1,uint param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DirtyCodeConstant(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  int iVar1;
-  
   if (0x89 < param_2) {
-    MyAssertHandler(0xffffffff821bda94,0x250,0,0xffffffff821bde40,param_2,0x8a);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x250,0,
+                    "constant doesn\'t index ARRAY_COUNT( source->constVersions )\n\t%i not in [0, %i)"
+                   );
   }
-  iVar1 = (param_2 + 0xac8) * 2;
-  *(short *)(iVar1 + param_1) = *(short *)(iVar1 + param_1) + 1;
+  param_1->constVersions[param_2] = param_1->constVersions[param_2] + 1;
   return;
 }
 
 
 // 82734178  R_SetCodeConstantFromVec4  (gfx_d3d/r_state.h:685)
 
-void R_SetCodeConstantFromVec4(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetCodeConstantFromVec4(GfxCmdBufSourceState *param_1,uint param_2,float *param_3)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  GfxCmdBufSourceState *pGVar1;
+  ulonglong uVar2;
+  float (*pafVar3) [4];
   
-  iVar1 = __savegprlr_29();
-  if (0x51 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bda94,0x2ae,0,0xffffffff821bde90,param_2,0x52);
+  uVar2 = (ulonglong)(int)param_2;
+  pGVar1 = (GfxCmdBufSourceState *)__savegprlr_29(param_1);
+  if (0x51 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2ae,0,
+                    "constant doesn\'t index CONST_SRC_CODE_COUNT_FLOAT4\n\t%i not in [0, %i)");
   }
-  puVar2 = (undefined4 *)(((int)param_2 + 0xe0) * 0x10 + iVar1);
-  *puVar2 = *param_3;
-  puVar2[1] = param_3[1];
-  puVar2[2] = param_3[2];
-  puVar2[3] = param_3[3];
-  R_DirtyCodeConstant(iVar1,param_2);
+  pafVar3 = (pGVar1->input).consts + (uint)uVar2;
+  (*pafVar3)[0] = *param_3;
+  (*pafVar3)[1] = param_3[1];
+  (*pafVar3)[2] = param_3[2];
+  (*pafVar3)[3] = param_3[3];
+  R_DirtyCodeConstant(pGVar1,(uint)uVar2);
   __restgprlr_29();
   return;
 }

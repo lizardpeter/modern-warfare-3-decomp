@@ -2,218 +2,214 @@
 
 // 82735308  R_SetBasicLitTechsForSurfaceType  (gfx_d3d/r_draw_method.cpp:11)
 
-void R_SetBasicLitTechsForSurfaceType(int param_1)
+/* WARNING: Enum "surfaceType_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetBasicLitTechsForSurfaceType(surfaceType_t param_1)
 
 {
-  undefined1 uVar1;
-  undefined1 uVar2;
-  undefined1 uVar3;
+  uchar uVar1;
+  uchar uVar2;
+  uchar uVar3;
   
-  param_1 = param_1 * 8;
-  if (DAT_84618059 == '\0') {
-    (&DAT_845aa514)[param_1] = 9;
-    (&DAT_845aa516)[param_1] = 0xf;
-    (&DAT_845aa515)[param_1] = 0xb;
-    (&DAT_845aa517)[param_1] = 0x15;
-    uVar3 = 0x11;
-    (&DAT_845aa518)[param_1] = 0xd;
-    uVar2 = 0x17;
-    uVar1 = 0x13;
+  if (rg.useSunDirFog) {
+    gfxDrawMethod.litTechType[param_1][0] = '\n';
+    gfxDrawMethod.litTechType[param_1][2] = '\x10';
+    gfxDrawMethod.litTechType[param_1][1] = '\f';
+    gfxDrawMethod.litTechType[param_1][3] = '\x16';
+    uVar3 = '\x12';
+    gfxDrawMethod.litTechType[param_1][4] = '\x0e';
+    uVar2 = '\x18';
+    uVar1 = '\x14';
   }
   else {
-    (&DAT_845aa514)[param_1] = 10;
-    (&DAT_845aa516)[param_1] = 0x10;
-    (&DAT_845aa515)[param_1] = 0xc;
-    (&DAT_845aa517)[param_1] = 0x16;
-    uVar3 = 0x12;
-    (&DAT_845aa518)[param_1] = 0xe;
-    uVar2 = 0x18;
-    uVar1 = 0x14;
+    gfxDrawMethod.litTechType[param_1][0] = '\t';
+    gfxDrawMethod.litTechType[param_1][2] = '\x0f';
+    gfxDrawMethod.litTechType[param_1][1] = '\v';
+    gfxDrawMethod.litTechType[param_1][3] = '\x15';
+    uVar3 = '\x11';
+    gfxDrawMethod.litTechType[param_1][4] = '\r';
+    uVar2 = '\x17';
+    uVar1 = '\x13';
   }
-  (&DAT_845aa51b)[param_1] = uVar1;
-  (&DAT_845aa51a)[param_1] = uVar2;
-  (&DAT_845aa519)[param_1] = uVar3;
+  gfxDrawMethod.litTechType[param_1][7] = uVar1;
+  gfxDrawMethod.litTechType[param_1][6] = uVar2;
+  gfxDrawMethod.litTechType[param_1][5] = uVar3;
   return;
 }
 
 
 // 827353E0  R_SetNoSunShadowsLitTechsForSurfaceType  (gfx_d3d/r_draw_method.cpp:39)
 
-void R_SetNoSunShadowsLitTechsForSurfaceType(int param_1)
+/* WARNING: Enum "surfaceType_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetNoSunShadowsLitTechsForSurfaceType(surfaceType_t param_1)
 
 {
-  undefined1 uVar1;
-  undefined1 uVar2;
-  undefined1 uVar3;
-  undefined1 uVar4;
+  uchar uVar1;
+  uchar uVar2;
+  uchar uVar3;
+  uchar uVar4;
   
-  param_1 = param_1 * 8;
-  if (DAT_84618059 == '\0') {
-    (&DAT_845aa515)[param_1] = 0xb;
-    (&DAT_845aa518)[param_1] = 0xb;
-    (&DAT_845aa516)[param_1] = 0xf;
-    uVar1 = 0x15;
-    (&DAT_845aa514)[param_1] = 9;
-    uVar4 = 0x11;
-    uVar3 = 0x17;
-    uVar2 = 0x13;
+  if (rg.useSunDirFog) {
+    gfxDrawMethod.litTechType[param_1][1] = '\f';
+    gfxDrawMethod.litTechType[param_1][4] = '\f';
+    gfxDrawMethod.litTechType[param_1][2] = '\x10';
+    uVar1 = '\x16';
+    gfxDrawMethod.litTechType[param_1][0] = '\n';
+    uVar4 = '\x12';
+    uVar3 = '\x18';
+    uVar2 = '\x14';
   }
   else {
-    (&DAT_845aa515)[param_1] = 0xc;
-    (&DAT_845aa518)[param_1] = 0xc;
-    (&DAT_845aa516)[param_1] = 0x10;
-    uVar1 = 0x16;
-    (&DAT_845aa514)[param_1] = 10;
-    uVar4 = 0x12;
-    uVar3 = 0x18;
-    uVar2 = 0x14;
+    gfxDrawMethod.litTechType[param_1][1] = '\v';
+    gfxDrawMethod.litTechType[param_1][4] = '\v';
+    gfxDrawMethod.litTechType[param_1][2] = '\x0f';
+    uVar1 = '\x15';
+    gfxDrawMethod.litTechType[param_1][0] = '\t';
+    uVar4 = '\x11';
+    uVar3 = '\x17';
+    uVar2 = '\x13';
   }
-  (&DAT_845aa51b)[param_1] = uVar2;
-  (&DAT_845aa51a)[param_1] = uVar3;
-  (&DAT_845aa519)[param_1] = uVar4;
-  (&DAT_845aa517)[param_1] = uVar1;
+  gfxDrawMethod.litTechType[param_1][7] = uVar2;
+  gfxDrawMethod.litTechType[param_1][6] = uVar3;
+  gfxDrawMethod.litTechType[param_1][5] = uVar4;
+  gfxDrawMethod.litTechType[param_1][3] = uVar1;
   return;
 }
 
 
 // 82735498  R_SetNoneLitTechsForSurfaceType  (gfx_d3d/r_draw_method.cpp:120)
 
-void R_SetNoneLitTechsForSurfaceType(int param_1)
+/* WARNING: Enum "surfaceType_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetNoneLitTechsForSurfaceType(surfaceType_t param_1)
 
 {
-  param_1 = param_1 * 8;
-  (&DAT_845aa514)[param_1] = 0x27;
-  (&DAT_845aa515)[param_1] = 0x27;
-  (&DAT_845aa516)[param_1] = 0x27;
-  (&DAT_845aa517)[param_1] = 0x27;
-  (&DAT_845aa518)[param_1] = 0x27;
-  (&DAT_845aa519)[param_1] = 0x27;
-  (&DAT_845aa51a)[param_1] = 0x27;
-  (&DAT_845aa51b)[param_1] = 0x27;
+  gfxDrawMethod.litTechType[param_1][0] = '\'';
+  gfxDrawMethod.litTechType[param_1][1] = '\'';
+  gfxDrawMethod.litTechType[param_1][2] = '\'';
+  gfxDrawMethod.litTechType[param_1][3] = '\'';
+  gfxDrawMethod.litTechType[param_1][4] = '\'';
+  gfxDrawMethod.litTechType[param_1][5] = '\'';
+  gfxDrawMethod.litTechType[param_1][6] = '\'';
+  gfxDrawMethod.litTechType[param_1][7] = '\'';
   return;
 }
 
 
 // 827354F0  R_SetDefaultLitTechTypes  (gfx_d3d/r_draw_method.cpp:133)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "surfaceType_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_SetDefaultLitTechTypes(void)
 
 {
-  R_SetNoSunShadowsLitTechsForSurfaceType(1);
-  R_SetNoSunShadowsLitTechsForSurfaceType(3);
-  R_SetBasicLitTechsForSurfaceType(0);
-  R_SetBasicLitTechsForSurfaceType(2);
-  R_SetBasicLitTechsForSurfaceType(4);
-  R_SetBasicLitTechsForSurfaceType(5);
-  R_SetBasicLitTechsForSurfaceType(6);
-  R_SetBasicLitTechsForSurfaceType(8);
-  R_SetBasicLitTechsForSurfaceType(9);
-  R_SetBasicLitTechsForSurfaceType(7);
-  DAT_845aa564 = 0x27;
-  DAT_845aa565 = 0x27;
-  DAT_845aa566 = 0x27;
-  DAT_845aa567 = 0x27;
-  DAT_845aa568 = 0x27;
-  DAT_845aa569 = 0x27;
-  DAT_845aa56a = 0x27;
-  DAT_845aa56b = 0x27;
-  DAT_845aa56c = 0x27;
-  DAT_845aa56d = 0x27;
-  DAT_845aa56e = 0x27;
-  DAT_845aa56f = 0x27;
-  DAT_845aa570 = 0x27;
-  DAT_845aa571 = 0x27;
-  DAT_845aa572 = 0x27;
-  DAT_845aa573 = 0x27;
-  DAT_845aa574 = 0x27;
-  DAT_845aa575 = 0x27;
-  DAT_845aa576 = 0x27;
-  DAT_845aa577 = 0x27;
-  DAT_845aa578 = 0x27;
-  DAT_845aa579 = 0x27;
-  DAT_845aa57a = 0x27;
-  DAT_845aa57b = 0x27;
+  R_SetNoSunShadowsLitTechsForSurfaceType(SF_TRIANGLES_NO_SUN_SHADOW);
+  R_SetNoSunShadowsLitTechsForSurfaceType(SF_STATICMODEL_RIGID_NO_SUN_SHADOW);
+  R_SetBasicLitTechsForSurfaceType(SF_TRIANGLES);
+  R_SetBasicLitTechsForSurfaceType(SF_BEGIN_STATICMODEL);
+  R_SetBasicLitTechsForSurfaceType(SF_BMODEL);
+  R_SetBasicLitTechsForSurfaceType(SF_BEGIN_XMODEL);
+  R_SetBasicLitTechsForSurfaceType(SF_XMODEL_SKINNED);
+  R_SetBasicLitTechsForSurfaceType(SF_GLASS);
+  R_SetBasicLitTechsForSurfaceType(SF_MARK);
+  R_SetBasicLitTechsForSurfaceType(SF_BEGIN_FX);
+  builtin_memcpy(gfxDrawMethod.litTechType + 10,"\'\'\'\'\'\'\'\'",8);
+  builtin_memcpy(gfxDrawMethod.litTechType + 0xb,"\'\'\'\'\'\'\'\'",8);
+  builtin_memcpy(gfxDrawMethod.litTechType + 0xc,"\'\'\'\'\'\'\'\'",8);
   return;
 }
 
 
 // 827355E0  R_ForceLitTechType  (gfx_d3d/r_draw_method.cpp:174)
 
-void R_ForceLitTechType(undefined1 param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ForceLitTechType(MaterialTechniqueType param_1)
 
 {
-  undefined1 *puVar1;
-  longlong lVar2;
+  byte bVar1;
+  byte *pbVar2;
+  longlong lVar3;
   
-  puVar1 = (undefined1 *)((int)&DAT_845aa510 + 3);
-  lVar2 = 0xd;
+  bVar1 = (byte)param_1;
+  pbVar2 = (byte *)((int)&gfxDrawMethod.emissiveTechType + 3);
+  lVar3 = 0xd;
   do {
-    puVar1[1] = param_1;
-    puVar1[2] = param_1;
-    puVar1[3] = param_1;
-    puVar1[4] = param_1;
-    puVar1[5] = param_1;
-    puVar1[6] = param_1;
-    puVar1[7] = param_1;
-    puVar1 = puVar1 + 8;
-    *puVar1 = param_1;
-    lVar2 = lVar2 + -1;
-  } while (lVar2 != 0);
+    (*(uchar (*) [8])(pbVar2 + 1))[0] = bVar1;
+    pbVar2[2] = bVar1;
+    pbVar2[3] = bVar1;
+    pbVar2[4] = bVar1;
+    pbVar2[5] = bVar1;
+    pbVar2[6] = bVar1;
+    pbVar2[7] = bVar1;
+    pbVar2 = pbVar2 + 8;
+    *pbVar2 = bVar1;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 82735620  R_InitDrawMethod  (gfx_d3d/r_draw_method.cpp:187)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_InitDrawMethod(void)
 
 {
   longlong lVar1;
-  undefined1 *puVar2;
+  int iVar2;
   int iVar3;
   longlong lVar4;
   
-  if (*(char *)(DAT_845aa714 + 0xc) != '\0') {
-    DAT_845aa508 = 1;
-    puVar2 = &DAT_845aa514;
+  if ((r_fullbright->current).enabled != false) {
+    gfxDrawMethod.drawScene = GFX_DRAW_SCENE_FULLBRIGHT;
+    iVar2 = -0x7ba55aec;
     lVar1 = 0xd;
-    DAT_845aa50c = 4;
-    DAT_845aa510 = 4;
+    gfxDrawMethod.baseTechType = TECHNIQUE_UNLIT;
+    gfxDrawMethod.emissiveTechType = TECHNIQUE_UNLIT;
     do {
       iVar3 = 0;
       lVar4 = 8;
       do {
-        puVar2[iVar3] = 4;
+        *(undefined1 *)(iVar2 + iVar3) = 4;
         iVar3 = iVar3 + 1;
         lVar4 = lVar4 + -1;
       } while (lVar4 != 0);
       lVar1 = lVar1 + -1;
-      puVar2 = puVar2 + 8;
+      iVar2 = iVar2 + 8;
     } while (lVar1 != 0);
     return;
   }
-  if (*(int *)(DAT_845aa6dc + 0xc) != 0) {
-    DAT_845aa508 = 2;
-    puVar2 = &DAT_845aa514;
+  if ((r_debugShader->current).integer != 0) {
+    gfxDrawMethod.drawScene = GFX_DRAW_SCENE_DEBUGSHADER;
+    iVar2 = -0x7ba55aec;
     lVar1 = 0xd;
-    DAT_845aa50c = 0x24;
-    DAT_845aa510 = 0x24;
+    gfxDrawMethod.baseTechType = TECHNIQUE_DEBUG_BUMPMAP;
+    gfxDrawMethod.emissiveTechType = TECHNIQUE_DEBUG_BUMPMAP;
     do {
       iVar3 = 0;
       lVar4 = 8;
       do {
-        puVar2[iVar3] = 0x24;
+        *(undefined1 *)(iVar2 + iVar3) = 0x24;
         iVar3 = iVar3 + 1;
         lVar4 = lVar4 + -1;
       } while (lVar4 != 0);
       lVar1 = lVar1 + -1;
-      puVar2 = puVar2 + 8;
+      iVar2 = iVar2 + 8;
     } while (lVar1 != 0);
     return;
   }
-  DAT_845aa508 = 3;
-  DAT_845aa50c = 9;
-  DAT_845aa510 = 5;
+  gfxDrawMethod.drawScene = GFX_DRAW_SCENE_STANDARD;
+  gfxDrawMethod.baseTechType = TECHNIQUE_LIT;
+  gfxDrawMethod.emissiveTechType = TECHNIQUE_EMISSIVE;
   R_SetDefaultLitTechTypes();
   return;
 }
@@ -221,7 +217,10 @@ void R_InitDrawMethod(void)
 
 // 82735710  R_UpdateDrawMethod  (gfx_d3d/r_draw_method.cpp:215)
 
-void R_UpdateDrawMethod(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_UpdateDrawMethod(GfxBackEndData *param_1,GfxViewInfo *param_2)
 
 {
   int iVar1;
@@ -233,32 +232,35 @@ void R_UpdateDrawMethod(undefined8 param_1,int param_2)
   uint uVar7;
   longlong lVar8;
   
-  iVar1 = __savegprlr_22();
-  if (0xfd < *(uint *)(param_2 + 0x1b0)) {
-    MyAssertHandler(0xffffffff821be428,0xe0,0,0xffffffff821be3d0,0xffffffff821be3f8);
+  iVar1 = __savegprlr_22(param_1);
+  if (0xfd < param_2->sceneLightCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp",
+                    0xe0,0,"%s\n\t(viewInfo->sceneLightCount) = %i");
   }
   uVar6 = 0;
-  if (*(int *)(param_2 + 0x1b0) != 0) {
+  if (param_2->sceneLightCount != 0) {
     piVar5 = (int *)(iVar1 + 0x89c48);
     do {
       uVar7 = (uint)*(byte *)(piVar5 + -0x12);
-      if ((*(char *)(param_2 + 0x924) != '\0') &&
-         (iVar2 = Com_BitCheckAssert(iVar1 + 0x1524,uVar6,0x20), iVar2 != 0)) {
+      if ((param_2->useShadows != false) &&
+         (iVar2 = Com_BitCheckAssert((uint *)(iVar1 + 0x1524),uVar6,0x20), iVar2 != 0)) {
         if (uVar7 == 0) {
-          MyAssertHandler(0xffffffff821be428,0xe7,0,0xffffffff82000f98,0xffffffff821be384);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp"
+                          ,0xe7,0,"%s");
         }
         uVar7 = uVar7 + 3;
       }
       if (uVar7 == 5) {
         if (*piVar5 == 0) {
-          MyAssertHandler(0xffffffff821be428,0xed,0,0xffffffff82000f98,0xffffffff821be3a8);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp"
+                          ,0xed,0,"%s");
         }
         if (*(int *)(*piVar5 + 0xc) != 0) {
           uVar7 = 7;
         }
       }
       puVar3 = (undefined1 *)(uVar6 + iVar1 + -0x100);
-      puVar4 = (undefined1 *)((int)&DAT_845aa50c + uVar7);
+      puVar4 = (undefined1 *)((int)(gfxDrawMethod.litTechType + -1) + uVar7);
       lVar8 = 0xd;
       do {
         puVar4 = puVar4 + 8;
@@ -268,7 +270,7 @@ void R_UpdateDrawMethod(undefined8 param_1,int param_2)
       } while (lVar8 != 0);
       uVar6 = uVar6 + 1;
       piVar5 = piVar5 + 0x13;
-    } while (uVar6 < *(uint *)(param_2 + 0x1b0));
+    } while (uVar6 < param_2->sceneLightCount);
   }
   __restgprlr_22();
   return;

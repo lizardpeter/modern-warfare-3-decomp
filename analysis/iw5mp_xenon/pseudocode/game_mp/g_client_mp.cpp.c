@@ -2,11 +2,14 @@
 
 // 8245A728  SetClientViewAngle  (game_mp/g_client_mp.cpp:26)
 
-void SetClientViewAngle(undefined8 param_1,float *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SetClientViewAngle(gentity_s *param_1,float *param_2)
 
 {
   float fVar1;
-  float fVar2;
+  dvar_t *pdVar2;
   int iVar3;
   int iVar4;
   int iVar5;
@@ -20,73 +23,74 @@ void SetClientViewAngle(undefined8 param_1,float *param_2)
   double dVar13;
   double dVar14;
   double dVar15;
+  float fVar16;
   float afStack_33b0 [3256];
   undefined1 *local_d0;
   longlong local_80;
   float local_78 [30];
   
-  __savegprlr_29();
+  __savegprlr_29(param_1);
   iVar3 = __savefpr_24();
   iVar5 = *(int *)(iVar3 + 0x158);
   dVar11 = (double)*param_2;
-  dVar10 = (double)param_2[1];
+  local_78[1] = param_2[1];
+  dVar10 = (double)local_78[1];
   dVar9 = (double)param_2[2];
   local_78[0] = *param_2;
   dVar13 = 360.0;
   dVar14 = 0.5;
   dVar15 = 0.0027777778450399637;
-  local_78[1] = param_2[1];
   local_78[2] = param_2[2];
   local_d0 = (undefined1 *)register0x0000000c;
-  if ((*(uint *)(iVar5 + 0xc) & 1) == 0) goto LAB_8245a8cc;
-  if ((*(uint *)(iVar5 + 0xf8) & 0x3800) != 0) goto LAB_8245a8cc;
-  dVar7 = (double)AngleDelta((double)*(float *)(iVar5 + 0x1ac),dVar10);
-  dVar8 = (double)(float)(dVar7 * dVar15);
+  if (((*(uint *)(iVar5 + 0xc) & 1) == 0) || ((*(uint *)(iVar5 + 0xf8) & 0x3800) != 0))
+  goto LAB_8245a8cc;
+  fVar16 = AngleDelta(*(float *)(iVar5 + 0x1ac),local_78[1]);
+  dVar8 = (double)(float)((double)fVar16 * dVar15);
   dVar7 = floor((double)(float)(dVar8 + dVar14));
-  iVar5 = DAT_829c7d44;
+  pdVar2 = bg_prone_yawcap;
   dVar12 = 0.0;
-  fVar2 = *(float *)(DAT_829c7d44 + 0xc);
-  fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
-  if ((fVar2 < fVar1) || (fVar1 < -fVar2)) {
-    if (fVar1 <= fVar2) {
-      fVar2 = fVar2 + fVar1;
+  fVar1 = (bg_prone_yawcap->current).value;
+  fVar16 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
+  if ((fVar1 < fVar16) || (fVar16 < -fVar1)) {
+    if (fVar16 <= fVar1) {
+      fVar1 = fVar1 + fVar16;
     }
     else {
-      fVar2 = fVar1 - fVar2;
+      fVar1 = fVar16 - fVar1;
     }
-    iVar6 = *(int *)(iVar3 + 0x158);
-    *(float *)(iVar6 + 100) = *(float *)(iVar6 + 100) + fVar2;
-    if (fVar2 <= 0.0) {
-      fVar1 = *(float *)(iVar6 + 0x1ac) + *(float *)(iVar5 + 0xc);
+    iVar5 = *(int *)(iVar3 + 0x158);
+    *(float *)(iVar5 + 100) = *(float *)(iVar5 + 100) + fVar1;
+    if (fVar1 <= 0.0) {
+      fVar16 = *(float *)(iVar5 + 0x1ac) + (pdVar2->current).value;
     }
     else {
-      fVar1 = *(float *)(iVar6 + 0x1ac) - *(float *)(iVar5 + 0xc);
+      fVar16 = *(float *)(iVar5 + 0x1ac) - (pdVar2->current).value;
     }
-    dVar10 = (double)AngleNormalize360((double)fVar1);
-    local_78[1] = (float)dVar10;
+    local_78[1] = AngleNormalize360(fVar16);
+    dVar10 = (double)local_78[1];
   }
-  dVar7 = (double)AngleDelta((double)*(float *)(*(int *)(iVar3 + 0x158) + 0x1b4),dVar11);
-  dVar8 = (double)(float)(dVar7 * dVar15);
+  fVar16 = AngleDelta(*(float *)(*(int *)(iVar3 + 0x158) + 0x1b4),(float)dVar11);
+  dVar8 = (double)(float)((double)fVar16 * dVar15);
   dVar7 = floor((double)(float)(dVar8 + dVar14));
-  fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
-  if (45.0 < fVar1) {
+  fVar16 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar13);
+  if (45.0 < fVar16) {
 LAB_8245a87c:
-    fVar1 = fVar1 - 45.0;
+    fVar16 = fVar16 - 45.0;
   }
   else {
-    if (-45.0 <= fVar1) goto LAB_8245a8cc;
-    if (45.0 < fVar1) goto LAB_8245a87c;
-    fVar1 = fVar1 + 45.0;
+    if (-45.0 <= fVar16) goto LAB_8245a8cc;
+    if (45.0 < fVar16) goto LAB_8245a87c;
+    fVar16 = fVar16 + 45.0;
   }
   iVar5 = *(int *)(iVar3 + 0x158);
-  *(float *)(iVar5 + 0x60) = (float)((double)*(float *)(iVar5 + 0x60) + (double)fVar1);
-  if ((double)fVar1 <= dVar12) {
-    fVar1 = *(float *)(iVar5 + 0x1b4) + 45.0;
+  *(float *)(iVar5 + 0x60) = (float)((double)*(float *)(iVar5 + 0x60) + (double)fVar16);
+  if ((double)fVar16 <= dVar12) {
+    fVar16 = *(float *)(iVar5 + 0x1b4) + 45.0;
   }
   else {
-    fVar1 = *(float *)(iVar5 + 0x1b4) - 45.0;
+    fVar16 = *(float *)(iVar5 + 0x1b4) - 45.0;
   }
-  dVar7 = (double)(float)((double)fVar1 * dVar15);
+  dVar7 = (double)(float)((double)fVar16 * dVar15);
   dVar11 = floor((double)(float)(dVar7 + dVar14));
   local_78[0] = (float)((double)(float)(dVar7 - (double)(float)dVar11) * dVar13);
   dVar11 = (double)local_78[0];
@@ -119,53 +123,61 @@ LAB_8245a8cc:
 
 // 8245A970  SetClientOrigin  (game_mp/g_client_mp.cpp:93)
 
-void SetClientOrigin(int param_1,undefined4 *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SetClientOrigin(gentity_s *param_1,float *param_2)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   
-  if (*(int *)(param_1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x5e,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (param_1->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x5e,
+                    0,"%s");
   }
-  iVar1 = *(int *)(param_1 + 0x158);
-  *(undefined4 *)(iVar1 + 0x1c) = *param_2;
-  *(undefined4 *)(iVar1 + 0x20) = param_2[1];
-  *(undefined4 *)(iVar1 + 0x24) = param_2[2];
-  *(float *)(*(int *)(param_1 + 0x158) + 0x24) = *(float *)(*(int *)(param_1 + 0x158) + 0x24) + 1.0;
-  *(uint *)(*(int *)(param_1 + 0x158) + 0xf8) = *(uint *)(*(int *)(param_1 + 0x158) + 0xf8) ^ 2;
-  BG_PlayerStateToEntityState(*(undefined4 *)(param_1 + 0x158),param_1,1);
-  iVar1 = *(int *)(param_1 + 0x158);
-  *(undefined4 *)(param_1 + 0x138) = *(undefined4 *)(iVar1 + 0x1c);
-  *(undefined4 *)(param_1 + 0x13c) = *(undefined4 *)(iVar1 + 0x20);
-  *(undefined4 *)(param_1 + 0x140) = *(undefined4 *)(iVar1 + 0x24);
+  pgVar1 = param_1->client;
+  (pgVar1->ps).origin[0] = *param_2;
+  (pgVar1->ps).origin[1] = param_2[1];
+  (pgVar1->ps).origin[2] = param_2[2];
+  (param_1->client->ps).origin[2] = (param_1->client->ps).origin[2] + 1.0;
+  (param_1->client->ps).eFlags = (param_1->client->ps).eFlags ^ 2;
+  BG_PlayerStateToEntityState(&param_1->client->ps,&param_1->s,1);
+  pgVar1 = param_1->client;
+  (param_1->r).currentOrigin[0] = (pgVar1->ps).origin[0];
+  (param_1->r).currentOrigin[1] = (pgVar1->ps).origin[1];
+  (param_1->r).currentOrigin[2] = (pgVar1->ps).origin[2];
   return;
 }
 
 
 // 8245AA48  G_GetPlayerEyePosition  (game_mp/g_client_mp.cpp:111)
 
-void G_GetPlayerEyePosition(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void G_GetPlayerEyePosition(playerState_s *param_1,float *param_2)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28();
-  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
-    BG_GetPlayerEyePosition(iVar1,param_2,DAT_83580fac);
+  ppVar1 = (playerState_s *)__savegprlr_28(param_1);
+  if ((ppVar1->eFlags & 0x3800U) == 0) {
+    BG_GetPlayerEyePosition(ppVar1,param_2,level.time);
   }
   else {
-    if (*(int *)(iVar1 + 0x1b8) == 0) {
-      MyAssertHandler(0xffffffff8206c6c8,0x74,0,0xffffffff82000f98,0xffffffff820272c4);
+    if (ppVar1->viewlocked == PLAYERVIEWLOCK_NONE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x74,0,"%s");
     }
-    if (*(int *)(iVar1 + 0x1bc) == 0x7ff) {
-      MyAssertHandler(0xffffffff8206c6c8,0x75,0,0xffffffff82000f98,0xffffffff82001fb4);
+    if (ppVar1->viewlocked_entNum == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x75,0,"%s");
     }
-    iVar1 = G_DObjGetWorldTagPos
-                      (((ulonglong)*(uint *)(iVar1 + 0x1bc) +
-                        ((ulonglong)*(uint *)(iVar1 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-                       -0x7cc8c980,DAT_835a0c60,param_2);
-    if (iVar1 == 0) {
-      Com_Error(1,0xffffffff8206c710);
+    iVar2 = G_DObjGetWorldTagPos
+                      (g_entities + ppVar1->viewlocked_entNum,(uint)scr_const.tag_player,param_2);
+    if (iVar2 == 0) {
+      Com_Error(ERR_DROP,"\x15G_GetPlayerEyePosition(): Couldn\'t find [tag_player] on turret\n");
       __restgprlr_28();
       return;
     }
@@ -177,24 +189,28 @@ void G_GetPlayerEyePosition(undefined8 param_1,undefined8 param_2)
 
 // 8245AB40  G_GetPlayerViewOrigin  (game_mp/g_client_mp.cpp:131)
 
-void G_GetPlayerViewOrigin(int param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void G_GetPlayerViewOrigin(playerState_s *param_1,float *param_2)
 
 {
   int iVar1;
   
-  if ((*(uint *)(param_1 + 0x14) & 4) == 0) {
+  if ((param_1->linkFlags & 4U) == 0) {
     G_GetPlayerEyePosition(param_1,param_2);
   }
   else {
-    if (*(int *)(param_1 + 0x1d8) == 0x7ff) {
-      MyAssertHandler(0xffffffff8206c6c8,0x89,0,0xffffffff82000f98,0xffffffff82028920);
+    if (param_1->linkWeaponEnt == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x89,0,"%s");
     }
     iVar1 = G_DObjGetWorldTagPos
-                      (((ulonglong)*(uint *)(param_1 + 0x1d8) +
-                        ((ulonglong)*(uint *)(param_1 + 0x1d8) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80
-                       + -0x7cc8c980,DAT_835a0c60,param_2);
+                      (g_entities + param_1->linkWeaponEnt,(uint)scr_const.tag_player,param_2);
     if (iVar1 == 0) {
-      Com_Error(1,0xffffffff8206c758);
+      Com_Error(ERR_DROP,
+                "\x15G_GetPlayerViewOrigin(): Couldn\'t find \"tag_player\" on player\'s view-link parent.\n"
+               );
     }
   }
   return;
@@ -203,20 +219,24 @@ void G_GetPlayerViewOrigin(int param_1,undefined8 param_2)
 
 // 8245AC10  G_GetPlayerViewDirection  (game_mp/g_client_mp.cpp:152)
 
-void G_GetPlayerViewDirection
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_GetPlayerViewDirection(gentity_s *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x99,0,0xffffffff82000f98,0xffffffff82002614);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x99,
+                    0,"%s");
   }
   if (*(int *)(iVar1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x9a,0,0xffffffff82000f98,0xffffffff8206b9fc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x9a,
+                    0,"%s");
   }
-  BG_GetPlayerViewDirection(*(undefined4 *)(iVar1 + 0x158),param_2,param_3,param_4);
+  BG_GetPlayerViewDirection(*(playerState_s **)(iVar1 + 0x158),param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
@@ -224,165 +244,184 @@ void G_GetPlayerViewDirection
 
 // 8245ACA8  G_GetNextClient  (game_mp/g_client_mp.cpp:164)
 
-void G_GetNextClient(undefined8 param_1,int param_2,int param_3,uint param_4,int param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+gclient_s *
+G_GetNextClient(gclient_s *param_1,clientConnected_t param_2,sessionState_t param_3,int param_4,
+               int param_5)
 
 {
-  uint uVar1;
-  int *piVar2;
+  gclient_s *pgVar1;
+  int iVar2;
   int iVar3;
-  int *piVar4;
+  clientSession_t *pcVar4;
   
-  uVar1 = __savegprlr_23();
-  if (0xf < (int)param_4) {
-    MyAssertHandler(0xffffffff8206c6c8,0xa9,0,0xffffffff82000f98,0xffffffff8206c85c);
+  pgVar1 = (gclient_s *)__savegprlr_23(param_1);
+  if (0xf < param_4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0xa9,
+                    0,"%s");
   }
   if (param_5 < -1) {
-    MyAssertHandler(0xffffffff8206c6c8,0xaa,0,0xffffffff82000f98,0xffffffff8206c838);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0xaa,
+                    0,"%s");
   }
-  if (uVar1 == 0) {
+  if (pgVar1 == (gclient_s *)0x0) {
     iVar3 = 0;
   }
   else {
-    if (uVar1 < DAT_83580b00) {
-      MyAssertHandler(0xffffffff8206c6c8,0xae,0,0xffffffff82000f98,0xffffffff8206c81c);
+    if (pgVar1 < level.clients) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0xae,0,"%s");
     }
-    if (DAT_83580fa4 * 0x3980 + DAT_83580b00 <= uVar1) {
-      MyAssertHandler(0xffffffff8206c6c8,0xaf,0,0xffffffff82000f98,0xffffffff8206c7ec);
+    if (level.clients + level.maxclients <= pgVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0xaf,0,"%s");
     }
-    if (uVar1 != ((int)(uVar1 - DAT_83580b00) / 0x3980) * 0x3980 + DAT_83580b00) {
-      MyAssertHandler(0xffffffff8206c6c8,0xb0,0,0xffffffff82000f98,0xffffffff8206c7ac);
+    if (pgVar1 != level.clients + ((int)pgVar1 - (int)level.clients) / 0x3980) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0xb0,0,"%s");
     }
-    iVar3 = (int)(uVar1 - DAT_83580b00) / 0x3980 + 1;
+    iVar3 = ((int)pgVar1 - (int)level.clients) / 0x3980 + 1;
   }
-  if (iVar3 < DAT_83580fa4) {
-    piVar4 = (int *)(iVar3 * 0x3980 + DAT_83580b00 + 0x3300);
+  if (iVar3 < level.maxclients) {
+    pcVar4 = &level.clients[iVar3].sess;
     do {
-      if ((((iVar3 != param_5) && (piVar2 = piVar4 + -0xcc0, piVar4[0xb] == param_2)) &&
-          (*piVar4 == param_3)) && ((1 << (piVar4[0x35] & 0x3fU) & param_4) != 0))
+      if ((((iVar3 != param_5) &&
+           (iVar2 = (int)(pcVar4 + -0x12) + 0x270, pcVar4->connected == param_2)) &&
+          (pcVar4->sessionState == param_3)) && ((1 << ((pcVar4->cs).team & 0x3f) & param_4) != 0))
       goto LAB_8245ae4c;
       iVar3 = iVar3 + 1;
-      piVar4 = piVar4 + 0xe60;
-    } while (iVar3 < DAT_83580fa4);
+      pcVar4 = (clientSession_t *)((int)(pcVar4 + 0x13) + 0x118);
+    } while (iVar3 < level.maxclients);
   }
-  piVar2 = (int *)0x0;
+  iVar2 = 0;
 LAB_8245ae4c:
-  __restgprlr_23(piVar2);
-  return;
+  pgVar1 = (gclient_s *)__restgprlr_23(iVar2);
+  return pgVar1;
 }
 
 
 // 8245AE58  ClientUserinfoChanged  (game_mp/g_client_mp.cpp:218)
 
-void ClientUserinfoChanged(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ClientUserinfoChanged(int param_1)
 
 {
-  int iVar1;
-  uint uVar3;
-  int iVar4;
-  undefined4 uVar5;
-  undefined8 uVar2;
-  char *pcVar6;
-  undefined1 auStack_840 [1024];
-  undefined1 auStack_440 [1088];
+  gclient_s *pgVar1;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  char acStack_840 [1024];
+  char acStack_440 [1088];
   
-  uVar3 = __savegprlr_25();
-  iVar1 = (&DAT_833737d8)[uVar3 * 0xa0];
-  if (0x11 < uVar3) {
-    MyAssertHandler(0xffffffff8206c6c8,0xe5,0,0xffffffff82014c1c,uVar3,0x12);
+  uVar2 = __savegprlr_25(param_1);
+  pgVar1 = g_entities[uVar2].client;
+  if (0x11 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0xe5,
+                    0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  SV_GetUserinfo(uVar3,auStack_840,0x400);
-  iVar4 = Info_Validate(auStack_840);
-  if (iVar4 == 0) {
-    memcpy(auStack_840,"\\name\\badinfo",0xe);
+  SV_GetUserinfo(uVar2,acStack_840,0x400);
+  iVar3 = Info_Validate(acStack_840);
+  if (iVar3 == 0) {
+    memcpy();
   }
-  uVar5 = SV_IsLocalClient(uVar3);
-  *(undefined4 *)(iVar1 + 0x3388) = uVar5;
-  if ((*(int *)(iVar1 + 0x332c) == 2) && (DAT_83580fe8 != 0)) {
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff82021a74);
-    Com_CleanName(uVar2,iVar1 + 0x338c,0x20);
+  iVar3 = SV_IsLocalClient(uVar2);
+  (pgVar1->sess).localClient = iVar3;
+  if (((pgVar1->sess).connected == CON_CONNECTED) && (level.manualNameChange != 0)) {
+    pcVar4 = Info_ValueForKey(acStack_840,"name");
+    Com_CleanName(pcVar4,(pgVar1->sess).newnetname,0x20);
   }
   else {
-    iVar4 = iVar1 + 0x3414;
-    I_strncpyz(auStack_440,iVar4,0x400);
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff82021a74);
-    Com_CleanName(uVar2,iVar4,0x20);
-    I_strncpyz(iVar1 + 0x338c,iVar4,0x20);
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c9b8);
-    if (*pcVar6 == '\0') {
-      *(undefined1 *)(iVar1 + 0x3450) = 0;
+    pcVar5 = (pgVar1->sess).cs.name;
+    I_strncpyz(acStack_440,pcVar5,0x400);
+    pcVar4 = Info_ValueForKey(acStack_840,"name");
+    Com_CleanName(pcVar4,pcVar5,0x20);
+    I_strncpyz((pgVar1->sess).newnetname,pcVar5,0x20);
+    pcVar4 = Info_ValueForKey(acStack_840,"clanAbbrev");
+    if (*pcVar4 == '\0') {
+      (pgVar1->sess).cs.clanAbbrev[0] = '\0';
     }
     else {
-      I_strncpyz(iVar1 + 0x3450,pcVar6,8);
+      I_strncpyz((pgVar1->sess).cs.clanAbbrev,pcVar4,8);
     }
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff8206c9ac);
-    I_strncpyz(iVar1 + 0x3488,uVar2,8);
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff8206c99c);
-    I_strncpyz(iVar1 + 0x346c,uVar2,0x18);
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff8206c990);
-    iVar4 = I_stricmp(uVar2,0xffffffff82032490);
-    if (iVar4 == 0) {
-      *(undefined4 *)(iVar1 + 0x3464) = 1;
-    }
-    else {
-      *(undefined4 *)(iVar1 + 0x3464) = 0;
-    }
-    uVar2 = Info_ValueForKey(auStack_840,0xffffffff8206c980);
-    iVar4 = I_stricmp(uVar2,0xffffffff82032490);
-    if (iVar4 == 0) {
-      *(undefined4 *)(iVar1 + 0x3468) = 1;
+    pcVar4 = Info_ValueForKey(acStack_840,"ec_TagText");
+    I_strncpyz((pgVar1->sess).cs.elite_clan_tag_text,pcVar4,8);
+    pcVar4 = Info_ValueForKey(acStack_840,"ec_TitleText");
+    I_strncpyz((pgVar1->sess).cs.elite_clan_title_text,pcVar4,0x18);
+    pcVar4 = Info_ValueForKey(acStack_840,"ec_usingTag");
+    iVar3 = I_stricmp(pcVar4,"1");
+    if (iVar3 == 0) {
+      (pgVar1->sess).cs.use_elite_clan_tag = 1;
     }
     else {
-      *(undefined4 *)(iVar1 + 0x3468) = 0;
+      (pgVar1->sess).cs.use_elite_clan_tag = 0;
     }
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c974);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x3484) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c95c);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x3490) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c948);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x3494) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c934);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x3498) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c924);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x349c) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c908);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x34a0) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c8f0);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x34a4) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c8e0);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x34a8) = iVar4;
-    pcVar6 = (char *)Info_ValueForKey(auStack_840,0xffffffff8206c8d4);
-    iVar4 = atoi(pcVar6);
-    *(int *)(iVar1 + 0x34ac) = iVar4;
+    pcVar4 = Info_ValueForKey(acStack_840,"ec_usingTitle");
+    iVar3 = I_stricmp(pcVar4,"1");
+    if (iVar3 == 0) {
+      (pgVar1->sess).cs.use_elite_clan_title = 1;
+    }
+    else {
+      (pgVar1->sess).cs.use_elite_clan_title = 0;
+    }
+    pcVar4 = Info_ValueForKey(acStack_840,"ec_TitleBg");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.elite_clan_title_bg = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_prestige_black_ops");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.prestige_black_ops = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_rank_black_ops");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.rank_black_ops = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_prestige_mw2");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.prestige_mw2 = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_rank_mw2");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.rank_mw2 = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_prestige_world_at_war");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.prestige_world_at_war = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_rank_world_at_war");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.rank_world_at_war = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_prestige_mw");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.prestige_mw = iVar3;
+    pcVar4 = Info_ValueForKey(acStack_840,"ptd_rank_mw");
+    iVar3 = atoi(pcVar4);
+    (pgVar1->sess).cs.rank_mw = iVar3;
   }
-  if (0x11 < uVar3) {
-    MyAssertHandler(0xffffffff8206c6c8,0x124,0,0xffffffff82014c1c,uVar3,0x12);
+  if (0x11 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x124
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar4 = uVar3 * 0x590;
-  if ((&DAT_83539a90)[uVar3 * 0x164] == 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x126,0,0xffffffff82000f98,0xffffffff8202b76c);
+  if (level_bgs.clientinfo[uVar2].infoValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x126
+                    ,0,"%s");
   }
-  if (*(uint *)(&DAT_83539a98 + iVar4) != uVar3) {
-    MyAssertHandler(0xffffffff8206c6c8,0x128,0,0xffffffff82000f98,0xffffffff8206c8b8);
+  if (level_bgs.clientinfo[uVar2].clientNum != uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x128
+                    ,0,"%s");
   }
-  if (*(char *)(iVar1 + 0x3414) == '\0') {
-    MyAssertHandler(0xffffffff8206c6c8,0x129,0,0xffffffff82000f98,0xffffffff8206c898);
+  if ((pgVar1->sess).cs.name[0] == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x129
+                    ,0,"%s");
   }
-  I_strncpyz(&DAT_83539a9c + iVar4,iVar1 + 0x3414,0x20);
-  if ((&DAT_83539a9c)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff8206c6c8,299,0,0xffffffff82000f98,0xffffffff8206c884);
-    *(undefined4 *)(&DAT_83539abc + iVar4) = *(undefined4 *)(iVar1 + 0x33d4);
+  I_strncpyz(level_bgs.clientinfo[uVar2].name,(pgVar1->sess).cs.name,0x20);
+  if (level_bgs.clientinfo[uVar2].name[0] == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",299,0
+                    ,"%s");
+    level_bgs.clientinfo[uVar2].team = (pgVar1->sess).cs.team;
     __restgprlr_25();
     return;
   }
-  *(undefined4 *)(&DAT_83539abc + iVar4) = *(undefined4 *)(iVar1 + 0x33d4);
+  level_bgs.clientinfo[uVar2].team = (pgVar1->sess).cs.team;
   __restgprlr_25();
   return;
 }
@@ -390,257 +429,284 @@ void ClientUserinfoChanged(void)
 
 // 8245B248  ClientConnect  (game_mp/g_client_mp.cpp:321)
 
-void ClientConnect(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * ClientConnect(int param_1,ushort param_2)
 
 {
   char cVar1;
   char cVar2;
-  uint uVar3;
-  void *_Dst;
-  undefined4 uVar4;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
-  undefined4 *puVar8;
-  undefined1 auStack_450 [1104];
+  XAnimTree *pXVar3;
+  gclient_s *pgVar4;
+  uint uVar5;
+  gentity_s *pgVar6;
+  int iVar7;
+  char *pcVar8;
+  int iVar9;
+  ulonglong uVar10;
+  char *pcVar11;
+  char acStack_450 [1104];
   
-  uVar3 = __savegprlr_23();
-  if ((param_2 & 0xffff) == 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x149,0,0xffffffff82000f98,0xffffffff8206ca10);
+  uVar10 = (ulonglong)(short)param_2;
+  uVar5 = __savegprlr_23(param_1);
+  if ((uVar10 & 0xffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x149
+                    ,0,"%s");
   }
-  _Dst = (void *)(uVar3 * 0x3980 + DAT_83580b00);
-  iVar6 = uVar3 * 0x280;
-  puVar8 = &DAT_83373680 + uVar3 * 0xa0;
-  memset(_Dst,0,0x3980);
-  if (0x11 < uVar3) {
-    MyAssertHandler(0xffffffff8206c6c8,0x152,0,0xffffffff82014c1c,uVar3,0x12);
+  pgVar4 = level.clients + uVar5;
+  pgVar6 = g_entities + uVar5;
+  memset();
+  if (0x11 < uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x152
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar4 = (&DAT_83539fa8)[uVar3 * 0x164];
-  memset(&DAT_83539a90 + uVar3 * 0x164,0,0x590);
-  (&DAT_83539fa8)[uVar3 * 0x164] = uVar4;
-  *(uint *)(&DAT_83539a98 + uVar3 * 0x590) = uVar3;
-  (&DAT_83539a90)[uVar3 * 0x164] = 1;
-  *(undefined4 *)(&DAT_83539a94 + uVar3 * 0x590) = 1;
-  *(undefined4 *)((int)_Dst + 0x332c) = 1;
-  *(short *)((int)_Dst + 0x3328) = (short)param_2;
-  *(undefined4 *)((int)_Dst + 0x33d4) = 3;
-  *(undefined4 *)((int)_Dst + 0x3300) = 2;
-  *(undefined4 *)((int)_Dst + 0x35fc) = 0xffffffff;
-  *(undefined4 *)((int)_Dst + 0x3304) = 0xffffffff;
-  *(undefined4 *)((int)_Dst + 0x3308) = 0xffffffff;
-  *(uint *)((int)_Dst + 0x330c) = uVar3;
-  G_InitGentity(puVar8);
-  (&DAT_833737d8)[uVar3 * 0xa0] = _Dst;
-  *(uint *)(&DAT_83373710 + iVar6) = uVar3;
-  (&DAT_833737ed)[iVar6] = 0;
-  *(uint *)((int)_Dst + 0x33d0) = uVar3;
-  *(uint *)((int)_Dst + 0x150) = uVar3;
-  *(undefined4 *)((int)_Dst + 0x33c0) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0xa8) = 0xffffffff;
-  *(undefined4 *)((int)_Dst + 0x228) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0xac) = 0x7ff;
-  uVar4 = SV_GetVoiceConnectivityBits(uVar3);
-  *(undefined4 *)((int)_Dst + 0x344c) = uVar4;
-  if (*(int *)((int)_Dst + 0xf8) != 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x17c,0,0xffffffff82000f98,0xffffffff8206c9fc);
+  pXVar3 = level_bgs.clientinfo[uVar5].pXAnimTree;
+  memset();
+  level_bgs.clientinfo[uVar5].pXAnimTree = pXVar3;
+  level_bgs.clientinfo[uVar5].clientNum = uVar5;
+  level_bgs.clientinfo[uVar5].infoValid = 1;
+  level_bgs.clientinfo[uVar5].nextValid = 1;
+  (pgVar4->sess).connected = CON_CONNECTING;
+  (pgVar4->sess).scriptPersId = (ushort)uVar10;
+  (pgVar4->sess).cs.team = TEAM_SPECTATOR;
+  (pgVar4->sess).sessionState = SESS_STATE_SPECTATOR;
+  pgVar4->spectatorClient = -1;
+  (pgVar4->sess).forceSpectatorClient = -1;
+  (pgVar4->sess).killCamEntity = -1;
+  (pgVar4->sess).killCamLookAtEntity = uVar5;
+  G_InitGentity(pgVar6);
+  g_entities[uVar5].client = pgVar4;
+  g_entities[uVar5].s.clientNum = uVar5;
+  g_entities[uVar5].handler = '\0';
+  (pgVar4->sess).cs.clientIndex = uVar5;
+  (pgVar4->ps).clientNum = uVar5;
+  (pgVar4->sess).moveSpeedScaleMultiplier = 1.0;
+  (pgVar4->ps).corpseIndex = -1;
+  (pgVar4->ps).moveSpeedScaleMultiplier = 1.0;
+  (pgVar4->ps).vehicleState.entity = 0x7ff;
+  iVar7 = SV_GetVoiceConnectivityBits(uVar5);
+  iVar9 = (pgVar4->ps).eFlags;
+  (pgVar4->sess).cs.voiceConnectivityBits = iVar7;
+  if (iVar9 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x17c
+                    ,0,"%s");
   }
-  if ((&DAT_83373782)[iVar6] != '\0') {
-    MyAssertHandler(0xffffffff8206c6c8,0x17d,0,0xffffffff82000f98,0xffffffff8206c9ec);
+  if (g_entities[uVar5].r.svFlags != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x17d
+                    ,0,"%s");
   }
-  ClientUserinfoChanged(uVar3);
-  SV_GetUserinfo(uVar3,auStack_450,0x400);
-  if (*(int *)((int)_Dst + 0x3388) == 0) {
-    pcVar5 = (char *)Info_ValueForKey(auStack_450,0xffffffff82032c34);
-    if ((**(char **)(DAT_83373600 + 0xc) != '\0') &&
-       (iVar6 = I_stricmp(*(char **)(DAT_83373600 + 0xc),0xffffffff82003484), iVar6 != 0)) {
-      pcVar7 = *(char **)(DAT_83373600 + 0xc);
+  ClientUserinfoChanged(uVar5);
+  SV_GetUserinfo(uVar5,acStack_450,0x400);
+  if ((pgVar4->sess).localClient == 0) {
+    pcVar8 = Info_ValueForKey(acStack_450,"password");
+    if ((*(g_password->current).string != '\0') &&
+       (iVar9 = I_stricmp((g_password->current).string,"none"), iVar9 != 0)) {
+      pcVar11 = (g_password->current).string;
       do {
-        cVar1 = *pcVar7;
-        cVar2 = *pcVar5;
+        cVar1 = *pcVar11;
+        cVar2 = *pcVar8;
         if (cVar1 == '\0') break;
-        pcVar7 = pcVar7 + 1;
-        pcVar5 = pcVar5 + 1;
+        pcVar11 = pcVar11 + 1;
+        pcVar8 = pcVar8 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        G_FreeEntity(puVar8);
-        __restgprlr_23(0xffffffff8206c9d4);
-        return;
+        G_FreeEntity(pgVar6);
+        pcVar8 = (char *)__restgprlr_23(0xffffffff8206c9d4);
+        return pcVar8;
       }
     }
   }
-  Scr_PlayerConnect(puVar8);
+  Scr_PlayerConnect(pgVar6);
   CalculateRanks();
-  __restgprlr_23(0);
-  return;
+  pcVar8 = (char *)__restgprlr_23(0);
+  return pcVar8;
 }
 
 
 // 8245B4C8  ClientBegin  (game_mp/g_client_mp.cpp:420)
 
-void ClientBegin(ulonglong param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ClientBegin(int param_1)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  gclient_s *pgVar1;
+  team_t tVar2;
   
-  iVar1 = (int)param_1 * 0x3980 + DAT_83580b00;
-  *(undefined4 *)(iVar1 + 0x332c) = 2;
-  *(undefined4 *)(iVar1 + 4) = 5;
-  uVar2 = SV_GetAssignedTeam();
-  *(undefined4 *)(iVar1 + 0x33d4) = uVar2;
+  pgVar1 = level.clients;
+  level.clients[param_1].sess.connected = CON_CONNECTED;
+  pgVar1[param_1].ps.pm_type = 5;
+  tVar2 = SV_GetAssignedTeam(param_1);
+  pgVar1[param_1].sess.cs.team = tVar2;
   CalculateRanks();
-  Scr_Notify((param_1 + (param_1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7cc8c980,DAT_835a0d5e,0)
-  ;
+  Scr_Notify(g_entities + param_1,scr_const.begin,0);
   return;
 }
 
 
 // 8245B550  ClientMigrate  (game_mp/g_client_mp.cpp:437)
 
-void ClientMigrate(ulonglong param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ClientMigrate(int param_1)
 
 {
   CalculateRanks();
-  Scr_PlayerMigrated((param_1 + (param_1 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7cc8c980);
+  Scr_PlayerMigrated(g_entities + param_1);
   return;
 }
 
 
 // 8245B598  ClientSpawn  (game_mp/g_client_mp.cpp:457)
 
-void ClientSpawn(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ClientSpawn(gentity_s *param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
-  int *_Dst;
-  uint uVar2;
-  int iVar3;
-  int *piVar5;
+  byte bVar2;
+  gclient_s *pgVar3;
+  uint uVar4;
+  int iVar5;
   int iVar6;
-  int *piVar7;
-  undefined8 uVar4;
-  int *piVar8;
-  longlong lVar9;
-  undefined1 auStack_380 [896];
+  uint uVar7;
+  gentity_s *pgVar8;
+  int iVar9;
+  gentity_s *pgVar10;
+  char *pcVar11;
+  entityShared_t *peVar12;
+  float *pfVar13;
+  usercmd_s *puVar14;
+  longlong lVar15;
   
-  piVar5 = (int *)__savegprlr_17();
-  _Dst = (int *)piVar5[0x56];
-  iVar1 = (int)(piVar5 + 0x1f323260) / 0x280;
-  if (_Dst != (int *)(iVar1 * 0x3980 + DAT_83580b00)) {
-    MyAssertHandler(0xffffffff8206c6c8,0x1d4,0,0xffffffff82000f98,0xffffffff8206cb08);
+  pgVar8 = (gentity_s *)__savegprlr_17(param_1);
+  pgVar3 = pgVar8->client;
+  iVar1 = (int)&pgVar8[0x31e9ea].s.groundEntityNum / 0x280;
+  if (pgVar3 != level.clients + iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x1d4
+                    ,0,"%s");
   }
-  if (*(char *)((int)piVar5 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8206c6c8,0x1d5,0,0xffffffff82000f98,0xffffffff8206caf8);
+  if ((pgVar8->r).isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x1d5
+                    ,0,"%s");
   }
-  if (((_Dst[4] & 0x1000U) != 0) && ((_Dst[0x3e] & 0x3800U) != 0)) {
-    if (_Dst[0x54] != *piVar5) {
-      MyAssertHandler(0xffffffff8206c6c8,0x1da,0,0xffffffff82000f98,0xffffffff8206c018);
+  if ((((pgVar3->ps).otherFlags & 0x1000U) != 0) && (((pgVar3->ps).eFlags & 0x3800U) != 0)) {
+    if ((pgVar3->ps).clientNum != (pgVar8->s).number) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x1da,0,"%s");
     }
-    if (_Dst[0x6f] == 0x7ff) {
-      MyAssertHandler(0xffffffff8206c6c8,0x1db,0,0xffffffff82000f98,0xffffffff8206bfe8);
+    if ((pgVar3->ps).viewlocked_entNum == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x1db,0,"%s");
     }
-    iVar6 = EntHandle__isDefined
-                      (((ulonglong)(uint)_Dst[0x6f] + ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4
-                       & 0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04 + 0x150);
-    if (iVar6 == 0) {
-      MyAssertHandler(0xffffffff8206c6c8,0x1dc,0,0xffffffff82000f98,0xffffffff8206cab0);
+    iVar9 = EntHandle::isDefined(&level.gentities[(pgVar3->ps).viewlocked_entNum].r.ownerNum);
+    if (iVar9 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x1dc,0,"%s");
     }
-    piVar7 = (int *)EntHandle__ent(((ulonglong)(uint)_Dst[0x6f] +
-                                    ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4 & 0x1ffffff) *
-                                   0x80 + (ulonglong)DAT_83580b04 + 0x150);
-    if (piVar7 != piVar5) {
-      MyAssertHandler(0xffffffff8206c6c8,0x1dd,0,0xffffffff82000f98,0xffffffff8206ca68);
+    pgVar10 = EntHandle::ent(&level.gentities[(pgVar3->ps).viewlocked_entNum].r.ownerNum);
+    if (pgVar10 != pgVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x1dd,0,"%s");
     }
-    G_ClientStopUsingTurret
-              (((ulonglong)(uint)_Dst[0x6f] + ((ulonglong)(uint)_Dst[0x6f] & 0x3fffffff) * 4 &
-               0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04);
+    G_ClientStopUsingTurret(level.gentities + (pgVar3->ps).viewlocked_entNum);
   }
-  uVar2 = _Dst[0x2b];
-  if (uVar2 != 0x7ff) {
-    EntHandle__setEnt(((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-                      (ulonglong)DAT_83580b04 + 0x150,0);
+  iVar9 = (pgVar3->ps).vehicleState.entity;
+  if (iVar9 != 0x7ff) {
+    EntHandle::setEnt(&level.gentities[iVar9].r.ownerNum,(gentity_s *)0x0);
   }
-  G_EntUnlink(piVar5);
-  if (*(char *)(piVar5 + 0x40) != '\0') {
-    SV_UnlinkEntity(piVar5);
+  G_EntUnlink(pgVar8);
+  if ((pgVar8->r).isLinked != '\0') {
+    SV_UnlinkEntity(pgVar8);
   }
-  piVar5[0x20] = 0x7ff;
-  Scr_SetString((int)piVar5 + 0x172,DAT_835a0c02);
-  Scr_SetString(piVar5 + 0x5d,DAT_835a0c02);
-  *(undefined1 *)((int)piVar5 + 0x16b) = 0;
-  piVar5[99] = 0x2810011;
-  *(byte *)((int)piVar5 + 0x102) = *(byte *)((int)piVar5 + 0x102) | 1;
-  G_SetClientContents(piVar5);
-  *(undefined1 *)((int)piVar5 + 0x16d) = 0xb;
-  piVar8 = piVar5 + 0x40;
-  piVar5[0x61] = 0x1000;
-  piVar7 = (int *)0x8200c29c;
-  lVar9 = 6;
+  (pgVar8->s).groundEntityNum = 0x7ff;
+  Scr_SetString(&pgVar8->classname,(uint)scr_const.player);
+  Scr_SetString(&pgVar8->script_classname,(uint)scr_const.player);
+  bVar2 = (pgVar8->r).svFlags;
+  pgVar8->takedamage = '\0';
+  pgVar8->clipmask = 0x2810011;
+  (pgVar8->r).svFlags = bVar2 | 1;
+  G_SetClientContents(pgVar8);
+  pgVar8->handler = '\v';
+  peVar12 = &pgVar8->r;
+  pgVar8->flags = 0x1000;
+  pfVar13 = (float *)0x8200c29c;
+  lVar15 = 6;
   do {
-    piVar7 = piVar7 + 1;
-    piVar8 = piVar8 + 1;
-    *piVar8 = *piVar7;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  uVar2 = _Dst[0x3e];
-  memcpy(auStack_380,_Dst + 0xcc0,0x2f8);
-  iVar6 = _Dst[0x6a];
-  iVar3 = _Dst[0xdd4];
-  Scr_FreeClientFields(_Dst);
-  memset(_Dst,0,0x3980);
-  G_DefaultViewAngleClampGoal(_Dst + 0xda0);
-  G_SnapToViewAngleClampGoal(_Dst + 0xda0);
-  memcpy(_Dst + 0xcc0,auStack_380,0x2f8);
-  _Dst[0xdd4] = iVar3;
-  _Dst[0x3e] = uVar2 & 0x82;
-  _Dst[0xd7f] = -1;
-  _Dst[0x6a] = iVar6 + 1;
-  piVar8 = _Dst + 0xccc;
-  _Dst[0xcf4] = iVar1;
-  _Dst[0x54] = iVar1;
-  _Dst[0x6f] = 0x7ff;
-  _Dst[0x76] = 0x7ff;
-  _Dst[0x69] = _Dst[0xceb];
-  SV_GetUsercmd(((int)_Dst - DAT_83580b00) / 0x3980,piVar8);
-  _Dst[0x5b] = 0;
-  _Dst[0xe1] = 0;
-  _Dst[0xe2] = 0;
-  _Dst[0xf] = 0;
-  _Dst[0x5a] = 0x42700000;
-  _Dst[0x10] = 0;
-  _Dst[0x15d] = 0x40c00000;
-  _Dst[0x59] = 0x3c;
-  _Dst[0x15e] = 0x3fe66666;
-  _Dst[0xe] = 0x7ff;
-  _Dst[0xe3] = 0x3f800000;
-  _Dst[0x2b] = 0x7ff;
-  _Dst[0x158] = 0x3f800000;
-  _Dst[0xccd] = _Dst[0xccd] & 0xfffffcff;
-  _Dst[0x3e] = _Dst[0x3e] ^ 2;
-  G_SetOrigin(piVar5,param_2);
-  piVar7 = (int *)param_2;
-  _Dst[7] = *piVar7;
-  _Dst[8] = piVar7[1];
-  _Dst[9] = piVar7[2];
-  _Dst[3] = _Dst[3] | 0x400;
-  SetClientViewAngle(piVar5,param_3);
-  _Dst[0xd94] = *(int *)(DAT_8353fed8 + 0xc) * 1000 + DAT_83580fac;
-  if (_Dst[0xd84] != 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x247,0,0xffffffff82000f98,0xffffffff8206ca44);
+    pfVar13 = pfVar13 + 1;
+    peVar12 = (entityShared_t *)&peVar12->box;
+    ((Bounds *)peVar12)->midPoint[0] = *pfVar13;
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
+  uVar4 = (pgVar3->ps).eFlags;
+  memcpy();
+  iVar9 = (pgVar3->ps).stats[3];
+  iVar5 = pgVar3->lastServerTime;
+  Scr_FreeClientFields(pgVar3);
+  memset();
+  G_DefaultViewAngleClampGoal(&pgVar3->link_viewClamp);
+  G_SnapToViewAngleClampGoal(&pgVar3->link_viewClamp);
+  memcpy();
+  iVar6 = (pgVar3->sess).maxHealth;
+  pgVar3->lastServerTime = iVar5;
+  (pgVar3->ps).eFlags = uVar4 & 0x82;
+  pgVar3->spectatorClient = -1;
+  (pgVar3->ps).stats[3] = iVar9 + 1;
+  puVar14 = &(pgVar3->sess).cmd;
+  (pgVar3->sess).cs.clientIndex = iVar1;
+  (pgVar3->ps).clientNum = iVar1;
+  (pgVar3->ps).viewlocked_entNum = 0x7ff;
+  (pgVar3->ps).linkWeaponEnt = 0x7ff;
+  (pgVar3->ps).stats[2] = iVar6;
+  SV_GetUsercmd(((int)pgVar3 - (int)level.clients) / 0x3980,puVar14);
+  uVar4 = (pgVar3->sess).cmd.buttons;
+  uVar7 = (pgVar3->ps).eFlags;
+  (pgVar3->ps).viewHeightLerpTime = 0;
+  (pgVar3->ps).weapCommon.spreadOverride = 0;
+  (pgVar3->ps).weapCommon.spreadOverrideState = 0;
+  (pgVar3->ps).throwbackGrenadeTimeLeft = 0;
+  (pgVar3->ps).viewHeightCurrent = 60.0;
+  (pgVar3->ps).throwbackWeapon.data = 0;
+  (pgVar3->ps).dofNearBlur = 6.0;
+  (pgVar3->ps).viewHeightTarget = 0x3c;
+  (pgVar3->ps).dofFarBlur = 1.8;
+  (pgVar3->ps).throwbackGrenadeOwner = 0x7ff;
+  (pgVar3->ps).weapCommon.fAimSpreadMovementScale = 1.0;
+  (pgVar3->ps).vehicleState.entity = 0x7ff;
+  (pgVar3->ps).viewKickScale = 1.0;
+  (pgVar3->sess).cmd.buttons = uVar4 & 0xfffffcff;
+  (pgVar3->ps).eFlags = uVar7 ^ 2;
+  G_SetOrigin(pgVar8,param_2);
+  (pgVar3->ps).origin[0] = *param_2;
+  (pgVar3->ps).origin[1] = param_2[1];
+  (pgVar3->ps).origin[2] = param_2[2];
+  (pgVar3->ps).pm_flags = (pgVar3->ps).pm_flags | 0x400;
+  SetClientViewAngle(pgVar8,param_3);
+  pgVar3->inactivityTime = (g_inactivity->current).integer * 1000 + level.time;
+  if (pgVar3->latched_buttons != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x247
+                    ,0,"%s");
   }
-  if (_Dst[0xd85] != 0) {
-    MyAssertHandler(0xffffffff8206c6c8,0x248,0,0xffffffff82000f98,0xffffffff8206ca24);
+  if (pgVar3->buttonsSinceLastFrame != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x248
+                    ,0,"%s");
   }
-  _Dst[0xd82] = _Dst[0xccd];
-  DAT_83580b20 = 1;
-  piVar5[0x1a] = DAT_83580fac;
-  uVar4 = va(0xffffffff8206ca20,0x6a);
-  SV_GameSendServerCommand(iVar1,1,uVar4);
-  *piVar8 = DAT_83580fac;
-  *_Dst = DAT_83580fac + -100;
-  ClientEndFrame(piVar5);
-  ClientThink_real(piVar5,piVar8);
-  DAT_83580b20 = 0;
+  pgVar3->buttons = (pgVar3->sess).cmd.buttons;
+  level.clientIsSpawning = 1;
+  (pgVar8->s).lerp.u.turret.lastHeatChangeTime = level.time;
+  pcVar11 = va("%c");
+  SV_GameSendServerCommand(iVar1,SV_CMD_RELIABLE,pcVar11);
+  puVar14->serverTime = level.time;
+  (pgVar3->ps).commandTime = level.time + -100;
+  ClientEndFrame(pgVar8);
+  ClientThink_real(pgVar8,puVar14);
+  level.clientIsSpawning = 0;
   __restgprlr_17();
   return;
 }
@@ -648,90 +714,89 @@ void ClientSpawn(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 8245BA50  ClientDisconnect  (game_mp/g_client_mp.cpp:619)
 
-void ClientDisconnect(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ClientDisconnect(int param_1)
 
 {
   int iVar1;
   int iVar2;
-  int *piVar3;
-  void *pvVar4;
-  int iVar5;
-  int iVar6;
-  int *piVar7;
-  int iVar8;
-  longlong lVar9;
-  int iVar10;
+  gentity_s *pgVar3;
+  int iVar4;
+  gentity_s *pgVar5;
+  gclient_s *pgVar6;
+  int iVar7;
   
-  iVar1 = __savegprlr_22();
-  lVar9 = -0x7cc8c980;
-  piVar7 = &DAT_83373680 + iVar1 * 0xa0;
-  iVar8 = iVar1 * 0x3980 + DAT_83580b00;
-  if ((&DAT_83373783)[iVar1 * 0x280] == '\0') {
-    MyAssertHandler(0xffffffff8206c6c8,0x273,0,0xffffffff82000f98,0xffffffff8206caf8);
+  iVar1 = __savegprlr_22(param_1);
+  pgVar3 = g_entities;
+  pgVar5 = g_entities + iVar1;
+  pgVar6 = level.clients + iVar1;
+  if (g_entities[iVar1].r.isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x273
+                    ,0,"%s");
   }
-  iVar2 = Scr_IsSystemActive(1);
+  iVar2 = Scr_IsSystemActive('\x01');
   if (iVar2 != 0) {
-    Scr_AddString(0xffffffff82030b34);
-    Scr_AddString(0xffffffff8206cb48);
-    Scr_Notify(piVar7,DAT_835a0d6a,2);
+    Scr_AddString("disconnect");
+    Scr_AddString("-1");
+    Scr_Notify(pgVar5,scr_const.menuresponse,2);
   }
   iVar2 = 0;
-  if (0 < DAT_83580fa4) {
-    iVar10 = 0;
-    iVar5 = DAT_83580fa4;
+  if (0 < level.maxclients) {
+    iVar7 = 0;
+    iVar4 = level.maxclients;
     do {
-      iVar6 = iVar10 + DAT_83580b00;
-      if (((*(int *)(iVar6 + 0x332c) != 0) && (*(int *)(iVar6 + 0x3300) == 2)) &&
-         (*(int *)(iVar6 + 0x35fc) == iVar1)) {
-        StopFollowing(lVar9);
-        *(undefined4 *)(iVar10 + DAT_83580b00 + 0x3314) = 0;
-        iVar5 = DAT_83580fa4;
+      if (((*(int *)((int)((level.clients)->sess).cmd.angles + iVar7 + -0xc) != 0) &&
+          (*(int *)((int)((level.clients)->sess).cmd.angles + iVar7 + -0x38) == 2)) &&
+         (*(int *)((int)(level.clients)->oldOrigin + iVar7 + -0x1c) == iVar1)) {
+        StopFollowing(pgVar3);
+        *(undefined4 *)((int)((level.clients)->sess).cmd.angles + iVar7 + -0x24) = 0;
+        iVar4 = level.maxclients;
       }
       iVar2 = iVar2 + 1;
-      lVar9 = lVar9 + 0x280;
-      iVar10 = iVar10 + 0x3980;
-    } while (iVar2 < iVar5);
+      pgVar3 = pgVar3 + 1;
+      iVar7 = iVar7 + 0x3980;
+    } while (iVar2 < iVar4);
   }
-  if (((*(uint *)(iVar8 + 0x10) & 0x1000) != 0) && ((*(uint *)(iVar8 + 0xf8) & 0x3800) != 0)) {
-    if (*(int *)(iVar8 + 0x150) != *piVar7) {
-      MyAssertHandler(0xffffffff8206c6c8,0x28d,0,0xffffffff82000f98,0xffffffff8206c018);
+  if ((((pgVar6->ps).otherFlags & 0x1000U) != 0) && (((pgVar6->ps).eFlags & 0x3800U) != 0)) {
+    if ((pgVar6->ps).clientNum != (pgVar5->s).number) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x28d,0,"%s");
     }
-    if (*(int *)(iVar8 + 0x1bc) == 0x7ff) {
-      MyAssertHandler(0xffffffff8206c6c8,0x28e,0,0xffffffff82000f98,0xffffffff8206bfe8);
+    if ((pgVar6->ps).viewlocked_entNum == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x28e,0,"%s");
     }
-    iVar2 = EntHandle__isDefined
-                      (((ulonglong)*(uint *)(iVar8 + 0x1bc) +
-                        ((ulonglong)*(uint *)(iVar8 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-                       (ulonglong)DAT_83580b04 + 0x150);
+    iVar2 = EntHandle::isDefined(&level.gentities[(pgVar6->ps).viewlocked_entNum].r.ownerNum);
     if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff8206c6c8,0x28f,0,0xffffffff82000f98,0xffffffff8206cab0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x28f,0,"%s");
     }
-    piVar3 = (int *)EntHandle__ent(((ulonglong)*(uint *)(iVar8 + 0x1bc) +
-                                    ((ulonglong)*(uint *)(iVar8 + 0x1bc) & 0x3fffffff) * 4 &
-                                   0x1ffffff) * 0x80 + (ulonglong)DAT_83580b04 + 0x150);
-    if (piVar3 != piVar7) {
-      MyAssertHandler(0xffffffff8206c6c8,0x290,0,0xffffffff82000f98,0xffffffff8206ca68);
+    pgVar3 = EntHandle::ent(&level.gentities[(pgVar6->ps).viewlocked_entNum].r.ownerNum);
+    if (pgVar3 != pgVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",
+                      0x290,0,"%s");
     }
-    G_ClientStopUsingTurret
-              (((ulonglong)*(uint *)(iVar8 + 0x1bc) +
-                ((ulonglong)*(uint *)(iVar8 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-               (ulonglong)DAT_83580b04);
+    G_ClientStopUsingTurret(level.gentities + (pgVar6->ps).viewlocked_entNum);
   }
-  if ((&DAT_833737d8)[iVar1 * 0xa0] != iVar8) {
-    MyAssertHandler(0xffffffff8206c6c8,0x295,0,0xffffffff82000f98,0xffffffff8206cb30);
+  if (g_entities[iVar1].client != pgVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x295
+                    ,0,"%s");
   }
-  HudElem_ClientDisconnect(piVar7);
-  iVar2 = Scr_IsSystemActive(1);
+  HudElem_ClientDisconnect(pgVar5);
+  iVar2 = Scr_IsSystemActive('\x01');
   if (iVar2 != 0) {
-    Scr_PlayerDisconnect(piVar7);
+    Scr_PlayerDisconnect(pgVar5);
   }
-  G_FreeEntity(piVar7);
-  (&DAT_833737d8)[iVar1 * 0xa0] = iVar8;
-  *(undefined4 *)(iVar8 + 0x332c) = 0;
-  pvVar4 = memset((void *)(iVar8 + 0x33d0),0,0xe0);
-  CalculateRanks(pvVar4);
-  if ((&DAT_833737d8)[iVar1 * 0xa0] != iVar8) {
-    MyAssertHandler(0xffffffff8206c6c8,0x2a7,0,0xffffffff82000f98,0xffffffff8206cb30);
+  G_FreeEntity(pgVar5);
+  g_entities[iVar1].client = pgVar6;
+  (pgVar6->sess).connected = CON_DISCONNECTED;
+  memset();
+  CalculateRanks();
+  if (g_entities[iVar1].client != pgVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x2a7
+                    ,0,"%s");
   }
   __restgprlr_22();
   return;
@@ -740,7 +805,10 @@ void ClientDisconnect(void)
 
 // 8245BD30  G_GetNonPVSPlayerInfo  (game_mp/g_client_mp.cpp:690)
 
-void G_GetNonPVSPlayerInfo(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int G_GetNonPVSPlayerInfo(gentity_s *param_1,float *param_2,int param_3)
 
 {
   float fVar1;
@@ -756,18 +824,19 @@ void G_GetNonPVSPlayerInfo(undefined8 param_1,undefined8 param_2,longlong param_
   longlong lVar11;
   longlong lVar12;
   
-  uVar5 = __savegprlr_23();
+  lVar12 = (longlong)param_3;
+  uVar5 = __savegprlr_23(param_1);
   iVar6 = *(int *)((int)uVar5 + 0x158);
   iVar10 = *(int *)(iVar6 + 0x33d4);
   if (iVar10 != 3) {
-    if ((((&DAT_83580fd0)[iVar10] != '\0') || (*(int *)(iVar6 + 0x34b4) != 0)) ||
-       (bVar4 = false, *(char *)(DAT_8353ff20 + 0xc) != '\0')) {
+    if (((level.teamHasRadar[iVar10] != false) || (*(int *)(iVar6 + 0x34b4) != 0)) ||
+       (bVar4 = false, (g_compassShowEnemies->current).enabled != false)) {
       bVar4 = true;
     }
     if ((iVar10 != 0) || (bVar4)) {
       lVar11 = 0;
-      if ((int)param_3 != 0x7ff) {
-        lVar11 = param_3 + 1;
+      if ((int)lVar12 != 0x7ff) {
+        lVar11 = lVar12 + 1;
       }
       lVar12 = 0;
       do {
@@ -779,94 +848,103 @@ void G_GetNonPVSPlayerInfo(undefined8 param_1,undefined8 param_2,longlong param_
         puVar2 = (uint *)uVar9;
         if (((*(char *)((int)puVar2 + 0x103) != '\0') && (uVar7 = puVar2[0x56], uVar7 != 0)) &&
            ((*(int *)(uVar7 + 0x3300) == 0 &&
-            ((((*(int *)(uVar7 + 0x33d4) == iVar10 || (bVar4)) &&
-              ((uVar5 & 0xffffffff) != (uVar9 & 0xffffffff))) &&
-             (iVar6 = SV_inSnapshot(param_2,*puVar2), iVar6 == 0)))))) {
-          fVar1 = 1.0;
-          iVar6 = (int)(((float)puVar2[0x4e] - *(float *)param_2) + 0.5);
-          iVar10 = (int)(((float)puVar2[0x4f] - ((float *)param_2)[1]) + 0.5);
-          if (iVar6 < 0x401) {
-            fVar3 = fVar1;
-            if (iVar6 < -0x3fe) {
-              fVar3 = -1022.0 / (float)(longlong)iVar6;
-            }
-          }
-          else {
-            fVar3 = 1024.0 / (float)(longlong)iVar6;
-          }
-          if (iVar10 < 0x401) {
-            if (iVar10 < -0x3fe) {
-              fVar1 = -1022.0 / (float)(longlong)iVar10;
-            }
-          }
-          else {
-            fVar1 = 1024.0 / (float)(longlong)iVar10;
-          }
-          if ((fVar3 < 1.0) || (fVar1 < 1.0)) {
-            if (fVar1 <= fVar3) {
-              if (fVar1 < fVar3) {
-                iVar6 = (int)((float)(longlong)iVar6 * fVar1);
+            (((*(int *)(uVar7 + 0x33d4) == iVar10 || (bVar4)) &&
+             ((uVar5 & 0xffffffff) != (uVar9 & 0xffffffff))))))) {
+          iVar6 = SV_inSnapshot(param_2,*puVar2);
+          if (iVar6 == 0) {
+            fVar1 = 1.0;
+            iVar6 = (int)(((float)puVar2[0x4e] - *param_2) + 0.5);
+            iVar10 = (int)(((float)puVar2[0x4f] - param_2[1]) + 0.5);
+            if (iVar6 < 0x401) {
+              fVar3 = fVar1;
+              if (iVar6 < -0x3fe) {
+                fVar3 = -1022.0 / (float)(longlong)iVar6;
               }
             }
             else {
-              iVar10 = (int)((float)(longlong)iVar10 * fVar3);
+              fVar3 = 1024.0 / (float)(longlong)iVar6;
             }
-          }
-          if (iVar6 < 0x401) {
-            if (iVar6 < -0x3fe) {
-              iVar6 = -0x3fe;
+            if (iVar10 < 0x401) {
+              if (iVar10 < -0x3fe) {
+                fVar1 = -1022.0 / (float)(longlong)iVar10;
+              }
             }
-          }
-          else {
-            iVar6 = 0x400;
-          }
-          if (iVar10 < 0x401) {
-            if (iVar10 < -0x3fe) {
-              iVar10 = -0x3fe;
+            else {
+              fVar1 = 1024.0 / (float)(longlong)iVar10;
             }
+            if ((fVar3 < 1.0) || (fVar1 < 1.0)) {
+              if (fVar1 <= fVar3) {
+                if (fVar1 < fVar3) {
+                  iVar6 = (int)((float)(longlong)iVar6 * fVar1);
+                }
+              }
+              else {
+                iVar10 = (int)((float)(longlong)iVar10 * fVar3);
+              }
+            }
+            if (iVar6 < 0x401) {
+              if (iVar6 < -0x3fe) {
+                iVar6 = -0x3fe;
+              }
+            }
+            else {
+              iVar6 = 0x400;
+            }
+            if (iVar10 < 0x401) {
+              if (iVar10 < -0x3fe) {
+                iVar10 = -0x3fe;
+              }
+            }
+            else {
+              iVar10 = 0x400;
+            }
+            uVar8 = iVar10 + 2;
+            uVar7 = iVar6 + 2;
+            iVar6 = __restgprlr_23((((int)uVar8 >> 2) + (uint)((int)uVar8 < 0 && (uVar8 & 3) != 0) +
+                                    0xff & 0x1ff) << 0xf |
+                                   (((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) +
+                                    0xff & 0x1ff) << 6 |
+                                   (int)((float)puVar2[0x52] * 0.7111111) << 0x18 | *puVar2 & 0x3f);
+            return iVar6;
           }
-          else {
-            iVar10 = 0x400;
-          }
-          uVar8 = iVar10 + 2;
-          uVar7 = iVar6 + 2;
-          __restgprlr_23((((int)uVar8 >> 2) + (uint)((int)uVar8 < 0 && (uVar8 & 3) != 0) + 0xff &
-                         0x1ff) << 0xf |
-                         (((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) + 0xff &
-                         0x1ff) << 6 | (int)((float)puVar2[0x52] * 0.7111111) << 0x18 |
-                         *puVar2 & 0x3f);
-          return;
         }
         lVar12 = lVar12 + 1;
       } while ((int)lVar12 < 0x12);
     }
   }
-  __restgprlr_23(0);
-  return;
+  iVar6 = __restgprlr_23(0);
+  return iVar6;
 }
 
 
 // 8245C068  ClientSetEntUnusable  (game_mp/g_client_mp.cpp:874)
 
-void ClientSetEntUnusable(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ClientSetEntUnusable(gclient_s *param_1,ushort param_2)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
   
-  iVar3 = __savegprlr_28();
-  param_2 = param_2 & 0xffff;
-  if (0x7ff < param_2) {
-    MyAssertHandler(0xffffffff8206c6c8,0x36b,0,0xffffffff8206cbac,param_2,0x800);
+  uVar3 = (ulonglong)(short)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  uVar3 = uVar3 & 0xffff;
+  if (0x7ff < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x36b
+                    ,0,"entnum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar1 = param_2 >> 5;
-  if (0x3f < uVar1) {
-    MyAssertHandler(0xffffffff8206c6c8,0x36c,0,0xffffffff8206cb50,uVar1,0x40);
+  if (0x3f < uVar3 >> 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x36c
+                    ,0,
+                    "entnum / 32 doesn\'t index ARRAY_COUNT( client->sess.unusableEntFlags )\n\t%i not in [0, %i)"
+                   );
   }
-  iVar2 = ((int)uVar1 + 0xd38) * 4;
-  *(uint *)(iVar2 + iVar3) =
-       1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU) | *(uint *)(iVar2 + iVar3);
+  iVar1 = ((int)(uVar3 >> 5) + 0xd38) * 4;
+  *(uint *)(iVar1 + iVar2) =
+       1 << ((int)uVar3 + ((int)uVar3 >> 5) * -0x20 & 0x3fU) | *(uint *)(iVar1 + iVar2);
   __restgprlr_28();
   return;
 }
@@ -874,25 +952,32 @@ void ClientSetEntUnusable(undefined8 param_1,ulonglong param_2)
 
 // 8245C110  ClientSetEntUsable  (game_mp/g_client_mp.cpp:883)
 
-void ClientSetEntUsable(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ClientSetEntUsable(gclient_s *param_1,ushort param_2)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
   
-  iVar3 = __savegprlr_28();
-  param_2 = param_2 & 0xffff;
-  if (0x7ff < param_2) {
-    MyAssertHandler(0xffffffff8206c6c8,0x374,0,0xffffffff8206cbac,param_2,0x800);
+  uVar3 = (ulonglong)(short)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  uVar3 = uVar3 & 0xffff;
+  if (0x7ff < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x374
+                    ,0,"entnum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar1 = param_2 >> 5;
-  if (0x3f < uVar1) {
-    MyAssertHandler(0xffffffff8206c6c8,0x375,0,0xffffffff8206cb50,uVar1,0x40);
+  if (0x3f < uVar3 >> 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x375
+                    ,0,
+                    "entnum / 32 doesn\'t index ARRAY_COUNT( client->sess.unusableEntFlags )\n\t%i not in [0, %i)"
+                   );
   }
-  iVar2 = ((int)uVar1 + 0xd38) * 4;
-  *(uint *)(iVar2 + iVar3) =
-       *(uint *)(iVar2 + iVar3) & ~(1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU));
+  iVar1 = ((int)(uVar3 >> 5) + 0xd38) * 4;
+  *(uint *)(iVar1 + iVar2) =
+       *(uint *)(iVar1 + iVar2) & ~(1 << ((int)uVar3 + ((int)uVar3 >> 5) * -0x20 & 0x3fU));
   __restgprlr_28();
   return;
 }
@@ -900,23 +985,31 @@ void ClientSetEntUsable(undefined8 param_1,ulonglong param_2)
 
 // 8245C1B8  ClientMayUseEnt  (game_mp/g_client_mp.cpp:892)
 
-void ClientMayUseEnt(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool ClientMayUseEnt(gclient_s *param_1,ushort param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_28();
-  param_2 = param_2 & 0xffff;
-  if (0x7ff < param_2) {
-    MyAssertHandler(0xffffffff8206c6c8,0x37d,0,0xffffffff8206cbac,param_2,0x800);
+  uVar3 = (ulonglong)(short)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  uVar3 = uVar3 & 0xffff;
+  if (0x7ff < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x37d
+                    ,0,"entnum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar1 = param_2 >> 5;
-  if (0x3f < uVar1) {
-    MyAssertHandler(0xffffffff8206c6c8,0x37e,0,0xffffffff8206cb50,uVar1,0x40);
+  if (0x3f < uVar3 >> 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_mp.cpp",0x37e
+                    ,0,
+                    "entnum / 32 doesn\'t index ARRAY_COUNT( client->sess.unusableEntFlags )\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_28((1 << ((int)param_2 + ((int)param_2 >> 5) * -0x20 & 0x3fU) &
-                 *(uint *)(((int)uVar1 + 0xd38) * 4 + iVar2)) == 0);
-  return;
+  uVar2 = __restgprlr_28((1 << ((int)uVar3 + ((int)uVar3 >> 5) * -0x20 & 0x3fU) &
+                         *(uint *)(((int)(uVar3 >> 5) + 0xd38) * 4 + iVar1)) == 0);
+  return (bool)uVar2;
 }
 

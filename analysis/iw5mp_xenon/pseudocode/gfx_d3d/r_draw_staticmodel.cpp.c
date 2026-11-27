@@ -2,16 +2,16 @@
 
 // 82736358  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 82736360  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(int param_1,int param_2)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
@@ -20,7 +20,7 @@ void __stvx(int param_1,int param_2)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -31,7 +31,9 @@ void __stvx(int param_1,int param_2)
 
 // 827364B0  R_GetNextStaticModelArray  (gfx_d3d/r_draw_staticmodel.cpp:188)
 
-void R_GetNextStaticModelArray(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_GetNextStaticModelArray(GfxStaticModelDrawStream *param_1)
 
 {
   ushort uVar1;
@@ -42,18 +44,20 @@ void R_GetNextStaticModelArray(void)
   int *piVar6;
   int *piVar7;
   
-  piVar6 = (int *)__savegprlr_28();
+  piVar6 = (int *)__savegprlr_28(param_1);
   iVar3 = *piVar6;
   puVar4 = *(ushort **)(iVar3 + 4);
   uVar1 = *puVar4;
   *(ushort **)(iVar3 + 4) = puVar4 + 1;
   if (*(ushort **)(iVar3 + 8) < puVar4 + 1) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_smodelsurfiter_inline.h"
+                    ,0x8e,0,"%s");
   }
   uVar5 = uVar1 >> 2 & 0x3ffc;
   piVar7 = (int *)(uVar5 + piVar6[6]);
   if (*(int *)(uVar5 + piVar6[6]) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0xcf,0,0xffffffff82000f98,0xffffffff821beaa4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0xcf,0,"%s");
   }
   iVar3 = *piVar7;
   uVar2 = *(ushort *)(piVar7 + 1);
@@ -67,30 +71,33 @@ void R_GetNextStaticModelArray(void)
 
 // 82737618  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>  (gfx_d3d/r_draw_staticmodel.cpp:227)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-               (undefined8 param_1,undefined8 param_2)
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufPrimState *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  DWORD DVar3;
+  GfxCmdRingBuf *pGVar1;
+  GfxStaticModelDrawStream *pGVar2;
+  ulong uVar3;
   longlong lVar4;
   
-  iVar2 = __savegprlr_24();
-  lVar4 = (ulonglong)(*(ushort *)(iVar2 + 0x14) >> 0xc) + 1;
+  pGVar2 = (GfxStaticModelDrawStream *)__savegprlr_24(param_1);
+  lVar4 = (ulonglong)((pGVar2->smodelSurfHeader).array[0] >> 0xc) + 1;
   do {
-    iVar1 = *(int *)(iVar2 + 0x30);
-    DVar3 = GetCurrentProcessorNumber();
-    if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
+    pGVar1 = pGVar2->cmdBuf;
+    uVar3 = GetCurrentProcessorNumber();
+    if (pGVar1 != dx.cmdBufForProcId[uVar3]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                      0x496,0,"%s");
     }
-    if (iVar1 != 0) {
-      if ((longlong)((ulonglong)*(uint *)(iVar1 + 0x20) - (ulonglong)*(uint *)(iVar1 + 4)) < 0) {
-        R_CmdBufReserveMemory(iVar1);
-      }
+    if ((pGVar1 != (GfxCmdRingBuf *)0x0) &&
+       ((longlong)((ulonglong)pGVar1->reserveMemoryPos0 - (ulonglong)pGVar1->memoryPos) < 0)) {
+      R_CmdBufReserveMemory(pGVar1);
     }
-    R_GetNextStaticModelArray(iVar2);
-    GfxSModelArrayCallback_NoPrepass__Callback(iVar2,param_2);
+    R_GetNextStaticModelArray(pGVar2);
+    GfxSModelArrayCallback_NoPrepass::Callback(pGVar2,param_2);
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   __restgprlr_24();
@@ -100,30 +107,34 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimStat
 
 // 827376D0  R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>  (gfx_d3d/r_draw_staticmodel.cpp:227)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>
-               (undefined8 param_1,undefined8 param_2)
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufContext param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  DWORD DVar3;
+  GfxCmdRingBuf *pGVar1;
+  GfxStaticModelDrawStream *pGVar2;
+  ulong uVar3;
   longlong lVar4;
   
-  iVar2 = __savegprlr_24();
-  lVar4 = (ulonglong)(*(ushort *)(iVar2 + 0x14) >> 0xc) + 1;
+  pGVar2 = (GfxStaticModelDrawStream *)__savegprlr_24(param_1);
+  lVar4 = (ulonglong)((pGVar2->smodelSurfHeader).array[0] >> 0xc) + 1;
   do {
-    iVar1 = *(int *)(iVar2 + 0x30);
-    DVar3 = GetCurrentProcessorNumber();
-    if (iVar1 != *(int *)(&DAT_846177e4 + DVar3 * 4)) {
-      MyAssertHandler(0xffffffff821bdad0,0x496,0,0xffffffff82000f98,0xffffffff821bdb14);
+    pGVar1 = pGVar2->cmdBuf;
+    uVar3 = GetCurrentProcessorNumber();
+    if (pGVar1 != dx.cmdBufForProcId[uVar3]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                      0x496,0,"%s");
     }
-    if (iVar1 != 0) {
-      if ((longlong)((ulonglong)*(uint *)(iVar1 + 0x20) - (ulonglong)*(uint *)(iVar1 + 4)) < 0) {
-        R_CmdBufReserveMemory(iVar1);
-      }
+    if ((pGVar1 != (GfxCmdRingBuf *)0x0) &&
+       ((longlong)((ulonglong)pGVar1->reserveMemoryPos0 - (ulonglong)pGVar1->memoryPos) < 0)) {
+      R_CmdBufReserveMemory(pGVar1);
     }
-    R_GetNextStaticModelArray(iVar2);
-    R_DrawStaticModelArray_NonOptimized(iVar2,param_2);
+    R_GetNextStaticModelArray(pGVar2);
+    R_DrawStaticModelArray_NonOptimized(pGVar2,param_2);
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   __restgprlr_24();
@@ -133,25 +144,31 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufConte
 
 // 82736570  R_SetStaticModelVertexBuffer  (gfx_d3d/r_draw_staticmodel.cpp:255)
 
-void R_SetStaticModelVertexBuffer(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetStaticModelVertexBuffer(GfxCmdBufState *param_1,XSurface *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
+  GfxCmdBufState *pGVar1;
+  uint uVar2;
+  MaterialVertexDeclType MVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x107,0,0xffffffff82000f98,0xffffffff821beabc);
+  uVar4 = (ulonglong)(int)param_2;
+  pGVar1 = (GfxCmdBufState *)__savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x107,0,"%s");
   }
-  uVar1 = XSurfaceGetVert0Size(param_2);
-  if (param_2 + 0x20 == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x10f,0,0xffffffff82000f98,0xffffffff821ba234);
+  uVar2 = XSurfaceGetVert0Size((XSurface *)uVar4);
+  if (uVar4 + 0x20 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x10f,0,"%s");
   }
-  uVar3 = XSurfaceGetModelVertDecl(param_2);
-  *(undefined4 *)(iVar2 + 200) = uVar3;
-  R_UpdateVertexDecl(iVar2);
-  R_SetStreamSource(iVar2 + 0xc0,param_2 + 0x20,0,uVar1);
+  MVar3 = XSurfaceGetModelVertDecl((XSurface *)uVar4);
+  (pGVar1->prim).vertDeclType = MVar3;
+  R_UpdateVertexDecl(pGVar1);
+  R_SetStreamSource(&pGVar1->prim,(D3DVertexBuffer *)(uVar4 + 0x20),0,uVar2);
   __restgprlr_26();
   return;
 }
@@ -159,25 +176,27 @@ void R_SetStaticModelVertexBuffer(undefined8 param_1,ulonglong param_2)
 
 // 82736618  R_SetupStaticModelPrim  (gfx_d3d/r_draw_staticmodel.cpp:287)
 
-void R_SetupStaticModelPrim(undefined8 param_1,uint *param_2,undefined8 param_3)
+void R_SetupStaticModelPrim(XSurface *param_1,GfxDrawPrimArgs *param_2,GfxCmdBufPrimState *param_3)
 
 {
   int iVar1;
-  int iVar2;
+  D3DIndexBuffer *pDVar2;
   
-  iVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x122,0,0xffffffff82000f98,0xffffffff821beabc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x122,0,"%s");
   }
-  iVar2 = iVar1 + 0x48;
-  *param_2 = (uint)*(ushort *)(iVar1 + 2);
-  param_2[1] = (uint)*(ushort *)(iVar1 + 4);
-  param_2[2] = 0;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821bea58,299,0,0xffffffff82000f98,0xffffffff821ba260);
+  pDVar2 = (D3DIndexBuffer *)(iVar1 + 0x48);
+  param_2->vertexCount = (uint)*(ushort *)(iVar1 + 2);
+  param_2->triCount = (uint)*(ushort *)(iVar1 + 4);
+  param_2->baseIndex = 0;
+  if (pDVar2 == (D3DIndexBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,299,0,"%s");
   }
-  if (*(int *)((int)param_3 + 4) != iVar2) {
-    R_ChangeIndices(param_3,iVar2);
+  if (param_3->indexBuffer != pDVar2) {
+    R_ChangeIndices(param_3,pDVar2);
   }
   __restgprlr_26();
   return;
@@ -186,32 +205,42 @@ void R_SetupStaticModelPrim(undefined8 param_1,uint *param_2,undefined8 param_3)
 
 // 82736368  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-int D3DTag_Index(int param_1)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong D3DTag_Index(_D3DTAG param_1)
 
 {
-  return param_1 >> 0x10;
+  return (int)param_1 >> 0x10;
 }
 
 
 // 82737940  R_DirtyCodeConstantBlock  (gfx_d3d/r_state.h:618)
 
-void R_DirtyCodeConstantBlock(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DirtyCodeConstantBlock(GfxCmdBufState *param_1,uint param_2)
 
 {
   int iVar1;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_29();
-  if (0x3f < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bda94,0x26c,0,0xffffffff821be968,param_2,0x40);
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (0x3f < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x26c,0,
+                    "dest doesn\'t index ARRAY_COUNT( state->vertexShaderConstState )\n\t%i not in [0, %i)"
+                   );
   }
-  param_2 = param_2 & 0xfffffffc;
-  if (0x3f < param_2 + 3) {
-    MyAssertHandler(0xffffffff821bda94,0x26f,0,0xffffffff821be910,param_2 + 3,0x40);
+  uVar2 = uVar2 & 0xfffffffc;
+  if (0x3f < uVar2 + 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x26f,0,
+                    "dest + 3 doesn\'t index ARRAY_COUNT( state->vertexShaderConstState )\n\t%i not in [0, %i)"
+                   );
   }
-  *(undefined8 *)((int)((param_2 + 0x22 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x23 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x24 & 0xffffffff) << 3) + iVar1) = 0;
-  *(undefined8 *)((int)((param_2 + 0x25 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((uVar2 + 0x22 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((uVar2 + 0x23 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((uVar2 + 0x24 & 0xffffffff) << 3) + iVar1) = 0;
+  *(undefined8 *)((int)((uVar2 + 0x25 & 0xffffffff) << 3) + iVar1) = 0;
   __restgprlr_29();
   return;
 }
@@ -219,68 +248,73 @@ void R_DirtyCodeConstantBlock(undefined8 param_1,ulonglong param_2)
 
 // 82736370  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
 
 {
-  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
-         ((param_1 & 0xff) + param_2 & 0x7f);
+  return (ulonglong)
+         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
+         (((ulonglong)param_1 & 0xff) + (longlong)(int)param_2 & 0x7f);
 }
 
 
 // 82736398  D3DTag_ShaderConstantMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:631)
 
-ulonglong D3DTag_ShaderConstantMask(ulonglong param_1,longlong param_2)
+ulong64 D3DTag_ShaderConstantMask(ulong param_1,ulong param_2)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (param_1 & 0xffffffff) >> 2;
   return (ulonglong)
-         (-0x8000000000000000 >> ((((param_1 + param_2) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >>
-         (uVar1 & 0x7f);
+         (-0x8000000000000000 >>
+         (((((longlong)(int)param_1 + (longlong)(int)param_2) - 1U & 0xffffffff) >> 2) -
+          (ulonglong)(param_1 >> 2) & 0x7f)) >> ((ulonglong)(param_1 >> 2) & 0x7f);
 }
 
 
 // 827363C8  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
   return;
 }
 
 
 // 827363E0  D3DTagCollection_Clear  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:660)
 
-void D3DTagCollection_Clear(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) & ~param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] & ~param_3;
   return;
 }
 
 
 // 827379F0  R_ChangeIndices  (gfx_d3d/r_state.h:773)
 
-void R_ChangeIndices(undefined8 param_1,ulonglong param_2)
+void R_ChangeIndices(GfxCmdBufPrimState *param_1,D3DIndexBuffer *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
+  D3DDevice *pDVar1;
+  undefined4 *puVar2;
+  ulonglong uVar3;
   
-  piVar2 = (int *)__savegprlr_27();
-  if ((param_2 & 0xffffffff) == (ulonglong)(uint)piVar2[1]) {
-    MyAssertHandler(0xffffffff821bda94,0x308,0,0xffffffff82000f98,0xffffffff821be9bc);
+  uVar3 = (ulonglong)(int)param_2;
+  puVar2 = (undefined4 *)__savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == (ulonglong)(uint)puVar2[1]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x308,0,
+                    "%s");
   }
-  iVar1 = *piVar2;
-  piVar2[1] = (int)param_2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bda94,0x30c,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  pDVar1 = (D3DDevice *)*puVar2;
+  puVar2[1] = (D3DIndexBuffer *)uVar3;
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x30c,0,
+                    "%s");
   }
   do {
-    D3DDevice_SetIndices(iVar1,param_2);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetIndices(pDVar1,(D3DIndexBuffer *)uVar3);
+  } while (alwaysfails != 0);
   __restgprlr_27();
   return;
 }
@@ -288,23 +322,25 @@ void R_ChangeIndices(undefined8 param_1,ulonglong param_2)
 
 // 827366C0  R_DrawStaticModelArray_UnlitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:880)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-void R_DrawStaticModelArray_UnlitNoPrepass(undefined8 param_1,ulonglong param_2)
+void R_DrawStaticModelArray_UnlitNoPrepass
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufPrimState *param_2)
 
 {
-  ulonglong *puVar1;
-  uint uVar2;
-  int iVar3;
+  D3DDevice *pDVar1;
+  GfxStaticModelDrawInst *pGVar2;
+  GfxCmdRingBuf *pGVar3;
   int iVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  DWORD DVar9;
-  undefined8 uVar8;
-  ulonglong uVar10;
-  ushort *puVar11;
-  ulonglong uVar12;
+  longlong lVar5;
+  ulong uVar6;
+  __vector4 *p_Var7;
+  GfxCmdBufPrimState *pGVar8;
+  ulonglong uVar9;
+  ushort *puVar10;
+  uint uVar11;
+  undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
@@ -313,116 +349,129 @@ void R_DrawStaticModelArray_UnlitNoPrepass(undefined8 param_1,ulonglong param_2)
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
+  GfxDrawPrimArgs aGStack_108 [22];
   
-  uVar6 = ZEXT48(&stack0x00000000);
+  uVar9 = (ulonglong)(int)param_2;
   __savegprlr();
-  lVar7 = __savevmx_123();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,900,0,0xffffffff82000f98,0xffffffff821bebc4);
+  lVar5 = __savevmx_123();
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,900,0,"%s");
   }
-  iVar4 = (int)lVar7;
+  iVar4 = (int)lVar5;
   if (*(int *)(iVar4 + 4) != 2) {
-    MyAssertHandler(0xffffffff821bea58,0x385,0,0xffffffff821beb60,0xffffffff821beb88);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x385,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar4 + 0x24),uVar6 - 0x108,param_2);
-  puVar11 = *(ushort **)(iVar4 + 0x2c);
-  auVar20 = loadVectorLeftIndexed(lVar7 + 8);
-  auVar21 = loadVectorRightIndexed(lVar7 + 0x18);
-  auVar20 = vectorSubtractFloatingPoint128((auVar20 | auVar21) & _DAT_8404f950,_DAT_8217a040);
-  puVar1 = (ulonglong *)*(undefined4 *)param_2;
-  uVar10 = (ulonglong)*(uint *)(iVar4 + 0x28);
-  uVar2 = *(uint *)(DAT_8461658c + 0x284);
-  *puVar1 = *puVar1 & 0xbfffffffffffffff;
-joined_r0x827367b8:
-  if (uVar10 == 0) {
-    *puVar1 = *puVar1 | 0x4000000000000000;
-    __restvmx_123();
-    __restgprlr();
-    return;
-  }
-  iVar3 = *(int *)(iVar4 + 0x30);
-  DVar9 = GetCurrentProcessorNumber();
-  if (iVar3 != *(int *)(&DAT_846177e4 + DVar9 * 4)) {
-    MyAssertHandler(0xffffffff821bdad0,0x496,0,&DAT_82000f98,0xffffffff821bdb14);
-  }
-  if ((iVar3 != 0) &&
-     ((longlong)((ulonglong)*(uint *)(iVar3 + 0x20) - (ulonglong)*(uint *)(iVar3 + 4)) < 0)) {
-    R_CmdBufReserveMemory(iVar3);
-  }
-  lVar7 = (ulonglong)*puVar11 * 0x2c + (ulonglong)uVar2;
-  auVar19 = loadVectorRightIndexed(lVar7 + 0x10);
-  auVar18 = loadVectorLeftIndexed(lVar7);
-  auVar21 = loadVectorRightIndexed(lVar7 + 0x1c);
-  auVar17 = loadVectorLeftIndexed(lVar7 + 0xc);
-  auVar17 = auVar17 | auVar21;
-  auVar21 = loadVectorLeftIndexed(uVar6 - 0x10c);
-  auVar16 = vectorSplatWord(auVar21,0);
-  auVar15 = vectorSplatWord(auVar17,1);
-  auVar21 = vectorSplatWord(auVar17,0);
-  auVar17 = vectorSplatWord(auVar17,2);
-  auVar15 = vectorUnpackD3Dtype(auVar15,8);
-  auVar19 = vectorSubtractFloatingPoint128((auVar18 | auVar19) & _DAT_8404f950,auVar20);
-  auVar21 = vectorUnpackD3Dtype(auVar21,8);
-  auVar17 = vectorUnpackD3Dtype(auVar17,8);
-  auVar18 = vectorMultiplyAddFloatingPoint(auVar15,_DAT_8217a100,_DAT_8217a110);
-  auVar15 = vectorMultiplyAddFloatingPoint(auVar21,_DAT_8217a100,_DAT_8217a110);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar17,_DAT_8217a100,_DAT_8217a110);
-  auVar17 = vectorMultiplyFloatingPoint(auVar18,auVar16);
-  auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar16);
-  auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar16);
+  pGVar8 = (GfxCmdBufPrimState *)uVar9;
+  R_SetupStaticModelPrim(*(XSurface **)(iVar4 + 0x24),aGStack_108,pGVar8);
+  puVar10 = *(ushort **)(iVar4 + 0x2c);
+  auVar19 = loadVectorLeftIndexed(lVar5 + 8);
+  auVar20 = loadVectorRightIndexed(lVar5 + 0x18);
+  auVar19 = vectorSubtractFloatingPoint128
+                      ((auVar19 | auVar20) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       (undefined1  [16])g_unit.field0_0x0);
+  pDVar1 = pGVar8->device;
+  uVar9 = (ulonglong)*(uint *)(iVar4 + 0x28);
+  pGVar2 = ((rgp.world)->dpvs).smodelDrawInsts;
+  (pDVar1->m_Pending).m_Mask[0] = (pDVar1->m_Pending).m_Mask[0] & 0xbfffffffffffffff;
   do {
-    lVar7 = D3DDevice_GpuBeginShaderConstantF4(puVar1,0,4,4);
-    uVar12 = -(ulonglong)(lVar7 == 0) & 0xffffffff8007000e;
-    if ((int)uVar12 < 0) goto LAB_82736924;
-  } while (DAT_84013128 != 0);
-  goto LAB_82736948;
-LAB_82736924:
-  do {
-    uVar8 = R_ErrorDescription(uVar12);
-    Sys_Error(0xffffffff821beac8,0x3b6,uVar8);
-  } while (DAT_84013128 != 0);
-LAB_82736948:
-  auVar14 = vectorMergeHighWord128(auVar15,auVar21);
-  auVar13 = vectorMergeHighWord128(auVar17,auVar19);
-  auVar16 = vectorMergeLowWord128(auVar15,auVar21);
-  auVar21 = vectorMergeLowWord128(auVar17,auVar19);
-  auVar18 = vectorMergeHighWord128(auVar14,auVar13);
-  auVar17 = vectorMergeLowWord128(auVar14,auVar13);
-  auVar15 = vectorMergeHighWord128(auVar16,auVar21);
-  auVar21 = vectorMergeLowWord128(auVar16,auVar21);
-  uVar5 = (uint)lVar7;
-  *(undefined1 (*) [16])(uVar5 & 0xfffffff0) = auVar18;
-  *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0) = auVar17;
-  *(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0) = auVar15;
-  *(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0) = auVar21;
-  R_DrawIndexedPrimitive(param_2,uVar6 - 0x108);
-  uVar10 = uVar10 - 1;
-  puVar11 = puVar11 + 1;
-  goto joined_r0x827367b8;
+    if (uVar9 == 0) {
+      (pDVar1->m_Pending).m_Mask[0] = (pDVar1->m_Pending).m_Mask[0] | 0x4000000000000000;
+      __restvmx_123();
+      __restgprlr();
+      return;
+    }
+    pGVar3 = *(GfxCmdRingBuf **)(iVar4 + 0x30);
+    uVar6 = GetCurrentProcessorNumber();
+    if (pGVar3 != dx.cmdBufForProcId[uVar6]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                      0x496,0,"%s");
+    }
+    if ((pGVar3 != (GfxCmdRingBuf *)0x0) &&
+       ((longlong)((ulonglong)pGVar3->reserveMemoryPos0 - (ulonglong)pGVar3->memoryPos) < 0)) {
+      R_CmdBufReserveMemory(pGVar3);
+    }
+    lVar5 = (ulonglong)*puVar10 * 0x2c + ZEXT48(pGVar2);
+    auVar18 = loadVectorRightIndexed(lVar5 + 0x10);
+    auVar17 = loadVectorLeftIndexed(lVar5);
+    auVar20 = loadVectorRightIndexed(lVar5 + 0x1c);
+    auVar16 = loadVectorLeftIndexed(lVar5 + 0xc);
+    auVar16 = auVar16 | auVar20;
+    auVar20 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x10c);
+    auVar15 = vectorSplatWord(auVar20,0);
+    auVar14 = vectorSplatWord(auVar16,1);
+    auVar20 = vectorSplatWord(auVar16,0);
+    auVar16 = vectorSplatWord(auVar16,2);
+    auVar14 = vectorUnpackD3Dtype(auVar14,8);
+    auVar18 = vectorSubtractFloatingPoint128
+                        ((auVar17 | auVar18) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar19);
+    auVar20 = vectorUnpackD3Dtype(auVar20,8);
+    auVar16 = vectorUnpackD3Dtype(auVar16,8);
+    auVar17 = vectorMultiplyAddFloatingPoint
+                        (auVar14,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                         (undefined1  [16])g_unpackAdd101010.field0_0x0);
+    auVar14 = vectorMultiplyAddFloatingPoint
+                        (auVar20,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                         (undefined1  [16])g_unpackAdd101010.field0_0x0);
+    auVar20 = vectorMultiplyAddFloatingPoint
+                        (auVar16,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                         (undefined1  [16])g_unpackAdd101010.field0_0x0);
+    auVar16 = vectorMultiplyFloatingPoint(auVar17,auVar15);
+    auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar15);
+    auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar15);
+    do {
+      p_Var7 = D3DDevice_GpuBeginShaderConstantF4(pDVar1,0,4,4);
+      uVar11 = -(uint)(p_Var7 == (__vector4 *)0x0) & 0x8007000e;
+      if ((int)uVar11 < 0) {
+        R_ErrorDescription(uVar11);
+                    /* WARNING: Subroutine does not return */
+        Sys_Error(
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
+                 );
+      }
+    } while (alwaysfails != 0);
+    auVar13 = vectorMergeHighWord128(auVar14,auVar20);
+    auVar12 = vectorMergeHighWord128(auVar16,auVar18);
+    auVar15 = vectorMergeLowWord128(auVar14,auVar20);
+    auVar20 = vectorMergeLowWord128(auVar16,auVar18);
+    auVar17 = vectorMergeHighWord128(auVar13,auVar12);
+    auVar16 = vectorMergeLowWord128(auVar13,auVar12);
+    auVar14 = vectorMergeHighWord128(auVar15,auVar20);
+    auVar20 = vectorMergeLowWord128(auVar15,auVar20);
+    *(undefined1 (*) [16])((uint)p_Var7 & 0xfffffff0) = auVar17;
+    *(undefined1 (*) [16])((uint)(p_Var7 + 1) & 0xfffffff0) = auVar16;
+    *(undefined1 (*) [16])((uint)(p_Var7 + 2) & 0xfffffff0) = auVar14;
+    *(undefined1 (*) [16])((uint)(p_Var7 + 3) & 0xfffffff0) = auVar20;
+    R_DrawIndexedPrimitive(pGVar8,aGStack_108);
+    uVar9 = uVar9 - 1;
+    puVar10 = puVar10 + 1;
+  } while( true );
 }
 
 
 // 827369C0  R_DrawStaticModelArray_LitNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1049)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-void R_DrawStaticModelArray_LitNoPrepass(undefined8 param_1,ulonglong param_2)
+void R_DrawStaticModelArray_LitNoPrepass
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufPrimState *param_2)
 
 {
-  short sVar1;
+  ushort uVar1;
   uint uVar2;
-  ulonglong *puVar3;
-  uint uVar4;
-  uint uVar5;
-  int iVar6;
-  float *pfVar7;
-  undefined4 *puVar8;
+  D3DDevice *pDVar3;
+  GfxTexture *pGVar4;
+  GfxStaticModelDrawInst *pGVar5;
+  GfxCmdRingBuf *pGVar6;
+  int iVar7;
+  float *pfVar8;
   longlong lVar9;
-  DWORD DVar11;
-  undefined8 uVar10;
-  int iVar12;
-  ulonglong uVar13;
+  ulong uVar10;
+  __vector4 *p_Var11;
+  GfxCmdBufPrimState *pGVar12;
+  GfxTexture *pGVar13;
   ulonglong uVar14;
   uint uVar15;
   undefined1 auVar16 [16];
@@ -434,184 +483,195 @@ void R_DrawStaticModelArray_LitNoPrepass(undefined8 param_1,ulonglong param_2)
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
-  int local_150;
+  GfxCmdBufPrimState *pGStack0000001c;
+  GfxTexture *local_150;
   ushort *local_14c;
   uint local_144;
+  GfxDrawPrimArgs aGStack_100 [21];
   
-  uVar14 = ZEXT48(&stack0x00000000);
+  uVar14 = (ulonglong)(int)param_2;
   __savegprlr();
   lVar9 = __savevmx_123();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x432,0,0xffffffff82000f98,0xffffffff821bebc4);
+  pGVar12 = (GfxCmdBufPrimState *)uVar14;
+  pGStack0000001c = pGVar12;
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x432,0,"%s");
   }
-  iVar6 = (int)lVar9;
-  if (*(int *)(iVar6 + 4) != 1) {
-    MyAssertHandler(0xffffffff821bea58,0x433,0,0xffffffff821beb60,0xffffffff821bedb8);
+  iVar7 = (int)lVar9;
+  if (*(int *)(iVar7 + 4) != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x433,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar6 + 0x24),uVar14 - 0x100,param_2);
-  uVar2 = *(uint *)(iVar6 + 0x20);
+  R_SetupStaticModelPrim(*(XSurface **)(iVar7 + 0x24),aGStack_100,pGVar12);
+  uVar2 = *(uint *)(iVar7 + 0x20);
   auVar23 = loadVectorLeftIndexed(lVar9 + 8);
   auVar24 = loadVectorRightIndexed(lVar9 + 0x18);
-  puVar3 = (ulonglong *)*(undefined4 *)param_2;
-  auVar23 = vectorSubtractFloatingPoint128((auVar23 | auVar24) & _DAT_8404f950,_DAT_8217a040);
-  local_150 = *(int *)(iVar6 + 0x1c);
-  local_144 = *(uint *)(iVar6 + 0x28);
-  uVar13 = *puVar3;
-  uVar4 = DAT_84613714[3];
-  uVar5 = *(uint *)(DAT_8461658c + 0x284);
-  *puVar3 = uVar13 & 0xbfffffffffffffff;
-  local_14c = *(ushort **)(iVar6 + 0x2c);
-  *puVar3 = uVar13 & 0x9fffffffffffffff;
-  if (local_144 == 0) {
-LAB_82736e94:
-    uVar14 = *puVar3;
-    *puVar3 = uVar14 | 0x4000000000000000;
-    *(int *)(iVar6 + 0x1c) = local_150;
-    *puVar3 = uVar14 | 0x6000000000000000;
-    __restvmx_123();
-    __restgprlr();
-    return;
+  pDVar3 = pGVar12->device;
+  auVar23 = vectorSubtractFloatingPoint128
+                      ((auVar23 | auVar24) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       (undefined1  [16])g_unit.field0_0x0);
+  local_150 = *(GfxTexture **)(iVar7 + 0x1c);
+  local_144 = *(uint *)(iVar7 + 0x28);
+  uVar14 = (pDVar3->m_Pending).m_Mask[0];
+  pGVar4 = g_worldDraw->reflectionProbeTextures;
+  pGVar5 = ((rgp.world)->dpvs).smodelDrawInsts;
+  (pDVar3->m_Pending).m_Mask[0] = uVar14 & 0xbfffffffffffffff;
+  local_14c = *(ushort **)(iVar7 + 0x2c);
+  (pDVar3->m_Pending).m_Mask[0] = uVar14 & 0x9fffffffffffffff;
+  if (local_144 != 0) {
+    do {
+      pGVar6 = *(GfxCmdRingBuf **)(iVar7 + 0x30);
+      uVar10 = GetCurrentProcessorNumber();
+      if (pGVar6 != dx.cmdBufForProcId[uVar10]) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                        0x496,0,"%s");
+      }
+      if ((pGVar6 != (GfxCmdRingBuf *)0x0) &&
+         ((longlong)((ulonglong)pGVar6->reserveMemoryPos0 - (ulonglong)pGVar6->memoryPos) < 0)) {
+        R_CmdBufReserveMemory(pGVar6);
+      }
+      lVar9 = (ulonglong)*local_14c * 0x2c + ZEXT48(pGVar5);
+      if ((uVar2 & 1) == 0) {
+        local_150 = (GfxTexture *)0x0;
+      }
+      else {
+        uVar15 = (uint)*(byte *)((int)lVar9 + 0x24);
+        if (g_worldDraw->reflectionProbeCount <= uVar15) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                          ,0x469,0,
+                          "smodelDrawInst->reflectionProbeIndex doesn\'t index g_worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
+                         );
+        }
+        pGVar13 = pGVar4 + uVar15;
+        if (local_150 != pGVar13) {
+          R_HW_SetPixelSamplerTexture(pDVar3,1,pGVar13);
+          local_150 = pGVar13;
+        }
+      }
+      auVar22 = loadVectorLeftIndexed(lVar9);
+      auVar21 = loadVectorRightIndexed(lVar9 + 0x10);
+      auVar20 = loadVectorLeftIndexed(lVar9 + 0xc);
+      uVar1 = *(ushort *)((int)lVar9 + 0x22);
+      auVar24 = loadVectorRightIndexed(lVar9 + 0x1c);
+      auVar20 = auVar20 | auVar24;
+      auVar24 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x118);
+      auVar19 = vectorSplatWord(auVar24,0);
+      auVar18 = vectorSplatWord(auVar20,1);
+      auVar24 = vectorSplatWord(auVar20,0);
+      auVar22 = vectorSubtractFloatingPoint128
+                          ((auVar22 | auVar21) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar23);
+      auVar20 = vectorSplatWord(auVar20,2);
+      auVar18 = vectorUnpackD3Dtype(auVar18,8);
+      auVar24 = vectorUnpackD3Dtype(auVar24,8);
+      auVar20 = vectorUnpackD3Dtype(auVar20,8);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (auVar18,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar18 = vectorMultiplyAddFloatingPoint
+                          (auVar24,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar24 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar20 = vectorMultiplyFloatingPoint(auVar21,auVar19);
+      auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar19);
+      auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar19);
+      if ((uVar1 == 0) || (uVar1 == 1)) {
+        va(
+          "Context: model \"%s\", origin (%d, %d, %d).  \n    Please attach game\\<platform>\\zone_source\\english\\assetlist\\mychanges.csv to the bug report!"
+          );
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                        ,0x486,0,"%s\n\t%s");
+      }
+      do {
+        p_Var11 = D3DDevice_GpuBeginShaderConstantF4(pDVar3,0,8,4);
+        uVar15 = -(uint)(p_Var11 == (__vector4 *)0x0) & 0x8007000e;
+        if ((int)uVar15 < 0) {
+          R_ErrorDescription(uVar15);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error(
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 8, &constantData, 4 ) failed: %s\n"
+                   );
+        }
+      } while (alwaysfails != 0);
+      R_SetModelLightingCoords((uint)uVar1,(float *)p_Var11);
+      pfVar8 = (float *)((uint)(p_Var11 + 1) & 0xfffffff0);
+      *pfVar8 = (float)0;
+      pfVar8[1] = (float)0;
+      pfVar8[2] = (float)0;
+      pfVar8[3] = (float)0;
+      pfVar8 = (float *)((uint)(p_Var11 + 2) & 0xfffffff0);
+      *pfVar8 = (float)0;
+      pfVar8[1] = (float)0;
+      pfVar8[2] = (float)0;
+      pfVar8[3] = (float)0;
+      pfVar8 = (float *)((uint)(p_Var11 + 3) & 0xfffffff0);
+      *pfVar8 = (float)0;
+      pfVar8[1] = (float)0;
+      pfVar8[2] = (float)0;
+      pfVar8[3] = (float)0;
+      do {
+        p_Var11 = D3DDevice_GpuBeginShaderConstantF4(pDVar3,0,4,4);
+        uVar15 = -(uint)(p_Var11 == (__vector4 *)0x0) & 0x8007000e;
+        if ((int)uVar15 < 0) {
+          R_ErrorDescription(uVar15);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error(
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
+                   );
+        }
+      } while (alwaysfails != 0);
+      auVar17 = vectorMergeHighWord128(auVar18,auVar24);
+      auVar16 = vectorMergeHighWord128(auVar20,auVar22);
+      auVar19 = vectorMergeLowWord128(auVar18,auVar24);
+      auVar24 = vectorMergeLowWord128(auVar20,auVar22);
+      auVar21 = vectorMergeHighWord128(auVar17,auVar16);
+      auVar20 = vectorMergeLowWord128(auVar17,auVar16);
+      auVar18 = vectorMergeHighWord128(auVar19,auVar24);
+      auVar24 = vectorMergeLowWord128(auVar19,auVar24);
+      *(undefined1 (*) [16])((uint)p_Var11 & 0xfffffff0) = auVar21;
+      *(undefined1 (*) [16])((uint)(p_Var11 + 1) & 0xfffffff0) = auVar20;
+      *(undefined1 (*) [16])((uint)(p_Var11 + 2) & 0xfffffff0) = auVar18;
+      *(undefined1 (*) [16])((uint)(p_Var11 + 3) & 0xfffffff0) = auVar24;
+      R_DrawIndexedPrimitive(pGStack0000001c,aGStack_100);
+      uVar14 = (ulonglong)local_144;
+      local_14c = local_14c + 1;
+      local_144 = (uint)(uVar14 - 1);
+    } while (uVar14 - 1 != 0);
   }
-LAB_82736b90:
-  iVar12 = *(int *)(iVar6 + 0x30);
-  DVar11 = GetCurrentProcessorNumber();
-  if (iVar12 != *(int *)(&DAT_846177e4 + DVar11 * 4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x496,
-                    0,&DAT_82000f98,"cmdBuf == R_GetCmdRingBuf()");
-  }
-  if ((iVar12 != 0) &&
-     ((longlong)((ulonglong)*(uint *)(iVar12 + 0x20) - (ulonglong)*(uint *)(iVar12 + 4)) < 0)) {
-    R_CmdBufReserveMemory(iVar12);
-  }
-  lVar9 = (ulonglong)*local_14c * 0x2c + (ulonglong)uVar5;
-  pfVar7 = (float *)lVar9;
-  if ((uVar2 & 1) == 0) {
-    local_150 = 0;
-  }
-  else {
-    uVar15 = (uint)*(byte *)(pfVar7 + 9);
-    if (*DAT_84613714 <= uVar15) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
-                      ,0x469,0,
-                      "smodelDrawInst->reflectionProbeIndex doesn\'t index g_worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
-                      ,uVar15);
-    }
-    iVar12 = uVar15 * 0x34 + uVar4;
-    if (local_150 != iVar12) {
-      R_HW_SetPixelSamplerTexture(puVar3,1);
-      local_150 = iVar12;
-    }
-  }
-  auVar22 = loadVectorLeftIndexed(lVar9);
-  auVar21 = loadVectorRightIndexed(lVar9 + 0x10);
-  auVar20 = loadVectorLeftIndexed(lVar9 + 0xc);
-  sVar1 = *(short *)((int)pfVar7 + 0x22);
-  auVar24 = loadVectorRightIndexed(lVar9 + 0x1c);
-  auVar20 = auVar20 | auVar24;
-  auVar24 = loadVectorLeftIndexed(uVar14 - 0x118);
-  auVar19 = vectorSplatWord(auVar24,0);
-  auVar18 = vectorSplatWord(auVar20,1);
-  auVar24 = vectorSplatWord(auVar20,0);
-  auVar22 = vectorSubtractFloatingPoint128((auVar22 | auVar21) & _DAT_8404f950,auVar23);
-  auVar20 = vectorSplatWord(auVar20,2);
-  auVar18 = vectorUnpackD3Dtype(auVar18,8);
-  auVar24 = vectorUnpackD3Dtype(auVar24,8);
-  auVar20 = vectorUnpackD3Dtype(auVar20,8);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar18,_DAT_8217a100,_DAT_8217a110);
-  auVar18 = vectorMultiplyAddFloatingPoint(auVar24,_DAT_8217a100,_DAT_8217a110);
-  auVar24 = vectorMultiplyAddFloatingPoint(auVar20,_DAT_8217a100,_DAT_8217a110);
-  auVar20 = vectorMultiplyFloatingPoint(auVar21,auVar19);
-  auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar19);
-  auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar19);
-  if ((sVar1 == 0) || (sVar1 == 1)) {
-    uVar10 = va(0xffffffff821bebd0,*(undefined4 *)pfVar7[7],(int)*pfVar7,(int)pfVar7[1],
-                (int)pfVar7[2]);
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
-                    ,0x486,0,0xffffffff820011f4,0xffffffff821bec60,uVar10);
-  }
-  do {
-    lVar9 = D3DDevice_GpuBeginShaderConstantF4(puVar3,0,8,4);
-    uVar13 = -(ulonglong)(lVar9 == 0) & 0xffffffff8007000e;
-    if ((int)uVar13 < 0) goto LAB_82736d9c;
-  } while (DAT_84013128 != 0);
-  goto LAB_82736dc0;
-LAB_82736d9c:
-  do {
-    uVar10 = R_ErrorDescription(uVar13);
-    Sys_Error(0xffffffff821becb8,0x489,uVar10);
-  } while (DAT_84013128 != 0);
-LAB_82736dc0:
-  R_SetModelLightingCoords(sVar1,lVar9);
-  iVar12 = (int)lVar9;
-  puVar8 = (undefined4 *)(iVar12 + 0x10U & 0xfffffff0);
-  *puVar8 = 0;
-  puVar8[1] = 0;
-  puVar8[2] = 0;
-  puVar8[3] = 0;
-  puVar8 = (undefined4 *)(iVar12 + 0x20U & 0xfffffff0);
-  *puVar8 = 0;
-  puVar8[1] = 0;
-  puVar8[2] = 0;
-  puVar8[3] = 0;
-  puVar8 = (undefined4 *)(iVar12 + 0x30U & 0xfffffff0);
-  *puVar8 = 0;
-  puVar8[1] = 0;
-  puVar8[2] = 0;
-  puVar8[3] = 0;
-  do {
-    lVar9 = D3DDevice_GpuBeginShaderConstantF4(puVar3,0,4,4);
-    uVar13 = -(ulonglong)(lVar9 == 0) & 0xffffffff8007000e;
-    if ((int)uVar13 < 0) goto LAB_82736e18;
-  } while (DAT_84013128 != 0);
-LAB_82736e3c:
-  auVar17 = vectorMergeHighWord128(auVar18,auVar24);
-  auVar16 = vectorMergeHighWord128(auVar20,auVar22);
-  auVar19 = vectorMergeLowWord128(auVar18,auVar24);
-  auVar24 = vectorMergeLowWord128(auVar20,auVar22);
-  auVar21 = vectorMergeHighWord128(auVar17,auVar16);
-  auVar20 = vectorMergeLowWord128(auVar17,auVar16);
-  auVar18 = vectorMergeHighWord128(auVar19,auVar24);
-  auVar24 = vectorMergeLowWord128(auVar19,auVar24);
-  uVar15 = (uint)lVar9;
-  *(undefined1 (*) [16])(uVar15 & 0xfffffff0) = auVar21;
-  *(undefined1 (*) [16])(uVar15 + 0x10 & 0xfffffff0) = auVar20;
-  *(undefined1 (*) [16])(uVar15 + 0x20 & 0xfffffff0) = auVar18;
-  *(undefined1 (*) [16])(uVar15 + 0x30 & 0xfffffff0) = auVar24;
-  R_DrawIndexedPrimitive((undefined4 *)param_2,uVar14 - 0x100);
-  uVar13 = (ulonglong)local_144;
-  local_14c = local_14c + 1;
-  local_144 = (uint)(uVar13 - 1);
-  if (uVar13 - 1 == 0) goto LAB_82736e94;
-  goto LAB_82736b90;
-LAB_82736e18:
-  do {
-    uVar10 = R_ErrorDescription(uVar13);
-    Sys_Error(0xffffffff821beac8,0x491,uVar10);
-  } while (DAT_84013128 != 0);
-  goto LAB_82736e3c;
+  uVar14 = (pDVar3->m_Pending).m_Mask[0];
+  (pDVar3->m_Pending).m_Mask[0] = uVar14 | 0x4000000000000000;
+  *(GfxTexture **)(iVar7 + 0x1c) = local_150;
+  (pDVar3->m_Pending).m_Mask[0] = uVar14 | 0x6000000000000000;
+  __restvmx_123();
+  __restgprlr();
+  return;
 }
 
 
 // 82736ED8  R_DrawStaticModelArray_AmbientNoPrepass  (gfx_d3d/r_draw_staticmodel.cpp:1324)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-void R_DrawStaticModelArray_AmbientNoPrepass(undefined8 param_1,ulonglong param_2)
+void R_DrawStaticModelArray_AmbientNoPrepass
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufPrimState *param_2)
 
 {
-  ulonglong *puVar1;
-  uint uVar2;
-  int iVar3;
+  D3DDevice *pDVar1;
+  GfxStaticModelDrawInst *pGVar2;
+  GfxCmdRingBuf *pGVar3;
   int iVar4;
-  uint uVar5;
-  undefined4 *puVar6;
+  float *pfVar5;
   undefined8 in_r0;
-  longlong lVar7;
-  DWORD DVar9;
-  undefined8 uVar8;
+  longlong lVar6;
+  ulong uVar7;
+  __vector4 *p_Var8;
+  GfxCmdBufPrimState *pGVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ushort *puVar12;
+  ushort *puVar11;
+  uint uVar12;
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
@@ -621,181 +681,193 @@ void R_DrawStaticModelArray_AmbientNoPrepass(undefined8 param_1,ulonglong param_
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
   undefined1 auVar21 [16];
+  GfxCmdBufPrimState *pGStack0000001c;
   uint local_130;
+  GfxDrawPrimArgs aGStack_110 [22];
   
-  uVar11 = ZEXT48(&stack0x00000000);
+  uVar10 = (ulonglong)(int)param_2;
   __savegprlr();
-  lVar7 = __savevmx_122();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x542,0,0xffffffff82000f98,0xffffffff821bebc4);
+  lVar6 = __savevmx_122();
+  pGVar9 = (GfxCmdBufPrimState *)uVar10;
+  pGStack0000001c = pGVar9;
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x542,0,"%s");
   }
-  iVar4 = (int)lVar7;
+  iVar4 = (int)lVar6;
   if (*(int *)(iVar4 + 4) != 3) {
-    MyAssertHandler(0xffffffff821bea58,0x543,0,0xffffffff821beb60,0xffffffff821bedf4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x543,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
-  R_SetupStaticModelPrim(*(undefined4 *)(iVar4 + 0x24),uVar11 - 0x110,param_2);
-  puVar12 = *(ushort **)(iVar4 + 0x2c);
-  auVar20 = loadVectorLeftIndexed(lVar7 + 8);
-  auVar21 = loadVectorRightIndexed(lVar7 + 0x18);
-  auVar20 = vectorSubtractFloatingPoint128((auVar20 | auVar21) & _DAT_8404f950,_DAT_8217a040);
-  puVar1 = (ulonglong *)*(undefined4 *)param_2;
+  R_SetupStaticModelPrim(*(XSurface **)(iVar4 + 0x24),aGStack_110,pGVar9);
+  puVar11 = *(ushort **)(iVar4 + 0x2c);
+  auVar20 = loadVectorLeftIndexed(lVar6 + 8);
+  auVar21 = loadVectorRightIndexed(lVar6 + 0x18);
+  auVar20 = vectorSubtractFloatingPoint128
+                      ((auVar20 | auVar21) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       (undefined1  [16])g_unit.field0_0x0);
+  pDVar1 = pGVar9->device;
   local_130 = *(uint *)(iVar4 + 0x28);
-  uVar10 = *puVar1;
-  uVar2 = *(uint *)(DAT_8461658c + 0x284);
-  *puVar1 = uVar10 & 0xbfffffffffffffff;
-  *puVar1 = uVar10 & 0x9fffffffffffffff;
-  if (local_130 == 0) {
-LAB_827372c0:
-    uVar11 = *puVar1;
-    *puVar1 = uVar11 | 0x4000000000000000;
-    *puVar1 = uVar11 | 0x6000000000000000;
-    __restvmx_122();
-    __restgprlr();
-    return;
+  uVar10 = (pDVar1->m_Pending).m_Mask[0];
+  pGVar2 = ((rgp.world)->dpvs).smodelDrawInsts;
+  (pDVar1->m_Pending).m_Mask[0] = uVar10 & 0xbfffffffffffffff;
+  (pDVar1->m_Pending).m_Mask[0] = uVar10 & 0x9fffffffffffffff;
+  if (local_130 != 0) {
+    do {
+      pGVar3 = *(GfxCmdRingBuf **)(iVar4 + 0x30);
+      uVar7 = GetCurrentProcessorNumber();
+      if (pGVar3 != dx.cmdBufForProcId[uVar7]) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                        0x496,0,"%s");
+      }
+      if ((pGVar3 != (GfxCmdRingBuf *)0x0) &&
+         ((longlong)((ulonglong)pGVar3->reserveMemoryPos0 - (ulonglong)pGVar3->memoryPos) < 0)) {
+        R_CmdBufReserveMemory(pGVar3);
+      }
+      auVar21 = ZEXT416(0);
+      auVar13 = auVar21 | auVar21 << 0x20 | auVar21 << 0x40 | auVar21 << 0x60;
+      lVar6 = (ulonglong)*puVar11 * 0x2c + ZEXT48(pGVar2);
+      auVar19 = loadVectorRightIndexed(lVar6 + 0x10);
+      auVar18 = loadVectorLeftIndexed(lVar6);
+      uVar12 = (uint)(lVar6 + 0x28);
+      auVar21 = loadVectorForShiftLeft(in_r0,lVar6 + 0x28);
+      auVar17 = loadVectorRightIndexed(lVar6 + 0x1c);
+      auVar21 = vectorPermute128(*(undefined1 (*) [16])(uVar12 & 0xfffffff0),
+                                 *(undefined1 (*) [16])(uVar12 + 7 & 0xfffffff0),auVar21);
+      auVar16 = loadVectorLeftIndexed(lVar6 + 0xc);
+      auVar16 = auVar16 | auVar17;
+      auVar21 = vectorMergeHighByte(auVar13,auVar21);
+      auVar15 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x118);
+      auVar17 = vectorSplatWord(auVar16,1);
+      auVar14 = vectorSplatWord(auVar16,0);
+      auVar19 = vectorSubtractFloatingPoint128
+                          ((auVar18 | auVar19) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar20);
+      auVar16 = vectorSplatWord(auVar16,2);
+      auVar21 = vectorMergeHighHalfWord(auVar13,auVar21);
+      auVar17 = vectorUnpackD3Dtype(auVar17,8);
+      auVar13 = vectorUnpackD3Dtype(auVar14,8);
+      auVar16 = vectorUnpackD3Dtype(auVar16,8);
+      auVar21 = vectorConvertFromUnsignedFixedPointWord128(auVar21,0);
+      auVar14 = vectorSplatWord(auVar15,0);
+      auVar15 = vectorMultiplyFloatingPoint(auVar21,(undefined1  [16])g_diffuseDouble.field0_0x0);
+      auVar13 = vectorMultiplyAddFloatingPoint
+                          (auVar13,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (auVar17,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (auVar16,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar16 = vectorMultiplyFloatingPoint(auVar15,auVar15);
+      auVar18 = vectorMultiplyFloatingPoint(auVar13,auVar14);
+      auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar14);
+      auVar13 = vectorMultiplyFloatingPoint(auVar21,auVar14);
+      auVar21 = vectorPermute128(auVar16,auVar15,(undefined1  [16])g_XYZw.field0_0x0);
+      do {
+        p_Var8 = D3DDevice_GpuBeginShaderConstantF4(pDVar1,0,8,4);
+        uVar12 = -(uint)(p_Var8 == (__vector4 *)0x0) & 0x8007000e;
+        if ((int)uVar12 < 0) {
+          R_ErrorDescription(uVar12);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error(
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 8, &constantData, 4 ) failed: %s\n"
+                   );
+        }
+      } while (alwaysfails != 0);
+      *(undefined1 (*) [16])((uint)p_Var8 & 0xfffffff0) = auVar21;
+      pfVar5 = (float *)((uint)(p_Var8 + 1) & 0xfffffff0);
+      *pfVar5 = (float)0;
+      pfVar5[1] = (float)0;
+      pfVar5[2] = (float)0;
+      pfVar5[3] = (float)0;
+      pfVar5 = (float *)((uint)(p_Var8 + 2) & 0xfffffff0);
+      *pfVar5 = (float)0;
+      pfVar5[1] = (float)0;
+      pfVar5[2] = (float)0;
+      pfVar5[3] = (float)0;
+      pfVar5 = (float *)((uint)(p_Var8 + 3) & 0xfffffff0);
+      *pfVar5 = (float)0;
+      pfVar5[1] = (float)0;
+      pfVar5[2] = (float)0;
+      pfVar5[3] = (float)0;
+      do {
+        p_Var8 = D3DDevice_GpuBeginShaderConstantF4(pDVar1,0,4,4);
+        uVar12 = -(uint)(p_Var8 == (__vector4 *)0x0) & 0x8007000e;
+        if ((int)uVar12 < 0) {
+          R_ErrorDescription(uVar12);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error(
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
+                   );
+        }
+      } while (alwaysfails != 0);
+      auVar15 = vectorMergeHighWord128(auVar18,auVar13);
+      auVar16 = vectorMergeHighWord128(auVar17,auVar19);
+      auVar14 = vectorMergeLowWord128(auVar18,auVar13);
+      auVar21 = vectorMergeLowWord128(auVar17,auVar19);
+      auVar17 = vectorMergeHighWord128(auVar15,auVar16);
+      auVar16 = vectorMergeLowWord128(auVar15,auVar16);
+      auVar13 = vectorMergeHighWord128(auVar14,auVar21);
+      auVar21 = vectorMergeLowWord128(auVar14,auVar21);
+      *(undefined1 (*) [16])((uint)p_Var8 & 0xfffffff0) = auVar17;
+      *(undefined1 (*) [16])((uint)(p_Var8 + 1) & 0xfffffff0) = auVar16;
+      *(undefined1 (*) [16])((uint)(p_Var8 + 2) & 0xfffffff0) = auVar13;
+      *(undefined1 (*) [16])((uint)(p_Var8 + 3) & 0xfffffff0) = auVar21;
+      R_DrawIndexedPrimitive(pGStack0000001c,aGStack_110);
+      uVar10 = (ulonglong)local_130;
+      puVar11 = puVar11 + 1;
+      local_130 = (uint)(uVar10 - 1);
+    } while (uVar10 - 1 != 0);
   }
-LAB_82737078:
-  iVar3 = *(int *)(iVar4 + 0x30);
-  DVar9 = GetCurrentProcessorNumber();
-  if (iVar3 != *(int *)(&DAT_846177e4 + DVar9 * 4)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x496,
-                    0,&DAT_82000f98,"cmdBuf == R_GetCmdRingBuf()");
-  }
-  if ((iVar3 != 0) &&
-     ((longlong)((ulonglong)*(uint *)(iVar3 + 0x20) - (ulonglong)*(uint *)(iVar3 + 4)) < 0)) {
-    R_CmdBufReserveMemory(iVar3);
-  }
-  auVar21 = ZEXT416(0);
-  auVar13 = auVar21 | auVar21 << 0x20 | auVar21 << 0x40 | auVar21 << 0x60;
-  lVar7 = (ulonglong)*puVar12 * 0x2c + (ulonglong)uVar2;
-  auVar19 = loadVectorRightIndexed(lVar7 + 0x10);
-  auVar18 = loadVectorLeftIndexed(lVar7);
-  uVar5 = (uint)(lVar7 + 0x28);
-  auVar21 = loadVectorForShiftLeft(in_r0,lVar7 + 0x28);
-  auVar17 = loadVectorRightIndexed(lVar7 + 0x1c);
-  auVar21 = vectorPermute128(*(undefined1 (*) [16])(uVar5 & 0xfffffff0),
-                             *(undefined1 (*) [16])(uVar5 + 7 & 0xfffffff0),auVar21);
-  auVar16 = loadVectorLeftIndexed(lVar7 + 0xc);
-  auVar16 = auVar16 | auVar17;
-  auVar21 = vectorMergeHighByte(auVar13,auVar21);
-  auVar15 = loadVectorLeftIndexed(uVar11 - 0x118);
-  auVar17 = vectorSplatWord(auVar16,1);
-  auVar14 = vectorSplatWord(auVar16,0);
-  auVar19 = vectorSubtractFloatingPoint128((auVar18 | auVar19) & _DAT_8404f950,auVar20);
-  auVar16 = vectorSplatWord(auVar16,2);
-  auVar21 = vectorMergeHighHalfWord(auVar13,auVar21);
-  auVar17 = vectorUnpackD3Dtype(auVar17,8);
-  auVar13 = vectorUnpackD3Dtype(auVar14,8);
-  auVar16 = vectorUnpackD3Dtype(auVar16,8);
-  auVar21 = vectorConvertFromUnsignedFixedPointWord128(auVar21,0);
-  auVar14 = vectorSplatWord(auVar15,0);
-  auVar15 = vectorMultiplyFloatingPoint(auVar21,_DAT_8217a600);
-  auVar13 = vectorMultiplyAddFloatingPoint(auVar13,_DAT_8217a100,_DAT_8217a110);
-  auVar17 = vectorMultiplyAddFloatingPoint(auVar17,_DAT_8217a100,_DAT_8217a110);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar16,_DAT_8217a100,_DAT_8217a110);
-  auVar16 = vectorMultiplyFloatingPoint(auVar15,auVar15);
-  auVar18 = vectorMultiplyFloatingPoint(auVar13,auVar14);
-  auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar14);
-  auVar13 = vectorMultiplyFloatingPoint(auVar21,auVar14);
-  auVar21 = vectorPermute128(auVar16,auVar15,_DAT_8404f590);
-  do {
-    lVar7 = D3DDevice_GpuBeginShaderConstantF4(puVar1,0,8,4);
-    uVar10 = -(ulonglong)(lVar7 == 0) & 0xffffffff8007000e;
-    if ((int)uVar10 < 0) goto LAB_827371d4;
-  } while (DAT_84013128 != 0);
-  goto LAB_827371f8;
-LAB_827371d4:
-  do {
-    uVar8 = R_ErrorDescription(uVar10);
-    Sys_Error(0xffffffff821becb8,0x57a,uVar8);
-  } while (DAT_84013128 != 0);
-LAB_827371f8:
-  uVar5 = (uint)lVar7;
-  *(undefined1 (*) [16])(uVar5 & 0xfffffff0) = auVar21;
-  puVar6 = (undefined4 *)(uVar5 + 0x10 & 0xfffffff0);
-  *puVar6 = 0;
-  puVar6[1] = 0;
-  puVar6[2] = 0;
-  puVar6[3] = 0;
-  puVar6 = (undefined4 *)(uVar5 + 0x20 & 0xfffffff0);
-  *puVar6 = 0;
-  puVar6[1] = 0;
-  puVar6[2] = 0;
-  puVar6[3] = 0;
-  puVar6 = (undefined4 *)(uVar5 + 0x30 & 0xfffffff0);
-  *puVar6 = 0;
-  puVar6[1] = 0;
-  puVar6[2] = 0;
-  puVar6[3] = 0;
-  do {
-    lVar7 = D3DDevice_GpuBeginShaderConstantF4(puVar1,0,4,4);
-    uVar10 = -(ulonglong)(lVar7 == 0) & 0xffffffff8007000e;
-    if ((int)uVar10 < 0) goto LAB_8273724c;
-  } while (DAT_84013128 != 0);
-LAB_82737270:
-  auVar15 = vectorMergeHighWord128(auVar18,auVar13);
-  auVar16 = vectorMergeHighWord128(auVar17,auVar19);
-  auVar14 = vectorMergeLowWord128(auVar18,auVar13);
-  auVar21 = vectorMergeLowWord128(auVar17,auVar19);
-  auVar17 = vectorMergeHighWord128(auVar15,auVar16);
-  auVar16 = vectorMergeLowWord128(auVar15,auVar16);
-  auVar13 = vectorMergeHighWord128(auVar14,auVar21);
-  auVar21 = vectorMergeLowWord128(auVar14,auVar21);
-  uVar5 = (uint)lVar7;
-  *(undefined1 (*) [16])(uVar5 & 0xfffffff0) = auVar17;
-  *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0) = auVar16;
-  *(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0) = auVar13;
-  *(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0) = auVar21;
-  R_DrawIndexedPrimitive((undefined4 *)param_2,uVar11 - 0x110);
-  uVar10 = (ulonglong)local_130;
-  puVar12 = puVar12 + 1;
-  local_130 = (uint)(uVar10 - 1);
-  if (uVar10 - 1 == 0) goto LAB_827372c0;
-  goto LAB_82737078;
-LAB_8273724c:
-  do {
-    uVar8 = R_ErrorDescription(uVar10);
-    Sys_Error(0xffffffff821beac8,0x582,uVar8);
-  } while (DAT_84013128 != 0);
-  goto LAB_82737270;
+  uVar10 = (pDVar1->m_Pending).m_Mask[0];
+  (pDVar1->m_Pending).m_Mask[0] = uVar10 | 0x4000000000000000;
+  (pDVar1->m_Pending).m_Mask[0] = uVar10 | 0x6000000000000000;
+  __restvmx_122();
+  __restgprlr();
+  return;
 }
 
 
-// 82737A90  GfxSModelArrayCallback_NoPrepass::Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
+// 82737A90  Callback  (gfx_d3d/r_draw_staticmodel.cpp:1530)
 
-void GfxSModelArrayCallback_NoPrepass__Callback(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void GfxSModelArrayCallback_NoPrepass::Callback
+               (GfxStaticModelDrawStream *param_1,GfxCmdBufPrimState *param_2)
 
 {
-  int iVar1;
-  int iVar3;
-  undefined4 uVar4;
-  undefined8 uVar2;
-  ulonglong uVar5;
+  XSurface *pXVar1;
+  GfxStaticModelDrawStream *pGVar2;
+  MaterialVertexDeclType MVar3;
+  uint uVar4;
   
-  iVar3 = __savegprlr_29();
-  uVar5 = (ulonglong)*(uint *)(iVar3 + 0x24);
-  uVar4 = XSurfaceGetModelVertDecl(uVar5);
-  *(undefined4 *)((int)param_2 + 8) = uVar4;
-  R_UpdateVertexDecl(*(undefined4 *)(iVar3 + 0x34));
-  uVar2 = XSurfaceGetVert0Size(uVar5);
-  R_SetStreamSource(param_2,uVar5 + 0x20,0,uVar2);
-  iVar1 = *(int *)(iVar3 + 4);
-  if (iVar1 == 2) {
-    R_DrawStaticModelArray_UnlitNoPrepass(iVar3,param_2);
+  pGVar2 = (GfxStaticModelDrawStream *)__savegprlr_29(param_1);
+  pXVar1 = pGVar2->localSurf;
+  MVar3 = XSurfaceGetModelVertDecl(pXVar1);
+  param_2->vertDeclType = MVar3;
+  R_UpdateVertexDecl(pGVar2->state);
+  uVar4 = XSurfaceGetVert0Size(pXVar1);
+  R_SetStreamSource(param_2,&pXVar1->vb0,0,uVar4);
+  uVar4 = pGVar2->precompiledIndex;
+  if (uVar4 == 2) {
+    R_DrawStaticModelArray_UnlitNoPrepass(pGVar2,param_2);
     __restgprlr_29();
     return;
   }
-  if (iVar1 == 1) {
-    R_DrawStaticModelArray_LitNoPrepass(iVar3,param_2);
+  if (uVar4 == 1) {
+    R_DrawStaticModelArray_LitNoPrepass(pGVar2,param_2);
     __restgprlr_29();
     return;
   }
-  if (iVar1 == 3) {
-    R_DrawStaticModelArray_AmbientNoPrepass(iVar3,param_2);
+  if (uVar4 == 3) {
+    R_DrawStaticModelArray_AmbientNoPrepass(pGVar2,param_2);
     __restgprlr_29();
     return;
   }
-  if (iVar1 != 0) {
-    MyAssertHandler(0xffffffff821bea58,0x62c,0,0xffffffff821beb60,0xffffffff821bee34);
+  if (uVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x62c,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
   __restgprlr_29();
   return;
@@ -804,59 +876,70 @@ void GfxSModelArrayCallback_NoPrepass__Callback(undefined8 param_1,undefined8 pa
 
 // 827372F8  R_InitStaticModelDrawStreamNonOptimized  (gfx_d3d/r_draw_staticmodel.cpp:2026)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void R_InitStaticModelDrawStreamNonOptimized
-               (undefined8 param_1,ulonglong param_2,undefined4 *param_3,int param_4)
+               (GfxStaticModelDrawStream *param_1,GfxDrawListInfo *param_2,
+               GfxSModelSurfIter *param_3,GfxCmdBufState *param_4)
 
 {
   undefined4 uVar1;
   undefined4 uVar2;
   undefined2 uVar3;
-  int iVar4;
-  undefined2 *puVar5;
-  undefined2 *puVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  DWORD DVar9;
-  undefined2 *puVar10;
+  MaterialPass *pMVar4;
+  uchar *puVar5;
+  uchar *puVar6;
+  GfxCmdRingBuf *pGVar7;
+  int iVar8;
+  undefined4 *puVar9;
+  ulong uVar10;
+  ulonglong uVar11;
+  uchar *puVar12;
   
-  puVar8 = (undefined4 *)__savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bea58,0x7ec,0,0xffffffff82000f98,0xffffffff82015cf8);
+  uVar11 = (ulonglong)(int)param_2;
+  puVar9 = (undefined4 *)__savegprlr_25(param_1);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp"
+                    ,0x7ec,0,"%s");
   }
-  iVar4 = *(int *)(param_4 + 0xf8);
-  iVar7 = (int)param_2;
-  uVar1 = *(undefined4 *)(iVar7 + 0xc);
-  uVar2 = *(undefined4 *)(iVar7 + 0x10);
-  puVar5 = (undefined2 *)param_3[1];
-  puVar8[2] = *(undefined4 *)(iVar7 + 8);
-  puVar8[3] = uVar1;
-  puVar6 = (undefined2 *)param_3[2];
-  puVar8[4] = uVar2;
-  puVar8[1] = (uint)*(byte *)(iVar4 + 100);
-  *puVar8 = param_3;
-  uVar3 = *puVar5;
-  param_3[1] = puVar5 + 1;
-  if (puVar6 < puVar5 + 1) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
+  pMVar4 = param_4->pass;
+  iVar8 = (int)uVar11;
+  uVar1 = *(undefined4 *)(iVar8 + 0xc);
+  uVar2 = *(undefined4 *)(iVar8 + 0x10);
+  puVar5 = param_3->current;
+  puVar9[2] = *(undefined4 *)(iVar8 + 8);
+  puVar9[3] = uVar1;
+  puVar6 = param_3->end;
+  puVar9[4] = uVar2;
+  puVar9[1] = (uint)pMVar4->precompiledIndex;
+  *puVar9 = param_3;
+  uVar3 = *(undefined2 *)puVar5;
+  param_3->current = puVar5 + 2;
+  if (puVar6 < puVar5 + 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_smodelsurfiter_inline.h"
+                    ,0x8e,0,"%s");
   }
-  puVar5 = (undefined2 *)param_3[1];
-  puVar6 = (undefined2 *)param_3[2];
-  puVar10 = puVar5 + 1;
-  *(undefined2 *)(puVar8 + 5) = uVar3;
-  param_3[1] = puVar10;
-  uVar3 = *puVar5;
-  if (puVar6 < puVar10) {
-    MyAssertHandler(0xffffffff821be9d8,0x8e,0,0xffffffff82000f98,0xffffffff821bea24);
+  puVar5 = param_3->current;
+  puVar6 = param_3->end;
+  puVar12 = puVar5 + 2;
+  *(undefined2 *)(puVar9 + 5) = uVar3;
+  param_3->current = puVar12;
+  uVar3 = *(undefined2 *)puVar5;
+  if (puVar6 < puVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_smodelsurfiter_inline.h"
+                    ,0x8e,0,"%s");
   }
-  uVar1 = *param_3;
-  *(undefined2 *)((int)puVar8 + 0x16) = uVar3;
-  puVar8[6] = uVar1;
-  puVar8[7] = *(undefined4 *)(param_4 + 0x74);
-  puVar8[8] = (uint)*(byte *)(*(int *)(param_4 + 0xf8) + 99);
-  DVar9 = GetCurrentProcessorNumber();
-  uVar1 = *(undefined4 *)(&DAT_846177e4 + DVar9 * 4);
-  puVar8[0xd] = param_4;
-  puVar8[0xc] = uVar1;
+  puVar5 = param_3->visData;
+  *(undefined2 *)((int)puVar9 + 0x16) = uVar3;
+  puVar9[6] = puVar5;
+  puVar9[7] = param_4->samplerTexture[1];
+  puVar9[8] = (uint)param_4->pass->customSamplerFlags;
+  uVar10 = GetCurrentProcessorNumber();
+  pGVar7 = dx.cmdBufForProcId[uVar10];
+  puVar9[0xd] = param_4;
+  puVar9[0xc] = pGVar7;
   __restgprlr_25();
   return;
 }
@@ -864,16 +947,18 @@ void R_InitStaticModelDrawStreamNonOptimized
 
 // 82737430  R_DrawStaticModel_SetPlacement  (gfx_d3d/r_draw_staticmodel.cpp:2058)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
-void R_DrawStaticModel_SetPlacement(undefined8 param_1,undefined8 param_2,int param_3)
+void R_DrawStaticModel_SetPlacement
+               (GfxStaticModelDrawInst *param_1,GfxCmdBufSourceState *param_2,XSurface *param_3)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  undefined8 uVar3;
-  double dVar4;
-  undefined1 auVar5 [16];
+  float *pfVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  GfxMatrix *pGVar4;
+  double dVar5;
   undefined1 auVar6 [16];
   undefined1 auVar7 [16];
   undefined1 auVar8 [16];
@@ -882,42 +967,57 @@ void R_DrawStaticModel_SetPlacement(undefined8 param_1,undefined8 param_2,int pa
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  float local_80;
+  float local_7c;
+  float local_78;
+  float afStack_70 [28];
   
-  uVar1 = ZEXT48(&stack0x00000000);
-  lVar2 = __savegprlr_26();
-  auVar13 = loadVectorLeftIndexed(lVar2 + 0xc);
-  auVar12 = loadVectorRightIndexed(lVar2 + 0x1c);
-  auVar13 = auVar13 | auVar12;
+  uVar2 = ZEXT48(&stack0x00000000);
+  lVar3 = __savegprlr_26(param_1);
+  auVar14 = loadVectorLeftIndexed(lVar3 + 0xc);
+  auVar13 = loadVectorRightIndexed(lVar3 + 0x1c);
+  auVar14 = auVar14 | auVar13;
+  auVar13 = vectorSplatWord(auVar14,0);
+  auVar12 = vectorSplatWord(auVar14,1);
+  auVar14 = vectorSplatWord(auVar14,2);
+  auVar13 = vectorUnpackD3Dtype(auVar13,8);
+  auVar6 = vectorUnpackD3Dtype(auVar12,8);
+  auVar12 = vectorUnpackD3Dtype(auVar14,8);
+  auVar14 = vectorMultiplyAddFloatingPoint
+                      (auVar13,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                       (undefined1  [16])g_unpackAdd101010.field0_0x0);
+  auVar6 = vectorMultiplyAddFloatingPoint
+                     (auVar6,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                      (undefined1  [16])g_unpackAdd101010.field0_0x0);
+  auVar13 = vectorMultiplyAddFloatingPoint
+                      (auVar12,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                       (undefined1  [16])g_unpackAdd101010.field0_0x0);
+  auVar11 = vectorSplatWord(auVar14,0);
+  auVar10 = vectorSplatWord(auVar14,1);
+  auVar9 = vectorSplatWord(auVar14,2);
+  auVar8 = vectorSplatWord(auVar6,0);
+  auVar7 = vectorSplatWord(auVar6,1);
+  auVar6 = vectorSplatWord(auVar6,2);
   auVar12 = vectorSplatWord(auVar13,0);
-  auVar11 = vectorSplatWord(auVar13,1);
+  auVar14 = vectorSplatWord(auVar13,1);
+  storeVectorElementWordIndexed(auVar11,uVar2 - 0x70);
   auVar13 = vectorSplatWord(auVar13,2);
-  auVar12 = vectorUnpackD3Dtype(auVar12,8);
-  auVar5 = vectorUnpackD3Dtype(auVar11,8);
-  auVar11 = vectorUnpackD3Dtype(auVar13,8);
-  auVar13 = vectorMultiplyAddFloatingPoint(auVar12,_DAT_8217a100,_DAT_8217a110);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar5,_DAT_8217a100,_DAT_8217a110);
-  auVar12 = vectorMultiplyAddFloatingPoint(auVar11,_DAT_8217a100,_DAT_8217a110);
-  auVar10 = vectorSplatWord(auVar13,0);
-  auVar9 = vectorSplatWord(auVar13,1);
-  auVar8 = vectorSplatWord(auVar13,2);
-  auVar7 = vectorSplatWord(auVar5,0);
-  auVar6 = vectorSplatWord(auVar5,1);
-  auVar5 = vectorSplatWord(auVar5,2);
-  auVar11 = vectorSplatWord(auVar12,0);
-  auVar13 = vectorSplatWord(auVar12,1);
-  storeVectorElementWordIndexed(auVar10,uVar1 - 0x70);
-  auVar12 = vectorSplatWord(auVar12,2);
-  storeVectorElementWordIndexed(auVar9,uVar1 - 0x6c);
-  storeVectorElementWordIndexed(auVar8,uVar1 - 0x68);
-  storeVectorElementWordIndexed(auVar7,uVar1 - 100);
-  storeVectorElementWordIndexed(auVar6,uVar1 - 0x60);
-  storeVectorElementWordIndexed(auVar5,uVar1 - 0x5c);
-  storeVectorElementWordIndexed(auVar11,uVar1 - 0x58);
-  storeVectorElementWordIndexed(auVar13,uVar1 - 0x54);
-  storeVectorElementWordIndexed(auVar12,uVar1 - 0x50);
-  dVar4 = (double)(*(float *)((int)lVar2 + 0x18) * *(float *)(param_3 + 8));
-  uVar3 = R_GetActiveWorldMatrix(param_2,uVar1 - 0x70);
-  MatrixSet44(dVar4,uVar3,uVar1 - 0x80,uVar1 - 0x70);
+  storeVectorElementWordIndexed(auVar10,uVar2 - 0x6c);
+  storeVectorElementWordIndexed(auVar9,uVar2 - 0x68);
+  storeVectorElementWordIndexed(auVar8,uVar2 - 100);
+  storeVectorElementWordIndexed(auVar7,uVar2 - 0x60);
+  storeVectorElementWordIndexed(auVar6,uVar2 - 0x5c);
+  storeVectorElementWordIndexed(auVar12,uVar2 - 0x58);
+  storeVectorElementWordIndexed(auVar14,uVar2 - 0x54);
+  storeVectorElementWordIndexed(auVar13,uVar2 - 0x50);
+  pfVar1 = (float *)lVar3;
+  dVar5 = (double)(pfVar1[6] * param_3->quantizeScale);
+  pGVar4 = R_GetActiveWorldMatrix(param_2);
+  local_80 = *pfVar1 - param_2->eyeOffset[0];
+  local_7c = pfVar1[1] - param_2->eyeOffset[1];
+  local_78 = pfVar1[2] - param_2->eyeOffset[2];
+  MatrixSet44((float (*) [4])pGVar4,&local_80,(float (*) [3])afStack_70,(float)dVar5);
   __restgprlr_26();
   return;
 }
@@ -925,37 +1025,45 @@ void R_DrawStaticModel_SetPlacement(undefined8 param_1,undefined8 param_2,int pa
 
 // 82737570  R_DrawStaticModelArray_NonOptimized  (gfx_d3d/r_draw_staticmodel.cpp:2078)
 
-void R_DrawStaticModelArray_NonOptimized(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawStaticModelArray_NonOptimized(GfxStaticModelDrawStream *param_1,GfxCmdBufContext param_2)
 
 {
-  undefined4 uVar1;
+  XSurface *pXVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  ushort *puVar6;
-  uint uVar7;
-  undefined4 uStack00000018;
-  undefined1 auStack_60 [96];
+  GfxStaticModelDrawInst *pGVar3;
+  GfxCmdBufSourceState *pGVar4;
+  GfxCmdBufState *pGVar5;
+  int iVar6;
+  GfxCmdBufPrimState *pGVar7;
+  ushort *puVar8;
+  uint uVar9;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
+  GfxDrawPrimArgs aGStack_60 [8];
   
-  iVar4 = __savegprlr_24();
-  lVar5 = (param_2 & 0xffffffff) + 0xc0;
-  uVar1 = *(undefined4 *)(iVar4 + 0x24);
-  R_SetupStaticModelPrim(uVar1,auStack_60,lVar5);
-  R_SetStaticModelVertexBuffer(param_2 & 0xffffffff,uVar1);
-  uVar7 = 0;
-  uStack00000018 = (undefined4)(param_2 >> 0x20);
-  puVar6 = (ushort *)(*(int *)(iVar4 + 0x2c) + -2);
-  uVar2 = *(uint *)(iVar4 + 0x28);
-  uVar3 = *(uint *)(DAT_8461658c + 0x284);
+  iVar6 = __savegprlr_24(param_1);
+  pGStack0000001c = param_2.state;
+  pGVar5 = pGStack0000001c;
+  pGVar7 = &pGStack0000001c->prim;
+  pXVar1 = *(XSurface **)(iVar6 + 0x24);
+  _pGStack00000018 = param_2;
+  R_SetupStaticModelPrim(pXVar1,aGStack_60,pGVar7);
+  R_SetStaticModelVertexBuffer(pGVar5,pXVar1);
+  uVar9 = 0;
+  pGVar4 = pGStack00000018;
+  puVar8 = (ushort *)(*(int *)(iVar6 + 0x2c) + -2);
+  uVar2 = *(uint *)(iVar6 + 0x28);
+  pGVar3 = ((rgp.world)->dpvs).smodelDrawInsts;
   do {
-    puVar6 = puVar6 + 1;
-    R_DrawStaticModel_SetPlacement
-              ((ulonglong)*puVar6 * 0x2c + (ulonglong)uVar3,uStack00000018,uVar1);
+    puVar8 = puVar8 + 1;
+    R_DrawStaticModel_SetPlacement(pGVar3 + *puVar8,pGVar4,pXVar1);
     R_SetupPassPerPrimArgs(param_2);
-    R_DrawIndexedPrimitive(lVar5,auStack_60);
-    uVar7 = uVar7 + 1;
-  } while (uVar7 < uVar2);
+    R_DrawIndexedPrimitive(pGVar7,aGStack_60);
+    uVar9 = uVar9 + 1;
+  } while (uVar9 < uVar2);
   __restgprlr_24();
   return;
 }
@@ -963,34 +1071,44 @@ void R_DrawStaticModelArray_NonOptimized(undefined8 param_1,ulonglong param_2)
 
 // 82737798  R_DrawStaticModelSurfLit  (gfx_d3d/r_draw_staticmodel.cpp:2220)
 
-void R_DrawStaticModelSurfLit(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawStaticModelSurfLit
+               (GfxSModelSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawListInfo *param_3)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_60 [4];
-  int local_5c;
-  undefined4 local_44;
+  GfxCmdBufState *pGVar1;
+  GfxCmdBufContext GVar2;
+  GfxSModelSurfIter *pGVar3;
+  GfxCmdBufContext GStack00000018;
+  GfxStaticModelDrawStream GStack_60;
   
-  uVar1 = __savegprlr_29();
-  *(undefined8 *)(param_2 + 0x150) = 0;
-  *(undefined8 *)(param_2 + 0x158) = 0;
-  *(undefined8 *)(param_2 + 0x160) = 0;
-  *(undefined8 *)(param_2 + 0x168) = 0;
-  *(undefined8 *)(param_2 + 0x130) = 0;
-  *(undefined8 *)(param_2 + 0x138) = 0;
-  *(undefined8 *)(param_2 + 0x140) = 0;
-  *(undefined8 *)(param_2 + 0x148) = 0;
-  if ((*(byte *)(*(int *)(param_2 + 0xf8) + 99) & 1) != 0) {
-    R_SetSamplerState(param_2,1,0x72);
+  pGVar3 = (GfxSModelSurfIter *)__savegprlr_29(param_1);
+  GStack00000018.state = param_2.state;
+  pGVar1 = GStack00000018.state;
+  (GStack00000018.state)->vertexShaderConstState[8] = 0;
+  (GStack00000018.state)->vertexShaderConstState[9] = 0;
+  (GStack00000018.state)->vertexShaderConstState[10] = 0;
+  (GStack00000018.state)->vertexShaderConstState[0xb] = 0;
+  (GStack00000018.state)->vertexShaderConstState[4] = 0;
+  (GStack00000018.state)->vertexShaderConstState[5] = 0;
+  (GStack00000018.state)->vertexShaderConstState[6] = 0;
+  (GStack00000018.state)->vertexShaderConstState[7] = 0;
+  GVar2 = param_2;
+  if (((GStack00000018.state)->pass->customSamplerFlags & 1) != 0) {
+    GStack00000018 = param_2;
+    R_SetSamplerState(pGVar1,1,'r');
+    GVar2 = GStack00000018;
   }
-  R_InitStaticModelDrawStreamNonOptimized(auStack_60,param_3,uVar1,param_2);
-  if (local_5c == 0) {
-    R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(param_2 + 0xf8) + 0x5c),
-                       **(undefined4 **)(param_2 + 0xec));
+  GStack00000018 = GVar2;
+  R_InitStaticModelDrawStreamNonOptimized(&GStack_60,param_3,pGVar3,pGVar1);
+  if (GStack_60.precompiledIndex == 0) {
+    R_WarnOncePerFrame(R_WARN_UNKNOWN_STATICMODEL_SHADER);
   }
   R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-            (auStack_60,param_2 + 0xc0);
-  *(undefined4 *)(param_2 + 0x74) = local_44;
+            (&GStack_60,&pGVar1->prim);
+  pGVar1->samplerTexture[1] = GStack_60.reflectionProbeTexture;
   __restgprlr_29();
   return;
 }
@@ -998,100 +1116,106 @@ void R_DrawStaticModelSurfLit(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 82737858  R_DrawStaticModelSurf  (gfx_d3d/r_draw_staticmodel.cpp:2253)
 
-void R_DrawStaticModelSurf(undefined8 param_1,undefined8 param_2,int *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawStaticModelSurf
+               (GfxSModelSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawListInfo *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uStack00000018;
-  undefined1 auStack_50 [4];
-  int local_4c;
-  int local_34;
+  GfxCmdBufState *pGVar1;
+  int iVar2;
+  GfxCmdBufContext GStack00000018;
+  GfxStaticModelDrawStream GStack_50;
   
-  uStack00000018._4_4_ = (int)param_2;
-  iVar1 = uStack00000018._4_4_;
-  uStack00000018 = param_2;
-  if (*param_3 == 0x21) {
-    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
+  GStack00000018.state = param_2.state;
+  pGVar1 = GStack00000018.state;
+  GStack00000018 = param_2;
+  if (param_3->baseTechType == TECHNIQUE_WIREFRAME_SOLID) {
+    R_InitStaticModelDrawStreamNonOptimized(&GStack_50,param_3,param_1,pGVar1);
     R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>
-              (auStack_50,param_2);
-    if (*(int *)(iVar1 + 0x74) == local_34) {
+              (&GStack_50,param_2);
+    if (pGVar1->samplerTexture[1] == GStack_50.reflectionProbeTexture) {
       return;
     }
-    uVar2 = 0x8d7;
+    iVar2 = 0x8d7;
   }
   else {
-    R_InitStaticModelDrawStreamNonOptimized(auStack_50,param_3,param_1,iVar1);
-    if (local_4c == 0) {
-      R_WarnOncePerFrame(0x39,**(undefined4 **)(*(int *)(iVar1 + 0xf8) + 0x5c),
-                         **(undefined4 **)(iVar1 + 0xec));
+    R_InitStaticModelDrawStreamNonOptimized(&GStack_50,param_3,param_1,pGVar1);
+    if (GStack_50.precompiledIndex == 0) {
+      R_WarnOncePerFrame(R_WARN_UNKNOWN_STATICMODEL_SHADER);
     }
     R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimState_*>
-              (auStack_50,iVar1 + 0xc0);
-    if (*(int *)(iVar1 + 0x74) == local_34) {
+              (&GStack_50,&pGVar1->prim);
+    if (pGVar1->samplerTexture[1] == GStack_50.reflectionProbeTexture) {
       return;
     }
-    uVar2 = 0x8e5;
+    iVar2 = 0x8e5;
   }
-  MyAssertHandler(0xffffffff821bea58,uVar2,0,0xffffffff82000f98,0xffffffff821bee70);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_staticmodel.cpp",
+                  iVar2,0,"%s");
   return;
 }
 
 
 // 827363F8  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
 
-void D3DDevice_SetStreamSource_Inline(void)
+void D3DDevice_SetStreamSource_Inline
+               (D3DDevice *param_1,uint param_2,D3DVertexBuffer *param_3,uint param_4,uint param_5)
 
 {
-  D3DDevice_SetStreamSource();
+  D3DDevice_SetStreamSource
+            (param_1,param_2,param_3,param_4,param_5,
+             0x8000000000000000 >>
+             ((((0x5f - (longlong)(int)param_2) * 0x5556 & 0xffffffffU) >> 0x10) + 0x20 & 0x7f));
   return;
 }
 
 
 // 82736420  D3DDevice_SetTexture_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2799)
 
-void D3DDevice_SetTexture_Inline(void)
+void D3DDevice_SetTexture_Inline(D3DDevice *param_1,ulong param_2,D3DBaseTexture *param_3)
 
 {
-  D3DDevice_SetTexture();
+  D3DDevice_SetTexture
+            (param_1,param_2,param_3,0x8000000000000000 >> ((longlong)(int)param_2 + 0x20U & 0x7f));
   return;
 }
 
 
 // 82736438  D3DDevice_GpuOwnVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3408)
 
-void D3DDevice_GpuOwnVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
+void D3DDevice_GpuOwnVertexShaderConstantF(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = *param_1 &
-             ~((ulonglong)
-               (-0x8000000000000000 >>
-               ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f)) >> (uVar1 & 0x7f));
+  (param_1->m_Pending).m_Mask[0] =
+       (param_1->m_Pending).m_Mask[0] &
+       ~((ulonglong)
+         (-0x8000000000000000 >>
+         (((((longlong)(int)param_2 + (longlong)(int)param_3) - 1U & 0xffffffff) >> 2) -
+          (ulonglong)(param_2 >> 2) & 0x7f)) >> ((ulonglong)(param_2 >> 2) & 0x7f));
   return;
 }
 
 
 // 82736470  D3DDevice_GpuDisownVertexShaderConstantF  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3464)
 
-void D3DDevice_GpuDisownVertexShaderConstantF(ulonglong *param_1,ulonglong param_2,longlong param_3)
+void D3DDevice_GpuDisownVertexShaderConstantF(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (param_2 & 0xffffffff) >> 2;
-  *param_1 = (ulonglong)
-             (-0x8000000000000000 >> ((((param_2 + param_3) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
-             >> (uVar1 & 0x7f) | *param_1;
+  (param_1->m_Pending).m_Mask[0] =
+       (ulonglong)
+       (-0x8000000000000000 >>
+       (((((longlong)(int)param_2 + (longlong)(int)param_3) - 1U & 0xffffffff) >> 2) -
+        (ulonglong)(param_2 >> 2) & 0x7f)) >> ((ulonglong)(param_2 >> 2) & 0x7f) |
+       (param_1->m_Pending).m_Mask[0];
   return;
 }
 
 
 // 827364A8  D3DDevice_GpuEndShaderConstantF4  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3497)
 
-void D3DDevice_GpuEndShaderConstantF4(void)
+void D3DDevice_GpuEndShaderConstantF4(D3DDevice *param_1)
 
 {
   return;

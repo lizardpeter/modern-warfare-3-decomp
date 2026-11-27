@@ -2,46 +2,57 @@
 
 // 82570860  TRACK_sv_game  (server/sv_game.cpp:108)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_sv_game(void)
 
 {
-  track_static_alloc_internal(0xffffffff83cad660,0x40000,0xffffffff8215d748,0xb);
-  track_static_alloc_internal(0xffffffff82990720,0x14,0xffffffff8215d738,10);
+  track_static_alloc_internal(g_sv_skel_memory,0x40000,"g_sv_skel_memory",0xb);
+  track_static_alloc_internal(g_gameModeStrs,0x14,"g_gameModeStrs",10);
   return;
 }
 
 
 // 825708B8  SV_GetPlayerstateForClientNum  (server/sv_game.cpp:119)
 
-longlong SV_GetPlayerstateForClientNum(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+playerState_s * SV_GetPlayerstateForClientNum(int param_1)
 
 {
-  return (longlong)DAT_83cfc50c * (longlong)param_1 + (ulonglong)DAT_83cfc508;
+  return (playerState_s *)((int)(sv.gameClients)->origin + sv.gameClientSize * param_1 + -0x1c);
 }
 
 
 // 825708E8  SV_GameSendServerCommand  (server/sv_game.cpp:137)
 
-void SV_GameSendServerCommand(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_GameSendServerCommand(int param_1,svscmd_type param_2,char *param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  longlong lVar2;
   
-  uVar1 = __savegprlr_27();
-  if ((int)uVar1 == -1) {
-    SV_SendServerCommand(0);
+  lVar2 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1,lVar2,param_3);
+  if (uVar1 == 0xffffffff) {
+    SV_SendServerCommand((client_t *)0x0,(svscmd_type)lVar2,"%s");
     __restgprlr_27();
     return;
   }
-  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
-    MyAssertHandler(0xffffffff8215d800,0x90,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x90,0,
+                    "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if ((ulonglong)*(uint *)(DAT_83d0b55c + 0xc) <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8215d800,0x91,0,0xffffffff8215d760,uVar1);
+  if ((sv_maxclients->current).unsignedInt <= uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x91,0,
+                    "clientNum doesn\'t index sv_maxclients->current.integer\n\t%i not in [0, %i)");
   }
-  SV_SendServerCommand
-            ((longlong)(int)uVar1 * 0x68b00 + (ulonglong)DAT_83f11414,param_2,0xffffffff82000f98,
-             param_3);
+  SV_SendServerCommand(svs.clients + uVar1,(svscmd_type)lVar2,"%s");
   __restgprlr_27();
   return;
 }
@@ -49,17 +60,22 @@ void SV_GameSendServerCommand(undefined8 param_1,undefined8 param_2,undefined8 p
 
 // 825709D8  SV_GameDropClient  (server/sv_game.cpp:169)
 
-void SV_GameDropClient(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_GameDropClient(int param_1,char *param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
-  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
-    MyAssertHandler(0xffffffff8215d800,0xaa,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  iVar1 = __savegprlr_29(param_1);
+  if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0xaa,0,
+                    "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if ((-1 < iVar1) && (iVar1 < *(int *)(DAT_83d0b55c + 0xc))) {
-    SV_DropClient((longlong)iVar1 * 0x68b00 + (ulonglong)DAT_83f11414,param_2,1);
+  if ((-1 < iVar1) && (iVar1 < (sv_maxclients->current).integer)) {
+    SV_DropClient(svs.clients + iVar1,param_2,true);
   }
   __restgprlr_29();
   return;
@@ -68,53 +84,63 @@ void SV_GameDropClient(undefined8 param_1,undefined8 param_2)
 
 // 82570A80  SV_SetMapCenter  (server/sv_game.cpp:180)
 
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void SV_SetMapCenter(float *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  DAT_83f1da28 = *param_1;
-  DAT_83f1da2c = param_1[1];
-  DAT_83f1da30 = param_1[2];
-  uVar1 = va(0xffffffff820294b4,(double)*param_1,(double)param_1[1],(double)param_1[2]);
-  SV_SetConfigstring(0x10,uVar1);
-  DAT_83f1da34 = (*param_1 - 32768.0) + 100.0;
-  DAT_83f1da38 = (param_1[1] - 32768.0) + 100.0;
-  DAT_83f1da3c = (param_1[2] - 32768.0) + 100.0;
-  DAT_83f1da40 = ((*param_1 + 32768.0) - 1.0) - 100.0;
-  DAT_83f1da44 = ((param_1[1] + 32768.0) - 1.0) - 100.0;
-  DAT_83f1da48 = ((param_1[2] + 32768.0) - 1.0) - 100.0;
+  svs.mapCenter[0] = *param_1;
+  svs.mapCenter[1] = param_1[1];
+  svs.mapCenter[2] = param_1[2];
+  pcVar1 = va("%f %f %f");
+  SV_SetConfigstring(CS_MAPCENTER,pcVar1);
+  svs.mapCenterBoundsMin[0] = (*param_1 - 32768.0) + 100.0;
+  svs.mapCenterBoundsMin[1] = (param_1[1] - 32768.0) + 100.0;
+  svs.mapCenterBoundsMin[2] = (param_1[2] - 32768.0) + 100.0;
+  svs.mapCenterBoundsMax[0] = ((*param_1 + 32768.0) - 1.0) - 100.0;
+  svs.mapCenterBoundsMax[1] = ((param_1[1] + 32768.0) - 1.0) - 100.0;
+  svs.mapCenterBoundsMax[2] = ((param_1[2] + 32768.0) - 1.0) - 100.0;
   return;
 }
 
 
 // 82570BD8  SV_GetMapCenter  (server/sv_game.cpp:196)
 
-undefined8 SV_GetMapCenter(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float (*) [3] SV_GetMapCenter(void)
 
 {
-  return 0xffffffff83f1da28;
+  return &svs.mapCenter;
 }
 
 
 // 82570BF0  SV_SetGameEndTime  (server/sv_game.cpp:202)
 
-void SV_SetGameEndTime(undefined8 param_1)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void SV_SetGameEndTime(int param_1)
 
 {
   uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  uint uVar4;
+  int iVar2;
+  char *pcVar3;
   char acStack_20 [16];
   
-  SV_GetConfigstring(0xf,acStack_20,0xc);
-  iVar3 = atoi(acStack_20);
-  uVar4 = iVar3 - (int)param_1;
-  uVar1 = (int)uVar4 >> 0x1f;
-  if (500 < (int)((uVar4 ^ uVar1) - uVar1)) {
-    uVar2 = va(0xffffffff8200c28c,param_1);
-    SV_SetConfigstring(0xf,uVar2);
+  SV_GetConfigstring(CS_GAMEENDTIME,acStack_20,0xc);
+  iVar2 = atoi(acStack_20);
+  uVar1 = iVar2 - param_1 >> 0x1f;
+  if (500 < (int)((iVar2 - param_1 ^ uVar1) - uVar1)) {
+    pcVar3 = va("%i");
+    SV_SetConfigstring(CS_GAMEENDTIME,pcVar3);
   }
   return;
 }
@@ -122,166 +148,180 @@ void SV_SetGameEndTime(undefined8 param_1)
 
 // 82570C68  SV_SetBrushModel  (server/sv_game.cpp:222)
 
-undefined8 SV_SetBrushModel(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_SetBrushModel(gentity_s *param_1)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  undefined4 uVar2;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
+  bool bVar3;
+  uint uVar1;
+  int iVar2;
+  entityShared_t *peVar4;
+  float *pfVar5;
   longlong lVar6;
-  undefined4 uStack_34;
-  undefined1 local_30 [24];
+  float fStack_34;
+  Bounds local_30;
   
-  if (*(char *)(param_1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8215d800,0xe1,0,0xffffffff82000f98,0xffffffff8206caf8);
+  if ((param_1->r).isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0xe1,0,
+                    "%s");
   }
-  if (*(char *)(param_1 + 0x101) != '\x04') {
-    MyAssertHandler(0xffffffff8215d800,0xe2,0,0xffffffff8215d8a4,*(char *)(param_1 + 0x101),4);
+  if ((param_1->r).modelType != '\x04') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0xe2,0,
+                    "ent->r.modelType == MODELTYPE_BRUSH\n\t%i, %i");
   }
-  cVar3 = CM_BrushModelIsValid(*(undefined4 *)(param_1 + 0x8c));
-  if (cVar3 == '\0') {
-    G_ModelName(*(undefined2 *)(param_1 + 0x168));
-    uVar1 = SL_ConvertToString();
-    Com_PrintWarning(0xf,0xffffffff8215d848,uVar1);
-    SV_UnlinkEntity(param_1);
-    uVar1 = 0;
-    *(undefined1 *)(param_1 + 0x101) = 0;
-  }
-  else {
-    CM_BrushModelBounds(*(undefined4 *)(param_1 + 0x8c),local_30);
-    puVar5 = &uStack_34;
-    puVar4 = (undefined4 *)(param_1 + 0x100);
+  bVar3 = CM_BrushModelIsValid((param_1->s).index.brushModel);
+  if (bVar3) {
+    CM_BrushModelBounds((param_1->s).index.brushModel,&local_30);
+    pfVar5 = &fStack_34;
+    peVar4 = &param_1->r;
     lVar6 = 6;
     do {
-      puVar5 = puVar5 + 1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = *puVar5;
+      pfVar5 = pfVar5 + 1;
+      peVar4 = (entityShared_t *)&peVar4->box;
+      ((Bounds *)peVar4)->midPoint[0] = *pfVar5;
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
-    uVar2 = CM_ContentsOfBrushModel(*(undefined4 *)(param_1 + 0x8c));
-    *(undefined4 *)(param_1 + 0x11c) = uVar2;
+    iVar2 = CM_ContentsOfBrushModel((param_1->s).index.brushModel);
+    (param_1->r).contents = iVar2;
     SV_LinkEntity(param_1);
-    uVar1 = 1;
+    bVar3 = true;
   }
-  return uVar1;
+  else {
+    uVar1 = G_ModelName((uint)param_1->model);
+    SL_ConvertToString(uVar1);
+    Com_PrintWarning(0xf,
+                     "WARNING: Invalid brush model assigned to entity [%s]; falling back to capsule collision.\n"
+                    );
+    SV_UnlinkEntity(param_1);
+    bVar3 = false;
+    (param_1->r).modelType = '\0';
+  }
+  return bVar3;
 }
 
 
 // 82570D80  SV_SetTriggerModel  (server/sv_game.cpp:256)
 
-undefined8 SV_SetTriggerModel(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_SetTriggerModel(gentity_s *param_1)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  undefined4 uVar2;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  undefined4 uStack_34;
-  undefined1 local_30 [24];
+  bool bVar2;
+  int iVar1;
+  entityShared_t *peVar3;
+  float *pfVar4;
+  longlong lVar5;
+  float fStack_34;
+  Bounds local_30;
   
-  if (*(char *)(param_1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8215d800,0x103,0,0xffffffff82000f98,0xffffffff8206caf8);
+  if ((param_1->r).isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x103,0,
+                    "%s");
   }
-  if (*(char *)(param_1 + 0x101) != '\x03') {
-    MyAssertHandler(0xffffffff8215d800,0x104,0,0xffffffff8215d8d0,*(char *)(param_1 + 0x101),3);
+  if ((param_1->r).modelType != '\x03') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x104,0,
+                    "ent->r.modelType == MODELTYPE_TRIGGER\n\t%i, %i");
   }
-  cVar3 = CM_TriggerModelIsValid(*(undefined4 *)(param_1 + 0x8c));
-  if (cVar3 == '\0') {
-    SV_UnlinkEntity(param_1);
-    uVar1 = 0;
-    *(undefined1 *)(param_1 + 0x101) = 0;
+  bVar2 = CM_TriggerModelIsValid((param_1->s).index.brushModel);
+  if (bVar2) {
+    CM_TriggerModelBounds((param_1->s).index.brushModel,&local_30);
+    pfVar4 = &fStack_34;
+    peVar3 = &param_1->r;
+    lVar5 = 6;
+    do {
+      pfVar4 = pfVar4 + 1;
+      peVar3 = (entityShared_t *)&peVar3->box;
+      ((Bounds *)peVar3)->midPoint[0] = *pfVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    iVar1 = CM_ContentsOfTriggerModel((param_1->s).index.brushModel);
+    (param_1->r).contents = iVar1;
+    SV_LinkEntity(param_1);
+    bVar2 = true;
   }
   else {
-    CM_TriggerModelBounds(*(undefined4 *)(param_1 + 0x8c),local_30);
-    puVar5 = &uStack_34;
-    puVar4 = (undefined4 *)(param_1 + 0x100);
-    lVar6 = 6;
-    do {
-      puVar5 = puVar5 + 1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = *puVar5;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    uVar2 = CM_ContentsOfTriggerModel(*(undefined4 *)(param_1 + 0x8c));
-    *(undefined4 *)(param_1 + 0x11c) = uVar2;
-    SV_LinkEntity(param_1);
-    uVar1 = 1;
+    SV_UnlinkEntity(param_1);
+    bVar2 = false;
+    (param_1->r).modelType = '\0';
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 82570E78  SV_inSnapshot  (server/sv_game.cpp:284)
 
-byte SV_inSnapshot(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_inSnapshot(float *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x280 + DAT_83cfc500;
-  if (*(char *)(iVar1 + 0x100) == '\0') {
+  if (sv.gentities[param_2].r.isLinked == '\0') {
     return 0;
   }
-  return ~*(byte *)(iVar1 + 0x102) & 1;
+  return ~(uint)sv.gentities[param_2].r.svFlags & 1;
 }
 
 
 // 82570EC0  SV_EntityContactBounds  (server/sv_game.cpp:301)
 
-ulonglong SV_EntityContactBounds(int param_1,int param_2)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_EntityContactBounds(Bounds *param_1,gentity_s *param_2)
 
 {
   byte bVar1;
-  ulonglong uVar2;
+  int iVar2;
   double dVar3;
-  double dVar4;
-  undefined1 auStack_60 [47];
-  byte local_31;
+  float fVar4;
+  trace_t tStack_60;
   
-  bVar1 = *(byte *)(param_2 + 0x101);
+  bVar1 = (param_2->r).modelType;
   if (bVar1 < 5) {
     if (bVar1 == 1) {
-      if (*(float *)(param_2 + 0x118) + *(float *)(param_1 + 0x14) <=
-          ABS((*(float *)(param_2 + 0x140) + *(float *)(param_2 + 0x10c)) - *(float *)(param_1 + 8))
+      if ((param_2->r).box.halfSize[2] + param_1->halfSize[2] <=
+          ABS(((param_2->r).currentOrigin[2] + (param_2->r).box.midPoint[2]) - param_1->midPoint[2])
          ) {
         return 0;
       }
-      dVar4 = (double)(*(float *)(param_2 + 0x110) + *(float *)(param_1 + 0xc));
-      dVar3 = (double)Vec2DistanceSq(param_2 + 0x138,param_1);
-      if ((double)(float)(dVar4 * dVar4) <= dVar3) {
+      dVar3 = (double)((param_2->r).box.halfSize[0] + param_1->halfSize[0]);
+      fVar4 = Vec2DistanceSq((param_2->r).currentOrigin,param_1->midPoint);
+      if ((float)(dVar3 * dVar3) <= fVar4) {
         return 0;
       }
       return 1;
     }
     if (bVar1 != 2) {
       if (bVar1 == 3) {
-        uVar2 = CM_TestTriggerTouch(param_1,*(undefined4 *)(param_2 + 0x8c),param_2 + 0x138,
-                                    param_2 + 0x144);
-        return uVar2;
+        iVar2 = CM_TestTriggerTouch(param_1,(param_2->s).index.brushModel,(param_2->r).currentOrigin
+                                    ,(param_2->r).currentAngles);
+        return iVar2;
       }
       if (bVar1 != 0) {
         CM_TransformedBrushModelTraceExternal
-                  (auStack_60,0xffffffff82179fd8,0xffffffff82179fd8,param_1,
-                   *(undefined4 *)(param_2 + 0x8c),0xffffffffffffffff,param_2 + 0x138,
-                   param_2 + 0x144);
-        return (ulonglong)local_31;
+                  (&tStack_60,vec3_origin,vec3_origin,param_1,(param_2->s).index.brushModel,-1,
+                   (param_2->r).currentOrigin,(param_2->r).currentAngles);
+        return (uint)tStack_60.startsolid;
       }
       CM_TransformedCapsuleTraceExternal
-                (auStack_60,0xffffffff82179fd8,0xffffffff82179fd8,param_1,param_2 + 0x104,
-                 *(undefined4 *)(param_2 + 0x11c),param_2 + 0x138,param_2 + 0x144);
-      return (ulonglong)local_31;
+                (&tStack_60,vec3_origin,vec3_origin,param_1,&(param_2->r).box,(param_2->r).contents,
+                 (param_2->r).currentOrigin,(param_2->r).currentAngles);
+      return (uint)tStack_60.startsolid;
     }
   }
   if (bVar1 != 2) {
-    MyAssertHandler(0xffffffff8215d800,0x147,0,0xffffffff82000f98,0xffffffff8215d900);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x147,0,
+                    "%s");
   }
-  dVar4 = (double)((*(float *)(param_2 + 0x110) + *(float *)(param_1 + 0xc)) - 64.0);
-  dVar3 = (double)Vec2DistanceSq(param_2 + 0x138,param_1);
-  if (dVar3 < (double)(float)(dVar4 * dVar4)) {
+  dVar3 = (double)(((param_2->r).box.halfSize[0] + param_1->halfSize[0]) - 64.0);
+  fVar4 = Vec2DistanceSq((param_2->r).currentOrigin,param_1->midPoint);
+  if (fVar4 < (float)(dVar3 * dVar3)) {
     return 0;
   }
   return 1;
@@ -290,142 +330,171 @@ ulonglong SV_EntityContactBounds(int param_1,int param_2)
 
 // 82571058  SV_EntityContactPoint  (server/sv_game.cpp:336)
 
-void SV_EntityContactPoint(undefined4 *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_EntityContactPoint(float *param_1,gentity_s *param_2)
 
 {
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
+  int iVar1;
+  Bounds local_20;
   
-  local_20 = *param_1;
-  local_1c = param_1[1];
-  local_18 = param_1[2];
-  local_14 = 0;
-  local_10 = 0;
-  local_c = 0;
-  SV_EntityContactBounds(&local_20);
-  return;
+  local_20.midPoint[0] = *param_1;
+  local_20.midPoint[1] = param_1[1];
+  local_20.midPoint[2] = param_1[2];
+  local_20.halfSize[0] = 0.0;
+  local_20.halfSize[1] = 0.0;
+  local_20.halfSize[2] = 0.0;
+  iVar1 = SV_EntityContactBounds(&local_20,param_2);
+  return iVar1;
 }
 
 
 // 825710A8  SV_Hunk_Alloc  (server/sv_game.cpp:352)
 
-void SV_Hunk_Alloc(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void * SV_Hunk_Alloc(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_83ced708 != 1) {
-    Com_Error(1,0xffffffff8215d928);
+  iVar1 = __savegprlr_29(param_1);
+  if (sv.state != SS_LOADING) {
+    Com_Error(ERR_DROP,
+              "\x15Hunk_Alloc can only be called in G_InitGame and the first few frames of G_RunFrame\n"
+             );
   }
-  Hunk_Alloc(uVar1,param_2,param_3);
-  __restgprlr_29();
-  return;
+  pvVar2 = Hunk_Alloc(iVar1,param_2,param_3);
+  pvVar2 = (void *)__restgprlr_29(pvVar2);
+  return pvVar2;
 }
 
 
 // 825710F8  SV_Hunk_AllocAlign  (server/sv_game.cpp:368)
 
-void SV_Hunk_AllocAlign(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void * SV_Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_28();
-  if (DAT_83ced708 != 1) {
-    Com_Error(1,0xffffffff8215d980);
+  iVar1 = __savegprlr_28(param_1);
+  if (sv.state != SS_LOADING) {
+    Com_Error(ERR_DROP,
+              "\x15Hunk_AllocAlign can only be called in G_InitGame and the first few frames of G_RunFrame\n"
+             );
   }
-  Hunk_AllocAlign(uVar1,param_2,param_3,param_4);
-  __restgprlr_28();
-  return;
+  pvVar2 = Hunk_AllocAlign(iVar1,param_2,param_3,param_4);
+  pvVar2 = (void *)__restgprlr_28(pvVar2);
+  return pvVar2;
 }
 
 
 // 82571150  SV_LocateGameData  (server/sv_game.cpp:443)
 
-void SV_LocateGameData(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_LocateGameData(gentity_s *param_1,int param_2,playerState_s *param_3,int param_4)
 
 {
-  DAT_83cfc500 = param_1;
-  DAT_83cfc504 = param_2;
-  DAT_83cfc508 = param_3;
-  DAT_83cfc50c = param_4;
+  sv.gentities = param_1;
+  sv.num_entities = param_2;
+  sv.gameClients = param_3;
+  sv.gameClientSize = param_4;
   return;
 }
 
 
 // 82571190  SV_GetUsercmd  (server/sv_game.cpp:459)
 
-void SV_GetUsercmd(undefined8 param_1,void *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_GetUsercmd(int param_1,usercmd_s *param_2)
 
 {
   int iVar1;
-  void *pvVar2;
   
-  iVar1 = __savegprlr_27();
+  iVar1 = __savegprlr_27(param_1,param_2);
   if (iVar1 < 0) {
-    MyAssertHandler(0xffffffff8215d800,0x1cc,0,0xffffffff82000f98,0xffffffff82058560);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1cc,0,
+                    "%s");
   }
-  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
-    MyAssertHandler(0xffffffff8215d800,0x1ce,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1ce,0,
+                    "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if (*(int *)(DAT_83d0b55c + 0xc) <= iVar1) {
-    MyAssertHandler(0xffffffff8215d800,0x1cf,0,0xffffffff82000f98,0xffffffff8215d9dc);
+  if ((sv_maxclients->current).integer <= iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1cf,0,
+                    "%s");
   }
-  pvVar2 = memcpy(param_2,(void *)(iVar1 * 0x68b00 + DAT_83f11414 + 0x20e88),0x2c);
-  __restgprlr_27(pvVar2);
+  memcpy();
+  __restgprlr_27();
   return;
 }
 
 
 // 82571280  SV_AllocXModelPrecache  (server/sv_game.cpp:481)
 
-void SV_AllocXModelPrecache(undefined8 param_1)
+void * SV_AllocXModelPrecache(int param_1)
 
 {
-  Hunk_Alloc(param_1,0xffffffff8215da08,0x15);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Hunk_Alloc(param_1,"SV_AllocXModelPrecache",0x15);
+  return pvVar1;
 }
 
 
 // 82571290  SV_AllocXModelPrecacheColl  (server/sv_game.cpp:487)
 
-void SV_AllocXModelPrecacheColl(undefined8 param_1)
+void * SV_AllocXModelPrecacheColl(int param_1)
 
 {
-  Hunk_Alloc(param_1,0xffffffff8215da20,0x1b);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Hunk_Alloc(param_1,"SV_AllocXModelPrecacheColl",0x1b);
+  return pvVar1;
 }
 
 
 // 825712A0  SV_XModelGet  (server/sv_game.cpp:499)
 
-void SV_XModelGet(undefined8 param_1)
+XModel * SV_XModelGet(char *param_1)
 
 {
-  XModelPrecache(param_1,0xffffffff82571280,0xffffffff82571290);
-  return;
+  XModel *pXVar1;
+  
+  pXVar1 = XModelPrecache(param_1,SV_AllocXModelPrecache,SV_AllocXModelPrecacheColl);
+  return pXVar1;
 }
 
 
 // 825712B8  SV_DObjDumpInfo  (server/sv_game.cpp:512)
 
-void SV_DObjDumpInfo(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_DObjDumpInfo(gentity_s *param_1)
 
 {
-  int iVar1;
+  DObj *pDVar1;
   
-  if (*(int *)(DAT_8365e118 + 0xc) != 0) {
-    iVar1 = Com_GetServerDObjForEnt();
-    if (iVar1 == 0) {
-      Com_Printf(0xf,0xffffffff8215da3c);
+  if ((com_developer->current).integer != 0) {
+    pDVar1 = Com_GetServerDObjForEnt(param_1);
+    if (pDVar1 == (DObj *)0x0) {
+      Com_Printf(0xf,"no model.\n");
       return;
     }
-    DObjDumpInfo();
+    DObjDumpInfo(pDVar1);
   }
   return;
 }
@@ -433,160 +502,194 @@ void SV_DObjDumpInfo(void)
 
 // 82571318  SV_ResetSkeletonCache  (server/sv_game.cpp:537)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void SV_ResetSkeletonCache(void)
 
 {
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)DAT_83cfc510;
-  DAT_83cfc510 = (uint)(uVar1 + 1);
+  uVar1 = (ulonglong)(uint)sv.skelTimeStamp;
+  sv.skelTimeStamp = (int)(uVar1 + 1);
   if (uVar1 + 1 == 0) {
-    DAT_83cfc510 = 1;
+    sv.skelTimeStamp = 1;
   }
-  DAT_83cfc514 = 0;
-  DAT_83ced668 = &DAT_83cad660;
+  sv.skelMemPos = 0;
+  g_sv_skel_memory_start = g_sv_skel_memory;
   return;
 }
 
 
 // 82571380  SV_AllocSkelMemory  (server/sv_game.cpp:554)
 
-void SV_AllocSkelMemory(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+char * SV_AllocSkelMemory(uint param_1)
 
 {
   uint uVar1;
   int iVar2;
-  ulonglong uVar3;
-  undefined *puVar4;
+  char *pcVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_23();
+  iVar2 = __savegprlr_23(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x22e,0,0xffffffff82000f98,0xffffffff82036204);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x22e,0,
+                    "%s");
   }
   uVar1 = iVar2 + 0xfU & 0xfffffff0;
   if (0x3fff0 < uVar1) {
-    MyAssertHandler(0xffffffff8215d800,0x231,0,0xffffffff82000f98,0xffffffff8215da88);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x231,0,
+                    "%s");
   }
-  if (DAT_83ced668 == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff8215d800,0x233,0,0xffffffff82000f98,0xffffffff8215da70);
+  if (g_sv_skel_memory_start == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x233,0,
+                    "%s");
   }
-  puVar4 = DAT_83ced668 + DAT_83cfc514;
-  DAT_83cfc514 = DAT_83cfc514 + uVar1;
-  if (0x3fff0 < (int)DAT_83cfc514) {
-    puVar4 = &DAT_83cad660;
-    uVar3 = (ulonglong)DAT_83cfc510;
+  pcVar3 = g_sv_skel_memory_start + sv.skelMemPos;
+  sv.skelMemPos = sv.skelMemPos + uVar1;
+  if (0x3fff0 < sv.skelMemPos) {
+    pcVar3 = g_sv_skel_memory;
+    uVar4 = (ulonglong)(uint)sv.skelTimeStamp;
     do {
-      if (DAT_83ced670 != (int)uVar3) {
-        DAT_83ced670 = (int)uVar3;
-        Com_PrintWarning(0xf,0xffffffff8215da48);
-        uVar3 = (ulonglong)DAT_83cfc510;
+      if (warnCount != (int)uVar4) {
+        warnCount = (int)uVar4;
+        Com_PrintWarning(0xf,"WARNING: SV_SKEL_MEMORY_SIZE exceeded\n");
+        uVar4 = (ulonglong)(uint)sv.skelTimeStamp;
       }
-      uVar3 = uVar3 + 1;
-      DAT_83cfc510 = (uint)uVar3;
-      if (uVar3 == 0) {
-        uVar3 = 1;
-        DAT_83cfc510 = 1;
+      uVar4 = uVar4 + 1;
+      sv.skelTimeStamp = (int)uVar4;
+      if (uVar4 == 0) {
+        uVar4 = 1;
+        sv.skelTimeStamp = 1;
       }
-      DAT_83ced668 = &DAT_83cad660;
-      DAT_83cfc514 = uVar1;
+      g_sv_skel_memory_start = g_sv_skel_memory;
+      sv.skelMemPos = uVar1;
     } while (0x3fff0 < (int)uVar1);
   }
-  if (puVar4 == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff8215d800,0x23b,0,0xffffffff82000f98,0xffffffff82012420);
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x23b,0,
+                    "%s");
   }
-  __restgprlr_23(puVar4);
-  return;
+  pcVar3 = (char *)__restgprlr_23(pcVar3);
+  return pcVar3;
 }
 
 
 // 82571518  SV_DObjCreateSkelForBone  (server/sv_game.cpp:594)
 
-void SV_DObjCreateSkelForBone(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjCreateSkelForBone(DObj *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  DObj *pDVar1;
+  int iVar2;
+  uint uVar3;
+  char *pcVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x256,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = (DObj *)__savegprlr_28(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x256,0,
+                    "%s");
   }
-  iVar3 = DObjNumBones(uVar1);
-  if (iVar3 < 1) {
-    MyAssertHandler(0xffffffff8215d800,599,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  iVar2 = DObjNumBones(pDVar1);
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",599,0,"%s"
+                   );
   }
-  iVar3 = DObjSkelExists(uVar1,DAT_83cfc510);
-  if (iVar3 != 0) {
-    DObjSkelIsBoneUpToDate(uVar1,param_2);
-    __restgprlr_28();
-    return;
+  iVar2 = DObjSkelExists(pDVar1,sv.skelTimeStamp);
+  if (iVar2 != 0) {
+    iVar2 = DObjSkelIsBoneUpToDate(pDVar1,param_2);
+    iVar2 = __restgprlr_28(iVar2);
+    return iVar2;
   }
-  DObjGetAllocSkelSize(uVar1);
-  uVar2 = SV_AllocSkelMemory();
-  DObjCreateSkel(uVar1,uVar2,DAT_83cfc510);
-  __restgprlr_28(0);
-  return;
+  uVar3 = DObjGetAllocSkelSize(pDVar1);
+  pcVar4 = SV_AllocSkelMemory(uVar3);
+  DObjCreateSkel(pDVar1,pcVar4,sv.skelTimeStamp);
+  iVar2 = __restgprlr_28(0);
+  return iVar2;
 }
 
 
 // 825715F0  SV_DObjCreateSkelForBones  (server/sv_game.cpp:623)
 
-void SV_DObjCreateSkelForBones(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjCreateSkelForBones(DObj *param_1,int *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  DObj *pDVar1;
+  int iVar2;
+  uint uVar3;
+  char *pcVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x273,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = (DObj *)__savegprlr_28(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x273,0,
+                    "%s");
   }
-  iVar3 = DObjNumBones(uVar1);
-  if (iVar3 < 1) {
-    MyAssertHandler(0xffffffff8215d800,0x274,0,0xffffffff82000f98,0xffffffff8202c4cc);
+  iVar2 = DObjNumBones(pDVar1);
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x274,0,
+                    "%s");
   }
-  iVar3 = DObjSkelExists(uVar1,DAT_83cfc510);
-  if (iVar3 != 0) {
-    DObjSkelAreBonesUpToDate(uVar1,param_2);
-    __restgprlr_28();
-    return;
+  iVar2 = DObjSkelExists(pDVar1,sv.skelTimeStamp);
+  if (iVar2 != 0) {
+    iVar2 = DObjSkelAreBonesUpToDate(pDVar1,param_2);
+    iVar2 = __restgprlr_28(iVar2);
+    return iVar2;
   }
-  DObjGetAllocSkelSize(uVar1);
-  uVar2 = SV_AllocSkelMemory();
-  DObjCreateSkel(uVar1,uVar2,DAT_83cfc510);
-  __restgprlr_28(0);
-  return;
+  uVar3 = DObjGetAllocSkelSize(pDVar1);
+  pcVar4 = SV_AllocSkelMemory(uVar3);
+  DObjCreateSkel(pDVar1,pcVar4,sv.skelTimeStamp);
+  iVar2 = __restgprlr_28(0);
+  return iVar2;
 }
 
 
 // 825716C8  SV_DObjUpdateServerTime  (server/sv_game.cpp:650)
 
-void SV_DObjUpdateServerTime
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjUpdateServerTime(gentity_s *param_1,float param_2,int param_3)
 
 {
-  int iVar1;
+  DObj *pDVar1;
+  int iVar2;
+  double dVar3;
   
-  iVar1 = Com_GetServerDObjForEnt();
-  if (iVar1 != 0) {
-    DObjUpdateServerInfo(param_1,iVar1,param_3,param_4);
+  dVar3 = (double)param_2;
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  iVar2 = 0;
+  if (pDVar1 != (DObj *)0x0) {
+    iVar2 = DObjUpdateServerInfo(pDVar1,(float)dVar3,param_3);
   }
-  return;
+  return iVar2;
 }
 
 
 // 82571718  SV_DObjInitServerTime  (server/sv_game.cpp:668)
 
-void SV_DObjInitServerTime(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_DObjInitServerTime(gentity_s *param_1,float param_2)
 
 {
-  int iVar1;
+  DObj *pDVar1;
+  double dVar2;
   
-  iVar1 = Com_GetServerDObjForEnt();
-  if (iVar1 != 0) {
-    DObjInitServerTime(param_1);
+  dVar2 = (double)param_2;
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 != (DObj *)0x0) {
+    DObjInitServerTime(pDVar1,(float)dVar2);
   }
   return;
 }
@@ -594,69 +697,86 @@ void SV_DObjInitServerTime(undefined8 param_1)
 
 // 82571758  SV_DObjNumBones  (server/sv_game.cpp:686)
 
-void SV_DObjNumBones(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjNumBones(gentity_s *param_1)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
+  int iVar2;
   
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x2b2,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x2b2,0,
+                    "%s");
   }
-  DObjNumBones(uVar1);
-  return;
+  iVar2 = DObjNumBones(pDVar1);
+  return iVar2;
 }
 
 
 // 825717B8  SV_DObjGetBoneIndex  (server/sv_game.cpp:703)
 
-ulonglong SV_DObjGetBoneIndex(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjGetBoneIndex(gentity_s *param_1,uint param_2)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
   int iVar2;
+  uint uVar3;
   byte local_20 [16];
   
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    return 0xffffffffffffffff;
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    return -1;
   }
   local_20[0] = 0xfe;
-  iVar2 = DObjGetBoneIndex(uVar1,param_2,local_20);
-  uVar1 = 0xffffffffffffffff;
+  iVar2 = DObjGetBoneIndex(pDVar1,param_2,local_20);
+  uVar3 = 0xffffffff;
   if (iVar2 != 0) {
-    uVar1 = (ulonglong)local_20[0];
+    uVar3 = (uint)local_20[0];
   }
-  return uVar1;
+  return uVar3;
 }
 
 
 // 82571828  SV_DObjGetMatrixArray  (server/sv_game.cpp:719)
 
-void SV_DObjGetMatrixArray(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+DObjAnimMat * SV_DObjGetMatrixArray(gentity_s *param_1)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
+  DObjAnimMat *pDVar2;
   
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x2d3,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x2d3,0,
+                    "%s");
   }
-  DObjGetRotTransArray(uVar1);
-  return;
+  pDVar2 = DObjGetRotTransArray(pDVar1);
+  return pDVar2;
 }
 
 
 // 82571888  SV_DObjDisplayAnim  (server/sv_game.cpp:731)
 
-void SV_DObjDisplayAnim(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_DObjDisplayAnim(gentity_s *param_1,char *param_2)
 
 {
-  int iVar1;
+  DObj *pDVar1;
   
-  iVar1 = Com_GetServerDObjForEnt();
-  if (iVar1 != 0) {
-    DObjDisplayAnim(iVar1,param_2);
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 != (DObj *)0x0) {
+    DObjDisplayAnim(pDVar1,param_2);
   }
   return;
 }
@@ -664,160 +784,313 @@ void SV_DObjDisplayAnim(undefined8 param_1,undefined8 param_2)
 
 // 825718C8  SV_DObjGetRotTransArray  (server/sv_game.cpp:744)
 
-void SV_DObjGetRotTransArray(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+DObjAnimMat * SV_DObjGetRotTransArray(gentity_s *param_1)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
+  DObjAnimMat *pDVar2;
   
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x2ec,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x2ec,0,
+                    "%s");
   }
-  DObjGetRotTransArray(uVar1);
-  return;
+  pDVar2 = DObjGetRotTransArray(pDVar1);
+  return pDVar2;
 }
 
 
 // 82571928  SV_DObjSetRotTransIndex  (server/sv_game.cpp:755)
 
-void SV_DObjSetRotTransIndex(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjSetRotTransIndex(gentity_s *param_1,int *param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  gentity_s *pgVar1;
+  DObj *pDVar2;
+  int iVar3;
   
-  __savegprlr_29();
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x2f7,0,0xffffffff82000f98,0xffffffff820040b4);
+  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
+  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
+  if (pDVar2 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x2f7,0,
+                    "%s");
   }
-  DObjSetRotTransIndex(uVar1,param_2,param_3);
-  __restgprlr_29();
-  return;
+  iVar3 = DObjSetRotTransIndex(pDVar2,param_2,param_3);
+  iVar3 = __restgprlr_29(iVar3);
+  return iVar3;
 }
 
 
 // 82571988  SV_DObjSetControlRotTransIndex  (server/sv_game.cpp:766)
 
-void SV_DObjSetControlRotTransIndex(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjSetControlRotTransIndex(gentity_s *param_1,int *param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  gentity_s *pgVar1;
+  DObj *pDVar2;
+  int iVar3;
   
-  __savegprlr_29();
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x302,0,0xffffffff82000f98,0xffffffff820040b4);
+  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
+  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
+  if (pDVar2 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x302,0,
+                    "%s");
   }
-  DObjSetControlRotTransIndex(uVar1,param_2,param_3);
-  __restgprlr_29();
-  return;
+  iVar3 = DObjSetControlRotTransIndex(pDVar2,param_2,param_3);
+  iVar3 = __restgprlr_29(iVar3);
+  return iVar3;
 }
 
 
 // 825719E8  SV_DObjGetBounds  (server/sv_game.cpp:778)
 
-void SV_DObjGetBounds(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_DObjGetBounds(gentity_s *param_1,Bounds *param_2)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
   
-  uVar1 = Com_GetServerDObjForEnt();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x30e,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x30e,0,
+                    "%s");
   }
-  DObjGetBounds(uVar1,param_2);
+  DObjGetBounds(pDVar1,param_2);
   return;
 }
 
 
 // 82571A58  SV_DObjGetTree  (server/sv_game.cpp:795)
 
-undefined8 SV_DObjGetTree(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+XAnimTree * SV_DObjGetTree(gentity_s *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  DObj *pDVar1;
+  XAnimTree *pXVar2;
   
-  iVar2 = Com_GetServerDObjForEnt();
-  if (iVar2 != 0) {
-    uVar1 = DObjGetTree();
-    return uVar1;
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 != (DObj *)0x0) {
+    pXVar2 = DObjGetTree(pDVar1);
+    return pXVar2;
   }
-  return 0;
+  return (XAnimTree *)0x0;
 }
 
 
 // 82571A98  SV_XModelDebugBoxes  (server/sv_game.cpp:810)
 
-void SV_XModelDebugBoxes(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_XModelDebugBoxes(gentity_s *param_1,float *param_2,int param_3)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  int iVar3;
-  uint *puVar4;
-  int iVar5;
-  char cVar6;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  XBoneInfo *pXVar5;
+  uint uVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  DObj *pDVar11;
+  int iVar12;
+  DObjAnimMat *pDVar13;
+  XModel *pXVar14;
+  int iVar15;
+  bool bVar16;
+  int iVar17;
+  XBoneInfo **ppXVar18;
+  longlong lVar19;
+  uint *puVar20;
+  float *pfVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
   int local_470;
-  undefined1 local_468 [16];
-  undefined1 local_458 [16];
-  undefined1 local_448 [40];
-  undefined1 auStack_420 [16];
-  undefined1 local_410 [48];
-  undefined1 auStack_3e0 [48];
-  undefined1 local_3b0 [944];
+  float local_468;
+  float local_464;
+  float local_460;
+  float local_458;
+  float local_454;
+  float local_450;
+  float local_448;
+  float local_444;
+  float local_440;
+  int local_43c;
+  float local_438;
+  float local_434;
+  float local_430;
+  char *local_42c;
+  float local_428;
+  float local_424;
+  float afStack_420 [4];
+  float local_410;
+  float local_40c;
+  float local_408;
+  float local_404;
+  float local_400;
+  float local_3fc;
+  float local_3f8;
+  float local_3f4;
+  float local_3f0;
+  float local_3ec;
+  float local_3e8;
+  float local_3e4;
+  float afStack_3e0 [12];
+  XBoneInfo *local_3b0 [236];
   
-  lVar1 = __savegprlr();
-  uVar2 = Com_GetServerDObjForEnt();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x342,0,0xffffffff82000f98,0xffffffff820040b4);
+  __savegprlr();
+  pDVar11 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar11 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x342,0,
+                    "%s");
   }
-  iVar3 = DObjNumBones(uVar2);
-  if (0xc0 < iVar3) {
-    MyAssertHandler(0xffffffff8215d800,0x346,0,0xffffffff82000f98,0xffffffff8215dac0);
+  iVar12 = DObjNumBones(pDVar11);
+  if (0xc0 < iVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x346,0,
+                    "%s");
   }
-  DObjGetBoneInfo(uVar2,local_3b0);
-  puVar4 = (uint *)DObjGetRotTransArray(uVar2);
-  AnglesToAxis(lVar1 + 0x144,auStack_3e0);
-  iVar3 = DObjGetNumModels(uVar2);
+  DObjGetBoneInfo(pDVar11,local_3b0);
+  pDVar13 = DObjGetRotTransArray(pDVar11);
+  AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_3e0);
+  iVar12 = DObjGetNumModels(pDVar11);
+  iVar17 = 0;
   local_470 = 0;
-  if (0 < iVar3) {
+  local_43c = iVar12;
+  if (0 < iVar12) {
+    dVar23 = -1.0;
+    dVar24 = 1.0;
+    local_42c = 
+    "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
+    ;
     do {
-      DObjGetModel(uVar2,local_470);
-      iVar5 = XModelNumBones();
-      cVar6 = DObjIgnoreCollision(uVar2,local_470);
-      if (cVar6 == '\0') {
-        if (0 < iVar5) {
-          do {
-            if (((((*puVar4 & 0x7f800000) == 0x7f800000) || ((puVar4[1] & 0x7f800000) == 0x7f800000)
-                 ) || ((puVar4[2] & 0x7f800000) == 0x7f800000)) ||
-               ((puVar4[3] & 0x7f800000) == 0x7f800000)) {
-              MyAssertHandler(0xffffffff82015a60,0x205,0,0xffffffff82000f98,
-                              "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
-                             );
-            }
-            if ((puVar4[7] & 0x7f800000) == 0x7f800000) {
-              MyAssertHandler(0xffffffff82015a60,0x206,0,0xffffffff82000f98,0xffffffff820159d4);
-            }
-            lVar1 = 0xc;
-            do {
-              MatrixTransformVector43(local_468,local_410,auStack_420);
-              MatrixTransformVector(auStack_420,auStack_3e0,local_448);
-              MatrixTransformVector43(local_468,local_410,auStack_420);
-              MatrixTransformVector(auStack_420,auStack_3e0,local_458);
-              CL_AddDebugLine(local_448,local_458,param_2,0,param_3,1);
-              lVar1 = lVar1 + -1;
-            } while (lVar1 != 0);
-            iVar5 = iVar5 + -1;
-            puVar4 = puVar4 + 8;
-          } while (iVar5 != 0);
-        }
+      pXVar14 = DObjGetModel(pDVar11,local_470);
+      iVar15 = XModelNumBones(pXVar14);
+      bVar16 = DObjIgnoreCollision(pDVar11,local_470);
+      if (bVar16) {
+        iVar17 = iVar15 + iVar17;
+        pDVar13 = pDVar13 + iVar15;
       }
-      else {
-        puVar4 = puVar4 + iVar5 * 8;
+      else if (0 < iVar15) {
+        pfVar21 = (param_1->r).currentOrigin;
+        ppXVar18 = local_3b0 + iVar17;
+        iVar17 = iVar15 + iVar17;
+        do {
+          local_424 = pDVar13->quat[0];
+          pXVar5 = *ppXVar18;
+          if ((((((uint)local_424 & 0x7f800000) == 0x7f800000) ||
+               (local_428 = pDVar13->quat[1], ((uint)local_428 & 0x7f800000) == 0x7f800000)) ||
+              (local_438 = pDVar13->quat[2], ((uint)local_438 & 0x7f800000) == 0x7f800000)) ||
+             (local_434 = pDVar13->quat[3], ((uint)local_434 & 0x7f800000) == 0x7f800000)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                            ,0x205,0,"%s");
+          }
+          local_430 = pDVar13->transWeight;
+          if (((uint)local_430 & 0x7f800000) == 0x7f800000) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
+                            ,0x206,0,"%s");
+          }
+          fVar1 = pDVar13->quat[2];
+          lVar19 = 0xc;
+          fVar2 = pDVar13->transWeight;
+          fVar3 = pDVar13->quat[1];
+          fVar9 = fVar3 * fVar2;
+          fVar10 = pDVar13->quat[0] * fVar2;
+          fVar4 = pDVar13->quat[3];
+          fVar7 = fVar1 * fVar1 * fVar2;
+          fVar8 = pDVar13->quat[0] * fVar10;
+          local_404 = fVar4 * fVar1 * fVar2;
+          local_3fc = fVar1 * fVar9 + fVar4 * fVar10;
+          local_40c = local_404 + fVar3 * fVar10;
+          local_408 = fVar1 * fVar10 - fVar4 * fVar9;
+          local_404 = fVar3 * fVar10 - local_404;
+          local_3f8 = fVar4 * fVar9 + fVar1 * fVar10;
+          local_3f4 = fVar1 * fVar9 - fVar4 * fVar10;
+          local_410 = (float)(dVar24 - (double)(fVar7 + fVar3 * fVar9));
+          local_400 = (float)(dVar24 - (double)(fVar7 + fVar8));
+          local_3f0 = (float)(dVar24 - (double)(fVar3 * fVar9 + fVar8));
+          local_3ec = pDVar13->trans[0];
+          local_3e8 = pDVar13->trans[1];
+          local_3e4 = pDVar13->trans[2];
+          puVar20 = s_boxVerts;
+          do {
+            uVar6 = *puVar20;
+            dVar22 = dVar23;
+            if ((uVar6 & 1) != 0) {
+              dVar22 = dVar24;
+            }
+            local_468 = (float)((double)(pXVar5->bounds).halfSize[0] * dVar22 +
+                               (double)(pXVar5->bounds).midPoint[0]);
+            dVar22 = dVar23;
+            if ((uVar6 & 2) != 0) {
+              dVar22 = dVar24;
+            }
+            local_464 = (float)((double)(pXVar5->bounds).halfSize[1] * dVar22 +
+                               (double)(pXVar5->bounds).midPoint[1]);
+            dVar22 = dVar23;
+            if ((uVar6 & 4) != 0) {
+              dVar22 = dVar24;
+            }
+            local_460 = (float)(dVar22 * (double)(pXVar5->bounds).halfSize[2] +
+                               (double)(pXVar5->bounds).midPoint[2]);
+            MatrixTransformVector43(&local_468,(float (*) [3])&local_410,afStack_420);
+            MatrixTransformVector(afStack_420,(float (*) [3])afStack_3e0,&local_448);
+            uVar6 = puVar20[1];
+            local_448 = *pfVar21 + local_448;
+            local_444 = local_444 + (param_1->r).currentOrigin[1];
+            local_440 = local_440 + (param_1->r).currentOrigin[2];
+            dVar22 = dVar23;
+            if ((uVar6 & 1) != 0) {
+              dVar22 = dVar24;
+            }
+            local_468 = (float)((double)(pXVar5->bounds).halfSize[0] * dVar22 +
+                               (double)(pXVar5->bounds).midPoint[0]);
+            dVar22 = dVar23;
+            if ((uVar6 & 2) != 0) {
+              dVar22 = dVar24;
+            }
+            local_464 = (float)((double)(pXVar5->bounds).halfSize[1] * dVar22 +
+                               (double)(pXVar5->bounds).midPoint[1]);
+            dVar22 = dVar23;
+            if ((uVar6 & 4) != 0) {
+              dVar22 = dVar24;
+            }
+            local_460 = (float)(dVar22 * (double)(pXVar5->bounds).halfSize[2] +
+                               (double)(pXVar5->bounds).midPoint[2]);
+            MatrixTransformVector43(&local_468,(float (*) [3])&local_410,afStack_420);
+            MatrixTransformVector(afStack_420,(float (*) [3])afStack_3e0,&local_458);
+            local_458 = *pfVar21 + local_458;
+            local_454 = local_454 + (param_1->r).currentOrigin[1];
+            local_450 = local_450 + (param_1->r).currentOrigin[2];
+            puVar20 = puVar20 + 2;
+            CL_AddDebugLine(&local_448,&local_458,param_2,0,param_3,1);
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
+          iVar15 = iVar15 + -1;
+          pDVar13 = pDVar13 + 1;
+          ppXVar18 = ppXVar18 + 1;
+          iVar12 = local_43c;
+        } while (iVar15 != 0);
       }
       local_470 = local_470 + 1;
-    } while (local_470 < iVar3);
+    } while (local_470 < iVar12);
   }
   __restgprlr();
   return;
@@ -826,17 +1099,22 @@ void SV_XModelDebugBoxes(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 82571F68  SV_DObjExists  (server/sv_game.cpp:897)
 
-bool SV_DObjExists(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_DObjExists(gentity_s *param_1)
 
 {
-  longlong lVar1;
+  DObj *pDVar1;
   
-  lVar1 = Com_GetServerDObjForEnt();
-  return lVar1 != 0;
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  return (uint)(pDVar1 != (DObj *)0x0);
 }
 
 
 // 82571F90  SV_track_shutdown  (server/sv_game.cpp:911)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_track_shutdown(void)
 
@@ -848,84 +1126,103 @@ void SV_track_shutdown(void)
 
 // 82571F98  SV_GetGuid  (server/sv_game.cpp:930)
 
-longlong SV_GetGuid(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+char * SV_GetGuid(int param_1)
 
 {
-  longlong lVar1;
+  char *pcVar1;
   
-  if (DAT_83d0b55c == 0) {
-    MyAssertHandler(0xffffffff8215d800,0x3a3,0,0xffffffff82000f98,0xffffffff82022f7c);
+  if (sv_maxclients == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x3a3,0,
+                    "%s");
   }
-  if ((param_1 < 0) || (*(int *)(DAT_83d0b55c + 0xc) <= param_1)) {
-    lVar1 = -0x7dff9751;
+  if ((param_1 < 0) || ((sv_maxclients->current).integer <= param_1)) {
+    pcVar1 = "";
   }
   else {
-    lVar1 = (longlong)param_1 * 0x68b00 + (ulonglong)DAT_83f11414 + 0x31cac;
+    pcVar1 = svs.clients[param_1].playerGuid;
   }
-  return lVar1;
+  return pcVar1;
 }
 
 
 // 82572050  SV_GetClientPing  (server/sv_game.cpp:939)
 
-undefined4 SV_GetClientPing(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_GetClientPing(int param_1)
 
 {
-  return *(undefined4 *)(param_1 * 0x68b00 + DAT_83f11414 + 0x2149c);
+  return svs.clients[param_1].ping;
 }
 
 
 // 82572088  SV_IsLocalClient  (server/sv_game.cpp:957)
 
-void SV_IsLocalClient(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_IsLocalClient(int param_1)
 
 {
   int iVar1;
+  undefined1 in_stack_00000008 [16];
   
-  iVar1 = param_1 * 0x68b00 + DAT_83f11414;
-  NET_IsLocalAddress(*(undefined8 *)(iVar1 + 0x28),*(undefined8 *)(iVar1 + 0x30));
-  return;
+  iVar1 = NET_IsLocalAddress((netadr_t)in_stack_00000008);
+  return iVar1;
 }
 
 
 // 82572720  SV_ShutdownGameProgs  (server/sv_game.cpp:972)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void SV_ShutdownGameProgs(void)
 
 {
-  uint uVar1;
-  char cVar2;
-  undefined8 in_MSR;
+  int iVar1;
+  bool bVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8215d800,0x3cd,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x3cd,0,
+                    "%s");
   }
   do {
-    uVar1 = DAT_83f1e19c;
-    if (DAT_83f1e19c != 0) {
+    iVar1 = g_serverThreadOwnership;
+    if (g_serverThreadOwnership != 0) {
       if (in_RESERVE != '\0') {
-        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar1 != 1) {
-    MyAssertHandler(0xffffffff8215d800,0x3ce,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
-                    in_MSR);
+  if (iVar1 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x3ce,0,
+                    "%s\n\t(g_serverThreadOwnership) = %i");
   }
   Com_SyncThreads();
-  DAT_83ced708 = 0;
+  sv.state = SS_DEAD;
   sync(1);
-  if (DAT_83ced66c != 0) {
+  if (gameInitialized != 0) {
     SV_ShutdownGameVM(1);
-    DAT_83ced66c = 0;
+    gameInitialized = 0;
   }
   return;
 }
@@ -933,59 +1230,65 @@ void SV_ShutdownGameProgs(void)
 
 // 825720B8  SV_SetGametype  (server/sv_game.cpp:1020)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void SV_SetGametype(void)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar4;
+  char cVar1;
+  int iVar2;
+  undefined4 uVar3;
+  dvar_t *pdVar4;
   int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar6;
-  int *in_r13;
+  PartyData *pPVar6;
   char *pcVar7;
-  undefined1 auStack_90 [4];
-  undefined4 local_8c;
+  int *in_r13;
+  PartyActiveClient aPStack_90 [2];
   char local_80 [128];
   
   __savegprlr_26();
-  iVar1 = *in_r13;
-  uVar2 = *(undefined4 *)(iVar1 + 0xf4);
-  *(undefined4 *)(iVar1 + 0xf4) = 0xffffedff;
-  Dvar_RegisterString(0xffffffff82022f8c,0xffffffff82072a84,0x482,0xffffffff8215db1c);
-  iVar4 = Dvar_RegisterBool(0xffffffff82022f98,0,0x480,0xffffffff82072a78);
-  if ((*(char *)(DAT_83666174 + 0xc) == '\0') || (iVar5 = G_GetSavePersist(), iVar5 == 0)) {
-    uVar6 = (ulonglong)*(uint *)(DAT_83f1e094 + 0xc);
+  iVar2 = *in_r13;
+  uVar3 = *(undefined4 *)(iVar2 + 0xf4);
+  *(undefined4 *)(iVar2 + 0xf4) = 0xffffedff;
+  Dvar_RegisterString("g_gametype","war",0x482,"Game Type");
+  pdVar4 = Dvar_RegisterBool("g_hardcore",false,0x480,"Hardcore?");
+  if (((com_sv_running->current).enabled == false) || (iVar5 = G_GetSavePersist(), iVar5 == 0)) {
+    pcVar7 = (sv_gametype->current).string;
   }
   else {
-    uVar6 = 0xffffffff83cfc5e8;
+    pcVar7 = sv.gametype;
   }
-  I_strncpyz(local_80,uVar6,0x40);
+  I_strncpyz(local_80,pcVar7,0x40);
   pcVar7 = local_80;
-  while (local_80[0] != '\0') {
+  cVar1 = local_80[0];
+  while (cVar1 != '\0') {
     iVar5 = tolower((int)*pcVar7);
     *pcVar7 = (char)iVar5;
     pcVar7 = pcVar7 + 1;
-    local_80[0] = *pcVar7;
+    cVar1 = *pcVar7;
   }
   iVar5 = Scr_IsValidGameType(local_80);
   if (iVar5 == 0) {
-    Com_Printf(0xf,0xffffffff8215dae0,local_80);
+    Com_Printf(0xf,"g_gametype %s is not a valid gametype, defaulting to dm\n");
+    local_80[0] = 'd';
     local_80[1] = 0x6d;
     local_80[2] = 0;
   }
-  Dvar_SetString(DAT_83f1e094,local_80);
-  if (DAT_844c7870 != 0) {
-    Live_SetGametype(DAT_844c7d58,local_80,*(undefined1 *)(iVar4 + 0xc));
+  Dvar_SetString(sv_gametype,local_80);
+  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+    Live_SetGametype(g_serverSession.dyn.sessionCreateController,local_80,(pdVar4->current).color[0]
+                    );
   }
-  uVar3 = Lobby_GetPartyData();
-  iVar5 = Party_GetSecondaryActiveClient(uVar3,auStack_90);
+  pPVar6 = Lobby_GetPartyData();
+  iVar5 = Party_GetSecondaryActiveClient(pPVar6,aPStack_90);
   if (iVar5 != 0) {
-    Live_SetGametype(local_8c,local_80,*(undefined1 *)(iVar4 + 0xc));
+    Live_SetGametype(aPStack_90[0].localControllerIndex,local_80,(pdVar4->current).color[0]);
   }
-  *(undefined4 *)(iVar1 + 0xf4) = uVar2;
+  *(undefined4 *)(iVar2 + 0xf4) = uVar3;
   __restgprlr_26();
   return;
 }
@@ -993,13 +1296,18 @@ void SV_SetGametype(void)
 
 // 82572240  SV_InitGameVM  (server/sv_game.cpp:1075)
 
-void SV_InitGameVM(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void SV_InitGameVM(int param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  DWORD DVar3;
-  int iVar4;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
+  client_t *pcVar4;
   int iVar5;
   ulonglong uVar6;
   int iVar7;
@@ -1007,61 +1315,66 @@ void SV_InitGameVM(undefined8 param_1,undefined8 param_2,undefined8 param_3)
   char in_RESERVE;
   byte in_cr0;
   
-  uVar2 = __savegprlr_24();
+  iVar1 = __savegprlr_24(param_1);
   do {
-    uVar1 = DAT_83f1e19c;
-    if (DAT_83f1e19c != 0) {
+    iVar5 = g_serverThreadOwnership;
+    if (g_serverThreadOwnership != 0) {
       if (in_RESERVE != '\0') {
-        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar1 != 1) {
-    MyAssertHandler(0xffffffff8215d800,0x436,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c);
+  if (iVar5 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x436,0,
+                    "%s\n\t(g_serverThreadOwnership) = %i");
   }
   G_ResetEntityParsePoint();
-  uVar6 = (ulonglong)DAT_83cfc510;
-  DAT_83cfc510 = (uint)(uVar6 + 1);
+  uVar6 = (ulonglong)(uint)sv.skelTimeStamp;
+  sv.skelTimeStamp = (int)(uVar6 + 1);
   if (uVar6 + 1 == 0) {
-    DAT_83cfc510 = 1;
+    sv.skelTimeStamp = 1;
   }
-  DAT_83cfc514 = 0;
-  DAT_83ced668 = &DAT_83cad660;
-  if ((*(int *)(DAT_83d0b55c + 0xc) < 1) || (0x12 < *(int *)(DAT_83d0b55c + 0xc))) {
-    MyAssertHandler(0xffffffff8215d800,0x442,0,0xffffffff82031eb4,0xffffffff8215d7b0);
+  sv.skelMemPos = 0;
+  g_sv_skel_memory_start = g_sv_skel_memory;
+  if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x442,0,
+                    "%s\n\t(sv_maxclients->current.integer) = %i");
   }
   iVar5 = 0;
-  if (0 < *(int *)(DAT_83d0b55c + 0xc)) {
+  if (0 < (sv_maxclients->current).integer) {
+    pcVar4 = svs.clients;
     iVar7 = 0;
-    iVar4 = DAT_83f11414;
     do {
-      *(undefined4 *)(iVar4 + 0x21418) = 0;
+      pcVar4->gentity = (gentity_s *)0x0;
       iVar5 = iVar5 + 1;
+      pcVar4 = (client_t *)(svs.clients[1].header.netchan.remoteAddress.ip + iVar7 + -0x2c);
       iVar7 = iVar7 + 0x68b00;
-      iVar4 = iVar7 + DAT_83f11414;
-    } while (iVar5 < *(int *)(DAT_83d0b55c + 0xc));
+    } while (iVar5 < (sv_maxclients->current).integer);
   }
-  ProfLoad_Begin(0xffffffff8215db44);
-  DVar3 = Sys_MillisecondsRaw();
-  G_InitGame(DAT_83f11404,DVar3,uVar2,param_2,param_3);
+  ProfLoad_Begin("G_InitGame");
+  uVar2 = Sys_MillisecondsRaw();
+  G_InitGame(svs.time,uVar2,iVar1,param_2,param_3);
   ProfLoad_End();
-  DAT_83ced714 = DAT_83f11404;
-  I_strncpyz(0xffffffff83cfc5e8,*(undefined4 *)(DAT_83f1e094 + 0xc),0x40);
-  uVar2 = va(0xffffffff8200c28c,DAT_83ced688);
-  SV_SetConfigstring(3,uVar2);
+  sv.levelTime = svs.time;
+  I_strncpyz(sv.gametype,(sv_gametype->current).string,0x40);
+  pcVar3 = va("%i");
+  SV_SetConfigstring(CS_SERVERID,pcVar3);
   Migration_Shutdown();
-  if ((int)param_3 == 0) {
+  if (param_3 == 0) {
     lVar8 = 3;
     do {
-      DAT_83ced714 = DAT_83ced714 + 0x32;
+      sv.levelTime = sv.levelTime + 0x32;
       SV_RunFrame();
-      if (DAT_83f11404 != DAT_83ced714) {
-        MyAssertHandler(0xffffffff8215d800,0x473,0,0xffffffff82000f98,0xffffffff8215db28);
+      if (svs.time != sv.levelTime) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x473,
+                        0,"%s");
       }
       lVar8 = lVar8 + -1;
     } while (lVar8 != 0);
@@ -1073,35 +1386,37 @@ void SV_InitGameVM(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 825724D0  SV_ShutdownGameVM  (server/sv_game.cpp:1151)
 
-void SV_ShutdownGameVM(undefined8 param_1)
+void SV_ShutdownGameVM(int param_1)
 
 {
-  uint uVar1;
-  char cVar2;
-  undefined8 in_MSR;
+  int iVar1;
+  bool bVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8215d800,0x480,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x480,0,
+                    "%s");
   }
   do {
-    uVar1 = DAT_83f1e19c;
-    if (DAT_83f1e19c != 0) {
+    iVar1 = g_serverThreadOwnership;
+    if (g_serverThreadOwnership != 0) {
       if (in_RESERVE != '\0') {
-        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar1 != 1) {
-    MyAssertHandler(0xffffffff8215d800,0x481,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
-                    in_MSR);
+  if (iVar1 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x481,0,
+                    "%s\n\t(g_serverThreadOwnership) = %i");
   }
   G_ShutdownGame(param_1);
   return;
@@ -1110,41 +1425,43 @@ void SV_ShutdownGameVM(undefined8 param_1)
 
 // 825725B0  SV_RestartGameProgs  (server/sv_game.cpp:1325)
 
-void SV_RestartGameProgs(undefined8 param_1,undefined8 param_2)
+void SV_RestartGameProgs(int param_1,int param_2)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  undefined8 in_MSR;
+  int iVar1;
+  int iVar2;
+  bool bVar3;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar2 = __savegprlr_29();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8215d800,0x52e,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar2 = __savegprlr_29(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x52e,0,
+                    "%s");
   }
   do {
-    uVar1 = DAT_83f1e19c;
-    if (DAT_83f1e19c != 0) {
+    iVar1 = g_serverThreadOwnership;
+    if (g_serverThreadOwnership != 0) {
       if (in_RESERVE != '\0') {
-        DAT_83f1e19c = storeWordConditionalIndexed((ulonglong)DAT_83f1e19c,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_serverThreadOwnership,0,0xffffffff83f1e19c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_83f1e19c = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar1 != 1) {
-    MyAssertHandler(0xffffffff8215d800,0x52f,0,0xffffffff820837d8,0xffffffff8215db50,DAT_83f1e19c,
-                    in_MSR);
+  if (iVar1 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x52f,0,
+                    "%s\n\t(g_serverThreadOwnership) = %i");
   }
   SV_ShutdownGameVM(0);
-  DAT_83667304 = 0;
-  SV_InitGameVM(1,uVar2,param_2);
+  com_fixedConsolePosition = 0;
+  SV_InitGameVM(1,iVar2,param_2);
   __restgprlr_29();
   return;
 }
@@ -1152,10 +1469,10 @@ void SV_RestartGameProgs(undefined8 param_1,undefined8 param_2)
 
 // 82572698  SV_InitGameProgs  (server/sv_game.cpp:1372)
 
-void SV_InitGameProgs(undefined8 param_1)
+void SV_InitGameProgs(int param_1)
 
 {
-  DAT_83ced66c = 1;
+  gameInitialized = 1;
   SV_InitGameVM(0,1,param_1);
   return;
 }
@@ -1163,26 +1480,31 @@ void SV_InitGameProgs(undefined8 param_1)
 
 // 825726B8  SV_InitGameMode  (server/sv_game.cpp:1392)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SV_InitGameMode(void)
 
 {
-  DAT_83ced660 = Dvar_RegisterEnum(0xffffffff8215dbac,0xffffffff82990720,3,0x2080,0xffffffff8215dbb8
-                                  );
+  g_gameMode = Dvar_RegisterEnum("gameMode",g_gameModeStrs,3,0x2080,"Current gameMode");
   return;
 }
 
 
 // 82572700  SV_GameCommand  (server/sv_game.cpp:1408)
 
-undefined8 SV_GameCommand(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_GameCommand(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  if (DAT_83ced708 != 2) {
+  if (sv.state != SS_GAME) {
     return 0;
   }
-  uVar1 = ConsoleCommand();
-  return uVar1;
+  iVar1 = ConsoleCommand();
+  return iVar1;
 }
 

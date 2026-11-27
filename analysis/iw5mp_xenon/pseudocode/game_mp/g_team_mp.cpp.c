@@ -2,15 +2,18 @@
 
 // 824AD180  OnSameTeam  (game_mp/g_team_mp.cpp:10)
 
-bool OnSameTeam(int param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int OnSameTeam(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
+  team_t tVar1;
   
-  if (((*(int *)(param_1 + 0x158) != 0) && (*(int *)(param_2 + 0x158) != 0)) &&
-     (iVar1 = *(int *)(*(int *)(param_1 + 0x158) + 0x33d4), iVar1 != 0)) {
-    return *(int *)(*(int *)(param_2 + 0x158) + 0x33d4) == iVar1;
+  if (((param_1->client != (gclient_s *)0x0) && (param_2->client != (gclient_s *)0x0)) &&
+     (tVar1 = (param_1->client->sess).cs.team, tVar1 != TEAM_FREE)) {
+    return (uint)LZCOUNT((param_2->client->sess).cs.team - tVar1) >> 5;
   }
-  return false;
+  return 0;
 }
 

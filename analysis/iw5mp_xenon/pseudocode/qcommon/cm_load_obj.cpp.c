@@ -2,12 +2,15 @@
 
 // 824C43E0  CM_EntityString  (qcommon/cm_load_obj.cpp:2780)
 
-undefined4 CM_EntityString(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * CM_EntityString(void)
 
 {
-  if (DAT_835a2918 == 0) {
-    MyAssertHandler(0xffffffff82081d68,0xadd,0,0xffffffff82000f98,0xffffffff82081dac);
+  if (cm.mapEnts == (MapEnts *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load_obj.cpp",0xadd
+                    ,0,"%s");
   }
-  return *(undefined4 *)(DAT_835a2918 + 4);
+  return (cm.mapEnts)->entityString;
 }
 

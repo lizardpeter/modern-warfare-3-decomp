@@ -2,6 +2,8 @@
 
 // 827ACC00  TRACK_rb_sunshadow  (gfx_d3d/rb_sunshadow.cpp:21)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_sunshadow(void)
 
 {
@@ -11,26 +13,32 @@ void TRACK_rb_sunshadow(void)
 
 // 827ACC08  RB_SunShadowMaps  (gfx_d3d/rb_sunshadow.cpp:27)
 
-void RB_SunShadowMaps(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_SunShadowMaps(GfxBackEndData *param_1,GfxViewInfo *param_2)
 
 {
-  ulonglong uVar1;
+  GfxBackEndData *pGVar1;
   longlong lVar2;
   longlong lVar3;
-  undefined1 auStack_40 [64];
+  uint uVar4;
+  GfxDrawCallOutput aGStack_40 [4];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d8af8,0x27,0,0xffffffff82000f98,0xffffffff8201f49c);
+  lVar2 = (longlong)(int)param_2;
+  pGVar1 = (GfxBackEndData *)__savegprlr_28(param_1);
+  if (pGVar1 == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sunshadow.cpp",0x27
+                    ,0,"%s");
   }
-  lVar3 = 0;
-  lVar2 = param_2 + 0x2ad0;
+  uVar4 = 0;
+  lVar3 = lVar2 + 0x2ad0;
   do {
-    R_InitDrawCallOutput(uVar1,auStack_40);
-    R_DrawSunShadowMap(param_2,lVar2,lVar3,auStack_40);
-    lVar3 = lVar3 + 1;
-    lVar2 = lVar2 + 0x1f8;
-  } while ((int)lVar3 < 2);
+    R_InitDrawCallOutput(pGVar1,aGStack_40);
+    R_DrawSunShadowMap((GfxViewInfo *)lVar2,(GfxDrawList *)lVar3,uVar4,aGStack_40);
+    uVar4 = uVar4 + 1;
+    lVar3 = lVar3 + 0x1f8;
+  } while ((int)uVar4 < 2);
   __restgprlr_28();
   return;
 }
@@ -39,13 +47,14 @@ void RB_SunShadowMaps(undefined8 param_1,longlong param_2)
 // 827ACC88  RB_SunShadowOverlayPoint  (gfx_d3d/rb_sunshadow.cpp:77)
 
 void RB_SunShadowOverlayPoint
-               (double param_1,double param_2,double param_3,double param_4,float *param_5)
+               (float *param_1,float param_2,float param_3,float param_4,float param_5,
+               float *param_6)
 
 {
   float *in_r8;
   
-  *in_r8 = (float)((double)((*param_5 + 1.0) * 0.5) * param_3 + param_1);
-  in_r8[1] = (float)(-(double)(param_5[1] * 0.5 - 0.5) * param_4 + param_2);
+  *in_r8 = (*param_1 + 1.0) * 0.5 * param_4 + param_2;
+  in_r8[1] = -(param_1[1] * 0.5 - 0.5) * param_5 + param_3;
   in_r8[2] = 0.0;
   return;
 }
@@ -59,11 +68,11 @@ void RB_GetShadowOverlayDepthBounds(float *param_1,float *param_2)
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  dvar_t *pdVar4;
   
-  iVar4 = DAT_845aa7e4;
-  *param_1 = *(float *)(DAT_845aa7e4 + 0xc);
-  fVar1 = *(float *)(iVar4 + 0x10);
+  pdVar4 = sm_showOverlayDepthBounds;
+  *param_1 = (float)(sm_showOverlayDepthBounds->current).integer;
+  fVar1 = (pdVar4->current).vector[1];
   *param_2 = fVar1;
   fVar2 = *param_1;
   if (0.0001 <= ABS(fVar1 - fVar2)) {
@@ -83,14 +92,18 @@ void RB_GetShadowOverlayDepthBounds(float *param_1,float *param_2)
 
 // 827ACD40  RB_SetSunShadowOverlayScaleAndBias  (gfx_d3d/rb_sunshadow.cpp:107)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void RB_SetSunShadowOverlayScaleAndBias(void)
 
 {
   float fVar1;
   float fVar2;
   
-  fVar1 = *(float *)(DAT_845aa7e4 + 0xc);
-  fVar2 = *(float *)(DAT_845aa7e4 + 0x10);
+  fVar1 = (sm_showOverlayDepthBounds->current).value;
+  fVar2 = (sm_showOverlayDepthBounds->current).vector[1];
   if (ABS(fVar2 - fVar1) < 0.0001) {
     if (fVar2 <= fVar1) {
       fVar2 = (fVar1 + fVar2) * 0.5 - 5e-05;
@@ -102,22 +115,30 @@ void RB_SetSunShadowOverlayScaleAndBias(void)
     }
   }
   fVar2 = 1.0 / (fVar2 - fVar1);
-  if ((((DAT_8484d6c0 == fVar2) && (DAT_8484d6c4 == -(fVar2 * fVar1))) && (DAT_8484d6c8 == 1.0)) &&
-     (DAT_8484d6cc == 1.0)) {
+  if ((((gfxCmdBufSourceState.input.consts[0xe][0] == fVar2) &&
+       (gfxCmdBufSourceState.input.consts[0xe][1] == -(fVar2 * fVar1))) &&
+      (gfxCmdBufSourceState.input.consts[0xe][2] == 1.0)) &&
+     (gfxCmdBufSourceState.input.consts[0xe][3] == 1.0)) {
     return;
   }
-  DAT_8484d6c8 = 1.0;
-  DAT_8484d6cc = 1.0;
-  DAT_8484d6c0 = fVar2;
-  DAT_8484d6c4 = -(fVar2 * fVar1);
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0xe);
+  gfxCmdBufSourceState.input.consts[0xe][2] = 1.0;
+  gfxCmdBufSourceState.input.consts[0xe][3] = 1.0;
+  gfxCmdBufSourceState.input.consts[0xe][0] = fVar2;
+  gfxCmdBufSourceState.input.consts[0xe][1] = -(fVar2 * fVar1);
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0xe);
   return;
 }
 
 
 // 827ACE08  RB_DrawSunShadowOverlay  (gfx_d3d/rb_sunshadow.cpp:121)
 
-void RB_DrawSunShadowOverlay(void)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_DrawSunShadowOverlay(GfxViewInfo *param_1)
 
 {
   float fVar1;
@@ -129,453 +150,450 @@ void RB_DrawSunShadowOverlay(void)
   float fVar7;
   float fVar8;
   float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float fVar13;
-  float fVar14;
-  float fVar15;
-  float fVar16;
-  int iVar17;
-  int iVar18;
-  uint uVar19;
-  uint uVar20;
-  int iVar21;
-  undefined4 uVar22;
-  ulonglong uVar23;
+  float *pfVar10;
+  float *pfVar11;
+  float *pfVar12;
+  float *pfVar13;
+  float *pfVar14;
+  float *pfVar15;
+  float *pfVar16;
+  float *pfVar17;
+  float *pfVar18;
+  float *pfVar19;
+  float *pfVar20;
+  float *pfVar21;
+  float *pfVar22;
+  float *pfVar23;
   int iVar24;
-  uint uVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
-  ulonglong uVar28;
-  ulonglong uVar29;
-  longlong lVar30;
+  int iVar25;
+  int iVar26;
+  GfxBackEndData *pGVar27;
+  int iVar28;
+  undefined8 in_r4;
+  GfxSunShadow *pGVar29;
+  ulonglong in_r5;
+  uint uVar30;
   longlong lVar31;
-  int iVar32;
+  ulonglong uVar32;
   ulonglong uVar33;
-  int iVar34;
-  longlong lVar35;
-  longlong lVar36;
-  double dVar37;
-  double dVar38;
-  double dVar39;
-  double dVar40;
-  double dVar41;
+  ulonglong uVar34;
+  undefined4 *puVar35;
+  float *pfVar36;
+  GfxSunShadowOverlayLines *pGVar37;
+  float *pfVar38;
+  uint uVar39;
+  uint uVar40;
+  longlong lVar41;
   double dVar42;
   double dVar43;
   double dVar44;
   double dVar45;
   double dVar46;
   double dVar47;
-  float local_350 [90];
-  float local_1e8 [122];
+  double dVar48;
+  double dVar49;
+  double dVar50;
+  double dVar51;
+  double dVar52;
+  float local_350 [8];
+  GfxPointVertex local_330;
+  float local_320;
+  float local_31c;
+  float local_318;
+  undefined4 local_314;
+  float local_310;
+  float local_30c;
+  float local_308;
+  undefined4 local_304;
+  float local_300;
+  float local_2fc;
+  float local_2f8;
+  undefined4 local_2f4;
+  float local_2f0;
+  float local_2ec;
+  float local_2e8;
+  undefined4 local_2e4;
+  float local_2e0;
+  float local_2dc;
+  float local_2d8;
+  undefined4 local_2d4;
+  float local_2d0;
+  float local_2cc;
+  float local_2c8;
+  undefined4 local_2c4;
+  float local_2c0;
+  float local_2bc;
+  float local_2b8;
+  undefined4 local_2b4;
+  GfxSunShadowOverlayLines local_1f0;
   
-  uVar23 = ZEXT48(&stack0x00000000);
-  __savegprlr_21();
-  iVar24 = __savefpr_19();
-  iVar17 = (int)(uVar23 - 0x3d0);
-  *(BADSPACEBASE **)iVar17 = register0x0000000c;
-  iVar32 = DAT_84821000;
-  dVar40 = -1.0;
-  dVar45 = 1.0;
-  iVar34 = DAT_84821000 + 0x23f0;
-  *(undefined4 *)(iVar17 + 0x80) = 0xbf800000;
-  *(undefined4 *)(iVar17 + 0x84) = 0xbf800000;
-  *(undefined4 *)(iVar17 + 0x88) = 0xbf800000;
-  *(undefined4 *)(iVar17 + 0x8c) = 0x3f800000;
-  *(undefined4 *)(iVar17 + 0x90) = 0x3f800000;
-  *(undefined4 *)(iVar17 + 0x94) = 0x3f800000;
-  *(undefined4 *)(iVar17 + 0x98) = 0x3f800000;
-  *(undefined4 *)(iVar17 + 0x9c) = 0xbf800000;
+  __savegprlr_21(param_1);
+  iVar28 = __savefpr_19();
+  pGVar27 = backEndData;
+  dVar44 = -1.0;
+  dVar50 = 1.0;
+  pGVar29 = &backEndData->sunShadow;
+  local_350[0] = -1.0;
+  local_350[1] = -1.0;
+  local_350[2] = -1.0;
+  local_350[3] = 1.0;
+  local_350[4] = 1.0;
+  local_350[5] = 1.0;
+  local_350[6] = 1.0;
+  local_350[7] = -1.0;
   RB_SetSunShadowOverlayScaleAndBias();
-  uVar22 = DAT_84762184;
-  DAT_8484db20 = DAT_84762170;
-  dVar47 = 0.5;
-  DAT_8484db80 = 0x61;
-  if (*(int *)(iVar24 + 0x93c) == 0xd) {
-    *(ulonglong *)(iVar17 + 0x70) = (ulonglong)DAT_8461372c;
-    fVar1 = (float)*(longlong *)(iVar17 + 0x70) * 0.375;
-    dVar39 = 0.25;
-    DAT_8484db20 = uVar22;
+  dVar52 = 0.5;
+  gfxCmdBufSourceState.input.codeImageSamplerStates[8] = 'a';
+  if (*(int *)(iVar28 + 0x93c) == 0xd) {
+    in_r5 = (ulonglong)vidConfig.displayHeight;
+    fVar1 = (float)in_r5 * 0.375;
+    dVar43 = 0.25;
+    gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[0xd].image;
   }
   else {
-    *(ulonglong *)(iVar17 + 0x70) = (ulonglong)DAT_8461372c;
-    fVar1 = (float)((double)*(longlong *)(iVar17 + 0x70) * 0.5);
-    dVar39 = dVar47;
+    fVar1 = (float)((double)vidConfig.displayHeight * 0.5);
+    dVar43 = dVar52;
+    gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[0xc].image;
   }
-  dVar46 = (double)fVar1;
-  iVar24 = 0;
-  dVar42 = 2.0;
-  dVar44 = 32.0;
-  dVar38 = (double)(float)(dVar46 + 2.0);
-  dVar43 = 0.0;
+  dVar51 = (double)fVar1;
+  iVar28 = 0;
+  dVar47 = 2.0;
+  dVar49 = 32.0;
+  dVar42 = (double)(float)(dVar51 + 2.0);
+  dVar48 = 0.0;
   do {
-    uVar22 = DAT_8461654c;
-    *(undefined4 *)(iVar17 + 100) = 6;
-    *(longlong *)(iVar17 + 0x70) = (longlong)iVar24;
-    *(undefined4 *)(iVar17 + 0x5c) = 0xffffffff;
-    dVar37 = (double)(float)((double)*(longlong *)(iVar17 + 0x70) * dVar39);
-    RB_DrawStretchPic((double)(float)((double)*(longlong *)(iVar17 + 0x70) * dVar38 + dVar44),dVar44
-                      ,dVar46,dVar46,dVar43,dVar37,dVar45,(double)(float)(dVar37 + dVar39),uVar22);
-    iVar24 = iVar24 + 1;
-  } while (iVar24 < 2);
+    fVar1 = (float)((double)(longlong)iVar28 * dVar43);
+    RB_DrawStretchPic(rgp.shadowOverlayMaterial,(float)((double)(longlong)iVar28 * dVar42 + dVar49),
+                      (float)dVar49,(float)dVar51,(float)dVar51,(float)dVar48,fVar1,(float)dVar50,
+                      (float)((double)fVar1 + dVar43),(ulong)in_r4,(GfxPrimStatsTarget)in_r5);
+    iVar28 = iVar28 + 1;
+  } while (iVar28 < 2);
   RB_EndTessSurface();
-  DAT_8484db80 = 0x62;
-  if (DAT_8461814c != 0) {
-    lVar30 = uVar23 - 0x334;
-    iVar24 = 0;
-    lVar35 = 2;
-    dVar39 = (double)*(float *)(DAT_845aa8c4 + 0xc);
-    dVar37 = (double)(float)(dVar39 * 0.875);
-    dVar40 = (double)(float)(dVar37 * dVar40);
-    fVar1 = (float)(-(double)(float)(dVar40 * dVar47 - dVar47) * dVar46 + dVar44);
+  gfxCmdBufSourceState.input.codeImageSamplerStates[8] = 'b';
+  if (rg.sunShadowFull != 0) {
+    pfVar38 = local_350 + 7;
+    iVar28 = 0;
+    lVar41 = 2;
+    dVar43 = (double)(sm_sunShadowScale->current).value;
+    dVar46 = (double)(float)(dVar43 * 0.875);
+    dVar44 = (double)(float)(dVar46 * dVar44);
+    fVar1 = (float)(-(double)(float)(dVar44 * dVar52 - dVar52) * dVar51 + dVar49);
     do {
-      iVar18 = (int)lVar30;
-      *(float *)(iVar18 + 8) = fVar1;
-      *(longlong *)(iVar17 + 0x70) = (longlong)iVar24;
-      *(float *)(iVar18 + 0xc) = (float)dVar43;
-      iVar24 = iVar24 + 1;
-      fVar1 = (float)(-(double)(float)(dVar40 * dVar47 - dVar47) * dVar46 + dVar44);
-      dVar41 = (double)(float)((double)*(longlong *)(iVar17 + 0x70) * dVar38 + dVar44);
-      *(float *)(iVar18 + 4) =
-           (float)((double)(float)((double)(float)(dVar40 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(undefined4 *)(iVar18 + 0x10) = 0x30ff0000;
-      *(float *)(iVar18 + 0x14) =
-           (float)((double)(float)((double)(float)(dVar40 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x18) =
-           (float)(-(double)(float)(dVar37 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x1c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x20) = 0x30ff0000;
-      *(float *)(iVar18 + 0x24) =
-           (float)((double)(float)((double)(float)(dVar40 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x28) =
-           (float)(-(double)(float)(dVar37 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x2c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x30) = 0x30ff0000;
-      *(float *)(iVar18 + 0x34) =
-           (float)((double)(float)((double)(float)(dVar37 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x38) =
-           (float)(-(double)(float)(dVar37 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x3c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x40) = 0x30ff0000;
-      *(float *)(iVar18 + 0x44) =
-           (float)((double)(float)((double)(float)(dVar37 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x48) =
-           (float)(-(double)(float)(dVar37 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x4c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x50) = 0x30ff0000;
-      *(float *)(iVar18 + 0x54) =
-           (float)((double)(float)((double)(float)(dVar37 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x58) =
-           (float)(-(double)(float)(dVar40 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x5c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x60) = 0x30ff0000;
-      *(float *)(iVar18 + 100) =
-           (float)((double)(float)((double)(float)(dVar37 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x68) =
-           (float)(-(double)(float)(dVar40 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar18 + 0x6c) = (float)dVar43;
-      *(undefined4 *)(iVar18 + 0x70) = 0x30ff0000;
-      *(float *)(iVar18 + 0x74) =
-           (float)((double)(float)((double)(float)(dVar40 + dVar45) * dVar47) * dVar46 + dVar41);
-      *(float *)(iVar18 + 0x78) = fVar1;
-      *(float *)(iVar18 + 0x7c) = (float)dVar43;
-      lVar30 = lVar30 + 0x80;
-      *(undefined4 *)lVar30 = 0x30ff0000;
-      lVar35 = lVar35 + -1;
-    } while (lVar35 != 0);
-    RB_DrawLines2D(8,1,uVar23 - 0x330);
-    uVar25 = 0;
-    lVar30 = uVar23 - 0x328;
+      lVar31 = (longlong)iVar28;
+      pfVar38[2] = fVar1;
+      pfVar38[3] = (float)dVar48;
+      iVar28 = iVar28 + 1;
+      fVar1 = (float)(-(double)(float)(dVar44 * dVar52 - dVar52) * dVar51 + dVar49);
+      dVar45 = (double)(float)((double)lVar31 * dVar42 + dVar49);
+      pfVar38[1] = (float)((double)(float)((double)(float)(dVar44 + dVar50) * dVar52) * dVar51 +
+                          dVar45);
+      pfVar38[4] = 1.8553692e-09;
+      pfVar38[5] = (float)((double)(float)((double)(float)(dVar44 + dVar50) * dVar52) * dVar51 +
+                          dVar45);
+      pfVar38[6] = (float)(-(double)(float)(dVar46 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[7] = (float)dVar48;
+      pfVar38[8] = 1.8553692e-09;
+      pfVar38[9] = (float)((double)(float)((double)(float)(dVar44 + dVar50) * dVar52) * dVar51 +
+                          dVar45);
+      pfVar38[10] = (float)(-(double)(float)(dVar46 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[0xb] = (float)dVar48;
+      pfVar38[0xc] = 1.8553692e-09;
+      pfVar38[0xd] = (float)((double)(float)((double)(float)(dVar46 + dVar50) * dVar52) * dVar51 +
+                            dVar45);
+      pfVar38[0xe] = (float)(-(double)(float)(dVar46 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[0xf] = (float)dVar48;
+      pfVar38[0x10] = 1.8553692e-09;
+      pfVar38[0x11] =
+           (float)((double)(float)((double)(float)(dVar46 + dVar50) * dVar52) * dVar51 + dVar45);
+      pfVar38[0x12] = (float)(-(double)(float)(dVar46 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[0x13] = (float)dVar48;
+      pfVar38[0x14] = 1.8553692e-09;
+      pfVar38[0x15] =
+           (float)((double)(float)((double)(float)(dVar46 + dVar50) * dVar52) * dVar51 + dVar45);
+      pfVar38[0x16] = (float)(-(double)(float)(dVar44 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[0x17] = (float)dVar48;
+      pfVar38[0x18] = 1.8553692e-09;
+      pfVar38[0x19] =
+           (float)((double)(float)((double)(float)(dVar46 + dVar50) * dVar52) * dVar51 + dVar45);
+      pfVar38[0x1a] = (float)(-(double)(float)(dVar44 * dVar52 - dVar52) * dVar51 + dVar49);
+      pfVar38[0x1b] = (float)dVar48;
+      pfVar38[0x1c] = 1.8553692e-09;
+      pfVar38[0x1d] =
+           (float)((double)(float)((double)(float)(dVar44 + dVar50) * dVar52) * dVar51 + dVar45);
+      pfVar38[0x1e] = fVar1;
+      pfVar38[0x1f] = (float)dVar48;
+      pfVar38 = pfVar38 + 0x20;
+      *pfVar38 = 1.8553692e-09;
+      lVar41 = lVar41 + -1;
+    } while (lVar41 != 0);
+    RB_DrawLines2D(8,1,&local_330);
+    uVar30 = 0;
+    pfVar38 = local_330.xyz + 2;
     do {
-      dVar40 = dVar39;
-      if (uVar25 != 0) {
-        dVar40 = dVar37;
+      dVar44 = dVar43;
+      if (uVar30 != 0) {
+        dVar44 = dVar46;
       }
-      lVar35 = lVar30 + -0xc;
-      uVar28 = 0;
-      lVar30 = lVar30 + 0x80;
-      lVar36 = 4;
+      puVar35 = pfVar38 + -3;
+      uVar33 = 0;
+      pfVar38 = pfVar38 + 0x20;
+      lVar41 = 4;
       do {
-        uVar19 = (uint)((uVar28 & 0xffffffff) << 3) & 0x18;
-        fVar1 = *(float *)(iVar32 + 0x243c);
-        uVar28 = uVar28 + 1;
-        fVar2 = *(float *)(iVar32 + 0x2430);
-        fVar3 = *(float *)(iVar32 + 0x2434);
-        uVar20 = (uint)((uVar28 & 0xffffffff) << 3) & 0x18;
-        iVar24 = (int)lVar35;
-        *(float *)(iVar24 + 0xc) = (float)dVar43;
-        fVar13 = *(float *)((int)local_350 + uVar19 + 4);
-        fVar14 = *(float *)(uVar20 + iVar17 + 0x84);
-        fVar15 = *(float *)(uVar20 + iVar17 + 0x80);
-        *(float *)(iVar24 + 4) =
-             (float)((double)(float)((double)(float)((double)(float)((double)(fVar1 * (float)((
-                                                  double)(float)((double)*(float *)((int)local_350 +
-                                                                                   uVar19) * dVar40
-                                                                + dVar45) * dVar47) + fVar2) *
-                                                  dVar42 - dVar45) + dVar45) * dVar47) * dVar46 +
-                    (double)(float)(dVar46 + dVar44));
-        *(float *)(iVar24 + 8) =
-             (float)(-(double)(float)(-(double)(float)((double)(float)((double)(fVar1 * (float)(-(
-                                                  double)(float)((double)(float)((double)fVar13 *
-                                                                                dVar40) * dVar47 -
-                                                                dVar47) * dVar47) + fVar3) * dVar42
-                                                  - dVar45) * dVar42 - dVar45) * dVar47 - dVar47) *
-                     dVar46 + dVar44);
-        *(undefined4 *)(iVar24 + 0x10) = 0x30ff8000;
-        fVar1 = *(float *)(iVar32 + 0x2434);
-        fVar2 = *(float *)(iVar32 + 0x243c);
-        *(float *)(iVar24 + 0x14) =
-             (float)((double)(float)((double)(float)((double)(float)((double)(fVar2 * (float)((
-                                                  double)(float)((double)fVar15 * dVar40 + dVar45) *
-                                                  dVar47) + *(float *)(iVar32 + 0x2430)) * dVar42 -
-                                                  dVar45) + dVar45) * dVar47) * dVar46 +
-                    (double)(float)(dVar46 + dVar44));
-        *(float *)(iVar24 + 0x18) =
-             (float)(-(double)(float)(-(double)(float)((double)(float)((double)(fVar2 * (float)(-(
-                                                  double)(float)((double)(float)((double)fVar14 *
-                                                                                dVar40) * dVar47 -
-                                                                dVar47) * dVar47) + fVar1) * dVar42
-                                                  - dVar45) * dVar42 - dVar45) * dVar47 - dVar47) *
-                     dVar46 + dVar44);
-        *(float *)(iVar24 + 0x1c) = (float)dVar43;
-        lVar35 = lVar35 + 0x20;
-        *(undefined4 *)lVar35 = 0x30ff8000;
-        lVar36 = lVar36 + -1;
-      } while (lVar36 != 0);
-      uVar25 = uVar25 + 1;
-    } while (uVar25 < 2);
-    RB_DrawLines2D(8,1,uVar23 - 0x330);
+        uVar39 = (uint)((uVar33 & 0xffffffff) << 3) & 0x18;
+        fVar1 = (pGVar27->sunShadow).sunProj.switchPartition[3];
+        uVar33 = uVar33 + 1;
+        fVar2 = (pGVar27->sunShadow).sunProj.switchPartition[0];
+        fVar3 = (pGVar27->sunShadow).sunProj.switchPartition[1];
+        uVar40 = (uint)((uVar33 & 0xffffffff) << 3) & 0x18;
+        puVar35[3] = (float)dVar48;
+        fVar6 = *(float *)((int)local_350 + uVar39 + 4);
+        fVar7 = *(float *)((int)local_350 + uVar40 + 4);
+        fVar8 = *(float *)((int)local_350 + uVar40);
+        puVar35[1] = (float)((double)(float)((double)(float)((double)(float)((double)(fVar1 * (float
+                                                  )((double)(float)((double)*(float *)((int)
+                                                  local_350 + uVar39) * dVar44 + dVar50) * dVar52) +
+                                                  fVar2) * dVar47 - dVar50) + dVar50) * dVar52) *
+                             dVar51 + (double)(float)(dVar51 + dVar49));
+        puVar35[2] = (float)(-(double)(float)(-(double)(float)((double)(float)((double)(fVar1 * (
+                                                  float)(-(double)(float)((double)(float)((double)
+                                                  fVar6 * dVar44) * dVar52 - dVar52) * dVar52) +
+                                                  fVar3) * dVar47 - dVar50) * dVar47 - dVar50) *
+                                              dVar52 - dVar52) * dVar51 + dVar49);
+        puVar35[4] = 0x30ff8000;
+        fVar1 = (pGVar27->sunShadow).sunProj.switchPartition[1];
+        fVar2 = (pGVar27->sunShadow).sunProj.switchPartition[3];
+        puVar35[5] = (float)((double)(float)((double)(float)((double)(float)((double)(fVar2 * (float
+                                                  )((double)(float)((double)fVar8 * dVar44 + dVar50)
+                                                   * dVar52) +
+                                                  (pGVar27->sunShadow).sunProj.switchPartition[0]) *
+                                                  dVar47 - dVar50) + dVar50) * dVar52) * dVar51 +
+                            (double)(float)(dVar51 + dVar49));
+        puVar35[6] = (float)(-(double)(float)(-(double)(float)((double)(float)((double)(fVar2 * (
+                                                  float)(-(double)(float)((double)(float)((double)
+                                                  fVar7 * dVar44) * dVar52 - dVar52) * dVar52) +
+                                                  fVar1) * dVar47 - dVar50) * dVar47 - dVar50) *
+                                              dVar52 - dVar52) * dVar51 + dVar49);
+        puVar35[7] = (float)dVar48;
+        puVar35 = puVar35 + 8;
+        *puVar35 = 0x30ff8000;
+        lVar41 = lVar41 + -1;
+      } while (lVar41 != 0);
+      uVar30 = uVar30 + 1;
+    } while (uVar30 < 2);
+    RB_DrawLines2D(8,1,&local_330);
   }
-  if (*(int *)(iVar32 + 0x2738) != 0) {
-    R_GetSunShadowMapOverlayLines(DAT_84821000,iVar34,uVar23 - 0x1f0);
-    iVar32 = 0;
-    lVar36 = 0;
-    lVar35 = uVar23 - 0x1f0;
-    lVar30 = uVar23 - 0x14c;
+  if ((pGVar27->sunShadow).overlaySetup.clipPlaneCount[0] != 0) {
+    R_GetSunShadowMapOverlayLines(backEndData,pGVar29,&local_1f0);
+    iVar28 = 0;
+    lVar41 = 0;
+    pGVar37 = &local_1f0;
+    pfVar38 = local_1f0.borderPoints[1][9] + 1;
     do {
-      uVar28 = 0;
-      uVar25 = *(uint *)lVar35;
-      uVar33 = (ulonglong)uVar25;
-      *(longlong *)(iVar17 + 0x70) = (longlong)iVar32;
-      dVar40 = (double)(float)((double)*(longlong *)(iVar17 + 0x70) * dVar38 + dVar44);
+      uVar39 = 0;
+      uVar30 = pGVar37->borderPointCount[0];
+      uVar33 = (ulonglong)uVar30;
+      dVar44 = (double)(float)((double)(longlong)iVar28 * dVar42 + dVar49);
       if (uVar33 != 0) {
-        if (0x14 < uVar25 << 1) {
-          MyAssertHandler(0xffffffff821d8af8,0x129,0,0xffffffff821d8b3c,uVar25 << 1,0x14);
+        if (0x14 < uVar30 << 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sunshadow.cpp"
+                          ,0x129,0,"2 * pointCount <= ARRAY_COUNT( overlayPoints )\n\t%i, %i");
         }
-        uVar29 = 0;
-        if (3 < (int)uVar25) {
-          lVar31 = uVar23 - 0x334;
+        uVar34 = 0;
+        if (3 < (int)uVar30) {
+          pfVar36 = local_350 + 7;
           do {
-            iVar34 = (int)((lVar36 + uVar29 & 0x1fffffff) << 3);
-            iVar24 = (int)((((uVar29 + 1) -
-                            (longlong)(int)((uVar29 + 1 & 0xffffffff) / (ulonglong)uVar25) *
-                            (longlong)(int)uVar25) + lVar36 & 0xffffffff) << 3);
-            fVar1 = *(float *)((int)local_1e8 + iVar34 + 4);
-            iVar18 = (int)((((uVar29 + 2) -
-                            (longlong)(int)((uVar29 + 2 & 0xffffffff) / (ulonglong)uVar25) *
-                            (longlong)(int)uVar25) + lVar36 & 0xffffffff) << 3);
-            fVar2 = *(float *)((int)local_1e8 + iVar24);
-            fVar3 = *(float *)((int)local_1e8 + iVar24 + 4);
-            fVar13 = *(float *)((int)local_1e8 + iVar34 + 8);
+            iVar24 = (int)((lVar41 + uVar34 & 0x1fffffff) << 3);
+            iVar25 = (int)((((uVar34 + 1) -
+                            (longlong)(int)((uVar34 + 1 & 0xffffffff) / (ulonglong)uVar30) *
+                            (longlong)(int)uVar30) + lVar41 & 0xffffffff) << 3);
+            fVar1 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar24 + 4);
+            iVar26 = (int)((((uVar34 + 2) -
+                            (longlong)(int)((uVar34 + 2 & 0xffffffff) / (ulonglong)uVar30) *
+                            (longlong)(int)uVar30) + lVar41 & 0xffffffff) << 3);
+            fVar2 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar25);
+            fVar3 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar25 + 4);
+            fVar6 = *(float *)((int)local_1f0.borderPoints[0][1] + iVar24);
             trapWord(6,uVar33,0);
-            fVar14 = *(float *)((int)local_1e8 + iVar34 + 0xc);
-            fVar16 = *(float *)((int)local_1e8 + iVar34 + 0x10);
-            fVar15 = *(float *)((int)local_1e8 + iVar18);
-            fVar4 = *(float *)((int)local_1e8 + iVar18 + 4);
-            fVar5 = *(float *)((int)local_1e8 + iVar34 + 0x14);
+            fVar7 = *(float *)((int)local_1f0.borderPoints[0][1] + iVar24 + 4);
+            fVar9 = *(float *)((int)local_1f0.borderPoints[0][2] + iVar24);
+            fVar8 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar26);
+            fVar4 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar26 + 4);
+            fVar5 = *(float *)((int)local_1f0.borderPoints[0][2] + iVar24 + 4);
             trapWord(6,uVar33,0);
             trapWord(6,uVar33,0);
-            iVar24 = (int)lVar31;
-            *(float *)(iVar24 + 4) =
-                 (float)((double)(float)((double)(float)((double)*(float *)((int)local_1e8 + iVar34)
-                                                        + dVar45) * dVar47) * dVar46 + dVar40);
-            *(float *)(iVar24 + 8) =
-                 (float)(-(double)(float)((double)fVar1 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0xc) = (float)dVar43;
-            *(float *)(iVar24 + 0x14) =
-                 (float)((double)(float)((double)(float)((double)fVar2 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x18) =
-                 (float)(-(double)(float)((double)fVar3 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x1c) = (float)dVar43;
-            *(undefined4 *)(iVar24 + 0x10) = 0x8000ff00;
-            *(undefined4 *)(iVar24 + 0x20) = 0x8000ff00;
-            *(float *)(iVar24 + 0x24) =
-                 (float)((double)(float)((double)(float)((double)fVar13 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x28) =
-                 (float)(-(double)(float)((double)fVar14 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x2c) = (float)dVar43;
-            *(float *)(iVar24 + 0x34) =
-                 (float)((double)(float)((double)(float)((double)fVar15 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x38) =
-                 (float)(-(double)(float)((double)fVar4 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x3c) = (float)dVar43;
-            *(undefined4 *)(iVar24 + 0x30) = 0x8000ff00;
-            *(undefined4 *)(iVar24 + 0x40) = 0x8000ff00;
-            *(float *)(iVar24 + 0x44) =
-                 (float)((double)(float)((double)(float)((double)fVar16 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x48) =
-                 (float)(-(double)(float)((double)fVar5 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x4c) = (float)dVar43;
-            iVar18 = (int)((((uVar29 + 3) -
-                            (longlong)(int)((uVar29 + 3 & 0xffffffff) / (ulonglong)uVar25) *
-                            (longlong)(int)uVar25) + lVar36 & 0xffffffff) << 3);
-            iVar21 = (int)((((uVar29 + 4) -
-                            (longlong)(int)((uVar29 + 4 & 0xffffffff) / (ulonglong)uVar25) *
-                            (longlong)(int)uVar25) + lVar36 & 0xffffffff) << 3);
-            fVar1 = *(float *)((int)local_1e8 + iVar18 + 4);
-            uVar29 = uVar29 + 4;
-            fVar2 = *(float *)((int)local_1e8 + iVar34 + 0x18);
-            fVar3 = *(float *)((int)local_1e8 + iVar34 + 0x1c);
+            pfVar36[1] = (float)((double)(float)((double)(float)((double)*(float *)((int)local_1f0.
+                                                                                                                                                                                  
+                                                  borderPoints[0][0] + iVar24) + dVar50) * dVar52) *
+                                 dVar51 + dVar44);
+            pfVar36[2] = (float)(-(double)(float)((double)fVar1 * dVar52 - dVar52) * dVar51 + dVar49
+                                );
+            pfVar36[3] = (float)dVar48;
+            pfVar36[5] = (float)((double)(float)((double)(float)((double)fVar2 + dVar50) * dVar52) *
+                                 dVar51 + dVar44);
+            pfVar36[6] = (float)(-(double)(float)((double)fVar3 * dVar52 - dVar52) * dVar51 + dVar49
+                                );
+            pfVar36[7] = (float)dVar48;
+            pfVar36[4] = -9.14768e-41;
+            pfVar36[8] = -9.14768e-41;
+            pfVar36[9] = (float)((double)(float)((double)(float)((double)fVar6 + dVar50) * dVar52) *
+                                 dVar51 + dVar44);
+            pfVar36[10] = (float)(-(double)(float)((double)fVar7 * dVar52 - dVar52) * dVar51 +
+                                 dVar49);
+            pfVar36[0xb] = (float)dVar48;
+            pfVar36[0xd] = (float)((double)(float)((double)(float)((double)fVar8 + dVar50) * dVar52)
+                                   * dVar51 + dVar44);
+            pfVar36[0xe] = (float)(-(double)(float)((double)fVar4 * dVar52 - dVar52) * dVar51 +
+                                  dVar49);
+            pfVar36[0xf] = (float)dVar48;
+            pfVar36[0xc] = -9.14768e-41;
+            pfVar36[0x10] = -9.14768e-41;
+            pfVar36[0x11] =
+                 (float)((double)(float)((double)(float)((double)fVar9 + dVar50) * dVar52) * dVar51
+                        + dVar44);
+            pfVar36[0x12] =
+                 (float)(-(double)(float)((double)fVar5 * dVar52 - dVar52) * dVar51 + dVar49);
+            pfVar36[0x13] = (float)dVar48;
+            iVar25 = (int)((((uVar34 + 3) -
+                            (longlong)(int)((uVar34 + 3 & 0xffffffff) / (ulonglong)uVar30) *
+                            (longlong)(int)uVar30) + lVar41 & 0xffffffff) << 3);
+            iVar26 = (int)((((uVar34 + 4) -
+                            (longlong)(int)((uVar34 + 4 & 0xffffffff) / (ulonglong)uVar30) *
+                            (longlong)(int)uVar30) + lVar41 & 0xffffffff) << 3);
+            fVar1 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar25 + 4);
+            uVar34 = uVar34 + 4;
+            fVar2 = *(float *)((int)local_1f0.borderPoints[0][3] + iVar24);
+            fVar3 = *(float *)((int)local_1f0.borderPoints[0][3] + iVar24 + 4);
             trapWord(6,uVar33,0);
-            fVar14 = *(float *)((int)local_1e8 + iVar21);
-            uVar28 = uVar28 + 8;
-            fVar13 = *(float *)((int)local_1e8 + iVar21 + 4);
-            *(float *)(iVar24 + 0x54) =
-                 (float)((double)(float)((double)(float)((double)*(float *)((int)local_1e8 + iVar18)
-                                                        + dVar45) * dVar47) * dVar46 + dVar40);
-            *(float *)(iVar24 + 0x58) =
-                 (float)(-(double)(float)((double)fVar1 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x5c) = (float)dVar43;
-            *(undefined4 *)(iVar24 + 0x50) = 0x8000ff00;
-            *(undefined4 *)(iVar24 + 0x60) = 0x8000ff00;
-            *(float *)(iVar24 + 100) =
-                 (float)((double)(float)((double)(float)((double)fVar2 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x68) =
-                 (float)(-(double)(float)((double)fVar3 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x6c) = (float)dVar43;
-            *(float *)(iVar24 + 0x74) =
-                 (float)((double)(float)((double)(float)((double)fVar14 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x78) =
-                 (float)(-(double)(float)((double)fVar13 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x7c) = (float)dVar43;
-            *(undefined4 *)(iVar24 + 0x70) = 0x8000ff00;
-            lVar31 = lVar31 + 0x80;
-            *(undefined4 *)lVar31 = 0x8000ff00;
-          } while ((uVar29 & 0xffffffff) < (uVar33 - 3 & 0xffffffff));
+            fVar7 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar26);
+            uVar39 = uVar39 + 8;
+            fVar6 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar26 + 4);
+            pfVar36[0x15] =
+                 (float)((double)(float)((double)(float)((double)*(float *)((int)local_1f0.
+                                                                                 borderPoints[0][0]
+                                                                           + iVar25) + dVar50) *
+                                        dVar52) * dVar51 + dVar44);
+            pfVar36[0x16] =
+                 (float)(-(double)(float)((double)fVar1 * dVar52 - dVar52) * dVar51 + dVar49);
+            pfVar36[0x17] = (float)dVar48;
+            pfVar36[0x14] = -9.14768e-41;
+            pfVar36[0x18] = -9.14768e-41;
+            pfVar36[0x19] =
+                 (float)((double)(float)((double)(float)((double)fVar2 + dVar50) * dVar52) * dVar51
+                        + dVar44);
+            pfVar36[0x1a] =
+                 (float)(-(double)(float)((double)fVar3 * dVar52 - dVar52) * dVar51 + dVar49);
+            pfVar36[0x1b] = (float)dVar48;
+            pfVar36[0x1d] =
+                 (float)((double)(float)((double)(float)((double)fVar7 + dVar50) * dVar52) * dVar51
+                        + dVar44);
+            pfVar36[0x1e] =
+                 (float)(-(double)(float)((double)fVar6 * dVar52 - dVar52) * dVar51 + dVar49);
+            pfVar36[0x1f] = (float)dVar48;
+            pfVar36[0x1c] = -9.14768e-41;
+            pfVar36 = pfVar36 + 0x20;
+            *pfVar36 = -9.14768e-41;
+          } while ((uVar34 & 0xffffffff) < (uVar33 - 3 & 0xffffffff));
         }
-        if ((uVar29 & 0xffffffff) < (ulonglong)uVar25) {
-          uVar27 = uVar28 & 0xfffffff;
-          uVar26 = uVar33 - uVar29;
-          uVar28 = (uVar26 & 0x7fffffff) * 2 + uVar28;
-          lVar31 = uVar27 * 0x10 + (uVar23 - 0x3d0) + 0x9c;
+        uVar40 = uVar39;
+        if ((uVar34 & 0xffffffff) < (ulonglong)uVar30) {
+          lVar31 = uVar33 - uVar34;
+          uVar40 = (int)lVar31 * 2 + uVar39;
+          pfVar36 = local_350 + uVar39 * 4 + 7;
           do {
-            uVar27 = uVar29 + 1;
-            iVar24 = (int)lVar31;
-            *(float *)(iVar24 + 0xc) = (float)dVar43;
-            iVar34 = (int)((lVar36 + uVar29 & 0xffffffff) << 3);
-            iVar18 = (int)(((uVar27 - (longlong)(int)((uVar27 & 0xffffffff) / (ulonglong)uVar25) *
-                                      (longlong)(int)uVar25) + lVar36 & 0xffffffff) << 3);
+            uVar32 = uVar34 + 1;
+            pfVar36[3] = (float)dVar48;
+            iVar24 = (int)((lVar41 + uVar34 & 0xffffffff) << 3);
+            iVar25 = (int)(((uVar32 - (longlong)(int)((uVar32 & 0xffffffff) / (ulonglong)uVar30) *
+                                      (longlong)(int)uVar30) + lVar41 & 0xffffffff) << 3);
             trapWord(6,uVar33,0);
-            fVar1 = *(float *)((int)local_1e8 + iVar34);
-            fVar2 = *(float *)((int)local_1e8 + iVar18);
-            fVar3 = *(float *)((int)local_1e8 + iVar18 + 4);
-            *(float *)(iVar24 + 8) =
-                 (float)(-(double)(float)((double)*(float *)((int)local_1e8 + iVar34 + 4) * dVar47 -
-                                         dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 4) =
-                 (float)((double)(float)((double)(float)((double)fVar1 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x14) =
-                 (float)((double)(float)((double)(float)((double)fVar2 + dVar45) * dVar47) * dVar46
-                        + dVar40);
-            *(float *)(iVar24 + 0x18) =
-                 (float)(-(double)(float)((double)fVar3 * dVar47 - dVar47) * dVar46 + dVar44);
-            *(float *)(iVar24 + 0x1c) = (float)dVar43;
-            *(undefined4 *)(iVar24 + 0x10) = 0x8000ff00;
-            lVar31 = lVar31 + 0x20;
-            *(undefined4 *)lVar31 = 0x8000ff00;
-            uVar26 = uVar26 - 1;
-            uVar29 = uVar27;
-          } while (uVar26 != 0);
+            fVar1 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar24);
+            fVar2 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar25);
+            fVar3 = *(float *)((int)local_1f0.borderPoints[0][0] + iVar25 + 4);
+            pfVar36[2] = (float)(-(double)(float)((double)*(float *)((int)local_1f0.borderPoints[0]
+                                                                          [0] + iVar24 + 4) * dVar52
+                                                 - dVar52) * dVar51 + dVar49);
+            pfVar36[1] = (float)((double)(float)((double)(float)((double)fVar1 + dVar50) * dVar52) *
+                                 dVar51 + dVar44);
+            pfVar36[5] = (float)((double)(float)((double)(float)((double)fVar2 + dVar50) * dVar52) *
+                                 dVar51 + dVar44);
+            pfVar36[6] = (float)(-(double)(float)((double)fVar3 * dVar52 - dVar52) * dVar51 + dVar49
+                                );
+            pfVar36[7] = (float)dVar48;
+            pfVar36[4] = -9.14768e-41;
+            pfVar36 = pfVar36 + 8;
+            *pfVar36 = -9.14768e-41;
+            lVar31 = lVar31 + -1;
+            uVar34 = uVar32;
+          } while (lVar31 != 0);
         }
-        RB_DrawLines2D((uVar28 & 0xffffffff) >> 1,1,uVar23 - 0x330);
+        RB_DrawLines2D(uVar40 >> 1,1,&local_330);
       }
-      iVar24 = (int)lVar30;
-      fVar1 = *(float *)(iVar24 + 0xc);
-      *(undefined4 *)(iVar17 + 0xac) = 0x80ffff00;
-      fVar2 = *(float *)(iVar24 + 0x14);
-      fVar3 = *(float *)(iVar24 + 4);
-      fVar13 = *(float *)(iVar24 + 0x1c);
-      fVar14 = *(float *)(iVar24 + 0x24);
-      fVar15 = *(float *)(iVar24 + 0x2c);
-      fVar4 = *(float *)(iVar24 + 0x34);
-      fVar5 = *(float *)(iVar24 + 8);
-      fVar16 = *(float *)(iVar24 + 0x10);
-      fVar6 = *(float *)(iVar24 + 0x18);
-      fVar7 = *(float *)(iVar24 + 0x20);
-      fVar8 = *(float *)(iVar24 + 0x28);
-      fVar9 = *(float *)(iVar24 + 0x30);
-      fVar10 = *(float *)(iVar24 + 0x3c);
-      fVar11 = *(float *)(iVar24 + 0x38);
-      lVar30 = lVar30 + 0x40;
-      fVar12 = *(float *)lVar30;
-      *(float *)(iVar17 + 0xa8) = (float)dVar43;
-      *(float *)(iVar17 + 0xb8) = (float)dVar43;
-      *(float *)(iVar17 + 200) = (float)dVar43;
-      *(float *)(iVar17 + 0xd8) = (float)dVar43;
-      *(float *)(iVar17 + 0xe8) = (float)dVar43;
-      *(undefined4 *)(iVar17 + 0xbc) = 0x80ffff00;
-      *(float *)(iVar17 + 0xa4) =
-           (float)(-(double)(float)((double)fVar5 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0xb0) =
-           (float)((double)(float)((double)(float)((double)fVar1 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xc0) =
-           (float)((double)(float)((double)(float)((double)fVar2 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xb4) =
-           (float)(-(double)(float)((double)fVar16 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0xc4) =
-           (float)(-(double)(float)((double)fVar6 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0xa0) =
-           (float)((double)(float)((double)(float)((double)fVar3 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xd0) =
-           (float)((double)(float)((double)(float)((double)fVar13 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xe4) =
-           (float)(-(double)(float)((double)fVar8 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0xd4) =
-           (float)(-(double)(float)((double)fVar7 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0xe0) =
-           (float)((double)(float)((double)(float)((double)fVar14 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xf0) =
-           (float)((double)(float)((double)(float)((double)fVar15 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0xf4) =
-           (float)(-(double)(float)((double)fVar9 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(undefined4 *)(iVar17 + 0xcc) = 0x80ffff00;
-      *(undefined4 *)(iVar17 + 0xdc) = 0x80ffff00;
-      *(undefined4 *)(iVar17 + 0xec) = 0x80ffff00;
-      *(undefined4 *)(iVar17 + 0xfc) = 0x80ffff00;
-      *(undefined4 *)(iVar17 + 0x10c) = 0x80ffff00;
-      *(undefined4 *)(iVar17 + 0x11c) = 0x80ffff00;
-      *(float *)(iVar17 + 0xf8) = (float)dVar43;
-      *(float *)(iVar17 + 0x100) =
-           (float)((double)(float)((double)(float)((double)fVar4 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0x104) =
-           (float)(-(double)(float)((double)fVar11 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0x108) = (float)dVar43;
-      *(float *)(iVar17 + 0x110) =
-           (float)((double)(float)((double)(float)((double)fVar10 + dVar45) * dVar47) * dVar46 +
-                  dVar40);
-      *(float *)(iVar17 + 0x114) =
-           (float)(-(double)(float)((double)fVar12 * dVar47 - dVar47) * dVar46 + dVar44);
-      *(float *)(iVar17 + 0x118) = (float)dVar43;
-      RB_DrawLines2D(4,1,uVar23 - 0x330);
-      lVar36 = lVar36 + 10;
-      iVar32 = iVar32 + 1;
-      lVar35 = lVar35 + 4;
-    } while ((int)lVar36 < 0x14);
+      pfVar36 = pfVar38 + 3;
+      local_330.color[0] = 0x80;
+      local_330.color[1] = 0xff;
+      local_330.color[2] = 0xff;
+      local_330.color[3] = '\0';
+      pfVar10 = pfVar38 + 5;
+      pfVar11 = pfVar38 + 1;
+      pfVar12 = pfVar38 + 7;
+      pfVar13 = pfVar38 + 9;
+      pfVar14 = pfVar38 + 0xb;
+      pfVar15 = pfVar38 + 0xd;
+      pfVar16 = pfVar38 + 2;
+      pfVar17 = pfVar38 + 4;
+      pfVar18 = pfVar38 + 6;
+      pfVar19 = pfVar38 + 8;
+      pfVar20 = pfVar38 + 10;
+      pfVar21 = pfVar38 + 0xc;
+      pfVar22 = pfVar38 + 0xf;
+      pfVar23 = pfVar38 + 0xe;
+      pfVar38 = pfVar38 + 0x10;
+      local_330.xyz[2] = (float)dVar48;
+      local_318 = (float)dVar48;
+      local_308 = (float)dVar48;
+      local_2f8 = (float)dVar48;
+      local_2e8 = (float)dVar48;
+      local_314 = 0x80ffff00;
+      local_330.xyz[1] =
+           (float)(-(double)(float)((double)*pfVar16 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_320 = (float)((double)(float)((double)(float)((double)*pfVar36 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_310 = (float)((double)(float)((double)(float)((double)*pfVar10 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_31c = (float)(-(double)(float)((double)*pfVar17 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_30c = (float)(-(double)(float)((double)*pfVar18 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_330.xyz[0] =
+           (float)((double)(float)((double)(float)((double)*pfVar11 + dVar50) * dVar52) * dVar51 +
+                  dVar44);
+      local_300 = (float)((double)(float)((double)(float)((double)*pfVar12 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_2ec = (float)(-(double)(float)((double)*pfVar20 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_2fc = (float)(-(double)(float)((double)*pfVar19 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_2f0 = (float)((double)(float)((double)(float)((double)*pfVar13 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_2e0 = (float)((double)(float)((double)(float)((double)*pfVar14 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_2dc = (float)(-(double)(float)((double)*pfVar21 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_304 = 0x80ffff00;
+      local_2f4 = 0x80ffff00;
+      local_2e4 = 0x80ffff00;
+      local_2d4 = 0x80ffff00;
+      local_2c4 = 0x80ffff00;
+      local_2b4 = 0x80ffff00;
+      local_2d0 = (float)((double)(float)((double)(float)((double)*pfVar15 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_2cc = (float)(-(double)(float)((double)*pfVar23 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_2d8 = (float)dVar48;
+      local_2c0 = (float)((double)(float)((double)(float)((double)*pfVar22 + dVar50) * dVar52) *
+                          dVar51 + dVar44);
+      local_2bc = (float)(-(double)(float)((double)*pfVar38 * dVar52 - dVar52) * dVar51 + dVar49);
+      local_2c8 = (float)dVar48;
+      local_2b8 = (float)dVar48;
+      RB_DrawLines2D(4,1,&local_330);
+      lVar41 = lVar41 + 10;
+      iVar28 = iVar28 + 1;
+      pGVar37 = (GfxSunShadowOverlayLines *)(pGVar37->borderPointCount + 1);
+    } while ((int)lVar41 < 0x14);
   }
   RB_EndTessSurface();
   __restfpr_19();

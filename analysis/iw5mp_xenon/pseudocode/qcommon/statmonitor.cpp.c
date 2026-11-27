@@ -2,41 +2,45 @@
 
 // 825130E0  TRACK_statmonitor  (qcommon/statmonitor.cpp:28)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_statmonitor(void)
 
 {
-  track_static_alloc_internal(0xffffffff836fda38,0x58,0xffffffff82012e44,10);
+  track_static_alloc_internal(stats,0x58,"stats",10);
   return;
 }
 
 
 // 82513100  StatMon_Warning  (qcommon/statmonitor.cpp:41)
 
-void StatMon_Warning(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void StatMon_Warning(int param_1,int param_2,char *param_3)
 
 {
   uint uVar1;
   int iVar2;
-  undefined4 uVar3;
-  int iVar4;
+  Material *pMVar3;
   
-  uVar1 = __savegprlr_27();
-  if (*(char *)(DAT_8365e12c + 0xc) != '\0') {
+  uVar1 = __savegprlr_27(param_1);
+  if ((com_statmon->current).enabled != false) {
     if (10 < uVar1) {
-      MyAssertHandler(0xffffffff820926e0,0x2d,0,0xffffffff82092724,uVar1,0xb);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\statmonitor.cpp",
+                      0x2d,0,"type doesn\'t index ARRAY_COUNT( stats )\n\t%i not in [0, %i)");
     }
-    Sys_EnterCriticalSection(3);
-    iVar4 = uVar1 * 8;
+    Sys_EnterCriticalSection(CRITSECT_STATMON);
     iVar2 = Sys_Milliseconds();
-    *(int *)(&DAT_836fda38 + iVar4) = iVar2 + param_2;
-    if ((*(int *)(&DAT_836fda3c + iVar4) == 0) && (DAT_82aa1c08 != 0)) {
-      uVar3 = Material_RegisterHandle(param_3,1);
-      *(undefined4 *)(&DAT_836fda3c + iVar4) = uVar3;
+    stats[uVar1].endtime = iVar2 + param_2;
+    if ((stats[uVar1].material == (Material *)0x0) && (cls.rendererStarted != 0)) {
+      pMVar3 = Material_RegisterHandle(param_3,1);
+      stats[uVar1].material = pMVar3;
     }
     if (DAT_836fda90 <= (int)uVar1) {
       DAT_836fda90 = uVar1 + 1;
     }
-    Sys_LeaveCriticalSection(3);
+    Sys_LeaveCriticalSection(CRITSECT_STATMON);
   }
   __restgprlr_27();
   return;
@@ -45,10 +49,10 @@ void StatMon_Warning(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 825131D0  StatMon_GetStatsArray  (qcommon/statmonitor.cpp:72)
 
-void StatMon_GetStatsArray(undefined4 *param_1,undefined4 *param_2)
+void StatMon_GetStatsArray(statmonitor_s **param_1,int *param_2)
 
 {
-  *param_1 = &DAT_836fda38;
+  *param_1 = stats;
   *param_2 = DAT_836fda90;
   return;
 }
@@ -56,13 +60,13 @@ void StatMon_GetStatsArray(undefined4 *param_1,undefined4 *param_2)
 
 // 825131E8  StatMon_Reset  (qcommon/statmonitor.cpp:84)
 
-void * StatMon_Reset(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void StatMon_Reset(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_836fda38,0,0x58);
+  memset();
   DAT_836fda90 = 0;
-  return pvVar1;
+  return;
 }
 

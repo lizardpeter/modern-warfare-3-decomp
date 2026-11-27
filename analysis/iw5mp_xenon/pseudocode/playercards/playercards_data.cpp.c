@@ -2,253 +2,296 @@
 
 // 826E6A10  PlayerCards_GetRowCount  (playercards/playercards_data.cpp:15)
 
-void PlayerCards_GetRowCount(undefined8 param_1)
+uint PlayerCards_GetRowCount(char *param_1)
 
 {
-  int local_10 [4];
+  uint uVar1;
+  StringTable *local_10 [4];
   
   StringTable_GetAsset(param_1,local_10);
-  if (local_10[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
+  if (local_10[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x14,1,"%s");
   }
-  StringTable_GetRowCount(local_10[0]);
-  return;
+  uVar1 = StringTable_GetRowCount(local_10[0]);
+  return uVar1;
 }
 
 
 // 826E6A70  PlayerCards_GetTableString  (playercards/playercards_data.cpp:28)
 
-void PlayerCards_GetTableString(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+char * PlayerCards_GetTableString(char *param_1,uint param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  int local_40 [16];
+  char *pcVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  StringTable *local_40 [16];
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x20,0,0xffffffff82000f98,0xffffffff821a9c5c);
+  uVar3 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x20,0,"%s");
   }
-  StringTable_GetAsset(uVar1,local_40);
-  if (local_40[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x23,1,0xffffffff82000f98,0xffffffff820362e8);
+  StringTable_GetAsset(pcVar1,local_40);
+  if (local_40[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x23,1,"%s");
   }
-  uVar1 = StringTable_GetRowCount(local_40[0]);
-  if ((uVar1 & 0xffffffff) <= (param_2 & 0xffffffff)) {
-    uVar2 = StringTable_GetRowCount(local_40[0]);
-    MyAssertHandler(0xffffffff821a9bc0,0x25,0,0xffffffff821a9c10,param_2,uVar2);
+  uVar2 = StringTable_GetRowCount(local_40[0]);
+  if ((ulonglong)uVar2 <= (uVar3 & 0xffffffff)) {
+    StringTable_GetRowCount(local_40[0]);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x25,0,
+                    "rowNum doesn\'t index StringTable_GetRowCount( table )\n\t%i not in [0, %i)");
   }
-  uVar1 = StringTable_GetColumnValueForRow(local_40[0],param_2,param_3);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x28,1,0xffffffff82000f98,0xffffffff820181d4);
+  pcVar1 = StringTable_GetColumnValueForRow(local_40[0],(int)uVar3,param_3);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x28,1,"%s");
   }
-  __restgprlr_27(uVar1);
-  return;
+  pcVar1 = (char *)__restgprlr_27(pcVar1);
+  return pcVar1;
 }
 
 
 // 826E6B70  PlayerCards_GetRowNumberFromHandle  (playercards/playercards_data.cpp:47)
 
-void PlayerCards_GetRowNumberFromHandle
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+uint PlayerCards_GetRowNumberFromHandle(char *param_1,char *param_2,uint param_3,uint param_4)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
-  int local_40 [16];
+  char *pcVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  StringTable *local_40 [16];
   
-  pcVar2 = (char *)__savegprlr_26();
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x33,0,0xffffffff82000f98,0xffffffff820363b8);
+  lVar6 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_26(param_1,lVar4,lVar5,lVar6);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x33,0,"%s");
   }
-  if (*pcVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a9bc0,0x34,0,0xffffffff82000f98,0xffffffff821a9ce4);
+  if (*pcVar1 == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x34,0,"%s");
   }
-  StringTable_GetAsset(param_2,local_40);
-  if (local_40[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x37,1,0xffffffff82000f98,0xffffffff820362e8);
+  StringTable_GetAsset((char *)lVar4,local_40);
+  if (local_40[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x37,1,"%s");
   }
-  uVar1 = StringTable_LookupRowNumForValue(local_40[0],param_3,pcVar2);
-  if ((int)uVar1 < 0) {
-    Com_PrintWarning(1,0xffffffff821a9c68,pcVar2,param_2);
-    uVar1 = param_4;
+  iVar2 = StringTable_LookupRowNumForValue(local_40[0],(int)lVar5,pcVar1);
+  lVar4 = (longlong)iVar2;
+  if (iVar2 < 0) {
+    Com_PrintWarning(1,
+                     "PlayerCards::GetRowNumberFromHandle: can\'t find information on handle \'%s\'. playerData enum values also need to be in %s.\n"
+                    );
+    lVar4 = lVar6;
   }
-  __restgprlr_26(uVar1);
-  return;
+  uVar3 = __restgprlr_26(lVar4);
+  return uVar3;
 }
 
 
 // 826E6C58  PlayerCards_GetTitleCount  (playercards/playercards_data.cpp:68)
 
-void PlayerCards_GetTitleCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint PlayerCards_GetTitleCount(void)
 
 {
-  int local_10 [4];
+  uint uVar1;
+  StringTable *local_10 [4];
   
-  StringTable_GetAsset(0xffffffff820268f8,local_10);
-  if (local_10[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_10);
+  if (local_10[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x14,1,"%s");
   }
-  StringTable_GetRowCount(local_10[0]);
-  return;
+  uVar1 = StringTable_GetRowCount(local_10[0]);
+  return uVar1;
 }
 
 
 // 826E6CC0  PlayerCards_GetTitleIndexFromHandle  (playercards/playercards_data.cpp:74)
 
-undefined8 PlayerCards_GetTitleIndexFromHandle(char *param_1)
+uint PlayerCards_GetTitleIndexFromHandle(char *param_1)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x4b,0,0xffffffff82000f98,0xffffffff821a9cf8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x4b,0,"%s");
   }
   if (*param_1 == '\0') {
     return 0;
   }
-  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,0xffffffff820268f8,0,0);
+  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,"mp/cardTitleTable.csv",0,0);
   return uVar1;
 }
 
 
 // 826E6D50  PlayerCards_GetTitleTextByIndex  (playercards/playercards_data.cpp:85)
 
-undefined8 PlayerCards_GetTitleTextByIndex(undefined8 param_1)
+char * PlayerCards_GetTitleTextByIndex(uint param_1)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
+  char *pcVar1;
   
-  pcVar2 = (char *)PlayerCards_GetTableString(0xffffffff820268f8,param_1,1);
-  if (*pcVar2 == '\0') {
-    return 0xffffffff820068af;
+  pcVar1 = PlayerCards_GetTableString("mp/cardTitleTable.csv",param_1,1);
+  if (*pcVar1 == '\0') {
+    return "";
   }
-  uVar1 = SEH_SafeTranslateString();
-  return uVar1;
+  pcVar1 = SEH_SafeTranslateString(pcVar1);
+  return pcVar1;
 }
 
 
 // 826E6DA8  PlayerCards_GetTitleBackgroundNameByIndex  (playercards/playercards_data.cpp:99)
 
-void PlayerCards_GetTitleBackgroundNameByIndex(undefined8 param_1)
+char * PlayerCards_GetTitleBackgroundNameByIndex(uint param_1)
 
 {
-  PlayerCards_GetTableString(0xffffffff820268f8,param_1,2);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = PlayerCards_GetTableString("mp/cardTitleTable.csv",param_1,2);
+  return pcVar1;
 }
 
 
 // 826E6DC0  PlayerCards_GetTitleBackgroundByIndex  (playercards/playercards_data.cpp:105)
 
-void PlayerCards_GetTitleBackgroundByIndex(undefined8 param_1)
+Material * PlayerCards_GetTitleBackgroundByIndex(uint param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  Material *pMVar2;
   
-  uVar1 = PlayerCards_GetTableString(0xffffffff820268f8,param_1,2);
-  Material_RegisterHandle(uVar1,3);
-  return;
+  pcVar1 = PlayerCards_GetTableString("mp/cardTitleTable.csv",param_1,2);
+  pMVar2 = Material_RegisterHandle(pcVar1,3);
+  return pMVar2;
 }
 
 
 // 826E6DF8  PlayerCards_GetIconCount  (playercards/playercards_data.cpp:111)
 
-void PlayerCards_GetIconCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint PlayerCards_GetIconCount(void)
 
 {
-  int local_10 [4];
+  uint uVar1;
+  StringTable *local_10 [4];
   
-  StringTable_GetAsset(0xffffffff82026928,local_10);
-  if (local_10[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_10);
+  if (local_10[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x14,1,"%s");
   }
-  StringTable_GetRowCount(local_10[0]);
-  return;
+  uVar1 = StringTable_GetRowCount(local_10[0]);
+  return uVar1;
 }
 
 
 // 826E6E60  PlayerCards_GetIconIndexFromHandle  (playercards/playercards_data.cpp:117)
 
-undefined8 PlayerCards_GetIconIndexFromHandle(char *param_1)
+uint PlayerCards_GetIconIndexFromHandle(char *param_1)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x76,0,0xffffffff82000f98,0xffffffff821a9d04);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x76,0,"%s");
   }
   if (*param_1 == '\0') {
     return 0;
   }
-  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,0xffffffff82026928,0,0);
+  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,"mp/cardIconTable.csv",0,0);
   return uVar1;
 }
 
 
 // 826E6EF0  PlayerCards_GetIconMaterialNameByIndex  (playercards/playercards_data.cpp:128)
 
-void PlayerCards_GetIconMaterialNameByIndex(undefined8 param_1)
+char * PlayerCards_GetIconMaterialNameByIndex(uint param_1)
 
 {
-  PlayerCards_GetTableString(0xffffffff82026928,param_1,1);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = PlayerCards_GetTableString("mp/cardIconTable.csv",param_1,1);
+  return pcVar1;
 }
 
 
 // 826E6F08  PlayerCards_GetIconMaterialByIndex  (playercards/playercards_data.cpp:134)
 
-void PlayerCards_GetIconMaterialByIndex(undefined8 param_1)
+Material * PlayerCards_GetIconMaterialByIndex(uint param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  Material *pMVar2;
   
-  uVar1 = PlayerCards_GetTableString(0xffffffff82026928,param_1,1);
-  Material_RegisterHandle(uVar1,3);
-  return;
+  pcVar1 = PlayerCards_GetTableString("mp/cardIconTable.csv",param_1,1);
+  pMVar2 = Material_RegisterHandle(pcVar1,3);
+  return pMVar2;
 }
 
 
 // 826E6F40  PlayerCards_GetNameplateCount  (playercards/playercards_data.cpp:140)
 
-void PlayerCards_GetNameplateCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint PlayerCards_GetNameplateCount(void)
 
 {
-  int local_10 [4];
+  uint uVar1;
+  StringTable *local_10 [4];
   
-  StringTable_GetAsset(0xffffffff821a9d10,local_10);
-  if (local_10[0] == 0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x14,1,0xffffffff82000f98,0xffffffff820362e8);
+  StringTable_GetAsset("mp/cardNameplateTable.csv",local_10);
+  if (local_10[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x14,1,"%s");
   }
-  StringTable_GetRowCount(local_10[0]);
-  return;
+  uVar1 = StringTable_GetRowCount(local_10[0]);
+  return uVar1;
 }
 
 
 // 826E6FA8  PlayerCards_GetNameplateIndexFromHandle  (playercards/playercards_data.cpp:146)
 
-undefined8 PlayerCards_GetNameplateIndexFromHandle(char *param_1)
+uint PlayerCards_GetNameplateIndexFromHandle(char *param_1)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
   if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a9bc0,0x93,0,0xffffffff82000f98,0xffffffff821a9d2c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
+                    ,0x93,0,"%s");
   }
   if (*param_1 == '\0') {
     return 0;
   }
-  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,0xffffffff821a9d10,0,0);
+  uVar1 = PlayerCards_GetRowNumberFromHandle(param_1,"mp/cardNameplateTable.csv",0,0);
   return uVar1;
 }
 
 
 // 826E7038  PlayerCards_GetNameplateBackgroundNameByIndex  (playercards/playercards_data.cpp:157)
 
-void PlayerCards_GetNameplateBackgroundNameByIndex(undefined8 param_1)
+char * PlayerCards_GetNameplateBackgroundNameByIndex(uint param_1)
 
 {
-  PlayerCards_GetTableString(0xffffffff821a9d10,param_1,1);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = PlayerCards_GetTableString("mp/cardNameplateTable.csv",param_1,1);
+  return pcVar1;
 }
 

@@ -2,7 +2,7 @@
 
 // 8243D560  FX_NeedsBoltUpdate  (EffectsCore/fx_spawn_api.cpp:15)
 
-undefined8 FX_NeedsBoltUpdate(int param_1)
+bool FX_NeedsBoltUpdate(FxEffectDef *param_1)
 
 {
   longlong lVar1;
@@ -10,40 +10,62 @@ undefined8 FX_NeedsBoltUpdate(int param_1)
   uint *puVar3;
   int iVar4;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff820679d0,0x13,0,0xffffffff82000f98,0xffffffff8206070c);
+  if (param_1 == (FxEffectDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_api.cpp",
+                    0x13,0,"%s");
   }
   iVar2 = 0;
-  lVar1 = (ulonglong)*(uint *)(param_1 + 0x14) + (ulonglong)*(uint *)(param_1 + 0x10);
+  lVar1 = (ulonglong)(uint)param_1->elemDefCountOneShot +
+          (ulonglong)(uint)param_1->elemDefCountLooping;
   if (lVar1 != 0) {
     iVar4 = 0;
     do {
-      puVar3 = (uint *)(iVar4 + *(int *)(param_1 + 0x30));
+      puVar3 = (uint *)((int)&((FxElemDef *)(param_1->elemDefs->spawnOrigin + -7))->flags + iVar4);
       if ((*(char *)(puVar3 + 0x2c) == '\x03') || ((*puVar3 & 0xc0) == 0x80)) {
-        return 1;
+        return true;
       }
       iVar2 = iVar2 + 1;
       iVar4 = iVar4 + 0x100;
     } while (iVar2 < (int)lVar1);
   }
-  return 0;
+  return false;
 }
 
 
 // 8243D620  FX_PlayOrientedEffectWithViewmodelInfo  (EffectsCore/fx_spawn_api.cpp:37)
 
-void FX_PlayOrientedEffectWithViewmodelInfo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_PlayOrientedEffectWithViewmodelInfo
+               (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,float *param_4,
+               float (*param_5) [3],uint param_6,bool param_7,bool param_8,int param_9)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  FxSystem *pFVar2;
   int in_stack_00000054;
+  FxEffectDef *in_stack_ffffff08;
+  int in_stack_ffffff0c;
+  float *in_stack_ffffff10;
+  float (*in_stack_ffffff14) [3];
+  int in_stack_ffffff18;
+  int in_stack_ffffff1c;
+  ushort in_stack_ffffff22;
+  uint in_stack_ffffff24;
+  undefined1 in_stack_ffffff2b;
+  undefined1 in_stack_ffffff2f;
+  int in_stack_ffffff30;
   
-  uVar1 = __savegprlr_23();
+  iVar1 = __savegprlr_23(param_1);
   if (in_stack_00000054 != 0) {
-    MyAssertHandler(0xffffffff820679d0,0x29,0,0xffffffff82000f98,0xffffffff82067a18);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_api.cpp",
+                    0x29,0,"%s");
   }
-  uVar1 = FX_GetSystem(uVar1);
-  FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,1);
+  pFVar2 = FX_GetSystem(iVar1);
+  FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,-1,-1,1,in_stack_ffffff08,in_stack_ffffff0c,
+                  in_stack_ffffff10,in_stack_ffffff14,in_stack_ffffff18,in_stack_ffffff1c,
+                  in_stack_ffffff22,in_stack_ffffff24,(bool)in_stack_ffffff2b,
+                  (bool)in_stack_ffffff2f,in_stack_ffffff30);
   __restgprlr_23();
   return;
 }
@@ -51,14 +73,33 @@ void FX_PlayOrientedEffectWithViewmodelInfo(void)
 
 // 8243D6E8  FX_PlayOrientedEffect  (EffectsCore/fx_spawn_api.cpp:48)
 
-void FX_PlayOrientedEffect(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_PlayOrientedEffect
+               (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,float *param_4,
+               float (*param_5) [3])
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxEffectDef *in_stack_ffffff38;
+  int in_stack_ffffff3c;
+  float *in_stack_ffffff40;
+  float (*in_stack_ffffff44) [3];
+  int in_stack_ffffff48;
+  int in_stack_ffffff4c;
+  ushort in_stack_ffffff52;
+  uint in_stack_ffffff54;
+  undefined1 in_stack_ffffff5b;
+  undefined1 in_stack_ffffff5f;
+  int in_stack_ffffff60;
   
-  __savegprlr_28();
-  uVar1 = FX_GetSystem();
-  FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,1);
+  iVar1 = __savegprlr_28(param_1);
+  pFVar2 = FX_GetSystem(iVar1);
+  FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,-1,-1,1,in_stack_ffffff38,in_stack_ffffff3c,
+                  in_stack_ffffff40,in_stack_ffffff44,in_stack_ffffff48,in_stack_ffffff4c,
+                  in_stack_ffffff52,in_stack_ffffff54,(bool)in_stack_ffffff5b,
+                  (bool)in_stack_ffffff5f,in_stack_ffffff60);
   __restgprlr_28();
   return;
 }
@@ -66,16 +107,33 @@ void FX_PlayOrientedEffect(void)
 
 // 8243D770  FX_SpawnOrientedEffectForCEntity  (EffectsCore/fx_spawn_api.cpp:66)
 
-void FX_SpawnOrientedEffectForCEntity(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_SpawnOrientedEffectForCEntity
+               (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,float *param_4,
+               float (*param_5) [3],int param_6,int param_7)
 
 {
-  undefined8 uVar1;
-  undefined8 in_r8;
-  undefined8 in_r9;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxEffectDef *in_stack_ffffff28;
+  int in_stack_ffffff2c;
+  float *in_stack_ffffff30;
+  float (*in_stack_ffffff34) [3];
+  int in_stack_ffffff38;
+  int in_stack_ffffff3c;
+  ushort in_stack_ffffff42;
+  uint in_stack_ffffff44;
+  undefined1 in_stack_ffffff4b;
+  undefined1 in_stack_ffffff4f;
+  int in_stack_ffffff50;
   
-  __savegprlr_26();
-  uVar1 = FX_GetSystem();
-  FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,in_r8,in_r9,0);
+  iVar1 = __savegprlr_26(param_1);
+  pFVar2 = FX_GetSystem(iVar1);
+  FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,param_6,param_7,0,in_stack_ffffff28,
+                  in_stack_ffffff2c,in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,
+                  in_stack_ffffff3c,in_stack_ffffff42,in_stack_ffffff44,(bool)in_stack_ffffff4b,
+                  (bool)in_stack_ffffff4f,in_stack_ffffff50);
   __restgprlr_26();
   return;
 }
@@ -83,14 +141,33 @@ void FX_SpawnOrientedEffectForCEntity(void)
 
 // 8243D800  FX_PlayOrientedEffectWithMarkEntity  (EffectsCore/fx_spawn_api.cpp:76)
 
-void FX_PlayOrientedEffectWithMarkEntity(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_PlayOrientedEffectWithMarkEntity
+               (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,float *param_4,
+               float (*param_5) [3],uint param_6,bool param_7)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxEffectDef *in_stack_ffffff28;
+  int in_stack_ffffff2c;
+  float *in_stack_ffffff30;
+  float (*in_stack_ffffff34) [3];
+  int in_stack_ffffff38;
+  int in_stack_ffffff3c;
+  ushort in_stack_ffffff42;
+  uint in_stack_ffffff44;
+  undefined1 in_stack_ffffff4b;
+  undefined1 in_stack_ffffff4f;
+  int in_stack_ffffff50;
   
-  __savegprlr_26();
-  uVar1 = FX_GetSystem();
-  FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,1);
+  iVar1 = __savegprlr_26(param_1);
+  pFVar2 = FX_GetSystem(iVar1);
+  FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,-1,-1,1,in_stack_ffffff28,in_stack_ffffff2c,
+                  in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,in_stack_ffffff3c,
+                  in_stack_ffffff42,in_stack_ffffff44,(bool)in_stack_ffffff4b,
+                  (bool)in_stack_ffffff4f,in_stack_ffffff50);
   __restgprlr_26();
   return;
 }
@@ -98,14 +175,33 @@ void FX_PlayOrientedEffectWithMarkEntity(void)
 
 // 8243D890  FX_PlayOrientedEffectWithMarkViewmodel  (EffectsCore/fx_spawn_api.cpp:82)
 
-void FX_PlayOrientedEffectWithMarkViewmodel(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_PlayOrientedEffectWithMarkViewmodel
+               (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,float *param_4,
+               float (*param_5) [3])
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxEffectDef *in_stack_ffffff38;
+  int in_stack_ffffff3c;
+  float *in_stack_ffffff40;
+  float (*in_stack_ffffff44) [3];
+  int in_stack_ffffff48;
+  int in_stack_ffffff4c;
+  ushort in_stack_ffffff52;
+  uint in_stack_ffffff54;
+  undefined1 in_stack_ffffff5b;
+  undefined1 in_stack_ffffff5f;
+  int in_stack_ffffff60;
   
-  __savegprlr_28();
-  uVar1 = FX_GetSystem();
-  FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,1);
+  iVar1 = __savegprlr_28(param_1);
+  pFVar2 = FX_GetSystem(iVar1);
+  FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,-1,-1,1,in_stack_ffffff38,in_stack_ffffff3c,
+                  in_stack_ffffff40,in_stack_ffffff44,in_stack_ffffff48,in_stack_ffffff4c,
+                  in_stack_ffffff52,in_stack_ffffff54,(bool)in_stack_ffffff5b,
+                  (bool)in_stack_ffffff5f,in_stack_ffffff60);
   __restgprlr_28();
   return;
 }
@@ -113,29 +209,52 @@ void FX_PlayOrientedEffectWithMarkViewmodel(void)
 
 // 8243D918  FX_PlayBoltedEffect  (EffectsCore/fx_spawn_api.cpp:89)
 
-void FX_PlayBoltedEffect(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                        ulonglong param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_PlayBoltedEffect(LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,int param_4,
+                        int param_5)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_70 [112];
+  LocalClientNum_t LVar1;
+  bool bVar3;
+  FxSystem *pFVar2;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  FxEffectDef *in_stack_fffffee8;
+  int in_stack_fffffeec;
+  float *in_stack_fffffef0;
+  float (*in_stack_fffffef4) [3];
+  int in_stack_fffffef8;
+  int in_stack_fffffefc;
+  ushort in_stack_ffffff02;
+  uint in_stack_ffffff04;
+  undefined1 in_stack_ffffff0b;
+  undefined1 in_stack_ffffff0f;
+  int in_stack_ffffff10;
+  orientation_t aoStack_70 [2];
   
-  uVar1 = __savegprlr_26();
-  cVar2 = FX_GetBoneOrientation(uVar1,param_4,param_5,auStack_70);
-  if (cVar2 != '\0') {
-    cVar2 = FX_NeedsBoltUpdate(param_2);
-    if (cVar2 != '\0') {
-      if (0xffe < (param_4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820679d0,0x66,0,0xffffffff82067a78,param_4,0xfff);
+  uVar5 = (ulonglong)param_5;
+  uVar4 = (ulonglong)param_4;
+  LVar1 = __savegprlr_26(param_1);
+  bVar3 = FX_GetBoneOrientation(LVar1,(int)uVar4,(int)uVar5,aoStack_70);
+  if (bVar3) {
+    bVar3 = FX_NeedsBoltUpdate(param_2);
+    if (bVar3) {
+      if (0xffe < (uVar4 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_api.cpp"
+                        ,0x66,0,"dobjHandle doesn\'t index FX_DOBJ_HANDLE_NONE\n\t%i not in [0, %i)"
+                       );
       }
-      if (0x7fe < (param_5 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff820679d0,0x67,0,0xffffffff82067a38,param_5,0x7ff);
+      if (0x7fe < (uVar5 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_api.cpp"
+                        ,0x67,0,"boneIndex doesn\'t index FX_BONE_INDEX_NONE\n\t%i not in [0, %i)");
       }
     }
-    uVar1 = FX_GetSystem(uVar1);
-    FX_InitSpawnCmd(uVar1,0,0xffff,0xffff,0xffffffffffffffff,0xffffffffffffffff,0xffffffffffffffff,1
-                   );
+    pFVar2 = FX_GetSystem(LVar1);
+    FX_InitSpawnCmd(pFVar2,0,0xffff,0xffff,0xffffffff,-1,-1,1,in_stack_fffffee8,in_stack_fffffeec,
+                    in_stack_fffffef0,in_stack_fffffef4,in_stack_fffffef8,in_stack_fffffefc,
+                    in_stack_ffffff02,in_stack_ffffff04,(bool)in_stack_ffffff0b,
+                    (bool)in_stack_ffffff0f,in_stack_ffffff10);
   }
   __restgprlr_26();
   return;

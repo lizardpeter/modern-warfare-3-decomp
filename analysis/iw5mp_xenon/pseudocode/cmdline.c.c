@@ -2,9 +2,11 @@
 
 // 828A5450  GetCommandLineA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/cmdline.c:42)
 
-LPSTR GetCommandLineA(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * GetCommandLineA(void)
 
 {
-  return (LPSTR)0x1ae;
+  return &DAT_000001ae;
 }
 

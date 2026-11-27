@@ -2,127 +2,154 @@
 
 // 8293E848  `dynamic_initializer_for_'overlappedTasks''  (iwnet/lsp.cpp:250)
 
-int _dynamic_initializer_for__overlappedTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__overlappedTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  char *pcVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x844daa90;
+  lVar2 = 0x20;
+  pcVar1 = lspList[0x31].szServerInfo + 0x70;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
-  return iVar1;
+    pcVar1 = pcVar1 + 0xa0;
+    pcVar1[0] = '\0';
+    pcVar1[1] = '\0';
+    pcVar1[2] = '\0';
+    pcVar1[3] = '\0';
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
+  return;
 }
 
 
 // 8293E878  `dynamic_initializer_for_'overlappedLogTasks''  (iwnet/lsp.cpp:259)
 
-int _dynamic_initializer_for__overlappedLogTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__overlappedLogTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  ulong *puVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x844dbe98;
+  lVar2 = 0x20;
+  puVar1 = &overlappedTasks.tasks[0x1f].u.overlappedIO.InternalHigh;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__overlappedLogTasks__);
-  return iVar1;
+    puVar1 = puVar1 + 0x28;
+    *puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__overlappedLogTasks__);
+  return;
 }
 
 
 // 826E4578  LSP_IsNewPlaylistAvailable  (iwnet/lsp.cpp:316)
 
-undefined1 LSP_IsNewPlaylistAvailable(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LSP_IsNewPlaylistAvailable(void)
 
 {
-  return DAT_844d8239;
+  return g_shouldReloadPlaylist;
 }
 
 
 // 826E4588  LSP_ClearPlaylistAvailable  (iwnet/lsp.cpp:325)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LSP_ClearPlaylistAvailable(void)
 
 {
-  DAT_844d8239 = 0;
+  g_shouldReloadPlaylist = false;
   return;
 }
 
 
 // 826E4598  LSP_SetPlaylistAvailable  (iwnet/lsp.cpp:330)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LSP_SetPlaylistAvailable(void)
 
 {
-  DAT_844d8239 = 1;
+  g_shouldReloadPlaylist = true;
   return;
 }
 
 
 // 826E45A8  LSP_Connected  (iwnet/lsp.cpp:383)
 
-undefined1 LSP_Connected(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LSP_Connected(void)
 
 {
-  return DAT_844dab0c;
+  return lsp_connected;
 }
 
 
 // 826E45B8  LSP_SendPacket  (iwnet/lsp.cpp:390)
 
-void LSP_SendPacket(undefined8 param_1,undefined8 param_2,undefined2 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LSP_SendPacket(msg_t *param_1,netadr_t *param_2,int param_3)
 
 {
   int iVar1;
+  undefined1 uVar2;
+  ushort uVar3;
   
-  iVar1 = __savegprlr_28();
-  if (DAT_844dab0c == '\0') {
-    MyAssertHandler(0xffffffff821a90bc,0x187,0,0xffffffff82000f98,0xffffffff821a90f4);
+  uVar3 = (ushort)param_3;
+  iVar1 = __savegprlr_28(param_1);
+  if (lsp_connected == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x187,0,"%s");
   }
-  *(undefined2 *)((int)param_2 + 8) = param_3;
-  iVar1 = Xenon_SendLSPPacket(*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14),param_2);
+  param_2->port = uVar3;
+  iVar1 = Xenon_SendLSPPacket(*(uchar **)(iVar1 + 8),*(int *)(iVar1 + 0x14),param_2);
   if (iVar1 < 0) {
-    DAT_844dab0c = 0;
-    __restgprlr_28(0);
-    return;
+    lsp_connected = false;
+    uVar2 = __restgprlr_28(0);
+    return (bool)uVar2;
   }
-  __restgprlr_28(1);
-  return;
+  uVar2 = __restgprlr_28(1);
+  return (bool)uVar2;
 }
 
 
 // 826E4640  LSP_GetStorageServerAddr  (iwnet/lsp.cpp:485)
 
-undefined8 LSP_GetStorageServerAddr(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+netadr_t * LSP_GetStorageServerAddr(void)
 
 {
-  return 0xffffffff844cf260;
+  return &g_iwnetStorageServerAddr;
 }
 
 
 // 826E4650  LSP_SendStoragePacket  (iwnet/lsp.cpp:491)
 
-void LSP_SendStoragePacket(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LSP_SendStoragePacket(msg_t *param_1)
 
 {
-  LSP_SendPacket(param_1,0xffffffff844cf260,0xfb4);
-  return;
+  bool bVar1;
+  
+  bVar1 = LSP_SendPacket(param_1,&g_iwnetStorageServerAddr,0xfb4);
+  return bVar1;
 }
 
 
 // 8293E8A8  `dynamic_initializer_for_'dw_print_buffer''  (iwnet/lsp.cpp:1020)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__dw_print_buffer__(void)
 
@@ -131,7 +158,7 @@ void _dynamic_initializer_for__dw_print_buffer__(void)
   longlong lVar2;
   
   lVar2 = 0x40;
-  puVar1 = (undefined1 *)0x844dd32c;
+  puVar1 = &overlappedLogTasks.tasks[0x1f].field_0x9c;
   do {
     puVar1 = puVar1 + 0x408;
     *puVar1 = 0;
@@ -143,99 +170,104 @@ void _dynamic_initializer_for__dw_print_buffer__(void)
 
 // 826E4660  LSP_LogOutStandingStringsToDW  (iwnet/lsp.cpp:1023)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LSP_LogOutStandingStringsToDW(void)
 
 {
-  char cVar4;
+  char cVar1;
+  uint uVar2;
+  bool bVar8;
   int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  uint uVar5;
+  bdLobbyService *pbVar4;
+  Status SVar5;
   int iVar6;
-  char *pcVar7;
-  int iVar8;
-  int iVar9;
+  overlappedTask *poVar7;
+  uint uVar9;
   char *pcVar10;
-  ulonglong uVar11;
-  int iVar12;
-  int iVar13;
-  double dVar14;
-  int local_150 [32];
-  undefined4 local_d0 [52];
+  int iVar11;
+  char *pcVar12;
+  ulonglong uVar13;
+  int iVar14;
+  int iVar15;
+  float fVar16;
+  uint local_150 [32];
+  char *local_d0 [52];
   
   __savegprlr_23();
-  iVar12 = 0;
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 != '\0') {
-    if (*(char *)(DAT_844d8244 + 0xb) != '\0') {
-      DAT_844dab0e = '\0';
-      dVar14 = (double)G_flrand(0,0x3ff0000000000000);
-      if (dVar14 < (double)*(float *)(DAT_844d8244 + 0xc)) {
-        DAT_844dab0e = '\x01';
+  iVar14 = 0;
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    if (dw_logging_level_chance->modified != false) {
+      s_is_demonware_logging_on = false;
+      fVar16 = G_flrand(0.0,1.0);
+      if (fVar16 < (dw_logging_level_chance->current).value) {
+        s_is_demonware_logging_on = true;
       }
-      Dvar_ClearModified();
+      Dvar_ClearModified(dw_logging_level_chance);
     }
-    if ((DAT_844dab0e != '\0') && (iVar3 = Sys_Milliseconds(), DAT_844ed530 < iVar3)) {
+    if ((s_is_demonware_logging_on != false) && (iVar3 = Sys_Milliseconds(), time_to_check < iVar3))
+    {
       iVar3 = Sys_Milliseconds();
-      DAT_844ed530 = iVar3 + *(int *)(DAT_844d8240 + 0xc) * 60000;
-      Sys_EnterCriticalSection(0x18);
-      iVar3 = TaskManager_CountTasksInProgress(0xffffffff844dbf28,2);
+      time_to_check = iVar3 + (dw_logging_frequency->current).integer * 60000;
+      Sys_EnterCriticalSection(CRITSECT_LSP);
+      iVar3 = TaskManager_CountTasksInProgress(&overlappedLogTasks,2);
       if ((0 < 0x20 - iVar3) && (iVar3 = CL_GetLocalClientActiveCount(), iVar3 != 0)) {
-        CL_GetFirstActiveControllerIndex();
-        iVar3 = dwGetLobbyService();
-        if (iVar3 != 0) {
-          CL_GetFirstActiveControllerIndex();
-          dwGetLobbyService();
-          iVar3 = bdLobbyService__getStatus();
-          if (iVar3 == 2) {
+        iVar3 = CL_GetFirstActiveControllerIndex();
+        pbVar4 = dwGetLobbyService(iVar3);
+        if (pbVar4 != (bdLobbyService *)0x0) {
+          iVar3 = CL_GetFirstActiveControllerIndex();
+          pbVar4 = dwGetLobbyService(iVar3);
+          SVar5 = bdLobbyService::getStatus(pbVar4);
+          if (SVar5 == BD_CONNECTED) {
             iVar3 = 0;
-            uVar11 = 1;
-            iVar13 = 0;
+            uVar13 = 1;
+            iVar15 = 0;
             do {
-              if ((*(uint *)(DAT_844dab04 + 0xc) & (uint)uVar11) != 0) {
-                uVar5 = *(uint *)((int)&DAT_844daafc + iVar13);
-                if ((int)uVar5 < *(int *)((int)&DAT_844daaf4 + iVar13)) {
-                  iVar9 = *(int *)((int)&DAT_844daaf4 + iVar13) - uVar5;
-                  iVar6 = iVar12 << 2;
-                  iVar12 = iVar9 + iVar12;
+              if (((dw_logging_level->current).unsignedInt & (uint)uVar13) != 0) {
+                uVar9 = *(uint *)((int)current_dw_position_start + iVar15);
+                if ((int)uVar9 < *(int *)((int)&DAT_844daaf4 + iVar15)) {
+                  iVar11 = *(int *)((int)&DAT_844daaf4 + iVar15) - uVar9;
+                  iVar6 = iVar14 << 2;
+                  iVar14 = iVar11 + iVar14;
                   do {
-                    iVar8 = (uVar5 + (((int)uVar5 >> 5) +
-                                      (uint)((int)uVar5 < 0 && (uVar5 & 0x1f) != 0) & 0x7ffffff) *
-                                     -0x20 + iVar3 * 0x20) * 0x408;
-                    if ((&DAT_844dd734)[iVar8] != '\0') {
-                      pcVar10 = &DAT_844dd334 + iVar8;
-                      *(char **)((int)local_d0 + iVar6) = pcVar10;
-                      pcVar7 = pcVar10;
+                    uVar2 = ((int)uVar9 >> 5) + (uint)((int)uVar9 < 0 && (uVar9 & 0x1f) != 0) &
+                            0x7ffffff;
+                    if (dw_print_buffer[iVar3 - uVar2][uVar9].in_use != false) {
+                      pcVar12 = dw_print_buffer[iVar3 - uVar2][uVar9].output_string;
+                      *(char **)((int)local_d0 + iVar6) = pcVar12;
+                      pcVar10 = pcVar12;
                       do {
-                        cVar4 = *pcVar7;
-                        pcVar7 = pcVar7 + 1;
-                      } while (cVar4 != '\0');
-                      (&DAT_844dd734)[iVar8] = 0;
-                      *(int *)((int)local_150 + iVar6) = (int)pcVar7 - (int)pcVar10;
+                        cVar1 = *pcVar10;
+                        pcVar10 = pcVar10 + 1;
+                      } while (cVar1 != '\0');
+                      dw_print_buffer[iVar3 - uVar2][uVar9].in_use = false;
+                      *(int *)((int)local_150 + iVar6) = (int)pcVar10 - (int)pcVar12;
                     }
-                    uVar5 = uVar5 + 1;
+                    uVar9 = uVar9 + 1;
                     iVar6 = iVar6 + 4;
-                    *(int *)((int)&DAT_844daafc + iVar13) =
-                         *(int *)((int)&DAT_844daafc + iVar13) + 1;
-                    iVar9 = iVar9 + -1;
-                  } while (iVar9 != 0);
+                    *(int *)((int)current_dw_position_start + iVar15) =
+                         *(int *)((int)current_dw_position_start + iVar15) + 1;
+                    iVar11 = iVar11 + -1;
+                  } while (iVar11 != 0);
                 }
-                if (0 < iVar12) {
-                  uVar1 = CL_GetFirstActiveControllerIndex();
-                  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff844dbf28,uVar1,2);
-                  if ((uVar2 & 0xffffffff) != 0) {
-                    dwRecordStringEvents(uVar2,iVar12,local_d0,local_150,iVar3 + 1);
+                if (0 < iVar14) {
+                  iVar6 = CL_GetFirstActiveControllerIndex();
+                  poVar7 = TaskManager_GetOpenTaskSlot(&overlappedLogTasks,iVar6,2);
+                  if (poVar7 != (overlappedTask *)0x0) {
+                    dwRecordStringEvents
+                              (poVar7,iVar14,local_d0,local_150,iVar3 + DW_STRING_EVENT_LSP_LOG);
                   }
                 }
               }
               iVar3 = iVar3 + 1;
-              iVar13 = iVar13 + 4;
-              uVar11 = (uVar11 & 0x7fffffff) << 1 | uVar11 >> 0x1f;
+              iVar15 = iVar15 + 4;
+              uVar13 = (uVar13 & 0x7fffffff) << 1 | uVar13 >> 0x1f;
             } while (iVar3 < 2);
           }
         }
       }
-      Sys_LeaveCriticalSection(0x18);
+      Sys_LeaveCriticalSection(CRITSECT_LSP);
     }
   }
   __restgprlr_23();
@@ -245,83 +277,77 @@ void LSP_LogOutStandingStringsToDW(void)
 
 // 826E48C0  LSP_LogStringToDW  (iwnet/lsp.cpp:1105)
 
-void LSP_LogStringToDW(undefined8 param_1,undefined8 param_2,longlong param_3)
+void LSP_LogStringToDW(int param_1,char *param_2,DWRecordStringEventType param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
-  int iVar5;
-  undefined8 uVar4;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  uint uVar3;
+  int iVar4;
+  bdLobbyService *pbVar5;
+  Status SVar6;
+  bdRemoteTaskManager *this;
+  longlong lVar7;
+  DWRecordStringEventType DVar8;
+  uint uVar9;
+  uint uVar10;
   
-  __savegprlr_23();
-  iVar6 = (int)param_3;
-  if ((iVar6 < 1) || (2 < iVar6)) {
-    MyAssertHandler(0xffffffff821a90bc,0x452,0,0xffffffff82000f98,0xffffffff821a9170);
+  lVar7 = (longlong)(int)param_3;
+  __savegprlr_23(param_1,param_2);
+  DVar8 = (DWRecordStringEventType)lVar7;
+  if (((int)DVar8 < 1) || (2 < (int)DVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x452,0,"%s");
   }
-  if (DAT_844dab0e != '\0') {
-    uVar10 = param_3 - 1;
-    uVar2 = 1 << ((uint)uVar10 & 0x3f);
-    uVar1 = uVar2 & *(uint *)(DAT_844dab04 + 0xc);
-    if (((uVar1 != 0) && (0 < iVar6)) && (iVar6 < 3)) {
-      uVar7 = (ulonglong)uVar2;
-      if (DAT_844dab0d == '\0') {
-        DAT_844daaf4 = 0;
-        DAT_844daafc = 0;
-        DAT_844daaf8 = 0;
-        DAT_844dab00 = 0;
-        DAT_844dab0d = '\x01';
-        uVar7 = 0xffffffff844daafc;
-      }
-      if (5 < iVar6) {
-        MyAssertHandler(0xffffffff821a90bc,0x470,0,0xffffffff82000f98,0xffffffff821a9118,uVar1,
-                        *(uint *)(DAT_844dab04 + 0xc),uVar7);
-      }
-      Sys_EnterCriticalSection(0x18);
-      iVar5 = CL_GetLocalClientActiveCount();
-      if (iVar5 != 0) {
-        CL_GetFirstActiveControllerIndex();
-        iVar5 = dwGetLobbyService();
-        if (iVar5 != 0) {
-          CL_GetFirstActiveControllerIndex();
-          dwGetLobbyService();
-          iVar5 = bdLobbyService__getStatus();
-          if (iVar5 == 2) {
-            CL_GetFirstActiveControllerIndex();
-            dwGetLobbyService();
-            bdLobbyService__getTaskManager();
-            uVar4 = bdRemoteTaskManager__getConnectionID();
-            lVar9 = (uVar10 & 0x7ffffff) * 0x20;
-            iVar5 = (int)((uVar10 & 0x3fffffff) << 2);
-            uVar2 = *(uint *)((int)&DAT_844daaf4 + iVar5);
-            Com_sprintf(((ulonglong)uVar2 +
-                         ((longlong)((int)uVar2 >> 5) +
-                          (ulonglong)((int)uVar2 < 0 && (uVar2 & 0x1f) != 0) & 0x7ffffff) * -0x20 +
-                        lVar9) * 0x408 + -0x7bb22ccc,0x400,0xffffffff821a9104,uVar4,param_2);
-            uVar2 = *(uint *)((int)&DAT_844daaf4 + iVar5);
-            uVar1 = *(uint *)((int)&DAT_844daafc + iVar5);
-            uVar8 = uVar2 + 1;
-            *(uint *)((int)&DAT_844daaf4 + iVar5) = uVar8;
-            iVar3 = (uVar2 + (((int)uVar2 >> 5) + (uint)((int)uVar2 < 0 && (uVar2 & 0x1f) != 0) &
-                             0x7ffffff) * -0x20 + (int)lVar9) * 0x408;
-            (&DAT_844dd733)[iVar3] = 0;
-            (&DAT_844dd734)[iVar3] = 1;
-            *(int *)(&DAT_844dd330 + iVar3) = iVar6;
-            if (uVar8 + (((int)uVar8 >> 5) + (uint)((int)uVar8 < 0 && (uVar8 & 0x1f) != 0)) * -0x20
-                == uVar1 + (((int)uVar1 >> 5) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1f) != 0)) *
-                           -0x20) {
-              *(uint *)((int)&DAT_844daafc + iVar5) = uVar1 + 1;
-            }
+  if ((((s_is_demonware_logging_on != false) &&
+       (uVar10 = (uint)(lVar7 - 1U),
+       (1 << (uVar10 & 0x3f) & (dw_logging_level->current).unsignedInt) != 0)) && (0 < (int)DVar8))
+     && ((int)DVar8 < 3)) {
+    if (dw_ring_buffer_setup == false) {
+      DAT_844daaf4 = 0;
+      current_dw_position_start[0] = 0;
+      DAT_844daaf8 = 0;
+      current_dw_position_start[1] = 0;
+      dw_ring_buffer_setup = true;
+    }
+    if (5 < (int)DVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x470,0,"%s")
+      ;
+    }
+    Sys_EnterCriticalSection(CRITSECT_LSP);
+    iVar4 = CL_GetLocalClientActiveCount();
+    if (iVar4 != 0) {
+      iVar4 = CL_GetFirstActiveControllerIndex();
+      pbVar5 = dwGetLobbyService(iVar4);
+      if (pbVar5 != (bdLobbyService *)0x0) {
+        iVar4 = CL_GetFirstActiveControllerIndex();
+        pbVar5 = dwGetLobbyService(iVar4);
+        SVar6 = bdLobbyService::getStatus(pbVar5);
+        if (SVar6 == BD_CONNECTED) {
+          iVar4 = CL_GetFirstActiveControllerIndex();
+          pbVar5 = dwGetLobbyService(iVar4);
+          this = bdLobbyService::getTaskManager(pbVar5);
+          bdRemoteTaskManager::getConnectionID(this);
+          iVar4 = (int)((lVar7 - 1U & 0x3fffffff) << 2);
+          uVar1 = *(uint *)((int)&DAT_844daaf4 + iVar4);
+          Com_sprintf(dw_print_buffer
+                      [uVar10 - (((int)uVar1 >> 5) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1f) != 0))]
+                      [uVar1].output_string,0x400,"dw_conn_id: %llx %s");
+          uVar1 = *(uint *)((int)&DAT_844daaf4 + iVar4);
+          uVar2 = *(uint *)((int)current_dw_position_start + iVar4);
+          uVar9 = uVar1 + 1;
+          *(uint *)((int)&DAT_844daaf4 + iVar4) = uVar9;
+          uVar3 = ((int)uVar1 >> 5) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1f) != 0) & 0x7ffffff;
+          dw_print_buffer[uVar10 - uVar3][uVar1].output_string[0x3ff] = '\0';
+          dw_print_buffer[uVar10 - uVar3][uVar1].in_use = true;
+          dw_print_buffer[uVar10 - uVar3][uVar1].type = DVar8;
+          if (uVar9 + (((int)uVar9 >> 5) + (uint)((int)uVar9 < 0 && (uVar9 & 0x1f) != 0)) * -0x20 ==
+              uVar2 + (((int)uVar2 >> 5) + (uint)((int)uVar2 < 0 && (uVar2 & 0x1f) != 0)) * -0x20) {
+            *(uint *)((int)current_dw_position_start + iVar4) = uVar2 + 1;
           }
         }
       }
-      Sys_LeaveCriticalSection(0x18);
     }
+    Sys_LeaveCriticalSection(CRITSECT_LSP);
   }
   __restgprlr_23();
   return;
@@ -330,25 +356,27 @@ void LSP_LogStringToDW(undefined8 param_1,undefined8 param_2,longlong param_3)
 
 // 826E4AC0  LSP_LogString  (iwnet/lsp.cpp:1175)
 
-void LSP_LogString(undefined8 param_1,undefined8 param_2)
+void LSP_LogString(int param_1,char *param_2)
 
 {
-  LSP_LogStringToDW(param_1,param_2,1);
+  LSP_LogStringToDW(param_1,param_2,DW_STRING_EVENT_LSP_LOG);
   return;
 }
 
 
 // 826E4AC8  LSP_LogStringEvenIfControllerIsInactive  (iwnet/lsp.cpp:1211)
 
-void LSP_LogStringEvenIfControllerIsInactive(undefined8 param_1)
+void LSP_LogStringEvenIfControllerIsInactive(char *param_1)
 
 {
-  LSP_LogStringToDW(0,param_1,1);
+  LSP_LogStringToDW(0,param_1,DW_STRING_EVENT_LSP_LOG);
   return;
 }
 
 
 // 826E4AD8  LSP_ForceSendPacket  (iwnet/lsp.cpp:1285)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LSP_ForceSendPacket(void)
 
@@ -359,245 +387,250 @@ void LSP_ForceSendPacket(void)
 
 // 826E4AE0  LSP_LogStringAboutUser  (iwnet/lsp.cpp:1303)
 
-void LSP_LogStringAboutUser(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void LSP_LogStringAboutUser(int param_1,ulong64 param_2,char *param_3)
 
 {
-  LSP_LogStringToDW(0xffffffffffffffff,param_3,1);
+  LSP_LogStringToDW(-1,param_3,DW_STRING_EVENT_LSP_LOG);
   return;
 }
 
 
 // 826E4AF0  LSP_SetXboxLSPAddress  (iwnet/lsp.cpp:1338)
 
-void LSP_SetXboxLSPAddress(undefined4 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LSP_SetXboxLSPAddress(in_addr param_1)
 
 {
-  DAT_844cf264 = param_1;
+  g_iwnetStorageServerAddr.ip = (uchar  [4])param_1.S_un;
   return;
 }
 
 
 // 826E4B00  LSP_MapTitleServerToIP  (iwnet/lsp.cpp:1359)
 
-undefined8 LSP_MapTitleServerToIP(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LSP_MapTitleServerToIP(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  uVar1 = XNetServerToInAddr(*(undefined4 *)(&DAT_844d8248 + DAT_844dab08 * 0xd0),0x415607e9,
-                             0xffffffff844daaf0);
-  if ((int)uVar1 != 0) {
-    Com_PrintError(0x19,0xffffffff821a9204,uVar1);
-    return 0;
+  iVar1 = XNetServerToInAddr((in_addr)((<unnamed_type_S_un> *)(lspList + s_lspIndex))->S_un_b,
+                             0x415607e9,(in_addr *)DAT_844daaf0);
+  if (iVar1 != 0) {
+    Com_PrintError(0x19,"Failed to convert IP addr to secure IP addr - error %i\n");
+    return false;
   }
-  DAT_844cf264 = DAT_844daaf0;
-  Com_Printf(0x19,0xffffffff821a91d0,DAT_844daaf0._0_1_,DAT_844daaf0._1_1_,DAT_844daaf0._2_1_,
-             (undefined1)DAT_844daaf0);
-  return 1;
+  g_iwnetStorageServerAddr.ip[0] = DAT_844daaf0[0];
+  g_iwnetStorageServerAddr.ip[1] = DAT_844daaf0[1];
+  g_iwnetStorageServerAddr.ip[2] = DAT_844daaf0[2];
+  g_iwnetStorageServerAddr.ip[3] = DAT_844daaf0[3];
+  Com_Printf(0x19,"LSP server registered at IP address %u.%u.%u.%u\n");
+  return true;
 }
 
 
 // 826E4BC0  LSP_FindTitleServersComplete  (iwnet/lsp.cpp:1383)
 
-void LSP_FindTitleServersComplete(void)
+taskCompleteResults LSP_FindTitleServersComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  ulonglong uVar1;
-  BOOL BVar4;
-  char cVar5;
-  longlong lVar6;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  bool bVar6;
+  longlong lVar7;
   uint local_40;
   uint local_3c [15];
   
-  iVar2 = __savegprlr_27();
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(iVar2 * 0xa0 + -0x7bb254d8);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a90bc,0x570,0,0xffffffff82000f98,0xffffffff821a938c);
+  iVar1 = __savegprlr_27(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x570,0,"%s");
   }
-  if ((&DAT_844dabbc)[iVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff821a90bc,0x572,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (overlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x572,0,"%s");
   }
-  if ((&DAT_844dabb8)[iVar2 * 0x28] != 1) {
-    MyAssertHandler(0xffffffff821a90bc,0x573,0,0xffffffff82000f98,0xffffffff821a9350);
+  if (overlappedTasks.tasks[iVar1].type != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x573,0,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  XGetOverlappedResult(piVar3,&local_40,0);
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  if ((int)uVar1 == 0) {
-    TaskManager_TaskFromXOverlapped(0xffffffff844dab20,piVar3);
-    TaskManager_ClearTask();
+  XGetOverlappedResult(p_Var2,&local_40,0);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  if (uVar4 == 0) {
+    poVar5 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar5);
     DAT_844daaec = local_40;
     if (local_40 == 0) {
-      Com_PrintError(0x19,0xffffffff821a9298);
-      CloseHandle(DAT_844daae8);
-      DAT_844daae8 = (HANDLE)0x0;
-      __restgprlr_27(1);
-      return;
+      Com_PrintError(0x19,"Got no results for LSP servers query.\n");
+      CloseHandle(s_lspEnumeratorHandle);
+      s_lspEnumeratorHandle = (void *)0x0;
+      tVar3 = __restgprlr_27(1);
+      return tVar3;
     }
-    Com_Printf(0x19,0xffffffff821a9280);
+    Com_Printf(0x19,"Found %i title servers\n");
     if (DAT_844daaec == 0) {
-      CloseHandle(DAT_844daae8);
-      DAT_844daae8 = (HANDLE)0x0;
-      DAT_844dab10 = DAT_844dab10 + 1;
-      if (2 < DAT_844dab10) {
-        DAT_844dab14 = DAT_844dab14 + 1;
-        DAT_844dab10 = 0;
-        DAT_82998a30 = DAT_82998a30 * 5;
-        __restgprlr_27(2);
-        return;
+      CloseHandle(s_lspEnumeratorHandle);
+      s_lspEnumeratorHandle = (void *)0x0;
+      s_lspEnumerateFailures = s_lspEnumerateFailures + 1;
+      if (2 < s_lspEnumerateFailures) {
+        s_lspEnumerateBackoffs = s_lspEnumerateBackoffs + 1;
+        s_lspEnumerateFailures = 0;
+        s_lspEnumerateInterval = s_lspEnumerateInterval * 5;
+        tVar3 = __restgprlr_27(2);
+        return tVar3;
       }
     }
     else {
-      XNetRandom(local_3c,4);
+      XNetRandom((uchar *)local_3c,4);
       trapWord(6,(ulonglong)DAT_844daaec,0);
-      lVar6 = (ulonglong)local_3c[0] -
+      lVar7 = (ulonglong)local_3c[0] -
               (longlong)(int)(local_3c[0] / DAT_844daaec) * (longlong)(int)DAT_844daaec;
-      if ((lVar6 < 0) || ((int)DAT_844daaec <= (int)lVar6)) {
-        lVar6 = 0;
+      if ((lVar7 < 0) || ((int)DAT_844daaec <= (int)lVar7)) {
+        lVar7 = 0;
       }
-      DAT_844dab08 = (undefined4)lVar6;
-      if ((&DAT_844d8250)[(int)(lVar6 * 0xd0)] == '\0') {
-        MyAssertHandler(0xffffffff821a90bc,0x5c7,0,0xffffffff82000f98,0xffffffff821a9260);
+      s_lspIndex = (int)lVar7;
+      if (lspList[s_lspIndex].szServerInfo[0] == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x5c7,0,
+                        "%s");
       }
-      Com_Printf(0x19,0xffffffff821a923c,lVar6,lVar6 * 0xd0 + -0x7bb27db0);
-      cVar5 = LSP_MapTitleServerToIP();
-      if (cVar5 == '\0') {
-        CloseHandle(DAT_844daae8);
-        DAT_844daae8 = (HANDLE)0x0;
-        __restgprlr_27(2);
-        return;
+      Com_Printf(0x19,"Connection to LSP server %i (\'%s\')\n");
+      bVar6 = LSP_MapTitleServerToIP();
+      if (!bVar6) {
+        CloseHandle(s_lspEnumeratorHandle);
+        s_lspEnumeratorHandle = (void *)0x0;
+        tVar3 = __restgprlr_27(2);
+        return tVar3;
       }
-      BVar4 = CloseHandle(DAT_844daae8);
-      DAT_844daae8 = (HANDLE)0x0;
-      DAT_844dab10 = 0;
-      DAT_844dab18 = 0;
-      DAT_82998a30 = 500;
-      DAT_844dab14 = 0;
-      cVar5 = LSP_MapTitleServerToIP(BVar4);
-      if (cVar5 != '\0') {
-        DAT_844dab0c = 1;
-        __restgprlr_27(1);
-        return;
+      CloseHandle(s_lspEnumeratorHandle);
+      s_lspEnumeratorHandle = (void *)0x0;
+      s_lspEnumerateFailures = 0;
+      s_lspEnumerateTime = 0;
+      s_lspEnumerateInterval = 500;
+      s_lspEnumerateBackoffs = 0;
+      bVar6 = LSP_MapTitleServerToIP();
+      if (bVar6) {
+        lsp_connected = true;
+        tVar3 = __restgprlr_27(1);
+        return tVar3;
       }
     }
   }
   else {
-    TaskManager_TaskFromXOverlapped(0xffffffff844dab20,piVar3);
-    TaskManager_ClearTask();
-    BVar4 = CloseHandle(DAT_844daae8);
-    DAT_844daae8 = (HANDLE)0x0;
-    iVar2 = Live_OnlinePlayEvenIfDown(BVar4);
-    if (iVar2 != 0) {
+    poVar5 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar5);
+    CloseHandle(s_lspEnumeratorHandle);
+    s_lspEnumeratorHandle = (void *)0x0;
+    iVar1 = Live_OnlinePlayEvenIfDown();
+    if (iVar1 != 0) {
       DAT_844daaf0 = 0xaa05a1f;
-      DAT_844dab0c = 1;
-      __restgprlr_27(1);
-      return;
+      lsp_connected = true;
+      tVar3 = __restgprlr_27(1);
+      return tVar3;
     }
-    if ((int)uVar1 == -0x7feafff6) {
-      Com_Printf(0x19,0xffffffff821a9308);
+    if (uVar4 == 0x8015000a) {
+      Com_Printf(0x19,"Microsoft error SERVER_ERROR trying to get a list of LSP title servers\n");
     }
-    else if ((uVar1 & 0xffffffff) == 0x80070012) {
-      Com_Printf(0x19,0xffffffff821a92e8);
+    else if (uVar4 == 0x80070012) {
+      Com_Printf(0x19,"We have no LSP title servers\n");
     }
     else {
-      Com_PrintError(0x19,0xffffffff821a92c0,uVar1);
+      Com_PrintError(0x19,"Error listing LSP servers - error %x\n");
     }
-    DAT_844dab10 = DAT_844dab10 + 1;
-    if (2 < DAT_844dab10) {
-      DAT_844dab14 = DAT_844dab14 + 1;
-      DAT_844dab10 = 0;
-      DAT_82998a30 = DAT_82998a30 * 5;
+    s_lspEnumerateFailures = s_lspEnumerateFailures + 1;
+    if (2 < s_lspEnumerateFailures) {
+      s_lspEnumerateBackoffs = s_lspEnumerateBackoffs + 1;
+      s_lspEnumerateFailures = 0;
+      s_lspEnumerateInterval = s_lspEnumerateInterval * 5;
     }
   }
-  __restgprlr_27(2);
-  return;
+  tVar3 = __restgprlr_27(2);
+  return tVar3;
 }
 
 
 // 826E4F68  LSP_CleanupEnumHandle_Internal  (iwnet/lsp.cpp:1510)
 
-BOOL LSP_CleanupEnumHandle_Internal(undefined8 param_1)
+void LSP_CleanupEnumHandle_Internal(int param_1)
 
 {
-  BOOL BVar1;
-  
-  TaskManager_CancelTasksForController(0xffffffff844dab20,1,param_1);
-  BVar1 = 0;
-  if (DAT_844daae8 != (HANDLE)0x0) {
-    BVar1 = CloseHandle(DAT_844daae8);
-    DAT_844daae8 = (HANDLE)0x0;
+  TaskManager_CancelTasksForController(&overlappedTasks,1,param_1);
+  if (s_lspEnumeratorHandle != (void *)0x0) {
+    CloseHandle(s_lspEnumeratorHandle);
+    s_lspEnumeratorHandle = (void *)0x0;
   }
-  return BVar1;
+  return;
 }
 
 
 // 826E4FC0  LSP_CancelTasks  (iwnet/lsp.cpp:1523)
 
-BOOL LSP_CancelTasks(undefined8 param_1)
+void LSP_CancelTasks(int param_1)
 
 {
-  BOOL BVar1;
-  
-  TaskManager_CancelTasksForController(0xffffffff844dab20,1,param_1);
-  BVar1 = 0;
-  if (DAT_844daae8 != (HANDLE)0x0) {
-    BVar1 = CloseHandle(DAT_844daae8);
-    DAT_844daae8 = (HANDLE)0x0;
+  TaskManager_CancelTasksForController(&overlappedTasks,1,param_1);
+  if (s_lspEnumeratorHandle != (void *)0x0) {
+    CloseHandle(s_lspEnumeratorHandle);
+    s_lspEnumeratorHandle = (void *)0x0;
   }
-  return BVar1;
+  return;
 }
 
 
 // 826E5018  LSP_FindTitleServers  (iwnet/lsp.cpp:1532)
 
-void LSP_FindTitleServers(void)
+void LSP_FindTitleServers(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  int iVar3;
-  ulonglong uVar2;
-  undefined4 *puVar5;
-  longlong lVar6;
-  int local_30 [12];
+  int iVar1;
+  bool bVar6;
+  int iVar2;
+  ulong uVar3;
+  overlappedTask *poVar4;
+  _XOVERLAPPED *p_Var5;
+  ulong *puVar7;
+  longlong lVar8;
+  ulong local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  cVar4 = TaskManager_TaskIsInProgress(0xffffffff844dab20,1);
-  if ((cVar4 == '\0') && (DAT_844dab14 < 0x28)) {
-    iVar3 = Sys_Milliseconds();
-    if (DAT_82998a30 + DAT_844dab18 <= iVar3) {
-      DAT_844dab18 = iVar3;
-      Com_Printf(0x19,0xffffffff821a9488);
-      if (DAT_844daae8 != 0) {
-        MyAssertHandler(0xffffffff821a90bc,0x618,0,0xffffffff82000f98,0xffffffff821a9470);
-      }
-      uVar2 = XTitleServerCreateEnumerator(0xffffffff821a945c,0x32,local_30,0xffffffff844daae8);
-      if ((uVar2 & 0xffffffff) != 0) {
-        Com_Printf(0x19,0xffffffff821a942c,uVar2);
-      }
-      if (local_30[0] != 0x28a0) {
-        MyAssertHandler(0xffffffff821a90bc,0x61e,0,0xffffffff821a93e0,0xffffffff821a9400);
-      }
-      TaskManager_GetOpenTaskSlot(0xffffffff844dab20,uVar1,1);
-      iVar3 = TaskManager_TaskToXOverlapped();
-      puVar5 = (undefined4 *)(iVar3 + -4);
-      lVar6 = 7;
-      do {
-        puVar5 = puVar5 + 1;
-        *puVar5 = 0;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      uVar1 = XEnumerate(DAT_844daae8,0xffffffff844d8248,0x28a0,0,iVar3);
-      if (((int)uVar1 != 0) && ((int)uVar1 != 0x3e5)) {
-        TaskManager_TaskFromXOverlapped(0xffffffff844dab20,iVar3);
-        TaskManager_ClearTask();
-        Com_Error(1,0xffffffff821a93a0,uVar1);
-      }
+  iVar1 = __savegprlr_28(param_1);
+  bVar6 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
+  if (((!bVar6) && (s_lspEnumerateBackoffs < 0x28)) &&
+     (iVar2 = Sys_Milliseconds(), s_lspEnumerateInterval + s_lspEnumerateTime <= iVar2)) {
+    s_lspEnumerateTime = iVar2;
+    Com_Printf(0x19,"Enumerating LSP servers (current interval %d)\n");
+    if (s_lspEnumeratorHandle != (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x618,0,"%s")
+      ;
+    }
+    uVar3 = XTitleServerCreateEnumerator("MW3 - DW ATVI LSP",0x32,local_30,&s_lspEnumeratorHandle);
+    if (uVar3 != 0) {
+      Com_Printf(0x19,"Error %i from XTitleServerCreateEnumerator()\n");
+    }
+    if (local_30[0] != 0x28a0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x61e,0,
+                      "%s\n\t(bufferSizeRequired) = %i");
+    }
+    poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,iVar1,1);
+    p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
+    puVar7 = &p_Var5[-1].dwExtendedError;
+    lVar8 = 7;
+    do {
+      puVar7 = puVar7 + 1;
+      *puVar7 = 0;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    uVar3 = XEnumerate(s_lspEnumeratorHandle,lspList,0x28a0,(ulong *)0x0,p_Var5);
+    if ((uVar3 != 0) && (uVar3 != 0x3e5)) {
+      poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
+      TaskManager_ClearTask(poVar4);
+      Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to enumerate lsp title servers");
     }
   }
   __restgprlr_28();
@@ -607,105 +640,110 @@ void LSP_FindTitleServers(void)
 
 // 826E51B0  LSP_HandlePacket  (iwnet/lsp.cpp:1965)
 
-undefined8 LSP_HandlePacket(undefined8 param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LSP_HandlePacket(msg_t *param_1,netadr_t *param_2)
 
 {
   int iVar1;
   short *psVar2;
   
   iVar1 = 0;
-  psVar2 = &DAT_82998a02;
+  psVar2 = &packetHandlers[0].lastPort;
   do {
-    if ((int)psVar2[-1] <= (int)(uint)*(ushort *)(param_2 + 8)) {
-      if ((int)(uint)*(ushort *)(param_2 + 8) <= (int)*psVar2) {
-        if (*(code **)(&DAT_82998a04 + iVar1 * 8) != (code *)0x0) {
-          (**(code **)(&DAT_82998a04 + iVar1 * 8))();
-          return 1;
+    if ((int)((PacketHandler *)(psVar2 + -1))->startPort <= (int)(uint)param_2->port) {
+      if ((int)(uint)param_2->port <= (int)*psVar2) {
+        if (packetHandlers[iVar1].handler != (_func___cdecl_void_msg_t_ptr *)0x0) {
+          (*packetHandlers[iVar1].handler)(param_1);
+          return true;
         }
-        Com_PrintError(0x10,0xffffffff821a94b8);
-        return 1;
+        Com_PrintError(0x10,"Missing packet handler for LSP messages from port %i!\n");
+        return true;
       }
     }
     psVar2 = psVar2 + 4;
     iVar1 = iVar1 + 1;
   } while ((int)psVar2 < -0x7d6675ce);
-  return 0;
+  return false;
 }
 
 
 // 826E5270  LSP_GetPacketsInternal  (iwnet/lsp.cpp:1998)
 
-undefined8 LSP_GetPacketsInternal(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LSP_GetPacketsInternal(void)
 
 {
-  undefined8 uVar1;
+  uchar *puVar1;
   int iVar2;
-  char cVar3;
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [8];
-  undefined2 local_48;
-  undefined1 auStack_40 [64];
+  bool bVar3;
+  LargeLocal aLStack_60 [2];
+  netadr_t nStack_50;
+  msg_t mStack_40;
   
-  LargeLocal__LargeLocal(auStack_60,0x4b0);
-  uVar1 = LargeLocal__GetBuf(auStack_60);
-  MSG_Init(auStack_40,uVar1,0x4b0);
-  iVar2 = Sys_GetLSPPacket(auStack_50,auStack_40);
+  LargeLocal::LargeLocal(aLStack_60,0x4b0);
+  puVar1 = LargeLocal::GetBuf(aLStack_60);
+  MSG_Init(&mStack_40,puVar1,0x4b0);
+  iVar2 = Sys_GetLSPPacket(&nStack_50,&mStack_40);
   if (iVar2 == 0) {
-    LargeLocal___LargeLocal(auStack_60);
-    return 0;
+    LargeLocal::~LargeLocal(aLStack_60);
+    return false;
   }
   if (iVar2 < 0) {
-    DAT_844dab0c = 0;
-    LargeLocal___LargeLocal(auStack_60);
-    return 0;
+    lsp_connected = false;
+    LargeLocal::~LargeLocal(aLStack_60);
+    return false;
   }
-  cVar3 = LSP_HandlePacket(auStack_40,auStack_50);
-  if (cVar3 == '\0') {
-    Com_PrintError(0x19,0xffffffff821a94f0,local_48);
+  bVar3 = LSP_HandlePacket(&mStack_40,&nStack_50);
+  if (!bVar3) {
+    Com_PrintError(0x19,"Received LSP packet from port %i which nobody handled!\n");
   }
-  LargeLocal___LargeLocal(auStack_60);
-  return 1;
+  LargeLocal::~LargeLocal(aLStack_60);
+  return true;
 }
 
 
 // 826E5348  LSP_GetPackets  (iwnet/lsp.cpp:2026)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void LSP_GetPackets(void)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar4;
-  undefined1 auStack_70 [16];
-  undefined1 auStack_60 [8];
-  undefined2 local_58;
-  undefined1 auStack_50 [56];
+  uchar *puVar1;
+  int iVar2;
+  bool bVar3;
+  LargeLocal aLStack_70 [2];
+  netadr_t nStack_60;
+  msg_t mStack_50;
   
-  if (DAT_844dab0c != '\0') {
+  if (lsp_connected) {
     do {
-      LargeLocal__LargeLocal(auStack_70,0x4b0);
-      uVar2 = LargeLocal__GetBuf(auStack_70);
-      MSG_Init(auStack_50,uVar2,0x4b0);
-      iVar3 = Sys_GetLSPPacket(auStack_60,auStack_50);
-      if (iVar3 == 0) {
-        LargeLocal___LargeLocal(auStack_70);
-        bVar1 = false;
+      LargeLocal::LargeLocal(aLStack_70,0x4b0);
+      puVar1 = LargeLocal::GetBuf(aLStack_70);
+      MSG_Init(&mStack_50,puVar1,0x4b0);
+      iVar2 = Sys_GetLSPPacket(&nStack_60,&mStack_50);
+      if (iVar2 == 0) {
+        LargeLocal::~LargeLocal(aLStack_70);
+        bVar3 = false;
       }
-      else if (iVar3 < 0) {
-        DAT_844dab0c = '\0';
-        LargeLocal___LargeLocal(auStack_70);
-        bVar1 = false;
+      else if (iVar2 < 0) {
+        lsp_connected = false;
+        LargeLocal::~LargeLocal(aLStack_70);
+        bVar3 = false;
       }
       else {
-        cVar4 = LSP_HandlePacket(auStack_50,auStack_60);
-        if (cVar4 == '\0') {
-          Com_PrintError(0x19,0xffffffff821a94f0,local_58);
+        bVar3 = LSP_HandlePacket(&mStack_50,&nStack_60);
+        if (!bVar3) {
+          Com_PrintError(0x19,"Received LSP packet from port %i which nobody handled!\n");
         }
-        LargeLocal___LargeLocal(auStack_70);
-        bVar1 = true;
+        LargeLocal::~LargeLocal(aLStack_70);
+        bVar3 = true;
       }
-    } while (bVar1);
+    } while (bVar3);
   }
   return;
 }
@@ -713,54 +751,57 @@ void LSP_GetPackets(void)
 
 // 826E5570  LSP_CheckOngoingTasks  (iwnet/lsp.cpp:2095)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LSP_CheckOngoingTasks(void)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
+  char *pcVar1;
+  taskCompleteResults tVar2;
   int iVar3;
-  longlong lVar4;
-  int *piVar5;
-  int iVar6;
+  int *piVar4;
+  overlappedTask *poVar5;
   
   __savegprlr_25();
   LSP_GetPackets();
-  lVar4 = 0;
-  piVar5 = &DAT_844dabb8;
+  iVar3 = 0;
+  piVar4 = &overlappedTasks.tasks[0].type;
   do {
-    if (*(char *)(piVar5 + 1) != '\0') {
-      if (*piVar5 == 1) {
-        uVar2 = LSP_FindTitleServersComplete(lVar4);
-        if (1 < uVar2) {
-          Com_PrintError(0x19,0xffffffff821a9650);
+    if (*(bool *)(piVar4 + 1) != false) {
+      if (*piVar4 == 1) {
+        tVar2 = LSP_FindTitleServersComplete(iVar3);
+        if (TASK_COMPLETE < tVar2) {
+          Com_PrintError(0x19,"Error listing LSP servers\n");
         }
       }
-      else if (DAT_84013128 == 0) {
-        uVar1 = va(0xffffffff821a966c);
-        MyAssertHandler(0xffffffff821a90bc,0x853,0,uVar1);
+      else if (alwaysfails == 0) {
+        pcVar1 = va("Unknown lsp task type %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x853,0,
+                        pcVar1);
       }
     }
-    piVar5 = piVar5 + 0x28;
-    lVar4 = lVar4 + 1;
-  } while ((int)piVar5 < -0x7bb24048);
-  iVar6 = -0x7bb240d0;
+    piVar4 = piVar4 + 0x28;
+    iVar3 = iVar3 + 1;
+  } while ((int)piVar4 < -0x7bb24048);
+  poVar5 = overlappedLogTasks.tasks;
   do {
-    if (*(char *)(iVar6 + 0x94) != '\0') {
-      if (*(int *)(iVar6 + 8) == 0) {
+    if (poVar5->active != false) {
+      if ((poVar5->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
 LAB_826e5690:
-        TaskManager_ClearTask(iVar6);
+        TaskManager_ClearTask(poVar5);
       }
-      else if (*(int *)(iVar6 + 0x90) == 2) {
-        iVar3 = dwRecordEventComplete(iVar6);
-        if (iVar3 != 0) goto LAB_826e5690;
+      else if (poVar5->type == 2) {
+        tVar2 = dwRecordEventComplete(poVar5);
+        if (tVar2 != TASK_NOTCOMPLETE) goto LAB_826e5690;
       }
-      else if (DAT_84013128 == 0) {
-        uVar1 = va(0xffffffff821a966c);
-        MyAssertHandler(0xffffffff821a90bc,0x875,0,uVar1);
+      else if (alwaysfails == 0) {
+        pcVar1 = va("Unknown lsp task type %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\lsp.cpp",0x875,0,
+                        pcVar1);
       }
     }
-    iVar6 = iVar6 + 0xa0;
-    if (-0x7bb22cd1 < iVar6) {
+    poVar5 = poVar5 + 1;
+    if (-0x7bb22cd1 < (int)poVar5) {
       LSP_LogOutStandingStringsToDW();
       __restgprlr_25();
       return;
@@ -771,47 +812,61 @@ LAB_826e5690:
 
 // 826E5430  LSP_Init  (iwnet/lsp.cpp:2175)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void LSP_Init(void)
 
 {
-  TaskManager_ConstructTaskSet(0xffffffff844dab20,0xffffffff821a9644);
-  TaskManager_ConstructTaskSet(0xffffffff844dbf28,0xffffffff821a9630);
-  DAT_844d823c = Dvar_RegisterBool(0xffffffff821a9624,0,0,0xffffffff821a9604);
-  DAT_844dab04 = Dvar_RegisterInt(0xffffffff821a95bc,0,0,0x7fffffff,0,0xffffffff821a95d0);
-  DAT_844d8244 = Dvar_RegisterFloat(0,0,0x3ff0000000000000,0xffffffff821a9570);
-  DAT_844d8240 = Dvar_RegisterInt(0xffffffff821a9528,1,0,0x7fffffff,0,0xffffffff821a9540);
-  DAT_844cf260 = 4;
+  TaskManager_ConstructTaskSet(&overlappedTasks,"LSP_Init");
+  TaskManager_ConstructTaskSet(&overlappedLogTasks,"LSP_Logging_Init");
+  lsp_debug = Dvar_RegisterBool("lsp_debug",false,0,"Whether to print lsp debug info");
+  dw_logging_level =
+       Dvar_RegisterInt("dw_logging_level",0,0,0x7fffffff,0,
+                        "Bit field for which LSP logging use should be on.");
+  dw_logging_level_chance =
+       Dvar_RegisterFloat("dw_logging_level_chance",0.0,0.0,1.0,0,"ustomClasses");
+  dw_logging_frequency =
+       Dvar_RegisterInt("dw_logging_frequency",1,0,0x7fffffff,0,
+                        "How often to submit to Demonware in minutes.");
+  g_iwnetStorageServerAddr.type = NA_IP;
   return;
 }
 
 
 // 826E5538  LSP_Shutdown  (iwnet/lsp.cpp:2216)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LSP_Shutdown(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff844dab20);
-  TaskManager_DestructTaskSet(0xffffffff844dbf28);
+  TaskManager_DestructTaskSet(&overlappedTasks);
+  TaskManager_DestructTaskSet(&overlappedLogTasks);
   return;
 }
 
 
 // 829402B0  `dynamic_atexit_destructor_for_'overlappedLogTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__overlappedLogTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff844dbf28);
+  OverlappedTaskSet::~OverlappedTaskSet(&overlappedLogTasks);
   return;
 }
 
 
 // 829402C0  `dynamic_atexit_destructor_for_'overlappedTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__overlappedTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff844dab20);
+  OverlappedTaskSet::~OverlappedTaskSet(&overlappedTasks);
   return;
 }
 

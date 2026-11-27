@@ -2,19 +2,23 @@
 
 // 8292A530  _CallSettingFrame  (<external>/bt/278379/vctools/crt/xb/xbox/handlers.asm:27)
 
-void _CallSettingFrame(code *param_1)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _CallSettingFrame(void)
 
 {
-  ulong uVar1;
+  code *in_r3;
   
-  _NLG_Notify((ulong)param_1);
-  uVar1 = (*param_1)();
-  _NLG_Notify(uVar1);
+  _NLG_Notify();
+  (*in_r3)();
+  _NLG_Notify();
   return;
 }
 
 
 // 8292A58C  _JumpToContinuation  (<external>/bt/278379/vctools/crt/xb/xbox/handlers.asm:71)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _JumpToContinuation(void)
 

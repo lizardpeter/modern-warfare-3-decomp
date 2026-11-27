@@ -2,32 +2,34 @@
 
 // 829165A0  tan  (<external>/bt/278379/vctools/crt/src/fpw32/tran/tan.c:71)
 
-double tan(double _X)
+double tan(double param_1)
 
 {
-  double dVar1;
-  double dVar2;
+  _dbl _Var1;
+  _dbl _Var2;
+  double dVar3;
+  double dVar4;
   
-  if (_X == 0.0) {
-    return _X;
+  if (param_1 == 0.0) {
+    return param_1;
   }
-  dVar1 = (double)(longlong)(_X * 0.6366197723675814);
-  dVar2 = -(DAT_829aff18 * dVar1 - -(DAT_829aff10 * dVar1 - _X));
-  dVar1 = dVar2 * dVar2;
-  dVar2 = ((-(dVar1 * 1.7861707342254428e-05 - 0.003424887823589059) * dVar1 - 0.13338350006421962)
-           * dVar1 + 1.0) * dVar2;
-  dVar1 = (((dVar1 * 4.981943399378651e-07 - 0.00031181531907010027) * dVar1 + 0.025663832289440112)
-           * dVar1 - 0.46671683339755293) * dVar1 + 1.0;
-  if (((longlong)(_X * 0.6366197723675814) & 1U) == 0) {
-    dVar1 = dVar2 / dVar1;
+  dVar3 = (double)(longlong)(param_1 * 0.6366197723675814);
+  dVar4 = -(_C2.dbl * dVar3 - -(_C1.dbl * dVar3 - param_1));
+  dVar3 = dVar4 * dVar4;
+  dVar4 = ((-(dVar3 * 1.7861707342254428e-05 - 0.003424887823589059) * dVar3 - 0.13338350006421962)
+           * dVar3 + 1.0) * dVar4;
+  dVar3 = (((dVar3 * 4.981943399378651e-07 - 0.00031181531907010027) * dVar3 + 0.025663832289440112)
+           * dVar3 - 0.46671683339755293) * dVar3 + 1.0;
+  if (((longlong)(param_1 * 0.6366197723675814) & 1U) == 0) {
+    _Var1.dbl = dVar4 / dVar3;
   }
   else {
-    dVar1 = dVar1 / -dVar2;
+    _Var1.dbl = dVar3 / -dVar4;
   }
-  dVar2 = DAT_829b0420;
-  if (ABS(_X) - 298156826.8647902 < 0.0) {
-    dVar2 = dVar1;
+  _Var2 = _d_ind;
+  if (ABS(param_1) - 298156826.8647902 < 0.0) {
+    _Var2 = _Var1;
   }
-  return dVar2;
+  return _Var2.dbl;
 }
 

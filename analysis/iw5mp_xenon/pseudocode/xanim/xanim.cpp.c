@@ -2,71 +2,80 @@
 
 // 8261E7A0  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 8261E7A8  IsLeafNode  (xanim/xanim.cpp:115)
 
-bool IsLeafNode(short *param_1)
+bool IsLeafNode(XAnimEntry *param_1)
 
 {
-  return *param_1 == 0;
+  return param_1->numAnims == 0;
 }
 
 
 // 8261E7B8  IsNodeAdditive  (xanim/xanim.cpp:121)
 
-undefined8 IsNodeAdditive(short *param_1)
+bool IsNodeAdditive(XAnimEntry *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (param_1 == (short *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x7a,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  if (param_1 == (XAnimEntry *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x7a,0,"%s");
   }
-  if ((*param_1 == 0) || (uVar1 = 1, (param_1[2] & 0x10U) == 0)) {
-    uVar1 = 0;
+  if ((param_1->numAnims == 0) ||
+     (bVar1 = true, ((param_1->field2_0x4).animParent.flags & 0x10) == 0)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8261E838  XAnimGetTreeHighMemUsage  (xanim/xanim.cpp:134)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 int XAnimGetTreeHighMemUsage(void)
 
 {
-  return DAT_841db994 << 6;
+  return g_info_high_usage << 6;
 }
 
 
 // 8261E848  XAnimGetTreeMemUsage  (xanim/xanim.cpp:140)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 int XAnimGetTreeMemUsage(void)
 
 {
-  return DAT_841db988 << 6;
+  return g_info_usage << 6;
 }
 
 
 // 8261E858  TRACK_xanim  (xanim/xanim.cpp:155)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_xanim(void)
 
 {
-  track_static_alloc_internal(0xffffffff841dbf98,0x40000,0xffffffff82185c04,0xb);
-  track_static_alloc_internal(0xffffffff841db998,0x600,0xffffffff82185bf4,0xb);
+  track_static_alloc_internal(g_xAnimInfo,0x40000,"g_xAnimInfo",0xb);
+  track_static_alloc_internal(g_notifyList,0x600,"g_notifyList",0xb);
   return;
 }
 
 
 // 8261E8B0  XAnimGetTreeMaxMemUsage  (xanim/xanim.cpp:166)
 
-undefined8 XAnimGetTreeMaxMemUsage(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int XAnimGetTreeMaxMemUsage(void)
 
 {
   return 0x40000;
@@ -74,6 +83,8 @@ undefined8 XAnimGetTreeMaxMemUsage(void)
 
 
 // 8261E8B8  XAnimInit  (xanim/xanim.cpp:175)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void XAnimInit(void)
 
@@ -85,11 +96,11 @@ void XAnimInit(void)
   uint uVar5;
   short *psVar6;
   uint uVar7;
-  undefined4 *puVar8;
+  XAnimInfo_u_28 *pXVar8;
   longlong lVar9;
   
   uVar7 = 1;
-  psVar6 = (short *)0x841dbf62;
+  psVar6 = (short *)((int)&g_notifyList[0x7b].type + 2);
   lVar9 = 0x1000;
   do {
     uVar5 = uVar7 + 0xffe;
@@ -107,31 +118,34 @@ void XAnimInit(void)
                              0xc);
     lVar9 = lVar9 + -1;
   } while (lVar9 != 0);
-  puVar8 = (undefined4 *)&DAT_841dbfb4;
+  pXVar8 = &g_xAnimInfo[0].field12_0x1c;
   lVar9 = 8;
   do {
-    puVar8 = puVar8 + 1;
-    *puVar8 = 0;
+    pXVar8 = pXVar8 + 1;
+    pXVar8->parts = (XAnimParts *)0x0;
     lVar9 = lVar9 + -1;
   } while (lVar9 != 0);
-  DAT_8421bf98 = SL_GetString_(0xffffffff8202a874,0,3);
-  DAT_841db988 = 1;
-  DAT_841db994 = 1;
+  g_endNotetrackName = SL_GetString_("end",0,3);
+  g_info_usage = 1;
+  g_info_high_usage = 1;
   return;
 }
 
 
 // 82624710  XAnimShutdown  (xanim/xanim.cpp:197)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void XAnimShutdown(void)
 
 {
-  if (DAT_8421bf98 != 0) {
-    if ((DAT_8421bf9c == '\0') && (DAT_841db988 != 1)) {
-      MyAssertHandler(0xffffffff82185bb8,0x28c,0,0xffffffff82185da8,0xffffffff82185dc0);
+  if (g_endNotetrackName != 0) {
+    if ((!g_disableLeakCheck) && (g_info_usage != 1)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x28c,0,
+                      "%s\n\t(g_info_usage) = %i");
     }
-    SL_RemoveRefToString(DAT_8421bf98);
-    DAT_8421bf98 = 0;
+    SL_RemoveRefToString(g_endNotetrackName);
+    g_endNotetrackName = 0;
   }
   return;
 }
@@ -139,81 +153,109 @@ void XAnimShutdown(void)
 
 // 8261E978  XAnimFindData_FastFile  (xanim/xanim.cpp:240)
 
-void XAnimFindData_FastFile(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAnimParts * XAnimFindData_FastFile(char *param_1)
 
 {
-  DB_FindXAssetHeader(2,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_XANIMPARTS,param_1,1);
+  return XVar1.parts;
 }
 
 
 // 8261E988  XAnimFindData  (xanim/xanim.cpp:247)
 
-void XAnimFindData(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAnimParts * XAnimFindData(char *param_1)
 
 {
-  DB_FindXAssetHeader(2,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_XANIMPARTS,param_1,1);
+  return XVar1.parts;
 }
 
 
 // 8261E998  XAnimCreate  (xanim/xanim.cpp:312)
 
-void XAnimCreate(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void XAnimCreate(XAnim_s *param_1,uint param_2,char *param_3,bool param_4)
 
 {
   char cVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  char *pcVar8;
+  XAssetHeader XVar4;
+  void *pvVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  ulonglong uVar8;
+  char *pcVar11;
+  longlong lVar9;
+  longlong lVar10;
   
-  lVar4 = __savegprlr_25();
-  iVar5 = DB_FindXAssetHeader(2,param_3,1);
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x14b,0,0xffffffff82000f98,0xffffffff8213fd58);
+  uVar8 = (ulonglong)param_4;
+  lVar10 = (longlong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  pcVar7 = (char *)lVar10;
+  XVar4 = DB_FindXAssetHeader(ASSET_TYPE_XANIMPARTS,pcVar7,1);
+  if (XVar4.physPreset == (PhysPreset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x14b,0,"%s")
+    ;
   }
-  lVar7 = (param_2 & 0x1fffffff) * 8 + lVar4;
-  iVar2 = (int)lVar7;
+  iVar2 = (int)((uVar6 & 0xffffffff) << 3) + iVar3;
   *(undefined2 *)(iVar2 + 0xc) = 0;
-  *(int *)(iVar2 + 0x10) = iVar5;
-  iVar5 = (int)lVar4;
-  if ((param_4 & 0xff) == 0) {
-    param_3 = param_3 + -1;
-    pcVar8 = (char *)(*(int *)(*(int *)(iVar5 + 8) + (int)((param_2 & 0xffffffff) << 2)) + -1);
+  *(XAssetHeader *)(iVar2 + 0x10) = XVar4;
+  if ((uVar8 & 0xff) == 0) {
+    lVar10 = lVar10 + -1;
+    pcVar7 = (char *)(*(int *)(*(int *)(iVar3 + 8) + (int)((uVar6 & 0xffffffff) << 2)) + -1);
     do {
-      param_3 = param_3 + 1;
-      cVar1 = *(char *)param_3;
-      pcVar8 = pcVar8 + 1;
-      *pcVar8 = cVar1;
+      lVar10 = lVar10 + 1;
+      cVar1 = *(char *)lVar10;
+      pcVar7 = pcVar7 + 1;
+      *pcVar7 = cVar1;
     } while (cVar1 != '\0');
     __restgprlr_25();
     return;
   }
-  if (*(int *)(iVar5 + 8) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x157,0,0xffffffff82000f98,0xffffffff82185c40,param_4 & 0xff,
-                    0,lVar7 + 0xc);
+  if (*(int *)(iVar3 + 8) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x157,0,"%s")
+    ;
   }
-  iVar2 = (int)((param_2 & 0xffffffff) << 2);
-  lVar4 = param_3;
-  if (*(int *)(*(int *)(iVar5 + 8) + iVar2) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x158,0,0xffffffff82000f98,0xffffffff82185c1c);
+  iVar2 = (int)((uVar6 & 0xffffffff) << 2);
+  lVar9 = lVar10;
+  if (*(int *)(*(int *)(iVar3 + 8) + iVar2) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x158,0,"%s")
+    ;
   }
   do {
-    pcVar8 = (char *)lVar4;
-    lVar4 = lVar4 + 1;
-  } while (*pcVar8 != '\0');
-  iVar6 = Hunk_AllocDebugMem(((lVar4 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c10);
-  iVar3 = (int)param_3;
+    pcVar11 = (char *)lVar9;
+    lVar9 = lVar9 + 1;
+  } while (*pcVar11 != '\0');
+  pvVar5 = Hunk_AllocDebugMem((int)lVar9 - (int)pcVar7,"XAnimCreate");
   do {
-    cVar1 = *(char *)param_3;
-    ((char *)param_3)[iVar6 - iVar3] = cVar1;
-    param_3 = param_3 + 1;
+    cVar1 = *(char *)lVar10;
+    ((char *)lVar10)[(int)pvVar5 - (int)pcVar7] = cVar1;
+    lVar10 = lVar10 + 1;
   } while (cVar1 != '\0');
-  *(int *)(*(int *)(iVar5 + 8) + iVar2) = iVar6;
+  *(void **)(*(int *)(iVar3 + 8) + iVar2) = pvVar5;
   __restgprlr_25();
   return;
 }
@@ -221,8 +263,8 @@ void XAnimCreate(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong
 
 // 8261EB08  XAnimBlend  (xanim/xanim.cpp:382)
 
-void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
-               ulonglong param_5,ulonglong param_6,ulonglong param_7)
+void XAnimBlend(XAnim_s *param_1,uint param_2,char *param_3,uint param_4,uint param_5,uint param_6,
+               bool param_7)
 
 {
   char cVar1;
@@ -231,97 +273,114 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
   int iVar4;
   int iVar5;
   uint *puVar6;
-  int iVar7;
-  char *pcVar9;
-  longlong lVar8;
+  void *pvVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  char *pcVar15;
+  longlong lVar13;
+  longlong lVar14;
+  uint uVar16;
   
-  puVar6 = (uint *)__savegprlr_21();
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x185,0,0xffffffff82000f98,0xffffffff82185d54);
+  uVar12 = (ulonglong)param_7;
+  uVar11 = (ulonglong)(int)param_6;
+  uVar10 = (ulonglong)(int)param_5;
+  uVar9 = (ulonglong)(int)param_4;
+  lVar14 = (longlong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  puVar6 = (uint *)__savegprlr_21(param_1);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x185,0,"%s")
+    ;
   }
-  iVar4 = (int)((param_2 & 0xffffffff) << 3);
-  *(short *)((int)puVar6 + iVar4 + 0xc) = (short)param_5;
-  if ((param_5 & 0xffffffff) != (param_5 & 0xffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x189,0,0xffffffff82000f98,0xffffffff82185d3c);
+  iVar5 = (int)((uVar8 & 0xffffffff) << 3);
+  *(short *)((int)puVar6 + iVar5 + 0xc) = (short)uVar10;
+  if ((uVar10 & 0xffffffff) != (uVar10 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x189,0,"%s")
+    ;
   }
-  *(short *)((int)puVar6 + iVar4 + 0x10) = (short)param_6;
-  if ((param_6 & 0xffffffff) != (param_6 & 0xffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x18b,0,0xffffffff82000f98,0xffffffff82185d1c);
+  *(short *)((int)puVar6 + iVar5 + 0x10) = (short)uVar11;
+  if ((uVar11 & 0xffffffff) != (uVar11 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x18b,0,"%s")
+    ;
   }
-  *(short *)((int)puVar6 + iVar4 + 0x12) = (short)param_4;
-  if ((param_4 & 0xffffffff) != (param_4 & 0xffff)) {
-    MyAssertHandler(0xffffffff82185bb8,400,0,0xffffffff82000f98,0xffffffff82185cf4);
+  *(short *)((int)puVar6 + iVar5 + 0x12) = (short)uVar9;
+  if ((uVar9 & 0xffffffff) != (uVar9 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",400,0,"%s");
   }
-  if ((ulonglong)*puVar6 < (*(ushort *)((int)puVar6 + iVar4 + 0x12) + param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x191,0,0xffffffff82000f98,0xffffffff82185cc4);
+  if ((ulonglong)*puVar6 < (*(ushort *)((int)puVar6 + iVar5 + 0x12) + uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x191,0,"%s")
+    ;
   }
-  uVar10 = 0;
-  if ((param_5 & 0xffffffff) != 0) {
+  uVar16 = 0;
+  if ((uVar10 & 0xffffffff) != 0) {
     do {
-      *(short *)((int)puVar6 +
-                (int)((*(ushort *)((int)puVar6 + iVar4 + 0x12) + uVar10 & 0xffffffff) << 3) + 0xe) =
-           (short)param_2;
-      if ((param_2 & 0xffffffff) !=
+      *(short *)((int)puVar6 + (*(ushort *)((int)puVar6 + iVar5 + 0x12) + uVar16) * 8 + 0xe) =
+           (short)uVar8;
+      if ((uVar8 & 0xffffffff) !=
           (ulonglong)
-          *(ushort *)
-           ((int)puVar6 +
-           (int)((*(ushort *)((int)puVar6 + iVar4 + 0x12) + uVar10 & 0xffffffff) << 3) + 0xe)) {
-        MyAssertHandler(0xffffffff82185bb8,0x196,0,0xffffffff82000f98,0xffffffff82185c80);
+          *(ushort *)((int)puVar6 + (*(ushort *)((int)puVar6 + iVar5 + 0x12) + uVar16) * 8 + 0xe)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x196,0,
+                        "%s");
       }
-      uVar10 = uVar10 + 1;
-    } while ((uVar10 & 0xffffffff) < (param_5 & 0xffffffff));
+      uVar16 = uVar16 + 1;
+    } while ((ulonglong)uVar16 < (uVar10 & 0xffffffff));
   }
-  if ((*(short *)((int)puVar6 + iVar4 + 0xc) == 0) ||
-     (bVar3 = true, (*(ushort *)((int)puVar6 + iVar4 + 0x10) & 0x10) == 0)) {
+  if ((*(short *)((int)puVar6 + iVar5 + 0xc) == 0) ||
+     (bVar3 = true, (*(ushort *)((int)puVar6 + iVar5 + 0x10) & 0x10) == 0)) {
     bVar3 = false;
   }
   if (bVar3) {
-    for (uVar2 = *(ushort *)((int)puVar6 + iVar4 + 0xe); uVar2 != 0;
+    for (uVar2 = *(ushort *)((int)puVar6 + iVar5 + 0xe); uVar2 != 0;
         uVar2 = *(ushort *)((int)puVar6 + (uint)uVar2 * 8 + 0xe)) {
       if (puVar6 + (uint)uVar2 * 2 + 3 == (uint *)0x0) {
-        MyAssertHandler(0xffffffff82185bb8,0x7a,0,0xffffffff82000f98,0xffffffff8206f7e8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x7a,0,
+                        "%s");
       }
       if ((*(short *)(puVar6 + (uint)uVar2 * 2 + 3) == 0) ||
          (bVar3 = true, (puVar6[(uint)uVar2 * 2 + 4] & 0x100000) == 0)) {
         bVar3 = false;
       }
       if (bVar3) {
-        Com_Error(1,0xffffffff82185c64);
+        Com_Error(ERR_DROP,"\x15Do not nest additives");
       }
     }
   }
-  if ((param_7 & 0xff) != 0) {
+  if ((uVar12 & 0xff) != 0) {
     if (puVar6[2] == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x1ac,0,0xffffffff82000f98,0xffffffff82185c40);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1ac,0,
+                      "%s");
     }
-    iVar4 = (int)((param_2 & 0xffffffff) << 2);
-    lVar8 = param_3;
-    if (*(int *)(iVar4 + puVar6[2]) != 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x1ad,0,0xffffffff82000f98,0xffffffff82185c1c);
+    iVar5 = (int)((uVar8 & 0xffffffff) << 2);
+    lVar13 = lVar14;
+    if (*(int *)(iVar5 + puVar6[2]) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1ad,0,
+                      "%s");
     }
     do {
-      pcVar9 = (char *)lVar8;
-      lVar8 = lVar8 + 1;
-    } while (*pcVar9 != '\0');
-    iVar7 = Hunk_AllocDebugMem(((lVar8 - param_3) - 1U & 0xffffffff) + 1,0xffffffff82185c58);
-    iVar5 = (int)param_3;
+      pcVar15 = (char *)lVar13;
+      lVar13 = lVar13 + 1;
+    } while (*pcVar15 != '\0');
+    iVar4 = (int)lVar14;
+    pvVar7 = Hunk_AllocDebugMem((int)lVar13 - iVar4,"XAnimBlend");
     do {
-      cVar1 = *(char *)param_3;
-      ((char *)param_3)[iVar7 - iVar5] = cVar1;
-      param_3 = param_3 + 1;
+      cVar1 = *(char *)lVar14;
+      ((char *)lVar14)[(int)pvVar7 - iVar4] = cVar1;
+      lVar14 = lVar14 + 1;
     } while (cVar1 != '\0');
-    *(int *)(iVar4 + puVar6[2]) = iVar7;
+    *(void **)(iVar5 + puVar6[2]) = pvVar7;
     __restgprlr_21();
     return;
   }
-  param_3 = param_3 + -1;
-  pcVar9 = (char *)(*(int *)(puVar6[2] + (int)((param_2 & 0xffffffff) << 2)) + -1);
+  lVar14 = lVar14 + -1;
+  pcVar15 = (char *)(*(int *)(puVar6[2] + (int)((uVar8 & 0xffffffff) << 2)) + -1);
   do {
-    param_3 = param_3 + 1;
-    cVar1 = *(char *)param_3;
-    pcVar9 = pcVar9 + 1;
-    *pcVar9 = cVar1;
+    lVar14 = lVar14 + 1;
+    cVar1 = *(char *)lVar14;
+    pcVar15 = pcVar15 + 1;
+    *pcVar15 = cVar1;
   } while (cVar1 != '\0');
   __restgprlr_21();
   return;
@@ -330,69 +389,78 @@ void XAnimBlend(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong 
 
 // 8261EE40  XAnimCreateAnims  (xanim/xanim.cpp:453)
 
-void XAnimCreateAnims(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+XAnim_s * XAnimCreateAnims(char *param_1,int param_2,_func___cdecl_void_ptr_int *param_3)
 
 {
   char cVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  undefined4 uVar6;
-  char *pcVar7;
+  char *pcVar2;
+  undefined4 *puVar3;
+  void *pvVar4;
+  XAnim_s *pXVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  char *pcVar8;
   
-  pcVar3 = (char *)__savegprlr_27();
-  if (pcVar3 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1cc,0,0xffffffff82000f98,0xffffffff821794fc);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)param_2;
+  pcVar2 = (char *)__savegprlr_27(param_1);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1cc,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1cd,0,0xffffffff82000f98,0xffffffff82185d70);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1cd,0,"%s")
+    ;
   }
-  puVar4 = (undefined4 *)(*(code *)param_3)((param_2 & 0x1fffffff) * 8 + 0xc);
-  *puVar4 = (int)param_2;
-  pcVar7 = pcVar3;
+  puVar3 = (undefined4 *)(*(code *)uVar7)((uVar6 & 0x1fffffff) * 8 + 0xc);
+  *puVar3 = (int)uVar6;
+  pcVar8 = pcVar2;
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 != '\0');
-  iVar5 = Hunk_AllocDebugMem((int)pcVar7 - (int)pcVar3,0xffffffff82185d5c);
-  iVar2 = iVar5 - (int)pcVar3;
+  pvVar4 = Hunk_AllocDebugMem((int)pcVar8 - (int)pcVar2,"XAnimCreateAnims");
+  pcVar8 = pcVar2;
   do {
-    cVar1 = *pcVar3;
-    pcVar3[iVar2] = cVar1;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar8;
+    *(char *)((int)pvVar4 + ((int)pcVar8 - (int)pcVar2)) = cVar1;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 != '\0');
-  puVar4[1] = iVar5;
-  uVar6 = Hunk_AllocDebugMem((param_2 & 0x3fffffff) << 2,0xffffffff82185d5c);
-  puVar4[2] = uVar6;
-  __restgprlr_27(puVar4);
-  return;
+  puVar3[1] = pvVar4;
+  pvVar4 = Hunk_AllocDebugMem((int)((uVar6 & 0xffffffff) << 2),"XAnimCreateAnims");
+  puVar3[2] = pvVar4;
+  pXVar5 = (XAnim_s *)__restgprlr_27(puVar3);
+  return pXVar5;
 }
 
 
 // 8261EF40  XAnimDisableLeakCheck  (xanim/xanim.cpp:479)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void XAnimDisableLeakCheck(void)
 
 {
-  DAT_8421bf9c = 1;
+  g_disableLeakCheck = true;
   return;
 }
 
 
 // 8261EF50  XAnimCreateTree  (xanim/xanim.cpp:487)
 
-void XAnimCreateTree(undefined8 param_1,code *param_2)
+XAnimTree * XAnimCreateTree(XAnim_s *param_1,_func___cdecl_void_ptr_int *param_2)
 
 {
   int iVar1;
   int *piVar2;
+  XAnimTree *pXVar3;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1ea,0,0xffffffff82000f98,0xffffffff8202a360);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1ea,0,"%s")
+    ;
   }
-  piVar2 = (int *)(*param_2)(0x14);
+  piVar2 = (*param_2)(0x14);
   *piVar2 = 0;
   piVar2[1] = 0;
   piVar2[2] = 0;
@@ -400,36 +468,43 @@ void XAnimCreateTree(undefined8 param_1,code *param_2)
   piVar2[4] = 0;
   *piVar2 = iVar1;
   if (piVar2[1] != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1f2,0,0xffffffff82185d78,0xffffffff82185d94);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1f2,0,
+                    "%s\n\t(tree->info_usage) = %i");
   }
-  __restgprlr_29(piVar2);
-  return;
+  pXVar3 = (XAnimTree *)__restgprlr_29(piVar2);
+  return pXVar3;
 }
 
 
 // 82624798  XAnimFreeTree  (xanim/xanim.cpp:506)
 
-void XAnimFreeTree(undefined8 param_1,ulonglong param_2)
+void XAnimFreeTree(XAnimTree *param_1,_func___cdecl_void_void_ptr_int *param_2)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
+  ulonglong uVar2;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1fb,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar2 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1fb,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1fc,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1fc,0,"%s")
+    ;
   }
-  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1fd,0,0xffffffff82000f98,0xffffffff82186750);
+  if ((pXVar1->anims->entries[0].field2_0x4.animParent.flags & 0x20) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1fd,0,"%s")
+    ;
   }
-  XAnimClearTree(piVar1);
-  if (piVar1[1] != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x202,0,0xffffffff82185d78,0xffffffff82185d94);
+  XAnimClearTree(pXVar1);
+  if (pXVar1->info_usage != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x202,0,
+                    "%s\n\t(tree->info_usage) = %i");
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    (*(code *)param_2)(piVar1,0x14);
+  if ((uVar2 & 0xffffffff) != 0) {
+    (*(code *)uVar2)(pXVar1,0x14);
   }
   __restgprlr_28();
   return;
@@ -438,57 +513,70 @@ void XAnimFreeTree(undefined8 param_1,ulonglong param_2)
 
 // 8261EFF8  XAnimCreateSimpleTree  (xanim/xanim.cpp:525)
 
-void XAnimCreateSimpleTree(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAnimTree * XAnimCreateSimpleTree(char *param_1)
 
 {
   char *pcVar1;
-  int *_Dst;
   int *piVar2;
+  XAssetHeader XVar3;
+  XAnimTree *pXVar4;
   
-  pcVar1 = (char *)__savegprlr_28();
+  pcVar1 = (char *)__savegprlr_28(param_1);
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x214,0,0xffffffff82000f98,0xffffffff82021a74);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x214,0,"%s")
+    ;
   }
   if (*pcVar1 == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x215,0,0xffffffff82000f98,0xffffffff8207e370);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x215,0,"%s")
+    ;
   }
-  _Dst = (int *)MT_Alloc(0x30,6);
-  memset(_Dst,0,0x30);
-  piVar2 = (int *)DB_FindXAssetHeader(2,pcVar1,1);
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x223,0,0xffffffff82000f98,0xffffffff8213fd58);
+  piVar2 = MT_Alloc(0x30,6);
+  memset();
+  XVar3 = DB_FindXAssetHeader(ASSET_TYPE_XANIMPARTS,pcVar1,1);
+  if (XVar3.physPreset == (PhysPreset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x223,0,"%s")
+    ;
   }
-  _Dst[0xb] = (int)piVar2;
-  *(undefined2 *)(_Dst + 8) = 1;
-  _Dst[5] = 2;
-  *(undefined2 *)((int)_Dst + 0x26) = 1;
-  *(ushort *)(_Dst + 9) = *(ushort *)(_Dst + 9) | 0x20;
-  _Dst[6] = *piVar2;
-  *_Dst = (int)(_Dst + 5);
-  __restgprlr_28(_Dst);
-  return;
+  ((XAssetHeader *)(piVar2 + 0xb))->physPreset = (PhysPreset *)XVar3;
+  *(undefined2 *)(piVar2 + 8) = 1;
+  piVar2[5] = 2;
+  *(undefined2 *)((int)piVar2 + 0x26) = 1;
+  *(ushort *)(piVar2 + 9) = *(ushort *)(piVar2 + 9) | 0x20;
+  piVar2[6] = (int)(XVar3.physPreset)->name;
+  *piVar2 = (int)(piVar2 + 5);
+  pXVar4 = (XAnimTree *)__restgprlr_28(piVar2);
+  return pXVar4;
 }
 
 
 // 82624890  XAnimFreeSimpleTree  (xanim/xanim.cpp:571)
 
-void XAnimFreeSimpleTree(void)
+void XAnimFreeSimpleTree(XAnimTree *param_1)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
   
-  piVar1 = (int *)__savegprlr_29();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x23f,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = (XAnimTree *)__savegprlr_29(param_1);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x23f,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x240,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x240,0,"%s")
+    ;
   }
-  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x241,0,0xffffffff82000f98,0xffffffff82186790);
+  if ((pXVar1->anims->entries[0].field2_0x4.animParent.flags & 0x20) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x241,0,"%s")
+    ;
   }
-  XAnimClearTree(piVar1);
-  MT_Free(piVar1,0x30);
+  XAnimClearTree(pXVar1);
+  MT_Free(pXVar1,0x30);
   __restgprlr_29();
   return;
 }
@@ -496,47 +584,72 @@ void XAnimFreeSimpleTree(void)
 
 // 826278C0  XAnimPlaySimpleTreeAnim  (xanim/xanim.cpp:589)
 
-void XAnimPlaySimpleTreeAnim(void)
+void XAnimPlaySimpleTreeAnim(DObj *param_1,float param_2)
 
 {
-  int *piVar1;
-  int *piVar2;
-  char cVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  bool bVar3;
+  uint in_r5;
+  char *in_r6;
+  char *in_r7;
   double extraout_f1;
   double dVar4;
   double dVar5;
-  double dVar6;
+  float fVar6;
   
-  piVar2 = (int *)__savegprlr_28();
-  dVar5 = extraout_f1;
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x252,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar2 = (DObj *)__savegprlr_28((double)param_2,param_1);
+  dVar4 = extraout_f1;
+  if (pDVar2 == (DObj *)0x0) {
+    in_r7 = "obj";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x252,0,"%s")
+    ;
   }
-  piVar1 = (int *)*piVar2;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x256,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    in_r7 = "tree";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x256,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,599,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    in_r7 = "tree->anims";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",599,0,"%s");
   }
-  if ((*(ushort *)(*piVar1 + 0x10) & 0x20) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,600,0,0xffffffff82000f98,0xffffffff82186790);
+  if ((pXVar1->anims->entries[0].field2_0x4.animParent.flags & 0x20) == 0) {
+    in_r7 = "tree->anims->entries[0].animParent.flags & XANIM_SIMPLE_TREE";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",600,0,"%s");
   }
-  if (*(int *)(*piVar1 + 0x18) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x259,0,0xffffffff82000f98,0xffffffff82186c6c);
+  if (pXVar1->anims[1].debugName == (char *)0x0) {
+    in_r7 = "tree->anims->entries[1].parts";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x259,0,"%s")
+    ;
   }
-  if (dVar5 < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x25a,0,0xffffffff82000f98,0xffffffff82186c58);
+  if (dVar4 < 0.0) {
+    in_r7 = "animTime >= 0.0f";
+    in_r5 = 0;
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x25a,0,"%s")
+    ;
   }
-  dVar6 = 1.0;
-  XAnimSetGoalWeight(0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,piVar2,1);
-  cVar3 = XAnimIsLooped(*piVar1,1);
-  if (cVar3 == '\0') {
-    dVar4 = (double)XAnimGetLength(*piVar1,1);
-    if ((float)(dVar5 - dVar4) < 0.0) {
-      dVar6 = (double)(float)(dVar5 / dVar4);
+  dVar5 = 1.0;
+  XAnimSetGoalWeight(pDVar2,1,1.0,1.0,1.0,in_r5,(uint)in_r6,(int)in_r7);
+  bVar3 = XAnimIsLooped(pXVar1->anims,1);
+  if (!bVar3) {
+    fVar6 = XAnimGetLength(pXVar1->anims,1);
+    if ((float)(dVar4 - (double)fVar6) < 0.0) {
+      dVar5 = (double)(float)(dVar4 / (double)fVar6);
     }
-    XAnimSetTime(dVar6,piVar1,1);
+    XAnimSetTime(pXVar1,1,(float)dVar5);
   }
   __restgprlr_28();
   return;
@@ -545,82 +658,87 @@ void XAnimPlaySimpleTreeAnim(void)
 
 // 8261F0F8  XAnimCheckTreeLeak  (xanim/xanim.cpp:648)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void XAnimCheckTreeLeak(void)
 
 {
-  if (DAT_8421bf9c != '\0') {
+  if (g_disableLeakCheck) {
     return;
   }
-  if (DAT_841db988 == 1) {
+  if (g_info_usage == 1) {
     return;
   }
-  MyAssertHandler(0xffffffff82185bb8,0x28c,0,0xffffffff82185da8,0xffffffff82185dc0);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x28c,0,
+                  "%s\n\t(g_info_usage) = %i");
   return;
 }
 
 
 // 8261F140  XAnimGetAnims  (xanim/xanim.cpp:658)
 
-undefined4 XAnimGetAnims(undefined4 *param_1)
+XAnim_s * XAnimGetAnims(XAnimTree *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x293,0,0xffffffff82000f98,0xffffffff821813e0);
+  if (param_1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x293,0,"%s")
+    ;
   }
-  return *param_1;
+  return param_1->anims;
 }
 
 
 // 8261F198  XAnimInitModelMap  (xanim/xanim.cpp:679)
 
-void XAnimInitModelMap(undefined8 param_1,ulonglong param_2,void *param_3)
+void XAnimInitModelMap(XModel **param_1,uint param_2,XModelNameMap *param_3)
 
 {
   ushort uVar1;
   ushort uVar2;
   uint uVar3;
   int *piVar4;
-  void *pvVar5;
-  ushort *puVar6;
+  XModelNameMap *pXVar5;
+  ulonglong uVar6;
   ushort uVar7;
   ushort *puVar8;
   ulonglong uVar9;
   
-  piVar4 = (int *)__savegprlr_21();
-  pvVar5 = memset(param_3,0,0x400);
+  uVar6 = (ulonglong)(int)param_2;
+  piVar4 = (int *)__savegprlr_21(param_1);
+  memset();
   uVar7 = 0;
-  uVar9 = param_2 & 0xffffffff;
+  uVar9 = uVar6 & 0xffffffff;
   while (uVar9 != 0) {
     uVar9 = (ulonglong)*(byte *)(*piVar4 + 4);
     puVar8 = *(ushort **)(*piVar4 + 0x24);
     if (0xbf < uVar9) {
-      pvVar5 = (void *)MyAssertHandler(0xffffffff82185bb8,0x2ba,0,0xffffffff82000f98,
-                                       0xffffffff82185dd4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x2ba,0,
+                      "%s");
     }
     for (; uVar9 != 0; uVar9 = uVar9 - 1) {
       uVar1 = *puVar8;
       if (uVar1 == 0) {
-        pvVar5 = (void *)MyAssertHandler(0xffffffff82185bb8,0x2bf,0,0xffffffff82000f98,
-                                         0xffffffff82185df0);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x2bf,0,
+                        "%s");
       }
       uVar3 = uVar1 & 0xff;
-      puVar6 = (ushort *)((uVar1 & 0xff) * 4 + (int)param_3);
-      uVar2 = *puVar6;
+      pXVar5 = param_3 + (uVar1 & 0xff);
+      uVar2 = pXVar5->name;
       while (uVar2 != 0) {
         uVar3 = uVar3 + 1 & 0xff;
-        puVar6 = (ushort *)(uVar3 * 4 + (int)param_3);
-        uVar2 = *puVar6;
+        pXVar5 = param_3 + uVar3;
+        uVar2 = pXVar5->name;
       }
-      puVar6[1] = uVar7;
-      *puVar6 = uVar1;
+      pXVar5->index = uVar7;
+      pXVar5->name = uVar1;
       puVar8 = puVar8 + 1;
       uVar7 = uVar7 + 1;
     }
     piVar4 = piVar4 + 1;
-    param_2 = param_2 - 1;
-    uVar9 = param_2;
+    uVar6 = uVar6 - 1;
+    uVar9 = uVar6;
   }
-  __restgprlr_21(pvVar5);
+  __restgprlr_21();
   return;
 }
 
@@ -629,7 +747,7 @@ void XAnimInitModelMap(undefined8 param_1,ulonglong param_2,void *param_3)
 
 /* WARNING: Removing unreachable block (ram,0x82624a90) */
 
-void XAnimGetAnimMap(undefined8 param_1,int param_2)
+uint XAnimGetAnimMap(XAnimParts *param_1,XModelNameMap *param_2)
 
 {
   byte bVar1;
@@ -637,59 +755,55 @@ void XAnimGetAnimMap(undefined8 param_1,int param_2)
   uint uVar3;
   int iVar4;
   uint uVar5;
-  uint uVar6;
-  uint uVar7;
-  ushort *puVar8;
+  ushort *puVar6;
   uint local_140 [6];
   byte local_128;
   undefined1 local_127 [295];
   
-  iVar4 = __savegprlr_21();
+  iVar4 = __savegprlr_21(param_1);
   if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x2d5,0,0xffffffff82000f98,0xffffffff8213fd58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x2d5,0,"%s")
+    ;
   }
   bVar1 = *(byte *)(iVar4 + 0x1c);
-  uVar6 = (uint)bVar1;
-  puVar8 = *(ushort **)(iVar4 + 0x30);
-  uVar7 = 0;
+  puVar6 = *(ushort **)(iVar4 + 0x30);
+  uVar5 = 0;
   local_140[0] = 0;
   local_140[1] = 0;
   local_140[2] = 0;
   local_140[3] = 0;
   local_140[4] = 0;
   local_140[5] = 0;
-  if (uVar6 != 0) {
+  if (bVar1 != 0) {
     do {
-      uVar5 = (uint)*puVar8;
-      iVar4 = (uVar5 & 0xff) * 4;
-      uVar3 = uVar5 & 0xff;
-      uVar2 = *(ushort *)(iVar4 + param_2);
+      uVar3 = *puVar6 & 0xff;
+      uVar2 = param_2[uVar3].name;
       while (uVar2 != 0) {
-        if (uVar5 == uVar2) {
-          uVar2 = *(ushort *)(iVar4 + param_2 + 2);
-          local_127[uVar7] = (char)uVar2;
+        if ((uint)*puVar6 == (uint)uVar2) {
+          uVar2 = param_2[uVar3].index;
+          local_127[uVar5] = (char)uVar2;
           if (0xbf < uVar2) {
-            MyAssertHandler(0xffffffff821858f8,0x48,0,0xffffffff82000f98,0xffffffff82185940);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../qcommon/bitarray.h"
+                            ,0x48,0,"%s");
           }
           uVar3 = uVar2 >> 3 & 0x1ffffffc;
           *(uint *)((int)local_140 + uVar3) =
-               (&DAT_82992400)[uVar2 & 0x1f] | *(uint *)((int)local_140 + uVar3);
+               *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) | *(uint *)((int)local_140 + uVar3);
           goto LAB_82624a70;
         }
         uVar3 = uVar3 + 1 & 0xff;
-        iVar4 = uVar3 * 4;
-        uVar2 = *(ushort *)(iVar4 + param_2);
+        uVar2 = param_2[uVar3].name;
       }
-      local_127[uVar7] = 0xbf;
+      local_127[uVar5] = 0xbf;
 LAB_82624a70:
-      uVar7 = uVar7 + 1;
-      puVar8 = puVar8 + 1;
-    } while (uVar7 < uVar6);
+      uVar5 = uVar5 + 1;
+      puVar6 = puVar6 + 1;
+    } while (uVar5 < bVar1);
   }
   local_128 = bVar1;
-  SL_GetStringOfSize(local_140,0,uVar6 + 0x19,0xc);
-  __restgprlr_21();
-  return;
+  uVar5 = SL_GetStringOfSize((char *)local_140,0,bVar1 + 0x19,0xc);
+  uVar5 = __restgprlr_21(uVar5);
+  return uVar5;
 }
 
 
@@ -722,119 +836,128 @@ void TransformToQuatRefFrame(float *param_1,float *param_2)
 
 // 8261F328  XAnimCalcRelDeltaParts  (xanim/xanim.cpp:783)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void XAnimCalcRelDeltaParts(undefined8 param_1,double param_2,double param_3)
+void XAnimCalcRelDeltaParts
+               (XAnimParts *param_1,float param_2,float param_3,float param_4,XAnimRotPos *param_5,
+               int param_6)
 
 {
-  ushort *puVar1;
+  XAnimPartTrans *pXVar1;
   uint uVar2;
   uint uVar3;
   undefined8 in_r0;
   ulonglong uVar4;
-  int iVar5;
+  XAnimParts *pXVar5;
+  float *pfVar6;
   float *in_r7;
   ulonglong in_r8;
-  ulonglong uVar6;
   ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  ulonglong uVar8;
+  longlong lVar9;
+  ulonglong uVar10;
   double extraout_f1;
-  double dVar10;
   double dVar11;
   double dVar12;
-  undefined1 auVar13 [16];
+  double dVar13;
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  float fStack0000001c;
   float local_90;
   float local_8c;
   float local_88;
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_74;
+  undefined1 local_80 [16];
   undefined1 local_70 [16];
   undefined1 local_60 [16];
   
+  dVar13 = (double)param_4;
+  dVar12 = (double)param_3;
+  lVar9 = (longlong)(int)param_5;
   uVar4 = ZEXT48(&stack0x00000000);
-  iVar5 = __savegprlr_27();
-  if ((*(byte *)(iVar5 + 0x10) & 2) != 0) {
-    dVar10 = extraout_f1;
-    XAnim_CalcDeltaForTime(param_2);
-    XAnim_CalcDeltaForTime(param_3,iVar5);
-    if (((*(byte *)(iVar5 + 0x10) & 1) != 0) && (param_3 < param_2)) {
-      puVar1 = (ushort *)**(undefined4 **)(iVar5 + 0x54);
-      uVar6 = ZEXT48(puVar1);
-      if ((uVar6 != 0) && (uVar7 = (ulonglong)*puVar1, uVar7 != 0)) {
-        auVar13 = ZEXT416(0);
-        auVar13 = auVar13 | auVar13 << 0x20 | auVar13 << 0x40 | auVar13 << 0x60;
-        uVar2 = *(uint *)(puVar1 + 0xe);
-        uVar9 = (ulonglong)uVar2;
-        if (*(char *)(puVar1 + 1) == '\0') {
-          auVar14 = loadVectorRightIndexed(uVar9 + 8);
-          auVar18 = loadVectorLeftIndexed(uVar9);
-          lVar8 = uVar7 * 6 + uVar9;
-          auVar17 = vectorShiftLeftDoubleByOctetImmediate(auVar14,auVar14,8);
-          auVar14 = loadVectorRightIndexed(lVar8 + 8);
-          auVar15 = loadVectorLeftIndexed(lVar8);
-          auVar16 = vectorShiftLeftDoubleByOctetImmediate(auVar14,auVar14,8);
-          auVar14 = vectorMergeHighHalfWord(auVar13,auVar18 | auVar17);
+  pXVar5 = (XAnimParts *)__savegprlr_27((double)param_2,param_1,lVar9,param_6);
+  pfVar6 = (float *)lVar9;
+  fStack0000001c = (float)extraout_f1;
+  if ((pXVar5->flags & 2) != 0) {
+    dVar11 = extraout_f1;
+    XAnim_CalcDeltaForTime(pXVar5,(float)dVar12,pfVar6,(__vector4 *)local_80);
+    XAnim_CalcDeltaForTime(pXVar5,(float)dVar13,pfVar6,(__vector4 *)(local_80 + 8));
+    if (((pXVar5->flags & 1) != 0) && (dVar13 < dVar12)) {
+      pXVar1 = pXVar5->deltaPart->trans;
+      uVar7 = ZEXT48(pXVar1);
+      if ((uVar7 != 0) && (uVar8 = (ulonglong)pXVar1->size, uVar8 != 0)) {
+        auVar14 = ZEXT416(0);
+        auVar14 = auVar14 | auVar14 << 0x20 | auVar14 << 0x40 | auVar14 << 0x60;
+        uVar2 = *(uint *)((int)&pXVar1->u + 0x18);
+        uVar10 = (ulonglong)uVar2;
+        if (pXVar1->smallTrans == '\0') {
+          auVar15 = loadVectorRightIndexed(uVar10 + 8);
+          auVar19 = loadVectorLeftIndexed(uVar10);
+          lVar9 = uVar8 * 6 + uVar10;
+          auVar18 = vectorShiftLeftDoubleByOctetImmediate(auVar15,auVar15,8);
+          auVar15 = loadVectorRightIndexed(lVar9 + 8);
+          auVar16 = loadVectorLeftIndexed(lVar9);
+          auVar17 = vectorShiftLeftDoubleByOctetImmediate(auVar15,auVar15,8);
+          auVar15 = vectorMergeHighHalfWord(auVar14,auVar19 | auVar18);
+          auVar15 = vectorConvertFromUnsignedFixedPointWord128(auVar15,0);
+          auVar14 = vectorMergeHighHalfWord(auVar14,auVar16 | auVar17);
           auVar14 = vectorConvertFromUnsignedFixedPointWord128(auVar14,0);
-          auVar13 = vectorMergeHighHalfWord(auVar13,auVar15 | auVar16);
-          auVar13 = vectorConvertFromUnsignedFixedPointWord128(auVar13,0);
         }
         else {
-          lVar8 = uVar7 * 3 + uVar9;
-          auVar16 = loadVectorForShiftLeft(in_r0,uVar9);
-          uVar3 = (uint)lVar8;
-          auVar14 = loadVectorForShiftLeft(in_r0,lVar8);
-          auVar15 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
-                                     *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar16);
-          auVar16 = vectorPermute128(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),
-                                     *(undefined1 (*) [16])(uVar3 + 7 & 0xfffffff0),auVar14);
-          auVar14 = vectorMergeHighByte(auVar13,auVar15);
-          auVar16 = vectorMergeHighByte(auVar13,auVar16);
-          auVar14 = vectorMergeHighHalfWord(auVar13,auVar14);
-          auVar13 = vectorMergeHighHalfWord(auVar13,auVar16);
+          lVar9 = uVar8 * 3 + uVar10;
+          auVar17 = loadVectorForShiftLeft(in_r0,uVar10);
+          uVar3 = (uint)lVar9;
+          auVar15 = loadVectorForShiftLeft(in_r0,lVar9);
+          auVar16 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
+                                     *(undefined1 (*) [16])(uVar2 + 7 & 0xfffffff0),auVar17);
+          auVar17 = vectorPermute128(*(undefined1 (*) [16])(uVar3 & 0xfffffff0),
+                                     *(undefined1 (*) [16])(uVar3 + 7 & 0xfffffff0),auVar15);
+          auVar15 = vectorMergeHighByte(auVar14,auVar16);
+          auVar17 = vectorMergeHighByte(auVar14,auVar17);
+          auVar15 = vectorMergeHighHalfWord(auVar14,auVar15);
+          auVar14 = vectorMergeHighHalfWord(auVar14,auVar17);
+          auVar15 = vectorConvertFromUnsignedFixedPointWord128(auVar15,0);
           auVar14 = vectorConvertFromUnsignedFixedPointWord128(auVar14,0);
-          auVar13 = vectorConvertFromUnsignedFixedPointWord128(auVar13,0);
         }
-        auVar13 = vectorSubtractFloatingPoint128(auVar13 & _DAT_8404f950,auVar14 & _DAT_8404f950);
-        auVar16 = loadVectorLeftIndexed(uVar6 + 0x10);
-        auVar14 = loadVectorRightIndexed(uVar6 + 0x20);
+        auVar14 = vectorSubtractFloatingPoint128
+                            (auVar14 & (undefined1  [16])g_keepXYZ.field0_0x0,
+                             auVar15 & (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar17 = loadVectorLeftIndexed(uVar7 + 0x10);
+        auVar15 = loadVectorRightIndexed(uVar7 + 0x20);
         local_70 = vectorMultiplyAddFloatingPoint
-                             ((auVar16 | auVar14) & _DAT_8404f950,auVar13,local_70);
+                             ((auVar17 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar14,
+                              local_70);
       }
     }
-    dVar11 = 0.0;
-    dVar12 = (double)(float)(dVar10 * 9.313794180343393e-10);
+    dVar12 = 0.0;
+    dVar13 = (double)(float)(dVar11 * 9.313794180343393e-10);
     if (*in_r7 != 0.0) {
-      MyAssertHandler(0xffffffff82185bb8,0x341,0,0xffffffff82000f98,0xffffffff82185e0c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x341,0,
+                      "%s");
     }
-    if ((double)in_r7[1] != dVar11) {
-      MyAssertHandler(0xffffffff82185bb8,0x342,0,0xffffffff82000f98,0xffffffff82185dfc);
+    if ((double)in_r7[1] != dVar12) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x342,0,
+                      "%s");
     }
-    auVar14 = vectorSubtractFloatingPoint128(local_70,local_60);
-    auVar13 = loadVectorLeftIndexed(uVar4 + 0x1c);
-    auVar13 = vectorSplatWord(auVar13,0);
-    auVar13 = vectorMultiplyFloatingPoint(auVar13,auVar14);
-    in_r7[2] = (float)((double)(local_7c * local_78 - local_80 * local_74) * dVar12 +
+    auVar15 = vectorSubtractFloatingPoint128(local_70,local_60);
+    auVar14 = loadVectorLeftIndexed(uVar4 + 0x1c);
+    auVar14 = vectorSplatWord(auVar14,0);
+    auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar15);
+    in_r7[2] = (float)((double)((float)local_80._4_4_ * (float)local_80._8_4_ -
+                               (float)local_80._0_4_ * (float)local_80._12_4_) * dVar13 +
                       (double)in_r7[2]);
-    in_r7[3] = (float)((double)(local_74 * local_7c + local_80 * local_78) * dVar12 +
+    in_r7[3] = (float)((double)((float)local_80._12_4_ * (float)local_80._4_4_ +
+                               (float)local_80._0_4_ * (float)local_80._8_4_) * dVar13 +
                       (double)in_r7[3]);
-    auVar16 = vectorSplatWord(auVar13,0);
-    auVar14 = vectorSplatWord(auVar13,1);
-    auVar13 = vectorSplatWord(auVar13,2);
-    storeVectorElementWordIndexed(auVar16,uVar4 - 0x90);
-    storeVectorElementWordIndexed(auVar14,uVar4 - 0x8c);
-    storeVectorElementWordIndexed(auVar13,uVar4 - 0x88);
-    TransformToQuatRefFrame
-              ((in_r8 & 0x1fffffff) * 8 + (uVar4 - 0x80),uVar4 - 0x90,uVar4 - 0x90,4,uVar4 - 0x90,
-               uVar4 - 0x90,uVar4 + 0x1c);
-    in_r7[4] = (float)((double)in_r7[4] + dVar10);
+    auVar17 = vectorSplatWord(auVar14,0);
+    auVar15 = vectorSplatWord(auVar14,1);
+    auVar14 = vectorSplatWord(auVar14,2);
+    storeVectorElementWordIndexed(auVar17,uVar4 - 0x90);
+    storeVectorElementWordIndexed(auVar15,uVar4 - 0x8c);
+    storeVectorElementWordIndexed(auVar14,uVar4 - 0x88);
+    TransformToQuatRefFrame((float *)(local_80 + (int)((in_r8 & 0xffffffff) << 3)),&local_90);
+    in_r7[4] = (float)((double)in_r7[4] + dVar11);
     in_r7[5] = in_r7[5] + local_90;
     in_r7[6] = in_r7[6] + local_8c;
     in_r7[7] = in_r7[7] + local_88;
@@ -846,188 +969,194 @@ void XAnimCalcRelDeltaParts(undefined8 param_1,double param_2,double param_3)
 
 // 8261F618  XAnimCalcAbsDeltaParts  (xanim/xanim.cpp:849)
 
-void XAnimCalcAbsDeltaParts
-               (double param_1,undefined8 param_2,int param_3,undefined8 param_4,undefined8 param_5,
-               float *param_6)
+void XAnimCalcAbsDeltaParts(XAnimParts *param_1,float param_2,float param_3,XAnimRotPos *param_4)
 
 {
   float fVar1;
   ulonglong uVar2;
-  undefined1 auVar3 [16];
+  float *in_r6;
+  double dVar3;
   undefined1 auVar4 [16];
   undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
   float fStack0000001c;
-  float local_40;
-  float local_3c;
-  float local_38;
-  float local_34;
+  undefined1 local_40 [16];
   undefined1 local_30 [16];
   
+  dVar3 = (double)param_2;
   uVar2 = ZEXT48(&stack0x00000000);
-  fStack0000001c = (float)param_1;
-  if ((*(byte *)(param_3 + 0x10) & 2) == 0) {
-    if ((*(byte *)(param_3 + 0x10) & 4) == 0) {
+  fStack0000001c = param_2;
+  if ((param_1->flags & 2) == 0) {
+    if ((param_1->flags & 4) == 0) {
       return;
     }
-    XAnim_CalcDelta3DForTime(param_2,param_3,param_4,uVar2 - 0x40,uVar2 - 0x30);
-    fVar1 = (float)(param_1 * 3.0518509447574615e-05);
-    *param_6 = fVar1 * local_40 + *param_6;
-    param_6[1] = fVar1 * local_3c + param_6[1];
-    param_6[2] = fVar1 * local_38 + param_6[2];
-    param_6[3] = fVar1 * local_34 + param_6[3];
+    XAnim_CalcDelta3DForTime(param_1,param_3,param_4->rot,(__vector4 *)local_40);
+    fVar1 = (float)(dVar3 * 3.0518509447574615e-05);
+    *in_r6 = fVar1 * (float)local_40._0_4_ + *in_r6;
+    in_r6[1] = fVar1 * (float)local_40._4_4_ + in_r6[1];
+    in_r6[2] = fVar1 * (float)local_40._8_4_ + in_r6[2];
+    in_r6[3] = fVar1 * (float)local_40._12_4_ + in_r6[3];
   }
   else {
-    XAnim_CalcDeltaForTime(param_3,param_4,uVar2 - 0x38,uVar2 - 0x30);
-    param_6[2] = (float)(param_1 * 3.0518509447574615e-05) * local_38 + param_6[2];
-    param_6[3] = (float)(param_1 * 3.0518509447574615e-05) * local_34 + param_6[3];
+    XAnim_CalcDeltaForTime(param_1,param_3,param_4->rot,(__vector4 *)(local_40 + 8));
+    in_r6[2] = (float)(dVar3 * 3.0518509447574615e-05) * (float)local_40._8_4_ + in_r6[2];
+    in_r6[3] = (float)(dVar3 * 3.0518509447574615e-05) * (float)local_40._12_4_ + in_r6[3];
   }
-  auVar5 = loadVectorLeftIndexed(uVar2 + 0x1c);
-  auVar5 = vectorSplatWord(auVar5,0);
-  auVar5 = vectorMultiplyFloatingPoint(auVar5,local_30);
-  auVar4 = vectorSplatWord(auVar5,0);
-  auVar3 = vectorSplatWord(auVar5,1);
-  auVar5 = vectorSplatWord(auVar5,2);
-  storeVectorElementWordIndexed(auVar4,uVar2 - 0x40);
-  storeVectorElementWordIndexed(auVar3,uVar2 - 0x3c);
-  storeVectorElementWordIndexed(auVar5,uVar2 - 0x38);
-  param_6[4] = (float)((double)param_6[4] + param_1);
-  param_6[5] = param_6[5] + local_40;
-  param_6[6] = local_3c + param_6[6];
-  param_6[7] = local_38 + param_6[7];
+  auVar6 = loadVectorLeftIndexed(uVar2 + 0x1c);
+  auVar6 = vectorSplatWord(auVar6,0);
+  auVar6 = vectorMultiplyFloatingPoint(auVar6,local_30);
+  auVar5 = vectorSplatWord(auVar6,0);
+  auVar4 = vectorSplatWord(auVar6,1);
+  auVar6 = vectorSplatWord(auVar6,2);
+  storeVectorElementWordIndexed(auVar5,uVar2 - 0x40);
+  storeVectorElementWordIndexed(auVar4,uVar2 - 0x3c);
+  storeVectorElementWordIndexed(auVar6,uVar2 - 0x38);
+  in_r6[4] = (float)((double)in_r6[4] + dVar3);
+  in_r6[5] = in_r6[5] + (float)local_40._0_4_;
+  in_r6[6] = (float)local_40._4_4_ + in_r6[6];
+  in_r6[7] = (float)local_40._8_4_ + in_r6[7];
   return;
 }
 
 
 // 8261F790  XAnimClearServerNotify  (xanim/xanim.cpp:880)
 
-void XAnimClearServerNotify(int param_1)
+void XAnimClearServerNotify(XAnimInfo *param_1)
 
 {
-  if (*(short *)(param_1 + 4) != 0) {
-    SL_RemoveRefToString();
-    *(undefined2 *)(param_1 + 4) = 0;
-    *(undefined2 *)(param_1 + 2) = 0xffff;
+  if (param_1->notifyName != 0) {
+    SL_RemoveRefToString((uint)param_1->notifyName);
+    param_1->notifyName = 0;
+    param_1->notifyIndex = -1;
     return;
   }
-  *(undefined2 *)(param_1 + 2) = 0xffff;
+  param_1->notifyIndex = -1;
   return;
 }
 
 
 // 8261F7F8  XAnimFreeInfo  (xanim/xanim.cpp:891)
 
-void XAnimFreeInfo(undefined8 param_1,ulonglong param_2)
+void XAnimFreeInfo(XAnimTree *param_1,uint param_2)
 
 {
   bool bVar1;
-  short sVar2;
+  ushort uVar2;
   ushort uVar3;
-  ushort uVar4;
+  int iVar4;
   uint uVar5;
-  int iVar6;
-  undefined2 uVar7;
-  int iVar8;
+  XAnimTree *pXVar6;
+  ulonglong uVar7;
+  char *pcVar8;
   ulonglong uVar9;
-  int iVar10;
-  int iVar11;
-  longlong lVar12;
-  uint *puVar13;
+  longlong lVar10;
+  uint *puVar11;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar9 = __savegprlr_23();
-  lVar12 = uVar9 + 0xc;
+  uVar9 = (ulonglong)(int)param_2;
+  uVar7 = __savegprlr_23(param_1);
+  lVar10 = uVar7 + 0xc;
   do {
-    puVar13 = (uint *)lVar12;
+    puVar11 = (uint *)lVar10;
     if (in_RESERVE != '\0') {
-      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar12);
-      *puVar13 = uVar5;
+      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,lVar10);
+      *puVar11 = uVar5;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar6 = (int)uVar9;
-  if (*(int *)(iVar6 + 8) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x386,0,0xffffffff82000f98,0xffffffff82185ec4);
+  pXVar6 = (XAnimTree *)uVar7;
+  if (pXVar6->calcRefCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x386,0,"%s")
+    ;
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x38b,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar9 & 0xffffffff) == 0) || (0xfff < (uVar9 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x38b,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar8 = (int)param_2;
-  iVar11 = iVar8 * 0x40;
-  if ((ulonglong)*(uint *)(&DAT_841dbfb0 + iVar11) != (uVar9 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x38f,0,0xffffffff82000f98,0xffffffff82185e74);
+  iVar4 = (int)uVar9;
+  if (ZEXT48(g_xAnimInfo[iVar4].tree) != (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x38f,0,"%s")
+    ;
   }
-  if ((&DAT_841dbfac)[iVar11] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x390,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (g_xAnimInfo[iVar4].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x390,0,"%s")
+    ;
   }
-  sVar2 = *(short *)(&DAT_841dbfa4 + iVar11);
-  (&DAT_841dbfac)[iVar11] = 0;
-  if (*(short *)(&DAT_841dbfaa + iVar11) == 0) {
-    while (sVar2 != 0) {
-      XAnimFreeInfo(uVar9,*(undefined2 *)(&DAT_841dbfa4 + iVar11));
-      sVar2 = *(short *)(&DAT_841dbfa4 + iVar11);
+  uVar2 = g_xAnimInfo[iVar4].animToModel;
+  uVar3 = g_xAnimInfo[iVar4].children;
+  g_xAnimInfo[iVar4].inuse = false;
+  if (uVar2 == 0) {
+    while (uVar3 != 0) {
+      XAnimFreeInfo(pXVar6,(uint)g_xAnimInfo[iVar4].children);
+      uVar3 = g_xAnimInfo[iVar4].children;
     }
   }
   else {
-    if (sVar2 != 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x396,0,0xffffffff82000f98,0xffffffff82185e58);
+    if (uVar3 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x396,0,
+                      "%s");
     }
-    if (*(int *)(&DAT_841dbfb4 + iVar11) == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x39a,0,0xffffffff82000f98,0xffffffff8213fd58);
+    if (g_xAnimInfo[iVar4].field12_0x1c.parts == (XAnimParts *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x39a,0,
+                      "%s");
     }
-    if (*(short *)(&DAT_841dbfaa + iVar11) == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x39d,0,0xffffffff82000f98,0xffffffff82185e44);
+    if (g_xAnimInfo[iVar4].animToModel == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x39d,0,
+                      "%s");
     }
-    iVar10 = SL_ConvertToString(*(undefined2 *)(&DAT_841dbfaa + iVar11));
-    SL_RemoveRefToStringOfSize
-              (*(undefined2 *)(&DAT_841dbfaa + iVar11),(ulonglong)*(byte *)(iVar10 + 0x18) + 0x19);
-    *(undefined2 *)(&DAT_841dbfaa + iVar11) = 0;
+    pcVar8 = SL_ConvertToString((uint)g_xAnimInfo[iVar4].animToModel);
+    SL_RemoveRefToStringOfSize((uint)g_xAnimInfo[iVar4].animToModel,(byte)pcVar8[0x18] + 0x19);
+    g_xAnimInfo[iVar4].animToModel = 0;
   }
-  uVar3 = (&DAT_841dbfa0)[iVar8 * 0x20];
-  uVar4 = (&DAT_841dbfa2)[iVar8 * 0x20];
-  if (uVar3 == 0) {
-    if (*(ushort *)(&DAT_841dbfa6 + iVar11) == 0) {
-      *(ushort *)(iVar6 + 0x10) = uVar4;
+  uVar2 = g_xAnimInfo[iVar4].prev;
+  uVar3 = g_xAnimInfo[iVar4].next;
+  if (uVar2 == 0) {
+    if (g_xAnimInfo[iVar4].parent == 0) {
+      pXVar6->children = uVar3;
     }
     else {
-      *(ushort *)(&DAT_841dbfa4 + (uint)*(ushort *)(&DAT_841dbfa6 + iVar11) * 0x40) = uVar4;
+      g_xAnimInfo[g_xAnimInfo[iVar4].parent].children = uVar3;
     }
   }
   else {
-    (&DAT_841dbfa2)[(uint)uVar3 * 0x20] = uVar4;
+    g_xAnimInfo[uVar2].next = uVar3;
   }
-  if (uVar4 != 0) {
-    (&DAT_841dbfa0)[(uint)uVar4 * 0x20] = uVar3;
+  if (uVar3 != 0) {
+    g_xAnimInfo[uVar3].prev = uVar2;
   }
-  if (*(short *)(&DAT_841dbf9c + iVar11) != 0) {
-    SL_RemoveRefToString();
-    *(undefined2 *)(&DAT_841dbf9c + iVar11) = 0;
+  if (g_xAnimInfo[iVar4].notifyName != 0) {
+    SL_RemoveRefToString((uint)g_xAnimInfo[iVar4].notifyName);
+    g_xAnimInfo[iVar4].notifyName = 0;
   }
-  (&DAT_841dbfa0)[iVar8 * 0x20] = 0;
-  *(undefined2 *)(&DAT_841dbf9a + iVar11) = 0xffff;
-  Sys_EnterCriticalSection(0xd);
-  uVar7 = (undefined2)param_2;
-  (&DAT_841dbfa2)[iVar8 * 0x20] = DAT_841dbfa2;
-  iVar11 = DAT_841db988;
-  bVar1 = DAT_841db988 == 0;
-  (&DAT_841dbfa0)[(uint)DAT_841dbfa2 * 0x20] = uVar7;
-  DAT_841dbfa2 = uVar7;
+  g_xAnimInfo[iVar4].prev = 0;
+  g_xAnimInfo[iVar4].notifyIndex = -1;
+  Sys_EnterCriticalSection(CRITSECT_XANIM_ALLOC);
+  uVar2 = (ushort)uVar9;
+  g_xAnimInfo[iVar4].next = g_xAnimInfo[0].next;
+  iVar4 = g_info_usage;
+  bVar1 = g_info_usage == 0;
+  g_xAnimInfo[g_xAnimInfo[0].next].prev = uVar2;
+  g_xAnimInfo[0].next = uVar2;
   if (bVar1) {
-    MyAssertHandler(0xffffffff82185bb8,0x3c8,0,0xffffffff82000f98,0xffffffff82185e34);
-    iVar11 = DAT_841db988;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x3c8,0,"%s")
+    ;
+    iVar4 = g_info_usage;
   }
-  DAT_841db988 = iVar11 + -1;
-  if (*(int *)(iVar6 + 4) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x3cb,0,0xffffffff82000f98,0xffffffff82185e20);
+  g_info_usage = iVar4 + -1;
+  if (pXVar6->info_usage == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x3cb,0,"%s")
+    ;
   }
-  *(int *)(iVar6 + 4) = *(int *)(iVar6 + 4) + -1;
-  Sys_LeaveCriticalSection(0xd);
-  if (*(int *)(iVar6 + 8) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x3d4,0,0xffffffff82000f98,0xffffffff82185ec4);
+  pXVar6->info_usage = pXVar6->info_usage + -1;
+  Sys_LeaveCriticalSection(CRITSECT_XANIM_ALLOC);
+  if (pXVar6->calcRefCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x3d4,0,"%s")
+    ;
     do {
       if (in_RESERVE != '\0') {
-        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 - 1,0,lVar12);
-        *puVar13 = uVar5;
+        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar11 - 1,0,lVar10);
+        *puVar11 = uVar5;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1036,8 +1165,8 @@ void XAnimFreeInfo(undefined8 param_1,ulonglong param_2)
   }
   do {
     if (in_RESERVE != '\0') {
-      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar13 - 1,0,lVar12);
-      *puVar13 = uVar5;
+      uVar5 = storeWordConditionalIndexed((ulonglong)*puVar11 - 1,0,lVar10);
+      *puVar11 = uVar5;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1048,32 +1177,35 @@ void XAnimFreeInfo(undefined8 param_1,ulonglong param_2)
 
 // 8261FB50  XAnimCheckFreeInfo  (xanim/xanim.cpp:987)
 
-void XAnimCheckFreeInfo(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void XAnimCheckFreeInfo(XAnimTree *param_1,uint param_2,int param_3)
 
 {
   ushort uVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
-  undefined8 uVar4;
-  double dVar5;
+  XAnimTree *pXVar4;
+  ulonglong uVar5;
+  double dVar6;
   
-  uVar4 = __savegprlr_26();
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x3e1,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  uVar5 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_26(param_1);
+  if (((uVar5 & 0xffffffff) == 0) || (0xfff < (uVar5 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x3e1,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar2 = (int)param_2 * 0x40;
-  dVar5 = 0.0;
-  if (*(float *)(&DAT_841dbfcc + iVar2) == 0.0) {
+  uVar2 = (uint)uVar5;
+  dVar6 = 0.0;
+  if (g_xAnimInfo[uVar2].state.weight == 0.0) {
     param_3 = 0;
   }
-  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar2);
+  uVar1 = g_xAnimInfo[uVar2].children;
   while (uVar3 = (uint)uVar1, uVar3 != 0) {
-    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
-    XAnimCheckFreeInfo(uVar4,uVar3,param_3);
+    uVar1 = g_xAnimInfo[uVar3].next;
+    XAnimCheckFreeInfo(pXVar4,uVar3,param_3);
   }
-  if (((*(short *)(&DAT_841dbfa4 + iVar2) == 0) && ((int)param_3 == 0)) &&
-     ((double)*(float *)(&DAT_841dbfc8 + iVar2) == dVar5)) {
-    XAnimFreeInfo(uVar4,param_2);
+  if (((g_xAnimInfo[uVar2].children == 0) && (param_3 == 0)) &&
+     ((double)g_xAnimInfo[uVar2].state.goalWeight == dVar6)) {
+    XAnimFreeInfo(pXVar4,uVar2);
   }
   __restgprlr_26();
   return;
@@ -1082,301 +1214,329 @@ void XAnimCheckFreeInfo(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 // 8261FC38  XAnimGetAverageRateFrequency  (xanim/xanim.cpp:1017)
 
-void XAnimGetAverageRateFrequency(undefined8 param_1,int param_2)
+float XAnimGetAverageRateFrequency(XAnimTree *param_1,uint param_2)
 
 {
-  int iVar1;
-  int *piVar2;
+  XAnimParts *pXVar1;
+  XAnimTree *pXVar2;
   uint uVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
+  float fVar8;
   
-  __savegprlr_23();
-  piVar2 = (int *)__savefpr_28();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x401,0,0xffffffff82000f98,0xffffffff821813e0);
+  __savegprlr_23(param_1);
+  pXVar2 = (XAnimTree *)__savefpr_28();
+  if (pXVar2 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x401,0,"%s")
+    ;
   }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x402,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar2->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x402,0,"%s")
+    ;
   }
-  param_2 = param_2 * 0x40;
-  if ((&DAT_841dbfac)[param_2] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x406,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (g_xAnimInfo[param_2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x406,0,"%s")
+    ;
   }
-  if (*(short *)(&DAT_841dbfaa + param_2) != 0) {
-    iVar1 = *(int *)(&DAT_841dbfb4 + param_2);
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x40c,0,0xffffffff82000f98,0xffffffff8213fd58);
+  if (g_xAnimInfo[param_2].animToModel == 0) {
+    uVar3 = (uint)g_xAnimInfo[param_2].children;
+    dVar5 = 0.0;
+    dVar4 = dVar5;
+    dVar6 = dVar5;
+    if (uVar3 != 0) {
+      do {
+        if (0xfff < uVar3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x415,0
+                          ,"%s\n\t(infoIndex) = %i");
+        }
+        dVar7 = (double)g_xAnimInfo[uVar3].state.weight;
+        if (dVar7 < dVar6) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x418,0
+                          ,"%s\n\t(weight) = %g");
+        }
+        if (dVar7 != dVar6) {
+          fVar8 = XAnimGetAverageRateFrequency(pXVar2,uVar3);
+          if ((double)fVar8 != dVar6) {
+            dVar4 = (double)(float)(dVar7 + dVar4);
+            dVar5 = (double)(float)((double)(float)((double)g_xAnimInfo[uVar3].state.rate *
+                                                   (double)fVar8) * dVar7 + dVar5);
+          }
+        }
+        uVar3 = (uint)g_xAnimInfo[uVar3].next;
+      } while (uVar3 != 0);
+      if (dVar4 != dVar6) {
+        __restfpr_28((double)(float)(dVar5 / dVar4));
+        dVar4 = (double)__restgprlr_23();
+        return (float)dVar4;
+      }
     }
-    __restfpr_28((double)*(float *)(iVar1 + 0x2c));
-    __restgprlr_23();
-    return;
+    __restfpr_28(dVar6);
+    dVar4 = (double)__restgprlr_23();
+    return (float)dVar4;
   }
-  uVar3 = (uint)*(ushort *)(&DAT_841dbfa4 + param_2);
-  dVar6 = 0.0;
-  dVar5 = dVar6;
-  dVar7 = dVar6;
-  if (uVar3 != 0) {
-    do {
-      if (0xfff < uVar3) {
-        MyAssertHandler(0xffffffff82185bb8,0x415,0,0xffffffff82185e88,0xffffffff82185ea0,uVar3);
-      }
-      dVar8 = (double)*(float *)(&DAT_841dbfcc + uVar3 * 0x40);
-      if (dVar8 < dVar7) {
-        MyAssertHandler(dVar8,0xffffffff82185bb8,0x418,0,0xffffffff82185eec,0xffffffff82185ed8,dVar8
-                       );
-      }
-      if ((dVar8 != dVar7) &&
-         (dVar4 = (double)XAnimGetAverageRateFrequency(piVar2,uVar3), dVar4 != dVar7)) {
-        dVar5 = (double)(float)(dVar8 + dVar5);
-        dVar6 = (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfd0 + uVar3 * 0x40) *
-                                               dVar4) * dVar8 + dVar6);
-      }
-      uVar3 = (uint)(ushort)(&DAT_841dbfa2)[uVar3 * 0x20];
-    } while (uVar3 != 0);
-    if (dVar5 != dVar7) {
-      __restfpr_28((double)(float)(dVar6 / dVar5));
-      __restgprlr_23();
-      return;
-    }
+  pXVar1 = g_xAnimInfo[param_2].field12_0x1c.parts;
+  if (pXVar1 == (XAnimParts *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x40c,0,"%s")
+    ;
   }
-  __restfpr_28(dVar7);
-  __restgprlr_23();
-  return;
+  __restfpr_28((double)pXVar1->frequency);
+  dVar4 = (double)__restgprlr_23();
+  return (float)dVar4;
 }
 
 
 // 8261FE30  XAnimGetNextNotifyIndex  (xanim/xanim.cpp:1066)
 
-void XAnimGetNextNotifyIndex(void)
+ushort XAnimGetNextNotifyIndex(XAnimParts *param_1,float param_2)
 
 {
   int iVar1;
-  int iVar2;
+  ushort uVar2;
   int iVar3;
   int iVar4;
+  int iVar5;
   double extraout_f1;
-  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
   
-  __savegprlr_25();
+  __savegprlr_25((double)param_2,param_1);
   iVar1 = __savefpr_28();
-  dVar6 = extraout_f1;
+  dVar7 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x431,0,0xffffffff82000f98,0xffffffff8213fd58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x431,0,"%s")
+    ;
   }
-  dVar5 = 0.0;
-  if (dVar6 < 0.0) {
-    MyAssertHandler(dVar6,0xffffffff82185bb8,0x433,0,0xffffffff82028794,0xffffffff82185f94,dVar6);
+  dVar6 = 0.0;
+  if (dVar7 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x433,0,
+                    "%s\n\t(time) = %g");
   }
-  if (1.0 <= dVar6) {
-    MyAssertHandler(dVar6,0xffffffff82185bb8,0x434,0,0xffffffff82028794,0xffffffff82185f84,dVar6);
+  if (1.0 <= dVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x434,0,
+                    "%s\n\t(time) = %g");
   }
-  iVar4 = *(int *)(iVar1 + 0x50);
-  iVar2 = 0;
-  dVar7 = 2.0;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x43a,0,0xffffffff82000f98,0xffffffff82185f78);
-  }
+  iVar5 = *(int *)(iVar1 + 0x50);
   iVar3 = 0;
+  dVar8 = 2.0;
+  if (iVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x43a,0,"%s")
+    ;
+  }
+  iVar4 = 0;
   if (*(char *)(iVar1 + 0x1d) != '\0') {
     do {
-      dVar8 = (double)*(float *)(iVar4 + 4);
-      if (dVar8 < dVar5) {
-        MyAssertHandler(0xffffffff82185bb8,0x43e,0,0xffffffff82000f98,0xffffffff82185f68);
+      dVar9 = (double)*(float *)(iVar5 + 4);
+      if (dVar9 < dVar6) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x43e,0,
+                        "%s");
       }
-      if ((dVar6 <= dVar8) && (dVar8 < dVar7)) {
-        dVar7 = dVar8;
-        iVar2 = iVar4;
+      if ((dVar7 <= dVar9) && (dVar9 < dVar8)) {
+        dVar8 = dVar9;
+        iVar3 = iVar5;
       }
-      iVar3 = iVar3 + 1;
-      iVar4 = iVar4 + 8;
-    } while (iVar3 < (int)(uint)*(byte *)(iVar1 + 0x1d));
-    if (iVar2 != 0) goto LAB_8261ffb8;
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 8;
+    } while (iVar4 < (int)(uint)*(byte *)(iVar1 + 0x1d));
+    if (iVar3 != 0) goto LAB_8261ffb8;
   }
-  MyAssertHandler(0xffffffff82185bb8,0x448,0,0xffffffff82000f98,0xffffffff82185f58);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x448,0,"%s");
 LAB_8261ffb8:
-  if ((iVar2 != *(int *)(iVar1 + 0x50)) && (*(float *)(iVar2 + 4) <= *(float *)(iVar2 + -4))) {
-    MyAssertHandler(0xffffffff82185bb8,0x449,0,0xffffffff82000f98,0xffffffff82185f00);
+  if ((iVar3 != *(int *)(iVar1 + 0x50)) && (*(float *)(iVar3 + 4) <= *(float *)(iVar3 + -4))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x449,0,"%s")
+    ;
   }
-  __restfpr_28(iVar2 - *(int *)(iVar1 + 0x50) >> 3 & 0xffff);
-  __restgprlr_25();
-  return;
+  __restfpr_28(iVar3 - *(int *)(iVar1 + 0x50) >> 3 & 0xffff);
+  uVar2 = __restgprlr_25();
+  return uVar2;
 }
 
 
 // 82620010  XAnimGetNotifyFracLeaf  (xanim/xanim.cpp:1111)
 
-double XAnimGetNotifyFracLeaf(double param_1,double param_2,int param_3,float *param_4)
+float XAnimGetNotifyFracLeaf(XAnimState *param_1,XAnimState *param_2,float param_3,float param_4)
 
 {
-  longlong lVar1;
-  double dVar2;
+  float fVar1;
+  longlong lVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  if (param_2 == 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x458,0,0xffffffff82000f98,0xffffffff82185fa4);
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  if (dVar5 == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x458,0,"%s")
+    ;
   }
-  dVar3 = (double)param_4[1];
-  dVar2 = 1.0;
-  if (dVar3 != 1.0) {
-    dVar2 = (double)*param_4;
-    if (dVar3 <= dVar2) {
-      if ((dVar2 <= param_1) && (dVar2 != 1.0)) {
+  dVar6 = (double)param_2->oldTime;
+  fVar1 = 1.0;
+  if (dVar6 != 1.0) {
+    dVar3 = (double)param_2->currentAnimTime;
+    if (dVar6 <= dVar3) {
+      if ((dVar3 <= dVar4) && (dVar3 != 1.0)) {
         return 1.0;
       }
-      if (param_1 < dVar3) {
+      if (dVar4 < dVar6) {
         return 1.0;
       }
-      lVar1 = (longlong)((int)*(short *)((int)param_4 + 10) - (int)*(short *)(param_3 + 10));
+      lVar2 = (longlong)((int)param_2->oldCycleCount - (int)param_1->oldCycleCount);
     }
-    else if (dVar2 <= param_1) {
-      if (param_1 < dVar3) {
+    else if (dVar3 <= dVar4) {
+      if (dVar4 < dVar6) {
         return 1.0;
       }
-      lVar1 = (longlong)((int)*(short *)((int)param_4 + 10) - (int)*(short *)(param_3 + 10));
+      lVar2 = (longlong)((int)param_2->oldCycleCount - (int)param_1->oldCycleCount);
     }
     else {
-      lVar1 = (longlong)(((int)*(short *)((int)param_4 + 10) - (int)*(short *)(param_3 + 10)) + 1);
+      lVar2 = (longlong)(((int)param_2->oldCycleCount - (int)param_1->oldCycleCount) + 1);
     }
-    dVar2 = (double)(float)((double)((float)lVar1 +
-                                    (float)(param_1 - (double)*(float *)(param_3 + 4))) / param_2);
+    fVar1 = (float)((double)((float)lVar2 + (float)(dVar4 - (double)param_1->oldTime)) / dVar5);
   }
-  return dVar2;
+  return fVar1;
 }
 
 
 // 82620160  XAnimGetPartsInternal  (xanim/xanim.cpp:1153)
 
-void XAnimGetPartsInternal(void)
+XAnimParts * XAnimGetPartsInternal(XAnimEntry *param_1)
 
 {
   int iVar1;
   short *psVar2;
+  XAnimParts *pXVar3;
   
-  psVar2 = (short *)__savegprlr_29();
+  psVar2 = (short *)__savegprlr_29(param_1);
   if (*psVar2 != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x484,0,0xffffffff82000f98,0xffffffff82185fac);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x484,0,"%s")
+    ;
   }
   iVar1 = *(int *)(psVar2 + 2);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x499,0,0xffffffff82000f98,0xffffffff8213fd58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x499,0,"%s")
+    ;
   }
-  __restgprlr_29(iVar1);
-  return;
+  pXVar3 = (XAnimParts *)__restgprlr_29(iVar1);
+  return pXVar3;
 }
 
 
 // 826201E0  XAnimGetParts  (xanim/xanim.cpp:1183)
 
-ulonglong XAnimGetParts(uint *param_1,ushort *param_2)
+XAnimParts * XAnimGetParts(XAnimTree *param_1,XAnimInfo *param_2)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
+  XAnimParts *pXVar1;
   
-  if (param_2[9] != 0) {
-    uVar1 = *(uint *)(param_2 + 0xe);
-    if ((ulonglong)uVar1 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x4a6,0,0xffffffff82000f98,0xffffffff8213fd58);
+  if (param_2->animToModel != 0) {
+    pXVar1 = (param_2->field12_0x1c).parts;
+    if (pXVar1 == (XAnimParts *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4a6,0,
+                      "%s");
     }
-    return (ulonglong)uVar1;
+    return pXVar1;
   }
-  if ((ulonglong)*param_2 == 0) {
-    return 0;
+  if (param_2->notifyChild == 0) {
+    return (XAnimParts *)0x0;
   }
-  uVar2 = XAnimGetPartsInternal((ulonglong)*param_2 * 8 + (ulonglong)*param_1 + 0xc);
-  return uVar2;
+  pXVar1 = XAnimGetPartsInternal(param_1->anims->entries + param_2->notifyChild);
+  return pXVar1;
 }
 
 
 // 82624AC8  XAnimGetNextServerNotifyFrac  (xanim/xanim.cpp:1210)
 
-void XAnimGetNextServerNotifyFrac
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+float XAnimGetNextServerNotifyFrac
+                (DObj *param_1,XAnimInfo *param_2,XAnimState *param_3,XAnimState *param_4,
+                float param_5)
 
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  XAnimTree *pXVar1;
+  undefined4 *puVar2;
+  XAnimParts *pXVar3;
   short sVar4;
   double extraout_f1;
   double dVar5;
   double dVar6;
+  float fVar7;
   
-  piVar2 = (int *)__savegprlr_26();
-  iVar1 = (int)param_2;
-  dVar5 = 0.0;
-  dVar6 = extraout_f1;
-  if (*(float *)(iVar1 + 0x30) == 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x4be,0,0xffffffff82000f98,0xffffffff82186368);
+  puVar2 = (undefined4 *)__savegprlr_26((double)param_5,param_1);
+  dVar6 = 0.0;
+  dVar5 = extraout_f1;
+  if ((param_2->state).goalWeight == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4be,0,"%s")
+    ;
   }
-  if (dVar6 == dVar5) {
-    MyAssertHandler(0xffffffff82185bb8,0x4bf,0,0xffffffff82000f98,0xffffffff82185fa4);
+  if (dVar5 == dVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4bf,0,"%s")
+    ;
   }
-  if ((*(short *)((int)piVar2 + 6) == 0) || (*(short *)(iVar1 + 4) == 0)) {
-    __restgprlr_26(0x3ff0000000000000);
-    return;
+  if ((*(short *)((int)puVar2 + 6) == 0) || (param_2->notifyName == 0)) {
+    dVar5 = (double)__restgprlr_26(0x3ff0000000000000);
+    return (float)dVar5;
   }
-  if (*(char *)(iVar1 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x4c5,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (param_2->inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4c5,0,"%s")
+    ;
   }
-  iVar3 = *piVar2;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x4c9,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = (XAnimTree *)*puVar2;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4c9,0,"%s")
+    ;
   }
-  iVar3 = XAnimGetParts(iVar3,param_2);
-  if (iVar3 == 0) {
+  pXVar3 = XAnimGetParts(pXVar1,param_2);
+  if (pXVar3 == (XAnimParts *)0x0) {
 LAB_82624bd4:
-    XAnimGetNotifyFracLeaf(0x3ff0000000000000,dVar6,param_3,param_4);
-    __restgprlr_26();
-    return;
+    fVar7 = XAnimGetNotifyFracLeaf(param_3,param_4,1.0,(float)dVar5);
+    dVar5 = (double)__restgprlr_26((double)fVar7);
+    return (float)dVar5;
   }
-  sVar4 = *(short *)(iVar1 + 2);
+  sVar4 = param_2->notifyIndex;
   if (sVar4 < 0) {
-    XAnimUpdateServerNotifyIndex(param_2,iVar3);
-    sVar4 = *(short *)(iVar1 + 2);
+    XAnimUpdateServerNotifyIndex(param_2,pXVar3);
+    sVar4 = param_2->notifyIndex;
     if (sVar4 < 0) goto LAB_82624bd4;
   }
-  XAnimGetNotifyFracLeaf
-            ((double)*(float *)(sVar4 * 8 + *(int *)(iVar3 + 0x50) + 4),dVar6,param_3,param_4);
-  __restgprlr_26();
-  return;
+  fVar7 = XAnimGetNotifyFracLeaf(param_3,param_4,pXVar3->notify[sVar4].time,(float)dVar5);
+  dVar5 = (double)__restgprlr_26((double)fVar7);
+  return (float)dVar5;
 }
 
 
 // 82620290  XAnimAddClientNotify  (xanim/xanim.cpp:1243)
 
-void XAnimAddClientNotify(undefined8 param_1,undefined8 param_2,undefined4 param_3)
+void XAnimAddClientNotify(uint param_1,float param_2,uint param_3)
 
 {
   undefined4 *puVar1;
   int iVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined4 uVar4;
+  uint uVar3;
+  bool bVar5;
+  char *pcVar4;
+  uint in_r5;
   longlong lVar6;
   ulonglong uVar7;
   double extraout_f1;
   double dVar8;
   
-  uVar3 = __savegprlr_27();
+  uVar3 = __savegprlr_27((double)param_2,param_1,param_3);
   dVar8 = extraout_f1;
-  if (0x7f < (int)DAT_841db98c) {
-    MyAssertHandler(0xffffffff82185bb8,0x4df,0,0xffffffff82000f98,0xffffffff82185fc0);
+  if (0x7f < g_notifyListSize) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4df,0,"%s")
+    ;
   }
-  cVar5 = Sys_IsMainThread();
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x4e0,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar5 = Sys_IsMainThread();
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4e0,0,"%s")
+    ;
   }
-  uVar7 = (ulonglong)DAT_841db98c - 1;
+  uVar7 = (ulonglong)(uint)g_notifyListSize - 1;
   if (-1 < (int)uVar7) {
-    if (3 < (int)DAT_841db98c) {
+    if (3 < g_notifyListSize) {
       lVar6 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + -0x7be24668;
       do {
         puVar1 = (undefined4 *)lVar6;
@@ -1423,12 +1583,12 @@ void XAnimAddClientNotify(undefined8 param_1,undefined8 param_2,undefined4 param
     }
   }
 LAB_82620450:
-  iVar2 = (int)uVar7 * 0xc;
-  uVar4 = SL_ConvertToString(uVar3);
-  *(float *)(&DAT_841db9ac + iVar2) = (float)dVar8;
-  *(undefined4 *)(&DAT_841db9a4 + iVar2) = uVar4;
-  DAT_841db98c = DAT_841db98c + 1;
-  *(undefined4 *)(&DAT_841db9a8 + iVar2) = param_3;
+  iVar2 = (int)uVar7;
+  pcVar4 = SL_ConvertToString(uVar3);
+  g_notifyList[iVar2 + 1].timeFrac = (float)dVar8;
+  g_notifyList[iVar2 + 1].name = pcVar4;
+  g_notifyListSize = g_notifyListSize + 1;
+  g_notifyList[iVar2 + 1].type = in_r5;
   __restgprlr_27();
   return;
 }
@@ -1436,118 +1596,137 @@ LAB_82620450:
 
 // 82620490  XAnimProcessClientNotify  (xanim/xanim.cpp:1268)
 
-void XAnimProcessClientNotify(void)
+void XAnimProcessClientNotify(XAnimInfo *param_1,float param_2)
 
 {
-  undefined2 uVar1;
-  int iVar2;
-  int iVar3;
-  ushort uVar4;
-  undefined2 *puVar5;
-  float *pfVar6;
-  float *pfVar7;
-  double dVar8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
+  ushort uVar1;
+  XAnimParts *pXVar2;
+  XAnimNotifyInfo *pXVar3;
+  int iVar4;
+  ushort uVar5;
+  XAnimState *pXVar6;
+  uint uVar7;
+  XAnimNotifyInfo *pXVar8;
+  float *pfVar9;
+  XAnimState *pXVar10;
   double dVar11;
+  double extraout_f1;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float fVar15;
   
-  iVar3 = __savegprlr_22();
-  pfVar7 = (float *)(iVar3 + 0x20);
-  dVar11 = 0.0;
-  dVar10 = extraout_f1;
+  iVar4 = __savegprlr_22((double)param_2,param_1);
+  pXVar10 = (XAnimState *)(iVar4 + 0x20);
+  dVar14 = 0.0;
+  dVar13 = extraout_f1;
   if (extraout_f1 == 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x4fd,0,0xffffffff82000f98,0xffffffff82185fa4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x4fd,0,"%s")
+    ;
   }
-  if (*(short *)(iVar3 + 6) != 0) {
-    if ((double)*(float *)(iVar3 + 0x30) == dVar11) {
-      MyAssertHandler(0xffffffff82185bb8,0x503,0,0xffffffff82000f98,0xffffffff82186048);
+  if (*(short *)(iVar4 + 6) != 0) {
+    if ((double)*(float *)(iVar4 + 0x30) == dVar14) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x503,0,
+                      "%s");
     }
-    dVar11 = 1.0;
-    if (*(float *)(iVar3 + 0x24) == 1.0) {
+    dVar14 = 1.0;
+    if (*(float *)(iVar4 + 0x24) == 1.0) {
 LAB_82620554:
-      XAnimGetNotifyFracLeaf(0x3ff0000000000000,dVar10,pfVar7,pfVar7);
-      XAnimAddClientNotify(DAT_8421bf98);
+      fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,1.0,(float)dVar13);
+      XAnimAddClientNotify(g_endNotetrackName,fVar15,(uint)pXVar10);
       __restgprlr_22();
       return;
     }
-    if (*(short *)(iVar3 + 0x12) == 0) {
-      if ((*pfVar7 < *(float *)(iVar3 + 0x24)) || (*pfVar7 == 1.0)) goto LAB_82620554;
+    if (*(short *)(iVar4 + 0x12) == 0) {
+      if ((pXVar10->currentAnimTime < *(float *)(iVar4 + 0x24)) || (pXVar10->currentAnimTime == 1.0)
+         ) goto LAB_82620554;
     }
     else {
-      iVar2 = *(int *)(iVar3 + 0x1c);
-      if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff82185bb8,0x513,0,0xffffffff82000f98,0xffffffff8213fd58);
+      pXVar2 = *(XAnimParts **)(iVar4 + 0x1c);
+      if (pXVar2 == (XAnimParts *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x513,0,
+                        "%s");
       }
-      uVar4 = XAnimGetNextNotifyIndex((double)*(float *)(iVar3 + 0x24),iVar2);
-      if (*(byte *)(iVar2 + 0x1d) <= uVar4) {
-        MyAssertHandler(0xffffffff82185bb8,0x516,0,0xffffffff82000f98,0xffffffff82186024);
+      uVar5 = XAnimGetNextNotifyIndex(pXVar2,*(float *)(iVar4 + 0x24));
+      uVar7 = (uint)uVar5;
+      if (pXVar2->notifyCount <= uVar7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x516,0,
+                        "%s");
       }
-      dVar8 = (double)*pfVar7;
-      dVar9 = (double)*(float *)(iVar3 + 0x24);
-      puVar5 = (undefined2 *)((uint)uVar4 * 8 + *(int *)(iVar2 + 0x50));
-      if (dVar9 <= dVar8) {
-        if (dVar8 == dVar11) {
-          if ((*(byte *)(iVar2 + 0x10) & 1) != 0) {
-            MyAssertHandler(0xffffffff82185bb8,0x545,0,0xffffffff82000f98,0xffffffff82185fe4);
+      dVar11 = (double)pXVar10->currentAnimTime;
+      dVar12 = (double)*(float *)(iVar4 + 0x24);
+      pXVar8 = pXVar2->notify + uVar7;
+      if (dVar12 <= dVar11) {
+        if (dVar11 == dVar14) {
+          if ((pXVar2->flags & 1) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x545
+                            ,0,"%s");
           }
-          if (*(float *)(iVar3 + 0x24) <= *(float *)(puVar5 + 2)) {
-            pfVar6 = (float *)(puVar5 + -2);
+          if (*(float *)(iVar4 + 0x24) <= pXVar8->time) {
+            pfVar9 = &pXVar8[-1].time;
             do {
-              if (pfVar6[2] < *(float *)(iVar3 + 0x24)) {
-                MyAssertHandler(0xffffffff82185bb8,0x54c,0,0xffffffff82000f98,0xffffffff82186000);
+              if (pfVar9[2] < *(float *)(iVar4 + 0x24)) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                                0x54c,0,"%s");
               }
-              uVar1 = *(undefined2 *)(pfVar6 + 1);
-              pfVar6 = pfVar6 + 2;
-              XAnimGetNotifyFracLeaf((double)*pfVar6,dVar10,pfVar7,pfVar7);
-              XAnimAddClientNotify(uVar1);
-              uVar4 = uVar4 + 1;
-            } while (uVar4 < *(byte *)(iVar2 + 0x1d));
+              uVar5 = *(ushort *)(pfVar9 + 1);
+              pfVar9 = pfVar9 + 2;
+              pXVar6 = pXVar10;
+              fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,*pfVar9,(float)dVar13);
+              XAnimAddClientNotify((uint)uVar5,fVar15,(uint)pXVar6);
+              uVar7 = uVar7 + 1 & 0xffff;
+            } while (uVar7 < pXVar2->notifyCount);
             __restgprlr_22();
             return;
           }
         }
-        else if (((double)*(float *)(puVar5 + 2) < dVar8) &&
-                (dVar9 <= (double)*(float *)(puVar5 + 2))) {
+        else if (((double)pXVar8->time < dVar11) && (dVar12 <= (double)pXVar8->time)) {
           do {
-            if (*(float *)(puVar5 + 2) < *(float *)(iVar3 + 0x24)) {
-              MyAssertHandler(0xffffffff82185bb8,0x55d,0,0xffffffff82000f98,0xffffffff82186000);
+            if (pXVar8->time < *(float *)(iVar4 + 0x24)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                              0x55d,0,"%s");
             }
-            XAnimGetNotifyFracLeaf((double)*(float *)(puVar5 + 2),dVar10,pfVar7,pfVar7);
-            XAnimAddClientNotify(*puVar5);
-            uVar4 = uVar4 + 1;
-          } while ((uVar4 < *(byte *)(iVar2 + 0x1d)) &&
-                  (pfVar6 = (float *)(puVar5 + 6), puVar5 = puVar5 + 4, *pfVar6 < *pfVar7));
+            pXVar6 = pXVar10;
+            fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,pXVar8->time,(float)dVar13);
+            XAnimAddClientNotify((uint)pXVar8->name,fVar15,(uint)pXVar6);
+            uVar7 = uVar7 + 1 & 0xffff;
+          } while ((uVar7 < pXVar2->notifyCount) &&
+                  (pXVar3 = pXVar8 + 1, pXVar8 = pXVar8 + 1, pXVar3->time < pXVar10->currentAnimTime
+                  ));
         }
       }
-      else if (dVar8 <= (double)*(float *)(puVar5 + 2)) {
-        if (dVar9 <= (double)*(float *)(puVar5 + 2)) {
-          pfVar6 = (float *)(puVar5 + -2);
+      else if (dVar11 <= (double)pXVar8->time) {
+        if (dVar12 <= (double)pXVar8->time) {
+          pfVar9 = &pXVar8[-1].time;
           do {
-            if (pfVar6[2] < *(float *)(iVar3 + 0x24)) {
-              MyAssertHandler(0xffffffff82185bb8,0x52d,0,0xffffffff82000f98,0xffffffff82186000);
+            if (pfVar9[2] < *(float *)(iVar4 + 0x24)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                              0x52d,0,"%s");
             }
-            uVar1 = *(undefined2 *)(pfVar6 + 1);
-            pfVar6 = pfVar6 + 2;
-            XAnimGetNotifyFracLeaf((double)*pfVar6,dVar10,pfVar7,pfVar7);
-            XAnimAddClientNotify(uVar1);
-            uVar4 = uVar4 + 1;
-          } while (uVar4 < *(byte *)(iVar2 + 0x1d));
-          dVar11 = (double)*(float *)(*(int *)(iVar2 + 0x50) + 4);
-          if (dVar11 < (double)*pfVar7) {
-            uVar4 = 0;
-            iVar3 = *(int *)(iVar2 + 0x50) + -8;
+            uVar5 = *(ushort *)(pfVar9 + 1);
+            pfVar9 = pfVar9 + 2;
+            pXVar6 = pXVar10;
+            fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,*pfVar9,(float)dVar13);
+            XAnimAddClientNotify((uint)uVar5,fVar15,(uint)pXVar6);
+            uVar7 = uVar7 + 1 & 0xffff;
+          } while (uVar7 < pXVar2->notifyCount);
+          fVar15 = pXVar2->notify->time;
+          if (fVar15 < pXVar10->currentAnimTime) {
+            uVar5 = 0;
+            pXVar8 = pXVar2->notify + -1;
             do {
-              uVar1 = *(undefined2 *)(iVar3 + 8);
-              XAnimGetNotifyFracLeaf(dVar11,dVar10,pfVar7,pfVar7);
-              XAnimAddClientNotify(uVar1);
-              uVar4 = uVar4 + 1;
-              if (*(byte *)(iVar2 + 0x1d) <= uVar4) {
-                MyAssertHandler(0xffffffff82185bb8,0x53c,0,0xffffffff82000f98,0xffffffff82186024);
+              uVar1 = pXVar8[1].name;
+              pXVar6 = pXVar10;
+              fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,fVar15,(float)dVar13);
+              XAnimAddClientNotify((uint)uVar1,fVar15,(uint)pXVar6);
+              uVar5 = uVar5 + 1;
+              if (pXVar2->notifyCount <= uVar5) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                                0x53c,0,"%s");
               }
-              dVar11 = (double)*(float *)(iVar3 + 0x1c);
-              iVar3 = iVar3 + 0x10;
-            } while (dVar11 < (double)*pfVar7);
+              fVar15 = pXVar8[3].time;
+              pXVar8 = pXVar8 + 2;
+            } while (fVar15 < pXVar10->currentAnimTime);
             __restgprlr_22();
             return;
           }
@@ -1555,13 +1734,14 @@ LAB_82620554:
       }
       else {
         while( true ) {
-          XAnimGetNotifyFracLeaf((double)*(float *)(puVar5 + 2),dVar10,pfVar7,pfVar7);
-          XAnimAddClientNotify(*puVar5);
-          uVar4 = uVar4 + 1;
-          if (*(byte *)(iVar2 + 0x1d) <= uVar4) break;
-          pfVar6 = (float *)(puVar5 + 6);
-          puVar5 = puVar5 + 4;
-          if (*pfVar7 <= *pfVar6) {
+          pXVar6 = pXVar10;
+          fVar15 = XAnimGetNotifyFracLeaf(pXVar10,pXVar10,pXVar8->time,(float)dVar13);
+          XAnimAddClientNotify((uint)pXVar8->name,fVar15,(uint)pXVar6);
+          uVar7 = uVar7 + 1 & 0xffff;
+          if (pXVar2->notifyCount <= uVar7) break;
+          pXVar3 = pXVar8 + 1;
+          pXVar8 = pXVar8 + 1;
+          if (pXVar10->currentAnimTime <= pXVar3->time) {
             __restgprlr_22();
             return;
           }
@@ -1576,67 +1756,65 @@ LAB_82620554:
 
 // 82627A60  XAnimUpdateInfoSync  (xanim/xanim.cpp:1382)
 
-void XAnimUpdateInfoSync(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+void XAnimUpdateInfoSync(DObj *param_1,uint param_2,bool param_3,XAnimState *param_4,float param_5)
 
 {
   ushort uVar1;
-  int iVar2;
-  float *pfVar3;
-  uint uVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  longlong lVar7;
-  float *pfVar8;
+  uint uVar2;
+  DObj *pDVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   double extraout_f1;
-  double dVar9;
-  double dVar10;
+  double dVar6;
+  double dVar7;
   
-  puVar5 = (undefined4 *)__savegprlr_23();
-  dVar10 = 0.0;
-  dVar9 = extraout_f1;
+  uVar5 = (ulonglong)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pDVar3 = (DObj *)__savegprlr_23((double)param_5,param_1);
+  dVar7 = 0.0;
+  dVar6 = extraout_f1;
   if (extraout_f1 <= 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x56b,0,0xffffffff82000f98,0xffffffff82186c8c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x56b,0,"%s")
+    ;
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x56c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar4 & 0xffffffff) == 0) || (0xfff < (uVar4 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x56c,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  lVar6 = (param_2 & 0x3ffffff) * 0x40;
-  lVar7 = lVar6 + -0x7be24068;
-  pfVar8 = (float *)((int)&DAT_841dbfb8 + (int)lVar6);
-  iVar2 = (int)lVar7;
-  if ((double)*(float *)(iVar2 + 0x34) == dVar10) {
-    XAnimCheckFreeInfo(*puVar5,param_2,0);
+  uVar2 = (uint)uVar4;
+  if ((double)g_xAnimInfo[uVar2].state.weight == dVar7) {
+    XAnimCheckFreeInfo(pDVar3->tree,uVar2,0);
     __restgprlr_23();
     return;
   }
-  if ((double)*(float *)(iVar2 + 0x30) == dVar10) {
-    param_3 = 0;
+  if ((double)g_xAnimInfo[uVar2].state.goalWeight == dVar7) {
+    uVar5 = 0;
   }
-  if (*(char *)(iVar2 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x57a,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (g_xAnimInfo[uVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x57a,0,"%s")
+    ;
   }
-  pfVar3 = (float *)param_4;
-  if ((*(float *)(iVar2 + 0x24) != pfVar3[1]) ||
-     (*(short *)(iVar2 + 0x2a) != *(short *)((int)pfVar3 + 10))) {
-    *pfVar8 = pfVar3[1];
-    *(undefined2 *)(iVar2 + 0x28) = *(undefined2 *)((int)pfVar3 + 10);
-    *(float *)(iVar2 + 0x24) = pfVar3[1];
-    *(undefined2 *)(iVar2 + 0x2a) = *(undefined2 *)((int)pfVar3 + 10);
-    *(undefined2 *)(iVar2 + 2) = 0xffff;
+  if ((g_xAnimInfo[uVar2].state.oldTime != param_4->oldTime) ||
+     (g_xAnimInfo[uVar2].state.oldCycleCount != param_4->oldCycleCount)) {
+    g_xAnimInfo[uVar2].state.currentAnimTime = param_4->oldTime;
+    g_xAnimInfo[uVar2].state.cycleCount = param_4->oldCycleCount;
+    g_xAnimInfo[uVar2].state.oldTime = param_4->oldTime;
+    g_xAnimInfo[uVar2].state.oldCycleCount = param_4->oldCycleCount;
+    g_xAnimInfo[uVar2].notifyIndex = -1;
   }
-  if ((param_3 & 0xff) != 0) {
-    XAnimProcessServerNotify((double)*pfVar3,puVar5,lVar7);
+  if ((uVar5 & 0xff) != 0) {
+    XAnimProcessServerNotify(pDVar3,g_xAnimInfo + uVar2,param_4->currentAnimTime);
   }
-  *pfVar8 = *pfVar3;
-  *(undefined2 *)(iVar2 + 0x28) = *(undefined2 *)(pfVar3 + 2);
-  *(undefined2 *)(iVar2 + 2) = 0xffff;
-  if ((param_3 & 0xff) != 0) {
-    XAnimProcessClientNotify(dVar9,lVar7);
+  g_xAnimInfo[uVar2].state.currentAnimTime = param_4->currentAnimTime;
+  g_xAnimInfo[uVar2].state.cycleCount = param_4->cycleCount;
+  g_xAnimInfo[uVar2].notifyIndex = -1;
+  if ((uVar5 & 0xff) != 0) {
+    XAnimProcessClientNotify(g_xAnimInfo + uVar2,(float)dVar6);
   }
-  uVar1 = *(ushort *)(iVar2 + 0xc);
-  while (uVar4 = (uint)uVar1, uVar4 != 0) {
-    uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
-    XAnimUpdateInfoSync(dVar9,puVar5,uVar4,param_3,param_4);
+  uVar1 = g_xAnimInfo[uVar2].children;
+  while (uVar2 = (uint)uVar1, uVar2 != 0) {
+    uVar1 = g_xAnimInfo[uVar2].next;
+    XAnimUpdateInfoSync(pDVar3,uVar2,SUB81(uVar5,0),param_4,(float)dVar6);
   }
   __restgprlr_23();
   return;
@@ -1646,99 +1824,103 @@ void XAnimUpdateInfoSync(undefined8 param_1,ulonglong param_2,ulonglong param_3,
 // 82627C48  XAnimUpdateTimeAndNotetrackLeaf  (xanim/xanim.cpp:1443)
 
 void XAnimUpdateTimeAndNotetrackLeaf
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               ulonglong param_5)
+               (DObj *param_1,XAnimParts *param_2,uint param_3,float param_4,bool param_5)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  longlong lVar5;
+  DObj *pDVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  int iVar5;
+  ulonglong in_r7;
   short sVar6;
-  longlong lVar7;
-  float *pfVar8;
+  XAnimState *pXVar7;
   double extraout_f1;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  __savegprlr_22();
-  uVar3 = __savefpr_28();
-  dVar9 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x5a9,0,0xffffffff82000f98,0xffffffff8213fd58);
+  lVar4 = (longlong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  __savegprlr_22((double)param_4,param_1,uVar3,lVar4,param_5);
+  iVar5 = (int)lVar4;
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar8 = extraout_f1;
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5a9,0,"%s")
+    ;
   }
-  lVar5 = (param_3 & 0x3ffffff) * 0x40;
-  lVar7 = lVar5 + -0x7be24068;
-  pfVar8 = (float *)((int)&DAT_841dbfb8 + (int)lVar5);
-  dVar10 = 0.0;
-  iVar1 = (int)lVar7;
-  if (*(float *)(iVar1 + 0x24) < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x5ae,0,0xffffffff82000f98,0xffffffff82186d8c);
+  pXVar7 = &g_xAnimInfo[iVar5].state;
+  dVar9 = 0.0;
+  if (g_xAnimInfo[iVar5].state.oldTime < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5ae,0,"%s")
+    ;
   }
-  iVar2 = (int)param_2;
-  dVar9 = (double)(float)((double)(*(float *)(iVar1 + 0x38) * *(float *)(iVar2 + 0x2c)) * dVar9);
-  if (dVar9 == dVar10) goto LAB_82627f5c;
-  dVar12 = (double)(float)(dVar9 + (double)*(float *)(iVar1 + 0x24));
-  sVar6 = *(short *)(iVar1 + 0x28);
-  if (dVar12 < dVar10) {
-    MyAssertHandler(dVar12,0xffffffff82185bb8,0x5b7,0,0xffffffff82028794,0xffffffff82185f94,dVar12);
+  iVar1 = (int)uVar3;
+  dVar8 = (double)(float)((double)(g_xAnimInfo[iVar5].state.rate * *(float *)(iVar1 + 0x2c)) * dVar8
+                         );
+  if (dVar8 == dVar9) goto LAB_82627f5c;
+  dVar11 = (double)(float)(dVar8 + (double)g_xAnimInfo[iVar5].state.oldTime);
+  sVar6 = g_xAnimInfo[iVar5].state.cycleCount;
+  if (dVar11 < dVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5b7,0,
+                    "%s\n\t(time) = %g");
   }
-  dVar11 = 1.0;
-  if (1.0 <= dVar12) {
-    if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-      dVar12 = dVar11;
-      if (*(float *)(iVar1 + 0x24) - 0.9999999 < 0.0) {
-        dVar12 = 0.9999998807907104;
+  dVar10 = 1.0;
+  if (1.0 <= dVar11) {
+    if ((*(byte *)(iVar1 + 0x10) & 1) == 0) {
+      dVar11 = dVar10;
+      if (g_xAnimInfo[iVar5].state.oldTime - 0.9999999 < 0.0) {
+        dVar11 = 0.9999998807907104;
       }
     }
     else {
       do {
-        dVar12 = (double)(float)(dVar12 - 1.0);
+        dVar11 = (double)(float)(dVar11 - 1.0);
         sVar6 = sVar6 + 1;
-      } while (1.0 <= dVar12);
-      if (1.0 <= dVar12) {
-        MyAssertHandler(dVar12,0xffffffff82185bb8,0x5c7,0,0xffffffff82028794,0xffffffff82185f84,
-                        dVar12);
+      } while (1.0 <= dVar11);
+      if (1.0 <= dVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5c7,0,
+                        "%s\n\t(time) = %g");
       }
-      if (dVar12 < dVar10) {
-        MyAssertHandler(dVar12,0xffffffff82185bb8,0x5c8,0,0xffffffff82028794,0xffffffff82185f94,
-                        dVar12);
+      if (dVar11 < dVar9) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5c8,0,
+                        "%s\n\t(time) = %g");
       }
     }
   }
-  if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-    if (dVar11 < dVar12) goto LAB_82627e28;
+  if ((*(byte *)(iVar1 + 0x10) & 1) == 0) {
+    if (dVar10 < dVar11) goto LAB_82627e28;
   }
-  else if (dVar11 <= dVar12) {
+  else if (dVar10 <= dVar11) {
 LAB_82627e28:
-    uVar4 = va(dVar12,0xffffffff82186d78,dVar12);
-    MyAssertHandler(0xffffffff82185bb8,0x5cc,0,0xffffffff820011f4,0xffffffff82186d3c,uVar4);
+    va("time: %f, loop: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5cc,0,
+                    "%s\n\t%s");
   }
-  if ((float)((double)*pfVar8 - dVar12) <=
-      (float)(longlong)((int)sVar6 - (int)*(short *)(iVar1 + 0x28))) {
-    if ((param_5 & 0xff) != 0) {
-      XAnimProcessServerNotify(dVar12,uVar3,lVar7);
+  if ((float)((double)pXVar7->currentAnimTime - dVar11) <=
+      (float)(longlong)((int)sVar6 - (int)g_xAnimInfo[iVar5].state.cycleCount)) {
+    if ((in_r7 & 0xff) != 0) {
+      XAnimProcessServerNotify(pDVar2,g_xAnimInfo + iVar5,(float)dVar11);
     }
-    *pfVar8 = (float)dVar12;
-    *(short *)(iVar1 + 0x28) = sVar6;
-    *(undefined2 *)(iVar1 + 2) = 0xffff;
-    if ((param_5 & 0xff) != 0) {
-      XAnimProcessClientNotify(dVar9,lVar7);
+    pXVar7->currentAnimTime = (float)dVar11;
+    g_xAnimInfo[iVar5].state.cycleCount = sVar6;
+    g_xAnimInfo[iVar5].notifyIndex = -1;
+    if ((in_r7 & 0xff) != 0) {
+      XAnimProcessClientNotify(g_xAnimInfo + iVar5,(float)dVar8);
     }
-    if ((double)*pfVar8 < dVar10) {
-      MyAssertHandler(0xffffffff82185bb8,0x5dc,0,0xffffffff82186cf8,0xffffffff82186d1c,
-                      (double)*pfVar8);
+    if ((double)pXVar7->currentAnimTime < dVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5dc,0,
+                      "%s\n\t(state->currentAnimTime) = %g");
     }
-    dVar9 = (double)*pfVar8;
-    if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-      if (dVar9 <= dVar11) goto LAB_82627f5c;
+    if ((*(byte *)(iVar1 + 0x10) & 1) == 0) {
+      if ((double)pXVar7->currentAnimTime <= dVar10) goto LAB_82627f5c;
     }
-    else if (dVar9 < dVar11) goto LAB_82627f5c;
-    uVar3 = va(0xffffffff82186d78,dVar9);
-    MyAssertHandler(0xffffffff82185bb8,0x5dd,0,0xffffffff820011f4,0xffffffff82186c98,uVar3);
+    else if ((double)pXVar7->currentAnimTime < dVar10) goto LAB_82627f5c;
+    va("time: %f, loop: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5dd,0,
+                    "%s\n\t%s");
   }
 LAB_82627f5c:
   __restfpr_28();
@@ -1749,112 +1931,115 @@ LAB_82627f5c:
 
 // 82627F70  XAnimUpdateTimeAndNotetrackSyncSubTree  (xanim/xanim.cpp:1506)
 
-void XAnimUpdateTimeAndNotetrackSyncSubTree
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+void XAnimUpdateTimeAndNotetrackSyncSubTree(DObj *param_1,uint param_2,float param_3,bool param_4)
 
 {
-  ushort uVar1;
-  int iVar2;
+  float fVar1;
+  ushort uVar2;
   uint uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  longlong lVar6;
+  DObj *pDVar4;
+  longlong lVar5;
+  int iVar6;
+  ulonglong in_r6;
   short sVar7;
-  float *pfVar8;
-  longlong lVar9;
+  XAnimState *pXVar8;
   double extraout_f1;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   
-  __savegprlr_22();
-  uVar4 = __savefpr_28();
-  lVar6 = (param_2 & 0x3ffffff) * 0x40;
-  lVar9 = lVar6 + -0x7be24068;
-  iVar2 = (int)lVar9;
-  lVar6 = lVar6 + -0x7be24048;
-  dVar11 = extraout_f1;
-  if ((*(ushort *)(iVar2 + 0x1c) & 4) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x5ec,0,0xffffffff82000f98,0xffffffff82186edc);
+  lVar5 = (longlong)(int)param_2;
+  __savegprlr_22((double)param_3,param_1,lVar5,param_4);
+  iVar6 = (int)lVar5;
+  pDVar4 = (DObj *)__savefpr_28();
+  pXVar8 = &g_xAnimInfo[iVar6].state;
+  dVar9 = extraout_f1;
+  if ((g_xAnimInfo[iVar6].field12_0x1c.animParent.flags & 4) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5ec,0,"%s")
+    ;
   }
-  dVar10 = (double)*(float *)(iVar2 + 0x24);
-  dVar12 = 0.0;
-  dVar13 = 1.0;
-  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
-    MyAssertHandler(0xffffffff82185bb8,0x5ee,0,0xffffffff82186ea4,dVar10,0,0x3ff0000000000000);
+  fVar1 = g_xAnimInfo[iVar6].state.oldTime;
+  dVar10 = 0.0;
+  dVar11 = 1.0;
+  if ((fVar1 < 0.0) || (1.0 < fVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5ee,0,
+                    "state->oldTime not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  dVar10 = (double)(float)((double)*(float *)(iVar2 + 0x24) + dVar11);
-  sVar7 = *(short *)(iVar2 + 0x2a);
-  if (dVar10 < dVar12) {
-    MyAssertHandler(dVar10,0xffffffff82185bb8,0x5f3,0,0xffffffff82028794,0xffffffff82185f94,dVar10);
+  dVar12 = (double)(float)((double)g_xAnimInfo[iVar6].state.oldTime + dVar9);
+  sVar7 = g_xAnimInfo[iVar6].state.oldCycleCount;
+  if (dVar12 < dVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5f3,0,
+                    "%s\n\t(time) = %g");
   }
-  if (dVar13 <= dVar10) {
-    uVar1 = *(ushort *)(iVar2 + 0x1c);
-    if ((uVar1 & 2) == 0) {
-      if ((uVar1 & 1) == 0) {
-        MyAssertHandler(0xffffffff82185bb8,0x5fe,0,0xffffffff82000f98,0xffffffff8218681c);
+  if (dVar11 <= dVar12) {
+    uVar2 = g_xAnimInfo[iVar6].field12_0x1c.animParent.flags;
+    if ((uVar2 & 2) == 0) {
+      if ((uVar2 & 1) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5fe,0,
+                        "%s");
       }
       do {
-        dVar10 = (double)(float)(dVar10 - dVar13);
+        dVar12 = (double)(float)(dVar12 - dVar11);
         sVar7 = sVar7 + 1;
-      } while (dVar13 <= dVar10);
-      if (dVar13 <= dVar10) {
-        MyAssertHandler(dVar10,0xffffffff82185bb8,0x605,0,0xffffffff82028794,0xffffffff82185f84,
-                        dVar10);
+      } while (dVar11 <= dVar12);
+      if (dVar11 <= dVar12) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x605,0,
+                        "%s\n\t(time) = %g");
       }
-      if (dVar10 < dVar12) {
-        MyAssertHandler(dVar10,0xffffffff82185bb8,0x606,0,0xffffffff82028794,0xffffffff82185f94,
-                        dVar10);
+      if (dVar12 < dVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x606,0,
+                        "%s\n\t(time) = %g");
       }
     }
     else {
-      if ((uVar1 & 1) != 0) {
-        MyAssertHandler(0xffffffff82185bb8,0x5f9,0,0xffffffff82000f98,0xffffffff8218684c);
+      if ((uVar2 & 1) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x5f9,0,
+                        "%s");
       }
-      dVar10 = dVar13;
-      if (*(float *)(iVar2 + 0x24) - 0.9999999 < 0.0) {
-        dVar10 = 0.9999998807907104;
+      dVar12 = dVar11;
+      if (g_xAnimInfo[iVar6].state.oldTime - 0.9999999 < 0.0) {
+        dVar12 = 0.9999998807907104;
       }
     }
   }
-  if ((*(ushort *)(iVar2 + 0x1c) & 1) == 0) {
-    if (dVar13 < dVar10) goto LAB_826281b0;
+  if ((g_xAnimInfo[iVar6].field12_0x1c.animParent.flags & 1) == 0) {
+    if (dVar11 < dVar12) goto LAB_826281b0;
   }
-  else if (dVar13 <= dVar10) {
+  else if (dVar11 <= dVar12) {
 LAB_826281b0:
-    uVar5 = va(dVar10,0xffffffff82186e68,dVar10);
-    MyAssertHandler(0xffffffff82185bb8,0x60a,0,0xffffffff820011f4,0xffffffff82186e18,uVar5);
+    va("time: %f, info->animParent.flags & XANIM_LOOP_SYNC_TIME: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x60a,0,
+                    "%s\n\t%s");
   }
-  pfVar8 = (float *)lVar6;
-  if ((float)(longlong)((int)sVar7 - (int)*(short *)(iVar2 + 0x28)) <
-      (float)((double)*pfVar8 - dVar10)) goto LAB_82628320;
-  if ((param_4 & 0xff) != 0) {
-    XAnimProcessServerNotify(dVar10,uVar4,lVar9);
+  if ((float)(longlong)((int)sVar7 - (int)g_xAnimInfo[iVar6].state.cycleCount) <
+      (float)((double)pXVar8->currentAnimTime - dVar12)) goto LAB_82628320;
+  if ((in_r6 & 0xff) != 0) {
+    XAnimProcessServerNotify(pDVar4,g_xAnimInfo + iVar6,(float)dVar12);
   }
-  *pfVar8 = (float)dVar10;
-  *(short *)(iVar2 + 0x28) = sVar7;
-  *(undefined2 *)(iVar2 + 2) = 0xffff;
-  if ((param_4 & 0xff) != 0) {
-    XAnimProcessClientNotify(dVar11,lVar9);
+  pXVar8->currentAnimTime = (float)dVar12;
+  g_xAnimInfo[iVar6].state.cycleCount = sVar7;
+  g_xAnimInfo[iVar6].notifyIndex = -1;
+  if ((in_r6 & 0xff) != 0) {
+    XAnimProcessClientNotify(g_xAnimInfo + iVar6,(float)dVar9);
   }
-  if ((double)*pfVar8 < dVar12) {
-    MyAssertHandler(0xffffffff82185bb8,0x61a,0,0xffffffff82186cf8,0xffffffff82186d1c,(double)*pfVar8
-                   );
+  if ((double)pXVar8->currentAnimTime < dVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x61a,0,
+                    "%s\n\t(state->currentAnimTime) = %g");
   }
-  dVar10 = (double)*pfVar8;
-  if ((*(ushort *)(iVar2 + 0x1c) & 1) == 0) {
-    if (dVar13 < dVar10) goto LAB_826282b4;
+  if ((g_xAnimInfo[iVar6].field12_0x1c.animParent.flags & 1) == 0) {
+    if (dVar11 < (double)pXVar8->currentAnimTime) goto LAB_826282b4;
   }
-  else if (dVar13 <= dVar10) {
+  else if (dVar11 <= (double)pXVar8->currentAnimTime) {
 LAB_826282b4:
-    uVar5 = va(0xffffffff82186e68,dVar10);
-    MyAssertHandler(0xffffffff82185bb8,0x61b,0,0xffffffff820011f4,0xffffffff82186da0,uVar5);
+    va("time: %f, info->animParent.flags & XANIM_LOOP_SYNC_TIME: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x61b,0,
+                    "%s\n\t%s");
   }
-  uVar1 = *(ushort *)(iVar2 + 0xc);
-  while (uVar3 = (uint)uVar1, uVar3 != 0) {
-    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
-    XAnimUpdateInfoSync(dVar11,uVar4,uVar3,param_4,lVar6);
+  uVar2 = g_xAnimInfo[iVar6].children;
+  while (uVar3 = (uint)uVar2, uVar3 != 0) {
+    uVar2 = g_xAnimInfo[uVar3].next;
+    XAnimUpdateInfoSync(pDVar4,uVar3,SUB81(in_r6,0),pXVar8,(float)dVar9);
   }
 LAB_82628320:
   __restfpr_28();
@@ -1865,75 +2050,99 @@ LAB_82628320:
 
 // 82628330  XAnimUpdateTimeAndNotetrack  (xanim/xanim.cpp:1574)
 
-void XAnimUpdateTimeAndNotetrack(undefined8 param_1,ulonglong param_2)
+void XAnimUpdateTimeAndNotetrack(DObj *param_1,uint param_2,float param_3,bool param_4)
 
 {
   ushort uVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  int *piVar5;
+  XAnimTree *pXVar2;
+  uint uVar3;
+  DObj *pDVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  undefined1 uVar7;
+  undefined1 in_r6;
   double extraout_f1;
-  double dVar6;
-  double dVar7;
   double dVar8;
+  double dVar9;
+  float fVar10;
   
-  piVar5 = (int *)__savegprlr_24();
-  iVar2 = *piVar5;
-  dVar7 = extraout_f1;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x62d,0,0xffffffff82000f98,0xffffffff821813e0);
+  lVar6 = (longlong)param_4;
+  uVar5 = (ulonglong)(int)param_2;
+  pDVar4 = (DObj *)__savegprlr_24((double)param_3,param_1);
+  pXVar2 = pDVar4->tree;
+  dVar8 = extraout_f1;
+  if (pXVar2 == (XAnimTree *)0x0) {
+    lVar6 = 0;
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x62d,0,"%s")
+    ;
   }
-  dVar8 = 0.0;
-  if (dVar7 < 0.0) {
-    MyAssertHandler(dVar7,0xffffffff82185bb8,0x62f,0,0xffffffff821867f4,0xffffffff82186808,dVar7);
+  dVar9 = 0.0;
+  if (dVar8 < 0.0) {
+    in_r6 = 0xf4;
+    lVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x62f,0,
+                    "%s\n\t(dtime) = %g");
   }
-  if (0xfff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x630,0,0xffffffff82186f34,param_2,0x1000);
+  if (0xfff < (uVar5 & 0xffffffff)) {
+    in_r6 = 0x34;
+    lVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x630,0,
+                    "infoIndex doesn\'t index XANIM_INFO_SIZE\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)param_2 * 0x40;
-  if ((&DAT_841dbfac)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x633,0,0xffffffff82000f98,0xffffffff82185e68);
+  uVar3 = (uint)uVar5;
+  if (g_xAnimInfo[uVar3].inuse == false) {
+    lVar6 = 0;
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x633,0,"%s")
+    ;
   }
-  if ((double)*(float *)(&DAT_841dbfcc + iVar3) == dVar8) {
-    XAnimCheckFreeInfo(*piVar5,param_2,0);
+  uVar7 = (undefined1)lVar6;
+  if ((double)g_xAnimInfo[uVar3].state.weight == dVar9) {
+    XAnimCheckFreeInfo(pDVar4->tree,uVar3,0);
     __restgprlr_24();
     return;
   }
-  if (*(short *)(&DAT_841dbfaa + iVar3) != 0) {
-    XAnimUpdateTimeAndNotetrackLeaf(dVar7,piVar5,*(undefined4 *)(&DAT_841dbfb4 + iVar3),param_2);
+  if (g_xAnimInfo[uVar3].animToModel != 0) {
+    XAnimUpdateTimeAndNotetrackLeaf
+              (pDVar4,g_xAnimInfo[uVar3].field12_0x1c.parts,uVar3,(float)dVar8,(bool)in_r6);
     __restgprlr_24();
     return;
   }
-  if ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 3) == 0) {
-    if ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 4) != 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x653,0,0xffffffff82000f98,0xffffffff82186f08);
+  uVar1 = g_xAnimInfo[uVar3].field12_0x1c.animParent.flags;
+  if ((uVar1 & 3) == 0) {
+    if ((uVar1 & 4) != 0) {
+      lVar6 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x653,0,
+                      "%s");
     }
-    if ((*(short *)((int)piVar5 + 6) != 0) && (*(short *)(&DAT_841dbf9c + iVar3) != 0)) {
-      MyAssertHandler(0xffffffff82185bb8,0x654,0,0xffffffff82000f98,0xffffffff82186880);
+    if ((pDVar4->entnum != 0) && (g_xAnimInfo[uVar3].notifyName != 0)) {
+      lVar6 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x654,0,
+                      "%s");
     }
-    dVar7 = (double)(float)((double)*(float *)(&DAT_841dbfd0 + iVar3) * dVar7);
-    if (dVar7 == dVar8) {
-      XAnimCheckFreeInfo(*piVar5,param_2,1);
+    dVar8 = (double)(float)((double)g_xAnimInfo[uVar3].state.rate * dVar8);
+    if (dVar8 == dVar9) {
+      XAnimCheckFreeInfo(pDVar4->tree,uVar3,1);
       __restgprlr_24();
       return;
     }
-    uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar3);
-    while (uVar4 = (uint)uVar1, uVar4 != 0) {
-      uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
-      XAnimUpdateTimeAndNotetrack(dVar7,piVar5,uVar4);
+    uVar1 = g_xAnimInfo[uVar3].children;
+    while (uVar3 = (uint)uVar1, uVar3 != 0) {
+      uVar1 = g_xAnimInfo[uVar3].next;
+      XAnimUpdateTimeAndNotetrack(pDVar4,uVar3,(float)dVar8,SUB81(lVar6,0));
     }
     __restgprlr_24();
     return;
   }
-  dVar6 = (double)XAnimGetAverageRateFrequency(iVar2,param_2);
-  if ((double)(float)((double)(float)(dVar6 * (double)*(float *)(&DAT_841dbfd0 + iVar3)) * dVar7) ==
-      dVar8) {
-    XAnimCheckFreeInfo(*piVar5,param_2,1);
+  fVar10 = XAnimGetAverageRateFrequency(pXVar2,uVar3);
+  fVar10 = (float)((double)(fVar10 * g_xAnimInfo[uVar3].state.rate) * dVar8);
+  if ((double)fVar10 == dVar9) {
+    XAnimCheckFreeInfo(pDVar4->tree,uVar3,1);
     __restgprlr_24();
     return;
   }
-  XAnimUpdateTimeAndNotetrackSyncSubTree(piVar5,param_2);
+  XAnimUpdateTimeAndNotetrackSyncSubTree(pDVar4,uVar3,fVar10,(bool)uVar7);
   __restgprlr_24();
   return;
 }
@@ -1941,23 +2150,23 @@ void XAnimUpdateTimeAndNotetrack(undefined8 param_1,ulonglong param_2)
 
 // 826208D0  XAnimInitInfo  (xanim/xanim.cpp:1638)
 
-void XAnimInitInfo(undefined2 *param_1)
+void XAnimInitInfo(XAnimInfo *param_1)
 
 {
-  undefined4 *puVar1;
+  XAnimInfo_u_28 *pXVar1;
   longlong lVar2;
   
-  puVar1 = (undefined4 *)(param_1 + 0xe);
+  pXVar1 = &param_1->field12_0x1c;
   lVar2 = 8;
   do {
-    puVar1 = puVar1 + 1;
-    *puVar1 = 0;
+    pXVar1 = pXVar1 + 1;
+    pXVar1->parts = (XAnimParts *)0x0;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  param_1[2] = 0;
-  *param_1 = 0;
-  param_1[1] = 0xffff;
-  param_1[3] = 0;
+  param_1->notifyName = 0;
+  param_1->notifyChild = 0;
+  param_1->notifyIndex = -1;
+  param_1->notifyType = 0;
   return;
 }
 
@@ -1967,34 +2176,32 @@ void XAnimInitInfo(undefined2 *param_1)
 void XAnimResetTimeInternal(uint param_1)
 
 {
-  int iVar1;
-  
   if ((param_1 == 0) || (0xfff < param_1)) {
-    MyAssertHandler(0xffffffff82185bb8,0x72a,0,0xffffffff82185e88,0xffffffff82185ea0,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x72a,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar1 = param_1 * 0x40;
-  (&DAT_841dbfb8)[param_1 * 0x10] = 0;
-  *(undefined2 *)(&DAT_841dbfc0 + iVar1) = 0;
-  (&DAT_841dbfbc)[param_1 * 0x10] = 0;
-  *(undefined2 *)(&DAT_841dbfc2 + iVar1) = 0;
-  *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+  g_xAnimInfo[param_1].state.currentAnimTime = 0.0;
+  g_xAnimInfo[param_1].state.cycleCount = 0;
+  g_xAnimInfo[param_1].state.oldTime = 0.0;
+  g_xAnimInfo[param_1].state.oldCycleCount = 0;
+  g_xAnimInfo[param_1].notifyIndex = -1;
   return;
 }
 
 
 // 82620998  XAnimResetTime  (xanim/xanim.cpp:1849)
 
-void XAnimResetTime(int param_1)
+void XAnimResetTime(uint param_1)
 
 {
   ushort uVar1;
   uint uVar2;
   
-  XAnimResetTimeInternal();
-  uVar1 = *(ushort *)(&DAT_841dbfa4 + param_1 * 0x40);
+  XAnimResetTimeInternal(param_1);
+  uVar1 = g_xAnimInfo[param_1].children;
   while (uVar2 = (uint)uVar1, uVar2 != 0) {
     XAnimResetTime(uVar2);
-    uVar1 = (&DAT_841dbfa2)[uVar2 * 0x20];
+    uVar1 = g_xAnimInfo[uVar2].next;
   }
   return;
 }
@@ -2002,184 +2209,207 @@ void XAnimResetTime(int param_1)
 
 // 82624C70  XAnimCloneInitTime  (xanim/xanim.cpp:1860)
 
-void XAnimCloneInitTime(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+uint XAnimCloneInitTime(XAnimTree *param_1,uint param_2,uint param_3)
 
 {
-  short sVar1;
-  ushort uVar2;
-  uint uVar3;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  XAnimTree *pXVar4;
+  uint uVar5;
+  ulonglong uVar6;
   
-  uVar4 = __savegprlr_26();
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x74b,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_26(param_1);
+  if (((uVar6 & 0xffffffff) == 0) || (0xfff < (uVar6 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x74b,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  lVar7 = (param_2 & 0x3ffffff) * 0x40;
-  lVar8 = lVar7 + -0x7be24068;
-  iVar5 = (int)lVar8;
-  sVar1 = *(short *)(iVar5 + 0x12);
-  if (sVar1 != 0) {
-    SL_AddRefToString(sVar1);
+  iVar3 = (int)uVar6;
+  uVar1 = g_xAnimInfo[iVar3].animToModel;
+  if (uVar1 != 0) {
+    SL_AddRefToString((uint)uVar1);
   }
-  iVar5 = XAnimAllocInfoWithParent(uVar4,sVar1,*(undefined2 *)(iVar5 + 0x10),param_3,0);
-  iVar6 = iVar5 * 0x40;
-  XAnimCloneAnimInfo(lVar8,&DAT_841dbf98 + iVar6);
-  XAnimResetTimeInternal(iVar5);
-  (&DAT_841dbfd4)[iVar6] = 1;
-  *(undefined4 *)(&DAT_841dbfcc + iVar6) = 0;
-  uVar2 = *(ushort *)(&DAT_841dbfa4 + (int)lVar7);
-  while (uVar3 = (uint)uVar2, uVar3 != 0) {
-    XAnimCloneInitTime(uVar4,uVar3,iVar5);
-    uVar2 = (&DAT_841dbfa2)[uVar3 * 0x20];
+  uVar5 = XAnimAllocInfoWithParent(pXVar4,(uint)uVar1,(uint)g_xAnimInfo[iVar3].animIndex,param_3,0);
+  XAnimCloneAnimInfo(g_xAnimInfo + iVar3,g_xAnimInfo + uVar5);
+  XAnimResetTimeInternal(uVar5);
+  g_xAnimInfo[uVar5].state.instantWeightChange = true;
+  g_xAnimInfo[uVar5].state.weight = 0.0;
+  uVar1 = g_xAnimInfo[iVar3].children;
+  while (uVar2 = (uint)uVar1, uVar2 != 0) {
+    XAnimCloneInitTime(pXVar4,uVar2,uVar5);
+    uVar1 = g_xAnimInfo[uVar2].next;
   }
-  __restgprlr_26(iVar5);
-  return;
+  uVar5 = __restgprlr_26(uVar5);
+  return uVar5;
 }
 
 
 // 82624D70  XAnimInitTime  (xanim/xanim.cpp:1891)
 
-void XAnimInitTime(undefined8 param_1,ulonglong param_2)
+uint XAnimInitTime(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  XAnimTree *pXVar1;
+  uint uVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  uint uVar5;
   double extraout_f1;
-  double dVar4;
+  double dVar6;
   
-  uVar2 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x768,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  uVar4 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_29((double)param_3,param_1);
+  dVar6 = extraout_f1;
+  if (((uVar4 & 0xffffffff) == 0) || (0xfff < (uVar4 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x768,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar1 = (int)param_2 * 0x40;
-  if (((float)(&DAT_841dbfb8)[(int)param_2 * 0x10] != 0.0) ||
-     (*(short *)(&DAT_841dbfc0 + iVar1) != 0)) {
-    if (*(short *)(&DAT_841dbfc0 + iVar1) == *(short *)(&DAT_841dbfc2 + iVar1)) {
-      if ((dVar4 != 0.0) && (*(float *)(&DAT_841dbfcc + iVar1) != 0.0)) {
-        uVar3 = XAnimCloneInitTime(uVar2,param_2,*(undefined2 *)(&DAT_841dbfa6 + iVar1));
-        XAnimClearTreeGoalWeightsInternal(dVar4,uVar2,param_2);
-        __restgprlr_29(uVar3);
-        return;
-      }
-      XAnimResetTime(param_2);
+  uVar3 = (uint)uVar4;
+  if (((g_xAnimInfo[uVar3].state.currentAnimTime != 0.0) ||
+      (g_xAnimInfo[uVar3].state.cycleCount != 0)) &&
+     (g_xAnimInfo[uVar3].state.cycleCount == g_xAnimInfo[uVar3].state.oldCycleCount)) {
+    if ((dVar6 != 0.0) && (g_xAnimInfo[uVar3].state.weight != 0.0)) {
+      uVar5 = (uint)g_xAnimInfo[uVar3].parent;
+      uVar2 = XAnimCloneInitTime(pXVar1,uVar3,(uint)g_xAnimInfo[uVar3].parent);
+      XAnimClearTreeGoalWeightsInternal(pXVar1,uVar3,(float)dVar6,uVar5);
+      uVar3 = __restgprlr_29(uVar2);
+      return uVar3;
     }
+    XAnimResetTime(uVar3);
   }
-  __restgprlr_29(param_2);
-  return;
+  uVar3 = __restgprlr_29(uVar4);
+  return uVar3;
 }
 
 
 // 82624E68  XAnimUpdateOldTime  (xanim/xanim.cpp:1919)
 
-void XAnimUpdateOldTime(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
-                       ulonglong param_5,undefined1 *param_6)
+void XAnimUpdateOldTime(DObj *param_1,uint param_2,XAnimState *param_3,float param_4,bool param_5,
+                       bool *param_6)
 
 {
   float fVar1;
   ushort uVar2;
-  int *piVar3;
-  int iVar4;
-  int iVar5;
+  short sVar3;
+  XAnimTree *pXVar4;
+  XAnimParts *pXVar5;
   uint uVar6;
-  int *piVar7;
-  longlong lVar8;
-  bool bVar9;
-  float *pfVar10;
-  float *pfVar11;
-  bool bVar12;
+  uint uVar7;
+  DObj *pDVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  undefined1 *in_r8;
+  bool *pbVar12;
+  XAnimState *pXVar13;
+  longlong lVar14;
+  bool bVar15;
+  double dVar16;
   double extraout_f1;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   
-  piVar7 = (int *)__savegprlr_18();
-  piVar3 = (int *)*piVar7;
-  dVar15 = extraout_f1;
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x78b,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar11 = (ulonglong)(int)param_6;
+  lVar10 = (longlong)param_5;
+  uVar9 = (ulonglong)(int)param_2;
+  pDVar8 = (DObj *)__savegprlr_18((double)param_4,param_1);
+  pXVar4 = pDVar8->tree;
+  lVar14 = -0x7dfff068;
+  dVar20 = extraout_f1;
+  if (pXVar4 == (XAnimTree *)0x0) {
+    lVar10 = lVar14;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x78b,0,"%s")
+    ;
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x78c,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar4->anims == (XAnim_s *)0x0) {
+    lVar10 = lVar14;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x78c,0,"%s")
+    ;
   }
-  dVar14 = 0.0;
-  if (dVar15 < 0.0) {
-    MyAssertHandler(dVar15,0xffffffff82185bb8,0x78d,0,0xffffffff821867f4,0xffffffff82186808,dVar15);
+  dVar19 = 0.0;
+  if (dVar20 < 0.0) {
+    lVar10 = -0x7de7980c;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x78d,0,
+                    "%s\n\t(dtime) = %g");
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x78f,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar9 & 0xffffffff) == 0) || (0xfff < (uVar9 & 0xffffffff))) {
+    lVar10 = -0x7de7a178;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x78f,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  lVar8 = (param_2 & 0x3ffffff) * 0x40;
-  iVar5 = (int)lVar8;
-  if ((&DAT_841dbfac)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x792,0,0xffffffff82000f98,0xffffffff82185e68);
+  uVar6 = (uint)uVar9;
+  if (g_xAnimInfo[uVar6].inuse == false) {
+    lVar10 = lVar14;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x792,0,"%s")
+    ;
   }
-  lVar8 = lVar8 + -0x7be24048;
-  if (((param_5 & 0xff) == 0) ||
-     (dVar13 = (double)*(float *)(&DAT_841dbfc4 + iVar5), dVar13 <= dVar15)) {
-    *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar14;
-    *(undefined4 *)(&DAT_841dbfcc + iVar5) = *(undefined4 *)(&DAT_841dbfc8 + iVar5);
+  pXVar13 = &g_xAnimInfo[uVar6].state;
+  if (((uVar11 & 0xff) == 0) ||
+     (dVar18 = (double)g_xAnimInfo[uVar6].state.goalTime, dVar18 <= dVar20)) {
+    fVar1 = g_xAnimInfo[uVar6].state.goalWeight;
+    g_xAnimInfo[uVar6].state.goalTime = (float)dVar19;
+    g_xAnimInfo[uVar6].state.weight = fVar1;
   }
   else {
-    fVar1 = (float)((double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
-                                                   (double)*(float *)(&DAT_841dbfcc + iVar5)) /
-                                   dVar13) * dVar15 + (double)*(float *)(&DAT_841dbfcc + iVar5));
-    *(float *)(&DAT_841dbfcc + iVar5) = fVar1;
+    dVar17 = (double)g_xAnimInfo[uVar6].state.weight;
+    dVar16 = (double)g_xAnimInfo[uVar6].state.goalWeight;
+    fVar1 = (float)((double)(float)((double)(float)(dVar16 - dVar17) / dVar18) * dVar20 + dVar17);
+    g_xAnimInfo[uVar6].state.weight = fVar1;
     if (fVar1 < 1.0000001e-06) {
-      *(float *)(&DAT_841dbfcc + iVar5) =
-           (float)((double)*(float *)(&DAT_841dbfc8 + iVar5) * 0.0010000000474974513);
+      g_xAnimInfo[uVar6].state.weight = (float)(dVar16 * 0.0010000000474974513);
     }
-    *(float *)(&DAT_841dbfc4 + iVar5) = (float)(dVar13 - dVar15);
+    g_xAnimInfo[uVar6].state.goalTime = (float)(dVar18 - dVar20);
   }
-  if (((param_5 & 0xff) == 0) || (bVar9 = true, (double)*(float *)(&DAT_841dbfcc + iVar5) == dVar14)
-     ) {
-    bVar9 = false;
+  if (((uVar11 & 0xff) == 0) ||
+     (pbVar12 = (bool *)0x1, (double)g_xAnimInfo[uVar6].state.weight == dVar19)) {
+    pbVar12 = (bool *)0x0;
   }
-  (&DAT_841dbfd4)[iVar5] = 0;
-  if ((&DAT_841dbfac)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x7a7,0,0xffffffff82000f98,0xffffffff82185e68);
+  g_xAnimInfo[uVar6].state.instantWeightChange = false;
+  if (g_xAnimInfo[uVar6].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x7a7,0,"%s")
+    ;
+    lVar10 = lVar14;
   }
-  if (*(short *)(&DAT_841dbfaa + iVar5) == 0) {
-    bVar12 = false;
-    if ((*(ushort *)(&DAT_841dbfb4 + iVar5) & 4) != 0) {
-      param_3 = lVar8;
+  if (g_xAnimInfo[uVar6].animToModel == 0) {
+    bVar15 = false;
+    if ((g_xAnimInfo[uVar6].field12_0x1c.animParent.flags & 4) != 0) {
+      param_3 = pXVar13;
     }
-    uVar2 = *(ushort *)(&DAT_841dbfa4 + iVar5);
-    while (uVar6 = (uint)uVar2, uVar6 != 0) {
-      uVar2 = (&DAT_841dbfa2)[uVar6 * 0x20];
-      XAnimUpdateOldTime(dVar15,piVar7,uVar6,param_3);
+    uVar2 = g_xAnimInfo[uVar6].children;
+    while (uVar7 = (uint)uVar2, uVar7 != 0) {
+      uVar2 = g_xAnimInfo[uVar7].next;
+      XAnimUpdateOldTime(pDVar8,uVar7,param_3,(float)dVar20,SUB81(lVar10,0),pbVar12);
     }
   }
   else {
-    iVar4 = *(int *)(&DAT_841dbfb4 + iVar5);
-    if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x7ad,0,0xffffffff82000f98,0xffffffff8213fd58);
+    pXVar5 = g_xAnimInfo[uVar6].field12_0x1c.parts;
+    if (pXVar5 == (XAnimParts *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x7ad,0,
+                      "%s");
     }
-    bVar12 = (double)*(float *)(iVar4 + 0x2c) != dVar14;
+    bVar15 = (double)pXVar5->frequency != dVar19;
   }
-  pfVar11 = (float *)lVar8;
-  if ((bVar9) && (bVar12)) {
-    *param_6 = 1;
-  }
-  else if ((*(short *)(&DAT_841dbfaa + iVar5) == 0) &&
-          ((*(ushort *)(&DAT_841dbfb4 + iVar5) & 4) != 0)) {
-    XAnimInitTime(dVar14,piVar3,param_2);
+  if ((pbVar12 == (bool *)0x0) || (!bVar15)) {
+    if ((g_xAnimInfo[uVar6].animToModel == 0) &&
+       ((g_xAnimInfo[uVar6].field12_0x1c.animParent.flags & 4) != 0)) {
+      XAnimInitTime(pXVar4,uVar6,(float)dVar19);
+    }
+    else if ((pXVar13->currentAnimTime != param_3->currentAnimTime) ||
+            (g_xAnimInfo[uVar6].state.cycleCount != param_3->cycleCount)) {
+      pXVar13->currentAnimTime = param_3->currentAnimTime;
+      g_xAnimInfo[uVar6].state.cycleCount = param_3->cycleCount;
+      g_xAnimInfo[uVar6].notifyIndex = -1;
+    }
   }
   else {
-    pfVar10 = (float *)param_3;
-    if ((*pfVar11 != *pfVar10) || (*(short *)(&DAT_841dbfc0 + iVar5) != *(short *)(pfVar10 + 2))) {
-      *pfVar11 = *pfVar10;
-      *(undefined2 *)(&DAT_841dbfc0 + iVar5) = *(undefined2 *)(pfVar10 + 2);
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    }
+    *in_r8 = 1;
   }
-  *(float *)((int)&DAT_841dbfbc + iVar5) = *pfVar11;
-  *(undefined2 *)(&DAT_841dbfc2 + iVar5) = *(undefined2 *)(&DAT_841dbfc0 + iVar5);
+  sVar3 = g_xAnimInfo[uVar6].state.cycleCount;
+  g_xAnimInfo[uVar6].state.oldTime = pXVar13->currentAnimTime;
+  g_xAnimInfo[uVar6].state.oldCycleCount = sVar3;
   __restgprlr_18();
   return;
 }
@@ -2187,427 +2417,455 @@ void XAnimUpdateOldTime(undefined8 param_1,ulonglong param_2,longlong param_3,un
 
 // 82620A08  NotifyServerNotetrack  (xanim/xanim.cpp:2009)
 
-void NotifyServerNotetrack(int param_1,undefined8 param_2,undefined8 param_3)
+void NotifyServerNotetrack(DObj *param_1,uint param_2,uint param_3)
 
 {
   Scr_AddConstString(param_3);
-  Scr_NotifyNum((ulonglong)*(ushort *)(param_1 + 6) - 1,0,param_2,1);
+  Scr_NotifyNum(param_1->entnum - 1,0,param_2,1);
   return;
 }
 
 
 // 826251A8  XAnimGetServerNotifyFracSyncTotal  (xanim/xanim.cpp:2016)
 
-void XAnimGetServerNotifyFracSyncTotal
-               (undefined8 param_1,int param_2,undefined8 param_3,undefined8 param_4)
+float XAnimGetServerNotifyFracSyncTotal
+                (DObj *param_1,XAnimInfo *param_2,XAnimState *param_3,XAnimState *param_4,
+                float param_5)
 
 {
-  undefined8 uVar1;
+  DObj *pDVar1;
   uint uVar2;
-  int iVar3;
-  undefined8 extraout_f1;
+  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  undefined8 uVar7;
+  float fVar6;
   
-  uVar1 = __savegprlr_24();
-  uVar7 = extraout_f1;
-  dVar4 = (double)XAnimGetNextServerNotifyFrac();
-  uVar2 = (uint)*(ushort *)(param_2 + 0xc);
+  pDVar1 = (DObj *)__savegprlr_24((double)param_5,param_1);
+  dVar4 = extraout_f1;
+  fVar6 = XAnimGetNextServerNotifyFrac(pDVar1,param_2,param_3,param_4,(float)extraout_f1);
+  dVar3 = (double)fVar6;
+  uVar2 = (uint)param_2->children;
   if (uVar2 != 0) {
-    dVar6 = 0.0;
+    dVar5 = 0.0;
     do {
       if (0xfff < uVar2) {
-        MyAssertHandler(0xffffffff82185bb8,0x7e9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x7e9,0,
+                        "%s\n\t(infoIndex) = %i");
       }
-      iVar3 = uVar2 * 0x40;
-      if ((((double)*(float *)(&DAT_841dbfcc + iVar3) != dVar6) &&
-          ((double)*(float *)(&DAT_841dbfc8 + iVar3) != dVar6)) &&
-         (dVar5 = (double)XAnimGetServerNotifyFracSyncTotal
-                                    (uVar7,uVar1,&DAT_841dbf98 + iVar3,param_3,param_4),
-         dVar5 < dVar4)) {
-        dVar4 = dVar5;
+      if (((double)g_xAnimInfo[uVar2].state.weight != dVar5) &&
+         ((double)g_xAnimInfo[uVar2].state.goalWeight != dVar5)) {
+        fVar6 = XAnimGetServerNotifyFracSyncTotal
+                          (pDVar1,g_xAnimInfo + uVar2,param_3,param_4,(float)dVar4);
+        if ((double)fVar6 < dVar3) {
+          dVar3 = (double)fVar6;
+        }
       }
-      uVar2 = (uint)(ushort)(&DAT_841dbfa2)[uVar2 * 0x20];
+      uVar2 = (uint)g_xAnimInfo[uVar2].next;
     } while (uVar2 != 0);
   }
-  __restgprlr_24(dVar4);
-  return;
+  dVar4 = (double)__restgprlr_24(dVar3);
+  return (float)dVar4;
 }
 
 
 // 826252A0  XAnimFindServerNoteTrackLeafNode  (xanim/xanim.cpp:2041)
 
-void XAnimFindServerNoteTrackLeafNode(undefined8 param_1,longlong param_2)
+float XAnimFindServerNoteTrackLeafNode(DObj *param_1,XAnimInfo *param_2,float param_3)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  undefined8 uVar4;
-  short sVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  float local_70;
-  float local_6c;
-  short local_68;
-  short local_66;
-  
-  uVar4 = __savegprlr_26();
-  iVar3 = (int)param_2;
-  dVar6 = extraout_f1;
-  if (*(char *)(iVar3 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x800,0,0xffffffff82000f98,0xffffffff82185e68);
-  }
-  iVar2 = *(int *)(iVar3 + 0x1c);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x804,0,0xffffffff82000f98,0xffffffff8213fd58);
-  }
-  dVar6 = (double)(float)((double)(*(float *)(iVar2 + 0x2c) * *(float *)(iVar3 + 0x38)) * dVar6);
-  if (dVar6 == 0.0) {
-    __restgprlr_26(0x3ff0000000000000);
-    return;
-  }
-  sVar5 = *(short *)(iVar3 + 0x2a);
-  dVar7 = (double)(float)((double)*(float *)(iVar3 + 0x24) + dVar6);
-  if (dVar7 < 0.0) {
-    MyAssertHandler(dVar7,0xffffffff82185bb8,0x80f,0,0xffffffff82028794,0xffffffff82185f94,dVar7);
-  }
-  if ((*(byte *)(iVar2 + 0x10) & 1) == 0) {
-    if ((1.0 <= dVar7) && (dVar7 = 1.0, *(float *)(iVar3 + 0x24) - 0.9999999 < 0.0)) {
-      dVar7 = 0.9999998807907104;
-    }
-  }
-  else {
-    for (; 1.0 <= dVar7; dVar7 = (double)(float)(dVar7 - 1.0)) {
-      sVar5 = sVar5 + 1;
-    }
-  }
-  fVar1 = *(float *)(param_2 + 0x20);
-  if ((float)((double)fVar1 - dVar7) <=
-      (float)(longlong)((int)sVar5 - (int)*(short *)(iVar3 + 0x28))) {
-    local_70 = (float)dVar7;
-    local_6c = fVar1;
-    local_68 = sVar5;
-    local_66 = *(short *)(iVar3 + 0x28);
-    XAnimGetNextServerNotifyFrac(dVar6,uVar4,param_2,param_2 + 0x20,&local_70);
-  }
-  __restgprlr_26();
-  return;
-}
-
-
-// 82625468  XAnimFindServerNoteTrackSyncSubTree  (xanim/xanim.cpp:2094)
-
-void XAnimFindServerNoteTrackSyncSubTree(undefined8 param_1,longlong param_2)
-
-{
-  ushort uVar1;
-  int iVar2;
-  undefined8 uVar3;
+  short sVar1;
+  XAnimParts *pXVar2;
+  DObj *pDVar3;
   short sVar4;
   double extraout_f1;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  float local_90;
-  float local_8c;
-  short local_88;
-  short local_86;
+  float fVar8;
+  XAnimState local_70 [3];
   
-  __savegprlr_24();
-  uVar3 = __savefpr_28();
-  iVar2 = (int)param_2;
-  dVar8 = (double)(float)((double)*(float *)(iVar2 + 0x24) + extraout_f1);
-  sVar4 = *(short *)(iVar2 + 0x2a);
-  dVar6 = 0.0;
-  dVar5 = extraout_f1;
-  if (dVar8 < 0.0) {
-    MyAssertHandler(dVar8,0xffffffff82185bb8,0x838,0,0xffffffff82028794,0xffffffff82185f94,dVar8);
+  pDVar3 = (DObj *)__savegprlr_26((double)param_3,param_1);
+  dVar6 = extraout_f1;
+  if (param_2->inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x800,0,"%s")
+    ;
   }
-  if (*(char *)(iVar2 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x83b,0,0xffffffff82000f98,0xffffffff82185e68);
+  pXVar2 = (param_2->field12_0x1c).parts;
+  if (pXVar2 == (XAnimParts *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x804,0,"%s")
+    ;
   }
-  uVar1 = *(ushort *)(iVar2 + 0x1c);
-  if ((uVar1 & 2) == 0) {
-    if ((uVar1 & 1) == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x846,0,0xffffffff82000f98,0xffffffff8218681c);
+  dVar6 = (double)(float)((double)(pXVar2->frequency * (param_2->state).rate) * dVar6);
+  if (dVar6 == 0.0) {
+    dVar6 = (double)__restgprlr_26(0x3ff0000000000000);
+    return (float)dVar6;
+  }
+  sVar4 = (param_2->state).oldCycleCount;
+  dVar7 = (double)(float)((double)(param_2->state).oldTime + dVar6);
+  if (dVar7 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x80f,0,
+                    "%s\n\t(time) = %g");
+  }
+  dVar5 = 1.0;
+  if ((pXVar2->flags & 1) == 0) {
+    if ((1.0 <= dVar7) && (dVar7 = dVar5, (param_2->state).oldTime - 0.9999999 < 0.0)) {
+      dVar7 = 0.9999998807907104;
     }
-    dVar7 = 1.0;
-    for (; 1.0 <= dVar8; dVar8 = (double)(float)(dVar8 - 1.0)) {
+  }
+  else {
+    for (; 1.0 <= dVar7; dVar7 = (double)(float)(dVar7 - 1.0)) {
       sVar4 = sVar4 + 1;
     }
-    if (1.0 <= dVar8) {
-      MyAssertHandler(dVar8,0xffffffff82185bb8,0x84d,0,0xffffffff82028794,0xffffffff82185f84,dVar8);
+  }
+  sVar1 = (param_2->state).cycleCount;
+  fVar8 = (param_2->state).currentAnimTime;
+  if ((float)((double)fVar8 - dVar7) <= (float)(longlong)((int)sVar4 - (int)sVar1)) {
+    local_70[0].currentAnimTime = (float)dVar7;
+    local_70[0].oldTime = fVar8;
+    local_70[0].cycleCount = sVar4;
+    local_70[0].oldCycleCount = sVar1;
+    fVar8 = XAnimGetNextServerNotifyFrac(pDVar3,param_2,&param_2->state,local_70,(float)dVar6);
+    dVar5 = (double)fVar8;
+  }
+  dVar6 = (double)__restgprlr_26(dVar5);
+  return (float)dVar6;
+}
+
+
+// 82625468  XAnimFindServerNoteTrackSyncSubTree  (xanim/xanim.cpp:2094)
+
+float XAnimFindServerNoteTrackSyncSubTree(DObj *param_1,XAnimInfo *param_2,float param_3)
+
+{
+  ushort uVar1;
+  DObj *pDVar2;
+  short sVar3;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float fVar8;
+  XAnimState local_90 [4];
+  
+  __savegprlr_24((double)param_3,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar7 = (double)(float)((double)(param_2->state).oldTime + extraout_f1);
+  sVar3 = (param_2->state).oldCycleCount;
+  dVar5 = 0.0;
+  dVar4 = extraout_f1;
+  if (dVar7 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x838,0,
+                    "%s\n\t(time) = %g");
+  }
+  if (param_2->inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x83b,0,"%s")
+    ;
+  }
+  uVar1 = (param_2->field12_0x1c).animParent.flags;
+  if ((uVar1 & 2) == 0) {
+    if ((uVar1 & 1) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x846,0,
+                      "%s");
     }
-    if (dVar8 < dVar6) {
-      MyAssertHandler(dVar8,0xffffffff82185bb8,0x84e,0,0xffffffff82028794,0xffffffff82185f94,dVar8);
+    dVar6 = 1.0;
+    for (; 1.0 <= dVar7; dVar7 = (double)(float)(dVar7 - 1.0)) {
+      sVar3 = sVar3 + 1;
+    }
+    if (1.0 <= dVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x84d,0,
+                      "%s\n\t(time) = %g");
+    }
+    if (dVar7 < dVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x84e,0,
+                      "%s\n\t(time) = %g");
     }
   }
   else {
     if ((uVar1 & 1) != 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x840,0,0xffffffff82000f98,0xffffffff8218684c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x840,0,
+                      "%s");
     }
-    dVar7 = 1.0;
-    if ((1.0 <= dVar8) && (dVar8 = dVar7, *(float *)(iVar2 + 0x24) - 0.9999999 < 0.0)) {
-      dVar8 = 0.9999998807907104;
+    dVar6 = 1.0;
+    if ((1.0 <= dVar7) && (dVar7 = dVar6, (param_2->state).oldTime - 0.9999999 < 0.0)) {
+      dVar7 = 0.9999998807907104;
     }
   }
-  local_86 = *(short *)(iVar2 + 0x28);
-  local_8c = *(float *)(param_2 + 0x20);
-  if ((float)(longlong)((int)sVar4 - (int)local_86) < (float)((double)local_8c - dVar8)) {
-    __restfpr_28(dVar7);
-    __restgprlr_24();
-    return;
+  local_90[0].oldCycleCount = (param_2->state).cycleCount;
+  local_90[0].oldTime = (param_2->state).currentAnimTime;
+  if ((float)(longlong)((int)sVar3 - (int)local_90[0].oldCycleCount) <
+      (float)((double)local_90[0].oldTime - dVar7)) {
+    __restfpr_28(dVar6);
+    dVar7 = (double)__restgprlr_24();
+    return (float)dVar7;
   }
-  local_90 = (float)dVar8;
-  local_88 = sVar4;
-  XAnimGetServerNotifyFracSyncTotal(dVar5,uVar3,param_2,param_2 + 0x20,&local_90);
-  __restfpr_28();
-  __restgprlr_24();
-  return;
+  local_90[0].currentAnimTime = (float)dVar7;
+  local_90[0].cycleCount = sVar3;
+  fVar8 = XAnimGetServerNotifyFracSyncTotal(pDVar2,param_2,&param_2->state,local_90,(float)dVar4);
+  __restfpr_28((double)fVar8);
+  dVar7 = (double)__restgprlr_24();
+  return (float)dVar7;
 }
 
 
 // 826256A8  XAnimFindServerNoteTrack  (xanim/xanim.cpp:2143)
 
-void XAnimFindServerNoteTrack(undefined8 param_1,ulonglong param_2)
+float XAnimFindServerNoteTrack(DObj *param_1,uint param_2,float param_3)
 
 {
   ushort uVar1;
-  int *piVar2;
-  int iVar3;
-  uint uVar4;
-  int *piVar5;
-  longlong lVar6;
+  XAnimTree *pXVar2;
+  uint uVar3;
+  DObj *pDVar4;
+  ulonglong uVar5;
   double extraout_f1;
+  double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
+  float fVar8;
   
-  piVar5 = (int *)__savegprlr_25();
-  piVar2 = (int *)*piVar5;
-  dVar8 = extraout_f1;
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x867,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar5 = (ulonglong)(int)param_2;
+  pDVar4 = (DObj *)__savegprlr_25((double)param_3,param_1);
+  pXVar2 = pDVar4->tree;
+  dVar6 = extraout_f1;
+  if (pXVar2 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x867,0,"%s")
+    ;
   }
-  dVar9 = 0.0;
-  if (dVar8 < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x869,0,0xffffffff82000f98,0xffffffff821868d8);
+  dVar7 = 0.0;
+  if (dVar6 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x869,0,"%s")
+    ;
   }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x86a,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar2->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x86a,0,"%s")
+    ;
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x86c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar5 & 0xffffffff) == 0) || (0xfff < (uVar5 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x86c,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  lVar6 = (param_2 & 0x3ffffff) * 0x40 + -0x7be24068;
-  iVar3 = (int)lVar6;
-  if (((double)*(float *)(iVar3 + 0x34) != dVar9) && ((double)*(float *)(iVar3 + 0x30) != dVar9)) {
-    if (*(char *)(iVar3 + 0x14) == '\0') {
-      MyAssertHandler(0xffffffff82185bb8,0x874,0,0xffffffff82000f98,0xffffffff82185e68);
+  uVar3 = (uint)uVar5;
+  if (((double)g_xAnimInfo[uVar3].state.weight != dVar7) &&
+     ((double)g_xAnimInfo[uVar3].state.goalWeight != dVar7)) {
+    if (g_xAnimInfo[uVar3].inuse == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x874,0,
+                      "%s");
     }
-    if (*(short *)(iVar3 + 0x12) != 0) {
-      XAnimFindServerNoteTrackLeafNode(dVar8,piVar5,lVar6);
-      __restgprlr_25();
-      return;
+    if (g_xAnimInfo[uVar3].animToModel != 0) {
+      fVar8 = XAnimFindServerNoteTrackLeafNode(pDVar4,g_xAnimInfo + uVar3,(float)dVar6);
+      dVar6 = (double)__restgprlr_25((double)fVar8);
+      return (float)dVar6;
     }
-    if ((*(ushort *)(iVar3 + 0x1c) & 3) == 0) {
-      if ((*(short *)((int)piVar5 + 6) != 0) && (*(short *)(iVar3 + 4) != 0)) {
-        MyAssertHandler(0xffffffff82185bb8,0x887,0,0xffffffff82000f98,0xffffffff82186880);
+    if ((g_xAnimInfo[uVar3].field12_0x1c.animParent.flags & 3) == 0) {
+      if ((pDVar4->entnum != 0) && (g_xAnimInfo[uVar3].notifyName != 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x887,0,
+                        "%s");
       }
-      dVar8 = (double)(float)((double)*(float *)(iVar3 + 0x38) * dVar8);
-      if (dVar8 != dVar9) {
-        uVar1 = *(ushort *)(iVar3 + 0xc);
-        dVar9 = 1.0;
-        while (uVar4 = (uint)uVar1, uVar4 != 0) {
-          dVar7 = (double)XAnimFindServerNoteTrack(dVar8,piVar5,uVar4);
-          uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
-          if ((float)(dVar7 - dVar9) < 0.0) {
-            dVar9 = dVar7;
+      dVar6 = (double)(float)((double)g_xAnimInfo[uVar3].state.rate * dVar6);
+      if (dVar6 != dVar7) {
+        uVar1 = g_xAnimInfo[uVar3].children;
+        dVar7 = 1.0;
+        while (uVar3 = (uint)uVar1, uVar3 != 0) {
+          fVar8 = XAnimFindServerNoteTrack(pDVar4,uVar3,(float)dVar6);
+          uVar1 = g_xAnimInfo[uVar3].next;
+          if ((float)((double)fVar8 - dVar7) < 0.0) {
+            dVar7 = (double)fVar8;
           }
         }
-        __restgprlr_25(dVar9);
-        return;
+        dVar6 = (double)__restgprlr_25(dVar7);
+        return (float)dVar6;
       }
     }
     else {
-      dVar7 = (double)XAnimGetAverageRateFrequency(piVar2,param_2);
-      dVar8 = (double)(float)((double)(float)(dVar7 * (double)*(float *)(iVar3 + 0x38)) * dVar8);
-      if (dVar8 != dVar9) {
-        if ((double)*(float *)(iVar3 + 0x24) < dVar9) {
-          MyAssertHandler(0xffffffff82185bb8,0x881,0,0xffffffff821868a4,0xffffffff821868c0,
-                          (double)*(float *)(iVar3 + 0x24));
+      fVar8 = XAnimGetAverageRateFrequency(pXVar2,uVar3);
+      dVar6 = (double)(float)((double)(fVar8 * g_xAnimInfo[uVar3].state.rate) * dVar6);
+      if (dVar6 != dVar7) {
+        if ((double)g_xAnimInfo[uVar3].state.oldTime < dVar7) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x881,0
+                          ,"%s\n\t(state->oldTime) = %g");
         }
-        XAnimFindServerNoteTrackSyncSubTree(dVar8,piVar5,lVar6);
-        __restgprlr_25();
-        return;
+        fVar8 = XAnimFindServerNoteTrackSyncSubTree(pDVar4,g_xAnimInfo + uVar3,(float)dVar6);
+        dVar6 = (double)__restgprlr_25((double)fVar8);
+        return (float)dVar6;
       }
     }
   }
-  __restgprlr_25(0x3ff0000000000000);
-  return;
+  dVar6 = (double)__restgprlr_25(0x3ff0000000000000);
+  return (float)dVar6;
 }
 
 
 // 82625938  XAnimProcessServerNotify  (xanim/xanim.cpp:2202)
 
-void XAnimProcessServerNotify(undefined8 param_1,undefined8 param_2)
+void XAnimProcessServerNotify(DObj *param_1,XAnimInfo *param_2,float param_3)
 
 {
   short sVar1;
-  int iVar2;
-  float *pfVar3;
-  int *piVar4;
-  int iVar5;
+  XAnimTree *pXVar2;
+  XAnimNotifyInfo *pXVar3;
+  DObj *pDVar4;
+  XAnimParts *pXVar5;
   int iVar6;
-  int iVar7;
-  undefined2 *puVar8;
+  XAnimNotifyInfo *pXVar7;
   double extraout_f1;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   
-  piVar4 = (int *)__savegprlr_23();
-  iVar2 = (int)param_2;
-  dVar11 = extraout_f1;
-  if (*(float *)(iVar2 + 0x30) == 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x8a0,0,0xffffffff82000f98,0xffffffff82186368);
+  pDVar4 = (DObj *)__savegprlr_23((double)param_3,param_1);
+  dVar10 = extraout_f1;
+  if ((param_2->state).goalWeight == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8a0,0,"%s")
+    ;
   }
-  dVar10 = 1.0;
-  if (1.0 < dVar11) {
-    MyAssertHandler(dVar11,0xffffffff82185bb8,0x8a1,0,0xffffffff82028794,0xffffffff82186984,dVar11);
+  dVar9 = 1.0;
+  if (1.0 < dVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8a1,0,
+                    "%s\n\t(time) = %g");
   }
-  if ((*(short *)((int)piVar4 + 6) != 0) && (*(short *)(iVar2 + 4) != 0)) {
-    if ((double)*(float *)(iVar2 + 0x20) == dVar10) {
+  if ((pDVar4->entnum != 0) && (param_2->notifyName != 0)) {
+    if ((double)(param_2->state).currentAnimTime == dVar9) {
 LAB_82625a4c:
-      Scr_AddConstString(DAT_8421bf98);
-      Scr_NotifyNum((ulonglong)*(ushort *)((int)piVar4 + 6) - 1,0,*(undefined2 *)(iVar2 + 4),1);
+      Scr_AddConstString(g_endNotetrackName);
+      Scr_NotifyNum(pDVar4->entnum - 1,0,(uint)param_2->notifyName,1);
       __restgprlr_23();
       return;
     }
-    iVar5 = *piVar4;
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x8b0,0,0xffffffff82000f98,0xffffffff821813e0);
+    pXVar2 = pDVar4->tree;
+    if (pXVar2 == (XAnimTree *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8b0,0,
+                      "%s");
     }
-    iVar5 = XAnimGetParts(iVar5,param_2);
-    if (iVar5 == 0) {
-      if ((dVar11 < (double)*(float *)(iVar2 + 0x20)) || (dVar11 == dVar10)) goto LAB_82625a4c;
+    pXVar5 = XAnimGetParts(pXVar2,param_2);
+    if (pXVar5 == (XAnimParts *)0x0) {
+      if ((dVar10 < (double)(param_2->state).currentAnimTime) || (dVar10 == dVar9))
+      goto LAB_82625a4c;
     }
-    else if ((*(ushort *)(iVar2 + 2) < 0x8000) ||
-            (XAnimUpdateServerNotifyIndex(param_2,iVar5), *(ushort *)(iVar2 + 2) < 0x8000)) {
-      if (dVar10 <= (double)*(float *)(iVar2 + 0x20)) {
-        MyAssertHandler(0xffffffff82185bb8,0x8cb,0,0xffffffff82000f98,0xffffffff82186960);
+    else if (((ushort)param_2->notifyIndex < 0x8000) ||
+            (XAnimUpdateServerNotifyIndex(param_2,pXVar5), (ushort)param_2->notifyIndex < 0x8000)) {
+      if (dVar9 <= (double)(param_2->state).currentAnimTime) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8cb,0,
+                        "%s");
       }
-      if (*(char *)(iVar5 + 0x1d) == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0x8cc,0,0xffffffff82000f98,0xffffffff82186948);
+      if (pXVar5->notifyCount == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8cc,0,
+                        "%s");
       }
-      if (dVar10 < (double)*(float *)(*(int *)(iVar5 + 0x50) + 4)) {
-        MyAssertHandler(0xffffffff82185bb8,0x8cd,0,0xffffffff82000f98,0xffffffff82186928);
+      if (dVar9 < (double)pXVar5->notify->time) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8cd,0,
+                        "%s");
       }
-      sVar1 = *(short *)(iVar2 + 2);
-      iVar7 = (int)sVar1;
+      sVar1 = param_2->notifyIndex;
+      iVar6 = (int)sVar1;
       if (sVar1 < 0) {
-        MyAssertHandler(0xffffffff82185bb8,0x8d0,0,0xffffffff82000f98,0xffffffff82186914);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8d0,0,
+                        "%s");
       }
-      if ((short)(ushort)*(byte *)(iVar5 + 0x1d) <= sVar1) {
-        MyAssertHandler(0xffffffff82185bb8,0x8d1,0,0xffffffff82000f98,0xffffffff82186024);
+      if ((short)(ushort)pXVar5->notifyCount <= sVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8d1,0,
+                        "%s");
       }
-      dVar9 = (double)*(float *)(iVar2 + 0x20);
-      iVar6 = iVar7 * 8 + *(int *)(iVar5 + 0x50);
-      if (dVar9 <= dVar11) {
-        if (dVar11 == dVar10) {
-          if ((*(byte *)(iVar5 + 0x10) & 1) != 0) {
-            MyAssertHandler(0xffffffff82185bb8,0x902,0,0xffffffff82000f98,0xffffffff82185fe4);
+      pXVar7 = pXVar5->notify;
+      dVar8 = (double)(param_2->state).currentAnimTime;
+      if (dVar8 <= dVar10) {
+        if (dVar10 == dVar9) {
+          if ((pXVar5->flags & 1) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x902
+                            ,0,"%s");
           }
-          if (*(float *)(iVar2 + 0x20) <= *(float *)(iVar6 + 4)) {
-            if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
-              MyAssertHandler(0xffffffff82185bb8,0x907,0,0xffffffff82000f98,0xffffffff82186024);
+          if ((param_2->state).currentAnimTime <= pXVar7[iVar6].time) {
+            if ((int)(uint)pXVar5->notifyCount <= iVar6) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                              0x907,0,"%s");
             }
-            puVar8 = (undefined2 *)(iVar6 + -8);
+            pXVar7 = pXVar7 + iVar6 + -1;
             do {
-              if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
-                MyAssertHandler(0xffffffff82185bb8,0x90b,0,0xffffffff82000f98,0xffffffff821868e4);
+              if (pXVar7[1].time < (param_2->state).currentAnimTime) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                                0x90b,0,"%s");
               }
-              puVar8 = puVar8 + 4;
-              NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),*puVar8);
-              iVar7 = iVar7 + 1;
-            } while (iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d));
+              pXVar7 = pXVar7 + 1;
+              NotifyServerNotetrack(pDVar4,(uint)param_2->notifyName,(uint)pXVar7->name);
+              iVar6 = iVar6 + 1;
+            } while (iVar6 < (int)(uint)pXVar5->notifyCount);
             __restgprlr_23();
             return;
           }
         }
-        else if (((double)*(float *)(iVar6 + 4) < dVar11) &&
-                (dVar9 <= (double)*(float *)(iVar6 + 4))) {
-          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
-            MyAssertHandler(0xffffffff82185bb8,0x91a,0,0xffffffff82000f98,0xffffffff82186024);
+        else if (((double)pXVar7[iVar6].time < dVar10) && (dVar8 <= (double)pXVar7[iVar6].time)) {
+          if ((int)(uint)pXVar5->notifyCount <= iVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x91a
+                            ,0,"%s");
           }
-          puVar8 = (undefined2 *)(iVar6 + -8);
+          pXVar7 = pXVar7 + iVar6 + -1;
           do {
-            if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
-              MyAssertHandler(0xffffffff82185bb8,0x91e,0,0xffffffff82000f98,0xffffffff821868e4);
+            if (pXVar7[1].time < (param_2->state).currentAnimTime) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                              0x91e,0,"%s");
             }
-            NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
-            iVar7 = iVar7 + 1;
-          } while ((iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d)) &&
-                  (pfVar3 = (float *)(puVar8 + 10), puVar8 = puVar8 + 4, (double)*pfVar3 < dVar11));
+            NotifyServerNotetrack(pDVar4,(uint)param_2->notifyName,(uint)pXVar7[1].name);
+            iVar6 = iVar6 + 1;
+          } while ((iVar6 < (int)(uint)pXVar5->notifyCount) &&
+                  (pXVar3 = pXVar7 + 2, pXVar7 = pXVar7 + 1, (double)pXVar3->time < dVar10));
         }
       }
-      else if (dVar11 <= (double)*(float *)(iVar6 + 4)) {
-        if (dVar9 <= (double)*(float *)(iVar6 + 4)) {
-          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
-            MyAssertHandler(0xffffffff82185bb8,0x8e7,0,0xffffffff82000f98,0xffffffff82186024);
+      else if (dVar10 <= (double)pXVar7[iVar6].time) {
+        if (dVar8 <= (double)pXVar7[iVar6].time) {
+          if ((int)(uint)pXVar5->notifyCount <= iVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8e7
+                            ,0,"%s");
           }
-          puVar8 = (undefined2 *)(iVar6 + -8);
+          pXVar7 = pXVar7 + iVar6 + -1;
           do {
-            if (*(float *)(puVar8 + 6) < *(float *)(iVar2 + 0x20)) {
-              MyAssertHandler(0xffffffff82185bb8,0x8eb,0,0xffffffff82000f98,0xffffffff821868e4);
+            if (pXVar7[1].time < (param_2->state).currentAnimTime) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                              0x8eb,0,"%s");
             }
-            puVar8 = puVar8 + 4;
-            NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),*puVar8);
-            iVar7 = iVar7 + 1;
-          } while (iVar7 < (int)(uint)*(byte *)(iVar5 + 0x1d));
-          iVar7 = 0;
-          if ((double)*(float *)(*(int *)(iVar5 + 0x50) + 4) < dVar11) {
-            puVar8 = (undefined2 *)(*(int *)(iVar5 + 0x50) + -8);
+            pXVar7 = pXVar7 + 1;
+            NotifyServerNotetrack(pDVar4,(uint)param_2->notifyName,(uint)pXVar7->name);
+            iVar6 = iVar6 + 1;
+          } while (iVar6 < (int)(uint)pXVar5->notifyCount);
+          iVar6 = 0;
+          if ((double)pXVar5->notify->time < dVar10) {
+            pXVar7 = pXVar5->notify + -1;
             do {
-              if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
-                MyAssertHandler(0xffffffff82185bb8,0x8f6,0,0xffffffff82000f98,0xffffffff82186024);
+              if ((int)(uint)pXVar5->notifyCount <= iVar6) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",
+                                0x8f6,0,"%s");
               }
-              NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
-              pfVar3 = (float *)(puVar8 + 10);
-              iVar7 = iVar7 + 1;
-              puVar8 = puVar8 + 4;
-            } while ((double)*pfVar3 < dVar11);
+              NotifyServerNotetrack(pDVar4,(uint)param_2->notifyName,(uint)pXVar7[1].name);
+              pXVar3 = pXVar7 + 2;
+              iVar6 = iVar6 + 1;
+              pXVar7 = pXVar7 + 1;
+            } while ((double)pXVar3->time < dVar10);
             __restgprlr_23();
             return;
           }
         }
       }
       else {
-        if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) {
-          MyAssertHandler(0xffffffff82185bb8,0x8d8,0,0xffffffff82000f98,0xffffffff82186024);
+        if ((int)(uint)pXVar5->notifyCount <= iVar6) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x8d8,0
+                          ,"%s");
         }
-        puVar8 = (undefined2 *)(iVar6 + -8);
+        pXVar7 = pXVar7 + iVar6 + -1;
         while( true ) {
-          NotifyServerNotetrack(piVar4,*(undefined2 *)(iVar2 + 4),puVar8[4]);
-          iVar7 = iVar7 + 1;
-          if ((int)(uint)*(byte *)(iVar5 + 0x1d) <= iVar7) break;
-          pfVar3 = (float *)(puVar8 + 10);
-          puVar8 = puVar8 + 4;
-          if (dVar11 <= (double)*pfVar3) {
+          NotifyServerNotetrack(pDVar4,(uint)param_2->notifyName,(uint)pXVar7[1].name);
+          iVar6 = iVar6 + 1;
+          if ((int)(uint)pXVar5->notifyCount <= iVar6) break;
+          pXVar3 = pXVar7 + 2;
+          pXVar7 = pXVar7 + 1;
+          if (dVar10 <= (double)pXVar3->time) {
             __restgprlr_23();
             return;
           }
         }
       }
     }
-    else if ((dVar11 < (double)*(float *)(iVar2 + 0x20)) || (dVar11 == dVar10)) {
-      Scr_AddConstString(DAT_8421bf98);
-      Scr_NotifyNum((ulonglong)*(ushort *)((int)piVar4 + 6) - 1,0,*(undefined2 *)(iVar2 + 4),1);
+    else if ((dVar10 < (double)(param_2->state).currentAnimTime) || (dVar10 == dVar9)) {
+      Scr_AddConstString(g_endNotetrackName);
+      Scr_NotifyNum(pDVar4->entnum - 1,0,(uint)param_2->notifyName,1);
       __restgprlr_23();
       return;
     }
@@ -2619,31 +2877,36 @@ LAB_82625a4c:
 
 // 82625EB0  XAnimResetAnimMapLeaf  (xanim/xanim.cpp:2343)
 
-void XAnimResetAnimMapLeaf(undefined8 param_1,ulonglong param_2)
+void XAnimResetAnimMapLeaf(XModelNameMap *param_1,uint param_2)
 
 {
-  short sVar1;
+  ushort uVar1;
   int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  undefined2 uVar5;
+  XModelNameMap *pXVar3;
+  char *pcVar4;
+  uint uVar5;
+  ulonglong uVar6;
   
-  uVar3 = __savegprlr_27();
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x92c,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar3 = (XModelNameMap *)__savegprlr_27(param_1);
+  if (((uVar6 & 0xffffffff) == 0) || (0xfff < (uVar6 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x92c,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar2 = (int)param_2 * 0x40;
-  if ((&DAT_841dbfac)[iVar2] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x92e,0,0xffffffff82000f98,0xffffffff821869a0);
+  iVar2 = (int)uVar6;
+  if (g_xAnimInfo[iVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x92e,0,"%s")
+    ;
   }
-  sVar1 = *(short *)(&DAT_841dbfaa + iVar2);
-  if (sVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x934,0,0xffffffff82000f98,0xffffffff82186994);
+  uVar1 = g_xAnimInfo[iVar2].animToModel;
+  if (uVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x934,0,"%s")
+    ;
   }
-  iVar4 = SL_ConvertToString(sVar1);
-  uVar5 = XAnimGetAnimMap(*(undefined4 *)(&DAT_841dbfb4 + iVar2),uVar3);
-  *(undefined2 *)(&DAT_841dbfaa + iVar2) = uVar5;
-  SL_RemoveRefToStringOfSize(sVar1,(ulonglong)*(byte *)(iVar4 + 0x18) + 0x19);
+  pcVar4 = SL_ConvertToString((uint)uVar1);
+  uVar5 = XAnimGetAnimMap(g_xAnimInfo[iVar2].field12_0x1c.parts,pXVar3);
+  g_xAnimInfo[iVar2].animToModel = (ushort)uVar5;
+  SL_RemoveRefToStringOfSize((uint)uVar1,(byte)pcVar4[0x18] + 0x19);
   __restgprlr_27();
   return;
 }
@@ -2651,40 +2914,46 @@ void XAnimResetAnimMapLeaf(undefined8 param_1,ulonglong param_2)
 
 // 82625FA8  XAnimResetAnimMap_r  (xanim/xanim.cpp:2365)
 
-void XAnimResetAnimMap_r(undefined8 param_1,ulonglong param_2)
+void XAnimResetAnimMap_r(XModelNameMap *param_1,uint param_2)
 
 {
   ushort uVar1;
-  int iVar2;
-  uint uVar3;
-  undefined8 uVar4;
+  uint uVar2;
+  XModelNameMap *pXVar3;
+  ulonglong uVar4;
   
-  uVar4 = __savegprlr_23();
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x941,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  uVar4 = (ulonglong)(int)param_2;
+  pXVar3 = (XModelNameMap *)__savegprlr_23(param_1);
+  if (((uVar4 & 0xffffffff) == 0) || (0xfff < (uVar4 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x941,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar2 = (int)param_2 * 0x40;
-  if ((&DAT_841dbfac)[iVar2] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x945,0,0xffffffff82000f98,0xffffffff82185e68);
+  uVar2 = (uint)uVar4;
+  if (g_xAnimInfo[uVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x945,0,"%s")
+    ;
   }
-  if (*(short *)(&DAT_841dbfaa + iVar2) != 0) {
-    if (*(short *)(&DAT_841dbfa4 + iVar2) != 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x94a,0,0xffffffff82000f98,0xffffffff82185e58);
+  if (g_xAnimInfo[uVar2].animToModel != 0) {
+    if (g_xAnimInfo[uVar2].children != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x94a,0,
+                      "%s");
     }
-    XAnimResetAnimMapLeaf(uVar4,param_2);
+    XAnimResetAnimMapLeaf(pXVar3,uVar2);
     __restgprlr_23();
     return;
   }
-  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar2);
-  while (uVar3 = (uint)uVar1, uVar3 != 0) {
-    if (0xfff < uVar3) {
-      MyAssertHandler(0xffffffff82185bb8,0x951,0,0xffffffff8218633c,0xffffffff82186310,uVar3);
+  uVar1 = g_xAnimInfo[uVar2].children;
+  while (uVar2 = (uint)uVar1, uVar2 != 0) {
+    if (0xfff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x951,0,
+                      "%s\n\t(childInfoIndex) = %i");
     }
-    if ((&DAT_841dbfac)[uVar3 * 0x40] == '\0') {
-      MyAssertHandler(0xffffffff82185bb8,0x955,0,0xffffffff82000f98,0xffffffff82185e68);
+    if (g_xAnimInfo[uVar2].inuse == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x955,0,
+                      "%s");
     }
-    XAnimResetAnimMap_r(uVar4,uVar3);
-    uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+    XAnimResetAnimMap_r(pXVar3,uVar2);
+    uVar1 = g_xAnimInfo[uVar2].next;
   }
   __restgprlr_23();
   return;
@@ -2693,360 +2962,403 @@ void XAnimResetAnimMap_r(undefined8 param_1,ulonglong param_2)
 
 // 82626110  XAnimResetAnimMap  (xanim/xanim.cpp:2398)
 
-void XAnimResetAnimMap(int param_1,undefined8 param_2)
+void XAnimResetAnimMap(DObj *param_1,uint param_2)
 
 {
-  undefined1 auStack_420 [1032];
+  XModelNameMap aXStack_420 [258];
   
   Profile_Begin(0x13f);
-  XAnimInitModelMap(*(undefined4 *)(param_1 + 0x98),*(undefined1 *)(param_1 + 9),auStack_420);
-  XAnimResetAnimMap_r(auStack_420,param_2);
-  Profile_EndInternal(0);
+  XAnimInitModelMap(param_1->models,(uint)param_1->numModels,aXStack_420);
+  XAnimResetAnimMap_r(aXStack_420,param_2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82626170  XAnimDisplay  (xanim/xanim.cpp:2412)
 
-void XAnimDisplay(undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4,
-                 undefined8 param_5,ulonglong param_6)
+void XAnimDisplay(XAnimTree *param_1,uint param_2,int param_3,char *param_4,int param_5,int *param_6
+                 )
 
 {
-  bool bVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
-  uint uVar6;
-  longlong lVar7;
-  undefined8 uVar8;
-  double dVar9;
-  double dVar10;
+  ushort uVar1;
+  ushort uVar2;
+  XAnim_s *pXVar3;
+  bool bVar4;
+  XAnimTree *pXVar5;
+  char *pcVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int *piVar11;
+  int iVar12;
+  uint uVar13;
+  longlong lVar14;
   
-  piVar4 = (int *)__savegprlr_19();
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x977,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar10 = (ulonglong)(int)param_6;
+  uVar9 = (ulonglong)(int)param_4;
+  lVar14 = (longlong)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  pXVar5 = (XAnimTree *)__savegprlr_19(param_1);
+  if (pXVar5 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x977,0,"%s")
+    ;
   }
-  if (*piVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x978,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar5->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x978,0,"%s")
+    ;
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x979,0,0xffffffff82000f98,0xffffffff8200e484);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x979,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x97a,0,0xffffffff82000f98,0xffffffff82186bb0);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x97a,0,"%s")
+    ;
   }
-  if ((int)param_5 <= *(int *)param_6) {
-    MyAssertHandler(0xffffffff82185bb8,0x97b,0,0xffffffff82000f98,0xffffffff82186b98);
+  piVar11 = (int *)uVar10;
+  if (param_5 <= *piVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x97b,0,"%s")
+    ;
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x97d,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar8 & 0xffffffff) == 0) || (0xfff < (uVar8 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x97d,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar2 = (int)param_2 * 0x40;
-  dVar10 = 0.0;
-  if (*(float *)(&DAT_841dbfcc + iVar2) < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0x981,0,0xffffffff82000f98,0xffffffff82186b84);
+  iVar7 = (int)uVar8;
+  if (g_xAnimInfo[iVar7].state.weight < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x981,0,"%s")
+    ;
   }
-  lVar7 = param_3;
-  if (0 < (int)param_3) {
+  iVar12 = (int)lVar14;
+  pcVar6 = (char *)uVar9;
+  if (0 < iVar12) {
     do {
-      Com_sprintfPos(param_4,param_5,param_6,0xffffffff820034a0);
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      Com_sprintfPos(pcVar6,param_5,piVar11," ");
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
   }
-  if ((&DAT_841dbfac)[iVar2] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x987,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (g_xAnimInfo[iVar7].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x987,0,"%s")
+    ;
   }
-  uVar6 = (uint)*(ushort *)(&DAT_841dbfa8 + iVar2);
-  if (*(uint *)*piVar4 <= uVar6) {
-    MyAssertHandler(0xffffffff82185bb8,0x98a,0,0xffffffff82000f98,0xffffffff82186218);
+  uVar1 = g_xAnimInfo[iVar7].animIndex;
+  uVar13 = (uint)uVar1;
+  if (pXVar5->anims->size <= uVar13) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x98a,0,"%s")
+    ;
   }
-  uVar3 = XAnimGetAnimDebugName(*piVar4,uVar6);
-  dVar9 = (double)*(float *)(&DAT_841dbfcc + iVar2);
-  if (dVar9 == dVar10) {
-    uVar8 = 0xffffffff82186b80;
-  }
-  else if ((double)*(float *)(&DAT_841dbfc8 + iVar2) <= dVar9) {
-    if (dVar9 <= (double)*(float *)(&DAT_841dbfc8 + iVar2)) {
-      uVar8 = 0xffffffff820068af;
+  XAnimGetAnimDebugName(pXVar5->anims,(uint)uVar1);
+  if (g_xAnimInfo[iVar7].animToModel == 0) {
+    pXVar3 = pXVar5->anims;
+    uVar1 = g_xAnimInfo[iVar7].notifyName;
+    uVar2 = pXVar3->entries[uVar13].numAnims;
+    if (uVar1 == 0) {
+      if ((uVar2 == 0) ||
+         (bVar4 = false, (pXVar3->entries[uVar13].field2_0x4.animParent.flags & 3) != 0)) {
+        bVar4 = true;
+      }
+      if (bVar4) {
+        Com_sprintfPos(pcVar6,param_5,piVar11,
+                       "%s%s: (weight) %.3f -> %.3f over %.3f, (time) %.3f -> %.3f, (rate) %.3f\n");
+      }
+      else {
+        Com_sprintfPos(pcVar6,param_5,piVar11,"%s%s: (weight) %.3f -> %.3f over %.3f\n");
+      }
     }
     else {
-      uVar8 = 0xffffffff82013958;
+      if ((uVar2 == 0) ||
+         (bVar4 = false, (pXVar3->entries[uVar13].field2_0x4.animParent.flags & 3) != 0)) {
+        bVar4 = true;
+      }
+      if (bVar4) {
+        if (g_xAnimInfo[iVar7].notifyChild == 0) {
+          SL_ConvertToString((uint)uVar1);
+          Com_sprintfPos(pcVar6,param_5,piVar11,
+                         "%s%s: (weight) %.3f -> %.3f over %.3f, (time) %.3f -> %.3f, (rate) %.3f, \'%s\'\n"
+                        );
+        }
+        else {
+          SL_ConvertToString((uint)uVar1);
+          Com_sprintfPos(pcVar6,param_5,piVar11,
+                         "%s%s: (weight) %.3f -> %.3f over %.3f, (time) %.3f -> %.3f, (rate) %.3f, \'%s\'\n"
+                        );
+        }
+      }
+      else {
+        SL_ConvertToString((uint)uVar1);
+        Com_sprintfPos(pcVar6,param_5,piVar11,"%s%s: (weight) %.3f -> %.3f over %.3f, \'%s\'\n");
+      }
     }
-  }
-  else {
-    uVar8 = 0xffffffff82186b7c;
-  }
-  if (*(short *)(&DAT_841dbfaa + iVar2) != 0) {
-    if (*(int *)(&DAT_841dbfb4 + iVar2) == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x99a,0,0xffffffff82000f98,0xffffffff8213fd58);
+    uVar13 = (uint)g_xAnimInfo[iVar7].children;
+    if (uVar13 != 0) {
+      do {
+        XAnimDisplay(pXVar5,uVar13,iVar12 + 1,pcVar6,param_5,piVar11);
+        uVar13 = (uint)g_xAnimInfo[uVar13].next;
+      } while (uVar13 != 0);
     }
-    if (*(short *)(&DAT_841dbf9c + iVar2) != 0) {
-      SL_ConvertToString();
-      Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186b18,uVar8,uVar3,
-                     (double)*(float *)(&DAT_841dbfcc + iVar2),
-                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
-      __restgprlr_19();
-      return;
-    }
-    Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186ab8,uVar8,uVar3,
-                   (double)*(float *)(&DAT_841dbfcc + iVar2),
-                   (double)*(float *)(&DAT_841dbfc8 + iVar2));
     __restgprlr_19();
     return;
   }
-  iVar5 = uVar6 * 8 + *piVar4;
-  if (*(short *)(&DAT_841dbf9c + iVar2) == 0) {
-    if ((*(short *)(iVar5 + 0xc) == 0) || (bVar1 = false, (*(ushort *)(iVar5 + 0x10) & 3) != 0)) {
-      bVar1 = true;
-    }
-    if (bVar1) {
-      Com_sprintfPos(param_4,param_5,param_6,0xffffffff821869e8,uVar8,uVar3,dVar9,
-                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
-    }
-    else {
-      Com_sprintfPos(param_4,param_5,param_6,0xffffffff821869c0,uVar8,uVar3,dVar9,
-                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
-    }
+  if (g_xAnimInfo[iVar7].field12_0x1c.parts == (XAnimParts *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x99a,0,"%s")
+    ;
   }
-  else {
-    if ((*(short *)(iVar5 + 0xc) == 0) || (bVar1 = false, (*(ushort *)(iVar5 + 0x10) & 3) != 0)) {
-      bVar1 = true;
-    }
-    if (bVar1) {
-      if (*(short *)(&DAT_841dbf98 + iVar2) == 0) {
-        SL_ConvertToString();
-        Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a68,uVar8,uVar3,
-                       (double)*(float *)(&DAT_841dbfcc + iVar2),
-                       (double)*(float *)(&DAT_841dbfc8 + iVar2));
-      }
-      else {
-        SL_ConvertToString();
-        Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a68,uVar8,uVar3,
-                       (double)*(float *)(&DAT_841dbfcc + iVar2),
-                       (double)*(float *)(&DAT_841dbfc8 + iVar2));
-      }
-    }
-    else {
-      SL_ConvertToString();
-      Com_sprintfPos(param_4,param_5,param_6,0xffffffff82186a34,uVar8,uVar3,
-                     (double)*(float *)(&DAT_841dbfcc + iVar2),
-                     (double)*(float *)(&DAT_841dbfc8 + iVar2));
-    }
+  if (g_xAnimInfo[iVar7].notifyName == 0) {
+    iVar7 = Com_sprintfPos(pcVar6,param_5,piVar11,
+                           "%s%s: (weight) %.3f -> %.3f over %.3f, (time) %.3f -> %.3f, (realtimedelta) %.3f, (rate) %.3f\n"
+                          );
+    __restgprlr_19(iVar7);
+    return;
   }
-  uVar6 = (uint)*(ushort *)(&DAT_841dbfa4 + iVar2);
-  if (uVar6 != 0) {
-    do {
-      XAnimDisplay(piVar4,uVar6,param_3 + 1,param_4,param_5,param_6);
-      uVar6 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
-    } while (uVar6 != 0);
-  }
-  __restgprlr_19();
+  SL_ConvertToString((uint)g_xAnimInfo[iVar7].notifyName);
+  iVar7 = Com_sprintfPos(pcVar6,param_5,piVar11,
+                         "%s%s: (weight) %.3f -> %.3f over %.3f, (time) %.3f -> %.3f, (realtimedelta) %.3f, (rate) %.3f \'%s\'\n"
+                        );
+  __restgprlr_19(iVar7);
   return;
 }
 
 
 // 82620A60  XAnimCalcDeltaTree  (xanim/xanim.cpp:2515)
 
-void XAnimCalcDeltaTree(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined4 param_4,
-                       float *param_5)
+void XAnimCalcDeltaTree(DObj *param_1,uint param_2,float param_3,XAnimDeltaInfo param_4,
+                       XAnimRotPos *param_5)
 
 {
-  float fVar1;
-  ushort uVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  uint uVar6;
-  float *pfVar7;
-  uint uVar8;
+  ushort uVar1;
+  XAnimParts *pXVar2;
+  char cVar3;
+  char cVar4;
+  DObj *pDVar5;
+  ulonglong uVar6;
+  XAnimRotPos *pXVar7;
+  XAnimRotPos *pXVar8;
+  longlong lVar9;
+  int iVar10;
+  XAnimDeltaInfo XVar11;
+  float *in_r7;
+  uint uVar12;
+  float *pfVar13;
+  uint uVar14;
   double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  float fVar19;
   char cStack0000002c;
   char cStack0000002d;
   char cStack0000002e;
   char cStack0000002f;
+  undefined4 local_e0;
   float local_d0 [52];
   
-  __savegprlr_16();
-  uVar5 = __savefpr_28();
-  dVar9 = extraout_f1;
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x9e0,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  lVar9 = (longlong)(int)param_4;
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_16((double)param_3,param_1);
+  pDVar5 = (DObj *)__savefpr_28();
+  pXVar7 = (XAnimRotPos *)uVar6;
+  dVar15 = extraout_f1;
+  _cStack0000002c = param_5;
+  if (((uVar6 & 0xffffffff) == 0) || (pXVar8 = pXVar7, 0xfff < (uVar6 & 0xffffffff))) {
+    lVar9 = 0;
+    pXVar8 = (XAnimRotPos *)0x9e0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x9e0,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar4 = (int)param_2;
-  iVar3 = iVar4 * 0x40;
-  if ((&DAT_841dbfac)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x9e3,0,0xffffffff82000f98,0xffffffff82185e68);
+  if (g_xAnimInfo[(int)pXVar7].inuse == false) {
+    lVar9 = 0;
+    pXVar8 = (XAnimRotPos *)0x9e3;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x9e3,0,"%s")
+    ;
   }
-  cStack0000002c = (char)((uint)param_4 >> 0x18);
-  if (*(short *)(&DAT_841dbfaa + iVar3) != 0) {
+  iVar10 = (int)lVar9;
+  if (g_xAnimInfo[(int)pXVar7].animToModel != 0) {
     if (cStack0000002c != '\0') {
-      *param_5 = 0.0;
-      param_5[1] = 0.0;
-      param_5[2] = 0.0;
-      param_5[3] = 0.0;
-      param_5[4] = 0.0;
-      param_5[5] = 0.0;
-      param_5[6] = 0.0;
-      param_5[7] = 0.0;
+      *in_r7 = 0.0;
+      in_r7[1] = 0.0;
+      in_r7[2] = 0.0;
+      in_r7[3] = 0.0;
+      in_r7[4] = 0.0;
+      in_r7[5] = 0.0;
+      in_r7[6] = 0.0;
+      in_r7[7] = 0.0;
     }
-    iVar3 = *(int *)(&DAT_841dbfb4 + iVar3);
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x9f0,0,0xffffffff82000f98,0xffffffff8213fd58);
+    pXVar2 = g_xAnimInfo[(int)pXVar7].field12_0x1c.parts;
+    if (pXVar2 == (XAnimParts *)0x0) {
+      iVar10 = 0;
+      pXVar8 = (XAnimRotPos *)0x9f0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x9f0,0,
+                      "%s");
     }
-    cStack0000002e = (char)((uint)param_4 >> 8);
     if (cStack0000002e != '\0') {
-      XAnimCalcAbsDeltaParts(dVar9,(double)(float)(&DAT_841dbfb8)[iVar4 * 0x10]);
+      XAnimCalcAbsDeltaParts
+                (pXVar2,(float)dVar15,g_xAnimInfo[(int)pXVar7].state.currentAnimTime,pXVar8);
       __restfpr_28();
       __restgprlr_16();
       return;
     }
     XAnimCalcRelDeltaParts
-              (dVar9,(double)(float)(&DAT_841dbfbc)[iVar4 * 0x10],
-               (double)(float)(&DAT_841dbfb8)[iVar4 * 0x10],iVar3);
+              (pXVar2,(float)dVar15,g_xAnimInfo[(int)pXVar7].state.oldTime,
+               g_xAnimInfo[(int)pXVar7].state.currentAnimTime,pXVar8,iVar10);
     __restfpr_28();
     __restgprlr_16();
     return;
   }
-  uVar6 = (uint)*(ushort *)(&DAT_841dbfa4 + iVar3);
-  dVar12 = 0.0;
-  if (uVar6 != 0) {
-    cStack0000002f = (char)param_4;
+  uVar12 = (uint)g_xAnimInfo[(int)pXVar7].children;
+  dVar18 = 0.0;
+  if (uVar12 != 0) {
+    cVar4 = cStack0000002f;
     do {
-      if (0xfff < uVar6) {
-        MyAssertHandler(0xffffffff82185bb8,0x9fd,0,0xffffffff821860dc,0xffffffff821860b8,uVar6);
+      if (0xfff < uVar12) {
+        lVar9 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x9fd,0,
+                        "%s\n\t(infoIndex1) = %i");
       }
-      if (cStack0000002f == '\0') {
-        fVar1 = *(float *)(&DAT_841dbfcc + uVar6 * 0x40);
+      if (cVar4 == '\0') {
+        fVar19 = g_xAnimInfo[uVar12].state.weight;
       }
       else {
-        fVar1 = *(float *)(&DAT_841dbfc8 + uVar6 * 0x40);
+        fVar19 = g_xAnimInfo[uVar12].state.goalWeight;
       }
-      dVar10 = (double)fVar1;
-      if (dVar10 < dVar12) {
-        MyAssertHandler(dVar10,0xffffffff82185bb8,0xa01,0,0xffffffff8218610c,0xffffffff821860f4,
-                        dVar10);
+      dVar16 = (double)fVar19;
+      if (dVar16 < dVar18) {
+        lVar9 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa01,0,
+                        "%s\n\t(firstWeight) = %g");
       }
-      if (dVar10 != dVar12) {
-        uVar8 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
-        if (uVar8 != 0) goto LAB_82620cdc;
+      XVar11 = SUB84(lVar9,0);
+      if (dVar16 != dVar18) {
+        uVar14 = (uint)g_xAnimInfo[uVar12].next;
+        if (uVar14 != 0) goto LAB_82620cdc;
         goto LAB_82620d50;
       }
-      uVar6 = (uint)(ushort)(&DAT_841dbfa2)[uVar6 * 0x20];
-    } while (uVar6 != 0);
+      uVar12 = (uint)g_xAnimInfo[uVar12].next;
+    } while (uVar12 != 0);
   }
   if (cStack0000002c != '\0') {
-    *param_5 = (float)dVar12;
-    param_5[1] = (float)dVar12;
-    param_5[2] = (float)dVar12;
-    param_5[3] = (float)dVar12;
-    param_5[4] = (float)dVar12;
-    param_5[5] = (float)dVar12;
-    param_5[6] = (float)dVar12;
-    param_5[7] = (float)dVar12;
+    *in_r7 = (float)dVar18;
+    in_r7[1] = (float)dVar18;
+    in_r7[2] = (float)dVar18;
+    in_r7[3] = (float)dVar18;
+    in_r7[4] = (float)dVar18;
+    in_r7[5] = (float)dVar18;
+    in_r7[6] = (float)dVar18;
+    in_r7[7] = (float)dVar18;
   }
 LAB_82620ca8:
   __restfpr_28();
   __restgprlr_16();
   return;
 LAB_82620cdc:
-  if (0xfff < uVar8) {
-    MyAssertHandler(0xffffffff82185bb8,0xa07,0,0xffffffff82186094,0xffffffff82186070,uVar8);
+  if (0xfff < uVar14) {
+    lVar9 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa07,0,
+                    "%s\n\t(infoIndex2) = %i");
   }
-  if (cStack0000002f == '\0') {
-    fVar1 = *(float *)(&DAT_841dbfcc + uVar8 * 0x40);
+  if (cVar4 == '\0') {
+    fVar19 = g_xAnimInfo[uVar14].state.weight;
   }
   else {
-    fVar1 = *(float *)(&DAT_841dbfc8 + uVar8 * 0x40);
+    fVar19 = g_xAnimInfo[uVar14].state.goalWeight;
   }
-  dVar11 = (double)fVar1;
-  if (dVar11 < dVar12) {
-    MyAssertHandler(0xffffffff82185bb8,0xa0b,0,0xffffffff82000f98,0xffffffff821860ac);
+  dVar17 = (double)fVar19;
+  if (dVar17 < dVar18) {
+    lVar9 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa0b,0,"%s")
+    ;
   }
-  if (dVar11 != dVar12) {
-    pfVar7 = param_5;
+  XVar11 = SUB84(lVar9,0);
+  if (dVar17 != dVar18) {
+    cVar3 = cStack0000002c;
+    pfVar13 = in_r7;
     if (cStack0000002c == '\0') {
-      pfVar7 = local_d0;
+      pfVar13 = local_d0;
     }
-    XAnimCalcDeltaTree(dVar10,uVar5,uVar6);
-    XAnimCalcDeltaTree(dVar11,uVar5,uVar8);
-    uVar2 = (&DAT_841dbfa2)[uVar8 * 0x20];
-    while (uVar6 = (uint)uVar2, uVar6 != 0) {
-      if (0xfff < uVar6) {
-        MyAssertHandler(0xffffffff82185bb8,0xa1b,0,0xffffffff82186094,0xffffffff82186070,uVar6);
+    local_e0._1_3_ = CONCAT12(1,(short)param_5);
+    local_e0 = (XAnimRotPos *)CONCAT13(1,local_e0._1_3_);
+    XAnimCalcDeltaTree(pDVar5,uVar12,(float)dVar16,XVar11,local_e0);
+    local_e0 = (XAnimRotPos *)(uint)local_e0._1_3_;
+    XAnimCalcDeltaTree(pDVar5,uVar14,(float)dVar17,SUB84(lVar9,0),local_e0);
+    uVar1 = g_xAnimInfo[uVar14].next;
+    while (uVar12 = (uint)uVar1, uVar12 != 0) {
+      if (0xfff < uVar12) {
+        lVar9 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa1b,0,
+                        "%s\n\t(infoIndex2) = %i");
       }
-      if (cStack0000002f == '\0') {
-        fVar1 = *(float *)(&DAT_841dbfcc + uVar6 * 0x40);
+      if (cVar4 == '\0') {
+        fVar19 = g_xAnimInfo[uVar12].state.weight;
       }
       else {
-        fVar1 = *(float *)(&DAT_841dbfc8 + uVar6 * 0x40);
+        fVar19 = g_xAnimInfo[uVar12].state.goalWeight;
       }
-      dVar10 = (double)fVar1;
-      if (dVar10 < dVar12) {
-        MyAssertHandler(0xffffffff82185bb8,0xa1f,0,0xffffffff82000f98,0xffffffff821860ac);
+      dVar16 = (double)fVar19;
+      if (dVar16 < dVar18) {
+        lVar9 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa1f,0,
+                        "%s");
       }
-      if (dVar10 != dVar12) {
-        XAnimCalcDeltaTree(dVar10,uVar5,uVar6);
+      if (dVar16 != dVar18) {
+        XAnimCalcDeltaTree(pDVar5,uVar12,(float)dVar16,SUB84(lVar9,0),local_e0);
       }
-      uVar2 = (&DAT_841dbfa2)[uVar6 * 0x20];
+      uVar1 = g_xAnimInfo[uVar12].next;
     }
-    cStack0000002d = (char)((uint)param_4 >> 0x10);
     if (cStack0000002d == '\0') {
-      if (cStack0000002c == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0xa28,0,0xffffffff82000f98,0xffffffff8218605c);
+      if (cVar3 == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa28,0,
+                        "%s");
       }
-      if ((double)param_5[4] != dVar12) {
-        fVar1 = (float)(1.0 / (double)param_5[4]);
-        param_5[5] = param_5[5] * fVar1;
-        param_5[6] = param_5[6] * fVar1;
-        param_5[7] = param_5[7] * fVar1;
+      if ((double)in_r7[4] != dVar18) {
+        fVar19 = (float)(1.0 / (double)in_r7[4]);
+        in_r7[5] = in_r7[5] * fVar19;
+        in_r7[6] = in_r7[6] * fVar19;
+        in_r7[7] = in_r7[7] * fVar19;
         __restfpr_28();
         __restgprlr_16();
         return;
       }
     }
-    else if (cStack0000002c == '\0') {
-      if ((double)(pfVar7[3] * pfVar7[3] +
-                  pfVar7[2] * pfVar7[2] + *pfVar7 * *pfVar7 + pfVar7[1] * pfVar7[1]) != dVar12) {
-        dVar10 = (double)I_rsqrt();
-        fVar1 = (float)(dVar10 * dVar9);
-        *param_5 = *pfVar7 * fVar1 + *param_5;
-        param_5[1] = fVar1 * pfVar7[1] + param_5[1];
-        param_5[2] = pfVar7[2] * fVar1 + param_5[2];
-        param_5[3] = pfVar7[3] * fVar1 + param_5[3];
+    else if (cVar3 == '\0') {
+      fVar19 = pfVar13[3] * pfVar13[3] +
+               pfVar13[2] * pfVar13[2] + *pfVar13 * *pfVar13 + pfVar13[1] * pfVar13[1];
+      if ((double)fVar19 != dVar18) {
+        fVar19 = I_rsqrt(fVar19);
+        fVar19 = (float)((double)fVar19 * dVar15);
+        *in_r7 = *pfVar13 * fVar19 + *in_r7;
+        in_r7[1] = fVar19 * pfVar13[1] + in_r7[1];
+        in_r7[2] = pfVar13[2] * fVar19 + in_r7[2];
+        in_r7[3] = pfVar13[3] * fVar19 + in_r7[3];
       }
-      if ((double)pfVar7[4] != dVar12) {
-        fVar1 = (float)(dVar9 / (double)pfVar7[4]);
-        param_5[5] = pfVar7[5] * fVar1 + param_5[5];
-        param_5[6] = pfVar7[6] * fVar1 + param_5[6];
-        param_5[7] = pfVar7[7] * fVar1 + param_5[7];
-        param_5[4] = (float)((double)param_5[4] + dVar9);
+      if ((double)pfVar13[4] != dVar18) {
+        fVar19 = (float)(dVar15 / (double)pfVar13[4]);
+        in_r7[5] = pfVar13[5] * fVar19 + in_r7[5];
+        in_r7[6] = pfVar13[6] * fVar19 + in_r7[6];
+        in_r7[7] = pfVar13[7] * fVar19 + in_r7[7];
+        in_r7[4] = (float)((double)in_r7[4] + dVar15);
         __restfpr_28();
         __restgprlr_16();
         return;
       }
     }
     else {
-      if ((double)(param_5[3] * param_5[3] +
-                  param_5[2] * param_5[2] + *param_5 * *param_5 + param_5[1] * param_5[1]) != dVar12
-         ) {
-        dVar10 = (double)I_rsqrt();
-        fVar1 = (float)(dVar10 * dVar9);
-        *param_5 = fVar1 * *param_5;
-        param_5[1] = param_5[1] * fVar1;
-        param_5[2] = param_5[2] * fVar1;
-        param_5[3] = param_5[3] * fVar1;
+      fVar19 = in_r7[3] * in_r7[3] + in_r7[2] * in_r7[2] + *in_r7 * *in_r7 + in_r7[1] * in_r7[1];
+      if ((double)fVar19 != dVar18) {
+        fVar19 = I_rsqrt(fVar19);
+        fVar19 = (float)((double)fVar19 * dVar15);
+        *in_r7 = fVar19 * *in_r7;
+        in_r7[1] = in_r7[1] * fVar19;
+        in_r7[2] = in_r7[2] * fVar19;
+        in_r7[3] = in_r7[3] * fVar19;
       }
-      if ((double)param_5[4] != dVar12) {
-        fVar1 = (float)(dVar9 / (double)param_5[4]);
-        param_5[5] = param_5[5] * fVar1;
-        param_5[6] = param_5[6] * fVar1;
-        param_5[7] = param_5[7] * fVar1;
-        param_5[4] = (float)dVar9;
+      if ((double)in_r7[4] != dVar18) {
+        fVar19 = (float)(dVar15 / (double)in_r7[4]);
+        in_r7[5] = in_r7[5] * fVar19;
+        in_r7[6] = in_r7[6] * fVar19;
+        in_r7[7] = in_r7[7] * fVar19;
+        in_r7[4] = (float)dVar15;
         __restfpr_28();
         __restgprlr_16();
         return;
@@ -3054,10 +3366,10 @@ LAB_82620cdc:
     }
     goto LAB_82620ca8;
   }
-  uVar8 = (uint)(ushort)(&DAT_841dbfa2)[uVar8 * 0x20];
-  if (uVar8 == 0) {
+  uVar14 = (uint)g_xAnimInfo[uVar14].next;
+  if (uVar14 == 0) {
 LAB_82620d50:
-    XAnimCalcDeltaTree(dVar9,uVar5,uVar6);
+    XAnimCalcDeltaTree(pDVar5,uVar12,(float)dVar15,XVar11,param_5);
     __restfpr_28();
     __restgprlr_16();
     return;
@@ -3068,39 +3380,45 @@ LAB_82620d50:
 
 // 82621078  XAnimGetLength  (xanim/xanim.cpp:2654)
 
-void XAnimGetLength(undefined8 param_1,ulonglong param_2)
+float XAnimGetLength(XAnim_s *param_1,uint param_2)
 
 {
   ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
+  XAnimParts *pXVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  double dVar5;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xa62,0,0xffffffff82000f98,0xffffffff8202a360);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa62,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)uVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xa63,0,0xffffffff82186124,param_2);
+  if ((ulonglong)*(uint *)uVar1 <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa63,0,
+                    "animIndex < anims->size\n\t%i, %i");
   }
-  lVar3 = (param_2 & 0x1fffffff) * 8 + uVar1 + 0xc;
-  if (lVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xa66,0,0xffffffff82000f98,0xffffffff820589d8);
+  lVar4 = (uVar3 & 0x1fffffff) * 8 + uVar1 + 0xc;
+  if (lVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa66,0,"%s")
+    ;
   }
-  iVar2 = XAnimGetPartsInternal(lVar3);
-  __restgprlr_28((double)((float)*(ushort *)(iVar2 + 0xe) / *(float *)(iVar2 + 0x28)));
-  return;
+  pXVar2 = XAnimGetPartsInternal((XAnimEntry *)lVar4);
+  dVar5 = (double)__restgprlr_28((double)((float)pXVar2->numframes / pXVar2->framerate));
+  return (float)dVar5;
 }
 
 
 // 82621148  XAnimGetLengthMsec  (xanim/xanim.cpp:2677)
 
-int XAnimGetLengthMsec(void)
+int XAnimGetLengthMsec(XAnim_s *param_1,uint param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)XAnimGetLength();
-  return (int)(dVar1 * 1000.0);
+  fVar1 = XAnimGetLength(param_1,param_2);
+  return (int)(fVar1 * 1000.0);
 }
 
 
@@ -3108,60 +3426,66 @@ int XAnimGetLengthMsec(void)
 
 /* WARNING: Removing unreachable block (ram,0x82621248) */
 
-void XAnimGetInfoIndex_r(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+uint XAnimGetInfoIndex_r(XAnimTree *param_1,uint param_2,uint param_3)
 
 {
   ushort uVar1;
-  short sVar2;
-  int iVar3;
+  int iVar2;
+  XAnimTree *pXVar3;
   uint uVar4;
-  undefined8 uVar5;
+  uint uVar5;
   ulonglong uVar6;
-  short sVar7;
+  ulonglong uVar7;
+  ushort uVar8;
   
-  uVar5 = __savegprlr_22();
-  if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0xa86,0,0xffffffff82185e88,0xffffffff82185ea0,param_3);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar3 = (XAnimTree *)__savegprlr_22(param_1);
+  if (((uVar7 & 0xffffffff) == 0) || (0xfff < (uVar7 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa86,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar3 = (int)param_3 * 0x40;
-  if ((&DAT_841dbfac)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xa89,0,0xffffffff82000f98,0xffffffff82185e68);
+  iVar2 = (int)uVar7;
+  if (g_xAnimInfo[iVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xa89,0,"%s")
+    ;
   }
-  if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar3) == (param_2 & 0xffffffff)) {
-    __restgprlr_22(param_3);
-    return;
+  if ((ulonglong)g_xAnimInfo[iVar2].animIndex == (uVar6 & 0xffffffff)) {
+    uVar4 = __restgprlr_22(uVar7);
+    return uVar4;
   }
-  sVar7 = 0;
-  uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar3);
+  uVar8 = 0;
+  uVar1 = g_xAnimInfo[iVar2].children;
   while (uVar4 = (uint)uVar1, uVar4 != 0) {
-    sVar2 = *(short *)(&DAT_841dbfa8 + uVar4 * 0x40);
-    if ((sVar2 != sVar7) &&
-       (uVar6 = XAnimGetInfoIndex_r(uVar5,param_2,uVar4), sVar7 = sVar2, (uVar6 & 0xffffffff) != 0))
+    uVar1 = g_xAnimInfo[uVar4].animIndex;
+    if ((uVar1 != uVar8) &&
+       (uVar5 = XAnimGetInfoIndex_r(pXVar3,(uint)uVar6,uVar4), uVar8 = uVar1, uVar5 != 0))
     goto LAB_826212a4;
-    uVar1 = (&DAT_841dbfa2)[uVar4 * 0x20];
+    uVar1 = g_xAnimInfo[uVar4].next;
   }
-  uVar6 = 0;
+  uVar5 = 0;
 LAB_826212a4:
-  __restgprlr_22(uVar6);
-  return;
+  uVar4 = __restgprlr_22(uVar5);
+  return uVar4;
 }
 
 
 // 826212B0  XAnimGetInfoIndex  (xanim/xanim.cpp:2726)
 
-undefined8 XAnimGetInfoIndex(int param_1,undefined8 param_2)
+uint XAnimGetInfoIndex(XAnimTree *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xaa7,0,0xffffffff82000f98,0xffffffff821813e0);
+  if (param_1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xaa7,0,"%s")
+    ;
   }
-  if (*(short *)(param_1 + 0x10) == 0) {
+  if (param_1->children == 0) {
     uVar1 = 0;
   }
   else {
-    uVar1 = XAnimGetInfoIndex_r(param_1,param_2);
+    uVar1 = XAnimGetInfoIndex_r(param_1,param_2,(uint)param_1->children);
   }
   return uVar1;
 }
@@ -3169,658 +3493,803 @@ undefined8 XAnimGetInfoIndex(int param_1,undefined8 param_2)
 
 // 82621330  XAnimGetTime  (xanim/xanim.cpp:2739)
 
-void XAnimGetTime(undefined8 param_1,ulonglong param_2)
+float XAnimGetTime(XAnimTree *param_1,uint param_2)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
   uint uVar2;
+  ulonglong uVar3;
+  double dVar4;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xab6,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xab6,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xab7,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xab7,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xab8,0,0xffffffff82186164,param_2);
+  if ((ulonglong)pXVar1->anims->size <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xab8,0,
+                    "animIndex < tree->anims->size\n\t%i, %i");
   }
-  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
+  uVar2 = XAnimGetInfoIndex(pXVar1,(uint)uVar3);
   if (0xfff < uVar2) {
-    MyAssertHandler(0xffffffff82185bb8,0xabb,0,0xffffffff82185e88,0xffffffff82186150,uVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xabb,0,
+                    "%s\n\t(infoIndex) = %i");
   }
   if (uVar2 != 0) {
-    __restgprlr_28((double)(float)(&DAT_841dbfb8)[uVar2 * 0x10]);
-    return;
+    dVar4 = (double)__restgprlr_28((double)g_xAnimInfo[uVar2].state.currentAnimTime);
+    return (float)dVar4;
   }
-  __restgprlr_28(0);
-  return;
+  dVar4 = (double)__restgprlr_28(0);
+  return (float)dVar4;
 }
 
 
 // 82621440  XAnimGetWeight  (xanim/xanim.cpp:2758)
 
-void XAnimGetWeight(undefined8 param_1,ulonglong param_2)
+float XAnimGetWeight(XAnimTree *param_1,uint param_2)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
   uint uVar2;
+  ulonglong uVar3;
+  double dVar4;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xac9,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xac9,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xaca,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xaca,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xacb,0,0xffffffff82186164,param_2);
+  if ((ulonglong)pXVar1->anims->size <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xacb,0,
+                    "animIndex < tree->anims->size\n\t%i, %i");
   }
-  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
+  uVar2 = XAnimGetInfoIndex(pXVar1,(uint)uVar3);
   if (0xfff < uVar2) {
-    MyAssertHandler(0xffffffff82185bb8,0xace,0,0xffffffff82185e88,0xffffffff82186150,uVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xace,0,
+                    "%s\n\t(infoIndex) = %i");
   }
   if (uVar2 != 0) {
-    __restgprlr_28((double)*(float *)(&DAT_841dbfcc + uVar2 * 0x40));
-    return;
+    dVar4 = (double)__restgprlr_28((double)g_xAnimInfo[uVar2].state.weight);
+    return (float)dVar4;
   }
-  __restgprlr_28(0);
-  return;
+  dVar4 = (double)__restgprlr_28(0);
+  return (float)dVar4;
 }
 
 
 // 82621550  XAnimHasFinished  (xanim/xanim.cpp:2777)
 
-void XAnimHasFinished(undefined8 param_1,ulonglong param_2)
+bool XAnimHasFinished(XAnimTree *param_1,uint param_2)
 
 {
-  int iVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  undefined8 uVar4;
+  float fVar1;
+  XAnimTree *pXVar2;
+  uint uVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  undefined8 uVar6;
   
-  piVar3 = (int *)__savegprlr_28();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xadd,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar5 = (ulonglong)(int)param_2;
+  pXVar2 = (XAnimTree *)__savegprlr_28(param_1);
+  if (pXVar2 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xadd,0,"%s")
+    ;
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xade,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar2->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xade,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xadf,0,0xffffffff82186164,param_2);
+  if ((ulonglong)pXVar2->anims->size <= (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xadf,0,
+                    "animIndex < tree->anims->size\n\t%i, %i");
   }
-  uVar2 = XAnimGetInfoIndex(piVar3,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    __restgprlr_28(1);
-    return;
+  uVar3 = XAnimGetInfoIndex(pXVar2,(uint)uVar5);
+  if (uVar3 == 0) {
+    uVar4 = __restgprlr_28(1);
+    return (bool)uVar4;
   }
-  if (0xfff < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xae5,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
+  if (0xfff < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xae5,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar1 = (int)uVar2;
-  if (((float)(&DAT_841dbfbc)[iVar1 * 0x10] <= (float)(&DAT_841dbfb8)[iVar1 * 0x10]) &&
-     ((float)(&DAT_841dbfb8)[iVar1 * 0x10] != 1.0)) {
-    uVar4 = 0;
-    if (*(short *)(&DAT_841dbfc0 + iVar1 * 0x40) <= *(short *)(&DAT_841dbfc2 + iVar1 * 0x40))
+  fVar1 = g_xAnimInfo[uVar3].state.currentAnimTime;
+  if ((g_xAnimInfo[uVar3].state.oldTime <= fVar1) && (fVar1 != 1.0)) {
+    uVar6 = 0;
+    if (g_xAnimInfo[uVar3].state.cycleCount <= g_xAnimInfo[uVar3].state.oldCycleCount)
     goto LAB_82621690;
   }
-  uVar4 = 1;
+  uVar6 = 1;
 LAB_82621690:
-  __restgprlr_28(uVar4);
-  return;
+  uVar4 = __restgprlr_28(uVar6);
+  return (bool)uVar4;
 }
 
 
 // 826216A0  XAnimGetNumChildren  (xanim/xanim.cpp:2801)
 
-void XAnimGetNumChildren(undefined8 param_1,ulonglong param_2)
+int XAnimGetNumChildren(XAnim_s *param_1,uint param_2)
 
 {
   uint *puVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  puVar1 = (uint *)__savegprlr_29();
+  uVar3 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_29(param_1);
   if (puVar1 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xaf2,0,0xffffffff82000f98,0xffffffff8202a360);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xaf2,0,"%s")
+    ;
   }
-  if ((ulonglong)*puVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xaf3,0,0xffffffff82186124,param_2);
+  if ((ulonglong)*puVar1 <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xaf3,0,
+                    "animIndex < anims->size\n\t%i, %i");
   }
-  __restgprlr_29(*(undefined2 *)((int)puVar1 + (int)((param_2 & 0xffffffff) << 3) + 0xc));
-  return;
+  iVar2 = __restgprlr_29(*(undefined2 *)((int)puVar1 + (int)((uVar3 & 0xffffffff) << 3) + 0xc));
+  return iVar2;
 }
 
 
 // 82621720  XAnimGetChildAt  (xanim/xanim.cpp:2815)
 
-void XAnimGetChildAt(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+uint XAnimGetChildAt(XAnim_s *param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
   uint *puVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  puVar2 = (uint *)__savegprlr_28();
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_28(param_1);
   if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb00,0,0xffffffff82000f98,0xffffffff8202a360);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb00,0,"%s")
+    ;
   }
-  if ((ulonglong)*puVar2 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xb01,0,0xffffffff82186124,param_2);
+  if ((ulonglong)*puVar2 <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb01,0,
+                    "animIndex < anims->size\n\t%i, %i");
   }
-  iVar1 = (int)((param_2 & 0xffffffff) << 3);
-  if ((ulonglong)*(ushort *)((int)puVar2 + iVar1 + 0xc) <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xb02,0,0xffffffff8218618c,param_3);
+  iVar1 = (int)((uVar4 & 0xffffffff) << 3);
+  if ((ulonglong)*(ushort *)((int)puVar2 + iVar1 + 0xc) <= (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb02,0,
+                    "childIndex < anims->entries[animIndex].numAnims\n\t%i, %i");
   }
-  __restgprlr_28(*(ushort *)((int)puVar2 + iVar1 + 0x12) + param_3);
-  return;
+  uVar3 = __restgprlr_28(*(ushort *)((int)puVar2 + iVar1 + 0x12) + uVar5);
+  return uVar3;
 }
 
 
 // 826217D0  XAnimGetAnimName  (xanim/xanim.cpp:2830)
 
-void XAnimGetAnimName(undefined8 param_1,ulonglong param_2)
+char * XAnimGetAnimName(XAnim_s *param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  int iVar1;
+  uint *puVar2;
+  XAnimParts *pXVar3;
+  char *pcVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb11,0,0xffffffff82000f98,0xffffffff8202a360);
+  uVar5 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_29(param_1);
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb11,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)uVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xb12,0,0xffffffff82186124,param_2);
+  if ((ulonglong)*puVar2 <= (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb12,0,
+                    "animIndex < anims->size\n\t%i, %i");
   }
-  lVar3 = (param_2 & 0x1fffffff) * 8 + uVar1;
-  if (*(short *)((int)lVar3 + 0xc) == 0) {
-    puVar2 = (undefined4 *)XAnimGetPartsInternal(lVar3 + 0xc);
-    __restgprlr_29(*puVar2);
-    return;
+  iVar1 = (int)((uVar5 & 0xffffffff) << 3);
+  if (*(short *)((int)puVar2 + iVar1 + 0xc) == 0) {
+    pXVar3 = XAnimGetPartsInternal((XAnimEntry *)((int)puVar2 + iVar1 + 0xc));
+    pcVar4 = (char *)__restgprlr_29(pXVar3->name);
+    return pcVar4;
   }
-  __restgprlr_29(0xffffffff820068af);
-  return;
+  pcVar4 = (char *)__restgprlr_29(0xffffffff820068af);
+  return pcVar4;
 }
 
 
 // 82621878  XAnimIsDefault  (xanim/xanim.cpp:2842)
 
-void XAnimIsDefault(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int XAnimIsDefault(XAnimParts *param_1)
 
 {
-  DB_IsXAssetDefault(2,*param_1);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_IsXAssetDefault(ASSET_TYPE_XANIMPARTS,param_1->name);
+  return iVar1;
 }
 
 
 // 82621888  XAnimGetAnimDebugName  (xanim/xanim.cpp:2857)
 
-void XAnimGetAnimDebugName(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+char * XAnimGetAnimDebugName(XAnim_s *param_1,uint param_2)
 
 {
   undefined4 uVar1;
   bool bVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  longlong lVar7;
+  uint *puVar3;
+  XAnimParts *pXVar4;
+  int iVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  XAnimEntry *pXVar8;
   
-  uVar3 = __savegprlr_27();
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb30,0,0xffffffff82000f98,0xffffffff8202a360);
+  uVar7 = (ulonglong)(int)param_2;
+  puVar3 = (uint *)__savegprlr_27(param_1);
+  if (puVar3 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb30,0,"%s")
+    ;
   }
-  puVar4 = (uint *)uVar3;
-  if ((ulonglong)*puVar4 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xb31,0,0xffffffff82186124,param_2);
+  if ((ulonglong)*puVar3 <= (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb31,0,
+                    "animIndex < anims->size\n\t%i, %i");
   }
-  lVar7 = (param_2 & 0x1fffffff) * 8 + uVar3 + 0xc;
-  if (puVar4[2] == 0) {
-    if (*(short *)lVar7 == 0) {
-      puVar5 = (undefined4 *)XAnimGetPartsInternal(lVar7);
-      __restgprlr_27(*puVar5);
-      return;
+  pXVar8 = (XAnimEntry *)((int)puVar3 + (int)((uVar7 & 0xffffffff) << 3) + 0xc);
+  if (puVar3[2] == 0) {
+    if (pXVar8->numAnims == 0) {
+      pXVar4 = XAnimGetPartsInternal(pXVar8);
+      pcVar6 = (char *)__restgprlr_27(pXVar4->name);
+      return pcVar6;
     }
-    va(0xffffffff8200c28c,param_2);
-    __restgprlr_27();
-    return;
+    pcVar6 = va("%i");
+    pcVar6 = (char *)__restgprlr_27(pcVar6);
+    return pcVar6;
   }
-  iVar6 = (int)((param_2 & 0xffffffff) << 2);
-  if (*(int *)(iVar6 + puVar4[2]) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb38,0,0xffffffff82000f98,0xffffffff821861d4);
+  iVar5 = (int)((uVar7 & 0xffffffff) << 2);
+  if (*(int *)(iVar5 + puVar3[2]) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb38,0,"%s")
+    ;
   }
-  uVar1 = *(undefined4 *)(puVar4[2] + iVar6);
-  if (*(short *)lVar7 == 0) {
-    puVar5 = (undefined4 *)XAnimGetPartsInternal(lVar7);
-    iVar6 = DB_IsXAssetDefault(2,*puVar5);
+  uVar1 = *(undefined4 *)(puVar3[2] + iVar5);
+  if (pXVar8->numAnims == 0) {
+    pXVar4 = XAnimGetPartsInternal(pXVar8);
+    iVar5 = DB_IsXAssetDefault(ASSET_TYPE_XANIMPARTS,pXVar4->name);
     bVar2 = true;
-    if (iVar6 != 0) goto LAB_82621978;
+    if (iVar5 != 0) goto LAB_82621978;
   }
   bVar2 = false;
 LAB_82621978:
   if (!bVar2) {
-    __restgprlr_27(uVar1);
-    return;
+    pcVar6 = (char *)__restgprlr_27(uVar1);
+    return pcVar6;
   }
-  va(0xffffffff821861c4,uVar1);
-  __restgprlr_27();
-  return;
+  pcVar6 = va("^3%s (missing)");
+  pcVar6 = (char *)__restgprlr_27(pcVar6);
+  return pcVar6;
 }
 
 
 // 826219E0  XAnimGetAnimTreeDebugName  (xanim/xanim.cpp:2888)
 
-undefined4 XAnimGetAnimTreeDebugName(int param_1)
+char * XAnimGetAnimTreeDebugName(XAnim_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb4a,0,0xffffffff82000f98,0xffffffff8202a360);
+  if (param_1 == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb4a,0,"%s")
+    ;
   }
-  return *(undefined4 *)(param_1 + 4);
+  return param_1->debugName;
 }
 
 
 // 82621A38  XAnimGetAnimTreeSize  (xanim/xanim.cpp:2904)
 
-undefined4 XAnimGetAnimTreeSize(undefined4 *param_1)
+uint XAnimGetAnimTreeSize(XAnim_s *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xb59,0,0xffffffff82000f98,0xffffffff8202a360);
+  if (param_1 == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xb59,0,"%s")
+    ;
   }
-  return *param_1;
+  return param_1->size;
 }
 
 
 // 82626760  DObjInitServerTime  (xanim/xanim.cpp:3033)
 
-void DObjInitServerTime(undefined8 param_1,int *param_2)
+void DObjInitServerTime(DObj *param_1,float param_2)
 
 {
-  int iVar1;
-  undefined4 local_40 [2];
-  undefined2 local_38;
+  XAnimTree *pXVar1;
+  undefined1 in_r6;
+  double dVar2;
+  XAnimState local_40;
   
+  dVar2 = (double)param_2;
   Profile_Begin(0x12f);
-  if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xbe0,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (param_1 == (DObj *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xbe0,0,"%s")
+    ;
   }
-  iVar1 = *param_2;
-  if ((iVar1 != 0) && (*(short *)(iVar1 + 0x10) != 0)) {
-    local_38 = 0;
-    local_40[0] = 0;
-    XAnimUpdateOldTime(param_1,param_2,*(undefined2 *)(iVar1 + 0x10),local_40);
+  pXVar1 = param_1->tree;
+  if ((pXVar1 != (XAnimTree *)0x0) && (pXVar1->children != 0)) {
+    local_40.cycleCount = 0;
+    local_40.currentAnimTime = 0.0;
+    XAnimUpdateOldTime(param_1,(uint)pXVar1->children,&local_40,(float)dVar2,(bool)in_r6,(bool *)0x1
+                      );
   }
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 826285D8  DObjUpdateClientInfo  (xanim/xanim.cpp:3064)
 
-void DObjUpdateClientInfo(void)
+void DObjUpdateClientInfo(DObj *param_1,float param_2,bool param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  char cVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  bool bVar4;
+  int iVar3;
+  longlong lVar5;
+  undefined1 in_r6;
+  undefined1 uVar6;
   double extraout_f1;
-  double dVar4;
-  double dVar5;
-  float local_60 [2];
-  undefined2 local_58;
+  double dVar7;
   
-  piVar2 = (int *)__savegprlr_28();
-  dVar4 = extraout_f1;
+  pDVar2 = (DObj *)__savegprlr_28((double)param_2,param_1,param_3);
+  dVar7 = extraout_f1;
   Profile_Begin(0x12f);
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xbff,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar6 = 0x98;
+  if (pDVar2 == (DObj *)0x0) {
+    in_r6 = uVar6;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xbff,0,"%s")
+    ;
   }
-  dVar5 = 0.0;
-  if (dVar4 < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc00,0,0xffffffff82000f98,0xffffffff821868d8);
+  if (dVar7 < 0.0) {
+    in_r6 = uVar6;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc00,0,"%s")
+    ;
   }
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xc01,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
+    in_r6 = uVar6;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc01,0,"%s")
+    ;
   }
-  iVar1 = *piVar2;
-  DAT_841db98c = 0;
-  if ((iVar1 != 0) && (*(short *)(iVar1 + 0x10) != 0)) {
-    local_60[0] = (float)dVar5;
-    local_58 = 0;
-    XAnimUpdateOldTime(dVar4,piVar2,*(undefined2 *)(iVar1 + 0x10),local_60);
-    if (*(short *)(iVar1 + 0x10) != 0) {
-      XAnimUpdateTimeAndNotetrack(dVar4,piVar2);
+  pXVar1 = pDVar2->tree;
+  g_notifyListSize = 0;
+  if ((pXVar1 != (XAnimTree *)0x0) && (pXVar1->children != 0)) {
+    lVar5 = ZEXT48(&stack0x00000000) - 0x60;
+    XAnimUpdateOldTime(pDVar2,(uint)pXVar1->children,(XAnimState *)lVar5,(float)dVar7,(bool)in_r6,
+                       (bool *)0x1);
+    if (pXVar1->children != 0) {
+      XAnimUpdateTimeAndNotetrack(pDVar2,(uint)pXVar1->children,(float)dVar7,SUB81(lVar5,0));
     }
   }
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  iVar3 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar3);
   return;
 }
 
 
 // 82628708  DObjUpdateServerInfo  (xanim/xanim.cpp:3101)
 
-void DObjUpdateServerInfo(undefined8 param_1,undefined8 param_2,int param_3)
+int DObjUpdateServerInfo(DObj *param_1,float param_2,int param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  short sVar3;
+  ushort uVar1;
+  XAnimTree *pXVar2;
+  DObj *pDVar3;
+  int iVar4;
+  undefined8 in_r5;
+  undefined8 uVar5;
+  undefined1 uVar6;
   double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   
-  piVar2 = (int *)__savegprlr_27();
-  dVar5 = extraout_f1;
+  pDVar3 = (DObj *)__savegprlr_27((double)param_2,param_1,param_3);
+  uVar5 = in_r5;
+  dVar8 = extraout_f1;
   Profile_Begin(0x12f);
-  dVar6 = 0.0;
-  if (dVar5 < 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc24,0,0xffffffff82000f98,0xffffffff821868d8);
+  uVar6 = (undefined1)uVar5;
+  dVar9 = 0.0;
+  if (dVar8 < 0.0) {
+    uVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc24,0,"%s")
+    ;
   }
-  iVar1 = *piVar2;
-  if ((iVar1 != 0) && (sVar3 = *(short *)(iVar1 + 0x10), sVar3 != 0)) {
-    if (param_3 != 0) {
-      dVar4 = (double)XAnimFindServerNoteTrack(dVar5,piVar2);
-      if (dVar4 < dVar6) {
-        MyAssertHandler(0xffffffff82185bb8,0xc36,0,0xffffffff82000f98,0xffffffff82082a28);
+  pXVar2 = pDVar3->tree;
+  if ((pXVar2 != (XAnimTree *)0x0) && (uVar1 = pXVar2->children, uVar1 != 0)) {
+    if ((int)in_r5 != 0) {
+      fVar10 = XAnimFindServerNoteTrack(pDVar3,(uint)uVar1,(float)dVar8);
+      dVar7 = (double)fVar10;
+      if (dVar7 < dVar9) {
+        uVar6 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc36,0,
+                        "%s");
       }
-      if ((dVar4 != 1.0) && ((double)(float)(dVar4 * dVar5 + 0.0010000000474974513) <= dVar5)) {
-        XAnimUpdateTimeAndNotetrack(piVar2,*(undefined2 *)(iVar1 + 0x10));
-        Profile_EndInternal(0);
-        __restgprlr_27(1);
-        return;
+      if ((dVar7 != 1.0) &&
+         (fVar10 = (float)(dVar7 * dVar8 + 0.0010000000474974513), (double)fVar10 <= dVar8)) {
+        XAnimUpdateTimeAndNotetrack(pDVar3,(uint)pXVar2->children,fVar10,(bool)uVar6);
+        Profile_EndInternal((double *)0x0);
+        iVar4 = __restgprlr_27(1);
+        return iVar4;
       }
-      sVar3 = *(short *)(iVar1 + 0x10);
+      uVar1 = pXVar2->children;
     }
-    XAnimUpdateTimeAndNotetrack(dVar5,piVar2,sVar3);
+    XAnimUpdateTimeAndNotetrack(pDVar3,(uint)uVar1,(float)dVar8,(bool)uVar6);
   }
-  Profile_EndInternal(0);
-  __restgprlr_27(0);
-  return;
+  Profile_EndInternal((double *)0x0);
+  iVar4 = __restgprlr_27(0);
+  return iVar4;
 }
 
 
 // 82621A90  DObjGetClientNotifyList  (xanim/xanim.cpp:3153)
 
-undefined4 DObjGetClientNotifyList(undefined4 *param_1)
+int DObjGetClientNotifyList(XAnimNotify_s **param_1)
 
 {
-  char cVar2;
-  undefined4 uVar1;
+  int iVar1;
+  bool bVar2;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xc52,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc52,0,"%s")
+    ;
   }
-  uVar1 = DAT_841db98c;
-  *param_1 = &DAT_841db998;
-  return uVar1;
+  iVar1 = g_notifyListSize;
+  *param_1 = g_notifyList;
+  return iVar1;
 }
 
 
 // 82626818  DObjDisplayAnimToBuffer  (xanim/xanim.cpp:3163)
 
-void DObjDisplayAnimToBuffer
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+void DObjDisplayAnimToBuffer(DObj *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
-  int *piVar2;
-  undefined8 uVar3;
-  undefined4 local_40 [16];
+  XAnimTree *pXVar1;
+  undefined4 *puVar2;
+  char *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  int local_40 [16];
   
-  piVar2 = (int *)__savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc5f,0,0xffffffff82000f98,0xffffffff82058e00);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  puVar2 = (undefined4 *)__savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc5f,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc60,0,0xffffffff82000f98,0xffffffff8200e484);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc60,0,"%s")
+    ;
   }
-  if (piVar2 == (int *)0x0) {
-    uVar3 = 0xffffffff82186bc8;
+  pcVar3 = (char *)uVar6;
+  if (puVar2 == (undefined4 *)0x0) {
+    pcVar7 = "%sNO DOBJ\n";
   }
   else {
-    iVar1 = *piVar2;
-    if ((iVar1 != 0) && (*(short *)(iVar1 + 0x10) != 0)) {
+    pXVar1 = (XAnimTree *)*puVar2;
+    if ((pXVar1 != (XAnimTree *)0x0) && (pXVar1->children != 0)) {
       local_40[0] = 0;
-      Com_sprintfPos(param_3,param_4,local_40,0xffffffff82000f98,param_2);
-      XAnimDisplay(iVar1,*(undefined2 *)(iVar1 + 0x10),0,param_3,param_4,local_40);
-      Com_sprintfPos(param_3,param_4,local_40,0xffffffff820044d8);
-      __restgprlr_26();
+      Com_sprintfPos(pcVar3,param_4,local_40,"%s");
+      XAnimDisplay(pXVar1,(uint)pXVar1->children,0,pcVar3,param_4,local_40);
+      iVar4 = Com_sprintfPos(pcVar3,param_4,local_40,"\n");
+      __restgprlr_26(iVar4);
       return;
     }
-    uVar3 = 0xffffffff82186bbc;
+    pcVar7 = "%sNO TREE\n";
   }
-  Com_sprintf(param_3,param_4,uVar3,param_2);
-  __restgprlr_26();
+  iVar4 = Com_sprintf(pcVar3,param_4,pcVar7);
+  __restgprlr_26(iVar4);
   return;
 }
 
 
 // 82626938  DObjDisplayAnim  (xanim/xanim.cpp:3191)
 
-void DObjDisplayAnim(undefined8 param_1,ulonglong param_2)
+void DObjDisplayAnim(DObj *param_1,char *param_2)
 
 {
-  undefined1 auStack_820 [2056];
+  char acStack_820 [2056];
   
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc7b,0,0xffffffff82000f98,0xffffffff82058e00);
+  if (param_2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc7b,0,"%s")
+    ;
   }
-  DObjDisplayAnimToBuffer(param_1,param_2,auStack_820,0x800);
-  Com_Printf(0x13,auStack_820);
+  DObjDisplayAnimToBuffer(param_1,param_2,acStack_820,0x800);
+  Com_Printf(0x13,acStack_820);
   return;
 }
 
 
 // 82621B00  XAnimCalcDelta  (xanim/xanim.cpp:3204)
 
-void XAnimCalcDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefined4 *param_4)
+void XAnimCalcDelta(DObj *param_1,uint param_2,float *param_3,float *param_4,bool param_5)
 
 {
-  int *piVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  double dVar4;
-  double dVar5;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  XAnimDeltaInfo XVar6;
+  double dVar7;
+  double dVar8;
+  XAnimRotPos *local_90;
   float local_80;
   float local_7c;
   float local_78;
   float local_74;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
+  float local_6c;
+  float local_68;
+  float local_64;
   
-  piVar3 = (int *)__savegprlr_24();
+  uVar5 = (ulonglong)(int)param_2;
+  pDVar2 = (DObj *)__savegprlr_24(param_1);
+  XVar6 = (XAnimDeltaInfo)param_3;
   Profile_Begin(0x12e);
-  piVar1 = (int *)*piVar3;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc8e,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc8e,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xc8f,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc8f,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xc90,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar1->anims->size <= (uVar5 & 0xffffffff)) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xc90,0,"%s")
+    ;
   }
-  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    param_3[1] = 1.0;
-    local_6c = 0;
+  uVar3 = XAnimGetInfoIndex(pXVar1,(uint)uVar5);
+  if (uVar3 == 0) {
+    *(float *)((int)param_3 + 4) = 1.0;
+    local_6c = 0.0;
     *param_3 = 0.0;
-    param_4[1] = 0;
-    param_4[2] = 0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
   else {
-    dVar4 = 1.0;
-    XAnimCalcDeltaTree(0x3ff0000000000000,piVar3,uVar2);
-    dVar5 = 0.0;
+    dVar7 = 1.0;
+    local_90 = (XAnimRotPos *)CONCAT13(1,(uint3)param_5);
+    XAnimCalcDeltaTree(pDVar2,uVar3,1.0,XVar6,local_90);
+    dVar8 = 0.0;
     if (local_80 != 0.0) {
-      MyAssertHandler(0xffffffff82185bb8,0xca2,0,0xffffffff82000f98,0xffffffff82186208);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xca2,0,
+                      "%s");
     }
-    if ((double)local_7c != dVar5) {
-      MyAssertHandler(0xffffffff82185bb8,0xca3,0,0xffffffff82000f98,0xffffffff821861f8);
+    if ((double)local_7c != dVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xca3,0,
+                      "%s");
     }
-    if (((double)local_78 == dVar5) || ((double)local_74 == dVar5)) {
-      *param_3 = (float)dVar5;
-      param_3[1] = (float)dVar4;
+    if (((double)local_78 == dVar8) || ((double)local_74 == dVar8)) {
+      *param_3 = (float)dVar8;
+      *(float *)((int)param_3 + 4) = (float)dVar7;
     }
     else {
       *param_3 = local_78;
-      param_3[1] = local_74;
+      *(float *)((int)param_3 + 4) = local_74;
     }
     param_4[1] = local_68;
     param_4[2] = local_64;
   }
   *param_4 = local_6c;
-  Profile_EndInternal(0);
-  __restgprlr_24();
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_24(iVar4);
   return;
 }
 
 
 // 82621CE0  XAnimCalcAbsDelta  (xanim/xanim.cpp:3260)
 
-void XAnimCalcAbsDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefined4 *param_4)
+void XAnimCalcAbsDelta(DObj *param_1,uint param_2,float *param_3,float *param_4)
 
 {
-  int *piVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  double dVar4;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  XAnimDeltaInfo XVar6;
+  double dVar7;
   float local_70;
   float local_6c;
   float local_68;
   float local_64;
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
+  float local_5c;
+  float local_58;
+  float local_54;
   
-  piVar3 = (int *)__savegprlr_25();
+  uVar5 = (ulonglong)(int)param_2;
+  pDVar2 = (DObj *)__savegprlr_25(param_1);
+  XVar6 = (XAnimDeltaInfo)param_3;
   Profile_Begin(0x12e);
-  piVar1 = (int *)*piVar3;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xcc6,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xcc6,0,"%s")
+    ;
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xcc7,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xcc7,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xcc8,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar1->anims->size <= (uVar5 & 0xffffffff)) {
+    XVar6.bClear = false;
+    XVar6.bNormQuat = false;
+    XVar6.bAbs = false;
+    XVar6.bUseGoalWeight = false;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xcc8,0,"%s")
+    ;
   }
-  uVar2 = XAnimGetInfoIndex(piVar1,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    param_3[3] = 1.0;
-    local_5c = 0;
+  uVar3 = XAnimGetInfoIndex(pXVar1,(uint)uVar5);
+  if (uVar3 == 0) {
+    *(float *)((int)param_3 + 0xc) = 1.0;
+    local_5c = 0.0;
     *param_3 = 0.0;
-    param_3[1] = 0.0;
-    param_3[2] = 0.0;
-    param_4[1] = 0;
-    param_4[2] = 0;
+    *(float *)((int)param_3 + 4) = 0.0;
+    *(float *)((int)param_3 + 8) = 0.0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
   else {
-    dVar4 = 1.0;
-    XAnimCalcDeltaTree(0x3ff0000000000000,piVar3,uVar2);
+    dVar7 = 1.0;
+    XAnimCalcDeltaTree(pDVar2,uVar3,1.0,XVar6,(XAnimRotPos *)0x1000101);
     if (local_64 * local_64 + local_70 * local_70 + local_6c * local_6c + local_68 * local_68 == 0.0
        ) {
       *param_3 = 0.0;
-      param_3[1] = 0.0;
-      param_3[2] = 0.0;
-      param_3[3] = (float)dVar4;
+      *(float *)((int)param_3 + 4) = 0.0;
+      *(float *)((int)param_3 + 8) = 0.0;
+      *(float *)((int)param_3 + 0xc) = (float)dVar7;
     }
     else {
       *param_3 = local_70;
-      param_3[1] = local_6c;
-      param_3[2] = local_68;
-      param_3[3] = local_64;
+      *(float *)((int)param_3 + 4) = local_6c;
+      *(float *)((int)param_3 + 8) = local_68;
+      *(float *)((int)param_3 + 0xc) = local_64;
     }
     param_4[1] = local_58;
     param_4[2] = local_54;
   }
   *param_4 = local_5c;
-  Profile_EndInternal(0);
-  __restgprlr_25();
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_25(iVar4);
   return;
 }
 
 
 // 82621E88  XAnimGetRelDelta  (xanim/xanim.cpp:3307)
 
-void XAnimGetRelDelta(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                     float *param_5,undefined4 *param_6)
+void XAnimGetRelDelta(XAnim_s *param_1,uint param_2,float *param_3,float *param_4,float param_5,
+                     float param_6)
 
 {
-  longlong lVar1;
-  undefined8 extraout_f1;
-  double dVar2;
-  undefined8 uVar3;
-  double dVar4;
+  int iVar1;
+  XAnimParts *pXVar2;
+  ulonglong uVar3;
+  XAnimRotPos *pXVar4;
+  float *pfVar5;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  lVar1 = __savegprlr_28();
-  uVar3 = extraout_f1;
+  dVar6 = (double)param_6;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28((double)param_5,param_1);
+  pXVar4 = (XAnimRotPos *)uVar3;
+  dVar8 = extraout_f1;
+  pfVar5 = param_3;
   Profile_Begin(0x12e);
-  lVar1 = (param_4 & 0x1fffffff) * 8 + lVar1;
-  if (*(short *)((int)lVar1 + 0xc) == 0) {
-    XAnimGetPartsInternal(lVar1 + 0xc);
-    dVar4 = 0.0;
-    dVar2 = 1.0;
-    XAnimCalcRelDeltaParts(0x3ff0000000000000,uVar3,param_2);
-    if (dVar4 != 0.0) {
-      MyAssertHandler(0xffffffff82185bb8,0xcfd,0,0xffffffff82000f98,0xffffffff82186208);
+  iVar1 = (int)((uVar3 & 0xffffffff) << 3) + iVar1;
+  if (*(short *)(iVar1 + 0xc) == 0) {
+    pXVar2 = XAnimGetPartsInternal((XAnimEntry *)(iVar1 + 0xc));
+    dVar9 = 0.0;
+    dVar7 = 1.0;
+    XAnimCalcRelDeltaParts(pXVar2,1.0,(float)dVar8,(float)dVar6,pXVar4,(int)pfVar5);
+    if (dVar9 != 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xcfd,0,
+                      "%s");
     }
-    if (dVar4 != 0.0) {
-      MyAssertHandler(0xffffffff82185bb8,0xcfe,0,0xffffffff82000f98,0xffffffff821861f8);
+    if (dVar9 != 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xcfe,0,
+                      "%s");
     }
-    if ((dVar4 == 0.0) && (dVar4 == 0.0)) {
-      *param_5 = (float)dVar4;
-      param_5[1] = (float)dVar2;
+    if ((dVar9 == 0.0) && (dVar9 == 0.0)) {
+      *param_3 = (float)dVar9;
+      param_3[1] = (float)dVar7;
     }
     else {
-      *param_5 = 0.0;
-      param_5[1] = 0.0;
+      *param_3 = 0.0;
+      param_3[1] = 0.0;
     }
-    param_6[1] = 0;
-    param_6[2] = 0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
   else {
-    *param_5 = 0.0;
-    param_5[1] = 1.0;
-    param_6[1] = 0;
-    param_6[2] = 0;
+    *param_3 = 0.0;
+    param_3[1] = 1.0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
-  *param_6 = 0;
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  *param_4 = 0.0;
+  iVar1 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar1);
   return;
 }
 
 
 // 82622000  XAnimGetAbsDelta  (xanim/xanim.cpp:3360)
 
-void XAnimGetAbsDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefined4 *param_4)
+void XAnimGetAbsDelta(XAnim_s *param_1,uint param_2,float *param_3,float *param_4,float param_5)
 
 {
-  longlong lVar1;
-  undefined8 extraout_f1;
-  double dVar2;
-  undefined8 uVar3;
-  double dVar4;
+  int iVar1;
+  XAnimParts *pXVar2;
+  ulonglong uVar3;
+  XAnimRotPos *pXVar4;
+  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  lVar1 = __savegprlr_28();
-  uVar3 = extraout_f1;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28((double)param_5,param_1);
+  pXVar4 = (XAnimRotPos *)uVar3;
+  dVar6 = extraout_f1;
   Profile_Begin(0x12e);
-  lVar1 = (param_2 & 0x1fffffff) * 8 + lVar1;
-  if (*(short *)((int)lVar1 + 0xc) == 0) {
-    XAnimGetPartsInternal(lVar1 + 0xc);
-    dVar4 = 0.0;
-    dVar2 = 1.0;
-    XAnimCalcAbsDeltaParts(0x3ff0000000000000,uVar3);
-    if (dVar4 == 0.0) {
-      *param_3 = (float)dVar4;
-      param_3[1] = (float)dVar4;
-      param_3[2] = (float)dVar4;
-      param_3[3] = (float)dVar2;
+  iVar1 = (int)((uVar3 & 0xffffffff) << 3) + iVar1;
+  if (*(short *)(iVar1 + 0xc) == 0) {
+    pXVar2 = XAnimGetPartsInternal((XAnimEntry *)(iVar1 + 0xc));
+    dVar7 = 0.0;
+    dVar5 = 1.0;
+    XAnimCalcAbsDeltaParts(pXVar2,1.0,(float)dVar6,pXVar4);
+    if (dVar7 == 0.0) {
+      *param_3 = (float)dVar7;
+      param_3[1] = (float)dVar7;
+      param_3[2] = (float)dVar7;
+      param_3[3] = (float)dVar5;
     }
     else {
       *param_3 = 0.0;
@@ -3828,330 +4297,368 @@ void XAnimGetAbsDelta(undefined8 param_1,ulonglong param_2,float *param_3,undefi
       param_3[2] = 0.0;
       param_3[3] = 0.0;
     }
-    param_4[1] = 0;
-    param_4[2] = 0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
   else {
     *param_3 = 0.0;
     param_3[1] = 0.0;
     param_3[2] = 0.0;
     param_3[3] = 1.0;
-    param_4[1] = 0;
-    param_4[2] = 0;
+    param_4[1] = 0.0;
+    param_4[2] = 0.0;
   }
-  *param_4 = 0;
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  *param_4 = 0.0;
+  iVar1 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar1);
   return;
 }
 
 
 // 82622138  XAnimAllocInfoWithParent  (xanim/xanim.cpp:3400)
 
-void XAnimAllocInfoWithParent
-               (undefined8 param_1,undefined2 param_2,ulonglong param_3,ulonglong param_4,
-               int param_5)
+uint XAnimAllocInfoWithParent(XAnimTree *param_1,uint param_2,uint param_3,uint param_4,int param_5)
 
 {
   ushort uVar1;
-  uint uVar2;
+  XAnim_s *pXVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  ushort uVar6;
-  int *piVar7;
+  ushort uVar5;
+  XAnimTree *pXVar6;
+  ushort uVar7;
   ulonglong uVar8;
-  uint uVar9;
+  ulonglong uVar9;
   ulonglong uVar10;
+  longlong lVar11;
+  uint uVar12;
+  ulonglong uVar13;
   
-  piVar7 = (int *)__savegprlr_17();
-  if (piVar7 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xd50,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar9 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ushort)param_2;
+  pXVar6 = (XAnimTree *)__savegprlr_17(param_1);
+  if (pXVar6 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd50,0,"%s")
+    ;
   }
-  if (*piVar7 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xd51,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar6->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd51,0,"%s")
+    ;
   }
-  Sys_EnterCriticalSection(0xd);
-  uVar6 = DAT_841dbfa2;
-  uVar9 = (uint)DAT_841dbfa2;
-  if (uVar9 == 0) {
-    Sys_LeaveCriticalSection(0xd);
-    Sys_Error(0xffffffff821862e8);
+  Sys_EnterCriticalSection(CRITSECT_XANIM_ALLOC);
+  uVar5 = g_xAnimInfo[0].next;
+  uVar12 = (uint)g_xAnimInfo[0].next;
+  if (uVar12 == 0) {
+    Sys_LeaveCriticalSection(CRITSECT_XANIM_ALLOC);
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("exceeded maximum number of anim info");
   }
-  uVar8 = (ulonglong)DAT_841db988 + 1;
-  DAT_841db988 = (uint)uVar8;
-  if (uVar8 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xd63,0,0xffffffff82000f98,0xffffffff82185e34);
-    uVar8 = (ulonglong)DAT_841db988;
+  uVar10 = (ulonglong)(uint)g_info_usage + 1;
+  g_info_usage = (int)uVar10;
+  if (uVar10 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd63,0,"%s")
+    ;
+    uVar10 = (ulonglong)(uint)g_info_usage;
   }
-  if (DAT_841db994 < (int)uVar8) {
-    DAT_841db994 = (int)uVar8;
+  if (g_info_high_usage < (int)uVar10) {
+    g_info_high_usage = (int)uVar10;
   }
-  uVar2 = piVar7[1];
-  piVar7[1] = (int)((ulonglong)uVar2 + 1);
-  if ((ulonglong)uVar2 + 1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xd69,0,0xffffffff82000f98,0xffffffff82185e20);
+  lVar11 = (ulonglong)(uint)pXVar6->info_usage + 1;
+  pXVar6->info_usage = (int)lVar11;
+  if (lVar11 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd69,0,"%s")
+    ;
   }
-  if ((uVar9 == 0) || (0xfff < uVar9)) {
-    MyAssertHandler(0xffffffff82185bb8,0xd6c,0,0xffffffff82185e88,0xffffffff82185ea0,uVar9);
+  if ((uVar12 == 0) || (0xfff < uVar12)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd6c,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar3 = uVar9 * 0x40;
-  uVar1 = (&DAT_841dbfa2)[uVar9 * 0x20];
-  DAT_841dbfa2 = uVar1;
+  uVar1 = g_xAnimInfo[uVar12].next;
+  g_xAnimInfo[0].next = uVar1;
   if (0xfff < uVar1) {
-    MyAssertHandler(0xffffffff82185bb8,0xd6f,0,0xffffffff821862c8,0xffffffff821862d8,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd6f,0,
+                    "%s\n\t(next) = %i");
   }
-  (&DAT_841dbfa0)[(uint)uVar1 * 0x20] = 0;
-  Sys_LeaveCriticalSection(0xd);
-  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xd77,0,0xffffffff82186164,param_3);
+  g_xAnimInfo[uVar1].prev = 0;
+  Sys_LeaveCriticalSection(CRITSECT_XANIM_ALLOC);
+  if ((ulonglong)pXVar6->anims->size <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd77,0,
+                    "animIndex < tree->anims->size\n\t%i, %i");
   }
-  iVar4 = (int)((param_4 & 0xffffffff) << 6);
-  uVar8 = 0;
-  uVar10 = (ulonglong)*(ushort *)(&DAT_841dbfa4 + iVar4);
+  iVar3 = (int)((uVar9 & 0xffffffff) << 6);
+  uVar10 = 0;
+  uVar13 = (ulonglong)*(ushort *)((int)&g_xAnimInfo[0].children + iVar3);
   if (param_5 == 0) {
-    for (; uVar10 != 0; uVar10 = (ulonglong)(&DAT_841dbfa2)[(int)uVar10 * 0x20]) {
-      iVar5 = (int)uVar10 * 0x40;
-      if ((&DAT_841dbfac)[iVar5] == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0xd82,0,0xffffffff82000f98,0xffffffff821862b4);
+    while (uVar13 != 0) {
+      iVar4 = (int)uVar13;
+      if (g_xAnimInfo[iVar4].inuse == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd82,0,
+                        "%s");
       }
-      if ((param_3 & 0xffffffff) <= (ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar5)) break;
-      uVar8 = uVar10;
+      if ((uVar8 & 0xffffffff) <= (ulonglong)g_xAnimInfo[iVar4].animIndex) break;
+      uVar10 = uVar13;
+      uVar13 = (ulonglong)g_xAnimInfo[iVar4].next;
     }
   }
   else {
-    for (; uVar10 != 0; uVar10 = (ulonglong)(&DAT_841dbfa2)[(int)uVar10 * 0x20]) {
-      iVar5 = (int)uVar10 * 0x40;
-      if ((&DAT_841dbfac)[iVar5] == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0xd8f,0,0xffffffff82000f98,0xffffffff821862b4);
+    while (uVar13 != 0) {
+      iVar4 = (int)uVar13;
+      if (g_xAnimInfo[iVar4].inuse == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd8f,0,
+                        "%s");
       }
-      if ((param_3 & 0xffffffff) < (ulonglong)*(ushort *)(&DAT_841dbfa8 + iVar5)) break;
-      uVar8 = uVar10;
+      if ((uVar8 & 0xffffffff) < (ulonglong)g_xAnimInfo[iVar4].animIndex) break;
+      uVar10 = uVar13;
+      uVar13 = (ulonglong)g_xAnimInfo[iVar4].next;
     }
   }
-  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xd97,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar6->anims->size <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xd97,0,"%s")
+    ;
   }
-  (&DAT_841dbfa0)[uVar9 * 0x20] = (short)uVar8;
-  (&DAT_841dbfa2)[uVar9 * 0x20] = (short)uVar10;
-  *(short *)(&DAT_841dbfa8 + iVar3) = (short)param_3;
-  iVar5 = (int)param_3 * 8 + *piVar7;
-  *(undefined2 *)(&DAT_841dbfa4 + iVar3) = 0;
-  *(short *)(&DAT_841dbfa6 + iVar3) = (short)param_4;
-  *(undefined2 *)(&DAT_841dbfaa + iVar3) = param_2;
-  *(undefined4 *)(&DAT_841dbfb4 + iVar3) = *(undefined4 *)(iVar5 + 0x10);
-  if (*(short *)(&DAT_841dbfb6 + iVar3) != *(short *)(iVar5 + 0x12)) {
-    MyAssertHandler(0xffffffff82185bb8,0xda2,0,0xffffffff82000f98,0xffffffff8218627c);
+  iVar4 = (int)uVar8;
+  g_xAnimInfo[uVar12].prev = (ushort)uVar10;
+  g_xAnimInfo[uVar12].next = (ushort)uVar13;
+  g_xAnimInfo[uVar12].animIndex = (ushort)uVar8;
+  pXVar2 = pXVar6->anims;
+  g_xAnimInfo[uVar12].children = 0;
+  g_xAnimInfo[uVar12].parent = (ushort)uVar9;
+  g_xAnimInfo[uVar12].animToModel = uVar7;
+  g_xAnimInfo[uVar12].field12_0x1c = (XAnimInfo_u_28)pXVar2->entries[iVar4].field2_0x4;
+  if (g_xAnimInfo[uVar12].field12_0x1c.animParent.children !=
+      pXVar2->entries[iVar4].field2_0x4.animParent.children) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xda2,0,"%s")
+    ;
   }
-  if (*(short *)(&DAT_841dbfb4 + iVar3) != *(short *)(iVar5 + 0x10)) {
-    MyAssertHandler(0xffffffff82185bb8,0xda3,0,0xffffffff82000f98,0xffffffff82186248);
+  if (g_xAnimInfo[uVar12].field12_0x1c.animParent.flags !=
+      pXVar2->entries[iVar4].field2_0x4.animParent.flags) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xda3,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar7 <= (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xda5,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar6->anims->size <= (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xda5,0,"%s")
+    ;
   }
-  if ((&DAT_841dbfac)[iVar3] != '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xda8,0,0xffffffff82000f98,0xffffffff82186238);
+  if (g_xAnimInfo[uVar12].inuse != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xda8,0,"%s")
+    ;
   }
-  *(int **)(&DAT_841dbfb0 + iVar3) = piVar7;
-  (&DAT_841dbfac)[iVar3] = 1;
+  g_xAnimInfo[uVar12].tree = pXVar6;
+  g_xAnimInfo[uVar12].inuse = true;
   sync(1);
-  if (uVar10 != 0) {
-    *(ushort *)((int)&DAT_841dbfa0 + (int)(uVar10 << 6)) = uVar6;
+  if (uVar13 != 0) {
+    *(ushort *)((int)&g_xAnimInfo[0].prev + (int)(uVar13 << 6)) = uVar5;
   }
-  if (uVar8 == 0) {
-    if ((param_4 & 0xffffffff) == 0) {
-      *(ushort *)(piVar7 + 4) = uVar6;
-      __restgprlr_17(uVar9);
-      return;
+  if (uVar10 == 0) {
+    if ((uVar9 & 0xffffffff) == 0) {
+      pXVar6->children = uVar5;
+      uVar12 = __restgprlr_17(uVar12);
+      return uVar12;
     }
-    *(ushort *)(&DAT_841dbfa4 + iVar4) = uVar6;
-    __restgprlr_17(uVar9);
-    return;
+    *(ushort *)((int)&g_xAnimInfo[0].children + iVar3) = uVar5;
+    uVar12 = __restgprlr_17(uVar12);
+    return uVar12;
   }
-  *(ushort *)((int)&DAT_841dbfa2 + (int)(uVar8 << 6)) = uVar6;
-  __restgprlr_17(uVar9);
-  return;
+  *(ushort *)((int)&g_xAnimInfo[0].next + (int)(uVar10 << 6)) = uVar5;
+  uVar12 = __restgprlr_17(uVar12);
+  return uVar12;
 }
 
 
 // 82622558  XAnimEnsureGoalWeightParent  (xanim/xanim.cpp:3528)
 
-void XAnimEnsureGoalWeightParent(undefined8 param_1,ulonglong param_2)
+uint XAnimEnsureGoalWeightParent(DObj *param_1,uint param_2)
 
 {
   ushort uVar1;
-  int *piVar2;
+  XAnimTree *pXVar2;
   uint uVar3;
-  int *piVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  DObj *pDVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  XAnimInfo_u_28 *pXVar7;
+  longlong lVar8;
   
-  piVar4 = (int *)__savegprlr_23();
-  piVar2 = (int *)*piVar4;
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xdd0,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar6 = (ulonglong)(int)param_2;
+  pDVar4 = (DObj *)__savegprlr_23(param_1);
+  pXVar2 = pDVar4->tree;
+  if (pXVar2 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xdd0,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    if (*(short *)(piVar2 + 4) == 0) {
-      iVar5 = XAnimAllocInfoWithParent(piVar2,0,0,0,0);
-      iVar5 = iVar5 * 0x40;
-      puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-      lVar7 = 8;
+  if ((uVar6 & 0xffffffff) == 0) {
+    if (pXVar2->children == 0) {
+      uVar5 = XAnimAllocInfoWithParent(pXVar2,0,0,0,0);
+      pXVar7 = &g_xAnimInfo[uVar5].field12_0x1c;
+      lVar8 = 8;
       do {
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-      *(undefined4 *)(&DAT_841dbfc8 + iVar5) = 0x3f800000;
-      *(undefined4 *)(&DAT_841dbfcc + iVar5) = 0x3f800000;
-      *(undefined4 *)(&DAT_841dbfc4 + iVar5) = 0;
-      *(undefined4 *)(&DAT_841dbfd0 + iVar5) = 0x3f800000;
-      *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-      *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-      __restgprlr_23();
-      return;
+        pXVar7 = pXVar7 + 1;
+        pXVar7->parts = (XAnimParts *)0x0;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      g_xAnimInfo[uVar5].notifyIndex = -1;
+      g_xAnimInfo[uVar5].state.goalWeight = 1.0;
+      g_xAnimInfo[uVar5].state.weight = 1.0;
+      g_xAnimInfo[uVar5].state.goalTime = 0.0;
+      g_xAnimInfo[uVar5].state.rate = 1.0;
+      g_xAnimInfo[uVar5].notifyType = 0;
+      g_xAnimInfo[uVar5].notifyChild = 0;
+      g_xAnimInfo[uVar5].notifyName = 0;
+      uVar5 = __restgprlr_23();
+      return uVar5;
     }
   }
   else {
-    iVar5 = XAnimEnsureGoalWeightParent
-                      (piVar4,*(undefined2 *)((int)((param_2 & 0xffffffff) << 3) + *piVar2 + 0xe));
-    uVar1 = *(ushort *)(&DAT_841dbfa4 + iVar5 * 0x40);
+    uVar5 = XAnimEnsureGoalWeightParent
+                      (pDVar4,(uint)*(ushort *)
+                                     ((int)&pXVar2->anims->entries[0].parent +
+                                     (int)((uVar6 & 0xffffffff) << 3)));
+    uVar1 = g_xAnimInfo[uVar5].children;
     while (uVar3 = (uint)uVar1, uVar3 != 0) {
-      if ((&DAT_841dbfac)[uVar3 * 0x40] == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0xdea,0,0xffffffff82000f98,0xffffffff82185e68);
+      if (g_xAnimInfo[uVar3].inuse == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xdea,0,
+                        "%s");
       }
-      if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + uVar3 * 0x40) == (param_2 & 0xffffffff)) {
-        __restgprlr_23(uVar3);
-        return;
+      if ((ulonglong)g_xAnimInfo[uVar3].animIndex == (uVar6 & 0xffffffff)) {
+        uVar5 = __restgprlr_23(uVar3);
+        return uVar5;
       }
-      uVar1 = (&DAT_841dbfa2)[uVar3 * 0x20];
+      uVar1 = g_xAnimInfo[uVar3].next;
     }
-    iVar5 = XAnimAllocInfoWithParent(piVar2,0,param_2,iVar5,0);
-    iVar5 = iVar5 * 0x40;
-    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-    lVar7 = 8;
+    uVar5 = XAnimAllocInfoWithParent(pXVar2,0,(uint)uVar6,uVar5,0);
+    pXVar7 = &g_xAnimInfo[uVar5].field12_0x1c;
+    lVar8 = 8;
     do {
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+      pXVar7 = pXVar7 + 1;
+      pXVar7->parts = (XAnimParts *)0x0;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    g_xAnimInfo[uVar5].notifyIndex = -1;
+    g_xAnimInfo[uVar5].notifyType = 0;
+    g_xAnimInfo[uVar5].notifyChild = 0;
+    g_xAnimInfo[uVar5].notifyName = 0;
   }
-  __restgprlr_23();
-  return;
+  uVar5 = __restgprlr_23();
+  return uVar5;
 }
 
 
 // 826269B8  XAnimAllocInfoIndex  (xanim/xanim.cpp:3577)
 
-void XAnimAllocInfoIndex(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+uint XAnimAllocInfoIndex(DObj *param_1,uint param_2,int param_3)
 
 {
-  uint *puVar1;
-  int *piVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  longlong lVar5;
-  longlong lVar6;
-  undefined1 auStack_440 [1088];
+  XAnimTree *pXVar1;
+  int iVar2;
+  DObj *pDVar3;
+  uint uVar4;
+  XAnimParts *pXVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  XAnimEntry *pXVar8;
+  XModelNameMap aXStack_440 [272];
   
-  piVar4 = (int *)__savegprlr_26();
-  puVar1 = (uint *)*piVar4;
-  if (puVar1 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe02,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar7 = (ulonglong)(int)param_2;
+  pDVar3 = (DObj *)__savegprlr_26(param_1);
+  pXVar1 = pDVar3->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe02,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    uVar2 = 0;
+  if ((uVar7 & 0xffffffff) == 0) {
+    uVar4 = 0;
   }
   else {
-    lVar5 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar1;
-    lVar6 = lVar5 + 0xc;
-    uVar2 = XAnimEnsureGoalWeightParent(piVar4,*(undefined2 *)((int)lVar5 + 0xe));
-    if (*(short *)lVar6 == 0) {
+    iVar2 = (int)((uVar7 & 0xffffffff) << 3);
+    pXVar8 = (XAnimEntry *)((int)&pXVar1->anims->entries[0].numAnims + iVar2);
+    uVar4 = XAnimEnsureGoalWeightParent
+                      (pDVar3,(uint)*(ushort *)((int)&pXVar1->anims->entries[0].parent + iVar2));
+    if (pXVar8->numAnims == 0) {
       Profile_Begin(0x13f);
-      XAnimInitModelMap(piVar4[0x26],*(undefined1 *)((int)piVar4 + 9),auStack_440);
-      uVar3 = XAnimGetPartsInternal(lVar6);
-      uVar3 = XAnimGetAnimMap(uVar3,auStack_440);
-      Profile_EndInternal(0);
+      XAnimInitModelMap(pDVar3->models,(uint)pDVar3->numModels,aXStack_440);
+      pXVar5 = XAnimGetPartsInternal(pXVar8);
+      uVar6 = XAnimGetAnimMap(pXVar5,aXStack_440);
+      Profile_EndInternal((double *)0x0);
       goto LAB_82626a74;
     }
   }
-  uVar3 = 0;
+  uVar6 = 0;
 LAB_82626a74:
-  XAnimAllocInfoWithParent(puVar1,uVar3,param_2,uVar2,param_3);
-  __restgprlr_26();
-  return;
+  uVar4 = XAnimAllocInfoWithParent(pXVar1,uVar6,(uint)uVar7,uVar4,param_3);
+  uVar4 = __restgprlr_26(uVar4);
+  return uVar4;
 }
 
 
 // 82626A98  XAnimAllocInfo  (xanim/xanim.cpp:3620)
 
-longlong XAnimAllocInfo(void)
+XAnimInfo * XAnimAllocInfo(DObj *param_1,uint param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = XAnimAllocInfoIndex();
-  return (uVar1 & 0x3ffffff) * 0x40 + -0x7be24068;
+  uVar1 = XAnimAllocInfoIndex(param_1,param_2,param_3);
+  return g_xAnimInfo + uVar1;
 }
 
 
 // 82622718  XAnimClearGoalWeightInternal  (xanim/xanim.cpp:3626)
 
-void XAnimClearGoalWeightInternal
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
+void XAnimClearGoalWeightInternal(XAnimTree *param_1,uint param_2,float param_3,int param_4)
 
 {
   int iVar1;
   int *piVar2;
+  ulonglong uVar3;
+  int in_r6;
   double extraout_f1;
-  double dVar3;
   double dVar4;
+  double dVar5;
   
-  piVar2 = (int *)__savegprlr_27();
-  dVar4 = extraout_f1;
+  uVar3 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_27((double)param_3,param_1,uVar3,param_4);
+  dVar5 = extraout_f1;
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe2e,0,0xffffffff82000f98,0xffffffff821813e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe2e,0,"%s")
+    ;
   }
   if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe2f,0,0xffffffff82000f98,0xffffffff82184c8c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe2f,0,"%s")
+    ;
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0xe30,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar3 & 0xffffffff) == 0) || (0xfff < (uVar3 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe30,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar1 = (int)param_2 * 0x40;
-  if ((&DAT_841dbfac)[iVar1] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xe33,0,0xffffffff82000f98,0xffffffff82185e68);
+  iVar1 = (int)uVar3;
+  if (g_xAnimInfo[iVar1].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe33,0,"%s")
+    ;
   }
-  if ((*(float *)(&DAT_841dbfc8 + iVar1) == 0.0) && (param_4 == 0)) {
-    dVar3 = (double)*(float *)(&DAT_841dbfc4 + iVar1);
-    if ((float)(dVar4 - (double)*(float *)(&DAT_841dbfc4 + iVar1)) < 0.0) {
-      dVar3 = dVar4;
+  if ((g_xAnimInfo[iVar1].state.goalWeight == 0.0) && (in_r6 == 0)) {
+    dVar4 = (double)g_xAnimInfo[iVar1].state.goalTime;
+    if ((float)(dVar5 - dVar4) < 0.0) {
+      dVar4 = dVar5;
     }
-    *(float *)(&DAT_841dbfc4 + iVar1) = (float)dVar3;
+    g_xAnimInfo[iVar1].state.goalTime = (float)dVar4;
   }
   else {
-    *(float *)(&DAT_841dbfc4 + iVar1) = (float)dVar4;
+    g_xAnimInfo[iVar1].state.goalTime = (float)dVar5;
   }
-  *(undefined4 *)(&DAT_841dbfc8 + iVar1) = 0;
-  if (dVar4 == 0.0) {
-    *(undefined4 *)(&DAT_841dbfcc + iVar1) = 0;
-    (&DAT_841dbfd4)[iVar1] = 1;
+  g_xAnimInfo[iVar1].state.goalWeight = 0.0;
+  if (dVar5 == 0.0) {
+    g_xAnimInfo[iVar1].state.weight = 0.0;
+    g_xAnimInfo[iVar1].state.instantWeightChange = true;
   }
-  if (*(short *)(&DAT_841dbf9c + iVar1) != 0) {
-    SL_RemoveRefToString();
-    *(undefined2 *)(&DAT_841dbf9c + iVar1) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+  if (g_xAnimInfo[iVar1].notifyName != 0) {
+    SL_RemoveRefToString((uint)g_xAnimInfo[iVar1].notifyName);
+    g_xAnimInfo[iVar1].notifyName = 0;
+    g_xAnimInfo[iVar1].notifyIndex = -1;
     __restgprlr_27();
     return;
   }
-  *(undefined2 *)(&DAT_841dbf9a + iVar1) = 0xffff;
+  g_xAnimInfo[iVar1].notifyIndex = -1;
   __restgprlr_27();
   return;
 }
@@ -4159,15 +4666,17 @@ void XAnimClearGoalWeightInternal
 
 // 82622890  XAnimClearGoalWeight  (xanim/xanim.cpp:3658)
 
-void XAnimClearGoalWeight
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void XAnimClearGoalWeight(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  int in_r5;
+  double dVar2;
   
-  uVar1 = XAnimGetInfoIndex();
-  if ((uVar1 & 0xffffffff) != 0) {
-    XAnimClearGoalWeightInternal(param_1,param_2,uVar1,param_4,0);
+  dVar2 = (double)param_3;
+  uVar1 = XAnimGetInfoIndex(param_1,param_2);
+  if (uVar1 != 0) {
+    XAnimClearGoalWeightInternal(param_1,uVar1,(float)dVar2,in_r5);
   }
   return;
 }
@@ -4175,28 +4684,24 @@ void XAnimClearGoalWeight
 
 // 826228E8  XAnimClearTreeGoalWeightsInternal  (xanim/xanim.cpp:3668)
 
-void XAnimClearTreeGoalWeightsInternal
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,int param_4)
+void XAnimClearTreeGoalWeightsInternal(XAnimTree *param_1,uint param_2,float param_3,int param_4)
 
 {
   ushort uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  short sVar4;
-  undefined8 extraout_f1;
-  undefined8 uVar5;
+  XAnimTree *pXVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  double extraout_f1;
+  double dVar5;
   
-  uVar2 = __savegprlr_28();
-  uVar5 = extraout_f1;
-  XAnimClearGoalWeightInternal();
-  sVar4 = 0;
-  for (uVar1 = *(ushort *)(&DAT_841dbfa4 + (int)((param_2 & 0xffffffff) << 6)); uVar1 != 0;
-      uVar1 = (&DAT_841dbfa2)[(uint)uVar1 * 0x20]) {
-    if ((param_4 == 0) || (uVar3 = 1, sVar4 == *(short *)(&DAT_841dbfa8 + (uint)uVar1 * 0x40))) {
-      uVar3 = 0;
-    }
-    XAnimClearTreeGoalWeightsInternal(uVar5,uVar2,uVar1,param_3,uVar3);
-    sVar4 = *(short *)(&DAT_841dbfa8 + (uint)uVar1 * 0x40);
+  lVar4 = (longlong)param_4;
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar2 = (XAnimTree *)__savegprlr_28((double)param_3,param_1);
+  dVar5 = extraout_f1;
+  XAnimClearGoalWeightInternal(pXVar2,(uint)uVar3,(float)extraout_f1,(int)lVar4);
+  for (uVar1 = *(ushort *)((int)&g_xAnimInfo[0].children + (int)((uVar3 & 0xffffffff) << 6));
+      uVar1 != 0; uVar1 = g_xAnimInfo[uVar1].next) {
+    XAnimClearTreeGoalWeightsInternal(pXVar2,(uint)uVar1,(float)dVar5,(int)lVar4);
   }
   __restgprlr_28();
   return;
@@ -4205,15 +4710,17 @@ void XAnimClearTreeGoalWeightsInternal
 
 // 82622988  XAnimClearTreeGoalWeights  (xanim/xanim.cpp:3684)
 
-void XAnimClearTreeGoalWeights
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void XAnimClearTreeGoalWeights(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  int in_r5;
+  double dVar2;
   
-  uVar1 = XAnimGetInfoIndex();
-  if ((uVar1 & 0xffffffff) != 0) {
-    XAnimClearTreeGoalWeightsInternal(param_1,param_2,uVar1,param_4,1);
+  dVar2 = (double)param_3;
+  uVar1 = XAnimGetInfoIndex(param_1,param_2);
+  if (uVar1 != 0) {
+    XAnimClearTreeGoalWeightsInternal(param_1,uVar1,(float)dVar2,in_r5);
   }
   return;
 }
@@ -4221,40 +4728,54 @@ void XAnimClearTreeGoalWeights
 
 // 826229E0  XAnimClearTreeGoalWeightsStrict  (xanim/xanim.cpp:3694)
 
-void XAnimClearTreeGoalWeightsStrict(undefined8 param_1,ulonglong param_2)
+void XAnimClearTreeGoalWeightsStrict(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  int iVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  uint uVar4;
-  longlong lVar5;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
+  ushort uVar1;
+  XAnim_s *pXVar2;
+  int iVar3;
+  XAnimTree *pXVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  double extraout_f1;
+  double dVar10;
   
-  piVar3 = (int *)__savegprlr_28();
-  uVar6 = extraout_f1;
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe73,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_28((double)param_3,param_1);
+  dVar10 = extraout_f1;
+  if (pXVar4 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe73,0,"%s")
+    ;
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe74,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar4->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe74,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xe75,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar4->anims->size <= (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe75,0,"%s")
+    ;
   }
-  lVar5 = 0;
-  iVar1 = (int)((param_2 & 0xffffffff) << 3) + *piVar3;
-  uVar4 = (uint)*(ushort *)(iVar1 + 0xc);
-  if (uVar4 != 0) {
+  pXVar2 = pXVar4->anims;
+  iVar3 = (int)((uVar6 & 0xffffffff) << 3);
+  iVar9 = 0;
+  uVar8 = (uint)*(ushort *)((int)&pXVar2->entries[0].numAnims + iVar3);
+  if (uVar8 != 0) {
     do {
-      if ((*(short *)(piVar3 + 4) != 0) &&
-         (uVar2 = XAnimGetInfoIndex_r(piVar3,(ulonglong)*(ushort *)(iVar1 + 0x12) + lVar5),
-         (uVar2 & 0xffffffff) != 0)) {
-        XAnimClearTreeGoalWeightsInternal(uVar6,piVar3,uVar2);
+      uVar1 = pXVar4->children;
+      uVar7 = (uint)uVar1;
+      if (uVar1 != 0) {
+        uVar5 = XAnimGetInfoIndex_r(pXVar4,(uint)*(ushort *)
+                                                  ((int)&pXVar2->entries[0].field2_0x4 + iVar3 + 2)
+                                           + iVar9,(uint)uVar1);
+        if (uVar5 != 0) {
+          XAnimClearTreeGoalWeightsInternal(pXVar4,uVar5,(float)dVar10,uVar7);
+        }
       }
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < (int)uVar4);
+      iVar9 = iVar9 + 1;
+    } while (iVar9 < (int)uVar8);
   }
   __restgprlr_28();
   return;
@@ -4263,64 +4784,76 @@ void XAnimClearTreeGoalWeightsStrict(undefined8 param_1,ulonglong param_2)
 
 // 82622AF8  XAnimClearGoalWeightKnobInternal  (xanim/xanim.cpp:3711)
 
-void XAnimClearGoalWeightKnobInternal
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
+void XAnimClearGoalWeightKnobInternal(XAnimTree *param_1,uint param_2,float param_3,float param_4)
 
 {
   ushort uVar1;
   int iVar2;
-  int *piVar3;
+  XAnimTree *pXVar3;
   ulonglong uVar4;
+  undefined8 in_r5;
   ulonglong uVar5;
-  double dVar6;
-  double extraout_f1;
+  ulonglong uVar6;
   double dVar7;
+  double extraout_f1;
   double dVar8;
+  double dVar9;
+  double dVar10;
   
-  piVar3 = (int *)__savegprlr_24();
-  dVar8 = extraout_f1;
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe89,0,0xffffffff82000f98,0xffffffff821813e0);
+  dVar8 = (double)param_4;
+  uVar4 = (ulonglong)(int)param_2;
+  pXVar3 = (XAnimTree *)__savegprlr_24((double)param_3,param_1);
+  dVar10 = extraout_f1;
+  if (pXVar3 == (XAnimTree *)0x0) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe89,0,"%s")
+    ;
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xe8a,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar3->anims == (XAnim_s *)0x0) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe8a,0,"%s")
+    ;
   }
-  if (((param_4 & 0xffffffff) == 0) || (0xfff < (param_4 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0xe8b,0,0xffffffff82185e88,0xffffffff82185ea0,param_4);
+  if (((uVar4 & 0xffffffff) == 0) || (0xfff < (uVar4 & 0xffffffff))) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe8b,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  dVar7 = 0.0;
-  if (*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6)) == 0) {
-    uVar1 = *(ushort *)(piVar3 + 4);
+  dVar9 = 0.0;
+  uVar1 = *(ushort *)((int)&g_xAnimInfo[0].parent + (int)((uVar4 & 0xffffffff) << 6));
+  if (uVar1 == 0) {
+    uVar1 = pXVar3->children;
   }
   else {
-    uVar1 = *(ushort *)
-             (&DAT_841dbfa4 +
-             (uint)*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6)) * 0x40);
+    uVar1 = g_xAnimInfo[uVar1].children;
   }
-  uVar4 = (ulonglong)uVar1;
-  if (uVar4 != 0) {
-    uVar5 = uVar4;
-    if (uVar4 == 0) goto LAB_82622c18;
+  uVar5 = (ulonglong)uVar1;
+  if (uVar5 != 0) {
+    uVar6 = uVar5;
+    if (uVar5 == 0) goto LAB_82622c18;
     do {
-      if (0xfff < uVar5) {
+      if (0xfff < uVar6) {
 LAB_82622c18:
-        MyAssertHandler(0xffffffff82185bb8,0xe94,0,0xffffffff8218633c,0xffffffff82186310,uVar5);
+        in_r5 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe94,0,
+                        "%s\n\t(childInfoIndex) = %i");
       }
-      iVar2 = (int)(uVar5 << 6);
-      dVar6 = (double)*(float *)(&DAT_841dbfcc + iVar2);
-      if (uVar5 == (param_4 & 0xffffffff)) {
-        dVar6 = ABS((double)(float)(dVar8 - dVar6));
+      iVar2 = (int)(uVar6 << 6);
+      dVar7 = (double)*(float *)((int)&g_xAnimInfo[0].state.weight + iVar2);
+      if (uVar6 == (uVar4 & 0xffffffff)) {
+        dVar7 = ABS((double)(float)(dVar10 - dVar7));
       }
-      uVar5 = (ulonglong)*(ushort *)((int)&DAT_841dbfa2 + iVar2);
-      if ((float)(dVar7 - dVar6) < 0.0) {
-        dVar7 = dVar6;
+      uVar6 = (ulonglong)*(ushort *)((int)&g_xAnimInfo[0].next + iVar2);
+      if ((float)(dVar9 - dVar7) < 0.0) {
+        dVar9 = dVar7;
       }
-    } while (uVar5 != 0);
+    } while (uVar6 != 0);
   }
-  dVar8 = (double)(float)(dVar7 * param_2);
-  for (; uVar4 != 0; uVar4 = (ulonglong)*(ushort *)((int)&DAT_841dbfa2 + (int)(uVar4 << 6))) {
-    if (uVar4 != (param_4 & 0xffffffff)) {
-      XAnimClearGoalWeightInternal(dVar8,piVar3,uVar4);
+  dVar10 = (double)(float)(dVar9 * dVar8);
+  for (; uVar5 != 0; uVar5 = (ulonglong)*(ushort *)((int)&g_xAnimInfo[0].next + (int)(uVar5 << 6)))
+  {
+    if (uVar5 != (uVar4 & 0xffffffff)) {
+      XAnimClearGoalWeightInternal(pXVar3,(uint)uVar5,(float)dVar10,(int)in_r5);
     }
   }
   __restgprlr_24();
@@ -4330,510 +4863,659 @@ LAB_82622c18:
 
 // 82626AC8  XAnimSetCompleteGoalWeightNode  (xanim/xanim.cpp:3753)
 
-void XAnimSetCompleteGoalWeightNode
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
+int XAnimSetCompleteGoalWeightNode
+              (XAnimTree *param_1,uint param_2,float param_3,float param_4,float param_5,
+              uint param_6,uint param_7)
 
 {
-  ushort uVar1;
+  bool bVar1;
   float fVar2;
-  int *piVar4;
-  ulonglong uVar3;
-  int iVar5;
-  uint uVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  ushort uVar3;
+  short sVar4;
+  XAnimTree *pXVar5;
+  uint uVar7;
+  ulonglong uVar6;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
   double dVar11;
+  double extraout_f1;
   double dVar12;
   double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  XAnimTree *pXStack00000014;
   
+  dVar15 = (double)param_5;
+  dVar12 = (double)param_4;
+  uVar9 = (ulonglong)(int)param_2;
   __savegprlr();
-  piVar4 = (int *)__savefpr_27();
-  uVar3 = XAnimSetGoalWeightNode();
-  uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6));
-  if (uVar6 != 0) {
-    dVar10 = 0.0010000000474974513;
-    dVar11 = 1.0;
-    dVar12 = 0.0;
+  pXStack00000014 = (XAnimTree *)__savefpr_27();
+  uVar7 = XAnimSetGoalWeightNode
+                    (pXStack00000014,(uint)uVar9,(float)extraout_f1,(float)dVar12,(float)dVar15,
+                     param_6,param_7);
+  uVar6 = (ulonglong)(int)uVar7;
+  uVar10 = (uint)*(ushort *)((int)&g_xAnimInfo[0].parent + (int)((uVar9 & 0xffffffff) << 6));
+  if (uVar10 != 0) {
+    dVar15 = 0.0010000000474974513;
+    dVar16 = 1.0;
+    dVar17 = 0.0;
     do {
-      if (0xfff < uVar6) {
-        MyAssertHandler(0xffffffff82185bb8,0xeb5,0,0xffffffff82186c04,0xffffffff82186bd4,uVar6);
+      if (0xfff < uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xeb5,0,
+                        "%s\n\t(parentInfoIndex) = %i");
       }
-      iVar5 = uVar6 * 0x40;
-      if ((double)*(float *)(&DAT_841dbfc8 + iVar5) == dVar12) {
-        dVar13 = param_2;
-        if (piVar4 == (int *)0x0) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+      pXVar5 = pXStack00000014;
+      if ((double)g_xAnimInfo[uVar10].state.goalWeight == dVar17) {
+        dVar18 = dVar12;
+        if (pXStack00000014 == (XAnimTree *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc1,0
+                          ,"%s");
         }
-        if (*piVar4 == 0) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+        if (pXVar5->anims == (XAnim_s *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc2,0
+                          ,"%s");
         }
-        if (param_2 < dVar12) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+        if (dVar12 < dVar17) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc4,0
+                          ,"%s");
         }
-        if ((uVar6 == 0) || (0xfff < uVar6)) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar6);
+        if ((uVar10 == 0) || (0xfff < uVar10)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc9,0
+                          ,"%s\n\t(infoIndex) = %i");
         }
-        if (*(short *)(&DAT_841dbf9c + iVar5) != 0) {
-          SL_RemoveRefToString();
-          *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        if (g_xAnimInfo[uVar10].notifyName != 0) {
+          SL_RemoveRefToString((uint)g_xAnimInfo[uVar10].notifyName);
+          g_xAnimInfo[uVar10].notifyName = 0;
         }
-        *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-        if ((&DAT_841dbfac)[iVar5] == '\0') {
-          MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+        bVar1 = g_xAnimInfo[uVar10].inuse;
+        g_xAnimInfo[uVar10].notifyIndex = -1;
+        if (bVar1 == false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfcf,0
+                          ,"%s");
         }
-        uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar5);
-        if (*(uint *)*piVar4 <= (uint)uVar1) {
-          MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+        uVar3 = g_xAnimInfo[uVar10].animIndex;
+        if (pXVar5->anims->size <= (uint)uVar3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfd2,0
+                          ,"%s");
         }
-        if (uVar1 == 0) {
-          dVar13 = dVar12;
+        if (uVar3 == 0) {
+          dVar18 = dVar17;
         }
-        if (dVar13 == dVar12) {
-          *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar11;
-          *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar12;
-          (&DAT_841dbfd4)[iVar5] = 1;
+        if (dVar18 == dVar17) {
+          g_xAnimInfo[uVar10].state.weight = (float)dVar16;
+          g_xAnimInfo[uVar10].state.goalTime = (float)dVar17;
+          g_xAnimInfo[uVar10].state.instantWeightChange = true;
         }
         else {
-          if ((double)*(float *)(&DAT_841dbfcc + iVar5) == dVar12) {
-            *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar10;
+          if ((double)g_xAnimInfo[uVar10].state.weight == dVar17) {
+            g_xAnimInfo[uVar10].state.weight = (float)dVar15;
           }
-          dVar7 = (double)*(float *)(&DAT_841dbfcc + iVar5);
-          dVar9 = (double)(float)(dVar7 - dVar11);
-          if ((dVar9 == dVar12) ||
-             (dVar12 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
-                                                      dVar11) * dVar9))) {
-            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar13;
+          dVar11 = (double)g_xAnimInfo[uVar10].state.weight;
+          dVar14 = (double)(float)(dVar11 - dVar16);
+          if ((dVar14 == dVar17) ||
+             (dVar17 < (double)(float)((double)(float)((double)g_xAnimInfo[uVar10].state.goalWeight
+                                                      - dVar16) * dVar14))) {
+            g_xAnimInfo[uVar10].state.goalTime = (float)dVar18;
           }
           else {
-            dVar8 = (double)*(float *)(&DAT_841dbfc4 + iVar5);
-            if ((float)(dVar13 - (double)*(float *)(&DAT_841dbfc4 + iVar5)) < 0.0) {
-              dVar8 = dVar13;
+            dVar13 = (double)g_xAnimInfo[uVar10].state.goalTime;
+            if ((float)(dVar18 - dVar13) < 0.0) {
+              dVar13 = dVar18;
             }
-            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar8;
+            g_xAnimInfo[uVar10].state.goalTime = (float)dVar13;
           }
-          if (dVar11 < dVar7) {
-            dVar7 = dVar9 / dVar7;
+          if (dVar16 < dVar11) {
+            dVar11 = dVar14 / dVar11;
           }
           else {
-            dVar7 = dVar11 - dVar7;
+            dVar11 = dVar16 - dVar11;
           }
-          fVar2 = *(float *)(&DAT_841dbfc4 + iVar5);
-          if (*(float *)(&DAT_841dbfc4 + iVar5) - (float)((double)(float)dVar7 * dVar13) < 0.0) {
-            fVar2 = (float)((double)(float)dVar7 * dVar13);
+          fVar2 = g_xAnimInfo[uVar10].state.goalTime;
+          if (fVar2 - (float)((double)(float)dVar11 * dVar18) < 0.0) {
+            fVar2 = (float)((double)(float)dVar11 * dVar18);
           }
-          *(float *)(&DAT_841dbfc4 + iVar5) = fVar2;
+          g_xAnimInfo[uVar10].state.goalTime = fVar2;
         }
-        *(float *)(&DAT_841dbfc8 + iVar5) = (float)dVar11;
-        *(float *)(&DAT_841dbfd0 + iVar5) = (float)dVar11;
-        *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-        *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-        if (*(short *)(&DAT_841dbf9a + iVar5) != -1) {
-          MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+        g_xAnimInfo[uVar10].state.goalWeight = (float)dVar16;
+        g_xAnimInfo[uVar10].state.rate = (float)dVar16;
+        sVar4 = g_xAnimInfo[uVar10].notifyIndex;
+        g_xAnimInfo[uVar10].notifyName = 0;
+        g_xAnimInfo[uVar10].notifyType = 0;
+        if (sVar4 != -1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1002,
+                          0,"%s");
         }
-        *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+        g_xAnimInfo[uVar10].notifyChild = 0;
       }
-      uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + iVar5);
-    } while (uVar6 != 0);
-    uVar3 = uVar3 & 0xffffffff;
+      uVar10 = (uint)g_xAnimInfo[uVar10].parent;
+    } while (uVar10 != 0);
+    uVar6 = (ulonglong)uVar7;
   }
-  __restfpr_27(uVar3);
+  iVar8 = __restfpr_27(uVar6);
   __restgprlr();
-  return;
+  return iVar8;
 }
 
 
 // 82626DC8  XAnimSetCompleteGoalWeightNodeRel  (xanim/xanim.cpp:3776)
 
-void XAnimSetCompleteGoalWeightNodeRel
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,uint param_5)
+int XAnimSetCompleteGoalWeightNodeRel
+              (XAnimTree *param_1,uint param_2,uint param_3,float param_4,float param_5,
+              float param_6,uint param_7,uint param_8)
 
 {
-  ushort uVar1;
+  bool bVar1;
   float fVar2;
-  int *piVar4;
-  ulonglong uVar3;
-  int iVar5;
-  uint uVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  ushort uVar3;
+  short sVar4;
+  XAnimTree *pXVar5;
+  uint uVar7;
+  ulonglong uVar6;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
   double dVar11;
+  double extraout_f1;
   double dVar12;
   double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  XAnimTree *pXStack00000014;
+  uint uStack00000024;
   
+  dVar12 = (double)param_5;
+  dVar15 = (double)param_6;
+  uVar9 = (ulonglong)(int)param_2;
   __savegprlr();
-  piVar4 = (int *)__savefpr_27();
-  uVar3 = XAnimSetGoalWeightNode();
-  uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + (int)((param_4 & 0xffffffff) << 6));
-  if (uVar6 != 0) {
-    dVar10 = 0.0010000000474974513;
-    dVar11 = 1.0;
-    dVar12 = 0.0;
+  pXStack00000014 = (XAnimTree *)__savefpr_27();
+  uStack00000024 = param_3;
+  uVar7 = XAnimSetGoalWeightNode
+                    (pXStack00000014,(uint)uVar9,(float)extraout_f1,(float)dVar12,(float)dVar15,
+                     param_3,param_7);
+  uVar6 = (ulonglong)(int)uVar7;
+  uVar10 = (uint)*(ushort *)((int)&g_xAnimInfo[0].parent + (int)((uVar9 & 0xffffffff) << 6));
+  if (uVar10 != 0) {
+    dVar15 = 0.0010000000474974513;
+    dVar16 = 1.0;
+    dVar17 = 0.0;
     do {
-      if (0xfff < uVar6) {
-        MyAssertHandler(0xffffffff82185bb8,0xecc,0,0xffffffff82186c04,0xffffffff82186bd4,uVar6);
+      if (0xfff < uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xecc,0,
+                        "%s\n\t(parentInfoIndex) = %i");
       }
-      iVar5 = uVar6 * 0x40;
-      if (*(ushort *)(&DAT_841dbfa8 + iVar5) == param_5) break;
-      if ((double)*(float *)(&DAT_841dbfc8 + iVar5) == dVar12) {
-        dVar13 = param_2;
-        if (piVar4 == (int *)0x0) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+      pXVar5 = pXStack00000014;
+      if (g_xAnimInfo[uVar10].animIndex == uStack00000024) break;
+      if ((double)g_xAnimInfo[uVar10].state.goalWeight == dVar17) {
+        dVar18 = dVar12;
+        if (pXStack00000014 == (XAnimTree *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc1,0
+                          ,"%s");
         }
-        if (*piVar4 == 0) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+        if (pXVar5->anims == (XAnim_s *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc2,0
+                          ,"%s");
         }
-        if (param_2 < dVar12) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+        if (dVar12 < dVar17) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc4,0
+                          ,"%s");
         }
-        if ((uVar6 == 0) || (0xfff < uVar6)) {
-          MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,uVar6);
+        if ((uVar10 == 0) || (0xfff < uVar10)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc9,0
+                          ,"%s\n\t(infoIndex) = %i");
         }
-        if (*(short *)(&DAT_841dbf9c + iVar5) != 0) {
-          SL_RemoveRefToString();
-          *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
+        if (g_xAnimInfo[uVar10].notifyName != 0) {
+          SL_RemoveRefToString((uint)g_xAnimInfo[uVar10].notifyName);
+          g_xAnimInfo[uVar10].notifyName = 0;
         }
-        *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-        if ((&DAT_841dbfac)[iVar5] == '\0') {
-          MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+        bVar1 = g_xAnimInfo[uVar10].inuse;
+        g_xAnimInfo[uVar10].notifyIndex = -1;
+        if (bVar1 == false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfcf,0
+                          ,"%s");
         }
-        uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar5);
-        if (*(uint *)*piVar4 <= (uint)uVar1) {
-          MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+        uVar3 = g_xAnimInfo[uVar10].animIndex;
+        if (pXVar5->anims->size <= (uint)uVar3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfd2,0
+                          ,"%s");
         }
-        if (uVar1 == 0) {
-          dVar13 = dVar12;
+        if (uVar3 == 0) {
+          dVar18 = dVar17;
         }
-        if (dVar13 == dVar12) {
-          *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar11;
-          *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar12;
-          (&DAT_841dbfd4)[iVar5] = 1;
+        if (dVar18 == dVar17) {
+          g_xAnimInfo[uVar10].state.weight = (float)dVar16;
+          g_xAnimInfo[uVar10].state.goalTime = (float)dVar17;
+          g_xAnimInfo[uVar10].state.instantWeightChange = true;
         }
         else {
-          if ((double)*(float *)(&DAT_841dbfcc + iVar5) == dVar12) {
-            *(float *)(&DAT_841dbfcc + iVar5) = (float)dVar10;
+          if ((double)g_xAnimInfo[uVar10].state.weight == dVar17) {
+            g_xAnimInfo[uVar10].state.weight = (float)dVar15;
           }
-          dVar7 = (double)*(float *)(&DAT_841dbfcc + iVar5);
-          dVar9 = (double)(float)(dVar7 - dVar11);
-          if ((dVar9 == dVar12) ||
-             (dVar12 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar5) -
-                                                      dVar11) * dVar9))) {
-            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar13;
+          dVar11 = (double)g_xAnimInfo[uVar10].state.weight;
+          dVar14 = (double)(float)(dVar11 - dVar16);
+          if ((dVar14 == dVar17) ||
+             (dVar17 < (double)(float)((double)(float)((double)g_xAnimInfo[uVar10].state.goalWeight
+                                                      - dVar16) * dVar14))) {
+            g_xAnimInfo[uVar10].state.goalTime = (float)dVar18;
           }
           else {
-            dVar8 = (double)*(float *)(&DAT_841dbfc4 + iVar5);
-            if ((float)(dVar13 - (double)*(float *)(&DAT_841dbfc4 + iVar5)) < 0.0) {
-              dVar8 = dVar13;
+            dVar13 = (double)g_xAnimInfo[uVar10].state.goalTime;
+            if ((float)(dVar18 - dVar13) < 0.0) {
+              dVar13 = dVar18;
             }
-            *(float *)(&DAT_841dbfc4 + iVar5) = (float)dVar8;
+            g_xAnimInfo[uVar10].state.goalTime = (float)dVar13;
           }
-          if (dVar11 < dVar7) {
-            dVar7 = dVar9 / dVar7;
+          if (dVar16 < dVar11) {
+            dVar11 = dVar14 / dVar11;
           }
           else {
-            dVar7 = dVar11 - dVar7;
+            dVar11 = dVar16 - dVar11;
           }
-          fVar2 = *(float *)(&DAT_841dbfc4 + iVar5);
-          if (*(float *)(&DAT_841dbfc4 + iVar5) - (float)((double)(float)dVar7 * dVar13) < 0.0) {
-            fVar2 = (float)((double)(float)dVar7 * dVar13);
+          fVar2 = g_xAnimInfo[uVar10].state.goalTime;
+          if (fVar2 - (float)((double)(float)dVar11 * dVar18) < 0.0) {
+            fVar2 = (float)((double)(float)dVar11 * dVar18);
           }
-          *(float *)(&DAT_841dbfc4 + iVar5) = fVar2;
+          g_xAnimInfo[uVar10].state.goalTime = fVar2;
         }
-        *(float *)(&DAT_841dbfc8 + iVar5) = (float)dVar11;
-        *(float *)(&DAT_841dbfd0 + iVar5) = (float)dVar11;
-        *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-        *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
-        if (*(short *)(&DAT_841dbf9a + iVar5) != -1) {
-          MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+        g_xAnimInfo[uVar10].state.goalWeight = (float)dVar16;
+        g_xAnimInfo[uVar10].state.rate = (float)dVar16;
+        sVar4 = g_xAnimInfo[uVar10].notifyIndex;
+        g_xAnimInfo[uVar10].notifyName = 0;
+        g_xAnimInfo[uVar10].notifyType = 0;
+        if (sVar4 != -1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1002,
+                          0,"%s");
         }
-        *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
+        g_xAnimInfo[uVar10].notifyChild = 0;
       }
-      uVar6 = (uint)*(ushort *)(&DAT_841dbfa6 + iVar5);
-    } while (uVar6 != 0);
-    uVar3 = uVar3 & 0xffffffff;
+      uVar10 = (uint)g_xAnimInfo[uVar10].parent;
+    } while (uVar10 != 0);
+    uVar6 = (ulonglong)uVar7;
   }
-  __restfpr_27(uVar3);
+  iVar8 = __restfpr_27(uVar6);
   __restgprlr();
-  return;
+  return iVar8;
 }
 
 
 // 82628858  XAnimSetCompleteGoalWeightKnob  (xanim/xanim.cpp:3801)
 
-void XAnimSetCompleteGoalWeightKnob
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+int XAnimSetCompleteGoalWeightKnob
+              (DObj *param_1,uint param_2,float param_3,float param_4,float param_5,uint param_6,
+              int param_7)
 
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
+  int iVar4;
   ulonglong in_r8;
   int in_r9;
-  int iVar4;
-  undefined4 *puVar5;
+  XAnimInfo_u_28 *pXVar5;
   longlong lVar6;
   double extraout_f1;
   double dVar7;
   double dVar8;
+  double dVar9;
+  double dVar10;
   
-  __savegprlr_25();
-  piVar2 = (int *)__savefpr_28();
-  dVar8 = extraout_f1;
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xedd,0,0xffffffff82000f98,0xffffffff820040b4);
+  dVar7 = (double)param_4;
+  dVar8 = (double)param_5;
+  __savegprlr_25((double)param_3,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar10 = extraout_f1;
+  if (pDVar2 == (DObj *)0x0) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xedd,0,"%s")
+    ;
   }
-  dVar7 = 0.0;
-  if (((in_r8 & 0xffffffff) != 0) && (dVar8 == 0.0)) {
-    MyAssertHandler(0xffffffff82185bb8,0xede,0,0xffffffff82000f98,0xffffffff821863c0);
+  dVar9 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == 0.0)) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xede,0,"%s")
+    ;
   }
-  if ((dVar8 < 0.0010000000474974513) && (dVar8 = dVar7, (in_r8 & 0xffffffff) != 0)) {
-    dVar8 = 0.0010000000474974513;
+  if ((dVar10 < 0.0010000000474974513) && (dVar10 = dVar9, (in_r8 & 0xffffffff) != 0)) {
+    dVar10 = 0.0010000000474974513;
   }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xee4,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xee4,0,"%s")
+    ;
   }
-  iVar3 = XAnimGetInfoIndex(iVar1,param_5);
-  if (iVar3 == 0) {
-    iVar3 = XAnimAllocInfoIndex(piVar2,param_5,0);
-    iVar4 = iVar3 * 0x40;
-    puVar5 = (undefined4 *)(&DAT_841dbfb4 + iVar4);
+  uVar3 = XAnimGetInfoIndex(pXVar1,param_2);
+  if (uVar3 == 0) {
+    param_6 = 0;
+    uVar3 = XAnimAllocInfoIndex(pDVar2,param_2,0);
+    pXVar5 = &g_xAnimInfo[uVar3].field12_0x1c;
     lVar6 = 8;
     do {
-      puVar5 = puVar5 + 1;
-      *puVar5 = 0;
+      pXVar5 = pXVar5 + 1;
+      pXVar5->parts = (XAnimParts *)0x0;
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
-    *(undefined2 *)(&DAT_841dbf9c + iVar4) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar4) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar4) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar4) = 0;
+    g_xAnimInfo[uVar3].notifyName = 0;
+    g_xAnimInfo[uVar3].notifyChild = 0;
+    g_xAnimInfo[uVar3].notifyIndex = -1;
+    g_xAnimInfo[uVar3].notifyType = 0;
   }
   else if (in_r9 != 0) {
-    iVar3 = XAnimRestart(param_2,iVar1,iVar3);
+    uVar3 = XAnimRestart(pXVar1,uVar3,(float)dVar7);
   }
-  XAnimClearGoalWeightKnobInternal(dVar8,param_2,iVar1,iVar3);
-  XAnimSetCompleteGoalWeightNode(dVar8,param_2,param_3,iVar1,iVar3);
-  __restfpr_28();
-  __restgprlr_25();
-  return;
+  XAnimClearGoalWeightKnobInternal(pXVar1,uVar3,(float)dVar10,(float)dVar7);
+  iVar4 = XAnimSetCompleteGoalWeightNode
+                    (pXVar1,uVar3,(float)dVar10,(float)dVar7,(float)dVar8,param_6,param_7);
+  __restfpr_28(iVar4);
+  iVar4 = __restgprlr_25();
+  return iVar4;
 }
 
 
 // 82628BD0  XAnimSetGoalWeightKnobAll  (xanim/xanim.cpp:3832)
 
-void XAnimSetGoalWeightKnobAll
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,ulonglong param_6)
+int XAnimSetGoalWeightKnobAll
+              (DObj *param_1,uint param_2,uint param_3,float param_4,float param_5,float param_6,
+              uint param_7,int param_8)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int in_r10;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  int iVar3;
+  uint uVar4;
   ulonglong uVar5;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
+  ulonglong uVar6;
+  longlong lVar7;
+  int in_r10;
+  longlong lVar8;
+  ulonglong uVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  puVar3 = (undefined4 *)__savegprlr_24();
-  uVar2 = extraout_f1;
-  if ((param_5 & 0xffffffff) == (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xefd,0,0xffffffff82000f98,0xffffffff82186f70);
+  dVar11 = (double)param_6;
+  dVar10 = (double)param_5;
+  lVar7 = (longlong)(int)param_7;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  pDVar2 = (DObj *)__savegprlr_24((double)param_4,param_1);
+  lVar8 = -0x7dfff068;
+  uVar6 = uVar5;
+  dVar12 = extraout_f1;
+  if ((uVar9 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    uVar6 = 0;
+    lVar7 = lVar8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xefd,0,"%s")
+    ;
   }
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xefe,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    uVar6 = 0;
+    lVar7 = lVar8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xefe,0,"%s")
+    ;
   }
-  uVar2 = XAnimSetGoalWeightKnob(uVar2,param_2,param_3,puVar3,param_5);
+  iVar3 = XAnimSetGoalWeightKnob
+                    (pDVar2,(uint)uVar9,(float)dVar12,(float)dVar10,(float)dVar11,(uint)uVar6,
+                     (int)lVar7);
   Profile_Begin(0x143);
-  uVar1 = *puVar3;
-  iVar4 = XAnimGetInfoIndex(uVar1,param_5);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf07,0,0xffffffff82000f98,0xffffffff82186144);
+  pXVar1 = pDVar2->tree;
+  uVar4 = XAnimGetInfoIndex(pXVar1,(uint)uVar9);
+  if (uVar4 == 0) {
+    uVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf07,0,"%s")
+    ;
+    lVar7 = lVar8;
   }
-  uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar4 * 0x40);
-  if (uVar5 != 0) {
-    uVar6 = 0x3ff0000000000000;
+  uVar9 = (ulonglong)g_xAnimInfo[uVar4].parent;
+  if (uVar9 != 0) {
+    dVar12 = 1.0;
     do {
-      if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + (int)(uVar5 << 6)) == (param_6 & 0xffffffff)) {
-        Profile_EndInternal(0);
-        __restgprlr_24(uVar2);
-        return;
+      if ((ulonglong)*(ushort *)((int)&g_xAnimInfo[0].animIndex + (int)(uVar9 << 6)) ==
+          (uVar5 & 0xffffffff)) {
+        Profile_EndInternal((double *)0x0);
+        iVar3 = __restgprlr_24(iVar3);
+        return iVar3;
       }
       if (in_r10 != 0) {
-        uVar5 = XAnimRestart(param_2,uVar1,uVar5);
+        uVar4 = XAnimRestart(pXVar1,(uint)uVar9,(float)dVar10);
+        uVar9 = (ulonglong)(int)uVar4;
       }
-      XAnimClearGoalWeightKnobInternal(uVar6,param_2,uVar1,uVar5);
-      XAnimSetGoalWeightNode(uVar6,param_2,uVar6,uVar1,uVar5);
-      uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + (int)((uVar5 & 0xffffffff) << 6));
-    } while (uVar5 != 0);
+      XAnimClearGoalWeightKnobInternal(pXVar1,(uint)uVar9,(float)dVar12,(float)dVar10);
+      XAnimSetGoalWeightNode
+                (pXVar1,(uint)uVar9,(float)dVar12,(float)dVar10,(float)dVar12,(uint)uVar6,
+                 (uint)lVar7);
+      uVar9 = (ulonglong)*(ushort *)((int)&g_xAnimInfo[0].parent + (int)((uVar9 & 0xffffffff) << 6))
+      ;
+    } while (uVar9 != 0);
   }
-  Profile_EndInternal(0);
-  __restgprlr_24(1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  iVar3 = __restgprlr_24(1);
+  return iVar3;
 }
 
 
 // 82628DA8  XAnimSetCompleteGoalWeightKnobAll  (xanim/xanim.cpp:3875)
 
-void XAnimSetCompleteGoalWeightKnobAll
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,ulonglong param_6)
+int XAnimSetCompleteGoalWeightKnobAll
+              (DObj *param_1,uint param_2,uint param_3,float param_4,float param_5,float param_6,
+              uint param_7,int param_8)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int in_r10;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  int iVar3;
+  uint uVar4;
   ulonglong uVar5;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
+  ulonglong uVar6;
+  longlong lVar7;
+  int in_r10;
+  longlong lVar8;
+  ulonglong uVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  puVar3 = (undefined4 *)__savegprlr_24();
-  uVar2 = extraout_f1;
-  if ((param_5 & 0xffffffff) == (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xf28,0,0xffffffff82000f98,0xffffffff82186f70);
+  dVar11 = (double)param_6;
+  dVar10 = (double)param_5;
+  lVar7 = (longlong)(int)param_7;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  pDVar2 = (DObj *)__savegprlr_24((double)param_4,param_1);
+  lVar8 = -0x7dfff068;
+  uVar6 = uVar5;
+  dVar12 = extraout_f1;
+  if ((uVar9 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    uVar6 = 0;
+    lVar7 = lVar8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf28,0,"%s")
+    ;
   }
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf29,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    uVar6 = 0;
+    lVar7 = lVar8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf29,0,"%s")
+    ;
   }
-  uVar2 = XAnimSetGoalWeightKnob(uVar2,param_2,param_3,puVar3,param_5);
+  iVar3 = XAnimSetGoalWeightKnob
+                    (pDVar2,(uint)uVar9,(float)dVar12,(float)dVar10,(float)dVar11,(uint)uVar6,
+                     (int)lVar7);
   Profile_Begin(0x143);
-  uVar1 = *puVar3;
-  iVar4 = XAnimGetInfoIndex(uVar1,param_5);
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf32,0,0xffffffff82000f98,0xffffffff82186144);
+  pXVar1 = pDVar2->tree;
+  uVar4 = XAnimGetInfoIndex(pXVar1,(uint)uVar9);
+  if (uVar4 == 0) {
+    uVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf32,0,"%s")
+    ;
+    lVar7 = lVar8;
   }
-  uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar4 * 0x40);
-  if (uVar5 != 0) {
-    uVar6 = 0x3ff0000000000000;
+  uVar9 = (ulonglong)g_xAnimInfo[uVar4].parent;
+  if (uVar9 != 0) {
+    dVar12 = 1.0;
     do {
-      if ((ulonglong)*(ushort *)(&DAT_841dbfa8 + (int)(uVar5 << 6)) == (param_6 & 0xffffffff)) {
-        Profile_EndInternal(0);
-        __restgprlr_24(uVar2);
-        return;
+      if ((ulonglong)*(ushort *)((int)&g_xAnimInfo[0].animIndex + (int)(uVar9 << 6)) ==
+          (uVar5 & 0xffffffff)) {
+        Profile_EndInternal((double *)0x0);
+        iVar3 = __restgprlr_24(iVar3);
+        return iVar3;
       }
       if (in_r10 != 0) {
-        uVar5 = XAnimRestart(param_2,uVar1,uVar5);
+        uVar4 = XAnimRestart(pXVar1,(uint)uVar9,(float)dVar10);
+        uVar9 = (ulonglong)(int)uVar4;
       }
-      XAnimClearGoalWeightKnobInternal(uVar6,param_2,uVar1,uVar5);
-      XAnimSetCompleteGoalWeightNode(uVar6,param_2,uVar6,uVar1,uVar5);
-      uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + (int)((uVar5 & 0xffffffff) << 6));
-    } while (uVar5 != 0);
+      XAnimClearGoalWeightKnobInternal(pXVar1,(uint)uVar9,(float)dVar12,(float)dVar10);
+      XAnimSetCompleteGoalWeightNode
+                (pXVar1,(uint)uVar9,(float)dVar12,(float)dVar10,(float)dVar12,(uint)uVar6,
+                 (uint)lVar7);
+      uVar9 = (ulonglong)*(ushort *)((int)&g_xAnimInfo[0].parent + (int)((uVar9 & 0xffffffff) << 6))
+      ;
+    } while (uVar9 != 0);
   }
-  Profile_EndInternal(0);
-  __restgprlr_24(1);
-  return;
+  Profile_EndInternal((double *)0x0);
+  iVar3 = __restgprlr_24(1);
+  return iVar3;
 }
 
 
 // 82628A08  XAnimSetGoalWeightKnob  (xanim/xanim.cpp:3917)
 
-void XAnimSetGoalWeightKnob
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+int XAnimSetGoalWeightKnob
+              (DObj *param_1,uint param_2,float param_3,float param_4,float param_5,uint param_6,
+              int param_7)
 
 {
-  int iVar1;
-  int *piVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar2;
   ulonglong in_r8;
   int in_r9;
-  int iVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  XAnimInfo_u_28 *pXVar5;
+  longlong lVar6;
   double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  __savegprlr_25();
-  piVar3 = (int *)__savefpr_28();
-  dVar9 = extraout_f1;
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_4;
+  __savegprlr_25((double)param_3,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar10 = extraout_f1;
   Profile_Begin(0x143);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf54,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf54,0,"%s")
+    ;
   }
-  dVar8 = 0.0;
-  if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-    MyAssertHandler(0xffffffff82185bb8,0xf55,0,0xffffffff82000f98,0xffffffff821863c0);
+  dVar9 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == 0.0)) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf55,0,"%s")
+    ;
   }
-  if ((dVar9 < 0.0010000000474974513) && (dVar9 = dVar8, (in_r8 & 0xffffffff) != 0)) {
-    dVar9 = 0.0010000000474974513;
+  if ((dVar10 < 0.0010000000474974513) && (dVar10 = dVar9, (in_r8 & 0xffffffff) != 0)) {
+    dVar10 = 0.0010000000474974513;
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf5b,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    param_6 = 0;
+    param_7 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf5b,0,"%s")
+    ;
   }
-  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-  if (iVar4 == 0) {
-    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-    iVar5 = iVar4 * 0x40;
-    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-    lVar7 = 8;
+  uVar3 = XAnimGetInfoIndex(pXVar1,param_2);
+  if (uVar3 == 0) {
+    param_6 = 0;
+    uVar3 = XAnimAllocInfoIndex(pDVar2,param_2,0);
+    pXVar5 = &g_xAnimInfo[uVar3].field12_0x1c;
+    lVar6 = 8;
     do {
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+      pXVar5 = pXVar5 + 1;
+      pXVar5->parts = (XAnimParts *)0x0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    g_xAnimInfo[uVar3].notifyName = 0;
+    g_xAnimInfo[uVar3].notifyChild = 0;
+    g_xAnimInfo[uVar3].notifyIndex = -1;
+    g_xAnimInfo[uVar3].notifyType = 0;
   }
   else if (in_r9 != 0) {
-    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+    uVar3 = XAnimRestart(pXVar1,uVar3,(float)dVar7);
   }
-  XAnimClearGoalWeightKnobInternal(dVar9,param_2,iVar1,iVar4);
-  uVar2 = XAnimSetGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
-  Profile_EndInternal(0);
-  __restfpr_28(uVar2);
-  __restgprlr_25();
-  return;
+  XAnimClearGoalWeightKnobInternal(pXVar1,uVar3,(float)dVar10,(float)dVar7);
+  iVar4 = XAnimSetGoalWeightNode
+                    (pXVar1,uVar3,(float)dVar10,(float)dVar7,(float)dVar8,param_6,param_7);
+  Profile_EndInternal((double *)0x0);
+  __restfpr_28(iVar4);
+  iVar4 = __restgprlr_25();
+  return iVar4;
 }
 
 
 // 82622CB8  XAnimClearChildGoalWeights  (xanim/xanim.cpp:3954)
 
-void XAnimClearChildGoalWeights(undefined8 param_1,ulonglong param_2)
+void XAnimClearChildGoalWeights(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  int iVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  uint uVar4;
-  longlong lVar5;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
+  ushort uVar1;
+  XAnim_s *pXVar2;
+  int iVar3;
+  XAnimTree *pXVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  uint uVar8;
+  int iVar9;
+  double extraout_f1;
+  double dVar10;
   
-  piVar3 = (int *)__savegprlr_28();
-  uVar6 = extraout_f1;
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf77,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_28((double)param_3,param_1);
+  dVar10 = extraout_f1;
+  if (pXVar4 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf77,0,"%s")
+    ;
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf78,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar4->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf78,0,"%s")
+    ;
   }
-  if ((ulonglong)*(uint *)*piVar3 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0xf79,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar4->anims->size <= (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf79,0,"%s")
+    ;
   }
-  lVar5 = 0;
-  iVar1 = (int)((param_2 & 0xffffffff) << 3) + *piVar3;
-  uVar4 = (uint)*(ushort *)(iVar1 + 0xc);
-  if (uVar4 != 0) {
+  pXVar2 = pXVar4->anims;
+  iVar3 = (int)((uVar6 & 0xffffffff) << 3);
+  iVar9 = 0;
+  uVar8 = (uint)*(ushort *)((int)&pXVar2->entries[0].numAnims + iVar3);
+  if (uVar8 != 0) {
     do {
-      if ((*(short *)(piVar3 + 4) != 0) &&
-         (uVar2 = XAnimGetInfoIndex_r(piVar3,(ulonglong)*(ushort *)(iVar1 + 0x12) + lVar5),
-         (uVar2 & 0xffffffff) != 0)) {
-        XAnimClearGoalWeightInternal(uVar6,piVar3,uVar2);
+      uVar1 = pXVar4->children;
+      uVar7 = (uint)uVar1;
+      if (uVar1 != 0) {
+        uVar5 = XAnimGetInfoIndex_r(pXVar4,(uint)*(ushort *)
+                                                  ((int)&pXVar2->entries[0].field2_0x4 + iVar3 + 2)
+                                           + iVar9,(uint)uVar1);
+        if (uVar5 != 0) {
+          XAnimClearGoalWeightInternal(pXVar4,uVar5,(float)dVar10,uVar7);
+        }
       }
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < (int)uVar4);
+      iVar9 = iVar9 + 1;
+    } while (iVar9 < (int)uVar8);
   }
   __restgprlr_28();
   return;
@@ -4842,20 +5524,24 @@ void XAnimClearChildGoalWeights(undefined8 param_1,ulonglong param_2)
 
 // 82622DD0  XAnimClearTree  (xanim/xanim.cpp:3971)
 
-void XAnimClearTree(void)
+void XAnimClearTree(XAnimTree *param_1)
 
 {
-  int iVar1;
+  XAnimTree *pXVar1;
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf84,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = (XAnimTree *)__savegprlr_29(param_1);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf84,0,"%s")
+    ;
   }
-  if ((*(short *)(iVar1 + 0x10) != 0) && (XAnimFreeInfo(iVar1), *(short *)(iVar1 + 0x10) != 0)) {
-    MyAssertHandler(0xffffffff82185bb8,0xf89,0,0xffffffff82000f98,0xffffffff82186358);
+  if ((pXVar1->children != 0) &&
+     (XAnimFreeInfo(pXVar1,(uint)pXVar1->children), pXVar1->children != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf89,0,"%s")
+    ;
   }
-  if (*(int *)(iVar1 + 4) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xf8d,0,0xffffffff82185d78,0xffffffff82185d94);
+  if (pXVar1->info_usage != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf8d,0,
+                    "%s\n\t(tree->info_usage) = %i");
   }
   __restgprlr_29();
   return;
@@ -4864,244 +5550,276 @@ void XAnimClearTree(void)
 
 // 82622E88  XAnimGetDescendantWithGreatestWeight  (xanim/xanim.cpp:3987)
 
-void XAnimGetDescendantWithGreatestWeight(undefined8 param_1,int param_2)
+uint XAnimGetDescendantWithGreatestWeight(XAnimTree *param_1,uint param_2)
 
 {
   ushort uVar1;
   uint uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  XAnimTree *pXVar3;
+  uint uVar4;
+  uint uVar5;
   double dVar6;
   double dVar7;
   
-  uVar3 = __savegprlr_27();
-  param_2 = param_2 * 0x40;
-  if ((&DAT_841dbfac)[param_2] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xf9c,0,0xffffffff82000f98,0xffffffff82185e68);
+  pXVar3 = (XAnimTree *)__savegprlr_27(param_1);
+  if (g_xAnimInfo[param_2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xf9c,0,"%s")
+    ;
   }
-  if (*(short *)(&DAT_841dbfaa + param_2) == 0) {
+  if (g_xAnimInfo[param_2].animToModel == 0) {
     dVar6 = 0.0;
-    uVar5 = 0;
-    uVar1 = *(ushort *)(&DAT_841dbfa4 + param_2);
+    uVar4 = 0;
+    uVar1 = g_xAnimInfo[param_2].children;
     while (uVar2 = (uint)uVar1, uVar2 != 0) {
-      dVar7 = (double)*(float *)(&DAT_841dbfc8 + uVar2 * 0x40);
+      dVar7 = (double)g_xAnimInfo[uVar2].state.goalWeight;
       if ((dVar6 < dVar7) &&
-         (uVar4 = XAnimGetDescendantWithGreatestWeight(uVar3), (uVar4 & 0xffffffff) != 0)) {
-        uVar5 = uVar4;
+         (uVar5 = XAnimGetDescendantWithGreatestWeight(pXVar3,uVar2), uVar5 != 0)) {
         dVar6 = dVar7;
+        uVar4 = uVar5;
       }
-      uVar1 = (&DAT_841dbfa2)[uVar2 * 0x20];
+      uVar1 = g_xAnimInfo[uVar2].next;
     }
-    __restgprlr_27(uVar5);
-    return;
+    uVar4 = __restgprlr_27(uVar4);
+    return uVar4;
   }
-  if (*(float *)(&DAT_841dbfc8 + param_2) == 0.0) {
-    MyAssertHandler(0xffffffff82185bb8,0xfa1,0,0xffffffff82000f98,0xffffffff82186368);
+  if (g_xAnimInfo[param_2].state.goalWeight == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfa1,0,"%s")
+    ;
   }
-  __restgprlr_27(*(undefined2 *)(&DAT_841dbfa8 + param_2));
-  return;
+  uVar4 = __restgprlr_27(g_xAnimInfo[param_2].animIndex);
+  return uVar4;
 }
 
 
 // 82622F98  XAnimSetGoalWeightNode  (xanim/xanim.cpp:4027)
 
-void XAnimSetGoalWeightNode
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               ulonglong param_5)
+int XAnimSetGoalWeightNode
+              (XAnimTree *param_1,uint param_2,float param_3,float param_4,float param_5,
+              uint param_6,uint param_7)
 
 {
-  ushort uVar1;
+  bool bVar1;
   float fVar2;
-  int iVar3;
-  int *piVar4;
-  short sVar5;
+  ushort uVar3;
+  short sVar4;
+  uint uVar5;
+  XAnimTree *pXVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong in_r8;
   ulonglong in_r9;
-  double dVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
   double dVar10;
+  double extraout_f1;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   
-  __savegprlr_23();
-  piVar4 = (int *)__savefpr_27();
-  dVar10 = extraout_f1;
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc1,0,0xffffffff82000f98,0xffffffff821813e0);
+  dVar16 = (double)param_5;
+  dVar11 = (double)param_4;
+  uVar9 = (ulonglong)(int)param_2;
+  __savegprlr_23((double)param_3,param_1,uVar9,param_6,param_7);
+  pXVar6 = (XAnimTree *)__savefpr_27();
+  dVar15 = extraout_f1;
+  if (pXVar6 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc1,0,"%s")
+    ;
   }
-  if (*piVar4 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc2,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar6->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc2,0,"%s")
+    ;
   }
-  dVar9 = 0.0;
-  dVar8 = 0.0010000000474974513;
-  if ((dVar10 != 0.0) && (dVar10 < 0.0010000000474974513)) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc3,0,0xffffffff82000f98,0xffffffff821863f8);
+  dVar14 = 0.0;
+  dVar13 = 0.0010000000474974513;
+  if ((dVar15 != 0.0) && (dVar15 < 0.0010000000474974513)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc3,0,"%s")
+    ;
   }
-  if (param_2 < dVar9) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc4,0,0xffffffff82000f98,0xffffffff821863e8);
+  if (dVar11 < dVar14) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc4,0,"%s")
+    ;
   }
-  if (param_3 < dVar9) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc5,0,0xffffffff82000f98,0xffffffff821863dc);
+  if (dVar16 < dVar14) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc5,0,"%s")
+    ;
   }
-  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc6,0,0xffffffff82000f98,0xffffffff821863c0);
+  if (((in_r8 & 0xffffffff) != 0) && (dVar15 == dVar14)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc6,0,"%s")
+    ;
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc7,0,0xffffffff82000f98,0xffffffff821863a4);
+  if (((in_r9 & 0xffffffff) != 0) && (dVar15 == dVar14)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc7,0,"%s")
+    ;
   }
-  if (((param_5 & 0xffffffff) == 0) || (0xfff < (param_5 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0xfc9,0,0xffffffff82185e88,0xffffffff82185ea0,param_5);
+  if (((uVar9 & 0xffffffff) == 0) || (0xfff < (uVar9 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc9,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar3 = (int)param_5 * 0x40;
-  if (*(short *)(&DAT_841dbf9c + iVar3) != 0) {
-    SL_RemoveRefToString();
-    *(undefined2 *)(&DAT_841dbf9c + iVar3) = 0;
+  uVar5 = (uint)uVar9;
+  if (g_xAnimInfo[uVar5].notifyName != 0) {
+    SL_RemoveRefToString((uint)g_xAnimInfo[uVar5].notifyName);
+    g_xAnimInfo[uVar5].notifyName = 0;
   }
-  *(undefined2 *)(&DAT_841dbf9a + iVar3) = 0xffff;
-  if ((&DAT_841dbfac)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0xfcf,0,0xffffffff82000f98,0xffffffff82185e68);
+  bVar1 = g_xAnimInfo[uVar5].inuse;
+  g_xAnimInfo[uVar5].notifyIndex = -1;
+  if (bVar1 == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfcf,0,"%s")
+    ;
   }
-  uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar3);
-  if (*(uint *)*piVar4 <= (uint)uVar1) {
-    MyAssertHandler(0xffffffff82185bb8,0xfd2,0,0xffffffff82000f98,0xffffffff82186218);
+  uVar3 = g_xAnimInfo[uVar5].animIndex;
+  if (pXVar6->anims->size <= (uint)uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfd2,0,"%s")
+    ;
   }
-  if (uVar1 == 0) {
-    param_3 = 1.0;
-    param_2 = dVar9;
-    dVar10 = param_3;
+  if (uVar3 == 0) {
+    dVar16 = 1.0;
+    dVar11 = dVar14;
+    dVar15 = dVar16;
   }
-  if (param_2 == dVar9) {
-    *(float *)(&DAT_841dbfcc + iVar3) = (float)dVar10;
-    *(float *)(&DAT_841dbfc4 + iVar3) = (float)dVar9;
-    (&DAT_841dbfd4)[iVar3] = 1;
+  if (dVar11 == dVar14) {
+    g_xAnimInfo[uVar5].state.weight = (float)dVar15;
+    g_xAnimInfo[uVar5].state.goalTime = (float)dVar14;
+    g_xAnimInfo[uVar5].state.instantWeightChange = true;
   }
   else {
-    if ((double)*(float *)(&DAT_841dbfcc + iVar3) == dVar9) {
-      *(float *)(&DAT_841dbfcc + iVar3) = (float)(dVar10 * dVar8);
+    if ((double)g_xAnimInfo[uVar5].state.weight == dVar14) {
+      g_xAnimInfo[uVar5].state.weight = (float)(dVar15 * dVar13);
     }
-    dVar6 = (double)*(float *)(&DAT_841dbfcc + iVar3);
-    dVar8 = (double)(float)(dVar6 - dVar10);
-    if ((dVar8 == dVar9) ||
-       (dVar9 < (double)(float)((double)(float)((double)*(float *)(&DAT_841dbfc8 + iVar3) - dVar10)
-                               * dVar8))) {
-      *(float *)(&DAT_841dbfc4 + iVar3) = (float)param_2;
+    dVar10 = (double)g_xAnimInfo[uVar5].state.weight;
+    dVar13 = (double)(float)(dVar10 - dVar15);
+    if ((dVar13 == dVar14) ||
+       (dVar14 < (double)(float)((double)(float)((double)g_xAnimInfo[uVar5].state.goalWeight -
+                                                dVar15) * dVar13))) {
+      g_xAnimInfo[uVar5].state.goalTime = (float)dVar11;
     }
     else {
-      dVar7 = (double)*(float *)(&DAT_841dbfc4 + iVar3);
-      if ((float)(param_2 - (double)*(float *)(&DAT_841dbfc4 + iVar3)) < 0.0) {
-        dVar7 = param_2;
+      dVar12 = (double)g_xAnimInfo[uVar5].state.goalTime;
+      if ((float)(dVar11 - dVar12) < 0.0) {
+        dVar12 = dVar11;
       }
-      *(float *)(&DAT_841dbfc4 + iVar3) = (float)dVar7;
+      g_xAnimInfo[uVar5].state.goalTime = (float)dVar12;
     }
-    if (dVar10 != dVar9) {
-      if (dVar10 < dVar6) {
-        dVar8 = dVar8 / dVar6;
+    if (dVar15 != dVar14) {
+      if (dVar15 < dVar10) {
+        dVar13 = dVar13 / dVar10;
       }
       else {
-        dVar8 = (double)(float)(dVar10 - dVar6) / dVar10;
+        dVar13 = (double)(float)(dVar15 - dVar10) / dVar15;
       }
-      fVar2 = *(float *)(&DAT_841dbfc4 + iVar3);
-      if (*(float *)(&DAT_841dbfc4 + iVar3) - (float)((double)(float)dVar8 * param_2) < 0.0) {
-        fVar2 = (float)((double)(float)dVar8 * param_2);
+      fVar2 = g_xAnimInfo[uVar5].state.goalTime;
+      if (fVar2 - (float)((double)(float)dVar13 * dVar11) < 0.0) {
+        fVar2 = (float)((double)(float)dVar13 * dVar11);
       }
-      *(float *)(&DAT_841dbfc4 + iVar3) = fVar2;
+      g_xAnimInfo[uVar5].state.goalTime = fVar2;
     }
   }
-  *(float *)(&DAT_841dbfc8 + iVar3) = (float)dVar10;
-  *(float *)(&DAT_841dbfd0 + iVar3) = (float)param_3;
-  *(short *)(&DAT_841dbf9c + iVar3) = (short)in_r8;
+  g_xAnimInfo[uVar5].state.goalWeight = (float)dVar15;
+  g_xAnimInfo[uVar5].state.rate = (float)dVar16;
+  g_xAnimInfo[uVar5].notifyName = (ushort)in_r8;
   if ((in_r8 & 0xffffffff) != 0) {
-    SL_AddRefToString(in_r8);
+    SL_AddRefToString((uint)in_r8);
   }
-  *(short *)(&DAT_841dbf9e + iVar3) = (short)in_r9;
-  if (*(short *)(&DAT_841dbf9a + iVar3) != -1) {
-    MyAssertHandler(0xffffffff82185bb8,0x1002,0,0xffffffff82000f98,0xffffffff8218638c);
+  sVar4 = g_xAnimInfo[uVar5].notifyIndex;
+  g_xAnimInfo[uVar5].notifyType = (ushort)in_r9;
+  if (sVar4 != -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1002,0,"%s"
+                   );
   }
-  if ((((in_r8 & 0xffffffff) == 0) || (*(short *)(&DAT_841dbfaa + iVar3) != 0)) ||
-     ((*(ushort *)(&DAT_841dbfb4 + iVar3) & 3) == 0)) {
-    *(short *)(&DAT_841dbf98 + iVar3) = 0;
+  if ((((in_r8 & 0xffffffff) == 0) || (g_xAnimInfo[uVar5].animToModel != 0)) ||
+     ((g_xAnimInfo[uVar5].field12_0x1c.animParent.flags & 3) == 0)) {
+    g_xAnimInfo[uVar5].notifyChild = 0;
   }
   else {
-    if (dVar10 == dVar9) {
-      MyAssertHandler(0xffffffff82185bb8,0x1006,0,0xffffffff82000f98,0xffffffff82186380);
+    if (dVar15 == dVar14) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1006,0,
+                      "%s");
     }
-    sVar5 = XAnimGetDescendantWithGreatestWeight(piVar4,param_5);
-    *(short *)(&DAT_841dbf98 + iVar3) = sVar5;
-    if (sVar5 == 0) {
+    uVar7 = XAnimGetDescendantWithGreatestWeight(pXVar6,uVar5);
+    g_xAnimInfo[uVar5].notifyChild = (ushort)uVar7;
+    if ((uVar7 & 0xffff) == 0) {
       __restfpr_27(2);
-      __restgprlr_23();
-      return;
+      iVar8 = __restgprlr_23();
+      return iVar8;
     }
   }
   __restfpr_27(0);
-  __restgprlr_23();
-  return;
+  iVar8 = __restgprlr_23();
+  return iVar8;
 }
 
 
 // 82623358  XAnimFillInSyncNodes_r  (xanim/xanim.cpp:4117)
 
-void XAnimFillInSyncNodes_r(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void XAnimFillInSyncNodes_r(XAnim_s *param_1,uint param_2,bool param_3)
 
 {
   ushort uVar1;
-  undefined4 uVar2;
-  ushort *puVar3;
-  longlong lVar4;
-  undefined4 *puVar6;
-  int iVar7;
-  undefined8 uVar5;
-  longlong lVar8;
+  longlong lVar2;
+  XAnim_s *pXVar3;
+  XAnimParts *pXVar4;
+  int iVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
   longlong lVar9;
   longlong lVar10;
+  XAnimEntry *pXVar11;
   
-  lVar4 = __savegprlr_27();
-  lVar8 = (param_2 & 0x1fffffff) * 8 + lVar4;
-  lVar10 = lVar8 + 0xc;
-  iVar7 = (int)lVar8;
-  if (*(short *)(iVar7 + 0xc) == 0) {
-    puVar6 = (undefined4 *)XAnimGetPartsInternal(lVar10);
-    iVar7 = DB_IsXAssetDefault(2,*puVar6);
-    if (iVar7 != 0) {
-      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
-      Com_Error(1,0xffffffff821864f0,uVar5);
+  uVar8 = (ulonglong)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  lVar2 = __savegprlr_27(param_1);
+  lVar9 = (uVar6 & 0x1fffffff) * 8 + lVar2;
+  lVar10 = lVar9 + 0xc;
+  pXVar11 = (XAnimEntry *)lVar10;
+  iVar5 = (int)lVar9;
+  pXVar3 = (XAnim_s *)lVar2;
+  uVar7 = (uint)uVar6;
+  if (*(short *)(iVar5 + 0xc) == 0) {
+    pXVar4 = XAnimGetPartsInternal(pXVar11);
+    iVar5 = DB_IsXAssetDefault(ASSET_TYPE_XANIMPARTS,pXVar4->name);
+    if (iVar5 != 0) {
+      XAnimGetAnimDebugName(pXVar3,uVar7);
+      Com_Error(ERR_DROP,"\x15Cannot find \'xanim/%s\'.");
     }
-    if (((ulonglong)*(byte *)(puVar6 + 4) & 1) != (param_3 & 0xff)) {
-      uVar2 = *(undefined4 *)((int)lVar4 + 4);
-      if ((param_3 & 0xff) != 0) {
-        uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
-        Com_Error(1,0xffffffff821864b0,uVar5,uVar2);
+    if (((ulonglong)pXVar4->flags & 1) != (uVar8 & 0xff)) {
+      if ((uVar8 & 0xff) == 0) {
+        XAnimGetAnimDebugName(pXVar3,uVar7);
+        Com_Error(ERR_DROP,"\x15animation \'%s\' in \'%s\' cannot be sync nonlooping and looping");
         __restgprlr_27();
         return;
       }
-      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
-      Com_Error(1,0xffffffff82186470,uVar5,uVar2);
+      XAnimGetAnimDebugName(pXVar3,uVar7);
+      Com_Error(ERR_DROP,"\x15animation \'%s\' in \'%s\' cannot be sync looping and nonlooping");
       __restgprlr_27();
       return;
     }
   }
   else {
-    if ((*(ushort *)(iVar7 + 0x10) & 3) != 0) {
-      lVar8 = 0;
+    if ((*(ushort *)(iVar5 + 0x10) & 3) != 0) {
       do {
-        lVar8 = lVar8 + 1;
-        lVar9 = (ulonglong)*(ushort *)((int)lVar10 + 6) * 8 + lVar4;
+        lVar9 = (ulonglong)*(ushort *)((int)lVar10 + 6) * 8 + lVar2;
         lVar10 = lVar9 + 0xc;
+        pXVar11 = (XAnimEntry *)lVar10;
       } while (*(short *)((int)lVar9 + 0xc) != 0);
-      uVar5 = XAnimGetAnimDebugName(lVar4,param_2);
-      Com_Error(1,0xffffffff82186428,*(undefined4 *)((int)lVar4 + 4),lVar8,uVar5);
+      XAnimGetAnimDebugName(pXVar3,uVar7);
+      Com_Error(ERR_DROP,
+                "\x15duplicate specification of animation sync in \'%s\', %d nodes above \'%s\'");
     }
-    puVar3 = (ushort *)lVar10;
-    uVar1 = *puVar3;
-    lVar8 = 0;
-    puVar3[2] = ((param_3 & 0xff) == 0) + 1 | puVar3[2];
+    uVar1 = pXVar11->numAnims;
+    iVar5 = 0;
+    (pXVar11->field2_0x4).animParent.flags =
+         ((uVar8 & 0xff) == 0) + 1 | (pXVar11->field2_0x4).animParent.flags;
     if (uVar1 != 0) {
       do {
-        XAnimFillInSyncNodes_r(lVar4,(ulonglong)puVar3[3] + lVar8,param_3);
-        lVar8 = lVar8 + 1;
-      } while ((int)lVar8 < (int)(uint)uVar1);
+        XAnimFillInSyncNodes_r
+                  (pXVar3,(uint)(pXVar11->field2_0x4).animParent.children + iVar5,SUB81(uVar8,0));
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < (int)(uint)uVar1);
     }
   }
   __restgprlr_27();
@@ -5111,91 +5829,94 @@ void XAnimFillInSyncNodes_r(undefined8 param_1,ulonglong param_2,ulonglong param
 
 // 826234E8  XAnimSetupSyncNodes_r  (xanim/xanim.cpp:4183)
 
-void XAnimSetupSyncNodes_r(undefined8 param_1,int param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void XAnimSetupSyncNodes_r(XAnim_s *param_1,uint param_2)
 
 {
   ushort uVar1;
-  undefined4 uVar2;
-  int iVar3;
-  bool bVar4;
+  ushort uVar2;
+  bool bVar3;
+  XAnim_s *pXVar4;
+  XAnimParts *pXVar5;
   int iVar6;
-  undefined4 *puVar7;
-  int iVar8;
-  undefined8 uVar5;
-  int iVar9;
-  int iVar10;
-  longlong lVar11;
-  ushort uVar13;
-  ushort *puVar12;
+  int iVar7;
+  uint uVar8;
+  ushort uVar10;
+  XAnimEntry *pXVar9;
   
-  iVar6 = __savegprlr_19();
-  iVar3 = param_2 * 8 + iVar6;
-  uVar1 = *(ushort *)(iVar3 + 0xc);
+  pXVar4 = (XAnim_s *)__savegprlr_19(param_1);
+  uVar1 = pXVar4->entries[param_2].numAnims;
   if (uVar1 != 0) {
-    uVar13 = *(ushort *)(iVar3 + 0x10) & 3;
-    if ((*(ushort *)(iVar3 + 0x10) & 3) == 0) {
-      lVar11 = 0;
+    uVar2 = pXVar4->entries[param_2].field2_0x4.animParent.flags;
+    uVar10 = uVar2 & 3;
+    if ((uVar2 & 3) == 0) {
+      iVar7 = 0;
       if (uVar1 != 0) {
         do {
-          XAnimSetupSyncNodes_r(iVar6,(ulonglong)*(ushort *)(iVar3 + 0x12) + lVar11);
-          lVar11 = lVar11 + 1;
-        } while ((int)lVar11 < (int)(uint)uVar1);
+          XAnimSetupSyncNodes_r
+                    (pXVar4,(uint)pXVar4->entries[param_2].field2_0x4.animParent.children + iVar7);
+          iVar7 = iVar7 + 1;
+        } while (iVar7 < (int)(uint)uVar1);
       }
     }
     else {
-      if (uVar13 == 3) {
-        Com_Error(1,0xffffffff8218650c);
+      if (uVar10 == 3) {
+        Com_Error(ERR_DROP,"\x15animation cannot be sync looping and sync nonlooping");
       }
-      iVar9 = 0;
-      *(ushort *)(iVar3 + 0x10) = *(ushort *)(iVar3 + 0x10) | 4;
-      bVar4 = uVar13 == 1;
+      iVar7 = 0;
+      pXVar4->entries[param_2].field2_0x4.animParent.flags =
+           pXVar4->entries[param_2].field2_0x4.animParent.flags | 4;
+      bVar3 = uVar10 == 1;
       if (uVar1 != 0) {
         do {
-          iVar10 = (uint)*(ushort *)(iVar3 + 0x12) + iVar9;
-          iVar8 = iVar10 * 8 + iVar6;
-          puVar12 = (ushort *)(iVar8 + 0xc);
-          if (*(short *)(iVar8 + 0xc) == 0) {
-            puVar7 = (undefined4 *)XAnimGetPartsInternal(puVar12);
-            iVar8 = DB_IsXAssetDefault(2,*puVar7);
-            if (iVar8 != 0) {
-              uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
-              Com_Error(1,0xffffffff821864f0,uVar5);
+          uVar8 = (uint)pXVar4->entries[param_2].field2_0x4.animParent.children + iVar7;
+          pXVar9 = pXVar4->entries + uVar8;
+          if (pXVar4->entries[uVar8].numAnims == 0) {
+            pXVar5 = XAnimGetPartsInternal(pXVar9);
+            iVar6 = DB_IsXAssetDefault(ASSET_TYPE_XANIMPARTS,pXVar5->name);
+            if (iVar6 != 0) {
+              XAnimGetAnimDebugName(pXVar4,uVar8);
+              Com_Error(ERR_DROP,"\x15Cannot find \'xanim/%s\'.");
             }
-            if ((bool)(*(byte *)(puVar7 + 4) & 1) != bVar4) {
-              uVar2 = *(undefined4 *)(iVar6 + 4);
-              if (bVar4) {
-                uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
-                Com_Error(1,0xffffffff821864b0,uVar5,uVar2);
+            if ((bool)(pXVar5->flags & 1) != bVar3) {
+              if (bVar3) {
+                XAnimGetAnimDebugName(pXVar4,uVar8);
+                Com_Error(ERR_DROP,
+                          "\x15animation \'%s\' in \'%s\' cannot be sync looping and nonlooping");
               }
               else {
-                uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
-                Com_Error(1,0xffffffff82186470,uVar5,uVar2);
+                XAnimGetAnimDebugName(pXVar4,uVar8);
+                Com_Error(ERR_DROP,
+                          "\x15animation \'%s\' in \'%s\' cannot be sync nonlooping and looping");
               }
             }
           }
           else {
-            if ((*(ushort *)(iVar8 + 0x10) & 3) != 0) {
-              lVar11 = 0;
+            if ((pXVar4->entries[uVar8].field2_0x4.animParent.flags & 3) != 0) {
               do {
-                lVar11 = lVar11 + 1;
-                iVar8 = (uint)puVar12[3] * 8 + iVar6;
-                puVar12 = (ushort *)(iVar8 + 0xc);
-              } while (*(short *)(iVar8 + 0xc) != 0);
-              uVar5 = XAnimGetAnimDebugName(iVar6,iVar10);
-              Com_Error(1,0xffffffff82186428,*(undefined4 *)(iVar6 + 4),lVar11,uVar5);
+                uVar2 = (pXVar9->field2_0x4).animParent.children;
+                pXVar9 = pXVar4->entries + uVar2;
+              } while (pXVar4->entries[uVar2].numAnims != 0);
+              XAnimGetAnimDebugName(pXVar4,uVar8);
+              Com_Error(ERR_DROP,
+                        "\x15duplicate specification of animation sync in \'%s\', %d nodes above \'%s\'"
+                       );
             }
-            uVar13 = *puVar12;
-            lVar11 = 0;
-            puVar12[2] = !bVar4 + 1 | puVar12[2];
-            if (uVar13 != 0) {
+            uVar2 = pXVar9->numAnims;
+            iVar6 = 0;
+            (pXVar9->field2_0x4).animParent.flags =
+                 !bVar3 + 1 | (pXVar9->field2_0x4).animParent.flags;
+            if (uVar2 != 0) {
               do {
-                XAnimFillInSyncNodes_r(iVar6,(ulonglong)puVar12[3] + lVar11,bVar4);
-                lVar11 = lVar11 + 1;
-              } while ((int)lVar11 < (int)(uint)uVar13);
+                XAnimFillInSyncNodes_r
+                          (pXVar4,(uint)(pXVar9->field2_0x4).animParent.children + iVar6,bVar3);
+                iVar6 = iVar6 + 1;
+              } while (iVar6 < (int)(uint)uVar2);
             }
           }
-          iVar9 = iVar9 + 1;
-        } while (iVar9 < (int)(uint)uVar1);
+          iVar7 = iVar7 + 1;
+        } while (iVar7 < (int)(uint)uVar1);
         __restgprlr_19();
         return;
       }
@@ -5208,7 +5929,7 @@ void XAnimSetupSyncNodes_r(undefined8 param_1,int param_2)
 
 // 82623720  XAnimSetupSyncNodes  (xanim/xanim.cpp:4214)
 
-void XAnimSetupSyncNodes(undefined8 param_1)
+void XAnimSetupSyncNodes(XAnim_s *param_1)
 
 {
   XAnimSetupSyncNodes_r(param_1,0);
@@ -5218,92 +5939,98 @@ void XAnimSetupSyncNodes(undefined8 param_1)
 
 // 82623728  XAnimHasTime  (xanim/xanim.cpp:4220)
 
-undefined8 XAnimHasTime(int param_1,int param_2)
+bool XAnimHasTime(XAnim_s *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  param_1 = param_2 * 8 + param_1;
-  if ((*(short *)(param_1 + 0xc) == 0) || (uVar1 = 0, (*(ushort *)(param_1 + 0x10) & 3) != 0)) {
-    uVar1 = 1;
+  if ((param_1->entries[param_2].numAnims == 0) ||
+     (bVar1 = false, (param_1->entries[param_2].field2_0x4.animParent.flags & 3) != 0)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 82623760  XAnimIsPrimitive  (xanim/xanim.cpp:4229)
 
-bool XAnimIsPrimitive(int param_1,int param_2)
+bool XAnimIsPrimitive(XAnim_s *param_1,uint param_2)
 
 {
-  return *(short *)(param_2 * 8 + param_1 + 0xc) == 0;
+  return param_1->entries[param_2].numAnims == 0;
 }
 
 
 // 82623778  XAnimSetTime  (xanim/xanim.cpp:4235)
 
-void XAnimSetTime(undefined8 param_1,ulonglong param_2)
+void XAnimSetTime(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  byte bVar1;
+  XAnim_s *pXVar1;
   int iVar2;
-  uint *puVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
+  XAnimTree *pXVar3;
+  uint uVar4;
+  XAnimEntry *pXVar5;
+  XAnimParts *pXVar6;
+  ulonglong uVar7;
+  uint uVar8;
   double extraout_f1;
   double dVar9;
   double dVar10;
   
-  puVar5 = (uint *)__savegprlr_26();
+  uVar7 = (ulonglong)(int)param_2;
+  pXVar3 = (XAnimTree *)__savegprlr_26((double)param_3,param_1);
   dVar10 = extraout_f1;
-  if (puVar5 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1093,0,0xffffffff82000f98,0xffffffff821813e0);
+  if (pXVar3 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1093,0,"%s"
+                   );
   }
-  if (*puVar5 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1094,0,0xffffffff82000f98,0xffffffff82184c8c);
+  if (pXVar3->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1094,0,"%s"
+                   );
   }
-  if ((ulonglong)*(uint *)*puVar5 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1095,0,0xffffffff82000f98,0xffffffff82186218);
+  if ((ulonglong)pXVar3->anims->size <= (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1095,0,"%s"
+                   );
   }
-  uVar3 = XAnimGetInfoIndex(puVar5,param_2);
-  if ((uVar3 & 0xffffffff) == 0) goto LAB_826239c8;
-  lVar7 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar5;
-  lVar8 = lVar7 + 0xc;
-  if (*(short *)((int)lVar7 + 0xc) != 0) {
-    uVar4 = XAnimGetAnimDebugName((ulonglong)*puVar5,param_2);
-    uVar4 = va(dVar10,0xffffffff821865e0,uVar4,dVar10);
-    MyAssertHandler(0xffffffff82185bb8,0x109d,0,0xffffffff820011f4,0xffffffff82185fac,uVar4);
+  uVar8 = (uint)uVar7;
+  uVar4 = XAnimGetInfoIndex(pXVar3,uVar8);
+  if (uVar4 == 0) goto LAB_826239c8;
+  pXVar1 = pXVar3->anims;
+  iVar2 = (int)((uVar7 & 0xffffffff) << 3);
+  pXVar5 = (XAnimEntry *)((int)&pXVar1->entries[0].numAnims + iVar2);
+  if (*(short *)((int)&pXVar1->entries[0].numAnims + iVar2) != 0) {
+    XAnimGetAnimDebugName(pXVar1,uVar8);
+    va("Anim name: \'%s\', time: %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x109d,0,
+                    "%s\n\t%s");
   }
   dVar9 = 1.0;
   if ((dVar10 < 0.0) || (1.0 < dVar10)) {
-    MyAssertHandler(dVar10,0xffffffff82185bb8,0x109f,0,0xffffffff82028794,0xffffffff821865bc,dVar10)
-    ;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x109f,0,
+                    "%s\n\t(time) = %g");
   }
-  iVar6 = XAnimGetPartsInternal(lVar8);
-  if ((*(byte *)(iVar6 + 0x10) & 1) == 0) {
+  pXVar6 = XAnimGetPartsInternal(pXVar5);
+  if ((pXVar6->flags & 1) == 0) {
     if (dVar9 < dVar10) goto LAB_82623918;
   }
   else if (dVar9 <= dVar10) {
 LAB_82623918:
-    iVar6 = XAnimGetPartsInternal(lVar8);
-    bVar1 = *(byte *)(iVar6 + 0x10);
-    uVar4 = XAnimGetAnimDebugName(*puVar5,param_2);
-    uVar4 = va(dVar10,0xffffffff8218659c,uVar4,dVar10,bVar1 & 1);
-    MyAssertHandler(0xffffffff82185bb8,0x10a0,0,0xffffffff820011f4,0xffffffff82186548,uVar4);
+    XAnimGetPartsInternal(pXVar5);
+    XAnimGetAnimDebugName(pXVar3->anims,uVar8);
+    va("name: \'%s\', time: %f, loop: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10a0,0,
+                    "%s\n\t%s");
   }
-  if (0xfff < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x10a3,0,0xffffffff82185e88,0xffffffff82185ea0,uVar3);
+  if (0xfff < uVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10a3,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  iVar2 = (int)uVar3;
-  iVar6 = iVar2 * 0x40;
-  (&DAT_841dbfb8)[iVar2 * 0x10] = (float)dVar10;
-  *(undefined2 *)(&DAT_841dbfc0 + iVar6) = 0;
-  (&DAT_841dbfbc)[iVar2 * 0x10] = (float)dVar10;
-  *(undefined2 *)(&DAT_841dbfc2 + iVar6) = 0;
-  *(undefined2 *)(&DAT_841dbf9a + iVar6) = 0xffff;
+  g_xAnimInfo[uVar4].state.currentAnimTime = (float)dVar10;
+  g_xAnimInfo[uVar4].state.cycleCount = 0;
+  g_xAnimInfo[uVar4].state.oldTime = (float)dVar10;
+  g_xAnimInfo[uVar4].state.oldCycleCount = 0;
+  g_xAnimInfo[uVar4].notifyIndex = -1;
 LAB_826239c8:
   __restgprlr_26();
   return;
@@ -5312,54 +6039,66 @@ LAB_826239c8:
 
 // 826239D8  XAnimGetAssetType  (xanim/xanim.cpp:4274)
 
-void XAnimGetAssetType(undefined8 param_1,ulonglong param_2)
+uchar XAnimGetAssetType(XAnimTree *param_1,uint param_2)
 
 {
   uint *puVar1;
-  int iVar2;
-  longlong lVar3;
+  XAnimParts *pXVar2;
+  uchar uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   
-  puVar1 = (uint *)__savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_28(param_1);
   if (puVar1 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10b3,0,0xffffffff82000f98,0xffffffff821813e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10b3,0,"%s"
+                   );
   }
   if (*puVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10b4,0,0xffffffff82000f98,0xffffffff82184c8c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10b4,0,"%s"
+                   );
   }
-  if ((ulonglong)*(uint *)*puVar1 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82185bb8,0x10b5,0,0xffffffff821865fc,param_2);
+  if ((ulonglong)*(uint *)*puVar1 <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10b5,0,
+                    "index < tree->anims->size\n\t%i, %i");
   }
-  lVar3 = (param_2 & 0x1fffffff) * 8 + (ulonglong)*puVar1 + 0xc;
-  if (lVar3 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10b8,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  lVar5 = (uVar4 & 0x1fffffff) * 8 + (ulonglong)*puVar1 + 0xc;
+  if (lVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10b8,0,"%s"
+                   );
   }
-  iVar2 = XAnimGetPartsInternal(lVar3);
-  __restgprlr_28(*(undefined1 *)(iVar2 + 0x1e));
-  return;
+  pXVar2 = XAnimGetPartsInternal((XAnimEntry *)lVar5);
+  uVar3 = __restgprlr_28(pXVar2->assetType);
+  return uVar3;
 }
 
 
 // 82623AB8  XAnimUpdateServerNotifyIndex  (xanim/xanim.cpp:4287)
 
-void XAnimUpdateServerNotifyIndex(undefined8 param_1,ulonglong param_2)
+void XAnimUpdateServerNotifyIndex(XAnimInfo *param_1,XAnimParts *param_2)
 
 {
   int iVar1;
-  undefined2 uVar2;
+  ushort uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10c0,0,0xffffffff82000f98,0xffffffff8213fd58);
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10c0,0,"%s"
+                   );
   }
   if (*(short *)(iVar1 + 4) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10c1,0,0xffffffff82000f98,0xffffffff82186620);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10c1,0,"%s"
+                   );
   }
   if (*(short *)(iVar1 + 2) != -1) {
-    MyAssertHandler(0xffffffff82185bb8,0x10c2,0,0xffffffff82000f98,0xffffffff8218638c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10c2,0,"%s"
+                   );
   }
   if (*(float *)(iVar1 + 0x20) != 1.0) {
-    uVar2 = XAnimGetNextNotifyIndex(param_2);
-    *(undefined2 *)(iVar1 + 2) = uVar2;
+    uVar2 = XAnimGetNextNotifyIndex((XAnimParts *)uVar3,*(float *)(iVar1 + 0x20));
+    *(ushort *)(iVar1 + 2) = uVar2;
   }
   __restgprlr_28();
   return;
@@ -5368,173 +6107,206 @@ void XAnimUpdateServerNotifyIndex(undefined8 param_1,ulonglong param_2)
 
 // 826270E8  XAnimRestart  (xanim/xanim.cpp:4299)
 
-void XAnimRestart(undefined8 param_1,ulonglong param_2)
+uint XAnimRestart(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  ushort uVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
+  int iVar1;
+  XAnimTree *pXVar2;
+  uint uVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
+  uint uVar6;
+  double extraout_f1;
+  double dVar7;
   
-  piVar2 = (int *)__savegprlr_20();
-  uVar6 = extraout_f1;
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x10d3,0,0xffffffff82000f98,0xffffffff821813e0);
+  uVar4 = (ulonglong)(int)param_2;
+  pXVar2 = (XAnimTree *)__savegprlr_20((double)param_3,param_1);
+  dVar7 = extraout_f1;
+  if (pXVar2 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10d3,0,"%s"
+                   );
   }
-  if (((param_2 & 0xffffffff) == 0) || (0xfff < (param_2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x10d4,0,0xffffffff82185e88,0xffffffff82185ea0,param_2);
+  if (((uVar4 & 0xffffffff) == 0) || (0xfff < (uVar4 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10d4,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    uVar5 = param_2;
-    if ((param_2 & 0xffffffff) == 0) goto LAB_826271b0;
+  if ((uVar4 & 0xffffffff) != 0) {
+    uVar5 = uVar4;
+    if ((uVar4 & 0xffffffff) == 0) goto LAB_826271b0;
     do {
+      uVar3 = (uint)uVar5;
       if (0xfff < (uVar5 & 0xffffffff)) {
 LAB_826271b0:
-        MyAssertHandler(0xffffffff82185bb8,0x10d8,0,0xffffffff82186c04,0xffffffff82186bd4,uVar5);
+        uVar3 = (uint)uVar5;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10d8,0,
+                        "%s\n\t(parentInfoIndex) = %i");
       }
-      iVar3 = (int)uVar5 * 0x40;
-      if ((&DAT_841dbfac)[iVar3] == '\0') {
-        MyAssertHandler(0xffffffff82185bb8,0x10dc,0,0xffffffff82000f98,0xffffffff82186c20);
+      if (g_xAnimInfo[uVar3].inuse == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10dc,0,
+                        "%s");
       }
-      uVar1 = *(ushort *)(&DAT_841dbfa8 + iVar3);
-      if (*(uint *)*piVar2 <= (uint)uVar1) {
-        MyAssertHandler(0xffffffff82185bb8,0x10df,0,0xffffffff82000f98,0xffffffff82186c34);
+      uVar6 = (uint)g_xAnimInfo[uVar3].animIndex;
+      if (pXVar2->anims->size <= uVar6) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10df,0,
+                        "%s");
       }
-      iVar4 = (uint)uVar1 * 8 + *piVar2;
-      if ((*(short *)(iVar4 + 0xc) != 0) && ((*(ushort *)(iVar4 + 0x10) & 4) != 0)) {
-        XAnimInitTime(uVar6,piVar2,uVar5);
-        iVar3 = XAnimGetInfoIndex(piVar2,*(undefined2 *)
-                                          (&DAT_841dbfa8 + (int)((param_2 & 0xffffffff) << 6)));
-        if (iVar3 == 0) goto LAB_826272dc;
+      if ((pXVar2->anims->entries[uVar6].numAnims != 0) &&
+         ((pXVar2->anims->entries[uVar6].field2_0x4.animParent.flags & 4) != 0)) {
+        XAnimInitTime(pXVar2,uVar3,(float)dVar7);
+        uVar3 = XAnimGetInfoIndex(pXVar2,(uint)*(ushort *)
+                                                ((int)&g_xAnimInfo[0].animIndex +
+                                                (int)((uVar4 & 0xffffffff) << 6)));
+        if (uVar3 == 0) goto LAB_826272dc;
         goto LAB_826272a4;
       }
-      uVar5 = (ulonglong)*(ushort *)(&DAT_841dbfa6 + iVar3);
+      uVar5 = (ulonglong)g_xAnimInfo[uVar3].parent;
     } while (uVar5 != 0);
   }
-  iVar3 = (int)((param_2 & 0xffffffff) << 6);
-  if ((&DAT_841dbfac)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x10ed,0,0xffffffff82000f98,0xffffffff82185e68);
+  iVar1 = (int)((uVar4 & 0xffffffff) << 6);
+  if ((&g_xAnimInfo[0].inuse)[iVar1] == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x10ed,0,"%s"
+                   );
   }
-  if (*(short *)(&DAT_841dbfaa + iVar3) == 0) {
+  if (*(short *)((int)&g_xAnimInfo[0].animToModel + iVar1) == 0) {
 LAB_826272dc:
-    __restgprlr_20(param_2);
-    return;
+    uVar3 = __restgprlr_20(uVar4);
+    return uVar3;
   }
-  XAnimInitTime(uVar6,piVar2,param_2);
+  uVar3 = XAnimInitTime(pXVar2,(uint)uVar4,(float)dVar7);
 LAB_826272a4:
-  __restgprlr_20();
-  return;
+  uVar3 = __restgprlr_20(uVar3);
+  return uVar3;
 }
 
 
 // 826272F0  XAnimSetGoalWeight  (xanim/xanim.cpp:4345)
 
-void XAnimSetGoalWeight(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5)
+int XAnimSetGoalWeight(DObj *param_1,uint param_2,float param_3,float param_4,float param_5,
+                      uint param_6,uint param_7,int param_8)
 
 {
-  int iVar1;
-  int *piVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar2;
   ulonglong in_r8;
   ulonglong in_r9;
-  int iVar5;
-  undefined4 *puVar6;
+  XAnimInfo_u_28 *pXVar5;
   int in_r10;
-  longlong lVar7;
+  longlong lVar6;
   double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  __savegprlr_24();
-  piVar3 = (int *)__savefpr_28();
-  dVar9 = extraout_f1;
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_4;
+  __savegprlr_24((double)param_3,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar10 = extraout_f1;
   Profile_Begin(0x143);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1100,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1100,0,"%s"
+                   );
   }
-  dVar8 = 0.0;
-  if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1101,0,0xffffffff82000f98,0xffffffff821863c0);
+  dVar9 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == 0.0)) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1101,0,"%s"
+                   );
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1102,0,0xffffffff82000f98,0xffffffff821863a4);
+  if (((in_r9 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1102,0,"%s"
+                   );
   }
-  if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)
-      ) && ((in_r9 & 0xffffffff) == 0)) {
-    dVar9 = dVar8;
+  if (((dVar10 < 0.0010000000474974513) &&
+      (dVar10 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)) && ((in_r9 & 0xffffffff) == 0)) {
+    dVar10 = dVar9;
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1108,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1108,0,"%s"
+                   );
   }
-  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-  if (iVar4 == 0) {
-    if (dVar9 == dVar8) {
-      Profile_EndInternal(0);
+  uVar3 = XAnimGetInfoIndex(pXVar1,param_2);
+  if (uVar3 == 0) {
+    if (dVar10 == dVar9) {
+      Profile_EndInternal((double *)0x0);
       __restfpr_28(0);
-      __restgprlr_24();
-      return;
+      iVar4 = __restgprlr_24();
+      return iVar4;
     }
-    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-    iVar5 = iVar4 * 0x40;
-    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-    lVar7 = 8;
+    param_6 = 0;
+    uVar3 = XAnimAllocInfoIndex(pDVar2,param_2,0);
+    pXVar5 = &g_xAnimInfo[uVar3].field12_0x1c;
+    lVar6 = 8;
     do {
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+      pXVar5 = pXVar5 + 1;
+      pXVar5->parts = (XAnimParts *)0x0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    g_xAnimInfo[uVar3].notifyName = 0;
+    g_xAnimInfo[uVar3].notifyChild = 0;
+    g_xAnimInfo[uVar3].notifyIndex = -1;
+    g_xAnimInfo[uVar3].notifyType = 0;
   }
   else if (in_r10 != 0) {
-    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+    uVar3 = XAnimRestart(pXVar1,uVar3,(float)dVar7);
   }
-  uVar2 = XAnimSetGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
-  Profile_EndInternal(0);
-  __restfpr_28(uVar2);
-  __restgprlr_24();
-  return;
+  iVar4 = XAnimSetGoalWeightNode
+                    (pXVar1,uVar3,(float)dVar10,(float)dVar7,(float)dVar8,param_6,param_7);
+  Profile_EndInternal((double *)0x0);
+  __restfpr_28(iVar4);
+  iVar4 = __restgprlr_24();
+  return iVar4;
 }
 
 
 // 82623B78  XAnimSetAnimRate  (xanim/xanim.cpp:4388)
 
-void XAnimSetAnimRate(undefined8 param_1,ulonglong param_2)
+void XAnimSetAnimRate(XAnimTree *param_1,uint param_2,float param_3)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
   uint uVar2;
+  ulonglong uVar3;
   double extraout_f1;
-  double dVar3;
+  double dVar4;
   
-  piVar1 = (int *)__savegprlr_27();
-  dVar3 = extraout_f1;
-  uVar2 = XAnimGetInfoIndex();
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_27((double)param_3,param_1);
+  dVar4 = extraout_f1;
+  uVar2 = XAnimGetInfoIndex(pXVar1,(uint)uVar3);
   if (uVar2 != 0) {
-    if (piVar1 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82185bb8,0x112b,0,0xffffffff82000f98,0xffffffff821813e0);
+    if (pXVar1 == (XAnimTree *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x112b,0,
+                      "%s");
     }
-    if (*piVar1 == 0) {
-      MyAssertHandler(0xffffffff82185bb8,0x112c,0,0xffffffff82000f98,0xffffffff82184c8c);
+    if (pXVar1->anims == (XAnim_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x112c,0,
+                      "%s");
     }
-    if ((ulonglong)*(uint *)*piVar1 <= (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff82185bb8,0x112d,0,0xffffffff82000f98,0xffffffff82186218);
+    if ((ulonglong)pXVar1->anims->size <= (uVar3 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x112d,0,
+                      "%s");
     }
-    if (dVar3 < 0.0) {
-      MyAssertHandler(0xffffffff82185bb8,0x112e,0,0xffffffff82000f98,0xffffffff821863dc);
+    if (dVar4 < 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x112e,0,
+                      "%s");
     }
     if (0xfff < uVar2) {
-      MyAssertHandler(0xffffffff82185bb8,0x1130,0,0xffffffff82185e88,0xffffffff82185ea0,uVar2);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1130,0,
+                      "%s\n\t(infoIndex) = %i");
     }
-    *(float *)(&DAT_841dbfd0 + uVar2 * 0x40) = (float)dVar3;
+    g_xAnimInfo[uVar2].state.rate = (float)dVar4;
   }
   __restgprlr_27();
   return;
@@ -5543,90 +6315,94 @@ void XAnimSetAnimRate(undefined8 param_1,ulonglong param_2)
 
 // 82623CA8  XAnimIsLooped  (xanim/xanim.cpp:4408)
 
-ushort XAnimIsLooped(int param_1,int param_2)
+bool XAnimIsLooped(XAnim_s *param_1,uint param_2)
 
 {
-  int iVar1;
-  ushort uVar2;
+  XAnimParts *pXVar1;
+  byte bVar2;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x113b,0,0xffffffff82000f98,0xffffffff8202a360);
+  if (param_1 == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x113b,0,"%s"
+                   );
   }
-  param_1 = param_2 * 8 + param_1;
-  if (*(short *)(param_1 + 0xc) == 0) {
-    iVar1 = XAnimGetPartsInternal();
-    uVar2 = (ushort)*(byte *)(iVar1 + 0x10);
+  if (param_1->entries[param_2].numAnims == 0) {
+    pXVar1 = XAnimGetPartsInternal(param_1->entries + param_2);
+    bVar2 = pXVar1->flags;
   }
   else {
-    uVar2 = *(ushort *)(param_1 + 0x10);
+    bVar2 = (byte)param_1->entries[param_2].field2_0x4.animParent.flags;
   }
-  return uVar2 & 1;
+  return (bool)(bVar2 & 1);
 }
 
 
 // 82623D38  XAnimIsLeafNode  (xanim/xanim.cpp:4422)
 
-bool XAnimIsLeafNode(int param_1,int param_2)
+int XAnimIsLeafNode(XAnim_s *param_1,uint param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1147,0,0xffffffff82000f98,0xffffffff8202a360);
+  if (param_1 == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1147,0,"%s"
+                   );
   }
-  return *(short *)(param_2 * 8 + param_1 + 0xc) == 0;
+  return (uint)LZCOUNT((uint)param_1->entries[param_2].numAnims) >> 5;
 }
 
 
 // 82623DB0  XAnimNotetrackExists  (xanim/xanim.cpp:4430)
 
-undefined8 XAnimNotetrackExists(longlong param_1,ulonglong param_2,uint param_3)
+bool XAnimNotetrackExists(XAnim_s *param_1,uint param_2,uint param_3)
 
 {
-  int iVar1;
+  XAnimParts *pXVar1;
   int iVar2;
-  ushort *puVar3;
+  XAnimNotifyInfo *pXVar3;
   
-  iVar1 = XAnimGetPartsInternal((param_2 & 0x1fffffff) * 8 + param_1 + 0xc);
-  puVar3 = *(ushort **)(iVar1 + 0x50);
-  if (puVar3 != (ushort *)0x0) {
+  pXVar1 = XAnimGetPartsInternal(param_1->entries + param_2);
+  pXVar3 = pXVar1->notify;
+  if (pXVar3 != (XAnimNotifyInfo *)0x0) {
     iVar2 = 0;
-    if (*(byte *)(iVar1 + 0x1d) != 0) {
+    if (pXVar1->notifyCount != 0) {
       do {
-        if (*puVar3 == param_3) {
-          return 1;
+        if (pXVar3->name == param_3) {
+          return true;
         }
         iVar2 = iVar2 + 1;
-        puVar3 = puVar3 + 4;
-      } while (iVar2 < (int)(uint)*(byte *)(iVar1 + 0x1d));
+        pXVar3 = pXVar3 + 1;
+      } while (iVar2 < (int)(uint)pXVar1->notifyCount);
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82623E40  XAnimAddNotetrackTimesToScriptArray  (xanim/xanim.cpp:4453)
 
-void XAnimAddNotetrackTimesToScriptArray(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void XAnimAddNotetrackTimesToScriptArray(XAnim_s *param_1,uint param_2,uint param_3)
 
 {
-  longlong lVar1;
-  int iVar2;
-  int iVar3;
-  ushort *puVar4;
+  int iVar1;
+  XAnimParts *pXVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  XAnimNotifyInfo *pXVar5;
   
-  lVar1 = __savegprlr_28();
-  iVar2 = XAnimGetPartsInternal((param_2 & 0x1fffffff) * 8 + lVar1 + 0xc);
-  puVar4 = *(ushort **)(iVar2 + 0x50);
-  if (puVar4 != (ushort *)0x0) {
-    iVar3 = 0;
-    if (*(char *)(iVar2 + 0x1d) != '\0') {
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  pXVar2 = XAnimGetPartsInternal((XAnimEntry *)((int)((uVar3 & 0xffffffff) << 3) + iVar1 + 0xc));
+  pXVar5 = pXVar2->notify;
+  if (pXVar5 != (XAnimNotifyInfo *)0x0) {
+    iVar1 = 0;
+    if (pXVar2->notifyCount != '\0') {
       do {
-        if ((ulonglong)*puVar4 == (param_3 & 0xffffffff)) {
-          Scr_AddFloat((double)*(float *)(puVar4 + 2));
+        if ((ulonglong)pXVar5->name == (uVar4 & 0xffffffff)) {
+          Scr_AddFloat(pXVar5->time);
           Scr_AddArray();
         }
-        iVar3 = iVar3 + 1;
-        puVar4 = puVar4 + 4;
-      } while (iVar3 < (int)(uint)*(byte *)(iVar2 + 0x1d));
+        iVar1 = iVar1 + 1;
+        pXVar5 = pXVar5 + 1;
+      } while (iVar1 < (int)(uint)pXVar2->notifyCount);
     }
   }
   __restgprlr_28();
@@ -5636,173 +6412,209 @@ void XAnimAddNotetrackTimesToScriptArray(undefined8 param_1,ulonglong param_2,ul
 
 // 826274F8  XAnimSetCompleteGoalWeight  (xanim/xanim.cpp:4478)
 
-void XAnimSetCompleteGoalWeight
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+int XAnimSetCompleteGoalWeight
+              (DObj *param_1,uint param_2,float param_3,float param_4,float param_5,uint param_6,
+              uint param_7,int param_8)
 
 {
-  int iVar1;
-  int *piVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar2;
   ulonglong in_r8;
   ulonglong in_r9;
-  int iVar5;
-  undefined4 *puVar6;
+  XAnimInfo_u_28 *pXVar5;
   int in_r10;
-  longlong lVar7;
+  longlong lVar6;
   double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  __savegprlr_24();
-  piVar3 = (int *)__savefpr_28();
-  dVar9 = extraout_f1;
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_4;
+  __savegprlr_24((double)param_3,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar10 = extraout_f1;
   Profile_Begin(0x143);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1185,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1185,0,"%s"
+                   );
   }
-  dVar8 = 0.0;
-  if (((in_r8 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1186,0,0xffffffff82000f98,0xffffffff821863c0);
+  dVar9 = 0.0;
+  if (((in_r8 & 0xffffffff) != 0) && (dVar10 == 0.0)) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1186,0,"%s"
+                   );
   }
-  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1187,0,0xffffffff82000f98,0xffffffff821863a4);
+  if (((in_r9 & 0xffffffff) != 0) && (dVar10 == dVar9)) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1187,0,"%s"
+                   );
   }
-  if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)
-      ) && ((in_r9 & 0xffffffff) == 0)) {
-    dVar9 = dVar8;
+  if (((dVar10 < 0.0010000000474974513) &&
+      (dVar10 = 0.0010000000474974513, (in_r8 & 0xffffffff) == 0)) && ((in_r9 & 0xffffffff) == 0)) {
+    dVar10 = dVar9;
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x118d,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    param_6 = 0;
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x118d,0,"%s"
+                   );
   }
-  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-  if (iVar4 == 0) {
-    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-    iVar5 = iVar4 * 0x40;
-    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
-    lVar7 = 8;
+  uVar3 = XAnimGetInfoIndex(pXVar1,param_2);
+  if (uVar3 == 0) {
+    param_6 = 0;
+    uVar3 = XAnimAllocInfoIndex(pDVar2,param_2,0);
+    pXVar5 = &g_xAnimInfo[uVar3].field12_0x1c;
+    lVar6 = 8;
     do {
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+      pXVar5 = pXVar5 + 1;
+      pXVar5->parts = (XAnimParts *)0x0;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    g_xAnimInfo[uVar3].notifyName = 0;
+    g_xAnimInfo[uVar3].notifyChild = 0;
+    g_xAnimInfo[uVar3].notifyIndex = -1;
+    g_xAnimInfo[uVar3].notifyType = 0;
   }
   else if (in_r10 != 0) {
-    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+    uVar3 = XAnimRestart(pXVar1,uVar3,(float)dVar7);
   }
-  uVar2 = XAnimSetCompleteGoalWeightNode(dVar9,param_2,param_3,iVar1,iVar4);
-  Profile_EndInternal(0);
-  __restfpr_28(uVar2);
-  __restgprlr_24();
-  return;
+  iVar4 = XAnimSetCompleteGoalWeightNode
+                    (pXVar1,uVar3,(float)dVar10,(float)dVar7,(float)dVar8,param_6,param_7);
+  Profile_EndInternal((double *)0x0);
+  __restfpr_28(iVar4);
+  iVar4 = __restgprlr_24();
+  return iVar4;
 }
 
 
 // 826276D8  XAnimSetCompleteGoalWeightRel  (xanim/xanim.cpp:4515)
 
-void XAnimSetCompleteGoalWeightRel
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+int XAnimSetCompleteGoalWeightRel
+              (DObj *param_1,uint param_2,uint param_3,float param_4,float param_5,float param_6,
+              uint param_7,uint param_8,int param_9)
 
 {
-  int iVar1;
-  int *piVar3;
+  XAnimTree *pXVar1;
+  DObj *pDVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar2;
+  char *pcVar5;
   ulonglong in_r9;
-  int iVar5;
-  undefined4 *puVar6;
+  XAnimInfo_u_28 *pXVar6;
   ulonglong in_r10;
   longlong lVar7;
   double extraout_f1;
   double dVar8;
   double dVar9;
+  double dVar10;
+  double dVar11;
   int in_stack_00000054;
   
-  __savegprlr_24();
-  piVar3 = (int *)__savefpr_28();
-  dVar9 = extraout_f1;
+  dVar9 = (double)param_6;
+  dVar8 = (double)param_5;
+  pcVar5 = (char *)param_8;
+  __savegprlr_24((double)param_4,param_1);
+  pDVar2 = (DObj *)__savefpr_28();
+  dVar11 = extraout_f1;
   Profile_Begin(0x143);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11aa,0,0xffffffff82000f98,0xffffffff820040b4);
+  if (pDVar2 == (DObj *)0x0) {
+    pcVar5 = "obj";
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11aa,0,"%s"
+                   );
   }
-  dVar8 = 0.0;
-  if (((in_r9 & 0xffffffff) != 0) && (dVar9 == 0.0)) {
-    MyAssertHandler(0xffffffff82185bb8,0x11ab,0,0xffffffff82000f98,0xffffffff821863c0);
+  dVar10 = 0.0;
+  if (((in_r9 & 0xffffffff) != 0) && (dVar11 == 0.0)) {
+    pcVar5 = "!notifyName || goalWeight";
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11ab,0,"%s"
+                   );
   }
-  if (((in_r10 & 0xffffffff) != 0) && (dVar9 == dVar8)) {
-    MyAssertHandler(0xffffffff82185bb8,0x11ac,0,0xffffffff82000f98,0xffffffff821863a4);
+  if (((in_r10 & 0xffffffff) != 0) && (dVar11 == dVar10)) {
+    pcVar5 = "!notifyType || goalWeight";
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11ac,0,"%s"
+                   );
   }
-  if (((dVar9 < 0.0010000000474974513) && (dVar9 = 0.0010000000474974513, (in_r9 & 0xffffffff) == 0)
-      ) && ((in_r10 & 0xffffffff) == 0)) {
-    dVar9 = dVar8;
+  if (((dVar11 < 0.0010000000474974513) &&
+      (dVar11 = 0.0010000000474974513, (in_r9 & 0xffffffff) == 0)) && ((in_r10 & 0xffffffff) == 0))
+  {
+    dVar11 = dVar10;
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11b2,0,0xffffffff82000f98,0xffffffff821813e0);
+  pXVar1 = pDVar2->tree;
+  if (pXVar1 == (XAnimTree *)0x0) {
+    pcVar5 = "tree";
+    param_7 = (uint)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11b2,0,"%s"
+                   );
   }
-  iVar4 = XAnimGetInfoIndex(iVar1,param_5);
-  if (iVar4 == 0) {
-    iVar4 = XAnimAllocInfoIndex(piVar3,param_5,0);
-    iVar5 = iVar4 * 0x40;
-    puVar6 = (undefined4 *)(&DAT_841dbfb4 + iVar5);
+  uVar3 = XAnimGetInfoIndex(pXVar1,param_2);
+  if (uVar3 == 0) {
+    uVar3 = XAnimAllocInfoIndex(pDVar2,param_2,0);
+    pXVar6 = &g_xAnimInfo[uVar3].field12_0x1c;
     lVar7 = 8;
     do {
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
+      pXVar6 = pXVar6 + 1;
+      pXVar6->parts = (XAnimParts *)0x0;
       lVar7 = lVar7 + -1;
     } while (lVar7 != 0);
-    *(undefined2 *)(&DAT_841dbf9c + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf98 + iVar5) = 0;
-    *(undefined2 *)(&DAT_841dbf9a + iVar5) = 0xffff;
-    *(undefined2 *)(&DAT_841dbf9e + iVar5) = 0;
+    g_xAnimInfo[uVar3].notifyName = 0;
+    g_xAnimInfo[uVar3].notifyChild = 0;
+    g_xAnimInfo[uVar3].notifyIndex = -1;
+    g_xAnimInfo[uVar3].notifyType = 0;
   }
   else if (in_stack_00000054 != 0) {
-    iVar4 = XAnimRestart(param_2,iVar1,iVar4);
+    uVar3 = XAnimRestart(pXVar1,uVar3,(float)dVar8);
   }
-  uVar2 = XAnimSetCompleteGoalWeightNodeRel(dVar9,param_2,param_3,iVar1,iVar4,param_6);
-  Profile_EndInternal(0);
-  __restfpr_28(uVar2);
-  __restgprlr_24();
-  return;
+  iVar4 = XAnimSetCompleteGoalWeightNodeRel
+                    (pXVar1,uVar3,param_3,(float)dVar11,(float)dVar8,(float)dVar9,param_7,
+                     (uint)pcVar5);
+  Profile_EndInternal((double *)0x0);
+  __restfpr_28(iVar4);
+  iVar4 = __restgprlr_24();
+  return iVar4;
 }
 
 
 // 82623EB8  XAnimCloneAnimInfo  (xanim/xanim.cpp:4552)
 
-void XAnimCloneAnimInfo(undefined2 *param_1,undefined2 *param_2)
+void XAnimCloneAnimInfo(XAnimInfo *param_1,XAnimInfo *param_2)
 
 {
-  short sVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  ushort uVar1;
+  XAnimInfo_u_28 *pXVar2;
+  XAnimInfo_u_28 *pXVar3;
   longlong lVar4;
   
-  if (param_2[8] != param_1[8]) {
-    MyAssertHandler(0xffffffff82185bb8,0x11c9,0,0xffffffff82000f98,0xffffffff82186634);
+  if (param_2->animIndex != param_1->animIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11c9,0,"%s"
+                   );
   }
-  puVar3 = (undefined4 *)(param_1 + 0xe);
-  puVar2 = (undefined4 *)(param_2 + 0xe);
+  pXVar3 = &param_1->field12_0x1c;
+  pXVar2 = &param_2->field12_0x1c;
   lVar4 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *puVar3;
+    pXVar3 = pXVar3 + 1;
+    pXVar2 = pXVar2 + 1;
+    *pXVar2 = *pXVar3;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  *param_2 = *param_1;
-  param_2[1] = param_1[1];
-  sVar1 = param_1[2];
-  param_2[2] = sVar1;
-  param_2[3] = param_1[3];
-  if (sVar1 != 0) {
-    SL_AddRefToString();
+  param_2->notifyChild = param_1->notifyChild;
+  param_2->notifyIndex = param_1->notifyIndex;
+  uVar1 = param_1->notifyName;
+  param_2->notifyName = uVar1;
+  param_2->notifyType = param_1->notifyType;
+  if (uVar1 != 0) {
+    SL_AddRefToString((uint)uVar1);
   }
   return;
 }
@@ -5810,51 +6622,61 @@ void XAnimCloneAnimInfo(undefined2 *param_1,undefined2 *param_2)
 
 // 82623F70  XAnimCloneAnimTree_r  (xanim/xanim.cpp:4566)
 
-void XAnimCloneAnimTree_r(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+void XAnimCloneAnimTree_r(XAnimTree *param_1,XAnimTree *param_2,uint param_3,uint param_4)
 
 {
-  short sVar1;
-  ushort uVar2;
-  int iVar3;
-  uint uVar4;
-  int *piVar6;
-  ulonglong uVar5;
-  longlong lVar7;
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  XAnimTree *pXVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  XAnimTree *pXVar7;
+  ulonglong uVar8;
   
-  piVar6 = (int *)__savegprlr_25();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11dd,0,0xffffffff82000f98,0xffffffff82001400);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_25(param_1);
+  if (pXVar4 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11dd,0,"%s"
+                   );
   }
-  if (*piVar6 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11de,0,0xffffffff82000f98,0xffffffff821866e0);
+  if (pXVar4->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11de,0,"%s"
+                   );
   }
-  if (*(int *)*piVar6 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11df,0,0xffffffff82000f98,0xffffffff821866cc);
+  if (pXVar4->anims->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11df,0,"%s"
+                   );
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11e0,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11e0,0,"%s"
+                   );
   }
-  if (*(int *)param_2 != *piVar6) {
-    MyAssertHandler(0xffffffff82185bb8,0x11e1,0,0xffffffff82000f98,0xffffffff821866b0);
+  pXVar7 = (XAnimTree *)uVar6;
+  if (pXVar7->anims != pXVar4->anims) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11e1,0,"%s"
+                   );
   }
-  if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x11e3,0,0xffffffff82186668,0xffffffff82186684,param_3);
+  if (((uVar8 & 0xffffffff) == 0) || (0xfff < (uVar8 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11e3,0,
+                    "%s\n\t(fromInfoIndex) = %i");
   }
-  lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
-  iVar3 = (int)lVar7;
-  if (*(char *)(iVar3 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x11e6,0,0xffffffff82000f98,0xffffffff82186658);
+  iVar2 = (int)uVar8;
+  if (g_xAnimInfo[iVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11e6,0,"%s"
+                   );
   }
-  sVar1 = *(short *)(iVar3 + 0x12);
-  if (sVar1 != 0) {
-    SL_AddRefToString(sVar1);
+  uVar1 = g_xAnimInfo[iVar2].animToModel;
+  if (uVar1 != 0) {
+    SL_AddRefToString((uint)uVar1);
   }
-  uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
-  XAnimCloneAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
-  uVar2 = *(ushort *)(iVar3 + 0xc);
-  while (uVar4 = (uint)uVar2, uVar4 != 0) {
-    XAnimCloneAnimTree_r(piVar6,param_2,uVar4,uVar5);
-    uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
+  uVar5 = XAnimAllocInfoWithParent(pXVar7,(uint)uVar1,(uint)g_xAnimInfo[iVar2].animIndex,param_4,1);
+  XAnimCloneAnimInfo(g_xAnimInfo + iVar2,g_xAnimInfo + uVar5);
+  uVar1 = g_xAnimInfo[iVar2].children;
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    XAnimCloneAnimTree_r(pXVar4,pXVar7,uVar3,uVar5);
+    uVar1 = g_xAnimInfo[uVar3].next;
   }
   __restgprlr_25();
   return;
@@ -5863,72 +6685,85 @@ void XAnimCloneAnimTree_r(undefined8 param_1,ulonglong param_2,ulonglong param_3
 
 // 82624150  XAnimCloneAnimTree  (xanim/xanim.cpp:4603)
 
-void XAnimCloneAnimTree(undefined8 param_1,ulonglong param_2)
+void XAnimCloneAnimTree(XAnimTree *param_1,XAnimTree *param_2)
 
 {
-  int *piVar1;
-  int *piVar2;
+  XAnimTree *pXVar1;
+  int iVar2;
+  ulonglong uVar3;
+  XAnimTree *pXVar4;
   
-  piVar1 = (int *)__savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
   Profile_Begin(0x12f);
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11fe,0,0xffffffff82000f98,0xffffffff82001400);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11fe,0,"%s"
+                   );
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x11ff,0,0xffffffff82000f98,0xffffffff821866e0);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x11ff,0,"%s"
+                   );
   }
-  if (*(int *)*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1200,0,0xffffffff82000f98,0xffffffff821866cc);
+  if (pXVar1->anims->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1200,0,"%s"
+                   );
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1201,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1201,0,"%s"
+                   );
   }
-  piVar2 = (int *)param_2;
-  if (*piVar2 != *piVar1) {
-    MyAssertHandler(0xffffffff82185bb8,0x1202,0,0xffffffff82000f98,0xffffffff821866b0);
+  pXVar4 = (XAnimTree *)uVar3;
+  if (pXVar4->anims != pXVar1->anims) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1202,0,"%s"
+                   );
   }
-  if (*(short *)(piVar2 + 4) != 0) {
-    XAnimFreeInfo(param_2);
+  if (pXVar4->children != 0) {
+    XAnimFreeInfo(pXVar4,(uint)pXVar4->children);
   }
-  if (*(short *)(piVar2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1206,0,0xffffffff82000f98,0xffffffff821866ec);
+  if (pXVar4->children != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1206,0,"%s"
+                   );
   }
-  if (*(short *)(piVar1 + 4) != 0) {
-    XAnimCloneAnimTree_r(piVar1,param_2,*(short *)(piVar1 + 4),0);
+  if (pXVar1->children != 0) {
+    XAnimCloneAnimTree_r(pXVar1,pXVar4,(uint)pXVar1->children,0);
   }
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar2);
   return;
 }
 
 
 // 826242B0  XAnimCloneClientAnimInfo  (xanim/xanim.cpp:4624)
 
-void XAnimCloneClientAnimInfo(undefined8 param_1,longlong param_2)
+void XAnimCloneClientAnimInfo(XAnimInfo *param_1,XAnimInfo *param_2)
 
 {
   undefined2 *puVar1;
   int iVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  longlong lVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
   
-  iVar2 = __savegprlr_29();
-  puVar1 = (undefined2 *)param_2;
+  lVar3 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  puVar1 = (undefined2 *)lVar3;
   if (puVar1[8] != *(short *)(iVar2 + 0x10)) {
-    MyAssertHandler(0xffffffff82185bb8,0x1211,0,0xffffffff82000f98,0xffffffff82186634);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1211,0,"%s"
+                   );
   }
   if (*(short *)(iVar2 + 6) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1212,0,0xffffffff821866fc,0xffffffff82186718);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1212,0,
+                    "%s\n\t(from->notifyType) = %i");
   }
-  puVar3 = (undefined4 *)(iVar2 + 0x1c);
-  param_2 = param_2 + 0x1c;
-  lVar4 = 8;
+  puVar4 = (undefined4 *)(iVar2 + 0x1c);
+  lVar3 = lVar3 + 0x1c;
+  lVar5 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    param_2 = param_2 + 4;
-    *(undefined4 *)param_2 = *puVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    puVar4 = puVar4 + 1;
+    lVar3 = lVar3 + 4;
+    *(undefined4 *)lVar3 = *puVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   puVar1[3] = 0;
   *puVar1 = 0;
   puVar1[1] = 0xffff;
@@ -5940,52 +6775,61 @@ void XAnimCloneClientAnimInfo(undefined8 param_1,longlong param_2)
 
 // 82624368  XAnimCloneClientAnimTree_r  (xanim/xanim.cpp:4636)
 
-void XAnimCloneClientAnimTree_r
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+void XAnimCloneClientAnimTree_r(XAnimTree *param_1,XAnimTree *param_2,uint param_3,uint param_4)
 
 {
-  short sVar1;
-  ushort uVar2;
-  int iVar3;
-  uint uVar4;
-  int *piVar6;
-  ulonglong uVar5;
-  longlong lVar7;
+  ushort uVar1;
+  int iVar2;
+  uint uVar3;
+  XAnimTree *pXVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  XAnimTree *pXVar7;
+  ulonglong uVar8;
   
-  piVar6 = (int *)__savegprlr_25();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1223,0,0xffffffff82000f98,0xffffffff82001400);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar4 = (XAnimTree *)__savegprlr_25(param_1);
+  if (pXVar4 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1223,0,"%s"
+                   );
   }
-  if (*piVar6 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1224,0,0xffffffff82000f98,0xffffffff821866e0);
+  if (pXVar4->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1224,0,"%s"
+                   );
   }
-  if (*(int *)*piVar6 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1225,0,0xffffffff82000f98,0xffffffff821866cc);
+  if (pXVar4->anims->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1225,0,"%s"
+                   );
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1226,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1226,0,"%s"
+                   );
   }
-  if (*(int *)param_2 != *piVar6) {
-    MyAssertHandler(0xffffffff82185bb8,0x1227,0,0xffffffff82000f98,0xffffffff821866b0);
+  pXVar7 = (XAnimTree *)uVar6;
+  if (pXVar7->anims != pXVar4->anims) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1227,0,"%s"
+                   );
   }
-  if (((param_3 & 0xffffffff) == 0) || (0xfff < (param_3 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff82185bb8,0x1229,0,0xffffffff82186668,0xffffffff82186684,param_3);
+  if (((uVar8 & 0xffffffff) == 0) || (0xfff < (uVar8 & 0xffffffff))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1229,0,
+                    "%s\n\t(fromInfoIndex) = %i");
   }
-  lVar7 = (param_3 & 0x3ffffff) * 0x40 + -0x7be24068;
-  iVar3 = (int)lVar7;
-  if (*(char *)(iVar3 + 0x14) == '\0') {
-    MyAssertHandler(0xffffffff82185bb8,0x122c,0,0xffffffff82000f98,0xffffffff82186658);
+  iVar2 = (int)uVar8;
+  if (g_xAnimInfo[iVar2].inuse == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x122c,0,"%s"
+                   );
   }
-  sVar1 = *(short *)(iVar3 + 0x12);
-  if (sVar1 != 0) {
-    SL_AddRefToString(sVar1);
+  uVar1 = g_xAnimInfo[iVar2].animToModel;
+  if (uVar1 != 0) {
+    SL_AddRefToString((uint)uVar1);
   }
-  uVar5 = XAnimAllocInfoWithParent(param_2,sVar1,*(undefined2 *)(iVar3 + 0x10),param_4,1);
-  XAnimCloneClientAnimInfo(lVar7,(uVar5 & 0x3ffffff) * 0x40 + -0x7be24068);
-  uVar2 = *(ushort *)(iVar3 + 0xc);
-  while (uVar4 = (uint)uVar2, uVar4 != 0) {
-    XAnimCloneClientAnimTree_r(piVar6,param_2,uVar4,uVar5);
-    uVar2 = (&DAT_841dbfa2)[uVar4 * 0x20];
+  uVar5 = XAnimAllocInfoWithParent(pXVar7,(uint)uVar1,(uint)g_xAnimInfo[iVar2].animIndex,param_4,1);
+  XAnimCloneClientAnimInfo(g_xAnimInfo + iVar2,g_xAnimInfo + uVar5);
+  uVar1 = g_xAnimInfo[iVar2].children;
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    XAnimCloneClientAnimTree_r(pXVar4,pXVar7,uVar3,uVar5);
+    uVar1 = g_xAnimInfo[uVar3].next;
   }
   __restgprlr_25();
   return;
@@ -5994,57 +6838,71 @@ void XAnimCloneClientAnimTree_r
 
 // 82624548  XAnimCloneClientAnimTree  (xanim/xanim.cpp:4673)
 
-void XAnimCloneClientAnimTree(undefined8 param_1,ulonglong param_2)
+void XAnimCloneClientAnimTree(XAnimTree *param_1,XAnimTree *param_2)
 
 {
-  int *piVar1;
+  XAnimTree *pXVar1;
+  int iVar2;
+  ulonglong uVar3;
+  XAnimTree *pXVar4;
   
-  piVar1 = (int *)__savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar1 = (XAnimTree *)__savegprlr_28(param_1);
   Profile_Begin(0x12f);
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1244,0,0xffffffff82000f98,0xffffffff82001400);
+  if (pXVar1 == (XAnimTree *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1244,0,"%s"
+                   );
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1245,0,0xffffffff82000f98,0xffffffff821866e0);
+  if (pXVar1->anims == (XAnim_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1245,0,"%s"
+                   );
   }
-  if (*(int *)*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1246,0,0xffffffff82000f98,0xffffffff821866cc);
+  if (pXVar1->anims->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1246,0,"%s"
+                   );
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1247,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1247,0,"%s"
+                   );
   }
-  if (*(int *)param_2 != *piVar1) {
-    MyAssertHandler(0xffffffff82185bb8,0x1248,0,0xffffffff82000f98,0xffffffff821866b0);
+  pXVar4 = (XAnimTree *)uVar3;
+  if (pXVar4->anims != pXVar1->anims) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1248,0,"%s"
+                   );
   }
-  if (*(short *)((int *)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82185bb8,0x1249,0,0xffffffff82000f98,0xffffffff821866ec);
+  if (pXVar4->children != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x1249,0,"%s"
+                   );
   }
-  if (*(short *)(piVar1 + 4) != 0) {
-    XAnimCloneClientAnimTree_r(piVar1,param_2,*(short *)(piVar1 + 4),0);
+  if (pXVar1->children != 0) {
+    XAnimCloneClientAnimTree_r(pXVar1,pXVar4,(uint)pXVar1->children,0);
   }
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar2);
   return;
 }
 
 
 // 82624690  GetAnimInfo  (xanim/xanim.cpp:4698)
 
-longlong GetAnimInfo(ulonglong param_1)
+XAnimInfo * GetAnimInfo(int param_1)
 
 {
-  if (((int)param_1 < 1) || (0xfff < (int)param_1)) {
-    MyAssertHandler(0xffffffff82185bb8,0x125b,0,0xffffffff82185e88,0xffffffff8218672c,param_1);
+  if ((param_1 < 1) || (0xfff < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x125b,0,
+                    "%s\n\t(infoIndex) = %i");
   }
-  return (param_1 & 0x3ffffff) * 0x40 + -0x7be24068;
+  return g_xAnimInfo + param_1;
 }
 
 
 // 82624700  GetAnimInfoBase  (xanim/xanim.cpp:4711)
 
-undefined8 GetAnimInfoBase(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+XAnimInfo * GetAnimInfoBase(void)
 
 {
-  return 0xffffffff841dbf98;
+  return g_xAnimInfo;
 }
 

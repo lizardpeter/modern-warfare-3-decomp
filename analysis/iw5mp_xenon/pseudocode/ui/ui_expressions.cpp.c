@@ -2,425 +2,503 @@
 
 // 8258C978  Window_GetDynamicFlags  (ui/ui_utils.h:32)
 
-undefined4 Window_GetDynamicFlags(uint param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Window_GetDynamicFlags(LocalClientNum_t param_1,windowDef_t *param_2)
 
 {
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff821649a8,0x21,0,0xffffffff821649e0,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x21,0,
+                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  return *(undefined4 *)((param_1 + 0x12) * 4 + param_2);
+  return param_2->dynamicFlags[param_1];
 }
 
 
 // 8258C9E8  Window_IsVisible  (ui/ui_utils.h:83)
 
-void Window_IsVisible(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Window_IsVisible(LocalClientNum_t param_1,windowDef_t *param_2)
 
 {
   uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821649a8,0x54,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x54,0,"%s");
   }
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff821649a8,0x21,0,0xffffffff821649e0,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x21,0,
+                    "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  __restgprlr_29(*(uint *)((uVar1 + 0x12) * 4 + (int)param_2) >> 2 & 1);
-  return;
+  iVar2 = __restgprlr_29(*(uint *)((uVar1 + 0x12) * 4 + (int)uVar3) >> 2 & 1);
+  return iVar2;
 }
 
 
 // 8258CA70  Window_HasFocus  (ui/ui_utils.h:97)
 
-void Window_HasFocus(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Window_HasFocus(LocalClientNum_t param_1,windowDef_t *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  uint uVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  windowDef_t *pwVar6;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821649a8,0x62,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  uVar5 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x62,0,"%s");
   }
-  iVar3 = Window_IsVisible(uVar1,param_2);
-  if (iVar3 == 0) {
-    uVar2 = Window_GetDynamicFlags(uVar1,param_2);
-    if (((uVar2 & 2) != 0) && (DAT_84013128 == 0)) {
-      MyAssertHandler(0xffffffff821649a8,0x66,0,0xffffffff82164a2c);
+  pwVar6 = (windowDef_t *)uVar5;
+  iVar2 = Window_IsVisible(LVar1,pwVar6);
+  if (iVar2 == 0) {
+    uVar3 = Window_GetDynamicFlags(LVar1,pwVar6);
+    if (((uVar3 & 2) != 0) && (alwaysfails == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x66,0,
+                      "Hidden window has focus!");
     }
-    __restgprlr_29(0);
-    return;
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  uVar2 = Window_GetDynamicFlags(uVar1,param_2);
-  __restgprlr_29((uVar2 & 0xffffffff) >> 1 & 1);
-  return;
+  uVar3 = Window_GetDynamicFlags(LVar1,pwVar6);
+  uVar4 = __restgprlr_29(uVar3 >> 1 & 1);
+  return (bool)uVar4;
 }
 
 
 // 8258CB28  Operand_SetBool  (ui/ui_expressions.cpp:242)
 
-void Operand_SetBool(undefined4 *param_1,longlong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void Operand_SetBool(Operand *param_1,int param_2)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0xf3,0,0xffffffff82000f98,0xffffffff82164ae0);
+  operandInternalDataUnion oVar1;
+  
+  if (param_1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xf3,0,
+                    "%s");
   }
-  *param_1 = 0;
-  param_1[1] = (uint)(param_2 != 0);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = param_2 != 0;
+  param_1->dataType = VAL_INT;
+  param_1->internals = oVar1;
   return;
 }
 
 
 // 8258CBA0  Operand_SetInt  (ui/ui_expressions.cpp:250)
 
-void Operand_SetInt(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void Operand_SetInt(Operand *param_1,int param_2)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfb,0,0xffffffff82000f98,0xffffffff82164ae0);
+  if (param_1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfb,0,
+                    "%s");
   }
-  param_1[1] = param_2;
-  *param_1 = 0;
+  (param_1->internals).intVal = param_2;
+  param_1->dataType = VAL_INT;
   return;
 }
 
 
 // 8259CC20  Operand_SetString  (ui/ui_expressions.cpp:258)
 
-void Operand_SetString(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void Operand_SetString(Operand *param_1,char *param_2)
 
 {
-  *param_1 = 2;
-  CopyDynamicString();
+  param_1->dataType = VAL_STRING;
+  CopyDynamicString(param_1,param_2);
   return;
 }
 
 
 // 8258CC10  UI_IncExpressionExecuteTime  (ui/ui_expressions.cpp:265)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UI_IncExpressionExecuteTime(void)
 
 {
-  DAT_83f60a38 = DAT_83f60a38 + 1;
-  DAT_83f60a44 = Sys_Milliseconds();
+  g_uiExpressionState.currentExpressionExecuteTime =
+       g_uiExpressionState.currentExpressionExecuteTime + 1;
+  g_uiExpressionState.milliseconds = Sys_Milliseconds();
   return;
 }
 
 
 // 8258CC50  GetAvailableOperandString  (ui/ui_expressions.cpp:277)
 
-longlong GetAvailableOperandString(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * GetAvailableOperandString(void)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  char *pcVar1;
+  uint uVar2;
   
-  uVar1 = (ulonglong)DAT_83f60a30;
-  if (0xf < uVar1) {
-    MyAssertHandler(0xffffffff82164aa0,0x117,0,0xffffffff82164ae8,uVar1,0x10);
-    uVar1 = (ulonglong)DAT_83f60a30;
+  if (0xf < DAT_83f60a30) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x117,0
+                    ,"operandStringIndex doesn\'t index OPERAND_STRING_COUNT\n\t%i not in [0, %i)");
   }
-  iVar2 = (int)(uVar1 + 1);
-  DAT_83f60a30 = iVar2 + ((iVar2 >> 4) + (uint)(iVar2 < 0 && (uVar1 + 1 & 0xf) != 0)) * -0x10;
-  return (uVar1 & 0xffffff) * 0x100 + -0x7c09e1c0;
+  uVar2 = DAT_83f60a30 + 1;
+  pcVar1 = s_operandStrings[DAT_83f60a30];
+  DAT_83f60a30 = uVar2 + (((int)uVar2 >> 4) + (uint)((int)uVar2 < 0 && (uVar2 & 0xf) != 0)) * -0x10;
+  return pcVar1;
 }
 
 
 // 8258CCD0  GetSourceString  (ui/ui_expressions.cpp:293)
 
-void GetSourceString(void)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+char * GetSourceString(Operand *param_1)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
+  int *piVar1;
+  char *pcVar2;
   ulonglong uVar3;
   int iVar4;
   longlong lVar5;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (*piVar2 == 2) {
-    __restgprlr_28(piVar2[1]);
-    return;
+  piVar1 = (int *)__savegprlr_28(param_1);
+  if (*piVar1 == 2) {
+    pcVar2 = (char *)__restgprlr_28(piVar1[1]);
+    return pcVar2;
   }
-  uVar3 = (ulonglong)DAT_83f60a28;
+  uVar3 = (ulonglong)(uint)currentTempOperand;
   if (0xf < uVar3) {
-    MyAssertHandler(0xffffffff82164aa0,0x12a,0,0xffffffff82164b60,uVar3,0x10);
-    uVar3 = (ulonglong)DAT_83f60a28;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x12a,0
+                    ,"currentTempOperand doesn\'t index NUM_OPERAND_STRINGS\n\t%i not in [0, %i)");
+    uVar3 = (ulonglong)(uint)currentTempOperand;
   }
   iVar4 = (int)(uVar3 + 1);
   lVar5 = (uVar3 & 0xffffff) * 0x100 + -0x7c09f1c0;
-  DAT_83f60a28 = iVar4 + ((iVar4 >> 4) + (uint)(iVar4 < 0 && (uVar3 + 1 & 0xf) != 0)) * -0x10;
-  if (*piVar2 == 0) {
-    Com_sprintf(lVar5,0x100,0xffffffff8200c28c,piVar2[1]);
-    __restgprlr_28(lVar5);
-    return;
+  currentTempOperand = iVar4 + ((iVar4 >> 4) + (uint)(iVar4 < 0 && (uVar3 + 1 & 0xf) != 0)) * -0x10;
+  if (*piVar1 == 0) {
+    Com_sprintf((char *)lVar5,0x100,"%i");
+    pcVar2 = (char *)__restgprlr_28(lVar5);
+    return pcVar2;
   }
-  if (*piVar2 == 1) {
-    Com_sprintf(lVar5,0x100,0xffffffff820106dc,(double)(float)piVar2[1]);
-    __restgprlr_28(lVar5);
-    return;
+  if (*piVar1 == 1) {
+    Com_sprintf((char *)lVar5,0x100,"%f");
+    pcVar2 = (char *)__restgprlr_28(lVar5);
+    return pcVar2;
   }
-  if (DAT_84013128 == 0) {
-    uVar1 = va(0xffffffff82164b34);
-    MyAssertHandler(0xffffffff82164aa0,0x132,0,uVar1);
+  if (alwaysfails == 0) {
+    pcVar2 = va("Unknown data type %i in GetSourceString!");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x132,0
+                    ,pcVar2);
   }
-  __restgprlr_28(lVar5);
-  return;
+  pcVar2 = (char *)__restgprlr_28(lVar5);
+  return pcVar2;
 }
 
 
 // 8258CDF8  SetOperandString  (ui/ui_expressions.cpp:312)
 
-void SetOperandString(int param_1,int param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void SetOperandString(Operand *param_1,char *param_2)
 
 {
-  if (param_2 == 0) {
-    *(undefined1 **)(param_1 + 4) = &DAT_820068af;
+  if (param_2 == (char *)0x0) {
+    (param_1->internals).floatVal = (float)"";
     return;
   }
-  *(int *)(param_1 + 4) = param_2;
+  (param_1->internals).function = (Statement_s *)param_2;
   return;
 }
 
 
 // 8258CE18  ClearOperandString  (ui/ui_expressions.cpp:320)
 
-void ClearOperandString(int param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void ClearOperandString(Operand *param_1)
 
 {
-  *(undefined1 **)(param_1 + 4) = &DAT_820068af;
+  (param_1->internals).floatVal = (float)"";
   return;
 }
 
 
 // 8258CE28  CopyDynamicString  (ui/ui_expressions.cpp:325)
 
-void CopyDynamicString(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void CopyDynamicString(Operand *param_1,char *param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  int iVar2;
   int iVar3;
-  longlong lVar4;
+  uint uVar4;
   
-  iVar1 = __savegprlr_28();
-  uVar2 = (ulonglong)DAT_83f60a28;
-  if (0xf < uVar2) {
-    MyAssertHandler(0xffffffff82164aa0,0x148,0,0xffffffff82164b60,uVar2,0x10);
-    uVar2 = (ulonglong)DAT_83f60a28;
+  iVar2 = __savegprlr_28(param_1,param_2);
+  if (0xf < (uint)currentTempOperand) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x148,0
+                    ,"currentTempOperand doesn\'t index NUM_OPERAND_STRINGS\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)(uVar2 + 1);
-  lVar4 = (uVar2 & 0xffffff) * 0x100 + -0x7c09f1c0;
-  DAT_83f60a28 = iVar3 + ((iVar3 >> 4) + (uint)(iVar3 < 0 && (uVar2 + 1 & 0xf) != 0)) * -0x10;
-  Com_sprintf(lVar4,0x100,0xffffffff82000f98,param_2);
-  *(int *)(iVar1 + 4) = (int)lVar4;
-  __restgprlr_28();
+  uVar4 = currentTempOperand + 1;
+  iVar1 = currentTempOperand * 0x100;
+  currentTempOperand =
+       uVar4 + (((int)uVar4 >> 4) + (uint)((int)uVar4 < 0 && (uVar4 & 0xf) != 0)) * -0x10;
+  iVar3 = Com_sprintf(&DAT_83f60e40 + iVar1,0x100,"%s");
+  *(undefined **)(iVar2 + 4) = &DAT_83f60e40 + iVar1;
+  __restgprlr_28(iVar3);
   return;
 }
 
 
 // 8258CEC0  CopySubString  (ui/ui_expressions.cpp:337)
 
-void CopySubString(undefined8 param_1,longlong param_2,longlong param_3)
+char * CopySubString(char *param_1,int param_2,int param_3)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  longlong lVar4;
+  ulonglong uVar4;
+  int iVar5;
+  longlong lVar6;
   
-  lVar1 = __savegprlr_28();
-  uVar2 = (ulonglong)DAT_83f60a28;
-  if (0xf < uVar2) {
-    MyAssertHandler(0xffffffff82164aa0,0x154,0,0xffffffff82164b60,uVar2,0x10);
-    uVar2 = (ulonglong)DAT_83f60a28;
+  iVar1 = __savegprlr_28(param_1);
+  uVar4 = (ulonglong)(uint)currentTempOperand;
+  if (0xf < uVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x154,0
+                    ,"currentTempOperand doesn\'t index NUM_OPERAND_STRINGS\n\t%i not in [0, %i)");
+    uVar4 = (ulonglong)(uint)currentTempOperand;
   }
-  iVar3 = (int)(uVar2 + 1);
-  param_3 = param_3 + 1;
-  lVar4 = (uVar2 & 0xffffff) * 0x100 + -0x7c09f1c0;
-  DAT_83f60a28 = iVar3 + ((iVar3 >> 4) + (uint)(iVar3 < 0 && (uVar2 + 1 & 0xf) != 0)) * -0x10;
-  if (0x100 < (int)param_3) {
-    param_3 = 0x100;
+  iVar5 = (int)(uVar4 + 1);
+  iVar3 = param_3 + 1;
+  lVar6 = (uVar4 & 0xffffff) * 0x100 + -0x7c09f1c0;
+  currentTempOperand = iVar5 + ((iVar5 >> 4) + (uint)(iVar5 < 0 && (uVar4 + 1 & 0xf) != 0)) * -0x10;
+  if (0x100 < iVar3) {
+    iVar3 = 0x100;
   }
-  I_strncpyz(lVar4,lVar1 + param_2,param_3);
-  __restgprlr_28(lVar4);
-  return;
+  I_strncpyz((char *)lVar6,(char *)(iVar1 + param_2),iVar3);
+  pcVar2 = (char *)__restgprlr_28(lVar6);
+  return pcVar2;
 }
 
 
 // 8258CF60  GetSourceFloat  (ui/ui_expressions.cpp:354)
 
-double GetSourceFloat(int *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+float GetSourceFloat(Operand *param_1)
 
 {
-  int iVar1;
+  expDataType eVar1;
   double dVar2;
   
-  iVar1 = *param_1;
-  if (iVar1 == 1) {
-    return (double)(float)param_1[1];
+  eVar1 = param_1->dataType;
+  if (eVar1 == VAL_FLOAT) {
+    return (param_1->internals).floatVal;
   }
-  if (iVar1 == 0) {
-    return (double)(longlong)param_1[1];
+  if (eVar1 == VAL_INT) {
+    return (float)(longlong)(param_1->internals).intVal;
   }
-  if (iVar1 != 2) {
-    MyAssertHandler(0xffffffff82164aa0,0x16d,0,0xffffffff82000f98,0xffffffff82164ba8);
+  if (eVar1 != VAL_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x16d,0
+                    ,"%s");
   }
-  dVar2 = atof((char *)param_1[1]);
-  return (double)(float)dVar2;
+  dVar2 = atof((char *)(param_1->internals).function);
+  return (float)dVar2;
 }
 
 
 // 8258D018  GetSourceInt  (ui/ui_expressions.cpp:375)
 
-ulonglong GetSourceInt(int *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+int GetSourceInt(Operand *param_1)
 
 {
-  int iVar1;
+  expDataType eVar1;
+  int iVar2;
   
-  iVar1 = *param_1;
-  if (iVar1 == 1) {
-    return (ulonglong)(uint)(int)(float)param_1[1];
+  eVar1 = param_1->dataType;
+  if (eVar1 == VAL_FLOAT) {
+    return (int)(param_1->internals).floatVal;
   }
-  if (iVar1 == 0) {
-    return (ulonglong)(uint)param_1[1];
+  if (eVar1 == VAL_INT) {
+    return (param_1->internals).intVal;
   }
-  if (iVar1 != 2) {
-    MyAssertHandler(0xffffffff82164aa0,0x181,0,0xffffffff82164bc8,0xffffffff82164be4);
+  if (eVar1 != VAL_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x181,0
+                    ,"%s\n\t(source->dataType) = %i");
   }
-  iVar1 = atoi((char *)param_1[1]);
-  return (longlong)iVar1;
+  iVar2 = atoi((char *)(param_1->internals).function);
+  return iVar2;
 }
 
 
 // 8258D0C8  GetSourceUInt64  (ui/ui_expressions.cpp:394)
 
-longlong GetSourceUInt64(int *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+ulong64 GetSourceUInt64(Operand *param_1)
 
 {
-  int iVar1;
+  expDataType eVar1;
+  int iVar2;
   
-  iVar1 = *param_1;
-  if (iVar1 == 1) {
-    return (longlong)(float)param_1[1];
+  eVar1 = param_1->dataType;
+  if (eVar1 == VAL_FLOAT) {
+    return (longlong)(param_1->internals).floatVal;
   }
-  if (iVar1 == 0) {
-    return (longlong)param_1[1];
+  if (eVar1 == VAL_INT) {
+    return (longlong)(param_1->internals).intVal;
   }
-  if (iVar1 != 2) {
-    MyAssertHandler(0xffffffff82164aa0,0x194,0,0xffffffff82164bc8,0xffffffff82164be4);
+  if (eVar1 != VAL_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x194,0
+                    ,"%s\n\t(source->dataType) = %i");
   }
-  iVar1 = atoi((char *)param_1[1]);
-  return (longlong)iVar1;
+  iVar2 = atoi((char *)(param_1->internals).function);
+  return (longlong)iVar2;
 }
 
 
 // 8258D180  GetNameForValueType  (ui/ui_expressions.cpp:414)
 
-undefined8 GetNameForValueType(ulonglong param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+char * GetNameForValueType(expDataType param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
+  char *pcVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff82164c08);
-      MyAssertHandler(0xffffffff82164aa0,0x1ab,0,uVar2);
+  if (NUM_INTERNAL_DATATYPES < param_1) {
+    if (alwaysfails == 0) {
+      pcVar1 = va("Unknown value type %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1ab
+                      ,0,pcVar1);
     }
-    return 0xffffffff820068af;
+    return "";
   }
-  bVar1 = (int)param_1 != 0;
-  if (param_1 == 1 && bVar1) {
-    return 0xffffffff82164c60;
+  if (param_1 == VAL_FLOAT) {
+    return "Float";
   }
-  if (param_1 == 2 && bVar1) {
-    return 0xffffffff82164c58;
+  if (param_1 == VAL_STRING) {
+    return "String";
   }
-  if (!bVar1) {
-    return 0xffffffff82164c68;
+  if (param_1 == VAL_INT) {
+    return "Int";
   }
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1a8,0,0xffffffff82164c2c);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1a8,0
+                    ,"got a function in GetNameForValueType()!");
   }
-  return 0xffffffff82164c20;
+  return "Function";
 }
 
 
 // 8258D288  GetStaticDvar  (ui/ui_expressions.cpp:434)
 
-void GetStaticDvar(undefined8 param_1,int *param_2)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+dvar_t * GetStaticDvar(Statement_s *param_1,Operand *param_2)
 
 {
   int *piVar1;
   int iVar2;
+  dvar_t *pdVar3;
   
-  iVar2 = __savegprlr_29();
-  if (*param_2 != 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1b9,0,0xffffffff82000f98,0xffffffff82164d20);
+  iVar2 = __savegprlr_29(param_1);
+  if (param_2->dataType != VAL_INT) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1b9,0
+                    ,"%s");
   }
-  if ((param_2[1] < 0) || (*(int *)(*(int *)(iVar2 + 8) + 8) <= param_2[1])) {
-    MyAssertHandler(0xffffffff82164aa0,0x1ba,0,0xffffffff82164c6c,0xffffffff82164c98);
+  if (((param_2->internals).intVal < 0) ||
+     (*(int *)(*(int *)(iVar2 + 8) + 8) <= (param_2->internals).intVal)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1ba,0
+                    ,"%s\n\t(staticDvarRef->internals.intVal) = %i");
   }
-  piVar1 = *(int **)(*(int *)(*(int *)(iVar2 + 8) + 0xc) + param_2[1] * 4);
+  piVar1 = *(int **)(*(int *)(*(int *)(iVar2 + 8) + 0xc) + (param_2->internals).intVal * 4);
   if (*piVar1 == 0) {
-    iVar2 = Dvar_FindVar(piVar1[1]);
-    *piVar1 = iVar2;
-    __restgprlr_29(iVar2);
-    return;
+    pdVar3 = Dvar_FindVar((char *)piVar1[1]);
+    *piVar1 = (int)pdVar3;
+    pdVar3 = (dvar_t *)__restgprlr_29(pdVar3);
+    return pdVar3;
   }
   dataCacheBlockTouch(ZEXT48(piVar1));
-  __restgprlr_29(*piVar1);
-  return;
+  pdVar3 = (dvar_t *)__restgprlr_29(*piVar1);
+  return pdVar3;
 }
 
 
 // 8258D358  GetStaticDvarIntVal  (ui/ui_expressions.cpp:467)
 
-void GetStaticDvarIntVal(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetStaticDvarIntVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  uint *puVar2;
-  char *_Str;
-  int iVar3;
-  ulonglong uVar4;
-  double dVar5;
+  uchar uVar1;
+  dvar_t *pdVar2;
+  char *pcVar3;
+  int iVar4;
+  operandInternalDataUnion oVar5;
+  double dVar6;
+  DvarValue in_stack_ffffff98;
   
-  puVar2 = (uint *)GetStaticDvar();
-  *param_3 = 0;
-  if (puVar2 == (uint *)0x0) {
-    param_3[1] = 0;
+  pdVar2 = GetStaticDvar(param_1,param_2);
+  param_3->dataType = VAL_INT;
+  if (pdVar2 == (dvar_t *)0x0) {
+    (param_3->internals).intVal = 0;
   }
   else {
-    cVar1 = *(char *)((int)puVar2 + 10);
-    if (cVar1 == '\0') {
-      param_3[1] = (uint)*(byte *)(puVar2 + 3);
+    uVar1 = pdVar2->type;
+    if (uVar1 == '\0') {
+      oVar5.intVal._0_3_ = 0;
+      oVar5.intVal._3_1_ = (pdVar2->current).color[0];
+      param_3->internals = oVar5;
     }
-    else if (cVar1 == '\x05') {
-      param_3[1] = puVar2[3];
+    else if (uVar1 == '\x05') {
+      param_3->internals = (operandInternalDataUnion)(pdVar2->current).integer;
     }
-    else if (cVar1 == '\x01') {
-      dVar5 = floor((double)((float)puVar2[3] + 0.5));
-      param_3[1] = (int)dVar5;
+    else if (uVar1 == '\x01') {
+      dVar6 = floor((double)((pdVar2->current).value + 0.5));
+      (param_3->internals).intVal = (int)dVar6;
     }
     else {
-      _Str = (char *)Dvar_ValueToString(puVar2,*(undefined8 *)(puVar2 + 3),
-                                        *(undefined8 *)(puVar2 + 5));
-      iVar3 = atoi(_Str);
-      param_3[1] = iVar3;
+      pcVar3 = Dvar_ValueToString(pdVar2,in_stack_ffffff98);
+      iVar4 = atoi(pcVar3);
+      (param_3->internals).intVal = iVar4;
     }
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    if (puVar2 == (uint *)0x0) {
-      uVar4 = 0xffffffff820068af;
-    }
-    else {
-      uVar4 = (ulonglong)*puVar2;
-    }
-    Com_Printf(0xd,0xffffffff82164d44,uVar4,param_3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"dvarint( %s ) = %i\n");
   }
   return;
 }
@@ -428,51 +506,47 @@ void GetStaticDvarIntVal(undefined8 param_1,undefined8 param_2,undefined4 *param
 
 // 8258D460  GetStaticDvarFloatVal  (ui/ui_expressions.cpp:498)
 
-void GetStaticDvarFloatVal(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetStaticDvarFloatVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
 {
-  char cVar1;
+  uchar uVar1;
   float fVar2;
-  uint *puVar3;
-  char *_String;
-  ulonglong uVar4;
+  dvar_t *pdVar3;
+  char *pcVar4;
   double dVar5;
+  DvarValue in_stack_ffffff98;
   
-  puVar3 = (uint *)GetStaticDvar();
-  *param_3 = 1;
-  if (puVar3 == (uint *)0x0) {
+  pdVar3 = GetStaticDvar(param_1,param_2);
+  param_3->dataType = VAL_FLOAT;
+  if (pdVar3 == (dvar_t *)0x0) {
     fVar2 = 0.0;
   }
   else {
-    cVar1 = *(char *)((int)puVar3 + 10);
-    if (cVar1 == '\0') {
-      param_3[1] = (float)*(byte *)(puVar3 + 3);
+    uVar1 = pdVar3->type;
+    if (uVar1 == '\0') {
+      (param_3->internals).floatVal = (float)(pdVar3->current).color[0];
       goto LAB_8258d518;
     }
-    if (cVar1 == '\x05') {
-      param_3[1] = (float)(longlong)(int)puVar3[3];
+    if (uVar1 == '\x05') {
+      (param_3->internals).floatVal = (float)(longlong)(pdVar3->current).integer;
       goto LAB_8258d518;
     }
-    if (cVar1 == '\x01') {
-      fVar2 = (float)puVar3[3];
+    if (uVar1 == '\x01') {
+      fVar2 = (float)(pdVar3->current).integer;
     }
     else {
-      _String = (char *)Dvar_ValueToString(puVar3,*(undefined8 *)(puVar3 + 3),
-                                           *(undefined8 *)(puVar3 + 5));
-      dVar5 = atof(_String);
+      pcVar4 = Dvar_ValueToString(pdVar3,in_stack_ffffff98);
+      dVar5 = atof(pcVar4);
       fVar2 = (float)dVar5;
     }
   }
-  param_3[1] = fVar2;
+  (param_3->internals).intVal = (int)fVar2;
 LAB_8258d518:
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    if (puVar3 == (uint *)0x0) {
-      uVar4 = 0xffffffff820068af;
-    }
-    else {
-      uVar4 = (ulonglong)*puVar3;
-    }
-    Com_Printf(0xd,0xffffffff82164d58,uVar4,(double)(float)param_3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"dvarfloat( %s ) = %f\n");
   }
   return;
 }
@@ -480,48 +554,50 @@ LAB_8258d518:
 
 // 8258D578  GetStaticDvarBoolVal  (ui/ui_expressions.cpp:529)
 
-void GetStaticDvarBoolVal(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void GetStaticDvarBoolVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  uint *puVar2;
-  char *_Str;
-  int iVar3;
-  ulonglong uVar4;
+  uchar uVar1;
+  dvar_t *pdVar2;
+  char *pcVar3;
+  int iVar4;
   uint uVar5;
+  operandInternalDataUnion oVar6;
+  operandInternalDataUnion oVar7;
+  DvarValue in_stack_ffffff98;
   
-  puVar2 = (uint *)GetStaticDvar();
+  pdVar2 = GetStaticDvar(param_1,param_2);
   uVar5 = 0;
-  *param_3 = 0;
-  if (puVar2 != (uint *)0x0) {
-    cVar1 = *(char *)((int)puVar2 + 10);
-    if (cVar1 == '\0') {
-      param_3[1] = (uint)*(byte *)(puVar2 + 3);
+  param_3->dataType = VAL_INT;
+  if (pdVar2 != (dvar_t *)0x0) {
+    uVar1 = pdVar2->type;
+    if (uVar1 == '\0') {
+      oVar6.intVal._0_3_ = 0;
+      oVar6.intVal._3_1_ = (pdVar2->current).color[0];
+      param_3->internals = oVar6;
       goto LAB_8258d624;
     }
-    if (cVar1 == '\x05') {
-      param_3[1] = puVar2[3];
+    if (uVar1 == '\x05') {
+      param_3->internals = (operandInternalDataUnion)(pdVar2->current).integer;
       goto LAB_8258d624;
     }
-    if (cVar1 == '\x01') {
-      param_3[1] = (uint)(ABS((float)puVar2[3]) < 0.01);
+    if (uVar1 == '\x01') {
+      oVar7.intVal._0_3_ = 0;
+      oVar7.intVal._3_1_ = ABS((pdVar2->current).value) < 0.01;
+      param_3->internals = oVar7;
       goto LAB_8258d624;
     }
-    _Str = (char *)Dvar_ValueToString(puVar2,*(undefined8 *)(puVar2 + 3),*(undefined8 *)(puVar2 + 5)
-                                     );
-    iVar3 = atoi(_Str);
-    uVar5 = (uint)(iVar3 != 0);
+    pcVar3 = Dvar_ValueToString(pdVar2,in_stack_ffffff98);
+    iVar4 = atoi(pcVar3);
+    uVar5 = (uint)(iVar4 != 0);
   }
-  param_3[1] = uVar5;
+  (param_3->internals).intVal = uVar5;
 LAB_8258d624:
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    if (puVar2 == (uint *)0x0) {
-      uVar4 = 0xffffffff820068af;
-    }
-    else {
-      uVar4 = (ulonglong)*puVar2;
-    }
-    Com_Printf(0xd,0xffffffff82164d70,uVar4,param_3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"dvarbool( %s ) = %i\n");
   }
   return;
 }
@@ -529,37 +605,35 @@ LAB_8258d624:
 
 // 8258D680  GetStaticDvarStringVal  (ui/ui_expressions.cpp:560)
 
-void GetStaticDvarStringVal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetStaticDvarStringVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
 {
-  uint *puVar2;
-  ulonglong uVar1;
-  undefined4 *puVar3;
-  ulonglong uVar4;
+  Statement_s *pSVar1;
+  dvar_t *pdVar2;
+  char *pcVar3;
+  DvarValue in_stack_ffffff98;
   
-  __savegprlr_29();
-  puVar2 = (uint *)GetStaticDvar();
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 2;
-  uVar4 = 0xffffffff820068af;
-  if (puVar2 == (uint *)0x0) {
-    puVar3[1] = &DAT_820068af;
+  pSVar1 = (Statement_s *)__savegprlr_29(param_1);
+  pdVar2 = GetStaticDvar(pSVar1,param_2);
+  param_3->dataType = VAL_STRING;
+  if (pdVar2 == (dvar_t *)0x0) {
+    (param_3->internals).floatVal = (float)"";
   }
-  else if (*(char *)((int)puVar2 + 10) == '\a') {
-    CopyDynamicString(param_3,puVar2[3]);
+  else if (pdVar2->type == '\a') {
+    CopyDynamicString(param_3,(pdVar2->current).string);
   }
   else {
-    uVar1 = Dvar_ValueToString(puVar2,*(undefined8 *)(puVar2 + 3),*(undefined8 *)(puVar2 + 5));
-    if ((uVar1 & 0xffffffff) == 0) {
-      uVar1 = uVar4;
+    pcVar3 = Dvar_ValueToString(pdVar2,in_stack_ffffff98);
+    if ((Statement_s *)pcVar3 == (Statement_s *)0x0) {
+      pcVar3 = "";
     }
-    puVar3[1] = (int)uVar1;
+    (param_3->internals).function = (Statement_s *)pcVar3;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    if (puVar2 != (uint *)0x0) {
-      uVar4 = (ulonglong)*puVar2;
-    }
-    Com_Printf(0xd,0xffffffff82164d88,uVar4,puVar3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"dvarstring( %s ) = %s\n");
   }
   __restgprlr_29();
   return;
@@ -568,38 +642,40 @@ void GetStaticDvarStringVal(undefined8 param_1,undefined8 param_2,undefined8 par
 
 // 8258D738  GetDvarStringValue  (ui/ui_expressions.cpp:584)
 
-void GetDvarStringValue(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDvarStringValue(Operand *param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined1 *puVar3;
+  dvar_t *pdVar1;
+  char *pcVar2;
   
-  if (*param_1 == 2) {
-    *param_2 = 2;
-    iVar2 = Dvar_FindVar(param_1[1]);
-    if (iVar2 == 0) {
-      param_2[1] = &DAT_820068af;
+  if (param_1->dataType == VAL_STRING) {
+    param_2->dataType = VAL_STRING;
+    pdVar1 = Dvar_FindVar((char *)(param_1->internals).function);
+    if (pdVar1 == (dvar_t *)0x0) {
+      (param_2->internals).floatVal = (float)"";
     }
-    else if (*(char *)(iVar2 + 10) == '\a') {
-      CopyDynamicString(param_2,*(undefined4 *)(iVar2 + 0xc));
+    else if (pdVar1->type == '\a') {
+      CopyDynamicString(param_2,(pdVar1->current).string);
     }
     else {
-      puVar3 = (undefined1 *)Dvar_GetVariantString(param_1[1]);
-      if (puVar3 == (undefined1 *)0x0) {
-        puVar3 = &DAT_820068af;
+      pcVar2 = Dvar_GetVariantString((char *)(param_1->internals).function);
+      if ((Statement_s *)pcVar2 == (Statement_s *)0x0) {
+        pcVar2 = "";
       }
-      param_2[1] = puVar3;
+      (param_2->internals).function = (Statement_s *)pcVar2;
     }
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164d88,param_1[1],param_2[1]);
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"dvarstring( %s ) = %s\n");
     }
   }
   else {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82164da0,uVar1);
-    *param_2 = 2;
-    param_2[1] = &DAT_820068af;
+    GetNameForValueType(param_1->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a dvar, not a %s\n");
+    param_2->dataType = VAL_STRING;
+    (param_2->internals).floatVal = (float)"";
   }
   return;
 }
@@ -607,27 +683,29 @@ void GetDvarStringValue(int *param_1,undefined4 *param_2)
 
 // 8258D838  GetDvarBoolValue  (ui/ui_expressions.cpp:616)
 
-void GetDvarBoolValue(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDvarBoolValue(Operand *param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char *_Str;
+  char *pcVar1;
   int iVar2;
   
-  if (*param_1 == 2) {
-    *param_2 = 0;
-    _Str = (char *)Dvar_GetVariantString(param_1[1]);
-    iVar2 = atoi(_Str);
-    param_2[1] = iVar2;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164d70,param_1[1],iVar2);
+  if (param_1->dataType == VAL_STRING) {
+    param_2->dataType = VAL_INT;
+    pcVar1 = Dvar_GetVariantString((char *)(param_1->internals).function);
+    iVar2 = atoi(pcVar1);
+    (param_2->internals).intVal = iVar2;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"dvarbool( %s ) = %i\n");
     }
   }
   else {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82164da0,uVar1);
-    *param_2 = 0;
-    param_2[1] = 0;
+    GetNameForValueType(param_1->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a dvar, not a %s\n");
+    param_2->dataType = VAL_INT;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -635,27 +713,29 @@ void GetDvarBoolValue(int *param_1,undefined4 *param_2)
 
 // 8258D8E8  GetDvarIntValue  (ui/ui_expressions.cpp:640)
 
-void GetDvarIntValue(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDvarIntValue(Operand *param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char *_Str;
+  char *pcVar1;
   int iVar2;
   
-  if (*param_1 == 2) {
-    *param_2 = 0;
-    _Str = (char *)Dvar_GetVariantString(param_1[1]);
-    iVar2 = atoi(_Str);
-    param_2[1] = iVar2;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164d44,param_1[1],iVar2);
+  if (param_1->dataType == VAL_STRING) {
+    param_2->dataType = VAL_INT;
+    pcVar1 = Dvar_GetVariantString((char *)(param_1->internals).function);
+    iVar2 = atoi(pcVar1);
+    (param_2->internals).intVal = iVar2;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"dvarint( %s ) = %i\n");
     }
   }
   else {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82164da0,uVar1);
-    *param_2 = 0;
-    param_2[1] = 0;
+    GetNameForValueType(param_1->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a dvar, not a %s\n");
+    param_2->dataType = VAL_INT;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -663,27 +743,29 @@ void GetDvarIntValue(int *param_1,undefined4 *param_2)
 
 // 8258D998  GetDvarFloatValue  (ui/ui_expressions.cpp:664)
 
-void GetDvarFloatValue(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDvarFloatValue(Operand *param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char *_String;
+  char *pcVar1;
   double dVar2;
   
-  if (*param_1 == 2) {
-    *param_2 = 1;
-    _String = (char *)Dvar_GetVariantString(param_1[1]);
-    dVar2 = atof(_String);
-    param_2[1] = (float)dVar2;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164d58,param_1[1],(double)(float)dVar2);
+  if (param_1->dataType == VAL_STRING) {
+    param_2->dataType = VAL_FLOAT;
+    pcVar1 = Dvar_GetVariantString((char *)(param_1->internals).function);
+    dVar2 = atof(pcVar1);
+    (param_2->internals).floatVal = (float)dVar2;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"dvarfloat( %s ) = %f\n");
     }
   }
   else {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82164da0,uVar1);
-    *param_2 = 1;
-    param_2[1] = 0;
+    GetNameForValueType(param_1->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a dvar, not a %s\n");
+    param_2->dataType = VAL_FLOAT;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -691,34 +773,42 @@ void GetDvarFloatValue(int *param_1,undefined4 *param_2)
 
 // 8258DA58  GetCharByIndex  (ui/ui_expressions.cpp:688)
 
-void GetCharByIndex(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetCharByIndex(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   char cVar1;
   char *pcVar2;
   int *piVar3;
-  char *pcVar4;
+  longlong lVar4;
+  undefined4 *puVar5;
+  char *pcVar6;
   
-  piVar3 = (int *)__savegprlr_29();
-  *param_2 = 2;
+  lVar4 = (longlong)(int)param_2;
+  piVar3 = (int *)__savegprlr_29(param_1,lVar4,param_3);
+  puVar5 = (undefined4 *)lVar4;
+  *puVar5 = 2;
   if (((piVar3[0x14] != 2) || (*piVar3 != 2)) || (piVar3[2] != 0)) {
-    Com_PrintError(0xd,0xffffffff82164ddc);
-    param_2[1] = &DAT_820068af;
+    Com_PrintError(0xd,"Error: GetCharByIndex( string, index )\n");
+    puVar5[1] = "";
   }
   pcVar2 = (char *)piVar3[1];
-  pcVar4 = pcVar2;
+  pcVar6 = pcVar2;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  if ((char *)piVar3[3] < pcVar4 + (-1 - (int)pcVar2)) {
-    DAT_83f62e4c = pcVar2[piVar3[3]];
-    DAT_83f62e4d = 0;
-    param_2[1] = &DAT_83f62e4c;
+  if ((char *)piVar3[3] < pcVar6 + (-1 - (int)pcVar2)) {
+    resultCharString[0] = pcVar2[piVar3[3]];
+    resultCharString[1] = '\0';
+    puVar5[1] = resultCharString;
     __restgprlr_29();
     return;
   }
-  param_2[1] = &DAT_820068af;
+  puVar5[1] = "";
   __restgprlr_29();
   return;
 }
@@ -726,50 +816,60 @@ void GetCharByIndex(undefined8 param_1,undefined4 *param_2)
 
 // 8258DB18  GetLocalVar  (ui/ui_expressions.cpp:718)
 
-undefined8 GetLocalVar(undefined8 param_1,int *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+UILocalVar * GetLocalVar(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  Statement_s *pSVar1;
+  UILocalVarContext *pUVar2;
+  UILocalVar *pUVar3;
   
-  if (*param_2 != 2) {
-    uVar2 = GetNameForValueType(*param_2);
-    Com_PrintError(0xd,0xffffffff82164e04,uVar2);
-    return 0;
+  if (param_2->dataType != VAL_STRING) {
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a localVar, not a %s\n");
+    return (UILocalVar *)0x0;
   }
-  iVar1 = param_2[1];
-  uVar2 = UI_GetLocalVarsContext();
-  uVar2 = UILocalVar_Find(uVar2,iVar1);
-  return uVar2;
+  pSVar1 = (param_2->internals).function;
+  pUVar2 = UI_GetLocalVarsContext(param_1);
+  pUVar3 = UILocalVar_Find(pUVar2,(char *)pSVar1);
+  return pUVar3;
 }
 
 
 // 8258DB90  GetLocalVarStringValue  (ui/ui_expressions.cpp:729)
 
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void GetLocalVarStringValue
-               (undefined8 param_1,int param_2,undefined4 *param_3,undefined8 param_4,
-               undefined8 param_5)
+               (LocalClientNum_t param_1,Operand *param_2,Operand *param_3,char *param_4,int param_5
+               )
 
 {
-  ulonglong uVar1;
-  undefined1 *puVar2;
+  LocalClientNum_t LVar1;
+  UILocalVar *pUVar2;
+  char *pcVar3;
   
-  __savegprlr_28();
-  uVar1 = GetLocalVar();
-  if ((uVar1 & 0xffffffff) == 0) {
-    *param_3 = 2;
-    param_3[1] = &DAT_820068af;
+  LVar1 = __savegprlr_28(param_1);
+  pUVar2 = GetLocalVar(LVar1,param_2);
+  if (pUVar2 == (UILocalVar *)0x0) {
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"";
     __restgprlr_28();
     return;
   }
-  *param_3 = 2;
-  puVar2 = (undefined1 *)UILocalVar_GetString(uVar1,param_4,param_5);
-  if (puVar2 == (undefined1 *)0x0) {
-    puVar2 = &DAT_820068af;
+  param_3->dataType = VAL_STRING;
+  pcVar3 = UILocalVar_GetString(pUVar2,param_4,param_5);
+  if ((Statement_s *)pcVar3 == (Statement_s *)0x0) {
+    pcVar3 = "";
   }
-  param_3[1] = puVar2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82164e44,*(undefined4 *)(param_2 + 4));
+  (param_3->internals).function = (Statement_s *)pcVar3;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"localVarString( %s ) = %s\n");
   }
   __restgprlr_28();
   return;
@@ -778,22 +878,29 @@ void GetLocalVarStringValue
 
 // 8258DC30  GetLocalVarBoolValue  (ui/ui_expressions.cpp:750)
 
-void GetLocalVarBoolValue(undefined8 param_1,int param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetLocalVarBoolValue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  UILocalVar *pUVar2;
+  bool bVar3;
   
-  iVar1 = GetLocalVar();
-  *param_3 = 0;
-  if (iVar1 == 0) {
-    param_3[1] = 0;
+  pUVar2 = GetLocalVar(param_1,param_2);
+  param_3->dataType = VAL_INT;
+  if (pUVar2 == (UILocalVar *)0x0) {
+    (param_3->internals).intVal = 0;
   }
   else {
-    uVar2 = UILocalVar_GetBool();
-    param_3[1] = uVar2 & 0xff;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164e60,*(undefined4 *)(param_2 + 4));
+    bVar3 = UILocalVar_GetBool(pUVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_3->internals = oVar1;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"localVarBool( %s ) = %i\n");
     }
   }
   return;
@@ -802,22 +909,26 @@ void GetLocalVarBoolValue(undefined8 param_1,int param_2,undefined4 *param_3)
 
 // 8258DCB8  GetLocalVarIntValue  (ui/ui_expressions.cpp:770)
 
-void GetLocalVarIntValue(undefined8 param_1,int param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetLocalVarIntValue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
+  UILocalVar *pUVar1;
   int iVar2;
-  undefined8 uVar1;
   
-  iVar2 = GetLocalVar();
-  *param_3 = 0;
-  if (iVar2 == 0) {
-    param_3[1] = 0;
+  pUVar1 = GetLocalVar(param_1,param_2);
+  param_3->dataType = VAL_INT;
+  if (pUVar1 == (UILocalVar *)0x0) {
+    (param_3->internals).intVal = 0;
   }
   else {
-    uVar1 = UILocalVar_GetInt();
-    param_3[1] = (int)uVar1;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164e7c,*(undefined4 *)(param_2 + 4),uVar1);
+    iVar2 = UILocalVar_GetInt(pUVar1);
+    (param_3->internals).intVal = iVar2;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"localVarInt( %s ) = %i\n");
     }
   }
   return;
@@ -826,23 +937,27 @@ void GetLocalVarIntValue(undefined8 param_1,int param_2,undefined4 *param_3)
 
 // 8258DD40  GetLocalVarFloatValue  (ui/ui_expressions.cpp:790)
 
-void GetLocalVarFloatValue(undefined8 param_1,int param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetLocalVarFloatValue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  double dVar2;
+  UILocalVar *pUVar1;
+  float fVar2;
   
-  iVar1 = GetLocalVar();
-  if (iVar1 == 0) {
-    *param_3 = 1;
-    param_3[1] = 0;
+  pUVar1 = GetLocalVar(param_1,param_2);
+  if (pUVar1 == (UILocalVar *)0x0) {
+    param_3->dataType = VAL_FLOAT;
+    (param_3->internals).intVal = 0;
   }
   else {
-    *param_3 = 1;
-    dVar2 = (double)UILocalVar_GetFloat();
-    param_3[1] = (float)dVar2;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164e94,*(undefined4 *)(param_2 + 4),dVar2);
+    param_3->dataType = VAL_FLOAT;
+    fVar2 = UILocalVar_GetFloat(pUVar1);
+    (param_3->internals).floatVal = fVar2;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"localVarFloat( %s ) = %f\n");
     }
   }
   return;
@@ -851,18 +966,21 @@ void GetLocalVarFloatValue(undefined8 param_1,int param_2,undefined4 *param_3)
 
 // 8258DDD8  GetSinValue  (ui/ui_expressions.cpp:810)
 
-void GetSinValue(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSinValue(Operand *param_1,Operand *param_2)
 
 {
-  double _X;
   double dVar1;
+  float fVar2;
   
-  _X = (double)GetSourceFloat();
-  *param_2 = 1;
-  dVar1 = sin(_X);
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(_X,0xd,0xffffffff82164eb0,_X,(double)(float)dVar1);
+  fVar2 = GetSourceFloat(param_1);
+  param_2->dataType = VAL_FLOAT;
+  dVar1 = sin((double)fVar2);
+  (param_2->internals).floatVal = (float)dVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"sin( %f ) = %f\n");
   }
   return;
 }
@@ -870,18 +988,21 @@ void GetSinValue(undefined8 param_1,undefined4 *param_2)
 
 // 8258DE60  GetCosValue  (ui/ui_expressions.cpp:825)
 
-void GetCosValue(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetCosValue(Operand *param_1,Operand *param_2)
 
 {
-  double _X;
   double dVar1;
+  float fVar2;
   
-  _X = (double)GetSourceFloat();
-  *param_2 = 1;
-  dVar1 = cos(_X);
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(_X,0xd,0xffffffff82164ec0,_X,(double)(float)dVar1);
+  fVar2 = GetSourceFloat(param_1);
+  param_2->dataType = VAL_FLOAT;
+  dVar1 = cos((double)fVar2);
+  (param_2->internals).floatVal = (float)dVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"cos( %f ) = %f\n");
   }
   return;
 }
@@ -889,102 +1010,123 @@ void GetCosValue(undefined8 param_1,undefined4 *param_2)
 
 // 8258DEE8  GetMilliseconds  (ui/ui_expressions.cpp:840)
 
-void GetMilliseconds(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMilliseconds(Operand *param_1)
 
 {
-  *param_1 = 0;
-  param_1[1] = DAT_83f60a44;
+  param_1->dataType = VAL_INT;
+  (param_1->internals).intVal = g_uiExpressionState.milliseconds;
   return;
 }
 
 
 // 8258DF08  GetLocalClientUIMilliseconds  (ui/ui_expressions.cpp:847)
 
-void GetLocalClientUIMilliseconds(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetLocalClientUIMilliseconds(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = UI_GetLocalClientUIContextMilliseconds();
-  param_2[1] = uVar1;
+  param_2->dataType = VAL_INT;
+  iVar1 = UI_GetLocalClientUIContextMilliseconds(param_1);
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 8258DF40  GetPlayerPerk  (ui/ui_expressions.cpp:854)
 
-void GetPlayerPerk(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetPlayerPerk(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
   uint uVar3;
-  char cVar5;
-  uint uVar4;
-  undefined1 *local_50 [20];
+  cg_s *pcVar4;
+  bool bVar7;
+  char *pcVar5;
+  uint uVar6;
+  Statement_s *local_50 [20];
   
-  uVar1 = __savegprlr_24();
-  iVar2 = CL_IsCgameInitialized();
+  LVar1 = __savegprlr_24(param_1);
+  iVar2 = CL_IsCgameInitialized(LVar1);
   if (iVar2 == 0) {
-    Com_PrintError(0xd,0xffffffff82165028);
-    *param_3 = 2;
-    param_3[1] = "specialty_null";
+    Com_PrintError(0xd,
+                   "Error: You can\'t look at the player\'s perks until they\'re playing a match\n")
+    ;
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"specialty_null";
     __restgprlr_24();
     return;
   }
-  if (*param_2 != 2) {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82164fe0,uVar1);
-    *param_3 = 2;
-    param_3[1] = "specialty_null";
+  if (param_2->dataType != VAL_STRING) {
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of the perk slot, not a %s\n");
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"specialty_null";
     __restgprlr_24();
     return;
   }
-  uVar3 = Perk_GetSlotIndex(param_2[1]);
+  uVar3 = Perk_GetSlotIndex((char *)(param_2->internals).function);
   if (uVar3 == 9) {
-    Com_PrintError(0xd,0xffffffff82164f90,param_2[1]);
-    *param_3 = 2;
-    param_3[1] = "specialty_null";
+    Com_PrintError(0xd,
+                   "Error: Perk slot name \'%s\' not found.  It should be formatted like \'perk1\'.\n"
+                  );
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"specialty_null";
     __restgprlr_24();
     return;
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
+  pcVar4 = CG_GetLocalClientGlobals(LVar1);
   if (8 < uVar3) {
-    MyAssertHandler(0xffffffff82164aa0,0x377,0,0xffffffff82164f50,uVar3,9);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x377,0
+                    ,"perkSlotIndex doesn\'t index MAX_PERK_SLOTS\n\t%i not in [0, %i)");
   }
-  iVar2 = *(int *)((uVar3 + 0x13d) * 4 + iVar2);
-  if (iVar2 == 0) {
-    param_3[1] = "specialty_null";
-    *param_3 = 2;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164f3c,param_2[1]);
+  uVar6 = (pcVar4->predictedPlayerState).perkSlots[uVar3];
+  if (uVar6 == 0) {
+    (param_3->internals).floatVal = (float)"specialty_null";
+    param_3->dataType = VAL_STRING;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"getperk( %s ) = %s\n");
       __restgprlr_24();
       return;
     }
   }
   else {
-    cVar5 = Perk_GetName(iVar2,local_50);
-    if (cVar5 == '\0') {
-      Com_PrintError(0xd,0xffffffff82164f18,iVar2);
-      *param_3 = 2;
-      param_3[1] = "specialty_null";
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82164f3c,param_2[1]);
+    bVar7 = Perk_GetName(uVar6,(char **)local_50);
+    if (!bVar7) {
+      Com_PrintError(0xd,"Error: Perk index %d not found.\n");
+      param_3->dataType = VAL_STRING;
+      (param_3->internals).floatVal = (float)"specialty_null";
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"getperk( %s ) = %s\n");
       }
     }
-    Perk_GetSlotIndexName(local_50[0]);
-    uVar4 = Perk_GetSlotIndex();
-    if (uVar3 != uVar4) {
-      MyAssertHandler(0xffffffff82164aa0,0x38c,0,0xffffffff82000f98,0xffffffff82164ed0);
+    pcVar5 = Perk_GetSlotIndexName((char *)local_50[0]);
+    uVar6 = Perk_GetSlotIndex(pcVar5);
+    if (uVar3 != uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x38c
+                      ,0,"%s");
     }
-    *param_3 = 2;
-    if (local_50[0] == (undefined1 *)0x0) {
-      local_50[0] = &DAT_820068af;
+    param_3->dataType = VAL_STRING;
+    if (local_50[0] == (Statement_s *)0x0) {
+      local_50[0] = (Statement_s *)0x820068af;
     }
-    param_3[1] = local_50[0];
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82164f3c,param_2[1]);
+    (param_3->internals).function = local_50[0];
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"getperk( %s ) = %s\n");
     }
   }
   __restgprlr_24();
@@ -994,220 +1136,232 @@ void GetPlayerPerk(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 8258E190  GetPlayerField  (ui/ui_expressions.cpp:928)
 
-void GetPlayerField(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GetPlayerField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined1 *puVar3;
-  uint uVar4;
+  operandInternalDataUnion oVar1;
+  operandInternalDataUnion oVar2;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  char *pcVar5;
+  bool bVar7;
+  score_t *psVar6;
   
-  uVar1 = __savegprlr_29();
-  if (*param_2 != 2) {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82165128,uVar1);
-    *param_3 = 2;
-    param_3[1] = &DAT_820068af;
+  LVar3 = __savegprlr_29(param_1);
+  if (param_2->dataType != VAL_STRING) {
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a player field, not a %s\n");
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"";
     __restgprlr_29();
     return;
   }
-  iVar2 = I_stricmp(param_2[1],0xffffffff82165118);
-  if (iVar2 == 0) {
-    *param_3 = 2;
-    puVar3 = (undefined1 *)CG_GetPlayerTeamName(uVar1);
-    if (puVar3 == (undefined1 *)0x0) {
-      puVar3 = &DAT_820068af;
+  iVar4 = I_stricmp((char *)(param_2->internals).function,"teamname");
+  if (iVar4 == 0) {
+    param_3->dataType = VAL_STRING;
+    pcVar5 = CG_GetPlayerTeamName(LVar3);
+    if ((Statement_s *)pcVar5 == (Statement_s *)0x0) {
+      pcVar5 = "";
     }
-    param_3[1] = puVar3;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82165104,param_2[1]);
+    (param_3->internals).function = (Statement_s *)pcVar5;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"player( %s ) = %s\n");
       __restgprlr_29();
       return;
     }
   }
   else {
-    iVar2 = I_stricmp(param_2[1],0xffffffff821650f4);
-    if (iVar2 == 0) {
-      *param_3 = 2;
-      puVar3 = (undefined1 *)CG_GetPlayerOpposingTeamName(uVar1);
-      if (puVar3 == (undefined1 *)0x0) {
-        puVar3 = &DAT_820068af;
+    iVar4 = I_stricmp((char *)(param_2->internals).function,"otherteamname");
+    if (iVar4 == 0) {
+      param_3->dataType = VAL_STRING;
+      pcVar5 = CG_GetPlayerOpposingTeamName(LVar3);
+      if ((Statement_s *)pcVar5 == (Statement_s *)0x0) {
+        pcVar5 = "";
       }
-      param_3[1] = puVar3;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82165104,param_2[1]);
+      (param_3->internals).function = (Statement_s *)pcVar5;
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"player( %s ) = %s\n");
         __restgprlr_29();
         return;
       }
     }
     else {
-      iVar2 = I_stricmp(param_2[1],0xffffffff8202c804);
-      if (iVar2 == 0) {
-        *param_3 = 0;
-        uVar4 = CG_IsPlayerDead(uVar1);
-        param_3[1] = uVar4 & 0xff;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          Com_Printf(0xd,0xffffffff821650e0,param_2[1]);
+      iVar4 = I_stricmp((char *)(param_2->internals).function,"dead");
+      if (iVar4 == 0) {
+        param_3->dataType = VAL_INT;
+        bVar7 = CG_IsPlayerDead(LVar3);
+        oVar1.intVal._0_3_ = 0;
+        oVar1.intVal._3_1_ = bVar7;
+        param_3->internals = oVar1;
+        if ((uiscript_debug->current).integer != 0) {
+          Com_Printf(0xd,"player( %s ) = %i\n");
           __restgprlr_29();
           return;
         }
       }
       else {
-        iVar2 = I_stricmp(param_2[1],0xffffffff821650d4);
-        if (iVar2 == 0) {
-          *param_3 = 0;
-          uVar1 = CG_GetPlayerClipAmmoCount(uVar1,0);
-          param_3[1] = (int)uVar1;
-          if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-            Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+        iVar4 = I_stricmp((char *)(param_2->internals).function,"clipAmmo");
+        if (iVar4 == 0) {
+          param_3->dataType = VAL_INT;
+          iVar4 = CG_GetPlayerClipAmmoCount(LVar3,WEAPON_HAND_DEFAULT);
+          (param_3->internals).intVal = iVar4;
+          if ((uiscript_debug->current).integer != 0) {
+            Com_Printf(0xd,"player( %s ) = %i\n");
             __restgprlr_29();
             return;
           }
         }
         else {
-          iVar2 = I_stricmp(param_2[1],0xffffffff821650c4);
-          if (iVar2 == 0) {
-            *param_3 = 0;
-            uVar1 = CG_GetPlayerClipAmmoCount(uVar1,1);
-            param_3[1] = (int)uVar1;
-            if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-              Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+          iVar4 = I_stricmp((char *)(param_2->internals).function,"clipAmmo_left");
+          if (iVar4 == 0) {
+            param_3->dataType = VAL_INT;
+            iVar4 = CG_GetPlayerClipAmmoCount(LVar3,WEAPON_HAND_LEFT);
+            (param_3->internals).intVal = iVar4;
+            if ((uiscript_debug->current).integer != 0) {
+              Com_Printf(0xd,"player( %s ) = %i\n");
               __restgprlr_29();
               return;
             }
           }
           else {
-            iVar2 = I_stricmp(param_2[1],0xffffffff821650b8);
-            if (iVar2 == 0) {
-              *param_3 = 0;
-              uVar1 = CG_GetPlayerWeaponAmmoStock(uVar1);
-              param_3[1] = (int)uVar1;
-              if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+            iVar4 = I_stricmp((char *)(param_2->internals).function,"stockAmmo");
+            if (iVar4 == 0) {
+              param_3->dataType = VAL_INT;
+              iVar4 = CG_GetPlayerWeaponAmmoStock(LVar3);
+              (param_3->internals).intVal = iVar4;
+              if ((uiscript_debug->current).integer != 0) {
+                Com_Printf(0xd,"player( %s ) = %i\n");
                 __restgprlr_29();
                 return;
               }
             }
             else {
-              iVar2 = I_stricmp(param_2[1],0xffffffff821650ac);
-              if (iVar2 == 0) {
-                *param_3 = 0;
-                uVar1 = CG_GetOffHandPrimaryAmmo(uVar1);
-                param_3[1] = (int)uVar1;
-                if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                  Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+              iVar4 = I_stricmp((char *)(param_2->internals).function,"fragAmmo");
+              if (iVar4 == 0) {
+                param_3->dataType = VAL_INT;
+                iVar4 = CG_GetOffHandPrimaryAmmo(LVar3);
+                (param_3->internals).intVal = iVar4;
+                if ((uiscript_debug->current).integer != 0) {
+                  Com_Printf(0xd,"player( %s ) = %i\n");
                   __restgprlr_29();
                   return;
                 }
               }
               else {
-                iVar2 = I_stricmp(param_2[1],0xffffffff821650a0);
-                if (iVar2 == 0) {
-                  *param_3 = 0;
-                  uVar1 = CG_GetOffHandSecondaryAmmo(uVar1);
-                  param_3[1] = (int)uVar1;
-                  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                    Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+                iVar4 = I_stricmp((char *)(param_2->internals).function,"smokeAmmo");
+                if (iVar4 == 0) {
+                  param_3->dataType = VAL_INT;
+                  iVar4 = CG_GetOffHandSecondaryAmmo(LVar3);
+                  (param_3->internals).intVal = iVar4;
+                  if ((uiscript_debug->current).integer != 0) {
+                    Com_Printf(0xd,"player( %s ) = %i\n");
                     __restgprlr_29();
                     return;
                   }
                 }
                 else {
-                  iVar2 = I_stricmp(param_2[1],0xffffffff8206dffc);
-                  if (iVar2 == 0) {
-                    *param_3 = 0;
-                    uVar4 = CG_LookingThroughNightVisionGoggles(uVar1);
-                    param_3[1] = uVar4 & 0xff;
-                    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                      Com_Printf(0xd,0xffffffff821650e0,param_2[1]);
+                  iVar4 = I_stricmp((char *)(param_2->internals).function,"nightvision");
+                  if (iVar4 == 0) {
+                    param_3->dataType = VAL_INT;
+                    bVar7 = CG_LookingThroughNightVisionGoggles(LVar3);
+                    oVar2.intVal._0_3_ = 0;
+                    oVar2.intVal._3_1_ = bVar7;
+                    param_3->internals = oVar2;
+                    if ((uiscript_debug->current).integer != 0) {
+                      Com_Printf(0xd,"player( %s ) = %i\n");
                       __restgprlr_29();
                       return;
                     }
                   }
                   else {
-                    iVar2 = I_stricmp(param_2[1],0xffffffff8208059c);
-                    if (iVar2 == 0) {
-                      iVar2 = UI_GetOurClientScore(uVar1);
-                      if (iVar2 == 0) {
-                        param_3[1] = 0;
+                    iVar4 = I_stricmp((char *)(param_2->internals).function,"score");
+                    if (iVar4 == 0) {
+                      psVar6 = UI_GetOurClientScore(LVar3);
+                      if (psVar6 == (score_t *)0x0) {
+                        (param_3->internals).intVal = 0;
                       }
                       else {
-                        param_3[1] = *(undefined4 *)(iVar2 + 4);
+                        param_3->internals = (operandInternalDataUnion)psVar6->score;
                       }
-                      *param_3 = 0;
-                      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                        Com_Printf(0xd,0xffffffff821650e0,param_2[1],param_3[1]);
+                      param_3->dataType = VAL_INT;
+                      if ((uiscript_debug->current).integer != 0) {
+                        Com_Printf(0xd,"player( %s ) = %i\n");
                         __restgprlr_29();
                         return;
                       }
                     }
                     else {
-                      iVar2 = I_stricmp(param_2[1],0xffffffff82080594);
-                      if (iVar2 == 0) {
-                        iVar2 = UI_GetOurClientScore(uVar1);
-                        if (iVar2 == 0) {
-                          param_3[1] = 0;
+                      iVar4 = I_stricmp((char *)(param_2->internals).function,"deaths");
+                      if (iVar4 == 0) {
+                        psVar6 = UI_GetOurClientScore(LVar3);
+                        if (psVar6 == (score_t *)0x0) {
+                          (param_3->internals).intVal = 0;
                         }
                         else {
-                          param_3[1] = *(undefined4 *)(iVar2 + 0xc);
+                          param_3->internals = (operandInternalDataUnion)psVar6->deaths;
                         }
-                        *param_3 = 0;
-                        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                          Com_Printf(0xd,0xffffffff821650e0,param_2[1],param_3[1]);
+                        param_3->dataType = VAL_INT;
+                        if ((uiscript_debug->current).integer != 0) {
+                          Com_Printf(0xd,"player( %s ) = %i\n");
                           __restgprlr_29();
                           return;
                         }
                       }
                       else {
-                        iVar2 = I_stricmp(param_2[1],0xffffffff82080580);
-                        if (iVar2 == 0) {
-                          iVar2 = UI_GetOurClientScore(uVar1);
-                          if (iVar2 == 0) {
-                            param_3[1] = 0;
+                        iVar4 = I_stricmp((char *)(param_2->internals).function,"kills");
+                        if (iVar4 == 0) {
+                          psVar6 = UI_GetOurClientScore(LVar3);
+                          if (psVar6 == (score_t *)0x0) {
+                            (param_3->internals).intVal = 0;
                           }
                           else {
-                            param_3[1] = *(undefined4 *)(iVar2 + 0x14);
+                            param_3->internals = (operandInternalDataUnion)psVar6->kills;
                           }
-                          *param_3 = 0;
-                          if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                            Com_Printf(0xd,0xffffffff821650e0,param_2[1],param_3[1]);
+                          param_3->dataType = VAL_INT;
+                          if ((uiscript_debug->current).integer != 0) {
+                            Com_Printf(0xd,"player( %s ) = %i\n");
                             __restgprlr_29();
                             return;
                           }
                         }
                         else {
-                          iVar2 = I_stricmp(param_2[1],0xffffffff82031bf4);
-                          if (iVar2 == 0) {
-                            iVar2 = UI_GetOurClientScore(uVar1);
-                            if (iVar2 == 0) {
-                              param_3[1] = 0;
+                          iVar4 = I_stricmp((char *)(param_2->internals).function,"ping");
+                          if (iVar4 == 0) {
+                            psVar6 = UI_GetOurClientScore(LVar3);
+                            if (psVar6 == (score_t *)0x0) {
+                              (param_3->internals).intVal = 0;
                             }
                             else {
-                              param_3[1] = *(undefined4 *)(iVar2 + 8);
+                              param_3->internals = (operandInternalDataUnion)psVar6->ping;
                             }
-                            *param_3 = 0;
-                            if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                              Com_Printf(0xd,0xffffffff821650e0,param_2[1],param_3[1]);
+                            param_3->dataType = VAL_INT;
+                            if ((uiscript_debug->current).integer != 0) {
+                              Com_Printf(0xd,"player( %s ) = %i\n");
                               __restgprlr_29();
                               return;
                             }
                           }
                           else {
-                            iVar2 = I_stricmp(param_2[1],0xffffffff82165098);
-                            if (iVar2 == 0) {
-                              *param_3 = 0;
-                              uVar1 = CG_GetClientNum(uVar1);
-                              param_3[1] = (int)uVar1;
-                              if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-                                Com_Printf(0xd,0xffffffff821650e0,param_2[1],uVar1);
+                            iVar4 = I_stricmp((char *)(param_2->internals).function,"number");
+                            if (iVar4 == 0) {
+                              param_3->dataType = VAL_INT;
+                              iVar4 = CG_GetClientNum(LVar3);
+                              (param_3->internals).intVal = iVar4;
+                              if ((uiscript_debug->current).integer != 0) {
+                                Com_Printf(0xd,"player( %s ) = %i\n");
                                 __restgprlr_29();
                                 return;
                               }
                             }
                             else {
-                              Com_Printf(0xd,0xffffffff82165074,param_2[1]);
-                              *param_3 = 0;
-                              param_3[1] = 0;
+                              Com_Printf(0xd,"ERROR: Unknown player field \'%s\'\n");
+                              param_3->dataType = VAL_INT;
+                              (param_3->internals).intVal = 0;
                             }
                           }
                         }
@@ -1229,107 +1383,135 @@ void GetPlayerField(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 8258E7C8  GetFieldForTeam  (ui/ui_expressions.cpp:1095)
 
-void GetFieldForTeam(undefined8 param_1,longlong param_2,int *param_3,undefined4 *param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetFieldForTeam(LocalClientNum_t param_1,team_t param_2,Operand *param_3,Operand *param_4)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  char cVar5;
-  undefined4 uVar3;
-  undefined1 *puVar4;
+  bool bVar6;
+  PartyData *pPVar3;
+  cg_s *pcVar4;
+  char *pcVar5;
+  longlong lVar7;
+  operandInternalDataUnion oVar8;
+  operandInternalDataUnion oVar9;
+  team_t tVar10;
   
-  uVar1 = __savegprlr_28();
-  if (*param_3 != 2) {
-    uVar1 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff821652f0,uVar1);
-    *param_4 = 2;
-    param_4[1] = &DAT_820068af;
+  lVar7 = (longlong)(int)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  if (param_3->dataType != VAL_STRING) {
+    GetNameForValueType(param_3->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a team parameter, not a %s\n");
+    param_4->dataType = VAL_STRING;
+    (param_4->internals).floatVal = (float)"";
     __restgprlr_28();
     return;
   }
-  iVar2 = I_stricmp(param_3[1],0xffffffff821652e4);
+  iVar2 = I_stricmp((char *)(param_3->internals).function,"wins");
+  tVar10 = (team_t)lVar7;
   if (iVar2 == 0) {
-    *param_4 = 0;
-    param_4[1] = 0;
-    cVar5 = Lobby_IsInLobby();
-    if (cVar5 == '\0') {
-      Com_PrintError(0xd,0xffffffff82165260);
-    }
-    else if ((int)param_2 == 1) {
-      iVar2 = Lobby_GetPartyData();
-      param_4[1] = (uint)*(byte *)(iVar2 + 0x3e3c);
-    }
-    else if ((int)param_2 == 2) {
-      iVar2 = Lobby_GetPartyData();
-      param_4[1] = (uint)*(byte *)(iVar2 + 0x3e3d);
+    param_4->dataType = VAL_INT;
+    (param_4->internals).intVal = 0;
+    bVar6 = Lobby_IsInLobby();
+    if (bVar6) {
+      if (tVar10 == TEAM_AXIS) {
+        pPVar3 = Lobby_GetPartyData();
+        oVar9.intVal._0_3_ = 0;
+        oVar9.intVal._3_1_ = pPVar3->axisWins;
+        param_4->internals = oVar9;
+      }
+      else if (tVar10 == TEAM_ALLIES) {
+        pPVar3 = Lobby_GetPartyData();
+        oVar8.intVal._0_3_ = 0;
+        oVar8.intVal._3_1_ = pPVar3->alliesWins;
+        param_4->internals = oVar8;
+      }
+      else {
+        Com_PrintError(0xd,"Error: You can\'t look at team \'wins\' for team %i\n");
+      }
     }
     else {
-      Com_PrintError(0xd,0xffffffff821652b0,param_2);
+      Com_PrintError(0xd,
+                     "Error: You can\'t look at team \'wins\' when the player isn\'t in a match or lobby\n"
+                    );
     }
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82165244,param_2,param_3[1],param_4[1]);
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"team(%i)( %s ) = %i\n");
       __restgprlr_28();
       return;
     }
   }
   else {
-    iVar2 = I_stricmp(param_3[1],0xffffffff82031d80);
+    iVar2 = I_stricmp((char *)(param_3->internals).function,"count");
     if (iVar2 == 0) {
-      *param_4 = 0;
-      cVar5 = Lobby_IsInLobby();
-      if (cVar5 == '\0') {
-        Com_PrintError(0xd,0xffffffff821651f0);
+      param_4->dataType = VAL_INT;
+      bVar6 = Lobby_IsInLobby();
+      if (bVar6) {
+        pPVar3 = Lobby_GetPartyData();
+        iVar2 = Party_CountTeamMembers(pPVar3,tVar10);
+        (param_4->internals).intVal = iVar2;
       }
       else {
-        uVar1 = Lobby_GetPartyData();
-        uVar3 = Party_CountTeamMembers(uVar1,param_2);
-        param_4[1] = uVar3;
+        Com_PrintError(0xd,
+                       "Error: You can\'t look at team \'count\' when the player isn\'t in a match or lobby\n"
+                      );
       }
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82165244,param_2,param_3[1],param_4[1]);
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"team(%i)( %s ) = %i\n");
         __restgprlr_28();
         return;
       }
     }
     else {
-      iVar2 = CL_IsCgameInitialized(uVar1);
+      iVar2 = CL_IsCgameInitialized(LVar1);
       if (iVar2 == 0) {
-        Com_PrintError(0xd,0xffffffff821651a8);
-        *param_4 = 2;
-        param_4[1] = &DAT_820068af;
+        Com_PrintError(0xd,
+                       "Error: You can\'t look at team fields when the player isn\'t in a match\n");
+        param_4->dataType = VAL_STRING;
+        (param_4->internals).floatVal = (float)"";
         __restgprlr_28();
         return;
       }
-      iVar2 = I_stricmp(param_3[1],0xffffffff8208059c);
+      iVar2 = I_stricmp((char *)(param_3->internals).function,"score");
       if (iVar2 == 0) {
-        *param_4 = 0;
-        iVar2 = CG_GetLocalClientGlobals(uVar1);
-        param_4[1] = *(undefined4 *)((int)((param_2 + 0x1daaeU & 0xffffffff) << 2) + iVar2);
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          Com_Printf(0xd,0xffffffff82165244,param_2,param_3[1]);
+        param_4->dataType = VAL_INT;
+        pcVar4 = CG_GetLocalClientGlobals(LVar1);
+        param_4->internals =
+             *(operandInternalDataUnion *)
+              ((int)(pcVar4->predictedPlayerState).origin +
+              (int)((lVar7 + 0x1daaeU & 0xffffffff) << 2) + -0x1c);
+        if ((uiscript_debug->current).integer != 0) {
+          Com_Printf(0xd,"team(%i)( %s ) = %i\n");
           __restgprlr_28();
           return;
         }
       }
       else {
-        iVar2 = I_stricmp(param_3[1],0xffffffff82021a74);
+        iVar2 = I_stricmp((char *)(param_3->internals).function,"name");
         if (iVar2 == 0) {
-          *param_4 = 2;
-          puVar4 = (undefined1 *)CG_GetTeamName(param_2);
-          if (puVar4 == (undefined1 *)0x0) {
-            puVar4 = &DAT_820068af;
+          param_4->dataType = VAL_STRING;
+          pcVar5 = CG_GetTeamName(tVar10);
+          if ((Statement_s *)pcVar5 == (Statement_s *)0x0) {
+            pcVar5 = "";
           }
-          param_4[1] = puVar4;
-          if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-            Com_Printf(0xd,0xffffffff8216518c,param_2,param_3[1]);
+          (param_4->internals).function = (Statement_s *)pcVar5;
+          if ((uiscript_debug->current).integer != 0) {
+            Com_Printf(0xd,"team(%i)( %s ) = %s\n");
             __restgprlr_28();
             return;
           }
         }
         else {
-          Com_Printf(0xd,0xffffffff8216516c,param_3[1]);
-          *param_4 = 0;
-          param_4[1] = 0;
+          Com_Printf(0xd,"ERROR: Unknown team field \'%s\'\n");
+          param_4->dataType = VAL_INT;
+          (param_4->internals).intVal = 0;
         }
       }
     }
@@ -1341,48 +1523,55 @@ void GetFieldForTeam(undefined8 param_1,longlong param_2,int *param_3,undefined4
 
 // 8258EAC0  GetOtherTeamField  (ui/ui_expressions.cpp:1192)
 
-void GetOtherTeamField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetOtherTeamField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  undefined8 uVar3;
-  uint uVar4;
+  cg_s *pcVar3;
+  team_t tVar4;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = CL_IsCgameInitialized();
+  LVar1 = __savegprlr_29(param_1);
+  iVar2 = CL_IsCgameInitialized(LVar1);
   if (iVar2 == 0) {
-    Com_PrintError(0xd,0xffffffff82165338);
-    *(undefined4 *)param_3 = 2;
-    ((undefined4 *)param_3)[1] = &DAT_820068af;
+    Com_PrintError(0xd,
+                   "Error: You can\'t look at other team fields when the player isn\'t in a match\n"
+                  );
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"";
     __restgprlr_29();
     return;
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  iVar2 = *(int *)(iVar2 + 0x3334) * 0x590 + iVar2;
-  if (*(int *)(iVar2 + 0x100b88) == 0) {
-    uVar4 = 0;
+  pcVar3 = CG_GetLocalClientGlobals(LVar1);
+  if ((pcVar3->bgs).clientinfo[pcVar3->clientNum].infoValid == 0) {
+    tVar4 = TEAM_FREE;
 LAB_8258eb4c:
-    if (uVar4 != 0) {
-      if (uVar4 == 1) {
-        uVar3 = 2;
+    if (tVar4 != TEAM_FREE) {
+      if (tVar4 == TEAM_AXIS) {
+        tVar4 = TEAM_ALLIES;
       }
-      else if (uVar4 == 2) {
-        uVar3 = 1;
+      else if (tVar4 == TEAM_ALLIES) {
+        tVar4 = TEAM_AXIS;
       }
       else {
-        uVar3 = 3;
+        tVar4 = TEAM_SPECTATOR;
       }
       goto LAB_8258eb88;
     }
   }
   else {
-    uVar4 = *(uint *)(iVar2 + 0x100bb4);
-    if (uVar4 < 4) goto LAB_8258eb4c;
+    tVar4 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
+    if (tVar4 < TEAM_NUM_TEAMS) goto LAB_8258eb4c;
   }
-  uVar3 = 0;
+  tVar4 = TEAM_FREE;
 LAB_8258eb88:
-  GetFieldForTeam(uVar1,uVar3,param_2,param_3);
+  GetFieldForTeam(LVar1,tVar4,param_2,param_3);
   __restgprlr_29();
   return;
 }
@@ -1390,23 +1579,28 @@ LAB_8258eb88:
 
 // 8258EBA0  GetTeamField  (ui/ui_expressions.cpp:1239)
 
-void GetTeamField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetTeamField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 uVar3;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  team_t tVar3;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar2 = *(int *)(iVar2 + 0x3334) * 0x590 + iVar2;
-  if (*(int *)(iVar2 + 0x100b88) == 0) {
-    uVar3 = 0;
+  LVar1 = __savegprlr_29(param_1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if ((pcVar2->bgs).clientinfo[pcVar2->clientNum].infoValid == 0) {
+    tVar3 = TEAM_FREE;
   }
   else {
-    uVar3 = *(undefined4 *)(iVar2 + 0x100bb4);
+    tVar3 = (pcVar2->bgs).clientinfo[pcVar2->clientNum].team;
   }
-  GetFieldForTeam(uVar1,uVar3,param_2,param_3);
+  GetFieldForTeam(LVar1,tVar3,param_2,param_3);
   __restgprlr_29();
   return;
 }
@@ -1414,233 +1608,279 @@ void GetTeamField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 8258EC08  GetTeamMarinesField  (ui/ui_expressions.cpp:1258)
 
-void GetTeamMarinesField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetTeamMarinesField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  GetFieldForTeam(param_1,2,param_2,param_3);
+  GetFieldForTeam(param_1,TEAM_ALLIES,param_2,param_3);
   return;
 }
 
 
 // 8258EC18  GetTeamOpForField  (ui/ui_expressions.cpp:1264)
 
-void GetTeamOpForField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetTeamOpForField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  GetFieldForTeam(param_1,1,param_2,param_3);
+  GetFieldForTeam(param_1,TEAM_AXIS,param_2,param_3);
   return;
 }
 
 
 // 8258EC28  GetMapName  (ui/ui_expressions.cpp:1270)
 
-void GetMapName(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetMapName(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  iVar1 = UI_GetCurrentMapName();
-  *param_1 = 2;
-  if (iVar1 == 0) {
-    param_1[1] = &DAT_820068af;
+  pcVar1 = UI_GetCurrentMapName();
+  *(undefined4 *)param_1 = 2;
+  if (pcVar1 == (char *)0x0) {
+    *(char **)(param_1 + LOCAL_CLIENT_COUNT) = "";
     return;
   }
-  param_1[1] = iVar1;
+  *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar1;
   return;
 }
 
 
 // 8258EC88  GetMapVoteMapName  (ui/ui_expressions.cpp:1284)
 
-void GetMapVoteMapName(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMapVoteMapName(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined1 *puVar2;
+  char *pcVar2;
   
-  if (*param_1 != 0) {
-    Com_PrintError(0xd,0xffffffff821653d0);
+  if (*(int *)param_1 != 0) {
+    Com_PrintError(0xd,"GetMapVoteName called with non integer data!\n");
     return;
   }
-  iVar1 = param_1[1];
+  iVar1 = *(int *)(param_1 + LOCAL_CLIENT_COUNT);
   if ((iVar1 != 0) && (iVar1 != 1)) {
-    Com_PrintError(0xd,0xffffffff82165388);
+    Com_PrintError(0xd,"GetMapVoteName called unrecognized integer data=[%d] expected 0 or 1\n");
     return;
   }
-  puVar2 = (undefined1 *)UI_GetMapVoteMapName(iVar1);
-  *param_2 = 2;
-  if (puVar2 == (undefined1 *)0x0) {
-    puVar2 = &DAT_820068af;
+  pcVar2 = UI_GetMapVoteMapName(iVar1);
+  param_2->dataType = VAL_STRING;
+  if ((Statement_s *)pcVar2 == (Statement_s *)0x0) {
+    pcVar2 = "";
   }
-  param_2[1] = puVar2;
+  (param_2->internals).function = (Statement_s *)pcVar2;
   return;
 }
 
 
 // 8258ED40  GetMapImage  (ui/ui_expressions.cpp:1317)
 
-void GetMapImage(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMapImage(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  iVar1 = UI_GetCurrentMapImage();
-  *param_1 = 2;
-  if (iVar1 == 0) {
-    param_1[1] = &DAT_820068af;
+  pcVar1 = UI_GetCurrentMapImage();
+  *(undefined4 *)param_1 = 2;
+  if (pcVar1 == (char *)0x0) {
+    *(char **)(param_1 + LOCAL_CLIENT_COUNT) = "";
     return;
   }
-  param_1[1] = iVar1;
+  *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar1;
   return;
 }
 
 
 // 8258EDA0  GetMapVoteMapImage  (ui/ui_expressions.cpp:1331)
 
-void GetMapVoteMapImage(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetMapVoteMapImage(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined1 *puVar2;
+  char *pcVar2;
   
-  if (*param_1 != 0) {
-    Com_PrintError(0xd,0xffffffff8216544c);
+  if (*(int *)param_1 != 0) {
+    Com_PrintError(0xd,"GetMapVoteMapImage called with non integer data!\n");
     return;
   }
-  iVar1 = param_1[1];
+  iVar1 = *(int *)(param_1 + LOCAL_CLIENT_COUNT);
   if ((iVar1 != 0) && (iVar1 != 1)) {
-    Com_PrintError(0xd,0xffffffff82165400);
+    Com_PrintError(0xd,"GetMapVoteMapImage called unrecognized integer data=[%d] expected 0 or 1\n")
+    ;
     return;
   }
-  puVar2 = (undefined1 *)UI_GetMapVoteMapImage(iVar1);
-  *param_2 = 2;
-  if (puVar2 == (undefined1 *)0x0) {
-    puVar2 = &DAT_820068af;
+  pcVar2 = UI_GetMapVoteMapImage(iVar1);
+  param_2->dataType = VAL_STRING;
+  if ((Statement_s *)pcVar2 == (Statement_s *)0x0) {
+    pcVar2 = "";
   }
-  param_2[1] = puVar2;
+  (param_2->internals).function = (Statement_s *)pcVar2;
   return;
 }
 
 
 // 8258EE58  GetMapCustom  (ui/ui_expressions.cpp:1364)
 
-void GetMapCustom(int param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMapCustom(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
+  Statement_s *pSVar1;
   
-  iVar1 = UI_GetCurrentMapCustom(*(undefined4 *)(param_1 + 4));
-  *param_2 = 2;
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  pSVar1 = (Statement_s *)UI_GetCurrentMapCustom(*(char **)(param_1 + LOCAL_CLIENT_COUNT));
+  param_2->dataType = VAL_STRING;
+  if (pSVar1 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar1;
   return;
 }
 
 
 // 8258EEC0  GetPreviewMapCustom  (ui/ui_expressions.cpp:1378)
 
-void GetPreviewMapCustom(int param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPreviewMapCustom(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
+  Statement_s *pSVar1;
   
-  iVar1 = UI_GetCurrentPreviewMapCustom(*(undefined4 *)(param_1 + 4));
-  *param_2 = 2;
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  pSVar1 = (Statement_s *)UI_GetCurrentPreviewMapCustom(*(char **)(param_1 + LOCAL_CLIENT_COUNT));
+  param_2->dataType = VAL_STRING;
+  if (pSVar1 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar1;
   return;
 }
 
 
 // 8258EF28  GetDlcMapsAvailableCount  (ui/ui_expressions.cpp:1392)
 
-void GetDlcMapsAvailableCount(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetDlcMapsAvailableCount(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = UI_GetAvailableDlcMapCount();
-  param_1[1] = uVar1;
+  *(undefined4 *)param_1 = 0;
+  iVar1 = UI_GetAvailableDlcMapCount();
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = iVar1;
   return;
 }
 
 
 // 8258EF60  GetMigrationStatus  (ui/ui_expressions.cpp:1404)
 
-void GetMigrationStatus(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMigrationStatus(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  Statement_s *pSVar1;
   
-  iVar1 = CL_GetLocalClientMigrationString();
-  *param_2 = 2;
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  pSVar1 = (Statement_s *)CL_GetLocalClientMigrationString(param_1);
+  param_2->dataType = VAL_STRING;
+  if (pSVar1 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar1;
   return;
 }
 
 
 // 8258EFC0  GetPlaylistField  (ui/ui_expressions.cpp:1421)
 
-void GetPlaylistField(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetPlaylistField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  int iVar2;
   int iVar3;
-  undefined4 uVar4;
-  char cVar5;
+  int iVar4;
+  bool bVar5;
   
-  __savegprlr_28();
-  if (*param_2 != 2) {
-    uVar1 = GetNameForValueType(*param_2);
-    Com_PrintError(0xd,0xffffffff821654d8,uVar1);
-    *param_3 = 2;
-    param_3[1] = &DAT_820068af;
+  LVar1 = __savegprlr_28(param_1);
+  if (param_2->dataType != VAL_STRING) {
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a playlist field, not a %s\n");
+    param_3->dataType = VAL_STRING;
+    (param_3->internals).floatVal = (float)"";
     __restgprlr_28();
     return;
   }
-  uVar1 = CL_ControllerIndexFromClientNum();
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar1,*(undefined4 *)(DAT_82aa1adc + 0xc));
-  iVar3 = I_stricmp(param_2[1],0xffffffff821654d0);
-  if (iVar3 == 0) {
-    *param_3 = 0;
-    uVar4 = Playlist_GetNumRounds(uVar1,uVar2);
-    param_3[1] = uVar4;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  iVar3 = Playlist_GetPlaylistIdForNum(iVar2,(playlist->current).integer);
+  iVar4 = I_stricmp((char *)(param_2->internals).function,"rounds");
+  if (iVar4 == 0) {
+    param_3->dataType = VAL_INT;
+    iVar2 = Playlist_GetNumRounds(iVar2,iVar3);
+    (param_3->internals).intVal = iVar2;
   }
   else {
-    iVar3 = I_stricmp(param_2[1],0xffffffff821654c4);
-    if (iVar3 == 0) {
-      *param_3 = 0;
-      cVar5 = Playlist_PartyBasedTeams(uVar1,uVar2);
-      param_3[1] = (uint)(cVar5 != '\0');
+    iVar4 = I_stricmp((char *)(param_2->internals).function,"partyteams");
+    if (iVar4 == 0) {
+      param_3->dataType = VAL_INT;
+      bVar5 = Playlist_PartyBasedTeams(iVar2,iVar3);
+      (param_3->internals).function = (Statement_s *)((int)bVar5 + (-(uint)!bVar5 - (bVar5 + -1)));
     }
     else {
-      iVar3 = I_stricmp(param_2[1],0xffffffff821654bc);
-      if (iVar3 == 0) {
-        *param_3 = 0;
-        cVar5 = Playlist_JoinInProgressDisabled(uVar1,uVar2);
-        param_3[1] = (uint)(cVar5 != '\0');
+      iVar4 = I_stricmp((char *)(param_2->internals).function,"nojip");
+      if (iVar4 == 0) {
+        param_3->dataType = VAL_INT;
+        bVar5 = Playlist_JoinInProgressDisabled(iVar2,iVar3);
+        (param_3->internals).function = (Statement_s *)((int)bVar5 + (-(uint)!bVar5 - (bVar5 + -1)))
+        ;
       }
       else {
-        Com_Printf(0xd,0xffffffff82165498,param_2[1]);
-        *param_3 = 0;
-        param_3[1] = 0;
+        Com_Printf(0xd,"ERROR: Unknown playlist field \'%s\'\n");
+        param_3->dataType = VAL_INT;
+        (param_3->internals).intVal = 0;
       }
     }
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165480,param_2[1],param_3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"playlist( %s ) = %i\n");
   }
   __restgprlr_28();
   return;
@@ -1649,16 +1889,23 @@ void GetPlaylistField(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 8258F140  GetUIActive  (ui/ui_expressions.cpp:1471)
 
-void GetUIActive(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUIActive(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CL_IsUIActive();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff8216551c);
+  param_2->dataType = VAL_INT;
+  bVar2 = CL_IsUIActive(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"ui_active() = %i\n");
   }
   return;
 }
@@ -1666,16 +1913,20 @@ void GetUIActive(undefined8 param_1,undefined4 *param_2)
 
 // 8258F1A0  GetFlashbanged  (ui/ui_expressions.cpp:1482)
 
-void GetFlashbanged(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFlashbanged(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = CG_GetFlashbangedRemainingTime();
-  param_2[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165530,uVar1);
+  param_2->dataType = VAL_INT;
+  iVar1 = CG_GetFlashbangedRemainingTime(param_1);
+  (param_2->internals).intVal = iVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"flashbanged() = %i\n");
   }
   return;
 }
@@ -1683,16 +1934,23 @@ void GetFlashbanged(undefined8 param_1,undefined4 *param_2)
 
 // 8258F200  GetUsingVehicle  (ui/ui_expressions.cpp:1493)
 
-void GetUsingVehicle(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUsingVehicle(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = VehicleCl_UsingVehicle();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165544);
+  param_2->dataType = VAL_INT;
+  bVar2 = VehicleCl_UsingVehicle(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"usingvehicle() = %i\n");
   }
   return;
 }
@@ -1700,16 +1958,23 @@ void GetUsingVehicle(undefined8 param_1,undefined4 *param_2)
 
 // 8258F260  GetMissileCam  (ui/ui_expressions.cpp:1504)
 
-void GetMissileCam(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMissileCam(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_GetMissileCamActive();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff8216555c);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_GetMissileCamActive(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"missilecam() = %i\n");
   }
   return;
 }
@@ -1717,16 +1982,23 @@ void GetMissileCam(undefined8 param_1,undefined4 *param_2)
 
 // 8258F2C0  GetScoped  (ui/ui_expressions.cpp:1515)
 
-void GetScoped(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetScoped(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_ScopeIsOverlayed();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165570);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_ScopeIsOverlayed(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"scoped() = %i\n");
   }
   return;
 }
@@ -1734,16 +2006,23 @@ void GetScoped(undefined8 param_1,undefined4 *param_2)
 
 // 8258F320  GetScopedThermal  (ui/ui_expressions.cpp:1526)
 
-void GetScopedThermal(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetScopedThermal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_ThermalScopeIsOverlayed();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165580);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_ThermalScopeIsOverlayed(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"scopedthermal() = %i\n");
   }
   return;
 }
@@ -1751,17 +2030,24 @@ void GetScopedThermal(undefined8 param_1,undefined4 *param_2)
 
 // 8258F380  GetInKillcam  (ui/ui_expressions.cpp:1537)
 
-void GetInKillcam(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetInKillcam(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  cg_s *pcVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  iVar1 = CL_IsCgameInitialized();
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  iVar1 = CL_IsCgameInitialized(param_1);
   if (iVar1 != 0) {
-    iVar1 = CG_GetLocalClientGlobals(param_1);
-    param_2[1] = *(undefined4 *)(iVar1 + 0x7a708);
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    param_2->internals = (operandInternalDataUnion)pcVar2->inKillCam;
   }
   return;
 }
@@ -1769,17 +2055,24 @@ void GetInKillcam(undefined8 param_1,undefined4 *param_2)
 
 // 8258F3E8  GetInKillcamNPC  (ui/ui_expressions.cpp:1551)
 
-void GetInKillcamNPC(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetInKillcamNPC(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  cg_s *pcVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  iVar1 = CL_IsCgameInitialized();
-  if (((iVar1 != 0) && (iVar1 = CG_GetLocalClientGlobals(param_1), *(int *)(iVar1 + 0x7a708) != 0))
-     && (*(int *)(*(int *)(iVar1 + 0x335c) + 0xa08) != 0x7ff)) {
-    param_2[1] = 1;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (((iVar1 != 0) && (pcVar2 = CG_GetLocalClientGlobals(param_1), pcVar2->inKillCam != 0)) &&
+     ((pcVar2->nextSnap->ps).killCamEntity != 0x7ff)) {
+    (param_2->internals).intVal = 1;
   }
   return;
 }
@@ -1787,16 +2080,20 @@ void GetInKillcamNPC(undefined8 param_1,undefined4 *param_2)
 
 // 8258F468  GetScoreboardVisible  (ui/ui_expressions.cpp:1573)
 
-void GetScoreboardVisible(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetScoreboardVisible(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = CG_IsScoreboardDisplayed();
-  param_2[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165598,uVar1);
+  param_2->dataType = VAL_INT;
+  iVar1 = CG_IsScoreboardDisplayed(param_1);
+  (param_2->internals).intVal = iVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"scoreboard_visible() = %i\n");
   }
   return;
 }
@@ -1804,16 +2101,20 @@ void GetScoreboardVisible(undefined8 param_1,undefined4 *param_2)
 
 // 8258F4C8  GetIsIntermission  (ui/ui_expressions.cpp:1588)
 
-void GetIsIntermission(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsIntermission(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = CG_IsIntermission();
-  param_2[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff821655b4,uVar1);
+  param_2->dataType = VAL_INT;
+  iVar1 = CG_IsIntermission(param_1);
+  (param_2->internals).intVal = iVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"isIntermission() = %i\n");
   }
   return;
 }
@@ -1821,16 +2122,23 @@ void GetIsIntermission(undefined8 param_1,undefined4 *param_2)
 
 // 8258F528  GetSelectingLocation  (ui/ui_expressions.cpp:1603)
 
-void GetSelectingLocation(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetSelectingLocation(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_IsSelectingLocation();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff821655cc);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_IsSelectingLocation(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"selecting_location() = %i\n");
   }
   return;
 }
@@ -1838,19 +2146,27 @@ void GetSelectingLocation(undefined8 param_1,undefined4 *param_2)
 
 // 8258F588  GetSelectingDirection  (ui/ui_expressions.cpp:1615)
 
-void GetSelectingDirection(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSelectingDirection(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0x650,0,0xffffffff82000f98,0xffffffff82012420);
+  if (param_2 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x650,0
+                    ,"%s");
   }
-  *param_2 = 0;
-  uVar1 = CG_IsSelectingDirection(param_1);
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff821655e8);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_IsSelectingDirection(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"selecting_direction() = %i\n");
   }
   return;
 }
@@ -1858,34 +2174,40 @@ void GetSelectingDirection(undefined8 param_1,undefined4 *param_2)
 
 // 8258F628  GetPartyStatusString  (ui/ui_expressions.cpp:1629)
 
-void GetPartyStatusString(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetPartyStatusString(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  int iVar2;
-  undefined1 auStack_20 [8];
+  bool bVar4;
+  PartyData *pPVar1;
+  char *pcVar2;
+  int iVar3;
+  int aiStack_20 [2];
   
-  *param_1 = 2;
-  cVar3 = Lobby_IsInRunningLobby();
-  if (cVar3 == '\0') {
-    iVar2 = Party_InParty(0xffffffff82b55118);
-    if (iVar2 == 0) {
-      iVar2 = UI_SafeTranslateString(0xffffffff82165604);
+  *(undefined4 *)param_1 = 2;
+  bVar4 = Lobby_IsInRunningLobby();
+  if (bVar4) {
+    pPVar1 = Lobby_GetPartyData();
+    pcVar2 = Party_GetStatus(pPVar1,aiStack_20);
+  }
+  else {
+    iVar3 = Party_InParty(&g_partyData);
+    if (iVar3 == 0) {
+      pcVar2 = UI_SafeTranslateString("XBOXLIVE_PARTYENDED");
     }
     else {
-      iVar2 = Party_GetStatus(0xffffffff82b55118,auStack_20);
+      pcVar2 = Party_GetStatus(&g_partyData,aiStack_20);
     }
   }
-  else {
-    uVar1 = Lobby_GetPartyData();
-    iVar2 = Party_GetStatus(uVar1,auStack_20);
-  }
-  if (iVar2 == 0) {
-    param_1[1] = &DAT_820068af;
+  if (pcVar2 == (char *)0x0) {
+    *(char **)(param_1 + LOCAL_CLIENT_COUNT) = "";
   }
   else {
-    param_1[1] = iVar2;
+    *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar2;
   }
   return;
 }
@@ -1893,31 +2215,36 @@ void GetPartyStatusString(undefined4 *param_1)
 
 // 8258F6D0  PrivatePartyHostInLobby  (ui/ui_expressions.cpp:1651)
 
-void PrivatePartyHostInLobby(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void PrivatePartyHostInLobby(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
+  undefined4 *puVar1;
+  int iVar2;
+  PartyData *pPVar3;
   uint uVar4;
-  longlong lVar5;
+  ulong64 uVar5;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  if (DAT_82b5700c != 0) {
-    iVar3 = Party_HostNum(0xffffffff82b55118);
-    lVar5 = (&DAT_82b55298)[iVar3 * 0x2a];
-    if (lVar5 != 0) {
-      uVar1 = Lobby_GetPartyData();
-      uVar4 = Party_FindMemberByXUID(uVar1,lVar5);
-      puVar2[1] = uVar4 >> 0x1f ^ 1;
+  puVar1 = (undefined4 *)__savegprlr_29(param_1,param_2);
+  if (g_partyData.inParty != 0) {
+    iVar2 = Party_HostNum(&g_partyData);
+    uVar5 = g_partyData.partyMembers[iVar2].player;
+    if (uVar5 != 0) {
+      pPVar3 = Lobby_GetPartyData();
+      uVar4 = Party_FindMemberByXUID(pPVar3,uVar5);
+      puVar1[1] = uVar4 >> 0x1f ^ 1;
       goto LAB_8258f734;
     }
   }
-  puVar2[1] = 0;
+  puVar1[1] = 0;
 LAB_8258f734:
-  *puVar2 = 0;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165618,puVar2[1]);
+  *puVar1 = 0;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"PrivatePartyHostInLobby() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -1926,25 +2253,30 @@ LAB_8258f734:
 
 // 8258F768  AloneInPrivateParty  (ui/ui_expressions.cpp:1675)
 
-void AloneInPrivateParty(void)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void AloneInPrivateParty(LocalClientNum_t param_1,Operand *param_2)
 
 {
   undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar2;
+  uint uVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_29();
-  iVar2 = Party_CountAllMembersEvenIfInactive(0xffffffff82b55118);
-  iVar3 = PartyClient_CountLocalMembers(0xffffffff82b55118);
-  if (iVar2 == iVar3) {
+  puVar1 = (undefined4 *)__savegprlr_29(param_1,param_2);
+  uVar2 = Party_CountAllMembersEvenIfInactive(&g_partyData);
+  uVar3 = PartyClient_CountLocalMembers(&g_partyData);
+  if (uVar2 == uVar3) {
     puVar1[1] = 1;
   }
   else {
     puVar1[1] = 0;
   }
   *puVar1 = 0;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165638,puVar1[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"AloneInPrivateParty() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -1953,136 +2285,191 @@ void AloneInPrivateParty(void)
 
 // 8258F7E8  GetAttachedControllerCount  (ui/ui_expressions.cpp:1699)
 
-void GetAttachedControllerCount(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetAttachedControllerCount(Operand *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = GPad_GetAttachedControllerCount();
-  param_1[1] = uVar1;
+  param_1->dataType = VAL_INT;
+  iVar1 = GPad_GetAttachedControllerCount();
+  (param_1->internals).intVal = iVar1;
   return;
 }
 
 
 // 8258F820  GetIsSplitScreenOnlinePossible  (ui/ui_expressions.cpp:1710)
 
-void GetIsSplitScreenOnlinePossible(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsSplitScreenOnlinePossible(Operand *param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = GPad_GetAttachedControllerCount();
-  param_1[1] = (int)((~uVar1 & 0xffffffff) >> 0x1f) + (uint)(uVar1 < 2) & 1;
+  param_1->dataType = VAL_INT;
+  iVar1 = GPad_GetAttachedControllerCount();
+  (param_1->internals).intVal =
+       (int)((~(longlong)iVar1 & 0xffffffffU) >> 0x1f) + (uint)((ulonglong)(longlong)iVar1 < 2) & 1;
   return;
+}
+
+
+// 8258F870  GetSplitScreenPlayerCountAsInt  (ui/ui_expressions.cpp:1721)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int GetSplitScreenPlayerCountAsInt(void)
+
+{
+  uint uVar1;
+  
+  uVar1 = (uint)clientUIActives[0].active;
+  if (clientUIActives[1].active) {
+    uVar1 = uVar1 + 1;
+  }
+  if (clientUIActives[2].active) {
+    uVar1 = uVar1 + 1;
+  }
+  if (!clientUIActives[3].active) {
+    return uVar1;
+  }
+  return uVar1 + 1;
 }
 
 
 // 8258F878  GetSplitScreenLocalClientNumForMenuScript  (ui/ui_expressions.cpp:1729)
 
-void GetSplitScreenLocalClientNumForMenuScript(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool GetSplitScreenLocalClientNumForMenuScript
+               (LocalClientNum_t param_1,LocalClientNum_t *param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  ulonglong uVar2;
-  undefined4 local_30 [12];
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  int local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x6c5,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1,uVar4,param_3);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x6c5,0
+                    ,"%s");
   }
-  cVar3 = CL_SplitscreenControllerIndexFromClientNum(uVar1,local_30);
-  if (cVar3 == '\0') {
-    *(undefined4 *)param_2 = 0;
-    __restgprlr_29(0);
-    return;
+  bVar2 = CL_SplitscreenControllerIndexFromClientNum(LVar1,local_30);
+  if (!bVar2) {
+    *(LocalClientNum_t *)uVar4 = LOCAL_CLIENT_0;
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  uVar2 = CL_LocalClientNumFromControllerIndex(local_30[0]);
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82164aa0,0x6d0,0,0xffffffff820011a8,uVar2,4);
+  LVar1 = CL_LocalClientNumFromControllerIndex(local_30[0]);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x6d0,0
+                    ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  *(undefined4 *)param_2 = (int)uVar2;
-  __restgprlr_29(1);
-  return;
+  *(LocalClientNum_t *)uVar4 = LVar1;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
 // 8258F928  GetSplitScreenLocalClientNumForExpression  (ui/ui_expressions.cpp:1753)
 
-void GetSplitScreenLocalClientNumForExpression
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool GetSplitScreenLocalClientNumForExpression
+               (Operand *param_1,LocalClientNum_t *param_2,char *param_3)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
+  Operand *pOVar1;
+  undefined1 uVar2;
+  bool bVar3;
+  ulonglong uVar4;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0x6da,0,0xffffffff82000f98,0xffffffff82164ae0);
+  uVar4 = (ulonglong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_27(param_1);
+  if (pOVar1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x6da,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x6db,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x6db,0
+                    ,"%s");
   }
-  if (*piVar2 != 0) {
-    *(undefined4 *)param_2 = 0;
-    uVar1 = GetSourceString(piVar2);
-    Com_PrintError(0xd,0xffffffff82165658,param_3,uVar1);
-    __restgprlr_27(0);
-    return;
+  if (pOVar1->dataType != VAL_INT) {
+    *(LocalClientNum_t *)uVar4 = LOCAL_CLIENT_0;
+    GetSourceString(pOVar1);
+    Com_PrintError(0xd,
+                   "Error: %s: Expected an int as the index of the splitscreen player, found \"%s\"\n"
+                  );
+    uVar2 = __restgprlr_27(0);
+    return (bool)uVar2;
   }
-  GetSplitScreenLocalClientNumForMenuScript(piVar2[1],param_2,param_3);
-  __restgprlr_27();
-  return;
+  bVar3 = GetSplitScreenLocalClientNumForMenuScript
+                    ((pOVar1->internals).intVal,(LocalClientNum_t *)uVar4,param_3);
+  uVar2 = __restgprlr_27(bVar3);
+  return (bool)uVar2;
 }
 
 
 // 8258F9F0  GetSplitScreenPlayerCount  (ui/ui_expressions.cpp:1775)
 
-void GetSplitScreenPlayerCount(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSplitScreenPlayerCount(Operand *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = CL_GetLocalClientActiveCount();
-  param_1[1] = uVar1;
+  param_1->dataType = VAL_INT;
+  iVar1 = CL_GetLocalClientActiveCount();
+  (param_1->internals).intVal = iVar1;
   return;
 }
 
 
 // 8258FA28  GetSplitScreenActiveGamepadCount  (ui/ui_expressions.cpp:1782)
 
-void GetSplitScreenActiveGamepadCount(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSplitScreenActiveGamepadCount(Operand *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = CL_GetActiveGamepadCount();
-  param_1[1] = uVar1;
+  param_1->dataType = VAL_INT;
+  iVar1 = CL_GetActiveGamepadCount();
+  (param_1->internals).intVal = iVar1;
   return;
 }
 
 
 // 8258FA60  DebugPrint  (ui/ui_expressions.cpp:1789)
 
-void DebugPrint(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void DebugPrint(OperandList *param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  
-  *param_2 = 0;
-  param_2[1] = 0;
-  if (*(int *)(param_1 + 0x50) == 2) {
-    uVar1 = GetSourceString(param_1 + 8);
-    uVar2 = GetSourceString(param_1);
-    Com_Printf(0,0xffffffff821656e4,uVar2,uVar1);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  if (param_1->operandCount == 2) {
+    GetSourceString(param_1->operands + 1);
+    GetSourceString(param_1->operands);
+    Com_Printf(0,"EXPRESION DEBUG \'%s:%s\'\n");
   }
   else {
-    Com_PrintError(1,0xffffffff821656a8);
+    Com_PrintError(1,"UI Expression Error: DebugPrint expects exactly 2 strings\n");
   }
   return;
 }
@@ -2090,16 +2477,20 @@ void DebugPrint(int param_1,undefined4 *param_2)
 
 // 8258FAE8  GameHost  (ui/ui_expressions.cpp:1801)
 
-void GameHost(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GameHost(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  uVar1 = Lobby_AreWeHost();
-  param_1[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165700);
+  *(undefined4 *)param_1 = 0;
+  bVar1 = Lobby_AreWeHost();
+  *(uint *)(param_1 + LOCAL_CLIENT_COUNT) = (uint)bVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GameHost() = %i\n");
   }
   return;
 }
@@ -2107,7 +2498,11 @@ void GameHost(undefined4 *param_1)
 
 // 8258FB48  IsCoopSearching  (ui/ui_expressions.cpp:1819)
 
-void IsCoopSearching(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsCoopSearching(LocalClientNum_t param_1,Operand *param_2)
 
 {
   return;
@@ -2116,16 +2511,20 @@ void IsCoopSearching(void)
 
 // 8258FB50  InLobby  (ui/ui_expressions.cpp:1839)
 
-void InLobby(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void InLobby(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  uVar1 = Lobby_IsInLobby();
-  param_1[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165714);
+  *(undefined4 *)param_1 = 0;
+  bVar1 = Lobby_IsInLobby();
+  *(uint *)(param_1 + LOCAL_CLIENT_COUNT) = (uint)bVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"InLobby() = %i\n");
   }
   return;
 }
@@ -2133,17 +2532,23 @@ void InLobby(undefined4 *param_1)
 
 // 8258FBB0  InGameLobby  (ui/ui_expressions.cpp:1854)
 
-void InGameLobby(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void InGameLobby(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  PartyData *pPVar1;
+  int iVar2;
   
-  *param_1 = 0;
-  Lobby_GetPartyData();
-  uVar1 = Party_InParty();
-  param_1[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82165724,uVar1);
+  *(undefined4 *)param_1 = 0;
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_InParty(pPVar1);
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = iVar2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"InGameLobby() = %i\n");
   }
   return;
 }
@@ -2151,88 +2556,104 @@ void InGameLobby(undefined4 *param_1)
 
 // 8258FC18  InPrivateParty  (ui/ui_expressions.cpp:1872)
 
-void InPrivateParty(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void InPrivateParty(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = DAT_82b5700c;
-  if (*(int *)(DAT_83f71ebc + 0xc) == 0) {
+  *(undefined4 *)param_1 = 0;
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = g_partyData.inParty;
+  if ((uiscript_debug->current).integer == 0) {
     return;
   }
-  Com_Printf(0xd,0xffffffff82165738,param_1[1]);
+  Com_Printf(0xd,"InPrivateParty() = %i\n");
   return;
 }
 
 
 // 8258FC60  PrivatePartyHost  (ui/ui_expressions.cpp:1888)
 
-void PrivatePartyHost(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void PrivatePartyHost(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = DAT_82b57004;
-  if (*(int *)(DAT_83f71ebc + 0xc) == 0) {
+  *(undefined4 *)param_1 = 0;
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = g_partyData.areWeHost;
+  if ((uiscript_debug->current).integer == 0) {
     return;
   }
-  Com_Printf(0xd,0xffffffff82165750,param_1[1]);
+  Com_Printf(0xd,"PrivatePartyHost() = %i\n");
   return;
 }
 
 
 // 8258FCA8  getOperandValueInt  (ui/ui_expressions.cpp:1904)
 
-ulonglong getOperandValueInt(int *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+int getOperandValueInt(Operand *param_1)
 
 {
   int iVar1;
   
-  if (*param_1 == 2) {
-    iVar1 = atoi((char *)param_1[1]);
-    return (longlong)iVar1;
+  if (param_1->dataType == VAL_STRING) {
+    iVar1 = atoi((char *)(param_1->internals).function);
+    return iVar1;
   }
-  if (*param_1 == 1) {
-    return (ulonglong)(uint)(int)(float)param_1[1];
+  if (param_1->dataType == VAL_FLOAT) {
+    return (int)(param_1->internals).floatVal;
   }
-  return (ulonglong)(uint)param_1[1];
+  return (param_1->internals).intVal;
 }
 
 
 // 8258FD18  PrintArguments  (ui/ui_expressions.cpp:1917)
 
-void PrintArguments(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void PrintArguments(OperandList *param_1,char *param_2)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  char *pcVar2;
   int iVar3;
-  float *pfVar4;
+  int iVar4;
   
-  iVar1 = __savegprlr_25();
-  Com_Printf(0xd,0xffffffff82165780,param_2);
+  iVar1 = __savegprlr_25(param_1,param_2);
+  Com_Printf(0xd,"%s(");
   iVar3 = 0;
   if (0 < *(int *)(iVar1 + 0x50)) {
-    pfVar4 = (float *)(iVar1 + 4);
+    iVar4 = iVar1 + 4;
     do {
-      uVar2 = 0xffffffff82165770;
-      if (pfVar4[-1] == 2.8026e-45) {
+      pcVar2 = " \"%s\"";
+      if (*(int *)(iVar4 + -4) == 2) {
 LAB_8258fdac:
-        Com_Printf(0xd,uVar2,*pfVar4);
+        Com_Printf(0xd,pcVar2);
       }
       else {
-        if (pfVar4[-1] != 1.4013e-45) {
-          uVar2 = 0xffffffff8216577c;
+        if (*(int *)(iVar4 + -4) != 1) {
+          pcVar2 = " %d";
           goto LAB_8258fdac;
         }
-        Com_Printf(0xd,0xffffffff82165778,(double)*pfVar4);
+        Com_Printf(0xd," %g");
       }
       if (iVar3 < *(int *)(iVar1 + 0x50) + -1) {
-        Com_Printf(0xd,0xffffffff82003480);
+        Com_Printf(0xd,",");
       }
       iVar3 = iVar3 + 1;
-      pfVar4 = pfVar4 + 2;
+      iVar4 = iVar4 + 8;
     } while (iVar3 < *(int *)(iVar1 + 0x50));
   }
-  Com_Printf(0xd,0xffffffff8216576c);
+  Com_Printf(0xd," )");
   __restgprlr_25();
   return;
 }
@@ -2240,202 +2661,243 @@ LAB_8258fdac:
 
 // 8258FE00  PrintArgumentsForError  (ui/ui_expressions.cpp:1934)
 
-void PrintArgumentsForError(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void PrintArgumentsForError(OperandList *param_1,char *param_2)
 
 {
-  Com_Printf(0xd,0xffffffff82165784);
+  Com_Printf(0xd,"In call ");
   PrintArguments(param_1,param_2);
-  Com_Printf(0xd,0xffffffff820044d8);
+  Com_Printf(0xd,"\n");
   return;
 }
 
 
 // 8258FE60  LookupByOperandList  (ui/ui_expressions.cpp:1942)
 
-void LookupByOperandList(undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4,
-                        ulonglong param_5,undefined8 param_6)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool LookupByOperandList(StructuredDataDef *param_1,StructuredDataLookup *param_2,
+                        OperandList *param_3,int param_4,bool param_5,char *param_6)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  OperandList *pOVar2;
   int iVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  double dVar6;
+  StructuredDataDef *pSVar4;
+  LookupState LVar5;
+  undefined1 uVar6;
+  StructuredDataLookup *pSVar7;
+  char *pcVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  double dVar13;
   
-  uVar2 = __savegprlr_22();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x799,0,0xffffffff82000f98,0xffffffff8206070c);
+  uVar11 = (ulonglong)param_5;
+  lVar10 = (longlong)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  pSVar4 = (StructuredDataDef *)__savegprlr_22(param_1);
+  if (pSVar4 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x799,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x79a,0,0xffffffff82000f98,0xffffffff82076fc4);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x79a,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x79b,0,0xffffffff82000f98,0xffffffff82039d70);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x79b,0
+                    ,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,param_2);
-  uVar2 = param_4 - 1;
-  iVar3 = StructuredData_GetLookupState(param_2);
-  if (iVar3 != 2) {
-    lVar5 = (uVar2 & 0x1fffffff) * 8 + param_3;
+  pSVar7 = (StructuredDataLookup *)uVar12;
+  StructuredData_InitializeLookup(pSVar4,pSVar7);
+  uVar12 = lVar10 - 1;
+  LVar5 = StructuredData_GetLookupState(pSVar7);
+  pOVar2 = (OperandList *)uVar9;
+  if (LVar5 != LOOKUP_ERROR) {
+    lVar10 = (uVar12 & 0x1fffffff) * 8 + uVar9;
     do {
-      if (iVar3 == 1) {
-        if ((int)uVar2 + 1 < *(int *)((int)param_3 + 0x50)) {
-          PrintArgumentsForError(param_3,param_6);
-          uVar4 = 0xffffffff821657c4;
+      if (LVar5 == LOOKUP_FINISHED) {
+        if ((int)uVar12 + 1 < pOVar2->operandCount) {
+          PrintArgumentsForError(pOVar2,param_6);
+          pcVar8 = "UI Expression Error: too many arguments to %s\n";
 LAB_82590094:
-          Com_PrintError(0xd,uVar4,param_6);
-          __restgprlr_22(0);
-          return;
+          Com_PrintError(0xd,pcVar8);
+          uVar6 = __restgprlr_22(0);
+          return (bool)uVar6;
         }
 LAB_82590074:
-        __restgprlr_22(1);
-        return;
+        uVar6 = __restgprlr_22(1);
+        return (bool)uVar6;
       }
-      if (iVar3 != 0) {
-        MyAssertHandler(0xffffffff82164aa0,0x7ac,0,0xffffffff82000f98,0xffffffff82076f64);
+      if (LVar5 != LOOKUP_IN_PROGRESS) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x7ac,0,"%s");
       }
-      uVar2 = uVar2 + 1;
-      if (*(int *)((int)param_3 + 0x50) <= (int)uVar2) {
-        if ((param_5 & 0xff) == 0) {
-          PrintArgumentsForError(param_3,param_6);
-          uVar4 = 0xffffffff82165790;
+      uVar12 = uVar12 + 1;
+      if (pOVar2->operandCount <= (int)uVar12) {
+        if ((uVar11 & 0xff) == 0) {
+          PrintArgumentsForError(pOVar2,param_6);
+          pcVar8 = "UI Expression Error: not enough arguments to %s\n";
           goto LAB_82590094;
         }
         goto LAB_82590074;
       }
-      iVar3 = *(int *)(lVar5 + 8);
-      iVar1 = (int)lVar5;
-      if (iVar3 == 0) {
-        StructuredData_LookupWithInt(param_2,*(undefined4 *)(iVar1 + 0xc));
+      iVar1 = *(int *)(lVar10 + 8);
+      iVar3 = (int)lVar10;
+      if (iVar1 == 0) {
+        StructuredData_LookupWithInt(pSVar7,*(int *)(iVar3 + 0xc));
       }
-      else if (iVar3 == 1) {
-        dVar6 = floor((double)*(float *)(iVar1 + 0xc));
-        StructuredData_LookupWithInt(param_2,(int)dVar6);
+      else if (iVar1 == 1) {
+        dVar13 = floor((double)*(float *)(iVar3 + 0xc));
+        StructuredData_LookupWithInt(pSVar7,(int)dVar13);
       }
       else {
-        if (iVar3 != 2) {
-          MyAssertHandler(0xffffffff82164aa0,0x7c4,0,0xffffffff82000f98,0xffffffff82165820);
+        if (iVar1 != 2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x7c4,0,"%s");
         }
-        StructuredData_LookupWithString(param_2,*(undefined4 *)(iVar1 + 0xc));
+        StructuredData_LookupWithString(pSVar7,*(char **)(iVar3 + 0xc));
       }
-      iVar3 = StructuredData_GetLookupState(param_2);
-      lVar5 = lVar5 + 8;
-    } while (iVar3 != 2);
+      LVar5 = StructuredData_GetLookupState(pSVar7);
+      lVar10 = lVar10 + 8;
+    } while (LVar5 != LOOKUP_ERROR);
   }
-  PrintArgumentsForError(param_3,param_6);
-  iVar3 = StructuredData_GetLookupError(param_2);
-  Com_PrintError(0xd,0xffffffff821657f4,param_6,uVar2 + 1,(&PTR_DAT_82992d38)[iVar3]);
-  __restgprlr_22(0);
-  return;
+  PrintArgumentsForError(pOVar2,param_6);
+  StructuredData_GetLookupError(pSVar7);
+  Com_PrintError(0xd,"UI Expression Error: %s, argument %d: %s\n");
+  uVar6 = __restgprlr_22(0);
+  return (bool)uVar6;
 }
 
 
 // 825900B0  GetClientMatchDataDef  (ui/ui_expressions.cpp:2007)
 
-void GetClientMatchDataDef(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetClientMatchDataDef(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 2;
-  param_1[1] = &DAT_82aa2a04;
-  if (*(int *)(DAT_83f71ebc + 0xc) == 0) {
+  *(undefined4 *)param_1 = 2;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0x82aa2a04;
+  if ((uiscript_debug->current).integer == 0) {
     return;
   }
-  Com_Printf(0xd,0xffffffff82165858,0xffffffff82aa2a04);
+  Com_Printf(0xd,"getClientMatchDataDef() -> %s\n");
   return;
 }
 
 
 // 825900F8  GetClientMatchData  (ui/ui_expressions.cpp:2023)
 
-void GetClientMatchData(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetClientMatchData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  char cVar7;
-  int iVar3;
-  undefined4 uVar4;
+  OperandList *pOVar1;
+  StructuredDataDef *pSVar2;
+  bool bVar7;
+  LookupResultDataType LVar3;
+  int iVar4;
   short sVar6;
-  undefined1 *puVar5;
-  undefined4 *puVar8;
-  double dVar9;
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [80];
+  char *pcVar5;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  float fVar10;
+  StructuredDataBuffer aSStack_60 [2];
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x7ef,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar8 = (ulonglong)(int)param_2;
+  pOVar1 = (OperandList *)__savegprlr_26(param_1,uVar8,param_3);
+  if (pOVar1 == (OperandList *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x7ef,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x7f0,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x7f0,0
+                    ,"%s");
   }
-  puVar8 = (undefined4 *)param_2;
-  *puVar8 = 0;
-  puVar8[1] = 0;
-  if (DAT_82aa2a04 != '\0') {
-    StructuredData_MakeBuffer(auStack_60,0xffffffff82aa2a44,0x400);
-    uVar2 = StructuredDataDef_GetAsset(0xffffffff82aa2a04,0x400);
-    cVar7 = LookupByOperandList(uVar2,auStack_50,uVar1,0,0,0xffffffff821658c0);
-    if (cVar7 != '\0') {
-      iVar3 = StructuredData_GetLookupResultType(auStack_50);
-      if (iVar3 == 0) {
-        *puVar8 = 0;
-        uVar4 = StructuredData_GetInt(auStack_50,auStack_60);
-        puVar8[1] = uVar4;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(uVar1,0xffffffff821658c0);
-          Com_Printf(0xd,0xffffffff821658b8,puVar8[1]);
+  puVar9 = (undefined4 *)uVar8;
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  if (cls.matchData.def[0] != '\0') {
+    StructuredData_MakeBuffer(aSStack_60,cls.matchData.data,0x400);
+    pSVar2 = StructuredDataDef_GetAsset(cls.matchData.def,0x400);
+    bVar7 = LookupByOperandList(pSVar2,aSStack_50,pOVar1,0,false,"GetClientMatchData");
+    if (bVar7) {
+      LVar3 = StructuredData_GetLookupResultType(aSStack_50);
+      if (LVar3 == LOOKUP_RESULT_INT) {
+        *puVar9 = 0;
+        iVar4 = StructuredData_GetInt(aSStack_50,aSStack_60);
+        puVar9[1] = iVar4;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar1,"GetClientMatchData");
+          Com_Printf(0xd," = %d\n");
           __restgprlr_26();
           return;
         }
       }
-      else if (iVar3 == 1) {
-        *puVar8 = 0;
-        cVar7 = StructuredData_GetBool(auStack_50,auStack_60);
-        puVar8[1] = (uint)(cVar7 != '\0');
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(uVar1,0xffffffff821658c0);
-          Com_Printf(0xd,0xffffffff821658b8,puVar8[1]);
+      else if (LVar3 == LOOKUP_RESULT_BOOL) {
+        *puVar9 = 0;
+        bVar7 = StructuredData_GetBool(aSStack_50,aSStack_60);
+        puVar9[1] = (int)bVar7 + (-(uint)!bVar7 - (bVar7 + -1));
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar1,"GetClientMatchData");
+          Com_Printf(0xd," = %d\n");
           __restgprlr_26();
           return;
         }
       }
-      else if (iVar3 == 3) {
-        *puVar8 = 1;
-        dVar9 = (double)StructuredData_GetFloat(auStack_50,auStack_60);
-        puVar8[1] = (float)dVar9;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(uVar1,0xffffffff821658c0);
-          Com_Printf(0xd,0xffffffff821658b0,(double)(float)puVar8[1]);
+      else if (LVar3 == LOOKUP_RESULT_FLOAT) {
+        *puVar9 = 1;
+        fVar10 = StructuredData_GetFloat(aSStack_50,aSStack_60);
+        puVar9[1] = fVar10;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar1,"GetClientMatchData");
+          Com_Printf(0xd," = %f\n");
           __restgprlr_26();
           return;
         }
       }
-      else if (iVar3 == 4) {
-        *puVar8 = 0;
-        sVar6 = StructuredData_GetShort(auStack_50,auStack_60);
-        puVar8[1] = (int)sVar6;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(uVar1,0xffffffff821658c0);
-          Com_Printf(0xd,0xffffffff821658a8,puVar8[1]);
+      else if (LVar3 == LOOKUP_RESULT_SHORT) {
+        *puVar9 = 0;
+        sVar6 = StructuredData_GetShort(aSStack_50,aSStack_60);
+        puVar9[1] = (int)sVar6;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar1,"GetClientMatchData");
+          Com_Printf(0xd," = %i\n");
           __restgprlr_26();
           return;
         }
       }
       else {
-        if (iVar3 != 2) {
-          MyAssertHandler(0xffffffff82164aa0,0x82e,0,0xffffffff82000f98,0xffffffff82165884);
+        if (LVar3 != LOOKUP_RESULT_STRING) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x82e,0,"%s");
         }
-        *puVar8 = 2;
-        puVar5 = (undefined1 *)StructuredData_GetString(auStack_50,auStack_60);
-        if (puVar5 == (undefined1 *)0x0) {
-          puVar5 = &DAT_820068af;
+        *puVar9 = 2;
+        pcVar5 = StructuredData_GetString(aSStack_50,aSStack_60);
+        if (pcVar5 == (char *)0x0) {
+          pcVar5 = "";
         }
-        puVar8[1] = puVar5;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(uVar1,0xffffffff821658c0);
-          Com_Printf(0xd,0xffffffff82165878,puVar8[1]);
+        puVar9[1] = pcVar5;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar1,"GetClientMatchData");
+          Com_Printf(0xd," = \"%s\"\n");
         }
       }
     }
@@ -2447,120 +2909,136 @@ void GetClientMatchData(undefined8 param_1,ulonglong param_2)
 
 // 825903D8  GetUsingMatchRulesData  (ui/ui_expressions.cpp:2114)
 
-void GetUsingMatchRulesData(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetUsingMatchRulesData(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  GameStateInfo *pGVar1;
   
-  *param_1 = 0;
-  iVar1 = GameStateInfo_Get();
-  param_1[1] = *(undefined4 *)(iVar1 + 4);
+  *(undefined4 *)param_1 = 0;
+  pGVar1 = GameStateInfo_Get();
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = pGVar1->usingRecipe;
   return;
 }
 
 
 // 82590418  GetMatchRulesData  (ui/ui_expressions.cpp:2125)
 
-void GetMatchRulesData(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMatchRulesData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char cVar7;
-  undefined4 uVar4;
-  short sVar6;
-  undefined1 *puVar5;
-  undefined4 *puVar8;
-  double dVar9;
-  int local_60 [4];
-  undefined1 auStack_50 [80];
+  OperandList *pOVar1;
+  GameStateInfo *pGVar2;
+  StructuredDataDef *pSVar3;
+  bool bVar8;
+  LookupResultDataType LVar4;
+  int iVar5;
+  short sVar7;
+  char *pcVar6;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  float fVar11;
+  StructuredDataBuffer local_60 [2];
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x854,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar9 = (ulonglong)(int)param_2;
+  pOVar1 = (OperandList *)__savegprlr_25(param_1,uVar9,param_3);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x854,0
+                    ,"%s");
   }
-  puVar8 = (undefined4 *)param_2;
-  *puVar8 = 0;
-  puVar8[1] = 0;
-  iVar3 = GameStateInfo_Get();
-  if (*(int *)(iVar3 + 4) == 0) {
-    Com_PrintError(0xd,0xffffffff821658d4);
+  puVar10 = (undefined4 *)uVar9;
+  *puVar10 = 0;
+  puVar10[1] = 0;
+  pGVar2 = GameStateInfo_Get();
+  if (pGVar2->usingRecipe == 0) {
+    Com_PrintError(0xd,"GetMatchRulesData called when when not using recipe");
     __restgprlr_25();
     return;
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x866,0,0xffffffff82000f98,0xffffffff82039d70);
+  if (pOVar1 == (OperandList *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x866,0
+                    ,"%s");
   }
-  if (*(int *)(iVar3 + 8) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x867,0,0xffffffff82000f98,0xffffffff82042524);
+  if (pGVar2->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x867,0
+                    ,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-  local_60[0] = *(int *)(iVar3 + 8);
-  if (local_60[0] == 0) {
-    MyAssertHandler(0xffffffff82164a48,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  pSVar3 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  local_60[0].data = pGVar2->matchRules->data;
+  if ((MatchRules *)local_60[0].data == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_60[1] = 0xc00;
-  cVar7 = LookupByOperandList(uVar2,auStack_50,uVar1,0,0,0xffffffff8207c3bc);
-  if (cVar7 != '\0') {
-    iVar3 = StructuredData_GetLookupResultType(auStack_50);
-    if (iVar3 == 0) {
-      *puVar8 = 0;
-      uVar4 = StructuredData_GetInt(auStack_50,local_60);
-      puVar8[1] = uVar4;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        PrintArguments(uVar1,0xffffffff8207c3bc);
-        Com_Printf(0xd,0xffffffff821658b8,puVar8[1]);
+  local_60[0].size = 0xc00;
+  bVar8 = LookupByOperandList(pSVar3,aSStack_50,pOVar1,0,false,"GetMatchRulesData");
+  if (bVar8) {
+    LVar4 = StructuredData_GetLookupResultType(aSStack_50);
+    if (LVar4 == LOOKUP_RESULT_INT) {
+      *puVar10 = 0;
+      iVar5 = StructuredData_GetInt(aSStack_50,local_60);
+      puVar10[1] = iVar5;
+      if ((uiscript_debug->current).integer != 0) {
+        PrintArguments(pOVar1,"GetMatchRulesData");
+        Com_Printf(0xd," = %d\n");
         __restgprlr_25();
         return;
       }
     }
-    else if (iVar3 == 1) {
-      *puVar8 = 0;
-      cVar7 = StructuredData_GetBool(auStack_50,local_60);
-      puVar8[1] = (uint)(cVar7 != '\0');
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        PrintArguments(uVar1,0xffffffff8207c3bc);
-        Com_Printf(0xd,0xffffffff821658b8,puVar8[1]);
+    else if (LVar4 == LOOKUP_RESULT_BOOL) {
+      *puVar10 = 0;
+      bVar8 = StructuredData_GetBool(aSStack_50,local_60);
+      puVar10[1] = (int)bVar8 + (-(uint)!bVar8 - (bVar8 + -1));
+      if ((uiscript_debug->current).integer != 0) {
+        PrintArguments(pOVar1,"GetMatchRulesData");
+        Com_Printf(0xd," = %d\n");
         __restgprlr_25();
         return;
       }
     }
-    else if (iVar3 == 3) {
-      *puVar8 = 1;
-      dVar9 = (double)StructuredData_GetFloat(auStack_50,local_60);
-      puVar8[1] = (float)dVar9;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        PrintArguments(uVar1,0xffffffff8207c3bc);
-        Com_Printf(0xd,0xffffffff821658b0,(double)(float)puVar8[1]);
+    else if (LVar4 == LOOKUP_RESULT_FLOAT) {
+      *puVar10 = 1;
+      fVar11 = StructuredData_GetFloat(aSStack_50,local_60);
+      puVar10[1] = fVar11;
+      if ((uiscript_debug->current).integer != 0) {
+        PrintArguments(pOVar1,"GetMatchRulesData");
+        Com_Printf(0xd," = %f\n");
         __restgprlr_25();
         return;
       }
     }
-    else if (iVar3 == 4) {
-      *puVar8 = 0;
-      sVar6 = StructuredData_GetShort(auStack_50,local_60);
-      puVar8[1] = (int)sVar6;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        PrintArguments(uVar1,0xffffffff8207c3bc);
-        Com_Printf(0xd,0xffffffff821658a8,puVar8[1]);
+    else if (LVar4 == LOOKUP_RESULT_SHORT) {
+      *puVar10 = 0;
+      sVar7 = StructuredData_GetShort(aSStack_50,local_60);
+      puVar10[1] = (int)sVar7;
+      if ((uiscript_debug->current).integer != 0) {
+        PrintArguments(pOVar1,"GetMatchRulesData");
+        Com_Printf(0xd," = %i\n");
         __restgprlr_25();
         return;
       }
     }
     else {
-      if (iVar3 != 2) {
-        MyAssertHandler(0xffffffff82164aa0,0x89a,0,0xffffffff82000f98,0xffffffff82165884);
+      if (LVar4 != LOOKUP_RESULT_STRING) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x89a,0,"%s");
       }
-      *puVar8 = 2;
-      puVar5 = (undefined1 *)StructuredData_GetString(auStack_50,local_60);
-      if (puVar5 == (undefined1 *)0x0) {
-        puVar5 = &DAT_820068af;
+      *puVar10 = 2;
+      pcVar6 = StructuredData_GetString(aSStack_50,local_60);
+      if (pcVar6 == (char *)0x0) {
+        pcVar6 = "";
       }
-      puVar8[1] = puVar5;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        PrintArguments(uVar1,0xffffffff8207c3bc);
-        Com_Printf(0xd,0xffffffff82165878,puVar8[1]);
+      puVar10[1] = pcVar6;
+      if ((uiscript_debug->current).integer != 0) {
+        PrintArguments(pOVar1,"GetMatchRulesData");
+        Com_Printf(0xd," = \"%s\"\n");
       }
     }
   }
@@ -2571,137 +3049,174 @@ void GetMatchRulesData(undefined8 param_1,ulonglong param_2)
 
 // 82590770  GetMatchRulesMetaData  (ui/ui_expressions.cpp:2217)
 
-void GetMatchRulesMetaData(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetMatchRulesMetaData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int *piVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar2;
   int iVar3;
-  uint uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
+  GameStateInfo *pGVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  Operand *pOVar7;
+  uint uVar8;
+  MatchRulesSaveLocation MVar9;
+  MatchRulesSaveHeaderLookup MVar10;
   
-  uVar2 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x8af,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_24(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x8af,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x8b0,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x8b0,0
+                    ,"%s");
   }
-  piVar1 = (int *)param_2;
+  piVar1 = (int *)uVar5;
   if ((piVar1[0x14] != 2) && (piVar1[0x14] != 3)) {
-    Com_PrintError(0xd,0xffffffff82165ad0);
+    Com_PrintError(0xd,"[GetMatchRulesMetaData] has incorrect number of params.\n");
     __restgprlr_24();
     return;
   }
-  uVar4 = 10;
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfb,0,0xffffffff82000f98,0xffffffff82164ae0);
+  uVar8 = 10;
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfb,0,
+                    "%s");
   }
-  uVar6 = 0;
-  *(undefined4 *)param_3 = 0;
-  ((undefined4 *)param_3)[1] = 0;
+  MVar10 = RECIPE_LOOKUP_TIMESTAMP;
+  pOVar7 = (Operand *)uVar6;
+  pOVar7->dataType = VAL_INT;
+  (pOVar7->internals).intVal = 0;
   if (*piVar1 != 2) {
 LAB_825908e8:
-    Com_PrintError(0xd,0xffffffff82165a38);
+    Com_PrintError(0xd,
+                   "[GetMatchRulesMetaData] first parameter should be a string in { \"history\", \"save\" }\n"
+                  );
     __restgprlr_24();
     return;
   }
-  iVar3 = I_stricmp(piVar1[1],0xffffffff82165ac8);
+  iVar3 = I_stricmp((char *)piVar1[1],"history");
   if (iVar3 == 0) {
-    uVar5 = 1;
+    MVar9 = MR_SAVELOC_PLAYERHISTORY;
   }
   else {
-    iVar3 = I_stricmp(piVar1[1],0xffffffff82075e4c);
+    iVar3 = I_stricmp((char *)piVar1[1],"save");
     if (iVar3 != 0) goto LAB_825908e8;
-    uVar5 = 0;
+    MVar9 = MR_SAVELOC_PLAYERSAVED;
   }
   if (piVar1[0x14] == 2) {
-    if ((piVar1[2] != 2) || (iVar3 = I_stricmp(piVar1[3],0xffffffff82031d80), iVar3 != 0)) {
+    if ((piVar1[2] != 2) || (iVar3 = I_stricmp((char *)piVar1[3],"count"), iVar3 != 0)) {
 LAB_825909b4:
       if (piVar1[0x14] == 2) {
-        Com_PrintError(0xd,0xffffffff82165970,10);
+        Com_PrintError(0xd,
+                       "[GetMatchRulesMetaData] second parameter should be either \"count\" or an int between [ 0, %d ]\n"
+                      );
         __restgprlr_24();
         return;
       }
-      Com_PrintError(0xd,0xffffffff82165908);
+      Com_PrintError(0xd,
+                     "[GetMatchRulesMetaData] third parameter should be a string in { \"timestamp\", \"gametype\", \"name\" }\n"
+                    );
       __restgprlr_24();
       return;
     }
-    uVar6 = 4;
+    MVar10 = RECIPE_LOOKUP_COUNT;
   }
   else {
-    if ((piVar1[2] != 0) || (uVar4 = piVar1[3], 9 < uVar4)) {
-      Com_PrintError(0xd,0xffffffff821659e8,10);
+    if ((piVar1[2] != 0) || (uVar8 = piVar1[3], 9 < uVar8)) {
+      Com_PrintError(0xd,
+                     "[GetMatchRulesMetaData] second parameter should be an int between [ 0, %d ]\n"
+                    );
       __restgprlr_24();
       return;
     }
     if (piVar1[4] != 2) goto LAB_825909b4;
-    iVar3 = I_stricmp(piVar1[5],0xffffffff821659dc);
+    iVar3 = I_stricmp((char *)piVar1[5],"timestamp");
     if (iVar3 != 0) {
-      iVar3 = I_stricmp(piVar1[5],0xffffffff821659d0);
+      iVar3 = I_stricmp((char *)piVar1[5],"rawgametype");
       if (iVar3 == 0) {
-        uVar6 = 1;
+        MVar10 = RECIPE_LOOKUP_RAW_GAMETYPE;
       }
       else {
-        iVar3 = I_stricmp(piVar1[5],0xffffffff820337c4);
+        iVar3 = I_stricmp((char *)piVar1[5],"gametype");
         if (iVar3 == 0) {
-          uVar6 = 2;
+          MVar10 = RECIPE_LOOKUP_GAMETYPE;
         }
         else {
-          iVar3 = I_stricmp(piVar1[5],0xffffffff82021a74);
+          iVar3 = I_stricmp((char *)piVar1[5],"name");
           if (iVar3 != 0) goto LAB_825909b4;
-          uVar6 = 3;
+          MVar10 = RECIPE_LOOKUP_NAME;
         }
       }
     }
   }
-  iVar3 = GameStateInfo_Get();
-  if (*(int *)(iVar3 + 4) == 0) {
-    Com_PrintError(0xd,0xffffffff82165a90);
+  pGVar4 = GameStateInfo_Get();
+  if (pGVar4->usingRecipe == 0) {
+    Com_PrintError(0xd,"[GetMatchRulesMetaData] called when not using recipe\n");
     __restgprlr_24();
     return;
   }
-  uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-  if (*(int *)(iVar3 + 8) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x8fd,0,0xffffffff82000f98,0xffffffff82042524);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if (pGVar4->matchRules == (MatchRules *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x8fd,0
+                    ,"%s");
   }
-  LoadMatchRulesMetadataFromDisk(*(undefined4 *)(iVar3 + 8),uVar2,uVar5,uVar4,uVar6,param_3);
-  __restgprlr_24();
+  iVar3 = LoadMatchRulesMetadataFromDisk(pGVar4->matchRules,iVar3,MVar9,uVar8,MVar10,pOVar7);
+  __restgprlr_24(iVar3);
   return;
 }
 
 
 // 82590A48  IsCustomClassRestricted  (ui/ui_expressions.cpp:2313)
 
-void IsCustomClassRestricted(undefined8 param_1,int *param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsCustomClassRestricted(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  Statement_s *pSVar1;
+  LocalClientNum_t LVar2;
+  GameStateInfo *pGVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  Operand *pOVar7;
   
-  uVar2 = __savegprlr_29();
-  if (((param_2[0x14] == 2) && (*param_2 == 2)) && (param_2[2] == 0)) {
-    iVar3 = GameStateInfo_Get();
-    if (*(int *)(iVar3 + 4) == 0) {
-      if ((param_3 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82164aa0,0xf3,0,0xffffffff82000f98,0xffffffff82164ae0);
+  uVar6 = (ulonglong)(int)param_3;
+  LVar2 = __savegprlr_29(param_1);
+  if (((param_2->operandCount == 2) && (param_2->operands[0].dataType == VAL_STRING)) &&
+     (param_2->operands[1].dataType == VAL_INT)) {
+    pGVar3 = GameStateInfo_Get();
+    pOVar7 = (Operand *)uVar6;
+    if (pGVar3->usingRecipe == 0) {
+      if ((uVar6 & 0xffffffff) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0xf3,0,"%s");
       }
-      *(undefined4 *)param_3 = 0;
-      ((undefined4 *)param_3)[1] = 0;
+      pOVar7->dataType = VAL_INT;
+      (pOVar7->internals).intVal = 0;
       __restgprlr_29();
       return;
     }
-    iVar3 = param_2[3];
-    iVar1 = param_2[1];
-    uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-    iVar3 = MatchRules_ValidateCustomClass(uVar2,iVar1,iVar3);
-    Operand_SetBool(param_3,iVar3 == 0);
+    iVar5 = param_2->operands[1].internals.intVal;
+    pSVar1 = param_2->operands[0].internals.function;
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    iVar5 = MatchRules_ValidateCustomClass(iVar4,(char *)pSVar1,iVar5);
+    Operand_SetBool(pOVar7,(uint)LZCOUNT(iVar5) >> 5);
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82165b10);
+  Com_PrintError(0xd,
+                 "IsCustomClassRestricted( string locName, int index ) has incorrect or invalid params.\n"
+                );
   __restgprlr_29();
   return;
 }
@@ -2709,27 +3224,34 @@ void IsCustomClassRestricted(undefined8 param_1,int *param_2,ulonglong param_3)
 
 // 82590B28  IsWeaponRestricted  (ui/ui_expressions.cpp:2336)
 
-void IsWeaponRestricted(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsWeaponRestricted(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
+  GameStateInfo *pGVar1;
+  int iVar2;
   
-  if ((param_1[0x14] == 1) && (*param_1 == 2)) {
-    iVar1 = GameStateInfo_Get();
-    if (*(int *)(iVar1 + 4) == 0) {
-      if (param_2 == (undefined4 *)0x0) {
-        MyAssertHandler(0xffffffff82164aa0,0xf3,0,0xffffffff82000f98,0xffffffff82164ae0);
+  if ((*(int *)(param_1 + 0x50) == 1) && (*(int *)param_1 == 2)) {
+    pGVar1 = GameStateInfo_Get();
+    if (pGVar1->usingRecipe == 0) {
+      if (param_2 == (OperandList *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0xf3,0,"%s");
       }
-      *param_2 = 0;
-      param_2[1] = 0;
+      param_2->operands[0].dataType = VAL_INT;
+      param_2->operands[0].internals.intVal = 0;
     }
     else {
-      iVar1 = MatchRules_ValidateWeapon(param_1[1]);
-      Operand_SetBool(param_2,iVar1 == 0);
+      iVar2 = MatchRules_ValidateWeapon(*(char **)(param_1 + LOCAL_CLIENT_COUNT));
+      Operand_SetBool(param_2->operands,(uint)LZCOUNT(iVar2) >> 5);
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82165b68);
+    Com_PrintError(0xd,"IsWeaponRestricted( string weaponName ) has incorrect or invalid params.\n")
+    ;
   }
   return;
 }
@@ -2737,72 +3259,83 @@ void IsWeaponRestricted(int *param_1,undefined4 *param_2)
 
 // 82590BF0  IncludedInMapRotation  (ui/ui_expressions.cpp:2358)
 
-void IncludedInMapRotation(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IncludedInMapRotation(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  uint *puVar2;
+  char *pcVar1;
+  LobbyMapRotation *pLVar2;
   int *piVar3;
-  int iVar4;
-  char cVar5;
-  undefined4 *puVar6;
-  uint uVar7;
-  uint *puVar8;
+  GameStateInfo *pGVar4;
+  bool bVar6;
+  int iVar5;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  uint uVar9;
+  <unnamed_type_entry> *p<Var10;
   
-  piVar3 = (int *)__savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xf3,0,0xffffffff82000f98,0xffffffff82164ae0);
+  uVar7 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_26(param_1,uVar7,param_3);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xf3,0,
+                    "%s");
   }
-  puVar6 = (undefined4 *)param_2;
-  *puVar6 = 0;
-  puVar6[1] = 0;
+  puVar8 = (undefined4 *)uVar7;
+  *puVar8 = 0;
+  puVar8[1] = 0;
   if ((piVar3[0x14] == 1) && (*piVar3 == 2)) {
-    iVar1 = piVar3[1];
-    iVar4 = GameStateInfo_Get();
-    cVar5 = Lobby_IsInLobby();
-    if (cVar5 == '\0') {
-      Com_PrintError(0xd,0xffffffff82165cb4);
+    pcVar1 = (char *)piVar3[1];
+    pGVar4 = GameStateInfo_Get();
+    bVar6 = Lobby_IsInLobby();
+    if (!bVar6) {
+      Com_PrintError(0xd,"IncludedInMapRotation called while not in lobby\n");
       __restgprlr_26();
       return;
     }
-    cVar5 = Lobby_AreWeHost();
-    if (cVar5 == '\0') {
-      Com_PrintError(0xd,0xffffffff82165c80);
+    bVar6 = Lobby_AreWeHost();
+    if (!bVar6) {
+      Com_PrintError(0xd,"IncludeInMapRotation called while not lobby host\n");
       __restgprlr_26();
       return;
     }
-    if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
-      Com_PrintError(0xd,0xffffffff82165c48);
+    if ((xblive_privatematch->current).enabled == false) {
+      Com_PrintError(0xd,"IncludeInMapRotation called while not in private match\n");
       __restgprlr_26();
       return;
     }
-    if (*(int *)(iVar4 + 0x14) == 0) {
-      Com_PrintError(0xd,0xffffffff82165c0c);
+    if (pGVar4->mapRotation == (LobbyMapRotation *)0x0) {
+      Com_PrintError(0xd,"IncludeInMapRotation called while not using map rotation\n");
     }
-    if (*(int *)(iVar4 + 0x14) == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0x959,0,0xffffffff82000f98,0xffffffff82045f50);
+    if (pGVar4->mapRotation == (LobbyMapRotation *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x959
+                      ,0,"%s");
     }
-    puVar2 = *(uint **)(iVar4 + 0x14);
-    uVar7 = 0;
-    if (*puVar2 != 0) {
-      puVar8 = puVar2 + 1;
+    pLVar2 = pGVar4->mapRotation;
+    uVar9 = 0;
+    if (pLVar2->entryCount != 0) {
+      p<Var10 = pLVar2->entry;
       do {
-        iVar4 = I_strncmp(iVar1,puVar8,0x10);
-        if (iVar4 == 0) {
-          *puVar6 = 0;
-          puVar6[1] = 1;
+        iVar5 = I_strncmp(pcVar1,p<Var10->name,0x10);
+        if (iVar5 == 0) {
+          *puVar8 = 0;
+          puVar8[1] = 1;
           __restgprlr_26();
           return;
         }
-        uVar7 = uVar7 + 1;
-        puVar8 = puVar8 + 5;
-      } while (uVar7 < *puVar2);
+        uVar9 = uVar9 + 1;
+        p<Var10 = p<Var10 + 1;
+      } while (uVar9 < pLVar2->entryCount);
       __restgprlr_26();
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82165bb8);
+    Com_PrintError(0xd,
+                   "IncludedInMapRotation: Parameters not legit! s.b. IncludedInMapRotation(string) \n"
+                  );
   }
   __restgprlr_26();
   return;
@@ -2811,34 +3344,41 @@ void IncludedInMapRotation(undefined8 param_1,ulonglong param_2)
 
 // 82590DA0  GetIsUsingCustomMapRotation  (ui/ui_expressions.cpp:2407)
 
-void GetIsUsingCustomMapRotation(undefined8 param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsUsingCustomMapRotation(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
-  char cVar2;
+  GameStateInfo *pGVar1;
+  bool bVar2;
   
-  iVar1 = GameStateInfo_Get();
-  cVar2 = Lobby_IsInLobby();
-  if (cVar2 == '\0') {
-    Com_PrintError(0xd,0xffffffff82165d9c);
-  }
-  else {
-    cVar2 = Lobby_AreWeHost();
-    if (cVar2 == '\0') {
-      Com_PrintError(0xd,0xffffffff82165d64);
-    }
-    else if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
-      Com_PrintError(0xd,0xffffffff82165d28);
+  pGVar1 = GameStateInfo_Get();
+  bVar2 = Lobby_IsInLobby();
+  if (bVar2) {
+    bVar2 = Lobby_AreWeHost();
+    if (bVar2) {
+      if ((xblive_privatematch->current).enabled == false) {
+        Com_PrintError(0xd,"isUsingCustomMapRotation called while not in private match\n");
+      }
+      else {
+        if (pGVar1->mapRotation == (LobbyMapRotation *)0x0) {
+          Com_PrintError(0xd,"isUsingCustomMapRotation called while not using map rotation\n");
+        }
+        if (pGVar1->mapRotation == (LobbyMapRotation *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x97e,0,"%s");
+        }
+        Operand_SetBool((Operand *)param_1,pGVar1->usingRotation);
+      }
     }
     else {
-      if (*(int *)(iVar1 + 0x14) == 0) {
-        Com_PrintError(0xd,0xffffffff82165ce8);
-      }
-      if (*(int *)(iVar1 + 0x14) == 0) {
-        MyAssertHandler(0xffffffff82164aa0,0x97e,0,0xffffffff82000f98,0xffffffff82045f50);
-      }
-      Operand_SetBool(param_1,*(undefined4 *)(iVar1 + 0xc));
+      Com_PrintError(0xd,"isUsingCustomMapRotation called while not lobby host\n");
     }
+  }
+  else {
+    Com_PrintError(0xd,"isUsingCustomMapRotation called while not in lobby\n");
   }
   return;
 }
@@ -2846,230 +3386,261 @@ void GetIsUsingCustomMapRotation(undefined8 param_1)
 
 // 82590EA0  Expression_GetPersistentDataBuffer  (ui/ui_expressions.cpp:2438)
 
-void Expression_GetPersistentDataBuffer(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Expression_GetPersistentDataBuffer(StructuredDataBuffer *param_1,LocalClientNum_t param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  int iVar3;
+  undefined4 *puVar1;
+  int iVar2;
+  uchar *puVar3;
+  undefined1 uVar4;
   
-  piVar2 = (int *)__savegprlr_29();
-  uVar1 = CL_ControllerIndexFromClientNum(param_2);
-  iVar3 = LiveStorage_GetPersistentDataBuffer();
-  if (iVar3 == 0) {
-    ShowPopupGettingData(uVar1);
-    __restgprlr_29(0);
-    return;
+  puVar1 = (undefined4 *)__savegprlr_29(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(param_2);
+  puVar3 = LiveStorage_GetPersistentDataBuffer(iVar2);
+  if (puVar3 == (uchar *)0x0) {
+    ShowPopupGettingData(iVar2);
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82164a48,0x53,0,0xffffffff82000f98,0xffffffff82012420);
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../universal/com_structureddatadef.h"
+                    ,0x53,0,"%s");
   }
-  *piVar2 = iVar3;
-  piVar2[1] = 0x2ffc;
-  __restgprlr_29(1);
-  return;
+  *puVar1 = puVar3;
+  puVar1[1] = 0x2ffc;
+  uVar4 = __restgprlr_29(1);
+  return (bool)uVar4;
 }
 
 
 // 82590F28  GetTimePlayed  (ui/ui_expressions.cpp:2459)
 
-void GetTimePlayed(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetTimePlayed(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int *piVar1;
   undefined4 *puVar2;
-  undefined8 uVar3;
-  int iVar6;
-  longlong lVar4;
-  longlong lVar5;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  char *pcVar9;
   ulonglong uVar10;
-  longlong lVar11;
+  ulonglong uVar11;
   ulonglong uVar12;
-  undefined1 local_c0 [8];
-  undefined8 local_b8;
-  undefined8 local_b0;
-  undefined8 local_a8;
-  undefined8 local_a0;
+  ConversionArguments local_c0;
   char acStack_90 [16];
   char acStack_80 [16];
   char acStack_70 [16];
   char acStack_60 [96];
   
-  uVar3 = __savegprlr_24();
-  uVar12 = 0;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x9a5,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_24(param_1);
+  uVar6 = 0;
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x9a5,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x9a6,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x9a6,0
+                    ,"%s");
   }
-  piVar1 = (int *)param_2;
-  puVar2 = (undefined4 *)param_3;
+  piVar1 = (int *)uVar10;
+  puVar2 = (undefined4 *)uVar11;
   if ((piVar1[0x14] < 1) || (*piVar1 != 2)) {
-    puVar2[1] = &DAT_820068af;
-    Com_PrintError(0xd,0xffffffff82165e64);
+    puVar2[1] = "";
+    Com_PrintError(0xd,"UI Expression Error: getTimePlayed must be for \'sp\' or \'mp\'\n");
   }
   else {
-    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-    iVar7 = piVar1[1];
-    iVar6 = I_stricmp(iVar7,0xffffffff82084e78);
-    if (iVar6 == 0) {
-      uVar12 = GamerProfile_GetPlayTimeSP(uVar3);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    pcVar9 = (char *)piVar1[1];
+    iVar5 = I_stricmp(pcVar9,"sp");
+    if (iVar5 == 0) {
+      uVar6 = GamerProfile_GetPlayTimeSP(iVar4);
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82139d0c);
-    if (iVar6 == 0) {
-      uVar12 = GamerProfile_GetPlayTimeSO(uVar3);
+    iVar5 = I_stricmp(pcVar9,"so");
+    if (iVar5 == 0) {
+      uVar6 = GamerProfile_GetPlayTimeSO(iVar4);
     }
     else {
-      iVar6 = I_stricmp(iVar7,0xffffffff82084e7c);
-      if (iVar6 == 0) {
-        uVar12 = GamerProfile_GetPlayTimeMP(uVar3);
+      iVar5 = I_stricmp(pcVar9,"mp");
+      if (iVar5 == 0) {
+        uVar6 = GamerProfile_GetPlayTimeMP(iVar4);
       }
       else {
-        iVar7 = I_stricmp(iVar7,0xffffffff8208eb58);
-        if (iVar7 == 0) {
-          lVar11 = GamerProfile_GetPlayTimeSP(uVar3);
-          lVar4 = GamerProfile_GetPlayTimeSO(uVar3);
-          lVar5 = GamerProfile_GetPlayTimeMP(uVar3);
-          uVar12 = lVar5 + lVar11 + lVar4;
+        iVar5 = I_stricmp(pcVar9,"total");
+        if (iVar5 == 0) {
+          uVar7 = GamerProfile_GetPlayTimeSP(iVar4);
+          uVar8 = GamerProfile_GetPlayTimeSO(iVar4);
+          uVar6 = GamerProfile_GetPlayTimeMP(iVar4);
+          uVar6 = uVar6 + uVar7 + uVar8;
         }
       }
     }
   }
-  uVar10 = (uVar12 & 0xffffffff) / 100;
-  uVar9 = uVar10 / 0x3c;
-  uVar8 = uVar9 / 0x3c;
-  lVar11 = uVar12 + ((uVar12 & 0xffffffff) / 100) * -100;
-  uVar10 = uVar10 % 0x3c;
-  uVar9 = uVar9 % 0x3c;
-  uVar12 = uVar8 / 0x18;
-  uVar8 = uVar8 % 0x18;
+  uVar12 = (ulonglong)uVar6 / 100;
+  uVar11 = uVar12 / 0x3c;
+  uVar10 = uVar11 / 0x3c;
   if ((1 < piVar1[0x14]) && (piVar1[2] == 2)) {
-    iVar7 = piVar1[3];
-    iVar6 = I_stricmp(iVar7,0xffffffff82165e5c);
-    if (iVar6 == 0) {
-      puVar2[1] = (int)uVar12;
+    pcVar9 = (char *)piVar1[3];
+    iVar4 = I_stricmp(pcVar9,"days");
+    if (iVar4 == 0) {
+      puVar2[1] = (int)(uVar10 / 0x18);
       *puVar2 = 0;
       __restgprlr_24();
       return;
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82165e54);
-    if (iVar6 == 0) {
-      puVar2[1] = (int)uVar8;
+    iVar4 = I_stricmp(pcVar9,"hours");
+    if (iVar4 == 0) {
+      puVar2[1] = (int)uVar10 + (int)(uVar10 / 0x18) * -0x18;
       *puVar2 = 0;
       __restgprlr_24();
       return;
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82165e4c);
-    if (iVar6 == 0) {
-      puVar2[1] = (int)uVar9;
+    iVar4 = I_stricmp(pcVar9,"minutes");
+    if (iVar4 == 0) {
+      puVar2[1] = (int)uVar11 + (int)(uVar11 / 0x3c) * -0x3c;
       *puVar2 = 0;
       __restgprlr_24();
       return;
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82106068);
-    if (iVar6 == 0) {
-      puVar2[1] = (int)uVar10;
+    iVar4 = I_stricmp(pcVar9,"seconds");
+    if (iVar4 == 0) {
+      puVar2[1] = (int)uVar12 + (int)(uVar12 / 0x3c) * -0x3c;
       *puVar2 = 0;
       __restgprlr_24();
       return;
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82165e3c);
-    if (iVar6 == 0) {
-      puVar2[1] = (int)lVar11;
+    iVar4 = I_stricmp(pcVar9,"centiseconds");
+    if (iVar4 == 0) {
+      puVar2[1] = uVar6 % 100;
       *puVar2 = 0;
       __restgprlr_24();
       return;
     }
-    iVar6 = I_stricmp(iVar7,0xffffffff82165e38);
-    if (iVar6 == 0) {
+    iVar4 = I_stricmp(pcVar9,"hms");
+    if (iVar4 == 0) {
       *puVar2 = 2;
-      local_b8 = 0;
-      local_b0 = 0;
-      local_a8 = 0;
-      local_a0 = 0;
-      _snprintf(acStack_90,0x10,"%02d",uVar8);
-      _snprintf(acStack_80,0x10,"%02d",uVar9);
-      _snprintf(acStack_70,0x10,"%02d",uVar10);
-      local_b8 = CONCAT44(acStack_80,acStack_70);
-      uVar12 = SEH_LocalizeTextMessage(0xffffffff82165e0c,0xffffffff82165e24,1);
-      if ((uVar12 & 0xffffffff) != 0) {
-        UI_ReplaceConversions(uVar12,local_c0,0xffffffff83f62f50,0x80);
-        puVar2[1] = &DAT_83f62f50;
+      local_c0.args[1] = (char *)0x0;
+      local_c0.args[2] = (char *)0x0;
+      local_c0.args[3] = (char *)0x0;
+      local_c0.args[4] = (char *)0x0;
+      local_c0.args[5] = (char *)0x0;
+      local_c0.args[6] = (char *)0x0;
+      local_c0.args[7] = (char *)0x0;
+      local_c0.args[8] = (char *)0x0;
+      local_c0.args[0] = (char *)0x0;
+      local_c0.argCount = 3;
+      _snprintf(acStack_90,0x10,"%02d");
+      _snprintf(acStack_80,0x10,"%02d");
+      _snprintf(acStack_70,0x10,"%02d");
+      local_c0.args[0] = acStack_90;
+      local_c0.args[1] = acStack_80;
+      local_c0.args[2] = acStack_70;
+      pcVar9 = SEH_LocalizeTextMessage("MENU_SP_TIME_PLAYED_HMS","ui string",LOCMSG_NOERR);
+      if (pcVar9 != (char *)0x0) {
+        UI_ReplaceConversions(pcVar9,&local_c0,resultHMS,0x80);
+        puVar2[1] = resultHMS;
         __restgprlr_24();
         return;
       }
-      DAT_83f62f50 = 0;
-      puVar2[1] = &DAT_83f62f50;
+      resultHMS[0] = '\0';
+      puVar2[1] = resultHMS;
       __restgprlr_24();
       return;
     }
-    iVar7 = I_stricmp(iVar7,0xffffffff82165e04);
-    if (iVar7 == 0) {
+    iVar4 = I_stricmp(pcVar9,"dhms");
+    if (iVar4 == 0) {
       *puVar2 = 2;
-      local_b8 = 0;
-      local_b0 = 0;
-      local_a8 = 0;
-      local_a0 = 0;
-      _snprintf(acStack_90,0x10,"%d",uVar12);
-      _snprintf(acStack_80,0x10,"%02d",uVar8);
-      _snprintf(acStack_70,0x10,"%02d",uVar9);
-      _snprintf(acStack_60,0x10,"%02d",uVar10);
-      local_b8 = CONCAT44(acStack_80,acStack_70);
-      local_b0 = CONCAT44(acStack_60,local_b0._4_4_);
-      uVar12 = SEH_LocalizeTextMessage(0xffffffff82165de8,0xffffffff82165e24,1);
-      if ((uVar12 & 0xffffffff) != 0) {
-        UI_ReplaceConversions(uVar12,local_c0,0xffffffff83f62ed0,0x80);
-        puVar2[1] = &DAT_83f62ed0;
+      local_c0.args[1] = (char *)0x0;
+      local_c0.args[2] = (char *)0x0;
+      local_c0.args[3] = (char *)0x0;
+      local_c0.args[4] = (char *)0x0;
+      local_c0.args[5] = (char *)0x0;
+      local_c0.args[6] = (char *)0x0;
+      local_c0.args[7] = (char *)0x0;
+      local_c0.args[8] = (char *)0x0;
+      local_c0.args[0] = (char *)0x0;
+      local_c0.argCount = 4;
+      _snprintf(acStack_90,0x10,"%d");
+      _snprintf(acStack_80,0x10,"%02d");
+      _snprintf(acStack_70,0x10,"%02d");
+      _snprintf(acStack_60,0x10,"%02d");
+      local_c0.args[0] = acStack_90;
+      local_c0.args[1] = acStack_80;
+      local_c0.args[2] = acStack_70;
+      local_c0.args[3] = acStack_60;
+      pcVar9 = SEH_LocalizeTextMessage("MENU_SP_TIME_PLAYED_DHMS","ui string",LOCMSG_NOERR);
+      if (pcVar9 != (char *)0x0) {
+        UI_ReplaceConversions(pcVar9,&local_c0,resultDHMS,0x80);
+        puVar2[1] = resultDHMS;
         __restgprlr_24();
         return;
       }
-      DAT_83f62ed0 = 0;
-      puVar2[1] = &DAT_83f62ed0;
+      resultDHMS[0] = '\0';
+      puVar2[1] = resultDHMS;
       __restgprlr_24();
       return;
     }
   }
   *puVar2 = 2;
-  iVar7 = _snprintf(&DAT_83f62e50,0x80,"%i:%02d:%02d:%02d:%02d",uVar12,uVar8,uVar9,uVar10,lVar11);
-  puVar2[1] = &DAT_83f62e50;
-  __restgprlr_24(iVar7);
+  iVar4 = _snprintf(resultString,0x80,"%i:%02d:%02d:%02d:%02d");
+  puVar2[1] = resultString;
+  __restgprlr_24(iVar4);
   return;
 }
 
 
 // 82591440  GetSortedChallengeCount  (ui/ui_expressions.cpp:2605)
 
-void GetSortedChallengeCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetSortedChallengeCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa2e,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa2e,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa2f,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa2f,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if ((((int *)param_2)[0x14] == 1) && (*(int *)param_2 == 2)) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar2 = GetSourceString(param_2);
-    uVar3 = LiveStorage_SortedChallengeCount(uVar1,uVar2);
-    puVar4[1] = uVar3;
+  puVar7 = (undefined4 *)uVar6;
+  *puVar7 = 0;
+  puVar7[1] = 0;
+  pOVar1 = (Operand *)uVar5;
+  if ((pOVar1[10].dataType == VAL_FLOAT) && (pOVar1->dataType == VAL_STRING)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    pcVar4 = GetSourceString(pOVar1);
+    iVar3 = LiveStorage_SortedChallengeCount(iVar3,pcVar4);
+    puVar7[1] = iVar3;
     __restgprlr_27();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82165ea4);
+  Com_PrintError(0xd,"Error: GetSortedChallengeCount( filter )\n");
   __restgprlr_27();
   return;
 }
@@ -3077,47 +3648,57 @@ void GetSortedChallengeCount(undefined8 param_1,ulonglong param_2,ulonglong para
 
 // 82591518  GetSortedChallengeIndex  (ui/ui_expressions.cpp:2631)
 
-void GetSortedChallengeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSortedChallengeIndex(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined4 uVar6;
-  undefined4 *puVar7;
+  int *piVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
   
-  uVar3 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa48,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa48,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa49,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa49,0
+                    ,"%s");
   }
-  puVar7 = (undefined4 *)param_3;
-  *puVar7 = 0;
-  puVar7[1] = 0;
-  piVar2 = (int *)param_2;
-  if (((piVar2[0x14] == 2) && (*piVar2 == 0)) && (piVar2[2] == 2)) {
-    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-    iVar1 = piVar2[1];
-    uVar4 = GetSourceString(param_2 + 8);
-    uVar5 = LiveStorage_SortedChallengeCount(uVar3,uVar4);
-    if ((-1 < iVar1) && (iVar1 < (int)uVar5)) {
-      uVar6 = LiveStorage_SortedChallengeIndex(uVar3,iVar1,uVar4);
-      puVar7[1] = uVar6;
+  puVar9 = (undefined4 *)uVar8;
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  piVar1 = (int *)uVar7;
+  if (((piVar1[0x14] == 2) && (*piVar1 == 0)) && (piVar1[2] == 2)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    iVar6 = piVar1[1];
+    pcVar4 = GetSourceString((Operand *)(piVar1 + 2));
+    iVar5 = LiveStorage_SortedChallengeCount(iVar3,pcVar4);
+    if ((-1 < iVar6) && (iVar6 < iVar5)) {
+      iVar6 = LiveStorage_SortedChallengeIndex(iVar3,iVar6,pcVar4);
+      puVar9[1] = iVar6;
       __restgprlr_27();
       return;
     }
-    if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
-      Com_PrintWarning(0xd,0xffffffff82165efc,iVar1,uVar5);
+    if ((ui_debugMode->current).enabled != false) {
+      Com_PrintWarning(0xd,"Warning: index %d is not in the %d filtered items\n");
       __restgprlr_27();
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82165ed0);
+    Com_PrintError(0xd,"Error: GetSortedChallenge( index, filter )\n");
   }
   __restgprlr_27();
   return;
@@ -3126,50 +3707,60 @@ void GetSortedChallengeIndex(undefined8 param_1,ulonglong param_2,ulonglong para
 
 // 82591660  GetSortedChallengeName  (ui/ui_expressions.cpp:2667)
 
-void GetSortedChallengeName(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSortedChallengeName(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
   int *piVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined1 *puVar6;
-  undefined4 *puVar7;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
   
-  uVar3 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa6c,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa6c,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa6d,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa6d,0
+                    ,"%s");
   }
-  puVar7 = (undefined4 *)param_3;
-  *puVar7 = 2;
-  puVar7[1] = &DAT_820068af;
-  piVar2 = (int *)param_2;
+  puVar9 = (undefined4 *)uVar8;
+  *puVar9 = 2;
+  puVar9[1] = "";
+  piVar2 = (int *)uVar7;
   if (((piVar2[0x14] == 2) && (*piVar2 == 0)) && (piVar2[2] == 2)) {
-    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
     iVar1 = piVar2[1];
-    uVar4 = GetSourceString(param_2 + 8);
-    uVar5 = LiveStorage_SortedChallengeCount(uVar3,uVar4);
-    if ((-1 < iVar1) && (iVar1 < (int)uVar5)) {
-      puVar6 = (undefined1 *)LiveStorage_SortedChallengeName(uVar3,iVar1,uVar4);
-      if (puVar6 == (undefined1 *)0x0) {
-        puVar6 = &DAT_820068af;
+    pcVar5 = GetSourceString((Operand *)(piVar2 + 2));
+    iVar6 = LiveStorage_SortedChallengeCount(iVar4,pcVar5);
+    if ((-1 < iVar1) && (iVar1 < iVar6)) {
+      pcVar5 = LiveStorage_SortedChallengeName(iVar4,iVar1,pcVar5);
+      if (pcVar5 == (char *)0x0) {
+        pcVar5 = "";
       }
-      puVar7[1] = puVar6;
+      puVar9[1] = pcVar5;
       __restgprlr_26();
       return;
     }
-    if (*(char *)(DAT_83f71ea8 + 0xc) != '\0') {
-      Com_PrintWarning(0xd,0xffffffff82165efc,iVar1,uVar5);
+    if ((ui_debugMode->current).enabled != false) {
+      Com_PrintWarning(0xd,"Warning: index %d is not in the %d filtered items\n");
       __restgprlr_26();
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82165f30);
+    Com_PrintError(0xd,"Error: GetSortedChallengeName( index, filter )\n");
   }
   __restgprlr_26();
   return;
@@ -3178,33 +3769,45 @@ void GetSortedChallengeName(undefined8 param_1,ulonglong param_2,ulonglong param
 
 // 825917B8  GetFilterChallengeCount  (ui/ui_expressions.cpp:2703)
 
-void GetFilterChallengeCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetFilterChallengeCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa90,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa90,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xa91,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xa91,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if ((((int *)param_2)[0x14] == 1) && (*(int *)param_2 == 2)) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar2 = GetSourceString(param_2);
-    uVar3 = LiveStorage_FilteredChallengeCount(uVar1,uVar2);
-    puVar4[1] = uVar3;
+  puVar7 = (undefined4 *)uVar6;
+  *puVar7 = 0;
+  puVar7[1] = 0;
+  pOVar1 = (Operand *)uVar5;
+  if ((pOVar1[10].dataType == VAL_FLOAT) && (pOVar1->dataType == VAL_STRING)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    pcVar4 = GetSourceString(pOVar1);
+    iVar3 = LiveStorage_FilteredChallengeCount(iVar3,pcVar4);
+    puVar7[1] = iVar3;
     __restgprlr_27();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82165f60);
+  Com_PrintError(0xd,"Error: GetFilterChallengeCount( filter )\n");
   __restgprlr_27();
   return;
 }
@@ -3212,33 +3815,45 @@ void GetFilterChallengeCount(undefined8 param_1,ulonglong param_2,ulonglong para
 
 // 82591890  GetFilterChallengeLockedCount  (ui/ui_expressions.cpp:2729)
 
-void GetFilterChallengeLockedCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetFilterChallengeLockedCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xaaa,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xaaa,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xaab,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xaab,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if ((((int *)param_2)[0x14] == 1) && (*(int *)param_2 == 2)) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar2 = GetSourceString(param_2);
-    uVar3 = LiveStorage_FilteredChallengeLockedCount(uVar1,uVar2);
-    puVar4[1] = uVar3;
+  puVar7 = (undefined4 *)uVar6;
+  *puVar7 = 0;
+  puVar7[1] = 0;
+  pOVar1 = (Operand *)uVar5;
+  if ((pOVar1[10].dataType == VAL_FLOAT) && (pOVar1->dataType == VAL_STRING)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    pcVar4 = GetSourceString(pOVar1);
+    iVar3 = LiveStorage_FilteredChallengeLockedCount(iVar3,pcVar4);
+    puVar7[1] = iVar3;
     __restgprlr_27();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82165f60);
+  Com_PrintError(0xd,"Error: GetFilterChallengeCount( filter )\n");
   __restgprlr_27();
   return;
 }
@@ -3246,42 +3861,53 @@ void GetFilterChallengeLockedCount(undefined8 param_1,ulonglong param_2,ulonglon
 
 // 82591968  GetIsSortedChallengeTiered  (ui/ui_expressions.cpp:2755)
 
-void GetIsSortedChallengeTiered(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsSortedChallengeTiered(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
   int *piVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar5;
-  uint uVar6;
-  undefined4 *puVar7;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  bool bVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
   
-  uVar3 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xac4,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_27(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xac4,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xac5,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xac5,0
+                    ,"%s");
   }
-  puVar7 = (undefined4 *)param_3;
-  *puVar7 = 0;
-  puVar7[1] = 0;
-  piVar2 = (int *)param_2;
+  puVar10 = (undefined4 *)uVar9;
+  *puVar10 = 0;
+  puVar10[1] = 0;
+  piVar2 = (int *)uVar8;
   if (((piVar2[0x14] == 2) && (*piVar2 == 0)) && (piVar2[2] == 2)) {
-    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
     iVar1 = piVar2[1];
-    uVar4 = GetSourceString(param_2 + 8);
-    iVar5 = LiveStorage_SortedChallengeCount(uVar3,uVar4);
-    if ((-1 < iVar1) && (iVar1 < iVar5)) {
-      uVar6 = LiveStorage_IsSortedChallengeTiered(uVar3,iVar1,uVar4);
-      puVar7[1] = uVar6 & 0xff;
+    pcVar5 = GetSourceString((Operand *)(piVar2 + 2));
+    iVar6 = LiveStorage_SortedChallengeCount(iVar4,pcVar5);
+    if ((-1 < iVar1) && (iVar1 < iVar6)) {
+      bVar7 = LiveStorage_IsSortedChallengeTiered(iVar4,iVar1,pcVar5);
+      puVar10[1] = (uint)bVar7;
       __restgprlr_27();
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82165f8c);
+    Com_PrintError(0xd,"Error: GetIsSortedChallengeTiered( index, filter )\n");
   }
   __restgprlr_27();
   return;
@@ -3290,33 +3916,45 @@ void GetIsSortedChallengeTiered(undefined8 param_1,ulonglong param_2,ulonglong p
 
 // 82591A80  GetFilterChallengeCompleteCount  (ui/ui_expressions.cpp:2787)
 
-void GetFilterChallengeCompleteCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFilterChallengeCompleteCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xae4,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xae4,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xae5,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xae5,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if ((((int *)param_2)[0x14] == 1) && (*(int *)param_2 == 2)) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar2 = GetSourceString(param_2);
-    uVar3 = LiveStorage_FilteredChallengeCompleteCount(uVar1,uVar2);
-    puVar4[1] = uVar3;
+  puVar7 = (undefined4 *)uVar6;
+  *puVar7 = 0;
+  puVar7[1] = 0;
+  pOVar1 = (Operand *)uVar5;
+  if ((pOVar1[10].dataType == VAL_FLOAT) && (pOVar1->dataType == VAL_STRING)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    pcVar4 = GetSourceString(pOVar1);
+    iVar3 = LiveStorage_FilteredChallengeCompleteCount(iVar3,pcVar4);
+    puVar7[1] = iVar3;
     __restgprlr_27();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82165f60);
+  Com_PrintError(0xd,"Error: GetFilterChallengeCount( filter )\n");
   __restgprlr_27();
   return;
 }
@@ -3324,33 +3962,43 @@ void GetFilterChallengeCompleteCount(undefined8 param_1,ulonglong param_2,ulongl
 
 // 82591B58  GetChallengeFilterCacheCount  (ui/ui_expressions.cpp:2813)
 
-void GetChallengeFilterCacheCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetChallengeFilterCacheCount(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xafe,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xafe,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xaff,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xaff,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if (*(int *)param_2 != 2) {
-    Com_PrintError(0xd,0xffffffff82165fc0);
+  puVar6 = (undefined4 *)uVar5;
+  *puVar6 = 0;
+  puVar6[1] = 0;
+  if (((Operand *)uVar4)->dataType != VAL_STRING) {
+    Com_PrintError(0xd,"Error: GetChallengeFilterCacheCount( filter )\n");
     __restgprlr_27();
     return;
   }
-  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-  uVar2 = GetSourceString(param_2);
-  uVar3 = LiveStorage_FilterCacheCount(uVar1,uVar2);
-  puVar4[1] = uVar3;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  pcVar3 = GetSourceString((Operand *)uVar4);
+  iVar2 = LiveStorage_FilterCacheCount(iVar2,pcVar3);
+  puVar6[1] = iVar2;
   __restgprlr_27();
   return;
 }
@@ -3358,33 +4006,44 @@ void GetChallengeFilterCacheCount(undefined8 param_1,ulonglong param_2,ulonglong
 
 // 82591C28  GetChallengeFilterCacheCompleteCount  (ui/ui_expressions.cpp:2839)
 
-void GetChallengeFilterCacheCompleteCount(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetChallengeFilterCacheCompleteCount
+               (LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb18,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb18,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb19,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb19,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  if (*(int *)param_2 != 2) {
-    Com_PrintError(0xd,0xffffffff82165ff8);
+  puVar6 = (undefined4 *)uVar5;
+  *puVar6 = 0;
+  puVar6[1] = 0;
+  if (((Operand *)uVar4)->dataType != VAL_STRING) {
+    Com_PrintError(0xd,"Error: GetChallengeFilterCacheCompleteCount( filter )\n");
     __restgprlr_27();
     return;
   }
-  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-  uVar2 = GetSourceString(param_2);
-  uVar3 = LiveStorage_FilterCacheCompleteCount(uVar1,uVar2);
-  puVar4[1] = uVar3;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  pcVar3 = GetSourceString((Operand *)uVar4);
+  iVar2 = LiveStorage_FilterCacheCompleteCount(iVar2,pcVar3);
+  puVar6[1] = iVar2;
   __restgprlr_27();
   return;
 }
@@ -3392,77 +4051,91 @@ void GetChallengeFilterCacheCompleteCount(undefined8 param_1,ulonglong param_2,u
 
 // 82591CF8  GetPlayerProfileData  (ui/ui_expressions.cpp:2865)
 
-void GetPlayerProfileData(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPlayerProfileData
+               (LocalClientNum_t param_1,OperandList *param_2,int param_3,Operand *param_4)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined4 *puVar4;
-  uint local_40;
-  undefined1 *puStack_3c;
+  char *pcVar1;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  GamerProfileData GVar2;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  GamerProfileDataType local_40;
+  GamerProfileDataUnion GStack_3c;
   
-  uVar3 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb32,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar7 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb32,0
+                    ,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb33,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb33,0
+                    ,"%s");
   }
-  puVar4 = (undefined4 *)param_4;
-  *puVar4 = 2;
-  puVar4[1] = &DAT_820068af;
-  iVar2 = (int)param_2;
-  if ((*(int *)(iVar2 + 0x50) - (int)param_3 == 1) &&
-     (*(int *)((int)((param_3 & 0xffffffff) << 3) + iVar2) == 2)) {
-    uVar1 = *(undefined4 *)(iVar2 + 4);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar3);
-    uVar3 = GamerProfile_GetDataByName(uVar3,uVar1);
-    local_40 = (uint)((ulonglong)uVar3 >> 0x20);
+  puVar8 = (undefined4 *)uVar7;
+  *puVar8 = 2;
+  puVar8[1] = "";
+  iVar4 = (int)uVar5;
+  if ((*(int *)(iVar4 + 0x50) - (int)uVar6 == 1) &&
+     (*(int *)((int)((uVar6 & 0xffffffff) << 3) + iVar4) == 2)) {
+    pcVar1 = *(char **)(iVar4 + 4);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    GVar2 = GamerProfile_GetDataByName(iVar4,pcVar1);
+    local_40 = GVar2.type;
     if (local_40 < 8) {
-      if (local_40 != 0) {
-        if ((local_40 == 1) || (local_40 == 2)) {
-          puStack_3c._0_1_ = (byte)((ulonglong)uVar3 >> 0x18);
-          *puVar4 = 0;
-          puVar4[1] = (uint)puStack_3c._0_1_;
+      if (local_40 != TYPE_INVALID) {
+        if ((local_40 == TYPE_BYTE) || (local_40 == TYPE_BOOL)) {
+          GStack_3c._0_1_ = GVar2.u._0_1_;
+          *puVar8 = 0;
+          puVar8[1] = (uint)(byte)GStack_3c._0_1_;
           __restgprlr_26();
           return;
         }
-        if (local_40 == 3) {
-          puStack_3c._0_2_ = (short)((ulonglong)uVar3 >> 0x10);
-          *puVar4 = 0;
-          puVar4[1] = (int)puStack_3c._0_2_;
+        if (local_40 == TYPE_SHORT) {
+          GStack_3c._0_2_ = GVar2.u._0_2_;
+          *puVar8 = 0;
+          puVar8[1] = SEXT24(GStack_3c.intVal._0_2_);
           __restgprlr_26();
           return;
         }
-        puStack_3c = (undefined1 *)uVar3;
-        if (local_40 != 4) {
-          if (local_40 == 5) {
-            puVar4[1] = puStack_3c;
-            *puVar4 = 1;
+        GStack_3c = GVar2.u;
+        if (local_40 != TYPE_INT) {
+          if (local_40 == TYPE_FLOAT) {
+            ((GamerProfileDataUnion *)(puVar8 + 1))->intVal = (int)GStack_3c;
+            *puVar8 = 1;
             __restgprlr_26();
             return;
           }
-          if (local_40 != 6) {
-            Com_PrintError(0xd,0xffffffff82166064);
+          if (local_40 != TYPE_STRING) {
+            Com_PrintError(0xd,"Error: Cannot get bitfields from profile\n");
             __restgprlr_26();
             return;
           }
-          *puVar4 = 2;
-          if (puStack_3c == (undefined1 *)0x0) {
-            puStack_3c = &DAT_820068af;
+          *puVar8 = 2;
+          if (GStack_3c.intVal == 0) {
+            GStack_3c.floatVal = -9.433998e-38;
           }
-          puVar4[1] = puStack_3c;
+          ((GamerProfileDataUnion *)(puVar8 + 1))->intVal = (int)GStack_3c;
           __restgprlr_26();
           return;
         }
-        *puVar4 = 0;
-        puVar4[1] = puStack_3c;
+        *puVar8 = 0;
+        ((GamerProfileDataUnion *)(puVar8 + 1))->intVal = (int)GStack_3c;
         __restgprlr_26();
         return;
       }
-      Com_PrintError(0xd,0xffffffff82166030,uVar1);
-      puVar4[1] = &DAT_820068af;
+      Com_PrintError(0xd,"Error: invalid argument \'%s\' for GetProfileData\n");
+      puVar8[1] = "";
     }
   }
   __restgprlr_26();
@@ -3472,117 +4145,136 @@ void GetPlayerProfileData(undefined8 param_1,ulonglong param_2,ulonglong param_3
 
 // 82591EA8  GetPlayerProfileDataSplitScreen  (ui/ui_expressions.cpp:2932)
 
-void GetPlayerProfileDataSplitScreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetPlayerProfileDataSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) < 1) {
-    Com_PrintError(0xd,0xffffffff821660b0);
+    Com_PrintError(0xd,"Error: No arguments to GetPlayerProfileDataSplitScreen\n");
   }
   else {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166090);
-    if (cVar1 != '\0') {
-      GetPlayerProfileData(local_20[0],param_1,1,param_2);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"GetPlayerProfileDataSplitScreen");
+    if (bVar1) {
+      GetPlayerProfileData(local_20[0],(OperandList *)param_1,1,param_2->operands);
       return;
     }
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82591F40  GetPlayerData  (ui/ui_expressions.cpp:2955)
 
-void GetPlayerData(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPlayerData(LocalClientNum_t param_1,OperandList *param_2,int param_3,Operand *param_4)
 
 {
-  undefined8 uVar1;
-  char cVar6;
-  int iVar2;
-  undefined4 uVar3;
-  short sVar5;
-  undefined1 *puVar4;
-  undefined4 *puVar7;
-  double dVar8;
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [80];
+  LocalClientNum_t LVar1;
+  bool bVar7;
+  StructuredDataDef *pSVar2;
+  LookupResultDataType LVar3;
+  int iVar4;
+  short sVar6;
+  char *pcVar5;
+  ulonglong uVar8;
+  OperandList *pOVar9;
+  ulonglong uVar10;
+  undefined4 *puVar11;
+  float fVar12;
+  StructuredDataBuffer aSStack_60 [2];
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb91,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar10 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_25(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb91,0
+                    ,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xb92,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xb92,0
+                    ,"%s");
   }
-  puVar7 = (undefined4 *)param_4;
-  *puVar7 = 0;
-  puVar7[1] = 0;
-  cVar6 = Expression_GetPersistentDataBuffer(auStack_60,uVar1);
-  if (cVar6 != '\0') {
-    uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    cVar6 = LookupByOperandList(uVar1,auStack_50,param_2,param_3,0,0xffffffff8207aff0);
-    if (cVar6 != '\0') {
-      iVar2 = StructuredData_GetLookupResultType(auStack_50);
-      if (iVar2 == 0) {
-        *puVar7 = 0;
-        uVar3 = StructuredData_GetInt(auStack_50,auStack_60);
-        puVar7[1] = uVar3;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(param_2,0xffffffff8207aff0);
-          Com_Printf(0xd,0xffffffff821658b8,puVar7[1]);
+  puVar11 = (undefined4 *)uVar10;
+  *puVar11 = 0;
+  puVar11[1] = 0;
+  bVar7 = Expression_GetPersistentDataBuffer(aSStack_60,LVar1);
+  if (bVar7) {
+    pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    pOVar9 = (OperandList *)uVar8;
+    bVar7 = LookupByOperandList(pSVar2,aSStack_50,pOVar9,param_3,false,"GetPlayerData");
+    if (bVar7) {
+      LVar3 = StructuredData_GetLookupResultType(aSStack_50);
+      if (LVar3 == LOOKUP_RESULT_INT) {
+        *puVar11 = 0;
+        iVar4 = StructuredData_GetInt(aSStack_50,aSStack_60);
+        puVar11[1] = iVar4;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar9,"GetPlayerData");
+          Com_Printf(0xd," = %d\n");
           __restgprlr_25();
           return;
         }
       }
-      else if (iVar2 == 1) {
-        *puVar7 = 0;
-        cVar6 = StructuredData_GetBool(auStack_50,auStack_60);
-        puVar7[1] = (uint)(cVar6 != '\0');
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(param_2,0xffffffff8207aff0);
-          Com_Printf(0xd,0xffffffff821658b8,puVar7[1]);
+      else if (LVar3 == LOOKUP_RESULT_BOOL) {
+        *puVar11 = 0;
+        bVar7 = StructuredData_GetBool(aSStack_50,aSStack_60);
+        puVar11[1] = (int)bVar7 + (-(uint)!bVar7 - (bVar7 + -1));
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar9,"GetPlayerData");
+          Com_Printf(0xd," = %d\n");
           __restgprlr_25();
           return;
         }
       }
-      else if (iVar2 == 3) {
-        *puVar7 = 1;
-        dVar8 = (double)StructuredData_GetFloat(auStack_50,auStack_60);
-        puVar7[1] = (float)dVar8;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(param_2,0xffffffff8207aff0);
-          Com_Printf(0xd,0xffffffff821658b0,(double)(float)puVar7[1]);
+      else if (LVar3 == LOOKUP_RESULT_FLOAT) {
+        *puVar11 = 1;
+        fVar12 = StructuredData_GetFloat(aSStack_50,aSStack_60);
+        puVar11[1] = fVar12;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar9,"GetPlayerData");
+          Com_Printf(0xd," = %f\n");
           __restgprlr_25();
           return;
         }
       }
-      else if (iVar2 == 4) {
-        *puVar7 = 0;
-        sVar5 = StructuredData_GetShort(auStack_50,auStack_60);
-        puVar7[1] = (int)sVar5;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(param_2,0xffffffff8207aff0);
-          Com_Printf(0xd,0xffffffff821658a8,puVar7[1]);
+      else if (LVar3 == LOOKUP_RESULT_SHORT) {
+        *puVar11 = 0;
+        sVar6 = StructuredData_GetShort(aSStack_50,aSStack_60);
+        puVar11[1] = (int)sVar6;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar9,"GetPlayerData");
+          Com_Printf(0xd," = %i\n");
           __restgprlr_25();
           return;
         }
       }
       else {
-        if (iVar2 != 2) {
-          MyAssertHandler(0xffffffff82164aa0,0xbcc,0,0xffffffff82000f98,0xffffffff82165884);
+        if (LVar3 != LOOKUP_RESULT_STRING) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0xbcc,0,"%s");
         }
-        *puVar7 = 2;
-        puVar4 = (undefined1 *)StructuredData_GetString(auStack_50,auStack_60);
-        if (puVar4 == (undefined1 *)0x0) {
-          puVar4 = &DAT_820068af;
+        *puVar11 = 2;
+        pcVar5 = StructuredData_GetString(aSStack_50,aSStack_60);
+        if (pcVar5 == (char *)0x0) {
+          pcVar5 = "";
         }
-        puVar7[1] = puVar4;
-        if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-          PrintArguments(param_2,0xffffffff8207aff0);
-          Com_Printf(0xd,0xffffffff82165878,puVar7[1]);
+        puVar11[1] = pcVar5;
+        if ((uiscript_debug->current).integer != 0) {
+          PrintArguments(pOVar9,"GetPlayerData");
+          Com_Printf(0xd," = \"%s\"\n");
         }
       }
     }
@@ -3594,63 +4286,82 @@ void GetPlayerData(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulong
 
 // 82592220  GetPlayerDataSplitScreen  (ui/ui_expressions.cpp:3042)
 
-void GetPlayerDataSplitScreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPlayerDataSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) < 1) {
-    Com_PrintError(0xd,0xffffffff82166104);
+    Com_PrintError(0xd,"Error: No arguments to GetPlayerDataSplitScreen\n");
   }
   else {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff821660e8);
-    if (cVar1 != '\0') {
-      GetPlayerData(local_20[0],param_1,1,param_2);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"GetPlayerDataSplitScreen");
+    if (bVar1) {
+      GetPlayerData(local_20[0],(OperandList *)param_1,1,param_2->operands);
       return;
     }
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 825922B8  GetPlayerDataAnyBoolTrue  (ui/ui_expressions.cpp:3065)
 
-void GetPlayerDataAnyBoolTrue(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetPlayerDataAnyBoolTrue(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  byte local_50 [8];
-  undefined1 auStack_48 [8];
-  undefined1 auStack_40 [64];
+  LocalClientNum_t LVar1;
+  bool bVar3;
+  StructuredDataDef *pSVar2;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
+  bool local_50 [8];
+  StructuredDataBuffer SStack_48;
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xc00,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xc00,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xc01,0,0xffffffff82000f98,0xffffffff821661a4);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xc01,0
+                    ,"%s");
   }
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 0;
-  puVar3[1] = 0;
-  cVar2 = Expression_GetPersistentDataBuffer(auStack_48,uVar1);
-  if (cVar2 != '\0') {
-    uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    cVar2 = LookupByOperandList(uVar1,auStack_40,param_2,0,1,0xffffffff82166188);
-    if (cVar2 != '\0') {
-      cVar2 = StructuredData_AnyBoolTrueInArray(auStack_40,auStack_48,local_50);
-      if (cVar2 == '\0') {
-        PrintArgumentsForError(param_2,0xffffffff82166188);
-        Com_PrintError(0xd,0xffffffff82166138);
+  puVar6 = (undefined4 *)uVar5;
+  *puVar6 = 0;
+  puVar6[1] = 0;
+  bVar3 = Expression_GetPersistentDataBuffer(&SStack_48,LVar1);
+  if (bVar3) {
+    pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    bVar3 = LookupByOperandList(pSVar2,aSStack_40,(OperandList *)uVar4,0,true,
+                                "GetPlayerDataAnyBoolTrue");
+    if (bVar3) {
+      bVar3 = StructuredData_AnyBoolTrueInArray(aSStack_40,&SStack_48,local_50);
+      if (!bVar3) {
+        PrintArgumentsForError((OperandList *)uVar4,"GetPlayerDataAnyBoolTrue");
+        Com_PrintError(0xd,
+                       "UI Expression Error: GetPlayerDataAnyBoolTrue: data is not an array of bools\n"
+                      );
         __restgprlr_27();
         return;
       }
-      puVar3[1] = (uint)local_50[0] + (-(uint)(local_50[0] == 0) - (local_50[0] - 1));
+      puVar6[1] = (uint)local_50[0] + (-(uint)(local_50[0] == false) - (local_50[0] - 1));
     }
   }
   __restgprlr_27();
@@ -3660,48 +4371,57 @@ void GetPlayerDataAnyBoolTrue(undefined8 param_1,ulonglong param_2,ulonglong par
 
 // 825923E0  GetProfileAnyBoolTrue  (ui/ui_expressions.cpp:3109)
 
-void GetProfileAnyBoolTrue(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetProfileAnyBoolTrue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
   int iVar4;
-  char cVar6;
-  ulonglong uVar3;
-  uint uVar5;
-  char local_40 [8];
-  undefined1 auStack_38 [8];
-  undefined1 auStack_30 [48];
+  StatsSource SVar5;
+  bool bVar8;
+  StructuredDataDef *pSVar6;
+  LookupState LVar7;
+  bool local_40 [8];
+  StructuredDataBuffer SStack_38;
+  StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = GetSourceString(param_2);
-  *param_3 = 0;
-  param_3[1] = 0;
-  CL_ControllerIndexFromClientNum(uVar1);
-  iVar4 = LiveStorage_GetActiveStatsSource();
-  if (iVar4 == 0) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    uVar5 = GamerProfile_AnyBit(uVar1,uVar2);
-    param_3[1] = uVar5 & 0xff;
+  LVar2 = __savegprlr_29(param_1);
+  pcVar3 = GetSourceString(param_2);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+  SVar5 = LiveStorage_GetActiveStatsSource(iVar4);
+  if (SVar5 == STATS_ONLINE) {
+    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+    bVar8 = GamerProfile_AnyBit(iVar4,pcVar3);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar8;
+    param_3->internals = oVar1;
   }
   else {
-    cVar6 = Expression_GetPersistentDataBuffer(auStack_38,uVar1);
-    if (cVar6 != '\0') {
-      uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-      if ((uVar3 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82164aa0,0xc39,0,0xffffffff82000f98,0xffffffff8206070c);
+    bVar8 = Expression_GetPersistentDataBuffer(&SStack_38,LVar2);
+    if (bVar8) {
+      pSVar6 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+      if (pSVar6 == (StructuredDataDef *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0xc39,0,"%s");
       }
-      StructuredData_InitializeLookup(uVar3,auStack_30);
-      StructuredData_LookupWithString(auStack_30,uVar2);
-      iVar4 = StructuredData_GetLookupState(auStack_30);
-      if (iVar4 != 0) {
-        Com_Error(1,0xffffffff821661b4,uVar2);
+      StructuredData_InitializeLookup(pSVar6,aSStack_30);
+      StructuredData_LookupWithString(aSStack_30,pcVar3);
+      LVar7 = StructuredData_GetLookupState(aSStack_30);
+      if (LVar7 != LOOKUP_IN_PROGRESS) {
+        Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def\n");
         __restgprlr_29();
         return;
       }
-      cVar6 = StructuredData_AnyBoolTrueInArray(auStack_30,auStack_38,local_40);
-      if ((cVar6 != '\0') && (local_40[0] != '\0')) {
-        param_3[1] = 1;
+      bVar8 = StructuredData_AnyBoolTrueInArray(aSStack_30,&SStack_38,local_40);
+      if ((bVar8) && (local_40[0] != false)) {
+        (param_3->internals).intVal = 1;
         __restgprlr_29();
         return;
       }
@@ -3714,97 +4434,112 @@ void GetProfileAnyBoolTrue(undefined8 param_1,undefined8 param_2,undefined4 *par
 
 // 82592518  GetWeaponClassNew  (ui/ui_expressions.cpp:3171)
 
-void GetWeaponClassNew(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeaponClassNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar9;
-  char *pcVar4;
-  int iVar5;
-  char *pcVar6;
+  char cVar2;
+  LocalClientNum_t LVar3;
+  StructuredDataDef *pSVar4;
+  bool bVar10;
+  char *pcVar5;
+  int iVar6;
   char *pcVar7;
-  int iVar8;
-  undefined4 *puVar10;
-  char *pcVar11;
-  longlong lVar12;
-  uint uVar13;
-  undefined **ppuVar14;
-  char local_80 [4];
-  undefined4 local_7c;
-  undefined1 auStack_78 [8];
-  undefined1 auStack_70 [112];
+  char *pcVar8;
+  LookupState LVar9;
+  ulonglong uVar11;
+  Operand *pOVar12;
+  ulonglong uVar13;
+  undefined4 *puVar14;
+  char *pcVar15;
+  int iVar16;
+  uint uVar17;
+  char **ppcVar18;
+  bool local_80 [4];
+  StringTable *local_7c;
+  StructuredDataBuffer SStack_78;
+  StructuredDataLookup aSStack_70 [7];
   
-  uVar2 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xc72,0,0xffffffff82000f98,0xffffffff821662b4);
+  uVar13 = (ulonglong)(int)param_3;
+  uVar11 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_22(param_1);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xc72,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xc73,0,0xffffffff82000f98,0xffffffff821661a4);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xc73,0
+                    ,"%s");
   }
-  puVar10 = (undefined4 *)param_3;
-  *puVar10 = 0;
-  puVar10[1] = 0;
-  if (*(int *)param_2 != 2) {
-    uVar2 = GetSourceString(param_2);
-    Com_PrintError(0xd,0xffffffff82166270,uVar2);
+  puVar14 = (undefined4 *)uVar13;
+  *puVar14 = 0;
+  puVar14[1] = 0;
+  pOVar12 = (Operand *)uVar11;
+  if (pOVar12->dataType != VAL_STRING) {
+    GetSourceString(pOVar12);
+    Com_PrintError(0xd,"Error: Expected a string as the name of the weapon class, found %s\n");
     __restgprlr_22();
     return;
   }
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StringTable_GetAsset(0xffffffff820867c8,&local_7c);
-  cVar9 = Expression_GetPersistentDataBuffer(auStack_78,uVar2);
-  if (cVar9 != '\0') {
-    pcVar4 = (char *)GetSourceString(param_2);
-    iVar5 = StringTable_GetRowCount(local_7c);
-    lVar12 = 0;
-    if (0 < iVar5) {
+  pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StringTable_GetAsset("mp/statstable.csv",&local_7c);
+  bVar10 = Expression_GetPersistentDataBuffer(&SStack_78,LVar3);
+  if (bVar10) {
+    pcVar5 = GetSourceString(pOVar12);
+    iVar6 = StringTable_GetRowCount(local_7c);
+    iVar16 = 0;
+    if (0 < iVar6) {
       do {
-        pcVar6 = (char *)StringTable_GetColumnValueForRow(local_7c,lVar12,4);
-        if (*pcVar6 != '\0') {
-          pcVar7 = (char *)StringTable_GetColumnValueForRow(local_7c,lVar12,2);
-          pcVar11 = pcVar4;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar16,4);
+        if (*pcVar7 != '\0') {
+          pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar16,2);
+          pcVar15 = pcVar5;
           do {
-            cVar9 = *pcVar7;
-            cVar1 = *pcVar11;
-            if (cVar9 == '\0') break;
-            pcVar7 = pcVar7 + 1;
-            pcVar11 = pcVar11 + 1;
-          } while (cVar9 == cVar1);
-          if (cVar9 == cVar1) {
-            uVar13 = 0;
-            ppuVar14 = &PTR_s_weaponNew_82991384;
+            cVar1 = *pcVar8;
+            cVar2 = *pcVar15;
+            if (cVar1 == '\0') break;
+            pcVar8 = pcVar8 + 1;
+            pcVar15 = pcVar15 + 1;
+          } while (cVar1 == cVar2);
+          if (cVar1 == cVar2) {
+            uVar17 = 0;
+            ppcVar18 = arrayNames;
             do {
-              StructuredData_InitializeLookup(uVar3,auStack_70);
-              StructuredData_LookupWithString(auStack_70,*ppuVar14);
-              iVar8 = StructuredData_GetLookupState(auStack_70);
-              if (iVar8 != 0) {
-                Com_PrintError(0xd,0xffffffff82166240,(&PTR_s_weaponNew_82991384)[uVar13]);
+              StructuredData_InitializeLookup(pSVar4,aSStack_70);
+              StructuredData_LookupWithString(aSStack_70,*ppcVar18);
+              LVar9 = StructuredData_GetLookupState(aSStack_70);
+              if (LVar9 != LOOKUP_IN_PROGRESS) {
+                Com_PrintError(0xd,"Error: Expected \"%s\" array in playerdata.def\n");
                 __restgprlr_22();
                 return;
               }
-              StructuredData_LookupWithString(auStack_70,pcVar6);
-              iVar8 = StructuredData_GetLookupState(auStack_70);
-              if (iVar8 != 2) {
-                cVar9 = StructuredData_AnyBoolTrueInArray(auStack_70,auStack_78,local_80);
-                if (cVar9 == '\0') {
-                  Com_PrintError(0xd,0xffffffff821661f0,(&PTR_s_weaponNew_82991384)[uVar13]);
+              StructuredData_LookupWithString(aSStack_70,pcVar7);
+              LVar9 = StructuredData_GetLookupState(aSStack_70);
+              if (LVar9 != LOOKUP_ERROR) {
+                bVar10 = StructuredData_AnyBoolTrueInArray(aSStack_70,&SStack_78,local_80);
+                if (!bVar10) {
+                  Com_PrintError(0xd,
+                                 "Error: Expected \"%s\" to be a weapon-indexed array of bools in playerdata.def\n"
+                                );
                   __restgprlr_22();
                   return;
                 }
-                if (local_80[0] != '\0') {
-                  puVar10[1] = 1;
+                if (local_80[0] != false) {
+                  puVar14[1] = 1;
                   goto LAB_82592770;
                 }
               }
-              uVar13 = uVar13 + 1;
-              ppuVar14 = ppuVar14 + 1;
-            } while (uVar13 < 3);
+              uVar17 = uVar17 + 1;
+              ppcVar18 = ppcVar18 + 1;
+            } while (uVar17 < 3);
           }
         }
-        lVar12 = lVar12 + 1;
-        if (iVar5 <= (int)lVar12) {
+        iVar16 = iVar16 + 1;
+        if (iVar6 <= iVar16) {
           __restgprlr_22();
           return;
         }
@@ -3819,57 +4554,64 @@ LAB_82592770:
 
 // 82592778  GetUnlockedItemCount  (ui/ui_expressions.cpp:3263)
 
-void GetUnlockedItemCount(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetUnlockedItemCount(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   char cVar1;
-  char cVar2;
-  undefined8 uVar3;
-  int iVar4;
+  int *piVar2;
+  LocalClientNum_t LVar3;
+  clientUIActive_t *pcVar4;
   char *pcVar5;
-  char *pcVar6;
+  Statement_s *pSVar6;
   int iVar7;
   int iVar8;
-  undefined2 *puVar9;
-  undefined4 local_40 [16];
+  ushort *puVar9;
+  StringTable *local_40 [16];
   
-  uVar3 = __savegprlr_26();
-  StringTable_GetAsset(0xffffffff82026898,local_40);
-  CG_FindItemsUnlockedLastGame(uVar3);
-  if (*(int *)param_2 != 2) {
-    uVar3 = GetSourceString(param_2);
-    Com_PrintError(0xd,0xffffffff82166318,uVar3);
+  LVar3 = __savegprlr_26(param_1);
+  StringTable_GetAsset("mp/unlocktable.csv",local_40);
+  CG_FindItemsUnlockedLastGame(LVar3);
+  if (param_2->dataType != VAL_STRING) {
+    GetSourceString(param_2);
+    Com_PrintError(0xd,
+                   "Error: UnlockedItemCount: Expected a string as the name of the unlocked item type, found %s\n"
+                  );
     __restgprlr_26();
     return;
   }
-  iVar4 = CL_GetLocalClientUIGlobals(uVar3);
-  if (0x10 < *(int *)(iVar4 + 0x1d0)) {
-    MyAssertHandler(0xffffffff82164aa0,0xcd3,0,0xffffffff82000f98,0xffffffff821662c8);
+  pcVar4 = CL_GetLocalClientUIGlobals(LVar3);
+  if (0x10 < pcVar4->itemsUnlockedLastGameCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xcd3,0
+                    ,"%s");
   }
   iVar7 = 0;
   iVar8 = 0;
-  if (0 < *(int *)(iVar4 + 0x1d0)) {
-    puVar9 = (undefined2 *)(iVar4 + 0x1b0);
+  if (0 < pcVar4->itemsUnlockedLastGameCount) {
+    puVar9 = pcVar4->itemsUnlockedLastGame;
     iVar7 = 0;
     do {
-      pcVar5 = (char *)StringTable_GetColumnValueForRow(local_40[0],*puVar9,1);
-      pcVar6 = (char *)((int *)param_2)[1];
+      pcVar5 = StringTable_GetColumnValueForRow(local_40[0],(uint)*puVar9,1);
+      pSVar6 = (param_2->internals).function;
       do {
         cVar1 = *pcVar5;
-        cVar2 = *pcVar6;
+        piVar2 = &pSVar6->numEntries;
         if (cVar1 == '\0') break;
         pcVar5 = pcVar5 + 1;
-        pcVar6 = pcVar6 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 == cVar2) {
+        pSVar6 = (Statement_s *)((int)&pSVar6->numEntries + 1);
+      } while (cVar1 == *(char *)piVar2);
+      if (cVar1 == *(char *)piVar2) {
         iVar7 = iVar7 + 1;
       }
       iVar8 = iVar8 + 1;
       puVar9 = puVar9 + 1;
-    } while (iVar8 < *(int *)(iVar4 + 0x1d0));
+    } while (iVar8 < pcVar4->itemsUnlockedLastGameCount);
   }
-  param_3[1] = iVar7;
-  *param_3 = 0;
+  (param_3->internals).intVal = iVar7;
+  param_3->dataType = VAL_INT;
   __restgprlr_26();
   return;
 }
@@ -3877,154 +4619,170 @@ void GetUnlockedItemCount(undefined8 param_1,undefined8 param_2,undefined4 *para
 
 // 825928A0  GetUnlockedItemCountSplitScreen  (ui/ui_expressions.cpp:3308)
 
-void GetUnlockedItemCountSplitScreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUnlockedItemCountSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) == 2) {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166378);
-    if (cVar1 != '\0') {
-      GetUnlockedItemCount(local_20[0],param_1 + 8,param_2);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"UnlockedItemCountSplitScreen");
+    if (bVar1) {
+      GetUnlockedItemCount(local_20[0],(Operand *)(param_1 + 8),param_2->operands);
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82166398);
+    Com_PrintError(0xd,"Error: UnlockedItemCountSplitScreen takes exactly 2 arguments\n");
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82592930  GetUnlockedItem  (ui/ui_expressions.cpp:3331)
 
-void GetUnlockedItem(undefined8 param_1,longlong param_2,ulonglong param_3,undefined4 *param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUnlockedItem(LocalClientNum_t param_1,OperandList *param_2,int param_3,Operand *param_4)
 
 {
   char cVar1;
-  char cVar2;
-  undefined2 uVar3;
-  uint uVar4;
-  int iVar5;
-  bool bVar6;
-  undefined8 uVar7;
+  ushort uVar2;
+  bool bVar3;
+  int *piVar4;
+  LocalClientNum_t LVar5;
+  Operand *pOVar6;
+  clientUIActive_t *pcVar7;
   char *pcVar8;
   int iVar9;
-  char *pcVar10;
-  int iVar11;
-  longlong lVar12;
-  longlong lVar13;
+  Statement_s *pSVar10;
+  longlong lVar11;
+  int iVar12;
+  int iVar13;
   int iVar14;
-  char *pcVar15;
-  undefined2 *puVar16;
-  undefined4 local_80 [32];
+  ushort *puVar15;
+  StringTable *local_80 [32];
   
-  uVar7 = __savegprlr_19();
-  StringTable_GetAsset(0xffffffff82026898,local_80);
-  CG_FindItemsUnlockedLastGame(uVar7);
-  *param_4 = 2;
-  param_4[1] = &DAT_820068af;
-  iVar14 = (int)param_2;
-  iVar11 = *(int *)(iVar14 + 0x50) - (int)param_3;
-  if ((iVar11 < 2) && (3 < iVar11)) {
-    Com_PrintError(0xd,0xffffffff82166520);
+  lVar11 = (longlong)param_3;
+  LVar5 = __savegprlr_19(param_1);
+  StringTable_GetAsset("mp/unlocktable.csv",local_80);
+  CG_FindItemsUnlockedLastGame(LVar5);
+  param_4->dataType = VAL_STRING;
+  (param_4->internals).floatVal = (float)"";
+  iVar14 = (int)lVar11;
+  iVar12 = param_2->operandCount - iVar14;
+  if ((iVar12 < 2) && (3 < iVar12)) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: Expected 2 or 3 params to function UnlockedItem, found %i\n"
+                  );
     __restgprlr_19();
     return;
   }
-  lVar12 = (param_3 & 0x1fffffff) * 8;
-  lVar13 = lVar12 + param_2;
-  if (*(int *)((int)lVar12 + iVar14) != 2) {
-    uVar7 = GetSourceString(lVar13);
-    Com_PrintError(0xd,0xffffffff821664c8,uVar7);
+  pOVar6 = param_2->operands + iVar14;
+  if (param_2->operands[iVar14].dataType != VAL_STRING) {
+    GetSourceString(pOVar6);
+    Com_PrintError(0xd,
+                   "Error: UnlockedItem: Expected a string as the name of the unlocked item type, found %s\n"
+                  );
     __restgprlr_19();
     return;
   }
-  iVar5 = (int)lVar13;
-  if (*(int *)(iVar5 + 8) != 0) {
-    uVar7 = GetSourceString(lVar13 + 8);
-    Com_PrintError(0xd,0xffffffff82166470,uVar7);
+  if (pOVar6[1].dataType != VAL_INT) {
+    GetSourceString(pOVar6 + 1);
+    Com_PrintError(0xd,
+                   "Error: UnlockedItem: Expected an int as the index of the unlocked item, found \"%s\"\n"
+                  );
     __restgprlr_19();
     return;
   }
-  if ((iVar11 == 3) &&
-     (lVar12 = (param_3 + 2 & 0x1fffffff) * 8, *(int *)((int)lVar12 + iVar14) != 0)) {
-    uVar7 = GetSourceString(lVar12 + param_2);
-    Com_PrintError(0xd,0xffffffff82166420,uVar7);
+  if ((iVar12 == 3) &&
+     (iVar12 = (int)((lVar11 + 2U & 0xffffffff) << 3),
+     *(int *)((int)&param_2->operands[0].dataType + iVar12) != 0)) {
+    GetSourceString((Operand *)((int)&param_2->operands[0].dataType + iVar12));
+    Com_PrintError(0xd,
+                   "Error: UnlockedItem: Expected an int as the string word index, found \"%s\"\n");
     __restgprlr_19();
     return;
   }
-  iVar11 = CL_GetLocalClientUIGlobals(uVar7);
-  if (0x10 < *(int *)(iVar11 + 0x1d0)) {
-    MyAssertHandler(0xffffffff82164aa0,0xd34,0,0xffffffff82000f98,0xffffffff821662c8);
+  pcVar7 = CL_GetLocalClientUIGlobals(LVar5);
+  if (0x10 < pcVar7->itemsUnlockedLastGameCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xd34,0
+                    ,"%s");
   }
-  lVar12 = 0;
-  uVar4 = *(uint *)(iVar5 + 0xc);
-  bVar6 = false;
+  iVar13 = 0;
+  iVar12 = pOVar6[1].internals.intVal;
+  bVar3 = false;
   iVar9 = 0;
-  pcVar10 = "";
-  if (0 < *(int *)(iVar11 + 0x1d0)) {
-    puVar16 = (undefined2 *)(iVar11 + 0x1b0);
+  pcVar8 = "";
+  if (0 < pcVar7->itemsUnlockedLastGameCount) {
+    puVar15 = pcVar7->itemsUnlockedLastGame;
     do {
-      uVar3 = *puVar16;
-      pcVar8 = (char *)StringTable_GetColumnValueForRow(local_80[0],uVar3,1);
-      pcVar10 = *(char **)(iVar5 + 4);
+      uVar2 = *puVar15;
+      pcVar8 = StringTable_GetColumnValueForRow(local_80[0],(uint)uVar2,1);
+      pSVar10 = (pOVar6->internals).function;
       do {
         cVar1 = *pcVar8;
-        cVar2 = *pcVar10;
+        piVar4 = &pSVar10->numEntries;
         if (cVar1 == '\0') break;
         pcVar8 = pcVar8 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar1 == cVar2);
-      if (cVar1 == cVar2) {
-        if ((uint)lVar12 == uVar4) {
-          pcVar10 = (char *)StringTable_GetColumnValueForRow(local_80[0],uVar3,0);
-          bVar6 = true;
+        pSVar10 = (Statement_s *)((int)&pSVar10->numEntries + 1);
+      } while (cVar1 == *(char *)piVar4);
+      if (cVar1 == *(char *)piVar4) {
+        if (iVar13 == iVar12) {
+          pcVar8 = StringTable_GetColumnValueForRow(local_80[0],(uint)uVar2,0);
+          bVar3 = true;
           break;
         }
-        lVar12 = lVar12 + 1;
+        iVar13 = iVar13 + 1;
       }
       iVar9 = iVar9 + 1;
-      puVar16 = puVar16 + 1;
-      pcVar10 = "";
-    } while (iVar9 < *(int *)(iVar11 + 0x1d0));
+      puVar15 = puVar15 + 1;
+      pcVar8 = "";
+    } while (iVar9 < pcVar7->itemsUnlockedLastGameCount);
   }
-  if ((!bVar6) && (*(int *)(DAT_83667358 + 0xc) != 0)) {
-    Com_PrintError(0xd,0xffffffff821663d8,lVar12 + 1,*(undefined4 *)(iVar5 + 4),(ulonglong)uVar4 + 1
-                  );
+  if ((!bVar3) && ((stringtable_debug->current).integer != 0)) {
+    Com_PrintError(0xd,"Failed to find unlockedItem number #%i of type \'%s\', wanted to find %i\n")
+    ;
   }
-  if (*(int *)(iVar14 + 0x50) - (int)param_3 == 3) {
-    pcVar15 = (char *)0x0;
-    iVar11 = 0;
+  if (param_2->operandCount - iVar14 == 3) {
+    iVar12 = 0;
+    iVar13 = 0;
     iVar14 = 0;
-    pcVar8 = pcVar10;
+    pSVar10 = (Statement_s *)pcVar8;
     while( true ) {
-      iVar9 = isspace((int)*pcVar8);
-      if (((iVar9 != 0) || (*pcVar8 == '\0')) && ((int)pcVar15 < iVar14)) {
-        if (iVar11 == *(int *)(iVar5 + 0x14)) {
-          pcVar10 = (char *)CopySubString(pcVar10,pcVar15,iVar14 - (int)pcVar15);
-          if (pcVar10 == (char *)0x0) {
-            pcVar10 = "";
+      iVar9 = isspace((int)*(char *)&pSVar10->numEntries);
+      if (((iVar9 != 0) || (*(char *)&pSVar10->numEntries == '\0')) && (iVar12 < iVar14)) {
+        if (iVar13 == pOVar6[2].internals.intVal) {
+          pSVar10 = (Statement_s *)CopySubString(pcVar8,iVar12,iVar14 - iVar12);
+          if (pSVar10 == (Statement_s *)0x0) {
+            pSVar10 = (Statement_s *)"";
           }
-          param_4[1] = pcVar10;
+          (param_4->internals).function = pSVar10;
           __restgprlr_19();
           return;
         }
-        iVar11 = iVar11 + 1;
-        pcVar15 = pcVar8 + (1 - (int)pcVar10);
+        iVar13 = iVar13 + 1;
+        iVar12 = (1 - (int)pcVar8) + (int)pSVar10;
       }
-      if (*pcVar8 == '\0') break;
+      if (*(char *)&pSVar10->numEntries == '\0') break;
       iVar14 = iVar14 + 1;
-      pcVar8 = pcVar8 + 1;
+      pSVar10 = (Statement_s *)((int)&pSVar10->numEntries + 1);
     }
   }
   else {
-    if (pcVar10 == (char *)0x0) {
-      pcVar10 = "";
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      pcVar8 = "";
     }
-    param_4[1] = pcVar10;
+    (param_4->internals).function = (Statement_s *)pcVar8;
   }
   __restgprlr_19();
   return;
@@ -4033,94 +4791,117 @@ void GetUnlockedItem(undefined8 param_1,longlong param_2,ulonglong param_3,undef
 
 // 82592C30  GetUnlockedItemSplitScreen  (ui/ui_expressions.cpp:3444)
 
-void GetUnlockedItemSplitScreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUnlockedItemSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) < 1) {
-    Com_PrintError(0xd,0xffffffff82166588);
+    Com_PrintError(0xd,"Error: No arguments to UnlockedItemSplitScreen\n");
   }
   else {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166570);
-    if (cVar1 != '\0') {
-      GetUnlockedItem(local_20[0],param_1,1,param_2);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"UnlockedItemSplitScreen");
+    if (bVar1) {
+      GetUnlockedItem(local_20[0],(OperandList *)param_1,1,param_2->operands);
       return;
     }
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82592CC8  GetLevelForExperienceMP  (ui/ui_expressions.cpp:3467)
 
-void GetLevelForExperienceMP(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetLevelForExperienceMP(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  GetSourceInt();
-  uVar1 = CL_GetRankForXpMP();
-  param_2[1] = uVar1;
+  param_2->dataType = VAL_INT;
+  iVar1 = GetSourceInt((Operand *)param_1);
+  iVar1 = CL_GetRankForXpMP(iVar1);
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 82592D08  GetLevelForExperienceSO  (ui/ui_expressions.cpp:3478)
 
-void GetLevelForExperienceSO(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetLevelForExperienceSO(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  GetSourceInt();
-  uVar1 = CL_GetRankForXpSO();
-  param_2[1] = uVar1;
+  param_2->dataType = VAL_INT;
+  iVar1 = GetSourceInt((Operand *)param_1);
+  iVar1 = CL_GetRankForXpSO(iVar1);
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 82592D48  GetIsItemUnlocked  (ui/ui_expressions.cpp:3489)
 
-void GetIsItemUnlocked(undefined8 param_1,undefined8 param_2,undefined4 *param_3,ulonglong param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsItemUnlocked(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  char cVar4;
-  undefined4 local_30 [12];
+  LocalClientNum_t LVar1;
+  connstate_t cVar2;
+  char *pcVar3;
+  int iVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  StringTable *local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  if ((DAT_82966e98 != 0) && ((param_4 & 0xff) == 0)) {
-    iVar3 = CL_GetLocalClientConnectionState();
-    if (iVar3 < 5) {
-      Com_PrintWarning(0xd,0xffffffff821665b8);
-      *param_3 = 0;
-      param_3[1] = 0;
+  uVar6 = (ulonglong)param_4;
+  LVar1 = __savegprlr_29(param_1);
+  if ((cl_multi_gamepads_enabled != 0) && ((uVar6 & 0xff) == 0)) {
+    cVar2 = CL_GetLocalClientConnectionState(LVar1);
+    if ((int)cVar2 < 5) {
+      Com_PrintWarning(0xd,
+                       "Error: isItemUnlocked() may not be called when splitscreen is enabled. Use isItemUnlockedSplitScreen().\n"
+                      );
+      param_3->dataType = VAL_INT;
+      (param_3->internals).intVal = 0;
       __restgprlr_29();
       return;
     }
   }
-  if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
-    StringTable_GetAsset(0xffffffff82026898,local_30);
-    uVar2 = GetSourceString(param_2);
-    uVar2 = StringTable_LookupRowNumForValue(local_30[0],0,uVar2);
-    if (-1 < (int)uVar2) {
-      cVar4 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar1,local_30[0],uVar2);
-      *param_3 = 0;
-      param_3[1] = (uint)(cVar4 != '\0');
+  if ((xblive_privatematch->current).enabled == false) {
+    StringTable_GetAsset("mp/unlocktable.csv",local_30);
+    pcVar3 = GetSourceString(param_2);
+    iVar4 = StringTable_LookupRowNumForValue(local_30[0],0,pcVar3);
+    if (-1 < iVar4) {
+      bVar5 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar1,local_30[0],iVar4);
+      param_3->dataType = VAL_INT;
+      (param_3->internals).function =
+           (Statement_s *)((int)bVar5 + (-(uint)(bVar5 == 0) - (bVar5 + -1)));
       __restgprlr_29();
       return;
     }
   }
-  *param_3 = 0;
-  param_3[1] = 1;
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 1;
   __restgprlr_29();
   return;
 }
@@ -4128,37 +4909,42 @@ void GetIsItemUnlocked(undefined8 param_1,undefined8 param_2,undefined4 *param_3
 
 // 82592E38  GetIsItemUnlockedSplitScreen  (ui/ui_expressions.cpp:3541)
 
-void GetIsItemUnlockedSplitScreen(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsItemUnlockedSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  undefined4 local_30 [12];
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  int iVar3;
+  LocalClientNum_t local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 0;
-  puVar3[1] = 0;
-  if (*(int *)((int)param_2 + 0x50) != 2) {
-    Com_PrintError(0xd,0xffffffff82166628);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  if (param_2->operandCount != 2) {
+    Com_PrintError(0xd,
+                   "Error: IsItemUnlockedSplitScreen must have two arguments: boolean check for all players and item\n"
+                  );
     __restgprlr_29();
     return;
   }
-  if (*(int *)((int)param_2 + 4) == 1) {
-    lVar4 = 0;
-    while ((cVar2 = CL_DoesControllerIndexHaveALocalClientNum(lVar4,local_30), cVar2 == '\0' ||
-           (GetIsItemUnlocked(local_30[0],param_2 + 8,param_3,1), puVar3[1] != 1))) {
-      lVar4 = lVar4 + 1;
-      if (3 < (int)lVar4) {
+  if (param_2->operands[0].internals.intVal == 1) {
+    iVar3 = 0;
+    while ((bVar2 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_30), !bVar2 ||
+           (GetIsItemUnlocked(local_30[0],param_2->operands + 1,param_3,true),
+           (param_3->internals).intVal != 1))) {
+      iVar3 = iVar3 + 1;
+      if (3 < iVar3) {
         __restgprlr_29();
         return;
       }
     }
   }
   else {
-    GetIsItemUnlocked(uVar1,param_2 + 8,param_3,1);
+    GetIsItemUnlocked(LVar1,param_2->operands + 1,param_3,true);
   }
   __restgprlr_29();
   return;
@@ -4167,21 +4953,27 @@ void GetIsItemUnlockedSplitScreen(undefined8 param_1,longlong param_2,undefined8
 
 // 82592EF0  GetIsItemUnlockedByClient  (ui/ui_expressions.cpp:3578)
 
-void GetIsItemUnlockedByClient(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsItemUnlockedByClient(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  if (((param_1[0x14] < 2) || (*param_1 != 0)) || (param_1[2] != 2)) {
-    Com_PrintError(0xd,0xffffffff82166690);
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
+  if (((*(int *)(param_1 + 0x50) < 2) || (*(int *)param_1 != 0)) || (*(int *)(param_1 + 8) != 2)) {
+    Com_PrintError(0xd,"Error: Bad Params: isitemunlockedbyclient <clientindex> <itemname>\n");
   }
   else {
-    cVar1 = GetSplitScreenLocalClientNumForMenuScript(param_1[1],local_20,0xffffffff821666d4);
-    if (cVar1 != '\0') {
-      GetIsItemUnlocked(local_20[0],param_1 + 2,param_2,1);
+    bVar1 = GetSplitScreenLocalClientNumForMenuScript
+                      (*(LocalClientNum_t *)(param_1 + LOCAL_CLIENT_COUNT),local_20,
+                       "IsItemUnlockedByClient");
+    if (bVar1) {
+      GetIsItemUnlocked(local_20[0],(Operand *)(param_1 + 8),param_2->operands,true);
     }
   }
   return;
@@ -4190,62 +4982,78 @@ void GetIsItemUnlockedByClient(int *param_1,undefined4 *param_2)
 
 // 82592FA0  GetIsCardIconUnlocked  (ui/ui_expressions.cpp:3603)
 
-void GetIsCardIconUnlocked(undefined8 param_1,int *param_2,undefined4 *param_3,ulonglong param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsCardIconUnlocked(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  uint uVar5;
-  int local_40 [16];
+  operandInternalDataUnion oVar1;
+  operandInternalDataUnion oVar2;
+  LocalClientNum_t LVar3;
+  connstate_t cVar4;
+  int iVar5;
+  StatsSource SVar6;
+  bool bVar9;
+  char *pcVar7;
+  int iVar8;
+  ulonglong uVar10;
+  StringTable *local_40 [16];
   
-  uVar1 = __savegprlr_26();
-  *param_3 = 0;
-  if (*(char *)(DAT_836108a4 + 0xc) == '\0') {
-    if ((DAT_82966e98 != 0) && ((param_4 & 0xff) == 0)) {
-      iVar3 = CL_GetLocalClientConnectionState();
-      if (iVar3 < 5) {
-        Com_PrintWarning(0xd,0xffffffff82166718);
-        *param_3 = 0;
-        param_3[1] = 0;
-        __restgprlr_26();
-        return;
-      }
-    }
-    if (*param_2 != 0) {
-      Com_PrintError(0xd,0xffffffff821666ec);
-      param_3[1] = 0;
+  uVar10 = (ulonglong)param_4;
+  LVar3 = __savegprlr_26(param_1);
+  param_3->dataType = VAL_INT;
+  if ((unlockAllItems->current).enabled == false) {
+    if (((cl_multi_gamepads_enabled != 0) && ((uVar10 & 0xff) == 0)) &&
+       (cVar4 = CL_GetLocalClientConnectionState(LVar3), (int)cVar4 < 5)) {
+      Com_PrintWarning(0xd,
+                       "Error: IsCardIconUnlocked() may not be called when splitscreen is enabled. Use IsCardIconUnlockedSplitScreen().\n"
+                      );
+      param_3->dataType = VAL_INT;
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    iVar3 = param_2[1];
-    uVar2 = CL_ControllerIndexFromClientNum(uVar1);
-    iVar4 = LiveStorage_GetActiveStatsSource();
-    if (iVar4 == 0) {
-      uVar5 = GamerProfile_IsCardIconUnlocked(uVar2,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    if (param_2->dataType != VAL_INT) {
+      Com_PrintError(0xd,"Error: icon index must be an integer\n");
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    StringTable_GetAsset(0xffffffff82026928,local_40);
-    if (local_40[0] == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0xe4f,0,0xffffffff82000f98,0xffffffff820362e8);
+    iVar8 = (param_2->internals).intVal;
+    iVar5 = CL_ControllerIndexFromClientNum(LVar3);
+    SVar6 = LiveStorage_GetActiveStatsSource(iVar5);
+    if (SVar6 == STATS_ONLINE) {
+      bVar9 = GamerProfile_IsCardIconUnlocked(iVar5,iVar8);
+      oVar1.intVal._0_3_ = 0;
+      oVar1.intVal._3_1_ = bVar9;
+      param_3->internals = oVar1;
+      __restgprlr_26();
+      return;
     }
-    uVar2 = StringTable_GetColumnValueForRow(local_40[0],iVar3,0);
-    StringTable_GetAsset(0xffffffff82026898,local_40);
-    if (local_40[0] == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0xe55,0,0xffffffff82000f98,0xffffffff820362e8);
+    StringTable_GetAsset("mp/cardIconTable.csv",local_40);
+    if (local_40[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xe4f
+                      ,0,"%s");
     }
-    uVar2 = StringTable_LookupRowNumForValue(local_40[0],0,uVar2);
-    if (-1 < (int)uVar2) {
-      uVar5 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar1,local_40[0],uVar2);
-      param_3[1] = uVar5 & 0xff;
+    pcVar7 = StringTable_GetColumnValueForRow(local_40[0],iVar8,0);
+    StringTable_GetAsset("mp/unlocktable.csv",local_40);
+    if (local_40[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xe55
+                      ,0,"%s");
+    }
+    iVar8 = StringTable_LookupRowNumForValue(local_40[0],0,pcVar7);
+    if (-1 < iVar8) {
+      bVar9 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar3,local_40[0],iVar8);
+      oVar2.intVal._0_3_ = 0;
+      oVar2.intVal._3_1_ = bVar9;
+      param_3->internals = oVar2;
       __restgprlr_26();
       return;
     }
   }
-  param_3[1] = 1;
+  (param_3->internals).intVal = 1;
   __restgprlr_26();
   return;
 }
@@ -4253,62 +5061,78 @@ void GetIsCardIconUnlocked(undefined8 param_1,int *param_2,undefined4 *param_3,u
 
 // 82593158  GetIsCardTitleUnlocked  (ui/ui_expressions.cpp:3691)
 
-void GetIsCardTitleUnlocked(undefined8 param_1,int *param_2,undefined4 *param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsCardTitleUnlocked(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  uint uVar5;
-  int local_40 [16];
+  operandInternalDataUnion oVar1;
+  operandInternalDataUnion oVar2;
+  LocalClientNum_t LVar3;
+  connstate_t cVar4;
+  int iVar5;
+  StatsSource SVar6;
+  bool bVar9;
+  char *pcVar7;
+  int iVar8;
+  ulonglong uVar10;
+  StringTable *local_40 [16];
   
-  uVar1 = __savegprlr_26();
-  *param_3 = 0;
-  if (*(char *)(DAT_836108a4 + 0xc) == '\0') {
-    if ((DAT_82966e98 != 0) && ((param_4 & 0xff) == 0)) {
-      iVar3 = CL_GetLocalClientConnectionState();
-      if (iVar3 < 5) {
-        Com_PrintWarning(0xd,0xffffffff821667b8);
-        *param_3 = 0;
-        param_3[1] = 0;
-        __restgprlr_26();
-        return;
-      }
-    }
-    if (*param_2 != 0) {
-      Com_PrintError(0xd,0xffffffff8216678c);
-      param_3[1] = 0;
+  uVar10 = (ulonglong)param_4;
+  LVar3 = __savegprlr_26(param_1);
+  param_3->dataType = VAL_INT;
+  if ((unlockAllItems->current).enabled == false) {
+    if (((cl_multi_gamepads_enabled != 0) && ((uVar10 & 0xff) == 0)) &&
+       (cVar4 = CL_GetLocalClientConnectionState(LVar3), (int)cVar4 < 5)) {
+      Com_PrintWarning(0xd,
+                       "Error: IsCardTitleUnlocked() may not be called when splitscreen is enabled. Use IsCardTitleUnlockedSplitScreen().\n"
+                      );
+      param_3->dataType = VAL_INT;
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    iVar3 = param_2[1];
-    uVar2 = CL_ControllerIndexFromClientNum(uVar1);
-    iVar4 = LiveStorage_GetActiveStatsSource();
-    if (iVar4 == 0) {
-      uVar5 = GamerProfile_IsCardTitleUnlocked(uVar2,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    if (param_2->dataType != VAL_INT) {
+      Com_PrintError(0xd,"Error: title index must be an integer\n");
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    StringTable_GetAsset(0xffffffff820268f8,local_40);
-    if (local_40[0] == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0xea7,0,0xffffffff82000f98,0xffffffff820362e8);
+    iVar8 = (param_2->internals).intVal;
+    iVar5 = CL_ControllerIndexFromClientNum(LVar3);
+    SVar6 = LiveStorage_GetActiveStatsSource(iVar5);
+    if (SVar6 == STATS_ONLINE) {
+      bVar9 = GamerProfile_IsCardTitleUnlocked(iVar5,iVar8);
+      oVar1.intVal._0_3_ = 0;
+      oVar1.intVal._3_1_ = bVar9;
+      param_3->internals = oVar1;
+      __restgprlr_26();
+      return;
     }
-    uVar2 = StringTable_GetColumnValueForRow(local_40[0],iVar3,0);
-    StringTable_GetAsset(0xffffffff82026898,local_40);
-    if (local_40[0] == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0xead,0,0xffffffff82000f98,0xffffffff820362e8);
+    StringTable_GetAsset("mp/cardTitleTable.csv",local_40);
+    if (local_40[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xea7
+                      ,0,"%s");
     }
-    uVar2 = StringTable_LookupRowNumForValue(local_40[0],0,uVar2);
-    if (-1 < (int)uVar2) {
-      uVar5 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar1,local_40[0],uVar2);
-      param_3[1] = uVar5 & 0xff;
+    pcVar7 = StringTable_GetColumnValueForRow(local_40[0],iVar8,0);
+    StringTable_GetAsset("mp/unlocktable.csv",local_40);
+    if (local_40[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xead
+                      ,0,"%s");
+    }
+    iVar8 = StringTable_LookupRowNumForValue(local_40[0],0,pcVar7);
+    if (-1 < iVar8) {
+      bVar9 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar3,local_40[0],iVar8);
+      oVar2.intVal._0_3_ = 0;
+      oVar2.intVal._3_1_ = bVar9;
+      param_3->internals = oVar2;
       __restgprlr_26();
       return;
     }
   }
-  param_3[1] = 1;
+  (param_3->internals).intVal = 1;
   __restgprlr_26();
   return;
 }
@@ -4316,49 +5140,60 @@ void GetIsCardTitleUnlocked(undefined8 param_1,int *param_2,undefined4 *param_3,
 
 // 82593310  GetIsCardIconNew  (ui/ui_expressions.cpp:3779)
 
-void GetIsCardIconNew(undefined8 param_1,int *param_2,undefined4 *param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsCardIconNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  int iVar1;
+  operandInternalDataUnion oVar2;
+  LocalClientNum_t LVar3;
   int iVar4;
-  char cVar6;
-  uint uVar5;
-  undefined1 auStack_40 [64];
+  connstate_t cVar5;
+  StatsSource SVar6;
+  bool bVar7;
+  ulonglong uVar8;
+  StructuredDataBuffer aSStack_40 [8];
   
-  uVar1 = __savegprlr_26();
-  *param_3 = 0;
-  uVar2 = CL_ControllerIndexFromClientNum();
-  if (((DAT_82966e98 == 0) || ((param_4 & 0xff) != 0)) ||
-     (iVar3 = CL_GetLocalClientConnectionState(uVar1), 4 < iVar3)) {
-    if (*param_2 != 0) {
-      Com_PrintError(0xd,0xffffffff821666ec);
-      param_3[1] = 0;
+  uVar8 = (ulonglong)param_4;
+  LVar3 = __savegprlr_26(param_1);
+  param_3->dataType = VAL_INT;
+  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+  if (((cl_multi_gamepads_enabled == 0) || ((uVar8 & 0xff) != 0)) ||
+     (cVar5 = CL_GetLocalClientConnectionState(LVar3), 4 < (int)cVar5)) {
+    if (param_2->dataType != VAL_INT) {
+      Com_PrintError(0xd,"Error: icon index must be an integer\n");
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    iVar3 = param_2[1];
-    iVar4 = LiveStorage_GetActiveStatsSource(uVar2);
-    if (iVar4 == 0) {
-      uVar5 = GamerProfile_IsCardIconNew(uVar2,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    iVar1 = (param_2->internals).intVal;
+    SVar6 = LiveStorage_GetActiveStatsSource(iVar4);
+    if (SVar6 == STATS_ONLINE) {
+      bVar7 = GamerProfile_IsCardIconNew(iVar4,iVar1);
+      oVar2.intVal._0_3_ = 0;
+      oVar2.intVal._3_1_ = bVar7;
+      param_3->internals = oVar2;
       __restgprlr_26();
       return;
     }
-    cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_40,uVar2);
-    if (cVar6 != '\0') {
-      uVar5 = LiveStorage_PlayerDataGetArrayBoolByIndex(auStack_40,0xffffffff820269fc,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,iVar4);
+    if (bVar7) {
+      bVar7 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_40,"iconNew",iVar1);
+      param_3->internals = (operandInternalDataUnion)(int)bVar7;
       __restgprlr_26();
       return;
     }
   }
   else {
-    Com_PrintWarning(0xd,0xffffffff82166830);
-    *param_3 = 0;
+    Com_PrintWarning(0xd,
+                     "Error: IsCardIconNew() may not be called when splitscreen is enabled. Use IsCardIconNewSplitScreen().\n"
+                    );
+    param_3->dataType = VAL_INT;
   }
-  param_3[1] = 0;
+  (param_3->internals).intVal = 0;
   __restgprlr_26();
   return;
 }
@@ -4366,50 +5201,61 @@ void GetIsCardIconNew(undefined8 param_1,int *param_2,undefined4 *param_3,ulongl
 
 // 82593420  GetIsCardTitleNew  (ui/ui_expressions.cpp:3842)
 
-void GetIsCardTitleNew(undefined8 param_1,int *param_2,undefined4 *param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsCardTitleNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  int iVar1;
+  operandInternalDataUnion oVar2;
+  LocalClientNum_t LVar3;
   int iVar4;
-  char cVar6;
-  uint uVar5;
-  undefined1 auStack_40 [64];
+  connstate_t cVar5;
+  StatsSource SVar6;
+  bool bVar7;
+  ulonglong uVar8;
+  StructuredDataBuffer aSStack_40 [8];
   
-  uVar1 = __savegprlr_26();
-  *param_3 = 0;
-  uVar2 = CL_ControllerIndexFromClientNum();
-  if (((DAT_82966e98 == 0) || ((param_4 & 0xff) != 0)) ||
-     (iVar3 = CL_GetLocalClientConnectionState(uVar1), 4 < iVar3)) {
-    if (*param_2 != 0) {
-      Com_PrintError(0xd,0xffffffff8216678c);
-      param_3[1] = 0;
+  uVar8 = (ulonglong)param_4;
+  LVar3 = __savegprlr_26(param_1);
+  param_3->dataType = VAL_INT;
+  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+  if (((cl_multi_gamepads_enabled == 0) || ((uVar8 & 0xff) != 0)) ||
+     (cVar5 = CL_GetLocalClientConnectionState(LVar3), 4 < (int)cVar5)) {
+    if (param_2->dataType != VAL_INT) {
+      Com_PrintError(0xd,"Error: title index must be an integer\n");
+      (param_3->internals).intVal = 0;
       __restgprlr_26();
       return;
     }
-    iVar3 = param_2[1];
-    iVar4 = LiveStorage_GetActiveStatsSource(uVar2);
-    if (iVar4 == 0) {
-      uVar5 = GamerProfile_IsCardTitleNew(uVar2,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    iVar1 = (param_2->internals).intVal;
+    SVar6 = LiveStorage_GetActiveStatsSource(iVar4);
+    if (SVar6 == STATS_ONLINE) {
+      bVar7 = GamerProfile_IsCardTitleNew(iVar4,iVar1);
+      oVar2.intVal._0_3_ = 0;
+      oVar2.intVal._3_1_ = bVar7;
+      param_3->internals = oVar2;
       __restgprlr_26();
       return;
     }
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_40,uVar1);
-    if (cVar6 != '\0') {
-      uVar5 = LiveStorage_PlayerDataGetArrayBoolByIndex(auStack_40,0xffffffff820269f0,iVar3);
-      param_3[1] = uVar5 & 0xff;
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,iVar4);
+    if (bVar7) {
+      bVar7 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_40,"titleNew",iVar1);
+      param_3->internals = (operandInternalDataUnion)(int)bVar7;
       __restgprlr_26();
       return;
     }
   }
   else {
-    Com_PrintWarning(0xd,0xffffffff82166898);
-    *param_3 = 0;
+    Com_PrintWarning(0xd,
+                     "Error: IsCardTitleNew() may not be called when splitscreen is enabled. Use IsCardTitleNewSplitScreen().\n"
+                    );
+    param_3->dataType = VAL_INT;
   }
-  param_3[1] = 0;
+  (param_3->internals).intVal = 0;
   __restgprlr_26();
   return;
 }
@@ -4417,167 +5263,215 @@ void GetIsCardTitleNew(undefined8 param_1,int *param_2,undefined4 *param_3,ulong
 
 // 82593538  GetIsCardIconUnlockedSplitscreen  (ui/ui_expressions.cpp:3903)
 
-void GetIsCardIconUnlockedSplitscreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsCardIconUnlockedSplitscreen
+               (LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) == 2) {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166904);
-    if (cVar1 != '\0') {
-      GetIsCardIconUnlocked(local_20[0],param_1 + 8,param_2,1);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"IsCardIconUnlockedSplitscreen");
+    if (bVar1) {
+      GetIsCardIconUnlocked(local_20[0],(Operand *)(param_1 + 8),param_2->operands,true);
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82166928);
+    Com_PrintError(0xd,
+                   "Error: IsCardIconUnlockedSplitscreen must have two arguments: player index and item\n"
+                  );
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 825935D0  GetIsCardTitleUnlockedSplitscreen  (ui/ui_expressions.cpp:3926)
 
-void GetIsCardTitleUnlockedSplitscreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsCardTitleUnlockedSplitscreen
+               (LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) == 2) {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166980);
-    if (cVar1 != '\0') {
-      GetIsCardTitleUnlocked(local_20[0],param_1 + 8,param_2,1);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"IsCardTitleUnlockedSplitscreen");
+    if (bVar1) {
+      GetIsCardTitleUnlocked(local_20[0],(Operand *)(param_1 + 8),param_2->operands,true);
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff821669a0);
+    Com_PrintError(0xd,
+                   "Error: IsCardTitleUnlockedSplitscreen must have two arguments: player index and item\n"
+                  );
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82593668  GetIsCardIconNewSplitscreen  (ui/ui_expressions.cpp:3949)
 
-void GetIsCardIconNewSplitscreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsCardIconNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) == 2) {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff821669f8);
-    if (cVar1 != '\0') {
-      GetIsCardIconNew(local_20[0],param_1 + 8,param_2,1);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"IsCardIconNewSplitscreen");
+    if (bVar1) {
+      GetIsCardIconNew(local_20[0],(Operand *)(param_1 + 8),param_2->operands,true);
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82166a18);
+    Com_PrintError(0xd,
+                   "Error: IsCardIconNewSplitscreen must have two arguments: player index and item\n"
+                  );
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82593700  GetIsCardTitleNewSplitscreen  (ui/ui_expressions.cpp:3972)
 
-void GetIsCardTitleNewSplitscreen(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsCardTitleNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  char cVar1;
-  undefined4 local_20 [2];
+  bool bVar1;
+  LocalClientNum_t local_20 [2];
   
   if (*(int *)(param_1 + 0x50) == 2) {
-    cVar1 = GetSplitScreenLocalClientNumForExpression(param_1,local_20,0xffffffff82166a68);
-    if (cVar1 != '\0') {
-      GetIsCardTitleNew(local_20[0],param_1 + 8,param_2,1);
+    bVar1 = GetSplitScreenLocalClientNumForExpression
+                      ((Operand *)param_1,local_20,"IsCardTitleNewSplitscreen");
+    if (bVar1) {
+      GetIsCardTitleNew(local_20[0],(Operand *)(param_1 + 8),param_2->operands,true);
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82166a88);
+    Com_PrintError(0xd,
+                   "Error: IsCardTitleNewSplitscreen must have two arguments: player index and item\n"
+                  );
   }
-  *param_2 = 0;
-  param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  param_2->operands[0].internals.intVal = 0;
   return;
 }
 
 
 // 82593798  GetIsProfileItemUnlocked  (ui/ui_expressions.cpp:3995)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
 void GetIsProfileItemUnlocked
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+               (LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  uint uVar5;
-  undefined4 *puVar6;
-  int local_50 [20];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  connstate_t cVar3;
+  char *pcVar4;
+  StatsSource SVar5;
+  bool bVar7;
+  int iVar6;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  ulonglong uVar11;
+  StringTable *local_50 [20];
   
-  uVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfa2,0,0xffffffff82000f98,0xffffffff82166b80);
+  uVar11 = (ulonglong)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_24(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfa2,0
+                    ,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfa3,0,0xffffffff82000f98,0xffffffff821661a4);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfa3,0
+                    ,"%s");
   }
-  puVar6 = (undefined4 *)param_3;
-  *puVar6 = 0;
-  uVar2 = CL_ControllerIndexFromClientNum(uVar1);
-  if (((DAT_82966e98 == 0) || ((param_4 & 0xff) != 0)) ||
-     (iVar4 = CL_GetLocalClientConnectionState(uVar1), 4 < iVar4)) {
-    if (*(int *)param_2 != 2) {
-      Com_PrintError(0xd,0xffffffff82166adc);
-      puVar6[1] = 0;
+  puVar10 = (undefined4 *)uVar9;
+  *puVar10 = 0;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (((cl_multi_gamepads_enabled == 0) || ((uVar11 & 0xff) != 0)) ||
+     (cVar3 = CL_GetLocalClientConnectionState(LVar1), 4 < (int)cVar3)) {
+    if (((Operand *)uVar8)->dataType != VAL_STRING) {
+      Com_PrintError(0xd,"Error: title name must be an string\n");
+      puVar10[1] = 0;
       __restgprlr_24();
       return;
     }
-    uVar3 = GetSourceString(param_2);
-    iVar4 = LiveStorage_GetActiveStatsSource(uVar2);
-    if (iVar4 != 0) {
-      StringTable_GetAsset(0xffffffff82026898,local_50);
-      if (local_50[0] == 0) {
-        MyAssertHandler(0xffffffff82164aa0,0xfc4,0,0xffffffff82000f98,0xffffffff8203aafc);
+    pcVar4 = GetSourceString((Operand *)uVar8);
+    SVar5 = LiveStorage_GetActiveStatsSource(iVar2);
+    if (SVar5 != STATS_ONLINE) {
+      StringTable_GetAsset("mp/unlocktable.csv",local_50);
+      if (local_50[0] == (StringTable *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0xfc4,0,"%s");
       }
-      iVar4 = StringTable_LookupRowNumForValue(local_50[0],0,uVar3);
-      if (-1 < iVar4) {
-        uVar5 = LiveStorage_IsItemUnlockedFromTable_LocalClient(uVar1,local_50[0]);
-        puVar6[1] = uVar5 & 0xff;
+      iVar2 = StringTable_LookupRowNumForValue(local_50[0],0,pcVar4);
+      if (-1 < iVar2) {
+        bVar7 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar1,local_50[0],iVar2);
+        puVar10[1] = (uint)bVar7;
         __restgprlr_24();
         return;
       }
-      puVar6[1] = 1;
+      puVar10[1] = 1;
       __restgprlr_24();
       return;
     }
-    StringTable_GetAsset(0xffffffff82026958,local_50);
-    if (local_50[0] == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0xfd0,0,0xffffffff82000f98,0xffffffff8203aafc);
+    StringTable_GetAsset("mp/profileUnlockTable.csv",local_50);
+    if (local_50[0] == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfd0
+                      ,0,"%s");
     }
-    uVar1 = StringTable_LookupRowNumForValue(local_50[0],0,uVar3);
-    if (-1 < (int)uVar1) {
-      uVar5 = GamerProfile_IsItemUnlocked(uVar2,uVar1);
-      puVar6[1] = uVar5 & 0xff;
+    iVar6 = StringTable_LookupRowNumForValue(local_50[0],0,pcVar4);
+    if (-1 < iVar6) {
+      bVar7 = GamerProfile_IsItemUnlocked(iVar2,iVar6);
+      puVar10[1] = (uint)bVar7;
       __restgprlr_24();
       return;
     }
   }
   else {
-    Com_PrintWarning(0xd,0xffffffff82166b08);
-    *puVar6 = 0;
+    Com_PrintWarning(0xd,
+                     "Error: IsProfileItemUnlocked() may not be called when splitscreen is enabled. Use IsProfileItemUnlockedSplitScreen().\n"
+                    );
+    *puVar10 = 0;
   }
-  puVar6[1] = 0;
+  puVar10[1] = 0;
   __restgprlr_24();
   return;
 }
@@ -4585,37 +5479,43 @@ void GetIsProfileItemUnlocked
 
 // 82593998  GetIsProfileItemUnlockedSplitscreen  (ui/ui_expressions.cpp:4075)
 
-void GetIsProfileItemUnlockedSplitscreen(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsProfileItemUnlockedSplitscreen
+               (LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  undefined4 local_30 [12];
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  int iVar3;
+  LocalClientNum_t local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 0;
-  puVar3[1] = 0;
-  if (*(int *)((int)param_2 + 0x50) != 2) {
-    Com_PrintError(0xd,0xffffffff82166b88);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  if (param_2->operandCount != 2) {
+    Com_PrintError(0xd,
+                   "Error: GetIsProfileItemUnlockedSplitscreen must have two arguments: boolean check for all players and item\n"
+                  );
     __restgprlr_29();
     return;
   }
-  if (*(int *)((int)param_2 + 4) == 1) {
-    lVar4 = 0;
-    while ((cVar2 = CL_DoesControllerIndexHaveALocalClientNum(lVar4,local_30), cVar2 == '\0' ||
-           (GetIsProfileItemUnlocked(local_30[0],param_2 + 8,param_3,1), puVar3[1] != 1))) {
-      lVar4 = lVar4 + 1;
-      if (3 < (int)lVar4) {
+  if (param_2->operands[0].internals.intVal == 1) {
+    iVar3 = 0;
+    while ((bVar2 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_30), !bVar2 ||
+           (GetIsProfileItemUnlocked(local_30[0],param_2->operands + 1,param_3,true),
+           (param_3->internals).intVal != 1))) {
+      iVar3 = iVar3 + 1;
+      if (3 < iVar3) {
         __restgprlr_29();
         return;
       }
     }
   }
   else {
-    GetIsProfileItemUnlocked(uVar1,param_2 + 8,param_3,1);
+    GetIsProfileItemUnlocked(LVar1,param_2->operands + 1,param_3,true);
   }
   __restgprlr_29();
   return;
@@ -4624,72 +5524,88 @@ void GetIsProfileItemUnlockedSplitscreen(undefined8 param_1,longlong param_2,und
 
 // 82593A50  GetIsProfileItemNew  (ui/ui_expressions.cpp:4112)
 
-void GetIsProfileItemNew(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsProfileItemNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar6;
-  undefined4 uVar4;
-  uint uVar5;
-  undefined4 *puVar7;
-  int local_60 [2];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  connstate_t cVar3;
+  char *pcVar4;
+  StatsSource SVar5;
+  bool bVar7;
+  int iVar6;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  ulonglong uVar11;
+  StringTable *local_60 [2];
   char *local_58;
-  undefined4 local_54;
-  undefined1 auStack_50 [80];
+  char *local_54;
+  StructuredDataBuffer aSStack_50 [10];
   
-  uVar1 = __savegprlr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1015,0,0xffffffff82000f98,0xffffffff82166b80);
+  uVar11 = (ulonglong)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_24(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1015,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1016,0,0xffffffff82000f98,0xffffffff821661a4);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1016,
+                    0,"%s");
   }
-  puVar7 = (undefined4 *)param_3;
-  *puVar7 = 0;
-  uVar2 = CL_ControllerIndexFromClientNum(uVar1);
-  if (((DAT_82966e98 == 0) || ((param_4 & 0xff) != 0)) ||
-     (iVar3 = CL_GetLocalClientConnectionState(uVar1), 4 < iVar3)) {
-    if (*(int *)param_2 != 2) {
-      Com_PrintError(0xd,0xffffffff82166adc);
-      puVar7[1] = 0;
+  puVar10 = (undefined4 *)uVar9;
+  *puVar10 = 0;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (((cl_multi_gamepads_enabled == 0) || ((uVar11 & 0xff) != 0)) ||
+     (cVar3 = CL_GetLocalClientConnectionState(LVar1), 4 < (int)cVar3)) {
+    if (((Operand *)uVar8)->dataType != VAL_STRING) {
+      Com_PrintError(0xd,"Error: title name must be an string\n");
+      puVar10[1] = 0;
       __restgprlr_24();
       return;
     }
-    uVar1 = GetSourceString(param_2);
-    iVar3 = LiveStorage_GetActiveStatsSource(uVar2);
-    if (iVar3 == 0) {
-      StringTable_GetAsset(0xffffffff82026958,local_60);
-      if (local_60[0] == 0) {
-        MyAssertHandler(0xffffffff82164aa0,0x1046,0,0xffffffff82000f98,0xffffffff82026698);
+    pcVar4 = GetSourceString((Operand *)uVar8);
+    SVar5 = LiveStorage_GetActiveStatsSource(iVar2);
+    if (SVar5 == STATS_ONLINE) {
+      StringTable_GetAsset("mp/profileUnlockTable.csv",local_60);
+      if (local_60[0] == (StringTable *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x1046,0,"%s");
       }
-      uVar1 = StringTable_LookupRowNumForValue(local_60[0],0,uVar1);
-      if (-1 < (int)uVar1) {
-        uVar5 = GamerProfile_IsItemNew(uVar2);
-        puVar7[1] = uVar5 & 0xff;
+      iVar6 = StringTable_LookupRowNumForValue(local_60[0],0,pcVar4);
+      if (-1 < iVar6) {
+        bVar7 = GamerProfile_IsItemNew(iVar2,iVar6);
+        puVar10[1] = (uint)bVar7;
         __restgprlr_24();
         return;
       }
-      puVar7[1] = 1;
-      __restgprlr_24(uVar1,uVar1);
+      puVar10[1] = 1;
+      __restgprlr_24();
       return;
     }
-    local_54 = (undefined4)uVar1;
     local_58 = "featureNew";
-    cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_50,uVar2);
-    if (cVar6 != '\0') {
-      uVar4 = LiveStorage_DataGetInternalInt(&local_58,2,auStack_50);
-      puVar7[1] = uVar4;
+    local_54 = pcVar4;
+    bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_50,iVar2);
+    if (bVar7) {
+      iVar2 = LiveStorage_DataGetInternalInt(&local_58,2,aSStack_50);
+      puVar10[1] = iVar2;
       __restgprlr_24();
       return;
     }
   }
   else {
-    Com_PrintWarning(0xd,0xffffffff82166bf8);
-    *puVar7 = 0;
+    Com_PrintWarning(0xd,
+                     "Error: IsProfileItemNew() may not be called when splitscreen is enabled. Use IsProfileItemNewSplitScreen().\n"
+                    );
+    *puVar10 = 0;
   }
-  puVar7[1] = 0;
+  puVar10[1] = 0;
   __restgprlr_24();
   return;
 }
@@ -4697,37 +5613,42 @@ void GetIsProfileItemNew(undefined8 param_1,ulonglong param_2,ulonglong param_3,
 
 // 82593C28  GetIsProfileItemNewSplitscreen  (ui/ui_expressions.cpp:4192)
 
-void GetIsProfileItemNewSplitscreen(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsProfileItemNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  undefined4 local_30 [12];
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  int iVar3;
+  LocalClientNum_t local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 0;
-  puVar3[1] = 0;
-  if (*(int *)((int)param_2 + 0x50) != 2) {
-    Com_PrintError(0xd,0xffffffff82166c68);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  if (param_2->operandCount != 2) {
+    Com_PrintError(0xd,
+                   "Error: GetIsProfileItemNewSplitscreen must have two arguments: boolean check for all players and item\n"
+                  );
     __restgprlr_29();
     return;
   }
-  if (*(int *)((int)param_2 + 4) == 1) {
-    lVar4 = 0;
-    while ((cVar2 = CL_DoesControllerIndexHaveALocalClientNum(lVar4,local_30), cVar2 == '\0' ||
-           (GetIsProfileItemNew(local_30[0],param_2 + 8,param_3,1), puVar3[1] != 1))) {
-      lVar4 = lVar4 + 1;
-      if (3 < (int)lVar4) {
+  if (param_2->operands[0].internals.intVal == 1) {
+    iVar3 = 0;
+    while ((bVar2 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_30), !bVar2 ||
+           (GetIsProfileItemNew(local_30[0],param_2->operands + 1,param_3,true),
+           (param_3->internals).intVal != 1))) {
+      iVar3 = iVar3 + 1;
+      if (3 < iVar3) {
         __restgprlr_29();
         return;
       }
     }
   }
   else {
-    GetIsProfileItemNew(uVar1,param_2 + 8,param_3,1);
+    GetIsProfileItemNew(LVar1,param_2->operands + 1,param_3,true);
   }
   __restgprlr_29();
   return;
@@ -4736,42 +5657,53 @@ void GetIsProfileItemNewSplitscreen(undefined8 param_1,longlong param_2,undefine
 
 // 82593CE0  GetKeyBinding  (ui/ui_expressions.cpp:4229)
 
-void GetKeyBinding(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetKeyBinding(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  undefined8 uVar2;
+  expDataType *peVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  undefined4 *puVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
   
-  uVar2 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1089,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1089,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x108a,0,0xffffffff82000f98,0xffffffff82039d70);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x108a,
+                    0,"%s");
   }
-  piVar1 = (int *)param_2;
-  if (piVar1[0x14] < 1) {
-    MyAssertHandler(0xffffffff82164aa0,0x108b,0,0xffffffff82000f98,0xffffffff82166d10);
+  peVar1 = (expDataType *)uVar4;
+  if ((int)peVar1[0x14] < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x108b,
+                    0,"%s");
   }
-  puVar4 = (undefined4 *)param_3;
-  if (*piVar1 != 2) {
-    uVar2 = GetNameForValueType();
-    Com_PrintError(0xd,0xffffffff82166cd0,uVar2);
-    *puVar4 = 2;
-    puVar4[1] = &DAT_820068af;
+  puVar6 = (undefined4 *)uVar5;
+  if (*peVar1 != VAL_STRING) {
+    GetNameForValueType(*peVar1);
+    Com_PrintError(0xd,"Error: Must use a string as KeyBinding() parameter, not a %s\n");
+    *puVar6 = 2;
+    puVar6[1] = "";
     __restgprlr_27();
     return;
   }
-  UI_GetKeyBindingLocalizedStringSingle(uVar2,piVar1[1],0xffffffff83f62fd0,0x100);
-  *puVar4 = 2;
-  if ((1 < piVar1[0x14]) &&
-     (((piVar1[2] == 0 && (piVar1[3] == 1)) ||
-      ((piVar1[2] == 2 && (iVar3 = I_stricmp(piVar1[3],0xffffffff82003cf8), iVar3 == 0)))))) {
-    UI_FilterStringForButtonAnimation(0xffffffff83f62fd0,0x100);
+  UI_GetKeyBindingLocalizedStringSingle(LVar2,(char *)peVar1[1],resultString,0x100);
+  *puVar6 = 2;
+  if ((1 < (int)peVar1[0x14]) &&
+     (((peVar1[2] == VAL_INT && (peVar1[3] == VAL_FLOAT)) ||
+      ((peVar1[2] == VAL_STRING && (iVar3 = I_stricmp((char *)peVar1[3],"true"), iVar3 == 0)))))) {
+    UI_FilterStringForButtonAnimation(resultString,0x100);
   }
-  puVar4[1] = &DAT_83f62fd0;
+  puVar6[1] = resultString;
   __restgprlr_27();
   return;
 }
@@ -4779,32 +5711,35 @@ void GetKeyBinding(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82593E38  GetActionSlotUsable  (ui/ui_expressions.cpp:4267)
 
-void GetActionSlotUsable(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetActionSlotUsable(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   int iVar1;
-  char cVar2;
-  ulonglong uVar3;
+  bool bVar2;
   
-  if (*param_2 == 2) {
-    iVar1 = atoi((char *)param_2[1]);
-    uVar3 = (ulonglong)iVar1;
+  if (param_2->dataType == VAL_STRING) {
+    iVar1 = atoi((char *)(param_2->internals).function);
   }
-  else if (*param_2 == 1) {
-    uVar3 = (ulonglong)(uint)(int)(float)param_2[1];
-  }
-  else {
-    uVar3 = (ulonglong)(uint)param_2[1];
-  }
-  if (((int)uVar3 < 1) || (4 < (int)uVar3)) {
-    Com_PrintError(0xd,0xffffffff82166d28,4);
-    *param_3 = 0;
-    param_3[1] = 0;
+  else if (param_2->dataType == VAL_FLOAT) {
+    iVar1 = (int)(param_2->internals).floatVal;
   }
   else {
-    *param_3 = 0;
-    cVar2 = CG_ActionSlotIsUsable(param_1,uVar3 - 1);
-    param_3[1] = (uint)(cVar2 != '\0');
+    iVar1 = (param_2->internals).intVal;
+  }
+  if ((iVar1 < 1) || (4 < iVar1)) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: ActionSlot() slot ID should be in range (1,%i) not %i.\n");
+    param_3->dataType = VAL_INT;
+    (param_3->internals).intVal = 0;
+  }
+  else {
+    param_3->dataType = VAL_INT;
+    bVar2 = CG_ActionSlotIsUsable(param_1,iVar1 - 1);
+    (param_3->internals).function = (Statement_s *)((int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1)));
   }
   return;
 }
@@ -4812,55 +5747,66 @@ void GetActionSlotUsable(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 82593F00  GetDPadAlpha  (ui/ui_expressions.cpp:4286)
 
-double GetDPadAlpha(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float GetDPadAlpha(LocalClientNum_t param_1)
 
 {
-  float fVar1;
-  int iVar2;
-  char cVar3;
-  longlong lVar4;
+  int iVar1;
+  bool bVar2;
+  uint uVar3;
   
-  iVar2 = CL_IsCgameInitialized();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x10c1,0,0xffffffff82000f98,0xffffffff82166d78);
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x10c1,
+                    0,"%s");
   }
-  lVar4 = 0;
+  uVar3 = 0;
   do {
-    cVar3 = CG_ActionSlotIsUsable(param_1,lVar4);
-    if (cVar3 != '\0') {
-      fVar1 = 1.0;
-      goto LAB_82593f78;
+    bVar2 = CG_ActionSlotIsUsable(param_1,uVar3);
+    if (bVar2) {
+      return 1.0;
     }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 4);
-  fVar1 = 0.0;
-LAB_82593f78:
-  return (double)fVar1;
+    uVar3 = uVar3 + 1;
+  } while ((int)uVar3 < 4);
+  return 0.0;
 }
 
 
 // 82593FA0  GetHudFade  (ui/ui_expressions.cpp:4308)
 
-void GetHudFade(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudFade(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   undefined4 *puVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar2;
   int iVar3;
-  int iVar4;
-  int *piVar6;
-  undefined8 uVar5;
-  double dVar7;
+  cg_s *pcVar4;
+  ulonglong uVar5;
+  expDataType *peVar6;
+  char *pcVar7;
+  ulonglong uVar8;
+  float fVar9;
   
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x10d5,0,0xffffffff82000f98,0xffffffff82086cc4);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x10d5,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x10d6,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x10d6,
+                    0,"%s");
   }
-  iVar3 = CL_IsCgameInitialized(uVar2);
-  puVar1 = (undefined4 *)param_3;
+  iVar3 = CL_IsCgameInitialized(LVar2);
+  puVar1 = (undefined4 *)uVar8;
   if (iVar3 == 0) {
 LAB_82594020:
     puVar1[1] = 0;
@@ -4868,56 +5814,58 @@ LAB_82594020:
     return;
   }
   *puVar1 = 1;
-  piVar6 = (int *)param_2;
-  if (*piVar6 != 2) {
-    uVar2 = GetNameForValueType();
-    uVar5 = 0xffffffff82166e34;
+  peVar6 = (expDataType *)uVar5;
+  if (*peVar6 != VAL_STRING) {
+    GetNameForValueType(*peVar6);
+    pcVar7 = "Error: Must use a string as HudFade() parameter, not a %s\n";
 LAB_8259418c:
-    Com_PrintError(0xd,uVar5,uVar2);
+    Com_PrintError(0xd,pcVar7);
     puVar1[1] = 0;
     __restgprlr_27();
     return;
   }
-  iVar3 = I_stricmp(piVar6[1],0xffffffff82166e2c);
+  iVar3 = I_stricmp((char *)peVar6[1],"dpad");
   if (iVar3 == 0) {
-    dVar7 = (double)GetDPadAlpha(uVar2);
-    puVar1[1] = (float)dVar7;
+    fVar9 = GetDPadAlpha(LVar2);
+    puVar1[1] = fVar9;
     __restgprlr_27();
     return;
   }
-  iVar3 = I_stricmp(piVar6[1],0xffffffff820267a8);
+  iVar3 = I_stricmp((char *)peVar6[1],"weapon");
   if (iVar3 == 0) {
-    dVar7 = (double)CG_GetHUDAlphaAmmo(uVar2);
-    puVar1[1] = (float)dVar7;
+    fVar9 = CG_GetHUDAlphaAmmo(LVar2);
+    puVar1[1] = fVar9;
     __restgprlr_27();
     return;
   }
-  iVar3 = I_stricmp(piVar6[1],0xffffffff820772bc);
+  iVar3 = I_stricmp((char *)peVar6[1],"weaponName");
   if (iVar3 == 0) {
-    dVar7 = (double)CG_GetHUDAlphaWeaponName(uVar2);
-    puVar1[1] = (float)dVar7;
+    fVar9 = CG_GetHUDAlphaWeaponName(LVar2);
+    puVar1[1] = fVar9;
     __restgprlr_27();
     return;
   }
-  iVar3 = I_stricmp(piVar6[1],0xffffffff82012134);
+  iVar3 = I_stricmp((char *)peVar6[1],"compass");
   if (iVar3 == 0) {
-    dVar7 = (double)CG_GetHudAlphaCompass(uVar2);
-    puVar1[1] = (float)dVar7;
+    fVar9 = CG_GetHudAlphaCompass(LVar2);
+    puVar1[1] = fVar9;
     __restgprlr_27();
     return;
   }
-  iVar3 = I_stricmp(piVar6[1],0xffffffff82166e1c);
+  iVar3 = I_stricmp((char *)peVar6[1],"stuckwarning");
   if (iVar3 == 0) {
-    iVar3 = CG_GetLocalClientGlobals(uVar2);
-    iVar3 = *(int *)(iVar3 + 0x6b98c);
-    iVar4 = CG_GetLocalClientGlobals(uVar2);
-    if (*(int *)(iVar4 + 0x108480) != iVar3) goto LAB_82594020;
+    pcVar4 = CG_GetLocalClientGlobals(LVar2);
+    iVar3 = pcVar4->time;
+    pcVar4 = CG_GetLocalClientGlobals(LVar2);
+    if (pcVar4->explosiveStuckWarningTime != iVar3) goto LAB_82594020;
   }
   else {
-    iVar3 = I_stricmp(piVar6[1],0xffffffff8202ec34);
+    iVar3 = I_stricmp((char *)peVar6[1],"scoreboard");
     if (iVar3 != 0) {
-      uVar2 = GetNameForValueType(*piVar6);
-      uVar5 = 0xffffffff82166da0;
+      GetNameForValueType(*peVar6);
+      pcVar7 = 
+      "Error: Argument to HudFade() must be \"dpad\", \"compass\", \"scoreboard\", \"stance\", \"stuckwarning\", \"weaponName\", or \"weapon\".\n"
+      ;
       goto LAB_8259418c;
     }
   }
@@ -4929,53 +5877,67 @@ LAB_8259418c:
 
 // 825941B0  GetMaxRecommendedPlayers  (ui/ui_expressions.cpp:4375)
 
-void GetMaxRecommendedPlayers(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetMaxRecommendedPlayers(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = Live_HowManyPlayersCanWeHost();
-  param_1[1] = uVar1;
+  *(undefined4 *)param_1 = 0;
+  iVar1 = Live_HowManyPlayersCanWeHost();
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = iVar1;
   return;
 }
 
 
 // 825941E8  AreWeAcceptingInvite  (ui/ui_expressions.cpp:4386)
 
-void AreWeAcceptingInvite(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AreWeAcceptingInvite(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  uVar1 = Live_AreWeAcceptingInvite();
-  param_1[1] = uVar1 & 0xff;
+  *(undefined4 *)param_1 = 0;
+  bVar1 = Live_AreWeAcceptingInvite();
+  *(uint *)(param_1 + LOCAL_CLIENT_COUNT) = (uint)bVar1;
   return;
 }
 
 
 // 82594228  IsMenuOpen  (ui/ui_expressions.cpp:4397)
 
-void IsMenuOpen(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsMenuOpen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  if (*param_2 == 2) {
-    *param_3 = 0;
-    uVar2 = Menu_IsMenuOpenAndVisible(param_1,param_2[1]);
-    param_3[1] = uVar2 & 0xff;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      Com_Printf(0xd,0xffffffff82166e70,param_2[1]);
+  if (param_2->dataType == VAL_STRING) {
+    param_3->dataType = VAL_INT;
+    bVar2 = Menu_IsMenuOpenAndVisible(param_1,(char *)(param_2->internals).function);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar2;
+    param_3->internals = oVar1;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"ismenuopen( %s ) = %i\n");
     }
   }
   else {
-    uVar1 = GetNameForValueType(*param_2);
-    Com_PrintError(0xd,0xffffffff82166e88,uVar1);
-    *param_3 = 0;
-    param_3[1] = 0;
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use a string as the name of a menu, not a %s\n");
+    param_3->dataType = VAL_INT;
+    (param_3->internals).intVal = 0;
   }
   return;
 }
@@ -4983,16 +5945,23 @@ void IsMenuOpen(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 825942D8  WritingData  (ui/ui_expressions.cpp:4415)
 
-void WritingData(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void WritingData(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = LiveStorage_WritingStats();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166ec4);
+  param_2->dataType = VAL_INT;
+  bVar2 = LiveStorage_WritingStats(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"writingdata() = %i\n");
   }
   return;
 }
@@ -5000,42 +5969,48 @@ void WritingData(undefined8 param_1,undefined4 *param_2)
 
 // 82594338  LogicalNot  (ui/ui_expressions.cpp:4430)
 
-void LogicalNot(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LogicalNot(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  int *piVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined4 *puVar6;
+  expDataType eVar1;
+  Operand *pOVar2;
+  longlong lVar3;
+  Operand *pOVar4;
+  operandInternalDataUnion oVar5;
   
-  piVar5 = (int *)__savegprlr_28();
-  puVar6 = (undefined4 *)param_2;
-  *puVar6 = 0;
-  iVar1 = *piVar5;
-  if (iVar1 == 2) {
-    uVar2 = GetSourceString();
-    uVar3 = GetNameForValueType(*piVar5);
-    Com_PrintError(0xd,0xffffffff82166f2c,uVar3,uVar2);
-    puVar6[1] = 0;
+  lVar3 = (longlong)(int)param_2;
+  pOVar2 = (Operand *)__savegprlr_28(param_1,lVar3,param_3);
+  pOVar4 = (Operand *)lVar3;
+  pOVar4->dataType = VAL_INT;
+  eVar1 = pOVar2->dataType;
+  if (eVar1 == VAL_STRING) {
+    GetSourceString(pOVar2);
+    GetNameForValueType(pOVar2->dataType);
+    Com_PrintError(0xd,"Error: You cannot ! a \'%s\' (%s)\n");
+    (pOVar4->internals).intVal = 0;
     __restgprlr_28();
     return;
   }
-  if (iVar1 == 0) {
-    puVar6[1] = (uint)LZCOUNT(piVar5[1]) >> 5;
+  if (eVar1 == VAL_INT) {
+    (pOVar4->internals).intVal = (uint)LZCOUNT((pOVar2->internals).intVal) >> 5;
   }
-  else if (iVar1 == 1) {
-    puVar6[1] = (uint)((float)piVar5[1] == 0.0);
+  else if (eVar1 == VAL_FLOAT) {
+    oVar5.intVal._0_3_ = 0;
+    oVar5.intVal._3_1_ = (pOVar2->internals).floatVal == 0.0;
+    pOVar4->internals = oVar5;
   }
   else {
-    Com_PrintError(0x10,0xffffffff82166f04);
+    Com_PrintError(0x10,"Unknown datatype %i in LogicalNot()\n");
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    uVar2 = GetSourceString(param_2);
-    uVar3 = GetSourceString(piVar5);
-    uVar4 = GetNameForValueType(*piVar5);
-    Com_Printf(0xd,0xffffffff82166ed8,uVar4,uVar3,uVar2);
+  if ((uiscript_debug->current).integer != 0) {
+    GetSourceString(pOVar4);
+    GetSourceString(pOVar2);
+    GetNameForValueType(pOVar2->dataType);
+    Com_Printf(0xd,"running NOT on a %s (%s); result is (%s)\n");
   }
   __restgprlr_28();
   return;
@@ -5044,39 +6019,45 @@ void LogicalNot(undefined8 param_1,undefined8 param_2)
 
 // 82594440  BitwiseNot  (ui/ui_expressions.cpp:4459)
 
-void BitwiseNot(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void BitwiseNot(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  int *piVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  expDataType eVar1;
+  Operand *pOVar2;
+  longlong lVar3;
+  undefined4 *puVar4;
   uint uVar5;
   
-  piVar4 = (int *)__savegprlr_28();
-  *param_2 = 0;
-  iVar1 = *piVar4;
-  if (iVar1 == 2) {
-    uVar2 = GetSourceString();
-    uVar3 = GetNameForValueType(*piVar4);
-    Com_PrintError(0xd,0xffffffff82166f5c,uVar3,uVar2);
-    param_2[1] = 0;
+  lVar3 = (longlong)(int)param_2;
+  pOVar2 = (Operand *)__savegprlr_28(param_1,lVar3,param_3);
+  puVar4 = (undefined4 *)lVar3;
+  *puVar4 = 0;
+  eVar1 = pOVar2->dataType;
+  if (eVar1 == VAL_STRING) {
+    GetSourceString(pOVar2);
+    GetNameForValueType(pOVar2->dataType);
+    Com_PrintError(0xd,"Error: You cannot ~ a \'%s\' (%s)\n");
+    puVar4[1] = 0;
     __restgprlr_28();
     return;
   }
-  if (iVar1 == 0) {
-    uVar5 = piVar4[1];
+  if (eVar1 == VAL_INT) {
+    uVar5 = (pOVar2->internals).intVal;
   }
-  else if (iVar1 == 1) {
-    uVar5 = (uint)(float)piVar4[1];
+  else if (eVar1 == VAL_FLOAT) {
+    uVar5 = (uint)(pOVar2->internals).floatVal;
   }
   else {
     uVar5 = 0;
-    Com_PrintError(0x10,0xffffffff82166f04);
+    Com_PrintError(0x10,"Unknown datatype %i in LogicalNot()\n");
   }
-  param_2[1] = ~uVar5;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166f50,uVar5);
+  puVar4[1] = ~uVar5;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"~%i = %i\n");
   }
   __restgprlr_28();
   return;
@@ -5085,19 +6066,28 @@ void BitwiseNot(undefined8 param_1,undefined4 *param_2)
 
 // 82594510  BitShiftLeft  (ui/ui_expressions.cpp:4492)
 
-void BitShiftLeft(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void BitShiftLeft(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Operand *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  Operand *pOVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  longlong lVar5;
   
-  __savegprlr_29();
-  uVar1 = GetSourceInt();
-  uVar2 = GetSourceInt(param_2);
-  *param_3 = 0;
-  param_3[1] = (int)uVar1 << ((uint)uVar2 & 0x3f);
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166f80,uVar1,uVar2);
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_29(param_1,lVar4,lVar5,param_4);
+  iVar2 = GetSourceInt(pOVar1);
+  uVar3 = GetSourceInt((Operand *)lVar4);
+  *(undefined4 *)lVar5 = 0;
+  ((undefined4 *)lVar5)[1] = iVar2 << (uVar3 & 0x3f);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"%i << %i = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5106,19 +6096,28 @@ void BitShiftLeft(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 82594578  BitShiftRight  (ui/ui_expressions.cpp:4508)
 
-void BitShiftRight(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void BitShiftRight(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Operand *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  Operand *pOVar1;
+  int iVar2;
+  uint uVar3;
+  longlong lVar4;
+  longlong lVar5;
   
-  __savegprlr_29();
-  uVar1 = GetSourceInt();
-  uVar2 = GetSourceInt(param_2);
-  *param_3 = 0;
-  param_3[1] = (int)uVar1 >> ((uint)uVar2 & 0x3f);
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166f90,uVar1,uVar2);
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_29(param_1,lVar4,lVar5,param_4);
+  iVar2 = GetSourceInt(pOVar1);
+  uVar3 = GetSourceInt((Operand *)lVar4);
+  *(undefined4 *)lVar5 = 0;
+  ((undefined4 *)lVar5)[1] = iVar2 >> (uVar3 & 0x3f);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"%i >> %i = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5127,26 +6126,35 @@ void BitShiftRight(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 825945E0  GetAdsJavelin  (ui/ui_expressions.cpp:4525)
 
-void GetAdsJavelin(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetAdsJavelin(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_JavelinADS(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_JavelinADS(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166fa0,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"adsjavelin() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5155,28 +6163,39 @@ void GetAdsJavelin(undefined8 param_1,undefined4 *param_2)
 
 // 82594690  GetWeapLockBlink  (ui/ui_expressions.cpp:4539)
 
-void GetWeapLockBlink(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeapLockBlink(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  undefined8 uVar3;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
+  double dVar4;
+  float fVar5;
   
-  uVar1 = __savegprlr_29();
-  uVar3 = GetSourceFloat(param_2);
-  *param_3 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  fVar5 = GetSourceFloat(param_2);
+  dVar4 = (double)fVar5;
+  param_3->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_3[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_3->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLockBlink(uVar3,uVar1);
-    param_3[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLockBlink(LVar2,(float)dVar4);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_3->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(uVar3,0xd,0xffffffff82166fb4,uVar3,param_3[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weaplockblink( %.2f ) = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5185,26 +6204,35 @@ void GetWeapLockBlink(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 82594760  GetWeapAttackTop  (ui/ui_expressions.cpp:4557)
 
-void GetWeapAttackTop(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeapAttackTop(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLockAttackTop(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLockAttackTop(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166fd0,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapattacktop() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5213,26 +6241,35 @@ void GetWeapAttackTop(undefined8 param_1,undefined4 *param_2)
 
 // 82594810  GetWeapAttackDirect  (ui/ui_expressions.cpp:4570)
 
-void GetWeapAttackDirect(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeapAttackDirect(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLockAttackDirect(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLockAttackDirect(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82166fe8,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapattackdirect() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5241,26 +6278,35 @@ void GetWeapAttackDirect(undefined8 param_1,undefined4 *param_2)
 
 // 825948C0  GetWeapLocking  (ui/ui_expressions.cpp:4584)
 
-void GetWeapLocking(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeapLocking(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLocking(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLocking(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167004,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapLocked() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5269,26 +6315,35 @@ void GetWeapLocking(undefined8 param_1,undefined4 *param_2)
 
 // 82594970  GetWeapLocked  (ui/ui_expressions.cpp:4597)
 
-void GetWeapLocked(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeapLocked(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLocked(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLocked(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167004,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapLocked() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5297,26 +6352,35 @@ void GetWeapLocked(undefined8 param_1,undefined4 *param_2)
 
 // 82594A20  GetWeapLockTooClose  (ui/ui_expressions.cpp:4610)
 
-void GetWeapLockTooClose(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeapLockTooClose(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_UICheckWeapLockTooClose(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_UICheckWeapLockTooClose(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167018,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapLockTooClose() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5325,16 +6389,20 @@ void GetWeapLockTooClose(undefined8 param_1,undefined4 *param_2)
 
 // 82594AD0  GetWeapLockScreenPosX  (ui/ui_expressions.cpp:4623)
 
-void GetWeapLockScreenPosX(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeapLockScreenPosX(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  *param_2 = 1;
-  dVar1 = (double)CG_UIGetWeapLockLoc2D_X();
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167034,dVar1);
+  param_2->dataType = VAL_FLOAT;
+  fVar1 = CG_UIGetWeapLockLoc2D_X(param_1);
+  (param_2->internals).floatVal = fVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapLockScreenPosX() = %.2f\n");
   }
   return;
 }
@@ -5342,16 +6410,20 @@ void GetWeapLockScreenPosX(undefined8 param_1,undefined4 *param_2)
 
 // 82594B38  GetWeapLockScreenPosY  (ui/ui_expressions.cpp:4634)
 
-void GetWeapLockScreenPosY(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeapLockScreenPosY(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  *param_2 = 1;
-  dVar1 = (double)CG_UIGetWeapLockLoc2D_Y();
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167034,dVar1);
+  param_2->dataType = VAL_FLOAT;
+  fVar1 = CG_UIGetWeapLockLoc2D_Y(param_1);
+  (param_2->internals).floatVal = fVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weapLockScreenPosX() = %.2f\n");
   }
   return;
 }
@@ -5359,27 +6431,33 @@ void GetWeapLockScreenPosY(undefined8 param_1,undefined4 *param_2)
 
 // 82594BA0  GetWeaponName  (ui/ui_expressions.cpp:4645)
 
-void GetWeaponName(ulonglong param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWeaponName(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined1 *puVar1;
+  char *pcVar1;
   
-  *param_2 = 2;
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,param_1,4);
+  param_2->dataType = VAL_STRING;
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)param_1 * 0x79] < 8) {
-    param_2[1] = &DAT_820068af;
+  if ((int)clientUIActives[param_1].connectionState < 8) {
+    (param_2->internals).floatVal = (float)"";
   }
   else {
-    puVar1 = (undefined1 *)CG_GetWeaponName(param_1,0xffffffff83f630d0,0x400);
-    if (puVar1 == (undefined1 *)0x0) {
-      puVar1 = &DAT_820068af;
+    pcVar1 = CG_GetWeaponName(param_1,name,0x400);
+    if ((Statement_s *)pcVar1 == (Statement_s *)0x0) {
+      pcVar1 = "";
     }
-    param_2[1] = puVar1;
+    (param_2->internals).function = (Statement_s *)pcVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167054,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weaponname() = %s\n");
   }
   return;
 }
@@ -5387,26 +6465,35 @@ void GetWeaponName(ulonglong param_1,undefined4 *param_2)
 
 // 82594C88  IsPlayerReloading  (ui/ui_expressions.cpp:4661)
 
-void IsPlayerReloading(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsPlayerReloading(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 0;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar2 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_INT;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 8) {
-    param_2[1] = 0;
+  if ((int)clientUIActives[LVar2].connectionState < 8) {
+    (param_2->internals).intVal = 0;
   }
   else {
-    uVar2 = CG_IsPlayerReloading(uVar1);
-    param_2[1] = uVar2 & 0xff;
+    bVar3 = CG_IsPlayerReloading(LVar2);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = bVar3;
+    param_2->internals = oVar1;
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167068,param_2[1]);
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"isreloading() = %i\n");
   }
   __restgprlr_29();
   return;
@@ -5415,138 +6502,154 @@ void IsPlayerReloading(undefined8 param_1,undefined4 *param_2)
 
 // 82594D38  ExpSaveGameAvailable  (ui/ui_expressions.cpp:4675)
 
-void ExpSaveGameAvailable(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ExpSaveGameAvailable(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  if (*(int *)(DAT_83f71ebc + 0xc) == 0) {
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  if ((uiscript_debug->current).integer == 0) {
     return;
   }
-  Com_Printf(0xd,0xffffffff8216707c,0);
+  Com_Printf(0xd,"savegameavailable() = %i\n");
   return;
 }
 
 
 // 82594D70  SecondsToTimeDisplay  (ui/ui_expressions.cpp:4690)
 
-void SecondsToTimeDisplay(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void SecondsToTimeDisplay(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  uint uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  double dVar5;
+  Operand *pOVar1;
+  int iVar2;
+  longlong lVar3;
   
-  __savegprlr_26();
-  iVar4 = GetSourceInt();
-  dVar5 = floor((double)((float)(longlong)iVar4 * 0.016666668 + 0.5));
-  uVar1 = (uint)dVar5;
-  UI_SafeTranslateString(0xffffffff821670f0);
-  uVar2 = UI_SafeTranslateString(0xffffffff821670d8);
-  uVar3 = UI_SafeTranslateString(0xffffffff821670c0);
-  iVar4 = _snprintf(&DAT_83f634d0,0x80,"%i%s %i%s %i%s",(int)uVar1 / 0x5a0,uVar3,
-                    ((int)uVar1 % 0x5a0) / 0x3c,uVar2,
-                    (ulonglong)uVar1 +
-                    ((longlong)((int)uVar1 / 0x3c + ((int)uVar1 >> 0x1f)) +
-                    (ulonglong)(uVar1 >> 0x1f)) * -0x3c);
-  param_2[1] = &DAT_83f634d0;
-  *param_2 = 2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    iVar4 = Com_Printf(0xd,0xffffffff82167098,0xffffffff83f634d0);
+  lVar3 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_26(param_1,lVar3,param_3);
+  iVar2 = GetSourceInt(pOVar1);
+  floor((double)((float)(longlong)iVar2 * 0.016666668 + 0.5));
+  UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
+  UI_SafeTranslateString("MENU_HOURS_ABBREVIATION");
+  UI_SafeTranslateString("MENU_DAYS_ABBREVIATION");
+  _snprintf(resultString,0x80,"%i%s %i%s %i%s");
+  ((undefined4 *)lVar3)[1] = resultString;
+  *(undefined4 *)lVar3 = 2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"secondsToTime() = %s\n");
   }
-  __restgprlr_26(iVar4);
+  __restgprlr_26();
   return;
 }
 
 
 // 82594EB8  SecondsToCountdownDisplay  (ui/ui_expressions.cpp:4708)
 
-longlong SecondsToCountdownDisplay(longlong param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void SecondsToCountdownDisplay(LocalClientNum_t param_1,int param_2,Operand *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  
-  *param_2 = 2;
-  uVar1 = (uint)param_1;
-  if ((int)uVar1 < 0) {
-    param_2[1] = &DAT_820068af;
+  *(undefined4 *)param_2 = 2;
+  if ((int)param_1 < 0) {
+    *(char **)(param_2 + 4) = "";
   }
   else {
-    iVar2 = _snprintf(&DAT_83f63550,0x80,"%2i:%02i",(int)uVar1 / 0x3c,
-                      param_1 + ((longlong)((int)uVar1 / 0x3c + ((int)uVar1 >> 0x1f)) +
-                                (ulonglong)(uVar1 >> 0x1f)) * -0x3c);
-    param_1 = (longlong)iVar2;
-    param_2[1] = &DAT_83f63550;
-    if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-      param_1 = Com_Printf(0xd,0xffffffff8216710c,0xffffffff83f63550);
+    _snprintf(resultString,0x80,"%2i:%02i");
+    *(char **)(param_2 + 4) = resultString;
+    if ((uiscript_debug->current).integer != 0) {
+      Com_Printf(0xd,"secondsToCountdown() = %s\n");
     }
   }
-  return param_1;
+  return;
 }
 
 
 // 82594F80  GetGameEndTime  (ui/ui_expressions.cpp:4728)
 
-ulonglong GetGameEndTime(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int GetGameEndTime(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  int iVar1;
+  cgs_t *pcVar2;
   
-  uVar1 = CL_IsCgameInitialized();
-  if ((int)uVar1 == 0) {
-    return uVar1;
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 == 0) {
+    return 0;
   }
-  iVar2 = CG_GetLocalClientStaticGlobals(param_1);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1282,0,0xffffffff82000f98,0xffffffff82167134);
+  pcVar2 = CG_GetLocalClientStaticGlobals(param_1);
+  if (pcVar2 == (cgs_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1282,
+                    0,"%s");
   }
-  return (ulonglong)*(uint *)(iVar2 + 400);
+  return pcVar2->gameEndTime;
 }
 
 
 // 82595008  GetServerTime  (ui/ui_expressions.cpp:4747)
 
-ulonglong GetServerTime(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int GetServerTime(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  int iVar1;
+  clientActive_t *pcVar2;
   
-  uVar1 = CL_IsCgameInitialized();
-  if ((int)uVar1 == 0) {
-    return uVar1;
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 == 0) {
+    return 0;
   }
-  iVar2 = CL_GetLocalClientGlobals(param_1);
-  return (ulonglong)*(uint *)(iVar2 + 0x3404);
+  pcVar2 = CL_GetLocalClientGlobals(param_1);
+  return pcVar2->serverTime;
 }
 
 
 // 82595060  GetTimeLeft  (ui/ui_expressions.cpp:4762)
 
-void GetTimeLeft(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetTimeLeft(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  int iVar3;
+  clientActive_t *pcVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x129b,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x129b,
+                    0,"%s");
   }
-  iVar3 = 0;
-  *(undefined4 *)param_2 = 0;
-  iVar2 = CL_IsCgameInitialized(uVar1);
+  iVar5 = 0;
+  *(undefined4 *)uVar4 = 0;
+  iVar2 = CL_IsCgameInitialized(LVar1);
   if (iVar2 != 0) {
-    iVar3 = CL_GetLocalClientGlobals(uVar1);
-    iVar3 = *(int *)(iVar3 + 0x3404);
+    pcVar3 = CL_GetLocalClientGlobals(LVar1);
+    iVar5 = pcVar3->serverTime;
   }
-  iVar2 = GetGameEndTime(uVar1);
-  ((undefined4 *)param_2)[1] = (iVar2 - iVar3) / 1000;
+  iVar2 = GetGameEndTime(LVar1);
+  ((undefined4 *)uVar4)[1] = (iVar2 - iVar5) / 1000;
   __restgprlr_29();
   return;
 }
@@ -5554,45 +6657,60 @@ void GetTimeLeft(undefined8 param_1,ulonglong param_2)
 
 // 825950E8  GetGameTime  (ui/ui_expressions.cpp:4772)
 
-void GetGameTime(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetGameTime(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  clientActive_t *pcVar2;
   
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0x12a5,0,0xffffffff82000f98,0xffffffff82012420);
+  if (param_2 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x12a5,
+                    0,"%s");
   }
-  *param_2 = 0;
+  param_2->dataType = VAL_INT;
   iVar1 = CL_IsCgameInitialized(param_1);
   if (iVar1 == 0) {
-    uVar2 = 0;
+    iVar1 = 0;
   }
   else {
-    iVar1 = CL_GetLocalClientGlobals(param_1);
-    uVar2 = *(undefined4 *)(iVar1 + 0x3404);
+    pcVar2 = CL_GetLocalClientGlobals(param_1);
+    iVar1 = pcVar2->serverTime;
   }
-  param_2[1] = uVar2;
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 82595178  GetGameTimeEnd  (ui/ui_expressions.cpp:4780)
 
-void GetGameTimeEnd(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetGameTimeEnd(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x12ad,0,0xffffffff82000f98,0xffffffff82012420);
-    MyAssertHandler(0xffffffff82164aa0,0x12af,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar3 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x12ad,
+                    0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x12af,
+                    0,"%s");
   }
-  *(undefined4 *)param_2 = 0;
-  uVar2 = GetGameEndTime(uVar1);
-  ((undefined4 *)param_2)[1] = uVar2;
+  *(undefined4 *)uVar3 = 0;
+  iVar2 = GetGameEndTime(LVar1);
+  ((undefined4 *)uVar3)[1] = iVar2;
   __restgprlr_27();
   return;
 }
@@ -5600,25 +6718,29 @@ void GetGameTimeEnd(undefined8 param_1,ulonglong param_2)
 
 // 825951F8  GetGametypeObjective  (ui/ui_expressions.cpp:4790)
 
-void GetGametypeObjective(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetGametypeObjective(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
-  undefined1 *puVar2;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  iVar1 = CL_IsCgameInitialized();
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_IsCgameInitialized(param_1);
   if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+    (param_2->internals).floatVal = (float)"";
   }
   else {
-    puVar2 = (undefined1 *)CG_GetGametypeDescription(param_1);
-    if (puVar2 == (undefined1 *)0x0) {
-      puVar2 = &DAT_820068af;
+    pSVar2 = (Statement_s *)CG_GetGametypeDescription(param_1);
+    if (pSVar2 == (Statement_s *)0x0) {
+      pSVar2 = (Statement_s *)"";
     }
-    param_2[1] = puVar2;
-    if (puVar2 == (undefined1 *)0x0) {
-      param_2[1] = &DAT_820068af;
+    (param_2->internals).function = pSVar2;
+    if (pSVar2 == (Statement_s *)0x0) {
+      (param_2->internals).floatVal = (float)"";
     }
   }
   return;
@@ -5627,53 +6749,63 @@ void GetGametypeObjective(undefined8 param_1,undefined4 *param_2)
 
 // 82595280  GetGametypeName  (ui/ui_expressions.cpp:4813)
 
-void GetGametypeName(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetGametypeName(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
+  connstate_t cVar2;
+  cgs_t *pcVar3;
+  PartyData *pPVar4;
   int iVar5;
-  longlong lVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined1 *puVar6;
-  char cVar7;
+  int iVar6;
+  Statement_s *pSVar7;
+  bool bVar9;
+  char *pcVar8;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 2;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_STRING;
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x47f,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((&DAT_82b3e4f3)[(int)uVar1 * 0x1e4] == '\0') ||
-     (iVar5 = CL_GetLocalClientConnectionState(uVar1), iVar5 < 9)) {
-    cVar7 = Lobby_IsInLobby();
-    if ((cVar7 != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      Lobby_GetPartyData();
-      uVar3 = Party_GetPlaylistEntry();
-      uVar4 = CL_ControllerIndexFromClientNum(uVar1);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeName(uVar4,uVar3);
+  if ((clientUIActives[LVar1].cgameInitCalled == false) ||
+     (cVar2 = CL_GetLocalClientConnectionState(LVar1), (int)cVar2 < 9)) {
+    bVar9 = Lobby_IsInLobby();
+    if ((bVar9) && ((xblive_privatematch->current).enabled == false)) {
+      pPVar4 = Lobby_GetPartyData();
+      iVar5 = Party_GetPlaylistEntry(pPVar4);
+      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar7 = (Statement_s *)Playlist_GetLocalizedGametypeName(iVar6,iVar5);
       goto LAB_82595398;
     }
-    lVar2 = Party_GetGametype();
+    pcVar8 = Party_GetGametype();
   }
   else {
-    lVar2 = CG_GetLocalClientStaticGlobals(uVar1);
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      Lobby_GetPartyData();
-      uVar3 = Party_GetPlaylistEntry();
-      uVar4 = CL_ControllerIndexFromClientNum(uVar1);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeName(uVar4,uVar3);
+    pcVar3 = CG_GetLocalClientStaticGlobals(LVar1);
+    if (((onlinegame->current).enabled != false) &&
+       ((xblive_privatematch->current).enabled == false)) {
+      pPVar4 = Lobby_GetPartyData();
+      iVar5 = Party_GetPlaylistEntry(pPVar4);
+      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar7 = (Statement_s *)Playlist_GetLocalizedGametypeName(iVar6,iVar5);
       goto LAB_82595398;
     }
-    lVar2 = lVar2 + 0x24;
+    pcVar8 = pcVar3->gametype;
   }
-  puVar6 = (undefined1 *)UI_GetGameTypeDisplayName(lVar2);
+  pSVar7 = (Statement_s *)UI_GetGameTypeDisplayName(pcVar8);
 LAB_82595398:
-  if (puVar6 == (undefined1 *)0x0) {
-    puVar6 = &DAT_820068af;
+  if (pSVar7 == (Statement_s *)0x0) {
+    pSVar7 = (Statement_s *)"";
   }
-  param_2[1] = puVar6;
-  if (puVar6 == (undefined1 *)0x0) {
-    param_2[1] = &DAT_820068af;
+  (param_2->internals).function = pSVar7;
+  if (pSVar7 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
   }
   __restgprlr_29();
   return;
@@ -5682,62 +6814,73 @@ LAB_82595398:
 
 // 825953C8  GetMapVoteGametypeName  (ui/ui_expressions.cpp:4851)
 
-void GetMapVoteGametypeName(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetMapVoteGametypeName(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar5;
-  longlong lVar3;
-  undefined8 uVar4;
-  undefined1 *puVar6;
-  char cVar7;
+  LocalClientNum_t LVar1;
+  clientUIActive_t *pcVar2;
+  connstate_t cVar3;
+  cgs_t *pcVar4;
+  PartyData *pPVar5;
+  int iVar6;
+  int iVar7;
+  Statement_s *pSVar8;
+  bool bVar10;
+  char *pcVar9;
   
-  uVar2 = __savegprlr_29();
-  *param_3 = 2;
-  if (*param_2 != 0) {
-    Com_PrintError(0xd,0xffffffff82167188);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_STRING;
+  if (param_2->dataType != VAL_INT) {
+    Com_PrintError(0xd,"GetMapVoteGametypeName called with non integer data!\n");
     __restgprlr_29();
     return;
   }
-  iVar1 = param_2[1];
-  if ((iVar1 != 0) && (iVar1 != 1)) {
-    Com_PrintError(0xd,0xffffffff82167138,iVar1);
+  iVar6 = (param_2->internals).intVal;
+  if ((iVar6 != 0) && (iVar6 != 1)) {
+    Com_PrintError(0xd,
+                   "GetMapVoteGametypeName called unrecognized integer data=[%d] expected 0 or 1\n")
+    ;
     __restgprlr_29();
     return;
   }
-  iVar5 = CL_GetLocalClientUIGlobals(uVar2);
-  if ((*(char *)(iVar5 + 3) == '\0') || (iVar5 = CL_GetLocalClientConnectionState(uVar2), iVar5 < 8)
-     ) {
-    cVar7 = Lobby_IsInLobby();
-    if ((cVar7 != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      uVar4 = Lobby_GetPartyData();
-      uVar4 = Party_GetMapVotePlaylistEntry(uVar4,iVar1);
-      uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeName(uVar2,uVar4);
+  pcVar2 = CL_GetLocalClientUIGlobals(LVar1);
+  if ((pcVar2->cgameInitCalled == false) ||
+     (cVar3 = CL_GetLocalClientConnectionState(LVar1), (int)cVar3 < 8)) {
+    bVar10 = Lobby_IsInLobby();
+    if ((bVar10) && ((xblive_privatematch->current).enabled == false)) {
+      pPVar5 = Lobby_GetPartyData();
+      iVar6 = Party_GetMapVotePlaylistEntry(pPVar5,iVar6);
+      iVar7 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar8 = (Statement_s *)Playlist_GetLocalizedGametypeName(iVar7,iVar6);
       goto LAB_82595508;
     }
-    lVar3 = Party_GetGametype();
+    pcVar9 = Party_GetGametype();
   }
   else {
-    lVar3 = CG_GetLocalClientStaticGlobals(uVar2);
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      uVar4 = Lobby_GetPartyData();
-      uVar4 = Party_GetMapVotePlaylistEntry(uVar4,iVar1);
-      uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeName(uVar2,uVar4);
+    pcVar4 = CG_GetLocalClientStaticGlobals(LVar1);
+    if (((onlinegame->current).enabled != false) &&
+       ((xblive_privatematch->current).enabled == false)) {
+      pPVar5 = Lobby_GetPartyData();
+      iVar6 = Party_GetMapVotePlaylistEntry(pPVar5,iVar6);
+      iVar7 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar8 = (Statement_s *)Playlist_GetLocalizedGametypeName(iVar7,iVar6);
       goto LAB_82595508;
     }
-    lVar3 = lVar3 + 0x24;
+    pcVar9 = pcVar4->gametype;
   }
-  puVar6 = (undefined1 *)UI_GetGameTypeDisplayName(lVar3);
+  pSVar8 = (Statement_s *)UI_GetGameTypeDisplayName(pcVar9);
 LAB_82595508:
-  if (puVar6 == (undefined1 *)0x0) {
-    puVar6 = &DAT_820068af;
+  if (pSVar8 == (Statement_s *)0x0) {
+    pSVar8 = (Statement_s *)"";
   }
-  param_3[1] = puVar6;
-  if (puVar6 == (undefined1 *)0x0) {
-    param_3[1] = &DAT_820068af;
+  (param_3->internals).function = pSVar8;
+  if (pSVar8 == (Statement_s *)0x0) {
+    (param_3->internals).floatVal = (float)"";
   }
   __restgprlr_29();
   return;
@@ -5746,53 +6889,63 @@ LAB_82595508:
 
 // 82595538  GetGametypeNameAbbreviated  (ui/ui_expressions.cpp:4903)
 
-void GetGametypeNameAbbreviated(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetGametypeNameAbbreviated(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
+  connstate_t cVar2;
+  cgs_t *pcVar3;
+  PartyData *pPVar4;
   int iVar5;
-  longlong lVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined1 *puVar6;
-  char cVar7;
+  int iVar6;
+  Statement_s *pSVar7;
+  bool bVar9;
+  char *pcVar8;
   
-  uVar1 = __savegprlr_29();
-  *param_2 = 2;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x47f,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = __savegprlr_29(param_1);
+  param_2->dataType = VAL_STRING;
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x47f,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((&DAT_82b3e4f3)[(int)uVar1 * 0x1e4] == '\0') ||
-     (iVar5 = CL_GetLocalClientConnectionState(uVar1), iVar5 < 8)) {
-    cVar7 = Lobby_IsInLobby();
-    if ((cVar7 != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      Lobby_GetPartyData();
-      uVar3 = Party_GetPlaylistEntry();
-      uVar4 = CL_ControllerIndexFromClientNum(uVar1);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeAbbrv(uVar4,uVar3);
+  if ((clientUIActives[LVar1].cgameInitCalled == false) ||
+     (cVar2 = CL_GetLocalClientConnectionState(LVar1), (int)cVar2 < 8)) {
+    bVar9 = Lobby_IsInLobby();
+    if ((bVar9) && ((xblive_privatematch->current).enabled == false)) {
+      pPVar4 = Lobby_GetPartyData();
+      iVar5 = Party_GetPlaylistEntry(pPVar4);
+      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar7 = (Statement_s *)Playlist_GetLocalizedGametypeAbbrv(iVar6,iVar5);
       goto LAB_82595650;
     }
-    lVar2 = Party_GetGametype();
+    pcVar8 = Party_GetGametype();
   }
   else {
-    lVar2 = CG_GetLocalClientStaticGlobals(uVar1);
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      Lobby_GetPartyData();
-      uVar3 = Party_GetPlaylistEntry();
-      uVar4 = CL_ControllerIndexFromClientNum(uVar1);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeAbbrv(uVar4,uVar3);
+    pcVar3 = CG_GetLocalClientStaticGlobals(LVar1);
+    if (((onlinegame->current).enabled != false) &&
+       ((xblive_privatematch->current).enabled == false)) {
+      pPVar4 = Lobby_GetPartyData();
+      iVar5 = Party_GetPlaylistEntry(pPVar4);
+      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar7 = (Statement_s *)Playlist_GetLocalizedGametypeAbbrv(iVar6,iVar5);
       goto LAB_82595650;
     }
-    lVar2 = lVar2 + 0x24;
+    pcVar8 = pcVar3->gametype;
   }
-  puVar6 = (undefined1 *)UI_GetGameTypeDisplayName(lVar2);
+  pSVar7 = (Statement_s *)UI_GetGameTypeDisplayName(pcVar8);
 LAB_82595650:
-  if (puVar6 == (undefined1 *)0x0) {
-    puVar6 = &DAT_820068af;
+  if (pSVar7 == (Statement_s *)0x0) {
+    pSVar7 = (Statement_s *)"";
   }
-  param_2[1] = puVar6;
-  if (puVar6 == (undefined1 *)0x0) {
-    param_2[1] = &DAT_820068af;
+  (param_2->internals).function = pSVar7;
+  if (pSVar7 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
   }
   __restgprlr_29();
   return;
@@ -5801,62 +6954,73 @@ LAB_82595650:
 
 // 82595680  GetMapVoteGametypeNameAbbreviated  (ui/ui_expressions.cpp:4941)
 
-void GetMapVoteGametypeNameAbbreviated(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetMapVoteGametypeNameAbbreviated(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar5;
-  longlong lVar3;
-  undefined8 uVar4;
-  undefined1 *puVar6;
-  char cVar7;
+  LocalClientNum_t LVar1;
+  clientUIActive_t *pcVar2;
+  connstate_t cVar3;
+  cgs_t *pcVar4;
+  PartyData *pPVar5;
+  int iVar6;
+  int iVar7;
+  Statement_s *pSVar8;
+  bool bVar10;
+  char *pcVar9;
   
-  uVar2 = __savegprlr_29();
-  *param_3 = 2;
-  if (*param_2 != 0) {
-    Com_PrintError(0xd,0xffffffff82167188);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_STRING;
+  if (param_2->dataType != VAL_INT) {
+    Com_PrintError(0xd,"GetMapVoteGametypeName called with non integer data!\n");
     __restgprlr_29();
     return;
   }
-  iVar1 = param_2[1];
-  if ((iVar1 != 0) && (iVar1 != 1)) {
-    Com_PrintError(0xd,0xffffffff82167138,iVar1);
+  iVar6 = (param_2->internals).intVal;
+  if ((iVar6 != 0) && (iVar6 != 1)) {
+    Com_PrintError(0xd,
+                   "GetMapVoteGametypeName called unrecognized integer data=[%d] expected 0 or 1\n")
+    ;
     __restgprlr_29();
     return;
   }
-  iVar5 = CL_GetLocalClientUIGlobals(uVar2);
-  if ((*(char *)(iVar5 + 3) == '\0') || (iVar5 = CL_GetLocalClientConnectionState(uVar2), iVar5 < 8)
-     ) {
-    cVar7 = Lobby_IsInLobby();
-    if ((cVar7 != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      uVar4 = Lobby_GetPartyData();
-      uVar4 = Party_GetMapVotePlaylistEntry(uVar4,iVar1);
-      uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeAbbrv(uVar2,uVar4);
+  pcVar2 = CL_GetLocalClientUIGlobals(LVar1);
+  if ((pcVar2->cgameInitCalled == false) ||
+     (cVar3 = CL_GetLocalClientConnectionState(LVar1), (int)cVar3 < 8)) {
+    bVar10 = Lobby_IsInLobby();
+    if ((bVar10) && ((xblive_privatematch->current).enabled == false)) {
+      pPVar5 = Lobby_GetPartyData();
+      iVar6 = Party_GetMapVotePlaylistEntry(pPVar5,iVar6);
+      iVar7 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar8 = (Statement_s *)Playlist_GetLocalizedGametypeAbbrv(iVar7,iVar6);
       goto LAB_825957c0;
     }
-    lVar3 = Party_GetGametype();
+    pcVar9 = Party_GetGametype();
   }
   else {
-    lVar3 = CG_GetLocalClientStaticGlobals(uVar2);
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-      uVar4 = Lobby_GetPartyData();
-      uVar4 = Party_GetMapVotePlaylistEntry(uVar4,iVar1);
-      uVar2 = CL_ControllerIndexFromClientNum(uVar2);
-      puVar6 = (undefined1 *)Playlist_GetLocalizedGametypeAbbrv(uVar2,uVar4);
+    pcVar4 = CG_GetLocalClientStaticGlobals(LVar1);
+    if (((onlinegame->current).enabled != false) &&
+       ((xblive_privatematch->current).enabled == false)) {
+      pPVar5 = Lobby_GetPartyData();
+      iVar6 = Party_GetMapVotePlaylistEntry(pPVar5,iVar6);
+      iVar7 = CL_ControllerIndexFromClientNum(LVar1);
+      pSVar8 = (Statement_s *)Playlist_GetLocalizedGametypeAbbrv(iVar7,iVar6);
       goto LAB_825957c0;
     }
-    lVar3 = lVar3 + 0x24;
+    pcVar9 = pcVar4->gametype;
   }
-  puVar6 = (undefined1 *)UI_GetGameTypeDisplayName(lVar3);
+  pSVar8 = (Statement_s *)UI_GetGameTypeDisplayName(pcVar9);
 LAB_825957c0:
-  if (puVar6 == (undefined1 *)0x0) {
-    puVar6 = &DAT_820068af;
+  if (pSVar8 == (Statement_s *)0x0) {
+    pSVar8 = (Statement_s *)"";
   }
-  param_3[1] = puVar6;
-  if (puVar6 == (undefined1 *)0x0) {
-    param_3[1] = &DAT_820068af;
+  (param_3->internals).function = pSVar8;
+  if (pSVar8 == (Statement_s *)0x0) {
+    (param_3->internals).floatVal = (float)"";
   }
   __restgprlr_29();
   return;
@@ -5865,155 +7029,186 @@ LAB_825957c0:
 
 // 825957F0  GetGametypeInternal  (ui/ui_expressions.cpp:4994)
 
-ulonglong GetGametypeInternal(ulonglong param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetGametypeInternal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar2;
-  ulonglong uVar1;
-  ulonglong uVar3;
-  longlong lVar4;
+  bool bVar5;
+  PartyData *pPVar1;
+  int iVar2;
+  char *pcVar3;
+  cgs_t *pcVar4;
+  longlong lVar6;
   
-  *param_2 = 2;
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,param_1,4);
+  param_2->dataType = VAL_STRING;
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((int)(&DAT_82b3e54c)[(int)param_1 * 0x79] < 8) {
-    cVar2 = Lobby_IsInRunningLobby();
-    if ((cVar2 == '\0') || (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
-      uVar1 = Party_GetGametype();
-      if ((uVar1 & 0xffffffff) == 0) {
-        uVar1 = 0xffffffff820068af;
-      }
-    }
-    else {
-      Lobby_GetPartyData();
-      Party_GetPlaylistEntry();
-      uVar1 = CustomGameTypes_GetGametypeInternalName();
-      uVar3 = 0xffffffff820068af;
-      if ((uVar1 & 0xffffffff) == 0) {
-        param_2[1] = &DAT_820068af;
+  if ((int)clientUIActives[param_1].connectionState < 8) {
+    bVar5 = Lobby_IsInRunningLobby();
+    if ((bVar5) && ((xblive_privatematch->current).enabled == false)) {
+      pPVar1 = Lobby_GetPartyData();
+      iVar2 = Party_GetPlaylistEntry(pPVar1);
+      pcVar3 = CustomGameTypes_GetGametypeInternalName(iVar2);
+      if ((Statement_s *)pcVar3 == (Statement_s *)0x0) {
+        (param_2->internals).floatVal = (float)"";
         goto LAB_825958e8;
       }
     }
-    uVar3 = uVar1;
-    param_2[1] = (int)uVar3;
+    else {
+      pcVar3 = Party_GetGametype();
+      if ((Statement_s *)pcVar3 == (Statement_s *)0x0) {
+        pcVar3 = "";
+      }
+    }
+    (param_2->internals).function = (Statement_s *)pcVar3;
   }
   else {
-    uVar3 = CG_GetLocalClientStaticGlobals(param_1);
-    lVar4 = uVar3 + 0x24;
-    if (uVar3 + 0x24 == 0) {
-      lVar4 = -0x7dff9751;
+    pcVar4 = CG_GetLocalClientStaticGlobals(param_1);
+    lVar6 = (longlong)(int)pcVar4 + 0x24;
+    if ((longlong)(int)pcVar4 + 0x24 == 0) {
+      lVar6 = -0x7dff9751;
     }
-    param_2[1] = (int)lVar4;
+    (param_2->internals).intVal = (int)lVar6;
   }
 LAB_825958e8:
-  if (param_2[1] == 0) {
-    param_2[1] = &DAT_820068af;
+  if ((param_2->internals).intVal == 0) {
+    (param_2->internals).floatVal = (float)"";
   }
-  return uVar3;
+  return;
 }
 
 
 // 82595910  ConnectionInfoInternal  (ui/ui_expressions.cpp:5028)
 
-void ConnectionInfoInternal(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ConnectionInfoInternal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  Statement_s *pSVar1;
   
-  iVar1 = UI_GetConnectionInfo();
-  *param_2 = 2;
-  if (iVar1 != 0) {
-    param_2[1] = iVar1;
+  pSVar1 = (Statement_s *)UI_GetConnectionInfo(param_1);
+  param_2->dataType = VAL_STRING;
+  if (pSVar1 != (Statement_s *)0x0) {
+    (param_2->internals).function = pSVar1;
     return;
   }
-  param_2[1] = &DAT_820068af;
+  (param_2->internals).floatVal = (float)"";
   return;
 }
 
 
 // 82595970  OfflineProfileCanSave  (ui/ui_expressions.cpp:5046)
 
-void OfflineProfileCanSave(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void OfflineProfileCanSave(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  uVar1 = LiveStorage_LocalClientOfflineProfileCanSave();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar3 = LiveStorage_LocalClientOfflineProfileCanSave(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 825959B0  UserWithoutOfflineProfile  (ui/ui_expressions.cpp:5058)
 
-void UserWithoutOfflineProfile(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void UserWithoutOfflineProfile(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  undefined1 *puVar2;
-  longlong lVar4;
-  undefined1 auStack_420 [1032];
+  bool bVar2;
+  char *pcVar1;
+  int iVar3;
+  char acStack_420 [1032];
   
-  lVar4 = 0;
-  *param_1 = 2;
-  while ((cVar3 = CL_IsSplitscreenControllerActive(lVar4), cVar3 == '\0' ||
-         (cVar3 = LiveStorage_LocalClientOfflineProfileCanSave(lVar4), cVar3 != '\0'))) {
-    lVar4 = lVar4 + 1;
-    if (3 < (int)lVar4) {
+  iVar3 = 0;
+  *(undefined4 *)param_1 = 2;
+  while ((bVar2 = CL_IsSplitscreenControllerActive(iVar3), !bVar2 ||
+         (bVar2 = LiveStorage_LocalClientOfflineProfileCanSave(iVar3), bVar2))) {
+    iVar3 = iVar3 + 1;
+    if (3 < iVar3) {
       return;
     }
   }
-  uVar1 = CL_GetUsernameForLocalClient(lVar4);
-  Com_sprintf(auStack_420,0x400,0xffffffff821671c0,uVar1);
-  puVar2 = (undefined1 *)SEH_LocalizeTextMessage(auStack_420,0xffffffff82165e24,1);
-  if (puVar2 == (undefined1 *)0x0) {
-    puVar2 = &DAT_820068af;
+  CL_GetUsernameForLocalClient(iVar3);
+  Com_sprintf(acStack_420,0x400,"MENU_NO_SAVE_DEVICE_WARNING_SS\x15%s\x14");
+  pcVar1 = SEH_LocalizeTextMessage(acStack_420,"ui string",LOCMSG_NOERR);
+  if (pcVar1 == (char *)0x0) {
+    pcVar1 = "";
   }
-  param_1[1] = puVar2;
+  *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar1;
   return;
 }
 
 
 // 82595A70  AllSplitscreenProfilesCanSave  (ui/ui_expressions.cpp:5112)
 
-void AllSplitscreenProfilesCanSave(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AllSplitscreenProfilesCanSave(Operand *param_1)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_1 = 0;
-  uVar1 = CL_AllSplitScreenPlayersCanSaveProgress();
-  param_1[1] = uVar1 & 0xff;
+  param_1->dataType = VAL_INT;
+  bVar2 = CL_AllSplitScreenPlayersCanSaveProgress();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_1->internals = oVar1;
   return;
 }
 
 
 // 82595AB0  GetScore  (ui/ui_expressions.cpp:5127)
 
-void GetScore(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetScore(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  score_t *psVar1;
   
-  *param_3 = 0;
-  param_3[1] = 0;
-  if (*param_2 != 0) {
-    uVar1 = GetNameForValueType(*param_2);
-    Com_PrintError(0xd,0xffffffff82167204,uVar1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  if (param_2->dataType != VAL_INT) {
+    GetNameForValueType(param_2->dataType);
+    Com_PrintError(0xd,"Error: Must use an integer for the rank: %s\n");
     return;
   }
-  if (param_2[1] < 1) {
-    Com_PrintError(0xd,0xffffffff821671e4);
+  if ((param_2->internals).intVal < 1) {
+    Com_PrintError(0xd,"Error: rank must be > 0: %i\n");
     return;
   }
-  iVar2 = UI_GetScoreAtRank(param_1,param_2[1]);
-  if (iVar2 != 0) {
-    param_3[1] = *(undefined4 *)(iVar2 + 4);
+  psVar1 = UI_GetScoreAtRank(param_1,(param_2->internals).intVal);
+  if (psVar1 != (score_t *)0x0) {
+    param_3->internals = (operandInternalDataUnion)psVar1->score;
   }
   return;
 }
@@ -6021,25 +7216,30 @@ void GetScore(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 82595B68  GetGameMessageWindowActive  (ui/ui_expressions.cpp:5153)
 
-void GetGameMessageWindowActive(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetGameMessageWindowActive(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  *param_3 = 0;
-  param_3[1] = 0;
-  uVar2 = GetSourceInt(param_2);
-  cVar3 = Con_IsValidGameMessageWindow();
-  if (cVar3 == '\0') {
-    Com_PrintError(0xd,0xffffffff82167238);
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  iVar2 = GetSourceInt(param_2);
+  bVar3 = Con_IsValidGameMessageWindow(iVar2);
+  if (!bVar3) {
+    Com_PrintError(0xd,"UI Script error: gameMsgWndActive was passed an invalid window index\n");
     __restgprlr_29();
     return;
   }
-  cVar3 = Con_IsGameMessageWindowActive(uVar1,uVar2);
-  param_3[1] = (uint)(cVar3 != '\0');
+  bVar3 = Con_IsGameMessageWindowActive(LVar1,iVar2);
+  (param_3->internals).function = (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)))
+  ;
   __restgprlr_29();
   return;
 }
@@ -6047,16 +7247,22 @@ void GetGameMessageWindowActive(undefined8 param_1,undefined8 param_2,undefined4
 
 // 82595BE0  GetFollowing  (ui/ui_expressions.cpp:5172)
 
-void GetFollowing(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetFollowing(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  iVar1 = CG_GetLocalClientGlobals();
-  if ((*(uint *)(iVar1 + 0x10) & 0x800) != 0) {
-    param_2[1] = 1;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).otherFlags & 0x800U) != 0) {
+    (param_2->internals).intVal = 1;
   }
   return;
 }
@@ -6064,16 +7270,22 @@ void GetFollowing(undefined8 param_1,undefined4 *param_2)
 
 // 82595C30  GetSpectatingFree  (ui/ui_expressions.cpp:5187)
 
-void GetSpectatingFree(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetSpectatingFree(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar1 + 4) == 5) {
-    param_2[1] = 1;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar1->predictedPlayerState).pm_type == 5) {
+    (param_2->internals).intVal = 1;
   }
   return;
 }
@@ -6081,109 +7293,136 @@ void GetSpectatingFree(undefined8 param_1,undefined4 *param_2)
 
 // 82595C80  GetOperationFunction  (ui/ui_expressions.cpp:5203)
 
-void GetOperationFunction(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+_func___cdecl_void_Operand_ptr_Operand_ptr_Operand_ptr *
+GetOperationFunction(operationEnum param_1,Operand *param_2,Operand *param_3)
 
 {
   uint uVar1;
   ulonglong uVar2;
   int iVar3;
-  uint *puVar4;
-  uint *puVar5;
-  longlong lVar6;
-  double dVar7;
+  _func___cdecl_void_Operand_ptr_Operand_ptr_Operand_ptr *p_Var4;
+  ulonglong uVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  uint *puVar8;
+  longlong lVar9;
+  double dVar10;
   
-  uVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1459,0,0xffffffff82000f98,0xffffffff82167344);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1459,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x145a,0,0xffffffff82000f98,0xffffffff8208f0e8);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x145a,
+                    0,"%s");
   }
   if (0x14e < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82164aa0,0x145b,0,0xffffffff82167310,uVar2,0x14f);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x145b,
+                    0,"op doesn\'t index NUM_OPERATORS\n\t%i not in [0, %i)");
   }
-  puVar4 = (uint *)param_2;
-  if (2 < *puVar4) {
-    MyAssertHandler(0xffffffff82164aa0,0x145c,0,0xffffffff821672c8,*puVar4,3);
+  puVar6 = (uint *)uVar5;
+  if (2 < *puVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x145c,
+                    0,"data1->dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)");
   }
-  puVar5 = (uint *)param_3;
-  if (2 < *puVar5) {
-    MyAssertHandler(0xffffffff82164aa0,0x145d,0,0xffffffff82167280,*puVar5,3);
+  puVar8 = (uint *)uVar7;
+  if (2 < *puVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x145d,
+                    0,"data2->dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)");
   }
-  uVar1 = *puVar5;
-  lVar6 = uVar2 + (uVar2 & 0x7fffffff) * 2;
-  uVar2 = lVar6 + (ulonglong)*puVar4;
-  iVar3 = *(int *)(&DAT_83f66dd8 +
+  uVar1 = *puVar8;
+  lVar9 = uVar2 + (uVar2 & 0x7fffffff) * 2;
+  uVar2 = lVar9 + (ulonglong)*puVar6;
+  iVar3 = *(int *)((int)ops[0][0] +
                   (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 + (ulonglong)uVar1 & 0xffffffff) << 2));
   if (iVar3 == 0) {
-    if (*puVar4 == 2) {
-      dVar7 = atof((char *)puVar4[1]);
-      puVar4[1] = (uint)(float)dVar7;
-      *puVar4 = 1;
+    if (*puVar6 == 2) {
+      dVar10 = atof((char *)puVar6[1]);
+      puVar6[1] = (uint)(float)dVar10;
+      *puVar6 = 1;
     }
     if (uVar1 == 2) {
-      dVar7 = atof((char *)puVar5[1]);
-      puVar5[1] = (uint)(float)dVar7;
-      *puVar5 = 1;
+      dVar10 = atof((char *)puVar8[1]);
+      puVar8[1] = (uint)(float)dVar10;
+      *puVar8 = 1;
     }
-    uVar2 = (ulonglong)*puVar4 + lVar6;
-    iVar3 = *(int *)(&DAT_83f66dd8 +
-                    (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 + (ulonglong)*puVar5 & 0xffffffff) << 2)
+    uVar2 = (ulonglong)*puVar6 + lVar9;
+    iVar3 = *(int *)((int)ops[0][0] +
+                    (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 + (ulonglong)*puVar8 & 0xffffffff) << 2)
                     );
   }
-  __restgprlr_26(iVar3);
-  return;
+  p_Var4 = (_func___cdecl_void_Operand_ptr_Operand_ptr_Operand_ptr *)__restgprlr_26(iVar3);
+  return p_Var4;
 }
 
 
 // 82595E08  OpPairsWithRightParen  (ui/ui_expressions.cpp:5249)
 
-bool OpPairsWithRightParen(int param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool OpPairsWithRightParen(operationEnum param_1)
 
 {
-  if ((0x16 < param_1) && (param_1 < 0x150)) {
+  if ((0x16 < (int)param_1) && ((int)param_1 < 0x150)) {
     return true;
   }
-  return param_1 == 0x10;
+  return param_1 == OP_LEFTPAREN;
 }
 
 
 // 82595E30  AddOperandToStack  (ui/ui_expressions.cpp:5262)
 
-void AddOperandToStack(undefined8 param_1,int param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AddOperandToStack(LocalClientNum_t param_1,OperandStack *param_2,Operand *param_3)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint *puVar4;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  Operand *pOVar3;
+  ulonglong uVar4;
+  expDataType *peVar5;
   
-  uVar2 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x148f);
+  uVar4 = (ulonglong)(int)param_3;
+  LVar2 = __savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x148f,
+                    (int)uVar4,"%s");
     __restgprlr_29();
     return;
   }
   do {
-    puVar4 = (uint *)param_3;
-    uVar1 = *puVar4;
-    if (uVar1 != 3) {
-      if (2 < uVar1) {
-        MyAssertHandler(0xffffffff82164aa0,0x1497,0,0xffffffff82167398,uVar1,3);
+    peVar5 = (expDataType *)uVar4;
+    if (*peVar5 != NUM_INTERNAL_DATATYPES) {
+      if (VAL_STRING < *peVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x1497,0,
+                        "data->dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)")
+        ;
       }
-      if ((*puVar4 == 2) && (puVar4[1] == 0)) {
-        MyAssertHandler(0xffffffff82164aa0,0x1498,0,0xffffffff82000f98,0xffffffff82167350);
+      if ((*peVar5 == VAL_STRING) && (peVar5[1] == VAL_INT)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x1498,0,"%s");
       }
-      iVar3 = *(int *)(param_2 + 0x13b0) * 0x54;
-      *(uint *)(iVar3 + param_2) = *puVar4;
-      *(uint *)(iVar3 + param_2 + 4) = puVar4[1];
-      *(undefined4 *)(*(int *)(param_2 + 0x13b0) * 0x54 + param_2 + 0x50) = 1;
-      *(int *)(param_2 + 0x13b0) = *(int *)(param_2 + 0x13b0) + 1;
+      iVar1 = param_2->numOperandLists;
+      param_2->stack[iVar1].operands[0].dataType = *peVar5;
+      param_2->stack[iVar1].operands[0].internals = *(operandInternalDataUnion *)(peVar5 + 1);
+      param_2->stack[param_2->numOperandLists].operandCount = 1;
+      param_2->numOperandLists = param_2->numOperandLists + 1;
       __restgprlr_29();
       return;
     }
-    param_3 = EvaluateExpression(uVar2,puVar4[1]);
-  } while ((param_3 & 0xffffffff) != 0);
+    pOVar3 = EvaluateExpression(LVar2,(Statement_s *)peVar5[1]);
+    uVar4 = (ulonglong)(int)pOVar3;
+  } while (pOVar3 != (Operand *)0x0);
   __restgprlr_29();
   return;
 }
@@ -6191,85 +7430,101 @@ void AddOperandToStack(undefined8 param_1,int param_2,ulonglong param_3)
 
 // 82595F50  RunCommaOp  (ui/ui_expressions.cpp:5280)
 
-void RunCommaOp(undefined8 param_1,longlong param_2,int param_3,longlong param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RunCommaOp(LocalClientNum_t param_1,OperandStack *param_2,OperandList *param_3,
+               OperandList *param_4)
 
 {
-  uint uVar1;
+  expDataType eVar1;
   int iVar2;
-  int iVar3;
-  undefined8 uVar4;
-  uint *puVar5;
+  LocalClientNum_t LVar3;
+  Operand *pOVar4;
+  OperandStack *pOVar5;
   int iVar6;
-  uint uVar7;
-  longlong lVar8;
-  uint *puVar9;
-  undefined4 local_70;
-  undefined4 local_6c;
+  longlong lVar7;
+  uint uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  expDataType *peVar11;
+  Operand local_70 [14];
   
-  uVar4 = __savegprlr_20();
-  iVar2 = (int)param_4;
-  iVar6 = *(int *)(iVar2 + 0x50) + *(int *)(param_3 + 0x50);
+  lVar9 = (longlong)(int)param_4;
+  lVar7 = (longlong)(int)param_2;
+  LVar3 = __savegprlr_20(param_1);
+  iVar2 = (int)lVar9;
+  iVar6 = *(int *)(iVar2 + 0x50) + param_3->operandCount;
+  pOVar5 = (OperandStack *)lVar7;
   if (iVar6 < 0xb) {
-    iVar3 = (int)param_2;
-    uVar7 = 0;
-    *(int *)(*(int *)(iVar3 + 0x13b0) * 0x54 + iVar3 + 0x50) = iVar6;
-    param_2 = (ulonglong)*(uint *)(iVar3 + 0x13b0) * 0x54 + param_2;
-    if (0 < *(int *)(param_3 + 0x50)) {
-      iVar6 = param_3 - (int)param_2;
-      lVar8 = param_2;
+    uVar8 = 0;
+    pOVar5->stack[pOVar5->numOperandLists].operandCount = iVar6;
+    lVar7 = (ulonglong)(uint)pOVar5->numOperandLists * 0x54 + lVar7;
+    if (0 < param_3->operandCount) {
+      iVar6 = (int)param_3 - (int)lVar7;
+      lVar10 = lVar7;
       do {
-        puVar9 = (uint *)lVar8;
-        uVar1 = *(uint *)(iVar6 + (int)puVar9);
-        *puVar9 = uVar1;
-        puVar9[1] = *(uint *)((int)puVar9 + iVar6 + 4);
-        while (uVar1 == 3) {
-          puVar5 = (uint *)EvaluateExpression(uVar4,puVar9[1]);
-          uVar1 = *puVar5;
-          *puVar9 = uVar1;
-          puVar9[1] = puVar5[1];
+        peVar11 = (expDataType *)lVar10;
+        eVar1 = *(expDataType *)(iVar6 + (int)peVar11);
+        *peVar11 = eVar1;
+        peVar11[1] = *(expDataType *)((int)peVar11 + iVar6 + 4);
+        while (eVar1 == NUM_INTERNAL_DATATYPES) {
+          pOVar4 = EvaluateExpression(LVar3,(Statement_s *)peVar11[1]);
+          eVar1 = pOVar4->dataType;
+          *peVar11 = eVar1;
+          *(operandInternalDataUnion *)(peVar11 + 1) = pOVar4->internals;
         }
-        if (2 < *puVar9) {
-          MyAssertHandler(0xffffffff82164aa0,0x14ba,0,0xffffffff821673e0,*puVar9,3);
+        if (VAL_STRING < *peVar11) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x14ba,0,
+                          "finalList[operand].dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)"
+                         );
         }
-        if ((*puVar9 == 2) && (puVar9[1] == 0)) {
-          MyAssertHandler(0xffffffff82164aa0,0x14bb,0,0xffffffff82000f98,0xffffffff82167438);
+        if ((*peVar11 == VAL_STRING) && (peVar11[1] == VAL_INT)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x14bb,0,"%s");
         }
-        uVar7 = uVar7 + 1;
-        lVar8 = lVar8 + 8;
-      } while ((int)uVar7 < *(int *)(param_3 + 0x50));
+        uVar8 = uVar8 + 1;
+        lVar10 = lVar10 + 8;
+      } while ((int)uVar8 < param_3->operandCount);
     }
     iVar6 = 0;
     if (0 < *(int *)(iVar2 + 0x50)) {
-      param_2 = ((ulonglong)uVar7 & 0x1fffffff) * 8 + param_2;
+      lVar7 = ((ulonglong)uVar8 & 0x1fffffff) * 8 + lVar7;
       do {
-        puVar9 = (uint *)param_2;
-        *(undefined8 *)puVar9 = *(undefined8 *)param_4;
-        uVar7 = *puVar9;
-        while (uVar7 == 3) {
-          puVar5 = (uint *)EvaluateExpression(uVar4,puVar9[1]);
-          uVar7 = *puVar5;
-          *puVar9 = uVar7;
-          puVar9[1] = puVar5[1];
+        peVar11 = (expDataType *)lVar7;
+        *(undefined8 *)peVar11 = *(undefined8 *)lVar9;
+        eVar1 = *peVar11;
+        while (eVar1 == NUM_INTERNAL_DATATYPES) {
+          pOVar4 = EvaluateExpression(LVar3,(Statement_s *)peVar11[1]);
+          eVar1 = pOVar4->dataType;
+          *peVar11 = eVar1;
+          *(operandInternalDataUnion *)(peVar11 + 1) = pOVar4->internals;
         }
-        if (2 < *puVar9) {
-          MyAssertHandler(0xffffffff82164aa0,0x14c5,0,0xffffffff821673e0,*puVar9,3);
+        if (VAL_STRING < *peVar11) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x14c5,0,
+                          "finalList[operand].dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)"
+                         );
         }
-        if ((*puVar9 == 2) && (puVar9[1] == 0)) {
-          MyAssertHandler(0xffffffff82164aa0,0x14c6,0,0xffffffff82000f98,0xffffffff82167438);
+        if ((*peVar11 == VAL_STRING) && (peVar11[1] == VAL_INT)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x14c6,0,"%s");
         }
         iVar6 = iVar6 + 1;
-        param_2 = param_2 + 8;
-        param_4 = param_4 + 8;
+        lVar7 = lVar7 + 8;
+        lVar9 = lVar9 + 8;
       } while (iVar6 < *(int *)(iVar2 + 0x50));
     }
-    *(int *)(iVar3 + 0x13b0) = *(int *)(iVar3 + 0x13b0) + 1;
+    pOVar5->numOperandLists = pOVar5->numOperandLists + 1;
     __restgprlr_20();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82167494);
-  local_70 = 0;
-  local_6c = 0;
-  AddOperandToStack(uVar4,param_2,&local_70);
+  Com_PrintError(0xd,"UI Script error: No function takes %i parameters\n");
+  local_70[0].dataType = VAL_INT;
+  local_70[0].internals.intVal = 0;
+  AddOperandToStack(LVar3,pOVar5,local_70);
   __restgprlr_20();
   return;
 }
@@ -6277,53 +7532,48 @@ void RunCommaOp(undefined8 param_1,longlong param_2,int param_3,longlong param_4
 
 // 82596198  RunLogicOp  (ui/ui_expressions.cpp:5326)
 
-void RunLogicOp(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RunLogicOp(LocalClientNum_t param_1,operationEnum param_2,OperandStack *param_3,Operand param_4
+               ,Operand param_5)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  code *pcVar6;
-  undefined4 uStack00000028;
-  undefined4 uStack00000030;
-  undefined4 local_50;
-  undefined4 local_4c;
+  LocalClientNum_t LVar1;
+  _func___cdecl_void_Operand_ptr_Operand_ptr_Operand_ptr *p_Var2;
+  expDataType eStack00000028;
+  expDataType eStack00000030;
+  Operand local_50 [10];
   
-  uVar1 = __savegprlr_24();
-  _uStack00000028 = param_4;
-  _uStack00000030 = param_5;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    uVar2 = GetSourceString(&stack0x00000030);
-    uVar3 = GetNameForValueType(uStack00000030);
-    uVar4 = GetSourceString(&stack0x00000028);
-    uVar5 = GetNameForValueType(uStack00000028);
-    Com_Printf(0xd,0xffffffff82167514,
-               *(undefined4 *)((int)&PTR_DAT_829917d8 + (int)((param_2 & 0xffffffff) << 2)),uVar5,
-               uVar4,uVar3,uVar2);
+  LVar1 = __savegprlr_24(param_1);
+  _eStack00000028 = param_4;
+  _eStack00000030 = param_5;
+  if ((uiscript_debug->current).integer != 0) {
+    GetSourceString((Operand *)&stack0x00000030);
+    GetNameForValueType(eStack00000030);
+    GetSourceString((Operand *)&stack0x00000028);
+    GetNameForValueType(eStack00000028);
+    Com_Printf(0xd,"running %s on a %s (%s) and a %s (%s)\n");
   }
-  pcVar6 = (code *)GetOperationFunction(param_2,&stack0x00000028,&stack0x00000030);
-  if (pcVar6 == (code *)0x0) {
-    uVar2 = GetSourceString(&stack0x00000030);
-    uVar3 = GetNameForValueType(uStack00000030);
-    uVar4 = GetSourceString(&stack0x00000028);
-    uVar5 = GetNameForValueType(uStack00000028);
-    Com_PrintError(0xd,0xffffffff821674e0,
-                   *(undefined4 *)((int)&PTR_DAT_829917d8 + (int)((param_2 & 0xffffffff) << 2)),
-                   uVar5,uVar4,uVar3,uVar2);
-    local_50 = 0;
-    local_4c = 0;
+  p_Var2 = GetOperationFunction(param_2,(Operand *)&stack0x00000028,(Operand *)&stack0x00000030);
+  if (p_Var2 == (_func___cdecl_void_Operand_ptr_Operand_ptr_Operand_ptr *)0x0) {
+    GetSourceString((Operand *)&stack0x00000030);
+    GetNameForValueType(eStack00000030);
+    GetSourceString((Operand *)&stack0x00000028);
+    GetNameForValueType(eStack00000028);
+    Com_PrintError(0xd,"Error: You cannot %s a \'%s\' (%s) and a \'%s\' (%s)\n");
+    local_50[0].dataType = VAL_INT;
+    local_50[0].internals.intVal = 0;
   }
   else {
-    (*pcVar6)(&stack0x00000028,&stack0x00000030,&local_50);
+    (*p_Var2)((Operand *)&stack0x00000028,(Operand *)&stack0x00000030,local_50);
   }
-  AddOperandToStack(uVar1,param_3,&local_50);
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    uVar1 = GetSourceString(&local_50);
-    uVar2 = GetNameForValueType(local_50);
-    Com_Printf(0xd,0xffffffff821674c8,uVar2,uVar1);
+  AddOperandToStack(LVar1,param_3,local_50);
+  if ((uiscript_debug->current).integer != 0) {
+    GetSourceString(local_50);
+    GetNameForValueType(local_50[0].dataType);
+    Com_Printf(0xd,"result is a %s (%s)\n");
   }
   __restgprlr_24();
   return;
@@ -6332,42 +7582,50 @@ void RunLogicOp(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefine
 
 // 82596310  TableLookup  (ui/ui_expressions.cpp:5365)
 
-void TableLookup(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void TableLookup(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar6;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  undefined4 local_50 [20];
+  Operand *pOVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  StringTable *local_50 [20];
   
-  iVar6 = __savegprlr_25();
-  if (*(int *)(iVar6 + 0x50) != 4) {
-    Com_PrintError(0xd,0xffffffff82167568);
-    *param_2 = 2;
-    param_2[1] = &DAT_820068af;
+  lVar5 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_25(param_1,lVar5,param_3);
+  puVar6 = (undefined4 *)lVar5;
+  if (pOVar1[10].dataType != NUM_DATATYPES) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: Expected 4 params to function StringTableLookup, found %i\n"
+                  );
+    *puVar6 = 2;
+    puVar6[1] = "";
     __restgprlr_25();
     return;
   }
-  uVar1 = GetSourceString(iVar6);
-  StringTable_GetAsset(uVar1,local_50);
-  *param_2 = 2;
-  uVar1 = GetSourceInt(iVar6 + 0x18);
-  uVar2 = GetSourceString(iVar6 + 0x10);
-  uVar3 = GetSourceInt(iVar6 + 8);
-  uVar4 = StringTable_Lookup(local_50[0],uVar3,uVar2,uVar1);
-  if ((uVar4 & 0xffffffff) == 0) {
-    uVar4 = 0xffffffff820068af;
+  pcVar2 = GetSourceString(pOVar1);
+  StringTable_GetAsset(pcVar2,local_50);
+  *puVar6 = 2;
+  iVar3 = GetSourceInt(pOVar1 + 3);
+  pcVar2 = GetSourceString(pOVar1 + 2);
+  iVar4 = GetSourceInt(pOVar1 + 1);
+  pcVar2 = StringTable_Lookup(local_50[0],iVar4,pcVar2,iVar3);
+  if (pcVar2 == (char *)0x0) {
+    pcVar2 = "";
   }
-  param_2[1] = (int)uVar4;
-  if ((*(int *)(DAT_83f71ebc + 0xc) != 0) || (*(int *)(DAT_83667358 + 0xc) != 0)) {
-    uVar1 = GetSourceInt(iVar6 + 0x18);
-    uVar2 = GetSourceString(iVar6 + 0x10);
-    uVar3 = GetSourceInt(iVar6 + 8);
-    uVar5 = GetSourceString(iVar6);
-    Com_Printf(0xd,0xffffffff8216753c,uVar5,uVar3,uVar2,uVar1,uVar4);
+  puVar6[1] = pcVar2;
+  if (((uiscript_debug->current).integer != 0) || ((stringtable_debug->current).integer != 0)) {
+    GetSourceInt(pOVar1 + 3);
+    GetSourceString(pOVar1 + 2);
+    GetSourceInt(pOVar1 + 1);
+    GetSourceString(pOVar1);
+    Com_Printf(0xd,"tablelookup( %s, %i, %s, %i ) == %s\n");
   }
   __restgprlr_25();
   return;
@@ -6376,39 +7634,48 @@ void TableLookup(undefined8 param_1,undefined4 *param_2)
 
 // 82596450  TableLookupByRow  (ui/ui_expressions.cpp:5416)
 
-void TableLookupByRow(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void TableLookupByRow(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  undefined4 local_40 [16];
+  Operand *pOVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  undefined4 *puVar6;
+  StringTable *local_40 [16];
   
-  iVar5 = __savegprlr_27();
-  if (*(int *)(iVar5 + 0x50) != 3) {
-    Com_PrintError(0xd,0xffffffff821675e0);
-    *param_2 = 2;
-    param_2[1] = &DAT_820068af;
+  lVar5 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_27(param_1,lVar5,param_3);
+  puVar6 = (undefined4 *)lVar5;
+  if (pOVar1[10].dataType != NUM_INTERNAL_DATATYPES) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: Expected 3 params to function TableLookupByRow, found %i\n"
+                  );
+    *puVar6 = 2;
+    puVar6[1] = "";
     __restgprlr_27();
     return;
   }
-  uVar1 = GetSourceString(iVar5);
-  StringTable_GetAsset(uVar1,local_40);
-  *param_2 = 2;
-  uVar1 = GetSourceInt(iVar5 + 0x10);
-  uVar2 = GetSourceInt(iVar5 + 8);
-  uVar3 = StringTable_GetColumnValueForRow(local_40[0],uVar2,uVar1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar3 = 0xffffffff820068af;
+  pcVar2 = GetSourceString(pOVar1);
+  StringTable_GetAsset(pcVar2,local_40);
+  *puVar6 = 2;
+  iVar3 = GetSourceInt(pOVar1 + 2);
+  iVar4 = GetSourceInt(pOVar1 + 1);
+  pcVar2 = StringTable_GetColumnValueForRow(local_40[0],iVar4,iVar3);
+  if (pcVar2 == (char *)0x0) {
+    pcVar2 = "";
   }
-  param_2[1] = (int)uVar3;
-  if ((*(int *)(DAT_83f71ebc + 0xc) != 0) || (*(int *)(DAT_83667358 + 0xc) != 0)) {
-    uVar1 = GetSourceInt(iVar5 + 0x10);
-    uVar2 = GetSourceInt(iVar5 + 8);
-    uVar4 = GetSourceString(iVar5);
-    Com_Printf(0xd,0xffffffff821675b8,uVar4,uVar2,uVar1,uVar3);
+  puVar6[1] = pcVar2;
+  if (((uiscript_debug->current).integer != 0) || ((stringtable_debug->current).integer != 0)) {
+    GetSourceInt(pOVar1 + 2);
+    GetSourceInt(pOVar1 + 1);
+    GetSourceString(pOVar1);
+    Com_Printf(0xd,"tablelookupbyrow( %s, %i, %i ) == %s\n");
   }
   __restgprlr_27();
   return;
@@ -6417,36 +7684,44 @@ void TableLookupByRow(undefined8 param_1,undefined4 *param_2)
 
 // 82596568  TableLookupRowNum  (ui/ui_expressions.cpp:5451)
 
-void TableLookupRowNum(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void TableLookupRowNum(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined4 local_40 [16];
+  Operand *pOVar1;
+  char *pcVar2;
+  int iVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  StringTable *local_40 [16];
   
-  iVar5 = __savegprlr_27();
-  if (*(int *)(iVar5 + 0x50) != 3) {
-    Com_PrintError(0xd,0xffffffff82167658);
-    *param_2 = 2;
-    param_2[1] = &DAT_820068af;
+  lVar4 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_27(param_1,lVar4,param_3);
+  puVar5 = (undefined4 *)lVar4;
+  if (pOVar1[10].dataType != NUM_INTERNAL_DATATYPES) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: Expected 3 params to function TableLookupRowNum, found %i\n"
+                  );
+    *puVar5 = 2;
+    puVar5[1] = "";
     __restgprlr_27();
     return;
   }
-  uVar1 = GetSourceString(iVar5);
-  StringTable_GetAsset(uVar1,local_40);
-  *param_2 = 0;
-  uVar1 = GetSourceString(iVar5 + 0x10);
-  uVar2 = GetSourceInt(iVar5 + 8);
-  uVar1 = StringTable_LookupRowNumForValue(local_40[0],uVar2,uVar1);
-  param_2[1] = (int)uVar1;
-  if ((*(int *)(DAT_83f71ebc + 0xc) != 0) || (*(int *)(DAT_83667358 + 0xc) != 0)) {
-    uVar2 = GetSourceString(iVar5 + 0x10);
-    uVar3 = GetSourceInt(iVar5 + 8);
-    uVar4 = GetSourceString(iVar5);
-    Com_Printf(0xd,0xffffffff82167630,uVar4,uVar3,uVar2,uVar1);
+  pcVar2 = GetSourceString(pOVar1);
+  StringTable_GetAsset(pcVar2,local_40);
+  *puVar5 = 0;
+  pcVar2 = GetSourceString(pOVar1 + 2);
+  iVar3 = GetSourceInt(pOVar1 + 1);
+  iVar3 = StringTable_LookupRowNumForValue(local_40[0],iVar3,pcVar2);
+  puVar5[1] = iVar3;
+  if (((uiscript_debug->current).integer != 0) || ((stringtable_debug->current).integer != 0)) {
+    GetSourceString(pOVar1 + 2);
+    GetSourceInt(pOVar1 + 1);
+    GetSourceString(pOVar1);
+    Com_Printf(0xd,"TableLookupRowNum( %s, %i, %s ) == %i\n");
   }
   __restgprlr_27();
   return;
@@ -6455,52 +7730,58 @@ void TableLookupRowNum(undefined8 param_1,undefined4 *param_2)
 
 // 82596670  MinValue  (ui/ui_expressions.cpp:5496)
 
-void MinValue(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MinValue(OperandList *param_1,Operand *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  int *piVar3;
+  expDataType eVar1;
+  Operand *pOVar2;
+  Operand *pOVar3;
   int iVar4;
   double dVar5;
   double dVar6;
+  float fVar7;
   
-  piVar3 = (int *)__savegprlr_25();
-  if (0 < piVar3[0x14]) {
-    dVar6 = (double)GetSourceFloat(piVar3);
+  pOVar3 = (Operand *)__savegprlr_25(param_1);
+  if (0 < (int)pOVar3[10].dataType) {
+    fVar7 = GetSourceFloat(pOVar3);
+    dVar6 = (double)fVar7;
     iVar4 = 1;
-    piVar2 = piVar3;
-    if (1 < piVar3[0x14]) {
+    pOVar2 = pOVar3;
+    if (1 < (int)pOVar3[10].dataType) {
       do {
-        iVar1 = piVar2[2];
-        if (iVar1 == 1) {
-          dVar5 = (double)(float)piVar2[3];
+        eVar1 = pOVar2[1].dataType;
+        if (eVar1 == VAL_FLOAT) {
+          dVar5 = (double)pOVar2[1].internals.floatVal;
         }
-        else if (iVar1 == 0) {
-          dVar5 = (double)(longlong)piVar2[3];
+        else if (eVar1 == VAL_INT) {
+          dVar5 = (double)(longlong)pOVar2[1].internals.intVal;
         }
         else {
-          if (iVar1 != 2) {
-            MyAssertHandler(0xffffffff82164aa0,0x16d,0,0xffffffff82000f98,0xffffffff82164ba8);
+          if (eVar1 != VAL_STRING) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                            ,0x16d,0,"%s");
           }
-          dVar5 = atof((char *)piVar2[3]);
+          dVar5 = atof((char *)pOVar2[1].internals.function);
           dVar5 = (double)(float)dVar5;
         }
         if (dVar5 < dVar6) {
           dVar6 = dVar5;
         }
         iVar4 = iVar4 + 1;
-        piVar2 = piVar2 + 2;
-      } while (iVar4 < piVar3[0x14]);
+        pOVar2 = pOVar2 + 1;
+      } while (iVar4 < (int)pOVar3[10].dataType);
     }
-    param_2[1] = (float)dVar6;
-    *param_2 = 1;
+    (param_2->internals).floatVal = (float)dVar6;
+    param_2->dataType = VAL_FLOAT;
     __restgprlr_25();
     return;
   }
-  Com_PrintError(0xd,0xffffffff821676a8);
-  *param_2 = 1;
-  param_2[1] = 0;
+  Com_PrintError(0xd,"UI Expression Error: Expected at least 1 parameter to min()\n");
+  param_2->dataType = VAL_FLOAT;
+  (param_2->internals).intVal = 0;
   __restgprlr_25();
   return;
 }
@@ -6508,52 +7789,58 @@ void MinValue(undefined8 param_1,undefined4 *param_2)
 
 // 82596798  MaxValue  (ui/ui_expressions.cpp:5523)
 
-void MaxValue(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MaxValue(OperandList *param_1,Operand *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  int *piVar3;
+  expDataType eVar1;
+  Operand *pOVar2;
+  Operand *pOVar3;
   int iVar4;
   double dVar5;
   double dVar6;
+  float fVar7;
   
-  piVar3 = (int *)__savegprlr_25();
-  if (0 < piVar3[0x14]) {
-    dVar6 = (double)GetSourceFloat(piVar3);
+  pOVar3 = (Operand *)__savegprlr_25(param_1);
+  if (0 < (int)pOVar3[10].dataType) {
+    fVar7 = GetSourceFloat(pOVar3);
+    dVar6 = (double)fVar7;
     iVar4 = 1;
-    piVar2 = piVar3;
-    if (1 < piVar3[0x14]) {
+    pOVar2 = pOVar3;
+    if (1 < (int)pOVar3[10].dataType) {
       do {
-        iVar1 = piVar2[2];
-        if (iVar1 == 1) {
-          dVar5 = (double)(float)piVar2[3];
+        eVar1 = pOVar2[1].dataType;
+        if (eVar1 == VAL_FLOAT) {
+          dVar5 = (double)pOVar2[1].internals.floatVal;
         }
-        else if (iVar1 == 0) {
-          dVar5 = (double)(longlong)piVar2[3];
+        else if (eVar1 == VAL_INT) {
+          dVar5 = (double)(longlong)pOVar2[1].internals.intVal;
         }
         else {
-          if (iVar1 != 2) {
-            MyAssertHandler(0xffffffff82164aa0,0x16d,0,0xffffffff82000f98,0xffffffff82164ba8);
+          if (eVar1 != VAL_STRING) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                            ,0x16d,0,"%s");
           }
-          dVar5 = atof((char *)piVar2[3]);
+          dVar5 = atof((char *)pOVar2[1].internals.function);
           dVar5 = (double)(float)dVar5;
         }
         if (dVar6 < dVar5) {
           dVar6 = dVar5;
         }
         iVar4 = iVar4 + 1;
-        piVar2 = piVar2 + 2;
-      } while (iVar4 < piVar3[0x14]);
+        pOVar2 = pOVar2 + 1;
+      } while (iVar4 < (int)pOVar3[10].dataType);
     }
-    param_2[1] = (float)dVar6;
-    *param_2 = 1;
+    (param_2->internals).floatVal = (float)dVar6;
+    param_2->dataType = VAL_FLOAT;
     __restgprlr_25();
     return;
   }
-  Com_PrintError(0xd,0xffffffff821676e8);
-  *param_2 = 1;
-  param_2[1] = 0;
+  Com_PrintError(0xd,"UI Expression Error: Expected at least 1 parameter to max()\n");
+  param_2->dataType = VAL_FLOAT;
+  (param_2->internals).intVal = 0;
   __restgprlr_25();
   return;
 }
@@ -6561,151 +7848,190 @@ void MaxValue(undefined8 param_1,undefined4 *param_2)
 
 // 825968C0  GetOperand  (ui/ui_expressions.cpp:5550)
 
-void GetOperand(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool GetOperand(OperandStack *param_1,Operand *param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  expDataType eVar1;
+  expDataType *peVar2;
+  undefined1 uVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  iVar1 = puVar2[0x4ec];
-  if (iVar1 < 1) {
-    Com_PrintError(0xd,0xffffffff821677d8);
-    puVar2[0x4ec] = 1;
-    puVar2[0x14] = 1;
-    *param_2 = *puVar2;
-    param_2[1] = puVar2[1];
-    *param_2 = 0;
-    param_2[1] = 0;
-    __restgprlr_29(0);
-    return;
+  peVar2 = (expDataType *)__savegprlr_29(param_1);
+  eVar1 = peVar2[0x4ec];
+  if ((int)eVar1 < 1) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operation - missing parameter inside function or parenthesis\n");
+    peVar2[0x4ec] = VAL_FLOAT;
+    peVar2[0x14] = VAL_FLOAT;
+    param_2->dataType = *peVar2;
+    param_2->internals = *(operandInternalDataUnion *)(peVar2 + 1);
+    param_2->dataType = VAL_INT;
+    (param_2->internals).intVal = 0;
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  if (puVar2[iVar1 * 0x15 + -1] != 1) {
-    Com_PrintError(0xd,0xffffffff82167780);
-    *param_2 = 0;
-    param_2[1] = 0;
-    __restgprlr_29(0);
-    return;
+  if (peVar2[eVar1 * 0x15 + -1] != VAL_FLOAT) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operand count - expected to find one operand but instead found %i\n"
+                  );
+    param_2->dataType = VAL_INT;
+    (param_2->internals).intVal = 0;
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
-  if (2 < (uint)puVar2[iVar1 * 0x15 + -0x15]) {
-    MyAssertHandler(0xffffffff82164aa0,0x15c5,0,0xffffffff82167728,puVar2[iVar1 * 0x15 + -0x15],3);
+  if (VAL_STRING < peVar2[eVar1 * 0x15 + -0x15]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x15c5,
+                    0,
+                    "list->operands[0].dataType doesn\'t index NUM_INTERNAL_DATATYPES\n\t%i not in [0, %i)"
+                   );
   }
-  *param_2 = puVar2[iVar1 * 0x15 + -0x15];
-  param_2[1] = puVar2[iVar1 * 0x15 + -0x14];
-  puVar2[0x4ec] = puVar2[0x4ec] + -1;
-  __restgprlr_29(1);
-  return;
+  param_2->dataType = peVar2[eVar1 * 0x15 + -0x15];
+  param_2->internals = *(operandInternalDataUnion *)(peVar2 + eVar1 * 0x15 + -0x14);
+  peVar2[0x4ec] = peVar2[0x4ec] - VAL_FLOAT;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
 // 825969B8  GetTwoOperands  (ui/ui_expressions.cpp:5581)
 
-undefined8 GetTwoOperands(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool GetTwoOperands(OperandStack *param_1,Operand *param_2,Operand *param_3)
 
 {
   GetOperand(param_1,param_3);
   GetOperand(param_1,param_2);
-  return 1;
+  return true;
 }
 
 
 // 82596A08  GetOperandList  (ui/ui_expressions.cpp:5589)
 
-void GetOperandList(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool GetOperandList(OperandStack *param_1,OperandList *param_2)
 
 {
-  void *_Src;
+  int iVar1;
+  undefined1 uVar2;
   
-  _Src = (void *)__savegprlr_29();
-  if (*(int *)((int)_Src + 0x13b0) < 1) {
-    Com_PrintError(0xd,0xffffffff821677d8);
-    *(undefined4 *)((int)_Src + 0x13b0) = 1;
-    memcpy(param_2,_Src,0x54);
-    param_2[0x14] = 1;
-    *param_2 = 0;
-    param_2[1] = 0;
-    __restgprlr_29(0);
-    return;
+  iVar1 = __savegprlr_29(param_1);
+  if (*(int *)(iVar1 + 0x13b0) < 1) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operation - missing parameter inside function or parenthesis\n");
+    *(undefined4 *)(iVar1 + 0x13b0) = 1;
+    memcpy();
+    param_2->operandCount = 1;
+    param_2->operands[0].dataType = VAL_INT;
+    param_2->operands[0].internals.intVal = 0;
+    uVar2 = __restgprlr_29(0);
+    return (bool)uVar2;
   }
-  memcpy(param_2,(void *)((int)_Src + *(int *)((int)_Src + 0x13b0) * 0x54 + -0x54),0x54);
-  *(int *)((int)_Src + 0x13b0) = *(int *)((int)_Src + 0x13b0) + -1;
-  __restgprlr_29(1);
-  return;
+  memcpy();
+  *(int *)(iVar1 + 0x13b0) = *(int *)(iVar1 + 0x13b0) + -1;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 82596AA0  GetCurrentMenuDefName  (ui/ui_expressions.cpp:5609)
 
-void GetCurrentMenuDefName(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+char * GetCurrentMenuDefName(LocalClientNum_t param_1)
 
 {
-  int iVar2;
+  LocalClientNum_t LVar2;
+  UiContext *pUVar3;
   ulonglong uVar1;
+  char *pcVar4;
   
-  __savegprlr_29();
-  iVar2 = UI_GetClientDC();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x15ef,0,0xffffffff82000f98,0xffffffff8216783c);
+  LVar2 = __savegprlr_29(param_1);
+  pUVar3 = UI_GetClientDC(LVar2);
+  if (pUVar3 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x15ef,
+                    0,"%s");
   }
-  if (*(int *)(iVar2 + 0x227c) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x15f0,0,0xffffffff82000f98,0xffffffff82167828);
+  if (pUVar3->currentMenuDef == (menuDef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x15f0,
+                    0,"%s");
   }
-  uVar1 = (ulonglong)*(uint *)(*(int *)(iVar2 + 0x227c) + 4);
+  uVar1 = ZEXT48((pUVar3->currentMenuDef->window).name);
   if (uVar1 == 0) {
     uVar1 = 0xffffffff820068af;
   }
-  __restgprlr_29(uVar1);
-  return;
+  pcVar4 = (char *)__restgprlr_29(uVar1);
+  return pcVar4;
 }
 
 
 // 82596B30  GetCurrentItemDefName  (ui/ui_expressions.cpp:5628)
 
-void GetCurrentItemDefName(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+char * GetCurrentItemDefName(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
+  UiContext *pUVar2;
+  char *pcVar3;
   
-  __savegprlr_29();
-  iVar1 = UI_GetClientDC();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1602,0,0xffffffff82000f98,0xffffffff8216783c);
+  LVar1 = __savegprlr_29(param_1);
+  pUVar2 = UI_GetClientDC(LVar1);
+  if (pUVar2 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1602,
+                    0,"%s");
   }
-  if (*(int *)(iVar1 + 0x2280) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1603,0,0xffffffff82000f98,0xffffffff82167840);
+  if (pUVar2->currentItemDef == (itemDef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1603,
+                    0,"%s");
   }
-  if (**(int **)(iVar1 + 0x2280) != 0) {
-    __restgprlr_29(**(int **)(iVar1 + 0x2280));
-    return;
+  pcVar3 = (pUVar2->currentItemDef->window).name;
+  if (pcVar3 != (char *)0x0) {
+    pcVar3 = (char *)__restgprlr_29(pcVar3);
+    return pcVar3;
   }
-  __restgprlr_29(0xffffffff820068af);
-  return;
+  pcVar3 = (char *)__restgprlr_29(0xffffffff820068af);
+  return pcVar3;
 }
 
 
 // 82596BD0  LocalizationError  (ui/ui_expressions.cpp:5647)
 
-void LocalizationError(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LocalizationError(LocalClientNum_t param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
-  if (*(char *)(DAT_83f5de0c + 0xc) != '\0') {
-    if ((param_2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0x1612,0,0xffffffff82000f98,0xffffffff82050564);
+  uVar2 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((loc_warnings->current).enabled != false) {
+    if ((uVar2 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x1612,0,"%s");
     }
-    if (*(char *)(DAT_83f5de04 + 0xc) != '\0') {
-      uVar2 = GetCurrentItemDefName(uVar1);
-      uVar1 = GetCurrentMenuDefName(uVar1);
-      Com_Error(6,0xffffffff8216787c,uVar1,uVar2,param_2);
+    if ((loc_warningsAsErrors->current).enabled != false) {
+      GetCurrentItemDefName(LVar1);
+      GetCurrentMenuDefName(LVar1);
+      Com_Error(ERR_LOCALIZATION,"Error: menuDef{%s} itemDef{%s} %s");
       __restgprlr_29();
       return;
     }
-    uVar2 = GetCurrentItemDefName(uVar1);
-    uVar1 = GetCurrentMenuDefName(uVar1);
-    Com_PrintWarning(0xd,0xffffffff82167854,uVar1,uVar2,param_2);
+    GetCurrentItemDefName(LVar1);
+    GetCurrentMenuDefName(LVar1);
+    Com_PrintWarning(0xd,"WARNING: menuDef{%s} itemDef{%s} %s\n");
   }
   __restgprlr_29();
   return;
@@ -6714,51 +8040,58 @@ void LocalizationError(undefined8 param_1,ulonglong param_2)
 
 // 82596CA8  ValidateLocalizedStringRef  (ui/ui_expressions.cpp:5671)
 
-void ValidateLocalizedStringRef(undefined8 param_1,ulonglong param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ValidateLocalizedStringRef(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  char *pcVar6;
-  int iVar7;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  char *pcVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_18();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x162a,0,0xffffffff82000f98,0xffffffff820294f0);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_18(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x162a,
+                    0,"%s");
   }
   if (param_3 < 1) {
-    MyAssertHandler(0xffffffff82164aa0,0x162b,0,0xffffffff82000f98,0xffffffff821678e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x162b,
+                    0,"%s");
   }
-  pcVar6 = (char *)param_2;
-  if (*pcVar6 != '@') {
-    uVar2 = va(0xffffffff821678a0,param_2);
-    LocalizationError(uVar1,uVar2);
+  pcVar5 = (char *)uVar4;
+  if (*pcVar5 != '@') {
+    pcVar2 = va("Illegal localized string reference: %s must start with a \'@\'.");
+    LocalizationError(LVar1,pcVar2);
   }
-  iVar7 = 1;
+  iVar6 = 1;
   if (1 < param_3) {
     do {
-      iVar5 = isalnum((int)pcVar6[iVar7]);
-      if (((iVar5 == 0) && (pcVar6[iVar7] != '_')) &&
-         (uVar3 = va(0xffffffff82077130,param_2), *(char *)(DAT_83f5de0c + 0xc) != '\0')) {
-        if ((uVar3 & 0xffffffff) == 0) {
-          MyAssertHandler(0xffffffff82164aa0,0x1612,0,0xffffffff82000f98,0xffffffff82050564);
+      iVar3 = isalnum((int)pcVar5[iVar6]);
+      if (((iVar3 == 0) && (pcVar5[iVar6] != '_')) &&
+         (pcVar2 = va(
+                     "Illegal localized string reference: %s must contain only alpha-numeric characters and underscores"
+                     ), (loc_warnings->current).enabled != false)) {
+        if (pcVar2 == (char *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x1612,0,"%s");
         }
-        if (*(char *)(DAT_83f5de04 + 0xc) == '\0') {
-          uVar2 = GetCurrentItemDefName(uVar1);
-          uVar4 = GetCurrentMenuDefName(uVar1);
-          Com_PrintWarning(0xd,0xffffffff82167854,uVar4,uVar2,uVar3);
+        if ((loc_warningsAsErrors->current).enabled == false) {
+          GetCurrentItemDefName(LVar1);
+          GetCurrentMenuDefName(LVar1);
+          Com_PrintWarning(0xd,"WARNING: menuDef{%s} itemDef{%s} %s\n");
         }
         else {
-          uVar2 = GetCurrentItemDefName(uVar1);
-          uVar4 = GetCurrentMenuDefName(uVar1);
-          Com_Error(6,0xffffffff8216787c,uVar4,uVar2,uVar3);
+          GetCurrentItemDefName(LVar1);
+          GetCurrentMenuDefName(LVar1);
+          Com_Error(ERR_LOCALIZATION,"Error: menuDef{%s} itemDef{%s} %s");
         }
       }
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < param_3);
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < param_3);
   }
   __restgprlr_18();
   return;
@@ -6767,178 +8100,179 @@ void ValidateLocalizedStringRef(undefined8 param_1,ulonglong param_2,int param_3
 
 // 82596E50  LocalizeString  (ui/ui_expressions.cpp:5690)
 
-void LocalizeString(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LocalizeString(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  char *pcVar5;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  char *pcVar6;
-  int iVar7;
-  undefined1 *puVar8;
-  undefined4 *puVar9;
-  char cVar10;
-  int iVar11;
-  char *pcVar12;
-  char *pcVar13;
-  ulonglong uVar14;
-  longlong lVar15;
+  char *pcVar2;
+  char *pcVar3;
+  char *pcVar4;
+  UiContext *pUVar5;
+  int iVar6;
+  char *pcVar7;
+  char (*pacVar8) [1024];
+  char cVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined4 *puVar12;
+  Operand *pOVar14;
+  longlong lVar13;
+  int iVar15;
   char *pcVar16;
-  char *pcVar17;
-  undefined1 *puVar18;
-  undefined1 *local_4b0;
+  char (*pacVar17) [1024];
+  undefined4 *puStack00000024;
   char local_4a0 [1184];
   
-  uVar2 = __savegprlr();
-  puVar9 = (undefined4 *)param_3;
-  iVar1 = (int)param_2;
-  iVar11 = DAT_83f65dd0 + 1;
-  local_4b0 = &DAT_820068af;
-  iVar7 = iVar11 / 10 + (iVar11 >> 0x1f);
-  pcVar17 = (char *)0x0;
+  uVar11 = (ulonglong)(int)param_3;
+  lVar13 = (longlong)(int)param_2;
+  __savegprlr();
+  puStack00000024 = (undefined4 *)uVar11;
+  iVar1 = (int)lVar13;
+  iVar10 = currString + 1;
+  iVar6 = iVar10 / 10 + (iVar10 >> 0x1f);
   pcVar16 = (char *)0x0;
-  lVar15 = 0;
-  DAT_83f65dd0 = iVar11 + ((iVar7 - (iVar7 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
-  puVar18 = (undefined1 *)(DAT_83f65dd0 * 0x400 + -0x7c09ca30);
-  uVar14 = param_3;
+  iVar15 = 0;
+  currString = iVar10 + ((iVar6 - (iVar6 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
+  pacVar17 = returnStrings + currString;
+  puVar12 = puStack00000024;
   if (0 < *(int *)(iVar1 + 0x50)) {
     do {
-      if (*(int *)param_2 == 2) {
-        pcVar5 = (char *)GetSourceString(param_2);
-        pcVar12 = pcVar5;
+      pOVar14 = (Operand *)lVar13;
+      if (pOVar14->dataType == VAL_STRING) {
+        pcVar2 = GetSourceString(pOVar14);
+        pcVar7 = pcVar2;
         do {
-          cVar10 = *pcVar12;
-          pcVar12 = pcVar12 + 1;
-        } while (cVar10 != '\0');
-        pcVar13 = pcVar12 + (-1 - (int)pcVar5);
-        pcVar16 = pcVar17;
-        if (pcVar13 != (char *)0x0) {
-          pcVar6 = pcVar5;
-          if (pcVar13 == (char *)0x1) {
-            if (*pcVar5 == '@') {
-              uVar3 = va(0xffffffff821678f8,lVar15);
-              LocalizationError(uVar2,uVar3);
+          cVar9 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
+        } while (cVar9 != '\0');
+        pcVar3 = pcVar7 + (-1 - (int)pcVar2);
+        if (pcVar3 != (char *)0x0) {
+          pcVar4 = pcVar2;
+          if (pcVar3 == (char *)0x1) {
+            if (*pcVar2 == '@') {
+              pcVar3 = va("Expecting localized string reference after \'@\' at parameter %i.");
+              LocalizationError(param_1,pcVar3);
               goto LAB_8259721c;
             }
           }
-          else if ((char *)0x1 < pcVar13) {
-            ValidateLocalizedStringRef(uVar2,pcVar5,pcVar13);
-            pcVar6 = pcVar5 + 1;
-            pcVar13 = pcVar12 + (-2 - (int)pcVar5);
+          else if ((char *)0x1 < pcVar3) {
+            ValidateLocalizedStringRef(param_1,pcVar2,(int)pcVar3);
+            pcVar4 = pcVar2 + 1;
+            pcVar3 = pcVar7 + (-2 - (int)pcVar2);
           }
-          if ((char *)0x3ff < pcVar13 + (int)pcVar17 + 1) {
-            uVar3 = GetCurrentItemDefName(uVar2);
-            uVar4 = GetCurrentMenuDefName(uVar2);
-            Com_Error(6,0xffffffff82167938,uVar4,uVar3,pcVar6,0x400);
+          if ((char *)0x3ff < pcVar3 + (int)pcVar16 + 1) {
+            GetCurrentItemDefName(param_1);
+            GetCurrentMenuDefName(param_1);
+            Com_Error(ERR_LOCALIZATION,
+                      "Error: menuDef{%s} itemDef{%s} %s is too long. Max length is %i\n");
           }
-          if (pcVar17 != (char *)0x0) {
-            cVar10 = '\x14';
+          if (pcVar16 != (char *)0x0) {
+            cVar9 = '\x14';
             goto LAB_825971b8;
           }
           goto LAB_825971c4;
         }
       }
       else {
-        pcVar6 = (char *)GetSourceString(param_2);
-        pcVar13 = pcVar6;
+        pcVar4 = GetSourceString(pOVar14);
+        pcVar3 = pcVar4;
         do {
-          cVar10 = *pcVar13;
-          pcVar13 = pcVar13 + 1;
-        } while (cVar10 != '\0');
-        pcVar16 = (char *)0x0;
-        pcVar13 = pcVar13 + (-1 - (int)pcVar6);
-        if (pcVar13 != (char *)0x0) {
+          cVar9 = *pcVar3;
+          pcVar3 = pcVar3 + 1;
+        } while (cVar9 != '\0');
+        pcVar7 = (char *)0x0;
+        pcVar3 = pcVar3 + (-1 - (int)pcVar4);
+        if (pcVar3 != (char *)0x0) {
           do {
-            cVar10 = pcVar6[(int)pcVar16];
-            if (((cVar10 == '\x14') || (cVar10 == '\x15')) || (cVar10 == '\x16')) {
-              iVar7 = UI_GetClientDC(uVar2);
-              if (iVar7 == 0) {
-                MyAssertHandler(0xffffffff82164aa0,0x15ef,0,0xffffffff82000f98,0xffffffff8216783c);
+            cVar9 = pcVar4[(int)pcVar7];
+            if (((cVar9 == '\x14') || (cVar9 == '\x15')) || (cVar9 == '\x16')) {
+              pUVar5 = UI_GetClientDC(param_1);
+              if (pUVar5 == (UiContext *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                                ,0x15ef,0,"%s");
               }
-              if (*(int *)(iVar7 + 0x227c) == 0) {
-                MyAssertHandler(0xffffffff82164aa0,0x15f0,0,0xffffffff82000f98,0xffffffff82167828);
+              if (pUVar5->currentMenuDef == (menuDef_t *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                                ,0x15f0,0,"%s");
               }
-              puVar8 = *(undefined1 **)(*(int *)(iVar7 + 0x227c) + 4);
-              if (puVar8 == (undefined1 *)0x0) {
-                puVar8 = local_4b0;
-              }
-              cVar10 = pcVar6[(int)pcVar16];
-              uVar3 = GetCurrentItemDefName(uVar2);
-              Com_PrintError(0xd,0xffffffff82167980,puVar8,uVar3,cVar10);
-              uVar14 = param_3 & 0xffffffff;
+              GetCurrentItemDefName(param_1);
+              Com_PrintError(0xd,
+                             "Error: menuDef{%s} itemDef{%s} bad escape character (%i) present in string"
+                            );
+              uVar11 = ZEXT48(puStack00000024);
             }
-            iVar7 = isalpha((int)pcVar6[(int)pcVar16]);
-            if (iVar7 != 0) {
-              uVar3 = va(0xffffffff821679d0,pcVar6);
-              LocalizationError(uVar2,uVar3);
+            iVar6 = isalpha((int)pcVar4[(int)pcVar7]);
+            if (iVar6 != 0) {
+              pcVar7 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\""
+                         );
+              LocalizationError(param_1,pcVar7);
               break;
             }
-            pcVar16 = pcVar16 + 1;
-          } while (pcVar16 < pcVar13);
+            pcVar7 = pcVar7 + 1;
+          } while (pcVar7 < pcVar3);
         }
-        if ((char *)0x3ff < pcVar13 + (int)pcVar17 + 1) {
-          iVar7 = UI_GetClientDC(uVar2);
-          if (iVar7 == 0) {
-            MyAssertHandler(0xffffffff82164aa0,0x15ef,0,0xffffffff82000f98,0xffffffff8216783c);
+        if ((char *)0x3ff < pcVar3 + (int)pcVar16 + 1) {
+          pUVar5 = UI_GetClientDC(param_1);
+          if (pUVar5 == (UiContext *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                            ,0x15ef,0,"%s");
           }
-          if (*(int *)(iVar7 + 0x227c) == 0) {
-            MyAssertHandler(0xffffffff82164aa0,0x15f0,0,0xffffffff82000f98,0xffffffff82167828);
+          if (pUVar5->currentMenuDef == (menuDef_t *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                            ,0x15f0,0,"%s");
           }
-          puVar8 = *(undefined1 **)(*(int *)(iVar7 + 0x227c) + 4);
-          if (puVar8 == (undefined1 *)0x0) {
-            puVar8 = local_4b0;
-          }
-          uVar3 = GetCurrentItemDefName(uVar2);
-          Com_Error(6,0xffffffff82167938,puVar8,uVar3,pcVar6,0x400);
+          GetCurrentItemDefName(param_1);
+          Com_Error(ERR_LOCALIZATION,
+                    "Error: menuDef{%s} itemDef{%s} %s is too long. Max length is %i\n");
         }
-        if (pcVar13 != (char *)0x0) {
-          cVar10 = '\x15';
+        if (pcVar3 != (char *)0x0) {
+          cVar9 = '\x15';
 LAB_825971b8:
-          local_4a0[(int)pcVar17] = cVar10;
-          pcVar17 = pcVar17 + 1;
+          local_4a0[(int)pcVar16] = cVar9;
+          pcVar16 = pcVar16 + 1;
         }
 LAB_825971c4:
-        iVar7 = 0;
-        pcVar16 = pcVar17;
-        if (pcVar13 != (char *)0x0) {
-          pcVar12 = &stack0x00000000 + (int)(pcVar17 + -0x4a0);
-          pcVar16 = pcVar13 + (int)pcVar17;
+        iVar6 = 0;
+        if (pcVar3 != (char *)0x0) {
+          pcVar7 = local_4a0 + (int)pcVar16;
+          pcVar16 = pcVar3 + (int)pcVar16;
           do {
-            cVar10 = pcVar6[iVar7];
-            if (((cVar10 == '\x14') || (cVar10 == '\x15')) || (cVar10 == '\x16')) {
-              *pcVar12 = '.';
+            cVar9 = pcVar4[iVar6];
+            if (((cVar9 == '\x14') || (cVar9 == '\x15')) || (cVar9 == '\x16')) {
+              *pcVar7 = '.';
             }
             else {
-              *pcVar12 = cVar10;
+              *pcVar7 = cVar9;
             }
-            pcVar12 = pcVar12 + 1;
-            iVar7 = iVar7 + 1;
-            pcVar13 = pcVar13 + -1;
-          } while (pcVar13 != (char *)0x0);
+            pcVar7 = pcVar7 + 1;
+            iVar6 = iVar6 + 1;
+            pcVar3 = pcVar3 + -1;
+          } while (pcVar3 != (char *)0x0);
         }
       }
 LAB_8259721c:
-      puVar9 = (undefined4 *)uVar14;
-      lVar15 = lVar15 + 1;
-      param_2 = param_2 + 8;
-      pcVar17 = pcVar16;
-    } while ((int)lVar15 < *(int *)(iVar1 + 0x50));
+      puVar12 = (undefined4 *)uVar11;
+      iVar15 = iVar15 + 1;
+      lVar13 = lVar13 + 8;
+    } while (iVar15 < *(int *)(iVar1 + 0x50));
   }
-  *puVar9 = 2;
+  *puVar12 = 2;
   local_4a0[(int)pcVar16] = '\0';
-  puVar8 = (undefined1 *)SEH_LocalizeTextMessage(&stack0x00000000 + -0x4a0,0xffffffff82165e24,1);
-  if (*(char *)(DAT_83f5de08 + 0xc) != '\0') {
-    Com_sprintf(puVar18,0x400,0xffffffff821678f0);
-    puVar8 = puVar18;
+  pacVar8 = (char (*) [1024])SEH_LocalizeTextMessage(local_4a0,"ui string",LOCMSG_NOERR);
+  if ((loc_warningsUI->current).enabled != false) {
+    Com_sprintf(*pacVar17,0x400,"\x15%s\x14");
+    pacVar8 = pacVar17;
   }
-  if (puVar8 == (undefined1 *)0x0) {
-    puVar8 = &DAT_820068af;
+  if (pacVar8 == (char (*) [1024])0x0) {
+    pacVar8 = (char (*) [1024])"";
   }
-  puVar9[1] = puVar8;
-  if (puVar8 == (undefined1 *)0x0) {
-    puVar9[1] = &DAT_820068af;
+  puVar12[1] = pacVar8;
+  if (pacVar8 == (char (*) [1024])0x0) {
+    puVar12[1] = "";
   }
   __restgprlr();
   return;
@@ -6947,100 +8281,116 @@ LAB_8259721c:
 
 // 825972C8  GetPartyMissingMapPack  (ui/ui_expressions.cpp:5827)
 
-void GetPartyMissingMapPack(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPartyMissingMapPack(Operand *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  cVar1 = Party_IsAnyMemberMissingMapPack();
-  param_1[1] = (uint)(cVar1 != '\0');
+  param_1->dataType = VAL_INT;
+  bVar1 = Party_IsAnyMemberMissingMapPack();
+  (param_1->internals).function = (Statement_s *)((int)bVar1 + (-(uint)!bVar1 - (bVar1 + -1)));
   return;
 }
 
 
 // 82597310  GetAnyNewMapPacks  (ui/ui_expressions.cpp:5837)
 
-void GetAnyNewMapPacks(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetAnyNewMapPacks(Operand *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  cVar1 = Content_AnyNewMapPacks();
-  param_1[1] = (uint)(cVar1 != '\0');
+  param_1->dataType = VAL_INT;
+  bVar1 = Content_AnyNewMapPacks();
+  (param_1->internals).function = (Statement_s *)((int)bVar1 + (-(uint)!bVar1 - (bVar1 + -1)));
   return;
 }
 
 
 // 82597358  GetDoWeHaveMapPack  (ui/ui_expressions.cpp:5847)
 
-void GetDoWeHaveMapPack(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDoWeHaveMapPack(Operand *param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  GetSourceInt();
-  cVar1 = Content_DoWeHaveContentPack();
-  param_2[1] = (uint)(cVar1 != '\0');
+  param_2->dataType = VAL_INT;
+  iVar1 = GetSourceInt(param_1);
+  bVar2 = Content_DoWeHaveContentPack(iVar1);
+  (param_2->internals).function = (Statement_s *)((int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1)));
   return;
 }
 
 
 // 825973A0  AmISelected  (ui/ui_expressions.cpp:5858)
 
-void AmISelected(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AmISelected(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  *param_2 = 0;
-  cVar1 = UI_AmISelected();
-  param_2[1] = (uint)(cVar1 != '\0');
+  param_2->dataType = VAL_INT;
+  bVar1 = UI_AmISelected(param_1);
+  (param_2->internals).function = (Statement_s *)((int)bVar1 + (-(uint)!bVar1 - (bVar1 + -1)));
   return;
 }
 
 
 // 825973E8  GetPartyMissingMapPackError  (ui/ui_expressions.cpp:5869)
 
-void GetPartyMissingMapPackError(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPartyMissingMapPackError(Operand *param_1)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  undefined1 *puVar3;
-  char *pcVar4;
+  char *pcVar2;
+  Statement_s *pSVar3;
   char local_440 [48];
-  undefined1 auStack_410 [1024];
+  char acStack_410 [1024];
   
-  I_strncpyz(auStack_410,0xffffffff82167a1c,0x400);
-  uVar2 = Party_MissingMapPackPlayerName();
-  I_strncpyz(local_440,uVar2,0x2a);
+  I_strncpyz(acStack_410,"\x14DLC_PLAYER_DOESNT_HAVE_MAP_PACK\x15",0x400);
+  pcVar2 = Party_MissingMapPackPlayerName();
+  I_strncpyz(local_440,pcVar2,0x2a);
   I_CleanStr(local_440);
-  pcVar4 = local_440;
+  pcVar2 = local_440;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar4 - (int)local_440 == 1) {
-    pcVar4 = "\' \'";
+  if ((int)pcVar2 - (int)local_440 == 1) {
+    pcVar2 = "\' \'";
   }
   else {
-    pcVar4 = local_440;
+    pcVar2 = local_440;
   }
-  I_strncat(auStack_410,0x400,pcVar4);
-  I_strncat(auStack_410,0x400,0xffffffff8215b6b4);
-  uVar2 = Party_MissingMapPackName();
-  I_strncat(auStack_410,0x400,uVar2);
-  *param_1 = 2;
-  puVar3 = (undefined1 *)SEH_LocalizeTextMessage(auStack_410,0xffffffff82165e24,1);
-  if (puVar3 == (undefined1 *)0x0) {
-    puVar3 = &DAT_820068af;
+  I_strncat(acStack_410,0x400,pcVar2);
+  I_strncat(acStack_410,0x400,"\x14");
+  pcVar2 = Party_MissingMapPackName();
+  I_strncat(acStack_410,0x400,pcVar2);
+  param_1->dataType = VAL_STRING;
+  pSVar3 = (Statement_s *)SEH_LocalizeTextMessage(acStack_410,"ui string",LOCMSG_NOERR);
+  if (pSVar3 == (Statement_s *)0x0) {
+    pSVar3 = (Statement_s *)"";
   }
-  param_1[1] = puVar3;
-  if (puVar3 == (undefined1 *)0x0) {
-    param_1[1] = &DAT_820068af;
+  (param_1->internals).function = pSVar3;
+  if (pSVar3 == (Statement_s *)0x0) {
+    (param_1->internals).floatVal = (float)"";
   }
   return;
 }
@@ -7048,24 +8398,28 @@ void GetPartyMissingMapPackError(undefined4 *param_1)
 
 // 825974F0  GetRadarIsJammed  (ui/ui_expressions.cpp:5897)
 
-void GetRadarIsJammed(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetRadarIsJammed(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
-  undefined4 uVar2;
+  bool bVar1;
+  int iVar2;
   
-  *param_2 = 0;
-  cVar1 = CG_GetRadarIsJammed();
-  if (cVar1 != '\0') {
-    cVar1 = CG_ClientHasAntiJammer(param_1);
-    uVar2 = 1;
-    if (cVar1 == '\0') goto LAB_82597540;
+  param_2->dataType = VAL_INT;
+  bVar1 = CG_GetRadarIsJammed(param_1);
+  if (bVar1) {
+    bVar1 = CG_ClientHasAntiJammer(param_1);
+    iVar2 = 1;
+    if (!bVar1) goto LAB_82597540;
   }
-  uVar2 = 0;
+  iVar2 = 0;
 LAB_82597540:
-  param_2[1] = uVar2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167a40);
+  (param_2->internals).intVal = iVar2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"radarIsJammed() = %i\n");
   }
   return;
 }
@@ -7073,16 +8427,20 @@ LAB_82597540:
 
 // 82597580  GetRadarJamIntensity  (ui/ui_expressions.cpp:5908)
 
-void GetRadarJamIntensity(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetRadarJamIntensity(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  *param_2 = 1;
-  dVar1 = (double)CG_GetRadarJamLevel();
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167a58,dVar1);
+  param_2->dataType = VAL_FLOAT;
+  fVar1 = CG_GetRadarJamLevel(param_1);
+  (param_2->internals).floatVal = fVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"radarJamIntensity() = %.2f\n");
   }
   return;
 }
@@ -7090,16 +8448,23 @@ void GetRadarJamIntensity(undefined8 param_1,undefined4 *param_2)
 
 // 825975E8  GetRadarIsEnabled  (ui/ui_expressions.cpp:5919)
 
-void GetRadarIsEnabled(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetRadarIsEnabled(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_IsRadarEnabled();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167a74);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_IsRadarEnabled(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"radarIsEnabled() = %i\n");
   }
   return;
 }
@@ -7107,16 +8472,23 @@ void GetRadarIsEnabled(undefined8 param_1,undefined4 *param_2)
 
 // 82597648  GetIsEmpJammed  (ui/ui_expressions.cpp:5930)
 
-void GetIsEmpJammed(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsEmpJammed(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = CG_IsEMPJammed();
-  param_2[1] = uVar1 & 0xff;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167a8c);
+  param_2->dataType = VAL_INT;
+  bVar2 = CG_IsEMPJammed(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"isEMPJammed() = %i\n");
   }
   return;
 }
@@ -7124,16 +8496,20 @@ void GetIsEmpJammed(undefined8 param_1,undefined4 *param_2)
 
 // 825976A8  GetPlayerADS  (ui/ui_expressions.cpp:5942)
 
-void GetPlayerADS(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetPlayerADS(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  *param_2 = 1;
-  dVar1 = (double)CG_GetADS();
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167aa0,dVar1);
+  param_2->dataType = VAL_FLOAT;
+  fVar1 = CG_GetADS(param_1);
+  (param_2->internals).floatVal = fVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"playerADS() = %.2f\n");
   }
   return;
 }
@@ -7141,16 +8517,20 @@ void GetPlayerADS(undefined8 param_1,undefined4 *param_2)
 
 // 82597710  GetWeaponHeatActive  (ui/ui_expressions.cpp:5953)
 
-void GetWeaponHeatActive(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeaponHeatActive(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = CG_PlayerTurret_HeatEnabled();
-  param_2[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167ab4,uVar1);
+  param_2->dataType = VAL_INT;
+  iVar1 = CG_PlayerTurret_HeatEnabled(param_1);
+  (param_2->internals).intVal = iVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weaponHeatActive() = %i\n");
   }
   return;
 }
@@ -7158,16 +8538,20 @@ void GetWeaponHeatActive(undefined8 param_1,undefined4 *param_2)
 
 // 82597770  GetWeaponHeatValue  (ui/ui_expressions.cpp:5970)
 
-void GetWeaponHeatValue(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeaponHeatValue(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  double dVar1;
+  float fVar1;
   
-  *param_2 = 1;
-  dVar1 = (double)CG_PlayerTurret_HeatValue();
-  param_2[1] = (float)dVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167ad0,dVar1);
+  param_2->dataType = VAL_FLOAT;
+  fVar1 = CG_PlayerTurret_HeatValue(param_1);
+  (param_2->internals).floatVal = fVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weaponHeatValue() = %.2f\n");
   }
   return;
 }
@@ -7175,16 +8559,20 @@ void GetWeaponHeatValue(undefined8 param_1,undefined4 *param_2)
 
 // 825977D8  GetWeaponHeatOverheated  (ui/ui_expressions.cpp:5987)
 
-void GetWeaponHeatOverheated(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWeaponHeatOverheated(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  uVar1 = CG_PlayerTurret_HeatOverheated();
-  param_2[1] = (int)uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167aec,uVar1);
+  param_2->dataType = VAL_INT;
+  iVar1 = CG_PlayerTurret_HeatOverheated(param_1);
+  (param_2->internals).intVal = iVar1;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"weaponHeatOverheated() = %i\n");
   }
   return;
 }
@@ -7192,49 +8580,61 @@ void GetWeaponHeatOverheated(undefined8 param_1,undefined4 *param_2)
 
 // 82597838  GetHudSplashText  (ui/ui_expressions.cpp:6004)
 
-void GetHudSplashText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudSplashText(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  cg_s *pcVar3;
   uint uVar4;
-  undefined1 *puVar5;
-  undefined4 *puVar6;
-  undefined4 local_40 [16];
+  char *pcVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  StringTable *local_40 [16];
   
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x177d,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x177d,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x177e,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x177e,
+                    0,"%s");
   }
-  iVar3 = CL_IsCgameInitialized(uVar2);
-  puVar6 = (undefined4 *)param_3;
-  if (iVar3 == 0) {
-    *puVar6 = 2;
-    puVar6[1] = &DAT_820068af;
+  iVar2 = CL_IsCgameInitialized(LVar1);
+  puVar8 = (undefined4 *)uVar7;
+  if (iVar2 == 0) {
+    *puVar8 = 2;
+    puVar8[1] = "";
     __restgprlr_27();
     return;
   }
-  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  uVar4 = GetSourceInt(param_2);
+  StringTable_GetAsset("mp/splashTable.csv",local_40);
+  pcVar3 = CG_GetLocalClientGlobals(LVar1);
+  uVar4 = GetSourceInt((Operand *)uVar6);
   if (3 < uVar4) {
-    MyAssertHandler(0xffffffff82164aa0,0x178c,0,0xffffffff82167b28,uVar4,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x178c,
+                    0,"splashSlot doesn\'t index SPLASH_SLOT_COUNT\n\t%i not in [0, %i)");
   }
-  iVar1 = (uVar4 + 0x1083e) * 0x10;
-  StringTable_GetColumnValueForRow(local_40[0],*(undefined4 *)(iVar1 + iVar3),1);
-  uVar2 = UI_SafeTranslateString();
-  puVar5 = (undefined1 *)UI_ReplaceConversionInt(uVar2,*(undefined4 *)(iVar1 + iVar3 + 0xc));
-  if (puVar5 == (undefined1 *)0x0) {
-    puVar5 = &DAT_820068af;
+  pcVar5 = StringTable_GetColumnValueForRow(local_40[0],pcVar3->splashes[uVar4].splashIndex,1);
+  pcVar5 = UI_SafeTranslateString(pcVar5);
+  pcVar5 = UI_ReplaceConversionInt(pcVar5,pcVar3->splashes[uVar4].optionalNumParam);
+  if (pcVar5 == (char *)0x0) {
+    pcVar5 = "";
   }
-  puVar6[1] = puVar5;
-  *puVar6 = 2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167b0c);
+  puVar8[1] = pcVar5;
+  *puVar8 = 2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GetHudSplashText() = %s\n");
   }
   __restgprlr_27();
   return;
@@ -7243,49 +8643,61 @@ void GetHudSplashText(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 825979A0  GetHudSplashDescription  (ui/ui_expressions.cpp:6048)
 
-void GetHudSplashDescription(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudSplashDescription(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  cg_s *pcVar3;
   uint uVar4;
-  undefined1 *puVar5;
-  undefined4 *puVar6;
-  undefined4 local_40 [16];
+  char *pcVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  StringTable *local_40 [16];
   
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17a9,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17a9,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17aa,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17aa,
+                    0,"%s");
   }
-  iVar3 = CL_IsCgameInitialized(uVar2);
-  puVar6 = (undefined4 *)param_3;
-  if (iVar3 == 0) {
-    *puVar6 = 2;
-    puVar6[1] = &DAT_820068af;
+  iVar2 = CL_IsCgameInitialized(LVar1);
+  puVar8 = (undefined4 *)uVar7;
+  if (iVar2 == 0) {
+    *puVar8 = 2;
+    puVar8[1] = "";
     __restgprlr_27();
     return;
   }
-  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  uVar4 = GetSourceInt(param_2);
+  StringTable_GetAsset("mp/splashTable.csv",local_40);
+  pcVar3 = CG_GetLocalClientGlobals(LVar1);
+  uVar4 = GetSourceInt((Operand *)uVar6);
   if (3 < uVar4) {
-    MyAssertHandler(0xffffffff82164aa0,0x17b8,0,0xffffffff82167b28,uVar4,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17b8,
+                    0,"splashSlot doesn\'t index SPLASH_SLOT_COUNT\n\t%i not in [0, %i)");
   }
-  iVar1 = (uVar4 + 0x1083e) * 0x10;
-  StringTable_GetColumnValueForRow(local_40[0],*(undefined4 *)(iVar1 + iVar3),2);
-  uVar2 = UI_SafeTranslateString();
-  puVar5 = (undefined1 *)UI_ReplaceConversionInt(uVar2,*(undefined4 *)(iVar1 + iVar3 + 0xc));
-  if (puVar5 == (undefined1 *)0x0) {
-    puVar5 = &DAT_820068af;
+  pcVar5 = StringTable_GetColumnValueForRow(local_40[0],pcVar3->splashes[uVar4].splashIndex,2);
+  pcVar5 = UI_SafeTranslateString(pcVar5);
+  pcVar5 = UI_ReplaceConversionInt(pcVar5,pcVar3->splashes[uVar4].optionalNumParam);
+  if (pcVar5 == (char *)0x0) {
+    pcVar5 = "";
   }
-  puVar6[1] = puVar5;
-  *puVar6 = 2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167b68);
+  puVar8[1] = pcVar5;
+  *puVar8 = 2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GetHudSplashDescription() = %s\n");
   }
   __restgprlr_27();
   return;
@@ -7294,47 +8706,59 @@ void GetHudSplashDescription(undefined8 param_1,ulonglong param_2,ulonglong para
 
 // 82597B08  GetHudSplashMaterial  (ui/ui_expressions.cpp:6092)
 
-void GetHudSplashMaterial(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudSplashMaterial(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  uint uVar3;
-  undefined1 *puVar4;
-  undefined4 *puVar5;
-  undefined4 local_40 [16];
+  cg_s *pcVar3;
+  uint uVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  StringTable *local_40 [16];
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17d4,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17d4,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17d5,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17d5,
+                    0,"%s");
   }
-  iVar2 = CL_IsCgameInitialized(uVar1);
-  puVar5 = (undefined4 *)param_3;
+  iVar2 = CL_IsCgameInitialized(LVar1);
+  puVar8 = (undefined4 *)uVar7;
   if (iVar2 == 0) {
-    *puVar5 = 2;
-    puVar5[1] = &DAT_820068af;
+    *puVar8 = 2;
+    puVar8[1] = "";
     __restgprlr_27();
     return;
   }
-  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  uVar3 = GetSourceInt(param_2);
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff82164aa0,0x17e3,0,0xffffffff82167b28,uVar3,4);
+  StringTable_GetAsset("mp/splashTable.csv",local_40);
+  pcVar3 = CG_GetLocalClientGlobals(LVar1);
+  uVar4 = GetSourceInt((Operand *)uVar6);
+  if (3 < uVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17e3,
+                    0,"splashSlot doesn\'t index SPLASH_SLOT_COUNT\n\t%i not in [0, %i)");
   }
-  puVar4 = (undefined1 *)
-           StringTable_GetColumnValueForRow
-                     (local_40[0],*(undefined4 *)((uVar3 + 0x1083e) * 0x10 + iVar2),3);
-  if (puVar4 == (undefined1 *)0x0) {
-    puVar4 = &DAT_820068af;
+  pcVar5 = StringTable_GetColumnValueForRow(local_40[0],pcVar3->splashes[uVar4].splashIndex,3);
+  if (pcVar5 == (char *)0x0) {
+    pcVar5 = "";
   }
-  puVar5[1] = puVar4;
-  *puVar5 = 2;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167b88);
+  puVar8[1] = pcVar5;
+  *puVar8 = 2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GetHudSplashMaterial() = %s\n");
   }
   __restgprlr_27();
   return;
@@ -7343,45 +8767,58 @@ void GetHudSplashMaterial(undefined8 param_1,ulonglong param_2,ulonglong param_3
 
 // 82597C60  GetHudSplashHasIcon  (ui/ui_expressions.cpp:6133)
 
-void GetHudSplashHasIcon(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudSplashHasIcon(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   char cVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar2;
   int iVar3;
-  uint uVar4;
-  char *pcVar5;
-  undefined4 *puVar6;
-  undefined4 local_40 [16];
+  cg_s *pcVar4;
+  uint uVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined4 *puVar9;
+  StringTable *local_40 [16];
   
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17fd,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17fd,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x17fe,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x17fe,
+                    0,"%s");
   }
-  iVar3 = CL_IsCgameInitialized(uVar2);
-  puVar6 = (undefined4 *)param_3;
+  iVar3 = CL_IsCgameInitialized(LVar2);
+  puVar9 = (undefined4 *)uVar8;
   if (iVar3 == 0) {
-    *puVar6 = 0;
-    puVar6[1] = 0;
+    *puVar9 = 0;
+    puVar9[1] = 0;
     __restgprlr_27();
     return;
   }
-  StringTable_GetAsset(0xffffffff8201cbd0,local_40);
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  uVar4 = GetSourceInt(param_2);
-  if (3 < uVar4) {
-    MyAssertHandler(0xffffffff82164aa0,0x180c,0,0xffffffff82167b28,uVar4,4);
+  StringTable_GetAsset("mp/splashTable.csv",local_40);
+  pcVar4 = CG_GetLocalClientGlobals(LVar2);
+  uVar5 = GetSourceInt((Operand *)uVar7);
+  if (3 < uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x180c,
+                    0,"splashSlot doesn\'t index SPLASH_SLOT_COUNT\n\t%i not in [0, %i)");
   }
-  pcVar5 = (char *)StringTable_GetColumnValueForRow
-                             (local_40[0],*(undefined4 *)((uVar4 + 0x1083e) * 0x10 + iVar3),3);
-  cVar1 = *pcVar5;
-  *puVar6 = 0;
-  puVar6[1] = (int)((-(longlong)cVar1 & ~(longlong)cVar1 & 0xffffffffU) >> 0x1f);
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167ba8);
+  pcVar6 = StringTable_GetColumnValueForRow(local_40[0],pcVar4->splashes[uVar5].splashIndex,3);
+  cVar1 = *pcVar6;
+  *puVar9 = 0;
+  puVar9[1] = (uint)(-(int)cVar1 & ~(int)cVar1) >> 0x1f;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GetHudSplashHasIcon() = %i\n");
   }
   __restgprlr_27();
   return;
@@ -7390,40 +8827,53 @@ void GetHudSplashHasIcon(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82597DB0  GetHudSplashRowNum  (ui/ui_expressions.cpp:6174)
 
-void GetHudSplashRowNum(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetHudSplashRowNum(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  cg_s *pcVar3;
   uint uVar4;
-  undefined4 *puVar5;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   
-  uVar2 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1824,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1824,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1825,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1825,
+                    0,"%s");
   }
-  iVar3 = CL_IsCgameInitialized(uVar2);
-  puVar5 = (undefined4 *)param_3;
-  if (iVar3 == 0) {
-    *puVar5 = 0;
-    puVar5[1] = 0;
+  iVar2 = CL_IsCgameInitialized(LVar1);
+  puVar7 = (undefined4 *)uVar6;
+  if (iVar2 == 0) {
+    *puVar7 = 0;
+    puVar7[1] = 0;
     __restgprlr_27();
     return;
   }
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  uVar4 = GetSourceInt(param_2);
+  pcVar3 = CG_GetLocalClientGlobals(LVar1);
+  uVar4 = GetSourceInt((Operand *)uVar5);
   if (3 < uVar4) {
-    MyAssertHandler(0xffffffff82164aa0,0x1831,0,0xffffffff82167b28,uVar4,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1831,
+                    0,"splashSlot doesn\'t index SPLASH_SLOT_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = *(undefined4 *)((uVar4 + 0x1083e) * 0x10 + iVar3);
-  *puVar5 = 0;
-  puVar5[1] = uVar1;
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    Com_Printf(0xd,0xffffffff82167bc4,uVar1);
+  iVar2 = pcVar3->splashes[uVar4].splashIndex;
+  *puVar7 = 0;
+  puVar7[1] = iVar2;
+  if ((uiscript_debug->current).integer != 0) {
+    Com_Printf(0xd,"GetHudSplashRowNum() = %i\n");
   }
   __restgprlr_27();
   return;
@@ -7432,49 +8882,60 @@ void GetHudSplashRowNum(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82597ED0  GetCurrentlyFocusedItem  (ui/ui_expressions.cpp:6210)
 
-void GetCurrentlyFocusedItem(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+itemDef_t * GetCurrentlyFocusedItem(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  UI_FindFocusedItem(uVar1);
-  return;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  return piVar2;
 }
 
 
 // 82597F30  GetFocusedItemName  (ui/ui_expressions.cpp:6222)
 
-void GetFocusedItemName(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFocusedItemName(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  undefined4 *puVar2;
-  undefined1 *puVar3;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
+  char *pcVar3;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  puVar2 = (undefined4 *)UI_FindFocusedItem(uVar1);
-  if (puVar2 == (undefined4 *)0x0) {
-    puVar3 = (undefined1 *)0x82003484;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    pcVar3 = "none";
   }
   else {
-    puVar3 = (undefined1 *)*puVar2;
-    if (puVar3 == (undefined1 *)0x0) {
-      puVar3 = &DAT_820068af;
+    pcVar3 = (piVar2->window).name;
+    if (pcVar3 == (char *)0x0) {
+      pcVar3 = "";
     }
   }
-  *param_2 = 2;
-  if (puVar3 == (undefined1 *)0x0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  if (pcVar3 == (char *)0x0) {
+    (param_2->internals).floatVal = (float)"";
   }
   else {
-    param_2[1] = puVar3;
+    (param_2->internals).stringVal.string = pcVar3;
   }
   return;
 }
@@ -7482,207 +8943,255 @@ void GetFocusedItemName(undefined8 param_1,undefined4 *param_2)
 
 // 82597FE8  GetFocusedItemX  (ui/ui_expressions.cpp:6241)
 
-void GetFocusedItemX(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFocusedItemX(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  iVar2 = UI_FindFocusedItem(uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 4);
+    iVar3 = (int)(piVar2->window).rect.x;
   }
-  param_2[1] = iVar2;
-  *param_2 = 0;
+  (param_2->internals).intVal = iVar3;
+  param_2->dataType = VAL_INT;
   return;
 }
 
 
 // 82598080  GetFocusedItemY  (ui/ui_expressions.cpp:6257)
 
-void GetFocusedItemY(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFocusedItemY(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  iVar2 = UI_FindFocusedItem(uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 8);
+    iVar3 = (int)(piVar2->window).rect.y;
   }
-  param_2[1] = iVar2;
-  *param_2 = 0;
+  (param_2->internals).intVal = iVar3;
+  param_2->dataType = VAL_INT;
   return;
 }
 
 
 // 82598118  GetFocusedItemWidth  (ui/ui_expressions.cpp:6273)
 
-void GetFocusedItemWidth(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFocusedItemWidth(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  iVar2 = UI_FindFocusedItem(uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 0xc);
+    iVar3 = (int)(piVar2->window).rect.w;
   }
-  param_2[1] = iVar2;
-  *param_2 = 0;
+  (param_2->internals).intVal = iVar3;
+  param_2->dataType = VAL_INT;
   return;
 }
 
 
 // 825981B0  GetFocusedItemHeight  (ui/ui_expressions.cpp:6289)
 
-void GetFocusedItemHeight(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFocusedItemHeight(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  UiContext *pUVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = UI_GetClientDC();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1847,0,0xffffffff82000f98,0xffffffff82167be0);
+  pUVar1 = UI_GetClientDC(param_1);
+  if (pUVar1 == (UiContext *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1847,
+                    0,"%s");
   }
-  iVar2 = UI_FindFocusedItem(uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  piVar2 = UI_FindFocusedItem(pUVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 0x10);
+    iVar3 = (int)(piVar2->window).rect.h;
   }
-  param_2[1] = iVar2;
-  *param_2 = 0;
+  (param_2->internals).intVal = iVar3;
+  param_2->dataType = VAL_INT;
   return;
 }
 
 
 // 82598248  GetItemX  (ui/ui_expressions.cpp:6305)
 
-void GetItemX(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetItemX(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = GetSourceString(param_2);
-  iVar2 = UI_GetItemByName(param_1,uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  pcVar1 = GetSourceString(param_2);
+  piVar2 = UI_GetItemByName(param_1,pcVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 4);
+    iVar3 = (int)(piVar2->window).rect.x;
   }
-  param_3[1] = iVar2;
-  *param_3 = 0;
+  (param_3->internals).intVal = iVar3;
+  param_3->dataType = VAL_INT;
   return;
 }
 
 
 // 825982C0  GetItemY  (ui/ui_expressions.cpp:6321)
 
-void GetItemY(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetItemY(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = GetSourceString(param_2);
-  iVar2 = UI_GetItemByName(param_1,uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  pcVar1 = GetSourceString(param_2);
+  piVar2 = UI_GetItemByName(param_1,pcVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 8);
+    iVar3 = (int)(piVar2->window).rect.y;
   }
-  param_3[1] = iVar2;
-  *param_3 = 0;
+  (param_3->internals).intVal = iVar3;
+  param_3->dataType = VAL_INT;
   return;
 }
 
 
 // 82598338  GetItemWidth  (ui/ui_expressions.cpp:6337)
 
-void GetItemWidth(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetItemWidth(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = GetSourceString(param_2);
-  iVar2 = UI_GetItemByName(param_1,uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  pcVar1 = GetSourceString(param_2);
+  piVar2 = UI_GetItemByName(param_1,pcVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 0xc);
+    iVar3 = (int)(piVar2->window).rect.w;
   }
-  param_3[1] = iVar2;
-  *param_3 = 0;
+  (param_3->internals).intVal = iVar3;
+  param_3->dataType = VAL_INT;
   return;
 }
 
 
 // 825983B0  GetItemHeight  (ui/ui_expressions.cpp:6353)
 
-void GetItemHeight(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetItemHeight(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   
-  uVar1 = GetSourceString(param_2);
-  iVar2 = UI_GetItemByName(param_1,uVar1);
-  if (iVar2 == 0) {
-    iVar2 = 0;
+  pcVar1 = GetSourceString(param_2);
+  piVar2 = UI_GetItemByName(param_1,pcVar1);
+  if (piVar2 == (itemDef_t *)0x0) {
+    iVar3 = 0;
   }
   else {
-    iVar2 = (int)*(float *)(iVar2 + 0x10);
+    iVar3 = (int)(piVar2->window).rect.h;
   }
-  param_3[1] = iVar2;
-  *param_3 = 0;
+  (param_3->internals).intVal = iVar3;
+  param_3->dataType = VAL_INT;
   return;
 }
 
 
 // 82598428  ItemHasFocus  (ui/ui_expressions.cpp:6369)
 
-void ItemHasFocus(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ItemHasFocus(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar3;
+  char *pcVar1;
+  itemDef_t *piVar2;
+  bool bVar3;
   
-  *param_3 = 0;
-  param_3[1] = 0;
-  uVar1 = GetSourceString(param_2);
-  uVar2 = UI_GetItemByName(param_1,uVar1);
-  if (((uVar2 & 0xffffffff) != 0) && (cVar3 = Window_HasFocus(param_1,uVar2), cVar3 != '\0')) {
-    param_3[1] = 1;
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  pcVar1 = GetSourceString(param_2);
+  piVar2 = UI_GetItemByName(param_1,pcVar1);
+  if ((piVar2 != (itemDef_t *)0x0) && (bVar3 = Window_HasFocus(param_1,&piVar2->window), bVar3)) {
+    (param_3->internals).intVal = 1;
   }
   return;
 }
@@ -7690,23 +9199,30 @@ void ItemHasFocus(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 825984A8  MenuHasFocus  (ui/ui_expressions.cpp:6382)
 
-void MenuHasFocus(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MenuHasFocus(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  char cVar5;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  UiContext *pUVar3;
+  menuDef_t *pmVar4;
+  bool bVar5;
   
-  uVar1 = __savegprlr_29();
-  *param_3 = 0;
-  param_3[1] = 0;
-  uVar2 = GetSourceString(param_2);
-  uVar3 = UI_GetClientDC(uVar1);
-  uVar4 = Menus_FindByName(uVar3,uVar2);
-  if (((uVar4 & 0xffffffff) != 0) && (cVar5 = Window_HasFocus(uVar1,uVar4 + 4), cVar5 != '\0')) {
-    param_3[1] = 1;
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  pcVar2 = GetSourceString(param_2);
+  pUVar3 = UI_GetClientDC(LVar1);
+  pmVar4 = Menus_FindByName(pUVar3,pcVar2);
+  if (pmVar4 != (menuDef_t *)0x0) {
+    bVar5 = Window_HasFocus(LVar1,&pmVar4->window);
+    if (bVar5) {
+      (param_3->internals).intVal = 1;
+    }
   }
   __restgprlr_29();
   return;
@@ -7715,22 +9231,27 @@ void MenuHasFocus(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 82598518  MenuIsTopmost  (ui/ui_expressions.cpp:6395)
 
-void MenuIsTopmost(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MenuIsTopmost(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  UiContext *pUVar2;
+  char *pcVar3;
+  int iVar4;
   
-  __savegprlr_29();
-  *param_3 = 0;
-  param_3[1] = 0;
-  iVar2 = UI_GetClientDC();
-  if (0 < *(int *)(iVar2 + 0xa78)) {
-    uVar1 = GetSourceString(param_2);
-    iVar2 = I_stricmp(*(undefined4 *)(*(int *)((*(int *)(iVar2 + 0xa78) + 0x28d) * 4 + iVar2) + 4),
-                      uVar1);
-    if (iVar2 == 0) {
-      param_3[1] = 1;
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  pUVar2 = UI_GetClientDC(LVar1);
+  if (0 < pUVar2->openMenuCount) {
+    pcVar3 = GetSourceString(param_2);
+    iVar4 = I_stricmp((pUVar2->menuStack[pUVar2->openMenuCount + -1]->window).name,pcVar3);
+    if (iVar4 == 0) {
+      (param_3->internals).intVal = 1;
     }
   }
   __restgprlr_29();
@@ -7740,20 +9261,25 @@ void MenuIsTopmost(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 // 82598588  GetSaveScreenTitle  (ui/ui_expressions.cpp:6408)
 
-void GetSaveScreenTitle(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetSaveScreenTitle(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
+  char *pcVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  param_2[1] = &DAT_820068af;
-  GetSourceString();
-  iVar1 = CL_Demo_GetSaveScreenTitle();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  (param_2->internals).floatVal = (float)"";
+  pcVar1 = GetSourceString((Operand *)param_1);
+  pSVar2 = (Statement_s *)CL_Demo_GetSaveScreenTitle(pcVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
   }
   else {
-    param_2[1] = iVar1;
+    (param_2->internals).function = pSVar2;
   }
   return;
 }
@@ -7761,20 +9287,25 @@ void GetSaveScreenTitle(undefined8 param_1,undefined4 *param_2)
 
 // 825985E8  GetSaveScreenDescription  (ui/ui_expressions.cpp:6424)
 
-void GetSaveScreenDescription(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetSaveScreenDescription(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
+  char *pcVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  param_2[1] = &DAT_820068af;
-  GetSourceString();
-  iVar1 = CL_Demo_GetSaveScreenDescription();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  (param_2->internals).floatVal = (float)"";
+  pcVar1 = GetSourceString((Operand *)param_1);
+  pSVar2 = (Statement_s *)CL_Demo_GetSaveScreenDescription(pcVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
   }
   else {
-    param_2[1] = iVar1;
+    (param_2->internals).function = pSVar2;
   }
   return;
 }
@@ -7782,27 +9313,38 @@ void GetSaveScreenDescription(undefined8 param_1,undefined4 *param_2)
 
 // 8259CC30  GetRecentGamesFeederData  (ui/ui_expressions.cpp:6439)
 
-void GetRecentGamesFeederData(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetRecentGamesFeederData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  Operand *pOVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfb);
+  uVar4 = (ulonglong)(int)param_3;
+  LVar1 = __savegprlr_29(param_1);
+  pOVar5 = (Operand *)uVar4;
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfb,
+                    (int)pOVar5,"%s");
   }
-  ((undefined4 *)param_3)[1] = 0;
-  *(undefined4 *)param_3 = 2;
-  CopyDynamicString(param_3,0xffffffff820068af);
-  if (*(int *)((int)param_2 + 0x50) != 1) {
-    Com_PrintError(0xd,0xffffffff821677d8);
+  (pOVar5->internals).intVal = 0;
+  pOVar5->dataType = VAL_STRING;
+  CopyDynamicString(pOVar5,"");
+  if (param_2->operandCount != 1) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operation - missing parameter inside function or parenthesis\n");
     __restgprlr_29();
     return;
   }
-  uVar2 = GetSourceString(param_2);
-  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-  CL_Demo_GetRecentGamesFeederDataForSelectedIndex(uVar1,uVar2,param_3);
+  pcVar2 = GetSourceString(param_2->operands);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+  CL_Demo_GetRecentGamesFeederDataForSelectedIndex(iVar3,pcVar2,pOVar5);
   __restgprlr_29();
   return;
 }
@@ -7810,20 +9352,28 @@ void GetRecentGamesFeederData(undefined8 param_1,undefined8 param_2,ulonglong pa
 
 // 82598648  IsContentServerTaskInProgress  (ui/ui_expressions.cpp:6459)
 
-void IsContentServerTaskInProgress(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsContentServerTaskInProgress(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  int iVar4;
+  bool bVar5;
   
-  uVar1 = __savegprlr_29();
-  *param_3 = 0;
-  param_3[1] = 0;
-  uVar2 = GetSourceString(param_2);
-  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-  uVar3 = LiveStorage_CS_IsTaskInProgress(uVar1,uVar2);
-  param_3[1] = uVar3 & 0xff;
+  LVar2 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  pcVar3 = GetSourceString(param_2);
+  iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+  bVar5 = LiveStorage_CS_IsTaskInProgress(iVar4,pcVar3);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar5;
+  param_3->internals = oVar1;
   __restgprlr_29();
   return;
 }
@@ -7831,51 +9381,56 @@ void IsContentServerTaskInProgress(undefined8 param_1,undefined8 param_2,undefin
 
 // 82598698  GetContentServerTaskProgress  (ui/ui_expressions.cpp:6474)
 
-void GetContentServerTaskProgress(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetContentServerTaskProgress(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  uint uVar5;
   uint local_40;
   uint local_3c;
   undefined8 local_38;
   
-  __savegprlr_28();
-  *param_3 = 0;
-  param_3[1] = 0;
-  uVar1 = CL_ControllerIndexFromClientNum();
-  uVar2 = GetSourceString(param_2);
+  LVar1 = __savegprlr_28(param_1);
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  pcVar3 = GetSourceString(param_2);
   local_40 = 0;
   local_3c = 0;
   local_38 = (ulonglong)local_38._4_4_;
-  iVar3 = I_stricmp(uVar2,0xffffffff82167c00);
-  if (iVar3 == 0) {
-    local_40 = LiveStorage_CS_GetDownloadingFileTotalSize(uVar1);
-    LiveStorage_CS_GetDownloadProgress(uVar1,&local_3c,&local_38);
+  iVar4 = I_stricmp(pcVar3,"download");
+  if (iVar4 == 0) {
+    local_40 = LiveStorage_CS_GetDownloadingFileTotalSize(iVar2);
+    LiveStorage_CS_GetDownloadProgress(iVar2,&local_3c,(float *)&local_38);
   }
   else {
-    iVar3 = I_stricmp(uVar2,0xffffffff82167bf4);
-    if ((iVar3 == 0) || (iVar3 = I_stricmp(uVar2,0xffffffff820fa340), iVar3 == 0)) {
-      local_40 = LiveStorage_CS_GetUploadingFileTotalSize(uVar1);
-      LiveStorage_CS_GetUploadProgress(uVar1,&local_3c,&local_38);
+    iVar4 = I_stricmp(pcVar3,"uploadavi");
+    if ((iVar4 == 0) || (iVar4 = I_stricmp(pcVar3,"upload"), iVar4 == 0)) {
+      local_40 = LiveStorage_CS_GetUploadingFileTotalSize(iVar2);
+      LiveStorage_CS_GetUploadProgress(iVar2,&local_3c,(float *)&local_38);
     }
     else {
-      iVar3 = I_stricmp(uVar2,0xffffffff82167be8);
-      if (iVar3 == 0) {
-        local_40 = LiveStorage_CS_GetUploadingFileTotalSize(uVar1);
-        WebmTranscode__Progress(0xffffffff848764a8,&local_40,&local_3c);
+      iVar4 = I_stricmp(pcVar3,"uploadwebm");
+      if (iVar4 == 0) {
+        local_40 = LiveStorage_CS_GetUploadingFileTotalSize(iVar2);
+        WebmTranscode::Progress(&webmTranscode,&local_40,&local_3c);
       }
     }
   }
-  uVar4 = local_40;
+  uVar5 = local_40;
   if (local_40 < local_3c) {
-    uVar4 = local_3c;
+    uVar5 = local_3c;
   }
-  if ((uVar4 != 0) && (local_3c <= uVar4)) {
+  if ((uVar5 != 0) && (local_3c <= uVar5)) {
     local_38 = (ulonglong)local_3c;
-    param_3[1] = (int)(((float)local_38 / (float)uVar4) * 100.0);
+    (param_3->internals).intVal = (int)(((float)local_38 / (float)uVar5) * 100.0);
   }
   __restgprlr_28();
   return;
@@ -7884,75 +9439,89 @@ void GetContentServerTaskProgress(undefined8 param_1,undefined8 param_2,undefine
 
 // 82598810  CanRenderClip  (ui/ui_expressions.cpp:6527)
 
-void CanRenderClip(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CanRenderClip(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_ControllerIndexFromClientNum();
-  OnlineVault_CanRenderClip(uVar1,param_2);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  OnlineVault_CanRenderClip(iVar1,param_2);
   return;
 }
 
 
 // 82598850  GetScoreboardExternalMuteNotice  (ui/ui_expressions.cpp:6538)
 
-void GetScoreboardExternalMuteNotice(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetScoreboardExternalMuteNotice(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  double dVar4;
-  double dVar5;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  int iVar4;
+  int iVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
   
-  __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  *param_2 = 1;
-  dVar6 = 0.0;
-  param_2[1] = 0;
-  iVar1 = *(int *)(iVar2 + 0x76e78);
+  LVar2 = __savegprlr_28(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  param_2->dataType = VAL_FLOAT;
+  dVar8 = 0.0;
+  (param_2->internals).intVal = 0;
+  iVar1 = pcVar3->unmutableNoticeTime;
   if (0 < iVar1) {
-    iVar3 = *(int *)(iVar2 + 0x6b98c);
-    if (iVar3 - iVar1 < *(int *)(DAT_82a5f5cc + 0xc)) {
-      if (iVar3 < iVar1) {
-        MyAssertHandler(0xffffffff82164aa0,0x1998,0,0xffffffff82167c0c);
+    iVar4 = pcVar3->time;
+    if (iVar4 - iVar1 < (cg_scoreboard_externalmute_notice_duration->current).integer) {
+      if (iVar4 < iVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x1998,0,"cgameGlob->time >= cgameGlob->unmutableNoticeTime\n\t%i, %i");
       }
-      iVar3 = *(int *)(iVar2 + 0x6b98c) - *(int *)(iVar2 + 0x76e78);
-      iVar1 = *(int *)(DAT_82a5f5e0 + 0xc);
-      iVar2 = *(int *)(DAT_82a5f5cc + 0xc) - iVar1;
-      if (iVar3 < *(int *)(DAT_82a5f5c0 + 0xc)) {
-        dVar5 = (double)(float)((double)(longlong)iVar3 /
-                               (double)(longlong)*(int *)(DAT_82a5f5c0 + 0xc));
-        dVar4 = 1.0;
-        if ((float)(dVar5 - 1.0) < 0.0) {
-          dVar4 = dVar5;
+      iVar5 = pcVar3->time - pcVar3->unmutableNoticeTime;
+      iVar1 = (cg_scoreboard_externalmute_notice_fadeout->current).integer;
+      iVar4 = (int)(cg_scoreboard_externalmute_notice_duration->current).string - iVar1;
+      if (iVar5 < (cg_scoreboard_externalmute_notice_fadein->current).integer) {
+        dVar7 = (double)(float)((double)(longlong)iVar5 /
+                               (double)(longlong)
+                                       (cg_scoreboard_externalmute_notice_fadein->current).integer);
+        dVar6 = 1.0;
+        if ((float)(dVar7 - 1.0) < 0.0) {
+          dVar6 = dVar7;
         }
-        if (-dVar5 < 0.0) {
-          dVar6 = dVar4;
+        if (-dVar7 < 0.0) {
+          dVar8 = dVar6;
         }
-        param_2[1] = (float)dVar6;
+        (param_2->internals).floatVal = (float)dVar8;
         __restgprlr_28();
         return;
       }
-      if (iVar3 < iVar2) {
-        param_2[1] = 0x3f800000;
+      if (iVar5 < iVar4) {
+        (param_2->internals).intVal = 0x3f800000;
         __restgprlr_28();
         return;
       }
       if (0 < iVar1) {
-        dVar5 = (double)(1.0 - (float)(longlong)(iVar3 - iVar2) / (float)(longlong)iVar1);
-        dVar4 = 1.0;
-        if ((float)(dVar5 - 1.0) < 0.0) {
-          dVar4 = dVar5;
+        dVar7 = (double)(1.0 - (float)(longlong)(iVar5 - iVar4) / (float)(longlong)iVar1);
+        dVar6 = 1.0;
+        if ((float)(dVar7 - 1.0) < 0.0) {
+          dVar6 = dVar7;
         }
-        if (-dVar5 < 0.0) {
-          dVar6 = dVar4;
+        if (-dVar7 < 0.0) {
+          dVar8 = dVar6;
         }
-        param_2[1] = (float)dVar6;
+        (param_2->internals).floatVal = (float)dVar8;
       }
     }
   }
@@ -7963,62 +9532,75 @@ void GetScoreboardExternalMuteNotice(undefined8 param_1,undefined4 *param_2)
 
 // 825989E8  GetPlayerCardClientData_SetClanAndNameStringResult  (ui/ui_expressions.cpp:6580)
 
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
 void GetPlayerCardClientData_SetClanAndNameStringResult
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,longlong param_4,
-               ulonglong param_5)
+               (Operand *param_1,char *param_2,char *param_3,int param_4,bool param_5)
 
 {
   char cVar1;
   undefined4 *puVar2;
-  char cVar3;
-  undefined1 *puVar4;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  char *pcVar6;
   
-  puVar2 = (undefined4 *)__savegprlr_25();
+  uVar5 = (ulonglong)param_5;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  puVar2 = (undefined4 *)__savegprlr_25(param_1,uVar3,uVar4,param_4);
   if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0x19b8,0,0xffffffff82000f98,0xffffffff82012420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19b8,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x19b9,0,0xffffffff82000f98,0xffffffff82167cd0);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19b9,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x19ba,0,0xffffffff82000f98,0xffffffff82021a74);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19ba,
+                    0,"%s");
   }
-  if (0x11 < DAT_83f62e44) {
-    MyAssertHandler(0xffffffff82164aa0,0x19bd,0,0xffffffff82167c78,DAT_83f62e44,0x12);
+  if (0x11 < playerCardUIStringIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19bd,
+                    0,
+                    "playerCardUIStringIndex doesn\'t index PLAYER_CARD_UI_STRING_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  puVar4 = &DAT_83f60b48 + DAT_83f62e44 * 0x2a;
-  DAT_83f62e44 = DAT_83f62e44 + 1 + (int)(((ulonglong)DAT_83f62e44 + 1 & 0xffffffff) / 0x12) * -0x12
-  ;
-  cVar3 = (-(param_4 != 0) & 3U) + 0x37;
-  if (*(char *)param_2 == '\0') {
-    if (*(char *)param_3 == '\0') {
-      *puVar4 = 0;
+  pcVar6 = playerCardUIStringBuf[playerCardUIStringIndex];
+  playerCardUIStringIndex =
+       playerCardUIStringIndex + 1 +
+       (int)(((ulonglong)playerCardUIStringIndex + 1 & 0xffffffff) / 0x12) * -0x12;
+  if (*(char *)uVar3 == '\0') {
+    if (*(char *)uVar4 == '\0') {
+      (*(char (*) [42])pcVar6)[0] = '\0';
     }
     else {
-      Com_sprintf(puVar4,0x2a,0xffffffff82167c48,cVar3,param_3);
+      Com_sprintf(pcVar6,0x2a,"^%c%s^7");
     }
   }
   else {
-    cVar1 = *(char *)param_3;
-    if ((param_5 & 0xff) == 1) {
+    cVar1 = *(char *)uVar4;
+    if ((uVar5 & 0xff) == 1) {
       if (cVar1 == '\0') {
-        Com_sprintf(puVar4,0x2a,0xffffffff82167c5c,param_2);
+        Com_sprintf(pcVar6,0x2a,"^3%s^7");
       }
       else {
-        Com_sprintf(puVar4,0x2a,0xffffffff82167c64,param_2,cVar3,param_3);
+        Com_sprintf(pcVar6,0x2a,"[^3%s^7]^%c%s^7");
       }
     }
     else if (cVar1 == '\0') {
-      I_strncpyz(puVar4,param_2,0x2a);
+      I_strncpyz(pcVar6,(char *)uVar3,0x2a);
     }
     else {
-      Com_sprintf(puVar4,0x2a,0xffffffff82167c50,param_2,cVar3,param_3);
+      Com_sprintf(pcVar6,0x2a,"[%s]^%c%s^7");
     }
   }
-  if (puVar4 == (undefined1 *)0x0) {
-    puVar4 = &DAT_820068af;
+  if ((char (*) [42])pcVar6 == (char (*) [42])0x0) {
+    pcVar6 = "";
   }
-  puVar2[1] = puVar4;
+  puVar2[1] = pcVar6;
   *puVar2 = 2;
   __restgprlr_25();
   return;
@@ -8027,257 +9609,288 @@ void GetPlayerCardClientData_SetClanAndNameStringResult
 
 // 82598BE8  GetPlayerCardClientData  (ui/ui_expressions.cpp:6631)
 
-void GetPlayerCardClientData(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetPlayerCardClientData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   byte bVar1;
-  undefined8 uVar2;
-  uint uVar5;
-  uint uVar6;
-  ulonglong uVar3;
-  int *piVar7;
-  undefined8 uVar4;
-  int iVar8;
-  undefined4 uVar9;
-  undefined1 *puVar10;
-  undefined4 *puVar11;
-  int *piVar12;
+  Operand *pOVar2;
+  LocalClientNum_t LVar3;
+  uint uVar4;
+  PlayerCardClientLookupType PVar5;
+  LocalClientNum_t LVar6;
+  PlayerCardData *pPVar7;
+  char *pcVar8;
+  int iVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  Operand *pOVar12;
+  Statement_s *pSVar13;
   
-  uVar2 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x19ef,0,0xffffffff82000f98,0xffffffff82039d70);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_23(param_1);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19ef,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x19f0,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19f0,
+                    0,"%s");
   }
-  puVar11 = (undefined4 *)param_3;
-  if (*(int *)((int)param_2 + 0x50) != 3) {
-    Com_PrintError(0xd,0xffffffff82167fb0);
-    *puVar11 = 0;
-    puVar11[1] = 0;
+  pOVar2 = (Operand *)uVar10;
+  pOVar12 = (Operand *)uVar11;
+  if (pOVar2[10].dataType != NUM_INTERNAL_DATATYPES) {
+    Com_PrintError(0xd,
+                   "UI Expression Error: Expected 3 params to function GetPlayerCardClientData(), found %i\n"
+                  );
+    pOVar12->dataType = VAL_INT;
+    (pOVar12->internals).intVal = 0;
     __restgprlr_23();
     return;
   }
-  uVar5 = GetSourceInt(param_2);
-  if (0x13 < uVar5) {
-    MyAssertHandler(0xffffffff82164aa0,0x19fb,1,0xffffffff82167f68,uVar5,0x14);
+  uVar4 = GetSourceInt(pOVar2);
+  if (0x13 < uVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19fb,
+                    1,"cardDataType doesn\'t index PLAYERCARD_DATA_COUNT\n\t%i not in [0, %i)");
   }
-  uVar6 = GetSourceInt(param_2 + 8);
-  if (9 < uVar6) {
-    MyAssertHandler(0xffffffff82164aa0,0x19fe,1,0xffffffff82167f18,uVar6,10);
+  PVar5 = GetSourceInt(pOVar2 + 1);
+  if (PLAYERCARD_LOOKUP_FRIEND_CACHE < PVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x19fe,
+                    1,"clientLookupType doesn\'t index PLAYERCARD_LOOKUP_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  uVar3 = GetSourceInt(param_2 + 0x10);
-  switch(uVar6) {
-  case 0:
-    piVar7 = (int *)PlayerCards_GetCachedPlayerData(uVar2,uVar3);
+  LVar6 = GetSourceInt(pOVar2 + 2);
+  switch(PVar5) {
+  case PLAYERCARD_LOOKUP_SCRIPTSLOT:
+    pPVar7 = PlayerCards_GetCachedPlayerData(LVar3,LVar6);
     break;
-  case 1:
-    piVar7 = (int *)PlayerCards_GetLiveProfileDataForClient();
+  case PLAYERCARD_LOOKUP_LIVEPROFILE_CLIENT:
+    pPVar7 = PlayerCards_GetLiveProfileDataForClient(LVar6);
     break;
-  case 3:
-  case 4:
-  case 5:
-    piVar7 = (int *)PlayerCards_GetPartyMemberData(uVar2,uVar6,uVar3);
+  case PLAYERCARD_LOOKUP_LOBBY:
+  case PLAYERCARD_LOOKUP_MYTEAM:
+  case PLAYERCARD_LOOKUP_ENEMYTEAM:
+    pPVar7 = PlayerCards_GetPartyMemberData(LVar3,PVar5,LVar6);
     break;
   default:
-    piVar7 = (int *)0x0;
-    if (DAT_84013128 == 0) {
-      uVar4 = va(0xffffffff82167ec8,uVar6);
-      MyAssertHandler(0xffffffff82164aa0,0x1a2d,0,uVar4);
+    pPVar7 = (PlayerCardData *)0x0;
+    if (alwaysfails == 0) {
+      pcVar8 = va("Unhandled clientLookupType %i in GetPlayerCardClientData!\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x1a2d,0,pcVar8);
     }
     goto LAB_82598d58;
-  case 7:
-    piVar7 = (int *)PlayerCards_GetTheaterPlayerData(uVar2);
+  case PLAYERCARD_LOOKUP_THEATER:
+    pPVar7 = PlayerCards_GetTheaterPlayerData(LVar3);
     break;
-  case 8:
-    uVar3 = (ulonglong)DAT_82b5c820;
-  case 2:
-    piVar7 = (int *)PlayerCards_GetLiveProfileDataForController(uVar3);
+  case PLAYERCARD_LOOKUP_LOCALCLIENT:
+    LVar6 = cl_controller_in_use;
+  case PLAYERCARD_LOOKUP_LIVEPROFILE_CONTROLLER:
+    pPVar7 = PlayerCards_GetLiveProfileDataForController(LVar6);
     break;
-  case 9:
-    piVar7 = (int *)PlayerCards_GetFriendCache(uVar2);
+  case PLAYERCARD_LOOKUP_FRIEND_CACHE:
+    pPVar7 = PlayerCards_GetFriendCache(LVar3);
   }
-  if (piVar7 == (int *)0x0) {
+  if (pPVar7 == (PlayerCardData *)0x0) {
 LAB_82598d58:
-    MyAssertHandler(0xffffffff82164aa0,0x1a2f,1,0xffffffff82000f98,0xffffffff82167f04);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1a2f,
+                    1,"%s");
   }
-  switch(uVar5) {
+  switch(uVar4) {
   case 0:
-    *puVar11 = 0;
-    bVar1 = *(byte *)(piVar7 + 9);
-    puVar11[1] = (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
+    pOVar12->dataType = VAL_INT;
+    bVar1 = pPVar7->name[0];
+    (pOVar12->internals).function =
+         (Statement_s *)((uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1)));
     __restgprlr_23();
     return;
   case 1:
-    *puVar11 = 0;
-    uVar5 = piVar7[1];
-    if (0x3ff < uVar5) {
-      Com_PrintWarning(0xd,0xffffffff82167e38,uVar5,0x400);
-      puVar11[1] = 0;
+    pOVar12->dataType = VAL_INT;
+    pSVar13 = (Statement_s *)pPVar7->titleIndex;
+    if ((Statement_s *)0x3ff < pSVar13) {
+      Com_PrintWarning(0xd,
+                       "PLAYERCARD_DATA_TITLEINDEX requests returned an index greater than the maximum allowed by code. The limit needs to be increased. (%i >= %i)\n"
+                      );
+      (pOVar12->internals).intVal = 0;
       __restgprlr_23();
       return;
     }
-    if (*(char *)((int)piVar7 + 0x51) != '\0') {
-      puVar11[1] = piVar7[0x1b];
+    if (pPVar7->use_elite_clan_title != false) {
+      pOVar12->internals = (operandInternalDataUnion)pPVar7->elite_clan_title_bg;
       __restgprlr_23();
       return;
     }
     goto LAB_82598ed0;
   case 2:
-    *puVar11 = 0;
-    uVar5 = piVar7[2];
-    if (0x3ff < uVar5) {
-      Com_PrintWarning(0xd,0xffffffff82167da8,uVar5,0x400);
-      puVar11[1] = 0;
+    pOVar12->dataType = VAL_INT;
+    pSVar13 = (Statement_s *)pPVar7->iconIndex;
+    if ((Statement_s *)0x3ff < pSVar13) {
+      Com_PrintWarning(0xd,
+                       "PLAYERCARD_DATA_ICONINDEX requests returned an index greater than the maximum allowed by code. The limit needs to be increased. (%i >= %i)\n"
+                      );
+      (pOVar12->internals).intVal = 0;
       __restgprlr_23();
       return;
     }
     goto LAB_82598ed0;
   case 3:
-    *puVar11 = 0;
-    uVar5 = piVar7[3];
-    if (0x3f < uVar5) {
-      Com_PrintWarning(0xd,0xffffffff82167d10,uVar5,0x40);
-      puVar11[1] = 0;
+    pOVar12->dataType = VAL_INT;
+    pSVar13 = (Statement_s *)pPVar7->nameplateIndex;
+    if ((Statement_s *)0x3f < pSVar13) {
+      Com_PrintWarning(0xd,
+                       "PLAYERCARD_DATA_NAMEPLATEINDEX requests returned an index greater than the maximum allowed by code. The limit needs to be increased. (%i >= %i)\n"
+                      );
+      (pOVar12->internals).intVal = 0;
       __restgprlr_23();
       return;
     }
 LAB_82598ed0:
-    puVar11[1] = uVar5;
+    (pOVar12->internals).function = pSVar13;
     __restgprlr_23();
     return;
   case 4:
-    *puVar11 = 0;
-    puVar11[1] = piVar7[4];
+    pOVar12->dataType = VAL_INT;
+    pOVar12->internals = (operandInternalDataUnion)pPVar7->rank_mp;
     __restgprlr_23();
     return;
   case 5:
-    *puVar11 = 0;
-    puVar11[1] = piVar7[5];
+    pOVar12->dataType = VAL_INT;
+    pOVar12->internals = (operandInternalDataUnion)pPVar7->prestige_mp;
     __restgprlr_23();
     return;
   case 6:
-    *puVar11 = 0;
-    puVar11[1] = piVar7[6];
+    pOVar12->dataType = VAL_INT;
+    pOVar12->internals = (operandInternalDataUnion)pPVar7->rank_so;
     __restgprlr_23();
     return;
   case 7:
-    *puVar11 = 0;
-    puVar11[1] = piVar7[7];
+    pOVar12->dataType = VAL_INT;
+    pOVar12->internals = (operandInternalDataUnion)pPVar7->prestige_so;
     __restgprlr_23();
     return;
   case 8:
-    *puVar11 = 0;
-    puVar11[1] = piVar7[8];
+    pOVar12->dataType = VAL_INT;
+    pOVar12->internals = (operandInternalDataUnion)pPVar7->team;
     __restgprlr_23();
     return;
   case 9:
-    *puVar11 = 0;
-    iVar8 = PlayerCardData_GetCurTime(uVar2);
-    puVar11[1] = iVar8 - *piVar7;
+    pOVar12->dataType = VAL_INT;
+    iVar9 = PlayerCardData_GetCurTime(LVar3);
+    (pOVar12->internals).function = (Statement_s *)(iVar9 - pPVar7->lastUpdateTime);
     __restgprlr_23();
     return;
   case 10:
-    *puVar11 = 0;
-    uVar9 = PlayerCardData_GetXPMult(uVar2,piVar7);
-    puVar11[1] = uVar9;
+    pOVar12->dataType = VAL_INT;
+    iVar9 = PlayerCardData_GetXPMult(LVar3,pPVar7);
+    (pOVar12->internals).intVal = iVar9;
     __restgprlr_23();
     return;
   case 0xb:
     GetPlayerCardClientData_SetClanAndNameStringResult
-              (param_3,0xffffffff820068af,piVar7 + 9,piVar7[0x13],*(undefined1 *)(piVar7 + 0x14));
+              (pOVar12,"",pPVar7->name,pPVar7->myParty,pPVar7->use_elite_clan_tag);
     __restgprlr_23();
     return;
   case 0xc:
-    iVar8 = piVar7[0x13];
-    piVar12 = (int *)&DAT_820068af;
-    if (*(char *)(piVar7 + 0x14) != '\0') {
+    iVar9 = pPVar7->myParty;
+    pcVar8 = "";
+    if (pPVar7->use_elite_clan_tag != false) {
       GetPlayerCardClientData_SetClanAndNameStringResult
-                (param_3,piVar7 + 0x1c,0xffffffff820068af,iVar8,1);
+                (pOVar12,pPVar7->elite_clan_tag_text,"",iVar9,true);
       __restgprlr_23();
       return;
     }
     goto LAB_82599050;
   case 0xd:
-    piVar12 = piVar7 + 9;
-    iVar8 = piVar7[0x13];
-    if (*(char *)(piVar7 + 0x14) != '\0') {
-      GetPlayerCardClientData_SetClanAndNameStringResult(param_3,piVar7 + 0x1c,piVar12,iVar8,1);
+    pcVar8 = pPVar7->name;
+    iVar9 = pPVar7->myParty;
+    if (pPVar7->use_elite_clan_tag != false) {
+      GetPlayerCardClientData_SetClanAndNameStringResult
+                (pOVar12,pPVar7->elite_clan_tag_text,pcVar8,iVar9,true);
       __restgprlr_23();
       return;
     }
 LAB_82599050:
-    GetPlayerCardClientData_SetClanAndNameStringResult(param_3,piVar7 + 0x11,piVar12,iVar8,0);
+    GetPlayerCardClientData_SetClanAndNameStringResult
+              (pOVar12,pPVar7->clanAbbrev,pcVar8,iVar9,false);
     __restgprlr_23();
     return;
   case 0xe:
-    if (*(char *)((int)piVar7 + 0x51) != '\0') {
-      puVar10 = (undefined1 *)((int)piVar7 + 0x52);
-      if (puVar10 == (undefined1 *)0x0) {
-        puVar10 = &DAT_820068af;
+    if (pPVar7->use_elite_clan_title != false) {
+      pcVar8 = pPVar7->elite_clan_title_text;
+      if (pcVar8 == (char *)0x0) {
+        pcVar8 = "";
       }
-      puVar11[1] = puVar10;
-      *puVar11 = 2;
+      (pOVar12->internals).function = (Statement_s *)pcVar8;
+      pOVar12->dataType = VAL_STRING;
       __restgprlr_23();
       return;
     }
-    puVar10 = (undefined1 *)PlayerCards_GetTitleTextByIndex(piVar7[1]);
-    if (puVar10 == (undefined1 *)0x0) {
-      puVar10 = &DAT_820068af;
+    pcVar8 = PlayerCards_GetTitleTextByIndex(pPVar7->titleIndex);
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      pcVar8 = "";
     }
-    puVar11[1] = puVar10;
-    *puVar11 = 2;
+    (pOVar12->internals).function = (Statement_s *)pcVar8;
+    pOVar12->dataType = VAL_STRING;
     __restgprlr_23();
     return;
   case 0xf:
-    *puVar11 = 0;
-    uVar9 = PlayerCardData_GetWeaponXPMult(uVar2,piVar7);
-    puVar11[1] = uVar9;
+    pOVar12->dataType = VAL_INT;
+    iVar9 = PlayerCardData_GetWeaponXPMult(LVar3,pPVar7);
+    (pOVar12->internals).intVal = iVar9;
     __restgprlr_23();
     return;
   case 0x10:
-    puVar10 = (undefined1 *)PastTitle_GetMaterial(0,piVar7[0x1f],piVar7[0x1e]);
-    if (puVar10 == (undefined1 *)0x0) {
-      puVar10 = &DAT_820068af;
+    pcVar8 = PastTitle_GetMaterial
+                       (PAST_TITLE_MATERIAL_BLACK_OPS,pPVar7->rank_black_ops,
+                        pPVar7->prestige_black_ops);
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      pcVar8 = "";
     }
     break;
   case 0x11:
-    puVar10 = (undefined1 *)PastTitle_GetMaterial(1,piVar7[0x21],piVar7[0x20]);
-    if (puVar10 == (undefined1 *)0x0) {
-      puVar11[1] = &DAT_820068af;
-      *puVar11 = 2;
+    pcVar8 = PastTitle_GetMaterial(PAST_TITLE_MATERIAL_MW2,pPVar7->rank_mw2,pPVar7->prestige_mw2);
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      (pOVar12->internals).floatVal = (float)"";
+      pOVar12->dataType = VAL_STRING;
       __restgprlr_23();
       return;
     }
     break;
   case 0x12:
-    puVar10 = (undefined1 *)PastTitle_GetMaterial(2,piVar7[0x23],piVar7[0x22]);
-    if (puVar10 == (undefined1 *)0x0) {
-      puVar11[1] = &DAT_820068af;
-      *puVar11 = 2;
+    pcVar8 = PastTitle_GetMaterial
+                       (PAST_TITLE_MATERIAL_WAW,pPVar7->rank_world_at_war,
+                        pPVar7->prestige_world_at_war);
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      (pOVar12->internals).floatVal = (float)"";
+      pOVar12->dataType = VAL_STRING;
       __restgprlr_23();
       return;
     }
     break;
   case 0x13:
-    puVar10 = (undefined1 *)PastTitle_GetMaterial(3,piVar7[0x25],piVar7[0x24]);
-    if (puVar10 == (undefined1 *)0x0) {
-      puVar11[1] = &DAT_820068af;
-      *puVar11 = 2;
+    pcVar8 = PastTitle_GetMaterial(PAST_TITLE_MATERIAL_MW,pPVar7->rank_mw,pPVar7->prestige_mw);
+    if ((Statement_s *)pcVar8 == (Statement_s *)0x0) {
+      (pOVar12->internals).floatVal = (float)"";
+      pOVar12->dataType = VAL_STRING;
       __restgprlr_23();
       return;
     }
     break;
   default:
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff82167cd8,uVar5);
-      MyAssertHandler(0xffffffff82164aa0,0x1ab7,0,uVar2);
+    if (alwaysfails == 0) {
+      pcVar8 = va("Unhandled cardDataType %i in GetPlayerCardClientData!\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x1ab7,0,pcVar8);
     }
     __restgprlr_23();
     return;
   }
-  puVar11[1] = puVar10;
-  *puVar11 = 2;
+  (pOVar12->internals).function = (Statement_s *)pcVar8;
+  pOVar12->dataType = VAL_STRING;
   __restgprlr_23();
   return;
 }
@@ -8285,97 +9898,134 @@ LAB_82599050:
 
 // 825991F0  GetIsOfflineProfileSelected  (ui/ui_expressions.cpp:6852)
 
-void GetIsOfflineProfileSelected(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsOfflineProfileSelected(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 1;
   return;
 }
 
 
 // 82599208  GetIsProfileSignedIn  (ui/ui_expressions.cpp:6868)
 
-void GetIsProfileSignedIn(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsProfileSignedIn(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  uVar1 = GamerProfile_IsProfileLoggedIn();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar3 = GamerProfile_IsProfileLoggedIn(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 82599248  AllSplitscreenProfilesAreSignedIn  (ui/ui_expressions.cpp:6880)
 
-void AllSplitscreenProfilesAreSignedIn(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AllSplitscreenProfilesAreSignedIn(Operand *param_1)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_1 = 0;
-  uVar1 = CL_AllSplitScreenPlayersAreSignedIn();
-  param_1[1] = uVar1 & 0xff;
+  param_1->dataType = VAL_INT;
+  bVar2 = CL_AllSplitScreenPlayersAreSignedIn();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_1->internals = oVar1;
   return;
 }
 
 
 // 82599288  AnySplitscreenProfilesAreSignedIn  (ui/ui_expressions.cpp:6892)
 
-void AnySplitscreenProfilesAreSignedIn(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AnySplitscreenProfilesAreSignedIn(Operand *param_1)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_1 = 0;
-  uVar1 = CL_AnySplitscreenPlayersAreSignedIn();
-  param_1[1] = uVar1 & 0xff;
+  param_1->dataType = VAL_INT;
+  bVar2 = CL_AnySplitscreenPlayersAreSignedIn();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_1->internals = oVar1;
   return;
 }
 
 
 // 825992C8  AnySplitscreenProfilesAreSignedInToLive  (ui/ui_expressions.cpp:6904)
 
-void AnySplitscreenProfilesAreSignedInToLive(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void AnySplitscreenProfilesAreSignedInToLive(Operand *param_1)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_1 = 0;
-  uVar1 = CL_AnySplitscreenPlayersAreSignedInToLive();
-  param_1[1] = uVar1 & 0xff;
+  param_1->dataType = VAL_INT;
+  bVar2 = CL_AnySplitscreenPlayersAreSignedInToLive();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_1->internals = oVar1;
   return;
 }
 
 
 // 82599308  MayInvitePlayerToParty  (ui/ui_expressions.cpp:6916)
 
-void MayInvitePlayerToParty(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MayInvitePlayerToParty(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
   return;
 }
 
 
 // 82599318  IsCoOpReady  (ui/ui_expressions.cpp:6930)
 
-void IsCoOpReady(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsCoOpReady(Operand *param_1)
 
 {
   int iVar1;
   
-  *param_1 = 0;
+  param_1->dataType = VAL_INT;
   iVar1 = CL_GetLocalClientActiveCount();
   if (iVar1 < 2) {
-    param_1[1] = 0;
+    (param_1->internals).intVal = 0;
   }
   else {
-    param_1[1] = 1;
+    (param_1->internals).intVal = 1;
   }
   return;
 }
@@ -8383,204 +10033,268 @@ void IsCoOpReady(undefined4 *param_1)
 
 // 82599370  VoteCast  (ui/ui_expressions.cpp:6947)
 
-void VoteCast(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void VoteCast(Operand *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  cVar1 = Party_HasVoteBeenCast();
-  param_1[1] = (uint)(cVar1 != '\0');
+  param_1->dataType = VAL_INT;
+  bVar1 = Party_HasVoteBeenCast();
+  (param_1->internals).function = (Statement_s *)((int)bVar1 + (-(uint)!bVar1 - (bVar1 + -1)));
   return;
 }
 
 
 // 825993B8  VotePassed  (ui/ui_expressions.cpp:6958)
 
-void VotePassed(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void VotePassed(Operand *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  cVar1 = Party_HasVotePassed();
-  param_1[1] = (uint)(cVar1 != '\0');
+  param_1->dataType = VAL_INT;
+  bVar1 = Party_HasVotePassed();
+  (param_1->internals).function = (Statement_s *)((int)bVar1 + (-(uint)!bVar1 - (bVar1 + -1)));
   return;
 }
 
 
 // 82599400  IsFriendInvitable  (ui/ui_expressions.cpp:6970)
 
-void IsFriendInvitable(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsFriendInvitable(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = FriendsMenu_FeederFriendInvitable();
-  param_2[1] = (uint)(cVar1 != '\0');
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = FriendsMenu_FeederFriendInvitable(iVar1);
+  (param_2->internals).function = (Statement_s *)((int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1)));
   return;
 }
 
 
 // 82599448  IsFriendJoinable  (ui/ui_expressions.cpp:6980)
 
-void IsFriendJoinable(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsFriendJoinable(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = FriendsMenu_FeederFriendJoinable();
-  param_2[1] = (uint)(cVar1 != '\0');
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = FriendsMenu_FeederFriendJoinable(iVar1);
+  (param_2->internals).function = (Statement_s *)((int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1)));
   return;
 }
 
 
 // 82599490  FriendGetGamerTag  (ui/ui_expressions.cpp:6991)
 
-void FriendGetGamerTag(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FriendGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = FriendsMenu_FeederGamerTag();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)FriendsMenu_FeederGamerTag(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 825994F8  RecentPlayerGetGamerTag  (ui/ui_expressions.cpp:7002)
 
-void RecentPlayerGetGamerTag(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void RecentPlayerGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = MeetPlayer_FeederGamerTag();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)MeetPlayer_FeederGamerTag(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 82599560  LivePartyGetGamerTag  (ui/ui_expressions.cpp:7013)
 
-void LivePartyGetGamerTag(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LivePartyGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = LiveParty_FeederGamerTag();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)LiveParty_FeederGamerTag(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 825995C8  FacebookGetGamerTag  (ui/ui_expressions.cpp:7024)
 
-void FacebookGetGamerTag(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void FacebookGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = Facebook_FeederGamerTag();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)Facebook_FeederGamerTag(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 82599630  EliteClanGetGamerTag  (ui/ui_expressions.cpp:7035)
 
-void EliteClanGetGamerTag(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void EliteClanGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = EliteClan_FeederGamerTag();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)EliteClan_FeederGamerTag(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 82599698  LivePartyIsMe  (ui/ui_expressions.cpp:7046)
 
-void LivePartyIsMe(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void LivePartyIsMe(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  uVar1 = LiveParty_IsMe();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar3 = LiveParty_IsMe(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 825996D8  LivePartyIsLocal  (ui/ui_expressions.cpp:7057)
 
-void LivePartyIsLocal(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LivePartyIsLocal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  uVar1 = LiveParty_IsLocal();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar3 = LiveParty_IsLocal(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 82599718  GetIndexFromString  (ui/ui_expressions.cpp:7068)
 
-void GetIndexFromString(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIndexFromString(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
+  ulonglong uVar1;
+  int iVar3;
+  char *pcVar2;
   
-  pcVar1 = (char *)GetSourceString();
-  *param_2 = 0;
-  param_2[1] = 1;
-  pcVar1 = strrchr(pcVar1,0x5f);
-  if (pcVar1 != (char *)0x0) {
-    iVar2 = atoi(pcVar1 + 1);
-    if (iVar2 < 0xb) {
-      iVar2 = atoi(pcVar1 + 1);
-      param_2[1] = iVar2;
+  pcVar2 = GetSourceString((Operand *)param_1);
+  uVar1 = (ulonglong)(int)pcVar2;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 1;
+  strrchr();
+  if ((uVar1 & 0xffffffff) != 0) {
+    pcVar2 = (char *)((int)uVar1 + 1);
+    iVar3 = atoi(pcVar2);
+    if (iVar3 < 0xb) {
+      iVar3 = atoi(pcVar2);
+      (param_2->internals).intVal = iVar3;
     }
   }
   return;
@@ -8589,27 +10303,35 @@ void GetIndexFromString(undefined8 param_1,undefined4 *param_2)
 
 // 82599790  GetStringWithoutIndex  (ui/ui_expressions.cpp:7085)
 
-void GetStringWithoutIndex(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetStringWithoutIndex(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  longlong lVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined4 uVar4;
+  undefined4 *puVar1;
+  Operand *pOVar3;
+  ulonglong uVar2;
+  char *pcVar5;
+  int iVar6;
+  longlong lVar7;
+  char *pcVar4;
   
-  __savegprlr_28();
-  lVar1 = GetSourceString();
-  param_2[1] = (char *)lVar1;
-  *param_2 = 2;
-  pcVar2 = strrchr((char *)lVar1,0x5f);
-  if (pcVar2 != (char *)0x0) {
-    iVar3 = atoi(pcVar2 + 1);
-    if (iVar3 != 0) {
-      iVar3 = atoi(pcVar2 + 1);
-      if (iVar3 < 0xb) {
-        uVar4 = CopySubString(lVar1,0,(int)pcVar2 - lVar1);
-        param_2[1] = uVar4;
-      }
+  lVar7 = (longlong)(int)param_2;
+  pOVar3 = (Operand *)__savegprlr_28(param_1,lVar7,param_3);
+  pcVar4 = GetSourceString(pOVar3);
+  uVar2 = (ulonglong)(int)pcVar4;
+  puVar1 = (undefined4 *)lVar7;
+  puVar1[1] = pcVar4;
+  *puVar1 = 2;
+  strrchr();
+  if ((uVar2 & 0xffffffff) != 0) {
+    pcVar5 = (char *)((int)uVar2 + 1);
+    iVar6 = atoi(pcVar5);
+    if ((iVar6 != 0) && (iVar6 = atoi(pcVar5), iVar6 < 0xb)) {
+      pcVar4 = CopySubString(pcVar4,0,(int)uVar2 - (int)pcVar4);
+      puVar1[1] = pcVar4;
     }
   }
   __restgprlr_28();
@@ -8619,37 +10341,43 @@ void GetStringWithoutIndex(undefined8 param_1,undefined4 *param_2)
 
 // 82599808  GetCoOpPlayerField  (ui/ui_expressions.cpp:7103)
 
-void GetCoOpPlayerField(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetCoOpPlayerField(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined4 *puVar5;
+  Operand *pOVar1;
+  char *pcVar2;
+  int iVar3;
+  longlong lVar4;
+  Operand *pOVar5;
   
-  iVar4 = __savegprlr_29();
-  puVar5 = (undefined4 *)param_2;
-  *puVar5 = 0;
-  puVar5[1] = 0;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1bc8,0,0xffffffff82000f98,0xffffffff82039d70);
+  lVar4 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_29(param_1,lVar4,param_3);
+  pOVar5 = (Operand *)lVar4;
+  pOVar5->dataType = VAL_INT;
+  (pOVar5->internals).intVal = 0;
+  if (pOVar1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1bc8,
+                    0,"%s");
   }
-  if (*(int *)(iVar4 + 0x50) != 2) {
-    Com_PrintError(0xd,0xffffffff8216803c);
+  if (pOVar1[10].dataType != VAL_STRING) {
+    Com_PrintError(0xd,"UI Expression Usage: coopPlayer( clientNum, field ).\n");
     __restgprlr_29();
     return;
   }
-  uVar1 = GetSourceInt(iVar4);
-  uVar2 = GetSourceString(iVar4 + 8);
-  iVar4 = I_stricmp(uVar2,0xffffffff82168020);
-  if ((iVar4 == 0) || (iVar4 = I_stricmp(uVar2,0xffffffff82021a74), iVar4 == 0)) {
-    *puVar5 = 2;
-    puVar5[1] = &DAT_820068af;
+  GetSourceInt(pOVar1);
+  pcVar2 = GetSourceString(pOVar1 + 1);
+  iVar3 = I_stricmp(pcVar2,"missionsohighestdifficulty");
+  if ((iVar3 == 0) || (iVar3 = I_stricmp(pcVar2,"name"), iVar3 == 0)) {
+    pOVar5->dataType = VAL_STRING;
+    (pOVar5->internals).floatVal = (float)"";
   }
-  if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-    uVar3 = GetSourceString(param_2);
-    Com_Printf(0xd,0xffffffff82168008,uVar1,uVar2,uVar3);
+  if ((uiscript_debug->current).integer != 0) {
+    GetSourceString(pOVar5);
+    Com_Printf(0xd,"player( %i, %s ) = %s\n");
   }
   __restgprlr_29();
   return;
@@ -8658,72 +10386,91 @@ void GetCoOpPlayerField(undefined8 param_1,undefined8 param_2)
 
 // 82599910  GetIsCoOp  (ui/ui_expressions.cpp:7246)
 
-void GetIsCoOp(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsCoOp(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  if (DAT_82966e98 == 0) {
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  if (cl_multi_gamepads_enabled == 0) {
     return;
   }
-  param_1[1] = 1;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 1;
   return;
 }
 
 
 // 82599938  GetCoopShowPublicType  (ui/ui_expressions.cpp:7266)
 
-void GetCoopShowPublicType(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetCoopShowPublicType(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  Com_PrintError(0x10,0xffffffff82168074);
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  Com_PrintError(0x10,"GetCoopShowPublicType called in non COOP mode\n");
   return;
 }
 
 
 // 82599958  GetCoopDisplaybleGroupNum  (ui/ui_expressions.cpp:7285)
 
-void GetCoopDisplaybleGroupNum(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetCoopDisplaybleGroupNum(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
-  Com_PrintError(0x10,0xffffffff821680a4);
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  Com_PrintError(0x10,"GetCoopGroupNum called in non COOP mode\n");
   return;
 }
 
 
 // 82599978  GetTextWidth  (ui/ui_expressions.cpp:7298)
 
-void GetTextWidth(undefined8 param_1,int *param_2,undefined4 *param_3,undefined8 param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetTextWidth(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  int in_r6;
   double dVar5;
   
-  __savegprlr_29();
-  if ((((param_2[0x14] == 3) && (*param_2 == 2)) && (param_2[2] == 0)) && (param_2[4] == 1)) {
-    iVar1 = param_2[3];
-    dVar5 = (double)(float)param_2[5];
-    uVar2 = ScrPlace_GetViewPlacement();
-    uVar3 = UI_GetFontHandle(dVar5,uVar2,iVar1);
-    if ((uVar3 & 0xffffffff) == 0) {
-      Com_PrintError(0xd,0xffffffff8216810c);
+  LVar1 = __savegprlr_29(param_1);
+  if ((((param_2->operandCount == 3) && (param_2->operands[0].dataType == VAL_STRING)) &&
+      (param_2->operands[1].dataType == VAL_INT)) && (param_2->operands[2].dataType == VAL_FLOAT)) {
+    iVar4 = param_2->operands[1].internals.intVal;
+    dVar5 = (double)param_2->operands[2].internals.floatVal;
+    pSVar2 = ScrPlace_GetViewPlacement(LVar1);
+    pFVar3 = UI_GetFontHandle(pSVar2,iVar4,(float)dVar5);
+    if (pFVar3 == (Font_s *)0x0) {
+      Com_PrintError(0xd,"GetTextWidth: Font not found! \n");
       __restgprlr_29();
       return;
     }
-    *param_3 = 0;
-    uVar4 = UI_TextWidthModCase((double)(float)param_2[5],param_2[1],0,uVar3,param_4,0);
-    param_3[1] = uVar4;
+    param_3->dataType = VAL_INT;
+    iVar4 = UI_TextWidthModCase((char *)param_2->operands[0].internals.function,0,pFVar3,
+                                param_2->operands[2].internals.floatVal,in_r6);
+    (param_3->internals).intVal = iVar4;
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xd,0xffffffff821680d0);
+  Com_PrintError(0xd,"GetTextWidth: Parameters not legit! (string, int, float) \n");
   __restgprlr_29();
   return;
 }
@@ -8731,41 +10478,41 @@ void GetTextWidth(undefined8 param_1,int *param_2,undefined4 *param_3,undefined8
 
 // 82599A48  GetTextWidthModCase  (ui/ui_expressions.cpp:7323)
 
-void GetTextWidthModCase(undefined8 param_1,int *param_2,undefined4 *param_3,undefined8 param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetTextWidthModCase(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
-  byte bVar5;
-  double dVar6;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  int in_r6;
+  double dVar5;
   
-  __savegprlr_29();
-  if ((((param_2[0x14] == 4) && (*param_2 == 2)) && (param_2[2] == 0)) &&
-     ((param_2[4] == 1 && (param_2[6] == 0)))) {
-    iVar1 = param_2[3];
-    dVar6 = (double)(float)param_2[5];
-    uVar2 = ScrPlace_GetViewPlacement();
-    uVar3 = UI_GetFontHandle(dVar6,uVar2,iVar1);
-    if ((uVar3 & 0xffffffff) == 0) {
-      Com_PrintError(0xd,0xffffffff8216810c);
+  LVar1 = __savegprlr_29(param_1);
+  if ((((param_2->operandCount == 4) && (param_2->operands[0].dataType == VAL_STRING)) &&
+      (param_2->operands[1].dataType == VAL_INT)) &&
+     ((param_2->operands[2].dataType == VAL_FLOAT && (param_2->operands[3].dataType == VAL_INT)))) {
+    iVar4 = param_2->operands[1].internals.intVal;
+    dVar5 = (double)param_2->operands[2].internals.floatVal;
+    pSVar2 = ScrPlace_GetViewPlacement(LVar1);
+    pFVar3 = UI_GetFontHandle(pSVar2,iVar4,(float)dVar5);
+    if (pFVar3 == (Font_s *)0x0) {
+      Com_PrintError(0xd,"GetTextWidth: Font not found! \n");
       __restgprlr_29();
       return;
     }
-    *param_3 = 0;
-    if (param_2[7] == 9) {
-      bVar5 = 1;
-    }
-    else {
-      bVar5 = -(param_2[7] == 10) & 2;
-    }
-    uVar4 = UI_TextWidthModCase((double)(float)param_2[5],param_2[1],0,uVar3,param_4,bVar5);
-    param_3[1] = uVar4;
+    param_3->dataType = VAL_INT;
+    iVar4 = UI_TextWidthModCase((char *)param_2->operands[0].internals.function,0,pFVar3,
+                                param_2->operands[2].internals.floatVal,in_r6);
+    (param_3->internals).intVal = iVar4;
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82168130);
+  Com_PrintError(0xd,"GetTextWidth: Parameters not legit! (string, int, float, int) \n");
   __restgprlr_29();
   return;
 }
@@ -8773,32 +10520,38 @@ void GetTextWidthModCase(undefined8 param_1,int *param_2,undefined4 *param_3,und
 
 // 82599B48  GetTextHeight  (ui/ui_expressions.cpp:7359)
 
-void GetTextHeight(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetTextHeight(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 uVar3;
-  double dVar4;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  double dVar5;
   
-  __savegprlr_29();
-  if (((param_2[0x14] == 2) && (*param_2 == 0)) && (param_2[2] == 1)) {
-    iVar2 = param_2[1];
-    dVar4 = (double)(float)param_2[3];
-    uVar1 = ScrPlace_GetViewPlacement();
-    iVar2 = UI_GetFontHandle(dVar4,uVar1,iVar2);
-    if (iVar2 == 0) {
-      Com_PrintError(0xd,0xffffffff821681a4);
+  LVar1 = __savegprlr_29(param_1);
+  if (((param_2->operandCount == 2) && (param_2->operands[0].dataType == VAL_INT)) &&
+     (param_2->operands[1].dataType == VAL_FLOAT)) {
+    iVar4 = param_2->operands[0].internals.intVal;
+    dVar5 = (double)param_2->operands[1].internals.floatVal;
+    pSVar2 = ScrPlace_GetViewPlacement(LVar1);
+    pFVar3 = UI_GetFontHandle(pSVar2,iVar4,(float)dVar5);
+    if (pFVar3 == (Font_s *)0x0) {
+      Com_PrintError(0xd,"GetTextHeight: Font not found! \n");
       __restgprlr_29();
       return;
     }
-    *param_3 = 0;
-    uVar3 = UI_TextHeight((double)(float)param_2[3]);
-    param_3[1] = uVar3;
+    param_3->dataType = VAL_INT;
+    iVar4 = UI_TextHeight(pFVar3,param_2->operands[1].internals.floatVal);
+    (param_3->internals).intVal = iVar4;
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82168170);
+  Com_PrintError(0xd,"GetTextHeight: Parameters not legit! (int, float) \n");
   __restgprlr_29();
   return;
 }
@@ -8806,48 +10559,67 @@ void GetTextHeight(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 82599C00  GetWrappedTextHeight  (ui/ui_expressions.cpp:7384)
 
-void GetWrappedTextHeight(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetWrappedTextHeight(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char *pcVar4;
-  double dVar5;
+  float fVar1;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  ScreenPlacement *pSVar4;
+  Font_s *pFVar5;
+  char *pcVar6;
+  char *pcVar7;
+  int in_r6;
+  double dVar8;
+  float fVar9;
   
-  __savegprlr_29();
-  *param_3 = 1;
-  param_3[1] = 0;
-  piVar1 = (int *)param_2;
-  if (((((piVar1[0x14] != 6) || (*piVar1 != 2)) || (piVar1[2] != 1)) ||
-      ((piVar1[4] != 0 || (piVar1[6] != 1)))) || ((piVar1[8] != 0 || (piVar1[10] != 0)))) {
-    Com_PrintError(0xd,0xffffffff821681c8);
+  LVar3 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_FLOAT;
+  (param_3->internals).intVal = 0;
+  if (((((param_2->operandCount != 6) || (param_2->operands[0].dataType != VAL_STRING)) ||
+       (param_2->operands[1].dataType != VAL_FLOAT)) ||
+      ((param_2->operands[2].dataType != VAL_INT || (param_2->operands[3].dataType != VAL_FLOAT))))
+     || ((param_2->operands[4].dataType != VAL_INT || (param_2->operands[5].dataType != VAL_INT))))
+  {
+    Com_PrintError(0xd,
+                   "GetWrappedTextHeight: Invalid Parameters: <text> <width> <font> <scale> <align> <style>\n"
+                  );
     __restgprlr_29();
     return;
   }
-  iVar3 = piVar1[5];
-  dVar5 = (double)(float)piVar1[7];
-  uVar2 = ScrPlace_GetViewPlacement();
-  iVar3 = UI_GetFontHandle(dVar5,uVar2,iVar3);
-  if (iVar3 == 0) {
-    Com_PrintError(0xd,0xffffffff82168224);
+  pcVar7 = (char *)param_2->operands[2].internals.function;
+  dVar8 = (double)param_2->operands[3].internals.floatVal;
+  pSVar4 = ScrPlace_GetViewPlacement(LVar3);
+  pFVar5 = UI_GetFontHandle(pSVar4,(int)pcVar7,(float)dVar8);
+  if (pFVar5 == (Font_s *)0x0) {
+    Com_PrintError(0xd,"GetWrappedTextHeight: Font not found!\n");
     __restgprlr_29();
     return;
   }
-  pcVar4 = (char *)GetSourceString(param_2);
-  if (((pcVar4 != (char *)0x0) && (*pcVar4 != '\0')) &&
-     ((*pcVar4 == '@' &&
-      (iVar3 = SEH_LocalizeTextMessage(pcVar4 + 1,0xffffffff82165e24,1), iVar3 == 0)))) {
-    GetSourceString(param_2);
+  pcVar6 = GetSourceString(param_2->operands);
+  if (((pcVar6 != (char *)0x0) && (*pcVar6 != '\0')) && (*pcVar6 == '@')) {
+    pcVar7 = "ui string";
+    pcVar6 = SEH_LocalizeTextMessage(pcVar6 + 1,"ui string",LOCMSG_NOERR);
+    if (pcVar6 == (char *)0x0) {
+      pcVar6 = GetSourceString(param_2->operands);
+    }
   }
-  if (piVar1[0xb] == 9) {
-    dVar5 = (double)UI_WrappedTextHeight((double)(float)piVar1[3],(double)(float)piVar1[7]);
-    param_3[1] = (float)dVar5;
+  fVar9 = param_2->operands[1].internals.floatVal;
+  iVar2 = param_2->operands[5].internals.intVal;
+  fVar1 = param_2->operands[3].internals.floatVal;
+  if (iVar2 == 9) {
+    fVar9 = UI_WrappedTextHeight(pcVar6,fVar9,(Font_s *)pcVar7,fVar1,(int)pFVar5,in_r6);
+    (param_3->internals).floatVal = fVar9;
     __restgprlr_29();
     return;
   }
-  dVar5 = (double)UI_WrappedTextHeight((double)(float)piVar1[3],(double)(float)piVar1[7]);
-  param_3[1] = (float)dVar5;
+  fVar9 = UI_WrappedTextHeight(pcVar6,fVar9,(Font_s *)pcVar7,fVar1,(int)pFVar5,-(uint)(iVar2 == 10))
+  ;
+  (param_3->internals).floatVal = fVar9;
   __restgprlr_29();
   return;
 }
@@ -8855,34 +10627,45 @@ void GetWrappedTextHeight(undefined8 param_1,undefined8 param_2,undefined4 *para
 
 // 82599D90  TruncateTextWithEllipsis  (ui/ui_expressions.cpp:7441)
 
-void TruncateTextWithEllipsis(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void TruncateTextWithEllipsis(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
-  double dVar5;
+  LocalClientNum_t LVar2;
+  ScreenPlacement *pSVar3;
+  Font_s *pFVar4;
+  Statement_s *pSVar5;
+  Operand *pOVar6;
+  double dVar7;
   
-  __savegprlr_29();
-  if ((((param_2[0x14] == 4) && (*param_2 == 2)) && (param_2[2] == 0)) &&
-     ((param_2[4] == 1 && (param_2[6] == 0)))) {
-    iVar1 = param_2[3];
-    dVar5 = (double)(float)param_2[5];
-    uVar2 = ScrPlace_GetViewPlacement();
-    uVar3 = UI_GetFontHandle(dVar5,uVar2,iVar1);
-    if ((uVar3 & 0xffffffff) == 0) {
-      Com_PrintError(0xd,0xffffffff8216824c);
+  LVar2 = __savegprlr_29(param_1);
+  if ((((param_2->operandCount == 4) && (param_2->operands[0].dataType == VAL_STRING)) &&
+      (param_2->operands[1].dataType == VAL_INT)) &&
+     ((param_2->operands[2].dataType == VAL_FLOAT && (param_2->operands[3].dataType == VAL_INT)))) {
+    iVar1 = param_2->operands[1].internals.intVal;
+    dVar7 = (double)param_2->operands[2].internals.floatVal;
+    pOVar6 = param_3;
+    pSVar3 = ScrPlace_GetViewPlacement(LVar2);
+    pFVar4 = UI_GetFontHandle(pSVar3,iVar1,(float)dVar7);
+    if (pFVar4 == (Font_s *)0x0) {
+      Com_PrintError(0xd,"TruncateTextWithEllipsis: Font not found! \n");
       __restgprlr_29();
       return;
     }
-    *param_3 = 2;
-    uVar4 = UI_TruncateTextWithEllipsis((double)(float)param_2[5],param_2[1],uVar3);
-    param_3[1] = uVar4;
+    param_3->dataType = VAL_STRING;
+    pSVar5 = (Statement_s *)
+             UI_TruncateTextWithEllipsis
+                       ((char *)param_2->operands[0].internals.function,pFVar4,
+                        param_2->operands[2].internals.floatVal,(int)pOVar6);
+    (param_3->internals).function = pSVar5;
     __restgprlr_29();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82168130);
+  Com_PrintError(0xd,"GetTextWidth: Parameters not legit! (string, int, float, int) \n");
   __restgprlr_29();
   return;
 }
@@ -8890,28 +10673,32 @@ void TruncateTextWithEllipsis(undefined8 param_1,int *param_2,undefined4 *param_
 
 // 82599E68  Select  (ui/ui_expressions.cpp:7468)
 
-void Select(int param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Select(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  operandInternalDataUnion oVar2;
   
   if (*(int *)(param_1 + 0x50) == 3) {
-    iVar1 = getOperandValueInt(param_1);
+    iVar1 = getOperandValueInt((Operand *)param_1);
     if (iVar1 == 0) {
-      *param_2 = *(undefined4 *)(param_1 + 0x10);
-      uVar2 = *(undefined4 *)(param_1 + 0x14);
+      param_2->operands[0].dataType = *(expDataType *)(param_1 + 0x10);
+      oVar2 = *(operandInternalDataUnion *)(param_1 + 0x14);
     }
     else {
-      *param_2 = *(undefined4 *)(param_1 + 8);
-      uVar2 = *(undefined4 *)(param_1 + 0xc);
+      param_2->operands[0].dataType = *(expDataType *)(param_1 + 8);
+      oVar2 = *(operandInternalDataUnion *)(param_1 + 0xc);
     }
-    param_2[1] = uVar2;
+    param_2->operands[0].internals = oVar2;
   }
   else {
-    Com_PrintError(0xd,0xffffffff82168278);
-    param_2[1] = 0;
-    *param_2 = 0;
+    Com_PrintError(0xd,"Select: Expected 3 parameters (condition, va1, val2) \n");
+    param_2->operands[0].internals.intVal = 0;
+    param_2->operands[0].dataType = VAL_INT;
   }
   return;
 }
@@ -8919,48 +10706,53 @@ void Select(int param_1,undefined4 *param_2)
 
 // 82599EF8  GetPrivateMatchLobbyStatus  (ui/ui_expressions.cpp:7492)
 
-void GetPrivateMatchLobbyStatus(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetPrivateMatchLobbyStatus(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined4 uVar4;
-  char cVar5;
-  ulonglong uVar2;
-  ulonglong uVar6;
+  PartyData *pPVar1;
+  int iVar2;
+  GameStateInfo *pGVar3;
+  char *pcVar4;
+  bool bVar6;
+  int iVar5;
   int local_20 [2];
   
-  *param_1 = 2;
-  param_1[1] = &DAT_820068af;
-  uVar1 = Lobby_GetPartyData();
-  iVar3 = Party_InParty();
-  if (iVar3 != 0) {
-    if (*(char *)(DAT_84253bb8 + 0xc) == '\0') {
-      Com_PrintError(0xd,0xffffffff821682f0);
+  *(undefined4 *)param_1 = 2;
+  *(char **)(param_1 + LOCAL_CLIENT_COUNT) = "";
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_InParty(pPVar1);
+  if (iVar2 != 0) {
+    if ((xblive_privatematch->current).enabled == false) {
+      Com_PrintError(0xd,"GetPrivateMatchLobbyStatus: Called while not in private lobby \n");
     }
     else {
-      Party_GetStatus(uVar1,local_20);
-      iVar3 = GameStateInfo_Get();
-      if ((local_20[0] < 1) || (*(int *)(iVar3 + 0x10) == 0)) {
-        cVar5 = Lobby_AreWeHost();
-        if (cVar5 == '\0') {
-          uVar4 = UI_SafeTranslateString(0xffffffff821682c8);
+      Party_GetStatus(pPVar1,local_20);
+      pGVar3 = GameStateInfo_Get();
+      if ((local_20[0] < 1) || (pGVar3->usingIntermission == 0)) {
+        bVar6 = Lobby_AreWeHost();
+        if (bVar6) {
+          iVar5 = Live_HowManyPlayersCanWeHost();
+          iVar2 = (party_maxplayers->current).integer;
+          if (iVar5 < (party_maxplayers->current).integer) {
+            iVar2 = iVar5;
+          }
+          pcVar4 = UI_SafeTranslateString("MPUI_RECOMMENDEDPLAYERS");
+          pcVar4 = UI_ReplaceConversionInt(pcVar4,iVar2);
         }
         else {
-          uVar2 = Live_HowManyPlayersCanWeHost();
-          uVar6 = (ulonglong)*(uint *)(DAT_82b59048 + 0xc);
-          if ((int)uVar2 < (int)*(uint *)(DAT_82b59048 + 0xc)) {
-            uVar6 = uVar2;
-          }
-          uVar1 = UI_SafeTranslateString(0xffffffff821682b0);
-          uVar4 = UI_ReplaceConversionInt(uVar1,uVar6);
+          pcVar4 = UI_SafeTranslateString("MENU_WAITING_FOR_HOST_TO_START");
         }
       }
       else {
-        uVar1 = Party_GetStatus(uVar1,local_20);
-        uVar4 = va(0xffffffff821682e8,uVar1,local_20[0]);
+        Party_GetStatus(pPVar1,local_20);
+        pcVar4 = va("%s: %i");
       }
-      param_1[1] = uVar4;
+      *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar4;
     }
   }
   return;
@@ -8969,62 +10761,52 @@ void GetPrivateMatchLobbyStatus(undefined4 *param_1)
 
 // 8259A020  GetPartyStatus  (ui/ui_expressions.cpp:7535)
 
-void GetPartyStatus(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetPartyStatus(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
-  undefined4 *puVar3;
-  char cVar7;
-  undefined8 uVar2;
-  char *pcVar4;
-  undefined4 uVar5;
-  int iVar6;
+  undefined4 *puVar1;
+  bool bVar5;
+  PartyData *pPVar2;
+  char *pcVar3;
+  int iVar4;
   int local_30 [12];
   
-  puVar3 = (undefined4 *)__savegprlr_29();
-  *puVar3 = 2;
-  cVar7 = Lobby_IsInRunningLobby();
-  if (cVar7 == '\0') {
-    uVar2 = 0xffffffff82b55118;
-    iVar6 = Party_InParty(0xffffffff82b55118);
-    if (iVar6 == 0) {
-      pcVar4 = "";
+  puVar1 = (undefined4 *)__savegprlr_29(param_1,param_2);
+  *puVar1 = 2;
+  bVar5 = Lobby_IsInRunningLobby();
+  if (bVar5) {
+    pPVar2 = Lobby_GetPartyData();
+  }
+  else {
+    iVar4 = Party_InParty(&g_partyData);
+    if (iVar4 == 0) {
+      pcVar3 = "";
       local_30[0] = -1;
       goto LAB_8259a0b4;
     }
+    pPVar2 = &g_partyData;
   }
-  else {
-    uVar2 = Lobby_GetPartyData();
-  }
-  pcVar4 = (char *)Party_GetStatus(uVar2,local_30);
+  pcVar3 = Party_GetStatus(pPVar2,local_30);
   if (0 < local_30[0]) {
-    uVar5 = va(0xffffffff821682e8,pcVar4);
-    puVar3[1] = uVar5;
+    pcVar3 = va("%s: %i");
+    puVar1[1] = pcVar3;
     __restgprlr_29();
     return;
   }
 LAB_8259a0b4:
-  if (*pcVar4 == '\0') {
-    puVar3[1] = &DAT_820068af;
+  if (*pcVar3 != '\0') {
+    Sys_Milliseconds();
+    pcVar3 = va("%s%s");
+    puVar1[1] = pcVar3;
     __restgprlr_29();
     return;
   }
-  iVar6 = Sys_Milliseconds();
-  uVar1 = iVar6 / 500 & 3;
-  if (uVar1 == 1) {
-    uVar2 = 0xffffffff82046284;
-  }
-  else if (uVar1 == 2) {
-    uVar2 = 0xffffffff82046288;
-  }
-  else if (uVar1 == 3) {
-    uVar2 = 0xffffffff820185bc;
-  }
-  else {
-    uVar2 = 0xffffffff8204628c;
-  }
-  uVar5 = va(0xffffffff82013790,pcVar4,uVar2);
-  puVar3[1] = uVar5;
+  puVar1[1] = "";
   __restgprlr_29();
   return;
 }
@@ -9032,77 +10814,100 @@ LAB_8259a0b4:
 
 // 8259A140  GetSearchParams  (ui/ui_expressions.cpp:7641)
 
-void GetSearchParams(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSearchParams(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  char *pcVar1;
   
-  uVar1 = Party_GetLobbySearchParams();
-  param_1[1] = uVar1;
-  *param_1 = 2;
+  pcVar1 = Party_GetLobbySearchParams();
+  *(char **)(param_1 + LOCAL_CLIENT_COUNT) = pcVar1;
+  *(undefined4 *)param_1 = 2;
   return;
 }
 
 
 // 8259A178  GetIsSelectedPlayerFriend  (ui/ui_expressions.cpp:7658)
 
-void GetIsSelectedPlayerFriend(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsSelectedPlayerFriend(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = UI_IsSelectedPlayerFriend();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  bVar2 = UI_IsSelectedPlayerFriend(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259A1B8  GetIsSelectedPlayerGuest  (ui/ui_expressions.cpp:7669)
 
-void GetIsSelectedPlayerGuest(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsSelectedPlayerGuest(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  uVar1 = UI_IsSelectedPlayerGuest();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  bVar2 = UI_IsSelectedPlayerGuest(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259A1F8  GetIsPopupPlayerAway  (ui/ui_expressions.cpp:7680)
 
-void GetIsPopupPlayerAway(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetIsPopupPlayerAway(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  undefined4 uVar3;
+  LocalClientNum_t LVar2;
+  bool bVar5;
+  ulong64 uVar1;
+  PartyData *pPVar3;
   int iVar4;
   
-  uVar1 = __savegprlr_28();
-  *param_2 = 0;
-  cVar5 = Lobby_IsInRunningLobby();
-  if (cVar5 != '\0') {
-    uVar1 = UI_GetSavedPartyMemberXUID(uVar1);
-    uVar2 = Lobby_GetPartyData();
-    uVar3 = PartyUI_IsMemberXuidAway(uVar2,uVar1);
-    param_2[1] = uVar3;
+  LVar2 = __savegprlr_28(param_1);
+  param_2->dataType = VAL_INT;
+  bVar5 = Lobby_IsInRunningLobby();
+  if (bVar5) {
+    uVar1 = UI_GetSavedPartyMemberXUID(LVar2);
+    pPVar3 = Lobby_GetPartyData();
+    iVar4 = PartyUI_IsMemberXuidAway(pPVar3,uVar1);
+    (param_2->internals).intVal = iVar4;
     __restgprlr_28();
     return;
   }
-  iVar4 = Party_InParty(0xffffffff82b55118);
+  iVar4 = Party_InParty(&g_partyData);
   if (iVar4 != 0) {
-    uVar1 = UI_GetSavedPartyMemberXUID(uVar1);
-    uVar3 = PartyUI_IsMemberXuidAway(0xffffffff82b55118,uVar1);
-    param_2[1] = uVar3;
+    uVar1 = UI_GetSavedPartyMemberXUID(LVar2);
+    iVar4 = PartyUI_IsMemberXuidAway(&g_partyData,uVar1);
+    (param_2->internals).intVal = iVar4;
     __restgprlr_28();
     return;
   }
-  param_2[1] = 0;
+  (param_2->internals).intVal = 0;
   __restgprlr_28();
   return;
 }
@@ -9110,35 +10915,40 @@ void GetIsPopupPlayerAway(undefined8 param_1,undefined4 *param_2)
 
 // 8259A290  GetIsSelectedPlayerAway  (ui/ui_expressions.cpp:7705)
 
-void GetIsSelectedPlayerAway(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetIsSelectedPlayerAway(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  undefined4 uVar3;
+  LocalClientNum_t LVar2;
+  bool bVar5;
+  ulong64 uVar1;
+  PartyData *pPVar3;
   int iVar4;
   
-  uVar1 = __savegprlr_28();
-  *param_2 = 0;
-  cVar5 = Lobby_IsInRunningLobby();
-  if (cVar5 != '\0') {
-    uVar1 = UI_GetSelectedPartyMemberXUID(uVar1);
-    uVar2 = Lobby_GetPartyData();
-    uVar3 = PartyUI_IsMemberXuidAway(uVar2,uVar1);
-    param_2[1] = uVar3;
+  LVar2 = __savegprlr_28(param_1);
+  param_2->dataType = VAL_INT;
+  bVar5 = Lobby_IsInRunningLobby();
+  if (bVar5) {
+    uVar1 = UI_GetSelectedPartyMemberXUID(LVar2);
+    pPVar3 = Lobby_GetPartyData();
+    iVar4 = PartyUI_IsMemberXuidAway(pPVar3,uVar1);
+    (param_2->internals).intVal = iVar4;
     __restgprlr_28();
     return;
   }
-  iVar4 = Party_InParty(0xffffffff82b55118);
+  iVar4 = Party_InParty(&g_partyData);
   if (iVar4 != 0) {
-    uVar1 = UI_GetSelectedPartyMemberXUID(uVar1);
-    uVar3 = PartyUI_IsMemberXuidAway(0xffffffff82b55118,uVar1);
-    param_2[1] = uVar3;
+    uVar1 = UI_GetSelectedPartyMemberXUID(LVar2);
+    iVar4 = PartyUI_IsMemberXuidAway(&g_partyData,uVar1);
+    (param_2->internals).intVal = iVar4;
     __restgprlr_28();
     return;
   }
-  param_2[1] = 0;
+  (param_2->internals).intVal = 0;
   __restgprlr_28();
   return;
 }
@@ -9146,157 +10956,144 @@ void GetIsSelectedPlayerAway(undefined8 param_1,undefined4 *param_2)
 
 // 8259A328  GetWaitPopupStatus  (ui/ui_expressions.cpp:7745)
 
-void GetWaitPopupStatus(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetWaitPopupStatus(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  bool bVar1;
-  uint uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  char cVar9;
-  char cVar10;
-  int iVar7;
-  int iVar8;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  uint uVar3;
+  bool bVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  char *pcVar8;
   
-  uVar3 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1e4c,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1e4c,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1e4d,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1e4d,
+                    0,"%s");
   }
-  uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-  uVar5 = GetSourceInt(param_2);
-  if (6 < (uVar5 & 0xffffffff)) goto LAB_8259a628;
-  bVar1 = (int)uVar5 != 0;
-  if (uVar5 == 1 && bVar1) {
-    uVar6 = UI_SafeTranslateString(0xffffffff821683f4);
-    cVar9 = LiveStorage_IsWaitingOnStats(uVar3);
-    iVar8 = 0x22b;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  uVar3 = GetSourceInt((Operand *)uVar6);
+  if (6 < uVar3) goto LAB_8259a628;
+  if (uVar3 == 1) {
+    UI_SafeTranslateString("MENU_POPUP_STATS");
+    bVar4 = LiveStorage_IsWaitingOnStats(LVar1);
 LAB_8259a414:
-    if (cVar9 != '\0') goto LAB_8259a41c;
-    uVar3 = UI_SafeTranslateString(0xffffffff8216837c);
+    if (bVar4 != false) goto LAB_8259a41c;
+    UI_SafeTranslateString("MENU_POPUP_COMPLETE");
   }
   else {
-    if (uVar5 == 2 && bVar1) {
-      uVar6 = UI_SafeTranslateString(0xffffffff821683dc);
-      cVar9 = LiveStorage_IsTimeSynced();
-      if (cVar9 == '\0') {
+    if (uVar3 == 2) {
+      UI_SafeTranslateString("MENU_POPUP_CHALLENGES");
+      bVar4 = LiveStorage_IsTimeSynced();
+      if (bVar4) {
+        bVar5 = LiveStorage_ShouldReadPeriodicChallenges(iVar2);
+        bVar4 = false;
+        if (!bVar5) goto LAB_8259a414;
+      }
 LAB_8259a40c:
-        cVar9 = '\x01';
-      }
-      else {
-        cVar10 = LiveStorage_ShouldReadPeriodicChallenges(uVar4);
-        cVar9 = '\0';
-        if (cVar10 != '\0') goto LAB_8259a40c;
-      }
-LAB_8259a410:
-      iVar8 = 0x14d;
+      bVar4 = true;
       goto LAB_8259a414;
     }
-    if (uVar5 == 3 && bVar1) {
-      uVar6 = UI_SafeTranslateString(0xffffffff821683c0);
-      iVar8 = Live_IsWaitingForConnection(uVar4);
-      if ((iVar8 == 0) && (cVar9 = LiveStorage_DoWeHaveFFotD(), cVar9 != '\0')) {
-        cVar10 = LiveStorage_CheckingRemoteConsoleChallenge();
-        cVar9 = '\0';
-        if (cVar10 != '\0') goto LAB_8259a4f8;
+    if (uVar3 == 3) {
+      UI_SafeTranslateString("XBOXLIVE_POPUP_CONNECTION");
+      iVar2 = Live_IsWaitingForConnection(iVar2);
+      if ((iVar2 == 0) && (bVar4 = LiveStorage_DoWeHaveFFotD(), bVar4)) {
+        bVar5 = LiveStorage_CheckingRemoteConsoleChallenge();
+        bVar4 = false;
+        if (!bVar5) goto LAB_8259a414;
       }
-      else {
-LAB_8259a4f8:
-        cVar9 = '\x01';
-      }
-      iVar8 = 0x309;
+      bVar4 = true;
       goto LAB_8259a414;
     }
-    if (uVar5 == 4 && bVar1) {
-      uVar6 = UI_SafeTranslateString(0xffffffff821683a8);
-      iVar8 = 999;
+    if (uVar3 == 4) {
+      UI_SafeTranslateString("MENU_POPUP_ACCEPTINVITE");
     }
     else {
-      if (uVar5 == 5 && bVar1) goto LAB_8259a628;
-      if (!bVar1) {
-        uVar6 = UI_SafeTranslateString(0xffffffff82168408);
-        cVar9 = LiveStorage_IsWaitingOnPlaylists(uVar3);
-        if (cVar9 == '\0') {
-          cVar10 = LiveStorage_DoWeHaveFFotD();
-          cVar9 = '\0';
-          if (cVar10 != '\0') goto LAB_8259a410;
+      if (uVar3 == 5) goto LAB_8259a628;
+      if (uVar3 == 0) {
+        UI_SafeTranslateString("MENU_POPUP_PLAYLISTS");
+        bVar4 = LiveStorage_IsWaitingOnPlaylists(LVar1);
+        if (!bVar4) {
+          bVar5 = LiveStorage_DoWeHaveFFotD();
+          bVar4 = false;
+          if (bVar5) goto LAB_8259a414;
         }
         goto LAB_8259a40c;
       }
-      uVar5 = Live_SyncOnlineDataFlags(uVar4);
-      if (((uVar5 & 0x138) == 0) && ((uVar5 & 4) != 0)) {
-        uVar6 = UI_SafeTranslateString(0xffffffff82168408);
-        iVar8 = 0;
+      uVar3 = Live_SyncOnlineDataFlags(iVar2);
+      if (((uVar3 & 0x138) == 0) && ((uVar3 & 4) != 0)) {
+        UI_SafeTranslateString("MENU_POPUP_PLAYLISTS");
       }
       else {
-        uVar6 = UI_SafeTranslateString(0xffffffff82168390);
-        iVar8 = 0;
+        UI_SafeTranslateString("MENU_POPUP_ONLINEDATA");
       }
     }
 LAB_8259a41c:
-    iVar7 = Sys_Milliseconds();
-    uVar2 = (iVar7 + iVar8) / 500 & 3;
-    if (uVar2 == 1) {
-      uVar3 = 0xffffffff82046284;
-    }
-    else if (uVar2 == 2) {
-      uVar3 = 0xffffffff82046288;
-    }
-    else if (uVar2 == 3) {
-      uVar3 = 0xffffffff820185bc;
-    }
-    else {
-      uVar3 = 0xffffffff8204628c;
-    }
+    Sys_Milliseconds();
   }
-  uVar5 = (ulonglong)DAT_83f62e48;
-  if (3 < uVar5) {
-    MyAssertHandler(0xffffffff82164aa0,0x1ecd,0,0xffffffff82168330,uVar5,4);
-    uVar5 = (ulonglong)DAT_83f62e48;
+  if (3 < s_waitPopupStringIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1ecd,
+                    0,
+                    "s_waitPopupStringIndex doesn\'t index WAIT_POPUP_STRINGS\n\t%i not in [0, %i)")
+    ;
   }
-  DAT_83f62e48 = (int)uVar5 + 1U & 3;
-  uVar5 = (uVar5 & 0x3ffffff) * 0x40 - 0x7c09f5b8;
-  Com_sprintf(uVar5,0x40,0xffffffff8202e2f4,uVar6,uVar3);
-  if ((uVar5 & 0xffffffff) == 0) {
-    uVar5 = 0xffffffff820068af;
+  pcVar8 = s_waitPopupStrings[s_waitPopupStringIndex];
+  s_waitPopupStringIndex = s_waitPopupStringIndex + 1 & 3;
+  uVar3 = Com_sprintf(pcVar8,0x40,"%s %s");
+  if ((char (*) [64])pcVar8 == (char (*) [64])0x0) {
+    pcVar8 = "";
   }
-  ((undefined4 *)param_3)[1] = (int)uVar5;
-  *(undefined4 *)param_3 = 2;
+  ((undefined4 *)uVar7)[1] = pcVar8;
+  *(undefined4 *)uVar7 = 2;
 LAB_8259a628:
-  __restgprlr_26();
+  __restgprlr_26(uVar3);
   return;
 }
 
 
 // 8259A630  IsWaitingForOnlineServices  (ui/ui_expressions.cpp:7897)
 
-void IsWaitingForOnlineServices(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsWaitingForOnlineServices(LocalClientNum_t param_1,Operand *param_2)
 
 {
+  operandInternalDataUnion oVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  undefined8 uVar1;
-  char cVar4;
-  longlong lVar2;
-  int local_30 [12];
+  bool bVar4;
+  LocalClientNum_t local_30 [12];
   
-  iVar3 = __savegprlr_28();
-  uVar1 = CL_ControllerIndexFromClientNum();
-  *param_2 = 0;
-  cVar4 = CL_DoesControllerIndexHaveALocalClientNum(uVar1,local_30);
-  if ((cVar4 != '\0') && (iVar3 == local_30[0])) {
-    lVar2 = Live_IsWaitingForOnlineServices(uVar1);
-    param_2[1] = (uint)(lVar2 != 0);
-    cVar4 = LiveStorage_CheckingRemoteConsoleChallenge();
-    param_2[1] = (uint)(cVar4 != '\0') | param_2[1];
+  LVar2 = __savegprlr_28(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  param_2->dataType = VAL_INT;
+  bVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_30);
+  if ((bVar4) && (LVar2 == local_30[0])) {
+    iVar3 = Live_IsWaitingForOnlineServices(iVar3);
+    oVar1.intVal._0_3_ = 0;
+    oVar1.intVal._3_1_ = iVar3 != 0;
+    param_2->internals = oVar1;
+    bVar4 = LiveStorage_CheckingRemoteConsoleChallenge();
+    (param_2->internals).intVal = (uint)bVar4 | (param_2->internals).intVal;
     __restgprlr_28();
     return;
   }
-  param_2[1] = 0;
-  Com_PrintError(0xd,0xffffffff82168420);
+  (param_2->internals).intVal = 0;
+  Com_PrintError(0xd,"Error: cannot retrieve controllerIndex from clientNum in this menu.\n");
   __restgprlr_28();
   return;
 }
@@ -9304,26 +11101,30 @@ void IsWaitingForOnlineServices(undefined8 param_1,undefined4 *param_2)
 
 // 8259A6C8  IsUserSignedInForVault  (ui/ui_expressions.cpp:7921)
 
-void IsUserSignedInForVault(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsUserSignedInForVault(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined4 uVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar3;
   
-  __savegprlr_29();
-  uVar1 = CL_ControllerIndexFromClientNum();
-  *param_2 = 0;
-  param_2[1] = 0;
-  cVar2 = Live_IsUserSignedIn();
-  if (cVar2 != '\0') {
-    cVar2 = Live_UserIsGuest(uVar1);
-    uVar3 = 1;
-    if (cVar2 == '\0') goto LAB_8259a718;
+  LVar1 = __savegprlr_29(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar3 = Live_IsUserSignedIn(iVar2);
+  if (bVar3) {
+    bVar3 = Live_UserIsGuest(iVar2);
+    iVar2 = 1;
+    if (!bVar3) goto LAB_8259a718;
   }
-  uVar3 = 0;
+  iVar2 = 0;
 LAB_8259a718:
-  param_2[1] = uVar3;
+  (param_2->internals).intVal = iVar2;
   __restgprlr_29();
   return;
 }
@@ -9331,155 +11132,198 @@ LAB_8259a718:
 
 // 8259A728  IsUserSignedInForCommerce  (ui/ui_expressions.cpp:7939)
 
-void IsUserSignedInForCommerce(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsUserSignedInForCommerce(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  CL_ControllerIndexFromClientNum();
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = Live_IsUserSignedInToLive();
-  param_2[1] = uVar1 & 0xff;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar3 = Live_IsUserSignedInToLive(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259A770  UserCanPlayOnline  (ui/ui_expressions.cpp:7962)
 
-void UserCanPlayOnline(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void UserCanPlayOnline(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  undefined1 auStack_20 [16];
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
+  int aiStack_20 [4];
   
-  uVar1 = CL_ControllerIndexFromClientNum();
-  *param_2 = 0;
-  uVar2 = Live_CanUserPlayOnline(uVar1,auStack_20);
-  param_2[1] = uVar2 & 0xff;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  param_2->dataType = VAL_INT;
+  bVar3 = Live_CanUserPlayOnline(iVar2,aiStack_20);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259A7B8  CanUserAccessOnlineVault  (ui/ui_expressions.cpp:7973)
 
-void CanUserAccessOnlineVault(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CanUserAccessOnlineVault(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  undefined1 auStack_20 [16];
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
+  int aiStack_20 [4];
   
-  uVar1 = CL_ControllerIndexFromClientNum();
-  *param_2 = 0;
-  uVar2 = Live_CanUserAccessOnlineVault(uVar1,auStack_20);
-  param_2[1] = uVar2 & 0xff;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  param_2->dataType = VAL_INT;
+  bVar3 = Live_CanUserAccessOnlineVault(iVar2,aiStack_20);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259A800  CoopHasRequiredOnlineFiles  (ui/ui_expressions.cpp:7984)
 
-void CoopHasRequiredOnlineFiles(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void CoopHasRequiredOnlineFiles(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  int iVar1;
+  uint uVar2;
   
-  CL_ControllerIndexFromClientNum();
-  uVar1 = Live_SyncOnlineDataFlags();
-  *param_2 = 0;
-  param_2[1] = (uint)LZCOUNT(uVar1 & 0x118) >> 5;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  uVar2 = Live_SyncOnlineDataFlags(iVar1);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = (uint)LZCOUNT(uVar2 & 0x118) >> 5;
   return;
 }
 
 
 // 8259A850  GetNATType  (ui/ui_expressions.cpp:7993)
 
-void GetNATType(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetNATType(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  uVar1 = Live_GetLocalNatType();
-  param_1[1] = uVar1;
+  *(undefined4 *)param_1 = 0;
+  iVar1 = Live_GetLocalNatType();
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = iVar1;
   return;
 }
 
 
 // 8259A888  GetAdjustedSafeareaHorizontal  (ui/ui_expressions.cpp:8004)
 
-void GetAdjustedSafeareaHorizontal(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetAdjustedSafeareaHorizontal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 local_20;
-  undefined1 auStack_1c [12];
+  float local_20;
+  float afStack_1c [3];
   
-  GamerProfile_GetSafeareaAdjustments(&local_20,auStack_1c);
-  param_1[1] = local_20;
-  *param_1 = 1;
+  GamerProfile_GetSafeareaAdjustments(&local_20,afStack_1c);
+  *(float *)(param_1 + LOCAL_CLIENT_COUNT) = local_20;
+  *(undefined4 *)param_1 = 1;
   return;
 }
 
 
 // 8259A8D0  GetAdjustedSafeareaVertical  (ui/ui_expressions.cpp:8021)
 
-void GetAdjustedSafeareaVertical(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetAdjustedSafeareaVertical(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 local_20;
-  undefined1 auStack_1c [12];
+  float local_20;
+  float afStack_1c [3];
   
-  GamerProfile_GetSafeareaAdjustments(auStack_1c,&local_20);
-  param_1[1] = local_20;
-  *param_1 = 1;
+  GamerProfile_GetSafeareaAdjustments(afStack_1c,&local_20);
+  *(float *)(param_1 + LOCAL_CLIENT_COUNT) = local_20;
+  *(undefined4 *)param_1 = 1;
   return;
 }
 
 
 // 8259A918  GetLocalizedNATType  (ui/ui_expressions.cpp:8037)
 
-void GetLocalizedNATType(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetLocalizedNATType(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
-  int iVar3;
-  char *pcVar4;
+  undefined4 *puVar1;
+  int iVar2;
+  char *pcVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  *puVar2 = 2;
-  uVar1 = Live_GetLocalNatType();
-  iVar3 = (int)uVar1;
-  if (iVar3 == 1) {
-    uVar1 = 0xffffffff8216848c;
+  puVar1 = (undefined4 *)__savegprlr_29(param_1,param_2);
+  *puVar1 = 2;
+  iVar2 = Live_GetLocalNatType();
+  if (iVar2 == 1) {
+    pcVar3 = "NETWORK_OPEN";
   }
-  else if (iVar3 == 2) {
-    uVar1 = 0xffffffff8216849c;
+  else if (iVar2 == 2) {
+    pcVar3 = "NETWORK_MODERATE";
   }
   else {
-    if (iVar3 != 3) {
-      if (DAT_84013128 == 0) {
-        uVar1 = va(0xffffffff821684cc,uVar1);
-        MyAssertHandler(0xffffffff82164aa0,0x1f7b,0,uVar1);
+    if (iVar2 != 3) {
+      if (alwaysfails == 0) {
+        pcVar3 = va("Unhandled case %i in GetLocalizedNATType()\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x1f7b,0,pcVar3);
       }
-      pcVar4 = "Unknown NAT";
+      pcVar3 = "Unknown NAT";
       goto LAB_8259a9d8;
     }
-    uVar1 = 0xffffffff821684b0;
+    pcVar3 = "NETWORK_STRICT";
   }
-  pcVar4 = (char *)SEH_LocalizeTextMessage(uVar1,0xffffffff82165e24,1);
-  if (pcVar4 == (char *)0x0) {
-    pcVar4 = "";
+  pcVar3 = SEH_LocalizeTextMessage(pcVar3,"ui string",LOCMSG_NOERR);
+  if (pcVar3 == (char *)0x0) {
+    pcVar3 = "";
   }
 LAB_8259a9d8:
-  if (pcVar4 == (char *)0x0) {
-    pcVar4 = "";
+  if (pcVar3 == (char *)0x0) {
+    pcVar3 = "";
   }
-  puVar2[1] = pcVar4;
-  if (pcVar4 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1f87,0,0xffffffff82000f98,0xffffffff82168468);
+  puVar1[1] = pcVar3;
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1f87,
+                    0,"%s");
   }
   __restgprlr_29();
   return;
@@ -9488,30 +11332,40 @@ LAB_8259a9d8:
 
 // 8259AA20  IsAirburstWeapon  (ui/ui_expressions.cpp:8077)
 
-void IsAirburstWeapon(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void IsAirburstWeapon(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  uint uVar3;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1f91,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1f91,
+                    0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1f94,0,0xffffffff82000f98,0xffffffff82002798);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if (pcVar2 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1f94,
+                    0,"%s");
   }
-  uVar3 = BG_GetAlternateWeapon(*(undefined4 *)(iVar2 + 0x370),0);
-  if (*(char *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x76b) != '\0') {
-    if ((*(int *)(iVar2 + 0x7a708) == 0) || (*(int *)(iVar2 + 0xa08) == 0x7ff)) {
-      Operand_SetBool(param_2,1);
-      __restgprlr_28();
-      return;
-    }
+  WVar3 = BG_GetAlternateWeapon((pcVar2->predictedPlayerState).weapCommon.weapon,false);
+  if ((bg_weaponDefs[WVar3.data & 0xff]->isAirburstWeapon != false) &&
+     ((pcVar2->inKillCam == 0 || ((pcVar2->predictedPlayerState).killCamEntity == 0x7ff)))) {
+    Operand_SetBool((Operand *)uVar4,1);
+    __restgprlr_28();
+    return;
   }
-  Operand_SetBool(param_2,0);
+  Operand_SetBool((Operand *)uVar4,0);
   __restgprlr_28();
   return;
 }
@@ -9519,25 +11373,38 @@ void IsAirburstWeapon(undefined8 param_1,ulonglong param_2)
 
 // 8259AB08  GetAirburstMeters  (ui/ui_expressions.cpp:8093)
 
-void GetAirburstMeters(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetAirburstMeters(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  uint uVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
   
-  __savegprlr_28();
-  iVar1 = CG_GetLocalClientGlobals();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1fa2,0,0xffffffff82000f98,0xffffffff82002798);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_28(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (pcVar3 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1fa2,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1fa6,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1fa6,
+                    0,"%s");
   }
-  puVar2 = (undefined4 *)param_2;
-  *puVar2 = 1;
-  puVar2[1] = 0;
-  if (*(uint *)(iVar1 + 0x4e8) != 0) {
-    puVar2[1] = (float)*(uint *)(iVar1 + 0x4e8) * 0.0254;
+  puVar5 = (undefined4 *)uVar4;
+  *puVar5 = 1;
+  puVar5[1] = 0;
+  uVar1 = (pcVar3->predictedPlayerState).airburstMarkDistance;
+  if (uVar1 != 0) {
+    puVar5[1] = (float)uVar1 * 0.0254;
   }
   __restgprlr_28();
   return;
@@ -9546,26 +11413,36 @@ void GetAirburstMeters(undefined8 param_1,ulonglong param_2)
 
 // 8259ABC8  GetCrosshairTraceMeters  (ui/ui_expressions.cpp:8115)
 
-void GetCrosshairTraceMeters(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void GetCrosshairTraceMeters(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1fb4,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar3 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1fb4,
+                    0,"%s");
   }
-  puVar3 = (undefined4 *)param_2;
-  *puVar3 = 1;
-  puVar3[1] = 0;
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x1fbc,0,0xffffffff82000f98,0xffffffff82002798);
+  puVar4 = (undefined4 *)uVar3;
+  *puVar4 = 1;
+  puVar4[1] = 0;
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if (pcVar2 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x1fbc,
+                    0,"%s");
   }
-  if (*(uint *)(iVar2 + 0x76e80) != 0) {
-    puVar3[1] = (float)*(uint *)(iVar2 + 0x76e80) * 0.0254;
+  if (pcVar2->crosshairTraceDistance != 0) {
+    puVar4[1] = (float)pcVar2->crosshairTraceDistance * 0.0254;
   }
   __restgprlr_28();
   return;
@@ -9574,38 +11451,48 @@ void GetCrosshairTraceMeters(undefined8 param_1,ulonglong param_2)
 
 // 8259AC98  GetFacebookStatusText  (ui/ui_expressions.cpp:8133)
 
-void GetFacebookStatusText(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFacebookStatusText(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = Facebook_GetUIString();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)Facebook_GetUIString(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259AD00  IsFacebookLoggedIn  (ui/ui_expressions.cpp:8146)
 
-void IsFacebookLoggedIn(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsFacebookLoggedIn(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = Facebook_IsRegistered();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = Facebook_IsRegistered(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9613,19 +11500,24 @@ void IsFacebookLoggedIn(undefined8 param_1,undefined4 *param_2)
 
 // 8259AD60  IsFacebookChecking  (ui/ui_expressions.cpp:8164)
 
-void IsFacebookChecking(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsFacebookChecking(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = Facebook_IsChecking();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = Facebook_IsChecking(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9633,27 +11525,34 @@ void IsFacebookChecking(undefined8 param_1,undefined4 *param_2)
 
 // 8259ADC0  IsFacebookAllowed  (ui/ui_expressions.cpp:8182)
 
-void IsFacebookAllowed(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsFacebookAllowed(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  __savegprlr_29();
-  *param_3 = 0;
-  uVar1 = CL_ControllerIndexFromClientNum();
-  iVar3 = 0;
-  if (((param_2 & 0xffffffff) != 0) && (*(int *)param_2 == 0)) {
-    iVar3 = ((int *)param_2)[1];
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  param_3->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  iVar5 = 0;
+  if (((uVar4 & 0xffffffff) != 0) && (*(int *)uVar4 == 0)) {
+    iVar5 = ((int *)uVar4)[1];
   }
-  cVar2 = Facebook_IsAllowed(uVar1,iVar3);
-  if (cVar2 != '\0') {
-    param_3[1] = 1;
+  bVar3 = Facebook_IsAllowed(iVar2,iVar5);
+  if (bVar3) {
+    (param_3->internals).intVal = 1;
     __restgprlr_29();
     return;
   }
-  param_3[1] = 0;
+  (param_3->internals).intVal = 0;
   __restgprlr_29();
   return;
 }
@@ -9661,57 +11560,72 @@ void IsFacebookAllowed(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
 
 // 8259AE28  GetFacebookHelpText  (ui/ui_expressions.cpp:8210)
 
-void GetFacebookHelpText(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFacebookHelpText(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = Facebook_GetHelpString();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)Facebook_GetHelpString(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259AE90  GetFacebookMenuText  (ui/ui_expressions.cpp:8223)
 
-void GetFacebookMenuText(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFacebookMenuText(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = Facebook_GetMenuString();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)Facebook_GetMenuString(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259AEF8  GetFacebookIsPosting  (ui/ui_expressions.cpp:8236)
 
-void GetFacebookIsPosting(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFacebookIsPosting(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = Facebook_IsPosting();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = Facebook_IsPosting(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9719,19 +11633,24 @@ void GetFacebookIsPosting(undefined8 param_1,undefined4 *param_2)
 
 // 8259AF58  IsEliteClanAllowed  (ui/ui_expressions.cpp:8256)
 
-void IsEliteClanAllowed(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsEliteClanAllowed(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_IsAllowed();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_IsAllowed(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9739,19 +11658,24 @@ void IsEliteClanAllowed(undefined8 param_1,undefined4 *param_2)
 
 // 8259AFB8  IsEntitlementsAllowed  (ui/ui_expressions.cpp:8276)
 
-void IsEntitlementsAllowed(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsEntitlementsAllowed(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = Entitlements_IsAllowed();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = Entitlements_IsAllowed(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9759,19 +11683,24 @@ void IsEntitlementsAllowed(undefined8 param_1,undefined4 *param_2)
 
 // 8259B018  IsUserGroupsAllowed  (ui/ui_expressions.cpp:8296)
 
-void IsUserGroupsAllowed(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsUserGroupsAllowed(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = UserGroups_IsAllowed();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = UserGroups_IsAllowed(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9779,19 +11708,24 @@ void IsUserGroupsAllowed(undefined8 param_1,undefined4 *param_2)
 
 // 8259B078  FacebookIsPlatformFriend  (ui/ui_expressions.cpp:8316)
 
-void FacebookIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void FacebookIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = Facebook_IsPlatformFriend();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = Facebook_IsPlatformFriend(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9799,19 +11733,24 @@ void FacebookIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
 
 // 8259B0D8  EliteClanIsPlatformFriend  (ui/ui_expressions.cpp:8336)
 
-void EliteClanIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_IsPlatformFriend();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_IsPlatformFriend(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9819,19 +11758,24 @@ void EliteClanIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
 
 // 8259B138  MeetPlayerIsPlatformFriend  (ui/ui_expressions.cpp:8356)
 
-void MeetPlayerIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void MeetPlayerIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = MeetPlayer_IsPlatformFriend();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = MeetPlayer_IsPlatformFriend(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9839,19 +11783,24 @@ void MeetPlayerIsPlatformFriend(undefined8 param_1,undefined4 *param_2)
 
 // 8259B198  EliteClanSelectedIsMe  (ui/ui_expressions.cpp:8376)
 
-void EliteClanSelectedIsMe(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanSelectedIsMe(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_SelectedIsMe();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_SelectedIsMe(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9859,19 +11808,24 @@ void EliteClanSelectedIsMe(undefined8 param_1,undefined4 *param_2)
 
 // 8259B1F8  EliteClanIsMe  (ui/ui_expressions.cpp:8396)
 
-void EliteClanIsMe(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanIsMe(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_IsMe();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_IsMe(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9879,19 +11833,24 @@ void EliteClanIsMe(undefined8 param_1,undefined4 *param_2)
 
 // 8259B258  EliteClanIsLeader  (ui/ui_expressions.cpp:8416)
 
-void EliteClanIsLeader(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanIsLeader(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_IsLeader();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_IsLeader(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9899,76 +11858,96 @@ void EliteClanIsLeader(undefined8 param_1,undefined4 *param_2)
 
 // 8259B2B8  EliteClanGetName  (ui/ui_expressions.cpp:8436)
 
-void EliteClanGetName(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanGetName(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = EliteClan_GetClanName();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)EliteClan_GetClanName(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259B320  EliteClanGetHelp  (ui/ui_expressions.cpp:8450)
 
-void EliteClanGetHelp(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanGetHelp(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = EliteClan_GetHelp();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)EliteClan_GetHelp(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259B388  EliteClanGetMOTD  (ui/ui_expressions.cpp:8465)
 
-void EliteClanGetMOTD(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanGetMOTD(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = EliteClan_GetClanNMOTD();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)EliteClan_GetClanNMOTD(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259B3F0  EliteClanIsMember  (ui/ui_expressions.cpp:8479)
 
-void EliteClanIsMember(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanIsMember(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = EliteClan_IsMember();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = EliteClan_IsMember(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -9976,30 +11955,39 @@ void EliteClanIsMember(undefined8 param_1,undefined4 *param_2)
 
 // 8259B450  EliteClanGetIsEmblemOk  (ui/ui_expressions.cpp:8499)
 
-void EliteClanGetIsEmblemOk(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void EliteClanGetIsEmblemOk(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
   return;
 }
 
 
 // 8259B460  FacebookFriendsShowNext  (ui/ui_expressions.cpp:8506)
 
-void FacebookFriendsShowNext(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void FacebookFriendsShowNext(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = FacebookFriends_ShowNext();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = FacebookFriends_ShowNext(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -10007,19 +11995,24 @@ void FacebookFriendsShowNext(undefined8 param_1,undefined4 *param_2)
 
 // 8259B4C0  FacebookFriendsShowPrev  (ui/ui_expressions.cpp:8526)
 
-void FacebookFriendsShowPrev(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void FacebookFriendsShowPrev(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  char cVar1;
+  int iVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  cVar1 = FacebookFriends_ShowPrev();
-  if (cVar1 == '\0') {
-    param_2[1] = 0;
+  param_2->dataType = VAL_INT;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = FacebookFriends_ShowPrev(iVar1);
+  if (bVar2) {
+    (param_2->internals).intVal = 1;
   }
   else {
-    param_2[1] = 1;
+    (param_2->internals).intVal = 0;
   }
   return;
 }
@@ -10027,57 +12020,66 @@ void FacebookFriendsShowPrev(undefined8 param_1,undefined4 *param_2)
 
 // 8259B520  ShowFriendPlayerCard  (ui/ui_expressions.cpp:8546)
 
-void ShowFriendPlayerCard(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void ShowFriendPlayerCard(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_27();
-  *param_3 = 0;
-  if ((param_2[0x14] != 1) || (*param_2 != 0)) {
-    Com_PrintError(0xd,0xffffffff821684f8);
+  LVar1 = __savegprlr_27(param_1);
+  param_3->dataType = VAL_INT;
+  if ((param_2->operandCount != 1) || (param_2->operands[0].dataType != VAL_INT)) {
+    Com_PrintError(0xd,"ShowFriendPlayerCard: Invalid Parameters (int index) \n");
     __restgprlr_27();
     return;
   }
-  uVar2 = CL_ControllerIndexFromClientNum();
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168568);
-  if (cVar3 != '\0') {
-    cVar3 = FriendsMenu_IsSlotSelected(uVar2,param_2[1]);
-    param_3[1] = (uint)(cVar3 != '\0');
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"page_friends");
+  if (bVar3) {
+    bVar3 = FriendsMenu_IsSlotSelected(iVar2,param_2->operands[0].internals.intVal);
+    (param_3->internals).function =
+         (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)));
     __restgprlr_27();
     return;
   }
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff8216855c);
-  if (cVar3 != '\0') {
-    cVar3 = MeetPlayer_IsSlotSelected(uVar2,param_2[1]);
-    param_3[1] = (uint)(cVar3 != '\0');
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"page_recent");
+  if (bVar3) {
+    bVar3 = MeetPlayer_IsSlotSelected(iVar2,param_2->operands[0].internals.intVal);
+    (param_3->internals).function =
+         (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)));
     __restgprlr_27();
     return;
   }
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168550);
-  if (cVar3 != '\0') {
-    cVar3 = LiveParty_IsSlotSelected(uVar2,param_2[1]);
-    param_3[1] = (uint)(cVar3 != '\0');
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"page_party");
+  if (bVar3) {
+    bVar3 = LiveParty_IsSlotSelected(iVar2,param_2->operands[0].internals.intVal);
+    (param_3->internals).function =
+         (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)));
     __restgprlr_27();
     return;
   }
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168540);
-  if (cVar3 != '\0') {
-    cVar3 = FacebookFriends_IsSlotSelected(uVar2,param_2[1]);
-    param_3[1] = (uint)(cVar3 != '\0');
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"page_facebook");
+  if (bVar3) {
+    bVar3 = FacebookFriends_IsSlotSelected(iVar2,param_2->operands[0].internals.intVal);
+    (param_3->internals).function =
+         (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)));
     __restgprlr_27();
     return;
   }
-  cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168530);
-  if (cVar3 != '\0') {
-    cVar3 = EliteClan_IsSlotSelected(uVar2,param_2[1]);
-    param_3[1] = (uint)(cVar3 != '\0');
+  bVar3 = Menu_IsMenuOpenAndVisible(LVar1,"page_elite_clan");
+  if (bVar3) {
+    bVar3 = EliteClan_IsSlotSelected(iVar2,param_2->operands[0].internals.intVal);
+    (param_3->internals).function =
+         (Statement_s *)((int)bVar3 + (-(uint)(bVar3 == 0) - (bVar3 + -1)));
     __restgprlr_27();
     return;
   }
-  param_3[1] = 0;
+  (param_3->internals).intVal = 0;
   __restgprlr_27();
   return;
 }
@@ -10085,82 +12087,89 @@ void ShowFriendPlayerCard(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 8259B6C8  GetFriendPlayerCardPresence  (ui/ui_expressions.cpp:8595)
 
-void GetFriendPlayerCardPresence(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetFriendPlayerCardPresence(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined1 *puVar4;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  bool bVar5;
+  char *pcVar4;
   
-  uVar2 = __savegprlr_28();
-  *param_3 = 2;
-  if ((param_2[0x14] == 1) && (*param_2 == 0)) {
-    uVar3 = CL_ControllerIndexFromClientNum();
-    iVar1 = param_2[1];
-    cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff82168568);
-    if (cVar5 == '\0') {
-      cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff8216855c);
-      if (cVar5 == '\0') {
-        cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff82168550);
-        if (cVar5 == '\0') {
-          cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff82168540);
-          if (cVar5 == '\0') {
-            cVar5 = Menu_IsMenuOpenAndVisible(uVar2,0xffffffff82168530);
-            if (cVar5 == '\0') {
-              if (DAT_84013128 == 0) {
-                MyAssertHandler(0xffffffff82164aa0,0x21bf,0,0xffffffff821685b8);
+  LVar2 = __savegprlr_28(param_1);
+  param_3->dataType = VAL_STRING;
+  if ((param_2->operandCount == 1) && (param_2->operands[0].dataType == VAL_INT)) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+    iVar1 = param_2->operands[0].internals.intVal;
+    bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"page_friends");
+    if (bVar5) {
+      pcVar4 = FriendsMenu_GetPresenceForSlot(iVar3,iVar1);
+      if ((Statement_s *)pcVar4 == (Statement_s *)0x0) {
+        (param_3->internals).floatVal = (float)"";
+        __restgprlr_28();
+        return;
+      }
+    }
+    else {
+      bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"page_recent");
+      if (bVar5) {
+        pcVar4 = MeetPlayer_GetPresenceForSlot(iVar3,iVar1);
+        if ((Statement_s *)pcVar4 == (Statement_s *)0x0) {
+          (param_3->internals).floatVal = (float)"";
+          __restgprlr_28();
+          return;
+        }
+      }
+      else {
+        bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"page_party");
+        if (bVar5) {
+          pcVar4 = LiveParty_GetPresenceForSlot(iVar3,iVar1);
+          if ((Statement_s *)pcVar4 == (Statement_s *)0x0) {
+            (param_3->internals).floatVal = (float)"";
+            __restgprlr_28();
+            return;
+          }
+        }
+        else {
+          bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"page_facebook");
+          if (bVar5) {
+            pcVar4 = FacebookFriends_GetPresenceForSlot(iVar3,iVar1);
+            if ((Statement_s *)pcVar4 == (Statement_s *)0x0) {
+              (param_3->internals).floatVal = (float)"";
+              __restgprlr_28();
+              return;
+            }
+          }
+          else {
+            bVar5 = Menu_IsMenuOpenAndVisible(LVar2,"page_elite_clan");
+            if (!bVar5) {
+              if (alwaysfails == 0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp"
+                                ,0x21bf,0,
+                                "ERROR: Trying to show a friend players card and we\'re not in the freinds menu "
+                               );
                 __restgprlr_28();
                 return;
               }
               goto LAB_8259b8a4;
             }
-            puVar4 = (undefined1 *)EliteClan_GetPresenceForSlot(uVar3,iVar1);
-            if (puVar4 == (undefined1 *)0x0) {
-              puVar4 = &DAT_820068af;
-            }
-          }
-          else {
-            puVar4 = (undefined1 *)FacebookFriends_GetPresenceForSlot(uVar3,iVar1);
-            if (puVar4 == (undefined1 *)0x0) {
-              param_3[1] = &DAT_820068af;
-              __restgprlr_28();
-              return;
+            pcVar4 = EliteClan_GetPresenceForSlot(iVar3,iVar1);
+            if ((Statement_s *)pcVar4 == (Statement_s *)0x0) {
+              pcVar4 = "";
             }
           }
         }
-        else {
-          puVar4 = (undefined1 *)LiveParty_GetPresenceForSlot(uVar3,iVar1);
-          if (puVar4 == (undefined1 *)0x0) {
-            param_3[1] = &DAT_820068af;
-            __restgprlr_28();
-            return;
-          }
-        }
-      }
-      else {
-        puVar4 = (undefined1 *)MeetPlayer_GetPresenceForSlot(uVar3,iVar1);
-        if (puVar4 == (undefined1 *)0x0) {
-          param_3[1] = &DAT_820068af;
-          __restgprlr_28();
-          return;
-        }
       }
     }
-    else {
-      puVar4 = (undefined1 *)FriendsMenu_GetPresenceForSlot(uVar3,iVar1);
-      if (puVar4 == (undefined1 *)0x0) {
-        param_3[1] = &DAT_820068af;
-        __restgprlr_28();
-        return;
-      }
-    }
-    param_3[1] = puVar4;
+    (param_3->internals).function = (Statement_s *)pcVar4;
     __restgprlr_28();
     return;
   }
-  Com_PrintError(0xd,0xffffffff82168578);
+  Com_PrintError(0xd,"GetFriendPlayerCardPresence: Invalid Parameters (int slot) \n");
 LAB_8259b8a4:
   __restgprlr_28();
   return;
@@ -10169,20 +12178,24 @@ LAB_8259b8a4:
 
 // 8259B8B0  ShowRecentPlayersGroup  (ui/ui_expressions.cpp:8645)
 
-void ShowRecentPlayersGroup(undefined8 param_1,int *param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ShowRecentPlayersGroup(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  *param_3 = 0;
-  if ((param_2[0x14] == 1) && (*param_2 == 0)) {
-    uVar1 = CL_ControllerIndexFromClientNum();
-    cVar2 = UserGroups_DoesSlotHaveGroups(uVar1,param_2[1]);
-    param_3[1] = (uint)(cVar2 != '\0');
+  param_3->dataType = VAL_INT;
+  if ((param_2->operandCount == 1) && (param_2->operands[0].dataType == VAL_INT)) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    bVar2 = UserGroups_DoesSlotHaveGroups(iVar1,param_2->operands[0].internals.intVal);
+    (param_3->internals).function = (Statement_s *)((int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1)));
   }
   else {
-    Com_PrintError(0xd,0xffffffff82168608);
+    Com_PrintError(0xd,"ShowRecentPlayersGroup: Invalid Parameters (int index) \n");
   }
   return;
 }
@@ -10190,134 +12203,179 @@ void ShowRecentPlayersGroup(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 // 8259B938  ShowSOCoopGroupIcon  (ui/ui_expressions.cpp:8664)
 
-void ShowSOCoopGroupIcon(int *param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void ShowSOCoopGroupIcon(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  *param_2 = 0;
-  if ((param_1[0x14] == 1) && (*param_1 == 0)) {
-    param_2[1] = 0;
+  param_2->operands[0].dataType = VAL_INT;
+  if ((*(int *)(param_1 + 0x50) == 1) && (*(int *)param_1 == 0)) {
+    param_2->operands[0].internals.intVal = 0;
     return;
   }
-  Com_PrintError(0xd,0xffffffff82168608);
+  Com_PrintError(0xd,"ShowRecentPlayersGroup: Invalid Parameters (int index) \n");
   return;
 }
 
 
 // 8259B970  IsDemoPlaying  (ui/ui_expressions.cpp:8683)
 
-void IsDemoPlaying(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsDemoPlaying(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_Demo_IsPlaying();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar2 = CL_Demo_IsPlaying(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259B9B0  IsDemoFollowCamera  (ui/ui_expressions.cpp:8694)
 
-void IsDemoFollowCamera(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsDemoFollowCamera(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_Demo_IsFollowCamera();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar2 = CL_Demo_IsFollowCamera(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259B9F0  IsDemoFreeCamera  (ui/ui_expressions.cpp:8705)
 
-void IsDemoFreeCamera(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsDemoFreeCamera(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_Demo_IsFreeCamera();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar2 = CL_Demo_IsFreeCamera(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259BA30  IsDemoCapturingScreenshot  (ui/ui_expressions.cpp:8716)
 
-void IsDemoCapturingScreenshot(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsDemoCapturingScreenshot(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_Demo_IsCapturingScreenshot();
-  param_2[1] = uVar1;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  iVar1 = CL_Demo_IsCapturingScreenshot(param_1);
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 8259BA70  IsClipModified  (ui/ui_expressions.cpp:8727)
 
-void IsClipModified(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsClipModified(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  param_1[1] = 0;
-  uVar1 = CL_Demo_IsClipModified();
-  param_1[1] = uVar1 & 0xff;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  bVar1 = CL_Demo_IsClipModified();
+  *(uint *)(param_1 + LOCAL_CLIENT_COUNT) = (uint)bVar1;
   return;
 }
 
 
 // 8259BAB0  GetDemoSegmentCount  (ui/ui_expressions.cpp:8738)
 
-void GetDemoSegmentCount(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDemoSegmentCount(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  *param_1 = 0;
-  param_1[1] = 0;
-  uVar1 = CL_Demo_GetSegmentCount();
-  param_1[1] = uVar1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  iVar1 = CL_Demo_GetSegmentCount();
+  *(int *)(param_1 + LOCAL_CLIENT_COUNT) = iVar1;
   return;
 }
 
 
 // 8259BAF0  GetDemoSegmentInformation  (ui/ui_expressions.cpp:8749)
 
-void GetDemoSegmentInformation(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetDemoSegmentInformation(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 *puVar4;
+  Operand *pOVar1;
+  int iVar2;
+  char *pcVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
   
-  iVar3 = __savegprlr_29();
-  *param_2 = 2;
-  if (*(int *)(iVar3 + 0x50) != 2) {
-    Com_PrintError(0xd,0xffffffff821677d8);
-    param_2[1] = &DAT_820068af;
+  lVar4 = (longlong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_29(param_1,lVar4,param_3);
+  puVar5 = (undefined4 *)lVar4;
+  *puVar5 = 2;
+  if (pOVar1[10].dataType != VAL_STRING) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operation - missing parameter inside function or parenthesis\n");
+    puVar5[1] = "";
     __restgprlr_29();
     return;
   }
-  uVar1 = GetSourceInt(iVar3);
-  uVar2 = GetSourceString(iVar3 + 8);
-  puVar4 = (undefined1 *)CL_Demo_GetSegmentInformation(uVar1,uVar2);
-  if (puVar4 == (undefined1 *)0x0) {
-    puVar4 = &DAT_820068af;
+  iVar2 = GetSourceInt(pOVar1);
+  pcVar3 = GetSourceString(pOVar1 + 1);
+  pcVar3 = CL_Demo_GetSegmentInformation(iVar2,pcVar3);
+  if (pcVar3 == (char *)0x0) {
+    pcVar3 = "";
   }
-  param_2[1] = puVar4;
+  puVar5[1] = pcVar3;
   __restgprlr_29();
   return;
 }
@@ -10325,41 +12383,56 @@ void GetDemoSegmentInformation(undefined8 param_1,undefined4 *param_2)
 
 // 8259BB78  IsDemoClipRecording  (ui/ui_expressions.cpp:8775)
 
-void IsDemoClipRecording(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsDemoClipRecording(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  bool bVar1;
   
-  *param_1 = 0;
-  param_1[1] = 0;
-  uVar1 = CL_Demo_IsClipRecording();
-  param_1[1] = uVar1 & 0xff;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
+  bVar1 = CL_Demo_IsClipRecording();
+  *(uint *)(param_1 + LOCAL_CLIENT_COUNT) = (uint)bVar1;
   return;
 }
 
 
 // 8259BBB8  GetOnlineVaultFeederData  (ui/ui_expressions.cpp:8787)
 
-void GetOnlineVaultFeederData(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetOnlineVaultFeederData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  Operand *pOVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0xfb);
+  uVar4 = (ulonglong)(int)param_3;
+  LVar1 = __savegprlr_29(param_1);
+  pOVar5 = (Operand *)uVar4;
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xfb,
+                    (int)pOVar5,"%s");
   }
-  *(undefined4 *)param_3 = 0;
-  ((undefined4 *)param_3)[1] = 0;
-  if (*(int *)((int)param_2 + 0x50) != 1) {
-    Com_PrintError(0xd,0xffffffff821677d8);
+  pOVar5->dataType = VAL_INT;
+  (pOVar5->internals).intVal = 0;
+  if (param_2->operandCount != 1) {
+    Com_PrintError(0xd,
+                   "Error: Invalid operation - missing parameter inside function or parenthesis\n");
     __restgprlr_29();
     return;
   }
-  uVar2 = GetSourceString(param_2);
-  uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-  OnlineVault_FeederGetDataForSelectedIndex(uVar1,uVar2,param_3);
+  pcVar2 = GetSourceString(param_2->operands);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+  OnlineVault_FeederGetDataForSelectedIndex(iVar3,pcVar2,pOVar5);
   __restgprlr_29();
   return;
 }
@@ -10367,27 +12440,32 @@ void GetOnlineVaultFeederData(undefined8 param_1,undefined8 param_2,ulonglong pa
 
 // 8259CCE0  GetOnlineVaultGamerTag  (ui/ui_expressions.cpp:8803)
 
-void GetOnlineVaultGamerTag(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetOnlineVaultGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char *pcVar3;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  ulong64 uVar1;
+  char *pcVar4;
   char local_40 [64];
   
-  __savegprlr_29();
-  uVar1 = CL_ControllerIndexFromClientNum();
-  uVar2 = OnlineVault_GetCurrentXUID();
-  Friends_Gamertag(uVar1,uVar2,local_40,0x20);
+  LVar2 = __savegprlr_29(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  uVar1 = OnlineVault_GetCurrentXUID(iVar3);
+  Friends_Gamertag(iVar3,uVar1,local_40,0x20);
   if ((local_40[0] == '\0') &&
-     (Facebook_GetGamerTagByXuid(uVar1,uVar2,local_40,0x20), local_40[0] == '\0')) {
-    pcVar3 = "";
+     (Facebook_GetGamerTagByXuid(iVar3,uVar1,local_40,0x20), local_40[0] == '\0')) {
+    pcVar4 = "";
   }
   else {
-    pcVar3 = local_40;
+    pcVar4 = local_40;
   }
-  *(undefined4 *)param_2 = 2;
-  CopyDynamicString(param_2,pcVar3);
+  param_2->dataType = VAL_STRING;
+  CopyDynamicString(param_2,pcVar4);
   __restgprlr_29();
   return;
 }
@@ -10395,61 +12473,75 @@ void GetOnlineVaultGamerTag(undefined8 param_1,undefined8 param_2)
 
 // 8259BC50  GetUserGroupText  (ui/ui_expressions.cpp:8830)
 
-void GetUserGroupText(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetUserGroupText(LocalClientNum_t param_1,Operand *param_2)
 
 {
   int iVar1;
+  Statement_s *pSVar2;
   
-  *param_2 = 2;
-  CL_ControllerIndexFromClientNum();
-  iVar1 = UserGroups_GetGroupPopupText();
-  if (iVar1 == 0) {
-    param_2[1] = &DAT_820068af;
+  param_2->dataType = VAL_STRING;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pSVar2 = (Statement_s *)UserGroups_GetGroupPopupText(iVar1);
+  if (pSVar2 == (Statement_s *)0x0) {
+    (param_2->internals).floatVal = (float)"";
     return;
   }
-  param_2[1] = iVar1;
+  (param_2->internals).function = pSVar2;
   return;
 }
 
 
 // 8259BCB8  GetUserGroupCommonInterestTotal  (ui/ui_expressions.cpp:8844)
 
-void GetUserGroupCommonInterestTotal(undefined8 param_1,int param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetUserGroupCommonInterestTotal(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  CL_ControllerIndexFromClientNum();
-  uVar1 = UserGroups_GetCommonInterestTotal();
-  *(undefined4 *)(param_2 + 4) = uVar1;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar1 = UserGroups_GetCommonInterestTotal(iVar1);
+  (param_2->internals).intVal = iVar1;
   return;
 }
 
 
 // 8259BCF0  GetIsPartyHostWaitingForMembers  (ui/ui_expressions.cpp:8855)
 
-void GetIsPartyHostWaitingForMembers(void)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void GetIsPartyHostWaitingForMembers(LocalClientNum_t param_1,Operand *param_2)
 
 {
   undefined4 *puVar1;
-  char cVar4;
-  undefined4 uVar2;
+  bool bVar4;
+  PartyData *pPVar2;
   int iVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_29();
+  puVar1 = (undefined4 *)__savegprlr_29(param_1,param_2);
   *puVar1 = 0;
-  cVar4 = Lobby_IsInRunningLobby();
-  if (cVar4 != '\0') {
-    Lobby_GetPartyData();
-    uVar2 = Party_IsWaitingForMembers();
-    puVar1[1] = uVar2;
+  bVar4 = Lobby_IsInRunningLobby();
+  if (bVar4) {
+    pPVar2 = Lobby_GetPartyData();
+    iVar3 = Party_IsWaitingForMembers(pPVar2);
+    puVar1[1] = iVar3;
     __restgprlr_29();
     return;
   }
-  iVar3 = Party_InParty(0xffffffff82b55118);
+  iVar3 = Party_InParty(&g_partyData);
   if (iVar3 != 0) {
-    uVar2 = Party_IsWaitingForMembers(0xffffffff82b55118);
-    puVar1[1] = uVar2;
+    iVar3 = Party_IsWaitingForMembers(&g_partyData);
+    puVar1[1] = iVar3;
     __restgprlr_29();
     return;
   }
@@ -10461,102 +12553,112 @@ void GetIsPartyHostWaitingForMembers(void)
 
 // 8259BD68  UI_GetPastTitlePrestige  (ui/ui_expressions.cpp:8893)
 
-void UI_GetPastTitlePrestige(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_GetPastTitlePrestige(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  char *pcVar1;
+  int iVar2;
   
-  *param_3 = 0;
-  uVar1 = GetSourceString(param_2);
-  uVar2 = CL_GetPastTitlePrestige(param_1,uVar1);
-  param_3[1] = uVar2;
+  param_3->dataType = VAL_INT;
+  pcVar1 = GetSourceString(param_2);
+  iVar2 = CL_GetPastTitlePrestige(param_1,pcVar1);
+  (param_3->internals).intVal = iVar2;
   return;
 }
 
 
 // 8259BDC0  UI_GetPastTitleRank  (ui/ui_expressions.cpp:8901)
 
-void UI_GetPastTitleRank(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UI_GetPastTitleRank(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar2;
+  char *pcVar1;
+  int iVar2;
   
-  *param_3 = 0;
-  uVar1 = GetSourceString(param_2);
-  uVar2 = CL_GetPastTitleRank(param_1,uVar1);
-  param_3[1] = uVar2;
+  param_3->dataType = VAL_INT;
+  pcVar1 = GetSourceString(param_2);
+  iVar2 = CL_GetPastTitleRank(param_1,pcVar1);
+  (param_3->internals).intVal = iVar2;
   return;
 }
 
 
 // 8259BE18  GetFeederData  (ui/ui_expressions.cpp:8908)
 
-void GetFeederData(undefined8 param_1,longlong param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetFeederData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  undefined8 uVar7;
-  char cVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  int local_50;
-  undefined4 local_4c [19];
+  LocalClientNum_t LVar2;
+  UiContext *pUVar3;
+  menuDef_t *pmVar4;
+  char *pcVar5;
+  itemDef_t *piVar6;
+  char *pcVar7;
+  bool bVar8;
+  int iVar9;
+  char *local_50;
+  operandInternalDataUnion local_4c [19];
   
-  uVar2 = __savegprlr_25();
-  lVar10 = 0;
-  *param_3 = 0;
-  param_3[1] = 0;
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x50) < 2) {
-    Com_PrintError(0xd,0xffffffff82168648);
+  LVar2 = __savegprlr_25(param_1);
+  iVar9 = 0;
+  param_3->dataType = VAL_INT;
+  (param_3->internals).intVal = 0;
+  if (param_2->operandCount < 2) {
+    Com_PrintError(0xd,"UI Expression Error: Expected at least 2 parameters to getFeederData()\n");
     __restgprlr_25();
     return;
   }
-  uVar9 = 0xffffffff820068af;
-  if (*(int *)(iVar1 + 0x50) == 2) {
-    uVar3 = UI_GetClientDC(uVar2);
-    uVar4 = Menu_GetTopOfStack(uVar3,0);
-    if ((uVar4 & 0xffffffff) == 0) goto LAB_8259bf9c;
+  pcVar7 = "";
+  if (param_2->operandCount == 2) {
+    pUVar3 = UI_GetClientDC(LVar2);
+    pmVar4 = Menu_GetTopOfStack(pUVar3,0);
+    if (pmVar4 == (menuDef_t *)0x0) goto LAB_8259bf9c;
     do {
-      uVar3 = GetSourceString(param_2);
-      uVar5 = Menu_FindItemByName(uVar4,uVar3);
-      if (((uVar5 & 0xffffffff) != 0) && (lVar6 = param_2 + 8, *(int *)(iVar1 + 8) == 2))
+      pcVar5 = GetSourceString(param_2->operands);
+      piVar6 = Menu_FindItemByName(pmVar4,pcVar5);
+      if ((piVar6 != (itemDef_t *)0x0) && (iVar1 = 8, param_2->operands[1].dataType == VAL_STRING))
       goto LAB_8259bf30;
-      lVar10 = lVar10 + 1;
-      uVar3 = UI_GetClientDC(uVar2);
-      uVar4 = Menu_GetTopOfStack(uVar3,lVar10);
-    } while ((uVar4 & 0xffffffff) != 0);
+      iVar9 = iVar9 + 1;
+      pUVar3 = UI_GetClientDC(LVar2);
+      pmVar4 = Menu_GetTopOfStack(pUVar3,iVar9);
+    } while (pmVar4 != (menuDef_t *)0x0);
   }
   else {
-    uVar3 = GetSourceString(param_2);
-    uVar7 = UI_GetClientDC(uVar2);
-    uVar3 = Menus_FindByName(uVar7,uVar3);
-    uVar7 = GetSourceString(param_2 + 8);
-    uVar5 = Menu_FindItemByName(uVar3,uVar7);
-    if ((uVar5 & 0xffffffff) == 0) goto LAB_8259bf9c;
-    lVar6 = param_2 + 0x10;
-    if (*(int *)(iVar1 + 0x10) == 2) {
+    pcVar5 = GetSourceString(param_2->operands);
+    pUVar3 = UI_GetClientDC(LVar2);
+    pmVar4 = Menus_FindByName(pUVar3,pcVar5);
+    pcVar5 = GetSourceString(param_2->operands + 1);
+    piVar6 = Menu_FindItemByName(pmVar4,pcVar5);
+    if (piVar6 == (itemDef_t *)0x0) goto LAB_8259bf9c;
+    iVar1 = 0x10;
+    if (param_2->operands[2].dataType == VAL_STRING) {
 LAB_8259bf30:
-      uVar9 = GetSourceString(lVar6);
+      pcVar7 = GetSourceString((Operand *)((int)&param_2->operands[0].dataType + iVar1));
     }
   }
-  if ((((uVar5 & 0xffffffff) != 0) && ((uVar9 & 0xffffffff) != 0)) &&
-     (cVar8 = UI_FeederData(uVar2,uVar5,uVar9,&local_50,local_4c), cVar8 != '\0')) {
-    if (local_50 != 0) {
-      param_3[1] = local_50;
-      *param_3 = 2;
+  if (((piVar6 != (itemDef_t *)0x0) && (pcVar7 != (char *)0x0)) &&
+     (bVar8 = UI_FeederData(LVar2,piVar6,pcVar7,&local_50,&local_4c[0].floatVal), bVar8)) {
+    if (local_50 != (char *)0x0) {
+      (param_3->internals).intVal = (int)local_50;
+      param_3->dataType = VAL_STRING;
       __restgprlr_25();
       return;
     }
-    param_3[1] = local_4c[0];
-    *param_3 = 1;
+    param_3->internals = local_4c[0];
+    param_3->dataType = VAL_FLOAT;
   }
 LAB_8259bf9c:
   __restgprlr_25();
@@ -10566,86 +12668,116 @@ LAB_8259bf9c:
 
 // 8259BFA8  PartyClientsUpToDate  (ui/ui_expressions.cpp:8978)
 
-void PartyClientsUpToDate(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PartyClientsUpToDate(int param_1,Operand *param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar3;
+  PartyData *pPVar1;
+  int iVar2;
   
-  cVar2 = Lobby_IsInLobby();
-  if ((cVar2 != '\0') && (cVar2 = Lobby_AreWeHost(), cVar2 != '\0')) {
-    Lobby_GetPartyData();
-    uVar1 = PartyHost_ArePresentClientsUpToDate();
-    Operand_SetBool(param_1,uVar1);
+  bVar3 = Lobby_IsInLobby();
+  if ((bVar3) && (bVar3 = Lobby_AreWeHost(), bVar3)) {
+    pPVar1 = Lobby_GetPartyData();
+    iVar2 = PartyHost_ArePresentClientsUpToDate(pPVar1);
+    Operand_SetBool((Operand *)param_1,iVar2);
     return;
   }
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82164aa0,0xf3,0,0xffffffff82000f98,0xffffffff82164ae0);
+  if (param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0xf3,0,
+                    "%s");
   }
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + 4) = 0;
   return;
 }
 
 
 // 8259C050  GetObjectiveListHeight  (ui/ui_expressions.cpp:8992)
 
-void GetObjectiveListHeight(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetObjectiveListHeight(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
   return;
 }
 
 
 // 8259C060  IsClientDemoEnabled  (ui/ui_expressions.cpp:9023)
 
-void IsClientDemoEnabled(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void IsClientDemoEnabled(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  bool bVar2;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  uVar1 = CL_Demo_CanRecord();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  bVar2 = CL_Demo_CanRecord(param_1);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar2;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259C0A0  EnoughStorageSpaceForClientDemo  (ui/ui_expressions.cpp:9034)
 
-void EnoughStorageSpaceForClientDemo(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void EnoughStorageSpaceForClientDemo(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  char cVar4;
-  int *piVar3;
-  longlong lVar5;
+  Operand *pOVar2;
+  int iVar3;
+  clientDemoDeviceEnumInfo_t *pcVar4;
+  bool bVar7;
+  int iVar5;
+  clientDemoDeviceEnumInfo_t *pcVar6;
+  ulong64 uVar1;
+  longlong lVar8;
+  undefined4 *puVar9;
+  LocalClientNum_t LVar10;
   
-  __savegprlr_27();
-  *param_2 = 0;
-  param_2[1] = 0;
-  iVar1 = GetSourceInt();
-  if (((-1 < iVar1) && (iVar1 < 4)) &&
-     (piVar2 = (int *)CL_Demo_GetDeviceEnumInfo(), piVar2 != (int *)0x0)) {
-    iVar1 = 0;
-    lVar5 = 0;
+  lVar8 = (longlong)(int)param_2;
+  pOVar2 = (Operand *)__savegprlr_27(param_1,lVar8,param_3);
+  puVar9 = (undefined4 *)lVar8;
+  *puVar9 = 0;
+  puVar9[1] = 0;
+  iVar3 = GetSourceInt(pOVar2);
+  if (((-1 < iVar3) && (iVar3 < 4)) &&
+     (pcVar4 = CL_Demo_GetDeviceEnumInfo(iVar3), pcVar4 != (clientDemoDeviceEnumInfo_t *)0x0)) {
+    iVar3 = 0;
+    LVar10 = LOCAL_CLIENT_0;
     do {
-      cVar4 = CL_IsLocalClientActive(lVar5);
-      if (cVar4 != '\0') {
-        CL_ControllerIndexFromClientNum(lVar5);
-        piVar3 = (int *)CL_Demo_GetDeviceEnumInfo();
-        if ((piVar3 != (int *)0x0) && (*piVar3 == *piVar2)) {
-          iVar1 = iVar1 + 1;
+      bVar7 = CL_IsLocalClientActive(LVar10);
+      if (bVar7) {
+        iVar5 = CL_ControllerIndexFromClientNum(LVar10);
+        pcVar6 = CL_Demo_GetDeviceEnumInfo(iVar5);
+        if ((pcVar6 != (clientDemoDeviceEnumInfo_t *)0x0) && (pcVar6->deviceID == pcVar4->deviceID))
+        {
+          iVar3 = iVar3 + 1;
         }
       }
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 4);
-    lVar5 = CL_Demo_GetMaximumFinalDemoSize();
-    param_2[1] = (uint)((ulonglong)(lVar5 * iVar1) < *(ulonglong *)(piVar2 + 2));
+      LVar10 = LVar10 + LOCAL_CLIENT_1;
+    } while ((int)LVar10 < 4);
+    uVar1 = CL_Demo_GetMaximumFinalDemoSize();
+    puVar9[1] = (uint)(uVar1 * (longlong)iVar3 < pcVar4->availableFreeSpace);
   }
   __restgprlr_27();
   return;
@@ -10654,41 +12786,54 @@ void EnoughStorageSpaceForClientDemo(undefined8 param_1,undefined4 *param_2)
 
 // 8259C160  GetIsGuestSplitscreen  (ui/ui_expressions.cpp:9085)
 
-void GetIsGuestSplitscreen(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsGuestSplitscreen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  undefined4 *puVar4;
-  undefined4 uVar5;
-  undefined4 local_30 [12];
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  undefined4 uVar6;
+  int local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x237e,0,0xffffffff82000f98,0xffffffff8201f49c);
+  uVar4 = (ulonglong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_28(param_1,uVar4,param_3);
+  if (pOVar1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x237e,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x237f,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x237f,
+                    0,"%s");
   }
-  uVar5 = 0;
-  puVar4 = (undefined4 *)param_2;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  uVar2 = GetSourceInt(uVar1);
-  if ((int)uVar2 != -1) {
-    cVar3 = CL_SplitscreenControllerIndexFromClientNum(uVar2,local_30);
-    if (cVar3 != '\0') {
-      cVar3 = Live_IsUserSignedIn(local_30[0]);
-      if ((cVar3 == '\0') || (cVar3 = Live_UserIsGuest(local_30[0]), cVar3 != '\0')) {
-        uVar5 = 1;
-      }
-      puVar4[1] = uVar5;
-      __restgprlr_28();
-      return;
-    }
-    Com_PrintError(0xd,0xffffffff82168690);
+  uVar6 = 0;
+  puVar5 = (undefined4 *)uVar4;
+  *puVar5 = 0;
+  puVar5[1] = 0;
+  LVar2 = GetSourceInt(pOVar1);
+  if (LVar2 == LOCAL_CLIENT_INVALID) {
+LAB_8259c244:
+    __restgprlr_28();
+    return;
   }
+  bVar3 = CL_SplitscreenControllerIndexFromClientNum(LVar2,local_30);
+  if (!bVar3) {
+    Com_PrintError(0xd,"GetIsUserByClient:: Cannot find controller index from client num! \n");
+    goto LAB_8259c244;
+  }
+  bVar3 = Live_IsUserSignedIn(local_30[0]);
+  if (bVar3) {
+    bVar3 = Live_UserIsGuest(local_30[0]);
+    if (!bVar3) goto LAB_8259c228;
+  }
+  uVar6 = 1;
+LAB_8259c228:
+  puVar5[1] = uVar6;
   __restgprlr_28();
   return;
 }
@@ -10696,26 +12841,35 @@ void GetIsGuestSplitscreen(undefined8 param_1,ulonglong param_2)
 
 // 8259C250  GetSplitScreenControllerClientNum  (ui/ui_expressions.cpp:9114)
 
-void GetSplitScreenControllerClientNum(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetSplitScreenControllerClientNum(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
-  undefined4 uVar2;
-  undefined4 *puVar3;
+  Operand *pOVar1;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x239b,0,0xffffffff82000f98,0xffffffff8201f49c);
+  uVar4 = (ulonglong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_28(param_1,uVar4,param_3);
+  if (pOVar1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x239b,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x239c,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x239c,
+                    0,"%s");
   }
-  puVar3 = (undefined4 *)param_2;
-  *puVar3 = 0;
-  puVar3[1] = 0;
-  GetSourceInt(uVar1);
-  uVar2 = CL_LocalClientNumFromMappedControllerIndex();
-  puVar3[1] = uVar2;
+  puVar5 = (undefined4 *)uVar4;
+  *puVar5 = 0;
+  puVar5[1] = 0;
+  iVar2 = GetSourceInt(pOVar1);
+  LVar3 = CL_LocalClientNumFromMappedControllerIndex(iVar2);
+  puVar5[1] = LVar3;
   __restgprlr_28();
   return;
 }
@@ -10723,31 +12877,40 @@ void GetSplitScreenControllerClientNum(undefined8 param_1,ulonglong param_2)
 
 // 8259C2E0  IsClientDemoEnabledSplitScreen  (ui/ui_expressions.cpp:9128)
 
-void IsClientDemoEnabledSplitScreen(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void IsClientDemoEnabledSplitScreen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  ulonglong uVar1;
+  Operand *pOVar1;
   int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
+  LocalClientNum_t LVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  undefined4 *puVar6;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x23a9,0,0xffffffff82000f98,0xffffffff8201f49c);
+  uVar5 = (ulonglong)(int)param_2;
+  pOVar1 = (Operand *)__savegprlr_28(param_1,uVar5,param_3);
+  if (pOVar1 == (Operand *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x23a9,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x23aa,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x23aa,
+                    0,"%s");
   }
-  puVar4 = (undefined4 *)param_2;
-  *puVar4 = 0;
-  puVar4[1] = 0;
-  GetSourceInt(uVar1);
-  iVar2 = CL_LocalClientNumFromMappedControllerIndex();
-  if (iVar2 != -1) {
-    *puVar4 = 0;
-    puVar4[1] = 0;
-    uVar3 = CL_Demo_CanRecord();
-    puVar4[1] = uVar3 & 0xff;
+  puVar6 = (undefined4 *)uVar5;
+  *puVar6 = 0;
+  puVar6[1] = 0;
+  iVar2 = GetSourceInt(pOVar1);
+  LVar3 = CL_LocalClientNumFromMappedControllerIndex(iVar2);
+  if (LVar3 != LOCAL_CLIENT_INVALID) {
+    *puVar6 = 0;
+    puVar6[1] = 0;
+    bVar4 = CL_Demo_CanRecord(LVar3);
+    puVar6[1] = (uint)bVar4;
   }
   __restgprlr_28();
   return;
@@ -10756,89 +12919,111 @@ void IsClientDemoEnabledSplitScreen(undefined8 param_1,ulonglong param_2)
 
 // 8259C388  GetGameInvitesCount  (ui/ui_expressions.cpp:9146)
 
-void GetGameInvitesCount(undefined4 *param_1)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetGameInvitesCount(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
   return;
 }
 
 
 // 8259C398  StripColorsFromString  (ui/ui_expressions.cpp:9177)
 
-void StripColorsFromString(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void StripColorsFromString(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  char *pcVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
   
-  iVar1 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1,uVar4,param_3);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x23dc,0,0xffffffff82000f98,0xffffffff8201f49c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x23dc,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x23dd,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x23dd,
+                    0,"%s");
   }
-  puVar2 = (undefined4 *)param_2;
-  *puVar2 = 2;
-  iVar1 = va(0xffffffff82000f98,*(undefined4 *)(iVar1 + 4));
-  I_CleanStr();
-  if (iVar1 == 0) {
-    puVar2[1] = &DAT_820068af;
-    __restgprlr_28();
+  puVar5 = (undefined4 *)uVar4;
+  *puVar5 = 2;
+  pcVar2 = va("%s");
+  pcVar3 = I_CleanStr(pcVar2);
+  if (pcVar2 == (char *)0x0) {
+    puVar5[1] = "";
+    __restgprlr_28(pcVar3);
     return;
   }
-  puVar2[1] = iVar1;
-  __restgprlr_28();
+  puVar5[1] = pcVar2;
+  __restgprlr_28(pcVar3);
   return;
 }
 
 
 // 8259C448  GetIsSplitscreenGamerLiveEnabled  (ui/ui_expressions.cpp:9193)
 
-void GetIsSplitscreenGamerLiveEnabled(undefined4 *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsSplitscreenGamerLiveEnabled(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  *param_1 = 0;
-  param_1[1] = 0;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)(param_1 + LOCAL_CLIENT_COUNT) = 0;
   return;
 }
 
 
 // 8259C458  GetIsChallengePeriodic  (ui/ui_expressions.cpp:9235)
 
-void GetIsChallengePeriodic(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetIsChallengePeriodic(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  int local_20;
-  int local_1c;
+  StringTable *local_20;
+  StringTable *local_1c;
   
-  *param_2 = 0;
-  param_2[1] = 0;
-  StringTable_GetAsset(0xffffffff82168740,&local_20);
-  if (local_20 == 0) {
-    Com_PrintError(0xd,0xffffffff82168720);
+  param_2->dataType = VAL_INT;
+  (param_2->internals).intVal = 0;
+  StringTable_GetAsset("mp/challenges/challengeTable_Daily.csv",&local_20);
+  if (local_20 == (StringTable *)0x0) {
+    Com_PrintError(0xd,"Missing daily challenge table!\n");
   }
   else {
-    uVar1 = GetSourceString(param_1);
-    iVar2 = StringTable_LookupRowNumForValue(local_20,0,uVar1);
+    pcVar1 = GetSourceString((Operand *)param_1);
+    iVar2 = StringTable_LookupRowNumForValue(local_20,0,pcVar1);
     if (-1 < iVar2) {
-      param_2[1] = 1;
+      (param_2->internals).intVal = 1;
       return;
     }
   }
-  StringTable_GetAsset(0xffffffff821686f8,&local_1c);
-  if (local_1c == 0) {
-    Com_PrintError(0xd,0xffffffff821686d4);
+  StringTable_GetAsset("mp/challenges/challengeTable_Weekly.csv",&local_1c);
+  if (local_1c == (StringTable *)0x0) {
+    Com_PrintError(0xd,"Missing weekly challenge table!\n");
   }
   else {
-    uVar1 = GetSourceString(param_1);
-    iVar2 = StringTable_LookupRowNumForValue(local_1c,0,uVar1);
+    pcVar1 = GetSourceString((Operand *)param_1);
+    iVar2 = StringTable_LookupRowNumForValue(local_1c,0,pcVar1);
     if (-1 < iVar2) {
-      param_2[1] = 1;
+      (param_2->internals).intVal = 1;
     }
   }
   return;
@@ -10847,172 +13032,181 @@ void GetIsChallengePeriodic(undefined8 param_1,undefined4 *param_2)
 
 // 8259C548  GetChallengeData  (ui/ui_expressions.cpp:9280)
 
-void GetChallengeData(undefined8 param_1,longlong param_2,undefined4 *param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void GetChallengeData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  char cVar10;
-  longlong lVar6;
-  int iVar8;
-  undefined1 *puVar9;
-  ulonglong uVar7;
-  bool bVar11;
-  char *pcVar12;
-  int local_90;
-  int local_8c;
-  int local_88 [2];
+  bool bVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  char *pcVar4;
+  int iVar5;
+  bool bVar9;
+  int iVar6;
+  int iVar7;
+  Statement_s *pSVar8;
+  char *pcVar10;
+  StringTable *local_90;
+  StringTable *local_8c;
+  StringTable *local_88 [2];
   char *local_80;
-  undefined1 *local_7c;
-  undefined1 auStack_78 [8];
-  undefined1 auStack_70 [112];
+  char *local_7c;
+  StructuredDataBuffer SStack_78;
+  char acStack_70 [112];
   
-  uVar2 = __savegprlr_22();
-  *param_3 = 2;
-  param_3[1] = &DAT_820068af;
-  piVar1 = (int *)param_2;
-  if ((((piVar1[0x14] < 2) || (3 < piVar1[0x14])) || (*piVar1 != 2)) || (piVar1[2] != 2)) {
-    Com_PrintError(0xd,0xffffffff82168768);
+  LVar2 = __savegprlr_22(param_1);
+  param_3->dataType = VAL_STRING;
+  (param_3->internals).floatVal = (float)"";
+  if ((((param_2->operandCount < 2) || (3 < param_2->operandCount)) ||
+      (param_2->operands[0].dataType != VAL_STRING)) ||
+     (param_2->operands[1].dataType != VAL_STRING)) {
+    Com_PrintError(0xd,
+                   "Bad params: getchallengedata( <challenge ref>, <data identifier>, [state index] )\n"
+                  );
     goto LAB_8259c9f4;
   }
-  uVar3 = GetSourceString(param_2);
-  uVar4 = GetSourceString(param_2 + 8);
-  bVar11 = false;
-  local_90 = 0;
-  pcVar12 = (char *)0x0;
-  StringTable_GetAsset(0xffffffff82168740,&local_8c);
-  if (local_8c == 0) {
+  pcVar3 = GetSourceString(param_2->operands);
+  pcVar4 = GetSourceString(param_2->operands + 1);
+  bVar1 = false;
+  local_90 = (StringTable *)0x0;
+  pcVar10 = (char *)0x0;
+  StringTable_GetAsset("mp/challenges/challengeTable_Daily.csv",&local_8c);
+  if (local_8c == (StringTable *)0x0) {
 LAB_8259c648:
-    StringTable_GetAsset(0xffffffff821686f8,local_88);
-    if (local_88[0] != 0) {
-      lVar5 = StringTable_LookupRowNumForValue(local_88[0],0,uVar3);
-      if (-1 < (int)lVar5) {
-        pcVar12 = "weeklyChallengeId";
-        bVar11 = true;
-        StringTable_GetAsset(0xffffffff8200af6c,&local_90);
-        if (local_90 == 0) {
-          Com_PrintError(0xd,0xffffffff821688ac);
+    StringTable_GetAsset("mp/challenges/challengeTable_Weekly.csv",local_88);
+    if (local_88[0] != (StringTable *)0x0) {
+      iVar5 = StringTable_LookupRowNumForValue(local_88[0],0,pcVar3);
+      if (-1 < iVar5) {
+        pcVar10 = "weeklyChallengeId";
+        bVar1 = true;
+        StringTable_GetAsset("mp/weeklyChallengesTable.csv",&local_90);
+        if (local_90 == (StringTable *)0x0) {
+          Com_PrintError(0xd,"Unable to load weekly challenge table!\n");
           __restgprlr_22();
           return;
         }
       }
-      if ((int)lVar5 != -1) goto LAB_8259c6c4;
+      if (iVar5 != -1) goto LAB_8259c6c4;
     }
-    StringTable_GetAsset(0xffffffff8200af8c,&local_90);
-    if (local_90 == 0) {
-      Com_PrintError(0xd,0xffffffff82168858);
+    StringTable_GetAsset("mp/allChallengesTable.csv",&local_90);
+    if (local_90 == (StringTable *)0x0) {
+      Com_PrintError(0xd,"Unable to load all challenge table!\n");
       __restgprlr_22();
       return;
     }
-    lVar5 = StringTable_LookupRowNumForValue(local_90,0,uVar3);
-    lVar6 = -1;
-    if ((int)lVar5 != -1) {
-      lVar6 = lVar5;
+    iVar5 = StringTable_LookupRowNumForValue(local_90,0,pcVar3);
+    iVar6 = -1;
+    if (iVar5 != -1) {
+      iVar6 = iVar5;
     }
   }
   else {
-    lVar5 = StringTable_LookupRowNumForValue(local_8c,0,uVar3);
-    if (-1 < (int)lVar5) {
-      pcVar12 = "dailyChallengeId";
-      bVar11 = true;
-      StringTable_GetAsset(0xffffffff8200af50,&local_90);
-      if (local_90 == 0) {
-        Com_PrintError(0xd,0xffffffff821688d4);
+    iVar5 = StringTable_LookupRowNumForValue(local_8c,0,pcVar3);
+    if (-1 < iVar5) {
+      pcVar10 = "dailyChallengeId";
+      bVar1 = true;
+      StringTable_GetAsset("mp/dailyChallengesTable.csv",&local_90);
+      if (local_90 == (StringTable *)0x0) {
+        Com_PrintError(0xd,"Unable to load daily challenge table!\n");
         __restgprlr_22();
         return;
       }
     }
-    if ((int)lVar5 == -1) goto LAB_8259c648;
+    if (iVar5 == -1) goto LAB_8259c648;
 LAB_8259c6c4:
-    if (local_90 == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0x2495,0,0xffffffff82000f98,0xffffffff82168898);
+    if (local_90 == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x2495,0,"%s");
     }
-    if (pcVar12 == (char *)0x0) {
-      MyAssertHandler(0xffffffff82164aa0,0x2496,0,0xffffffff82000f98,0xffffffff82168880);
+    if (pcVar10 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x2496,0,"%s");
     }
-    cVar10 = Expression_GetPersistentDataBuffer(auStack_78,uVar2);
-    if (cVar10 == '\0') goto LAB_8259c9f4;
-    Com_sprintf(auStack_70,0x10,0xffffffff82013b64,lVar5);
-    local_7c = auStack_70;
-    local_80 = pcVar12;
-    lVar6 = LiveStorage_DataGetInternalInt(&local_80,2,auStack_78);
+    bVar9 = Expression_GetPersistentDataBuffer(&SStack_78,LVar2);
+    if (!bVar9) goto LAB_8259c9f4;
+    Com_sprintf(acStack_70,0x10,"%d");
+    local_7c = acStack_70;
+    local_80 = pcVar10;
+    iVar6 = LiveStorage_DataGetInternalInt(&local_80,2,&SStack_78);
   }
-  if ((local_90 != 0) && (-1 < (int)lVar6)) {
-    iVar8 = I_stricmp(uVar4,0xffffffff82135f8c);
-    if (iVar8 == 0) {
-      puVar9 = (undefined1 *)StringTable_GetColumnValueForRow(local_90,lVar6,0);
-      if (puVar9 == (undefined1 *)0x0) {
-        param_3[1] = &DAT_820068af;
+  if ((local_90 != (StringTable *)0x0) && (-1 < iVar6)) {
+    iVar7 = I_stricmp(pcVar4,"ref");
+    if (iVar7 == 0) {
+      pSVar8 = (Statement_s *)StringTable_GetColumnValueForRow(local_90,iVar6,0);
+      if (pSVar8 == (Statement_s *)0x0) {
+        (param_3->internals).floatVal = (float)"";
         __restgprlr_22(0xffffffff820068af);
         return;
       }
     }
     else {
-      iVar8 = I_stricmp(uVar4,0xffffffff82021a74);
-      if (iVar8 == 0) {
-        uVar2 = StringTable_GetColumnValueForRow(local_90,lVar6,1);
-        puVar9 = (undefined1 *)SEH_LocalizeTextMessage(uVar2,0xffffffff82165e24,1);
-        if (bVar11) {
-          puVar9 = (undefined1 *)UI_ReplaceConversionInt(puVar9,lVar5 + 1);
+      iVar7 = I_stricmp(pcVar4,"name");
+      if (iVar7 == 0) {
+        pcVar3 = StringTable_GetColumnValueForRow(local_90,iVar6,1);
+        pcVar3 = SEH_LocalizeTextMessage(pcVar3,"ui string",LOCMSG_NOERR);
+        if (bVar1) {
+          pcVar3 = UI_ReplaceConversionInt(pcVar3,iVar5 + 1);
         }
-        if (puVar9 == (undefined1 *)0x0) {
-          puVar9 = &DAT_820068af;
+        if ((Statement_s *)pcVar3 == (Statement_s *)0x0) {
+          pcVar3 = "";
         }
-        param_3[1] = puVar9;
+        (param_3->internals).function = (Statement_s *)pcVar3;
         __restgprlr_22();
         return;
       }
-      iVar8 = I_stricmp(uVar4,0xffffffff8205eec4);
-      if (iVar8 == 0) {
-        puVar9 = (undefined1 *)StringTable_GetColumnValueForRow(local_90,lVar6,3);
-        if (puVar9 == (undefined1 *)0x0) {
-          param_3[1] = &DAT_820068af;
+      iVar5 = I_stricmp(pcVar4,"label");
+      if (iVar5 == 0) {
+        pSVar8 = (Statement_s *)StringTable_GetColumnValueForRow(local_90,iVar6,3);
+        if (pSVar8 == (Statement_s *)0x0) {
+          (param_3->internals).floatVal = (float)"";
           __restgprlr_22(0xffffffff820068af);
           return;
         }
       }
       else {
-        iVar8 = I_stricmp(uVar4,0xffffffff82132868);
-        if (iVar8 == 0) {
-          puVar9 = (undefined1 *)StringTable_GetColumnValueForRow(local_90,lVar6,2);
-          if (puVar9 == (undefined1 *)0x0) {
-            param_3[1] = &DAT_820068af;
+        iVar5 = I_stricmp(pcVar4,"desc");
+        if (iVar5 == 0) {
+          pSVar8 = (Statement_s *)StringTable_GetColumnValueForRow(local_90,iVar6,2);
+          if (pSVar8 == (Statement_s *)0x0) {
+            (param_3->internals).floatVal = (float)"";
             __restgprlr_22(0xffffffff820068af);
             return;
           }
         }
         else {
-          iVar8 = I_stricmp(uVar4,0xffffffff820025cc);
-          if (iVar8 == 0) {
-            if (piVar1[0x14] < 3) {
-              Com_PrintError(0xd,0xffffffff82168810);
+          iVar5 = I_stricmp(pcVar4,"target");
+          if (iVar5 == 0) {
+            if (param_2->operandCount < 3) {
+              Com_PrintError(0xd,
+                             "Bad params: getchallengedata( <challenge ref>, target, <state index> )\n"
+                            );
               __restgprlr_22();
               return;
             }
-            lVar5 = GetSourceInt(param_2 + 0x10);
-            puVar9 = (undefined1 *)
-                     StringTable_GetColumnValueForRow(local_90,lVar6,(lVar5 + 2U & 0x7fffffff) << 1)
+            iVar5 = GetSourceInt(param_2->operands + 2);
+            pSVar8 = (Statement_s *)StringTable_GetColumnValueForRow(local_90,iVar6,(iVar5 + 2) * 2)
             ;
-            if (puVar9 == (undefined1 *)0x0) {
-              puVar9 = &DAT_820068af;
+            if (pSVar8 == (Statement_s *)0x0) {
+              pSVar8 = (Statement_s *)"";
             }
           }
           else {
-            iVar8 = I_stricmp(uVar4,0xffffffff82168808);
-            if (iVar8 != 0) goto LAB_8259c9f4;
-            if (piVar1[0x14] < 3) {
-              Com_PrintError(0xd,0xffffffff821687c0);
+            iVar5 = I_stricmp(pcVar4,"reward");
+            if (iVar5 != 0) goto LAB_8259c9f4;
+            if (param_2->operandCount < 3) {
+              Com_PrintError(0xd,
+                             "Bad params: getchallengedata( <challenge ref>, reward, <state index> )\n"
+                            );
               __restgprlr_22();
               return;
             }
-            uVar7 = GetSourceInt(param_2 + 0x10);
-            puVar9 = (undefined1 *)
-                     StringTable_GetColumnValueForRow(local_90,lVar6,(uVar7 & 0x7fffffff) * 2 + 5);
-            if (puVar9 == (undefined1 *)0x0) {
-              param_3[1] = &DAT_820068af;
+            iVar5 = GetSourceInt(param_2->operands + 2);
+            pSVar8 = (Statement_s *)StringTable_GetColumnValueForRow(local_90,iVar6,iVar5 * 2 + 5);
+            if (pSVar8 == (Statement_s *)0x0) {
+              (param_3->internals).floatVal = (float)"";
               __restgprlr_22(0xffffffff820068af);
               return;
             }
@@ -11020,7 +13214,7 @@ LAB_8259c6c4:
         }
       }
     }
-    param_3[1] = puVar9;
+    (param_3->internals).function = pSVar8;
     __restgprlr_22();
     return;
   }
@@ -11032,66 +13226,89 @@ LAB_8259c9f4:
 
 // 8259CA00  GetIsEliteAppPresent  (ui/ui_expressions.cpp:9459)
 
-void GetIsEliteAppPresent(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+void GetIsEliteAppPresent(LocalClientNum_t param_1,Operand *param_2)
 
 {
-  uint uVar1;
+  operandInternalDataUnion oVar1;
+  int iVar2;
+  bool bVar3;
   
-  *param_2 = 0;
-  CL_ControllerIndexFromClientNum();
-  uVar1 = Live_IsEliteAppPresent();
-  param_2[1] = uVar1 & 0xff;
+  param_2->dataType = VAL_INT;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar3 = Live_IsEliteAppPresent(iVar2);
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = bVar3;
+  param_2->internals = oVar1;
   return;
 }
 
 
 // 8259CA40  CanItemDefTakeFocus  (ui/ui_expressions.cpp:9466)
 
-void CanItemDefTakeFocus(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CanItemDefTakeFocus(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  undefined4 uVar5;
-  undefined4 *puVar6;
+  Operand *pOVar1;
+  LocalClientNum_t LVar2;
+  UiContext *pUVar3;
+  char *pcVar4;
+  menuDef_t *pmVar5;
+  itemDef_t *piVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
   
-  uVar2 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x24fb,0,0xffffffff82000f98,0xffffffff8216897c);
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_25(param_1);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x24fb,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82164aa0,0x24fc,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x24fc,
+                    0,"%s");
   }
-  puVar6 = (undefined4 *)param_3;
-  *puVar6 = 0;
-  puVar6[1] = 0;
-  piVar1 = (int *)param_2;
-  if (((piVar1[0x14] == 2) && (*piVar1 == 2)) && (piVar1[2] == 2)) {
-    uVar3 = UI_GetClientDC(uVar2);
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82164aa0,0x250d,0,0xffffffff82000f98,0xffffffff8216783c);
+  puVar10 = (undefined4 *)uVar9;
+  *puVar10 = 0;
+  puVar10[1] = 0;
+  pOVar1 = (Operand *)uVar8;
+  if (((pOVar1[10].dataType == VAL_STRING) && (pOVar1->dataType == VAL_STRING)) &&
+     (pOVar1[1].dataType == VAL_STRING)) {
+    pUVar3 = UI_GetClientDC(LVar2);
+    if (pUVar3 == (UiContext *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x250d,0,"%s");
     }
-    uVar4 = GetSourceString(param_2);
-    uVar3 = Menus_FindByName(uVar3,uVar4);
-    if ((uVar3 & 0xffffffff) == 0) {
-      uVar2 = GetSourceString(param_2);
-      Com_PrintWarning(0xd,0xffffffff8216894c,uVar2);
+    pcVar4 = GetSourceString(pOVar1);
+    pmVar5 = Menus_FindByName(pUVar3,pcVar4);
+    if (pmVar5 == (menuDef_t *)0x0) {
+      GetSourceString(pOVar1);
+      Com_PrintWarning(0xd,"CanItemDefTakeFocus:: Cannot find menuDef %s\n");
       __restgprlr_25();
       return;
     }
-    uVar4 = GetSourceString(param_2 + 8);
-    uVar3 = Menu_FindItemByName(uVar3,uVar4);
-    if ((uVar3 & 0xffffffff) != 0) {
-      uVar5 = Item_CanHaveFocus(uVar2,uVar3);
-      puVar6[1] = uVar5;
+    pcVar4 = GetSourceString(pOVar1 + 1);
+    piVar6 = Menu_FindItemByName(pmVar5,pcVar4);
+    if (piVar6 != (itemDef_t *)0x0) {
+      iVar7 = Item_CanHaveFocus(LVar2,piVar6);
+      puVar10[1] = iVar7;
       __restgprlr_25();
       return;
     }
   }
   else {
-    Com_PrintError(0xd,0xffffffff82168900);
+    Com_PrintError(0xd,"CanItemDefTakeFocus:: Expected two string arguments (menuName, itemName)\n")
+    ;
   }
   __restgprlr_25();
   return;
@@ -11100,2019 +13317,2091 @@ void CanItemDefTakeFocus(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 8259CD68  RunOp  (ui/ui_expressions.cpp:9501)
 
-void RunOp(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void RunOp(LocalClientNum_t param_1,Statement_s *param_2,OperatorStack *param_3,
+          OperandStack *param_4)
 
 {
-  bool bVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  char cVar8;
-  int iVar6;
-  uint uVar7;
-  undefined8 uVar5;
-  undefined1 uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  int iVar12;
-  double dVar13;
-  undefined4 local_1b0;
-  undefined1 *local_1ac;
-  int local_1a8;
-  char *pcStack_1a4;
-  int local_1a0;
-  float fStack_19c;
-  int local_190 [20];
+  operationEnum oVar1;
+  operationEnum oVar2;
+  OperandStack *pOVar3;
+  bool bVar4;
+  Operand OVar5;
+  Operand OVar6;
+  LocalClientNum_t LVar7;
+  int iVar8;
+  bool bVar12;
+  GameStateInfo *pGVar9;
+  LocalClientNum_t LVar10;
+  char *pcVar11;
+  Statement_s *pSVar13;
+  OperatorStack *pOVar14;
+  longlong lVar15;
+  Operand *pOVar16;
+  int iVar17;
+  operandInternalDataUnion oVar18;
+  undefined1 local_1b0 [112];
   int local_140;
-  undefined1 auStack_130 [96];
-  undefined1 auStack_d0 [208];
+  OperandList OStack_130;
+  char acStack_d0 [208];
   
-  uVar3 = __savegprlr_24();
-  dataCacheBlockTouch((ulonglong)*(uint *)((int)param_4 + 0x13b0) * 0x54 + param_4 + -0x54);
-  uVar4 = CL_ControllerIndexFromClientNum();
-  iVar6 = (int)param_3;
-  if (*(int *)(iVar6 + 0xf0) < 1) {
-    MyAssertHandler(0xffffffff82164aa0,0x252d,0,0xffffffff82168a0c,0xffffffff82168a30);
+  lVar15 = (longlong)(int)param_4;
+  LVar7 = __savegprlr_24(param_1);
+  pOVar3 = (OperandStack *)lVar15;
+  dataCacheBlockTouch((ulonglong)(uint)pOVar3->numOperandLists * 0x54 + lVar15 + -0x54);
+  pSVar13 = param_2;
+  pOVar14 = param_3;
+  iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+  if (param_3->numOperators < 1) {
+    pOVar14 = (OperatorStack *)0x0;
+    pSVar13 = (Statement_s *)0x252d;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x252d,
+                    0,"%s\n\t(opStack->numOperators) = %i");
   }
-  uVar7 = *(uint *)(*(int *)(iVar6 + 0xf0) * 4 + iVar6 + -4);
-  uVar11 = (ulonglong)uVar7;
-  dataCacheBlockTouch(uVar11 - 0x7c099228);
-  iVar10 = *(int *)(iVar6 + 0xf0) + -1;
-  bVar2 = false;
-  iVar12 = 0;
-  *(int *)(iVar6 + 0xf0) = iVar10;
-  *(undefined4 *)(iVar10 * 4 + iVar6) = 0;
-  if (0x1d < (int)uVar7) {
-    switch(uVar7 - 0x1e) {
-    case 0:
-      GetOperand(param_4,&local_1a8);
-      GetSinValue(&local_1a8,&local_1b0);
-    case 0xb5:
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+  oVar1 = param_3->stack[param_3->numOperators + -1];
+  dataCacheBlockTouch((ulonglong)oVar1 - 0x7c099228);
+  iVar17 = param_3->numOperators + -1;
+  bVar12 = false;
+  oVar18.intVal = 0;
+  pOVar16 = (Operand *)(iVar17 * 4);
+  param_3->numOperators = iVar17;
+  *(undefined4 *)((int)param_3->stack + (int)&pOVar16->dataType) = 0;
+  if (0x1d < (int)oVar1) {
+    switch(oVar1 - OP_SIN) {
+    case OP_NOOP:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetSinValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+    case OP_GETNATTYPE:
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 1:
-      GetOperand(param_4,&local_1a8);
-      GetCosValue(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_RIGHTPAREN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetCosValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 2:
-      GetOperandList(param_4,local_190);
-      MinValue(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MULTIPLY:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      MinValue((OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 3:
-      GetOperandList(param_4,local_190);
-      MaxValue(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DIVIDE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      MaxValue((OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 4:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)DAT_83f60a44;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MODULUS:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = g_uiExpressionState.milliseconds;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 5:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)UI_GetLocalClientUIContextMilliseconds(uVar3);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ADD:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = UI_GetLocalClientUIContextMilliseconds(LVar7);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 6:
-      GetOperand(param_4,&local_1a8);
-      GetDvarIntValue(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SUBTRACT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetDvarIntValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 7:
-      GetOperand(param_4,&local_1a8);
-      GetDvarBoolValue(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_NOT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetDvarBoolValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 8:
-      GetOperand(param_4,&local_1a8);
-      GetDvarFloatValue(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LESSTHAN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetDvarFloatValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 9:
-      GetOperand(param_4,&local_1a8);
-      GetDvarStringValue(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LESSTHANEQUALTO:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetDvarStringValue((Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 10:
-      GetUIActive(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GREATERTHAN:
+      GetUIActive(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb:
-      GetFlashbanged(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GREATERTHANEQUALTO:
+      GetFlashbanged(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc:
-      GetUsingVehicle(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_EQUALS:
+      GetUsingVehicle(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd:
-      GetMissileCam(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_NOTEQUAL:
+      GetMissileCam(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe:
-      GetScoped(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_AND:
+      GetScoped(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf:
-      GetScopedThermal(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_OR:
+      GetScopedThermal(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10:
-      GetScoreboardVisible(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LEFTPAREN:
+      GetScoreboardVisible(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11:
-      GetInKillcam(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_COMMA:
+      GetInKillcam(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x12:
-      GetInKillcamNPC(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_BITWISEAND:
+      GetInKillcamNPC(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x13:
-      GetOperand(param_4,&local_1a8);
-      GetPlayerField(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_BITWISEOR:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetPlayerField(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x14:
-      GetOperand(param_4,&local_1a8);
-      GetPlayerPerk(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_BITWISENOT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetPlayerPerk(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x15:
-      GetSelectingLocation(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_BITSHIFTLEFT:
+      GetSelectingLocation(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x16:
-      GetSelectingDirection(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_BITSHIFTRIGHT:
+      GetSelectingDirection(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x17:
-      GetOperand(param_4,&local_1a8);
-      GetTeamField(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FIRSTFUNCTIONCALL:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetTeamField(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x18:
-      GetOperand(param_4,&local_1a8);
-      GetOtherTeamField(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_STATICDVARBOOL:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetOtherTeamField(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x19:
-      GetOperand(param_4,&local_1a8);
-      GetFieldForTeam(uVar3,2,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_STATICDVARFLOAT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetFieldForTeam(LVar7,TEAM_ALLIES,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1a:
-      GetOperand(param_4,&local_1a8);
-      GetFieldForTeam(uVar3,1,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_STATICDVARSTRING:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetFieldForTeam(LVar7,TEAM_AXIS,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1b:
-      GetOperand(param_4,&local_1a8);
-      IsMenuOpen(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TOINT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      IsMenuOpen(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1c:
-      WritingData(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TOSTRING:
+      WritingData(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1d:
-      InLobby(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case LAST_COMMONLY_CALLED_FUNCTION:
+      InLobby((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1e:
-      InGameLobby(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SIN:
+      InGameLobby((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x1f:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)DAT_82b5700c;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82165738,DAT_82b5700c);
+    case OP_COS:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = g_partyData.inParty;
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"InPrivateParty() = %i\n");
       }
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x20:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)DAT_82b57004;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82165750,DAT_82b57004);
+    case OP_MIN:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = g_partyData.areWeHost;
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"PrivatePartyHost() = %i\n");
       }
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x21:
-      PrivatePartyHostInLobby(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MAX:
+      PrivatePartyHostInLobby((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x22:
-      AloneInPrivateParty(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MILLISECONDS:
+      AloneInPrivateParty((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x23:
-      GetAdsJavelin(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALCLIENTUIMILLISECONDS:
+      GetAdsJavelin(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x24:
-      GetOperand(param_4,&local_1a8);
-      GetWeapLockBlink(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DVARINT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetWeapLockBlink(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x25:
-      GetWeapAttackTop(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DVARBOOL:
+      GetWeapAttackTop(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x26:
-      GetWeapAttackDirect(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DVARFLOAT:
+      GetWeapAttackDirect(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x27:
-      GetWeapLocking(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DVARSTRING:
+      GetWeapLocking(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x28:
-      GetWeapLocked(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_UIACTIVE:
+      GetWeapLocked(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x29:
-      GetWeapLockTooClose(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FLASHBANGED:
+      GetWeapLockTooClose(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2a:
-      GetWeapLockScreenPosX(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_USINGVEHICLE:
+      GetWeapLockScreenPosX(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2b:
-      GetWeapLockScreenPosY(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MISSILECAM:
+      GetWeapLockScreenPosY(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2c:
-      GetOperand(param_4,&local_1a8);
-      SecondsToTimeDisplay(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SCOPED:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      SecondsToTimeDisplay
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2d:
-      GetOperandList(param_4,local_190);
-      TableLookup(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SCOPEDTHERMAL:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      TableLookup((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2e:
-      GetOperandList(param_4,local_190);
-      TableLookupByRow(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SCOREBOARDVISIBLE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      TableLookupByRow((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                       (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x2f:
-      GetOperandList(param_4,local_190);
-      TableLookupRowNum(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INKILLCAM:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      TableLookupRowNum((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                        (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x30:
-      GetOperandList(param_4,local_190);
-      LocalizeString(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INKILLCAM_NPC:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      LocalizeString(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x31:
-      GetOperand(param_4,&local_1a8);
-      GetLocalVarIntValue(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PLAYERFIELD:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetLocalVarIntValue(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x32:
-      GetOperand(param_4,&local_1a8);
-      GetLocalVarBoolValue(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_PLAYER_PERK:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetLocalVarBoolValue(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x33:
-      GetOperand(param_4,&local_1a8);
-      GetLocalVarFloatValue(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SELECTINGLOCATION:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetLocalVarFloatValue(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x34:
-      GetOperand(param_4,&local_1a8);
-      GetLocalVarStringValue(uVar3,&local_1a8,&local_1b0,auStack_d0,0x20);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SELECTINGDIRECTION:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetLocalVarStringValue(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,acStack_d0,0x20);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x35:
-      GetTimeLeft(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TEAMFIELD:
+      GetTimeLeft(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x36:
-      GetOperand(param_4,&local_1a8);
-      uVar4 = GetSourceInt(&local_1a8);
-      SecondsToCountdownDisplay(uVar4,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_OTHERTEAMFIELD:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      LVar10 = GetSourceInt((Operand *)(local_1b0 + 8));
+      SecondsToCountdownDisplay(LVar10,(int)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x37:
-      GetOperand(param_4,&local_1a8);
-      GetGameMessageWindowActive(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MARINESFIELD:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetGameMessageWindowActive(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x38:
-      GetGametypeName(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_OPFORFIELD:
+      GetGametypeName(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x39:
-      GetGametypeInternal(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MENUISOPEN:
+      GetGametypeInternal(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3a:
-      GetGametypeObjective(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WRITINGDATA:
+      GetGametypeObjective(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3b:
-      GetOperand(param_4,&local_1a8);
-      GetScore(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INLOBBY:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetScore(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3c:
-      GetFollowing(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INGAMELOBBY:
+      GetFollowing(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3d:
-      GetSpectatingFree(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INPRIVATEPARTY:
+      GetSpectatingFree(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3e:
-      GetOperandList(param_4,local_190);
-      GetKeyBinding(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PRIVATEPARTYHOST:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetKeyBinding(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x3f:
-      GetOperand(param_4,&local_1a8);
-      GetActionSlotUsable(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PRIVATEPARTYHOSTINLOBBY:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetActionSlotUsable(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x40:
-      GetOperand(param_4,&local_1a8);
-      GetHudFade(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ALONEINPARTY:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudFade(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x41:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)Live_HowManyPlayersCanWeHost();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ADSJAVELIN:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = Live_HowManyPlayersCanWeHost();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x42:
-      local_1b0 = 0;
-      uVar7 = Live_AreWeAcceptingInvite();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKBLINK:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Live_AreWeAcceptingInvite();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x43:
-      GetIsIntermission(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPATTACKTOP:
+      GetIsIntermission(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x44:
-      GameHost(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPATTACKDIRECT:
+      GameHost((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x45:
-      local_1b0 = 0;
-      cVar8 = Party_IsAnyMemberMissingMapPack();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKING:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Party_IsAnyMemberMissingMapPack();
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x46:
-      GetPartyMissingMapPackError(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKED:
+      GetPartyMissingMapPackError((Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x47:
-      local_1b0 = 0;
-      cVar8 = Content_AnyNewMapPacks();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKTOOCLOSE:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Content_AnyNewMapPacks();
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x48:
-      local_1b0 = 0;
-      cVar8 = UI_AmISelected(uVar3);
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKSCREENPOSX:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = UI_AmISelected(LVar7);
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x49:
-      GetPartyStatusString(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPLOCKSCREENPOSY:
+      GetPartyStatusString((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4a:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)GPad_GetAttachedControllerCount();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SECONDSASTIME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = GPad_GetAttachedControllerCount();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4b:
-      GetIsSplitScreenOnlinePossible(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TABLELOOKUP:
+      GetIsSplitScreenOnlinePossible((Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4c:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)CL_GetLocalClientActiveCount();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TABLELOOKUPBYROW:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = CL_GetLocalClientActiveCount();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4d:
-      GetOperandList(param_4,local_190);
-      GetPlayerData(uVar3,local_190,0,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TABLEGETROWNUM:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerData(LVar7,(OperandList *)(local_1b0 + 0x20),0,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4e:
-      GetOperandList(param_4,local_190);
-      GetPlayerDataSplitScreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALIZESTRING:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerDataSplitScreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x4f:
-      GetOperandList(param_4,local_190);
-      GetMatchRulesData(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALVARINT:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetMatchRulesData((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                        (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x50:
-      GetOperandList(param_4,local_190);
-      GetMatchRulesMetaData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALVARBOOL:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetMatchRulesMetaData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x51:
-      GetOperand(param_4,&local_1a8);
-      local_1b0 = 0;
-      GetSourceInt(&local_1a8);
-      local_1ac = (undefined1 *)CL_GetRankForXpMP();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALVARFLOAT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = GetSourceInt((Operand *)(local_1b0 + 8));
+      local_1b0._4_4_ = CL_GetRankForXpMP(iVar8);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x52:
-      GetOperand(param_4,&local_1a8);
-      local_1b0 = 0;
-      GetSourceInt(&local_1a8);
-      local_1ac = (undefined1 *)CL_GetRankForXpSO();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LOCALVARSTRING:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = GetSourceInt((Operand *)(local_1b0 + 8));
+      local_1b0._4_4_ = CL_GetRankForXpSO(iVar8);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x53:
-      GetOperand(param_4,&local_1a8);
-      GetIsItemUnlocked(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TIMELEFT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsItemUnlocked(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x54:
-      GetOperandList(param_4,local_190);
-      GetIsItemUnlockedSplitScreen(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SECONDSASCOUNTDOWN:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsItemUnlockedSplitScreen(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x56:
-      GetOperand(param_4,&local_1a8);
-      GetIsCardTitleUnlocked(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMETYPENAME:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsCardTitleUnlocked(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x57:
-      GetOperand(param_4,&local_1a8);
-      GetIsCardIconNew(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMETYPE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsCardIconNew(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x58:
-      GetOperand(param_4,&local_1a8);
-      GetIsCardTitleNew(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMETYPEDESCRIPTION:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsCardTitleNew(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x59:
-      GetOperandList(param_4,local_190);
-      GetIsCardIconUnlockedSplitscreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SCORE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsCardIconUnlockedSplitscreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5a:
-      GetOperandList(param_4,local_190);
-      GetIsCardTitleUnlockedSplitscreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FOLLOWING:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsCardTitleUnlockedSplitscreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5b:
-      GetOperandList(param_4,local_190);
-      GetIsCardIconNewSplitscreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPECTATINGFREE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsCardIconNewSplitscreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5c:
-      GetOperandList(param_4,local_190);
-      GetIsCardTitleNewSplitscreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_KEYBINDING:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsCardTitleNewSplitscreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5d:
-      GetOperand(param_4,&local_1a8);
-      GetIsProfileItemUnlocked(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ACTIONSLOTUSABLE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsProfileItemUnlocked(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5e:
-      GetOperandList(param_4,local_190);
-      GetIsProfileItemUnlockedSplitscreen(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_HUDFADE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsProfileItemUnlockedSplitscreen
+                (LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x5f:
-      GetOperand(param_4,&local_1a8);
-      GetIsProfileItemNew(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MAXPLAYERS:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsProfileItemNew(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x60:
-      GetOperandList(param_4,local_190);
-      GetIsProfileItemNewSplitscreen(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ACCEPTINGINVITE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsProfileItemNewSplitscreen(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x61:
-      GetOperandList(param_4,local_190);
-      DebugPrint(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ISINTERMISSION:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      DebugPrint((OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x62:
-      GetOperandList(param_4,local_190);
-      GetPlayerDataAnyBoolTrue(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMEHOST:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerDataAnyBoolTrue(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 99:
-      GetOperand(param_4,&local_1a8);
-      GetProfileAnyBoolTrue(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PARTYHASMISSINGMAPPACK:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetProfileAnyBoolTrue(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 100:
-      GetOperand(param_4,&local_1a8);
-      GetWeaponClassNew(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PARTYMISSINGMAPPACKERROR:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetWeaponClassNew(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x65:
-      GetWeaponName(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ANYNEWMAPPACKS:
+      GetWeaponName(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x66:
-      IsPlayerReloading(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_AMISELECTED:
+      IsPlayerReloading(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x67:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff8216707c,0);
+    case OP_PARTYSTATUSSTRING:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"savegameavailable() = %i\n");
       }
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x68:
-      GetOperand(param_4,&local_1a8);
-      GetUnlockedItemCount(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ATTACHED_CONTROLLER_COUNT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetUnlockedItemCount(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x69:
-      GetOperandList(param_4,local_190);
-      GetUnlockedItemCountSplitScreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_SPLIT_SCREEN_ONLINE_POSSIBLE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetUnlockedItemCountSplitScreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6a:
-      GetOperandList(param_4,local_190);
-      GetUnlockedItem(uVar3,local_190,0,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLITSCREENPLAYERCOUNT:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetUnlockedItem(LVar7,(OperandList *)(local_1b0 + 0x20),0,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6b:
-      GetOperandList(param_4,local_190);
-      GetUnlockedItemSplitScreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPLAYERDATA:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetUnlockedItemSplitScreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6c:
-      GetRadarIsJammed(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPLAYERDATASPLITSCREEN:
+      GetRadarIsJammed(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6d:
-      GetRadarJamIntensity(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MATCHRULES_DATA:
+      GetRadarJamIntensity(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6e:
-      GetRadarIsEnabled(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SAVED_MATCHRULES_METADATA:
+      GetRadarIsEnabled(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x6f:
-      GetIsEmpJammed(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LEVEL_FOR_EXPERIENCE_MP:
+      GetIsEmpJammed(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x70:
-      GetPlayerADS(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LEVEL_FOR_EXPERIENCE_SO:
+      GetPlayerADS(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x71:
-      GetWeaponHeatActive(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_ITEM_UNLOCKED:
+      GetWeaponHeatActive(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x72:
-      GetWeaponHeatValue(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_ITEM_UNLOCKEDSPLITSCREEN:
+      GetWeaponHeatValue(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x73:
-      GetWeaponHeatOverheated(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDICON_UNLOCKED:
+      GetWeaponHeatOverheated(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x74:
-      GetOperand(param_4,&local_1a8);
-      GetHudSplashText(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDTITLE_UNLOCKED:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudSplashText(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x75:
-      GetOperand(param_4,&local_1a8);
-      GetHudSplashDescription(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDICON_NEW:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudSplashDescription(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x76:
-      GetOperand(param_4,&local_1a8);
-      GetHudSplashMaterial(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDTITLE_NEW:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudSplashMaterial(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x77:
-      GetOperand(param_4,&local_1a8);
-      GetHudSplashHasIcon(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDICON_UNLOCKED_SPLITSCREEN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudSplashHasIcon(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x78:
-      GetOperand(param_4,&local_1a8);
-      GetHudSplashRowNum(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDTITLE_UNLOCKED_SPLITSCREEN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetHudSplashRowNum(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x79:
-      GetFocusedItemName(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDICON_NEW_SPLITSCREEN:
+      GetFocusedItemName(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7a:
-      GetFocusedItemX(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CARDTITLE_NEW_SPLITSCREEN:
+      GetFocusedItemX(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7b:
-      GetFocusedItemY(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_PROFILEITEM_UNLOCKED:
+      GetFocusedItemY(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7c:
-      GetFocusedItemWidth(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_PROFILEITEM_UNLOCKED_SPLITSCREEN:
+      GetFocusedItemWidth(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7d:
-      GetFocusedItemHeight(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_PROFILEITEM_NEW:
+      GetFocusedItemHeight(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7e:
-      GetOperand(param_4,&local_1a8);
-      GetItemX(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_PROFILEITEM_NEW_SPLITSCREEN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetItemX(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x7f:
-      GetOperand(param_4,&local_1a8);
-      GetItemY(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DEBUG_PRINT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetItemY(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x80:
-      GetOperand(param_4,&local_1a8);
-      GetItemWidth(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPLAYERDATA_ANYBOOLTRUE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetItemWidth(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x81:
-      GetOperand(param_4,&local_1a8);
-      GetItemHeight(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPROFILE_ANYBOOLTRUE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetItemHeight(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x82:
-      GetOperand(param_4,&local_1a8);
-      GetPlaylistField(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPON_CLASS_NEW:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetPlaylistField(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x83:
-      GetScoreboardExternalMuteNotice(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPONNAME:
+      GetScoreboardExternalMuteNotice(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x84:
-      GetOperandList(param_4,local_190);
-      GetClientMatchData(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ISRELOADING:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetClientMatchData((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                         (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x85:
-      local_1b0 = 2;
-      local_1ac = &DAT_82aa2a04;
-      if (*(int *)(DAT_83f71ebc + 0xc) != 0) {
-        Com_Printf(0xd,0xffffffff82165858,0xffffffff82aa2a04);
+    case OP_SAVE_GAME_AVAILABLE:
+      local_1b0._0_4_ = VAL_STRING;
+      local_1b0._4_4_ = -2.500337e-37;
+      if ((uiscript_debug->current).integer != 0) {
+        Com_Printf(0xd,"getClientMatchDataDef() -> %s\n");
       }
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x86:
-      GetMapName(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_UNLOCKED_ITEM_COUNT:
+      GetMapName((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x87:
-      GetMapImage(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_UNLOCKED_ITEM_COUNT_SPLITSCREEN:
+      GetMapImage((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x88:
-      GetOperand(param_4,&local_1a8);
-      GetMapCustom(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_UNLOCKED_ITEM:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetMapCustom((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x89:
-      GetMigrationStatus(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_UNLOCKED_ITEM_SPLITSCREEN:
+      GetMigrationStatus(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8a:
-      GetOperandList(param_4,local_190);
-      GetPlayerCardClientData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_RADAR_IS_JAMMED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerCardClientData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8b:
-    case 0xbb:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x1;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_RADAR_JAM_INTENSITY:
+    case OP_USER_WITHOUT_OFFLINE_PROFILE:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 1;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8c:
-      GetOperandList(param_4,local_190);
-      GetCoOpPlayerField(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_RADAR_IS_ENABLED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetCoOpPlayerField((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                         (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8d:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)(uint)(DAT_82966e98 != 0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_EMP_JAMMED:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = cl_multi_gamepads_enabled != 0;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8e:
-      GetPartyStatus(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PLAYERADS:
+      GetPartyStatus((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x8f:
-      local_1ac = (undefined1 *)Party_GetLobbySearchParams();
-      local_1b0 = 2;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPON_HEAT_ACTIVE:
+      local_1b0._4_4_ = Party_GetLobbySearchParams();
+      local_1b0._0_4_ = VAL_STRING;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x90:
-      GetOperandList(param_4,local_190);
-      GetTimePlayed(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPON_HEAT_VALUE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetTimePlayed(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x91:
-      local_1b0 = 0;
-      uVar7 = UI_IsSelectedPlayerFriend(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_WEAPON_HEAT_OVERHEATED:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = UI_IsSelectedPlayerFriend(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x92:
-      GetOperandList(param_4,local_190);
-      GetCharByIndex(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLASH_TEXT:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetCharByIndex((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                     (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x93:
-      GetOperandList(param_4,local_190);
-      GetPlayerProfileData(uVar3,local_190,0,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLASH_DESCRIPTION:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerProfileData(LVar7,(OperandList *)(local_1b0 + 0x20),0,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x94:
-      GetOperandList(param_4,local_190);
-      GetPlayerProfileDataSplitScreen(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLASH_MATERIAL:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetPlayerProfileDataSplitScreen
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x95:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = GamerProfile_IsProfileLoggedIn();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLASH_HAS_ICON:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = GamerProfile_IsProfileLoggedIn(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x96:
-      GetOperand(param_4,&local_1a8);
-      GetWaitPopupStatus(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SPLASH_ROWNUM:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetWaitPopupStatus(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x97:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)Live_GetLocalNatType();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETFOCUSED_NAME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = Live_GetLocalNatType();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x98:
-      GetLocalizedNATType(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETFOCUSED_X:
+      GetLocalizedNATType((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x99:
-      GamerProfile_GetSafeareaAdjustments(&local_1a0,&local_1a8);
-      local_1ac = (undefined1 *)local_1a0;
-      local_1b0 = 1;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETFOCUSED_Y:
+      GamerProfile_GetSafeareaAdjustments((float *)(local_1b0 + 0x10),(float *)(local_1b0 + 8));
+      local_1b0._4_4_ = local_1b0._16_4_;
+      local_1b0._0_4_ = VAL_FLOAT;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9a:
-      GamerProfile_GetSafeareaAdjustments(&local_1a8,&local_1a0);
-      local_1ac = (undefined1 *)local_1a0;
-      local_1b0 = 1;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETFOCUSED_W:
+      GamerProfile_GetSafeareaAdjustments((float *)(local_1b0 + 8),(float *)(local_1b0 + 0x10));
+      local_1b0._4_4_ = local_1b0._16_4_;
+      local_1b0._0_4_ = VAL_FLOAT;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9b:
-      ConnectionInfoInternal(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETFOCUSED_H:
+      ConnectionInfoInternal(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9c:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = LiveStorage_LocalClientOfflineProfileCanSave();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETITEMDEF_X:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = LiveStorage_LocalClientOfflineProfileCanSave(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9d:
-      UserWithoutOfflineProfile(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETITEMDEF_Y:
+      UserWithoutOfflineProfile((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9e:
-      local_1b0 = 0;
-      uVar7 = CL_AllSplitScreenPlayersCanSaveProgress();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETITEMDEF_W:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = CL_AllSplitScreenPlayersCanSaveProgress();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x9f:
-      local_1b0 = 0;
-      uVar7 = CL_AllSplitScreenPlayersAreSignedIn();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETITEMDEF_H:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = CL_AllSplitScreenPlayersAreSignedIn();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa0:
-      GetOperand(param_4,&local_1a8);
-      local_1b0 = 0;
-      GetSourceInt(&local_1a8);
-      cVar8 = Content_DoWeHaveContentPack();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PLAYLISTFIELD:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = GetSourceInt((Operand *)(local_1b0 + 8));
+      bVar12 = Content_DoWeHaveContentPack(iVar8);
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa1:
-    case 0x103:
-    case 0x10b:
-    case 0x11f:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SCOREBOARD_EXTERNALMUTE_NOTICE:
+    case OP_GAMETYPENAME_ABBREVIATED:
+    case OP_UI_STARTED:
+    case OP_LIVEPARTY_IS_ME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
     default:
-      if (DAT_84013128 == 0) {
-        uVar3 = va(0xffffffff82168988,uVar11);
-        MyAssertHandler(0xffffffff82164aa0,0x2b60,0,uVar3);
+      if (alwaysfails == 0) {
+        pcVar11 = va("Unhandled operator %i in RunOp!\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x2b60,0,pcVar11);
       }
       break;
-    case 0xa4:
-      IsCoOpReady(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_NAME:
+      IsCoOpReady((Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa5:
-      local_1b0 = 0;
-      cVar8 = Party_HasVoteBeenCast();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_IMAGE:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Party_HasVoteBeenCast();
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa6:
-      local_1b0 = 0;
-      cVar8 = Party_HasVotePassed();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_CUSTOM:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Party_HasVotePassed();
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa7:
-      GetOperand(param_4,&local_1a8);
-      GetMapVoteMapImage(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MIGRATION_STATUS:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetMapVoteMapImage((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa8:
-      GetOperand(param_4,&local_1a8);
-      GetMapVoteMapName(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_PLAYERCARD_INFO:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetMapVoteMapName((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xa9:
-      GetOperand(param_4,&local_1a8);
-      GetMapVoteGametypeName(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_OFFLINE_PROFILE_SELECTED:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetMapVoteGametypeName(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xaa:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      cVar8 = FriendsMenu_FeederFriendInvitable();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_COOP_PLAYERFIELD:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = FriendsMenu_FeederFriendInvitable(iVar8);
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xab:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      cVar8 = FriendsMenu_FeederFriendJoinable();
-      local_1ac = (undefined1 *)(uint)(cVar8 != '\0');
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_COOP:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = FriendsMenu_FeederFriendJoinable(iVar8);
+      local_1b0._4_4_ = (int)bVar12 + (-(uint)!bVar12 - (bVar12 + -1));
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xac:
-      GetOperandList(param_4,local_190);
-      GetSortedChallengeIndex(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPARTYSTATUS:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetSortedChallengeIndex(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xad:
-      GetOperandList(param_4,local_190);
-      GetSortedChallengeName(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETSEARCHPARAMS:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetSortedChallengeName(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xae:
-      GetOperandList(param_4,local_190);
-      GetSortedChallengeCount(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETTIMEPLAYED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetSortedChallengeCount(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xaf:
-      GetOperandList(param_4,local_190);
-      GetFilterChallengeCount(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_SELECTED_PLAYER_FRIEND:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetFilterChallengeCount(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb0:
-      GetOperandList(param_4,local_190);
-      GetFilterChallengeLockedCount(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETCHARBYINDEX:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetFilterChallengeLockedCount(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb1:
-      GetOperandList(param_4,local_190);
-      GetFilterChallengeCompleteCount(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPLAYERPROFILEDATA:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetFilterChallengeCompleteCount(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb2:
-      GetOperandList(param_4,local_190);
-      GetIsSortedChallengeTiered(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPLAYERPROFILEDATASPLITSCREEN:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsSortedChallengeTiered(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb3:
-      GetOperand(param_4,&local_1a8);
-      GetChallengeFilterCacheCount(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_PROFILE_SIGNED_IN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetChallengeFilterCacheCount(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb4:
-      GetOperand(param_4,&local_1a8);
-      GetChallengeFilterCacheCompleteCount(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_WAIT_POPUP_STATUS:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetChallengeFilterCacheCompleteCount(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb6:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      Com_PrintError(0x10,0xffffffff82168074);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETLOCALIZEDNATTYPE:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      Com_PrintError(0x10,"GetCoopShowPublicType called in non COOP mode\n");
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb7:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      Com_PrintError(0x10,0xffffffff821680a4);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_ADJUSTED_SAFEAREA_HORIZONTAL:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      Com_PrintError(0x10,"GetCoopGroupNum called in non COOP mode\n");
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb8:
-      CoopHasRequiredOnlineFiles(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_ADJUSTED_SAFEAREA_VERTICAL:
+      CoopHasRequiredOnlineFiles(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xb9:
-      GetOperandList(param_4,local_190);
-      GetTextWidth(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_CONNECTION_INFO:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetTextWidth(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xba:
-      GetOperandList(param_4,local_190);
-      GetTextHeight(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_OFFLINE_PROFILE_CAN_SAVE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetTextHeight(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xbc:
-      IsAirburstWeapon(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ALL_SPLITSCREEN_PROFILES_CAN_SAVE:
+      IsAirburstWeapon(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xbd:
-      GetAirburstMeters(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ALL_SPLITSCREEN_PROFILES_ARE_SIGNED_IN:
+      GetAirburstMeters(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xbe:
-      GetCrosshairTraceMeters(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DO_WE_HAVE_MAP_PACK:
+      GetCrosshairTraceMeters(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xbf:
-      GetFacebookStatusText(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MAY_INVITE_PLAYER_TO_PARTY:
+      GetFacebookStatusText(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc0:
-      IsFacebookLoggedIn(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPATCHNOTES:
+      IsFacebookLoggedIn(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc1:
-      IsFacebookChecking(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETGAMEINFOS:
+      IsFacebookChecking(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc2:
-      GetOperand(param_4,&local_1a8);
-      IsFacebookAllowed(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_COOP_READY:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      IsFacebookAllowed(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc3:
-      GetPrivateMatchLobbyStatus(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_VOTE_CAST:
+      GetPrivateMatchLobbyStatus((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc4:
-      GetOperandList(param_4,local_190);
-      IncludedInMapRotation(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_VOTE_PASSED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      IncludedInMapRotation
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc5:
-      GetOperandList(param_4,local_190);
-      Select(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_VOTE_MAP_IMAGE:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      Select((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc6:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_IsPlaying(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_VOTE_MAP_NAME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_IsPlaying(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 199:
-      GetUserGroupText(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_VOTE_GAME_TYPE_NAME:
+      GetUserGroupText(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 200:
-      CL_ControllerIndexFromClientNum(uVar3);
-      local_1ac = (undefined1 *)UserGroups_GetCommonInterestTotal();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_FRIEND_INVITABLE:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      local_1b0._4_4_ = UserGroups_GetCommonInterestTotal(iVar8);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xc9:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_IsFollowCamera(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_FRIEND_JOINABLE:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_IsFollowCamera(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xca:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_IsFreeCamera(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SORTED_CHALLENGE_INDEX:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_IsFreeCamera(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xcb:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      local_1ac = (undefined1 *)CL_Demo_IsCapturingScreenshot(uVar3);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SORTED_CHALLENGE_NAME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      local_1b0._4_4_ = CL_Demo_IsCapturingScreenshot(LVar7);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xcc:
-      GetIsPartyHostWaitingForMembers(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SORTED_CHALLENGE_COUNT:
+      GetIsPartyHostWaitingForMembers((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xcd:
-      GetIsPopupPlayerAway(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FILTER_CHALLENGE_COUNT:
+      GetIsPopupPlayerAway(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xce:
-      GetIsSelectedPlayerAway(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FILTER_CHALLENGE_LOCKED_COUNT:
+      GetIsSelectedPlayerAway(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xcf:
-      GetGameTime(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FILTER_CHALLENGE_COMPLETE_COUNT:
+      GetGameTime(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd0:
-      GetGameTimeEnd(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_SORTED_CHALLENGE_TIERED:
+      GetGameTimeEnd(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd1:
-      GetOperand(param_4,&local_1a8);
-      ItemHasFocus(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_CHALLENGE_FILTER_CACHE_COUNT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      ItemHasFocus(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd2:
-      GetOperand(param_4,&local_1a8);
-      MenuHasFocus(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_CHALLENGE_FILTER_CACHE_COMPLETE_COUNT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      MenuHasFocus(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd3:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      local_1ac = (undefined1 *)CL_Demo_GetSegmentCount();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_COOP_SEARCHING:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      local_1b0._4_4_ = CL_Demo_GetSegmentCount();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd4:
-      GetOperandList(param_4,local_190);
-      GetDemoSegmentInformation(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_COOP_PUBLIC:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetDemoSegmentInformation
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd5:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_IsClipModified();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_COOP_DISPLAYABLE_GROUP_NUM:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_IsClipModified();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd6:
-      iVar6 = GameStateInfo_Get();
-      Operand_SetBool(&local_1b0,*(undefined4 *)(iVar6 + 4));
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_COOP_HAS_REQUIRED_ONLINE_FILES:
+      pGVar9 = GameStateInfo_Get();
+      Operand_SetBool((Operand *)local_1b0,pGVar9->usingRecipe);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd7:
-      uVar9 = Live_UserIsGuest(uVar4);
-      Operand_SetBool(&local_1b0,uVar9);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_TEXTWIDTH:
+      bVar12 = Live_UserIsGuest(iVar8);
+      Operand_SetBool((Operand *)local_1b0,(uint)bVar12);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd8:
-      GetFacebookHelpText(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_TEXTHEIGHT:
+      GetFacebookHelpText(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xd9:
-      IsEliteClanAllowed(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DEVELOPER:
+      IsEliteClanAllowed(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xda:
-      IsEntitlementsAllowed(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USING_AIRBURST_WEAPON:
+      IsEntitlementsAllowed(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xdb:
-      IsUserGroupsAllowed(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_AIRBURST_METERS:
+      IsUserGroupsAllowed(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xdc:
-      IsWaitingForOnlineServices(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_CROSSHAIR_TRACE_METERS:
+      IsWaitingForOnlineServices(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xdd:
-      GetOperandList(param_4,local_190);
-      GetTextWidthModCase(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FACEBOOK_STATUS_TEXT:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetTextWidthModCase(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xde:
-      GetOperand(param_4,&local_1a8);
-      GetSaveScreenTitle(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_FACEBOOK_LOGGED_IN:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetSaveScreenTitle((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xdf:
-      GetOperand(param_4,&local_1a8);
-      GetSaveScreenDescription(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_FACEBOOK_CHECKING:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetSaveScreenDescription
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe0:
-      GetOperandList(param_4,local_190);
-      GetOnlineVaultFeederData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_FACEBOOK_ALLOWED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetOnlineVaultFeederData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe1:
-      uVar4 = OnlineVault_IsRestrictedByTULevel();
-      Operand_SetBool(&local_1b0,uVar4);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GETPRIVATELOBBYSTATUS:
+      iVar8 = OnlineVault_IsRestrictedByTULevel();
+      Operand_SetBool((Operand *)local_1b0,iVar8);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe2:
-      GetOperand(param_4,&local_1a8);
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar4 = GetSourceString(&local_1a8);
-      uVar5 = CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = LiveStorage_CS_IsTaskInProgress(uVar5,uVar4);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_INCLUDEDINMAPROTATION:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      pcVar11 = GetSourceString((Operand *)(local_1b0 + 8));
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = LiveStorage_CS_IsTaskInProgress(iVar8,pcVar11);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe3:
-      GetOperand(param_4,&local_1a8);
-      GetContentServerTaskProgress(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SELECT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetContentServerTaskProgress(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe4:
-      GetOperandList(param_4,local_190);
-      GetRecentGamesFeederData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_DEMO_PLAYING:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetRecentGamesFeederData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe5:
-      GetGametypeNameAbbreviated(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_USER_GROUP_TEXT:
+      GetGametypeNameAbbreviated(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe6:
-      GetOperand(param_4,&local_1a8);
-      GetMapVoteGametypeNameAbbreviated(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_USER_GROUP_COMMON_INTEREST_TOTAL:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetMapVoteGametypeNameAbbreviated(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe7:
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar9 = Live_IsUserSignedInToLive();
-      Operand_SetBool(&local_1b0,uVar9);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_DEMO_FOLLOW_CAMERA:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = Live_IsUserSignedInToLive(iVar8);
+      Operand_SetBool((Operand *)local_1b0,(uint)bVar12);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe8:
-      uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-      local_1b0 = 0;
-      uVar7 = Live_CanUserPlayOnline(uVar4,&local_1a8);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_DEMO_FREE_CAMERA:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Live_CanUserPlayOnline(iVar8,(int *)(local_1b0 + 8));
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xe9:
-      GetOperand(param_4,&local_1a8);
-      UI_GetPastTitleRank(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_DEMO_CAPTURING_SCREENSHOT:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      UI_GetPastTitleRank(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xea:
-      GetOperandList(param_4,local_190);
-      GetFeederData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PARTY_HOST_WAITING_ON_MEMBERS:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetFeederData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xeb:
-      PartyClientsUpToDate(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_POPUP_PARTY_MEMBER_AWAY:
+      PartyClientsUpToDate((int)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xec:
-      GetOperandList(param_4,local_190);
-      TruncateTextWithEllipsis(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_SELECTED_PARTY_MEMBER_AWAY:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      TruncateTextWithEllipsis(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xed:
-      Operand_SetBool(&local_1b0,DAT_82aa1c14);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMETIME:
+      Operand_SetBool((Operand *)local_1b0,cls.uiStarted);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xee:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-      OnlineVault_CanRenderClip(uVar4,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GAMEENDTIME:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      OnlineVault_CanRenderClip(iVar8,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xef:
-      GetOperand(param_4,&local_1a8);
-      GetPreviewMapCustom(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_HAS_FOCUS:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetPreviewMapCustom((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14)
+      ;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf0:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)UI_GetAvailableDlcMapCount();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MENU_HAS_FOCUS:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = UI_GetAvailableDlcMapCount();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf1:
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar9 = Live_IsUserSignedIn();
-      Operand_SetBool(&local_1b0,uVar9);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_DEMO_SEGMENT_COUNT:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = Live_IsUserSignedIn(iVar8);
+      Operand_SetBool((Operand *)local_1b0,(uint)bVar12);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf2:
-      iVar6 = GameStateInfo_Get();
-      Operand_SetBool(&local_1b0,*(undefined4 *)(iVar6 + 0x10));
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_DEMO_SEGMENT_INFORMATION:
+      pGVar9 = GameStateInfo_Get();
+      Operand_SetBool((Operand *)local_1b0,pGVar9->usingIntermission);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf3:
-      GetIsUsingCustomMapRotation(&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CLIP_MODIFIED:
+      GetIsUsingCustomMapRotation((LocalClientNum_t)local_1b0,(Operand *)pSVar13);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf4:
-      GetOperand(param_4,&local_1a8);
-      MenuIsTopmost(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USING_RECIPE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      MenuIsTopmost(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf5:
-      FacebookIsPlatformFriend(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_GUEST:
+      FacebookIsPlatformFriend(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf6:
-      EliteClanIsPlatformFriend(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FACEBOOK_HELP_TEXT:
+      EliteClanIsPlatformFriend(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf7:
-      EliteClanIsMe(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_ELITE_CLAN_ALLOWED:
+      EliteClanIsMe(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf8:
-      EliteClanIsLeader(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_ENTITLEMENTS_ALLOWED:
+      EliteClanIsLeader(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xf9:
-      IsUserSignedInForVault(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USERGROUPS_ALLOWED:
+      IsUserSignedInForVault(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xfa:
-      local_1b0 = 0;
-      iVar6 = GameStateInfo_Get();
-      local_1ac = *(undefined1 **)(iVar6 + 4);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_WAITING_FOR_ONLINE_SERVICES:
+      local_1b0._0_4_ = VAL_INT;
+      pGVar9 = GameStateInfo_Get();
+      local_1b0._4_4_ = pGVar9->usingRecipe;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xfb:
-      uVar4 = CL_ControllerIndexFromClientNum(uVar3);
-      local_1b0 = 0;
-      uVar7 = Live_CanUserAccessOnlineVault(uVar4,&local_1a8);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_TEXTWIDTHMODCASE:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = Live_CanUserAccessOnlineVault(iVar8,(int *)(local_1b0 + 8));
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xfc:
-      FriendGetGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SAVE_SCREEN_TITLE:
+      FriendGetGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xfd:
-      RecentPlayerGetGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_SAVE_SCREEN_DESCRIPTION:
+      RecentPlayerGetGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xfe:
-      LivePartyGetGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_ONLINEVAULT_SELECTEDITEM_DATA:
+      LivePartyGetGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0xff:
-      FacebookGetGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ONLINEVAULT_IS_RESTRICTED:
+      FacebookGetGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x100:
-      EliteClanGetGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CONTENTSERVER_TASK_IN_PROGRESS:
+      EliteClanGetGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x101:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = LiveParty_IsMe();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CONTENTSERVER_GET_TASK_PROGRESS:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = LiveParty_IsMe(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x102:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = LiveParty_IsLocal();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_RECENTGAMES_SELECTEDITEM_DATA:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = LiveParty_IsLocal(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x104:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_IsClipRecording();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_MAP_VOTE_GAME_TYPE_NAME_ABBREVIATED:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_IsClipRecording();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x105:
-      GetOperand(param_4,&local_1a8);
-      GetIndexFromString(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USER_SIGNED_IN_TO_LIVE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIndexFromString((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x106:
-      GetOperand(param_4,&local_1a8);
-      GetStringWithoutIndex(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_USER_CAN_PLAY_ONLINE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetStringWithoutIndex
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x107:
-      EliteClanGetName(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_PAST_TITLE_RANK:
+      EliteClanGetName(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x108:
-      EliteClanGetHelp(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_FEEDER_DATA:
+      EliteClanGetHelp(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x109:
-      EliteClanGetMOTD(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_PARTY_CLIENTS_UP_TO_DATE:
+      EliteClanGetMOTD(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10a:
-      EliteClanIsMember(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_TRUNCATETEXTWITHELLIPSIS:
+      EliteClanIsMember(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10c:
-      FacebookFriendsShowNext(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_CAN_RENDER_CLIP:
+      FacebookFriendsShowNext(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10d:
-      FacebookFriendsShowPrev(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_PREVIEW_MAP_CUSTOM:
+      FacebookFriendsShowPrev(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10e:
-      GetOnlineVaultGamerTag(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_DLC_MAPS_AVAILABLE_COUNT:
+      GetOnlineVaultGamerTag(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x10f:
-      GetOperandList(param_4,local_190);
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USER_SIGNED_IN:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x110:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = CL_Demo_CanRecord(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_USINGINTERMISSIONTIMER:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = CL_Demo_CanRecord(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x111:
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar9 = Live_IsUserSignedInToDemonware();
-      Operand_SetBool(&local_1b0,uVar9);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ISUSINGCUSTOMMAPROTATION:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = Live_IsUserSignedInToDemonware(iVar8);
+      Operand_SetBool((Operand *)local_1b0,(uint)bVar12);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x112:
-      GetOperandList(param_4,local_190);
-      IsCustomClassRestricted(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_MENU_IS_TOPMOST:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      IsCustomClassRestricted(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x113:
-      GetOperandList(param_4,local_190);
-      IsWeaponRestricted(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FACEBOOK_IS_PLATFORM_FRIEND:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      IsWeaponRestricted((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,
+                         (Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x114:
-      local_1b0 = 0;
-      uVar7 = CL_AnySplitscreenPlayersAreSignedIn();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITE_CLAN_IS_PLATFORM_FRIEND:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = CL_AnySplitscreenPlayersAreSignedIn();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x115:
-      GetOperand(param_4,&local_1a8);
-      GetIsGuestSplitscreen(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITE_CLAN_IS_ME:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsGuestSplitscreen
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x116:
-      GetOperandList(param_4,local_190);
-      GetIsItemUnlockedByClient(local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
-    case 0x55:
-      GetOperand(param_4,&local_1a8);
-      GetIsCardIconUnlocked(uVar3,&local_1a8,&local_1b0,0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITE_CLAN_IS_LEADER:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetIsItemUnlockedByClient
+                ((LocalClientNum_t)(local_1b0 + 0x20),(OperandList *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
+    case OP_GAMEMSGWNDACTIVE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsCardIconUnlocked(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0,false);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x117:
-      local_1b0 = 0;
-      uVar7 = CL_AnySplitscreenPlayersAreSignedInToLive();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USER_SIGNED_IN_FOR_VAULT:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = CL_AnySplitscreenPlayersAreSignedInToLive();
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x118:
-      GetOperand(param_4,&local_1a8);
-      UI_GetPastTitlePrestige(uVar3,&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_USING_MATCHRULES_DATA:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      UI_GetPastTitlePrestige(LVar7,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x119:
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)CL_GetActiveGamepadCount();
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_CAN_USER_ACCESS_ONLINEVAULT:
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = CL_GetActiveGamepadCount();
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11a:
-      GetOperandList(param_4,local_190);
-      ShowFriendPlayerCard(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FRIEND_GET_GAMERTAG:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      ShowFriendPlayerCard(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11b:
-      GetOperandList(param_4,local_190);
-      GetFriendPlayerCardPresence(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_RECENTPLAYER_GET_GAMERTAG:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetFriendPlayerCardPresence(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11c:
-      GetOperandList(param_4,local_190);
-      ShowRecentPlayersGroup(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LIVEPARTY_GET_GAMERTAG:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      ShowRecentPlayersGroup(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11d:
-      GetOperandList(param_4,local_190);
-      GetWrappedTextHeight(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FACEBOOK_GET_GAMERTAG:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetWrappedTextHeight(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x11e:
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar9 = LiveStorage_LocalClientProfileCanSave();
-      Operand_SetBool(&local_1b0,uVar9);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_GET_GAMERTAG:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = LiveStorage_LocalClientProfileCanSave(iVar8);
+      Operand_SetBool((Operand *)local_1b0,(uint)bVar12);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x120:
-      GetOperand(param_4,&local_1a8);
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_LIVEPARTY_IS_LOCAL:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x121:
-      GetOperandList(param_4,local_190);
-      local_1b0 = 0;
-      if ((local_140 == 1) && (local_190[0] == 0)) {
-        local_1ac = (undefined1 *)0x0;
-        AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_DOUBLECLICK_WAS_RIGHT_CLICK:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      local_1b0._0_4_ = VAL_INT;
+      if ((local_140 == 1) && (local_1b0._32_4_ == VAL_INT)) {
+        local_1b0._4_4_ = 0;
+        AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
         __restgprlr_24();
         return;
       }
-      Com_PrintError(0xd,0xffffffff82168608);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+      Com_PrintError(0xd,"ShowRecentPlayersGroup: Invalid Parameters (int index) \n");
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x122:
-      GetOperand(param_4,&local_1a8);
-      StripColorsFromString(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_DEMO_CLIP_RECORDING:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      StripColorsFromString
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x124:
-      GetOperand(param_4,&local_1a8);
-      GetIsChallengePeriodic(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_STRING_WIHTOUT_INDEX:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetIsChallengePeriodic
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x125:
-      GetOperandList(param_4,local_190);
-      GetChallengeData(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_GET_NAME:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      GetChallengeData(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x126:
-      local_1b0 = 0;
-      CL_ControllerIndexFromClientNum(uVar3);
-      uVar7 = Live_IsEliteAppPresent();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_GET_HELP:
+      local_1b0._0_4_ = VAL_INT;
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      bVar12 = Live_IsEliteAppPresent(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x127:
-      EliteClanSelectedIsMe(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_GET_MOTD:
+      EliteClanSelectedIsMe(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x128:
-      GetOperand(param_4,&local_1a8);
-      EnoughStorageSpaceForClientDemo(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_IS_MEMBER:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      EnoughStorageSpaceForClientDemo
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x129:
-      CL_ControllerIndexFromClientNum(uVar3);
-      local_1b0 = 0;
-      local_1ac = (undefined1 *)0x0;
-      uVar7 = Live_IsUserSignedInToLive();
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_ELITECLAN_IS_EMBLEM_OK:
+      iVar8 = CL_ControllerIndexFromClientNum(LVar7);
+      local_1b0._0_4_ = VAL_INT;
+      local_1b0._4_4_ = 0;
+      bVar12 = Live_IsUserSignedInToLive(iVar8);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x12a:
-      GetFacebookMenuText(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FACEBOOKFRIENDS_SHOW_NEXT:
+      GetFacebookMenuText(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 299:
-      GetFacebookIsPosting(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_FACEBOOKFRIENDS_SHOW_PREV:
+      GetFacebookIsPosting(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 300:
-      MeetPlayerIsPlatformFriend(uVar3,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_ONLINEVAULT_FRIEND_GAMERTAG:
+      MeetPlayerIsPlatformFriend(LVar7,(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x12d:
-      local_1b0 = 0;
-      uVar7 = UI_IsSelectedPlayerGuest(uVar3);
-      local_1ac = (undefined1 *)(uVar7 & 0xff);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_GET_OBJECTIVE_LIST_HEIGHT:
+      local_1b0._0_4_ = VAL_INT;
+      bVar12 = UI_IsSelectedPlayerGuest(LVar7);
+      local_1b0._4_3_ = 0;
+      local_1b0[7] = bVar12;
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x12e:
-      GetOperand(param_4,&local_1a8);
-      GetSplitScreenControllerClientNum(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CLIENT_DEMO_ENABLED:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      GetSplitScreenControllerClientNum
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x12f:
-      GetOperand(param_4,&local_1a8);
-      IsClientDemoEnabledSplitScreen(&local_1a8,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_USER_SIGNED_IN_TO_DEMONWARE:
+      GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+      IsClientDemoEnabledSplitScreen
+                ((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
-    case 0x130:
-      GetOperandList(param_4,local_190);
-      CanItemDefTakeFocus(uVar3,local_190,&local_1b0);
-      AddOperandToStack(uVar3,param_4,&local_1b0);
+    case OP_IS_CUSTOM_CLASS_RESTRICTED:
+      GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20));
+      CanItemDefTakeFocus(LVar7,(OperandList *)(local_1b0 + 0x20),(Operand *)local_1b0);
+      AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
       __restgprlr_24();
       return;
     }
     goto switchD_8259ce2c_caseD_f;
   }
-  switch(uVar7 - 1) {
-  case 0:
-    if (*(int *)(iVar6 + 0xf0) != 0) {
+  switch(oVar1 - OP_RIGHTPAREN) {
+  case OP_NOOP:
+    if (param_3->numOperators != 0) {
       do {
-        iVar10 = *(int *)(*(int *)(iVar6 + 0xf0) * 4 + iVar6 + -4);
-        RunOp(uVar3,param_2,param_3,param_4);
-        if ((iVar10 < 0x17) || (0x14f < iVar10)) {
-          bVar1 = iVar10 == 0x10;
+        oVar1 = param_3->stack[param_3->numOperators + -1];
+        RunOp(LVar7,param_2,param_3,pOVar3);
+        if (((int)oVar1 < 0x17) || (0x14f < (int)oVar1)) {
+          bVar4 = oVar1 == OP_LEFTPAREN;
         }
         else {
-          bVar1 = true;
+          bVar4 = true;
         }
-      } while ((!bVar1) && (*(int *)(iVar6 + 0xf0) != 0));
-      if (((0x16 < iVar10) && (iVar10 < 0x150)) || (iVar10 == 0x10)) {
-        bVar2 = true;
+      } while ((!bVar4) && (param_3->numOperators != 0));
+      if (((0x16 < (int)oVar1) && ((int)oVar1 < 0x150)) || (oVar1 == OP_LEFTPAREN)) {
+        bVar12 = true;
       }
     }
-    if (!bVar2) {
-      Com_PrintError(0xd,0xffffffff821689d4);
+    if (!bVar12) {
+      Com_PrintError(0xd,"Error: found \')\' but couldn\'t find what it was closing\n");
       __restgprlr_24();
       return;
     }
     break;
-  case 1:
-  case 2:
-  case 3:
-  case 4:
-  case 7:
-  case 8:
-  case 9:
-  case 10:
-  case 0xb:
-  case 0xc:
-  case 0x11:
-  case 0x12:
-    GetOperand(param_4,&local_1a0);
+  case OP_RIGHTPAREN:
+  case OP_MULTIPLY:
+  case OP_DIVIDE:
+  case OP_MODULUS:
+  case OP_NOT:
+  case OP_LESSTHAN:
+  case OP_LESSTHANEQUALTO:
+  case OP_GREATERTHAN:
+  case OP_GREATERTHANEQUALTO:
+  case OP_EQUALS:
+  case OP_COMMA:
+  case OP_BITWISEAND:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 0x10));
 LAB_8259d2bc:
-    GetOperand(param_4,&local_1a8);
-    RunLogicOp(uVar3,uVar11,param_4,CONCAT44(local_1a8,pcStack_1a4),CONCAT44(local_1a0,fStack_19c));
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    OVar6.dataType = local_1b0._16_4_;
+    OVar6.internals.floatVal = (float)local_1b0._20_4_;
+    OVar5.dataType = local_1b0._8_4_;
+    OVar5.internals = (operandInternalDataUnion)local_1b0._12_4_;
+    RunLogicOp(LVar7,oVar1,pOVar3,OVar5,OVar6);
     __restgprlr_24();
     return;
-  case 5:
-    cVar8 = GetOperand(param_4,&local_1a0);
-    if (cVar8 != '\0') {
-      if (*(int *)((int)param_4 + 0x13b0) < 1) {
-        if (local_1a0 == 0) {
-          fStack_19c = (float)-(int)fStack_19c;
-          AddOperandToStack(uVar3,param_4,&local_1a0);
+  case OP_ADD:
+    bVar12 = GetOperand(pOVar3,(Operand *)(local_1b0 + 0x10));
+    if (bVar12) {
+      if (pOVar3->numOperandLists < 1) {
+        if (local_1b0._16_4_ == VAL_INT) {
+          local_1b0._20_4_ = -local_1b0._20_4_;
+          AddOperandToStack(LVar7,pOVar3,(Operand *)(local_1b0 + 0x10));
           __restgprlr_24();
           return;
         }
-        if (local_1a0 != 1) {
-          Com_PrintError(0xd,0xffffffff821689ac,fStack_19c);
+        if (local_1b0._16_4_ != VAL_FLOAT) {
+          Com_PrintError(0xd,"Error: trying to negate a string: %s\n");
           __restgprlr_24();
           return;
         }
-        fStack_19c = -fStack_19c;
-        AddOperandToStack(uVar3,param_4,&local_1a0);
+        local_1b0._20_4_ = -(float)local_1b0._20_4_;
+        AddOperandToStack(LVar7,pOVar3,(Operand *)(local_1b0 + 0x10));
         __restgprlr_24();
         return;
       }
       goto LAB_8259d2bc;
     }
     break;
-  case 6:
-    GetOperand(param_4,&local_1a8);
-    LogicalNot(&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_SUBTRACT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    LogicalNot((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0xd:
-  case 0xe:
-    iVar10 = *(int *)(iVar6 + 0xf0);
-    while (iVar10 != 0) {
-      iVar10 = *(int *)(*(int *)(iVar6 + 0xf0) * 4 + iVar6 + -4);
-      if ((iVar10 < 0x17) || (0x14f < iVar10)) {
-        bVar2 = iVar10 == 0x10;
+  case OP_NOTEQUAL:
+  case OP_AND:
+    iVar8 = param_3->numOperators;
+    while (iVar8 != 0) {
+      oVar2 = param_3->stack[param_3->numOperators + -1];
+      if (((int)oVar2 < 0x17) || (0x14f < (int)oVar2)) {
+        bVar12 = oVar2 == OP_LEFTPAREN;
       }
       else {
-        bVar2 = true;
+        bVar12 = true;
       }
-      if (bVar2) break;
-      RunOp(uVar3,param_2,param_3,param_4);
-      iVar10 = *(int *)(iVar6 + 0xf0);
+      if (bVar12) break;
+      RunOp(LVar7,param_2,param_3,pOVar3);
+      iVar8 = param_3->numOperators;
     }
-    cVar8 = GetOperand(param_4,&local_1a8);
-    if (cVar8 == '\0') break;
-    local_1b0 = 0;
-    if (local_1a8 == 0) {
-      if (pcStack_1a4 != (char *)0x0) goto LAB_8259d25c;
+    bVar12 = GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    if (!bVar12) break;
+    local_1b0._0_4_ = VAL_INT;
+    if (local_1b0._8_4_ == VAL_INT) {
+      if (local_1b0._12_4_ != 0) goto LAB_8259d25c;
     }
-    else if (local_1a8 == 1) {
-      if ((float)pcStack_1a4 != 0.0) {
+    else if (local_1b0._8_4_ == VAL_FLOAT) {
+      if ((float)local_1b0._12_4_ != 0.0) {
 LAB_8259d25c:
-        iVar12 = 1;
+        oVar18.intVal = 1;
       }
     }
-    else if ((local_1a8 == 2) && (*pcStack_1a4 != '\0')) goto LAB_8259d25c;
-    local_1ac = (undefined1 *)iVar12;
-    if (uVar7 == 0xe) {
-      if (iVar12 != 0) {
+    else if ((local_1b0._8_4_ == VAL_STRING) && (*(char *)(int *)local_1b0._12_4_ != '\0'))
+    goto LAB_8259d25c;
+    local_1b0._4_4_ = oVar18;
+    if (oVar1 == OP_AND) {
+      if (oVar18.intVal != 0) {
         __restgprlr_24();
         return;
       }
     }
-    else if ((uVar7 != 0xf) || (iVar12 == 0)) break;
-    *(uint *)(iVar6 + 0xf8) = uVar7;
-    *(undefined4 *)(iVar6 + 0xf4) = 1;
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+    else if ((oVar1 != OP_OR) || (oVar18.intVal == 0)) break;
+    param_3->skipOp = oVar1;
+    param_3->skipGroups = 1;
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x10:
-    cVar8 = GetOperandList(param_4,auStack_130);
-    if ((cVar8 != '\0') && (cVar8 = GetOperandList(param_4,local_190), cVar8 != '\0')) {
-      RunCommaOp(uVar3,param_4,local_190,auStack_130);
+  case OP_LEFTPAREN:
+    bVar12 = GetOperandList(pOVar3,&OStack_130);
+    if ((bVar12) && (bVar12 = GetOperandList(pOVar3,(OperandList *)(local_1b0 + 0x20)), bVar12)) {
+      RunCommaOp(LVar7,pOVar3,(OperandList *)(local_1b0 + 0x20),&OStack_130);
       __restgprlr_24();
       return;
     }
     break;
-  case 0x13:
-    GetOperand(param_4,&local_1a8);
-    BitwiseNot(&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_BITWISEOR:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    BitwiseNot((LocalClientNum_t)(local_1b0 + 8),(Operand *)local_1b0,(Operand *)pOVar14);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x14:
-    GetOperand(param_4,&local_1a0);
-    GetOperand(param_4,&local_1a8);
-    BitShiftLeft(&local_1a8,&local_1a0,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_BITWISENOT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 0x10));
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    BitShiftLeft((LocalClientNum_t)(local_1b0 + 8),(Operand *)(local_1b0 + 0x10),
+                 (Operand *)local_1b0,pOVar16);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x15:
-    GetOperand(param_4,&local_1a0);
-    GetOperand(param_4,&local_1a8);
-    BitShiftRight(&local_1a8,&local_1a0,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_BITSHIFTLEFT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 0x10));
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    BitShiftRight((LocalClientNum_t)(local_1b0 + 8),(Operand *)(local_1b0 + 0x10),
+                  (Operand *)local_1b0,pOVar16);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x16:
-    GetOperand(param_4,&local_1a8);
-    GetStaticDvarIntVal(param_2,&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_BITSHIFTRIGHT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    GetStaticDvarIntVal(param_2,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x17:
-    GetOperand(param_4,&local_1a8);
-    GetStaticDvarBoolVal(param_2,&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_FIRSTFUNCTIONCALL:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    GetStaticDvarBoolVal(param_2,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x18:
-    GetOperand(param_4,&local_1a8);
-    GetStaticDvarFloatVal(param_2,&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_STATICDVARBOOL:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    GetStaticDvarFloatVal(param_2,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x19:
-    GetOperand(param_4,&local_1a8);
-    GetStaticDvarStringVal(param_2,&local_1a8,&local_1b0);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_STATICDVARFLOAT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    GetStaticDvarStringVal(param_2,(Operand *)(local_1b0 + 8),(Operand *)local_1b0);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x1a:
-    GetOperand(param_4,&local_1a8);
-    local_1b0 = 0;
-    local_1ac = (undefined1 *)GetSourceInt(&local_1a8);
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_STATICDVARSTRING:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    local_1b0._0_4_ = VAL_INT;
+    local_1b0._4_4_ = GetSourceInt((Operand *)(local_1b0 + 8));
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x1b:
-    GetOperand(param_4,&local_1a8);
-    local_1b0 = 2;
-    local_1ac = (undefined1 *)GetSourceString(&local_1a8);
-    if (local_1ac == (undefined1 *)0x0) {
-      local_1ac = &DAT_820068af;
+  case OP_TOINT:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    local_1b0._0_4_ = VAL_STRING;
+    local_1b0._4_4_ = GetSourceString((Operand *)(local_1b0 + 8));
+    if ((char *)local_1b0._4_4_ == (char *)0x0) {
+      local_1b0._4_4_ = "";
     }
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
-  case 0x1c:
-    GetOperand(param_4,&local_1a8);
-    local_1b0 = 1;
-    dVar13 = (double)GetSourceFloat(&local_1a8);
-    local_1ac = (undefined1 *)(float)dVar13;
-    AddOperandToStack(uVar3,param_4,&local_1b0);
+  case OP_TOSTRING:
+    GetOperand(pOVar3,(Operand *)(local_1b0 + 8));
+    local_1b0._0_4_ = VAL_FLOAT;
+    local_1b0._4_4_ = GetSourceFloat((Operand *)(local_1b0 + 8));
+    AddOperandToStack(LVar7,pOVar3,(Operand *)local_1b0);
     __restgprlr_24();
     return;
   }
@@ -13124,78 +15413,86 @@ switchD_8259ce2c_caseD_f:
 
 // 8259CBA8  IsOpAssociative  (ui/ui_expressions.cpp:11113)
 
-undefined8 IsOpAssociative(int param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+bool IsOpAssociative(operationEnum param_1)
 
 {
-  if ((2 < param_1) && ((param_1 < 5 || (param_1 == 6)))) {
-    return 0;
+  if ((2 < (int)param_1) && (((int)param_1 < 5 || (param_1 == OP_SUBTRACT)))) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 8259CBD0  GetOperatorPrecedence  (ui/ui_expressions.cpp:11126)
 
-undefined4 GetOperatorPrecedence(uint param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+
+int GetOperatorPrecedence(operationEnum param_1)
 
 {
-  if (0x16 < param_1) {
+  if (OP_BITSHIFTRIGHT < param_1) {
     return 5;
   }
-  return *(undefined4 *)(&DAT_82991328 + param_1 * 4);
+  return s_operatorPrecedence[param_1];
 }
 
 
 // 825A0D90  RunHigherPriorityOperators  (ui/ui_expressions.cpp:11135)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
 void RunHigherPriorityOperators
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5)
+               (LocalClientNum_t param_1,Statement_s *param_2,operationEnum param_3,
+               OperatorStack *param_4,OperandStack *param_5)
 
 {
-  uint uVar1;
-  int iVar2;
+  int iVar1;
+  operationEnum oVar2;
   bool bVar3;
-  undefined8 uVar4;
+  LocalClientNum_t LVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
+  ulonglong uVar6;
+  int iVar7;
+  operationEnum oVar8;
   
-  uVar4 = __savegprlr_19();
-  if ((param_3 & 0xffffffff) < 0x17) {
-    iVar6 = *(int *)(&DAT_82991328 + (int)((param_3 & 0xffffffff) << 2));
+  uVar6 = (ulonglong)(int)param_3;
+  LVar4 = __savegprlr_19(param_1);
+  if ((uVar6 & 0xffffffff) < 0x17) {
+    iVar7 = *(int *)((int)s_operatorPrecedence + (int)((uVar6 & 0xffffffff) << 2));
   }
   else {
-    iVar6 = 5;
+    iVar7 = 5;
   }
-  uVar7 = (uint)param_3;
-  if (((int)uVar7 < 3) || ((4 < (int)uVar7 && (uVar7 != 6)))) {
+  oVar8 = (operationEnum)uVar6;
+  if (((int)oVar8 < 3) || ((4 < (int)oVar8 && (oVar8 != OP_SUBTRACT)))) {
     bVar3 = true;
   }
   else {
     bVar3 = false;
   }
-  iVar2 = (int)param_4;
-  if (-1 < (longlong)((ulonglong)*(uint *)(iVar2 + 0xf0) - 1)) {
-    while (*(int *)(iVar2 + 0xf0) != 0) {
-      iVar8 = *(int *)(iVar2 + 0xf0) + -1;
-      uVar1 = *(uint *)(iVar8 * 4 + iVar2);
-      if (uVar1 < 0x17) {
-        iVar5 = *(int *)(&DAT_82991328 + uVar1 * 4);
+  if (-1 < (longlong)((ulonglong)(uint)param_4->numOperators - 1)) {
+    while (iVar1 = param_4->numOperators, iVar1 != 0) {
+      oVar2 = param_4->stack[iVar1 + -1];
+      if (oVar2 < OP_FIRSTFUNCTIONCALL) {
+        iVar5 = s_operatorPrecedence[oVar2];
       }
       else {
         iVar5 = 5;
       }
-      if ((iVar6 <= iVar5) || (iVar5 == 5)) {
-        iVar5 = GetOperatorPrecedence(1);
+      if ((iVar7 <= iVar5) || (iVar5 == 5)) {
+        iVar5 = GetOperatorPrecedence(OP_RIGHTPAREN);
         if (5 < iVar5) {
-          MyAssertHandler(0xffffffff82164aa0,0x2b93,0,0xffffffff82000f98,0xffffffff82168a4c);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                          0x2b93,0,"%s");
         }
-        if ((bVar3) || (uVar1 != uVar7)) break;
+        if ((bVar3) || (oVar2 != oVar8)) break;
       }
-      RunOp(uVar4,param_2,param_4,param_5);
-      if (iVar8 < 0) break;
+      RunOp(LVar4,param_2,param_4,param_5);
+      if (iVar1 + -1 < 0) break;
     }
   }
   __restgprlr_19();
@@ -13205,317 +15502,351 @@ void RunHigherPriorityOperators
 
 // 8259CBF8  UI_ExpressionState_PlayerDataModified  (ui/ui_expressions.cpp:11167)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UI_ExpressionState_PlayerDataModified(void)
 
 {
-  DAT_83f60a34 = DAT_83f60a34 + 1;
+  g_uiExpressionState.playerDataKey = g_uiExpressionState.playerDataKey + 1;
   return;
 }
 
 
 // 825A0EB8  EvaluateExpression  (ui/ui_expressions.cpp:11176)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
 
-void EvaluateExpression(undefined8 param_1,longlong param_2)
+Operand * EvaluateExpression(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
   uint uVar1;
   int iVar2;
   uint *puVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  char cVar7;
-  int iVar6;
-  ulonglong uVar8;
+  ulonglong uVar4;
+  bool bVar8;
+  int iVar5;
+  Operand *pOVar6;
+  LocalClientNum_t LVar7;
   longlong lVar9;
-  int *piVar10;
-  int iVar11;
-  int iVar12;
-  int *piVar13;
-  int *piVar14;
+  ulonglong uVar10;
+  longlong lVar11;
+  int *piVar12;
+  int iVar13;
+  int iVar14;
+  Statement_s *pSVar15;
+  int *piVar16;
   int local_1514;
-  int aiStack_1510 [60];
-  uint local_1420;
-  int local_141c;
-  int local_1418;
-  undefined4 local_1410;
-  undefined4 uStack_140c;
-  int local_13c0;
-  int local_60;
+  OperatorStack OStack_1510;
+  OperandStack local_1410;
   
-  uVar5 = __savegprlr_23();
-  cVar7 = Sys_IsMainThread();
-  if ((cVar7 != '\0') && (iVar6 = R_IsInRemoteScreenUpdate(), iVar6 != 0)) {
-    MyAssertHandler(0xffffffff82164aa0,0x2bb8,0,0xffffffff82000f98,0xffffffff82168c2c);
+  lVar9 = (longlong)(int)param_2;
+  uVar4 = __savegprlr_23(param_1);
+  bVar8 = Sys_IsMainThread();
+  if ((bVar8) && (iVar5 = R_IsInRemoteScreenUpdate(), iVar5 != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",0x2bb8,
+                    0,"%s");
   }
-  lVar9 = (uVar5 & 0x1fffffff) * 8 + param_2 + 0xc + 0x24;
-  piVar13 = (int *)param_2;
-  bVar4 = false;
-  piVar10 = (int *)lVar9;
-  DAT_83f60a2c = piVar13;
-  if (*piVar10 != 2) {
-    iVar11 = (int)((uVar5 + 5 & 0xffffffff) << 2);
-    puVar3 = (uint *)(param_2 + 0xc);
-    iVar6 = *(int *)(iVar11 + (int)puVar3);
-    if (iVar6 != DAT_83f60a38) {
+  lVar11 = (uVar4 & 0x1fffffff) * 8 + lVar9 + 0xc + 0x24;
+  pSVar15 = (Statement_s *)lVar9;
+  bVar8 = false;
+  piVar12 = (int *)lVar11;
+  g_releaseBuildStatement = pSVar15;
+  if (*piVar12 != 2) {
+    iVar13 = (int)((uVar4 + 5 & 0xffffffff) << 2);
+    puVar3 = (uint *)(lVar9 + 0xc);
+    iVar5 = *(int *)(iVar13 + (int)puVar3);
+    if (iVar5 != g_uiExpressionState.currentExpressionExecuteTime) {
       uVar1 = *puVar3;
       if (uVar1 != 0) {
-        bVar4 = true;
+        bVar8 = true;
         if ((uVar1 & 0x80000000) == 0) {
           if (((uVar1 & 1) != 0) &&
-             (iVar6 = (int)((uVar5 + 1 & 0xffffffff) << 2),
-             *(int *)(iVar6 + (int)puVar3) != DAT_83f60a34)) {
-            *(int *)(iVar6 + (int)puVar3) = DAT_83f60a34;
+             (iVar5 = (int)((uVar4 + 1 & 0xffffffff) << 2),
+             *(int *)(iVar5 + (int)puVar3) != g_uiExpressionState.playerDataKey)) {
+            *(int *)(iVar5 + (int)puVar3) = g_uiExpressionState.playerDataKey;
             goto LAB_825a0fb8;
           }
         }
-        else if (iVar6 == -1) {
+        else if (iVar5 == -1) {
 LAB_825a0fb8:
-          bVar4 = false;
+          bVar8 = false;
         }
       }
-      *(int *)(iVar11 + (int)puVar3) = DAT_83f60a38;
-      if (!bVar4) goto LAB_825a1008;
+      *(int *)(iVar13 + (int)puVar3) = g_uiExpressionState.currentExpressionExecuteTime;
+      if (!bVar8) goto LAB_825a1008;
     }
-    DAT_83f60a3c = DAT_83f60a3c + 1;
-    if (*piVar10 == 2) {
-      MyAssertHandler(0xffffffff82164aa0,0x2bef,0,0xffffffff82000f98,0xffffffff82168be8);
-      __restgprlr_23(lVar9);
-      return;
+    g_uiExpressionState.cacheHits = g_uiExpressionState.cacheHits + 1;
+    if (*piVar12 == 2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                      0x2bef,0,"%s");
+      pOVar6 = (Operand *)__restgprlr_23(lVar11);
+      return pOVar6;
     }
 LAB_825a12e4:
-    __restgprlr_23(lVar9);
-    return;
+    pOVar6 = (Operand *)__restgprlr_23(lVar11);
+    return pOVar6;
   }
 LAB_825a1008:
-  uVar8 = 0;
-  iVar6 = 0;
-  local_13c0 = 0;
-  DAT_83f60a40 = DAT_83f60a40 + 1;
-  local_60 = 0;
-  iVar11 = 0;
-  local_1410 = 0;
-  local_1420 = 0;
-  uStack_140c = 0;
-  local_141c = 0;
-  local_1418 = 0;
-  if (0 < *piVar13) {
-    iVar12 = 0;
+  uVar10 = 0;
+  iVar5 = 0;
+  local_1410.stack[0].operandCount = 0;
+  g_uiExpressionState.cacheMisses = g_uiExpressionState.cacheMisses + 1;
+  local_1410.numOperandLists = 0;
+  iVar13 = 0;
+  local_1410.stack[0].operands[0].dataType = VAL_INT;
+  OStack_1510.numOperators = 0;
+  local_1410.stack[0].operands[0].internals.intVal = 0;
+  OStack_1510.skipGroups = 0;
+  OStack_1510.skipOp = OP_NOOP;
+  if (0 < pSVar15->numEntries) {
+    iVar14 = 0;
     do {
-      piVar14 = (int *)(piVar13[1] + iVar12);
-      if (((int)uVar8 != 0) &&
-         ((iVar2 = *(int *)((int)&local_1514 + (int)((uVar8 & 0xffffffff) << 2)), iVar2 == 0xf ||
+      piVar16 = (int *)((int)&pSVar15->entries->type + iVar14);
+      LVar7 = (LocalClientNum_t)uVar4;
+      if (((int)uVar10 != 0) &&
+         ((iVar2 = *(int *)((int)&local_1514 + (int)((uVar10 & 0xffffffff) << 2)), iVar2 == 0xf ||
           (iVar2 == 0xe)))) {
-        RunOp(uVar5,param_2,aiStack_1510,&local_1410);
-        uVar8 = (ulonglong)local_1420;
-        iVar6 = local_141c;
+        RunOp(LVar7,pSVar15,&OStack_1510,&local_1410);
+        uVar10 = (ulonglong)(uint)OStack_1510.numOperators;
+        iVar5 = OStack_1510.skipGroups;
       }
-      if (iVar6 < 1) {
+      if (iVar5 < 1) {
 LAB_825a10f0:
-        if (*piVar14 == 0) {
-          if (piVar14[1] != 0x10) {
-            RunHigherPriorityOperators(uVar5,param_2,piVar14[1],aiStack_1510,&local_1410);
-            uVar8 = (ulonglong)local_1420;
+        if (*piVar16 == 0) {
+          if (piVar16[1] != OP_LEFTPAREN) {
+            RunHigherPriorityOperators(LVar7,pSVar15,piVar16[1],&OStack_1510,&local_1410);
+            uVar10 = (ulonglong)(uint)OStack_1510.numOperators;
           }
-          if ((int)uVar8 == 0x3c) {
-            Com_PrintError(0xd,0xffffffff82168b20);
-            __restgprlr_23(0);
-            return;
+          if ((int)uVar10 == 0x3c) {
+            Com_PrintError(0xd,"Invalid expression - operators are nested too deeply\n");
+            pOVar6 = (Operand *)__restgprlr_23(0);
+            return pOVar6;
           }
-          *(int *)((int)aiStack_1510 + (int)((uVar8 & 0xffffffff) << 2)) = piVar14[1];
-          uVar8 = (ulonglong)local_1420 + 1;
-          local_1420 = (uint)uVar8;
-          iVar6 = local_141c;
+          *(int *)((int)OStack_1510.stack + (int)((uVar10 & 0xffffffff) << 2)) = piVar16[1];
+          uVar10 = (ulonglong)(uint)OStack_1510.numOperators + 1;
+          OStack_1510.numOperators = (uint)uVar10;
+          iVar5 = OStack_1510.skipGroups;
         }
-        else if (*piVar14 == 1) {
-          if (local_60 == 0x3c) {
-            Com_PrintError(0xd,0xffffffff82168af8);
-            __restgprlr_23(0);
-            return;
+        else if (*piVar16 == 1) {
+          if (local_1410.numOperandLists == 0x3c) {
+            Com_PrintError(0xd,"Invalid expression - too many operands\n");
+            pOVar6 = (Operand *)__restgprlr_23(0);
+            return pOVar6;
           }
-          AddOperandToStack(uVar5,&local_1410,piVar14 + 1);
-          uVar8 = (ulonglong)local_1420;
-          iVar6 = local_141c;
+          AddOperandToStack(LVar7,&local_1410,(Operand *)(piVar16 + 1));
+          uVar10 = (ulonglong)(uint)OStack_1510.numOperators;
+          iVar5 = OStack_1510.skipGroups;
         }
       }
-      else if (*piVar14 == 0) {
-        iVar2 = piVar14[1];
+      else if (*piVar16 == 0) {
+        iVar2 = piVar16[1];
         if ((iVar2 < 0x17) || (0x14f < iVar2)) {
-          bVar4 = iVar2 == 0x10;
+          bVar8 = iVar2 == 0x10;
         }
         else {
-          bVar4 = true;
+          bVar8 = true;
         }
-        if (bVar4) {
-          iVar6 = iVar6 + 1;
-          local_141c = iVar6;
+        if (bVar8) {
+          iVar5 = iVar5 + 1;
+LAB_825a10e4:
+          OStack_1510.skipGroups = iVar5;
           goto LAB_825a10e8;
         }
         if (iVar2 == 1) {
-          iVar6 = iVar6 + -1;
-          local_141c = iVar6;
-          goto LAB_825a10e8;
+          iVar5 = iVar5 + -1;
+          goto LAB_825a10e4;
         }
-        if (iVar6 != 1) goto LAB_825a10e8;
-        if ((iVar2 == 0x11) || ((iVar2 == 0xf && (local_1418 == 0xe)))) {
-          iVar6 = 0;
-          local_141c = 0;
+        if (iVar5 != 1) goto LAB_825a10e8;
+        if ((iVar2 == 0x11) || ((iVar2 == 0xf && (OStack_1510.skipOp == OP_AND)))) {
+          iVar5 = 0;
+          OStack_1510.skipGroups = 0;
           goto LAB_825a10f0;
         }
       }
       else {
 LAB_825a10e8:
-        if (iVar6 < 1) goto LAB_825a10f0;
+        if (iVar5 < 1) goto LAB_825a10f0;
       }
-      iVar11 = iVar11 + 1;
-      iVar12 = iVar12 + 0xc;
-    } while (iVar11 < *piVar13);
-    uVar1 = (uint)uVar8;
+      iVar13 = iVar13 + 1;
+      iVar14 = iVar14 + 0xc;
+    } while (iVar13 < pSVar15->numEntries);
+    uVar1 = (uint)uVar10;
     while (uVar1 != 0) {
-      iVar6 = *(int *)((int)&local_1514 + (int)((uVar8 & 0xffffffff) << 2));
-      if ((iVar6 == 0xe) || (iVar6 == 0xf)) {
-        MyAssertHandler(0xffffffff82164aa0,0x2c33,0,0xffffffff82000f98,0xffffffff82168b80);
+      iVar5 = *(int *)((int)&local_1514 + (int)((uVar10 & 0xffffffff) << 2));
+      if ((iVar5 == 0xe) || (iVar5 == 0xf)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x2c33,0,"%s");
       }
-      RunOp(uVar5,param_2,aiStack_1510,&local_1410);
-      uVar8 = (ulonglong)local_1420;
-      uVar1 = local_1420;
+      RunOp(LVar7,pSVar15,&OStack_1510,&local_1410);
+      uVar10 = (ulonglong)(uint)OStack_1510.numOperators;
+      uVar1 = OStack_1510.numOperators;
     }
-    if (1 < local_60) {
-      Com_PrintError(0xd,0xffffffff82168b58);
-      __restgprlr_23(0);
-      return;
+    if (1 < local_1410.numOperandLists) {
+      Com_PrintError(0xd,"Error: stray operands in expression\n");
+      pOVar6 = (Operand *)__restgprlr_23(0);
+      return pOVar6;
     }
-    if (local_60 != 0) {
-      if (1 < local_13c0) {
-        Com_PrintError(0xd,0xffffffff82168a8c);
-        __restgprlr_23(0);
-        return;
+    if (local_1410.numOperandLists != 0) {
+      if (1 < local_1410.stack[0].operandCount) {
+        Com_PrintError(0xd,"Error: More than one operand in expression result\n");
+        pOVar6 = (Operand *)__restgprlr_23(0);
+        return pOVar6;
       }
-      *(ulonglong *)piVar10 = CONCAT44(local_1410,uStack_140c);
+      *(ulonglong *)piVar12 =
+           CONCAT44(local_1410.stack[0].operands[0].dataType,
+                    local_1410.stack[0].operands[0].internals.intVal);
       goto LAB_825a12e4;
     }
   }
-  Com_PrintError(0xd,0xffffffff82168ac0);
-  __restgprlr_23(0);
-  return;
+  Com_PrintError(0xd,"At the end of IsStatementTrue, we have no operands!\n");
+  pOVar6 = (Operand *)__restgprlr_23(0);
+  return pOVar6;
 }
 
 
 // 825A12F0  GetExpressionResultString  (ui/ui_expressions.cpp:11367)
 
-undefined8 GetExpressionResultString(void)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * GetExpressionResultString(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
-  uint uVar1;
-  uint *puVar3;
-  undefined8 uVar2;
+  expDataType eVar1;
+  Operand *pOVar2;
+  char *pcVar3;
   int iVar4;
   
-  puVar3 = (uint *)EvaluateExpression();
-  if (puVar3 == (uint *)0x0) {
-    return 0xffffffff820068af;
+  pOVar2 = EvaluateExpression(param_1,param_2);
+  if (pOVar2 == (Operand *)0x0) {
+LAB_825a135c:
+    return "";
   }
-  uVar1 = *puVar3;
-  if (uVar1 == 0) {
-    uVar2 = 0xffffffff8200c28c;
+  eVar1 = pOVar2->dataType;
+  if (eVar1 == VAL_INT) {
+    pcVar3 = "%i";
   }
   else {
-    if (uVar1 == 1) {
-      iVar4 = Com_sprintf(0xffffffff83f65dd8,0x1000,0xffffffff820106dc,(double)(float)puVar3[1]);
+    if (eVar1 == VAL_FLOAT) {
+      iVar4 = Com_sprintf(resultString,0x1000,"%f");
       goto LAB_825a13c0;
     }
-    if (2 < uVar1) {
-      if (DAT_84013128 != 0) {
-        return 0xffffffff820068af;
+    if (VAL_STRING < eVar1) {
+      if (alwaysfails == 0) {
+        pcVar3 = va("Unknown result datatype of %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions.cpp",
+                        0x2c7f,0,pcVar3);
       }
-      uVar2 = va(0xffffffff82168cb8);
-      MyAssertHandler(0xffffffff82164aa0,0x2c7f,0,uVar2);
-      return 0xffffffff820068af;
+      goto LAB_825a135c;
     }
-    uVar2 = 0xffffffff82000f98;
+    pcVar3 = "%s";
   }
-  iVar4 = Com_sprintf(0xffffffff83f65dd8,0x1000,uVar2,puVar3[1]);
+  iVar4 = Com_sprintf(resultString,0x1000,pcVar3);
 LAB_825a13c0:
-  if ((iVar4 < 0) && (iVar4 = Sys_Milliseconds(), 5000 < iVar4 - DAT_83f65dd4)) {
-    DAT_83f65dd4 = Sys_Milliseconds();
-    Com_PrintWarning(0xd,0xffffffff82168c60,0x1000,0xffffffff83f65dd8);
+  if ((iVar4 < 0) && (iVar4 = Sys_Milliseconds(), 5000 < iVar4 - lastWarnTime)) {
+    lastWarnTime = Sys_Milliseconds();
+    Com_PrintWarning(0xd,
+                     "Warning: Expression result string has been truncated, longer than %d characters: %s...\n"
+                    );
   }
-  return 0xffffffff83f65dd8;
+  return resultString;
 }
 
 
 // 825A1420  IsExpressionTrue  (ui/ui_expressions.cpp:11406)
 
-ulonglong IsExpressionTrue(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+bool IsExpressionTrue(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  Operand *pOVar1;
+  int iVar2;
   
-  uVar1 = EvaluateExpression();
-  if ((uVar1 & 0xffffffff) == 0) {
-    return uVar1;
+  pOVar1 = EvaluateExpression(param_1,param_2);
+  if (pOVar1 == (Operand *)0x0) {
+    return false;
   }
-  lVar2 = GetSourceInt();
-  return (ulonglong)(lVar2 != 0);
+  iVar2 = GetSourceInt(pOVar1);
+  return (bool)('\x01' - (iVar2 == 0));
 }
 
 
 // 825A1468  GetExpressionInt  (ui/ui_expressions.cpp:11419)
 
-void GetExpressionInt(void)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int GetExpressionInt(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
-  int iVar1;
+  Operand *pOVar1;
+  int iVar2;
   
-  iVar1 = EvaluateExpression();
-  if (iVar1 == 0) {
-    return;
+  pOVar1 = EvaluateExpression(param_1,param_2);
+  if (pOVar1 == (Operand *)0x0) {
+    return 0;
   }
-  GetSourceInt();
-  return;
+  iVar2 = GetSourceInt(pOVar1);
+  return iVar2;
 }
 
 
 // 825A14A8  GetExpressionFloat  (ui/ui_expressions.cpp:11431)
 
-undefined8 GetExpressionFloat(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+float GetExpressionFloat(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  Operand *pOVar1;
+  float fVar2;
   
-  iVar1 = EvaluateExpression();
-  if (iVar1 == 0) {
-    return 0;
+  pOVar1 = EvaluateExpression(param_1,param_2);
+  if (pOVar1 == (Operand *)0x0) {
+    return 0.0;
   }
-  uVar2 = GetSourceFloat();
-  return uVar2;
+  fVar2 = GetSourceFloat(pOVar1);
+  return fVar2;
 }
 
 
 // 825A14F0  GetExpressionUInt64  (ui/ui_expressions.cpp:11443)
 
-void GetExpressionUInt64(void)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ulong64 GetExpressionUInt64(LocalClientNum_t param_1,Statement_s *param_2)
 
 {
-  int iVar1;
+  Operand *pOVar2;
+  ulong64 uVar1;
   
-  iVar1 = EvaluateExpression();
-  if (iVar1 == 0) {
-    return;
+  pOVar2 = EvaluateExpression(param_1,param_2);
+  if (pOVar2 == (Operand *)0x0) {
+    return 0;
   }
-  GetSourceUInt64();
-  return;
+  uVar1 = GetSourceUInt64(pOVar2);
+  return uVar1;
 }
 
 
 // 8259CC10  GetUIMilliseconds  (ui/ui_expressions.cpp:11456)
 
-undefined4 GetUIMilliseconds(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int GetUIMilliseconds(void)
 
 {
-  return DAT_83f60a44;
+  return g_uiExpressionState.milliseconds;
 }
 

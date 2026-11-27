@@ -2,31 +2,37 @@
 
 // 82277F60  QuatMultiply  (universal/com_quat_inline.h:6)
 
-void QuatMultiply(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void QuatMultiply(float *param_1,float *param_2,float *param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   ulonglong uVar3;
-  float *pfVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  float *pfVar6;
   
-  uVar3 = __savegprlr_27();
-  if ((uVar3 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c490,7,0,0xffffffff82000f98,0xffffffff8200c480);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_quat_inline.h"
+                    ,7,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c490,8,0,0xffffffff82000f98,0xffffffff8200c474);
+  if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_quat_inline.h"
+                    ,8,0,"%s");
   }
-  pfVar1 = (float *)param_2;
+  pfVar1 = (float *)uVar4;
   pfVar2 = (float *)uVar3;
-  pfVar4 = (float *)param_3;
-  *pfVar4 = -(pfVar2[1] * pfVar1[2] -
+  pfVar6 = (float *)uVar5;
+  *pfVar6 = -(pfVar2[1] * pfVar1[2] -
              (*pfVar1 * pfVar2[3] + *pfVar2 * pfVar1[3] + pfVar1[1] * pfVar2[2]));
-  pfVar4[1] = *pfVar2 * pfVar1[2] +
+  pfVar6[1] = *pfVar2 * pfVar1[2] +
               pfVar1[1] * pfVar2[3] + (pfVar2[1] * pfVar1[3] - pfVar2[2] * *pfVar1);
-  pfVar4[2] = pfVar2[3] * pfVar1[2] +
+  pfVar6[2] = pfVar2[3] * pfVar1[2] +
               -(pfVar1[1] * *pfVar2 - (pfVar2[1] * *pfVar1 + pfVar2[2] * pfVar1[3]));
-  pfVar4[3] = -(pfVar2[2] * pfVar1[2] -
+  pfVar6[3] = -(pfVar2[2] * pfVar1[2] -
                -(pfVar2[1] * pfVar1[1] - (pfVar1[3] * pfVar2[3] - *pfVar2 * *pfVar1)));
   __restgprlr_27();
   return;
@@ -38,28 +44,19 @@ void QuatMultiply(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 void UnitQuatToNormal(float *param_1,float *param_2)
 
 {
-  undefined8 uVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  double dVar1;
   
-  dVar2 = (double)*param_1;
-  dVar4 = (double)param_1[2];
-  dVar3 = (double)param_1[3];
-  dVar5 = 1.0;
-  if (0.002 <= ABS((float)(dVar3 * dVar3 +
-                          (double)(float)(dVar4 * dVar4 +
-                                         (double)(float)(dVar2 * dVar2 +
-                                                        (double)(param_1[1] * param_1[1])))) - 1.0))
+  dVar1 = 1.0;
+  if (0.002 <= ABS((param_1[3] * param_1[3] +
+                   param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1]) - 1.0))
   {
-    uVar1 = va(dVar2,(double)param_1[1],dVar4,dVar3,0xffffffff8200c4fc,dVar2,(double)param_1[1],
-               dVar4,dVar3);
-    MyAssertHandler(0xffffffff8200c490,0x41,0,0xffffffff820011f4,0xffffffff8200c4e0,uVar1);
+    va("%g %g %g %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../universal/com_quat_inline.h"
+                    ,0x41,0,"%s\n\t%s");
   }
   *param_2 = (param_1[1] * param_1[3] + *param_1 * param_1[2]) * 2.0;
   param_2[1] = (param_1[1] * param_1[2] - *param_1 * param_1[3]) * 2.0;
-  param_2[2] = -(float)((double)(param_1[1] * param_1[1] + *param_1 * *param_1) * 2.0 - dVar5);
+  param_2[2] = -(float)((double)(param_1[1] * param_1[1] + *param_1 * *param_1) * 2.0 - dVar1);
   return;
 }
 
@@ -69,11 +66,11 @@ void UnitQuatToNormal(float *param_1,float *param_2)
 void Vec2NormalizeFast(float *param_1)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)I_rsqrt((double)(*param_1 * *param_1 + param_1[1] * param_1[1]));
-  *param_1 = (float)((double)*param_1 * dVar1);
-  param_1[1] = (float)(dVar1 * (double)param_1[1]);
+  fVar1 = I_rsqrt(*param_1 * *param_1 + param_1[1] * param_1[1]);
+  *param_1 = *param_1 * fVar1;
+  param_1[1] = fVar1 * param_1[1];
   return;
 }
 
@@ -81,175 +78,190 @@ void Vec2NormalizeFast(float *param_1)
 // 822781E8  PM_trace  (bgame/bg_pmove.cpp:302)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
-void PM_trace(int param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,ulonglong param_5,
-             undefined8 param_6,undefined8 param_7)
+void PM_trace(pmove_t *param_1,trace_t *param_2,float *param_3,float *param_4,Bounds *param_5,
+             int param_6,int param_7)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  ulonglong uVar3;
+  trace_t *ptVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   ulonglong unaff_r26;
   byte in_cr3;
-  undefined1 auStack_40 [64];
+  int in_stack_ffffff68;
+  IgnoreEntParams aIStack_40 [5];
   
-  uVar3 = ZEXT48((&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(param_1 + 0x134) * 7]);
+  uVar6 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar7 = ZEXT48((&pmoveHandlers)[(uint)param_1->handler * 7]);
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
                     /* WARNING: Could not find normalized switch variable to match jumptable */
-  switch(*(byte *)(param_1 + 0x134)) {
-  case 0:
-  case 0xc:
-    uVar3 = __savegprlr_24();
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8202b970,0x59f,0,0xffffffff82000f98,0xffffffff8202ba08);
+  switch(param_1->handler) {
+  case '\0':
+  case '\f':
+    ptVar1 = (trace_t *)__savegprlr_24();
+    if (ptVar1 == (trace_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x59f,0,
+                      "%s");
     }
-    if ((param_3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8202b970,0x5a0,0,0xffffffff82000f98,0xffffffff8202bebc);
+    if ((uVar4 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a0,0,
+                      "%s");
     }
-    if ((param_4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8202b970,0x5a1,0,0xffffffff82000f98,0xffffffff8202a874);
+    if ((uVar5 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a1,0,
+                      "%s");
     }
-    if ((param_5 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8202b970,0x5a2,0,0xffffffff82000f98,0xffffffff82002044);
+    if ((uVar6 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a2,0,
+                      "%s");
     }
-    cVar2 = Sys_IsMainThread();
-    if (cVar2 == '\0') {
-      MyAssertHandler(0xffffffff8202b970,0x5a3,0,0xffffffff82000f98,0xffffffff82010b48);
+    bVar3 = Sys_IsMainThread();
+    if (!bVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a3,0,
+                      "%s");
     }
     Profile_Begin(0x2c);
-    CG_Trace(uVar3,param_3,param_4,param_5,param_6,param_7,0,0);
-    Profile_EndInternal(0);
-    __restgprlr_24();
+    CG_Trace(ptVar1,(float *)uVar4,(float *)uVar5,(Bounds *)uVar6,param_6,param_7,false,false);
+    iVar2 = Profile_EndInternal((double *)0x0);
+    __restgprlr_24(iVar2);
     return;
-  case 1:
-    uVar1 = __savegprlr_27();
-    SV_SetupIgnoreEntParams(auStack_40,param_6);
-    SV_Trace(uVar1,param_3,param_4,param_5,auStack_40,param_7,0,0);
+  case '\x01':
+    ptVar1 = (trace_t *)__savegprlr_27();
+    SV_SetupIgnoreEntParams(aIStack_40,param_6);
+    SV_Trace(ptVar1,(float *)uVar4,param_4,param_5,aIStack_40,param_7,0,(uchar *)0x0,
+             in_stack_ffffff68);
     __restgprlr_27();
     return;
-  case 2:
-  case 0x2e:
+  case '\x02':
+  case '.':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 3:
-  case 0x2f:
+  case '\x03':
+  case '/':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 4:
-  case 0x30:
+  case '\x04':
+  case '0':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 5:
-  case 0x31:
+  case '\x05':
+  case '1':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 6:
-  case 0x32:
+  case '\x06':
+  case '2':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 7:
-  case 0x25:
+  case '\a':
+  case '%':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 8:
-  case 0x26:
+  case '\b':
+  case '&':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 9:
-  case 0x27:
+  case '\t':
+  case '\'':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 10:
-  case 0x28:
+  case '\n':
+  case '(':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xb:
-  case 0x29:
+  case '\v':
+  case ')':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xd:
+  case '\r':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xe:
+  case '\x0e':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xf:
+  case '\x0f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x10:
+  case '\x10':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x11:
+  case '\x11':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   default:
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x13:
-  case 0x21:
-  case 0x35:
+  case '\x13':
+  case '!':
+  case '5':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x14:
-  case 0x22:
-  case 0x36:
+  case '\x14':
+  case '\"':
+  case '6':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x15:
-  case 0x23:
-  case 0x37:
+  case '\x15':
+  case '#':
+  case '7':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x16:
-  case 0x24:
-  case 0x38:
+  case '\x16':
+  case '$':
+  case '8':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x17:
+  case '\x17':
     break;
-  case 0x18:
+  case '\x18':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x19:
+  case '\x19':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1a:
+  case '\x1a':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1b:
+  case '\x1b':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1c:
+  case '\x1c':
     halt_baddata();
-  case 0x1d:
+  case '\x1d':
     halt_baddata();
-  case 0x1e:
+  case '\x1e':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1f:
+  case '\x1f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2a:
+  case '*':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2b:
+  case '+':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2c:
+  case ',':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2d:
+  case '-':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x33:
+  case '3':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x39:
+  case '9':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   }
-  func_0x014e475c(param_2,param_3,(unaff_r26 & 0x78000) << 8,param_5,param_6,param_7);
-  if (uVar3 != 1 || (in_cr3 >> 3 & 1) != 1) {
+  func_0x014e475c(param_2,uVar4,(unaff_r26 & 0x78000) << 8);
+  if (uVar7 != 1 || (in_cr3 >> 3 & 1) != 1) {
     func_0x014e475c();
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
@@ -261,19 +273,30 @@ void PM_trace(int param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4
 
 // 82278220  PM_traceHandler  (bgame/bg_pmove.cpp:308)
 
-void PM_traceHandler(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                    undefined8 param_5,undefined8 param_6,undefined8 param_7)
+void PM_traceHandler(uchar param_1,trace_t *param_2,float *param_3,float *param_4,Bounds *param_5,
+                    int param_6,int param_7)
 
 {
   uint uVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_25();
-  uVar1 = uVar1 & 0xff;
-  if (1 < uVar1) {
-    MyAssertHandler(0xffffffff8200c508,0x135,0,0xffffffff8200c548,uVar1,2);
+  lVar7 = (longlong)param_7;
+  lVar6 = (longlong)param_6;
+  lVar5 = (longlong)(int)param_5;
+  lVar4 = (longlong)(int)param_4;
+  lVar3 = (longlong)(int)param_3;
+  lVar2 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1,lVar2,lVar3,lVar4,lVar5,lVar6,lVar7);
+  if (1 < (uVar1 & 0xff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x135,0,
+                    "handler doesn\'t index PMOVE_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  (*(code *)(&switchD_8227821c::switchdataD_82961640)[uVar1 * 7])
-            (param_2,param_3,param_4,param_5,param_6,param_7);
+  (*(code *)(&pmoveHandlers)[(uVar1 & 0xff) * 7])(lVar2,lVar3,lVar4,lVar5,lVar6,lVar7);
   __restgprlr_25();
   return;
 }
@@ -281,23 +304,37 @@ void PM_traceHandler(undefined8 param_1,undefined8 param_2,undefined8 param_3,un
 
 // 8227FB38  PM_playerTrace  (bgame/bg_pmove.cpp:320)
 
-void PM_playerTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                   undefined8 param_5,undefined8 param_6,ulonglong param_7)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_playerTrace(pmove_t *param_1,trace_t *param_2,float *param_3,float *param_4,Bounds *param_5,
+                   int param_6,int param_7)
 
 {
-  int iVar1;
-  undefined2 uVar2;
+  trace_t *ptVar1;
+  pmove_t *ppVar2;
+  ushort uVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  iVar1 = __savegprlr_24();
-  (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(iVar1 + 0x134) * 7])
-            (param_2,param_3,param_4,param_5,param_6,param_7);
-  if ((*(char *)((int)param_2 + 0x2f) != '\0') &&
-     ((*(uint *)((int)param_2 + 0x14) & 0x2000000) != 0)) {
-    uVar2 = Trace_GetEntityHitId(param_2);
-    PM_AddTouchEnt(iVar1,uVar2);
-    *(uint *)(iVar1 + 0x5c) = *(uint *)(iVar1 + 0x5c) & 0xfdffffff;
-    (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(iVar1 + 0x134) * 7])
-              (param_2,param_3,param_4,param_5,param_6,param_7 << 0x20 | param_7 & 0xfdffffff);
+  uVar9 = (ulonglong)param_7;
+  lVar8 = (longlong)param_6;
+  lVar7 = (longlong)(int)param_5;
+  lVar6 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  ppVar2 = (pmove_t *)__savegprlr_24(param_1,lVar4,lVar5,lVar6,lVar7,lVar8,uVar9);
+  (*(code *)(&pmoveHandlers)[(uint)ppVar2->handler * 7])(lVar4,lVar5,lVar6,lVar7,lVar8,uVar9);
+  ptVar1 = (trace_t *)lVar4;
+  if ((ptVar1->startsolid != false) && ((ptVar1->contents & 0x2000000U) != 0)) {
+    uVar3 = Trace_GetEntityHitId(ptVar1);
+    PM_AddTouchEnt(ppVar2,(uint)uVar3);
+    ppVar2->tracemask = ppVar2->tracemask & 0xfdffffff;
+    (*(code *)(&pmoveHandlers)[(uint)ppVar2->handler * 7])
+              (lVar4,lVar5,lVar6,lVar7,lVar8,uVar9 << 0x20 | uVar9 & 0xfdffffff);
   }
   __restgprlr_24();
   return;
@@ -309,11 +346,11 @@ void PM_playerTrace(undefined8 param_1,undefined8 param_2,undefined8 param_3,und
 /* WARNING: Switch with 1 destination removed at 0x822782ec */
 /* WARNING: Exceeded maximum restarts with more pending */
 
-void PM_debugLine(uint param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                 undefined8 param_5,undefined8 param_6)
+void PM_debugLine(uchar param_1,float *param_2,float *param_3,float *param_4,int param_5,int param_6
+                 )
 
 {
-  if ((&PTR_CG_DebugLine_82961648)[(param_1 & 0xff) * 7] != (undefined *)0x0) {
+  if ((&PTR_CG_DebugLine_82961648)[(uint)param_1 * 7] != (undefined *)0x0) {
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
     CL_AddDebugLine(param_2,param_3,param_4,param_5,param_6,0);
     return;
@@ -325,157 +362,169 @@ void PM_debugLine(uint param_1,undefined8 param_2,undefined8 param_3,undefined8 
 // 822782F8  PM_getPlayerTurretWeapon  (bgame/bg_pmove.cpp:359)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
-ulonglong PM_getPlayerTurretWeapon
-                    (ulonglong param_1,int param_2,undefined8 param_3,undefined8 param_4)
+Weapon PM_getPlayerTurretWeapon(uchar param_1,playerState_s *param_2)
 
 {
-  int iVar2;
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  longlong lVar6;
+  int iVar1;
+  centity_s *pcVar2;
+  trace_t *ptVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  float *in_r5;
+  Bounds *in_r6;
+  undefined **ppuVar6;
   ulonglong unaff_r26;
-  undefined1 auStack_40 [48];
+  int iVar7;
+  int in_stack_ffffff68;
+  IgnoreEntParams aIStack_40 [4];
   
-  param_1 = param_1 & 0xff;
-  lVar6 = param_1 * 0x1c;
-  uVar5 = 0xffffffff8296164c;
-  if (*(int *)((int)&switchD_8227833c::switchdataD_8296164c + (int)lVar6) == 0) {
-    return 0;
+  iVar7 = (uint)param_1 * 0x1c;
+  ppuVar6 = &switchD_8227833c::switchdataD_8296164c;
+  if ((&switchD_8227833c::switchdataD_8296164c)[(uint)param_1 * 7] == (undefined *)0x0) {
+    return (Weapon)0;
   }
-  if (param_1 == 0) {
-    uVar4 = (ulonglong)DAT_82a382e4;
+  if (param_1 == '\0') {
+    uVar5 = (ulonglong)g_cgameClientNum;
   }
   else {
-    uVar4 = 0xffffffffffffffff;
+    uVar5 = 0xffffffffffffffff;
   }
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
                     /* WARNING: Could not find normalized switch variable to match jumptable */
-  switch((int)param_1) {
-  case 1:
-    iVar3 = 0x7ff;
-    if ((*(uint *)(param_2 + 0xf8) & 0x3800) == 0) {
-      if ((*(uint *)(param_2 + 0x10) & 0x80000) == 0) {
-        MyAssertHandler(0xffffffff8207ed88,0x861,0,0xffffffff82000f98,0xffffffff8202b03c);
+  switch(param_1) {
+  case '\x01':
+    iVar7 = 0x7ff;
+    if ((param_2->eFlags & 0x3800U) == 0) {
+      if ((param_2->otherFlags & 0x80000U) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_weapon.cpp",0x861,0
+                        ,"%s");
       }
       else {
-        iVar3 = *(int *)(param_2 + 0x50);
-        if (iVar3 == 0x7ff) {
-          return 0;
+        iVar7 = param_2->remoteTurretEnt;
+        if (iVar7 == 0x7ff) {
+          return (Weapon)0;
         }
       }
     }
     else {
-      if (*(int *)(param_2 + 0x1b8) == 0) {
-        return 0;
+      if (param_2->viewlocked == PLAYERVIEWLOCK_NONE) {
+        return (Weapon)0;
       }
-      iVar3 = *(int *)(param_2 + 0x1bc);
-      if (iVar3 == 0x7ff) {
-        return 0;
+      iVar7 = param_2->viewlocked_entNum;
+      if (iVar7 == 0x7ff) {
+        return (Weapon)0;
       }
     }
-    return (ulonglong)*(uint *)(iVar3 * 0x280 + DAT_83580b04 + 200);
-  case 2:
+    return (Weapon)level.gentities[iVar7].s.weapon.data;
+  case '\x02':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 3:
+  case '\x03':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 4:
+  case '\x04':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 5:
+  case '\x05':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 6:
+  case '\x06':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 7:
+  case '\a':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 8:
+  case '\b':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 9:
+  case '\t':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 10:
+  case '\n':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xb:
+  case '\v':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xc:
-    uVar1 = __savegprlr_27();
-    SV_SetupIgnoreEntParams(auStack_40,uVar5);
-    SV_Trace(uVar1,uVar4,param_3,param_4,auStack_40,lVar6,0,0);
+  case '\f':
+    ptVar3 = (trace_t *)__savegprlr_27();
+    SV_SetupIgnoreEntParams(aIStack_40,(int)ppuVar6);
+    SV_Trace(ptVar3,(float *)uVar5,in_r5,in_r6,aIStack_40,iVar7,0,(uchar *)0x0,in_stack_ffffff68);
     uVar4 = __restgprlr_27();
-    return uVar4;
-  case 0xd:
-    func_0x014e475c(param_2,uVar4,(unaff_r26 & 0x78000) << 8);
+    return (Weapon)uVar4;
+  case '\r':
+    func_0x014e475c(param_2,uVar5,(unaff_r26 & 0x78000) << 8);
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xe:
+  case '\x0e':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xf:
+  case '\x0f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x10:
+  case '\x10':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   }
-  iVar2 = __savegprlr_26();
-  iVar3 = 0x7ff;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8202a368,0x1a3a,0,0xffffffff82000f98,0xffffffff82001fdc);
+  iVar1 = __savegprlr_26();
+  iVar7 = 0x7ff;
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1a3a,0
+                    ,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf8) & 0x3800) == 0) {
-    if ((*(uint *)(iVar2 + 0x10) & 0x80000) != 0) {
-      if ((*(uint *)(iVar2 + 0x10) & 0x80000) == 0) {
-        MyAssertHandler(0xffffffff8202a368,0x1a58,0,0xffffffff82000f98,0xffffffff8202b03c);
+  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
+    if ((*(uint *)(iVar1 + 0x10) & 0x80000) != 0) {
+      if ((*(uint *)(iVar1 + 0x10) & 0x80000) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                        0x1a58,0,"%s");
       }
       else {
-        iVar3 = *(int *)(iVar2 + 0x50);
-        if (iVar3 == 0x7ff) goto LAB_82320050;
+        iVar7 = *(int *)(iVar1 + 0x50);
+        if (iVar7 == 0x7ff) goto LAB_82320050;
       }
 LAB_82320098:
-      iVar3 = CG_GetEntity(uVar4,iVar3);
-      uVar4 = __restgprlr_26(*(undefined4 *)(iVar3 + 0x18c));
-      return uVar4;
+      pcVar2 = CG_GetEntity((LocalClientNum_t)uVar5,iVar7);
+      uVar4 = __restgprlr_26((pcVar2->nextState).weapon.data);
+      return (Weapon)uVar4;
     }
   }
-  else if ((*(int *)(iVar2 + 0x1b8) != 0) && (iVar3 = *(int *)(iVar2 + 0x1bc), iVar3 != 0x7ff))
+  else if ((*(int *)(iVar1 + 0x1b8) != 0) && (iVar7 = *(int *)(iVar1 + 0x1bc), iVar7 != 0x7ff))
   goto LAB_82320098;
 LAB_82320050:
   uVar4 = __restgprlr_26(0);
-  return uVar4;
+  return (Weapon)uVar4;
 }
 
 
 // 82278348  PM_getEntityOrigin  (bgame/bg_pmove.cpp:374)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
-undefined8 PM_getEntityOrigin(uint param_1,int param_2,undefined4 *param_3)
+int PM_getEntityOrigin(uchar param_1,int param_2,float *param_3)
 
 {
+  centity_s *pcVar2;
   ulonglong uVar1;
   int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
+  VehicleDef *pVVar4;
+  ulonglong uVar5;
   ulonglong unaff_r26;
   byte in_cr3;
   
-  param_1 = param_1 & 0xff;
-  uVar4 = ZEXT48((&switchD_82278384::switchdataD_82961650)[param_1 * 7]);
-  if (uVar4 == 0) {
+  uVar5 = ZEXT48((&switchD_82278384::switchdataD_82961650)[(uint)param_1 * 7]);
+  if (uVar5 == 0) {
     return 0;
   }
-  if (param_1 == 0) {
-    uVar1 = (ulonglong)DAT_82a382e4;
+  if (param_1 == '\0') {
+    uVar1 = (ulonglong)g_cgameClientNum;
   }
   else {
     uVar1 = 0xffffffffffffffff;
@@ -483,81 +532,85 @@ undefined8 PM_getEntityOrigin(uint param_1,int param_2,undefined4 *param_3)
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
                     /* WARNING: Could not find normalized switch variable to match jumptable */
   switch(param_1) {
-  case 1:
+  case '\x01':
     if (0x7ff < param_2) {
-      MyAssertHandler(0xffffffff8207e318,0x62a,0,0xffffffff82000f98,0xffffffff8207e600);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",
+                      0x62a,0,"%s");
     }
-    *param_3 = (&DAT_833737b8)[param_2 * 0xa0];
-    param_3[1] = (&DAT_833737bc)[param_2 * 0xa0];
-    param_3[2] = (&DAT_833737c0)[param_2 * 0xa0];
+    *param_3 = g_entities[param_2].r.currentOrigin[0];
+    param_3[1] = g_entities[param_2].r.currentOrigin[1];
+    param_3[2] = g_entities[param_2].r.currentOrigin[2];
     return 1;
-  case 3:
+  case '\x03':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 4:
+  case '\x04':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 5:
+  case '\x05':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 6:
+  case '\x06':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 7:
+  case '\a':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 8:
+  case '\b':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 9:
+  case '\t':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 10:
+  case '\n':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xb:
+  case '\v':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xc:
+  case '\f':
     iVar3 = __savegprlr_29();
     if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff8200d10c,0x79,0,0xffffffff82000f98,0xffffffff82001fdc);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x79,0
+                      ,"%s");
     }
     if (*(int *)(iVar3 + 0xac) == 0) {
-      MyAssertHandler(0xffffffff8200d10c,0x7a,0,0xffffffff82000f98,0xffffffff8200d0f4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x7a,0
+                      ,"%s");
     }
-    iVar3 = *(int *)(iVar3 + 0xac) * 0x280;
-    if (*(int *)(&DAT_833737e0 + iVar3) == 0) {
-      MyAssertHandler(0xffffffff8200d10c,0x7d,0,0xffffffff82000f98,0xffffffff8200d0e4);
+    iVar3 = *(int *)(iVar3 + 0xac);
+    if (g_entities[iVar3].vehicle == (Vehicle *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x7d,0
+                      ,"%s");
     }
-    Vehicle_GetServerDef(*(undefined4 *)(*(int *)(&DAT_833737e0 + iVar3) + 0x210));
-    uVar2 = __restgprlr_29();
-    return uVar2;
-  case 0xd:
-    uVar1 = func_0x014e475c(uVar1,param_2,(unaff_r26 & 0x78000) << 8);
-    if (uVar4 == 1 && (in_cr3 >> 3 & 1) == 1) {
+    pVVar4 = Vehicle_GetServerDef((g_entities[iVar3].vehicle)->defIndex);
+    iVar3 = __restgprlr_29(pVVar4);
+    return iVar3;
+  case '\r':
+    func_0x014e475c(uVar1,param_2,(unaff_r26 & 0x78000) << 8);
+    if (uVar5 == 1 && (in_cr3 >> 3 & 1) == 1) {
                     /* WARNING: Bad instruction - Truncating control flow here */
       halt_baddata();
     }
-  case 2:
-    func_0x014e475c(uVar1);
+  case '\x02':
+    func_0x014e475c();
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xe:
+  case '\x0e':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xf:
+  case '\x0f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x10:
+  case '\x10':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   }
-  iVar3 = CG_GetEntity();
-  if (iVar3 != 0) {
-    *param_3 = *(undefined4 *)(iVar3 + 0x14);
-    param_3[1] = *(undefined4 *)(iVar3 + 0x18);
-    param_3[2] = *(undefined4 *)(iVar3 + 0x1c);
+  pcVar2 = CG_GetEntity((LocalClientNum_t)uVar1,param_2);
+  if (pcVar2 != (centity_s *)0x0) {
+    *param_3 = (pcVar2->pose).origin[0];
+    param_3[1] = (pcVar2->pose).origin[1];
+    param_3[2] = (pcVar2->pose).origin[2];
     return 1;
   }
   return 0;
@@ -567,196 +620,200 @@ undefined8 PM_getEntityOrigin(uint param_1,int param_2,undefined4 *param_3)
 // 82278390  PM_getEntityVelocity  (bgame/bg_pmove.cpp:386)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-undefined8 PM_getEntityVelocity(uint param_1,undefined8 param_2,undefined8 param_3)
+int PM_getEntityVelocity(uchar param_1,int param_2,float *param_3)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
+  centity_s *pcVar2;
+  ulonglong uVar1;
+  int iVar3;
   int iVar4;
-  undefined8 uVar3;
   ulonglong uVar5;
   ulonglong unaff_r26;
   byte in_cr3;
   longlong lVar6;
-  undefined4 auStack_30 [6];
+  int aiStack_30 [6];
   
-  param_1 = param_1 & 0xff;
-  uVar5 = ZEXT48((&switchD_822783cc::switchdataD_82961654)[param_1 * 7]);
+  lVar6 = (longlong)param_2;
+  uVar5 = ZEXT48((&switchD_822783cc::switchdataD_82961654)[(uint)param_1 * 7]);
   if (uVar5 == 0) {
     return 0;
   }
-  if (param_1 == 0) {
-    uVar2 = (ulonglong)DAT_82a382e4;
+  if (param_1 == '\0') {
+    uVar1 = (ulonglong)g_cgameClientNum;
   }
   else {
-    uVar2 = 0xffffffffffffffff;
+    uVar1 = 0xffffffffffffffff;
   }
-  puVar1 = (undefined4 *)param_3;
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
                     /* WARNING: Could not find normalized switch variable to match jumptable */
   switch(param_1) {
-  case 0:
-    iVar4 = CG_GetEntity();
-    if (iVar4 == 0) {
+  case '\0':
+    pcVar2 = CG_GetEntity((LocalClientNum_t)uVar1,param_2);
+    if (pcVar2 == (centity_s *)0x0) {
       return 0;
     }
-    *puVar1 = *(undefined4 *)(iVar4 + 0xe8);
-    puVar1[1] = *(undefined4 *)(iVar4 + 0xec);
-    puVar1[2] = *(undefined4 *)(iVar4 + 0xf0);
+    *param_3 = (pcVar2->nextState).lerp.pos.trDelta[0];
+    param_3[1] = (pcVar2->nextState).lerp.pos.trDelta[1];
+    param_3[2] = (pcVar2->nextState).lerp.pos.trDelta[2];
     return 1;
-  case 1:
-    if (0x7ff < (int)param_2) {
-      MyAssertHandler(0xffffffff8207e318,0x636,0,0xffffffff82000f98,0xffffffff8207e600);
+  case '\x01':
+    if (0x7ff < param_2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",
+                      0x636,0,"%s");
     }
-    iVar4 = (int)param_2 * 0x280;
-    *puVar1 = *(undefined4 *)(&DAT_833736a4 + iVar4);
-    puVar1[1] = *(undefined4 *)(&DAT_833736a8 + iVar4);
-    puVar1[2] = *(undefined4 *)(&DAT_833736ac + iVar4);
+    *param_3 = g_entities[param_2].s.lerp.pos.trDelta[0];
+    param_3[1] = g_entities[param_2].s.lerp.pos.trDelta[1];
+    param_3[2] = g_entities[param_2].s.lerp.pos.trDelta[2];
     return 1;
-  case 2:
-    func_0x014e475c(uVar2,param_2,(unaff_r26 & 0x78000) << 8);
+  case '\x02':
+    func_0x014e475c(uVar1,lVar6,(unaff_r26 & 0x78000) << 8);
     if (uVar5 == 1 && (in_cr3 >> 3 & 1) == 1) {
                     /* WARNING: Bad instruction - Truncating control flow here */
       halt_baddata();
     }
-  case 0x29:
+  case ')':
     func_0x014e475c();
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 3:
+  case '\x03':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 4:
+  case '\x04':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 5:
+  case '\x05':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   default:
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 7:
-  case 0x25:
+  case '\a':
+  case '%':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 8:
-  case 0x26:
+  case '\b':
+  case '&':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 9:
-  case 0x27:
+  case '\t':
+  case '\'':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 10:
-  case 0x28:
+  case '\n':
+  case '(':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xb:
+  case '\v':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xc:
+  case '\f':
     break;
-  case 0xd:
+  case '\r':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xe:
+  case '\x0e':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0xf:
+  case '\x0f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x10:
+  case '\x10':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x11:
-  case 0x1f:
+  case '\x11':
+  case '\x1f':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x12:
-  case 0x20:
+  case '\x12':
+  case ' ':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x13:
-  case 0x21:
+  case '\x13':
+  case '!':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x14:
-  case 0x22:
+  case '\x14':
+  case '\"':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x15:
-  case 0x23:
+  case '\x15':
+  case '#':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x16:
+  case '\x16':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x17:
+  case '\x17':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x18:
+  case '\x18':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x19:
+  case '\x19':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1a:
+  case '\x1a':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1b:
+  case '\x1b':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1c:
+  case '\x1c':
     halt_baddata();
-  case 0x1d:
+  case '\x1d':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x1e:
+  case '\x1e':
     lVar6 = uVar5 - 1;
     if (lVar6 == 0) {
-      uVar2 = func_0x00007270(uVar2);
+      func_0x00007270();
     }
     lVar6 = lVar6 + -1;
     if (lVar6 == 0) {
-      uVar2 = func_0x00007270(uVar2);
+      func_0x00007270();
     }
     if (lVar6 == 1) {
-      func_0x00007270(uVar2);
+      func_0x00007270();
     }
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2a:
+  case '*':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2b:
+  case '+':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
-  case 0x2c:
+  case ',':
                     /* WARNING: Bad instruction - Truncating control flow here */
     halt_baddata();
   }
-  iVar4 = __savegprlr_29();
+  iVar3 = __savegprlr_29();
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xb5,0,
+                    "%s");
+  }
+  iVar3 = *(int *)(iVar3 + 0xac);
+  aiStack_30[0] = 0xfe;
+  iVar4 = Vehicle_GetWheelBone(g_entities + iVar3,(int)lVar6,aiStack_30);
   if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200d10c,0xb5,0,0xffffffff82000f98,0xffffffff82001fdc);
+    iVar3 = __restgprlr_29(0);
+    return iVar3;
   }
-  auStack_30[0] = 0xfe;
-  lVar6 = ((ulonglong)*(uint *)(iVar4 + 0xac) +
-           ((ulonglong)*(uint *)(iVar4 + 0xac) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 + -0x7cc8c980;
-  iVar4 = Vehicle_GetWheelBone(lVar6,param_2,auStack_30);
-  if (iVar4 == 0) {
-    uVar3 = __restgprlr_29(0);
-    return uVar3;
-  }
-  Vehicle_GetBoneOrigin(lVar6,auStack_30[0],param_3);
-  uVar3 = __restgprlr_29(1);
-  return uVar3;
+  Vehicle_GetBoneOrigin(g_entities + iVar3,aiStack_30[0],param_3);
+  iVar3 = __restgprlr_29(1);
+  return iVar3;
 }
 
 
 // 822783D8  PM_AddEvent  (bgame/bg_pmove.cpp:401)
 
-void PM_AddEvent(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_AddEvent(playerState_s *param_1,uint param_2)
 
 {
   BG_AddPredictableEventToPlayerstate(param_2,0,param_1);
@@ -766,7 +823,9 @@ void PM_AddEvent(undefined8 param_1,undefined8 param_2)
 
 // 822783F0  PM_AddTouchEnt  (bgame/bg_pmove.cpp:407)
 
-void PM_AddTouchEnt(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_AddTouchEnt(pmove_t *param_1,int param_2)
 
 {
   int iVar1;
@@ -774,24 +833,25 @@ void PM_AddTouchEnt(int param_1,int param_2)
   int *piVar3;
   
   if (param_2 != 0x7fe) {
-    if (param_1 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0x19e,0,0xffffffff82000f98,0xffffffff82004978);
+    if (param_1 == (pmove_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x19e,0,
+                      "%s");
     }
-    iVar1 = *(int *)(param_1 + 0x60);
+    iVar1 = param_1->numtouch;
     if (iVar1 != 0x20) {
       iVar2 = 0;
       if (0 < iVar1) {
-        piVar3 = (int *)(param_1 + 100);
+        piVar3 = param_1->touchents;
         do {
           if (*piVar3 == param_2) {
             return;
           }
           iVar2 = iVar2 + 1;
           piVar3 = piVar3 + 1;
-        } while (iVar2 < *(int *)(param_1 + 0x60));
+        } while (iVar2 < param_1->numtouch);
       }
-      *(int *)((iVar1 + 0x19) * 4 + param_1) = param_2;
-      *(int *)(param_1 + 0x60) = *(int *)(param_1 + 0x60) + 1;
+      param_1->touchents[iVar1] = param_2;
+      param_1->numtouch = param_1->numtouch + 1;
     }
   }
   return;
@@ -800,32 +860,37 @@ void PM_AddTouchEnt(int param_1,int param_2)
 
 // 82277DB8  BG_GetAmmoInClipForWeapon  (bgame/bg_weapons_util.h:422)
 
-void BG_GetAmmoInClipForWeapon
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int BG_GetAmmoInClipForWeapon
+              (playerState_s *param_1,Weapon param_2,bool param_3,PlayerHandIndex param_4)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
+  longlong lVar3;
+  int iVar4;
+  int *piVar5;
   
-  iVar1 = __savegprlr_28();
+  lVar3 = (longlong)(int)param_4;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82003180,0x1a9,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_util.h",0x1a9
+                    ,0,"%s");
   }
   iVar2 = BG_ClipForWeapon(param_2,param_3);
-  iVar3 = 0;
-  piVar4 = (int *)(iVar1 + 0x40c);
+  iVar4 = 0;
+  piVar5 = (int *)(iVar1 + 0x40c);
   do {
-    if (*piVar4 == iVar2) {
-      __restgprlr_28(*(undefined4 *)((int)((param_4 + 1U & 0xffffffff) << 2) + (int)piVar4));
-      return;
+    if (*piVar5 == iVar2) {
+      iVar1 = __restgprlr_28(*(undefined4 *)((int)((lVar3 + 1U & 0xffffffff) << 2) + (int)piVar5));
+      return iVar1;
     }
-    iVar3 = iVar3 + 1;
-    piVar4 = piVar4 + 3;
-  } while (iVar3 < 0xf);
-  __restgprlr_28(0);
-  return;
+    iVar4 = iVar4 + 1;
+    piVar5 = piVar5 + 3;
+  } while (iVar4 < 0xf);
+  iVar1 = __restgprlr_28(0);
+  return iVar1;
 }
 
 
@@ -880,66 +945,78 @@ void PM_ProjectVelocity(float *param_1,float *param_2,float *param_3)
 
 // 822785D0  PM_GetEffectiveStance  (bgame/bg_pmove.cpp:494)
 
-undefined1 PM_GetEffectiveStance(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+EffectiveStance PM_GetEffectiveStance(playerState_s *param_1)
 
 {
   int iVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1ef,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1ef,0,
+                    "%s");
   }
-  iVar1 = *(int *)(param_1 + 0x164);
+  iVar1 = param_1->viewHeightTarget;
   if (iVar1 == 0x16) {
-    return 3;
+    return PM_EFF_STANCE_LASTSTANDCRAWL;
   }
   if (iVar1 == 0x28) {
-    return 2;
+    return PM_EFF_STANCE_DUCKED;
   }
-  return iVar1 == 0xb;
+  return (uint)LZCOUNT(iVar1 + -0xb) >> 5;
 }
 
 
 // 82278678  PM_GetStanceEx  (bgame/bg_pmove.cpp:518)
 
-ulonglong PM_GetStanceEx(ulonglong param_1,int param_2)
+/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
+
+PmStanceFrontBack PM_GetStanceEx(EffectiveStance param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  EffectiveStance EVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c508,0x207,0,0xffffffff8200c588,param_1,4);
+  if (PM_EFF_STANCE_LASTSTANDCRAWL < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x207,0,
+                    "stance doesn\'t index PM_STANCE_BACKWARD_FIRST\n\t%i not in [0, %i)");
   }
-  uVar1 = param_1 + 4;
+  EVar1 = param_1 + PM_EFF_STANCE_COUNT;
   if (param_2 == 0) {
-    uVar1 = param_1;
+    EVar1 = param_1;
   }
-  return uVar1;
+  return EVar1;
 }
 
 
 // 82277CE8  Vec3Cross  (universal/com_vector.h:525)
 
-void Vec3Cross(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void Vec3Cross(float *param_1,float *param_2,float *param_3)
 
 {
   float *pfVar1;
   float *pfVar2;
   ulonglong uVar3;
-  float *pfVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  float *pfVar6;
   
-  uVar3 = __savegprlr_27();
-  if ((uVar3 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c430,0x20e,0,0xffffffff82000f98,0xffffffff8200c424);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_vector.h",0x20e,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) == (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c430,0x20f,0,0xffffffff82000f98,0xffffffff8200c418);
+  if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_vector.h",0x20f,
+                    0,"%s");
   }
-  pfVar1 = (float *)param_2;
+  pfVar1 = (float *)uVar4;
   pfVar2 = (float *)uVar3;
-  pfVar4 = (float *)param_3;
-  *pfVar4 = pfVar1[2] * pfVar2[1] - pfVar1[1] * pfVar2[2];
-  pfVar4[1] = pfVar2[2] * *pfVar1 - pfVar1[2] * *pfVar2;
-  pfVar4[2] = pfVar1[1] * *pfVar2 - pfVar2[1] * *pfVar1;
+  pfVar6 = (float *)uVar5;
+  *pfVar6 = pfVar1[2] * pfVar2[1] - pfVar1[1] * pfVar2[2];
+  pfVar6[1] = pfVar2[2] * *pfVar1 - pfVar1[2] * *pfVar2;
+  pfVar6[2] = pfVar1[1] * *pfVar2 - pfVar2[1] * *pfVar1;
   __restgprlr_27();
   return;
 }
@@ -947,317 +1024,367 @@ void Vec3Cross(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 822786E8  PM_ViewRangeLimited  (bgame/bg_pmove.cpp:535)
 
-undefined8 PM_ViewRangeLimited(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_ViewRangeLimited(playerState_s *param_1)
 
 {
   bool bVar1;
-  undefined8 uVar2;
+  bool bVar2;
   
-  if (((*(int *)(param_1 + 4) == 1) && ((*(uint *)(param_1 + 0x14) & 1) == 0)) ||
-     (bVar1 = false, (*(uint *)(param_1 + 0x14) & 4) != 0)) {
+  if (((param_1->pm_type == 1) && ((param_1->linkFlags & 1U) == 0)) ||
+     (bVar1 = false, (param_1->linkFlags & 4U) != 0)) {
     bVar1 = true;
   }
-  if (((*(uint *)(param_1 + 0xf8) & 0x3800) != 0) || (uVar2 = 0, bVar1)) {
-    uVar2 = 1;
+  if (((param_1->eFlags & 0x3800U) != 0) || (bVar2 = false, bVar1)) {
+    bVar2 = true;
   }
-  return uVar2;
+  return bVar2;
 }
 
 
 // 82278748  PM_GetUnlimitedSprint  (bgame/bg_pmove.cpp:550)
 
-undefined1 PM_GetUnlimitedSprint(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool PM_GetUnlimitedSprint(void)
 
 {
-  return *(undefined1 *)(DAT_829c7de0 + 0xc);
+  return (player_sprintUnlimited->current).enabled;
 }
 
 
 // 82278758  PM_GetSprintLeft  (bgame/bg_pmove.cpp:581)
 
-void PM_GetSprintLeft(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_GetSprintLeft(playerState_s *param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar3;
+  playerState_s *ppVar3;
   ulonglong uVar2;
-  longlong lVar4;
-  ulonglong uVar5;
+  longlong lVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  int iVar4;
   
-  iVar3 = __savegprlr_28();
-  uVar2 = BG_GetMaxSprintTime();
-  if ((uint *)(iVar3 + 0x4ec) == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  lVar5 = (longlong)param_2;
+  ppVar3 = (playerState_s *)__savegprlr_28(param_1);
+  iVar4 = BG_GetMaxSprintTime(ppVar3);
+  uVar2 = (ulonglong)iVar4;
+  if (ppVar3->perks == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  if ((*(uint *)(iVar3 + 0x4ec) & 0x4000) == 0) {
-    uVar5 = uVar2;
-    if (*(char *)(DAT_829c7de0 + 0xc) == '\0') {
-      uVar1 = *(uint *)(iVar3 + 0x214);
+  if ((ppVar3->perks[0] & 0x4000) == 0) {
+    uVar7 = uVar2;
+    if ((player_sprintUnlimited->current).enabled == false) {
+      uVar1 = (ppVar3->sprintState).lastSprintStart;
       if (uVar1 != 0) {
-        if (*(int *)(iVar3 + 0x218) < (int)uVar1) {
-          uVar5 = ((ulonglong)*(uint *)(iVar3 + 0x21c) - param_2) + (ulonglong)uVar1;
+        if ((ppVar3->sprintState).lastSprintEnd < (int)uVar1) {
+          uVar7 = ((ulonglong)(uint)(ppVar3->sprintState).sprintStartMaxLength - lVar5) +
+                  (ulonglong)uVar1;
         }
         else {
-          if (*(int *)(iVar3 + 0x210) == 0) {
-            lVar4 = ((ulonglong)*(uint *)(iVar3 + 0x218) & 0x7fffffff) * -2;
+          if ((ppVar3->sprintState).sprintDelay == 0) {
+            lVar6 = ((ulonglong)(uint)(ppVar3->sprintState).lastSprintEnd & 0x7fffffff) * -2;
           }
           else {
-            lVar4 = (-(ulonglong)*(uint *)(iVar3 + 0x218) & 0x7fffffff) * 2 -
-                    (ulonglong)(uint)(int)(*(float *)(DAT_829c7df8 + 0xc) * 1000.0);
+            lVar6 = (-(ulonglong)(uint)(ppVar3->sprintState).lastSprintEnd & 0x7fffffff) * 2 -
+                    (ulonglong)(uint)(int)((player_sprintRechargePause->current).value * 1000.0);
           }
-          uVar5 = lVar4 + (ulonglong)*(uint *)(iVar3 + 0x21c) + (ulonglong)uVar1 + param_2;
+          uVar7 = lVar6 + (ulonglong)(uint)(ppVar3->sprintState).sprintStartMaxLength +
+                  (ulonglong)uVar1 + lVar5;
         }
       }
     }
-    uVar5 = ((uVar5 & 0xffffffff) >> 0x1f) - 1 & uVar5;
-    if ((int)uVar2 < (int)uVar5) {
-      uVar5 = uVar2;
+    uVar7 = ((uVar7 & 0xffffffff) >> 0x1f) - 1 & uVar7;
+    if (iVar4 < (int)uVar7) {
+      uVar7 = uVar2;
     }
-    __restgprlr_28(uVar5);
-    return;
+    iVar4 = __restgprlr_28(uVar7);
+    return iVar4;
   }
-  __restgprlr_28(uVar2);
-  return;
+  iVar4 = __restgprlr_28(uVar2);
+  return iVar4;
 }
 
 
 // 8227FC08  PM_GetSprintLeftLastTime  (bgame/bg_pmove.cpp:619)
 
-void PM_GetSprintLeftLastTime(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_GetSprintLeftLastTime(playerState_s *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar2;
+  playerState_s *ppVar3;
+  int iVar4;
+  ulonglong uVar5;
   
-  iVar2 = __savegprlr_28();
-  uVar1 = *(uint *)(iVar2 + 0x214);
-  uVar3 = (ulonglong)uVar1;
+  ppVar3 = (playerState_s *)__savegprlr_28(param_1);
+  uVar1 = (ppVar3->sprintState).lastSprintStart;
+  uVar5 = (ulonglong)uVar1;
   if (uVar1 != 0) {
-    uVar3 = ((~(ulonglong)(uVar1 ^ *(uint *)(iVar2 + 0x218)) & 0xffffffff) >> 0x1f) +
-            (ulonglong)(uVar3 <= *(uint *)(iVar2 + 0x218)) & 1;
+    uVar2 = (ppVar3->sprintState).lastSprintEnd;
+    uVar5 = ((~(ulonglong)(uVar1 ^ uVar2) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar5 <= uVar2) & 1;
   }
-  if ((uVar3 & 0xff) != 0) {
-    MyAssertHandler(0xffffffff8200c508,0x270,0,0xffffffff82000f98,0xffffffff8200cf58);
+  if ((uVar5 & 0xff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x270,0,
+                    "%s");
   }
-  uVar3 = BG_GetMaxSprintTime(iVar2);
-  if ((uint *)(iVar2 + 0x4ec) == (uint *)0x0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  iVar4 = BG_GetMaxSprintTime(ppVar3);
+  if (ppVar3->perks == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  if (((*(uint *)(iVar2 + 0x4ec) & 0x4000) == 0) && (*(char *)(DAT_829c7de0 + 0xc) == '\0')) {
-    uVar4 = ((ulonglong)*(uint *)(iVar2 + 0x21c) - (ulonglong)*(uint *)(iVar2 + 0x218)) +
-            (ulonglong)*(uint *)(iVar2 + 0x214);
-    uVar4 = ((uVar4 & 0xffffffff) >> 0x1f) - 1 & uVar4;
-    if ((int)uVar3 < (int)uVar4) {
-      uVar4 = uVar3;
+  if (((ppVar3->perks[0] & 0x4000) == 0) && ((player_sprintUnlimited->current).enabled == false)) {
+    uVar5 = ((ulonglong)(uint)(ppVar3->sprintState).sprintStartMaxLength -
+            (ulonglong)(uint)(ppVar3->sprintState).lastSprintEnd) +
+            (ulonglong)(uint)(ppVar3->sprintState).lastSprintStart;
+    uVar5 = ((uVar5 & 0xffffffff) >> 0x1f) - 1 & uVar5;
+    if (iVar4 < (int)uVar5) {
+      uVar5 = (longlong)iVar4;
     }
-    __restgprlr_28(uVar4);
-    return;
+    iVar4 = __restgprlr_28(uVar5);
+    return iVar4;
   }
-  __restgprlr_28(uVar3);
-  return;
+  iVar4 = __restgprlr_28((longlong)iVar4);
+  return iVar4;
 }
 
 
 // 82278890  PM_IsSprinting  (bgame/bg_pmove.cpp:646)
 
-ulonglong PM_IsSprinting(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_IsSprinting(playerState_s *param_1)
 
 {
   uint uVar1;
+  uint uVar2;
   
-  uVar1 = *(uint *)(param_1 + 0x214);
+  uVar1 = (param_1->sprintState).lastSprintStart;
   if (uVar1 == 0) {
-    return 0;
+    return false;
   }
-  return ((~(ulonglong)(uVar1 ^ *(uint *)(param_1 + 0x218)) & 0xffffffff) >> 0x1f) +
-         (ulonglong)(uVar1 <= *(uint *)(param_1 + 0x218)) & 1;
+  uVar2 = (param_1->sprintState).lastSprintEnd;
+  return (bool)((char)((~(ulonglong)(uVar1 ^ uVar2) & 0xffffffff) >> 0x1f) + (uVar1 <= uVar2) & 1);
 }
 
 
 // 822788C0  PM_StartSprint  (bgame/bg_pmove.cpp:669)
 
-void PM_StartSprint(undefined8 param_1,int param_2,undefined4 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_StartSprint(playerState_s *param_1,pmove_t *param_2,pml_t *param_3,int param_4)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  iVar1 = __savegprlr_29();
-  if ((*(int *)(iVar1 + 0x218) != 0) && (*(int *)(iVar1 + 0x218) < *(int *)(iVar1 + 0x214))) {
-    MyAssertHandler(0xffffffff8200c508,0x2a1,0,0xffffffff82000f98,0xffffffff8200c5d0);
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  ppVar1 = (playerState_s *)__savegprlr_29(param_1,lVar3,lVar4,param_4);
+  iVar2 = (ppVar1->sprintState).lastSprintEnd;
+  if ((iVar2 != 0) && (iVar2 < (ppVar1->sprintState).lastSprintStart)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x2a1,0,
+                    "%s");
   }
-  *(undefined4 *)(iVar1 + 0x21c) = param_3;
-  *(undefined4 *)(iVar1 + 0x214) = *(undefined4 *)(param_2 + 4);
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 0x4000;
-  BG_PlayAnim(iVar1,0,2,0,0,1,1);
-  __restgprlr_29();
+  (ppVar1->sprintState).sprintStartMaxLength = (int)lVar4;
+  (ppVar1->sprintState).lastSprintStart = *(int *)((int)lVar3 + 4);
+  ppVar1->pm_flags = ppVar1->pm_flags | 0x4000;
+  iVar2 = BG_PlayAnim(ppVar1,0,ANIM_BP_TORSO,0,0,1,1);
+  __restgprlr_29(iVar2);
   return;
 }
 
 
 // 82278958  PM_EndSprint  (bgame/bg_pmove.cpp:693)
 
-void PM_EndSprint(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_EndSprint(playerState_s *param_1,pmove_t *param_2,pml_t *param_3)
 
 {
-  if ((*(uint *)(param_1 + 0xc) & 0x4000) == 0) {
+  if ((param_1->pm_flags & 0x4000U) == 0) {
     return;
   }
-  *(undefined4 *)(param_1 + 0x210) = 0;
-  *(undefined4 *)(param_1 + 0x218) = *(undefined4 *)(param_2 + 4);
-  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffffbfff;
-  if ((*(uint *)(param_2 + 8) & 2) == 0) {
+  (param_1->sprintState).sprintDelay = 0;
+  (param_1->sprintState).lastSprintEnd = (param_2->cmd).serverTime;
+  param_1->pm_flags = param_1->pm_flags & 0xffffbfff;
+  if (((param_2->cmd).buttons & 2U) == 0) {
     return;
   }
-  *(undefined4 *)(param_1 + 0x20c) = 1;
+  (param_1->sprintState).sprintButtonUpRequired = 1;
   return;
 }
 
 
 // 822789A0  PM_SprintStartInterferingButtons  (bgame/bg_pmove.cpp:711)
 
-undefined8 PM_SprintStartInterferingButtons(int param_1,int param_2,uint param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_SprintStartInterferingButtons(playerState_s *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
   int iVar2;
   
-  uVar1 = *(uint *)(param_1 + 0xc);
-  if ((((((uVar1 & 8) == 0) && (*(int *)(DAT_829c4050 + 0xc) < param_2)) &&
-       ((param_3 & 0xcc35) == 0)) && ((uVar1 & 0x801c) == 0)) &&
-     ((((uVar1 & 0x2000) != 0 && (*(int *)(param_1 + 8) == 0)) ||
-      (((iVar2 = *(int *)(param_1 + 0x24c), iVar2 != 0xd && ((iVar2 != 0xe && (iVar2 != 0xf)))) &&
-       ((iVar2 < 0x10 || (0x15 < iVar2)))))))) {
-    return 0;
+  uVar1 = param_1->pm_flags;
+  if ((((((uVar1 & 8) == 0) && ((player_sprintForwardMinimum->current).integer < param_2)) &&
+       ((param_3 & 0xcc35U) == 0)) && ((uVar1 & 0x801c) == 0)) &&
+     ((((uVar1 & 0x2000) != 0 && (param_1->pm_time == 0)) ||
+      (((iVar2 = param_1->weapState[0].weaponState, iVar2 != 0xd &&
+        ((iVar2 != 0xe && (iVar2 != 0xf)))) && ((iVar2 < 0x10 || (0x15 < iVar2)))))))) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 82278A40  PM_SprintEndingButtons  (bgame/bg_pmove.cpp:734)
 
-void PM_SprintEndingButtons(undefined8 param_1,int param_2,uint param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_SprintEndingButtons(playerState_s *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   longlong lVar2;
   undefined8 uVar3;
-  uint uVar4;
+  undefined1 uVar4;
+  uint uVar5;
   
-  lVar2 = __savegprlr_28();
+  lVar2 = __savegprlr_28(param_1);
   iVar1 = (int)lVar2;
-  if (((*(uint *)(iVar1 + 0xc) & 0x8018) == 0) && (*(int *)(DAT_829c4050 + 0xc) < param_2)) {
-    uVar4 = 0xcf35;
+  if (((*(uint *)(iVar1 + 0xc) & 0x8018) == 0) &&
+     ((player_sprintForwardMinimum->current).integer < param_2)) {
+    uVar5 = 0xcf35;
     if (lVar2 == -0x4ec) {
-      MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                      0x4f,0,"%s");
     }
     if ((*(uint *)(iVar1 + 0x4f0) & 0x1000) != 0) {
-      uVar4 = 0xcd35;
+      uVar5 = 0xcd35;
     }
-    if ((((((uVar4 & param_3) == 0) && (iVar1 = *(int *)(iVar1 + 0x24c), iVar1 != 0xd)) &&
+    if ((((((uVar5 & param_3) == 0) && (iVar1 = *(int *)(iVar1 + 0x24c), iVar1 != 0xd)) &&
          (iVar1 != 0xe)) && ((iVar1 != 0xf && ((iVar1 < 0x10 || (0x15 < iVar1)))))) &&
        ((iVar1 != 0x1d && (uVar3 = 0, iVar1 != 0x1e)))) goto LAB_82278b18;
   }
   uVar3 = 1;
 LAB_82278b18:
-  __restgprlr_28(uVar3);
-  return;
+  uVar4 = __restgprlr_28(uVar3);
+  return (bool)uVar4;
 }
 
 
 // 82278B20  PM_CanStand  (bgame/bg_pmove.cpp:759)
 
-bool PM_CanStand(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_CanStand(playerState_s *param_1,pmove_t *param_2)
 
 {
   undefined1 auStack_40 [46];
   char local_12;
   
-  if ((*(uint *)(param_1 + 0xc) & 3) == 0) {
+  if ((param_1->pm_flags & 3U) == 0) {
     return true;
   }
-  (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(param_2 + 0x134) * 7])
-            (auStack_40,param_1 + 0x1c,param_1 + 0x1c,0xffffffff8200c2a0,
-             *(undefined4 *)(param_1 + 0x150),
-             CONCAT44(*(undefined4 *)(param_2 + 0x5c),*(undefined4 *)(param_2 + 0x5c)) &
-             0xfffffffffdffffff);
+  (*(code *)(&pmoveHandlers)[(uint)param_2->handler * 7])
+            (auStack_40,(longlong)(int)param_1 + 0x1c,(longlong)(int)param_1 + 0x1c,
+             0xffffffff8200c2a0,param_1->clientNum,
+             CONCAT44(param_2->tracemask,param_2->tracemask) & 0xfffffffffdffffff);
   return local_12 == '\0';
 }
 
 
 // 82278BA8  PM_UpdateSprint  (bgame/bg_pmove.cpp:775)
 
-void PM_UpdateSprint(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateSprint(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   uint uVar2;
-  int *piVar4;
+  uint uVar3;
+  pmove_t *ppVar4;
   int iVar5;
-  char cVar6;
-  undefined8 uVar3;
-  double dVar7;
+  bool bVar7;
+  pml_t *ppVar6;
+  char *in_r6;
+  double dVar8;
   
-  piVar4 = (int *)__savegprlr_29();
-  iVar1 = *piVar4;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x30e,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar4 = (pmove_t *)__savegprlr_29(param_1,param_2);
+  ppVar1 = ppVar4->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x30e,0,
+                    "%s");
   }
-  if ((*(int *)(iVar1 + 0x20c) != 0) && ((piVar4[2] & 2U) == 0)) {
-    *(undefined4 *)(iVar1 + 0x20c) = 0;
+  if (((ppVar1->sprintState).sprintButtonUpRequired != 0) && (((ppVar4->cmd).buttons & 2U) == 0)) {
+    (ppVar1->sprintState).sprintButtonUpRequired = 0;
   }
-  if (((*(int *)(iVar1 + 4) == 0) || (*(int *)(iVar1 + 4) == 1)) &&
-     (iVar5 = BG_GetMaxSprintTime(iVar1), 0 < iVar5)) {
-    uVar2 = *(uint *)(iVar1 + 0xc);
+  if (((ppVar1->pm_type == 0) || (ppVar1->pm_type == 1)) &&
+     (iVar5 = BG_GetMaxSprintTime(ppVar1), 0 < iVar5)) {
+    uVar2 = ppVar1->pm_flags;
     if ((uVar2 & 0x4000) == 0) {
-      dVar7 = 1000.0;
-      if (*(int *)(iVar1 + 0x210) != 0) {
-        if ((float)(longlong)(piVar4[1] - *(int *)(iVar1 + 0x218)) <
-            *(float *)(DAT_829c7df8 + 0xc) * 1000.0) goto LAB_82278e40;
+      dVar8 = 1000.0;
+      if ((ppVar1->sprintState).sprintDelay != 0) {
+        in_r6 = (char *)((ppVar4->cmd).serverTime - (ppVar1->sprintState).lastSprintEnd);
+        if ((float)(longlong)(int)in_r6 < (player_sprintRechargePause->current).value * 1000.0)
+        goto LAB_82278e40;
       }
-      if ((((piVar4[2] & 2U) != 0) && ((uVar2 & 0x20000) == 0)) && (*(int *)(iVar1 + 0x20c) == 0)) {
-        cVar6 = PM_SprintStartInterferingButtons(iVar1,*(undefined1 *)(piVar4 + 8));
-        if ((cVar6 == '\0') && (cVar6 = PM_CanStand(iVar1,piVar4), cVar6 != '\0')) {
-          uVar3 = PM_GetSprintLeft(iVar1,piVar4[1]);
-          if ((float)((double)*(float *)(DAT_829c7cf4 + 0xc) * dVar7) < (float)(longlong)(int)uVar3)
-          {
-            PM_StartSprint(iVar1,piVar4,uVar3);
-          }
+      uVar3 = (ppVar4->cmd).buttons;
+      if ((((uVar3 & 2) != 0) && ((uVar2 & 0x20000) == 0)) &&
+         (((ppVar1->sprintState).sprintButtonUpRequired == 0 &&
+          ((bVar7 = PM_SprintStartInterferingButtons(ppVar1,(int)(ppVar4->cmd).forwardmove,uVar3),
+           !bVar7 && (bVar7 = PM_CanStand(ppVar1,ppVar4), bVar7)))))) {
+        ppVar6 = (pml_t *)PM_GetSprintLeft(ppVar1,(ppVar4->cmd).serverTime);
+        if ((float)((double)(player_sprintMinTime->current).value * dVar8) <
+            (float)(longlong)(int)ppVar6) {
+          PM_StartSprint(ppVar1,ppVar4,ppVar6,(int)in_r6);
         }
       }
       goto LAB_82278e40;
     }
     if ((uVar2 & 0x20000) == 0) {
-      cVar6 = BG_HasPerk(iVar1 + 0x4ec,0xe);
-      if (((cVar6 == '\0') && (*(char *)(DAT_829c7de0 + 0xc) == '\0')) &&
-         (*(int *)(iVar1 + 0x21c) <= piVar4[1] - *(int *)(iVar1 + 0x214))) {
-        if ((*(uint *)(iVar1 + 0xc) & 0x4000) != 0) {
-          *(undefined4 *)(iVar1 + 0x210) = 0;
-          *(int *)(iVar1 + 0x218) = piVar4[1];
-          *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xffffbfff;
-          if ((piVar4[2] & 2U) != 0) {
-            *(undefined4 *)(iVar1 + 0x20c) = 1;
+      bVar7 = BG_HasPerk(ppVar1->perks,0xe);
+      if (((!bVar7) && ((player_sprintUnlimited->current).enabled == false)) &&
+         ((ppVar1->sprintState).sprintStartMaxLength <=
+          (ppVar4->cmd).serverTime - (ppVar1->sprintState).lastSprintStart)) {
+        if ((ppVar1->pm_flags & 0x4000U) != 0) {
+          (ppVar1->sprintState).sprintDelay = 0;
+          (ppVar1->sprintState).lastSprintEnd = (ppVar4->cmd).serverTime;
+          ppVar1->pm_flags = ppVar1->pm_flags & 0xffffbfff;
+          if (((ppVar4->cmd).buttons & 2U) != 0) {
+            (ppVar1->sprintState).sprintButtonUpRequired = 1;
           }
         }
-        *(undefined4 *)(iVar1 + 0x210) = 1;
+        (ppVar1->sprintState).sprintDelay = 1;
         __restgprlr_29();
         return;
       }
-      cVar6 = PM_SprintEndingButtons(iVar1,*(undefined1 *)(piVar4 + 8),piVar4[2]);
-      if (cVar6 == '\0') goto LAB_82278e40;
+      bVar7 = PM_SprintEndingButtons(ppVar1,(int)(ppVar4->cmd).forwardmove,(ppVar4->cmd).buttons);
+      if (!bVar7) goto LAB_82278e40;
       goto LAB_82278d04;
     }
   }
   else {
 LAB_82278d04:
-    if ((*(uint *)(iVar1 + 0xc) & 0x4000) == 0) goto LAB_82278e40;
+    if ((ppVar1->pm_flags & 0x4000U) == 0) goto LAB_82278e40;
   }
-  *(undefined4 *)(iVar1 + 0x210) = 0;
-  *(int *)(iVar1 + 0x218) = piVar4[1];
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xffffbfff;
-  if ((piVar4[2] & 2U) != 0) {
-    *(undefined4 *)(iVar1 + 0x20c) = 1;
+  (ppVar1->sprintState).sprintDelay = 0;
+  (ppVar1->sprintState).lastSprintEnd = (ppVar4->cmd).serverTime;
+  ppVar1->pm_flags = ppVar1->pm_flags & 0xffffbfff;
+  if (((ppVar4->cmd).buttons & 2U) != 0) {
+    (ppVar1->sprintState).sprintButtonUpRequired = 1;
     __restgprlr_29();
     return;
   }
@@ -1269,7 +1396,10 @@ LAB_82278e40:
 
 // 82278E50  PM_GetMeleeChargeFriction  (bgame/bg_pmove.cpp:866)
 
-void PM_GetMeleeChargeFriction(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float PM_GetMeleeChargeFriction(pmove_t *param_1,pml_t *param_2)
 
 {
   int iVar1;
@@ -1280,16 +1410,19 @@ void PM_GetMeleeChargeFriction(undefined8 param_1,int param_2)
   ulonglong uVar5;
   int iVar7;
   double dVar8;
-  undefined1 auStack_48 [72];
+  float fVar9;
+  float afStack_48 [18];
   
-  piVar6 = (int *)__savegprlr_27();
-  if (*(char *)(DAT_829c55f8 + 0xc) != '\0') {
+  piVar6 = (int *)__savegprlr_27(param_1);
+  if ((player_meleeCalcSpeedFromTarget->current).enabled != false) {
     if (piVar6 == (int *)0x0) {
-      MyAssertHandler(0xffffffff8200c508,0x36e,0,0xffffffff82000f98,0xffffffff82004978);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x36e,0,
+                      "%s");
     }
     iVar1 = *piVar6;
     if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0x371,0,0xffffffff82000f98,0xffffffff82001fdc);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x371,0,
+                      "%s");
     }
     if ((0 < *(int *)(iVar1 + 0x244)) || (bVar2 = true, *(int *)(iVar1 + 0x4e0) < 1)) {
       bVar2 = false;
@@ -1298,119 +1431,126 @@ void PM_GetMeleeChargeFriction(undefined8 param_1,int param_2)
       if ((code *)(&switchD_82278384::switchdataD_82961650)[(uint)*(byte *)(piVar6 + 0x4d) * 7] !=
           (code *)0x0) {
         if (*(byte *)(piVar6 + 0x4d) == 0) {
-          uVar5 = (ulonglong)DAT_82a382e4;
+          uVar5 = (ulonglong)g_cgameClientNum;
         }
         else {
           uVar5 = 0xffffffffffffffff;
         }
         iVar7 = (*(code *)(&switchD_82278384::switchdataD_82961650)
                           [(uint)*(byte *)(piVar6 + 0x4d) * 7])
-                          (uVar5,*(int *)(iVar1 + 0x4e4),auStack_48);
+                          (uVar5,*(int *)(iVar1 + 0x4e4),afStack_48);
         if (iVar7 != 0) {
-          dVar8 = (double)Vec2Distance(auStack_48,iVar1 + 0x1c);
+          fVar9 = Vec2Distance(afStack_48,(float *)(iVar1 + 0x1c));
           fVar4 = SQRT(*(float *)(iVar1 + 0x28) * *(float *)(iVar1 + 0x28) +
                        *(float *)(iVar1 + 0x2c) * *(float *)(iVar1 + 0x2c));
           fVar3 = (float)(longlong)*(int *)(iVar1 + 0x4e0) * 0.001;
-          if ((float)(dVar8 - 15.0) < fVar4 * fVar3) {
-            __restgprlr_27((double)(fVar4 - (float)(dVar8 - 15.0) / fVar3));
-            return;
+          if (fVar9 - 15.0 < fVar4 * fVar3) {
+            dVar8 = (double)__restgprlr_27((double)(fVar4 - (fVar9 - 15.0) / fVar3));
+            return (float)dVar8;
           }
         }
       }
     }
   }
-  __restgprlr_27((double)(*(float *)(DAT_829c7dd0 + 0xc) * *(float *)(param_2 + 0x24)));
-  return;
+  dVar8 = (double)__restgprlr_27((double)((player_meleeChargeFriction->current).value *
+                                         param_2->frametime));
+  return (float)dVar8;
 }
 
 
 // 82278FE0  PM_Friction  (bgame/bg_pmove.cpp:917)
 
-void PM_Friction(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_Friction(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  int *piVar5;
+  float fVar2;
+  playerState_s *ppVar3;
+  uint uVar4;
+  pmove_t *ppVar5;
   float *pfVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
+  float fVar11;
   
-  piVar5 = (int *)__savegprlr_26();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x39c,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar5 = (pmove_t *)__savegprlr_26(param_1);
+  if (ppVar5 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x39c,0,
+                    "%s");
   }
-  iVar2 = *piVar5;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x39f,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = ppVar5->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x39f,0,
+                    "%s");
   }
-  iVar4 = (int)param_2;
-  pfVar6 = (float *)(iVar2 + 0x28);
-  dVar8 = 0.0;
-  dVar10 = (double)*(float *)(iVar2 + 0x30);
-  if (*(int *)(iVar4 + 0x2c) != 0) {
-    dVar10 = dVar8;
+  pfVar6 = ppVar3->velocity;
+  dVar7 = 0.0;
+  dVar10 = (double)ppVar3->velocity[2];
+  if (param_2->walking != 0) {
+    dVar10 = dVar7;
   }
   dVar10 = (double)SQRT((float)(dVar10 * dVar10 +
-                               (double)(*(float *)(iVar2 + 0x2c) * *(float *)(iVar2 + 0x2c) +
-                                       *(float *)(iVar2 + 0x28) * *(float *)(iVar2 + 0x28))));
+                               (double)(ppVar3->velocity[1] * ppVar3->velocity[1] +
+                                       ppVar3->velocity[0] * ppVar3->velocity[0])));
   if (dVar10 < 1.0) {
     *pfVar6 = 0.0;
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    *(undefined4 *)(iVar2 + 0x30) = 0;
+    ppVar3->velocity[1] = 0.0;
+    ppVar3->velocity[2] = 0.0;
     __restgprlr_26();
     return;
   }
-  uVar3 = *(uint *)(iVar2 + 0xc);
-  dVar7 = dVar8;
-  if ((uVar3 & 0x10000) == 0) {
-    if (((*(int *)(iVar4 + 0x2c) != 0) && ((*(uint *)(iVar4 + 0x48) & 2) == 0)) &&
-       ((uVar3 & 0x100) == 0)) {
-      dVar9 = (double)*(float *)(DAT_829c4058 + 0xc);
-      if ((double)*(float *)(DAT_829c4058 + 0xc) <= dVar10) {
+  uVar4 = ppVar3->pm_flags;
+  dVar8 = dVar7;
+  if ((uVar4 & 0x10000) == 0) {
+    if (((param_2->walking != 0) && (((param_2->groundTrace).surfaceFlags & 2U) == 0)) &&
+       ((uVar4 & 0x100) == 0)) {
+      dVar9 = (double)(stopspeed->current).value;
+      if ((double)(stopspeed->current).value <= dVar10) {
         dVar9 = dVar10;
       }
-      if ((uVar3 & 0x80) == 0) {
-        if ((uVar3 & 0x2000) != 0) {
-          dVar7 = (double)Jump_ReduceFriction(iVar2);
-          dVar9 = (double)(float)(dVar7 * dVar9);
-          dVar7 = dVar8;
+      if ((uVar4 & 0x80) == 0) {
+        if ((uVar4 & 0x2000) != 0) {
+          fVar11 = Jump_ReduceFriction(ppVar3);
+          dVar9 = (double)(float)((double)fVar11 * dVar9);
+          dVar8 = dVar7;
         }
       }
       else {
         dVar9 = (double)(float)(dVar9 * 0.30000001192092896);
       }
-      dVar8 = (double)(float)((double)(*(float *)(DAT_829c7d48 + 0xc) * *(float *)(iVar4 + 0x24)) *
-                             dVar9);
+      dVar7 = (double)(float)((double)((friction->current).value * param_2->frametime) * dVar9);
     }
   }
-  else if (*(char *)(DAT_829c562c + 0xc) == '\0') {
-    if (*(int *)(iVar2 + 0x4e0) < 1) {
-      MyAssertHandler(0xffffffff8200c508,0x3b9,0,0xffffffff82000f98,0xffffffff8200c614);
-      dVar7 = dVar8;
+  else if ((player_meleeCOD4ChargeMovement->current).enabled == false) {
+    if (ppVar3->meleeChargeTime < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x3b9,0,
+                      "%s");
+      dVar8 = dVar7;
     }
-    dVar8 = (double)((float)(dVar10 / (double)((float)(longlong)*(int *)(iVar2 + 0x4e0) * 0.001)) *
-                    *(float *)(iVar4 + 0x24));
+    dVar7 = (double)((float)(dVar10 / (double)((float)(longlong)ppVar3->meleeChargeTime * 0.001)) *
+                    param_2->frametime);
   }
   else {
-    dVar8 = (double)PM_GetMeleeChargeFriction(piVar5,param_2);
+    fVar11 = PM_GetMeleeChargeFriction(ppVar5,param_2);
+    dVar7 = (double)fVar11;
   }
-  if (*(int *)(iVar2 + 4) == 5) {
-    dVar8 = (double)(float)((double)(float)((double)*(float *)(iVar4 + 0x24) * dVar10) * 5.0 + dVar8
-                           );
+  if (ppVar3->pm_type == 5) {
+    dVar7 = (double)(float)((double)(float)((double)param_2->frametime * dVar10) * 5.0 + dVar7);
   }
-  dVar9 = (double)(float)(dVar10 - dVar8);
-  if ((double)(float)(dVar10 - dVar8) < dVar7) {
-    dVar9 = dVar7;
+  dVar9 = (double)(float)(dVar10 - dVar7);
+  if ((double)(float)(dVar10 - dVar7) < dVar8) {
+    dVar9 = dVar8;
   }
-  fVar1 = (float)(dVar9 / dVar10);
-  *pfVar6 = *pfVar6 * fVar1;
-  *(float *)(iVar2 + 0x2c) = *(float *)(iVar2 + 0x2c) * fVar1;
-  *(float *)(iVar2 + 0x30) = *(float *)(iVar2 + 0x30) * fVar1;
+  fVar11 = (float)(dVar9 / dVar10);
+  fVar1 = ppVar3->velocity[1];
+  fVar2 = ppVar3->velocity[2];
+  *pfVar6 = *pfVar6 * fVar11;
+  ppVar3->velocity[1] = fVar1 * fVar11;
+  ppVar3->velocity[2] = fVar2 * fVar11;
   __restgprlr_26();
   return;
 }
@@ -1418,7 +1558,9 @@ void PM_Friction(undefined8 param_1,undefined8 param_2)
 
 // 82279250  PM_Accelerate  (bgame/bg_pmove.cpp:996)
 
-void PM_Accelerate(double param_1,double param_2,int param_3,int param_4,float *param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_Accelerate(playerState_s *param_1,pml_t *param_2,float *param_3,float param_4,float param_5)
 
 {
   float fVar1;
@@ -1429,13 +1571,13 @@ void PM_Accelerate(double param_1,double param_2,int param_3,int param_4,float *
   float fVar6;
   float fVar7;
   
-  fVar3 = *(float *)(param_3 + 0x28);
-  if ((*(uint *)(param_3 + 0xc) & 8) != 0) {
-    fVar5 = (float)((double)param_5[1] * param_1) - *(float *)(param_3 + 0x2c);
-    fVar6 = (float)((double)param_5[2] * param_1) - *(float *)(param_3 + 0x30);
-    fVar1 = (float)((double)*param_5 * param_1) - fVar3;
-    fVar2 = (float)((double)(float)((double)*(float *)(param_4 + 0x24) * param_1) * param_2);
-    fVar7 = SQRT(fVar1 * fVar1 + fVar6 * fVar6 + fVar5 * fVar5);
+  fVar1 = param_1->velocity[0];
+  if ((param_1->pm_flags & 8U) != 0) {
+    fVar5 = param_3[1] * param_4 - param_1->velocity[1];
+    fVar6 = param_3[2] * param_4 - param_1->velocity[2];
+    fVar3 = *param_3 * param_4 - fVar1;
+    fVar2 = param_2->frametime * param_4 * param_5;
+    fVar7 = SQRT(fVar3 * fVar3 + fVar6 * fVar6 + fVar5 * fVar5);
     fVar4 = 1.0;
     if (-fVar7 < 0.0) {
       fVar4 = fVar7;
@@ -1444,60 +1586,65 @@ void PM_Accelerate(double param_1,double param_2,int param_3,int param_4,float *
     if (fVar7 < fVar2) {
       fVar2 = fVar7;
     }
-    *(float *)(param_3 + 0x28) = fVar4 * fVar1 * fVar2 + fVar3;
-    *(float *)(param_3 + 0x2c) = fVar5 * fVar4 * fVar2 + *(float *)(param_3 + 0x2c);
-    *(float *)(param_3 + 0x30) = fVar6 * fVar4 * fVar2 + *(float *)(param_3 + 0x30);
+    param_1->velocity[0] = fVar4 * fVar3 * fVar2 + fVar1;
+    param_1->velocity[1] = fVar5 * fVar4 * fVar2 + param_1->velocity[1];
+    param_1->velocity[2] = fVar6 * fVar4 * fVar2 + param_1->velocity[2];
     return;
   }
-  fVar2 = (float)(param_1 -
-                 (double)(*(float *)(param_3 + 0x30) * param_5[2] +
-                         fVar3 * *param_5 +
-                         (float)((double)param_5[1] * (double)*(float *)(param_3 + 0x2c))));
+  fVar2 = param_4 - (param_1->velocity[2] * param_3[2] +
+                    fVar1 * *param_3 + param_3[1] * param_1->velocity[1]);
   if (fVar2 <= 0.0) {
     return;
   }
-  if (param_1 < (double)*(float *)(DAT_829c4058 + 0xc)) {
-    param_1 = (double)*(float *)(DAT_829c4058 + 0xc);
+  if (param_4 < (stopspeed->current).value) {
+    param_4 = (stopspeed->current).value;
   }
-  fVar1 = (float)((double)(float)((double)*(float *)(param_4 + 0x24) * param_1) * param_2);
-  if (fVar2 < fVar1) {
-    fVar1 = fVar2;
+  fVar3 = param_2->frametime * param_4 * param_5;
+  if (fVar2 < fVar3) {
+    fVar3 = fVar2;
   }
-  *(float *)(param_3 + 0x28) = *param_5 * fVar1 + fVar3;
-  *(float *)(param_3 + 0x2c) = param_5[1] * fVar1 + *(float *)(param_3 + 0x2c);
-  *(float *)(param_3 + 0x30) = fVar1 * param_5[2] + *(float *)(param_3 + 0x30);
+  param_1->velocity[0] = *param_3 * fVar3 + fVar1;
+  param_1->velocity[1] = param_3[1] * fVar3 + param_1->velocity[1];
+  param_1->velocity[2] = fVar3 * param_3[2] + param_1->velocity[2];
   return;
 }
 
 
 // 82279390  PM_MoveScale  (bgame/bg_pmove.cpp:1048)
 
-void PM_MoveScale(undefined8 param_1,double param_2,double param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_MoveScale(playerState_s *param_1,float param_2,float param_3,float param_4)
 
 {
   int iVar1;
   double extraout_f1;
   double dVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
   
-  iVar1 = __savefpr_28();
-  dVar3 = ABS(extraout_f1);
-  if (dVar3 < ABS(param_2)) {
-    dVar3 = ABS(param_2);
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
+  iVar1 = __savefpr_28((double)param_2,param_1);
+  dVar5 = ABS(extraout_f1);
+  if (dVar5 < ABS(dVar3)) {
+    dVar5 = ABS(dVar3);
   }
-  if (dVar3 < ABS(param_3)) {
-    dVar3 = ABS(param_3);
+  if (dVar5 < ABS(dVar4)) {
+    dVar5 = ABS(dVar4);
   }
   dVar2 = 0.0;
-  if (dVar3 != 0.0) {
+  if (dVar5 != 0.0) {
     dVar2 = extraout_f1;
     if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0x426,0,0xffffffff82000f98,0xffffffff82001fdc);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x426,0,
+                      "%s");
     }
-    dVar2 = (double)((float)((double)(longlong)*(int *)(iVar1 + 0x5c) * dVar3) /
-                    (SQRT((float)(param_3 * param_3 +
-                                 (double)(float)(dVar2 * dVar2 + (double)(float)(param_2 * param_2))
-                                 )) * 127.0));
+    dVar2 = (double)((float)((double)(longlong)*(int *)(iVar1 + 0x5c) * dVar5) /
+                    (SQRT((float)(dVar4 * dVar4 +
+                                 (double)(float)(dVar2 * dVar2 + (double)(float)(dVar3 * dVar3)))) *
+                    127.0));
     if ((*(uint *)(iVar1 + 0xc) & 0x40) != 0) {
       dVar2 = (double)(float)(dVar2 * 0.4000000059604645);
     }
@@ -1509,96 +1656,103 @@ void PM_MoveScale(undefined8 param_1,double param_2,double param_3)
       dVar2 = (double)(float)(dVar2 * 6.0);
     }
     if (iVar1 == 5) {
-      dVar2 = (double)(float)((double)*(float *)(DAT_829c7d24 + 0xc) * dVar2);
+      dVar2 = (double)(float)((double)(player_spectateSpeedScale->current).value * dVar2);
     }
   }
-  __restfpr_28(dVar2);
-  return;
+  dVar3 = (double)__restfpr_28(dVar2);
+  return (float)dVar3;
 }
 
 
 // 822794D0  PM_CmdScale  (bgame/bg_pmove.cpp:1097)
 
-double PM_CmdScale(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_CmdScale(playerState_s *param_1,usercmd_s *param_2)
 
 {
   char cVar1;
   char cVar2;
-  int iVar3;
+  float fVar3;
   int iVar4;
-  double dVar5;
+  int iVar5;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x44e,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x44e,0,
+                    "%s");
   }
-  cVar1 = *(char *)(param_2 + 0x1d);
-  cVar2 = *(char *)(param_2 + 0x1c);
-  iVar4 = ((int)cVar2 ^ (int)cVar2 >> 0x1f) - ((int)cVar2 >> 0x1f);
-  iVar3 = ((int)cVar1 ^ (int)cVar1 >> 0x1f) - ((int)cVar1 >> 0x1f);
-  if (iVar4 < iVar3) {
-    iVar4 = iVar3;
+  cVar1 = param_2->rightmove;
+  cVar2 = param_2->forwardmove;
+  iVar5 = ((int)cVar2 ^ (int)cVar2 >> 0x1f) - ((int)cVar2 >> 0x1f);
+  iVar4 = ((int)cVar1 ^ (int)cVar1 >> 0x1f) - ((int)cVar1 >> 0x1f);
+  if (iVar5 < iVar4) {
+    iVar5 = iVar4;
   }
-  if (iVar4 == 0) {
-    dVar5 = 0.0;
+  if (iVar5 == 0) {
+    fVar3 = 0.0;
   }
   else {
-    dVar5 = (double)(((float)(longlong)*(int *)(param_1 + 0x5c) * (float)(longlong)iVar4) /
-                    (SQRT((float)(longlong)((int)cVar2 * (int)cVar2 + (int)cVar1 * (int)cVar1)) *
-                    127.0));
-    if ((*(uint *)(param_1 + 0xc) & 0x40) != 0) {
-      dVar5 = (double)(float)(dVar5 * 0.4000000059604645);
+    fVar3 = ((float)(longlong)param_1->speed * (float)(longlong)iVar5) /
+            (SQRT((float)(longlong)((int)cVar2 * (int)cVar2 + (int)cVar1 * (int)cVar1)) * 127.0);
+    if ((param_1->pm_flags & 0x40U) != 0) {
+      fVar3 = fVar3 * 0.4;
     }
-    iVar4 = *(int *)(param_1 + 4);
-    if (iVar4 == 2) {
-      dVar5 = (double)(float)(dVar5 * 3.0);
+    iVar5 = param_1->pm_type;
+    if (iVar5 == 2) {
+      fVar3 = fVar3 * 3.0;
     }
-    if (iVar4 == 3) {
-      dVar5 = (double)(float)(dVar5 * 6.0);
+    if (iVar5 == 3) {
+      fVar3 = fVar3 * 6.0;
     }
-    if (iVar4 == 5) {
-      dVar5 = (double)(float)((double)*(float *)(DAT_829c7d24 + 0xc) * dVar5);
+    if (iVar5 == 5) {
+      fVar3 = (player_spectateSpeedScale->current).value * fVar3;
     }
   }
-  return dVar5;
+  return fVar3;
 }
 
 
 // 8227FD10  PM_CmdScaleForStance  (bgame/bg_pmove.cpp:1136)
 
-double PM_CmdScaleForStance(uint *param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_CmdScaleForStance(pmove_t *param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  char cVar3;
+  playerState_s *ppVar1;
+  EffectiveStance EVar2;
+  bool bVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   
-  uVar1 = *param_1;
+  ppVar1 = param_1->ps;
   dVar6 = 1.0;
-  if ((((*(int *)(uVar1 + 0x16c) == 0) || (*(int *)(uVar1 + 0x170) != 0xb)) ||
-      (dVar4 = (double)((float)(longlong)(int)(param_1[1] - *(int *)(uVar1 + 0x16c)) * 0.0025),
-      dVar4 < 0.0)) || ((dVar5 = dVar6, dVar4 <= 1.0 && (dVar5 = dVar4, dVar4 == 0.0)))) {
-    if ((((*(int *)(uVar1 + 0x16c) == 0) || (*(int *)(uVar1 + 0x170) != 0x28)) ||
-        ((*(int *)(uVar1 + 0x174) != 0 ||
-         (dVar4 = (double)((float)(longlong)(int)(param_1[1] - *(int *)(uVar1 + 0x16c)) * 0.0025),
-         dVar4 < 0.0)))) || ((dVar5 = dVar6, dVar4 <= 1.0 && (dVar5 = dVar4, dVar4 == 0.0)))) {
-      if (uVar1 == 0) {
-        MyAssertHandler(0xffffffff8200c508,0x47d,0,0xffffffff82000f98,0xffffffff8200cdf4);
+  if ((((ppVar1->viewHeightLerpTime == 0) || (ppVar1->viewHeightLerpTarget != 0xb)) ||
+      (dVar4 = (double)((float)(longlong)((param_1->cmd).serverTime - ppVar1->viewHeightLerpTime) *
+                       0.0025), dVar4 < 0.0)) ||
+     ((dVar5 = dVar6, dVar4 <= 1.0 && (dVar5 = dVar4, dVar4 == 0.0)))) {
+    if ((((ppVar1->viewHeightLerpTime == 0) || (ppVar1->viewHeightLerpTarget != 0x28)) ||
+        ((ppVar1->viewHeightLerpDown != 0 ||
+         (dVar4 = (double)((float)(longlong)((param_1->cmd).serverTime - ppVar1->viewHeightLerpTime)
+                          * 0.0025), dVar4 < 0.0)))) ||
+       ((dVar5 = dVar6, dVar4 <= 1.0 && (dVar5 = dVar4, dVar4 == 0.0)))) {
+      if (ppVar1 == (playerState_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x47d,
+                        0,"%s");
       }
-      iVar2 = PM_GetEffectiveStance(*param_1);
-      if (iVar2 == 1) {
+      EVar2 = PM_GetEffectiveStance(param_1->ps);
+      if (EVar2 == PM_EFF_STANCE_PRONE) {
         dVar6 = 0.15000000596046448;
       }
-      else if (iVar2 == 2) {
-        cVar3 = BG_HasPerk((ulonglong)*param_1 + 0x4ec,0x2c);
-        if ((cVar3 == '\0') || ((*(uint *)(*param_1 + 0xc) & 0x4000) == 0)) {
+      else if (EVar2 == PM_EFF_STANCE_DUCKED) {
+        bVar3 = BG_HasPerk(param_1->ps->perks,0x2c);
+        if ((!bVar3) || ((param_1->ps->pm_flags & 0x4000U) == 0)) {
           dVar6 = 0.6499999761581421;
         }
       }
-      else if (iVar2 == 3) {
-        dVar6 = (double)*(float *)(DAT_829c7e48 + 0xc);
+      else if (EVar2 == PM_EFF_STANCE_LASTSTANDCRAWL) {
+        dVar6 = (double)(player_lastStandCrawlSpeedScale->current).value;
       }
     }
     else {
@@ -1606,120 +1760,129 @@ double PM_CmdScaleForStance(uint *param_1)
     }
   }
   else {
-    dVar6 = (double)((float)(1.0 - dVar5) * (float)0x3f266666 + (float)(dVar5 * 0.15000000596046448)
-                    );
+    dVar6 = (double)((float)(1.0 - dVar5) * 0.65 + (float)(dVar5 * 0.15000000596046448));
   }
-  return dVar6;
+  return (float)dVar6;
 }
 
 
 // 82279648  PM_SprintScale  (bgame/bg_pmove.cpp:1182)
 
-double PM_SprintScale(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float PM_SprintScale(void)
 
 {
-  return (double)*(float *)(DAT_829c7dd4 + 0xc);
+  return (player_sprintSpeedScale->current).value;
 }
 
 
 // 8227FF00  PM_CmdScale_Walk  (bgame/bg_pmove.cpp:1214)
 
-void PM_CmdScale_Walk(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_CmdScale_Walk(pmove_t *param_1,usercmd_s *param_2)
 
 {
   char cVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar4;
-  int *piVar5;
-  int iVar6;
-  double dVar7;
-  double dVar8;
+  byte bVar2;
+  playerState_s *ppVar3;
+  uint uVar4;
+  bool bVar5;
+  pmove_t *ppVar6;
+  shellshock_parms_t *psVar7;
+  int iVar8;
   double dVar9;
   double dVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
   float local_50;
   float local_4c;
   longlong local_48;
   
-  piVar5 = (int *)__savegprlr_27();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x4c9,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar6 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar6 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x4c9,0,
+                    "%s");
   }
-  iVar2 = *piVar5;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x4cb,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = ppVar6->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x4cb,0,
+                    "%s");
   }
-  uVar3 = *(uint *)(iVar2 + 0xc);
-  dVar10 = 0.0;
-  if (((uVar3 & 1) == 0) || (bVar4 = true, *(float *)(iVar2 + 0x378) <= 0.0)) {
-    bVar4 = false;
+  uVar4 = ppVar3->pm_flags;
+  dVar12 = 0.0;
+  if (((uVar4 & 1) == 0) || (bVar5 = true, (ppVar3->weapCommon).fWeaponPosFrac <= 0.0)) {
+    bVar5 = false;
   }
-  cVar1 = *(char *)(param_2 + 0x1c);
-  iVar6 = (int)cVar1;
-  if (iVar6 < 0) {
-    dVar9 = (double)(*(float *)(DAT_829c7d68 + 0xc) * (float)(longlong)iVar6);
-  }
-  else {
-    dVar9 = (double)(longlong)iVar6;
-  }
-  local_48 = (longlong)*(char *)(param_2 + 0x1d);
-  dVar8 = ABS((double)(*(float *)(DAT_829c7e40 + 0xc) * (float)local_48));
-  dVar7 = ABS(dVar9);
-  if ((float)(ABS(dVar9) - dVar8) < 0.0) {
-    dVar7 = dVar8;
-  }
-  if (dVar7 == 0.0) {
-    __restgprlr_27(0);
-    return;
-  }
-  local_48 = (longlong)*(int *)(iVar2 + 0x5c);
-  dVar9 = (double)((float)((double)local_48 * dVar7) /
-                  (SQRT((float)(longlong)
-                               ((int)*(char *)(param_2 + 0x1d) * (int)*(char *)(param_2 + 0x1d) +
-                               (int)cVar1 * (int)cVar1)) * 127.0));
-  if (((uVar3 & 0x40) != 0) || (bVar4)) {
-    dVar9 = (double)(float)(dVar9 * 0.4000000059604645);
-  }
-  if ((uVar3 & 0x4000) != 0) {
-    dVar9 = (double)(float)((double)*(float *)(DAT_829c7dd4 + 0xc) * dVar9);
-  }
-  if (*(int *)(iVar2 + 4) == 2) {
-    dVar9 = (double)(float)(dVar9 * 3.0);
-  }
-  else if (*(int *)(iVar2 + 4) == 3) {
-    dVar9 = (double)(float)(dVar9 * 6.0);
+  cVar1 = param_2->forwardmove;
+  iVar8 = (int)cVar1;
+  if (iVar8 < 0) {
+    dVar11 = (double)((player_backSpeedScale->current).value * (float)(longlong)iVar8);
   }
   else {
-    dVar7 = (double)PM_CmdScaleForStance(piVar5);
-    dVar9 = (double)(float)(dVar7 * dVar9);
+    dVar11 = (double)(longlong)iVar8;
+  }
+  local_48 = (longlong)param_2->rightmove;
+  dVar10 = ABS((double)((player_strafeSpeedScale->current).value * (float)local_48));
+  dVar9 = ABS(dVar11);
+  if ((float)(ABS(dVar11) - dVar10) < 0.0) {
+    dVar9 = dVar10;
+  }
+  if (dVar9 == 0.0) {
+    dVar12 = (double)__restgprlr_27(0);
+    return (float)dVar12;
+  }
+  local_48 = (longlong)ppVar3->speed;
+  dVar11 = (double)((float)((double)local_48 * dVar9) /
+                   (SQRT((float)(longlong)
+                                ((int)param_2->rightmove * (int)param_2->rightmove +
+                                (int)cVar1 * (int)cVar1)) * 127.0));
+  if (((uVar4 & 0x40) != 0) || (bVar5)) {
+    dVar11 = (double)(float)(dVar11 * 0.4000000059604645);
+  }
+  if ((uVar4 & 0x4000) != 0) {
+    dVar11 = (double)(float)((double)(player_sprintSpeedScale->current).value * dVar11);
+  }
+  if (ppVar3->pm_type == 2) {
+    dVar11 = (double)(float)(dVar11 * 3.0);
+  }
+  else if (ppVar3->pm_type == 3) {
+    dVar11 = (double)(float)(dVar11 * 6.0);
+  }
+  else {
+    fVar13 = PM_CmdScaleForStance(ppVar6);
+    dVar11 = (double)(float)((double)fVar13 * dVar11);
   }
   BG_GetMoveSpeedScale
-            (*(undefined4 *)(iVar2 + 0x370),*(uint *)(iVar2 + 0x374) >> 0xf & 1,&local_50,&local_4c)
-  ;
-  if ((*(char *)(iVar2 + 0x373) != '\0') &&
-     ((((dVar7 = (double)local_50, dVar10 < dVar7 && ((*(uint *)(iVar2 + 0xc) & 0x40) == 0)) &&
-       (!bVar4)) ||
-      ((*(char *)(iVar2 + 0x373) != '\0' && (dVar7 = (double)local_4c, dVar10 < dVar7)))))) {
-    dVar9 = (double)(float)(dVar7 * dVar9);
+            ((ppVar3->weapCommon).weapon,
+             (bool)((byte)((uint)(ppVar3->weapCommon).weapFlags >> 0xf) & 1),&local_50,&local_4c);
+  bVar2 = (ppVar3->weapCommon).weapon._s_0.weaponIdx;
+  if ((bVar2 != 0) &&
+     ((((dVar9 = (double)local_50, dVar12 < dVar9 && ((ppVar3->pm_flags & 0x40U) == 0)) && (!bVar5))
+      || ((bVar2 != 0 && (dVar9 = (double)local_4c, dVar12 < dVar9)))))) {
+    dVar11 = (double)(float)(dVar9 * dVar11);
   }
-  if (((*(uint *)(iVar2 + 0xc) & 0x8000) != 0) &&
-     (iVar6 = BG_GetShellshockParms(*(undefined4 *)(iVar2 + 0x554)),
-     *(char *)(iVar6 + 0x264) != '\0')) {
-    dVar9 = (double)(float)(dVar9 * 0.4000000059604645);
+  if (((ppVar3->pm_flags & 0x8000U) != 0) &&
+     (psVar7 = BG_GetShellshockParms(ppVar3->shellshockIndex), (psVar7->movement).affect != false))
+  {
+    dVar11 = (double)(float)(dVar11 * 0.4000000059604645);
   }
-  __restgprlr_27((double)(float)((double)*(float *)(iVar2 + 0x228) * dVar9));
-  return;
+  dVar12 = (double)__restgprlr_27((double)(float)((double)ppVar3->moveSpeedScaleMultiplier * dVar11)
+                                 );
+  return (float)dVar12;
 }
 
 
 // 82279658  PM_DamageScale_Walk  (bgame/bg_pmove.cpp:1285)
 
-double PM_DamageScale_Walk(int param_1)
+float PM_DamageScale_Walk(int param_1)
 
 {
-  if ((param_1 != 0) && (*(float *)(DAT_829c7da0 + 0xc) != 0.0)) {
-    return (double)(*(float *)(DAT_829c7ce8 + 0xc) * (-1.0 / *(float *)(DAT_829c7da0 + 0xc)) *
-                    (float)(longlong)param_1 + 1.0);
+  if ((param_1 != 0) && ((player_dmgtimer_maxTime->current).value != 0.0)) {
+    return (player_dmgtimer_minScale->current).value *
+           (-1.0 / (player_dmgtimer_maxTime->current).value) * (float)(longlong)param_1 + 1.0;
   }
   return 1.0;
 }
@@ -1727,91 +1890,93 @@ double PM_DamageScale_Walk(int param_1)
 
 // 822796C8  PM_SetMovementDir  (bgame/bg_pmove.cpp:1316)
 
-void PM_SetMovementDir(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_SetMovementDir(pmove_t *param_1,pml_t *param_2)
 
 {
   bool bVar1;
   int iVar2;
   float fVar3;
-  float fVar4;
-  int *piVar5;
-  uint uVar6;
+  int *piVar4;
+  uint uVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
+  float fVar8;
   float local_48;
   float local_44;
   float local_40;
   
-  piVar5 = (int *)__savegprlr_27();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x52a,0,0xffffffff82000f98,0xffffffff82004978);
+  piVar4 = (int *)__savegprlr_27(param_1);
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x52a,0,
+                    "%s");
   }
-  iVar2 = *piVar5;
+  iVar2 = *piVar4;
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x52d,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x52d,0,
+                    "%s");
   }
-  if ((*(uint *)(iVar2 + 0xc) & 1) != 0) {
-    if ((*(uint *)(iVar2 + 0xf8) & 0x3800) == 0) {
-      dVar7 = (double)AngleDelta((double)*(float *)(iVar2 + 0x1ac),(double)*(float *)(iVar2 + 0x15c)
-                                );
-      uVar6 = (uint)dVar7;
-      if ((0x5a < (int)((uVar6 ^ (int)uVar6 >> 0x1f) - ((int)uVar6 >> 0x1f))) &&
-         (bVar1 = (int)uVar6 < 1, uVar6 = 0x5a, bVar1)) {
-        *(undefined4 *)(iVar2 + 0xf4) = 0xffffffa6;
-        __restgprlr_27();
-        return;
+  if (((*(uint *)(iVar2 + 0xc) & 1) == 0) || ((*(uint *)(iVar2 + 0xf8) & 0x3800) != 0)) {
+    if ((*(uint *)(iVar2 + 0xc) & 8) == 0) {
+      local_44 = *(float *)(iVar2 + 0x20) - param_2->previous_origin[1];
+      local_48 = *(float *)(iVar2 + 0x1c) - param_2->previous_origin[0];
+      local_40 = *(float *)(iVar2 + 0x24) - param_2->previous_origin[2];
+      if (((*(char *)(piVar4 + 8) != '\0') || (*(char *)((int)piVar4 + 0x21) != '\0')) &&
+         (*(int *)(iVar2 + 0x6c) != 0x7ff)) {
+        fVar8 = SQRT(local_44 * local_44 + local_40 * local_40 + local_48 * local_48);
+        if (fVar8 != 0.0) {
+          if (param_2->frametime * 5.0 < fVar8) {
+            fVar3 = 1.0;
+            if (-fVar8 < 0.0) {
+              fVar3 = fVar8;
+            }
+            fVar3 = 1.0 / fVar3;
+            local_48 = fVar3 * local_48;
+            local_44 = fVar3 * local_44;
+            local_40 = local_40 * fVar3;
+            vectoangles(&local_48,&local_48);
+            fVar8 = AngleDelta(local_44,*(float *)(iVar2 + 0x15c));
+            uVar5 = (uint)fVar8;
+            if (0x7f < *(byte *)(piVar4 + 8)) {
+              dVar7 = (double)(float)((double)(longlong)(int)uVar5 * 0.0027777778450399637 + 0.5);
+              dVar6 = floor((double)(float)(dVar7 + 0.5));
+              uVar5 = (uint)((float)(dVar7 - (double)(float)dVar6) * 360.0);
+            }
+            if ((0x5a < (int)((uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f))) &&
+               (bVar1 = (int)uVar5 < 1, uVar5 = 0x5a, bVar1)) {
+              uVar5 = 0xffffffa6;
+            }
+            goto LAB_82279968;
+          }
+        }
       }
-      goto LAB_82279968;
+      *(undefined4 *)(iVar2 + 0xf4) = 0;
+      __restgprlr_27();
+      return;
     }
-  }
-  if ((*(uint *)(iVar2 + 0xc) & 8) != 0) {
-    dVar7 = (double)vectoyaw(iVar2 + 0x70);
-    dVar7 = (double)AngleDelta((double)(float)(dVar7 + 180.0),(double)*(float *)(iVar2 + 0x15c));
-    uVar6 = (uint)dVar7;
-    if ((0x5a < (int)((uVar6 ^ (int)uVar6 >> 0x1f) - ((int)uVar6 >> 0x1f))) &&
-       (bVar1 = (int)uVar6 < 1, uVar6 = 0x5a, bVar1)) {
+    fVar8 = vectoyaw((float *)(iVar2 + 0x70));
+    fVar8 = AngleDelta(fVar8 + 180.0,*(float *)(iVar2 + 0x15c));
+    uVar5 = (uint)fVar8;
+    if ((0x5a < (int)((uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f))) &&
+       (bVar1 = (int)uVar5 < 1, uVar5 = 0x5a, bVar1)) {
       *(undefined4 *)(iVar2 + 0xf4) = 0xffffffa6;
       __restgprlr_27();
       return;
     }
-LAB_82279968:
-    *(int *)(iVar2 + 0xf4) = (int)(char)uVar6;
-    __restgprlr_27();
-    return;
   }
-  local_44 = *(float *)(iVar2 + 0x20) - *(float *)(param_2 + 0x74);
-  local_48 = *(float *)(iVar2 + 0x1c) - *(float *)(param_2 + 0x70);
-  local_40 = *(float *)(iVar2 + 0x24) - *(float *)(param_2 + 0x78);
-  if (((*(char *)(piVar5 + 8) != '\0') || (*(char *)((int)piVar5 + 0x21) != '\0')) &&
-     (*(int *)(iVar2 + 0x6c) != 0x7ff)) {
-    fVar3 = SQRT(local_44 * local_44 + local_40 * local_40 + local_48 * local_48);
-    if (fVar3 != 0.0) {
-      if (*(float *)(param_2 + 0x24) * 5.0 < fVar3) {
-        fVar4 = 1.0;
-        if (-fVar3 < 0.0) {
-          fVar4 = fVar3;
-        }
-        fVar4 = 1.0 / fVar4;
-        local_48 = fVar4 * local_48;
-        local_44 = fVar4 * local_44;
-        local_40 = local_40 * fVar4;
-        vectoangles(&local_48,&local_48);
-        dVar7 = (double)AngleDelta((double)local_44,(double)*(float *)(iVar2 + 0x15c));
-        uVar6 = (uint)dVar7;
-        if (0x7f < *(byte *)(piVar5 + 8)) {
-          dVar8 = (double)(float)((double)(longlong)(int)uVar6 * 0.0027777778450399637 + 0.5);
-          dVar7 = floor((double)(float)(dVar8 + 0.5));
-          uVar6 = (uint)((float)(dVar8 - (double)(float)dVar7) * 360.0);
-        }
-        if ((0x5a < (int)((uVar6 ^ (int)uVar6 >> 0x1f) - ((int)uVar6 >> 0x1f))) &&
-           (bVar1 = (int)uVar6 < 1, uVar6 = 0x5a, bVar1)) {
-          uVar6 = 0xffffffa6;
-        }
-        goto LAB_82279968;
-      }
+  else {
+    fVar8 = AngleDelta(*(float *)(iVar2 + 0x1ac),*(float *)(iVar2 + 0x15c));
+    uVar5 = (uint)fVar8;
+    if ((0x5a < (int)((uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f))) &&
+       (bVar1 = (int)uVar5 < 1, uVar5 = 0x5a, bVar1)) {
+      *(undefined4 *)(iVar2 + 0xf4) = 0xffffffa6;
+      __restgprlr_27();
+      return;
     }
   }
-  *(undefined4 *)(iVar2 + 0xf4) = 0;
+LAB_82279968:
+  *(int *)(iVar2 + 0xf4) = (int)(char)uVar5;
   __restgprlr_27();
   return;
 }
@@ -1819,80 +1984,81 @@ LAB_82279968:
 
 // 82279990  PM_GroundSurfaceType  (bgame/bg_pmove.cpp:1398)
 
-void PM_GroundSurfaceType(void)
+uint PM_GroundSurfaceType(pml_t *param_1)
 
 {
-  uint uVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   
-  iVar2 = __savegprlr_29();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x579,0,0xffffffff82000f98,0xffffffff8200c660);
+  iVar1 = __savegprlr_29(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x579,0,
+                    "%s");
   }
-  if ((*(uint *)(iVar2 + 0x48) & 0x2000) == 0) {
-    uVar1 = (int)*(uint *)(iVar2 + 0x48) >> 0x14 & 0x1f;
-    if (0x1e < uVar1) {
-      MyAssertHandler(0xffffffff8200c508,0x57f,0,0xffffffff82000f98,0xffffffff8200c630);
+  if ((*(uint *)(iVar1 + 0x48) & 0x2000) == 0) {
+    uVar2 = (int)*(uint *)(iVar1 + 0x48) >> 0x14 & 0x1f;
+    if (0x1e < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x57f,0,
+                      "%s");
     }
-    __restgprlr_29(uVar1);
-    return;
+    uVar2 = __restgprlr_29(uVar2);
+    return uVar2;
   }
-  __restgprlr_29(0);
-  return;
+  uVar2 = __restgprlr_29(0);
+  return uVar2;
 }
 
 
 // 82279A30  PM_FlyMove  (bgame/bg_pmove.cpp:1424)
 
-void PM_FlyMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_FlyMove(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  float *pfVar2;
+  float fVar1;
+  playerState_s *ppVar2;
   float fVar3;
   float fVar4;
-  int *piVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  float fVar5;
+  pmove_t *ppVar6;
+  float fVar7;
   float local_40;
   float fStack_3c;
   float local_38;
   
-  piVar5 = (int *)__savegprlr_27();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x598,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar6 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar6 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x598,0,
+                    "%s");
   }
-  iVar1 = *piVar5;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x59b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar2 = ppVar6->ps;
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x59b,0,
+                    "%s");
   }
-  PM_Friction(piVar5,param_2);
-  dVar7 = (double)PM_CmdScale(iVar1,piVar5 + 1);
-  dVar6 = 0.0;
-  dVar9 = dVar6;
-  dVar10 = dVar6;
-  if (dVar7 != 0.0) {
-    pfVar2 = (float *)param_2;
-    fVar3 = (float)(longlong)*(char *)((int)piVar5 + 0x21);
-    fVar4 = (float)(longlong)*(char *)(piVar5 + 8);
-    dVar6 = (double)(float)((double)(fVar4 * *pfVar2) * dVar7 + (double)(pfVar2[3] * fVar3));
-    dVar9 = (double)(float)((double)(pfVar2[2] * fVar4) * dVar7 + (double)(pfVar2[5] * fVar3));
-    dVar10 = (double)(float)((double)(pfVar2[1] * fVar4) * dVar7 + (double)(pfVar2[4] * fVar3));
+  PM_Friction(ppVar6,param_2);
+  fVar7 = PM_CmdScale(ppVar2,&ppVar6->cmd);
+  fVar1 = 0.0;
+  fVar3 = fVar1;
+  fVar4 = fVar1;
+  if (fVar7 != 0.0) {
+    fVar4 = (float)(longlong)(ppVar6->cmd).rightmove;
+    fVar5 = (float)(longlong)(ppVar6->cmd).forwardmove;
+    fVar1 = fVar5 * param_2->forward[0] * fVar7 + param_2->right[0] * fVar4;
+    fVar3 = param_2->forward[2] * fVar5 * fVar7 + param_2->right[2] * fVar4;
+    fVar4 = param_2->forward[1] * fVar5 * fVar7 + param_2->right[1] * fVar4;
   }
-  dVar8 = (double)SQRT((float)(dVar6 * dVar6 +
-                              (double)(float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10))));
-  dVar7 = 1.0;
-  if (-dVar8 < 0.0) {
-    dVar7 = dVar8;
+  fVar7 = SQRT(fVar1 * fVar1 + fVar3 * fVar3 + fVar4 * fVar4);
+  local_38 = 1.0;
+  if (-fVar7 < 0.0) {
+    local_38 = fVar7;
   }
-  dVar7 = (double)(float)(1.0 / dVar7);
-  _local_40 = CONCAT44((float)(dVar7 * dVar6),(float)(dVar7 * dVar10));
-  local_38 = (float)(dVar7 * dVar9);
-  PM_Accelerate(dVar8,0x4020000000000000,iVar1,param_2,&local_40);
-  PM_StepSlideMove(piVar5);
+  local_38 = 1.0 / local_38;
+  _local_40 = CONCAT44(local_38 * fVar1,local_38 * fVar4);
+  local_38 = local_38 * fVar3;
+  PM_Accelerate(ppVar2,param_2,&local_40,fVar7,8.0);
+  PM_StepSlideMove(ppVar6,param_2,0);
   __restgprlr_27();
   return;
 }
@@ -1900,123 +2066,125 @@ void PM_FlyMove(undefined8 param_1,undefined8 param_2)
 
 // 822801D0  PM_AirMove  (bgame/bg_pmove.cpp:1475)
 
-void PM_AirMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_AirMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
-  int iVar4;
-  undefined4 uVar5;
-  float *pfVar6;
-  int *piVar7;
-  char cVar9;
-  int iVar8;
+  playerState_s *ppVar3;
+  float fVar4;
+  float fVar5;
+  pmove_t *ppVar6;
+  bool bVar8;
+  int iVar7;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  float fVar11;
   undefined8 local_e0;
   float local_d8;
-  undefined4 local_d0;
-  undefined4 local_cc;
+  float local_d0;
+  float local_cc;
   undefined4 local_c8;
   undefined4 local_c4;
   undefined4 local_c0;
   undefined4 local_bc;
-  undefined1 auStack_b0 [48];
+  usercmd_s uStack_b0;
   undefined1 auStack_80 [46];
   char local_52;
   
-  piVar7 = (int *)__savegprlr_27();
-  if (piVar7 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x5cf,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar6 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar6 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x5cf,0,
+                    "%s");
   }
-  iVar4 = *piVar7;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x5d2,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = ppVar6->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x5d2,0,
+                    "%s");
   }
-  PM_Friction(piVar7,param_2);
-  local_e0 = (longlong)*(char *)(piVar7 + 8);
-  dVar14 = (double)(longlong)*(char *)((int)piVar7 + 0x21);
-  dVar15 = (double)local_e0;
-  memcpy(auStack_b0,piVar7 + 1,0x2c);
-  dVar10 = (double)PM_CmdScale(iVar4,auStack_b0);
-  pfVar6 = (float *)param_2;
-  fVar2 = pfVar6[1];
-  fVar3 = *pfVar6;
-  dVar11 = 1.0;
-  pfVar6[5] = 0.0;
-  dVar12 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2);
-  dVar13 = dVar11;
-  if (-dVar12 < 0.0) {
-    dVar13 = dVar12;
+  PM_Friction(ppVar6,param_2);
+  local_e0 = (longlong)(ppVar6->cmd).forwardmove;
+  dVar9 = (double)(longlong)(ppVar6->cmd).rightmove;
+  dVar10 = (double)local_e0;
+  memcpy();
+  fVar11 = PM_CmdScale(ppVar3,&uStack_b0);
+  fVar1 = param_2->forward[1];
+  fVar2 = param_2->forward[0];
+  local_d8 = 1.0;
+  param_2->right[2] = 0.0;
+  fVar5 = SQRT(fVar2 * fVar2 + fVar1 * fVar1);
+  fVar4 = local_d8;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
   }
-  fVar1 = (float)(1.0 / dVar13);
-  *pfVar6 = fVar3 * fVar1;
-  pfVar6[1] = fVar2 * fVar1;
-  pfVar6[2] = fVar1 * 0.0;
-  fVar2 = pfVar6[3];
-  fVar3 = pfVar6[4];
-  dVar12 = (double)SQRT(fVar2 * fVar2 + fVar3 * fVar3 + 0.0);
-  dVar13 = dVar11;
-  if (-dVar12 < 0.0) {
-    dVar13 = dVar12;
+  fVar4 = 1.0 / fVar4;
+  param_2->forward[0] = fVar2 * fVar4;
+  param_2->forward[1] = fVar1 * fVar4;
+  param_2->forward[2] = fVar4 * 0.0;
+  fVar1 = param_2->right[0];
+  fVar2 = param_2->right[1];
+  fVar5 = SQRT(fVar1 * fVar1 + fVar2 * fVar2 + 0.0);
+  fVar4 = local_d8;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
   }
-  fVar1 = (float)(1.0 / dVar13);
-  pfVar6[3] = fVar2 * fVar1;
-  pfVar6[4] = fVar3 * fVar1;
-  pfVar6[5] = fVar1 * 0.0;
-  fVar2 = (float)((double)(fVar2 * fVar1) * dVar14 + (double)(float)((double)*pfVar6 * dVar15));
-  fVar3 = (float)((double)(fVar3 * fVar1) * dVar14 + (double)(float)((double)pfVar6[1] * dVar15));
-  dVar13 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2);
-  if (-dVar13 < 0.0) {
-    dVar11 = dVar13;
+  fVar4 = 1.0 / fVar4;
+  param_2->right[0] = fVar1 * fVar4;
+  param_2->right[1] = fVar2 * fVar4;
+  param_2->right[2] = fVar4 * 0.0;
+  fVar1 = (float)((double)(fVar1 * fVar4) * dVar9 +
+                 (double)(float)((double)param_2->forward[0] * dVar10));
+  fVar2 = (float)((double)(fVar2 * fVar4) * dVar9 +
+                 (double)(float)((double)param_2->forward[1] * dVar10));
+  fVar4 = SQRT(fVar2 * fVar2 + fVar1 * fVar1);
+  if (-fVar4 < 0.0) {
+    local_d8 = fVar4;
   }
-  local_d8 = (float)(1.0 / dVar11);
-  local_e0 = CONCAT44(local_d8 * fVar2,fVar3 * local_d8);
+  local_d8 = 1.0 / local_d8;
+  local_e0 = CONCAT44(local_d8 * fVar1,fVar2 * local_d8);
   local_d8 = local_d8 * 0.0;
-  PM_Accelerate((double)(float)(dVar13 * dVar10),iVar4,param_2,&local_e0);
-  if (pfVar6[0xc] != 0.0) {
-    fVar2 = pfVar6[0x11] * *(float *)(iVar4 + 0x30) +
-            *(float *)(iVar4 + 0x28) * pfVar6[0xf] + *(float *)(iVar4 + 0x2c) * pfVar6[0x10];
+  PM_Accelerate(ppVar3,param_2,(float *)&local_e0,fVar4 * fVar11,1.0);
+  if (param_2->groundPlane != 0) {
+    fVar1 = (param_2->groundTrace).normal[0];
+    fVar2 = (param_2->groundTrace).normal[2] * ppVar3->velocity[2] +
+            ppVar3->velocity[0] * fVar1 + ppVar3->velocity[1] * (param_2->groundTrace).normal[1];
     fVar2 = ABS(fVar2) * 0.001 - fVar2;
-    *(float *)(iVar4 + 0x28) = pfVar6[0xf] * fVar2 + *(float *)(iVar4 + 0x28);
-    *(float *)(iVar4 + 0x2c) = pfVar6[0x10] * fVar2 + *(float *)(iVar4 + 0x2c);
-    *(float *)(iVar4 + 0x30) = pfVar6[0x11] * fVar2 + *(float *)(iVar4 + 0x30);
+    ppVar3->velocity[0] = fVar1 * fVar2 + ppVar3->velocity[0];
+    ppVar3->velocity[1] = (param_2->groundTrace).normal[1] * fVar2 + ppVar3->velocity[1];
+    ppVar3->velocity[2] = (param_2->groundTrace).normal[2] * fVar2 + ppVar3->velocity[2];
   }
-  uVar5 = *(undefined4 *)(iVar4 + 0x58);
-  cVar9 = PM_Diving(iVar4);
-  if (cVar9 != '\0') {
-    local_e0 = (longlong)*(int *)(iVar4 + 0x58);
-    dVar13 = floor((double)(*(float *)(DAT_829d7f34 + 0xc) * (float)local_e0 + 0.5));
-    *(int *)(iVar4 + 0x58) = (int)dVar13;
+  iVar7 = ppVar3->gravity;
+  bVar8 = PM_Diving(ppVar3);
+  if (bVar8) {
+    local_e0 = (longlong)ppVar3->gravity;
+    dVar9 = floor((double)((perk_diveGravityScale->current).value * (float)local_e0 + 0.5));
+    ppVar3->gravity = (int)dVar9;
   }
-  PM_StepSlideMove(piVar7,param_2,1);
-  cVar9 = PM_Diving(iVar4);
-  if (cVar9 != '\0') {
-    *(undefined4 *)(iVar4 + 0x58) = uVar5;
+  PM_StepSlideMove(ppVar6,param_2,1);
+  bVar8 = PM_Diving(ppVar3);
+  if (bVar8) {
+    ppVar3->gravity = iVar7;
   }
-  if ((((*(uint *)(iVar4 + 0xc) & 1) != 0) && (*(int *)(iVar4 + 4) < 7)) &&
-     (iVar8 = PlayerPronePossible(piVar7), iVar8 == 0)) {
-    local_d0 = 0;
+  if ((((ppVar3->pm_flags & 1U) != 0) && (ppVar3->pm_type < 7)) &&
+     (iVar7 = PlayerPronePossible(ppVar6), iVar7 == 0)) {
+    local_d0 = 0.0;
     local_c4 = 0x41700000;
-    local_cc = 0;
+    local_cc = 0.0;
     local_c8 = 0x41c80000;
     local_c0 = 0x41700000;
     local_bc = 0x41c80000;
-    (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar7 + 0x4d) * 7])
-              (auStack_80,iVar4 + 0x1c,iVar4 + 0x1c,&local_d0,*(undefined4 *)(iVar4 + 0x150),
-               CONCAT44(piVar7[0x17],piVar7[0x17]) & 0xfffffffffdffffff);
+    (*(code *)(&pmoveHandlers)[(uint)ppVar6->handler * 7])
+              (auStack_80,ppVar3->origin,ppVar3->origin,&local_d0,ppVar3->clientNum,
+               CONCAT44(ppVar6->tracemask,ppVar6->tracemask) & 0xfffffffffdffffff);
     if (local_52 == '\0') {
-      *(undefined4 *)(iVar4 + 0x164) = 0x28;
-      *(uint *)(iVar4 + 0xc) = *(uint *)(iVar4 + 0xc) & 0xfffffffc | 2;
-      BG_AddPredictableEventToPlayerstate(7,0,iVar4);
+      ppVar3->viewHeightTarget = 0x28;
+      ppVar3->pm_flags = ppVar3->pm_flags & 0xfffffffcU | 2;
+      BG_AddPredictableEventToPlayerstate(7,0,ppVar3);
     }
   }
-  PM_SetMovementDir(piVar7,param_2);
+  PM_SetMovementDir(ppVar6,param_2);
   __restgprlr_27();
   return;
 }
@@ -2024,115 +2192,126 @@ void PM_AirMove(undefined8 param_1,undefined8 param_2)
 
 // 82280580  PM_WalkMove  (bgame/bg_pmove.cpp:1574)
 
-void PM_WalkMove(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_WalkMove(pmove_t *param_1,pml_t *param_2)
 
 {
   int iVar1;
-  float *pfVar2;
-  int *piVar3;
-  char cVar5;
-  int iVar4;
-  ulonglong uVar6;
-  longlong lVar7;
-  double dVar8;
-  double dVar9;
+  uint uVar2;
+  playerState_s *ppVar3;
+  pmove_t *ppVar4;
+  bool bVar6;
+  EffectiveStance EVar5;
+  float *pfVar7;
+  ulonglong uVar8;
+  longlong lVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
+  float fVar17;
   undefined8 local_a0;
   float local_98;
-  undefined1 auStack_90 [144];
+  usercmd_s auStack_90 [3];
   
-  __savegprlr_27();
-  piVar3 = (int *)__savefpr_27();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x631,0,0xffffffff82000f98,0xffffffff82004978);
+  __savegprlr_27(param_1);
+  ppVar4 = (pmove_t *)__savefpr_27();
+  if (ppVar4 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x631,0,
+                    "%s");
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x634,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = ppVar4->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x634,0,
+                    "%s");
   }
-  if ((*(uint *)(iVar1 + 0xc) & 0x2000) != 0) {
-    Jump_ApplySlowdown(iVar1);
+  if ((ppVar3->pm_flags & 0x2000U) != 0) {
+    Jump_ApplySlowdown(ppVar3);
   }
-  if ((*(uint *)(iVar1 + 0xc) & 0x4000) != 0) {
-    iVar4 = (int)(*(float *)(DAT_829c7e28 + 0xc) * (float)(longlong)*(char *)((int)piVar3 + 0x21));
-    local_a0._7_1_ = (undefined1)iVar4;
-    *(undefined1 *)((int)piVar3 + 0x21) = (undefined1)local_a0;
-    local_a0 = (longlong)iVar4;
+  if ((ppVar3->pm_flags & 0x4000U) != 0) {
+    iVar1 = (int)((player_sprintStrafeSpeedScale->current).value *
+                 (float)(longlong)(ppVar4->cmd).rightmove);
+    local_a0._7_1_ = (schar)iVar1;
+    (ppVar4->cmd).rightmove = (schar)local_a0;
+    local_a0 = (longlong)iVar1;
   }
-  cVar5 = Jump_Check(piVar3,param_2);
-  if (cVar5 != '\0') {
-    PM_AirMove();
+  bVar6 = Jump_Check(ppVar4,param_2);
+  if (bVar6) {
+    PM_AirMove(ppVar4,param_2);
     __restfpr_27();
     __restgprlr_27();
     return;
   }
-  PM_Friction(piVar3,param_2);
-  local_a0 = (longlong)*(char *)(piVar3 + 8);
-  dVar11 = (double)(longlong)*(char *)((int)piVar3 + 0x21);
-  dVar12 = (double)local_a0;
-  memcpy(auStack_90,piVar3 + 1,0x2c);
-  dVar8 = (double)PM_CmdScale_Walk(piVar3,auStack_90);
-  uVar6 = (ulonglong)*(uint *)(iVar1 + 0x9c);
-  dVar9 = (double)PM_DamageScale_Walk(uVar6);
-  pfVar2 = (float *)param_2;
-  dVar8 = (double)(float)(dVar9 * dVar8);
-  local_a0 = (longlong)(int)(pfVar2[9] * 1000.0);
-  lVar7 = uVar6 - (uint)(int)(pfVar2[9] * 1000.0);
-  *(int *)(iVar1 + 0x9c) = (int)lVar7;
-  if (lVar7 < 1) {
-    *(undefined4 *)(iVar1 + 0x9c) = 0;
+  PM_Friction(ppVar4,param_2);
+  local_a0 = (longlong)(ppVar4->cmd).forwardmove;
+  dVar12 = (double)(longlong)(ppVar4->cmd).rightmove;
+  dVar13 = (double)local_a0;
+  memcpy();
+  fVar17 = PM_CmdScale_Walk(ppVar4,auStack_90);
+  dVar11 = (double)fVar17;
+  uVar8 = (ulonglong)(uint)ppVar3->damageTimer;
+  fVar17 = PM_DamageScale_Walk(ppVar3->damageTimer);
+  dVar11 = (double)(float)((double)fVar17 * dVar11);
+  uVar2 = (uint)(param_2->frametime * 1000.0);
+  local_a0 = (longlong)(int)uVar2;
+  lVar9 = uVar8 - uVar2;
+  ppVar3->damageTimer = (int)lVar9;
+  if (lVar9 < 1) {
+    ppVar3->damageTimer = 0;
   }
-  dVar14 = 0.0;
-  pfVar2[2] = 0.0;
-  pfVar2[5] = 0.0;
-  Vec2Normalize(param_2);
-  Vec2Normalize(param_2 + 0xc);
-  dVar9 = 1.0;
-  dVar10 = (double)(float)((double)pfVar2[4] * dVar11 + (double)(float)((double)pfVar2[1] * dVar12))
-  ;
-  dVar12 = (double)(float)((double)pfVar2[3] * dVar11 + (double)(float)((double)*pfVar2 * dVar12));
-  dVar11 = (double)SQRT((float)(dVar12 * dVar12 + (double)(float)(dVar10 * dVar10)));
-  dVar13 = (double)(float)(dVar11 * dVar8);
-  dVar8 = dVar9;
-  if (-dVar11 < 0.0) {
-    dVar8 = dVar11;
+  dVar15 = 0.0;
+  param_2->forward[2] = 0.0;
+  param_2->right[2] = 0.0;
+  Vec2Normalize(param_2->forward);
+  Vec2Normalize(param_2->right);
+  pfVar7 = (param_2->groundTrace).normal;
+  dVar16 = 1.0;
+  dVar10 = (double)(float)((double)param_2->right[1] * dVar12 +
+                          (double)(float)((double)param_2->forward[1] * dVar13));
+  dVar13 = (double)(float)((double)param_2->right[0] * dVar12 +
+                          (double)(float)((double)param_2->forward[0] * dVar13));
+  dVar12 = (double)SQRT((float)(dVar13 * dVar13 + (double)(float)(dVar10 * dVar10)));
+  dVar14 = (double)(float)(dVar12 * dVar11);
+  dVar11 = dVar16;
+  if (-dVar12 < 0.0) {
+    dVar11 = dVar12;
   }
-  dVar8 = (double)(float)(1.0 / dVar8);
-  local_a0 = CONCAT44((float)(dVar8 * dVar12),(float)(dVar8 * dVar10));
-  local_98 = (float)(dVar8 * dVar14);
-  PM_ProjectVelocity(&local_a0,param_2 + 0x3c,&local_a0);
-  if ((((uint)pfVar2[0x12] & 2) != 0) || ((*(uint *)(iVar1 + 0xc) & 0x100) != 0)) goto LAB_8228081c;
-  iVar4 = PM_GetEffectiveStance(iVar1);
-  if (iVar4 != 1) {
-    if (iVar4 == 2) {
-      dVar9 = 12.0;
+  dVar11 = (double)(float)(1.0 / dVar11);
+  local_a0 = CONCAT44((float)(dVar11 * dVar13),(float)(dVar11 * dVar10));
+  local_98 = (float)(dVar11 * dVar15);
+  PM_ProjectVelocity((float *)&local_a0,pfVar7,(float *)&local_a0);
+  if ((((param_2->groundTrace).surfaceFlags & 2U) != 0) || ((ppVar3->pm_flags & 0x100U) != 0))
+  goto LAB_8228081c;
+  EVar5 = PM_GetEffectiveStance(ppVar3);
+  if (EVar5 != PM_EFF_STANCE_PRONE) {
+    if (EVar5 == PM_EFF_STANCE_DUCKED) {
+      dVar16 = 12.0;
       goto LAB_8228081c;
     }
-    if (iVar4 != 3) {
-      dVar9 = 9.0;
+    if (EVar5 != PM_EFF_STANCE_LASTSTANDCRAWL) {
+      dVar16 = 9.0;
       goto LAB_8228081c;
     }
   }
-  dVar9 = 19.0;
+  dVar16 = 19.0;
 LAB_8228081c:
-  if ((*(uint *)(iVar1 + 0xc) & 0x80) != 0) {
-    dVar9 = (double)(float)(dVar9 * 0.25);
+  if ((ppVar3->pm_flags & 0x80U) != 0) {
+    dVar16 = (double)(float)(dVar16 * 0.25);
   }
-  PM_Accelerate(dVar13,dVar9,iVar1,param_2,&local_a0);
-  if ((((uint)pfVar2[0x12] & 2) != 0) || ((*(uint *)(iVar1 + 0xc) & 0x100) != 0)) {
-    local_a0 = (longlong)*(int *)(iVar1 + 0x58);
-    *(float *)(iVar1 + 0x30) = -((float)local_a0 * pfVar2[9] - *(float *)(iVar1 + 0x30));
+  PM_Accelerate(ppVar3,param_2,(float *)&local_a0,(float)dVar14,(float)dVar16);
+  if ((((param_2->groundTrace).surfaceFlags & 2U) != 0) || ((ppVar3->pm_flags & 0x100U) != 0)) {
+    local_a0 = (longlong)ppVar3->gravity;
+    ppVar3->velocity[2] = -((float)local_a0 * param_2->frametime - ppVar3->velocity[2]);
   }
-  PM_ProjectVelocity(iVar1 + 0x28,param_2 + 0x3c);
-  if (((double)*(float *)(iVar1 + 0x28) != dVar14) || ((double)*(float *)(iVar1 + 0x2c) != dVar14))
-  {
-    PM_StepSlideMove(piVar3,param_2,0);
+  PM_ProjectVelocity(ppVar3->velocity,pfVar7,ppVar3->velocity);
+  if (((double)ppVar3->velocity[0] != dVar15) || ((double)ppVar3->velocity[1] != dVar15)) {
+    PM_StepSlideMove(ppVar4,param_2,0);
   }
-  PM_SetMovementDir(piVar3,param_2);
+  PM_SetMovementDir(ppVar4,param_2);
   __restfpr_27();
   __restgprlr_27();
   return;
@@ -2141,7 +2320,9 @@ LAB_8228081c:
 
 // 82279BA8  PM_DeadMove  (bgame/bg_pmove.cpp:1702)
 
-void PM_DeadMove(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_DeadMove(playerState_s *param_1,pml_t *param_2)
 
 {
   float fVar1;
@@ -2152,17 +2333,18 @@ void PM_DeadMove(int param_1,int param_2)
   float fVar6;
   float *pfVar7;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x6a9,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x6a9,0,
+                    "%s");
   }
-  if (*(int *)(param_2 + 0x2c) != 0) {
-    pfVar7 = (float *)(param_1 + 0x28);
-    fVar4 = SQRT(*(float *)(param_1 + 0x30) * *(float *)(param_1 + 0x30) +
-                 *(float *)(param_1 + 0x28) * *(float *)(param_1 + 0x28) +
-                 *(float *)(param_1 + 0x2c) * *(float *)(param_1 + 0x2c)) - 20.0;
+  if (param_2->walking != 0) {
+    pfVar7 = param_1->velocity;
+    fVar4 = SQRT(param_1->velocity[2] * param_1->velocity[2] +
+                 param_1->velocity[0] * param_1->velocity[0] +
+                 param_1->velocity[1] * param_1->velocity[1]) - 20.0;
     if (0.0 < fVar4) {
-      fVar1 = *(float *)(param_1 + 0x30);
-      fVar2 = *(float *)(param_1 + 0x2c);
+      fVar1 = param_1->velocity[2];
+      fVar2 = param_1->velocity[1];
       fVar3 = *pfVar7;
       fVar6 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
       fVar5 = 1.0;
@@ -2171,16 +2353,16 @@ void PM_DeadMove(int param_1,int param_2)
       }
       fVar5 = 1.0 / fVar5;
       *pfVar7 = fVar3 * fVar5;
-      *(float *)(param_1 + 0x2c) = fVar2 * fVar5;
-      *(float *)(param_1 + 0x30) = fVar1 * fVar5;
+      param_1->velocity[1] = fVar2 * fVar5;
+      param_1->velocity[2] = fVar1 * fVar5;
       *pfVar7 = fVar3 * fVar5 * fVar4;
-      *(float *)(param_1 + 0x2c) = *(float *)(param_1 + 0x2c) * fVar4;
-      *(float *)(param_1 + 0x30) = *(float *)(param_1 + 0x30) * fVar4;
+      param_1->velocity[1] = param_1->velocity[1] * fVar4;
+      param_1->velocity[2] = param_1->velocity[2] * fVar4;
     }
     else {
       *pfVar7 = 0.0;
-      *(undefined4 *)(param_1 + 0x2c) = 0;
-      *(undefined4 *)(param_1 + 0x30) = 0;
+      param_1->velocity[1] = 0.0;
+      param_1->velocity[2] = 0.0;
     }
   }
   return;
@@ -2189,96 +2371,99 @@ void PM_DeadMove(int param_1,int param_2)
 
 // 82279CD0  PM_NoclipMove  (bgame/bg_pmove.cpp:1732)
 
-void PM_NoclipMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_NoclipMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
-  int iVar4;
+  playerState_s *ppVar3;
+  undefined4 *puVar4;
   float *pfVar5;
-  int *piVar6;
-  float *pfVar7;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
+  float fVar11;
   undefined8 local_60;
   float local_58;
   
-  __savegprlr_27();
-  piVar6 = (int *)__savefpr_28();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x6d4,0,0xffffffff82000f98,0xffffffff82004978);
+  __savegprlr_27(param_1);
+  puVar4 = (undefined4 *)__savefpr_28();
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x6d4,0,
+                    "%s");
   }
-  iVar4 = *piVar6;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x6d7,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = (playerState_s *)*puVar4;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x6d7,0,
+                    "%s");
   }
-  *(undefined4 *)(iVar4 + 0x164) = 0x3c;
-  fVar3 = *(float *)(iVar4 + 0x28);
-  dVar10 = 1.0;
-  pfVar7 = (float *)(iVar4 + 0x28);
-  dVar8 = (double)SQRT(*(float *)(iVar4 + 0x30) * *(float *)(iVar4 + 0x30) +
-                       fVar3 * fVar3 + *(float *)(iVar4 + 0x2c) * *(float *)(iVar4 + 0x2c));
-  pfVar5 = (float *)param_2;
-  if (1.0 <= dVar8) {
-    dVar11 = (double)*(float *)(DAT_829c4058 + 0xc);
-    if ((double)*(float *)(DAT_829c4058 + 0xc) <= dVar8) {
-      dVar11 = dVar8;
+  ppVar3->viewHeightTarget = 0x3c;
+  fVar11 = ppVar3->velocity[0];
+  dVar8 = 1.0;
+  pfVar5 = ppVar3->velocity;
+  dVar6 = (double)SQRT(ppVar3->velocity[2] * ppVar3->velocity[2] +
+                       fVar11 * fVar11 + ppVar3->velocity[1] * ppVar3->velocity[1]);
+  if (1.0 <= dVar6) {
+    dVar9 = (double)(stopspeed->current).value;
+    if ((double)(stopspeed->current).value <= dVar6) {
+      dVar9 = dVar6;
     }
-    dVar11 = -(double)(float)((double)(float)((double)pfVar5[9] * dVar11) *
-                              (double)(*(float *)(DAT_829c7d48 + 0xc) * 1.5) - dVar8);
-    if (dVar11 < 0.0) {
-      dVar11 = 0.0;
+    dVar9 = -(double)(float)((double)(float)((double)param_2->frametime * dVar9) *
+                             (double)((friction->current).value * 1.5) - dVar6);
+    if (dVar9 < 0.0) {
+      dVar9 = 0.0;
     }
-    fVar2 = (float)(dVar11 / dVar8);
-    *pfVar7 = fVar3 * fVar2;
-    *(float *)(iVar4 + 0x2c) = *(float *)(iVar4 + 0x2c) * fVar2;
-    *(float *)(iVar4 + 0x30) = *(float *)(iVar4 + 0x30) * fVar2;
+    fVar2 = (float)(dVar9 / dVar6);
+    *pfVar5 = fVar11 * fVar2;
+    ppVar3->velocity[1] = ppVar3->velocity[1] * fVar2;
+    ppVar3->velocity[2] = ppVar3->velocity[2] * fVar2;
   }
   else {
-    *pfVar7 = 0.0;
-    *(undefined4 *)(iVar4 + 0x2c) = 0;
-    *(undefined4 *)(iVar4 + 0x30) = 0;
+    *pfVar5 = 0.0;
+    ppVar3->velocity[1] = 0.0;
+    ppVar3->velocity[2] = 0.0;
   }
-  local_60 = (longlong)*(char *)((int)piVar6 + 0x21);
-  dVar12 = (double)(longlong)*(char *)(piVar6 + 8);
-  dVar11 = (double)local_60;
-  dVar8 = 0.0;
-  if ((piVar6[2] & 1U) != 0) {
-    dVar8 = 127.0;
+  local_60 = (longlong)*(char *)((int)puVar4 + 0x21);
+  dVar10 = (double)(longlong)*(char *)(puVar4 + 8);
+  dVar9 = (double)local_60;
+  dVar6 = 0.0;
+  if ((puVar4[2] & 1) != 0) {
+    dVar6 = 127.0;
   }
-  if ((piVar6[2] & 0x80000U) != 0) {
-    dVar8 = (double)(float)(dVar8 - 127.0);
+  if ((puVar4[2] & 0x80000) != 0) {
+    dVar6 = (double)(float)(dVar6 - 127.0);
   }
-  dVar9 = (double)PM_MoveScale(dVar12,dVar11,dVar8,iVar4);
-  if ((piVar6[2] & 6U) != 0) {
-    dVar9 = (double)(float)(dVar9 * 15.0);
+  fVar11 = PM_MoveScale(ppVar3,(float)(longlong)*(char *)(puVar4 + 8),(float)local_60,(float)dVar6);
+  dVar7 = (double)fVar11;
+  if ((puVar4[2] & 6) != 0) {
+    dVar7 = (double)(float)(dVar7 * 15.0);
   }
-  fVar3 = (float)((double)pfVar5[1] * dVar12 +
-                 (double)(float)((double)pfVar5[7] * dVar8 +
-                                (double)(float)((double)pfVar5[4] * dVar11)));
-  local_58 = (float)((double)pfVar5[2] * dVar12 +
-                    (double)(float)((double)pfVar5[8] * dVar8 +
-                                   (double)(float)((double)pfVar5[5] * dVar11)));
-  fVar2 = (float)((double)*pfVar5 * dVar12 +
-                 (double)(float)((double)pfVar5[6] * dVar8 +
-                                (double)(float)((double)pfVar5[3] * dVar11)));
-  dVar11 = (double)SQRT(fVar2 * fVar2 + local_58 * local_58 + fVar3 * fVar3);
-  dVar8 = dVar10;
-  if (-dVar11 < 0.0) {
-    dVar8 = dVar11;
+  fVar11 = (float)((double)param_2->forward[1] * dVar10 +
+                  (double)(float)((double)param_2->up[1] * dVar6 +
+                                 (double)(float)((double)param_2->right[1] * dVar9)));
+  local_58 = (float)((double)param_2->forward[2] * dVar10 +
+                    (double)(float)((double)param_2->up[2] * dVar6 +
+                                   (double)(float)((double)param_2->right[2] * dVar9)));
+  fVar2 = (float)((double)param_2->forward[0] * dVar10 +
+                 (double)(float)((double)param_2->up[0] * dVar6 +
+                                (double)(float)((double)param_2->right[0] * dVar9)));
+  dVar9 = (double)SQRT(fVar2 * fVar2 + local_58 * local_58 + fVar11 * fVar11);
+  dVar6 = dVar8;
+  if (-dVar9 < 0.0) {
+    dVar6 = dVar9;
   }
-  fVar1 = (float)(dVar10 / dVar8);
-  local_60 = CONCAT44(fVar1 * fVar2,fVar3 * fVar1);
+  fVar1 = (float)(dVar8 / dVar6);
+  local_60 = CONCAT44(fVar1 * fVar2,fVar11 * fVar1);
   local_58 = local_58 * fVar1;
-  PM_Accelerate((double)(float)(dVar11 * dVar9),0x4022000000000000,iVar4,param_2,&local_60);
-  fVar3 = pfVar5[9];
-  *(float *)(iVar4 + 0x1c) = *pfVar7 * fVar3 + *(float *)(iVar4 + 0x1c);
-  *(float *)(iVar4 + 0x20) = *(float *)(iVar4 + 0x2c) * fVar3 + *(float *)(iVar4 + 0x20);
-  *(float *)(iVar4 + 0x24) = *(float *)(iVar4 + 0x30) * fVar3 + *(float *)(iVar4 + 0x24);
+  PM_Accelerate(ppVar3,param_2,(float *)&local_60,(float)(dVar9 * dVar7),9.0);
+  fVar11 = param_2->frametime;
+  ppVar3->origin[0] = *pfVar5 * fVar11 + ppVar3->origin[0];
+  ppVar3->origin[1] = ppVar3->velocity[1] * fVar11 + ppVar3->origin[1];
+  ppVar3->origin[2] = ppVar3->velocity[2] * fVar11 + ppVar3->origin[2];
   __restfpr_28();
   __restgprlr_27();
   return;
@@ -2287,16 +2472,19 @@ void PM_NoclipMove(undefined8 param_1,undefined8 param_2)
 
 // 82277E50  CG_GetOrigin  (cgame_mp/cg_local_mp.h:1758)
 
-undefined8 CG_GetOrigin(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_GetOrigin(LocalClientNum_t param_1,int param_2,float *param_3)
 
 {
-  int iVar1;
+  centity_s *pcVar1;
   
-  iVar1 = CG_GetEntity();
-  if (iVar1 != 0) {
-    *param_3 = *(undefined4 *)(iVar1 + 0x14);
-    param_3[1] = *(undefined4 *)(iVar1 + 0x18);
-    param_3[2] = *(undefined4 *)(iVar1 + 0x1c);
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  if (pcVar1 != (centity_s *)0x0) {
+    *param_3 = (pcVar1->pose).origin[0];
+    param_3[1] = (pcVar1->pose).origin[1];
+    param_3[2] = (pcVar1->pose).origin[2];
     return 1;
   }
   return 0;
@@ -2305,16 +2493,19 @@ undefined8 CG_GetOrigin(undefined8 param_1,undefined8 param_2,undefined4 *param_
 
 // 82277EC0  CG_GetVelocity  (cgame_mp/cg_local_mp.h:1774)
 
-undefined8 CG_GetVelocity(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_GetVelocity(LocalClientNum_t param_1,int param_2,float *param_3)
 
 {
-  int iVar1;
+  centity_s *pcVar1;
   
-  iVar1 = CG_GetEntity();
-  if (iVar1 != 0) {
-    *param_3 = *(undefined4 *)(iVar1 + 0xe8);
-    param_3[1] = *(undefined4 *)(iVar1 + 0xec);
-    param_3[2] = *(undefined4 *)(iVar1 + 0xf0);
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  if (pcVar1 != (centity_s *)0x0) {
+    *param_3 = (pcVar1->nextState).lerp.pos.trDelta[0];
+    param_3[1] = (pcVar1->nextState).lerp.pos.trDelta[1];
+    param_3[2] = (pcVar1->nextState).lerp.pos.trDelta[2];
     return 1;
   }
   return 0;
@@ -2323,119 +2514,127 @@ undefined8 CG_GetVelocity(undefined8 param_1,undefined8 param_2,undefined4 *para
 
 // 82277F30  CG_GetEntityState  (cgame_mp/cg_local_mp.h:1790)
 
-longlong CG_GetEntityState(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+entityState_s * CG_GetEntityState(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  centity_s *pcVar1;
+  entityState_s *peVar2;
   
-  uVar1 = CG_GetEntity();
-  lVar2 = uVar1 + 0xc4;
-  if ((uVar1 & 0xffffffff) == 0) {
-    lVar2 = 0;
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  peVar2 = &pcVar1->nextState;
+  if (pcVar1 == (centity_s *)0x0) {
+    peVar2 = (entityState_s *)0x0;
   }
-  return lVar2;
+  return peVar2;
 }
 
 
 // 82279F88  PM_UFOMove  (bgame/bg_pmove.cpp:1820)
 
-void PM_UFOMove(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UFOMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
+  char cVar3;
+  playerState_s *ppVar4;
+  undefined4 *puVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
+  float fVar13;
   undefined8 local_80;
   float local_78;
   float local_70;
   float local_6c;
   float local_68;
   
-  __savegprlr_27();
-  piVar6 = (int *)__savefpr_26();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x729,0,0xffffffff82000f98,0xffffffff82004978);
+  __savegprlr_27(param_1);
+  puVar5 = (undefined4 *)__savefpr_26();
+  if (puVar5 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x729,0,
+                    "%s");
   }
-  iVar4 = *piVar6;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x72c,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar4 = (playerState_s *)*puVar5;
+  if (ppVar4 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x72c,0,
+                    "%s");
   }
-  *(undefined4 *)(iVar4 + 0x164) = 0x3c;
-  local_80 = (longlong)*(char *)((int)piVar6 + 0x21);
-  dVar13 = 0.0;
-  dVar11 = (double)(longlong)*(char *)(piVar6 + 8);
-  dVar10 = (double)local_80;
-  dVar12 = dVar13;
-  if ((piVar6[2] & 1U) != 0) {
-    dVar12 = 127.0;
+  ppVar4->viewHeightTarget = 0x3c;
+  cVar3 = *(char *)(puVar5 + 8);
+  local_80 = (longlong)*(char *)((int)puVar5 + 0x21);
+  dVar12 = 0.0;
+  dVar10 = (double)(longlong)cVar3;
+  dVar9 = (double)local_80;
+  dVar11 = dVar12;
+  if ((puVar5[2] & 1) != 0) {
+    dVar11 = 127.0;
   }
-  if ((piVar6[2] & 0x80000U) != 0) {
-    dVar12 = (double)(float)(dVar12 - 127.0);
+  if ((puVar5[2] & 0x80000) != 0) {
+    dVar11 = (double)(float)(dVar11 - 127.0);
   }
-  dVar9 = 1.0;
-  iVar5 = (int)param_2;
-  if (((dVar11 != 0.0) || (dVar10 != 0.0)) || (dVar12 != 0.0)) {
-    fVar3 = *(float *)(iVar4 + 0x28);
-    dVar7 = (double)SQRT(*(float *)(iVar4 + 0x30) * *(float *)(iVar4 + 0x30) +
-                         fVar3 * fVar3 + *(float *)(iVar4 + 0x2c) * *(float *)(iVar4 + 0x2c));
-    if (1.0 <= dVar7) {
-      dVar8 = (double)*(float *)(DAT_829c4058 + 0xc);
-      if ((double)*(float *)(DAT_829c4058 + 0xc) <= dVar7) {
-        dVar8 = dVar7;
+  dVar8 = 1.0;
+  if (((dVar10 != 0.0) || (dVar9 != 0.0)) || (dVar11 != 0.0)) {
+    fVar13 = ppVar4->velocity[0];
+    dVar6 = (double)SQRT(ppVar4->velocity[2] * ppVar4->velocity[2] +
+                         fVar13 * fVar13 + ppVar4->velocity[1] * ppVar4->velocity[1]);
+    if (1.0 <= dVar6) {
+      dVar7 = (double)(stopspeed->current).value;
+      if ((double)(stopspeed->current).value <= dVar6) {
+        dVar7 = dVar6;
       }
-      dVar8 = -(double)(float)((double)(float)((double)*(float *)(iVar5 + 0x24) * dVar8) *
-                               (double)(*(float *)(DAT_829c7d48 + 0xc) * 1.5) - dVar7);
-      if (dVar8 < 0.0) {
-        dVar8 = dVar13;
+      dVar7 = -(double)(float)((double)(float)((double)param_2->frametime * dVar7) *
+                               (double)((friction->current).value * 1.5) - dVar6);
+      if (dVar7 < 0.0) {
+        dVar7 = dVar12;
       }
-      fVar1 = (float)(dVar8 / dVar7);
-      *(float *)(iVar4 + 0x28) = fVar3 * fVar1;
-      *(float *)(iVar4 + 0x2c) = fVar1 * *(float *)(iVar4 + 0x2c);
-      *(float *)(iVar4 + 0x30) = *(float *)(iVar4 + 0x30) * fVar1;
+      fVar1 = (float)(dVar7 / dVar6);
+      ppVar4->velocity[0] = fVar13 * fVar1;
+      ppVar4->velocity[1] = fVar1 * ppVar4->velocity[1];
+      ppVar4->velocity[2] = ppVar4->velocity[2] * fVar1;
       goto LAB_8227a14c;
     }
   }
-  *(undefined4 *)(iVar4 + 0x28) = 0;
-  *(undefined4 *)(iVar4 + 0x2c) = 0;
-  *(undefined4 *)(iVar4 + 0x30) = 0;
+  ppVar4->velocity[0] = 0.0;
+  ppVar4->velocity[1] = 0.0;
+  ppVar4->velocity[2] = 0.0;
 LAB_8227a14c:
-  dVar7 = (double)PM_MoveScale(dVar11,dVar10,dVar12,iVar4);
-  if ((piVar6[2] & 6U) != 0) {
-    dVar7 = (double)(float)(dVar7 * 15.0);
+  fVar13 = PM_MoveScale(ppVar4,(float)(longlong)cVar3,(float)local_80,(float)dVar11);
+  dVar6 = (double)fVar13;
+  if ((puVar5[2] & 6) != 0) {
+    dVar6 = (double)(float)(dVar6 * 15.0);
   }
-  local_80 = CONCAT44((float)dVar13,(float)dVar13);
-  local_78 = (float)dVar9;
-  Vec3Cross(&local_80,param_2 + 0xc,&local_70);
-  fVar3 = (float)((double)*(float *)(iVar5 + 0x10) * dVar10 +
-                 (double)(float)((double)local_6c * dVar11)) + (float)(dVar12 * dVar13);
-  local_78 = (float)((double)(float)((double)*(float *)(iVar5 + 0x14) * dVar10 +
-                                    (double)(float)((double)local_68 * dVar11)) + dVar12);
-  fVar1 = (float)((double)*(float *)(iVar5 + 0xc) * dVar10 +
-                 (double)(float)((double)local_70 * dVar11)) + (float)(dVar12 * dVar13);
-  dVar10 = (double)SQRT(fVar1 * fVar1 + local_78 * local_78 + fVar3 * fVar3);
-  dVar12 = dVar9;
-  if (-dVar10 < 0.0) {
-    dVar12 = dVar10;
+  local_80 = CONCAT44((float)dVar12,(float)dVar12);
+  local_78 = (float)dVar8;
+  Vec3Cross((float *)&local_80,param_2->right,&local_70);
+  fVar13 = (float)((double)param_2->right[1] * dVar9 + (double)(float)((double)local_6c * dVar10)) +
+           (float)(dVar11 * dVar12);
+  local_78 = (float)((double)(float)((double)param_2->right[2] * dVar9 +
+                                    (double)(float)((double)local_68 * dVar10)) + dVar11);
+  fVar1 = (float)((double)param_2->right[0] * dVar9 + (double)(float)((double)local_70 * dVar10)) +
+          (float)(dVar11 * dVar12);
+  dVar9 = (double)SQRT(fVar1 * fVar1 + local_78 * local_78 + fVar13 * fVar13);
+  dVar11 = dVar8;
+  if (-dVar9 < 0.0) {
+    dVar11 = dVar9;
   }
-  fVar2 = (float)(dVar9 / dVar12);
-  local_80 = CONCAT44(fVar2 * fVar1,fVar3 * fVar2);
+  fVar2 = (float)(dVar8 / dVar11);
+  local_80 = CONCAT44(fVar2 * fVar1,fVar13 * fVar2);
   local_78 = local_78 * fVar2;
-  PM_Accelerate((double)(float)(dVar10 * dVar7),0x4022000000000000,iVar4,param_2,&local_80);
-  fVar3 = *(float *)(iVar5 + 0x24);
-  *(float *)(iVar4 + 0x1c) = fVar3 * *(float *)(iVar4 + 0x28) + *(float *)(iVar4 + 0x1c);
-  *(float *)(iVar4 + 0x20) = fVar3 * *(float *)(iVar4 + 0x2c) + *(float *)(iVar4 + 0x20);
-  *(float *)(iVar4 + 0x24) = *(float *)(iVar4 + 0x30) * fVar3 + *(float *)(iVar4 + 0x24);
+  PM_Accelerate(ppVar4,param_2,(float *)&local_80,(float)(dVar9 * dVar6),9.0);
+  fVar13 = param_2->frametime;
+  ppVar4->origin[0] = fVar13 * ppVar4->velocity[0] + ppVar4->origin[0];
+  ppVar4->origin[1] = fVar13 * ppVar4->velocity[1] + ppVar4->origin[1];
+  ppVar4->origin[2] = ppVar4->velocity[2] * fVar13 + ppVar4->origin[2];
   __restfpr_26();
   __restgprlr_27();
   return;
@@ -2444,133 +2643,141 @@ LAB_8227a14c:
 
 // 8227A278  PM_ModelPreviewerMove  (bgame/bg_pmove.cpp:1914)
 
-void PM_ModelPreviewerMove(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_ModelPreviewerMove(playerState_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x77b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x77b,0,
+                    "%s");
   }
-  *(undefined4 *)(param_1 + 0x30) = 0;
-  *(undefined4 *)(param_1 + 0x2c) = 0;
-  *(undefined4 *)(param_1 + 0x28) = 0;
+  param_1->velocity[2] = 0.0;
+  param_1->velocity[1] = 0.0;
+  param_1->velocity[0] = 0.0;
   return;
 }
 
 
 // 8227A2E0  PM_FootstepType  (bgame/bg_pmove.cpp:1931)
 
-longlong PM_FootstepType(int *param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_FootstepType(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   uint uVar2;
-  longlong lVar3;
+  uint uVar3;
+  int iVar4;
   
-  iVar1 = *param_1;
-  lVar3 = PM_GroundSurfaceType(param_2);
-  if ((int)lVar3 != 0) {
-    if ((*(uint *)(iVar1 + 0xc) & 1) == 0) {
-      if (((*(uint *)(iVar1 + 0xc) & 0x42) != 0) ||
-         ((float)param_1[0x3f] < *(float *)(DAT_829c7d1c + 0xc))) {
-        lVar3 = 0x77;
+  ppVar1 = param_1->ps;
+  uVar3 = PM_GroundSurfaceType(param_2);
+  iVar4 = 0;
+  if (uVar3 != 0) {
+    if ((ppVar1->pm_flags & 1U) == 0) {
+      if (((ppVar1->pm_flags & 0x42U) != 0) ||
+         (param_1->speed < (player_runThreshhold->current).value)) {
+        iVar4 = 0x77;
       }
       else {
-        uVar2 = *(uint *)(iVar1 + 0x214);
-        if (uVar2 == 0) {
-          lVar3 = 0x76;
+        uVar3 = (ppVar1->sprintState).lastSprintStart;
+        if (uVar3 == 0) {
+          iVar4 = 0x76;
         }
         else {
-          lVar3 = (ulonglong)
-                  (((int)((~(ulonglong)(uVar2 ^ *(uint *)(iVar1 + 0x218)) & 0xffffffff) >> 0x1f) +
-                    (uint)(uVar2 <= *(uint *)(iVar1 + 0x218)) & 1) == 0) + 0x75;
+          uVar2 = (ppVar1->sprintState).lastSprintEnd;
+          iVar4 = ((uint)LZCOUNT((int)((~(ulonglong)(uVar3 ^ uVar2) & 0xffffffff) >> 0x1f) +
+                                 (uint)(uVar3 <= uVar2) & 1) >> 5) + 0x75;
         }
       }
     }
     else {
-      lVar3 = 0x78;
+      iVar4 = 0x78;
     }
   }
-  return lVar3;
+  return iVar4;
 }
 
 
 // 8227A3B8  PM_LightLandingForSurface  (bgame/bg_pmove.cpp:1966)
 
-byte PM_LightLandingForSurface(void)
+int PM_LightLandingForSurface(pml_t *param_1)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = PM_GroundSurfaceType();
-  return -(lVar1 != 0) & 0x77;
+  uVar1 = PM_GroundSurfaceType(param_1);
+  return -(uint)(uVar1 != 0) & 0x77;
 }
 
 
 // 8227A3E8  PM_MediumLandingForSurface  (bgame/bg_pmove.cpp:1985)
 
-byte PM_MediumLandingForSurface(void)
+int PM_MediumLandingForSurface(pml_t *param_1)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = PM_GroundSurfaceType();
-  return -(lVar1 != 0) & 0x76;
+  uVar1 = PM_GroundSurfaceType(param_1);
+  return -(uint)(uVar1 != 0) & 0x76;
 }
 
 
 // 8227A418  PM_HardLandingForSurface  (bgame/bg_pmove.cpp:2004)
 
-longlong PM_HardLandingForSurface(void)
+int PM_HardLandingForSurface(pml_t *param_1)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = PM_GroundSurfaceType();
-  if ((int)lVar1 == 0) {
-    return lVar1;
+  uVar1 = PM_GroundSurfaceType(param_1);
+  if (uVar1 == 0) {
+    return 0;
   }
-  return lVar1 + 0x7a;
+  return uVar1 + 0x7a;
 }
 
 
 // 8227A458  PM_DamageLandingForSurface  (bgame/bg_pmove.cpp:2023)
 
-longlong PM_DamageLandingForSurface(int param_1)
+int PM_DamageLandingForSurface(pml_t *param_1)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = PM_GroundSurfaceType();
-  if ((int)lVar1 == 0) {
-    Com_PrintError(1,0xffffffff8200c668,*(undefined4 *)(param_1 + 0x50),
-                   (double)*(float *)(param_1 + 0x70),(double)*(float *)(param_1 + 0x74),
-                   (double)*(float *)(param_1 + 0x78));
+  uVar1 = PM_GroundSurfaceType(param_1);
+  if (uVar1 == 0) {
+    Com_PrintError(1,
+                   "PM_DamageLandingForSurface has been called with a ground surface of type \'NONE\' for material \'%s\' near (%.2f %.2f %.2f). \nThis means a player has landed on a surface that wasn\'t properly setup to be used as a ground surface. \nUse a different material which has a surface type set.\n"
+                  );
   }
-  return lVar1 + 0x99;
+  return uVar1 + 0x99;
 }
 
 
 // 8227A4D8  ComputeFallDamage_Internal  (bgame/bg_pmove.cpp:2037)
 
-ulonglong ComputeFallDamage_Internal
-                    (double param_1,double param_2,double param_3,int param_4,int param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int ComputeFallDamage_Internal
+              (playerState_s *param_1,pml_t *param_2,float param_3,float param_4,float param_5,
+              int param_6)
 
 {
-  ulonglong in_r8;
+  int in_r8;
   
-  if (param_2 <= param_3) {
-    if (((param_2 < param_1) && ((*(uint *)(param_5 + 0x48) & 1) == 0)) &&
-       (*(int *)(param_4 + 4) < 8)) {
-      if (param_3 <= param_1) {
+  if (param_4 <= param_5) {
+    if (((param_4 < param_3) && (((param_2->groundTrace).surfaceFlags & 1U) == 0)) &&
+       (param_1->pm_type < 8)) {
+      if (param_5 <= param_3) {
         return in_r8;
       }
-      return (ulonglong)
-             (uint)(int)(((float)(param_1 - param_2) / (float)(param_3 - param_2)) *
-                        (float)(longlong)(int)in_r8);
+      return (int)(((param_3 - param_4) / (param_5 - param_4)) * (float)(longlong)in_r8);
     }
   }
   else {
-    Com_Printf(param_2,param_3,0x11,0xffffffff8200c784,param_2,param_3);
+    Com_Printf(0x11,"Invalid bg_fall*Height: %f must be greater than %f\n");
   }
   return 0;
 }
@@ -2578,24 +2785,30 @@ ulonglong ComputeFallDamage_Internal
 
 // 8227A5B0  ComputeFallDamage  (bgame/bg_pmove.cpp:2059)
 
-void ComputeFallDamage(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int ComputeFallDamage(playerState_s *param_1,pml_t *param_2,float param_3)
 
 {
-  if ((*(uint *)(param_3 + 0x48) & 0x1000) != 0) {
-    ComputeFallDamage_Internal
-              (param_1,(double)*(float *)(DAT_829c7cd0 + 0xc),(double)*(float *)(DAT_829c7e0c + 0xc)
-              );
-    return;
+  int iVar1;
+  int in_r5;
+  
+  if (((param_2->groundTrace).surfaceFlags & 0x1000U) != 0) {
+    iVar1 = ComputeFallDamage_Internal
+                      (param_1,param_2,param_3,(bg_softLandingMinHeight->current).value,
+                       (bg_softLandingMaxHeight->current).value,in_r5);
+    return iVar1;
   }
-  ComputeFallDamage_Internal
-            (param_1,(double)*(float *)(DAT_829c7e38 + 0xc),(double)*(float *)(DAT_829c7d14 + 0xc));
-  return;
+  iVar1 = ComputeFallDamage_Internal
+                    (param_1,param_2,param_3,(bg_fallDamageMinHeight->current).value,
+                     (bg_fallDamageMaxHeight->current).value,in_r5);
+  return iVar1;
 }
 
 
 // 8227A650  BG_GetViewDip  (bgame/bg_pmove.cpp:2082)
 
-int BG_GetViewDip(double param_1)
+int BG_GetViewDip(float param_1)
 
 {
   int iVar1;
@@ -2603,7 +2816,7 @@ int BG_GetViewDip(double param_1)
   if (param_1 <= 12.0) {
     return 0;
   }
-  iVar1 = (int)(((float)(param_1 - 12.0) * 0.03846154 + 1.0) * 4.0);
+  iVar1 = (int)(((param_1 - 12.0) * 0.03846154 + 1.0) * 4.0);
   if (iVar1 < 0x19) {
     return iVar1;
   }
@@ -2613,127 +2826,126 @@ int BG_GetViewDip(double param_1)
 
 // 8227A6A8  PM_CrashLand  (bgame/bg_pmove.cpp:2105)
 
-void PM_CrashLand(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_CrashLand(playerState_s *param_1,pml_t *param_2)
 
 {
-  uint uVar1;
+  float fVar1;
   float fVar2;
-  float fVar3;
-  int iVar4;
-  int iVar9;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int iVar10;
-  ulonglong uVar11;
+  playerState_s *ppVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  int iVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   
-  __savegprlr_26();
-  iVar9 = __savefpr_28();
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x846,0,0xffffffff82000f98,0xffffffff82001fdc);
+  __savegprlr_26(param_1);
+  ppVar3 = (playerState_s *)__savefpr_28();
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x846,0,
+                    "%s");
   }
-  iVar4 = (int)param_2;
-  dVar12 = (double)*(float *)(iVar4 + 0x84);
-  dVar14 = 0.5;
-  dVar15 = 4.0;
-  dVar13 = -(double)(longlong)*(int *)(iVar9 + 0x58);
-  fVar3 = (float)(dVar13 * 0.5);
-  fVar2 = (float)(dVar12 * dVar12 -
-                 (double)((*(float *)(iVar4 + 0x78) - *(float *)(iVar9 + 0x24)) * fVar3 * 4.0));
-  if (fVar2 < 0.0) goto LAB_8227aa14;
-  fVar2 = (float)((double)((float)(-dVar12 - (double)SQRT(fVar2)) / (fVar3 * 2.0)) * dVar13 + dVar12
-                 ) * -1.0;
-  dVar13 = (double)((fVar2 * fVar2) / (float)((double)(longlong)*(int *)(iVar9 + 0x58) * 2.0));
-  uVar5 = ComputeFallDamage(dVar13,iVar9,param_2);
-  dVar12 = 12.0;
-  if (12.0 < dVar13) {
-    uVar1 = (uint)((double)((float)(dVar13 - 12.0) * 0.03846154 + 1.0) * dVar15);
-    uVar11 = (ulonglong)uVar1;
-    if (0x18 < (int)uVar1) {
-      uVar11 = 0x18;
+  dVar9 = (double)param_2->previous_velocity[2];
+  dVar11 = 0.5;
+  dVar12 = 4.0;
+  dVar10 = -(double)(longlong)ppVar3->gravity;
+  fVar2 = (float)(dVar10 * 0.5);
+  fVar1 = (float)(dVar9 * dVar9 -
+                 (double)((param_2->previous_origin[2] - ppVar3->origin[2]) * fVar2 * 4.0));
+  if (fVar1 < 0.0) goto LAB_8227aa14;
+  fVar1 = (float)((double)((float)(-dVar9 - (double)SQRT(fVar1)) / (fVar2 * 2.0)) * dVar10 + dVar9)
+          * -1.0;
+  fVar1 = (fVar1 * fVar1) / (float)((double)(longlong)ppVar3->gravity * 2.0);
+  dVar10 = (double)fVar1;
+  uVar4 = ComputeFallDamage(ppVar3,param_2,fVar1);
+  dVar9 = 12.0;
+  if (12.0 < dVar10) {
+    uVar8 = (uint)((double)((float)(dVar10 - 12.0) * 0.03846154 + 1.0) * dVar12);
+    if (0x18 < (int)uVar8) {
+      uVar8 = 0x18;
     }
   }
   else {
-    uVar11 = 0;
+    uVar8 = 0;
   }
-  if (((*(uint *)(iVar9 + 0xc) & 0x400000) == 0) || ((int)uVar11 < 4)) {
-    if (0 < (int)uVar11) goto LAB_8227a814;
+  if (((ppVar3->pm_flags & 0x400000U) == 0) || ((int)uVar8 < 4)) {
+    if (0 < (int)uVar8) goto LAB_8227a814;
   }
   else {
-    uVar11 = 3;
+    uVar8 = 3;
 LAB_8227a814:
-    BG_AnimScriptEvent(iVar9,5,0,1,param_2 + 0x88);
+    BG_AnimScriptEvent(ppVar3,ANIM_ET_LAND,0,1,&param_2->holdrand);
   }
-  uVar6 = PM_GroundSurfaceType(param_2);
-  iVar10 = (int)uVar5;
-  if (iVar10 == 0) {
-    if (dVar13 <= dVar15) goto LAB_8227aa14;
-    if (8.0 <= dVar13) {
-      if (dVar12 <= dVar13) {
-        *(float *)(iVar9 + 0x28) = *(float *)(iVar9 + 0x28) * 0.67;
-        *(float *)(iVar9 + 0x2c) = *(float *)(iVar9 + 0x2c) * 0.67;
-        *(float *)(iVar9 + 0x30) = *(float *)(iVar9 + 0x30) * 0.67;
-        uVar7 = PM_GroundSurfaceType(param_2);
-        if ((int)uVar7 != 0) {
-          uVar7 = uVar7 + 0x7a;
+  uVar5 = PM_GroundSurfaceType(param_2);
+  if (uVar4 == 0) {
+    if (dVar10 <= dVar12) goto LAB_8227aa14;
+    if (8.0 <= dVar10) {
+      if (dVar9 <= dVar10) {
+        ppVar3->velocity[0] = ppVar3->velocity[0] * 0.67;
+        ppVar3->velocity[1] = ppVar3->velocity[1] * 0.67;
+        ppVar3->velocity[2] = ppVar3->velocity[2] * 0.67;
+        uVar6 = PM_GroundSurfaceType(param_2);
+        if (uVar6 != 0) {
+          uVar6 = uVar6 + 0x7a;
         }
       }
       else {
-        lVar8 = PM_GroundSurfaceType(param_2);
-        uVar7 = -(ulonglong)(lVar8 != 0) & 0x76;
-        uVar11 = uVar6;
+        uVar4 = PM_GroundSurfaceType(param_2);
+        uVar6 = -(uint)(uVar4 != 0) & 0x76;
+        uVar8 = uVar5;
       }
     }
     else {
-      lVar8 = PM_GroundSurfaceType(param_2);
-      uVar7 = -(ulonglong)(lVar8 != 0) & 0x77;
-      uVar11 = uVar6;
+      uVar4 = PM_GroundSurfaceType(param_2);
+      uVar6 = -(uint)(uVar4 != 0) & 0x77;
+      uVar8 = uVar5;
     }
   }
   else {
-    if (0x7f < (uVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8200c508,0x86f,0,0xffffffff8200c7c4,uVar5,0x80);
+    if (0x7f < uVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x86f,0,
+                      "damage doesn\'t index EV_SOFTLANDING_BIT\n\t%i not in [0, %i)");
     }
-    if ((iVar10 < 100) && ((*(uint *)(iVar4 + 0x48) & 2) == 0)) {
-      iVar10 = iVar10 * 0x23 + 500;
-      if (iVar10 < 0x7d1) {
-        if (500 < iVar10) {
-          if (iVar10 < 0x5dc) {
-            dVar14 = -(double)(float)((double)(((float)(longlong)iVar10 - 500.0) * 0.001) *
-                                      0.30000001192092896 - dVar14);
+    if (((int)uVar4 < 100) && (((param_2->groundTrace).surfaceFlags & 2U) == 0)) {
+      iVar7 = uVar4 * 0x23 + 500;
+      if (iVar7 < 0x7d1) {
+        if (500 < iVar7) {
+          if (iVar7 < 0x5dc) {
+            dVar11 = -(double)(float)((double)(((float)(longlong)iVar7 - 500.0) * 0.001) *
+                                      0.30000001192092896 - dVar11);
           }
           else {
-            dVar14 = 0.20000000298023224;
+            dVar11 = 0.20000000298023224;
           }
         }
       }
       else {
-        iVar10 = 2000;
-        dVar14 = 0.20000000298023224;
+        iVar7 = 2000;
+        dVar11 = 0.20000000298023224;
       }
-      *(int *)(iVar9 + 8) = iVar10;
-      *(uint *)(iVar9 + 0xc) = *(uint *)(iVar9 + 0xc) | 0x80;
-      dVar12 = dVar14 * (double)*(float *)(iVar9 + 0x28);
+      ppVar3->pm_time = iVar7;
+      ppVar3->pm_flags = ppVar3->pm_flags | 0x80;
+      dVar9 = dVar11 * (double)ppVar3->velocity[0];
     }
     else {
-      dVar14 = 0.6700000166893005;
-      dVar12 = (double)*(float *)(iVar9 + 0x28) * 0.6700000166893005;
+      dVar11 = 0.6700000166893005;
+      dVar9 = (double)ppVar3->velocity[0] * 0.6700000166893005;
     }
-    *(float *)(iVar9 + 0x28) = (float)dVar12;
-    *(float *)(iVar9 + 0x2c) = (float)((double)*(float *)(iVar9 + 0x2c) * dVar14);
-    *(float *)(iVar9 + 0x30) = (float)((double)*(float *)(iVar9 + 0x30) * dVar14);
-    if ((*(uint *)(iVar4 + 0x48) & 0x1000) != 0) {
-      uVar5 = uVar5 | 0x80;
+    ppVar3->velocity[0] = (float)dVar9;
+    ppVar3->velocity[1] = (float)((double)ppVar3->velocity[1] * dVar11);
+    ppVar3->velocity[2] = (float)((double)ppVar3->velocity[2] * dVar11);
+    if (((param_2->groundTrace).surfaceFlags & 0x1000U) != 0) {
+      uVar4 = uVar4 | 0x80;
     }
-    uVar7 = PM_DamageLandingForSurface(param_2);
-    uVar11 = uVar5;
+    uVar6 = PM_DamageLandingForSurface(param_2);
+    uVar8 = uVar4;
   }
-  BG_AddPredictableEventToPlayerstate(uVar7,uVar11,iVar9);
+  BG_AddPredictableEventToPlayerstate(uVar6,uVar8,ppVar3);
 LAB_8227aa14:
   __restfpr_28();
   __restgprlr_26();
@@ -2743,19 +2955,21 @@ LAB_8227aa14:
 
 // 822808E8  PM_JitterPoint  (bgame/bg_pmove.cpp:2245)
 
-void PM_JitterPoint(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_JitterPoint(pmove_t *param_1,pml_t *param_2,trace_t *param_3,float param_4)
 
 {
   float fVar1;
-  int iVar2;
-  float *_Src;
-  int *piVar3;
-  ulonglong uVar4;
-  float *pfVar5;
+  playerState_s *ppVar2;
+  pmove_t *ppVar3;
+  int iVar4;
+  ulonglong uVar5;
+  float *pfVar6;
   double extraout_f1;
-  double dVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
   float local_80;
   float local_7c;
   float local_78;
@@ -2763,276 +2977,281 @@ void PM_JitterPoint(undefined8 param_1,int param_2,undefined8 param_3)
   float local_6c;
   float local_68;
   
-  piVar3 = (int *)__savegprlr_24();
-  dVar6 = extraout_f1;
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x8cc,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar3 = (pmove_t *)__savegprlr_24((double)param_4,param_1,param_2);
+  dVar7 = extraout_f1;
+  if (ppVar3 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x8cc,0,
+                    "%s");
   }
-  iVar2 = *piVar3;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x8cf,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar2 = ppVar3->ps;
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x8cf,0,
+                    "%s");
   }
-  pfVar5 = (float *)&DAT_8200c2e8;
-  dVar8 = 1.0;
-  uVar4 = 0;
-  dVar7 = 0.25;
+  pfVar6 = CorrectSolidDeltas[0] + 2;
+  dVar9 = 1.0;
+  uVar5 = 0;
+  dVar8 = 0.25;
   do {
-    local_80 = (float)((double)pfVar5[-2] * dVar6 + (double)*(float *)(iVar2 + 0x1c));
-    local_7c = (float)((double)pfVar5[-1] * dVar6 + (double)*(float *)(iVar2 + 0x20));
-    local_78 = (float)((double)*pfVar5 * dVar6 + (double)*(float *)(iVar2 + 0x24));
-    PM_playerTrace(piVar3,param_3,&local_80,&local_80,piVar3 + 0x39,*(undefined4 *)(iVar2 + 0x150),
-                   piVar3[0x17]);
-    _Src = (float *)param_3;
-    if (*(char *)((int)_Src + 0x2f) == '\0') {
+    local_80 = (float)((double)(*(float (*) [3])(pfVar6 + -2))[0] * dVar7 +
+                      (double)ppVar2->origin[0]);
+    local_7c = (float)((double)pfVar6[-1] * dVar7 + (double)ppVar2->origin[1]);
+    local_78 = (float)((double)*pfVar6 * dVar7 + (double)ppVar2->origin[2]);
+    PM_playerTrace(ppVar3,param_3,&local_80,&local_80,&ppVar3->bounds,ppVar2->clientNum,
+                   ppVar3->tracemask);
+    if (param_3->startsolid == false) {
       local_68 = local_78;
       local_70 = local_80;
       local_6c = local_7c;
-      local_78 = (float)((double)(float)((double)local_78 - dVar8) - dVar7);
-      PM_playerTrace(piVar3,param_3,&local_70,&local_80,piVar3 + 0x39,*(undefined4 *)(iVar2 + 0x150)
-                     ,piVar3[0x17]);
-      if (*(char *)((int)_Src + 0x2f) == '\0') {
-        memcpy((void *)(param_2 + 0x38),_Src,0x34);
-        fVar1 = *_Src;
-        *(float *)(iVar2 + 0x1c) = (local_80 - local_70) * fVar1 + local_70;
-        *(float *)(iVar2 + 0x20) = (local_7c - local_6c) * fVar1 + local_6c;
-        *(float *)(iVar2 + 0x24) = (local_78 - local_68) * fVar1 + local_68;
-        __restgprlr_24(1);
-        return;
+      local_78 = (float)((double)(float)((double)local_78 - dVar9) - dVar8);
+      PM_playerTrace(ppVar3,param_3,&local_70,&local_80,&ppVar3->bounds,ppVar2->clientNum,
+                     ppVar3->tracemask);
+      if (param_3->startsolid == false) {
+        memcpy();
+        fVar1 = param_3->fraction;
+        ppVar2->origin[0] = (local_80 - local_70) * fVar1 + local_70;
+        ppVar2->origin[1] = (local_7c - local_6c) * fVar1 + local_6c;
+        ppVar2->origin[2] = (local_78 - local_68) * fVar1 + local_68;
+        iVar4 = __restgprlr_24(1);
+        return iVar4;
       }
     }
-    uVar4 = uVar4 + 0xc;
-    pfVar5 = pfVar5 + 3;
-  } while ((uVar4 & 0xffffffff) < 0x138);
-  __restgprlr_24(0);
-  return;
+    uVar5 = uVar5 + 0xc;
+    pfVar6 = pfVar6 + 3;
+  } while ((uVar5 & 0xffffffff) < 0x138);
+  iVar4 = __restgprlr_24(0);
+  return iVar4;
 }
 
 
 // 82280AD0  PM_CorrectAllSolid  (bgame/bg_pmove.cpp:2290)
 
-void PM_CorrectAllSolid(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_CorrectAllSolid(pmove_t *param_1,pml_t *param_2,trace_t *param_3)
 
 {
-  int iVar1;
-  int *piVar2;
+  playerState_s *ppVar1;
+  pmove_t *ppVar2;
   int iVar3;
   
-  piVar2 = (int *)__savegprlr_26();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x8f6,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar2 = (pmove_t *)__savegprlr_26(param_1);
+  if (ppVar2 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x8f6,0,
+                    "%s");
   }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x8f9,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar2->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x8f9,0,
+                    "%s");
   }
-  iVar3 = PM_JitterPoint(0x3ff0000000000000,piVar2,param_2,param_3);
+  iVar3 = PM_JitterPoint(ppVar2,param_2,param_3,1.0);
   if (iVar3 != 0) {
-    __restgprlr_26(1);
-    return;
+    iVar3 = __restgprlr_26(1);
+    return iVar3;
   }
-  *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
-  iVar3 = (int)param_2;
-  *(undefined4 *)(iVar3 + 0x30) = 0;
-  *(undefined4 *)(iVar3 + 0x34) = 0;
-  *(undefined4 *)(iVar3 + 0x2c) = 0;
-  Jump_ClearState(iVar1);
-  __restgprlr_26(0);
-  return;
+  ppVar1->groundEntityNum = 0x7ff;
+  param_2->groundPlane = 0;
+  param_2->almostGroundPlane = 0;
+  param_2->walking = 0;
+  Jump_ClearState(ppVar1);
+  iVar3 = __restgprlr_26(0);
+  return iVar3;
 }
 
 
 // 8227AA28  PM_GroundTraceMissed  (bgame/bg_pmove.cpp:2339)
 
-void PM_GroundTraceMissed(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_GroundTraceMissed(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar4;
-  undefined4 uVar5;
+  playerState_s *ppVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  scriptAnimEventTypes_t sVar4;
+  int iVar5;
   double dVar6;
-  undefined4 local_80;
-  undefined4 local_7c;
+  float local_80;
+  float local_7c;
   float local_78;
   float local_70 [28];
   
-  piVar3 = (int *)__savegprlr_27();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x92a,0,0xffffffff82000f98,0xffffffff82004978);
+  puVar2 = (undefined4 *)__savegprlr_27(param_1);
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x92a,0,
+                    "%s");
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x92d,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*puVar2;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x92d,0,
+                    "%s");
   }
-  local_80 = *(undefined4 *)(iVar1 + 0x1c);
-  local_7c = *(undefined4 *)(iVar1 + 0x20);
-  if (*(int *)(iVar1 + 0x6c) == 0x7ff) {
+  local_80 = ppVar1->origin[0];
+  local_7c = ppVar1->origin[1];
+  if (ppVar1->groundEntityNum == 0x7ff) {
     dVar6 = 1.0;
-    local_78 = *(float *)(iVar1 + 0x24) - 1.0;
-    (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar3 + 0x4d) * 7])
-              (local_70,iVar1 + 0x1c,&local_80,piVar3 + 0x39,*(undefined4 *)(iVar1 + 0x150),
-               piVar3[0x17]);
-    uVar5 = 1;
+    local_78 = ppVar1->origin[2] - 1.0;
+    iVar3 = (*(code *)(&pmoveHandlers)[(uint)*(byte *)(puVar2 + 0x4d) * 7])
+                      (local_70,ppVar1->origin,&local_80,puVar2 + 0x39,ppVar1->clientNum,
+                       puVar2[0x17]);
+    iVar5 = 1;
     if ((double)local_70[0] != dVar6) goto LAB_8227ab9c;
   }
   else {
-    local_78 = *(float *)(iVar1 + 0x24) - 64.0;
-    (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar3 + 0x4d) * 7])
-              (local_70);
+    local_78 = ppVar1->origin[2] - 64.0;
+    iVar3 = (*(code *)(&pmoveHandlers)[(uint)*(byte *)(puVar2 + 0x4d) * 7])(local_70);
     if (local_70[0] == 1.0) {
-      uVar4 = 3;
-      if (0x7f < *(byte *)(piVar3 + 8)) {
-        uVar4 = 4;
+      sVar4 = ANIM_ET_JUMP;
+      if (0x7f < *(byte *)(puVar2 + 8)) {
+        sVar4 = ANIM_ET_JUMPBK;
       }
-      BG_AnimScriptEvent(iVar1,uVar4,0,1,param_2 + 0x88);
+      iVar3 = BG_AnimScriptEvent(ppVar1,sVar4,0,1,&param_2->holdrand);
     }
     else {
-      uVar5 = 1;
+      iVar5 = 1;
       if (local_70[0] < 0.015625) goto LAB_8227ab9c;
     }
   }
-  uVar5 = 0;
+  iVar5 = 0;
 LAB_8227ab9c:
-  iVar2 = (int)param_2;
-  *(undefined4 *)(iVar2 + 0x34) = uVar5;
-  *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
-  *(undefined4 *)(iVar2 + 0x30) = 0;
-  *(undefined4 *)(iVar2 + 0x2c) = 0;
-  __restgprlr_27();
+  param_2->almostGroundPlane = iVar5;
+  ppVar1->groundEntityNum = 0x7ff;
+  param_2->groundPlane = 0;
+  param_2->walking = 0;
+  __restgprlr_27(iVar3);
   return;
 }
 
 
 // 82280BA0  PM_GroundTrace  (bgame/bg_pmove.cpp:2409)
 
-void PM_GroundTrace(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PM_GroundTrace(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  int *piVar5;
-  int iVar6;
-  undefined2 uVar8;
-  ulonglong uVar4;
-  uint uVar7;
-  undefined8 uVar9;
-  double dVar10;
-  undefined4 local_a0;
-  undefined4 local_9c;
+  playerState_s *ppVar1;
+  bool bVar2;
+  pmove_t *ppVar4;
+  int iVar5;
+  ushort uVar6;
+  ulonglong uVar3;
+  scriptAnimEventTypes_t sVar7;
+  double dVar8;
+  float local_a0;
+  float local_9c;
   float local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
+  float local_90;
+  float local_8c;
   float local_88;
-  float local_80;
-  float local_7c;
-  float local_78;
-  float local_74;
-  uint local_6c;
-  char local_52;
-  char local_51;
-  char local_50;
+  trace_t local_80 [2];
   
-  piVar5 = (int *)__savegprlr_25();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x970,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar4 = (pmove_t *)__savegprlr_25(param_1);
+  if (ppVar4 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x970,0,
+                    "%s");
   }
-  iVar1 = *piVar5;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x973,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar4->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x973,0,
+                    "%s");
   }
-  local_a0 = *(undefined4 *)(iVar1 + 0x1c);
-  local_9c = *(undefined4 *)(iVar1 + 0x20);
-  local_90 = *(undefined4 *)(iVar1 + 0x1c);
-  local_8c = *(undefined4 *)(iVar1 + 0x20);
-  dVar10 = 1.0;
-  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
-    local_98 = *(float *)(iVar1 + 0x24) + 0.25;
-    local_88 = *(float *)(iVar1 + 0x24) - 0.25;
+  local_a0 = ppVar1->origin[0];
+  local_9c = ppVar1->origin[1];
+  local_90 = ppVar1->origin[0];
+  local_8c = ppVar1->origin[1];
+  dVar8 = 1.0;
+  if ((ppVar1->eFlags & 0x3800U) == 0) {
+    local_98 = ppVar1->origin[2] + 0.25;
+    local_88 = ppVar1->origin[2] - 0.25;
   }
   else {
-    local_98 = *(float *)(iVar1 + 0x24);
-    local_88 = *(float *)(iVar1 + 0x24) - 1.0;
+    local_98 = ppVar1->origin[2];
+    local_88 = ppVar1->origin[2] - 1.0;
   }
-  PM_playerTrace(piVar5,&local_80,&local_a0,&local_90,piVar5 + 0x39,*(undefined4 *)(iVar1 + 0x150),
-                 piVar5[0x17]);
-  iVar2 = (int)param_2;
-  memcpy((void *)(iVar2 + 0x38),&local_80,0x34);
-  if ((local_52 == '\0') || (iVar6 = PM_CorrectAllSolid(piVar5,param_2,&local_80), iVar6 != 0)) {
-    if (local_51 != '\0') {
-      local_98 = *(float *)(iVar1 + 0x24) - 0.001;
-      PM_playerTrace(piVar5,&local_80,&local_a0,&local_90,piVar5 + 0x39,
-                     *(undefined4 *)(iVar1 + 0x150),piVar5[0x17]);
-      if (local_51 != '\0') {
-        *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
-        *(undefined4 *)(iVar2 + 0x30) = 0;
-        *(undefined4 *)(iVar2 + 0x34) = 0;
-        *(undefined4 *)(iVar2 + 0x2c) = 0;
+  PM_playerTrace(ppVar4,local_80,&local_a0,&local_90,&ppVar4->bounds,ppVar1->clientNum,
+                 ppVar4->tracemask);
+  memcpy();
+  if ((local_80[0].allsolid == false) ||
+     (iVar5 = PM_CorrectAllSolid(ppVar4,param_2,local_80), iVar5 != 0)) {
+    if (local_80[0].startsolid != false) {
+      local_98 = ppVar1->origin[2] - 0.001;
+      PM_playerTrace(ppVar4,local_80,&local_a0,&local_90,&ppVar4->bounds,ppVar1->clientNum,
+                     ppVar4->tracemask);
+      if (local_80[0].startsolid != false) {
+        ppVar1->groundEntityNum = 0x7ff;
+        param_2->groundPlane = 0;
+        param_2->almostGroundPlane = 0;
+        param_2->walking = 0;
         __restgprlr_25();
         return;
       }
-      memcpy((void *)(iVar2 + 0x38),&local_80,0x34);
+      memcpy();
     }
-    if ((double)local_80 == dVar10) {
-      PM_GroundTraceMissed(piVar5,param_2);
+    if ((double)local_80[0].fraction == dVar8) {
+      PM_GroundTraceMissed(ppVar4,param_2);
       __restgprlr_25();
       return;
     }
-    dVar10 = 0.0;
-    if (((local_7c == 0.0) && (local_78 == 0.0)) && (local_74 == 0.0)) {
-      MyAssertHandler(0xffffffff8200c508,0x9aa,0,0xffffffff82000f98,0xffffffff8200c9c8);
+    dVar8 = 0.0;
+    if (((local_80[0].normal[0] == 0.0) && (local_80[0].normal[1] == 0.0)) &&
+       (local_80[0].normal[2] == 0.0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x9aa,0,
+                      "%s");
     }
-    if ((((*(uint *)(iVar1 + 0xc) & 8) == 0) && (dVar10 < (double)*(float *)(iVar1 + 0x30))) &&
-       (10.0 < *(float *)(iVar1 + 0x30) * local_74 +
-               *(float *)(iVar1 + 0x2c) * local_78 + *(float *)(iVar1 + 0x28) * local_7c)) {
-      uVar9 = 3;
-      if (0x7f < *(byte *)(piVar5 + 8)) {
-        uVar9 = 4;
+    if ((((ppVar1->pm_flags & 8U) == 0) && (dVar8 < (double)ppVar1->velocity[2])) &&
+       (10.0 < ppVar1->velocity[2] * local_80[0].normal[2] +
+               ppVar1->velocity[1] * local_80[0].normal[1] +
+               ppVar1->velocity[0] * local_80[0].normal[0])) {
+      sVar7 = ANIM_ET_JUMP;
+      if (0x7f < (byte)(ppVar4->cmd).forwardmove) {
+        sVar7 = ANIM_ET_JUMPBK;
       }
-      BG_AnimScriptEvent(iVar1,uVar9,0,0,param_2 + 0x88);
-      *(undefined4 *)(iVar2 + 0x34) = 0;
-      *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
-      *(undefined4 *)(iVar2 + 0x30) = 0;
-      *(undefined4 *)(iVar2 + 0x2c) = 0;
-      __restgprlr_25();
+      iVar5 = BG_AnimScriptEvent(ppVar1,sVar7,0,0,&param_2->holdrand);
+      param_2->almostGroundPlane = 0;
+      ppVar1->groundEntityNum = 0x7ff;
+      param_2->groundPlane = 0;
+      param_2->walking = 0;
+      __restgprlr_25(iVar5);
       return;
     }
-    bVar3 = false;
-    if ((local_6c & 0x800000) != 0) {
-      uVar8 = Trace_GetEntityHitId(&local_80);
-      if (*(byte *)(piVar5 + 0x4d) == 0) {
-        uVar4 = (ulonglong)DAT_82a382e4;
+    bVar2 = false;
+    if ((local_80[0].contents & 0x800000U) != 0) {
+      uVar6 = Trace_GetEntityHitId(local_80);
+      if (ppVar4->handler == 0) {
+        uVar3 = (ulonglong)g_cgameClientNum;
       }
       else {
-        uVar4 = 0xffffffffffffffff;
+        uVar3 = 0xffffffffffffffff;
       }
-      iVar6 = (*(code *)(&PTR_CG_GetEntityState_82961658)[(uint)*(byte *)(piVar5 + 0x4d) * 7])
-                        (uVar4,uVar8);
-      if ((iVar6 != 0) &&
-         (((iVar6 = *(int *)(iVar6 + 4), iVar6 == 0xc || (iVar6 == 0xb)) ||
-          (bVar3 = false, iVar6 == 0xe)))) {
-        bVar3 = true;
+      iVar5 = (*(code *)(&PTR_CG_GetEntityState_82961658)[(uint)ppVar4->handler * 7])(uVar3,uVar6);
+      if ((iVar5 != 0) &&
+         (((iVar5 = *(int *)(iVar5 + 4), iVar5 == 0xc || (iVar5 == 0xb)) ||
+          (bVar2 = false, iVar5 == 0xe)))) {
+        bVar2 = true;
       }
     }
-    if (((local_50 != '\0') && (local_6c != 0x2000000)) && (!bVar3)) {
-      *(undefined4 *)(iVar2 + 0x30) = 1;
-      *(undefined4 *)(iVar2 + 0x34) = 1;
-      *(undefined4 *)(iVar2 + 0x2c) = 1;
-      if (*(int *)(iVar1 + 0x6c) == 0x7ff) {
-        PM_CrashLand(iVar1,param_2);
+    if (((local_80[0].walkable != false) && (local_80[0].contents != 0x2000000)) && (!bVar2)) {
+      param_2->groundPlane = 1;
+      param_2->almostGroundPlane = 1;
+      param_2->walking = 1;
+      if (ppVar1->groundEntityNum == 0x7ff) {
+        PM_CrashLand(ppVar1,param_2);
       }
-      uVar7 = Trace_GetEntityHitId(&local_80);
-      *(uint *)(iVar1 + 0x6c) = uVar7 & 0xffff;
-      PM_AddTouchEnt(piVar5);
+      uVar6 = Trace_GetEntityHitId(local_80);
+      ppVar1->groundEntityNum = (uint)uVar6;
+      PM_AddTouchEnt(ppVar4,(uint)uVar6);
       __restgprlr_25();
       return;
     }
-    *(undefined4 *)(iVar1 + 0x6c) = 0x7ff;
-    *(undefined4 *)(iVar2 + 0x30) = 1;
-    *(undefined4 *)(iVar2 + 0x34) = 1;
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
-    Jump_ClearState(iVar1);
+    ppVar1->groundEntityNum = 0x7ff;
+    param_2->groundPlane = 1;
+    param_2->almostGroundPlane = 1;
+    param_2->walking = 0;
+    Jump_ClearState(ppVar1);
   }
   __restgprlr_25();
   return;
@@ -3041,15 +3260,16 @@ void PM_GroundTrace(undefined8 param_1,longlong param_2)
 
 // 8227ABC8  PM_GetViewHeightLerpTime  (bgame/bg_pmove.cpp:2556)
 
-longlong PM_GetViewHeightLerpTime(undefined8 param_1,int param_2,longlong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_GetViewHeightLerpTime(playerState_s *param_1,int param_2,int param_3)
 
 {
   if (param_2 == 0xb) {
     return 400;
   }
   if (param_2 == 0x28) {
-    return ((-(ulonglong)(param_3 != 0) & 0xfffffff8) << 0x20 |
-           -(ulonglong)(param_3 != 0) & 0xffffff38) + 400;
+    return (-(uint)(param_3 != 0) & 0xffffff38) + 400;
   }
   return 200;
 }
@@ -3057,87 +3277,94 @@ longlong PM_GetViewHeightLerpTime(undefined8 param_1,int param_2,longlong param_
 
 // 8227AC00  PM_ViewHeightTableLerp  (bgame/bg_pmove.cpp:2589)
 
-void PM_ViewHeightTableLerp(undefined8 param_1,longlong param_2,float *param_3)
+float PM_ViewHeightTableLerp(int param_1,viewLerpWaypoint_s *param_2,float *param_3)
 
 {
   float fVar1;
   uint uVar2;
   int *piVar3;
   int iVar4;
-  undefined8 uVar5;
-  uint uVar6;
+  uint uVar5;
+  char *pcVar6;
   int iVar7;
+  longlong lVar8;
+  double dVar9;
   
-  uVar5 = __savegprlr_26();
-  uVar6 = (uint)uVar5;
-  iVar4 = (int)param_2;
-  if (uVar6 == 0) {
+  lVar8 = (longlong)(int)param_2;
+  uVar5 = __savegprlr_26(param_1);
+  iVar4 = (int)lVar8;
+  if (uVar5 == 0) {
     iVar7 = *(int *)(iVar4 + 8);
   }
   else {
-    if (99 < (int)uVar6) {
-      MyAssertHandler(0xffffffff8200c508,0xa29,0,0xffffffff82000f98,0xffffffff8200c8a4);
+    if (99 < (int)uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xa29,0,
+                      "%s");
     }
-    param_2 = param_2 + 0xc;
+    lVar8 = lVar8 + 0xc;
     uVar2 = *(uint *)(iVar4 + 0xc);
     iVar7 = 1;
     do {
-      piVar3 = (int *)param_2;
-      if (uVar2 == uVar6) {
+      piVar3 = (int *)lVar8;
+      if (uVar2 == uVar5) {
         *param_3 = (float)(longlong)piVar3[2];
-        __restgprlr_26((double)(float)piVar3[1]);
-        return;
+        dVar9 = (double)__restgprlr_26((double)(float)piVar3[1]);
+        return (float)dVar9;
       }
-      if ((int)uVar6 < (int)uVar2) {
+      if ((int)uVar5 < (int)uVar2) {
         iVar4 = iVar7 * 0xc + iVar4;
         if ((longlong)((ulonglong)uVar2 - (ulonglong)*(uint *)(iVar4 + -0xc)) < 1) {
-          MyAssertHandler(0xffffffff8200c508,0xa3f,0,0xffffffff82000f98,0xffffffff8200c804);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                          0xa3f,0,"%s");
         }
-        fVar1 = (float)((double)(longlong)(int)(uVar6 - *(int *)(iVar4 + -0xc)) /
+        fVar1 = (float)((double)(longlong)(int)(uVar5 - *(int *)(iVar4 + -0xc)) /
                        (double)(longlong)(*piVar3 - *(int *)(iVar4 + -0xc)));
         *param_3 = (float)(longlong)(piVar3[2] - *(int *)(iVar4 + -4)) * fVar1 +
                    (float)(longlong)*(int *)(iVar4 + -4);
-        __restgprlr_26((double)(((float)piVar3[1] - *(float *)(iVar4 + -8)) * fVar1 +
-                               *(float *)(iVar4 + -8)));
-        return;
+        dVar9 = (double)__restgprlr_26((double)(((float)piVar3[1] - *(float *)(iVar4 + -8)) * fVar1
+                                               + *(float *)(iVar4 + -8)));
+        return (float)dVar9;
       }
-      param_2 = param_2 + 0xc;
+      lVar8 = lVar8 + 0xc;
       iVar7 = iVar7 + 1;
-      uVar2 = *(uint *)param_2;
+      uVar2 = *(uint *)lVar8;
     } while (uVar2 != 0xffffffff);
-    iVar7 = va(0xffffffff8200c86c,uVar5);
-    if (iVar7 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0xa4c,0,0xffffffff82000f98,0xffffffff8200c828);
+    pcVar6 = va("No encapsulating table entries found for fraction %i");
+    if (pcVar6 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xa4c,0,
+                      "%s");
     }
     iVar7 = *(int *)(iVar4 + 8);
   }
   *param_3 = (float)(longlong)iVar7;
-  __restgprlr_26((double)*(float *)(iVar4 + 4));
-  return;
+  dVar9 = (double)__restgprlr_26((double)*(float *)(iVar4 + 4));
+  return (float)dVar9;
 }
 
 
 // 8227ADE8  PM_GetViewHeightLerp  (bgame/bg_pmove.cpp:2652)
 
-double PM_GetViewHeightLerp(int *param_1,int param_2,int param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_GetViewHeightLerp(pmove_t *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  double dVar3;
-  double dVar4;
+  float fVar1;
+  playerState_s *ppVar2;
+  float fVar3;
+  int iVar4;
   
-  iVar1 = *param_1;
-  if (*(int *)(iVar1 + 0x16c) == 0) {
+  ppVar2 = param_1->ps;
+  if (ppVar2->viewHeightLerpTime == 0) {
     return 0.0;
   }
   if ((param_2 != -1) && (param_3 != -1)) {
-    if (param_3 != *(int *)(iVar1 + 0x170)) {
+    if (param_3 != ppVar2->viewHeightLerpTarget) {
       return 0.0;
     }
     if (param_3 == 0x28) {
       if (param_2 == 0xb) {
-        if (*(int *)(iVar1 + 0x174) != 0) {
+        if (ppVar2->viewHeightLerpDown != 0) {
           return 0.0;
         }
       }
@@ -3145,279 +3372,290 @@ double PM_GetViewHeightLerp(int *param_1,int param_2,int param_3)
         if (param_2 != 0x3c) {
           return 0.0;
         }
-        if (*(int *)(iVar1 + 0x174) == 0) {
+        if (ppVar2->viewHeightLerpDown == 0) {
           return 0.0;
         }
       }
     }
   }
-  if (*(int *)(iVar1 + 0x170) == 0xb) {
-    iVar2 = 400;
+  if (ppVar2->viewHeightLerpTarget == 0xb) {
+    iVar4 = 400;
   }
-  else if (*(int *)(iVar1 + 0x170) == 0x28) {
-    iVar2 = (-(uint)(*(int *)(iVar1 + 0x174) != 0) & 0xffffff38) + 400;
+  else if (ppVar2->viewHeightLerpTarget == 0x28) {
+    iVar4 = (-(uint)(ppVar2->viewHeightLerpDown != 0) & 0xffffff38) + 400;
   }
   else {
-    iVar2 = 200;
+    iVar4 = 200;
   }
-  dVar3 = 0.0;
-  dVar4 = (double)((float)(longlong)(param_1[1] - *(int *)(iVar1 + 0x16c)) / (float)(longlong)iVar2)
-  ;
-  if ((0.0 <= dVar4) && (dVar3 = 1.0, dVar4 <= 1.0)) {
-    return dVar4;
+  fVar1 = 0.0;
+  fVar3 = (float)(longlong)((param_1->cmd).serverTime - ppVar2->viewHeightLerpTime) /
+          (float)(longlong)iVar4;
+  if ((0.0 <= fVar3) && (fVar1 = 1.0, fVar3 <= 1.0)) {
+    return fVar3;
   }
-  return dVar3;
+  return fVar1;
 }
 
 
 // 8227AEF8  PM_ViewHeightAdjust  (bgame/bg_pmove.cpp:2695)
 
-void PM_ViewHeightAdjust(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_ViewHeightAdjust(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  float fVar2;
-  float fVar3;
-  int iVar4;
-  bool bVar5;
-  float fVar6;
-  int *piVar7;
-  int iVar8;
-  undefined8 uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  undefined4 uVar13;
-  int iVar14;
-  undefined8 uVar15;
-  longlong lVar16;
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  float fVar5;
+  int *piVar6;
+  int iVar7;
+  char *pcVar8;
+  viewLerpWaypoint_s *pvVar9;
+  viewLerpWaypoint_s *pvVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  undefined4 uVar15;
+  int iVar16;
   double dVar17;
-  double dVar18;
+  float fVar18;
   longlong local_60;
   longlong local_58;
   
-  piVar7 = (int *)__savegprlr_24();
-  if (piVar7 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xa8a,0,0xffffffff82000f98,0xffffffff82004978);
+  piVar6 = (int *)__savegprlr_24(param_1);
+  if (piVar6 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xa8a,0,
+                    "%s");
   }
-  iVar4 = *piVar7;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xa8d,0,0xffffffff82000f98,0xffffffff82001fdc);
+  iVar2 = *piVar6;
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xa8d,0,
+                    "%s");
   }
-  iVar8 = *(int *)(iVar4 + 0x164);
-  dVar18 = 0.0;
-  if ((iVar8 == 0) || (fVar2 = *(float *)(iVar4 + 0x168), fVar2 == 0.0)) {
-    if (*(int *)(iVar4 + 4) == 5) {
-      *(undefined4 *)(iVar4 + 0x168) = 0;
+  iVar3 = *(int *)(iVar2 + 0x164);
+  dVar17 = 0.0;
+  if ((iVar3 == 0) || (fVar18 = *(float *)(iVar2 + 0x168), fVar18 == 0.0)) {
+    if (*(int *)(iVar2 + 4) == 5) {
+      *(undefined4 *)(iVar2 + 0x168) = 0;
       __restgprlr_24();
       return;
     }
-    lVar16 = (longlong)iVar8;
-    local_58 = lVar16;
+    lVar13 = (longlong)iVar3;
+    local_58 = lVar13;
   }
   else {
-    local_60 = (longlong)iVar8;
-    fVar6 = (float)local_60;
-    if ((fVar2 == fVar6) && (*(int *)(iVar4 + 0x16c) == 0)) goto LAB_8227b4a8;
-    lVar16 = 0;
-    bVar5 = false;
-    if (((iVar8 != 0xb) && ((iVar8 != 0x28 && (iVar8 != 0x3c)))) ||
-       (((*(uint *)(iVar4 + 0xc) & 0x400000) != 0 && (fVar6 < fVar2)))) {
-      bVar5 = true;
+    local_60 = (longlong)iVar3;
+    fVar5 = (float)local_60;
+    if ((fVar18 == fVar5) && (*(int *)(iVar2 + 0x16c) == 0)) goto LAB_8227b4a8;
+    iVar7 = 0;
+    bVar4 = false;
+    if (((iVar3 != 0xb) && ((iVar3 != 0x28 && (iVar3 != 0x3c)))) ||
+       (((*(uint *)(iVar2 + 0xc) & 0x400000) != 0 && (fVar5 < fVar18)))) {
+      bVar4 = true;
     }
-    if (bVar5) {
-      fVar3 = 180.0;
-      if ((*(uint *)(iVar4 + 0xc) & 0x400000) != 0) {
-        fVar3 = 120.0;
+    if (bVar4) {
+      fVar1 = 180.0;
+      if ((*(uint *)(iVar2 + 0xc) & 0x400000) != 0) {
+        fVar1 = 120.0;
       }
-      *(undefined4 *)(iVar4 + 0x16c) = 0;
-      if (fVar6 <= fVar2) {
-        fVar2 = -(*(float *)(param_2 + 0x24) * fVar3 - *(float *)(iVar4 + 0x168));
-        *(float *)(iVar4 + 0x168) = fVar2;
-        if (fVar2 <= fVar6) {
-          *(float *)(iVar4 + 0x168) = (float)local_60;
+      *(undefined4 *)(iVar2 + 0x16c) = 0;
+      if (fVar5 <= fVar18) {
+        fVar18 = -(param_2->frametime * fVar1 - *(float *)(iVar2 + 0x168));
+        *(float *)(iVar2 + 0x168) = fVar18;
+        if (fVar18 <= fVar5) {
+          *(float *)(iVar2 + 0x168) = (float)local_60;
           __restgprlr_24();
           return;
         }
       }
       else {
-        fVar2 = *(float *)(param_2 + 0x24) * fVar3 + fVar2;
-        *(float *)(iVar4 + 0x168) = fVar2;
-        if (fVar6 <= fVar2) {
-          *(float *)(iVar4 + 0x168) = (float)local_60;
+        fVar18 = param_2->frametime * fVar1 + fVar18;
+        *(float *)(iVar2 + 0x168) = fVar18;
+        if (fVar5 <= fVar18) {
+          *(float *)(iVar2 + 0x168) = (float)local_60;
           __restgprlr_24();
           return;
         }
       }
       goto LAB_8227b4a8;
     }
-    uVar15 = 0xffffffff829614e8;
-    if (*(uint *)(iVar4 + 0x16c) != 0) {
-      iVar8 = *(int *)(iVar4 + 0x170);
-      if (iVar8 == 0xb) {
-        uVar12 = 400;
+    pvVar10 = viewLerp_CrouchStand;
+    if (*(uint *)(iVar2 + 0x16c) != 0) {
+      iVar3 = *(int *)(iVar2 + 0x170);
+      if (iVar3 == 0xb) {
+        uVar14 = 400;
       }
-      else if (iVar8 == 0x28) {
-        uVar12 = -(ulonglong)(*(int *)(iVar4 + 0x174) != 0);
-        uVar12 = ((uVar12 & 0xfffffff8) << 0x20 | uVar12 & 0xffffff38) + 400;
+      else if (iVar3 == 0x28) {
+        uVar14 = -(ulonglong)(*(int *)(iVar2 + 0x174) != 0);
+        uVar14 = ((uVar14 & 0xfffffff8) << 0x20 | uVar14 & 0xffffff38) + 400;
       }
       else {
-        uVar12 = 200;
+        uVar14 = 200;
       }
-      trapWord(6,uVar12,0);
-      uVar10 = ((ulonglong)(uint)piVar7[1] - (ulonglong)*(uint *)(iVar4 + 0x16c)) * 100;
-      iVar1 = (int)uVar10 / (int)uVar12;
-      lVar16 = (longlong)iVar1;
-      trapWord(5,uVar12 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff
+      trapWord(6,uVar14,0);
+      uVar11 = ((ulonglong)(uint)piVar6[1] - (ulonglong)*(uint *)(iVar2 + 0x16c)) * 100;
+      iVar7 = (int)uVar11 / (int)uVar14;
+      trapWord(5,uVar14 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff
               );
-      if (iVar1 < 0) {
-        lVar16 = 0;
+      if (iVar7 < 0) {
+        iVar7 = 0;
 LAB_8227b0fc:
-        if (iVar8 == 0xb) {
-          uVar9 = 0xffffffff82961558;
+        if (iVar3 == 0xb) {
+          pvVar9 = viewLerp_CrouchProne;
         }
         else {
-          uVar9 = uVar15;
-          if (iVar8 == 0x28) {
-            if (*(int *)(iVar4 + 0x174) == 0) {
-              uVar9 = 0xffffffff829615e0;
+          pvVar9 = pvVar10;
+          if (iVar3 == 0x28) {
+            if (*(int *)(iVar2 + 0x174) == 0) {
+              pvVar9 = viewLerp_ProneCrouch;
             }
             else {
-              uVar9 = 0xffffffff82961478;
+              pvVar9 = viewLerp_StandCrouch;
             }
           }
         }
-        dVar17 = (double)PM_ViewHeightTableLerp(lVar16,uVar9,&local_60);
-        *(float *)(iVar4 + 0x168) = (float)dVar17;
-        if (((double)local_60._0_4_ != dVar18) && (DAT_84013128 == 0)) {
-          MyAssertHandler(0xffffffff8200c508,0xaeb,0,0xffffffff8200c950);
+        fVar18 = PM_ViewHeightTableLerp(iVar7,pvVar9,(float *)&local_60);
+        *(float *)(iVar2 + 0x168) = fVar18;
+        if (((double)local_60._0_4_ != dVar17) && (alwaysfails == 0)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                          0xaeb,0,
+                          "Wow, someone added view height offsets back in!  You need to restore this code and the viewHeightLerpPosAdj field"
+                         );
         }
       }
       else {
-        if (iVar1 < 0x65) {
-          if (iVar1 != 100) goto LAB_8227b0fc;
+        if (iVar7 < 0x65) {
+          if (iVar7 != 100) goto LAB_8227b0fc;
         }
         else {
-          lVar16 = 100;
+          iVar7 = 100;
         }
-        local_60 = (longlong)iVar8;
-        *(undefined4 *)(iVar4 + 0x16c) = 0;
-        *(float *)(iVar4 + 0x168) = (float)local_60;
+        local_60 = (longlong)iVar3;
+        *(undefined4 *)(iVar2 + 0x16c) = 0;
+        *(float *)(iVar2 + 0x168) = (float)local_60;
       }
     }
-    if (*(int *)(iVar4 + 0x16c) == 0) {
-      iVar8 = *(int *)(iVar4 + 0x164);
-      local_58 = (longlong)iVar8;
-      if (*(float *)(iVar4 + 0x168) != (float)local_58) {
-        *(int *)(iVar4 + 0x16c) = piVar7[1];
-        if (iVar8 == 0xb) {
-          *(undefined4 *)(iVar4 + 0x174) = 1;
-          if (*(float *)(iVar4 + 0x168) <= 40.0) {
-            *(undefined4 *)(iVar4 + 0x170) = 0xb;
+    if (*(int *)(iVar2 + 0x16c) == 0) {
+      iVar3 = *(int *)(iVar2 + 0x164);
+      local_58 = (longlong)iVar3;
+      if (*(float *)(iVar2 + 0x168) != (float)local_58) {
+        *(int *)(iVar2 + 0x16c) = piVar6[1];
+        if (iVar3 == 0xb) {
+          *(undefined4 *)(iVar2 + 0x174) = 1;
+          if (*(float *)(iVar2 + 0x168) <= 40.0) {
+            *(undefined4 *)(iVar2 + 0x170) = 0xb;
             __restgprlr_24();
             return;
           }
         }
-        else if (iVar8 == 0x28) {
-          if ((float)local_58 < *(float *)(iVar4 + 0x168)) {
-            *(undefined4 *)(iVar4 + 0x174) = 1;
-            *(undefined4 *)(iVar4 + 0x170) = 0x28;
+        else if (iVar3 == 0x28) {
+          if ((float)local_58 < *(float *)(iVar2 + 0x168)) {
+            *(undefined4 *)(iVar2 + 0x174) = 1;
+            *(undefined4 *)(iVar2 + 0x170) = 0x28;
             __restgprlr_24();
             return;
           }
-          *(undefined4 *)(iVar4 + 0x174) = 0;
+          *(undefined4 *)(iVar2 + 0x174) = 0;
         }
         else {
-          if (iVar8 != 0x3c) {
-            if (DAT_84013128 == 0) {
-              uVar15 = va(0xffffffff8200c8b0);
-              MyAssertHandler(0xffffffff8200c508,0xb5b,0,uVar15);
+          if (iVar3 != 0x3c) {
+            if (alwaysfails == 0) {
+              pcVar8 = va("View height lerp to %i reached bad place\n");
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                              0xb5b,0,pcVar8);
               __restgprlr_24();
               return;
             }
             goto LAB_8227b4a8;
           }
-          *(undefined4 *)(iVar4 + 0x174) = 0;
-          if (40.0 <= *(float *)(iVar4 + 0x168)) {
-            *(undefined4 *)(iVar4 + 0x170) = 0x3c;
+          *(undefined4 *)(iVar2 + 0x174) = 0;
+          if (40.0 <= *(float *)(iVar2 + 0x168)) {
+            *(undefined4 *)(iVar2 + 0x170) = 0x3c;
             __restgprlr_24();
             return;
           }
         }
-        *(undefined4 *)(iVar4 + 0x170) = 0x28;
+        *(undefined4 *)(iVar2 + 0x170) = 0x28;
         __restgprlr_24();
         return;
       }
       goto LAB_8227b4a8;
     }
-    iVar8 = *(int *)(iVar4 + 0x164);
-    iVar1 = *(int *)(iVar4 + 0x170);
-    if ((iVar8 == iVar1) ||
-       (((iVar1 <= iVar8 || (uVar11 = 0, *(int *)(iVar4 + 0x174) != 0)) &&
-        ((iVar8 <= iVar1 || (uVar11 = *(uint *)(iVar4 + 0x174), uVar11 == 0)))))) goto LAB_8227b4a8;
-    uVar11 = uVar11 ^ 1;
-    *(uint *)(iVar4 + 0x174) = uVar11;
-    if (uVar11 == 0) {
-      if (iVar1 == 0xb) {
-        uVar13 = 0x28;
+    iVar3 = *(int *)(iVar2 + 0x164);
+    iVar16 = *(int *)(iVar2 + 0x170);
+    if ((iVar3 == iVar16) ||
+       (((iVar16 <= iVar3 || (uVar12 = 0, *(int *)(iVar2 + 0x174) != 0)) &&
+        ((iVar3 <= iVar16 || (uVar12 = *(uint *)(iVar2 + 0x174), uVar12 == 0))))))
+    goto LAB_8227b4a8;
+    uVar12 = uVar12 ^ 1;
+    iVar7 = 100 - iVar7;
+    *(uint *)(iVar2 + 0x174) = uVar12;
+    if (uVar12 == 0) {
+      if (iVar16 == 0xb) {
+        uVar15 = 0x28;
       }
       else {
-        if (iVar1 != 0x28) goto LAB_8227b244;
-        uVar13 = 0x3c;
+        if (iVar16 != 0x28) goto LAB_8227b244;
+        uVar15 = 0x3c;
       }
 LAB_8227b240:
-      *(undefined4 *)(iVar4 + 0x170) = uVar13;
+      *(undefined4 *)(iVar2 + 0x170) = uVar15;
     }
     else {
-      if (iVar1 == 0x3c) {
-        uVar13 = 0x28;
+      if (iVar16 == 0x3c) {
+        uVar15 = 0x28;
         goto LAB_8227b240;
       }
-      if (iVar1 == 0x28) {
-        uVar13 = 0xb;
+      if (iVar16 == 0x28) {
+        uVar15 = 0xb;
         goto LAB_8227b240;
       }
     }
 LAB_8227b244:
-    iVar8 = (int)(100 - lVar16);
-    if (iVar8 != 100) {
-      iVar1 = *(int *)(iVar4 + 0x170);
-      if (iVar1 == 0xb) {
-        iVar14 = 400;
+    if (iVar7 != 100) {
+      iVar3 = *(int *)(iVar2 + 0x170);
+      if (iVar3 == 0xb) {
+        iVar16 = 400;
       }
-      else if (iVar1 == 0x28) {
-        iVar14 = (-(uint)(uVar11 != 0) & 0xffffff38) + 400;
+      else if (iVar3 == 0x28) {
+        iVar16 = (-(uint)(uVar12 != 0) & 0xffffff38) + 400;
       }
       else {
-        iVar14 = 200;
+        iVar16 = 200;
       }
-      iVar8 = (int)((float)((double)(longlong)iVar14 * (double)(longlong)iVar8) * 0.01);
-      local_58 = (longlong)iVar8;
-      *(int *)(iVar4 + 0x16c) = piVar7[1] - iVar8;
-      if (iVar1 == 0xb) {
-        uVar15 = 0xffffffff82961558;
+      iVar16 = (int)((float)(longlong)iVar16 * (float)(longlong)iVar7 * 0.01);
+      local_58 = (longlong)iVar16;
+      *(int *)(iVar2 + 0x16c) = piVar6[1] - iVar16;
+      if (iVar3 == 0xb) {
+        pvVar10 = viewLerp_CrouchProne;
       }
-      else if (iVar1 == 0x28) {
-        if (uVar11 == 0) {
-          uVar15 = 0xffffffff829615e0;
+      else if (iVar3 == 0x28) {
+        if (uVar12 == 0) {
+          pvVar10 = viewLerp_ProneCrouch;
         }
         else {
-          uVar15 = 0xffffffff82961478;
+          pvVar10 = viewLerp_StandCrouch;
         }
       }
-      PM_ViewHeightTableLerp(100 - lVar16,uVar15,&local_60);
-      if (((double)local_60._0_4_ != dVar18) && (DAT_84013128 == 0)) {
-        MyAssertHandler(0xffffffff8200c508,0xb32,0,0xffffffff8200c8e0);
+      PM_ViewHeightTableLerp(iVar7,pvVar10,(float *)&local_60);
+      if (((double)local_60._0_4_ != dVar17) && (alwaysfails == 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xb32,
+                        0,
+                        "Wow, someone added view height offsets back in!  You need to restore the viewHeightLerpPosAdj field back in!"
+                       );
         __restgprlr_24();
         return;
       }
       goto LAB_8227b4a8;
     }
-    *(undefined4 *)(iVar4 + 0x16c) = 0;
-    lVar16 = (longlong)*(int *)(iVar4 + 0x170);
-    local_60 = lVar16;
+    *(undefined4 *)(iVar2 + 0x16c) = 0;
+    lVar13 = (longlong)*(int *)(iVar2 + 0x170);
+    local_60 = lVar13;
   }
-  *(float *)(iVar4 + 0x168) = (float)lVar16;
+  *(float *)(iVar2 + 0x168) = (float)lVar13;
 LAB_8227b4a8:
   __restgprlr_24();
   return;
@@ -3426,117 +3664,135 @@ LAB_8227b4a8:
 
 // 8227B4B8  PlayerPronePossible  (bgame/bg_pmove.cpp:2915)
 
-void PlayerPronePossible(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PlayerPronePossible(pmove_t *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  undefined1 uVar3;
+  playerState_s *ppVar1;
+  undefined4 *puVar2;
+  bool bVar4;
+  int iVar3;
+  proneCheckType_t in_stack_ffffff58;
+  FeetDirection in_stack_ffffff5c;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xb67,0,0xffffffff82000f98,0xffffffff82004978);
+  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xb67,0,
+                    "%s");
   }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xb69,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*puVar2;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xb69,0,
+                    "%s");
   }
-  PM_GetProneFeetDirection(iVar1);
-  uVar3 = BG_CheckProne((double)(float)piVar2[0x3c],0x403e000000000000,
-                        (double)*(float *)(iVar1 + 0x15c),0x4049000000000000,
-                        *(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c);
-  __restgprlr_28(uVar3);
-  return;
+  PM_GetProneFeetDirection(ppVar1);
+  bVar4 = BG_CheckProne(ppVar1->clientNum,ppVar1->origin,(float)puVar2[0x3c],30.0,
+                        ppVar1->viewangles[1],(float *)0x1,(float *)&IMAGE_DOS_HEADER_82000000,
+                        (uint)*(byte *)(puVar2 + 0x4d),(int)(puVar2 + 0x49),(int)(puVar2 + 0x4a),
+                        '\0',in_stack_ffffff58,50.0,in_stack_ffffff5c);
+  iVar3 = __restgprlr_28(bVar4);
+  return iVar3;
 }
 
 
 // 8227B5A0  PlayerProneAllowed  (bgame/bg_pmove.cpp:2928)
 
-void PlayerProneAllowed(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PlayerProneAllowed(pmove_t *param_1)
 
 {
-  int *piVar1;
-  char cVar3;
-  int iVar2;
-  undefined8 uVar4;
+  playerState_s *ppVar1;
+  pmove_t *ppVar3;
+  bool bVar5;
+  bool bVar6;
+  int iVar4;
+  undefined8 uVar2;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xb74,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar3 = (pmove_t *)__savegprlr_28(param_1);
+  if (ppVar3 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xb74,0,
+                    "%s");
   }
-  iVar2 = *piVar1;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xb76,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar3->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xb76,0,
+                    "%s");
 LAB_8227b624:
-    uVar4 = 0;
+    bVar6 = false;
   }
   else {
-    uVar4 = 1;
-    if ((*(uint *)(iVar2 + 0x374) & 0x8000) == 0) goto LAB_8227b624;
+    bVar6 = true;
+    if (((ppVar1->weapCommon).weapFlags & 0x8000U) == 0) goto LAB_8227b624;
   }
-  cVar3 = BG_WeaponBlocksProne(*(undefined4 *)(*piVar1 + 0x370),uVar4);
-  if ((cVar3 == '\0') && (cVar3 = BG_WeaponBlocksProne(piVar1[6],uVar4), cVar3 == '\0')) {
-    if ((*(uint *)(iVar2 + 0xc) & 1) != 0) {
-      __restgprlr_28(1);
-      return;
+  bVar5 = BG_WeaponBlocksProne((ppVar3->ps->weapCommon).weapon,bVar6);
+  if ((!bVar5) && (bVar6 = BG_WeaponBlocksProne((ppVar3->cmd).weapon,bVar6), !bVar6)) {
+    if ((ppVar1->pm_flags & 1U) != 0) {
+      iVar4 = __restgprlr_28(1);
+      return iVar4;
     }
-    if ((*(int *)(iVar2 + 0x6c) != 0x7ff) || (cVar3 = PM_Diving(iVar2), cVar3 != '\0')) {
-      iVar2 = PlayerPronePossible(piVar1);
-      uVar4 = 1;
-      if (iVar2 != 0) goto LAB_8227b6b4;
+    if ((ppVar1->groundEntityNum != 0x7ff) || (bVar6 = PM_Diving(ppVar1), bVar6)) {
+      iVar4 = PlayerPronePossible(ppVar3);
+      uVar2 = 1;
+      if (iVar4 != 0) goto LAB_8227b6b4;
     }
   }
-  uVar4 = 0;
+  uVar2 = 0;
 LAB_8227b6b4:
-  __restgprlr_28(uVar4);
-  return;
+  iVar4 = __restgprlr_28(uVar2);
+  return iVar4;
 }
 
 
 // 8227B6C0  PM_IsPlayerFrozenByWeapon  (bgame/bg_pmove.cpp:2957)
 
-bool PM_IsPlayerFrozenByWeapon(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool PM_IsPlayerFrozenByWeapon(playerState_s *param_1)
 
 {
   int iVar1;
-  uint uVar2;
+  WeaponDef *pWVar2;
+  Weapon WVar3;
   
-  iVar1 = *(int *)(param_1 + 0x24c);
-  if ((0xf < iVar1) && (iVar1 < 0x15)) {
-    uVar2 = BG_GetAlternateWeapon(*(undefined4 *)(param_1 + 0x364),0);
-    iVar1 = (&DAT_829d84a0)[uVar2 & 0xff];
-LAB_8227b758:
-    return *(char *)(iVar1 + 0x793) != '\0';
-  }
-  if ((iVar1 == 6) || (*(int *)(param_1 + 0x268) == 6)) {
-    if ((*(uint *)(param_1 + 0x370) & 0xff) != 0) {
-      uVar2 = BG_GetAlternateWeapon
-                        (*(uint *)(param_1 + 0x370),*(uint *)(param_1 + 0x374) >> 0xf & 1);
-      iVar1 = (&DAT_829d84a0)[uVar2 & 0xff];
-      goto LAB_8227b758;
+  iVar1 = param_1->weapState[0].weaponState;
+  if ((iVar1 < 0x10) || (0x14 < iVar1)) {
+    if (((iVar1 != 6) && (param_1->weapState[1].weaponState != 6)) ||
+       (WVar3 = (param_1->weapCommon).weapon, (WVar3.data & 0xff) == 0)) {
+      return false;
     }
+    WVar3 = BG_GetAlternateWeapon
+                      (WVar3,(bool)((byte)((uint)(param_1->weapCommon).weapFlags >> 0xf) & 1));
+    pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
   }
-  return false;
+  else {
+    WVar3 = BG_GetAlternateWeapon((param_1->weapCommon).offHand,false);
+    pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
+  }
+  return (bool)('\x01' - (pWVar2->freezeMovementWhenFiring == false));
 }
 
 
 // 8227B778  PM_CheckDuck_InitProne  (bgame/bg_pmove.cpp:2977)
 
-void PM_CheckDuck_InitProne(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_CheckDuck_InitProne(pmove_t *param_1)
 
 {
-  int iVar1;
-  int *piVar3;
-  char cVar4;
-  undefined8 uVar2;
-  int *piVar5;
-  undefined4 *puVar6;
-  double dVar7;
+  playerState_s *ppVar1;
+  undefined4 *puVar2;
+  bool bVar4;
+  float *pfVar3;
+  undefined4 *puVar5;
+  float fVar6;
   float local_a8;
   float local_a4;
   float local_a0;
-  undefined4 local_98;
-  undefined4 local_94;
+  float local_98;
+  float local_94;
   float local_90;
   float local_80;
   float local_7c;
@@ -3544,72 +3800,75 @@ void PM_CheckDuck_InitProne(void)
   float local_74;
   char local_51;
   
-  piVar3 = (int *)__savegprlr_25();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xba8,0,0xffffffff82000f98,0xffffffff82004978);
+  puVar2 = (undefined4 *)__savegprlr_25(param_1);
+  if (puVar2 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xba8,0,
+                    "%s");
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xbaa,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*puVar2;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xbaa,0,
+                    "%s");
   }
-  if ((*(char *)(piVar3 + 8) != '\0') || (*(char *)((int)piVar3 + 0x21) != '\0')) {
-    *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) & 0xfffffdff;
-    cVar4 = PM_Diving(iVar1);
-    if (cVar4 == '\0') {
-      PM_ExitAimDownSight(iVar1);
+  if ((*(char *)(puVar2 + 8) != '\0') || (*(char *)((int)puVar2 + 0x21) != '\0')) {
+    ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffdff;
+    bVar4 = PM_Diving(ppVar1);
+    if (!bVar4) {
+      PM_ExitAimDownSight(ppVar1);
     }
   }
-  local_a8 = *(float *)(iVar1 + 0x1c);
-  local_a4 = *(float *)(iVar1 + 0x20);
-  local_a0 = *(float *)(iVar1 + 0x24) + 10.0;
-  puVar6 = (undefined4 *)(iVar1 + 0x1c);
-  piVar5 = piVar3 + 0x39;
-  (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar3 + 0x4d) * 7])
-            (&local_80,puVar6,&local_a8,piVar5,*(undefined4 *)(iVar1 + 0x150),
-             CONCAT44(piVar3[0x17],piVar3[0x17]) & 0xfffffffffdffffff);
-  local_a8 = (local_a8 - *(float *)(iVar1 + 0x1c)) * local_80 + *(float *)(iVar1 + 0x1c);
-  local_a4 = (local_a4 - *(float *)(iVar1 + 0x20)) * local_80 + *(float *)(iVar1 + 0x20);
-  local_a0 = (local_a0 - *(float *)(iVar1 + 0x24)) * local_80 + *(float *)(iVar1 + 0x24);
-  (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar3 + 0x4d) * 7])
-            (&local_80,&local_a8,puVar6,piVar5,*(undefined4 *)(iVar1 + 0x150),
-             CONCAT44(piVar3[0x17],piVar3[0x17]) & 0xfffffffffdffffff);
-  *(float *)(iVar1 + 0x1c) = (*(float *)(iVar1 + 0x1c) - local_a8) * local_80 + local_a8;
-  *(float *)(iVar1 + 0x20) = (*(float *)(iVar1 + 0x20) - local_a4) * local_80 + local_a4;
-  *(float *)(iVar1 + 0x24) = (*(float *)(iVar1 + 0x24) - local_a0) * local_80 + local_a0;
-  if ((*(uint *)(iVar1 + 0x15c) & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8200c508,0xbbe,0,0xffffffff82000f98,0xffffffff8200ca00);
+  local_a8 = ppVar1->origin[0];
+  local_a4 = ppVar1->origin[1];
+  local_a0 = ppVar1->origin[2] + 10.0;
+  pfVar3 = ppVar1->origin;
+  puVar5 = puVar2 + 0x39;
+  (*(code *)(&pmoveHandlers)[(uint)*(byte *)(puVar2 + 0x4d) * 7])
+            (&local_80,pfVar3,&local_a8,puVar5,ppVar1->clientNum,
+             CONCAT44(puVar2[0x17],puVar2[0x17]) & 0xfffffffffdffffff);
+  local_a8 = (local_a8 - ppVar1->origin[0]) * local_80 + ppVar1->origin[0];
+  local_a4 = (local_a4 - ppVar1->origin[1]) * local_80 + ppVar1->origin[1];
+  local_a0 = (local_a0 - ppVar1->origin[2]) * local_80 + ppVar1->origin[2];
+  (*(code *)(&pmoveHandlers)[(uint)*(byte *)(puVar2 + 0x4d) * 7])
+            (&local_80,&local_a8,pfVar3,puVar5,ppVar1->clientNum,
+             CONCAT44(puVar2[0x17],puVar2[0x17]) & 0xfffffffffdffffff);
+  ppVar1->origin[0] = (ppVar1->origin[0] - local_a8) * local_80 + local_a8;
+  ppVar1->origin[1] = (ppVar1->origin[1] - local_a4) * local_80 + local_a4;
+  ppVar1->origin[2] = (ppVar1->origin[2] - local_a0) * local_80 + local_a0;
+  if (((uint)ppVar1->viewangles[1] & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xbbe,0,
+                    "%s");
   }
-  *(undefined4 *)(iVar1 + 0x1ac) = *(undefined4 *)(iVar1 + 0x15c);
-  local_98 = *puVar6;
-  local_94 = *(undefined4 *)(iVar1 + 0x20);
-  local_90 = *(float *)(iVar1 + 0x24) - 0.25;
-  uVar2 = (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(piVar3 + 0x4d) * 7])
-                    (&local_80,puVar6,&local_98,piVar5,*(undefined4 *)(iVar1 + 0x150),
-                     CONCAT44(piVar3[0x17],piVar3[0x17]) & 0xfffffffffdffffff);
+  ppVar1->proneDirection = ppVar1->viewangles[1];
+  local_98 = *pfVar3;
+  local_94 = ppVar1->origin[1];
+  local_90 = ppVar1->origin[2] - 0.25;
+  pfVar3 = (float *)(*(code *)(&pmoveHandlers)[(uint)*(byte *)(puVar2 + 0x4d) * 7])
+                              (&local_80,pfVar3,&local_98,puVar5,ppVar1->clientNum,
+                               CONCAT44(puVar2[0x17],puVar2[0x17]) & 0xfffffffffdffffff);
   if ((local_51 != '\0') || (1.0 <= local_80)) {
-    *(undefined4 *)(iVar1 + 0x1b0) = 0;
+    ppVar1->proneDirectionPitch = 0.0;
   }
   else {
     if (((local_7c == 0.0) && (local_78 == 0.0)) && (local_74 == 0.0)) {
-      uVar2 = MyAssertHandler(0xffffffff8200c508,0xbc8,0,0xffffffff82000f98,0xffffffff8200c9c8);
+      pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xbc8,0,
+                      "%s");
     }
-    dVar7 = (double)PitchForYawOnNormal((double)*(float *)(iVar1 + 0x1ac),uVar2,&local_7c);
-    *(float *)(iVar1 + 0x1b0) = (float)dVar7;
+    fVar6 = PitchForYawOnNormal(ppVar1->proneDirection,pfVar3);
+    ppVar1->proneDirectionPitch = fVar6;
   }
-  dVar7 = (double)AngleDelta((double)*(float *)(iVar1 + 0x1b0),(double)*(float *)(iVar1 + 0x158));
-  if (dVar7 < -(double)*(float *)(DAT_829c55f4 + 0xc)) {
-    *(float *)(iVar1 + 0x1b4) =
-         (float)((double)*(float *)(iVar1 + 0x158) - (double)*(float *)(DAT_829c55f4 + 0xc));
+  fVar6 = AngleDelta(ppVar1->proneDirectionPitch,ppVar1->viewangles[0]);
+  if (fVar6 < -(player_prone_view_pitch_down->current).value) {
+    ppVar1->proneTorsoPitch = ppVar1->viewangles[0] - (player_prone_view_pitch_down->current).value;
     __restgprlr_25();
     return;
   }
-  if ((double)*(float *)(DAT_829c5634 + 0xc) < dVar7) {
-    *(float *)(iVar1 + 0x1b4) =
-         (float)((double)*(float *)(DAT_829c5634 + 0xc) + (double)*(float *)(iVar1 + 0x158));
+  if ((player_prone_view_pitch_up->current).value < fVar6) {
+    ppVar1->proneTorsoPitch = (player_prone_view_pitch_up->current).value + ppVar1->viewangles[0];
     __restgprlr_25();
     return;
   }
-  *(undefined4 *)(iVar1 + 0x1b4) = *(undefined4 *)(iVar1 + 0x1b0);
+  ppVar1->proneTorsoPitch = ppVar1->proneDirectionPitch;
   __restgprlr_25();
   return;
 }
@@ -3617,297 +3876,300 @@ void PM_CheckDuck_InitProne(void)
 
 // 8227BAC8  PM_CheckDuck  (bgame/bg_pmove.cpp:3042)
 
-void PM_CheckDuck(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_CheckDuck(pmove_t *param_1,pml_t *param_2)
 
 {
-  bool bVar1;
+  playerState_s *ppVar1;
   uint uVar2;
-  uint uVar3;
-  uint uVar4;
+  pmove_t *ppVar3;
+  bool bVar7;
+  int iVar4;
   uint uVar5;
-  bool bVar6;
-  uint *puVar8;
-  undefined8 uVar7;
-  char cVar10;
-  int iVar9;
-  undefined8 uVar11;
-  uint *puVar12;
-  uint *puVar13;
-  uint *puVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  double dVar17;
+  bool bVar8;
+  EffectiveStance EVar6;
+  uint uVar9;
+  Bounds *pBVar10;
+  float *pfVar11;
+  Bounds *pBVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  double dVar15;
   undefined1 auStack_a0 [46];
   char local_72;
   
-  puVar8 = (uint *)__savegprlr_21();
-  if (puVar8 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xbed,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar3 = (pmove_t *)__savegprlr_21(param_1);
+  if (ppVar3 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xbed,0,
+                    "%s");
   }
-  uVar2 = *puVar8;
-  uVar15 = (ulonglong)uVar2;
-  if (uVar15 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xbf0,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar3->ps;
+  uVar13 = ZEXT48(ppVar1);
+  if (uVar13 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xbf0,0,
+                    "%s");
   }
-  puVar8[0x40] = 0;
-  if (*(int *)(uVar2 + 4) == 5) {
-    puVar8[0x3b] = 0x40800000;
-    dVar17 = 0.0;
-    puVar8[0x39] = 0;
-    puVar8[0x3a] = 0;
-    puVar8[0x3c] = 0x41000000;
-    puVar8[0x3d] = 0x41000000;
-    puVar8[0x3e] = 0x41400000;
-    *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc;
-    if ((puVar8[2] & 0x100) != 0) {
-      puVar8[2] = puVar8[2] & 0xfffffeff;
-      BG_AddPredictableEventToPlayerstate(6,0,uVar15);
+  ppVar3->proneChange = 0;
+  if (ppVar1->pm_type == 5) {
+    (ppVar3->bounds).midPoint[2] = 4.0;
+    dVar15 = 0.0;
+    (ppVar3->bounds).midPoint[0] = 0.0;
+    (ppVar3->bounds).midPoint[1] = 0.0;
+    (ppVar3->bounds).halfSize[0] = 8.0;
+    (ppVar3->bounds).halfSize[1] = 8.0;
+    (ppVar3->bounds).halfSize[2] = 12.0;
+    ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffc;
+    uVar2 = (ppVar3->cmd).buttons;
+    if ((uVar2 & 0x100) != 0) {
+      (ppVar3->cmd).buttons = uVar2 & 0xfffffeff;
+      BG_AddPredictableEventToPlayerstate(6,0,ppVar1);
     }
-    *(float *)(uVar2 + 0x168) = (float)dVar17;
-    *(undefined4 *)(uVar2 + 0x164) = 0;
+    ppVar1->viewHeightCurrent = (float)dVar15;
+    ppVar1->viewHeightTarget = 0;
     __restgprlr_21();
     return;
   }
-  uVar3 = *(uint *)(uVar2 + 0xc);
-  puVar14 = puVar8 + 0x39;
-  puVar13 = (uint *)0x8200c29c;
-  puVar12 = puVar8 + 0x38;
-  lVar16 = 6;
+  uVar2 = ppVar1->pm_flags;
+  pBVar12 = &ppVar3->bounds;
+  pfVar11 = (float *)0x8200c29c;
+  pBVar10 = (Bounds *)(ppVar3->touchents + 0x1f);
+  lVar14 = 6;
   do {
-    puVar13 = puVar13 + 1;
-    puVar12 = puVar12 + 1;
-    *puVar12 = *puVar13;
-    lVar16 = lVar16 + -1;
-  } while (lVar16 != 0);
-  if (*(int *)(uVar2 + 4) == 8) {
-    *(undefined4 *)(uVar2 + 0x164) = 8;
-    PM_ViewHeightAdjust(puVar8,param_2);
+    pfVar11 = pfVar11 + 1;
+    pBVar10 = (Bounds *)(pBVar10->midPoint + 1);
+    pBVar10->midPoint[0] = *pfVar11;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  if (ppVar1->pm_type == 8) {
+    ppVar1->viewHeightTarget = 8;
+    PM_ViewHeightAdjust(ppVar3,param_2);
     __restgprlr_21();
     return;
   }
-  bVar1 = (*(uint *)(uVar2 + 0xf8) & 0x200000) != 0;
-  bVar6 = false;
-  if (uVar15 == 0xfffffffffffffb14) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  bVar7 = (ppVar1->eFlags & 0x200000U) != 0;
+  bVar8 = false;
+  if (uVar13 == 0xfffffffffffffb14) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  uVar4 = *(uint *)(uVar2 + 0xc);
-  if ((*(uint *)(uVar2 + 0x4f0) & 0x1000) == 0) {
-    if (((uVar4 & 0x4000) != 0) && ((*(uint *)(uVar2 + 0xf8) & 0x2000) == 0)) {
-      bVar1 = true;
+  uVar5 = ppVar1->pm_flags;
+  if ((ppVar1->perks[1] & 0x1000) == 0) {
+    if (((uVar5 & 0x4000) != 0) && ((ppVar1->eFlags & 0x2000U) == 0)) {
+      bVar7 = true;
     }
   }
-  else if (((uVar4 & 0x4000) != 0) && ((*(uint *)(uVar2 + 0xf8) & 0x2000) == 0)) {
-    bVar6 = true;
+  else if (((uVar5 & 0x4000) != 0) && ((ppVar1->eFlags & 0x2000U) == 0)) {
+    bVar8 = true;
   }
-  if ((bVar1) && ((uVar4 & 3) != 0)) {
-    *(uint *)(uVar2 + 0xc) = uVar4 & 0xfffffffc;
-    *(undefined4 *)(uVar2 + 0x164) = 0x3c;
-    *(uint *)(uVar2 + 0xf8) = *(uint *)(uVar2 + 0xf8) & 0xfffffff3;
-    BG_AddPredictableEventToPlayerstate(6,0,uVar15);
-    PM_ViewHeightAdjust(puVar8,param_2);
+  if ((bVar7) && ((uVar5 & 3) != 0)) {
+    ppVar1->pm_flags = uVar5 & 0xfffffffc;
+    ppVar1->viewHeightTarget = 0x3c;
+    ppVar1->eFlags = ppVar1->eFlags & 0xfffffff3;
+    BG_AddPredictableEventToPlayerstate(6,0,ppVar1);
+    PM_ViewHeightAdjust(ppVar3,param_2);
     __restgprlr_21();
     return;
   }
-  if ((bVar6) && ((uVar4 & 1) != 0)) {
-    *(uint *)(uVar2 + 0xc) = uVar4 & 0xfffffffc | 2;
-    *(undefined4 *)(uVar2 + 0x164) = 0x28;
-    *(uint *)(uVar2 + 0xf8) = *(uint *)(uVar2 + 0xf8) & 0xfffffff3 | 4;
-    BG_AddPredictableEventToPlayerstate(7,0,uVar15);
-    PM_ViewHeightAdjust(puVar8,param_2);
+  if ((bVar8) && ((uVar5 & 1) != 0)) {
+    ppVar1->pm_flags = uVar5 & 0xfffffffc | 2;
+    ppVar1->viewHeightTarget = 0x28;
+    ppVar1->eFlags = ppVar1->eFlags & 0xfffffff3U | 4;
+    BG_AddPredictableEventToPlayerstate(7,0,ppVar1);
+    PM_ViewHeightAdjust(ppVar3,param_2);
     __restgprlr_21();
     return;
   }
-  uVar5 = *(uint *)(uVar2 + 0xf8);
-  dVar17 = 25.0;
-  if (((uVar5 & 0x3800) == 0) || ((uVar5 & 0x2000) != 0)) {
-    if (((uVar4 & 0xc00) == 0) &&
-       (((cVar10 = PM_IsPlayerFrozenByWeapon(uVar15), cVar10 == '\0' &&
-         (*(int *)(uVar2 + 0xac) == 0x7ff)) && ((*(uint *)(uVar2 + 0xf8) & 0x2000) == 0)))) {
-      if (*(int *)(uVar2 + 4) == 7) {
-        *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 1;
+  uVar9 = ppVar1->eFlags;
+  dVar15 = 25.0;
+  if (((uVar9 & 0x3800) == 0) || ((uVar9 & 0x2000) != 0)) {
+    if (((uVar5 & 0xc00) == 0) &&
+       (((bVar7 = PM_IsPlayerFrozenByWeapon(ppVar1), !bVar7 &&
+         ((ppVar1->vehicleState).entity == 0x7ff)) && ((ppVar1->eFlags & 0x2000U) == 0)))) {
+      if (ppVar1->pm_type == 7) {
+        ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 1;
       }
       else {
-        if (((*(uint *)(uVar2 + 0xc) & 8) != 0) && ((puVar8[2] & 0x300) != 0)) {
-          puVar8[2] = puVar8[2] & 0xfffffcff;
-          BG_AddPredictableEventToPlayerstate(6,0,uVar15);
+        if (((ppVar1->pm_flags & 8U) != 0) && (uVar5 = (ppVar3->cmd).buttons, (uVar5 & 0x300) != 0))
+        {
+          (ppVar3->cmd).buttons = uVar5 & 0xfffffcff;
+          BG_AddPredictableEventToPlayerstate(6,0,ppVar1);
         }
-        cVar10 = PM_Diving(uVar15);
-        if (((cVar10 != '\0') && (200 < (int)(puVar8[1] - *(int *)(uVar2 + 0x7c)))) &&
-           ((puVar8[2] & 0x100) == 0)) {
-          puVar8[2] = puVar8[2] & 0xfffffcff | 0x100;
-          BG_AddPredictableEventToPlayerstate(8,0,uVar15);
+        bVar7 = PM_Diving(ppVar1);
+        if (((bVar7) && (200 < (ppVar3->cmd).serverTime - ppVar1->jumpTime)) &&
+           (uVar5 = (ppVar3->cmd).buttons, (uVar5 & 0x100) == 0)) {
+          (ppVar3->cmd).buttons = uVar5 & 0xfffffcff | 0x100;
+          BG_AddPredictableEventToPlayerstate(8,0,ppVar1);
         }
-        if (((puVar8[2] & 0x100) == 0) || ((*(uint *)(uVar2 + 0xc) & 0x400) != 0)) {
-          uVar4 = *(uint *)(uVar2 + 0xc) & 1;
-          if ((puVar8[2] & 0x200) == 0) {
-            if (uVar4 == 0) {
-              if ((*(uint *)(uVar2 + 0xc) & 2) != 0) {
-                (*(code *)(&switchD_8227821c::switchdataD_82961640)
-                          [(uint)*(byte *)(puVar8 + 0x4d) * 7])
-                          (auStack_a0,uVar15 + 0x1c,uVar15 + 0x1c,puVar14,
-                           *(undefined4 *)(uVar2 + 0x150),
-                           CONCAT44(puVar8[0x17],puVar8[0x17]) & 0xfffffffffdffffff);
+        uVar5 = (ppVar3->cmd).buttons;
+        if (((uVar5 & 0x100) == 0) || ((ppVar1->pm_flags & 0x400U) != 0)) {
+          uVar9 = ppVar1->pm_flags & 1;
+          if ((uVar5 & 0x200) == 0) {
+            if (uVar9 == 0) {
+              if ((ppVar1->pm_flags & 2U) != 0) {
+                (*(code *)(&pmoveHandlers)[(uint)ppVar3->handler * 7])
+                          (auStack_a0,uVar13 + 0x1c,uVar13 + 0x1c,pBVar12,ppVar1->clientNum,
+                           CONCAT44(ppVar3->tracemask,ppVar3->tracemask) & 0xfffffffffdffffff);
                 if (local_72 == '\0') {
-                  BG_AnimScriptEvent(uVar15,0xe,0,0,param_2 + 0x88);
-                  *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffd;
+                  BG_AnimScriptEvent(ppVar1,ANIM_ET_CROUCH_TO_STAND,0,0,&param_2->holdrand);
+                  ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffd;
                 }
-                else if ((puVar8[2] & 0x1000) == 0) {
-                  uVar11 = 1;
+                else if (((ppVar3->cmd).buttons & 0x1000U) == 0) {
+                  uVar5 = 1;
                   goto LAB_8227c1ac;
                 }
               }
             }
             else {
-              lVar16 = uVar15 + 0x1c;
-              (*(code *)(&switchD_8227821c::switchdataD_82961640)
-                        [(uint)*(byte *)(puVar8 + 0x4d) * 7])
-                        (auStack_a0,lVar16,lVar16,puVar14,*(undefined4 *)(uVar2 + 0x150),
-                         CONCAT44(puVar8[0x17],puVar8[0x17]) & 0xfffffffffdffffff);
+              lVar14 = uVar13 + 0x1c;
+              (*(code *)(&pmoveHandlers)[(uint)ppVar3->handler * 7])
+                        (auStack_a0,lVar14,lVar14,pBVar12,ppVar1->clientNum,
+                         CONCAT44(ppVar3->tracemask,ppVar3->tracemask) & 0xfffffffffdffffff);
               if (local_72 == '\0') {
-                BG_AnimScriptEvent(uVar15,0x10,0,0,param_2 + 0x88);
-                *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc;
+                BG_AnimScriptEvent(ppVar1,ANIM_ET_PRONE_TO_STAND,0,0,&param_2->holdrand);
+                ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffc;
               }
               else {
-                puVar8[0x3e] = (uint)(float)dVar17;
-                puVar8[0x3b] = (uint)(float)dVar17;
-                (*(code *)(&switchD_8227821c::switchdataD_82961640)
-                          [(uint)*(byte *)(puVar8 + 0x4d) * 7])
-                          (auStack_a0,lVar16,lVar16,puVar14,*(undefined4 *)(uVar2 + 0x150),
-                           CONCAT44(puVar8[0x17],puVar8[0x17]) & 0xfffffffffdffffff);
+                (ppVar3->bounds).halfSize[2] = (float)dVar15;
+                (ppVar3->bounds).midPoint[2] = (float)dVar15;
+                (*(code *)(&pmoveHandlers)[(uint)ppVar3->handler * 7])
+                          (auStack_a0,lVar14,lVar14,pBVar12,ppVar1->clientNum,
+                           CONCAT44(ppVar3->tracemask,ppVar3->tracemask) & 0xfffffffffdffffff);
                 if (local_72 == '\0') {
-                  *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 2;
+                  ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 2;
                 }
-                else if ((puVar8[2] & 0x1000) == 0) {
-                  uVar11 = 1;
-                  uVar7 = 8;
+                else if (((ppVar3->cmd).buttons & 0x1000U) == 0) {
+                  uVar9 = 1;
+                  uVar5 = 8;
                   goto LAB_8227c1b0;
                 }
               }
             }
           }
-          else if (uVar4 == 0) {
-            BG_AnimScriptEvent(uVar15,0xd,0,0,param_2 + 0x88);
-            *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) | 2;
+          else if (uVar9 == 0) {
+            BG_AnimScriptEvent(ppVar1,ANIM_ET_STAND_TO_CROUCH,0,0,&param_2->holdrand);
+            ppVar1->pm_flags = ppVar1->pm_flags | 2;
           }
           else {
-            puVar8[0x3e] = (uint)(float)dVar17;
-            puVar8[0x3b] = (uint)(float)dVar17;
-            (*(code *)(&switchD_8227821c::switchdataD_82961640)[(uint)*(byte *)(puVar8 + 0x4d) * 7])
-                      (auStack_a0,uVar15 + 0x1c,uVar15 + 0x1c,puVar14,*(undefined4 *)(uVar2 + 0x150)
-                       ,CONCAT44(puVar8[0x17],puVar8[0x17]) & 0xfffffffffdffffff);
+            (ppVar3->bounds).halfSize[2] = (float)dVar15;
+            (ppVar3->bounds).midPoint[2] = (float)dVar15;
+            (*(code *)(&pmoveHandlers)[(uint)ppVar3->handler * 7])
+                      (auStack_a0,uVar13 + 0x1c,uVar13 + 0x1c,pBVar12,ppVar1->clientNum,
+                       CONCAT44(ppVar3->tracemask,ppVar3->tracemask) & 0xfffffffffdffffff);
             if (local_72 == '\0') {
-              BG_AnimScriptEvent(uVar15,0xc,0,0,param_2 + 0x88);
-              *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 2;
+              BG_AnimScriptEvent(ppVar1,ANIM_ET_PRONE_TO_CROUCH,0,0,&param_2->holdrand);
+              ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 2;
             }
-            else if ((puVar8[2] & 0x1000) == 0) {
-              uVar11 = 2;
-              uVar7 = 8;
+            else if (((ppVar3->cmd).buttons & 0x1000U) == 0) {
+              uVar9 = 2;
+              uVar5 = 8;
               goto LAB_8227c1b0;
             }
           }
         }
         else {
-          iVar9 = PlayerProneAllowed(puVar8);
-          if (iVar9 == 0) {
-            if ((*(int *)(uVar2 + 0x6c) != 0x7ff) && ((puVar8[2] & 0x1000) == 0)) {
-              uVar11 = 3;
-              if (((*(uint *)(uVar2 + 0xc) & 1) == 0) && ((*(uint *)(uVar2 + 0xc) & 2) == 0)) {
-                uVar7 = 6;
+          iVar4 = PlayerProneAllowed(ppVar3);
+          if (iVar4 == 0) {
+            if ((ppVar1->groundEntityNum != 0x7ff) && (((ppVar3->cmd).buttons & 0x1000U) == 0)) {
+              uVar9 = 3;
+              uVar5 = 3;
+              if (((ppVar1->pm_flags & 1U) == 0) && (uVar5 = 3, (ppVar1->pm_flags & 2U) == 0)) {
+                uVar5 = 6;
               }
               else {
 LAB_8227c1ac:
-                uVar7 = 7;
+                uVar9 = uVar5;
+                uVar5 = 7;
               }
 LAB_8227c1b0:
-              BG_AddPredictableEventToPlayerstate(uVar7,uVar11,uVar15);
+              BG_AddPredictableEventToPlayerstate(uVar5,uVar9,ppVar1);
             }
           }
           else {
-            *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 1;
+            ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 1;
           }
         }
       }
     }
   }
-  else if (((uVar5 & 0x800) == 0) || ((uVar5 & 0x1000) != 0)) {
-    if (((uVar5 & 0x1000) == 0) || ((uVar5 & 0x800) != 0)) {
-      *(uint *)(uVar2 + 0xc) = uVar4 & 0xfffffffc;
+  else if (((uVar9 & 0x800) == 0) || ((uVar9 & 0x1000) != 0)) {
+    if (((uVar9 & 0x1000) == 0) || ((uVar9 & 0x800) != 0)) {
+      ppVar1->pm_flags = uVar5 & 0xfffffffc;
     }
     else {
-      *(uint *)(uVar2 + 0xc) = uVar4 & 0xfffffffc | 2;
+      ppVar1->pm_flags = uVar5 & 0xfffffffc | 2;
     }
   }
   else {
-    *(uint *)(uVar2 + 0xc) = uVar4 & 0xfffffffc | 1;
+    ppVar1->pm_flags = uVar5 & 0xfffffffc | 1;
   }
-  if (*(int *)(uVar2 + 0x16c) == 0) {
-    bVar1 = false;
-    if (*(int *)(uVar2 + 4) == 7) {
-      if (*(int *)(uVar2 + 0x164) != 0x16) {
-        bVar1 = true;
-        *(undefined4 *)(uVar2 + 0x164) = 0x16;
+  if (ppVar1->viewHeightLerpTime == 0) {
+    bVar7 = false;
+    if (ppVar1->pm_type == 7) {
+      if (ppVar1->viewHeightTarget != 0x16) {
+        bVar7 = true;
+        ppVar1->viewHeightTarget = 0x16;
       }
     }
     else {
-      iVar9 = *(int *)(uVar2 + 0x164);
-      if ((*(uint *)(uVar2 + 0xc) & 1) == 0) {
-        bVar1 = iVar9 == 0x16;
-        if (iVar9 == 0xb) {
-          bVar1 = true;
-          *(undefined4 *)(uVar2 + 0x164) = 0x28;
+      iVar4 = ppVar1->viewHeightTarget;
+      if ((ppVar1->pm_flags & 1U) == 0) {
+        bVar7 = iVar4 == 0x16;
+        if (iVar4 == 0xb) {
+          bVar7 = true;
+          ppVar1->viewHeightTarget = 0x28;
         }
         else {
-          *(uint *)(uVar2 + 0x164) =
-               (-(uint)((*(uint *)(uVar2 + 0xc) & 2) != 0) & 0xffffffec) + 0x3c;
+          ppVar1->viewHeightTarget = (-(uint)((ppVar1->pm_flags & 2U) != 0) & 0xffffffec) + 0x3c;
         }
       }
-      else if (iVar9 == 0x3c) {
-        *(undefined4 *)(uVar2 + 0x164) = 0x28;
+      else if (iVar4 == 0x3c) {
+        ppVar1->viewHeightTarget = 0x28;
       }
-      else if (iVar9 != 0xb) {
-        *(undefined4 *)(uVar2 + 0x164) = 0xb;
-        bVar1 = true;
-        cVar10 = PM_Diving(uVar15);
-        if (cVar10 == '\0') {
-          Jump_ActivateSlowdown(uVar15);
+      else if (iVar4 != 0xb) {
+        ppVar1->viewHeightTarget = 0xb;
+        bVar7 = true;
+        bVar8 = PM_Diving(ppVar1);
+        if (!bVar8) {
+          Jump_ActivateSlowdown(ppVar1);
         }
       }
     }
-    if (bVar1) {
-      puVar8[0x40] = 1;
-      BG_PlayAnim(uVar15,0,2,0,0,1,1);
+    if (bVar7) {
+      ppVar3->proneChange = 1;
+      BG_PlayAnim(ppVar1,0,ANIM_BP_TORSO,0,0,1,1);
     }
   }
-  PM_ViewHeightAdjust(puVar8,param_2);
-  iVar9 = PM_GetEffectiveStance(uVar15);
-  if (iVar9 == 1) {
-    puVar8[0x3b] = 0x41700000;
-    puVar8[0x3e] = 0x41700000;
-    *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 1;
+  PM_ViewHeightAdjust(ppVar3,param_2);
+  EVar6 = PM_GetEffectiveStance(ppVar1);
+  if (EVar6 == PM_EFF_STANCE_PRONE) {
+    (ppVar3->bounds).midPoint[2] = 15.0;
+    (ppVar3->bounds).halfSize[2] = 15.0;
+    ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 1;
   }
   else {
-    if (iVar9 == 2) {
-      puVar8[0x3b] = (uint)(float)dVar17;
-      puVar8[0x3e] = (uint)(float)dVar17;
-      *(uint *)(uVar2 + 0xf8) = *(uint *)(uVar2 + 0xf8) & 0xfffffff3 | 4;
-      *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 2;
+    if (EVar6 == PM_EFF_STANCE_DUCKED) {
+      (ppVar3->bounds).midPoint[2] = (float)dVar15;
+      (ppVar3->bounds).halfSize[2] = (float)dVar15;
+      ppVar1->eFlags = ppVar1->eFlags & 0xfffffff3U | 4;
+      ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 2;
       goto LAB_8227c374;
     }
-    if (iVar9 != 3) {
-      puVar8[0x3e] = 0x420c0000;
-      puVar8[0x3b] = 0x420c0000;
-      *(uint *)(uVar2 + 0xf8) = *(uint *)(uVar2 + 0xf8) & 0xfffffff3;
-      *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc;
+    if (EVar6 != PM_EFF_STANCE_LASTSTANDCRAWL) {
+      (ppVar3->bounds).halfSize[2] = 35.0;
+      (ppVar3->bounds).midPoint[2] = 35.0;
+      ppVar1->eFlags = ppVar1->eFlags & 0xfffffff3;
+      ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffc;
       goto LAB_8227c374;
     }
-    puVar8[0x3b] = (uint)(float)dVar17;
-    puVar8[0x3e] = (uint)(float)dVar17;
-    *(uint *)(uVar2 + 0xc) = *(uint *)(uVar2 + 0xc) & 0xfffffffc | 1;
+    (ppVar3->bounds).midPoint[2] = (float)dVar15;
+    (ppVar3->bounds).halfSize[2] = (float)dVar15;
+    ppVar1->pm_flags = ppVar1->pm_flags & 0xfffffffcU | 1;
   }
-  *(uint *)(uVar2 + 0xf8) = *(uint *)(uVar2 + 0xf8) & 0xfffffff3 | 8;
+  ppVar1->eFlags = ppVar1->eFlags & 0xfffffff3U | 8;
 LAB_8227c374:
-  if (((*(uint *)(uVar2 + 0xc) & 1) != 0) && ((uVar3 & 1) == 0)) {
-    PM_CheckDuck_InitProne(puVar8);
+  if (((ppVar1->pm_flags & 1U) != 0) && ((uVar2 & 1) == 0)) {
+    PM_CheckDuck_InitProne(ppVar3);
   }
   __restgprlr_21();
   return;
@@ -3916,31 +4178,35 @@ LAB_8227c374:
 
 // 8227C3A0  PM_GetLadderBounds  (bgame/bg_pmove.cpp:3568)
 
-void PM_GetLadderBounds(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_GetLadderBounds(pmove_t *param_1,Bounds *param_2)
 
 {
   float fVar1;
   float fVar2;
   int iVar3;
   longlong lVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  double dVar7;
+  longlong lVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  double dVar8;
   
-  iVar3 = __savegprlr_29();
-  puVar5 = (undefined4 *)(iVar3 + 0xe0);
-  lVar4 = param_2 + -4;
-  lVar6 = 6;
+  lVar4 = (longlong)(int)param_2;
+  iVar3 = __savegprlr_29(param_1);
+  puVar6 = (undefined4 *)(iVar3 + 0xe0);
+  lVar5 = lVar4 + -4;
+  lVar7 = 6;
   do {
-    puVar5 = puVar5 + 1;
-    lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = *puVar5;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  iVar3 = (int)param_2;
+    puVar6 = puVar6 + 1;
+    lVar5 = lVar5 + 4;
+    *(undefined4 *)lVar5 = *puVar6;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  iVar3 = (int)lVar4;
   *(float *)(iVar3 + 0xc) = *(float *)(iVar3 + 0xc) - 6.0;
   *(float *)(iVar3 + 0x10) = *(float *)(iVar3 + 0x10) - 6.0;
-  dVar7 = 0.0;
+  dVar8 = 0.0;
   fVar1 = (*(float *)(iVar3 + 0x14) + *(float *)(iVar3 + 8) + 8.0) * 0.5;
   *(float *)(iVar3 + 8) = fVar1;
   fVar2 = fVar1 - 8.0;
@@ -3950,13 +4216,16 @@ void PM_GetLadderBounds(undefined8 param_1,longlong param_2)
     *(undefined4 *)(iVar3 + 0x14) = 0;
   }
   if (*(float *)(iVar3 + 0xc) < 0.0) {
-    MyAssertHandler(0xffffffff8200c508,0xdfc,0,0xffffffff82000f98,0xffffffff8200ca58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xdfc,0,
+                    "%s");
   }
-  if ((double)*(float *)(iVar3 + 0x10) < dVar7) {
-    MyAssertHandler(0xffffffff8200c508,0xdfd,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  if ((double)*(float *)(iVar3 + 0x10) < dVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xdfd,0,
+                    "%s");
   }
-  if ((double)*(float *)(iVar3 + 0x14) < dVar7) {
-    MyAssertHandler(0xffffffff8200c508,0xdfe,0,0xffffffff82000f98,0xffffffff8200ca20);
+  if ((double)*(float *)(iVar3 + 0x14) < dVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xdfe,0,
+                    "%s");
   }
   __restgprlr_29();
   return;
@@ -3965,31 +4234,38 @@ void PM_GetLadderBounds(undefined8 param_1,longlong param_2)
 
 // 8227C4D8  PM_FootstepEvent  (bgame/bg_pmove.cpp:3592)
 
-void PM_FootstepEvent(undefined8 param_1,undefined8 param_2,int param_3,int param_4,int param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_FootstepEvent(pmove_t *param_1,pml_t *param_2,int param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  int *piVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  playerState_s *ppVar1;
+  pmove_t *ppVar2;
+  uint uVar3;
+  uint uVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  piVar4 = (int *)__savegprlr_26();
-  iVar1 = *piVar4;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xe0c,0,0xffffffff82000f98,0xffffffff82001fdc);
+  lVar6 = (longlong)param_4;
+  lVar5 = (longlong)param_3;
+  ppVar2 = (pmove_t *)__savegprlr_26(param_1);
+  ppVar1 = ppVar2->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe0c,0,
+                    "%s");
   }
-  if (((param_3 + 0x40U ^ param_4 + 0x40U) & 0x80) != 0) {
-    if (*(int *)(iVar1 + 0x6c) == 0x7ff) {
-      if ((param_5 != 0) && ((*(uint *)(iVar1 + 0xc) & 8) != 0)) {
-        BG_AddPredictableEventToPlayerstate(0x76,0xd,iVar1);
+  if (((lVar5 + 0x40U ^ lVar6 + 0x40U) & 0x80) != 0) {
+    if (ppVar1->groundEntityNum == 0x7ff) {
+      if ((param_5 != 0) && ((ppVar1->pm_flags & 8U) != 0)) {
+        BG_AddPredictableEventToPlayerstate(0x76,0xd,ppVar1);
         __restgprlr_26();
         return;
       }
     }
     else if (param_5 != 0) {
-      uVar2 = PM_GroundSurfaceType(param_2);
-      uVar3 = PM_FootstepType(piVar4,param_2);
-      BG_AddPredictableEventToPlayerstate(uVar3,uVar2,iVar1);
+      uVar3 = PM_GroundSurfaceType(param_2);
+      uVar4 = PM_FootstepType(ppVar2,param_2);
+      BG_AddPredictableEventToPlayerstate(uVar4,uVar3,ppVar1);
     }
   }
   __restgprlr_26();
@@ -3999,64 +4275,72 @@ void PM_FootstepEvent(undefined8 param_1,undefined8 param_2,int param_3,int para
 
 // 8227C5B0  PM_ShouldMakeFootsteps  (bgame/bg_pmove.cpp:3623)
 
-void PM_ShouldMakeFootsteps(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_ShouldMakeFootsteps(pmove_t *param_1)
 
 {
-  int iVar1;
-  int *piVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  playerState_s *ppVar1;
+  undefined4 *puVar3;
+  EffectiveStance EVar4;
   int iVar5;
+  undefined8 uVar2;
+  dvar_t *pdVar6;
   
-  piVar4 = (int *)__savegprlr_28();
-  iVar1 = *piVar4;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xe30,0,0xffffffff82000f98,0xffffffff82001fdc);
+  puVar3 = (undefined4 *)__savegprlr_28(param_1);
+  ppVar1 = (playerState_s *)*puVar3;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe30,0,
+                    "%s");
   }
-  uVar2 = PM_GetEffectiveStance(iVar1);
-  iVar5 = DAT_829c4030;
-  if ((uVar2 & 0xffffffff) == 0) {
+  EVar4 = PM_GetEffectiveStance(ppVar1);
+  pdVar6 = player_footstepsThreshhold;
+  if (EVar4 == PM_EFF_STANCE_DEFAULT) {
 LAB_8227c6c4:
-    uVar3 = 1;
-    if (*(float *)(iVar5 + 0xc) <= (float)piVar4[0x3f]) goto LAB_8227c6dc;
+    uVar2 = 1;
+    if ((pdVar6->current).value <= (float)puVar3[0x3f]) goto LAB_8227c6dc;
   }
   else {
-    if ((uVar2 & 0xffffffff) == 1) {
-      iVar5 = DAT_829c7e3c;
-      if ((*(uint *)(iVar1 + 0xc) & 1) == 0) {
-        MyAssertHandler(0xffffffff8200c508,0xe41,0,0xffffffff82000f98,0xffffffff8200ca74,uVar2);
-        iVar5 = DAT_829c7e3c;
+    if (EVar4 == PM_EFF_STANCE_PRONE) {
+      pdVar6 = player_footstepsThreshholdProne;
+      if ((ppVar1->pm_flags & 1U) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe41,
+                        0,"%s");
+        pdVar6 = player_footstepsThreshholdProne;
       }
       goto LAB_8227c6c4;
     }
-    if ((uVar2 & 0xffffffff) < 3) {
-      iVar5 = DAT_829c7d2c;
-      if ((*(uint *)(iVar1 + 0xc) & 2) == 0) {
-        MyAssertHandler(0xffffffff8200c508,0xe3c,0,0xffffffff82000f98,0xffffffff8200ca90,uVar2);
-        iVar5 = DAT_829c7d2c;
+    if (EVar4 < PM_EFF_STANCE_LASTSTANDCRAWL) {
+      pdVar6 = player_footstepsThreshholdCrouch;
+      if ((ppVar1->pm_flags & 2U) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe3c,
+                        0,"%s");
+        pdVar6 = player_footstepsThreshholdCrouch;
       }
       goto LAB_8227c6c4;
     }
-    if ((int)uVar2 != 3) {
-      MyAssertHandler(0xffffffff8200c508,0xe49,0,0xffffffff8200caac,0xffffffff8200cac4,uVar2);
-      __restgprlr_28(0);
-      return;
+    if (EVar4 != PM_EFF_STANCE_LASTSTANDCRAWL) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe49,0,
+                      "%s\n\t(effStance) = %i");
+      iVar5 = __restgprlr_28(0);
+      return iVar5;
     }
   }
-  uVar3 = 0;
+  uVar2 = 0;
 LAB_8227c6dc:
-  __restgprlr_28(uVar3);
-  return;
+  iVar5 = __restgprlr_28(uVar2);
+  return iVar5;
 }
 
 
 // 8227C6E8  PM_GetFlinchAnim  (bgame/bg_pmove.cpp:3676)
 
-longlong PM_GetFlinchAnim(longlong param_1)
+int PM_GetFlinchAnim(int param_1)
 
 {
-  if (((int)param_1 < 0) || (3 < (int)param_1)) {
-    MyAssertHandler(0xffffffff8200c508,0xe5d,0,0xffffffff8200caf0,0xffffffff8200cb0c,param_1);
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xe5d,0,
+                    "%s\n\t(flinchAnimDir) = %i");
   }
   return param_1 + 0x21;
 }
@@ -4064,7 +4348,7 @@ longlong PM_GetFlinchAnim(longlong param_1)
 
 // 8227C750  PM_Footsteps_TurnAnim  (bgame/bg_pmove.cpp:3688)
 
-void PM_Footsteps_TurnAnim(void)
+int PM_Footsteps_TurnAnim(clientInfo_t *param_1)
 
 {
   int iVar1;
@@ -4072,24 +4356,22 @@ void PM_Footsteps_TurnAnim(void)
   int *in_r13;
   undefined1 uVar3;
   
-  iVar2 = __savegprlr_28();
+  iVar2 = __savegprlr_28(param_1);
   uVar3 = 0;
   if ((*(char *)(iVar2 + 0x52c) != '\0') && (*(int *)(iVar2 + 0x528) != 0)) {
-    Com_DPrintf(0x11,0xffffffff8200cb98,*(int *)(iVar2 + 0x528),
-                *(undefined4 *)(*(int *)(*in_r13 + 8) + 0x863c0));
+    Com_DPrintf(0x11,"turn anim end time is %i, time is %i\n");
   }
   if (*(int *)(iVar2 + 0x3bc) == 0) {
-    iVar1 = *in_r13;
-    if (*(int *)(*(int *)(iVar1 + 8) + 0x863c0) < *(int *)(iVar2 + 0x528)) {
+    if (*(int *)(*(int *)(*in_r13 + 8) + 0x863c0) < *(int *)(iVar2 + 0x528)) {
       *(undefined4 *)(iVar2 + 0x3b8) = *(undefined4 *)(iVar2 + 1000);
-      __restgprlr_28(0);
-      return;
+      iVar2 = __restgprlr_28(0);
+      return iVar2;
     }
     if (*(int *)(iVar2 + 0x528) != 0) {
       *(undefined4 *)(iVar2 + 0x3b8) = *(undefined4 *)(iVar2 + 1000);
       *(undefined4 *)(iVar2 + 0x528) = 0;
-      if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
-        Com_Printf(0x11,0xffffffff8200cb38,*(undefined4 *)(*(int *)(iVar1 + 8) + 0x863c0));
+      if ((xanim_debug->current).enabled != false) {
+        Com_Printf(0x11,"[%i] playing idle anim after turn anim\n");
       }
     }
   }
@@ -4102,97 +4384,103 @@ void PM_Footsteps_TurnAnim(void)
     *(float *)(iVar2 + 0x3b8) = *(float *)(iVar2 + 1000);
     *(undefined1 *)(iVar2 + 0x52c) = uVar3;
     if (*(int *)(iVar2 + 0x528) < *(int *)(*(int *)(iVar1 + 8) + 0x863c0)) {
-      if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
-        Com_Printf(0x11,0xffffffff8200cb60);
+      if ((xanim_debug->current).enabled != false) {
+        Com_Printf(0x11,"Restarting turn animation because it is done playing\n");
       }
       *(undefined4 *)(iVar2 + 0x528) = 0;
-      __restgprlr_28(uVar3);
-      return;
+      iVar2 = __restgprlr_28(uVar3);
+      return iVar2;
     }
   }
-  __restgprlr_28(uVar3);
-  return;
+  iVar2 = __restgprlr_28(uVar3);
+  return iVar2;
 }
 
 
 // 8227C8A0  PM_GetNotMovingAnim  (bgame/bg_pmove.cpp:3737)
 
-void PM_GetNotMovingAnim(undefined8 param_1,int param_2)
+scriptAnimMoveTypes_t PM_GetNotMovingAnim(EffectiveStance param_1,int param_2)
 
 {
   uint uVar1;
-  uint uVar2;
+  scriptAnimMoveTypes_t sVar2;
+  uint uVar3;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff8200c508,0xea7,0,0xffffffff8200cc3c,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xea7,0,
+                    "stance doesn\'t index PM_EFF_STANCE_COUNT\n\t%i not in [0, %i)");
   }
   if (param_2 == 0) {
-    uVar2 = 0;
+    uVar3 = 0;
   }
   else {
-    uVar2 = (param_2 == 0xe ^ 1) + 1;
-    if (2 < uVar2) {
-      MyAssertHandler(0xffffffff8200c508,0xeae,1,0xffffffff8200cbf0,uVar2,3);
+    uVar3 = (param_2 == 0xe ^ 1) + 1;
+    if (2 < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xeae,1,
+                      "turnIndex doesn\'t index IDLE_ANIMS_TURN_VARIATION_COUNT\n\t%i not in [0, %i)"
+                     );
     }
   }
-  __restgprlr_29(*(undefined4 *)(&DAT_8200cbc0 + (uVar1 * 3 + uVar2) * 4));
-  return;
+  sVar2 = __restgprlr_29(notMovingAnims[uVar1][uVar3]);
+  return sVar2;
 }
 
 
 // 8227C958  PM_ShouldFlinch  (bgame/bg_pmove.cpp:3765)
 
-ulonglong PM_ShouldFlinch(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int PM_ShouldFlinch(playerState_s *param_1)
 
 {
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)*(uint *)(param_1 + 0xa0) - (ulonglong)*(uint *)(DAT_829c54a0 + 0xc);
+  uVar1 = (ulonglong)(uint)param_1->damageDuration -
+          (ulonglong)(player_dmgtimer_flinchTime->current).unsignedInt;
   uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1;
-  return ((~(*(uint *)(param_1 + 0x9c) ^ uVar1) & 0xffffffff) >> 0x1f) +
-         (ulonglong)(*(uint *)(param_1 + 0x9c) <= uVar1) & 1;
+  return (int)((~((uint)param_1->damageTimer ^ uVar1) & 0xffffffff) >> 0x1f) +
+         (uint)((uint)param_1->damageTimer <= uVar1) & 1;
 }
 
 
 // 8227C998  PM_Footstep_LadderMove  (bgame/bg_pmove.cpp:3784)
 
-void PM_Footstep_LadderMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_Footstep_LadderMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  playerState_s *ppVar3;
   int iVar4;
   uint uVar5;
-  int *piVar6;
-  undefined8 uVar7;
+  pmove_t *ppVar6;
+  scriptAnimMoveTypes_t sVar7;
   double dVar8;
   
-  piVar6 = (int *)__savegprlr_29();
-  iVar3 = *piVar6;
-  if ((*(uint *)(iVar3 + 0xc) & 8) != 0) {
-    if (299 < piVar6[1] - *(int *)(iVar3 + 0x7c)) {
-      if ((*(uint *)(iVar3 + 0xc) & 0x40) == 0) {
-        fVar1 = 0.010498688;
-        fVar2 = 0.45;
-      }
-      else {
-        fVar1 = 0.026246719;
-        fVar2 = 0.35;
-      }
-      dVar8 = (double)(*(float *)(iVar3 + 0x30) * fVar1 * fVar2);
-      uVar7 = 0x12;
-      if (*(float *)(iVar3 + 0x30) < 0.0) {
-        uVar7 = 0x13;
-      }
-      BG_AnimScriptAnimation(iVar3,0,uVar7,0);
-      iVar4 = *(int *)(iVar3 + 0x18);
-      uVar5 = (int)((double)(longlong)*(int *)((int)param_2 + 0x28) * dVar8 +
-                   (double)(longlong)iVar4) & 0xff;
-      *(uint *)(iVar3 + 0x18) = uVar5;
-      PM_FootstepEvent(piVar6,param_2,iVar4,uVar5,1);
+  ppVar6 = (pmove_t *)__savegprlr_29(param_1);
+  ppVar3 = ppVar6->ps;
+  if (((ppVar3->pm_flags & 8U) != 0) && (299 < (ppVar6->cmd).serverTime - ppVar3->jumpTime)) {
+    if ((ppVar3->pm_flags & 0x40U) == 0) {
+      fVar1 = 0.010498688;
+      fVar2 = 0.45;
     }
+    else {
+      fVar1 = 0.026246719;
+      fVar2 = 0.35;
+    }
+    dVar8 = (double)(ppVar3->velocity[2] * fVar1 * fVar2);
+    sVar7 = ANIM_MT_CLIMBUP;
+    if (ppVar3->velocity[2] < 0.0) {
+      sVar7 = ANIM_MT_CLIMBDOWN;
+    }
+    BG_AnimScriptAnimation(ppVar3,AISTATE_COMBAT,sVar7,0);
+    iVar4 = ppVar3->bobCycle;
+    uVar5 = (int)((double)(longlong)param_2->msec * dVar8 + (double)(longlong)iVar4) & 0xff;
+    ppVar3->bobCycle = uVar5;
+    PM_FootstepEvent(ppVar6,param_2,iVar4,uVar5,1);
   }
   __restgprlr_29();
   return;
@@ -4201,84 +4489,83 @@ void PM_Footstep_LadderMove(undefined8 param_1,undefined8 param_2)
 
 // 8227CAA8  PM_Footsteps_NotMoving  (bgame/bg_pmove.cpp:3835)
 
-void PM_Footsteps_NotMoving(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_Footsteps_NotMoving(pmove_t *param_1,EffectiveStance param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar4;
-  undefined8 uVar3;
-  int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  bool bVar8;
+  playerState_s *ppVar1;
+  bool bVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  scriptAnimMoveTypes_t sVar5;
+  uint uVar6;
   int *in_r13;
-  int iVar9;
-  undefined8 uVar10;
-  int iVar11;
+  clientInfo_t *pcVar7;
   
-  piVar4 = (int *)__savegprlr_25();
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xf02,0,0xffffffff82000f98,0xffffffff82004978);
+  puVar3 = (undefined4 *)__savegprlr_25(param_1);
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xf02,0,
+                    "%s");
   }
-  iVar1 = *piVar4;
-  uVar10 = 0;
-  if ((float)piVar4[0x3f] < 1.0) {
-    *(undefined4 *)(iVar1 + 0x18) = 0;
+  ppVar1 = (playerState_s *)*puVar3;
+  iVar4 = 0;
+  if ((float)puVar3[0x3f] < 1.0) {
+    ppVar1->bobCycle = 0;
   }
-  if (*(int *)(iVar1 + 0x150) < 0x12) {
-    iVar11 = *(int *)(iVar1 + 0x150) * 0x590 + *(int *)(*in_r13 + 8) + 0x863e8;
+  if (ppVar1->clientNum < 0x12) {
+    pcVar7 = (clientInfo_t *)(ppVar1->clientNum * 0x590 + *(int *)(*in_r13 + 8) + 0x863e8);
   }
   else {
-    iVar11 = 0;
+    pcVar7 = (clientInfo_t *)0x0;
   }
-  iVar9 = (int)param_2;
-  if ((iVar9 == 1) || (bVar8 = true, iVar9 == 3)) {
-    bVar8 = false;
+  if ((param_2 == PM_EFF_STANCE_PRONE) || (bVar2 = true, param_2 == PM_EFF_STANCE_LASTSTANDCRAWL)) {
+    bVar2 = false;
   }
-  if (((iVar11 != 0) && (*(char *)(DAT_829c4054 + 0xc) != '\0')) && (bVar8)) {
-    uVar10 = PM_Footsteps_TurnAnim(iVar11);
+  if (((pcVar7 != (clientInfo_t *)0x0) && ((player_turnAnims->current).enabled != false)) && (bVar2)
+     ) {
+    iVar4 = PM_Footsteps_TurnAnim(pcVar7);
   }
-  uVar3 = PM_GetNotMovingAnim(param_2,uVar10);
-  if ((int)uVar10 == 0) {
-    uVar7 = *(int *)(iVar1 + 0xa0) - *(int *)(DAT_829c54a0 + 0xc);
-    if ((*(int *)(iVar1 + 0x9c) <= (int)(0xffffffffU - ((int)uVar7 >> 0x1f) & uVar7)) ||
-       (iVar9 != 0)) {
-      iVar5 = BG_AnimScriptAnimation(iVar1,0,uVar3,0);
+  sVar5 = PM_GetNotMovingAnim(param_2,iVar4);
+  if (iVar4 == 0) {
+    uVar6 = ppVar1->damageDuration - (player_dmgtimer_flinchTime->current).integer;
+    if ((ppVar1->damageTimer <= (int)(-((int)uVar6 >> 0x1f) - 1U & uVar6)) ||
+       (param_2 != PM_EFF_STANCE_DEFAULT)) {
+      iVar4 = BG_AnimScriptAnimation(ppVar1,AISTATE_COMBAT,sVar5,0);
       goto LAB_8227ccac;
     }
-    uVar10 = PM_GetFlinchAnim(*(undefined4 *)(iVar1 + 0xa4));
+    sVar5 = PM_GetFlinchAnim(ppVar1->flinchYawAnim);
   }
   else {
-    iVar5 = BG_AnimScriptAnimation(iVar1,0,uVar3,0);
-    if ((0 < iVar5) && (*(int *)(iVar11 + 0x528) == 0)) {
-      if (*(int *)(iVar1 + 0x94) < 1) {
-        MyAssertHandler(0xffffffff8200c508,0xf27,0,0xffffffff82000f98,0xffffffff8200cca8);
+    iVar4 = BG_AnimScriptAnimation(ppVar1,AISTATE_COMBAT,sVar5,0);
+    if ((0 < iVar4) && (pcVar7->turnAnimEndTime == 0)) {
+      if (ppVar1->legsAnimDuration < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xf27,
+                        0,"%s");
       }
-      iVar2 = *in_r13;
-      *(int *)(iVar11 + 0x528) = *(int *)(*(int *)(iVar2 + 8) + 0x863c0) + *(int *)(iVar1 + 0x94);
-      if (*(char *)(DAT_829c7de4 + 0xc) != '\0') {
-        uVar6 = (ulonglong)*(uint *)(*(int *)(iVar2 + 8) + 0x863c0);
-        Com_Printf(0x11,0xffffffff8200cc84,uVar6,*(uint *)(iVar1 + 0x94) + uVar6);
+      pcVar7->turnAnimEndTime = *(int *)(*(int *)(*in_r13 + 8) + 0x863c0) + ppVar1->legsAnimDuration
+      ;
+      if ((xanim_debug->current).enabled != false) {
+        Com_Printf(0x11,"[%i] turn anim should end at %i\n");
       }
     }
 LAB_8227ccac:
-    if (-1 < iVar5) goto LAB_8227cd10;
-    if (iVar9 == 3) {
-      uVar10 = 0x35;
+    if (-1 < iVar4) goto LAB_8227cd10;
+    if (param_2 == PM_EFF_STANCE_LASTSTANDCRAWL) {
+      sVar5 = ANIM_MT_IDLELASTSTAND;
     }
-    else if (iVar9 == 2) {
-      uVar10 = 2;
+    else if (param_2 == PM_EFF_STANCE_DUCKED) {
+      sVar5 = ANIM_MT_IDLECR;
     }
     else {
-      uVar7 = *(int *)(iVar1 + 0xa0) - *(int *)(DAT_829c54a0 + 0xc);
-      uVar10 = 0x21;
-      if (*(int *)(iVar1 + 0x9c) <= (int)(-((int)uVar7 >> 0x1f) - 1U & uVar7)) {
-        uVar10 = 1;
+      uVar6 = ppVar1->damageDuration - (player_dmgtimer_flinchTime->current).integer;
+      sVar5 = ANIM_MT_FLINCH_FORWARD;
+      if (ppVar1->damageTimer <= (int)(-((int)uVar6 >> 0x1f) - 1U & uVar6)) {
+        sVar5 = ANIM_MT_IDLE;
       }
     }
   }
-  BG_AnimScriptAnimation(iVar1,0,uVar10,0);
+  BG_AnimScriptAnimation(ppVar1,AISTATE_COMBAT,sVar5,0);
 LAB_8227cd10:
   __restgprlr_25();
   return;
@@ -4287,337 +4574,382 @@ LAB_8227cd10:
 
 // 82280F90  PM_GetMaxSpeed  (bgame/bg_pmove.cpp:3924)
 
-void PM_GetMaxSpeed(undefined8 param_1,int param_2,int param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float PM_GetMaxSpeed(pmove_t *param_1,int param_2,int param_3)
 
 {
   char cVar1;
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar4;
+  playerState_s *ppVar2;
+  pmove_t *ppVar3;
+  bool bVar4;
   double dVar5;
   double dVar6;
+  float fVar7;
   float local_50;
   float local_4c;
   longlong local_48;
   
-  piVar3 = (int *)__savegprlr_27();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0xf59,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar3 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar3 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xf59,0,
+                    "%s");
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xf5a,0,0xffffffff82000f98,0xffffffff8200cdf4);
+  if (ppVar3->ps == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xf5a,0,
+                    "%s");
   }
-  iVar2 = *piVar3;
-  cVar1 = *(char *)(piVar3 + 8);
-  local_48 = (longlong)*(int *)(iVar2 + 0x5c);
+  ppVar2 = ppVar3->ps;
+  cVar1 = (ppVar3->cmd).forwardmove;
+  local_48 = (longlong)ppVar2->speed;
   dVar6 = (double)local_48;
   if (cVar1 == '\0') {
-    if (*(char *)((int)piVar3 + 0x21) != '\0') {
-      dVar6 = (double)(float)((double)((*(float *)(DAT_829c7e40 + 0xc) - 1.0) * 0.75 + 1.0) * dVar6)
-      ;
+    if ((ppVar3->cmd).rightmove != '\0') {
+      dVar6 = (double)(float)((double)(((player_strafeSpeedScale->current).value - 1.0) * 0.75 + 1.0
+                                      ) * dVar6);
     }
   }
-  else if (*(char *)((int)piVar3 + 0x21) == '\0') {
+  else if ((ppVar3->cmd).rightmove == '\0') {
     if (cVar1 < '\0') {
-      dVar6 = (double)(float)((double)*(float *)(DAT_829c7d68 + 0xc) * dVar6);
+      dVar6 = (double)(float)((double)(player_backSpeedScale->current).value * dVar6);
     }
   }
   else {
-    dVar6 = (double)((float)((double)((*(float *)(DAT_829c7e40 + 0xc) - 1.0) * 0.75 + 1.0 + 1.0) *
-                            dVar6) * 0.5);
+    dVar6 = (double)((float)((double)(((player_strafeSpeedScale->current).value - 1.0) * 0.75 + 1.0
+                                     + 1.0) * dVar6) * 0.5);
     if (cVar1 < '\0') {
-      dVar6 = (double)((float)((double)(*(float *)(DAT_829c7d68 + 0xc) + 1.0) * dVar6) * 0.5);
+      dVar6 = (double)((float)((double)((player_backSpeedScale->current).value + 1.0) * dVar6) * 0.5
+                      );
     }
   }
   if (param_2 == 0) {
     if (param_3 != 0) {
-      dVar6 = (double)(float)((double)*(float *)(DAT_829c7dd4 + 0xc) * dVar6);
+      dVar6 = (double)(float)((double)(player_sprintSpeedScale->current).value * dVar6);
     }
   }
   else {
     dVar6 = (double)(float)(dVar6 * 0.4000000059604645);
   }
-  if (*(char *)(iVar2 + 0x373) == '\0') goto LAB_82281194;
-  if (iVar2 == 0) {
-LAB_82281144:
-    uVar4 = 0;
+  if ((ppVar2->weapCommon).weapon._s_0.weaponIdx != 0) {
+    if ((ppVar2 == (playerState_s *)0x0) ||
+       (bVar4 = true, ((ppVar2->weapCommon).weapFlags & 0x8000U) == 0)) {
+      bVar4 = false;
+    }
+    BG_GetMoveSpeedScale((ppVar2->weapCommon).weapon,bVar4,&local_50,&local_4c);
+    dVar5 = (double)local_50;
+    if (((0.0 < dVar5) && ((ppVar3->ps->pm_flags & 0x40U) == 0)) ||
+       (dVar5 = (double)local_4c, 0.0 < dVar5)) {
+      dVar6 = (double)(float)(dVar5 * dVar6);
+    }
   }
-  else {
-    uVar4 = 1;
-    if ((*(uint *)(iVar2 + 0x374) & 0x8000) == 0) goto LAB_82281144;
-  }
-  BG_GetMoveSpeedScale(*(undefined4 *)(iVar2 + 0x370),uVar4,&local_50,&local_4c);
-  dVar5 = (double)local_50;
-  if (((0.0 < dVar5) && ((*(uint *)(*piVar3 + 0xc) & 0x40) == 0)) ||
-     (dVar5 = (double)local_4c, 0.0 < dVar5)) {
-    dVar6 = (double)(float)(dVar5 * dVar6);
-  }
-LAB_82281194:
-  dVar5 = (double)PM_CmdScaleForStance(piVar3);
-  __restgprlr_27((double)(float)(dVar5 * dVar6));
-  return;
+  fVar7 = PM_CmdScaleForStance(ppVar3);
+  dVar6 = (double)__restgprlr_27((double)(float)((double)fVar7 * dVar6));
+  return (float)dVar6;
 }
 
 
 // 8227CD18  PM_GetBobMove  (bgame/bg_pmove.cpp:3982)
 
-double PM_GetBobMove(double param_1,double param_2,int param_3,undefined8 param_4,undefined8 param_5
-                    ,int param_6,int param_7)
+/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
+
+float PM_GetBobMove(PmStanceFrontBack param_1,float param_2,float param_3,int param_4,int param_5)
 
 {
-  if ((param_3 == 0) && (param_7 != 0)) {
-    return (double)((float)(param_1 / param_2) * *(float *)(DAT_829c7e88 + 0xc));
+  int in_r6;
+  int in_r7;
+  
+  if ((param_1 == PM_STANCE_FORWARD_STAND) && (in_r7 != 0)) {
+    return (param_2 / param_3) * (player_sprintCameraBob->current).value;
   }
-  return (double)((float)(param_1 / param_2) *
-                 *(float *)(&DAT_8200ccc8 + (param_3 * 2 + param_6) * 4));
+  return (param_2 / param_3) * bobFactorTable[param_1][in_r6];
 }
 
 
 // 8227CD68  PM_GetMoveAnim  (bgame/bg_pmove.cpp:4019)
 
-void PM_GetMoveAnim(undefined8 param_1,int param_2,int param_3,int param_4)
+/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+scriptAnimMoveTypes_t
+PM_GetMoveAnim(playerState_s *param_1,PmStanceFrontBack param_2,int param_3,int param_4)
 
 {
   int iVar3;
   ulonglong uVar1;
   ulonglong uVar2;
+  scriptAnimMoveTypes_t sVar4;
   
-  iVar3 = __savegprlr_28();
+  iVar3 = __savegprlr_28(param_1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0xfc9,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xfc9,0,
+                    "%s");
   }
-  uVar1 = (ulonglong)*(uint *)(iVar3 + 0xa0) - (ulonglong)*(uint *)(DAT_829c7d5c + 0xc);
+  uVar1 = (ulonglong)*(uint *)(iVar3 + 0xa0) -
+          (ulonglong)(player_dmgtimer_stumbleTime->current).unsignedInt;
   uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1;
   uVar1 = ((~(*(uint *)(iVar3 + 0x9c) ^ uVar1) & 0xffffffff) >> 0x1f) +
           (ulonglong)(*(uint *)(iVar3 + 0x9c) <= uVar1) & 1;
-  uVar2 = (ulonglong)*(uint *)(&DAT_8200cd08 + ((param_2 * 2 + param_3) * 2 + (int)uVar1) * 4);
-  if (param_2 == 0) {
+  uVar2 = (ulonglong)moveAnimTable[param_2][param_3][(int)uVar1];
+  if (param_2 == PM_STANCE_FORWARD_STAND) {
     if (param_4 != 0) {
-      __restgprlr_28(((-(ulonglong)(uVar1 != 0) & 0x1f) << 0x20 | -(ulonglong)(uVar1 != 0) & 0x17) +
-                     0x14);
-      return;
+      sVar4 = __restgprlr_28(((-(ulonglong)(uVar1 != 0) & 0x1f) << 0x20 |
+                             -(ulonglong)(uVar1 != 0) & 0x17) + 0x14);
+      return sVar4;
     }
   }
-  else if ((param_2 == 2) && (param_4 != 0)) {
+  else if ((param_2 == PM_STANCE_FORWARD_CROUCH) && (param_4 != 0)) {
     uVar2 = ((-(ulonglong)(uVar1 != 0) & 0x1f) << 0x20 | -(ulonglong)(uVar1 != 0) & 0x17) + 0x15;
   }
-  __restgprlr_28(uVar2);
-  return;
+  sVar4 = __restgprlr_28(uVar2);
+  return sVar4;
 }
 
 
 // 8227CE60  PM_SetStrafeCondition  (bgame/bg_pmove.cpp:4065)
 
-void PM_SetStrafeCondition(int *param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_SetStrafeCondition(pmove_t *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   float local_20;
   float fStack_1c;
   
-  _local_20 = CONCAT44((float)(longlong)*(char *)((int)param_1 + 0x21),
-                       (float)(longlong)*(char *)(param_1 + 8));
+  _local_20 = CONCAT44((float)(longlong)(param_1->cmd).rightmove,
+                       (float)(longlong)(param_1->cmd).forwardmove);
   Vec2Normalize(&local_20);
-  if ((*(float *)(DAT_829c7cdc + 0xc) < fStack_1c) || (fStack_1c < -*(float *)(DAT_829c7cdc + 0xc)))
-  {
-    uVar1 = 0;
+  if (((player_strafeAnimCosAngle->current).value < fStack_1c) ||
+     (fStack_1c < -(player_strafeAnimCosAngle->current).value)) {
+    iVar1 = 0;
   }
-  else if (*(char *)((int)param_1 + 0x21) < '\x01') {
-    uVar1 = 1;
+  else if ((param_1->cmd).rightmove < '\x01') {
+    iVar1 = 1;
   }
   else {
-    uVar1 = 2;
+    iVar1 = 2;
   }
-  BG_SetConditionValue(*(undefined4 *)(*param_1 + 0x150),7,uVar1);
+  BG_SetConditionValue(param_1->ps->clientNum,7,(longlong)iVar1);
   return;
 }
 
 
 // 8227CF28  PM_Footstep_NotTryingToMove  (bgame/bg_pmove.cpp:4092)
 
-void PM_Footstep_NotTryingToMove(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_Footstep_NotTryingToMove(pmove_t *param_1,EffectiveStance param_2)
 
 {
-  int *piVar1;
-  int iVar2;
-  undefined8 uVar3;
-  uint uVar4;
+  playerState_s *ppVar1;
+  int *piVar3;
+  ulonglong uVar2;
+  int iVar4;
   int iVar5;
+  ulonglong uVar6;
+  scriptAnimMoveTypes_t sVar7;
+  uint uVar8;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1000,0,0xffffffff82000f98,0xffffffff82004978);
+  uVar6 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_28(param_1);
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1000,0,
+                    "%s");
   }
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1001,0,0xffffffff82000f98,0xffffffff8200cdf4);
+  if (*piVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1001,0,
+                    "%s");
   }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8200c508,0x1002,0,0xffffffff8200cdb4,param_2,4);
+  if (3 < (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1002,0,
+                    "effStance doesn\'t index PM_EFF_STANCE_COUNT\n\t%i not in [0, %i)");
   }
-  if (120.0 < (float)piVar1[0x3f]) goto LAB_8227d0a8;
-  iVar5 = (int)param_2;
+  uVar2 = ZEXT48((playerState_s *)*piVar3);
+  if (120.0 < (float)piVar3[0x3f]) goto LAB_8227d0a8;
+  iVar5 = (int)uVar6;
   if (iVar5 == 1) {
-    uVar3 = 3;
+    sVar7 = ANIM_MT_IDLEPRONE;
 LAB_8227d004:
-    iVar2 = BG_AnimScriptAnimation(*piVar1,0,uVar3,0);
-    if (-1 < iVar2) goto LAB_8227d0a8;
+    iVar4 = BG_AnimScriptAnimation((playerState_s *)*piVar3,AISTATE_COMBAT,sVar7,0);
+    uVar2 = (ulonglong)iVar4;
+    if (-1 < iVar4) goto LAB_8227d0a8;
   }
   else {
     if (iVar5 == 2) {
-      uVar3 = 2;
+      sVar7 = ANIM_MT_IDLECR;
       goto LAB_8227d004;
     }
     if (iVar5 == 3) {
-      uVar3 = 0x35;
+      sVar7 = ANIM_MT_IDLELASTSTAND;
       goto LAB_8227d004;
     }
   }
-  iVar2 = *piVar1;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1020,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*piVar3;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1020,0,
+                    "%s");
   }
   if (iVar5 == 3) {
-    MyAssertHandler(0xffffffff8200c508,0x1024,0,0xffffffff82000f98,0xffffffff8200cd88);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1024,0,
+                    "%s");
   }
-  uVar4 = *(int *)(iVar2 + 0xa0) - *(int *)(DAT_829c54a0 + 0xc);
-  uVar3 = 0x21;
-  if (*(int *)(iVar2 + 0x9c) <= (int)(-((int)uVar4 >> 0x1f) - 1U & uVar4)) {
-    uVar3 = 1;
+  uVar8 = ppVar1->damageDuration - (player_dmgtimer_flinchTime->current).integer;
+  sVar7 = ANIM_MT_FLINCH_FORWARD;
+  if (ppVar1->damageTimer <= (int)(-((int)uVar8 >> 0x1f) - 1U & uVar8)) {
+    sVar7 = ANIM_MT_IDLE;
   }
-  BG_AnimScriptAnimation(iVar2,0,uVar3,0);
+  iVar5 = BG_AnimScriptAnimation(ppVar1,AISTATE_COMBAT,sVar7,0);
+  uVar2 = (ulonglong)iVar5;
 LAB_8227d0a8:
-  __restgprlr_28();
+  __restgprlr_28(uVar2);
   return;
 }
 
 
 // 8227D0B0  PM_IsInAir  (bgame/bg_pmove.cpp:4145)
 
-void PM_IsInAir(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_IsInAir(pmove_t *param_1,pml_t *param_2)
 
 {
   int iVar1;
   int *piVar2;
+  undefined1 uVar3;
   
-  piVar2 = (int *)__savegprlr_28();
+  piVar2 = (int *)__savegprlr_28(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1034,0,0xffffffff82000f98,0xffffffff82004978);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1034,0,
+                    "%s");
   }
   iVar1 = *piVar2;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1036,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1036,0,
+                    "%s");
   }
   if (((*(int *)(iVar1 + 0x6c) == 0x7ff) && (*(int *)(iVar1 + 4) != 1)) &&
      (*(int *)(iVar1 + 4) != 7)) {
-    __restgprlr_28(*(int *)(param_2 + 0x34) == 0);
-    return;
+    uVar3 = __restgprlr_28(param_2->almostGroundPlane == 0);
+    return (bool)uVar3;
   }
-  __restgprlr_28(0);
-  return;
+  uVar3 = __restgprlr_28(0);
+  return (bool)uVar3;
 }
 
 
 // 822811B0  PM_Footsteps  (bgame/bg_pmove.cpp:4178)
 
-void PM_Footsteps(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
+
+void PM_Footsteps(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  int *piVar5;
-  uint uVar6;
-  char cVar8;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar7;
+  playerState_s *ppVar2;
+  pmove_t *ppVar3;
+  EffectiveStance EVar4;
+  int iVar5;
+  bool bVar9;
+  PmStanceFrontBack PVar6;
+  scriptAnimMoveTypes_t sVar7;
+  int iVar8;
   int *in_r13;
-  byte bVar9;
   uint uVar10;
-  double dVar11;
+  uint uVar11;
+  float fVar12;
   
-  piVar5 = (int *)__savegprlr_23();
-  if (piVar5 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x105c,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar3 = (pmove_t *)__savegprlr_23(param_1);
+  if (ppVar3 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x105c,0,
+                    "%s");
   }
-  iVar2 = *piVar5;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x105f,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar2 = ppVar3->ps;
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x105f,0,
+                    "%s");
   }
   BG_CheckThread();
   if (*(int *)(*in_r13 + 8) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x106a,0,0xffffffff82000f98,0xffffffff820033f4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x106a,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 4) < 8) {
-    piVar5[0x3f] = (int)SQRT(*(float *)(iVar2 + 0x30) * *(float *)(iVar2 + 0x30) +
-                             *(float *)(iVar2 + 0x28) * *(float *)(iVar2 + 0x28) +
-                             *(float *)(iVar2 + 0x2c) * *(float *)(iVar2 + 0x2c));
-    uVar6 = PM_GetEffectiveStance(iVar2);
-    if ((*(uint *)(iVar2 + 0xf8) & 0x3800) != 0) {
-      if (3 < uVar6) {
-        MyAssertHandler(0xffffffff8200c508,0xea7,0,0xffffffff8200cc3c,uVar6,4);
+  if (ppVar2->pm_type < 8) {
+    ppVar3->speed =
+         SQRT(ppVar2->velocity[2] * ppVar2->velocity[2] +
+              ppVar2->velocity[0] * ppVar2->velocity[0] + ppVar2->velocity[1] * ppVar2->velocity[1])
+    ;
+    EVar4 = PM_GetEffectiveStance(ppVar2);
+    if ((ppVar2->eFlags & 0x3800U) != 0) {
+      if (PM_EFF_STANCE_LASTSTANDCRAWL < EVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0xea7,
+                        0,"stance doesn\'t index PM_EFF_STANCE_COUNT\n\t%i not in [0, %i)");
       }
-      BG_AnimScriptAnimation(iVar2,0,*(undefined4 *)(&DAT_8200cbc0 + uVar6 * 0xc),0);
-      __restgprlr_23();
+      iVar5 = BG_AnimScriptAnimation(ppVar2,AISTATE_COMBAT,notMovingAnims[EVar4][0],0);
+      __restgprlr_23(iVar5);
       return;
     }
-    cVar8 = PM_IsInAir(piVar5,param_2);
-    if (cVar8 == '\0') {
-      uVar10 = *(uint *)(iVar2 + 0xc) >> 6 & 1;
-      if ((*(uint *)(iVar2 + 0xc) & 0x4000) == 0) {
-        bVar9 = 0;
+    bVar9 = PM_IsInAir(ppVar3,param_2);
+    if (bVar9) {
+      PM_Footstep_LadderMove(ppVar3,param_2);
+      if (EVar4 != (ppVar2->pm_flags & PM_EFF_STANCE_LASTSTANDCRAWL)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x108a
+                        ,0,"%s");
+        __restgprlr_23();
+        return;
+      }
+    }
+    else {
+      uVar11 = (uint)ppVar2->pm_flags >> 6 & 1;
+      if ((ppVar2->pm_flags & 0x4000U) == 0) {
+        uVar10 = 0;
       }
       else {
-        bVar9 = 1;
-        if (uVar10 != 0) {
-          MyAssertHandler(0xffffffff8200c508,0x1095,0,0xffffffff82000f98,0xffffffff8200cf74);
+        uVar10 = 1;
+        if (uVar11 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                          0x1095,0,"%s");
         }
       }
-      fVar1 = (float)piVar5[0x3f];
-      if ((*(float *)(DAT_829c7ce0 + 0xc) <= fVar1) && (*(int *)(iVar2 + 4) != 1)) {
-        if ((*(char *)(piVar5 + 8) == '\0') && (*(char *)((int)piVar5 + 0x21) == '\0')) {
-          PM_Footstep_NotTryingToMove(piVar5,uVar6);
+      fVar12 = ppVar3->speed;
+      if (((player_moveThreshhold->current).value <= fVar12) && (ppVar2->pm_type != 1)) {
+        if (((ppVar3->cmd).forwardmove == '\0') && ((ppVar3->cmd).rightmove == '\0')) {
+          PM_Footstep_NotTryingToMove(ppVar3,EVar4);
           __restgprlr_23();
           return;
         }
-        if (uVar6 == 0) {
-          uVar10 = fVar1 <= *(float *)(DAT_829c404c + 0xc) | uVar10;
-          bVar9 = *(float *)(DAT_829c5618 + 0xc) <= fVar1 & bVar9;
+        if (EVar4 == PM_EFF_STANCE_DEFAULT) {
+          uVar11 = fVar12 <= (player_runbkThreshhold->current).value | uVar11;
+          uVar10 = (player_sprintThreshhold->current).value <= fVar12 & uVar10;
         }
-        uVar3 = PM_GetStanceEx(uVar6,*(uint *)(iVar2 + 0xc) & 0x20);
-        PM_SetStrafeCondition(piVar5);
-        uVar4 = PM_GetMoveAnim(iVar2,uVar3,uVar10,bVar9);
-        iVar7 = BG_AnimScriptAnimation(iVar2,0,uVar4,0);
-        if (iVar7 < 0) {
-          if (uVar6 == 3) {
-            MyAssertHandler(0xffffffff8200c508,0x10ca,0,0xffffffff82000f98,0xffffffff8200cd88);
+        PVar6 = PM_GetStanceEx(EVar4,ppVar2->pm_flags & 0x20);
+        PM_SetStrafeCondition(ppVar3);
+        sVar7 = PM_GetMoveAnim(ppVar2,PVar6,uVar11,uVar10);
+        iVar5 = BG_AnimScriptAnimation(ppVar2,AISTATE_COMBAT,sVar7,0);
+        if (iVar5 < 0) {
+          if (EVar4 == PM_EFF_STANCE_LASTSTANDCRAWL) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                            0x10ca,0,"%s");
           }
-          BG_AnimScriptAnimation(iVar2,0,1,0);
+          BG_AnimScriptAnimation(ppVar2,AISTATE_COMBAT,ANIM_MT_IDLE,0);
         }
-        dVar11 = (double)PM_GetMaxSpeed(piVar5,uVar10,bVar9);
-        if (((int)uVar3 == 0) && (bVar9 != 0)) {
-          fVar1 = *(float *)(DAT_829c7e88 + 0xc);
+        fVar12 = PM_GetMaxSpeed(ppVar3,uVar11,uVar10);
+        if ((PVar6 == PM_STANCE_FORWARD_STAND) && (uVar10 != 0)) {
+          fVar1 = (player_sprintCameraBob->current).value;
         }
         else {
-          fVar1 = *(float *)(&DAT_8200ccc8 + ((int)uVar3 * 2 + uVar10) * 4);
+          fVar1 = bobFactorTable[PVar6][uVar11];
         }
-        iVar7 = *(int *)(iVar2 + 0x18);
-        *(uint *)(iVar2 + 0x18) =
-             (int)((float)((double)(float)piVar5[0x3f] / dVar11) * fVar1 *
-                   (float)(longlong)*(int *)((int)param_2 + 0x28) + (float)(longlong)iVar7) & 0xff;
-        uVar3 = PM_ShouldMakeFootsteps(piVar5);
-        PM_FootstepEvent(piVar5,param_2,iVar7,*(undefined4 *)(iVar2 + 0x18),uVar3);
+        iVar5 = ppVar2->bobCycle;
+        ppVar2->bobCycle =
+             (int)((ppVar3->speed / fVar12) * fVar1 * (float)(longlong)param_2->msec +
+                  (float)(longlong)iVar5) & 0xff;
+        iVar8 = PM_ShouldMakeFootsteps(ppVar3);
+        PM_FootstepEvent(ppVar3,param_2,iVar5,ppVar2->bobCycle,iVar8);
         __restgprlr_23();
         return;
       }
-      PM_Footsteps_NotMoving(piVar5,uVar6);
-    }
-    else {
-      PM_Footstep_LadderMove(piVar5,param_2);
-      if (uVar6 != (*(uint *)(iVar2 + 0xc) & 3)) {
-        MyAssertHandler(0xffffffff8200c508,0x108a,0,0xffffffff82000f98,0xffffffff8200cf8c);
-        __restgprlr_23();
-        return;
-      }
+      PM_Footsteps_NotMoving(ppVar3,EVar4);
     }
   }
   __restgprlr_23();
@@ -4627,55 +4959,59 @@ void PM_Footsteps(undefined8 param_1,undefined8 param_2)
 
 // 82281588  PM_FoliageSounds  (bgame/bg_pmove.cpp:4326)
 
-void PM_FoliageSounds(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_FoliageSounds(pmove_t *param_1)
 
 {
-  int iVar1;
+  float fVar1;
   float fVar2;
-  int *piVar3;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_7c;
-  undefined1 auStack_70 [47];
-  char local_41;
+  playerState_s *ppVar3;
+  float fVar4;
+  pmove_t *ppVar5;
+  Bounds local_90;
+  trace_t atStack_70 [2];
   
-  piVar3 = (int *)__savegprlr_26();
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x10ee,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar5 = (pmove_t *)__savegprlr_26(param_1);
+  ppVar3 = ppVar5->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x10ee,0,
+                    "%s");
   }
-  if (*(float *)(DAT_829c5494 + 0xc) <= (float)piVar3[0x3f]) {
-    if (*(float *)(DAT_829c7e7c + 0xc) - *(float *)(DAT_829c5494 + 0xc) <= 0.0) {
-      MyAssertHandler(0xffffffff8200c508,0x10f8,1,0xffffffff82000f98,0xffffffff8200cfc8);
+  if ((bg_foliagesnd_minspeed->current).value <= ppVar5->speed) {
+    if ((bg_foliagesnd_maxspeed->current).value - (bg_foliagesnd_minspeed->current).value <= 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x10f8,1
+                      ,"%s");
     }
-    fVar2 = ((float)piVar3[0x3f] - *(float *)(DAT_829c5494 + 0xc)) /
-            (*(float *)(DAT_829c7e7c + 0xc) - *(float *)(DAT_829c5494 + 0xc));
-    if (1.0 < fVar2) {
-      fVar2 = 1.0;
+    fVar1 = (ppVar5->speed - (bg_foliagesnd_minspeed->current).value) /
+            ((bg_foliagesnd_maxspeed->current).value - (bg_foliagesnd_minspeed->current).value);
+    if (1.0 < fVar1) {
+      fVar1 = 1.0;
     }
-    if ((int)((float)(longlong)(*(int *)(DAT_829c7cfc + 0xc) - *(int *)(DAT_829c7d74 + 0xc)) * fVar2
-             + (float)(longlong)*(int *)(DAT_829c7d74 + 0xc)) + *(int *)(iVar1 + 0x54) < piVar3[1])
-    {
-      fVar2 = (float)piVar3[0x3e] + (float)piVar3[0x3b];
-      local_90 = (float)piVar3[0x39] * 0.75;
-      local_8c = (float)piVar3[0x3a] * 0.75;
-      local_84 = (float)piVar3[0x3c] * 0.75;
-      local_80 = (float)piVar3[0x3d] * 0.75;
-      local_88 = fVar2 * 0.075 + (float)piVar3[0x3b] * 0.75;
-      local_7c = fVar2 * 0.075 + (float)piVar3[0x3e] * 0.75;
-      PM_playerTrace(piVar3,auStack_70,iVar1 + 0x1c,iVar1 + 0x1c,&local_90,
-                     *(undefined4 *)(iVar1 + 0x150),2);
-      if (local_41 != '\0') {
-        BG_AddPredictableEventToPlayerstate(1,0,iVar1);
-        *(int *)(iVar1 + 0x54) = piVar3[1];
+    if ((int)((float)(longlong)
+                     ((int)(bg_foliagesnd_fastinterval->current).string -
+                     (bg_foliagesnd_slowinterval->current).integer) * fVar1 +
+             (float)(longlong)(bg_foliagesnd_slowinterval->current).integer) +
+        ppVar3->foliageSoundTime < (ppVar5->cmd).serverTime) {
+      fVar1 = (ppVar5->bounds).midPoint[2];
+      fVar2 = (ppVar5->bounds).halfSize[2];
+      fVar4 = fVar2 + fVar1;
+      local_90.midPoint[0] = (ppVar5->bounds).midPoint[0] * 0.75;
+      local_90.midPoint[1] = (ppVar5->bounds).midPoint[1] * 0.75;
+      local_90.halfSize[0] = (ppVar5->bounds).halfSize[0] * 0.75;
+      local_90.halfSize[1] = (ppVar5->bounds).halfSize[1] * 0.75;
+      local_90.midPoint[2] = fVar4 * 0.075 + fVar1 * 0.75;
+      local_90.halfSize[2] = fVar4 * 0.075 + fVar2 * 0.75;
+      PM_playerTrace(ppVar5,atStack_70,ppVar3->origin,ppVar3->origin,&local_90,ppVar3->clientNum,2);
+      if (atStack_70[0].startsolid != false) {
+        BG_AddPredictableEventToPlayerstate(1,0,ppVar3);
+        ppVar3->foliageSoundTime = (ppVar5->cmd).serverTime;
       }
     }
   }
-  else if (*(int *)(DAT_829c7d60 + 0xc) + *(int *)(iVar1 + 0x54) < piVar3[1]) {
-    *(undefined4 *)(iVar1 + 0x54) = 0;
+  else if ((int)((bg_foliagesnd_resetinterval->current).string + ppVar3->foliageSoundTime) <
+           (ppVar5->cmd).serverTime) {
+    ppVar3->foliageSoundTime = 0;
     __restgprlr_26();
     return;
   }
@@ -4686,44 +5022,47 @@ void PM_FoliageSounds(void)
 
 // 8227D160  PM_DropTimers  (bgame/bg_pmove.cpp:4375)
 
-void PM_DropTimers(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_DropTimers(playerState_s *param_1,pml_t *param_2)
 
 {
   int iVar1;
-  int iVar2;
+  playerState_s *ppVar2;
   longlong lVar3;
   
-  iVar2 = __savegprlr_29();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1118,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar2 = (playerState_s *)__savegprlr_29(param_1);
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1118,0,
+                    "%s");
   }
-  iVar1 = *(int *)(iVar2 + 8);
+  iVar1 = ppVar2->pm_time;
   if (iVar1 != 0) {
-    if (*(int *)(param_2 + 0x28) < iVar1) {
-      *(int *)(iVar2 + 8) = iVar1 - *(int *)(param_2 + 0x28);
+    if (param_2->msec < iVar1) {
+      ppVar2->pm_time = iVar1 - param_2->msec;
     }
     else {
-      if ((*(uint *)(iVar2 + 0xc) & 0x2000) != 0) {
-        Jump_ClearState(iVar2);
+      if ((ppVar2->pm_flags & 0x2000U) != 0) {
+        Jump_ClearState(ppVar2);
       }
-      *(undefined4 *)(iVar2 + 8) = 0;
-      *(uint *)(iVar2 + 0xc) = *(uint *)(iVar2 + 0xc) & 0xffffde7f;
+      ppVar2->pm_time = 0;
+      ppVar2->pm_flags = ppVar2->pm_flags & 0xffffde7f;
     }
   }
-  if (0 < (int)*(uint *)(iVar2 + 0x84)) {
-    lVar3 = (ulonglong)*(uint *)(iVar2 + 0x84) - (ulonglong)*(uint *)(param_2 + 0x28);
-    *(int *)(iVar2 + 0x84) = (int)lVar3;
+  if (0 < ppVar2->legsTimer) {
+    lVar3 = (ulonglong)(uint)ppVar2->legsTimer - (ulonglong)(uint)param_2->msec;
+    ppVar2->legsTimer = (int)lVar3;
     if (lVar3 < 0) {
-      *(undefined4 *)(iVar2 + 0x84) = 0;
-      G_DebugPlayerAnimScript_Print(*(undefined4 *)(iVar2 + 0x150),0xffffffff8200ce08);
+      ppVar2->legsTimer = 0;
+      G_DebugPlayerAnimScript_Print(ppVar2->clientNum,"end legs\n");
     }
   }
-  if (0 < (int)*(uint *)(iVar2 + 0x8c)) {
-    lVar3 = (ulonglong)*(uint *)(iVar2 + 0x8c) - (ulonglong)*(uint *)(param_2 + 0x28);
-    *(int *)(iVar2 + 0x8c) = (int)lVar3;
+  if (0 < ppVar2->torsoTimer) {
+    lVar3 = (ulonglong)(uint)ppVar2->torsoTimer - (ulonglong)(uint)param_2->msec;
+    ppVar2->torsoTimer = (int)lVar3;
     if (lVar3 < 0) {
-      *(undefined4 *)(iVar2 + 0x8c) = 0;
-      G_DebugPlayerAnimScript_Print(*(undefined4 *)(iVar2 + 0x150),0xffffffff8200cdfc);
+      ppVar2->torsoTimer = 0;
+      G_DebugPlayerAnimScript_Print(ppVar2->clientNum,"end torso\n");
     }
   }
   __restgprlr_29();
@@ -4733,116 +5072,141 @@ void PM_DropTimers(undefined8 param_1,int param_2)
 
 // 8227D260  BG_CheckProneTurned  (bgame/bg_pmove.cpp:4554)
 
-void BG_CheckProneTurned(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int BG_CheckProneTurned(pmove_t *param_1,playerState_s *param_2,float param_3,uchar param_4)
 
 {
-  undefined1 uVar1;
+  playerState_s *ppVar1;
+  int iVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  int iVar5;
   double extraout_f1;
-  double dVar2;
-  undefined8 uVar3;
-  double dVar4;
-  double dVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
+  float fVar9;
+  proneCheckType_t in_stack_ffffff48;
+  FeetDirection in_stack_ffffff4c;
   
-  __savegprlr_29();
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_29((double)param_3,param_1,uVar4,param_4);
   dVar6 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x11d2,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x11d2,0,
+                    "%s");
   }
-  dVar2 = (double)AngleDelta(dVar6,(double)*(float *)((int)param_2 + 0x15c));
-  dVar5 = (double)(float)(ABS(dVar2) * 0.004166666883975267);
-  dVar4 = (double)(float)(1.0 - dVar5);
-  uVar3 = AngleNormalize360(-(double)(float)(dVar4 * dVar2 - dVar6));
-  dVar6 = (double)(float)(dVar4 * 50.0 + (double)(float)(dVar5 * 45.0));
-  PM_GetProneFeetDirection(param_2);
-  uVar1 = BG_CheckProne(0x402e000000000000,0x403e000000000000,uVar3,dVar6,
-                        *(undefined4 *)((int)param_2 + 0x150),param_2 + 0x1c);
-  __restgprlr_29(uVar1);
-  return;
+  ppVar1 = (playerState_s *)uVar4;
+  fVar9 = AngleDelta((float)dVar6,ppVar1->viewangles[1]);
+  dVar8 = (double)(float)(ABS((double)fVar9) * 0.004166666883975267);
+  dVar7 = (double)(float)(1.0 - dVar8);
+  fVar9 = AngleNormalize360(-(float)(dVar7 * (double)fVar9 - dVar6));
+  dVar6 = (double)fVar9;
+  dVar7 = (double)(float)(dVar7 * 50.0 + (double)(float)(dVar8 * 45.0));
+  PM_GetProneFeetDirection(ppVar1);
+  if (iVar2 == 0) {
+    iVar5 = 0;
+    iVar2 = 0;
+  }
+  else {
+    iVar5 = iVar2 + 0x128;
+    iVar2 = iVar2 + 0x124;
+  }
+  bVar3 = BG_CheckProne(ppVar1->clientNum,ppVar1->origin,15.0,30.0,(float)dVar6,(float *)0x1,
+                        (float *)&IMAGE_DOS_HEADER_82000000,-0x7e000000,iVar2,iVar5,'\x01',
+                        in_stack_ffffff48,(float)dVar7,in_stack_ffffff4c);
+  iVar2 = __restgprlr_29(bVar3);
+  return iVar2;
 }
 
 
 // 8227D398  TurretUpdateViewClamp  (bgame/bg_pmove.cpp:4577)
 
-void TurretUpdateViewClamp(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void TurretUpdateViewClamp(pmove_t *param_1,float param_2)
 
 {
   int iVar1;
   code *pcVar2;
-  int iVar3;
-  int *piVar6;
-  undefined8 uVar4;
-  uint uVar7;
-  longlong lVar5;
+  WeaponDef *pWVar3;
+  int *piVar4;
+  Weapon WVar5;
+  centity_s *pcVar6;
+  float *pfVar7;
   double extraout_f1;
   double dVar8;
   double dVar9;
+  float fVar10;
   float local_a0;
   float local_9c;
   undefined4 local_98;
   float local_90;
   float local_8c;
-  undefined1 auStack_80 [16];
-  undefined1 auStack_70 [16];
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
+  float afStack_80 [4];
+  float afStack_70 [4];
+  float afStack_60 [4];
+  float afStack_50 [4];
+  float afStack_40 [16];
   
-  piVar6 = (int *)__savegprlr_28();
+  piVar4 = (int *)__savegprlr_28((double)param_2,param_1);
   dVar8 = extraout_f1;
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x11f0,0,0xffffffff82000f98,0xffffffff82004978);
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x11f0,0,
+                    "%s");
   }
-  iVar1 = *piVar6;
+  iVar1 = *piVar4;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x11f2,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x11f2,0,
+                    "%s");
   }
   if (0x7ff < *(uint *)(iVar1 + 0x1bc)) {
-    MyAssertHandler(0xffffffff8200c508,0x11f3,0,0xffffffff8200ce18,*(uint *)(iVar1 + 0x1bc),0x800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x11f3,0,
+                    "ps->viewlocked_entNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  pcVar2 = (code *)(&switchD_8227833c::switchdataD_8296164c)[(uint)*(byte *)(piVar6 + 0x4d) * 7];
+  pcVar2 = (code *)(&switchD_8227833c::switchdataD_8296164c)[(uint)*(byte *)(piVar4 + 0x4d) * 7];
   if (pcVar2 == (code *)0x0) {
-    uVar4 = 0;
+    WVar5.data = 0;
   }
-  else if (*(byte *)(piVar6 + 0x4d) == 0) {
-    uVar4 = (*pcVar2)(iVar1,DAT_82a382e4);
-  }
-  else {
-    uVar4 = (*pcVar2)(iVar1,0xffffffffffffffff);
-  }
-  uVar7 = BG_GetAlternateWeapon(uVar4,0);
-  iVar3 = (&DAT_829d84a0)[uVar7 & 0xff];
-  if (*(char *)(piVar6 + 0x4d) == '\0') {
-    lVar5 = CG_GetEntity(DAT_82a382e4,*(undefined4 *)(iVar1 + 0x1bc));
-    lVar5 = lVar5 + 0x20;
+  else if (*(byte *)(piVar4 + 0x4d) == 0) {
+    WVar5.data = (*pcVar2)(iVar1,g_cgameClientNum);
   }
   else {
-    lVar5 = ((ulonglong)*(uint *)(iVar1 + 0x1bc) +
-             ((ulonglong)*(uint *)(iVar1 + 0x1bc) & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 +
-            -0x7cc8c83c;
+    WVar5.data = (*pcVar2)(iVar1,0xffffffffffffffff);
   }
-  AnglesToQuat(lVar5,auStack_70);
-  local_a0 = -((*(float *)(iVar3 + 0x630) + *(float *)(iVar3 + 0x634)) * 0.5 -
-              *(float *)(iVar3 + 0x634));
-  local_9c = -((*(float *)(iVar3 + 0x62c) + *(float *)(iVar3 + 0x628)) * 0.5 -
-              *(float *)(iVar3 + 0x628));
+  WVar5 = BG_GetAlternateWeapon(WVar5,false);
+  pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
+  if (*(char *)(piVar4 + 0x4d) == '\0') {
+    pcVar6 = CG_GetEntity(g_cgameClientNum,*(int *)(iVar1 + 0x1bc));
+    pfVar7 = (pcVar6->pose).angles;
+  }
+  else {
+    pfVar7 = g_entities[*(int *)(iVar1 + 0x1bc)].r.currentAngles;
+  }
+  AnglesToQuat(pfVar7,afStack_70);
+  local_a0 = -((pWVar3->topArc + pWVar3->bottomArc) * 0.5 - pWVar3->bottomArc);
+  local_9c = -((pWVar3->rightArc + pWVar3->leftArc) * 0.5 - pWVar3->leftArc);
   local_98 = 0;
-  AnglesToQuat(&local_a0,auStack_50);
-  uVar4 = UnitQuatToNormal(auStack_70,auStack_80);
-  AngleAxisToQuat((double)*(float *)(iVar1 + 0x15c),uVar4,auStack_80,auStack_60);
-  QuatMultiply(auStack_50,auStack_60,auStack_40);
-  UnitQuatToAngles(auStack_40,&local_90);
+  AnglesToQuat(&local_a0,afStack_50);
+  pfVar7 = afStack_70;
+  UnitQuatToNormal(pfVar7,afStack_80);
+  AngleAxisToQuat(*(float *)(iVar1 + 0x15c),pfVar7,afStack_80);
+  QuatMultiply(afStack_50,afStack_60,afStack_40);
+  UnitQuatToAngles(afStack_40,&local_90);
   dVar9 = (double)(float)(dVar8 * 0.0010000000474974513);
-  dVar8 = (double)DiffTrackAngle((double)local_90,(double)*(float *)(iVar1 + 0x178),
-                                 0x4000000000000000,dVar9);
-  *(float *)(iVar1 + 0x178) = (float)dVar8;
-  dVar8 = (double)DiffTrackAngle((double)local_8c,(double)*(float *)(iVar1 + 0x17c),
-                                 0x4000000000000000,dVar9);
-  *(float *)(iVar1 + 0x17c) = (float)dVar8;
-  dVar8 = (double)AngleNormalize360((double)*(float *)(iVar1 + 0x178));
-  *(float *)(iVar1 + 0x178) = (float)dVar8;
-  dVar8 = (double)AngleNormalize360((double)*(float *)(iVar1 + 0x17c));
-  *(float *)(iVar1 + 0x17c) = (float)dVar8;
+  fVar10 = DiffTrackAngle(local_90,*(float *)(iVar1 + 0x178),2.0,
+                          (float)(dVar8 * 0.0010000000474974513));
+  *(float *)(iVar1 + 0x178) = fVar10;
+  fVar10 = DiffTrackAngle(local_8c,*(float *)(iVar1 + 0x17c),2.0,(float)dVar9);
+  *(float *)(iVar1 + 0x17c) = fVar10;
+  fVar10 = AngleNormalize360(*(float *)(iVar1 + 0x178));
+  *(float *)(iVar1 + 0x178) = fVar10;
+  fVar10 = AngleNormalize360(*(float *)(iVar1 + 0x17c));
+  *(float *)(iVar1 + 0x17c) = fVar10;
   __restgprlr_28();
   return;
 }
@@ -4850,7 +5214,9 @@ void TurretUpdateViewClamp(void)
 
 // 8227D5D8  PM_UpdateViewAngles_Clamp  (bgame/bg_pmove.cpp:4635)
 
-void PM_UpdateViewAngles_Clamp(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles_Clamp(playerState_s *param_1,usercmd_s *param_2)
 
 {
   bool bVar1;
@@ -4866,10 +5232,10 @@ void PM_UpdateViewAngles_Clamp(undefined8 param_1,int param_2)
   double dVar11;
   double dVar12;
   
-  __savegprlr_28();
+  __savegprlr_28(param_1);
   iVar2 = __savefpr_25();
-  dVar7 = (double)*(float *)(DAT_829c5478 + 0xc);
-  dVar8 = (double)*(float *)(DAT_829c4048 + 0xc);
+  dVar7 = (double)(player_view_pitch_up->current).value;
+  dVar8 = (double)(player_view_pitch_down->current).value;
   if (((*(int *)(iVar2 + 4) != 1) && (*(int *)(iVar2 + 4) != 9)) ||
      (bVar1 = true, (*(uint *)(iVar2 + 0x14) & 1) == 0)) {
     bVar1 = false;
@@ -4880,23 +5246,22 @@ void PM_UpdateViewAngles_Clamp(undefined8 param_1,int param_2)
   dVar11 = 0.0027777778450399637;
   dVar12 = 0.0054931640625;
   do {
-    dVar6 = (double)(float)((double)(float)((double)(longlong)*(int *)((iVar4 + 2) * 4 + param_2) *
-                                            dVar12 + (double)*(float *)((iVar4 + 0x18) * 4 + iVar2))
-                           * dVar11);
+    dVar6 = (double)(float)((double)(float)((double)(longlong)param_2->angles[iVar4] * dVar12 +
+                                           (double)*(float *)((iVar4 + 0x18) * 4 + iVar2)) * dVar11)
+    ;
     dVar5 = floor((double)(float)(dVar6 + dVar10));
     dVar5 = (double)(float)((double)(float)(dVar6 - (double)(float)dVar5) * dVar9);
     if ((!bVar1) && (iVar4 == 0)) {
       if (dVar5 <= dVar8) {
         dVar6 = -dVar7;
         if (dVar5 < dVar6) {
-          *(float *)(iVar2 + 0x60) =
-               -(float)((double)(longlong)*(int *)(param_2 + 8) * dVar12 - dVar6);
+          *(float *)(iVar2 + 0x60) = -(float)((double)(longlong)param_2->angles[0] * dVar12 - dVar6)
+          ;
           dVar5 = dVar6;
         }
       }
       else {
-        *(float *)(iVar2 + 0x60) =
-             -(float)((double)(longlong)*(int *)(param_2 + 8) * dVar12 - dVar8);
+        *(float *)(iVar2 + 0x60) = -(float)((double)(longlong)param_2->angles[0] * dVar12 - dVar8);
         dVar5 = dVar8;
       }
     }
@@ -4914,37 +5279,41 @@ void PM_UpdateViewAngles_Clamp(undefined8 param_1,int param_2)
 
 // 8227D758  PM_UpdateViewAngles_RemoteControlled  (bgame/bg_pmove.cpp:4676)
 
-void PM_UpdateViewAngles_RemoteControlled(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles_RemoteControlled(playerState_s *param_1,usercmd_s *param_2)
 
 {
   int iVar1;
-  float *pfVar2;
-  longlong lVar3;
-  double dVar4;
+  longlong lVar2;
+  float *pfVar3;
+  longlong lVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  __savegprlr_29();
+  lVar2 = (longlong)(int)param_2;
+  __savegprlr_29(param_1);
   iVar1 = __savefpr_27();
-  pfVar2 = (float *)(iVar1 + 0x154);
-  dVar6 = 360.0;
-  param_2 = param_2 + 4;
-  dVar7 = 0.5;
-  lVar3 = 3;
-  dVar8 = 0.0027777778450399637;
-  dVar9 = 0.0054931640625;
+  pfVar3 = (float *)(iVar1 + 0x154);
+  dVar7 = 360.0;
+  lVar2 = lVar2 + 4;
+  dVar8 = 0.5;
+  lVar4 = 3;
+  dVar9 = 0.0027777778450399637;
+  dVar10 = 0.0054931640625;
   do {
-    param_2 = param_2 + 4;
-    dVar5 = (double)(float)((double)(float)((double)(longlong)*(int *)param_2 * dVar9 +
-                                           (double)pfVar2[-0x3d]) * dVar8);
-    dVar4 = floor((double)(float)(dVar5 + dVar7));
-    lVar3 = lVar3 + -1;
-    pfVar2 = pfVar2 + 1;
-    *pfVar2 = (float)((double)(float)(dVar5 - (double)(float)dVar4) * dVar6);
-  } while (lVar3 != 0);
+    lVar2 = lVar2 + 4;
+    dVar6 = (double)(float)((double)(float)((double)(longlong)*(int *)lVar2 * dVar10 +
+                                           (double)pfVar3[-0x3d]) * dVar9);
+    dVar5 = floor((double)(float)(dVar6 + dVar8));
+    lVar4 = lVar4 + -1;
+    pfVar3 = pfVar3 + 1;
+    *pfVar3 = (float)((double)(float)(dVar6 - (double)(float)dVar5) * dVar7);
+  } while (lVar4 != 0);
   __restfpr_27();
   __restgprlr_29();
   return;
@@ -4953,64 +5322,65 @@ void PM_UpdateViewAngles_RemoteControlled(undefined8 param_1,longlong param_2)
 
 // 8227D7F0  PM_UpdateViewAngles_RangeLimited  (bgame/bg_pmove.cpp:4687)
 
-void PM_UpdateViewAngles_RangeLimited(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles_RangeLimited(playerState_s *param_1,float param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  undefined8 extraout_f1;
-  double dVar4;
-  double dVar5;
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  double extraout_f1;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined8 uVar9;
+  double dVar9;
+  float fVar10;
   
-  __savegprlr_29();
-  iVar2 = __savefpr_28();
-  lVar3 = 0;
+  __savegprlr_29((double)param_2,param_1);
+  iVar4 = __savefpr_28();
+  iVar5 = 0;
   dVar8 = 0.0;
   dVar7 = 180.0;
-  uVar9 = extraout_f1;
+  dVar9 = extraout_f1;
   do {
-    iVar1 = (int)((lVar3 + 0x60U & 0xffffffff) << 2);
-    if ((double)*(float *)(iVar1 + iVar2) < dVar7) {
-      if ((int)lVar3 == 1) {
-        dVar4 = (double)AngleDelta((double)*(float *)(iVar2 + 0x17c),uVar9);
-        dVar5 = (double)AngleDelta(uVar9,(double)*(float *)(iVar2 + 0x15c));
-        dVar4 = (double)(float)(dVar5 + dVar4);
+    iVar3 = (iVar5 + 0x60) * 4;
+    if ((double)*(float *)(iVar3 + iVar4) < dVar7) {
+      if (iVar5 == 1) {
+        fVar10 = AngleDelta(*(float *)(iVar4 + 0x17c),(float)dVar9);
+        dVar6 = (double)fVar10;
+        fVar10 = AngleDelta((float)dVar9,*(float *)(iVar4 + 0x15c));
+        fVar10 = (float)((double)fVar10 + dVar6);
       }
       else {
-        dVar4 = (double)AngleDelta((double)*(float *)((int)((lVar3 + 0x5eU & 0xffffffff) << 2) +
-                                                     iVar2),
-                                   (double)*(float *)((int)((lVar3 + 0x56U & 0xffffffff) << 2) +
-                                                     iVar2));
+        fVar10 = AngleDelta(*(float *)((iVar5 + 0x5e) * 4 + iVar4),
+                            *(float *)((iVar5 + 0x56) * 4 + iVar4));
       }
-      dVar5 = (double)*(float *)(iVar1 + iVar2);
-      if ((dVar5 < dVar4) || (dVar4 < -dVar5)) {
-        if (dVar4 <= dVar5) {
-          dVar4 = dVar5 + dVar4;
+      fVar1 = *(float *)(iVar3 + iVar4);
+      if ((fVar1 < fVar10) || (fVar10 < -fVar1)) {
+        if (fVar10 <= fVar1) {
+          fVar10 = fVar1 + fVar10;
         }
         else {
-          dVar4 = dVar4 - dVar5;
+          fVar10 = fVar10 - fVar1;
         }
-        iVar1 = (int)((lVar3 + 0x18U & 0xffffffff) << 2);
-        *(float *)(iVar1 + iVar2) =
-             (float)((double)*(float *)(iVar1 + iVar2) + (double)(float)dVar4);
-        dVar6 = (double)*(float *)((int)((lVar3 + 0x5eU & 0xffffffff) << 2) + iVar2);
-        if ((double)(float)dVar4 <= dVar8) {
-          dVar6 = dVar6 + dVar5;
+        iVar3 = (iVar5 + 0x18) * 4;
+        *(float *)(iVar3 + iVar4) = (float)((double)*(float *)(iVar3 + iVar4) + (double)fVar10);
+        fVar2 = *(float *)((iVar5 + 0x5e) * 4 + iVar4);
+        if ((double)fVar10 <= dVar8) {
+          fVar2 = fVar2 + fVar1;
         }
         else {
-          dVar6 = dVar6 - dVar5;
+          fVar2 = fVar2 - fVar1;
         }
-        dVar4 = (double)AngleNormalize360((double)(float)dVar6);
-        *(float *)((int)((lVar3 + 0x56U & 0xffffffff) << 2) + iVar2) = (float)dVar4;
+        fVar10 = AngleNormalize360(fVar2);
+        *(float *)((iVar5 + 0x56) * 4 + iVar4) = fVar10;
       }
     }
-    lVar3 = lVar3 + 1;
-  } while ((int)lVar3 < 2);
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 2);
   __restfpr_28();
   __restgprlr_29();
   return;
@@ -5019,33 +5389,35 @@ void PM_UpdateViewAngles_RangeLimited(void)
 
 // 8227D908  PM_UpdateViewAngles_LadderClamp  (bgame/bg_pmove.cpp:4725)
 
-void PM_UpdateViewAngles_LadderClamp(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles_LadderClamp(playerState_s *param_1)
 
 {
   double dVar1;
-  double dVar2;
-  double dVar3;
+  float fVar2;
+  float fVar3;
   
-  dVar2 = (double)vectoyaw(param_1 + 0x70);
-  dVar3 = (double)(float)(dVar2 + 180.0);
-  dVar2 = (double)AngleDelta(dVar3,(double)*(float *)(param_1 + 0x15c));
-  dVar1 = (double)*(float *)(DAT_829c7e5c + 0xc);
-  if ((dVar1 < dVar2) || (dVar2 < -dVar1)) {
-    if (dVar2 <= dVar1) {
-      dVar2 = dVar1 + dVar2;
+  fVar2 = vectoyaw(param_1->vLadderVec);
+  dVar1 = (double)(fVar2 + 180.0);
+  fVar3 = AngleDelta(fVar2 + 180.0,param_1->viewangles[1]);
+  fVar2 = (bg_ladder_yawcap->current).value;
+  if ((fVar2 < fVar3) || (fVar3 < -fVar2)) {
+    if (fVar3 <= fVar2) {
+      fVar2 = fVar2 + fVar3;
     }
     else {
-      dVar2 = dVar2 - dVar1;
+      fVar2 = fVar3 - fVar2;
     }
-    *(float *)(param_1 + 100) = *(float *)(param_1 + 100) + (float)dVar2;
-    if ((float)dVar2 <= 0.0) {
-      dVar3 = (double)*(float *)(DAT_829c7e5c + 0xc) + dVar3;
+    param_1->delta_angles[1] = param_1->delta_angles[1] + fVar2;
+    if (fVar2 <= 0.0) {
+      dVar1 = (double)(bg_ladder_yawcap->current).value + dVar1;
     }
     else {
-      dVar3 = dVar3 - (double)*(float *)(DAT_829c7e5c + 0xc);
+      dVar1 = dVar1 - (double)(bg_ladder_yawcap->current).value;
     }
-    dVar2 = (double)AngleNormalize360((double)(float)dVar3);
-    *(float *)(param_1 + 0x15c) = (float)dVar2;
+    fVar2 = AngleNormalize360((float)dVar1);
+    param_1->viewangles[1] = fVar2;
   }
   return;
 }
@@ -5053,54 +5425,62 @@ void PM_UpdateViewAngles_LadderClamp(int param_1)
 
 // 8227D9C8  PM_UpdateViewAngles_ProneYawClamp  (bgame/bg_pmove.cpp:4754)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void PM_UpdateViewAngles_ProneYawClamp
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,int param_6)
+               (playerState_s *param_1,float param_2,int param_3,float param_4,float param_5)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  double dVar4;
+  dvar_t *pdVar1;
+  playerState_s *ppVar2;
+  int in_r5;
+  double dVar3;
   double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
+  double dVar7;
+  float fVar8;
   
-  iVar3 = __savefpr_28();
-  dVar5 = extraout_f1;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1293,0,0xffffffff82000f98,0xffffffff82001fdc);
+  dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
+  ppVar2 = (playerState_s *)__savefpr_28((double)param_2,param_1,param_3);
+  dVar7 = extraout_f1;
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1293,0,
+                    "%s");
   }
-  iVar2 = DAT_829c7d44;
+  pdVar1 = bg_prone_yawcap;
   dVar6 = 0.0;
-  dVar4 = (double)*(float *)(DAT_829c7d44 + 0xc);
-  if ((dVar4 < dVar5) || (dVar5 < -dVar4)) {
-    if (dVar5 <= dVar4) {
-      dVar5 = dVar4 + dVar5;
+  dVar3 = (double)(bg_prone_yawcap->current).value;
+  if ((dVar3 < dVar7) || (dVar7 < -dVar3)) {
+    if (dVar7 <= dVar3) {
+      dVar7 = dVar3 + dVar7;
     }
     else {
-      dVar5 = dVar5 - dVar4;
+      dVar7 = dVar7 - dVar3;
     }
-    *(float *)(iVar3 + 100) = *(float *)(iVar3 + 100) + (float)dVar5;
-    if ((float)dVar5 <= 0.0) {
-      fVar1 = *(float *)(iVar3 + 0x1ac) + *(float *)(iVar2 + 0xc);
+    ppVar2->delta_angles[1] = ppVar2->delta_angles[1] + (float)dVar7;
+    if ((float)dVar7 <= 0.0) {
+      fVar8 = ppVar2->proneDirection + (pdVar1->current).value;
     }
     else {
-      fVar1 = *(float *)(iVar3 + 0x1ac) - *(float *)(iVar2 + 0xc);
+      fVar8 = ppVar2->proneDirection - (pdVar1->current).value;
     }
-    dVar5 = (double)AngleNormalize360((double)fVar1);
-    *(float *)(iVar3 + 0x15c) = (float)dVar5;
+    fVar8 = AngleNormalize360(fVar8);
+    ppVar2->viewangles[1] = fVar8;
   }
-  if (param_6 != 0) {
-    BG_AddPredictableEventToPlayerstate(9,3,iVar3);
-    dVar5 = (double)AngleDelta(param_2,(double)*(float *)(iVar3 + 0x15c));
-    if ((ABS(dVar5) <= 1.0) &&
-       (dVar4 = (double)AngleDelta(param_3,(double)*(float *)(iVar3 + 0x15c)),
-       dVar6 < (double)(float)(dVar4 * dVar5))) {
-      dVar4 = (double)(float)(dVar5 * 0.9800000190734863);
-      dVar5 = (double)AngleNormalize360((double)(float)(dVar4 + (double)*(float *)(iVar3 + 0x15c)));
-      *(float *)(iVar3 + 0x15c) = (float)dVar5;
-      *(float *)(iVar3 + 100) = (float)((double)*(float *)(iVar3 + 100) + dVar4);
+  if (in_r5 != 0) {
+    BG_AddPredictableEventToPlayerstate(9,3,ppVar2);
+    fVar8 = AngleDelta((float)dVar4,ppVar2->viewangles[1]);
+    dVar7 = (double)fVar8;
+    if ((ABS(dVar7) <= 1.0) &&
+       (fVar8 = AngleDelta((float)dVar5,ppVar2->viewangles[1]),
+       dVar6 < (double)(float)((double)fVar8 * dVar7))) {
+      dVar7 = (double)(float)(dVar7 * 0.9800000190734863);
+      fVar8 = AngleNormalize360((float)(dVar7 + (double)ppVar2->viewangles[1]));
+      ppVar2->viewangles[1] = fVar8;
+      ppVar2->delta_angles[1] = (float)((double)ppVar2->delta_angles[1] + dVar7);
     }
   }
   __restfpr_28();
@@ -5110,35 +5490,38 @@ void PM_UpdateViewAngles_ProneYawClamp
 
 // 8227DB30  PM_UpdateViewAngles_PronePitchClamp  (bgame/bg_pmove.cpp:4802)
 
-void PM_UpdateViewAngles_PronePitchClamp(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles_PronePitchClamp(playerState_s *param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  float fVar1;
+  dvar_t *pdVar2;
   double dVar3;
+  double dVar4;
+  float fVar5;
   
-  dVar3 = (double)AngleDelta((double)*(float *)(param_1 + 0x1b4),(double)*(float *)(param_1 + 0x158)
-                            );
-  iVar1 = DAT_829c5634;
-  dVar2 = (double)*(float *)(DAT_829c5634 + 0xc);
-  if ((dVar2 < dVar3) || (dVar3 < -(double)*(float *)(DAT_829c55f4 + 0xc))) {
-    if (dVar3 <= dVar2) {
-      dVar3 = (double)*(float *)(DAT_829c55f4 + 0xc) + dVar3;
+  fVar5 = AngleDelta(param_1->proneTorsoPitch,param_1->viewangles[0]);
+  pdVar2 = player_prone_view_pitch_up;
+  fVar1 = (player_prone_view_pitch_up->current).value;
+  if ((fVar1 < fVar5) || (fVar5 < -(player_prone_view_pitch_down->current).value)) {
+    if (fVar5 <= fVar1) {
+      fVar5 = (player_prone_view_pitch_down->current).value + fVar5;
     }
     else {
-      dVar3 = dVar3 - dVar2;
+      fVar5 = fVar5 - fVar1;
     }
-    *(float *)(param_1 + 0x60) = (float)dVar3 + *(float *)(param_1 + 0x60);
-    if ((float)dVar3 <= 0.0) {
-      dVar2 = (double)((*(float *)(DAT_829c55f4 + 0xc) + *(float *)(param_1 + 0x1b4)) * 0.0027777778
-                      );
-      dVar3 = floor((double)(float)(dVar2 + 0.5));
+    param_1->delta_angles[0] = fVar5 + param_1->delta_angles[0];
+    if (fVar5 <= 0.0) {
+      dVar4 = (double)(((player_prone_view_pitch_down->current).value + param_1->proneTorsoPitch) *
+                      0.0027777778);
+      dVar3 = floor((double)(float)(dVar4 + 0.5));
     }
     else {
-      dVar2 = (double)((*(float *)(param_1 + 0x1b4) - *(float *)(iVar1 + 0xc)) * 0.0027777778);
-      dVar3 = floor((double)(float)(dVar2 + 0.5));
+      dVar4 = (double)((param_1->proneTorsoPitch - (pdVar2->current).value) * 0.0027777778);
+      dVar3 = floor((double)(float)(dVar4 + 0.5));
     }
-    *(float *)(param_1 + 0x158) = (float)(dVar2 - (double)(float)dVar3) * 360.0;
+    param_1->viewangles[0] = (float)(dVar4 - (double)(float)dVar3) * 360.0;
   }
   return;
 }
@@ -5146,167 +5529,233 @@ void PM_UpdateViewAngles_PronePitchClamp(int param_1)
 
 // 8227DC40  PM_UpdateViewAngles_Prone  (bgame/bg_pmove.cpp:4826)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void PM_UpdateViewAngles_Prone
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,ulonglong param_6,undefined8 param_7)
+               (pmove_t *param_1,playerState_s *param_2,float param_3,usercmd_s *param_4,
+               uchar param_5,float param_6)
 
 {
   uint uVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar4;
-  bool bVar5;
-  undefined8 uVar6;
-  undefined4 uVar7;
-  int iVar8;
-  char cVar9;
-  bool bVar10;
-  double dVar11;
+  uint uVar2;
+  bool bVar3;
+  pmove_t *ppVar4;
+  FeetDirection FVar5;
+  int iVar6;
+  bool bVar7;
+  bool bVar8;
+  ulonglong uVar9;
+  playerState_s *ppVar10;
+  float *pfVar11;
+  playerState_s *ppVar12;
+  longlong lVar13;
+  float *pfVar14;
+  ulonglong uVar15;
+  longlong lVar16;
+  double dVar17;
   double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  undefined8 uVar17;
-  undefined8 uVar18;
-  undefined8 uVar19;
+  double dVar18;
+  double dVar19;
   double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  float fVar28;
+  proneCheckType_t in_stack_fffffea8;
+  FeetDirection in_stack_fffffeac;
   
-  __savegprlr_17();
-  uVar6 = __savefpr_22();
-  dVar11 = extraout_f1;
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x12e8,0,0xffffffff82000f98,0xffffffff82001fdc);
+  dVar19 = (double)param_6;
+  uVar15 = (ulonglong)(char)param_5;
+  uVar9 = (ulonglong)(int)param_2;
+  __savegprlr_17((double)param_3,param_1,uVar9,param_4);
+  ppVar4 = (pmove_t *)__savefpr_22();
+  ppVar10 = (playerState_s *)uVar9;
+  dVar17 = extraout_f1;
+  ppVar12 = ppVar10;
+  if ((uVar9 & 0xffffffff) == 0) {
+    ppVar12 = (playerState_s *)0x12e8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x12e8,0,
+                    "%s");
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x12e9,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  if ((uVar15 & 0xffffffff) == 0) {
+    ppVar12 = (playerState_s *)0x12e9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x12e9,0,
+                    "%s");
   }
-  iVar2 = (int)param_4;
-  dVar14 = (double)*(float *)(iVar2 + 0x15c);
-  bVar10 = false;
-  dVar12 = (double)AngleDelta((double)*(float *)(iVar2 + 0x1ac),dVar14);
-  if (((double)(*(float *)(DAT_829c7d44 + 0xc) - 5.0) < dVar12) ||
-     (bVar4 = false, dVar12 < -(double)(*(float *)(DAT_829c7d44 + 0xc) - 5.0))) {
-    bVar4 = true;
+  dVar20 = (double)ppVar10->viewangles[1];
+  bVar3 = false;
+  fVar28 = AngleDelta(ppVar10->proneDirection,ppVar10->viewangles[1]);
+  dVar27 = (double)fVar28;
+  if (((double)((bg_prone_yawcap->current).value - 5.0) < dVar27) ||
+     (bVar7 = false, dVar27 < -(double)((bg_prone_yawcap->current).value - 5.0))) {
+    bVar7 = true;
   }
-  iVar8 = (int)param_6;
-  dVar16 = 0.0;
-  if (((*(char *)(iVar8 + 0x1c) == '\0') && (*(char *)(iVar8 + 0x1d) == '\0')) ||
-     (bVar5 = true, dVar12 == 0.0)) {
-    bVar5 = false;
+  iVar6 = (int)uVar15;
+  dVar22 = 0.0;
+  if (((*(char *)(iVar6 + 0x1c) == '\0') && (*(char *)(iVar6 + 0x1d) == '\0')) ||
+     (bVar8 = true, dVar27 == 0.0)) {
+    bVar8 = false;
   }
-  uVar1 = *(uint *)(iVar8 + 4);
-  uVar7 = PM_GetProneFeetDirection(param_4);
-  uVar17 = 0x4046800000000000;
-  uVar18 = 0x403e000000000000;
-  uVar19 = 0x402e000000000000;
-  dVar15 = -1.0;
-  dVar20 = 1.0;
-  uVar3 = (uint)LZCOUNT(uVar7) >> 5;
-  if (((!bVar4) && (!bVar5)) && ((uVar1 & 0x100) == 0)) goto LAB_8227df7c;
-  dVar11 = (double)(float)(dVar11 * 0.055000003427267075);
-  if (dVar11 <= ABS(dVar12)) {
-    if (dVar12 <= dVar16) {
-      dVar11 = (double)(float)((double)*(float *)(iVar2 + 0x1ac) + dVar11);
+  uVar1 = *(uint *)(iVar6 + 4);
+  FVar5 = PM_GetProneFeetDirection(ppVar10);
+  lVar13 = LZCOUNT(FVar5);
+  dVar23 = 45.0;
+  dVar24 = 30.0;
+  dVar25 = 15.0;
+  dVar21 = -1.0;
+  dVar26 = 1.0;
+  uVar2 = (uint)lVar13 >> 5;
+  if (((!bVar7) && (!bVar8)) && ((uVar1 & 0x100) == 0)) goto LAB_8227df7c;
+  dVar17 = (double)(float)(dVar17 * 0.055000003427267075);
+  if (dVar17 <= ABS(dVar27)) {
+    if (dVar27 <= dVar22) {
+      dVar17 = (double)(float)((double)ppVar10->proneDirection + dVar17);
     }
     else {
-      dVar11 = (double)(float)((double)*(float *)(iVar2 + 0x1ac) - dVar11);
+      dVar17 = (double)(float)((double)ppVar10->proneDirection - dVar17);
     }
   }
   else {
-    dVar11 = (double)*(float *)(iVar2 + 0x15c);
+    dVar17 = (double)ppVar10->viewangles[1];
   }
-  bVar4 = true;
-  iVar8 = BG_CheckProneTurned(dVar11,uVar6,param_4,LZCOUNT(uVar7),param_7);
-  if (iVar8 == 0) {
+  bVar7 = true;
+  uVar15 = uVar9;
+  iVar6 = BG_CheckProneTurned(ppVar4,ppVar10,(float)dVar17,(uchar)lVar13);
+  ppVar12 = (playerState_s *)uVar15;
+  pfVar14 = (float *)lVar13;
+  if (iVar6 == 0) {
     do {
-      if (uVar3 != 0) goto LAB_8227df44;
-      if (!bVar4) goto LAB_8227df7c;
-      dVar12 = (double)AngleDelta((double)*(float *)(iVar2 + 0x1ac),dVar11);
-      if (ABS(dVar12) <= dVar20) {
-        bVar4 = false;
-        bVar10 = true;
-        dVar13 = dVar12;
+      ppVar12 = (playerState_s *)uVar15;
+      if (uVar2 != 0) goto LAB_8227df44;
+      if (!bVar7) goto LAB_8227df7c;
+      fVar28 = AngleDelta(ppVar10->proneDirection,(float)dVar17);
+      dVar27 = (double)fVar28;
+      if (ABS(dVar27) <= dVar26) {
+        bVar7 = false;
+        bVar3 = true;
+        dVar18 = dVar27;
       }
       else {
-        bVar4 = true;
-        dVar13 = dVar15;
-        if (dVar16 < dVar12) {
-          dVar13 = dVar20;
+        bVar7 = true;
+        dVar18 = dVar21;
+        if (dVar22 < dVar27) {
+          dVar18 = dVar26;
         }
       }
-      dVar11 = (double)AngleNormalize360((double)(float)(dVar11 + dVar13));
-      iVar8 = BG_CheckProneTurned(uVar6,param_4);
-    } while (iVar8 == 0);
+      fVar28 = AngleNormalize360((float)(dVar17 + dVar18));
+      dVar17 = (double)fVar28;
+      uVar15 = uVar9;
+      iVar6 = BG_CheckProneTurned(ppVar4,ppVar10,fVar28,(uchar)lVar13);
+      pfVar14 = (float *)lVar13;
+    } while (iVar6 == 0);
 LAB_8227de88:
-    cVar9 = BG_CheckProne(uVar19,uVar18,(double)*(float *)(iVar2 + 0x15c),uVar17,
-                          *(undefined4 *)(iVar2 + 0x150),param_4 + 0x1c);
-    if ((cVar9 == '\0') ||
-       ((uVar3 == 0 &&
-        (cVar9 = BG_CheckProne(uVar19,uVar18,dVar11,uVar17,*(undefined4 *)(iVar2 + 0x150),
-                               param_4 + 0x1c), cVar9 == '\0')))) {
-      bVar10 = true;
+    pfVar11 = ppVar10->origin;
+    lVar13 = (ulonglong)(uint)ppVar10->groundEntityNum - 0x7ff;
+    iVar6 = ppVar10->groundEntityNum - 0x800;
+    ppVar12 = (playerState_s *)pfVar11;
+    bVar7 = BG_CheckProne(ppVar10->clientNum,pfVar11,(float)dVar25,(float)dVar24,
+                          ppVar10->viewangles[1],pfVar14,
+                          (float *)((int)lVar13 - (iVar6 + (uint)(lVar13 == 0))),iVar6,0,0,'\x01',
+                          in_stack_fffffea8,(float)dVar23,in_stack_fffffeac);
+    lVar13 = (longlong)bVar7;
+    if (lVar13 == 0) {
+LAB_8227df78:
+      bVar3 = true;
       goto LAB_8227df7c;
     }
-  }
-  else if (uVar3 == 0) goto LAB_8227de88;
-LAB_8227df44:
-  if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8200c508,0x1317,0,0xffffffff82000f98,0xffffffff8200ce94);
-  }
-  *(float *)(iVar2 + 0x1ac) = (float)dVar11;
-LAB_8227df7c:
-  dVar11 = (double)AngleDelta((double)*(float *)(iVar2 + 0x1ac),(double)*(float *)(iVar2 + 0x15c));
-  if (dVar11 == dVar16) {
-LAB_8227e0dc:
-    if ((uVar3 != 0) && (bVar10)) {
-      MyAssertHandler(0xffffffff8200c508,0x1362,0,0xffffffff82000f98,0xffffffff8200ce68);
+    if (uVar2 == 0) {
+      lVar13 = (ulonglong)(uint)ppVar10->groundEntityNum - 0x7ff;
+      iVar6 = ppVar10->groundEntityNum - 0x800;
+      ppVar12 = (playerState_s *)pfVar11;
+      bVar7 = BG_CheckProne(ppVar10->clientNum,pfVar11,(float)dVar25,(float)dVar24,(float)dVar17,
+                            (float *)(int)bVar7,
+                            (float *)((int)lVar13 - (iVar6 + (uint)(lVar13 == 0))),iVar6,0,0,'\x01',
+                            in_stack_fffffea8,(float)dVar23,in_stack_fffffeac);
+      lVar13 = (longlong)bVar7;
+      if (lVar13 == 0) goto LAB_8227df78;
     }
-    PM_UpdateViewAngles_ProneYawClamp(dVar11,param_2,dVar14,param_4);
-    PM_UpdateViewAngles_PronePitchClamp(param_4);
+  }
+  else if (uVar2 == 0) goto LAB_8227de88;
+LAB_8227df44:
+  if (((uint)(float)dVar17 & 0x7f800000) == 0x7f800000) {
+    lVar13 = 0;
+    ppVar12 = (playerState_s *)0x1317;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1317,0,
+                    "%s");
+  }
+  ppVar10->proneDirection = (float)dVar17;
+LAB_8227df7c:
+  fVar28 = AngleDelta(ppVar10->proneDirection,ppVar10->viewangles[1]);
+  dVar17 = (double)fVar28;
+  if (dVar17 == dVar22) {
+LAB_8227e0dc:
+    if ((uVar2 != 0) && (bVar3)) {
+      ppVar12 = (playerState_s *)0x1362;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1362,0
+                      ,"%s");
+    }
+    PM_UpdateViewAngles_ProneYawClamp
+              (ppVar10,(float)dVar17,(int)ppVar12,(float)dVar19,(float)dVar20);
+    PM_UpdateViewAngles_PronePitchClamp(ppVar10);
     __restfpr_22();
     __restgprlr_17();
     return;
   }
-  dVar12 = (double)*(float *)(iVar2 + 0x1ac);
-  bVar4 = true;
+  dVar27 = (double)ppVar10->proneDirection;
+  bVar7 = true;
 LAB_8227df9c:
-  if ((uVar3 == 0) &&
-     (cVar9 = BG_CheckProne(uVar19,uVar18,dVar12,uVar17,*(undefined4 *)(iVar2 + 0x150),
-                            param_4 + 0x1c), cVar9 == '\0')) {
-    bVar5 = false;
+  if (uVar2 == 0) {
+    lVar16 = (ulonglong)(uint)ppVar10->groundEntityNum - 0x7ff;
+    iVar6 = ppVar10->groundEntityNum - 0x800;
+    ppVar12 = (playerState_s *)ppVar10->origin;
+    bVar8 = BG_CheckProne(ppVar10->clientNum,(float *)ppVar12,(float)dVar25,(float)dVar24,
+                          (float)dVar27,(float *)lVar13,
+                          (float *)((int)lVar16 - (iVar6 + (uint)(lVar16 == 0))),iVar6,0,0,'\x01',
+                          in_stack_fffffea8,(float)dVar23,in_stack_fffffeac);
+    lVar13 = (longlong)bVar8;
+    if (lVar13 != 0) goto LAB_8227e004;
+    bVar8 = false;
   }
   else {
-    bVar5 = true;
-    iVar8 = BG_CheckProneTurned(dVar12,uVar6,param_4);
-    if ((iVar8 != 0) || (uVar3 != 0)) {
-      if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff8200c508,0x1344,0,0xffffffff82000f98,0xffffffff8200ce94);
+LAB_8227e004:
+    bVar8 = true;
+    ppVar12 = ppVar10;
+    iVar6 = BG_CheckProneTurned(ppVar4,ppVar10,(float)dVar27,(uchar)lVar13);
+    if ((iVar6 != 0) || (uVar2 != 0)) {
+      if (((uint)(float)dVar27 & 0x7f800000) == 0x7f800000) {
+        ppVar12 = (playerState_s *)0x1344;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1344
+                        ,0,"%s");
       }
-      *(float *)(iVar2 + 0x1ac) = (float)dVar12;
+      ppVar10->proneDirection = (float)dVar27;
       goto LAB_8227e0dc;
     }
   }
-  if (!bVar4) goto LAB_8227e0dc;
-  if (ABS(dVar11) <= dVar20) {
-    bVar4 = false;
-    dVar13 = dVar11;
+  if (!bVar7) goto LAB_8227e0dc;
+  if (ABS(dVar17) <= dVar26) {
+    bVar7 = false;
+    dVar18 = dVar17;
   }
   else {
-    bVar4 = true;
-    dVar13 = dVar15;
-    if (dVar16 < dVar11) {
-      dVar13 = dVar20;
+    bVar7 = true;
+    dVar18 = dVar21;
+    if (dVar22 < dVar17) {
+      dVar18 = dVar26;
     }
   }
-  bVar10 = true;
-  *(float *)(iVar2 + 100) = (float)((double)*(float *)(iVar2 + 100) + dVar13);
-  dVar11 = (double)AngleNormalize360((double)(float)((double)*(float *)(iVar2 + 0x15c) + dVar13));
-  *(float *)(iVar2 + 0x15c) = (float)dVar11;
-  dVar11 = (double)AngleDelta((double)*(float *)(iVar2 + 0x1ac),dVar11);
-  if (!bVar5) {
-    dVar12 = (double)AngleNormalize360((double)(float)(dVar12 + dVar11));
+  bVar3 = true;
+  ppVar10->delta_angles[1] = (float)((double)ppVar10->delta_angles[1] + dVar18);
+  fVar28 = AngleNormalize360((float)((double)ppVar10->viewangles[1] + dVar18));
+  ppVar10->viewangles[1] = fVar28;
+  fVar28 = AngleDelta(ppVar10->proneDirection,fVar28);
+  dVar17 = (double)fVar28;
+  if (!bVar8) {
+    fVar28 = AngleNormalize360((float)(dVar27 + dVar17));
+    dVar27 = (double)fVar28;
   }
   goto LAB_8227df9c;
 }
@@ -5314,65 +5763,66 @@ LAB_8227df9c:
 
 // 8227E138  PM_UpdateViewAngles  (bgame/bg_pmove.cpp:4977)
 
-void PM_UpdateViewAngles(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4
-                        )
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdateViewAngles(pmove_t *param_1,playerState_s *param_2,float param_3,usercmd_s *param_4,
+                        uchar param_5)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  char cVar3;
-  undefined8 extraout_f1;
+  pmove_t *ppVar1;
+  bool bVar2;
+  usercmd_s *puVar3;
+  double extraout_f1;
   double dVar4;
-  undefined8 uVar5;
-  double dVar6;
+  double dVar5;
+  float fVar6;
   
-  uVar2 = __savegprlr_28();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 4) != 6) {
-    if (*(int *)(iVar1 + 4) < 8) {
-      if (((*(uint *)(iVar1 + 0xc) & 0x80000) == 0) &&
-         ((*(uint *)((int)param_4 + 4) & 0x100000) == 0)) {
-        dVar4 = (double)*(float *)(iVar1 + 0x15c);
-        uVar5 = extraout_f1;
-        if (((*(uint *)(iVar1 + 0xf8) & 0x2000) != 0) && ((*(uint *)(iVar1 + 0x14) & 4) == 0)) {
-          TurretUpdateViewClamp(extraout_f1,uVar2);
+  puVar3 = (usercmd_s *)(int)(char)param_5;
+  ppVar1 = (pmove_t *)__savegprlr_28((double)param_3,param_1);
+  if (param_2->pm_type != 6) {
+    if (param_2->pm_type < 8) {
+      if (((param_2->pm_flags & 0x80000U) == 0) && ((puVar3->buttons & 0x100000U) == 0)) {
+        dVar5 = (double)param_2->viewangles[1];
+        dVar4 = extraout_f1;
+        if (((param_2->eFlags & 0x2000U) != 0) && ((param_2->linkFlags & 4U) == 0)) {
+          TurretUpdateViewClamp(ppVar1,(float)extraout_f1);
         }
-        PM_UpdateViewAngles_Clamp(param_2,param_4);
-        cVar3 = PM_ViewRangeLimited(param_2);
-        if (cVar3 != '\0') {
-          PM_UpdateViewAngles_RangeLimited(dVar4,param_2);
+        PM_UpdateViewAngles_Clamp(param_2,puVar3);
+        bVar2 = PM_ViewRangeLimited(param_2);
+        if (bVar2) {
+          PM_UpdateViewAngles_RangeLimited(param_2,(float)dVar5);
           __restgprlr_28();
           return;
         }
-        if ((*(uint *)(iVar1 + 0xc) & 4) != 0) {
+        if ((param_2->pm_flags & 4U) != 0) {
           Mantle_CapView(param_2);
           __restgprlr_28();
           return;
         }
-        if ((((*(uint *)(iVar1 + 0xc) & 8) != 0) && (*(int *)(iVar1 + 0x6c) == 0x7ff)) &&
-           (*(float *)(DAT_829c7e5c + 0xc) != 0.0)) {
+        if ((((param_2->pm_flags & 8U) != 0) && (param_2->groundEntityNum == 0x7ff)) &&
+           ((bg_ladder_yawcap->current).value != 0.0)) {
           PM_UpdateViewAngles_LadderClamp(param_2);
         }
-        if (((*(uint *)(iVar1 + 0xc) & 1) != 0) && (*(int *)(iVar1 + 0xac) == 0x7ff)) {
-          if ((*(uint *)(iVar1 + 0xf8) & 0x3800) != 0) {
-            MyAssertHandler(0xffffffff8200c508,0x13b5,0,0xffffffff82000f98,0xffffffff8200ceac);
+        if (((param_2->pm_flags & 1U) != 0) && ((param_2->vehicleState).entity == 0x7ff)) {
+          if ((param_2->eFlags & 0x3800U) != 0) {
+            param_4 = (usercmd_s *)0x0;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",
+                            0x13b5,0,"%s");
           }
-          PM_UpdateViewAngles_Prone(uVar5,dVar4,uVar2,param_2);
+          PM_UpdateViewAngles_Prone(ppVar1,param_2,(float)dVar4,param_4,(uchar)puVar3,(float)dVar5);
           __restgprlr_28();
           return;
         }
       }
       else {
-        PM_UpdateViewAngles_RemoteControlled(param_2,param_4);
+        PM_UpdateViewAngles_RemoteControlled(param_2,puVar3);
       }
     }
-    else if (*(int *)(iVar1 + 0x1a0) == 999) {
-      dVar6 = 0.0054931640625;
-      dVar4 = (double)AngleNormalize360((double)(float)((double)(longlong)
-                                                                *(int *)((int)param_4 + 0xc) *
-                                                        0.0054931640625 +
-                                                       (double)*(float *)(iVar1 + 100)));
-      *(int *)(iVar1 + 0x1a0) = (int)(dVar4 * dVar6);
+    else if (param_2->stats[1] == 999) {
+      dVar4 = 0.0054931640625;
+      fVar6 = AngleNormalize360((float)((double)(longlong)puVar3->angles[1] * 0.0054931640625 +
+                                       (double)param_2->delta_angles[1]));
+      param_2->stats[1] = (int)((double)fVar6 * dVar4);
       __restgprlr_28();
       return;
     }
@@ -5384,14 +5834,16 @@ void PM_UpdateViewAngles(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 8227E358  PM_UpdatePronePitch  (bgame/bg_pmove.cpp:5073)
 
-void PM_UpdatePronePitch(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdatePronePitch(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  int *piVar4;
-  undefined8 uVar5;
+  playerState_s *ppVar1;
+  float *pfVar2;
+  bool bVar4;
+  float *pfVar3;
+  uint uVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -5402,42 +5854,57 @@ void PM_UpdatePronePitch(undefined8 param_1,longlong param_2)
   double dVar13;
   double dVar14;
   double dVar15;
+  float fVar16;
+  proneCheckType_t in_stack_ffffff18;
+  FeetDirection in_stack_ffffff1c;
   
-  __savegprlr_27();
-  piVar3 = (int *)__savefpr_24();
-  piVar4 = piVar3;
-  if (piVar3 == (int *)0x0) {
-    piVar4 = (int *)MyAssertHandler(0xffffffff8200c508,0x13d8,0,0xffffffff82000f98,
-                                    0xffffffff82004978);
+  __savegprlr_27(param_1);
+  pfVar2 = (float *)__savefpr_24();
+  pfVar3 = pfVar2;
+  if (pfVar2 == (float *)0x0) {
+    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x13d8,0,
+                    "%s");
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    piVar4 = (int *)MyAssertHandler(0xffffffff8200c508,0x13db,0,0xffffffff82000f98,
-                                    0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*pfVar2;
+  if (ppVar1 == (playerState_s *)0x0) {
+    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x13db,0,
+                    "%s");
   }
-  if ((*(uint *)(iVar1 + 0xc) & 1) == 0) goto LAB_8227e5ec;
-  iVar2 = (int)param_2;
-  if (*(int *)(iVar1 + 0x6c) == 0x7ff) {
-    PM_GetProneFeetDirection(iVar1);
-    piVar4 = (int *)BG_CheckProne(0x402e000000000000,0x403e000000000000,
-                                  (double)*(float *)(iVar1 + 0x1ac),0x4049000000000000,
-                                  *(undefined4 *)(iVar1 + 0x150),iVar1 + 0x1c);
-    if (((uint)piVar4 & 0xff) == 0) {
+  if ((ppVar1->pm_flags & 1U) == 0) goto LAB_8227e5ec;
+  if (ppVar1->groundEntityNum == 0x7ff) {
+    PM_GetProneFeetDirection(ppVar1);
+    if (param_2->groundPlane == 0) {
+      uVar5 = 1;
+    }
+    else {
+      uVar5 = (uint)(param_2->groundTrace).walkable;
+    }
+    bVar4 = BG_CheckProne(ppVar1->clientNum,ppVar1->origin,15.0,30.0,ppVar1->proneDirection,
+                          (float *)&IMAGE_DOS_HEADER_82000000,
+                          (float *)(uint)*(byte *)(pfVar2 + 0x4d),uVar5,(int)(pfVar2 + 0x49),
+                          (int)(pfVar2 + 0x4a),'\x01',in_stack_ffffff18,50.0,in_stack_ffffff1c);
+    pfVar3 = (float *)(int)bVar4;
+    if (!bVar4) {
       uVar5 = 3;
 LAB_8227e4a0:
-      piVar4 = (int *)BG_AddPredictableEventToPlayerstate(7,uVar5,iVar1);
+      pfVar3 = (float *)0x7;
+      BG_AddPredictableEventToPlayerstate(7,uVar5,ppVar1);
     }
   }
-  else if ((*(int *)(iVar2 + 0x30) != 0) && (*(char *)(iVar2 + 0x68) == '\0')) {
+  else if ((param_2->groundPlane != 0) && ((param_2->groundTrace).walkable == false)) {
     uVar5 = 0;
     goto LAB_8227e4a0;
   }
   dVar15 = 0.0;
   dVar8 = dVar15;
-  if (*(int *)(iVar2 + 0x30) != 0) {
-    dVar15 = (double)PitchForYawOnNormal((double)*(float *)(iVar1 + 0x1ac),piVar4,param_2 + 0x3c);
+  if (param_2->groundPlane != 0) {
+    fVar16 = PitchForYawOnNormal(ppVar1->proneDirection,pfVar3);
+    dVar15 = (double)fVar16;
   }
-  dVar7 = (double)AngleDelta(dVar15,(double)*(float *)(iVar1 + 0x1b0));
+  fVar16 = AngleDelta((float)dVar15,ppVar1->proneDirectionPitch);
+  dVar7 = (double)fVar16;
   dVar10 = 360.0;
   dVar11 = 0.5;
   dVar12 = 0.0027777778450399637;
@@ -5445,40 +5912,42 @@ LAB_8227e4a0:
   dVar15 = 1.0;
   dVar14 = 70.0;
   if (dVar7 != dVar8) {
-    dVar6 = (double)(*(float *)(iVar2 + 0x24) * 70.0);
+    dVar6 = (double)(param_2->frametime * 70.0);
     if (ABS(dVar7) <= dVar6) {
-      *(float *)(iVar1 + 0x1b0) = (float)((double)*(float *)(iVar1 + 0x1b0) + dVar7);
+      ppVar1->proneDirectionPitch = (float)((double)ppVar1->proneDirectionPitch + dVar7);
     }
     else {
       dVar9 = dVar15;
       if (dVar7 < 0.0) {
         dVar9 = dVar13;
       }
-      *(float *)(iVar1 + 0x1b0) = (float)(dVar9 * dVar6 + (double)*(float *)(iVar1 + 0x1b0));
+      ppVar1->proneDirectionPitch = (float)(dVar9 * dVar6 + (double)ppVar1->proneDirectionPitch);
     }
-    dVar6 = (double)(*(float *)(iVar1 + 0x1b0) * 0.0027777778);
+    dVar6 = (double)(ppVar1->proneDirectionPitch * 0.0027777778);
     dVar7 = floor((double)(float)(dVar6 + 0.5));
-    *(float *)(iVar1 + 0x1b0) = (float)((double)(float)(dVar6 - (double)(float)dVar7) * dVar10);
+    ppVar1->proneDirectionPitch = (float)((double)(float)(dVar6 - (double)(float)dVar7) * dVar10);
   }
   dVar7 = dVar8;
-  if (*(int *)(iVar2 + 0x30) != 0) {
-    dVar8 = (double)PitchForYawOnNormal((double)*(float *)(iVar1 + 0x15c));
+  if (param_2->groundPlane != 0) {
+    fVar16 = PitchForYawOnNormal(ppVar1->viewangles[1],pfVar3);
+    dVar8 = (double)fVar16;
   }
-  dVar8 = (double)AngleDelta(dVar8,(double)*(float *)(iVar1 + 0x1b4));
+  fVar16 = AngleDelta((float)dVar8,ppVar1->proneTorsoPitch);
+  dVar8 = (double)fVar16;
   if (dVar8 != dVar7) {
-    dVar7 = (double)(float)((double)*(float *)(iVar2 + 0x24) * dVar14);
+    dVar7 = (double)(float)((double)param_2->frametime * dVar14);
     if (ABS(dVar8) <= dVar7) {
-      *(float *)(iVar1 + 0x1b4) = (float)((double)*(float *)(iVar1 + 0x1b4) + dVar8);
+      ppVar1->proneTorsoPitch = (float)((double)ppVar1->proneTorsoPitch + dVar8);
     }
     else {
       if (dVar8 < 0.0) {
         dVar15 = dVar13;
       }
-      *(float *)(iVar1 + 0x1b4) = (float)(dVar15 * dVar7 + (double)*(float *)(iVar1 + 0x1b4));
+      ppVar1->proneTorsoPitch = (float)(dVar15 * dVar7 + (double)ppVar1->proneTorsoPitch);
     }
-    dVar15 = (double)(float)((double)*(float *)(iVar1 + 0x1b4) * dVar12);
+    dVar15 = (double)(float)((double)ppVar1->proneTorsoPitch * dVar12);
     dVar8 = floor((double)(float)(dVar15 + dVar11));
-    *(float *)(iVar1 + 0x1b4) = (float)((double)(float)(dVar15 - (double)(float)dVar8) * dVar10);
+    ppVar1->proneTorsoPitch = (float)((double)(float)(dVar15 - (double)(float)dVar8) * dVar10);
   }
 LAB_8227e5ec:
   __restfpr_24();
@@ -5489,14 +5958,17 @@ LAB_8227e5ec:
 
 // 8227E600  PM_SetProneMovementOverride  (bgame/bg_pmove.cpp:5167)
 
-void PM_SetProneMovementOverride(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_SetProneMovementOverride(playerState_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1430,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1430,0,
+                    "%s");
   }
-  if ((*(uint *)(param_1 + 0xc) & 1) != 0) {
-    *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) | 0x200;
+  if ((param_1->pm_flags & 1U) != 0) {
+    param_1->pm_flags = param_1->pm_flags | 0x200;
   }
   return;
 }
@@ -5504,36 +5976,40 @@ void PM_SetProneMovementOverride(int param_1)
 
 // 8227E670  PM_UpdatePlayerWalkingFlag  (bgame/bg_pmove.cpp:5182)
 
-void PM_UpdatePlayerWalkingFlag(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_UpdatePlayerWalkingFlag(pmove_t *param_1)
 
 {
   int iVar1;
   uint uVar2;
   int iVar3;
   int *piVar4;
-  char cVar5;
+  bool bVar5;
   
-  piVar4 = (int *)__savegprlr_28();
+  piVar4 = (int *)__savegprlr_28(param_1);
   iVar1 = *piVar4;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1442,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1442,0,
+                    "%s");
   }
   uVar2 = *(uint *)(iVar1 + 0xc);
   *(uint *)(iVar1 + 0xc) = uVar2 & 0xffffffbf;
   if ((((*(int *)(iVar1 + 4) < 8) && ((piVar4[2] & 0x800U) != 0)) && ((uVar2 & 1) == 0)) &&
      (((uVar2 & 0x10) != 0 && ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0)))) {
     if (*(int *)(iVar1 + 0x390) == 1) {
-      MyAssertHandler(0xffffffff8200c508,0x1456,0,0xffffffff82000f98,0xffffffff8200ceec);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1456,0
+                      ,"%s");
     }
     iVar3 = *(int *)(iVar1 + 0x24c);
-    if (((iVar3 != 8) && (iVar3 != 10)) &&
-       ((iVar3 != 0xc &&
-        (((iVar3 != 0xb && (iVar3 != 9)) && (cVar5 = BG_HasPerk(iVar1 + 0x4ec,0x14), cVar5 == '\0'))
-        )))) {
-      *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 0x40;
-      if ((*(uint *)(iVar1 + 0x10) & 0x1000) == 0) {
-        MyAssertHandler(0xffffffff8200c508,0x1461,0,0xffffffff82000f98,0xffffffff8200ced0);
-      }
+    if ((((iVar3 != 8) && (iVar3 != 10)) &&
+        ((iVar3 != 0xc &&
+         (((iVar3 != 0xb && (iVar3 != 9)) &&
+          (bVar5 = BG_HasPerk((uint *)(iVar1 + 0x4ec),0x14), !bVar5)))))) &&
+       (*(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 0x40,
+       (*(uint *)(iVar1 + 0x10) & 0x1000) == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1461,0
+                      ,"%s");
     }
   }
   __restgprlr_28();
@@ -5543,43 +6019,49 @@ void PM_UpdatePlayerWalkingFlag(void)
 
 // 8227E7B8  PM_SetLadderFlag  (bgame/bg_pmove.cpp:5223)
 
-void PM_SetLadderFlag(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_SetLadderFlag(playerState_s *param_1)
 
 {
-  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) | 8;
+  param_1->pm_flags = param_1->pm_flags | 8;
   return;
 }
 
 
 // 8227E7C8  PM_ClearLadderFlag  (bgame/bg_pmove.cpp:5229)
 
-void PM_ClearLadderFlag(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_ClearLadderFlag(playerState_s *param_1)
 
 {
-  if ((*(uint *)(param_1 + 0xc) & 8) == 0) {
+  if ((param_1->pm_flags & 8U) == 0) {
     return;
   }
-  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xffffeff7 | 0x1000;
+  param_1->pm_flags = param_1->pm_flags & 0xffffeff7U | 0x1000;
   return;
 }
 
 
 // 822817A8  PM_CheckLadderMove  (bgame/bg_pmove.cpp:5246)
 
-void PM_CheckLadderMove(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_CheckLadderMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float *pfVar5;
-  uint uVar6;
-  bool bVar7;
-  int *piVar8;
+  playerState_s *ppVar4;
+  uint uVar5;
+  bool bVar6;
+  pmove_t *ppVar7;
+  EffectiveStance EVar8;
   int iVar9;
-  uint uVar10;
-  float *pfVar11;
+  float *pfVar10;
+  uint uVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -5588,42 +6070,39 @@ void PM_CheckLadderMove(undefined8 param_1,longlong param_2)
   float local_d0;
   float local_cc;
   float local_c8;
-  undefined1 auStack_c0 [32];
-  float local_a0;
-  float local_9c;
-  float local_98;
-  float local_94;
-  uint local_90;
+  Bounds BStack_c0;
+  trace_t local_a0 [3];
   
-  __savegprlr_26();
-  piVar8 = (int *)__savefpr_27();
-  if (piVar8 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1488,0,0xffffffff82000f98,0xffffffff82004978);
+  __savegprlr_26(param_1);
+  ppVar7 = (pmove_t *)__savefpr_27();
+  if (ppVar7 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1488,0,
+                    "%s");
   }
-  iVar4 = *piVar8;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x148b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar4 = ppVar7->ps;
+  if (ppVar4 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x148b,0,
+                    "%s");
   }
-  pfVar5 = (float *)param_2;
-  if (pfVar5[0xb] != 0.0) {
-    *(uint *)(iVar4 + 0xc) = *(uint *)(iVar4 + 0xc) & 0xffffefff;
+  if (param_2->walking != 0) {
+    ppVar4->pm_flags = ppVar4->pm_flags & 0xffffefff;
   }
-  if (((*(int *)(iVar4 + 8) != 0) && ((*(uint *)(iVar4 + 0xc) & 8) == 0)) &&
-     ((*(uint *)(iVar4 + 0xc) & 0x180) != 0)) goto LAB_82281940;
-  if (pfVar5[0xb] == 0.0) {
+  if (((ppVar4->pm_time != 0) && ((ppVar4->pm_flags & 8U) == 0)) &&
+     ((ppVar4->pm_flags & 0x180U) != 0)) goto LAB_82281940;
+  if (param_2->walking == 0) {
     fVar2 = 30.0;
   }
   else {
     fVar2 = 8.0;
   }
   dVar15 = (double)fVar2;
-  uVar10 = *(uint *)(iVar4 + 0xc);
-  uVar6 = uVar10 & 8;
+  uVar11 = ppVar4->pm_flags;
+  uVar5 = uVar11 & 8;
   dVar16 = 1.0;
-  if ((uVar6 == 0) || (*(int *)(iVar4 + 0x6c) != 0x7ff)) {
-    fVar2 = *pfVar5;
-    fVar3 = pfVar5[1];
-    bVar7 = false;
+  if ((uVar5 == 0) || (ppVar4->groundEntityNum != 0x7ff)) {
+    fVar2 = param_2->forward[0];
+    fVar3 = param_2->forward[1];
+    bVar6 = false;
     dVar13 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2);
     dVar12 = dVar16;
     if (-dVar13 < 0.0) {
@@ -5635,51 +6114,52 @@ void PM_CheckLadderMove(undefined8 param_1,longlong param_2)
     dVar12 = (double)(fVar1 * 0.0);
   }
   else {
-    bVar7 = true;
-    dVar14 = -(double)*(float *)(iVar4 + 0x70);
-    dVar13 = -(double)*(float *)(iVar4 + 0x74);
-    dVar12 = -(double)*(float *)(iVar4 + 0x78);
+    bVar6 = true;
+    dVar14 = -(double)ppVar4->vLadderVec[0];
+    dVar13 = -(double)ppVar4->vLadderVec[1];
+    dVar12 = -(double)ppVar4->vLadderVec[2];
   }
-  if (*(int *)(iVar4 + 4) < 8) {
-    if ((uVar10 & 0x1000) == 0) {
-      iVar9 = PM_GetEffectiveStance(iVar4);
-      if (((iVar9 != 1) && (iVar9 != 3)) && (299 < piVar8[1] - *(int *)(iVar4 + 0x7c))) {
-        PM_GetLadderBounds(piVar8,auStack_c0);
-        local_d0 = (float)(dVar14 * dVar15 + (double)*(float *)(iVar4 + 0x1c));
-        local_cc = (float)(dVar13 * dVar15 + (double)*(float *)(iVar4 + 0x20));
-        pfVar11 = (float *)(iVar4 + 0x1c);
-        local_c8 = (float)(dVar12 * dVar15 + (double)*(float *)(iVar4 + 0x24));
-        PM_playerTrace(piVar8,&local_a0,pfVar11,&local_d0,auStack_c0,*(undefined4 *)(iVar4 + 0x150),
-                       piVar8[0x17]);
-        if ((((double)local_a0 < dVar16) && ((local_90 & 8) != 0)) &&
-           ((pfVar5[0xb] == 0.0 || ('\0' < *(char *)(piVar8 + 8))))) {
-          if ((*(uint *)(iVar4 + 0xc) & 8) != 0) {
-            *(uint *)(iVar4 + 0xc) = *(uint *)(iVar4 + 0xc) | 8;
+  if (ppVar4->pm_type < 8) {
+    if ((uVar11 & 0x1000) == 0) {
+      EVar8 = PM_GetEffectiveStance(ppVar4);
+      if (((EVar8 != PM_EFF_STANCE_PRONE) && (EVar8 != PM_EFF_STANCE_LASTSTANDCRAWL)) &&
+         (299 < (ppVar7->cmd).serverTime - ppVar4->jumpTime)) {
+        PM_GetLadderBounds(ppVar7,&BStack_c0);
+        local_d0 = (float)(dVar14 * dVar15 + (double)ppVar4->origin[0]);
+        local_cc = (float)(dVar13 * dVar15 + (double)ppVar4->origin[1]);
+        pfVar10 = ppVar4->origin;
+        local_c8 = (float)(dVar12 * dVar15 + (double)ppVar4->origin[2]);
+        PM_playerTrace(ppVar7,local_a0,pfVar10,&local_d0,&BStack_c0,ppVar4->clientNum,
+                       ppVar7->tracemask);
+        if ((((double)local_a0[0].fraction < dVar16) && ((local_a0[0].surfaceFlags & 8U) != 0)) &&
+           ((param_2->walking == 0 || ('\0' < (ppVar7->cmd).forwardmove)))) {
+          if ((ppVar4->pm_flags & 8U) != 0) {
+            ppVar4->pm_flags = ppVar4->pm_flags | 8;
             __restfpr_27();
             __restgprlr_26();
             return;
           }
-          *(float *)(iVar4 + 0x70) = local_9c;
-          *(float *)(iVar4 + 0x74) = local_98;
-          *(float *)(iVar4 + 0x78) = local_94;
-          local_d0 = (float)(-(double)local_9c * dVar15 + (double)*pfVar11);
-          local_cc = (float)(-(double)local_98 * dVar15 + (double)*(float *)(iVar4 + 0x20));
-          local_c8 = (float)(-(double)local_94 * dVar15 + (double)*(float *)(iVar4 + 0x24));
-          PM_playerTrace(piVar8,&local_a0,pfVar11,&local_d0,auStack_c0,
-                         *(undefined4 *)(iVar4 + 0x150),piVar8[0x17]);
-          if (((double)local_a0 < dVar16) && ((local_90 & 8) != 0)) {
-            *(uint *)(iVar4 + 0xc) = *(uint *)(iVar4 + 0xc) | 8;
+          ppVar4->vLadderVec[0] = local_a0[0].normal[0];
+          ppVar4->vLadderVec[1] = local_a0[0].normal[1];
+          ppVar4->vLadderVec[2] = local_a0[0].normal[2];
+          local_d0 = (float)(-(double)local_a0[0].normal[0] * dVar15 + (double)*pfVar10);
+          local_cc = (float)(-(double)local_a0[0].normal[1] * dVar15 + (double)ppVar4->origin[1]);
+          local_c8 = (float)(-(double)local_a0[0].normal[2] * dVar15 + (double)ppVar4->origin[2]);
+          PM_playerTrace(ppVar7,local_a0,pfVar10,&local_d0,&BStack_c0,ppVar4->clientNum,
+                         ppVar7->tracemask);
+          if (((double)local_a0[0].fraction < dVar16) && ((local_a0[0].surfaceFlags & 8U) != 0)) {
+            ppVar4->pm_flags = ppVar4->pm_flags | 8;
             __restfpr_27();
             __restgprlr_26();
             return;
           }
         }
-        if ((*(uint *)(iVar4 + 0xc) & 8) != 0) {
-          *(uint *)(iVar4 + 0xc) = *(uint *)(iVar4 + 0xc) & 0xffffeff7 | 0x1000;
+        if ((ppVar4->pm_flags & 8U) != 0) {
+          ppVar4->pm_flags = ppVar4->pm_flags & 0xffffeff7U | 0x1000;
         }
-        if (bVar7) {
-          BG_AnimScriptEvent(iVar4,3,0,1,param_2 + 0x88);
-          __restfpr_27();
+        if (bVar6) {
+          iVar9 = BG_AnimScriptEvent(ppVar4,ANIM_ET_JUMP,0,1,&param_2->holdrand);
+          __restfpr_27(iVar9);
           __restgprlr_26();
           return;
         }
@@ -5689,16 +6169,16 @@ void PM_CheckLadderMove(undefined8 param_1,longlong param_2)
     }
   }
   else {
-    *(undefined4 *)(iVar4 + 0x6c) = 0x7ff;
-    pfVar5[0xc] = 0.0;
-    pfVar5[0xd] = 0.0;
-    pfVar5[0xb] = 0.0;
+    ppVar4->groundEntityNum = 0x7ff;
+    param_2->groundPlane = 0;
+    param_2->almostGroundPlane = 0;
+    param_2->walking = 0;
 LAB_82281924:
-    uVar10 = *(uint *)(iVar4 + 0xc);
-    uVar6 = uVar10 & 8;
+    uVar11 = ppVar4->pm_flags;
+    uVar5 = uVar11 & 8;
   }
-  if (uVar6 != 0) {
-    *(uint *)(iVar4 + 0xc) = uVar10 & 0xffffeff7 | 0x1000;
+  if (uVar5 != 0) {
+    ppVar4->pm_flags = uVar11 & 0xffffeff7 | 0x1000;
   }
 LAB_82281940:
   __restfpr_27();
@@ -5709,166 +6189,167 @@ LAB_82281940:
 
 // 82281B40  PM_LadderMove  (bgame/bg_pmove.cpp:5377)
 
-void PM_LadderMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_LadderMove(pmove_t *param_1,pml_t *param_2)
 
 {
-  bool bVar1;
+  float fVar1;
   float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  float *pfVar6;
-  int *piVar7;
-  char cVar8;
+  playerState_s *ppVar3;
+  pmove_t *ppVar4;
+  bool bVar5;
+  int iVar6;
+  float *pfVar7;
+  uint uVar8;
   float *pfVar9;
-  uint uVar10;
-  float *pfVar11;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
+  float fVar17;
   float local_60;
   float local_5c;
   undefined8 local_58;
   float local_50;
   
-  piVar7 = (int *)__savegprlr_26();
-  if (piVar7 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x150e,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar4 = (pmove_t *)__savegprlr_26(param_1);
+  if (ppVar4 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x150e,0,
+                    "%s");
   }
-  iVar5 = *piVar7;
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1511,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = ppVar4->ps;
+  if (ppVar3 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1511,0,
+                    "%s");
   }
-  cVar8 = Jump_Check(piVar7,param_2);
-  if (cVar8 != '\0') {
-    PM_AirMove(piVar7,param_2);
+  bVar5 = Jump_Check(ppVar4,param_2);
+  if (bVar5) {
+    PM_AirMove(ppVar4,param_2);
     __restgprlr_26();
     return;
   }
-  pfVar6 = (float *)param_2;
-  fVar3 = pfVar6[1];
-  fVar4 = *pfVar6;
-  dVar17 = 1.0;
-  pfVar11 = (float *)(iVar5 + 0x70);
-  dVar18 = 0.0;
-  dVar15 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3);
-  dVar14 = dVar17;
-  if (-dVar15 < 0.0) {
-    dVar14 = dVar15;
+  fVar17 = param_2->forward[1];
+  fVar2 = param_2->forward[0];
+  dVar15 = 1.0;
+  pfVar9 = ppVar3->vLadderVec;
+  dVar16 = 0.0;
+  dVar12 = (double)SQRT(fVar2 * fVar2 + fVar17 * fVar17);
+  dVar13 = dVar15;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar12;
   }
-  fVar2 = (float)(1.0 / dVar14);
-  *pfVar6 = fVar4 * fVar2;
-  pfVar6[1] = fVar3 * fVar2;
-  pfVar6[2] = fVar2 * 0.0;
-  fVar4 = -*(float *)(iVar5 + 0x70);
-  fVar3 = *(float *)(iVar5 + 0x74);
-  pfVar6[3] = fVar3;
-  pfVar6[4] = fVar4;
-  pfVar6[5] = 0.0;
-  dVar15 = (double)SQRT(fVar3 * fVar3 + fVar4 * fVar4 + 0.0);
-  dVar14 = dVar17;
-  if (-dVar15 < 0.0) {
-    dVar14 = dVar15;
+  fVar1 = (float)(1.0 / dVar13);
+  param_2->forward[0] = fVar2 * fVar1;
+  param_2->forward[1] = fVar17 * fVar1;
+  param_2->forward[2] = fVar1 * 0.0;
+  fVar2 = -ppVar3->vLadderVec[0];
+  fVar17 = ppVar3->vLadderVec[1];
+  param_2->right[0] = fVar17;
+  param_2->right[1] = fVar2;
+  param_2->right[2] = 0.0;
+  dVar12 = (double)SQRT(fVar17 * fVar17 + fVar2 * fVar2 + 0.0);
+  dVar13 = dVar15;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar12;
   }
-  fVar2 = (float)(1.0 / dVar14);
-  dVar14 = (double)(fVar3 * fVar2);
-  pfVar6[3] = fVar3 * fVar2;
-  pfVar6[4] = fVar4 * fVar2;
-  pfVar6[5] = fVar2 * 0.0;
-  pfVar6[3] = (float)-dVar14;
-  pfVar6[4] = -pfVar6[4];
-  pfVar6[5] = -pfVar6[5];
-  dVar15 = (double)PM_CmdScale(dVar14,iVar5,piVar7 + 1);
-  dVar14 = dVar18;
-  if (*(char *)(piVar7 + 8) != 0) {
-    dVar14 = (double)((float)((double)(longlong)(int)*(char *)(piVar7 + 8) * dVar15) * 0.5);
+  fVar1 = (float)(1.0 / dVar13);
+  param_2->right[0] = fVar17 * fVar1;
+  param_2->right[1] = fVar2 * fVar1;
+  param_2->right[2] = fVar1 * 0.0;
+  param_2->right[0] = -(fVar17 * fVar1);
+  param_2->right[1] = -param_2->right[1];
+  param_2->right[2] = -param_2->right[2];
+  fVar17 = PM_CmdScale(ppVar3,&ppVar4->cmd);
+  iVar6 = (int)(ppVar4->cmd).forwardmove;
+  dVar13 = dVar16;
+  if (iVar6 != 0) {
+    dVar13 = (double)((float)(longlong)iVar6 * fVar17 * 0.5);
   }
-  dVar12 = dVar18;
-  dVar16 = dVar18;
-  if (*(char *)((int)piVar7 + 0x21) != 0) {
-    fVar3 = (float)((double)(longlong)(int)*(char *)((int)piVar7 + 0x21) * dVar15) * 0.2;
-    dVar12 = (double)(pfVar6[3] * fVar3);
-    dVar16 = (double)(fVar3 * pfVar6[4]);
+  iVar6 = (int)(ppVar4->cmd).rightmove;
+  dVar12 = dVar16;
+  dVar14 = dVar16;
+  if (iVar6 != 0) {
+    fVar17 = (float)(longlong)iVar6 * fVar17 * 0.2;
+    dVar12 = (double)(param_2->right[0] * fVar17);
+    dVar14 = (double)(fVar17 * param_2->right[1]);
   }
-  dVar13 = (double)SQRT((float)(dVar14 * dVar14 +
-                               (double)(float)(dVar16 * dVar16 + (double)(float)(dVar12 * dVar12))))
-  ;
-  dVar15 = dVar17;
-  if (-dVar13 < 0.0) {
-    dVar15 = dVar13;
+  fVar17 = SQRT((float)(dVar13 * dVar13 +
+                       (double)(float)(dVar14 * dVar14 + (double)(float)(dVar12 * dVar12))));
+  dVar10 = (double)fVar17;
+  dVar11 = dVar15;
+  if (-dVar10 < 0.0) {
+    dVar11 = dVar10;
   }
-  dVar15 = (double)(float)(dVar17 / dVar15);
-  local_58 = CONCAT44((float)(dVar15 * dVar12),(float)(dVar16 * dVar15));
-  local_50 = (float)(dVar15 * dVar14);
-  PM_Accelerate(dVar13,0x4022000000000000,iVar5,param_2,&local_58);
-  if (*(char *)(piVar7 + 8) == '\0') {
-    local_58 = (longlong)*(int *)(iVar5 + 0x58);
-    if ((double)*(float *)(iVar5 + 0x30) <= dVar18) {
-      fVar3 = (float)local_58 * pfVar6[9] + *(float *)(iVar5 + 0x30);
-      *(float *)(iVar5 + 0x30) = fVar3;
-      if ((double)fVar3 <= dVar18) goto LAB_82281e0c;
+  dVar11 = (double)(float)(dVar15 / dVar11);
+  local_58 = CONCAT44((float)(dVar11 * dVar12),(float)(dVar14 * dVar11));
+  local_50 = (float)(dVar11 * dVar13);
+  PM_Accelerate(ppVar3,param_2,(float *)&local_58,fVar17,9.0);
+  if ((ppVar4->cmd).forwardmove == '\0') {
+    local_58 = (longlong)ppVar3->gravity;
+    if ((double)ppVar3->velocity[2] <= dVar16) {
+      fVar17 = (float)local_58 * param_2->frametime + ppVar3->velocity[2];
+      ppVar3->velocity[2] = fVar17;
+      if ((double)fVar17 <= dVar16) goto LAB_82281e0c;
     }
     else {
-      dVar14 = -(double)(float)((double)local_58 * (double)pfVar6[9] -
-                               (double)*(float *)(iVar5 + 0x30));
-      *(float *)(iVar5 + 0x30) = (float)dVar14;
-      if (dVar18 <= dVar14) goto LAB_82281e0c;
+      dVar13 = -(double)(float)((double)local_58 * (double)param_2->frametime -
+                               (double)ppVar3->velocity[2]);
+      ppVar3->velocity[2] = (float)dVar13;
+      if (dVar16 <= dVar13) goto LAB_82281e0c;
     }
-    *(float *)(iVar5 + 0x30) = (float)dVar18;
+    ppVar3->velocity[2] = (float)dVar16;
   }
 LAB_82281e0c:
-  if (*(char *)((int)piVar7 + 0x21) == '\0') {
-    local_60 = pfVar6[3];
-    local_5c = pfVar6[4];
+  if ((ppVar4->cmd).rightmove == '\0') {
+    local_60 = param_2->right[0];
+    local_5c = param_2->right[1];
     Vec2Normalize(&local_60);
-    pfVar9 = (float *)(iVar5 + 0x28);
-    dVar14 = (double)(*(float *)(iVar5 + 0x2c) * local_5c +
-                     (float)((double)local_60 * (double)*(float *)(iVar5 + 0x28)));
-    if (dVar14 != dVar18) {
-      *pfVar9 = (float)(-dVar14 * (double)local_60 + (double)*(float *)(iVar5 + 0x28));
-      *(float *)(iVar5 + 0x2c) =
-           (float)((double)local_5c * -dVar14 + (double)*(float *)(iVar5 + 0x2c));
-      dVar15 = (double)((float)((double)pfVar6[9] * dVar14) * 16.0);
-      if (ABS(dVar15) < ABS(dVar14)) {
-        dVar12 = dVar15;
-        if ((ABS(dVar15) < dVar17) && (dVar12 = dVar17, dVar15 < 0.0)) {
-          dVar12 = -1.0;
+    pfVar7 = ppVar3->velocity;
+    dVar13 = (double)(ppVar3->velocity[1] * local_5c +
+                     (float)((double)local_60 * (double)ppVar3->velocity[0]));
+    if (dVar13 != dVar16) {
+      *pfVar7 = (float)(-dVar13 * (double)local_60 + (double)ppVar3->velocity[0]);
+      ppVar3->velocity[1] = (float)((double)local_5c * -dVar13 + (double)ppVar3->velocity[1]);
+      dVar12 = (double)((float)((double)param_2->frametime * dVar13) * 16.0);
+      if (ABS(dVar12) < ABS(dVar13)) {
+        dVar14 = dVar12;
+        if ((ABS(dVar12) < dVar15) && (dVar14 = dVar15, dVar12 < 0.0)) {
+          dVar14 = -1.0;
         }
-        *pfVar9 = local_60 * (float)(dVar14 - dVar12) + *pfVar9;
-        *(float *)(iVar5 + 0x2c) = local_5c * (float)(dVar14 - dVar12) + *(float *)(iVar5 + 0x2c);
+        *pfVar7 = local_60 * (float)(dVar13 - dVar14) + *pfVar7;
+        ppVar3->velocity[1] = local_5c * (float)(dVar13 - dVar14) + ppVar3->velocity[1];
       }
     }
   }
-  if (pfVar6[0xb] == 0.0) {
-    fVar4 = -(*pfVar11 * *(float *)(iVar5 + 0x28) +
-             *(float *)(iVar5 + 0x74) * *(float *)(iVar5 + 0x2c));
-    fVar3 = *pfVar11 * fVar4 + *(float *)(iVar5 + 0x28);
-    *(float *)(iVar5 + 0x28) = fVar3;
-    fVar4 = *(float *)(iVar5 + 0x74) * fVar4 + *(float *)(iVar5 + 0x2c);
-    *(float *)(iVar5 + 0x2c) = fVar4;
-    if (((((double)fVar3 != dVar18) || ((double)fVar4 != dVar18)) ||
-        ((double)*(float *)(iVar5 + 0x30) != dVar18)) &&
-       (fVar3 = *(float *)(iVar5 + 0x28),
-       *(float *)(iVar5 + 0x2c) * *(float *)(iVar5 + 0x2c) + fVar3 * fVar3 <=
-       *(float *)(iVar5 + 0x30) * *(float *)(iVar5 + 0x30))) {
-      *(float *)(iVar5 + 0x28) = -(*pfVar11 * 50.0 - fVar3);
-      *(float *)(iVar5 + 0x2c) = -(*(float *)(iVar5 + 0x74) * 50.0 - *(float *)(iVar5 + 0x2c));
+  if (param_2->walking == 0) {
+    fVar2 = -(*pfVar9 * ppVar3->velocity[0] + ppVar3->vLadderVec[1] * ppVar3->velocity[1]);
+    fVar17 = *pfVar9 * fVar2 + ppVar3->velocity[0];
+    ppVar3->velocity[0] = fVar17;
+    fVar2 = ppVar3->vLadderVec[1] * fVar2 + ppVar3->velocity[1];
+    ppVar3->velocity[1] = fVar2;
+    if (((((double)fVar17 != dVar16) || ((double)fVar2 != dVar16)) ||
+        ((double)ppVar3->velocity[2] != dVar16)) &&
+       (fVar17 = ppVar3->velocity[0],
+       ppVar3->velocity[1] * ppVar3->velocity[1] + fVar17 * fVar17 <=
+       ppVar3->velocity[2] * ppVar3->velocity[2])) {
+      ppVar3->velocity[0] = -(*pfVar9 * 50.0 - fVar17);
+      ppVar3->velocity[1] = -(ppVar3->vLadderVec[1] * 50.0 - ppVar3->velocity[1]);
     }
   }
-  PM_StepSlideMove(piVar7,param_2,0);
-  dVar14 = (double)vectoyaw(pfVar11);
-  dVar14 = (double)AngleDelta((double)(float)(dVar14 + 180.0),(double)*(float *)(iVar5 + 0x15c));
-  uVar10 = (uint)dVar14;
-  local_58 = (longlong)(int)uVar10;
-  if ((0x4b < (int)((uVar10 ^ (int)uVar10 >> 0x1f) - ((int)uVar10 >> 0x1f))) &&
-     (bVar1 = (int)uVar10 < 1, uVar10 = 0x4b, bVar1)) {
-    uVar10 = 0xffffffb5;
+  PM_StepSlideMove(ppVar4,param_2,0);
+  fVar17 = vectoyaw(pfVar9);
+  fVar17 = AngleDelta(fVar17 + 180.0,ppVar3->viewangles[1]);
+  uVar8 = (uint)fVar17;
+  local_58 = (longlong)(int)uVar8;
+  if ((0x4b < (int)((uVar8 ^ (int)uVar8 >> 0x1f) - ((int)uVar8 >> 0x1f))) &&
+     (bVar5 = (int)uVar8 < 1, uVar8 = 0x4b, bVar5)) {
+    uVar8 = 0xffffffb5;
   }
-  *(int *)(iVar5 + 0xf4) = (int)(char)uVar10;
+  ppVar3->movementDir = (int)(char)uVar8;
   __restgprlr_26();
   return;
 }
@@ -5876,41 +6357,53 @@ LAB_82281e0c:
 
 // 8227E7F0  PM_MeleeChargeClear  (bgame/bg_pmove.cpp:5543)
 
-void PM_MeleeChargeClear(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_MeleeChargeClear(playerState_s *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x15a8,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if (param_1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15a8,0,
+                    "%s");
   }
-  *(undefined4 *)(param_1 + 0x4dc) = 0;
-  *(undefined4 *)(param_1 + 0x4e0) = 0;
-  *(uint *)(param_1 + 0xc) = *(uint *)(param_1 + 0xc) & 0xfffeffff;
-  *(undefined4 *)(param_1 + 0x4e4) = 0x7ff;
+  param_1->meleeChargeDist = 0;
+  param_1->meleeChargeTime = 0;
+  param_1->pm_flags = param_1->pm_flags & 0xfffeffff;
+  param_1->meleeChargeEnt = 0x7ff;
   return;
 }
 
 
 // 8227E868  PM_HasMeleeChargeTarget  (bgame/bg_pmove.cpp:5559)
 
-longlong PM_HasMeleeChargeTarget(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_HasMeleeChargeTarget(pmove_t *param_1)
 
 {
-  longlong lVar1;
+  ushort uVar1;
+  longlong lVar2;
   
-  lVar1 = (ulonglong)*(ushort *)(param_1 + 0x24) - 0x7ff;
-  return lVar1 - (((ulonglong)*(ushort *)(param_1 + 0x24) - 0x800) + (ulonglong)(lVar1 == 0));
+  uVar1 = (param_1->cmd).meleeChargeEnt;
+  lVar2 = (ulonglong)uVar1 - 0x7ff;
+  return (bool)((char)lVar2 - ((char)uVar1 + (lVar2 == 0)));
 }
 
 
 // 8227E880  PM_GetMeleeChargeYaw  (bgame/bg_pmove.cpp:5573)
 
-void PM_GetMeleeChargeYaw(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float PM_GetMeleeChargeYaw(pmove_t *param_1)
 
 {
   int iVar1;
   int *piVar3;
   ulonglong uVar2;
   int iVar4;
+  double dVar5;
+  float fVar6;
   float local_50;
   float local_4c;
   float local_48;
@@ -5918,21 +6411,24 @@ void PM_GetMeleeChargeYaw(void)
   float local_3c;
   float local_38;
   
-  piVar3 = (int *)__savegprlr_28();
+  piVar3 = (int *)__savegprlr_28(param_1);
   if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x15c8,0,0xffffffff82000f98,0xffffffff82004978);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15c8,0,
+                    "%s");
   }
   iVar1 = *piVar3;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x15cb,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15cb,0,
+                    "%s");
   }
   if (*(int *)(iVar1 + 0x4e4) == 0x7ff) {
-    MyAssertHandler(0xffffffff8200c508,0x15d2,0,0xffffffff82000f98,0xffffffff8200cf0c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15d2,0,
+                    "%s");
   }
   if ((code *)(&switchD_82278384::switchdataD_82961650)[(uint)*(byte *)(piVar3 + 0x4d) * 7] !=
       (code *)0x0) {
     if (*(byte *)(piVar3 + 0x4d) == 0) {
-      uVar2 = (ulonglong)DAT_82a382e4;
+      uVar2 = (ulonglong)g_cgameClientNum;
     }
     else {
       uVar2 = 0xffffffffffffffff;
@@ -5943,81 +6439,96 @@ void PM_GetMeleeChargeYaw(void)
       local_40 = local_50 - *(float *)(iVar1 + 0x1c);
       local_3c = local_4c - *(float *)(iVar1 + 0x20);
       local_38 = local_48 - *(float *)(iVar1 + 0x24);
-      vectoyaw(&local_40);
-      __restgprlr_28();
-      return;
+      fVar6 = vectoyaw(&local_40);
+      dVar5 = (double)__restgprlr_28((double)fVar6);
+      return (float)dVar5;
     }
   }
-  __restgprlr_28(0);
-  return;
+  dVar5 = (double)__restgprlr_28(0);
+  return (float)dVar5;
 }
 
 
 // 8227E9B8  PM_MeleeChargeIsValid  (bgame/bg_pmove.cpp:5605)
 
-void PM_MeleeChargeIsValid(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_MeleeChargeIsValid(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  char cVar3;
-  longlong lVar4;
+  playerState_s *ppVar1;
+  pmove_t *ppVar2;
+  undefined1 uVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x15e8,0,0xffffffff82000f98,0xffffffff82004978);
+  uVar5 = (ulonglong)(int)param_2;
+  ppVar2 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar2 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15e8,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x15e9,0,0xffffffff82000f98,0xffffffff8200c660);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15e9,0,
+                    "%s");
   }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x15ec,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar2->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x15ec,0,
+                    "%s");
   }
-  if (((((*(uint *)(iVar1 + 0xc) & 0x10000) == 0) &&
-       (lVar4 = (ulonglong)*(ushort *)(piVar2 + 9) - 0x7ff,
-       (lVar4 - (((ulonglong)*(ushort *)(piVar2 + 9) - 0x800) + (ulonglong)(lVar4 == 0)) & 0xff) !=
-       0)) && (*(int *)(iVar1 + 4) == 0)) &&
-     (((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0 && ((*(uint *)(iVar1 + 0xc) & 0xc) == 0)))) {
-    cVar3 = PM_IsInAir(piVar2,param_2);
-    __restgprlr_27(cVar3 == '\0');
-    return;
+  if (((((ppVar1->pm_flags & 0x10000U) == 0) &&
+       (uVar6 = (ulonglong)(ppVar2->cmd).meleeChargeEnt, lVar7 = uVar6 - 0x7ff,
+       (lVar7 - ((uVar6 - 0x800) + (ulonglong)(lVar7 == 0)) & 0xff) != 0)) && (ppVar1->pm_type == 0)
+      ) && (((ppVar1->eFlags & 0x3800U) == 0 && ((ppVar1->pm_flags & 0xcU) == 0)))) {
+    bVar4 = PM_IsInAir(ppVar2,(pml_t *)uVar5);
+    uVar3 = __restgprlr_27(!bVar4);
+    return (bool)uVar3;
   }
-  __restgprlr_27(0);
-  return;
+  uVar3 = __restgprlr_27(0);
+  return (bool)uVar3;
 }
 
 
 // 8227EAD0  PM_MeleeChargeStart  (bgame/bg_pmove.cpp:5637)
 
-void PM_MeleeChargeStart(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_MeleeChargeStart(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  char cVar3;
+  playerState_s *ppVar1;
+  pmove_t *ppVar2;
+  bool bVar3;
+  ulonglong uVar4;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1608,0,0xffffffff82000f98,0xffffffff82004978);
+  uVar4 = (ulonglong)(int)param_2;
+  ppVar2 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar2 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1608,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1609,0,0xffffffff82000f98,0xffffffff8200c660);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1609,0,
+                    "%s");
   }
-  iVar1 = *piVar2;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x160c,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar2->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x160c,0,
+                    "%s");
   }
-  cVar3 = PM_MeleeChargeIsValid(piVar2,param_2);
-  if (cVar3 == '\0') {
-    PM_MeleeChargeClear(iVar1);
+  bVar3 = PM_MeleeChargeIsValid(ppVar2,(pml_t *)uVar4);
+  if (!bVar3) {
+    PM_MeleeChargeClear(ppVar1);
     __restgprlr_27();
     return;
   }
-  *(undefined4 *)(iVar1 + 0x4e0) = 0;
-  *(uint *)(iVar1 + 0xc) = *(uint *)(iVar1 + 0xc) | 0x10000;
-  *(uint *)(iVar1 + 0x4e4) = (uint)*(ushort *)(piVar2 + 9);
-  *(uint *)(iVar1 + 0x4dc) = (uint)*(byte *)((int)piVar2 + 0x26);
+  ppVar1->meleeChargeTime = 0;
+  ppVar1->pm_flags = ppVar1->pm_flags | 0x10000;
+  ppVar1->meleeChargeEnt = (uint)(ppVar2->cmd).meleeChargeEnt;
+  ppVar1->meleeChargeDist = (uint)(ppVar2->cmd).meleeChargeDist;
   __restgprlr_27();
   return;
 }
@@ -6025,21 +6536,26 @@ void PM_MeleeChargeStart(undefined8 param_1,ulonglong param_2)
 
 // 8227EBB8  PM_IsValidCharge  (bgame/bg_pmove.cpp:5669)
 
-void PM_IsValidCharge(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_IsValidCharge(pmove_t *param_1)
 
 {
   int iVar1;
   bool bVar2;
   int *piVar3;
-  undefined8 uVar4;
+  undefined1 uVar4;
+  undefined8 uVar5;
   
-  piVar3 = (int *)__savegprlr_29();
+  piVar3 = (int *)__savegprlr_29(param_1);
   if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1629,0,0xffffffff82000f98,0xffffffff82004978);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1629,0,
+                    "%s");
   }
   iVar1 = *piVar3;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x162c,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x162c,0,
+                    "%s");
   }
   if (((*(uint *)(iVar1 + 0xc) >> 0x10 & 1) == 0) || (bVar2 = true, *(int *)(iVar1 + 4) != 0)) {
     bVar2 = false;
@@ -6047,26 +6563,29 @@ void PM_IsValidCharge(void)
   if ((!bVar2) || (bVar2 = true, (*(uint *)(iVar1 + 0xf8) & 0x3800) != 0)) {
     bVar2 = false;
   }
-  if ((!bVar2) || (uVar4 = 1, (*(uint *)(iVar1 + 0xc) & 0xc) != 0)) {
-    uVar4 = 0;
+  if ((!bVar2) || (uVar5 = 1, (*(uint *)(iVar1 + 0xc) & 0xc) != 0)) {
+    uVar5 = 0;
   }
-  __restgprlr_29(uVar4);
-  return;
+  uVar4 = __restgprlr_29(uVar5);
+  return (bool)uVar4;
 }
 
 
 // 8227EC98  PM_MeleeChargeCatchupVelocity  (bgame/bg_pmove.cpp:5695)
 
-void PM_MeleeChargeCatchupVelocity(undefined8 param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PM_MeleeChargeCatchupVelocity(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  int *piVar7;
-  char cVar9;
+  playerState_s *ppVar5;
+  pmove_t *ppVar7;
+  bool bVar9;
   ulonglong uVar6;
   int iVar8;
   double dVar10;
@@ -6081,57 +6600,57 @@ void PM_MeleeChargeCatchupVelocity(undefined8 param_1,int param_2)
   float local_68;
   float local_64;
   
-  __savegprlr_27();
-  piVar7 = (int *)__savefpr_28();
-  if (*(char *)(DAT_829c55f8 + 0xc) != '\0') {
-    if (piVar7 == (int *)0x0) {
-      MyAssertHandler(0xffffffff8200c508,0x1651,0,0xffffffff82000f98,0xffffffff82004978);
+  __savegprlr_27(param_1);
+  ppVar7 = (pmove_t *)__savefpr_28();
+  if ((player_meleeCalcSpeedFromTarget->current).enabled != false) {
+    if (ppVar7 == (pmove_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1651,0
+                      ,"%s");
     }
-    iVar5 = *piVar7;
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0x1654,0,0xffffffff82000f98,0xffffffff82001fdc);
+    ppVar5 = ppVar7->ps;
+    if (ppVar5 == (playerState_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1654,0
+                      ,"%s");
     }
-    dVar12 = (double)*(float *)(DAT_829c7cb8 + 0xc);
-    dVar13 = (double)*(float *)(DAT_829c54bc + 0xc);
-    dVar11 = (double)*(float *)(DAT_829c7dd0 + 0xc);
-    cVar9 = PM_IsValidCharge(piVar7);
-    if ((cVar9 != '\0') && (*(int *)(iVar5 + 0x4e4) != 0x7ff)) {
-      local_80 = (longlong)*(int *)(iVar5 + 0x244);
+    dVar12 = (double)(player_meleeRange->current).value;
+    dVar13 = (double)(player_meleeChargeMaxSpeed->current).value;
+    dVar11 = (double)(player_meleeChargeFriction->current).value;
+    bVar9 = PM_IsValidCharge(ppVar7);
+    if ((bVar9) && (ppVar5->meleeChargeEnt != 0x7ff)) {
+      local_80 = (longlong)ppVar5->weapState[0].weaponDelay;
       dVar14 = (double)((float)local_80 * 0.001);
       if (0.0 < dVar14) {
-        if ((code *)(&switchD_82278384::switchdataD_82961650)[(uint)*(byte *)(piVar7 + 0x4d) * 7] !=
+        if ((code *)(&switchD_82278384::switchdataD_82961650)[(uint)ppVar7->handler * 7] !=
             (code *)0x0) {
-          if (*(byte *)(piVar7 + 0x4d) == 0) {
-            uVar6 = (ulonglong)DAT_82a382e4;
+          if (ppVar7->handler == 0) {
+            uVar6 = (ulonglong)g_cgameClientNum;
           }
           else {
             uVar6 = 0xffffffffffffffff;
           }
-          iVar8 = (*(code *)(&switchD_82278384::switchdataD_82961650)
-                            [(uint)*(byte *)(piVar7 + 0x4d) * 7])
-                            (uVar6,*(int *)(iVar5 + 0x4e4),&local_78);
+          iVar8 = (*(code *)(&switchD_82278384::switchdataD_82961650)[(uint)ppVar7->handler * 7])
+                            (uVar6,ppVar5->meleeChargeEnt,&local_78);
           if (iVar8 != 0) {
-            if ((code *)(&switchD_822783cc::switchdataD_82961654)
-                        [(uint)*(byte *)(piVar7 + 0x4d) * 7] != (code *)0x0) {
-              if (*(byte *)(piVar7 + 0x4d) == 0) {
-                uVar6 = (ulonglong)DAT_82a382e4;
+            if ((code *)(&switchD_822783cc::switchdataD_82961654)[(uint)ppVar7->handler * 7] !=
+                (code *)0x0) {
+              if (ppVar7->handler == 0) {
+                uVar6 = (ulonglong)g_cgameClientNum;
               }
               else {
                 uVar6 = 0xffffffffffffffff;
               }
-              iVar8 = (*(code *)(&switchD_822783cc::switchdataD_82961654)
-                                [(uint)*(byte *)(piVar7 + 0x4d) * 7])
-                                (uVar6,*(undefined4 *)(iVar5 + 0x4e4),&local_68);
+              iVar8 = (*(code *)(&switchD_822783cc::switchdataD_82961654)[(uint)ppVar7->handler * 7]
+                      )(uVar6,ppVar5->meleeChargeEnt,&local_68);
               if (iVar8 != 0) {
-                fVar3 = *(float *)(iVar5 + 0x20);
+                fVar3 = ppVar5->origin[1];
                 local_74 = local_74 - fVar3;
-                local_70 = local_70 - *(float *)(iVar5 + 0x24);
-                fVar4 = *(float *)(iVar5 + 0x1c);
+                local_70 = local_70 - ppVar5->origin[2];
+                fVar4 = ppVar5->origin[0];
                 local_78 = local_78 - fVar4;
                 fVar1 = local_78 * local_78 + local_70 * local_70 + local_74 * local_74;
                 if ((float)(dVar12 * dVar12) < fVar1) {
                   dVar10 = (double)SQRT(fVar1);
-                  fVar2 = (float)((double)*(float *)(param_2 + 0x24) * dVar11 + 1.0);
+                  fVar2 = (float)((double)param_2->frametime * dVar11 + 1.0);
                   fVar1 = (float)((double)(float)(dVar10 - dVar12) / dVar10);
                   fVar4 = fVar2 * (float)(1.0 / dVar14) *
                                   (float)((double)local_68 * dVar14 +
@@ -6141,12 +6660,12 @@ void PM_MeleeChargeCatchupVelocity(undefined8 param_1,int param_2)
                           (float)(1.0 / dVar14) * fVar2;
                   local_80 = CONCAT44(fVar4,fVar2);
                   if ((float)(dVar13 * dVar13) < fVar2 * fVar2 + fVar4 * fVar4) {
-                    Vec2NormalizeFast(&local_80);
+                    Vec2NormalizeFast((float *)&local_80);
                     fVar4 = (float)((double)local_80._0_4_ * dVar13);
                     fVar2 = (float)((double)local_80._4_4_ * dVar13);
                   }
-                  *(float *)(iVar5 + 0x28) = fVar4;
-                  *(float *)(iVar5 + 0x2c) = fVar2;
+                  ppVar5->velocity[0] = fVar4;
+                  ppVar5->velocity[1] = fVar2;
                 }
               }
             }
@@ -6163,59 +6682,69 @@ void PM_MeleeChargeCatchupVelocity(undefined8 param_1,int param_2)
 
 // 8227EF10  PM_MeleeChargeUpdate  (bgame/bg_pmove.cpp:5772)
 
-void PM_MeleeChargeUpdate(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_MeleeChargeUpdate(pmove_t *param_1,pml_t *param_2)
 
 {
-  int iVar1;
-  int *piVar3;
-  char cVar4;
-  undefined8 uVar2;
-  longlong lVar5;
-  double dVar6;
+  playerState_s *ppVar1;
+  pmove_t *ppVar2;
+  bool bVar4;
+  pmove_t *ppVar3;
+  ulonglong uVar5;
+  longlong lVar6;
   double dVar7;
+  double dVar8;
+  float fVar9;
   float local_210;
   float local_20c;
   longlong local_208;
-  undefined1 auStack_200 [512];
+  AntilagClientStore AStack_200;
   
-  piVar3 = (int *)__savegprlr_27();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1693,0,0xffffffff82000f98,0xffffffff82004978);
+  uVar5 = (ulonglong)(int)param_2;
+  ppVar2 = (pmove_t *)__savegprlr_27(param_1);
+  if (ppVar2 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1693,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1694,0,0xffffffff82000f98,0xffffffff8200c660);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1694,0,
+                    "%s");
   }
-  iVar1 = *piVar3;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1697,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = ppVar2->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1697,0,
+                    "%s");
   }
-  cVar4 = PM_IsValidCharge(piVar3);
-  if (cVar4 != '\0') {
-    if (*(char *)(piVar3 + 0x4d) == '\x01') {
-      G_AntiLagRewindClientIndexPos(*(undefined4 *)(iVar1 + 0x150),auStack_200);
+  bVar4 = PM_IsValidCharge(ppVar2);
+  if (bVar4) {
+    if (ppVar2->handler == '\x01') {
+      G_AntiLagRewindClientIndexPos(ppVar1->clientNum,&AStack_200);
     }
-    if (*(int *)(iVar1 + 0x4e0) == 0) {
-      dVar7 = (double)*(float *)(DAT_829c7dd0 + 0xc);
-      if (dVar7 <= 0.0) {
-        MyAssertHandler(0xffffffff8200c508,0x16ad,0,0xffffffff82000f98,0xffffffff8200cf34);
+    if (ppVar1->meleeChargeTime == 0) {
+      dVar8 = (double)(player_meleeChargeFriction->current).value;
+      if (dVar8 <= 0.0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x16ad
+                        ,0,"%s");
       }
-      uVar2 = PM_GetMeleeChargeYaw(piVar3);
-      YawVectors2D(uVar2,&local_210,0);
-      local_208 = (longlong)*(int *)(iVar1 + 0x4dc);
-      dVar6 = (double)SQRT((float)((double)local_208 * dVar7) * 2.0);
-      *(float *)(iVar1 + 0x28) = (float)((double)local_210 * dVar6);
-      *(float *)(iVar1 + 0x2c) = (float)((double)local_20c * dVar6);
-      *(int *)(iVar1 + 0x4e0) = (int)((float)(dVar6 / dVar7) * 1000.0);
+      ppVar3 = ppVar2;
+      fVar9 = PM_GetMeleeChargeYaw(ppVar2);
+      YawVectors2D(fVar9,(float *)ppVar3,&local_210);
+      local_208 = (longlong)ppVar1->meleeChargeDist;
+      dVar7 = (double)SQRT((float)((double)local_208 * dVar8) * 2.0);
+      ppVar1->velocity[0] = (float)((double)local_210 * dVar7);
+      ppVar1->velocity[1] = (float)((double)local_20c * dVar7);
+      ppVar1->meleeChargeTime = (int)((float)(dVar7 / dVar8) * 1000.0);
     }
-    PM_MeleeChargeCatchupVelocity(piVar3,param_2);
-    if (*(char *)(piVar3 + 0x4d) == '\x01') {
-      G_AntiLag_RestoreClientPos(auStack_200);
+    PM_MeleeChargeCatchupVelocity(ppVar2,(pml_t *)uVar5);
+    if (ppVar2->handler == '\x01') {
+      G_AntiLag_RestoreClientPos(&AStack_200);
     }
-    lVar5 = (ulonglong)*(uint *)(iVar1 + 0x4e0) - (ulonglong)*(uint *)((int)param_2 + 0x28);
-    *(int *)(iVar1 + 0x4e0) = (int)lVar5;
-    if (0 < lVar5) goto LAB_8227f0c8;
+    lVar6 = (ulonglong)(uint)ppVar1->meleeChargeTime - (ulonglong)(uint)((pml_t *)uVar5)->msec;
+    ppVar1->meleeChargeTime = (int)lVar6;
+    if (0 < lVar6) goto LAB_8227f0c8;
   }
-  PM_MeleeChargeClear(iVar1);
+  PM_MeleeChargeClear(ppVar1);
 LAB_8227f0c8:
   __restgprlr_27();
   return;
@@ -6224,58 +6753,61 @@ LAB_8227f0c8:
 
 // 8227F0D8  PM_MeleeChargeCheck  (bgame/bg_pmove.cpp:5832)
 
-void PM_MeleeChargeCheck(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_MeleeChargeCheck(pmove_t *param_1)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   bool bVar2;
-  uint uVar3;
-  int *piVar5;
-  undefined8 uVar4;
+  bool bVar3;
+  pmove_t *ppVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
+  float fVar7;
   int local_60;
   int local_5c;
-  undefined1 auStack_58 [4];
-  undefined1 auStack_54 [4];
+  int iStack_58;
+  int iStack_54;
   float local_50;
   float local_4c;
   longlong local_48;
   
-  piVar5 = (int *)__savegprlr_27();
-  if (*(char *)(DAT_829c562c + 0xc) == '\0') {
-    if (piVar5 == (int *)0x0) {
-      MyAssertHandler(0xffffffff8200c508,0x16dc,0,0xffffffff82000f98,0xffffffff82004978);
+  ppVar4 = (pmove_t *)__savegprlr_27(param_1);
+  if ((player_meleeCOD4ChargeMovement->current).enabled == false) {
+    if (ppVar4 == (pmove_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x16dc,0
+                      ,"%s");
     }
-    iVar1 = *piVar5;
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff8200c508,0x16df,0,0xffffffff82000f98,0xffffffff82001fdc);
+    ppVar1 = ppVar4->ps;
+    if (ppVar1 == (playerState_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x16df,0
+                      ,"%s");
     }
-    if ((*(uint *)(iVar1 + 0xc) & 0x10000) == 0) {
+    if ((ppVar1->pm_flags & 0x10000U) == 0) {
 LAB_8227f170:
-      PM_MeleeChargeClear(iVar1);
+      PM_MeleeChargeClear(ppVar1);
       __restgprlr_27();
       return;
     }
-    if (*(int *)(iVar1 + 0x4e0) == 0) {
-      uVar3 = *(uint *)(iVar1 + 0x374) >> 0xf & 1;
-      bVar2 = *(int *)(iVar1 + 0x390) == 1;
-      BG_GetMeleeTime(iVar1 + 0x4ec,*(undefined4 *)(iVar1 + 0x370),uVar3,bVar2,auStack_58,&local_5c)
-      ;
+    if (ppVar1->meleeChargeTime == 0) {
+      bVar2 = (bool)((byte)((uint)(ppVar1->weapCommon).weapFlags >> 0xf) & 1);
+      bVar3 = (ppVar1->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT;
+      BG_GetMeleeTime(ppVar1->perks,(ppVar1->weapCommon).weapon,bVar2,bVar3,&iStack_58,&local_5c);
       BG_GetMeleeChargeTime
-                (iVar1 + 0x4ec,*(undefined4 *)(iVar1 + 0x370),uVar3,bVar2,auStack_54,&local_60);
-      if ((double)*(float *)(DAT_829c7cb8 + 0xc) < (double)(longlong)*(int *)(iVar1 + 0x4dc)) {
+                (ppVar1->perks,(ppVar1->weapCommon).weapon,bVar2,bVar3,&iStack_54,&local_60);
+      if ((double)(player_meleeRange->current).value < (double)(longlong)ppVar1->meleeChargeDist) {
         local_5c = local_60;
       }
       local_48 = (longlong)local_5c;
-      dVar7 = (double)((float)local_48 * 0.001);
-      if (dVar7 <= 0.0) goto LAB_8227f170;
-      dVar6 = (double)((float)((double)(longlong)*(int *)(iVar1 + 0x4dc) / dVar7) * 2.0);
-      uVar4 = PM_GetMeleeChargeYaw(piVar5);
-      YawVectors2D(uVar4,&local_50,0);
-      *(float *)(iVar1 + 0x28) = (float)((double)local_50 * dVar6);
-      *(float *)(iVar1 + 0x2c) = (float)((double)local_4c * dVar6);
-      *(int *)(iVar1 + 0x4e0) = (int)(dVar7 * 1000.0);
+      dVar6 = (double)((float)local_48 * 0.001);
+      if (dVar6 <= 0.0) goto LAB_8227f170;
+      dVar5 = (double)((float)((double)(longlong)ppVar1->meleeChargeDist / dVar6) * 2.0);
+      fVar7 = PM_GetMeleeChargeYaw(ppVar4);
+      YawVectors2D(fVar7,(float *)ppVar4,&local_50);
+      ppVar1->velocity[0] = (float)((double)local_50 * dVar5);
+      ppVar1->velocity[1] = (float)((double)local_4c * dVar5);
+      ppVar1->meleeChargeTime = (int)(dVar6 * 1000.0);
     }
   }
   __restgprlr_27();
@@ -6285,107 +6817,122 @@ LAB_8227f170:
 
 // 8227F2C0  PM_MeleeChargeMove_IsActive  (bgame/bg_pmove.cpp:5901)
 
-void PM_MeleeChargeMove_IsActive(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool PM_MeleeChargeMove_IsActive(pmove_t *param_1)
 
 {
   int iVar1;
   int *piVar2;
+  undefined1 uVar3;
   
-  piVar2 = (int *)__savegprlr_29();
-  if (*(char *)(DAT_829c562c + 0xc) != '\0') {
-    __restgprlr_29(0);
-    return;
+  piVar2 = (int *)__savegprlr_29(param_1);
+  if ((player_meleeCOD4ChargeMovement->current).enabled != false) {
+    uVar3 = __restgprlr_29(0);
+    return (bool)uVar3;
   }
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1717,0,0xffffffff82000f98,0xffffffff82004978);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1717,0,
+                    "%s");
   }
   iVar1 = *piVar2;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x171a,0,0xffffffff82000f98,0xffffffff82001fdc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x171a,0,
+                    "%s");
   }
-  __restgprlr_29(*(ushort *)(iVar1 + 0xc) & 1);
-  return;
+  uVar3 = __restgprlr_29(*(ushort *)(iVar1 + 0xc) & 1);
+  return (bool)uVar3;
 }
 
 
 // 8227F360  PM_MeleeChargeMove  (bgame/bg_pmove.cpp:5921)
 
-void PM_MeleeChargeMove(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_MeleeChargeMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  int *piVar6;
-  longlong lVar7;
-  float *pfVar8;
-  double dVar9;
-  double dVar10;
+  playerState_s *ppVar5;
+  pml_t *ppVar6;
+  pmove_t *ppVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  float *pfVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
   
-  __savegprlr_27();
-  piVar6 = (int *)__savefpr_27();
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1727,0,0xffffffff82000f98,0xffffffff82004978);
+  uVar8 = (ulonglong)(int)param_2;
+  __savegprlr_27(param_1);
+  ppVar7 = (pmove_t *)__savefpr_27();
+  if (ppVar7 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1727,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1728,0,0xffffffff82000f98,0xffffffff8200c660);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1728,0,
+                    "%s");
   }
-  iVar5 = *piVar6;
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x172b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar5 = ppVar7->ps;
+  if (ppVar5 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x172b,0,
+                    "%s");
   }
-  if (*(int *)(iVar5 + 0x4e0) < 1) {
-    MyAssertHandler(0xffffffff8200c508,0x172d,0,0xffffffff82000f98,0xffffffff8200c614);
+  if (ppVar5->meleeChargeTime < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x172d,0,
+                    "%s");
   }
-  fVar2 = *(float *)(iVar5 + 0x2c);
-  fVar3 = *(float *)(iVar5 + 0x28);
-  fVar4 = *(float *)(iVar5 + 0x30);
-  pfVar8 = (float *)(iVar5 + 0x28);
-  dVar13 = 0.0;
-  dVar9 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar14 = 1.0;
-  if (-dVar9 < 0.0) {
-    dVar14 = dVar9;
+  fVar2 = ppVar5->velocity[1];
+  fVar3 = ppVar5->velocity[0];
+  fVar4 = ppVar5->velocity[2];
+  pfVar10 = ppVar5->velocity;
+  dVar15 = 0.0;
+  dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar16 = 1.0;
+  if (-dVar11 < 0.0) {
+    dVar16 = dVar11;
   }
-  fVar1 = (float)(1.0 / dVar14);
-  dVar12 = (double)(fVar3 * fVar1);
-  dVar11 = (double)(fVar1 * fVar2);
-  dVar10 = (double)(fVar4 * fVar1);
-  dVar14 = dVar9;
-  if (0.0 < dVar9) {
-    dVar14 = -(double)(float)((double)(float)(dVar9 / (double)((float)(longlong)
-                                                                      *(int *)(iVar5 + 0x4e0) *
-                                                              0.001)) *
-                              (double)*(float *)((int)param_2 + 0x24) - dVar9);
-    if (dVar14 < 0.0) {
-      dVar14 = dVar13;
+  fVar1 = (float)(1.0 / dVar16);
+  dVar14 = (double)(fVar3 * fVar1);
+  dVar13 = (double)(fVar1 * fVar2);
+  dVar12 = (double)(fVar4 * fVar1);
+  ppVar6 = (pml_t *)uVar8;
+  dVar16 = dVar11;
+  if (0.0 < dVar11) {
+    dVar16 = -(double)(float)((double)(float)(dVar11 / (double)((float)(longlong)
+                                                                       ppVar5->meleeChargeTime *
+                                                               0.001)) * (double)ppVar6->frametime -
+                             dVar11);
+    if (dVar16 < 0.0) {
+      dVar16 = dVar15;
     }
-    dVar9 = (double)((float)(dVar9 + dVar14) * 0.5);
-    *pfVar8 = (float)(dVar9 * dVar12);
-    *(float *)(iVar5 + 0x2c) = (float)(dVar11 * dVar9);
-    *(float *)(iVar5 + 0x30) = (float)(dVar10 * dVar9);
+    dVar11 = (double)((float)(dVar11 + dVar16) * 0.5);
+    *pfVar10 = (float)(dVar11 * dVar14);
+    ppVar5->velocity[1] = (float)(dVar13 * dVar11);
+    ppVar5->velocity[2] = (float)(dVar12 * dVar11);
   }
-  PM_ProjectVelocity(pfVar8,param_2 + 0x3c,pfVar8);
-  if (((double)*pfVar8 != dVar13) || ((double)*(float *)(iVar5 + 0x2c) != dVar13)) {
-    PM_StepSlideMove(piVar6,param_2,0);
+  PM_ProjectVelocity(pfVar10,(ppVar6->groundTrace).normal,pfVar10);
+  if (((double)*pfVar10 != dVar15) || ((double)ppVar5->velocity[1] != dVar15)) {
+    PM_StepSlideMove(ppVar7,ppVar6,0);
   }
-  *(float *)(iVar5 + 0x30) = (float)(dVar10 * dVar14);
-  *pfVar8 = (float)(dVar12 * dVar14);
-  *(float *)(iVar5 + 0x2c) = (float)(dVar11 * dVar14);
-  lVar7 = (ulonglong)*(uint *)(iVar5 + 0x4e0) - (ulonglong)*(uint *)((int)param_2 + 0x28);
-  *(int *)(iVar5 + 0x4e0) = (int)lVar7;
-  if (lVar7 < 1) {
-    *pfVar8 = (float)dVar13;
-    *(float *)(iVar5 + 0x2c) = (float)dVar13;
-    PM_MeleeChargeClear(iVar5);
+  ppVar5->velocity[2] = (float)(dVar12 * dVar16);
+  *pfVar10 = (float)(dVar14 * dVar16);
+  ppVar5->velocity[1] = (float)(dVar13 * dVar16);
+  lVar9 = (ulonglong)(uint)ppVar5->meleeChargeTime - (ulonglong)(uint)ppVar6->msec;
+  ppVar5->meleeChargeTime = (int)lVar9;
+  if (lVar9 < 1) {
+    *pfVar10 = (float)dVar15;
+    ppVar5->velocity[1] = (float)dVar15;
+    PM_MeleeChargeClear(ppVar5);
   }
-  PM_SetMovementDir(piVar6,param_2);
+  PM_SetMovementDir(ppVar7,ppVar6);
   __restfpr_27();
   __restgprlr_27();
   return;
@@ -6394,35 +6941,39 @@ void PM_MeleeChargeMove(undefined8 param_1,ulonglong param_2)
 
 // 8227F578  TurretNVGTrigger  (bgame/bg_pmove.cpp:5968)
 
-void TurretNVGTrigger(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void TurretNVGTrigger(pmove_t *param_1)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   uint uVar2;
   bool bVar3;
-  int *piVar4;
+  undefined4 *puVar4;
   
-  piVar4 = (int *)__savegprlr_28();
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1753,0,0xffffffff82000f98,0xffffffff82004978);
+  puVar4 = (undefined4 *)__savegprlr_28(param_1);
+  if (puVar4 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1753,0,
+                    "%s");
   }
-  iVar1 = *piVar4;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1755,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)*puVar4;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1755,0,
+                    "%s");
   }
-  if (((piVar4[0xd] & 0x40000U) != 0) || (bVar3 = true, (piVar4[2] & 0x40000U) == 0)) {
+  if (((puVar4[0xd] & 0x40000) != 0) || (bVar3 = true, (puVar4[2] & 0x40000) == 0)) {
     bVar3 = false;
   }
   if (bVar3) {
-    uVar2 = *(uint *)(iVar1 + 0x374);
+    uVar2 = (ppVar1->weapCommon).weapFlags;
     if ((uVar2 & 0x40) != 0) {
-      *(uint *)(iVar1 + 0x374) = uVar2 & 0xffffffbf;
-      BG_AddPredictableEventToPlayerstate(99,0,iVar1);
+      (ppVar1->weapCommon).weapFlags = uVar2 & 0xffffffbf;
+      BG_AddPredictableEventToPlayerstate(99,0,ppVar1);
       __restgprlr_28();
       return;
     }
-    *(uint *)(iVar1 + 0x374) = uVar2 | 0x40;
-    BG_AddPredictableEventToPlayerstate(0x62,0,iVar1);
+    (ppVar1->weapCommon).weapFlags = uVar2 | 0x40;
+    BG_AddPredictableEventToPlayerstate(0x62,0,ppVar1);
   }
   __restgprlr_28();
   return;
@@ -6431,490 +6982,504 @@ void TurretNVGTrigger(void)
 
 // 8227F660  IsFiringWeapon  (bgame/bg_pmove.cpp:5999)
 
-undefined8 IsFiringWeapon(int *param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int IsFiringWeapon(pmove_t *param_1)
 
 {
-  int iVar1;
+  playerState_s *ppVar1;
   int iVar2;
-  undefined8 uVar3;
+  weapFireType_t wVar3;
+  bool bVar4;
   
-  iVar2 = *param_1;
-  if ((param_1[2] & 1U) == 0) {
+  ppVar1 = param_1->ps;
+  if (((param_1->cmd).buttons & 1U) == 0) {
 LAB_8227f6d0:
-    if ((param_1[2] & 0x80000U) != 0) {
-      if ((iVar2 == 0) || (uVar3 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-        uVar3 = 0;
+    if (((param_1->cmd).buttons & 0x80000U) != 0) {
+      if ((ppVar1 == (playerState_s *)0x0) ||
+         (bVar4 = true, ((ppVar1->weapCommon).weapFlags & 0x8000U) == 0)) {
+        bVar4 = false;
       }
-      iVar1 = BG_GetAmmoInClipForWeapon(iVar2,*(undefined4 *)(iVar2 + 0x370),uVar3,1);
-      if (iVar1 != 0) {
-        if (*(int *)(iVar2 + 0x390) == 1) goto LAB_8227f6c8;
-        iVar2 = BG_GetWeaponFireType
-                          (*(undefined4 *)(iVar2 + 0x370),*(uint *)(iVar2 + 0x374) >> 0xf & 1);
-        if (iVar2 == 5) {
+      iVar2 = BG_GetAmmoInClipForWeapon(ppVar1,(ppVar1->weapCommon).weapon,bVar4,WEAPON_HAND_LEFT);
+      if (iVar2 != 0) {
+        if ((ppVar1->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT) goto LAB_8227f6c8;
+        wVar3 = BG_GetWeaponFireType
+                          ((ppVar1->weapCommon).weapon,
+                           (bool)((byte)((uint)(ppVar1->weapCommon).weapFlags >> 0xf) & 1));
+        if (wVar3 == WEAPON_FIRETYPE_DOUBLEBARREL) {
           return 1;
         }
       }
     }
-    uVar3 = 0;
+    iVar2 = 0;
   }
   else {
-    if ((iVar2 == 0) || (uVar3 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-      uVar3 = 0;
+    if ((ppVar1 == (playerState_s *)0x0) ||
+       (bVar4 = true, ((ppVar1->weapCommon).weapFlags & 0x8000U) == 0)) {
+      bVar4 = false;
     }
-    iVar1 = BG_GetAmmoInClipForWeapon(iVar2,*(undefined4 *)(iVar2 + 0x370),uVar3,0);
-    if (iVar1 == 0) goto LAB_8227f6d0;
+    iVar2 = BG_GetAmmoInClipForWeapon(ppVar1,(ppVar1->weapCommon).weapon,bVar4,WEAPON_HAND_DEFAULT);
+    if (iVar2 == 0) goto LAB_8227f6d0;
 LAB_8227f6c8:
-    uVar3 = 1;
+    iVar2 = 1;
   }
-  return uVar3;
+  return iVar2;
 }
 
 
 // 8227F760  WeaponStateProneAllowed  (bgame/bg_pmove.cpp:6026)
 
-undefined8 WeaponStateProneAllowed(int param_1)
+bool WeaponStateProneAllowed(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
   if ((((param_1 == 0) || (param_1 == 1)) || (param_1 == 2)) ||
-     (((param_1 == 3 || (param_1 == 4)) || ((param_1 == 5 || (uVar1 = 0, param_1 == 8)))))) {
-    uVar1 = 1;
+     (((param_1 == 3 || (param_1 == 4)) || ((param_1 == 5 || (bVar1 = false, param_1 == 8)))))) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8227F7A8  WeaponStateReadyOrFiring  (bgame/bg_pmove.cpp:6032)
 
-undefined8 WeaponStateReadyOrFiring(int param_1)
+bool WeaponStateReadyOrFiring(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((param_1 == 0) || (uVar1 = 0, param_1 == 6)) {
-    uVar1 = 1;
+  if ((param_1 == 0) || (bVar1 = false, param_1 == 6)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 82282028  PmoveSingle  (bgame/bg_pmove.cpp:6050)
 
-void PmoveSingle(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PmoveSingle(pmove_t *param_1)
 
 {
-  int *piVar1;
-  float fVar2;
+  char cVar1;
+  playerState_s *ppVar2;
   float fVar3;
   float fVar4;
-  bool bVar5;
-  bool bVar6;
-  float fVar7;
+  float fVar5;
+  float fVar6;
+  bool bVar7;
   longlong *plVar8;
-  int *piVar9;
+  pmove_t *ppVar9;
   int iVar10;
-  char cVar11;
-  uint uVar12;
-  longlong *plVar13;
-  float *pfVar14;
-  longlong lVar15;
-  double dVar16;
+  EffectiveStance EVar11;
+  bool bVar12;
+  pml_t *ppVar13;
+  uint uVar14;
+  int iVar15;
+  longlong *plVar16;
+  float *pfVar17;
+  longlong lVar18;
+  double dVar19;
   longlong local_e8;
-  undefined1 local_e0 [12];
-  undefined1 auStack_d4 [12];
-  undefined1 auStack_c8 [12];
-  float local_bc;
-  int local_b8;
-  int local_b4;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  float local_70;
-  float local_6c;
-  float local_68;
-  int local_64;
-  int local_60;
-  int local_5c;
-  int local_58;
+  pml_t local_e0;
   
-  piVar9 = (int *)__savegprlr_24();
-  piVar1 = (int *)*piVar9;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x17a9,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar9 = (pmove_t *)__savegprlr_24(param_1);
+  ppVar2 = ppVar9->ps;
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x17a9,0,
+                    "%s");
   }
-  BG_AnimUpdatePlayerStateConditions(piVar9);
-  if ((piVar1[3] & 0x10000U) != 0) {
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
-    *(undefined1 *)(piVar9 + 8) = 0x7f;
+  BG_AnimUpdatePlayerStateConditions(ppVar9);
+  if ((ppVar2->pm_flags & 0x10000U) != 0) {
+    (ppVar9->cmd).rightmove = '\0';
+    (ppVar9->cmd).forwardmove = '\x7f';
   }
-  dVar16 = 0.0;
-  if ((piVar1[3] & 0x800U) == 0) {
-    if ((piVar1[3] & 0x400U) == 0) {
-      cVar11 = PM_IsPlayerFrozenByWeapon(piVar1);
-      if (cVar11 == '\0') goto LAB_8228214c;
-      uVar12 = piVar9[2] & 0xfffffb3f;
+  dVar19 = 0.0;
+  if ((ppVar2->pm_flags & 0x800U) == 0) {
+    if ((ppVar2->pm_flags & 0x400U) == 0) {
+      bVar12 = PM_IsPlayerFrozenByWeapon(ppVar2);
+      if (!bVar12) goto LAB_8228214c;
+      uVar14 = (ppVar9->cmd).buttons & 0xfffffb3f;
     }
     else {
-      uVar12 = piVar9[2] & 0x1301;
+      uVar14 = (ppVar9->cmd).buttons & 0x1301;
     }
-    *(undefined1 *)(piVar9 + 8) = 0;
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
-    piVar9[2] = uVar12;
-    piVar1[0xc] = (int)(float)dVar16;
-    piVar1[0xb] = (int)(float)dVar16;
-    piVar1[10] = (int)(float)dVar16;
+    (ppVar9->cmd).forwardmove = '\0';
+    (ppVar9->cmd).rightmove = '\0';
+    (ppVar9->cmd).buttons = uVar14;
+    ppVar2->velocity[2] = (float)dVar19;
+    ppVar2->velocity[1] = (float)dVar19;
+    ppVar2->velocity[0] = (float)dVar19;
   }
   else {
-    piVar9[2] = piVar9[2] & 0x1300;
-    piVar1[0xdd] = piVar1[0xdd] & 0xfffffffe;
-    *(undefined1 *)(piVar9 + 8) = 0;
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
-    piVar1[10] = 0;
-    piVar1[0xb] = 0;
-    piVar1[0xc] = 0;
-    if (piVar1[0x2b] != 0x7ff) {
-      piVar1[0x33] = 0;
-      piVar1[0x34] = 0;
-      piVar1[0x35] = 0;
+    (ppVar9->cmd).buttons = (ppVar9->cmd).buttons & 0x1300;
+    (ppVar2->weapCommon).weapFlags = (ppVar2->weapCommon).weapFlags & 0xfffffffe;
+    (ppVar9->cmd).forwardmove = '\0';
+    (ppVar9->cmd).rightmove = '\0';
+    ppVar2->velocity[0] = 0.0;
+    ppVar2->velocity[1] = 0.0;
+    ppVar2->velocity[2] = 0.0;
+    if ((ppVar2->vehicleState).entity != 0x7ff) {
+      (ppVar2->vehicleState).velocity[0] = 0.0;
+      (ppVar2->vehicleState).velocity[1] = 0.0;
+      (ppVar2->vehicleState).velocity[2] = 0.0;
     }
   }
 LAB_8228214c:
-  if ((piVar9[2] & 0x800000U) != 0) {
-    *(undefined1 *)(piVar9 + 8) = 0;
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
-    piVar9[2] = piVar9[2] & 0xc01b02;
+  uVar14 = (ppVar9->cmd).buttons;
+  if ((uVar14 & 0x800000) != 0) {
+    (ppVar9->cmd).forwardmove = '\0';
+    (ppVar9->cmd).rightmove = '\0';
+    (ppVar9->cmd).buttons = uVar14 & 0xc01b02;
   }
-  if (7 < piVar1[1]) {
-    piVar9[0x17] = piVar9[0x17] & 0xfdffffff;
+  if (7 < ppVar2->pm_type) {
+    ppVar9->tracemask = ppVar9->tracemask & 0xfdffffff;
   }
-  if ((((piVar1[3] & 1U) == 0) || (iVar10 = BG_UsingSniperScope(piVar1), iVar10 != 0)) ||
-     (piVar1[0x2b] != 0x7ff)) {
-    piVar1[3] = piVar1[3] & 0xfffffdff;
+  if ((((ppVar2->pm_flags & 1U) == 0) || (iVar10 = BG_UsingSniperScope(ppVar2), iVar10 != 0)) ||
+     ((ppVar2->vehicleState).entity != 0x7ff)) {
+    ppVar2->pm_flags = ppVar2->pm_flags & 0xfffffdff;
   }
   else {
-    if (((int)*(char *)(piVar9 + 8) == (int)*(char *)(piVar9 + 0x13)) ||
-       (local_e8 = (longlong)(int)*(char *)(piVar9 + 8),
-       ABS((double)local_e8) <= ABS((double)(longlong)(int)*(char *)(piVar9 + 0x13)))) {
-      if (((int)*(char *)((int)piVar9 + 0x21) == (int)*(char *)((int)piVar9 + 0x4d)) ||
-         (local_e8 = (longlong)(int)*(char *)((int)piVar9 + 0x21),
-         ABS((double)local_e8) <= ABS((double)(longlong)(int)*(char *)((int)piVar9 + 0x4d)))) {
-        uVar12 = piVar1[3];
-        if ((((uVar12 & 0x10) == 0) &&
-            (cVar11 = WeaponStateProneAllowed(piVar1[0x93]), cVar11 != '\0')) &&
-           (cVar11 = WeaponStateProneAllowed(piVar1[0x9a]), cVar11 != '\0')) {
-          piVar1[3] = uVar12 & 0xfffffdff;
+    iVar15 = (int)(ppVar9->oldcmd).forwardmove;
+    iVar10 = (int)(ppVar9->cmd).forwardmove;
+    if ((iVar10 == iVar15) ||
+       (local_e8 = (longlong)iVar10, ABS((float)local_e8) <= ABS((float)(longlong)iVar15))) {
+      iVar15 = (int)(ppVar9->oldcmd).rightmove;
+      iVar10 = (int)(ppVar9->cmd).rightmove;
+      if ((iVar10 == iVar15) ||
+         (local_e8 = (longlong)iVar10, ABS((float)local_e8) <= ABS((float)(longlong)iVar15))) {
+        uVar14 = ppVar2->pm_flags;
+        if ((((uVar14 & 0x10) == 0) &&
+            (bVar12 = WeaponStateProneAllowed(ppVar2->weapState[0].weaponState), bVar12)) &&
+           (bVar12 = WeaponStateProneAllowed(ppVar2->weapState[1].weaponState), bVar12)) {
+          ppVar2->pm_flags = uVar14 & 0xfffffdff;
         }
         goto LAB_822822d0;
       }
     }
-    iVar10 = PM_InteruptWeaponWithProneMove(piVar1);
+    iVar10 = PM_InteruptWeaponWithProneMove(ppVar2);
     if (iVar10 != 0) {
-      piVar1[3] = piVar1[3] & 0xfffffdff;
-      PM_ExitAimDownSight(piVar1);
+      ppVar2->pm_flags = ppVar2->pm_flags & 0xfffffdff;
+      PM_ExitAimDownSight(ppVar2);
     }
   }
 LAB_822822d0:
-  iVar10 = PM_GetEffectiveStance(piVar1);
-  if ((iVar10 == 1) || (iVar10 == 3)) {
-    bVar6 = true;
-    if (((piVar1[3] & 0x10U) != 0) && (iVar10 = BG_UsingSniperScope(piVar1), iVar10 == 0)) {
-      *(undefined1 *)(piVar9 + 8) = 0;
-      *(undefined1 *)((int)piVar9 + 0x21) = 0;
+  EVar11 = PM_GetEffectiveStance(ppVar2);
+  if ((EVar11 == PM_EFF_STANCE_PRONE) || (EVar11 == PM_EFF_STANCE_LASTSTANDCRAWL)) {
+    bVar12 = true;
+    if (((ppVar2->pm_flags & 0x10U) != 0) && (iVar10 = BG_UsingSniperScope(ppVar2), iVar10 == 0)) {
+      (ppVar9->cmd).forwardmove = '\0';
+      (ppVar9->cmd).rightmove = '\0';
     }
   }
   else {
-    bVar6 = false;
+    bVar12 = false;
   }
-  if ((double)(float)piVar1[0xde] == dVar16) {
-    piVar1[0x135] = *piVar1;
+  if ((double)(ppVar2->weapCommon).fWeaponPosFrac == dVar19) {
+    (ppVar2->weapCommon).weaponIdleTime = ppVar2->commandTime;
   }
-  uVar12 = piVar1[0x3e] | 0x100;
-  if ((piVar9[2] & 0x800000U) == 0) {
-    uVar12 = piVar1[0x3e] & 0xfffffeff;
+  uVar14 = ppVar2->eFlags | 0x100;
+  if (((ppVar9->cmd).buttons & 0x800000U) == 0) {
+    uVar14 = ppVar2->eFlags & 0xfffffeff;
   }
-  piVar1[0x3e] = uVar12;
-  piVar1[0x3e] = uVar12 & 0xff7fffff;
-  if ((piVar1[1] != 6) && ((piVar1[3] & 0x400U) == 0)) {
-    if ((piVar1[0x93] == 0) || (bVar5 = false, piVar1[0x93] == 6)) {
-      bVar5 = true;
+  ppVar2->eFlags = uVar14;
+  ppVar2->eFlags = uVar14 & 0xff7fffff;
+  if ((ppVar2->pm_type != 6) && ((ppVar2->pm_flags & 0x400U) == 0)) {
+    iVar10 = ppVar2->weapState[0].weaponState;
+    if ((iVar10 == 0) || (bVar7 = false, iVar10 == 6)) {
+      bVar7 = true;
     }
-    if (!bVar5) {
-      if ((piVar1[0x9a] == 0) || (bVar5 = false, piVar1[0x9a] == 6)) {
-        bVar5 = true;
+    if (!bVar7) {
+      iVar10 = ppVar2->weapState[1].weaponState;
+      if ((iVar10 == 0) || (bVar7 = false, iVar10 == 6)) {
+        bVar7 = true;
       }
-      if (!bVar5) goto LAB_822823e8;
+      if (!bVar7) goto LAB_822823e8;
     }
-    iVar10 = IsFiringWeapon(piVar9);
+    iVar10 = IsFiringWeapon(ppVar9);
     if (iVar10 != 0) {
-      piVar1[0x3e] = piVar1[0x3e] | 0x800000;
+      ppVar2->eFlags = ppVar2->eFlags | 0x800000;
     }
   }
 LAB_822823e8:
-  if ((piVar1[1] < 8) && ((piVar9[2] & 0x101U) == 0)) {
-    piVar1[3] = piVar1[3] & 0xfffffbff;
+  if ((ppVar2->pm_type < 8) && (((ppVar9->cmd).buttons & 0x101U) == 0)) {
+    ppVar2->pm_flags = ppVar2->pm_flags & 0xfffffbff;
   }
-  lVar15 = 0x11;
+  lVar18 = 0x11;
   plVar8 = &local_e8;
   do {
-    plVar13 = plVar8;
-    plVar8 = plVar13 + 1;
+    plVar16 = plVar8;
+    plVar8 = plVar16 + 1;
     *plVar8 = 0;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  *(undefined4 *)(plVar13 + 2) = 0;
-  iVar10 = piVar9[1];
-  local_58 = ((((piVar1[0x57] + iVar10) * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd +
-             0x269ec3) * 0x343fd + 0x269ec3;
-  local_b8 = iVar10 - *piVar1;
-  if (local_b8 < 1) {
-    local_b8 = 1;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  *(undefined4 *)(plVar16 + 2) = 0;
+  iVar10 = (ppVar9->cmd).serverTime;
+  local_e0.holdrand =
+       (((((int)ppVar2->viewangles[1] + iVar10) * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) *
+        0x343fd + 0x269ec3) * 0x343fd + 0x269ec3;
+  local_e0.msec = iVar10 - ppVar2->commandTime;
+  if (local_e0.msec < 1) {
+    local_e0.msec = 1;
   }
-  else if (200 < local_b8) {
-    local_b8 = 200;
+  else if (200 < local_e0.msec) {
+    local_e0.msec = 200;
   }
-  *piVar1 = iVar10;
-  local_70 = (float)piVar1[7];
-  local_6c = (float)piVar1[8];
-  local_68 = (float)piVar1[9];
-  local_64 = piVar1[10];
-  pfVar14 = (float *)(piVar1 + 10);
-  local_60 = piVar1[0xb];
-  local_5c = piVar1[0xc];
-  local_bc = (float)(longlong)local_b8 * 0.001;
-  PM_AdjustAimSpreadScale(piVar9,local_e0);
-  PM_UpdateViewAngles((double)(longlong)local_b8,piVar9,piVar1,(longlong)local_b8,piVar9 + 1,
-                      *(undefined1 *)(piVar9 + 0x4d));
-  AngleVectors(piVar1 + 0x56,local_e0,auStack_d4,auStack_c8);
-  cVar11 = *(char *)(piVar9 + 8);
-  if (cVar11 < '\0') {
-    uVar12 = piVar1[3] | 0x20;
+  ppVar2->commandTime = iVar10;
+  local_e0.previous_origin[0] = ppVar2->origin[0];
+  local_e0.previous_origin[1] = ppVar2->origin[1];
+  local_e0.previous_origin[2] = ppVar2->origin[2];
+  local_e0.previous_velocity[0] = ppVar2->velocity[0];
+  pfVar17 = ppVar2->velocity;
+  local_e0.previous_velocity[1] = ppVar2->velocity[1];
+  local_e0.previous_velocity[2] = ppVar2->velocity[2];
+  local_e0.frametime = (float)(longlong)local_e0.msec * 0.001;
+  PM_AdjustAimSpreadScale(ppVar9,&local_e0);
+  PM_UpdateViewAngles(ppVar9,ppVar2,(float)(longlong)local_e0.msec,(usercmd_s *)local_e0.msec,
+                      (char)ppVar9 + '\x04');
+  AngleVectors(ppVar2->viewangles,local_e0.forward,local_e0.right,local_e0.up);
+  cVar1 = (ppVar9->cmd).forwardmove;
+  if (cVar1 < '\0') {
+    uVar14 = ppVar2->pm_flags | 0x20;
 LAB_8228258c:
-    piVar1[3] = uVar12;
+    ppVar2->pm_flags = uVar14;
   }
-  else if (('\0' < cVar11) || ((cVar11 == '\0' && (*(char *)((int)piVar9 + 0x21) != '\0')))) {
-    uVar12 = piVar1[3] & 0xffffffdf;
+  else if (('\0' < cVar1) || ((cVar1 == '\0' && ((ppVar9->cmd).rightmove != '\0')))) {
+    uVar14 = ppVar2->pm_flags & 0xffffffdf;
     goto LAB_8228258c;
   }
-  if (7 < piVar1[1]) {
-    *(undefined1 *)(piVar9 + 8) = 0;
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
+  if (7 < ppVar2->pm_type) {
+    (ppVar9->cmd).forwardmove = '\0';
+    (ppVar9->cmd).rightmove = '\0';
   }
-  if ((bVar6) && ((piVar1[3] & 0x200U) != 0)) {
-    *(undefined1 *)(piVar9 + 8) = 0;
-    *(undefined1 *)((int)piVar9 + 0x21) = 0;
+  if ((bVar12) && ((ppVar2->pm_flags & 0x200U) != 0)) {
+    (ppVar9->cmd).forwardmove = '\0';
+    (ppVar9->cmd).rightmove = '\0';
   }
   Profile_Begin(0x117);
-  if ((0x11 < piVar1[0x2b]) && (piVar1[0x2b] != 0x7ff)) {
-    BG_VehicleMove(piVar9,local_e0);
+  iVar10 = (ppVar2->vehicleState).entity;
+  if ((0x11 < iVar10) && (iVar10 != 0x7ff)) {
+    BG_VehicleMove(ppVar9,&local_e0);
   }
-  Profile_EndInternal(0);
-  Mantle_ClearFlags(piVar1);
-  if (*(char *)(DAT_829c562c + 0xc) != '\0') {
-    PM_MeleeChargeUpdate(piVar9,local_e0);
+  Profile_EndInternal((double *)0x0);
+  Mantle_ClearFlags(ppVar2);
+  if ((player_meleeCOD4ChargeMovement->current).enabled != false) {
+    PM_MeleeChargeUpdate(ppVar9,&local_e0);
   }
-  iVar10 = piVar1[1];
+  iVar10 = ppVar2->pm_type;
   if (iVar10 - 1U < 9) {
     if (iVar10 != 1) {
       if (iVar10 == 2) {
-        if ((piVar1[3] & 8U) != 0) {
-          piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+        if ((ppVar2->pm_flags & 8U) != 0) {
+          ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
         }
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdatePlayerWalkingFlag(piVar9);
-        PM_DropTimers(piVar1,local_e0);
-        PM_NoclipMove(piVar9,local_e0);
-        PM_UpdateAimDownSightLerp(piVar9,local_b8);
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdatePlayerWalkingFlag(ppVar9);
+        PM_DropTimers(ppVar2,&local_e0);
+        PM_NoclipMove(ppVar9,&local_e0);
+        PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
         __restgprlr_24();
         return;
       }
       if (iVar10 == 3) {
-        if ((piVar1[3] & 8U) != 0) {
-          piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+        if ((ppVar2->pm_flags & 8U) != 0) {
+          ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
         }
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdatePlayerWalkingFlag(piVar9);
-        PM_DropTimers(piVar1,local_e0);
-        PM_UFOMove(piVar9,local_e0);
-        PM_UpdateAimDownSightLerp(piVar9,local_b8);
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdatePlayerWalkingFlag(ppVar9);
+        PM_DropTimers(ppVar2,&local_e0);
+        PM_UFOMove(ppVar9,&local_e0);
+        PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
         __restgprlr_24();
         return;
       }
       if (iVar10 == 4) {
-        if ((piVar1[3] & 8U) != 0) {
-          piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+        if ((ppVar2->pm_flags & 8U) != 0) {
+          ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
         }
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdatePlayerWalkingFlag(piVar9);
-        PM_DropTimers(piVar1,local_e0);
-        PM_ModelPreviewerMove(piVar1);
-        PM_UpdateAimDownSightLerp(piVar9,local_b8);
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdatePlayerWalkingFlag(ppVar9);
+        PM_DropTimers(ppVar2,&local_e0);
+        PM_ModelPreviewerMove(ppVar2);
+        PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
         __restgprlr_24();
         return;
       }
       if (iVar10 == 5) {
-        if ((piVar1[3] & 8U) != 0) {
-          piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+        if ((ppVar2->pm_flags & 8U) != 0) {
+          ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
         }
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdatePlayerWalkingFlag(piVar9);
-        PM_CheckDuck(piVar9,local_e0);
-        PM_DropTimers(piVar1,local_e0);
-        PM_FlyMove(piVar9,local_e0);
-        PM_UpdateAimDownSightLerp(piVar9,local_b8);
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdatePlayerWalkingFlag(ppVar9);
+        PM_CheckDuck(ppVar9,&local_e0);
+        PM_DropTimers(ppVar2,&local_e0);
+        PM_FlyMove(ppVar9,&local_e0);
+        PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
         __restgprlr_24();
         return;
       }
       if (iVar10 == 6) {
-        if ((piVar1[3] & 8U) != 0) {
-          piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+        if ((ppVar2->pm_flags & 8U) != 0) {
+          ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
         }
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdateAimDownSightLerp(piVar9,local_b8);
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
         __restgprlr_24();
         return;
       }
       if ((iVar10 == 7) || (iVar10 == 8)) goto LAB_822828ec;
     }
-    if ((piVar1[3] & 8U) != 0) {
-      piVar1[3] = piVar1[3] & 0xffffeff7U | 0x1000;
+    if ((ppVar2->pm_flags & 8U) != 0) {
+      ppVar2->pm_flags = ppVar2->pm_flags & 0xffffeff7U | 0x1000;
     }
-    piVar1[0x1b] = 0x7ff;
-    local_ac = 0;
-    local_b4 = 0;
-    local_b0 = 0;
-    if ((piVar1[0x3e] & 0x200000U) == 0) {
-      *pfVar14 = (float)dVar16;
-      piVar1[0xb] = (int)(float)dVar16;
-      piVar1[0xc] = (int)(float)dVar16;
+    ppVar2->groundEntityNum = 0x7ff;
+    local_e0.almostGroundPlane = 0;
+    local_e0.walking = 0;
+    local_e0.groundPlane = 0;
+    if ((ppVar2->eFlags & 0x200000U) == 0) {
+      *pfVar17 = (float)dVar19;
+      ppVar2->velocity[1] = (float)dVar19;
+      ppVar2->velocity[2] = (float)dVar19;
     }
-    PM_UpdateAimDownSightFlag(piVar9,local_e0);
-    PM_UpdateSprint(piVar9);
-    PM_UpdatePlayerWalkingFlag(piVar9);
-    PM_DropTimers(piVar1,local_e0);
-    PM_CheckDuck(piVar9,local_e0);
-    PM_Footsteps(piVar9,local_e0);
+    ppVar13 = &local_e0;
+    PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+    PM_UpdateSprint(ppVar9,ppVar13);
+    PM_UpdatePlayerWalkingFlag(ppVar9);
+    PM_DropTimers(ppVar2,&local_e0);
+    PM_CheckDuck(ppVar9,&local_e0);
+    PM_Footsteps(ppVar9,&local_e0);
   }
   else {
 LAB_822828ec:
-    uVar12 = piVar1[3];
-    if ((piVar1[0x3e] & 0x3800U) == 0) {
-      if ((uVar12 & 4) == 0) {
-        PM_UpdateAimDownSightFlag(piVar9,local_e0);
-        PM_UpdateSprint(piVar9);
-        PM_UpdatePlayerWalkingFlag(piVar9);
-        PM_CheckDuck(piVar9,local_e0);
+    uVar14 = ppVar2->pm_flags;
+    if ((ppVar2->eFlags & 0x3800U) == 0) {
+      if ((uVar14 & 4) == 0) {
+        ppVar13 = &local_e0;
+        PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+        PM_UpdateSprint(ppVar9,ppVar13);
+        PM_UpdatePlayerWalkingFlag(ppVar9);
+        PM_CheckDuck(ppVar9,&local_e0);
         Profile_Begin(0x119);
-        PM_GroundTrace(piVar9,local_e0);
-        Profile_EndInternal(0);
+        PM_GroundTrace(ppVar9,&local_e0);
+        Profile_EndInternal((double *)0x0);
       }
       Profile_Begin(0x11c);
-      Mantle_Update(piVar9);
-      Profile_EndInternal(0);
-      uVar12 = piVar1[3];
-      if ((uVar12 & 4) == 0) {
-        PM_UpdatePronePitch(piVar9,local_e0);
-        PM_DropTimers(piVar1,local_e0);
-        if (7 < piVar1[1]) {
-          PM_DeadMove(piVar1,local_e0);
+      Mantle_Update(ppVar9);
+      Profile_EndInternal((double *)0x0);
+      uVar14 = ppVar2->pm_flags;
+      if ((uVar14 & 4) == 0) {
+        PM_UpdatePronePitch(ppVar9,&local_e0);
+        PM_DropTimers(ppVar2,&local_e0);
+        if (7 < ppVar2->pm_type) {
+          PM_DeadMove(ppVar2,&local_e0);
         }
-        PM_CheckLadderMove(piVar9,local_e0);
-        PM_MeleeChargeCheck(piVar9);
+        PM_CheckLadderMove(ppVar9,&local_e0);
+        PM_MeleeChargeCheck(ppVar9);
         Profile_Begin(0x116);
-        if (piVar1[0x2b] == 0x7ff) {
-          if ((piVar1[3] & 8U) == 0) {
-            cVar11 = PM_MeleeChargeMove_IsActive(piVar9);
-            if (cVar11 == '\0') {
-              if (local_b4 == 0) {
-                PM_AirMove(piVar9,local_e0);
-              }
-              else {
-                PM_WalkMove();
-              }
+        if ((ppVar2->vehicleState).entity == 0x7ff) {
+          if ((ppVar2->pm_flags & 8U) == 0) {
+            bVar12 = PM_MeleeChargeMove_IsActive(ppVar9);
+            if (bVar12) {
+              PM_MeleeChargeMove(ppVar9,&local_e0);
+            }
+            else if (local_e0.walking == 0) {
+              PM_AirMove(ppVar9,&local_e0);
             }
             else {
-              PM_MeleeChargeMove();
+              PM_WalkMove(ppVar9,&local_e0);
             }
           }
           else {
-            PM_LadderMove(piVar9,local_e0);
+            PM_LadderMove(ppVar9,&local_e0);
           }
         }
-        Profile_EndInternal(0);
+        Profile_EndInternal((double *)0x0);
         Profile_Begin(0x119);
-        PM_GroundTrace(piVar9,local_e0);
-        Profile_EndInternal(0);
+        PM_GroundTrace(ppVar9,&local_e0);
+        Profile_EndInternal((double *)0x0);
         Profile_Begin(0x11a);
-        PM_Footsteps(piVar9,local_e0);
-        Profile_EndInternal(0);
+        PM_Footsteps(ppVar9,&local_e0);
+        Profile_EndInternal((double *)0x0);
         Profile_Begin(0x118);
-        PM_Weapon(piVar9,local_e0);
-        Profile_EndInternal(0);
+        PM_Weapon(ppVar9,&local_e0);
+        Profile_EndInternal((double *)0x0);
         Profile_Begin(0x11b);
-        PM_FoliageSounds(piVar9);
-        Profile_EndInternal(0);
-        fVar2 = (float)piVar1[8] - local_6c;
-        fVar3 = (float)piVar1[9] - local_68;
-        fVar4 = (float)piVar1[7] - local_70;
-        if ((fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2) / (local_bc * local_bc) <
-            (*pfVar14 * *pfVar14 +
-            (float)piVar1[0xb] * (float)piVar1[0xb] + (float)piVar1[0xc] * (float)piVar1[0xc]) *
+        PM_FoliageSounds(ppVar9);
+        Profile_EndInternal((double *)0x0);
+        fVar3 = ppVar2->origin[1] - local_e0.previous_origin[1];
+        fVar4 = ppVar2->origin[2] - local_e0.previous_origin[2];
+        fVar5 = ppVar2->origin[0] - local_e0.previous_origin[0];
+        if ((fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3) /
+            (local_e0.frametime * local_e0.frametime) <
+            (*pfVar17 * *pfVar17 +
+            ppVar2->velocity[1] * ppVar2->velocity[1] + ppVar2->velocity[2] * ppVar2->velocity[2]) *
             0.25) {
-          fVar7 = 1.0 / local_bc;
-          *pfVar14 = fVar7 * fVar4;
-          piVar1[0xb] = (int)(fVar2 * fVar7);
-          piVar1[0xc] = (int)(fVar3 * fVar7);
+          fVar6 = 1.0 / local_e0.frametime;
+          *pfVar17 = fVar6 * fVar5;
+          ppVar2->velocity[1] = fVar3 * fVar6;
+          ppVar2->velocity[2] = fVar4 * fVar6;
         }
-        Sys_SnapVector(pfVar14);
+        Sys_SnapVector(pfVar17);
         __restgprlr_24();
         return;
       }
-      if ((uVar12 & 8) != 0) {
-        piVar1[3] = uVar12 & 0xffffeff7 | 0x1000;
+      if ((uVar14 & 8) != 0) {
+        ppVar2->pm_flags = uVar14 & 0xffffeff7 | 0x1000;
       }
-      piVar1[0x1b] = 0x7ff;
-      local_b0 = 0;
-      local_b4 = 0;
-      PM_UpdateAimDownSightFlag(piVar9,local_e0);
-      PM_UpdateSprint(piVar9);
-      PM_UpdatePlayerWalkingFlag(piVar9);
-      PM_CheckDuck(piVar9,local_e0);
-      Mantle_Move(piVar9,piVar1,local_e0);
+      ppVar13 = &local_e0;
+      ppVar2->groundEntityNum = 0x7ff;
+      local_e0.groundPlane = 0;
+      local_e0.walking = 0;
+      PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+      PM_UpdateSprint(ppVar9,ppVar13);
+      PM_UpdatePlayerWalkingFlag(ppVar9);
+      PM_CheckDuck(ppVar9,&local_e0);
+      Mantle_Move(ppVar9,ppVar2,&local_e0);
       Profile_Begin(0x118);
-      PM_Weapon(piVar9,local_e0);
-      Profile_EndInternal(0);
-      __restgprlr_24();
+      PM_Weapon(ppVar9,&local_e0);
+      iVar10 = Profile_EndInternal((double *)0x0);
+      __restgprlr_24(iVar10);
       return;
     }
-    if ((uVar12 & 8) != 0) {
-      piVar1[3] = uVar12 & 0xffffeff7 | 0x1000;
+    if ((uVar14 & 8) != 0) {
+      ppVar2->pm_flags = uVar14 & 0xffffeff7 | 0x1000;
     }
-    piVar1[0x1b] = 0x7ff;
-    local_b0 = 0;
-    local_ac = 0;
-    local_b4 = 0;
-    *pfVar14 = (float)dVar16;
-    piVar1[0xb] = (int)(float)dVar16;
-    piVar1[0xc] = (int)(float)dVar16;
-    PM_UpdateAimDownSightFlag(piVar9,local_e0);
-    PM_UpdateSprint(piVar9);
-    PM_UpdatePlayerWalkingFlag(piVar9);
-    TurretNVGTrigger(piVar9);
-    PM_DropTimers(piVar1,local_e0);
-    PM_CheckDuck(piVar9,local_e0);
-    PM_UpdateAimDownSightLerp(piVar9,local_b8);
-    PM_Footsteps(piVar9,local_e0);
-    if ((piVar1[0x3e] & 0x2000U) == 0) {
-      PM_ResetWeaponState(piVar1);
+    ppVar13 = &local_e0;
+    ppVar2->groundEntityNum = 0x7ff;
+    local_e0.groundPlane = 0;
+    local_e0.almostGroundPlane = 0;
+    local_e0.walking = 0;
+    *pfVar17 = (float)dVar19;
+    ppVar2->velocity[1] = (float)dVar19;
+    ppVar2->velocity[2] = (float)dVar19;
+    PM_UpdateAimDownSightFlag(ppVar9,ppVar13);
+    PM_UpdateSprint(ppVar9,ppVar13);
+    PM_UpdatePlayerWalkingFlag(ppVar9);
+    TurretNVGTrigger(ppVar9);
+    PM_DropTimers(ppVar2,&local_e0);
+    PM_CheckDuck(ppVar9,&local_e0);
+    PM_UpdateAimDownSightLerp(ppVar9,local_e0.msec);
+    PM_Footsteps(ppVar9,&local_e0);
+    if ((ppVar2->eFlags & 0x2000U) == 0) {
+      PM_ResetWeaponState(ppVar2);
       __restgprlr_24();
       return;
     }
   }
-  PM_Weapon(piVar9,local_e0);
+  PM_Weapon(ppVar9,&local_e0);
   __restgprlr_24();
   return;
 }
@@ -6922,69 +7487,77 @@ LAB_822828ec:
 
 // 8227F7C8  PM_SetPitchValues  (bgame/bg_pmove.cpp:6532)
 
-void PM_SetPitchValues(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PM_SetPitchValues(playerState_s *param_1,pmove_t *param_2)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
-  double dVar4;
-  double dVar5;
+  playerState_s *ppVar2;
+  EffectiveStance EVar3;
+  ulonglong uVar4;
+  int iVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
+  double dVar11;
   
-  __savegprlr_28();
-  piVar2 = (int *)__savefpr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x1987,0,0xffffffff82000f98,0xffffffff82001fdc);
+  uVar4 = (ulonglong)(int)param_2;
+  __savegprlr_28(param_1);
+  ppVar2 = (playerState_s *)__savefpr_27();
+  if (ppVar2 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1987,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8200c508,0x1988,0,0xffffffff82000f98,0xffffffff82004978);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1988,0,
+                    "%s");
   }
-  iVar3 = PM_GetEffectiveStance(piVar2);
-  iVar1 = (int)param_2;
-  if ((iVar3 != 1) && (iVar3 != 3)) {
+  EVar3 = PM_GetEffectiveStance(ppVar2);
+  iVar1 = (int)uVar4;
+  if ((EVar3 != PM_EFF_STANCE_PRONE) && (EVar3 != PM_EFF_STANCE_LASTSTANDCRAWL)) {
     *(undefined4 *)(iVar1 + 0x124) = 0;
     *(undefined4 *)(iVar1 + 0x128) = 0;
     __restfpr_27();
     __restgprlr_28();
     return;
   }
-  if (piVar2[0x5b] == 0) {
-    dVar4 = 1.0;
+  if (ppVar2->viewHeightLerpTime == 0) {
+    dVar6 = 1.0;
   }
   else {
-    if (piVar2[0x5c] == 0xb) {
-      iVar3 = 400;
+    if (ppVar2->viewHeightLerpTarget == 0xb) {
+      iVar5 = 400;
     }
-    else if (piVar2[0x5c] == 0x28) {
-      iVar3 = (-(uint)(piVar2[0x5d] != 0) & 0xffffff38) + 400;
+    else if (ppVar2->viewHeightLerpTarget == 0x28) {
+      iVar5 = (-(uint)(ppVar2->viewHeightLerpDown != 0) & 0xffffff38) + 400;
     }
     else {
-      iVar3 = 200;
+      iVar5 = 200;
     }
-    dVar4 = 0.0;
-    dVar9 = (double)((float)(longlong)(*piVar2 - piVar2[0x5b]) / (float)(longlong)iVar3);
-    if ((0.0 <= dVar9) && (dVar4 = dVar9, 1.0 < dVar9)) {
-      dVar4 = 1.0;
+    dVar6 = 0.0;
+    dVar11 = (double)((float)(longlong)(ppVar2->commandTime - ppVar2->viewHeightLerpTime) /
+                     (float)(longlong)iVar5);
+    if ((0.0 <= dVar11) && (dVar6 = dVar11, 1.0 < dVar11)) {
+      dVar6 = 1.0;
     }
-    if (piVar2[0x5d] == 0) {
-      dVar4 = (double)(float)(1.0 - dVar4);
+    if (ppVar2->viewHeightLerpDown == 0) {
+      dVar6 = (double)(float)(1.0 - dVar6);
     }
   }
-  dVar7 = 0.0027777778450399637;
-  dVar5 = (double)(*(float *)(iVar1 + 0x124) * 0.0027777778);
-  dVar6 = 0.5;
-  dVar9 = floor((double)(float)(dVar5 + 0.5));
-  dVar7 = (double)(float)((double)*(float *)(iVar1 + 0x128) * dVar7);
-  dVar8 = 360.0;
-  *(float *)(iVar1 + 0x124) = (float)((double)(float)(dVar5 - (double)(float)dVar9) * dVar4) * 360.0
-  ;
-  dVar9 = floor((double)(float)(dVar7 + dVar6));
+  dVar9 = 0.0027777778450399637;
+  dVar7 = (double)(*(float *)(iVar1 + 0x124) * 0.0027777778);
+  dVar8 = 0.5;
+  dVar11 = floor((double)(float)(dVar7 + 0.5));
+  dVar9 = (double)(float)((double)*(float *)(iVar1 + 0x128) * dVar9);
+  dVar10 = 360.0;
+  *(float *)(iVar1 + 0x124) =
+       (float)((double)(float)(dVar7 - (double)(float)dVar11) * dVar6) * 360.0;
+  dVar11 = floor((double)(float)(dVar9 + dVar8));
   *(float *)(iVar1 + 0x128) =
-       (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar9) * dVar4) * dVar8);
+       (float)((double)(float)((double)(float)(dVar9 - (double)(float)dVar11) * dVar6) * dVar10);
   __restfpr_27();
   __restgprlr_28();
   return;
@@ -6993,59 +7566,62 @@ void PM_SetPitchValues(undefined8 param_1,ulonglong param_2)
 
 // 82282C78  Pmove  (bgame/bg_pmove.cpp:6584)
 
-void Pmove(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Pmove(pmove_t *param_1)
 
 {
-  int *piVar1;
+  playerState_s *ppVar1;
   int iVar2;
-  int *piVar3;
+  pmove_t *ppVar3;
   int iVar4;
   double dVar5;
   
-  piVar3 = (int *)__savegprlr_26();
-  piVar1 = (int *)*piVar3;
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8200c508,0x19be,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar3 = (pmove_t *)__savegprlr_26(param_1);
+  ppVar1 = ppVar3->ps;
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x19be,0,
+                    "%s");
   }
-  if (((piVar1[3] & 0x80000U) != 0) || ((piVar3[2] & 0x100000U) != 0)) {
-    *(undefined1 *)(piVar3 + 8) = 0;
-    *(undefined1 *)((int)piVar3 + 0x21) = 0;
-    piVar3[2] = piVar3[2] & 0x100300;
+  if (((ppVar1->pm_flags & 0x80000U) != 0) || (((ppVar3->cmd).buttons & 0x100000U) != 0)) {
+    (ppVar3->cmd).forwardmove = '\0';
+    (ppVar3->cmd).rightmove = '\0';
+    (ppVar3->cmd).buttons = (ppVar3->cmd).buttons & 0x100300;
   }
-  if ((piVar1[5] & 4U) != 0) {
-    *(undefined1 *)(piVar3 + 8) = 0;
-    *(undefined1 *)((int)piVar3 + 0x21) = 0;
-    piVar3[2] = piVar3[2] & 0xfffffbf9;
+  if ((ppVar1->linkFlags & 4U) != 0) {
+    (ppVar3->cmd).forwardmove = '\0';
+    (ppVar3->cmd).rightmove = '\0';
+    (ppVar3->cmd).buttons = (ppVar3->cmd).buttons & 0xfffffbf9;
   }
-  iVar2 = piVar3[1];
-  if (*piVar1 <= iVar2) {
-    if (*piVar1 + 1000 < iVar2) {
-      *piVar1 = iVar2 + -1000;
+  iVar2 = (ppVar3->cmd).serverTime;
+  if (ppVar1->commandTime <= iVar2) {
+    if (ppVar1->commandTime + 1000 < iVar2) {
+      ppVar1->commandTime = iVar2 + -1000;
     }
-    piVar3[0x18] = 0;
-    if (*piVar1 != iVar2) {
+    ppVar3->numtouch = 0;
+    if (ppVar1->commandTime != iVar2) {
       dVar5 = 1.0;
       do {
-        iVar4 = iVar2 - *piVar1;
+        iVar4 = iVar2 - ppVar1->commandTime;
         if (0x42 < iVar4) {
           iVar4 = 0x42;
         }
-        piVar3[1] = *piVar1 + iVar4;
+        (ppVar3->cmd).serverTime = ppVar1->commandTime + iVar4;
         Profile_Begin(0x115);
-        PmoveSingle(piVar3);
-        Profile_EndInternal(0);
-        if ((double)(float)piVar1[0xde] == dVar5) {
-          if (piVar1[0x49] == 0) {
-            piVar1[0x49] = *piVar1;
+        PmoveSingle(ppVar3);
+        Profile_EndInternal((double *)0x0);
+        if ((double)(ppVar1->weapCommon).fWeaponPosFrac == dVar5) {
+          if ((ppVar1->pe).timeADSCameUp == 0) {
+            (ppVar1->pe).timeADSCameUp = ppVar1->commandTime;
           }
         }
         else {
-          piVar1[0x49] = 0;
+          (ppVar1->pe).timeADSCameUp = 0;
         }
-        memcpy(piVar3 + 0xc,piVar3 + 1,0x2c);
-      } while (*piVar1 != iVar2);
+        memcpy();
+      } while (ppVar1->commandTime != iVar2);
     }
-    PM_SetPitchValues(piVar1,piVar3);
+    PM_SetPitchValues(ppVar1,ppVar3);
   }
   __restgprlr_26();
   return;
@@ -7054,23 +7630,25 @@ void Pmove(void)
 
 // 8227F9A8  BG_GetSpeed  (bgame/bg_pmove.cpp:6672)
 
-double BG_GetSpeed(int param_1,int param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+float BG_GetSpeed(playerState_s *param_1,int param_2)
 
 {
-  if ((*(uint *)(param_1 + 0xc) & 8) == 0) {
-    return (double)SQRT(*(float *)(param_1 + 0x28) * *(float *)(param_1 + 0x28) +
-                        *(float *)(param_1 + 0x2c) * *(float *)(param_1 + 0x2c));
+  if ((param_1->pm_flags & 8U) == 0) {
+    return SQRT(param_1->velocity[0] * param_1->velocity[0] +
+                param_1->velocity[1] * param_1->velocity[1]);
   }
-  if (param_2 - *(int *)(param_1 + 0x7c) < 500) {
+  if (param_2 - param_1->jumpTime < 500) {
     return 0.0;
   }
-  return (double)*(float *)(param_1 + 0x30);
+  return param_1->velocity[2];
 }
 
 
 // 82281FE8  BG_srand  (bgame/bg_pmove.cpp:6696)
 
-void BG_srand(int *param_1)
+void BG_srand(uint *param_1)
 
 {
   *param_1 = (((*param_1 * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd + 0x269ec3) * 0x343fd
@@ -7081,7 +7659,7 @@ void BG_srand(int *param_1)
 
 // 8227F9F8  BG_rand  (bgame/bg_pmove.cpp:6706)
 
-uint BG_rand(uint *param_1)
+int BG_rand(uint *param_1)
 
 {
   uint uVar1;
@@ -7094,54 +7672,54 @@ uint BG_rand(uint *param_1)
 
 // 8227FA20  BG_flrand  (bgame/bg_pmove.cpp:6720)
 
-double BG_flrand(double param_1,double param_2,undefined8 param_3,undefined8 param_4,uint *param_5)
+float BG_flrand(float param_1,float param_2,uint *param_3)
 
 {
+  uint *in_r5;
   uint uVar1;
   
-  uVar1 = *param_5 * 0x343fd + 0x269ec3;
-  *param_5 = uVar1;
-  return (double)(float)((double)((float)(param_2 - param_1) * (float)(uVar1 >> 0x11)) *
-                         3.0517578125e-05 + param_1);
+  uVar1 = *in_r5 * 0x343fd + 0x269ec3;
+  *in_r5 = uVar1;
+  return (param_2 - param_1) * (float)(uVar1 >> 0x11) * 3.0517578e-05 + param_1;
 }
 
 
 // 8227FA68  BG_irand  (bgame/bg_pmove.cpp:6727)
 
-longlong BG_irand(longlong param_1,int param_2,uint *param_3)
+int BG_irand(int param_1,int param_2,uint *param_3)
 
 {
   uint uVar1;
   
   uVar1 = *param_3 * 0x343fd + 0x269ec3;
   *param_3 = uVar1;
-  return (int)((longlong)((ulonglong)(uVar1 >> 0x11) * (longlong)(param_2 - (int)param_1)) >> 0xf) +
+  return (int)((longlong)((ulonglong)(uVar1 >> 0x11) * (longlong)(param_2 - param_1)) >> 0xf) +
          param_1;
 }
 
 
 // 8227FAA8  BG_random  (bgame/bg_pmove.cpp:6738)
 
-double BG_random(uint *param_1)
+float BG_random(uint *param_1)
 
 {
   uint uVar1;
   
   uVar1 = *param_1 * 0x343fd + 0x269ec3;
   *param_1 = uVar1;
-  return (double)((float)(uVar1 >> 0x11) * 3.0517578e-05);
+  return (float)(uVar1 >> 0x11) * 3.0517578e-05;
 }
 
 
 // 8227FAE8  BG_crandom  (bgame/bg_pmove.cpp:6744)
 
-uint BG_crandom(uint *param_1)
+float BG_crandom(uint *param_1)
 
 {
   uint uVar1;
   
   uVar1 = *param_1 * 0x343fd + 0x269ec3;
   *param_1 = uVar1;
-  return uVar1 >> 0x11;
+  return (float)(uVar1 >> 0x11) * 6.1035156e-05 - 1.0;
 }
 

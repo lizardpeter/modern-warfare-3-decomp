@@ -2,17 +2,19 @@
 
 // 828C1058  NCICalloc  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:27)
 
-void NCICalloc(int param_1,int param_2)
+void * NCICalloc(uint param_1,uint param_2)
 
 {
-  XMemAlloc((longlong)param_1 * (longlong)param_2,0x648a0018);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = XMemAlloc(param_1 * param_2,0x648a0018);
+  return pvVar1;
 }
 
 
 // 828C1120  NCIFree  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:35)
 
-void NCIFree(undefined8 param_1)
+void NCIFree(void *param_1)
 
 {
   XMemFree(param_1,0x648a0018);
@@ -22,59 +24,61 @@ void NCIFree(undefined8 param_1)
 
 // 828C1070  NCIMemset  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:45)
 
-undefined8 NCIMemset(undefined8 param_1)
+void * NCIMemset(void *param_1,int param_2,uint param_3)
 
 {
-  XMemSet();
+  XMemSet(param_1,param_2,param_3);
   return param_1;
 }
 
 
 // 828C10A0  NCIMemcpy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:57)
 
-undefined8 NCIMemcpy(undefined8 param_1,void *param_2,size_t param_3)
+void * NCIMemcpy(void *param_1,void *param_2,uint param_3)
 
 {
-  memcpy((void *)param_1,param_2,param_3);
+  memcpy();
   return param_1;
 }
 
 
 // 828C1130  NCISetExportFunctions  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:66)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void NCISetExportFunctions(void)
 
 {
-  nciSetCallocFunction(0xffffffff828c1058);
-  nciSetFreeFunction(0xffffffff828c1120);
-  nciSetMemsetFunction(0xffffffff828c1070);
-  nciSetMemcpyFunction(0xffffffff828c10a0);
-  nciSetCosFunction(0xffffffff82916fe8);
-  nciSetSinFunction(0xffffffff82916f08);
+  nciSetCallocFunction(NCICalloc);
+  nciSetFreeFunction(NCIFree);
+  nciSetMemsetFunction(NCIMemset);
+  nciSetMemcpyFunction(NCIMemcpy);
+  nciSetCosFunction(cos);
+  nciSetSinFunction(sin);
   return;
 }
 
 
 // 828C1198  NCIEncoderCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:181)
 
-undefined8 NCIEncoderCreate(int param_1)
+undefined4 NCIEncoderCreate(NCIENCODER_EXTENSION *param_1)
 
 {
-  short sVar2;
-  undefined8 uVar1;
+  ushort uVar2;
+  undefined4 uVar1;
   
   NCISetExportFunctions();
-  sVar2 = nciInitEncode(param_1 + 0x34);
-  if (sVar2 == 0) {
-    *(int *)(param_1 + 0x1c) = param_1 + 0x40;
-    *(undefined2 *)(param_1 + 0x20) = 0xa0;
-    *(int *)(param_1 + 0x24) = param_1 + 0x180;
+  uVar2 = nciInitEncode(&param_1->Encoder);
+  if (uVar2 == 0) {
+    (param_1->CodecIO).pPCMBuffer = (short *)param_1->InputFrame;
+    (param_1->CodecIO).wSamplesInPCMBuffer = 0xa0;
+    (param_1->CodecIO).pNellyBuffer = param_1->OutputFrame;
     uVar1 = 0;
-    *(undefined2 *)(param_1 + 0x28) = 9;
+    (param_1->CodecIO).wNellyBufferSize = 9;
   }
   else {
-    nciFreeEncode(param_1 + 0x34);
-    uVar1 = 0xffffffff80004005;
+    nciFreeEncode(&param_1->Encoder);
+    uVar1 = 0x80004005;
   }
   return uVar1;
 }
@@ -82,138 +86,139 @@ undefined8 NCIEncoderCreate(int param_1)
 
 // 828C10D0  NCIEncoderDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:234)
 
-undefined8 NCIEncoderDestroy(longlong param_1)
+undefined4 NCIEncoderDestroy(NCIENCODER_EXTENSION *param_1)
 
 {
-  nciFreeEncode(param_1 + 0x34);
+  nciFreeEncode(&param_1->Encoder);
   return 0;
 }
 
 
 // 828C1218  NCIEncoderProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:284)
 
-void NCIEncoderProcess(undefined8 param_1,ulonglong param_2)
+undefined4 NCIEncoderProcess(NCIENCODER_EXTENSION *param_1,ulong param_2)
 
 {
-  ushort uVar1;
-  int *piVar2;
-  int iVar3;
-  short sVar6;
-  int iVar4;
-  int *piVar5;
+  XMEDIAPACKET *pXVar1;
+  int iVar2;
+  ushort uVar6;
+  PACKET_CONTEXT *pPVar3;
+  PACKET_CONTEXT *pPVar4;
+  undefined4 uVar5;
   uint uVar7;
   int *piVar8;
   uint uVar9;
   int iVar10;
-  undefined8 uVar11;
-  int *piVar12;
-  longlong lVar13;
-  undefined4 local_80;
-  int local_7c;
+  ulonglong uVar11;
+  undefined8 uVar12;
+  int *piVar13;
+  longlong lVar14;
+  void *local_80;
+  NCI_CODEC_IO_BLOCK *local_7c;
   int local_78 [30];
   
-  iVar3 = __savegprlr_20();
-  local_7c = iVar3 + 0x1c;
-  piVar5 = *(int **)(*(int *)(iVar3 + 4) + 8);
-  lVar13 = 2;
+  uVar11 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_20(param_1);
+  local_7c = (NCI_CODEC_IO_BLOCK *)(iVar2 + 0x1c);
+  pPVar4 = *(PACKET_CONTEXT **)(*(int *)(iVar2 + 4) + 8);
+  lVar14 = 2;
   iVar10 = 0;
-  local_80 = 0;
-  uVar11 = 1;
-  piVar12 = local_78;
-  piVar8 = (int *)(iVar3 + 8);
+  local_80 = (void *)0x0;
+  uVar12 = 1;
+  piVar13 = local_78;
+  piVar8 = (int *)(iVar2 + 8);
   do {
     if (*piVar8 == 0) {
-      *piVar12 = 0;
+      *piVar13 = 0;
     }
     else {
       if (piVar8[2] == 1) {
-        *piVar12 = *(int *)(*piVar8 + 8);
+        *piVar13 = *(int *)(*piVar8 + 8);
       }
       else {
-        *piVar12 = 0;
+        *piVar13 = 0;
       }
-      if (*piVar12 != 0) {
+      if (*piVar13 != 0) {
         iVar10 = iVar10 + 1;
       }
     }
     piVar8 = piVar8 + 1;
-    piVar12 = piVar12 + 1;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  if ((piVar5 != (int *)0x0) && (iVar10 != 0)) {
-    while ((uVar11 = 0, (param_2 & 0xffffffff) != 0 &&
-           ((param_2 = param_2 - 1, piVar5 != (int *)0x0 && (iVar10 != 0))))) {
-      XHVResamplerProcess(iVar3 + 400,iVar3 + 0x40,
-                          (ulonglong)*(uint *)(*piVar5 + 8) + (ulonglong)*(uint *)(*piVar5 + 4),
-                          *(uint *)(*(int *)(iVar3 + 0x18) + 0x18) >> 1,0);
-      *(undefined1 *)(iVar3 + 0x30) = 0;
-      *(undefined2 *)(iVar3 + 0x2e) = 0;
-      sVar6 = nciEncode1by1(iVar3 + 0x34,&local_7c,&local_80);
-      if (sVar6 != 0) break;
-      uVar1 = *(ushort *)(iVar3 + 0x2e);
-      piVar12 = local_78;
-      lVar13 = 2;
-      piVar8 = (int *)(iVar3 + 8);
+    piVar13 = piVar13 + 1;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
+  if ((pPVar4 != (PACKET_CONTEXT *)0x0) && (iVar10 != 0)) {
+    while ((uVar12 = 0, (uVar11 & 0xffffffff) != 0 &&
+           ((uVar11 = uVar11 - 1, pPVar4 != (PACKET_CONTEXT *)0x0 && (iVar10 != 0))))) {
+      XHVResamplerProcess((XHVRESAMPLER *)(iVar2 + 400),(short *)(iVar2 + 0x40),
+                          (short *)(pPVar4->Packet->Buffer + pPVar4->Packet->Offset),
+                          *(uint *)(*(int *)(iVar2 + 0x18) + 0x18) >> 1,0);
+      *(undefined1 *)(iVar2 + 0x30) = 0;
+      *(undefined2 *)(iVar2 + 0x2e) = 0;
+      uVar6 = nciEncode1by1((void **)(iVar2 + 0x34),&local_7c,&local_80);
+      if (uVar6 != 0) break;
+      uVar6 = *(ushort *)(iVar2 + 0x2e);
+      piVar13 = local_78;
+      lVar14 = 2;
+      piVar8 = (int *)(iVar2 + 8);
       do {
-        piVar2 = (int *)*piVar12;
-        if (piVar2 != (int *)0x0) {
-          memcpy((void *)(*(int *)(*piVar2 + 8) + *(int *)(*piVar2 + 4)),(void *)(iVar3 + 0x180),
-                 (uint)uVar1);
-          iVar4 = *piVar2;
-          uVar7 = *(int *)(iVar4 + 4) + (uint)uVar1;
-          uVar9 = *(uint *)(iVar4 + 0xc);
-          if (uVar7 < *(uint *)(iVar4 + 0xc)) {
+        pPVar3 = (PACKET_CONTEXT *)*piVar13;
+        if (pPVar3 != (PACKET_CONTEXT *)0x0) {
+          memcpy();
+          pXVar1 = pPVar3->Packet;
+          uVar7 = pXVar1->Offset + (uint)uVar6;
+          uVar9 = pXVar1->Length;
+          if (uVar7 < pXVar1->Length) {
             uVar9 = uVar7;
           }
-          *(uint *)(iVar4 + 4) = uVar9;
-          if (uVar9 == *(uint *)(*piVar2 + 0xc)) {
-            iVar4 = PacketProcessorRetireContext(*piVar8,piVar2);
-            *piVar12 = iVar4;
-            if (iVar4 == 0) {
+          pXVar1->Offset = uVar9;
+          if (uVar9 == pPVar3->Packet->Length) {
+            pPVar3 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar8,pPVar3);
+            *piVar13 = (int)pPVar3;
+            if (pPVar3 == (PACKET_CONTEXT *)0x0) {
               iVar10 = iVar10 + -1;
             }
           }
         }
-        lVar13 = lVar13 + -1;
+        lVar14 = lVar14 + -1;
         piVar8 = piVar8 + 1;
-        piVar12 = piVar12 + 1;
-      } while (lVar13 != 0);
-      iVar4 = *piVar5;
-      uVar7 = *(int *)(iVar4 + 4) + *(int *)(*(int *)(iVar3 + 0x18) + 0x18);
-      uVar9 = *(uint *)(iVar4 + 0xc);
-      if (uVar7 < *(uint *)(iVar4 + 0xc)) {
+        piVar13 = piVar13 + 1;
+      } while (lVar14 != 0);
+      pXVar1 = pPVar4->Packet;
+      uVar7 = pXVar1->Offset + *(int *)(*(int *)(iVar2 + 0x18) + 0x18);
+      uVar9 = pXVar1->Length;
+      if (uVar7 < pXVar1->Length) {
         uVar9 = uVar7;
       }
-      *(uint *)(iVar4 + 4) = uVar9;
-      if (uVar9 == *(uint *)(*piVar5 + 0xc)) {
-        piVar5 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4),piVar5);
+      pXVar1->Offset = uVar9;
+      if (uVar9 == pPVar4->Packet->Length) {
+        pPVar4 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar2 + 4),pPVar4);
       }
     }
   }
-  __restgprlr_20(uVar11);
-  return;
+  uVar5 = __restgprlr_20(uVar12);
+  return uVar5;
 }
 
 
 // 828C1418  NCIDecoderCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:573)
 
-undefined8 NCIDecoderCreate(int param_1)
+undefined4 NCIDecoderCreate(NCIDECODER_EXTENSION *param_1)
 
 {
-  short sVar2;
-  undefined8 uVar1;
+  ushort uVar2;
+  undefined4 uVar1;
   
   NCISetExportFunctions();
-  sVar2 = nciInitDecode(param_1 + 0x34);
-  if (sVar2 == 0) {
-    *(int *)(param_1 + 0x1c) = param_1 + 0x40;
-    *(int *)(param_1 + 0x24) = param_1 + 0x2c0;
+  uVar2 = nciInitDecode(&param_1->Decoder);
+  if (uVar2 == 0) {
+    (param_1->CodecIO).pPCMBuffer = (short *)param_1->OutputFrame;
+    (param_1->CodecIO).pNellyBuffer = param_1->InputFrame;
     uVar1 = 0;
-    *(undefined2 *)(param_1 + 0x28) = 9;
+    (param_1->CodecIO).wNellyBufferSize = 9;
   }
   else {
-    nciFreeDecode(param_1 + 0x34);
-    uVar1 = 0xffffffff80004005;
+    nciFreeDecode(&param_1->Decoder);
+    uVar1 = 0x80004005;
   }
   return uVar1;
 }
@@ -221,136 +226,141 @@ undefined8 NCIDecoderCreate(int param_1)
 
 // 828C10F8  NCIDecoderDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:625)
 
-undefined8 NCIDecoderDestroy(longlong param_1)
+undefined4 NCIDecoderDestroy(NCIDECODER_EXTENSION *param_1)
 
 {
-  nciFreeDecode(param_1 + 0x34);
+  nciFreeDecode(&param_1->Decoder);
   return 0;
 }
 
 
 // 828C1490  NCIDecoderProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:680)
 
-void NCIDecoderProcess(undefined8 param_1,ulonglong param_2)
+undefined4 NCIDecoderProcess(NCIDECODER_EXTENSION *param_1,ulong param_2)
 
 {
   ushort uVar1;
-  int *piVar2;
-  int iVar3;
-  short sVar6;
-  int iVar4;
-  int *piVar5;
-  int *piVar7;
-  uint uVar8;
-  undefined8 uVar9;
-  int iVar10;
-  int *piVar11;
-  int *piVar12;
-  void *_Src;
-  uint uVar13;
-  longlong lVar14;
-  char local_320 [4];
-  int *local_31c;
-  undefined4 local_318 [2];
+  short *psVar2;
+  void *pvVar3;
+  XMEDIAPACKET *pXVar4;
+  int iVar5;
+  ushort uVar9;
+  PACKET_CONTEXT *pPVar6;
+  PACKET_CONTEXT *pPVar7;
+  undefined4 uVar8;
+  int *piVar10;
+  uint uVar11;
+  uint uVar12;
+  undefined8 uVar13;
+  int iVar14;
+  ulonglong uVar15;
+  NCI_CODEC_IO_BLOCK *pNVar16;
+  int *piVar17;
+  longlong lVar18;
+  uchar local_320 [4];
+  NCI_CODEC_IO_BLOCK *local_31c;
+  NCI_VOICE_PROPERTIES_BLOCK *local_318 [2];
   int local_310 [4];
-  undefined1 auStack_300 [768];
+  short asStack_300 [384];
   
-  iVar3 = __savegprlr_17();
-  piVar11 = (int *)(iVar3 + 0x1c);
-  piVar5 = *(int **)(*(int *)(iVar3 + 4) + 8);
-  lVar14 = 2;
-  iVar10 = 0;
-  local_318[0] = 0;
-  uVar9 = 1;
-  piVar12 = local_310;
-  piVar7 = (int *)(iVar3 + 8);
+  uVar15 = (ulonglong)(int)param_2;
+  iVar5 = __savegprlr_17(param_1);
+  pNVar16 = (NCI_CODEC_IO_BLOCK *)(iVar5 + 0x1c);
+  pPVar7 = *(PACKET_CONTEXT **)(*(int *)(iVar5 + 4) + 8);
+  lVar18 = 2;
+  iVar14 = 0;
+  local_318[0] = (NCI_VOICE_PROPERTIES_BLOCK *)0x0;
+  uVar13 = 1;
+  piVar17 = local_310;
+  piVar10 = (int *)(iVar5 + 8);
   do {
-    if (*piVar7 == 0) {
-      *piVar12 = 0;
+    if (*piVar10 == 0) {
+      *piVar17 = 0;
     }
     else {
-      if (piVar7[2] == 1) {
-        *piVar12 = *(int *)(*piVar7 + 8);
+      if (piVar10[2] == 1) {
+        *piVar17 = *(int *)(*piVar10 + 8);
       }
       else {
-        *piVar12 = 0;
+        *piVar17 = 0;
       }
-      if (*piVar12 != 0) {
-        iVar10 = iVar10 + 1;
+      if (*piVar17 != 0) {
+        iVar14 = iVar14 + 1;
       }
     }
-    piVar7 = piVar7 + 1;
-    piVar12 = piVar12 + 1;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  local_31c = piVar11;
-  if ((piVar5 != (int *)0x0) && (iVar10 != 0)) {
-    uVar9 = 0;
-    while ((((param_2 & 0xffffffff) != 0 && (param_2 = param_2 - 1, piVar5 != (int *)0x0)) &&
-           (iVar10 != 0))) {
-      memcpy((void *)(iVar3 + 0x2c0),(void *)(*(int *)(*piVar5 + 8) + *(int *)(*piVar5 + 4)),
-             *(size_t *)(*(int *)(iVar3 + 0x18) + 0x18));
-      _Src = (void *)(iVar3 + 0x40);
-      *(undefined2 *)(iVar3 + 0x20) = 0;
-      *piVar11 = (int)_Src;
-      *(undefined2 *)(iVar3 + 0x2a) = 0;
-      *(undefined1 *)(iVar3 + 0x2c) = 0;
+    piVar10 = piVar10 + 1;
+    piVar17 = piVar17 + 1;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  local_31c = pNVar16;
+  if ((pPVar7 != (PACKET_CONTEXT *)0x0) && (iVar14 != 0)) {
+    uVar13 = 0;
+    while ((((uVar15 & 0xffffffff) != 0 && (uVar15 = uVar15 - 1, pPVar7 != (PACKET_CONTEXT *)0x0))
+           && (iVar14 != 0))) {
+      memcpy();
+      *(undefined2 *)(iVar5 + 0x20) = 0;
+      pNVar16->pPCMBuffer = (short *)(iVar5 + 0x40);
+      *(undefined2 *)(iVar5 + 0x2a) = 0;
+      *(undefined1 *)(iVar5 + 0x2c) = 0;
       do {
-        sVar6 = nciDecode1by1((undefined4 *)(iVar3 + 0x34),&local_31c,local_318);
-        if (sVar6 != 0) break;
-        uVar1 = *(ushort *)(iVar3 + 0x20);
-        *(undefined2 *)(iVar3 + 0x20) = 0;
-        *piVar11 = (uint)uVar1 * 2 + *piVar11;
-        nciDecodeNeedsInput(*(undefined4 *)(iVar3 + 0x34),local_320);
+        uVar9 = nciDecode1by1((void **)(iVar5 + 0x34),&local_31c,local_318);
+        if (uVar9 != 0) break;
+        uVar1 = *(ushort *)(iVar5 + 0x20);
+        psVar2 = pNVar16->pPCMBuffer;
+        *(undefined2 *)(iVar5 + 0x20) = 0;
+        pvVar3 = *(void **)(iVar5 + 0x34);
+        pNVar16->pPCMBuffer = psVar2 + uVar1;
+        nciDecodeNeedsInput(pvVar3,local_320);
       } while (local_320[0] == '\0');
-      if (sVar6 != 0) break;
-      uVar1 = *(ushort *)(iVar3 + 0x2a);
-      *(undefined2 *)(iVar3 + 0x20) = 0xa0;
-      memcpy(auStack_300,_Src,0x140);
-      XHVResamplerProcess(iVar3 + 0x2d0,_Src,auStack_300,0xa0,1);
-      piVar12 = local_310;
-      lVar14 = 2;
-      piVar7 = (int *)(iVar3 + 8);
+      if (uVar9 != 0) break;
+      uVar9 = *(ushort *)(iVar5 + 0x2a);
+      *(undefined2 *)(iVar5 + 0x20) = 0xa0;
+      memcpy();
+      XHVResamplerProcess((XHVRESAMPLER *)(iVar5 + 0x2d0),(short *)(iVar5 + 0x40),asStack_300,0xa0,1
+                         );
+      piVar17 = local_310;
+      lVar18 = 2;
+      piVar10 = (int *)(iVar5 + 8);
       do {
-        piVar2 = (int *)*piVar12;
-        if (piVar2 != (int *)0x0) {
-          uVar13 = ((uint)*(ushort *)(iVar3 + 0x20) * 16000) / 8000 << 1;
-          if ((uint)(*(int *)(*piVar2 + 0xc) - *(int *)(*piVar2 + 4)) <= uVar13) {
-            uVar13 = *(int *)(*piVar2 + 0xc) - *(int *)(*piVar2 + 4);
+        pPVar6 = (PACKET_CONTEXT *)*piVar17;
+        if (pPVar6 != (PACKET_CONTEXT *)0x0) {
+          uVar12 = ((uint)*(ushort *)(iVar5 + 0x20) * 16000) / 8000 << 1;
+          if (pPVar6->Packet->Length - pPVar6->Packet->Offset <= uVar12) {
+            uVar12 = pPVar6->Packet->Length - pPVar6->Packet->Offset;
           }
-          memcpy((void *)(*(int *)(*piVar2 + 8) + *(int *)(*piVar2 + 4)),_Src,uVar13);
-          iVar4 = *piVar2;
-          uVar13 = *(int *)(iVar4 + 4) + uVar13;
-          uVar8 = *(uint *)(iVar4 + 0xc);
-          if (uVar13 < *(uint *)(iVar4 + 0xc)) {
-            uVar8 = uVar13;
+          memcpy();
+          pXVar4 = pPVar6->Packet;
+          uVar12 = pXVar4->Offset + uVar12;
+          uVar11 = pXVar4->Length;
+          if (uVar12 < pXVar4->Length) {
+            uVar11 = uVar12;
           }
-          *(uint *)(iVar4 + 4) = uVar8;
-          if (uVar8 == *(uint *)(*piVar2 + 0xc)) {
-            iVar4 = PacketProcessorRetireContext(*piVar7,piVar2);
-            *piVar12 = iVar4;
-            if (iVar4 == 0) {
-              iVar10 = iVar10 + -1;
+          pXVar4->Offset = uVar11;
+          if (uVar11 == pPVar6->Packet->Length) {
+            pPVar6 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar10,pPVar6);
+            *piVar17 = (int)pPVar6;
+            if (pPVar6 == (PACKET_CONTEXT *)0x0) {
+              iVar14 = iVar14 + -1;
             }
           }
         }
-        lVar14 = lVar14 + -1;
-        piVar7 = piVar7 + 1;
-        piVar12 = piVar12 + 1;
-      } while (lVar14 != 0);
-      iVar4 = *piVar5;
-      uVar8 = (uint)uVar1 + *(int *)(iVar4 + 4);
-      uVar13 = *(uint *)(iVar4 + 0xc);
-      if (uVar8 < *(uint *)(iVar4 + 0xc)) {
-        uVar13 = uVar8;
+        lVar18 = lVar18 + -1;
+        piVar10 = piVar10 + 1;
+        piVar17 = piVar17 + 1;
+      } while (lVar18 != 0);
+      pXVar4 = pPVar7->Packet;
+      uVar11 = (uint)uVar9 + pXVar4->Offset;
+      uVar12 = pXVar4->Length;
+      if (uVar11 < pXVar4->Length) {
+        uVar12 = uVar11;
       }
-      *(uint *)(iVar4 + 4) = uVar13;
-      if (uVar13 == *(uint *)(*piVar5 + 0xc)) {
-        piVar5 = (int *)PacketProcessorRetireContext(*(undefined4 *)(iVar3 + 4),piVar5);
+      pXVar4->Offset = uVar12;
+      if (uVar12 == pPVar7->Packet->Length) {
+        pPVar7 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar5 + 4),pPVar7);
       }
     }
   }
-  __restgprlr_17(uVar9);
-  return;
+  uVar8 = __restgprlr_17(uVar13);
+  return uVar8;
 }
 

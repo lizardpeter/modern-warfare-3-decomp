@@ -2,12 +2,12 @@
 
 // 828AAAA8  XNotifyCreateListener  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xnotify.c:22)
 
-undefined8 XNotifyCreateListener(undefined8 param_1)
+void * XNotifyCreateListener(ulong64 param_1)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
   
-  uVar1 = XamNotifyCreateListener(param_1,8);
-  return uVar1;
+  pvVar1 = (void *)XamNotifyCreateListener(param_1,8);
+  return pvVar1;
 }
 

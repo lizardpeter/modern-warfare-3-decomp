@@ -2,48 +2,57 @@
 
 // 82866738  D3DDevice_GpuDisownAll  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gpu.cpp:588)
 
-void D3DDevice_GpuDisownAll(undefined8 *param_1)
+void D3DDevice_GpuDisownAll(D3DDevice *param_1)
 
 {
-  *param_1 = 0xffffffffffffffff;
-  param_1[1] = 0xffffffffffffffff;
-  param_1[2] = 0xffffffffffffffff;
-  param_1[3] = 0xffffffffffffffff;
-  param_1[4] = 0xffffffffffffffff;
+  (param_1->m_Pending).m_Mask[0] = 0xffffffffffffffff;
+  (param_1->m_Pending).m_Mask[1] = 0xffffffffffffffff;
+  (param_1->m_Pending).m_Mask[2] = 0xffffffffffffffff;
+  (param_1->m_Pending).m_Mask[3] = 0xffffffffffffffff;
+  (param_1->m_Pending).m_Mask[4] = 0xffffffffffffffff;
   return;
 }
 
 
 // 82866780  D3DDevice_GpuBeginShaderConstantF4  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gpu.cpp:618)
 
-void D3DDevice_GpuBeginShaderConstantF4
-               (undefined8 param_1,ulonglong param_2,longlong param_3,ulonglong param_4)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+__vector4 *
+D3DDevice_GpuBeginShaderConstantF4(D3DDevice *param_1,int param_2,uint param_3,ulong param_4)
 
 {
-  undefined4 *puVar1;
+  ulong *puVar1;
   uint *puVar2;
-  int iVar3;
-  int iVar4;
-  uint *puVar5;
+  CDevice *this;
+  ulong *puVar3;
+  uint *puVar4;
+  __vector4 *p_Var5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  iVar3 = __savegprlr_28();
-  param_4 = param_4 & 0x3fffffff;
-  iVar4 = D3D__CDevice__BeginRingBig(iVar3,param_4 * 4 + 5);
-  if (iVar4 == 0) {
-    puVar5 = (uint *)0x0;
+  uVar8 = (ulonglong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  uVar6 = (ulonglong)param_2;
+  this = (CDevice *)__savegprlr_28(param_1);
+  uVar8 = uVar8 & 0x3fffffff;
+  puVar3 = D3D::CDevice::BeginRingBig(this,(int)(uVar8 << 2) + 5);
+  if (puVar3 == (ulong *)0x0) {
+    puVar4 = (uint *)0x0;
   }
   else {
-    puVar1 = (undefined4 *)(iVar4 + 4);
+    puVar1 = puVar3 + 1;
     *puVar1 = 0x80000000;
-    *(undefined4 *)(iVar4 + 8) = 0x80000000;
-    *(undefined4 *)(iVar4 + 0xc) = 0x80000000;
+    puVar3[2] = 0x80000000;
+    puVar3[3] = 0x80000000;
     puVar2 = (uint *)((int)puVar1 + (0xfffffff8U - (int)puVar1 & 0xf));
-    *puVar2 = *(uint *)(iVar3 + 0x32a4) | (uint)(param_4 << 0x12) | 0xc0002d00;
-    puVar5 = puVar2 + 2;
-    puVar2[1] = (uint)((param_3 + (param_2 & 0xffffff) * -0x100 & 0xffffffff) << 2) & 0x7fc;
-    *(int *)(iVar3 + 0x30) = (int)puVar5 + (int)(param_4 << 4) + -4;
+    *puVar2 = this->m_GpuPacket3Predication | (uint)(uVar8 << 0x12) | 0xc0002d00;
+    puVar4 = puVar2 + 2;
+    puVar2[1] = (uint)((lVar7 + (uVar6 & 0xffffff) * -0x100 & 0xffffffff) << 2) & 0x7fc;
+    *(int *)&this->field_0x30 = (int)puVar4 + (int)(uVar8 << 4) + -4;
   }
-  __restgprlr_28(puVar5);
-  return;
+  p_Var5 = (__vector4 *)__restgprlr_28(puVar4);
+  return p_Var5;
 }
 

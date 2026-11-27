@@ -2,63 +2,64 @@
 
 // 82924C88  _commit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/commit.c:39)
 
-int _commit(int _FileHandle)
+int _commit(int param_1)
 
 {
-  uint _Filehandle;
-  int *piVar2;
-  ulonglong uVar1;
-  HANDLE hFile;
-  BOOL BVar3;
-  ulong *puVar4;
-  int iVar5;
+  int iVar1;
+  uint uVar3;
+  int *piVar4;
+  ulonglong uVar2;
+  void *pvVar5;
+  ulong *puVar6;
+  int iVar7;
   uint uStack00000014;
   uint local_40;
   
-  _Filehandle = __savegprlr_27(_FileHandle);
-  uStack00000014 = _Filehandle;
-  if (_Filehandle == 0xfffffffe) {
-    piVar2 = _errno();
-    uVar1 = 0xffffffffffffffff;
-    *piVar2 = 9;
+  uVar3 = __savegprlr_27(param_1);
+  uStack00000014 = uVar3;
+  if (uVar3 == 0xfffffffe) {
+    piVar4 = _errno();
+    uVar2 = 0xffffffffffffffff;
+    *piVar4 = 9;
     goto LAB_82924d98;
   }
-  if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
-    iVar5 = (_Filehandle & 0x1f) * 0x48;
-    if ((*(byte *)(iVar5 + (&DAT_84897dc0)[(int)_Filehandle >> 5] + 4) & 1) != 0) {
-      __lock_fhandle(_Filehandle);
-      if ((*(byte *)(iVar5 + (&DAT_84897dc0)[(int)_Filehandle >> 5] + 4) & 1) == 0) {
+  if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
+    iVar7 = ((int)uVar3 >> 5) * 4;
+    iVar1 = (uVar3 & 0x1f) * 0x48;
+    if ((*(byte *)(iVar1 + *(int *)(&__pioinfo + iVar7) + 4) & 1) != 0) {
+      __lock_fhandle(uVar3);
+      if ((*(byte *)(iVar1 + *(int *)(&__pioinfo + iVar7) + 4) & 1) == 0) {
 LAB_82924d74:
-        piVar2 = _errno();
-        *piVar2 = 9;
+        piVar4 = _errno();
+        *piVar4 = 9;
         local_40 = 0xffffffff;
       }
       else {
-        hFile = (HANDLE)_get_osfhandle(_Filehandle);
-        BVar3 = FlushFileBuffers(hFile);
-        if (BVar3 == 0) {
+        pvVar5 = (void *)_get_osfhandle(uVar3);
+        iVar7 = FlushFileBuffers(pvVar5);
+        if (iVar7 == 0) {
           local_40 = GetLastError();
         }
         else {
           local_40 = 0;
         }
         if (local_40 != 0) {
-          puVar4 = __doserrno();
-          *puVar4 = local_40;
+          puVar6 = __doserrno();
+          *puVar6 = local_40;
           goto LAB_82924d74;
         }
       }
       FUN_82924dc0();
-      uVar1 = (ulonglong)local_40;
+      uVar2 = (ulonglong)local_40;
       goto LAB_82924d98;
     }
   }
-  piVar2 = _errno();
-  *piVar2 = 9;
+  piVar4 = _errno();
+  *piVar4 = 9;
   _invalid_parameter_noinfo();
-  uVar1 = 0xffffffffffffffff;
+  uVar2 = 0xffffffffffffffff;
 LAB_82924d98:
-  iVar5 = __restgprlr_27(uVar1);
-  return iVar5;
+  iVar7 = __restgprlr_27(uVar2);
+  return iVar7;
 }
 

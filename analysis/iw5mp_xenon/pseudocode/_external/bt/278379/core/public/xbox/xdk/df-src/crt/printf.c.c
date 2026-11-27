@@ -2,58 +2,41 @@
 
 // 82918538  printf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/printf.c:49)
 
-int printf(char *_Format,...)
+int printf(char *param_1)
 
 {
-  longlong lVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  FILE *pFVar4;
-  uint uVar5;
-  int iVar6;
-  undefined8 in_r4;
-  undefined8 in_r5;
-  undefined8 in_r6;
-  undefined8 in_r7;
-  undefined8 in_r8;
-  undefined8 in_r9;
-  undefined8 in_r10;
-  undefined8 in_stack_00000018;
-  undefined8 in_stack_00000020;
-  undefined8 in_stack_00000028;
-  undefined8 in_stack_00000030;
-  undefined8 in_stack_00000038;
-  undefined8 in_stack_00000040;
-  undefined8 in_stack_00000048;
+  char *pcVar1;
+  longlong lVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  _iobuf *p_Var5;
+  uint uVar6;
+  int iVar7;
+  char *pcStack00000014;
   
-  lVar1 = __savegprlr_29(_Format);
-  in_stack_00000018 = in_r4;
-  in_stack_00000020 = in_r5;
-  in_stack_00000028 = in_r6;
-  in_stack_00000030 = in_r7;
-  in_stack_00000038 = in_r8;
-  in_stack_00000040 = in_r9;
-  in_stack_00000048 = in_r10;
-  if (lVar1 == 0) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  lVar2 = __savegprlr_29(param_1);
+  pcStack00000014 = (char *)lVar2;
+  if (lVar2 == 0) {
+    piVar4 = _errno();
+    *piVar4 = 0x16;
     _invalid_parameter_noinfo();
-    uVar2 = 0xffffffffffffffff;
+    uVar3 = 0xffffffffffffffff;
   }
   else {
-    pFVar4 = __iob_func();
-    _lock_file2(1,pFVar4 + 1);
-    pFVar4 = __iob_func();
-    iVar6 = _stbuf(pFVar4 + 1);
-    pFVar4 = __iob_func();
-    uVar5 = _output_l(pFVar4 + 1,(char *)lVar1,(_locale_t)0x0,(va_list)&stack0x00000018);
-    pFVar4 = __iob_func();
-    _ftbuf(iVar6,pFVar4 + 1);
+    p_Var5 = __iob_func();
+    _lock_file2(1,p_Var5 + 1);
+    p_Var5 = __iob_func();
+    iVar7 = _stbuf(p_Var5 + 1);
+    pcVar1 = pcStack00000014;
+    p_Var5 = __iob_func();
+    uVar6 = _output_l(p_Var5 + 1,pcVar1,(localeinfo_struct *)0x0,&stack0x00000018);
+    p_Var5 = __iob_func();
+    _ftbuf(iVar7,p_Var5 + 1);
     FUN_82918604();
-    uVar2 = (ulonglong)uVar5;
+    uVar3 = (ulonglong)uVar6;
   }
-  iVar6 = __restgprlr_29(uVar2);
-  return iVar6;
+  iVar7 = __restgprlr_29(uVar3);
+  return iVar7;
 }
 
 
@@ -64,6 +47,6 @@ int printf(char *_Format,...)
 int _get_printf_count_output(void)
 
 {
-  return (uint)LZCOUNT((DAT_829b0800 | 1) - DAT_84895dc8) >> 5;
+  return (uint)LZCOUNT((__security_cookie | 1) - __enable_percent_n) >> 5;
 }
 

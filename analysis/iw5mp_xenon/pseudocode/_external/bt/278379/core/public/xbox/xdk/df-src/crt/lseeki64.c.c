@@ -2,86 +2,88 @@
 
 // 82928068  _lseeki64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseeki64.c:72)
 
-longlong _lseeki64(int _FileHandle,longlong _Offset,int _Origin)
+long64 _lseeki64(int param_1,long64 param_2,int param_3)
 
 {
   int iVar1;
-  uint _Filehandle;
-  ulong *puVar3;
-  int *piVar4;
-  longlong lVar2;
+  int iVar2;
+  uint uVar4;
+  ulong *puVar5;
+  int *piVar6;
+  long64 lVar3;
   uint uStack00000014;
-  longlong local_50;
+  long64 local_50;
   
-  _Filehandle = __savegprlr_24(_FileHandle);
-  uStack00000014 = _Filehandle;
-  if (_Filehandle == 0xfffffffe) {
-    puVar3 = __doserrno();
-    *puVar3 = 0;
-    piVar4 = _errno();
+  uVar4 = __savegprlr_24(param_1);
+  uStack00000014 = uVar4;
+  if (uVar4 == 0xfffffffe) {
+    puVar5 = __doserrno();
+    *puVar5 = 0;
+    piVar6 = _errno();
     local_50 = -1;
-    *piVar4 = 9;
+    *piVar6 = 9;
   }
   else {
-    if ((-1 < (int)_Filehandle) && (_Filehandle < DAT_84897db0)) {
-      iVar1 = (_Filehandle & 0x1f) * 0x48;
-      if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar1 + 4) & 1) != 0) {
-        __lock_fhandle(_Filehandle);
-        if ((*(byte *)((&DAT_84897dc0)[(int)_Filehandle >> 5] + iVar1 + 4) & 1) == 0) {
-          piVar4 = _errno();
-          *piVar4 = 9;
-          puVar3 = __doserrno();
-          *puVar3 = 0;
+    if ((-1 < (int)uVar4) && (uVar4 < (uint)_nhandle)) {
+      iVar1 = ((int)uVar4 >> 5) * 4;
+      iVar2 = (uVar4 & 0x1f) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) != 0) {
+        __lock_fhandle(uVar4);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) == 0) {
+          piVar6 = _errno();
+          *piVar6 = 9;
+          puVar5 = __doserrno();
+          *puVar5 = 0;
           local_50 = -1;
         }
         else {
-          local_50 = _lseeki64_nolock(_Filehandle,_Offset,_Origin);
+          local_50 = _lseeki64_nolock(uVar4,param_2,param_3);
         }
         FUN_829281b0();
         goto LAB_82928188;
       }
     }
-    puVar3 = __doserrno();
-    *puVar3 = 0;
-    piVar4 = _errno();
-    *piVar4 = 9;
+    puVar5 = __doserrno();
+    *puVar5 = 0;
+    piVar6 = _errno();
+    *piVar6 = 9;
     _invalid_parameter_noinfo();
     local_50 = -1;
   }
 LAB_82928188:
-  lVar2 = __restgprlr_24(local_50);
-  return lVar2;
+  lVar3 = __restgprlr_24(local_50);
+  return lVar3;
 }
 
 
 // 82927F98  _lseeki64_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseeki64.c:119)
 
-longlong _lseeki64_nolock(int _FileHandle,longlong _Offset,int _Origin)
+long64 _lseeki64_nolock(int param_1,long64 param_2,int param_3)
 
 {
-  HANDLE hFile;
-  int *piVar1;
-  DWORD DVar2;
-  int iVar3;
+  void *pvVar1;
+  int *piVar2;
+  ulong uVar3;
+  int iVar4;
   undefined8 local_20;
   
-  local_20 = _Offset;
-  hFile = (HANDLE)_get_osfhandle(_FileHandle);
-  if (hFile == (HANDLE)0xffffffff) {
-    piVar1 = _errno();
+  local_20 = param_2;
+  pvVar1 = (void *)_get_osfhandle(param_1);
+  if (pvVar1 == (void *)0xffffffff) {
+    piVar2 = _errno();
     local_20 = -1;
-    *piVar1 = 9;
+    *piVar2 = 9;
   }
   else {
-    DVar2 = SetFilePointer(hFile,local_20._4_4_,(PLONG)&local_20,_Origin);
-    local_20 = CONCAT44(local_20._0_4_,DVar2);
-    if ((DVar2 == 0xffffffff) && (DVar2 = GetLastError(), DVar2 != 0)) {
-      _dosmaperr(DVar2);
+    uVar3 = SetFilePointer(pvVar1,local_20._4_4_,(long *)&local_20,param_3);
+    local_20 = CONCAT44(local_20._0_4_,uVar3);
+    if ((uVar3 == 0xffffffff) && (uVar3 = GetLastError(), uVar3 != 0)) {
+      _dosmaperr(uVar3);
       local_20 = -1;
     }
     else {
-      iVar3 = (&DAT_84897dc0)[_FileHandle >> 5] + (_FileHandle & 0x1fU) * 0x48;
-      *(byte *)(iVar3 + 4) = *(byte *)(iVar3 + 4) & 0xfd;
+      iVar4 = *(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48;
+      *(byte *)(iVar4 + 4) = *(byte *)(iVar4 + 4) & 0xfd;
     }
   }
   return local_20;

@@ -2,13 +2,13 @@
 
 // 828ABCD0  RtlSetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlerror.c:72)
 
-void RtlSetLastError(undefined4 param_1)
+void RtlSetLastError(long param_1)
 
 {
   int in_r13;
   
   if (*(int *)(in_r13 + 0x150) == 0) {
-    *(undefined4 *)(*(int *)(in_r13 + 0x100) + 0x160) = param_1;
+    *(long *)(*(int *)(in_r13 + 0x100) + 0x160) = param_1;
   }
   return;
 }
@@ -16,31 +16,33 @@ void RtlSetLastError(undefined4 param_1)
 
 // 828ABD18  RtlSetLastNTError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlerror.c:102)
 
-undefined8 RtlSetLastNTError(undefined8 param_1)
+ulong RtlSetLastNTError(long param_1)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = RtlNtStatusToDosError(param_1);
-  RtlSetLastError();
+  RtlSetLastError(uVar1);
   return uVar1;
 }
 
 
 // 828ABD60  RtlGetLastError  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlerror.c:136)
 
-undefined4 RtlGetLastError(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+long RtlGetLastError(void)
 
 {
-  undefined4 uVar1;
+  long lVar1;
   int in_r13;
   
   if (*(int *)(in_r13 + 0x150) == 0) {
-    uVar1 = *(undefined4 *)(*(int *)(in_r13 + 0x100) + 0x160);
+    lVar1 = *(long *)(*(int *)(in_r13 + 0x100) + 0x160);
   }
   else {
-    uVar1 = 0;
+    lVar1 = 0;
   }
-  return uVar1;
+  return lVar1;
 }
 

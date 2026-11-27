@@ -2,62 +2,75 @@
 
 // 826077C0  Pool_Init  (universal/pool_allocator.cpp:6)
 
-void Pool_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-              ulonglong param_5)
+void Pool_Init(pooldata_t *param_1,short *param_2,void *param_3,uint param_4,uint param_5)
 
 {
-  undefined4 *puVar1;
+  pooldata_t *ppVar1;
   int iVar2;
-  size_t _Size;
-  longlong lVar3;
-  longlong lVar4;
-  short sVar5;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  short sVar9;
   
-  puVar1 = (undefined4 *)__savegprlr_24();
-  if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8217d6c8,9,0,0xffffffff82000f98,0xffffffff8217d710);
+  uVar6 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  ppVar1 = (pooldata_t *)__savegprlr_24(param_1);
+  if (ppVar1 == (pooldata_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    9,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,10,0,0xffffffff82000f98,0xffffffff8217d7b0);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    10,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0xb,0,0xffffffff82000f98,0xffffffff8217d7a4);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0xb,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0xc,0,0xffffffff82000f98,0xffffffff8217d794);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0xc,0,"%s");
   }
-  if ((param_5 & 0xffffffff) < 2) {
-    MyAssertHandler(0xffffffff8217d6c8,0xd,0,0xffffffff82000f98,0xffffffff8217d784);
+  if ((uVar6 & 0xffffffff) < 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0xd,0,"%s");
   }
-  if (0x7ffe < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217d6c8,0xe,0,0xffffffff82000f98,0xffffffff8217d76c);
+  if (0x7ffe < (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0xe,0,"%s");
   }
-  if ((param_3 & 3) != 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x10,0,0xffffffff82000f98,0xffffffff8217d74c);
+  if ((uVar4 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x10,0,"%s");
   }
-  _Size = (int)param_4 * (int)param_5;
-  *puVar1 = (void *)param_3;
-  puVar1[1] = (int)param_4;
-  puVar1[2] = _Size;
-  puVar1[3] = (int)param_2;
-  puVar1[4] = 0;
-  puVar1[5] = 0;
-  memset((void *)param_3,0xff,_Size);
-  lVar4 = param_5 - 1;
-  sVar5 = 0;
-  if (lVar4 != 0) {
-    lVar3 = param_2 - 2;
+  ppVar1->bufferStart = (uchar *)uVar4;
+  ppVar1->itemSize = (int)uVar5;
+  ppVar1->bufferSize = (int)uVar5 * (int)uVar6;
+  ppVar1->freeList = (short *)uVar3;
+  ppVar1->freeIndex = 0;
+  ppVar1->activeCount = 0;
+  memset();
+  lVar8 = uVar6 - 1;
+  sVar9 = 0;
+  if (lVar8 != 0) {
+    lVar7 = uVar3 - 2;
     do {
-      sVar5 = sVar5 + 1;
-      lVar3 = lVar3 + 2;
-      *(short *)lVar3 = sVar5;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      sVar9 = sVar9 + 1;
+      lVar7 = lVar7 + 2;
+      *(short *)lVar7 = sVar9;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  *(undefined2 *)((int)((param_5 & 0xffffffff) << 1) + (int)param_2 + -2) = 0x7fff;
-  iVar2 = Pool_FreeCount(puVar1);
-  if (iVar2 != (int)param_5) {
-    MyAssertHandler(0xffffffff8217d6c8,0x21,0,0xffffffff82000f98,0xffffffff8217d71c);
+  *(undefined2 *)((int)(short *)uVar3 + (int)((uVar6 & 0xffffffff) << 1) + -2) = 0x7fff;
+  iVar2 = Pool_FreeCount(ppVar1);
+  if (iVar2 != (int)uVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x21,0,"%s");
   }
   __restgprlr_24();
   return;
@@ -66,137 +79,146 @@ void Pool_Init(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong 
 
 // 82607988  Pool_Alloc  (universal/pool_allocator.cpp:38)
 
-void Pool_Alloc(void)
+void * Pool_Alloc(pooldata_t *param_1)
 
 {
-  short sVar1;
+  int iVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
-  uint *puVar5;
+  pooldata_t *ppVar4;
+  void *pvVar5;
   int iVar6;
-  ulonglong uVar7;
   
-  puVar5 = (uint *)__savegprlr_28();
-  if (puVar5 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x29,0,0xffffffff82000f98,0xffffffff8217d710);
+  ppVar4 = (pooldata_t *)__savegprlr_28(param_1);
+  if (ppVar4 == (pooldata_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x29,0,"%s");
   }
-  uVar2 = puVar5[4];
-  if (uVar2 == 0x7fff) {
-    uVar2 = puVar5[2];
-    uVar3 = puVar5[1];
+  iVar1 = ppVar4->freeIndex;
+  if (iVar1 == 0x7fff) {
+    uVar2 = ppVar4->bufferSize;
+    uVar3 = ppVar4->itemSize;
     trapWord(6,(ulonglong)uVar3,0);
     trapWord(5,(ulonglong)uVar3 &
                ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
-    if (puVar5[5] != (int)uVar2 / (int)uVar3) {
-      MyAssertHandler(0xffffffff8217d6c8,0x2e,0,0xffffffff82000f98,0xffffffff8217d948);
+    if (ppVar4->activeCount != (int)uVar2 / (int)uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp"
+                      ,0x2e,0,"%s");
     }
-    __restgprlr_28(0);
-    return;
+    pvVar5 = (void *)__restgprlr_28(0);
+    return pvVar5;
   }
-  sVar1 = *(short *)(uVar2 * 2 + puVar5[3]);
-  puVar5[4] = (int)sVar1;
-  *(undefined2 *)(uVar2 * 2 + puVar5[3]) = 0x7fff;
-  uVar3 = puVar5[1];
-  uVar4 = puVar5[2];
-  uVar7 = (ulonglong)uVar3 &
-          ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1);
-  puVar5[5] = puVar5[5] + 1;
-  trapWord(6,(ulonglong)uVar3,0);
-  trapWord(5,uVar7,0xffff);
-  if ((int)uVar4 / (int)uVar3 <= (int)uVar2) {
-    MyAssertHandler(0xffffffff8217d6c8,0x36,0,0xffffffff82000f98,0xffffffff8217d90c,sVar1,0x7fff,
-                    uVar7);
-  }
-  if (puVar5[4] == 0x7fff) {
-    uVar3 = puVar5[2];
-    uVar4 = puVar5[1];
-    trapWord(6,(ulonglong)uVar4,0);
-    trapWord(5,(ulonglong)uVar4 &
-               ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
-    if (puVar5[5] != (int)uVar3 / (int)uVar4) {
-      MyAssertHandler(0xffffffff8217d6c8,0x37,0,0xffffffff82000f98,0xffffffff8217d8a0);
-    }
-  }
-  if (puVar5[4] == uVar2) {
-    MyAssertHandler(0xffffffff8217d6c8,0x38,0,0xffffffff82000f98,0xffffffff8217d87c);
-  }
-  iVar6 = Pool_FreeCount(puVar5);
-  uVar3 = puVar5[2];
-  uVar4 = puVar5[1];
-  trapWord(6,(ulonglong)uVar4,0);
-  trapWord(5,(ulonglong)uVar4 &
+  ppVar4->freeIndex = (int)ppVar4->freeList[iVar1];
+  ppVar4->freeList[iVar1] = 0x7fff;
+  uVar2 = ppVar4->itemSize;
+  uVar3 = ppVar4->bufferSize;
+  ppVar4->activeCount = ppVar4->activeCount + 1;
+  trapWord(6,(ulonglong)uVar2,0);
+  trapWord(5,(ulonglong)uVar2 &
              ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
-  if (iVar6 != (int)uVar3 / (int)uVar4 - puVar5[5]) {
-    MyAssertHandler(0xffffffff8217d6c8,0x39,0,0xffffffff82000f98,0xffffffff8217d818);
+  if ((int)uVar3 / (int)uVar2 <= iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x36,0,"%s");
   }
-  if ((puVar5[1] * uVar2 + *puVar5 & 3) != 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x3a,0,0xffffffff82000f98,0xffffffff8217d7c0);
+  if (ppVar4->freeIndex == 0x7fff) {
+    uVar2 = ppVar4->bufferSize;
+    uVar3 = ppVar4->itemSize;
+    trapWord(6,(ulonglong)uVar3,0);
+    trapWord(5,(ulonglong)uVar3 &
+               ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+    if (ppVar4->activeCount != (int)uVar2 / (int)uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp"
+                      ,0x37,0,"%s");
+    }
   }
-  __restgprlr_28((longlong)(int)puVar5[1] * (longlong)(int)uVar2 + (ulonglong)*puVar5);
-  return;
+  if (ppVar4->freeIndex == iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x38,0,"%s");
+  }
+  iVar6 = Pool_FreeCount(ppVar4);
+  uVar2 = ppVar4->bufferSize;
+  uVar3 = ppVar4->itemSize;
+  trapWord(6,(ulonglong)uVar3,0);
+  trapWord(5,(ulonglong)uVar3 &
+             ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+  if (iVar6 != (int)uVar2 / (int)uVar3 - ppVar4->activeCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x39,0,"%s");
+  }
+  if (((uint)(ppVar4->bufferStart + ppVar4->itemSize * iVar1) & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x3a,0,"%s");
+  }
+  pvVar5 = (void *)__restgprlr_28((longlong)ppVar4->itemSize * (longlong)iVar1 +
+                                  ZEXT48(ppVar4->bufferStart));
+  return pvVar5;
 }
 
 
 // 82607BB8  Pool_Free  (universal/pool_allocator.cpp:65)
 
-void Pool_Free(undefined8 param_1,ulonglong param_2)
+void Pool_Free(void *param_1,pooldata_t *param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
+  uint uVar3;
   ulonglong uVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  pooldata_t *ppVar6;
+  ulonglong uVar7;
   
-  uVar4 = __savegprlr_25();
+  uVar7 = (ulonglong)(int)param_2;
+  uVar4 = __savegprlr_25(param_1);
   if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x48,0,0xffffffff82000f98,0xffffffff8201f49c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x48,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x49,0,0xffffffff82000f98,0xffffffff8217d710);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x49,0,"%s");
   }
-  puVar3 = (uint *)param_2;
-  memset((void *)uVar4,0xff,puVar3[1]);
-  uVar7 = puVar3[1];
-  uVar6 = (ulonglong)uVar7;
-  uVar4 = uVar4 - *puVar3;
-  trapWord(6,uVar6,0);
-  uVar1 = (int)uVar4 / (int)uVar7;
-  uVar4 = ((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1;
-  trapWord(5,uVar6 & ~uVar4,0xffff);
-  if (-1 < (int)uVar1) {
-    uVar2 = puVar3[2];
-    trapWord(6,uVar6,0);
-    uVar4 = (ulonglong)((int)uVar2 / (int)uVar7);
-    trapWord(5,uVar6 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+  memset();
+  ppVar6 = (pooldata_t *)uVar7;
+  uVar2 = ppVar6->itemSize;
+  uVar7 = (ulonglong)uVar2;
+  uVar4 = uVar4 - ZEXT48(ppVar6->bufferStart);
+  trapWord(6,uVar7,0);
+  iVar1 = (int)uVar4 / (int)uVar2;
+  trapWord(5,uVar7 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if (-1 < iVar1) {
+    uVar3 = ppVar6->bufferSize;
+    trapWord(6,uVar7,0);
+    trapWord(5,uVar7 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
              0xffff);
-    if ((int)uVar1 < (int)uVar2 / (int)uVar7) goto LAB_82607c9c;
+    if (iVar1 < (int)uVar3 / (int)uVar2) goto LAB_82607c9c;
   }
-  MyAssertHandler(0xffffffff8217d6c8,0x52,0,0xffffffff82000f98,0xffffffff8217d9d0,uVar4);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                  0x52,0,"%s");
 LAB_82607c9c:
-  iVar5 = Pool_FreeCount(param_2);
-  uVar7 = puVar3[2];
-  uVar2 = puVar3[1];
-  trapWord(6,(ulonglong)uVar2,0);
-  trapWord(5,(ulonglong)uVar2 &
-             ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1),0xffff);
-  if (iVar5 != (int)uVar7 / (int)uVar2 - puVar3[5]) {
-    MyAssertHandler(0xffffffff8217d6c8,0x53,0,0xffffffff82000f98,0xffffffff8217d818);
+  iVar5 = Pool_FreeCount(ppVar6);
+  uVar2 = ppVar6->bufferSize;
+  uVar3 = ppVar6->itemSize;
+  trapWord(6,(ulonglong)uVar3,0);
+  trapWord(5,(ulonglong)uVar3 &
+             ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
+  if (iVar5 != (int)uVar2 / (int)uVar3 - ppVar6->activeCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x53,0,"%s");
   }
-  if (*(short *)(puVar3[3] + uVar1 * 2) != 0x7fff) {
-    MyAssertHandler(0xffffffff8217d6c8,0x54,0,0xffffffff82000f98,0xffffffff8217d9a4);
+  if (ppVar6->freeList[iVar1] != 0x7fff) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x54,0,"%s");
   }
-  for (uVar7 = puVar3[4]; uVar7 != 0x7fff; uVar7 = (uint)*(short *)(uVar7 * 2 + puVar3[3])) {
-    if (uVar7 == uVar1) {
-      MyAssertHandler(0xffffffff8217d6c8,0x5d,0,0xffffffff82000f98,0xffffffff8217d990);
+  for (iVar5 = ppVar6->freeIndex; iVar5 != 0x7fff; iVar5 = (int)ppVar6->freeList[iVar5]) {
+    if (iVar5 == iVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp"
+                      ,0x5d,0,"%s");
     }
   }
-  *(short *)(puVar3[3] + uVar1 * 2) = (short)puVar3[4];
-  puVar3[4] = uVar1;
-  puVar3[5] = puVar3[5] - 1;
+  ppVar6->freeList[iVar1] = (short)ppVar6->freeIndex;
+  ppVar6->freeIndex = iVar1;
+  ppVar6->activeCount = ppVar6->activeCount + -1;
   __restgprlr_25();
   return;
 }
@@ -204,25 +226,27 @@ LAB_82607c9c:
 
 // 82607738  Pool_FreeCount  (universal/pool_allocator.cpp:103)
 
-longlong Pool_FreeCount(int param_1)
+int Pool_FreeCount(pooldata_t *param_1)
 
 {
-  short sVar1;
-  longlong lVar2;
+  short *psVar1;
+  int iVar2;
   int iVar3;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8217d6c8,0x6b,0,0xffffffff82000f98,0xffffffff8217d710);
+  if (param_1 == (pooldata_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\pool_allocator.cpp",
+                    0x6b,0,"%s");
   }
-  iVar3 = *(int *)(param_1 + 0x10);
-  lVar2 = 0;
+  iVar3 = param_1->freeIndex;
+  iVar2 = 0;
   if (iVar3 != 0x7fff) {
+    iVar2 = 0;
     do {
-      sVar1 = *(short *)(iVar3 * 2 + *(int *)(param_1 + 0xc));
-      lVar2 = lVar2 + 1;
-      iVar3 = (int)sVar1;
-    } while (sVar1 != 0x7fff);
+      psVar1 = param_1->freeList + iVar3;
+      iVar2 = iVar2 + 1;
+      iVar3 = (int)*psVar1;
+    } while (*psVar1 != 0x7fff);
   }
-  return lVar2;
+  return iVar2;
 }
 

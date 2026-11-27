@@ -2,52 +2,56 @@
 
 // 8279ADE8  TRACK_rb_debug  (gfx_d3d/rb_debug.cpp:24)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_debug(void)
 
 {
-  track_static_alloc_internal(0xffffffff84838360,0x4000,0xffffffff821d5864,0);
-  track_static_alloc_internal(0xffffffff8483c360,0x4000,0xffffffff821d5850,0);
-  track_static_alloc_internal(0xffffffff84834360,0x4000,0xffffffff821d5838,0);
+  track_static_alloc_internal(g_debugPolyVerts,0x4000,"g_debugPolyVerts",0);
+  track_static_alloc_internal(g_debugLineVerts,0x4000,"g_debugLineVerts",0);
+  track_static_alloc_internal(g_debugExternLineVerts,0x4000,"g_debugExternLineVerts",0);
   return;
 }
 
 
 // 8279AE60  RB_AddDebugLine  (gfx_d3d/rb_debug.cpp:36)
 
-void RB_AddDebugLine(undefined8 param_1,undefined4 *param_2,undefined4 param_3,undefined8 param_4,
-                    ulonglong param_5,int param_6,undefined8 param_7)
+int RB_AddDebugLine(float *param_1,float *param_2,GfxColor param_3,bool param_4,int param_5,
+                   int param_6,GfxPointVertex *param_7)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  undefined4 *puVar3;
+  GfxPointVertex *pGVar1;
+  float *pfVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  puVar3 = (undefined4 *)__savegprlr_28();
-  iVar1 = (int)param_5;
-  if (param_6 < iVar1 + 2) {
-    RB_DrawLines3D((longlong)(iVar1 >> 1) + (ulonglong)(iVar1 < 0 && (param_5 & 1) != 0),1,param_7);
-    param_5 = 0;
+  uVar4 = (ulonglong)param_5;
+  pfVar2 = (float *)__savegprlr_28(param_1);
+  iVar3 = (int)uVar4;
+  if (param_6 < iVar3 + 2) {
+    RB_DrawLines3D((iVar3 >> 1) + (uint)(iVar3 < 0 && (uVar4 & 1) != 0),1,param_7,param_4);
+    uVar4 = 0;
   }
-  puVar2 = (undefined4 *)((int)param_5 * 0x10 + (int)param_7);
-  puVar2[3] = param_3;
-  puVar2[7] = param_3;
-  *puVar2 = *puVar3;
-  puVar2[1] = puVar3[1];
-  puVar2[2] = puVar3[2];
-  puVar2[4] = *param_2;
-  puVar2[5] = param_2[1];
-  puVar2[6] = param_2[2];
-  __restgprlr_28(param_5 + 2);
-  return;
+  pGVar1 = param_7 + (int)uVar4;
+  *(GfxColor *)pGVar1->color = param_3;
+  *(GfxColor *)pGVar1[1].color = param_3;
+  pGVar1->xyz[0] = *pfVar2;
+  pGVar1->xyz[1] = pfVar2[1];
+  pGVar1->xyz[2] = pfVar2[2];
+  pGVar1[1].xyz[0] = *param_2;
+  pGVar1[1].xyz[1] = param_2[1];
+  pGVar1[1].xyz[2] = param_2[2];
+  iVar3 = __restgprlr_28(uVar4 + 2);
+  return iVar3;
 }
 
 
 // 8279AEF0  RB_EndDebugLines  (gfx_d3d/rb_debug.cpp:54)
 
-undefined8 RB_EndDebugLines(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int RB_EndDebugLines(bool param_1,int param_2,GfxPointVertex *param_3)
 
 {
-  if ((int)param_2 != 0) {
+  if (param_2 != 0) {
     RB_DrawLines3D(param_2,1,param_3,param_1);
   }
   return 0;
@@ -56,96 +60,99 @@ undefined8 RB_EndDebugLines(undefined8 param_1,undefined8 param_2,undefined8 par
 
 // 8279AF30  RB_SetPolyVert  (gfx_d3d/rb_debug.cpp:62)
 
-void RB_SetPolyVert(undefined4 *param_1,undefined4 param_2,int param_3)
+void RB_SetPolyVert(float *param_1,GfxColor param_2,int param_3)
 
 {
-  param_3 = param_3 * 0x20;
-  *(undefined4 *)(&DAT_84822800 + param_3) = *param_1;
-  *(undefined4 *)(&DAT_84822804 + param_3) = param_1[1];
-  *(undefined4 *)(&DAT_84822808 + param_3) = param_1[2];
-  *(undefined4 *)(&DAT_8482281c + param_3) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822810 + param_3) = param_2;
-  *(undefined4 *)(&DAT_8482280c + param_3) = 0x3f800000;
-  *(undefined4 *)(&DAT_84822814 + param_3) = 0;
-  *(undefined4 *)(&DAT_84822818 + param_3) = 0;
+  tess.verts[param_3].xyzw[0] = *param_1;
+  tess.verts[param_3].xyzw[1] = param_1[1];
+  tess.verts[param_3].xyzw[2] = param_1[2];
+  tess.verts[param_3].normal.packed = 0x1ff00000;
+  tess.verts[param_3].color = param_2;
+  tess.verts[param_3].xyzw[3] = 1.0;
+  tess.verts[param_3].texCoord[0] = 0.0;
+  tess.verts[param_3].texCoord[1] = 0.0;
   return;
 }
 
 
 // 8279AFA8  RB_DrawPolyInteriors  (gfx_d3d/rb_debug.cpp:75)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void RB_DrawPolyInteriors(void)
 
 {
-  int iVar1;
-  int iVar2;
+  float (*pafVar1) [3];
+  float fVar2;
   short sVar3;
-  undefined4 *puVar4;
+  float *pfVar4;
   int iVar5;
-  ulonglong uVar6;
-  int iVar7;
+  int iVar6;
+  float fVar7;
   int iVar8;
   int iVar9;
-  int iVar10;
+  float *pfVar10;
   double dVar11;
   double dVar12;
-  undefined4 local_60 [24];
+  GfxColor local_60 [24];
   
   __savegprlr_24();
-  if (*(int *)(DAT_84821000 + 0x1900) < 1) {
-    MyAssertHandler(0xffffffff821d5878,0x53,0,0xffffffff82000f98,0xffffffff821d58b8);
+  if ((backEndData->debugGlobals).polyCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_debug.cpp",0x53,0,
+                    "%s");
   }
-  RB_BeginSurface(DAT_8461652c,4,7);
+  RB_BeginSurface(rgp.whiteMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
   iVar8 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x1900)) {
+  if (0 < (backEndData->debugGlobals).polyCount) {
     iVar9 = 0;
     dVar12 = 0.0;
     dVar11 = 1.0;
     do {
-      iVar7 = *(int *)(DAT_84821000 + 0x18f0);
-      iVar10 = *(int *)(DAT_84821000 + 0x18fc) + iVar9;
-      iVar1 = *(int *)(iVar10 + 0x10);
-      R_ConvertColorToBytes(iVar10,local_60);
-      uVar6 = (ulonglong)*(uint *)(iVar10 + 0x14) - 2;
-      RB_CheckTessOverflow((ulonglong)*(uint *)(iVar10 + 0x14),uVar6 + (uVar6 & 0x7fffffff) * 2);
-      iVar2 = *(int *)(iVar10 + 0x14);
+      pafVar1 = (backEndData->debugGlobals).verts;
+      pfVar10 = (float *)((int)((backEndData->debugGlobals).polys)->color + iVar9);
+      fVar2 = pfVar10[4];
+      R_ConvertColorToBytes(pfVar10,local_60[0].array);
+      RB_CheckTessOverflow((uint)pfVar10[5],((int)pfVar10[5] - 2U) * 3);
+      fVar7 = pfVar10[5];
       iVar5 = 0;
-      if (0 < iVar2) {
-        puVar4 = (undefined4 *)(iVar1 * 0xc + iVar7 + -4);
+      if (0 < (int)fVar7) {
+        pfVar4 = pafVar1[(int)fVar2 + -1] + 2;
         do {
-          iVar7 = DAT_8483400c + iVar5;
+          iVar6 = tess.vertexCount + iVar5;
           iVar5 = iVar5 + 1;
-          iVar7 = iVar7 * 0x20;
-          *(undefined4 *)(&DAT_84822800 + iVar7) = puVar4[1];
-          *(undefined4 *)(&DAT_84822804 + iVar7) = puVar4[2];
-          puVar4 = puVar4 + 3;
-          *(undefined4 *)(&DAT_84822808 + iVar7) = *puVar4;
-          *(undefined4 *)(&DAT_8482281c + iVar7) = 0x1ff00000;
-          *(float *)(&DAT_8482280c + iVar7) = (float)dVar11;
-          *(undefined4 *)(&DAT_84822810 + iVar7) = local_60[0];
-          *(float *)(&DAT_84822814 + iVar7) = (float)dVar12;
-          *(float *)(&DAT_84822818 + iVar7) = (float)dVar12;
-          iVar2 = *(int *)(iVar10 + 0x14);
-        } while (iVar5 < iVar2);
+          tess.verts[iVar6].xyzw[0] = pfVar4[1];
+          tess.verts[iVar6].xyzw[1] = pfVar4[2];
+          pfVar4 = pfVar4 + 3;
+          tess.verts[iVar6].xyzw[2] = *pfVar4;
+          tess.verts[iVar6].normal.packed = 0x1ff00000;
+          tess.verts[iVar6].xyzw[3] = (float)dVar11;
+          tess.verts[iVar6].color = local_60[0];
+          tess.verts[iVar6].texCoord[0] = (float)dVar12;
+          tess.verts[iVar6].texCoord[1] = (float)dVar12;
+          fVar7 = pfVar10[5];
+        } while (iVar5 < (int)fVar7);
       }
-      iVar7 = 2;
-      if (2 < iVar2) {
-        iVar1 = DAT_84834008 << 1;
+      iVar5 = 2;
+      if (2 < (int)fVar7) {
+        iVar6 = tess.indexCount << 1;
         do {
-          *(short *)(&DAT_84832800 + iVar1) = (short)DAT_8483400c;
-          sVar3 = (short)iVar7;
-          *(short *)(&DAT_84832802 + DAT_84834008 * 2) = (short)DAT_8483400c + sVar3;
-          iVar7 = iVar7 + 1;
-          *(short *)(&DAT_84832804 + DAT_84834008 * 2) = (short)DAT_8483400c + sVar3 + -1;
-          DAT_84834008 = DAT_84834008 + 3;
-          iVar1 = DAT_84834008 * 2;
-          iVar2 = *(int *)(iVar10 + 0x14);
-        } while (iVar7 < iVar2);
+          *(short *)((int)tess.indices + iVar6) = (short)tess.vertexCount;
+          sVar3 = (short)iVar5;
+          tess.indices[tess.indexCount + 1] = (short)tess.vertexCount + sVar3;
+          iVar5 = iVar5 + 1;
+          tess.indices[tess.indexCount + 2] = ((short)tess.vertexCount + sVar3) - 1;
+          tess.indexCount = tess.indexCount + 3;
+          iVar6 = tess.indexCount * 2;
+          fVar7 = pfVar10[5];
+        } while (iVar5 < (int)fVar7);
       }
       iVar8 = iVar8 + 1;
       iVar9 = iVar9 + 0x1c;
-      DAT_8483400c = iVar2 + DAT_8483400c;
-    } while (iVar8 < *(int *)(DAT_84821000 + 0x1900));
+      tess.vertexCount = (int)fVar7 + tess.vertexCount;
+    } while (iVar8 < (backEndData->debugGlobals).polyCount);
   }
   RB_EndTessSurface();
   __restgprlr_24();
@@ -155,74 +162,79 @@ void RB_DrawPolyInteriors(void)
 
 // 8279B210  RB_DrawPolyOutlines  (gfx_d3d/rb_debug.cpp:114)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void RB_DrawPolyOutlines(void)
 
 {
-  undefined4 uVar1;
-  int iVar2;
+  float fVar1;
+  undefined4 uVar2;
   int iVar3;
-  int iVar4;
+  GfxBackEndData *pGVar4;
   int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
-  int iVar9;
+  float (*pafVar8) [3];
+  float *pfVar9;
   int iVar10;
-  undefined4 *puVar11;
-  undefined4 *puVar12;
+  int iVar11;
+  float *pfVar12;
+  float *pfVar13;
   undefined4 local_70 [28];
   
   __savegprlr_20();
-  if (*(int *)(DAT_84821000 + 0x1900) < 1) {
-    MyAssertHandler(0xffffffff821d5878,0x7c,0,0xffffffff82000f98,0xffffffff821d58b8);
+  if ((backEndData->debugGlobals).polyCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_debug.cpp",0x7c,0,
+                    "%s");
   }
-  iVar9 = 0;
-  iVar5 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x1900)) {
-    iVar6 = 0;
-    iVar3 = DAT_84821000;
+  iVar10 = 0;
+  iVar6 = 0;
+  if (0 < (backEndData->debugGlobals).polyCount) {
+    iVar7 = 0;
+    pGVar4 = backEndData;
     do {
-      iVar8 = *(int *)(iVar3 + 0x18fc) + iVar6;
-      if (*(char *)(iVar8 + 0x18) != '\0') {
-        iVar7 = *(int *)(iVar8 + 0x10) * 0xc + *(int *)(iVar3 + 0x18f0);
-        R_ConvertColorToBytes(iVar8,local_70);
-        iVar10 = 0;
-        iVar3 = DAT_84821000;
-        if (0 < *(int *)(iVar8 + 0x14)) {
-          puVar12 = (undefined4 *)(iVar7 + 8);
-          iVar2 = (*(int *)(iVar8 + 0x14) + -1) * 0xc;
-          iVar4 = iVar9;
+      pfVar9 = (float *)((int)((pGVar4->debugGlobals).polys)->color + iVar7);
+      if (*(char *)(pfVar9 + 6) != '\0') {
+        pafVar8 = (pGVar4->debugGlobals).verts + (int)pfVar9[4];
+        R_ConvertColorToBytes(pfVar9,(uchar *)local_70);
+        iVar11 = 0;
+        pGVar4 = backEndData;
+        if (0 < (int)pfVar9[5]) {
+          pfVar13 = *pafVar8 + 2;
+          iVar3 = ((int)pfVar9[5] + -1) * 0xc;
           do {
-            uVar1 = local_70[0];
-            puVar11 = (undefined4 *)(iVar2 + iVar7);
-            if (0x400 < iVar4 + 2) {
-              RB_DrawLines3D(iVar4 >> 1,1,0xffffffff84838360,0);
-              iVar4 = 0;
+            uVar2 = local_70[0];
+            pfVar12 = (float *)((int)*pafVar8 + iVar3);
+            iVar5 = iVar10;
+            if (0x400 < iVar10 + 2) {
+              RB_DrawLines3D(iVar10 >> 1,1,g_debugPolyVerts,false);
+              iVar5 = 0;
             }
-            iVar10 = iVar10 + 1;
-            iVar2 = (-8 - iVar7) + (int)puVar12;
-            iVar9 = iVar4 + 2;
-            (&DAT_8483836c)[iVar4 * 4] = uVar1;
-            (&DAT_8483837c)[iVar4 * 4] = uVar1;
-            (&DAT_84838360)[iVar4 * 4] = *puVar11;
-            (&DAT_84838364)[iVar4 * 4] = puVar11[1];
-            (&DAT_84838368)[iVar4 * 4] = puVar11[2];
-            (&DAT_84838370)[iVar4 * 4] = puVar12[-2];
-            (&DAT_84838374)[iVar4 * 4] = puVar12[-1];
-            uVar1 = *puVar12;
-            puVar12 = puVar12 + 3;
-            (&DAT_84838378)[iVar4 * 4] = uVar1;
-            iVar3 = DAT_84821000;
-            iVar4 = iVar9;
-          } while (iVar10 < *(int *)(iVar8 + 0x14));
+            iVar11 = iVar11 + 1;
+            iVar3 = (-8 - (int)pafVar8) + (int)pfVar13;
+            iVar10 = iVar5 + 2;
+            *(undefined4 *)g_debugPolyVerts[iVar5].color = uVar2;
+            *(undefined4 *)g_debugPolyVerts[iVar5 + 1].color = uVar2;
+            g_debugPolyVerts[iVar5].xyz[0] = *pfVar12;
+            g_debugPolyVerts[iVar5].xyz[1] = pfVar12[1];
+            g_debugPolyVerts[iVar5].xyz[2] = pfVar12[2];
+            g_debugPolyVerts[iVar5 + 1].xyz[0] = (*(float (*) [3])(pfVar13 + -2))[0];
+            g_debugPolyVerts[iVar5 + 1].xyz[1] = pfVar13[-1];
+            fVar1 = *pfVar13;
+            pfVar13 = pfVar13 + 3;
+            g_debugPolyVerts[iVar5 + 1].xyz[2] = fVar1;
+            pGVar4 = backEndData;
+          } while (iVar11 < (int)pfVar9[5]);
         }
       }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 0x1c;
-    } while (iVar5 < *(int *)(iVar3 + 0x1900));
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 0x1c;
+    } while (iVar6 < (pGVar4->debugGlobals).polyCount);
   }
-  if (iVar9 >> 1 != 0) {
-    RB_DrawLines3D(iVar9 >> 1,1,0xffffffff84838360,0);
+  if (iVar10 >> 1 != 0) {
+    RB_DrawLines3D(iVar10 >> 1,1,g_debugPolyVerts,false);
   }
   __restgprlr_20();
   return;
@@ -231,15 +243,19 @@ void RB_DrawPolyOutlines(void)
 
 // 8279B3A8  RB_DrawDebugPolys  (gfx_d3d/rb_debug.cpp:145)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void RB_DrawDebugPolys(void)
 
 {
-  if (*(int *)(DAT_84821000 + 0x1900) != 0) {
+  if ((backEndData->debugGlobals).polyCount != 0) {
     RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
+    R_Set3D(&gfxCmdBufSourceState);
     RB_DrawPolyInteriors();
     RB_DrawPolyOutlines();
-    *(undefined4 *)(DAT_84821000 + 0x1900) = 0;
+    (backEndData->debugGlobals).polyCount = 0;
   }
   return;
 }
@@ -247,55 +263,59 @@ void RB_DrawDebugPolys(void)
 
 // 8279B408  RB_DrawDebugLines  (gfx_d3d/rb_debug.cpp:159)
 
-void RB_DrawDebugLines(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void RB_DrawDebugLines(trDebugLine_t *param_1,int param_2,GfxPointVertex *param_3)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  float fVar1;
+  GfxPointVertex *pGVar2;
   int iVar3;
   int iVar4;
-  undefined4 *puVar5;
-  bool bVar6;
+  longlong lVar5;
+  float *pfVar6;
+  bool bVar7;
   
-  iVar3 = __savegprlr_27();
-  if ((int)param_2 != 0) {
+  lVar5 = (longlong)param_2;
+  iVar3 = __savegprlr_27(param_1);
+  if ((int)lVar5 != 0) {
     RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
+    R_Set3D(&gfxCmdBufSourceState);
     iVar4 = 0;
-    bVar6 = *(int *)(iVar3 + 0x1c) != 0;
-    if (0 < (int)param_2) {
-      puVar5 = (undefined4 *)(iVar3 + -0xc);
-      iVar4 = 0;
+    bVar7 = *(int *)(iVar3 + 0x1c) != 0;
+    if (0 < (int)lVar5) {
+      pfVar6 = (float *)(iVar3 + -0xc);
       do {
-        iVar3 = puVar5[10];
-        if (bVar6 != (iVar3 != 0)) {
+        fVar1 = pfVar6[10];
+        if (bVar7 != (fVar1 != 0.0)) {
           if (iVar4 >> 1 != 0) {
-            RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
+            RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
           }
           iVar4 = 0;
-          bVar6 = iVar3 != 0;
+          bVar7 = fVar1 != 0.0;
         }
-        uVar1 = puVar5[9];
+        fVar1 = pfVar6[9];
         if (0x400 < iVar4 + 2) {
-          RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
+          RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
           iVar4 = 0;
         }
-        param_2 = param_2 + -1;
-        puVar2 = (undefined4 *)(iVar4 * 0x10 + (int)param_3);
+        lVar5 = lVar5 + -1;
+        pGVar2 = param_3 + iVar4;
         iVar4 = iVar4 + 2;
-        puVar2[3] = uVar1;
-        puVar2[7] = uVar1;
-        *puVar2 = puVar5[3];
-        puVar2[1] = puVar5[4];
-        puVar2[2] = puVar5[5];
-        puVar2[4] = puVar5[6];
-        puVar2[5] = puVar5[7];
-        puVar5 = puVar5 + 8;
-        puVar2[6] = *puVar5;
-      } while (param_2 != 0);
+        *(float *)pGVar2->color = fVar1;
+        *(float *)pGVar2[1].color = fVar1;
+        pGVar2->xyz[0] = pfVar6[3];
+        pGVar2->xyz[1] = pfVar6[4];
+        pGVar2->xyz[2] = pfVar6[5];
+        pGVar2[1].xyz[0] = pfVar6[6];
+        pGVar2[1].xyz[1] = pfVar6[7];
+        pfVar6 = pfVar6 + 8;
+        pGVar2[1].xyz[2] = *pfVar6;
+      } while (lVar5 != 0);
     }
     if (iVar4 >> 1 != 0) {
-      RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar6);
+      RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
     }
   }
   __restgprlr_27();
@@ -305,11 +325,15 @@ void RB_DrawDebugLines(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 // 8279B538  RB_DrawDebugStrings  (gfx_d3d/rb_debug.cpp:199)
 
-void RB_DrawDebugStrings(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void RB_DrawDebugStrings(trDebugString_t *param_1,int param_2)
 
 {
   int iVar1;
-  float *pfVar2;
+  longlong lVar2;
+  float *pfVar3;
   float local_50;
   float local_4c;
   float local_48;
@@ -317,30 +341,33 @@ void RB_DrawDebugStrings(undefined8 param_1,longlong param_2)
   float local_3c;
   float local_38;
   
-  iVar1 = __savegprlr_28();
-  if ((int)param_2 != 0) {
+  lVar2 = (longlong)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  if ((int)lVar2 != 0) {
     RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
-    if (0 < (int)param_2) {
-      pfVar2 = (float *)(iVar1 + 0x10);
+    R_Set3D(&gfxCmdBufSourceState);
+    if (0 < (int)lVar2) {
+      pfVar3 = (float *)(iVar1 + 0x10);
       do {
-        local_38 = -*pfVar2;
-        local_50 = DAT_8484dce8 * local_38;
-        local_4c = DAT_8484dcec * local_38;
-        local_48 = DAT_8484dcf0 * local_38;
-        local_40 = DAT_8484dcf4 * local_38;
-        local_3c = DAT_8484dcf8 * local_38;
-        local_38 = DAT_8484dcfc * local_38;
-        RB_DrawTextInSpace(pfVar2 + 1,DAT_84821010,pfVar2 + -4,&local_50,&local_40,pfVar2[-1]);
-        param_2 = param_2 + -1;
-        pfVar2 = pfVar2 + 0x18;
-      } while (param_2 != 0);
+        local_38 = -*pfVar3;
+        local_50 = gfxCmdBufSourceState.viewParms.camera.axis[1][0] * local_38;
+        local_4c = gfxCmdBufSourceState.viewParms.camera.axis[1][1] * local_38;
+        local_48 = gfxCmdBufSourceState.viewParms.camera.axis[1][2] * local_38;
+        local_40 = gfxCmdBufSourceState.viewParms.camera.axis[2][0] * local_38;
+        local_3c = gfxCmdBufSourceState.viewParms.camera.axis[2][1] * local_38;
+        local_38 = gfxCmdBufSourceState.viewParms.camera.axis[2][2] * local_38;
+        RB_DrawTextInSpace((char *)(pfVar3 + 1),backEnd.debugFont,pfVar3 + -4,&local_50,&local_40,
+                           (ulong)pfVar3[-1]);
+        lVar2 = lVar2 + -1;
+        pfVar3 = pfVar3 + 0x18;
+      } while (lVar2 != 0);
     }
     iVar1 = R_HasDeviceOwnership();
     if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0
+                      ,"%s");
     }
-    if (DAT_8483400c != 0) {
+    if (tess.vertexCount != 0) {
       RB_EndTessSurface();
     }
   }
@@ -351,70 +378,79 @@ void RB_DrawDebugStrings(undefined8 param_1,longlong param_2)
 
 // 8279B650  RB_AddPlumeStrings  (gfx_d3d/rb_debug.cpp:221)
 
-void RB_AddPlumeStrings(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void RB_AddPlumeStrings(GfxViewParms *param_1)
 
 {
   float fVar1;
-  int iVar2;
+  GfxDebugPlume *pGVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  float *pfVar7;
-  int iVar8;
+  undefined8 uVar4;
+  GfxBackEndData *pGVar5;
+  ulonglong uVar6;
+  int iVar7;
+  float *pfVar8;
   int iVar9;
-  double dVar10;
+  int iVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  undefined8 uVar14;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
+  double dVar18;
   float local_80;
   float local_7c;
   float local_78;
   
-  __savegprlr_26();
+  __savegprlr_26(param_1);
   iVar3 = __savefpr_25();
-  iVar8 = 0;
-  if (0 < *(int *)(DAT_84821000 + 0x193c)) {
-    uVar14 = 0x3fe0000000000000;
-    dVar15 = 0.06400000303983688;
-    dVar16 = 4.0;
-    dVar17 = 0.012566370889544487;
-    iVar9 = 0;
-    dVar13 = 2.0;
-    dVar12 = 1.0;
-    iVar4 = DAT_84821000;
+  iVar9 = 0;
+  if (0 < (backEndData->debugGlobals).plumeCount) {
+    uVar4 = 0xffffffff82000000;
+    dVar15 = 0.5;
+    dVar16 = 0.06400000303983688;
+    dVar17 = 4.0;
+    dVar18 = 0.012566370889544487;
+    iVar10 = 0;
+    dVar14 = 2.0;
+    dVar13 = 1.0;
+    pGVar5 = backEndData;
     do {
-      iVar2 = iVar9 + *(int *)(iVar4 + 0x1938);
-      uVar5 = (ulonglong)DAT_8484dee0 - (ulonglong)*(uint *)(iVar2 + 0x20);
-      if ((-1 < (longlong)uVar5) && (iVar6 = (int)uVar5, iVar6 <= *(int *)(iVar2 + 0x24))) {
-        iVar2 = iVar9 + *(int *)(iVar4 + 0x1938);
-        *(float *)(iVar2 + 0x18) = (float)dVar12;
-        if (*(int *)(iVar2 + 0x24) < (int)((uVar5 & 0xffffffff) << 1)) {
-          iVar4 = iVar9 + *(int *)(iVar4 + 0x1938);
-          *(float *)(iVar4 + 0x18) =
-               (float)(dVar13 - (double)((float)((double)(longlong)iVar6 * dVar13) /
-                                        (float)(longlong)*(int *)(iVar4 + 0x24)));
+      pGVar2 = (pGVar5->debugGlobals).plumes;
+      uVar6 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time -
+              (ulonglong)*(uint *)((int)pGVar2->color + iVar10 + 0x14);
+      if ((-1 < (longlong)uVar6) &&
+         (iVar7 = (int)uVar6, iVar7 <= *(int *)((int)pGVar2->color + iVar10 + 0x18))) {
+        pGVar2 = (pGVar5->debugGlobals).plumes;
+        *(float *)((int)pGVar2->color + iVar10 + 0xc) = (float)dVar13;
+        if (*(int *)((int)pGVar2->color + iVar10 + 0x18) < (int)((uVar6 & 0xffffffff) << 1)) {
+          pGVar2 = (pGVar5->debugGlobals).plumes;
+          *(float *)((int)pGVar2->color + iVar10 + 0xc) =
+               (float)(dVar14 - (double)((float)((double)(longlong)iVar7 * dVar14) /
+                                        (float)(longlong)
+                                               *(int *)((int)pGVar2->color + iVar10 + 0x18)));
         }
-        dVar11 = (double)(longlong)iVar6;
-        dVar10 = sin((double)(float)(dVar11 * dVar17 + (double)(longlong)iVar8));
-        pfVar7 = (float *)(iVar9 + *(int *)(DAT_84821000 + 0x1938));
-        fVar1 = (float)((double)(float)dVar10 * dVar16);
-        local_80 = fVar1 * *(float *)(iVar3 + 0x118) + *pfVar7;
-        local_7c = *(float *)(iVar3 + 0x11c) * fVar1 + pfVar7[1];
-        local_78 = (float)(dVar11 * dVar15 + (double)(*(float *)(iVar3 + 0x120) * fVar1 + pfVar7[2])
+        dVar12 = (double)(longlong)iVar7;
+        dVar11 = sin((double)(float)(dVar12 * dVar18 + (double)(longlong)iVar9));
+        pfVar8 = (float *)((int)((backEndData->debugGlobals).plumes)->origin + iVar10);
+        fVar1 = (float)((double)(float)dVar11 * dVar17);
+        local_80 = fVar1 * *(float *)(iVar3 + 0x118) + *pfVar8;
+        local_7c = *(float *)(iVar3 + 0x11c) * fVar1 + pfVar8[1];
+        local_78 = (float)(dVar12 * dVar16 + (double)(*(float *)(iVar3 + 0x120) * fVar1 + pfVar8[2])
                           );
-        va(0xffffffff8200c28c,*(undefined4 *)(iVar9 + *(int *)(DAT_84821000 + 0x1938) + 0x1c));
-        R_AddDebugString(uVar14,DAT_84821000 + 0x18f0,&local_80,
-                         *(int *)(DAT_84821000 + 0x1938) + iVar9 + 0xc);
-        iVar4 = DAT_84821000;
+        va("%i");
+        R_AddDebugString(&backEndData->debugGlobals,&local_80,
+                         (float *)((int)((backEndData->debugGlobals).plumes)->color + iVar10),
+                         (float)dVar15,(char *)uVar4);
+        pGVar5 = backEndData;
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x28;
-    } while (iVar8 < *(int *)(iVar4 + 0x193c));
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 0x28;
+    } while (iVar9 < (pGVar5->debugGlobals).plumeCount);
   }
   __restfpr_25();
   __restgprlr_26();
@@ -424,29 +460,32 @@ void RB_AddPlumeStrings(void)
 
 // 8279B820  RB_DrawDebug  (gfx_d3d/rb_debug.cpp:250)
 
-void RB_DrawDebug(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void RB_DrawDebug(GfxViewParms *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d5878,0xfb,0,0xffffffff82000f98,0xffffffff8201dd50);
+  if (param_1 == (GfxViewParms *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_debug.cpp",0xfb,0,
+                    "%s");
   }
   RB_AddPlumeStrings(param_1);
-  if (*(int *)(DAT_84821000 + 0x1900) != 0) {
+  if ((backEndData->debugGlobals).polyCount != 0) {
     RB_EndSurfaceIfNeeded();
-    R_Set3D(0xffffffff8484c7e0);
+    R_Set3D(&gfxCmdBufSourceState);
     RB_DrawPolyInteriors();
     RB_DrawPolyOutlines();
-    *(undefined4 *)(DAT_84821000 + 0x1900) = 0;
+    (backEndData->debugGlobals).polyCount = 0;
   }
-  RB_DrawDebugLines(*(undefined4 *)(DAT_84821000 + 0x1920),*(undefined4 *)(DAT_84821000 + 0x1924),
-                    0xffffffff8483c360);
-  RB_DrawDebugLines(*(undefined4 *)(DAT_84821000 + 0x192c),*(undefined4 *)(DAT_84821000 + 0x1930),
-                    0xffffffff84834360);
-  *(undefined4 *)(DAT_84821000 + 0x1924) = 0;
-  RB_DrawDebugStrings(*(undefined4 *)(DAT_84821000 + 0x1908),*(undefined4 *)(DAT_84821000 + 0x190c))
-  ;
-  RB_DrawDebugStrings(*(undefined4 *)(DAT_84821000 + 0x1914),*(undefined4 *)(DAT_84821000 + 0x1918))
-  ;
+  RB_DrawDebugLines((backEndData->debugGlobals).lines,(backEndData->debugGlobals).lineCount,
+                    g_debugLineVerts);
+  RB_DrawDebugLines((backEndData->debugGlobals).externLines,
+                    (backEndData->debugGlobals).externLineCount,g_debugExternLineVerts);
+  (backEndData->debugGlobals).lineCount = 0;
+  RB_DrawDebugStrings((backEndData->debugGlobals).strings,(backEndData->debugGlobals).stringCount);
+  RB_DrawDebugStrings((backEndData->debugGlobals).externStrings,
+                      (backEndData->debugGlobals).externStringCount);
   RB_EndSurfaceIfNeeded();
   return;
 }

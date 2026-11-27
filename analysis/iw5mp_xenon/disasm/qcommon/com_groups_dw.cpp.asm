@@ -39,7 +39,7 @@ LAB_8293d5e0:
   8293D610  EBE1FFF0             ld r31,-0x10(r1)
   8293D614  4E800020             blr
 
-; 824DCAB8  bdReference<bdRemoteTask>::operator=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.h:72)
+; 824DCAB8  operator=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdreference/bdreference.h:72)
   824DCAB8  7D8802A6             mfspr r12,LR
   824DCABC  9181FFF8             stw r12,-0x8(r1)
   824DCAC0  FBC1FFE8             std r30,-0x18(r1)
@@ -1509,7 +1509,7 @@ LAB_824dc010:
   824DC010  382100B0             addi r1,r1,0xb0
   824DC014  4843A6E0             b 0x829166f4
 
-; 824DCB88  OverlappedTaskSet::~OverlappedTaskSet  (line unknown)
+; 824DCB88  ~OverlappedTaskSet  (line unknown)
   824DCB88  7D8802A6             mfspr r12,LR
   824DCB8C  48439B31             bl 0x829166bc
   824DCB90  9421FF90             stwu r1,-0x70(r1)

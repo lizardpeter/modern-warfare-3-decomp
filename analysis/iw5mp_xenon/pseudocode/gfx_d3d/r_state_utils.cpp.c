@@ -2,95 +2,100 @@
 
 // 82781B00  R_MatrixIdentity44  (gfx_d3d/r_state_utils.cpp:18)
 
-void * R_MatrixIdentity44(void *param_1)
+void R_MatrixIdentity44(float (*param_1) [4])
 
 {
-  void *pvVar1;
-  
-  if (param_1 == (void *)0x0) {
-    MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
+  if (param_1 == (float (*) [4])0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x13,0,"%s");
   }
-  pvVar1 = memcpy(param_1,&DAT_821d1098,0x40);
-  return pvVar1;
+  memcpy();
+  return;
 }
 
 
 // 82781B68  R_InitCmdBufSourceState  (gfx_d3d/r_state_utils.cpp:25)
 
-void R_InitCmdBufSourceState(undefined8 param_1,ulonglong param_2,undefined4 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_InitCmdBufSourceState(GfxCmdBufSourceState *param_1,GfxCmdBufInput *param_2,int param_3)
 
 {
-  void *_Dst;
-  void *pvVar1;
-  int *piVar2;
-  uint uVar3;
-  undefined2 *puVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  double dVar7;
+  int iVar1;
+  ulonglong uVar2;
+  int *piVar3;
+  uint uVar4;
+  undefined2 *puVar5;
+  undefined4 *puVar6;
+  longlong lVar7;
+  double dVar8;
   
-  _Dst = (void *)__savegprlr_27();
-  if (_Dst == (void *)0x0) {
-    MyAssertHandler(0xffffffff821d10d8,0x1c,0,0xffffffff82000f98,0xffffffff82165ff0);
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x1c,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d10d8,0x1d,0,0xffffffff82000f98,0xffffffff820014a8);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x1d,0,"%s");
   }
-  memset(_Dst,0,0x1760);
-  pvVar1 = memcpy((void *)((int)_Dst + 0xe00),(void *)param_2,0x5f0);
-  uVar3 = 0;
-  lVar6 = 0x52;
-  piVar2 = &DAT_821c8480;
-  puVar4 = (undefined2 *)((int)_Dst + 0x1590);
-  puVar5 = (undefined4 *)((int)_Dst + 0xe08);
+  memset();
+  memcpy();
+  uVar4 = 0;
+  lVar7 = 0x52;
+  piVar3 = (int *)&s_codeConstUpdateFreq;
+  puVar5 = (undefined2 *)(iVar1 + 0x1590);
+  puVar6 = (undefined4 *)(iVar1 + 0xe08);
   do {
-    if ((((param_2 & 0xffffffff) == ZEXT48(&DAT_8484eab0)) || (*piVar2 != 2)) || (uVar3 < 0x1b)) {
-      puVar5[-2] = 0x7f7fffff;
-      puVar5[-1] = 0x7f7fffff;
-      *puVar5 = 0x7f7fffff;
-      puVar5[1] = 0;
+    if ((((uVar2 & 0xffffffff) == ZEXT48(&gfxCmdBufInput)) || (*piVar3 != 2)) || (uVar4 < 0x1b)) {
+      puVar6[-2] = 0x7f7fffff;
+      puVar6[-1] = 0x7f7fffff;
+      *puVar6 = 0x7f7fffff;
+      puVar6[1] = 0;
     }
     else {
-      *puVar4 = 1;
+      *puVar5 = 1;
     }
-    uVar3 = uVar3 + 1;
-    puVar4 = puVar4 + 1;
-    puVar5 = puVar5 + 4;
-    piVar2 = piVar2 + 1;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  *(undefined4 *)((int)_Dst + 0xe94) = 0;
-  *(undefined4 *)((int)_Dst + 0xe98) = 0;
-  *(undefined4 *)((int)_Dst + 0xe9c) = 0;
-  dVar7 = 1.0;
-  *(undefined4 *)((int)_Dst + 0xe90) = 0x3f800000;
-  *(short *)((int)_Dst + 0x15a2) = *(short *)((int)_Dst + 0x15a2) + 1;
-  *(undefined4 *)((int)_Dst + 0xea0) = 0;
-  *(undefined4 *)((int)_Dst + 0xea4) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0xea8) = 0;
-  *(undefined4 *)((int)_Dst + 0xeac) = 0;
-  *(short *)((int)_Dst + 0x15a4) = *(short *)((int)_Dst + 0x15a4) + 1;
-  *(undefined4 *)((int)_Dst + 0xeb0) = 0;
-  *(undefined4 *)((int)_Dst + 0xeb4) = 0;
-  *(undefined4 *)((int)_Dst + 0xeb8) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0xebc) = 0;
-  *(short *)((int)_Dst + 0x15a6) = *(short *)((int)_Dst + 0x15a6) + 1;
-  if (*(int *)((int)_Dst + 0x16c0) != 0) {
-    pvVar1 = (void *)MyAssertHandler(0xffffffff821d10d8,0x3e,1,0xffffffff82000f98,0xffffffff821d111c
-                                    );
+    uVar4 = uVar4 + 1;
+    puVar5 = puVar5 + 1;
+    puVar6 = puVar6 + 4;
+    piVar3 = piVar3 + 1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  *(undefined4 *)(iVar1 + 0xe94) = 0;
+  *(undefined4 *)(iVar1 + 0xe98) = 0;
+  *(undefined4 *)(iVar1 + 0xe9c) = 0;
+  dVar8 = 1.0;
+  *(undefined4 *)(iVar1 + 0xe90) = 0x3f800000;
+  *(short *)(iVar1 + 0x15a2) = *(short *)(iVar1 + 0x15a2) + 1;
+  *(undefined4 *)(iVar1 + 0xea0) = 0;
+  *(undefined4 *)(iVar1 + 0xea4) = 0x3f800000;
+  *(undefined4 *)(iVar1 + 0xea8) = 0;
+  *(undefined4 *)(iVar1 + 0xeac) = 0;
+  *(short *)(iVar1 + 0x15a4) = *(short *)(iVar1 + 0x15a4) + 1;
+  *(undefined4 *)(iVar1 + 0xeb0) = 0;
+  *(undefined4 *)(iVar1 + 0xeb4) = 0;
+  *(undefined4 *)(iVar1 + 0xeb8) = 0x3f800000;
+  *(undefined4 *)(iVar1 + 0xebc) = 0;
+  *(short *)(iVar1 + 0x15a6) = *(short *)(iVar1 + 0x15a6) + 1;
+  if (*(int *)(iVar1 + 0x16c0) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x3e,1,"%s");
   }
-  *(float *)((int)_Dst + 0x16e4) = (float)dVar7;
-  *(float *)((int)_Dst + 0x16f4) = (float)dVar7;
-  *(undefined4 *)((int)_Dst + 0x16f8) = param_3;
-  *(undefined4 *)((int)_Dst + 0x174c) = 0x27;
-  __restgprlr_27(pvVar1);
+  *(float *)(iVar1 + 0x16e4) = (float)dVar8;
+  *(float *)(iVar1 + 0x16f4) = (float)dVar8;
+  *(int *)(iVar1 + 0x16f8) = param_3;
+  *(undefined4 *)(iVar1 + 0x174c) = 0x27;
+  __restgprlr_27();
   return;
 }
 
 
 // 82781D20  R_SetDefaultStateBits  (gfx_d3d/r_state_utils.cpp:82)
 
-void R_SetDefaultStateBits(undefined4 *param_1)
+void R_SetDefaultStateBits(uint *param_1)
 
 {
   param_1[1] = 2;
@@ -101,66 +106,71 @@ void R_SetDefaultStateBits(undefined4 *param_1)
 
 // 82781D38  R_InitCmdBufState  (gfx_d3d/r_state_utils.cpp:102)
 
-void R_InitCmdBufState(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_InitCmdBufState(GfxCmdBufState *param_1)
 
 {
-  undefined4 uVar1;
-  void *_Dst;
-  undefined8 uVar2;
-  undefined4 *puVar3;
+  D3DDevice *pDVar1;
+  GfxCmdBufState *pGVar2;
+  uint uVar3;
   longlong lVar4;
-  int iVar5;
+  uint *puVar5;
   uint uVar6;
   
-  _Dst = (void *)__savegprlr_23();
-  if (_Dst == (void *)0x0) {
-    MyAssertHandler(0xffffffff821d10d8,0x6e,0,0xffffffff82000f98,0xffffffff82003870);
+  pGVar2 = (GfxCmdBufState *)__savegprlr_23(param_1);
+  if (pGVar2 == (GfxCmdBufState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x6e,0,"%s");
   }
-  uVar1 = *(undefined4 *)((int)_Dst + 0xc0);
-  memset(_Dst,0,0xb70);
-  *(undefined4 *)((int)_Dst + 0xc0) = uVar1;
+  pDVar1 = (pGVar2->prim).device;
+  memset();
+  (pGVar2->prim).device = pDVar1;
   lVar4 = 4;
-  iVar5 = 0x10;
-  *(undefined4 *)((int)_Dst + 0x104) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0x108) = 0;
-  *(undefined4 *)((int)_Dst + 0xcc) = 4;
-  *(undefined4 *)((int)_Dst + 0xb68) = 0x10;
-  *(undefined4 *)((int)_Dst + 0x100) = 0xffffffff;
-  *(undefined4 *)((int)_Dst + 0xb24) = 0x18004800;
-  *(undefined4 *)((int)_Dst + 0xb28) = 2;
-  *(undefined4 *)((int)_Dst + 0xb1c) = 0x18004800;
-  *(undefined4 *)((int)_Dst + 0xb20) = 2;
-  R_SetCompleteState(uVar1,(int)_Dst + 0xb24);
-  R_SetDefaultAlphaTestFunction(_Dst);
-  uVar2 = R_DecodeSamplerState(1);
-  puVar3 = (undefined4 *)((int)_Dst + 0x5c);
+  uVar6 = 0x10;
+  pGVar2->depthRangeNear = 1.0;
+  pGVar2->depthRangeFar = 0.0;
+  (pGVar2->prim).primType = 4;
+  pGVar2->renderTargetId = R_RENDERTARGET_NONE;
+  pGVar2->depthRangeType = GFX_DEPTH_RANGE_FULL;
+  pGVar2->activeStateBits[0] = 0x18004800;
+  pGVar2->activeStateBits[1] = 2;
+  pGVar2->refStateBits[0] = 0x18004800;
+  pGVar2->refStateBits[1] = 2;
+  R_SetCompleteState(pDVar1,pGVar2->activeStateBits);
+  R_SetDefaultAlphaTestFunction(pGVar2);
+  uVar3 = R_DecodeSamplerState('\x01');
+  puVar5 = pGVar2->samplerState + 0xf;
   do {
-    R_HW_ForceSamplerState(*(undefined4 *)((int)_Dst + 0xc0),iVar5,uVar2);
-    *(undefined1 *)(iVar5 + (int)_Dst) = 1;
+    R_HW_ForceSamplerState((pGVar2->prim).device,uVar6,uVar3);
+    pGVar2->refSamplerState[uVar6] = '\x01';
     lVar4 = lVar4 + -1;
-    puVar3 = puVar3 + 1;
-    *puVar3 = (int)uVar2;
-    iVar5 = iVar5 + 1;
+    puVar5 = puVar5 + 1;
+    *puVar5 = uVar3;
+    uVar6 = uVar6 + 1;
   } while (lVar4 != 0);
   uVar6 = 0;
-  puVar3 = (undefined4 *)((int)_Dst + 0x1c);
+  puVar5 = (uint *)(pGVar2->refSamplerStatePadding + 8);
   do {
-    R_HW_ForceSamplerState(*(undefined4 *)((int)_Dst + 0xc0),uVar6,uVar2);
-    *(undefined1 *)(uVar6 + (int)_Dst) = 1;
+    R_HW_ForceSamplerState((pGVar2->prim).device,uVar6,uVar3);
+    pGVar2->refSamplerState[uVar6] = '\x01';
     uVar6 = uVar6 + 1;
-    puVar3 = puVar3 + 1;
-    *puVar3 = (int)uVar2;
+    puVar5 = puVar5 + 1;
+    *puVar5 = uVar3;
   } while (uVar6 < 0x10);
-  *(undefined4 *)((int)_Dst + 0xe8) = 0xffffffff;
-  *(undefined4 *)((int)_Dst + 0xb2c) = 0xffffffff;
-  if (*(int *)((int)_Dst + 0xb34) != 0) {
-    MyAssertHandler(0xffffffff821d10d8,0xa7,0,0xffffffff82000f98,0xffffffff821d1170);
+  uVar3 = pGVar2->scissorX;
+  (pGVar2->prim).vertexDecl = (D3DVertexDeclaration *)0xffffffff;
+  pGVar2->pixelShader = (MaterialPixelShader *)0xffffffff;
+  if (uVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0xa7,0,"%s");
   }
-  if (*(int *)((int)_Dst + 0xb38) != 0) {
-    MyAssertHandler(0xffffffff821d10d8,0xa8,0,0xffffffff82000f98,0xffffffff821d115c);
+  if (pGVar2->scissorY != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0xa8,0,"%s");
   }
-  *(undefined4 *)((int)_Dst + 0xb3c) = 0x1000;
-  *(undefined4 *)((int)_Dst + 0xb40) = 0x1000;
+  pGVar2->scissorW = 0x1000;
+  pGVar2->scissorH = 0x1000;
   __restgprlr_23();
   return;
 }
@@ -168,19 +178,30 @@ void R_InitCmdBufState(void)
 
 // 82781EC8  R_ViewAndProjectionMatricesChanged  (gfx_d3d/r_state_utils.cpp:175)
 
-void R_ViewAndProjectionMatricesChanged(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ViewAndProjectionMatricesChanged(GfxCmdBufSourceState *param_1)
 
 {
-  *(short *)(param_1 + 0x16a4) = *(short *)(param_1 + 0x16a4) + 1;
-  *(short *)(param_1 + 0x16a6) = *(short *)(param_1 + 0x16a6) + 1;
-  *(short *)(param_1 + 0x16a8) = *(short *)(param_1 + 0x16a8) + 1;
+  ushort uVar1;
+  ushort uVar2;
+  
+  uVar1 = param_1->matrixVersions[1];
+  uVar2 = param_1->matrixVersions[2];
+  param_1->matrixVersions[0] = param_1->matrixVersions[0] + 1;
+  param_1->matrixVersions[1] = uVar1 + 1;
+  param_1->matrixVersions[2] = uVar2 + 1;
   return;
 }
 
 
 // 82781EF0  R_WorldMatrixChanged  (gfx_d3d/r_state_utils.cpp:183)
 
-void R_WorldMatrixChanged(int param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_WorldMatrixChanged(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
   int iVar1;
@@ -188,58 +209,71 @@ void R_WorldMatrixChanged(int param_1,ulonglong param_2)
   int iVar3;
   longlong lVar4;
   
-  lVar4 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-  iVar3 = ((int)((lVar4 + 0x14U & 0xffffffff) >> 2) + 0xb52) * 2;
-  iVar1 = ((int)((lVar4 + 0x18U & 0xffffffff) >> 2) + 0xb52) * 2;
-  iVar2 = ((int)((lVar4 + 0x1cU & 0xffffffff) >> 2) + 0xb52) * 2;
-  *(short *)(iVar3 + param_1) = *(short *)(iVar3 + param_1) + 1;
-  *(short *)(iVar1 + param_1) = *(short *)(iVar1 + param_1) + 1;
-  *(short *)(iVar2 + param_1) = *(short *)(iVar2 + param_1) + 1;
-  if ((param_2 & 0xffffffff) == 0) {
-    *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
+  lVar4 = ((longlong)(int)param_2 + ((ulonglong)param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  iVar1 = (int)((lVar4 + 0x14U & 0xffffffff) >> 2);
+  iVar2 = (int)((lVar4 + 0x18U & 0xffffffff) >> 2);
+  iVar3 = (int)((lVar4 + 0x1cU & 0xffffffff) >> 2);
+  param_1->matrixVersions[iVar1] = param_1->matrixVersions[iVar1] + 1;
+  param_1->matrixVersions[iVar2] = param_1->matrixVersions[iVar2] + 1;
+  param_1->matrixVersions[iVar3] = param_1->matrixVersions[iVar3] + 1;
+  if (param_2 == 0) {
+    param_1->matrixVersions[4] = param_1->matrixVersions[4] + 1;
   }
-  *(undefined2 *)((int)((lVar4 + 0xb2eU & 0xffffffff) << 1) + param_1) =
-       *(undefined2 *)(iVar3 + param_1);
+  *(ushort *)((int)(param_1->matrices).matrix[0].m[0] + (int)((lVar4 + 0xb2eU & 0xffffffff) << 1)) =
+       param_1->matrixVersions[iVar1];
   return;
 }
 
 
 // 82781F78  R_GetActiveWorldMatrix  (gfx_d3d/r_state_utils.cpp:197)
 
-int R_GetActiveWorldMatrix(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+GfxMatrix * R_GetActiveWorldMatrix(GfxCmdBufSourceState *param_1)
 
 {
-  *(short *)(param_1 + 0x16ae) = *(short *)(param_1 + 0x16ae) + 1;
-  *(short *)(param_1 + 0x16b0) = *(short *)(param_1 + 0x16b0) + 1;
-  *(short *)(param_1 + 0x16b2) = *(short *)(param_1 + 0x16b2) + 1;
-  *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
-  *(undefined2 *)(param_1 + 0x165c) = *(undefined2 *)(param_1 + 0x16ae);
-  return param_1 + 0x500;
+  param_1->matrixVersions[5] = param_1->matrixVersions[5] + 1;
+  param_1->matrixVersions[6] = param_1->matrixVersions[6] + 1;
+  param_1->matrixVersions[7] = param_1->matrixVersions[7] + 1;
+  param_1->matrixVersions[4] = param_1->matrixVersions[4] + 1;
+  param_1->constVersions[0x66] = param_1->matrixVersions[5];
+  return (param_1->matrices).matrix + 0x14;
 }
 
 
 // 82781FC0  R_GetActiveWorldMatrixAlternate  (gfx_d3d/r_state_utils.cpp:207)
 
-longlong R_GetActiveWorldMatrixAlternate(longlong param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+GfxMatrix * R_GetActiveWorldMatrixAlternate(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821d10d8,0xd3,0,0xffffffff821d1188,param_2,3);
+  if (3 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0xd3,0,
+                    "worldMatrixAlternateIndex not in [0, CONST_SRC_CODE_WORLD_MATRIX_ALTERNATE_COUNT]\n\t%i not in [0, %i]"
+                   );
   }
   R_WorldMatrixChanged(param_1,param_2);
-  return (param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffff) * 0x100 + param_1 + 0x500;
+  return (param_1->matrices).matrix + param_2 * 0xc + 0x14;
 }
 
 
 // 82782040  R_CmdBufSet2D  (gfx_d3d/r_state_utils.cpp:220)
 
-void R_CmdBufSet2D(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_CmdBufSet2D(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
   undefined8 *puVar2;
   undefined8 *puVar3;
-  longlong lVar4;
+  ulong *puVar4;
+  longlong lVar5;
   undefined8 uStack_b8;
   float local_b0;
   float local_9c;
@@ -248,67 +282,70 @@ void R_CmdBufSet2D(undefined8 param_1,int param_2)
   undefined4 local_78;
   undefined4 local_74;
   
-  iVar1 = __savegprlr_28();
-  if (*(int *)(param_2 + 8) < 1) {
-    MyAssertHandler(0xffffffff821d10d8,0xe4,0,0xffffffff821d07cc,0xffffffff821d07e8);
+  iVar1 = __savegprlr_28(param_1);
+  if (param_2->width < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0xe4,0,"%s\n\t(viewport->width) = %i");
   }
-  if (*(int *)(param_2 + 0xc) < 1) {
-    MyAssertHandler(0xffffffff821d10d8,0xe5,0,0xffffffff821d0798,0xffffffff821d07b4);
+  if (param_2->height < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0xe5,0,"%s\n\t(viewport->height) = %i");
   }
   puVar3 = &uStack_b8;
-  lVar4 = 8;
+  lVar5 = 8;
   do {
     puVar3 = puVar3 + 1;
     *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   local_7c = 0x3f800000;
   local_74 = 0x3f800000;
-  puVar2 = (undefined8 *)&local_78;
-  puVar3 = (undefined8 *)&UNK_821d1090;
+  puVar3 = (undefined8 *)&local_78;
+  puVar4 = s_stencilFuncTable + 7;
   local_80 = 0xbf800000;
   local_78 = 0;
-  lVar4 = 8;
-  local_9c = (1.0 / (float)(longlong)*(int *)(param_2 + 0xc)) * -2.0;
-  local_b0 = (1.0 / (float)(longlong)*(int *)(param_2 + 8)) * 2.0;
+  lVar5 = 8;
+  local_9c = (1.0 / (float)(longlong)param_2->height) * -2.0;
+  local_b0 = (1.0 / (float)(longlong)param_2->width) * 2.0;
   do {
+    puVar4 = puVar4 + 2;
     puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *puVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  if ((void *)(iVar1 + 0x13f0) == (void *)0x0) {
-    MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
+    *puVar3 = *(undefined8 *)puVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  if (iVar1 == -0x13f0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x13,0,"%s");
   }
-  memcpy((void *)(iVar1 + 0x13f0),&DAT_821d1098,0x40);
+  memcpy();
   puVar3 = &uStack_b8;
   puVar2 = (undefined8 *)(iVar1 + 0x1428);
-  lVar4 = 8;
+  lVar5 = 8;
   do {
     puVar3 = puVar3 + 1;
     puVar2 = puVar2 + 1;
     *puVar2 = *puVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   puVar3 = &uStack_b8;
   puVar2 = (undefined8 *)(iVar1 + 0x1468);
-  lVar4 = 8;
+  lVar5 = 8;
   do {
     puVar3 = puVar3 + 1;
     puVar2 = puVar2 + 1;
     *puVar2 = *puVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   puVar3 = (undefined8 *)(iVar1 + 0x14a8);
-  lVar4 = 8;
+  lVar5 = 8;
   do {
     puVar3 = puVar3 + 1;
     *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   *(short *)(iVar1 + 0x16a4) = *(short *)(iVar1 + 0x16a4) + 1;
   *(short *)(iVar1 + 0x16a6) = *(short *)(iVar1 + 0x16a6) + 1;
-  lVar4 = 8;
+  lVar5 = 8;
   *(short *)(iVar1 + 0x16a8) = *(short *)(iVar1 + 0x16a8) + 1;
   puVar2 = (undefined8 *)(iVar1 + 0x4f8);
   *(short *)(iVar1 + 0x16ae) = *(short *)(iVar1 + 0x16ae) + 1;
@@ -321,8 +358,8 @@ void R_CmdBufSet2D(undefined8 param_1,int param_2)
     puVar3 = puVar3 + 1;
     puVar2 = puVar2 + 1;
     *puVar2 = *puVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   __restgprlr_28();
   return;
 }
@@ -330,20 +367,23 @@ void R_CmdBufSet2D(undefined8 param_1,int param_2)
 
 // 82782280  R_Set2D  (gfx_d3d/r_state_utils.cpp:269)
 
-void R_Set2D(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_Set2D(GfxCmdBufSourceState *param_1)
 
 {
-  undefined1 auStack_20 [16];
+  GfxViewport GStack_20;
   
-  if (*(int *)(param_1 + 0x16fc) != 2) {
-    *(undefined4 *)(param_1 + 0x16fc) = 2;
-    *(undefined1 *)(param_1 + 0x1750) = 1;
-    *(undefined4 *)(param_1 + 0x1540) = 0;
-    *(undefined4 *)(param_1 + 0x1544) = 0;
-    *(undefined4 *)(param_1 + 0x1548) = 0;
-    *(undefined4 *)(param_1 + 0x154c) = 0x3f800000;
-    R_GetViewport(param_1,auStack_20);
-    R_CmdBufSet2D(param_1,auStack_20);
+  if (param_1->viewMode != VIEW_MODE_2D) {
+    param_1->viewMode = VIEW_MODE_2D;
+    param_1->viewportIsDirty = true;
+    param_1->eyeOffset[0] = 0.0;
+    param_1->eyeOffset[1] = 0.0;
+    param_1->eyeOffset[2] = 0.0;
+    param_1->eyeOffset[3] = 1.0;
+    R_GetViewport(param_1,&GStack_20);
+    R_CmdBufSet2D(param_1,&GStack_20);
   }
   return;
 }
@@ -351,75 +391,99 @@ void R_Set2D(int param_1)
 
 // 827822F8  R_CmdBufSet3D  (gfx_d3d/r_state_utils.cpp:287)
 
-void * R_CmdBufSet3D(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_CmdBufSet3D(GfxCmdBufSourceState *param_1)
 
 {
-  void *pvVar1;
+  ushort uVar1;
+  ushort uVar2;
   
-  *(short *)(param_1 + 0x16a4) = *(short *)(param_1 + 0x16a4) + 1;
-  *(short *)(param_1 + 0x16a6) = *(short *)(param_1 + 0x16a6) + 1;
-  *(short *)(param_1 + 0x16a8) = *(short *)(param_1 + 0x16a8) + 1;
-  *(short *)(param_1 + 0x16ae) = *(short *)(param_1 + 0x16ae) + 1;
-  *(short *)(param_1 + 0x16b0) = *(short *)(param_1 + 0x16b0) + 1;
-  *(short *)(param_1 + 0x16b2) = *(short *)(param_1 + 0x16b2) + 1;
-  *(short *)(param_1 + 0x16ac) = *(short *)(param_1 + 0x16ac) + 1;
-  *(undefined2 *)(param_1 + 0x165c) = *(undefined2 *)(param_1 + 0x16ae);
-  if ((void *)(param_1 + 0x500) == (void *)0x0) {
-    MyAssertHandler(0xffffffff821d10d8,0x13,0,0xffffffff82000f98,0xffffffff8200202c);
+  uVar1 = param_1->matrixVersions[1];
+  uVar2 = param_1->matrixVersions[2];
+  param_1->matrixVersions[0] = param_1->matrixVersions[0] + 1;
+  param_1->matrixVersions[1] = uVar1 + 1;
+  param_1->matrixVersions[2] = uVar2 + 1;
+  param_1->matrixVersions[5] = param_1->matrixVersions[5] + 1;
+  param_1->matrixVersions[6] = param_1->matrixVersions[6] + 1;
+  param_1->matrixVersions[7] = param_1->matrixVersions[7] + 1;
+  param_1->matrixVersions[4] = param_1->matrixVersions[4] + 1;
+  param_1->constVersions[0x66] = param_1->matrixVersions[5];
+  if (param_1 == (GfxCmdBufSourceState *)0xfffffb00) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x13,0,"%s");
   }
-  pvVar1 = memcpy((void *)(param_1 + 0x500),&DAT_821d1098,0x40);
-  *(float *)(param_1 + 0x530) = *(float *)(param_1 + 0x530) - *(float *)(param_1 + 0x1540);
-  *(float *)(param_1 + 0x534) = *(float *)(param_1 + 0x534) - *(float *)(param_1 + 0x1544);
-  *(float *)(param_1 + 0x538) = *(float *)(param_1 + 0x538) - *(float *)(param_1 + 0x1548);
-  return pvVar1;
+  memcpy();
+  (param_1->matrices).matrix[0x14].m[3][0] =
+       (param_1->matrices).matrix[0x14].m[3][0] - param_1->eyeOffset[0];
+  (param_1->matrices).matrix[0x14].m[3][1] =
+       (param_1->matrices).matrix[0x14].m[3][1] - param_1->eyeOffset[1];
+  (param_1->matrices).matrix[0x14].m[3][2] =
+       (param_1->matrices).matrix[0x14].m[3][2] - param_1->eyeOffset[2];
+  return;
 }
 
 
 // 82782878  R_HW_ForceSamplerState  (gfx_d3d/r_setstate_d3d.h:289)
 
-void R_HW_ForceSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_HW_ForceSamplerState(D3DDevice *param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  D3DDevice *pDVar3;
+  ulonglong uVar4;
+  ulong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  iVar2 = __savegprlr_26();
+  uVar6 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pDVar3 = (D3DDevice *)__savegprlr_26(param_1);
+  uVar2 = (uint)uVar6;
   do {
-    D3DDevice_SetSamplerState_MinFilter(iVar2,param_2,(param_3 & 0xffffffff) >> 8 & 0xf);
-  } while (DAT_84013128 != 0);
+    uVar5 = (ulong)uVar4;
+    D3DDevice_SetSamplerState_MinFilter(pDVar3,uVar5,uVar2 >> 8 & 0xf);
+  } while (alwaysfails != 0);
   do {
-    D3DDevice_SetSamplerState_MagFilter(iVar2,param_2,(param_3 & 0xffffffff) >> 0xc & 0xf);
-  } while (DAT_84013128 != 0);
-  if (1 < (uint)(param_3 & 0xff)) {
+    D3DDevice_SetSamplerState_MagFilter(pDVar3,uVar5,uVar2 >> 0xc & 0xf);
+  } while (alwaysfails != 0);
+  if (1 < (uVar2 & 0xff)) {
     do {
-      D3DDevice_SetSamplerState_MaxAnisotropy(iVar2,param_2,param_3 & 0xff);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetSamplerState_MaxAnisotropy(pDVar3,uVar5,uVar2 & 0xff);
+    } while (alwaysfails != 0);
   }
-  iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar2;
-  uVar3 = 0x8000000000000000 >> (param_2 + 0x20 & 0x7f);
+  iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+  uVar7 = 0x8000000000000000 >> (uVar4 + 0x20 & 0x7f);
   do {
-    *(uint *)(iVar1 + 0x48c) =
-         *(uint *)(iVar1 + 0x48c) & 0xfe7fffff | (uint)((param_3 & 0xffffffff) << 7) & 0x1800000;
-    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
-  } while (DAT_84013128 != 0);
+    *(uint *)((int)&(pDVar3->m_Constants).field0_0x0 + iVar1 + 0xc) =
+         *(uint *)((int)&(pDVar3->m_Constants).field0_0x0 + iVar1 + 0xc) & 0xfe7fffff |
+         (uint)((uVar6 & 0xffffffff) << 7) & 0x1800000;
+    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+  } while (alwaysfails != 0);
   do {
-    D3DDevice_SetSamplerState_MipMapLodBias(iVar2,param_2,DAT_84617854);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetSamplerState_MipMapLodBias(pDVar3,uVar5,dx.mipBias);
+  } while (alwaysfails != 0);
   do {
-    iVar1 = (int)((param_2 + 0x30 + (param_2 + 0x30 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    *(uint *)(iVar1 + iVar2) = *(uint *)(iVar1 + iVar2) & 0xffffe3ff | (uint)param_3 >> 10 & 0xc00;
-    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
-  } while (DAT_84013128 != 0);
+    iVar1 = (int)((uVar4 + 0x30 + (uVar4 + 0x30 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xffffe3ff | uVar2 >> 10 & 0xc00;
+    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+  } while (alwaysfails != 0);
   do {
-    *(uint *)(iVar1 + iVar2) = *(uint *)(iVar1 + iVar2) & 0xffff1fff | (uint)param_3 >> 9 & 0x6000;
-    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
-  } while (DAT_84013128 != 0);
+    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xffff1fff | uVar2 >> 9 & 0x6000;
+    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+  } while (alwaysfails != 0);
   do {
-    *(uint *)(iVar1 + iVar2) =
-         *(uint *)(iVar1 + iVar2) & 0xfff8ffff | (uint)(param_3 >> 8) & 0x30000;
-    *(ulonglong *)(iVar2 + 0x18) = uVar3 | *(ulonglong *)(iVar2 + 0x18);
-  } while (DAT_84013128 != 0);
+    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xfff8ffff |
+         (uint)(uVar6 >> 8) & 0x30000;
+    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+  } while (alwaysfails != 0);
   __restgprlr_26();
   return;
 }
@@ -427,19 +491,23 @@ void R_HW_ForceSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param
 
 // 827823F8  R_Set3D  (gfx_d3d/r_state_utils.cpp:299)
 
-void R_Set3D(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_Set3D(GfxCmdBufSourceState *param_1)
 
 {
-  if (*(int *)(param_1 + 0x16d0) == 0) {
-    MyAssertHandler(0xffffffff821d10d8,300,0,0xffffffff82000f98,0xffffffff821d11f0);
+  if (param_1->viewParms3D == (GfxViewParms *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",300
+                    ,0,"%s");
   }
-  if (*(int *)(param_1 + 0x16fc) != 1) {
-    *(undefined4 *)(param_1 + 0x16fc) = 1;
-    memcpy((void *)(param_1 + 0x13f0),*(void **)(param_1 + 0x16d0),0x150);
-    *(undefined4 *)(param_1 + 0x1540) = *(undefined4 *)(param_1 + 0x14f0);
-    *(undefined4 *)(param_1 + 0x1544) = *(undefined4 *)(param_1 + 0x14f4);
-    *(undefined4 *)(param_1 + 0x1548) = *(undefined4 *)(param_1 + 0x14f8);
-    *(undefined4 *)(param_1 + 0x154c) = 0x3f800000;
+  if (param_1->viewMode != VIEW_MODE_3D) {
+    param_1->viewMode = VIEW_MODE_3D;
+    memcpy();
+    param_1->eyeOffset[0] = (param_1->viewParms).camera.origin[0];
+    param_1->eyeOffset[1] = (param_1->viewParms).camera.origin[1];
+    param_1->eyeOffset[2] = (param_1->viewParms).camera.origin[2];
+    param_1->eyeOffset[3] = 1.0;
     R_CmdBufSet3D(param_1);
   }
   return;
@@ -448,55 +516,82 @@ void R_Set3D(int param_1)
 
 // 827824A0  R_DeriveNearPlaneConstantsForView  (gfx_d3d/r_state_utils.cpp:316)
 
-void R_DeriveNearPlaneConstantsForView(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveNearPlaneConstantsForView(GfxCmdBufSourceState *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  GfxCmdBufSourceState *pGVar10;
+  double dVar11;
+  double dVar12;
   
-  iVar1 = __savegprlr_28();
-  if (*(int *)(iVar1 + 0x16fc) != 1) {
-    MyAssertHandler(0xffffffff821d10d8,0x147,0,0xffffffff821be65c,0xffffffff821be678);
+  pGVar10 = (GfxCmdBufSourceState *)__savegprlr_28(param_1);
+  if (pGVar10->viewMode != VIEW_MODE_3D) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x147,0,"%s\n\t(source->viewMode) = %i");
   }
-  dVar3 = 9.999999747378752e-06;
-  if ((double)((*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)) * 1e-05) <=
-      ABS((double)*(float *)(iVar1 + 0x14bc))) {
-    MyAssertHandler(0xffffffff821d10d8,0x14a,0,0xffffffff821d1284,0xffffffff821d12a0,
-                    (double)*(float *)(iVar1 + 0x14bc));
+  dVar12 = 9.999999747378752e-06;
+  if (((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
+      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]) * 1e-05 <=
+      ABS((pGVar10->viewParms).inverseViewProjectionMatrix.m[0][3])) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x14a,0,"%s\n\t(mtx->m[0][3]) = %g");
   }
-  if ((double)(float)((double)(*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)) * dVar3) <=
-      ABS((double)*(float *)(iVar1 + 0x14cc))) {
-    MyAssertHandler(0xffffffff821d10d8,0x14b,0,0xffffffff821d1228,0xffffffff821d1240,
-                    (double)*(float *)(iVar1 + 0x14cc));
+  if ((float)((double)((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
+                      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]) * dVar12) <=
+      ABS((pGVar10->viewParms).inverseViewProjectionMatrix.m[1][3])) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x14b,0,"%s\n\t(mtx->m[1][3]) = %g");
   }
-  dVar3 = 0.0;
-  if (*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc) == 0.0) {
-    MyAssertHandler(0xffffffff821d10d8,0x14c,0,0xffffffff82000f98,0xffffffff821d1204);
+  dVar12 = 0.0;
+  if ((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
+      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3] == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x14c,0,"%s");
   }
-  dVar2 = (double)(1.0 / (*(float *)(iVar1 + 0x14ec) + *(float *)(iVar1 + 0x14dc)));
-  *(float *)(iVar1 + 0x122c) = (float)dVar3;
-  *(float *)(iVar1 + 0x1228) =
-       (float)((double)(*(float *)(iVar1 + 0x14e8) + *(float *)(iVar1 + 0x14d8)) * dVar2 -
-              (double)*(float *)(iVar1 + 0x14f8));
-  *(float *)(iVar1 + 0x1224) =
-       (float)((double)(*(float *)(iVar1 + 0x14e4) + *(float *)(iVar1 + 0x14d4)) * dVar2 -
-              (double)*(float *)(iVar1 + 0x14f4));
-  *(float *)(iVar1 + 0x1220) =
-       (float)((double)(*(float *)(iVar1 + 0x14e0) + *(float *)(iVar1 + 0x14d0)) * dVar2 -
-              (double)*(float *)(iVar1 + 0x14f0));
-  R_DirtyCodeConstant(iVar1,0x42);
-  *(float *)(iVar1 + 0x123c) = (float)dVar3;
-  dVar2 = (double)(float)(dVar2 * 2.0);
-  *(float *)(iVar1 + 0x1238) = (float)((double)*(float *)(iVar1 + 0x14b8) * dVar2);
-  *(float *)(iVar1 + 0x1234) = (float)((double)*(float *)(iVar1 + 0x14b4) * dVar2);
-  *(float *)(iVar1 + 0x1230) = (float)((double)*(float *)(iVar1 + 0x14b0) * dVar2);
-  R_DirtyCodeConstant(iVar1,0x43);
-  *(float *)(iVar1 + 0x124c) = (float)dVar3;
-  *(float *)(iVar1 + 0x1248) = -(float)((double)*(float *)(iVar1 + 0x14c8) * dVar2);
-  *(float *)(iVar1 + 0x1244) = -(float)((double)*(float *)(iVar1 + 0x14c4) * dVar2);
-  *(float *)(iVar1 + 0x1240) = -(float)((double)*(float *)(iVar1 + 0x14c0) * dVar2);
-  R_DirtyCodeConstant(iVar1,0x44);
+  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][2];
+  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][2];
+  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][1];
+  fVar4 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][1];
+  fVar5 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][0];
+  fVar6 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][0];
+  fVar7 = (pGVar10->viewParms).camera.origin[2];
+  fVar8 = (pGVar10->viewParms).camera.origin[1];
+  fVar9 = (pGVar10->viewParms).camera.origin[0];
+  dVar11 = (double)(1.0 / ((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
+                          (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]));
+  (pGVar10->input).consts[0x42][3] = (float)dVar12;
+  (pGVar10->input).consts[0x42][2] = (float)((double)(fVar1 + fVar2) * dVar11 - (double)fVar7);
+  (pGVar10->input).consts[0x42][1] = (float)((double)(fVar3 + fVar4) * dVar11 - (double)fVar8);
+  (pGVar10->input).consts[0x42][0] = (float)((double)(fVar5 + fVar6) * dVar11 - (double)fVar9);
+  R_DirtyCodeConstant(pGVar10,0x42);
+  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][2];
+  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][1];
+  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][0];
+  (pGVar10->input).consts[0x43][3] = (float)dVar12;
+  dVar11 = (double)(float)(dVar11 * 2.0);
+  (pGVar10->input).consts[0x43][2] = (float)((double)fVar1 * dVar11);
+  (pGVar10->input).consts[0x43][1] = (float)((double)fVar2 * dVar11);
+  (pGVar10->input).consts[0x43][0] = (float)((double)fVar3 * dVar11);
+  R_DirtyCodeConstant(pGVar10,0x43);
+  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][2];
+  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][1];
+  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][0];
+  (pGVar10->input).consts[0x44][3] = (float)dVar12;
+  (pGVar10->input).consts[0x44][2] = -(float)((double)fVar1 * dVar11);
+  (pGVar10->input).consts[0x44][1] = -(float)((double)fVar2 * dVar11);
+  (pGVar10->input).consts[0x44][0] = -(float)((double)fVar3 * dVar11);
+  R_DirtyCodeConstant(pGVar10,0x44);
   __restgprlr_28();
   return;
 }
@@ -504,57 +599,68 @@ void R_DeriveNearPlaneConstantsForView(void)
 
 // 827826C8  R_BeginView  (gfx_d3d/r_state_utils.cpp:363)
 
-void R_BeginView(undefined8 param_1,longlong param_2,undefined4 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_BeginView(GfxCmdBufSourceState *param_1,GfxSceneDef *param_2,GfxViewParms *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  float fVar1;
+  float fVar2;
+  int iVar3;
+  GfxCmdBufSourceState *pGVar4;
   longlong lVar5;
-  double dVar6;
+  GfxSceneDef *pGVar6;
+  longlong lVar7;
+  longlong lVar8;
+  double dVar9;
   
-  iVar2 = __savegprlr_28();
-  puVar3 = (undefined4 *)(iVar2 + 0x16fc);
-  lVar4 = param_2 + -4;
-  lVar5 = 10;
+  lVar5 = (longlong)(int)param_2;
+  pGVar4 = (GfxCmdBufSourceState *)__savegprlr_28(param_1);
+  pGVar6 = (GfxSceneDef *)&pGVar4->viewMode;
+  lVar7 = lVar5 + -4;
+  lVar8 = 10;
   do {
-    lVar4 = lVar4 + 4;
-    puVar3 = puVar3 + 1;
-    *puVar3 = *(undefined4 *)lVar4;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  *(undefined4 *)(iVar2 + 0x16d0) = param_3;
-  iVar1 = (int)param_2;
-  *(undefined4 *)(iVar2 + 0x16e8) = *(undefined4 *)(iVar1 + 8);
-  *(undefined4 *)(iVar2 + 0x16ec) = *(undefined4 *)(iVar1 + 0xc);
-  *(undefined4 *)(iVar2 + 0x16f0) = *(undefined4 *)(iVar1 + 0x10);
-  *(undefined4 *)(iVar2 + 0x16fc) = 0;
-  R_Set3D(iVar2);
-  dVar6 = 0.0;
-  if (*(float *)(iVar2 + 0x1738) != 0.0) {
-    MyAssertHandler(0xffffffff821d10d8,0x173,0,0xffffffff82000f98,0xffffffff821d1300);
+    lVar7 = lVar7 + 4;
+    pGVar6 = (GfxSceneDef *)&pGVar6->floatTime;
+    pGVar6->time = *(int *)lVar7;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  pGVar4->viewParms3D = param_3;
+  iVar3 = (int)lVar5;
+  (pGVar4->skinnedPlacement).base.origin[0] = *(float *)(iVar3 + 8);
+  (pGVar4->skinnedPlacement).base.origin[1] = *(float *)(iVar3 + 0xc);
+  (pGVar4->skinnedPlacement).base.origin[2] = *(float *)(iVar3 + 0x10);
+  pGVar4->viewMode = VIEW_MODE_NONE;
+  R_Set3D(pGVar4);
+  dVar9 = 0.0;
+  if (pGVar4->materialTime != 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x173,0,"%s");
   }
-  R_SetGameTime((double)*(float *)(iVar1 + 4),iVar2);
-  *(undefined4 *)(iVar2 + 0xe80) = *(undefined4 *)(iVar2 + 0x1540);
-  *(undefined4 *)(iVar2 + 0xe84) = *(undefined4 *)(iVar2 + 0x1544);
-  *(undefined4 *)(iVar2 + 0xe88) = *(undefined4 *)(iVar2 + 0x1548);
-  *(float *)(iVar2 + 0xe8c) = (float)dVar6;
-  R_DirtyCodeConstant(iVar2,8);
-  if (*(char *)(iVar2 + 0x1751) != '\0') {
-    MyAssertHandler(0xffffffff821d10d8,0x178,0,0xffffffff82000f98,0xffffffff821d12e4);
+  R_SetGameTime(pGVar4,*(float *)(iVar3 + 4));
+  fVar1 = pGVar4->eyeOffset[2];
+  fVar2 = pGVar4->eyeOffset[1];
+  (pGVar4->input).consts[8][0] = pGVar4->eyeOffset[0];
+  (pGVar4->input).consts[8][1] = fVar2;
+  (pGVar4->input).consts[8][2] = fVar1;
+  (pGVar4->input).consts[8][3] = (float)dVar9;
+  R_DirtyCodeConstant(pGVar4,8);
+  if (pGVar4->useHeroLighting != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
+                    0x178,0,"%s");
   }
-  R_DeriveNearPlaneConstantsForView(iVar2);
-  *(undefined4 *)(iVar2 + 0x1338) = *(undefined4 *)(iVar1 + 0x14);
-  if ((((*(float *)(iVar2 + 0x1180) != *(float *)(iVar1 + 0x18)) ||
-       (*(float *)(iVar2 + 0x1184) != *(float *)(iVar1 + 0x1c))) ||
-      (*(float *)(iVar2 + 0x1188) != *(float *)(iVar1 + 0x20))) ||
-     (*(float *)(iVar2 + 0x118c) != *(float *)(iVar1 + 0x24))) {
-    *(float *)(iVar2 + 0x1180) = *(float *)(iVar1 + 0x18);
-    *(undefined4 *)(iVar2 + 0x1184) = *(undefined4 *)(iVar1 + 0x1c);
-    *(undefined4 *)(iVar2 + 0x1188) = *(undefined4 *)(iVar1 + 0x20);
-    *(undefined4 *)(iVar2 + 0x118c) = *(undefined4 *)(iVar1 + 0x24);
-    R_DirtyCodeConstant(iVar2,0x38);
+  R_DeriveNearPlaneConstantsForView(pGVar4);
+  (pGVar4->input).codeImages[6] = *(GfxImage **)(iVar3 + 0x14);
+  if (((((pGVar4->input).consts[0x38][0] != *(float *)(iVar3 + 0x18)) ||
+       ((pGVar4->input).consts[0x38][1] != *(float *)(iVar3 + 0x1c))) ||
+      ((pGVar4->input).consts[0x38][2] != *(float *)(iVar3 + 0x20))) ||
+     ((pGVar4->input).consts[0x38][3] != *(float *)(iVar3 + 0x24))) {
+    (pGVar4->input).consts[0x38][0] = *(float *)(iVar3 + 0x18);
+    (pGVar4->input).consts[0x38][1] = *(float *)(iVar3 + 0x1c);
+    (pGVar4->input).consts[0x38][2] = *(float *)(iVar3 + 0x20);
+    (pGVar4->input).consts[0x38][3] = *(float *)(iVar3 + 0x24);
+    R_DirtyCodeConstant(pGVar4,0x38);
   }
   __restgprlr_28();
   return;
@@ -563,21 +669,24 @@ void R_BeginView(undefined8 param_1,longlong param_2,undefined4 param_3)
 
 // 82782848  R_SetShadowLookupMatrix  (gfx_d3d/r_state_utils.cpp:391)
 
-void R_SetShadowLookupMatrix(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetShadowLookupMatrix(GfxCmdBufSourceState *param_1,GfxMatrix *param_2)
 
 {
-  undefined8 *puVar1;
-  undefined8 *puVar2;
+  GfxMatrix *pGVar1;
+  float *pfVar2;
   longlong lVar3;
   
-  puVar1 = (undefined8 *)(param_1 + 0x1548);
-  puVar2 = (undefined8 *)(param_2 + -8);
-  *(short *)(param_1 + 0x16aa) = *(short *)(param_1 + 0x16aa) + 1;
+  pGVar1 = (GfxMatrix *)(param_1->eyeOffset + 2);
+  pfVar2 = param_2[-1].m[3] + 2;
+  param_1->matrixVersions[3] = param_1->matrixVersions[3] + 1;
   lVar3 = 8;
   do {
-    puVar2 = puVar2 + 1;
-    puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    pfVar2 = pfVar2 + 2;
+    pGVar1 = (GfxMatrix *)(pGVar1->m[0] + 2);
+    *(undefined8 *)pGVar1->m[0] = *(undefined8 *)pfVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   return;
@@ -586,58 +695,66 @@ void R_SetShadowLookupMatrix(int param_1,int param_2)
 
 // 827817A8  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-int D3DTag_Index(int param_1)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong D3DTag_Index(_D3DTAG param_1)
 
 {
-  return param_1 >> 0x10;
+  return (int)param_1 >> 0x10;
 }
 
 
 // 827817B0  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
 
 {
-  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
-         ((param_1 & 0xff) + param_2 & 0x7f);
+  return (ulonglong)
+         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
+         (((ulonglong)param_1 & 0xff) + (longlong)(int)param_2 & 0x7f);
 }
 
 
 // 827817D8  D3DTag_SamplerMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:636)
 
-ulonglong D3DTag_SamplerMask(longlong param_1)
+ulong64 D3DTag_SamplerMask(ulong param_1)
 
 {
-  return 0x8000000000000000 >> (param_1 + 0x20U & 0x7f);
+  return 0x8000000000000000 >> ((longlong)(int)param_1 + 0x20U & 0x7f);
 }
 
 
 // 827817F0  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
   return;
 }
 
 
 // 82782A10  R_SetDefaultAlphaTestFunction  (gfx_d3d/r_state.h:888)
 
-void R_SetDefaultAlphaTestFunction(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetDefaultAlphaTestFunction(GfxCmdBufState *param_1)
 
 {
-  int iVar1;
+  D3DDevice *pDVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = *(int *)(iVar2 + 0xc0);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bda94,0x37c,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  iVar2 = __savegprlr_29(param_1);
+  pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x37c,0,
+                    "%s");
   }
   do {
-    D3DDevice_SetRenderState_AlphaRef(iVar1,0);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetRenderState_AlphaRef(pDVar1,0);
+  } while (alwaysfails != 0);
   *(undefined1 *)(iVar2 + 0xb10) = 0;
   __restgprlr_29();
   return;
@@ -646,174 +763,174 @@ void R_SetDefaultAlphaTestFunction(void)
 
 // 82781808  D3DDevice_SetSamplerState_AddressU_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2708)
 
-void D3DDevice_SetSamplerState_AddressU_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressU_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 10 | *(uint *)(iVar1 + param_1) & 0xffffe3ff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 10 | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffffe3ff)
+  ;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781848  D3DDevice_SetSamplerState_AddressV_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2715)
 
-void D3DDevice_SetSamplerState_AddressV_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressV_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 0xd | *(uint *)(iVar1 + param_1) & 0xffff1fff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0xd | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffff1fff
+       );
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781888  D3DDevice_SetSamplerState_AddressW_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2722)
 
-void D3DDevice_SetSamplerState_AddressW_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressW_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 0x10 | *(uint *)(iVar1 + param_1) & 0xfff8ffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0x10 |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xfff8ffff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 827818C8  D3DDevice_SetSamplerState_MipFilter_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2729)
 
-void D3DDevice_SetSamplerState_MipFilter_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_MipFilter_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x48c) = (param_3 & 3) << 0x17 | *(uint *)(iVar1 + 0x48c) & 0xfe7fffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) =
+       (param_3 & 3) << 0x17 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) & 0xfe7fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781910  D3DDevice_SetSamplerState_BorderColor_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2736)
 
-void D3DDevice_SetSamplerState_BorderColor_Inline(int param_1,int param_2,longlong param_3)
+void D3DDevice_SetSamplerState_BorderColor_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = *(uint *)(iVar1 + 0x494) & 0xfffffffc | (uint)(param_3 != 0);
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffc |
+       (uint)(param_3 != 0);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781960  D3DDevice_SetSamplerState_TrilinearThreshold_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2743)
 
-void D3DDevice_SetSamplerState_TrilinearThreshold_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_TrilinearThreshold_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = (param_3 & 3) << 3 | *(uint *)(iVar1 + 0x494) & 0xffffffe7;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 3) << 3 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xffffffe7;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 827819A8  D3DDevice_SetSamplerState_HGradientExpBias_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2750)
 
-void D3DDevice_SetSamplerState_HGradientExpBias_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_HGradientExpBias_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x490) = (param_3 & 0x1f) << 0x16 | *(uint *)(iVar1 + 0x490) & 0xf83fffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       (param_3 & 0x1f) << 0x16 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xf83fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 827819F0  D3DDevice_SetSamplerState_VGradientExpBias_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2757)
 
-void D3DDevice_SetSamplerState_VGradientExpBias_Inline(int param_1,int param_2,int param_3)
+void D3DDevice_SetSamplerState_VGradientExpBias_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x490) = param_3 << 0x1b | *(uint *)(iVar1 + 0x490) & 0x7ffffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       param_3 << 0x1b |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0x7ffffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781A38  D3DDevice_SetSamplerState_WhiteBorderColorW_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2764)
 
-void D3DDevice_SetSamplerState_WhiteBorderColorW_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_WhiteBorderColorW_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = (param_3 & 1) << 2 | *(uint *)(iVar1 + 0x494) & 0xfffffffb;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 1) << 2 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffb;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781A80  D3DDevice_SetSamplerState_PointBorderEnable_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2771)
 
-void D3DDevice_SetSamplerState_PointBorderEnable_Inline(int param_1,int param_2,int param_3)
+void D3DDevice_SetSamplerState_PointBorderEnable_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x484) = (uint)(param_3 == 0) << 0xb | *(uint *)(iVar1 + 0x484) & 0xfffff7ff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((uint)(param_3 == 0) << 0xb |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] & 0xfffff7ff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 82781AD0  D3DDevice_SetRenderState  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2818)
 
-void D3DDevice_SetRenderState(int param_1,int param_2,undefined8 param_3)
+void D3DDevice_SetRenderState(D3DDevice *param_1,_D3DRENDERSTATETYPE param_2,ulong param_3)
 
 {
                     /* WARNING: Could not recover jumptable at 0x82781ae0. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(param_1 + param_2 + 0x40))(param_1,param_3);
+  (**(code **)((int)param_1->m_SetRenderStateCall + param_2))(param_1,param_3);
   return;
 }
 
 
 // 82781AE8  D3DDevice_SetSamplerState  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3069)
 
-void D3DDevice_SetSamplerState(int param_1,undefined8 param_2,int param_3,undefined8 param_4)
+void D3DDevice_SetSamplerState
+               (D3DDevice *param_1,ulong param_2,_D3DSAMPLERSTATETYPE param_3,ulong param_4)
 
 {
                     /* WARNING: Could not recover jumptable at 0x82781af8. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(param_1 + param_3 + 0x1d4))(param_1,param_2,param_4);
+  (**(code **)((int)param_1->m_SetSamplerStateCall + param_3))(param_1,param_2,param_4);
   return;
 }
 

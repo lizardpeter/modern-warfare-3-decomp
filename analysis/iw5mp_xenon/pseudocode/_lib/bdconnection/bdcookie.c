@@ -5,9 +5,9 @@
 void __unwind_73603(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdHMacSHA1___bdHMacSHA1(in_r12 + -0x130);
+  bdHMacSHA1::~bdHMacSHA1((bdHMacSHA1 *)(in_r12 + -0x130));
   return;
 }
 
@@ -17,9 +17,9 @@ void __unwind_73603(void)
 void __unwind_73817(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdHMacSHA1___bdHMacSHA1(in_r12 + -0x140);
+  bdHMacSHA1::~bdHMacSHA1((bdHMacSHA1 *)(in_r12 + -0x140));
   return;
 }
 
@@ -31,7 +31,7 @@ void __unwind_74009(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 

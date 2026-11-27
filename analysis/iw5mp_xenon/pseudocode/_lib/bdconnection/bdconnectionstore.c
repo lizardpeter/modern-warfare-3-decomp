@@ -5,9 +5,10 @@
 void __unwind_79362(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0x530);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0x530));
   return;
 }
 
@@ -19,7 +20,8 @@ void __unwind_79449(void)
 {
   int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(*(undefined4 *)(in_r12 + 0x14));
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            (*(bdReference<bdConnection> **)(in_r12 + 0x14));
   return;
 }
 
@@ -31,7 +33,8 @@ void __unwind_79682(void)
 {
   int in_r12;
   
-  bdAddrHandleRefWrapper___bdAddrHandleRefWrapper((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
+  bdReference<bdAddrHandle>::__1bdAddrHandleRefWrapper__QAA_XZ
+            ((bdReference<bdAddrHandle> *)(*(int *)(in_r12 + 0x14) + 0x14));
   return;
 }
 
@@ -41,9 +44,10 @@ void __unwind_79682(void)
 void __unwind_79900(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0x6e0);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0x6e0));
   return;
 }
 
@@ -53,9 +57,10 @@ void __unwind_79900(void)
 void __unwind_79901(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0x6d4);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0x6d4));
   return;
 }
 
@@ -69,7 +74,8 @@ void __unwind_79904(void)
   
   if ((*(uint *)(in_r12 + -0x6d8) & 1) != 0) {
     *(uint *)(in_r12 + -0x6d8) = *(uint *)(in_r12 + -0x6d8) & 0xfffffffe;
-    bdAddrHandleRefWrapper___bdAddrHandleRefWrapper(in_r12 + -0x6c4);
+    bdReference<bdAddrHandle>::__1bdAddrHandleRefWrapper__QAA_XZ
+              ((bdReference<bdAddrHandle> *)(in_r12 + -0x6c4));
   }
   return;
 }
@@ -80,9 +86,9 @@ void __unwind_79904(void)
 void __unwind_79907(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdAddr___bdAddr(in_r12 + -0x6c0);
+  bdAddr::~bdAddr((bdAddr *)(in_r12 + -0x6c0));
   return;
 }
 
@@ -92,9 +98,9 @@ void __unwind_79907(void)
 void __unwind_79908(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection___bdUnicastConnection(in_r12 + -0x6b0);
+  bdUnicastConnection::~bdUnicastConnection((bdUnicastConnection *)(in_r12 + -0x6b0));
   return;
 }
 
@@ -106,7 +112,7 @@ void __unwind_79909(void)
 {
   int in_r12;
   
-  bdUnicastConnection__operator_delete(*(undefined4 *)(in_r12 + -0x6cc));
+  bdMemory::__3bdUnicastConnection__SAXPAX_Z(*(void **)(in_r12 + -0x6cc));
   return;
 }
 
@@ -116,9 +122,10 @@ void __unwind_79909(void)
 void __unwind_79910(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0x6dc);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0x6dc));
   return;
 }
 
@@ -128,9 +135,10 @@ void __unwind_79910(void)
 void __unwind_79912(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdAddrHandleRefWrapper___bdAddrHandleRefWrapper(in_r12 + -0x6c8);
+  bdReference<bdAddrHandle>::__1bdAddrHandleRefWrapper__QAA_XZ
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0x6c8));
   return;
 }
 
@@ -140,9 +148,10 @@ void __unwind_79912(void)
 void __unwind_80520(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0x3c);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -152,9 +161,10 @@ void __unwind_80520(void)
 void __unwind_80519(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0x3c);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -166,7 +176,8 @@ void __unwind_80604(void)
 {
   int in_r12;
   
-  bdAddrHandleRefWrapper___bdAddrHandleRefWrapper((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
+  bdReference<bdAddrHandle>::__1bdAddrHandleRefWrapper__QAA_XZ
+            ((bdReference<bdAddrHandle> *)(*(int *)(in_r12 + 0x14) + 0x14));
   return;
 }
 
@@ -178,8 +189,10 @@ void __unwind_80671(void)
 {
   int in_r12;
   
-  bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>___bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 4);
+  bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>::
+  ~bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>
+            ((bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper> *)
+             (*(int *)(in_r12 + 0x14) + 4));
   return;
 }
 
@@ -191,7 +204,7 @@ void __unwind_80672(void)
 {
   int in_r12;
   
-  bdDispatcher___bdDispatcher((ulonglong)*(uint *)(in_r12 + 0x14) + 0x24);
+  bdDispatcher::~bdDispatcher((bdDispatcher *)(*(int *)(in_r12 + 0x14) + 0x24));
   return;
 }
 
@@ -203,8 +216,10 @@ void __unwind_80694(void)
 {
   int in_r12;
   
-  bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>___bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 4);
+  bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>::
+  ~bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper>
+            ((bdHashMap<bdAddrHandleRefWrapper,bdReference<bdConnection>,bdAddrHandleRefWrapper> *)
+             (*(int *)(in_r12 + 0x14) + 4));
   return;
 }
 
@@ -216,7 +231,7 @@ void __unwind_80695(void)
 {
   int in_r12;
   
-  bdDispatcher___bdDispatcher((ulonglong)*(uint *)(in_r12 + 0x14) + 0x24);
+  bdDispatcher::~bdDispatcher((bdDispatcher *)(*(int *)(in_r12 + 0x14) + 0x24));
   return;
 }
 
@@ -226,9 +241,10 @@ void __unwind_80695(void)
 void __unwind_80754(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdQueue<bdReference<bdConnection>_>___bdQueue<bdReference<bdConnection>_>(in_r12 + -0xb8);
+  bdLinkedList<bdReference<bdConnection>_>::__1__bdQueue_V__bdReference_VbdConnection______QAA_XZ
+            ((bdLinkedList<bdReference<bdConnection>_> *)(in_r12 + -0xb8));
   return;
 }
 
@@ -238,9 +254,10 @@ void __unwind_80754(void)
 void __unwind_80755(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0xe0);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0xe0));
   return;
 }
 
@@ -250,9 +267,10 @@ void __unwind_80755(void)
 void __unwind_80756(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCommonAddr>___bdReference<bdCommonAddr>(in_r12 + -200);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>
+            ((bdReference<bdCommonAddr> *)(in_r12 + -200));
   return;
 }
 
@@ -262,9 +280,10 @@ void __unwind_80756(void)
 void __unwind_80759(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0xd8);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0xd8));
   return;
 }
 
@@ -274,9 +293,10 @@ void __unwind_80759(void)
 void __unwind_80758(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0xd4);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0xd4));
   return;
 }
 
@@ -286,9 +306,10 @@ void __unwind_80758(void)
 void __unwind_80760(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0xd0);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0xd0));
   return;
 }
 
@@ -298,9 +319,10 @@ void __unwind_80760(void)
 void __unwind_80762(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdConnection>___bdReference<bdConnection>(in_r12 + -0xc4);
+  bdReference<bdConnection>::~bdReference<bdConnection>
+            ((bdReference<bdConnection> *)(in_r12 + -0xc4));
   return;
 }
 
@@ -310,9 +332,10 @@ void __unwind_80762(void)
 void __unwind_80763(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdAddrHandle>___bdReference<bdAddrHandle>(in_r12 + -0xdc);
+  bdReference<bdAddrHandle>::~bdReference<bdAddrHandle>
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0xdc));
   return;
 }
 
@@ -322,9 +345,10 @@ void __unwind_80763(void)
 void __unwind_80765(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdAddrHandleRefWrapper___bdAddrHandleRefWrapper(in_r12 + -0xbc);
+  bdReference<bdAddrHandle>::__1bdAddrHandleRefWrapper__QAA_XZ
+            ((bdReference<bdAddrHandle> *)(in_r12 + -0xbc));
   return;
 }
 
@@ -334,9 +358,10 @@ void __unwind_80765(void)
 void __unwind_81143(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdArray<bdReference<bdConnection>_>___bdArray<bdReference<bdConnection>_>(in_r12 + -0x38);
+  bdArray<bdReference<bdConnection>_>::__1__bdArray_V__bdReference_VbdConnection______QAA_XZ
+            ((bdArray<bdReference<bdConnection>_> *)(in_r12 + -0x38));
   return;
 }
 

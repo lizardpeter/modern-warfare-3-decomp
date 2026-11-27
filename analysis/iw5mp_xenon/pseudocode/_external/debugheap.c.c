@@ -2,37 +2,36 @@
 
 // 828F44B8  DmDebugAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/debugheap/debugheap.c:35)
 
-undefined8 DmDebugAlloc(undefined8 param_1)
+void * DmDebugAlloc(ulong param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  void *pvVar1;
   
-  uVar1 = GetDebugHeap();
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar2 = 0;
+  pvVar1 = GetDebugHeap();
+  if (pvVar1 == (void *)0x0) {
+    pvVar1 = (void *)0x0;
   }
   else {
-    uVar2 = RtlAllocateHeap(uVar1,8,param_1);
+    pvVar1 = RtlAllocateHeap(pvVar1,8,param_1);
   }
-  return uVar2;
+  return pvVar1;
 }
 
 
 // 828F4500  DmDebugFree  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/debugheap/debugheap.c:69)
 
-undefined8 DmDebugFree(undefined8 param_1)
+int DmDebugFree(void *param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  void *pvVar1;
+  ulong uVar2;
   
-  uVar1 = GetDebugHeap();
-  if ((uVar1 & 0xffffffff) == 0) {
+  pvVar1 = GetDebugHeap();
+  if (pvVar1 == (void *)0x0) {
     uVar2 = 0;
   }
   else {
-    uVar2 = RtlFreeHeap(uVar1,0,param_1);
+    uVar2 = RtlFreeHeap(pvVar1,0,param_1);
   }
   return uVar2;
 }

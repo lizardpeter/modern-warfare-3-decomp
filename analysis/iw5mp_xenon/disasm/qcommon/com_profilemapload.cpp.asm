@@ -1306,7 +1306,7 @@ LAB_824ddfe4:
   824DDFEC  484387F9             bl 0x829167e4
   824DDFF0  484386FC             b 0x829166ec
 
-; 824DE4E0  std::_Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 824DE4E0  _Push_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   824DE4E0  7D8802A6             mfspr r12,LR
   824DE4E4  484381C9             bl 0x829166ac
   824DE4E8  9421FF70             stwu r1,-0x90(r1)
@@ -1362,7 +1362,7 @@ LAB_824de580:
   824DE5A8  38210090             addi r1,r1,0x90
   824DE5AC  48438150             b 0x829166fc
 
-; 824DE5B0  std::_Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 824DE5B0  _Adjust_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   824DE5B0  7D8802A6             mfspr r12,LR
   824DE5B4  484380F9             bl 0x829166ac
   824DE5B8  9421FF70             stwu r1,-0x90(r1)
@@ -1476,7 +1476,7 @@ LAB_824de728:
   824DE750  38210090             addi r1,r1,0x90
   824DE754  48437FA8             b 0x829166fc
 
-; 824DE758  std::_Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 824DE758  _Make_heap<MapProfileHotSpot_*,int,MapProfileHotSpot,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   824DE758  7D8802A6             mfspr r12,LR
   824DE75C  48437F4D             bl 0x829166a8
   824DE760  9421FF50             stwu r1,-0xb0(r1)
@@ -1573,7 +1573,7 @@ LAB_824de8b4:
   824DE8B4  382100B0             addi r1,r1,0xb0
   824DE8B8  48437E40             b 0x829166f8
 
-; 824DF080  std::_Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 824DF080  _Sort_heap<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   824DF080  7D8802A6             mfspr r12,LR
   824DF084  48437631             bl 0x829166b4
   824DF088  9421FF60             stwu r1,-0xa0(r1)
@@ -1616,7 +1616,7 @@ LAB_824df114:
   824DF114  382100A0             addi r1,r1,0xa0
   824DF118  484375EC             b 0x82916704
 
-; 824DEAE8  std::_Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 824DEAE8  _Insertion_sort1<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&),MapProfileHotSpot>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   824DEAE8  7D8802A6             mfspr r12,LR
   824DEAEC  48437BC1             bl 0x829166ac
   824DEAF0  9421FF50             stwu r1,-0xb0(r1)
@@ -1709,7 +1709,7 @@ LAB_824dec2c:
   824DEC2C  382100B0             addi r1,r1,0xb0
   824DEC30  48437ACC             b 0x829166fc
 
-; 824DE8C0  std::_Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 824DE8C0  _Med3<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   824DE8C0  7D8802A6             mfspr r12,LR
   824DE8C4  48437DF5             bl 0x829166b8
   824DE8C8  9421FF70             stwu r1,-0x90(r1)
@@ -1804,7 +1804,7 @@ LAB_824dea20:
   824DEA20  38210090             addi r1,r1,0x90
   824DEA24  48437CE4             b 0x82916708
 
-; 824DEA28  std::_Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 824DEA28  _Median<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   824DEA28  7D8802A6             mfspr r12,LR
   824DEA2C  48437C85             bl 0x829166b0
   824DEA30  9421FF70             stwu r1,-0x90(r1)
@@ -1854,7 +1854,7 @@ LAB_824dead0:
   824DEADC  38210090             addi r1,r1,0x90
   824DEAE0  48437C20             b 0x82916700
 
-; 824DEC38  std::_Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 824DEC38  _Unguarded_partition<MapProfileHotSpot_*,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   824DEC38  7D8802A6             mfspr r12,LR
   824DEC3C  48437A69             bl 0x829166a4
   824DEC40  9421FE80             stwu r1,-0x180(r1)
@@ -2147,7 +2147,7 @@ LAB_824df06c:
   824DF078  38210180             addi r1,r1,0x180
   824DF07C  48437678             b 0x829166f4
 
-; 824DF120  std::_Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824DF120  _Sort<MapProfileHotSpot_*,int,bool_(__cdecl*)(MapProfileHotSpot_const_&,MapProfileHotSpot_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824DF120  7D8802A6             mfspr r12,LR
   824DF124  48437589             bl 0x829166ac
   824DF128  9421FF60             stwu r1,-0xa0(r1)

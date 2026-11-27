@@ -2,62 +2,73 @@
 
 // 826359B8  XA_GetSpeakerCount  (xenon/snd_driver.cpp:348)
 
-undefined8 XA_GetSpeakerCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uchar XA_GetSpeakerCount(void)
 
 {
-  return 6;
+  return '\x06';
 }
 
 
 // 826359C0  SND_IsMultiChannel  (xenon/snd_driver.cpp:354)
 
-undefined8 SND_IsMultiChannel(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool SND_IsMultiChannel(void)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 826359C8  TRACK_snd_driver  (xenon/snd_driver.cpp:361)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void TRACK_snd_driver(void)
 
 {
   TRACK_packet_cache();
-  track_static_alloc_internal(0xffffffff82994938,0x4e0,0xffffffff821880d8,0xd);
-  track_static_alloc_internal(0xffffffff8421bfe8,0x4968,0xffffffff821880d0,0xd);
+  track_static_alloc_internal(xaReverbPresets,0x4e0,"xaReverbPresets",0xd);
+  track_static_alloc_internal(&xaGlob,0x4968,"xaGlob",0xd);
   return;
 }
 
 
 // 82635A20  XAStream_Release  (xenon/snd_driver.cpp:372)
 
-void XAStream_Release(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XAStream_Release(int param_1)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  IXAudioVoice *pIVar1;
+  int iVar2;
+  ulong uVar3;
   
-  iVar3 = __savegprlr_26();
-  if ((iVar3 < 0x28) || (0x35 < iVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0x17a,0,0xffffffff82000f98,0xffffffff82188190);
+  iVar2 = __savegprlr_26(param_1);
+  if ((iVar2 < 0x28) || (0x35 < iVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x17a,0,
+                    "%s");
   }
-  uVar1 = (&DAT_8421bffc)[iVar3];
+  pIVar1 = (IXAudioVoice *)xaGlob.voice[iVar2];
   PMem_EnableSoundAlloc();
-  uVar2 = XAudioVoice_Release(uVar1);
+  uVar3 = XAudioVoice_Release(pIVar1);
   PMem_DisableSoundAlloc();
-  if ((int)uVar2 != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x18a,0,0xffffffff82174e08,0xffffffff8218816c,uVar2);
+  if (uVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x18a,0,
+                    "%s\n\t(res) = %i");
   }
-  if (*(int *)(&DAT_8421e1b8 + iVar3 * 0x94) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x18d,0,0xffffffff821880e8,0xffffffff8218812c,
-                    *(undefined4 *)(&DAT_8421e1c0 + iVar3 * 0x94));
-    (&DAT_8421bffc)[iVar3] = 0;
+  if (*(int *)((int)xaGlob.baseVolEntries + iVar2 * 0x94 + 0x7c) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x18d,0,
+                    "%s\n\t(xaGlob.streamReadInfo[index - ((0 + 8) + 32)].debugName) = %s");
+    xaGlob.voice[iVar2] = (IXAudioSourceVoice *)0x0;
     __restgprlr_26();
     return;
   }
-  (&DAT_8421bffc)[iVar3] = 0;
+  xaGlob.voice[iVar2] = (IXAudioSourceVoice *)0x0;
   __restgprlr_26();
   return;
 }
@@ -74,66 +85,75 @@ int XA_CalcTotalSamples(int param_1,int param_2)
 
 // 82635B60  XA_CalcXAudioPitch  (xenon/snd_driver.cpp:435)
 
-double XA_CalcXAudioPitch(uint param_1,uint param_2)
+float XA_CalcXAudioPitch(int param_1,ulong param_2)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  double dVar4;
   
-  dVar1 = log((double)param_1 / (double)param_2);
-  dVar3 = (double)(float)(dVar1 * 1.4426950408889634);
-  dVar1 = 1.0;
-  if ((float)(dVar3 - 1.0) < 0.0) {
-    dVar1 = dVar3;
+  dVar4 = log((double)(uint)param_1 / (double)param_2);
+  fVar1 = (float)(dVar4 * 1.4426950408889634);
+  fVar2 = 1.0;
+  if (fVar1 - 1.0 < 0.0) {
+    fVar2 = fVar1;
   }
-  dVar2 = -10.0;
-  if ((float)(-10.0 - dVar3) < 0.0) {
-    dVar2 = dVar1;
+  fVar3 = -10.0;
+  if (-10.0 - fVar1 < 0.0) {
+    fVar3 = fVar2;
   }
-  return dVar2;
+  return fVar3;
 }
 
 
 // 82635BD8  XA_GetSampleIndexFromMsec  (xenon/snd_driver.cpp:444)
 
-ulonglong XA_GetSampleIndexFromMsec(int param_1,int param_2)
+ulong XA_GetSampleIndexFromMsec(int param_1,int param_2)
 
 {
-  return (longlong)((float)(longlong)param_1 * 0.001 * (float)(longlong)param_2) & 0xffffffff;
+  undefined4 uStack_c;
+  
+  uStack_c = (ulong)(longlong)((float)(longlong)param_1 * 0.001 * (float)(longlong)param_2);
+  return uStack_c;
 }
 
 
 // 82635C20  XA_CalcAndAlignDesiredSampleIndex  (xenon/snd_driver.cpp:450)
 
-void XA_CalcAndAlignDesiredSampleIndex(undefined8 param_1,int param_2,int param_3,ulonglong param_4)
+void XA_CalcAndAlignDesiredSampleIndex
+               (XAUDIOSOURCEFORMAT *param_1,int param_2,int param_3,int *param_4)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
+  ulonglong uVar2;
+  int *piVar3;
+  int iVar4;
+  ulonglong uVar5;
   int iStack_3c;
   
-  iVar1 = __savegprlr_26();
+  uVar2 = (ulonglong)(int)param_4;
+  iVar1 = __savegprlr_26(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x1c7,0,0xffffffff82000f98,0xffffffff8218824c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1c7,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x1c8,0,0xffffffff82000f98,0xffffffff82188238);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1c8,0,
+                    "%s");
   }
   iVar1 = *(int *)(iVar1 + 8);
-  uVar4 = (ulonglong)((float)(longlong)param_2 * 0.001 * (float)(longlong)iVar1);
-  iStack_3c = (int)uVar4;
-  piVar2 = (int *)param_4;
-  *piVar2 = iStack_3c;
-  iVar3 = iStack_3c +
-          ((iStack_3c >> 7) + (uint)(iStack_3c < 0 && (uVar4 & 0x7f) != 0) & 0x1ffffff) * -0x80;
-  iStack_3c = iStack_3c - iVar3;
-  if ((iVar3 < 0x41) ||
-     (iVar3 = iStack_3c + 0x80, *piVar2 = iVar3,
-     (int)((float)(longlong)param_3 * 0.001 * (float)(longlong)iVar1) < iVar3)) {
-    *piVar2 = iStack_3c;
+  uVar5 = (ulonglong)((float)(longlong)param_2 * 0.001 * (float)(longlong)iVar1);
+  iStack_3c = (int)uVar5;
+  piVar3 = (int *)uVar2;
+  *piVar3 = iStack_3c;
+  iVar4 = iStack_3c +
+          ((iStack_3c >> 7) + (uint)(iStack_3c < 0 && (uVar5 & 0x7f) != 0) & 0x1ffffff) * -0x80;
+  iStack_3c = iStack_3c - iVar4;
+  if ((iVar4 < 0x41) ||
+     (iVar4 = iStack_3c + 0x80, *piVar3 = iVar4,
+     (int)((float)(longlong)param_3 * 0.001 * (float)(longlong)iVar1) < iVar4)) {
+    *piVar3 = iStack_3c;
   }
   __restgprlr_26();
   return;
@@ -142,359 +162,388 @@ void XA_CalcAndAlignDesiredSampleIndex(undefined8 param_1,int param_2,int param_
 
 // 82635D48  XA_GetDryLevel  (xenon/snd_driver.cpp:488)
 
-void XA_GetDryLevel(void)
+float XA_GetDryLevel(snd_alias_t *param_1)
 
 {
   int iVar1;
   double dVar2;
   undefined8 uVar3;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x1e9,0,0xffffffff82000f98,0xffffffff821882b8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1e9,0,
+                    "%s");
   }
   uVar3 = 0x3ff0000000000000;
-  dVar2 = (double)*(float *)(DAT_848869f4 + 4);
-  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0x1ea,0,0xffffffff82188254,0xffffffff82188278,dVar2);
+  if (((g_snd.effect)->drylevel < 0.0) || (1.0 < (g_snd.effect)->drylevel)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1ea,0,
+                    "%s\n\t(g_snd.effect->drylevel) = %g");
   }
   if ((*(uint *)(iVar1 + 0x3c) & 8) != 0) {
-    __restgprlr_29(uVar3);
-    return;
+    dVar2 = (double)__restgprlr_29(uVar3);
+    return (float)dVar2;
   }
-  __restgprlr_29((double)*(float *)(DAT_848869f4 + 4));
-  return;
+  dVar2 = (double)__restgprlr_29((double)(g_snd.effect)->drylevel);
+  return (float)dVar2;
 }
 
 
 // 82635E28  XA_GetWetLevel  (xenon/snd_driver.cpp:498)
 
-void XA_GetWetLevel(void)
+float XA_GetWetLevel(snd_alias_t *param_1)
 
 {
   int iVar1;
   double dVar2;
   undefined8 uVar3;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,499,0,0xffffffff82000f98,0xffffffff821882b8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",499,0,
+                    "%s");
   }
   uVar3 = 0;
-  dVar2 = (double)*(float *)(DAT_848869f4 + 0x10);
-  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
-    MyAssertHandler(0xffffffff821881f8,500,0,0xffffffff821882c0,0xffffffff821882e4,dVar2);
+  if (((g_snd.effect)->wetlevel < 0.0) || (1.0 < (g_snd.effect)->wetlevel)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",500,0,
+                    "%s\n\t(g_snd.effect->wetlevel) = %g");
   }
-  if (*(char *)(DAT_8488d59c + 0xc) != '\0') {
+  if ((snd_enableReverb->current).enabled != false) {
     if ((*(uint *)(iVar1 + 0x3c) & 0x10) == 0) {
-      __restgprlr_29((double)*(float *)(DAT_848869f4 + 0x10));
-      return;
+      dVar2 = (double)__restgprlr_29((double)(g_snd.effect)->wetlevel);
+      return (float)dVar2;
     }
   }
-  __restgprlr_29(uVar3);
-  return;
+  dVar2 = (double)__restgprlr_29(uVar3);
+  return (float)dVar2;
 }
 
 
 // 82635F20  XA_GetStreamPacket  (xenon/snd_driver.cpp:508)
 
-void XA_GetStreamPacket(undefined8 param_1,ulonglong param_2)
+PktCacheEntry * XA_GetStreamPacket(XaStreamReadInfo *param_1,int param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar1;
+  CacheFileName *pCVar2;
+  PktCacheEntry *pPVar3;
   int iVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
+  ulonglong uVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_28();
-  if ((int)param_2 < (int)*(uint *)(iVar2 + 0x5c)) {
-    if ((param_2 & 0x7ff) == 0) goto LAB_82635f90;
-    uVar5 = 0x202;
-    uVar6 = 0xffffffff82188370;
+  uVar5 = (ulonglong)param_2;
+  pCVar2 = (CacheFileName *)__savegprlr_28(param_1);
+  uVar1 = *(uint *)((int)&pCVar2[1].field1_0x4 + 0x14);
+  uVar6 = (uint)uVar5;
+  if ((int)uVar6 < (int)uVar1) {
+    if ((uVar5 & 0x7ff) == 0) goto LAB_82635f90;
+    iVar4 = 0x202;
   }
   else {
-    if ((param_2 - *(uint *)(iVar2 + 0x5c) & 0x7ff) == 0) goto LAB_82635f90;
-    uVar5 = 0x204;
-    uVar6 = 0xffffffff82188328;
+    if ((uVar5 - uVar1 & 0x7ff) == 0) goto LAB_82635f90;
+    iVar4 = 0x204;
   }
-  MyAssertHandler(0xffffffff821881f8,uVar5,0,0xffffffff82000f98,uVar6);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",iVar4,0,
+                  "%s");
 LAB_82635f90:
-  iVar1 = *(int *)(iVar2 + 0x44);
-  iVar3 = Com_GetCacheEntry(iVar1,param_2);
+  uVar1 = pCVar2[1].fileIndex;
+  pPVar3 = Com_GetCacheEntry(uVar1,uVar6);
   while( true ) {
-    if (iVar3 == 0) {
-      __restgprlr_28(0);
-      return;
+    if (pPVar3 == (PktCacheEntry *)0x0) {
+      pPVar3 = (PktCacheEntry *)__restgprlr_28(0);
+      return pPVar3;
     }
-    if (((*(int *)(iVar3 + 0x14) == (int)param_2) && (*(int *)(iVar3 + 0x10) == iVar1)) &&
-       (iVar4 = CacheFileNameEqual(iVar3,iVar2), iVar4 != 0)) break;
-    iVar3 = *(int *)(iVar3 + 0xc);
+    if (((pPVar3->offset == uVar6) && (pPVar3->hashCode == uVar1)) &&
+       (iVar4 = CacheFileNameEqual(&pPVar3->filename,pCVar2), iVar4 != 0)) break;
+    pPVar3 = pPVar3->nextHash;
   }
-  Com_TouchEntry(iVar3);
-  __restgprlr_28(iVar3);
-  return;
+  Com_TouchEntry(pPVar3);
+  pPVar3 = (PktCacheEntry *)__restgprlr_28(pPVar3);
+  return pPVar3;
 }
 
 
 // 82636008  XA_GetNewStreamPacket  (xenon/snd_driver.cpp:537)
 
-void XA_GetNewStreamPacket(undefined8 param_1,undefined4 param_2)
+PktCacheEntry * XA_GetNewStreamPacket(XaStreamReadInfo *param_1,int param_2,int param_3)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  int iVar3;
+  uint uVar1;
+  CacheFileName *pCVar2;
+  PktCacheEntry *pPVar3;
   int iVar4;
+  PktCacheEntry *pPVar5;
+  longlong lVar6;
   
-  iVar2 = __savegprlr_27();
-  iVar3 = Com_GetFreeCacheEntry();
-  iVar4 = *(int *)(iVar3 + 0x1c);
-  if (iVar4 == iVar3) {
-    iVar3 = Com_GetSemiFreeCacheEntry();
-    iVar4 = *(int *)(iVar3 + 0x1c);
-    if (iVar4 == iVar3) {
-      MyAssertHandler(0xffffffff821881f8,0x224,0,0xffffffff82000f98,0xffffffff821883ac);
+  lVar6 = (longlong)param_2;
+  pCVar2 = (CacheFileName *)__savegprlr_27(param_1,lVar6,param_3);
+  pPVar3 = Com_GetFreeCacheEntry();
+  pPVar5 = pPVar3->next;
+  if (pPVar5 == pPVar3) {
+    pPVar3 = Com_GetSemiFreeCacheEntry();
+    pPVar5 = pPVar3->next;
+    if (pPVar5 == pPVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x224,
+                      0,"%s");
     }
   }
-  if (*(int *)(iVar4 + 0x20) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x227,0,0xffffffff82000f98,0xffffffff82188398);
+  if (pPVar5->refCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x227,0,
+                    "%s");
   }
-  Com_TouchEntry(iVar4);
-  iVar3 = CacheFileNameDefined2(iVar4);
-  if (iVar3 != 0) {
-    Com_FreeEntry(iVar4);
+  Com_TouchEntry(pPVar5);
+  iVar4 = CacheFileNameDefined2(&pPVar5->filename);
+  if (iVar4 != 0) {
+    Com_FreeEntry(pPVar5);
   }
-  Com_CacheFileNameCopy(iVar2,iVar4);
-  uVar1 = *(undefined4 *)(iVar2 + 0x44);
-  *(undefined4 *)(iVar4 + 0x14) = param_2;
-  *(undefined4 *)(iVar4 + 0x10) = uVar1;
-  *(undefined4 *)(iVar4 + 0x24) = *(undefined4 *)(iVar2 + 0x5c);
-  Com_AddCacheEntry(iVar4);
-  __restgprlr_27(iVar4);
-  return;
+  Com_CacheFileNameCopy(pCVar2,pPVar5);
+  uVar1 = pCVar2[1].fileIndex;
+  pPVar5->offset = (int)lVar6;
+  pPVar5->hashCode = uVar1;
+  pPVar5->dataOffset = *(int *)((int)&pCVar2[1].field1_0x4 + 0x14);
+  Com_AddCacheEntry(pPVar5);
+  pPVar5 = (PktCacheEntry *)__restgprlr_27(pPVar5);
+  return pPVar5;
 }
 
 
 // 826360E8  XA_SetStreamPacket  (xenon/snd_driver.cpp:571)
 
-void XA_SetStreamPacket(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void XA_SetStreamPacket(XaStreamReadInfo *param_1,int param_2,uchar *param_3,int param_4)
 
 {
-  int iVar1;
+  XaStreamReadInfo *pXVar1;
   int iVar2;
-  byte *pbVar3;
-  void *_Dst;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  byte *pbVar7;
+  PktCacheEntry *pPVar3;
+  byte *pbVar4;
+  ulonglong uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  byte *pbVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  int iVar11;
   
-  iVar1 = __savegprlr_25();
-  if (*(int *)(iVar1 + 0x5c) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x23f,0,0xffffffff82000f98,0xffffffff8218845c);
+  uVar7 = (ulonglong)param_4;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)param_2;
+  pXVar1 = (XaStreamReadInfo *)__savegprlr_25(param_1);
+  iVar6 = (int)uVar10;
+  if (pXVar1->dataOffset == 0) {
+    iVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x23f,0,
+                    "%s");
   }
-  if ((int)param_2 < (int)*(uint *)(iVar1 + 0x5c)) {
-    if ((param_2 & 0x7ff) == 0) goto LAB_82636190;
-    uVar4 = 0x241;
-    uVar5 = 0xffffffff82188370;
+  iVar11 = (int)uVar5;
+  if (iVar11 < pXVar1->dataOffset) {
+    if ((uVar5 & 0x7ff) == 0) goto LAB_82636190;
+    iVar2 = 0x241;
   }
   else {
-    if ((param_2 - *(uint *)(iVar1 + 0x5c) & 0x7ff) == 0) goto LAB_82636190;
-    uVar4 = 0x243;
-    uVar5 = 0xffffffff82188328;
+    if ((uVar5 - (uint)pXVar1->dataOffset & 0x7ff) == 0) goto LAB_82636190;
+    iVar2 = 0x243;
   }
-  MyAssertHandler(0xffffffff821881f8,uVar4,0,0xffffffff82000f98,uVar5);
+  iVar6 = 0;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",iVar2,0,
+                  "%s");
 LAB_82636190:
-  iVar2 = CacheFileNameDefined(iVar1);
+  iVar2 = CacheFileNameDefined((CacheFileName *)pXVar1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x245,0,0xffffffff82000f98,0xffffffff82188428);
+    iVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x245,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x246,0,0xffffffff82000f98,0xffffffff8205af0c);
+  if ((uVar10 & 0xffffffff) == 0) {
+    iVar6 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x246,0,
+                    "%s");
   }
-  iVar2 = XA_GetStreamPacket(iVar1,param_2);
-  if (iVar2 == 0) {
-    XA_GetNewStreamPacket(iVar1,param_2);
-    _Dst = (void *)Com_GetCacheEntryBuffer();
-    pbVar3 = memcpy(_Dst,(void *)param_3,(size_t)param_4);
+  pPVar3 = XA_GetStreamPacket(pXVar1,iVar11);
+  if (pPVar3 == (PktCacheEntry *)0x0) {
+    pPVar3 = XA_GetNewStreamPacket(pXVar1,iVar11,iVar6);
+    Com_GetCacheEntryBuffer(pPVar3);
+    memcpy();
   }
   else {
-    if (*(int *)(iVar2 + 0x24) != *(int *)(iVar1 + 0x5c)) {
-      MyAssertHandler(0xffffffff821881f8,0x24b,0,0xffffffff82000f98,0xffffffff821883f8);
+    if (pPVar3->dataOffset != pXVar1->dataOffset) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x24b,
+                      0,"%s");
     }
-    pbVar3 = (byte *)Com_GetCacheEntryBuffer(iVar2);
-    lVar6 = 0;
-    if ((param_4 & 0xffffffff) != 0) {
-      pbVar7 = pbVar3;
+    pbVar4 = Com_GetCacheEntryBuffer(pPVar3);
+    lVar9 = 0;
+    if ((uVar7 & 0xffffffff) != 0) {
+      pbVar8 = pbVar4 + (int)uVar7;
       do {
-        lVar6 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)param_3;
-        if (lVar6 != 0) break;
-        pbVar7 = pbVar7 + 1;
-        param_3 = param_3 + 1;
-      } while (pbVar7 != pbVar3 + (size_t)param_4);
+        lVar9 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)uVar10;
+        if (lVar9 != 0) break;
+        pbVar4 = pbVar4 + 1;
+        uVar10 = uVar10 + 1;
+      } while (pbVar4 != pbVar8);
     }
-    if ((int)lVar6 != 0) {
-      MyAssertHandler(0xffffffff821881f8,0x24c,0,0xffffffff82000f98,0xffffffff821883bc);
+    if ((int)lVar9 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x24c,
+                      0,"%s");
       __restgprlr_25();
       return;
     }
   }
-  __restgprlr_25(pbVar3);
+  __restgprlr_25();
   return;
 }
 
 
 // 826362B8  XA_SetStreamPacketPosition  (xenon/snd_driver.cpp:599)
 
-void XA_SetStreamPacketPosition(undefined8 param_1,int param_2,int *param_3)
+void XA_SetStreamPacketPosition
+               (IXAudioSourceVoice *param_1,XaStreamReadInfo *param_2,XAUDIOPACKET *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
-  int iVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
+  short sVar2;
+  IXAudioSourceVoice *pIVar3;
+  T_HRESULT TVar4;
+  uint uVar5;
+  int iVar6;
+  undefined8 *puVar7;
+  longlong lVar8;
   undefined8 uStack_68;
-  uint local_60;
-  short sStack_5c;
+  XAUDIOPACKETPOSITION local_60 [2];
   
-  uVar2 = __savegprlr_27();
-  puVar5 = &uStack_68;
-  lVar6 = 6;
+  pIVar3 = (IXAudioSourceVoice *)__savegprlr_27(param_1);
+  puVar7 = &uStack_68;
+  lVar8 = 6;
   do {
-    puVar5 = puVar5 + 1;
-    *puVar5 = 0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  iVar1 = *(int *)(param_2 + 0x8c);
-  local_60 = 0x20;
-  uVar3 = *(int *)(param_2 + 0x90) + 0x1ffU & 0xfffffe00;
-  if (iVar1 < (int)uVar3) {
-    sStack_5c = (short)*(int *)(param_2 + 0x90);
+    puVar7 = puVar7 + 1;
+    *puVar7 = 0;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  iVar1 = param_2->desiredSampleIndex;
+  local_60[0].Position = 0x20;
+  uVar5 = param_2->initialSampleIndexOfFirstPacket + 0x1ffU & 0xfffffe00;
+  if (iVar1 < (int)uVar5) {
+    sVar2 = (short)param_2->initialSampleIndexOfFirstPacket;
   }
   else {
-    iVar4 = uVar3 + 0x200;
-    local_60 = (*(uint *)*param_3 >> 0xb & 0x7fff) + 0x20;
-    if (iVar4 <= iVar1) {
+    iVar6 = uVar5 + 0x200;
+    local_60[0]._0_4_ = (*(uint *)param_3->pBuffer >> 0xb & 0x7fff) + 0x20;
+    if (iVar6 <= iVar1) {
       do {
-        iVar4 = iVar4 + 0x200;
-        uVar3 = uVar3 + 0x200;
-        local_60 = (*(int *)((local_60 >> 3) + *param_3) >> (0x11 - (local_60 & 7) & 0x3f) & 0x7fffU
-                   ) + local_60;
-      } while (iVar4 <= *(int *)(param_2 + 0x8c));
+        iVar6 = iVar6 + 0x200;
+        uVar5 = uVar5 + 0x200;
+        local_60[0]._0_4_ =
+             (*(int *)(((uint)local_60[0]._0_4_ >> 3) + (int)param_3->pBuffer) >>
+              (0x11 - (local_60[0]._0_4_ & 7) & 0x3f) & 0x7fffU) + local_60[0]._0_4_;
+      } while (iVar6 <= param_2->desiredSampleIndex);
     }
-    sStack_5c = (short)uVar3;
+    sVar2 = (short)uVar5;
   }
-  sStack_5c = (short)iVar1 - sStack_5c;
-  *(undefined4 *)(param_2 + 0x8c) = 0;
-  *(undefined4 *)(param_2 + 0x90) = 0;
-  XAudioSourceVoice_SetPacketPosition(uVar2,&local_60);
-  __restgprlr_27();
+  local_60[0]._4_2_ = (short)iVar1 - sVar2;
+  param_2->desiredSampleIndex = 0;
+  param_2->initialSampleIndexOfFirstPacket = 0;
+  TVar4 = XAudioSourceVoice_SetPacketPosition(pIVar3,local_60);
+  __restgprlr_27(TVar4);
   return;
 }
 
 
 // 826363A8  XA_SubmitStreamPackets  (xenon/snd_driver.cpp:641)
 
-void XA_SubmitStreamPackets(undefined8 param_1,ulonglong param_2)
+void XA_SubmitStreamPackets(IXAudioSourceVoice *param_1,XaStreamReadInfo *param_2)
 
 {
   uint uVar1;
-  undefined4 uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  int iVar6;
-  undefined8 *puVar7;
-  uint *puVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  undefined4 *puVar12;
-  longlong lVar13;
-  uint uStack_e4;
+  XaStreamReadInfo *pXVar2;
+  IXAudioSourceVoice *pIVar3;
+  PktCacheEntry *pPVar4;
+  int iVar5;
+  undefined8 *puVar6;
+  ulonglong uVar7;
+  int iVar8;
+  undefined4 *puVar9;
+  longlong lVar10;
+  undefined4 uStack_e4;
   undefined4 local_e0 [6];
   undefined8 uStack_c8;
-  undefined4 local_c0;
-  undefined4 uStack_bc;
-  undefined4 local_6c;
+  XAUDIOPACKET local_c0 [2];
   
-  uVar4 = __savegprlr_20();
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x28f,0,0xffffffff82000f98,0xffffffff82188520);
+  uVar7 = (ulonglong)(int)param_2;
+  pIVar3 = (IXAudioSourceVoice *)__savegprlr_20(param_1);
+  if (pIVar3 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x28f,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x290,0,0xffffffff82000f98,0xffffffff82188510);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x290,0,
+                    "%s");
   }
-  Sys_EnterCriticalSection(8);
-  iVar3 = (int)param_2;
-  uVar1 = *(uint *)(iVar3 + 0x4c);
-  uVar9 = 0;
-  if (*(int *)(iVar3 + 0x48) < 8) {
-    puVar8 = &uStack_e4;
-    uVar11 = (ulonglong)*(uint *)(iVar3 + 0x60);
+  Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+  pXVar2 = (XaStreamReadInfo *)uVar7;
+  uVar1 = pXVar2->aliasFlags;
+  uVar7 = 0;
+  iVar5 = pXVar2->submitOffset;
+  if (pXVar2->packetCount < 8) {
+    puVar9 = &uStack_e4;
     do {
-      if ((int)uVar11 == *(int *)(iVar3 + 0x58)) {
+      if (iVar5 == pXVar2->totalWaveLength) {
         if ((uVar1 & 1) != 0) {
-          MyAssertHandler(0xffffffff821881f8,0x2a2,0,0xffffffff82000f98,0xffffffff821884b8);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x2a2,0,"%s");
         }
         break;
       }
-      uVar10 = uVar11 + 0x800;
-      if (*(int *)(iVar3 + 0x58) < (int)uVar10) {
-        MyAssertHandler(0xffffffff821881f8,0x2a7,0,0xffffffff82000f98,0xffffffff821884c8);
+      iVar8 = iVar5 + 0x800;
+      if (pXVar2->totalWaveLength < iVar8) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x2a7,0,"%s");
       }
-      uVar5 = XA_GetStreamPacket(param_2,uVar11);
-      if (uVar5 == 0) break;
-      if (*(int *)(uVar5 + 0x24) != *(int *)(iVar3 + 0x5c)) {
-        MyAssertHandler(0xffffffff821881f8,0x2ad,0,0xffffffff82000f98,0xffffffff821883f8);
+      pPVar4 = XA_GetStreamPacket(pXVar2,iVar5);
+      if (pPVar4 == (PktCacheEntry *)0x0) break;
+      if (pPVar4->dataOffset != pXVar2->dataOffset) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x2ad,0,"%s");
       }
-      if (*(int *)(uVar5 + 0x20) == 0) {
-        Com_RemoveFromFreeList(uVar5);
+      if (pPVar4->refCount == 0) {
+        Com_RemoveFromFreeList(pPVar4);
       }
-      *(int *)(uVar5 + 0x20) = *(int *)(uVar5 + 0x20) + 1;
-      if (((uVar1 & 1) != 0) && ((int)uVar10 == *(int *)(iVar3 + 0x58))) {
-        uVar10 = (ulonglong)*(uint *)(iVar3 + 0x5c);
+      pPVar4->refCount = pPVar4->refCount + 1;
+      iVar5 = iVar8;
+      if (((uVar1 & 1) != 0) && (iVar8 == pXVar2->totalWaveLength)) {
+        iVar5 = pXVar2->dataOffset;
       }
-      uVar9 = uVar9 + 1;
-      *(int *)(iVar3 + 0x60) = (int)uVar10;
-      iVar6 = *(int *)(iVar3 + 0x48) + 1;
-      puVar8 = puVar8 + 1;
-      *puVar8 = uVar5;
-      *(int *)(iVar3 + 0x48) = iVar6;
-      uVar11 = uVar10;
-    } while (iVar6 < 8);
+      iVar8 = pXVar2->packetCount;
+      uVar7 = uVar7 + 1;
+      pXVar2->submitOffset = iVar5;
+      puVar9 = puVar9 + 1;
+      *puVar9 = pPVar4;
+      pXVar2->packetCount = iVar8 + 1;
+    } while (iVar8 + 1 < 8);
   }
-  Sys_LeaveCriticalSection(8);
-  if ((uVar9 & 0xffffffff) != 0) {
-    puVar7 = &uStack_c8;
-    lVar13 = 0xb;
+  Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
+  if ((uVar7 & 0xffffffff) != 0) {
+    puVar6 = &uStack_c8;
+    lVar10 = 0xb;
     do {
-      puVar7 = puVar7 + 1;
-      *puVar7 = 0;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    if ((uVar9 & 0xffffffff) != 0) {
-      puVar12 = local_e0;
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    if ((uVar7 & 0xffffffff) != 0) {
+      puVar9 = local_e0;
       do {
-        uVar2 = *puVar12;
-        local_c0 = Com_GetCacheEntryBuffer(uVar2);
-        uStack_bc = 0x800;
-        local_6c = uVar2;
-        iVar6 = XAudioSourceVoice_SubmitPacket(uVar4,&local_c0,1);
-        if (iVar6 < 0) {
-          MyAssertHandler(0xffffffff821881f8,0x2f6,0,0xffffffff82188490,0xffffffff82188478,
-                          *(undefined4 *)(iVar3 + 0x50));
+        pPVar4 = (PktCacheEntry *)*puVar9;
+        local_c0[0].pBuffer = Com_GetCacheEntryBuffer(pPVar4);
+        local_c0[0].BufferSize = 0x800;
+        local_c0[0].pContext = pPVar4;
+        iVar5 = XAudioSourceVoice_SubmitPacket(pIVar3,local_c0,'\x01');
+        if (iVar5 < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x2f6,0,"%s\n\t(streamReadInfo->debugName) = %s");
         }
-        if (*(int *)(iVar3 + 0x8c) != 0) {
-          XA_SetStreamPacketPosition(uVar4,param_2,&local_c0);
+        if (pXVar2->desiredSampleIndex != 0) {
+          XA_SetStreamPacketPosition(pIVar3,pXVar2,local_c0);
         }
-        uVar9 = uVar9 - 1;
-        puVar12 = puVar12 + 1;
-      } while (uVar9 != 0);
+        uVar7 = uVar7 - 1;
+        puVar9 = puVar9 + 1;
+      } while (uVar7 != 0);
     }
   }
   __restgprlr_20();
@@ -504,454 +553,468 @@ void XA_SubmitStreamPackets(undefined8 param_1,ulonglong param_2)
 
 // 82636618  XA_CalculateStreamStartOffset  (xenon/snd_driver.cpp:815)
 
-void XA_CalculateStreamStartOffset(undefined8 param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool XA_CalculateStreamStartOffset(int param_1,XaStreamReadInfo *param_2,uchar *param_3)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
+  uint uVar1;
+  byte *pbVar2;
   int iVar3;
-  byte *pbVar4;
-  longlong lVar5;
-  undefined8 uVar6;
-  int iVar7;
-  uint uVar8;
-  uint uVar9;
-  uint uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  double dVar13;
+  undefined1 uVar5;
+  PktCacheEntry *pPVar4;
+  uint uVar6;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  int iVar10;
+  float fVar11;
   
-  lVar5 = __savegprlr_22();
-  iVar3 = (int)param_2;
-  if (*(int *)(iVar3 + 0x48) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x340,0,0xffffffff82000f98,0xffffffff821886bc);
+  lVar8 = (longlong)(int)param_3;
+  iVar3 = __savegprlr_22(param_1);
+  if (param_2->packetCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x340,0,
+                    "%s");
   }
-  if ((*(int *)(iVar3 + 0x58) - *(int *)(iVar3 + 0x5c) & 0x7ffU) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x341,0,0xffffffff82188490,0xffffffff82188668,
-                    *(undefined4 *)(iVar3 + 0x50));
+  if ((param_2->totalWaveLength - param_2->dataOffset & 0x7ffU) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x341,0,
+                    "%s\n\t(streamReadInfo->debugName) = %s");
   }
-  uVar8 = *(uint *)(iVar3 + 0x80);
-  iVar7 = *(int *)(iVar3 + 0x54);
-  if (iVar7 <= (int)uVar8) {
-    uVar1 = *(undefined4 *)(iVar3 + 0x50);
-    uVar6 = CacheFileNameGetDebugName(param_2);
-    Com_PrintError(1,0xffffffff821885f8,uVar6,uVar1,iVar7,uVar8);
-    __restgprlr_22(0);
-    return;
+  uVar7 = param_2->timeshift;
+  iVar10 = param_2->totalMsec;
+  if (iVar10 <= (int)uVar7) {
+    CacheFileNameGetDebugName(&param_2->fileName);
+    Com_PrintError(1,
+                   "Stream time shift exceeds length of the streamed sound \'%s\' for alias \'%s\'. totalMsec = %i, timeshift = %i.\n"
+                  );
+    uVar5 = __restgprlr_22(0);
+    return (bool)uVar5;
   }
-  uVar2 = *(uint *)(iVar3 + 0x4c);
-  if (*(float *)(iVar3 + 0x84) == 0.0) {
-    if (uVar8 == 0) {
-      if ((uVar2 & 0x20) == 0) {
-        uVar8 = 0;
+  uVar1 = param_2->aliasFlags;
+  if (param_2->fraction == 0.0) {
+    if (uVar7 == 0) {
+      if ((uVar1 & 0x20) == 0) {
+        uVar7 = 0;
       }
       else {
-        if ((uVar2 & 1) == 0) {
-          MyAssertHandler(0xffffffff821881f8,0x358,0,0xffffffff82000f98,0xffffffff821885f0);
+        if ((uVar1 & 1) == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x358,0,"%s");
         }
-        iVar7 = *(int *)(iVar3 + 0x54);
-        dVar13 = (double)random();
-        uVar8 = (int)(dVar13 * (double)(longlong)iVar7) & 0xffffff00;
+        iVar10 = param_2->totalMsec;
+        fVar11 = random();
+        uVar7 = (int)(fVar11 * (float)(longlong)iVar10) & 0xffffff00;
       }
     }
   }
   else {
-    uVar8 = (uint)((float)(longlong)iVar7 * *(float *)(iVar3 + 0x84));
+    uVar7 = (uint)((float)(longlong)iVar10 * param_2->fraction);
   }
-  *(float *)(iVar3 + 0x84) = (float)((double)(longlong)(int)uVar8 / (double)(longlong)iVar7);
-  if (uVar8 == 0) {
-    uVar12 = (ulonglong)*(uint *)(iVar3 + 0x5c);
-    *(undefined4 *)(iVar3 + 0x8c) = 0;
-    *(undefined4 *)(iVar3 + 0x90) = 0;
+  param_2->fraction = (float)(longlong)(int)uVar7 / (float)(longlong)iVar10;
+  if (uVar7 == 0) {
+    iVar3 = param_2->dataOffset;
+    param_2->desiredSampleIndex = 0;
+    param_2->initialSampleIndexOfFirstPacket = 0;
   }
   else {
-    *(undefined4 *)(iVar3 + 0x88) = 0;
-    XA_CalcAndAlignDesiredSampleIndex(lVar5 * 0x38 + -0x7bde0a80,uVar8,iVar7,param_2 + 0x8c);
-    param_3 = (ulonglong)*(uint *)(iVar3 + 0x78) + param_3;
-    iVar7 = (int)param_3;
-    uVar10 = (uint)*(byte *)(iVar7 + 7) << 0x18 | (uint)*(byte *)(iVar7 + 6) << 0x10 |
-             (uint)*(byte *)(iVar7 + 5) << 8 | (uint)*(byte *)(iVar7 + 4);
-    *(undefined4 *)(iVar3 + 0x90) = 0;
-    uVar8 = 0;
-    if (0 < (int)uVar10) {
-      iVar7 = *(int *)(param_2 + 0x8c);
-      param_3 = param_3 + 8;
-      uVar9 = 0;
+    param_2->startDelay = 0;
+    XA_CalcAndAlignDesiredSampleIndex
+              (xaGlob.streamSourceFormat + iVar3,uVar7,iVar10,&param_2->desiredSampleIndex);
+    lVar8 = (ulonglong)(uint)param_2->seekTableOffset + lVar8;
+    iVar3 = (int)lVar8;
+    uVar7 = (uint)*(byte *)(iVar3 + 7) << 0x18 | (uint)*(byte *)(iVar3 + 6) << 0x10 |
+            (uint)*(byte *)(iVar3 + 5) << 8 | (uint)*(byte *)(iVar3 + 4);
+    param_2->initialSampleIndexOfFirstPacket = 0;
+    iVar3 = 0;
+    if (0 < (int)uVar7) {
+      lVar8 = lVar8 + 8;
+      iVar10 = 0;
       do {
-        uVar11 = uVar9;
-        pbVar4 = (byte *)param_3;
-        uVar9 = (uint)pbVar4[3] << 0x18 | (uint)pbVar4[2] << 0x10 | (uint)pbVar4[1] << 8 |
-                (uint)*pbVar4;
-        if (iVar7 < (int)uVar9) break;
-        *(uint *)(iVar3 + 0x90) = uVar9;
-        param_3 = param_3 + 4;
-        uVar9 = uVar11 + 1;
-        uVar8 = uVar11;
-      } while ((int)(uVar11 + 1) < (int)uVar10);
+        iVar9 = iVar10;
+        pbVar2 = (byte *)lVar8;
+        uVar6 = (uint)pbVar2[3] << 0x18 | (uint)pbVar2[2] << 0x10 | (uint)pbVar2[1] << 8 |
+                (uint)*pbVar2;
+        if (param_2->desiredSampleIndex < (int)uVar6) break;
+        param_2->initialSampleIndexOfFirstPacket = uVar6;
+        lVar8 = lVar8 + 4;
+        iVar10 = iVar9 + 1;
+        iVar3 = iVar9;
+      } while (iVar9 + 1 < (int)uVar7);
     }
-    uVar12 = ((ulonglong)uVar8 & 0x1fffff) * 0x800 + (ulonglong)*(uint *)(iVar3 + 0x5c);
-    if (((int)uVar12 < (int)*(uint *)(iVar3 + 0x5c)) || (*(int *)(iVar3 + 0x58) <= (int)uVar12)) {
-      MyAssertHandler(0xffffffff821881f8,0x381,0,0xffffffff82188578,0xffffffff82188590,uVar12);
+    iVar3 = iVar3 * 0x800 + param_2->dataOffset;
+    if ((iVar3 < param_2->dataOffset) || (param_2->totalWaveLength <= iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x381,
+                      0,"%s\n\t(submitOffset) = %i");
     }
   }
-  if (*(int *)(iVar3 + 0x88) < 0) {
-    MyAssertHandler(0xffffffff821881f8,0x38a,0,0xffffffff8218852c,0xffffffff82188554);
+  if (param_2->startDelay < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x38a,0,
+                    "%s\n\t(streamReadInfo->startDelay) = %i");
   }
-  if ((uVar2 & 1) == 0) {
-    if ((*(int *)(iVar3 + 0x88) < 0x96) && (iVar7 = XA_GetStreamPacket(param_2,uVar12), iVar7 == 0))
-    {
-      *(undefined4 *)(iVar3 + 0x88) = 0x96;
+  if ((uVar1 & 1) == 0) {
+    if ((param_2->startDelay < 0x96) &&
+       (pPVar4 = XA_GetStreamPacket(param_2,iVar3), pPVar4 == (PktCacheEntry *)0x0)) {
+      param_2->startDelay = 0x96;
     }
-    *(int *)(iVar3 + 0x54) = *(int *)(iVar3 + 0x88) + *(int *)(iVar3 + 0x54);
+    param_2->totalMsec = param_2->startDelay + param_2->totalMsec;
   }
   else {
-    *(undefined4 *)(iVar3 + 0x54) = 0;
+    param_2->totalMsec = 0;
   }
-  if (*(int *)(iVar3 + 0x48) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x396,0,0xffffffff82000f98,0xffffffff821886bc);
+  if (param_2->packetCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x396,0,
+                    "%s");
   }
-  *(int *)(iVar3 + 0x60) = (int)uVar12;
-  *(int *)(iVar3 + 100) = (int)uVar12;
-  __restgprlr_22(1);
-  return;
+  param_2->submitOffset = iVar3;
+  param_2->playedOffset = iVar3;
+  uVar5 = __restgprlr_22(1);
+  return (bool)uVar5;
 }
 
 
 // 82636968  XA_StreamSoundFileDataOffset  (xenon/snd_driver.cpp:927)
 
-undefined8 XA_StreamSoundFileDataOffset(int param_1,undefined8 param_2)
+bool XA_StreamSoundFileDataOffset(XaStreamReadInfo *param_1,uchar *param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  undefined1 auStack_d0 [84];
-  int local_7c;
+  bool bVar3;
+  CXMAHeaderBuffer CStack_d0;
   
-  CXMAHeaderBuffer__CXMAHeaderBuffer(auStack_d0);
-  uVar1 = CacheFileNameGetDebugName(param_1);
-  iVar2 = CXMAHeaderBuffer__Initialize(auStack_d0,uVar1,param_2,0x40000);
+  CXMAHeaderBuffer::CXMAHeaderBuffer(&CStack_d0);
+  pcVar1 = CacheFileNameGetDebugName(&param_1->fileName);
+  iVar2 = CXMAHeaderBuffer::Initialize(&CStack_d0,pcVar1,param_2,0x40000);
   if (iVar2 < 0) {
-    uVar1 = 0;
+    bVar3 = false;
   }
   else {
-    *(int *)(param_1 + 0x5c) = local_7c;
-    if (0x40000 < local_7c) {
-      MyAssertHandler(0xffffffff821881f8,0x3a8,0,0xffffffff821886dc,0xffffffff82188704);
+    param_1->dataOffset = CStack_d0.m_DataChunk.m_dwDataOffset;
+    if (0x40000 < (int)CStack_d0.m_DataChunk.m_dwDataOffset) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3a8,
+                      0,"%s\n\t(streamReadInfo->dataOffset) = %i");
     }
-    uVar1 = 1;
+    bVar3 = true;
   }
-  return uVar1;
+  return bVar3;
 }
 
 
 // 82636A10  XA_ProcessStreamSoundFile  (xenon/snd_driver.cpp:942)
 
-void XA_ProcessStreamSoundFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool XA_ProcessStreamSoundFile(int param_1,XaStreamReadInfo *param_2,uchar *param_3)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  char *pcVar2;
   int iVar3;
-  undefined4 *local_100 [4];
-  undefined1 auStack_f0 [84];
-  int local_9c;
-  int local_98;
-  undefined4 local_64;
+  undefined1 uVar4;
+  bool bVar5;
+  XaIwXmaDataInfo *local_100 [4];
+  CXMAHeaderBuffer CStack_f0;
   
-  uVar1 = __savegprlr_26();
-  CXMAHeaderBuffer__CXMAHeaderBuffer(auStack_f0);
-  if (0xd < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x3bb,0,0xffffffff8209af00,uVar1,0xe);
+  uVar1 = __savegprlr_26(param_1);
+  CXMAHeaderBuffer::CXMAHeaderBuffer(&CStack_f0);
+  if (0xd < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3bb,0,
+                    "streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)");
   }
-  uVar2 = CacheFileNameGetDebugName(param_2);
-  iVar3 = CXMAHeaderBuffer__Initialize(auStack_f0,uVar2,param_3,0x40000);
+  pcVar2 = CacheFileNameGetDebugName(&param_2->fileName);
+  iVar3 = CXMAHeaderBuffer::Initialize(&CStack_f0,pcVar2,param_3,0x40000);
   if (((-1 < iVar3) &&
-      (iVar3 = CXMAHeaderBuffer__SetSourceFormat(auStack_f0,uVar1 * 0x38 + -0x7bde0a80), -1 < iVar3)
-      ) && (iVar3 = CXMAHeaderBuffer__ReadIwXmaDataInfo(auStack_f0,local_100), -1 < iVar3)) {
-    if (local_100[0] == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff821881f8,0x3d7,0,0xffffffff82000f98,0xffffffff8218877c);
+      (iVar3 = CXMAHeaderBuffer::SetSourceFormat(&CStack_f0,xaGlob.streamSourceFormat + uVar1),
+      -1 < iVar3)) &&
+     (iVar3 = CXMAHeaderBuffer::ReadIwXmaDataInfo(&CStack_f0,local_100), -1 < iVar3)) {
+    if (local_100[0] == (XaIwXmaDataInfo *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3d7,
+                      0,"%s");
     }
-    iVar3 = (int)param_2;
-    *(undefined4 *)(iVar3 + 0x54) = *local_100[0];
-    if (*(int *)(iVar3 + 0x5c) != local_9c) {
-      MyAssertHandler(0xffffffff821881f8,1000,0,0xffffffff82000f98,0xffffffff82188738);
+    param_2->totalMsec = local_100[0]->totalMsec;
+    if (param_2->dataOffset != CStack_f0.m_DataChunk.m_dwDataOffset) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",1000,0
+                      ,"%s");
     }
-    *(int *)(iVar3 + 0x58) = *(int *)(iVar3 + 0x5c) + local_98;
-    *(undefined4 *)(iVar3 + 0x78) = local_64;
-    XA_CalculateStreamStartOffset(uVar1,param_2,param_3);
-    __restgprlr_26();
-    return;
+    param_2->totalWaveLength = param_2->dataOffset + CStack_f0.m_DataChunk.m_dwDataSize;
+    param_2->seekTableOffset = CStack_f0.m_SeekTableChunk.m_dwDataOffset;
+    bVar5 = XA_CalculateStreamStartOffset(uVar1,param_2,param_3);
+    uVar4 = __restgprlr_26(bVar5);
+    return (bool)uVar4;
   }
-  __restgprlr_26(0);
-  return;
+  uVar4 = __restgprlr_26(0);
+  return (bool)uVar4;
 }
 
 
 // 82636B60  XA_CheckStreamSoundFile  (xenon/snd_driver.cpp:1009)
 
-void XA_CheckStreamSoundFile
-               (undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4)
+int XA_CheckStreamSoundFile(int param_1,XaStreamReadInfo *param_2,uchar *param_3,uint param_4)
 
 {
   int iVar1;
   int iVar2;
-  undefined8 uVar3;
-  int iVar5;
-  void *pvVar6;
-  ulonglong uVar4;
-  char cVar7;
-  longlong lVar8;
+  PktCacheEntry *pPVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  int iVar6;
   
-  uVar3 = __savegprlr_20();
-  iVar2 = (int)param_2;
-  if (*(char *)(iVar2 + 0x7c) != '\0') {
-    MyAssertHandler(0xffffffff821881f8,0x3f6,0,0xffffffff82000f98,0xffffffff82188818);
+  uVar5 = (ulonglong)(int)param_4;
+  iVar2 = __savegprlr_20(param_1);
+  if (param_2->soundFileLoaded != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3f6,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x5c) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x3f7,0,0xffffffff82000f98,0xffffffff821887fc);
+  if (param_2->dataOffset != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3f7,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x48) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x3f8,0,0xffffffff82000f98,0xffffffff821886bc);
+  if (param_2->packetCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3f8,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) < 0x800) {
-    MyAssertHandler(0xffffffff821881f8,0x3f9,0,0xffffffff82000f98,0xffffffff821887d8);
+  if ((uVar5 & 0xffffffff) < 0x800) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x3f9,0,
+                    "%s");
   }
-  iVar5 = XA_GetStreamPacket(param_2,0);
-  if (iVar5 != 0) {
-    iVar1 = *(int *)(iVar5 + 0x24);
+  pPVar3 = XA_GetStreamPacket(param_2,0);
+  if (pPVar3 != (PktCacheEntry *)0x0) {
+    iVar1 = pPVar3->dataOffset;
     if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x400,0,0xffffffff82000f98,0xffffffff821887cc);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x400,
+                      0,"%s");
     }
-    if (((ulonglong)(iVar1 + 0x7ff) & 0xfffff800) <= (param_4 & 0xffffffff)) {
-      if ((param_4 & 0xffffffff) < 0x800) {
-        MyAssertHandler(0xffffffff821881f8,0x406,0,0xffffffff82188490,0xffffffff821887b4,
-                        *(undefined4 *)(iVar2 + 0x50));
+    if (((ulonglong)(iVar1 + 0x7ff) & 0xfffff800) <= (uVar5 & 0xffffffff)) {
+      if ((uVar5 & 0xffffffff) < 0x800) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x406,0,"%s\n\t(streamReadInfo->debugName) = %s");
       }
-      pvVar6 = (void *)Com_GetCacheEntryBuffer(iVar5);
-      memcpy((void *)param_3,pvVar6,0x800);
-      lVar8 = 0x800;
+      Com_GetCacheEntryBuffer(pPVar3);
+      memcpy();
+      iVar6 = 0x800;
       if (0x800 < iVar1) {
         do {
-          uVar4 = XA_GetStreamPacket(param_2,lVar8);
-          if ((uVar4 & 0xffffffff) == 0) goto LAB_82636d78;
-          if ((param_4 & 0xffffffff) < ((0x800 - param_3) + lVar8 + param_3 & 0xffffffffU)) {
-            MyAssertHandler(0xffffffff821881f8,0x41f,0,0xffffffff82188490,0xffffffff8218878c,
-                            *(undefined4 *)(iVar2 + 0x50));
+          pPVar3 = XA_GetStreamPacket(param_2,iVar6);
+          if (pPVar3 == (PktCacheEntry *)0x0) goto LAB_82636d78;
+          if ((uVar5 & 0xffffffff) < (ulonglong)(iVar6 + 0x800)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                            0x41f,0,"%s\n\t(streamReadInfo->debugName) = %s");
           }
-          pvVar6 = (void *)Com_GetCacheEntryBuffer(uVar4);
-          memcpy((void *)(lVar8 + param_3),pvVar6,0x800);
-          lVar8 = lVar8 + 0x800;
-        } while ((int)lVar8 < iVar1);
+          Com_GetCacheEntryBuffer(pPVar3);
+          memcpy();
+          iVar6 = iVar6 + 0x800;
+        } while (iVar6 < iVar1);
       }
-      *(int *)(iVar2 + 0x5c) = iVar1;
-      cVar7 = XA_ProcessStreamSoundFile(uVar3,param_2,param_3);
-      if (cVar7 == '\0') {
-        *(undefined4 *)(iVar2 + 0x5c) = 0;
-        __restgprlr_20(0);
-        return;
+      param_2->dataOffset = iVar1;
+      bVar4 = XA_ProcessStreamSoundFile(iVar2,param_2,param_3);
+      if (!bVar4) {
+        param_2->dataOffset = 0;
+        iVar2 = __restgprlr_20(0);
+        return iVar2;
       }
-      *(undefined1 *)(iVar2 + 0x7c) = 1;
+      param_2->soundFileLoaded = true;
     }
   }
 LAB_82636d78:
-  __restgprlr_20(1);
-  return;
+  iVar2 = __restgprlr_20(1);
+  return iVar2;
 }
 
 
 // 82636D88  XA_ReadStreamPacketData  (xenon/snd_driver.cpp:1063)
 
-void XA_ReadStreamPacketData(undefined8 param_1,ulonglong param_2)
+void XA_ReadStreamPacketData(int param_1,XaStreamReadInfo *param_2)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
-  int iVar3;
-  undefined8 uVar4;
+  XaStreamReadInfo *pXVar1;
+  int iVar2;
+  StreamFile *pSVar3;
+  int iVar4;
+  PktCacheEntry *pPVar5;
   int iVar6;
-  int iVar7;
-  char cVar8;
-  ulonglong uVar5;
-  undefined8 uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  uint local_b0 [4];
-  undefined1 auStack_a0 [160];
+  bool bVar8;
+  uint uVar7;
+  char *pcVar9;
+  int iVar10;
+  int iVar12;
+  ulonglong uVar11;
+  uchar *local_b0 [4];
+  CacheFileName aCStack_a0 [2];
   
-  uVar4 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x436,0,0xffffffff82000f98,0xffffffff82188510);
+  uVar11 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_22(param_1);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x436,0,
+                    "%s");
   }
-  Sys_EnterCriticalSection(8);
-  iVar3 = (int)param_2;
-  lVar10 = param_2 + 0x68;
-  lVar11 = 0;
-  if (*(int *)(iVar3 + 0x74) == 0) {
-    iVar6 = StreamFileMissing(lVar10);
-    if (iVar6 != 0) goto LAB_82636e6c;
+  Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+  pXVar1 = (XaStreamReadInfo *)uVar11;
+  pSVar3 = &pXVar1->file;
+  iVar10 = 0;
+  if (pXVar1->closeFile == 0) {
+    iVar4 = StreamFileMissing(pSVar3);
+    if (iVar4 != 0) goto LAB_82636e6c;
   }
   else {
-    StreamFileClose();
+    StreamFileClose(pSVar3);
     sync(1);
-    *(undefined4 *)(iVar3 + 0x74) = 0;
+    pXVar1->closeFile = 0;
   }
-  if ((*(char *)(iVar3 + 0x7c) == '\0') &&
-     (iVar6 = XA_CheckStreamSoundFile(uVar4,param_2,DAT_84222950,0x40000), iVar6 == 0)) {
-    uVar1 = *(undefined4 *)(iVar3 + 0x50);
-    uVar4 = CacheFileNameGetDebugName(param_2);
-    uVar9 = 0xffffffff821889a0;
+  if ((pXVar1->soundFileLoaded == false) &&
+     (iVar4 = XA_CheckStreamSoundFile(iVar2,pXVar1,xaStreamInitialReadBuffer,0x40000), iVar4 == 0))
+  {
+    CacheFileNameGetDebugName(&pXVar1->fileName);
+    pcVar9 = "Format error on streamed file header \'%s\' for alias \'%s\'\n";
   }
   else {
-    if (*(char *)(iVar3 + 0x7c) == '\0') {
-      iVar6 = *(int *)(iVar3 + 0x88);
-      uVar13 = 0;
-      lVar14 = 0x40000;
+    if (pXVar1->soundFileLoaded == false) {
+      iVar6 = pXVar1->startDelay;
+      iVar4 = 0;
+      iVar12 = 0x40000;
       if (iVar6 < 0x96) {
         iVar6 = 0x96;
       }
-      *(int *)(iVar3 + 0x88) = iVar6;
+      pXVar1->startDelay = iVar6;
     }
     else {
-      uVar2 = *(uint *)(iVar3 + 0x4c);
-      uVar13 = (ulonglong)*(uint *)(iVar3 + 0x60);
-      if (*(uint *)(iVar3 + 0x60) == *(uint *)(iVar3 + 0x58)) {
-        if ((uVar2 & 1) != 0) {
-          MyAssertHandler(0xffffffff821881f8,0x46b,0,0xffffffff82000f98,0xffffffff821884b8);
-          Sys_LeaveCriticalSection(8);
+      uVar7 = pXVar1->aliasFlags;
+      iVar4 = pXVar1->submitOffset;
+      if (iVar4 == pXVar1->totalWaveLength) {
+        if ((uVar7 & 1) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x46b,0,"%s");
+          Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
           __restgprlr_22();
           return;
         }
         goto LAB_82636e6c;
       }
-      iVar6 = 0;
-      iVar7 = XA_GetStreamPacket(param_2);
-      while (iVar7 != 0) {
-        uVar13 = uVar13 + 0x800;
-        if ((int)uVar13 == *(int *)(iVar3 + 0x58)) {
-          if ((uVar2 & 1) == 0) goto LAB_82636e6c;
-          uVar13 = (ulonglong)*(uint *)(iVar3 + 0x5c);
+      iVar12 = 0;
+      pPVar5 = XA_GetStreamPacket(pXVar1,iVar4);
+      while (pPVar5 != (PktCacheEntry *)0x0) {
+        iVar4 = iVar4 + 0x800;
+        if (iVar4 == pXVar1->totalWaveLength) {
+          if ((uVar7 & 1) == 0) goto LAB_82636e6c;
+          iVar4 = pXVar1->dataOffset;
         }
-        iVar6 = iVar6 + 1;
-        if (iVar6 == 0x80) goto LAB_82636e6c;
-        iVar7 = XA_GetStreamPacket(param_2,uVar13);
+        iVar12 = iVar12 + 1;
+        if (iVar12 == 0x80) goto LAB_82636e6c;
+        pPVar5 = XA_GetStreamPacket(pXVar1,iVar4);
       }
-      lVar14 = *(uint *)(iVar3 + 0x58) - uVar13;
-      if ((int)lVar14 < 0x40001) {
-        if ((int)lVar14 < 1) {
-          MyAssertHandler(0xffffffff821881f8,0x48d,0,0xffffffff82000f98,0xffffffff82188994);
+      iVar12 = pXVar1->totalWaveLength - iVar4;
+      if (iVar12 < 0x40001) {
+        if (iVar12 < 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x48d,0,"%s");
         }
       }
       else {
-        lVar14 = 0x40000;
+        iVar12 = 0x40000;
       }
     }
-    iVar6 = StreamFileDefined(lVar10);
+    iVar6 = StreamFileDefined(pSVar3);
     if (iVar6 == 0) {
-      CacheFileNameCopy(param_2,auStack_a0);
+      CacheFileNameCopy(&pXVar1->fileName,aCStack_a0);
     }
-    Sys_LeaveCriticalSection(8);
-    iVar6 = StreamFileDefined(lVar10);
+    Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
+    iVar6 = StreamFileDefined(pSVar3);
     if (iVar6 == 0) {
-      StreamFileOpen(lVar10,auStack_a0);
-      iVar6 = StreamFileMissing(lVar10);
+      StreamFileOpen(pSVar3,aCStack_a0);
+      iVar6 = StreamFileMissing(pSVar3);
       if (iVar6 != 0) {
-        uVar1 = *(undefined4 *)(iVar3 + 0x50);
-        uVar4 = CacheFileNameGetDebugName(auStack_a0);
-        Com_PrintError(9,0xffffffff82188964,uVar4,uVar1);
+        CacheFileNameGetDebugName(aCStack_a0);
+        Com_PrintError(9,"ERROR: Could not open file \'%s\' for alias \'%s\'\n");
         __restgprlr_22();
         return;
       }
     }
-    Profile_EndInternal(0);
-    cVar8 = Profile_IsStackEmpty();
-    if (cVar8 == '\0') {
-      MyAssertHandler(0xffffffff821881f8,0x4a5,0,0xffffffff82000f98,0xffffffff8218894c);
+    Profile_EndInternal((double *)0x0);
+    bVar8 = Profile_IsStackEmpty();
+    if (!bVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x4a5,
+                      0,"%s");
     }
-    local_b0[0] = DAT_84222950 + 0x800;
-    uVar5 = StreamFileRead(lVar10,local_b0,uVar13,lVar14);
+    local_b0[0] = xaStreamInitialReadBuffer + 0x800;
+    uVar7 = StreamFileRead(pSVar3,local_b0,iVar4,iVar12);
     Profile_Begin(0x152);
-    Sys_EnterCriticalSection(8);
-    if (*(int *)(iVar3 + 0x74) != 0) goto LAB_826372a8;
-    iVar6 = (int)uVar5;
-    if (0x7ff < iVar6) {
-      uVar12 = uVar13;
-      if (*(char *)(iVar3 + 0x7c) != '\0') {
+    Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+    if (pXVar1->closeFile != 0) goto LAB_826372a8;
+    if (0x7ff < (int)uVar7) {
+      iVar12 = iVar4;
+      if (pXVar1->soundFileLoaded != false) {
 LAB_82637210:
-        if (0x7ff < (int)uVar5) {
-          uVar13 = (uVar5 & 0xffffffff) >> 0xb;
+        if (0x7ff < (int)uVar7) {
+          uVar11 = (ulonglong)(uVar7 >> 0xb);
           do {
-            if (*(int *)(iVar3 + 0x58) < (int)(uVar12 + 0x800)) {
-              uVar1 = *(undefined4 *)(iVar3 + 0x50);
-              uVar4 = CacheFileNameGetDebugName(param_2);
-              uVar4 = va(0xffffffff8218883c,uVar4,uVar1,uVar12);
-              MyAssertHandler(0xffffffff821881f8,0x50e,0,0xffffffff820011f4,0xffffffff82188860,uVar4
-                             );
+            if (pXVar1->totalWaveLength < iVar12 + 0x800) {
+              CacheFileNameGetDebugName(&pXVar1->fileName);
+              va("filename: \'%s\', alias: \'%s\', %d");
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp"
+                              ,0x50e,0,"%s\n\t%s");
             }
-            XA_SetStreamPacket(param_2,uVar12,lVar11 + (ulonglong)local_b0[0],0x800);
-            uVar13 = uVar13 - 1;
-            lVar11 = lVar11 + 0x800;
-            uVar12 = uVar12 + 0x800;
-          } while (uVar13 != 0);
+            XA_SetStreamPacket(pXVar1,iVar12,local_b0[0] + iVar10,0x800);
+            uVar11 = uVar11 - 1;
+            iVar10 = iVar10 + 0x800;
+            iVar12 = iVar12 + 0x800;
+          } while (uVar11 != 0);
         }
 LAB_826372a8:
-        Sys_LeaveCriticalSection(8);
+        Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
         Sys_YieldWorkerCmd();
         __restgprlr_22();
         return;
       }
-      if (*(int *)(iVar3 + 0x5c) != 0) {
-        MyAssertHandler(0xffffffff821881f8,0x4d7,0,0xffffffff82000f98,0xffffffff821887fc);
+      if (pXVar1->dataOffset != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x4d7,0,"%s");
       }
-      cVar8 = XA_StreamSoundFileDataOffset(param_2,local_b0[0]);
-      if (cVar8 != '\0') {
-        uVar2 = *(uint *)(iVar3 + 0x5c);
-        uVar12 = (ulonglong)uVar2;
-        if (uVar2 == 0) {
-          MyAssertHandler(0xffffffff821881f8,0x4dd,0,0xffffffff82000f98,0xffffffff821887cc);
+      bVar8 = XA_StreamSoundFileDataOffset(pXVar1,local_b0[0]);
+      if (bVar8) {
+        iVar12 = pXVar1->dataOffset;
+        if (iVar12 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x4dd,0,"%s");
         }
-        if ((int)(uVar2 + 0x800) <= iVar6) {
-          lVar14 = 0;
-          if (0 < (int)uVar2) {
+        if (iVar12 + 0x800 <= (int)uVar7) {
+          iVar6 = 0;
+          if (0 < iVar12) {
             do {
-              XA_SetStreamPacket(param_2,lVar14,lVar14 + (ulonglong)local_b0[0],0x800);
-              lVar14 = lVar14 + 0x800;
-            } while ((int)lVar14 < (int)uVar2);
+              XA_SetStreamPacket(pXVar1,iVar6,local_b0[0] + iVar6,0x800);
+              iVar6 = iVar6 + 0x800;
+            } while (iVar6 < iVar12);
           }
-          if ((int)uVar13 != 0) {
-            MyAssertHandler(0xffffffff821881f8,0x4e5,0,0xffffffff82000f98,0xffffffff82188940);
+          if (iVar4 != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                            0x4e5,0,"%s");
           }
-          if (iVar6 < (int)uVar2) {
-            MyAssertHandler(0xffffffff821881f8,0x4e6,0,0xffffffff82188910,0xffffffff82188928,uVar12)
-            ;
+          if ((int)uVar7 < iVar12) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                            0x4e6,0,"%s\n\t(dataOffset) = %i");
           }
-          cVar8 = XA_ProcessStreamSoundFile(uVar4,param_2,local_b0[0]);
-          if (cVar8 != '\0') {
-            if (iVar6 <= *(int *)(iVar3 + 0x58)) {
-              local_b0[0] = uVar2 + local_b0[0];
-              *(undefined1 *)(iVar3 + 0x7c) = 1;
-              uVar5 = uVar5 - uVar12;
+          bVar8 = XA_ProcessStreamSoundFile(iVar2,pXVar1,local_b0[0]);
+          if (bVar8) {
+            if ((int)uVar7 <= pXVar1->totalWaveLength) {
+              local_b0[0] = local_b0[0] + iVar12;
+              pXVar1->soundFileLoaded = true;
+              uVar7 = uVar7 - iVar12;
               goto LAB_82637210;
             }
-            Com_PrintError(9,0xffffffff821888d8,uVar5,*(int *)(iVar3 + 0x58),uVar12);
+            Com_PrintError(9,"Too many bytes read ( %i > %i ) with dataOffset = %i\n");
           }
         }
       }
     }
-    if (*(char *)(iVar3 + 0x7c) == '\0') {
-      *(undefined4 *)(iVar3 + 0x5c) = 0;
+    if (pXVar1->soundFileLoaded == false) {
+      pXVar1->dataOffset = 0;
     }
-    uVar1 = *(undefined4 *)(iVar3 + 0x50);
-    uVar4 = CacheFileNameGetDebugName(param_2);
-    uVar9 = 0xffffffff821888a4;
+    CacheFileNameGetDebugName(&pXVar1->fileName);
+    pcVar9 = "Read error on streamed file \'%s\' for alias \'%s\'\n";
   }
-  Com_PrintError(9,uVar9,uVar4,uVar1);
-  StreamFileClose(lVar10);
-  StreamFileSetMissing(lVar10);
+  Com_PrintError(9,pcVar9);
+  StreamFileClose(pSVar3);
+  StreamFileSetMissing(pSVar3);
 LAB_82636e6c:
-  Sys_LeaveCriticalSection(8);
+  Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
   __restgprlr_22();
   return;
 }
@@ -959,79 +1022,93 @@ LAB_82636e6c:
 
 // 826372C0  SND_ExecuteStreamRead  (xenon/snd_driver.cpp:1323)
 
-void SND_ExecuteStreamRead(void)
+void SND_ExecuteStreamRead(int param_1)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  int iVar2;
   
-  lVar1 = __savegprlr_29();
+  lVar1 = __savegprlr_29(param_1);
   Profile_Begin(0x152);
-  if (((int)lVar1 < 0) || (0xd < (int)lVar1)) {
-    MyAssertHandler(0xffffffff821881f8,0x530,0,0xffffffff8209af48,0xffffffff8209af60,lVar1);
+  iVar2 = (int)lVar1;
+  if ((iVar2 < 0) || (0xd < iVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x530,0,
+                    "%s\n\t(streamIndex) = %i");
   }
-  lVar2 = lVar1 * 0x94 + -0x7bde0770;
-  if (lVar2 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x532,0,0xffffffff82000f98,0xffffffff82188510);
+  lVar1 = lVar1 * 0x94 + -0x7bde0770;
+  if (lVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x532,0,
+                    "%s");
   }
-  XA_ReadStreamPacketData(lVar1,lVar2);
-  Profile_EndInternal(0);
-  __restgprlr_29();
+  XA_ReadStreamPacketData(iVar2,(XaStreamReadInfo *)lVar1);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_29(iVar2);
   return;
 }
 
 
 // 82637368  XA_StreamPacketCallback  (xenon/snd_driver.cpp:1402)
 
-void XA_StreamPacketCallback(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_StreamPacketCallback(XAUDIOVOICEPACKETCALLBACK *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  longlong lVar4;
+  PktCacheEntry *pPVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (DAT_84222954 == '\0') {
-    DAT_84222954 = Sys_InitStreamPacketCallbackThreadData();
+  piVar3 = (int *)__savegprlr_27(param_1);
+  if (xaThreadDataInitializedOnStreamPacketCallback == false) {
+    xaThreadDataInitializedOnStreamPacketCallback = Sys_InitStreamPacketCallbackThreadData();
   }
-  iVar3 = *piVar2;
-  if ((iVar3 < 0x28) || (0x35 < iVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0x584,0,0xffffffff82188a0c,0xffffffff82188a28,iVar3);
+  iVar4 = *piVar3;
+  if ((iVar4 < 0x28) || (0x35 < iVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x584,0,
+                    "%s\n\t(channelIndex) = %i");
   }
-  iVar3 = iVar3 * 0x94;
-  if (*(int *)(&DAT_8421e1b8 + iVar3) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x588,0,0xffffffff82000f98,0xffffffff821889f0);
+  iVar4 = iVar4 * 0x94;
+  if (*(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x7c) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x588,0,
+                    "%s");
   }
-  iVar1 = piVar2[1];
-  Sys_EnterCriticalSection(8);
-  *(int *)(&DAT_8421e1b8 + iVar3) = *(int *)(&DAT_8421e1b8 + iVar3) + -1;
-  if (*(int *)(iVar1 + 0x20) < 1) {
-    MyAssertHandler(0xffffffff821881f8,0x590,0,0xffffffff82000f98,0xffffffff821889dc);
+  pPVar1 = (PktCacheEntry *)piVar3[1];
+  Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+  *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x7c) =
+       *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x7c) + -1;
+  if (pPVar1->refCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x590,0,
+                    "%s");
   }
-  lVar4 = (ulonglong)*(uint *)(iVar1 + 0x20) - 1;
-  *(int *)(iVar1 + 0x20) = (int)lVar4;
-  if (lVar4 == 0) {
-    Com_ReleaseEntry(iVar1);
+  lVar5 = (ulonglong)(uint)pPVar1->refCount - 1;
+  pPVar1->refCount = (int)lVar5;
+  if (lVar5 == 0) {
+    Com_ReleaseEntry(pPVar1);
   }
-  if (piVar2[2] != 0) {
-    *(undefined4 *)(&DAT_8421e1d4 + iVar3) = *(undefined4 *)(&DAT_8421e1c8 + iVar3);
-    Sys_LeaveCriticalSection(8);
+  if (piVar3[2] != 0) {
+    *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) =
+         *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x8c);
+    Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
     __restgprlr_27();
     return;
   }
-  iVar1 = *(int *)(&DAT_8421e1d4 + iVar3);
-  *(int *)(&DAT_8421e1d4 + iVar3) = iVar1 + 0x800;
-  if (*(int *)(&DAT_8421e1c8 + iVar3) <= iVar1 + 0x800) {
-    if ((*(uint *)(&DAT_8421e1bc + iVar3) & 1) != 0) {
-      *(undefined4 *)(&DAT_8421e1d4 + iVar3) = *(undefined4 *)(&DAT_8421e1cc + iVar3);
-      Sys_LeaveCriticalSection(8);
+  iVar2 = *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x8c);
+  iVar6 = *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) + 0x800;
+  *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) = iVar6;
+  if (iVar2 <= iVar6) {
+    if ((*(uint *)((int)xaGlob.baseVolEntries + iVar4 + 0x80) & 1) != 0) {
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) =
+           *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x90);
+      Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
       __restgprlr_27();
       return;
     }
-    *(int *)(&DAT_8421e1d4 + iVar3) = *(int *)(&DAT_8421e1c8 + iVar3);
+    *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) = iVar2;
   }
-  Sys_LeaveCriticalSection(8);
+  Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
   __restgprlr_27();
   return;
 }
@@ -1039,38 +1116,47 @@ void XA_StreamPacketCallback(void)
 
 // 826374E0  XA_Init2D  (xenon/snd_driver.cpp:1452)
 
-undefined8 XA_Init2D(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool XA_Init2D(void)
 
 {
-  DAT_8487d9c8 = 1;
-  DAT_8487d9d8 = 0x3f800000;
-  DAT_8488a994 = 8;
-  DAT_8488a99c = 0xe;
-  DAT_8487d9d0 = 0x7fffffff;
-  DAT_8487d9d4 = 6;
-  return 1;
+  g_snd.Initialized2d = true;
+  g_snd.timescale = 1.0;
+  g_snd.max_2D_channels = 8;
+  g_snd.max_stream_channels = 0xe;
+  g_snd.playback_rate = 0x7fffffff;
+  g_snd.playback_channels = 6;
+  return true;
 }
 
 
 // 82637538  XA_Init3D  (xenon/snd_driver.cpp:1466)
 
-undefined8 XA_Init3D(undefined8 param_1,undefined8 param_2)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool XA_Init3D(void)
 
 {
-  X3DAudioInitialize(0x40ca2a9f40000000,0x3f,param_2,0xffffffff8421bfe8);
-  DAT_8487d9c9 = 1;
-  DAT_8488a998 = 0x20;
-  return 1;
+  uchar *in_r4;
+  
+  X3DAudioInitialize(0x3f,13397.244,in_r4);
+  g_snd.Initialized3d = true;
+  g_snd.max_3D_channels = 0x20;
+  return true;
 }
 
 
 // 82637590  XA_InitChannels  (xenon/snd_driver.cpp:1477)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_InitChannels(void)
 
 {
-  undefined4 uVar1;
-  char cVar3;
+  float fVar1;
+  bool bVar3;
   int iVar2;
   int iVar4;
   undefined1 local_70 [4];
@@ -1081,78 +1167,81 @@ void XA_InitChannels(void)
   undefined1 *local_5c;
   undefined1 local_58 [4];
   undefined1 **local_54;
-  undefined1 local_50 [8];
+  XAUDIOFORMAT local_50;
   ulonglong local_48;
   undefined8 local_40;
   undefined4 local_38;
   
   __savegprlr_27();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0x5cc,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x5cc,0,
+                    "%s");
   }
   local_6c = 0;
   local_64 = 0;
-  DAT_842208dc = &DAT_842208e8;
-  DAT_842208d0 = 1;
-  DAT_842208e8 = 6;
-  DAT_842208d4 = &DAT_842208d8;
+  xaGlob.outputEntry[0].pChannelMap = &xaGlob.channel;
+  xaGlob.output.EntryCount = '\x01';
+  xaGlob.channel.EntryCount = '\x06';
+  xaGlob.output.paEntries = xaGlob.outputEntry;
   local_38 = 0;
   local_60 = local_70;
-  DAT_842208ec = &DAT_842208f0;
+  xaGlob.channel.paEntries = xaGlob.channelEntry;
   local_5c = local_68;
   local_54 = &local_60;
-  DAT_842208d8 = 0;
+  xaGlob.outputEntry[0].pDestVoice = (IXAudioVoice *)0x0;
   local_70[0] = 4;
   local_68[0] = 3;
   local_58[0] = 2;
   iVar2 = 0;
   do {
-    (&DAT_842208f0)[iVar2 * 8] = 0;
-    (&DAT_842208f1)[iVar2 * 8] = (char)iVar2;
-    uVar1 = 0;
+    xaGlob.channelEntry[iVar2].InputChannel = '\0';
+    xaGlob.channelEntry[iVar2].OutputChannel = (uchar)iVar2;
+    fVar1 = 0.0;
     if (iVar2 != 2) {
-      uVar1 = 0x3f800000;
+      fVar1 = 1.0;
     }
     iVar4 = iVar2 + 1;
-    (&DAT_842208f4)[iVar2 * 2] = uVar1;
+    xaGlob.channelEntry[iVar2].Volume = fVar1;
     iVar2 = iVar4;
-  } while (iVar4 < (int)(uint)DAT_842208e8);
-  DAT_8421c160 = 0x3f800000;
-  DAT_8421c170 = 0x3f800000;
-  DAT_8421c158 = &DAT_8421c15c;
-  DAT_8421c154 = 1;
-  DAT_8421c174 = 1;
-  DAT_8421c178 = 0x3f800000;
-  DAT_8421c15c = 0;
-  DAT_8421c15d = 0;
-  DAT_8421c16c = 0;
-  DAT_8421c164 = 2;
-  DAT_8421c168 = &DAT_8421c16c;
-  DAT_8421c16d = 0;
-  DAT_8421c175 = 0;
+  } while (iVar4 < (int)(uint)xaGlob.channel.EntryCount);
+  xaGlob.monoSourcePassthroughChannelEntry[0].Volume = 1.0;
+  xaGlob.stereoSourcePassthroughChannelEntry[0].Volume = 1.0;
+  xaGlob.monoSourcePassthroughChannelMap.paEntries = xaGlob.monoSourcePassthroughChannelEntry;
+  xaGlob.monoSourcePassthroughChannelMap.EntryCount = '\x01';
+  xaGlob.stereoSourcePassthroughChannelEntry[1].InputChannel = '\x01';
+  xaGlob.stereoSourcePassthroughChannelEntry[1].Volume = 1.0;
+  xaGlob.monoSourcePassthroughChannelEntry[0].InputChannel = '\0';
+  xaGlob.monoSourcePassthroughChannelEntry[0].OutputChannel = '\0';
+  xaGlob.stereoSourcePassthroughChannelEntry[0].InputChannel = '\0';
+  xaGlob.stereoSourcePassthroughChannelMap.EntryCount = '\x02';
+  xaGlob.stereoSourcePassthroughChannelMap.paEntries = xaGlob.stereoSourcePassthroughChannelEntry;
+  xaGlob.stereoSourcePassthroughChannelEntry[0].OutputChannel = '\0';
+  xaGlob.stereoSourcePassthroughChannelEntry[1].OutputChannel = '\0';
   local_48._2_6_ = ZEXT46(local_58);
+  local_50.UnionValue = 0x100000000bb80;
   local_40 = 0x842208d000000000;
   local_48 = (ulonglong)CONCAT16(6,local_48._2_6_);
   do {
-    iVar2 = XAudioCreateSubmixVoice(local_50,0xffffffff8421c150);
-  } while (DAT_84013128 != 0);
+    iVar2 = XAudioCreateSubmixVoice((XAUDIOSUBMIXVOICEINIT *)&local_50._s_0,&xaGlob.submixReverb);
+  } while (alwaysfails != 0);
   if (iVar2 < 0) {
-    MyAssertHandler(0xffffffff821881f8,0x610,0,0xffffffff82000f98,0xffffffff82188a88);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x610,0,
+                    "%s");
   }
-  DAT_842208f0 = 0;
-  DAT_842208f1 = 0;
-  DAT_842208f8 = 0;
-  DAT_842208e0 = DAT_8421c150;
-  DAT_842208e8 = 2;
-  DAT_842208e4 = &DAT_842208e8;
-  DAT_842208f4 = 0x3f000000;
-  DAT_842208fc = 0x3f000000;
-  DAT_842208f9 = 1;
-  DAT_842208cc = 2;
-  DAT_842208d0 = 2;
-  DAT_84886944 = 2;
-  DAT_84886948 = 0;
+  xaGlob.channelEntry[0].InputChannel = '\0';
+  xaGlob.channelEntry[0].OutputChannel = '\0';
+  xaGlob.channelEntry[1].InputChannel = '\0';
+  xaGlob.outputEntry[1].pDestVoice = (IXAudioVoice *)xaGlob.submixReverb;
+  xaGlob.channel.EntryCount = '\x02';
+  xaGlob.outputEntry[1].pChannelMap = &xaGlob.channel;
+  xaGlob.channelEntry[0].Volume = 0.5;
+  xaGlob.channelEntry[1].Volume = 0.5;
+  xaGlob.channelEntry[1].OutputChannel = '\x01';
+  xaGlob.sourceVoiceOutputCount = '\x02';
+  xaGlob.output.EntryCount = '\x02';
+  g_snd.ambient_track = 2;
+  g_snd.music_track = 0;
   __restgprlr_27();
   return;
 }
@@ -1160,126 +1249,137 @@ void XA_InitChannels(void)
 
 // 82637808  XA_InitSpatializationCurves  (xenon/snd_driver.cpp:1576)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_InitSpatializationCurves(void)
 
 {
-  DAT_8422083c = 0;
-  DAT_84220834 = &DAT_8422083c;
-  DAT_84220840 = 0x3f800000;
+  xaGlob.linearVolumeFalloffCurvePoints[0].Distance = 0.0;
+  xaGlob.linearVolumeFalloffCurve.pPoints = xaGlob.linearVolumeFalloffCurvePoints;
+  xaGlob.linearVolumeFalloffCurvePoints[0].DSPSetting = 1.0;
   return;
 }
 
 
 // 82637838  XA_UpdateXAudioListener  (xenon/snd_driver.cpp:1585)
 
-void XA_UpdateXAudioListener(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+snd_listener * XA_UpdateXAudioListener(float *param_1)
 
 {
-  ulonglong uVar1;
+  float *pfVar1;
   int iVar2;
-  int iVar3;
+  snd_listener *psVar3;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x634,0,0xffffffff82000f98,0xffffffff82004854);
+  pfVar1 = (float *)__savegprlr_25(param_1);
+  if (pfVar1 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x634,0,
+                    "%s");
   }
-  iVar2 = SND_GetListenerIndexNearestToOrigin(uVar1);
-  iVar3 = iVar2 * 0x3c;
-  if ((*(float *)(&DAT_84886a04 + iVar3) == 0.0) && (*(float *)(&DAT_84886a08 + iVar3) == 0.0)) {
-    if (*(float *)(&DAT_84886a0c + iVar3) == 0.0) {
-      MyAssertHandler(0xffffffff821881f8,0x638,0,0xffffffff82000f98,0xffffffff82188ae8);
-    }
+  iVar2 = SND_GetListenerIndexNearestToOrigin(pfVar1);
+  if (((g_snd.listeners[iVar2].orient.axis[0][0] == 0.0) &&
+      (g_snd.listeners[iVar2].orient.axis[0][1] == 0.0)) &&
+     (g_snd.listeners[iVar2].orient.axis[0][2] == 0.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x638,0,
+                    "%s");
   }
-  if (((*(float *)(&DAT_84886a1c + iVar3) == 0.0) && (*(float *)(&DAT_84886a20 + iVar3) == 0.0)) &&
-     (*(float *)(&DAT_84886a24 + iVar3) == 0.0)) {
-    MyAssertHandler(0xffffffff821881f8,0x639,0,0xffffffff82000f98,0xffffffff82188a98);
+  if (((g_snd.listeners[iVar2].orient.axis[2][0] == 0.0) &&
+      (g_snd.listeners[iVar2].orient.axis[2][1] == 0.0)) &&
+     (g_snd.listeners[iVar2].orient.axis[2][2] == 0.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x639,0,
+                    "%s");
   }
-  DAT_84220618 = *(undefined4 *)(&DAT_84886a04 + iVar3);
-  DAT_84220624 = *(undefined4 *)(&DAT_84886a1c + iVar3);
-  DAT_84220630 = (&DAT_848869f8)[iVar2 * 0xf];
-  DAT_84220620 = -*(float *)(&DAT_84886a0c + iVar3);
-  DAT_84220638 = -(float)(&DAT_84886a00)[iVar2 * 0xf];
-  DAT_84220628 = *(undefined4 *)(&DAT_84886a20 + iVar3);
-  DAT_8422062c = -*(float *)(&DAT_84886a24 + iVar3);
-  DAT_8422061c = *(undefined4 *)(&DAT_84886a08 + iVar3);
-  DAT_84220634 = (&DAT_848869fc)[iVar2 * 0xf];
-  __restgprlr_25(&DAT_848869f8 + iVar2 * 0xf);
-  return;
+  xaGlob.listener.OrientFront.x = g_snd.listeners[iVar2].orient.axis[0][0];
+  xaGlob.listener.OrientTop.x = g_snd.listeners[iVar2].orient.axis[2][0];
+  xaGlob.listener.Position.x = g_snd.listeners[iVar2].orient.origin[0];
+  xaGlob.listener.OrientFront.z = -g_snd.listeners[iVar2].orient.axis[0][2];
+  xaGlob.listener.Position.z = -g_snd.listeners[iVar2].orient.origin[2];
+  xaGlob.listener.OrientTop.y = g_snd.listeners[iVar2].orient.axis[2][1];
+  xaGlob.listener.OrientTop.z = -g_snd.listeners[iVar2].orient.axis[2][2];
+  xaGlob.listener.OrientFront.y = g_snd.listeners[iVar2].orient.axis[0][1];
+  xaGlob.listener.Position.y = g_snd.listeners[iVar2].orient.origin[1];
+  psVar3 = (snd_listener *)__restgprlr_25(iVar2 * 0x3c + -0x7b779608);
+  return psVar3;
 }
 
 
 // 826379E8  XA_InitSpatializationParams  (xenon/snd_driver.cpp:1612)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_InitSpatializationParams(void)
 
 {
-  undefined1 uVar1;
+  uchar uVar1;
   int iVar2;
   int iVar3;
-  undefined1 *puVar4;
+  int iVar4;
   int iVar5;
   int iVar6;
-  undefined1 *puVar7;
+  int iVar7;
   longlong lVar8;
   
   __savegprlr_23();
   iVar2 = 0;
-  DAT_8422064c = &DAT_8422072c;
-  DAT_8422063c = 0;
-  DAT_84220640 = 0;
-  DAT_84220644 = 0;
-  DAT_8422083c = 0;
-  DAT_84220840 = 0x3f800000;
-  DAT_84220674 = 0;
-  DAT_84220678 = 0;
-  DAT_8422067c = 0;
-  DAT_8422068c = 0;
-  DAT_842206ac = 0x3f800000;
-  DAT_84220834 = &DAT_8422083c;
-  DAT_8422072c = 0;
-  DAT_84220694 = &DAT_84220834;
-  DAT_84220730 = 0;
-  DAT_84220698 = 0;
-  DAT_84220734 = 0;
-  DAT_8422069c = 0;
-  DAT_84220738 = 0x3f800000;
-  DAT_842206a0 = 0;
-  DAT_8422073c = 0;
-  DAT_842206a4 = 0;
-  DAT_84220740 = 0x3f800000;
-  DAT_84220690 = &DAT_842208c4;
-  DAT_84220744 = 0;
-  DAT_84220688 = 1;
-  DAT_84220748 = 0x3f800000;
-  DAT_842206b0 = 0x11;
+  xaGlob.emitter.pCone = &xaGlob.cone;
+  xaGlob.listener.Velocity.x = 0.0;
+  xaGlob.listener.Velocity.y = 0.0;
+  xaGlob.listener.Velocity.z = 0.0;
+  xaGlob.linearVolumeFalloffCurvePoints[0].Distance = 0.0;
+  xaGlob.linearVolumeFalloffCurvePoints[0].DSPSetting = 1.0;
+  xaGlob.emitter.Velocity.x = 0.0;
+  xaGlob.emitter.Velocity.y = 0.0;
+  xaGlob.emitter.Velocity.z = 0.0;
+  xaGlob.emitter.ChannelRadius = 0.0;
+  xaGlob.emitter.DopplerScaler = 1.0;
+  xaGlob.linearVolumeFalloffCurve.pPoints = xaGlob.linearVolumeFalloffCurvePoints;
+  xaGlob.cone.InnerAngle = 0.0;
+  xaGlob.emitter.pVolumeCurve = &xaGlob.linearVolumeFalloffCurve;
+  xaGlob.cone.OuterAngle = 0.0;
+  xaGlob.emitter.pLFECurve = (X3DAUDIO_DISTANCE_CURVE *)0x0;
+  xaGlob.cone.InnerVolume = 0.0;
+  xaGlob.emitter.pLPFDirectCurve = (X3DAUDIO_DISTANCE_CURVE *)0x0;
+  xaGlob.cone.OuterVolume = 1.0;
+  xaGlob.emitter.pLPFReverbCurve = (X3DAUDIO_DISTANCE_CURVE *)0x0;
+  xaGlob.cone.InnerLPF = 0.0;
+  xaGlob.emitter.pReverbCurve = (X3DAUDIO_DISTANCE_CURVE *)0x0;
+  xaGlob.cone.OuterLPF = 1.0;
+  xaGlob.emitter.pChannelAzimuths = xaGlob.azimuths;
+  xaGlob.cone.InnerReverb = 0.0;
+  xaGlob.emitter.ChannelCount = 1;
+  xaGlob.cone.OuterReverb = 1.0;
+  xaGlob.calc3DFlags = 0x11;
   iVar5 = 0;
-  DAT_842206b4 = &DAT_842206e4;
-  DAT_842206c0 = 6;
-  DAT_842206b8 = &DAT_84220714;
-  DAT_842206bc = 1;
-  DAT_8422074c = DAT_842208cc;
-  DAT_84220750 = &DAT_84220754;
-  if (DAT_842208cc != 0) {
-    puVar4 = &DAT_84220774;
-    puVar7 = &DAT_84220764;
+  xaGlob.dspSettings.pMatrixCoefficients = (float *)&xaGlob.volumeCoefficients;
+  xaGlob.dspSettings.DstChannelCount = 6;
+  xaGlob.dspSettings.pDelayTimes = xaGlob.delayTimes;
+  xaGlob.dspSettings.SrcChannelCount = 1;
+  xaGlob.voiceVolume.EntryCount = xaGlob.sourceVoiceOutputCount;
+  xaGlob.voiceVolume.paEntries = xaGlob.voiceEntry;
+  if (xaGlob.sourceVoiceOutputCount != '\0') {
+    iVar4 = -0x7bddf88c;
+    iVar7 = -0x7bddf89c;
     do {
-      *(undefined1 **)(puVar7 + -0xc) = puVar7;
-      *(undefined1 **)(puVar7 + 4) = puVar4;
+      *(int *)(iVar7 + -0xc) = iVar7;
+      *(int *)(iVar7 + 4) = iVar4;
       iVar6 = 0;
-      puVar7[-0x10] = (char)iVar5;
+      *(char *)(iVar7 + -0x10) = (char)iVar5;
       lVar8 = 0xc;
       do {
         iVar3 = iVar2 + iVar6;
-        uVar1 = (undefined1)iVar6;
+        uVar1 = (uchar)iVar6;
         iVar6 = iVar6 + 1;
-        (&DAT_84220774)[iVar3 * 8] = uVar1;
+        xaGlob.channelVolumeEntries[0][iVar3].EntryIndex = uVar1;
         lVar8 = lVar8 + -1;
       } while (lVar8 != 0);
       iVar5 = iVar5 + 1;
-      puVar4 = puVar4 + 0x60;
-      puVar7 = puVar7 + 8;
+      iVar4 = iVar4 + 0x60;
+      iVar7 = iVar7 + 8;
       iVar2 = iVar2 + 0xc;
-    } while (iVar5 < (int)(uint)DAT_8422074c);
+    } while (iVar5 < (int)(uint)xaGlob.voiceVolume.EntryCount);
   }
   __restgprlr_23();
   return;
@@ -1288,75 +1388,94 @@ void XA_InitSpatializationParams(void)
 
 // 82637B38  QueryDSPEffectSize  (xenon/snd_driver.cpp:1672)
 
-void QueryDSPEffectSize(undefined8 param_1,ulonglong param_2)
+undefined4 QueryDSPEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 {
   int iVar1;
+  undefined4 uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_29();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x689,0,0xffffffff82000f98,0xffffffff82188b40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x689,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x68a,0,0xffffffff82000f98,0xffffffff82188b34);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x68a,0,
+                    "%s");
   }
-  *(undefined4 *)param_2 = 0x1c8;
-  __restgprlr_29(0);
-  return;
+  *(undefined4 *)uVar3 = 0x1c8;
+  uVar2 = __restgprlr_29(0);
+  return uVar2;
 }
 
 
 // 82637BB8  CreateDSPEffect  (xenon/snd_driver.cpp:1682)
 
-void CreateDSPEffect(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+undefined4
+CreateDSPEffect(XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  ParametricEQ *pPVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  iVar1 = __savegprlr_28();
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x693,0,0xffffffff82000f98,0xffffffff821484e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x693,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x694,0,0xffffffff82000f98,0xffffffff82067364);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x694,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x695,0,0xffffffff82000f98,0xffffffff82188b48);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x695,0,
+                    "%s");
   }
-  iVar1 = (**(code **)(*(int *)param_2 + 0x14))(param_2,0x1c8);
-  if (iVar1 != 0) {
-    uVar2 = ParametricEQ__ParametricEQ();
-    *(undefined4 *)param_3 = uVar2;
-    __restgprlr_28(0);
-    return;
+  pPVar2 = (ParametricEQ *)(**(code **)(*(int *)uVar4 + 0x14))(uVar4,0x1c8);
+  if (pPVar2 != (ParametricEQ *)0x0) {
+    pPVar2 = ParametricEQ::ParametricEQ(pPVar2);
+    *(undefined4 *)uVar5 = pPVar2;
+    uVar3 = __restgprlr_28(0);
+    return uVar3;
   }
-  *(undefined4 *)param_3 = 0;
-  __restgprlr_28(0);
-  return;
+  *(undefined4 *)uVar5 = 0;
+  uVar3 = __restgprlr_28(0);
+  return uVar3;
 }
 
 
 // 82637C98  XA_InitEq  (xenon/snd_driver.cpp:1703)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_InitEq(void)
 
 {
   undefined4 *puVar1;
-  longlong lVar2;
-  undefined4 *puVar3;
+  int iVar2;
+  int iVar3;
   longlong lVar4;
   double dVar5;
   double dVar6;
   
   __savegprlr_28();
-  puVar3 = &DAT_8421c184;
+  iVar3 = -0x7bde3e7c;
   dVar5 = 20000.0;
-  lVar2 = 0;
+  iVar2 = 0;
   dVar6 = 1.0;
   do {
-    SND_SetEntChanFilterMode(lVar2,2);
-    puVar1 = puVar3 + -0x142;
+    SND_SetEntChanFilterMode(iVar2,NONE);
+    puVar1 = (undefined4 *)(iVar3 + -0x508);
     lVar4 = 2;
     do {
       puVar1[0x142] = (float)dVar5;
@@ -1377,9 +1496,9 @@ void XA_InitEq(void)
       *puVar1 = 0;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    puVar3 = puVar3 + 5;
-    lVar2 = lVar2 + 1;
-  } while ((int)puVar3 < -0x7bde397c);
+    iVar3 = iVar3 + 0x14;
+    iVar2 = iVar2 + 1;
+  } while (iVar3 < -0x7bde397c);
   __restgprlr_28();
   return;
 }
@@ -1387,129 +1506,168 @@ void XA_InitEq(void)
 
 // 82637D50  XA_SetVoiceEqParams  (xenon/snd_driver.cpp:1728)
 
-void XA_SetVoiceEqParams(undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-                        ulonglong param_5,int param_6)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_SetVoiceEqParams(IXAudioVoice *param_1,uchar param_2,int param_3,int param_4,int param_5,
+                        int param_6,float param_7)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  char cVar3;
+  ulong uVar2;
+  ulong uVar3;
+  IXAudioVoice *pIVar4;
+  bool bVar6;
+  T_HRESULT TVar5;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   double extraout_f1;
-  double dVar4;
-  undefined4 *local_60;
-  undefined4 local_5c;
+  double dVar10;
+  XAUDIOFXPARAM local_60 [12];
   
-  uVar2 = __savegprlr_24();
-  dVar4 = extraout_f1;
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x6c4,0,0xffffffff82000f98,0xffffffff8214428c);
+  uVar9 = (ulonglong)param_5;
+  uVar8 = (ulonglong)param_4;
+  uVar7 = (ulonglong)param_3;
+  pIVar4 = (IXAudioVoice *)__savegprlr_24((double)param_7,param_1);
+  dVar10 = extraout_f1;
+  if (pIVar4 == (IXAudioVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x6c4,0,
+                    "%s");
   }
-  if (0x3f < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x6c5,0,0xffffffff82188c28,param_5,0x40);
+  if (0x3f < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x6c5,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x6c6,0,0xffffffff82188bec,param_4,3);
+  if (2 < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x6c6,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x6c7,0,0xffffffff82188bb0,param_3,2);
+  if (1 < (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x6c7,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    MyAssertHandler(0xffffffff821881f8,0x6c9,0,0xffffffff82000f98,0xffffffff82188b58);
+  if ((dVar10 < 0.0) || (1.0 < dVar10)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x6c9,0,
+                    "%s");
   }
-  local_60 = (undefined4 *)param_3;
-  iVar1 = ((int)local_60 * 3 + (int)(undefined4 *)param_4) * 0x40 + (int)param_5;
-  XAudioVoice_SetEffectParam(uVar2,param_2,7,2,&local_60);
-  local_60 = (undefined4 *)param_4;
-  XAudioVoice_SetEffectParam(uVar2,param_2,5,2,&local_60);
-  if (((*(char *)(DAT_8487cfa4 + 0xc) == '\0') || ((&DAT_8421c18c)[iVar1 * 0x14] == '\0')) ||
-     (local_60 = (undefined4 *)0x1, param_6 == 0)) {
-    local_60 = (undefined4 *)0x0;
+  uVar3 = (ulong)uVar7;
+  uVar2 = (ulong)uVar8;
+  iVar1 = (int)uVar9;
+  local_60[0]._0_4_ = uVar3;
+  XAudioVoice_SetEffectParam(pIVar4,param_2,'\a','\x02',local_60);
+  local_60[0]._0_4_ = uVar2;
+  XAudioVoice_SetEffectParam(pIVar4,param_2,'\x05','\x02',local_60);
+  if ((((snd_enableEq->current).enabled == false) ||
+      (xaGlob.eq[uVar3][uVar2].params[iVar1].enabled == false)) ||
+     (local_60[0]._0_4_ = (SndEqParams *)0x1, param_6 == 0)) {
+    local_60[0]._0_4_ = (SndEqParams *)0x0;
   }
-  XAudioVoice_SetEffectParam(uVar2,param_2,4,2,&local_60);
-  if (local_60 != (undefined4 *)0x0) {
-    local_5c = 0x14;
-    local_60 = &DAT_8421c17c + iVar1 * 5;
-    XAudioVoice_SetEffectParam(uVar2,param_2,8,3,&local_60);
+  XAudioVoice_SetEffectParam(pIVar4,param_2,'\x04','\x02',local_60);
+  if ((SndEqParams *)local_60[0]._0_4_ != (SndEqParams *)0x0) {
+    local_60[0].Data.BufferSize = 0x14;
+    local_60[0]._0_4_ = xaGlob.eq[uVar3][uVar2].params + iVar1;
+    XAudioVoice_SetEffectParam(pIVar4,param_2,'\b','\x03',local_60);
   }
-  cVar3 = SND_IsEntChanInOcclusionMode(param_5);
-  if (cVar3 == '\0') {
-    local_60 = DAT_8421df7c;
+  bVar6 = SND_IsEntChanInOcclusionMode(iVar1);
+  if (bVar6) {
+    local_60[0]._0_4_ = (undefined4)dVar10;
   }
   else {
-    local_60 = (undefined4 *)(float)dVar4;
+    local_60[0].Value = xaGlob.eqLerp;
   }
-  XAudioVoice_SetEffectParam(uVar2,0,6,1,&local_60);
-  __restgprlr_24();
+  TVar5 = XAudioVoice_SetEffectParam(pIVar4,'\0','\x06','\x01',local_60);
+  __restgprlr_24(TVar5);
   return;
 }
 
 
 // 82637F90  XA_AnyEqEnabled  (xenon/snd_driver.cpp:1772)
 
-undefined8 XA_AnyEqEnabled(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool XA_AnyEqEnabled(int param_1)
 
 {
   int iVar1;
   int iVar2;
   
-  if (*(char *)(DAT_8487cfa4 + 0xc) != '\0') {
+  if ((snd_enableEq->current).enabled != false) {
     iVar1 = 0;
     do {
       iVar2 = 0;
       do {
-        if ((&DAT_8421c18c)[((iVar1 + iVar2) * 0x40 + param_1) * 0x14] != '\0') {
-          return 1;
+        if (xaGlob.eq[0][iVar1 + iVar2].params[param_1].enabled != false) {
+          return true;
         }
         iVar2 = iVar2 + 1;
       } while (iVar2 < 3);
       iVar1 = iVar1 + 3;
     } while (iVar1 < 6);
   }
-  return 0;
+  return false;
 }
 
 
 // 82638008  XA_ApplyEq  (xenon/snd_driver.cpp:1793)
 
-void XA_ApplyEq(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_ApplyEq(IXAudioVoice *param_1,int param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  char cVar3;
-  longlong lVar4;
-  longlong lVar5;
-  undefined8 uVar6;
+  IXAudioVoice *pIVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  double dVar8;
+  float fVar9;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x707,0,0xffffffff82000f98,0xffffffff8214428c);
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  pIVar1 = (IXAudioVoice *)__savegprlr_25(param_1);
+  if (pIVar1 == (IXAudioVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x707,0,
+                    "%s");
   }
-  if (0x35 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x708,0,0xffffffff82188c68,param_2,0x36);
+  if (0x35 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x708,0,
+                    "channelIndex doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)");
   }
-  if (0x3f < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x709,0,0xffffffff82188c28,param_3,0x40);
+  if (0x3f < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x709,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  cVar2 = XA_AnyEqEnabled(param_3);
-  cVar3 = '\0';
-  if (cVar2 != '\0') {
-    cVar3 = SND_IsFilterEnabled((param_2 + (param_2 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 +
-                                -0x7b777eec,param_4);
+  bVar2 = XA_AnyEqEnabled((int)uVar4);
+  iVar5 = 0;
+  if (bVar2) {
+    bVar2 = SND_IsFilterEnabled((snd_channel_info_t *)
+                                ((int)&(((snd_channel_info_t *)
+                                        (&g_snd.chaninfo[0].lengthNotifyInfo + -1))->soundFileInfo).
+                                       loadingState +
+                                (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6)),param_4
+                               );
+    iVar5 = (int)bVar2;
   }
-  if (((&DAT_8421c0d4)[(int)param_2] == '\0') || (cVar3 != '\0')) {
-    uVar6 = SND_GetCurrentOcclusionLerp
-                      ((param_2 + (param_2 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 + -0x7b777eec);
-    lVar4 = 0;
+  if ((xaGlob.voiceEqDisabled[(int)uVar3] == false) || (iVar5 != 0)) {
+    fVar9 = SND_GetCurrentOcclusionLerp
+                      ((snd_channel_info_t *)
+                       ((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                              soundFileInfo).loadingState +
+                       (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6)));
+    dVar8 = (double)fVar9;
+    iVar6 = 0;
     do {
-      lVar5 = 0;
+      iVar7 = 0;
       do {
-        XA_SetVoiceEqParams(uVar6,uVar1,0,lVar4,lVar5,param_3,cVar3);
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar5 < 3);
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < 2);
-    (&DAT_8421c0d4)[(int)param_2] = cVar3 == '\0';
+        XA_SetVoiceEqParams(pIVar1,'\0',iVar6,iVar7,(int)uVar4,iVar5,(float)dVar8);
+        iVar7 = iVar7 + 1;
+      } while (iVar7 < 3);
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < 2);
+    *(bool *)((int)uVar3 + -0x7bde3f2c) = iVar5 == 0;
   }
   __restgprlr_25();
   return;
@@ -1518,8 +1676,10 @@ void XA_ApplyEq(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined
 
 // 82638180  XA_InitVoiceOutputAndBaseVolumesForReverb  (xenon/snd_driver.cpp:1852)
 
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_InitVoiceOutputAndBaseVolumesForReverb
-               (undefined8 param_1,int param_2,ulonglong param_3,ulonglong param_4)
+               (int param_1,int param_2,bool param_3,XAUDIOCHANNELMAP *param_4)
 
 {
   byte bVar1;
@@ -1530,104 +1690,109 @@ void XA_InitVoiceOutputAndBaseVolumesForReverb
   int iVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  byte *pbVar9;
-  longlong lVar10;
+  ulonglong uVar9;
+  byte *pbVar10;
   longlong lVar11;
   longlong lVar12;
-  int iVar14;
   longlong lVar13;
-  double dVar15;
+  int iVar15;
+  longlong lVar14;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
+  double dVar20;
   
-  uVar7 = __savegprlr_26();
-  DAT_842208e4 = &DAT_8421c164;
+  uVar9 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)param_3;
+  uVar7 = __savegprlr_26(param_1);
+  xaGlob.outputEntry[1].pChannelMap = &xaGlob.stereoSourcePassthroughChannelMap;
   if (param_2 != 2) {
-    DAT_842208e4 = &DAT_8421c154;
+    xaGlob.outputEntry[1].pChannelMap = &xaGlob.monoSourcePassthroughChannelMap;
   }
-  if ((param_3 & 0xff) == 0) {
-    if ((param_4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x74a,0,0xffffffff82000f98,0xffffffff82188cd4);
+  if ((uVar8 & 0xff) == 0) {
+    if ((uVar9 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x74a,
+                      0,"%s");
     }
-    bVar1 = *DAT_842208e4;
+    bVar1 = (xaGlob.outputEntry[1].pChannelMap)->EntryCount;
     uVar8 = (ulonglong)bVar1;
-    pbVar9 = (byte *)param_4;
-    bVar2 = *pbVar9;
+    pbVar10 = (byte *)uVar9;
+    bVar2 = *pbVar10;
     iVar6 = (int)((uVar7 & 0xffffffff) << 3);
-    lVar11 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20;
-    *(uint *)(&DAT_8421df8c + iVar6) = (uint)bVar2;
-    *(uint *)(&DAT_8421df90 + iVar6) = (uint)bVar1;
-    lVar10 = lVar11 + -0x7bde1e94;
-    if ((bVar1 != 0) && (lVar12 = lVar11 + -0x7bde1e98, uVar7 = uVar8, bVar1 != 0)) {
+    lVar12 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20;
+    *(uint *)((int)xaGlob.baseVolEntryCount[0] + iVar6) = (uint)bVar2;
+    *(uint *)((int)xaGlob.baseVolEntryCount[0] + iVar6 + 4) = (uint)bVar1;
+    lVar11 = lVar12 + -0x7bde1e94;
+    if ((bVar1 != 0) && (lVar13 = lVar12 + -0x7bde1e98, uVar7 = uVar8, bVar1 != 0)) {
       do {
-        lVar12 = lVar12 + 4;
-        *(undefined4 *)lVar12 = 0;
+        lVar13 = lVar13 + 4;
+        *(undefined4 *)lVar13 = 0;
         uVar7 = uVar7 - 1;
       } while (uVar7 != 0);
     }
     uVar7 = 0;
-    iVar6 = (int)lVar10;
+    iVar6 = (int)lVar11;
     if (3 < bVar2) {
-      iVar14 = 0;
-      lVar12 = lVar11 + -0x7bde1ec8;
+      iVar15 = 0;
+      lVar13 = lVar12 + -0x7bde1ec8;
       do {
         uVar7 = uVar7 + 4;
-        iVar4 = (int)lVar12;
-        *(undefined4 *)(iVar4 + 4) = *(undefined4 *)(iVar14 + *(int *)(pbVar9 + 4) + 4);
-        iVar3 = (uint)*(byte *)(iVar14 + *(int *)(pbVar9 + 4)) * 4;
+        iVar4 = (int)lVar13;
+        *(undefined4 *)(iVar4 + 4) = *(undefined4 *)(iVar15 + *(int *)(pbVar10 + 4) + 4);
+        iVar3 = (uint)*(byte *)(iVar15 + *(int *)(pbVar10 + 4)) * 4;
         *(float *)(iVar3 + iVar6) =
-             *(float *)((byte *)(iVar14 + *(int *)(pbVar9 + 4)) + 4) + *(float *)(iVar3 + iVar6);
-        *(undefined4 *)(iVar4 + 8) = *(undefined4 *)(iVar14 + *(int *)(pbVar9 + 4) + 0xc);
-        iVar3 = (uint)*(byte *)(iVar14 + *(int *)(pbVar9 + 4) + 8) * 4;
+             *(float *)((byte *)(iVar15 + *(int *)(pbVar10 + 4)) + 4) + *(float *)(iVar3 + iVar6);
+        *(undefined4 *)(iVar4 + 8) = *(undefined4 *)(iVar15 + *(int *)(pbVar10 + 4) + 0xc);
+        iVar3 = (uint)*(byte *)(iVar15 + *(int *)(pbVar10 + 4) + 8) * 4;
         *(float *)(iVar3 + iVar6) =
-             *(float *)(iVar14 + *(int *)(pbVar9 + 4) + 0xc) + *(float *)(iVar3 + iVar6);
-        *(undefined4 *)(iVar4 + 0xc) = *(undefined4 *)(iVar14 + *(int *)(pbVar9 + 4) + 0x14);
-        iVar3 = (uint)*(byte *)(iVar14 + 0x18 + *(int *)(pbVar9 + 4) + -8) * 4;
+             *(float *)(iVar15 + *(int *)(pbVar10 + 4) + 0xc) + *(float *)(iVar3 + iVar6);
+        *(undefined4 *)(iVar4 + 0xc) = *(undefined4 *)(iVar15 + *(int *)(pbVar10 + 4) + 0x14);
+        iVar3 = (uint)*(byte *)(iVar15 + 0x18 + *(int *)(pbVar10 + 4) + -8) * 4;
         *(float *)(iVar3 + iVar6) =
-             *(float *)(iVar14 + *(int *)(pbVar9 + 4) + 0x14) + *(float *)(iVar3 + iVar6);
-        lVar12 = lVar12 + 0x10;
-        *(undefined4 *)lVar12 = *(undefined4 *)(iVar14 + *(int *)(pbVar9 + 4) + 0x1c);
-        iVar3 = (uint)*(byte *)(iVar14 + 0x18 + *(int *)(pbVar9 + 4)) * 4;
+             *(float *)(iVar15 + *(int *)(pbVar10 + 4) + 0x14) + *(float *)(iVar3 + iVar6);
+        lVar13 = lVar13 + 0x10;
+        *(undefined4 *)lVar13 = *(undefined4 *)(iVar15 + *(int *)(pbVar10 + 4) + 0x1c);
+        iVar3 = (uint)*(byte *)(iVar15 + 0x18 + *(int *)(pbVar10 + 4)) * 4;
         *(float *)(iVar3 + iVar6) =
-             *(float *)(iVar14 + *(int *)(pbVar9 + 4) + 0x1c) + *(float *)(iVar3 + iVar6);
-        iVar14 = iVar14 + 0x20;
+             *(float *)(iVar15 + *(int *)(pbVar10 + 4) + 0x1c) + *(float *)(iVar3 + iVar6);
+        iVar15 = iVar15 + 0x20;
       } while ((int)uVar7 < (int)(bVar2 - 3));
     }
     if ((int)uVar7 < (int)(uint)bVar2) {
-      lVar12 = bVar2 - uVar7;
-      lVar13 = (uVar7 & 0x1fffffff) << 3;
-      lVar11 = (uVar7 & 0x3fffffff) * 4 + lVar11 + -0x7bde1ec8;
+      lVar13 = bVar2 - uVar7;
+      lVar14 = (uVar7 & 0x1fffffff) << 3;
+      lVar12 = (uVar7 & 0x3fffffff) * 4 + lVar12 + -0x7bde1ec8;
       do {
-        lVar11 = lVar11 + 4;
-        *(undefined4 *)lVar11 = *(undefined4 *)((int)lVar13 + *(int *)(pbVar9 + 4) + 4);
-        pbVar5 = (byte *)((int)lVar13 + *(int *)(pbVar9 + 4));
-        iVar14 = (uint)*pbVar5 * 4;
-        *(float *)(iVar14 + iVar6) = *(float *)(pbVar5 + 4) + *(float *)(iVar14 + iVar6);
-        lVar13 = lVar13 + 8;
-        lVar12 = lVar12 + -1;
-      } while (lVar12 != 0);
+        lVar12 = lVar12 + 4;
+        *(undefined4 *)lVar12 = *(undefined4 *)((int)lVar14 + *(int *)(pbVar10 + 4) + 4);
+        pbVar5 = (byte *)((int)lVar14 + *(int *)(pbVar10 + 4));
+        iVar15 = (uint)*pbVar5 * 4;
+        *(float *)(iVar15 + iVar6) = *(float *)(pbVar5 + 4) + *(float *)(iVar15 + iVar6);
+        lVar14 = lVar14 + 8;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
     }
     if (bVar1 != 0) {
-      dVar18 = 0.0;
-      dVar19 = 1.0;
+      dVar19 = 0.0;
+      dVar20 = 1.0;
       do {
-        dVar15 = (double)*(float *)lVar10;
+        dVar16 = (double)*(float *)lVar11;
+        dVar18 = dVar20;
+        if ((float)(dVar16 - dVar20) < 0.0) {
+          dVar18 = dVar16;
+        }
         dVar17 = dVar19;
-        if ((float)(dVar15 - dVar19) < 0.0) {
-          dVar17 = dVar15;
+        if (-dVar16 < 0.0) {
+          dVar17 = dVar18;
         }
-        dVar16 = dVar18;
-        if (-dVar15 < 0.0) {
-          dVar16 = dVar17;
-        }
-        *(float *)lVar10 = (float)dVar16;
-        if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821881f8,0x76a,0,0xffffffff82000f98,0xffffffff82188ca8);
+        *(float *)lVar11 = (float)dVar17;
+        if (((uint)(float)dVar17 & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x76a,0,"%s");
         }
         uVar8 = uVar8 - 1;
-        lVar10 = lVar10 + 4;
+        lVar11 = lVar11 + 4;
       } while (uVar8 != 0);
     }
   }
@@ -1638,169 +1803,168 @@ void XA_InitVoiceOutputAndBaseVolumesForReverb
 
 // 82638430  XA_VoiceDirty  (xenon/snd_driver.cpp:1931)
 
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_VoiceDirty(int param_1)
 
 {
-  (&DAT_8421c0d4)[param_1] = 0;
+  xaGlob.voiceEqDisabled[param_1] = false;
   return;
 }
 
 
 // 82638448  XA_GetNewSourceVoice  (xenon/snd_driver.cpp:1937)
 
-void XA_GetNewSourceVoice(undefined8 param_1,int param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+IXAudioSourceVoice * XA_GetNewSourceVoice(int param_1,XAUDIOSOURCEFORMAT *param_2)
 
 {
   int iVar1;
   undefined8 *puVar2;
   ulonglong uVar3;
   int iVar4;
-  undefined8 *puVar5;
-  int iVar6;
-  longlong lVar7;
-  int local_d0;
-  undefined1 *local_cc;
-  undefined1 local_c8 [4];
-  undefined4 local_c4;
-  undefined1 local_c0 [4];
-  undefined1 **local_bc;
+  IXAudioSourceVoice *pIVar5;
+  undefined8 *puVar6;
+  void *pvVar7;
+  longlong lVar8;
+  IXAudioSourceVoice *local_d0;
+  XAUDIOFXINIT *local_cc;
+  XAUDIOFXINIT local_c8;
+  XAUDIOVOICEFXCHAIN local_c0;
   undefined8 uStack_b8;
-  undefined1 local_b0 [4];
-  undefined1 uStack_ac;
-  undefined4 local_a8;
-  undefined1 local_a4;
-  undefined1 local_78;
-  undefined1 local_77;
-  undefined1 local_76;
-  undefined1 local_75;
-  undefined4 local_74;
-  undefined1 *local_6c;
-  undefined1 *local_68;
-  code *local_60;
-  int local_58;
+  XAUDIOSOURCEVOICEINIT local_b0;
   
-  uVar3 = __savegprlr_23();
-  lVar7 = 0xb;
+  uVar3 = __savegprlr_23(param_1);
+  lVar8 = 0xb;
   puVar2 = &uStack_b8;
   do {
-    puVar5 = puVar2;
-    puVar2 = puVar5 + 1;
+    puVar6 = puVar2;
+    puVar2 = puVar6 + 1;
     *puVar2 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  *(undefined4 *)(puVar5 + 2) = 0;
-  uStack_ac = *(undefined1 *)(param_2 + 4);
-  local_a8 = *(undefined4 *)(param_2 + 8);
-  local_a4 = *(undefined1 *)(param_2 + 0xc);
-  local_cc = local_c8;
-  local_c4 = 0;
-  local_bc = &local_cc;
-  local_c0[0] = 1;
-  local_6c = local_c0;
-  local_74 = 0x3f800000;
-  iVar6 = (int)uVar3;
-  local_c8[0] = DAT_8421df80;
-  local_78 = 0;
-  local_77 = DAT_842208cc;
-  local_76 = 0xc;
-  local_75 = 1;
-  local_b0[0] = 4;
-  local_68 = &DAT_842208d0;
-  if ((0x27 < iVar6) && (iVar6 < 0x36)) {
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  *(undefined4 *)(puVar6 + 2) = 0;
+  local_b0.Format.field1_0x4._s_0.NumStreams = (param_2->field1_0x4)._s_0.NumStreams;
+  local_b0.Format.field1_0x4._s_0.Stream[0].SampleRate =
+       (param_2->field1_0x4)._s_0.Stream[0].SampleRate;
+  local_b0.Format.field1_0x4._s_0.Stream[0].ChannelCount = *(uchar *)((int)&param_2->field1_0x4 + 8)
+  ;
+  local_cc = &local_c8;
+  local_c8.pContext = (void *)0x0;
+  local_c0.papEffects = &local_cc;
+  local_c0.EffectCount = '\x01';
+  local_b0.pEffectChain = &local_c0;
+  local_b0.MaxPitchShift = 1.0;
+  pvVar7 = (void *)uVar3;
+  local_c8.EffectId = xaGlob.effectInfo.EffectId;
+  local_b0.Category = '\0';
+  local_b0.MaxOutputVoiceCount = xaGlob.sourceVoiceOutputCount;
+  local_b0.MaxChannelMapEntryCount = '\f';
+  local_b0.MaxPacketCount = '\x01';
+  local_b0.Format.SampleType = '\x04';
+  local_b0.pVoiceOutput = &xaGlob.output;
+  if ((0x27 < (int)pvVar7) && ((int)pvVar7 < 0x36)) {
     iVar1 = (int)((uVar3 & 0xffffffff) << 2);
-    local_78 = 0;
-    local_75 = 8;
-    local_d0 = *(int *)((int)&DAT_8421bffc + iVar1);
-    local_60 = XA_StreamPacketCallback;
-    local_58 = iVar6;
-    if (local_d0 != 0) {
-      MyAssertHandler(0xffffffff821881f8,0x7bd,0,0xffffffff82000f98,0xffffffff82188d0c);
+    local_b0.Category = '\0';
+    local_b0.MaxPacketCount = '\b';
+    local_d0 = *(IXAudioSourceVoice **)((int)xaGlob.voice + iVar1);
+    local_b0.pfnPacketCompletionCallback = XA_StreamPacketCallback;
+    local_b0.pContext = pvVar7;
+    if (local_d0 != (IXAudioSourceVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x7bd,
+                      0,"%s");
     }
     PMem_EnableSoundAlloc();
     do {
-      iVar4 = XAudioCreateSourceVoice(local_b0,&local_d0);
-    } while (DAT_84013128 != 0);
+      iVar4 = XAudioCreateSourceVoice(&local_b0,&local_d0);
+    } while (alwaysfails != 0);
     PMem_DisableSoundAlloc();
     if (iVar4 < 0) {
-      MyAssertHandler(0xffffffff821881f8,0x7c1,0,0xffffffff82000f98,0xffffffff82188cfc);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x7c1,
+                      0,"%s");
     }
-    if (local_d0 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x7c3,0,0xffffffff82000f98,0xffffffff8214428c);
+    if (local_d0 == (IXAudioSourceVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x7c3,
+                      0,"%s");
     }
-    *(int *)((int)&DAT_8421bffc + iVar1) = local_d0;
-    (&DAT_8421c0d4)[iVar6] = 0;
-    __restgprlr_23();
-    return;
+    *(IXAudioSourceVoice **)((int)xaGlob.voice + iVar1) = local_d0;
+    *(undefined1 *)((int)pvVar7 + -0x7bde3f2c) = 0;
+    pIVar5 = (IXAudioSourceVoice *)__restgprlr_23();
+    return pIVar5;
   }
   iVar1 = (int)((uVar3 & 0xffffffff) << 2);
-  if (*(int *)((int)&DAT_8421bffc + iVar1) != 0) {
-    MyAssertHandler(0xffffffff821881f8,0x7c9,0,0xffffffff82000f98,0xffffffff82188ce4);
+  if (*(int *)((int)xaGlob.voice + iVar1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x7c9,0,
+                    "%s");
   }
   PMem_EnableSoundAlloc();
   do {
-    iVar4 = XAudioCreateSourceVoice(local_b0,&local_d0);
-  } while (DAT_84013128 != 0);
+    iVar4 = XAudioCreateSourceVoice(&local_b0,&local_d0);
+  } while (alwaysfails != 0);
   PMem_DisableSoundAlloc();
   if (iVar4 < 0) {
-    MyAssertHandler(0xffffffff821881f8,0x7cd,0,0xffffffff82000f98,0xffffffff82188cfc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x7cd,0,
+                    "%s");
   }
-  if (local_d0 == 0) {
-    MyAssertHandler(0xffffffff821881f8,1999,0,0xffffffff82000f98,0xffffffff8214428c);
+  if (local_d0 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",1999,0,
+                    "%s");
   }
-  *(int *)((int)&DAT_8421bffc + iVar1) = local_d0;
-  (&DAT_8421c0d4)[iVar6] = 0;
-  __restgprlr_23();
-  return;
+  *(IXAudioSourceVoice **)((int)xaGlob.voice + iVar1) = local_d0;
+  *(undefined1 *)((int)pvVar7 + -0x7bde3f2c) = 0;
+  pIVar5 = (IXAudioSourceVoice *)__restgprlr_23();
+  return pIVar5;
 }
 
 
 // 8263E220  XA_InitializeStreamVoice  (xenon/snd_driver.cpp:2010)
 
-void XA_InitializeStreamVoice(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_InitializeStreamVoice(int param_1)
 
 {
-  undefined1 uVar1;
+  byte bVar1;
   int iVar2;
-  char *pcVar3;
-  uint uVar4;
-  int iVar7;
-  char cVar8;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  int iVar9;
-  double dVar10;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  bool bVar8;
+  XAUDIOCHANNELMAP *pXVar6;
+  IXAudioSourceVoice *pIVar7;
+  double dVar9;
+  float fVar10;
   
-  iVar7 = __savegprlr_23();
-  iVar9 = iVar7 * 0x38;
-  uVar4 = *(int *)((&DAT_84888184)[iVar7 * 0x30] + 0x3c) >> 9 & 0x3f;
-  uVar1 = (&DAT_8421eccc)[iVar9];
-  iVar2 = *(int *)(&DAT_8421ecc8 + iVar9);
-  cVar8 = SND_IsAliasChannel3D(uVar4);
-  if (cVar8 != '\0') {
-    pcVar3 = (char *)((undefined4 *)(&DAT_84888184)[iVar7 * 0x30])[0x1b];
-    if (*pcVar3 == '\0') {
-      Com_PrintWarning(9,0xffffffff82189cc0,*(undefined4 *)(&DAT_84888184)[iVar7 * 0x30],
-                       *(undefined4 *)(pcVar3 + 4));
-    }
+  iVar5 = __savegprlr_23(param_1);
+  iVar4 = iVar5 * 0x38;
+  uVar3 = (g_snd.chaninfo[iVar5].alias0)->flags >> 9 & 0x3f;
+  bVar1 = *(byte *)((int)xaGlob.baseVolEntries[0x1e] + iVar4 + 0x50);
+  iVar2 = *(int *)((int)xaGlob.baseVolEntries[0x1e] + iVar4 + 0x4c);
+  bVar8 = SND_IsAliasChannel3D(uVar3);
+  if ((bVar8) && ((g_snd.chaninfo[iVar5].alias0)->speakerMap->isDefault == false)) {
+    Com_PrintWarning(9,"\'%s\' alias is 3D but has a \'%s\' speakermap\n");
   }
-  uVar5 = Com_GetSpeakerMap(*(undefined4 *)((&DAT_84888184)[iVar7 * 0x30] + 0x6c),uVar1);
-  DAT_842208dc = (undefined4)uVar5;
-  DAT_842208d0 = DAT_842208cc;
-  uVar6 = SND_IsAliasChannel3D(uVar4);
-  XA_InitVoiceOutputAndBaseVolumesForReverb(iVar7,uVar1,uVar6,uVar5);
-  uVar5 = XA_GetNewSourceVoice(iVar7,&DAT_8421ecc0 + iVar9);
-  SND_AddVoice(uVar4);
-  XA_ApplyEq(uVar5,iVar7,uVar4,0);
-  SND_SetSoundFileChannelInfo(iVar7,uVar1,iVar2,2);
-  SND_GetStreamChannelVolume(iVar7);
-  SND_SetStreamChannelVolume(iVar7);
-  dVar10 = floor((double)((DAT_8487d9d8 * (float)(&DAT_848881c4)[iVar7 * 0x30] +
-                          (1.0 - (float)(&DAT_848881c4)[iVar7 * 0x30])) *
-                          *(float *)(&DAT_84888178 + iVar7 * 0xc0) * (float)(longlong)iVar2 + 0.5));
-  SND_SetStreamChannelPlaybackRate(iVar7,(int)dVar10);
-  cVar8 = SND_IsAliasChannel3D(uVar4);
-  if (cVar8 == '\0') {
-    SND_UpdateStreamChannelReverb(iVar7);
+  pXVar6 = Com_GetSpeakerMap((g_snd.chaninfo[iVar5].alias0)->speakerMap,(uint)bVar1);
+  xaGlob.output.EntryCount = xaGlob.sourceVoiceOutputCount;
+  xaGlob.outputEntry[0].pChannelMap = pXVar6;
+  bVar8 = SND_IsAliasChannel3D(uVar3);
+  XA_InitVoiceOutputAndBaseVolumesForReverb(iVar5,(uint)bVar1,bVar8,pXVar6);
+  pIVar7 = XA_GetNewSourceVoice
+                     (iVar5,(XAUDIOSOURCEFORMAT *)((int)xaGlob.baseVolEntries[0x1e] + iVar4 + 0x44))
+  ;
+  SND_AddVoice(uVar3);
+  XA_ApplyEq((IXAudioVoice *)pIVar7,iVar5,uVar3,0);
+  SND_SetSoundFileChannelInfo(iVar5,(uint)bVar1,iVar2,SFLS_LOADED);
+  fVar10 = SND_GetStreamChannelVolume(iVar5);
+  SND_SetStreamChannelVolume(iVar5,fVar10);
+  fVar10 = g_snd.chaninfo[iVar5].timescaleLerp;
+  dVar9 = floor((double)((g_snd.timescale * fVar10 + (1.0 - fVar10)) *
+                         g_snd.chaninfo[iVar5].pitchInfo.value * (float)(longlong)iVar2 + 0.5));
+  SND_SetStreamChannelPlaybackRate(iVar5,(int)dVar9);
+  bVar8 = SND_IsAliasChannel3D(uVar3);
+  if (!bVar8) {
+    SND_UpdateStreamChannelReverb(iVar5);
   }
   __restgprlr_23();
   return;
@@ -1809,56 +1973,64 @@ void XA_InitializeStreamVoice(void)
 
 // 8263E3D0  XA_ShutdownChannels  (xenon/snd_driver.cpp:2057)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void XA_ShutdownChannels(void)
 
 {
-  longlong lVar1;
+  ulong uVar1;
   longlong lVar2;
+  int iVar3;
   
   __savegprlr_27();
-  lVar1 = 0;
+  iVar3 = 0;
   do {
-    if (((int)lVar1 < 0) || (7 < (int)lVar1)) {
-      MyAssertHandler(0xffffffff821881f8,0xb3e,0,0xffffffff8200aef4,0xffffffff82189a68,lVar1);
+    if ((iVar3 < 0) || (7 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb3e,
+                      0,"%s\n\t(index) = %i");
     }
-    SND_StopChannel(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 8);
-  lVar2 = 8;
-  lVar1 = 0x20;
+    SND_StopChannel(iVar3);
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 8);
+  iVar3 = 8;
+  lVar2 = 0x20;
   do {
-    if (((int)lVar2 < 8) || (0x27 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff821881f8,0xb5a,0,0xffffffff8200aef4,0xffffffff82189a88,lVar2);
+    if ((iVar3 < 8) || (0x27 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb5a,
+                      0,"%s\n\t(index) = %i");
     }
-    SND_StopChannel(lVar2);
-    lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + 1;
-  } while (lVar1 != 0);
-  lVar1 = 0;
+    SND_StopChannel(iVar3);
+    lVar2 = lVar2 + -1;
+    iVar3 = iVar3 + 1;
+  } while (lVar2 != 0);
+  iVar3 = 0;
   do {
-    SND_StopStreamChannel(lVar1 + 0x28);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 0xe);
-  XAudioVoice_Release(DAT_8421c150);
-  __restgprlr_27();
+    SND_StopStreamChannel(iVar3 + 0x28);
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 0xe);
+  uVar1 = XAudioVoice_Release((IXAudioVoice *)xaGlob.submixReverb);
+  __restgprlr_27(uVar1);
   return;
 }
 
 
 // 826386C0  XA_SetSpatializationCurves  (xenon/snd_driver.cpp:2076)
 
-void XA_SetSpatializationCurves(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_SetSpatializationCurves(int param_1)
 
 {
   float fVar1;
-  int iVar3;
-  char cVar5;
-  ulonglong uVar2;
+  snd_alias_t *psVar2;
+  snd_alias_t *psVar3;
   int iVar4;
-  int iVar6;
-  ulonglong uVar7;
-  int iVar9;
-  longlong lVar8;
+  bool bVar6;
+  int iVar5;
+  X3DAUDIO_DISTANCE_CURVE_POINT *pXVar7;
+  ulonglong uVar8;
+  longlong lVar9;
   int iVar11;
   longlong lVar10;
   double dVar12;
@@ -1868,109 +2040,113 @@ void XA_SetSpatializationCurves(void)
   double dVar16;
   double dVar17;
   double dVar18;
-  float *local_50;
+  float (*local_50) [2];
   float local_4c;
   
-  __savegprlr_29();
-  iVar3 = __savefpr_28();
-  cVar5 = SND_IsAliasChannel3D(*(int *)((&DAT_84888184)[iVar3 * 0x30] + 0x3c) >> 9 & 0x3f);
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0x826,0,0xffffffff82000f98,0xffffffff82188db8);
+  __savegprlr_29(param_1);
+  iVar4 = __savefpr_28();
+  bVar6 = SND_IsAliasChannel3D((g_snd.chaninfo[iVar4].alias0)->flags >> 9 & 0x3f);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x826,0,
+                    "%s");
   }
-  iVar4 = (&DAT_84888184)[iVar3 * 0x30];
-  fVar1 = *(float *)(&DAT_84888194 + iVar3 * 0xc0);
+  psVar2 = g_snd.chaninfo[iVar4].alias0;
+  psVar3 = g_snd.chaninfo[iVar4].alias1;
+  fVar1 = g_snd.chaninfo[iVar4].lerp;
   dVar18 = 1.0;
-  local_50 = (float *)0x0;
-  dVar17 = (double)(*(float *)((&DAT_84888188)[iVar3 * 0x30] + 0x30) * fVar1 +
-                   *(float *)(iVar4 + 0x30) * (1.0 - fVar1));
-  dVar16 = (double)(*(float *)((&DAT_84888188)[iVar3 * 0x30] + 0x34) * fVar1 +
-                   *(float *)(iVar4 + 0x34) * (1.0 - fVar1));
-  uVar2 = Com_GetVolumeFalloffCurve(*(undefined4 *)(iVar4 + 0x5c),&local_50);
+  local_50 = (float (*) [2])0x0;
+  dVar17 = (double)(psVar3->distMin * fVar1 + psVar2->distMin * (1.0 - fVar1));
+  dVar16 = (double)(psVar3->distMax * fVar1 + psVar2->distMax * (1.0 - fVar1));
+  iVar4 = Com_GetVolumeFalloffCurve(psVar2->volumeFalloffCurve,&local_50);
   dVar15 = 0.0;
-  if ((((*local_50 != 0.0) || ((double)local_50[1] != dVar18)) ||
-      (iVar3 = (int)((uVar2 & 0xffffffff) << 3),
-      (double)*(float *)((int)local_50 + iVar3 + -8) != dVar18)) ||
-     (*(float *)((int)local_50 + iVar3 + -4) != 0.0)) {
-    MyAssertHandler(0xffffffff821881f8,0x82e,0,0xffffffff82000f98,0xffffffff82188d40);
+  if (((((*local_50)[0] != 0.0) || ((double)(*local_50)[1] != dVar18)) ||
+      ((double)local_50[iVar4 + -1][0] != dVar18)) || (local_50[iVar4 + -1][1] != 0.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x82e,0,
+                    "%s");
   }
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 2) || (0xf < iVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0x82f,0,0xffffffff8217541c,0xffffffff82188d18,uVar2);
+  if ((iVar4 < 2) || (0xf < iVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x82f,0,
+                    "%s\n\t(knotCount) = %i");
   }
   dVar14 = (double)(float)(dVar17 / dVar16);
   dVar12 = 0.9999989867210388;
-  uVar7 = 1;
-  iVar4 = (int)(uVar2 - 1);
+  uVar8 = 1;
+  iVar5 = (int)((longlong)iVar4 + -1);
   dVar17 = dVar14;
   if ((float)(0.9999989867210388 - dVar14) < 0.0) {
     dVar17 = dVar12;
   }
-  *(float *)(DAT_84220834 + 8) = (float)dVar17;
-  *(float *)(DAT_84220834 + 0xc) = (float)dVar18;
-  if (1 < iVar4) {
-    if (3 < iVar3 + -2) {
+  xaGlob.linearVolumeFalloffCurve.pPoints[1].Distance = (float)dVar17;
+  xaGlob.linearVolumeFalloffCurve.pPoints[1].DSPSetting = (float)dVar18;
+  if (1 < iVar5) {
+    if (3 < iVar4 + -2) {
       dVar17 = (double)(float)(dVar18 - dVar14);
-      iVar6 = DAT_84220834 + 8;
+      pXVar7 = xaGlob.linearVolumeFalloffCurve.pPoints + 1;
       iVar11 = 8;
       do {
-        iVar9 = iVar11 + 0x18;
-        uVar7 = uVar7 + 4;
-        dVar13 = (double)(float)((double)*(float *)(iVar11 + (int)local_50) * dVar17 + dVar14);
+        uVar8 = uVar8 + 4;
+        dVar13 = (double)(float)((double)*(float *)((int)*local_50 + iVar11) * dVar17 + dVar14);
         if ((float)(0.9999989867210388 - dVar13) < 0.0) {
           dVar13 = dVar12;
         }
-        *(float *)(iVar6 + 8) = (float)dVar13;
-        *(undefined4 *)(iVar11 + DAT_84220834 + 0xc) = *(undefined4 *)((int)local_50 + iVar11 + 4);
-        dVar13 = (double)(float)((double)*(float *)((int)local_50 + iVar11 + 8) * dVar17 + dVar14);
+        pXVar7[1].Distance = (float)dVar13;
+        *(undefined4 *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[1].DSPSetting + iVar11) =
+             *(undefined4 *)((int)*local_50 + iVar11 + 4);
+        dVar13 = (double)(float)((double)*(float *)((int)local_50[1] + iVar11) * dVar17 + dVar14);
         if ((float)(0.9999989867210388 - dVar13) < 0.0) {
           dVar13 = dVar12;
         }
-        *(float *)(iVar11 + 0x10 + DAT_84220834) = (float)dVar13;
-        *(undefined4 *)(iVar11 + DAT_84220834 + 0x14) =
-             *(undefined4 *)((int)local_50 + iVar11 + 0xc);
-        dVar13 = (double)(float)((double)*(float *)(iVar11 + 0x10 + (int)local_50) * dVar17 + dVar14
-                                );
+        *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[2].Distance + iVar11) =
+             (float)dVar13;
+        *(undefined4 *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[2].DSPSetting + iVar11) =
+             *(undefined4 *)((int)local_50[1] + iVar11 + 4);
+        dVar13 = (double)(float)((double)*(float *)((int)local_50[2] + iVar11) * dVar17 + dVar14);
         if ((float)(0.9999989867210388 - dVar13) < 0.0) {
           dVar13 = dVar12;
         }
-        *(float *)(iVar9 + DAT_84220834) = (float)dVar13;
-        *(undefined4 *)(iVar11 + DAT_84220834 + 0x1c) =
-             *(undefined4 *)((int)local_50 + iVar11 + 0x14);
-        dVar13 = (double)(float)((double)*(float *)(iVar9 + (int)local_50) * dVar17 + dVar14);
+        *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[3].Distance + iVar11) =
+             (float)dVar13;
+        *(undefined4 *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[3].DSPSetting + iVar11) =
+             *(undefined4 *)((int)local_50[2] + iVar11 + 4);
+        dVar13 = (double)(float)((double)*(float *)((int)local_50[3] + iVar11) * dVar17 + dVar14);
         if ((float)(0.9999989867210388 - dVar13) < 0.0) {
           dVar13 = dVar12;
         }
-        *(float *)(iVar9 + DAT_84220834 + 8) = (float)dVar13;
-        *(undefined4 *)(iVar11 + DAT_84220834 + 0x24) =
-             *(undefined4 *)((int)local_50 + iVar11 + 0x1c);
-        iVar6 = iVar11 + 0x20 + DAT_84220834;
+        *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[4].Distance + iVar11) =
+             (float)dVar13;
+        *(undefined4 *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[4].DSPSetting + iVar11) =
+             *(undefined4 *)((int)local_50[3] + iVar11 + 4);
+        pXVar7 = (X3DAUDIO_DISTANCE_CURVE_POINT *)
+                 ((int)&xaGlob.linearVolumeFalloffCurve.pPoints[4].Distance + iVar11);
         iVar11 = iVar11 + 0x20;
-      } while ((int)uVar7 < iVar3 + -4);
+      } while ((int)uVar8 < iVar4 + -4);
     }
-    if ((int)uVar7 < iVar4) {
-      lVar8 = (uVar2 - 1) - uVar7;
-      lVar10 = (uVar7 & 0x1fffffff) << 3;
-      uVar7 = lVar8 + uVar7;
+    if ((int)uVar8 < iVar5) {
+      lVar9 = ((longlong)iVar4 + -1) - uVar8;
+      lVar10 = (uVar8 & 0x1fffffff) << 3;
+      uVar8 = lVar9 + uVar8;
       do {
-        iVar4 = (int)lVar10;
-        dVar17 = (double)(float)((double)*(float *)(iVar4 + (int)local_50) *
+        iVar5 = (int)lVar10;
+        dVar17 = (double)(float)((double)*(float *)((int)*local_50 + iVar5) *
                                  (double)(float)(dVar18 - dVar14) + dVar14);
         if ((float)(0.9999989867210388 - dVar17) < 0.0) {
           dVar17 = dVar12;
         }
-        *(float *)(iVar4 + DAT_84220834 + 8) = (float)dVar17;
+        *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[1].Distance + iVar5) =
+             (float)dVar17;
         lVar10 = lVar10 + 8;
-        *(undefined4 *)(iVar4 + DAT_84220834 + 0xc) = *(undefined4 *)((int)local_50 + iVar4 + 4);
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
+        *(undefined4 *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[1].DSPSetting + iVar5) =
+             *(undefined4 *)((int)*local_50 + iVar5 + 4);
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
     }
   }
   local_4c = (float)dVar15;
-  iVar4 = (int)((uVar7 & 0x1fffffff) << 3);
-  *(float *)(iVar4 + DAT_84220834 + 8) = (float)dVar18;
-  DAT_84220838 = iVar3 + 1;
-  *(float *)(iVar4 + DAT_84220834 + 0xc) = local_4c;
-  DAT_842206a8 = (float)dVar16;
+  iVar5 = (int)((uVar8 & 0x1fffffff) << 3);
+  *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[1].Distance + iVar5) = (float)dVar18;
+  xaGlob.linearVolumeFalloffCurve.PointCount = iVar4 + 1;
+  *(float *)((int)&xaGlob.linearVolumeFalloffCurve.pPoints[1].DSPSetting + iVar5) = local_4c;
+  xaGlob.emitter.CurveDistanceScaler = (float)dVar16;
   __restfpr_28();
   __restgprlr_29();
   return;
@@ -1979,38 +2155,42 @@ void XA_SetSpatializationCurves(void)
 
 // 82638A78  XA_CalcOmnidirectionalPercentage  (xenon/snd_driver.cpp:2114)
 
-double XA_CalcOmnidirectionalPercentage(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+float XA_CalcOmnidirectionalPercentage(snd_alias_t *param_1)
 
 {
   float fVar1;
-  double dVar2;
-  double dVar3;
+  float fVar2;
+  float fVar3;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x845,0,0xffffffff82000f98,0xffffffff8201d9d0);
+  if (param_1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x845,0,
+                    "%s");
   }
-  dVar3 = (double)*(float *)(param_1 + 0x68);
-  dVar2 = (double)*(float *)(DAT_8421bfe0 + 0xc);
-  if (dVar2 < dVar3) {
-    fVar1 = *(float *)(param_1 + 0x60);
-    if (DAT_842206d8 - fVar1 <= 0.0) {
-      return dVar3;
+  fVar1 = param_1->envelopPercentage;
+  fVar2 = (snd_omnidirectionalPercentage->current).value;
+  if (fVar2 < fVar1) {
+    fVar3 = param_1->envelopMin;
+    if (xaGlob.dspSettings.EmitterToListenerDistance - fVar3 <= 0.0) {
+      return fVar1;
     }
-    if (*(float *)(param_1 + 100) != fVar1) {
-      fVar1 = (DAT_842206d8 - fVar1) / (*(float *)(param_1 + 100) - fVar1);
-      if (fVar1 < 1.0) {
-        dVar2 = (double)(float)((double)(float)(dVar3 - (double)*(float *)(DAT_8421bfe0 + 0xc)) *
-                                (double)(1.0 - fVar1) + (double)*(float *)(DAT_8421bfe0 + 0xc));
+    if (param_1->envelopMax != fVar3) {
+      fVar3 = (xaGlob.dspSettings.EmitterToListenerDistance - fVar3) / (param_1->envelopMax - fVar3)
+      ;
+      if (fVar3 < 1.0) {
+        fVar2 = (fVar1 - (snd_omnidirectionalPercentage->current).value) * (1.0 - fVar3) +
+                (snd_omnidirectionalPercentage->current).value;
       }
     }
   }
-  return dVar2;
+  return fVar2;
 }
 
 
 // 82638B58  XA_ApplyOmnidirectionality  (xenon/snd_driver.cpp:2138)
 
-void XA_ApplyOmnidirectionality(void)
+void XA_ApplyOmnidirectionality(float **param_1,float param_2)
 
 {
   float fVar1;
@@ -2025,17 +2205,19 @@ void XA_ApplyOmnidirectionality(void)
   double dVar9;
   double dVar10;
   
-  puVar5 = (undefined4 *)__savegprlr_26();
+  puVar5 = (undefined4 *)__savegprlr_26((double)param_2,param_1);
   dVar8 = extraout_f1;
   if (puVar5 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821881f8,0x85f,0,0xffffffff82000f98,0xffffffff82114ed8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x85f,0,
+                    "%s");
   }
   puVar6 = puVar5 + -1;
   lVar7 = 4;
   dVar10 = 0.0;
   do {
     if (puVar6[1] == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x866,0,0xffffffff82000f98,0xffffffff82188e08);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x866,
+                      0,"%s");
     }
     puVar6 = puVar6 + 1;
     lVar7 = lVar7 + -1;
@@ -2063,145 +2245,166 @@ void XA_ApplyOmnidirectionality(void)
 
 // 82638C88  XA_51_SpecificVolumeCoefficientAdjustments  (xenon/snd_driver.cpp:2165)
 
-void XA_51_SpecificVolumeCoefficientAdjustments
-               (undefined8 param_1,double param_2,undefined8 param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_51_SpecificVolumeCoefficientAdjustments(float param_1,float param_2,float param_3)
 
 {
-  float *pfVar1;
-  longlong lVar2;
-  undefined4 **ppuVar3;
-  double dVar4;
+  float fVar1;
+  XaVolumeCoefficients *pXVar2;
+  longlong lVar3;
+  XaVolumeCoefficients **ppXVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  undefined4 *local_a0;
-  undefined4 *local_9c;
-  undefined4 *local_98;
-  undefined4 *local_94;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  XaVolumeCoefficients *local_a0 [40];
   
-  __savegprlr_23();
-  dVar4 = (double)__savefpr_25();
-  dVar10 = 0.0;
-  dVar8 = 1.0;
-  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    MyAssertHandler(dVar4,0xffffffff821881f8,0x87b,0,0xffffffff82189108,0xffffffff82189124,dVar4);
+  dVar7 = (double)param_3;
+  dVar6 = (double)param_2;
+  __savegprlr_23((double)param_1);
+  dVar5 = (double)__savefpr_25();
+  dVar13 = 0.0;
+  dVar11 = 1.0;
+  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x87b,0,
+                    "%s\n\t(lfePercentage) = %g");
   }
-  if ((param_2 < dVar10) || (dVar8 < param_2)) {
-    MyAssertHandler(param_2,0xffffffff821881f8,0x87c,0,0xffffffff821890b4,0xffffffff821890d0,param_2
-                   );
+  if ((dVar6 < dVar13) || (dVar11 < dVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x87c,0,
+                    "%s\n\t(centerPercentage) = %g");
   }
-  dVar7 = (double)(float)(dVar8 - param_2);
-  local_a0 = &DAT_842206e4;
-  if (DAT_842206bc == 1) {
-    local_9c = &DAT_842206e8;
-    local_98 = &DAT_842206f4;
-    local_94 = &DAT_842206f8;
-    ppuVar3 = &local_a0;
-    lVar2 = 4;
-    DAT_842206e4 = DAT_842206ec * 0.5 + DAT_842206e4;
-    DAT_842206e8 = DAT_842206ec * 0.5 + DAT_842206e8;
-    dVar5 = dVar10;
-    dVar6 = dVar10;
+  dVar10 = (double)(float)(dVar11 - dVar6);
+  local_a0[0] = &xaGlob.volumeCoefficients;
+  if (xaGlob.dspSettings.SrcChannelCount == 1) {
+    local_a0[1] = (XaVolumeCoefficients *)0x842206e8;
+    local_a0[2] = (XaVolumeCoefficients *)0x842206f4;
+    local_a0[3] = (XaVolumeCoefficients *)0x842206f8;
+    ppXVar4 = local_a0;
+    lVar3 = 4;
+    xaGlob.volumeCoefficients.mono.leftFront =
+         xaGlob.volumeCoefficients.mono.center * 0.5 + xaGlob.volumeCoefficients.mono.leftFront;
+    xaGlob.volumeCoefficients.mono.rightFront =
+         xaGlob.volumeCoefficients.mono.center * 0.5 + xaGlob.volumeCoefficients.mono.rightFront;
+    dVar8 = dVar13;
+    dVar9 = dVar13;
     while( true ) {
-      pfVar1 = (float *)*ppuVar3;
-      if ((float)(dVar10 - (double)*pfVar1) < 0.0) {
-        dVar10 = (double)*pfVar1;
+      pXVar2 = *ppXVar4;
+      if ((float)(dVar13 - (double)(pXVar2->mono).leftFront) < 0.0) {
+        dVar13 = (double)(pXVar2->mono).leftFront;
       }
-      DAT_842206f0 = (float)dVar10;
-      DAT_842206ec = (float)((double)*pfVar1 * param_2 + dVar5);
-      dVar10 = (double)DAT_842206ec;
-      if ((dVar10 < dVar6) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x894,0,0xffffffff82189024,0xffffffff82188fc0,dVar10);
+      xaGlob.volumeCoefficients.mono.lfe = (float)dVar13;
+      xaGlob.volumeCoefficients.mono.center =
+           (float)((double)(pXVar2->mono).leftFront * dVar6 + dVar8);
+      if (((double)xaGlob.volumeCoefficients.mono.center < dVar9) ||
+         (dVar11 < (double)xaGlob.volumeCoefficients.mono.center)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x894,0,"%s\n\t(xaGlob.volumeCoefficients.mono.center) = %g");
       }
-      dVar10 = (double)(float)((double)*pfVar1 * dVar7);
-      *pfVar1 = (float)((double)*pfVar1 * dVar7);
-      if ((dVar10 < dVar6) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x897,0,0xffffffff82189094,0xffffffff82189058,
-                        (double)*pfVar1);
+      fVar1 = (float)((double)(pXVar2->mono).leftFront * dVar10);
+      dVar13 = (double)fVar1;
+      (pXVar2->mono).leftFront = fVar1;
+      if ((dVar13 < dVar9) || (dVar11 < dVar13)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x897,0,"%s\n\t((*speakers[index])) = %g");
       }
-      dVar10 = (double)DAT_842206f0;
-      lVar2 = lVar2 + -1;
-      ppuVar3 = ppuVar3 + 1;
-      if (lVar2 == 0) break;
-      dVar5 = (double)DAT_842206ec;
+      dVar13 = (double)xaGlob.volumeCoefficients.mono.lfe;
+      lVar3 = lVar3 + -1;
+      ppXVar4 = ppXVar4 + 1;
+      if (lVar3 == 0) break;
+      dVar8 = (double)xaGlob.volumeCoefficients.mono.center;
     }
-    DAT_842206f0 = (float)(dVar10 * dVar4);
+    xaGlob.volumeCoefficients.mono.lfe = (float)(dVar13 * dVar5);
   }
   else {
-    dVar9 = 0.5;
-    local_9c = &DAT_842206ec;
-    local_98 = (undefined4 *)&DAT_84220704;
-    local_94 = (undefined4 *)&DAT_8422070c;
-    ppuVar3 = &local_a0;
-    lVar2 = 4;
-    DAT_842206e4 = DAT_842206f4 * 0.5 + DAT_842206e4;
-    DAT_842206ec = DAT_842206f4 * 0.5 + DAT_842206ec;
-    dVar6 = dVar10;
-    dVar5 = dVar10;
+    dVar12 = 0.5;
+    local_a0[1] = (XaVolumeCoefficients *)0x842206ec;
+    local_a0[2] = (XaVolumeCoefficients *)0x84220704;
+    local_a0[3] = (XaVolumeCoefficients *)0x8422070c;
+    ppXVar4 = local_a0;
+    lVar3 = 4;
+    xaGlob.volumeCoefficients.mono.leftFront =
+         xaGlob.volumeCoefficients.mono.leftRear * 0.5 + xaGlob.volumeCoefficients.mono.leftFront;
+    xaGlob.volumeCoefficients.mono.center =
+         xaGlob.volumeCoefficients.mono.leftRear * 0.5 + xaGlob.volumeCoefficients.mono.center;
+    dVar9 = dVar13;
+    dVar8 = dVar13;
     while( true ) {
-      pfVar1 = (float *)*ppuVar3;
-      if ((float)(dVar10 - (double)*pfVar1) < 0.0) {
-        dVar10 = (double)*pfVar1;
+      pXVar2 = *ppXVar4;
+      if ((float)(dVar13 - (double)(pXVar2->mono).leftFront) < 0.0) {
+        dVar13 = (double)(pXVar2->mono).leftFront;
       }
-      DAT_842206fc = (float)dVar10;
-      DAT_842206f4 = (float)((double)*pfVar1 * param_2 + dVar6);
-      dVar10 = (double)DAT_842206f4;
-      if ((dVar10 < dVar5) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x8b3,0,0xffffffff82188f50,0xffffffff82188ed8,dVar10);
+      xaGlob.volumeCoefficients.stereo.leftInputLfe = (float)dVar13;
+      xaGlob.volumeCoefficients.mono.leftRear =
+           (float)((double)(pXVar2->mono).leftFront * dVar6 + dVar9);
+      if (((double)xaGlob.volumeCoefficients.mono.leftRear < dVar8) ||
+         (dVar11 < (double)xaGlob.volumeCoefficients.mono.leftRear)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x8b3,0,"%s\n\t(xaGlob.volumeCoefficients.stereo.leftInputCenter) = %g");
       }
-      dVar10 = (double)(float)((double)*pfVar1 * dVar7);
-      *pfVar1 = (float)((double)*pfVar1 * dVar7);
-      if ((dVar10 < dVar5) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x8b6,0,0xffffffff82189094,0xffffffff82188f8c,
-                        (double)*pfVar1);
+      fVar1 = (float)((double)(pXVar2->mono).leftFront * dVar10);
+      dVar13 = (double)fVar1;
+      (pXVar2->mono).leftFront = fVar1;
+      if ((dVar13 < dVar8) || (dVar11 < dVar13)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x8b6,0,"%s\n\t((*speakers[index])) = %g");
       }
-      dVar10 = (double)DAT_842206fc;
-      lVar2 = lVar2 + -1;
-      ppuVar3 = ppuVar3 + 1;
-      if (lVar2 == 0) break;
-      dVar6 = (double)DAT_842206f4;
+      dVar13 = (double)xaGlob.volumeCoefficients.stereo.leftInputLfe;
+      lVar3 = lVar3 + -1;
+      ppXVar4 = ppXVar4 + 1;
+      if (lVar3 == 0) break;
+      dVar9 = (double)xaGlob.volumeCoefficients.mono.leftRear;
     }
-    DAT_842206fc = (float)(dVar10 * dVar4);
-    XA_ApplyOmnidirectionality(param_3,&local_a0);
-    local_a0 = &DAT_842206e8;
-    local_9c = &DAT_842206f0;
-    local_98 = (undefined4 *)&DAT_84220708;
-    ppuVar3 = &local_a0;
-    lVar2 = 4;
-    local_94 = (undefined4 *)&DAT_84220710;
-    DAT_842206e8 = (float)((double)DAT_842206f8 * dVar9) + DAT_842206e8;
-    DAT_842206f0 = (float)((double)DAT_842206f8 * dVar9) + DAT_842206f0;
-    dVar10 = dVar5;
-    dVar6 = dVar5;
+    xaGlob.volumeCoefficients.stereo.leftInputLfe = (float)(dVar13 * dVar5);
+    XA_ApplyOmnidirectionality((float **)local_a0,(float)dVar7);
+    local_a0[0] = (XaVolumeCoefficients *)((int)&xaGlob.volumeCoefficients + 4);
+    local_a0[1] = (XaVolumeCoefficients *)0x842206f0;
+    local_a0[2] = (XaVolumeCoefficients *)0x84220708;
+    ppXVar4 = local_a0;
+    lVar3 = 4;
+    local_a0[3] = (XaVolumeCoefficients *)0x84220710;
+    xaGlob.volumeCoefficients.mono.rightFront =
+         (float)((double)xaGlob.volumeCoefficients.mono.rightRear * dVar12) +
+         xaGlob.volumeCoefficients.mono.rightFront;
+    xaGlob.volumeCoefficients.mono.lfe =
+         (float)((double)xaGlob.volumeCoefficients.mono.rightRear * dVar12) +
+         xaGlob.volumeCoefficients.mono.lfe;
+    dVar13 = dVar8;
+    dVar9 = dVar8;
     while( true ) {
-      pfVar1 = (float *)*ppuVar3;
-      if ((float)(dVar5 - (double)*pfVar1) < 0.0) {
-        dVar5 = (double)*pfVar1;
+      pXVar2 = *ppXVar4;
+      if ((float)(dVar8 - (double)(pXVar2->mono).leftFront) < 0.0) {
+        dVar8 = (double)(pXVar2->mono).leftFront;
       }
-      DAT_84220700 = (float)dVar5;
-      DAT_842206f8 = (float)(param_2 * (double)*pfVar1 + dVar10);
-      dVar10 = (double)DAT_842206f8;
-      if ((dVar10 < dVar6) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x8cf,0,0xffffffff82188e94,0xffffffff82188e20,dVar10);
+      xaGlob.volumeCoefficients.stereo.rightInputLfe = (float)dVar8;
+      xaGlob.volumeCoefficients.mono.rightRear =
+           (float)(dVar6 * (double)(pXVar2->mono).leftFront + dVar13);
+      if (((double)xaGlob.volumeCoefficients.mono.rightRear < dVar9) ||
+         (dVar11 < (double)xaGlob.volumeCoefficients.mono.rightRear)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x8cf,0,"%s\n\t(xaGlob.volumeCoefficients.stereo.rightInputCenter) = %g");
       }
-      dVar10 = (double)(float)(dVar7 * (double)*pfVar1);
-      *pfVar1 = (float)(dVar7 * (double)*pfVar1);
-      if ((dVar10 < dVar6) || (dVar8 < dVar10)) {
-        MyAssertHandler(0xffffffff821881f8,0x8d2,0,0xffffffff82189094,0xffffffff82189058,
-                        (double)*pfVar1);
+      fVar1 = (float)(dVar10 * (double)(pXVar2->mono).leftFront);
+      dVar13 = (double)fVar1;
+      (pXVar2->mono).leftFront = fVar1;
+      if ((dVar13 < dVar9) || (dVar11 < dVar13)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x8d2,0,"%s\n\t((*speakers[index])) = %g");
       }
-      dVar5 = (double)DAT_84220700;
-      lVar2 = lVar2 + -1;
-      ppuVar3 = ppuVar3 + 1;
-      if (lVar2 == 0) break;
-      dVar10 = (double)DAT_842206f8;
+      dVar8 = (double)xaGlob.volumeCoefficients.stereo.rightInputLfe;
+      lVar3 = lVar3 + -1;
+      ppXVar4 = ppXVar4 + 1;
+      if (lVar3 == 0) break;
+      dVar13 = (double)xaGlob.volumeCoefficients.mono.rightRear;
     }
-    DAT_84220700 = (float)(dVar5 * dVar4);
+    xaGlob.volumeCoefficients.stereo.rightInputLfe = (float)(dVar8 * dVar5);
   }
-  XA_ApplyOmnidirectionality(param_3,&local_a0);
+  XA_ApplyOmnidirectionality((float **)local_a0,(float)dVar7);
   __restfpr_25();
   __restgprlr_23();
   return;
@@ -2210,25 +2413,27 @@ void XA_51_SpecificVolumeCoefficientAdjustments
 
 // 826390F8  XA_SpatializeChannel  (xenon/snd_driver.cpp:2269)
 
-void XA_SpatializeChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void XA_SpatializeChannel(int param_1)
 
 {
   float fVar1;
   float fVar2;
-  float fVar3;
+  snd_alias_t *psVar3;
   int iVar4;
-  char cVar5;
-  float *pfVar6;
+  bool bVar5;
+  XAUDIOCHANNELVOLUMEENTRY **ppXVar6;
   float *pfVar7;
   int iVar8;
   double dVar9;
   double dVar10;
-  undefined8 uVar11;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
+  float fVar16;
   float local_c8;
   float local_c4;
   float local_c0;
@@ -2242,11 +2447,12 @@ void XA_SpatializeChannel(void)
   float local_94;
   float local_90;
   
-  __savegprlr_21();
+  __savegprlr_21(param_1);
   iVar4 = __savefpr_28();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0x8e9,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x8e9,0,
+                    "%s");
   }
   if (iVar4 < 8) {
     if (0x27 < iVar4) goto LAB_82639178;
@@ -2256,126 +2462,141 @@ void XA_SpatializeChannel(void)
 LAB_82639178:
     if (iVar4 < 0x36) goto LAB_826391a4;
   }
-  MyAssertHandler(0xffffffff821881f8,0x8ea,0,0xffffffff8200aef4,0xffffffff821893e8,iVar4);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x8ea,0,
+                  "%s\n\t(index) = %i");
 LAB_826391a4:
   Profile_Begin(0x150);
-  iVar8 = iVar4 * 0xc0;
-  if (**(char **)((&DAT_84888184)[iVar4 * 0x30] + 0x6c) != '\0') {
-    cVar5 = SND_IsAliasChannel3D(*(int *)((&DAT_84888184)[iVar4 * 0x30] + 0x3c) >> 9 & 0x3f);
-    if (cVar5 == '\0') {
-      MyAssertHandler(0xffffffff821881f8,0x8f6,0,0xffffffff82000f98,0xffffffff82188db8);
+  psVar3 = g_snd.chaninfo[iVar4].alias0;
+  if (psVar3->speakerMap->isDefault != false) {
+    bVar5 = SND_IsAliasChannel3D(psVar3->flags >> 9 & 0x3f);
+    if (!bVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x8f6,
+                      0,"%s");
     }
-    if ((&DAT_84888120)[iVar4 * 0x30] == 0xffff) {
-      MyAssertHandler(0xffffffff821881f8,0x8f7,0,0xffffffff82000f98,0xffffffff821893b8);
+    if (g_snd.chaninfo[iVar4].sndEnt.handle == 0xffff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x8f7,
+                      0,"%s");
     }
-    CG_GetSoundEntityOrientation((&DAT_84888120)[iVar4 * 0x30],&local_c8,&local_b0);
+    CG_GetSoundEntityOrientation(g_snd.chaninfo[iVar4].sndEnt,&local_c8,(float (*) [3])&local_b0);
     if (((((uint)local_c8 & 0x7f800000) == 0x7f800000) ||
         (((uint)local_c4 & 0x7f800000) == 0x7f800000)) ||
        (((uint)local_c0 & 0x7f800000) == 0x7f800000)) {
-      MyAssertHandler(0xffffffff821881f8,0x8fa,0,0xffffffff82000f98,0xffffffff82071450);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x8fa,
+                      0,"%s");
     }
-    DAT_84220650 = local_b0;
-    DAT_84220658 = -local_a8;
-    DAT_84220654 = local_ac;
-    DAT_84220664 = -local_90;
-    DAT_8422065c = local_98;
-    DAT_84220660 = local_94;
-    *(float *)(&DAT_848881a0 + iVar8) = local_c0;
-    *(float *)(&DAT_84888198 + iVar8) = local_c8;
-    *(float *)(&DAT_8488819c + iVar8) = local_c4;
-    fVar1 = *(float *)(&DAT_848881a8 + iVar8);
-    fVar2 = *(float *)(&DAT_848881ac + iVar8);
-    fVar3 = *(float *)(&DAT_848881a4 + iVar8);
-    local_c0 = fVar2 * local_90 + local_9c * fVar1 + fVar3 * local_a8 + local_c0;
-    DAT_84220668 = fVar2 * local_98 + local_a4 * fVar1 + fVar3 * local_b0 + local_c8;
-    DAT_84220670 = -local_c0;
-    DAT_8422066c = fVar2 * local_94 + local_a0 * fVar1 + fVar3 * local_ac + local_c4;
-    local_c8 = DAT_84220668;
-    local_c4 = DAT_8422066c;
+    xaGlob.emitter.OrientFront.z = -local_a8;
+    xaGlob.emitter.OrientTop.z = -local_90;
+    g_snd.chaninfo[iVar4].org[2] = local_c0;
+    g_snd.chaninfo[iVar4].org[0] = local_c8;
+    g_snd.chaninfo[iVar4].org[1] = local_c4;
+    fVar16 = g_snd.chaninfo[iVar4].offset[1];
+    fVar1 = g_snd.chaninfo[iVar4].offset[2];
+    fVar2 = g_snd.chaninfo[iVar4].offset[0];
+    xaGlob.emitter.OrientFront.y = local_ac;
+    xaGlob.emitter.OrientFront.x = local_b0;
+    xaGlob.emitter.OrientTop.x = local_98;
+    xaGlob.emitter.OrientTop.y = local_94;
+    local_c0 = fVar1 * local_90 + local_9c * fVar16 + fVar2 * local_a8 + local_c0;
+    xaGlob.emitter.Position.x = fVar1 * local_98 + local_a4 * fVar16 + fVar2 * local_b0 + local_c8;
+    xaGlob.emitter.Position.z = -local_c0;
+    xaGlob.emitter.Position.y = fVar1 * local_94 + local_a0 * fVar16 + fVar2 * local_ac + local_c4;
+    local_c8 = xaGlob.emitter.Position.x;
+    local_c4 = xaGlob.emitter.Position.y;
     XA_UpdateXAudioListener(&local_c8);
     XA_SetSpatializationCurves(iVar4);
-    DAT_84220688 = *(int *)(&DAT_84888118 + iVar8);
-    DAT_842206bc = DAT_84220688;
+    xaGlob.emitter.ChannelCount = g_snd.chaninfo[iVar4].soundFileInfo.srcChannelCount;
+    xaGlob.dspSettings.SrcChannelCount = xaGlob.emitter.ChannelCount;
     Profile_Begin(0x151);
-    X3DAudioCalculate(0xffffffff8421bfe8,0xffffffff84220618,0xffffffff8422064c,DAT_842206b0,
-                      0xffffffff842206b4);
-    Profile_EndInternal(0);
+    X3DAudioCalculate(xaGlob.xaudioHandle,&xaGlob.listener,&xaGlob.emitter,xaGlob.calc3DFlags,
+                      &xaGlob.dspSettings);
+    Profile_EndInternal((double *)0x0);
     iVar8 = 0;
-    dVar15 = 0.0;
-    dVar16 = 1.0;
-    DAT_84220764 = (byte)((longlong)DAT_842206c0 * (longlong)DAT_842206bc);
-    if (((longlong)DAT_842206c0 * (longlong)DAT_842206bc & 0xffU) != 0) {
-      pfVar7 = (float *)0x842206e0;
-      dVar13 = -0.0010000000474974513;
-      dVar14 = 1.0010000467300415;
+    dVar14 = 0.0;
+    dVar15 = 1.0;
+    xaGlob.channelVolume[0].EntryCount =
+         (uchar)((longlong)(int)xaGlob.dspSettings.DstChannelCount *
+                (longlong)(int)xaGlob.dspSettings.SrcChannelCount);
+    if (((longlong)(int)xaGlob.dspSettings.DstChannelCount *
+         (longlong)(int)xaGlob.dspSettings.SrcChannelCount & 0xffU) != 0) {
+      pfVar7 = &xaGlob.dspSettings.ListenerVelocityComponent;
+      dVar12 = -0.0010000000474974513;
+      dVar13 = 1.0010000467300415;
       do {
-        dVar10 = (double)pfVar7[1];
-        if ((dVar14 < dVar10) || (dVar10 < dVar13)) {
-          MyAssertHandler(0xffffffff821881f8,0x919,0,0xffffffff82189370,0xffffffff821892d0,dVar10);
+        if ((dVar13 < (double)pfVar7[1]) || ((double)pfVar7[1] < dVar12)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x919,0,
+                          "%s\n\t(xaGlob.volumeCoefficients.anonymousArray[volumeEntryIndex]) = %g")
+          ;
         }
         dVar9 = (double)pfVar7[1];
         iVar8 = iVar8 + 1;
-        dVar10 = dVar16;
-        if ((float)(dVar9 - dVar16) < 0.0) {
-          dVar10 = dVar9;
+        dVar11 = dVar15;
+        if ((float)(dVar9 - dVar15) < 0.0) {
+          dVar11 = dVar9;
         }
-        dVar12 = dVar15;
+        dVar10 = dVar14;
         if (-dVar9 < 0.0) {
-          dVar12 = dVar10;
+          dVar10 = dVar11;
         }
         pfVar7 = pfVar7 + 1;
-        *pfVar7 = (float)dVar12;
-      } while (iVar8 < (int)(uint)DAT_84220764);
+        *pfVar7 = (float)dVar10;
+      } while (iVar8 < (int)(uint)xaGlob.channelVolume[0].EntryCount);
     }
-    iVar8 = (&DAT_84888184)[iVar4 * 0x30];
-    uVar11 = XA_CalcOmnidirectionalPercentage(iVar8);
+    psVar3 = g_snd.chaninfo[iVar4].alias0;
+    fVar16 = XA_CalcOmnidirectionalPercentage(psVar3);
     XA_51_SpecificVolumeCoefficientAdjustments
-              ((double)*(float *)(iVar8 + 0x50),(double)*(float *)(iVar8 + 0x54),uVar11);
-    dVar13 = (double)XA_GetDryLevel((&DAT_84888184)[iVar4 * 0x30]);
+              (psVar3->lfePercentage,psVar3->centerPercentage,fVar16);
+    fVar16 = XA_GetDryLevel(g_snd.chaninfo[iVar4].alias0);
+    dVar12 = (double)fVar16;
     iVar8 = 0;
-    if (DAT_84220764 != 0) {
-      pfVar6 = (float *)&DAT_84220770;
-      pfVar7 = (float *)0x842206e0;
+    if (xaGlob.channelVolume[0].EntryCount != '\0') {
+      ppXVar6 = &xaGlob.channelVolume[1].paEntries;
+      pfVar7 = &xaGlob.dspSettings.ListenerVelocityComponent;
       do {
-        dVar14 = (double)pfVar7[1];
-        if ((dVar16 < dVar14) || (dVar14 < dVar15)) {
-          MyAssertHandler(0xffffffff821881f8,0x922,0,0xffffffff82189370,0xffffffff82189248,dVar14);
+        if ((dVar15 < (double)pfVar7[1]) || ((double)pfVar7[1] < dVar14)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x922,0,
+                          "%s\n\t(xaGlob.volumeCoefficients.anonymousArray[volumeEntryIndex]) = %g")
+          ;
         }
         pfVar7 = pfVar7 + 1;
         iVar8 = iVar8 + 1;
-        pfVar6 = pfVar6 + 2;
-        *pfVar6 = (float)((double)*pfVar7 * dVar13);
-      } while (iVar8 < (int)(uint)DAT_84220764);
+        ppXVar6 = ppXVar6 + 2;
+        *ppXVar6 = (XAUDIOCHANNELVOLUMEENTRY *)(float)((double)*pfVar7 * dVar12);
+      } while (iVar8 < (int)(uint)xaGlob.channelVolume[0].EntryCount);
     }
-    DAT_8422076c = (byte)DAT_842206bc;
-    dVar14 = (double)XA_GetWetLevel((&DAT_84888184)[iVar4 * 0x30]);
-    dVar13 = (double)DAT_842206cc;
-    if ((dVar13 < dVar15) || (dVar16 < dVar13)) {
-      MyAssertHandler(dVar13,0xffffffff821881f8,0x929,0,0xffffffff821891cc,0xffffffff821891f8,dVar13
-                     );
-      dVar13 = (double)DAT_842206cc;
+    xaGlob.channelVolume[1].EntryCount = (uchar)xaGlob.dspSettings.SrcChannelCount;
+    fVar16 = XA_GetWetLevel(g_snd.chaninfo[iVar4].alias0);
+    dVar13 = (double)fVar16;
+    dVar12 = (double)xaGlob.dspSettings.ReverbLevel;
+    if ((dVar12 < dVar14) || (dVar15 < dVar12)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x929,
+                      0,"%s\n\t(xaGlob.dspSettings.ReverbLevel) = %g");
+      dVar12 = (double)xaGlob.dspSettings.ReverbLevel;
     }
     iVar8 = 0;
-    if (DAT_8422076c != 0) {
-      pfVar7 = (float *)&DAT_842207d8;
+    if (xaGlob.channelVolume[1].EntryCount != '\0') {
+      pfVar7 = &xaGlob.channelVolumeEntries[1][0].Volume;
       while( true ) {
-        *pfVar7 = (float)(dVar13 * dVar14);
-        if (((uint)(float)(dVar13 * dVar14) & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff821881f8,0x92f,0,0xffffffff82000f98,0xffffffff82189170);
+        *pfVar7 = (float)(dVar12 * dVar13);
+        if (((uint)(float)(dVar12 * dVar13) & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                          0x92f,0,"%s");
         }
         iVar8 = iVar8 + 1;
         pfVar7 = pfVar7 + 2;
-        if ((int)(uint)DAT_8422076c <= iVar8) break;
-        dVar13 = (double)DAT_842206cc;
+        if ((int)(uint)xaGlob.channelVolume[1].EntryCount <= iVar8) break;
+        dVar12 = (double)xaGlob.dspSettings.ReverbLevel;
       }
     }
-    if ((&DAT_8421bffc)[iVar4] == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x934,0,0xffffffff82000f98,0xffffffff82189158);
+    if (xaGlob.voice[iVar4] == (IXAudioSourceVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x934,
+                      0,"%s");
     }
-    XAudioVoice_SetVoiceOutputVolume((&DAT_8421bffc)[iVar4],0xffffffff8422074c);
+    XAudioVoice_SetVoiceOutputVolume((IXAudioVoice *)xaGlob.voice[iVar4],&xaGlob.voiceVolume);
   }
-  Profile_EndInternal(0);
-  __restfpr_28();
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restfpr_28(iVar4);
   __restgprlr_21();
   return;
 }
@@ -2383,59 +2604,78 @@ LAB_826391a4:
 
 // 82639618  SND_SetEqLerp  (xenon/snd_driver.cpp:2368)
 
-void SND_SetEqLerp(double param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqLerp(float param_1)
 
 {
-  if ((0.0 <= param_1) && (param_1 <= 1.0)) {
-    DAT_8421df7c = (float)param_1;
+  double dVar1;
+  
+  dVar1 = (double)param_1;
+  if ((0.0 <= dVar1) && (dVar1 <= 1.0)) {
+    xaGlob.eqLerp = param_1;
     return;
   }
-  MyAssertHandler(param_1,0xffffffff821881f8,0x942,0,0xffffffff8200ab18,0xffffffff82189464,param_1);
-  DAT_8421df7c = (float)param_1;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x942,0,
+                  "%s\n\t(lerp) = %g");
+  xaGlob.eqLerp = (float)dVar1;
   return;
 }
 
 
 // 826396C0  SND_SetEqParams  (xenon/snd_driver.cpp:2377)
 
-void SND_SetEqParams(undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-                    ulonglong param_5,ulonglong param_6,undefined4 param_7)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqParams(int param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,
+                    float param_6,float param_7)
 
 {
   int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   double extraout_f1;
-  double dVar3;
-  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  __savegprlr_27();
+  dVar6 = (double)param_7;
+  dVar5 = (double)param_6;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  __savegprlr_27((double)param_5,param_1);
   uVar2 = __savefpr_28();
-  dVar3 = extraout_f1;
+  dVar7 = extraout_f1;
   if (0x3f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x94b,0,0xffffffff82188c28,uVar2,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94b,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x94c,0,0xffffffff82188bec,param_6,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94c,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x94d,0,0xffffffff82188bb0,param_5,2);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94d,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  dVar4 = 0.0;
-  if ((param_2 < 0.0) || (20000.0 < param_2)) {
-    MyAssertHandler(param_2,0xffffffff821881f8,0x94e,0,0xffffffff8218949c,0xffffffff821894ac,param_2
-                   );
+  dVar8 = 0.0;
+  if ((dVar5 < 0.0) || (20000.0 < dVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94e,0,
+                    "%s\n\t(freq) = %g");
   }
-  if (param_3 <= dVar4) {
-    MyAssertHandler(param_3,0xffffffff821881f8,0x94f,0,0xffffffff82189484,0xffffffff82189494,param_3
-                   );
+  if (dVar6 <= dVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94f,0,
+                    "%s\n\t(q) = %g");
   }
-  uVar2 = (param_5 + (param_5 & 0x7fffffff) * 2 + param_6 & 0x3ffffff) * 0x40 + uVar2;
+  uVar2 = (uVar3 + (uVar3 & 0x7fffffff) * 2 + uVar4 & 0x3ffffff) * 0x40 + uVar2;
   iVar1 = (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-  *(float *)((int)&DAT_8421c180 + iVar1) = (float)dVar3;
-  *(undefined4 *)((int)&DAT_8421c17c + iVar1) = param_7;
-  *(float *)((int)&DAT_8421c184 + iVar1) = (float)param_2;
-  (&DAT_8421c18c)[iVar1] = 1;
-  *(float *)((int)&DAT_8421c188 + iVar1) = (float)param_3;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].gain + iVar1) = (float)dVar7;
+  *(SND_EQTYPE *)((int)&xaGlob.eq[0][0].params[0].type + iVar1) = param_4;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].freq + iVar1) = (float)dVar5;
+  (&xaGlob.eq[0][0].params[0].enabled)[iVar1] = true;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].q + iVar1) = (float)dVar6;
   __restfpr_28();
   __restgprlr_27();
   return;
@@ -2444,26 +2684,35 @@ void SND_SetEqParams(undefined8 param_1,double param_2,double param_3,undefined8
 
 // 82639858  SND_SetEqType  (xenon/snd_driver.cpp:2395)
 
-void SND_SetEqType(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqType(int param_1,int param_2,int param_3,SND_EQTYPE param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar2 = __savegprlr_27();
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_27(param_1);
   if (0x3f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x95d,0,0xffffffff82188c28,uVar2,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x95d,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x95e,0,0xffffffff82188bec,param_3,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x95e,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x95f,0,0xffffffff82188bb0,param_2,2);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x95f,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 + param_3 & 0x3ffffff) * 0x40 + uVar2;
+  uVar2 = (uVar3 + (uVar3 & 0x7fffffff) * 2 + uVar4 & 0x3ffffff) * 0x40 + uVar2;
   iVar1 = (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  (&DAT_8421c18c)[iVar1] = 1;
-  *(undefined4 *)((int)&DAT_8421c17c + iVar1) = param_4;
+  (&xaGlob.eq[0][0].params[0].enabled)[iVar1] = true;
+  *(SND_EQTYPE *)((int)&xaGlob.eq[0][0].params[0].type + iVar1) = param_4;
   __restgprlr_27();
   return;
 }
@@ -2471,32 +2720,42 @@ void SND_SetEqType(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefi
 
 // 82639938  SND_SetEqFreq  (xenon/snd_driver.cpp:2408)
 
-void SND_SetEqFreq(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqFreq(int param_1,int param_2,int param_3,float param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   double extraout_f1;
-  double dVar3;
+  double dVar5;
   
-  uVar2 = __savegprlr_28();
-  dVar3 = extraout_f1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28((double)param_4,param_1);
+  dVar5 = extraout_f1;
   if (0x3f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x96a,0,0xffffffff82188c28,uVar2,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x96a,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x96b,0,0xffffffff82188bec,param_3,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x96b,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x96c,0,0xffffffff82188bb0,param_2,2);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x96c,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  if ((dVar3 < 0.0) || (20000.0 < dVar3)) {
-    MyAssertHandler(dVar3,0xffffffff821881f8,0x96d,0,0xffffffff8218949c,0xffffffff821894ac,dVar3);
+  if ((dVar5 < 0.0) || (20000.0 < dVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x96d,0,
+                    "%s\n\t(freq) = %g");
   }
-  uVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 + param_3 & 0x3ffffff) * 0x40 + uVar2;
+  uVar2 = (uVar3 + (uVar3 & 0x7fffffff) * 2 + uVar4 & 0x3ffffff) * 0x40 + uVar2;
   iVar1 = (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  *(float *)((int)&DAT_8421c184 + iVar1) = (float)dVar3;
-  (&DAT_8421c18c)[iVar1] = 1;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].freq + iVar1) = (float)dVar5;
+  (&xaGlob.eq[0][0].params[0].enabled)[iVar1] = true;
   __restgprlr_28();
   return;
 }
@@ -2504,29 +2763,38 @@ void SND_SetEqFreq(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82639A70  SND_SetEqGain  (xenon/snd_driver.cpp:2422)
 
-void SND_SetEqGain(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqGain(int param_1,int param_2,int param_3,float param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   double extraout_f1;
-  double dVar3;
+  double dVar5;
   
-  uVar2 = __savegprlr_28();
-  dVar3 = extraout_f1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28((double)param_4,param_1);
+  dVar5 = extraout_f1;
   if (0x3f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x978,0,0xffffffff82188c28,uVar2,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x978,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x979,0,0xffffffff82188bec,param_3,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x979,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x97a,0,0xffffffff82188bb0,param_2,2);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x97a,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 + param_3 & 0x3ffffff) * 0x40 + uVar2;
+  uVar2 = (uVar3 + (uVar3 & 0x7fffffff) * 2 + uVar4 & 0x3ffffff) * 0x40 + uVar2;
   iVar1 = (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  *(float *)((int)&DAT_8421c180 + iVar1) = (float)dVar3;
-  (&DAT_8421c18c)[iVar1] = 1;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].gain + iVar1) = (float)dVar5;
+  (&xaGlob.eq[0][0].params[0].enabled)[iVar1] = true;
   __restgprlr_28();
   return;
 }
@@ -2534,32 +2802,42 @@ void SND_SetEqGain(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82639B58  SND_SetEqQ  (xenon/snd_driver.cpp:2435)
 
-void SND_SetEqQ(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetEqQ(int param_1,int param_2,int param_3,float param_4)
 
 {
   int iVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   double extraout_f1;
-  double dVar3;
+  double dVar5;
   
-  uVar2 = __savegprlr_28();
-  dVar3 = extraout_f1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28((double)param_4,param_1);
+  dVar5 = extraout_f1;
   if (0x3f < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x985,0,0xffffffff82188c28,uVar2,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x985,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x986,0,0xffffffff82188bec,param_3,3);
+  if (2 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x986,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x987,0,0xffffffff82188bb0,param_2,2);
+  if (1 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x987,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  if (dVar3 <= 0.0) {
-    MyAssertHandler(dVar3,0xffffffff821881f8,0x988,0,0xffffffff82189484,0xffffffff82189494,dVar3);
+  if (dVar5 <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x988,0,
+                    "%s\n\t(q) = %g");
   }
-  uVar2 = (param_2 + (param_2 & 0x7fffffff) * 2 + param_3 & 0x3ffffff) * 0x40 + uVar2;
+  uVar2 = (uVar3 + (uVar3 & 0x7fffffff) * 2 + uVar4 & 0x3ffffff) * 0x40 + uVar2;
   iVar1 = (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  *(float *)((int)&DAT_8421c188 + iVar1) = (float)dVar3;
-  (&DAT_8421c18c)[iVar1] = 1;
+  *(float *)((int)&xaGlob.eq[0][0].params[0].q + iVar1) = (float)dVar5;
+  (&xaGlob.eq[0][0].params[0].enabled)[iVar1] = true;
   __restgprlr_28();
   return;
 }
@@ -2567,23 +2845,33 @@ void SND_SetEqQ(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82639C80  SND_DisableEq  (xenon/snd_driver.cpp:2449)
 
-void SND_DisableEq(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_DisableEq(int param_1,int param_2,int param_3)
 
 {
   ulonglong uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)param_3;
+  uVar2 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if (0x3f < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x993,0,0xffffffff82188c28,uVar1,0x40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x993,0,
+                    "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  if (2 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x994,0,0xffffffff82188bec,param_3,3);
+  if (2 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x994,0,
+                    "band doesn\'t index SND_MAX_EQBANDS\n\t%i not in [0, %i)");
   }
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0x995,0,0xffffffff82188bb0,param_2,2);
+  if (1 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x995,0,
+                    "eqIndex doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (param_2 + (param_2 & 0x7fffffff) * 2 + param_3 & 0x3ffffff) * 0x40 + uVar1;
-  (&DAT_8421c18c)[(int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 2)] = 0;
+  uVar1 = (uVar2 + (uVar2 & 0x7fffffff) * 2 + uVar3 & 0x3ffffff) * 0x40 + uVar1;
+  (&xaGlob.eq[0][0].params[0].enabled)[(int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 2)]
+       = false;
   __restgprlr_28();
   return;
 }
@@ -2591,31 +2879,31 @@ void SND_DisableEq(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82639D58  SND_SaveEq  (xenon/snd_driver.cpp:2461)
 
-void SND_SaveEq(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SaveEq(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
+  MemoryFile *pMVar1;
   longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_27();
-  MemFile_WriteFloat((double)DAT_8421df7c);
-  lVar3 = 0;
+  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
+  MemFile_WriteFloat(pMVar1,xaGlob.eqLerp);
+  iVar3 = 0;
   do {
     lVar2 = 3;
     do {
-      lVar4 = 0;
+      iVar4 = 0;
       do {
-        MemFile_WriteData(uVar1,0x14,
-                          (lVar3 + lVar4 + (lVar3 + lVar4 & 0x3fffffffU) * 4 & 0x3fffffff) * 4 +
-                          -0x7bde3e84);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 0x40);
+        MemFile_WriteData(pMVar1,0x14,xaGlob.eq[0][0].params + iVar3 + iVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 0x40);
       lVar2 = lVar2 + -1;
-      lVar3 = lVar3 + 0x40;
+      iVar3 = iVar3 + 0x40;
     } while (lVar2 != 0);
-  } while ((int)lVar3 < 0x180);
+  } while (iVar3 < 0x180);
   __restgprlr_27();
   return;
 }
@@ -2623,38 +2911,39 @@ void SND_SaveEq(void)
 
 // 82639DD0  SND_RestoreEq  (xenon/snd_driver.cpp:2479)
 
-void SND_RestoreEq(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_RestoreEq(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
+  MemoryFile *pMVar1;
   longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
-  uint local_40;
-  uint local_3c;
+  int iVar3;
+  int iVar4;
+  float local_40;
+  float local_3c;
   
-  uVar1 = __savegprlr_27();
-  MemFile_ReadData(uVar1,4,&local_40);
+  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
+  MemFile_ReadData(pMVar1,4,&local_40);
   local_3c = local_40;
-  if ((local_40 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82188090,0xc6,0,0xffffffff82000f98,0xffffffff820606fc);
+  if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
+                    "%s");
   }
-  DAT_8421df7c = local_40;
-  lVar3 = 0;
+  iVar3 = 0;
+  xaGlob.eqLerp = local_40;
   do {
     lVar2 = 3;
     do {
-      lVar4 = 0;
+      iVar4 = 0;
       do {
-        MemFile_ReadData(uVar1,0x14,
-                         (lVar3 + lVar4 + (lVar3 + lVar4 & 0x3fffffffU) * 4 & 0x3fffffff) * 4 +
-                         -0x7bde3e84);
-        lVar4 = lVar4 + 1;
-      } while ((int)lVar4 < 0x40);
+        MemFile_ReadData(pMVar1,0x14,xaGlob.eq[0][0].params + iVar3 + iVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 0x40);
       lVar2 = lVar2 + -1;
-      lVar3 = lVar3 + 0x40;
+      iVar3 = iVar3 + 0x40;
     } while (lVar2 != 0);
-  } while ((int)lVar3 < 0x180);
+  } while (iVar3 < 0x180);
   __restgprlr_27();
   return;
 }
@@ -2662,57 +2951,54 @@ void SND_RestoreEq(void)
 
 // 82639E98  SND_PrintEqParams  (xenon/snd_driver.cpp:2497)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void SND_PrintEqParams(void)
 
 {
-  undefined8 uVar1;
+  undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
+  longlong lVar6;
   undefined8 local_78;
-  int local_70;
-  float local_6c;
-  float local_68;
-  float local_64;
+  float local_70 [4];
   char local_60;
   
   __savegprlr_23();
-  Com_Printf(9,0xffffffff821894f0,(double)DAT_8421df7c);
-  iVar5 = 0;
-  if (0 < DAT_84888110) {
+  Com_Printf(9,"Current EQ Settings\n---------------\n lerp = %.2f\n");
+  iVar3 = 0;
+  if (0 < g_snd.entchannel_count) {
     do {
-      uVar1 = SND_GetEntChannelName(iVar5);
-      Com_Printf(9,0xffffffff821894cc,uVar1);
-      lVar4 = 0;
-      iVar6 = 0;
+      SND_GetEntChannelName(iVar3);
+      Com_Printf(9,"+ %s\n");
+      iVar4 = 0;
       do {
-        iVar7 = 0;
+        iVar5 = 0;
         do {
-          puVar2 = (undefined4 *)((int)&local_78 + 4);
-          lVar8 = 5;
-          puVar3 = &DAT_8421c178 + ((iVar6 + iVar7) * 0x40 + iVar5) * 5;
+          puVar1 = (undefined4 *)((int)&local_78 + 4);
+          lVar6 = 5;
+          puVar2 = (undefined4 *)
+                   ((int)xaGlob.stereoSourcePassthroughChannelEntry +
+                   ((iVar4 + iVar5) * 0x40 + iVar3) * 0x14 + 0xc);
           do {
-            puVar3 = puVar3 + 1;
             puVar2 = puVar2 + 1;
-            *puVar2 = *puVar3;
-            lVar8 = lVar8 + -1;
-          } while (lVar8 != 0);
+            puVar1 = puVar1 + 1;
+            *puVar1 = *puVar2;
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
           if (local_60 != '\0') {
-            local_78 = (double)local_64;
-            Com_Printf(9,0xffffffff821894d4,lVar4,iVar7,(&PTR_s_lowpass_829a6558)[local_70],
-                       (double)local_68,(double)local_6c,local_78);
+            local_78 = (double)local_70[3];
+            Com_Printf(9,"\t%i %i %s %f Hz %f dB %f q\n");
           }
-          iVar7 = iVar7 + 1;
-        } while (iVar7 < 3);
-        iVar6 = iVar6 + 3;
-        lVar4 = lVar4 + 1;
-      } while (iVar6 < 6);
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < DAT_84888110);
+          iVar5 = iVar5 + 1;
+        } while (iVar5 < 3);
+        iVar4 = iVar4 + 3;
+      } while (iVar4 < 6);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < g_snd.entchannel_count);
   }
   __restgprlr_23();
   return;
@@ -2721,182 +3007,207 @@ void SND_PrintEqParams(void)
 
 // 82639FF0  QueryMasterEffectSize  (xenon/snd_driver.cpp:2526)
 
-void QueryMasterEffectSize(undefined8 param_1,ulonglong param_2)
+undefined4 QueryMasterEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 {
   int iVar1;
+  undefined4 uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_29();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x9df,0,0xffffffff82000f98,0xffffffff82188b40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x9df,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x9e0,0,0xffffffff82000f98,0xffffffff82188b34);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x9e0,0,
+                    "%s");
   }
-  *(undefined4 *)param_2 = 8;
-  __restgprlr_29(0);
-  return;
+  *(undefined4 *)uVar3 = 8;
+  uVar2 = __restgprlr_29(0);
+  return uVar2;
 }
 
 
 // 8263A070  CreateMasterEffect  (xenon/snd_driver.cpp:2536)
 
-void CreateMasterEffect(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+undefined4
+CreateMasterEffect(XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  MjpegCaptureDsp *pMVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  iVar1 = __savegprlr_28();
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x9e9,0,0xffffffff82000f98,0xffffffff821484e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x9e9,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x9ea,0,0xffffffff82000f98,0xffffffff82067364);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x9ea,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x9eb,0,0xffffffff82000f98,0xffffffff82188b48);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x9eb,0,
+                    "%s");
   }
-  iVar1 = (**(code **)(*(int *)param_2 + 0x14))(param_2,8);
-  if (iVar1 != 0) {
-    uVar2 = MjpegCaptureDsp__MjpegCaptureDsp();
-    *(undefined4 *)param_3 = uVar2;
-    __restgprlr_28(0);
-    return;
+  pMVar2 = (MjpegCaptureDsp *)(**(code **)(*(int *)uVar4 + 0x14))(uVar4,8);
+  if (pMVar2 != (MjpegCaptureDsp *)0x0) {
+    pMVar2 = MjpegCaptureDsp::MjpegCaptureDsp(pMVar2);
+    *(undefined4 *)uVar5 = pMVar2;
+    uVar3 = __restgprlr_28(0);
+    return uVar3;
   }
-  *(undefined4 *)param_3 = 0;
-  __restgprlr_28(0);
-  return;
+  *(undefined4 *)uVar5 = 0;
+  uVar3 = __restgprlr_28(0);
+  return uVar3;
 }
 
 
 // 8263A150  SND_GetSoundEqOverlay  (xenon/snd_driver.cpp:2554)
 
-void SND_GetSoundEqOverlay(undefined8 param_1,int param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_GetSoundEqOverlay(snd_eqoverlay_info_t *param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  int iVar3;
+  float *pfVar4;
   int iVar5;
   int iVar6;
   int iVar7;
-  undefined4 *puVar8;
-  undefined4 *puVar9;
+  int iVar8;
+  int iVar9;
   int iVar10;
   longlong lVar11;
   
-  iVar2 = __savegprlr_27();
-  if (param_2 < DAT_84888110) {
-    MyAssertHandler(0xffffffff821881f8,0xa00,0,0xffffffff82000f98,0xffffffff82189524);
+  iVar2 = __savegprlr_27(param_1);
+  if (param_2 < g_snd.entchannel_count) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xa00,0,
+                    "%s");
   }
   iVar10 = 0;
-  if (0 < DAT_84888110) {
+  if (0 < g_snd.entchannel_count) {
     iVar5 = 0;
-    puVar4 = (undefined4 *)(iVar2 + 0x18);
-    puVar3 = &DAT_8421c67c;
+    pfVar4 = (float *)(iVar2 + 0x18);
+    iVar3 = -0x7bde3984;
     do {
-      *puVar4 = DAT_8421df7c;
+      *pfVar4 = xaGlob.eqLerp;
       iVar7 = 0;
       lVar11 = 2;
-      puVar8 = puVar3;
+      iVar8 = iVar3;
       do {
         iVar6 = iVar5 + iVar7;
         iVar1 = iVar6 * 4;
-        puVar9 = puVar8 + 0x140;
+        iVar9 = iVar8 + 0x500;
         iVar7 = iVar7 + 3;
-        *(undefined4 **)(iVar1 + iVar2) = puVar8 + -0x140;
-        *(undefined4 **)(iVar1 + iVar2 + 4) = puVar8;
-        puVar8 = puVar8 + 0x3c0;
-        *(undefined4 **)((iVar6 + 2) * 4 + iVar2) = puVar9;
+        *(int *)(iVar1 + iVar2) = iVar8 + -0x500;
+        *(int *)(iVar1 + iVar2 + 4) = iVar8;
+        iVar8 = iVar8 + 0xf00;
+        *(int *)((iVar6 + 2) * 4 + iVar2) = iVar9;
         lVar11 = lVar11 + -1;
       } while (lVar11 != 0);
       iVar10 = iVar10 + 1;
-      puVar4 = puVar4 + 7;
+      pfVar4 = pfVar4 + 7;
       iVar5 = iVar5 + 7;
-      puVar3 = puVar3 + 5;
-    } while (iVar10 < DAT_84888110);
+      iVar3 = iVar3 + 0x14;
+    } while (iVar10 < g_snd.entchannel_count);
   }
-  __restgprlr_27();
-  return;
+  iVar2 = __restgprlr_27();
+  return iVar2;
 }
 
 
 // 8263A248  SND_InitMemory  (xenon/snd_driver.cpp:2583)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 void SND_InitMemory(void)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar1;
   undefined1 *local_90 [2];
   undefined1 local_88 [4];
   undefined4 local_84;
-  undefined1 local_80;
+  undefined1 local_80 [4];
   undefined1 **local_7c;
-  undefined1 local_78 [4];
-  undefined1 *local_74;
-  undefined1 local_70 [8];
-  undefined1 *local_68;
-  undefined1 local_60 [8];
-  undefined4 local_58;
+  XAUDIOFXREGISTER local_78;
+  XAUDIOENGINEINIT local_70;
+  XAUDIOMASTERINGVOICEINIT local_60 [8];
   
   __savegprlr_23();
-  if (DAT_84222950 != 0) {
-    MyAssertHandler(0xffffffff821881f8,0xa20,0,0xffffffff82000f98,0xffffffff821895c8);
+  if (xaStreamInitialReadBuffer != (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xa20,0,
+                    "%s");
   }
-  uVar1 = PMem_Alloc_NoDebug(0x41000,0x800,4);
-  DAT_84222950 = (int)uVar1;
-  track_static_alloc_internal(uVar1,0x41000,0xffffffff821895b8,0xe);
-  DAT_8421c148 = 5;
-  local_58 = 0;
-  DAT_8421c14c = &DAT_8421c10c;
+  xaStreamInitialReadBuffer = PMem_Alloc_NoDebug(0x41000,0x800,4);
+  track_static_alloc_internal(xaStreamInitialReadBuffer,0x41000,"SND_InitDriver",0xe);
+  xaGlob.fxtable.EffectCount = '\x05';
+  local_60[0].pContext = (void *)0x0;
+  xaGlob.fxtable.paEffects = xaGlob.effects;
   local_90[0] = local_88;
   local_7c = local_90;
-  local_68 = local_60;
-  DAT_8421c10c = 0;
-  DAT_8421c110 = XAudioQuerySourceEffectSize;
-  DAT_8421c114 = XAudioCreateSourceEffect;
-  DAT_8421c118 = 0x1000000;
-  DAT_8421c11c = XAudioQueryRouterEffectSize;
-  DAT_8421c120 = XAudioCreateRouterEffect;
-  DAT_8421c124 = 0x2000000;
-  DAT_8421c128 = XAudioQueryNativeRenderEffectSize;
-  DAT_8421c12c = XAudioCreateNativeRenderEffect;
-  DAT_8421c130 = 0x3000000;
-  DAT_8421c134 = XAudioQueryReverbEffectSize;
-  DAT_8421c138 = XAudioCreateReverbEffect;
+  local_70.pMasteringVoiceInit = local_60;
+  xaGlob.effects[0].EffectId = '\0';
+  xaGlob.effects[0]._1_3_ = 0;
+  xaGlob.effects[1].EffectId = '\x01';
+  xaGlob.effects[1]._1_3_ = 0;
+  xaGlob.effects[2].EffectId = '\x02';
+  xaGlob.effects[2]._1_3_ = 0;
+  xaGlob.effects[3].EffectId = '\x03';
+  xaGlob.effects[3]._1_3_ = 0;
   local_88[0] = 4;
-  DAT_8421c13c = 4;
-  DAT_8421c144 = CreateMasterEffect;
-  DAT_8421c140 = QueryMasterEffectSize;
+  xaGlob.effects[4].EffectId = '\x04';
+  xaGlob.effects[4].pfnCreateEffect = CreateMasterEffect;
+  xaGlob.effects[4].pfnQueryEffectSize = QueryMasterEffectSize;
   local_84 = 0;
-  local_80 = 1;
+  local_80[0] = 1;
+  local_60[0]._0_8_ = ZEXT48(local_80) << 0x20;
+  local_70.MaxVoiceChannelCount = '\x06';
+  local_70.SubmixStageCount = '\x01';
+  local_70.ThreadUsage = '\x10';
+  local_70._3_1_ = 0;
+  local_70.pEffectTable = (XAUDIOFXTABLE *)0x8421c148;
+  xaGlob.effects[0].pfnQueryEffectSize = XAudioQuerySourceEffectSize;
+  xaGlob.effects[0].pfnCreateEffect = XAudioCreateSourceEffect;
+  xaGlob.effects[1].pfnQueryEffectSize = XAudioQueryRouterEffectSize;
+  xaGlob.effects[1].pfnCreateEffect = XAudioCreateRouterEffect;
+  xaGlob.effects[2].pfnQueryEffectSize = XAudioQueryNativeRenderEffectSize;
+  xaGlob.effects[2].pfnCreateEffect = XAudioCreateNativeRenderEffect;
+  xaGlob.effects[3].pfnQueryEffectSize = XAudioQueryReverbEffectSize;
+  xaGlob.effects[3].pfnCreateEffect = XAudioCreateReverbEffect;
   do {
-    iVar3 = XAudioInitialize(local_70);
-  } while (DAT_84013128 != 0);
-  if (iVar3 < 0) {
-    MyAssertHandler(0xffffffff821881f8,0xa58,0,0xffffffff82000f98,0xffffffff82188a88);
+    iVar1 = XAudioInitialize(&local_70);
+  } while (alwaysfails != 0);
+  if (iVar1 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xa58,0,
+                    "%s");
   }
   XA_InitChannels();
-  local_78[0] = 1;
-  DAT_8421df7c = 0x3f800000;
-  DAT_8421df88 = CreateDSPEffect;
-  DAT_8421df84 = QueryDSPEffectSize;
-  local_74 = &DAT_8421df80;
+  local_78.EffectCount = '\x01';
+  xaGlob.eqLerp = 1.0;
+  xaGlob.effectInfo.pfnCreateEffect = CreateDSPEffect;
+  xaGlob.effectInfo.pfnQueryEffectSize = QueryDSPEffectSize;
+  local_78.paEffects = &xaGlob.effectInfo;
   do {
-    uVar1 = XAudioRegisterEffects(local_78);
-    if ((int)uVar1 < 0) {
-      do {
-        uVar2 = R_ErrorDescription(uVar1);
-        Sys_Error(0xffffffff82189548,0xa62,uVar2);
-      } while (DAT_84013128 != 0);
-      __restgprlr_23();
-      return;
+    iVar1 = XAudioRegisterEffects(&local_78);
+    if (iVar1 < 0) {
+      R_ErrorDescription(iVar1);
+                    /* WARNING: Subroutine does not return */
+      Sys_Error(
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp (%i) XAudioRegisterEffects( &reg ) failed: %s\n"
+               );
     }
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   __restgprlr_23();
   return;
 }
@@ -2904,178 +3215,214 @@ void SND_InitMemory(void)
 
 // 8263F360  SND_InitDriver  (xenon/snd_driver.cpp:2666)
 
-undefined8 SND_InitDriver(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool SND_InitDriver(void)
 
 {
-  undefined4 *puVar1;
+  XAssetHeader XVar1;
+  ushort in_r4;
+  char *in_r5;
   double dVar2;
   
-  if (DAT_84222950 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xa6b,0,0xffffffff82000f98,0xffffffff8218a814);
+  if (xaStreamInitialReadBuffer == (uchar *)0x0) {
+    in_r5 = (char *)0x0;
+    in_r4 = 0xa6b;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xa6b,0,
+                    "%s");
   }
   PMem_SoundInit();
   dVar2 = 1.0;
-  DAT_8421bfe0 = Dvar_RegisterFloat(0x3fd0000000000000,0,0x3ff0000000000000,0xffffffff8218a7f4);
-  DAT_8421bfe4 = Dvar_RegisterEnum(0xffffffff8218a798,0xffffffff82994e18,0,4,0xffffffff8218a7ac);
-  DAT_8487d9c8 = 1;
-  DAT_8487d9d8 = (float)dVar2;
-  DAT_8488a994 = 8;
-  DAT_8488a99c = 0xe;
-  DAT_8487d9d0 = 0x7fffffff;
-  DAT_8487d9d4 = 6;
-  X3DAudioInitialize(0x40ca2a9f40000000,0x3f,0xffffffff82190000,0xffffffff8421bfe8);
-  DAT_8487d9c9 = 1;
-  DAT_8488a998 = 0x20;
+  snd_omnidirectionalPercentage =
+       Dvar_RegisterFloat("snd_omnidirectionalPercentage",0.25,0.0,1.0,in_r4,in_r5);
+  snd_xenonDebugLevel =
+       Dvar_RegisterEnum("snd_xenonDebugLevel",snd_xenonDebugLevelStrings,0,4,"Debug output level");
+  g_snd.Initialized2d = true;
+  g_snd.timescale = (float)dVar2;
+  g_snd.max_2D_channels = 8;
+  g_snd.max_stream_channels = 0xe;
+  g_snd.playback_rate = 0x7fffffff;
+  g_snd.playback_channels = 6;
+  X3DAudioInitialize(0x3f,13397.244,"ntroller %i, not logged in.\n");
+  g_snd.Initialized3d = true;
+  g_snd.max_3D_channels = 0x20;
   Stream_Init();
   XA_InitSpatializationParams();
-  puVar1 = (undefined4 *)DB_FindXAssetHeader(0x1c,0xffffffff8218a78c,1);
-  DAT_8421f57c = *puVar1;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SNDDRIVER_GLOBALS,"singleton",1);
+  xaGlob.reverbSettings = (XVar1.sndDriverGlobals)->reverbSettings;
   SND_SetRoomtype(0);
   XA_InitEq();
   Com_PacketCacheInit();
-  return 1;
+  return true;
 }
 
 
 // 8263A498  SND_SetRoomtype  (xenon/snd_driver.cpp:2712)
 
-void SND_SetRoomtype(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetRoomtype(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined *local_48;
-  undefined4 local_44;
+  T_HRESULT TVar2;
+  uchar uVar3;
+  XAUDIOFXPARAM local_48 [9];
   
-  iVar2 = __savegprlr_25();
-  if ((iVar2 < 0) || (0x19 < iVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0xa9d,0,0xffffffff821899b8,0xffffffff821899cc,iVar2);
+  iVar1 = __savegprlr_25(param_1);
+  if ((iVar1 < 0) || (0x19 < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xa9d,0,
+                    "%s\n\t(roomtype) = %i");
   }
-  iVar1 = iVar2 * 0x34;
-  if (*(int *)(iVar1 + DAT_8421f57c) == 0) {
-    iVar2 = iVar2 * 0x30;
-    local_48 = &DAT_82994938 + iVar2;
-    uVar5 = 1;
-    local_44 = 0x30;
-    if ((*(uint *)(&DAT_82994940 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xab7,0,0xffffffff82000f98,0xffffffff82189748);
+  if (xaGlob.reverbSettings[iVar1].presetOverridden == 0) {
+    local_48[0]._0_4_ = xaReverbPresets + iVar1;
+    uVar3 = '\x01';
+    local_48[0].Data.BufferSize = 0x30;
+    if (((uint)xaReverbPresets[iVar1].flRoomRolloffFactor & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xab7,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994944 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xab8,0,0xffffffff82000f98,0xffffffff82189718);
+    if (((uint)xaReverbPresets[iVar1].flDecayTime & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xab8,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994948 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xab9,0,0xffffffff82000f98,0xffffffff821896e4);
+    if (((uint)xaReverbPresets[iVar1].flDecayHFRatio & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xab9,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994950 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaba,0,0xffffffff82000f98,0xffffffff821896ac);
+    if (((uint)xaReverbPresets[iVar1].flReflectionsDelay & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaba,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994958 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xabb,0,0xffffffff82000f98,0xffffffff82189678);
+    if (((uint)xaReverbPresets[iVar1].flReverbDelay & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xabb,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_8299495c + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xabc,0,0xffffffff82000f98,0xffffffff82189648);
+    if (((uint)xaReverbPresets[iVar1].flDiffusion & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xabc,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994960 + iVar2) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xabd,0,0xffffffff82000f98,0xffffffff82189618);
+    if (((uint)xaReverbPresets[iVar1].flDensity & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xabd,
+                      0,"%s");
     }
-    if ((*(uint *)(&DAT_82994964 + iVar2) & 0x7f800000) != 0x7f800000) goto LAB_8263a8e4;
-    uVar4 = 0xffffffff821895e4;
-    uVar3 = 0xabe;
+    if (((uint)xaReverbPresets[iVar1].flHFReference & 0x7f800000) != 0x7f800000) goto LAB_8263a8e4;
+    iVar1 = 0xabe;
   }
   else {
-    local_48 = (undefined *)(iVar1 + DAT_8421f57c + 4);
-    uVar5 = 0;
-    local_44 = 0x30;
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x14) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaa6,0,0xffffffff82000f98,0xffffffff82189970);
+    local_48[0]._0_4_ = &xaGlob.reverbSettings[iVar1].reverbSettings;
+    uVar3 = '\0';
+    local_48[0].Data.BufferSize = 0x30;
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.RoomFilterFreq & 0x7f800000) ==
+        0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaa6,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x18) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaa7,0,0xffffffff82000f98,0xffffffff82189928);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.RoomFilterMain & 0x7f800000) ==
+        0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaa7,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x1c) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaa8,0,0xffffffff82000f98,0xffffffff821898e0);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.RoomFilterHF & 0x7f800000) == 0x7f800000)
+    {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaa8,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x20) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaa9,0,0xffffffff82000f98,0xffffffff82189898);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.ReflectionsGain & 0x7f800000) ==
+        0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaa9,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x24) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaaa,0,0xffffffff82000f98,0xffffffff82189850);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.ReverbGain & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaaa,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x28) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaab,0,0xffffffff82000f98,0xffffffff82189808);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.DecayTime & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaab,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x2c) & 0x7f800000) == 0x7f800000) {
-      MyAssertHandler(0xffffffff821881f8,0xaac,0,0xffffffff82000f98,0xffffffff821897c8);
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.Density & 0x7f800000) == 0x7f800000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaac,
+                      0,"%s");
     }
-    if ((*(uint *)(iVar1 + DAT_8421f57c + 0x30) & 0x7f800000) != 0x7f800000) goto LAB_8263a8e4;
-    uVar4 = 0xffffffff82189780;
-    uVar3 = 0xaad;
+    if (((uint)xaGlob.reverbSettings[iVar1].reverbSettings.RoomSize & 0x7f800000) != 0x7f800000)
+    goto LAB_8263a8e4;
+    iVar1 = 0xaad;
   }
-  MyAssertHandler(0xffffffff821881f8,uVar3,0,0xffffffff82000f98,uVar4);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",iVar1,0,
+                  "%s");
 LAB_8263a8e4:
-  XAudioVoice_SetEffectParam(DAT_8421c150,1,uVar5,3,&local_48);
-  __restgprlr_25();
+  TVar2 = XAudioVoice_SetEffectParam
+                    ((IXAudioVoice *)xaGlob.submixReverb,'\x01',uVar3,'\x03',local_48);
+  __restgprlr_25(TVar2);
   return;
 }
 
 
 // 8263E4B8  SND_ShutdownDriver  (xenon/snd_driver.cpp:2764)
 
-void * SND_ShutdownDriver(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void SND_ShutdownDriver(void)
 
 {
-  undefined8 uVar1;
-  void *pvVar2;
+  ulong uVar1;
   
   Stream_Shutdown();
-  if (DAT_8487d9c8 != '\0') {
+  if (g_snd.Initialized2d != false) {
     XA_ShutdownChannels();
     uVar1 = XAudioShutDown();
     if ((int)uVar1 < 0) {
-      Com_PrintError(1,0xffffffff8218a404,uVar1);
+      Com_PrintError(1,"XAudioShutDown() failed due to error %d\n");
     }
-    DAT_8487d9c8 = '\0';
-    DAT_8487d9c9 = 0;
-    DAT_84222954 = 0;
+    g_snd.Initialized2d = false;
+    g_snd.Initialized3d = false;
+    xaThreadDataInitializedOnStreamPacketCallback = false;
   }
-  pvVar2 = memset(&DAT_8421bfe8,0,0x4968);
-  return pvVar2;
+  memset();
+  return;
 }
 
 
 // 8263A908  SND_StopChannel  (xenon/snd_driver.cpp:2793)
 
-void SND_StopChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_StopChannel(int param_1)
 
 {
-  int iVar1;
+  IXAudioVoice *pIVar1;
   int iVar2;
   ulonglong uVar3;
-  char cVar5;
-  undefined8 uVar4;
+  bool bVar5;
+  ulong uVar4;
   
-  uVar3 = __savegprlr_27();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xaef,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar3 = __savegprlr_27(param_1);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaef,0,
+                    "%s");
   }
-  SND_ResetChannelInfo(uVar3);
+  SND_ResetChannelInfo((int)uVar3);
   iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-  iVar1 = *(int *)((int)&DAT_8421bffc + iVar2);
-  if (iVar1 != 0) {
-    SND_RemoveVoice(*(undefined4 *)
-                     ((int)&DAT_84888124 +
-                     (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6)));
+  pIVar1 = *(IXAudioVoice **)((int)xaGlob.voice + iVar2);
+  if (pIVar1 != (IXAudioVoice *)0x0) {
+    SND_RemoveVoice(*(int *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id +
+                            (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6) + -0x14));
     PMem_EnableSoundAlloc();
-    uVar4 = XAudioVoice_Release(iVar1);
+    uVar4 = XAudioVoice_Release(pIVar1);
     PMem_DisableSoundAlloc();
-    if ((int)uVar4 != 0) {
-      MyAssertHandler(0xffffffff821881f8,0xaff,0,0xffffffff82174e08,0xffffffff8218816c,uVar4);
+    if (uVar4 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xaff,
+                      0,"%s\n\t(res) = %i");
     }
-    *(undefined4 *)((int)&DAT_8421bffc + iVar2) = 0;
+    *(undefined4 *)((int)xaGlob.voice + iVar2) = 0;
   }
   __restgprlr_27();
   return;
@@ -3084,28 +3431,35 @@ void SND_StopChannel(void)
 
 // 8263A9F8  SND_PauseChannel  (xenon/snd_driver.cpp:2823)
 
-void SND_PauseChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_PauseChannel(int param_1)
 
 {
-  int iVar1;
+  IXAudioSourceVoice *pIVar1;
   ulonglong uVar2;
-  char cVar4;
-  undefined8 uVar3;
+  bool bVar4;
+  int iVar3;
   
-  uVar2 = __savegprlr_28();
-  cVar4 = Sys_IsMainThread();
-  if ((cVar4 == '\0') && (cVar4 = Sys_IsRenderThread(), cVar4 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xb0c,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar2 = __savegprlr_28(param_1);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb0c,0,
+                    "%s");
   }
-  iVar1 = *(int *)((int)&DAT_8421bffc + (int)((uVar2 & 0xffffffff) << 2));
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xb0f,0,0xffffffff82000f98,0xffffffff8214428c);
+  pIVar1 = *(IXAudioSourceVoice **)((int)xaGlob.voice + (int)((uVar2 & 0xffffffff) << 2));
+  if (pIVar1 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb0f,0,
+                    "%s");
   }
-  uVar3 = XAudioSourceVoice_Stop(iVar1,0);
-  if ((int)uVar3 != 0) {
-    MyAssertHandler(0xffffffff821881f8,0xb12,0,0xffffffff82174e08,0xffffffff8218816c,uVar3);
+  iVar3 = XAudioSourceVoice_Stop(pIVar1,'\0');
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb12,0,
+                    "%s\n\t(res) = %i");
   }
-  (&DAT_848881b0)[(int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6)] = 1;
+  *(undefined1 *)
+   ((int)g_snd.chaninfo[0].offset +
+   (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6) + 0xc) = 1;
   __restgprlr_28();
   return;
 }
@@ -3113,58 +3467,60 @@ void SND_PauseChannel(void)
 
 // 8263AAF0  SND_UnpauseChannel  (xenon/snd_driver.cpp:2842)
 
-void SND_UnpauseChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UnpauseChannel(int param_1,int param_2)
 
 {
-  int iVar1;
+  IXAudioSourceVoice *pIVar1;
   int iVar2;
   ulonglong uVar3;
-  char cVar4;
+  bool bVar5;
+  undefined4 uVar4;
   
-  uVar3 = __savegprlr_28();
-  cVar4 = Sys_IsMainThread();
-  if ((cVar4 == '\0') && (cVar4 = Sys_IsRenderThread(), cVar4 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xb1e,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar3 = __savegprlr_28(param_1,param_2);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb1e,0,
+                    "%s");
   }
-  iVar1 = *(int *)((int)&DAT_8421bffc + (int)((uVar3 & 0xffffffff) << 2));
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xb21,0,0xffffffff82000f98,0xffffffff8214428c);
+  pIVar1 = *(IXAudioSourceVoice **)((int)xaGlob.voice + (int)((uVar3 & 0xffffffff) << 2));
+  if (pIVar1 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb21,0,
+                    "%s");
   }
-  XAudioSourceVoice_Discontinuity(iVar1);
+  uVar4 = XAudioSourceVoice_Discontinuity(pIVar1);
   iVar2 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  if (*(int *)(&DAT_84888128 + iVar2) == -1) {
-    XAudioSourceVoice_Start(iVar1,0);
+  if (*(int *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id + iVar2 + -0x10) == -1) {
+    uVar4 = XAudioSourceVoice_Start(pIVar1,'\0');
   }
-  (&DAT_848881b0)[iVar2] = 0;
-  __restgprlr_28();
+  *(undefined1 *)((int)g_snd.chaninfo[0].offset + iVar2 + 0xc) = 0;
+  __restgprlr_28(uVar4);
   return;
 }
 
 
 // 8263ABD8  SND_Set3DPosition  (xenon/snd_driver.cpp:2868)
 
-void SND_Set3DPosition(undefined8 param_1,uint *param_2)
+void SND_Set3DPosition(int param_1,float *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (0x35 < iVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0xb35,0,0xffffffff8200aef4,0xffffffff82189a2c,uVar1);
+  iVar1 = __savegprlr_29(param_1);
+  if ((iVar1 < 0) || (0x35 < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb35,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((*param_2 & 0x7f800000) != 0x7f800000) {
-    if ((param_2[1] & 0x7f800000) != 0x7f800000) {
-      if ((param_2[2] & 0x7f800000) != 0x7f800000) goto LAB_8263ac94;
-    }
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb37,0,
+                    "%s");
   }
-  MyAssertHandler(0xffffffff821881f8,0xb37,0,0xffffffff82000f98,0xffffffff821899f0);
-LAB_8263ac94:
-  iVar2 = iVar2 * 0xc0;
-  *(uint *)(&DAT_84888198 + iVar2) = *param_2;
-  *(uint *)(&DAT_8488819c + iVar2) = param_2[1];
-  *(uint *)(&DAT_848881a0 + iVar2) = param_2[2];
+  g_snd.chaninfo[iVar1].org[0] = *param_2;
+  g_snd.chaninfo[iVar1].org[1] = param_2[1];
+  g_snd.chaninfo[iVar1].org[2] = param_2[2];
   __restgprlr_29();
   return;
 }
@@ -3172,11 +3528,12 @@ LAB_8263ac94:
 
 // 8263ACD8  SND_Stop2DChannel  (xenon/snd_driver.cpp:2877)
 
-void SND_Stop2DChannel(undefined8 param_1)
+void SND_Stop2DChannel(int param_1)
 
 {
-  if (((int)param_1 < 0) || (7 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb3e,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+  if ((param_1 < 0) || (7 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb3e,0,
+                    "%s\n\t(index) = %i");
   }
   SND_StopChannel(param_1);
   return;
@@ -3185,11 +3542,12 @@ void SND_Stop2DChannel(undefined8 param_1)
 
 // 8263AD40  SND_Pause2DChannel  (xenon/snd_driver.cpp:2884)
 
-void SND_Pause2DChannel(undefined8 param_1)
+void SND_Pause2DChannel(int param_1)
 
 {
-  if (((int)param_1 < 0) || (7 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb45,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+  if ((param_1 < 0) || (7 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb45,0,
+                    "%s\n\t(index) = %i");
   }
   SND_PauseChannel(param_1);
   return;
@@ -3198,36 +3556,42 @@ void SND_Pause2DChannel(undefined8 param_1)
 
 // 8263ADA8  SND_Unpause2DChannel  (xenon/snd_driver.cpp:2891)
 
-void SND_Unpause2DChannel(undefined8 param_1)
+void SND_Unpause2DChannel(int param_1,int param_2)
 
 {
-  if (((int)param_1 < 0) || (7 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb4c,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+  if ((param_1 < 0) || (7 < param_1)) {
+    param_2 = 0xb4c;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb4c,0,
+                    "%s\n\t(index) = %i");
   }
-  SND_UnpauseChannel(param_1);
+  SND_UnpauseChannel(param_1,param_2);
   return;
 }
 
 
 // 8263AE10  SND_Is2DChannelFree  (xenon/snd_driver.cpp:2898)
 
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 bool SND_Is2DChannelFree(int param_1)
 
 {
   if ((param_1 < 0) || (7 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb53,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb53,0,
+                    "%s\n\t(index) = %i");
   }
-  return (&DAT_8421bffc)[param_1] == 0;
+  return xaGlob.voice[param_1] == (IXAudioSourceVoice *)0x0;
 }
 
 
 // 8263AE90  SND_Stop3DChannel  (xenon/snd_driver.cpp:2905)
 
-void SND_Stop3DChannel(undefined8 param_1)
+void SND_Stop3DChannel(int param_1)
 
 {
-  if (((int)param_1 < 8) || (0x27 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb5a,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+  if ((param_1 < 8) || (0x27 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb5a,0,
+                    "%s\n\t(index) = %i");
   }
   SND_StopChannel(param_1);
   return;
@@ -3236,11 +3600,12 @@ void SND_Stop3DChannel(undefined8 param_1)
 
 // 8263AEF8  SND_Pause3DChannel  (xenon/snd_driver.cpp:2912)
 
-void SND_Pause3DChannel(undefined8 param_1)
+void SND_Pause3DChannel(int param_1)
 
 {
-  if (((int)param_1 < 8) || (0x27 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb61,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+  if ((param_1 < 8) || (0x27 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb61,0,
+                    "%s\n\t(index) = %i");
   }
   SND_PauseChannel(param_1);
   return;
@@ -3249,48 +3614,55 @@ void SND_Pause3DChannel(undefined8 param_1)
 
 // 8263AF60  SND_Unpause3DChannel  (xenon/snd_driver.cpp:2919)
 
-void SND_Unpause3DChannel(undefined8 param_1)
+void SND_Unpause3DChannel(int param_1,int param_2)
 
 {
-  if (((int)param_1 < 8) || (0x27 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb68,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+  if ((param_1 < 8) || (0x27 < param_1)) {
+    param_2 = 0xb68;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb68,0,
+                    "%s\n\t(index) = %i");
   }
-  SND_UnpauseChannel(param_1);
+  SND_UnpauseChannel(param_1,param_2);
   return;
 }
 
 
 // 8263AFC8  SND_Is3DChannelFree  (xenon/snd_driver.cpp:2926)
 
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
 bool SND_Is3DChannelFree(int param_1)
 
 {
   if ((param_1 < 8) || (0x27 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb6f,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb6f,0,
+                    "%s\n\t(index) = %i");
   }
-  return (&DAT_8421bffc)[param_1] == 0;
+  return xaGlob.voice[param_1] == (IXAudioSourceVoice *)0x0;
 }
 
 
 // 8263B048  SND_StopStreamChannel  (xenon/snd_driver.cpp:2933)
 
-void SND_StopStreamChannel(ulonglong param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_StopStreamChannel(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xb78,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb78,0,
+                    "%s");
   }
-  if (((int)param_1 < 0x28) || (0x35 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb79,0,0xffffffff8200aef4,0xffffffff82189ab8,param_1);
+  if ((param_1 < 0x28) || (0x35 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb79,0,
+                    "%s\n\t(index) = %i");
   }
   SND_ResetChannelInfo(param_1);
-  if (*(int *)((int)&DAT_8421bffc + (int)((param_1 & 0xffffffff) << 2)) != 0) {
-    SND_RemoveVoice(*(undefined4 *)
-                     ((int)&DAT_84888124 +
-                     (int)((param_1 + (param_1 & 0x7fffffff) * 2 & 0xffffffff) << 6)));
+  if (xaGlob.voice[param_1] != (IXAudioSourceVoice *)0x0) {
+    SND_RemoveVoice(g_snd.chaninfo[param_1].entchannel);
     XAStream_Release(param_1);
   }
   return;
@@ -3299,41 +3671,52 @@ void SND_StopStreamChannel(ulonglong param_1)
 
 // 8263B148  SND_PauseStreamChannel  (xenon/snd_driver.cpp:2952)
 
-void SND_PauseStreamChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_PauseStreamChannel(int param_1)
 
 {
   int iVar1;
-  int iVar2;
+  IXAudioSourceVoice *pIVar2;
   ulonglong uVar3;
-  char cVar5;
-  undefined8 uVar4;
+  bool bVar5;
+  int iVar4;
   int *piVar6;
   
-  uVar3 = __savegprlr_28();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xb8d,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar3 = __savegprlr_28(param_1);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb8d,0,
+                    "%s");
   }
   if (((int)uVar3 < 0x28) || (0x35 < (int)uVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0xb8e,0,0xffffffff8200aef4,0xffffffff82189ab8,uVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb8e,0,
+                    "%s\n\t(index) = %i");
   }
   if (0xd < (uVar3 - 0x28 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821881f8,0xb8f,0,0xffffffff82189b80,uVar3 - 0x28,0xe);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb8f,0,
+                    "index - SND_FIRST_STREAM_CHANNEL doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)"
+                   );
   }
-  iVar2 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  iVar1 = *(int *)((int)&DAT_8421bffc + (int)((uVar3 & 0xffffffff) << 2));
-  piVar6 = (int *)((int)&DAT_84888114 + iVar2);
-  if ((iVar1 == 0) && (*piVar6 != 1)) {
-    MyAssertHandler(0xffffffff821881f8,0xb92,0,0xffffffff82189b04,0xffffffff82189b38);
+  iVar4 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6);
+  pIVar2 = *(IXAudioSourceVoice **)((int)xaGlob.voice + (int)((uVar3 & 0xffffffff) << 2));
+  piVar6 = (int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                         soundFileInfo).loadingState + iVar4);
+  if ((pIVar2 == (IXAudioSourceVoice *)0x0) && (*piVar6 != 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb92,0,
+                    "%s\n\t(chaninfo->soundFileInfo.loadingState) = %i");
   }
-  (&DAT_848881b0)[iVar2] = 1;
-  if (*piVar6 != 1) {
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xb99,0,0xffffffff82000f98,0xffffffff8214428c);
+  iVar1 = *piVar6;
+  *(undefined1 *)((int)g_snd.chaninfo[0].offset + iVar4 + 0xc) = 1;
+  if (iVar1 != 1) {
+    if (pIVar2 == (IXAudioSourceVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb99,
+                      0,"%s");
     }
-    uVar4 = XAudioSourceVoice_Stop(iVar1,0);
-    if ((int)uVar4 != 0) {
-      MyAssertHandler(0xffffffff821881f8,0xb9b,0,0xffffffff82174e08,0xffffffff8218816c,uVar4);
+    iVar4 = XAudioSourceVoice_Stop(pIVar2,'\0');
+    if (iVar4 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xb9b,
+                      0,"%s\n\t(res) = %i");
     }
   }
   __restgprlr_28();
@@ -3343,38 +3726,47 @@ void SND_PauseStreamChannel(void)
 
 // 8263B2E8  SND_UnpauseStreamChannel  (xenon/snd_driver.cpp:2976)
 
-void SND_UnpauseStreamChannel(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UnpauseStreamChannel(int param_1,int param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  SndFileLoadingState SVar1;
+  IXAudioSourceVoice *pIVar2;
   int iVar3;
-  char cVar4;
+  bool bVar4;
   
-  iVar3 = __savegprlr_28();
-  cVar4 = Sys_IsMainThread();
-  if ((cVar4 == '\0') && (cVar4 = Sys_IsRenderThread(), cVar4 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xba4,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  iVar3 = __savegprlr_28(param_1,param_2);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xba4,0,
+                    "%s");
   }
   if ((iVar3 < 0x28) || (0x35 < iVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0xba5,0,0xffffffff8200aef4,0xffffffff82189ab8,iVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xba5,0,
+                    "%s\n\t(index) = %i");
   }
   if (0xd < iVar3 - 0x28U) {
-    MyAssertHandler(0xffffffff821881f8,0xba6,0,0xffffffff82189b80,iVar3 + -0x28,0xe);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xba6,0,
+                    "index - SND_FIRST_STREAM_CHANNEL doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)"
+                   );
   }
-  iVar2 = (&DAT_8421bffc)[iVar3];
-  if ((iVar2 == 0) && ((&DAT_84888114)[iVar3 * 0x30] != 1)) {
-    MyAssertHandler(0xffffffff821881f8,0xba9,0,0xffffffff82189b04,0xffffffff82189b38);
+  pIVar2 = xaGlob.voice[iVar3];
+  if ((pIVar2 == (IXAudioSourceVoice *)0x0) &&
+     (g_snd.chaninfo[iVar3].soundFileInfo.loadingState != SFLS_LOADING)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xba9,0,
+                    "%s\n\t(chaninfo->soundFileInfo.loadingState) = %i");
   }
-  iVar1 = (&DAT_84888114)[iVar3 * 0x30];
-  (&DAT_848881b0)[iVar3 * 0xc0] = 0;
-  if (iVar1 != 1) {
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xbb0,0,0xffffffff82000f98,0xffffffff8214428c);
+  SVar1 = g_snd.chaninfo[iVar3].soundFileInfo.loadingState;
+  g_snd.chaninfo[iVar3].paused = false;
+  if (SVar1 != SFLS_LOADING) {
+    if (pIVar2 == (IXAudioSourceVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbb0,
+                      0,"%s");
     }
-    XAudioSourceVoice_Discontinuity(iVar2);
-    if (*(int *)(&DAT_84888128 + iVar3 * 0xc0) == -1) {
-      XAudioSourceVoice_Start(iVar2,0);
+    XAudioSourceVoice_Discontinuity(pIVar2);
+    if (g_snd.chaninfo[iVar3].startDelay == -1) {
+      XAudioSourceVoice_Start(pIVar2,'\0');
     }
   }
   __restgprlr_28();
@@ -3384,615 +3776,718 @@ void SND_UnpauseStreamChannel(void)
 
 // 8263B470  SND_IsStreamChannelFree  (xenon/snd_driver.cpp:3007)
 
-undefined8 SND_IsStreamChannelFree(ulonglong param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+bool SND_IsStreamChannelFree(int param_1)
 
 {
-  if (((int)param_1 < 0x28) || (0x35 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xbc0,0,0xffffffff8200aef4,0xffffffff82189ab8,param_1);
+  if ((param_1 < 0x28) || (0x35 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbc0,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((*(int *)((int)&DAT_8421bffc + (int)((param_1 & 0xffffffff) << 2)) == 0) &&
-     (*(int *)((int)&DAT_84888114 + (int)((param_1 + (param_1 & 0x7fffffff) * 2 & 0xffffffff) << 6))
-      == 0)) {
-    return 1;
+  if ((xaGlob.voice[param_1] == (IXAudioSourceVoice *)0x0) &&
+     (g_snd.chaninfo[param_1].soundFileInfo.loadingState == SFLS_UNLOADED)) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 8263B520  XA_StartAliasSample  (xenon/snd_driver.cpp:3014)
 
-void XA_StartAliasSample(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                        ulonglong param_5)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int XA_StartAliasSample(SndStartAliasInfo *param_1,int *param_2,int *param_3,
+                       _func___cdecl_int_SndStartAliasInfo_ptr_int *param_4,
+                       _func___cdecl_void_int *param_5)
 
 {
-  undefined1 uVar1;
-  float fVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
-  int *piVar9;
-  char cVar11;
+  byte bVar1;
+  snd_alias_t *psVar2;
+  snd_alias_t *psVar3;
+  LoadedSound *pLVar4;
+  ulong uVar5;
+  SndStartAliasInfo *pSVar6;
+  bool bVar11;
+  int iVar7;
+  XAUDIOCHANNELMAP *pXVar8;
+  IXAudioSourceVoice *pIVar9;
   int iVar10;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  undefined8 *puVar12;
-  uint uVar13;
-  longlong lVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  undefined8 *puVar16;
+  XAUDIOSOURCEFORMAT *pXVar17;
+  uint uVar18;
+  int iVar19;
+  longlong lVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  float fVar24;
   longlong local_1a0 [2];
-  undefined1 auStack_190 [4];
-  uint local_18c;
-  undefined4 local_188;
-  undefined4 local_184;
-  undefined4 local_180;
-  undefined1 local_17c;
-  undefined1 local_17b;
+  XAUDIOPACKET XStack_190;
   undefined8 uStack_138;
-  undefined1 local_130 [48];
-  undefined1 auStack_100 [256];
+  XAUDIOPACKETPOSITION local_130;
+  char acStack_100 [256];
   
-  piVar9 = (int *)__savegprlr_20();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xbdb,0,0xffffffff82000f98,0xffffffff82189d38);
+  uVar15 = (ulonglong)(int)param_5;
+  uVar14 = (ulonglong)(int)param_4;
+  uVar13 = (ulonglong)(int)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  pSVar6 = (SndStartAliasInfo *)__savegprlr_20(param_1);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbdb,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xbdc,0,0xffffffff82000f98,0xffffffff82189d2c);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbdc,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xbdd,0,0xffffffff82000f98,0xffffffff82189d1c);
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbdd,0,
+                    "%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xbde,0,0xffffffff82000f98,0xffffffff82189d10);
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbde,0,
+                    "%s");
   }
-  puVar3 = (undefined4 *)*piVar9;
-  piVar9[0xf] = 0xffffffffU - (piVar9[0xf] >> 0x1f) & piVar9[0xf];
-  uVar13 = (int)puVar3[0xf] >> 9 & 0x3f;
-  SND_ComputeStartAliasMixVolume(piVar9,uVar13);
-  dVar16 = 0.0;
-  if ((float)piVar9[10] < 0.0) {
-    MyAssertHandler(0xffffffff821881f8,0xbe5,0,0xffffffff82000f98,0xffffffff82189cec);
+  psVar2 = pSVar6->alias0;
+  pSVar6->startDelay = -(pSVar6->startDelay >> 0x1f) - 1U & pSVar6->startDelay;
+  uVar18 = psVar2->flags >> 9 & 0x3f;
+  SND_ComputeStartAliasMixVolume(pSVar6,uVar18);
+  dVar21 = 0.0;
+  if (pSVar6->mixvolume < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xbe5,0,
+                    "%s");
   }
-  cVar11 = SND_IsAliasChannel3D(uVar13);
-  dVar17 = 1.0;
-  if (cVar11 == '\0') {
-    piVar9[0xb] = 0x3f800000;
+  bVar11 = SND_IsAliasChannel3D(uVar18);
+  dVar22 = 1.0;
+  if (bVar11) {
+    fVar24 = pSVar6->lerp;
+    psVar3 = pSVar6->alias0;
+    fVar24 = SND_Get3DDistanceAttenuation
+                       (pSVar6->org,psVar3->volumeFalloffCurve,
+                        pSVar6->alias1->distMin * fVar24 + psVar3->distMin * (1.0 - fVar24),
+                        pSVar6->alias1->distMax * fVar24 + psVar3->distMax * (1.0 - fVar24));
+    pSVar6->attenuation = fVar24;
   }
   else {
-    fVar2 = (float)piVar9[2];
-    iVar10 = *piVar9;
-    dVar15 = (double)SND_Get3DDistanceAttenuation
-                               ((double)(*(float *)(piVar9[1] + 0x30) * fVar2 +
-                                        *(float *)(iVar10 + 0x30) * (1.0 - fVar2)),
-                                (double)(*(float *)(piVar9[1] + 0x34) * fVar2 +
-                                        *(float *)(iVar10 + 0x34) * (1.0 - fVar2)),piVar9 + 4,
-                                *(undefined4 *)(iVar10 + 0x5c));
-    piVar9[0xb] = (int)(float)dVar15;
+    pSVar6->attenuation = 1.0;
   }
-  iVar10 = (*(code *)param_4)(piVar9,uVar13);
-  *(int *)param_2 = iVar10;
-  if (iVar10 < 0) {
-    __restgprlr_20(0xffffffffffffffff);
-    return;
+  iVar7 = (*(code *)uVar14)(pSVar6,uVar18);
+  *(int *)uVar12 = iVar7;
+  if (iVar7 < 0) {
+    iVar7 = __restgprlr_20(0xffffffffffffffff);
+    return iVar7;
   }
-  (*(code *)param_5)(iVar10);
-  iVar4 = *(int *)(puVar3[5] + 4);
-  uVar5 = *(uint *)(iVar4 + 0x94);
-  if (piVar9[0xd] < (int)uVar5) {
-    uVar1 = *(undefined1 *)(iVar4 + 0x68);
-    iVar6 = *(int *)(iVar4 + 100);
-    SND_SetChannelStartInfo(iVar10,piVar9);
-    SND_SetSoundFileChannelInfo(iVar10,uVar1,iVar6,2);
-    cVar11 = SND_IsAliasChannel3D(uVar13);
-    if ((cVar11 != '\0') && (*(char *)puVar3[0x1b] == '\0')) {
-      Com_PrintWarning(9,0xffffffff82189cc0,*puVar3,*(undefined4 *)((char *)puVar3[0x1b] + 4));
+  (*(code *)uVar15)(iVar7);
+  pLVar4 = (psVar2->soundFile->u).loadSnd;
+  iVar19 = (pLVar4->sound).xaIwXmaDataInfo.totalMsec;
+  if (pSVar6->timeshift < iVar19) {
+    bVar1 = *(byte *)((int)&(pLVar4->sound).format.field1_0x4 + 8);
+    uVar5 = (pLVar4->sound).format.field1_0x4._s_0.Stream[0].SampleRate;
+    SND_SetChannelStartInfo(iVar7,pSVar6);
+    SND_SetSoundFileChannelInfo(iVar7,(uint)bVar1,uVar5,SFLS_LOADED);
+    bVar11 = SND_IsAliasChannel3D(uVar18);
+    if ((bVar11) && (psVar2->speakerMap->isDefault == false)) {
+      Com_PrintWarning(9,"\'%s\' alias is 3D but has a \'%s\' speakermap\n");
     }
-    uVar7 = Com_GetSpeakerMap(puVar3[0x1b],uVar1);
-    DAT_842208dc = (undefined4)uVar7;
-    DAT_842208d0 = DAT_842208cc;
-    uVar8 = SND_IsAliasChannel3D(uVar13);
-    XA_InitVoiceOutputAndBaseVolumesForReverb(iVar10,uVar1,uVar8,uVar7);
-    uVar7 = XA_GetNewSourceVoice(iVar10,iVar4 + 0x5c);
-    SND_AddVoice(uVar13);
-    XA_ApplyEq(uVar7,iVar10,uVar13,0);
-    local_1a0[0] = (longlong)iVar6;
-    dVar15 = 0.5;
-    dVar17 = floor((double)((float)((double)(float)piVar9[0x10] * (double)DAT_8487d9d8 +
-                                   (double)(float)(dVar17 - (double)(float)piVar9[0x10])) *
-                            (float)piVar9[0xc] * (float)local_1a0[0] + 0.5));
-    *(int *)(&DAT_84220540 + iVar10 * 4) = (int)dVar17;
-    XAudioSourceVoice_SetVolume((double)(float)piVar9[10],uVar7);
-    XA_CalcXAudioPitch(*(undefined4 *)(&DAT_84220540 + iVar10 * 4),iVar6);
-    XAudioSourceVoice_SetPitch(uVar7);
-    if ((double)(float)piVar9[0xe] == dVar16) {
-      uVar13 = piVar9[0xd];
-      if (uVar13 == 0) {
-        if ((puVar3[0xf] & 0x20) == 0) {
-          uVar13 = 0;
+    pXVar8 = Com_GetSpeakerMap(psVar2->speakerMap,(uint)bVar1);
+    xaGlob.output.EntryCount = xaGlob.sourceVoiceOutputCount;
+    xaGlob.outputEntry[0].pChannelMap = pXVar8;
+    bVar11 = SND_IsAliasChannel3D(uVar18);
+    XA_InitVoiceOutputAndBaseVolumesForReverb(iVar7,(uint)bVar1,bVar11,pXVar8);
+    pXVar17 = &(pLVar4->sound).format;
+    pIVar9 = XA_GetNewSourceVoice(iVar7,pXVar17);
+    SND_AddVoice(uVar18);
+    XA_ApplyEq((IXAudioVoice *)pIVar9,iVar7,uVar18,0);
+    local_1a0[0] = (longlong)(int)uVar5;
+    dVar23 = 0.5;
+    dVar22 = floor((double)((float)((double)pSVar6->timescaleLerp * (double)g_snd.timescale +
+                                   (double)(float)(dVar22 - (double)pSVar6->timescaleLerp)) *
+                            pSVar6->pitch * (float)local_1a0[0] + 0.5));
+    xaGlob.playbackRate[iVar7] = (int)dVar22;
+    XAudioSourceVoice_SetVolume(pIVar9,pSVar6->mixvolume);
+    fVar24 = XA_CalcXAudioPitch(xaGlob.playbackRate[iVar7],uVar5);
+    XAudioSourceVoice_SetPitch(pIVar9,fVar24);
+    if ((double)pSVar6->fraction == dVar21) {
+      uVar18 = pSVar6->timeshift;
+      if (uVar18 == 0) {
+        if ((psVar2->flags & 0x20U) == 0) {
+          uVar18 = 0;
         }
         else {
-          dVar16 = (double)random();
-          local_1a0[0] = (longlong)(int)uVar5;
-          dVar16 = floor((double)(float)((double)(float)(dVar16 * (double)local_1a0[0]) + dVar15));
-          local_1a0[0] = (longlong)(int)dVar16;
-          uVar13 = (int)dVar16 & 0xffffff00;
+          fVar24 = random();
+          local_1a0[0] = (longlong)iVar19;
+          dVar21 = floor((double)(float)((double)(fVar24 * (float)local_1a0[0]) + dVar23));
+          local_1a0[0] = (longlong)(int)dVar21;
+          uVar18 = (int)dVar21 & 0xffffff00;
         }
       }
     }
     else {
-      local_1a0[0] = (longlong)(int)uVar5;
-      dVar16 = floor((double)(float)((double)(float)((double)local_1a0[0] *
-                                                    (double)(float)piVar9[0xe]) + dVar15));
-      uVar13 = (uint)dVar16;
-      local_1a0[0] = (longlong)(int)uVar13;
+      local_1a0[0] = (longlong)iVar19;
+      dVar21 = floor((double)(float)((double)(float)((double)local_1a0[0] * (double)pSVar6->fraction
+                                                    ) + dVar23));
+      uVar18 = (uint)dVar21;
+      local_1a0[0] = (longlong)(int)uVar18;
     }
-    memcpy(auStack_190,(undefined4 *)(iVar4 + 4),0x58);
-    if (uVar13 != 0) {
-      piVar9[0xf] = 0;
-      puVar12 = &uStack_138;
-      lVar14 = 6;
+    memcpy();
+    if (uVar18 != 0) {
+      pSVar6->startDelay = 0;
+      puVar16 = &uStack_138;
+      lVar20 = 6;
       do {
-        puVar12 = puVar12 + 1;
-        *puVar12 = 0;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      XA_CalcAndAlignDesiredSampleIndex(iVar4 + 0x5c,uVar13,(ulonglong)uVar5,local_1a0);
+        puVar16 = puVar16 + 1;
+        *puVar16 = 0;
+        lVar20 = lVar20 + -1;
+      } while (lVar20 != 0);
+      XA_CalcAndAlignDesiredSampleIndex(pXVar17,uVar18,iVar19,(int *)local_1a0);
       XAudioGetXMAPacketPosition
-                (local_1a0[0]._0_4_,(ulonglong)*(uint *)(iVar4 + 0x9c) + 4,
-                 *(undefined4 *)(iVar4 + 4),local_130);
-      XAudioSourceVoice_SetPacketPosition(uVar7,local_130);
+                (local_1a0[0]._0_4_,(pLVar4->sound).seekTable.data + 1,
+                 (pLVar4->sound).packet.pBuffer,local_130.XMAPosition);
+      XAudioSourceVoice_SetPacketPosition(pIVar9,&local_130);
     }
-    if (piVar9[0xf] < 0) {
-      MyAssertHandler(0xffffffff821881f8,0xc3f,0,0xffffffff82189c74,0xffffffff82189c9c);
+    if (pSVar6->startDelay < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc3f,
+                      0,"%s\n\t(startAliasInfo->startDelay) = %i");
     }
-    lVar14 = (ulonglong)uVar5 + (ulonglong)(uint)piVar9[0xf];
-    if ((puVar3[0xf] & 1) == 0) {
-      local_188 = 0;
-      local_184 = 0;
-      local_180 = 0;
-      local_17b = 0;
-      local_17c = 0;
+    iVar19 = iVar19 + pSVar6->startDelay;
+    if ((psVar2->flags & 1U) == 0) {
+      XStack_190.LoopCount = 0;
+      XStack_190.field3_0xc._s_0.LoopStart = 0;
+      XStack_190.field3_0xc._s_0.LoopLength = 0;
+      XStack_190.field3_0xc.XMALoop[0].LoopSubframeSkip = '\0';
+      XStack_190.field3_0xc.XMALoop[0].LoopSubframeEnd = '\0';
     }
     else {
-      lVar14 = 0;
-      local_188 = 0xffffffff;
+      iVar19 = 0;
+      XStack_190.LoopCount = 0xffffffff;
     }
-    if ((local_18c == 0) || ((local_18c & 0x7ff) != 0)) {
-      MyAssertHandler(0xffffffff821881f8,0xc5c,0,0xffffffff82189c18,0xffffffff82189c38);
+    if ((XStack_190.BufferSize == 0) || ((XStack_190.BufferSize & 0x7ff) != 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc5c,
+                      0,"%s\n\t(packet.BufferSize) = %i");
     }
-    uVar7 = XAudioSourceVoice_SubmitPacket(uVar7,auStack_190,1);
-    if (-1 < (int)uVar7) {
-      *(undefined4 *)param_3 = (int)lVar14;
-      SND_AcquirePlaybackId(iVar10,lVar14);
-      __restgprlr_20();
-      return;
+    iVar10 = XAudioSourceVoice_SubmitPacket(pIVar9,&XStack_190,'\x01');
+    if (-1 < iVar10) {
+      *(int *)uVar13 = iVar19;
+      iVar7 = SND_AcquirePlaybackId(iVar7,iVar19);
+      iVar7 = __restgprlr_20(iVar7);
+      return iVar7;
     }
-    Com_GetSoundFileName(puVar3,auStack_100,0x80);
-    Com_PrintError(1,0xffffffff82189bdc,uVar7,auStack_100,*puVar3);
+    Com_GetSoundFileName(psVar2,acStack_100,0x80);
+    Com_PrintError(1,"Error %d submitting packet for sound \'%s\' from alias \'%s\'.\n");
   }
-  SND_SetPlaybackIdNotPlayed(iVar10);
-  __restgprlr_20();
-  return;
+  iVar7 = SND_SetPlaybackIdNotPlayed(iVar7);
+  iVar7 = __restgprlr_20(iVar7);
+  return iVar7;
 }
 
 
 // 8263E550  SND_StartAlias2DSample  (xenon/snd_driver.cpp:3180)
 
-void SND_StartAlias2DSample(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_StartAlias2DSample(SndStartAliasInfo *param_1,int *param_2)
 
 {
-  int iVar1;
-  int *piVar4;
-  char cVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar6;
+  IXAudioSourceVoice *pIVar1;
+  SndStartAliasInfo *pSVar2;
+  bool bVar5;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar6;
   int local_d0;
-  undefined1 auStack_cc [12];
-  undefined1 auStack_c0 [192];
+  int aiStack_cc [3];
+  char acStack_c0 [192];
   
-  piVar4 = (int *)__savegprlr_26();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xc74,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar2 = (SndStartAliasInfo *)__savegprlr_26(param_1);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc74,0,
+                    "%s");
   }
-  if (*piVar4 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc75,0,0xffffffff82000f98,0xffffffff8218a690);
+  if (pSVar2->alias0 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc75,0,
+                    "%s");
   }
-  if ((*(uint *)(*piVar4 + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821881f8,0xc76,0,0xffffffff82000f98,0xffffffff8218a648);
+  if ((pSVar2->alias0->flags & 0x180U) != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc76,0,
+                    "%s");
   }
-  if (*(int *)(*piVar4 + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc77,0,0xffffffff82000f98,0xffffffff8218a624);
+  if (pSVar2->alias0->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc77,0,
+                    "%s");
   }
-  if (**(char **)(*piVar4 + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xc78,0,0xffffffff82000f98,0xffffffff8218a5ec);
+  if (pSVar2->alias0->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc78,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)(*piVar4 + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc79,0,0xffffffff82000f98,0xffffffff8218a5bc);
+  if ((pSVar2->alias0->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc79,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)(*piVar4 + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xc7a,0,0xffffffff82000f98,0xffffffff8218a590);
+  if (pSVar2->alias0->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7a,0,
+                    "%s");
   }
-  if (piVar4[1] == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc7b,0,0xffffffff82000f98,0xffffffff8218a578);
+  if (pSVar2->alias1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7b,0,
+                    "%s");
   }
-  if ((*(uint *)(piVar4[1] + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821881f8,0xc7c,0,0xffffffff82000f98,0xffffffff8218a530);
+  if ((pSVar2->alias1->flags & 0x180U) != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7c,0,
+                    "%s");
   }
-  if (*(int *)(piVar4[1] + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc7d,0,0xffffffff82000f98,0xffffffff8218a50c);
+  if (pSVar2->alias1->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7d,0,
+                    "%s");
   }
-  if (**(char **)(piVar4[1] + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xc7e,0,0xffffffff82000f98,0xffffffff8218a4d4);
+  if (pSVar2->alias1->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7e,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)(piVar4[1] + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc7f,0,0xffffffff82000f98,0xffffffff8218a4a4);
+  if ((pSVar2->alias1->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc7f,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)(piVar4[1] + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xc80,0,0xffffffff82000f98,0xffffffff8218a478);
+  if (pSVar2->alias1->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc80,0,
+                    "%s");
   }
-  uVar2 = XA_StartAliasSample(piVar4,&local_d0,auStack_cc,0xffffffff82849e88,0xffffffff8263acd8);
-  if ((param_2 & 0xffffffff) != 0) {
-    *(int *)param_2 = local_d0;
+  iVar3 = XA_StartAliasSample(pSVar2,&local_d0,aiStack_cc,SND_FindFree2DChannel,SND_Stop2DChannel);
+  if ((uVar6 & 0xffffffff) != 0) {
+    *(int *)uVar6 = local_d0;
   }
-  if ((int)uVar2 == -1) {
-    __restgprlr_26(0xffffffffffffffff);
-    return;
+  if (iVar3 == -1) {
+    iVar3 = __restgprlr_26(0xffffffffffffffff);
+    return iVar3;
   }
   SND_Update2DChannelReverb(local_d0);
-  iVar1 = (&DAT_8421bffc)[local_d0];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xc8c,0,0xffffffff82000f98,0xffffffff8214428c);
+  pIVar1 = xaGlob.voice[local_d0];
+  if (pIVar1 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xc8c,0,
+                    "%s");
   }
-  iVar6 = local_d0 * 0xc0;
-  if ((*(int *)(&DAT_84888128 + iVar6) == 0) && ((&DAT_848881b0)[iVar6] == '\0')) {
-    *(undefined4 *)(&DAT_84888128 + iVar6) = 0xffffffff;
-    uVar3 = XAudioSourceVoice_Start(iVar1,0);
-    if ((int)uVar3 < 0) {
-      Com_GetSoundFileName(*piVar4,auStack_c0,0x80);
-      Com_PrintError(1,0xffffffff8218a430,uVar3,auStack_c0,*(undefined4 *)*piVar4);
-      SND_SetPlaybackIdNotPlayed(local_d0);
-      __restgprlr_26();
-      return;
+  if ((g_snd.chaninfo[local_d0].startDelay == 0) && (g_snd.chaninfo[local_d0].paused == false)) {
+    g_snd.chaninfo[local_d0].startDelay = -1;
+    iVar4 = XAudioSourceVoice_Start(pIVar1,'\0');
+    if (iVar4 < 0) {
+      Com_GetSoundFileName(pSVar2->alias0,acStack_c0,0x80);
+      Com_PrintError(1,
+                     "Error %d calling sourceVoice->Start for 2d sound \'%s\' from alias \'%s\'.\n")
+      ;
+      iVar3 = SND_SetPlaybackIdNotPlayed(local_d0);
+      iVar3 = __restgprlr_26(iVar3);
+      return iVar3;
     }
   }
-  __restgprlr_26(uVar2);
-  return;
+  iVar3 = __restgprlr_26(iVar3);
+  return iVar3;
 }
 
 
 // 8263E908  SND_StartAlias3DSample  (xenon/snd_driver.cpp:3234)
 
-void SND_StartAlias3DSample(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_StartAlias3DSample(SndStartAliasInfo *param_1,int *param_2)
 
 {
-  int iVar1;
-  int *piVar4;
-  char cVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar6;
+  IXAudioSourceVoice *pIVar1;
+  SndStartAliasInfo *pSVar2;
+  bool bVar5;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar6;
   int local_d0;
-  undefined1 auStack_cc [12];
-  undefined1 auStack_c0 [192];
+  int aiStack_cc [3];
+  char acStack_c0 [192];
   
-  piVar4 = (int *)__savegprlr_26();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xcaa,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar2 = (SndStartAliasInfo *)__savegprlr_26(param_1);
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcaa,0,
+                    "%s");
   }
-  if (*piVar4 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcab,0,0xffffffff82000f98,0xffffffff8218a690);
+  if (pSVar2->alias0 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcab,0,
+                    "%s");
   }
-  if ((*(uint *)(*piVar4 + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821881f8,0xcac,0,0xffffffff82000f98,0xffffffff8218a648);
+  if ((pSVar2->alias0->flags & 0x180U) != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcac,0,
+                    "%s");
   }
-  if (*(int *)(*piVar4 + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcad,0,0xffffffff82000f98,0xffffffff8218a624);
+  if (pSVar2->alias0->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcad,0,
+                    "%s");
   }
-  if (**(char **)(*piVar4 + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xcae,0,0xffffffff82000f98,0xffffffff8218a5ec);
+  if (pSVar2->alias0->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcae,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)(*piVar4 + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcaf,0,0xffffffff82000f98,0xffffffff8218a5bc);
+  if ((pSVar2->alias0->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcaf,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)(*piVar4 + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xcb0,0,0xffffffff82000f98,0xffffffff8218a590);
+  if (pSVar2->alias0->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb0,0,
+                    "%s");
   }
-  if (piVar4[1] == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcb1,0,0xffffffff82000f98,0xffffffff8218a578);
+  if (pSVar2->alias1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb1,0,
+                    "%s");
   }
-  if ((*(uint *)(piVar4[1] + 0x3c) & 0x180) != 0x80) {
-    MyAssertHandler(0xffffffff821881f8,0xcb2,0,0xffffffff82000f98,0xffffffff8218a530);
+  if ((pSVar2->alias1->flags & 0x180U) != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb2,0,
+                    "%s");
   }
-  if (*(int *)(piVar4[1] + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcb3,0,0xffffffff82000f98,0xffffffff8218a50c);
+  if (pSVar2->alias1->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb3,0,
+                    "%s");
   }
-  if (**(char **)(piVar4[1] + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xcb4,0,0xffffffff82000f98,0xffffffff8218a4d4);
+  if (pSVar2->alias1->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb4,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)(piVar4[1] + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcb5,0,0xffffffff82000f98,0xffffffff8218a4a4);
+  if ((pSVar2->alias1->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb5,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)(piVar4[1] + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xcb6,0,0xffffffff82000f98,0xffffffff8218a478);
+  if (pSVar2->alias1->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcb6,0,
+                    "%s");
   }
-  uVar2 = XA_StartAliasSample(piVar4,&local_d0,auStack_cc,0xffffffff8284a188,0xffffffff8263ae90);
-  if ((param_2 & 0xffffffff) != 0) {
-    *(int *)param_2 = local_d0;
+  iVar3 = XA_StartAliasSample(pSVar2,&local_d0,aiStack_cc,SND_FindFree3DChannel,SND_Stop3DChannel);
+  if ((uVar6 & 0xffffffff) != 0) {
+    *(int *)uVar6 = local_d0;
   }
-  if ((int)uVar2 == -1) {
-    __restgprlr_26(0xffffffffffffffff);
-    return;
+  if (iVar3 == -1) {
+    iVar3 = __restgprlr_26(0xffffffffffffffff);
+    return iVar3;
   }
   XA_SpatializeChannel(local_d0);
-  iVar1 = (&DAT_8421bffc)[local_d0];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xcc3,0,0xffffffff82000f98,0xffffffff8214428c);
+  pIVar1 = xaGlob.voice[local_d0];
+  if (pIVar1 == (IXAudioSourceVoice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcc3,0,
+                    "%s");
   }
-  iVar6 = local_d0 * 0xc0;
-  if ((*(int *)(&DAT_84888128 + iVar6) == 0) && ((&DAT_848881b0)[iVar6] == '\0')) {
-    *(undefined4 *)(&DAT_84888128 + iVar6) = 0xffffffff;
-    uVar3 = XAudioSourceVoice_Start(iVar1,0);
-    if ((int)uVar3 < 0) {
-      Com_GetSoundFileName(*piVar4,auStack_c0,0x80);
-      Com_PrintError(1,0xffffffff8218a6a8,uVar3,auStack_c0,*(undefined4 *)*piVar4);
-      SND_SetPlaybackIdNotPlayed(local_d0);
-      __restgprlr_26();
-      return;
+  if ((g_snd.chaninfo[local_d0].startDelay == 0) && (g_snd.chaninfo[local_d0].paused == false)) {
+    g_snd.chaninfo[local_d0].startDelay = -1;
+    iVar4 = XAudioSourceVoice_Start(pIVar1,'\0');
+    if (iVar4 < 0) {
+      Com_GetSoundFileName(pSVar2->alias0,acStack_c0,0x80);
+      Com_PrintError(1,
+                     "Error %d calling sourceVoice->Start for 3d sound \'%s\' from alias \'%s\'.\n")
+      ;
+      iVar3 = SND_SetPlaybackIdNotPlayed(local_d0);
+      iVar3 = __restgprlr_26(iVar3);
+      return iVar3;
     }
   }
-  __restgprlr_26(uVar2);
-  return;
+  iVar3 = __restgprlr_26(iVar3);
+  return iVar3;
 }
 
 
 // 8263F4E8  SND_StartAliasStreamOnChannel  (xenon/snd_driver.cpp:3289)
 
-void SND_StartAliasStreamOnChannel(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_StartAliasStreamOnChannel(SndStartAliasInfo *param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
+  CacheFileName *pCVar2;
   uint uVar3;
   int iVar4;
-  int *piVar5;
-  char cVar7;
-  undefined4 uVar6;
-  longlong lVar8;
-  double dVar9;
+  SndStartAliasInfo *pSVar5;
+  bool bVar8;
+  int iVar6;
+  uint uVar7;
+  ulonglong uVar9;
+  int iVar10;
   float local_d0 [4];
-  undefined1 auStack_c0 [192];
+  char acStack_c0 [192];
   
-  piVar5 = (int *)__savegprlr_26();
-  cVar7 = Sys_IsMainThread();
-  if ((cVar7 == '\0') && (cVar7 = Sys_IsRenderThread(), cVar7 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xcdf,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar9 = (ulonglong)param_2;
+  pSVar5 = (SndStartAliasInfo *)__savegprlr_26(param_1);
+  bVar8 = Sys_IsMainThread();
+  if ((!bVar8) && (bVar8 = Sys_IsRenderThread(), !bVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xcdf,0,
+                    "%s");
   }
-  if (*piVar5 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xce0,0,0xffffffff82000f98,0xffffffff8218a690);
+  if (pSVar5->alias0 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xce0,0,
+                    "%s");
   }
-  if ((*(uint *)(*piVar5 + 0x3c) & 0x180) != 0x100) {
-    MyAssertHandler(0xffffffff821881f8,0xce1,0,0xffffffff82000f98,0xffffffff8218a928);
+  if ((pSVar5->alias0->flags & 0x180U) != 0x100) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xce1,0,
+                    "%s");
   }
-  if (piVar5[1] == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xce2,0,0xffffffff82000f98,0xffffffff8218a578);
+  if (pSVar5->alias1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xce2,0,
+                    "%s");
   }
-  if ((*(uint *)(piVar5[1] + 0x3c) & 0x180) != 0x100) {
-    MyAssertHandler(0xffffffff821881f8,0xce3,0,0xffffffff82000f98,0xffffffff8218a8e0);
+  if ((pSVar5->alias1->flags & 0x180U) != 0x100) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xce3,0,
+                    "%s");
   }
-  if (((int)param_2 < 0x28) || (0x35 < (int)param_2)) {
-    MyAssertHandler(0xffffffff821881f8,0xce4,0,0xffffffff8200aef4,0xffffffff82189ab8,param_2);
+  iVar6 = (int)uVar9;
+  if ((iVar6 < 0x28) || (0x35 < iVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xce4,0,
+                    "%s\n\t(index) = %i");
   }
-  iVar1 = *(int *)(*piVar5 + 0x3c);
-  piVar5[0xf] = 0xffffffffU - (piVar5[0xf] >> 0x1f) & piVar5[0xf];
-  uVar2 = iVar1 >> 9;
-  uVar3 = uVar2 & 0x3f;
-  cVar7 = SND_HasFreeVoice(uVar3);
-  if (cVar7 != '\0') {
-    if (*(char *)(*(int *)(*piVar5 + 0x14) + 1) == '\0') {
-      Com_GetSoundFileName(*piVar5,auStack_c0,0x80);
-      Com_PrintError(1,0xffffffff8218a888,auStack_c0,*(undefined4 *)*piVar5);
+  iVar10 = pSVar5->alias0->flags;
+  pSVar5->startDelay = -(pSVar5->startDelay >> 0x1f) - 1U & pSVar5->startDelay;
+  uVar1 = iVar10 >> 9;
+  uVar3 = uVar1 & 0x3f;
+  bVar8 = SND_HasFreeVoice(uVar3);
+  if (bVar8) {
+    if (pSVar5->alias0->soundFile->exists == '\0') {
+      Com_GetSoundFileName(pSVar5->alias0,acStack_c0,0x80);
+      Com_PrintError(1,
+                     "Tried to play streamed sound \'%s\' from alias \'%s\', but it was not found at load time.\n"
+                    );
     }
     else {
-      SND_StopStreamChannel(param_2);
-      lVar8 = param_2 * 0x94 + -0x7bde1e90;
-      Sys_EnterCriticalSection(8);
-      iVar1 = (int)lVar8;
-      *(undefined1 *)(iVar1 + 0x7c) = 0;
-      *(undefined4 *)(iVar1 + 0x74) = 1;
-      *(int *)(iVar1 + 0x84) = piVar5[0xe];
-      *(int *)(iVar1 + 0x80) = piVar5[0xd];
-      *(int *)(iVar1 + 0x88) = piVar5[0xf];
-      *(undefined4 *)(iVar1 + 0x4c) = *(undefined4 *)(*piVar5 + 0x3c);
-      *(undefined4 *)(iVar1 + 0x50) = *(undefined4 *)*piVar5;
-      *(undefined4 *)(iVar1 + 0x5c) = 0;
-      *(undefined4 *)(iVar1 + 0x58) = 0;
-      *(undefined4 *)(iVar1 + 0x54) = 0xffffffff;
-      *(undefined4 *)(iVar1 + 0x60) = 0;
-      *(undefined4 *)(iVar1 + 100) = 0;
-      if (*(int *)(iVar1 + 0x48) != 0) {
-        MyAssertHandler(0xffffffff821881f8,0xd0c,0,0xffffffff82000f98,0xffffffff821886bc);
+      SND_StopStreamChannel(iVar6);
+      iVar4 = iVar6 * 0x94;
+      pCVar2 = (CacheFileName *)((int)xaGlob.baseVolEntries + iVar4 + 0x34);
+      Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+      iVar10 = *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x7c);
+      *(undefined1 *)((int)xaGlob.baseVolEntries + iVar4 + 0xb0) = 0;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0xa8) = 1;
+      *(float *)((int)xaGlob.baseVolEntries + iVar4 + 0xb8) = pSVar5->fraction;
+      *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0xb4) = pSVar5->timeshift;
+      *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0xbc) = pSVar5->startDelay;
+      *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x80) = pSVar5->alias0->flags;
+      *(char **)((int)xaGlob.baseVolEntries + iVar4 + 0x84) = pSVar5->alias0->aliasName;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x90) = 0;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x8c) = 0;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x88) = 0xffffffff;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x94) = 0;
+      *(undefined4 *)((int)xaGlob.baseVolEntries + iVar4 + 0x98) = 0;
+      if (iVar10 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xd0c,0,"%s");
       }
-      StreamFileNameGetCacheName((ulonglong)*(uint *)(*piVar5 + 0x14) + 4,lVar8);
-      uVar6 = CacheFileNameHash(lVar8);
-      *(undefined4 *)(iVar1 + 0x44) = uVar6;
-      Sys_LeaveCriticalSection(8);
-      SND_SetChannelStartInfo(param_2,piVar5);
-      SND_SetSoundFileChannelInfo(param_2,0,0,1);
-      iVar4 = uVar3 + (uVar2 & 0x3f) * 2;
-      local_d0[0] = *(float *)(iVar4 * 4 + DAT_84886910) * (float)(&DAT_848859fc)[iVar4] *
-                    (float)piVar5[7] * DAT_848859ec;
-      SND_ApplyStartAliasMasterPriorityVolume(piVar5,local_d0);
-      dVar9 = (double)local_d0[0];
-      if ((dVar9 < 0.0) || (1.0 < dVar9)) {
-        MyAssertHandler(0xffffffff821881f8,0xd21,0,0xffffffff8218a830,0xffffffff8218a84c,dVar9);
-        dVar9 = (double)local_d0[0];
+      StreamFileNameGetCacheName(&(pSVar5->alias0->soundFile->u).streamSnd.filename,pCVar2);
+      uVar7 = CacheFileNameHash(pCVar2);
+      *(uint *)((int)xaGlob.baseVolEntries + iVar4 + 0x78) = uVar7;
+      Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
+      SND_SetChannelStartInfo(iVar6,pSVar5);
+      SND_SetSoundFileChannelInfo(iVar6,0,0,SFLS_LOADING);
+      iVar10 = uVar3 + (uVar1 & 0x3f) * 2;
+      local_d0[0] = (&(g_snd.channelvol)->channelvol[0].value)[iVar10] *
+                    (&g_snd.channelVolGlobal.channelvol[0].value)[iVar10] * pSVar5->volume *
+                    g_snd.volume;
+      SND_ApplyStartAliasMasterPriorityVolume(pSVar5,local_d0);
+      if ((local_d0[0] < 0.0) || (1.0 < local_d0[0])) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xd21,0,"%s\n\t(calculatedVolume) = %g");
       }
-      SND_SetStreamChannelVolume(dVar9,param_2);
-      SND_UpdateStreamChannel(param_2,0);
-      if (*(int *)((int)&DAT_84888114 +
-                  (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 6)) != 0) {
-        SND_AcquirePlaybackId(param_2,*(undefined4 *)(iVar1 + 0x54));
-        __restgprlr_26();
-        return;
+      SND_SetStreamChannelVolume(iVar6,local_d0[0]);
+      SND_UpdateStreamChannel(iVar6,0);
+      if (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                         soundFileInfo).loadingState +
+                  (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 6)) != 0) {
+        iVar6 = SND_AcquirePlaybackId(iVar6,*(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x88));
+        iVar6 = __restgprlr_26(iVar6);
+        return iVar6;
       }
     }
   }
-  __restgprlr_26(0xffffffffffffffff);
-  return;
+  iVar6 = __restgprlr_26(0xffffffffffffffff);
+  return iVar6;
 }
 
 
 // 8263BA88  SND_Get2DChannelVolume  (xenon/snd_driver.cpp:3373)
 
-double SND_Get2DChannelVolume(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+float SND_Get2DChannelVolume(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   float local_20 [2];
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd30,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd30,0,
+                    "%s");
   }
   if ((param_1 < 0) || (7 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xd31,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd31,0,
+                    "%s\n\t(index) = %i");
   }
-  XAudioSourceVoice_GetVolume((&DAT_8421bffc)[param_1],local_20);
-  return (double)local_20[0];
+  XAudioSourceVoice_GetVolume(xaGlob.voice[param_1],local_20);
+  return local_20[0];
 }
 
 
 // 8263BB58  SND_Set2DChannelVolume  (xenon/snd_driver.cpp:3385)
 
-void SND_Set2DChannelVolume(double param_1,int param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Set2DChannelVolume(int param_1,float param_2)
 
 {
-  char cVar1;
+  bool bVar1;
+  double dVar2;
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd3a,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  dVar2 = (double)param_2;
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd3a,0,
+                    "%s");
   }
-  if ((param_2 < 0) || (7 < param_2)) {
-    MyAssertHandler(0xffffffff821881f8,0xd3b,0,0xffffffff8200aef4,0xffffffff82189a68,param_2);
+  if ((param_1 < 0) || (7 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd3b,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((param_1 < 0.0) || (1.0 < param_1)) {
-    MyAssertHandler(param_1,0xffffffff821881f8,0xd3d,0,0xffffffff82189d40,0xffffffff82189d54,param_1
-                   );
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd3d,0,
+                    "%s\n\t(volume) = %g");
   }
-  XAudioSourceVoice_SetVolume(param_1,(&DAT_8421bffc)[param_2]);
+  XAudioSourceVoice_SetVolume(xaGlob.voice[param_1],(float)dVar2);
   return;
 }
 
 
 // 8263BC78  SND_Get3DChannelVolume  (xenon/snd_driver.cpp:3400)
 
-double SND_Get3DChannelVolume(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+float SND_Get3DChannelVolume(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   float local_20 [2];
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd4b,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd4b,0,
+                    "%s");
   }
   if ((param_1 < 8) || (0x27 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xd4c,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd4c,0,
+                    "%s\n\t(index) = %i");
   }
-  XAudioSourceVoice_GetVolume((&DAT_8421bffc)[param_1],local_20);
-  return (double)local_20[0];
+  XAudioSourceVoice_GetVolume(xaGlob.voice[param_1],local_20);
+  return local_20[0];
 }
 
 
 // 8263BD48  SND_Set3DChannelVolume  (xenon/snd_driver.cpp:3412)
 
-void SND_Set3DChannelVolume(double param_1,int param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Set3DChannelVolume(int param_1,float param_2)
 
 {
-  char cVar1;
+  bool bVar1;
+  double dVar2;
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd55,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  dVar2 = (double)param_2;
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd55,0,
+                    "%s");
   }
-  if ((param_2 < 8) || (0x27 < param_2)) {
-    MyAssertHandler(0xffffffff821881f8,0xd56,0,0xffffffff8200aef4,0xffffffff82189a88,param_2);
+  if ((param_1 < 8) || (0x27 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd56,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((param_1 < 0.0) || (1.0 < param_1)) {
-    MyAssertHandler(param_1,0xffffffff821881f8,0xd58,0,0xffffffff82189d40,0xffffffff82189d54,param_1
-                   );
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd58,0,
+                    "%s\n\t(volume) = %g");
   }
-  XAudioSourceVoice_SetVolume(param_1,(&DAT_8421bffc)[param_2]);
+  XAudioSourceVoice_SetVolume(xaGlob.voice[param_1],(float)dVar2);
   return;
 }
 
 
 // 8263BE68  SND_GetStreamChannelVolume  (xenon/snd_driver.cpp:3427)
 
-double SND_GetStreamChannelVolume(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+float SND_GetStreamChannelVolume(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd64,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd64,0,
+                    "%s");
   }
   if ((param_1 < 0x28) || (0x35 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xd65,0,0xffffffff8200aef4,0xffffffff82189ab8,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd65,0,
+                    "%s\n\t(index) = %i");
   }
-  return (double)*(float *)(&DAT_84220468 + param_1 * 4);
+  return xaGlob.startAliasInfo[0xc].org[param_1 + -4];
 }
 
 
 // 8263BF28  SND_SetStreamChannelVolume  (xenon/snd_driver.cpp:3436)
 
-void SND_SetStreamChannelVolume(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetStreamChannelVolume(int param_1,float param_2)
 
 {
   int iVar1;
   int iVar2;
   ulonglong uVar3;
-  char cVar4;
+  bool bVar4;
   double extraout_f1;
   double dVar5;
   
-  uVar3 = __savegprlr_25();
+  uVar3 = __savegprlr_25((double)param_2,param_1);
   dVar5 = extraout_f1;
-  cVar4 = Sys_IsMainThread();
-  if ((cVar4 == '\0') && (cVar4 = Sys_IsRenderThread(), cVar4 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd6d,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd6d,0,
+                    "%s");
   }
   if (((int)uVar3 < 0x28) || (0x35 < (int)uVar3)) {
-    MyAssertHandler(0xffffffff821881f8,0xd6e,0,0xffffffff8200aef4,0xffffffff82189ab8,uVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd6e,0,
+                    "%s\n\t(index) = %i");
   }
   if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821881f8,0xd6f,0,0xffffffff82189d40,0xffffffff82189d54,dVar5);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd6f,0,
+                    "%s\n\t(volume) = %g");
   }
   iVar2 = (int)((uVar3 & 0x3fffffff) << 2);
-  if (*(int *)((int)&DAT_8421bffc + iVar2) == 0) {
-    if (*(int *)((int)&DAT_84888114 + (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6))
-        != 1) {
-      MyAssertHandler(0xffffffff821881f8,0xd70,0,0xffffffff82189d78,0xffffffff82189db8);
-    }
+  if ((*(int *)((int)xaGlob.voice + iVar2) == 0) &&
+     (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                     soundFileInfo).loadingState +
+              (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6)) != 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd70,0,
+                    "%s\n\t(g_snd.chaninfo[index].soundFileInfo.loadingState) = %i");
   }
-  iVar1 = *(int *)((int)&DAT_84888114 + (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6))
-  ;
-  *(float *)(&DAT_84220468 + iVar2) = (float)dVar5;
+  iVar1 = *(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                         soundFileInfo).loadingState +
+                  (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6));
+  *(float *)((int)xaGlob.startAliasInfo[0xc].org + iVar2 + -0x10) = (float)dVar5;
   if (iVar1 != 1) {
-    if (*(int *)((int)&DAT_8421bffc + iVar2) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xd77,0,0xffffffff82000f98,0xffffffff82189158);
+    if (*(int *)((int)xaGlob.voice + iVar2) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd77,
+                      0,"%s");
     }
     if (0xd < (uVar3 - 0x28 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821881f8,0xd78,0,0xffffffff82189b80,uVar3 - 0x28,0xe);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd78,
+                      0,
+                      "index - SND_FIRST_STREAM_CHANNEL doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)"
+                     );
     }
-    XAudioSourceVoice_SetVolume(dVar5,*(undefined4 *)((int)&DAT_8421bffc + iVar2));
+    XAudioSourceVoice_SetVolume(*(IXAudioSourceVoice **)((int)xaGlob.voice + iVar2),(float)dVar5);
   }
   __restgprlr_25();
   return;
@@ -4001,133 +4496,165 @@ void SND_SetStreamChannelVolume(void)
 
 // 8263C108  SND_Get2DChannelPlaybackRate  (xenon/snd_driver.cpp:3459)
 
-undefined4 SND_Get2DChannelPlaybackRate(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_Get2DChannelPlaybackRate(int param_1)
 
 {
   if ((param_1 < 0) || (7 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xd84,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd84,0,
+                    "%s\n\t(index) = %i");
   }
-  return *(undefined4 *)(&DAT_84220540 + param_1 * 4);
+  return xaGlob.playbackRate[param_1];
 }
 
 
 // 8263C180  SND_Set2DChannelPlaybackRate  (xenon/snd_driver.cpp:3467)
 
-void SND_Set2DChannelPlaybackRate(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Set2DChannelPlaybackRate(int param_1,int param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  char cVar3;
+  bool bVar4;
+  T_HRESULT TVar3;
+  float fVar5;
   
-  uVar2 = __savegprlr_28();
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 == '\0') && (cVar3 = Sys_IsRenderThread(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xd8c,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar2 = __savegprlr_28(param_1);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd8c,0,
+                    "%s");
   }
   if (((int)uVar2 < 0) || (7 < (int)uVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0xd8d,0,0xffffffff8200aef4,0xffffffff82189a68,uVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd8d,0,
+                    "%s\n\t(index) = %i");
   }
   iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  *(int *)(&DAT_84220540 + iVar1) = (int)param_2;
-  XA_CalcXAudioPitch(param_2,*(undefined4 *)
-                              ((int)&DAT_8488811c +
-                              (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6)));
-  XAudioSourceVoice_SetPitch(*(undefined4 *)((int)&DAT_8421bffc + iVar1));
-  __restgprlr_28();
+  *(int *)((int)xaGlob.playbackRate + iVar1) = param_2;
+  fVar5 = XA_CalcXAudioPitch(param_2,*(ulong *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id +
+                                               (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff)
+                                                    << 6) + -0x1c));
+  TVar3 = XAudioSourceVoice_SetPitch(*(IXAudioSourceVoice **)((int)xaGlob.voice + iVar1),fVar5);
+  __restgprlr_28(TVar3);
   return;
 }
 
 
 // 8263C260  SND_Get3DChannelPlaybackRate  (xenon/snd_driver.cpp:3481)
 
-undefined4 SND_Get3DChannelPlaybackRate(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_Get3DChannelPlaybackRate(int param_1)
 
 {
   if ((param_1 < 8) || (0x27 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xd9a,0,0xffffffff8200aef4,0xffffffff82189a88,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xd9a,0,
+                    "%s\n\t(index) = %i");
   }
-  return *(undefined4 *)(&DAT_84220540 + param_1 * 4);
+  return xaGlob.playbackRate[param_1];
 }
 
 
 // 8263C2D8  SND_Set3DChannelPlaybackRate  (xenon/snd_driver.cpp:3489)
 
-void SND_Set3DChannelPlaybackRate(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Set3DChannelPlaybackRate(int param_1,int param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  char cVar3;
+  bool bVar4;
+  T_HRESULT TVar3;
+  float fVar5;
   
-  uVar2 = __savegprlr_28();
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 == '\0') && (cVar3 = Sys_IsRenderThread(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xda2,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar2 = __savegprlr_28(param_1);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xda2,0,
+                    "%s");
   }
   if (((int)uVar2 < 8) || (0x27 < (int)uVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0xda3,0,0xffffffff8200aef4,0xffffffff82189a88,uVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xda3,0,
+                    "%s\n\t(index) = %i");
   }
   iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  *(int *)(&DAT_84220540 + iVar1) = (int)param_2;
-  XA_CalcXAudioPitch(param_2,*(undefined4 *)
-                              ((int)&DAT_8488811c +
-                              (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6)));
-  XAudioSourceVoice_SetPitch(*(undefined4 *)((int)&DAT_8421bffc + iVar1));
-  __restgprlr_28();
+  *(int *)((int)xaGlob.playbackRate + iVar1) = param_2;
+  fVar5 = XA_CalcXAudioPitch(param_2,*(ulong *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id +
+                                               (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff)
+                                                    << 6) + -0x1c));
+  TVar3 = XAudioSourceVoice_SetPitch(*(IXAudioSourceVoice **)((int)xaGlob.voice + iVar1),fVar5);
+  __restgprlr_28(TVar3);
   return;
 }
 
 
 // 8263C3B8  SND_GetStreamChannelPlaybackRate  (xenon/snd_driver.cpp:3503)
 
-undefined4 SND_GetStreamChannelPlaybackRate(int param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int SND_GetStreamChannelPlaybackRate(int param_1)
 
 {
   if ((param_1 < 0x28) || (0x35 < param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xdb0,0,0xffffffff8200aef4,0xffffffff82189ab8,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdb0,0,
+                    "%s\n\t(index) = %i");
   }
-  return *(undefined4 *)(&DAT_84220540 + param_1 * 4);
+  return xaGlob.playbackRate[param_1];
 }
 
 
 // 8263C430  SND_SetStreamChannelPlaybackRate  (xenon/snd_driver.cpp:3511)
 
-void SND_SetStreamChannelPlaybackRate(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_SetStreamChannelPlaybackRate(int param_1,int param_2)
 
 {
   int iVar1;
-  undefined4 uVar2;
+  IXAudioSourceVoice *pIVar2;
   int iVar3;
   int iVar4;
   ulonglong uVar5;
-  char cVar6;
+  bool bVar6;
+  float fVar7;
   
-  uVar5 = __savegprlr_24();
-  cVar6 = Sys_IsMainThread();
-  if ((cVar6 == '\0') && (cVar6 = Sys_IsRenderThread(), cVar6 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xdba,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar5 = __savegprlr_24(param_1);
+  bVar6 = Sys_IsMainThread();
+  if ((!bVar6) && (bVar6 = Sys_IsRenderThread(), !bVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdba,0,
+                    "%s");
   }
   if (((int)uVar5 < 0x28) || (0x35 < (int)uVar5)) {
-    MyAssertHandler(0xffffffff821881f8,0xdbb,0,0xffffffff8200aef4,0xffffffff82189ab8,uVar5);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdbb,0,
+                    "%s\n\t(index) = %i");
   }
   iVar3 = (int)((uVar5 & 0x3fffffff) << 2);
-  if (*(int *)((int)&DAT_8421bffc + iVar3) == 0) {
-    if (*(int *)((int)&DAT_84888114 + (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 6))
-        != 1) {
-      MyAssertHandler(0xffffffff821881f8,0xdbc,0,0xffffffff82189d78,0xffffffff82189db8);
-    }
+  if ((*(int *)((int)xaGlob.voice + iVar3) == 0) &&
+     (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                     soundFileInfo).loadingState +
+              (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 6)) != 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdbc,0,
+                    "%s\n\t(g_snd.chaninfo[index].soundFileInfo.loadingState) = %i");
   }
   iVar4 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  iVar1 = *(int *)((int)&DAT_84888114 + iVar4);
-  *(int *)(&DAT_84220540 + iVar3) = (int)param_2;
+  iVar1 = *(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                         soundFileInfo).loadingState + iVar4);
+  *(int *)((int)xaGlob.playbackRate + iVar3) = param_2;
   if (iVar1 != 1) {
     if (0xd < (uVar5 - 0x28 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821881f8,0xdc3,0,0xffffffff82189b80,uVar5 - 0x28,0xe);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdc3,
+                      0,
+                      "index - SND_FIRST_STREAM_CHANNEL doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)"
+                     );
     }
-    uVar2 = *(undefined4 *)((int)&DAT_8421bffc + iVar3);
-    XA_CalcXAudioPitch(param_2,*(undefined4 *)((int)&DAT_8488811c + iVar4));
-    XAudioSourceVoice_SetPitch(uVar2);
+    pIVar2 = *(IXAudioSourceVoice **)((int)xaGlob.voice + iVar3);
+    fVar7 = XA_CalcXAudioPitch(param_2,*(ulong *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id +
+                                                 iVar4 + -0x1c));
+    XAudioSourceVoice_SetPitch(pIVar2,fVar7);
   }
   __restgprlr_24();
   return;
@@ -4136,93 +4663,106 @@ void SND_SetStreamChannelPlaybackRate(undefined8 param_1,undefined8 param_2)
 
 // 8263C5A0  SND_UpdateChannelReverb  (xenon/snd_driver.cpp:3535)
 
-void SND_UpdateChannelReverb(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UpdateChannelReverb(int param_1)
 
 {
-  float fVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  char cVar7;
+  ulonglong uVar5;
+  bool bVar7;
+  T_HRESULT TVar6;
   longlong lVar8;
   longlong lVar9;
-  float *pfVar10;
+  XAUDIOCHANNELVOLUMEENTRY **ppXVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  double dVar13;
+  float *pfVar13;
   double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
+  float fVar18;
   
-  uVar6 = __savegprlr_18();
-  cVar7 = Sys_IsMainThread();
-  if ((cVar7 == '\0') && (cVar7 = Sys_IsRenderThread(), cVar7 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xdda,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar5 = __savegprlr_18(param_1);
+  bVar7 = Sys_IsMainThread();
+  if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xdda,0,
+                    "%s");
   }
-  iVar4 = (int)((uVar6 & 0xffffffff) << 2);
-  if (*(int *)((int)&DAT_8421bffc + iVar4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xddb,0,0xffffffff82000f98,0xffffffff82189158);
+  iVar3 = (int)((uVar5 & 0xffffffff) << 2);
+  if (*(int *)((int)xaGlob.voice + iVar3) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xddb,0,
+                    "%s");
   }
-  iVar5 = (int)((uVar6 & 0xffffffff) << 3);
-  uVar2 = *(uint *)(&DAT_8421df8c + iVar5);
-  uVar12 = (ulonglong)uVar2;
-  uVar3 = *(uint *)(&DAT_8421df90 + iVar5);
-  uVar11 = (ulonglong)uVar3;
-  DAT_84220764 = (undefined1)uVar2;
-  iVar5 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  lVar8 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20;
+  iVar4 = (int)((uVar5 & 0xffffffff) << 3);
+  uVar1 = *(uint *)((int)xaGlob.baseVolEntryCount[0] + iVar4);
+  uVar12 = (ulonglong)uVar1;
+  uVar2 = *(uint *)((int)xaGlob.baseVolEntryCount[0] + iVar4 + 4);
+  uVar11 = (ulonglong)uVar2;
+  xaGlob.channelVolume[0].EntryCount = (uchar)uVar1;
+  iVar4 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 6);
+  lVar8 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20;
   lVar9 = lVar8 + -0x7bde1e94;
-  dVar13 = (double)XA_GetDryLevel(*(undefined4 *)((int)&DAT_84888184 + iVar5));
-  dVar15 = 1.0;
-  dVar16 = 0.0;
-  if (0 < (int)uVar2) {
+  fVar18 = XA_GetDryLevel(*(snd_alias_t **)((int)g_snd.chaninfo[0].org + iVar4 + -0x14));
+  dVar14 = (double)fVar18;
+  dVar16 = 1.0;
+  dVar17 = 0.0;
+  if (0 < (int)uVar1) {
     lVar8 = lVar8 + -0x7bde1ec8;
-    pfVar10 = (float *)&DAT_84220770;
+    ppXVar10 = &xaGlob.channelVolume[1].paEntries;
     do {
-      dVar14 = (double)*(float *)((int)lVar8 + 4);
-      if ((dVar14 < dVar16) || (dVar15 < dVar14)) {
-        MyAssertHandler(0xffffffff821881f8,0xde8,0,0xffffffff82189ef0,0xffffffff82189eb4,dVar14);
+      dVar15 = (double)*(float *)((int)lVar8 + 4);
+      if ((dVar15 < dVar17) || (dVar16 < dVar15)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xde8,0,"%s\n\t(masteringBaseVol[i]) = %g");
       }
       lVar8 = lVar8 + 4;
       uVar12 = uVar12 - 1;
-      pfVar10 = pfVar10 + 2;
-      *pfVar10 = (float)((double)*(float *)lVar8 * dVar13);
+      ppXVar10 = ppXVar10 + 2;
+      *ppXVar10 = (XAUDIOCHANNELVOLUMEENTRY *)(float)((double)*(float *)lVar8 * dVar14);
     } while (uVar12 != 0);
   }
-  DAT_8422076c = (undefined1)uVar3;
-  dVar13 = (double)XA_GetWetLevel(*(undefined4 *)((int)&DAT_84888184 + iVar5));
-  if (0 < (int)uVar3) {
-    pfVar10 = (float *)&DAT_842207d8;
+  xaGlob.channelVolume[1].EntryCount = (uchar)uVar2;
+  fVar18 = XA_GetWetLevel(*(snd_alias_t **)((int)g_snd.chaninfo[0].org + iVar4 + -0x14));
+  dVar14 = (double)fVar18;
+  if (0 < (int)uVar2) {
+    pfVar13 = &xaGlob.channelVolumeEntries[1][0].Volume;
     do {
-      dVar14 = (double)*(float *)lVar9;
-      if ((dVar14 < dVar16) || (dVar15 < dVar14)) {
-        MyAssertHandler(0xffffffff821881f8,0xdf1,0,0xffffffff82189e48,0xffffffff82189e14,dVar14);
+      dVar15 = (double)*(float *)lVar9;
+      if ((dVar15 < dVar17) || (dVar16 < dVar15)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xdf1,0,"%s\n\t(reverbBaseVol[i]) = %g");
       }
-      fVar1 = (float)((double)*(float *)lVar9 * dVar13);
-      *pfVar10 = fVar1;
-      if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
-        MyAssertHandler(0xffffffff821881f8,0xdf5,0,0xffffffff82000f98,0xffffffff82189e68);
+      fVar18 = (float)((double)*(float *)lVar9 * dVar14);
+      *pfVar13 = fVar18;
+      if (((uint)fVar18 & 0x7f800000) == 0x7f800000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xdf5,0,"%s");
       }
       uVar11 = uVar11 - 1;
       lVar9 = lVar9 + 4;
-      pfVar10 = pfVar10 + 2;
+      pfVar13 = pfVar13 + 2;
     } while (uVar11 != 0);
   }
-  XAudioVoice_SetVoiceOutputVolume(*(undefined4 *)((int)&DAT_8421bffc + iVar4),0xffffffff8422074c);
-  __restgprlr_18();
+  TVar6 = XAudioVoice_SetVoiceOutputVolume
+                    (*(IXAudioVoice **)((int)xaGlob.voice + iVar3),&xaGlob.voiceVolume);
+  __restgprlr_18(TVar6);
   return;
 }
 
 
 // 8263C7F0  SND_Update2DChannelReverb  (xenon/snd_driver.cpp:3588)
 
-void SND_Update2DChannelReverb(undefined8 param_1)
+void SND_Update2DChannelReverb(int param_1)
 
 {
-  if (((int)param_1 < 0) || (7 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xe05,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+  if ((param_1 < 0) || (7 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe05,0,
+                    "%s\n\t(index) = %i");
   }
   SND_UpdateChannelReverb(param_1);
   return;
@@ -4231,7 +4771,7 @@ void SND_Update2DChannelReverb(undefined8 param_1)
 
 // 8263C858  SND_Update3DChannelReverb  (xenon/snd_driver.cpp:3595)
 
-void SND_Update3DChannelReverb(void)
+void SND_Update3DChannelReverb(int param_1)
 
 {
   return;
@@ -4240,31 +4780,42 @@ void SND_Update3DChannelReverb(void)
 
 // 8263C860  SND_UpdateStreamChannelReverb  (xenon/snd_driver.cpp:3601)
 
-void SND_UpdateStreamChannelReverb(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UpdateStreamChannelReverb(int param_1)
 
 {
   int iVar1;
   ulonglong uVar2;
-  char cVar3;
+  bool bVar3;
+  int iVar4;
   
-  uVar2 = __savegprlr_29();
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 == '\0') && (cVar3 = Sys_IsRenderThread(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xe12,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar2 = __savegprlr_29(param_1);
+  bVar3 = Sys_IsMainThread();
+  if ((!bVar3) && (bVar3 = Sys_IsRenderThread(), !bVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe12,0,
+                    "%s");
   }
-  if (((int)uVar2 < 0x28) || (0x35 < (int)uVar2)) {
-    MyAssertHandler(0xffffffff821881f8,0xe13,0,0xffffffff8200aef4,0xffffffff82189ab8,uVar2);
+  iVar4 = (int)uVar2;
+  if ((iVar4 < 0x28) || (0x35 < iVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe13,0,
+                    "%s\n\t(index) = %i");
   }
-  if (*(int *)((int)&DAT_8421bffc + (int)((uVar2 & 0xffffffff) << 2)) == 0) {
-    if (*(int *)((int)&DAT_84888114 + (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6))
-        != 1) {
-      MyAssertHandler(0xffffffff821881f8,0xe14,0,0xffffffff82189d78,0xffffffff82189f10);
-    }
+  if ((*(int *)((int)xaGlob.voice + (int)((uVar2 & 0xffffffff) << 2)) == 0) &&
+     (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                     soundFileInfo).loadingState +
+              (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6)) != 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe14,0,
+                    "%s\n\t(g_snd.chaninfo[index].soundFileInfo.loadingState) = %i");
   }
   iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  cVar3 = SND_IsAliasChannel3D(*(int *)(*(int *)((int)&DAT_84888184 + iVar1) + 0x3c) >> 9 & 0x3f);
-  if ((cVar3 == '\0') && (*(int *)((int)&DAT_84888114 + iVar1) != 1)) {
-    SND_UpdateChannelReverb(uVar2);
+  bVar3 = SND_IsAliasChannel3D
+                    (*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar1 + -0x14) + 0x3c) >> 9 &
+                     0x3f);
+  if ((!bVar3) &&
+     (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0].lengthNotifyInfo + -1))->
+                     soundFileInfo).loadingState + iVar1) != 1)) {
+    SND_UpdateChannelReverb(iVar4);
   }
   __restgprlr_29();
   return;
@@ -4273,54 +4824,55 @@ void SND_UpdateStreamChannelReverb(void)
 
 // 8263C9A8  SND_UpdateEqs  (xenon/snd_driver.cpp:3617)
 
-void SND_UpdateEqs(void)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UpdateEqs(int param_1)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  int *piVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  int iVar7;
+  int iVar1;
+  int iVar2;
+  bool bVar3;
+  IXAudioSourceVoice **ppIVar4;
+  int *piVar5;
+  int iVar6;
   
-  uVar2 = __savegprlr_23();
-  piVar4 = &DAT_8421bffc;
-  puVar5 = &DAT_84888124;
-  lVar6 = 0;
+  iVar2 = __savegprlr_23(param_1);
+  ppIVar4 = xaGlob.voice;
+  piVar5 = &g_snd.chaninfo[0].entchannel;
+  iVar6 = 0;
   do {
-    uVar1 = *puVar5;
-    iVar7 = (int)lVar6;
-    if (iVar7 < 0) {
-      if (7 < iVar7) goto LAB_8263ca24;
-      if (0x27 < iVar7) goto LAB_8263ca4c;
+    iVar1 = *piVar5;
+    if (iVar6 < 0) {
+      if (7 < iVar6) goto LAB_8263ca24;
+      if (0x27 < iVar6) goto LAB_8263ca4c;
 LAB_8263ca54:
-      MyAssertHandler(0xffffffff821881f8,0xe37,0,0xffffffff82188a0c,0xffffffff82188a28,lVar6);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe37,
+                      0,"%s\n\t(channelIndex) = %i");
 LAB_8263ca70:
-      if (*piVar4 != 0) goto LAB_8263ca7c;
+      if (*ppIVar4 != (IXAudioSourceVoice *)0x0) goto LAB_8263ca7c;
     }
     else {
-      if (iVar7 < 8) {
-        cVar3 = SND_Is2DChannelFree(lVar6);
+      if (iVar6 < 8) {
+        bVar3 = SND_Is2DChannelFree(iVar6);
       }
       else {
 LAB_8263ca24:
-        if (0x27 < iVar7) {
+        if (0x27 < iVar6) {
 LAB_8263ca4c:
-          if (0x35 < iVar7) goto LAB_8263ca54;
+          if (0x35 < iVar6) goto LAB_8263ca54;
           goto LAB_8263ca70;
         }
-        cVar3 = SND_Is3DChannelFree(lVar6);
+        bVar3 = SND_Is3DChannelFree(iVar6);
       }
-      if (cVar3 == '\0') {
+      if (!bVar3) {
 LAB_8263ca7c:
-        XA_ApplyEq(*piVar4,lVar6,uVar1,uVar2);
+        XA_ApplyEq((IXAudioVoice *)*ppIVar4,iVar6,iVar1,iVar2);
       }
     }
-    puVar5 = puVar5 + 0x30;
-    lVar6 = lVar6 + 1;
-    piVar4 = piVar4 + 1;
-    if (-0x7b77565d < (int)puVar5) {
+    piVar5 = piVar5 + 0x30;
+    iVar6 = iVar6 + 1;
+    ppIVar4 = ppIVar4 + 1;
+    if (-0x7b77565d < (int)piVar5) {
       __restgprlr_23();
       return;
     }
@@ -4330,301 +4882,338 @@ LAB_8263ca7c:
 
 // 8263CAB8  SND_Get2DChannelLength  (xenon/snd_driver.cpp:3654)
 
-void SND_Get2DChannelLength(void)
+int SND_Get2DChannelLength(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if ((iVar1 < 0) || (7 < iVar1)) {
-    MyAssertHandler(0xffffffff821881f8,0xe49,0,0xffffffff8200aef4,0xffffffff82189a68,iVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe49,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((&DAT_84888184)[iVar1 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe4a,0,0xffffffff82000f98,0xffffffff8218a034);
+  if (g_snd.chaninfo[iVar1].alias0 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe4a,0,
+                    "%s");
   }
-  if (*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe4b,0,0xffffffff82000f98,0xffffffff8218a00c);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe4b,0,
+                    "%s");
   }
-  if (**(char **)((&DAT_84888184)[iVar1 * 0x30] + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xe4c,0,0xffffffff82000f98,0xffffffff82189fd0);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe4c,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe4d,0,0xffffffff82000f98,0xffffffff82189f9c);
+  if (((g_snd.chaninfo[iVar1].alias0)->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe4d,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xe4e,0,0xffffffff82000f98,0xffffffff82189f6c);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe4e,0,
+                    "%s");
   }
-  __restgprlr_28(*(undefined4 *)
-                  (*(int *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 4) + 0x94));
-  return;
+  iVar1 = __restgprlr_28(((((g_snd.chaninfo[iVar1].alias0)->soundFile->u).loadSnd)->sound).
+                         xaIwXmaDataInfo.totalMsec);
+  return iVar1;
 }
 
 
 // 8263CC28  SND_Get3DChannelLength  (xenon/snd_driver.cpp:3674)
 
-void SND_Get3DChannelLength(void)
+int SND_Get3DChannelLength(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if ((iVar1 < 8) || (0x27 < iVar1)) {
-    MyAssertHandler(0xffffffff821881f8,0xe5d,0,0xffffffff8200aef4,0xffffffff82189a88,iVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe5d,0,
+                    "%s\n\t(index) = %i");
   }
-  if ((&DAT_84888184)[iVar1 * 0x30] == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe5e,0,0xffffffff82000f98,0xffffffff8218a034);
+  if (g_snd.chaninfo[iVar1].alias0 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe5e,0,
+                    "%s");
   }
-  if (*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe5f,0,0xffffffff82000f98,0xffffffff8218a00c);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile == (SoundFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe5f,0,
+                    "%s");
   }
-  if (**(char **)((&DAT_84888184)[iVar1 * 0x30] + 0x14) != '\x01') {
-    MyAssertHandler(0xffffffff821881f8,0xe60,0,0xffffffff82000f98,0xffffffff82189fd0);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile->type != '\x01') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe60,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 4) == 0) {
-    MyAssertHandler(0xffffffff821881f8,0xe61,0,0xffffffff82000f98,0xffffffff82189f9c);
+  if (((g_snd.chaninfo[iVar1].alias0)->soundFile->u).loadSnd == (LoadedSound *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe61,0,
+                    "%s");
   }
-  if (*(char *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 1) == '\0') {
-    MyAssertHandler(0xffffffff821881f8,0xe62,0,0xffffffff82000f98,0xffffffff82189f6c);
+  if ((g_snd.chaninfo[iVar1].alias0)->soundFile->exists == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe62,0,
+                    "%s");
   }
-  __restgprlr_28(*(undefined4 *)
-                  (*(int *)(*(int *)((&DAT_84888184)[iVar1 * 0x30] + 0x14) + 4) + 0x94));
-  return;
+  iVar1 = __restgprlr_28(((((g_snd.chaninfo[iVar1].alias0)->soundFile->u).loadSnd)->sound).
+                         xaIwXmaDataInfo.totalMsec);
+  return iVar1;
 }
 
 
 // 8263CD98  SND_SyncAmbientTracks_Internal  (xenon/snd_driver.cpp:3694)
 
-void SND_SyncAmbientTracks_Internal(undefined8 param_1,ulonglong param_2,int param_3)
+int SND_SyncAmbientTracks_Internal(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  ulonglong uVar2;
+  int iVar3;
   ulonglong uVar4;
   
-  uVar3 = __savegprlr_24();
-  if ((int)uVar3 == param_3 + 0x28) {
-    iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-    if (*(int *)((int)&DAT_84889f14 + iVar1) != 0) {
-      iVar2 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-      if (*(int *)((int)&DAT_84888184 + iVar2) == 0) {
-        MyAssertHandler(0xffffffff821881f8,0xe77,0,0xffffffff82000f98,0xffffffff8218a034);
+  uVar4 = (ulonglong)param_2;
+  uVar2 = __savegprlr_24(param_1);
+  if ((int)uVar2 == param_3 + 0x28) {
+    iVar3 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
+    if (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0x28].lengthNotifyInfo + -1))->
+                       soundFileInfo).loadingState + iVar3) != 0) {
+      iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 6);
+      if (*(int *)((int)g_snd.chaninfo[0].org + iVar1 + -0x14) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xe77,0,"%s");
       }
-      if (*(int *)((int)&DAT_84889f84 + iVar1) == 0) {
-        MyAssertHandler(0xffffffff821881f8,0xe78,0,0xffffffff82000f98,0xffffffff8218a058);
+      if (*(int *)((int)g_snd.chaninfo[0x28].org + iVar3 + -0x14) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xe78,0,"%s");
       }
-      uVar4 = param_2 + 0x28;
-      if (*(int *)(*(int *)((int)&DAT_84888184 + iVar2) + 0x58) ==
-          *(int *)(*(int *)((int)&DAT_84889f84 + iVar1) + 0x58)) goto LAB_8263ce7c;
+      uVar4 = uVar4 + 0x28;
+      if (*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar1 + -0x14) + 0x58) ==
+          *(int *)(*(int *)((int)g_snd.chaninfo[0x28].org + iVar3 + -0x14) + 0x58))
+      goto LAB_8263ce7c;
     }
   }
-  uVar4 = uVar3;
+  uVar4 = uVar2;
 LAB_8263ce7c:
-  __restgprlr_24(uVar4);
-  return;
+  iVar3 = __restgprlr_24(uVar4);
+  return iVar3;
 }
 
 
 // 8263CE88  SND_SyncAmbientTracks  (xenon/snd_driver.cpp:3714)
 
-void SND_SyncAmbientTracks(undefined8 param_1)
+int SND_SyncAmbientTracks(int param_1)
 
 {
   int iVar1;
   
   iVar1 = SND_SyncAmbientTracks_Internal(param_1,2,3);
-  if (iVar1 == (int)param_1) {
-    SND_SyncAmbientTracks_Internal(param_1,4,5);
+  if (iVar1 == param_1) {
+    iVar1 = SND_SyncAmbientTracks_Internal(param_1,4,5);
   }
-  return;
+  return iVar1;
 }
 
 
 // 8263CED8  SND_GetChannelFractionPlayed  (xenon/snd_driver.cpp:3725)
 
-void SND_GetChannelFractionPlayed(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+float SND_GetChannelFractionPlayed(int param_1,bool param_2)
 
 {
   uint uVar1;
   int iVar2;
   ulonglong uVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  undefined8 uVar4;
+  ulonglong uVar6;
+  double dVar7;
   ulonglong local_50;
   longlong local_48;
   
-  uVar3 = __savegprlr_26();
-  iVar5 = (int)uVar3;
-  if (iVar5 < 0x28) {
-    if ((iVar5 < 0) && (iVar5 < 8)) {
-      MyAssertHandler(0xffffffff821881f8,0xeb1,0,0xffffffff8200aef4,0xffffffff8218a0d8,uVar3);
+  uVar6 = (ulonglong)param_2;
+  uVar3 = __savegprlr_26(param_1);
+  iVar4 = (int)uVar3;
+  if (iVar4 < 0x28) {
+    if ((iVar4 < 0) && (iVar4 < 8)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeb1,
+                      0,"%s\n\t(index) = %i");
     }
-    iVar5 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-    if (*(int *)(*(int *)((int)&DAT_84888184 + iVar5) + 0x14) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xeb2,0,0xffffffff82000f98,0xffffffff8218a00c);
+    iVar4 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
+    if (*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar4 + -0x14) + 0x14) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeb2,
+                      0,"%s");
     }
-    if (**(char **)(*(int *)((int)&DAT_84888184 + iVar5) + 0x14) != '\x01') {
-      MyAssertHandler(0xffffffff821881f8,0xeb3,0,0xffffffff82000f98,0xffffffff82189fd0);
+    if (**(char **)(*(int *)((int)g_snd.chaninfo[0].org + iVar4 + -0x14) + 0x14) != '\x01') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeb3,
+                      0,"%s");
     }
-    if (*(int *)(*(int *)(*(int *)((int)&DAT_84888184 + iVar5) + 0x14) + 4) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xeb4,0,0xffffffff82000f98,0xffffffff82189f9c);
+    if (*(int *)(*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar4 + -0x14) + 0x14) + 4) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeb4,
+                      0,"%s");
     }
-    if (*(char *)(*(int *)(*(int *)((int)&DAT_84888184 + iVar5) + 0x14) + 1) == '\0') {
-      MyAssertHandler(0xffffffff821881f8,0xeb5,0,0xffffffff82000f98,0xffffffff82189f6c);
+    if (*(char *)(*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar4 + -0x14) + 0x14) + 1) == '\0'
+       ) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeb5,
+                      0,"%s");
     }
-    iVar5 = *(int *)(*(int *)(*(int *)((int)&DAT_84888184 + iVar5) + 0x14) + 4);
-    uVar4 = XAudioSourceVoice_GetStreamPosition
-                      (*(undefined4 *)((int)&DAT_8421bffc + (int)((uVar3 & 0xffffffff) << 2)),
-                       &local_50);
-    if ((int)uVar4 < 0) {
-      MyAssertHandler(0xffffffff821881f8,0xebf,0,0xffffffff8218a0c8,0xffffffff820581bc,uVar4);
+    iVar4 = *(int *)(*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar4 + -0x14) + 0x14) + 4);
+    iVar5 = XAudioSourceVoice_GetStreamPosition
+                      (*(IXAudioSourceVoice **)
+                        ((int)xaGlob.voice + (int)((uVar3 & 0xffffffff) << 2)),(ulong *)&local_50);
+    if (iVar5 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xebf,
+                      0,"%s\n\t(hr) = %i");
     }
-    uVar1 = (uint)((float)(longlong)*(int *)(iVar5 + 0x94) * 0.001 *
-                  (float)(longlong)*(int *)(iVar5 + 100));
+    uVar1 = (uint)((float)(longlong)*(int *)(iVar4 + 0x94) * 0.001 *
+                  (float)(longlong)*(int *)(iVar4 + 100));
     local_48 = (longlong)(int)uVar1;
     if ((int)uVar1 < 1) {
-      MyAssertHandler(0xffffffff821881f8,0xec2,0,0xffffffff8218a09c,0xffffffff8218a0b4,
-                      (ulonglong)uVar1);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xec2,
+                      0,"%s\n\t(totalSamples) = %i");
     }
     uVar3 = (ulonglong)local_50._0_4_;
-    if ((param_2 & 0xff) != 0) {
+    if ((uVar6 & 0xff) != 0) {
       trapWord(6,(ulonglong)uVar1,0);
       uVar3 = uVar3 - (longlong)(int)(local_50._0_4_ / uVar1) * (longlong)(int)uVar1;
     }
     local_48 = (longlong)(int)uVar1;
     local_50 = uVar3 & 0xffffffff;
-    __restgprlr_26((double)(float)((double)local_50 / (double)local_48));
-    return;
+    dVar7 = (double)__restgprlr_26((double)(float)((double)local_50 / (double)local_48));
+    return (float)dVar7;
   }
-  if (0x35 < iVar5) {
-    MyAssertHandler(0xffffffff821881f8,0xe9d,0,0xffffffff8200aef4,0xffffffff82189ab8,uVar3);
+  if (0x35 < iVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xe9d,0,
+                    "%s\n\t(index) = %i");
   }
-  iVar6 = SND_SyncAmbientTracks_Internal(uVar3,2,3);
-  if (iVar6 == iVar5) {
-    iVar6 = SND_SyncAmbientTracks_Internal(uVar3,4,5);
+  iVar5 = SND_SyncAmbientTracks_Internal(iVar4,2,3);
+  if (iVar5 == iVar4) {
+    iVar5 = SND_SyncAmbientTracks_Internal(iVar4,4,5);
   }
-  iVar5 = iVar6 * 0x94;
-  if ((&DAT_84888114)[iVar6 * 0x30] == 1) {
-    __restgprlr_26((double)*(float *)(&DAT_8421e1f4 + iVar5));
-    return;
+  iVar4 = iVar5 * 0x94;
+  if (g_snd.chaninfo[iVar5].soundFileInfo.loadingState == SFLS_LOADING) {
+    dVar7 = (double)__restgprlr_26((double)*(float *)((int)xaGlob.baseVolEntries + iVar4 + 0xb8));
+    return (float)dVar7;
   }
-  iVar6 = *(int *)(&DAT_8421e1cc + iVar5);
-  iVar2 = *(int *)(&DAT_8421e1d4 + iVar5);
-  if (*(int *)(&DAT_8421e1c8 + iVar5) <= iVar6) {
-    MyAssertHandler(0xffffffff821881f8,0xeab,0,0xffffffff82000f98,0xffffffff8218a128);
+  iVar5 = *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x90);
+  iVar2 = *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x98);
+  if (*(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x8c) <= iVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xeab,0,
+                    "%s");
   }
-  local_50 = (ulonglong)(*(int *)(&DAT_8421e1c8 + iVar5) - *(int *)(&DAT_8421e1cc + iVar5));
-  __restgprlr_26((double)(float)((double)(longlong)(iVar2 - iVar6) / (double)(longlong)local_50));
-  return;
+  local_50 = (ulonglong)
+             (*(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x8c) -
+             *(int *)((int)xaGlob.baseVolEntries + iVar4 + 0x90));
+  dVar7 = (double)__restgprlr_26((double)(float)((double)(longlong)(iVar2 - iVar5) /
+                                                (double)(longlong)local_50));
+  return (float)dVar7;
 }
 
 
 // 8263D248  SND_Get2DChannelSaveInfo  (xenon/snd_driver.cpp:3787)
 
-void SND_Get2DChannelSaveInfo(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Get2DChannelSaveInfo(int param_1,snd_save_2D_sample_t *param_2)
 
 {
-  undefined4 uVar1;
+  IXAudioSourceVoice *pIVar1;
   int iVar2;
   ulonglong uVar3;
-  float *pfVar4;
-  double dVar5;
+  T_HRESULT TVar4;
+  float *pfVar5;
+  float fVar6;
   
-  uVar3 = __savegprlr_27();
-  uVar1 = *(undefined4 *)((int)&DAT_8421bffc + (int)((uVar3 & 0xffffffff) << 2));
-  dVar5 = (double)SND_GetChannelFractionPlayed(uVar3,1);
-  *(float *)param_2 = (float)dVar5;
+  uVar3 = __savegprlr_27(param_1);
+  pIVar1 = *(IXAudioSourceVoice **)((int)xaGlob.voice + (int)((uVar3 & 0xffffffff) << 2));
+  fVar6 = SND_GetChannelFractionPlayed((int)uVar3,true);
+  param_2->fraction = fVar6;
   iVar2 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6);
-  ((float *)param_2)[1] = *(float *)(&DAT_84888178 + iVar2);
-  XAudioSourceVoice_GetVolume(uVar1,param_2 + 8);
-  pfVar4 = (float *)(param_2 + 8);
-  if (DAT_848859ec != 0.0) {
-    *pfVar4 = *pfVar4 / DAT_848859ec;
-    __restgprlr_27();
+  pfVar5 = &param_2->volume;
+  param_2->pitch = *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x20);
+  TVar4 = XAudioSourceVoice_GetVolume(pIVar1,pfVar5);
+  if (g_snd.volume != 0.0) {
+    *pfVar5 = *pfVar5 / g_snd.volume;
+    __restgprlr_27(TVar4);
     return;
   }
-  *pfVar4 = *(float *)((int)&DAT_84888168 + iVar2);
-  __restgprlr_27();
+  *pfVar5 = *(float *)((int)(&g_snd.chaninfo[0].lengthNotifyInfo + 1) + iVar2 + 0xc);
+  __restgprlr_27(TVar4);
   return;
 }
 
 
 // 8263D2F8  SND_Set2DChannelFromSaveInfo  (xenon/snd_driver.cpp:3802)
 
-void SND_Set2DChannelFromSaveInfo(undefined8 param_1,int param_2)
+void SND_Set2DChannelFromSaveInfo(int param_1,snd_save_2D_sample_t *param_2)
 
 {
-  if (((int)param_1 < 0) || (7 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xedb,0,0xffffffff8200aef4,0xffffffff82189a68,param_1);
+  if ((param_1 < 0) || (7 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xedb,0,
+                    "%s\n\t(index) = %i");
   }
-  SND_Set2DChannelVolume((double)(*(float *)(param_2 + 8) * DAT_848859ec),param_1);
+  SND_Set2DChannelVolume(param_1,param_2->volume * g_snd.volume);
   return;
 }
 
 
 // 8263D388  SND_Get3DChannelSaveInfo  (xenon/snd_driver.cpp:3810)
 
-void SND_Get3DChannelSaveInfo(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Get3DChannelSaveInfo(int param_1,snd_save_3D_sample_t *param_2)
 
 {
-  undefined4 uVar1;
+  IXAudioSourceVoice *pIVar1;
   int iVar2;
-  int iVar3;
+  T_HRESULT TVar3;
   float *pfVar4;
-  float *pfVar5;
-  double dVar6;
+  float fVar5;
   
-  iVar3 = __savegprlr_28();
-  uVar1 = (&DAT_8421bffc)[iVar3];
-  dVar6 = (double)SND_GetChannelFractionPlayed(iVar3,1);
-  pfVar4 = (float *)param_2;
-  *pfVar4 = (float)dVar6;
-  iVar2 = iVar3 * 0xc0;
-  pfVar4[1] = *(float *)(&DAT_84888178 + iVar2);
-  XAudioSourceVoice_GetVolume(uVar1,param_2 + 8);
-  pfVar5 = (float *)(param_2 + 8);
-  if (DAT_848859ec == 0.0) {
-    *pfVar5 = (float)(&DAT_84888168)[iVar3 * 0x30];
+  iVar2 = __savegprlr_28(param_1);
+  pIVar1 = xaGlob.voice[iVar2];
+  fVar5 = SND_GetChannelFractionPlayed(iVar2,true);
+  param_2->fraction = fVar5;
+  pfVar4 = &param_2->volume;
+  param_2->pitch = g_snd.chaninfo[iVar2].pitchInfo.value;
+  TVar3 = XAudioSourceVoice_GetVolume(pIVar1,pfVar4);
+  if (g_snd.volume == 0.0) {
+    *pfVar4 = g_snd.chaninfo[iVar2].volumeInfo.value;
   }
   else {
-    *pfVar5 = *pfVar5 / DAT_848859ec;
+    *pfVar4 = *pfVar4 / g_snd.volume;
   }
-  pfVar4[3] = *(float *)(&DAT_84888198 + iVar2);
-  pfVar4[4] = *(float *)(&DAT_8488819c + iVar2);
-  pfVar4[5] = *(float *)(&DAT_848881a0 + iVar2);
-  __restgprlr_28();
+  param_2->org[0] = g_snd.chaninfo[iVar2].org[0];
+  param_2->org[1] = g_snd.chaninfo[iVar2].org[1];
+  param_2->org[2] = g_snd.chaninfo[iVar2].org[2];
+  __restgprlr_28(TVar3);
   return;
 }
 
 
 // 8263D458  SND_GetStreamChannelSaveInfo  (xenon/snd_driver.cpp:3827)
 
-void SND_GetStreamChannelSaveInfo(undefined8 param_1,float *param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_GetStreamChannelSaveInfo(int param_1,snd_save_stream_t *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  double dVar3;
+  double dVar2;
+  float fVar3;
   
-  iVar2 = __savegprlr_27();
-  dVar3 = (double)SND_GetChannelFractionPlayed(iVar2,1);
-  *param_2 = (float)dVar3;
-  iVar1 = iVar2 * 0xc0;
-  dVar3 = floor((double)((float)(longlong)*(int *)(&DAT_84220540 + iVar2 * 4) /
-                         (DAT_8487d9d8 * (float)(&DAT_848881c4)[iVar2 * 0x30] +
-                         (1.0 - (float)(&DAT_848881c4)[iVar2 * 0x30])) + 0.5));
-  param_2[1] = (float)(int)dVar3;
-  param_2[2] = *(float *)(&DAT_8488815c + iVar1);
-  if (DAT_848859ec == 0.0) {
-    param_2[3] = (float)(&DAT_84888168)[iVar2 * 0x30];
+  iVar1 = __savegprlr_27(param_1);
+  fVar3 = SND_GetChannelFractionPlayed(iVar1,true);
+  param_2->fraction = fVar3;
+  fVar3 = g_snd.chaninfo[iVar1].timescaleLerp;
+  dVar2 = floor((double)((float)(longlong)xaGlob.playbackRate[iVar1] /
+                         (g_snd.timescale * fVar3 + (1.0 - fVar3)) + 0.5));
+  param_2->rate = (int)dVar2;
+  param_2->basevolume = g_snd.chaninfo[iVar1].basevolume;
+  if (g_snd.volume == 0.0) {
+    param_2->volume = g_snd.chaninfo[iVar1].volumeInfo.value;
   }
   else {
-    param_2[3] = *(float *)(&DAT_84220468 + iVar2 * 4) / DAT_848859ec;
+    param_2->volume = xaGlob.startAliasInfo[0xc].org[iVar1 + -4] / g_snd.volume;
   }
-  param_2[5] = *(float *)(&DAT_84888198 + iVar1);
-  param_2[6] = *(float *)(&DAT_8488819c + iVar1);
-  param_2[7] = *(float *)(&DAT_848881a0 + iVar1);
+  param_2->org[0] = g_snd.chaninfo[iVar1].org[0];
+  param_2->org[1] = g_snd.chaninfo[iVar1].org[1];
+  param_2->org[2] = g_snd.chaninfo[iVar1].org[2];
   __restgprlr_27();
   return;
 }
@@ -4632,33 +5221,34 @@ void SND_GetStreamChannelSaveInfo(undefined8 param_1,float *param_2)
 
 // 8263D578  SND_SetStreamChannelFromSaveInfo  (xenon/snd_driver.cpp:3841)
 
-void SND_SetStreamChannelFromSaveInfo(undefined8 param_1,int param_2)
+void SND_SetStreamChannelFromSaveInfo(int param_1,snd_save_stream_t *param_2)
 
 {
-  if (((int)param_1 < 0x28) || (0x35 < (int)param_1)) {
-    MyAssertHandler(0xffffffff821881f8,0xf02,0,0xffffffff8200aef4,0xffffffff82189ab8,param_1);
+  if ((param_1 < 0x28) || (0x35 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf02,0,
+                    "%s\n\t(index) = %i");
   }
-  SND_SetStreamChannelVolume((double)(*(float *)(param_2 + 0xc) * DAT_848859ec),param_1);
+  SND_SetStreamChannelVolume(param_1,param_2->volume * g_snd.volume);
   return;
 }
 
 
 // 8263D608  SND_DriverPreUpdate  (xenon/snd_driver.cpp:3856)
 
-void SND_DriverPreUpdate(void)
+void SND_DriverPreUpdate(int param_1)
 
 {
-  XAudioSetDebugPrintLevel(*(undefined4 *)(&DAT_82188064 + *(int *)(DAT_8421bfe4 + 0xc) * 4));
+  XAudioSetDebugPrintLevel(snd_xenonDebugLevelEnums[(snd_xenonDebugLevel->current).integer]);
   return;
 }
 
 
 // 8263D628  SND_DriverPostUpdate  (xenon/snd_driver.cpp:3872)
 
-void SND_DriverPostUpdate(void)
+void SND_DriverPostUpdate(int param_1)
 
 {
-  SND_UpdateEqs();
+  SND_UpdateEqs(param_1);
   SND_UpdateReverbs();
   return;
 }
@@ -4666,95 +5256,105 @@ void SND_DriverPostUpdate(void)
 
 // 8263D650  SND_Update2DChannel  (xenon/snd_driver.cpp:3886)
 
-void SND_Update2DChannel(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Update2DChannel(int param_1,int param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  float fVar3;
+  snd_alias_t *psVar1;
+  snd_alias_t *psVar2;
+  IXAudioVoice *pIVar3;
   float fVar4;
-  int iVar6;
-  char cVar8;
-  undefined8 uVar5;
+  float fVar5;
+  uint uVar6;
   int iVar7;
-  uint uVar9;
-  int iVar11;
-  ulonglong uVar10;
+  bool bVar9;
+  int iVar8;
+  uint uVar10;
+  longlong lVar11;
   byte local_e0 [4];
   float local_dc [3];
-  undefined1 auStack_d0 [208];
+  char acStack_d0 [208];
   
-  iVar6 = __savegprlr_23();
-  cVar8 = Sys_IsMainThread();
-  if ((cVar8 == '\0') && (cVar8 = Sys_IsRenderThread(), cVar8 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xf3c,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  lVar11 = (longlong)param_2;
+  iVar7 = __savegprlr_23(param_1);
+  bVar9 = Sys_IsMainThread();
+  if ((!bVar9) && (bVar9 = Sys_IsRenderThread(), !bVar9)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf3c,0,
+                    "%s");
   }
-  if ((iVar6 < 0) || (7 < iVar6)) {
-    MyAssertHandler(0xffffffff821881f8,0xf3d,0,0xffffffff820802a8,0xffffffff8218a218,iVar6);
+  if ((iVar7 < 0) || (7 < iVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf3d,0,
+                    "%s\n\t(i) = %i");
   }
-  iVar11 = iVar6 * 0xc0;
-  if ((&DAT_848881b0)[iVar11] == '\0') {
-    iVar2 = (&DAT_8421bffc)[iVar6];
-    if (iVar2 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xf44,0,0xffffffff82000f98,0xffffffff8214428c);
+  if (g_snd.chaninfo[iVar7].paused == false) {
+    pIVar3 = (IXAudioVoice *)xaGlob.voice[iVar7];
+    if (pIVar3 == (IXAudioVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf44,
+                      0,"%s");
     }
-    if (*(int *)(&DAT_84888128 + iVar11) == -1) {
-      uVar5 = XAudioVoice_GetVoiceState(iVar2,local_e0);
-      if ((int)uVar5 != 0) {
-        MyAssertHandler(0xffffffff821881f8,0xf4c,0,0xffffffff82174e08,0xffffffff8218816c,uVar5);
+    if (g_snd.chaninfo[iVar7].startDelay == -1) {
+      iVar8 = XAudioVoice_GetVoiceState(pIVar3,local_e0);
+      if (iVar8 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xf4c,0,"%s\n\t(res) = %i");
       }
       if ((local_e0[0] & 1) == 0) {
-        SND_StopChannelAndPlayChainAlias();
+        SND_StopChannelAndPlayChainAlias(iVar7);
         __restgprlr_23();
         return;
       }
-      iVar7 = SND_StopChannelAndPlayChainAliasIfTimeExpired(iVar6);
-      if (iVar7 != 0) goto LAB_8263d9b0;
+      iVar8 = SND_StopChannelAndPlayChainAliasIfTimeExpired(iVar7);
+      if (iVar8 != 0) goto LAB_8263d9b0;
     }
-    puVar1 = (undefined4 *)(&DAT_84888184)[iVar6 * 0x30];
-    iVar7 = (&DAT_84888188)[iVar6 * 0x30];
-    if (puVar1 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff821881f8,0xf5a,0,0xffffffff82000f98,0xffffffff8218a210);
+    psVar1 = g_snd.chaninfo[iVar7].alias0;
+    psVar2 = g_snd.chaninfo[iVar7].alias1;
+    if (psVar1 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf5a,
+                      0,"%s");
     }
-    if (iVar7 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xf5b,0,0xffffffff82000f98,0xffffffff8218a208);
+    if (psVar2 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf5b,
+                      0,"%s");
     }
-    SND_UpdateParameter(&DAT_84888178 + iVar11,param_2);
-    SND_Set2DChannelPitch((double)*(float *)(&DAT_84888178 + iVar11),iVar6);
-    SND_UpdateParameter(&DAT_84888168 + iVar6 * 0x30,param_2);
-    local_dc[0] = (float)(&DAT_84888168)[iVar6 * 0x30];
-    SND_ApplyGroupVolumeModifier((&DAT_84888184)[iVar6 * 0x30],local_dc);
-    SND_ApplyChannelMasterPriorityVolume(&DAT_84888114 + iVar6 * 0x30,local_dc);
-    iVar7 = puVar1[0xf];
-    uVar9 = iVar7 >> 9 & 0x3f;
-    if (DAT_84888110 <= (int)uVar9) {
-      MyAssertHandler(0xffffffff821881f8,0xf71,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar9);
+    SND_UpdateParameter(&g_snd.chaninfo[iVar7].pitchInfo,(int)lVar11);
+    SND_Set2DChannelPitch(iVar7,g_snd.chaninfo[iVar7].pitchInfo.value);
+    SND_UpdateParameter(&g_snd.chaninfo[iVar7].volumeInfo,(int)lVar11);
+    local_dc[0] = g_snd.chaninfo[iVar7].volumeInfo.value;
+    SND_ApplyGroupVolumeModifier(g_snd.chaninfo[iVar7].alias0,local_dc);
+    SND_ApplyChannelMasterPriorityVolume(g_snd.chaninfo + iVar7,local_dc);
+    uVar10 = psVar1->flags >> 9;
+    uVar6 = uVar10 & 0x3f;
+    if (g_snd.entchannel_count <= (int)uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xf71,
+                      0,"%s\n\t(entchannel) = %i");
     }
-    iVar7 = uVar9 + (iVar7 >> 9 & 0x3fU) * 2;
-    local_dc[0] = (float)(&DAT_8488cba0)[puVar1[9] * 3] *
-                  *(float *)(iVar7 * 4 + DAT_84886910) * local_dc[0] * (float)(&DAT_848859fc)[iVar7]
-                  * DAT_848859ec;
-    fVar3 = 1.0;
+    iVar8 = uVar6 + (uVar10 & 0x3f) * 2;
+    local_dc[0] = g_snd.volmods[psVar1->volModIndex].value *
+                  (&(g_snd.channelvol)->channelvol[0].value)[iVar8] * local_dc[0] *
+                  (&g_snd.channelVolGlobal.channelvol[0].value)[iVar8] * g_snd.volume;
+    fVar4 = 1.0;
     if (local_dc[0] - 1.0 < 0.0) {
-      fVar3 = local_dc[0];
+      fVar4 = local_dc[0];
     }
-    fVar4 = 0.0;
+    fVar5 = 0.0;
     if (-local_dc[0] < 0.0) {
-      fVar4 = fVar3;
+      fVar5 = fVar4;
     }
-    *(float *)(&DAT_84888160 + iVar11) = fVar4;
-    SND_Set2DChannelVolume(iVar6);
-    if (*(uint *)(&DAT_84888128 + iVar11) != 0xffffffff) {
-      uVar10 = (ulonglong)*(uint *)(&DAT_84888128 + iVar11) - param_2;
-      uVar9 = (int)((uVar10 & 0xffffffff) >> 0x1f) - (uint)(uVar10 != 0) & (uint)uVar10;
-      *(uint *)(&DAT_84888128 + iVar11) = uVar9;
-      if (uVar9 == 0) {
-        *(undefined4 *)(&DAT_84888128 + iVar11) = 0xffffffff;
-        uVar5 = XAudioSourceVoice_Start(iVar2,0);
-        if ((int)uVar5 < 0) {
-          Com_GetSoundFileName(puVar1,auStack_d0,0x80);
-          Com_PrintError(1,0xffffffff8218a168,uVar5,auStack_d0,*puVar1);
-        }
+    g_snd.chaninfo[iVar7].mixvolume = fVar5;
+    SND_Set2DChannelVolume(iVar7,fVar5);
+    uVar10 = g_snd.chaninfo[iVar7].startDelay;
+    if ((uVar10 != 0xffffffff) &&
+       (lVar11 = (ulonglong)uVar10 - lVar11, uVar10 = (uint)lVar11,
+       uVar10 = -((int)uVar10 >> 0x1f) - (uint)(lVar11 != 0) & uVar10,
+       g_snd.chaninfo[iVar7].startDelay = uVar10, uVar10 == 0)) {
+      g_snd.chaninfo[iVar7].startDelay = -1;
+      iVar7 = XAudioSourceVoice_Start((IXAudioSourceVoice *)pIVar3,'\0');
+      if (iVar7 < 0) {
+        Com_GetSoundFileName(psVar1,acStack_d0,0x80);
+        Com_PrintError(1,
+                       "Error %d calling sourceVoice->Start for stream sound \'%s\' from alias \'%s\'.\n"
+                      );
       }
     }
   }
@@ -4766,115 +5366,122 @@ LAB_8263d9b0:
 
 // 8263D9B8  SND_Update3DChannel  (xenon/snd_driver.cpp:3994)
 
-void SND_Update3DChannel(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_Update3DChannel(int param_1,int param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
+  snd_alias_t *psVar1;
+  snd_alias_t *psVar2;
+  IXAudioVoice *pIVar3;
+  uint uVar4;
   int iVar5;
-  char cVar7;
-  undefined8 uVar4;
+  bool bVar7;
   int iVar6;
   uint uVar8;
-  int iVar10;
-  ulonglong uVar9;
+  longlong lVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
+  float fVar15;
   byte local_100 [4];
   float local_fc;
-  undefined1 auStack_f8 [24];
-  undefined1 auStack_e0 [224];
+  float afStack_f8 [6];
+  char acStack_e0 [224];
   
-  iVar5 = __savegprlr_23();
-  cVar7 = Sys_IsMainThread();
-  if ((cVar7 == '\0') && (cVar7 = Sys_IsRenderThread(), cVar7 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0xfad,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  lVar9 = (longlong)param_2;
+  iVar5 = __savegprlr_23(param_1);
+  bVar7 = Sys_IsMainThread();
+  if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfad,0,
+                    "%s");
   }
   if ((iVar5 < 8) || (0x27 < iVar5)) {
-    MyAssertHandler(0xffffffff821881f8,0xfae,0,0xffffffff820802a8,0xffffffff8218a230,iVar5);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfae,0,
+                    "%s\n\t(i) = %i");
   }
-  iVar10 = iVar5 * 0xc0;
-  if ((&DAT_848881b0)[iVar10] == '\0') {
-    iVar3 = (&DAT_8421bffc)[iVar5];
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xfb5,0,0xffffffff82000f98,0xffffffff8214428c);
+  if (g_snd.chaninfo[iVar5].paused == false) {
+    pIVar3 = (IXAudioVoice *)xaGlob.voice[iVar5];
+    if (pIVar3 == (IXAudioVoice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfb5,
+                      0,"%s");
     }
-    if (*(int *)(&DAT_84888128 + iVar10) == -1) {
-      uVar4 = XAudioVoice_GetVoiceState(iVar3,local_100);
-      if ((int)uVar4 != 0) {
-        MyAssertHandler(0xffffffff821881f8,0xfbd,0,0xffffffff82174e08,0xffffffff8218816c,uVar4);
+    if (g_snd.chaninfo[iVar5].startDelay == -1) {
+      iVar6 = XAudioVoice_GetVoiceState(pIVar3,local_100);
+      if (iVar6 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0xfbd,0,"%s\n\t(res) = %i");
       }
       if ((local_100[0] & 1) == 0) {
-        SND_StopChannelAndPlayChainAlias();
+        SND_StopChannelAndPlayChainAlias(iVar5);
         __restgprlr_23();
         return;
       }
       iVar6 = SND_StopChannelAndPlayChainAliasIfTimeExpired(iVar5);
       if (iVar6 != 0) goto LAB_8263dd80;
     }
-    puVar1 = (undefined4 *)(&DAT_84888184)[iVar5 * 0x30];
-    iVar6 = (&DAT_84888188)[iVar5 * 0x30];
-    if (puVar1 == (undefined4 *)0x0) {
-      MyAssertHandler(0xffffffff821881f8,0xfcb,0,0xffffffff82000f98,0xffffffff8218a210);
+    psVar1 = g_snd.chaninfo[iVar5].alias0;
+    psVar2 = g_snd.chaninfo[iVar5].alias1;
+    if (psVar1 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfcb,
+                      0,"%s");
     }
-    if (iVar6 == 0) {
-      MyAssertHandler(0xffffffff821881f8,0xfcc,0,0xffffffff82000f98,0xffffffff8218a208);
+    if (psVar2 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfcc,
+                      0,"%s");
     }
-    dVar14 = (double)*(float *)(&DAT_84888194 + iVar10);
-    SND_UpdateParameter(&DAT_84888178 + iVar10,param_2);
-    SND_Set3DChannelPitch((double)*(float *)(&DAT_84888178 + iVar10),iVar5);
-    SND_UpdateParameter(&DAT_84888168 + iVar5 * 0x30,param_2);
-    local_fc = (float)(&DAT_84888168)[iVar5 * 0x30];
-    SND_ApplyGroupVolumeModifier((&DAT_84888184)[iVar5 * 0x30],&local_fc);
+    dVar12 = (double)g_snd.chaninfo[iVar5].lerp;
+    SND_UpdateParameter(&g_snd.chaninfo[iVar5].pitchInfo,(int)lVar9);
+    SND_Set3DChannelPitch(iVar5,g_snd.chaninfo[iVar5].pitchInfo.value);
+    SND_UpdateParameter(&g_snd.chaninfo[iVar5].volumeInfo,(int)lVar9);
+    local_fc = g_snd.chaninfo[iVar5].volumeInfo.value;
+    SND_ApplyGroupVolumeModifier(g_snd.chaninfo[iVar5].alias0,&local_fc);
     XA_SpatializeChannel(iVar5);
-    SND_ApplyChannelMasterPriorityVolume(&DAT_84888114 + iVar5 * 0x30,&local_fc);
-    iVar2 = puVar1[0xf];
-    uVar8 = iVar2 >> 9 & 0x3f;
-    if (DAT_84888110 <= (int)uVar8) {
-      MyAssertHandler(0xffffffff821881f8,0xfdc,0,0xffffffff8218a1b4,0xffffffff8218a1cc,uVar8);
+    SND_ApplyChannelMasterPriorityVolume(g_snd.chaninfo + iVar5,&local_fc);
+    uVar8 = psVar1->flags >> 9;
+    uVar4 = uVar8 & 0x3f;
+    if (g_snd.entchannel_count <= (int)uVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0xfdc,
+                      0,"%s\n\t(entchannel) = %i");
     }
-    iVar2 = uVar8 + (iVar2 >> 9 & 0x3fU) * 2;
-    dVar15 = 1.0;
-    local_fc = (float)(&DAT_8488cba0)[puVar1[9] * 3] *
-               *(float *)(iVar2 * 4 + DAT_84886910) * local_fc * (float)(&DAT_848859fc)[iVar2] *
-               DAT_848859ec;
-    dVar11 = (double)local_fc;
-    dVar13 = dVar15;
-    if ((float)(dVar11 - 1.0) < 0.0) {
-      dVar13 = dVar11;
+    iVar6 = uVar4 + (uVar8 & 0x3f) * 2;
+    dVar13 = 1.0;
+    local_fc = g_snd.volmods[psVar1->volModIndex].value *
+               (&(g_snd.channelvol)->channelvol[0].value)[iVar6] * local_fc *
+               (&g_snd.channelVolGlobal.channelvol[0].value)[iVar6] * g_snd.volume;
+    dVar10 = (double)local_fc;
+    dVar14 = dVar13;
+    if ((float)(dVar10 - 1.0) < 0.0) {
+      dVar14 = dVar10;
     }
-    dVar12 = 0.0;
-    if (-dVar11 < 0.0) {
-      dVar12 = dVar13;
+    dVar11 = 0.0;
+    if (-dVar10 < 0.0) {
+      dVar11 = dVar14;
     }
-    *(float *)(&DAT_84888160 + iVar10) = (float)dVar12;
-    SND_Set3DChannelVolume(iVar5);
-    dVar13 = (double)(float)(dVar15 - dVar14);
-    dVar11 = (double)(float)((double)(float)puVar1[0xc] * dVar13 +
-                            (double)(float)((double)*(float *)(iVar6 + 0x30) * dVar14));
-    dVar14 = (double)(float)((double)(float)puVar1[0xd] * dVar13 +
-                            (double)(float)((double)*(float *)(iVar6 + 0x34) * dVar14));
-    SND_GetCurrent3DPosition
-              ((double)*(float *)(iVar6 + 0x34),(double)*(float *)(iVar6 + 0x30),dVar13,
-               (&DAT_84888120)[iVar5 * 0x30],&DAT_848881a4 + iVar10,auStack_f8);
-    dVar14 = (double)SND_Get3DDistanceAttenuation(dVar11,dVar14,auStack_f8,puVar1[0x17]);
-    uVar8 = *(uint *)(&DAT_84888128 + iVar10);
-    (&DAT_84888164)[iVar5 * 0x30] = (float)dVar14;
-    if (uVar8 != 0xffffffff) {
-      uVar9 = (ulonglong)uVar8 - param_2;
-      uVar8 = (int)((uVar9 & 0xffffffff) >> 0x1f) - (uint)(uVar9 != 0) & (uint)uVar9;
-      *(uint *)(&DAT_84888128 + iVar10) = uVar8;
-      if (uVar8 == 0) {
-        *(undefined4 *)(&DAT_84888128 + iVar10) = 0xffffffff;
-        uVar4 = XAudioSourceVoice_Start(iVar3,0);
-        if ((int)uVar4 < 0) {
-          Com_GetSoundFileName(puVar1,auStack_e0,0x80);
-          Com_PrintError(1,0xffffffff8218a168,uVar4,auStack_e0,*puVar1);
-        }
+    g_snd.chaninfo[iVar5].mixvolume = (float)dVar11;
+    SND_Set3DChannelVolume(iVar5,(float)dVar11);
+    dVar14 = (double)(psVar1->distMin * (float)(dVar13 - dVar12) +
+                     (float)((double)psVar2->distMin * dVar12));
+    dVar12 = (double)(psVar1->distMax * (float)(dVar13 - dVar12) +
+                     (float)((double)psVar2->distMax * dVar12));
+    SND_GetCurrent3DPosition(g_snd.chaninfo[iVar5].sndEnt,g_snd.chaninfo[iVar5].offset,afStack_f8);
+    fVar15 = SND_Get3DDistanceAttenuation
+                       (afStack_f8,psVar1->volumeFalloffCurve,(float)dVar14,(float)dVar12);
+    uVar8 = g_snd.chaninfo[iVar5].startDelay;
+    g_snd.chaninfo[iVar5].attenuation = fVar15;
+    if ((uVar8 != 0xffffffff) &&
+       (lVar9 = (ulonglong)uVar8 - lVar9, uVar8 = (uint)lVar9,
+       uVar8 = -((int)uVar8 >> 0x1f) - (uint)(lVar9 != 0) & uVar8,
+       g_snd.chaninfo[iVar5].startDelay = uVar8, uVar8 == 0)) {
+      g_snd.chaninfo[iVar5].startDelay = -1;
+      iVar5 = XAudioSourceVoice_Start((IXAudioSourceVoice *)pIVar3,'\0');
+      if (iVar5 < 0) {
+        Com_GetSoundFileName(psVar1,acStack_e0,0x80);
+        Com_PrintError(1,
+                       "Error %d calling sourceVoice->Start for stream sound \'%s\' from alias \'%s\'.\n"
+                      );
       }
     }
   }
@@ -4886,302 +5493,341 @@ LAB_8263dd80:
 
 // 8263DD90  XA_AllowSubmitStreamPackestsPrimary_Internal  (xenon/snd_driver.cpp:4099)
 
-void XA_AllowSubmitStreamPackestsPrimary_Internal(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int XA_AllowSubmitStreamPackestsPrimary_Internal(int param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
-  longlong lVar3;
+  PktCacheEntry *pPVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_26();
+  uVar4 = (ulonglong)param_2;
+  iVar2 = __savegprlr_26(param_1);
   if ((iVar2 != 2) && (iVar2 != 4)) {
-    MyAssertHandler(0xffffffff821881f8,0x1004,0,0xffffffff8218a33c,0xffffffff8218a358,iVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1004,0
+                    ,"%s\n\t(primaryAmbient) = %i");
   }
-  if (((int)param_2 != 3) && ((int)param_2 != 5)) {
-    MyAssertHandler(0xffffffff821881f8,0x1005,0,0xffffffff8218a2b4,0xffffffff8218a2d0,param_2);
+  iVar5 = (int)uVar4;
+  if ((iVar5 != 3) && (iVar5 != 5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1005,0
+                    ,"%s\n\t(secondaryAmbient) = %i");
   }
-  iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-  if (*(int *)((int)&DAT_84889f14 + iVar1) != 0) {
-    if (*(int *)((int)&DAT_84889f84 + iVar1) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x100f,0,0xffffffff82000f98,0xffffffff8218a29c);
+  iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
+  if (*(int *)((int)&(((snd_channel_info_t *)(&g_snd.chaninfo[0x28].lengthNotifyInfo + -1))->
+                     soundFileInfo).loadingState + iVar1) != 0) {
+    if (*(int *)((int)g_snd.chaninfo[0x28].org + iVar1 + -0x14) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x100f
+                      ,0,"%s");
     }
-    if ((&DAT_84889f84)[iVar2 * 0x30] == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x1010,0,0xffffffff82000f98,0xffffffff8218a258);
+    if (g_snd.chaninfo[iVar2 + 0x28].alias0 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1010
+                      ,0,"%s");
     }
-    if (*(int *)(*(int *)((int)&DAT_84889f84 + iVar1) + 0x58) ==
-        *(int *)((&DAT_84889f84)[iVar2 * 0x30] + 0x58)) {
-      lVar3 = param_2 * 0x94 + -0x7bde0770;
-      iVar2 = (int)lVar3;
-      if (*(char *)(iVar2 + 0x7c) == '\0') {
+    if (*(int *)(*(int *)((int)g_snd.chaninfo[0x28].org + iVar1 + -0x14) + 0x58) ==
+        (g_snd.chaninfo[iVar2 + 0x28].alias0)->startDelay) {
+      if (xaGlob.streamReadInfo[iVar5].soundFileLoaded == false) {
 LAB_8263df24:
-        __restgprlr_26(0);
-        return;
+        iVar2 = __restgprlr_26(0);
+        return iVar2;
       }
-      if ((*(int *)(iVar2 + 0x60) != *(int *)(iVar2 + 0x58)) && (*(int *)(iVar2 + 0x48) == 0)) {
-        Sys_EnterCriticalSection(8);
-        iVar2 = XA_GetStreamPacket(lVar3,*(undefined4 *)(iVar2 + 0x60));
-        if (iVar2 == 0) {
-          Sys_LeaveCriticalSection(8);
+      if ((xaGlob.streamReadInfo[iVar5].submitOffset != xaGlob.streamReadInfo[iVar5].totalWaveLength
+          ) && (xaGlob.streamReadInfo[iVar5].packetCount == 0)) {
+        Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+        pPVar3 = XA_GetStreamPacket(xaGlob.streamReadInfo + iVar5,
+                                    xaGlob.streamReadInfo[iVar5].submitOffset);
+        if (pPVar3 == (PktCacheEntry *)0x0) {
+          Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
           goto LAB_8263df24;
         }
-        Sys_LeaveCriticalSection(8);
+        Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
       }
     }
   }
-  __restgprlr_26(1);
-  return;
+  iVar2 = __restgprlr_26(1);
+  return iVar2;
 }
 
 
 // 8263DF40  XA_AllowSubmitStreamPacketsSecondary_Internal  (xenon/snd_driver.cpp:4141)
 
-void XA_AllowSubmitStreamPacketsSecondary_Internal(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int XA_AllowSubmitStreamPacketsSecondary_Internal(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
   int iVar2;
+  undefined8 uVar1;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_25();
-  iVar2 = (int)uVar1;
+  uVar3 = (ulonglong)param_2;
+  iVar2 = __savegprlr_25(param_1);
   if ((iVar2 != 2) && (iVar2 != 4)) {
-    MyAssertHandler(0xffffffff821881f8,0x102e,0,0xffffffff8218a33c,0xffffffff8218a358,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x102e,0
+                    ,"%s\n\t(primaryAmbient) = %i");
   }
-  if (((int)param_2 != 3) && ((int)param_2 != 5)) {
-    MyAssertHandler(0xffffffff821881f8,0x102f,0,0xffffffff8218a2b4,0xffffffff8218a2d0,param_2);
+  if (((int)uVar3 != 3) && ((int)uVar3 != 5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x102f,0
+                    ,"%s\n\t(secondaryAmbient) = %i");
   }
-  if ((&DAT_84889f14)[iVar2 * 0x30] != 0) {
-    if ((&DAT_84889f84)[iVar2 * 0x30] == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x1039,0,0xffffffff82000f98,0xffffffff8218a29c);
+  if (g_snd.chaninfo[iVar2 + 0x28].soundFileInfo.loadingState != SFLS_UNLOADED) {
+    if (g_snd.chaninfo[iVar2 + 0x28].alias0 == (snd_alias_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1039
+                      ,0,"%s");
     }
-    if (*(int *)((int)&DAT_84889f84 +
-                (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 6)) == 0) {
-      MyAssertHandler(0xffffffff821881f8,0x103a,0,0xffffffff82000f98,0xffffffff8218a3c0);
+    if (*(int *)((int)g_snd.chaninfo[0x28].org +
+                (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 6) + -0x14) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x103a
+                      ,0,"%s");
     }
-    if (*(int *)((&DAT_84889f84)[iVar2 * 0x30] + 0x58) ==
-        *(int *)((&DAT_84889f84)[iVar2 * 0x30] + 0x58)) {
-      if ((&DAT_84889f14)[iVar2 * 0x30] != 2) {
-        __restgprlr_25(0);
-        return;
+    if ((g_snd.chaninfo[iVar2 + 0x28].alias0)->startDelay ==
+        (g_snd.chaninfo[iVar2 + 0x28].alias0)->startDelay) {
+      if (g_snd.chaninfo[iVar2 + 0x28].soundFileInfo.loadingState != SFLS_LOADED) {
+        iVar2 = __restgprlr_25(0);
+        return iVar2;
       }
-      iVar2 = iVar2 * 0x94;
-      if ((*(int *)(&DAT_8421f8f0 + iVar2) != *(int *)(&DAT_8421f8e8 + iVar2)) &&
-         (uVar1 = 0, *(int *)(&DAT_8421f8d8 + iVar2) == 0)) goto LAB_8263e0cc;
+      if ((xaGlob.streamReadInfo[iVar2].submitOffset != xaGlob.streamReadInfo[iVar2].totalWaveLength
+          ) && (uVar1 = 0, xaGlob.streamReadInfo[iVar2].packetCount == 0)) goto LAB_8263e0cc;
     }
   }
   uVar1 = 1;
 LAB_8263e0cc:
-  __restgprlr_25(uVar1);
-  return;
+  iVar2 = __restgprlr_25(uVar1);
+  return iVar2;
 }
 
 
 // 8263E0D8  XA_AllowSubmitStreamPackets  (xenon/snd_driver.cpp:4175)
 
-undefined8 XA_AllowSubmitStreamPackets(uint param_1)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+int XA_AllowSubmitStreamPackets(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
   
-  if (0xd < param_1) {
-    MyAssertHandler(0xffffffff821881f8,0x1050,0,0xffffffff8209af00,param_1,0xe);
+  if (0xd < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1050,0
+                    ,"streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)");
   }
-  iVar2 = param_1 * 0x94;
-  if (*(int *)(&DAT_8421f8f0 + iVar2) == *(int *)(&DAT_8421f8e8 + iVar2)) {
+  if (xaGlob.streamReadInfo[param_1].submitOffset == xaGlob.streamReadInfo[param_1].totalWaveLength)
+  {
     return 0;
   }
-  if ((*(int *)(&DAT_8421f8d8 + iVar2) != 0) || (3 < param_1 - 2)) {
+  if ((xaGlob.streamReadInfo[param_1].packetCount != 0) || (3 < param_1 - 2U)) {
     return 1;
   }
   if (param_1 == 3) {
-    uVar1 = XA_AllowSubmitStreamPacketsSecondary_Internal(2,3);
-    return uVar1;
+    iVar1 = XA_AllowSubmitStreamPacketsSecondary_Internal(2,3);
+    return iVar1;
   }
-  if (param_1 - 2 != 2) {
+  if (param_1 != 4) {
     if (param_1 == 2) {
-      uVar1 = XA_AllowSubmitStreamPackestsPrimary_Internal(2,3);
-      return uVar1;
+      iVar1 = XA_AllowSubmitStreamPackestsPrimary_Internal(2,3);
+      return iVar1;
     }
-    uVar1 = XA_AllowSubmitStreamPacketsSecondary_Internal(4,5);
-    return uVar1;
+    iVar1 = XA_AllowSubmitStreamPacketsSecondary_Internal(4,5);
+    return iVar1;
   }
-  uVar1 = XA_AllowSubmitStreamPackestsPrimary_Internal(4,5);
-  return uVar1;
+  iVar1 = XA_AllowSubmitStreamPackestsPrimary_Internal(4,5);
+  return iVar1;
 }
 
 
 // 8263ECC0  SND_UpdateStreamSourceChannel  (xenon/snd_driver.cpp:4205)
 
-void SND_UpdateStreamSourceChannel(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
+
+void SND_UpdateStreamSourceChannel(int param_1,int param_2)
 
 {
-  uint uVar1;
-  bool bVar2;
-  int iVar4;
-  char cVar7;
-  int iVar5;
-  undefined8 uVar3;
+  snd_alias_t *psVar1;
+  snd_alias_t *psVar2;
+  IXAudioVoice *pIVar3;
+  XaStreamReadInfo *pXVar4;
+  uint uVar5;
   int iVar6;
-  uint uVar8;
+  int iVar7;
+  int iVar8;
+  bool bVar11;
   int iVar9;
   int iVar10;
-  int iVar11;
-  int *piVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  bool bVar12;
+  uint uVar13;
+  longlong lVar14;
+  char cVar15;
+  snd_channel_info_t *psVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  float fVar20;
   byte local_a0 [4];
   float local_9c;
-  undefined1 auStack_98 [152];
+  float afStack_98 [38];
   
-  iVar4 = __savegprlr_18();
-  cVar7 = Sys_IsMainThread();
-  if ((cVar7 == '\0') && (cVar7 = Sys_IsRenderThread(), cVar7 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0x1080,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  lVar14 = (longlong)param_2;
+  iVar8 = __savegprlr_18(param_1);
+  bVar11 = Sys_IsMainThread();
+  if ((!bVar11) && (bVar11 = Sys_IsRenderThread(), !bVar11)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1080,0
+                    ,"%s");
   }
-  if ((iVar4 < 0x28) || (0x35 < iVar4)) {
-    MyAssertHandler(0xffffffff821881f8,0x1081,0,0xffffffff820802a8,0xffffffff8218a748,iVar4);
+  if ((iVar8 < 0x28) || (0x35 < iVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1081,0
+                    ,"%s\n\t(i) = %i");
   }
-  iVar11 = iVar4 + -0x28;
-  iVar10 = iVar11 * 0x94;
-  iVar9 = iVar4 * 0xc0;
-  piVar12 = &DAT_84888114 + iVar4 * 0x30;
+  iVar6 = iVar8 + -0x28;
+  iVar7 = iVar8 * 0x94;
+  pXVar4 = (XaStreamReadInfo *)((int)xaGlob.baseVolEntries + iVar7 + 0x34);
+  psVar16 = g_snd.chaninfo + iVar8;
   Profile_Begin(0x14f);
-  if (*(int *)(&DAT_8421f904 + iVar10) == 0) {
+  if (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0xa8) == 0) {
     sync(1);
-    iVar5 = StreamFileMissing(iVar10 + -0x7bde0708);
-    if (iVar5 == 0) goto LAB_8263ede4;
-    SND_LengthNotify(iVar4,0);
+    iVar9 = StreamFileMissing((StreamFile *)((int)xaGlob.baseVolEntries + iVar7 + 0x9c));
+    if (iVar9 == 0) goto LAB_8263ede4;
+    SND_LengthNotify(iVar8,0);
 LAB_8263edcc:
-    SND_StopChannelAndPlayChainAlias(iVar4);
+    SND_StopChannelAndPlayChainAlias(iVar8);
 LAB_8263edd0:
-    Profile_EndInternal(0);
-    __restgprlr_18();
+    iVar8 = Profile_EndInternal((double *)0x0);
+    __restgprlr_18(iVar8);
     return;
   }
 LAB_8263ede4:
-  if (*piVar12 == 1) {
-    Sys_EnterCriticalSection(8);
-    cVar7 = (&DAT_8421f90c)[iVar10];
-    if (cVar7 == '\0') {
-      XA_CheckStreamSoundFile(iVar11,&DAT_8421f890 + iVar10,0xffffffff84220950,0x2000);
-      cVar7 = (&DAT_8421f90c)[iVar10];
+  if ((psVar16->soundFileInfo).loadingState == SFLS_LOADING) {
+    Sys_EnterCriticalSection(CRITSECT_STREAMED_SOUND);
+    cVar15 = *(char *)((int)xaGlob.baseVolEntries + iVar7 + 0xb0);
+    if (cVar15 == '\0') {
+      XA_CheckStreamSoundFile(iVar6,pXVar4,xaStreamHeaderBuffer,0x2000);
+      cVar15 = *(char *)((int)xaGlob.baseVolEntries + iVar7 + 0xb0);
     }
-    Sys_LeaveCriticalSection(8);
-    if (cVar7 == '\0') {
-      Sys_WakeStream(iVar11);
+    Sys_LeaveCriticalSection(CRITSECT_STREAMED_SOUND);
+    if (cVar15 == '\0') {
+      Sys_WakeStream(iVar6);
     }
-    else if ((&DAT_848881b0)[iVar9] == '\0') {
-      XA_InitializeStreamVoice(iVar4);
-      SND_LengthNotify(iVar4,*(undefined4 *)(&DAT_8421f8e4 + iVar10));
+    else if (g_snd.chaninfo[iVar8].paused == false) {
+      XA_InitializeStreamVoice(iVar8);
+      SND_LengthNotify(iVar8,*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x88));
     }
   }
-  if (((&DAT_848881b0)[iVar9] != '\0') ||
-     ((iVar11 < 6 && (cVar7 = SND_UpdateBackgroundVolume(iVar11,param_2), cVar7 == '\0'))))
-  goto LAB_8263edd0;
-  iVar5 = (&DAT_8421bffc)[iVar4];
-  if ((iVar5 == 0) && (*piVar12 != 1)) {
-    MyAssertHandler(0xffffffff821881f8,0x10d6,0,0xffffffff82189b04,0xffffffff82189b38);
+  if ((g_snd.chaninfo[iVar8].paused != false) ||
+     ((iVar9 = (int)lVar14, iVar6 < 6 && (bVar11 = SND_UpdateBackgroundVolume(iVar6,iVar9), !bVar11)
+      ))) goto LAB_8263edd0;
+  pIVar3 = (IXAudioVoice *)xaGlob.voice[iVar8];
+  if ((pIVar3 == (IXAudioVoice *)0x0) && ((psVar16->soundFileInfo).loadingState != SFLS_LOADING)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x10d6,0
+                    ,"%s\n\t(chaninfo->soundFileInfo.loadingState) = %i");
   }
-  bVar2 = *piVar12 == 2;
-  if (bVar2) {
-    if ((*(int *)(&DAT_84888128 + iVar9) == -1) &&
-       (*(int *)(&DAT_8421f8f4 + iVar10) == *(int *)(&DAT_8421f8e8 + iVar10))) {
-      uVar3 = XAudioVoice_GetVoiceState(iVar5,local_a0);
-      if ((int)uVar3 != 0) {
-        MyAssertHandler(0xffffffff821881f8,0x10e4,0,0xffffffff82174e08,0xffffffff8218816c,uVar3);
+  bVar11 = (psVar16->soundFileInfo).loadingState == SFLS_LOADED;
+  if (bVar11) {
+    if ((g_snd.chaninfo[iVar8].startDelay == -1) &&
+       (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x98) ==
+        *(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x8c))) {
+      iVar10 = XAudioVoice_GetVoiceState(pIVar3,local_a0);
+      if (iVar10 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x10e4,0,"%s\n\t(res) = %i");
       }
       if ((local_a0[0] & 1) == 0) goto LAB_8263edcc;
-      iVar6 = SND_StopChannelAndPlayChainAliasIfTimeExpired(iVar4);
-      if (iVar6 != 0) goto LAB_8263edd0;
+      iVar10 = SND_StopChannelAndPlayChainAliasIfTimeExpired(iVar8);
+      if (iVar10 != 0) goto LAB_8263edd0;
     }
-    if (*(int *)(&DAT_8421f8d8 + iVar10) < 8) {
-      iVar6 = XA_AllowSubmitStreamPackets(iVar11);
-      if (iVar6 != 0) {
-        XA_SubmitStreamPackets(iVar5,&DAT_8421f890 + iVar10);
+    if (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x7c) < 8) {
+      iVar10 = XA_AllowSubmitStreamPackets(iVar6);
+      if (iVar10 != 0) {
+        XA_SubmitStreamPackets((IXAudioSourceVoice *)pIVar3,pXVar4);
       }
-      if (*(int *)(&DAT_8421f8f0 + iVar10) != *(int *)(&DAT_8421f8e8 + iVar10)) {
-        Sys_WakeStream(iVar11);
+      if (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x94) !=
+          *(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x8c)) {
+        Sys_WakeStream(iVar6);
       }
     }
   }
-  iVar11 = (&DAT_84888184)[iVar4 * 0x30];
-  iVar6 = (&DAT_84888188)[iVar4 * 0x30];
-  if (iVar11 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x1101,0,0xffffffff82000f98,0xffffffff8218a210);
+  psVar1 = g_snd.chaninfo[iVar8].alias0;
+  psVar2 = g_snd.chaninfo[iVar8].alias1;
+  if (psVar1 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1101,0
+                    ,"%s");
   }
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff821881f8,0x1102,0,0xffffffff82000f98,0xffffffff8218a208);
+  if (psVar2 == (snd_alias_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1102,0
+                    ,"%s");
   }
-  SND_UpdateParameter(&DAT_84888178 + iVar9,param_2);
-  SND_SetStreamChannelPitch((double)*(float *)(&DAT_84888178 + iVar9),iVar4);
-  SND_UpdateParameter(&DAT_84888168 + iVar4 * 0x30,param_2);
-  local_9c = (float)(&DAT_84888168)[iVar4 * 0x30];
-  SND_ApplyGroupVolumeModifier((&DAT_84888184)[iVar4 * 0x30],&local_9c);
-  dVar15 = 1.0;
-  if ((bVar2) && (cVar7 = SND_IsAliasChannel3D(*(int *)(iVar11 + 0x3c) >> 9 & 0x3f), cVar7 != '\0'))
-  {
-    XA_SpatializeChannel(iVar4);
-    SND_GetCurrent3DPosition((&DAT_84888120)[iVar4 * 0x30],&DAT_848881a4 + iVar9,auStack_98);
-    dVar13 = (double)*(float *)(&DAT_84888194 + iVar9);
-    dVar13 = (double)SND_Get3DDistanceAttenuation
-                               ((double)(*(float *)(iVar11 + 0x30) * (float)(dVar15 - dVar13) +
-                                        (float)((double)*(float *)(iVar6 + 0x30) * dVar13)),
-                                (double)(*(float *)(iVar11 + 0x34) * (float)(dVar15 - dVar13) +
-                                        (float)((double)*(float *)(iVar6 + 0x34) * dVar13)),
-                                auStack_98,*(undefined4 *)(iVar11 + 0x5c));
-    (&DAT_84888164)[iVar4 * 0x30] = (float)dVar13;
+  SND_UpdateParameter(&g_snd.chaninfo[iVar8].pitchInfo,iVar9);
+  SND_SetStreamChannelPitch(iVar8,g_snd.chaninfo[iVar8].pitchInfo.value);
+  SND_UpdateParameter(&g_snd.chaninfo[iVar8].volumeInfo,iVar9);
+  local_9c = g_snd.chaninfo[iVar8].volumeInfo.value;
+  SND_ApplyGroupVolumeModifier(g_snd.chaninfo[iVar8].alias0,&local_9c);
+  dVar19 = 1.0;
+  if ((bVar11) && (bVar12 = SND_IsAliasChannel3D(psVar1->flags >> 9 & 0x3f), bVar12)) {
+    XA_SpatializeChannel(iVar8);
+    SND_GetCurrent3DPosition(g_snd.chaninfo[iVar8].sndEnt,g_snd.chaninfo[iVar8].offset,afStack_98);
+    dVar17 = (double)g_snd.chaninfo[iVar8].lerp;
+    fVar20 = SND_Get3DDistanceAttenuation
+                       (afStack_98,psVar1->volumeFalloffCurve,
+                        psVar1->distMin * (float)(dVar19 - dVar17) +
+                        (float)((double)psVar2->distMin * dVar17),
+                        psVar1->distMax * (float)(dVar19 - dVar17) +
+                        (float)((double)psVar2->distMax * dVar17));
+    g_snd.chaninfo[iVar8].attenuation = fVar20;
   }
-  SND_ApplyChannelMasterPriorityVolume(piVar12,&local_9c);
-  uVar8 = *(int *)(iVar11 + 0x3c) >> 9;
-  uVar1 = uVar8 & 0x3f;
-  if (DAT_84888110 <= uVar1) {
-    MyAssertHandler(0xffffffff821881f8,0x1119,0,0xffffffff8218a700,uVar1);
+  SND_ApplyChannelMasterPriorityVolume(psVar16,&local_9c);
+  uVar13 = psVar1->flags >> 9;
+  uVar5 = uVar13 & 0x3f;
+  if ((uint)g_snd.entchannel_count <= uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1119,0
+                    ,"entchannel doesn\'t index g_snd.entchannel_count\n\t%i not in [0, %i)");
   }
-  iVar6 = uVar1 + (uVar8 & 0x3f) * 2;
-  local_9c = (float)(&DAT_8488cba0)[*(int *)(iVar11 + 0x24) * 3] *
-             *(float *)(iVar6 * 4 + DAT_84886910) * local_9c * (float)(&DAT_848859fc)[iVar6] *
-             DAT_848859ec;
-  dVar13 = (double)local_9c;
-  if ((float)(dVar13 - dVar15) < 0.0) {
-    dVar15 = dVar13;
+  iVar6 = uVar5 + (uVar13 & 0x3f) * 2;
+  local_9c = g_snd.volmods[psVar1->volModIndex].value *
+             (&(g_snd.channelvol)->channelvol[0].value)[iVar6] * local_9c *
+             (&g_snd.channelVolGlobal.channelvol[0].value)[iVar6] * g_snd.volume;
+  dVar17 = (double)local_9c;
+  if ((float)(dVar17 - dVar19) < 0.0) {
+    dVar19 = dVar17;
   }
-  dVar14 = 0.0;
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar15;
+  dVar18 = 0.0;
+  if (-dVar17 < 0.0) {
+    dVar18 = dVar19;
   }
-  *(float *)(&DAT_84888160 + iVar9) = (float)dVar14;
-  SND_SetStreamChannelVolume(iVar4);
-  Profile_EndInternal(0);
-  if (*(int *)(&DAT_8421f8d8 + iVar10) != 0) {
-    if (*(int *)(&DAT_84888128 + iVar9) == -1) {
-      if (iVar5 == 0) {
-        MyAssertHandler(0xffffffff821881f8,0x1131,0,0xffffffff82000f98,0xffffffff8214428c);
+  g_snd.chaninfo[iVar8].mixvolume = (float)dVar18;
+  SND_SetStreamChannelVolume(iVar8,(float)dVar18);
+  Profile_EndInternal((double *)0x0);
+  if (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x7c) != 0) {
+    if (g_snd.chaninfo[iVar8].startDelay == -1) {
+      if (pIVar3 == (IXAudioVoice *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x1131,0,"%s");
       }
-      uVar3 = XAudioVoice_GetVoiceState(iVar5,local_a0);
-      if ((int)uVar3 != 0) {
-        MyAssertHandler(0xffffffff821881f8,0x1136,0,0xffffffff82174e08,0xffffffff8218816c,uVar3);
+      iVar8 = XAudioVoice_GetVoiceState(pIVar3,local_a0);
+      if (iVar8 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x1136,0,"%s\n\t(res) = %i");
       }
       if ((local_a0[0] & 1) != 0) goto LAB_8263f2ac;
     }
     else {
-      if (iVar5 == 0) {
-        MyAssertHandler(0xffffffff821881f8,0x1144,0,0xffffffff82000f98,0xffffffff8214428c);
+      if (pIVar3 == (IXAudioVoice *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x1144,0,"%s");
       }
-      if (!bVar2) {
-        MyAssertHandler(0xffffffff821881f8,0x1145,0,0xffffffff82000f98,0xffffffff8218a6f0);
+      if (!bVar11) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",
+                        0x1145,0,"%s");
       }
-      uVar8 = (uint)((ulonglong)*(uint *)(&DAT_84888128 + iVar9) - param_2);
-      uVar8 = -((int)uVar8 >> 0x1f) -
-              (uint)((ulonglong)*(uint *)(&DAT_84888128 + iVar9) - param_2 != 0) & uVar8;
-      *(uint *)(&DAT_84888128 + iVar9) = uVar8;
-      if ((uVar8 != 0) ||
-         ((*(int *)(&DAT_8421f8d8 + iVar10) < 8 &&
-          (*(int *)(&DAT_8421f8f0 + iVar10) != *(int *)(&DAT_8421f8e8 + iVar10)))))
-      goto LAB_8263f2ac;
-      *(undefined4 *)(&DAT_84888128 + iVar9) = 0xffffffff;
+      lVar14 = (ulonglong)(uint)g_snd.chaninfo[iVar8].startDelay - lVar14;
+      uVar13 = (uint)lVar14;
+      uVar13 = -((int)uVar13 >> 0x1f) - (uint)(lVar14 != 0) & uVar13;
+      g_snd.chaninfo[iVar8].startDelay = uVar13;
+      if ((uVar13 != 0) ||
+         ((*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x7c) < 8 &&
+          (*(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x94) !=
+           *(int *)((int)xaGlob.baseVolEntries + iVar7 + 0x8c))))) goto LAB_8263f2ac;
+      g_snd.chaninfo[iVar8].startDelay = -1;
     }
-    XAudioSourceVoice_Start(iVar5,0);
+    XAudioSourceVoice_Start((IXAudioSourceVoice *)pIVar3,'\0');
   }
 LAB_8263f2ac:
   __restgprlr_18();
@@ -5191,21 +5837,23 @@ LAB_8263f2ac:
 
 // 8263F2B8  SND_UpdateStreamChannel  (xenon/snd_driver.cpp:4447)
 
-void SND_UpdateStreamChannel(undefined8 param_1,undefined8 param_2)
+void SND_UpdateStreamChannel(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_29();
-  cVar2 = Sys_IsMainThread();
-  if ((cVar2 == '\0') && (cVar2 = Sys_IsRenderThread(), cVar2 == '\0')) {
-    MyAssertHandler(0xffffffff821881f8,0x1160,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  iVar1 = __savegprlr_29(param_1);
+  bVar2 = Sys_IsMainThread();
+  if ((!bVar2) && (bVar2 = Sys_IsRenderThread(), !bVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1160,0
+                    ,"%s");
   }
-  if (((int)uVar1 < 0x28) || (0x35 < (int)uVar1)) {
-    MyAssertHandler(0xffffffff821881f8,0x1161,0,0xffffffff820802a8,0xffffffff8218a748,uVar1);
+  if ((iVar1 < 0x28) || (0x35 < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x1161,0
+                    ,"%s\n\t(i) = %i");
   }
-  SND_UpdateStreamSourceChannel(uVar1,param_2);
+  SND_UpdateStreamSourceChannel(iVar1,param_2);
   __restgprlr_29();
   return;
 }
@@ -5213,7 +5861,9 @@ void SND_UpdateStreamChannel(undefined8 param_1,undefined8 param_2)
 
 // 8263E218  SND_GetDriverCPUPercentage  (xenon/snd_driver.cpp:4462)
 
-undefined8 SND_GetDriverCPUPercentage(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int SND_GetDriverCPUPercentage(void)
 
 {
   return 0;

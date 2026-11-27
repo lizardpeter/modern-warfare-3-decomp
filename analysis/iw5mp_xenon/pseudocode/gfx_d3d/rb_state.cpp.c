@@ -2,96 +2,120 @@
 
 // 827AC6A0  TRACK_rb_state  (gfx_d3d/rb_state.cpp:25)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_state(void)
 
 {
-  track_static_alloc_internal(0xffffffff821d84dc,0x2c,0xffffffff821d85ac,0x12);
-  track_static_alloc_internal(0xffffffff821d84cc,0x10,0xffffffff821d85a0,0x12);
-  track_static_alloc_internal(0xffffffff821d8530,0x20,0xffffffff821d858c,0x12);
-  track_static_alloc_internal(0xffffffff821d8550,0x20,0xffffffff821d8578,0x12);
+  track_static_alloc_internal(s_blendTable,0x2c,"s_blendTable",0x12);
+  track_static_alloc_internal(s_cullTable,0x10,"s_cullTable",0x12);
+  track_static_alloc_internal(s_stencilOpTable,0x20,"s_stencilOpTable",0x12);
+  track_static_alloc_internal(s_stencilFuncTable,0x20,"s_stencilFuncTable",0x12);
   return;
 }
 
 
 // 827AC850  RB_SetInitialState  (gfx_d3d/rb_state.cpp:38)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void RB_SetInitialState(void)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  D3DDevice *pDVar1;
+  D3DDevice **ppDVar2;
   
   __savegprlr_26();
-  memset(&DAT_8484eab0,0,0x5f0);
-  R_InitCmdBufSourceState(0xffffffff8484c7e0,0xffffffff8484eab0,0);
-  DAT_8484e000 = DAT_84616688;
-  R_SetInitialContextState();
+  memset();
+  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&gfxCmdBufInput,0);
+  gfxCmdBufState.prim.device = dx.device;
+  R_SetInitialContextState(dx.device);
   R_SetTexFilter();
-  R_InitCmdBufState(0xffffffff8484df40);
-  DAT_8484df08 = 0;
-  DAT_8484df0c = 0;
-  DAT_8484df10 = DAT_84613728;
-  DAT_8484df14 = DAT_8461372c;
-  if (DAT_84762098 == 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x45,0,0xffffffff82000f98,0xffffffff821d88d0);
+  R_InitCmdBufState(&gfxCmdBufState);
+  gfxCmdBufSourceState.sceneViewport.x = 0;
+  gfxCmdBufSourceState.sceneViewport.y = 0;
+  gfxCmdBufSourceState.sceneViewport.width = vidConfig.displayWidth;
+  gfxCmdBufSourceState.sceneViewport.height = vidConfig.displayHeight;
+  if (gfxRenderTargets[1].surface.color == (D3DSurface *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x45,0,
+                    "%s");
   }
-  if (DAT_847620a0 == 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x4b,0,0xffffffff82000f98,0xffffffff821d889c);
+  if (gfxRenderTargets[1].width == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x4b,0,
+                    "%s");
   }
-  if (DAT_847620a4 == 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x4c,0,0xffffffff82000f98,0xffffffff821d8864);
+  if (gfxRenderTargets[1].height == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x4c,0,
+                    "%s");
   }
-  if (DAT_8484df20 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x4d,1,0xffffffff82000f98,0xffffffff821d8838);
+  if (gfxCmdBufSourceState.renderTargetWidth != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x4d,1,
+                    "%s");
   }
-  if (DAT_8484df24 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x4e,1,0xffffffff82000f98,0xffffffff821d8808);
+  if (gfxCmdBufSourceState.renderTargetHeight != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x4e,1,
+                    "%s");
   }
-  if (DAT_8484df1c != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x4f,1,0xffffffff82000f98,0xffffffff821d87dc);
+  if (gfxCmdBufSourceState.viewportBehavior != GFX_USE_VIEWPORT_FOR_VIEW) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x4f,1,
+                    "%s");
   }
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  if (DAT_8484e004 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x55,1,0xffffffff82000f98,0xffffffff821d87b4);
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  if (gfxCmdBufState.prim.indexBuffer != (D3DIndexBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x55,1,
+                    "%s");
   }
-  if (DAT_8484e014 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x56,1,0xffffffff82000f98,0xffffffff821d8788);
+  if (gfxCmdBufState.prim.streams[0].vb != (D3DVertexBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x56,1,
+                    "%s");
   }
-  if (DAT_8484e018 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x57,1,0xffffffff82000f98,0xffffffff821d875c);
+  if (gfxCmdBufState.prim.streams[0].offset != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x57,1,
+                    "%s");
   }
-  if (DAT_8484e010 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x58,1,0xffffffff82000f98,0xffffffff821d8730);
+  if (gfxCmdBufState.prim.streams[0].stride != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x58,1,
+                    "%s");
   }
-  if (DAT_8484e020 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x59,1,0xffffffff82000f98,0xffffffff821d8704);
+  if (gfxCmdBufState.prim.streams[1].vb != (D3DVertexBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x59,1,
+                    "%s");
   }
-  if (DAT_8484e024 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x5a,1,0xffffffff82000f98,0xffffffff821d86d8);
+  if (gfxCmdBufState.prim.streams[1].offset != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x5a,1,
+                    "%s");
   }
-  if (DAT_8484e01c != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x5b,1,0xffffffff82000f98,0xffffffff821d86ac);
+  if (gfxCmdBufState.prim.streams[1].stride != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x5b,1,
+                    "%s");
   }
-  if (DAT_8484ea70 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x5f,1,0xffffffff82000f98,0xffffffff821d8688);
+  if (gfxCmdBufState.vertexShader != (MaterialVertexShader *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x5f,1,
+                    "%s");
   }
-  if (DAT_8484e02c != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x61,1,0xffffffff82000f98,0xffffffff821d8668);
+  if (gfxCmdBufState.material != (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x61,1,
+                    "%s");
   }
-  if (DAT_8484e034 != 0) {
-    MyAssertHandler(0xffffffff821d85bc,0x62,1,0xffffffff82000f98,0xffffffff821d8644);
+  if (gfxCmdBufState.technique != (MaterialTechnique *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x62,1,
+                    "%s");
   }
-  if (DAT_8484ea50 != '\0') {
-    MyAssertHandler(0xffffffff821d85bc,0x65,1,0xffffffff82000f98,0xffffffff821d8624);
+  if (gfxCmdBufState.alphaRef != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x65,1,
+                    "%s");
   }
-  puVar2 = &DAT_84616694;
+  ppDVar2 = dx.cmdBufDevice;
   do {
-    uVar1 = *puVar2;
-    R_SetInitialContextState(uVar1);
-    D3DDevice_ReleaseThreadOwnership(uVar1);
-    puVar2 = puVar2 + 1;
-  } while ((int)puVar2 < -0x7b9e98d0);
+    pDVar1 = *ppDVar2;
+    R_SetInitialContextState(pDVar1);
+    D3DDevice_ReleaseThreadOwnership(pDVar1);
+    ppDVar2 = ppDVar2 + 1;
+  } while ((int)ppDVar2 < -0x7b9e98d0);
   __restgprlr_26();
   return;
 }
@@ -99,20 +123,26 @@ void RB_SetInitialState(void)
 
 // 827AC730  RB_UnbindAllImages  (gfx_d3d/rb_state.cpp:121)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void RB_UnbindAllImages(void)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  if (DAT_84617885 != '\0') {
-    if (DAT_8484e000 != DAT_84616688) {
-      MyAssertHandler(0xffffffff821d85bc,0x84,0,0xffffffff82000f98,0xffffffff821d85fc);
+  if (r_glob.startedRenderThread) {
+    if (gfxCmdBufState.prim.device != dx.device) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_state.cpp",0x84,0
+                      ,"%s");
     }
     uVar1 = 0;
     do {
-      R_DisableSampler(0xffffffff8484df40,uVar1);
+      R_DisableSampler(&gfxCmdBufState,uVar1);
       uVar1 = uVar1 + 1;
-    } while ((uVar1 & 0xffffffff) < 0x14);
+    } while (uVar1 < 0x14);
   }
   return;
 }
@@ -120,25 +150,102 @@ void RB_UnbindAllImages(void)
 
 // 827AC7D0  RB_InitSceneViewport  (gfx_d3d/rb_state.cpp:157)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void RB_InitSceneViewport(void)
 
 {
-  DAT_8484df08 = 0;
-  DAT_8484df0c = 0;
-  DAT_8484df10 = DAT_84613728;
-  DAT_8484df14 = DAT_8461372c;
+  gfxCmdBufSourceState.sceneViewport.x = 0;
+  gfxCmdBufSourceState.sceneViewport.y = 0;
+  gfxCmdBufSourceState.sceneViewport.width = vidConfig.displayWidth;
+  gfxCmdBufSourceState.sceneViewport.height = vidConfig.displayHeight;
+  return;
+}
+
+
+// 827AC808  RB_InitImages  (gfx_d3d/rb_state.cpp:190)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_InitImages(void)
+
+{
+  __savegprlr_20();
+  rg.codeImageNames[6] = "shadowmapSamplerSun";
+  gfxCmdBufInput.codeImageSamplerStates[0] = '\x01';
+  gfxCmdBufInput.codeImageSamplerStates[1] = '\x01';
+  gfxCmdBufInput.codeImageSamplerStates[2] = '\x01';
+  gfxCmdBufInput.codeImageSamplerStates[6] = gfxMetrics.shadowmapSamplerState;
+  gfxCmdBufInput.codeImageSamplerStates[7] = gfxMetrics.shadowmapSamplerState;
+  gfxCmdBufInput.codeImageSamplerStates[3] = 0xe2;
+  gfxCmdBufInput.codeImages[9] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImages[7] = (GfxImage *)0x0;
+  builtin_memcpy(gfxCmdBufInput.codeImageSamplerStates + 8,"bbbbb",6);
+  rg.codeImageNames[8] = "feedbackSampler";
+  rg.codeImageNames[7] = "shadowmapSamplerSpot";
+  rg.codeImageNames[0] = (char *)0x0;
+  rg.codeImageNames[1] = (char *)0x0;
+  rg.codeImageNames[2] = (char *)0x0;
+  gfxCmdBufInput.codeImages[1] = rgp.whiteImage;
+  rg.codeImageNames[3] = (char *)0x0;
+  gfxCmdBufInput.codeImages[8] = (GfxImage *)0x0;
+  rg.codeImageNames[9] = (char *)0x0;
+  gfxCmdBufInput.codeImages[3] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImages[6] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImages[10] = (GfxImage *)0x0;
+  rg.codeImageNames[0xb] = "postEffect0";
+  gfxCmdBufInput.codeImages[0] = rgp.blackImage;
+  gfxCmdBufInput.codeImages[2] = rgp.identityNormalMapImage;
+  gfxCmdBufInput.codeImages[0xb] = gfxRenderTargets[8].image;
+  rg.codeImageNames[10] = (char *)0x0;
+  gfxCmdBufInput.codeImages[0xe] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImages[0xc] = gfxRenderTargets[9].image;
+  rg.codeImageNames[0xc] = "postEffect1";
+  gfxCmdBufInput.codeImages[0xf] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImageSamplerStates[0x10] = 'a';
+  builtin_memcpy(gfxCmdBufInput.codeImageSamplerStates + 0x16,"bbbb",4);
+  gfxCmdBufInput.codeImages[0xd] = (GfxImage *)0x0;
+  gfxCmdBufInput.codeImageSamplerStates[0xe] = 'b';
+  gfxCmdBufInput.codeImageSamplerStates[0xf] = 'b';
+  rg.codeImageNames[0xf] = (char *)0x0;
+  rg.codeImageNames[0xd] = "attenuationSampler";
+  rg.codeImageNames[0xe] = "cucolorisSampler";
+  gfxCmdBufInput.codeImages[0x10] = gfxRenderTargets[7].image;
+  rg.codeImageNames[0x10] = (char *)0x0;
+  gfxCmdBufInput.codeImages[0x16] = rgp.blackImage;
+  rg.codeImageNames[0x16] = "cinematicY";
+  gfxCmdBufInput.codeImages[0x17] = rgp.blackImage;
+  rg.codeImageNames[0x17] = "cinematicCr";
+  gfxCmdBufInput.codeImages[0x18] = rgp.blackImage;
+  rg.codeImageNames[0x18] = "cinematicCb";
+  gfxCmdBufInput.codeImages[0x19] = rgp.blackImage;
+  rg.codeImageNames[0x19] = "cinematicA";
+  gfxCmdBufInput.codeImages[0x1c] = rgp.colorManipImage;
+  gfxCmdBufInput.codeImageSamplerStates[0x1c] = 'b';
+  rg.codeImageNames[0x1c] = "colorManipulationSampler";
+  gfxCmdBufInput.codeImages[0x1d] = rgp.streamingLoadingImage;
+  gfxCmdBufInput.codeImageSamplerStates[0x1d] = '\x01';
+  rg.codeImageNames[0x1d] = (char *)0x0;
+  __restgprlr_20();
   return;
 }
 
 
 // 827AC810  RB_IsStateChangeSafe  (gfx_d3d/rb_state.cpp:200)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool RB_IsStateChangeSafe(void)
 
 {
-  if (DAT_84834018 != '\0') {
+  if (tess.finishedFilling) {
     return true;
   }
-  return DAT_84834008 == 0;
+  return tess.indexCount == 0;
 }
 

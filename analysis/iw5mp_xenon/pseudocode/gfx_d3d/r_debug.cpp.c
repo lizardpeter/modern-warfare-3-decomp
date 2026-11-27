@@ -2,56 +2,62 @@
 
 // 82724BD8  TRACK_r_debug  (gfx_d3d/r_debug.cpp:23)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_debug(void)
 
 {
-  track_static_alloc_internal(0xffffffff845a16c0,0x54,0xffffffff821bbd24,0);
+  track_static_alloc_internal(&debugGlobals,0x54,"debugGlobals",0);
   return;
 }
 
 
 // 82724BF8  R_AddDebugPolygon  (gfx_d3d/r_debug.cpp:30)
 
-void R_AddDebugPolygon(undefined8 param_1,undefined4 *param_2,ulonglong param_3,void *param_4,
-                      undefined1 param_5)
+void R_AddDebugPolygon(DebugGlobals *param_1,float *param_2,int param_3,float (*param_4) [3],
+                      bool param_5)
 
 {
   int iVar1;
-  int *piVar2;
-  undefined4 *puVar3;
-  int *piVar4;
+  void **ppvVar2;
+  void **ppvVar3;
+  longlong lVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
   
-  piVar2 = (int *)__savegprlr_26();
-  Sys_EnterCriticalSection(5);
-  iVar1 = (int)param_3;
-  if ((iVar1 + piVar2[1] <= piVar2[2]) && (piVar2[4] + 1 <= piVar2[5])) {
-    piVar4 = piVar2 + 3;
-    if (piVar2[3] == 0) {
-      if (*piVar2 != 0) {
-        MyAssertHandler(0xffffffff821bbd6c,0x35,0,0xffffffff82000f98,0xffffffff821bbdac);
+  lVar6 = (longlong)param_3;
+  lVar4 = (longlong)(int)param_2;
+  ppvVar2 = (void **)__savegprlr_26(param_1,lVar4,lVar6,param_4);
+  Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
+  iVar1 = (int)lVar6;
+  if ((iVar1 + (int)ppvVar2[1] <= (int)ppvVar2[2]) && ((int)ppvVar2[4] + 1 <= (int)ppvVar2[5])) {
+    ppvVar3 = ppvVar2 + 3;
+    if (ppvVar2[3] == (void *)0x0) {
+      if (*ppvVar2 != (void *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug.cpp",0x35,
+                        0,"%s");
       }
-      R_DebugAlloc(piVar4,(ulonglong)(uint)piVar2[5] * 0x1c,0xffffffff821bbd50);
-      R_DebugAlloc(piVar2,((ulonglong)(uint)piVar2[2] +
-                           ((ulonglong)(uint)piVar2[2] & 0x7fffffff) * 2 & 0x3fffffff) << 2,
-                   0xffffffff821bbd34);
+      R_DebugAlloc(ppvVar3,(int)ppvVar2[5] * 0x1c,"(debugGlobalsEntry->polys)");
+      R_DebugAlloc(ppvVar2,(int)ppvVar2[2] * 0xc,"(debugGlobalsEntry->verts)");
     }
-    if ((*piVar4 == 0) || (*piVar2 == 0)) goto LAB_82724da0;
-    *(int *)(piVar2[4] * 0x1c + *piVar4 + 0x10) = piVar2[1];
-    *(int *)(piVar2[4] * 0x1c + *piVar4 + 0x14) = iVar1;
-    *(undefined1 *)(piVar2[4] * 0x1c + *piVar4 + 0x18) = param_5;
-    puVar3 = (undefined4 *)(piVar2[4] * 0x1c + *piVar4);
-    *puVar3 = *param_2;
-    puVar3[1] = param_2[1];
-    puVar3[2] = param_2[2];
-    puVar3[3] = param_2[3];
-    piVar2[4] = piVar2[4] + 1;
+    if ((*ppvVar3 == (void *)0x0) || (*ppvVar2 == (void *)0x0)) goto LAB_82724da0;
+    *(void **)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x10) = ppvVar2[1];
+    *(int *)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x14) = iVar1;
+    *(bool *)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x18) = param_5;
+    puVar5 = (undefined4 *)lVar4;
+    puVar7 = (undefined4 *)((int)ppvVar2[4] * 0x1c + (int)*ppvVar3);
+    *puVar7 = *puVar5;
+    puVar7[1] = puVar5[1];
+    puVar7[2] = puVar5[2];
+    puVar7[3] = puVar5[3];
+    ppvVar2[4] = (void *)((int)ppvVar2[4] + 1);
     Profile_Begin(0x9d);
-    memcpy((void *)(piVar2[1] * 0xc + *piVar2),param_4,
-           (size_t)((param_3 + (param_3 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-    Profile_EndInternal(0);
-    piVar2[1] = iVar1 + piVar2[1];
+    memcpy();
+    Profile_EndInternal((double *)0x0);
+    ppvVar2[1] = (void *)(iVar1 + (int)ppvVar2[1]);
   }
-  Sys_LeaveCriticalSection(5);
+  Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
 LAB_82724da0:
   __restgprlr_26();
   return;
@@ -60,36 +66,34 @@ LAB_82724da0:
 
 // 82724DA8  R_AddDebugLine  (gfx_d3d/r_debug.cpp:80)
 
-void R_AddDebugLine(undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined8 param_4)
+void R_AddDebugLine(DebugGlobals *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   
-  iVar2 = __savegprlr_27();
-  Sys_EnterCriticalSection(5);
-  if (*(int *)(iVar2 + 0x34) + 1 <= *(int *)(iVar2 + 0x38)) {
-    iVar1 = *(int *)(iVar2 + 0x30);
-    if (iVar1 == 0) {
-      R_DebugAlloc((int *)(iVar2 + 0x30),*(int *)(iVar2 + 0x38) << 5,0xffffffff821bbdd0);
-      iVar1 = *(int *)(iVar2 + 0x30);
-      if (iVar1 == 0) goto LAB_82724e74;
+  iVar3 = __savegprlr_27(param_1);
+  Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
+  if (*(int *)(iVar3 + 0x34) + 1 <= *(int *)(iVar3 + 0x38)) {
+    pvVar1 = *(void **)(iVar3 + 0x30);
+    if (pvVar1 == (void *)0x0) {
+      R_DebugAlloc((void **)(iVar3 + 0x30),*(int *)(iVar3 + 0x38) << 5,"R_AddDebugLine");
+      pvVar1 = *(void **)(iVar3 + 0x30);
+      if (pvVar1 == (void *)0x0) goto LAB_82724e74;
     }
-    iVar3 = *(int *)(iVar2 + 0x34) * 0x20;
-    iVar4 = iVar3 + iVar1;
-    *(undefined4 *)(iVar3 + iVar1) = *param_2;
-    *(undefined4 *)(iVar4 + 4) = param_2[1];
-    *(undefined4 *)(iVar4 + 8) = param_2[2];
-    *(undefined4 *)(iVar4 + 0xc) = *param_3;
-    *(undefined4 *)(iVar4 + 0x10) = param_3[1];
-    *(undefined4 *)(iVar4 + 0x14) = param_3[2];
-    Byte4PackVertexColor(param_4,iVar4 + 0x18);
-    *(undefined4 *)(iVar4 + 0x1c) = 0;
-    *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + 1;
+    iVar2 = *(int *)(iVar3 + 0x34) * 0x20;
+    *(float *)(iVar2 + (int)pvVar1) = *param_2;
+    *(float *)((int)pvVar1 + iVar2 + 4) = param_2[1];
+    *(float *)((int)pvVar1 + iVar2 + 8) = param_2[2];
+    *(float *)((int)pvVar1 + iVar2 + 0xc) = *param_3;
+    *(float *)((int)pvVar1 + iVar2 + 0x10) = param_3[1];
+    *(float *)((int)pvVar1 + iVar2 + 0x14) = param_3[2];
+    Byte4PackVertexColor(param_4,(uchar *)((int)pvVar1 + iVar2 + 0x18));
+    *(undefined4 *)((int)pvVar1 + iVar2 + 0x1c) = 0;
+    *(int *)(iVar3 + 0x34) = *(int *)(iVar3 + 0x34) + 1;
   }
-  Sys_LeaveCriticalSection(5);
+  Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
 LAB_82724e74:
   __restgprlr_27();
   return;
@@ -98,11 +102,11 @@ LAB_82724e74:
 
 // 82724E80  R_AddDebugBox  (gfx_d3d/r_debug.cpp:116)
 
-void R_AddDebugBox(undefined8 param_1,float *param_2,undefined8 param_3)
+void R_AddDebugBox(DebugGlobals *param_1,Bounds *param_2,float *param_3)
 
 {
   int *piVar1;
-  undefined8 uVar2;
+  DebugGlobals *pDVar2;
   longlong lVar3;
   int *piVar4;
   float local_90 [4];
@@ -127,13 +131,13 @@ void R_AddDebugBox(undefined8 param_1,float *param_2,undefined8 param_3)
   float local_38;
   float local_34;
   
-  uVar2 = __savegprlr_28();
-  local_90[0] = *param_2 - param_2[3];
-  local_90[3] = *param_2 + param_2[3];
-  local_90[1] = param_2[1] - param_2[4];
-  local_74 = param_2[1] + param_2[4];
-  local_90[2] = param_2[2] - param_2[5];
-  local_58 = param_2[2] + param_2[5];
+  pDVar2 = (DebugGlobals *)__savegprlr_28(param_1);
+  local_90[0] = param_2->midPoint[0] - param_2->halfSize[0];
+  local_90[3] = param_2->midPoint[0] + param_2->halfSize[0];
+  local_90[1] = param_2->midPoint[1] - param_2->halfSize[1];
+  local_74 = param_2->midPoint[1] + param_2->halfSize[1];
+  local_90[2] = param_2->midPoint[2] - param_2->halfSize[2];
+  local_58 = param_2->midPoint[2] + param_2->halfSize[2];
   lVar3 = 0xc;
   piVar4 = (int *)0x821bbddc;
   local_80 = local_90[1];
@@ -157,7 +161,7 @@ void R_AddDebugBox(undefined8 param_1,float *param_2,undefined8 param_3)
   do {
     piVar1 = piVar4 + 1;
     piVar4 = piVar4 + 2;
-    R_AddDebugLine(uVar2,local_90 + *piVar1 * 3,local_90 + *piVar4 * 3,param_3);
+    R_AddDebugLine(pDVar2,local_90 + *piVar1 * 3,local_90 + *piVar4 * 3,param_3);
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
   __restgprlr_28();
@@ -167,96 +171,91 @@ void R_AddDebugBox(undefined8 param_1,float *param_2,undefined8 param_3)
 
 // 82724F80  R_AddDebugFrustum  (gfx_d3d/r_debug.cpp:145)
 
-void R_AddDebugFrustum(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_AddDebugFrustum(GfxViewParms *param_1)
 
 {
   undefined8 *puVar1;
-  undefined8 *puVar2;
+  float *pfVar2;
   longlong lVar3;
   double dVar4;
-  undefined4 local_310;
-  undefined4 local_30c;
-  undefined4 local_308;
-  float local_304;
+  float local_310 [4];
   float local_300;
   float local_2fc;
   float local_2f8;
   undefined4 local_2f4;
-  undefined4 local_2f0;
-  undefined4 local_2ec;
-  float local_2e8;
+  float local_2f0 [3];
   float local_2e4;
   float local_2e0;
   float local_2dc;
   float local_2d8;
   float local_2d4;
-  undefined4 local_2d0;
-  undefined4 local_2cc;
-  undefined4 local_2c8;
-  float local_2c4;
+  float local_2d0 [4];
   float local_2c0 [3];
   float local_2b4;
-  undefined1 auStack_2b0 [16];
-  undefined4 local_2a0;
+  float afStack_2b0 [4];
+  float local_2a0;
   float local_29c;
   float local_298;
   float local_294;
-  undefined1 auStack_290 [16];
+  float afStack_290 [4];
   float local_280 [4];
-  undefined1 auStack_270 [16];
+  float afStack_270 [4];
   float local_260;
   float local_25c;
   undefined4 local_258;
   float local_254;
-  undefined1 auStack_250 [16];
-  undefined4 local_240;
+  float afStack_250 [4];
+  float local_240;
   float local_23c;
   undefined4 local_238;
   float local_234;
-  undefined1 auStack_230 [16];
-  undefined1 auStack_220 [16];
-  undefined1 auStack_210 [16];
-  undefined1 auStack_200 [16];
-  undefined1 auStack_1f0 [16];
-  undefined1 auStack_1e0 [64];
-  undefined1 auStack_1a0 [64];
-  undefined1 auStack_160 [16];
-  undefined1 auStack_150 [16];
-  undefined1 auStack_140 [16];
-  undefined1 auStack_130 [16];
-  undefined1 auStack_120 [16];
-  undefined1 auStack_110 [16];
-  undefined1 auStack_100 [16];
-  undefined1 auStack_f0 [16];
-  undefined1 auStack_e0 [16];
-  undefined1 auStack_d0 [16];
-  undefined1 auStack_c0 [16];
-  undefined1 auStack_b0 [16];
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [16];
-  undefined1 auStack_80 [16];
-  undefined1 auStack_70 [8];
+  float afStack_230 [4];
+  float afStack_220 [4];
+  float afStack_210 [4];
+  float afStack_200 [4];
+  float afStack_1f0 [4];
+  float afStack_1e0 [16];
+  float afStack_1a0 [16];
+  float afStack_160 [4];
+  float afStack_150 [4];
+  float afStack_140 [4];
+  float afStack_130 [4];
+  float afStack_120 [4];
+  float afStack_110 [4];
+  float afStack_100 [4];
+  float afStack_f0 [4];
+  float afStack_e0 [4];
+  float afStack_d0 [4];
+  float afStack_c0 [4];
+  float afStack_b0 [4];
+  float afStack_a0 [4];
+  float afStack_90 [4];
+  float afStack_80 [4];
+  float afStack_70 [2];
   undefined8 uStack_68;
-  undefined1 local_60 [48];
-  undefined1 auStack_30 [24];
+  float local_60 [12];
+  float afStack_30 [6];
   
   puVar1 = &uStack_68;
-  puVar2 = (undefined8 *)(param_1 + -8);
+  pfVar2 = &param_1[-1].camera.zNear;
   lVar3 = 8;
   do {
-    puVar2 = puVar2 + 1;
+    pfVar2 = pfVar2 + 2;
     puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    *puVar1 = *(undefined8 *)pfVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  local_300 = -*(float *)(param_1 + 0x100);
-  local_2fc = -*(float *)(param_1 + 0x104);
-  local_2f8 = -*(float *)(param_1 + 0x108);
+  local_300 = -(param_1->camera).origin[0];
+  local_2fc = -(param_1->camera).origin[1];
+  local_2f8 = -(param_1->camera).origin[2];
   dVar4 = 1.0;
   local_2f4 = 0x3f800000;
-  MatrixTransformVector44(&local_300,param_1,auStack_30);
-  MatrixInverse44(param_1 + 0x40,auStack_1a0);
-  MatrixInverse44(local_60,auStack_1e0);
+  MatrixTransformVector44(&local_300,(float (*) [4])param_1,afStack_30);
+  MatrixInverse44((float *)&param_1->projectionMatrix,afStack_1a0);
+  MatrixInverse44(local_60,afStack_1e0);
   local_260 = (float)dVar4;
   local_25c = (float)dVar4;
   local_254 = (float)dVar4;
@@ -273,110 +272,111 @@ void R_AddDebugFrustum(int param_1)
   local_2c0[1] = -1.0;
   local_2c0[2] = (float)dVar4;
   local_2b4 = (float)dVar4;
-  local_240 = 0xbf800000;
+  local_240 = -1.0;
   local_23c = (float)dVar4;
   local_238 = 0x358637bd;
   local_234 = (float)dVar4;
-  local_2a0 = 0xbf800000;
+  local_2a0 = -1.0;
   local_29c = (float)dVar4;
   local_298 = (float)dVar4;
   local_294 = (float)dVar4;
-  local_310 = 0xbf800000;
-  local_30c = 0xbf800000;
-  local_308 = 0x358637bd;
-  local_304 = (float)dVar4;
-  local_2f0 = 0xbf800000;
-  local_2ec = 0xbf800000;
-  local_2e8 = (float)dVar4;
+  local_310[0] = -1.0;
+  local_310[1] = -1.0;
+  local_310[2] = 1e-06;
+  local_310[3] = (float)dVar4;
+  local_2f0[0] = -1.0;
+  local_2f0[1] = -1.0;
+  local_2f0[2] = (float)dVar4;
   local_2e4 = (float)dVar4;
-  MatrixTransformVector44(&local_260,auStack_1a0,auStack_b0);
-  MatrixTransformVector44(&local_2e0,auStack_1a0,auStack_a0);
-  MatrixTransformVector44(local_280,auStack_1a0,auStack_80);
-  MatrixTransformVector44(local_2c0,auStack_1a0,auStack_d0);
-  MatrixTransformVector44(&local_240,auStack_1a0,auStack_130);
-  MatrixTransformVector44(&local_2a0,auStack_1a0,auStack_90);
-  MatrixTransformVector44(&local_310,auStack_1a0,auStack_110);
-  MatrixTransformVector44(&local_2f0,auStack_1a0,auStack_160);
-  Vec4DivideByW(auStack_b0,auStack_f0);
-  Vec4DivideByW(auStack_a0,auStack_70);
-  Vec4DivideByW(auStack_80,auStack_150);
-  Vec4DivideByW(auStack_d0,auStack_140);
-  Vec4DivideByW(auStack_130,auStack_120);
-  Vec4DivideByW(auStack_90,auStack_100);
-  Vec4DivideByW(auStack_110,auStack_e0);
-  Vec4DivideByW(auStack_160,auStack_c0);
-  local_2c4 = (float)dVar4;
-  local_2d0 = 0;
-  local_2cc = 0;
-  local_2c8 = 0;
-  MatrixTransformVector44(auStack_f0,auStack_1e0,auStack_1f0);
-  MatrixTransformVector44(auStack_70,auStack_1e0,auStack_2b0);
-  MatrixTransformVector44(auStack_150,auStack_1e0,auStack_220);
-  MatrixTransformVector44(auStack_140,auStack_1e0,auStack_290);
-  MatrixTransformVector44(auStack_120,auStack_1e0,auStack_210);
-  MatrixTransformVector44(auStack_100,auStack_1e0,auStack_270);
-  MatrixTransformVector44(auStack_e0,auStack_1e0,auStack_200);
-  MatrixTransformVector44(auStack_c0,auStack_1e0,auStack_250);
-  MatrixTransformVector44(&local_2d0,auStack_1e0,auStack_230);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_1f0,auStack_2b0,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_2b0,auStack_290,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_290,auStack_220,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_220,auStack_1f0,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_250,auStack_200,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_200,auStack_210,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_210,auStack_270,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_270,auStack_250,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_1f0,auStack_210,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_2b0,auStack_270,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_220,auStack_200,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_290,auStack_250,0xffffffff82181898);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_230,auStack_2b0,0xffffffff82181868);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_230,auStack_290,0xffffffff82181868);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_230,auStack_270,0xffffffff82181868);
-  R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,auStack_230,auStack_250,0xffffffff82181868);
+  MatrixTransformVector44(&local_260,(float (*) [4])afStack_1a0,afStack_b0);
+  MatrixTransformVector44(&local_2e0,(float (*) [4])afStack_1a0,afStack_a0);
+  MatrixTransformVector44(local_280,(float (*) [4])afStack_1a0,afStack_80);
+  MatrixTransformVector44(local_2c0,(float (*) [4])afStack_1a0,afStack_d0);
+  MatrixTransformVector44(&local_240,(float (*) [4])afStack_1a0,afStack_130);
+  MatrixTransformVector44(&local_2a0,(float (*) [4])afStack_1a0,afStack_90);
+  MatrixTransformVector44(local_310,(float (*) [4])afStack_1a0,afStack_110);
+  MatrixTransformVector44(local_2f0,(float (*) [4])afStack_1a0,afStack_160);
+  Vec4DivideByW(afStack_b0,afStack_f0);
+  Vec4DivideByW(afStack_a0,afStack_70);
+  Vec4DivideByW(afStack_80,afStack_150);
+  Vec4DivideByW(afStack_d0,afStack_140);
+  Vec4DivideByW(afStack_130,afStack_120);
+  Vec4DivideByW(afStack_90,afStack_100);
+  Vec4DivideByW(afStack_110,afStack_e0);
+  Vec4DivideByW(afStack_160,afStack_c0);
+  local_2d0[3] = (float)dVar4;
+  local_2d0[0] = 0.0;
+  local_2d0[1] = 0.0;
+  local_2d0[2] = 0.0;
+  MatrixTransformVector44(afStack_f0,(float (*) [4])afStack_1e0,afStack_1f0);
+  MatrixTransformVector44(afStack_70,(float (*) [4])afStack_1e0,afStack_2b0);
+  MatrixTransformVector44(afStack_150,(float (*) [4])afStack_1e0,afStack_220);
+  MatrixTransformVector44(afStack_140,(float (*) [4])afStack_1e0,afStack_290);
+  MatrixTransformVector44(afStack_120,(float (*) [4])afStack_1e0,afStack_210);
+  MatrixTransformVector44(afStack_100,(float (*) [4])afStack_1e0,afStack_270);
+  MatrixTransformVector44(afStack_e0,(float (*) [4])afStack_1e0,afStack_200);
+  MatrixTransformVector44(afStack_c0,(float (*) [4])afStack_1e0,afStack_250);
+  MatrixTransformVector44(local_2d0,(float (*) [4])afStack_1e0,afStack_230);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_1f0,afStack_2b0,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_2b0,afStack_290,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_290,afStack_220,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_220,afStack_1f0,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_250,afStack_200,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_200,afStack_210,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_210,afStack_270,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_270,afStack_250,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_1f0,afStack_210,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_2b0,afStack_270,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_220,afStack_200,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_290,afStack_250,colorMdCyan);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_230,afStack_2b0,colorMagenta);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_230,afStack_290,colorMagenta);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_230,afStack_270,colorMagenta);
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,afStack_230,afStack_250,colorMagenta);
   return;
 }
 
 
 // 827253D8  R_AddDebugString  (gfx_d3d/r_debug.cpp:222)
 
-void R_AddDebugString(undefined8 param_1,undefined4 *param_2,undefined8 param_3,undefined8 param_4,
+void R_AddDebugString(DebugGlobals *param_1,float *param_2,float *param_3,float param_4,
                      char *param_5)
 
 {
-  uint uVar1;
+  void *pvVar1;
   int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  longlong lVar3;
+  undefined4 *puVar4;
+  longlong lVar5;
+  char *in_r7;
+  int iVar6;
   double extraout_f1;
-  double dVar6;
+  double dVar7;
   
-  iVar3 = __savegprlr_27();
-  dVar6 = extraout_f1;
-  Sys_EnterCriticalSection(5);
-  uVar1 = *(uint *)(iVar3 + 0x20);
-  if (*(int *)(iVar3 + 0x1c) + 1 <= (int)uVar1) {
-    iVar2 = *(int *)(iVar3 + 0x18);
-    if (iVar2 == 0) {
-      R_DebugAlloc((int *)(iVar3 + 0x18),
-                   ((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7ffffff) << 5,
-                   0xffffffff821bbe40);
-      iVar2 = *(int *)(iVar3 + 0x18);
-      if (iVar2 == 0) goto LAB_827254b8;
+  lVar5 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_27((double)param_4,param_1,lVar3,lVar5,param_5);
+  dVar7 = extraout_f1;
+  Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
+  if (*(int *)(iVar2 + 0x1c) + 1 <= *(int *)(iVar2 + 0x20)) {
+    pvVar1 = *(void **)(iVar2 + 0x18);
+    if (pvVar1 == (void *)0x0) {
+      R_DebugAlloc((void **)(iVar2 + 0x18),*(int *)(iVar2 + 0x20) * 0x60,"R_AddDebugString");
+      pvVar1 = *(void **)(iVar2 + 0x18);
+      if (pvVar1 == (void *)0x0) goto LAB_827254b8;
     }
-    iVar4 = *(int *)(iVar3 + 0x1c) * 0x60;
-    iVar5 = iVar4 + iVar2;
-    *(undefined4 *)(iVar4 + iVar2) = *param_2;
-    *(undefined4 *)(iVar5 + 4) = param_2[1];
-    *(undefined4 *)(iVar5 + 8) = param_2[2];
-    Byte4PackVertexColor(param_3,iVar5 + 0xc);
-    *(float *)(iVar5 + 0x10) = (float)dVar6;
-    strncpy((char *)(iVar5 + 0x14),param_5,0x4b);
-    *(undefined1 *)(iVar5 + 0x5f) = 0;
-    *(int *)(iVar3 + 0x1c) = *(int *)(iVar3 + 0x1c) + 1;
+    puVar4 = (undefined4 *)lVar3;
+    iVar6 = *(int *)(iVar2 + 0x1c) * 0x60;
+    *(undefined4 *)(iVar6 + (int)pvVar1) = *puVar4;
+    *(undefined4 *)((int)pvVar1 + iVar6 + 4) = puVar4[1];
+    *(undefined4 *)((int)pvVar1 + iVar6 + 8) = puVar4[2];
+    Byte4PackVertexColor((float *)lVar5,(uchar *)((int)pvVar1 + iVar6 + 0xc));
+    *(float *)((int)pvVar1 + iVar6 + 0x10) = (float)dVar7;
+    strncpy((char *)((int)pvVar1 + iVar6 + 0x14),in_r7,0x4b);
+    *(undefined1 *)((int)pvVar1 + iVar6 + 0x5f) = 0;
+    *(int *)(iVar2 + 0x1c) = *(int *)(iVar2 + 0x1c) + 1;
   }
-  Sys_LeaveCriticalSection(5);
+  Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
 LAB_827254b8:
   __restgprlr_27();
   return;
@@ -385,284 +385,273 @@ LAB_827254b8:
 
 // 827254C8  R_AddScaledDebugString  (gfx_d3d/r_debug.cpp:259)
 
-void R_AddScaledDebugString(undefined8 param_1,float *param_2,float *param_3,undefined8 param_4)
+void R_AddScaledDebugString
+               (DebugGlobals *param_1,GfxCamera *param_2,float *param_3,float *param_4,char *param_5
+               )
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  double dVar5;
-  double dVar6;
+  float fVar5;
   
-  fVar2 = param_3[1] - param_2[1];
-  fVar3 = param_3[2] - param_2[2];
-  fVar4 = *param_3 - *param_2;
-  dVar6 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar5 = 1.0;
-  if (-dVar6 < 0.0) {
-    dVar5 = dVar6;
+  fVar1 = param_3[1] - param_2->origin[1];
+  fVar2 = param_3[2] - param_2->origin[2];
+  fVar3 = *param_3 - param_2->origin[0];
+  fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  fVar4 = 1.0;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
   }
-  fVar1 = (float)(1.0 / dVar5);
-  dVar5 = (double)(float)((double)((param_2[5] * fVar3 * fVar1 +
-                                   param_2[4] * fVar2 * fVar1 + param_2[3] * fVar1 * fVar4) - 0.995)
-                         * dVar6);
-  if (dVar5 < 1.0) {
-    dVar5 = 1.0;
+  fVar4 = 1.0 / fVar4;
+  fVar5 = ((param_2->axis[0][2] * fVar2 * fVar4 +
+           param_2->axis[0][1] * fVar1 * fVar4 + param_2->axis[0][0] * fVar4 * fVar3) - 0.995) *
+          fVar5;
+  if (fVar5 < 1.0) {
+    fVar5 = 1.0;
   }
-  R_AddDebugString(dVar5,param_1,param_3,param_4);
+  R_AddDebugString(param_1,param_3,param_4,fVar5,(char *)param_4);
   return;
 }
 
 
 // 82725560  R_InitDebugEntry  (gfx_d3d/r_debug.cpp:275)
 
-void * R_InitDebugEntry(void *param_1)
+void R_InitDebugEntry(DebugGlobals *param_1)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(param_1,0,0x54);
-  *(undefined4 *)((int)param_1 + 8) = 0x1000;
-  *(undefined4 *)((int)param_1 + 0x14) = 0x200;
-  *(undefined4 *)((int)param_1 + 0x20) = 0x1000;
-  *(undefined4 *)((int)param_1 + 0x38) = 0x4000;
-  *(undefined4 *)((int)param_1 + 0x50) = 0x1000;
-  return pvVar1;
+  memset();
+  param_1->vertLimit = 0x1000;
+  param_1->polyLimit = 0x200;
+  param_1->stringLimit = 0x1000;
+  param_1->lineLimit = 0x4000;
+  param_1->plumeLimit = 0x1000;
+  return;
 }
 
 
 // 827255B8  R_InitDebug  (gfx_d3d/r_debug.cpp:287)
 
-void * R_InitDebug(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void R_InitDebug(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_845a16c0,0,0x54);
-  DAT_845a16c8 = 0x1000;
-  DAT_845a16d4 = 0x200;
-  DAT_845a16e0 = 0x1000;
-  DAT_845a16f8 = 0x4000;
-  DAT_845a1710 = 0x1000;
-  return pvVar1;
+  memset();
+  debugGlobals.vertLimit = 0x1000;
+  debugGlobals.polyLimit = 0x200;
+  debugGlobals.stringLimit = 0x1000;
+  debugGlobals.lineLimit = 0x4000;
+  debugGlobals.plumeLimit = 0x1000;
+  return;
 }
 
 
 // 82725620  R_ShutdownDebugEntry  (gfx_d3d/r_debug.cpp:293)
 
-void R_ShutdownDebugEntry(longlong param_1)
+void R_ShutdownDebugEntry(DebugGlobals *param_1)
 
 {
-  R_DebugFree(param_1 + 0xc);
-  R_DebugFree(param_1);
-  R_DebugFree(param_1 + 0x18);
-  R_DebugFree(param_1 + 0x24);
-  R_DebugFree(param_1 + 0x30);
-  R_DebugFree(param_1 + 0x3c);
-  R_DebugFree(param_1 + 0x48);
+  R_DebugFree(&param_1->polys);
+  R_DebugFree(&param_1->verts);
+  R_DebugFree(&param_1->strings);
+  R_DebugFree(&param_1->externStrings);
+  R_DebugFree(&param_1->lines);
+  R_DebugFree(&param_1->externLines);
+  R_DebugFree(&param_1->plumes);
   return;
 }
 
 
 // 82725680  R_TransferDebugGlobals  (gfx_d3d/r_debug.cpp:305)
 
-void R_TransferDebugGlobals(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_TransferDebugGlobals(DebugGlobals *param_1)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  void *_Dst;
-  void *pvVar3;
+  int iVar1;
+  GfxDebugPlume *pGVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
+  int *piVar5;
+  longlong lVar6;
+  int *piVar7;
   int iVar8;
-  longlong lVar9;
   
-  uVar1 = __savegprlr_29();
-  iVar4 = 0;
-  uVar2 = uVar1;
-  iVar8 = DAT_845a170c;
-  pvVar3 = DAT_845a1708;
-  if (0 < DAT_845a170c) {
-    iVar5 = 0;
+  iVar1 = __savegprlr_29(param_1);
+  iVar3 = 0;
+  iVar8 = debugGlobals.plumeCount;
+  pGVar2 = debugGlobals.plumes;
+  if (0 < debugGlobals.plumeCount) {
+    iVar4 = 0;
     do {
-      uVar2 = (ulonglong)*(uint *)((int)pvVar3 + iVar5 + 0x20);
-      if (((longlong)(DAT_847b9694 - uVar2) < 0) ||
-         (*(int *)((int)pvVar3 + iVar5 + 0x24) < (int)(DAT_847b9694 - uVar2))) {
-        DAT_845a170c = iVar8 + -1;
-        puVar6 = (undefined4 *)((int)pvVar3 + iVar5 + -4);
-        lVar9 = 10;
-        puVar7 = (undefined4 *)((int)pvVar3 + DAT_845a170c * 0x28 + -4);
+      lVar6 = (ulonglong)(uint)scene.def.time -
+              (ulonglong)*(uint *)((int)pGVar2->color + iVar4 + 0x14);
+      if ((lVar6 < 0) || (*(int *)((int)pGVar2->color + iVar4 + 0x18) < (int)lVar6)) {
+        debugGlobals.plumeCount = iVar8 + -1;
+        piVar5 = (int *)((int)pGVar2->origin + iVar4 + -4);
+        lVar6 = 10;
+        piVar7 = &pGVar2[iVar8 + -2].duration;
         do {
-          puVar7 = puVar7 + 1;
-          puVar6 = puVar6 + 1;
-          *puVar6 = *puVar7;
-          lVar9 = lVar9 + -1;
-          iVar8 = DAT_845a170c;
-          pvVar3 = DAT_845a1708;
-        } while (lVar9 != 0);
+          piVar7 = piVar7 + 1;
+          piVar5 = piVar5 + 1;
+          *piVar5 = *piVar7;
+          lVar6 = lVar6 + -1;
+          pGVar2 = debugGlobals.plumes;
+          iVar8 = debugGlobals.plumeCount;
+        } while (lVar6 != 0);
       }
       else {
-        iVar4 = iVar4 + 1;
-        iVar5 = iVar5 + 0x28;
+        iVar3 = iVar3 + 1;
+        iVar4 = iVar4 + 0x28;
       }
-    } while (iVar4 < iVar8);
+    } while (iVar3 < iVar8);
   }
-  if (pvVar3 != (void *)0x0) {
-    _Dst = *(void **)((int)uVar1 + 0x48);
-    if (_Dst == (void *)0x0) {
-      R_DebugAlloc(uVar1 + 0x48,
-                   ((ulonglong)DAT_845a1710 + ((ulonglong)DAT_845a1710 & 0x3fffffff) * 4 &
-                   0x1fffffff) << 3,0xffffffff821bbe58);
-      _Dst = (void *)*(int *)(uVar1 + 0x48);
-      uVar2 = 0;
-      pvVar3 = DAT_845a1708;
-      iVar8 = DAT_845a170c;
-      if (_Dst == (void *)0x0) goto LAB_82725794;
-    }
-    pvVar3 = memcpy(_Dst,pvVar3,iVar8 * 0x28);
-    uVar2 = (ulonglong)(int)pvVar3;
-    iVar8 = DAT_845a170c;
+  if (pGVar2 != (GfxDebugPlume *)0x0) {
+    if ((*(int *)(iVar1 + 0x48) == 0) &&
+       (R_DebugAlloc((void **)(iVar1 + 0x48),debugGlobals.plumeLimit * 0x28,
+                     "(debugGlobalsEntry->plumes)"), *(void **)(iVar1 + 0x48) == (void *)0x0))
+    goto LAB_82725794;
+    memcpy();
+    iVar8 = debugGlobals.plumeCount;
   }
-  *(int *)((int)uVar1 + 0x4c) = iVar8;
+  *(int *)(iVar1 + 0x4c) = iVar8;
 LAB_82725794:
-  __restgprlr_29(uVar2);
+  __restgprlr_29();
   return;
 }
 
 
 // 827257A0  R_ShutdownDebug  (gfx_d3d/r_debug.cpp:339)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_ShutdownDebug(void)
 
 {
-  R_DebugFree(0xffffffff845a16cc);
-  R_DebugFree(0xffffffff845a16c0);
-  R_DebugFree(0xffffffff845a16d8);
-  R_DebugFree(0xffffffff845a16e4);
-  R_DebugFree(0xffffffff845a16f0);
-  R_DebugFree(0xffffffff845a16fc);
-  R_DebugFree(0xffffffff845a1708);
+  R_DebugFree(&debugGlobals.polys);
+  R_DebugFree(&debugGlobals.verts);
+  R_DebugFree(&debugGlobals.strings);
+  R_DebugFree(&debugGlobals.externStrings);
+  R_DebugFree(&debugGlobals.lines);
+  R_DebugFree(&debugGlobals.externLines);
+  R_DebugFree(&debugGlobals.plumes);
   return;
 }
 
 
 // 82725808  R_CopyDebugStrings  (gfx_d3d/r_debug.cpp:345)
 
-void R_CopyDebugStrings(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                       ulonglong param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_CopyDebugStrings(trDebugString_t *param_1,int param_2,trDebugString_t *param_3,int param_4,
+                       int param_5)
 
 {
-  size_t _Size;
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  void *pvVar4;
-  int *piVar5;
-  void *pvVar6;
+  GfxBackEndData *pGVar1;
+  int iVar2;
+  trDebugString_t **pptVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar2 = __savegprlr_26();
-  iVar1 = DAT_84628b00;
-  uVar3 = uVar2;
-  if ((((uVar2 & 0xffffffff) != 0) || ((param_3 & 0xffffffff) != 0)) &&
-     (piVar5 = (int *)(DAT_84628b00 + 0x1914), *(int *)(DAT_84628b00 + 0x1914) == 0)) {
-    uVar3 = R_DebugAlloc(piVar5,(param_5 + (param_5 & 0x7fffffff) * 2 & 0x7ffffff) << 5,
-                         0xffffffff821bbe74);
-    if (*piVar5 == 0) goto LAB_827258cc;
+  uVar5 = (ulonglong)param_5;
+  uVar4 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_26(param_1);
+  pGVar1 = frontEndDataOut;
+  if (((iVar2 != 0) || ((uVar4 & 0xffffffff) != 0)) &&
+     (pptVar3 = &(frontEndDataOut->debugGlobals).externStrings,
+     (frontEndDataOut->debugGlobals).externStrings == (trDebugString_t *)0x0)) {
+    R_DebugAlloc(pptVar3,(int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 5),
+                 "R_CopyDebugStrings");
+    if (*pptVar3 == (trDebugString_t *)0x0) goto LAB_827258cc;
   }
-  pvVar6 = *(void **)(iVar1 + 0x1914);
-  if ((uVar2 & 0xffffffff) != 0) {
-    _Size = (size_t)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 5);
-    pvVar4 = memcpy(pvVar6,(void *)uVar2,_Size);
-    uVar3 = (ulonglong)(int)pvVar4;
-    pvVar6 = (void *)(_Size + (int)pvVar6);
+  if (iVar2 != 0) {
+    memcpy();
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    pvVar6 = memcpy(pvVar6,(void *)param_3,
-                    (size_t)((param_4 + (param_4 & 0x7fffffff) * 2 & 0xffffffff) << 5));
-    uVar3 = (ulonglong)(int)pvVar6;
+  if ((uVar4 & 0xffffffff) != 0) {
+    memcpy();
   }
-  *(int *)(iVar1 + 0x1918) = (int)param_2 + (int)param_4;
+  (pGVar1->debugGlobals).externStringCount = param_2 + param_4;
 LAB_827258cc:
-  __restgprlr_26(uVar3);
+  __restgprlr_26();
   return;
 }
 
 
 // 827258D8  R_CopyDebugLines  (gfx_d3d/r_debug.cpp:379)
 
-void R_CopyDebugLines(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                     ulonglong param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_CopyDebugLines(trDebugLine_t *param_1,int param_2,trDebugLine_t *param_3,int param_4,
+                     int param_5)
 
 {
-  size_t _Size;
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  void *pvVar4;
-  int *piVar5;
-  void *pvVar6;
+  GfxBackEndData *pGVar1;
+  int iVar2;
+  trDebugLine_t **pptVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  uVar2 = __savegprlr_25();
-  iVar1 = DAT_84628b00;
-  uVar3 = uVar2;
-  if (((((uVar2 & 0xffffffff) == 0) && ((param_3 & 0xffffffff) == 0)) ||
-      (piVar5 = (int *)(DAT_84628b00 + 0x192c), *(int *)(DAT_84628b00 + 0x192c) != 0)) ||
-     (uVar3 = R_DebugAlloc(piVar5,(param_5 & 0x7ffffff) << 5,0xffffffff821bbe88), *piVar5 != 0)) {
-    pvVar6 = *(void **)(iVar1 + 0x192c);
-    if ((uVar2 & 0xffffffff) != 0) {
-      _Size = (size_t)((param_2 & 0xffffffff) << 5);
-      pvVar4 = memcpy(pvVar6,(void *)uVar2,_Size);
-      uVar3 = (ulonglong)(int)pvVar4;
-      pvVar6 = (void *)(_Size + (int)pvVar6);
+  uVar5 = (ulonglong)param_5;
+  uVar4 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_25(param_1);
+  pGVar1 = frontEndDataOut;
+  if ((((iVar2 == 0) && ((uVar4 & 0xffffffff) == 0)) ||
+      (pptVar3 = &(frontEndDataOut->debugGlobals).externLines,
+      (frontEndDataOut->debugGlobals).externLines != (trDebugLine_t *)0x0)) ||
+     (R_DebugAlloc(pptVar3,(int)((uVar5 & 0xffffffff) << 5),"R_CopyDebugLines"),
+     *pptVar3 != (trDebugLine_t *)0x0)) {
+    if (iVar2 != 0) {
+      memcpy();
     }
-    if ((param_3 & 0xffffffff) != 0) {
-      pvVar6 = memcpy(pvVar6,(void *)param_3,(size_t)((param_4 & 0xffffffff) << 5));
-      uVar3 = (ulonglong)(int)pvVar6;
+    if ((uVar4 & 0xffffffff) != 0) {
+      memcpy();
     }
-    *(int *)(iVar1 + 0x1930) = (int)param_2 + (int)param_4;
+    (pGVar1->debugGlobals).externLineCount = param_2 + param_4;
   }
-  __restgprlr_25(uVar3);
+  __restgprlr_25();
   return;
 }
 
 
 // 82725990  R_AddPlume  (gfx_d3d/r_debug.cpp:413)
 
-void R_AddPlume(undefined8 param_1,undefined4 param_2,undefined4 *param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddPlume(float *param_1,int param_2,float *param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  int iVar3;
+  int iVar1;
+  float *pfVar2;
+  GfxDebugPlume *pGVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_27();
-  Sys_EnterCriticalSection(5);
-  if (DAT_845a1708 == 0) {
-    R_DebugAlloc(0xffffffff845a1708,
-                 ((ulonglong)DAT_845a1710 + ((ulonglong)DAT_845a1710 & 0x3fffffff) * 4 & 0x1fffffff)
-                 << 3,0xffffffff821bbe9c);
-    DAT_845a170c = 0;
-    if (DAT_845a1708 == 0) goto LAB_82725ae8;
+  pfVar2 = (float *)__savegprlr_27(param_1);
+  Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
+  if (debugGlobals.plumes == (GfxDebugPlume *)0x0) {
+    R_DebugAlloc(&debugGlobals.plumes,debugGlobals.plumeLimit * 0x28,"(debugGlobals.plumes)");
+    debugGlobals.plumeCount = 0;
+    if (debugGlobals.plumes == (GfxDebugPlume *)0x0) goto LAB_82725ae8;
   }
-  if (DAT_845a170c != DAT_845a1710) {
-    puVar2 = (undefined4 *)(DAT_845a170c * 0x28 + DAT_845a1708);
-    *puVar2 = *puVar1;
-    puVar2[1] = puVar1[1];
-    puVar2[2] = puVar1[2];
-    iVar3 = DAT_845a170c * 0x28 + DAT_845a1708;
-    *(undefined4 *)(iVar3 + 0xc) = *param_3;
-    *(undefined4 *)(iVar3 + 0x10) = param_3[1];
-    *(undefined4 *)(iVar3 + 0x14) = param_3[2];
-    *(undefined4 *)(DAT_845a170c * 0x28 + DAT_845a1708 + 0x1c) = param_2;
-    *(undefined4 *)(DAT_845a170c * 0x28 + DAT_845a1708 + 0x20) = DAT_847b9694;
-    *(undefined4 *)(DAT_845a170c * 0x28 + DAT_845a1708 + 0x24) = param_4;
-    DAT_845a170c = DAT_845a170c + 1;
+  if (debugGlobals.plumeCount != debugGlobals.plumeLimit) {
+    pGVar3 = debugGlobals.plumes + debugGlobals.plumeCount;
+    pGVar3->origin[0] = *pfVar2;
+    pGVar3->origin[1] = pfVar2[1];
+    pGVar3->origin[2] = pfVar2[2];
+    iVar1 = debugGlobals.plumeCount;
+    pGVar3 = debugGlobals.plumes;
+    debugGlobals.plumes[debugGlobals.plumeCount].color[0] = *param_3;
+    pGVar3[iVar1].color[1] = param_3[1];
+    pGVar3[iVar1].color[2] = param_3[2];
+    debugGlobals.plumes[debugGlobals.plumeCount].score = param_2;
+    debugGlobals.plumes[debugGlobals.plumeCount].startTime = scene.def.time;
+    debugGlobals.plumes[debugGlobals.plumeCount].duration = param_4;
+    debugGlobals.plumeCount = debugGlobals.plumeCount + 1;
   }
-  Sys_LeaveCriticalSection(5);
+  Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
 LAB_82725ae8:
   __restgprlr_27();
   return;
@@ -677,7 +666,8 @@ void Vec4DivideByW(float *param_1,float *param_2)
   float fVar1;
   
   if (param_1[3] == 0.0) {
-    MyAssertHandler(0xffffffff8200c430,0x319,0,0xffffffff82000f98,0xffffffff821bbd14);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_vector.h",0x319,
+                    0,"%s");
   }
   fVar1 = 1.0 / param_1[3];
   *param_2 = *param_1 * fVar1;

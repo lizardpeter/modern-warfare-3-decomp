@@ -2,122 +2,131 @@
 
 // 8251C4F0  TRACK_scr_animtree  (script/scr_animtree.cpp:51)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_scr_animtree(void)
 
 {
-  track_static_alloc_internal(0xffffffff83700988,0x20c,0xffffffff8209b234,7);
-  track_static_alloc_internal(0xffffffff83700b98,0x41c,0xffffffff8209b228,7);
+  track_static_alloc_internal(&scrAnimGlob,0x20c,"scrAnimGlob",7);
+  track_static_alloc_internal(&scrAnimPub,0x41c,"scrAnimPub",7);
   return;
 }
 
 
 // 8251C548  SetAnimCheck  (script/scr_animtree.cpp:67)
 
-void SetAnimCheck(undefined4 param_1)
+void SetAnimCheck(int param_1)
 
 {
-  DAT_83700b90 = param_1;
+  scrAnimGlob.bAnimCheck = param_1;
   return;
 }
 
 
 // 8251C558  AnimTreeCompileError  (script/scr_animtree.cpp:77)
 
-void AnimTreeCompileError(undefined8 param_1)
+void AnimTreeCompileError(char *param_1)
 
 {
-  longlong lVar1;
+  char *pcVar1;
   
-  lVar1 = Com_GetLastTokenPos();
+  pcVar1 = Com_GetLastTokenPos();
   Com_EndParseSession();
-  CompileError(lVar1 - (ulonglong)DAT_83700988,0xffffffff82000f98,param_1);
+  CompileError((int)pcVar1 - (int)scrAnimGlob.start,"%s");
   return;
 }
 
 
 // 8251C5B0  GetAnimTreeParseProperties  (script/scr_animtree.cpp:107)
 
-void GetAnimTreeParseProperties(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int GetAnimTreeParseProperties(void)
 
 {
   bool bVar1;
-  char *pcVar3;
-  int iVar4;
-  longlong lVar2;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  undefined **ppuVar7;
+  char **ppcVar6;
   
   __savegprlr_24();
-  uVar5 = 0;
-  pcVar3 = (char *)Com_ParseOnLine(0xffffffff8370098c);
-  if (*pcVar3 != '\0') {
+  uVar4 = 0;
+  pcVar2 = Com_ParseOnLine(&scrAnimGlob.pos);
+  if (*pcVar2 != '\0') {
     do {
-      uVar6 = 0;
-      ppuVar7 = &PTR_s_loopsync_8296d1d8;
+      uVar5 = 0;
+      ppcVar6 = propertyNames;
       do {
-        iVar4 = I_stricmp(pcVar3,*ppuVar7);
-        if (iVar4 == 0) break;
-        uVar6 = uVar6 + 1;
-        ppuVar7 = ppuVar7 + 1;
-      } while ((uVar6 & 0xffffffff) < 4);
-      if ((uVar6 & 0xffffffff) < 4) {
-        bVar1 = (int)uVar6 != 0;
-        if (uVar6 == 1 && bVar1) {
-          uVar5 = uVar5 | 2;
+        iVar3 = I_stricmp(pcVar2,*ppcVar6);
+        if (iVar3 == 0) break;
+        uVar5 = uVar5 + 1;
+        ppcVar6 = ppcVar6 + 1;
+      } while ((uVar5 & 0xffffffff) < 4);
+      if ((uVar5 & 0xffffffff) < 4) {
+        bVar1 = (int)uVar5 != 0;
+        if (uVar5 == 1 && bVar1) {
+          uVar4 = uVar4 | 2;
         }
-        else if (uVar6 == 2 && bVar1) {
-          uVar5 = uVar5 | 8;
+        else if (uVar5 == 2 && bVar1) {
+          uVar4 = uVar4 | 8;
         }
         else if (bVar1) {
-          uVar5 = uVar5 | 0x10;
+          uVar4 = uVar4 | 0x10;
         }
         else {
-          uVar5 = uVar5 | 1;
+          uVar4 = uVar4 | 1;
         }
       }
       else {
-        lVar2 = Com_GetLastTokenPos();
+        pcVar2 = Com_GetLastTokenPos();
         Com_EndParseSession();
-        CompileError(lVar2 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b240);
+        CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
       }
-      pcVar3 = (char *)Com_ParseOnLine(0xffffffff8370098c);
-    } while (*pcVar3 != '\0');
+      pcVar2 = Com_ParseOnLine(&scrAnimGlob.pos);
+    } while (*pcVar2 != '\0');
   }
-  __restgprlr_24(uVar5);
-  return;
+  iVar3 = __restgprlr_24(uVar4);
+  return iVar3;
 }
 
 
 // 8251C6A8  Scr_EmitAnimationInternal  (script/scr_animtree.cpp:156)
 
-void Scr_EmitAnimationInternal(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void Scr_EmitAnimationInternal(char *param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  undefined4 *puVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined4 *puVar4;
-  undefined4 *local_30;
+  VariableUnion VVar1;
+  uint uVar2;
+  VariableUnion *pVVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  VariableUnion local_30;
   undefined4 local_2c;
   
-  puVar3 = (undefined4 *)__savegprlr_29();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8209b258,0xa1);
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  VVar1.intValue = __savegprlr_29(param_1,lVar4,uVar5,param_4);
+  uVar6 = (uint)uVar5;
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0xa1,
+                    uVar6,"%s");
   }
-  uVar1 = FindVariable(param_3,param_2);
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar2 = GetNewVariable(param_3,param_2);
-    *puVar3 = 0;
+  uVar2 = FindVariable(uVar6,(uint)lVar4);
+  if (uVar2 == 0) {
+    uVar2 = GetNewVariable(uVar6,(uint)lVar4);
+    *VVar1.vectorValue = 0.0;
     local_2c = 7;
-    local_30 = puVar3;
-    SetVariableValue(param_3,uVar2,&local_30);
+    local_30.intValue = VVar1.intValue;
+    SetVariableValue(uVar6,uVar2,(VariableValue *)&local_30);
     __restgprlr_29();
     return;
   }
-  puVar4 = (undefined4 *)GetVariableValueAddress(param_3,uVar1);
-  *puVar3 = *puVar4;
-  *puVar4 = puVar3;
+  pVVar3 = GetVariableValueAddress(uVar6,uVar2);
+  *VVar1.vectorValue = (float)*(float **)pVVar3;
+  pVVar3->vectorValue = (float *)VVar1;
   __restgprlr_29();
   return;
 }
@@ -125,202 +134,210 @@ void Scr_EmitAnimationInternal(undefined8 param_1,undefined8 param_2,ulonglong p
 
 // 8251C750  Scr_EmitAnimation  (script/scr_animtree.cpp:188)
 
-void Scr_EmitAnimation(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Scr_EmitAnimation(char *param_1,uint param_2,uint param_3)
 
 {
-  if (DAT_83700ba0 == 0) {
-    CompileError(param_3,0xffffffff8209b29c);
+  uint in_r6;
+  
+  if (scrAnimPub.animTreeNames == 0) {
+    CompileError(param_3,"#using_animtree was not specified");
     return;
   }
-  Scr_EmitAnimationInternal(param_1,param_2,DAT_83700ba0);
+  Scr_EmitAnimationInternal(param_1,param_2,scrAnimPub.animTreeNames,in_r6);
   return;
 }
 
 
 // 8251C780  AnimTreeParseInternal  (script/scr_animtree.cpp:201)
 
-void AnimTreeParseInternal
-               (undefined8 param_1,undefined4 param_2,char param_3,char param_4,char param_5)
+bool AnimTreeParseInternal(uint param_1,uint param_2,bool param_3,bool param_4,bool param_5)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  char *pcVar5;
-  char cVar8;
-  int iVar6;
-  longlong lVar3;
-  uint uVar7;
-  undefined8 uVar4;
-  undefined8 uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  uint local_a0;
+  char *pcVar2;
+  bool bVar8;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  char *pcVar6;
+  VariableUnion VVar7;
+  undefined1 uVar9;
+  uint uStack0000001c;
+  char cStack00000027;
+  char cStack0000002f;
+  char cStack00000037;
+  VariableUnion local_a0;
   undefined4 local_9c;
   
-  uVar2 = __savegprlr();
+  __savegprlr();
   local_9c = 6;
-  uVar10 = 0;
-  uVar11 = 0;
-  uVar7 = 0;
+  uVar3 = 0;
+  uVar4 = 0;
+  VVar7.intValue = 0;
   bVar1 = false;
-  pcVar5 = (char *)Com_Parse(0xffffffff8370098c);
+  uStack0000001c = param_2;
+  cStack00000027 = param_3;
+  cStack0000002f = param_4;
+  cStack00000037 = param_5;
+  pcVar2 = Com_Parse(&scrAnimGlob.pos);
   do {
-    if (DAT_8370098c == 0) {
-      uVar4 = 1;
+    if (scrAnimGlob.pos == (char *)0x0) {
+      uVar9 = 1;
 LAB_8251cbd8:
       if (bVar1) {
-        RemoveVariable(uVar2,uVar10);
+        RemoveVariable(param_1,uVar3);
       }
-      if ((uVar10 & 0xffffffff) != 0) {
-        SL_RemoveRefToString(uVar10);
+      if (uVar3 != 0) {
+        SL_RemoveRefToString(uVar3);
       }
-      if ((param_3 != '\0') && (iVar6 = GetArraySize(uVar2), iVar6 == 0)) {
-        if (param_4 == '\0') {
-          uVar9 = 0xffffffff8202a4c4;
+      if ((cStack00000027 != '\0') && (uVar3 = GetArraySize(param_1), uVar3 == 0)) {
+        if (cStack0000002f == '\0') {
+          pcVar2 = "void";
         }
         else {
-          uVar9 = 0xffffffff8209b2c0;
+          pcVar2 = "void_loop";
         }
-        uVar9 = SL_GetString_(uVar9,0,4);
-        GetVariable(uVar2,uVar9);
-        SL_RemoveRefToString(uVar9);
+        uVar3 = SL_GetString_(pcVar2,0,4);
+        GetVariable(param_1,uVar3);
+        SL_RemoveRefToString(uVar3);
       }
-      __restgprlr(uVar4);
-      return;
+      __restgprlr();
+      return (bool)uVar9;
     }
-    cVar8 = Scr_IsIdentifier(pcVar5);
-    if (cVar8 == '\0') {
-LAB_8251c9c4:
-      if (*pcVar5 == '{') {
-        if (pcVar5[1] != '\0') {
-          lVar3 = Com_GetLastTokenPos();
-          Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b320);
-        }
-        pcVar5 = (char *)Com_ParseOnLine(0xffffffff8370098c);
-        if (*pcVar5 != '\0') {
-          lVar3 = Com_GetLastTokenPos();
-          Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b364);
-        }
-        if ((uVar11 & 0xffffffff) == 0) {
-          lVar3 = Com_GetLastTokenPos();
-          Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b380);
-        }
-        uVar4 = GetArray(uVar2,uVar11);
-        if ((param_5 == '\0') && (((uVar7 & 8) == 0 || (bVar1)))) {
-          uVar9 = 0;
-        }
-        else {
-          uVar9 = 1;
-        }
-        cVar8 = AnimTreeParseInternal(uVar4,param_2,!bVar1,uVar7 & 1,uVar9);
-        if (cVar8 != '\0') {
-          lVar3 = Com_GetLastTokenPos();
-          Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b3a8);
-        }
-        iVar6 = GetArraySize(uVar4);
-        if (iVar6 == 0) {
-          if (!bVar1) {
-            MyAssertHandler(0xffffffff8209b258,0x11a,0,0xffffffff82000f98,0xffffffff8209b3c0);
-          }
-          RemoveVariable(uVar2,uVar10);
-          uVar11 = 0;
-          bVar1 = false;
-        }
-        else {
-          local_a0 = uVar7;
-          uVar9 = GetArrayVariable(uVar4,0);
-          SetVariableValue(uVar4,uVar9,&local_a0);
-          uVar11 = 0;
-          bVar1 = false;
-        }
-      }
-      else {
-        if (*pcVar5 == '}') {
-          if (pcVar5[1] != '\0') {
-            AnimTreeCompileError(0xffffffff8209b320);
-          }
-          pcVar5 = (char *)Com_ParseOnLine(0xffffffff8370098c);
-          if (*pcVar5 != '\0') {
-            AnimTreeCompileError(0xffffffff8209b2cc);
-          }
-          uVar4 = 0;
-          goto LAB_8251cbd8;
-        }
-        lVar3 = Com_GetLastTokenPos();
-        Com_EndParseSession();
-        CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b320);
-      }
-    }
-    else {
+    bVar8 = Scr_IsIdentifier(pcVar2);
+    if (bVar8) {
       if (bVar1) {
-        RemoveVariable(uVar2,uVar10);
+        RemoveVariable(param_1,uVar3);
       }
-      if ((uVar10 & 0xffffffff) != 0) {
-        SL_RemoveRefToString(uVar10);
+      if (uVar3 != 0) {
+        SL_RemoveRefToString(uVar3);
       }
-      uVar10 = SL_GetLowercaseString_(pcVar5,0,4);
-      iVar6 = FindVariable(uVar2,uVar10);
-      if (iVar6 != 0) {
-        lVar3 = Com_GetLastTokenPos();
+      uVar3 = SL_GetLowercaseString_(pcVar2,0,4);
+      uVar4 = FindVariable(param_1,uVar3);
+      if (uVar4 != 0) {
+        pcVar2 = Com_GetLastTokenPos();
         Com_EndParseSession();
-        CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b2e8);
+        CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
       }
-      uVar11 = GetVariable(uVar2,uVar10);
-      if (((param_5 != '\0') || (iVar6 = FindVariable(param_2,uVar10), iVar6 != 0)) ||
-         (bVar1 = true, DAT_83700b90 != 0)) {
+      uVar4 = GetVariable(param_1,uVar3);
+      if (((cStack00000037 != '\0') || (uVar5 = FindVariable(uStack0000001c,uVar3), uVar5 != 0)) ||
+         (bVar1 = true, scrAnimGlob.bAnimCheck != 0)) {
         bVar1 = false;
       }
-      uVar7 = 0;
-      pcVar5 = (char *)Com_ParseOnLine(0xffffffff8370098c);
-      if (*pcVar5 != '\0') {
-        cVar8 = Scr_IsIdentifier();
-        if (cVar8 != '\0') {
-          lVar3 = Com_GetLastTokenPos();
+      VVar7.intValue = 0;
+      pcVar2 = Com_ParseOnLine(&scrAnimGlob.pos);
+      if (*pcVar2 != '\0') {
+        bVar8 = Scr_IsIdentifier(pcVar2);
+        if (bVar8) {
+          pcVar6 = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b2fc);
+          CompileError((int)pcVar6 - (int)scrAnimGlob.start,"%s");
         }
-        if ((*pcVar5 != ':') || (pcVar5[1] != '\0')) {
-          lVar3 = Com_GetLastTokenPos();
+        if ((*pcVar2 != ':') || (pcVar2[1] != '\0')) {
+          pcVar2 = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b320);
+          CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
         }
-        uVar7 = GetAnimTreeParseProperties();
-        pcVar5 = (char *)Com_Parse(0xffffffff8370098c);
-        if ((*pcVar5 != '{') || (pcVar5[1] != '\0')) {
-          lVar3 = Com_GetLastTokenPos();
+        VVar7.intValue = GetAnimTreeParseProperties();
+        pcVar2 = Com_Parse(&scrAnimGlob.pos);
+        if ((*pcVar2 != '{') || (pcVar2[1] != '\0')) {
+          pcVar6 = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(lVar3 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b32c);
+          CompileError((int)pcVar6 - (int)scrAnimGlob.start,"%s");
         }
         goto LAB_8251c9c4;
       }
     }
-    pcVar5 = (char *)Com_Parse(0xffffffff8370098c);
+    else {
+LAB_8251c9c4:
+      if (*pcVar2 == '{') {
+        if (pcVar2[1] != '\0') {
+          pcVar2 = Com_GetLastTokenPos();
+          Com_EndParseSession();
+          CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
+        }
+        pcVar2 = Com_ParseOnLine(&scrAnimGlob.pos);
+        if (*pcVar2 != '\0') {
+          pcVar2 = Com_GetLastTokenPos();
+          Com_EndParseSession();
+          CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
+        }
+        if (uVar4 == 0) {
+          pcVar2 = Com_GetLastTokenPos();
+          Com_EndParseSession();
+          CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
+        }
+        uVar4 = GetArray(param_1,uVar4);
+        if ((cStack00000037 == '\0') && (((VVar7.uintValue & 8) == 0 || (bVar1)))) {
+          bVar8 = false;
+        }
+        else {
+          bVar8 = true;
+        }
+        bVar8 = AnimTreeParseInternal
+                          (uVar4,uStack0000001c,!bVar1,(bool)((byte)VVar7.uintValue & 1),bVar8);
+        if (bVar8) {
+          pcVar2 = Com_GetLastTokenPos();
+          Com_EndParseSession();
+          CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
+        }
+        uVar5 = GetArraySize(uVar4);
+        if (uVar5 == 0) {
+          if (!bVar1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp"
+                            ,0x11a,0,"%s");
+          }
+          RemoveVariable(param_1,uVar3);
+          uVar4 = 0;
+          bVar1 = false;
+        }
+        else {
+          local_a0 = VVar7;
+          uVar5 = GetArrayVariable(uVar4,0);
+          SetVariableValue(uVar4,uVar5,(VariableValue *)&local_a0);
+          uVar4 = 0;
+          bVar1 = false;
+        }
+      }
+      else {
+        if (*pcVar2 == '}') {
+          if (pcVar2[1] != '\0') {
+            AnimTreeCompileError("bad token");
+          }
+          pcVar2 = Com_ParseOnLine(&scrAnimGlob.pos);
+          if (*pcVar2 != '\0') {
+            AnimTreeCompileError("token not allowed after \'}\'");
+          }
+          uVar9 = 0;
+          goto LAB_8251cbd8;
+        }
+        pcVar2 = Com_GetLastTokenPos();
+        Com_EndParseSession();
+        CompileError((int)pcVar2 - (int)scrAnimGlob.start,"%s");
+      }
+    }
+    pcVar2 = Com_Parse(&scrAnimGlob.pos);
   } while( true );
 }
 
 
 // 8251CC70  Scr_AnimTreeParse  (script/scr_animtree.cpp:328)
 
-void Scr_AnimTreeParse(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Scr_AnimTreeParse(char *param_1,uint param_2,uint param_3)
 
 {
-  uint uVar2;
-  char cVar3;
-  longlong lVar1;
+  char *pcVar1;
+  bool bVar2;
   
-  uVar2 = __savegprlr_28();
-  Com_BeginParseSession(0xffffffff8209b3c8);
-  DAT_83700988 = uVar2;
-  DAT_8370098c = uVar2;
-  cVar3 = AnimTreeParseInternal(param_2,param_3,1,0,0);
-  if (cVar3 == '\0') {
-    lVar1 = Com_GetLastTokenPos();
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  Com_BeginParseSession("Scr_AnimTreeParse");
+  scrAnimGlob.start = pcVar1;
+  scrAnimGlob.pos = pcVar1;
+  bVar2 = AnimTreeParseInternal(param_2,param_3,true,false,false);
+  if (!bVar2) {
+    pcVar1 = Com_GetLastTokenPos();
     Com_EndParseSession();
-    CompileError(lVar1 - (ulonglong)DAT_83700988,0xffffffff82000f98,0xffffffff8209b320);
+    CompileError((int)pcVar1 - (int)scrAnimGlob.start,"%s");
   }
   Com_EndParseSession();
   __restgprlr_28();
@@ -330,78 +347,80 @@ void Scr_AnimTreeParse(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 8251CD00  Scr_GetAnimTreeSize  (script/scr_animtree.cpp:353)
 
-void Scr_GetAnimTreeSize(void)
+int Scr_GetAnimTreeSize(uint param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   int iVar5;
-  longlong lVar3;
-  longlong lVar6;
+  longlong lVar1;
+  uint uVar6;
   longlong lVar7;
   
-  uVar1 = __savegprlr_27();
+  uVar2 = __savegprlr_27(param_1);
   lVar7 = 0;
-  lVar6 = (longlong)(int)((uint)uVar1 & 1) * 0xc800;
-  uVar2 = FindFirstSibling();
-  if ((uVar2 & 0xffffffff) != 0) {
+  uVar6 = (uVar2 & 1) * 0xc800;
+  uVar3 = FindFirstSibling(uVar2);
+  if (uVar3 != 0) {
     do {
-      uVar4 = GetSiblingName(lVar6,uVar2);
+      uVar4 = GetSiblingName(uVar6,uVar3);
       if (uVar4 < 0x10000) {
-        iVar5 = GetValueType(lVar6,uVar2);
+        iVar5 = GetValueType(uVar6,uVar3);
         if (iVar5 == 1) {
-          FindObject(uVar1,uVar2);
-          lVar3 = Scr_GetAnimTreeSize();
-          lVar7 = lVar3 + lVar7;
+          uVar4 = FindObject(uVar2,uVar3);
+          iVar5 = Scr_GetAnimTreeSize(uVar4);
+          lVar7 = iVar5 + lVar7;
         }
         else {
           lVar7 = lVar7 + 1;
         }
       }
-      uVar2 = FindNextSibling(lVar6,uVar2);
-    } while ((uVar2 & 0xffffffff) != 0);
-    lVar6 = lVar7 + 1;
+      uVar3 = FindNextSibling(uVar6,uVar3);
+    } while (uVar3 != 0);
+    lVar1 = lVar7 + 1;
     if ((int)lVar7 != 0) goto LAB_8251cda4;
   }
-  lVar6 = lVar7;
+  lVar1 = lVar7;
 LAB_8251cda4:
-  __restgprlr_27(lVar6);
-  return;
+  iVar5 = __restgprlr_27(lVar1);
+  return iVar5;
 }
 
 
 // 8251CDB0  ConnectScriptToAnim  (script/scr_animtree.cpp:388)
 
-void ConnectScriptToAnim(undefined8 param_1,undefined2 param_2,undefined8 param_3,undefined8 param_4
-                        ,undefined2 param_5)
+void ConnectScriptToAnim(uint param_1,int param_2,uint param_3,uint param_4,int param_5)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  int *piVar6;
-  undefined8 uVar5;
+  VariableStackBuffer *pVVar1;
+  VariableStackBuffer *pVVar2;
+  uint uVar3;
+  uint uVar4;
+  VariableUnion *pVVar5;
+  undefined2 uVar6;
+  undefined2 uVar7;
   undefined4 local_40;
   
-  uVar3 = __savegprlr_27();
+  uVar7 = (undefined2)param_5;
+  uVar6 = (undefined2)param_2;
+  uVar3 = __savegprlr_27(param_1);
   uVar4 = FindVariable(uVar3,param_4);
-  if ((uVar4 & 0xffffffff) != 0) {
-    piVar6 = (int *)GetVariableValueAddress(uVar3,uVar4);
-    if (*piVar6 == 0) {
-      uVar3 = SL_ConvertToString(param_3);
-      uVar5 = SL_ConvertToString(param_4);
-      Com_Error(1,0xffffffff8209b3dc,uVar5,uVar3);
+  if (uVar4 != 0) {
+    pVVar5 = GetVariableValueAddress(uVar3,uVar4);
+    if (pVVar5->intValue == 0) {
+      SL_ConvertToString(param_3);
+      SL_ConvertToString(param_4);
+      Com_Error(ERR_DROP,"\x15duplicate animation \'%s\' in \'animtrees/%s.atr\'");
     }
-    local_40 = CONCAT22(param_2,param_5);
-    puVar2 = (undefined4 *)*piVar6;
-    while (puVar2 != (undefined4 *)0x0) {
-      puVar1 = (undefined4 *)*puVar2;
-      *puVar2 = local_40;
-      puVar2 = puVar1;
+    local_40 = (char *)CONCAT22(uVar6,uVar7);
+    pVVar2 = pVVar5->stackValue;
+    while (pVVar2 != (VariableStackBuffer *)0x0) {
+      pVVar1 = (VariableStackBuffer *)pVVar2->pos;
+      pVVar2->pos = local_40;
+      pVVar2 = pVVar1;
     }
-    *piVar6 = 0;
+    pVVar5->intValue = 0;
   }
   __restgprlr_27();
   return;
@@ -410,132 +429,150 @@ void ConnectScriptToAnim(undefined8 param_1,undefined2 param_2,undefined8 param_
 
 // 8251CE68  Scr_GetAnimsIndex  (script/scr_animtree.cpp:441)
 
-void Scr_GetAnimsIndex(int param_1)
+int Scr_GetAnimsIndex(XAnim_s *param_1)
 
 {
   ulonglong uVar1;
-  int *piVar2;
+  scr_animtree_t *psVar2;
   
-  uVar1 = (ulonglong)DAT_83700fa8;
-  if (DAT_83700fa8 == 0) {
-    return;
+  uVar1 = (ulonglong)scrAnimPub.xanim_num[1];
+  if (scrAnimPub.xanim_num[1] == 0) {
+    return 0;
   }
-  piVar2 = &DAT_83700da4 + DAT_83700fa8;
+  psVar2 = scrAnimPub.xanim_lookup[1] + scrAnimPub.xanim_num[1];
   do {
-    if (*piVar2 == param_1) {
-      return;
+    if (psVar2->anims == param_1) {
+      return (int)uVar1;
     }
     uVar1 = uVar1 - 1;
-    piVar2 = piVar2 + -1;
+    psVar2 = psVar2 + -1;
   } while (uVar1 != 0);
-  return;
+  return 0;
 }
 
 
 // 8251CEA8  Scr_GetAnims  (script/scr_animtree.cpp:456)
 
-undefined4 Scr_GetAnims(uint param_1)
+XAnim_s * Scr_GetAnims(uint param_1)
 
 {
-  if ((param_1 == 0) || (DAT_83700fa8 < param_1)) {
-    MyAssertHandler(0xffffffff8209b258,0x1c9,0,0xffffffff8209b410,param_1,1);
+  if ((param_1 == 0) || (scrAnimPub.xanim_num[1] < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x1c9
+                    ,0,
+                    "index not in [1, scrAnimPub.xanim_num[SCR_XANIM_SERVER]]\n\t%i not in [%i, %i]"
+                   );
   }
-  return (&DAT_83700da4)[param_1];
+  return scrAnimPub.xanim_lookup[1][param_1].anims;
 }
 
 
 // 8251CF28  Scr_CreateAnimationTree  (script/scr_animtree.cpp:468)
 
-void Scr_CreateAnimationTree
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,ulonglong param_6,undefined8 param_7,undefined8 param_8)
+int Scr_CreateAnimationTree
+              (uint param_1,uint param_2,XAnim_s *param_3,uint param_4,char *param_5,uint param_6,
+              uint param_7,int param_8,ushort param_9,int param_10)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  uint uVar7;
-  ulonglong uVar3;
-  int iVar8;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  uint *puVar9;
-  undefined8 uVar6;
-  longlong lVar10;
-  longlong lVar11;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  VariableUnion *pVVar7;
+  char *pcVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  uint uVar11;
   ulonglong uVar12;
+  longlong lVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
   ushort in_stack_00000056;
   int in_stack_0000005c;
+  ushort in_stack_ffffff0a;
+  int in_stack_ffffff0c;
   
-  uVar1 = __savegprlr();
-  uVar12 = 0;
-  lVar10 = (longlong)(int)((uint)uVar1 & 1) * 0xc800;
-  for (uVar2 = FindFirstSibling(); (uVar2 & 0xffffffff) != 0; uVar2 = FindNextSibling(lVar10,uVar2))
-  {
-    uVar7 = GetSiblingName(lVar10,uVar2);
-    if (uVar7 < 0x10000) {
-      uVar12 = uVar12 + 1;
+  uVar12 = (ulonglong)(int)param_6;
+  uVar15 = (ulonglong)(int)param_4;
+  __savegprlr();
+  uVar14 = 0;
+  uVar11 = (param_1 & 1) * 0xc800;
+  for (uVar1 = FindFirstSibling(param_1); uVar1 != 0; uVar1 = FindNextSibling(uVar11,uVar1)) {
+    uVar2 = GetSiblingName(uVar11,uVar1);
+    if (uVar2 < 0x10000) {
+      uVar14 = uVar14 + 1;
     }
   }
-  if ((param_6 & 0xffffffff) != (param_6 & 0xffff)) {
-    MyAssertHandler(0xffffffff8209b258,0x1e9,0,0xffffffff82000f98,0xffffffff8209b4ac);
-  }
-  if ((param_4 & 0xffffffff) != (param_4 & 0xffff)) {
-    MyAssertHandler(0xffffffff8209b258,0x1ea,0,0xffffffff82000f98,0xffffffff8209b480);
-  }
   if ((uVar12 & 0xffffffff) != (uVar12 & 0xffff)) {
-    MyAssertHandler(0xffffffff8209b258,0x1eb,0,0xffffffff82000f98,0xffffffff8209b460);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x1e9
+                    ,0,"%s");
+  }
+  if ((uVar15 & 0xffffffff) != (uVar15 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x1ea
+                    ,0,"%s");
+  }
+  if ((uVar14 & 0xffffffff) != (uVar14 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x1eb
+                    ,0,"%s");
   }
   if (in_stack_0000005c == 1) {
-    uVar2 = (((ulonglong)DAT_83c4bae4 & 0x7ffffff) * 0x20 - (ulonglong)DAT_83c4bae4) + param_6;
-    uVar2 = ((uVar2 & 0x7ffffff) * 0x20 - uVar2) + param_4;
-    uVar2 = ((uVar2 & 0x7ffffff) * 0x20 - uVar2) + uVar12;
-    DAT_83c4bae4 = ((int)((uVar2 & 0xffffffff) << 5) - (int)uVar2) + (uint)in_stack_00000056;
+    uVar10 = (((ulonglong)scrVarPub.checksum & 0x7ffffff) * 0x20 - (ulonglong)scrVarPub.checksum) +
+             uVar12;
+    uVar10 = ((uVar10 & 0x7ffffff) * 0x20 - uVar10) + uVar15;
+    uVar10 = ((uVar10 & 0x7ffffff) * 0x20 - uVar10) + uVar14;
+    scrVarPub.checksum = ((int)((uVar10 & 0xffffffff) << 5) - (int)uVar10) + (uint)in_stack_00000056
+    ;
   }
-  XAnimBlend(param_3,param_6,param_5,param_4,uVar12,in_stack_00000056,1);
-  uVar2 = 0;
-  lVar11 = uVar12 + param_4;
+  XAnimBlend(param_3,(uint)uVar12,param_5,(uint)uVar15,(uint)uVar14,(uint)in_stack_00000056,true);
+  uVar12 = 0;
+  lVar13 = uVar14 + uVar15;
   do {
-    for (uVar12 = FindFirstSibling(uVar1); (uVar12 & 0xffffffff) != 0;
-        uVar12 = FindNextSibling(lVar10,uVar12)) {
-      uVar3 = GetSiblingName(lVar10,uVar12);
-      if ((uVar3 & 0xffffffff) < 0x10000) {
-        iVar8 = GetValueType(lVar10,uVar12);
-        if (iVar8 == 1) {
-          uVar4 = FindObject(uVar1,uVar12);
-          uVar5 = FindArrayVariable(uVar4,0);
-          if ((uVar5 & 0xffffffff) == 0) {
-            uVar5 = 0;
+    for (uVar1 = FindFirstSibling(param_1); uVar2 = (uint)lVar13, uVar1 != 0;
+        uVar1 = FindNextSibling(uVar11,uVar1)) {
+      uVar3 = GetSiblingName(uVar11,uVar1);
+      if (uVar3 < 0x10000) {
+        iVar4 = GetValueType(uVar11,uVar1);
+        uVar9 = (uint)uVar15;
+        if (iVar4 == 1) {
+          uVar5 = FindObject(param_1,uVar1);
+          uVar6 = FindArrayVariable(uVar5,0);
+          if (uVar6 == 0) {
+            uVar14 = 0;
           }
           else {
-            puVar9 = (uint *)GetVariableValueAddress(uVar4,uVar5);
-            uVar5 = (ulonglong)*puVar9;
+            pVVar7 = GetVariableValueAddress(uVar5,uVar6);
+            uVar14 = (ulonglong)pVVar7->uintValue;
           }
-          if ((uVar5 >> 4 & 1) == (uVar2 & 0xffffffff)) {
-            uVar6 = SL_ConvertToString(uVar3);
-            lVar11 = Scr_CreateAnimationTree
-                               (uVar4,param_2,param_3,lVar11,uVar6,param_4,param_7,param_8);
+          if ((uVar14 >> 4 & 1) == (uVar12 & 0xffffffff)) {
+            pcVar8 = SL_ConvertToString(uVar3);
+            iVar4 = Scr_CreateAnimationTree
+                              (uVar5,param_2,param_3,uVar2,pcVar8,uVar9,param_7,param_8,
+                               in_stack_ffffff0a,in_stack_ffffff0c);
+            lVar13 = (longlong)iVar4;
 LAB_8251d1e0:
-            ConnectScriptToAnim(param_2,param_4,param_7,uVar3 & 0xffff,param_8);
-            param_4 = param_4 + 1;
+            ConnectScriptToAnim(param_2,uVar9,param_7,uVar3 & 0xffff,param_8);
+            uVar15 = uVar15 + 1;
           }
         }
-        else if ((uVar2 & 0xffffffff) == 0) {
-          if ((param_4 & 0xffffffff) != (param_4 & 0xffff)) {
-            MyAssertHandler(0xffffffff8209b258,0x21d,0,0xffffffff82000f98,0xffffffff8209b4ac);
+        else if ((uVar12 & 0xffffffff) == 0) {
+          if ((uVar15 & 0xffffffff) != (uVar15 & 0xffff)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp"
+                            ,0x21d,0,"%s");
           }
           if (in_stack_0000005c == 1) {
-            DAT_83c4bae4 = DAT_83c4bae4 * 0x1f + (int)param_4;
+            scrVarPub.checksum = scrVarPub.checksum * 0x1f + uVar9;
           }
-          uVar4 = SL_ConvertToString(uVar3);
-          XAnimCreate(param_3,param_4,uVar4,1);
+          pcVar8 = SL_ConvertToString(uVar3);
+          XAnimCreate(param_3,uVar9,pcVar8,true);
           goto LAB_8251d1e0;
         }
       }
     }
-    uVar2 = uVar2 + 1;
-    if (1 < (uVar2 & 0xffffffff)) {
-      __restgprlr(lVar11);
-      return;
+    uVar12 = uVar12 + 1;
+    if (1 < (uVar12 & 0xffffffff)) {
+      __restgprlr();
+      return uVar2;
     }
   } while( true );
 }
@@ -543,37 +580,35 @@ LAB_8251d1e0:
 
 // 8251D230  Scr_CheckAnimsDefined  (script/scr_animtree.cpp:571)
 
-void Scr_CheckAnimsDefined(undefined8 param_1,undefined8 param_2)
+void Scr_CheckAnimsDefined(uint param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int *piVar6;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  int iVar7;
-  longlong lVar8;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  VariableUnion *pVVar4;
+  int iVar5;
+  uint uVar6;
   
-  uVar1 = __savegprlr_19();
-  lVar8 = (longlong)(int)((uint)uVar1 & 1) * 0xc800;
-  for (uVar2 = FindFirstSibling(); (uVar2 & 0xffffffff) != 0; uVar2 = FindNextSibling(lVar8,uVar2))
-  {
-    uVar3 = GetSiblingName(lVar8,uVar2);
-    if (0xffff < (uVar3 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8209b258,0x247,0,0xffffffff82000f98,0xffffffff8209b4d8);
+  uVar1 = __savegprlr_19(param_1);
+  uVar6 = (uVar1 & 1) * 0xc800;
+  for (uVar2 = FindFirstSibling(uVar1); uVar2 != 0; uVar2 = FindNextSibling(uVar6,uVar2)) {
+    uVar3 = GetSiblingName(uVar6,uVar2);
+    if (0xffff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x247,0,"%s");
     }
-    piVar6 = (int *)GetVariableValueAddress(uVar1,uVar2);
-    if (*piVar6 != 0) {
-      uVar4 = SL_ConvertToString(param_2);
-      uVar5 = SL_ConvertToString(uVar3);
-      uVar4 = va(0xffffffff8209b4f4,uVar5,uVar4);
-      iVar7 = Scr_IsInOpcodeMemory(*piVar6);
-      if (iVar7 == 0) {
-        Com_Error(1,0xffffffff8200334c,uVar4);
+    pVVar4 = GetVariableValueAddress(uVar1,uVar2);
+    if (pVVar4->intValue != 0) {
+      SL_ConvertToString(param_2);
+      SL_ConvertToString(uVar3);
+      va("animation \'%s\' not defined in anim tree \'%s\'");
+      iVar5 = Scr_IsInOpcodeMemory(pVVar4->codePosValue);
+      if (iVar5 == 0) {
+        Com_Error(ERR_DROP,"\x15%s");
       }
       else {
-        CompileError2(*piVar6,0xffffffff82000f98);
+        CompileError2(pVVar4->codePosValue,"%s");
       }
     }
   }
@@ -584,88 +619,95 @@ void Scr_CheckAnimsDefined(undefined8 param_1,undefined8 param_2)
 
 // 8251D358  Scr_UsingTreeInternal  (script/scr_animtree.cpp:632)
 
-void Scr_UsingTreeInternal(undefined8 param_1,uint *param_2,ulonglong param_3)
+uint Scr_UsingTreeInternal(char *param_1,uint *param_2,int param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  char cVar7;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  int iVar6;
+  char *pcVar2;
+  bool bVar6;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  ulonglong uVar7;
   longlong lVar8;
   uint uVar9;
   
-  uVar2 = __savegprlr_23();
-  if (DAT_83700fb0 == '\0') {
-    MyAssertHandler(0xffffffff8209b258,0x280,0,0xffffffff82000f98,0xffffffff8209b5a4);
+  uVar7 = (ulonglong)param_3;
+  pcVar2 = (char *)__savegprlr_23(param_1);
+  if (scrAnimPub.animtree_loading == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x280
+                    ,0,"%s");
   }
-  cVar7 = Scr_IsIdentifier(uVar2);
-  if (cVar7 == '\0') {
-    MyAssertHandler(0xffffffff8209b258,0x281,0,0xffffffff82000f98,0xffffffff8209b584);
+  bVar6 = Scr_IsIdentifier(pcVar2);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x281
+                    ,0,"%s");
   }
-  uVar2 = Scr_CreateCanonicalFilename(uVar2);
-  uVar3 = FindVariable(DAT_83700b98,uVar2);
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar4 = GetNewVariable(DAT_83700b98,uVar2);
-    uVar5 = Scr_GetObject2(DAT_83700b98,uVar4);
-    iVar1 = (int)((param_3 & 0x3fffffff) << 2);
-    iVar6 = *(int *)(&DAT_83700fa4 + iVar1);
-    *(uint *)(&DAT_83700fa4 + iVar1) = iVar6 + 1U;
-    if (0x7f < iVar6 + 1U) {
-      MyAssertHandler(0xffffffff8209b258,0x299,0,0xffffffff82000f98,0xffffffff8209b554);
+  uVar3 = Scr_CreateCanonicalFilename(pcVar2);
+  uVar4 = FindVariable(scrAnimPub.animtrees,uVar3);
+  if (uVar4 == 0) {
+    uVar4 = GetNewVariable(scrAnimPub.animtrees,uVar3);
+    uVar5 = Scr_GetObject2(scrAnimPub.animtrees,uVar4);
+    iVar1 = (int)((uVar7 & 0x3fffffff) << 2);
+    uVar9 = *(int *)((int)scrAnimPub.xanim_num + iVar1) + 1;
+    *(uint *)((int)scrAnimPub.xanim_num + iVar1) = uVar9;
+    if (0x7f < uVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x299,0,"%s");
     }
-    *param_2 = *(uint *)(&DAT_83700fa4 + iVar1);
-    *(short *)(&DAT_83700990 +
-              (int)(((param_3 & 0x1ffffff) * 0x80 + (ulonglong)*(uint *)(&DAT_83700fa4 + iVar1) &
-                    0xffffffff) << 1)) = (short)uVar4;
+    *param_2 = *(uint *)((int)scrAnimPub.xanim_num + iVar1);
+    *(short *)((int)scrAnimGlob.using_xanim_lookup[0] +
+              (int)(((uVar7 & 0x1ffffff) * 0x80 +
+                     (ulonglong)*(uint *)((int)scrAnimPub.xanim_num + iVar1) & 0xffffffff) << 1)) =
+         (short)uVar4;
   }
   else {
-    uVar5 = FindObject(DAT_83700b98,uVar3);
-    iVar6 = (int)((param_3 & 0xffffffff) << 2);
+    uVar5 = FindObject(scrAnimPub.animtrees,uVar4);
+    iVar1 = (int)((uVar7 & 0xffffffff) << 2);
     *param_2 = 0;
     uVar9 = 1;
-    if (*(int *)(&DAT_83700fa4 + iVar6) != 0) {
-      lVar8 = (param_3 & 0xffffff) * 0x100 + -0x7c8ff66e;
+    if (*(int *)((int)scrAnimPub.xanim_num + iVar1) != 0) {
+      lVar8 = (uVar7 & 0xffffff) * 0x100 + -0x7c8ff66e;
       do {
-        if ((ulonglong)*(ushort *)lVar8 == (uVar3 & 0xffffffff)) {
+        if (*(ushort *)lVar8 == uVar4) {
           *param_2 = uVar9;
           if (uVar9 != 0) goto LAB_8251d520;
           break;
         }
         uVar9 = uVar9 + 1;
         lVar8 = lVar8 + 2;
-      } while (uVar9 <= *(uint *)(&DAT_83700fa4 + iVar6));
+      } while (uVar9 <= *(uint *)((int)scrAnimPub.xanim_num + iVar1));
     }
-    MyAssertHandler(0xffffffff8209b258,0x2b6,0,0xffffffff82000f98,0xffffffff8209b54c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x2b6
+                    ,0,"%s");
   }
 LAB_8251d520:
-  iVar6 = FindVariable(uVar5,1);
-  if (iVar6 != 0) {
-    MyAssertHandler(0xffffffff8209b258,0x2b9,0,0xffffffff82000f98,0xffffffff8209b524);
+  uVar4 = FindVariable(uVar5,1);
+  if (uVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x2b9
+                    ,0,"%s");
   }
   uVar4 = GetVariable(uVar5,0);
-  uVar5 = GetArray(uVar5,uVar4);
-  SL_RemoveRefToString(uVar2);
-  __restgprlr_23(uVar5);
-  return;
+  uVar4 = GetArray(uVar5,uVar4);
+  SL_RemoveRefToString(uVar3);
+  uVar3 = __restgprlr_23(uVar4);
+  return uVar3;
 }
 
 
 // 8251D580  Scr_UsingTree  (script/scr_animtree.cpp:710)
 
-void Scr_UsingTree(undefined8 param_1,undefined8 param_2)
+void Scr_UsingTree(char *param_1,uint param_2)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Scr_IsIdentifier();
-  if (cVar1 == '\0') {
-    CompileError(param_2,0xffffffff8209b5c0);
+  bVar1 = Scr_IsIdentifier(param_1);
+  if (bVar1) {
+    scrAnimPub.animTreeNames = Scr_UsingTreeInternal(param_1,&scrAnimPub.animTreeIndex,1);
   }
   else {
-    DAT_83700ba0 = Scr_UsingTreeInternal(param_1,0xffffffff83700fac,1);
+    CompileError(param_2,"bad anim tree name");
   }
   return;
 }
@@ -673,132 +715,148 @@ void Scr_UsingTree(undefined8 param_1,undefined8 param_2)
 
 // 8251D5F8  Scr_LoadAnimTreeInternal  (script/scr_animtree.cpp:722)
 
-void Scr_LoadAnimTreeInternal(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+bool Scr_LoadAnimTreeInternal(char *param_1,uint param_2,uint param_3)
 
 {
   char cVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
+  char *pcVar2;
+  char *pcVar3;
+  undefined1 uVar5;
+  uint uVar4;
   char *pcVar6;
-  ulonglong uVar4;
-  longlong lVar5;
-  char *pcVar7;
   char acStack_70 [112];
   
-  pcVar6 = (char *)__savegprlr_28();
-  pcVar7 = pcVar6;
+  pcVar2 = (char *)__savegprlr_28(param_1);
+  pcVar6 = pcVar2;
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x3f < pcVar7 + (0xe - (int)pcVar6)) {
-    MyAssertHandler(0xffffffff8209b258,0x2db,0,0xffffffff82000f98,0xffffffff8209b5e8);
+  if ((char *)0x3f < pcVar6 + (0xe - (int)pcVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x2db
+                    ,0,"%s");
   }
-  sprintf(acStack_70,"animtrees/%s.atr",pcVar6);
-  uVar3 = DAT_8382d8d4;
-  uVar4 = Scr_AddSourceBuffer(0,acStack_70,0,1);
-  uVar2 = DAT_8382d8d0;
-  if ((uVar4 & 0xffffffff) == 0) {
-    __restgprlr_28();
-    return;
+  sprintf(acStack_70,"animtrees/%s.atr");
+  pcVar2 = scrParserPub.sourceBuf;
+  pcVar3 = Scr_AddSourceBuffer((char *)0x0,acStack_70,(char *)0x0,true);
+  pcVar6 = scrParserPub.scriptExtFilename;
+  if (pcVar3 == (char *)0x0) {
+    uVar5 = __restgprlr_28();
+    return (bool)uVar5;
   }
-  DAT_8382d8d0 = acStack_70;
-  Scr_AnimTreeParse(uVar4,param_2,param_3);
-  DAT_8382d8d0 = (char *)uVar2;
-  DAT_8382d8d4 = uVar3;
+  scrParserPub.scriptExtFilename = acStack_70;
+  Scr_AnimTreeParse(pcVar3,param_2,param_3);
+  scrParserPub.scriptExtFilename = pcVar6;
+  scrParserPub.sourceBuf = pcVar2;
   Hunk_ClearTempMemoryHigh();
-  lVar5 = GetArraySize(param_2);
-  __restgprlr_28(lVar5 != 0);
-  return;
+  uVar4 = GetArraySize(param_2);
+  uVar5 = __restgprlr_28(uVar4 != 0);
+  return (bool)uVar5;
 }
 
 
 // 8251D6E8  Scr_LoadAnimTreeAtIndex  (script/scr_animtree.cpp:767)
 
-void Scr_LoadAnimTreeAtIndex(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void Scr_LoadAnimTreeAtIndex(uint param_1,_func___cdecl_void_ptr_int *param_2,int param_3)
 
 {
-  undefined2 uVar1;
+  ushort uVar1;
   longlong lVar2;
-  uint uVar8;
-  undefined2 uVar10;
-  ulonglong uVar3;
-  int iVar9;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  char cVar11;
-  undefined8 uVar7;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  char *pcVar7;
+  bool bVar11;
+  int iVar8;
+  VariableUnion VVar9;
+  int iVar10;
   ulonglong uVar12;
-  undefined4 local_80;
+  ushort in_stack_ffffff2a;
+  int in_stack_ffffff2c;
+  VariableUnion local_80;
   undefined4 local_7c;
   
-  lVar2 = __savegprlr_19();
-  if (DAT_83700fb0 == '\0') {
-    MyAssertHandler(0xffffffff8209b258,0x30e,0,0xffffffff82000f98,0xffffffff8209b5a4);
+  uVar12 = (ulonglong)param_3;
+  lVar2 = __savegprlr_19(param_1);
+  if (scrAnimPub.animtree_loading == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x30e
+                    ,0,"%s");
   }
-  uVar12 = (param_3 & 0x1ffffff) * 0x80 + lVar2;
-  uVar1 = *(undefined2 *)(&DAT_83700990 + (int)((uVar12 & 0xffffffff) << 1));
+  uVar12 = (uVar12 & 0x1ffffff) * 0x80 + lVar2;
+  uVar1 = *(ushort *)((int)scrAnimGlob.using_xanim_lookup[0] + (int)((uVar12 & 0xffffffff) << 1));
   Hunk_CheckTempMemoryClear();
   Hunk_CheckTempMemoryHighClear();
-  uVar8 = GetVariableName(DAT_83700b98,uVar1);
-  if (0xffff < uVar8) {
-    MyAssertHandler(0xffffffff8209b258,799,0,0xffffffff82000f98,0xffffffff8209b670);
+  uVar3 = GetVariableName(scrAnimPub.animtrees,(uint)uVar1);
+  if (0xffff < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",799,0
+                    ,"%s");
   }
-  uVar10 = GetVariableName(DAT_83700b98,uVar1);
-  uVar3 = FindObject(DAT_83700b98,uVar1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8209b258,0x324,0,0xffffffff82000f98,0xffffffff8209b668);
+  uVar3 = GetVariableName(scrAnimPub.animtrees,(uint)uVar1);
+  uVar3 = uVar3 & 0xffff;
+  uVar4 = FindObject(scrAnimPub.animtrees,(uint)uVar1);
+  if (uVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x324
+                    ,0,"%s");
   }
-  iVar9 = FindVariable(uVar3,1);
-  if (iVar9 == 0) {
-    uVar4 = FindVariable(uVar3,0);
-    if ((uVar4 & 0xffffffff) == 0) {
-      *(undefined4 *)(&DAT_83700ba4 + (int)((uVar12 & 0xffffffff) << 2)) = 0;
+  uVar5 = FindVariable(uVar4,1);
+  if (uVar5 == 0) {
+    uVar5 = FindVariable(uVar4,0);
+    if (uVar5 == 0) {
+      *(undefined4 *)((int)&scrAnimPub.xanim_lookup[0][0].anims + (int)((uVar12 & 0xffffffff) << 2))
+           = 0;
       __restgprlr_19();
       return;
     }
-    uVar4 = FindObject(uVar3,uVar4);
-    if ((uVar4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8209b258,0x337,0,0xffffffff82000f98,0xffffffff82070574);
+    uVar5 = FindObject(uVar4,uVar5);
+    if (uVar5 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x337,0,"%s");
     }
-    if (DAT_83700b9c != 0) {
-      MyAssertHandler(0xffffffff8209b258,0x33c,0,0xffffffff82000f98,0xffffffff8209b64c);
+    if (scrAnimPub.animtree_node != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x33c,0,"%s");
     }
-    uVar5 = Scr_AllocArray();
-    DAT_83700b9c = (int)uVar5;
-    uVar6 = SL_ConvertToString(uVar10);
-    cVar11 = Scr_LoadAnimTreeInternal(uVar6,uVar5,uVar4);
-    if (cVar11 == '\0') {
-      uVar5 = SL_ConvertToString(uVar10);
-      uVar5 = va(0xffffffff8209b634,uVar5);
-      Com_Error(1,uVar5);
+    uVar6 = Scr_AllocArray();
+    scrAnimPub.animtree_node = uVar6;
+    pcVar7 = SL_ConvertToString(uVar3);
+    bVar11 = Scr_LoadAnimTreeInternal(pcVar7,uVar6,uVar5);
+    if (!bVar11) {
+      SL_ConvertToString(uVar3);
+      pcVar7 = va("unknown anim tree \'%s\'");
+      Com_Error(ERR_DROP,pcVar7);
     }
     Hunk_CheckTempMemoryClear();
     Hunk_CheckTempMemoryHighClear();
-    uVar5 = Scr_GetAnimTreeSize(DAT_83700b9c);
-    if ((int)uVar5 == 0) {
-      MyAssertHandler(0xffffffff8209b258,0x346,0,0xffffffff82000f98,0xffffffff82036204);
+    iVar8 = Scr_GetAnimTreeSize(scrAnimPub.animtree_node);
+    if (iVar8 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x346,0,"%s");
     }
-    uVar6 = SL_ConvertToString(uVar10);
-    uVar6 = XAnimCreateAnims(uVar6,uVar5,param_2);
-    uVar7 = SL_GetString_(0xffffffff82004220,0,4);
-    ConnectScriptToAnim(uVar4,0,uVar10,uVar7,lVar2);
-    SL_RemoveRefToString(uVar7);
-    iVar9 = Scr_CreateAnimationTree(DAT_83700b9c,uVar4,uVar6,1,0xffffffff82004220,0,uVar10,lVar2);
-    if ((int)uVar5 != iVar9) {
-      MyAssertHandler(0xffffffff8209b258,0x357,0,0xffffffff82000f98,0xffffffff8209b624);
+    pcVar7 = SL_ConvertToString(uVar3);
+    VVar9.stackValue = (VariableStackBuffer *)XAnimCreateAnims(pcVar7,iVar8,param_2);
+    uVar6 = SL_GetString_("root",0,4);
+    ConnectScriptToAnim(uVar5,0,uVar3,uVar6,(int)lVar2);
+    SL_RemoveRefToString(uVar6);
+    iVar10 = Scr_CreateAnimationTree
+                       (scrAnimPub.animtree_node,uVar5,(XAnim_s *)VVar9.stackValue,1,"root",0,uVar3,
+                        (int)lVar2,in_stack_ffffff2a,in_stack_ffffff2c);
+    if (iVar8 != iVar10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x357,0,"%s");
     }
-    XAnimSetupSyncNodes(uVar6);
-    *(int *)(&DAT_83700ba4 + (int)((uVar12 & 0xffffffff) << 2)) = (int)uVar6;
-    Scr_CheckAnimsDefined(uVar4,uVar10);
-    RemoveVariable(uVar3,0);
-    RemoveRefToObject(DAT_83700b9c);
-    DAT_83700b9c = 0;
+    XAnimSetupSyncNodes((XAnim_s *)VVar9.stackValue);
+    ((VariableUnion *)
+    ((int)&scrAnimPub.xanim_lookup[0][0].anims + (int)((uVar12 & 0xffffffff) << 2)))->stackValue =
+         (VariableStackBuffer *)VVar9;
+    Scr_CheckAnimsDefined(uVar5,uVar3);
+    RemoveVariable(uVar4,0);
+    RemoveRefToObject(scrAnimPub.animtree_node);
+    scrAnimPub.animtree_node = 0;
     local_7c = 7;
-    local_80 = (int)uVar6;
-    uVar5 = GetVariable(uVar3,1);
-    SetVariableValue(uVar3,uVar5,&local_80);
+    local_80.stackValue = VVar9.stackValue;
+    uVar3 = GetVariable(uVar4,1);
+    SetVariableValue(uVar4,uVar3,(VariableValue *)&local_80);
   }
   __restgprlr_19();
   return;
@@ -807,63 +865,71 @@ void Scr_LoadAnimTreeAtIndex(undefined8 param_1,undefined8 param_2,ulonglong par
 
 // 8251DA18  Scr_FindAnimTree  (script/scr_animtree.cpp:878)
 
-void Scr_FindAnimTree(void)
+scr_animtree_t Scr_FindAnimTree(char *param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  char *pcVar2;
+  uint uVar3;
   uint uVar4;
-  ulonglong uVar3;
-  undefined4 local_40;
+  XAnim_s *pXVar5;
+  VariableValue VVar1;
+  VariableUnion local_40;
   int iStack_3c;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_83700fb0 == '\0') {
-    MyAssertHandler(0xffffffff8209b258,0x375,0,0xffffffff82000f98,0xffffffff8209b5a4);
+  pcVar2 = (char *)__savegprlr_27(param_1);
+  if (scrAnimPub.animtree_loading == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",0x375
+                    ,0,"%s");
   }
-  uVar1 = Scr_CreateCanonicalFilename(uVar1);
-  uVar2 = FindVariable(DAT_83700b98,uVar1);
-  SL_RemoveRefToString(uVar1);
-  if ((uVar2 & 0xffffffff) != 0) {
-    uVar4 = GetVariableName(DAT_83700b98,uVar2);
-    if (0xffff < uVar4) {
-      MyAssertHandler(0xffffffff8209b258,0x380,0,0xffffffff82000f98,0xffffffff8209b6d8);
+  uVar3 = Scr_CreateCanonicalFilename(pcVar2);
+  uVar4 = FindVariable(scrAnimPub.animtrees,uVar3);
+  SL_RemoveRefToString(uVar3);
+  if (uVar4 != 0) {
+    uVar3 = GetVariableName(scrAnimPub.animtrees,uVar4);
+    if (0xffff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x380,0,"%s");
     }
-    GetVariableName(DAT_83700b98,uVar2);
-    uVar2 = FindObject(DAT_83700b98,uVar2);
-    if ((uVar2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8209b258,0x385,0,0xffffffff82000f98,0xffffffff8209b668);
+    GetVariableName(scrAnimPub.animtrees,uVar4);
+    uVar3 = FindObject(scrAnimPub.animtrees,uVar4);
+    if (uVar3 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                      0x385,0,"%s");
     }
-    uVar3 = FindVariable(uVar2,1);
-    if ((uVar3 & 0xffffffff) != 0) {
-      uVar1 = Scr_EvalVariable(uVar2,uVar3);
-      iStack_3c = (int)uVar1;
+    uVar4 = FindVariable(uVar3,1);
+    if (uVar4 != 0) {
+      VVar1 = Scr_EvalVariable(uVar3,uVar4);
+      iStack_3c = VVar1.type;
       if (iStack_3c != 7) {
-        MyAssertHandler(0xffffffff8209b258,0x38c,0,0xffffffff82000f98,0xffffffff8209b6b4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_animtree.cpp",
+                        0x38c,0,"%s");
       }
-      local_40 = (undefined4)((ulonglong)uVar1 >> 0x20);
-      __restgprlr_27(local_40);
-      return;
+      local_40 = VVar1.u;
+      pXVar5 = (XAnim_s *)__restgprlr_27(local_40.intValue);
+      return (scr_animtree_t)pXVar5;
     }
   }
-  __restgprlr_27(0);
-  return;
+  pXVar5 = (XAnim_s *)__restgprlr_27(0);
+  return (scr_animtree_t)pXVar5;
 }
 
 
 // 8251DB78  Scr_FindAnim  (script/scr_animtree.cpp:918)
 
-void Scr_FindAnim(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void Scr_FindAnim(char *param_1,char *param_2,scr_anim_s *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_30 [48];
+  char *pcVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint auStack_30 [12];
   
-  uVar1 = __savegprlr_28();
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  uVar4 = param_4;
   uVar2 = SL_GetLowercaseString_(param_2,0,4);
-  uVar1 = Scr_UsingTreeInternal(uVar1,auStack_30,param_4);
-  Scr_EmitAnimationInternal(param_3,uVar2,uVar1);
+  uVar3 = Scr_UsingTreeInternal(pcVar1,auStack_30,param_4);
+  Scr_EmitAnimationInternal((char *)param_3,uVar2,uVar3,uVar4);
   SL_RemoveRefToString(uVar2);
   __restgprlr_28();
   return;

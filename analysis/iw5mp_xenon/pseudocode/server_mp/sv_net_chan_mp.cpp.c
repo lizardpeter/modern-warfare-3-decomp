@@ -2,89 +2,113 @@
 
 // 8257DAB0  SV_Netchan_OutgoingSequenceIncremented  (server_mp/sv_net_chan_mp.cpp:88)
 
-void SV_Netchan_OutgoingSequenceIncremented(longlong param_1,uint *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_Netchan_OutgoingSequenceIncremented(client_t *param_1,netchan_t *param_2)
 
 {
-  Com_Memset((ulonglong)(*param_2 & DAT_83f1e028) * 0x3380 + param_1 + 0x35300,0,0x3380);
+  Com_Memset(param_1->frames + (param_2->outgoingSequence & svs.packetBackupMask),0,0x3380);
   return;
 }
 
 
 // 8257DAE8  SV_Netchan_TransmitNextFragment  (server_mp/sv_net_chan_mp.cpp:102)
 
-void SV_Netchan_TransmitNextFragment(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_Netchan_TransmitNextFragment(client_t *param_1,netchan_t *param_2)
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
+  undefined1 uVar5;
+  longlong lVar6;
   
-  lVar4 = __savegprlr_27();
-  puVar3 = (uint *)param_2;
-  uVar1 = puVar3[0xd];
-  uVar2 = puVar3[0xe];
-  uVar5 = Netchan_TransmitNextFragment(param_2);
-  if (puVar3[0xc] == 0) {
-    Com_Memset((ulonglong)(*puVar3 & DAT_83f1e028) * 0x3380 + lVar4 + 0x35300,0,0x3380);
+  iVar3 = __savegprlr_27(param_1);
+  uVar1 = param_2->unsentFragmentStart;
+  iVar2 = param_2->unsentLength;
+  bVar4 = Netchan_TransmitNextFragment(param_2);
+  if (param_2->unsentFragments == 0) {
+    Com_Memset((void *)((param_2->outgoingSequence & svs.packetBackupMask) * 0x3380 + iVar3 +
+                       0x35300),0,0x3380);
   }
-  if (((uVar5 & 0xff) != 0) || (puVar3[4] == 0)) {
-    if (uVar2 != puVar3[0xe]) {
-      MyAssertHandler(0xffffffff82160d20,0x79,0,0xffffffff82160d68,uVar2);
+  if ((bVar4) || ((param_2->remoteAddress).type == NA_BOT)) {
+    if (iVar2 != param_2->unsentLength) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_net_chan_mp.cpp"
+                      ,0x79,0,"previousLen == chan->unsentLength\n\t%i, %i");
     }
-    lVar4 = (ulonglong)puVar3[0xd] - (ulonglong)uVar1;
-    if (lVar4 < 1) {
-      Com_PrintWarning(0xf,0xffffffff82160cc8,lVar4);
+    lVar6 = (ulonglong)(uint)param_2->unsentFragmentStart - (ulonglong)uVar1;
+    if (lVar6 < 1) {
+      Com_PrintWarning(0xf,
+                       "SV_Netchan_TransmitNextFragment - Did not report a valid amount of data sent (%i)\n"
+                      );
     }
-    DAT_83cfc518 = DAT_83cfc518 + (int)lVar4;
-    DAT_83cfc570 = DAT_83cfc570 + (int)lVar4;
+    iVar2 = (int)lVar6;
+    sv.bpsTotalBytesForTwoFrames = sv.bpsTotalBytesForTwoFrames + iVar2;
+    sv.bpsTotalBytes = sv.bpsTotalBytes + iVar2;
   }
-  __restgprlr_27(uVar5);
-  return;
+  uVar5 = __restgprlr_27(bVar4);
+  return (bool)uVar5;
 }
 
 
 // 8257DC08  SV_Netchan_Transmit  (server_mp/sv_net_chan_mp.cpp:145)
 
-void SV_Netchan_Transmit(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_Netchan_Transmit(client_t *param_1,uchar *param_2,int param_3)
 
 {
-  int iVar2;
-  ulonglong uVar1;
+  int iVar1;
+  bool bVar2;
+  undefined1 uVar3;
   
-  iVar2 = __savegprlr_28();
-  uVar1 = Netchan_Transmit((uint *)(iVar2 + 0x18),param_3,param_2);
-  if (*(int *)(iVar2 + 0x48) == 0) {
-    Com_Memset((DAT_83f1e028 & *(uint *)(iVar2 + 0x18)) * 0x3380 + iVar2 + 0x35300,0,0x3380);
+  iVar1 = __savegprlr_28(param_1);
+  bVar2 = Netchan_Transmit((netchan_t *)(iVar1 + 0x18),param_3,param_2);
+  if (*(int *)(iVar1 + 0x48) == 0) {
+    Com_Memset((void *)((svs.packetBackupMask & ((netchan_t *)(iVar1 + 0x18))->outgoingSequence) *
+                        0x3380 + iVar1 + 0x35300),0,0x3380);
   }
-  if (*(int *)(DAT_83ced680 + 0xc) < (int)param_3) {
-    *(undefined4 *)(iVar2 + 0x14) = 1;
+  if ((sv_hugeSnapshotSize->current).integer < param_3) {
+    *(undefined4 *)(iVar1 + 0x14) = 1;
   }
-  if (((uVar1 & 0xff) != 0) || (*(int *)(iVar2 + 0x28) == 0)) {
-    if (*(int *)(iVar2 + 0x48) != 0) {
-      param_3 = ((ulonglong)*(uint *)(iVar2 + 0x4c) - (ulonglong)*(uint *)(iVar2 + 0x50)) + param_3;
+  if ((bVar2) || (*(int *)(iVar1 + 0x28) == 0)) {
+    if (*(int *)(iVar1 + 0x48) != 0) {
+      param_3 = (*(int *)(iVar1 + 0x4c) - *(int *)(iVar1 + 0x50)) + param_3;
     }
-    iVar2 = (int)param_3;
-    if (iVar2 < 1) {
-      Com_PrintWarning(0xf,0xffffffff82160cc8,param_3);
+    if (param_3 < 1) {
+      Com_PrintWarning(0xf,
+                       "SV_Netchan_TransmitNextFragment - Did not report a valid amount of data sent (%i)\n"
+                      );
     }
-    DAT_83cfc518 = DAT_83cfc518 + iVar2;
-    DAT_83cfc570 = DAT_83cfc570 + iVar2;
+    sv.bpsTotalBytesForTwoFrames = sv.bpsTotalBytesForTwoFrames + param_3;
+    sv.bpsTotalBytes = sv.bpsTotalBytes + param_3;
   }
-  __restgprlr_28(uVar1);
-  return;
+  uVar3 = __restgprlr_28(bVar2);
+  return (bool)uVar3;
 }
 
 
 // 8257DD38  SV_Netchan_AddOOBProfilePacket  (server_mp/sv_net_chan_mp.cpp:187)
 
-void SV_Netchan_AddOOBProfilePacket(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_Netchan_AddOOBProfilePacket(int param_1)
 
 {
-  if (*(int *)(DAT_836b939c + 0xc) != 0) {
-    NetProf_PrepProfiling(0xffffffff83f1d448);
-    NetProf_AddPacket(0xffffffff83f1d448,param_1,0);
+  if ((net_profile->current).integer != 0) {
+    NetProf_PrepProfiling(&svs.OOBProf);
+    NetProf_AddPacket(&svs.OOBProf.send,param_1,0);
   }
   return;
 }
@@ -92,21 +116,25 @@ void SV_Netchan_AddOOBProfilePacket(undefined8 param_1)
 
 // 8257DDA8  SV_Netchan_SendOOBPacket  (server_mp/sv_net_chan_mp.cpp:203)
 
-void SV_Netchan_SendOOBPacket
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_Netchan_SendOOBPacket(int param_1,void *param_2,netadr_t param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  netadr_t in_stack_ffffff88;
   
-  uVar1 = __savegprlr_27();
+  iVar1 = __savegprlr_27(param_1);
   if (*(int *)param_2 != -1) {
-    Com_Printf(0xf,0xffffffff82160d94);
+    Com_Printf(0xf,"SV_Netchan_SendOOBPacket used to send non-OOB packet.\n");
   }
-  NetProf_PrepProfiling(0xffffffff83f1d448);
-  NET_SendPacket(4,uVar1,param_2,param_3,param_4);
-  if (*(int *)(DAT_836b939c + 0xc) != 0) {
-    NetProf_PrepProfiling(0xffffffff83f1d448);
-    NetProf_AddPacket(0xffffffff83f1d448,uVar1,0);
+  NetProf_PrepProfiling(&svs.OOBProf);
+  NET_SendPacket(NS_MAXCLIENTS,iVar1,param_2,in_stack_ffffff88);
+  if ((net_profile->current).integer != 0) {
+    NetProf_PrepProfiling(&svs.OOBProf);
+    NetProf_AddPacket(&svs.OOBProf.send,iVar1,0);
   }
   __restgprlr_27();
   return;
@@ -115,32 +143,38 @@ void SV_Netchan_SendOOBPacket
 
 // 8257DE48  SV_Netchan_UpdateProfileStats  (server_mp/sv_net_chan_mp.cpp:224)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void SV_Netchan_UpdateProfileStats(void)
 
 {
   int iVar1;
   int iVar2;
-  int *piVar3;
+  client_t *pcVar3;
   
   __savegprlr_28();
-  if ((DAT_83f11414 != (int *)0x0) && (*(int *)(DAT_836b939c + 0xc) != 0)) {
-    NetProf_UpdateStatistics(0xffffffff83f1d448);
-    NetProf_UpdateStatistics(0xffffffff83f1d738);
-    if (DAT_83f11410 < *(int *)(DAT_83d0b55c + 0xc)) {
-      MyAssertHandler(0xffffffff82160d20,0xed,0,0xffffffff82000f98,0xffffffff8215a9fc);
+  if ((svs.clients != (client_t *)0x0) && ((net_profile->current).integer != 0)) {
+    NetProf_UpdateStatistics(&svs.OOBProf.send);
+    NetProf_UpdateStatistics(&svs.OOBProf.recieve);
+    if (svs.clientCount < (sv_maxclients->current).integer) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_net_chan_mp.cpp"
+                      ,0xed,0,"%s");
     }
     iVar2 = 0;
-    iVar1 = DAT_83f11410;
-    piVar3 = DAT_83f11414;
-    if (0 < DAT_83f11410) {
+    iVar1 = svs.clientCount;
+    pcVar3 = svs.clients;
+    if (0 < svs.clientCount) {
       do {
-        if (*piVar3 != 0) {
-          NetProf_UpdateStatistics(piVar3 + 0x17);
-          NetProf_UpdateStatistics(piVar3 + 0xd3);
-          iVar1 = DAT_83f11410;
+        if ((pcVar3->header).state != 0) {
+          NetProf_UpdateStatistics(&(pcVar3->header).netchan.prof.send);
+          NetProf_UpdateStatistics(&(pcVar3->header).netchan.prof.recieve);
+          iVar1 = svs.clientCount;
         }
         iVar2 = iVar2 + 1;
-        piVar3 = piVar3 + 0x1a2c0;
+        pcVar3 = pcVar3 + 1;
       } while (iVar2 < iVar1);
     }
   }
@@ -151,12 +185,17 @@ void SV_Netchan_UpdateProfileStats(void)
 
 // 8257DF50  SV_NetChan_GetClientAddress  (server_mp/sv_net_chan_mp.cpp:256)
 
-longlong SV_NetChan_GetClientAddress(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+netadr_t * SV_NetChan_GetClientAddress(int param_1)
 
 {
-  if ((ulonglong)DAT_83f11410 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82160d20,0x101,0,0xffffffff8215b44c,param_1);
+  if ((uint)svs.clientCount <= (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_net_chan_mp.cpp",
+                    0x101,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
-  return (longlong)(int)param_1 * 0x68b00 + (ulonglong)DAT_83f11414 + 0x28;
+  return &svs.clients[param_1].header.netchan.remoteAddress;
 }
 

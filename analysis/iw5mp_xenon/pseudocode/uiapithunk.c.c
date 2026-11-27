@@ -2,10 +2,10 @@
 
 // 828A1C58  XShowSigninUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:26)
 
-undefined8 XShowSigninUI(undefined8 param_1,undefined8 param_2)
+ulong XShowSigninUI(ulong param_1,ulong param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamShowSigninUI(param_1,param_2);
   return uVar1;
@@ -14,10 +14,10 @@ undefined8 XShowSigninUI(undefined8 param_1,undefined8 param_2)
 
 // 828A1CA8  XShowFriendsUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:49)
 
-undefined8 XShowFriendsUI(undefined8 param_1)
+ulong XShowFriendsUI(ulong param_1)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamShowFriendsUI(param_1);
   return uVar1;
@@ -26,25 +26,40 @@ undefined8 XShowFriendsUI(undefined8 param_1)
 
 // 828A1CE8  XShowKeyboardUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:86)
 
-void XShowKeyboardUI(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                    undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+ulong XShowKeyboardUI(ulong param_1,ulong param_2,wchar_t *param_3,wchar_t *param_4,wchar_t *param_5
+                     ,ushort *param_6,ulong param_7,_XOVERLAPPED *param_8)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
   
-  uVar1 = __savegprlr_24();
-  uVar1 = XamShowKeyboardUI(uVar1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
-  __restgprlr_24(uVar1);
-  return;
+  lVar9 = (longlong)(int)param_8;
+  lVar8 = (longlong)(int)param_7;
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_24(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
+  uVar1 = XamShowKeyboardUI(uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
+  uVar2 = __restgprlr_24(uVar1);
+  return uVar2;
 }
 
 
 // 828A1D50  XShowGamerCardUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:145)
 
-undefined8 XShowGamerCardUI(undefined8 param_1,undefined8 param_2)
+ulong XShowGamerCardUI(ulong param_1,ulong64 param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamShowGamerCardUIForXUID(param_1,param_2,0);
   return uVar1;
@@ -53,55 +68,85 @@ undefined8 XShowGamerCardUI(undefined8 param_1,undefined8 param_2)
 
 // 828A1DA8  XShowMarketplaceUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:196)
 
-void XShowMarketplaceUI(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+ulong XShowMarketplaceUI(ulong param_1,ulong param_2,ulong64 param_3,ulong param_4)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_28();
-  uVar1 = XamShowMarketplaceUI(uVar1,param_2,param_3,0xffffffffffffffff,param_4,0);
-  __restgprlr_28(uVar1);
-  return;
+  lVar4 = (longlong)(int)param_4;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1,lVar3,param_3,lVar4);
+  uVar1 = XamShowMarketplaceUI(uVar1,lVar3,param_3,0xffffffffffffffff,lVar4,0);
+  uVar2 = __restgprlr_28(uVar1);
+  return uVar2;
 }
 
 
 // 828A1DF8  XShowDeviceSelectorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:246)
 
-void XShowDeviceSelectorUI
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+ulong XShowDeviceSelectorUI
+                (ulong param_1,ulong param_2,ulong param_3,_ULARGE_INTEGER param_4,ulong *param_5,
+                _XOVERLAPPED *param_6)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_26();
-  uVar1 = XamShowDeviceSelectorUI(uVar1,param_2,param_3,param_4,param_5,param_6);
-  __restgprlr_26(uVar1);
-  return;
+  lVar6 = (longlong)(int)param_6;
+  lVar5 = (longlong)(int)param_5;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_26(param_1,lVar3,lVar4,param_4.QuadPart,lVar5,lVar6);
+  uVar1 = XamShowDeviceSelectorUI(uVar1,lVar3,lVar4,param_4.QuadPart,lVar5,lVar6);
+  uVar2 = __restgprlr_26(uVar1);
+  return uVar2;
 }
 
 
 // 828A1E50  XShowMessageBoxUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:271)
 
-void XShowMessageBoxUI(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+ulong XShowMessageBoxUI(ulong param_1,wchar_t *param_2,wchar_t *param_3,ulong param_4,
+                       wchar_t **param_5,ulong param_6,ulong param_7,_MESSAGEBOX_RESULT *param_8,
+                       _XOVERLAPPED *param_9)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
   
-  uVar1 = __savegprlr_24();
-  uVar1 = XamShowMessageBoxUI(uVar1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
-  __restgprlr_24(uVar1);
-  return;
+  lVar9 = (longlong)(int)param_8;
+  lVar8 = (longlong)(int)param_7;
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_24(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
+  uVar1 = XamShowMessageBoxUI(uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
+  uVar2 = __restgprlr_24(uVar1);
+  return uVar2;
 }
 
 
 // 828A1EC0  XShowFriendRequestUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:325)
 
-undefined8 XShowFriendRequestUI(undefined8 param_1,undefined8 param_2)
+ulong XShowFriendRequestUI(ulong param_1,ulong64 param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
   uVar1 = XamShowFriendRequestUI(param_1,param_2);
   return uVar1;
@@ -110,14 +155,11 @@ undefined8 XShowFriendRequestUI(undefined8 param_1,undefined8 param_2)
 
 // 828A1F10  XShowDirtyDiscErrorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:336)
 
-/* WARNING: Control flow encountered bad instruction data */
-
-void XShowDirtyDiscErrorUI(undefined8 param_1)
+void XShowDirtyDiscErrorUI(ulong param_1)
 
 {
   XamShowDirtyDiscErrorUI(param_1);
-  XLaunchNewImage(0,0);
-                    /* WARNING: Bad instruction - Truncating control flow here */
-  halt_baddata();
+                    /* WARNING: Subroutine does not return */
+  XLaunchNewImage((char *)0x0,0);
 }
 

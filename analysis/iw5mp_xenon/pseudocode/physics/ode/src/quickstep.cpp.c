@@ -2,16 +2,16 @@
 
 // 8269D060  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 8269D068  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(int param_1,int param_2)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
@@ -20,7 +20,7 @@ void __stvx(int param_1,int param_2)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -31,90 +31,98 @@ void __stvx(int param_1,int param_2)
 
 // 8269E6C8  compute_invM_JT  (physics/ode/src/quickstep.cpp:160)
 
-void compute_invM_JT(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                    ulonglong param_5)
+void compute_invM_JT(int param_1,int param_2,ConstraintRowData *param_3,dxBody **param_4,
+                    float *param_5)
 
 {
   float fVar1;
   float fVar2;
   float *pfVar3;
-  int iVar4;
-  float *pfVar5;
-  longlong lVar6;
-  undefined8 uVar7;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
+  float *pfVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
   
-  lVar6 = __savegprlr_20();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0xa7,0,0xffffffff82000f98,0xffffffff8219a824);
+  uVar9 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)param_2;
+  lVar5 = __savegprlr_20(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0xa7,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0xa8,0,0xffffffff82000f98,0xffffffff82003cbc);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0xa8,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0xa9,0,0xffffffff82000f98,0xffffffff8219a81c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0xa9,0,"%s");
   }
-  if (0 < (int)lVar6) {
-    dVar10 = 0.0;
-    lVar8 = param_3 + 0x54;
+  if (0 < (int)lVar5) {
+    dVar12 = 0.0;
+    lVar10 = uVar7 + 0x54;
     do {
-      pfVar3 = (float *)lVar8;
+      pfVar3 = (float *)lVar10;
       fVar1 = pfVar3[-0xe];
       fVar2 = pfVar3[-10];
-      if ((param_2 & 0xffffffff) <= (ulonglong)(uint)fVar1) {
-        MyAssertHandler(0xffffffff8219a388,0xb1,0,0xffffffff8219a784,(ulonglong)(uint)fVar1,param_2)
-        ;
+      if ((uVar6 & 0xffffffff) <= (ulonglong)(uint)fVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                        ,0xb1,0,"body1 doesn\'t index bodyCount\n\t%i not in [0, %i)");
       }
-      iVar4 = (int)param_4;
-      dVar9 = dVar10;
+      dVar11 = dVar12;
       if (pfVar3[10] != 2.8026e-45) {
-        dVar9 = (double)*(float *)(*(int *)((int)fVar1 * 4 + iVar4) + 0x94);
+        dVar11 = (double)*(float *)(*(int *)((int)fVar1 * 4 + (int)uVar8) + 0x94);
       }
-      pfVar3[-5] = (float)((double)pfVar3[-0x15] * dVar9);
-      pfVar3[-4] = (float)((double)pfVar3[-0x14] * dVar9);
-      pfVar3[-3] = (float)((double)pfVar3[-0x13] * dVar9);
+      pfVar3[-5] = (float)((double)pfVar3[-0x15] * dVar11);
+      pfVar3[-4] = (float)((double)pfVar3[-0x14] * dVar11);
+      pfVar3[-3] = (float)((double)pfVar3[-0x13] * dVar11);
       if (pfVar3[10] == 2.8026e-45) {
-        pfVar3[-1] = (float)dVar10;
-        *pfVar3 = (float)dVar10;
-        pfVar3[1] = (float)dVar10;
+        pfVar3[-1] = (float)dVar12;
+        *pfVar3 = (float)dVar12;
+        pfVar3[1] = (float)dVar12;
       }
       else {
-        pfVar5 = (float *)((int)fVar1 * 0x30 + (int)param_5);
-        pfVar3[-1] = pfVar3[-0x11] * *pfVar5 + pfVar3[-0xf] * pfVar5[2] + pfVar3[-0x10] * pfVar5[1];
-        *pfVar3 = pfVar3[-0x11] * pfVar5[4] + pfVar3[-0xf] * pfVar5[6] + pfVar3[-0x10] * pfVar5[5];
-        pfVar3[1] = pfVar3[-0x11] * pfVar5[8] +
-                    pfVar3[-0xf] * pfVar5[10] + pfVar3[-0x10] * pfVar5[9];
+        pfVar4 = (float *)((int)fVar1 * 0x30 + (int)uVar9);
+        pfVar3[-1] = pfVar3[-0x11] * *pfVar4 + pfVar3[-0xf] * pfVar4[2] + pfVar3[-0x10] * pfVar4[1];
+        *pfVar3 = pfVar3[-0x11] * pfVar4[4] + pfVar3[-0xf] * pfVar4[6] + pfVar3[-0x10] * pfVar4[5];
+        pfVar3[1] = pfVar3[-0x11] * pfVar4[8] +
+                    pfVar3[-0xf] * pfVar4[10] + pfVar3[-0x10] * pfVar4[9];
       }
       if (-1 < (int)fVar2) {
-        if ((param_2 & 0xffffffff) <= (ulonglong)(uint)fVar2) {
-          uVar7 = va(0xffffffff8219a7b8,fVar2,param_2,
-                     *(undefined4 *)(*(int *)(*(int *)((int)fVar1 * 4 + iVar4) + 0x10) + 0x5c));
-          MyAssertHandler(0xffffffff8219a388,200,0,0xffffffff820011f4,0xffffffff8219a7f4,uVar7);
+        if ((uVar6 & 0xffffffff) <= (ulonglong)(uint)fVar2) {
+          va("body2 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                          ,200,0,"%s\n\t%s");
         }
-        dVar9 = dVar10;
+        dVar11 = dVar12;
         if (pfVar3[10] != 1.4013e-45) {
-          dVar9 = (double)*(float *)(*(int *)((int)fVar2 * 4 + iVar4) + 0x94);
+          dVar11 = (double)*(float *)(*(int *)((int)fVar2 * 4 + (int)uVar8) + 0x94);
         }
-        pfVar3[3] = (float)((double)pfVar3[-0xd] * dVar9);
-        pfVar3[4] = (float)((double)pfVar3[-0xc] * dVar9);
-        pfVar3[5] = (float)((double)pfVar3[-0xb] * dVar9);
+        pfVar3[3] = (float)((double)pfVar3[-0xd] * dVar11);
+        pfVar3[4] = (float)((double)pfVar3[-0xc] * dVar11);
+        pfVar3[5] = (float)((double)pfVar3[-0xb] * dVar11);
         if (pfVar3[10] == 1.4013e-45) {
-          pfVar3[7] = (float)dVar10;
-          pfVar3[8] = (float)dVar10;
-          pfVar3[9] = (float)dVar10;
+          pfVar3[7] = (float)dVar12;
+          pfVar3[8] = (float)dVar12;
+          pfVar3[9] = (float)dVar12;
         }
         else {
-          pfVar5 = (float *)((int)fVar2 * 0x30 + (int)param_5);
-          pfVar3[7] = pfVar3[-9] * *pfVar5 + pfVar3[-7] * pfVar5[2] + pfVar3[-8] * pfVar5[1];
-          pfVar3[8] = pfVar3[-9] * pfVar5[4] + pfVar3[-7] * pfVar5[6] + pfVar3[-8] * pfVar5[5];
-          pfVar3[9] = pfVar3[-9] * pfVar5[8] + pfVar3[-7] * pfVar5[10] + pfVar3[-8] * pfVar5[9];
+          pfVar4 = (float *)((int)fVar2 * 0x30 + (int)uVar9);
+          pfVar3[7] = pfVar3[-9] * *pfVar4 + pfVar3[-7] * pfVar4[2] + pfVar3[-8] * pfVar4[1];
+          pfVar3[8] = pfVar3[-9] * pfVar4[4] + pfVar3[-7] * pfVar4[6] + pfVar3[-8] * pfVar4[5];
+          pfVar3[9] = pfVar3[-9] * pfVar4[8] + pfVar3[-7] * pfVar4[10] + pfVar3[-8] * pfVar4[9];
         }
       }
-      lVar6 = lVar6 + -1;
-      lVar8 = lVar8 + 0x90;
-    } while (lVar6 != 0);
+      lVar5 = lVar5 + -1;
+      lVar10 = lVar10 + 0x90;
+    } while (lVar5 != 0);
   }
   __restgprlr_20();
   return;
@@ -123,87 +131,85 @@ void compute_invM_JT(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulon
 
 // 8269D070  multiply_J  (physics/ode/src/quickstep.cpp:229)
 
-void multiply_J(longlong param_1,float *param_2,int param_3)
+void multiply_J(int param_1,ConstraintRowData *param_2,float *param_3)
 
 {
   float fVar1;
-  int iVar2;
-  longlong lVar3;
+  longlong lVar2;
+  float *pfVar3;
   float *pfVar4;
-  float *pfVar5;
   
-  iVar2 = (int)param_1;
-  lVar3 = 0;
-  if (3 < iVar2) {
-    pfVar5 = param_2 + -2;
+  lVar2 = 0;
+  if (3 < param_1) {
+    pfVar4 = &param_2[-1].rhs;
     do {
-      pfVar4 = (float *)((int)pfVar5[9] * 0x18 + param_3);
-      fVar1 = pfVar4[5] * pfVar5[8] +
-              pfVar4[2] * pfVar5[4] + pfVar4[1] * pfVar5[3] + *param_2 * *pfVar4 +
-              pfVar4[4] * pfVar5[7] + pfVar5[6] * pfVar4[3];
-      if (-1 < (int)pfVar5[0xd]) {
-        pfVar4 = (float *)((int)pfVar5[0xd] * 0x18 + param_3);
-        fVar1 = pfVar4[5] * pfVar5[0x10] +
-                pfVar4[2] * pfVar5[0xc] + pfVar4[1] * pfVar5[0xb] + *pfVar4 * pfVar5[10] + fVar1 +
-                pfVar4[4] * pfVar5[0xf] + pfVar4[3] * pfVar5[0xe];
+      pfVar3 = param_3 + (int)pfVar4[9] * 6;
+      fVar1 = pfVar3[5] * pfVar4[8] +
+              pfVar3[2] * pfVar4[4] + pfVar3[1] * pfVar4[3] + param_2->J_body1Linear[0] * *pfVar3 +
+              pfVar3[4] * pfVar4[7] + pfVar4[6] * pfVar3[3];
+      if (-1 < (int)pfVar4[0xd]) {
+        pfVar3 = param_3 + (int)pfVar4[0xd] * 6;
+        fVar1 = pfVar3[5] * pfVar4[0x10] +
+                pfVar3[2] * pfVar4[0xc] + pfVar3[1] * pfVar4[0xb] + *pfVar3 * pfVar4[10] + fVar1 +
+                pfVar3[4] * pfVar4[0xf] + pfVar3[3] * pfVar4[0xe];
       }
-      pfVar5[0x24] = fVar1;
-      pfVar4 = (float *)((int)pfVar5[0x2d] * 0x18 + param_3);
-      fVar1 = pfVar4[5] * pfVar5[0x2c] +
-              pfVar4[2] * pfVar5[0x28] + pfVar4[1] * pfVar5[0x27] + *pfVar4 * pfVar5[0x26] +
-              pfVar4[4] * pfVar5[0x2b] + pfVar4[3] * pfVar5[0x2a];
-      if (-1 < (int)pfVar5[0x31]) {
-        pfVar4 = (float *)((int)pfVar5[0x31] * 0x18 + param_3);
-        fVar1 = pfVar4[5] * pfVar5[0x34] +
-                pfVar4[2] * pfVar5[0x30] + pfVar4[1] * pfVar5[0x2f] + *pfVar4 * pfVar5[0x2e] + fVar1
-                + pfVar4[4] * pfVar5[0x33] + pfVar5[0x32] * pfVar4[3];
+      pfVar4[0x24] = fVar1;
+      pfVar3 = param_3 + (int)pfVar4[0x2d] * 6;
+      fVar1 = pfVar3[5] * pfVar4[0x2c] +
+              pfVar3[2] * pfVar4[0x28] + pfVar3[1] * pfVar4[0x27] + *pfVar3 * pfVar4[0x26] +
+              pfVar3[4] * pfVar4[0x2b] + pfVar3[3] * pfVar4[0x2a];
+      if (-1 < (int)pfVar4[0x31]) {
+        pfVar3 = param_3 + (int)pfVar4[0x31] * 6;
+        fVar1 = pfVar3[5] * pfVar4[0x34] +
+                pfVar3[2] * pfVar4[0x30] + pfVar3[1] * pfVar4[0x2f] + *pfVar3 * pfVar4[0x2e] + fVar1
+                + pfVar3[4] * pfVar4[0x33] + pfVar4[0x32] * pfVar3[3];
       }
-      pfVar5[0x48] = fVar1;
-      pfVar4 = (float *)((int)pfVar5[0x51] * 0x18 + param_3);
-      fVar1 = pfVar4[5] * pfVar5[0x50] +
-              pfVar4[2] * pfVar5[0x4c] + pfVar4[1] * pfVar5[0x4b] + pfVar5[0x4a] * *pfVar4 +
-              pfVar4[4] * pfVar5[0x4f] + pfVar5[0x4e] * pfVar4[3];
-      if (-1 < (int)pfVar5[0x55]) {
-        pfVar4 = (float *)((int)pfVar5[0x55] * 0x18 + param_3);
-        fVar1 = pfVar4[5] * pfVar5[0x58] +
-                pfVar4[2] * pfVar5[0x54] + pfVar4[1] * pfVar5[0x53] + pfVar5[0x52] * *pfVar4 + fVar1
-                + pfVar4[4] * pfVar5[0x57] + pfVar5[0x56] * pfVar4[3];
+      pfVar4[0x48] = fVar1;
+      pfVar3 = param_3 + (int)pfVar4[0x51] * 6;
+      fVar1 = pfVar3[5] * pfVar4[0x50] +
+              pfVar3[2] * pfVar4[0x4c] + pfVar3[1] * pfVar4[0x4b] + pfVar4[0x4a] * *pfVar3 +
+              pfVar3[4] * pfVar4[0x4f] + pfVar4[0x4e] * pfVar3[3];
+      if (-1 < (int)pfVar4[0x55]) {
+        pfVar3 = param_3 + (int)pfVar4[0x55] * 6;
+        fVar1 = pfVar3[5] * pfVar4[0x58] +
+                pfVar3[2] * pfVar4[0x54] + pfVar3[1] * pfVar4[0x53] + pfVar4[0x52] * *pfVar3 + fVar1
+                + pfVar3[4] * pfVar4[0x57] + pfVar4[0x56] * pfVar3[3];
       }
-      pfVar5[0x6c] = fVar1;
-      pfVar4 = (float *)((int)pfVar5[0x75] * 0x18 + param_3);
-      fVar1 = pfVar4[5] * pfVar5[0x74] +
-              pfVar4[2] * pfVar5[0x70] + pfVar4[1] * pfVar5[0x6f] + pfVar5[0x6e] * *pfVar4 +
-              pfVar4[4] * pfVar5[0x73] + pfVar5[0x72] * pfVar4[3];
-      if (-1 < (int)pfVar5[0x79]) {
-        pfVar4 = (float *)((int)pfVar5[0x79] * 0x18 + param_3);
-        fVar1 = pfVar4[5] * pfVar5[0x7c] +
-                pfVar4[2] * pfVar5[0x78] + pfVar4[1] * pfVar5[0x77] + pfVar5[0x76] * *pfVar4 + fVar1
-                + pfVar4[4] * pfVar5[0x7b] + pfVar5[0x7a] * pfVar4[3];
+      pfVar4[0x6c] = fVar1;
+      pfVar3 = param_3 + (int)pfVar4[0x75] * 6;
+      fVar1 = pfVar3[5] * pfVar4[0x74] +
+              pfVar3[2] * pfVar4[0x70] + pfVar3[1] * pfVar4[0x6f] + pfVar4[0x6e] * *pfVar3 +
+              pfVar3[4] * pfVar4[0x73] + pfVar4[0x72] * pfVar3[3];
+      if (-1 < (int)pfVar4[0x79]) {
+        pfVar3 = param_3 + (int)pfVar4[0x79] * 6;
+        fVar1 = pfVar3[5] * pfVar4[0x7c] +
+                pfVar3[2] * pfVar4[0x78] + pfVar3[1] * pfVar4[0x77] + pfVar4[0x76] * *pfVar3 + fVar1
+                + pfVar3[4] * pfVar4[0x7b] + pfVar4[0x7a] * pfVar3[3];
       }
-      lVar3 = lVar3 + 4;
-      pfVar5 = pfVar5 + 0x90;
-      *pfVar5 = fVar1;
-      param_2 = param_2 + 0x90;
-    } while ((int)lVar3 < iVar2 + -3);
+      lVar2 = lVar2 + 4;
+      pfVar4 = pfVar4 + 0x90;
+      *pfVar4 = fVar1;
+      param_2 = param_2 + 4;
+    } while ((int)lVar2 < param_1 + -3);
   }
-  if ((int)lVar3 < iVar2) {
-    param_1 = param_1 - lVar3;
-    param_2 = param_2 + -2;
+  if ((int)lVar2 < param_1) {
+    lVar2 = param_1 - lVar2;
+    pfVar4 = &param_2[-1].rhs;
     do {
-      pfVar5 = (float *)((int)param_2[9] * 0x18 + param_3);
-      fVar1 = pfVar5[5] * param_2[8] +
-              pfVar5[2] * param_2[4] + pfVar5[1] * param_2[3] + param_2[2] * *pfVar5 +
-              pfVar5[4] * param_2[7] + param_2[6] * pfVar5[3];
-      if (-1 < (int)param_2[0xd]) {
-        pfVar5 = (float *)((int)param_2[0xd] * 0x18 + param_3);
-        fVar1 = pfVar5[5] * param_2[0x10] +
-                pfVar5[2] * param_2[0xc] + pfVar5[1] * param_2[0xb] + param_2[10] * *pfVar5 + fVar1
-                + pfVar5[4] * param_2[0xf] + param_2[0xe] * pfVar5[3];
+      pfVar3 = param_3 + (int)pfVar4[9] * 6;
+      fVar1 = pfVar3[5] * pfVar4[8] +
+              pfVar3[2] * pfVar4[4] + pfVar3[1] * pfVar4[3] + pfVar4[2] * *pfVar3 +
+              pfVar3[4] * pfVar4[7] + pfVar4[6] * pfVar3[3];
+      if (-1 < (int)pfVar4[0xd]) {
+        pfVar3 = param_3 + (int)pfVar4[0xd] * 6;
+        fVar1 = pfVar3[5] * pfVar4[0x10] +
+                pfVar3[2] * pfVar4[0xc] + pfVar3[1] * pfVar4[0xb] + pfVar4[10] * *pfVar3 + fVar1 +
+                pfVar3[4] * pfVar4[0xf] + pfVar4[0xe] * pfVar3[3];
       }
-      param_2 = param_2 + 0x24;
-      *param_2 = fVar1;
-      param_1 = param_1 + -1;
-    } while (param_1 != 0);
+      pfVar4 = pfVar4 + 0x24;
+      *pfVar4 = fVar1;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
   return;
 }
@@ -211,12 +217,12 @@ void multiply_J(longlong param_1,float *param_2,int param_3)
 
 // 8269D4D0  ProcessOneConstraintRow_OneBody  (physics/ode/src/quickstep.cpp:283)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void ProcessOneConstraintRow_OneBody(uint param_1,uint param_2,int param_3,int param_4,int param_5)
+void ProcessOneConstraintRow_OneBody
+               (__vector4 *param_1,__vector4 *param_2,uint param_3,int param_4,
+               ConstraintRowData *param_5)
 
 {
-  uint uVar1;
+  ConstraintRowData *pCVar1;
   undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   undefined1 auVar4 [16];
@@ -230,27 +236,28 @@ void ProcessOneConstraintRow_OneBody(uint param_1,uint param_2,int param_3,int p
   
   auVar10 = vectorSplatImmediateSignedWord(0xff);
   auVar9 = vectorShiftLeftWord128(auVar10,auVar10);
-  uVar1 = param_3 * 0x90 + param_5;
-  auVar8 = *(undefined1 (*) [16])(uVar1 + 0x80 & 0xfffffff0);
-  auVar11 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
+  pCVar1 = param_5 + param_3;
+  auVar8 = *(undefined1 (*) [16])((uint)&pCVar1->lo & 0xfffffff0);
+  auVar11 = *(undefined1 (*) [16])((uint)pCVar1 & 0xfffffff0);
   auVar7 = vectorSplatWord(auVar8,3);
-  auVar4 = *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0);
+  auVar4 = *(undefined1 (*) [16])((uint)pCVar1->iMJ_body1Linear & 0xfffffff0);
   auVar2 = vectorSplatWord(auVar8,0);
-  auVar3 = *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0);
+  auVar3 = *(undefined1 (*) [16])((uint)pCVar1->iMJ_body1Angular & 0xfffffff0);
   auVar5 = vectorSplatWord(auVar8,1);
   auVar6 = vectorSplatWord(auVar8,2);
   auVar8 = vectorSplatWord(auVar11,3);
   if (-1 < param_4) {
     auVar2 = vectorShiftLeftWord128(auVar10,auVar10);
-    auVar10 = vectorSplatWord(*(undefined1 (*) [16])(param_4 * 0x90 + param_5 & 0xfffffff0),3);
+    auVar10 = vectorSplatWord(*(undefined1 (*) [16])((uint)(param_5 + param_4) & 0xfffffff0),3);
     auVar5 = vectorMultiplyFloatingPoint(auVar5,auVar10);
     auVar2 = auVar5 ^ auVar2;
   }
   auVar6 = vectorMultiplyAddFloatingPoint(auVar8,auVar7 ^ auVar9,auVar6);
-  auVar9 = vectorMultiplySum3FloatingPoint(*(undefined1 (*) [16])(param_1 & 0xfffffff0),auVar11);
+  auVar9 = vectorMultiplySum3FloatingPoint
+                     (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),auVar11);
   auVar7 = vectorMultiplySum3FloatingPoint
-                     (*(undefined1 (*) [16])(param_2 & 0xfffffff0),
-                      *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0));
+                     (*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)pCVar1->J_body1Angular & 0xfffffff0));
   auVar6 = vectorSubtractFloatingPoint128(auVar6,auVar9);
   auVar6 = vectorSubtractFloatingPoint128(auVar6,auVar7);
   auVar9 = vectorAddFloatingPoint128(auVar8,auVar6);
@@ -259,29 +266,28 @@ void ProcessOneConstraintRow_OneBody(uint param_1,uint param_2,int param_3,int p
   auVar5 = vectorConditionalSelect(auVar9,auVar5,auVar7);
   auVar5 = vectorConditionalSelect(auVar5,auVar2,auVar6);
   auVar2 = vectorSubtractFloatingPoint(auVar5,auVar8);
-  auVar8 = vectorPermute128(auVar11,auVar5,_DAT_8404f590);
-  *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar8;
+  auVar8 = vectorPermute128(auVar11,auVar5,(undefined1  [16])g_XYZw.field0_0x0);
+  *(undefined1 (*) [16])((uint)pCVar1 & 0xfffffff0) = auVar8;
   auVar4 = vectorMultiplyAddFloatingPoint
-                     (auVar2,auVar4,*(undefined1 (*) [16])(param_1 & 0xfffffff0));
-  *(undefined1 (*) [16])(param_1 & 0xfffffff0) = auVar4;
+                     (auVar2,auVar4,*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0));
+  *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0) = auVar4;
   auVar2 = vectorMultiplyAddFloatingPoint
-                     (auVar2,auVar3,*(undefined1 (*) [16])(param_2 & 0xfffffff0));
-  *(undefined1 (*) [16])(param_2 & 0xfffffff0) = auVar2;
+                     (auVar2,auVar3,*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0));
+  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar2;
   return;
 }
 
 
 // 8269D5B8  ProcessOneConstraintRow  (physics/ode/src/quickstep.cpp:423)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void ProcessOneConstraintRow(int param_1,int param_2,int param_3,int param_4)
+void ProcessOneConstraintRow
+               (ConstraintForce *param_1,uint param_2,int param_3,ConstraintRowData *param_4)
 
 {
   int iVar1;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
+  ConstraintForce *pCVar2;
+  ConstraintForce *pCVar3;
+  ConstraintRowData *pCVar4;
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
   undefined1 auVar7 [16];
@@ -301,25 +307,25 @@ void ProcessOneConstraintRow(int param_1,int param_2,int param_3,int param_4)
   undefined1 auVar21 [16];
   
   auVar20 = vectorSplatImmediateSignedWord(0);
-  uVar4 = param_2 * 0x90 + param_4;
-  uVar3 = 0;
-  auVar18 = *(undefined1 (*) [16])(uVar4 + 0x80 & 0xfffffff0);
-  auVar8 = *(undefined1 (*) [16])(uVar4 + 0x40 & 0xfffffff0);
-  iVar1 = *(int *)(uVar4 + 0x2c);
-  auVar17 = *(undefined1 (*) [16])(uVar4 & 0xfffffff0);
-  uVar2 = *(int *)(uVar4 + 0x1c) * 0x20 + param_1;
-  auVar7 = *(undefined1 (*) [16])(uVar4 + 0x50 & 0xfffffff0);
-  auVar10 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-  auVar9 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
+  pCVar4 = param_4 + param_2;
+  pCVar3 = (ConstraintForce *)0x0;
+  auVar18 = *(undefined1 (*) [16])((uint)&pCVar4->lo & 0xfffffff0);
+  auVar8 = *(undefined1 (*) [16])((uint)pCVar4->iMJ_body1Linear & 0xfffffff0);
+  iVar1 = pCVar4->body2;
+  auVar17 = *(undefined1 (*) [16])((uint)pCVar4 & 0xfffffff0);
+  pCVar2 = param_1 + pCVar4->body1;
+  auVar7 = *(undefined1 (*) [16])((uint)pCVar4->iMJ_body1Angular & 0xfffffff0);
+  auVar10 = *(undefined1 (*) [16])((uint)pCVar2 & 0xfffffff0);
+  auVar9 = *(undefined1 (*) [16])((uint)pCVar2->angular & 0xfffffff0);
   auVar6 = auVar20;
   auVar16 = auVar20;
   auVar21 = auVar20;
   if (-1 < iVar1) {
-    uVar3 = iVar1 * 0x20 + param_1;
-    auVar16 = *(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0);
-    auVar6 = *(undefined1 (*) [16])(uVar3 & 0xfffffff0);
-    auVar20 = *(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0);
-    auVar21 = *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0);
+    pCVar3 = param_1 + iVar1;
+    auVar16 = *(undefined1 (*) [16])((uint)pCVar4->J_body2Linear & 0xfffffff0);
+    auVar6 = *(undefined1 (*) [16])((uint)pCVar3 & 0xfffffff0);
+    auVar20 = *(undefined1 (*) [16])((uint)pCVar3->angular & 0xfffffff0);
+    auVar21 = *(undefined1 (*) [16])((uint)pCVar4->J_body2Angular & 0xfffffff0);
   }
   auVar5 = vectorSplatWord(auVar18,0);
   auVar12 = vectorSplatWord(auVar18,1);
@@ -329,14 +335,14 @@ void ProcessOneConstraintRow(int param_1,int param_2,int param_3,int param_4)
   if (-1 < param_3) {
     auVar5 = vectorSplatImmediateSignedWord(0xff);
     auVar5 = vectorShiftLeftWord128(auVar5,auVar5);
-    auVar15 = vectorSplatWord(*(undefined1 (*) [16])(param_3 * 0x90 + param_4 & 0xfffffff0),3);
+    auVar15 = vectorSplatWord(*(undefined1 (*) [16])((uint)(param_4 + param_3) & 0xfffffff0),3);
     auVar12 = vectorMultiplyFloatingPoint(auVar12,auVar15);
     auVar5 = auVar12 ^ auVar5;
   }
   auVar15 = vectorSplatImmediateSignedWord(0xff);
   auVar14 = vectorMultiplySum3FloatingPoint(auVar10,auVar17);
   auVar13 = vectorMultiplySum3FloatingPoint
-                      (auVar9,*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0));
+                      (auVar9,*(undefined1 (*) [16])((uint)pCVar4->J_body1Angular & 0xfffffff0));
   auVar15 = vectorShiftLeftWord128(auVar15,auVar15);
   auVar11 = vectorMultiplyAddFloatingPoint(auVar18,auVar19 ^ auVar15,auVar11);
   auVar11 = vectorSubtractFloatingPoint128(auVar11,auVar14);
@@ -353,62 +359,64 @@ void ProcessOneConstraintRow(int param_1,int param_2,int param_3,int param_4)
   auVar21 = vectorConditionalSelect(auVar11,auVar12,auVar21);
   auVar21 = vectorConditionalSelect(auVar21,auVar5,auVar16);
   auVar16 = vectorSubtractFloatingPoint(auVar21,auVar18);
-  auVar21 = vectorPermute128(auVar17,auVar21,_DAT_8404f590);
-  *(undefined1 (*) [16])(uVar4 & 0xfffffff0) = auVar21;
+  auVar21 = vectorPermute128(auVar17,auVar21,(undefined1  [16])g_XYZw.field0_0x0);
+  *(undefined1 (*) [16])((uint)pCVar4 & 0xfffffff0) = auVar21;
   auVar21 = vectorMultiplyAddFloatingPoint(auVar16,auVar8,auVar10);
   auVar7 = vectorMultiplyAddFloatingPoint(auVar16,auVar7,auVar9);
   if (-1 < iVar1) {
     auVar20 = vectorMultiplyAddFloatingPoint
-                        (auVar16,*(undefined1 (*) [16])(uVar4 + 0x70 & 0xfffffff0),auVar20);
+                        (auVar16,*(undefined1 (*) [16])((uint)pCVar4->iMJ_body2Angular & 0xfffffff0)
+                         ,auVar20);
     auVar6 = vectorMultiplyAddFloatingPoint
-                       (auVar16,*(undefined1 (*) [16])(uVar4 + 0x60 & 0xfffffff0),auVar6);
-    *(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0) = auVar20;
-    *(undefined1 (*) [16])(uVar3 & 0xfffffff0) = auVar6;
+                       (auVar16,*(undefined1 (*) [16])((uint)pCVar4->iMJ_body2Linear & 0xfffffff0),
+                        auVar6);
+    *(undefined1 (*) [16])((uint)pCVar3->angular & 0xfffffff0) = auVar20;
+    *(undefined1 (*) [16])((uint)pCVar3 & 0xfffffff0) = auVar6;
   }
-  *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0) = auVar7;
-  *(undefined1 (*) [16])(uVar2 & 0xfffffff0) = auVar21;
+  *(undefined1 (*) [16])((uint)pCVar2->angular & 0xfffffff0) = auVar7;
+  *(undefined1 (*) [16])((uint)pCVar2 & 0xfffffff0) = auVar21;
   return;
 }
 
 
 // 8269D738  SOR_LCP_irand  (physics/ode/src/quickstep.cpp:647)
 
-undefined4 SOR_LCP_irand(int param_1,int *param_2)
+int SOR_LCP_irand(int param_1,uint *param_2)
 
 {
   ulonglong uVar1;
   
-  if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8219a388,0x28b,0,0xffffffff82000f98,0xffffffff8219a3d0);
+  if (param_2 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x28b,0,"%s");
   }
-  uVar1 = (longlong)*param_2 * 0x343fd + 0x269ec3;
-  *param_2 = (int)uVar1;
+  uVar1 = (longlong)(int)*param_2 * 0x343fd + 0x269ec3;
+  *param_2 = (uint)uVar1;
   return (int)((longlong)((uVar1 >> 0x11 & 0x7fff) * (longlong)param_1) >> 0xf);
 }
 
 
 // 8269D7C8  SOR_LCP_MainLoop  (physics/ode/src/quickstep.cpp:664)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
-void SOR_LCP_MainLoop(undefined8 param_1,int param_2,int param_3,int param_4,uint *param_5,
-                     longlong param_6)
+void SOR_LCP_MainLoop(uint param_1,ConstraintRowData *param_2,int *param_3,ConstraintForce *param_4,
+                     dxQuickStepParameters *param_5,SorLcpData *param_6)
 
 {
   uint uVar1;
   int iVar2;
   undefined4 uVar3;
-  int iVar4;
-  uint uVar5;
-  longlong lVar6;
-  uint uVar8;
-  uint uVar9;
+  ConstraintRowData *pCVar4;
+  int iVar5;
+  ConstraintForce *pCVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ConstraintForce *pCVar9;
   uint uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  undefined1 auVar14 [16];
-  undefined1 auVar15 [16];
+  uint uVar11;
+  uint uVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  ulonglong uVar15;
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
@@ -426,107 +434,111 @@ void SOR_LCP_MainLoop(undefined8 param_1,int param_2,int param_3,int param_4,uin
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
-  uint uVar7;
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
   
-  lVar6 = __savegprlr();
-  uVar7 = (uint)lVar6;
-  uVar1 = *param_5;
-  uVar10 = 0;
-  uVar11 = 0xffffffff89abcdef;
+  lVar8 = (longlong)(int)param_6;
+  uVar7 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uVar1 = param_5->num_iterations;
+  uVar12 = 0;
+  uVar13 = 0xffffffff89abcdef;
   if (uVar1 != 0) {
     do {
-      if (((uVar10 & 7) == 7) && (uVar8 = 1, 1 < uVar7)) {
+      if (((uVar12 & 7) == 7) && (uVar10 = 1, 1 < (uVar7 & 0xffffffff))) {
         do {
-          uVar9 = uVar8 + 1;
-          uVar11 = (longlong)(int)uVar11 * 0x343fd + 0x269ec3;
-          iVar2 = (int)param_6;
-          iVar4 = (int)(((longlong)((uVar11 >> 0x11 & 0x7fff) * (longlong)(int)uVar9) >> 0xf &
+          uVar11 = uVar10 + 1;
+          uVar13 = (longlong)(int)uVar13 * 0x343fd + 0x269ec3;
+          iVar2 = (int)lVar8;
+          iVar5 = (int)(((longlong)((uVar13 >> 0x11 & 0x7fff) * (longlong)(int)uVar11) >> 0xf &
                         0xffffffffU) << 2);
-          uVar3 = *(undefined4 *)(iVar4 + iVar2);
-          *(undefined4 *)(iVar4 + iVar2) = *(undefined4 *)(uVar8 * 4 + iVar2);
-          *(undefined4 *)(uVar8 * 4 + iVar2) = uVar3;
-          uVar8 = uVar9;
-        } while (uVar9 < uVar7);
+          uVar3 = *(undefined4 *)(iVar5 + iVar2);
+          *(undefined4 *)(iVar5 + iVar2) = *(undefined4 *)(uVar10 * 4 + iVar2);
+          *(undefined4 *)(uVar10 * 4 + iVar2) = uVar3;
+          uVar10 = uVar11;
+        } while ((ulonglong)uVar11 < (uVar7 & 0xffffffff));
       }
-      if (uVar7 != 0) {
-        auVar27 = vectorSplatImmediateSignedWord(0);
-        auVar26 = vectorSplatImmediateSignedWord(0xff);
-        lVar12 = param_6;
-        lVar13 = lVar6;
+      if ((uVar7 & 0xffffffff) != 0) {
+        auVar29 = vectorSplatImmediateSignedWord(0);
+        auVar28 = vectorSplatImmediateSignedWord(0xff);
+        lVar14 = lVar8;
+        uVar15 = uVar7;
         do {
-          uVar9 = 0;
-          uVar8 = *(int *)lVar12 * 0x90 + param_2;
-          iVar4 = *(int *)(*(int *)lVar12 * 4 + param_3);
-          auVar31 = *(undefined1 (*) [16])(uVar8 + 0x80 & 0xfffffff0);
-          iVar2 = *(int *)(uVar8 + 0x2c);
-          auVar30 = *(undefined1 (*) [16])(uVar8 & 0xfffffff0);
-          auVar18 = *(undefined1 (*) [16])(uVar8 + 0x40 & 0xfffffff0);
-          uVar5 = *(int *)(uVar8 + 0x1c) * 0x20 + param_4;
-          auVar17 = *(undefined1 (*) [16])(uVar8 + 0x50 & 0xfffffff0);
-          auVar20 = *(undefined1 (*) [16])(uVar5 & 0xfffffff0);
-          auVar19 = *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0);
-          auVar15 = auVar27;
-          auVar16 = auVar27;
-          auVar28 = auVar27;
-          auVar29 = auVar27;
+          pCVar9 = (ConstraintForce *)0x0;
+          pCVar4 = param_2 + *(int *)lVar14;
+          auVar33 = *(undefined1 (*) [16])((uint)&pCVar4->lo & 0xfffffff0);
+          iVar2 = pCVar4->body2;
+          auVar32 = *(undefined1 (*) [16])((uint)pCVar4 & 0xfffffff0);
+          auVar20 = *(undefined1 (*) [16])((uint)pCVar4->iMJ_body1Linear & 0xfffffff0);
+          pCVar6 = param_4 + pCVar4->body1;
+          auVar19 = *(undefined1 (*) [16])((uint)pCVar4->iMJ_body1Angular & 0xfffffff0);
+          auVar22 = *(undefined1 (*) [16])((uint)pCVar6 & 0xfffffff0);
+          auVar21 = *(undefined1 (*) [16])((uint)pCVar6->angular & 0xfffffff0);
+          auVar17 = auVar29;
+          auVar18 = auVar29;
+          auVar30 = auVar29;
+          auVar31 = auVar29;
           if (-1 < iVar2) {
-            auVar29 = *(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0);
-            auVar28 = *(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0);
-            uVar9 = iVar2 * 0x20 + param_4;
-            auVar16 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
-            auVar15 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
+            auVar31 = *(undefined1 (*) [16])((uint)pCVar4->J_body2Linear & 0xfffffff0);
+            auVar30 = *(undefined1 (*) [16])((uint)pCVar4->J_body2Angular & 0xfffffff0);
+            pCVar9 = param_4 + iVar2;
+            auVar18 = *(undefined1 (*) [16])((uint)pCVar9 & 0xfffffff0);
+            auVar17 = *(undefined1 (*) [16])((uint)pCVar9->angular & 0xfffffff0);
           }
-          auVar14 = vectorSplatWord(auVar31,0);
-          auVar22 = vectorSplatWord(auVar31,1);
-          auVar21 = vectorSplatWord(auVar31,2);
-          auVar32 = vectorSplatWord(auVar31,3);
-          auVar31 = vectorSplatWord(auVar30,3);
-          if (-1 < iVar4) {
-            auVar14 = vectorShiftLeftWord128(auVar26,auVar26);
-            auVar25 = vectorSplatWord(*(undefined1 (*) [16])(iVar4 * 0x90 + param_2 & 0xfffffff0),3)
-            ;
-            auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar25);
-            auVar14 = auVar22 ^ auVar14;
+          auVar16 = vectorSplatWord(auVar33,0);
+          auVar24 = vectorSplatWord(auVar33,1);
+          auVar23 = vectorSplatWord(auVar33,2);
+          auVar34 = vectorSplatWord(auVar33,3);
+          auVar33 = vectorSplatWord(auVar32,3);
+          if (-1 < param_3[*(int *)lVar14]) {
+            auVar16 = vectorShiftLeftWord128(auVar28,auVar28);
+            auVar27 = vectorSplatWord(*(undefined1 (*) [16])
+                                       ((uint)(param_2 + param_3[*(int *)lVar14]) & 0xfffffff0),3);
+            auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar27);
+            auVar16 = auVar24 ^ auVar16;
           }
-          auVar24 = vectorShiftLeftWord128(auVar26,auVar26);
-          auVar23 = vectorMultiplySum3FloatingPoint(auVar20,auVar30);
-          auVar25 = vectorMultiplySum3FloatingPoint
-                              (auVar19,*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0));
-          auVar21 = vectorMultiplyAddFloatingPoint(auVar31,auVar32 ^ auVar24,auVar21);
-          auVar21 = vectorSubtractFloatingPoint128(auVar21,auVar23);
-          auVar21 = vectorSubtractFloatingPoint128(auVar21,auVar25);
+          auVar26 = vectorShiftLeftWord128(auVar28,auVar28);
+          auVar25 = vectorMultiplySum3FloatingPoint(auVar22,auVar32);
+          auVar27 = vectorMultiplySum3FloatingPoint
+                              (auVar21,*(undefined1 (*) [16])
+                                        ((uint)pCVar4->J_body1Angular & 0xfffffff0));
+          auVar23 = vectorMultiplyAddFloatingPoint(auVar33,auVar34 ^ auVar26,auVar23);
+          auVar23 = vectorSubtractFloatingPoint128(auVar23,auVar25);
+          auVar23 = vectorSubtractFloatingPoint128(auVar23,auVar27);
           if (-1 < iVar2) {
-            auVar32 = vectorMultiplySum3FloatingPoint(auVar16,auVar29);
-            auVar29 = vectorMultiplySum3FloatingPoint(auVar15,auVar28);
-            auVar28 = vectorSubtractFloatingPoint128(auVar21,auVar32);
-            auVar21 = vectorSubtractFloatingPoint128(auVar28,auVar29);
+            auVar34 = vectorMultiplySum3FloatingPoint(auVar18,auVar31);
+            auVar31 = vectorMultiplySum3FloatingPoint(auVar17,auVar30);
+            auVar30 = vectorSubtractFloatingPoint128(auVar23,auVar34);
+            auVar23 = vectorSubtractFloatingPoint128(auVar30,auVar31);
           }
-          auVar21 = vectorAddFloatingPoint128(auVar31,auVar21);
-          auVar29 = vectorCompareGreaterThanFloatingPoint128(auVar21,auVar22);
-          auVar28 = vectorCompareGreaterThanFloatingPoint128(auVar14,auVar21);
-          auVar29 = vectorConditionalSelect(auVar21,auVar22,auVar29);
-          auVar29 = vectorConditionalSelect(auVar29,auVar14,auVar28);
-          auVar28 = vectorSubtractFloatingPoint(auVar29,auVar31);
-          auVar29 = vectorPermute128(auVar30,auVar29,_DAT_8404f590);
-          *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar29;
-          auVar29 = vectorMultiplyAddFloatingPoint(auVar28,auVar18,auVar20);
-          auVar17 = vectorMultiplyAddFloatingPoint(auVar28,auVar17,auVar19);
+          auVar23 = vectorAddFloatingPoint128(auVar33,auVar23);
+          auVar31 = vectorCompareGreaterThanFloatingPoint128(auVar23,auVar24);
+          auVar30 = vectorCompareGreaterThanFloatingPoint128(auVar16,auVar23);
+          auVar31 = vectorConditionalSelect(auVar23,auVar24,auVar31);
+          auVar31 = vectorConditionalSelect(auVar31,auVar16,auVar30);
+          auVar30 = vectorSubtractFloatingPoint(auVar31,auVar33);
+          auVar31 = vectorPermute128(auVar32,auVar31,(undefined1  [16])g_XYZw.field0_0x0);
+          *(undefined1 (*) [16])((uint)pCVar4 & 0xfffffff0) = auVar31;
+          auVar31 = vectorMultiplyAddFloatingPoint(auVar30,auVar20,auVar22);
+          auVar19 = vectorMultiplyAddFloatingPoint(auVar30,auVar19,auVar21);
           if (-1 < iVar2) {
-            auVar18 = vectorMultiplyAddFloatingPoint
-                                (auVar28,*(undefined1 (*) [16])(uVar8 + 0x70 & 0xfffffff0),auVar15);
-            auVar15 = vectorMultiplyAddFloatingPoint
-                                (auVar28,*(undefined1 (*) [16])(uVar8 + 0x60 & 0xfffffff0),auVar16);
-            *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0) = auVar18;
-            *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar15;
+            auVar20 = vectorMultiplyAddFloatingPoint
+                                (auVar30,*(undefined1 (*) [16])
+                                          ((uint)pCVar4->iMJ_body2Angular & 0xfffffff0),auVar17);
+            auVar17 = vectorMultiplyAddFloatingPoint
+                                (auVar30,*(undefined1 (*) [16])
+                                          ((uint)pCVar4->iMJ_body2Linear & 0xfffffff0),auVar18);
+            *(undefined1 (*) [16])((uint)pCVar9->angular & 0xfffffff0) = auVar20;
+            *(undefined1 (*) [16])((uint)pCVar9 & 0xfffffff0) = auVar17;
           }
-          *(undefined1 (*) [16])(uVar5 & 0xfffffff0) = auVar29;
-          lVar12 = lVar12 + 4;
-          *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0) = auVar17;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          *(undefined1 (*) [16])((uint)pCVar6 & 0xfffffff0) = auVar31;
+          lVar14 = lVar14 + 4;
+          *(undefined1 (*) [16])((uint)pCVar6->angular & 0xfffffff0) = auVar19;
+          uVar15 = uVar15 - 1;
+        } while (uVar15 != 0);
       }
-      uVar10 = uVar10 + 1;
-    } while (uVar10 < uVar1);
+      uVar12 = uVar12 + 1;
+    } while (uVar12 < uVar1);
   }
   __restgprlr();
   return;
@@ -535,29 +547,27 @@ void SOR_LCP_MainLoop(undefined8 param_1,int param_2,int param_3,int param_4,uin
 
 // 8269D9F8  SOR_LCP_MainLoop_OneBody  (physics/ode/src/quickstep.cpp:707)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void SOR_LCP_MainLoop_OneBody
-               (undefined8 param_1,int param_2,int param_3,longlong param_4,uint *param_5,
-               longlong param_6)
+               (uint param_1,ConstraintRowData *param_2,int *param_3,ConstraintForce *param_4,
+               dxQuickStepParameters *param_5,SorLcpData *param_6)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
   undefined4 uVar4;
-  int iVar5;
-  ulonglong uVar6;
+  ConstraintRowData *pCVar5;
+  int iVar6;
   ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  uint uVar11;
+  ulonglong uVar8;
+  uint uVar9;
   ulonglong uVar10;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
+  uint uVar12;
+  ulonglong uVar11;
+  longlong lVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
@@ -569,97 +579,103 @@ void SOR_LCP_MainLoop_OneBody
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
   undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
   uint local_f0;
   
-  uVar6 = __savegprlr();
-  uVar1 = *(uint *)(param_2 + 0x1c);
-  uVar2 = *param_5;
-  uVar9 = ((ulonglong)uVar1 & 0x7ffffff) * 0x20 + param_4;
-  uVar7 = uVar9 + 0x10;
+  lVar13 = (longlong)(int)param_6;
+  lVar16 = (longlong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uVar1 = param_2->body1;
+  uVar2 = param_5->num_iterations;
+  uVar10 = ((ulonglong)uVar1 & 0x7ffffff) * 0x20 + lVar16;
+  uVar8 = uVar10 + 0x10;
   local_f0 = 0;
-  uVar11 = (uint)uVar9;
-  auVar27 = *(undefined1 (*) [16])(uVar11 & 0xfffffff0);
-  uVar12 = 0xffffffff89abcdef;
-  uVar8 = (uint)uVar7;
-  auVar26 = *(undefined1 (*) [16])(uVar8 & 0xfffffff0);
-  uVar13 = uVar7;
-  uVar10 = uVar9;
+  uVar12 = (uint)uVar10;
+  auVar29 = *(undefined1 (*) [16])(uVar12 & 0xfffffff0);
+  uVar14 = 0xffffffff89abcdef;
+  uVar9 = (uint)uVar8;
+  auVar28 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+  uVar15 = uVar8;
+  uVar11 = uVar10;
   if (uVar2 != 0) {
     do {
-      if (((local_f0 & 7) == 7) && (uVar8 = 1, 1 < (uVar6 & 0xffffffff))) {
+      if (((local_f0 & 7) == 7) && (uVar9 = 1, 1 < (uVar7 & 0xffffffff))) {
         do {
-          uVar11 = uVar8 + 1;
-          uVar12 = (longlong)(int)uVar12 * 0x343fd + 0x269ec3;
-          iVar3 = (int)param_6;
-          iVar5 = (int)(((longlong)((uVar12 >> 0x11 & 0x7fff) * (longlong)(int)uVar11) >> 0xf &
+          uVar12 = uVar9 + 1;
+          uVar14 = (longlong)(int)uVar14 * 0x343fd + 0x269ec3;
+          iVar3 = (int)lVar13;
+          iVar6 = (int)(((longlong)((uVar14 >> 0x11 & 0x7fff) * (longlong)(int)uVar12) >> 0xf &
                         0xffffffffU) << 2);
-          uVar4 = *(undefined4 *)(iVar5 + iVar3);
-          *(undefined4 *)(iVar5 + iVar3) = *(undefined4 *)(uVar8 * 4 + iVar3);
-          *(undefined4 *)(uVar8 * 4 + iVar3) = uVar4;
-          uVar8 = uVar11;
-        } while ((ulonglong)uVar11 < (uVar6 & 0xffffffff));
+          uVar4 = *(undefined4 *)(iVar6 + iVar3);
+          *(undefined4 *)(iVar6 + iVar3) = *(undefined4 *)(uVar9 * 4 + iVar3);
+          *(undefined4 *)(uVar9 * 4 + iVar3) = uVar4;
+          uVar9 = uVar12;
+        } while ((ulonglong)uVar12 < (uVar7 & 0xffffffff));
       }
-      if ((uVar6 & 0xffffffff) != 0) {
-        auVar25 = vectorSplatImmediateSignedWord(0xff);
-        uVar13 = uVar6;
-        lVar14 = param_6;
+      if ((uVar7 & 0xffffffff) != 0) {
+        auVar27 = vectorSplatImmediateSignedWord(0xff);
+        uVar15 = uVar7;
+        lVar16 = lVar13;
         do {
-          iVar3 = *(int *)lVar14;
-          uVar8 = iVar3 * 0x90 + param_2;
-          if (uVar1 != *(uint *)(uVar8 + 0x1c)) {
-            MyAssertHandler(0xffffffff8219a388,0x2f8,0,0xffffffff82000f98,
-                            "body == rows[index].body1");
+          iVar3 = *(int *)lVar16;
+          pCVar5 = param_2 + iVar3;
+          if (uVar1 != pCVar5->body1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                            ,0x2f8,0,"%s");
           }
-          if (-1 < *(int *)(uVar8 + 0x2c)) {
-            MyAssertHandler(0xffffffff8219a388,0x2f9,0,0xffffffff82000f98,"rows[index].body2 < 0");
+          if (-1 < pCVar5->body2) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                            ,0x2f9,0,"%s");
           }
-          auVar23 = *(undefined1 (*) [16])(uVar8 + 0x80 & 0xfffffff0);
-          auVar22 = vectorShiftLeftWord128(auVar25,auVar25);
-          auVar24 = *(undefined1 (*) [16])(uVar8 & 0xfffffff0);
-          auVar21 = vectorSplatWord(auVar23,3);
-          auVar17 = *(undefined1 (*) [16])(uVar8 + 0x40 & 0xfffffff0);
-          auVar18 = vectorSplatWord(auVar24,3);
-          auVar16 = *(undefined1 (*) [16])(uVar8 + 0x50 & 0xfffffff0);
-          auVar15 = vectorSplatWord(auVar23,0);
-          iVar3 = *(int *)(iVar3 * 4 + param_3);
-          auVar19 = vectorSplatWord(auVar23,1);
-          auVar23 = vectorSplatWord(auVar23,2);
-          if (-1 < iVar3) {
-            auVar15 = vectorShiftLeftWord128(auVar25,auVar25);
-            auVar20 = vectorSplatWord(*(undefined1 (*) [16])(iVar3 * 0x90 + param_2 & 0xfffffff0),3)
-            ;
-            auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar20);
-            auVar15 = auVar19 ^ auVar15;
+          auVar25 = *(undefined1 (*) [16])((uint)&pCVar5->lo & 0xfffffff0);
+          auVar24 = vectorShiftLeftWord128(auVar27,auVar27);
+          auVar26 = *(undefined1 (*) [16])((uint)pCVar5 & 0xfffffff0);
+          auVar23 = vectorSplatWord(auVar25,3);
+          auVar19 = *(undefined1 (*) [16])((uint)pCVar5->iMJ_body1Linear & 0xfffffff0);
+          auVar20 = vectorSplatWord(auVar26,3);
+          auVar18 = *(undefined1 (*) [16])((uint)pCVar5->iMJ_body1Angular & 0xfffffff0);
+          auVar17 = vectorSplatWord(auVar25,0);
+          auVar21 = vectorSplatWord(auVar25,1);
+          auVar25 = vectorSplatWord(auVar25,2);
+          if (-1 < param_3[iVar3]) {
+            auVar17 = vectorShiftLeftWord128(auVar27,auVar27);
+            auVar22 = vectorSplatWord(*(undefined1 (*) [16])
+                                       ((uint)(param_2 + param_3[iVar3]) & 0xfffffff0),3);
+            auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar22);
+            auVar17 = auVar21 ^ auVar17;
           }
-          auVar20 = vectorMultiplySum3FloatingPoint(auVar27,auVar24);
-          auVar23 = vectorMultiplyAddFloatingPoint(auVar18,auVar21 ^ auVar22,auVar23);
-          auVar21 = vectorMultiplySum3FloatingPoint
-                              (auVar26,*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0));
-          uVar13 = uVar13 - 1;
-          lVar14 = lVar14 + 4;
-          auVar23 = vectorSubtractFloatingPoint128(auVar23,auVar20);
-          auVar23 = vectorSubtractFloatingPoint128(auVar23,auVar21);
-          auVar22 = vectorAddFloatingPoint128(auVar18,auVar23);
-          auVar21 = vectorCompareGreaterThanFloatingPoint128(auVar22,auVar19);
-          auVar23 = vectorCompareGreaterThanFloatingPoint128(auVar15,auVar22);
-          auVar19 = vectorConditionalSelect(auVar22,auVar19,auVar21);
-          auVar19 = vectorConditionalSelect(auVar19,auVar15,auVar23);
-          auVar15 = vectorSubtractFloatingPoint(auVar19,auVar18);
-          auVar18 = vectorPermute128(auVar24,auVar19,_DAT_8404f590);
-          *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar18;
-          auVar27 = vectorMultiplyAddFloatingPoint128(auVar15,auVar17,auVar27);
-          auVar26 = vectorMultiplyAddFloatingPoint128(auVar15,auVar16,auVar26);
-        } while (uVar13 != 0);
-        uVar10 = uVar9 & 0xffffffff;
-        uVar13 = uVar7 & 0xffffffff;
+          auVar22 = vectorMultiplySum3FloatingPoint(auVar29,auVar26);
+          auVar25 = vectorMultiplyAddFloatingPoint(auVar20,auVar23 ^ auVar24,auVar25);
+          auVar23 = vectorMultiplySum3FloatingPoint
+                              (auVar28,*(undefined1 (*) [16])
+                                        ((uint)pCVar5->J_body1Angular & 0xfffffff0));
+          uVar15 = uVar15 - 1;
+          lVar16 = lVar16 + 4;
+          auVar25 = vectorSubtractFloatingPoint128(auVar25,auVar22);
+          auVar25 = vectorSubtractFloatingPoint128(auVar25,auVar23);
+          auVar24 = vectorAddFloatingPoint128(auVar20,auVar25);
+          auVar23 = vectorCompareGreaterThanFloatingPoint128(auVar24,auVar21);
+          auVar25 = vectorCompareGreaterThanFloatingPoint128(auVar17,auVar24);
+          auVar21 = vectorConditionalSelect(auVar24,auVar21,auVar23);
+          auVar21 = vectorConditionalSelect(auVar21,auVar17,auVar25);
+          auVar17 = vectorSubtractFloatingPoint(auVar21,auVar20);
+          auVar20 = vectorPermute128(auVar26,auVar21,(undefined1  [16])g_XYZw.field0_0x0);
+          *(undefined1 (*) [16])((uint)pCVar5 & 0xfffffff0) = auVar20;
+          auVar29 = vectorMultiplyAddFloatingPoint128(auVar17,auVar19,auVar29);
+          auVar28 = vectorMultiplyAddFloatingPoint128(auVar17,auVar18,auVar28);
+        } while (uVar15 != 0);
+        uVar11 = uVar10 & 0xffffffff;
+        uVar15 = uVar8 & 0xffffffff;
       }
-      uVar11 = (uint)uVar10;
-      uVar8 = (uint)uVar13;
+      uVar12 = (uint)uVar11;
+      uVar9 = (uint)uVar15;
       local_f0 = local_f0 + 1;
     } while (local_f0 < uVar2);
   }
-  *(undefined1 (*) [16])(uVar8 & 0xfffffff0) = auVar26;
-  *(undefined1 (*) [16])(uVar11 & 0xfffffff0) = auVar27;
+  *(undefined1 (*) [16])(uVar9 & 0xfffffff0) = auVar28;
+  *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar29;
   __restgprlr();
   return;
 }
@@ -667,271 +683,277 @@ void SOR_LCP_MainLoop_OneBody
 
 // 8269EA00  SOR_LCP  (physics/ode/src/quickstep.cpp:794)
 
-void SOR_LCP(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-            undefined8 param_5,undefined8 param_6,longlong param_7,longlong param_8)
+void SOR_LCP(int param_1,int param_2,ConstraintRowData *param_3,dxBody **param_4,float *param_5,
+            ConstraintForce *param_6,float *param_7,int *param_8,dxQuickStepParameters *param_9,
+            SorLcpData *param_10)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   ulonglong uVar4;
-  int iVar5;
+  uint uVar5;
   int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  ConstraintRowData *pCVar7;
+  int iVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  longlong lVar11;
+  int iVar12;
   ulonglong uVar13;
   longlong lVar14;
-  double dVar15;
-  double dVar16;
+  ulonglong uVar15;
+  longlong lVar16;
   double dVar17;
-  int in_stack_00000054;
-  uint in_stack_0000005c;
+  double dVar18;
+  double dVar19;
+  dxQuickStepParameters *in_stack_00000054;
+  SorLcpData *in_stack_0000005c;
   
-  uVar4 = __savegprlr_18();
-  dVar16 = (double)*(float *)(in_stack_00000054 + 4);
-  iVar5 = (int)uVar4;
-  if (0x240 < iVar5) {
-    MyAssertHandler(0xffffffff8219a388,0x322,0,0xffffffff8219a878,0xffffffff8219a898,uVar4);
+  lVar10 = (longlong)(int)param_8;
+  lVar11 = (longlong)(int)param_7;
+  uVar15 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar4 = __savegprlr_18(param_1);
+  dVar18 = (double)in_stack_00000054->w;
+  uVar5 = (uint)uVar4;
+  if (0x240 < (int)uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x322,0,"%s\n\t(constraintRowCount) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x323,0,0xffffffff82000f98,0xffffffff8219a824);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x323,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x324,0,0xffffffff82000f98,0xffffffff82003cbc);
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x324,0,"%s");
   }
-  uVar11 = (ulonglong)in_stack_0000005c;
-  if (uVar11 == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x326,0,0xffffffff82000f98,0xffffffff8219a874);
+  uVar13 = ZEXT48(in_stack_0000005c);
+  if (uVar13 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x326,0,"%s");
   }
-  if ((int)param_2 < 1) {
-    MyAssertHandler(0xffffffff8219a388,0x327,0,0xffffffff82000f98,0xffffffff8219a864);
+  if (param_2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x327,0,"%s");
   }
   Profile_Begin(0x188);
-  compute_invM_JT(uVar4,param_2,param_3,param_4,param_5);
-  memset((void *)param_6,0,(size_t)((param_2 & 0xffffffff) << 5));
-  if (0 < iVar5) {
-    lVar12 = param_7 + -4;
-    lVar14 = param_3 - 4;
-    dVar15 = 0.0;
-    uVar13 = uVar4;
+  pCVar7 = (ConstraintRowData *)uVar9;
+  compute_invM_JT(uVar5,param_2,pCVar7,(dxBody **)uVar15,param_5);
+  memset();
+  if (0 < (int)uVar5) {
+    lVar14 = lVar11 + -4;
+    lVar16 = uVar9 - 4;
+    dVar17 = 0.0;
+    uVar15 = uVar4;
     do {
-      iVar7 = (int)lVar14;
-      dVar17 = (double)(*(float *)(iVar7 + 0x5c) * *(float *)(iVar7 + 0x1c) +
-                       *(float *)(iVar7 + 0x4c) * *(float *)(iVar7 + 0xc) +
-                       *(float *)(iVar7 + 0x48) * *(float *)(iVar7 + 8) +
-                       *(float *)(iVar7 + 0x44) * *(float *)(iVar7 + 4) +
-                       *(float *)(iVar7 + 0x54) * *(float *)(iVar7 + 0x14) +
-                       *(float *)(iVar7 + 0x58) * *(float *)(iVar7 + 0x18));
-      if (-1 < *(int *)(iVar7 + 0x30)) {
-        dVar17 = (double)(*(float *)(iVar7 + 0x7c) * *(float *)(iVar7 + 0x3c) +
-                         (float)((double)(*(float *)(iVar7 + 0x6c) * *(float *)(iVar7 + 0x2c) +
-                                         *(float *)(iVar7 + 100) * *(float *)(iVar7 + 0x24) +
-                                         *(float *)(iVar7 + 0x68) * *(float *)(iVar7 + 0x28)) +
-                                dVar17) +
-                         *(float *)(iVar7 + 0x34) * *(float *)(iVar7 + 0x74) +
-                         *(float *)(iVar7 + 0x38) * *(float *)(iVar7 + 0x78));
+      iVar6 = (int)lVar16;
+      dVar19 = (double)(*(float *)(iVar6 + 0x5c) * *(float *)(iVar6 + 0x1c) +
+                       *(float *)(iVar6 + 0x4c) * *(float *)(iVar6 + 0xc) +
+                       *(float *)(iVar6 + 0x48) * *(float *)(iVar6 + 8) +
+                       *(float *)(iVar6 + 0x44) * *(float *)(iVar6 + 4) +
+                       *(float *)(iVar6 + 0x54) * *(float *)(iVar6 + 0x14) +
+                       *(float *)(iVar6 + 0x58) * *(float *)(iVar6 + 0x18));
+      if (-1 < *(int *)(iVar6 + 0x30)) {
+        dVar19 = (double)(*(float *)(iVar6 + 0x7c) * *(float *)(iVar6 + 0x3c) +
+                         (float)((double)(*(float *)(iVar6 + 0x6c) * *(float *)(iVar6 + 0x2c) +
+                                         *(float *)(iVar6 + 100) * *(float *)(iVar6 + 0x24) +
+                                         *(float *)(iVar6 + 0x68) * *(float *)(iVar6 + 0x28)) +
+                                dVar19) +
+                         *(float *)(iVar6 + 0x34) * *(float *)(iVar6 + 0x74) +
+                         *(float *)(iVar6 + 0x38) * *(float *)(iVar6 + 0x78));
       }
-      if ((double)(float)((double)*(float *)((int)lVar12 + 4) + dVar17) == dVar15) {
-        MyAssertHandler(0xffffffff8219a388,0x35a,0,0xffffffff82000f98,0xffffffff8219a850);
+      if ((double)(float)((double)*(float *)((int)lVar14 + 4) + dVar19) == dVar17) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                        ,0x35a,0,"%s");
       }
-      lVar12 = lVar12 + 4;
-      uVar13 = uVar13 - 1;
+      lVar14 = lVar14 + 4;
+      uVar15 = uVar15 - 1;
+      lVar16 = lVar16 + 0x90;
+      *(float *)lVar16 = (float)(dVar18 / (double)(float)((double)*(float *)lVar14 + dVar19));
+    } while (uVar15 != 0);
+  }
+  uVar15 = 0;
+  if (3 < (int)uVar5) {
+    lVar16 = uVar9 - 4;
+    lVar14 = lVar11 + -4;
+    do {
+      iVar6 = (int)lVar16;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      fVar2 = *(float *)(iVar6 + 8);
+      fVar3 = *(float *)(iVar6 + 0xc);
+      *(float *)uVar9 = *(float *)uVar9 * fVar1;
+      *(float *)(iVar6 + 8) = fVar2 * fVar1;
+      *(float *)(iVar6 + 0xc) = fVar3 * fVar1;
+      *(float *)(iVar6 + 0x14) = *(float *)(iVar6 + 0x14) * fVar1;
+      *(float *)(iVar6 + 0x18) = *(float *)(iVar6 + 0x18) * fVar1;
+      *(float *)(iVar6 + 0x1c) = *(float *)(iVar6 + 0x1c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 0x24) = *(float *)(iVar6 + 0x24) * fVar1;
+      *(float *)(iVar6 + 0x28) = *(float *)(iVar6 + 0x28) * fVar1;
+      *(float *)(iVar6 + 0x2c) = *(float *)(iVar6 + 0x2c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 0x34) = *(float *)(iVar6 + 0x34) * fVar1;
+      *(float *)(iVar6 + 0x38) = *(float *)(iVar6 + 0x38) * fVar1;
+      *(float *)(iVar6 + 0x3c) = *(float *)(iVar6 + 0x3c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x120);
+      *(float *)(iVar6 + 0x8c) = *(float *)(iVar6 + 0x8c) * *(float *)(iVar6 + 0x90);
+      iVar8 = (int)lVar14;
+      *(float *)(iVar6 + 0x90) = *(float *)(iVar8 + 4) * *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 0x94) = *(float *)(iVar6 + 0x94) * fVar1;
+      *(float *)(iVar6 + 0x9c) = *(float *)(iVar6 + 0x9c) * fVar1;
+      *(float *)(iVar6 + 0x98) = *(float *)(iVar6 + 0x98) * fVar1;
+      *(float *)(iVar6 + 0xa4) = *(float *)(iVar6 + 0xa4) * fVar1;
+      *(float *)(iVar6 + 0xa8) = *(float *)(iVar6 + 0xa8) * fVar1;
+      *(float *)(iVar6 + 0xac) = *(float *)(iVar6 + 0xac) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x120);
+      *(float *)(iVar6 + 0xb4) = *(float *)(iVar6 + 0xb4) * fVar1;
+      *(float *)(iVar6 + 0xb8) = *(float *)(iVar6 + 0xb8) * fVar1;
+      *(float *)(iVar6 + 0xbc) = *(float *)(iVar6 + 0xbc) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x120);
+      *(float *)(iVar6 + 0xc4) = *(float *)(iVar6 + 0xc4) * fVar1;
+      *(float *)(iVar6 + 200) = *(float *)(iVar6 + 200) * fVar1;
+      uVar15 = uVar15 + 4;
+      *(float *)(iVar6 + 0xcc) = *(float *)(iVar6 + 0xcc) * fVar1;
+      uVar9 = uVar9 + 0x240;
+      fVar1 = *(float *)(iVar6 + 0x1b0);
+      *(float *)(iVar6 + 0x11c) = *(float *)(iVar6 + 0x11c) * *(float *)(iVar6 + 0x120);
+      *(float *)(iVar6 + 0x120) = *(float *)(iVar8 + 8) * *(float *)(iVar6 + 0x120);
+      *(float *)(iVar6 + 0x124) = *(float *)(iVar6 + 0x124) * fVar1;
+      *(float *)(iVar6 + 0x128) = *(float *)(iVar6 + 0x128) * fVar1;
+      *(float *)(iVar6 + 300) = *(float *)(iVar6 + 300) * fVar1;
+      *(float *)(iVar6 + 0x134) = *(float *)(iVar6 + 0x134) * fVar1;
+      *(float *)(iVar6 + 0x138) = *(float *)(iVar6 + 0x138) * fVar1;
+      *(float *)(iVar6 + 0x13c) = *(float *)(iVar6 + 0x13c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x1b0);
+      *(float *)(iVar6 + 0x144) = *(float *)(iVar6 + 0x144) * fVar1;
+      *(float *)(iVar6 + 0x148) = *(float *)(iVar6 + 0x148) * fVar1;
+      *(float *)(iVar6 + 0x14c) = *(float *)(iVar6 + 0x14c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x1b0);
+      *(float *)(iVar6 + 0x154) = *(float *)(iVar6 + 0x154) * fVar1;
+      *(float *)(iVar6 + 0x158) = *(float *)(iVar6 + 0x158) * fVar1;
+      *(float *)(iVar6 + 0x15c) = *(float *)(iVar6 + 0x15c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x240);
+      *(float *)(iVar6 + 0x1ac) = *(float *)(iVar6 + 0x1b0) * *(float *)(iVar6 + 0x1ac);
+      fVar2 = *(float *)(iVar8 + 0xc);
+      *(float *)(iVar6 + 0x1b4) = *(float *)(iVar6 + 0x1b4) * fVar1;
+      *(float *)(iVar6 + 0x1b0) = *(float *)(iVar6 + 0x1b0) * fVar2;
+      *(float *)(iVar6 + 0x1b8) = *(float *)(iVar6 + 0x1b8) * fVar1;
+      *(float *)(iVar6 + 0x1bc) = *(float *)(iVar6 + 0x1bc) * fVar1;
+      *(float *)(iVar6 + 0x1c4) = *(float *)(iVar6 + 0x1c4) * fVar1;
+      *(float *)(iVar6 + 0x1c8) = *(float *)(iVar6 + 0x1c8) * fVar1;
+      *(float *)(iVar6 + 0x1cc) = *(float *)(iVar6 + 0x1cc) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x240);
+      *(float *)(iVar6 + 0x1d4) = *(float *)(iVar6 + 0x1d4) * fVar1;
+      *(float *)(iVar6 + 0x1d8) = *(float *)(iVar6 + 0x1d8) * fVar1;
+      *(float *)(iVar6 + 0x1dc) = *(float *)(iVar6 + 0x1dc) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x240);
+      *(float *)(iVar6 + 0x1e4) = *(float *)(iVar6 + 0x1e4) * fVar1;
+      *(float *)(iVar6 + 0x1e8) = *(float *)(iVar6 + 0x1e8) * fVar1;
+      *(float *)(iVar6 + 0x1ec) = *(float *)(iVar6 + 0x1ec) * fVar1;
+      *(float *)(iVar6 + 0x23c) = *(float *)(iVar6 + 0x240) * *(float *)(iVar6 + 0x23c);
+      lVar14 = lVar14 + 0x10;
+      lVar16 = lVar16 + 0x240;
+      *(float *)lVar16 = *(float *)(iVar6 + 0x240) * *(float *)lVar14;
+    } while ((int)uVar15 < (int)(uVar5 - 3));
+  }
+  if ((int)uVar15 < (int)uVar5) {
+    lVar16 = uVar4 - uVar15;
+    lVar14 = uVar9 - 4;
+    lVar11 = (uVar15 & 0x3fffffff) * 4 + lVar11 + -4;
+    do {
+      iVar6 = (int)lVar14;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 4) = *(float *)(iVar6 + 4) * fVar1;
+      *(float *)(iVar6 + 8) = *(float *)(iVar6 + 8) * fVar1;
+      *(float *)(iVar6 + 0xc) = *(float *)(iVar6 + 0xc) * fVar1;
+      *(float *)(iVar6 + 0x14) = *(float *)(iVar6 + 0x14) * fVar1;
+      *(float *)(iVar6 + 0x18) = *(float *)(iVar6 + 0x18) * fVar1;
+      *(float *)(iVar6 + 0x1c) = *(float *)(iVar6 + 0x1c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 0x24) = *(float *)(iVar6 + 0x24) * fVar1;
+      *(float *)(iVar6 + 0x28) = *(float *)(iVar6 + 0x28) * fVar1;
+      *(float *)(iVar6 + 0x2c) = *(float *)(iVar6 + 0x2c) * fVar1;
+      fVar1 = *(float *)(iVar6 + 0x90);
+      *(float *)(iVar6 + 0x34) = *(float *)(iVar6 + 0x34) * fVar1;
+      *(float *)(iVar6 + 0x38) = *(float *)(iVar6 + 0x38) * fVar1;
+      *(float *)(iVar6 + 0x3c) = *(float *)(iVar6 + 0x3c) * fVar1;
+      *(float *)(iVar6 + 0x8c) = *(float *)(iVar6 + 0x8c) * *(float *)(iVar6 + 0x90);
+      lVar11 = lVar11 + 4;
       lVar14 = lVar14 + 0x90;
-      *(float *)lVar14 = (float)(dVar16 / (double)(float)((double)*(float *)lVar12 + dVar17));
-    } while (uVar13 != 0);
+      *(float *)lVar14 = *(float *)(iVar6 + 0x90) * *(float *)lVar11;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
   }
-  uVar8 = 0;
-  uVar13 = param_3;
-  if (3 < iVar5) {
-    lVar14 = param_3 - 4;
-    lVar12 = param_7 + -4;
+  iVar8 = 0;
+  iVar6 = 1;
+  iVar12 = 0;
+  if (0 < (int)uVar5) {
+    lVar11 = uVar13 - 4;
+    lVar14 = (uVar4 & 0x3fffffff) * 4 + uVar13;
+    lVar16 = lVar10;
+    iVar6 = 1;
+    iVar8 = 0;
     do {
-      iVar7 = (int)lVar14;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      fVar2 = *(float *)(iVar7 + 8);
-      fVar3 = *(float *)(iVar7 + 0xc);
-      *(float *)uVar13 = *(float *)uVar13 * fVar1;
-      *(float *)(iVar7 + 8) = fVar2 * fVar1;
-      *(float *)(iVar7 + 0xc) = fVar3 * fVar1;
-      *(float *)(iVar7 + 0x14) = *(float *)(iVar7 + 0x14) * fVar1;
-      *(float *)(iVar7 + 0x18) = *(float *)(iVar7 + 0x18) * fVar1;
-      *(float *)(iVar7 + 0x1c) = *(float *)(iVar7 + 0x1c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 0x24) = *(float *)(iVar7 + 0x24) * fVar1;
-      *(float *)(iVar7 + 0x28) = *(float *)(iVar7 + 0x28) * fVar1;
-      *(float *)(iVar7 + 0x2c) = *(float *)(iVar7 + 0x2c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 0x34) = *(float *)(iVar7 + 0x34) * fVar1;
-      *(float *)(iVar7 + 0x38) = *(float *)(iVar7 + 0x38) * fVar1;
-      *(float *)(iVar7 + 0x3c) = *(float *)(iVar7 + 0x3c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x120);
-      *(float *)(iVar7 + 0x8c) = *(float *)(iVar7 + 0x8c) * *(float *)(iVar7 + 0x90);
-      iVar6 = (int)lVar12;
-      *(float *)(iVar7 + 0x90) = *(float *)(iVar6 + 4) * *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 0x94) = *(float *)(iVar7 + 0x94) * fVar1;
-      *(float *)(iVar7 + 0x9c) = *(float *)(iVar7 + 0x9c) * fVar1;
-      *(float *)(iVar7 + 0x98) = *(float *)(iVar7 + 0x98) * fVar1;
-      *(float *)(iVar7 + 0xa4) = *(float *)(iVar7 + 0xa4) * fVar1;
-      *(float *)(iVar7 + 0xa8) = *(float *)(iVar7 + 0xa8) * fVar1;
-      *(float *)(iVar7 + 0xac) = *(float *)(iVar7 + 0xac) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x120);
-      *(float *)(iVar7 + 0xb4) = *(float *)(iVar7 + 0xb4) * fVar1;
-      *(float *)(iVar7 + 0xb8) = *(float *)(iVar7 + 0xb8) * fVar1;
-      *(float *)(iVar7 + 0xbc) = *(float *)(iVar7 + 0xbc) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x120);
-      *(float *)(iVar7 + 0xc4) = *(float *)(iVar7 + 0xc4) * fVar1;
-      *(float *)(iVar7 + 200) = *(float *)(iVar7 + 200) * fVar1;
-      uVar8 = uVar8 + 4;
-      *(float *)(iVar7 + 0xcc) = *(float *)(iVar7 + 0xcc) * fVar1;
-      uVar13 = uVar13 + 0x240;
-      fVar1 = *(float *)(iVar7 + 0x1b0);
-      *(float *)(iVar7 + 0x11c) = *(float *)(iVar7 + 0x11c) * *(float *)(iVar7 + 0x120);
-      *(float *)(iVar7 + 0x120) = *(float *)(iVar6 + 8) * *(float *)(iVar7 + 0x120);
-      *(float *)(iVar7 + 0x124) = *(float *)(iVar7 + 0x124) * fVar1;
-      *(float *)(iVar7 + 0x128) = *(float *)(iVar7 + 0x128) * fVar1;
-      *(float *)(iVar7 + 300) = *(float *)(iVar7 + 300) * fVar1;
-      *(float *)(iVar7 + 0x134) = *(float *)(iVar7 + 0x134) * fVar1;
-      *(float *)(iVar7 + 0x138) = *(float *)(iVar7 + 0x138) * fVar1;
-      *(float *)(iVar7 + 0x13c) = *(float *)(iVar7 + 0x13c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x1b0);
-      *(float *)(iVar7 + 0x144) = *(float *)(iVar7 + 0x144) * fVar1;
-      *(float *)(iVar7 + 0x148) = *(float *)(iVar7 + 0x148) * fVar1;
-      *(float *)(iVar7 + 0x14c) = *(float *)(iVar7 + 0x14c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x1b0);
-      *(float *)(iVar7 + 0x154) = *(float *)(iVar7 + 0x154) * fVar1;
-      *(float *)(iVar7 + 0x158) = *(float *)(iVar7 + 0x158) * fVar1;
-      *(float *)(iVar7 + 0x15c) = *(float *)(iVar7 + 0x15c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x240);
-      *(float *)(iVar7 + 0x1ac) = *(float *)(iVar7 + 0x1b0) * *(float *)(iVar7 + 0x1ac);
-      fVar2 = *(float *)(iVar6 + 0xc);
-      *(float *)(iVar7 + 0x1b4) = *(float *)(iVar7 + 0x1b4) * fVar1;
-      *(float *)(iVar7 + 0x1b0) = *(float *)(iVar7 + 0x1b0) * fVar2;
-      *(float *)(iVar7 + 0x1b8) = *(float *)(iVar7 + 0x1b8) * fVar1;
-      *(float *)(iVar7 + 0x1bc) = *(float *)(iVar7 + 0x1bc) * fVar1;
-      *(float *)(iVar7 + 0x1c4) = *(float *)(iVar7 + 0x1c4) * fVar1;
-      *(float *)(iVar7 + 0x1c8) = *(float *)(iVar7 + 0x1c8) * fVar1;
-      *(float *)(iVar7 + 0x1cc) = *(float *)(iVar7 + 0x1cc) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x240);
-      *(float *)(iVar7 + 0x1d4) = *(float *)(iVar7 + 0x1d4) * fVar1;
-      *(float *)(iVar7 + 0x1d8) = *(float *)(iVar7 + 0x1d8) * fVar1;
-      *(float *)(iVar7 + 0x1dc) = *(float *)(iVar7 + 0x1dc) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x240);
-      *(float *)(iVar7 + 0x1e4) = *(float *)(iVar7 + 0x1e4) * fVar1;
-      *(float *)(iVar7 + 0x1e8) = *(float *)(iVar7 + 0x1e8) * fVar1;
-      *(float *)(iVar7 + 0x1ec) = *(float *)(iVar7 + 0x1ec) * fVar1;
-      *(float *)(iVar7 + 0x23c) = *(float *)(iVar7 + 0x240) * *(float *)(iVar7 + 0x23c);
-      lVar12 = lVar12 + 0x10;
-      lVar14 = lVar14 + 0x240;
-      *(float *)lVar14 = *(float *)(iVar7 + 0x240) * *(float *)lVar12;
-    } while ((int)uVar8 < iVar5 + -3);
-  }
-  if ((int)uVar8 < iVar5) {
-    lVar9 = uVar4 - uVar8;
-    lVar14 = uVar13 - 4;
-    lVar12 = (uVar8 & 0x3fffffff) * 4 + param_7 + -4;
-    do {
-      iVar7 = (int)lVar14;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 4) = *(float *)(iVar7 + 4) * fVar1;
-      *(float *)(iVar7 + 8) = *(float *)(iVar7 + 8) * fVar1;
-      *(float *)(iVar7 + 0xc) = *(float *)(iVar7 + 0xc) * fVar1;
-      *(float *)(iVar7 + 0x14) = *(float *)(iVar7 + 0x14) * fVar1;
-      *(float *)(iVar7 + 0x18) = *(float *)(iVar7 + 0x18) * fVar1;
-      *(float *)(iVar7 + 0x1c) = *(float *)(iVar7 + 0x1c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 0x24) = *(float *)(iVar7 + 0x24) * fVar1;
-      *(float *)(iVar7 + 0x28) = *(float *)(iVar7 + 0x28) * fVar1;
-      *(float *)(iVar7 + 0x2c) = *(float *)(iVar7 + 0x2c) * fVar1;
-      fVar1 = *(float *)(iVar7 + 0x90);
-      *(float *)(iVar7 + 0x34) = *(float *)(iVar7 + 0x34) * fVar1;
-      *(float *)(iVar7 + 0x38) = *(float *)(iVar7 + 0x38) * fVar1;
-      *(float *)(iVar7 + 0x3c) = *(float *)(iVar7 + 0x3c) * fVar1;
-      *(float *)(iVar7 + 0x8c) = *(float *)(iVar7 + 0x8c) * *(float *)(iVar7 + 0x90);
-      lVar12 = lVar12 + 4;
-      lVar14 = lVar14 + 0x90;
-      *(float *)lVar14 = *(float *)(iVar7 + 0x90) * *(float *)lVar12;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-  }
-  iVar6 = 0;
-  iVar7 = 1;
-  iVar10 = 0;
-  if (0 < iVar5) {
-    lVar12 = uVar11 - 4;
-    lVar14 = (uVar4 & 0x3fffffff) * 4 + uVar11;
-    lVar9 = param_8;
-    uVar13 = uVar4;
-    iVar7 = 1;
-    iVar6 = 0;
-    do {
-      if (*(int *)lVar9 < 0) {
-        lVar12 = lVar12 + 4;
-        *(int *)lVar12 = iVar10;
-        iVar6 = iVar6 + 1;
+      if (*(int *)lVar16 < 0) {
+        lVar11 = lVar11 + 4;
+        *(int *)lVar11 = iVar12;
+        iVar8 = iVar8 + 1;
       }
       else {
         lVar14 = lVar14 + -4;
-        *(int *)lVar14 = iVar10;
-        iVar7 = iVar7 + 1;
+        *(int *)lVar14 = iVar12;
+        iVar6 = iVar6 + 1;
       }
-      iVar10 = iVar10 + 1;
-      lVar9 = lVar9 + 4;
-      uVar13 = uVar13 - 1;
-    } while (uVar13 != 0);
+      iVar12 = iVar12 + 1;
+      lVar16 = lVar16 + 4;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
   }
-  if (iVar7 + iVar6 + -1 != iVar5) {
-    MyAssertHandler(0xffffffff8219a388,0x37e,0,0xffffffff82000f98,0xffffffff8219a82c);
+  if ((iVar6 + iVar8) - 1U != uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x37e,0,"%s");
   }
-  if ((int)param_2 == 1) {
-    SOR_LCP_MainLoop_OneBody();
+  if (param_2 == 1) {
+    SOR_LCP_MainLoop_OneBody(uVar5,pCVar7,(int *)lVar10,param_6,in_stack_00000054,in_stack_0000005c)
+    ;
   }
   else {
-    SOR_LCP_MainLoop(uVar4,param_3,param_8,param_6,in_stack_00000054,uVar11);
+    SOR_LCP_MainLoop(uVar5,pCVar7,(int *)lVar10,param_6,in_stack_00000054,in_stack_0000005c);
   }
-  Profile_EndInternal(0);
-  __restgprlr_18();
+  iVar6 = Profile_EndInternal((double *)0x0);
+  __restgprlr_18(iVar6);
   return;
 }
 
 
 // 8269DC90  pr  (physics/ode/src/quickstep.cpp:907)
 
-void pr(undefined8 param_1,longlong param_2)
+void pr(char *param_1,int param_2)
 
 {
-  if ((int)param_2 < 0x28) {
-    if ((int)param_2 < 1) {
-      param_2 = 0;
-    }
-  }
-  else {
-    param_2 = 0x28;
-  }
-  Com_Printf(0x14,0xffffffff82013790,(ZEXT48(PTR_DAT_829974f0) - param_2) + 0x28,param_1);
+  Com_Printf(0x14,"%s%s");
   return;
 }
 
 
 // 8269DCD8  ptrIdx  (physics/ode/src/quickstep.cpp:915)
 
-longlong ptrIdx(int *param_1,int param_2,int param_3)
+int ptrIdx(void **param_1,void *param_2,int param_3)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = 0;
+  iVar1 = 0;
   if (0 < param_3) {
     do {
       if (*param_1 == param_2) {
-        return lVar1;
+        return iVar1;
       }
-      lVar1 = lVar1 + 1;
+      iVar1 = iVar1 + 1;
       param_1 = param_1 + 1;
-    } while ((int)lVar1 < param_3);
+    } while (iVar1 < param_3);
   }
   return -1;
 }
@@ -939,179 +961,132 @@ longlong ptrIdx(int *param_1,int param_2,int param_3)
 
 // 8269DD18  jointKind  (physics/ode/src/quickstep.cpp:926)
 
-undefined8 jointKind(int param_1)
+char * jointKind(dxJoint *param_1)
 
 {
-  int iVar1;
+  JointType JVar1;
   
-  iVar1 = *(int *)(param_1 + 0x14);
-  if (iVar1 == 4) {
-    return 0xffffffff8219a464;
+  JVar1 = param_1->type;
+  if (JVar1 == ODE_JOINT_TYPE_CONTACT) {
+    return "Contact";
   }
-  if (iVar1 == 10) {
-    return 0xffffffff8219a45c;
+  if (JVar1 == ODE_JOINT_TYPE_AMOTOR) {
+    return "AMotor";
   }
-  if (iVar1 == 2) {
-    return 0xffffffff8219a454;
+  if (JVar1 == ODE_JOINT_TYPE_HINGE) {
+    return "Hinge";
   }
-  if (iVar1 == 1) {
-    return 0xffffffff8219a44c;
+  if (JVar1 == ODE_JOINT_TYPE_BALL) {
+    return "Ball";
   }
-  if (iVar1 == 5) {
-    return 0xffffffff8219a440;
+  if (JVar1 == ODE_JOINT_TYPE_ORIENTATION) {
+    return "Orientation";
   }
-  if (iVar1 == 6) {
-    return 0xffffffff8219a438;
+  if (JVar1 == ODE_JOINT_TYPE_PATH) {
+    return "Path";
   }
-  return 0xffffffff82003a4c;
+  return "Unknown";
 }
 
 
 // 8269DDA0  dumpBodyJoints  (physics/ode/src/quickstep.cpp:944)
 
-void dumpBodyJoints(undefined8 param_1,int param_2)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void dumpBodyJoints(dxWorld *param_1,dxBody **param_2,int param_3,dxJoint **param_4,int param_5)
 
 {
   int iVar1;
   int *piVar2;
-  int iVar3;
-  int *piVar5;
-  undefined8 uVar4;
-  char *pcVar6;
-  int *piVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  int *local_a0;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  uint local_a0;
   
-  piVar5 = (int *)__savegprlr();
-  uVar4 = va(0xffffffff8219a4f8);
-  Com_Printf(0x14,0xffffffff82013790,ZEXT48(PTR_DAT_829974f0) + 0x28,uVar4);
-  lVar10 = 0;
-  if (0 < param_2) {
-    local_a0 = piVar5;
-    do {
-      iVar1 = *local_a0;
-      uVar4 = va(0xffffffff8219a46c,lVar10,iVar1,(double)*(float *)(iVar1 + 0x20),
-                 (double)*(float *)(iVar1 + 0x130),(double)*(float *)(iVar1 + 0x134),
-                 (double)*(float *)(iVar1 + 0x138),(double)*(float *)(iVar1 + 0x140));
-      Com_Printf(0x14,0xffffffff82013790,ZEXT48(PTR_DAT_829974f0) + 0x28,uVar4);
-      lVar11 = 0;
-      for (piVar2 = *(int **)(iVar1 + 0x14); piVar2 != (int *)0x0; piVar2 = (int *)piVar2[3]) {
-        iVar1 = *piVar2;
-        iVar3 = *(int *)(iVar1 + 0x14);
-        if (iVar3 == 4) {
-          pcVar6 = "Contact";
-        }
-        else {
-          pcVar6 = "AMotor";
-          if (iVar3 != 10) {
-            if (iVar3 == 2) {
-              pcVar6 = "Hinge";
-            }
-            else if (iVar3 == 1) {
-              pcVar6 = "Ball";
-            }
-            else if (iVar3 == 5) {
-              pcVar6 = "Orientation";
-            }
-            else {
-              pcVar6 = "Path";
-              if (iVar3 != 6) {
-                pcVar6 = "Unknown";
-              }
-            }
-          }
-        }
-        lVar8 = 0;
-        piVar7 = piVar5;
-        do {
-          if (*piVar7 == *(int *)(iVar1 + 0x30)) goto LAB_8269df78;
-          lVar8 = lVar8 + 1;
-          piVar7 = piVar7 + 1;
-        } while ((int)lVar8 < param_2);
-        lVar8 = -1;
-LAB_8269df78:
-        lVar9 = 0;
-        piVar7 = piVar5;
-        do {
-          if (*piVar7 == *(int *)(iVar1 + 0x20)) goto LAB_8269dfa4;
-          lVar9 = lVar9 + 1;
-          piVar7 = piVar7 + 1;
-        } while ((int)lVar9 < param_2);
-        lVar9 = -1;
-LAB_8269dfa4:
-        uVar4 = va(0xffffffff8219a4a4,lVar11,iVar1,lVar9,lVar8,pcVar6);
-        Com_Printf(0x14,0xffffffff82013790,ZEXT48(PTR_DAT_829974f0) + 0x24,uVar4);
-        if (*(int *)(iVar1 + 0x14) == 4) {
-          if ((*(uint *)(iVar1 + 0x18) & 2) == 0) {
-            dVar12 = (double)*(float *)(iVar1 + 0x78);
-            dVar13 = (double)*(float *)(iVar1 + 0x7c);
-            dVar14 = (double)*(float *)(iVar1 + 0x80);
-          }
-          else {
-            dVar12 = -(double)*(float *)(iVar1 + 0x78);
-            dVar13 = -(double)*(float *)(iVar1 + 0x7c);
-            dVar14 = -(double)*(float *)(iVar1 + 0x80);
-          }
-          uVar4 = va(0xffffffff8219a4cc,(double)*(float *)(iVar1 + 0x6c),
-                     (double)*(float *)(iVar1 + 0x70),(double)*(float *)(iVar1 + 0x74),dVar12,dVar13
-                     ,dVar14,(double)*(float *)(iVar1 + 0x84));
-        }
-        else {
-          uVar4 = 0xffffffff820044d8;
-        }
-        Com_Printf(0x14,0xffffffff82013790,ZEXT48(PTR_DAT_829974f0) + 0x28,uVar4);
-        lVar11 = lVar11 + 1;
-      }
-      lVar10 = lVar10 + 1;
-      local_a0 = local_a0 + 1;
-    } while ((int)lVar10 < param_2);
+  uVar3 = (ulonglong)(int)param_1;
+  __savegprlr();
+  va("Dumping island - %d bodies, %d joints\n");
+  Com_Printf(0x14,"%s%s");
+  iVar6 = 0;
+  if ((int)param_2 < 1) {
+LAB_8269e0b4:
+    __restgprlr();
+    return;
   }
-  __restgprlr();
-  return;
+  local_a0 = (uint)uVar3;
+  uVar4 = uVar3;
+  do {
+    iVar1 = *(int *)uVar4;
+    va("\n%d: %0x8p  Mass: %f  Vel: %f %f %f  AVel: %f %f %f\n");
+    Com_Printf(0x14,"%s%s");
+    for (piVar2 = *(int **)(iVar1 + 0x14); piVar2 != (int *)0x0; piVar2 = (int *)piVar2[3]) {
+      iVar1 = *piVar2;
+      iVar5 = 0;
+      uVar4 = uVar3;
+      do {
+        if (*(int *)uVar4 == *(int *)(iVar1 + 0x30)) break;
+        iVar5 = iVar5 + 1;
+        uVar4 = uVar4 + 4;
+      } while (iVar5 < (int)param_2);
+      iVar5 = 0;
+      uVar4 = uVar3;
+      do {
+        if (*(int *)uVar4 == *(int *)(iVar1 + 0x20)) break;
+        iVar5 = iVar5 + 1;
+        uVar4 = uVar4 + 4;
+      } while (iVar5 < (int)param_2);
+      va("%d: %0x8p  Bodies: %d %d  Kind: %s  ");
+      Com_Printf(0x14,"%s%s");
+      if (*(int *)(iVar1 + 0x14) == 4) {
+        va("Pos: %f %f %f  Normal: %f %f %f  Depth: %f\n");
+      }
+      Com_Printf(0x14,"%s%s");
+    }
+    iVar6 = iVar6 + 1;
+    local_a0 = local_a0 + 4;
+    if ((int)param_2 <= iVar6) goto LAB_8269e0b4;
+    uVar4 = (ulonglong)local_a0;
+  } while( true );
 }
 
 
 // 8269E0C0  sinc  (physics/ode/src/quickstep.cpp:1004)
 
-double sinc(double param_1)
+float sinc(float param_1)
 
 {
   double dVar1;
+  double dVar2;
   
-  if (ABS(param_1) < 0.0001) {
-    return -(double)((float)(param_1 * param_1) * 0.16666667 - 1.0);
+  dVar1 = (double)param_1;
+  if (ABS(dVar1) < 0.0001) {
+    return -((float)(dVar1 * dVar1) * 0.16666667 - 1.0);
   }
-  dVar1 = sin(param_1);
-  return (double)(float)((double)(float)dVar1 / param_1);
+  dVar2 = sin(dVar1);
+  return (float)((double)(float)dVar2 / dVar1);
 }
 
 
 // 8269E138  dxStepBody  (physics/ode/src/quickstep.cpp:1018)
 
-void dxStepBody(void)
+void dxStepBody(dxBody *param_1,float param_2)
 
 {
   int iVar1;
   float *pfVar2;
-  uint *puVar3;
-  double dVar4;
+  double dVar3;
   double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double _X;
   float local_a0;
   float local_9c;
   float local_98;
   float local_94;
-  undefined4 local_90;
+  float local_90;
   undefined4 local_8c;
   undefined4 local_88;
   undefined4 local_84;
@@ -1123,140 +1098,129 @@ void dxStepBody(void)
   float local_6c;
   float local_68;
   
-  __savegprlr_26();
+  __savegprlr_26((double)param_2,param_1);
   iVar1 = __savefpr_27();
-  dVar4 = extraout_f1;
+  dVar3 = extraout_f1;
   if ((*(uint *)(iVar1 + 0x18) & 0x100) != 0) {
-    MyAssertHandler(0xffffffff8219a388,0x402,0,0xffffffff82000f98,0xffffffff8219a75c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x402,0,"%s");
   }
   *(float *)(iVar1 + 0xe0) =
-       (float)((double)*(float *)(iVar1 + 0x130) * dVar4 + (double)*(float *)(iVar1 + 0xe0));
+       (float)((double)*(float *)(iVar1 + 0x130) * dVar3 + (double)*(float *)(iVar1 + 0xe0));
   *(float *)(iVar1 + 0xe4) =
-       (float)((double)*(float *)(iVar1 + 0x134) * dVar4 + (double)*(float *)(iVar1 + 0xe4));
+       (float)((double)*(float *)(iVar1 + 0x134) * dVar3 + (double)*(float *)(iVar1 + 0xe4));
   *(float *)(iVar1 + 0xe8) =
-       (float)((double)*(float *)(iVar1 + 0x138) * dVar4 + (double)*(float *)(iVar1 + 0xe8));
+       (float)((double)*(float *)(iVar1 + 0x138) * dVar3 + (double)*(float *)(iVar1 + 0xe8));
   if ((*(uint *)(iVar1 + 0x18) & 1) == 0) {
-    dDQfromW(&local_80,iVar1 + 0x140,iVar1 + 0xf0);
-    dVar6 = (double)local_7c * dVar4 + (double)*(float *)(iVar1 + 0xf4);
-    dVar5 = (double)local_78 * dVar4 + (double)*(float *)(iVar1 + 0xf8);
-    *(float *)(iVar1 + 0xf0) = (float)((double)local_80 * dVar4 + (double)*(float *)(iVar1 + 0xf0));
-    dVar4 = (double)local_74 * dVar4 + (double)*(float *)(iVar1 + 0xfc);
-LAB_8269e438:
-    *(float *)(iVar1 + 0xfc) = (float)dVar4;
-    *(float *)(iVar1 + 0xf8) = (float)dVar5;
-    *(float *)(iVar1 + 0xf4) = (float)dVar6;
+    dDQfromW(&local_80,(float *)(iVar1 + 0x140),(float *)(iVar1 + 0xf0));
+    dVar5 = (double)local_7c * dVar3 + (double)*(float *)(iVar1 + 0xf4);
+    dVar4 = (double)local_78 * dVar3 + (double)*(float *)(iVar1 + 0xf8);
+    *(float *)(iVar1 + 0xf0) = (float)((double)local_80 * dVar3 + (double)*(float *)(iVar1 + 0xf0));
+    dVar3 = (double)local_74 * dVar3 + (double)*(float *)(iVar1 + 0xfc);
   }
   else {
     if ((*(uint *)(iVar1 + 0x18) & 2) == 0) {
-      dVar8 = (double)(float)(dVar4 * 0.5);
-      dVar5 = (double)(float)((double)SQRT(*(float *)(iVar1 + 0x148) * *(float *)(iVar1 + 0x148) +
+      dVar7 = (double)(float)(dVar3 * 0.5);
+      dVar4 = (double)(float)((double)SQRT(*(float *)(iVar1 + 0x148) * *(float *)(iVar1 + 0x148) +
                                            *(float *)(iVar1 + 0x140) * *(float *)(iVar1 + 0x140) +
                                            *(float *)(iVar1 + 0x144) * *(float *)(iVar1 + 0x144)) *
-                             dVar8);
-      dVar4 = cos(dVar5);
-      local_a0 = (float)dVar4;
-      if (0.0001 <= ABS(dVar5)) {
-        dVar4 = sin(dVar5);
-        dVar4 = (double)(float)((double)(float)dVar4 / dVar5);
+                             dVar7);
+      dVar3 = cos(dVar4);
+      local_a0 = (float)dVar3;
+      if (0.0001 <= ABS(dVar4)) {
+        dVar3 = sin(dVar4);
+        dVar3 = (double)(float)((double)(float)dVar3 / dVar4);
       }
       else {
-        dVar4 = -(double)((float)(dVar5 * dVar5) * 0.16666667 - 1.0);
+        dVar3 = -(double)((float)(dVar4 * dVar4) * 0.16666667 - 1.0);
       }
-      local_94 = (float)(dVar4 * dVar8);
+      local_94 = (float)(dVar3 * dVar7);
       local_9c = *(float *)(iVar1 + 0x140) * local_94;
       local_98 = local_94 * *(float *)(iVar1 + 0x144);
       local_94 = local_94 * *(float *)(iVar1 + 0x148);
     }
     else {
-      dVar8 = (double)(float)(dVar4 * 0.5);
-      dVar4 = (double)(float)((double)*(float *)(iVar1 + 0xb8) * (double)*(float *)(iVar1 + 0x140) +
+      dVar7 = (double)(float)(dVar3 * 0.5);
+      dVar3 = (double)(float)((double)*(float *)(iVar1 + 0xb8) * (double)*(float *)(iVar1 + 0x140) +
                              (double)(float)((double)*(float *)(iVar1 + 0xc0) *
                                              (double)*(float *)(iVar1 + 0x148) +
                                             (double)(float)((double)*(float *)(iVar1 + 0xbc) *
                                                            (double)*(float *)(iVar1 + 0x144))));
-      dVar7 = (double)(float)((double)*(float *)(iVar1 + 0xb8) * dVar4);
-      dVar6 = (double)(float)((double)*(float *)(iVar1 + 0xbc) * dVar4);
-      dVar5 = (double)(float)((double)*(float *)(iVar1 + 0xc0) * dVar4);
-      _X = (double)(float)(dVar4 * dVar8);
-      local_70 = (float)((double)*(float *)(iVar1 + 0x140) - dVar7);
-      local_6c = (float)((double)*(float *)(iVar1 + 0x144) - dVar6);
-      local_68 = (float)((double)*(float *)(iVar1 + 0x148) - dVar5);
-      dVar4 = cos(_X);
-      local_a0 = (float)dVar4;
-      if (0.0001 <= ABS(_X)) {
-        dVar4 = sin(_X);
-        dVar4 = (double)(float)((double)(float)dVar4 / _X);
+      dVar6 = (double)(float)((double)*(float *)(iVar1 + 0xb8) * dVar3);
+      dVar5 = (double)(float)((double)*(float *)(iVar1 + 0xbc) * dVar3);
+      dVar4 = (double)(float)((double)*(float *)(iVar1 + 0xc0) * dVar3);
+      dVar8 = (double)(float)(dVar3 * dVar7);
+      local_70 = (float)((double)*(float *)(iVar1 + 0x140) - dVar6);
+      local_6c = (float)((double)*(float *)(iVar1 + 0x144) - dVar5);
+      local_68 = (float)((double)*(float *)(iVar1 + 0x148) - dVar4);
+      dVar3 = cos(dVar8);
+      local_a0 = (float)dVar3;
+      if (0.0001 <= ABS(dVar8)) {
+        dVar3 = sin(dVar8);
+        dVar3 = (double)(float)((double)(float)dVar3 / dVar8);
       }
       else {
-        dVar4 = -(double)((float)(_X * _X) * 0.16666667 - 1.0);
+        dVar3 = -(double)((float)(dVar8 * dVar8) * 0.16666667 - 1.0);
       }
-      dVar4 = (double)(float)(dVar4 * dVar8);
-      local_9c = (float)(dVar4 * dVar7);
-      local_98 = (float)(dVar4 * dVar6);
-      local_94 = (float)(dVar4 * dVar5);
+      dVar3 = (double)(float)(dVar3 * dVar7);
+      local_9c = (float)(dVar3 * dVar6);
+      local_98 = (float)(dVar3 * dVar5);
+      local_94 = (float)(dVar3 * dVar4);
     }
     pfVar2 = (float *)(iVar1 + 0xf0);
     dQMultiply0(&local_90,&local_a0,pfVar2);
     *(undefined4 *)(iVar1 + 0xf8) = local_88;
     *(undefined4 *)(iVar1 + 0xf4) = local_8c;
-    *(undefined4 *)(iVar1 + 0xf0) = local_90;
+    *(float *)(iVar1 + 0xf0) = local_90;
     *(undefined4 *)(iVar1 + 0xfc) = local_84;
-    if ((*(uint *)(iVar1 + 0x18) & 2) != 0) {
-      dDQfromW(&local_80,&local_70,pfVar2);
-      dVar6 = (double)local_7c * dVar8 + (double)*(float *)(iVar1 + 0xf4);
-      dVar5 = (double)local_78 * dVar8 + (double)*(float *)(iVar1 + 0xf8);
-      *pfVar2 = (float)((double)local_80 * dVar8 + (double)*pfVar2);
-      dVar4 = (double)local_74 * dVar8 + (double)*(float *)(iVar1 + 0xfc);
-      goto LAB_8269e438;
-    }
+    if ((*(uint *)(iVar1 + 0x18) & 2) == 0) goto LAB_8269e444;
+    dDQfromW(&local_80,&local_70,pfVar2);
+    dVar5 = (double)local_7c * dVar7 + (double)*(float *)(iVar1 + 0xf4);
+    dVar4 = (double)local_78 * dVar7 + (double)*(float *)(iVar1 + 0xf8);
+    *pfVar2 = (float)((double)local_80 * dVar7 + (double)*pfVar2);
+    dVar3 = (double)local_74 * dVar7 + (double)*(float *)(iVar1 + 0xfc);
   }
-  puVar3 = (uint *)(iVar1 + 0xf0);
-  dNormalize4(puVar3);
-  dRfromQ((uint *)(iVar1 + 0x100),puVar3);
-  if ((*puVar3 & 0x7f800000) == 0x7f800000) {
-LAB_8269e4c0:
-    MyAssertHandler(0xffffffff8219a388,0x445,0,0xffffffff82000f98,0xffffffff8219a6f0);
+  *(float *)(iVar1 + 0xfc) = (float)dVar3;
+  *(float *)(iVar1 + 0xf8) = (float)dVar4;
+  *(float *)(iVar1 + 0xf4) = (float)dVar5;
+LAB_8269e444:
+  pfVar2 = (float *)(iVar1 + 0xf0);
+  dNormalize4(pfVar2);
+  dRfromQ((float *)(iVar1 + 0x100),pfVar2);
+  if ((((((uint)*pfVar2 & 0x7f800000) == 0x7f800000) ||
+       ((*(uint *)(iVar1 + 0xf4) & 0x7f800000) == 0x7f800000)) ||
+      ((*(uint *)(iVar1 + 0xf8) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar1 + 0xfc) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x445,0,"%s");
   }
-  else {
-    if ((*(uint *)(iVar1 + 0xf4) & 0x7f800000) == 0x7f800000) goto LAB_8269e4c0;
-    if ((*(uint *)(iVar1 + 0xf8) & 0x7f800000) == 0x7f800000) goto LAB_8269e4c0;
-    if ((*(uint *)(iVar1 + 0xfc) & 0x7f800000) == 0x7f800000) goto LAB_8269e4c0;
+  if ((((*(uint *)(iVar1 + 0xe0) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar1 + 0xe4) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar1 + 0xe8) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x446,0,"%s");
   }
-  if ((*(uint *)(iVar1 + 0xe0) & 0x7f800000) == 0x7f800000) {
-LAB_8269e524:
-    MyAssertHandler(0xffffffff8219a388,0x446,0,0xffffffff82000f98,0xffffffff8219a698);
+  if (((((uint)*(float *)(iVar1 + 0x100) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar1 + 0x104) & 0x7f800000) == 0x7f800000)) ||
+     (((*(uint *)(iVar1 + 0x108) & 0x7f800000) == 0x7f800000 ||
+      ((*(uint *)(iVar1 + 0x10c) & 0x7f800000) == 0x7f800000)))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x447,0,"%s");
   }
-  else {
-    if ((*(uint *)(iVar1 + 0xe4) & 0x7f800000) == 0x7f800000) goto LAB_8269e524;
-    if ((*(uint *)(iVar1 + 0xe8) & 0x7f800000) == 0x7f800000) goto LAB_8269e524;
+  if (((((*(uint *)(iVar1 + 0x110) & 0x7f800000) == 0x7f800000) ||
+       ((*(uint *)(iVar1 + 0x114) & 0x7f800000) == 0x7f800000)) ||
+      ((*(uint *)(iVar1 + 0x118) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)(iVar1 + 0x11c) & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x448,0,"%s");
   }
-  if ((*(uint *)(iVar1 + 0x100) & 0x7f800000) == 0x7f800000) {
-LAB_8269e5a0:
-    MyAssertHandler(0xffffffff8219a388,0x447,0,0xffffffff82000f98,0xffffffff8219a628);
+  if ((((*(uint *)(iVar1 + 0x120) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)(iVar1 + 0x124) & 0x7f800000) == 0x7f800000)) ||
+     (((*(uint *)(iVar1 + 0x128) & 0x7f800000) == 0x7f800000 ||
+      ((*(uint *)(iVar1 + 300) & 0x7f800000) == 0x7f800000)))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x449,0,"%s");
   }
-  else {
-    if ((*(uint *)(iVar1 + 0x104) & 0x7f800000) == 0x7f800000) goto LAB_8269e5a0;
-    if ((*(uint *)(iVar1 + 0x108) & 0x7f800000) == 0x7f800000) goto LAB_8269e5a0;
-    if ((*(uint *)(iVar1 + 0x10c) & 0x7f800000) == 0x7f800000) goto LAB_8269e5a0;
-  }
-  if ((*(uint *)(iVar1 + 0x110) & 0x7f800000) == 0x7f800000) {
-LAB_8269e61c:
-    MyAssertHandler(0xffffffff8219a388,0x448,0,0xffffffff82000f98,0xffffffff8219a5a8);
-  }
-  else {
-    if ((*(uint *)(iVar1 + 0x114) & 0x7f800000) == 0x7f800000) goto LAB_8269e61c;
-    if ((*(uint *)(iVar1 + 0x118) & 0x7f800000) == 0x7f800000) goto LAB_8269e61c;
-    if ((*(uint *)(iVar1 + 0x11c) & 0x7f800000) == 0x7f800000) goto LAB_8269e61c;
-  }
-  if ((*(uint *)(iVar1 + 0x120) & 0x7f800000) != 0x7f800000) {
-    if ((*(uint *)(iVar1 + 0x124) & 0x7f800000) != 0x7f800000) {
-      if ((*(uint *)(iVar1 + 0x128) & 0x7f800000) != 0x7f800000) {
-        if ((*(uint *)(iVar1 + 300) & 0x7f800000) != 0x7f800000) goto LAB_8269e6b4;
-      }
-    }
-  }
-  MyAssertHandler(0xffffffff8219a388,0x449,0,0xffffffff82000f98,0xffffffff8219a528);
-LAB_8269e6b4:
   __restfpr_27();
   __restgprlr_26();
   return;
@@ -1265,8 +1229,10 @@ LAB_8269e6b4:
 
 // 8269F100  dxQuickStepper  (physics/ode/src/quickstep.cpp:1102)
 
-void dxQuickStepper(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                   ulonglong param_5)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void dxQuickStepper(dxWorld *param_1,dxBody **param_2,int param_3,dxJoint **param_4,int param_5,
+                   float param_6)
 
 {
   float fVar1;
@@ -1286,640 +1252,678 @@ void dxQuickStepper(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulong
   float fVar15;
   float fVar16;
   float fVar17;
-  undefined4 uVar18;
-  uint uVar19;
+  uint uVar18;
+  dxJoint *pdVar19;
   uint uVar20;
-  int iVar21;
-  int iVar23;
-  DWORD DVar24;
-  undefined8 uVar22;
+  uint uVar21;
+  int iVar22;
+  ConstraintRowData *pCVar23;
+  float *pfVar24;
   int iVar25;
-  float *pfVar26;
-  float *pfVar27;
-  float *pfVar28;
-  int iVar30;
-  undefined4 *puVar31;
-  longlong lVar29;
-  float *pfVar32;
-  int iVar33;
+  int iVar26;
+  ulong uVar27;
+  ulonglong uVar28;
+  Info1 *pIVar29;
+  dxJoint **ppdVar30;
+  char *pcVar31;
+  char *pcVar32;
+  float *pfVar33;
   int iVar34;
-  int iVar35;
-  void *_Dst;
-  int iVar36;
-  ulonglong uVar37;
+  float *pfVar35;
+  longlong lVar36;
+  float *pfVar37;
   longlong lVar38;
-  int *piVar39;
-  ulonglong uVar40;
-  ulonglong uVar41;
-  longlong lVar42;
-  void *pvVar43;
-  longlong lVar44;
+  int iVar39;
+  int iVar40;
+  dxBody **ppdVar41;
+  dxWorldStepInfo *pdVar42;
+  QuickstepData *pQVar43;
+  ulonglong uVar44;
   int *piVar45;
-  ulonglong uVar46;
+  int *piVar46;
+  ulonglong uVar47;
+  ulonglong uVar48;
+  int iVar51;
+  longlong lVar49;
+  QuickstepData *pQVar52;
+  ulonglong uVar50;
+  longlong lVar53;
+  ulonglong uVar54;
   double extraout_f1;
-  double dVar47;
-  double dVar48;
-  double dVar49;
-  double dVar50;
-  double dVar51;
-  float local_240c [335];
+  double dVar55;
+  double dVar56;
+  double dVar57;
+  double dVar58;
+  double dVar59;
+  float local_2410 [336];
   float local_1ed0 [1972];
   
-  uVar46 = ZEXT48(&stack0x00000000);
+  uVar44 = (ulonglong)param_5;
+  uVar47 = (ulonglong)(int)param_4;
+  uVar50 = (ulonglong)param_3;
+  uVar28 = (ulonglong)(int)param_2;
+  uVar54 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  iVar23 = __savefpr_26();
-  iVar21 = (int)(uVar46 - 0x24f0);
-  *(BADSPACEBASE **)iVar21 = register0x0000000c;
-  *(int *)(iVar21 + 0x251c) = (int)param_4;
-  iVar25 = (int)param_5;
-  *(int *)(iVar21 + 0x2524) = iVar25;
-  *(undefined **)(iVar21 + 0x60) = &DAT_82000f98;
-  dVar51 = extraout_f1;
-  if (iVar23 == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x47b,0,0xffffffff82000f98,0xffffffff820665e4);
+  iVar26 = __savefpr_26();
+  iVar22 = (int)(uVar54 - 0x24f0);
+  *(BADSPACEBASE **)iVar22 = register0x0000000c;
+  ppdVar30 = (dxJoint **)uVar47;
+  *(dxJoint ***)(iVar22 + 0x251c) = ppdVar30;
+  pcVar31 = (char *)uVar44;
+  *(char **)(iVar22 + 0x2524) = pcVar31;
+  *(char **)(iVar22 + 0x60) = "%s";
+  dVar59 = extraout_f1;
+  pcVar32 = pcVar31;
+  if (iVar26 == 0) {
+    pcVar32 = "world";
+    ppdVar30 = (dxJoint **)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x47b,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x47c,0,0xffffffff82000f98,0xffffffff82003cbc);
+  if ((uVar28 & 0xffffffff) == 0) {
+    pcVar32 = "body";
+    ppdVar30 = (dxJoint **)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x47c,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219a388,0x47d,0,0xffffffff82000f98,0xffffffff82194ed4);
+  if ((uVar47 & 0xffffffff) == 0) {
+    pcVar32 = "joint";
+    ppdVar30 = (dxJoint **)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x47d,0,"%s");
   }
-  iVar35 = (int)param_3;
-  if ((0x5f < iVar25) || (0xd < iVar35)) {
-    dumpBodyJoints(param_2,param_3,param_5);
+  ppdVar41 = (dxBody **)uVar50;
+  if ((0x5f < (int)pcVar31) || (0xd < (int)ppdVar41)) {
+    dumpBodyJoints((dxWorld *)uVar28,ppdVar41,(int)pcVar31,ppdVar30,(int)pcVar32);
   }
-  if (0x5f < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8219a388,0x484,0,0xffffffff8219aa60,param_5,0x60);
+  if (0x5f < (uVar44 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x484,0,"jointCount doesn\'t index ISLAND_MAX_JOINT_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  if (0xd < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8219a388,0x485,0,0xffffffff8219aa18,param_3,0xe);
+  if (0xd < (uVar50 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x485,0,"bodyCount doesn\'t index ISLAND_MAX_BODY_COUNT\n\t%i not in [0, %i)");
   }
-  pfVar32 = (float *)(iVar23 + 0x10);
-  dVar49 = 1.0;
-  dVar50 = (double)(float)(1.0 / dVar51);
-  if (pfVar32 == (float *)0x0) {
-    MyAssertHandler(0xffffffff8219a388,0x4aa,0,0xffffffff82000f98,0xffffffff8219aa0c);
+  pdVar42 = (dxWorldStepInfo *)(iVar26 + 0x10);
+  dVar57 = 1.0;
+  dVar58 = (double)(float)(1.0 / dVar59);
+  if (pdVar42 == (dxWorldStepInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x4aa,0,"%s");
   }
-  DVar24 = GetCurrentProcessorNumber();
-  if (5 < DVar24) {
-    MyAssertHandler(0xffffffff8219a388,0x4d0,0,0xffffffff8219a9c0,DVar24,6);
+  uVar27 = GetCurrentProcessorNumber();
+  if (5 < uVar27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x4d0,0,
+                    "processorNumber doesn\'t index ARRAY_COUNT( g_qdIndex )\n\t%i not in [0, %i)");
   }
-  uVar19 = *(uint *)(&DAT_829974d8 + DVar24 * 4);
-  if (4 < uVar19) {
-    MyAssertHandler(0xffffffff8219a388,0x4d2,0,0xffffffff8219a978,uVar19,5);
+  uVar20 = g_qdIndex[uVar27];
+  if (4 < uVar20) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                    ,0x4d2,0,
+                    "processorIndex doesn\'t index ARRAY_COUNT( g_qd )\n\t%i not in [0, %i)");
   }
-  iVar30 = uVar19 * 0x14d00;
-  _Dst = (void *)(iVar30 + -0x7bc33700);
-  if (0 < iVar35) {
-    lVar44 = param_2 - 4;
-    lVar42 = 0;
-    uVar40 = param_3;
+  pQVar43 = g_qd + uVar20;
+  if (0 < (int)ppdVar41) {
+    lVar53 = uVar28 - 4;
+    uVar47 = uVar50;
+    iVar51 = 0;
     do {
-      iVar36 = (int)lVar44;
+      iVar34 = (int)lVar53;
       dMULTIPLY2_333<float,float,float>
-                (uVar46 - 0x2440,(ulonglong)*(uint *)(iVar36 + 4) + 0x34,
-                 (ulonglong)*(uint *)(iVar36 + 4) + 0x100);
-      lVar38 = lVar42 + (uVar46 - 0x2410);
+                ((float *)(iVar22 + 0xb0),(float *)(*(int *)(iVar34 + 4) + 0x34),
+                 (float *)(*(int *)(iVar34 + 4) + 0x100));
       dMULTIPLY0_333<float,float,float>
-                (lVar38,(ulonglong)*(uint *)(iVar36 + 4) + 0x100,uVar46 - 0x2440);
+                ((float *)((int)local_2410 + iVar51),(float *)(*(int *)(iVar34 + 4) + 0x100),
+                 (float *)(iVar22 + 0xb0));
       dMULTIPLY2_333<float,float,float>
-                (uVar46 - 0x2440,(ulonglong)*(uint *)(iVar36 + 4) + 100,
-                 (ulonglong)*(uint *)(iVar36 + 4) + 0x100);
+                ((float *)(iVar22 + 0xb0),(float *)(*(int *)(iVar34 + 4) + 100),
+                 (float *)(*(int *)(iVar34 + 4) + 0x100));
       dMULTIPLY0_333<float,float,float>
-                (lVar42 + (uVar46 - 0x2170),(ulonglong)*(uint *)(iVar36 + 4) + 0x100,uVar46 - 0x2440
-                );
-      fVar1 = *(float *)lVar38;
-      uVar40 = uVar40 - 1;
-      iVar33 = (int)lVar42;
-      lVar42 = lVar42 + 0x30;
-      fVar2 = *(float *)((int)local_240c + iVar33 + 0x1c);
-      fVar3 = *(float *)((int)local_240c + iVar33 + 0x24);
-      fVar4 = *(float *)((int)local_240c + iVar33);
-      fVar5 = *(float *)((int)local_240c + iVar33 + 0x20);
-      fVar6 = *(float *)((int)local_240c + iVar33 + 4);
-      lVar44 = lVar44 + 4;
-      iVar36 = *(int *)lVar44;
-      fVar7 = *(float *)(iVar36 + 0x148);
-      fVar8 = *(float *)(iVar36 + 0x144);
-      fVar9 = *(float *)(iVar36 + 0x140);
-      fVar10 = *(float *)(iVar36 + 0xa8);
-      fVar11 = *(float *)((int)local_240c + iVar33 + 0x10) * fVar8 +
-               *(float *)((int)local_240c + iVar33 + 0xc) * fVar9 +
-               *(float *)((int)local_240c + iVar33 + 0x14) * fVar7;
-      *(float *)(iVar21 + 0xb4) = fVar11;
+                ((float *)(iVar51 + iVar22 + 0x380),(float *)(*(int *)(iVar34 + 4) + 0x100),
+                 (float *)(iVar22 + 0xb0));
+      fVar1 = *(float *)((int)local_2410 + iVar51);
+      uVar47 = uVar47 - 1;
+      fVar2 = *(float *)((int)local_2410 + iVar51 + 0x20);
+      fVar3 = *(float *)((int)local_2410 + iVar51 + 0x28);
+      fVar4 = *(float *)((int)local_2410 + iVar51 + 4);
+      fVar5 = *(float *)((int)local_2410 + iVar51 + 0x24);
+      fVar6 = *(float *)((int)local_2410 + iVar51 + 8);
+      lVar53 = lVar53 + 4;
+      iVar34 = *(int *)lVar53;
+      fVar7 = *(float *)(iVar34 + 0x148);
+      fVar8 = *(float *)(iVar34 + 0x144);
+      fVar9 = *(float *)(iVar34 + 0x140);
+      fVar10 = *(float *)(iVar34 + 0xa8);
+      fVar11 = *(float *)((int)local_2410 + iVar51 + 0x14) * fVar8 +
+               *(float *)((int)local_2410 + iVar51 + 0x10) * fVar9 +
+               *(float *)((int)local_2410 + iVar51 + 0x18) * fVar7;
+      *(float *)(iVar22 + 0xb4) = fVar11;
       fVar2 = fVar3 * fVar7 + fVar2 * fVar9 + fVar5 * fVar8;
-      *(float *)(iVar21 + 0xb8) = fVar2;
+      *(float *)(iVar22 + 0xb8) = fVar2;
       fVar1 = fVar1 * fVar9 + fVar4 * fVar8 + fVar6 * fVar7;
-      *(float *)(iVar21 + 0xb0) = fVar1;
-      *(float *)(iVar36 + 0xa8) = fVar10 - (fVar2 * fVar8 - fVar7 * fVar11);
-      *(float *)(iVar36 + 0xac) =
-           *(float *)(iVar36 + 0xac) -
-           (*(float *)(iVar36 + 0x148) * fVar1 - *(float *)(iVar36 + 0x140) * fVar2);
-      *(float *)(iVar36 + 0xb0) =
-           *(float *)(iVar36 + 0xb0) -
-           (*(float *)(iVar36 + 0x140) * fVar11 - fVar1 * *(float *)(iVar36 + 0x144));
-    } while (uVar40 != 0);
+      *(float *)(iVar22 + 0xb0) = fVar1;
+      *(float *)(iVar34 + 0xa8) = fVar10 - (fVar2 * fVar8 - fVar7 * fVar11);
+      *(float *)(iVar34 + 0xac) =
+           *(float *)(iVar34 + 0xac) -
+           (*(float *)(iVar34 + 0x148) * fVar1 - *(float *)(iVar34 + 0x140) * fVar2);
+      *(float *)(iVar34 + 0xb0) =
+           *(float *)(iVar34 + 0xb0) -
+           (*(float *)(iVar34 + 0x140) * fVar11 - fVar1 * *(float *)(iVar34 + 0x144));
+      iVar51 = iVar51 + 0x30;
+    } while (uVar47 != 0);
   }
-  uVar40 = 0;
-  if (3 < iVar35) {
-    lVar44 = param_2 + 8;
+  uVar47 = 0;
+  if (3 < (int)ppdVar41) {
+    lVar53 = uVar28 + 8;
     do {
-      piVar45 = (int *)lVar44;
-      iVar36 = piVar45[-2];
-      if ((*(uint *)(iVar36 + 0x18) & 8) == 0) {
-        *(float *)(iVar36 + 0x98) = *(float *)(iVar36 + 0x20) * *pfVar32 + *(float *)(iVar36 + 0x98)
-        ;
-        *(float *)(iVar36 + 0x9c) =
-             *(float *)(iVar23 + 0x14) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0x9c);
-        *(float *)(iVar36 + 0xa0) =
-             *(float *)(iVar23 + 0x18) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0xa0);
+      piVar45 = (int *)lVar53;
+      iVar51 = piVar45[-2];
+      if ((*(uint *)(iVar51 + 0x18) & 8) == 0) {
+        *(float *)(iVar51 + 0x98) =
+             *(float *)(iVar51 + 0x20) * pdVar42->gravity[0] + *(float *)(iVar51 + 0x98);
+        *(float *)(iVar51 + 0x9c) =
+             *(float *)(iVar26 + 0x14) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0x9c);
+        *(float *)(iVar51 + 0xa0) =
+             *(float *)(iVar26 + 0x18) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0xa0);
       }
-      iVar36 = piVar45[-1];
-      if ((*(uint *)(iVar36 + 0x18) & 8) == 0) {
-        *(float *)(iVar36 + 0x98) = *(float *)(iVar36 + 0x20) * *pfVar32 + *(float *)(iVar36 + 0x98)
-        ;
-        *(float *)(iVar36 + 0x9c) =
-             *(float *)(iVar23 + 0x14) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0x9c);
-        *(float *)(iVar36 + 0xa0) =
-             *(float *)(iVar23 + 0x18) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0xa0);
+      iVar51 = piVar45[-1];
+      if ((*(uint *)(iVar51 + 0x18) & 8) == 0) {
+        *(float *)(iVar51 + 0x98) =
+             *(float *)(iVar51 + 0x20) * pdVar42->gravity[0] + *(float *)(iVar51 + 0x98);
+        *(float *)(iVar51 + 0x9c) =
+             *(float *)(iVar26 + 0x14) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0x9c);
+        *(float *)(iVar51 + 0xa0) =
+             *(float *)(iVar26 + 0x18) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0xa0);
       }
-      iVar36 = *piVar45;
-      if ((*(uint *)(iVar36 + 0x18) & 8) == 0) {
-        *(float *)(iVar36 + 0x98) = *(float *)(iVar36 + 0x20) * *pfVar32 + *(float *)(iVar36 + 0x98)
-        ;
-        *(float *)(iVar36 + 0x9c) =
-             *(float *)(iVar23 + 0x14) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0x9c);
-        *(float *)(iVar36 + 0xa0) =
-             *(float *)(iVar23 + 0x18) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0xa0);
+      iVar51 = *piVar45;
+      if ((*(uint *)(iVar51 + 0x18) & 8) == 0) {
+        *(float *)(iVar51 + 0x98) =
+             *(float *)(iVar51 + 0x20) * pdVar42->gravity[0] + *(float *)(iVar51 + 0x98);
+        *(float *)(iVar51 + 0x9c) =
+             *(float *)(iVar26 + 0x14) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0x9c);
+        *(float *)(iVar51 + 0xa0) =
+             *(float *)(iVar26 + 0x18) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0xa0);
       }
-      iVar36 = piVar45[1];
-      if ((*(uint *)(iVar36 + 0x18) & 8) == 0) {
-        *(float *)(iVar36 + 0x98) = *(float *)(iVar36 + 0x20) * *pfVar32 + *(float *)(iVar36 + 0x98)
-        ;
-        *(float *)(iVar36 + 0x9c) =
-             *(float *)(iVar23 + 0x14) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0x9c);
-        *(float *)(iVar36 + 0xa0) =
-             *(float *)(iVar23 + 0x18) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0xa0);
+      iVar51 = piVar45[1];
+      if ((*(uint *)(iVar51 + 0x18) & 8) == 0) {
+        *(float *)(iVar51 + 0x98) =
+             *(float *)(iVar51 + 0x20) * pdVar42->gravity[0] + *(float *)(iVar51 + 0x98);
+        *(float *)(iVar51 + 0x9c) =
+             *(float *)(iVar26 + 0x14) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0x9c);
+        *(float *)(iVar51 + 0xa0) =
+             *(float *)(iVar26 + 0x18) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0xa0);
       }
-      uVar40 = uVar40 + 4;
-      lVar44 = lVar44 + 0x10;
-    } while ((int)uVar40 < iVar35 + -3);
+      uVar47 = uVar47 + 4;
+      lVar53 = lVar53 + 0x10;
+    } while ((int)uVar47 < (int)ppdVar41 + -3);
   }
-  if ((int)uVar40 < iVar35) {
-    lVar44 = param_3 - uVar40;
-    lVar42 = (uVar40 & 0x3fffffff) * 4 + param_2;
+  if ((int)uVar47 < (int)ppdVar41) {
+    lVar53 = uVar50 - uVar47;
+    lVar38 = (uVar47 & 0x3fffffff) * 4 + uVar28;
     do {
-      iVar36 = *(int *)lVar42;
-      if ((*(uint *)(iVar36 + 0x18) & 8) == 0) {
-        *(float *)(iVar36 + 0x98) = *(float *)(iVar36 + 0x20) * *pfVar32 + *(float *)(iVar36 + 0x98)
-        ;
-        *(float *)(iVar36 + 0x9c) =
-             *(float *)(iVar23 + 0x14) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0x9c);
-        *(float *)(iVar36 + 0xa0) =
-             *(float *)(iVar23 + 0x18) * *(float *)(iVar36 + 0x20) + *(float *)(iVar36 + 0xa0);
+      iVar51 = *(int *)lVar38;
+      if ((*(uint *)(iVar51 + 0x18) & 8) == 0) {
+        *(float *)(iVar51 + 0x98) =
+             *(float *)(iVar51 + 0x20) * pdVar42->gravity[0] + *(float *)(iVar51 + 0x98);
+        *(float *)(iVar51 + 0x9c) =
+             *(float *)(iVar26 + 0x14) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0x9c);
+        *(float *)(iVar51 + 0xa0) =
+             *(float *)(iVar26 + 0x18) * *(float *)(iVar51 + 0x20) + *(float *)(iVar51 + 0xa0);
       }
-      lVar42 = lVar42 + 4;
-      lVar44 = lVar44 + -1;
-    } while (lVar44 != 0);
+      lVar38 = lVar38 + 4;
+      lVar53 = lVar53 + -1;
+    } while (lVar53 != 0);
   }
-  iVar36 = 0;
-  if (0 < iVar25) {
-    iVar25 = *(int *)(iVar21 + 0x251c);
-    uVar40 = (ulonglong)*(uint *)(iVar21 + 0x2524);
-    lVar42 = uVar46 - 0xcd0;
-    uVar18 = *(undefined4 *)(iVar21 + 0x60);
-    lVar44 = uVar46 - 0x2410;
+  iVar51 = 0;
+  if (0 < (int)pcVar31) {
+    iVar34 = *(int *)(iVar22 + 0x251c);
+    uVar47 = (ulonglong)*(uint *)(iVar22 + 0x2524);
+    lVar38 = uVar54 - 0xcd0;
+    pcVar32 = *(char **)(iVar22 + 0x60);
+    lVar53 = uVar54 - 0x2410;
     do {
-      jointGetInfo1(*(undefined4 *)((iVar25 - (iVar21 + 0xe0)) + (int)(int *)lVar44),lVar42);
-      piVar45 = (int *)lVar42;
-      iVar33 = *piVar45;
-      if ((((iVar33 < 0) || (6 < iVar33)) || (piVar45[1] < 0)) || (iVar33 < piVar45[1])) {
-        MyAssertHandler(0xffffffff8219a388,0x510,0,uVar18,0xffffffff8219a920);
+      pIVar29 = (Info1 *)lVar38;
+      jointGetInfo1(*(dxJoint **)((iVar34 - (iVar22 + 0xe0)) + (int)(int *)lVar53),pIVar29);
+      iVar39 = pIVar29->m;
+      if ((((iVar39 < 0) || (6 < iVar39)) || (pIVar29->nub < 0)) || (iVar39 < pIVar29->nub)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                        ,0x510,0,pcVar32);
       }
-      iVar33 = *piVar45;
-      uVar40 = uVar40 - 1;
-      *(int *)lVar44 = iVar36;
-      lVar44 = lVar44 + 4;
-      iVar36 = iVar33 + iVar36;
-      lVar42 = lVar42 + 8;
-    } while (uVar40 != 0);
-    if (0x240 < iVar36) {
-      MyAssertHandler(0xffffffff8219a388,0x515,0,0xffffffff8219a878,0xffffffff8219a898,iVar36);
+      iVar39 = pIVar29->m;
+      uVar47 = uVar47 - 1;
+      *(int *)lVar53 = iVar51;
+      lVar53 = lVar53 + 4;
+      iVar51 = iVar39 + iVar51;
+      lVar38 = lVar38 + 8;
+    } while (uVar47 != 0);
+    if (0x240 < iVar51) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                      ,0x515,0,"%s\n\t(constraintRowCount) = %i");
     }
-    if (0 < iVar36) {
-      dSetZero(uVar46 - 0x15d0,iVar36);
-      dSetValue((double)*(float *)(iVar23 + 0x24),uVar46 - 0x1ed0,iVar36);
-      memset(_Dst,0,iVar36 * 0x90);
-      if (0 < iVar36) {
-        lVar44 = uVar46 - 0x9d4;
-        puVar31 = (undefined4 *)(iVar30 + -0x7bc3370c);
-        for (iVar25 = iVar36; iVar33 = iVar36, iVar25 != 0; iVar25 = iVar25 + -1) {
-          lVar44 = lVar44 + 4;
-          *(undefined4 *)lVar44 = 0xffffffff;
+    if (0 < iVar51) {
+      dSetZero((float *)(iVar22 + 0xf20),iVar51);
+      dSetValue((float *)(iVar22 + 0x620),iVar51,*(float *)(iVar26 + 0x24));
+      memset();
+      if (0 < iVar51) {
+        lVar53 = uVar54 - 0x9d4;
+        pcVar32 = (&odeGlob)[uVar20 * 0x378].worldGeom.user_data + 8;
+        for (iVar34 = iVar51; iVar39 = iVar51, iVar34 != 0; iVar34 = iVar34 + -1) {
+          lVar53 = lVar53 + 4;
+          *(undefined4 *)lVar53 = 0xffffffff;
         }
         do {
-          puVar31[0x23] = 0xff7fffff;
-          iVar33 = iVar33 + -1;
-          puVar31 = puVar31 + 0x24;
-          *puVar31 = 0x7f7fffff;
-        } while (iVar33 != 0);
+          *(undefined4 *)(pcVar32 + 0x8c) = 0xff7fffff;
+          iVar39 = iVar39 + -1;
+          pcVar32 = pcVar32 + 0x90;
+          pcVar32[0] = '\x7f';
+          pcVar32[1] = '\x7f';
+          pcVar32[2] = -1;
+          pcVar32[3] = -1;
+        } while (iVar39 != 0);
       }
-      piVar45 = *(int **)(iVar21 + 0x251c);
-      uVar37 = (ulonglong)*(uint *)(iVar21 + 0x2524);
-      *(undefined4 *)(iVar21 + 0x74) = *(undefined4 *)(iVar23 + 0x20);
-      *(undefined4 *)(iVar21 + 0x88) = 0x24;
-      *(float *)(iVar21 + 0x70) = (float)dVar50;
-      lVar44 = uVar46 - 0xcd0;
-      uVar40 = uVar37;
-      piVar39 = piVar45;
+      piVar45 = *(int **)(iVar22 + 0x251c);
+      uVar44 = (ulonglong)*(uint *)(iVar22 + 0x2524);
+      *(undefined4 *)(iVar22 + 0x74) = *(undefined4 *)(iVar26 + 0x20);
+      *(undefined4 *)(iVar22 + 0x88) = 0x24;
+      *(float *)(iVar22 + 0x70) = (float)dVar58;
+      lVar53 = uVar54 - 0xcd0;
+      uVar47 = uVar44;
+      piVar46 = piVar45;
       do {
-        uVar19 = *(uint *)lVar44;
-        uVar41 = (ulonglong)uVar19;
-        if (uVar19 != 0) {
-          uVar20 = *(uint *)(((iVar21 + 0xe0) - (int)piVar45) + (int)piVar39);
-          iVar25 = *piVar39;
-          lVar42 = ((ulonglong)uVar20 & 0x3fffffff) * 4;
-          lVar38 = lVar42 + (uVar46 - 0x9d0);
-          iVar33 = (int)lVar42;
-          *(int *)(iVar21 + 0xa0) = (int)lVar38;
-          pvVar43 = (void *)(uVar20 * 0x90 + (int)_Dst);
-          *(int *)(iVar21 + 0x8c) = iVar33 + iVar21 + 0xf20;
-          *(void **)(iVar21 + 0x78) = pvVar43;
-          *(int *)(iVar21 + 0x7c) = (int)pvVar43 + 0x10;
-          *(int *)(iVar21 + 0x90) = (int)local_1ed0 + iVar33;
-          *(int *)(iVar21 + 0x84) = (int)pvVar43 + 0x30;
-          *(int *)(iVar21 + 0x80) = (int)pvVar43 + 0x20;
-          *(int *)(iVar21 + 0x94) = (int)pvVar43 + 0x80;
-          *(int *)(iVar21 + 0x98) = (int)pvVar43 + 0x84;
-          *(int *)(iVar21 + 0x9c) = (int)pvVar43 + 0x7c;
-          jointGetInfo2(iVar25,pfVar32,uVar46 - 0x2480);
-          if (0 < (int)uVar19) {
+        uVar18 = *(uint *)lVar53;
+        uVar48 = (ulonglong)uVar18;
+        if (uVar18 != 0) {
+          uVar21 = *(uint *)(((iVar22 + 0xe0) - (int)piVar45) + (int)piVar46);
+          pdVar19 = (dxJoint *)*piVar46;
+          lVar38 = ((ulonglong)uVar21 & 0x3fffffff) * 4;
+          lVar49 = lVar38 + (uVar54 - 0x9d0);
+          iVar34 = (int)lVar38;
+          *(int *)(iVar22 + 0xa0) = (int)lVar49;
+          pCVar23 = pQVar43->rowData + uVar21;
+          *(int *)(iVar22 + 0x8c) = iVar34 + iVar22 + 0xf20;
+          *(ConstraintRowData **)(iVar22 + 0x78) = pCVar23;
+          *(float **)(iVar22 + 0x7c) = pCVar23->J_body1Angular;
+          *(int *)(iVar22 + 0x90) = iVar34 + iVar22 + 0x620;
+          *(float **)(iVar22 + 0x84) = pCVar23->J_body2Angular;
+          *(float **)(iVar22 + 0x80) = pCVar23->J_body2Linear;
+          *(float **)(iVar22 + 0x94) = &pCVar23->lo;
+          *(float **)(iVar22 + 0x98) = &pCVar23->hi;
+          *(uint **)(iVar22 + 0x9c) = &pCVar23->oneSided;
+          jointGetInfo2(pdVar19,pdVar42,(Info2 *)(iVar22 + 0x70));
+          if (0 < (int)uVar18) {
             do {
-              iVar25 = *(int *)lVar38;
-              if (-1 < iVar25) {
-                *(int *)lVar38 = iVar25 + uVar20;
+              iVar34 = *(int *)lVar49;
+              if (-1 < iVar34) {
+                *(int *)lVar49 = iVar34 + uVar21;
               }
-              lVar38 = lVar38 + 4;
-              uVar41 = uVar41 - 1;
-            } while (uVar41 != 0);
+              lVar49 = lVar49 + 4;
+              uVar48 = uVar48 - 1;
+            } while (uVar48 != 0);
           }
         }
-        uVar40 = uVar40 - 1;
-        lVar44 = lVar44 + 8;
-        piVar39 = piVar39 + 1;
-      } while (uVar40 != 0);
-      lVar44 = uVar46 - 0xcd0;
-      pvVar43 = _Dst;
+        uVar47 = uVar47 - 1;
+        lVar53 = lVar53 + 8;
+        piVar46 = piVar46 + 1;
+      } while (uVar47 != 0);
+      lVar53 = uVar54 - 0xcd0;
+      pQVar52 = pQVar43;
       do {
-        iVar25 = *(int *)(*piVar45 + 0x24);
-        iVar33 = *(int *)(*piVar45 + 0x34);
-        if (iVar35 <= iVar25) {
-          MyAssertHandler(0xffffffff8219a388,0x55c,0,*(undefined4 *)(iVar21 + 0x60),
-                          0xffffffff8219a8f8);
+        iVar34 = *(int *)(*piVar45 + 0x24);
+        iVar39 = *(int *)(*piVar45 + 0x34);
+        if ((int)ppdVar41 <= iVar34) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                          ,0x55c,0,*(char **)(iVar22 + 0x60));
         }
-        if (iVar35 <= iVar33) {
-          uVar22 = va(0xffffffff8219a7b8,iVar33,param_3,*(undefined4 *)(iVar23 + 0x5c));
-          MyAssertHandler(0xffffffff8219a388,0x55d,0,0xffffffff820011f4,0xffffffff8219a90c,uVar22);
+        if ((int)ppdVar41 <= iVar39) {
+          va("body2 doesn\'t index bodyCount\n\t%i not in [0, %i). World: %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                          ,0x55d,0,"%s\n\t%s");
         }
-        uVar40 = (ulonglong)*(uint *)lVar44;
-        if (0 < (int)*(uint *)lVar44) {
+        uVar47 = (ulonglong)*(uint *)lVar53;
+        if (0 < (int)*(uint *)lVar53) {
           do {
-            *(int *)((int)pvVar43 + 0x1c) = iVar25;
-            *(int *)((int)pvVar43 + 0x2c) = iVar33;
-            pvVar43 = (void *)((int)pvVar43 + 0x90);
-            uVar40 = uVar40 - 1;
-          } while (uVar40 != 0);
+            pQVar52->rowData[0].body1 = iVar34;
+            pQVar52->rowData[0].body2 = iVar39;
+            pQVar52 = (QuickstepData *)(pQVar52->rowData + 1);
+            uVar47 = uVar47 - 1;
+          } while (uVar47 != 0);
         }
-        uVar37 = uVar37 - 1;
+        uVar44 = uVar44 - 1;
         piVar45 = piVar45 + 1;
-        lVar44 = lVar44 + 8;
-      } while (uVar37 != 0);
-      if (pvVar43 != (void *)(iVar36 * 0x90 + (int)_Dst)) {
-        MyAssertHandler(0xffffffff8219a388,0x566,0,*(undefined4 *)(iVar21 + 0x60),0xffffffff8219a8d0
-                       );
+        lVar53 = lVar53 + 8;
+      } while (uVar44 != 0);
+      if (pQVar52 != (QuickstepData *)(pQVar43->rowData + iVar51)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                        ,0x566,0,*(char **)(iVar22 + 0x60));
       }
-      if (0 < iVar35) {
-        lVar29 = uVar46 - 0x2414;
-        lVar38 = uVar46 - 0x2414;
-        lVar44 = param_2 - 4;
-        lVar42 = uVar46 - 0x2180;
-        uVar40 = param_3;
+      if (0 < (int)ppdVar41) {
+        lVar36 = uVar54 - 0x2414;
+        lVar49 = uVar54 - 0x2414;
+        lVar53 = uVar28 - 4;
+        lVar38 = uVar54 - 0x2180;
+        uVar47 = uVar50;
         do {
-          iVar25 = *(int *)((int)lVar44 + 4);
-          iVar34 = (int)lVar42;
-          fVar1 = *(float *)(iVar34 + 0x24);
-          fVar2 = *(float *)(iVar34 + 0x14);
-          lVar44 = lVar44 + 4;
-          iVar33 = *(int *)lVar44;
-          fVar3 = *(float *)(iVar34 + 0x34);
-          fVar4 = *(float *)(iVar34 + 0x18);
-          fVar5 = *(float *)(iVar34 + 0x10);
-          fVar6 = *(float *)(iVar25 + 0xac);
-          fVar7 = *(float *)(iVar25 + 0x94);
-          fVar8 = *(float *)(iVar33 + 0x9c);
-          fVar9 = *(float *)(iVar33 + 0xa0);
-          fVar10 = *(float *)(iVar25 + 0xa8);
-          fVar11 = *(float *)(iVar34 + 0x28);
-          fVar12 = *(float *)(iVar34 + 0x20);
-          fVar13 = *(float *)(iVar34 + 0x38);
-          lVar42 = lVar42 + 0x30;
-          fVar17 = *(float *)lVar42;
-          fVar14 = *(float *)(iVar33 + 0x134);
-          fVar15 = *(float *)(iVar33 + 0x138);
-          fVar16 = *(float *)(iVar25 + 0xb0);
-          iVar34 = (int)lVar29;
-          *(float *)(iVar34 + 4) =
-               (float)((double)*(float *)(iVar33 + 0x130) * dVar50 +
-                      (double)(*(float *)(iVar33 + 0x98) * fVar7));
-          *(float *)(iVar34 + 8) = (float)((double)fVar14 * dVar50 + (double)(fVar8 * fVar7));
-          *(float *)(iVar34 + 0xc) = (float)((double)fVar15 * dVar50 + (double)(fVar9 * fVar7));
-          fVar7 = *(float *)(iVar25 + 0x140);
-          fVar8 = *(float *)(iVar25 + 0x144);
-          fVar9 = *(float *)(iVar25 + 0x148);
-          *(float *)((int)lVar38 + 0x10) = fVar16 * fVar4 + fVar10 * fVar5 + fVar6 * fVar2;
-          *(float *)((int)lVar38 + 0x14) = fVar16 * fVar11 + fVar10 * fVar12 + fVar6 * fVar1;
-          lVar38 = lVar38 + 0x18;
-          *(float *)lVar38 = fVar16 * fVar13 + fVar10 * fVar17 + fVar6 * fVar3;
-          *(float *)(iVar34 + 0x10) =
-               (float)((double)fVar7 * dVar50 + (double)*(float *)(iVar34 + 0x10));
-          *(float *)(iVar34 + 0x14) =
-               (float)((double)fVar8 * dVar50 + (double)*(float *)(iVar34 + 0x14));
-          lVar29 = lVar29 + 0x18;
-          *(float *)lVar29 = (float)((double)fVar9 * dVar50 + (double)*(float *)(iVar34 + 0x18));
-          uVar40 = uVar40 - 1;
-        } while (uVar40 != 0);
+          iVar34 = *(int *)((int)lVar53 + 4);
+          iVar40 = (int)lVar38;
+          fVar1 = *(float *)(iVar40 + 0x24);
+          fVar2 = *(float *)(iVar40 + 0x14);
+          lVar53 = lVar53 + 4;
+          iVar39 = *(int *)lVar53;
+          fVar3 = *(float *)(iVar40 + 0x34);
+          fVar4 = *(float *)(iVar40 + 0x18);
+          fVar5 = *(float *)(iVar40 + 0x10);
+          fVar6 = *(float *)(iVar34 + 0xac);
+          fVar7 = *(float *)(iVar34 + 0x94);
+          fVar8 = *(float *)(iVar39 + 0x9c);
+          fVar9 = *(float *)(iVar39 + 0xa0);
+          fVar10 = *(float *)(iVar34 + 0xa8);
+          fVar11 = *(float *)(iVar40 + 0x28);
+          fVar12 = *(float *)(iVar40 + 0x20);
+          fVar13 = *(float *)(iVar40 + 0x38);
+          lVar38 = lVar38 + 0x30;
+          fVar17 = *(float *)lVar38;
+          fVar14 = *(float *)(iVar39 + 0x134);
+          fVar15 = *(float *)(iVar39 + 0x138);
+          fVar16 = *(float *)(iVar34 + 0xb0);
+          iVar40 = (int)lVar36;
+          *(float *)(iVar40 + 4) =
+               (float)((double)*(float *)(iVar39 + 0x130) * dVar58 +
+                      (double)(*(float *)(iVar39 + 0x98) * fVar7));
+          *(float *)(iVar40 + 8) = (float)((double)fVar14 * dVar58 + (double)(fVar8 * fVar7));
+          *(float *)(iVar40 + 0xc) = (float)((double)fVar15 * dVar58 + (double)(fVar9 * fVar7));
+          fVar7 = *(float *)(iVar34 + 0x140);
+          fVar8 = *(float *)(iVar34 + 0x144);
+          fVar9 = *(float *)(iVar34 + 0x148);
+          *(float *)((int)lVar49 + 0x10) = fVar16 * fVar4 + fVar10 * fVar5 + fVar6 * fVar2;
+          *(float *)((int)lVar49 + 0x14) = fVar16 * fVar11 + fVar10 * fVar12 + fVar6 * fVar1;
+          lVar49 = lVar49 + 0x18;
+          *(float *)lVar49 = fVar16 * fVar13 + fVar10 * fVar17 + fVar6 * fVar3;
+          *(float *)(iVar40 + 0x10) =
+               (float)((double)fVar7 * dVar58 + (double)*(float *)(iVar40 + 0x10));
+          *(float *)(iVar40 + 0x14) =
+               (float)((double)fVar8 * dVar58 + (double)*(float *)(iVar40 + 0x14));
+          lVar36 = lVar36 + 0x18;
+          *(float *)lVar36 = (float)((double)fVar9 * dVar58 + (double)*(float *)(iVar40 + 0x18));
+          uVar47 = uVar47 - 1;
+        } while (uVar47 != 0);
       }
-      multiply_J(iVar36,_Dst,uVar46 - 0x2410);
-      iVar25 = 0;
-      if (3 < iVar36) {
-        pfVar32 = (float *)(iVar30 + -0x7bc33708);
-        iVar33 = 0;
+      multiply_J(iVar51,pQVar43->rowData,(float *)(iVar22 + 0xe0));
+      iVar34 = 0;
+      if (3 < iVar51) {
+        pcVar32 = (&odeGlob)[uVar20 * 0x378].worldGeom.user_data + 0xc;
+        iVar39 = 0;
         do {
-          fVar1 = pfVar32[0x90];
-          pfVar27 = (float *)((int)local_1ed0 + iVar33 + 8);
-          pfVar32[0x24] =
-               (float)((double)*(float *)(iVar33 + iVar21 + 0xf20) * dVar50 - (double)pfVar32[0x24])
-          ;
-          pfVar26 = (float *)((int)local_1ed0 + iVar33 + 0xc);
-          fVar4 = *(float *)(iVar33 + iVar21 + 0xf28);
-          fVar5 = *(float *)((int)local_1ed0 + iVar33);
-          fVar6 = *(float *)((int)local_1ed0 + iVar33 + 4);
-          fVar2 = *pfVar27;
-          iVar25 = iVar25 + 4;
-          fVar3 = *pfVar26;
-          fVar7 = *(float *)(iVar33 + iVar21 + 0xf2c);
-          pfVar32[0x48] =
-               (float)((double)*(float *)(iVar33 + iVar21 + 0xf24) * dVar50 - (double)pfVar32[0x48])
-          ;
-          pfVar32[0x6c] = (float)((double)fVar4 * dVar50 - (double)pfVar32[0x6c]);
-          *(float *)((int)local_1ed0 + iVar33) = (float)((double)fVar5 * dVar50);
-          *(float *)((int)local_1ed0 + iVar33 + 4) = (float)(dVar50 * (double)fVar6);
-          iVar33 = iVar33 + 0x10;
-          *pfVar27 = (float)((double)fVar2 * dVar50);
-          pfVar32 = pfVar32 + 0x90;
-          *pfVar32 = (float)((double)fVar7 * dVar50 - (double)fVar1);
-          *pfVar26 = (float)((double)fVar3 * dVar50);
-        } while (iVar25 < iVar36 + -3);
-      }
-      if (iVar25 < iVar36) {
-        iVar33 = iVar36 - iVar25;
-        iVar34 = iVar25 << 2;
-        pfVar32 = (float *)((int)_Dst + iVar25 * 0x90 + -8);
-        do {
-          pfVar26 = pfVar32 + 0x24;
-          pfVar28 = (float *)((int)local_1ed0 + iVar34);
-          pfVar27 = (float *)(iVar34 + iVar21 + 0xf20);
+          fVar1 = *(float *)(pcVar32 + 0x240);
+          pfVar33 = (float *)((int)local_1ed0 + iVar39 + 8);
+          *(float *)(pcVar32 + 0x90) =
+               (float)((double)*(float *)(iVar39 + iVar22 + 0xf20) * dVar58 -
+                      (double)*(float *)(pcVar32 + 0x90));
+          pfVar37 = (float *)((int)local_1ed0 + iVar39 + 0xc);
+          fVar4 = *(float *)(iVar39 + iVar22 + 0xf28);
+          fVar5 = *(float *)((int)local_1ed0 + iVar39);
+          fVar6 = *(float *)((int)local_1ed0 + iVar39 + 4);
+          fVar2 = *pfVar33;
           iVar34 = iVar34 + 4;
-          fVar1 = *pfVar28;
-          pfVar32 = pfVar32 + 0x24;
-          *pfVar32 = (float)((double)*pfVar27 * dVar50 - (double)*pfVar26);
-          *pfVar28 = (float)((double)fVar1 * dVar50);
-          iVar33 = iVar33 + -1;
-        } while (iVar33 != 0);
+          fVar3 = *pfVar37;
+          fVar7 = *(float *)(iVar39 + iVar22 + 0xf2c);
+          *(float *)(pcVar32 + 0x120) =
+               (float)((double)*(float *)(iVar39 + iVar22 + 0xf24) * dVar58 -
+                      (double)*(float *)(pcVar32 + 0x120));
+          *(float *)(pcVar32 + 0x1b0) =
+               (float)((double)fVar4 * dVar58 - (double)*(float *)(pcVar32 + 0x1b0));
+          *(float *)((int)local_1ed0 + iVar39) = (float)((double)fVar5 * dVar58);
+          *(float *)((int)local_1ed0 + iVar39 + 4) = (float)(dVar58 * (double)fVar6);
+          iVar39 = iVar39 + 0x10;
+          *pfVar33 = (float)((double)fVar2 * dVar58);
+          pcVar32 = pcVar32 + 0x240;
+          *(float *)pcVar32 = (float)((double)fVar7 * dVar58 - (double)fVar1);
+          *pfVar37 = (float)((double)fVar3 * dVar58);
+        } while (iVar34 < iVar51 + -3);
       }
-      *(int *)(iVar21 + 0x54) = iVar23 + 0x28;
-      *(int *)(iVar21 + 0x5c) = iVar30 + -0x7bc1f300;
-      SOR_LCP(iVar36,param_3,_Dst,param_2,uVar46 - 0x2170,uVar46 - 0x2410,uVar46 - 0x1ed0,
-              uVar46 - 0x9d0);
-      uVar40 = 0;
-      if (3 < iVar35) {
-        lVar42 = uVar46 - 0x2418;
-        lVar44 = param_2 - 4;
+      if (iVar34 < iVar51) {
+        iVar39 = iVar51 - iVar34;
+        iVar40 = iVar34 << 2;
+        pfVar37 = &pQVar43->rowData[iVar34 + -1].rhs;
         do {
-          iVar36 = (int)lVar44;
-          iVar25 = *(int *)(iVar36 + 4);
-          iVar34 = (int)lVar42;
+          pfVar33 = pfVar37 + 0x24;
+          pfVar35 = (float *)((int)local_1ed0 + iVar40);
+          pfVar24 = (float *)(iVar40 + iVar22 + 0xf20);
+          iVar40 = iVar40 + 4;
+          fVar1 = *pfVar35;
+          pfVar37 = pfVar37 + 0x24;
+          *pfVar37 = (float)((double)*pfVar24 * dVar58 - (double)*pfVar33);
+          *pfVar35 = (float)((double)fVar1 * dVar58);
+          iVar39 = iVar39 + -1;
+        } while (iVar39 != 0);
+      }
+      *(int *)(iVar22 + 0x54) = iVar26 + 0x28;
+      *(uint *)(iVar22 + 0x5c) = uVar20 * 0x14d00 + -0x7bc1f300;
+      SOR_LCP(iVar51,(int)ppdVar41,pQVar43->rowData,&((dxWorld *)uVar28)->firstbody,
+              (float *)(iVar22 + 0x380),(ConstraintForce *)(iVar22 + 0xe0),(float *)(iVar22 + 0x620)
+              ,(int *)(iVar22 + 0x1b20),*(dxQuickStepParameters **)(iVar22 + 8),
+              *(SorLcpData **)(iVar22 + 0xc));
+      uVar47 = 0;
+      if (3 < (int)ppdVar41) {
+        lVar38 = uVar54 - 0x2418;
+        lVar53 = uVar28 - 4;
+        do {
+          iVar39 = (int)lVar53;
+          iVar51 = *(int *)(iVar39 + 4);
+          iVar25 = (int)lVar38;
+          fVar1 = *(float *)(iVar25 + 0xc);
+          iVar34 = *(int *)(iVar39 + 8);
+          fVar2 = *(float *)(iVar25 + 0x10);
+          iVar39 = *(int *)(iVar39 + 0xc);
+          fVar3 = *(float *)(iVar25 + 0x18);
+          fVar4 = *(float *)(iVar25 + 0x1c);
+          *(float *)(iVar51 + 0x130) =
+               (float)((double)*(float *)(iVar25 + 8) * dVar59 + (double)*(float *)(iVar51 + 0x130))
+          ;
+          *(float *)(iVar51 + 0x134) =
+               (float)((double)fVar1 * dVar59 + (double)*(float *)(iVar51 + 0x134));
+          *(float *)(iVar51 + 0x138) =
+               (float)((double)fVar2 * dVar59 + (double)*(float *)(iVar51 + 0x138));
+          *(float *)(iVar51 + 0x140) =
+               (float)((double)fVar3 * dVar59 + (double)*(float *)(iVar51 + 0x140));
+          *(float *)(iVar51 + 0x144) =
+               (float)((double)fVar4 * dVar59 + (double)*(float *)(iVar51 + 0x144));
+          lVar53 = lVar53 + 0x10;
+          iVar40 = *(int *)lVar53;
+          uVar47 = uVar47 + 4;
+          *(float *)(iVar51 + 0x148) =
+               (float)((double)*(float *)(iVar25 + 0x20) * dVar59 +
+                      (double)*(float *)(iVar51 + 0x148));
+          *(float *)(iVar34 + 0x130) =
+               (float)((double)*(float *)(iVar25 + 0x28) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x130));
+          *(float *)(iVar34 + 0x134) =
+               (float)((double)*(float *)(iVar25 + 0x2c) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x134));
+          *(float *)(iVar34 + 0x138) =
+               (float)((double)*(float *)(iVar25 + 0x30) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x138));
+          *(float *)(iVar34 + 0x140) =
+               (float)((double)*(float *)(iVar25 + 0x38) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x140));
+          *(float *)(iVar34 + 0x144) =
+               (float)((double)*(float *)(iVar25 + 0x3c) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x144));
+          *(float *)(iVar34 + 0x148) =
+               (float)((double)*(float *)(iVar25 + 0x40) * dVar59 +
+                      (double)*(float *)(iVar34 + 0x148));
+          *(float *)(iVar39 + 0x130) =
+               (float)((double)*(float *)(iVar25 + 0x48) * dVar59 +
+                      (double)*(float *)(iVar39 + 0x130));
+          *(float *)(iVar39 + 0x134) =
+               (float)((double)*(float *)(iVar25 + 0x4c) * dVar59 +
+                      (double)*(float *)(iVar39 + 0x134));
+          fVar1 = *(float *)(iVar25 + 0x58);
+          *(float *)(iVar39 + 0x138) =
+               (float)((double)*(float *)(iVar25 + 0x50) * dVar59 +
+                      (double)*(float *)(iVar39 + 0x138));
+          fVar2 = *(float *)(iVar25 + 0x5c);
+          *(float *)(iVar39 + 0x140) =
+               (float)((double)fVar1 * dVar59 + (double)*(float *)(iVar39 + 0x140));
+          *(float *)(iVar39 + 0x144) =
+               (float)((double)fVar2 * dVar59 + (double)*(float *)(iVar39 + 0x144));
+          *(float *)(iVar39 + 0x148) =
+               (float)((double)*(float *)(iVar25 + 0x60) * dVar59 +
+                      (double)*(float *)(iVar39 + 0x148));
+          fVar1 = *(float *)(iVar25 + 0x6c);
+          fVar2 = *(float *)(iVar25 + 0x70);
+          fVar3 = *(float *)(iVar25 + 0x78);
+          fVar4 = *(float *)(iVar25 + 0x7c);
+          lVar38 = lVar38 + 0x80;
+          fVar5 = *(float *)lVar38;
+          *(float *)(iVar40 + 0x130) =
+               (float)((double)*(float *)(iVar25 + 0x68) * dVar59 +
+                      (double)*(float *)(iVar40 + 0x130));
+          *(float *)(iVar40 + 0x134) =
+               (float)((double)fVar1 * dVar59 + (double)*(float *)(iVar40 + 0x134));
+          *(float *)(iVar40 + 0x138) =
+               (float)((double)fVar2 * dVar59 + (double)*(float *)(iVar40 + 0x138));
+          *(float *)(iVar40 + 0x140) =
+               (float)((double)fVar3 * dVar59 + (double)*(float *)(iVar40 + 0x140));
+          *(float *)(iVar40 + 0x144) =
+               (float)((double)fVar4 * dVar59 + (double)*(float *)(iVar40 + 0x144));
+          *(float *)(iVar40 + 0x148) =
+               (float)((double)fVar5 * dVar59 + (double)*(float *)(iVar40 + 0x148));
+        } while ((int)uVar47 < (int)ppdVar41 + -3);
+      }
+      if ((int)uVar47 < (int)ppdVar41) {
+        lVar49 = uVar50 - uVar47;
+        lVar38 = (uVar47 & 0x7ffffff) * 0x20 + (uVar54 - 0x24f0) + 0xd8;
+        lVar53 = (uVar47 & 0x3fffffff) * 4 + uVar28 + -4;
+        do {
+          lVar53 = lVar53 + 4;
+          iVar51 = *(int *)lVar53;
+          iVar34 = (int)lVar38;
           fVar1 = *(float *)(iVar34 + 0xc);
-          iVar30 = *(int *)(iVar36 + 8);
           fVar2 = *(float *)(iVar34 + 0x10);
-          iVar36 = *(int *)(iVar36 + 0xc);
           fVar3 = *(float *)(iVar34 + 0x18);
           fVar4 = *(float *)(iVar34 + 0x1c);
-          *(float *)(iVar25 + 0x130) =
-               (float)((double)*(float *)(iVar34 + 8) * dVar51 + (double)*(float *)(iVar25 + 0x130))
+          *(float *)(iVar51 + 0x130) =
+               (float)((double)*(float *)(iVar34 + 8) * dVar59 + (double)*(float *)(iVar51 + 0x130))
           ;
-          *(float *)(iVar25 + 0x134) =
-               (float)((double)fVar1 * dVar51 + (double)*(float *)(iVar25 + 0x134));
-          *(float *)(iVar25 + 0x138) =
-               (float)((double)fVar2 * dVar51 + (double)*(float *)(iVar25 + 0x138));
-          *(float *)(iVar25 + 0x140) =
-               (float)((double)fVar3 * dVar51 + (double)*(float *)(iVar25 + 0x140));
-          *(float *)(iVar25 + 0x144) =
-               (float)((double)fVar4 * dVar51 + (double)*(float *)(iVar25 + 0x144));
-          lVar44 = lVar44 + 0x10;
-          iVar33 = *(int *)lVar44;
-          uVar40 = uVar40 + 4;
-          *(float *)(iVar25 + 0x148) =
-               (float)((double)*(float *)(iVar34 + 0x20) * dVar51 +
-                      (double)*(float *)(iVar25 + 0x148));
-          *(float *)(iVar30 + 0x130) =
-               (float)((double)*(float *)(iVar34 + 0x28) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x130));
-          *(float *)(iVar30 + 0x134) =
-               (float)((double)*(float *)(iVar34 + 0x2c) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x134));
-          *(float *)(iVar30 + 0x138) =
-               (float)((double)*(float *)(iVar34 + 0x30) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x138));
-          *(float *)(iVar30 + 0x140) =
-               (float)((double)*(float *)(iVar34 + 0x38) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x140));
-          *(float *)(iVar30 + 0x144) =
-               (float)((double)*(float *)(iVar34 + 0x3c) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x144));
-          *(float *)(iVar30 + 0x148) =
-               (float)((double)*(float *)(iVar34 + 0x40) * dVar51 +
-                      (double)*(float *)(iVar30 + 0x148));
-          *(float *)(iVar36 + 0x130) =
-               (float)((double)*(float *)(iVar34 + 0x48) * dVar51 +
-                      (double)*(float *)(iVar36 + 0x130));
-          *(float *)(iVar36 + 0x134) =
-               (float)((double)*(float *)(iVar34 + 0x4c) * dVar51 +
-                      (double)*(float *)(iVar36 + 0x134));
-          fVar1 = *(float *)(iVar34 + 0x58);
-          *(float *)(iVar36 + 0x138) =
-               (float)((double)*(float *)(iVar34 + 0x50) * dVar51 +
-                      (double)*(float *)(iVar36 + 0x138));
-          fVar2 = *(float *)(iVar34 + 0x5c);
-          *(float *)(iVar36 + 0x140) =
-               (float)((double)fVar1 * dVar51 + (double)*(float *)(iVar36 + 0x140));
-          *(float *)(iVar36 + 0x144) =
-               (float)((double)fVar2 * dVar51 + (double)*(float *)(iVar36 + 0x144));
-          *(float *)(iVar36 + 0x148) =
-               (float)((double)*(float *)(iVar34 + 0x60) * dVar51 +
-                      (double)*(float *)(iVar36 + 0x148));
-          fVar1 = *(float *)(iVar34 + 0x6c);
-          fVar2 = *(float *)(iVar34 + 0x70);
-          fVar3 = *(float *)(iVar34 + 0x78);
-          fVar4 = *(float *)(iVar34 + 0x7c);
-          lVar42 = lVar42 + 0x80;
-          fVar5 = *(float *)lVar42;
-          *(float *)(iVar33 + 0x130) =
-               (float)((double)*(float *)(iVar34 + 0x68) * dVar51 +
-                      (double)*(float *)(iVar33 + 0x130));
-          *(float *)(iVar33 + 0x134) =
-               (float)((double)fVar1 * dVar51 + (double)*(float *)(iVar33 + 0x134));
-          *(float *)(iVar33 + 0x138) =
-               (float)((double)fVar2 * dVar51 + (double)*(float *)(iVar33 + 0x138));
-          *(float *)(iVar33 + 0x140) =
-               (float)((double)fVar3 * dVar51 + (double)*(float *)(iVar33 + 0x140));
-          *(float *)(iVar33 + 0x144) =
-               (float)((double)fVar4 * dVar51 + (double)*(float *)(iVar33 + 0x144));
-          *(float *)(iVar33 + 0x148) =
-               (float)((double)fVar5 * dVar51 + (double)*(float *)(iVar33 + 0x148));
-        } while ((int)uVar40 < iVar35 + -3);
-      }
-      if ((int)uVar40 < iVar35) {
-        lVar38 = param_3 - uVar40;
-        lVar42 = (uVar40 & 0x7ffffff) * 0x20 + (uVar46 - 0x24f0) + 0xd8;
-        lVar44 = (uVar40 & 0x3fffffff) * 4 + param_2 + -4;
-        do {
-          lVar44 = lVar44 + 4;
-          iVar25 = *(int *)lVar44;
-          iVar30 = (int)lVar42;
-          fVar1 = *(float *)(iVar30 + 0xc);
-          fVar2 = *(float *)(iVar30 + 0x10);
-          fVar3 = *(float *)(iVar30 + 0x18);
-          fVar4 = *(float *)(iVar30 + 0x1c);
-          *(float *)(iVar25 + 0x130) =
-               (float)((double)*(float *)(iVar30 + 8) * dVar51 + (double)*(float *)(iVar25 + 0x130))
-          ;
-          lVar42 = lVar42 + 0x20;
-          fVar5 = *(float *)lVar42;
-          *(float *)(iVar25 + 0x134) =
-               (float)((double)fVar1 * dVar51 + (double)*(float *)(iVar25 + 0x134));
-          *(float *)(iVar25 + 0x138) =
-               (float)((double)fVar2 * dVar51 + (double)*(float *)(iVar25 + 0x138));
-          *(float *)(iVar25 + 0x140) =
-               (float)((double)fVar3 * dVar51 + (double)*(float *)(iVar25 + 0x140));
-          *(float *)(iVar25 + 0x144) =
-               (float)((double)fVar4 * dVar51 + (double)*(float *)(iVar25 + 0x144));
-          *(float *)(iVar25 + 0x148) =
-               (float)((double)fVar5 * dVar51 + (double)*(float *)(iVar25 + 0x148));
-          lVar38 = lVar38 + -1;
-        } while (lVar38 != 0);
+          lVar38 = lVar38 + 0x20;
+          fVar5 = *(float *)lVar38;
+          *(float *)(iVar51 + 0x134) =
+               (float)((double)fVar1 * dVar59 + (double)*(float *)(iVar51 + 0x134));
+          *(float *)(iVar51 + 0x138) =
+               (float)((double)fVar2 * dVar59 + (double)*(float *)(iVar51 + 0x138));
+          *(float *)(iVar51 + 0x140) =
+               (float)((double)fVar3 * dVar59 + (double)*(float *)(iVar51 + 0x140));
+          *(float *)(iVar51 + 0x144) =
+               (float)((double)fVar4 * dVar59 + (double)*(float *)(iVar51 + 0x144));
+          *(float *)(iVar51 + 0x148) =
+               (float)((double)fVar5 * dVar59 + (double)*(float *)(iVar51 + 0x148));
+          lVar49 = lVar49 + -1;
+        } while (lVar49 != 0);
       }
     }
   }
-  if (0 < iVar35) {
-    lVar44 = param_2 - 4;
-    lVar42 = uVar46 - 0x2178;
-    uVar46 = param_3;
+  if (0 < (int)ppdVar41) {
+    lVar53 = uVar28 - 4;
+    lVar38 = uVar54 - 0x2178;
+    uVar54 = uVar50;
     do {
-      lVar44 = lVar44 + 4;
-      iVar25 = *(int *)lVar44;
-      iVar30 = (int)lVar42;
-      fVar3 = *(float *)(iVar30 + 0x10);
-      fVar4 = *(float *)(iVar30 + 0xc);
-      fVar5 = *(float *)(iVar30 + 8);
-      fVar6 = *(float *)(iVar30 + 0x20);
-      fVar7 = *(float *)(iVar30 + 0x1c);
-      fVar1 = (float)((double)*(float *)(iVar25 + 0x94) * dVar51);
-      fVar8 = *(float *)(iVar30 + 0x18);
-      fVar9 = *(float *)(iVar30 + 0x2c);
-      fVar10 = *(float *)(iVar30 + 0x28);
-      lVar42 = lVar42 + 0x30;
-      fVar11 = *(float *)lVar42;
-      *(float *)(iVar25 + 0x130) = *(float *)(iVar25 + 0x98) * fVar1 + *(float *)(iVar25 + 0x130);
-      *(float *)(iVar25 + 0x134) = *(float *)(iVar25 + 0x9c) * fVar1 + *(float *)(iVar25 + 0x134);
-      *(float *)(iVar25 + 0x138) = *(float *)(iVar25 + 0xa0) * fVar1 + *(float *)(iVar25 + 0x138);
-      fVar1 = (float)((double)*(float *)(iVar25 + 0xa8) * dVar51);
-      *(float *)(iVar25 + 0xa8) = fVar1;
-      *(float *)(iVar25 + 0xac) = (float)((double)*(float *)(iVar25 + 0xac) * dVar51);
-      fVar2 = (float)((double)*(float *)(iVar25 + 0xb0) * dVar51);
-      *(float *)(iVar25 + 0xb0) = fVar2;
-      *(float *)(iVar25 + 0x140) =
-           fVar1 * fVar5 + fVar4 * *(float *)(iVar25 + 0xac) + fVar2 * fVar3 +
-           *(float *)(iVar25 + 0x140);
-      *(float *)(iVar25 + 0x144) =
-           *(float *)(iVar25 + 0xa8) * fVar8 +
-           fVar7 * *(float *)(iVar25 + 0xac) + *(float *)(iVar25 + 0xb0) * fVar6 +
-           *(float *)(iVar25 + 0x144);
-      *(float *)(iVar25 + 0x148) =
-           *(float *)(iVar25 + 0xa8) * fVar10 +
-           fVar9 * *(float *)(iVar25 + 0xac) + *(float *)(iVar25 + 0xb0) * fVar11 +
-           *(float *)(iVar25 + 0x148);
-      uVar46 = uVar46 - 1;
-    } while (uVar46 != 0);
+      lVar53 = lVar53 + 4;
+      iVar51 = *(int *)lVar53;
+      iVar34 = (int)lVar38;
+      fVar3 = *(float *)(iVar34 + 0x10);
+      fVar4 = *(float *)(iVar34 + 0xc);
+      fVar5 = *(float *)(iVar34 + 8);
+      fVar6 = *(float *)(iVar34 + 0x20);
+      fVar7 = *(float *)(iVar34 + 0x1c);
+      fVar1 = (float)((double)*(float *)(iVar51 + 0x94) * dVar59);
+      fVar8 = *(float *)(iVar34 + 0x18);
+      fVar9 = *(float *)(iVar34 + 0x2c);
+      fVar10 = *(float *)(iVar34 + 0x28);
+      lVar38 = lVar38 + 0x30;
+      fVar11 = *(float *)lVar38;
+      *(float *)(iVar51 + 0x130) = *(float *)(iVar51 + 0x98) * fVar1 + *(float *)(iVar51 + 0x130);
+      *(float *)(iVar51 + 0x134) = *(float *)(iVar51 + 0x9c) * fVar1 + *(float *)(iVar51 + 0x134);
+      *(float *)(iVar51 + 0x138) = *(float *)(iVar51 + 0xa0) * fVar1 + *(float *)(iVar51 + 0x138);
+      fVar1 = (float)((double)*(float *)(iVar51 + 0xa8) * dVar59);
+      *(float *)(iVar51 + 0xa8) = fVar1;
+      *(float *)(iVar51 + 0xac) = (float)((double)*(float *)(iVar51 + 0xac) * dVar59);
+      fVar2 = (float)((double)*(float *)(iVar51 + 0xb0) * dVar59);
+      *(float *)(iVar51 + 0xb0) = fVar2;
+      *(float *)(iVar51 + 0x140) =
+           fVar1 * fVar5 + fVar4 * *(float *)(iVar51 + 0xac) + fVar2 * fVar3 +
+           *(float *)(iVar51 + 0x140);
+      *(float *)(iVar51 + 0x144) =
+           *(float *)(iVar51 + 0xa8) * fVar8 +
+           fVar7 * *(float *)(iVar51 + 0xac) + *(float *)(iVar51 + 0xb0) * fVar6 +
+           *(float *)(iVar51 + 0x144);
+      *(float *)(iVar51 + 0x148) =
+           *(float *)(iVar51 + 0xa8) * fVar10 +
+           fVar9 * *(float *)(iVar51 + 0xac) + *(float *)(iVar51 + 0xb0) * fVar11 +
+           *(float *)(iVar51 + 0x148);
+      uVar54 = uVar54 - 1;
+    } while (uVar54 != 0);
   }
-  dVar50 = (double)*(float *)(iVar23 + 0x60);
-  if (0 < iVar35) {
-    dVar47 = 40.0;
-    if ((float)(dVar50 - 40.0) < 0.0) {
-      dVar47 = dVar50;
+  dVar58 = (double)*(float *)(iVar26 + 0x60);
+  if (0 < (int)ppdVar41) {
+    dVar55 = 40.0;
+    if ((float)(dVar58 - 40.0) < 0.0) {
+      dVar55 = dVar58;
     }
-    dVar48 = dVar49;
-    if ((float)(dVar49 - dVar50) < 0.0) {
-      dVar48 = dVar47;
+    dVar56 = dVar57;
+    if ((float)(dVar57 - dVar58) < 0.0) {
+      dVar56 = dVar55;
     }
-    uVar46 = param_2;
-    uVar40 = param_3;
+    uVar54 = uVar28;
+    uVar47 = uVar50;
     do {
-      iVar23 = *(int *)uVar46;
-      fVar1 = *(float *)(iVar23 + 0x144) * *(float *)(iVar23 + 0x144) +
-              *(float *)(iVar23 + 0x148) * *(float *)(iVar23 + 0x148) +
-              *(float *)(iVar23 + 0x140) * *(float *)(iVar23 + 0x140);
-      if ((float)(dVar48 * dVar48) < fVar1) {
-        fVar1 = (float)(dVar48 - dVar49) / SQRT(fVar1);
-        *(float *)(iVar23 + 0x140) = *(float *)(iVar23 + 0x140) * fVar1;
-        *(float *)(iVar23 + 0x144) = *(float *)(iVar23 + 0x144) * fVar1;
-        *(float *)(iVar23 + 0x148) = *(float *)(iVar23 + 0x148) * fVar1;
+      iVar26 = *(int *)uVar54;
+      fVar1 = *(float *)(iVar26 + 0x144) * *(float *)(iVar26 + 0x144) +
+              *(float *)(iVar26 + 0x148) * *(float *)(iVar26 + 0x148) +
+              *(float *)(iVar26 + 0x140) * *(float *)(iVar26 + 0x140);
+      if ((float)(dVar56 * dVar56) < fVar1) {
+        fVar1 = (float)(dVar56 - dVar57) / SQRT(fVar1);
+        *(float *)(iVar26 + 0x140) = *(float *)(iVar26 + 0x140) * fVar1;
+        *(float *)(iVar26 + 0x144) = *(float *)(iVar26 + 0x144) * fVar1;
+        *(float *)(iVar26 + 0x148) = *(float *)(iVar26 + 0x148) * fVar1;
       }
-      fVar1 = *(float *)(iVar23 + 0x138) * *(float *)(iVar23 + 0x138) +
-              *(float *)(iVar23 + 0x130) * *(float *)(iVar23 + 0x130) +
-              *(float *)(iVar23 + 0x134) * *(float *)(iVar23 + 0x134);
+      fVar1 = *(float *)(iVar26 + 0x138) * *(float *)(iVar26 + 0x138) +
+              *(float *)(iVar26 + 0x130) * *(float *)(iVar26 + 0x130) +
+              *(float *)(iVar26 + 0x134) * *(float *)(iVar26 + 0x134);
       if (1e+12 < fVar1) {
-        iVar23 = *(int *)uVar46;
+        iVar26 = *(int *)uVar54;
         fVar1 = 999900.0 / SQRT(fVar1);
-        *(float *)(iVar23 + 0x130) = *(float *)(iVar23 + 0x130) * fVar1;
-        *(float *)(iVar23 + 0x134) = *(float *)(iVar23 + 0x134) * fVar1;
-        *(float *)(iVar23 + 0x138) = *(float *)(iVar23 + 0x138) * fVar1;
+        *(float *)(iVar26 + 0x130) = *(float *)(iVar26 + 0x130) * fVar1;
+        *(float *)(iVar26 + 0x134) = *(float *)(iVar26 + 0x134) * fVar1;
+        *(float *)(iVar26 + 0x138) = *(float *)(iVar26 + 0x138) * fVar1;
       }
-      uVar46 = uVar46 + 4;
-      uVar40 = uVar40 - 1;
-    } while (uVar40 != 0);
-    if (0 < iVar35) {
-      lVar44 = param_2 - 4;
+      uVar54 = uVar54 + 4;
+      uVar47 = uVar47 - 1;
+    } while (uVar47 != 0);
+    if (0 < (int)ppdVar41) {
+      lVar53 = uVar28 - 4;
       do {
-        iVar23 = (int)lVar44;
-        dxStepBody(dVar51,*(undefined4 *)(iVar23 + 4));
-        lVar44 = lVar44 + 4;
-        param_3 = param_3 - 1;
-        *(uint *)(*(int *)(iVar23 + 4) + 0x18) = *(uint *)(*(int *)lVar44 + 0x18) & 0xfffffffb;
-      } while (param_3 != 0);
+        iVar26 = (int)lVar53;
+        dxStepBody(*(dxBody **)(iVar26 + 4),(float)dVar59);
+        lVar53 = lVar53 + 4;
+        uVar50 = uVar50 - 1;
+        *(uint *)(*(int *)(iVar26 + 4) + 0x18) = *(uint *)(*(int *)lVar53 + 0x18) & 0xfffffffb;
+      } while (uVar50 != 0);
     }
   }
-  uVar46 = (ulonglong)*(uint *)(iVar21 + 0x2524);
-  if (0 < (int)*(uint *)(iVar21 + 0x2524)) {
-    piVar45 = *(int **)(iVar21 + 0x251c);
-    uVar18 = *(undefined4 *)(iVar21 + 0x60);
+  uVar54 = (ulonglong)*(uint *)(iVar22 + 0x2524);
+  if (0 < (int)*(uint *)(iVar22 + 0x2524)) {
+    piVar45 = *(int **)(iVar22 + 0x251c);
+    pcVar32 = *(char **)(iVar22 + 0x60);
     do {
       if (*(int *)(*piVar45 + 0xc) == 0) {
-        MyAssertHandler(0xffffffff8219a388,0x617,0,uVar18,0xffffffff8219a8bc);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\quickstep.cpp"
+                        ,0x617,0,pcVar32);
       }
-      uVar46 = uVar46 - 1;
+      uVar54 = uVar54 - 1;
       piVar45 = piVar45 + 1;
-    } while (uVar46 != 0);
+    } while (uVar54 != 0);
   }
   __restfpr_26();
   __restgprlr();
@@ -1929,11 +1933,14 @@ void dxQuickStepper(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulong
 
 // 826A00A8  dxQuickStepperCmd  (physics/ode/src/quickstep.cpp:1583)
 
-void dxQuickStepperCmd(undefined4 *param_1)
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void dxQuickStepperCmd(void *param_1)
 
 {
-  dxQuickStepper((double)(float)param_1[4],*param_1,param_1[2],*(undefined2 *)(param_1 + 1),
-                 param_1[3],*(undefined2 *)((int)param_1 + 6));
+  dxQuickStepper(*(dxWorld **)param_1,*(dxBody ***)((int)param_1 + 8),
+                 (uint)*(ushort *)((int)param_1 + 4),*(dxJoint ***)((int)param_1 + 0xc),
+                 (uint)*(ushort *)((int)param_1 + 6),*(float *)((int)param_1 + 0x10));
   return;
 }
 

@@ -2,60 +2,60 @@
 
 // 828C4448  nciSetCallocFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:78)
 
-undefined8 nciSetCallocFunction(undefined4 param_1)
+ushort nciSetCallocFunction(_func___cdecl_void_ptr_uint_uint *param_1)
 
 {
-  DAT_848958c0 = param_1;
+  callocfunc = param_1;
   return 0;
 }
 
 
 // 828C4460  nciSetFreeFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:92)
 
-undefined8 nciSetFreeFunction(undefined4 param_1)
+ushort nciSetFreeFunction(_func___cdecl_void_void_ptr *param_1)
 
 {
-  DAT_848958c4 = param_1;
+  freefunc = param_1;
   return 0;
 }
 
 
 // 828C4478  nciSetMemsetFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:106)
 
-undefined8 nciSetMemsetFunction(undefined4 param_1)
+ushort nciSetMemsetFunction(_func___cdecl_void_ptr_void_ptr_int_uint *param_1)
 
 {
-  DAT_848958c8 = param_1;
+  memsetfunc = param_1;
   return 0;
 }
 
 
 // 828C4490  nciSetMemcpyFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:118)
 
-undefined8 nciSetMemcpyFunction(undefined4 param_1)
+ushort nciSetMemcpyFunction(_func___cdecl_void_ptr_void_ptr_void_ptr_uint *param_1)
 
 {
-  DAT_848958cc = param_1;
+  memcpyfunc = param_1;
   return 0;
 }
 
 
 // 828C44A8  nciSetCosFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:144)
 
-undefined8 nciSetCosFunction(undefined4 param_1)
+ushort nciSetCosFunction(_func___cdecl_double_double *param_1)
 
 {
-  DAT_848958d0 = param_1;
+  cosfunc = param_1;
   return 0;
 }
 
 
 // 828C44C0  nciSetSinFunction  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/nciexport.c:156)
 
-undefined8 nciSetSinFunction(undefined4 param_1)
+ushort nciSetSinFunction(_func___cdecl_double_double *param_1)
 
 {
-  DAT_848958d4 = param_1;
+  sinfunc = param_1;
   return 0;
 }
 

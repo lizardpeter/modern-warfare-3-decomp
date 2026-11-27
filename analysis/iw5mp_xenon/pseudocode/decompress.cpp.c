@@ -2,62 +2,62 @@
 
 // 828A2D08  XMemInitializeDecompressionContext  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/api/decompress.cpp:96)
 
-undefined8
-XMemInitializeDecompressionContext
-          (uint param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,undefined8 param_5)
+void * XMemInitializeDecompressionContext
+                 (_XMEMCODEC_TYPE param_1,void *param_2,ulong param_3,void *param_4,ulong param_5)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
   
-  if (1 < param_1) {
-    return 0;
+  if (XMEMCODEC_LZX < param_1) {
+    return (void *)0x0;
   }
-  uVar1 = XCOMPRESS__XMemInitializeDecompressionContextLzx(param_2,param_3,param_4,param_5);
-  return uVar1;
+  pvVar1 = XCOMPRESS::XMemInitializeDecompressionContextLzx(param_2,param_3,param_4,param_5);
+  return pvVar1;
 }
 
 
 // 828A2C90  XMemGetDecompressionContextSize  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/api/decompress.cpp:177)
 
-undefined8 XMemGetDecompressionContextSize(uint param_1,undefined8 param_2,undefined8 param_3)
+ulong XMemGetDecompressionContextSize(_XMEMCODEC_TYPE param_1,void *param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   
-  if (1 < param_1) {
+  if (XMEMCODEC_LZX < param_1) {
     return 0;
   }
-  uVar1 = XCOMPRESS__XMemGetDecompressionContextSizeLzx(param_2,param_3);
+  uVar1 = XCOMPRESS::XMemGetDecompressionContextSizeLzx(param_2,param_3);
   return uVar1;
 }
 
 
 // 828A2CB8  XMemResetDecompressionContext  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/api/decompress.cpp:208)
 
-undefined8 XMemResetDecompressionContext(int param_1)
+undefined4 XMemResetDecompressionContext(void *param_1)
 
 {
-  undefined8 uVar1;
+  T_HRESULT TVar1;
   
-  if (*(int *)(param_1 + 4) != 1) {
-    return 0xffffffff80004005;
+  if (*(int *)((int)param_1 + 4) != 1) {
+    return 0x80004005;
   }
-  uVar1 = XCOMPRESS__XMemResetDecompressionContextLzx(param_1);
-  return uVar1;
+  TVar1 = XCOMPRESS::XMemResetDecompressionContextLzx(param_1);
+  return TVar1;
 }
 
 
 // 828A2CE0  XMemDecompressStream  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/api/decompress.cpp:320)
 
-undefined8 XMemDecompressStream(int param_1)
+undefined4
+XMemDecompressStream(void *param_1,void *param_2,ulong *param_3,void *param_4,ulong *param_5)
 
 {
-  undefined8 uVar1;
+  T_HRESULT TVar1;
   
-  if (*(int *)(param_1 + 4) != 1) {
-    return 0xffffffff80004005;
+  if (*(int *)((int)param_1 + 4) != 1) {
+    return 0x80004005;
   }
-  uVar1 = XCOMPRESS__XMemDecompressStreamLzx(param_1);
-  return uVar1;
+  TVar1 = XCOMPRESS::XMemDecompressStreamLzx(param_1,param_2,param_3,param_4,param_5);
+  return TVar1;
 }
 

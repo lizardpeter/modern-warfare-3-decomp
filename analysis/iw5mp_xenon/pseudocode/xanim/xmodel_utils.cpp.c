@@ -2,201 +2,243 @@
 
 // 82634268  XModelGetName  (xanim/xmodel_utils.cpp:45)
 
-undefined4 XModelGetName(undefined4 *param_1)
+char * XModelGetName(XModel *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82187aa0,0x2e,0,0xffffffff82000f98,0xffffffff8205ce78);
+  if (param_1 == (XModel *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x2e,0
+                    ,"%s");
   }
-  return *param_1;
+  return param_1->name;
 }
 
 
 // 826342C0  XModelGetSurfaces  (xanim/xmodel_utils.cpp:57)
 
-void XModelGetSurfaces(undefined8 param_1,ulonglong param_2,int param_3)
+int XModelGetSurfaces(XModel *param_1,XSurface **param_2,int param_3)
 
 {
   int iVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_27();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_27(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x3c,0,0xffffffff82000f98,0xffffffff8205ce78);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x3c,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x3d,0,0xffffffff82000f98,0xffffffff8205dd0c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x3d,0
+                    ,"%s");
   }
   if (param_3 < 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x3e,0,0xffffffff82000f98,0xffffffff8201f4d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x3e,0
+                    ,"%s");
   }
   iVar1 = param_3 * 0x28 + iVar2;
   if ((ushort)*(byte *)(iVar2 + 6) <= *(ushort *)(iVar1 + 0x46)) {
-    MyAssertHandler(0xffffffff82187aa0,0x41,0,0xffffffff82187ba8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x41,0
+                    ,"lodInfo->surfIndex doesn\'t index model->numsurfs\n\t%i not in [0, %i)");
   }
   if ((uint)*(byte *)(iVar2 + 6) < (uint)*(ushort *)(iVar1 + 0x44) + (uint)*(ushort *)(iVar1 + 0x46)
      ) {
-    MyAssertHandler(0xffffffff82187aa0,0x42,0,0xffffffff82000f98,0xffffffff82187b6c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x42,0
+                    ,"%s");
   }
   if (*(int *)(iVar1 + 0x48) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x44,0,0xffffffff82000f98,0xffffffff82187b58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x44,0
+                    ,"%s");
   }
   if (*(int *)(iVar1 + 100) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x4a,0,0xffffffff82000f98,0xffffffff82187b48);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x4a,0
+                    ,"%s");
   }
-  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 100);
+  *(undefined4 *)uVar3 = *(undefined4 *)(iVar1 + 100);
   if (*(int *)(*(int *)(iVar1 + 0x48) + 4) != *(int *)(iVar1 + 100)) {
-    MyAssertHandler(0xffffffff82187aa0,0x4e,0,0xffffffff82000f98,0xffffffff82187b18);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x4e,0
+                    ,"%s");
   }
   if (*(short *)(*(int *)(iVar1 + 0x48) + 8) != *(short *)(iVar1 + 0x44)) {
-    MyAssertHandler(0xffffffff82187aa0,0x4f,0,0xffffffff82000f98,0xffffffff82187ae4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x4f,0
+                    ,"%s");
   }
-  __restgprlr_27(*(undefined2 *)(iVar1 + 0x44));
-  return;
+  iVar2 = __restgprlr_27(*(undefined2 *)(iVar1 + 0x44));
+  return iVar2;
 }
 
 
 // 82634488  XModelGetSurface  (xanim/xmodel_utils.cpp:93)
 
-void XModelGetSurface(undefined8 param_1,int param_2,ulonglong param_3)
+XSurface * XModelGetSurface(XModel *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   int iVar2;
+  XSurface *pXVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_27();
+  uVar4 = (ulonglong)param_3;
+  iVar2 = __savegprlr_27(param_1);
   if (param_2 < 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x60,0,0xffffffff82000f98,0xffffffff8201f4d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x60,0
+                    ,"%s");
   }
   iVar1 = param_2 * 0x28 + iVar2;
-  if ((ulonglong)*(byte *)(iVar2 + 6) <= (*(ushort *)(iVar1 + 0x46) + param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82187aa0,99,0,0xffffffff82187bf0);
+  if ((ulonglong)*(byte *)(iVar2 + 6) <= (*(ushort *)(iVar1 + 0x46) + uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",99,0,
+                    "lodInfo->surfIndex + surfIndex doesn\'t index model->numsurfs\n\t%i not in [0, %i)"
+                   );
   }
   if (*(int *)(iVar1 + 100) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,100,0,0xffffffff82000f98,0xffffffff82187b48);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",100,0,
+                    "%s");
   }
   if (*(int *)(iVar1 + 0x48) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x66,0,0xffffffff82000f98,0xffffffff82187b58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x66,0
+                    ,"%s");
   }
   if (*(int *)(*(int *)(iVar1 + 0x48) + 4) != *(int *)(iVar1 + 100)) {
-    MyAssertHandler(0xffffffff82187aa0,0x68,0,0xffffffff82000f98,0xffffffff82187b18);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x68,0
+                    ,"%s");
   }
   if (*(short *)(*(int *)(iVar1 + 0x48) + 8) != *(short *)(iVar1 + 0x44)) {
-    MyAssertHandler(0xffffffff82187aa0,0x69,0,0xffffffff82000f98,0xffffffff82187ae4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x69,0
+                    ,"%s");
   }
-  __restgprlr_27((param_3 & 0x1ffffff) * 0x80 + (ulonglong)*(uint *)(iVar1 + 100));
-  return;
+  pXVar3 = (XSurface *)
+           __restgprlr_27((uVar4 & 0x1ffffff) * 0x80 + (ulonglong)*(uint *)(iVar1 + 100));
+  return pXVar3;
 }
 
 
 // 826345D8  XModelGetLodInfo  (xanim/xmodel_utils.cpp:118)
 
-void XModelGetLodInfo(undefined8 param_1,ulonglong param_2)
+XModelLodInfo * XModelGetLodInfo(XModel *param_1,int param_2)
 
 {
   ulonglong uVar1;
+  XModelLodInfo *pXVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x77,0,0xffffffff82000f98,0xffffffff8205ce78);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x77,0
+                    ,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x78,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  if ((int)uVar3 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x78,0
+                    ,"%s");
   }
-  __restgprlr_28((param_2 + (param_2 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + uVar1 + 0x40);
-  return;
+  pXVar2 = (XModelLodInfo *)
+           __restgprlr_28((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + uVar1 + 0x40);
+  return pXVar2;
 }
 
 
 // 82634660  XModelGetSurfCount  (xanim/xmodel_utils.cpp:168)
 
-void XModelGetSurfCount(undefined8 param_1,ulonglong param_2)
+uint XModelGetSurfCount(XModel *param_1,int param_2)
 
 {
   int iVar1;
+  uint uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0xa9,0,0xffffffff82000f98,0xffffffff8205ce78);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0xa9,0
+                    ,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff82187aa0,0xaa,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  if ((int)uVar3 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0xaa,0
+                    ,"%s");
   }
-  __restgprlr_28(*(undefined2 *)
-                  ((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 + 0x44));
-  return;
+  uVar2 = __restgprlr_28(*(undefined2 *)
+                          ((int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 +
+                          0x44));
+  return uVar2;
 }
 
 
 // 826346E8  XModelGetSkins  (xanim/xmodel_utils.cpp:185)
 
-void XModelGetSkins(undefined8 param_1,ulonglong param_2)
+Material ** XModelGetSkins(XModel *param_1,int param_2)
 
 {
   int iVar1;
+  Material **ppMVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0xba,0,0xffffffff82000f98,0xffffffff8205ce78);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0xba,0
+                    ,"%s");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff82187aa0,0xbb,0,0xffffffff82000f98,0xffffffff8201f4d4);
+  if ((int)uVar3 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0xbb,0
+                    ,"%s");
   }
-  __restgprlr_28((ulonglong)
-                 *(ushort *)
-                  ((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 + 0x46) *
-                 4 + (ulonglong)*(uint *)(iVar1 + 0x3c));
-  return;
+  ppMVar2 = (Material **)
+            __restgprlr_28((ulonglong)
+                           *(ushort *)
+                            ((int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 +
+                            0x46) * 4 + (ulonglong)*(uint *)(iVar1 + 0x3c));
+  return ppMVar2;
 }
 
 
 // 82634780  XModelGetNumLods  (xanim/xmodel_utils.cpp:211)
 
-undefined1 XModelGetNumLods(int param_1)
+int XModelGetNumLods(XModel *param_1)
 
 {
-  return *(undefined1 *)(param_1 + 0xe1);
+  return (int)param_1->numLods;
 }
 
 
 // 82634790  XModelGetLodOutDist  (xanim/xmodel_utils.cpp:223)
 
-double XModelGetLodOutDist(int param_1)
+float XModelGetLodOutDist(XModel *param_1)
 
 {
-  return (double)*(float *)(*(char *)(param_1 + 0xe1) * 0x28 + param_1 + 0x18);
+  return param_1->lodInfo[param_1->numLods + -1].dist;
 }
 
 
 // 826347B0  XModelNumBones  (xanim/xmodel_utils.cpp:237)
 
-undefined1 XModelNumBones(int param_1)
+int XModelNumBones(XModel *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0xee,0,0xffffffff82000f98,0xffffffff8205ce78);
+  if (param_1 == (XModel *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0xee,0
+                    ,"%s");
   }
-  return *(undefined1 *)(param_1 + 4);
+  return (int)param_1->numBones;
 }
 
 
 // 82634808  XModelGetBasePose  (xanim/xmodel_utils.cpp:250)
 
-undefined4 XModelGetBasePose(int param_1)
+DObjAnimMat * XModelGetBasePose(XModel *param_1)
 
 {
-  return *(undefined4 *)(param_1 + 0x38);
+  return param_1->baseMat;
 }
 
 
 // 82634810  XModelGetLodForDist  (xanim/xmodel_utils.cpp:261)
 
-void XModelGetLodForDist(undefined8 param_1,double param_2)
+int XModelGetLodForDist(XModel *param_1,float param_2,float param_3)
 
 {
   char cVar1;
   float fVar2;
-  undefined4 *puVar3;
+  int iVar3;
   int iVar4;
   float *pfVar5;
   float *pfVar6;
@@ -204,19 +246,22 @@ void XModelGetLodForDist(undefined8 param_1,double param_2)
   int iVar8;
   double extraout_f1;
   double dVar9;
+  double dVar10;
   
-  puVar3 = (undefined4 *)__savegprlr_29();
-  uVar7 = (longlong)*(char *)((int)puVar3 + 0xe1) - 1;
-  dVar9 = extraout_f1;
-  if (0x7f < *(byte *)(puVar3 + 0x38)) {
-    MyAssertHandler(0xffffffff82187aa0,0x10d,0,0xffffffff82187878,0xffffffff82187c40,*puVar3);
+  dVar9 = (double)param_3;
+  iVar3 = __savegprlr_29((double)param_2,param_1);
+  uVar7 = (longlong)*(char *)(iVar3 + 0xe1) - 1;
+  dVar10 = extraout_f1;
+  if (0x7f < *(byte *)(iVar3 + 0xe0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x10d,
+                    0,"%s\n\t(model->name) = %s");
   }
-  cVar1 = *(char *)(puVar3 + 0x38);
+  cVar1 = *(char *)(iVar3 + 0xe0);
   iVar4 = (int)cVar1;
   iVar8 = (int)uVar7;
   if (cVar1 < iVar8) {
-    pfVar6 = (float *)(&DAT_8421bfbc + iVar4 * 8);
-    pfVar5 = (float *)(puVar3 + iVar4 * 10 + 0x10);
+    pfVar6 = (float *)(iVar4 * 8 + -0x7bde4044);
+    pfVar5 = (float *)(iVar4 * 0x28 + iVar3 + 0x40);
     do {
       if (*(char *)(pfVar6 + -1) == '\0') {
         fVar2 = *pfVar5;
@@ -224,7 +269,7 @@ void XModelGetLodForDist(undefined8 param_1,double param_2)
       else {
         fVar2 = *pfVar6;
       }
-      if (((double)fVar2 == 0.0) || (dVar9 < (double)fVar2)) goto LAB_8263494c;
+      if (((double)fVar2 == 0.0) || (dVar10 < (double)fVar2)) goto LAB_8263494c;
       iVar4 = iVar4 + 1;
       pfVar5 = pfVar5 + 10;
       pfVar6 = pfVar6 + 2;
@@ -232,67 +277,77 @@ void XModelGetLodForDist(undefined8 param_1,double param_2)
   }
   if (cVar1 <= iVar8) {
     iVar4 = (int)((uVar7 & 0xffffffff) << 3);
-    if ((&DAT_8421bfb8)[iVar4] == '\0') {
-      fVar2 = *(float *)((int)puVar3 +
-                        (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 3) + 0x40);
+    if ((&g_testLods[0].enabled)[iVar4] == false) {
+      fVar2 = *(float *)((int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar3 + 0x40)
+      ;
     }
     else {
-      fVar2 = *(float *)(&DAT_8421bfbc + iVar4);
+      fVar2 = *(float *)((int)&g_testLods[0].dist + iVar4);
     }
-    if (((double)fVar2 == 0.0) || (param_2 < (double)fVar2)) {
-      __restgprlr_29(uVar7);
-      return;
+    if (((double)fVar2 == 0.0) || (dVar9 < (double)fVar2)) {
+      iVar3 = __restgprlr_29(uVar7);
+      return iVar3;
     }
   }
   iVar4 = -1;
 LAB_8263494c:
-  __restgprlr_29(iVar4);
-  return;
+  iVar3 = __restgprlr_29(iVar4);
+  return iVar3;
 }
 
 
 // 82634960  XModelSetTestLods  (xanim/xmodel_utils.cpp:318)
 
-void XModelSetTestLods(double param_1,uint param_2)
+void XModelSetTestLods(int param_1,float param_2)
 
 {
-  if (3 < param_2) {
-    MyAssertHandler(0xffffffff82187aa0,0x140,0,0xffffffff82000f98,0xffffffff82187c5c);
+  double dVar1;
+  
+  dVar1 = (double)param_2;
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x140,
+                    0,"%s");
   }
-  *(float *)(&DAT_8421bfbc + param_2 * 8) = (float)param_1;
-  (&DAT_8421bfb8)[param_2 * 8] = 0.0 <= param_1;
+  g_testLods[param_1].dist = (float)dVar1;
+  g_testLods[param_1].enabled = 0.0 <= dVar1;
   return;
 }
 
 
 // 826349F0  XModelGetLodDist  (xanim/xmodel_utils.cpp:328)
 
-void XModelGetLodDist(undefined8 param_1,ulonglong param_2)
+float XModelGetLodDist(XModel *param_1,uint param_2)
 
 {
   int iVar1;
+  ulonglong uVar2;
+  double dVar3;
   
-  iVar1 = __savegprlr_29();
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x149,0,0xffffffff82000f98,0xffffffff8205ce78);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x149,
+                    0,"%s");
   }
-  if (((longlong)*(char *)(iVar1 + 0xe1) & 0xffffffffU) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82187aa0,0x14a,0,0xffffffff82187c7c,param_2);
+  if (((longlong)*(char *)(iVar1 + 0xe1) & 0xffffffffU) <= (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x14a,
+                    0,"lod doesn\'t index model->numLods\n\t%i not in [0, %i)");
   }
-  __restgprlr_29((double)*(float *)((int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3)
-                                    + iVar1 + 0x40));
-  return;
+  dVar3 = (double)__restgprlr_29((double)*(float *)((int)((uVar2 + (uVar2 & 0x3fffffff) * 4 &
+                                                          0xffffffff) << 3) + iVar1 + 0x40));
+  return (float)dVar3;
 }
 
 
 // 82634A80  XModelGetContents  (xanim/xmodel_utils.cpp:341)
 
-undefined4 XModelGetContents(int param_1)
+int XModelGetContents(XModel *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82187aa0,0x156,0,0xffffffff82000f98,0xffffffff8205ce78);
+  if (param_1 == (XModel *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel_utils.cpp",0x156,
+                    0,"%s");
   }
-  return *(undefined4 *)(param_1 + 0xec);
+  return param_1->contents;
 }
 

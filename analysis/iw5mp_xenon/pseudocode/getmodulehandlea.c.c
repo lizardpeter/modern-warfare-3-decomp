@@ -2,16 +2,16 @@
 
 // 828AB068  GetModuleHandleA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getmodulehandlea.c:21)
 
-HMODULE GetModuleHandleA(LPCSTR lpModuleName)
+HINSTANCE__ * GetModuleHandleA(char *param_1)
 
 {
-  int iVar1;
-  HMODULE local_20 [4];
+  long lVar1;
+  HINSTANCE__ *local_20 [4];
   
-  iVar1 = XexGetModuleHandle(lpModuleName,local_20);
-  if (iVar1 < 0) {
-    RtlSetLastNTError();
-    local_20[0] = (HMODULE)0x0;
+  lVar1 = XexGetModuleHandle(param_1,local_20);
+  if (lVar1 < 0) {
+    RtlSetLastNTError(lVar1);
+    local_20[0] = (HINSTANCE__ *)0x0;
   }
   return local_20[0];
 }

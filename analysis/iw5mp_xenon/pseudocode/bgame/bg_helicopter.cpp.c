@@ -2,7 +2,7 @@
 
 // 828459F8  BG_HeliCmdScale  (bgame/bg_helicopter.cpp:33)
 
-void BG_HeliCmdScale(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void BG_HeliCmdScale(bool param_1,char *param_2,float *param_3)
 
 {
   char cVar1;
@@ -10,71 +10,79 @@ void BG_HeliCmdScale(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   uint uVar3;
   float fVar4;
   char cVar5;
-  char *pcVar6;
-  float *pfVar7;
-  int iVar8;
-  int iVar9;
-  double dVar10;
-  double dVar11;
+  ulonglong uVar6;
+  char *pcVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  int iVar10;
+  int iVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
+  double dVar15;
   
-  __savegprlr_26();
+  uVar8 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_26(param_1);
   cVar5 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821eee48,0x28,0,0xffffffff82000f98,0xffffffff821425c0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x28,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821eee48,0x29,0,0xffffffff82000f98,0xffffffff821a00d4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x29,
+                    0,"%s");
   }
-  pcVar6 = (char *)param_2;
-  dVar10 = 0.0;
-  pfVar7 = (float *)param_3;
-  *pfVar7 = (float)(longlong)*pcVar6 * 0.007874016;
-  pfVar7[1] = (float)(longlong)pcVar6[1] * 0.007874016;
-  pfVar7[2] = (float)(longlong)pcVar6[2] * 0.007874016;
-  pfVar7[3] = (float)(longlong)pcVar6[3] * 0.007874016;
-  cVar1 = *pcVar6;
-  if ((cVar1 != 0) || (pcVar6[1] != '\0')) {
-    cVar2 = pcVar6[1];
+  pcVar7 = (char *)uVar6;
+  dVar12 = 0.0;
+  pfVar9 = (float *)uVar8;
+  *pfVar9 = (float)(longlong)*pcVar7 * 0.007874016;
+  pfVar9[1] = (float)(longlong)pcVar7[1] * 0.007874016;
+  pfVar9[2] = (float)(longlong)pcVar7[2] * 0.007874016;
+  pfVar9[3] = (float)(longlong)pcVar7[3] * 0.007874016;
+  cVar1 = *pcVar7;
+  if ((cVar1 != 0) || (pcVar7[1] != '\0')) {
+    cVar2 = pcVar7[1];
     uVar3 = (int)cVar1 >> 0x1f;
-    iVar9 = ((int)cVar1 ^ uVar3) - uVar3;
-    iVar8 = ((int)cVar2 ^ (int)cVar2 >> 0x1f) - ((int)cVar2 >> 0x1f);
-    if (iVar9 < iVar8) {
-      iVar9 = iVar8;
+    iVar11 = ((int)cVar1 ^ uVar3) - uVar3;
+    iVar10 = ((int)cVar2 ^ (int)cVar2 >> 0x1f) - ((int)cVar2 >> 0x1f);
+    if (iVar11 < iVar10) {
+      iVar11 = iVar10;
     }
-    if (iVar9 != 0) {
-      fVar4 = (float)(longlong)iVar9 /
+    if (iVar11 != 0) {
+      fVar4 = (float)(longlong)iVar11 /
               SQRT((float)(longlong)((int)cVar2 * (int)cVar2 + (int)cVar1 * (int)cVar1));
-      *pfVar7 = *pfVar7 * fVar4;
-      pfVar7[1] = pfVar7[1] * fVar4;
+      *pfVar9 = *pfVar9 * fVar4;
+      pfVar9[1] = pfVar9[1] * fVar4;
     }
-    if (ABS(pfVar7[1]) < 0.3) {
-      pfVar7[1] = 0.0;
+    if (ABS(pfVar9[1]) < 0.3) {
+      pfVar9[1] = 0.0;
     }
     if (cVar5 != '\0') {
-      dVar12 = ABS((double)*pfVar7);
-      dVar13 = ABS((double)pfVar7[1]);
-      dVar11 = 1.0;
-      if (1.0 < dVar12) {
-        MyAssertHandler(0xffffffff821eee48,0x46,0,0xffffffff82000f98,0xffffffff821a00c0);
+      dVar14 = ABS((double)*pfVar9);
+      dVar15 = ABS((double)pfVar9[1]);
+      dVar13 = 1.0;
+      if (1.0 < dVar14) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0x46,0,"%s");
       }
-      if (dVar11 < dVar13) {
-        MyAssertHandler(0xffffffff821eee48,0x47,0,0xffffffff82000f98,0xffffffff821a00ac);
+      if (dVar13 < dVar15) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0x47,0,"%s");
       }
-      if (dVar12 <= dVar13) {
-        *pfVar7 = (float)(dVar11 - (double)(float)(dVar13 - dVar12)) * *pfVar7;
+      if (dVar14 <= dVar15) {
+        *pfVar9 = (float)(dVar13 - (double)(float)(dVar15 - dVar14)) * *pfVar9;
       }
       else {
-        pfVar7[1] = (float)(dVar11 - (double)(float)(dVar12 - dVar13)) * pfVar7[1];
+        pfVar9[1] = (float)(dVar13 - (double)(float)(dVar14 - dVar15)) * pfVar9[1];
       }
     }
   }
-  if (ABS(pfVar7[2]) < 0.3) {
-    pfVar7[2] = (float)dVar10;
+  if (ABS(pfVar9[2]) < 0.3) {
+    pfVar9[2] = (float)dVar12;
   }
-  if (ABS(pfVar7[3]) < 0.3) {
-    pfVar7[3] = (float)dVar10;
+  if (ABS(pfVar9[3]) < 0.3) {
+    pfVar9[3] = (float)dVar12;
   }
   __restfpr_28();
   __restgprlr_26();
@@ -84,27 +92,30 @@ void BG_HeliCmdScale(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82845CA8  BG_HeliCalcAccel  (bgame/bg_helicopter.cpp:95)
 
-void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *param_4,float *param_5,
-                     float *param_6)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void BG_HeliCalcAccel(pmove_t *param_1,pml_t *param_2,VehicleState *param_3,float *param_4,
+                     float *param_5,float *param_6)
 
 {
-  double dVar1;
-  double dVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  int *piVar11;
-  int iVar12;
-  int iVar13;
-  int iVar14;
-  float *pfVar15;
-  longlong lVar16;
-  longlong lVar17;
+  float *pfVar6;
+  pmove_t *ppVar7;
+  VehicleDef *pVVar8;
+  int iVar10;
+  longlong lVar9;
+  int iVar11;
+  float *pfVar12;
+  longlong lVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
@@ -114,11 +125,9 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   double dVar24;
   double dVar25;
   double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
+  float fVar27;
+  float fVar28;
+  float fVar29;
   float local_1c0 [4];
   float local_1b0;
   float local_1a8 [4];
@@ -131,355 +140,369 @@ void BG_HeliCalcAccel(undefined8 param_1,int param_2,longlong param_3,float *par
   float local_130;
   float local_12c;
   float local_128;
-  undefined4 local_120;
-  undefined4 local_11c;
-  undefined4 local_118;
+  float local_120 [4];
   float local_110;
   undefined4 local_10c;
   float local_108;
-  undefined1 auStack_100 [12];
-  undefined1 auStack_f4 [12];
-  undefined1 auStack_e8 [12];
+  float afStack_100 [3];
+  float afStack_f4 [3];
+  float afStack_e8 [3];
   float local_dc;
   float local_d8;
   float local_d4;
   
-  __savegprlr_20();
-  piVar11 = (int *)__savefpr_20();
-  if (piVar11 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821eee48,0x7a,0,0xffffffff82000f98,0xffffffff82004978);
+  lVar9 = (longlong)(int)param_3;
+  __savegprlr_20(param_1);
+  ppVar7 = (pmove_t *)__savefpr_20();
+  if (ppVar7 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x7a,
+                    0,"%s");
   }
-  if (*piVar11 == 0) {
-    MyAssertHandler(0xffffffff821eee48,0x7b,0,0xffffffff82000f98,0xffffffff8200cdf4);
+  if (ppVar7->ps == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x7b,
+                    0,"%s");
   }
-  iVar12 = BG_GetVehicleDef(piVar11);
-  if (iVar12 == 0) {
-    MyAssertHandler(0xffffffff821eee48,0x7e,0,0xffffffff82000f98,0xffffffff8200d194);
+  pVVar8 = BG_GetVehicleDef(ppVar7);
+  if (pVVar8 == (VehicleDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x7e,
+                    0,"%s");
   }
-  iVar13 = 0;
-  dVar21 = 17.600000381469727;
-  local_1a8[0] = *(float *)(iVar12 + 0x184) * 17.6;
-  lVar16 = 3;
-  local_168[0] = *(float *)(iVar12 + 0x18c) * 17.6;
-  local_168[2] = *(float *)(iVar12 + 400) * 17.6;
-  dVar22 = (double)local_168[2];
-  local_1a8[2] = *(float *)(iVar12 + 0x188) * 17.6;
-  dVar31 = 0.0;
+  iVar10 = 0;
+  dVar17 = 17.600000381469727;
+  local_1a8[0] = pVVar8->vehHelicopterMaxSpeed * 17.6;
+  lVar13 = 3;
+  local_168[0] = pVVar8->vehHelicopterMaxAccel * 17.6;
+  local_168[2] = pVVar8->vehHelicopterMaxAccelVertical * 17.6;
+  dVar18 = (double)local_168[2];
+  local_1a8[2] = pVVar8->vehHelicopterMaxSpeedVertical * 17.6;
+  dVar26 = 0.0;
   local_168[1] = local_168[0];
-  dVar30 = 1.0;
+  dVar25 = 1.0;
   local_1a8[1] = local_1a8[0];
   do {
-    if (*(float *)((int)local_1a8 + iVar13) == 0.0) {
-      *(undefined4 *)((int)local_140 + iVar13) = 0x3f800000;
+    if (*(float *)((int)local_1a8 + iVar10) == 0.0) {
+      *(undefined4 *)((int)local_140 + iVar10) = 0x3f800000;
     }
     else {
-      *(float *)((int)local_140 + iVar13) =
-           *(float *)((int)local_168 + iVar13) / *(float *)((int)local_1a8 + iVar13);
+      *(float *)((int)local_140 + iVar10) =
+           *(float *)((int)local_168 + iVar10) / *(float *)((int)local_1a8 + iVar10);
     }
-    iVar13 = iVar13 + 4;
-    lVar16 = lVar16 + -1;
-  } while (lVar16 != 0);
-  iVar13 = (int)param_3;
-  local_120 = *(undefined4 *)(iVar13 + 0x40);
-  local_118 = *(undefined4 *)(iVar13 + 0x48);
-  local_11c = 0;
-  dVar28 = (double)(*param_4 * local_1a8[0]);
-  dVar27 = (double)(param_4[1] * local_1a8[0]);
-  dVar25 = (double)(param_4[2] * local_1a8[2]);
-  AngleVectors(&local_120,0,0,&local_130);
-  local_198[0] = (float)((double)local_130 * dVar25 + dVar28);
-  dVar23 = (double)local_198[0];
-  local_198[1] = (float)((double)local_12c * dVar25 + dVar27);
-  dVar28 = (double)local_198[1];
-  local_198[2] = (float)((double)local_128 * dVar25);
-  dVar24 = (double)local_198[2];
-  dVar27 = (double)SQRT((float)(dVar24 * dVar24 +
-                               (double)(float)(dVar28 * dVar28 + (double)(float)(dVar23 * dVar23))))
+    iVar10 = iVar10 + 4;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  iVar10 = (int)lVar9;
+  local_120[0] = *(float *)(iVar10 + 0x40);
+  local_120[2] = *(float *)(iVar10 + 0x48);
+  local_120[1] = 0.0;
+  dVar24 = (double)(*param_4 * local_1a8[0]);
+  dVar23 = (double)(param_4[1] * local_1a8[0]);
+  dVar21 = (double)(param_4[2] * local_1a8[2]);
+  AngleVectors(local_120,(float *)0x0,(float *)0x0,&local_130);
+  local_198[0] = (float)((double)local_130 * dVar21 + dVar24);
+  dVar19 = (double)local_198[0];
+  local_198[1] = (float)((double)local_12c * dVar21 + dVar23);
+  dVar24 = (double)local_198[1];
+  dVar20 = (double)(float)((double)local_128 * dVar21);
+  local_198[2] = (float)((double)local_128 * dVar21);
+  dVar23 = (double)SQRT((float)(dVar20 * dVar20 +
+                               (double)(float)(dVar24 * dVar24 + (double)(float)(dVar19 * dVar19))))
   ;
-  dVar25 = dVar30;
-  if (-dVar27 < 0.0) {
-    dVar25 = dVar27;
+  dVar21 = dVar25;
+  if (-dVar23 < 0.0) {
+    dVar21 = dVar23;
   }
-  dVar19 = (double)(float)(dVar30 / dVar25);
-  dVar25 = (double)(float)(dVar19 * dVar23);
-  dVar20 = (double)(float)(dVar19 * dVar28);
-  dVar19 = (double)(float)(dVar19 * dVar24);
-  if (dVar30 <= dVar27) {
-    dVar26 = (double)(float)((double)*(float *)(iVar13 + 0x54) * dVar19 +
-                            (double)(float)((double)*(float *)(iVar13 + 0x50) * dVar20 +
-                                           (double)(float)(dVar25 * (double)*(float *)(iVar13 + 0x4c
+  dVar15 = (double)(float)(dVar25 / dVar21);
+  dVar21 = (double)(float)(dVar15 * dVar19);
+  dVar16 = (double)(float)(dVar15 * dVar24);
+  dVar15 = (double)(float)(dVar15 * dVar20);
+  if (dVar25 <= dVar23) {
+    dVar22 = (double)(float)((double)*(float *)(iVar10 + 0x54) * dVar15 +
+                            (double)(float)((double)*(float *)(iVar10 + 0x50) * dVar16 +
+                                           (double)(float)(dVar21 * (double)*(float *)(iVar10 + 0x4c
                                                                                       ))));
-    dVar18 = -dVar26;
-    dVar29 = dVar25 * dVar26;
-    dVar1 = dVar20 * dVar26;
-    dVar2 = dVar19 * dVar26;
-    local_188[0] = (float)(dVar18 * dVar25 + (double)*(float *)(iVar13 + 0x4c));
-    local_188[1] = (float)(dVar20 * dVar18 + (double)*(float *)(iVar13 + 0x50));
-    local_188[2] = (float)(dVar19 * dVar18 + (double)*(float *)(iVar13 + 0x54));
+    dVar14 = -dVar22;
+    local_178[0] = (float)(dVar21 * dVar22);
+    local_178[1] = (float)(dVar16 * dVar22);
+    local_178[2] = (float)(dVar15 * dVar22);
+    local_188[0] = (float)(dVar14 * dVar21 + (double)*(float *)(iVar10 + 0x4c));
+    local_188[1] = (float)(dVar16 * dVar14 + (double)*(float *)(iVar10 + 0x50));
+    local_188[2] = (float)(dVar15 * dVar14 + (double)*(float *)(iVar10 + 0x54));
   }
   else {
-    local_188[0] = *(float *)(iVar13 + 0x4c);
-    local_188[1] = *(float *)(iVar13 + 0x50);
-    local_188[2] = *(float *)(iVar13 + 0x54);
-    dVar27 = dVar31;
-    dVar26 = dVar31;
-    dVar29 = dVar31;
-    dVar1 = dVar31;
-    dVar2 = dVar31;
+    local_178[0] = (float)dVar26;
+    local_178[1] = (float)dVar26;
+    local_178[2] = (float)dVar26;
+    local_188[0] = *(float *)(iVar10 + 0x4c);
+    local_188[1] = *(float *)(iVar10 + 0x50);
+    local_188[2] = *(float *)(iVar10 + 0x54);
+    dVar23 = dVar26;
+    dVar22 = dVar26;
   }
-  local_178[2] = (float)dVar2;
-  local_178[1] = (float)dVar1;
-  local_178[0] = (float)dVar29;
-  local_158[2] = *(float *)(iVar12 + 0x194);
-  iVar14 = 0;
-  local_158[3] = *(float *)(iVar12 + 0x198);
-  local_1c0[0] = (float)dVar31;
-  local_1c0[1] = (float)dVar31;
-  local_158[0] = (float)dVar31;
-  local_158[1] = (float)dVar31;
+  iVar11 = 0;
+  local_158[2] = pVVar8->vehHelicopterDecelerationFwd;
+  local_1c0[0] = (float)dVar26;
+  local_158[3] = pVVar8->vehHelicopterDecelerationSide;
+  local_1c0[1] = (float)dVar26;
+  local_158[0] = (float)dVar26;
+  local_158[1] = (float)dVar26;
   do {
-    dVar29 = (double)*(float *)((int)local_140 + iVar14);
-    dVar20 = (double)(float)((double)*(float *)((int)local_158 + iVar14 + 8) * dVar29);
-    dVar19 = (double)*(float *)((int)local_188 + iVar14);
-    dVar25 = (double)DiffTrack(dVar31,dVar19,dVar20,(double)*(float *)(param_2 + 0x24));
-    *(float *)((int)local_158 + iVar14) = (float)(dVar25 - dVar19) / *(float *)(param_2 + 0x24);
-    if (dVar27 <= dVar26) {
-      dVar19 = (double)*(float *)((int)local_178 + iVar14);
-      dVar25 = (double)DiffTrack((double)*(float *)((int)local_198 + iVar14),dVar19,dVar20);
-      *(float *)((int)local_158 + iVar14) =
-           (float)(dVar25 - dVar19) / *(float *)(param_2 + 0x24) +
-           *(float *)((int)local_158 + iVar14);
+    dVar16 = (double)*(float *)((int)local_140 + iVar11);
+    fVar28 = (float)((double)*(float *)((int)local_158 + iVar11 + 8) * dVar16);
+    dVar15 = (double)fVar28;
+    dVar21 = (double)*(float *)((int)local_188 + iVar11);
+    fVar27 = DiffTrack((float)dVar26,*(float *)((int)local_188 + iVar11),fVar28,param_2->frametime);
+    fVar28 = param_2->frametime;
+    *(float *)((int)local_158 + iVar11) = (float)((double)fVar27 - dVar21) / fVar28;
+    if (dVar23 <= dVar22) {
+      dVar21 = (double)*(float *)((int)local_178 + iVar11);
+      fVar28 = DiffTrack(*(float *)((int)local_198 + iVar11),*(float *)((int)local_178 + iVar11),
+                         (float)dVar15,fVar28);
+      *(float *)((int)local_158 + iVar11) =
+           (float)((double)fVar28 - dVar21) / param_2->frametime +
+           *(float *)((int)local_158 + iVar11);
     }
     else {
-      dVar19 = (double)*(float *)((int)local_178 + iVar14);
-      dVar25 = (double)DiffTrack((double)*(float *)((int)local_198 + iVar14),dVar19,dVar29);
-      *(float *)((int)local_1c0 + iVar14) =
-           (float)(dVar25 - dVar19) / *(float *)(param_2 + 0x24) +
-           *(float *)((int)local_1c0 + iVar14);
+      dVar21 = (double)*(float *)((int)local_178 + iVar11);
+      fVar28 = DiffTrack(*(float *)((int)local_198 + iVar11),*(float *)((int)local_178 + iVar11),
+                         (float)dVar16,fVar28);
+      *(float *)((int)local_1c0 + iVar11) =
+           (float)((double)fVar28 - dVar21) / param_2->frametime +
+           *(float *)((int)local_1c0 + iVar11);
     }
-    fVar4 = *(float *)((int)local_158 + iVar14);
-    fVar5 = *(float *)((int)local_1c0 + iVar14);
-    fVar3 = fVar4 + fVar5;
-    fVar6 = *(float *)((int)local_168 + iVar14);
-    fVar9 = -fVar6;
-    fVar7 = fVar6;
-    if (fVar4 - fVar6 < 0.0) {
-      fVar7 = fVar4;
+    fVar28 = *(float *)((int)local_158 + iVar11);
+    fVar27 = *(float *)((int)local_1c0 + iVar11);
+    fVar29 = fVar28 + fVar27;
+    fVar1 = *(float *)((int)local_168 + iVar11);
+    fVar4 = -fVar1;
+    fVar2 = fVar1;
+    if (fVar28 - fVar1 < 0.0) {
+      fVar2 = fVar28;
     }
-    fVar10 = fVar6;
-    if (fVar5 - fVar6 < 0.0) {
-      fVar10 = fVar5;
+    fVar5 = fVar1;
+    if (fVar27 - fVar1 < 0.0) {
+      fVar5 = fVar27;
     }
-    if (fVar3 - fVar6 < 0.0) {
-      fVar6 = fVar3;
+    if (fVar29 - fVar1 < 0.0) {
+      fVar1 = fVar29;
     }
-    fVar8 = fVar9;
-    if (fVar9 - fVar4 < 0.0) {
-      fVar8 = fVar7;
+    fVar3 = fVar4;
+    if (fVar4 - fVar28 < 0.0) {
+      fVar3 = fVar2;
     }
-    *(float *)((int)local_158 + iVar14) = fVar8;
-    fVar4 = fVar9;
-    if (fVar9 - fVar5 < 0.0) {
-      fVar4 = fVar10;
+    *(float *)((int)local_158 + iVar11) = fVar3;
+    fVar28 = fVar4;
+    if (fVar4 - fVar27 < 0.0) {
+      fVar28 = fVar5;
     }
-    *(float *)((int)local_1c0 + iVar14) = fVar4;
-    if (fVar9 - fVar3 < 0.0) {
-      fVar9 = fVar6;
+    *(float *)((int)local_1c0 + iVar11) = fVar28;
+    if (fVar4 - fVar29 < 0.0) {
+      fVar4 = fVar1;
     }
-    *(float *)(iVar14 + (int)param_5) = fVar9;
-    iVar14 = iVar14 + 4;
-  } while (iVar14 < 8);
-  dVar25 = (double)*(float *)(iVar13 + 0x54);
-  if (((dVar24 < dVar25) && (dVar31 < dVar25)) || ((dVar25 < dVar24 && (dVar25 < dVar31)))) {
-    local_140[2] = *(float *)(iVar12 + 0x19c) * local_140[2];
+    *(float *)(iVar11 + (int)param_5) = fVar4;
+    iVar11 = iVar11 + 4;
+  } while (iVar11 < 8);
+  dVar21 = (double)*(float *)(iVar10 + 0x54);
+  if (((dVar20 < dVar21) && (dVar26 < dVar21)) || ((dVar21 < dVar20 && (dVar21 < dVar26)))) {
+    local_140[2] = pVVar8->vehHelicopterDecelerationUp * local_140[2];
   }
-  dVar25 = (double)DiffTrack(dVar24,dVar25,(double)local_140[2],(double)*(float *)(param_2 + 0x24));
-  dVar27 = (double)((float)(dVar25 - (double)*(float *)(iVar13 + 0x54)) / *(float *)(param_2 + 0x24)
-                   );
-  dVar25 = dVar22;
-  if ((float)(dVar27 - dVar22) < 0.0) {
-    dVar25 = dVar27;
+  fVar28 = DiffTrack((float)dVar20,*(float *)(iVar10 + 0x54),local_140[2],param_2->frametime);
+  dVar23 = (double)((fVar28 - *(float *)(iVar10 + 0x54)) / param_2->frametime);
+  dVar21 = dVar18;
+  if ((float)(dVar23 - dVar18) < 0.0) {
+    dVar21 = dVar23;
   }
-  dVar24 = -dVar22;
-  if ((float)(-dVar22 - dVar27) < 0.0) {
-    dVar24 = dVar25;
+  dVar20 = -dVar18;
+  if ((float)(-dVar18 - dVar23) < 0.0) {
+    dVar20 = dVar21;
   }
-  param_5[2] = (float)dVar24;
-  if ((double)*(float *)(iVar12 + 0x1a0) <= dVar31) {
-    MyAssertHandler(0xffffffff821eee48,0xcf,0,0xffffffff82000f98,0xffffffff821eef38);
+  param_5[2] = (float)dVar20;
+  if ((double)pVVar8->vehHelicopterMaxYawRate <= dVar26) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0xcf,
+                    0,"%s");
   }
-  dVar19 = (double)(*(float *)(iVar12 + 0x1a4) / *(float *)(iVar12 + 0x1a0));
-  dVar25 = (double)*(float *)(iVar13 + 0x44);
-  dVar22 = (double)DiffTrackAngle((double)*(float *)(*piVar11 + 0x15c),dVar25,dVar19,
-                                  (double)*(float *)(param_2 + 0x24));
-  dVar24 = 0.5;
-  dVar25 = (double)((float)(dVar22 - dVar25) * 0.0027777778);
-  dVar22 = floor((double)(float)(dVar25 + 0.5));
-  dVar27 = (double)*(float *)(iVar12 + 0x1a0);
-  dVar25 = (double)((float)(dVar30 / (double)*(float *)(param_2 + 0x24)) *
-                   (float)(dVar25 - (double)(float)dVar22) * 360.0);
-  dVar22 = dVar27;
-  if ((float)(dVar25 - dVar27) < 0.0) {
-    dVar22 = dVar25;
+  fVar28 = pVVar8->vehHelicopterMaxYawAccel / pVVar8->vehHelicopterMaxYawRate;
+  dVar20 = (double)fVar28;
+  dVar18 = (double)*(float *)(iVar10 + 0x44);
+  fVar28 = DiffTrackAngle(ppVar7->ps->viewangles[1],*(float *)(iVar10 + 0x44),fVar28,
+                          param_2->frametime);
+  dVar21 = 0.5;
+  dVar23 = (double)((float)((double)fVar28 - dVar18) * 0.0027777778);
+  dVar18 = floor((double)(float)(dVar23 + 0.5));
+  fVar28 = pVVar8->vehHelicopterMaxYawRate;
+  fVar27 = (float)(dVar25 / (double)param_2->frametime) *
+           (float)(dVar23 - (double)(float)dVar18) * 360.0;
+  fVar1 = fVar28;
+  if (fVar27 - fVar28 < 0.0) {
+    fVar1 = fVar27;
   }
-  dVar20 = -dVar27;
-  if ((float)(-dVar27 - dVar25) < 0.0) {
-    dVar20 = dVar22;
+  fVar29 = -fVar28;
+  if (-fVar28 - fVar27 < 0.0) {
+    fVar29 = fVar1;
   }
-  if (ABS((double)*(float *)(iVar13 + 0x2c)) < ABS(dVar20)) {
-    dVar20 = (double)DiffTrack(dVar20,(double)*(float *)(iVar13 + 0x2c),dVar19);
+  if (ABS(*(float *)(iVar10 + 0x2c)) < ABS(fVar29)) {
+    fVar29 = DiffTrack(fVar29,*(float *)(iVar10 + 0x2c),(float)dVar20,param_2->frametime);
   }
-  iVar14 = 0;
-  fVar6 = (float)(dVar20 - (double)*(float *)(iVar13 + 0x2c)) / *(float *)(param_2 + 0x24);
-  param_6[1] = fVar6;
-  fVar4 = *(float *)(iVar12 + 0x1a4);
-  fVar5 = fVar4;
-  if (fVar6 - fVar4 < 0.0) {
-    fVar5 = fVar6;
+  iVar11 = 0;
+  fVar27 = (fVar29 - *(float *)(iVar10 + 0x2c)) / param_2->frametime;
+  param_6[1] = fVar27;
+  fVar28 = pVVar8->vehHelicopterMaxYawAccel;
+  fVar1 = fVar28;
+  if (fVar27 - fVar28 < 0.0) {
+    fVar1 = fVar27;
   }
-  fVar3 = -fVar4;
-  if (-fVar4 - fVar6 < 0.0) {
-    fVar3 = fVar5;
+  fVar29 = -fVar28;
+  if (-fVar28 - fVar27 < 0.0) {
+    fVar29 = fVar1;
   }
-  param_6[1] = fVar3;
+  param_6[1] = fVar29;
   do {
-    if ((double)*(float *)((int)local_1a8 + iVar14) <= dVar31) {
-      if ((double)*(float *)(iVar12 + 0x184) <= dVar31) {
-        MyAssertHandler(0xffffffff821eee48,0xe0,0,0xffffffff82000f98,0xffffffff821eeee8);
+    if ((double)*(float *)((int)local_1a8 + iVar11) <= dVar26) {
+      if ((double)pVVar8->vehHelicopterMaxSpeed <= dVar26) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0xe0,0,"%s");
       }
-      *(float *)((int)local_1a8 + iVar14) = (float)((double)*(float *)(iVar12 + 0x184) * dVar21);
+      *(float *)((int)local_1a8 + iVar11) = (float)((double)pVVar8->vehHelicopterMaxSpeed * dVar17);
     }
-    if ((double)*(float *)((int)local_168 + iVar14) <= dVar31) {
-      if ((double)*(float *)(iVar12 + 0x18c) <= dVar31) {
-        MyAssertHandler(0xffffffff821eee48,0xe5,0,0xffffffff82000f98,0xffffffff821eef10);
+    if ((double)*(float *)((int)local_168 + iVar11) <= dVar26) {
+      if ((double)pVVar8->vehHelicopterMaxAccel <= dVar26) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0xe5,0,"%s");
       }
-      *(float *)((int)local_168 + iVar14) = (float)((double)*(float *)(iVar12 + 0x18c) * dVar21);
+      *(float *)((int)local_168 + iVar11) = (float)((double)pVVar8->vehHelicopterMaxAccel * dVar17);
     }
-    iVar14 = iVar14 + 4;
-  } while (iVar14 < 8);
-  local_10c = *(undefined4 *)(iVar13 + 0x14);
-  local_110 = (float)dVar31;
-  local_108 = (float)dVar31;
-  AngleVectors(&local_110,auStack_100,auStack_f4,auStack_e8);
-  dVar25 = (double)(float)(dVar30 / (double)local_1a8[0]);
-  local_dc = (float)dVar31;
-  local_d8 = (float)dVar31;
-  local_d4 = (float)dVar31;
-  dVar27 = -1.0;
-  dVar22 = (double)((float)(dVar30 / (double)local_168[0]) * local_158[0] *
-                    *(float *)(iVar12 + 0x1b4) +
-                   (float)(dVar30 / (double)local_168[0]) * local_1c0[0] *
-                   *(float *)(iVar12 + 0x1b0) +
-                   (float)(dVar25 * dVar23) * *(float *)(iVar12 + 0x1ac) +
-                   (float)(dVar25 * (double)*(float *)(iVar13 + 0x4c)) * *(float *)(iVar12 + 0x1a8))
-  ;
-  dVar21 = dVar30;
-  if ((float)(dVar22 - dVar30) < 0.0) {
-    dVar21 = dVar22;
+    iVar11 = iVar11 + 4;
+  } while (iVar11 < 8);
+  local_10c = *(undefined4 *)(iVar10 + 0x14);
+  local_110 = (float)dVar26;
+  local_108 = (float)dVar26;
+  AngleVectors(&local_110,afStack_100,afStack_f4,afStack_e8);
+  dVar23 = (double)(float)(dVar25 / (double)local_1a8[0]);
+  local_dc = (float)dVar26;
+  local_d8 = (float)dVar26;
+  local_d4 = (float)dVar26;
+  dVar20 = -1.0;
+  dVar18 = (double)((float)(dVar25 / (double)local_168[0]) * local_158[0] *
+                    pVVar8->vehHelicopterTiltFromDeceleration +
+                   (float)(dVar25 / (double)local_168[0]) * local_1c0[0] *
+                   pVVar8->vehHelicopterTiltFromAcceleration +
+                   (float)(dVar23 * dVar19) * pVVar8->vehHelicopterTiltFromControllerAxes +
+                   (float)(dVar23 * (double)*(float *)(iVar10 + 0x4c)) *
+                   pVVar8->vehHelicopterTiltFromVelocity);
+  dVar17 = dVar25;
+  if ((float)(dVar18 - dVar25) < 0.0) {
+    dVar17 = dVar18;
   }
-  dVar23 = dVar27;
-  if ((float)(-1.0 - dVar22) < 0.0) {
-    dVar23 = dVar21;
+  dVar19 = dVar20;
+  if ((float)(-1.0 - dVar18) < 0.0) {
+    dVar19 = dVar17;
   }
-  local_1c0[2] = (float)dVar23;
-  local_1c0[3] = (float)(dVar30 / (double)local_168[1]) * local_158[1] * *(float *)(iVar12 + 0x1b4)
-                 + (float)(dVar30 / (double)local_168[1]) * local_1c0[1] *
-                   *(float *)(iVar12 + 0x1b0) +
-                   (float)((double)(float)(dVar30 / (double)local_1a8[1]) * dVar28) *
-                   *(float *)(iVar12 + 0x1ac) +
-                   (float)((double)*(float *)(iVar13 + 0x50) *
-                          (double)(float)(dVar30 / (double)local_1a8[1])) *
-                   *(float *)(iVar12 + 0x1a8);
-  dVar21 = (double)local_1c0[3];
-  if ((dVar31 < (double)*(float *)(iVar13 + 0x4c)) &&
-     (dVar31 < ABS((double)*(float *)(iVar13 + 0x2c)))) {
-    dVar22 = dVar30;
-    if ((double)local_1a8[0] <= dVar31) {
-      MyAssertHandler(0xffffffff821eee48,0x101,0,0xffffffff82000f98,0xffffffff821a0230);
-      dVar21 = (double)local_1c0[3];
-      dVar22 = dVar30;
+  local_1c0[2] = (float)dVar19;
+  local_1c0[3] = (float)(dVar25 / (double)local_168[1]) * local_158[1] *
+                 pVVar8->vehHelicopterTiltFromDeceleration +
+                 (float)(dVar25 / (double)local_168[1]) * local_1c0[1] *
+                 pVVar8->vehHelicopterTiltFromAcceleration +
+                 (float)((double)(float)(dVar25 / (double)local_1a8[1]) * dVar24) *
+                 pVVar8->vehHelicopterTiltFromControllerAxes +
+                 (float)((double)*(float *)(iVar10 + 0x50) *
+                        (double)(float)(dVar25 / (double)local_1a8[1])) *
+                 pVVar8->vehHelicopterTiltFromVelocity;
+  dVar17 = (double)local_1c0[3];
+  if ((dVar26 < (double)*(float *)(iVar10 + 0x4c)) &&
+     (dVar26 < ABS((double)*(float *)(iVar10 + 0x2c)))) {
+    dVar18 = dVar25;
+    if ((double)local_1a8[0] <= dVar26) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                      0x101,0,"%s");
+      dVar17 = (double)local_1c0[3];
+      dVar18 = dVar25;
     }
-    dVar25 = (double)(float)(dVar25 * (double)*(float *)(iVar13 + 0x4c));
-    dVar30 = dVar22;
-    if (dVar25 < (double)*(float *)(iVar12 + 0x1b8)) {
-      if ((double)*(float *)(iVar12 + 0x1b8) <= dVar31) {
-        MyAssertHandler(0xffffffff821eee48,0x105,1,0xffffffff82000f98,0xffffffff821eeeb0);
-        dVar21 = (double)local_1c0[3];
-        dVar30 = dVar22;
+    dVar23 = (double)(float)(dVar23 * (double)*(float *)(iVar10 + 0x4c));
+    dVar25 = dVar18;
+    if (dVar23 < (double)pVVar8->vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt) {
+      if ((double)pVVar8->vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt <= dVar26) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0x105,1,"%s");
+        dVar17 = (double)local_1c0[3];
+        dVar25 = dVar18;
       }
-      dVar22 = (double)(float)(dVar25 / (double)*(float *)(iVar12 + 0x1b8));
+      dVar18 = (double)(float)(dVar23 / (double)pVVar8->vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt)
+      ;
     }
-    if ((double)*(float *)(iVar12 + 0x1a0) <= dVar31) {
-      MyAssertHandler(0xffffffff821eee48,0x10b,0,0xffffffff82000f98,0xffffffff821eef38);
-      dVar21 = (double)local_1c0[3];
+    if ((double)pVVar8->vehHelicopterMaxYawRate <= dVar26) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                      0x10b,0,"%s");
+      dVar17 = (double)local_1c0[3];
     }
-    dVar21 = (double)(float)((double)((float)(dVar27 / (double)*(float *)(iVar12 + 0x1a0)) *
-                                      *(float *)(iVar13 + 0x2c) * *(float *)(iVar12 + 0x1bc)) *
-                             dVar22 + dVar21);
+    dVar17 = (double)(float)((double)((float)(dVar20 / (double)pVVar8->vehHelicopterMaxYawRate) *
+                                      *(float *)(iVar10 + 0x2c) *
+                                     pVVar8->vehHelicopterTiltFromFwdAndYaw) * dVar18 + dVar17);
   }
-  local_1b0 = (float)dVar31;
-  dVar22 = dVar30;
-  if ((float)(dVar21 - dVar30) < 0.0) {
-    dVar22 = dVar21;
+  local_1b0 = (float)dVar26;
+  dVar18 = dVar25;
+  if ((float)(dVar17 - dVar25) < 0.0) {
+    dVar18 = dVar17;
   }
-  dVar25 = dVar27;
-  if ((float)(dVar27 - dVar21) < 0.0) {
-    dVar25 = dVar22;
+  dVar23 = dVar20;
+  if ((float)(dVar20 - dVar17) < 0.0) {
+    dVar23 = dVar18;
   }
-  local_1c0[3] = (float)dVar25;
-  MatrixTransformVector(local_1c0 + 2,auStack_100,local_198);
-  dVar22 = (double)(local_198[0] - *(float *)(iVar13 + 0x58));
-  dVar21 = (double)(local_198[1] - *(float *)(iVar13 + 0x5c));
-  if ((double)*(float *)(iVar12 + 0x1c0) == dVar31) {
-    MyAssertHandler(0xffffffff821eee48,0x117,0,0xffffffff82000f98,0xffffffff821eee8c);
+  local_1c0[3] = (float)dVar23;
+  MatrixTransformVector(local_1c0 + 2,&afStack_100,local_198);
+  pfVar12 = (float *)(iVar10 + 0x58);
+  dVar18 = (double)(local_198[0] - *(float *)(iVar10 + 0x58));
+  dVar17 = (double)(local_198[1] - *(float *)(iVar10 + 0x5c));
+  if ((double)pVVar8->vehHelicopterTiltMomentum == dVar26) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x117
+                    ,0,"%s");
   }
-  dVar28 = (double)(float)(dVar30 / (double)*(float *)(iVar12 + 0x1c0));
-  fVar5 = *(float *)(iVar13 + 0x60);
-  lVar16 = param_3 + 0x60;
-  fVar6 = *(float *)(iVar13 + 100);
-  fVar3 = *(float *)(param_2 + 0x24);
-  lVar17 = 2;
-  dVar25 = (double)(float)((double)*(float *)(iVar12 + 0x1c4) * dVar28);
-  fVar4 = (float)(dVar28 * dVar27);
-  fVar7 = fVar3 * (fVar5 * fVar4 + (float)(dVar22 * dVar25)) + fVar5;
-  *(float *)(iVar13 + 0x60) = fVar7;
-  fVar3 = (fVar6 * fVar4 + (float)(dVar21 * dVar25)) * fVar3 + *(float *)(iVar13 + 100);
-  *(float *)(iVar13 + 100) = fVar3;
-  fVar4 = *(float *)(param_2 + 0x24);
-  pfVar15 = (float *)(param_3 + 0x58);
-  *pfVar15 = fVar4 * (float)((double)(fVar5 + fVar7) * dVar24) + *pfVar15;
-  *(float *)(iVar13 + 0x5c) =
-       (float)((double)(fVar6 + fVar3) * dVar24) * fVar4 + *(float *)(iVar13 + 0x5c);
+  dVar24 = (double)(float)(dVar25 / (double)pVVar8->vehHelicopterTiltMomentum);
+  fVar27 = *(float *)(iVar10 + 0x60);
+  lVar9 = lVar9 + 0x60;
+  fVar1 = *(float *)(iVar10 + 100);
+  fVar29 = param_2->frametime;
+  lVar13 = 2;
+  dVar23 = (double)(float)((double)pVVar8->vehHelicopterTiltSpeed * dVar24);
+  fVar28 = (float)(dVar24 * dVar20);
+  fVar2 = fVar29 * (fVar27 * fVar28 + (float)(dVar18 * dVar23)) + fVar27;
+  *(float *)(iVar10 + 0x60) = fVar2;
+  fVar29 = (fVar1 * fVar28 + (float)(dVar17 * dVar23)) * fVar29 + *(float *)(iVar10 + 100);
+  *(float *)(iVar10 + 100) = fVar29;
+  fVar28 = param_2->frametime;
+  *pfVar12 = fVar28 * (float)((double)(fVar27 + fVar2) * dVar21) + *pfVar12;
+  *(float *)(iVar10 + 0x5c) =
+       (float)((double)(fVar1 + fVar29) * dVar21) * fVar28 + *(float *)(iVar10 + 0x5c);
   do {
-    pfVar15 = (float *)lVar16;
-    if ((double)pfVar15[-2] <= dVar30) {
-      if (((double)pfVar15[-2] < dVar27) && (pfVar15[-2] = (float)dVar27, (double)*pfVar15 < dVar31)
-         ) goto LAB_82846550;
+    pfVar6 = (float *)lVar9;
+    if ((double)pfVar6[-2] <= dVar25) {
+      if (((double)pfVar6[-2] < dVar20) && (pfVar6[-2] = (float)dVar20, (double)*pfVar6 < dVar26))
+      goto LAB_82846550;
     }
     else {
-      pfVar15[-2] = (float)dVar30;
-      if (dVar31 < (double)*pfVar15) {
+      pfVar6[-2] = (float)dVar25;
+      if (dVar26 < (double)*pfVar6) {
 LAB_82846550:
-        *pfVar15 = (float)dVar31;
+        *pfVar6 = (float)dVar26;
       }
     }
-    lVar16 = lVar16 + 4;
-    lVar17 = lVar17 + -1;
-    if (lVar17 == 0) {
-      MatrixTransposeTransformVector43(param_3 + 0x58,auStack_100,local_1c0 + 2);
-      *param_6 = *(float *)(iVar12 + 0x1c8) * local_1c0[2];
-      param_6[2] = *(float *)(iVar12 + 0x1cc) * local_1c0[3];
+    lVar9 = lVar9 + 4;
+    lVar13 = lVar13 + -1;
+    if (lVar13 == 0) {
+      MatrixTransposeTransformVector43(pfVar12,&afStack_100,local_1c0 + 2);
+      *param_6 = pVVar8->vehHelicopterMaxPitch * local_1c0[2];
+      param_6[2] = pVVar8->vehHelicopterMaxRoll * local_1c0[3];
       local_1c0[0] = *param_5;
       if (((((uint)local_1c0[0] & 0x7f800000) == 0x7f800000) ||
           (local_1c0[0] = param_5[1], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) ||
          (local_1c0[0] = param_5[2], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821eee48,0x143,0,0xffffffff82000f98,0xffffffff821a0140);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0x143,0,"%s");
       }
       local_1c0[0] = *param_6;
       if (((((uint)local_1c0[0] & 0x7f800000) == 0x7f800000) ||
           (local_1c0[0] = param_6[1], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) ||
          (local_1c0[0] = param_6[2], ((uint)local_1c0[0] & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff821eee48,0x144,0,0xffffffff82000f98,0xffffffff821a00f0);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",
+                        0x144,0,"%s");
       }
       __restfpr_20();
       __restgprlr_20();
@@ -491,177 +514,153 @@ LAB_82846550:
 
 // 82846668  BG_VehicleHelicopterMove  (bgame/bg_helicopter.cpp:328)
 
-void BG_VehicleHelicopterMove(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void BG_VehicleHelicopterMove(pmove_t *param_1,pml_t *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
-  int *piVar4;
-  double dVar5;
+  playerState_s *ppVar2;
+  uint uVar3;
+  playerState_s *ppVar4;
+  pmove_t *ppVar5;
   double dVar6;
   double dVar7;
   double dVar8;
+  double dVar9;
   undefined4 local_1c0;
   undefined8 local_1b8;
   float local_1b0;
   float local_1a8;
   float local_1a4;
   float local_1a0;
-  undefined4 local_190;
-  undefined4 local_18c;
-  undefined4 local_188;
-  undefined4 local_184;
-  float local_180;
-  float local_17c;
-  float local_178;
-  float local_174;
-  float local_170;
-  float local_16c;
-  undefined4 local_168;
-  float local_164;
-  undefined4 local_160;
-  undefined4 local_15c;
-  undefined4 local_158;
-  undefined4 local_154;
-  undefined4 local_150;
-  float local_14c;
-  undefined4 local_148;
-  undefined1 auStack_144 [12];
-  undefined4 local_138;
-  undefined4 local_134;
-  undefined4 local_130;
-  undefined4 local_12c;
-  undefined1 auStack_128 [24];
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined4 local_108;
-  undefined4 local_104;
-  undefined1 auStack_100 [12];
-  undefined1 auStack_f4 [12];
-  undefined1 auStack_e8 [12];
+  VehicleState local_190;
+  float afStack_100 [3];
+  float afStack_f4 [3];
+  float afStack_e8 [3];
   float local_dc;
   float local_d8;
   float local_d4;
-  undefined1 auStack_d0 [16];
-  undefined1 auStack_c0 [16];
-  undefined1 auStack_b0 [4];
-  undefined4 local_ac;
-  undefined4 local_a8;
-  undefined4 local_a4;
-  undefined4 local_6c;
+  float afStack_d0 [4];
+  float afStack_c0 [4];
+  GroundTrace aGStack_b0 [2];
   
-  piVar4 = (int *)__savegprlr_25();
+  ppVar5 = (pmove_t *)__savegprlr_25(param_1);
   local_1c0 = (float)((uint)local_1c0 & 0xffffff00);
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821eee48,0x15d,0,0xffffffff82000f98,0xffffffff82004978);
+  if (ppVar5 == (pmove_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x15d
+                    ,0,"%s");
   }
-  if (*piVar4 == 0) {
-    MyAssertHandler(0xffffffff821eee48,0x15e,0,0xffffffff82000f98,0xffffffff8200cdf4);
+  if (ppVar5->ps == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x15e
+                    ,0,"%s");
   }
-  iVar2 = *piVar4;
-  local_190 = *(undefined4 *)(iVar2 + 0xac);
-  local_110 = 0x2800211;
-  local_18c = *(undefined4 *)(iVar2 + 0xb4);
-  local_188 = *(undefined4 *)(iVar2 + 0xb8);
-  local_184 = *(undefined4 *)(iVar2 + 0xbc);
-  local_15c = *(undefined4 *)(iVar2 + 0xb4);
-  local_158 = *(undefined4 *)(iVar2 + 0xb8);
-  local_154 = *(undefined4 *)(iVar2 + 0xbc);
-  local_180 = *(float *)(iVar2 + 0xc0);
-  local_17c = *(float *)(iVar2 + 0xc4);
-  local_178 = *(float *)(iVar2 + 200);
-  local_150 = *(undefined4 *)(iVar2 + 0xc0);
-  local_14c = *(float *)(iVar2 + 0xc4);
-  local_148 = *(undefined4 *)(iVar2 + 200);
-  local_174 = *(float *)(iVar2 + 0xcc);
-  local_170 = *(float *)(iVar2 + 0xd0);
-  local_16c = *(float *)(iVar2 + 0xd4);
-  local_168 = *(undefined4 *)(iVar2 + 0xd8);
-  local_164 = *(float *)(iVar2 + 0xdc);
-  local_160 = *(undefined4 *)(iVar2 + 0xe0);
-  local_138 = *(undefined4 *)(iVar2 + 0xe4);
-  local_134 = *(undefined4 *)(iVar2 + 0xe8);
-  local_130 = *(undefined4 *)(iVar2 + 0xec);
-  local_12c = *(undefined4 *)(iVar2 + 0xf0);
-  BG_GetVehicleBounds(piVar4,auStack_128);
-  dVar8 = 0.0;
-  local_1c0 = (float)CONCAT13(*(undefined1 *)(piVar4 + 8),
-                              CONCAT12(*(undefined1 *)((int)piVar4 + 0x21),local_1c0._2_2_));
-  dVar5 = dVar8;
-  if ((piVar4[2] & 0x4000U) != 0) {
-    dVar5 = 1.0;
+  ppVar2 = ppVar5->ps;
+  local_190.entity = (ppVar2->vehicleState).entity;
+  local_190.clipmask = 0x2800211;
+  local_190.origin[0] = (ppVar2->vehicleState).origin[0];
+  local_190.origin[1] = (ppVar2->vehicleState).origin[1];
+  local_190.origin[2] = (ppVar2->vehicleState).origin[2];
+  local_190.previousOrigin[0] = (ppVar2->vehicleState).origin[0];
+  local_190.previousOrigin[1] = (ppVar2->vehicleState).origin[1];
+  local_190.previousOrigin[2] = (ppVar2->vehicleState).origin[2];
+  local_190.angles[0] = (ppVar2->vehicleState).angles[0];
+  local_190.angles[1] = (ppVar2->vehicleState).angles[1];
+  local_190.angles[2] = (ppVar2->vehicleState).angles[2];
+  local_190.previousAngles[0] = (ppVar2->vehicleState).angles[0];
+  local_190.previousAngles[1] = (ppVar2->vehicleState).angles[1];
+  local_190.previousAngles[2] = (ppVar2->vehicleState).angles[2];
+  local_190.velocity[0] = (ppVar2->vehicleState).velocity[0];
+  local_190.velocity[1] = (ppVar2->vehicleState).velocity[1];
+  local_190.velocity[2] = (ppVar2->vehicleState).velocity[2];
+  local_190.angVelocity[0] = (ppVar2->vehicleState).angVelocity[0];
+  local_190.angVelocity[1] = (ppVar2->vehicleState).angVelocity[1];
+  local_190.angVelocity[2] = (ppVar2->vehicleState).angVelocity[2];
+  local_190.tilt[0] = (ppVar2->vehicleState).tilt[0];
+  local_190.tilt[1] = (ppVar2->vehicleState).tilt[1];
+  local_190.tiltVelocity[0] = (ppVar2->vehicleState).tiltVelocity[0];
+  local_190.tiltVelocity[1] = (ppVar2->vehicleState).tiltVelocity[1];
+  BG_GetVehicleBounds(ppVar5,&local_190.bounds);
+  uVar3 = (ppVar5->cmd).buttons;
+  dVar9 = 0.0;
+  local_1c0 = (float)CONCAT13((ppVar5->cmd).forwardmove,
+                              CONCAT12((ppVar5->cmd).rightmove,local_1c0._2_2_));
+  dVar6 = dVar9;
+  if ((uVar3 & 0x4000) != 0) {
+    dVar6 = 1.0;
   }
-  if ((piVar4[2] & 0x8000U) != 0) {
-    dVar5 = (double)(float)(dVar5 - 1.0);
+  if ((uVar3 & 0x8000) != 0) {
+    dVar6 = (double)(float)(dVar6 - 1.0);
   }
-  dVar7 = 0.5;
-  dVar5 = floor((double)(float)(dVar5 * 127.0 + 0.5));
-  local_1a8 = (float)dVar8;
-  local_1a4 = local_14c;
-  local_1a0 = (float)dVar8;
-  local_1b8 = (longlong)(int)dVar5;
-  local_1c0._2_2_ = CONCAT11((char)(int)dVar5,(undefined1)local_1c0);
-  AngleVectors(&local_1a8,auStack_100,auStack_f4,auStack_e8);
-  local_dc = (float)dVar8;
-  local_d8 = (float)dVar8;
-  local_d4 = (float)dVar8;
-  MatrixTransposeTransformVector43(&local_174,auStack_100,auStack_144);
-  BG_HeliCmdScale(1,&local_1c0,auStack_c0);
-  BG_HeliCalcAccel(piVar4,param_2,&local_190,auStack_c0,auStack_d0,&local_1b8);
-  iVar3 = (int)param_2;
-  local_164 = *(float *)(iVar3 + 0x24) * local_1b8._4_4_ + local_164;
-  dVar6 = (double)((*(float *)(iVar3 + 0x24) * local_164 + local_14c) * 0.0027777778);
-  dVar5 = floor((double)(float)(dVar6 + dVar7));
+  dVar8 = 0.5;
+  dVar6 = floor((double)(float)(dVar6 * 127.0 + 0.5));
+  local_1a8 = (float)dVar9;
+  local_1a4 = local_190.previousAngles[1];
+  local_1a0 = (float)dVar9;
+  local_1b8 = (longlong)(int)dVar6;
+  local_1c0._2_2_ = CONCAT11((char)(int)dVar6,(undefined1)local_1c0);
+  AngleVectors(&local_1a8,afStack_100,afStack_f4,afStack_e8);
+  local_dc = (float)dVar9;
+  local_d8 = (float)dVar9;
+  local_d4 = (float)dVar9;
+  MatrixTransposeTransformVector43(local_190.velocity,&afStack_100,local_190.bodyVelocity);
+  BG_HeliCmdScale(true,(char *)&local_1c0,afStack_c0);
+  BG_HeliCalcAccel(ppVar5,param_2,&local_190,afStack_c0,afStack_d0,(float *)&local_1b8);
+  local_190.angVelocity[1] = param_2->frametime * local_1b8._4_4_ + local_190.angVelocity[1];
+  dVar7 = (double)((param_2->frametime * local_190.angVelocity[1] + local_190.previousAngles[1]) *
+                  0.0027777778);
+  dVar6 = floor((double)(float)(dVar7 + dVar8));
   local_1c0 = local_1b8._0_4_;
-  local_180 = local_1b8._0_4_;
-  local_178 = local_1b0;
-  local_17c = (float)(dVar6 - (double)(float)dVar5) * 360.0;
+  local_190.angles[0] = local_1b8._0_4_;
+  local_190.angles[2] = local_1b0;
+  local_190.angles[1] = (float)(dVar7 - (double)(float)dVar6) * 360.0;
   if (((((uint)local_1b8._0_4_ & 0x7f800000) == 0x7f800000) ||
-      (local_1c0 = local_17c, ((uint)local_17c & 0x7f800000) == 0x7f800000)) ||
+      (local_1c0 = local_190.angles[1], ((uint)local_190.angles[1] & 0x7f800000) == 0x7f800000)) ||
      (local_1c0 = local_1b0, ((uint)local_1b0 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff821eee48,0x198,0,0xffffffff82000f98,0xffffffff821eef60);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_helicopter.cpp",0x198
+                    ,0,"%s");
   }
-  local_1a8 = (float)dVar8;
-  local_1a0 = (float)dVar8;
-  local_1a4 = local_17c;
-  AngleVectors(&local_1a8,auStack_100,auStack_f4,auStack_e8);
-  local_dc = (float)dVar8;
-  local_d8 = (float)dVar8;
-  local_d4 = (float)dVar8;
-  MatrixTransformVector(auStack_d0,auStack_100,&local_1b8);
-  fVar1 = *(float *)(iVar3 + 0x24);
-  local_174 = local_1b8._0_4_ * fVar1 + local_174;
-  local_170 = local_1b8._4_4_ * fVar1 + local_170;
-  local_16c = local_1b0 * fVar1 + local_16c;
-  if (((local_174 != 0.0) || (local_170 != 0.0)) || (local_16c != 0.0)) {
-    local_6c = 0;
-    BG_VehicleGroundTrace(piVar4,&local_190,auStack_b0);
-    local_10c = local_ac;
-    local_108 = local_a8;
-    local_104 = local_a4;
-    BG_VehicleSlideMove((double)*(float *)(iVar3 + 0x24),piVar4,&local_190,auStack_b0,0);
+  local_1a8 = (float)dVar9;
+  local_1a0 = (float)dVar9;
+  local_1a4 = local_190.angles[1];
+  AngleVectors(&local_1a8,afStack_100,afStack_f4,afStack_e8);
+  local_dc = (float)dVar9;
+  local_d8 = (float)dVar9;
+  local_d4 = (float)dVar9;
+  MatrixTransformVector(afStack_d0,&afStack_100,(float *)&local_1b8);
+  fVar1 = param_2->frametime;
+  local_190.velocity[0] = local_1b8._0_4_ * fVar1 + local_190.velocity[0];
+  local_190.velocity[1] = local_1b8._4_4_ * fVar1 + local_190.velocity[1];
+  local_190.velocity[2] = local_1b0 * fVar1 + local_190.velocity[2];
+  if (((local_190.velocity[0] != 0.0) || (local_190.velocity[1] != 0.0)) ||
+     (local_190.velocity[2] != 0.0)) {
+    aGStack_b0[0].hasGround = 0;
+    BG_VehicleGroundTrace(ppVar5,&local_190,aGStack_b0,fVar1);
+    local_190.groundNormal[0] = aGStack_b0[0].trace.normal[0];
+    local_190.groundNormal[1] = aGStack_b0[0].trace.normal[1];
+    local_190.groundNormal[2] = aGStack_b0[0].trace.normal[2];
+    BG_VehicleSlideMove(ppVar5,&local_190,aGStack_b0,0,param_2->frametime);
   }
-  iVar3 = *piVar4;
-  *(undefined4 *)(iVar3 + 0xb4) = local_18c;
-  *(undefined4 *)(iVar3 + 0xb8) = local_188;
-  *(undefined4 *)(iVar3 + 0xbc) = local_184;
-  iVar3 = *piVar4;
-  *(float *)(iVar3 + 0xc0) = local_180;
-  *(float *)(iVar3 + 0xc4) = local_17c;
-  *(float *)(iVar3 + 200) = local_178;
-  iVar3 = *piVar4;
-  *(float *)(iVar3 + 0xcc) = local_174;
-  *(float *)(iVar3 + 0xd0) = local_170;
-  *(float *)(iVar3 + 0xd4) = local_16c;
-  iVar3 = *piVar4;
-  *(undefined4 *)(iVar3 + 0xd8) = local_168;
-  *(float *)(iVar3 + 0xdc) = local_164;
-  *(undefined4 *)(iVar3 + 0xe0) = local_160;
-  *(undefined4 *)(iVar2 + 0xe4) = local_138;
-  *(undefined4 *)(iVar2 + 0xe8) = local_134;
-  *(undefined4 *)(iVar2 + 0xec) = local_130;
-  *(undefined4 *)(iVar2 + 0xf0) = local_12c;
+  ppVar4 = ppVar5->ps;
+  (ppVar4->vehicleState).origin[0] = local_190.origin[0];
+  (ppVar4->vehicleState).origin[1] = local_190.origin[1];
+  (ppVar4->vehicleState).origin[2] = local_190.origin[2];
+  ppVar4 = ppVar5->ps;
+  (ppVar4->vehicleState).angles[0] = local_190.angles[0];
+  (ppVar4->vehicleState).angles[1] = local_190.angles[1];
+  (ppVar4->vehicleState).angles[2] = local_190.angles[2];
+  ppVar4 = ppVar5->ps;
+  (ppVar4->vehicleState).velocity[0] = local_190.velocity[0];
+  (ppVar4->vehicleState).velocity[1] = local_190.velocity[1];
+  (ppVar4->vehicleState).velocity[2] = local_190.velocity[2];
+  ppVar4 = ppVar5->ps;
+  (ppVar4->vehicleState).angVelocity[0] = local_190.angVelocity[0];
+  (ppVar4->vehicleState).angVelocity[1] = local_190.angVelocity[1];
+  (ppVar4->vehicleState).angVelocity[2] = local_190.angVelocity[2];
+  (ppVar2->vehicleState).tilt[0] = local_190.tilt[0];
+  (ppVar2->vehicleState).tilt[1] = local_190.tilt[1];
+  (ppVar2->vehicleState).tiltVelocity[0] = local_190.tiltVelocity[0];
+  (ppVar2->vehicleState).tiltVelocity[1] = local_190.tiltVelocity[1];
   __restgprlr_25();
   return;
 }

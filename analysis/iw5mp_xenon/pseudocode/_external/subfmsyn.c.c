@@ -2,21 +2,24 @@
 
 // 828CAD98  SubFrameSynth  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/subfmsyn.c:57)
 
-void SubFrameSynth(undefined4 *param_1,float *param_2,undefined8 param_3,int *param_4)
+void SubFrameSynth(void *param_1,void *param_2,short *param_3,int *param_4)
 
 {
   float fVar1;
+  long *in_stack_ffffff68;
   
-  if (*(short *)(param_1 + 0x17) == 1) {
+  if (*(short *)((int)param_1 + 0x5c) == 1) {
     fVar1 = 0.5;
   }
   else {
-    param_2 = param_2 + 2;
+    param_2 = (void *)((int)param_2 + 8);
     fVar1 = 1.0;
   }
-  NellySWSynth((double)*param_2,(double)param_2[1],(double)(float)param_1[7],
-               (double)(float)param_1[8],(double)fVar1,*param_1,param_3,param_1[1],param_1[2],
-               param_1 + 0x1a,param_1[6],param_1[3],param_1[4]);
+  NellySWSynth(*(void **)param_1,param_3,*(float **)((int)param_1 + 4),*(float **)((int)param_1 + 8)
+               ,*(float *)param_2,*(float *)((int)param_2 + 4),(float *)((int)param_1 + 0x68),
+               *(float **)((int)param_1 + 0x18),*(float **)((int)param_1 + 0xc),
+               *(float **)((int)param_1 + 0x10),*(float *)((int)param_1 + 0x1c),
+               *(float *)((int)param_1 + 0x20),fVar1,in_stack_ffffff68);
   *param_4 = *param_4 + 0x50;
   return;
 }

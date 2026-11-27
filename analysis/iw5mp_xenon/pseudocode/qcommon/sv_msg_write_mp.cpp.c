@@ -2,147 +2,165 @@
 
 // 82513230  TRACK_msg  (qcommon/sv_msg_write_mp.cpp:75)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_msg(void)
 
 {
-  track_static_alloc_internal(0xffffffff8368ca48,0x4c14,0xffffffff82099544,9);
-  track_static_alloc_internal(0xffffffff8296d108,0x84,0xffffffff82099538,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d104) + 0x28,4,0xffffffff82099504,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x90,4,0xffffffff820994d8,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 8,4,0xffffffff820994ac,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x10,4,0xffffffff82099478,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x20,4,0xffffffff8209944c,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x18,4,0xffffffff82099420,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d104) + 0x10,4,0xffffffff820993ec,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x40,4,0xffffffff820993c4,9);
-  track_static_alloc_internal(ZEXT48(PTR_PTR_8296d100) + 0x30,4,0xffffffff82099394,9);
-  track_static_alloc_internal(0xffffffff8296cc30,0x400,0xffffffff82099388,9);
+  track_static_alloc_internal(&msgHuff,0x4c14,"msgHuff",9);
+  track_static_alloc_internal(kbitmask,0x84,"kbitmask",9);
+  track_static_alloc_internal
+            (g_netFieldList + 5,4,"g_netFieldList[NET_FIELD_TYPE_ENTITY_STATE].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 0x12,4,"g_entityStateNetFieldList[ET_EVENTS].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 1,4,"g_entityStateNetFieldList[ET_PLAYER].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 2,4,"g_entityStateNetFieldList[ET_PLAYER_CORPSE].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 4,4,"g_entityStateNetFieldList[ET_MISSILE].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 3,4,"g_entityStateNetFieldList[ET_ITEM].array",9);
+  track_static_alloc_internal
+            (g_netFieldList + 2,4,"g_netFieldList[NET_FIELD_TYPE_PLAYERSTATE].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 8,4,"g_entityStateNetFieldList[ET_FX].array",9);
+  track_static_alloc_internal
+            (g_entityStateNetFieldList + 6,4,"g_entityStateNetFieldList[ET_SCRIPTMOVER].array",9);
+  track_static_alloc_internal(msg_hData,0x400,"msg_hData",9);
   return;
 }
 
 
 // 825133B8  MSG_SetupNetFieldListsForGame  (qcommon/sv_msg_write_mp.cpp:94)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MSG_SetupNetFieldListsForGame(void)
 
 {
-  PTR_PTR_8296d104 = (undefined *)&PTR_PTR_8296d0c8;
-  PTR_PTR_8296d100 = (undefined *)&PTR_PTR_8296d030;
+  g_netFieldList = g_netFieldList_Head;
+  g_entityStateNetFieldList = g_entityStateNetFieldList_Head;
   return;
 }
 
 
 // 825133E0  MSG_GetStateFieldListForEntityType  (qcommon/sv_msg_write_mp.cpp:101)
 
-longlong MSG_GetStateFieldListForEntityType(uint param_1)
+NetFieldList * MSG_GetStateFieldListForEntityType(int param_1)
 
 {
-  if ((int)param_1 < 0x13) {
-    return ((ulonglong)param_1 & 0x1fffffff) * 8 + ZEXT48(PTR_PTR_8296d100);
+  if (param_1 < 0x13) {
+    return g_entityStateNetFieldList + param_1;
   }
-  return ZEXT48(PTR_PTR_8296d100) + 0x90;
+  return g_entityStateNetFieldList + 0x12;
 }
 
 
 // 82513418  GetEntityStateHistogram  (qcommon/sv_msg_write_mp.cpp:119)
 
-longlong GetEntityStateHistogram(ulonglong param_1,char param_2)
+uint * GetEntityStateHistogram(uint param_1,bool param_2)
 
 {
-  longlong lVar1;
+  uint (*pauVar1) [64];
   
-  if (0x11 < (param_1 & 0xffffffff)) {
-    return 0;
+  if (0x11 < param_1) {
+    return (uint *)0x0;
   }
-  lVar1 = -0x7c900ba0;
-  if (param_2 != '\0') {
-    lVar1 = -0x7c901fe0;
+  pauVar1 = entityStateHistograms;
+  if (param_2) {
+    pauVar1 = (uint (*) [64])0x836fe020;
   }
-  return (param_1 & 0xffffff) * 0x100 + lVar1;
+  return pauVar1[param_1];
 }
 
 
 // 82513450  GetNumEntityStateFields  (qcommon/sv_msg_write_mp.cpp:127)
 
-undefined4 GetNumEntityStateFields(uint param_1)
+uint GetNumEntityStateFields(uint param_1)
 
 {
   if (0x11 < param_1) {
-    MyAssertHandler(0xffffffff82099550,0x80,0,0xffffffff82000f98,0xffffffff82099598);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x80,0,"%s");
   }
-  return *(undefined4 *)(PTR_PTR_8296d100 + param_1 * 8 + 4);
+  return g_entityStateNetFieldList[param_1].count;
 }
 
 
 // 825134B8  GetAveragePacketBitCost  (qcommon/sv_msg_write_mp.cpp:134)
 
-double GetAveragePacketBitCost(uint param_1,char param_2)
+float GetAveragePacketBitCost(uint param_1,bool param_2)
 
 {
-  undefined *puVar1;
+  float *pfVar1;
   
   if (0x11 < param_1) {
-    MyAssertHandler(0xffffffff82099550,0x87,0,0xffffffff82000f98,0xffffffff82099598);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x87,0,"%s");
   }
-  if (param_2 == '\0') {
-    puVar1 = &DAT_836ff410;
+  if (param_2) {
+    pfVar1 = (float *)&DAT_836ff3c0;
   }
   else {
-    puVar1 = &DAT_836ff3c0;
+    pfVar1 = averagePacketBitCost;
   }
-  return (double)*(float *)(puVar1 + param_1 * 4);
+  return pfVar1[param_1];
 }
 
 
 // 82513540  GetMaxPacketBitCost  (qcommon/sv_msg_write_mp.cpp:141)
 
-double GetMaxPacketBitCost(uint param_1,char param_2)
+float GetMaxPacketBitCost(uint param_1,bool param_2)
 
 {
-  undefined *puVar1;
+  float *pfVar1;
   
   if (0x11 < param_1) {
-    MyAssertHandler(0xffffffff82099550,0x8e,0,0xffffffff82000f98,0xffffffff82099598);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x8e,0,"%s");
   }
-  if (param_2 == '\0') {
-    puVar1 = &DAT_836ff370;
+  if (param_2) {
+    pfVar1 = (float *)&DAT_836ff320;
   }
   else {
-    puVar1 = &DAT_836ff320;
+    pfVar1 = maxPacketBitCost;
   }
-  return (double)*(float *)(puVar1 + param_1 * 4);
+  return pfVar1[param_1];
 }
 
 
 // 825135C8  AddPacketBitCost  (qcommon/sv_msg_write_mp.cpp:148)
 
-void AddPacketBitCost(double param_1,uint param_2,char param_3)
+void AddPacketBitCost(uint param_1,bool param_2,float param_3)
 
 {
   int iVar1;
   double dVar2;
+  double dVar3;
   
-  if (0x11 < param_2) {
-    MyAssertHandler(0xffffffff82099550,0x95,0,0xffffffff82000f98,0xffffffff82099598);
+  dVar2 = (double)param_3;
+  if (0x11 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x95,0,"%s");
   }
-  iVar1 = param_2 * 4;
-  if (param_3 == '\0') {
-    dVar2 = (double)*(float *)(&DAT_836ff370 + iVar1);
-    if ((float)((double)*(float *)(&DAT_836ff370 + iVar1) - param_1) < 0.0) {
-      dVar2 = param_1;
+  iVar1 = param_1 * 4;
+  if (param_2) {
+    *(float *)(&DAT_836ff3c0 + iVar1) =
+         (float)(dVar2 + (double)*(float *)(&DAT_836ff3c0 + iVar1)) * 0.5;
+    dVar3 = (double)*(float *)(&DAT_836ff320 + iVar1);
+    if ((float)((double)*(float *)(&DAT_836ff320 + iVar1) - dVar2) < 0.0) {
+      dVar3 = dVar2;
     }
-    *(float *)(&DAT_836ff370 + iVar1) = (float)dVar2;
-    *(float *)(&DAT_836ff410 + iVar1) =
-         (float)((double)*(float *)(&DAT_836ff410 + iVar1) + param_1) * 0.5;
+    *(float *)(&DAT_836ff320 + iVar1) = (float)dVar3;
   }
   else {
-    *(float *)(&DAT_836ff3c0 + iVar1) =
-         (float)(param_1 + (double)*(float *)(&DAT_836ff3c0 + iVar1)) * 0.5;
-    dVar2 = (double)*(float *)(&DAT_836ff320 + iVar1);
-    if ((float)((double)*(float *)(&DAT_836ff320 + iVar1) - param_1) < 0.0) {
-      dVar2 = param_1;
+    dVar3 = (double)maxPacketBitCost[param_1];
+    if ((float)((double)maxPacketBitCost[param_1] - dVar2) < 0.0) {
+      dVar3 = dVar2;
     }
-    *(float *)(&DAT_836ff320 + iVar1) = (float)dVar2;
+    maxPacketBitCost[param_1] = (float)dVar3;
+    averagePacketBitCost[param_1] = (float)((double)averagePacketBitCost[param_1] + dVar2) * 0.5;
   }
   return;
 }
@@ -150,93 +168,100 @@ void AddPacketBitCost(double param_1,uint param_2,char param_3)
 
 // 825136B0  GetPlayerStateHistogram  (qcommon/sv_msg_write_mp.cpp:164)
 
-undefined8 GetPlayerStateHistogram(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint * GetPlayerStateHistogram(void)
 
 {
-  return 0xffffffff836fda98;
+  return playerStateHistogram;
 }
 
 
 // 825136C0  GetNumPlayerStateFields  (qcommon/sv_msg_write_mp.cpp:170)
 
-undefined4 GetNumPlayerStateFields(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint GetNumPlayerStateFields(void)
 
 {
-  return *(undefined4 *)(PTR_PTR_8296d104 + 0x14);
+  return g_netFieldList[2].count;
 }
 
 
 // 825136D0  GetAveragePlayerStatePacketBitCost  (qcommon/sv_msg_write_mp.cpp:176)
 
-double GetAveragePlayerStatePacketBitCost(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float GetAveragePlayerStatePacketBitCost(void)
 
 {
-  return (double)DAT_836fe01c;
+  return averagePlayerStatePacketBitCost;
 }
 
 
 // 825136E0  GetMaxPlayerStatePacketBitCost  (qcommon/sv_msg_write_mp.cpp:182)
 
-double GetMaxPlayerStatePacketBitCost(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float GetMaxPlayerStatePacketBitCost(void)
 
 {
-  return (double)DAT_836ff36c;
+  return maxPlayerStatePacketBitCost;
 }
 
 
 // 825136F0  AddPlayerStatePacketBitCost  (qcommon/sv_msg_write_mp.cpp:188)
 
-void AddPlayerStatePacketBitCost(double param_1)
+void AddPlayerStatePacketBitCost(float param_1)
 
 {
-  double dVar1;
-  
-  dVar1 = (double)DAT_836ff36c;
-  if ((float)((double)DAT_836ff36c - param_1) < 0.0) {
-    dVar1 = param_1;
+  if (maxPlayerStatePacketBitCost - param_1 < 0.0) {
+    maxPlayerStatePacketBitCost = param_1;
   }
-  DAT_836ff36c = (float)dVar1;
-  DAT_836fe01c = (float)((double)DAT_836fe01c + param_1) * 0.5;
+  averagePlayerStatePacketBitCost = (averagePlayerStatePacketBitCost + param_1) * 0.5;
   return;
 }
 
 
 // 82513728  ResetNetFieldHistograms  (qcommon/sv_msg_write_mp.cpp:195)
 
-void * ResetNetFieldHistograms(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void ResetNetFieldHistograms(void)
 
 {
-  void *pvVar1;
-  
-  memset(&DAT_836ff460,0,0x1300);
-  memset(&DAT_836ff410,0,0x4c);
-  memset(&DAT_836ff370,0,0x4c);
-  memset(&DAT_836fe020,0,0x1300);
-  memset(&DAT_836ff3c0,0,0x4c);
-  memset(&DAT_836ff320,0,0x4c);
-  pvVar1 = memset(&DAT_836fda98,0,0x584);
-  DAT_836fe01c = 0;
-  DAT_836ff36c = 0;
-  return pvVar1;
+  memset();
+  memset();
+  memset();
+  memset();
+  memset();
+  memset();
+  memset();
+  averagePlayerStatePacketBitCost = 0.0;
+  maxPlayerStatePacketBitCost = 0.0;
+  return;
 }
 
 
 // 825137D8  MSG_CheckWritingEnoughBits  (qcommon/sv_msg_write_mp.cpp:211)
 
-longlong MSG_CheckWritingEnoughBits(int param_1,ulonglong param_2)
+bool MSG_CheckWritingEnoughBits(int param_1,int param_2)
 
 {
+  ulonglong uVar1;
+  
+  uVar1 = (ulonglong)param_2;
   if (param_1 < 0) {
     param_1 = -1 - param_1;
-    param_2 = param_2 - 1;
+    uVar1 = uVar1 - 1;
   }
-  return -((ulonglong)(param_2 < 0x20U - LZCOUNT(param_1)) - 1);
+  return (bool)-((uVar1 < 0x20U - LZCOUNT(param_1)) + -1);
 }
 
 
 // 82513808  MSG_WriteReliableCommandToBuffer  (qcommon/sv_msg_write_mp.cpp:249)
 
-void MSG_WriteReliableCommandToBuffer(undefined8 param_1,longlong param_2,undefined8 param_3)
+void MSG_WriteReliableCommandToBuffer(char *param_1,char *param_2,int param_3)
 
 {
   int iVar1;
@@ -244,45 +269,46 @@ void MSG_WriteReliableCommandToBuffer(undefined8 param_1,longlong param_2,undefi
   char cVar3;
   char *pcVar4;
   int iVar5;
-  int iVar6;
+  longlong lVar6;
   
-  pcVar2 = (char *)__savegprlr_25();
+  lVar6 = (longlong)(int)param_2;
+  pcVar2 = (char *)__savegprlr_25(param_1);
   pcVar4 = pcVar2;
   do {
     cVar3 = *pcVar4;
     pcVar4 = pcVar4 + 1;
   } while (cVar3 != '\0');
-  pcVar4 = pcVar4 + (-1 - (int)pcVar2);
-  iVar5 = (int)param_3;
-  if (iVar5 <= (int)pcVar4) {
-    Com_PrintWarning(0x10,0xffffffff820995d0,pcVar4,param_3,pcVar2);
+  if (param_3 <= ((int)pcVar4 - (int)pcVar2) + -1) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Reliable command is too long (%i/%i) and will be truncated: \'%s\'\n"
+                    );
   }
-  if (pcVar4 == (char *)0x0) {
-    Com_PrintWarning(0x10,0xffffffff820995ac);
+  if ((int)pcVar4 - (int)pcVar2 == 1) {
+    Com_PrintWarning(0x10,"WARNING: Empty reliable command\n");
   }
-  iVar6 = 0;
-  iVar1 = (int)param_2;
-  if (0 < iVar5) {
+  iVar5 = 0;
+  iVar1 = (int)lVar6;
+  if (0 < param_3) {
     do {
-      pcVar4 = (char *)param_2;
+      pcVar4 = (char *)lVar6;
       if (pcVar4[(int)pcVar2 - iVar1] == '\0') {
-        if (iVar6 < iVar5) {
-          *(undefined1 *)(iVar6 + iVar1) = 0;
+        if (iVar5 < param_3) {
+          *(undefined1 *)(iVar5 + iVar1) = 0;
           __restgprlr_25();
           return;
         }
         break;
       }
-      cVar3 = I_CleanChar();
+      cVar3 = I_CleanChar(pcVar4[(int)pcVar2 - iVar1]);
       *pcVar4 = cVar3;
       if (cVar3 == '%') {
         *pcVar4 = '.';
       }
-      iVar6 = iVar6 + 1;
-      param_2 = param_2 + 1;
-    } while (iVar6 < iVar5);
+      iVar5 = iVar5 + 1;
+      lVar6 = lVar6 + 1;
+    } while (iVar5 < param_3);
   }
-  *(undefined1 *)(iVar1 + iVar5 + -1) = 0;
+  *(undefined1 *)(iVar1 + param_3 + -1) = 0;
   __restgprlr_25();
   return;
 }
@@ -290,24 +316,29 @@ void MSG_WriteReliableCommandToBuffer(undefined8 param_1,longlong param_2,undefi
 
 // 825138F0  MSG_WriteReliableCommandMsgToBuffer  (qcommon/sv_msg_write_mp.cpp:287)
 
-void MSG_WriteReliableCommandMsgToBuffer(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteReliableCommandMsgToBuffer(msg_t *param_1,char *param_2,int param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  int iVar2;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82099550,0x120,0,0xffffffff82000f98,0xffffffff82004d74);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x120,0,"%s");
   }
-  if ((int)param_3 <= *(int *)(iVar1 + 0x14)) {
-    Com_PrintWarning(0x10,0xffffffff82099620,*(int *)(iVar1 + 0x14),param_3);
+  if (param_3 <= *(int *)(iVar1 + 0x14)) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Reliable command message is too long (%i/%i) and will be truncated.\n"
+                    );
   }
-  uVar2 = (ulonglong)*(uint *)(iVar1 + 0x14);
-  if ((int)param_3 <= (int)*(uint *)(iVar1 + 0x14)) {
-    uVar2 = param_3;
+  iVar2 = *(int *)(iVar1 + 0x14);
+  if (param_3 <= *(int *)(iVar1 + 0x14)) {
+    iVar2 = param_3;
   }
-  Com_Memcpy(param_2,*(undefined4 *)(iVar1 + 8),uVar2);
+  Com_Memcpy(param_2,*(void **)(iVar1 + 8),iVar2);
   __restgprlr_29();
   return;
 }
@@ -315,15 +346,18 @@ void MSG_WriteReliableCommandMsgToBuffer(undefined8 param_1,undefined8 param_2,u
 
 // 82513980  SV_ValidateEntityState  (qcommon/sv_msg_write_mp.cpp:306)
 
-void SV_ValidateEntityState(int *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void SV_ValidateEntityState(entityState_s *param_1)
 
 {
   byte bVar1;
   
-  switch(param_1[1]) {
+  switch(param_1->eType) {
   case 1:
-    if (*param_1 != param_1[0x24]) {
-      MyAssertHandler(0xffffffff82099550,0x137,0,0xffffffff820996b0);
+    if (param_1->number != param_1->clientNum) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x137,0,"entState->number == entState->clientNum\n\t%i, %i");
       return;
     }
     return;
@@ -341,152 +375,151 @@ void SV_ValidateEntityState(int *param_1)
     break;
   case 6:
   case 0xd:
-    if (param_1[0x27] == 0xffffff) {
-      R_TryToValidateBrushModel(param_1[0x23]);
+    if (param_1->solid == 0xffffff) {
+      R_TryToValidateBrushModel((param_1->index).brushModel);
       return;
     }
     return;
   default:
     return;
   }
-  bVar1 = *(byte *)((int)param_1 + 0xcb);
+  bVar1 = (param_1->weapon)._s_0.weaponIdx;
   if ((bVar1 != 0) && (bVar1 < 0xf0)) {
     return;
   }
-  MyAssertHandler(0xffffffff82099550,0x13f,0,0xffffffff82099670,bVar1,1,0xef);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                  0x13f,0,"weaponIndex not in [1, (MAX_WEAPONS - 1)]\n\t%i not in [%i, %i]");
   return;
 }
 
 
 // 82513A60  SV_CheckOriginIsInPlayableBounds  (qcommon/sv_msg_write_mp.cpp:343)
 
-void SV_CheckOriginIsInPlayableBounds(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_CheckOriginIsInPlayableBounds(float *param_1)
 
 {
   float *pfVar1;
-  float *pfVar2;
-  undefined8 uVar3;
-  longlong lVar4;
-  float *pfVar5;
-  double dVar6;
+  int iVar2;
+  float *pfVar3;
+  undefined1 uVar4;
+  undefined8 uVar5;
+  int iVar6;
   double dVar7;
+  double dVar8;
   
-  pfVar2 = (float *)__savegprlr_26();
-  uVar3 = 1;
-  lVar4 = 0;
-  dVar7 = 0.5;
-  pfVar5 = pfVar2;
+  pfVar3 = (float *)__savegprlr_26(param_1);
+  uVar5 = 1;
+  iVar6 = 0;
+  dVar8 = 0.5;
+  iVar2 = -0x7c0e25c0 - (int)pfVar3;
   do {
-    dVar6 = floor((double)(float)((double)*pfVar5 + dVar7));
-    pfVar1 = (float *)((int)&DAT_83f1da40 + ((int)pfVar5 - (int)pfVar2));
-    if (((float)(longlong)(int)dVar6 < pfVar1[-3]) || (*pfVar1 < (float)(longlong)(int)dVar6)) {
-      Com_PrintError(0x19,0xffffffff820996e0,lVar4,(double)*pfVar5,(double)DAT_83f1da34,
-                     (double)DAT_83f1da38,(double)DAT_83f1da3c,(double)DAT_83f1da40);
-      uVar3 = 0;
+    dVar7 = floor((double)(float)((double)*pfVar3 + dVar8));
+    pfVar1 = (float *)(iVar2 + (int)pfVar3);
+    if (((float)(longlong)(int)dVar7 < pfVar1[-3]) || (*pfVar1 < (float)(longlong)(int)dVar7)) {
+      Com_PrintError(0x19,
+                     "Entity with axis \'%i\' coordinate of %f is too far outside the playable area of the map.  The playable area goes from ( %f, %f, %f ) to ( %f, %f, %f )\n"
+                    );
+      uVar5 = 0;
     }
-    lVar4 = lVar4 + 1;
-    pfVar5 = pfVar5 + 1;
-  } while ((int)lVar4 < 3);
-  __restgprlr_26(uVar3);
-  return;
+    iVar6 = iVar6 + 1;
+    pfVar3 = pfVar3 + 1;
+  } while (iVar6 < 3);
+  uVar4 = __restgprlr_26(uVar5);
+  return (bool)uVar4;
 }
 
 
 // 82513BA0  MSG_WriteOriginFloat  (qcommon/sv_msg_write_mp.cpp:372)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteOriginFloat
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               float *param_5,undefined8 param_6,int param_7)
+               (SnapshotInfo_s *param_1,int param_2,float *param_3,msg_t *param_4,int param_5,
+               float param_6,float param_7)
 
 {
+  uint uVar1;
   int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  uint uVar3;
+  int iVar4;
+  longlong lVar5;
+  uint uVar6;
   double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
   
-  iVar2 = __savegprlr_23();
-  dVar11 = extraout_f1;
-  if (*(int *)((int)param_6 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x17b,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  dVar8 = (double)param_7;
+  iVar2 = __savegprlr_23((double)param_6,param_1,param_2);
+  dVar7 = extraout_f1;
+  if (param_4->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x17b,0,"%s");
   }
-  dVar10 = 0.5;
-  dVar8 = floor((double)(float)(dVar11 + 0.5));
-  uVar6 = (ulonglong)(uint)(int)dVar8;
-  dVar9 = floor((double)(float)(param_2 + dVar10));
-  uVar5 = (ulonglong)(uint)(int)dVar9;
-  lVar7 = uVar6 - uVar5;
-  if ((int)lVar7 + (int)dVar9 != (int)dVar8) {
-    uVar1 = va(param_2,dVar11,0xffffffff82099844,param_2,lVar7,dVar11);
-    MyAssertHandler(0xffffffff82099550,0x180,0,0xffffffff820011f4,0xffffffff82099814,uVar1);
+  dVar9 = 0.5;
+  dVar7 = floor((double)(float)(dVar7 + 0.5));
+  uVar3 = (uint)dVar7;
+  dVar7 = floor((double)(float)(dVar8 + dVar9));
+  uVar1 = (uint)dVar7;
+  if ((int)((ulonglong)uVar3 - (ulonglong)uVar1) + uVar1 != uVar3) {
+    va("oldValue is %f, truncDelta is %i, value is %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x180,0,"%s\n\t%s");
   }
-  lVar7 = lVar7 + 0x40;
-  if ((lVar7 < 0) || (0x3f < (int)lVar7)) {
-    MSG_WriteBit1(param_6);
-    if ((param_7 == -0x5c) || (param_7 == -0x53)) {
-      iVar3 = 0;
+  lVar5 = ((ulonglong)uVar3 - (ulonglong)uVar1) + 0x40;
+  if ((lVar5 < 0) || (uVar6 = (uint)lVar5, 0x3f < (int)uVar6)) {
+    MSG_WriteBit1(param_4);
+    if ((param_5 == -0x5c) || (param_5 == -0x53)) {
+      iVar4 = 0;
     }
     else {
-      if ((param_7 != -0x5b) && (param_7 != -0x52)) {
-        MyAssertHandler(0xffffffff82099550,0x1b3,0,0xffffffff82000f98,0xffffffff8208f2b0);
+      if ((param_5 != -0x5b) && (param_5 != -0x52)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x1b3,0,"%s");
       }
-      iVar3 = 1;
+      iVar4 = 1;
     }
-    dVar8 = floor((double)(float)((double)param_5[iVar3] + dVar10));
-    uVar5 = (uVar5 - (uint)(int)dVar8) + 0x8000 ^ (uVar6 - (uint)(int)dVar8) + 0x8000;
-    uVar1 = GetMinBitCountForNum(uVar5);
-    if (0x10 < (int)uVar1) {
-      if (iVar3 == 0) {
-        uVar4 = 0xffffffff8209980c;
-      }
-      else {
-        uVar4 = 0xffffffff82099810;
-      }
-      Com_Error(dVar11,1,0xffffffff82099778,uVar4,dVar11,(double)(*param_5 - 32768.0),
-                (double)(param_5[1] - 32768.0),(double)(param_5[2] - 32768.0),
-                (double)((*param_5 + 32768.0) - 1.0));
+    dVar7 = floor((double)(float)((double)param_3[iVar4] + dVar9));
+    uVar3 = (uVar1 - (int)dVar7) + 0x8000 ^ (uVar3 - (int)dVar7) + 0x8000;
+    iVar4 = GetMinBitCountForNum(uVar3);
+    if (0x10 < iVar4) {
+      Com_Error(ERR_DROP,
+                "Entity with %s coordinate of %f is too far outside the playable area of the map.  The playable area goes from ( %f, %f, %f ) to ( %f, %f, %f )\n"
+               );
     }
     if ((*(char *)(iVar2 + 0x18) == '\0') && (*(char *)(iVar2 + 0x19) == '\0')) {
-      SV_TrackOriginFullBits(uVar1);
+      SV_TrackOriginFullBits(iVar4);
     }
-    MSG_WriteBits(param_6,uVar5,0x10);
+    MSG_WriteBits(param_4,uVar3,0x10);
   }
   else {
-    MSG_WriteBit0(param_6);
+    MSG_WriteBit0(param_4);
     if ((*(char *)(iVar2 + 0x18) == '\0') && (*(char *)(iVar2 + 0x19) == '\0')) {
-      GetMinBitCountForNum(lVar7);
-      SV_TrackOriginDeltaBits();
+      iVar2 = GetMinBitCountForNum(uVar6);
+      SV_TrackOriginDeltaBits(iVar2);
     }
-    MSG_WriteBits(param_6,lVar7,7);
-    if ((param_7 == -0x5c) || (param_7 == -0x53)) {
+    MSG_WriteBits(param_4,uVar6,7);
+    if ((param_5 == -0x5c) || (param_5 == -0x53)) {
       iVar2 = 0;
     }
     else {
-      if ((param_7 != -0x5b) && (param_7 != -0x52)) {
-        MyAssertHandler(0xffffffff82099550,0x196,0,0xffffffff82000f98,0xffffffff8208f2b0);
+      if ((param_5 != -0x5b) && (param_5 != -0x52)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x196,0,"%s");
       }
       iVar2 = 1;
     }
-    iVar3 = GetMinBitCountForNum
-                      ((uVar5 - (uint)(int)((double)param_5[iVar2] + dVar10)) + 0x8000 ^
-                       (uVar6 - (uint)(int)((double)param_5[iVar2] + dVar10)) + 0x8000);
-    if (0x10 < iVar3) {
-      if (iVar2 == 0) {
-        uVar1 = 0xffffffff8209980c;
-      }
-      else {
-        uVar1 = 0xffffffff82099810;
-      }
-      Com_Error(dVar11,1,0xffffffff82099778,uVar1,dVar11,(double)(*param_5 - 32768.0),
-                (double)(param_5[1] - 32768.0),(double)(param_5[2] - 32768.0),
-                (double)((*param_5 + 32768.0) - 1.0));
+    iVar2 = GetMinBitCountForNum
+                      ((uVar1 - (int)((double)param_3[iVar2] + dVar9)) + 0x8000 ^
+                       (uVar3 - (int)((double)param_3[iVar2] + dVar9)) + 0x8000);
+    if (0x10 < iVar2) {
+      Com_Error(ERR_DROP,
+                "Entity with %s coordinate of %f is too far outside the playable area of the map.  The playable area goes from ( %f, %f, %f ) to ( %f, %f, %f )\n"
+               );
       __restgprlr_23();
       return;
     }
@@ -498,69 +531,72 @@ void MSG_WriteOriginFloat
 
 // 82513FA8  MSG_WriteOriginZFloat  (qcommon/sv_msg_write_mp.cpp:461)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteOriginZFloat
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               float *param_5,undefined8 param_6)
+               (SnapshotInfo_s *param_1,int param_2,float *param_3,msg_t *param_4,float param_5,
+               float param_6)
 
 {
+  uint uVar1;
   int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  uint uVar3;
+  int iVar4;
+  longlong lVar5;
+  uint uVar6;
   double extraout_f1;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  iVar2 = __savegprlr_25();
-  dVar10 = extraout_f1;
-  if (*(int *)((int)param_6 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x1d3,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  dVar8 = (double)param_6;
+  iVar2 = __savegprlr_25((double)param_5,param_1,param_2);
+  dVar7 = extraout_f1;
+  if (param_4->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x1d3,0,"%s");
   }
   dVar9 = 0.5;
-  dVar7 = floor((double)(float)(dVar10 + 0.5));
-  uVar6 = (ulonglong)(uint)(int)dVar7;
-  dVar8 = floor((double)(float)(param_2 + dVar9));
-  uVar5 = (ulonglong)(uint)(int)dVar8;
-  lVar4 = uVar6 - uVar5;
-  if ((int)lVar4 + (int)dVar8 != (int)dVar7) {
-    uVar1 = va(param_2,dVar10,0xffffffff82099844,param_2,lVar4,dVar10);
-    MyAssertHandler(0xffffffff82099550,0x1dc,0,0xffffffff820011f4,0xffffffff82099814,uVar1);
+  dVar7 = floor((double)(float)(dVar7 + 0.5));
+  uVar3 = (uint)dVar7;
+  dVar7 = floor((double)(float)(dVar8 + dVar9));
+  uVar1 = (uint)dVar7;
+  if ((int)((ulonglong)uVar3 - (ulonglong)uVar1) + uVar1 != uVar3) {
+    va("oldValue is %f, truncDelta is %i, value is %f");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x1dc,0,"%s\n\t%s");
   }
-  lVar4 = lVar4 + 0x40;
-  if ((lVar4 < 0) || (0x3f < (int)lVar4)) {
-    MSG_WriteBit1(param_6);
-    dVar7 = floor((double)(float)((double)param_5[2] + dVar9));
-    uVar5 = (uVar5 - (uint)(int)dVar7) + 0x8000 ^ (uVar6 - (uint)(int)dVar7) + 0x8000;
-    iVar3 = GetMinBitCountForNum(uVar5);
-    if (0x10 < iVar3) {
-      Com_Error(dVar10,1,0xffffffff82099878,dVar10,(double)(*param_5 - 32768.0),
-                (double)(param_5[1] - 32768.0),(double)(param_5[2] - 32768.0),
-                (double)((*param_5 + 32768.0) - 1.0),(double)((param_5[1] + 32768.0) - 1.0));
+  lVar5 = ((ulonglong)uVar3 - (ulonglong)uVar1) + 0x40;
+  if ((lVar5 < 0) || (uVar6 = (uint)lVar5, 0x3f < (int)uVar6)) {
+    MSG_WriteBit1(param_4);
+    dVar7 = floor((double)(float)((double)param_3[2] + dVar9));
+    uVar3 = (uVar1 - (int)dVar7) + 0x8000 ^ (uVar3 - (int)dVar7) + 0x8000;
+    iVar4 = GetMinBitCountForNum(uVar3);
+    if (0x10 < iVar4) {
+      Com_Error(ERR_DROP,
+                "Entity with Z coordinate of %f is too far outside the playable area of the map.  The playable area goes from ( %f, %f, %f ) to ( %f, %f, %f )\n"
+               );
     }
     if ((*(char *)(iVar2 + 0x18) == '\0') && (*(char *)(iVar2 + 0x19) == '\0')) {
-      GetMinBitCountForNum(uVar5);
-      SV_TrackOriginZFullBits();
+      iVar2 = GetMinBitCountForNum(uVar3);
+      SV_TrackOriginZFullBits(iVar2);
     }
-    MSG_WriteBits(param_6,uVar5,0x10);
+    MSG_WriteBits(param_4,uVar3,0x10);
   }
   else {
-    MSG_WriteBit0(param_6);
+    MSG_WriteBit0(param_4);
     if ((*(char *)(iVar2 + 0x18) == '\0') && (*(char *)(iVar2 + 0x19) == '\0')) {
-      GetMinBitCountForNum(lVar4);
-      SV_TrackOriginZDeltaBits();
+      iVar2 = GetMinBitCountForNum(uVar6);
+      SV_TrackOriginZDeltaBits(iVar2);
     }
-    MSG_WriteBits(param_6,lVar4,7);
+    MSG_WriteBits(param_4,uVar6,7);
     iVar2 = GetMinBitCountForNum
-                      ((uVar5 - (uint)(int)((double)param_5[2] + dVar9)) + 0x8000 ^
-                       (uVar6 - (uint)(int)((double)param_5[2] + dVar9)) + 0x8000);
+                      ((uVar1 - (int)((double)param_3[2] + dVar9)) + 0x8000 ^
+                       (uVar3 - (int)((double)param_3[2] + dVar9)) + 0x8000);
     if (0x10 < iVar2) {
-      Com_Error(dVar10,1,0xffffffff82099878,dVar10,(double)(*param_5 - 32768.0),
-                (double)(param_5[1] - 32768.0),(double)(param_5[2] - 32768.0),
-                (double)((*param_5 + 32768.0) - 1.0),(double)((param_5[1] + 32768.0) - 1.0));
+      Com_Error(ERR_DROP,
+                "Entity with Z coordinate of %f is too far outside the playable area of the map.  The playable area goes from ( %f, %f, %f ) to ( %f, %f, %f )\n"
+               );
       __restgprlr_25();
       return;
     }
@@ -572,113 +608,123 @@ void MSG_WriteOriginZFloat
 
 // 825142E0  MSG_ShouldSendPSField  (qcommon/sv_msg_write_mp.cpp:543)
 
-ulonglong MSG_ShouldSendPSField
-                    (int param_1,ulonglong param_2,ulonglong param_3,int param_4,int param_5,
-                    int param_6)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool MSG_ShouldSendPSField
+               (SnapshotInfo_s *param_1,bool param_2,bool param_3,playerState_s *param_4,
+               playerState_s *param_5,NetField *param_6)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
-  iVar1 = *(int *)(param_6 + 8);
+  iVar1 = param_6->bits;
   if (iVar1 == -0x57) {
-    if (((*(uint *)(param_4 + 0xf8) ^ *(uint *)(param_5 + 0xf8)) & 2) != 0) {
-      return 1;
+    if (((param_4->eFlags ^ param_5->eFlags) & 2U) != 0) {
+      return true;
     }
-    if ((*(uint *)(param_4 + 0x10) & 0x800) == 0) {
-      if (*(char *)(param_1 + 0x19) == '\0') {
-        if (*(int *)(param_4 + 0x1bc) == 0x7ff) {
-          if (((*(int *)(param_4 + 4) != 6) && (*(int *)(param_4 + 4) != 1)) &&
-             ((*(uint *)(param_4 + 0x14) & 4) == 0)) {
-            return 0;
+    if ((param_4->otherFlags & 0x800U) == 0) {
+      if (param_1->archived == false) {
+        if (param_4->viewlocked_entNum == 0x7ff) {
+          if (((param_4->pm_type != 6) && (param_4->pm_type != 1)) &&
+             ((param_4->linkFlags & 4U) == 0)) {
+            return false;
           }
         }
-        else if (*(int *)(param_4 + 0x1bc) != *(int *)(param_5 + 0x1bc)) {
-          return 1;
+        else if (param_4->viewlocked_entNum != param_5->viewlocked_entNum) {
+          return true;
         }
       }
     }
-    else if ((*(uint *)(param_5 + 0x10) & 0x800) == 0) {
-      return 1;
+    else if ((param_5->otherFlags & 0x800U) == 0) {
+      return true;
     }
   }
   else {
     if (iVar1 == -0x46) {
-      return (ulonglong)(*(float *)(param_4 + 0x378) != 0.0);
+      return (param_4->weapCommon).fWeaponPosFrac != 0.0;
     }
-    if (*(char *)(param_1 + 0x19) == '\0') {
-      if (*(char *)(param_6 + 0xc) == '\x03') {
+    if (param_1->archived == false) {
+      if (param_6->changeHints == '\x03') {
         return param_2;
       }
-      if (*(char *)(param_6 + 0xc) == '\x04') {
+      if (param_6->changeHints == '\x04') {
         return param_3;
       }
     }
   }
-  cVar2 = MSG_ValuesAreEqual(iVar1,*(int *)(param_6 + 4) + param_5,*(int *)(param_6 + 4) + param_4);
-  return (ulonglong)(cVar2 == '\0');
+  bVar2 = MSG_ValuesAreEqual(iVar1,(int *)((int)param_5->origin + param_6->offset + -0x1c),
+                             (int *)((int)param_4->origin + param_6->offset + -0x1c));
+  return !bVar2;
 }
 
 
 // 82514468  MSG_WriteEntityIndex  (qcommon/sv_msg_write_mp.cpp:597)
 
-void MSG_WriteEntityIndex(undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteEntityIndex(SnapshotInfo_s *param_1,msg_t *param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  char cVar4;
-  undefined8 uVar3;
+  bool bVar2;
+  longlong lVar3;
   
-  __savegprlr_27();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x256,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  lVar3 = (longlong)param_3;
+  __savegprlr_27(param_1);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x256,0,"%s");
   }
-  if ((*(char *)(DAT_836b93b0 + 0xc) != '\0') &&
-     (cVar4 = SV_IsPacketDataNetworkData(0), cVar4 != '\0')) {
-    Com_Printf(0xf,0xffffffff82099a54,param_3);
+  if (((msg_printEntityNums->current).enabled != false) &&
+     (bVar2 = SV_IsPacketDataNetworkData(0), bVar2)) {
+    Com_Printf(0xf,"Writing entity num %i\n");
   }
-  if ((longlong)(param_3 - (ulonglong)*(uint *)(iVar1 + 0x24)) < 1) {
-    uVar3 = va(0xffffffff82099a2c,(ulonglong)*(uint *)(iVar1 + 0x24),param_3);
-    MyAssertHandler(0xffffffff82099550,0x261,0,0xffffffff820011f4,0xffffffff82099a0c,uVar3);
+  if ((longlong)(lVar3 - (ulonglong)(uint)param_2->lastEntityRef) < 1) {
+    va("lastEntityReferenced is %i, index is %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x261,0,"%s\n\t%s");
   }
-  iVar2 = (int)param_3;
-  if (iVar2 - *(int *)(iVar1 + 0x24) == 1) {
-    if ((*(char *)(DAT_836b93b0 + 0xc) != '\0') &&
-       (cVar4 = SV_IsPacketDataNetworkData(0), cVar4 != '\0')) {
-      Com_Printf(0x10,0xffffffff820999ec);
+  iVar1 = (int)lVar3;
+  if (iVar1 - param_2->lastEntityRef == 1) {
+    if (((msg_printEntityNums->current).enabled != false) &&
+       (bVar2 = SV_IsPacketDataNetworkData(0), bVar2)) {
+      Com_Printf(0x10,"Wrote entity num: 1 bit (inc)\n");
     }
     MSG_WriteBit1(param_2);
-    *(int *)(iVar1 + 0x24) = iVar2;
+    param_2->lastEntityRef = iVar1;
     __restgprlr_27();
     return;
   }
   MSG_WriteBit0(param_2);
-  if (((int)param_4 == 0xb) && (iVar2 - *(int *)(iVar1 + 0x24) < 0x200)) {
-    if ((*(char *)(DAT_836b93b0 + 0xc) != '\0') &&
-       (cVar4 = SV_IsPacketDataNetworkData(0), cVar4 != '\0')) {
-      Com_Printf(0x10,0xffffffff820999c8,0xb);
+  if ((param_4 == 0xb) && (iVar1 - param_2->lastEntityRef < 0x200)) {
+    if (((msg_printEntityNums->current).enabled != false) &&
+       (bVar2 = SV_IsPacketDataNetworkData(0), bVar2)) {
+      Com_Printf(0x10,"Wrote entity num: %i bits (delta)\n");
     }
-    if ((longlong)(param_3 - (ulonglong)*(uint *)(iVar1 + 0x24)) < 1) {
-      uVar3 = va(0xffffffff820999a4,param_3);
-      MyAssertHandler(0xffffffff82099550,0x275,0,0xffffffff82099930,0xffffffff82099980,uVar3);
+    if ((longlong)(lVar3 - (ulonglong)(uint)param_2->lastEntityRef) < 1) {
+      va("index was %i, lastEntityRef is %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x275,0,
+                      "%s\n\t(va( \"index was %i, lastEntityRef is %i\", index, msg->lastEntityRef )) = %i"
+                     );
     }
     MSG_WriteBit0(param_2);
-    MSG_WriteBits(param_2,param_3 - (ulonglong)*(uint *)(iVar1 + 0x24),9);
-    *(int *)(iVar1 + 0x24) = iVar2;
+    MSG_WriteBits(param_2,iVar1 - param_2->lastEntityRef,9);
+    param_2->lastEntityRef = iVar1;
     __restgprlr_27();
     return;
   }
-  if ((*(char *)(DAT_836b93b0 + 0xc) != '\0') &&
-     (cVar4 = SV_IsPacketDataNetworkData(0), cVar4 != '\0')) {
-    Com_Printf(0x10,0xffffffff82099908,param_4 + 2);
+  if (((msg_printEntityNums->current).enabled != false) &&
+     (bVar2 = SV_IsPacketDataNetworkData(0), bVar2)) {
+    Com_Printf(0x10,"Wrote entity num: %i bits (full)\n");
   }
-  if ((int)param_4 == 0xb) {
+  if (param_4 == 0xb) {
     MSG_WriteBit1(param_2);
   }
-  MSG_WriteBits(param_2,param_3,param_4);
-  *(int *)(iVar1 + 0x24) = iVar2;
+  MSG_WriteBits(param_2,iVar1,param_4);
+  param_2->lastEntityRef = iVar1;
   __restgprlr_27();
   return;
 }
@@ -686,21 +732,25 @@ void MSG_WriteEntityIndex(undefined8 param_1,undefined8 param_2,longlong param_3
 
 // 825146B0  MSG_WriteLastChangedField  (qcommon/sv_msg_write_mp.cpp:656)
 
-void MSG_WriteLastChangedField(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteLastChangedField(msg_t *param_1,int param_2,int param_3)
 
 {
+  msg_t *pmVar1;
   int iVar2;
-  undefined8 uVar1;
   
-  iVar2 = __savegprlr_27();
-  if (*(int *)(iVar2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x292,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  pmVar1 = (msg_t *)__savegprlr_27(param_1);
+  if (pmVar1->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x292,0,"%s");
   }
-  if ((int)param_3 < (int)param_2) {
-    MyAssertHandler(0xffffffff82099550,0x293,0,0xffffffff82000f98,0xffffffff82099a6c);
+  if (param_3 < param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x293,0,"%s");
   }
-  uVar1 = GetMinBitCountForNum(param_3);
-  MSG_WriteBits(iVar2,param_2,uVar1);
+  iVar2 = GetMinBitCountForNum(param_3);
+  MSG_WriteBits(pmVar1,param_2,iVar2);
   __restgprlr_27();
   return;
 }
@@ -708,24 +758,31 @@ void MSG_WriteLastChangedField(undefined8 param_1,undefined8 param_2,undefined8 
 
 // 82514748  MSG_WriteDeltaTime  (qcommon/sv_msg_write_mp.cpp:681)
 
-void MSG_WriteDeltaTime(undefined8 param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteDeltaTime(int param_1,msg_t *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
+  msg_t *pmVar1;
+  longlong lVar2;
+  longlong lVar3;
+  int iVar4;
   
-  iVar1 = __savegprlr_29();
-  if (*(int *)(iVar1 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x2ac,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  lVar3 = (longlong)param_3;
+  lVar2 = (longlong)(int)param_2;
+  pmVar1 = (msg_t *)__savegprlr_29(param_1,lVar2,lVar3,param_4);
+  if (pmVar1->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x2ac,0,"%s");
   }
-  param_2 = param_3 - param_2;
-  if ((param_2 < 1) && (-0x100 < (int)param_2)) {
-    MSG_WriteBit0(iVar1);
-    MSG_WriteBits(iVar1,-param_2,8);
+  if ((lVar3 - lVar2 < 1) && (iVar4 = (int)(lVar3 - lVar2), -0x100 < iVar4)) {
+    MSG_WriteBit0(pmVar1);
+    MSG_WriteBits(pmVar1,-iVar4,8);
     __restgprlr_29();
     return;
   }
-  MSG_WriteBit1(iVar1);
-  MSG_WriteLong(iVar1,param_3);
+  MSG_WriteBit1(pmVar1);
+  MSG_WriteLong(pmVar1,(int)lVar3);
   __restgprlr_29();
   return;
 }
@@ -733,44 +790,54 @@ void MSG_WriteDeltaTime(undefined8 param_1,longlong param_2,longlong param_3)
 
 // 825147E0  MSG_WriteEFlags  (qcommon/sv_msg_write_mp.cpp:700)
 
-void MSG_WriteEFlags(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteEFlags(int param_1,msg_t *param_2,int param_3,int param_4)
 
 {
   uint uVar1;
-  int *piVar2;
+  msg_t *pmVar2;
   ulonglong uVar3;
-  uint uVar4;
-  longlong lVar5;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  uint uVar7;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2[1] != 0) {
-    MyAssertHandler(0xffffffff82099550,0x2c1,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  pmVar2 = (msg_t *)__savegprlr_27(param_1,uVar3,uVar4,param_4);
+  if (pmVar2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x2c1,0,"%s");
   }
-  uVar3 = (param_2 ^ param_3) & 0x1fffffff;
-  uVar4 = (uint)uVar3;
-  if ((uVar4 == 0) || ((uVar4 - 1 & uVar4) != 0)) {
-    MSG_WriteBit1(piVar2);
-    MSG_WriteBits(piVar2,param_3,0x1d);
+  uVar5 = (uVar3 ^ uVar4) & 0x1fffffff;
+  uVar6 = (uint)uVar5;
+  if ((uVar6 == 0) || ((uVar6 - 1 & uVar6) != 0)) {
+    MSG_WriteBit1(pmVar2);
+    MSG_WriteBits(pmVar2,(int)uVar4,0x1d);
   }
   else {
-    lVar5 = 0;
-    if (((param_2 ^ param_3) & 1) == 0) {
+    uVar7 = 0;
+    if (((uVar3 ^ uVar4) & 1) == 0) {
       do {
-        uVar1 = (int)uVar3 >> 1;
-        uVar3 = (ulonglong)(int)uVar1;
-        lVar5 = lVar5 + 1;
+        uVar1 = (int)uVar5 >> 1;
+        uVar5 = (ulonglong)(int)uVar1;
+        uVar7 = uVar7 + 1;
       } while ((uVar1 & 1) == 0);
-      if (((int)lVar5 < 0) || (0x1c < (int)lVar5)) {
-        MyAssertHandler(0xffffffff82099550,0x2d7,0,0xffffffff82099ae0,0xffffffff82099afc,lVar5);
+      if (((int)uVar7 < 0) || (0x1c < (int)uVar7)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x2d7,0,"%s\n\t(changedBitIndex) = %i");
       }
     }
-    if (1 << ((uint)lVar5 & 0x3f) != uVar4) {
-      MyAssertHandler(0xffffffff82099550,0x2d8,0,0xffffffff82000f98,0xffffffff82099a90);
+    if (1 << (uVar7 & 0x3f) != uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x2d8,0,"%s");
     }
-    MSG_WriteBit0(piVar2);
-    MSG_WriteBits(piVar2,lVar5,5);
-    if (*piVar2 != 0) {
-      MyAssertHandler(0xffffffff82099550,0x2de,0,0xffffffff82000f98,0xffffffff8208f29c);
+    MSG_WriteBit0(pmVar2);
+    MSG_WriteBits(pmVar2,uVar7,5);
+    if (pmVar2->overflowed != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x2de,0,"%s");
       __restgprlr_27();
       return;
     }
@@ -782,22 +849,22 @@ void MSG_WriteEFlags(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82514948  MSG_WriteGroundEntityNum  (qcommon/sv_msg_write_mp.cpp:740)
 
-void MSG_WriteGroundEntityNum(int param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteGroundEntityNum(int param_1,msg_t *param_2,int param_3)
 
 {
-  int iVar1;
-  
   if (*(int *)(param_1 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x2e9,0,0xffffffff82000f98,0xffffffff8208f0f0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x2e9,0,"%s");
   }
-  iVar1 = (int)param_2;
-  if ((iVar1 == 0x7fe) || (MSG_WriteBit0(param_1), iVar1 == 0)) {
-    MSG_WriteBit1();
+  if ((param_2 == (msg_t *)0x7fe) || (MSG_WriteBit0((msg_t *)param_1), param_2 == (msg_t *)0x0)) {
+    MSG_WriteBit1((msg_t *)param_1);
   }
   else {
-    MSG_WriteBit0(param_1);
-    MSG_WriteBits(param_1,param_2,3);
-    MSG_WriteByte(param_1,iVar1 >> 3);
+    MSG_WriteBit0((msg_t *)param_1);
+    MSG_WriteBits((msg_t *)param_1,(int)param_2,3);
+    MSG_WriteByte((msg_t *)param_1,(int)param_2 >> 3);
   }
   return;
 }
@@ -805,11 +872,14 @@ void MSG_WriteGroundEntityNum(int param_1,undefined8 param_2)
 
 // 825149F0  MSG_WriteEventNum  (qcommon/sv_msg_write_mp.cpp:783)
 
-void MSG_WriteEventNum(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteEventNum(int param_1,msg_t *param_2,int param_3)
 
 {
-  if (*(int *)(param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x310,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x310,0,"%s");
   }
   MSG_WriteByte(param_2,param_3);
   return;
@@ -818,11 +888,14 @@ void MSG_WriteEventNum(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 82514A60  MSG_WriteEventParam  (qcommon/sv_msg_write_mp.cpp:790)
 
-void MSG_WriteEventParam(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteEventParam(int param_1,msg_t *param_2,int param_3)
 
 {
-  if (*(int *)(param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x317,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x317,0,"%s");
   }
   MSG_WriteBits(param_2,param_3,0x18);
   return;
@@ -831,225 +904,240 @@ void MSG_WriteEventParam(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 82514AD8  MSG_GetPacketEntityTypeForEType  (qcommon/sv_msg_write_mp.cpp:801)
 
-undefined8 MSG_GetPacketEntityTypeForEType(undefined4 param_1)
+PacketEntityType MSG_GetPacketEntityTypeForEType(int param_1)
 
 {
   switch(param_1) {
   case 0:
-    return 0;
+    return ANALYZE_DATATYPE_ENTITYTYPE_GENERALENTITY;
   case 1:
-    return 1;
+    return ANALYZE_DATATYPE_ENTITYTYPE_PLAYERENTITY;
   case 2:
-    return 2;
+    return ANALYZE_DATATYPE_ENTITYTYPE_PLAYERCORPSEENTITY;
   case 3:
-    return 3;
+    return ANALYZE_DATATYPE_ENTITYTYPE_ITEMENTITY;
   case 4:
-    return 4;
+    return ANALYZE_DATATYPE_ENTITYTYPE_MISSILEENTITY;
   case 5:
-    return 5;
+    return ANALYZE_DATATYPE_ENTITYTYPE_INVISIBLEENTITY;
   case 6:
-    return 6;
+    return ANALYZE_DATATYPE_ENTITYTYPE_SCRIPTMOVERENTITY;
   case 7:
-    return 7;
+    return ANALYZE_DATATYPE_ENTITYTYPE_SOUNDBLENDENTITY;
   case 8:
-    return 8;
+    return ANALYZE_DATATYPE_ENTITYTYPE_FXENTITY;
   case 9:
-    return 9;
+    return ANALYZE_DATATYPE_ENTITYTYPE_LOOPFXENTITY;
   default:
-    return 0x12;
+    return ANALYZE_DATATYPE_ENTITYTYPE_TEMPENTITY;
   case 0xb:
-    return 0xb;
+    return ANALYZE_DATATYPE_ENTITYTYPE_TURRET;
   case 0xc:
-    return 0xc;
+    return ANALYZE_DATATYPE_ENTITYTYPE_HELICOPTER;
   case 0xd:
-    return 0xd;
+    return ANALYZE_DATATYPE_ENTITYTYPE_PLANE;
   case 0xe:
-    return 0xe;
+    return ANALYZE_DATATYPE_ENTITYTYPE_VEHICLE;
   case 0xf:
-    return 0xf;
+    return ANALYZE_DATATYPE_ENTITYTYPE_VEHICLE_COLLMAP;
   }
 }
 
 
 // 82514BB8  MSG_GetBitCount  (qcommon/sv_msg_write_mp.cpp:845)
 
-void MSG_GetBitCount(undefined8 param_1,undefined1 *param_2,ulonglong param_3,ulonglong param_4)
+int MSG_GetBitCount(int param_1,bool *param_2,int param_3,int param_4)
 
 {
   ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  uint uVar4;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   uint uVar5;
+  ulonglong uVar6;
+  uint uVar7;
   
-  uVar1 = __savegprlr_29();
-  iVar3 = (int)uVar1;
-  if ((((iVar3 == 0) || (iVar3 == -0x50)) || (iVar3 == -0x4e)) || (iVar3 == -0x59)) {
+  uVar6 = (ulonglong)param_4;
+  uVar4 = (ulonglong)param_3;
+  uVar1 = __savegprlr_29(param_1);
+  iVar2 = (int)uVar1;
+  if ((((iVar2 == 0) || (iVar2 == -0x50)) || (iVar2 == -0x4e)) || (iVar2 == -0x59)) {
 LAB_82514f24:
-    *param_2 = 1;
-    __restgprlr_29(0x21);
-    return;
+    *param_2 = true;
+    iVar2 = __restgprlr_29(0x21);
+    return iVar2;
   }
-  if (iVar3 == -0x58) {
+  if (iVar2 == -0x58) {
 LAB_82514bf8:
-    *param_2 = 0;
-    __restgprlr_29(0x20);
-    return;
+    *param_2 = false;
+    iVar2 = __restgprlr_29(0x20);
+    return iVar2;
   }
-  if (iVar3 == -99) goto LAB_82514f24;
-  if (((iVar3 == -100) || (iVar3 == -0x4f)) || (iVar3 == -0x65)) {
-    *param_2 = 0;
-    __restgprlr_29(0x11);
-    return;
+  if (iVar2 == -99) goto LAB_82514f24;
+  if (((iVar2 == -100) || (iVar2 == -0x4f)) || (iVar2 == -0x65)) {
+    *param_2 = false;
+    iVar2 = __restgprlr_29(0x11);
+    return iVar2;
   }
-  if (iVar3 == -0x57) {
-    *param_2 = 0;
-    __restgprlr_29(0x10);
-    return;
+  if (iVar2 == -0x57) {
+    *param_2 = false;
+    iVar2 = __restgprlr_29(0x10);
+    return iVar2;
   }
-  if (iVar3 == -0x56) {
+  if (iVar2 == -0x56) {
 LAB_82514c64:
-    *param_2 = 0;
-    __restgprlr_29(6);
-    return;
+    *param_2 = false;
+    iVar2 = __restgprlr_29(6);
+    return iVar2;
   }
-  uVar4 = (uint)param_3;
-  uVar5 = (uint)param_4;
-  if (iVar3 == -0x66) {
-    *param_2 = 0;
-    if (3999 < (int)uVar4) goto LAB_82514cb0;
-    uVar1 = (longlong)((int)uVar5 / 0xfa) * 0xfa;
+  uVar5 = (uint)uVar4;
+  uVar7 = (uint)uVar6;
+  if (iVar2 == -0x66) {
+    *param_2 = false;
+    if (3999 < (int)uVar5) goto LAB_82514cb0;
+    uVar1 = (longlong)((int)uVar7 / 0xfa) * 0xfa;
   }
   else {
-    if (iVar3 != -0x67) {
-      if (iVar3 == -0x55) {
-        *param_2 = 0;
-        if (((param_3 ^ param_4) & 0xffffff00) != 0) {
-          __restgprlr_29(0x22);
-          return;
+    if (iVar2 != -0x67) {
+      if (iVar2 == -0x55) {
+        *param_2 = false;
+        if (((uVar4 ^ uVar6) & 0xffffff00) != 0) {
+          iVar2 = __restgprlr_29(0x22);
+          return iVar2;
         }
-        if ((((param_3 & 0xff) != 0) || ((uVar5 & 0xff) != 0xff)) &&
-           (((uVar4 & 0xff) != 0xff || ((param_4 & 0xff) != 0)))) {
-          __restgprlr_29(7);
-          return;
+        if ((((uVar4 & 0xff) != 0) || ((uVar7 & 0xff) != 0xff)) &&
+           (((uVar5 & 0xff) != 0xff || ((uVar6 & 0xff) != 0)))) {
+          iVar2 = __restgprlr_29(7);
+          return iVar2;
         }
-        __restgprlr_29(2);
-        return;
+        iVar2 = __restgprlr_29(2);
+        return iVar2;
       }
-      if (iVar3 == -0x54) {
-        *param_2 = 0;
-        __restgprlr_29(0xb);
-        return;
+      if (iVar2 == -0x54) {
+        *param_2 = false;
+        iVar2 = __restgprlr_29(0xb);
+        return iVar2;
       }
-      if (((iVar3 == -0x61) || (iVar3 == -0x4a)) || ((iVar3 == -0x48 || (iVar3 == -0x46)))) {
-        *param_2 = 1;
-        __restgprlr_29(9);
-        return;
+      if (((iVar2 == -0x61) || (iVar2 == -0x4a)) || ((iVar2 == -0x48 || (iVar2 == -0x46)))) {
+        *param_2 = true;
+        iVar2 = __restgprlr_29(9);
+        return iVar2;
       }
-      if ((iVar3 == -0x49) || (iVar3 == -0x47)) goto LAB_82514bf8;
-      if (iVar3 != -0x62) {
-        if (iVar3 == -0x60) {
-          *param_2 = 1;
-          __restgprlr_29(3);
-          return;
+      if ((iVar2 == -0x49) || (iVar2 == -0x47)) goto LAB_82514bf8;
+      if (iVar2 != -0x62) {
+        if (iVar2 == -0x60) {
+          *param_2 = true;
+          iVar2 = __restgprlr_29(3);
+          return iVar2;
         }
-        if (iVar3 == -0x4b) {
-          *param_2 = 1;
-          __restgprlr_29(7);
-          return;
+        if (iVar2 == -0x4b) {
+          *param_2 = true;
+          iVar2 = __restgprlr_29(7);
+          return iVar2;
         }
-        if ((iVar3 == -0x5e) || (iVar3 == -0x4d)) {
-          *param_2 = 0;
-          __restgprlr_29(8);
-          return;
+        if ((iVar2 == -0x5e) || (iVar2 == -0x4d)) {
+          *param_2 = false;
+          iVar2 = __restgprlr_29(8);
+          return iVar2;
         }
-        if (iVar3 == -0x5d) {
-          *param_2 = 0;
-          __restgprlr_29(0x18);
-          return;
+        if (iVar2 == -0x5d) {
+          *param_2 = false;
+          iVar2 = __restgprlr_29(0x18);
+          return iVar2;
         }
-        if ((((iVar3 != -0x5c) && (iVar3 != -0x5b)) && (iVar3 != -0x53)) &&
-           (((iVar3 != -0x52 && (iVar3 != -0x5a)) && (iVar3 != -0x51)))) {
-          if (iVar3 == -0x5f) {
-            *param_2 = 0;
-            __restgprlr_29(7);
-            return;
+        if ((((iVar2 != -0x5c) && (iVar2 != -0x5b)) && (iVar2 != -0x53)) &&
+           (((iVar2 != -0x52 && (iVar2 != -0x5a)) && (iVar2 != -0x51)))) {
+          if (iVar2 == -0x5f) {
+            *param_2 = false;
+            iVar2 = __restgprlr_29(7);
+            return iVar2;
           }
-          if (iVar3 == -0x4c) {
-            *param_2 = 1;
-            __restgprlr_29(8);
-            return;
+          if (iVar2 == -0x4c) {
+            *param_2 = true;
+            iVar2 = __restgprlr_29(8);
+            return iVar2;
           }
-          if ((iVar3 < -0x32) && (DAT_84013128 == 0)) {
-            uVar2 = va(0xffffffff82099b2c,uVar1);
-            MyAssertHandler(0xffffffff82099550,0x3e9,0,uVar2);
+          if ((iVar2 < -0x32) && (alwaysfails == 0)) {
+            pcVar3 = va("Missed a MSG_ case in MSG_GetBitCount - value is %i");
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                            ,0x3e9,0,pcVar3);
           }
-          *param_2 = 0;
-          if (uVar5 == 0) {
-            __restgprlr_29(1);
-            return;
+          *param_2 = false;
+          if (uVar7 == 0) {
+            iVar2 = __restgprlr_29(1);
+            return iVar2;
           }
-          __restgprlr_29(((uVar1 ^ (longlong)(iVar3 >> 0x1f)) - (longlong)(iVar3 >> 0x1f)) + 1);
-          return;
+          iVar2 = __restgprlr_29(((uVar1 ^ (longlong)(iVar2 >> 0x1f)) - (longlong)(iVar2 >> 0x1f)) +
+                                 1);
+          return iVar2;
         }
-        *param_2 = 1;
-        __restgprlr_29(0x11);
-        return;
+        *param_2 = true;
+        iVar2 = __restgprlr_29(0x11);
+        return iVar2;
       }
       goto LAB_82514c64;
     }
-    *param_2 = 0;
-    if (799 < (int)uVar4) goto LAB_82514cb0;
-    uVar1 = (longlong)((int)uVar5 / 0x32) * 0x32;
+    *param_2 = false;
+    if (799 < (int)uVar5) goto LAB_82514cb0;
+    uVar1 = (longlong)((int)uVar7 / 0x32) * 0x32;
   }
-  if (param_4 == uVar1) {
-    __restgprlr_29(5);
-    return;
+  if (uVar6 == uVar1) {
+    iVar2 = __restgprlr_29(5);
+    return iVar2;
   }
 LAB_82514cb0:
-  __restgprlr_29(0x11);
-  return;
+  iVar2 = __restgprlr_29(0x11);
+  return iVar2;
 }
 
 
 // 82514F38  MSG_EncodeSkippedFields  (qcommon/sv_msg_write_mp.cpp:1017)
 
-void MSG_EncodeSkippedFields(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_EncodeSkippedFields(SnapshotInfo_s *param_1,msg_t *param_2,int param_3,int param_4)
 
 {
   uint uVar1;
-  undefined8 uVar2;
+  msg_t *pmVar2;
   int iVar3;
+  longlong lVar4;
+  uint uVar5;
+  longlong lVar6;
   
-  uVar2 = __savegprlr_27();
-  iVar3 = (int)param_2;
+  lVar4 = (longlong)param_3;
+  lVar6 = (longlong)(int)param_2;
+  pmVar2 = (msg_t *)__savegprlr_27(param_1,lVar6,lVar4,param_4);
+  iVar3 = (int)lVar6;
   if (iVar3 < 1) {
-    MyAssertHandler(0xffffffff82099550,0x3fa,0,0xffffffff82099b60,0xffffffff82099b7c,param_2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x3fa,0,"%s\n\t(numFieldsSkipped) = %i");
   }
-  if ((uint)param_3 == 1) {
+  uVar5 = (uint)lVar4;
+  if (uVar5 == 1) {
     if (1 < iVar3) {
-      param_2 = param_2 + -1;
+      lVar6 = lVar6 + -1;
       do {
-        MSG_WriteBit0(uVar2);
-        param_2 = param_2 + -1;
-      } while (param_2 != 0);
+        MSG_WriteBit0(pmVar2);
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
     }
   }
   else if (iVar3 != 1) {
-    MSG_WriteBit0(uVar2);
-    param_2 = param_2 + -1;
-    uVar1 = 1 << ((uint)param_3 & 0x3f);
-    iVar3 = (int)param_2;
+    MSG_WriteBit0(pmVar2);
+    lVar6 = lVar6 + -1;
+    uVar1 = 1 << (uVar5 & 0x3f);
+    iVar3 = (int)lVar6;
     while ((int)(uVar1 - 1) <= iVar3) {
-      MSG_WriteBits(uVar2,0xffffffffffffffff,param_3);
-      param_2 = (param_2 - (ulonglong)uVar1) + 1;
-      iVar3 = (int)param_2;
+      MSG_WriteBits(pmVar2,-1,uVar5);
+      lVar6 = (lVar6 - (ulonglong)uVar1) + 1;
+      iVar3 = (int)lVar6;
     }
-    MSG_WriteBits(uVar2,param_2,param_3);
+    MSG_WriteBits(pmVar2,iVar3,uVar5);
     __restgprlr_27();
     return;
   }
-  MSG_WriteBit1(uVar2);
+  MSG_WriteBit1(pmVar2);
   __restgprlr_27();
   return;
 }
@@ -1057,20 +1145,26 @@ void MSG_EncodeSkippedFields(undefined8 param_1,longlong param_2,undefined8 para
 
 // 82515018  MSG_WriteValueNoXor  (qcommon/sv_msg_write_mp.cpp:1096)
 
-void MSG_WriteValueNoXor(undefined8 param_1,longlong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteValueNoXor(SnapshotInfo_s *param_1,msg_t *param_2,int param_3,int param_4,
+                        char *param_5)
 
 {
-  undefined8 uVar1;
+  msg_t *pmVar1;
   int iVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   int iVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_28();
-  uVar4 = (ulonglong)((int)param_3 >> 0x1f);
-  uVar4 = (param_3 ^ uVar4) - uVar4;
-  iVar2 = (int)param_2;
-  if (-1 < (int)param_3) {
+  uVar3 = (ulonglong)param_3;
+  lVar6 = (longlong)(int)param_2;
+  pmVar1 = (msg_t *)__savegprlr_28(param_1,lVar6,uVar3,param_4,param_5);
+  uVar4 = (ulonglong)((int)uVar3 >> 0x1f);
+  uVar4 = (uVar3 ^ uVar4) - uVar4;
+  iVar2 = (int)lVar6;
+  if (-1 < (int)uVar3) {
     uVar3 = uVar4;
     iVar5 = iVar2;
     if (iVar2 < 0) {
@@ -1078,19 +1172,19 @@ void MSG_WriteValueNoXor(undefined8 param_1,longlong param_2,ulonglong param_3,u
       iVar5 = -1 - iVar2;
     }
     if ((uVar3 & 0xffffffff) < (0x20U - LZCOUNT(iVar5) & 0xffffffff)) {
-      Com_PrintError(1,0xffffffff82099b94,param_2,param_4,uVar4);
+      Com_PrintError(1,"Not enough bits written: %d for %s (%d)\n");
     }
   }
-  uVar3 = uVar4 & 7;
-  if ((int)uVar3 != 0) {
-    MSG_WriteBits(uVar1,param_2,uVar3);
-    uVar4 = uVar4 - uVar3;
-    param_2 = (longlong)(iVar2 >> (int)uVar3);
+  iVar5 = (int)(uVar4 & 7);
+  if (iVar5 != 0) {
+    MSG_WriteBits(pmVar1,iVar2,iVar5);
+    uVar4 = uVar4 - (uVar4 & 7);
+    lVar6 = (longlong)(iVar2 >> iVar5);
   }
   if ((int)uVar4 != 0) {
     do {
-      MSG_WriteByte(uVar1,param_2);
-      param_2 = (longlong)((int)param_2 >> 8);
+      MSG_WriteByte(pmVar1,(int)lVar6);
+      lVar6 = (longlong)((int)lVar6 >> 8);
       uVar4 = uVar4 - 8;
     } while (uVar4 != 0);
   }
@@ -1101,31 +1195,39 @@ void MSG_WriteValueNoXor(undefined8 param_1,longlong param_2,ulonglong param_3,u
 
 // 825150D0  MSG_WriteValue  (qcommon/sv_msg_write_mp.cpp:1125)
 
-void MSG_WriteValue(undefined8 param_1,uint *param_2,uint *param_3,ulonglong param_4,
-                   undefined8 param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteValue(SnapshotInfo_s *param_1,msg_t *param_2,int *param_3,int *param_4,int param_5,
+                   char *param_6)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  uint uVar4;
+  uint uVar1;
+  SnapshotInfo_s *pSVar2;
+  msg_t *pmVar3;
+  char *pcVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  uint uVar7;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = *param_3;
-  uVar3 = param_4;
-  uVar4 = uVar2;
-  if ((int)uVar2 < 0) {
-    uVar3 = param_4 - 1;
-    uVar4 = -uVar2 - 1;
+  uVar6 = (ulonglong)(int)param_4;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_27(param_1);
+  pcVar4 = (char *)uVar6;
+  uVar1 = *param_3;
+  uVar7 = uVar1;
+  if ((int)uVar1 < 0) {
+    uVar6 = uVar6 - 1;
+    uVar7 = -uVar1 - 1;
   }
-  if ((uVar3 & 0xffffffff) < (0x20U - LZCOUNT(uVar4) & 0xffffffff)) {
-    Com_PrintError(1,0xffffffff82099b94,uVar2,param_5,param_4);
+  pcVar5 = (char *)param_5;
+  if ((uVar6 & 0xffffffff) < (0x20U - LZCOUNT(uVar7) & 0xffffffff)) {
+    pcVar5 = pcVar4;
+    Com_PrintError(1,"Not enough bits written: %d for %s (%d)\n");
   }
-  uVar2 = *param_2 ^ uVar2;
-  if ((uint)param_4 != 0x20) {
-    uVar2 = (1 << ((uint)param_4 & 0x3f)) - 1U & uVar2;
+  pmVar3 = (msg_t *)(param_2->overflowed ^ uVar1);
+  if (pcVar4 != (char *)0x20) {
+    pmVar3 = (msg_t *)((1 << ((uint)pcVar4 & 0x3f)) - 1U & (uint)pmVar3);
   }
-  MSG_WriteValueNoXor(uVar1,uVar2,param_4,param_5);
+  MSG_WriteValueNoXor(pSVar2,pmVar3,(int)pcVar4,param_5,pcVar5);
   __restgprlr_27();
   return;
 }
@@ -1133,93 +1235,91 @@ void MSG_WriteValue(undefined8 param_1,uint *param_2,uint *param_3,ulonglong par
 
 // 82515170  MSG_WriteDeltaAngle  (qcommon/sv_msg_write_mp.cpp:1144)
 
-void MSG_WriteDeltaAngle(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteDeltaAngle(SnapshotInfo_s *param_1,msg_t *param_2,float param_3,float param_4)
 
 {
   bool bVar1;
+  int iVar2;
   int iVar3;
-  undefined8 uVar2;
   short sVar4;
   short *psVar5;
-  longlong lVar6;
+  int iVar6;
   int iVar7;
-  longlong lVar8;
-  short sVar11;
-  ulonglong uVar9;
-  int iVar10;
+  uint uVar8;
   double extraout_f1;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   
-  __savegprlr_24();
-  iVar3 = __savefpr_28();
-  dVar14 = 182.04444885253906;
-  dVar16 = 0.5;
-  dVar12 = floor((double)(float)(extraout_f1 * 182.04444885253906 + 0.5));
-  dVar13 = (double)(float)(param_2 * dVar14);
-  dVar14 = floor((double)(float)(dVar13 + dVar16));
-  sVar11 = (short)(int)dVar12;
+  dVar12 = (double)param_4;
+  __savegprlr_24((double)param_3,param_1);
+  iVar2 = __savefpr_28();
+  dVar11 = 182.04444885253906;
+  dVar13 = 0.5;
+  dVar9 = floor((double)(float)(extraout_f1 * 182.04444885253906 + 0.5));
+  dVar10 = (double)(float)(dVar12 * dVar11);
+  dVar11 = floor((double)(float)(dVar10 + dVar13));
   bVar1 = false;
-  psVar5 = &DAT_8296d18c;
-  lVar8 = 0;
-  sVar4 = (short)(int)dVar14;
-  uVar9 = (longlong)sVar4 - (longlong)sVar11;
-  iVar10 = (int)uVar9;
-  lVar6 = (uVar9 ^ (longlong)(iVar10 >> 0x1f)) - (longlong)(iVar10 >> 0x1f);
+  psVar5 = g_commonAngleDeltas;
+  iVar7 = 0;
+  sVar4 = (short)(int)dVar11;
+  uVar8 = (int)sVar4 - (int)(short)(int)dVar9;
+  iVar6 = (uVar8 ^ (int)uVar8 >> 0x1f) - ((int)uVar8 >> 0x1f);
   do {
-    iVar7 = (int)lVar6;
-    if (*psVar5 == iVar7) {
+    if (*psVar5 == iVar6) {
       bVar1 = true;
-      MSG_WriteBit1(param_4);
-      if (iVar10 < 0) {
-        MSG_WriteBit1();
+      MSG_WriteBit1(param_2);
+      if ((int)uVar8 < 0) {
+        MSG_WriteBit1(param_2);
       }
       else {
-        MSG_WriteBit0(param_4);
+        MSG_WriteBit0(param_2);
       }
-      uVar2 = GetMinBitCountForNum(7);
-      MSG_WriteBits(param_4,lVar8,uVar2);
+      iVar3 = GetMinBitCountForNum(7);
+      MSG_WriteBits(param_2,iVar7,iVar3);
       break;
     }
     psVar5 = psVar5 + 1;
-    lVar8 = lVar8 + 1;
+    iVar7 = iVar7 + 1;
   } while ((int)psVar5 < -0x7d692e66);
   if (!bVar1) {
-    MSG_WriteBit0(param_4);
-    if ((iVar7 == 0) || (0xfff < iVar7)) {
-      if ((*(char *)(iVar3 + 0x19) == '\0') && (*(char *)(iVar3 + 0x18) == '\0')) {
+    MSG_WriteBit0(param_2);
+    if ((iVar6 == 0) || (0xfff < iVar6)) {
+      if ((*(char *)(iVar2 + 0x19) == '\0') && (*(char *)(iVar2 + 0x18) == '\0')) {
         SV_TrackAngleFullSend();
       }
-      MSG_WriteBit0(param_4);
-      MSG_WriteAngle16(param_2,param_4);
+      MSG_WriteBit0(param_2);
+      MSG_WriteAngle16(param_2,(float)dVar12);
     }
     else {
-      if ((*(char *)(iVar3 + 0x19) == '\0') && (*(char *)(iVar3 + 0x18) == '\0')) {
-        SV_TrackAngleDeltaBits(uVar9);
+      if ((*(char *)(iVar2 + 0x19) == '\0') && (*(char *)(iVar2 + 0x18) == '\0')) {
+        SV_TrackAngleDeltaBits(uVar8);
       }
-      MSG_WriteBit1(param_4);
-      if (iVar10 < 0) {
-        MSG_WriteBit1();
+      MSG_WriteBit1(param_2);
+      if ((int)uVar8 < 0) {
+        MSG_WriteBit1(param_2);
       }
       else {
-        MSG_WriteBit0(param_4);
+        MSG_WriteBit0(param_2);
       }
-      MSG_WriteBits(param_4,lVar6,0xc);
-      if (sVar11 + iVar10 != (int)sVar4) {
-        uVar2 = va(0xffffffff82099c54,(longlong)sVar11,uVar9,(longlong)sVar4);
-        MyAssertHandler(0xffffffff82099550,0x4ab,0,0xffffffff820011f4,0xffffffff82099c2c,uVar2);
+      MSG_WriteBits(param_2,iVar6,0xc);
+      if ((int)(short)(int)dVar9 + uVar8 != (int)sVar4) {
+        va("%i + %i != %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x4ab,0,"%s\n\t%s");
       }
-      dVar15 = 0.0054931640625;
-      dVar14 = (double)(float)((double)(longlong)(int)sVar4 * 0.0054931640625);
-      dVar12 = floor((double)(float)(dVar13 + dVar16));
-      if (dVar14 != (double)(float)((double)(longlong)(short)(int)dVar12 * dVar15)) {
-        dVar12 = floor((double)(float)(dVar13 + dVar16));
-        uVar2 = va(dVar14,0xffffffff82099c20,dVar14,
-                   (double)(float)((double)(longlong)(short)(int)dVar12 * dVar15));
-        MyAssertHandler(0xffffffff82099550,0x4ac,0,0xffffffff820011f4,0xffffffff82099bc0,uVar2);
+      dVar12 = 0.0054931640625;
+      dVar11 = (double)(float)((double)(longlong)(int)sVar4 * 0.0054931640625);
+      dVar9 = floor((double)(float)(dVar10 + dVar13));
+      if (dVar11 != (double)(float)((double)(longlong)(short)(int)dVar9 * dVar12)) {
+        floor((double)(float)(dVar10 + dVar13));
+        va("%f != %f");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x4ac,0,"%s\n\t%s");
         __restfpr_28();
         __restgprlr_24();
         return;
@@ -1234,352 +1334,398 @@ void MSG_WriteDeltaAngle(undefined8 param_1,double param_2,undefined8 param_3,un
 
 // 82515448  MSG_WriteDeltaField  (qcommon/sv_msg_write_mp.cpp:1219)
 
-void MSG_WriteDeltaField(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                        longlong param_5,undefined4 *param_6,ulonglong param_7,ulonglong param_8)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool MSG_WriteDeltaField(SnapshotInfo_s *param_1,msg_t *param_2,int param_3,uchar *param_4,
+                        uchar *param_5,NetField *param_6,int param_7,bool param_8,bool param_9,
+                        int param_10,int param_11,bool param_12)
 
 {
-  uint uVar1;
+  char cVar1;
   float fVar2;
-  float fVar3;
-  undefined4 *puVar5;
-  char cVar6;
-  undefined8 uVar4;
-  int iVar8;
-  longlong lVar7;
+  SnapshotInfo_s *pSVar3;
+  bool bVar5;
+  undefined1 uVar6;
+  char *pcVar4;
+  float *pfVar7;
+  float fVar8;
   float *pfVar9;
-  longlong lVar10;
-  float *pfVar11;
+  msg_t *pmVar10;
+  char *pcVar11;
   ulonglong uVar12;
   longlong lVar13;
-  int iVar14;
-  double dVar15;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  int iVar17;
+  longlong lVar16;
+  msg_t *pmVar18;
+  longlong lVar19;
+  uint uVar20;
+  longlong lVar21;
+  uint uVar22;
+  int iVar23;
+  double dVar24;
   char in_stack_00000057;
-  uint in_stack_0000005c;
-  undefined4 in_stack_00000064;
+  int in_stack_0000005c;
+  msg_t *in_stack_00000064;
   char in_stack_0000006f;
   uint uStack_7c;
   
-  puVar5 = (undefined4 *)__savegprlr_19();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x4d1,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar14 = (ulonglong)param_8;
+  uVar12 = (ulonglong)param_7;
+  lVar13 = (longlong)(int)param_5;
+  uVar15 = (ulonglong)(int)param_4;
+  pSVar3 = (SnapshotInfo_s *)__savegprlr_19(param_1);
+  pmVar10 = (msg_t *)param_3;
+  pcVar4 = (char *)uVar15;
+  if (param_2->readOnly != 0) {
+    pmVar10 = (msg_t *)0x0;
+    pcVar4 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x4d1,0,"%s");
   }
-  lVar10 = param_5 + (ulonglong)(uint)param_6[1];
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x4d5,0,0xffffffff82000f98,0xffffffff82001400);
+  lVar19 = lVar13 + (ulonglong)(uint)param_6->offset;
+  if ((uVar15 & 0xffffffff) == 0) {
+    pmVar10 = (msg_t *)0x0;
+    pcVar4 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x4d5,0,"%s");
   }
-  lVar13 = param_4 + (uint)param_6[1];
-  lVar7 = lVar13;
+  lVar21 = uVar15 + (uint)param_6->offset;
+  lVar16 = lVar21;
   if (in_stack_00000057 == '\0') {
-    lVar7 = ZEXT48(&stack0x00000000) - 0x90;
+    lVar16 = ZEXT48(&stack0x00000000) - 0x90;
   }
-  pfVar11 = (float *)lVar10;
+  pfVar9 = (float *)lVar19;
   if (in_stack_0000006f != '\0') {
-    if ((param_8 & 0xff) == 0) {
-      cVar6 = MSG_ValuesAreEqual(param_6[2],lVar13,lVar10);
-      if (cVar6 != '\0') {
-        __restgprlr_19(0);
-        return;
+    if ((uVar14 & 0xff) == 0) {
+      pfVar7 = (float *)lVar21;
+      bVar5 = MSG_ValuesAreEqual(param_6->bits,(int *)pfVar7,(int *)pfVar9);
+      if (bVar5) {
+        uVar6 = __restgprlr_19(0);
+        return (bool)uVar6;
       }
-      if (*(float *)lVar13 == *pfVar11) {
-        MyAssertHandler(0xffffffff82099550,0x4e7,0,0xffffffff82000f98,0xffffffff82099d88);
+      if (*pfVar7 == *pfVar9) {
+        pcVar4 = "%s";
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x4e7,0,"%s");
       }
     }
-    if (((*(char *)(param_6 + 3) == '\x01') &&
-        ((0x12 < (int)puVar5[9] || (*(int *)((int)param_4 + 4) == *(int *)((int)param_5 + 4))))) &&
-       ((*(char *)(puVar5 + 6) == '\0' || ((int)param_7 != 0)))) {
-      uVar4 = SV_GetEntityTypeString();
-      Com_PrintError(0xf,0xffffffff82099d48,*param_6,uVar4);
+    if (((param_6->changeHints == '\x01') &&
+        ((0x12 < (int)pSVar3->packetEntityType ||
+         (*(int *)((char *)uVar15 + 4) == *(int *)((int)lVar13 + 4))))) &&
+       ((pSVar3->fromBaseline == false || ((int)uVar12 != 0)))) {
+      pcVar4 = SV_GetEntityTypeString(pSVar3->packetEntityType);
+      Com_PrintError(0xf,"Field %s changed for eType %s when we thought it never would\n");
     }
-    MSG_EncodeSkippedFields(param_2,param_7 - in_stack_0000005c,in_stack_00000064);
+    pmVar10 = in_stack_00000064;
+    MSG_EncodeSkippedFields
+              ((SnapshotInfo_s *)param_2,(msg_t *)((int)uVar12 - in_stack_0000005c),
+               (int)in_stack_00000064,(int)pcVar4);
   }
-  cVar6 = *(char *)((int)puVar5 + 0x19);
-  if ((cVar6 == '\0') && (*(char *)(puVar5 + 6) == '\0')) {
-    iVar14 = (int)((param_7 & 0xffffffff) << 2);
-    *(int *)(puVar5[7] + iVar14) = *(int *)(puVar5[7] + iVar14) + 1;
+  bVar5 = pSVar3->archived;
+  pcVar11 = (char *)(uint)bVar5;
+  if ((bVar5 == false) && (pSVar3->fromBaseline == false)) {
+    iVar23 = (int)((uVar12 & 0xffffffff) << 2);
+    *(int *)((int)pSVar3->fieldChanges + iVar23) = *(int *)((int)pSVar3->fieldChanges + iVar23) + 1;
   }
-  iVar14 = param_6[2];
-  pfVar9 = (float *)lVar7;
-  if (iVar14 == 0) {
-    fVar2 = *pfVar9;
-    dVar15 = (double)*pfVar11;
-    uVar1 = (uint)*pfVar11;
-    if (dVar15 == 0.0) {
-      MSG_WriteBit0();
-      if ((float)dVar15 == -0.0) {
-        MSG_WriteBit1();
-        __restgprlr_19(1);
-        return;
+  iVar23 = param_6->bits;
+  pmVar18 = (msg_t *)lVar16;
+  if (iVar23 == 0) {
+    fVar8 = (float)pmVar18->overflowed;
+    dVar24 = (double)*pfVar9;
+    iVar23 = (int)*pfVar9;
+    if (dVar24 == 0.0) {
+      MSG_WriteBit0(param_2);
+      if ((float)dVar24 == -0.0) {
+        MSG_WriteBit1(param_2);
+        uVar6 = __restgprlr_19(1);
+        return (bool)uVar6;
       }
 LAB_82515f7c:
       MSG_WriteBit0(param_2);
-      __restgprlr_19(1);
-      return;
+      uVar6 = __restgprlr_19(1);
+      return (bool)uVar6;
     }
     MSG_WriteBit1(param_2);
-    if (((((float)dVar15 != -0.0) && ((double)(longlong)(int)uVar1 == dVar15)) &&
-        (uVar12 = (ulonglong)uVar1 + 0x1000, (int)uVar12 < 0x2000)) &&
-       ((int)((ulonglong)(uint)(int)fVar2 + 0x1000) < 0x2000)) {
+    if (((((float)dVar24 != -0.0) && ((double)(longlong)iVar23 == dVar24)) &&
+        (uVar20 = iVar23 + 0x1000, (int)uVar20 < 0x2000)) &&
+       (uVar22 = (int)fVar8 + 0x1000, (int)uVar22 < 0x2000)) {
       MSG_WriteBit0(param_2);
-      uVar12 = (ulonglong)(uint)(int)fVar2 + 0x1000 ^ uVar12;
-      iVar14 = (int)uVar12;
-      if ((iVar14 < 0) || (0x1fff < iVar14)) {
-        MyAssertHandler(0xffffffff82099550,0x51d,0,0xffffffff82099d08,uVar12,0,0x1fff);
+      uVar22 = uVar22 ^ uVar20;
+      if (((int)uVar22 < 0) || (0x1fff < (int)uVar22)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x51d,0,"trunc not in [0, (1 << FLOAT_INT_BITS) - 1]\n\t%i not in [%i, %i]"
+                       );
       }
-      MSG_WriteBits(param_2,uVar12,5);
-      MSG_WriteByte(param_2,iVar14 >> 5);
-      __restgprlr_19(1);
-      return;
+      MSG_WriteBits(param_2,uVar22,5);
+      MSG_WriteByte(param_2,(int)uVar22 >> 5);
+      uVar6 = __restgprlr_19(1);
+      return (bool)uVar6;
     }
 LAB_82515744:
     MSG_WriteBit1(param_2);
 LAB_8251574c:
-    fVar2 = (float)((uint)*pfVar11 ^ (uint)*pfVar9);
+    fVar8 = (float)((uint)*pfVar9 ^ pmVar18->overflowed);
   }
   else {
-    if (iVar14 == -0x59) {
-      fVar2 = *pfVar11;
-      fVar3 = *pfVar9;
-      if ((((float)(longlong)(int)fVar2 == fVar2) && (fVar2 != -0.0)) &&
-         (uVar12 = (ulonglong)(uint)(int)fVar2 + 0x1000, (int)uVar12 < 0x2000)) {
+    if (iVar23 == -0x59) {
+      fVar8 = *pfVar9;
+      fVar2 = (float)pmVar18->overflowed;
+      if ((((float)(longlong)(int)fVar8 == fVar8) && (fVar8 != -0.0)) &&
+         (uVar20 = (int)fVar8 + 0x1000, (int)uVar20 < 0x2000)) {
         MSG_WriteBit0(param_2);
-        uVar12 = (ulonglong)(uint)(int)fVar3 + 0x1000 ^ uVar12;
-        MSG_WriteBits(param_2,uVar12,5);
-        MSG_WriteByte(param_2,(int)uVar12 >> 5);
-        __restgprlr_19(1);
-        return;
+        uVar20 = (int)fVar2 + 0x1000U ^ uVar20;
+        MSG_WriteBits(param_2,uVar20,5);
+        MSG_WriteByte(param_2,(int)uVar20 >> 5);
+        uVar6 = __restgprlr_19(1);
+        return (bool)uVar6;
       }
       goto LAB_82515744;
     }
-    if ((iVar14 != -0x50) && (iVar14 != -0x4e)) {
-      if (iVar14 == -0x65) {
-        if (SUB42(*pfVar11,0) != 0) {
+    if ((iVar23 != -0x50) && (iVar23 != -0x4e)) {
+      if (iVar23 == -0x65) {
+        if (SUB42(*pfVar9,0) != 0) {
           MSG_WriteBit1(param_2);
-          MSG_WriteShort(param_2,*pfVar11);
-          __restgprlr_19(1);
-          return;
+          MSG_WriteShort(param_2,(int)*pfVar9);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
         goto LAB_82515f7c;
       }
-      if (iVar14 != -0x58) {
-        if (iVar14 == -99) {
+      if (iVar23 != -0x58) {
+        if (iVar23 == -99) {
+          fVar8 = (float)pmVar18->overflowed;
           fVar2 = *pfVar9;
-          fVar3 = *pfVar11;
-          dVar15 = (double)fVar3;
-          if ((dVar15 == 0.0) && (fVar3 != -0.0)) {
+          dVar24 = (double)fVar2;
+          if ((dVar24 == 0.0) && (fVar2 != -0.0)) {
             MSG_WriteBit0(param_2);
           }
           else {
             MSG_WriteBit1(param_2);
-            if (((float)dVar15 == -0.0) ||
-               (((double)(longlong)(int)fVar3 != dVar15 ||
-                (uVar12 = (ulonglong)(uint)(int)fVar3 + 0x800, 0xfff < (int)uVar12)))) {
+            if (((float)dVar24 == -0.0) ||
+               (((double)(longlong)(int)fVar2 != dVar24 ||
+                (uVar20 = (int)fVar2 + 0x800, 0xfff < (int)uVar20)))) {
               MSG_WriteBit1(param_2);
-              MSG_WriteLong(param_2,(uint)*pfVar11 ^ (uint)*pfVar9);
+              MSG_WriteLong(param_2,(uint)*pfVar9 ^ pmVar18->overflowed);
             }
             else {
               MSG_WriteBit0(param_2);
-              uVar12 = (ulonglong)(uint)(int)fVar2 + 0x800 ^ uVar12;
-              MSG_WriteBits(param_2,uVar12,4);
-              MSG_WriteByte(param_2,(int)uVar12 >> 4);
+              uVar20 = (int)fVar8 + 0x800U ^ uVar20;
+              MSG_WriteBits(param_2,uVar20,4);
+              MSG_WriteByte(param_2,(int)uVar20 >> 4);
             }
           }
-          uStack_7c = (uint)(longlong)(*pfVar11 + 2048.0);
+          uStack_7c = (uint)(longlong)(*pfVar9 + 2048.0);
           if (0xfff < uStack_7c) {
-            MyAssertHandler(0xffffffff82099550,0x578,0,0xffffffff8208f4b8,uStack_7c,0x1000);
-            __restgprlr_19(1);
-            return;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                            ,0x578,0,
+                            "*(float *)toF + HUDELEM_COORD_BIAS doesn\'t index 1 << HUDELEM_COORD_BITS\n\t%i not in [0, %i)"
+                           );
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
           goto LAB_82516064;
         }
-        if ((iVar14 == -100) || (iVar14 == -0x4f)) {
-          MSG_WriteDeltaAngle((double)*pfVar9,(double)*pfVar11,puVar5,param_2);
-          __restgprlr_19(1);
-          return;
+        if ((iVar23 == -100) || (iVar23 == -0x4f)) {
+          MSG_WriteDeltaAngle(pSVar3,param_2,(float)pmVar18->overflowed,*pfVar9);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x57) {
-          MSG_WriteAngle16((double)*pfVar11,param_2);
-          __restgprlr_19(1);
-          return;
+        if (iVar23 == -0x57) {
+          MSG_WriteAngle16(param_2,*pfVar9);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x56) {
-          dVar15 = floor((double)(*pfVar11 * 10.0 + 0.5));
-          iVar14 = (int)dVar15;
-          if (iVar14 < 0) {
-            iVar8 = -1 - iVar14;
-            uVar12 = 5;
+        if (iVar23 == -0x56) {
+          dVar24 = floor((double)(*pfVar9 * 10.0 + 0.5));
+          iVar23 = (int)dVar24;
+          if (iVar23 < 0) {
+            iVar17 = -1 - iVar23;
+            uVar15 = 5;
           }
           else {
-            uVar12 = 6;
-            iVar8 = iVar14;
+            uVar15 = 6;
+            iVar17 = iVar23;
           }
-          if (uVar12 < (0x20U - LZCOUNT(iVar8) & 0xffffffff)) {
-            Com_PrintError(0xf,0xffffffff82099cd8,*pfVar11);
+          if (uVar15 < (0x20U - LZCOUNT(iVar17) & 0xffffffff)) {
+            Com_PrintError(0xf,"Not enough bits written for fontScale %f\n");
           }
-          MSG_WriteBits(param_2,iVar14,6);
-          __restgprlr_19(1);
-          return;
+          MSG_WriteBits(param_2,iVar23,6);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x66) {
-          fVar2 = *pfVar11;
-          if (((int)fVar2 < 4000) &&
-             ((ulonglong)(uint)fVar2 + (longlong)((int)fVar2 / 0xfa) * -0xfa == 0)) {
+        if (iVar23 == -0x66) {
+          fVar8 = *pfVar9;
+          if (((int)fVar8 < 4000) &&
+             ((ulonglong)(uint)fVar8 == (longlong)((int)fVar8 / 0xfa) * 0xfa)) {
             MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,(longlong)((int)fVar2 / 0xfa),4);
-            __restgprlr_19(1);
-            return;
+            MSG_WriteBits(param_2,(int)fVar8 / 0xfa,4);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
 LAB_82515af4:
           MSG_WriteBit1(param_2);
-          MSG_WriteBits(param_2,*pfVar11,0x10);
-          __restgprlr_19(1);
-          return;
+          MSG_WriteBits(param_2,(int)*pfVar9,0x10);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x67) {
-          fVar2 = *pfVar11;
-          if (((int)fVar2 < 800) &&
-             ((ulonglong)(uint)fVar2 + (longlong)((int)fVar2 / 0x32) * -0x32 == 0)) {
+        if (iVar23 == -0x67) {
+          fVar8 = *pfVar9;
+          if (((int)fVar8 < 800) && ((ulonglong)(uint)fVar8 == (longlong)((int)fVar8 / 0x32) * 0x32)
+             ) {
             MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,(longlong)((int)fVar2 / 0x32),4);
-            __restgprlr_19(1);
-            return;
+            MSG_WriteBits(param_2,(int)fVar8 / 0x32,4);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
           goto LAB_82515af4;
         }
-        if (iVar14 == -0x55) {
-          if (((*(char *)((int)pfVar9 + 3) == -1) && (*(char *)((int)pfVar11 + 3) == '\0')) ||
-             ((*(char *)((int)pfVar9 + 3) == '\0' && (*(char *)((int)pfVar11 + 3) == -1)))) {
+        if (iVar23 == -0x55) {
+          cVar1 = (char)pmVar18->overflowed;
+          if (((cVar1 == -1) && (*(byte *)((int)pfVar9 + 3) == 0)) ||
+             ((cVar1 == '\0' && (*(byte *)((int)pfVar9 + 3) == 0xff)))) {
             do {
-              lVar13 = (ulonglong)*(byte *)lVar7 - (ulonglong)*(byte *)lVar10;
+              lVar13 = (ulonglong)*(byte *)lVar16 - (ulonglong)*(byte *)lVar19;
               if (lVar13 != 0) break;
-              lVar7 = lVar7 + 1;
-              lVar10 = lVar10 + 1;
-            } while ((char *)lVar7 != (char *)((int)pfVar9 + 3));
+              lVar16 = lVar16 + 1;
+              lVar19 = lVar19 + 1;
+            } while ((undefined1 *)lVar16 != (undefined1 *)((int)&pmVar18->overflowed + 3));
             if ((int)lVar13 == 0) {
               MSG_WriteBit1(param_2);
-              __restgprlr_19(1);
-              return;
+              uVar6 = __restgprlr_19(1);
+              return (bool)uVar6;
             }
           }
           MSG_WriteBit0(param_2);
-          if (((*(char *)pfVar9 == *(char *)pfVar11) &&
-              (*(char *)((int)pfVar9 + 1) == *(char *)((int)pfVar11 + 1))) &&
-             (*(char *)((int)pfVar9 + 2) == *(char *)((int)pfVar11 + 2))) {
+          if (((*(byte *)&pmVar18->overflowed == *(byte *)pfVar9) &&
+              (*(byte *)((int)&pmVar18->overflowed + 1) == *(byte *)((int)pfVar9 + 1))) &&
+             (*(byte *)((int)&pmVar18->overflowed + 2) == *(byte *)((int)pfVar9 + 2))) {
             MSG_WriteBit1(param_2);
           }
           else {
             MSG_WriteBit0(param_2);
-            MSG_WriteByte(param_2,*(char *)pfVar11);
-            MSG_WriteByte(param_2,*(char *)((int)pfVar11 + 1));
-            MSG_WriteByte(param_2,*(char *)((int)pfVar11 + 2));
+            MSG_WriteByte(param_2,(uint)*(byte *)pfVar9);
+            MSG_WriteByte(param_2,(uint)*(byte *)((int)pfVar9 + 1));
+            MSG_WriteByte(param_2,(uint)*(byte *)((int)pfVar9 + 2));
           }
-          MSG_WriteBits(param_2,*(byte *)((int)pfVar11 + 3) >> 3,5);
-          __restgprlr_19(1);
-          return;
+          MSG_WriteBits(param_2,(uint)(*(byte *)((int)pfVar9 + 3) >> 3),5);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x4b) {
-          lVar13 = (ulonglong)(uint)*pfVar11 - (ulonglong)(uint)*pfVar9;
-          if ((0 < (int)lVar13) && ((int)lVar13 < 0x11)) {
-            if ((cVar6 == '\0') && (*(char *)(puVar5 + 6) == '\0')) {
-              SV_TrackEventSeqDeltaSend(lVar13);
+        if (iVar23 == -0x4b) {
+          iVar23 = (int)*pfVar9 - pmVar18->overflowed;
+          if ((0 < iVar23) && (iVar23 < 0x11)) {
+            if ((bVar5 == false) && (pSVar3->fromBaseline == false)) {
+              SV_TrackEventSeqDeltaSend(iVar23);
             }
             MSG_WriteBit1(param_2);
-            uVar4 = GetMinBitCountForNum(0x10);
-            MSG_WriteBits(param_2,lVar13 + -1,uVar4);
-            __restgprlr_19(1);
-            return;
+            iVar17 = GetMinBitCountForNum(0x10);
+            MSG_WriteBits(param_2,iVar23 + -1,iVar17);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if ((cVar6 == '\0') && (*(char *)(puVar5 + 6) == '\0')) {
-            SV_TrackEventSeqFullSend(lVar13);
+          if ((bVar5 == false) && (pSVar3->fromBaseline == false)) {
+            pcVar11 = (char *)(uint)bVar5;
+            SV_TrackEventSeqFullSend(iVar23);
           }
           MSG_WriteBit0(param_2);
-          MSG_WriteValue(param_2,lVar7,lVar10,0x18,*param_6);
-          __restgprlr_19(1);
-          return;
+          MSG_WriteValue((SnapshotInfo_s *)param_2,pmVar18,(int *)pfVar9,(int *)&DAT_00000018,
+                         (int)param_6->name,pcVar11);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if (iVar14 == -0x54) {
-          MSG_WriteBits(param_2,*pfVar11,0xb);
-          __restgprlr_19(1);
-          return;
+        if (iVar23 == -0x54) {
+          MSG_WriteBits(param_2,(int)*pfVar9,0xb);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if ((((iVar14 == -0x61) || (iVar14 == -0x4a)) || (iVar14 == -0x48)) || (iVar14 == -0x46)) {
-          MSG_WriteDeltaTime(param_2,param_3,*pfVar11);
-          __restgprlr_19(1);
-          return;
+        if ((((iVar23 == -0x61) || (iVar23 == -0x4a)) || (iVar23 == -0x48)) || (iVar23 == -0x46)) {
+          MSG_WriteDeltaTime((int)param_2,(msg_t *)param_3,(int)*pfVar9,(int)pcVar4);
+          uVar6 = __restgprlr_19(1);
+          return (bool)uVar6;
         }
-        if ((iVar14 != -0x49) && (iVar14 != -0x47)) {
-          if (iVar14 == -0x62) {
-            MSG_WriteEFlags(param_2,*pfVar9,*pfVar11);
-            __restgprlr_19(1);
-            return;
+        if ((iVar23 != -0x49) && (iVar23 != -0x47)) {
+          if (iVar23 == -0x62) {
+            MSG_WriteEFlags((int)param_2,(msg_t *)pmVar18->overflowed,(int)*pfVar9,(int)pcVar4);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x60) {
-            MSG_WriteGroundEntityNum(param_2,*pfVar11);
-            __restgprlr_19(1);
-            return;
+          if (iVar23 == -0x60) {
+            MSG_WriteGroundEntityNum((int)param_2,(msg_t *)*pfVar9,(int)pmVar10);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x5e) {
-            MSG_WriteEventNum(*puVar5,param_2,*pfVar11);
-            __restgprlr_19(1);
-            return;
+          if (iVar23 == -0x5e) {
+            MSG_WriteEventNum(pSVar3->clientNum,param_2,(int)*pfVar9);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x5d) {
-            MSG_WriteEventParam(*puVar5,param_2,*pfVar11);
-            __restgprlr_19(1);
-            return;
+          if (iVar23 == -0x5d) {
+            MSG_WriteEventParam(pSVar3->clientNum,param_2,(int)*pfVar9);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x4d) {
-            MSG_WriteValueNoXor(param_2,*pfVar11,8,*param_6);
-            __restgprlr_19(1);
-            return;
+          if (iVar23 == -0x4d) {
+            MSG_WriteValueNoXor((SnapshotInfo_s *)param_2,(msg_t *)*pfVar9,8,(int)param_6->name,
+                                (char *)0xffffffb3);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (((iVar14 == -0x5c) || (iVar14 == -0x5b)) || ((iVar14 == -0x53 || (iVar14 == -0x52))))
+          if (((iVar23 == -0x5c) || (iVar23 == -0x5b)) || ((iVar23 == -0x53 || (iVar23 == -0x52))))
           {
-            MSG_WriteOriginFloat((double)*pfVar11,(double)*pfVar9,puVar5,*puVar5,puVar5 + 1,param_2)
-            ;
-            __restgprlr_19(1);
-            return;
+            MSG_WriteOriginFloat
+                      (pSVar3,pSVar3->clientNum,pSVar3->mapCenter,param_2,iVar23,*pfVar9,
+                       (float)pmVar18->overflowed);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if ((iVar14 == -0x5a) || (iVar14 == -0x51)) {
+          if ((iVar23 == -0x5a) || (iVar23 == -0x51)) {
             MSG_WriteOriginZFloat
-                      ((double)*pfVar11,(double)*pfVar9,puVar5,*puVar5,puVar5 + 1,param_2);
-            __restgprlr_19(1);
-            return;
+                      (pSVar3,pSVar3->clientNum,pSVar3->mapCenter,param_2,*pfVar9,
+                       (float)pmVar18->overflowed);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x5f) {
-            fVar2 = *pfVar11;
-            if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-              Com_Printf(0x10,0xffffffff82099c9c,fVar2,100);
+          if (iVar23 == -0x5f) {
+            fVar8 = *pfVar9;
+            if (2 < (sv_debugPacketContents->current).integer) {
+              Com_Printf(0x10,"Sending %i as playerstate timer value (%ims granularity)\n");
             }
-            MSG_WriteBits(param_2,(int)fVar2 / 100,7);
-            __restgprlr_19(1);
-            return;
+            MSG_WriteBits(param_2,(int)fVar8 / 100,7);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if (iVar14 == -0x4c) {
-            lVar13 = (ulonglong)(uint)*pfVar11 - (ulonglong)(uint)*pfVar9;
-            if ((cVar6 == '\0') && (*(char *)(puVar5 + 6) == '\0')) {
-              SV_TrackMovementDirDelta(lVar13);
+          if (iVar23 == -0x4c) {
+            uVar20 = (int)*pfVar9 - pmVar18->overflowed;
+            if ((bVar5 == false) && (pSVar3->fromBaseline == false)) {
+              pcVar11 = (char *)(uint)bVar5;
+              SV_TrackMovementDirDelta(uVar20);
             }
-            uVar1 = (int)(uint)lVar13 >> 0x1f;
-            if ((int)(((uint)lVar13 ^ uVar1) - uVar1) < 0x10) {
-              MSG_WriteBit1();
-              MSG_WriteBits(param_2,lVar13 + 0x10,5);
-              __restgprlr_19(1);
-              return;
+            if ((int)((uVar20 ^ (int)uVar20 >> 0x1f) - ((int)uVar20 >> 0x1f)) < 0x10) {
+              MSG_WriteBit1(param_2);
+              MSG_WriteBits(param_2,uVar20 + 0x10,5);
+              uVar6 = __restgprlr_19(1);
+              return (bool)uVar6;
             }
             MSG_WriteBit0(param_2);
-            MSG_WriteValue(param_2,lVar7,lVar10,0xfffffffffffffff8,*param_6);
-            __restgprlr_19(1);
-            return;
+            MSG_WriteValue((SnapshotInfo_s *)param_2,pmVar18,(int *)pfVar9,(int *)0xfffffff8,
+                           (int)param_6->name,pcVar11);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
-          if ((iVar14 < -0x32) && (DAT_84013128 == 0)) {
-            uVar4 = va(0xffffffff82099c64,iVar14);
-            MyAssertHandler(0xffffffff82099550,0x635,0,uVar4);
+          if ((iVar23 < -0x32) && (alwaysfails == 0)) {
+            pcVar11 = (char *)(uint)bVar5;
+            pcVar4 = va("Missed a MSG_ case in MSG_WriteDeltaField - value is %i");
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                            ,0x635,0,pcVar4);
           }
-          if (*pfVar11 != 0.0) {
+          if (*pfVar9 != 0.0) {
             MSG_WriteBit1(param_2);
-            MSG_WriteValue(param_2,lVar7,lVar10,param_6[2],*param_6);
-            __restgprlr_19(1);
-            return;
+            MSG_WriteValue((SnapshotInfo_s *)param_2,pmVar18,(int *)pfVar9,(int *)param_6->bits,
+                           (int)param_6->name,pcVar11);
+            uVar6 = __restgprlr_19(1);
+            return (bool)uVar6;
           }
           goto LAB_82515f7c;
         }
@@ -1588,96 +1734,122 @@ LAB_82515af4:
       goto LAB_8251574c;
     }
 LAB_82516058:
-    fVar2 = *pfVar11;
+    fVar8 = *pfVar9;
   }
-  MSG_WriteLong(param_2,fVar2);
+  MSG_WriteLong(param_2,(int)fVar8);
 LAB_82516064:
-  __restgprlr_19(1);
-  return;
+  uVar6 = __restgprlr_19(1);
+  return (bool)uVar6;
 }
 
 
 // 82516078  MSG_WriteDeltaFields  (qcommon/sv_msg_write_mp.cpp:1625)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteDeltaFields
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               undefined8 param_5,int param_6,undefined8 param_7,undefined8 param_8)
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,uchar *param_4,uchar *param_5,
+               int param_6,int param_7,int param_8,NetField *param_9,int param_10,bool param_11,
+               bool param_12)
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  longlong lVar4;
-  undefined4 *puVar6;
-  longlong lVar7;
-  int iVar8;
-  undefined4 *in_stack_00000054;
-  char in_stack_00000067;
+  bool bVar1;
+  bool bVar3;
+  char *pcVar2;
+  ulonglong uVar4;
   int iVar5;
+  int *piVar6;
+  int iVar7;
+  NetField *in_stack_00000054;
+  char in_stack_00000067;
+  undefined1 in_stack_fffffefb;
+  int in_stack_fffffefc;
+  int in_stack_ffffff00;
+  undefined1 in_stack_ffffff07;
   
-  iVar2 = __savegprlr();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x66c,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar4 = (ulonglong)(int)param_4;
+  __savegprlr();
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x66c,0,"%s");
   }
-  iVar8 = (int)param_7;
-  if ((int)param_8 <= iVar8) {
-    MyAssertHandler(0xffffffff82099550,0x66d,0,0xffffffff82000f98,0xffffffff82099e30);
+  if (param_8 <= param_7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x66d,0,"%s");
   }
-  if ((param_6 == 0) && (iVar8 < 0)) {
+  if ((param_6 == 0) && (param_7 < 0)) {
     MSG_WriteBit0(param_2);
     __restgprlr();
     return;
   }
   MSG_WriteBit1(param_2);
-  if (iVar8 < 0) {
-    MyAssertHandler(0xffffffff82099550,0x681,0,0xffffffff82000f98,0xffffffff8208f6f4);
+  if (param_7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x681,0,"%s");
   }
   if (in_stack_00000067 != '\0') {
-    if (*(char *)(iVar2 + 0x21) == '\0') {
+    if (param_1->entJustUnlinked == false) {
       MSG_WriteBit0(param_2);
     }
     else {
-      MSG_WriteBit1();
+      MSG_WriteBit1(param_2);
     }
   }
-  if ((*(char *)(iVar2 + 0x19) == '\0') && (2 < *(int *)(DAT_83f1e168 + 0xc))) {
-    Com_Printf(0x10,0xffffffff82099e00,param_7);
+  if ((param_1->archived == false) && (2 < (sv_debugPacketContents->current).integer)) {
+    Com_Printf(0x10,"Writing byte for how many fields changed (%i)\n");
   }
   MSG_WriteLastChangedField(param_2,param_7,param_8);
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x69a,0,0xffffffff82000f98,0xffffffff82001400);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x69a,0,"%s");
   }
-  lVar4 = -1;
   iVar5 = -1;
-  lVar7 = 0;
-  if (-1 < iVar8) {
-    puVar6 = in_stack_00000054 + 2;
+  iVar7 = 0;
+  if (-1 < param_7) {
+    piVar6 = &in_stack_00000054->bits;
     do {
-      if (((*(char *)(puVar6 + 1) != '\x02') || ((int)lVar7 == iVar8)) &&
-         (cVar3 = MSG_WriteDeltaField(iVar2,param_2,param_3,param_4,param_5,puVar6 + -2,lVar7),
-         cVar3 != '\0')) {
-        lVar4 = lVar7;
+      if ((*(uchar *)(piVar6 + 1) != '\x02') || (iVar7 == param_7)) {
+        if (param_1->entJustUnlinked == false) {
+LAB_8251626c:
+          bVar1 = false;
+        }
+        else {
+          if ((*piVar6 < -0x53) || (bVar3 = true, -0x4e < *piVar6)) {
+            bVar3 = false;
+          }
+          bVar1 = true;
+          if (!bVar3) goto LAB_8251626c;
+        }
+        bVar3 = MSG_WriteDeltaField(param_1,param_2,param_3,(uchar *)uVar4,param_5,
+                                    (NetField *)(piVar6 + -2),iVar7,bVar1,(bool)in_stack_fffffefb,
+                                    in_stack_fffffefc,in_stack_ffffff00,(bool)in_stack_ffffff07);
+        if (bVar3) {
+          iVar5 = iVar7;
+        }
       }
-      iVar5 = (int)lVar4;
-      lVar7 = lVar7 + 1;
-      puVar6 = puVar6 + 4;
-    } while ((int)lVar7 <= iVar8);
+      iVar7 = iVar7 + 1;
+      piVar6 = piVar6 + 4;
+    } while (iVar7 <= param_7);
   }
-  if (iVar5 != iVar8) {
-    MyAssertHandler(0xffffffff82099550,0x6ac,0,0xffffffff82000f98,0xffffffff82099de4);
+  if (iVar5 != param_7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x6ac,0,"%s");
   }
-  lVar4 = 0;
-  if (0 < iVar8) {
+  iVar5 = 0;
+  if (0 < param_7) {
     do {
-      if (((*(char *)(in_stack_00000054 + 3) == '\x02') &&
-          (cVar3 = MSG_WriteDeltaField(iVar2,param_2,param_3,param_4,param_5,in_stack_00000054,lVar4
-                                       ,1), cVar3 == '\0')) && (DAT_84013128 == 0)) {
-        uVar1 = va(0xffffffff82099da8,*in_stack_00000054);
-        MyAssertHandler(0xffffffff82099550,0x6bf,0,uVar1);
+      if (((in_stack_00000054->changeHints == '\x02') &&
+          (bVar3 = MSG_WriteDeltaField(param_1,param_2,param_3,(uchar *)uVar4,param_5,
+                                       in_stack_00000054,iVar5,true,(bool)in_stack_fffffefb,
+                                       in_stack_fffffefc,in_stack_ffffff00,(bool)in_stack_ffffff07),
+          !bVar3)) && (alwaysfails == 0)) {
+        pcVar2 = va("An ALWAYS_CHANGES field (%s) didn\'t have its delta written?");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x6bf,0,pcVar2);
       }
-      lVar4 = lVar4 + 1;
-      in_stack_00000054 = in_stack_00000054 + 4;
-    } while ((int)lVar4 < iVar8);
+      iVar5 = iVar5 + 1;
+      in_stack_00000054 = in_stack_00000054 + 1;
+    } while (iVar5 < param_7);
   }
   __restgprlr();
   return;
@@ -1686,90 +1858,101 @@ void MSG_WriteDeltaFields
 
 // 82516448  MSG_WriteEntityDeltaFields  (qcommon/sv_msg_write_mp.cpp:1738)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteEntityDeltaFields
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,int param_6,undefined8 param_7,undefined8 param_8)
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,entityState_s *param_4,
+               entityState_s *param_5,int param_6,int param_7,int param_8,NetField *param_9,
+               int param_10,int *param_11)
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
+  bool bVar2;
+  char *pcVar1;
+  ulonglong uVar3;
+  int iVar4;
+  int iVar5;
+  int *piVar6;
   int iVar7;
-  longlong lVar5;
-  longlong lVar6;
-  undefined4 *puVar8;
-  longlong lVar9;
-  int iVar10;
-  undefined4 *in_stack_00000054;
+  NetField *in_stack_00000054;
   int in_stack_00000064;
+  undefined1 in_stack_fffffefb;
+  int in_stack_fffffefc;
+  int in_stack_ffffff00;
+  undefined1 in_stack_ffffff07;
   
-  iVar2 = __savegprlr();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x6d4,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  __savegprlr();
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x6d4,0,"%s");
   }
-  iVar10 = (int)param_7;
-  if ((int)param_8 <= iVar10) {
-    MyAssertHandler(0xffffffff82099550,0x6d5,0,0xffffffff82000f98,0xffffffff82099e30);
+  if (param_8 <= param_7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x6d5,0,"%s");
   }
-  if ((param_6 == 0) && (iVar10 < 0)) {
+  if ((param_6 == 0) && (param_7 < 0)) {
     MSG_WriteBit0(param_2);
     __restgprlr();
     return;
   }
   MSG_WriteBit1(param_2);
-  if (iVar10 < 0) {
-    MyAssertHandler(0xffffffff82099550,0x6e9,0,0xffffffff82000f98,0xffffffff8208f6f4);
+  if (param_7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x6e9,0,"%s");
   }
-  if (*(char *)(iVar2 + 0x21) == '\0') {
+  if (param_1->entJustUnlinked == false) {
     MSG_WriteBit0(param_2);
   }
   else {
-    MSG_WriteBit1();
+    MSG_WriteBit1(param_2);
   }
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff82099e00,param_7);
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Writing byte for how many fields changed (%i)\n");
   }
   MSG_WriteLastChangedField(param_2,param_7,param_8);
-  iVar7 = -1;
-  lVar9 = 0;
-  uVar4 = 1;
-  if (-1 < iVar10) {
-    puVar8 = in_stack_00000054 + 2;
-    lVar5 = -1;
+  iVar5 = -1;
+  iVar7 = 0;
+  uVar3 = 1;
+  if (-1 < param_7) {
+    piVar6 = &in_stack_00000054->bits;
+    iVar4 = iVar5;
     do {
-      lVar6 = lVar5;
-      if ((((*(uint *)(((int)lVar9 >> 5) * 4 + in_stack_00000064) & (uint)uVar4) != 0) &&
-          (((*(char *)(puVar8 + 1) != '\x02' || ((int)lVar9 == iVar10)) &&
-           (cVar3 = MSG_WriteDeltaField(iVar2,param_2,param_3,param_4,param_5,puVar8 + -2,lVar9,1),
-           lVar6 = lVar9, cVar3 == '\0')))) && (lVar6 = lVar5, DAT_84013128 == 0)) {
+      iVar5 = iVar4;
+      if ((((*(uint *)((iVar7 >> 5) * 4 + in_stack_00000064) & (uint)uVar3) != 0) &&
+          (((*(uchar *)(piVar6 + 1) != '\x02' || (iVar7 == param_7)) &&
+           (bVar2 = MSG_WriteDeltaField(param_1,param_2,param_3,(uchar *)param_4,(uchar *)param_5,
+                                        (NetField *)(piVar6 + -2),iVar7,true,(bool)in_stack_fffffefb
+                                        ,in_stack_fffffefc,in_stack_ffffff00,(bool)in_stack_ffffff07
+                                       ), iVar5 = iVar7, !bVar2)))) &&
+         (iVar5 = iVar4, alwaysfails == 0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
-                        ,0x70a,0,0xffffffff82099e48);
+                        ,0x70a,0,"We expected to send a field and it didn\'t send!");
       }
-      iVar7 = (int)lVar6;
-      lVar9 = lVar9 + 1;
-      puVar8 = puVar8 + 4;
-      uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
-      lVar5 = lVar6;
-    } while ((int)lVar9 <= iVar10);
+      iVar7 = iVar7 + 1;
+      piVar6 = piVar6 + 4;
+      uVar3 = (uVar3 & 0x7fffffff) << 1 | uVar3 >> 0x1f;
+      iVar4 = iVar5;
+    } while (iVar7 <= param_7);
   }
-  if (iVar7 != iVar10) {
+  if (iVar5 != param_7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
-                    0x70d,0,0xffffffff82000f98,0xffffffff82099de4);
+                    0x70d,0,"%s");
   }
-  lVar9 = 0;
-  if (0 < iVar10) {
+  iVar5 = 0;
+  if (0 < param_7) {
     do {
-      if (((*(char *)(in_stack_00000054 + 3) == '\x02') &&
-          (cVar3 = MSG_WriteDeltaField(iVar2,param_2,param_3,param_4,param_5,in_stack_00000054,lVar9
-                                       ,1), cVar3 == '\0')) && (DAT_84013128 == 0)) {
-        uVar1 = va(0xffffffff82099da8,*in_stack_00000054);
+      if (((in_stack_00000054->changeHints == '\x02') &&
+          (bVar2 = MSG_WriteDeltaField(param_1,param_2,param_3,(uchar *)param_4,(uchar *)param_5,
+                                       in_stack_00000054,iVar5,true,(bool)in_stack_fffffefb,
+                                       in_stack_fffffefc,in_stack_ffffff00,(bool)in_stack_ffffff07),
+          !bVar2)) && (alwaysfails == 0)) {
+        pcVar1 = va("An ALWAYS_CHANGES field (%s) didn\'t have its delta written?");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
-                        ,0x720,0,uVar1);
+                        ,0x720,0,pcVar1);
       }
-      lVar9 = lVar9 + 1;
-      in_stack_00000054 = in_stack_00000054 + 4;
-    } while ((int)lVar9 < iVar10);
+      iVar5 = iVar5 + 1;
+      in_stack_00000054 = in_stack_00000054 + 1;
+    } while (iVar5 < param_7);
   }
   __restgprlr();
   return;
@@ -1778,132 +1961,154 @@ void MSG_WriteEntityDeltaFields
 
 // 825167F0  MSG_GetLastChangedField  (qcommon/sv_msg_write_mp.cpp:1836)
 
-void MSG_GetLastChangedField
-               (undefined8 param_1,ulonglong param_2,longlong param_3,int param_4,longlong param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int MSG_GetLastChangedField
+              (SnapshotInfo_s *param_1,uchar *param_2,uchar *param_3,int param_4,NetField *param_5)
 
 {
-  undefined4 *puVar1;
-  char cVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  int *piVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  puVar1 = (undefined4 *)__savegprlr_24();
-  lVar4 = 0;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x736,0,0xffffffff82000f98,0xffffffff82001400);
-  }
+  lVar7 = (longlong)(int)param_5;
+  uVar4 = (ulonglong)(int)param_2;
+  piVar1 = (int *)__savegprlr_24(param_1);
   lVar5 = 0;
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x736,0,"%s");
+  }
+  lVar6 = 0;
   if (param_4 < 1) {
 LAB_825168b8:
-    if ((int)lVar4 <= param_4) goto LAB_825168e4;
+    if ((int)lVar5 <= param_4) goto LAB_825168e4;
   }
   else {
-    param_5 = param_5 + 4;
+    lVar7 = lVar7 + 4;
     do {
-      uVar3 = (ulonglong)*(uint *)param_5;
-      cVar2 = MSG_ValuesAreEqual(((uint *)param_5)[1],uVar3 + param_2,uVar3 + param_3);
-      if (cVar2 == '\0') {
-        if ((*(char *)((int)puVar1 + 0x19) == '\0') && (*(char *)(puVar1 + 6) == '\0')) {
-          SV_TrackFieldChange(*puVar1,puVar1[9],lVar5);
+      iVar2 = *(int *)lVar7;
+      bVar3 = MSG_ValuesAreEqual(((int *)lVar7)[1],(int *)(iVar2 + (int)uVar4),
+                                 (int *)(param_3 + iVar2));
+      if (!bVar3) {
+        if ((*(char *)((int)piVar1 + 0x19) == '\0') && (*(char *)(piVar1 + 6) == '\0')) {
+          SV_TrackFieldChange(*piVar1,piVar1[9],(int)lVar6);
         }
-        lVar4 = lVar5 + 1;
+        lVar5 = lVar6 + 1;
       }
-      lVar5 = lVar5 + 1;
-      param_5 = param_5 + 0x10;
-    } while ((int)lVar5 < param_4);
-    if (-1 < (int)lVar4) goto LAB_825168b8;
+      lVar6 = lVar6 + 1;
+      lVar7 = lVar7 + 0x10;
+    } while ((int)lVar6 < param_4);
+    if (-1 < (int)lVar5) goto LAB_825168b8;
   }
-  MyAssertHandler(0xffffffff82099550,0x745,0,0xffffffff82099e78,0xffffffff82099e88,lVar4);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                  0x745,0,"%s\n\t(lc) = %i");
 LAB_825168e4:
-  __restgprlr_24(lVar4);
-  return;
+  iVar2 = __restgprlr_24(lVar5);
+  return iVar2;
 }
 
 
 // 825168F0  MSG_WriteDeltaStruct  (qcommon/sv_msg_write_mp.cpp:1867)
 
-void MSG_WriteDeltaStruct
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int MSG_WriteDeltaStruct
+              (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,uchar *param_4,uchar *param_5,
+              int param_6,int param_7,int param_8,NetField *param_9,int param_10,int param_11,
+              bool param_12)
 
 {
-  int iVar4;
-  longlong lVar1;
-  undefined8 uVar2;
-  longlong lVar3;
+  SnapshotInfo_s *pSVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   uint *puVar5;
-  undefined4 in_stack_00000054;
+  NetField *in_stack_00000054;
   int in_stack_0000005c;
+  NetField *in_stack_ffffff28;
+  int in_stack_ffffff2c;
+  undefined1 in_stack_ffffff33;
+  undefined1 in_stack_ffffff37;
   
-  iVar4 = __savegprlr_20();
-  lVar1 = MSG_GetUsedBitCount(param_2);
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x751,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar4 = (ulonglong)(int)param_5;
+  pSVar1 = (SnapshotInfo_s *)__savegprlr_20(param_1);
+  iVar2 = MSG_GetUsedBitCount(param_2);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x751,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x752,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x752,0,"%s");
   }
-  puVar5 = (uint *)param_5;
-  if ((uint)(1 << ((uint)param_8 & 0x3f)) <= *puVar5) {
-    uVar2 = va(0xffffffff82099fac,*puVar5,param_8);
-    MyAssertHandler(0xffffffff82099550,0x754,0,0xffffffff820011f4,0xffffffff82099f70,uVar2);
+  puVar5 = (uint *)uVar4;
+  if ((uint)(1 << (param_8 & 0x3fU)) <= *puVar5) {
+    va("to = %i, bits = %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x754,0,"%s\n\t%s");
   }
-  lVar3 = MSG_GetLastChangedField(iVar4,param_4,param_5,param_7,in_stack_00000054);
-  if ((int)lVar3 == 0) {
-    if ((int)param_6 == 0) {
-      __restgprlr_20();
-      return;
+  iVar3 = MSG_GetLastChangedField(pSVar1,param_4,(uchar *)puVar5,param_7,in_stack_00000054);
+  if (iVar3 == 0) {
+    if (param_6 == 0) {
+      iVar2 = __restgprlr_20();
+      return iVar2;
     }
-    if ((*(char *)(iVar4 + 0x19) == '\0') && (2 < *(int *)(DAT_83f1e168 + 0xc))) {
-      Com_Printf(0x10,0xffffffff82099f30,*puVar5);
+    if ((pSVar1->archived == false) && (2 < (sv_debugPacketContents->current).integer)) {
+      Com_Printf(0x10,"Entity %u did not change, but we\'re forcing a send to say this\n");
     }
     if (in_stack_0000005c != 0) {
       MSG_WriteBit1(param_2);
     }
-    MSG_WriteEntityIndex(iVar4,param_2,*puVar5,param_8);
+    MSG_WriteEntityIndex(pSVar1,param_2,*puVar5,param_8);
     MSG_WriteBit0(param_2);
     MSG_WriteBit0(param_2);
-    lVar3 = MSG_GetUsedBitCount(param_2);
-    __restgprlr_20(lVar3 - lVar1);
-    return;
+    iVar3 = MSG_GetUsedBitCount(param_2);
+    iVar2 = __restgprlr_20((longlong)iVar3 - (longlong)iVar2);
+    return iVar2;
   }
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff82099f1c);
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Entity had a delta\n");
   }
   if (in_stack_0000005c != 0) {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff82099f00);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Writing 1 for bChangeBit\n");
     }
     MSG_WriteBit1(param_2);
   }
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff82099ee4,*puVar5);
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Writing index number %i\n");
   }
-  MSG_WriteEntityIndex(iVar4,param_2,*puVar5,param_8);
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff82099ea8);
+  MSG_WriteEntityIndex(pSVar1,param_2,*puVar5,param_8);
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Writing 0,1 to say it\'s not removed and we have a delta\n");
   }
   MSG_WriteBit0(param_2);
-  MSG_WriteDeltaFields(iVar4,param_2,param_3,param_4,param_5,param_6,lVar3 + -1,param_7);
-  lVar3 = MSG_GetUsedBitCount(param_2);
-  __restgprlr_20(lVar3 - lVar1);
-  return;
+  MSG_WriteDeltaFields
+            (pSVar1,param_2,param_3,param_4,(uchar *)puVar5,param_6,iVar3 + -1,param_7,
+             in_stack_ffffff28,in_stack_ffffff2c,(bool)in_stack_ffffff33,(bool)in_stack_ffffff37);
+  iVar3 = MSG_GetUsedBitCount(param_2);
+  iVar2 = __restgprlr_20((longlong)iVar3 - (longlong)iVar2);
+  return iVar2;
 }
 
 
 // 82516B90  MSG_TrTypeUsesTrDelta  (qcommon/sv_msg_write_mp.cpp:1961)
 
-undefined8 MSG_TrTypeUsesTrDelta(void)
+bool MSG_TrTypeUsesTrDelta(int param_1)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 82516B98  MSG_TrTypeUsesTrDuration  (qcommon/sv_msg_write_mp.cpp:1980)
 
-undefined8 MSG_TrTypeUsesTrDuration(undefined4 param_1)
+bool MSG_TrTypeUsesTrDuration(int param_1)
 
 {
   switch(param_1) {
@@ -1915,59 +2120,69 @@ undefined8 MSG_TrTypeUsesTrDuration(undefined4 param_1)
   case 10:
   case 0xb:
   case 0xc:
-    return 0;
+    return false;
   default:
-    return 1;
+    return true;
   }
 }
 
 
 // 82516C00  MSG_ShouldEntityFieldBeForcedSent  (qcommon/sv_msg_write_mp.cpp:2001)
 
-bool MSG_ShouldEntityFieldBeForcedSent(int param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool MSG_ShouldEntityFieldBeForcedSent
+               (SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3,
+               NetField *param_4)
 
 {
   ulonglong uVar1;
   
-  uVar1 = (ulonglong)*(uint *)(param_2 + 8);
+  uVar1 = (ulonglong)(uint)(param_2->lerp).eFlags;
   if (5 < (uVar1 + 0x53 & 0xffffffff)) {
     return false;
   }
   if (((((int)(uVar1 + 0x53) != 0) && (uVar1 != 0xffffffffffffffae)) &&
       (uVar1 != 0xffffffffffffffaf)) &&
      ((uVar1 == 0xffffffffffffffb0 || (uVar1 != 0xffffffffffffffb1)))) {
-    return *(char *)(param_1 + 0x21) != '\0';
+    return param_1->entJustUnlinked != false;
   }
-  return (bool)*(undefined1 *)(param_1 + 0x21);
+  return param_1->entJustUnlinked;
 }
 
 
 // 82516C50  MSG_ShouldEntityFieldBeForcedHidden  (qcommon/sv_msg_write_mp.cpp:2018)
 
-bool MSG_ShouldEntityFieldBeForcedHidden(int param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool MSG_ShouldEntityFieldBeForcedHidden
+               (SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3,
+               NetField *param_4)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  switch(*(undefined4 *)(param_2 + 8)) {
-  case 0xffffffad:
-  case 0xffffffae:
-  case 0xffffffaf:
-  case 0xffffffb1:
-    return *(short *)(param_1 + 0xe2) != 0;
+  switch((param_2->lerp).eFlags) {
+  case -0x53:
+  case -0x52:
+  case -0x51:
+  case -0x4f:
+    return (bool)('\x01' - (*(short *)&param_1[5].packetIsDelta == 0));
   default:
     return false;
-  case 0xffffffb7:
+  case -0x49:
     break;
-  case 0xffffffb9:
-    if ((*(short *)(param_1 + 0xe2) == 0) &&
-       (cVar1 = MSG_TrTypeUsesTrDuration(*(undefined4 *)(param_1 + 0xc)), cVar1 == '\0')) {
+  case -0x47:
+    if ((*(short *)&param_1[5].packetIsDelta == 0) &&
+       (bVar1 = MSG_TrTypeUsesTrDuration((int)param_1->mapCenter[2]), !bVar1)) {
       return true;
     }
     return false;
   }
-  if ((*(short *)(param_1 + 0xe2) == 0) &&
-     (cVar1 = MSG_TrTypeUsesTrDuration(*(undefined4 *)(param_1 + 0x30)), cVar1 == '\0')) {
+  if ((*(short *)&param_1[5].packetIsDelta == 0) &&
+     (bVar1 = MSG_TrTypeUsesTrDuration((int)param_1[1].mapCenter[1]), !bVar1)) {
     return true;
   }
   return false;
@@ -1976,199 +2191,226 @@ bool MSG_ShouldEntityFieldBeForcedHidden(int param_1,int param_2)
 
 // 82516D60  MSG_ShouldSendEntityField  (qcommon/sv_msg_write_mp.cpp:2040)
 
-bool MSG_ShouldSendEntityField(int param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool MSG_ShouldSendEntityField
+               (SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3,
+               NetField *param_4)
 
 {
-  char cVar1;
+  bool bVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
+  char cVar3;
   
-  uVar2 = (ulonglong)*(uint *)((int)param_4 + 8);
+  uVar2 = (ulonglong)(uint)param_4->bits;
   if ((uVar2 + 0x53 & 0xffffffff) < 6) {
     if (((((int)(uVar2 + 0x53) == 0) || (uVar2 == 0xffffffffffffffae)) ||
         (uVar2 == 0xffffffffffffffaf)) ||
        ((uVar2 != 0xffffffffffffffb0 && (uVar2 == 0xffffffffffffffb1)))) {
-      cVar1 = *(char *)(param_1 + 0x21);
+      cVar3 = param_1->entJustUnlinked;
     }
     else {
-      cVar1 = '\x01' - (*(char *)(param_1 + 0x21) == '\0');
+      cVar3 = param_1->entJustUnlinked != false;
     }
   }
   else {
-    cVar1 = '\0';
+    cVar3 = '\0';
   }
-  if (cVar1 != '\0') {
+  if (cVar3 != '\0') {
     return true;
   }
-  cVar1 = MSG_ShouldEntityFieldBeForcedHidden(param_3,param_4);
-  if (cVar1 != '\0') {
+  bVar1 = MSG_ShouldEntityFieldBeForcedHidden
+                    ((SnapshotInfo_s *)param_3,(entityState_s *)param_4,param_3,param_4);
+  if (bVar1) {
     return false;
   }
-  uVar3 = (ulonglong)*(uint *)((int)param_4 + 4);
-  cVar1 = MSG_ValuesAreEqual(uVar2,uVar3 + param_2,uVar3 + param_3);
-  return cVar1 == '\0';
+  bVar1 = MSG_ValuesAreEqual((int)uVar2,
+                             (int *)((int)(param_2->lerp).pos.trBase + param_4->offset + -0x18),
+                             (int *)((int)(param_3->lerp).pos.trBase + param_4->offset + -0x18));
+  return !bVar1;
 }
 
 
 // 82516E38  MSG_WriteEntityDelta  (qcommon/sv_msg_write_mp.cpp:2056)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
-void MSG_WriteEntityDelta
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+int MSG_WriteEntityDelta
+              (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,entityState_s *param_4,
+              entityState_s *param_5,int param_6,int param_7,int param_8,NetField *param_9)
 
 {
   int iVar1;
-  undefined4 *puVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  char cVar6;
-  int iVar5;
-  uint *puVar7;
-  undefined *puVar8;
-  ulonglong uVar9;
-  int *piVar10;
-  longlong lVar11;
-  uint uVar12;
-  int *piVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  bool bVar16;
-  uint in_stack_00000054;
-  uint local_a8 [42];
+  bool bVar3;
+  int iVar2;
+  entityState_s *peVar4;
+  uint (*pauVar5) [64];
+  uint *puVar6;
+  uint uVar7;
+  uint uVar8;
+  uint *puVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  bool bVar12;
+  NetField *in_stack_00000054;
+  NetField *in_stack_fffffee8;
+  int in_stack_fffffeec;
+  int *in_stack_fffffef0;
+  longlong local_a8 [21];
   
-  puVar4 = (undefined4 *)__savegprlr();
-  if (*(int *)(PTR_PTR_8296d104 + 0x2c) != 0x3e) {
-    MyAssertHandler(0xffffffff82099550,0x810,0,0xffffffff82000f98,0xffffffff8209a090);
+  uVar10 = (ulonglong)(int)param_5;
+  __savegprlr();
+  if (g_netFieldList[5].count != 0x3e) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x810,0,"%s");
   }
-  uVar2 = MSG_GetUsedBitCount(param_2);
-  lVar15 = 0;
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x816,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  iVar1 = MSG_GetUsedBitCount(param_2);
+  uVar11 = 0;
+  local_a8[0] = 0;
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x816,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x817,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x817,0,"%s");
   }
-  puVar7 = (uint *)param_5;
-  if ((uint)(1 << ((uint)param_8 & 0x3f)) <= *puVar7) {
-    uVar3 = va(0xffffffff82099fac,*puVar7,param_8);
-    MyAssertHandler(0xffffffff82099550,0x819,0,0xffffffff820011f4,0xffffffff8209a050,uVar3);
+  peVar4 = (entityState_s *)uVar10;
+  if ((uint)(1 << (param_8 & 0x3fU)) <= (uint)peVar4->number) {
+    va("to = %i, bits = %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x819,0,"%s\n\t%s");
   }
-  uVar12 = puVar7[1];
-  bVar16 = *(uint *)((int)param_4 + 4) != uVar12;
-  if (uVar12 < 0x12) {
-    puVar8 = &DAT_836ff460;
-    if (bVar16) {
-      puVar8 = &DAT_836fe020;
+  uVar8 = peVar4->eType;
+  bVar12 = param_4->eType != uVar8;
+  if (uVar8 < 0x12) {
+    pauVar5 = entityStateHistograms;
+    if (bVar12) {
+      pauVar5 = (uint (*) [64])0x836fe020;
     }
-    piVar10 = (int *)(puVar8 + uVar12 * 0x100);
+    puVar6 = pauVar5[uVar8];
   }
   else {
-    piVar10 = (int *)0x0;
+    puVar6 = (uint *)0x0;
   }
-  uVar9 = (ulonglong)in_stack_00000054;
-  lVar11 = -1;
-  uVar14 = 1;
-  iVar5 = (int)param_7;
-  piVar13 = piVar10;
-  if (iVar5 < 1) {
+  uVar7 = 0xffffffff;
+  uVar8 = 0xffffffff;
+  uVar10 = 1;
+  puVar9 = puVar6;
+  if (param_7 < 1) {
 LAB_8251705c:
-    if ((int)lVar11 <= iVar5) goto LAB_82517088;
+    if ((int)uVar8 <= param_7) goto LAB_82517088;
   }
   else {
     do {
-      cVar6 = MSG_ShouldSendEntityField(puVar4,param_4,param_5,uVar9);
-      if (cVar6 != '\0') {
-        if ((*(char *)(puVar4 + 6) == '\0') && (*(char *)((int)puVar4 + 0x19) == '\0')) {
-          SV_TrackFieldChange(*puVar4,puVar4[9],lVar15);
-          SV_TrackNumFieldsSkippedInEntitystate(lVar15 - lVar11);
+      bVar3 = MSG_ShouldSendEntityField(param_1,param_4,peVar4,in_stack_00000054);
+      uVar8 = uVar7;
+      if (bVar3) {
+        if ((param_1->fromBaseline == false) && (param_1->archived == false)) {
+          SV_TrackFieldChange(param_1->clientNum,param_1->packetEntityType,uVar11);
+          SV_TrackNumFieldsSkippedInEntitystate(uVar11 - uVar7);
         }
-        if (piVar10 != (int *)0x0) {
-          *piVar13 = *piVar13 + 1;
+        if (puVar6 != (uint *)0x0) {
+          *puVar9 = *puVar9 + 1;
         }
-        iVar1 = (int)lVar15 >> 5;
-        local_a8[iVar1] = local_a8[iVar1] | (uint)uVar14;
-        lVar11 = lVar15;
+        iVar2 = ((int)uVar11 >> 5) * 4;
+        *(uint *)((int)local_a8 + iVar2) = *(uint *)((int)local_a8 + iVar2) | (uint)uVar10;
+        uVar8 = uVar11;
       }
-      lVar15 = lVar15 + 1;
-      uVar14 = (uVar14 & 0x7fffffff) << 1 | uVar14 >> 0x1f;
-      uVar9 = uVar9 + 0x10;
-      piVar13 = piVar13 + 1;
-    } while ((int)lVar15 < iVar5);
-    uVar2 = uVar2 & 0xffffffff;
-    if (-2 < (int)lVar11) goto LAB_8251705c;
+      uVar11 = uVar11 + 1;
+      uVar10 = (uVar10 & 0x7fffffff) << 1 | uVar10 >> 0x1f;
+      in_stack_00000054 = in_stack_00000054 + 1;
+      puVar9 = puVar9 + 1;
+      uVar7 = uVar8;
+    } while ((int)uVar11 < param_7);
+    if (-2 < (int)uVar8) goto LAB_8251705c;
   }
-  MyAssertHandler(0xffffffff82099550,0x83d,0,0xffffffff82099e78,0xffffffff8209a030,lVar11);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                  0x83d,0,"%s\n\t(lc) = %i");
 LAB_82517088:
-  uVar12 = (uint)lVar11;
-  if (-1 < (int)uVar12) {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff82099f1c);
+  if (-1 < (int)uVar8) {
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Entity had a delta\n");
     }
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff82099ee4,*puVar7);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Writing index number %i\n");
     }
-    MSG_WriteEntityIndex(puVar4,param_2,*puVar7,param_8);
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff82099ea8);
+    MSG_WriteEntityIndex(param_1,param_2,peVar4->number,param_8);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Writing 0,1 to say it\'s not removed and we have a delta\n");
     }
     MSG_WriteBit0(param_2);
-    if ((1 << (uVar12 & 0x1f) & local_a8[(int)uVar12 >> 5]) == 0) {
-      MyAssertHandler(0xffffffff82099550,0x875,0,0xffffffff82000f98,0xffffffff82099fc0);
+    if ((1 << (uVar8 & 0x1f) & *(uint *)((int)local_a8 + ((int)uVar8 >> 5) * 4)) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x875,0,"%s");
     }
-    MSG_WriteEntityDeltaFields(puVar4,param_2,param_3,param_4,param_5,param_6,lVar11,param_7);
-    if (piVar10 != (int *)0x0) {
-      iVar5 = MSG_GetUsedBitCount(param_2);
-      AddPacketBitCost((double)(longlong)(iVar5 - (int)uVar2),puVar7[1],bVar16);
+    MSG_WriteEntityDeltaFields
+              (param_1,param_2,param_3,param_4,peVar4,param_6,uVar8,param_7,in_stack_fffffee8,
+               in_stack_fffffeec,in_stack_fffffef0);
+    if (puVar6 != (uint *)0x0) {
+      iVar2 = MSG_GetUsedBitCount(param_2);
+      local_a8[0] = (longlong)(iVar2 - iVar1);
+      AddPacketBitCost(peVar4->eType,bVar12,(float)local_a8[0]);
     }
-    lVar15 = MSG_GetUsedBitCount(param_2);
-    __restgprlr(lVar15 - uVar2);
-    return;
+    iVar2 = MSG_GetUsedBitCount(param_2);
+    iVar2 = iVar2 - iVar1;
+    __restgprlr();
+    return iVar2;
   }
-  if ((int)param_6 != 0) {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff82099ff0);
+  if (param_6 != 0) {
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Entity did not change, but we\'re forcing a send to say this\n");
     }
-    MSG_WriteEntityIndex(puVar4,param_2,*puVar7,param_8);
+    MSG_WriteEntityIndex(param_1,param_2,peVar4->number,param_8);
     MSG_WriteBit0(param_2);
     MSG_WriteBit0(param_2);
-    lVar15 = MSG_GetUsedBitCount(param_2);
-    __restgprlr(lVar15 - uVar2);
-    return;
+    iVar2 = MSG_GetUsedBitCount(param_2);
+    iVar2 = iVar2 - iVar1;
+    __restgprlr();
+    return iVar2;
   }
-  __restgprlr(0);
-  return;
+  iVar1 = 0;
+  __restgprlr();
+  return iVar1;
 }
 
 
 // 82517240  MSG_WriteEntityRemoval  (qcommon/sv_msg_write_mp.cpp:2183)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteEntityRemoval
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               ulonglong param_5)
+               (SnapshotInfo_s *param_1,msg_t *param_2,uchar *param_3,int param_4,bool param_5)
 
 {
-  undefined8 uVar1;
+  SnapshotInfo_s *pSVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_25();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x888,0,0xffffffff82000f98,0xffffffff82001400);
+  uVar3 = (ulonglong)param_5;
+  uVar2 = (ulonglong)(int)param_3;
+  pSVar1 = (SnapshotInfo_s *)__savegprlr_25(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x888,0,"%s");
   }
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x889,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x889,0,"%s");
   }
-  if ((DAT_82b3ecc8 != 0) &&
-     ((1 < *(int *)(DAT_82b3ecc8 + 0xc) || (*(int *)(DAT_82b3ecc8 + 0xc) == -1)))) {
-    Com_Printf(0x10,0xffffffff8209a0fc,*(undefined4 *)((int)param_2 + 0x14),*(undefined4 *)param_3);
+  if ((cl_shownet != (dvar_t *)0x0) &&
+     ((1 < (cl_shownet->current).integer || ((cl_shownet->current).integer == -1)))) {
+    Com_Printf(0x10,"W|%3i: #%-3i remove\n");
   }
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff8209a0e8);
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Entity was removed\n");
   }
-  if ((param_5 & 0xff) != 0) {
+  if ((uVar3 & 0xff) != 0) {
     MSG_WriteBit1(param_2);
   }
-  MSG_WriteEntityIndex(uVar1,param_2,*(undefined4 *)param_3,param_4);
+  MSG_WriteEntityIndex(pSVar1,param_2,*(int *)uVar2,param_4);
   MSG_WriteBit1(param_2);
   __restgprlr_25();
   return;
@@ -2177,7 +2419,9 @@ void MSG_WriteEntityRemoval
 
 // 82517358  MSG_EntityStatesMatch  (qcommon/sv_msg_write_mp.cpp:2221)
 
-ulonglong MSG_EntityStatesMatch(uint param_1,uint param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool MSG_EntityStatesMatch(entityState_s *param_1,entityState_s *param_2)
 
 {
   int iVar1;
@@ -2185,94 +2429,112 @@ ulonglong MSG_EntityStatesMatch(uint param_1,uint param_2)
   byte bVar3;
   longlong lVar4;
   
-  if (((param_1 & 0x7f) != 0) || (bVar3 = 0, (param_2 & 0x7f) != 0)) {
+  if ((((uint)param_1 & 0x7f) != 0) || (bVar3 = 0, ((uint)param_2 & 0x7f) != 0)) {
     bVar3 = 0;
-    MyAssertHandler(0xffffffff82099550,0x8b3,0,0xffffffff82000f98,0xffffffff8209a114);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x8b3,0,"%s");
   }
   uVar2 = 0x80;
-  iVar1 = param_2 - param_1;
+  iVar1 = (int)param_2 - (int)param_1;
   lVar4 = 0x10;
   do {
     vectorCompareEqualUnsignedWord128
-              (*(undefined1 (*) [16])(param_1 & 0xfffffff0),
-               *(undefined1 (*) [16])(iVar1 + param_1 & 0xfffffff0));
-    param_1 = param_1 + 0x10;
+              (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
+               *(undefined1 (*) [16])(iVar1 + (int)param_1 & 0xfffffff0));
+    param_1 = (entityState_s *)&(param_1->lerp).pos.trTime;
     uVar2 = uVar2 & (ulonglong)bVar3 << 4;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  return uVar2 >> 7;
+  return SUB81(uVar2 >> 7,0);
 }
 
 
 // 82517400  MSG_WriteEntityDeltaForEType  (qcommon/sv_msg_write_mp.cpp:2248)
 
-void MSG_WriteEntityDeltaForEType
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5,ulonglong param_6,undefined8 param_7)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool MSG_WriteEntityDeltaForEType
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,int param_4,
+               entityState_s *param_5,entityState_s *param_6,int param_7)
 
 {
-  undefined4 *puVar1;
-  undefined *puVar2;
-  int iVar5;
-  char cVar6;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  NetFieldList *pNVar1;
+  SnapshotInfo_s *pSVar2;
+  bool bVar4;
+  undefined1 uVar5;
+  int iVar3;
+  entityState_s *peVar6;
   ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
+  NetField *in_stack_ffffff58;
   
-  iVar5 = __savegprlr_22();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x8ce,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar8 = (ulonglong)(int)param_6;
+  uVar7 = (ulonglong)(int)param_5;
+  uVar9 = (ulonglong)param_4;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_22(param_1);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x8ce,0,"%s");
   }
-  puVar2 = PTR_PTR_8296d100;
-  uVar7 = param_4;
-  if (0x12 < (int)param_4) {
-    uVar7 = 0x12;
+  pNVar1 = g_entityStateNetFieldList;
+  iVar10 = (int)uVar9;
+  if (0x12 < iVar10) {
+    uVar9 = 0x12;
   }
-  *(undefined4 **)(iVar5 + 0x1c) = &DAT_8368bbf8;
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x8d6,0,0xffffffff82000f98,0xffffffff820013fc);
+  pSVar2->fieldChanges = orderInfo.entState;
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x8d6,0,"%s");
   }
-  if (((((int)param_7 == 0) && (*(char *)(iVar5 + 0x21) == '\0')) && ((param_5 & 0xffffffff) != 0))
-     && (cVar6 = MSG_EntityStatesMatch(param_5,param_6), cVar6 != '\0')) {
-    __restgprlr_22(0);
-    return;
+  peVar6 = (entityState_s *)uVar8;
+  if ((((param_7 == 0) && (pSVar2->entJustUnlinked == false)) && ((uVar7 & 0xffffffff) != 0)) &&
+     (bVar4 = MSG_EntityStatesMatch((entityState_s *)uVar7,peVar6), bVar4)) {
+    uVar5 = __restgprlr_22(0);
+    return (bool)uVar5;
   }
-  uVar3 = MSG_WriteEntityDelta
-                    (iVar5,param_2,param_3,param_5,param_6,param_7,
-                     *(undefined4 *)(puVar2 + (int)((uVar7 & 0xffffffff) << 3) + 4),0xb);
-  if ((*(char *)(iVar5 + 0x19) == '\0') && (*(char *)(iVar5 + 0x18) == '\0')) {
-    SV_TrackETypeBytes(param_4,uVar3);
+  iVar3 = MSG_WriteEntityDelta
+                    (pSVar2,param_2,param_3,(entityState_s *)uVar7,peVar6,param_7,
+                     *(int *)((int)&pNVar1->count + (int)((uVar9 & 0xffffffff) << 3)),0xb,
+                     in_stack_ffffff58);
+  if ((pSVar2->archived == false) && (pSVar2->fromBaseline == false)) {
+    SV_TrackETypeBytes(iVar10,iVar3);
   }
-  if (((int)uVar3 != 0) && (1 < *(int *)(DAT_83f1e168 + 0xc))) {
-    puVar1 = (undefined4 *)param_6;
-    uVar4 = BG_GetEntityTypeName(puVar1[1]);
-    Com_Printf(0xf,0xffffffff8209a148,*puVar1,puVar1[1],uVar4,uVar3);
+  if ((iVar3 != 0) && (1 < (sv_debugPacketContents->current).integer)) {
+    BG_GetEntityTypeName(peVar6->eType);
+    Com_Printf(0xf,"^^ Entity delta entnum %i - object is type %i (%s) - took %i bits\n");
   }
-  __restgprlr_22(1);
-  return;
+  uVar5 = __restgprlr_22(1);
+  return (bool)uVar5;
 }
 
 
 // 82517598  UpdateEntTimesForTimeDelta  (qcommon/sv_msg_write_mp.cpp:2292)
 
-void UpdateEntTimesForTimeDelta(int param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void UpdateEntTimesForTimeDelta(entityState_s *param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
   
-  if (*(int *)(param_1 + 0x10) != 0) {
-    *(int *)(param_1 + 0x10) = *(int *)(param_1 + 0x10) + param_2;
+  iVar1 = (param_1->lerp).pos.trTime;
+  if (iVar1 != 0) {
+    (param_1->lerp).pos.trTime = iVar1 + param_2;
   }
-  if (*(int *)(param_1 + 0x34) != 0) {
-    *(int *)(param_1 + 0x34) = *(int *)(param_1 + 0x34) + param_2;
+  iVar1 = (param_1->lerp).apos.trTime;
+  if (iVar1 != 0) {
+    (param_1->lerp).apos.trTime = iVar1 + param_2;
   }
-  if (*(int *)(param_1 + 0x74) != 0) {
-    *(int *)(param_1 + 0x74) = *(int *)(param_1 + 0x74) + param_2;
+  if (param_1->time2 != 0) {
+    param_1->time2 = param_1->time2 + param_2;
   }
-  iVar1 = *(int *)(param_1 + 4);
-  if ((iVar1 != 4) || (iVar2 = *(int *)(param_1 + 0x54), iVar2 == 0)) {
-    iVar2 = *(int *)(param_1 + 0x54);
+  iVar1 = param_1->eType;
+  if ((iVar1 != 4) || (iVar2 = (param_1->lerp).u.player.movementDir, iVar2 == 0)) {
+    iVar2 = (param_1->lerp).u.player.movementDir;
     if (iVar2 == 0) {
       return;
     }
@@ -2280,44 +2542,43 @@ void UpdateEntTimesForTimeDelta(int param_1,int param_2)
       return;
     }
   }
-  *(int *)(param_1 + 0x54) = iVar2 + param_2;
+  (param_1->lerp).u.player.movementDir = iVar2 + param_2;
   return;
 }
 
 
 // 82517618  PrintChangedEntityFields  (qcommon/sv_msg_write_mp.cpp:2310)
 
-void PrintChangedEntityFields(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PrintChangedEntityFields(SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3)
 
 {
-  int iVar1;
-  undefined *puVar2;
-  undefined8 uVar3;
-  char cVar4;
-  int iVar5;
-  uint uVar6;
-  undefined4 *puVar7;
+  NetFieldList *pNVar1;
+  SnapshotInfo_s *pSVar2;
+  bool bVar3;
+  int iVar4;
+  uint uVar5;
+  NetField *pNVar6;
   
-  uVar3 = __savegprlr_24();
-  puVar2 = PTR_PTR_8296d100;
-  iVar5 = *(int *)((int)param_3 + 4);
-  if (0x12 < iVar5) {
-    iVar5 = 0x12;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_24(param_1);
+  pNVar1 = g_entityStateNetFieldList;
+  iVar4 = param_3->eType;
+  if (0x12 < iVar4) {
+    iVar4 = 0x12;
   }
-  iVar5 = iVar5 * 8;
-  uVar6 = 0;
-  puVar7 = *(undefined4 **)(PTR_PTR_8296d100 + iVar5);
-  if (*(int *)(PTR_PTR_8296d100 + iVar5 + 4) != 0) {
+  uVar5 = 0;
+  pNVar6 = g_entityStateNetFieldList[iVar4].array;
+  if (g_entityStateNetFieldList[iVar4].count != 0) {
     do {
-      iVar1 = puVar7[1];
-      cVar4 = MSG_ShouldSendEntityField(uVar3,param_2,param_3,puVar7);
-      if (cVar4 != '\0') {
-        Com_DPrintf(0x19,0xffffffff8209a18c,*puVar7,*(undefined4 *)(iVar1 + (int)param_2),
-                    *(undefined4 *)(iVar1 + (int)param_3));
+      bVar3 = MSG_ShouldSendEntityField(pSVar2,param_2,param_3,pNVar6);
+      if (bVar3) {
+        Com_DPrintf(0x19,"Field %s changed from %i to %i\n");
       }
-      uVar6 = uVar6 + 1;
-      puVar7 = puVar7 + 4;
-    } while (uVar6 < *(uint *)(puVar2 + iVar5 + 4));
+      uVar5 = uVar5 + 1;
+      pNVar6 = pNVar6 + 1;
+    } while (uVar5 < pNVar1[iVar4].count);
   }
   __restgprlr_24();
   return;
@@ -2326,176 +2587,225 @@ void PrintChangedEntityFields(undefined8 param_1,undefined8 param_2,undefined8 p
 
 // 825176C8  MSG_WriteEntity  (qcommon/sv_msg_write_mp.cpp:2344)
 
-void MSG_WriteEntity(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                    undefined8 param_5,ulonglong param_6,ulonglong param_7,undefined8 param_8)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool MSG_WriteEntity(SnapshotInfo_s *param_1,msg_t *param_2,int param_3,int param_4,int param_5,
+                    entityState_s *param_6,entityState_s *param_7,int param_8)
 
 {
-  undefined4 *puVar1;
-  int iVar3;
-  undefined8 uVar2;
-  undefined4 uVar4;
-  undefined4 uVar5;
-  int *piVar6;
-  longlong lVar7;
+  int iVar1;
+  SnapshotInfo_s *pSVar2;
+  undefined1 uVar4;
+  PacketEntityType PVar3;
+  entityState_s *peVar5;
+  entityState_s *peVar7;
+  longlong lVar6;
   ulonglong uVar8;
   ulonglong uVar9;
-  undefined1 uVar10;
+  bool bVar10;
+  entityState_s *peVar11;
+  entityState_s *peVar12;
+  entityState_s eStack_370;
+  entityState_s eStack_1f0;
   
-  uVar8 = ZEXT48(&stack0x00000000);
-  iVar3 = __savegprlr_19();
+  uVar8 = (ulonglong)(int)param_7;
+  uVar9 = (ulonglong)(int)param_6;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_19(param_1);
+  peVar5 = (entityState_s *)uVar9;
+  peVar7 = (entityState_s *)uVar8;
   Profile_Begin(0x125);
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x92e,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x92e,0,"%s");
   }
-  piVar6 = (int *)param_6;
-  puVar1 = (undefined4 *)param_7;
-  if ((*(char *)(iVar3 + 0x1a) == '\0') || (*(char *)(iVar3 + 0x22) == '\0')) {
-    if ((param_6 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82099550,0x940,0,0xffffffff82000f98,0xffffffff82001400);
+  if ((pSVar2->packetIsDelta == false) || (pSVar2->entNeverChanges == false)) {
+    if ((uVar9 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x940,0,"%s");
     }
-    if (0xffffff < (uint)piVar6[0x28]) {
-      MyAssertHandler(0xffffffff82099550,0x941,0,0xffffffff8209a268,0xffffffff8209a284);
+    if (0xffffff < peVar5->eventParm) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x941,0,"%s\n\t(from->eventParm) = %i");
     }
-    SV_ValidateEntityState(param_6);
-    if ((param_7 & 0xffffffff) == 0) {
-      if ((piVar6[2] & 0x20000000U) != 0) {
-        MyAssertHandler(0xffffffff82099550,0x949,0,0xffffffff82000f98,0xffffffff8209a23c);
+    SV_ValidateEntityState(peVar5);
+    if ((uVar8 & 0xffffffff) == 0) {
+      if (((peVar5->lerp).eFlags & 0x20000000U) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0x949,0,"%s");
       }
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        uVar2 = BG_GetEntityTypeName(piVar6[1]);
-        Com_Printf(0xf,0xffffffff8209a20c,*piVar6,piVar6[1],uVar2);
+      if (2 < (sv_debugPacketContents->current).integer) {
+        BG_GetEntityTypeName(peVar5->eType);
+        Com_Printf(0xf,"Removing entity %i - object is type %i (%s)\n");
       }
-      uVar4 = MSG_GetPacketEntityTypeForEType(piVar6[1]);
-      *(undefined4 *)(iVar3 + 0x24) = uVar4;
-      MSG_WriteEntityRemoval(iVar3,param_2,param_6,0xb,0);
-      Profile_EndInternal(0);
-      __restgprlr_19(1);
-      return;
+      PVar3 = MSG_GetPacketEntityTypeForEType(peVar5->eType);
+      pSVar2->packetEntityType = PVar3;
+      MSG_WriteEntityRemoval(pSVar2,param_2,(uchar *)peVar5,0xb,false);
+      Profile_EndInternal((double *)0x0);
+      uVar4 = __restgprlr_19(1);
+      return (bool)uVar4;
     }
-    SV_ValidateEntityState(param_7);
-    uVar4 = puVar1[1];
-    uVar5 = MSG_GetPacketEntityTypeForEType(uVar4);
-    *(undefined4 *)(iVar3 + 0x24) = uVar5;
-    uVar9 = (-(uVar8 - 0x370) & 0x7f) + (uVar8 - 0x370);
-    if ((uVar9 & 0x7f) != 0) {
-      MyAssertHandler(0xffffffff82099550,0x967,0,0xffffffff82000f98,0xffffffff8209a1dc);
+    SV_ValidateEntityState(peVar7);
+    iVar1 = peVar7->eType;
+    PVar3 = MSG_GetPacketEntityTypeForEType(iVar1);
+    pSVar2->packetEntityType = PVar3;
+    peVar11 = (entityState_s *)
+              ((int)eStack_370.lerp.pos.trBase + ((-(int)&eStack_370 & 0x7fU) - 0x18));
+    if (((uint)peVar11 & 0x7f) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x967,0,"%s");
     }
-    uVar8 = (-(uVar8 - 0x1f0) & 0x7f) + (uVar8 - 0x1f0);
-    if ((uVar8 & 0x7f) != 0) {
-      MyAssertHandler(0xffffffff82099550,0x968,0,0xffffffff82000f98,0xffffffff8209a1ac);
+    peVar12 = (entityState_s *)
+              ((int)eStack_1f0.lerp.pos.trBase + ((-(int)&eStack_1f0 & 0x7fU) - 0x18));
+    if (((uint)peVar12 & 0x7f) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0x968,0,"%s");
     }
-    if ((int)param_3 != 0) {
-      Com_Memcpy(uVar8,param_6,0x100);
-      UpdateEntTimesForTimeDelta(uVar8,param_3);
-      param_6 = uVar8;
+    if (param_3 != 0) {
+      Com_Memcpy(peVar12,peVar5,0x100);
+      UpdateEntTimesForTimeDelta(peVar12,param_3);
+      peVar5 = peVar12;
     }
-    if ((int)param_4 != 0) {
-      Com_Memcpy(uVar9,param_7,0x100);
-      UpdateEntTimesForTimeDelta(uVar9,param_4);
-      param_7 = uVar9;
+    if (param_4 != 0) {
+      Com_Memcpy(peVar11,peVar7,0x100);
+      UpdateEntTimesForTimeDelta(peVar11,param_4);
+      peVar7 = peVar11;
     }
-    if ((*(short *)((int)param_7 + 0xe2) != 0) || (uVar10 = 1, *(short *)((int)param_6 + 0xe2) == 0)
-       ) {
-      uVar10 = 0;
+    if (((peVar7->clientLinkInfo).parentId != 0) ||
+       (bVar10 = true, (peVar5->clientLinkInfo).parentId == 0)) {
+      bVar10 = false;
     }
-    *(undefined1 *)(iVar3 + 0x21) = uVar10;
-    MSG_WriteEntityDeltaForEType(iVar3,param_2,param_5,uVar4,param_6,param_7,param_8);
-    Profile_EndInternal(0);
-    __restgprlr_19(1);
-    return;
+    pSVar2->entJustUnlinked = bVar10;
+    MSG_WriteEntityDeltaForEType(pSVar2,param_2,param_5,iVar1,peVar5,peVar7,param_8);
+    Profile_EndInternal((double *)0x0);
+    uVar4 = __restgprlr_19(1);
+    return (bool)uVar4;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x933,0,0xffffffff82000f98,0xffffffff82001400);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x933,0,"%s");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82099550,0x934,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x934,0,"%s");
   }
-  if ((*piVar6 != 0) && (*(char *)(iVar3 + 0x18) == '\0')) {
-    uVar8 = param_7;
-    uVar9 = param_6;
+  if ((peVar5->number != 0) && (pSVar2->fromBaseline == false)) {
     do {
-      lVar7 = (ulonglong)*(byte *)uVar9 - (ulonglong)*(byte *)uVar8;
-      if (lVar7 != 0) break;
+      lVar6 = (ulonglong)*(byte *)uVar9 - (ulonglong)*(byte *)uVar8;
+      if (lVar6 != 0) break;
       uVar9 = uVar9 + 1;
       uVar8 = uVar8 + 1;
-    } while ((int *)uVar9 != piVar6 + 0x40);
-    if ((int)lVar7 != 0) {
-      Com_DPrintf(0x19,0xffffffff8209a2c0,*puVar1,puVar1[1]);
-      PrintChangedEntityFields(iVar3,param_6,param_7);
+    } while ((entityState_s *)uVar9 != peVar5 + 1);
+    if ((int)lVar6 != 0) {
+      Com_DPrintf(0x19,
+                  "Entity %i (eType %i) is flagged as \'willNeverChange\' but changed.  This won\'t show up in killcam\n"
+                 );
+      PrintChangedEntityFields(pSVar2,peVar5,peVar7);
     }
   }
-  Profile_EndInternal(0);
-  __restgprlr_19(0);
-  return;
+  Profile_EndInternal((double *)0x0);
+  uVar4 = __restgprlr_19(0);
+  return (bool)uVar4;
 }
 
 
 // 82517A58  MSG_WriteDeltaArchivedEntity  (qcommon/sv_msg_write_mp.cpp:2463)
 
-void MSG_WriteDeltaArchivedEntity
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5,undefined8 param_6)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool MSG_WriteDeltaArchivedEntity
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,archivedEntity_s *param_4,
+               archivedEntity_s *param_5,int param_6)
 
 {
-  int iVar1;
+  uint uVar1;
+  SnapshotInfo_s *pSVar2;
   int iVar3;
-  ulonglong uVar2;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  NetField *in_stack_ffffff38;
+  int in_stack_ffffff3c;
+  int in_stack_ffffff40;
+  undefined1 in_stack_ffffff47;
   
-  iVar3 = __savegprlr_22();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x9a6,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar6 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_4;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_22(param_1);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x9a6,0,"%s");
   }
-  iVar1 = *(int *)(PTR_PTR_8296d104 + 4);
-  if (iVar1 != 0x46) {
-    MyAssertHandler(0xffffffff82099550,0x9b3,0,0xffffffff82000f98,0xffffffff8209a328);
+  uVar1 = g_netFieldList->count;
+  if (uVar1 != 0x46) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x9b3,0,"%s");
   }
-  *(undefined4 *)(iVar3 + 0x24) = 0x13;
-  *(undefined **)(iVar3 + 0x1c) = &DAT_8368bcf8;
-  if ((param_4 & 0xffffffff) != 0) {
-    SV_ValidateEntityState(param_4);
+  pSVar2->packetEntityType = ANALYZE_DATATYPE_ENTITYTYPE_ARCHIVEDENTITY;
+  pSVar2->fieldChanges = orderInfo.arcEntState;
+  if ((uVar5 & 0xffffffff) != 0) {
+    SV_ValidateEntityState((entityState_s *)uVar5);
   }
-  if ((param_5 & 0xffffffff) != 0) {
-    SV_ValidateEntityState(param_5);
+  if ((uVar6 & 0xffffffff) != 0) {
+    SV_ValidateEntityState((entityState_s *)uVar6);
   }
-  uVar2 = MSG_WriteDeltaStruct(iVar3,param_2,param_3,param_4,param_5,param_6,iVar1,0xb);
-  __restgprlr_22((-uVar2 & ~uVar2 & 0xffffffff) >> 0x1f);
-  return;
+  iVar3 = MSG_WriteDeltaStruct
+                    (pSVar2,param_2,param_3,(uchar *)(entityState_s *)uVar5,
+                     (uchar *)(entityState_s *)uVar6,param_6,uVar1,0xb,in_stack_ffffff38,
+                     in_stack_ffffff3c,in_stack_ffffff40,(bool)in_stack_ffffff47);
+  uVar4 = __restgprlr_22((-(longlong)iVar3 & ~(longlong)iVar3 & 0xffffffffU) >> 0x1f);
+  return (bool)uVar4;
 }
 
 
 // 82517B78  MSG_WriteDeltaClient  (qcommon/sv_msg_write_mp.cpp:2513)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteDeltaClient
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5,undefined8 param_6)
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,clientState_s *param_4,
+               clientState_s *param_5,int param_6)
 
 {
-  undefined *puVar1;
+  NetFieldList *pNVar1;
+  SnapshotInfo_s *pSVar2;
   int iVar3;
-  undefined8 uVar2;
-  undefined1 auStack_120 [288];
+  ulonglong uVar4;
+  uchar *puVar5;
+  ulonglong uVar6;
+  NetField *in_stack_fffffe78;
+  int in_stack_fffffe7c;
+  int in_stack_fffffe80;
+  undefined1 in_stack_fffffe87;
+  uchar auStack_120 [288];
   
-  iVar3 = __savegprlr_26();
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x9db,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar6 = (ulonglong)(int)param_5;
+  uVar4 = (ulonglong)(int)param_4;
+  pSVar2 = (SnapshotInfo_s *)__savegprlr_26(param_1);
+  puVar5 = (uchar *)uVar4;
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x9db,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    param_4 = ZEXT48(&stack0x00000000) - 0x120;
-    memset(auStack_120,0,0xe0);
+  if ((uVar4 & 0xffffffff) == 0) {
+    puVar5 = auStack_120;
+    memset();
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    *(undefined4 *)(iVar3 + 0x24) = 0x14;
-    MSG_WriteEntityRemoval(iVar3,param_2,param_4,5,1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    pSVar2->packetEntityType = ANALYZE_DATATYPE_ENTITYTYPE_CLIENTSTATE;
+    MSG_WriteEntityRemoval(pSVar2,param_2,puVar5,5,true);
     __restgprlr_26();
     return;
   }
-  *(undefined4 *)(iVar3 + 0x24) = 0x14;
-  puVar1 = PTR_PTR_8296d104;
-  *(undefined **)(iVar3 + 0x1c) = &DAT_8368bef8;
-  uVar2 = MSG_WriteDeltaStruct
-                    (iVar3,param_2,param_3,param_4,param_5,param_6,*(undefined4 *)(puVar1 + 0xc),5);
-  if (((int)uVar2 != 0) && (1 < *(int *)(DAT_83f1e168 + 0xc))) {
-    Com_Printf(0xf,0xffffffff8209a36c,*(undefined4 *)param_5,uVar2);
+  pSVar2->packetEntityType = ANALYZE_DATATYPE_ENTITYTYPE_CLIENTSTATE;
+  pNVar1 = g_netFieldList;
+  pSVar2->fieldChanges = orderInfo.clientState;
+  iVar3 = MSG_WriteDeltaStruct
+                    (pSVar2,param_2,param_3,puVar5,(uchar *)uVar6,param_6,pNVar1[1].count,5,
+                     in_stack_fffffe78,in_stack_fffffe7c,in_stack_fffffe80,(bool)in_stack_fffffe87);
+  if ((iVar3 != 0) && (1 < (sv_debugPacketContents->current).integer)) {
+    Com_Printf(0xf,"^^ client state delta for client %i - %i bits\n");
   }
   __restgprlr_26();
   return;
@@ -2504,36 +2814,42 @@ void MSG_WriteDeltaClient
 
 // 82517CB0  MSG_WriteDeltaHudElems  (qcommon/sv_msg_write_mp.cpp:2582)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void MSG_WriteDeltaHudElems
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,ulonglong param_4,
-               longlong param_5,int param_6)
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,hudelem_s *param_4,
+               hudelem_s *param_5,int param_6)
 
 {
-  uint uVar1;
+  int iVar1;
   char *pcVar2;
-  char *pcVar3;
-  char *pcVar4;
-  undefined4 *puVar6;
-  char cVar7;
-  undefined8 uVar5;
-  ulonglong uVar8;
+  int iVar3;
+  bool bVar4;
+  int *piVar5;
+  int *piVar6;
+  int iVar7;
+  int iVar8;
   longlong lVar9;
-  longlong lVar10;
+  uint *puVar10;
   longlong lVar11;
-  uint *puVar12;
+  int iVar12;
   longlong lVar13;
-  int iVar14;
-  longlong lVar15;
-  int *piVar16;
-  int iVar17;
-  longlong lVar18;
-  int *piVar19;
-  undefined4 *puVar20;
-  undefined1 local_f0 [4];
+  uint uVar14;
+  NetField *pNVar15;
+  int iVar16;
+  int *piVar17;
+  int iVar18;
+  int iStack00000024;
+  int iStack0000002c;
+  undefined1 in_stack_fffffeab;
+  int in_stack_fffffeac;
+  int in_stack_fffffeb0;
+  undefined1 in_stack_fffffeb7;
+  bool local_f0 [4];
   int local_ec;
-  int local_e8;
-  uint local_e4;
-  int local_e0;
+  uint local_e8;
+  int local_e4;
+  NetField *local_e0;
   char *local_dc;
   char *local_d8;
   char *local_d4;
@@ -2541,48 +2857,56 @@ void MSG_WriteDeltaHudElems
   int local_cc;
   char *local_c8;
   char *local_c4;
-  undefined *local_c0;
-  undefined *local_bc;
+  char *local_c0;
+  int local_bc;
   char *local_b8;
-  undefined1 *local_b4;
+  char *local_b4;
   char *local_b0;
   char *local_ac;
   char *local_a8;
   char *local_a4;
   char *local_a0;
   
-  puVar6 = (undefined4 *)__savegprlr();
-  local_c0 = &DAT_82000f98;
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0xa25,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  lVar11 = (longlong)(int)param_5;
+  lVar9 = (longlong)(int)param_4;
+  __savegprlr();
+  iVar7 = (int)lVar9;
+  local_c0 = "%s";
+  iStack00000024 = param_3;
+  iStack0000002c = iVar7;
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0xa25,0,"%s");
   }
   if (param_6 != 0x1f) {
-    MyAssertHandler(0xffffffff82099550,0xa26,0,0xffffffff82000f98,0xffffffff8208f8c8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0xa26,0,"%s");
   }
-  lVar10 = 0;
-  lVar11 = param_5;
+  iVar8 = 0;
+  lVar13 = lVar11;
   if (0 < param_6) {
     do {
-      if (*(int *)lVar11 == 0) break;
-      lVar10 = lVar10 + 1;
-      lVar11 = lVar11 + 0xa8;
-    } while ((int)lVar10 < param_6);
+      if (*(int *)lVar13 == 0) break;
+      iVar8 = iVar8 + 1;
+      lVar13 = lVar13 + 0xa8;
+    } while (iVar8 < param_6);
   }
-  MSG_WriteBits(param_2,lVar10,5);
+  MSG_WriteBits(param_2,iVar8,5);
   local_ec = 0;
-  local_e8 = *(int *)(PTR_PTR_8296d104 + 0x24);
-  local_e0 = *(int *)(PTR_PTR_8296d104 + 0x20);
-  if (0 < (int)lVar10) {
-    local_e4 = -(int)param_4 - 0x28;
-    local_cc = (int)param_5 - (int)param_4;
+  local_e8 = g_netFieldList[4].count;
+  local_e0 = g_netFieldList[4].array;
+  if (0 < iVar8) {
+    local_e4 = -0x28 - iVar7;
+    iVar1 = (int)lVar11;
+    local_cc = iVar1 - iVar7;
     local_a0 = "%s\n\t%s";
-    lVar11 = param_4 + 0x28;
+    lVar9 = lVar9 + 0x28;
     local_a8 = "%i != %i";
-    local_bc = &DAT_836c0000;
+    local_bc = -0x7c940000;
     local_a4 = "lastChanged == lc";
     local_ac = "%s\n\t(lc) = %i";
     local_b0 = "(lc+1 >= 0 && lc+1 <= static_cast<int>( numFields ))";
-    local_b4 = &DAT_820068af;
+    local_b4 = "";
     local_b8 = "(est)";
     local_c4 = "*fromF != *toF";
     local_dc = "%s\n\t(to[i].alignOrg) = %i";
@@ -2591,98 +2915,103 @@ void MSG_WriteDeltaHudElems
     local_c8 = "(!(to[i].alignOrg & ~15))";
     local_d0 = "(!(from[i].alignOrg & ~15))";
     do {
-      pcVar4 = local_d4;
-      pcVar3 = local_d8;
       pcVar2 = local_dc;
-      puVar12 = (uint *)lVar11;
-      if ((*puVar12 & 0xfffffff0) != 0) {
-        MyAssertHandler(0xffffffff82099550,0xa38,0,0xffffffff8208f838,local_d0);
+      puVar10 = (uint *)lVar9;
+      if ((*puVar10 & 0xfffffff0) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa38,0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      iVar14 = local_cc;
-      if ((*(uint *)(local_cc + (int)puVar12) & 0xfffffff0) != 0) {
-        MyAssertHandler(0xffffffff82099550,0xa39,0,0xffffffff8208f838,local_c8,*puVar12);
+      iVar7 = local_cc;
+      if ((*(uint *)(local_cc + (int)puVar10) & 0xfffffff0) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa39,0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      uVar1 = (int)*puVar12 >> 2 & 3;
-      if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-        MyAssertHandler(0xffffffff82099550,0xa3c,0,0xffffffff8208f838,pcVar4);
+      uVar14 = (int)*puVar10 >> 2 & 3;
+      if (((uVar14 != 0) && (uVar14 != 1)) && (uVar14 != 2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa3c,0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      uVar1 = *puVar12 & 3;
-      if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-        MyAssertHandler(0xffffffff82099550,0xa3f,0,0xffffffff8208f838,pcVar3);
+      uVar14 = *puVar10 & 3;
+      if (((uVar14 != 0) && (uVar14 != 1)) && (uVar14 != 2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa3f,0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      uVar1 = *(int *)(iVar14 + (int)puVar12) >> 2 & 3;
-      if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-        MyAssertHandler(0xffffffff82099550,0xa42,0,pcVar2,pcVar4);
+      uVar14 = *(int *)(iVar7 + (int)puVar10) >> 2 & 3;
+      if (((uVar14 != 0) && (uVar14 != 1)) && (uVar14 != 2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa42,0,pcVar2);
       }
-      uVar1 = *(uint *)(iVar14 + (int)puVar12) & 3;
-      if (((uVar1 != 0) && (uVar1 != 1)) && (uVar1 != 2)) {
-        MyAssertHandler(0xffffffff82099550,0xa45,0,pcVar2,pcVar3);
+      uVar14 = *(uint *)(iVar7 + (int)puVar10) & 3;
+      if (((uVar14 != 0) && (uVar14 != 1)) && (uVar14 != 2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa45,0,pcVar2);
       }
-      lVar13 = -1;
-      lVar15 = 0;
-      iVar14 = local_e8;
-      if (0 < local_e8) {
-        uVar8 = (ulonglong)local_e4;
-        puVar20 = (undefined4 *)(local_e0 + 8);
+      iVar7 = local_e4;
+      lVar11 = -1;
+      lVar13 = 0;
+      uVar14 = local_e8;
+      if (0 < (int)local_e8) {
+        piVar17 = &local_e0->bits;
         do {
-          lVar9 = uVar8 + lVar11 + (ulonglong)(uint)puVar20[-1];
-          lVar18 = lVar9 + (param_4 & 0xffffffff);
-          lVar9 = lVar9 + param_5;
-          cVar7 = MSG_ValuesAreEqual(*puVar20,lVar18,lVar9);
-          if (cVar7 == '\0') {
-            piVar19 = (int *)lVar18;
-            piVar16 = (int *)lVar9;
-            if (*piVar19 == *piVar16) {
-              MyAssertHandler(0xffffffff82099550,0xa4f,0,local_c0,local_c4);
+          piVar5 = (int *)((int)puVar10 + iStack0000002c + piVar17[-1] + iVar7);
+          piVar6 = (int *)((int)puVar10 + iVar1 + piVar17[-1] + iVar7);
+          bVar4 = MSG_ValuesAreEqual(*piVar17,piVar5,piVar6);
+          if (!bVar4) {
+            if (*piVar5 == *piVar6) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                              ,0xa4f,0,local_c0);
             }
-            if ((*(char *)((int)puVar6 + 0x19) == '\0') &&
+            if ((param_1->archived == false) &&
                (*(char *)(*(int *)(local_bc + -0x6c4c) + 0xc) != '\0')) {
-              MSG_GetBitCount(*puVar20,local_f0,*piVar19,*piVar16);
-              Com_Printf(0xf,0xffffffff8209a3a0,local_ec,lVar10,
-                         *(undefined4 *)((int)(uVar8 + lVar11) + (int)param_5),*puVar6,lVar15,
-                         puVar20[-2]);
-              iVar14 = local_e8;
+              MSG_GetBitCount(*piVar17,local_f0,*piVar5,*piVar6);
+              Com_Printf(0xf,
+                         "Hudelem write delta %d/%d type %x client %d field %d (%s) from %x to %x bits%s %d\n"
+                        );
+              uVar14 = local_e8;
             }
-            SV_TrackFieldChange(*puVar6,0x16,lVar15);
-            lVar13 = lVar15;
+            SV_TrackFieldChange(param_1->clientNum,0x16,(int)lVar13);
+            lVar11 = lVar13;
           }
-          lVar15 = lVar15 + 1;
-          puVar20 = puVar20 + 4;
-        } while ((int)lVar15 < iVar14);
+          lVar13 = lVar13 + 1;
+          piVar17 = piVar17 + 4;
+        } while ((int)lVar13 < (int)uVar14);
       }
-      lVar15 = lVar13 + 1;
-      if ((lVar15 < 0) || (iVar14 < (int)lVar15)) {
-        MyAssertHandler(0xffffffff82099550,0xa5c,0,local_ac,local_b0,lVar13);
+      iVar7 = (int)(lVar11 + 1);
+      if ((lVar11 + 1 < 0) || ((int)uVar14 < iVar7)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa5c,0,local_ac);
       }
-      MSG_WriteBits(param_2,lVar15,6);
-      lVar15 = -1;
-      lVar9 = 0;
-      iVar14 = (int)lVar13;
-      if (-1 < iVar14) {
-        uVar8 = (ulonglong)local_e4;
-        lVar18 = lVar15;
-        iVar17 = local_e0;
+      MSG_WriteBits(param_2,iVar7,6);
+      iVar7 = local_e4;
+      iVar16 = -1;
+      iVar18 = 0;
+      iVar12 = (int)lVar11;
+      if (-1 < iVar12) {
+        pNVar15 = local_e0;
         do {
-          puVar6[7] = &DAT_8368c59c;
-          cVar7 = MSG_WriteDeltaField(puVar6,param_2,param_3,lVar11 + -0x28,uVar8 + lVar11 + param_5
-                                      ,iVar17,lVar9,0);
-          lVar15 = lVar18;
-          if (((cVar7 != '\0') && (lVar15 = lVar9, *(char *)((int)puVar6 + 0x19) == '\0')) &&
-             (*(char *)(puVar6 + 6) == '\0')) {
-            SV_TrackNumFieldsSkippedInHudelem(lVar9 - lVar18);
+          param_1->fieldChanges = orderInfo.hudElem;
+          bVar4 = MSG_WriteDeltaField(param_1,param_2,iStack00000024,(uchar *)(puVar10 + -10),
+                                      (uchar *)((int)puVar10 + iVar1 + iVar7),pNVar15,iVar18,false,
+                                      (bool)in_stack_fffffeab,in_stack_fffffeac,in_stack_fffffeb0,
+                                      (bool)in_stack_fffffeb7);
+          iVar3 = iVar16;
+          if (((bVar4) && (iVar3 = iVar18, param_1->archived == false)) &&
+             (param_1->fromBaseline == false)) {
+            SV_TrackNumFieldsSkippedInHudelem(iVar18 - iVar16);
           }
-          lVar9 = lVar9 + 1;
-          iVar17 = iVar17 + 0x10;
-          lVar18 = lVar15;
-        } while ((int)lVar9 <= iVar14);
+          iVar16 = iVar3;
+          iVar18 = iVar18 + 1;
+          pNVar15 = pNVar15 + 1;
+        } while (iVar18 <= iVar12);
       }
-      if ((int)lVar15 != iVar14) {
-        uVar5 = va(local_a8,lVar15,lVar13);
-        MyAssertHandler(0xffffffff82099550,0xa6e,0,local_a0,local_a4,uVar5);
+      if (iVar16 != iVar12) {
+        va(local_a8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xa6e,0,local_a0);
       }
-      lVar11 = lVar11 + 0xa8;
+      lVar9 = lVar9 + 0xa8;
       local_ec = local_ec + 1;
-    } while (local_ec < (int)lVar10);
+    } while (local_ec < iVar8);
   }
   __restgprlr();
   return;
@@ -2691,11 +3020,13 @@ void MSG_WriteDeltaHudElems
 
 // 82518220  MSG_WriteEmptyPlayerstate  (qcommon/sv_msg_write_mp.cpp:2676)
 
-void MSG_WriteEmptyPlayerstate(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void MSG_WriteEmptyPlayerstate(msg_t *param_1)
 
 {
-  MSG_WriteBit1();
-  MSG_WriteLastChangedField(param_1,0,(ulonglong)*(uint *)(PTR_PTR_8296d104 + 0x14) + 1);
+  MSG_WriteBit1(param_1);
+  MSG_WriteLastChangedField(param_1,0,g_netFieldList[2].count + 1);
   MSG_WriteBit0(param_1);
   MSG_WriteBit0(param_1);
   MSG_WriteBit0(param_1);
@@ -2708,563 +3039,613 @@ void MSG_WriteEmptyPlayerstate(undefined8 param_1)
 
 // 82518298  MSG_WriteDeltaPlayerstate  (qcommon/sv_msg_write_mp.cpp:2729)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void MSG_WriteDeltaPlayerstate
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,ulonglong param_4,
-               int *param_5)
+               (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,playerState_s *param_4,
+               playerState_s *param_5)
 
 {
-  byte bVar1;
-  float fVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
-  float fVar7;
-  float fVar8;
-  int *piVar10;
-  uint uVar11;
-  char cVar13;
-  int iVar12;
-  undefined8 uVar9;
-  bool bVar14;
-  undefined8 uVar15;
+  clientHeader_t *pcVar1;
+  NetField *pNVar2;
+  float fVar3;
+  float fVar4;
+  dvar_t *pdVar5;
+  playerState_s *ppVar6;
+  playerState_s *ppVar7;
+  bool bVar12;
+  int iVar8;
+  int iVar9;
+  bool bVar13;
+  int iVar10;
+  int iVar11;
+  Weapon *pWVar14;
+  PlayerEquippedWeaponState *pPVar15;
   byte *pbVar16;
-  longlong lVar17;
-  int iVar18;
-  byte *pbVar19;
-  undefined8 uVar20;
-  longlong lVar21;
-  longlong lVar22;
-  ulonglong uVar23;
-  int *piVar25;
-  ulonglong uVar24;
-  undefined4 *puVar26;
+  objective_t *poVar17;
+  <unnamed_type_hud> *p<Var18;
+  longlong lVar19;
+  ClipAmmo *pCVar20;
+  int iVar21;
+  PlayerEquippedWeaponState *pPVar22;
+  GlobalAmmo *pGVar23;
+  objective_t *poVar24;
+  <unnamed_type_hud> *p<Var25;
+  bool bVar26;
   int iVar27;
-  char *pcVar28;
-  int iVar29;
-  int *piVar30;
-  byte *pbVar31;
-  byte bVar32;
-  longlong lVar33;
-  double dVar34;
-  double dVar35;
-  int iStack0000002c;
-  uint local_3420;
-  char local_341c;
+  ulonglong uVar28;
+  uint *puVar29;
+  int iVar30;
+  NetField *pNVar31;
+  ClipAmmo *pCVar32;
+  uchar *puVar33;
+  int iVar34;
+  Weapon *pWVar35;
+  GlobalAmmo *pGVar36;
+  SnapshotInfo_s *pSVar37;
+  uint uVar38;
+  float fVar39;
+  bool *pbVar40;
+  objective_t *poVar41;
+  longlong lVar42;
+  double dVar43;
+  double dVar44;
+  SnapshotInfo_s *pSStack00000014;
+  int iStack00000024;
+  playerState_s *ppStack0000002c;
+  playerState_s *ppStack00000034;
+  NetField *in_stack_ffffcb78;
+  int in_stack_ffffcb7c;
+  int in_stack_ffffcb80;
+  undefined1 in_stack_ffffcb87;
+  int local_3420;
+  bool local_341c [4];
+  int local_3418;
+  uint *local_3414;
+  int local_3410;
+  longlong local_3408;
+  int local_3400;
+  int local_33fc;
   char local_33f8 [4];
   undefined4 local_33f4;
   undefined4 local_33f0;
   undefined2 local_33ec;
   undefined1 local_33ea;
-  uint local_33e0 [3320];
+  uint local_33e0 [12];
+  undefined1 auStack_33b0 [13232];
   
-  uVar24 = ZEXT48(&stack0x00000000);
-  piVar10 = (int *)__savegprlr();
-  iStack0000002c = (int)param_4;
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0xad5,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  uVar28 = (ulonglong)(int)param_4;
+  __savegprlr();
+  ppStack0000002c = (playerState_s *)uVar28;
+  pSStack00000014 = param_1;
+  iStack00000024 = param_3;
+  ppStack00000034 = param_5;
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0xad5,0,"%s");
   }
-  lVar17 = uVar24 - 0x33e8;
-  lVar33 = 6;
+  lVar19 = ZEXT48(&stack0x00000000) - 0x33e8;
+  lVar42 = 6;
   do {
-    lVar17 = lVar17 + 8;
-    *(undefined8 *)lVar17 = 0;
-    lVar33 = lVar33 + -1;
-  } while (lVar33 != 0);
+    lVar19 = lVar19 + 8;
+    *(undefined8 *)lVar19 = 0;
+    lVar42 = lVar42 + -1;
+  } while (lVar42 != 0);
   Profile_Begin(0x11f);
-  uVar11 = MSG_GetUsedBitCount(param_2);
-  if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-    Com_Printf(0x10,0xffffffff8209a870,*piVar10);
+  local_3418 = MSG_GetUsedBitCount(param_2);
+  local_33fc = 0;
+  local_3410 = 0;
+  local_3400 = 0;
+  if (2 < (sv_debugPacketContents->current).integer) {
+    Com_Printf(0x10,"Writing playerstate for client #%i\n");
   }
-  piVar10[9] = 0x15;
-  if ((param_4 & 0xffffffff) == 0) {
-    param_4 = uVar24 - 0x33b0;
-    iStack0000002c = (int)param_4;
-    Com_Memset(uVar24 - 0x33b0,0,0x3300);
+  param_1->packetEntityType = ANALYZE_DATATYPE_ENTITYTYPE_PLAYERSTATE;
+  if ((uVar28 & 0xffffffff) == 0) {
+    uVar28 = ZEXT48(&stack0x00000000) - 0x33b0;
+    ppStack0000002c = (playerState_s *)uVar28;
+    Com_Memset(auStack_33b0,0,0x3300);
   }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 8) == '\0')) {
-    iVar12 = piVar10[4];
-    fVar2 = (float)param_5[8] - *(float *)(iVar12 + 0x640);
-    fVar7 = (float)param_5[9] - *(float *)(iVar12 + 0x644);
-    fVar8 = (float)param_5[7] - *(float *)(iVar12 + 0x63c);
-    dVar35 = (double)(fVar8 * fVar8 + fVar7 * fVar7 + fVar2 * fVar2);
-    if (DAT_83f1ebb0 == 0) {
-      MyAssertHandler(0xffffffff82099550,0xafc,0,0xffffffff82000f98,0xffffffff8209a860);
+  if ((param_1->archived == false) && (param_1->demoSnapshot == false)) {
+    pcVar1 = param_1->client;
+    fVar39 = param_5->origin[1] - pcVar1->predictedOrigin[1];
+    fVar3 = param_5->origin[2] - pcVar1->predictedOrigin[2];
+    fVar4 = param_5->origin[0] - pcVar1->predictedOrigin[0];
+    dVar44 = (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar39 * fVar39);
+    if (svsHeaderValid == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0xafc,0,"%s");
     }
-    dVar34 = 0.009999999776482582;
-    if (((((param_4 & 0xffffffff) == 0) || (DAT_83f1ec68 == 0)) || (0.009999999776482582 < dVar35))
-       || (*(int *)(piVar10[4] + 0x648) != *param_5)) {
-      fVar2 = *(float *)(DAT_836b93a8 + 0xc);
-      if ((fVar2 <= 0.0) || ((double)(fVar2 * fVar2) <= dVar35)) {
+    dVar43 = 0.009999999776482582;
+    if (((((uVar28 & 0xffffffff) == 0) || (svsHeader.clientArchive == 0)) ||
+        (0.009999999776482582 < dVar44)) ||
+       (param_1->client->predictedOriginServerTime != param_5->commandTime)) {
+      fVar39 = (msg_logPredictionPositionErrors->current).value;
+      if ((fVar39 <= 0.0) || ((double)(fVar39 * fVar39) <= dVar44)) {
 LAB_82518558:
-        if (dVar35 <= dVar34) goto LAB_82518574;
-        DAT_83f4abe4 = DAT_83f4abe4 + 1;
+        if (dVar44 <= dVar43) goto LAB_82518574;
+        originsSentDueToPredicitonError = originsSentDueToPredicitonError + 1;
       }
       else {
-        if (0.009999999776482582 < dVar35) {
-          if (*(char *)((int)piVar10 + 0x19) == '\0') {
-            if (0x11 < (uint)param_5[0x54]) {
-              MyAssertHandler(0xffffffff82099550,0xb0c,0,0xffffffff8209a824,param_5[0x54],0x12);
+        if (0.009999999776482582 < dVar44) {
+          if (param_1->archived == false) {
+            if (0x11 < (uint)param_5->clientNum) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                              ,0xb0c,0,
+                              "to->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
             }
-            iVar12 = piVar10[4];
-            Com_Printf(0x10,0xffffffff8209a7a8,param_5[0x54] * 0x68b00 + DAT_83f11414 + 0x2141c,
-                       param_5[0x54],*param_5,(double)*(float *)(iVar12 + 0x63c),
-                       (double)*(float *)(iVar12 + 0x640),(double)*(float *)(iVar12 + 0x644));
+            Com_Printf(0x10,
+                       "%s (%i): Prediction mismatch. Time ( %i ). Setting origin from ( %.2f, %.2f, %.2f ) to ( %.2f, %.2f, %.2f ) (%.2f away)\n"
+                      );
           }
           goto LAB_82518558;
         }
 LAB_82518574:
-        if (*(int *)(*piVar10 * 0x68b00 + DAT_83f11414 + 0x648) != *param_5) {
-          DAT_83f4abec = DAT_83f4abec + 1;
+        if (svs.clients[param_1->clientNum].header.predictedOriginServerTime != param_5->commandTime
+           ) {
+          originsSentDueToServerTimeMismatch = originsSentDueToServerTimeMismatch + 1;
         }
       }
-      uVar20 = 1;
+      bVar26 = true;
       MSG_WriteBit1(param_2);
     }
     else {
-      uVar20 = 0;
+      bVar26 = false;
       MSG_WriteBit0(param_2);
     }
-    if (param_5[0x2b] == 0x7ff) {
-      lVar17 = 0;
+    if ((param_5->vehicleState).entity == 0x7ff) {
+      bVar13 = false;
     }
     else {
-      if ((((param_4 & 0xffffffff) == 0) || (DAT_83f1ec68 == 0)) ||
-         (lVar17 = 0, *(int *)(piVar10[4] + 0x65c) != *param_5)) {
-        lVar17 = 1;
+      if ((((uVar28 & 0xffffffff) == 0) || (svsHeader.clientArchive == 0)) ||
+         (bVar13 = false, param_1->client->predictedVehicleServerTime != param_5->commandTime)) {
+        bVar13 = true;
       }
-      if ((lVar17 == 0) &&
-         (iVar12 = piVar10[4], fVar2 = (float)param_5[0x2e] - *(float *)(iVar12 + 0x654),
-         fVar7 = (float)param_5[0x2f] - *(float *)(iVar12 + 0x658),
-         fVar8 = (float)param_5[0x2d] - *(float *)(iVar12 + 0x650),
-         dVar34 < (double)(fVar8 * fVar8 + fVar7 * fVar7 + fVar2 * fVar2))) {
-        lVar17 = 1;
+      if ((!bVar13) &&
+         (pcVar1 = param_1->client,
+         fVar39 = (param_5->vehicleState).origin[1] - pcVar1->predictedVehicleOrigin[1],
+         fVar3 = (param_5->vehicleState).origin[2] - pcVar1->predictedVehicleOrigin[2],
+         fVar4 = (param_5->vehicleState).origin[0] - pcVar1->predictedVehicleOrigin[0],
+         dVar43 < (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar39 * fVar39))) {
+        bVar13 = true;
       }
     }
-    if (lVar17 == 0) {
-      MSG_WriteBit0();
+    if (!bVar13) {
+      MSG_WriteBit0(param_2);
       goto LAB_82518678;
     }
   }
   else {
-    uVar20 = 1;
-    lVar17 = 1;
+    bVar26 = true;
+    bVar13 = true;
     MSG_WriteBit1(param_2);
   }
   MSG_WriteBit1(param_2);
 LAB_82518678:
-  lVar33 = 0;
-  uVar23 = 1;
-  local_3420 = 0xffffffff;
-  uVar3 = *(uint *)(PTR_PTR_8296d104 + 0x14);
-  puVar4 = *(undefined4 **)(PTR_PTR_8296d104 + 0x10);
-  if (0 < (int)uVar3) {
-    piVar25 = &DAT_836fda98;
-    puVar26 = puVar4;
+  iVar9 = 0;
+  uVar28 = 1;
+  local_3420 = -1;
+  local_3414 = playerStateHistogram;
+  uVar38 = g_netFieldList[2].count;
+  pNVar2 = g_netFieldList[2].array;
+  if (0 < (int)uVar38) {
+    puVar29 = playerStateHistogram;
+    pNVar31 = pNVar2;
+    pSVar37 = pSStack00000014;
     do {
-      cVar13 = MSG_ShouldSendPSField(piVar10,uVar20,lVar17,param_5,iStack0000002c,puVar26);
-      if (cVar13 != '\0') {
-        if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-          SV_TrackFieldChange(*piVar10,0x15,lVar33);
-          if ((*(char *)(DAT_83f1e17c + 0xc) != '\0') &&
-             ((*(char *)((int)piVar10 + 0x19) == '\0' &&
-              (iVar12 = I_strcmp(*puVar26,0xffffffff8209397c), iVar12 != 0)))) {
-            iVar12 = puVar26[1];
-            uVar9 = MSG_GetBitCount(puVar26[2],uVar24 - 0x341c,
-                                    *(undefined4 *)(iVar12 + iStack0000002c),
-                                    *(undefined4 *)(iVar12 + (int)param_5));
-            uVar15 = 0xffffffff8209a404;
-            if (local_341c == '\0') {
-              uVar15 = 0xffffffff820068af;
-            }
-            Com_Printf(0x10,0xffffffff8209a774,lVar33,*puVar26,
-                       *(undefined4 *)(iVar12 + iStack0000002c),
-                       *(undefined4 *)(iVar12 + (int)param_5),uVar9,uVar15);
+      bVar12 = MSG_ShouldSendPSField(pSVar37,bVar26,bVar13,ppStack00000034,ppStack0000002c,pNVar31);
+      if (bVar12) {
+        if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+          SV_TrackFieldChange(pSVar37->clientNum,0x15,iVar9);
+          if (((sv_debugPlayerstate->current).enabled != false) &&
+             ((pSVar37->archived == false &&
+              (iVar8 = I_strcmp(pNVar31->name,"commandTime"), iVar8 != 0)))) {
+            MSG_GetBitCount(pNVar31->bits,local_341c,
+                            *(int *)((int)ppStack0000002c->origin + pNVar31->offset + -0x1c),
+                            *(int *)((int)ppStack00000034->origin + pNVar31->offset + -0x1c));
+            Com_Printf(0x10,"PS field %d %s changed, %x to %x, %d bits%s\n");
+            pSVar37 = pSStack00000014;
           }
-          SV_TrackNumFieldsSkippedInPlayerstate(lVar33 - (ulonglong)local_3420);
+          SV_TrackNumFieldsSkippedInPlayerstate(iVar9 - local_3420);
         }
-        local_3420 = (uint)lVar33;
-        *piVar25 = *piVar25 + 1;
-        local_33e0[(int)local_3420 >> 5] = local_33e0[(int)local_3420 >> 5] | (uint)uVar23;
+        *puVar29 = *puVar29 + 1;
+        local_33e0[iVar9 >> 5] = local_33e0[iVar9 >> 5] | (uint)uVar28;
+        local_3420 = iVar9;
       }
-      lVar33 = lVar33 + 1;
-      piVar25 = piVar25 + 1;
-      uVar23 = (uVar23 & 0x7fffffff) << 1 | uVar23 >> 0x1f;
-      puVar26 = puVar26 + 4;
-    } while ((int)lVar33 < (int)uVar3);
+      iVar9 = iVar9 + 1;
+      puVar29 = puVar29 + 1;
+      uVar28 = (uVar28 & 0x7fffffff) << 1 | uVar28 >> 0x1f;
+      pNVar31 = pNVar31 + 1;
+    } while (iVar9 < (int)uVar38);
   }
-  iVar12 = DAT_83f1e168;
-  piVar10[7] = (int)&DAT_8368bff8;
-  if (2 < *(int *)(iVar12 + 0xc)) {
-    Com_Printf(0x10,0xffffffff8209a744,local_3420);
+  pdVar5 = sv_debugPacketContents;
+  local_3408 = CONCAT44(&orderInfo,local_3408._4_4_);
+  pSStack00000014->fieldChanges = orderInfo.playerState;
+  if (2 < (pdVar5->current).integer) {
+    Com_Printf(0x10,"Writing byte for number of fields changed (%i)\n");
   }
-  if ((int)local_3420 < -1) {
-    MyAssertHandler(0xffffffff82099550,0xb6b,0,0xffffffff82000f98,0xffffffff8209a738);
+  if (local_3420 < -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0xb6b,0,"%s");
   }
-  if (*(int *)((int)param_2 + 4) != 0) {
-    MyAssertHandler(0xffffffff82099550,0x292,0,0xffffffff82000f98,0xffffffff8208f0f0);
+  if (param_2->readOnly != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x292,0,"%s");
   }
-  if ((int)((ulonglong)uVar3 + 1) < (int)((ulonglong)local_3420 + 1)) {
-    MyAssertHandler(0xffffffff82099550,0x293,0,0xffffffff82000f98,0xffffffff82099a6c);
+  if ((int)(uVar38 + 1) < local_3420 + 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0x293,0,"%s");
   }
-  uVar20 = GetMinBitCountForNum((ulonglong)uVar3 + 1);
-  MSG_WriteBits(param_2,(ulonglong)local_3420 + 1,uVar20);
-  lVar17 = -1;
-  iVar12 = -1;
-  lVar33 = 0;
-  uVar24 = 1;
-  if (-1 < (int)local_3420) {
-    pcVar28 = (char *)(puVar4 + 3);
-    lVar21 = -1;
+  iVar9 = GetMinBitCountForNum(uVar38 + 1);
+  MSG_WriteBits(param_2,local_3420 + 1,iVar9);
+  ppVar7 = ppStack00000034;
+  ppVar6 = ppStack0000002c;
+  iVar9 = iStack00000024;
+  pSVar37 = pSStack00000014;
+  iVar8 = -1;
+  iVar10 = -1;
+  iVar11 = 0;
+  uVar28 = 1;
+  if (-1 < local_3420) {
+    puVar33 = &pNVar2->changeHints;
+    iVar27 = iVar10;
     do {
-      if (((*pcVar28 != '\x02') || (lVar22 = lVar33, (uint)lVar33 == local_3420)) &&
-         (lVar22 = lVar21, (local_33e0[(int)(uint)lVar33 >> 5] & (uint)uVar24) != 0)) {
-        cVar13 = MSG_WriteDeltaField(piVar10,param_2,param_3,iStack0000002c,param_5,pcVar28 + -0xc,
-                                     lVar33,1);
-        lVar17 = lVar33;
-        if (cVar13 == '\0') {
-          uVar20 = va(0xffffffff8209a700,*(undefined4 *)(pcVar28 + -0xc));
-          MyAssertHandler(0xffffffff82099550,0xb83,0,0xffffffff820011f4,0xffffffff8209a730,uVar20);
-        }
+      if ((((*puVar33 != '\x02') || (iVar10 = iVar11, iVar11 == local_3420)) &&
+          (iVar10 = iVar27, (local_33e0[iVar11 >> 5] & (uint)uVar28) != 0)) &&
+         (bVar13 = MSG_WriteDeltaField(pSVar37,param_2,iVar9,(uchar *)ppVar6,(uchar *)ppVar7,
+                                       (NetField *)(puVar33 + -0xc),iVar11,true,
+                                       SUB41(in_stack_ffffcb78,0),in_stack_ffffcb7c,
+                                       in_stack_ffffcb80,(bool)in_stack_ffffcb87), iVar8 = iVar11,
+         !bVar13)) {
+        va("field %s changed but wasn\'t sent to the client\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                        ,0xb83,0,"%s\n\t%s");
       }
-      iVar12 = (int)lVar22;
-      lVar33 = lVar33 + 1;
-      uVar24 = (uVar24 & 0x7fffffff) << 1 | uVar24 >> 0x1f;
-      pcVar28 = pcVar28 + 0x10;
-      lVar21 = lVar22;
-    } while ((int)lVar33 <= (int)local_3420);
-    if ((-1 < (int)local_3420) && ((uint)lVar17 != local_3420)) {
-      MyAssertHandler(0xffffffff82099550,0xb88,0,0xffffffff82000f98,0xffffffff8208fa70);
+      iVar11 = iVar11 + 1;
+      uVar28 = (uVar28 & 0x7fffffff) << 1 | uVar28 >> 0x1f;
+      puVar33 = puVar33 + 0x10;
+      iVar27 = iVar10;
+    } while (iVar11 <= local_3420);
+    if ((-1 < local_3420) && (iVar8 != local_3420)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp"
+                      ,0xb88,0,"%s");
     }
   }
-  lVar17 = -1;
-  iVar27 = -1;
-  lVar33 = 0;
-  if (-1 < iVar12) {
-    pcVar28 = (char *)(puVar4 + 3);
+  iVar8 = -1;
+  iVar11 = 0;
+  if (-1 < iVar10) {
+    puVar33 = &pNVar2->changeHints;
     do {
-      if ((*pcVar28 == '\x02') &&
-         (cVar13 = MSG_WriteDeltaField(piVar10,param_2,param_3,iStack0000002c,param_5,pcVar28 + -0xc
-                                       ,lVar33,1), cVar13 != '\0')) {
-        lVar17 = lVar33;
+      if ((*puVar33 == '\x02') &&
+         (bVar13 = MSG_WriteDeltaField(pSVar37,param_2,iVar9,(uchar *)ppVar6,(uchar *)ppVar7,
+                                       (NetField *)(puVar33 + -0xc),iVar11,true,
+                                       SUB41(in_stack_ffffcb78,0),in_stack_ffffcb7c,
+                                       in_stack_ffffcb80,(bool)in_stack_ffffcb87), bVar13)) {
+        iVar8 = iVar11;
       }
-      iVar27 = (int)lVar17;
-      lVar33 = lVar33 + 1;
-      pcVar28 = pcVar28 + 0x10;
-    } while ((int)lVar33 <= iVar12);
+      iVar11 = iVar11 + 1;
+      puVar33 = puVar33 + 0x10;
+    } while (iVar11 <= iVar10);
   }
-  if ((int)local_3420 < iVar27) {
-    MyAssertHandler(0xffffffff82099550,0xb9b,0,0xffffffff82000f98,0xffffffff8209a6ec);
+  if (local_3420 < iVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
+                    0xb9b,0,"%s");
   }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-    lVar17 = MSG_GetUsedBitCount(param_2);
-    SV_TrackPSFieldDeltasBits(lVar17 - (ulonglong)uVar11);
+  iVar8 = local_3418;
+  iVar10 = local_33fc;
+  if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+    iVar10 = MSG_GetUsedBitCount(param_2);
+    iVar8 = local_3418;
+    SV_TrackPSFieldDeltasBits(iVar10 - local_3418);
   }
-  else {
-    lVar17 = 0;
+  uVar38 = (uint)(ppVar7->stats[0] != ppVar6->stats[0]);
+  if (ppVar7->stats[1] != ppVar6->stats[1]) {
+    uVar38 = uVar38 | 2;
   }
-  bVar32 = param_5[0x67] != *(int *)(iStack0000002c + 0x19c);
-  if (param_5[0x68] != *(int *)(iStack0000002c + 0x1a0)) {
-    bVar32 = bVar32 | 2;
+  if (ppVar7->stats[2] != ppVar6->stats[2]) {
+    uVar38 = uVar38 | 4;
   }
-  if (param_5[0x69] != *(int *)(iStack0000002c + 0x1a4)) {
-    bVar32 = bVar32 | 4;
+  if (ppVar7->stats[3] != ppVar6->stats[3]) {
+    uVar38 = uVar38 | 8;
   }
-  if (param_5[0x6a] != *(int *)(iStack0000002c + 0x1a8)) {
-    bVar32 = bVar32 | 8;
-  }
-  if (bVar32 == 0) {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a5b0);
+  if (uVar38 == 0) {
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"Writing 0 to say no player stats changed\n");
     }
     MSG_WriteBit0(param_2);
   }
   else {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a698,4);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,
+                 "Sending player stats changes - bit 1 to say it changed, %i bits for which changed\n"
+                );
     }
     MSG_WriteBit1(param_2);
-    MSG_WriteBits(param_2,bVar32,4);
-    if ((bVar32 & 1) != 0) {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a66c,param_5[0x67]);
+    MSG_WriteBits(param_2,uVar38,4);
+    if ((uVar38 & 1) != 0) {
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,"Sending player health stat (value is %i)\n");
       }
-      MSG_WriteShort(param_2,param_5[0x67]);
+      MSG_WriteShort(param_2,ppVar7->stats[0]);
     }
-    if ((bVar32 & 2) != 0) {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a640,param_5[0x68]);
+    if ((uVar38 & 2) != 0) {
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,"Sending player dead yaw stat (value is %i)\n");
       }
-      MSG_WriteShort(param_2,param_5[0x68]);
+      MSG_WriteShort(param_2,ppVar7->stats[1]);
     }
-    if ((bVar32 & 4) != 0) {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a60c,param_5[0x69]);
+    if ((uVar38 & 4) != 0) {
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,"Sending player maximum health stat (value is %i)\n");
       }
-      MSG_WriteShort(param_2,param_5[0x69]);
+      MSG_WriteShort(param_2,ppVar7->stats[2]);
     }
-    if ((bVar32 & 8) != 0) {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a5dc,param_5[0x6a]);
+    if ((uVar38 & 8) != 0) {
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,"Sending player spawn count stat (value is %i)\n");
       }
-      MSG_WriteByte(param_2,param_5[0x6a]);
+      MSG_WriteByte(param_2,ppVar7->stats[3]);
     }
   }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-    lVar33 = MSG_GetUsedBitCount(param_2);
-    SV_TrackPSStatsBits(lVar33 - lVar17);
+  iVar11 = local_3410;
+  if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+    iVar11 = MSG_GetUsedBitCount(param_2);
+    SV_TrackPSStatsBits(iVar11 - iVar10);
   }
-  else {
-    lVar33 = 0;
-  }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-    lVar17 = MSG_GetUsedBitCount(param_2);
-    SV_TrackPSAmmoBits(lVar17 - lVar33);
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a594);
+  iVar10 = local_3400;
+  if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+    iVar10 = MSG_GetUsedBitCount(param_2);
+    SV_TrackPSAmmoBits(iVar10 - iVar11);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"sending ammo and weapons\n");
     }
   }
-  else {
-    lVar17 = 0;
-  }
-  lVar33 = 0;
-  iVar27 = 0x104;
-  pbVar31 = (byte *)(param_5 + 0x103);
-  iVar12 = iStack0000002c - (int)param_5;
-  do {
-    pbVar16 = pbVar31 + iVar12;
-    pbVar19 = pbVar31;
-    do {
-      bVar32 = *pbVar19;
-      bVar1 = *pbVar16;
-      if ((ulonglong)bVar32 - (ulonglong)bVar1 != 0) break;
-      pbVar19 = pbVar19 + 1;
-      pbVar16 = pbVar16 + 1;
-    } while (pbVar19 != pbVar31 + 0xc);
-    if ((int)((ulonglong)bVar32 - (ulonglong)bVar1) != 0) {
-      MSG_WriteBit1(param_2);
-      MSG_WriteBits(param_2,lVar33,4);
-      MSG_WriteBits(param_2,*(undefined4 *)pbVar31,0x19);
-      iVar29 = 0;
-      do {
-        iVar18 = iVar27 + iVar29;
-        if (param_5[iVar18] == *(int *)(iVar18 * 4 + iStack0000002c)) {
-          MSG_WriteBit0(param_2);
-        }
-        else {
-          MSG_WriteBit1();
-          iVar18 = param_5[iVar18];
-          if ((0xff < iVar18) && (iVar18 = 0xff, *(char *)((int)piVar10 + 0x19) == '\0')) {
-            Com_Printf(0xf,0xffffffff8209a560,0xff);
-          }
-          MSG_WriteBits(param_2,iVar18,8);
-        }
-        iVar29 = iVar29 + 1;
-      } while (iVar29 < 2);
-    }
-    iVar27 = iVar27 + 3;
-    lVar33 = lVar33 + 1;
-    pbVar31 = pbVar31 + 0xc;
-  } while (iVar27 < 0x131);
-  MSG_WriteBit0(param_2);
-  piVar30 = param_5 + 0x9d;
-  bVar14 = false;
   iVar27 = 0;
-  pbVar31 = (byte *)(param_5 + 0xac);
-  local_33f4 = 0;
-  lVar33 = 0xf;
-  local_33f0 = 0;
-  local_33ec = 0;
-  local_33ea = 0;
-  piVar25 = piVar30;
+  iVar30 = 0x104;
+  pCVar32 = (ppVar7->weapCommon).ammoInClip;
+  iVar11 = (int)ppVar6 - (int)ppVar7;
   do {
-    if (*piVar25 == *(int *)((int)piVar25 + iVar12)) {
-      pbVar16 = pbVar31 + iVar12;
-      pbVar19 = pbVar31;
-      do {
-        bVar32 = *pbVar19;
-        bVar1 = *pbVar16;
-        if ((ulonglong)bVar32 - (ulonglong)bVar1 != 0) break;
-        pbVar19 = pbVar19 + 1;
-        pbVar16 = pbVar16 + 1;
-      } while (pbVar19 != pbVar31 + 0xc);
-      if ((int)((ulonglong)bVar32 - (ulonglong)bVar1) != 0) goto LAB_82518f0c;
-    }
-    else {
-LAB_82518f0c:
-      bVar14 = true;
-      local_33f8[iVar27] = '\x01';
-    }
-    iVar27 = iVar27 + 1;
-    piVar25 = piVar25 + 1;
-    pbVar31 = pbVar31 + 0xc;
-    lVar33 = lVar33 + -1;
-  } while (lVar33 != 0);
-  if (bVar14) {
-    MSG_WriteBit1();
-    iVar27 = 0;
-    pcVar28 = (char *)((int)param_5 + 0x2b1);
+    pbVar16 = (byte *)(iVar11 + (int)pCVar32);
+    pCVar20 = pCVar32;
     do {
-      if (local_33f8[iVar27] == '\0') {
-        MSG_WriteBit0();
-      }
-      else {
-        MSG_WriteBit1(param_2);
-        if (*piVar30 == *(int *)((int)piVar30 + iVar12)) {
-          MSG_WriteBit0();
+      lVar19 = (ulonglong)*(byte *)&pCVar20->clipIndex - (ulonglong)*pbVar16;
+      if (lVar19 != 0) break;
+      pCVar20 = (ClipAmmo *)((int)&pCVar20->clipIndex + 1);
+      pbVar16 = pbVar16 + 1;
+    } while (pCVar20 != pCVar32 + 1);
+    if ((int)lVar19 != 0) {
+      MSG_WriteBit1(param_2);
+      MSG_WriteBits(param_2,iVar27,4);
+      MSG_WriteBits(param_2,pCVar32->clipIndex,0x19);
+      iVar34 = 0;
+      do {
+        iVar21 = iVar30 + iVar34;
+        if (ppVar7->origin[iVar21 + -7] == ppVar6->origin[iVar21 + -7]) {
+          MSG_WriteBit0(param_2);
         }
         else {
           MSG_WriteBit1(param_2);
-          MSG_WriteBits(param_2,*piVar30,0x18);
+          fVar39 = ppVar7->origin[iVar21 + -7];
+          if ((0xff < (int)fVar39) && (fVar39 = 3.57331e-43, pSVar37->archived == false)) {
+            Com_Printf(0xf,"Clip ammo clamped to %i when packed into message.\n");
+          }
+          MSG_WriteBits(param_2,(int)fVar39,8);
         }
-        if (pcVar28[-1] == '\0') {
+        iVar34 = iVar34 + 1;
+      } while (iVar34 < 2);
+    }
+    iVar30 = iVar30 + 3;
+    iVar27 = iVar27 + 1;
+    pCVar32 = pCVar32 + 1;
+  } while (iVar30 < 0x131);
+  MSG_WriteBit0(param_2);
+  pWVar35 = ppVar7->weaponsEquipped;
+  bVar13 = false;
+  iVar27 = 0;
+  pPVar15 = ppVar7->weapEquippedData;
+  local_33f4 = 0;
+  lVar19 = 0xf;
+  local_33f0 = 0;
+  local_33ec = 0;
+  local_33ea = 0;
+  pWVar14 = pWVar35;
+  do {
+    if (pWVar14->data == *(uint *)((int)pWVar14 + iVar11)) {
+      pbVar16 = (byte *)((int)pPVar15 + iVar11);
+      pPVar22 = pPVar15;
+      do {
+        lVar42 = (ulonglong)pPVar22->usedBefore - (ulonglong)*pbVar16;
+        if (lVar42 != 0) break;
+        pPVar22 = (PlayerEquippedWeaponState *)&pPVar22->dualWielding;
+        pbVar16 = pbVar16 + 1;
+      } while (pPVar22 != pPVar15 + 1);
+      if ((int)lVar42 != 0) goto LAB_82518f0c;
+    }
+    else {
+LAB_82518f0c:
+      bVar13 = true;
+      local_33f8[iVar27] = '\x01';
+    }
+    iVar27 = iVar27 + 1;
+    pWVar14 = pWVar14 + 1;
+    pPVar15 = pPVar15 + 1;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  if (bVar13) {
+    MSG_WriteBit1(param_2);
+    iVar27 = 0;
+    pbVar40 = &ppVar7->weapEquippedData[0].dualWielding;
+    do {
+      if (local_33f8[iVar27] == '\0') {
+        MSG_WriteBit0(param_2);
+      }
+      else {
+        MSG_WriteBit1(param_2);
+        if (pWVar35->data == *(uint *)((int)pWVar35 + iVar11)) {
           MSG_WriteBit0(param_2);
         }
         else {
-          MSG_WriteBit1();
+          MSG_WriteBit1(param_2);
+          MSG_WriteBits(param_2,pWVar35->data,0x18);
         }
-        if (*pcVar28 == '\0') {
+        if (((PlayerEquippedWeaponState *)(pbVar40 + -1))->usedBefore == false) {
           MSG_WriteBit0(param_2);
         }
         else {
-          MSG_WriteBit1();
+          MSG_WriteBit1(param_2);
         }
-        if (pcVar28[1] == '\0') {
+        if (*pbVar40 == false) {
           MSG_WriteBit0(param_2);
         }
         else {
-          MSG_WriteBit1();
+          MSG_WriteBit1(param_2);
         }
-        if (pcVar28[2] == '\0') {
+        if (pbVar40[1] == false) {
           MSG_WriteBit0(param_2);
         }
         else {
-          MSG_WriteBit1();
+          MSG_WriteBit1(param_2);
         }
-        if (pcVar28[3] == '\0') {
+        if (pbVar40[2] == false) {
           MSG_WriteBit0(param_2);
         }
         else {
-          MSG_WriteBit1();
+          MSG_WriteBit1(param_2);
         }
-        MSG_WriteBits(param_2,*(undefined4 *)(pcVar28 + 7),2);
+        if (pbVar40[3] == false) {
+          MSG_WriteBit0(param_2);
+        }
+        else {
+          MSG_WriteBit1(param_2);
+        }
+        MSG_WriteBits(param_2,*(int *)(pbVar40 + 7),2);
       }
       iVar27 = iVar27 + 1;
-      piVar30 = piVar30 + 1;
-      pcVar28 = pcVar28 + 0xc;
+      pWVar35 = pWVar35 + 1;
+      pbVar40 = pbVar40 + 0xc;
     } while (iVar27 < 0xf);
   }
   else {
     MSG_WriteBit0(param_2);
   }
-  lVar33 = 0;
-  pbVar31 = (byte *)(param_5 + 0xe5);
+  iVar27 = 0;
+  pGVar36 = (ppVar7->weapCommon).ammoNotInClip;
   do {
-    pbVar16 = pbVar31 + iVar12;
-    pbVar19 = pbVar31;
+    pbVar16 = (byte *)((int)pGVar36 + iVar11);
+    pGVar23 = pGVar36;
     do {
-      bVar32 = *pbVar19;
-      bVar1 = *pbVar16;
-      if ((ulonglong)bVar32 - (ulonglong)bVar1 != 0) break;
-      pbVar19 = pbVar19 + 1;
+      lVar19 = (ulonglong)*(byte *)&pGVar23->ammoType - (ulonglong)*pbVar16;
+      if (lVar19 != 0) break;
+      pGVar23 = (GlobalAmmo *)((int)&pGVar23->ammoType + 1);
       pbVar16 = pbVar16 + 1;
-    } while (pbVar19 != pbVar31 + 8);
-    if ((int)((ulonglong)bVar32 - (ulonglong)bVar1) != 0) {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a4c0,10,lVar33,*(undefined4 *)(pbVar31 + 4));
+    } while (pGVar23 != pGVar36 + 1);
+    if ((int)lVar19 != 0) {
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,
+                   "ammo changed, sending bits as flag bit, %i bit index (value is %i) followed by the ammo value as short\n"
+                  );
       }
       MSG_WriteBit1(param_2);
-      MSG_WriteBits(param_2,lVar33,4);
-      MSG_WriteBits(param_2,*(undefined4 *)pbVar31,0x19);
-      iVar27 = *(int *)(pbVar31 + 4);
-      if ((0x3ff < iVar27) && (iVar27 = 0x3ff, *(char *)((int)piVar10 + 0x19) == '\0')) {
-        Com_Printf(0xf,0xffffffff8209a528,0x3ff);
+      MSG_WriteBits(param_2,iVar27,4);
+      MSG_WriteBits(param_2,pGVar36->ammoType,0x19);
+      iVar30 = pGVar36->ammoCount;
+      if ((0x3ff < iVar30) && (iVar30 = 0x3ff, pSVar37->archived == false)) {
+        Com_Printf(0xf,"Stored ammo clamped to %i when packed into message.\n");
       }
-      MSG_WriteBits(param_2,iVar27,10);
+      MSG_WriteBits(param_2,iVar30,10);
     }
-    lVar33 = lVar33 + 1;
-    pbVar31 = pbVar31 + 8;
-  } while ((int)lVar33 < 0xf);
+    iVar27 = iVar27 + 1;
+    pGVar36 = pGVar36 + 1;
+  } while (iVar27 < 0xf);
   MSG_WriteBit0(param_2);
-  pbVar16 = (byte *)(param_5 + 0x161);
-  pbVar19 = (byte *)(iStack0000002c + 0x584);
-  pbVar31 = pbVar16;
+  poVar41 = ppVar7->objective;
+  poVar24 = ppVar6->objective;
+  poVar17 = poVar41;
   do {
-    bVar32 = *pbVar19;
-    bVar1 = *pbVar31;
-    if ((ulonglong)bVar32 - (ulonglong)bVar1 != 0) break;
-    pbVar19 = pbVar19 + 1;
-    pbVar31 = pbVar31 + 1;
-  } while (pbVar19 != (byte *)(iStack0000002c + 0xa04));
-  if ((int)((ulonglong)bVar32 - (ulonglong)bVar1) == 0) {
-    MSG_WriteBit0();
-    uVar24 = (ulonglong)local_3420;
+    lVar19 = (ulonglong)(byte)*(undefined1 *)&poVar24->state -
+             (ulonglong)(byte)*(undefined1 *)&poVar17->state;
+    if (lVar19 != 0) break;
+    poVar24 = (objective_t *)((int)&poVar24->state + 1);
+    poVar17 = (objective_t *)((int)&poVar17->state + 1);
+  } while (poVar24 != (objective_t *)&ppVar6->deltaTime);
+  if ((int)lVar19 == 0) {
+    MSG_WriteBit0(param_2);
   }
   else {
-    uVar5 = *(undefined4 *)(PTR_PTR_8296d104 + 0x1c);
-    uVar6 = *(undefined4 *)(PTR_PTR_8296d104 + 0x18);
+    uVar38 = g_netFieldList[3].count;
+    pNVar2 = g_netFieldList[3].array;
     MSG_WriteBit1(param_2);
-    lVar33 = 0;
+    iVar27 = local_3408._0_4_;
+    iVar30 = 0;
     do {
-      if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-        Com_Printf(0x10,0xffffffff8209a4a8,lVar33);
+      if (2 < (sv_debugPacketContents->current).integer) {
+        Com_Printf(0x10,"sending objective %i\n");
       }
-      MSG_WriteBits(param_2,*(undefined4 *)pbVar16,3);
-      uVar24 = MSG_GetLastChangedField(piVar10,pbVar16 + iVar12,pbVar16,uVar5,uVar6);
-      piVar10[7] = (int)&DAT_8368c57c;
-      MSG_WriteDeltaFields(piVar10,param_2,param_3,pbVar16 + iVar12,pbVar16,0,uVar24 - 1,uVar5);
-      lVar33 = lVar33 + 1;
-      pbVar16 = pbVar16 + 0x24;
-    } while ((int)lVar33 < 0x20);
+      MSG_WriteBits(param_2,poVar41->state,3);
+      local_3420 = MSG_GetLastChangedField
+                             (pSVar37,(uchar *)((int)poVar41 + iVar11),(uchar *)poVar41,uVar38,
+                              pNVar2);
+      pSVar37->fieldChanges = (int *)(iVar27 + 0x984);
+      MSG_WriteDeltaFields
+                (pSVar37,param_2,iVar9,(uchar *)((int)poVar41 + iVar11),(uchar *)poVar41,0,
+                 local_3420 + -1,uVar38,in_stack_ffffcb78,in_stack_ffffcb7c,
+                 SUB41(in_stack_ffffcb80,0),(bool)in_stack_ffffcb87);
+      iVar30 = iVar30 + 1;
+      poVar41 = poVar41 + 1;
+    } while (iVar30 < 0x20);
   }
-  lVar33 = MSG_GetUsedBitCount(param_2);
-  SV_TrackPSObjectivesBits(lVar33 - lVar17);
-  pbVar31 = (byte *)(iStack0000002c + 0xa14);
-  pbVar19 = (byte *)(param_5 + 0x285);
+  iVar11 = MSG_GetUsedBitCount(param_2);
+  SV_TrackPSObjectivesBits(iVar11 - iVar10);
+  p<Var18 = &ppVar7->hud;
+  p<Var25 = &ppVar6->hud;
   do {
-    bVar32 = *pbVar31;
-    bVar1 = *pbVar19;
-    if ((ulonglong)bVar32 - (ulonglong)bVar1 != 0) break;
-    pbVar31 = pbVar31 + 1;
-    pbVar19 = pbVar19 + 1;
-  } while (pbVar31 != (byte *)(iStack0000002c + 0x32c4));
-  if ((int)((ulonglong)bVar32 - (ulonglong)bVar1) == 0) {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a490);
+    lVar19 = (ulonglong)(byte)*(undefined1 *)&p<Var25->current[0].type -
+             (ulonglong)(byte)*(undefined1 *)&p<Var18->current[0].type;
+    if (lVar19 != 0) break;
+    p<Var25 = (<unnamed_type_hud> *)((int)&p<Var25->current[0].type + 1);
+    p<Var18 = (<unnamed_type_hud> *)((int)&p<Var18->current[0].type + 1);
+  } while (p<Var25 != (<unnamed_type_hud> *)ppVar6->partBits);
+  if ((int)lVar19 == 0) {
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"no hudelems changed\n");
     }
     MSG_WriteBit0(param_2);
   }
   else {
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a47c);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"hudelems changed\n");
     }
     MSG_WriteBit1(param_2);
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a460);
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"sending archived hudelems\n");
     }
-    MSG_WriteDeltaHudElems(piVar10,param_2,param_3,iStack0000002c + 0x1e6c,param_5 + 0x79b,0x1f);
-    if (2 < *(int *)(DAT_83f1e168 + 0xc)) {
-      Com_Printf(0x10,0xffffffff8209a444);
+    MSG_WriteDeltaHudElems(pSVar37,param_2,iVar9,(ppVar6->hud).archival,(ppVar7->hud).archival,0x1f)
+    ;
+    if (2 < (sv_debugPacketContents->current).integer) {
+      Com_Printf(0x10,"sending current hudelems\n");
     }
-    MSG_WriteDeltaHudElems
-              (piVar10,param_2,param_3,(byte *)(iStack0000002c + 0xa14),param_5 + 0x285,0x1f);
+    MSG_WriteDeltaHudElems(pSVar37,param_2,iVar9,(ppVar6->hud).current,(ppVar7->hud).current,0x1f);
   }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-    lVar17 = MSG_GetUsedBitCount(param_2);
-    SV_TrackPSHudelemBits(lVar17 - lVar33);
+  if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+    iVar9 = MSG_GetUsedBitCount(param_2);
+    SV_TrackPSHudelemBits(iVar9 - iVar11);
   }
-  if ((*(char *)((int)piVar10 + 0x19) == '\0') && (*(char *)(piVar10 + 6) == '\0')) {
-    SV_TrackFieldsChanged(uVar24);
-    lVar17 = MSG_GetUsedBitCount(param_2);
-    SV_TrackPSBits(lVar17 - (ulonglong)uVar11);
+  if ((pSVar37->archived == false) && (pSVar37->fromBaseline == false)) {
+    SV_TrackFieldsChanged(local_3420);
+    iVar9 = MSG_GetUsedBitCount(param_2);
+    SV_TrackPSBits(iVar9 - iVar8);
   }
-  iVar12 = MSG_GetUsedBitCount(param_2);
-  fVar2 = (float)(longlong)(int)(iVar12 - uVar11);
-  DAT_836fe01c = (fVar2 + DAT_836fe01c) * 0.5;
-  if (DAT_836ff36c - fVar2 < 0.0) {
-    DAT_836ff36c = fVar2;
+  iVar9 = MSG_GetUsedBitCount(param_2);
+  local_3408 = (longlong)(iVar9 - iVar8);
+  fVar39 = (float)local_3408;
+  local_3414[0x161] = (uint)((fVar39 + (float)local_3414[0x161]) * 0.5);
+  fVar3 = (float)local_3414[0x635];
+  if ((float)local_3414[0x635] - fVar39 < 0.0) {
+    fVar3 = fVar39;
   }
-  Profile_EndInternal(0);
+  local_3414[0x635] = (uint)fVar3;
+  Profile_EndInternal((double *)0x0);
   __restgprlr();
   return;
 }

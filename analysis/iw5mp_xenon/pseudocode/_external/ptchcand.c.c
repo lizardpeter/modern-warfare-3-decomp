@@ -2,300 +2,309 @@
 
 // 828CBD90  SelectPitchCandidates  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ptchcand.c:143)
 
-void SelectPitchCandidates
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,int param_7,longlong param_8)
+int SelectPitchCandidates
+              (float *param_1,int param_2,int *param_3,int param_4,float *param_5,float *param_6,
+              float param_7,float param_8,int *param_9)
 
 {
   bool bVar1;
   float fVar2;
-  float fVar3;
-  undefined4 *puVar4;
-  undefined8 uVar5;
+  undefined4 *puVar3;
+  int iVar4;
+  ulonglong uVar5;
   undefined8 uVar6;
   float *pfVar7;
   int iVar8;
-  undefined4 *puVar10;
-  int iVar11;
-  ulonglong uVar9;
-  float fVar12;
-  int iVar13;
-  float fVar14;
-  int *piVar15;
-  float fVar16;
+  float *pfVar9;
+  int iVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  float fVar13;
+  int iVar14;
+  float fVar15;
+  longlong lVar16;
   longlong lVar17;
-  double dVar18;
-  double extraout_f1;
-  double extraout_f1_00;
-  double extraout_f1_01;
-  double extraout_f1_02;
-  double dVar19;
+  longlong lVar18;
+  longlong lVar19;
   double dVar20;
+  double extraout_f1;
   double dVar21;
   double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  float fVar26;
+  float fVar27;
   undefined4 *in_stack_00000054;
   float local_220 [4];
-  int local_210 [7];
-  undefined4 uStack_1f4;
+  int local_210 [8];
   float local_1f0 [124];
   
+  dVar21 = (double)param_8;
+  lVar16 = (longlong)(int)param_6;
+  uVar5 = ZEXT48(&stack0x00000000);
   __savegprlr();
-  uVar5 = __savefpr_26();
-  dVar20 = extraout_f1;
-  uVar6 = DotProd(uVar5,uVar5,param_4);
-  iVar11 = 0;
-  pfVar7 = (float *)&DAT_82204228;
-  dVar19 = (double)(10.0 / (float)(extraout_f1_00 + 9.999999974752427e-07));
+  uVar6 = __savefpr_26();
+  pfVar7 = (float *)uVar6;
+  dVar23 = extraout_f1;
+  fVar26 = DotProd(pfVar7,pfVar7,param_2);
+  iVar8 = 0;
+  pfVar9 = CpfPitchTable;
+  dVar22 = (double)(10.0 / (fVar26 + 1e-06));
   do {
-    uVar6 = CalcCostFunc((double)*(float *)((int)&DAT_82204228 + iVar11),dVar19,uVar6,param_5,
-                         param_6,uVar5,param_4);
-    *(float *)((int)local_1f0 + iVar11) = (float)extraout_f1_01;
-    iVar11 = iVar11 + 8;
-  } while (iVar11 < 0x128);
-  puVar10 = &uStack_1f4;
-  lVar17 = 0x25;
+    fVar26 = CalcCostFunc(*(float *)((int)CpfPitchTable + iVar8),(int *)uVar6,(int)param_3,
+                          (float *)param_4,(int)pfVar7,(float)dVar22);
+    *(float *)((int)local_1f0 + iVar8) = fVar26;
+    iVar8 = iVar8 + 8;
+  } while (iVar8 < 0x128);
+  lVar11 = uVar5 - 500;
+  lVar19 = 0x25;
   do {
-    puVar4 = puVar10 + 1;
-    puVar10 = puVar10 + 2;
-    *puVar10 = *puVar4;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  iVar11 = 0;
-  if (8.0 < (float)(dVar20 * 0.75)) {
+    iVar8 = (int)lVar11;
+    lVar11 = lVar11 + 8;
+    *(undefined4 *)lVar11 = *(undefined4 *)(iVar8 + 4);
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  iVar8 = 0;
+  if (8.0 < (float)(dVar23 * 0.75)) {
     do {
-      pfVar7 = pfVar7 + 1;
-      iVar11 = iVar11 + 1;
-    } while (*pfVar7 < (float)(dVar20 * 0.75));
+      pfVar9 = pfVar9 + 1;
+      iVar8 = iVar8 + 1;
+    } while (*pfVar9 < (float)(dVar23 * 0.75));
   }
-  dVar18 = (double)local_1f0[iVar11];
-  iVar13 = iVar11;
-  iVar8 = iVar11 * 4;
+  dVar20 = (double)local_1f0[iVar8];
+  iVar14 = iVar8;
+  iVar10 = iVar8 * 4;
   do {
-    if (dVar18 < (double)*(float *)((int)local_1f0 + iVar8)) {
-      dVar18 = (double)*(float *)((int)local_1f0 + iVar8);
-      iVar13 = iVar11;
+    if (dVar20 < (double)*(float *)((int)local_1f0 + iVar10)) {
+      dVar20 = (double)*(float *)((int)local_1f0 + iVar10);
+      iVar14 = iVar8;
     }
-    iVar11 = iVar11 + 1;
-  } while ((iVar8 + 4 < 0x128) &&
-          (pfVar7 = (float *)((int)&DAT_8220422c + iVar8), iVar8 = iVar8 + 4,
-          *pfVar7 <= (float)(dVar20 * 1.3329999446868896)));
-  dVar20 = 0.5;
-  if (dVar18 < param_2) {
-    dVar18 = (double)((float)(dVar18 + param_2) * 0.5);
+    iVar8 = iVar8 + 1;
+  } while ((iVar10 + 4 < 0x128) &&
+          (iVar4 = iVar10 + 4, iVar10 = iVar10 + 4,
+          *(float *)((int)CpfPitchTable + iVar4) <= (float)(dVar23 * 1.3329999446868896)));
+  dVar23 = 0.5;
+  if (dVar20 < dVar21) {
+    dVar20 = (double)((float)(dVar20 + dVar21) * 0.5);
   }
-  dVar22 = (double)local_1f0[iVar13];
-  local_1f0[iVar13] = (float)dVar18;
-  local_220[2] = (float)HarmThreshold(local_1f0,local_210,local_220);
-  uVar6 = EliminateSmallP0(local_1f0,local_210,local_220 + 2,local_220);
+  dVar25 = (double)local_1f0[iVar14];
+  local_1f0[iVar14] = (float)dVar20;
+  local_220[2] = (float)HarmThreshold(local_1f0,local_210,(int *)local_220);
+  lVar11 = uVar5 - 0x1f0;
+  EliminateSmallP0((float *)lVar11,local_210,(int *)(local_220 + 2),(int *)local_220);
   bVar1 = false;
-  fVar16 = 0.0;
+  fVar26 = 0.0;
   if (0 < (int)local_220[2]) {
-    piVar15 = local_210;
+    lVar19 = uVar5 - 0x210;
     bVar1 = false;
     do {
-      if (iVar13 == *piVar15) {
+      if (iVar14 == *(int *)lVar19) {
         bVar1 = true;
       }
-      if (*piVar15 < iVar13) break;
-      fVar16 = (float)((int)fVar16 + 1);
-      piVar15 = piVar15 + 1;
-    } while ((int)fVar16 < (int)local_220[2]);
+      if (*(int *)lVar19 < iVar14) break;
+      fVar26 = (float)((int)fVar26 + 1);
+      lVar19 = lVar19 + 4;
+    } while ((int)fVar26 < (int)local_220[2]);
   }
-  fVar14 = local_220[2];
-  fVar12 = local_220[0];
+  fVar15 = local_220[2];
+  fVar13 = local_220[0];
   if (!bVar1) {
-    fVar2 = local_1f0[iVar13];
-    fVar3 = local_1f0[local_210[(int)local_220[0]]];
-    if (((fVar16 == local_220[2]) && (local_1f0[local_210[0]] * 0.72 <= fVar2)) ||
-       (((int)local_220[0] < (int)fVar16 && (fVar3 * 0.84 <= fVar2)))) {
-      if ((int)fVar16 < (int)local_220[2]) {
-        iVar11 = (int)local_220[2] - (int)fVar16;
-        piVar15 = local_210 + (int)local_220[2];
+    fVar27 = local_1f0[iVar14];
+    fVar2 = local_1f0[local_210[(int)local_220[0]]];
+    if (((fVar26 == local_220[2]) && (local_1f0[local_210[0]] * 0.72 <= fVar27)) ||
+       (((int)local_220[0] < (int)fVar26 && (fVar2 * 0.84 <= fVar27)))) {
+      if ((int)fVar26 < (int)local_220[2]) {
+        iVar8 = (int)local_220[2] - (int)fVar26;
+        lVar19 = ((ulonglong)(uint)local_220[2] & 0x3fffffff) * 4 + (uVar5 - 0x210);
         do {
-          *piVar15 = piVar15[-1];
-          iVar11 = iVar11 + -1;
-          piVar15 = piVar15 + -1;
-        } while (iVar11 != 0);
+          puVar3 = (undefined4 *)lVar19;
+          lVar19 = lVar19 + -4;
+          *puVar3 = puVar3[-1];
+          iVar8 = iVar8 + -1;
+        } while (iVar8 != 0);
       }
-      local_210[(int)fVar16] = iVar13;
-      if (fVar3 * 0.84 <= fVar2) {
-        fVar12 = fVar16;
+      local_210[(int)fVar26] = iVar14;
+      if (fVar2 * 0.84 <= fVar27) {
+        fVar13 = fVar26;
       }
-      fVar14 = (float)((int)local_220[2] + 1);
+      fVar15 = (float)((int)local_220[2] + 1);
     }
   }
-  local_1f0[iVar13] = (float)dVar22;
-  lVar17 = 0;
-  fVar16 = 0.0;
-  if (0 < (int)fVar14) {
-    piVar15 = local_210;
-    iVar11 = (int)param_8;
+  local_1f0[iVar14] = (float)dVar25;
+  lVar19 = 0;
+  fVar26 = 0.0;
+  if (0 < (int)fVar15) {
+    lVar17 = uVar5 - 0x210;
+    iVar8 = (int)lVar16;
     do {
-      if (((fVar16 == 0.0) || (fVar16 == (float)((int)fVar14 + -1))) || (fVar16 == fVar12)) {
-        if (fVar16 == fVar12) {
-          *in_stack_00000054 = (int)lVar17;
+      if (((fVar26 == 0.0) || (fVar26 == (float)((int)fVar15 + -1))) || (fVar26 == fVar13)) {
+        if (fVar26 == fVar13) {
+          *in_stack_00000054 = (int)lVar19;
         }
-        iVar8 = *piVar15;
-        bVar1 = 0 < iVar8;
-        dVar22 = (double)local_1f0[iVar8];
-        dVar18 = (double)(float)(&DAT_82204228)[iVar8];
+        iVar10 = *(int *)lVar17;
+        bVar1 = 0 < iVar10;
+        dVar25 = (double)local_1f0[iVar10];
+        dVar20 = (double)CpfPitchTable[iVar10];
         if (bVar1) {
-          local_220[0] = (float)((double)(float)((double)*(float *)(&DAT_82204224 + iVar8 * 4) +
-                                                dVar18) * dVar20);
+          local_220[0] = (float)((double)(float)((double)fCepWeight[iVar10 + 0xb] + dVar20) * dVar23
+                                );
         }
-        uVar9 = (ulonglong)bVar1;
-        if (iVar8 + 1 < 0x4a) {
-          uVar9 = uVar9 + 1;
+        uVar12 = (ulonglong)bVar1;
+        if (iVar10 + 1 < 0x4a) {
+          uVar12 = uVar12 + 1;
           local_220[bVar1] =
-               (float)((double)(float)((double)(float)(&DAT_82204228)[iVar8 + 1] + dVar18) * dVar20)
-          ;
+               (float)((double)(float)((double)CpfPitchTable[iVar10 + 1] + dVar20) * dVar23);
         }
-        if ((int)uVar9 != 0) {
-          pfVar7 = local_220;
+        if ((int)uVar12 != 0) {
+          lVar18 = uVar5 - 0x220;
           do {
-            dVar21 = (double)*pfVar7;
-            uVar6 = CalcCostFunc(dVar21,dVar19,uVar6,param_5,param_6,uVar5,param_4);
-            if (dVar22 < extraout_f1_02) {
-              dVar18 = dVar21;
-              dVar22 = extraout_f1_02;
+            dVar24 = (double)*(float *)lVar18;
+            fVar27 = CalcCostFunc(*(float *)lVar18,(int *)lVar11,(int)param_3,(float *)param_4,
+                                  (int)pfVar7,(float)dVar22);
+            if (dVar25 < (double)fVar27) {
+              dVar20 = dVar24;
+              dVar25 = (double)fVar27;
             }
-            uVar9 = uVar9 - 1;
-            pfVar7 = pfVar7 + 1;
-          } while (uVar9 != 0);
+            uVar12 = uVar12 - 1;
+            lVar18 = lVar18 + 4;
+          } while (uVar12 != 0);
         }
-        *(float *)((param_7 - iVar11) + (int)(float *)param_8) = (float)dVar18;
-        if ((iVar8 == iVar13) && (dVar22 < param_2)) {
-          dVar22 = (double)(float)((double)(float)(dVar22 + param_2) * dVar20);
+        *(float *)(((int)param_5 - iVar8) + (int)(float *)lVar16) = (float)dVar20;
+        if ((iVar10 == iVar14) && (dVar25 < dVar21)) {
+          dVar25 = (double)(float)((double)(float)(dVar25 + dVar21) * dVar23);
         }
-        *(float *)param_8 = (float)dVar22;
-        lVar17 = lVar17 + 1;
-        param_8 = param_8 + 4;
+        *(float *)lVar16 = (float)dVar25;
+        lVar19 = lVar19 + 1;
+        lVar16 = lVar16 + 4;
       }
-      fVar16 = (float)((int)fVar16 + 1);
-      piVar15 = piVar15 + 1;
-    } while ((int)fVar16 < (int)fVar14);
+      fVar26 = (float)((int)fVar26 + 1);
+      lVar17 = lVar17 + 4;
+    } while ((int)fVar26 < (int)fVar15);
   }
-  __restfpr_26(lVar17);
+  iVar8 = __restfpr_26(lVar19);
   __restgprlr();
-  return;
+  return iVar8;
 }
 
 
 // 828CBB30  HarmThreshold  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ptchcand.c:380)
 
-void HarmThreshold(undefined8 param_1,longlong param_2,undefined4 *param_3)
+int HarmThreshold(float *param_1,int *param_2,int *param_3)
 
 {
   longlong lVar1;
-  float *pfVar3;
-  longlong lVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  undefined4 uVar6;
+  int iVar2;
+  float *pfVar4;
+  longlong lVar3;
+  ulonglong uVar5;
+  longlong lVar6;
   longlong lVar7;
-  double dVar8;
+  longlong lVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   float local_60;
   uint local_5c [23];
   
-  __savegprlr_26();
+  lVar7 = (longlong)(int)param_2;
+  __savegprlr_26(param_1);
   lVar1 = __savefpr_28();
-  dVar12 = 0.8333333134651184;
-  dVar10 = 0.8399999737739563;
-  dVar11 = 0.7799999713897705;
-  lVar5 = 0;
-  lVar7 = 0;
-  uVar4 = 0x49;
-  dVar13 = -1.0;
+  dVar13 = 0.8333333134651184;
+  dVar11 = 0.8399999737739563;
+  dVar12 = 0.7799999713897705;
+  lVar6 = 0;
+  lVar8 = 0;
+  uVar5 = 0x49;
+  dVar14 = -1.0;
   while( true ) {
-    uVar6 = (undefined4)lVar5;
-    FindMaxValueFlt(lVar1,uVar4 + 1,local_5c,&local_60);
-    dVar8 = (double)local_60;
-    if (dVar8 < (double)(float)(dVar13 * dVar11)) break;
-    uVar4 = (ulonglong)local_5c[0];
-    *(uint *)param_2 = local_5c[0];
-    if ((double)(float)(dVar13 * dVar10) <= dVar8) {
-      lVar5 = lVar7;
+    iVar2 = (int)lVar6;
+    FindMaxValueFlt((float *)lVar1,(int)uVar5 + 1,(int *)local_5c,&local_60);
+    dVar9 = (double)local_60;
+    if (dVar9 < (double)(float)(dVar14 * dVar12)) break;
+    uVar5 = (ulonglong)local_5c[0];
+    *(uint *)lVar7 = local_5c[0];
+    if ((double)(float)(dVar14 * dVar11) <= dVar9) {
+      lVar6 = lVar8;
     }
-    uVar6 = (undefined4)lVar5;
-    lVar7 = lVar7 + 1;
-    pfVar3 = (float *)(&DAT_82204228 + local_5c[0]);
-    param_2 = param_2 + 4;
-    dVar9 = (double)*pfVar3;
-    dVar13 = dVar9 * dVar12;
-    if ((double)(float)dVar13 < 8.0) break;
-    while ((double)(float)dVar13 < dVar9) {
-      pfVar3 = pfVar3 + -1;
-      uVar4 = uVar4 - 1;
-      dVar9 = (double)*pfVar3;
+    iVar2 = (int)lVar6;
+    lVar8 = lVar8 + 1;
+    pfVar4 = CpfPitchTable + local_5c[0];
+    lVar7 = lVar7 + 4;
+    dVar10 = (double)*pfVar4;
+    dVar14 = dVar10 * dVar13;
+    if ((double)(float)dVar14 < 8.0) break;
+    while ((double)(float)dVar14 < dVar10) {
+      pfVar4 = pfVar4 + -1;
+      uVar5 = uVar5 - 1;
+      dVar10 = (double)*pfVar4;
     }
-    if ((int)uVar4 < 0) break;
-    lVar2 = (uVar4 & 0x3fffffff) * 4 + lVar1;
+    if ((int)uVar5 < 0) break;
+    lVar3 = (uVar5 & 0x3fffffff) * 4 + lVar1;
     do {
-      if (((float *)lVar2)[1] <= *(float *)lVar2) break;
-      uVar4 = uVar4 - 1;
-      lVar2 = lVar2 + -4;
-    } while (-1 < (longlong)uVar4);
-    if (((int)uVar4 < 0) || (dVar13 = dVar8, 4 < (int)lVar7)) break;
+      if (((float *)lVar3)[1] <= *(float *)lVar3) break;
+      uVar5 = uVar5 - 1;
+      lVar3 = lVar3 + -4;
+    } while (-1 < (longlong)uVar5);
+    if (((int)uVar5 < 0) || (dVar14 = dVar9, 4 < (int)lVar8)) break;
   }
-  *param_3 = uVar6;
-  __restfpr_28(lVar7);
-  __restgprlr_26();
-  return;
+  *param_3 = iVar2;
+  __restfpr_28(lVar8);
+  iVar2 = __restgprlr_26();
+  return iVar2;
 }
 
 
 // 828CBC50  EliminateSmallP0  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ptchcand.c:506)
 
-void EliminateSmallP0(undefined8 param_1,int *param_2,uint *param_3,uint *param_4)
+void EliminateSmallP0(float *param_1,int *param_2,int *param_3,int *param_4)
 
 {
   float fVar1;
   uint uVar2;
   float fVar3;
-  int iVar4;
-  bool bVar5;
+  bool bVar4;
+  int iVar5;
   float *pfVar6;
   uint uVar7;
   ulonglong uVar8;
   int iVar9;
   int local_40;
-  undefined1 auStack_3c [60];
+  float afStack_3c [15];
   
-  iVar4 = __savegprlr_26();
+  iVar5 = __savegprlr_26(param_1);
   uVar2 = *param_3;
   uVar8 = (ulonglong)uVar2;
   uVar7 = *param_4;
   iVar9 = param_2[uVar2 - 1];
-  pfVar6 = (float *)(&DAT_82204228 + iVar9);
-  fVar1 = (float)(&DAT_82204228)[iVar9];
+  pfVar6 = CpfPitchTable + iVar9;
+  fVar1 = CpfPitchTable[iVar9];
   if (fVar1 <= 30.0) {
-    bVar5 = false;
-    fVar3 = *(float *)(iVar9 * 4 + iVar4) * 0.2;
+    bVar4 = false;
+    fVar3 = *(float *)(iVar9 * 4 + iVar5) * 0.2;
     do {
       pfVar6 = pfVar6 + 1;
       iVar9 = iVar9 + 1;
     } while (*pfVar6 < fVar1 * 2.0);
-    pfVar6 = (float *)(iVar9 * 4 + iVar4);
+    pfVar6 = (float *)(iVar9 * 4 + iVar5);
     if ((pfVar6[-1] < fVar3) && (*pfVar6 < fVar3)) {
-      bVar5 = true;
+      bVar4 = true;
     }
-    pfVar6 = (float *)(&DAT_82204228 + iVar9);
+    pfVar6 = CpfPitchTable + iVar9;
     do {
       pfVar6 = pfVar6 + 1;
       iVar9 = iVar9 + 1;
     } while (*pfVar6 < fVar1 * 3.0);
-    pfVar6 = (float *)(iVar9 * 4 + iVar4);
+    pfVar6 = (float *)(iVar9 * 4 + iVar5);
     if ((pfVar6[-1] < fVar3) && (*pfVar6 < fVar3)) {
-      bVar5 = true;
+      bVar4 = true;
     }
-    if (bVar5) {
+    if (bVar4) {
       if (uVar2 == 1) {
-        FindMaxValueFlt(pfVar6,0x4a - iVar9,&local_40,auStack_3c);
+        FindMaxValueFlt(pfVar6,0x4a - iVar9,&local_40,afStack_3c);
         *param_2 = local_40 + iVar9;
       }
       else {

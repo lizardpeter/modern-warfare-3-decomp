@@ -2,40 +2,72 @@
 
 // 825D1578  UI_LoadMenu_FastFile  (ui/ui_shared_obj.cpp:3845)
 
-void UI_LoadMenu_FastFile(undefined8 param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+MenuList * UI_LoadMenu_FastFile(char *param_1,int param_2)
 
 {
-  DB_FindXAssetHeader(0x17,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MENULIST,param_1,1);
+  return XVar1.menuList;
 }
 
 
 // 825D1588  UI_LoadMenu  (ui/ui_shared_obj.cpp:3852)
 
-void UI_LoadMenu(undefined8 param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+MenuList * UI_LoadMenu(char *param_1,int param_2)
 
 {
-  DB_FindXAssetHeader(0x17,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MENULIST,param_1,1);
+  return XVar1.menuList;
 }
 
 
 // 825D1598  UI_LoadMenus_FastFile  (ui/ui_shared_obj.cpp:3958)
 
-void UI_LoadMenus_FastFile(undefined8 param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+MenuList * UI_LoadMenus_FastFile(char *param_1,int param_2)
 
 {
-  DB_FindXAssetHeader(0x17,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MENULIST,param_1,1);
+  return XVar1.menuList;
 }
 
 
 // 825D15A8  UI_LoadMenus  (ui/ui_shared_obj.cpp:3965)
 
-void UI_LoadMenus(undefined8 param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+MenuList * UI_LoadMenus(char *param_1,int param_2)
 
 {
-  DB_FindXAssetHeader(0x17,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MENULIST,param_1,1);
+  return XVar1.menuList;
 }
 

@@ -2,62 +2,63 @@
 
 // 828BCA98  XHVCopyEffectTable  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhv.c:149)
 
-void XHVCopyEffectTable(void)
+XAUDIOFXTABLE * XHVCopyEffectTable(XAUDIOFXTABLE *param_1)
 
 {
   bool bVar1;
-  undefined *puVar2;
+  XAUDIOFXTABLEENTRY *pXVar2;
   byte *pbVar3;
   byte *pbVar4;
-  void *_Dst;
-  byte bVar7;
-  char cVar8;
-  uint uVar5;
-  uint uVar6;
-  uint uVar9;
-  uint uVar10;
+  void *pvVar5;
+  XAUDIOFXTABLE *pXVar6;
+  byte bVar9;
+  uint uVar7;
+  char cVar10;
+  uint uVar8;
+  uint uVar11;
   
-  pbVar3 = (byte *)__savegprlr_26();
-  cVar8 = '\0';
+  pbVar3 = (byte *)__savegprlr_26(param_1);
+  cVar10 = '\0';
   if ((pbVar3 != (byte *)0x0) && (*pbVar3 != 0)) {
-    bVar7 = 0;
+    bVar9 = 0;
     do {
-      bVar7 = bVar7 + 1;
-    } while (bVar7 < *pbVar3);
+      bVar9 = bVar9 + 1;
+    } while (bVar9 < *pbVar3);
   }
-  if (DAT_829af8dc != 0) {
-    uVar5 = 0;
+  if (XHVFXTable.EffectCount != 0) {
+    uVar11 = 0;
     do {
       bVar1 = false;
       if ((pbVar3 == (byte *)0x0) || (*pbVar3 == 0)) {
 LAB_828bcb44:
-        cVar8 = cVar8 + '\x01';
+        cVar10 = cVar10 + '\x01';
       }
       else {
-        uVar9 = 0;
+        uVar7 = 0;
         do {
-          if (*(char *)(uVar9 * 0xc + *(int *)(pbVar3 + 4)) == PTR_DAT_829af8e0[uVar5 * 0xc]) {
+          if (*(uchar *)(uVar7 * 0xc + *(int *)(pbVar3 + 4)) ==
+              XHVFXTable.paEffects[uVar11].EffectId) {
             bVar1 = true;
           }
-          uVar9 = uVar9 + 1 & 0xff;
-        } while (uVar9 < *pbVar3);
+          uVar7 = uVar7 + 1 & 0xff;
+        } while (uVar7 < *pbVar3);
         if (!bVar1) goto LAB_828bcb44;
       }
-      uVar5 = uVar5 + 1 & 0xff;
-    } while (uVar5 < DAT_829af8dc);
+      uVar11 = uVar11 + 1 & 0xff;
+    } while (uVar11 < XHVFXTable.EffectCount);
   }
-  pbVar4 = (byte *)XMemAlloc(8,0x608a2002);
+  pbVar4 = XMemAlloc(8,0x608a2002);
   if (pbVar4 != (byte *)0x0) {
     if (pbVar3 != (byte *)0x0) {
       *pbVar4 = *pbVar3;
     }
-    bVar7 = *pbVar4;
-    *pbVar4 = bVar7 + cVar8;
-    _Dst = (void *)XMemAlloc((ulonglong)(byte)(bVar7 + cVar8) * 0xc,0x608a2002);
-    *(void **)(pbVar4 + 4) = _Dst;
-    if (_Dst == (void *)0x0) {
-      if (*(int *)(pbVar4 + 4) != 0) {
-        XMemFree(*(int *)(pbVar4 + 4),0x608a2002);
+    bVar9 = *pbVar4;
+    *pbVar4 = bVar9 + cVar10;
+    pvVar5 = XMemAlloc((uint)(byte)(bVar9 + cVar10) * 0xc,0x608a2002);
+    *(void **)(pbVar4 + 4) = pvVar5;
+    if (pvVar5 == (void *)0x0) {
+      if (*(void **)(pbVar4 + 4) != (void *)0x0) {
+        XMemFree(*(void **)(pbVar4 + 4),0x608a2002);
         pbVar4[4] = 0;
         pbVar4[5] = 0;
         pbVar4[6] = 0;
@@ -67,64 +68,68 @@ LAB_828bcb44:
       pbVar4 = (byte *)0x0;
     }
     else {
-      uVar5 = 0;
-      if (pbVar3 != (byte *)0x0) {
-        uVar5 = (uint)*pbVar3;
-        if (*(void **)(pbVar3 + 4) != (void *)0x0) {
-          memcpy(_Dst,*(void **)(pbVar3 + 4),(uint)*pbVar3 * 0xc);
-        }
+      if ((pbVar3 != (byte *)0x0) && (*(int *)(pbVar3 + 4) != 0)) {
+        memcpy();
       }
-      puVar2 = PTR_DAT_829af8e0;
-      uVar9 = (uint)DAT_829af8dc;
-      if (uVar9 != 0) {
-        uVar10 = 0;
+      pXVar2 = XHVFXTable.paEffects;
+      uVar11 = (uint)XHVFXTable.EffectCount;
+      if (uVar11 != 0) {
+        uVar7 = 0;
         do {
           bVar1 = false;
           if ((pbVar3 == (byte *)0x0) || (*pbVar3 == 0)) {
 LAB_828bcc50:
-            memcpy((void *)(uVar5 * 0xc + *(int *)(pbVar4 + 4)),puVar2 + uVar10 * 0xc,0xc);
-            uVar5 = uVar5 + 1 & 0xff;
+            memcpy();
           }
           else {
-            uVar6 = 0;
+            uVar8 = 0;
             do {
-              if (*(char *)(uVar6 * 0xc + *(int *)(pbVar3 + 4)) == puVar2[uVar10 * 0xc]) {
+              if (*(uchar *)(uVar8 * 0xc + *(int *)(pbVar3 + 4)) == pXVar2[uVar7].EffectId) {
                 bVar1 = true;
               }
-              uVar6 = uVar6 + 1 & 0xff;
-            } while (uVar6 < *pbVar3);
+              uVar8 = uVar8 + 1 & 0xff;
+            } while (uVar8 < *pbVar3);
             if (!bVar1) goto LAB_828bcc50;
           }
-          uVar10 = uVar10 + 1 & 0xff;
-        } while (uVar10 < uVar9);
+          uVar7 = uVar7 + 1 & 0xff;
+        } while (uVar7 < uVar11);
       }
     }
   }
-  __restgprlr_26(pbVar4);
-  return;
+  pXVar6 = (XAUDIOFXTABLE *)__restgprlr_26(pbVar4);
+  return pXVar6;
 }
 
 
 // 828BCCC8  XHVInitializeXAudio  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhv.c:355)
 
-void XHVInitializeXAudio(undefined8 param_1,ulonglong param_2,undefined4 *param_3,undefined8 param_4
-                        )
+undefined4
+XHVInitializeXAudio(void **param_1,void **param_2,XAUDIOENGINEINIT *param_3,
+                   IXAudioBatchAllocator *param_4)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  undefined4 *puVar3;
+  undefined4 *puVar1;
+  ulonglong uVar2;
+  undefined4 uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
+  XAUDIOFXTABLEENTRY **ppXVar7;
   undefined4 local_30;
-  int local_2c;
+  XAUDIOFXTABLE *local_2c;
   undefined4 local_28;
   
-  uVar1 = __savegprlr_29();
-  local_2c = param_3[1];
-  local_30 = *param_3;
-  local_28 = param_3[2];
+  lVar5 = (longlong)(int)param_4;
+  lVar6 = (longlong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_29(param_1,uVar4,lVar6,lVar5);
+  puVar1 = (undefined4 *)lVar6;
+  local_2c = (XAUDIOFXTABLE *)puVar1[1];
+  local_30 = *puVar1;
+  local_28 = puVar1[2];
   local_2c = XHVCopyEffectTable(local_2c);
-  if (local_2c == 0) {
-    lVar2 = -0x7ff8fff2;
+  if (local_2c == (XAUDIOFXTABLE *)0x0) {
+    lVar6 = -0x7ff8fff2;
   }
   else {
     if (local_30._0_1_ < 4) {
@@ -134,60 +139,59 @@ void XHVInitializeXAudio(undefined8 param_1,ulonglong param_2,undefined4 *param_
       local_30._1_3_ = CONCAT12(3,local_30._2_2_);
     }
     do {
-      uVar1 = uVar1 + 4;
-      if ((param_2 & 0xffffffff) <= (uVar1 & 0xffffffff)) break;
-    } while (*(int *)uVar1 == 0);
-    lVar2 = (*(code *)*(int *)uVar1)(uVar1,param_2,&local_30,param_4);
-    if ((lVar2 < 0) && (local_2c != 0)) {
-      puVar3 = (undefined4 *)(local_2c + 4);
-      if (*(int *)(local_2c + 4) != 0) {
-        XMemFree(*(int *)(local_2c + 4),0x608a2002);
-        *puVar3 = 0;
+      uVar2 = uVar2 + 4;
+      if ((uVar4 & 0xffffffff) <= (uVar2 & 0xffffffff)) break;
+    } while (*(int *)uVar2 == 0);
+    lVar6 = (*(code *)*(int *)uVar2)(uVar2,uVar4,&local_30,lVar5);
+    if ((lVar6 < 0) && (local_2c != (XAUDIOFXTABLE *)0x0)) {
+      ppXVar7 = &local_2c->paEffects;
+      if (local_2c->paEffects != (XAUDIOFXTABLEENTRY *)0x0) {
+        XMemFree(local_2c->paEffects,0x608a2002);
+        *ppXVar7 = (XAUDIOFXTABLEENTRY *)0x0;
       }
       XMemFree(local_2c,0x608a2002);
     }
   }
-  __restgprlr_29(lVar2);
-  return;
+  uVar3 = __restgprlr_29(lVar6);
+  return uVar3;
 }
 
 
 // 828BCDD0  XHVpCreateEngine  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhv.c:479)
 
-void XHVpCreateEngine(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined8 param_4)
+undefined4
+XHVpCreateEngine(XHV_INIT_PARAMS *param_1,void **param_2,int param_3,IXHVEngine **param_4)
 
 {
-  int *piVar1;
-  undefined4 uVar3;
-  longlong lVar2;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  IXHVEngine *pIVar1;
+  XHV_INIT_PARAMS *pXVar2;
+  int iVar3;
+  undefined4 uVar4;
+  XHVENGINECREATEPARAMS local_40 [5];
   
-  uVar3 = __savegprlr_28();
-  XMemSet(&local_40,0,0xc);
-  local_40 = uVar3;
-  local_3c = param_2;
-  local_38 = param_3;
-  lVar2 = XHVEngineCreate(&local_40,param_4);
-  if (lVar2 < 0) {
-    piVar1 = (int *)*(int *)param_4;
-    if (piVar1 != (int *)0x0) {
-      (**(code **)(*piVar1 + 4))();
-      *(int *)param_4 = 0;
-    }
+  pXVar2 = (XHV_INIT_PARAMS *)__savegprlr_28(param_1);
+  XMemSet(local_40,0,0xc);
+  local_40[0].InitParams = pXVar2;
+  local_40[0].WorkerThread = param_2;
+  local_40[0].NoWorkerThread = param_3;
+  iVar3 = XHVEngineCreate(local_40,param_4);
+  if ((iVar3 < 0) && (pIVar1 = *param_4, pIVar1 != (IXHVEngine *)0x0)) {
+    (*pIVar1->lpVtbl->Release)(pIVar1);
+    *param_4 = (IXHVEngine *)0x0;
   }
-  __restgprlr_28(lVar2);
-  return;
+  uVar4 = __restgprlr_28(iVar3);
+  return uVar4;
 }
 
 
 // 828BCE50  XHVCreateEngine  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhv.c:554)
 
-void XHVCreateEngine(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+undefined4 XHVCreateEngine(XHV_INIT_PARAMS *param_1,void **param_2,IXHVEngine **param_3)
 
 {
-  XHVpCreateEngine(param_1,param_2,0,param_3);
-  return;
+  T_HRESULT TVar1;
+  
+  TVar1 = XHVpCreateEngine(param_1,param_2,0,param_3);
+  return TVar1;
 }
 

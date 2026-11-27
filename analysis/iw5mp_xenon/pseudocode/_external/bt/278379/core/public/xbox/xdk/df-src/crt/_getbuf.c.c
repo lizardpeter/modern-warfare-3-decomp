@@ -2,27 +2,27 @@
 
 // 829281E8  _getbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_getbuf.c:43)
 
-void _getbuf(FILE *_File)
+void _getbuf(_iobuf *param_1)
 
 {
   char *pcVar1;
   uint uVar2;
   
-  DAT_84895df8 = DAT_84895df8 + 1;
+  _cflush = _cflush + 1;
   pcVar1 = malloc(0x1000);
-  _File->_base = pcVar1;
+  param_1->_base = pcVar1;
   if (pcVar1 == (char *)0x0) {
-    uVar2 = _File->_flag | 4;
-    _File->_base = (char *)&_File->_charbuf;
-    _File->_bufsiz = 2;
+    uVar2 = param_1->_flag | 4;
+    param_1->_base = (char *)&param_1->_charbuf;
+    param_1->_bufsiz = 2;
   }
   else {
-    uVar2 = _File->_flag | 8;
-    _File->_bufsiz = 0x1000;
+    uVar2 = param_1->_flag | 8;
+    param_1->_bufsiz = 0x1000;
   }
-  _File->_flag = uVar2;
-  _File->_cnt = 0;
-  _File->_ptr = _File->_base;
+  param_1->_flag = uVar2;
+  param_1->_cnt = 0;
+  param_1->_ptr = param_1->_base;
   return;
 }
 

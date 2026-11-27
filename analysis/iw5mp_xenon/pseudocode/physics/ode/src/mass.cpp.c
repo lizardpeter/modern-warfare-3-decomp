@@ -2,7 +2,7 @@
 
 // 82695B80  checkMass  (physics/ode/src/mass.cpp:37)
 
-void checkMass(void)
+void checkMass(dMass *param_1)
 
 {
   float fVar1;
@@ -17,7 +17,7 @@ void checkMass(void)
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_60 [4];
+  float fStack_60;
   float local_5c;
   float local_58;
   float local_50;
@@ -25,22 +25,24 @@ void checkMass(void)
   float local_40;
   float local_3c;
   
-  pfVar2 = (float *)__savegprlr_28();
+  pfVar2 = (float *)__savegprlr_28(param_1);
   if (*pfVar2 <= 0.0) {
-    MyAssertHandler(0xffffffff821999a0,0x2a,0,0xffffffff82000f98,0xffffffff82199a60);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x2a,0,"%s");
   }
   iVar3 = dIsPositiveDefinite3(pfVar2 + 5);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821999a0,0x2b,0,0xffffffff82000f98,0xffffffff82199a40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x2b,0,"%s");
   }
-  dSetZero(auStack_60,0xc);
+  dSetZero(&fStack_60,0xc);
   local_50 = pfVar2[3];
   local_58 = pfVar2[2];
   local_5c = -local_50;
   local_3c = pfVar2[1];
   local_40 = -local_58;
   local_48 = -local_3c;
-  dMULTIPLY0_333<float,float,float>(&local_90,auStack_60,auStack_60);
+  dMULTIPLY0_333<float,float,float>(&local_90,&fStack_60,&fStack_60);
   fVar1 = *pfVar2;
   local_90 = fVar1 * local_90 + pfVar2[5];
   local_8c = fVar1 * local_8c + pfVar2[6];
@@ -53,8 +55,8 @@ void checkMass(void)
   local_68 = fVar1 * local_68 + pfVar2[0xf];
   iVar3 = dIsPositiveDefinite3(&local_90);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821999a0,0x40,0,0xffffffff820011f4,0xffffffff821999f0,
-                    0xffffffff82199a0c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x40,0,"%s\n\t%s");
   }
   __restgprlr_28();
   return;
@@ -63,50 +65,70 @@ void checkMass(void)
 
 // 82695938  dMassSetZero  (physics/ode/src/mass.cpp:70)
 
-void dMassSetZero(undefined4 *param_1)
+void dMassSetZero(dMass *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0x47,0,0xffffffff82000f98,0xffffffff821999e4);
+  if (param_1 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x47,0,"%s");
   }
-  *param_1 = 0;
-  dSetZero(param_1 + 1,4);
-  dSetZero(param_1 + 5,0xc);
+  param_1->mass = 0.0;
+  dSetZero(param_1->c,4);
+  dSetZero(param_1->I,0xc);
   return;
 }
 
 
 // 82695D20  dMassSetParameters  (physics/ode/src/mass.cpp:82)
 
-void dMassSetParameters(undefined8 param_1,double param_2,double param_3,double param_4,
-                       double param_5,double param_6,double param_7,double param_8,double param_9,
-                       double param_10)
+void dMassSetParameters(dMass *param_1,float param_2,float param_3,float param_4,float param_5,
+                       float param_6,float param_7,float param_8,float param_9,float param_10,
+                       float param_11)
 
 {
-  float *pfVar1;
+  dMass *pdVar1;
   double extraout_f1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  pfVar1 = (float *)__savefpr_22();
-  dVar2 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0x53,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar10 = (double)param_11;
+  dVar9 = (double)param_10;
+  dVar5 = (double)param_6;
+  dVar6 = (double)param_7;
+  dVar7 = (double)param_8;
+  dVar8 = (double)param_9;
+  dVar4 = (double)param_5;
+  dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
+  pdVar1 = (dMass *)__savefpr_22((double)param_2,param_1);
+  dVar11 = extraout_f1;
+  if (pdVar1 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x53,0,"%s");
   }
-  dMassSetZero(pfVar1);
-  *pfVar1 = (float)dVar2;
-  pfVar1[1] = (float)param_2;
-  pfVar1[2] = (float)param_3;
-  pfVar1[3] = (float)param_4;
-  pfVar1[5] = (float)param_5;
-  pfVar1[10] = (float)param_6;
-  pfVar1[0xf] = (float)param_7;
-  pfVar1[6] = (float)param_8;
-  pfVar1[7] = (float)param_9;
-  pfVar1[0xb] = (float)param_10;
-  pfVar1[9] = (float)param_8;
-  pfVar1[0xd] = (float)param_9;
-  pfVar1[0xe] = (float)param_10;
-  checkMass(pfVar1);
+  dMassSetZero(pdVar1);
+  pdVar1->mass = (float)dVar11;
+  pdVar1->c[0] = (float)dVar2;
+  pdVar1->c[1] = (float)dVar3;
+  pdVar1->c[2] = (float)dVar4;
+  pdVar1->I[0] = (float)dVar5;
+  pdVar1->I[5] = (float)dVar6;
+  pdVar1->I[10] = (float)dVar7;
+  pdVar1->I[1] = (float)dVar8;
+  pdVar1->I[2] = (float)dVar9;
+  pdVar1->I[6] = (float)dVar10;
+  pdVar1->I[4] = (float)dVar8;
+  pdVar1->I[8] = (float)dVar9;
+  pdVar1->I[9] = (float)dVar10;
+  checkMass(pdVar1);
   __restfpr_22();
   return;
 }
@@ -114,103 +136,109 @@ void dMassSetParameters(undefined8 param_1,double param_2,double param_3,double 
 
 // 82695DF0  Phys_MassSetTotal  (physics/ode/src/mass.cpp:106)
 
-void Phys_MassSetTotal(double param_1,undefined8 param_2,undefined8 param_3,float *param_4,
-                      float *param_5)
+void Phys_MassSetTotal(dMass *param_1,float param_2,float *param_3,float *param_4)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float *in_r6;
   
-  dVar1 = 100.0;
-  dVar3 = dVar1;
-  if (-(double)param_4[2] < 0.0) {
-    dVar3 = (double)param_4[2];
+  fVar1 = 100.0;
+  fVar3 = fVar1;
+  if (-param_4[2] < 0.0) {
+    fVar3 = param_4[2];
   }
-  dVar2 = dVar1;
-  if (-(double)*param_4 < 0.0) {
-    dVar2 = (double)*param_4;
+  fVar2 = fVar1;
+  if (-*param_4 < 0.0) {
+    fVar2 = *param_4;
   }
-  if (-(double)param_4[1] < 0.0) {
-    dVar1 = (double)param_4[1];
+  if (-param_4[1] < 0.0) {
+    fVar1 = param_4[1];
   }
-  dMassSetParameters(param_1,0,0,0,(double)(float)(dVar2 * param_1),(double)(float)(dVar1 * param_1)
-                     ,(double)(float)(dVar3 * param_1),(double)(float)((double)*param_5 * param_1),
-                     (double)(float)((double)param_5[1] * param_1),
-                     (double)(float)((double)param_5[2] * param_1));
+  dMassSetParameters(param_1,param_2,0.0,0.0,0.0,fVar2 * param_2,fVar1 * param_2,fVar3 * param_2,
+                     *in_r6 * param_2,in_r6[1] * param_2,in_r6[2] * param_2);
   return;
 }
 
 
 // 82696A68  dMassSetSphere  (physics/ode/src/mass.cpp:125)
 
-void dMassSetSphere(double param_1,double param_2)
+void dMassSetSphere(dMass *param_1,float param_2,float param_3)
 
 {
-  dMassSetSphereTotal((double)((float)((double)(float)((double)(float)(param_1 * param_2) * param_2)
-                                      * param_2) * 4.1887903));
+  dMassSetSphereTotal(param_1,param_2 * param_3 * param_3 * param_3 * 4.1887903,param_3);
   return;
 }
 
 
 // 82695E70  dMassSetSphereTotal  (physics/ode/src/mass.cpp:132)
 
-void dMassSetSphereTotal(double param_1,double param_2,float *param_3)
+void dMassSetSphereTotal(dMass *param_1,float param_2,float param_3)
 
 {
   float fVar1;
+  double dVar2;
+  double dVar3;
   
-  if (param_3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0x85,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
+  if (param_1 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x85,0,"%s");
   }
-  dMassSetZero(param_3);
-  *param_3 = (float)param_1;
-  fVar1 = (float)((double)(float)(param_1 * param_2) * param_2) * 0.4;
-  param_3[5] = fVar1;
-  param_3[10] = fVar1;
-  param_3[0xf] = fVar1;
-  checkMass(param_3);
+  dMassSetZero(param_1);
+  param_1->mass = (float)dVar2;
+  fVar1 = (float)((double)(float)(dVar2 * dVar3) * dVar3) * 0.4;
+  param_1->I[0] = fVar1;
+  param_1->I[5] = fVar1;
+  param_1->I[10] = fVar1;
+  checkMass(param_1);
   return;
 }
 
 
 // 82695F10  dMassSetCappedCylinder  (physics/ode/src/mass.cpp:149)
 
-void dMassSetCappedCylinder
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+void dMassSetCappedCylinder(dMass *param_1,float param_2,int param_3,float param_4,float param_5)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
+  dMass *pdVar4;
+  ulonglong in_r5;
   double extraout_f1;
   double dVar5;
+  double dVar6;
+  double dVar7;
   
-  pfVar4 = (float *)__savegprlr_29();
-  dVar5 = extraout_f1;
-  if (pfVar4 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0x97,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  pdVar4 = (dMass *)__savegprlr_29((double)param_2,param_1,param_3);
+  dVar7 = extraout_f1;
+  if (pdVar4 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x97,0,"%s");
   }
-  if (((int)param_6 < 1) || (3 < (int)param_6)) {
-    MyAssertHandler(0xffffffff821999a0,0x98,0,0xffffffff820011f4,0xffffffff82199a74,
-                    0xffffffff82199a98);
+  if (((int)in_r5 < 1) || (3 < (int)in_r5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x98,0,"%s\n\t%s");
   }
-  dMassSetZero(pfVar4);
-  dVar5 = (double)(float)((double)(float)(dVar5 * param_2) * param_2);
-  fVar1 = (float)(dVar5 * param_3) * 3.1415927;
-  fVar2 = (float)(dVar5 * param_2) * 4.1887903;
-  *pfVar4 = fVar2 + fVar1;
-  fVar3 = (float)((double)(float)(param_2 * 0.4000000059604645 + (double)(float)(param_3 * 0.375)) *
-                  param_2 + (double)((float)(param_3 * param_3) * 0.25)) * fVar2 +
-          ((float)(param_2 * param_2) * 0.25 + (float)(param_3 * param_3) * 0.083333336) * fVar1;
-  pfVar4[5] = fVar3;
-  pfVar4[10] = fVar3;
-  pfVar4[0xf] = fVar3;
-  *(float *)((int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 2) + (int)pfVar4) =
-       (float)((double)(float)((double)(fVar2 * 0.4 + fVar1 * 0.5) * param_2) * param_2);
-  checkMass(pfVar4);
+  dMassSetZero(pdVar4);
+  dVar7 = (double)(float)((double)(float)(dVar7 * dVar5) * dVar5);
+  fVar1 = (float)(dVar7 * dVar6) * 3.1415927;
+  fVar2 = (float)(dVar7 * dVar5) * 4.1887903;
+  pdVar4->mass = fVar2 + fVar1;
+  fVar3 = (float)((double)(float)(dVar5 * 0.4000000059604645 + (double)(float)(dVar6 * 0.375)) *
+                  dVar5 + (double)((float)(dVar6 * dVar6) * 0.25)) * fVar2 +
+          ((float)(dVar5 * dVar5) * 0.25 + (float)(dVar6 * dVar6) * 0.083333336) * fVar1;
+  pdVar4->I[0] = fVar3;
+  pdVar4->I[5] = fVar3;
+  pdVar4->I[10] = fVar3;
+  *(float *)((int)pdVar4->c + (int)((in_r5 + (in_r5 & 0x3fffffff) * 4 & 0xffffffff) << 2) + -4) =
+       (float)((double)(float)((double)(fVar2 * 0.4 + fVar1 * 0.5) * dVar5) * dVar5);
+  checkMass(pdVar4);
   __restgprlr_29();
   return;
 }
@@ -218,23 +246,26 @@ void dMassSetCappedCylinder
 
 // 82696A88  dMassSetCappedCylinderTotal  (physics/ode/src/mass.cpp:173)
 
-void dMassSetCappedCylinderTotal(undefined8 param_1,undefined8 param_2)
+void dMassSetCappedCylinderTotal
+               (dMass *param_1,float param_2,int param_3,float param_4,float param_5)
 
 {
-  dMassSetCappedCylinder(0x3ff0000000000000);
-  dMassAdjust(param_1,param_2);
+  double dVar1;
+  
+  dVar1 = (double)param_2;
+  dMassSetCappedCylinder(param_1,1.0,param_3,param_4,param_5);
+  dMassAdjust(param_1,(float)dVar1);
   return;
 }
 
 
 // 82696AD8  dMassSetCylinder  (physics/ode/src/mass.cpp:181)
 
-void dMassSetCylinder(double param_1,double param_2,double param_3)
+void dMassSetCylinder(dMass *param_1,float param_2,int param_3,float param_4,float param_5)
 
 {
   dMassSetCylinderTotal
-            ((double)((float)((double)(float)((double)(float)(param_1 * param_2) * param_2) *
-                             param_3) * 3.1415927));
+            (param_1,param_2 * param_4 * param_4 * param_5 * 3.1415927,param_3,param_4,param_5);
   return;
 }
 
@@ -259,63 +290,75 @@ void dMULTIPLY2_333<float,float,float>(float *param_1,float *param_2,float *para
 
 // 82696078  dMassSetCylinderTotal  (physics/ode/src/mass.cpp:188)
 
-void dMassSetCylinderTotal
-               (double param_1,double param_2,double param_3,float *param_4,undefined8 param_5,
-               int param_6)
+void dMassSetCylinderTotal(dMass *param_1,float param_2,int param_3,float param_4,float param_5)
 
 {
   float fVar1;
+  int in_r5;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
-  if (param_4 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0xbe,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar4 = (double)param_5;
+  dVar2 = (double)param_2;
+  dVar3 = (double)param_4;
+  if (param_1 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0xbe,0,"%s");
   }
-  dMassSetZero(param_4);
-  *param_4 = (float)param_1;
-  fVar1 = (float)((double)((float)(param_3 * param_3) * 0.083333336 +
-                          (float)((double)(float)(param_2 * param_2) * 0.25)) * param_1);
-  param_4[5] = fVar1;
-  param_4[10] = fVar1;
-  param_4[0xf] = fVar1;
-  param_4[param_6 * 5] = (float)((double)(float)(param_2 * param_2) * param_1) * 0.5;
-  checkMass(param_4);
+  dMassSetZero(param_1);
+  param_1->mass = (float)dVar2;
+  fVar1 = (float)((double)((float)(dVar4 * dVar4) * 0.083333336 +
+                          (float)((double)(float)(dVar3 * dVar3) * 0.25)) * dVar2);
+  param_1->I[0] = fVar1;
+  param_1->I[5] = fVar1;
+  param_1->I[10] = fVar1;
+  param_1->c[in_r5 * 5 + -1] = (float)((double)(float)(dVar3 * dVar3) * dVar2) * 0.5;
+  checkMass(param_1);
   return;
 }
 
 
 // 82696AF8  dMassSetBox  (physics/ode/src/mass.cpp:208)
 
-void dMassSetBox(double param_1,double param_2,double param_3,double param_4)
+void dMassSetBox(dMass *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  dMassSetBoxTotal((double)(float)((double)(float)((double)(float)(param_1 * param_2) * param_3) *
-                                  param_4));
+  dMassSetBoxTotal(param_1,param_2 * param_3 * param_4 * param_5,param_3,param_4,param_5);
   return;
 }
 
 
 // 82696160  dMassSetBoxTotal  (physics/ode/src/mass.cpp:215)
 
-void dMassSetBoxTotal(undefined8 param_1,double param_2,double param_3,double param_4)
+void dMassSetBoxTotal(dMass *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  float *pfVar1;
+  dMass *pdVar1;
   double extraout_f1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  pfVar1 = (float *)__savefpr_28();
-  dVar2 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0xd8,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  pdVar1 = (dMass *)__savefpr_28((double)param_2,param_1);
+  dVar5 = extraout_f1;
+  if (pdVar1 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0xd8,0,"%s");
   }
-  dMassSetZero(pfVar1);
-  *pfVar1 = (float)dVar2;
-  pfVar1[5] = (float)((double)((float)(param_4 * param_4) + (float)(param_3 * param_3)) * dVar2) *
-              0.083333336;
-  pfVar1[10] = (float)((double)((float)(param_2 * param_2) + (float)(param_4 * param_4)) * dVar2) *
-               0.083333336;
-  pfVar1[0xf] = (float)((double)((float)(param_2 * param_2) + (float)(param_3 * param_3)) * dVar2) *
-                0.083333336;
-  checkMass(pfVar1);
+  dMassSetZero(pdVar1);
+  pdVar1->mass = (float)dVar5;
+  pdVar1->I[0] = (float)((double)((float)(dVar4 * dVar4) + (float)(dVar3 * dVar3)) * dVar5) *
+                 0.083333336;
+  pdVar1->I[5] = (float)((double)((float)(dVar2 * dVar2) + (float)(dVar4 * dVar4)) * dVar5) *
+                 0.083333336;
+  pdVar1->I[10] =
+       (float)((double)((float)(dVar2 * dVar2) + (float)(dVar3 * dVar3)) * dVar5) * 0.083333336;
+  checkMass(pdVar1);
   __restfpr_28();
   return;
 }
@@ -323,7 +366,7 @@ void dMassSetBoxTotal(undefined8 param_1,double param_2,double param_3,double pa
 
 // 82696230  dMassAdjust  (physics/ode/src/mass.cpp:230)
 
-void dMassAdjust(void)
+void dMassAdjust(dMass *param_1,float param_2)
 
 {
   float fVar1;
@@ -341,7 +384,7 @@ void dMassAdjust(void)
   float local_80;
   float local_7c;
   float local_78;
-  undefined1 auStack_70 [4];
+  float fStack_70;
   float local_6c;
   float local_68;
   float local_60;
@@ -349,17 +392,20 @@ void dMassAdjust(void)
   float local_50;
   float local_4c;
   
-  pfVar2 = (float *)__savegprlr_28();
+  pfVar2 = (float *)__savegprlr_28((double)param_2,param_1);
   dVar4 = extraout_f1;
   if (pfVar2 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0xe7,0,0xffffffff82000f98,0xffffffff821999e4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0xe7,0,"%s");
   }
   dVar5 = 0.0;
   if (*pfVar2 == 0.0) {
-    MyAssertHandler(0xffffffff821999a0,0xe8,0,0xffffffff82000f98,0xffffffff82199ac0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0xe8,0,"%s");
   }
   if (dVar4 == dVar5) {
-    MyAssertHandler(0xffffffff821999a0,0xe9,0,0xffffffff82000f98,0xffffffff82199ab0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0xe9,0,"%s");
   }
   fVar1 = *pfVar2;
   *pfVar2 = (float)dVar4;
@@ -374,20 +420,22 @@ void dMassAdjust(void)
   pfVar2[0xe] = fVar1 * pfVar2[0xe];
   pfVar2[0xf] = pfVar2[0xf] * fVar1;
   if ((double)*pfVar2 <= dVar5) {
-    MyAssertHandler(0xffffffff821999a0,0x2a,0,0xffffffff82000f98,0xffffffff82199a60);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x2a,0,"%s");
   }
   iVar3 = dIsPositiveDefinite3(pfVar2 + 5);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821999a0,0x2b,0,0xffffffff82000f98,0xffffffff82199a40);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x2b,0,"%s");
   }
-  dSetZero(auStack_70,0xc);
+  dSetZero(&fStack_70,0xc);
   local_60 = pfVar2[3];
   local_68 = pfVar2[2];
   local_6c = -local_60;
   local_4c = pfVar2[1];
   local_50 = -local_68;
   local_58 = -local_4c;
-  dMULTIPLY0_333<float,float,float>(&local_a0,auStack_70,auStack_70);
+  dMULTIPLY0_333<float,float,float>(&local_a0,&fStack_70,&fStack_70);
   fVar1 = *pfVar2;
   local_a0 = fVar1 * local_a0 + pfVar2[5];
   local_9c = fVar1 * local_9c + pfVar2[6];
@@ -400,8 +448,8 @@ void dMassAdjust(void)
   local_78 = fVar1 * local_78 + pfVar2[0xf];
   iVar3 = dIsPositiveDefinite3(&local_a0);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821999a0,0x40,0,0xffffffff820011f4,0xffffffff821999f0,
-                    0xffffffff82199a0c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x40,0,"%s\n\t%s");
   }
   __restgprlr_28();
   return;
@@ -410,15 +458,20 @@ void dMassAdjust(void)
 
 // 826964D8  dMassTranslate  (physics/ode/src/mass.cpp:248)
 
-void dMassTranslate(undefined8 param_1,double param_2,double param_3)
+void dMassTranslate(dMass *param_1,float param_2,float param_3,float param_4)
 
 {
-  float *pfVar1;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  dMass *pdVar4;
   double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
   double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   float local_100;
   float local_fc;
   float local_f8;
@@ -437,14 +490,14 @@ void dMassTranslate(undefined8 param_1,double param_2,double param_3)
   float local_b0;
   float local_ac;
   float local_a8;
-  undefined1 auStack_a0 [4];
+  float fStack_a0;
   float local_9c;
   float local_98;
   float local_90;
   float local_88;
   float local_80;
   float local_7c;
-  undefined1 auStack_70 [4];
+  float fStack_70;
   float local_6c;
   float local_68;
   float local_60;
@@ -452,46 +505,54 @@ void dMassTranslate(undefined8 param_1,double param_2,double param_3)
   float local_50;
   float local_4c;
   
-  pfVar1 = (float *)__savefpr_26();
-  dVar5 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821999a0,0x104,0,0xffffffff82000f98,0xffffffff821999e4);
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  pdVar4 = (dMass *)__savefpr_26((double)param_2,param_1);
+  dVar10 = extraout_f1;
+  if (pdVar4 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x104,0,"%s");
   }
-  dSetZero(auStack_70,0xc);
-  local_60 = pfVar1[3];
-  local_68 = pfVar1[2];
-  local_4c = pfVar1[1];
+  dSetZero(&fStack_70,0xc);
+  local_60 = pdVar4->c[2];
+  local_68 = pdVar4->c[1];
+  local_4c = pdVar4->c[0];
   local_6c = (float)-(double)local_60;
   local_58 = (float)-(double)local_4c;
-  dVar4 = (double)(float)((double)local_4c + dVar5);
+  dVar9 = (double)(float)((double)local_4c + dVar10);
   local_50 = (float)-(double)local_68;
-  dVar3 = (double)(float)((double)local_68 + param_2);
-  dVar2 = (double)(float)((double)local_60 + param_3);
-  dSetZero(auStack_a0,0xc);
-  local_9c = (float)-dVar2;
-  local_98 = (float)dVar3;
-  local_90 = (float)dVar2;
-  local_88 = (float)-dVar4;
-  local_80 = (float)-dVar3;
-  local_7c = (float)dVar4;
-  dMULTIPLY0_333<float,float,float>(&local_d0,auStack_a0,auStack_a0);
-  dMULTIPLY0_333<float,float,float>(&local_100,auStack_70,auStack_70);
-  pfVar1[5] = (local_100 - local_d0) * *pfVar1 + pfVar1[5];
-  pfVar1[6] = (local_fc - local_cc) * *pfVar1 + pfVar1[6];
-  pfVar1[7] = (local_f8 - local_c8) * *pfVar1 + pfVar1[7];
-  pfVar1[9] = (local_f0 - local_c0) * *pfVar1 + pfVar1[9];
-  pfVar1[10] = (local_ec - local_bc) * *pfVar1 + pfVar1[10];
-  pfVar1[0xb] = (local_e8 - local_b8) * *pfVar1 + pfVar1[0xb];
-  pfVar1[0xd] = (local_e0 - local_b0) * *pfVar1 + pfVar1[0xd];
-  pfVar1[0xe] = (local_dc - local_ac) * *pfVar1 + pfVar1[0xe];
-  pfVar1[0xf] = (local_d8 - local_a8) * *pfVar1 + pfVar1[0xf];
-  pfVar1[9] = pfVar1[6];
-  pfVar1[0xd] = pfVar1[7];
-  pfVar1[0xe] = pfVar1[0xb];
-  pfVar1[1] = (float)(dVar5 + (double)pfVar1[1]);
-  pfVar1[2] = (float)((double)pfVar1[2] + param_2);
-  pfVar1[3] = (float)((double)pfVar1[3] + param_3);
-  checkMass(pfVar1);
+  dVar8 = (double)(float)((double)local_68 + dVar5);
+  dVar7 = (double)(float)((double)local_60 + dVar6);
+  dSetZero(&fStack_a0,0xc);
+  local_9c = (float)-dVar7;
+  local_98 = (float)dVar8;
+  local_90 = (float)dVar7;
+  local_88 = (float)-dVar9;
+  local_80 = (float)-dVar8;
+  local_7c = (float)dVar9;
+  dMULTIPLY0_333<float,float,float>(&local_d0,&fStack_a0,&fStack_a0);
+  dMULTIPLY0_333<float,float,float>(&local_100,&fStack_70,&fStack_70);
+  fVar1 = pdVar4->I[1];
+  fVar2 = pdVar4->I[2];
+  pdVar4->I[0] = (local_100 - local_d0) * pdVar4->mass + pdVar4->I[0];
+  pdVar4->I[1] = (local_fc - local_cc) * pdVar4->mass + fVar1;
+  pdVar4->I[2] = (local_f8 - local_c8) * pdVar4->mass + fVar2;
+  pdVar4->I[4] = (local_f0 - local_c0) * pdVar4->mass + pdVar4->I[4];
+  pdVar4->I[5] = (local_ec - local_bc) * pdVar4->mass + pdVar4->I[5];
+  pdVar4->I[6] = (local_e8 - local_b8) * pdVar4->mass + pdVar4->I[6];
+  pdVar4->I[8] = (local_e0 - local_b0) * pdVar4->mass + pdVar4->I[8];
+  pdVar4->I[9] = (local_dc - local_ac) * pdVar4->mass + pdVar4->I[9];
+  pdVar4->I[10] = (local_d8 - local_a8) * pdVar4->mass + pdVar4->I[10];
+  fVar1 = pdVar4->c[1];
+  fVar2 = pdVar4->c[2];
+  fVar3 = pdVar4->c[0];
+  pdVar4->I[4] = pdVar4->I[1];
+  pdVar4->I[8] = pdVar4->I[2];
+  pdVar4->I[9] = pdVar4->I[6];
+  pdVar4->c[0] = (float)(dVar10 + (double)fVar3);
+  pdVar4->c[1] = (float)((double)fVar1 + dVar5);
+  pdVar4->c[2] = (float)((double)fVar2 + dVar6);
+  checkMass(pdVar4);
   __restfpr_26();
   return;
 }
@@ -499,7 +560,7 @@ void dMassTranslate(undefined8 param_1,double param_2,double param_3)
 
 // 82696720  dMassRotate  (physics/ode/src/mass.cpp:292)
 
-void dMassRotate(undefined8 param_1,undefined8 param_2)
+void dMassRotate(dMass *param_1,float *param_2)
 
 {
   float fVar1;
@@ -511,33 +572,32 @@ void dMassRotate(undefined8 param_1,undefined8 param_2)
   float fVar7;
   float fVar8;
   float fVar9;
-  float *pfVar10;
-  int iVar11;
-  undefined1 auStack_50 [80];
+  dMass *pdVar10;
+  float afStack_50 [20];
   
-  iVar11 = __savegprlr_29();
-  if (iVar11 == 0) {
-    MyAssertHandler(0xffffffff821999a0,0x12f,0,0xffffffff82000f98,0xffffffff821999e4);
+  pdVar10 = (dMass *)__savegprlr_29(param_1);
+  if (pdVar10 == (dMass *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x12f,0,"%s");
   }
-  dMULTIPLY2_333<float,float,float>(auStack_50,iVar11 + 0x14,param_2);
-  dMULTIPLY0_333<float,float,float>(iVar11 + 0x14,param_2,auStack_50);
-  *(undefined4 *)(iVar11 + 0x24) = *(undefined4 *)(iVar11 + 0x18);
-  *(undefined4 *)(iVar11 + 0x34) = *(undefined4 *)(iVar11 + 0x1c);
-  *(undefined4 *)(iVar11 + 0x38) = *(undefined4 *)(iVar11 + 0x2c);
-  pfVar10 = (float *)param_2;
-  fVar1 = pfVar10[2];
-  fVar2 = *(float *)(iVar11 + 8);
-  fVar3 = pfVar10[1];
-  fVar4 = pfVar10[5];
-  fVar5 = *(float *)(iVar11 + 4);
-  fVar6 = *pfVar10;
-  fVar7 = pfVar10[4];
-  fVar8 = *(float *)(iVar11 + 0xc);
-  fVar9 = pfVar10[6];
-  *(float *)(iVar11 + 0xc) = pfVar10[8] * fVar5 + pfVar10[9] * fVar2 + pfVar10[10] * fVar8;
-  *(float *)(iVar11 + 8) = fVar7 * fVar5 + fVar4 * fVar2 + fVar9 * fVar8;
-  *(float *)(iVar11 + 4) = fVar5 * fVar6 + fVar3 * fVar2 + fVar1 * fVar8;
-  checkMass(iVar11);
+  dMULTIPLY2_333<float,float,float>(afStack_50,pdVar10->I,param_2);
+  dMULTIPLY0_333<float,float,float>(pdVar10->I,param_2,afStack_50);
+  pdVar10->I[4] = pdVar10->I[1];
+  pdVar10->I[8] = pdVar10->I[2];
+  pdVar10->I[9] = pdVar10->I[6];
+  fVar1 = param_2[2];
+  fVar2 = pdVar10->c[1];
+  fVar3 = param_2[1];
+  fVar4 = param_2[5];
+  fVar5 = pdVar10->c[0];
+  fVar6 = *param_2;
+  fVar7 = param_2[4];
+  fVar8 = pdVar10->c[2];
+  fVar9 = param_2[6];
+  pdVar10->c[2] = param_2[8] * fVar5 + param_2[9] * fVar2 + param_2[10] * fVar8;
+  pdVar10->c[1] = fVar7 * fVar5 + fVar4 * fVar2 + fVar9 * fVar8;
+  pdVar10->c[0] = fVar5 * fVar6 + fVar3 * fVar2 + fVar1 * fVar8;
+  checkMass(pdVar10);
   __restgprlr_29();
   return;
 }
@@ -545,36 +605,39 @@ void dMassRotate(undefined8 param_1,undefined8 param_2)
 
 // 826959B0  dMassAdd  (physics/ode/src/mass.cpp:327)
 
-void dMassAdd(float *param_1,float *param_2)
+void dMassAdd(dMass *param_1,dMass *param_2)
 
 {
   float fVar1;
-  float *pfVar2;
+  float fVar2;
   float *pfVar3;
-  longlong lVar4;
+  float *pfVar4;
+  longlong lVar5;
   
-  if ((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) {
-    MyAssertHandler(0xffffffff821999a0,0x149,0,0xffffffff82000f98,0xffffffff821999e8);
+  if ((param_1 == (dMass *)0x0) || (param_2 == (dMass *)0x0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
+                    0x149,0,"%s");
   }
-  pfVar2 = param_2 + 4;
-  pfVar3 = param_1 + 5;
-  lVar4 = 2;
-  fVar1 = 1.0 / (*param_2 + *param_1);
-  param_1[1] = (param_2[1] * *param_2 + param_1[1] * *param_1) * fVar1;
-  param_1[2] = (param_2[2] * *param_2 + param_1[2] * *param_1) * fVar1;
-  param_1[3] = (param_2[3] * *param_2 + param_1[3] * *param_1) * fVar1;
-  *param_1 = *param_1 + *param_2;
+  pfVar3 = param_2->c + 3;
+  fVar1 = param_1->c[2];
+  pfVar4 = param_1->I;
+  lVar5 = 2;
+  fVar2 = 1.0 / (param_2->mass + param_1->mass);
+  param_1->c[0] = (param_2->c[0] * param_2->mass + param_1->c[0] * param_1->mass) * fVar2;
+  param_1->c[1] = (param_2->c[1] * param_2->mass + param_1->c[1] * param_1->mass) * fVar2;
+  param_1->c[2] = (param_2->c[2] * param_2->mass + fVar1 * param_1->mass) * fVar2;
+  param_1->mass = param_1->mass + param_2->mass;
   do {
-    *pfVar3 = *(float *)((int)pfVar3 + ((int)param_2 - (int)param_1)) + *pfVar3;
-    pfVar3[1] = pfVar3[1] + pfVar2[2];
-    pfVar3[2] = pfVar3[2] + pfVar2[3];
-    pfVar3[3] = pfVar3[3] + pfVar2[4];
-    pfVar3[4] = pfVar3[4] + pfVar2[5];
-    pfVar2 = pfVar2 + 6;
-    pfVar3[5] = pfVar3[5] + *pfVar2;
+    *pfVar4 = *(float *)((int)pfVar4 + ((int)param_2 - (int)param_1)) + *pfVar4;
+    pfVar4[1] = pfVar4[1] + pfVar3[2];
+    pfVar4[2] = pfVar4[2] + pfVar3[3];
+    pfVar4[3] = pfVar4[3] + pfVar3[4];
+    pfVar4[4] = pfVar4[4] + pfVar3[5];
     pfVar3 = pfVar3 + 6;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    pfVar4[5] = pfVar4[5] + *pfVar3;
+    pfVar4 = pfVar4 + 6;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
@@ -582,87 +645,120 @@ void dMassAdd(float *param_1,float *param_2)
 // 82696810  Phys_ComputeMassProperties  (physics/ode/src/mass.cpp:338)
 
 void Phys_ComputeMassProperties
-               (undefined8 param_1,float *param_2,code *param_3,undefined8 param_4,float *param_5,
-               undefined4 *param_6,undefined4 *param_7)
+               (float *param_1,float *param_2,
+               _func___cdecl_bool_float_ptr_float_ptr_void_ptr *param_3,void *param_4,float *param_5
+               ,float *param_6,float *param_7)
 
 {
   float *pfVar1;
   char cVar2;
-  longlong lVar3;
-  longlong lVar4;
-  uint uVar5;
+  float *pfVar3;
+  code *pcVar4;
+  longlong lVar5;
   longlong lVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
+  longlong lVar7;
+  uint uVar8;
+  longlong lVar9;
   double dVar10;
   double dVar11;
   double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
   float local_128;
   float local_124;
   float local_120;
   float local_118;
   float local_114;
   float local_110;
-  undefined1 auStack_100 [20];
-  undefined4 local_ec;
-  undefined4 local_e8;
-  undefined4 local_e4;
-  undefined4 local_d8;
-  undefined4 local_d4;
-  undefined4 local_c4;
+  dMass adStack_100 [3];
   
-  __savegprlr_22();
+  lVar5 = (longlong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  __savegprlr_22(param_1,lVar6,lVar7,lVar5);
+  pcVar4 = (code *)lVar7;
+  pfVar3 = (float *)lVar6;
   pfVar1 = (float *)__savefpr_20();
-  dMassSetZero(auStack_100);
-  uVar5 = 0;
-  lVar3 = 0x20;
-  dVar11 = 0.0;
-  dVar7 = (double)((*param_2 - *pfVar1) * 0.03125);
-  dVar8 = (double)((param_2[1] - pfVar1[1]) * 0.03125);
-  dVar9 = (double)((param_2[2] - pfVar1[2]) * 0.03125);
-  local_118 = (float)(dVar7 * 0.5);
-  local_114 = (float)(dVar8 * 0.5);
-  local_110 = (float)(dVar9 * 0.5);
+  dMassSetZero(adStack_100);
+  uVar8 = 0;
+  lVar6 = 0x20;
+  dVar23 = 0.0;
+  dVar13 = (double)((*pfVar3 - *pfVar1) * 0.03125);
+  dVar14 = (double)((pfVar3[1] - pfVar1[1]) * 0.03125);
+  dVar15 = (double)((pfVar3[2] - pfVar1[2]) * 0.03125);
+  local_118 = (float)(dVar13 * 0.5);
+  local_114 = (float)(dVar14 * 0.5);
+  local_110 = (float)(dVar15 * 0.5);
   local_128 = *pfVar1 + local_118;
-  dVar10 = dVar11;
-  dVar12 = dVar11;
+  dVar16 = dVar23;
+  dVar17 = dVar23;
+  dVar18 = dVar23;
+  dVar19 = dVar23;
+  dVar20 = dVar23;
+  dVar21 = dVar23;
+  dVar22 = dVar23;
+  dVar24 = dVar23;
   do {
-    lVar4 = 0x20;
+    lVar7 = 0x20;
     local_124 = local_114 + pfVar1[1];
     do {
-      lVar6 = 0x20;
+      lVar9 = 0x20;
       local_120 = pfVar1[2] + local_110;
       do {
-        cVar2 = (*param_3)(&local_128,&local_118,param_4);
+        cVar2 = (*pcVar4)(&local_128,&local_118,lVar5);
+        dVar10 = (double)local_120;
+        dVar12 = (double)local_124;
+        dVar11 = (double)local_128;
         if (cVar2 != '\0') {
-          uVar5 = uVar5 + 1;
-          dVar12 = (double)(float)(dVar12 + (double)local_128);
-          dVar10 = (double)(float)(dVar10 + (double)local_124);
-          dVar11 = (double)(float)(dVar11 + (double)local_120);
+          uVar8 = uVar8 + 1;
+          dVar24 = (double)(float)(dVar24 + dVar11);
+          dVar22 = (double)(float)(dVar22 + dVar12);
+          dVar21 = (double)(float)(dVar21 + dVar10);
+          dVar20 = (double)(float)(dVar12 * dVar11 + dVar20);
+          dVar19 = (double)(float)(dVar10 * dVar11 + dVar19);
+          dVar18 = (double)(float)(dVar10 * dVar12 + dVar18);
+          dVar17 = (double)(float)((double)((float)(dVar11 * dVar11) + (float)(dVar12 * dVar12)) +
+                                  dVar17);
+          dVar16 = (double)(float)((double)((float)(dVar10 * dVar10) + (float)(dVar11 * dVar11)) +
+                                  dVar16);
+          dVar23 = (double)(float)((double)((float)(dVar10 * dVar10) + (float)(dVar12 * dVar12)) +
+                                  dVar23);
         }
-        local_120 = (float)((double)local_120 + dVar9);
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      local_124 = (float)((double)local_124 + dVar8);
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    local_128 = (float)((double)local_128 + dVar7);
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  if (uVar5 != 0) {
-    dVar7 = (double)(1.0 / (float)uVar5);
-    *param_5 = (float)(dVar12 * dVar7);
-    param_5[1] = (float)(dVar10 * dVar7);
-    param_5[2] = (float)(dVar11 * dVar7);
-    dMassSetParameters(auStack_100);
-    dMassTranslate(-(double)*param_5,-(double)param_5[1],-(double)param_5[2],auStack_100);
-    *param_6 = local_ec;
-    param_6[1] = local_d8;
-    param_6[2] = local_c4;
-    *param_7 = local_e8;
-    param_7[1] = local_e4;
-    param_7[2] = local_d4;
+        local_120 = (float)(dVar10 + dVar15);
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      local_124 = (float)(dVar12 + dVar14);
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    local_128 = (float)(dVar11 + dVar13);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  if (uVar8 != 0) {
+    dVar13 = (double)(1.0 / (float)uVar8);
+    *param_5 = (float)(dVar24 * dVar13);
+    param_5[1] = (float)(dVar22 * dVar13);
+    param_5[2] = (float)(dVar21 * dVar13);
+    dMassSetParameters(adStack_100,1.0,(float)(dVar24 * dVar13),(float)(dVar22 * dVar13),
+                       (float)(dVar21 * dVar13),(float)(dVar13 * dVar23),(float)(dVar13 * dVar16),
+                       (float)(dVar13 * dVar17),-(float)(dVar13 * dVar20),-(float)(dVar13 * dVar19),
+                       -(float)(dVar13 * dVar18));
+    dMassTranslate(adStack_100,-*param_5,-param_5[1],-param_5[2]);
+    *param_6 = adStack_100[0].I[0];
+    param_6[1] = adStack_100[0].I[5];
+    param_6[2] = adStack_100[0].I[10];
+    *param_7 = adStack_100[0].I[1];
+    param_7[1] = adStack_100[0].I[2];
+    param_7[2] = adStack_100[0].I[6];
   }
   __restfpr_20();
   __restgprlr_22();
@@ -672,16 +768,16 @@ void Phys_ComputeMassProperties
 
 // 82695B18  Phys_MomentOfInertiaAroundAxis  (physics/ode/src/mass.cpp:414)
 
-double Phys_MomentOfInertiaAroundAxis(longlong param_1,float *param_2)
+float Phys_MomentOfInertiaAroundAxis(dMass *param_1,float *param_2)
 
 {
   float local_50;
   float local_4c;
   float local_48;
-  undefined1 auStack_40 [48];
+  float afStack_40 [12];
   
-  Phys_OdeMatrix3ToAxis(param_1 + 0x14,auStack_40);
-  MatrixTransformVector(param_2,auStack_40,&local_50);
-  return (double)(param_2[2] * local_48 + param_2[1] * local_4c + *param_2 * local_50);
+  Phys_OdeMatrix3ToAxis(param_1->I,(float (*) [3])afStack_40);
+  MatrixTransformVector(param_2,(float (*) [3])afStack_40,&local_50);
+  return param_2[2] * local_48 + param_2[1] * local_4c + *param_2 * local_50;
 }
 

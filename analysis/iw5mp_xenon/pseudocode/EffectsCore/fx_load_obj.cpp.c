@@ -2,21 +2,56 @@
 
 // 82430E70  FX_Register_FastFile  (EffectsCore/fx_load_obj.cpp:1622)
 
-void FX_Register_FastFile(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+FxEffectDef * FX_Register_FastFile(char *param_1)
 
 {
   int iVar1;
+  XAssetHeader XVar2;
   
-  iVar1 = I_strncmp(param_1,0xffffffff82026dc4,3);
+  iVar1 = I_strncmp(param_1,"fx/",3);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82065300,0x657,0,0xffffffff82065348,0xffffffff82065358,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_load_obj.cpp",
+                    0x657,0,"%s\n\t(name) = %s");
   }
-  DB_FindXAssetHeader(0x1d,param_1,1);
-  return;
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_FX,param_1,1);
+  return XVar2.fx;
+}
+
+
+// 82430EE8  FX_Register  (EffectsCore/fx_load_obj.cpp:1646)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* struct FxEffectDef const * __cdecl FX_Register(char const *) */
+
+FxEffectDef * FX_Register(char *param_1)
+
+{
+  int iVar1;
+  XAssetHeader XVar2;
+  
+  iVar1 = I_strncmp(param_1,"fx/",3);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_load_obj.cpp",
+                    0x657,0,"%s\n\t(name) = %s");
+  }
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_FX,param_1,1);
+  return XVar2.fx;
 }
 
 
 // 82430EF0  FX_RegisterDefaultEffect  (EffectsCore/fx_load_obj.cpp:1667)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void FX_RegisterDefaultEffect(void)
 

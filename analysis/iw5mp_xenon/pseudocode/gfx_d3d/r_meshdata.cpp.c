@@ -2,113 +2,138 @@
 
 // 827583D8  R_ReserveMeshVerts  (gfx_d3d/r_meshdata.cpp:47)
 
-void R_ReserveMeshVerts(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+bool R_ReserveMeshVerts(GfxMeshData *param_1,int param_2,int *param_3)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
   longlong lVar4;
-  uint *puVar5;
-  longlong lVar6;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  uint *puVar7;
+  longlong lVar8;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar4 = __savegprlr_27();
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821c8ec8,0x34,0,0xffffffff821c35e4,0xffffffff821c35fc,param_2);
+  uVar6 = (ulonglong)(int)param_3;
+  lVar4 = __savegprlr_27(param_1);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x34,0
+                    ,"%s\n\t(vertCount) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c8ec8,0x35,0,0xffffffff82000f98,0xffffffff821c8ebc);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x35,0
+                    ,"%s");
   }
   iVar3 = (int)lVar4;
   if (*(int *)(iVar3 + 0x58) == 0) {
-    MyAssertHandler(0xffffffff821c8ec8,0x36,0,0xffffffff82000f98,0xffffffff821c8eac);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x36,0
+                    ,"%s");
   }
-  lVar6 = (longlong)*(int *)(iVar3 + 0x58) * (longlong)(int)param_2;
+  lVar8 = (longlong)*(int *)(iVar3 + 0x58) * (longlong)param_2;
   do {
-    puVar5 = (uint *)(lVar4 + 0x2c);
-    uVar1 = *puVar5;
+    puVar7 = (uint *)(lVar4 + 0x2c);
+    uVar1 = *puVar7;
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed(lVar6 + (ulonglong)uVar1,0,lVar4 + 0x2c);
-      *puVar5 = uVar2;
+      uVar2 = storeWordConditionalIndexed(lVar8 + (ulonglong)uVar1,0,lVar4 + 0x2c);
+      *puVar7 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (*(int *)(iVar3 + 0x30) < (int)(uVar1 + (int)lVar6)) {
-    __restgprlr_27(0);
-    return;
+  if (*(int *)(iVar3 + 0x30) < (int)(uVar1 + (int)lVar8)) {
+    uVar5 = __restgprlr_27(0);
+    return (bool)uVar5;
   }
   trapWord(6,(ulonglong)*(uint *)(iVar3 + 0x58),0);
-  *(uint *)param_3 = uVar1 / *(uint *)(iVar3 + 0x58);
-  __restgprlr_27(1);
-  return;
+  *(uint *)uVar6 = uVar1 / *(uint *)(iVar3 + 0x58);
+  uVar5 = __restgprlr_27(1);
+  return (bool)uVar5;
 }
 
 
 // 827584E0  R_GetMeshVerts  (gfx_d3d/r_meshdata.cpp:68)
 
-longlong R_GetMeshVerts(int param_1,int param_2)
+uchar * R_GetMeshVerts(GfxMeshData *param_1,int param_2)
 
 {
-  return (longlong)*(int *)(param_1 + 0x58) * (longlong)param_2 +
-         (ulonglong)*(uint *)(param_1 + 0x54);
+  return (param_1->vb).verts + param_1->vertSize * param_2;
 }
 
 
 // 827584F8  R_ResetMesh  (gfx_d3d/r_meshdata.cpp:74)
 
-void R_ResetMesh(undefined4 *param_1)
+void R_ResetMesh(GfxMeshData *param_1)
 
 {
-  param_1[0xb] = 0;
-  *param_1 = 0;
+  (param_1->vb).used = 0;
+  param_1->indexCount = 0;
   return;
 }
 
 
 // 82758508  R_SetQuadMeshData  (gfx_d3d/r_meshdata.cpp:81)
 
-void R_SetQuadMeshData(undefined8 param_1,double param_2,double param_3,double param_4,
-                      undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void R_SetQuadMeshData(GfxMeshData *param_1,float param_2,float param_3,float param_4,float param_5,
+                      float param_6,float param_7,float param_8,float param_9,ulong param_10)
 
 {
   undefined4 *puVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
+  GfxVertex *pGVar2;
+  undefined4 *puVar3;
   double extraout_f1;
   double dVar4;
   double dVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  ulong local_70;
   
-  __savegprlr_29();
-  puVar2 = (undefined4 *)__savefpr_24();
-  dVar6 = extraout_f1;
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821c8ec8,0x56,0,0xffffffff82000f98,0xffffffff821c8f94);
+  dVar5 = (double)param_5;
+  dVar6 = (double)param_6;
+  dVar7 = (double)param_7;
+  dVar8 = (double)param_8;
+  dVar9 = (double)param_9;
+  dVar11 = (double)param_4;
+  dVar4 = (double)param_3;
+  __savegprlr_29((double)param_2,param_1,param_10);
+  puVar3 = (undefined4 *)__savefpr_24();
+  dVar12 = extraout_f1;
+  if (puVar3 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x56,0
+                    ,"%s");
   }
-  if (puVar2[0x16] != 0x20) {
-    MyAssertHandler(0xffffffff821c8ec8,0x57,0,0xffffffff821c8f64,puVar2[0x16],0x20);
+  if (puVar3[0x16] != 0x20) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x57,0
+                    ,"mesh->vertSize == sizeof( GfxVertex )\n\t%i, %i");
   }
-  if (puVar2[0xc] != 0x80) {
-    MyAssertHandler(0xffffffff821c8ec8,0x58,0,0xffffffff821c8f30,puVar2[0xc],0x80);
+  if (puVar3[0xc] != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x58,0
+                    ,"mesh->vb.total == sizeof( GfxVertex ) * 4\n\t%i, %i");
   }
-  if (puVar2[1] != 6) {
-    MyAssertHandler(0xffffffff821c8ec8,0x59,0,0xffffffff821c8f0c,puVar2[1],6);
+  if (puVar3[1] != 6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x59,0
+                    ,"mesh->totalIndexCount == 6\n\t%i, %i");
   }
-  puVar1 = (undefined4 *)puVar2[10];
+  puVar1 = (undefined4 *)puVar3[10];
+  local_70 = 1;
   *puVar1 = 0x30000;
   puVar1[1] = 0x20002;
   puVar1[2] = 1;
-  uVar3 = (ulonglong)(uint)puVar2[0x15];
-  R_SetVertex2d(dVar6,param_2,param_5,param_6,uVar3);
-  dVar4 = (double)(float)(dVar6 + param_3);
-  R_SetVertex2d(dVar4,param_2,param_7,param_6,uVar3 + 0x20);
-  dVar5 = (double)(float)(param_2 + param_4);
-  R_SetVertex2d(dVar4,dVar5,param_7,param_8,uVar3 + 0x40);
-  R_SetVertex2d(dVar6,dVar5,param_5,param_8,uVar3 + 0x60);
-  *puVar2 = 6;
-  puVar2[0xb] = 0x80;
+  pGVar2 = (GfxVertex *)puVar3[0x15];
+  R_SetVertex2d(pGVar2,(float)dVar12,(float)dVar4,(float)dVar6,(float)dVar7,1);
+  dVar10 = (double)(float)(dVar12 + dVar11);
+  R_SetVertex2d(pGVar2 + 1,(float)(dVar12 + dVar11),(float)dVar4,(float)dVar8,(float)dVar7,local_70)
+  ;
+  dVar11 = (double)(float)(dVar4 + dVar5);
+  R_SetVertex2d(pGVar2 + 2,(float)dVar10,(float)(dVar4 + dVar5),(float)dVar8,(float)dVar9,local_70);
+  R_SetVertex2d(pGVar2 + 3,(float)dVar12,(float)dVar11,(float)dVar6,(float)dVar9,local_70);
+  *puVar3 = 6;
+  puVar3[0xb] = 0x80;
   __restfpr_24();
   __restgprlr_29();
   return;
@@ -117,24 +142,41 @@ void R_SetQuadMeshData(undefined8 param_1,double param_2,double param_3,double p
 
 // 827586D0  R_SetQuadMesh  (gfx_d3d/r_meshdata.cpp:126)
 
-void R_SetQuadMesh(undefined8 param_1,double param_2,double param_3,double param_4,
-                  undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void R_SetQuadMesh(GfxQuadMeshData *param_1,float param_2,float param_3,float param_4,float param_5,
+                  float param_6,float param_7,float param_8,float param_9,ulong param_10)
 
 {
   float *pfVar1;
   double extraout_f1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  pfVar1 = (float *)__savefpr_24();
-  dVar2 = extraout_f1;
+  dVar4 = (double)param_5;
+  dVar5 = (double)param_6;
+  dVar6 = (double)param_7;
+  dVar7 = (double)param_8;
+  dVar8 = (double)param_9;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  pfVar1 = (float *)__savefpr_24((double)param_2,param_1);
+  dVar9 = extraout_f1;
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821c8ec8,0x7f,0,0xffffffff82000f98,0xffffffff821c8f9c);
+    param_10 = 0x7f;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x7f,0
+                    ,"%s");
   }
-  *pfVar1 = (float)dVar2;
-  pfVar1[1] = (float)param_2;
-  pfVar1[2] = (float)param_3;
-  pfVar1[3] = (float)param_4;
-  R_SetQuadMeshData(dVar2,param_2,param_3,param_4,param_5,param_6,param_7,param_8,pfVar1 + 4);
+  *pfVar1 = (float)dVar9;
+  pfVar1[1] = (float)dVar2;
+  pfVar1[2] = (float)dVar3;
+  pfVar1[3] = (float)dVar4;
+  R_SetQuadMeshData((GfxMeshData *)(pfVar1 + 4),(float)dVar9,(float)dVar2,(float)dVar3,(float)dVar4,
+                    (float)dVar5,(float)dVar6,(float)dVar7,(float)dVar8,param_10);
   __restfpr_24();
   return;
 }
@@ -142,36 +184,45 @@ void R_SetQuadMesh(undefined8 param_1,double param_2,double param_3,double param
 
 // 82758798  R_DrawQuadMesh  (gfx_d3d/r_meshdata.cpp:138)
 
-void R_DrawQuadMesh(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawQuadMesh(GfxCmdBufContext param_1,Material *param_2,GfxMeshData *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined1 auStack_40 [64];
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufState *pGVar2;
+  GfxCmdBufContext GVar3;
+  int iVar4;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
+  GfxDrawPrimArgs local_50;
+  GfxViewport aGStack_40 [4];
   
-  iVar1 = __savegprlr_27();
-  iVar2 = R_BeginMaterial(iVar1);
-  if (iVar2 != 0) {
-    *(undefined4 *)(iVar1 + 200) = 0;
-    R_Set2D(0);
-    if (cRam00001750 != '\0') {
-      R_GetViewport(0,auStack_40);
-      R_SetViewport(iVar1,auStack_40);
-      R_UpdateViewport(0,auStack_40);
+  GVar3 = (GfxCmdBufContext)__savegprlr_27();
+  pGStack00000014 = GVar3.state;
+  pGVar2 = pGStack00000014;
+  _pGStack00000010 = GVar3;
+  iVar4 = R_BeginMaterial(pGVar2,param_2,TECHNIQUE_UNLIT);
+  if (iVar4 != 0) {
+    pGVar1 = pGStack00000010;
+    (pGVar2->prim).vertDeclType = VERTDECL_GENERIC;
+    R_Set2D(pGStack00000010);
+    if (pGVar1->viewportIsDirty != false) {
+      R_GetViewport(pGVar1,aGStack_40);
+      R_SetViewport(pGVar2,aGStack_40);
+      R_UpdateViewport(pGVar1,aGStack_40);
     }
-    R_SetupPass(iVar1,0);
-    R_UpdateVertexDecl(iVar1);
-    R_SetupPassCriticalPixelShaderArgs(iVar1);
-    R_SetMeshStream(iVar1,param_3);
-    local_48 = 0;
-    local_50 = 4;
-    local_4c = 2;
-    R_SetupPassPerObjectArgs(iVar1);
-    R_SetupPassPerPrimArgs(iVar1);
-    R_DrawIndexedPrimitive(iVar1 + 0xc0,&local_50);
+    R_SetupPass(GVar3,0);
+    R_UpdateVertexDecl(pGVar2);
+    R_SetupPassCriticalPixelShaderArgs(GVar3);
+    R_SetMeshStream(pGVar2,param_3);
+    local_50.baseIndex = 0;
+    local_50.vertexCount = 4;
+    local_50.triCount = 2;
+    R_SetupPassPerObjectArgs(GVar3);
+    R_SetupPassPerPrimArgs(GVar3);
+    R_DrawIndexedPrimitive(&pGVar2->prim,&local_50);
   }
   __restgprlr_27();
   return;

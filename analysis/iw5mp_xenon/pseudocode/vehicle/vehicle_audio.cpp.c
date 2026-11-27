@@ -2,148 +2,226 @@
 
 // 826B6830  VehicleAudio_RegisterDvars  (vehicle/vehicle_audio.cpp:35)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void VehicleAudio_RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  ushort in_r4;
+  ushort uVar1;
+  char *in_r5;
+  char *pcVar2;
+  double dVar3;
+  double dVar4;
   
-  uVar2 = 0x4000000000000000;
+  dVar4 = 2.0;
+  dVar3 = 0.0;
+  vehAudio_inAirPitchUpLerp =
+       Dvar_RegisterFloat("vehAudio_inAirPitchUpLerp",0.75,0.0,2.0,in_r4,in_r5);
+  pcVar2 = "";
   uVar1 = 0;
-  DAT_8444feac = Dvar_RegisterFloat(0x3fe8000000000000,0,0x4000000000000000,0xffffffff8219f5c4);
-  DAT_8444fea8 = Dvar_RegisterFloat(0x3ff3333340000000,uVar1,uVar2,0xffffffff8219f560);
-  DAT_8444feb0 = Dvar_RegisterFloat(uVar2,uVar1,0x403e000000000000,0xffffffff8219f544);
+  vehAudio_inAirPitchDownLerp =
+       Dvar_RegisterFloat("vehAudio_inAirPitchDownLerp",1.2,(float)dVar3,(float)dVar4,0,"");
+  vehAudio_spawnVolumeTime =
+       Dvar_RegisterFloat("vehAudio_spawnVolumeTime",(float)dVar4,(float)dVar3,30.0,uVar1,pcVar2);
   return;
 }
 
 
 // 826B6900  VehicleAudio_ResetSounds  (vehicle/vehicle_audio.cpp:45)
 
-void VehicleAudio_ResetSounds(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_ResetSounds(VehicleClient *param_1)
 
 {
-  undefined4 uVar1;
+  uint uVar1;
+  VehicleEngineState VVar2;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x2e,0,0xffffffff82000f98,0xffffffff82026d30);
+  if (param_1 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2e,0,"%s");
   }
-  *(undefined4 *)(param_1 + 0x50) = *(undefined4 *)(param_1 + 0x14);
-  *(int *)(param_1 + 0x54) = (int)(*(float *)(DAT_8444feb0 + 0xc) * 1000.0);
-  uVar1 = 0;
-  if ((*(uint *)(param_1 + 0x18) & 0x20) == 0) {
-    uVar1 = 2;
+  uVar1 = param_1->flags;
+  (param_1->audioState).spawnTime = param_1->time;
+  (param_1->audioState).spawnTimeDelay = (int)((vehAudio_spawnVolumeTime->current).value * 1000.0);
+  VVar2 = VEH_ENGINE_STATE_OFF;
+  if ((uVar1 & 0x20) == 0) {
+    VVar2 = VEH_ENGINE_STATE_IDLE;
   }
-  *(undefined4 *)(param_1 + 0x60) = uVar1;
+  (param_1->audioState).engineState = VVar2;
   return;
 }
 
 
 // 826B69A0  VehicleAudio_PlaySoundInternal  (vehicle/vehicle_audio.cpp:63)
 
-void VehicleAudio_PlaySoundInternal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool VehicleAudio_PlaySoundInternal
+               (VehicleClient *param_1,snd_alias_list_t *param_2,int param_3,float param_4,
+               float param_5,bool param_6)
 
 {
   int iVar1;
-  int iVar2;
+  undefined1 uVar4;
+  snd_alias_t *psVar2;
+  SndEntHandle SVar3;
+  ulonglong uVar5;
+  SndEntHandle SVar6;
+  longlong lVar7;
+  float *pfVar8;
   ulonglong in_r8;
   double extraout_f1;
-  double dVar3;
-  double dVar4;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  iVar1 = __savegprlr_26();
-  dVar4 = extraout_f1;
+  dVar9 = (double)param_5;
+  lVar7 = (longlong)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26((double)param_4,param_1,uVar5,lVar7,param_6);
+  pfVar8 = (float *)lVar7;
+  dVar11 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x43,0,0xffffffff82000f98,0xffffffff82026d30);
+    pfVar8 = (float *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x43,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x44,0,0xffffffff82000f98,0xffffffff82176e88);
+  if ((uVar5 & 0xffffffff) == 0) {
+    pfVar8 = (float *)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x44,0,"%s");
   }
-  dVar3 = 0.0;
-  if (dVar4 != 0.0) {
+  dVar10 = 0.0;
+  if (dVar11 != 0.0) {
     if ((in_r8 & 0xff) == 0) {
-      iVar2 = Com_PickSoundAliasFromListNoError(param_4);
+      psVar2 = Com_PickSoundAliasFromListNoError((snd_alias_list_t *)uVar5);
     }
     else {
-      iVar2 = Com_PickSoundAliasFromList();
+      psVar2 = Com_PickSoundAliasFromList((snd_alias_list_t *)uVar5);
     }
-    if ((iVar2 != 0) &&
-       (((*(uint *)(iVar2 + 0x3c) & 1) == 0 ||
-        (dVar4 = (double)(float)((double)*(float *)(iVar1 + 0x58) * dVar4), dVar4 != dVar3)))) {
-      CG_GenerateSndEntHandle(*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
-      SND_PlayScaledSoundAlias(dVar4,param_2,iVar2);
-      __restgprlr_26(1);
-      return;
+    if ((psVar2 != (snd_alias_t *)0x0) &&
+       (((psVar2->flags & 1U) == 0 ||
+        (dVar11 = (double)(float)((double)*(float *)(iVar1 + 0x58) * dVar11), dVar11 != dVar10)))) {
+      SVar6 = *(SndEntHandle *)(iVar1 + 8);
+      SVar3 = CG_GenerateSndEntHandle(*(LocalClientNum_t *)(iVar1 + 0xc),SVar6.handle);
+      SND_PlayScaledSoundAlias
+                (psVar2,(float)dVar11,(float)dVar9,SVar6,pfVar8,SVar3.handle,iVar1 + 0x3c);
+      uVar4 = __restgprlr_26(1);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar4 = __restgprlr_26(0);
+  return (bool)uVar4;
 }
 
 
 // 826B6AE0  VehicleAudio_PlaySound  (vehicle/vehicle_audio.cpp:101)
 
-void VehicleAudio_PlaySound(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_PlaySound
+               (VehicleClient *param_1,snd_alias_list_t *param_2,int param_3,float param_4,
+               float param_5)
 
 {
-  VehicleAudio_PlaySoundInternal();
+  bool in_r6;
+  
+  VehicleAudio_PlaySoundInternal(param_1,param_2,param_3,param_4,param_5,in_r6);
   return;
 }
 
 
 // 826B6AE8  VehicleAudio_PlaySoundNoError  (vehicle/vehicle_audio.cpp:107)
 
-void VehicleAudio_PlaySoundNoError(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool VehicleAudio_PlaySoundNoError
+               (VehicleClient *param_1,snd_alias_list_t *param_2,int param_3,float param_4,
+               float param_5)
 
 {
-  VehicleAudio_PlaySoundInternal();
-  return;
+  bool bVar1;
+  bool in_r6;
+  
+  bVar1 = VehicleAudio_PlaySoundInternal(param_1,param_2,param_3,param_4,param_5,in_r6);
+  return bVar1;
 }
 
 
 // 826B6AF0  VehicleAudio_PlayBlendedSound  (vehicle/vehicle_audio.cpp:113)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void VehicleAudio_PlayBlendedSound
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4,
-               ulonglong param_5)
+               (VehicleClient *param_1,snd_alias_list_t *param_2,snd_alias_list_t *param_3,
+               float param_4,int param_5,float param_6)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
+  snd_alias_t *psVar2;
+  snd_alias_t *psVar3;
+  SndEntHandle SVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  SndEntHandle SVar7;
+  char *pcVar8;
   double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  __savegprlr_26();
+  dVar10 = (double)param_6;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar8 = (char *)param_5;
+  __savegprlr_26((double)param_4,param_1);
   iVar1 = __savefpr_28();
-  dVar5 = extraout_f1;
+  dVar11 = extraout_f1;
+  SVar7.handle = (int)uVar6;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x76,0,0xffffffff82000f98,0xffffffff82026d30);
+    SVar7.handle = 0;
+    pcVar8 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x76,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x77,0,0xffffffff82000f98,0xffffffff8219f630);
+  if ((uVar5 & 0xffffffff) == 0) {
+    SVar7.handle = 0;
+    pcVar8 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x77,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x78,0,0xffffffff82000f98,0xffffffff8219f624);
+  if ((uVar6 & 0xffffffff) == 0) {
+    SVar7.handle = 0;
+    pcVar8 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x78,0,"%s");
   }
-  dVar6 = 0.0;
-  dVar4 = 1.0;
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff8219f5e0,0x79,0,0xffffffff820180f8,dVar5,0,0x3ff0000000000000);
+  dVar12 = 0.0;
+  dVar9 = 1.0;
+  if ((dVar11 < 0.0) || (1.0 < dVar11)) {
+    pcVar8 = "lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
+    SVar7.handle = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x79,0,"lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  if (((((param_2 != dVar6) && (iVar2 = Com_PickSoundAliasFromList(param_4), iVar2 != 0)) &&
-       ((dVar5 != dVar6 ||
-        (((double)*(float *)(iVar2 + 0x1c) != dVar6 || ((double)*(float *)(iVar2 + 0x20) != dVar6)))
-        ))) && (((*(uint *)(iVar2 + 0x3c) & 1) == 0 ||
-                (param_2 = (double)(float)((double)*(float *)(iVar1 + 0x58) * param_2),
-                param_2 != dVar6)))) &&
-     ((iVar3 = Com_PickSoundAliasFromList(param_5), iVar3 != 0 &&
-      (((dVar5 != dVar4 || ((double)*(float *)(iVar3 + 0x1c) != dVar6)) ||
-       ((double)*(float *)(iVar3 + 0x20) != dVar6)))))) {
-    CG_GenerateSndEntHandle(*(undefined4 *)(iVar1 + 0xc),*(undefined4 *)(iVar1 + 8));
-    SND_PlayBlendedSoundAliases(dVar5,param_2,iVar2,iVar3);
+  if (((((dVar10 != dVar12) &&
+        (psVar2 = Com_PickSoundAliasFromList((snd_alias_list_t *)uVar5),
+        psVar2 != (snd_alias_t *)0x0)) &&
+       ((dVar11 != dVar12 ||
+        (((double)psVar2->volMin != dVar12 || ((double)psVar2->volMax != dVar12)))))) &&
+      (((psVar2->flags & 1U) == 0 ||
+       (dVar10 = (double)(float)((double)*(float *)(iVar1 + 0x58) * dVar10), dVar10 != dVar12)))) &&
+     ((psVar3 = Com_PickSoundAliasFromList((snd_alias_list_t *)(int)uVar6),
+      psVar3 != (snd_alias_t *)0x0 &&
+      (((dVar11 != dVar9 || ((double)psVar3->volMin != dVar12)) ||
+       ((double)psVar3->volMax != dVar12)))))) {
+    SVar4 = CG_GenerateSndEntHandle(*(LocalClientNum_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
+    SND_PlayBlendedSoundAliases
+              (psVar2,psVar3,(float)dVar11,(float)dVar10,SVar7,(float *)pcVar8,SVar4.handle,
+               iVar1 + 0x3c);
   }
   __restfpr_28();
   __restgprlr_26();
@@ -153,21 +231,27 @@ void VehicleAudio_PlayBlendedSound
 
 // 826B6CD0  VehicleAudio_StopSound  (vehicle/vehicle_audio.cpp:152)
 
-void VehicleAudio_StopSound(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_StopSound(VehicleClient *param_1,snd_alias_list_t *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  SndEntHandle SVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x9b,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x9b,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x9c,0,0xffffffff82000f98,0xffffffff82176e88);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x9c,0,"%s");
   }
-  uVar1 = CG_GenerateSndEntHandle(*(undefined4 *)(iVar2 + 0xc),*(undefined4 *)(iVar2 + 8));
-  SND_StopSoundAliasOnEnt(uVar1,*(undefined4 *)param_2);
+  SVar2 = CG_GenerateSndEntHandle(*(LocalClientNum_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
+  SND_StopSoundAliasOnEnt(SVar2,(char *)*(undefined4 *)uVar3);
   __restgprlr_28();
   return;
 }
@@ -175,23 +259,33 @@ void VehicleAudio_StopSound(undefined8 param_1,ulonglong param_2)
 
 // 826B6D58  VehicleAudio_EngineOff_Start  (vehicle/vehicle_audio.cpp:169)
 
-void VehicleAudio_EngineOff_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineOff_Start(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  snd_alias_list_t *psVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xaa,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xaa,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xab,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xab,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0x60) = 0;
-  iVar1 = *(int *)((int)param_2 + 0x330);
-  if (iVar1 != 0) {
-    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  (pVVar2->audioState).engineState = VEH_ENGINE_STATE_OFF;
+  psVar1 = *(snd_alias_list_t **)((int)uVar3 + 0x330);
+  if (psVar1 != (snd_alias_list_t *)0x0) {
+    VehicleAudio_PlaySoundInternal(pVVar2,psVar1,0,1.0,1.0,(bool)in_r6);
   }
   __restgprlr_28();
   return;
@@ -200,20 +294,27 @@ void VehicleAudio_EngineOff_Start(undefined8 param_1,ulonglong param_2)
 
 // 826B8188  VehicleAudio_EngineOff  (vehicle/vehicle_audio.cpp:181)
 
-void VehicleAudio_EngineOff(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineOff(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
+  VehicleClient *pVVar1;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xb6,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar2 = (ulonglong)(int)param_2;
+  pVVar1 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar1 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xb6,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xb7,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xb7,0,"%s");
   }
-  if ((*(uint *)(iVar1 + 0x18) & 0x20) == 0) {
-    VehicleAudio_EngineStartUp_Start(iVar1,param_2);
+  if ((pVVar1->flags & 0x20) == 0) {
+    VehicleAudio_EngineStartUp_Start(pVVar1,(VehicleDef *)uVar2);
   }
   __restgprlr_28();
   return;
@@ -222,28 +323,39 @@ void VehicleAudio_EngineOff(undefined8 param_1,ulonglong param_2)
 
 // 826B79E8  VehicleAudio_EngineStartUp_Start  (vehicle/vehicle_audio.cpp:191)
 
-void VehicleAudio_EngineStartUp_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineStartUp_Start(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  VehicleDef *pVVar1;
+  VehicleClient *pVVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xc0,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar4 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xc0,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xc1,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar4 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xc1,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0x60) = 1;
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x328) != 0) {
-    *(int *)(iVar2 + 0x4c) = *(int *)(iVar1 + 0x32c) + *(int *)(iVar2 + 0x14);
-    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,*(undefined4 *)(iVar1 + 0x328),0);
-    __restgprlr_28();
+  (pVVar2->audioState).engineState = VEH_ENGINE_STATE_STARTUP;
+  pVVar1 = (VehicleDef *)uVar4;
+  if (pVVar1->engineStartUpSnd != (snd_alias_list_t *)0x0) {
+    (pVVar2->audioState).stateTime = pVVar1->engineStartUpLength + pVVar2->time;
+    bVar3 = VehicleAudio_PlaySoundInternal(pVVar2,pVVar1->engineStartUpSnd,0,1.0,1.0,(bool)in_r6);
+    __restgprlr_28(bVar3);
     return;
   }
-  VehicleAudio_EngineIdle_Start(iVar2,param_2);
+  VehicleAudio_EngineIdle_Start(pVVar2,pVVar1);
   __restgprlr_28();
   return;
 }
@@ -251,20 +363,27 @@ void VehicleAudio_EngineStartUp_Start(undefined8 param_1,ulonglong param_2)
 
 // 826B7AB0  VehicleAudio_EngineStartUp  (vehicle/vehicle_audio.cpp:210)
 
-void VehicleAudio_EngineStartUp(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineStartUp(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
+  VehicleClient *pVVar1;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xd3,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar2 = (ulonglong)(int)param_2;
+  pVVar1 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar1 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xd3,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xd4,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xd4,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x4c) <= *(int *)(iVar1 + 0x14)) {
-    VehicleAudio_EngineIdle_Start(iVar1,param_2);
+  if ((pVVar1->audioState).stateTime <= pVVar1->time) {
+    VehicleAudio_EngineIdle_Start(pVVar1,(VehicleDef *)uVar2);
   }
   __restgprlr_28();
   return;
@@ -273,23 +392,33 @@ void VehicleAudio_EngineStartUp(undefined8 param_1,ulonglong param_2)
 
 // 826B6E00  VehicleAudio_EngineIdle_Start  (vehicle/vehicle_audio.cpp:220)
 
-void VehicleAudio_EngineIdle_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineIdle_Start(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  snd_alias_list_t *psVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xdd,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xdd,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xde,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xde,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0x60) = 2;
-  iVar1 = *(int *)((int)param_2 + 0x334);
-  if (iVar1 != 0) {
-    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  (pVVar2->audioState).engineState = VEH_ENGINE_STATE_IDLE;
+  psVar1 = *(snd_alias_list_t **)((int)uVar3 + 0x334);
+  if (psVar1 != (snd_alias_list_t *)0x0) {
+    VehicleAudio_PlaySoundInternal(pVVar2,psVar1,0,1.0,1.0,(bool)in_r6);
   }
   __restgprlr_28();
   return;
@@ -298,30 +427,40 @@ void VehicleAudio_EngineIdle_Start(undefined8 param_1,ulonglong param_2)
 
 // 826B8218  VehicleAudio_EngineIdle  (vehicle/vehicle_audio.cpp:232)
 
-void VehicleAudio_EngineIdle(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineIdle(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  VehicleDef *pVVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xe9,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xe9,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xea,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xea,0,"%s");
   }
-  iVar1 = *(int *)((int)param_2 + 0x334);
-  if (iVar1 != 0) {
-    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,iVar2,iVar1,0);
+  pVVar1 = (VehicleDef *)uVar3;
+  if (pVVar1->engineIdleSnd != (snd_alias_list_t *)0x0) {
+    VehicleAudio_PlaySoundInternal(pVVar2,pVVar1->engineIdleSnd,0,1.0,1.0,(bool)in_r6);
   }
-  if ((*(uint *)(iVar2 + 0x18) & 0x20) != 0) {
-    VehicleAudio_EngineOff_Start(iVar2,param_2);
+  if ((pVVar2->flags & 0x20) != 0) {
+    VehicleAudio_EngineOff_Start(pVVar2,pVVar1);
     __restgprlr_28();
     return;
   }
-  if (*(char *)(iVar2 + 0x48) != '\0') {
-    VehicleAudio_EngineRampUp_Start(0,iVar2,param_2);
+  if ((pVVar2->audioState).throttle != false) {
+    VehicleAudio_EngineRampUp_Start(pVVar2,pVVar1,0.0);
   }
   __restgprlr_28();
   return;
@@ -330,118 +469,154 @@ void VehicleAudio_EngineIdle(undefined8 param_1,ulonglong param_2)
 
 // 826B7B40  VehicleAudio_EngineRampUp_Start  (vehicle/vehicle_audio.cpp:251)
 
-void VehicleAudio_EngineRampUp_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineRampUp_Start(VehicleClient *param_1,VehicleDef *param_2,float param_3)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  undefined1 uVar5;
+  int iVar2;
+  uint uVar3;
+  VehicleDef *pVVar4;
+  VehicleClient *pVVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  bool bVar8;
   double extraout_f1;
-  double dVar6;
-  undefined8 uVar7;
-  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  iVar4 = __savegprlr_28();
-  dVar8 = extraout_f1;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xfe,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar7 = (ulonglong)(int)param_2;
+  pVVar5 = (VehicleClient *)__savegprlr_28((double)param_3,param_1);
+  dVar11 = extraout_f1;
+  if (pVVar5 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xfe,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0xff,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0xff,0,"%s");
   }
-  dVar6 = 0.0;
-  uVar7 = 0x3ff0000000000000;
-  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
-    MyAssertHandler(dVar8,0xffffffff8219f5e0,0x100,0,0xffffffff8219f63c,dVar8,0,0x3ff0000000000000);
+  dVar9 = 0.0;
+  dVar10 = 1.0;
+  if ((dVar11 < 0.0) || (1.0 < dVar11)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x100,0,"frac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  iVar3 = (int)param_2;
-  if (*(int *)(iVar3 + 0x33c) == 0) {
-    VehicleAudio_EngineSustain_Start(iVar4,param_2);
+  pVVar4 = (VehicleDef *)uVar7;
+  if (pVVar4->engineRampUpSnd == (snd_alias_list_t *)0x0) {
+    VehicleAudio_EngineSustain_Start(pVVar5,pVVar4);
     __restgprlr_28();
     return;
   }
-  iVar1 = *(int *)(iVar3 + 0x340);
-  *(undefined4 *)(iVar4 + 0x60) = 3;
-  uVar2 = *(uint *)(iVar4 + 0x18);
-  *(int *)(iVar4 + 100) =
-       (*(int *)(iVar4 + 0x14) - (int)((double)(longlong)iVar1 * dVar8)) + *(int *)(iVar3 + 0x340);
-  if (((uVar2 & 2) == 0) || (*(int *)(iVar3 + 0x338) == 0)) {
-    VehicleAudio_PlaySoundInternal(uVar7,uVar7,iVar4,*(undefined4 *)(iVar3 + 0x33c));
-    *(float *)(iVar4 + 0x6c) = (float)dVar6;
-    uVar5 = 0;
+  iVar1 = pVVar4->engineRampUpLength;
+  iVar2 = pVVar5->time;
+  (pVVar5->audioState).engineState = VEH_ENGINE_STATE_RAMPUP;
+  uVar3 = pVVar5->flags;
+  bVar6 = (bool)((byte)uVar3 & 2);
+  iVar1 = (int)((double)(longlong)iVar1 * dVar11);
+  (pVVar5->audioState).engineRampUpTime = (iVar2 - iVar1) + pVVar4->engineRampUpLength;
+  if (((uVar3 & 2) == 0) || (pVVar4->engineSustainSnd == (snd_alias_list_t *)0x0)) {
+    bVar6 = VehicleAudio_PlaySoundInternal
+                      (pVVar5,pVVar4->engineRampUpSnd,iVar1,(float)dVar10,(float)dVar10,bVar6);
+    (pVVar5->audioState).engineRampUpDelayFrac = (float)dVar9;
+    bVar8 = false;
   }
   else {
-    VehicleAudio_PlaySoundInternal
-              (uVar7,(double)*(float *)(iVar4 + 0x5c),iVar4,*(int *)(iVar3 + 0x338),0,uVar2 & 2,
-               uVar2,1);
-    *(float *)(iVar4 + 0x6c) = (float)dVar8;
-    uVar5 = 1;
+    bVar6 = VehicleAudio_PlaySoundInternal
+                      (pVVar5,pVVar4->engineSustainSnd,0,(float)dVar10,
+                       (pVVar5->audioState).inAirPitch,bVar6);
+    (pVVar5->audioState).engineRampUpDelayFrac = (float)dVar11;
+    bVar8 = true;
   }
-  *(undefined1 *)(iVar4 + 0x68) = uVar5;
-  __restgprlr_28();
+  (pVVar5->audioState).engineRampUpDelay = bVar8;
+  __restgprlr_28(bVar6);
   return;
 }
 
 
 // 826B7D08  VehicleAudio_EngineRampUp  (vehicle/vehicle_audio.cpp:287)
 
-void VehicleAudio_EngineRampUp(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_EngineRampUp(VehicleClient *param_1,VehicleDef *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  double dVar3;
+  VehicleDef *pVVar2;
+  VehicleClient *pVVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  undefined1 in_r6;
+  longlong lVar6;
+  undefined1 uVar7;
+  double dVar8;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x122,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar5 = (ulonglong)(int)param_2;
+  pVVar3 = (VehicleClient *)__savegprlr_28(param_1);
+  uVar7 = 0x98;
+  if (pVVar3 == (VehicleClient *)0x0) {
+    in_r6 = uVar7;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x122,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x123,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar5 & 0xffffffff) == 0) {
+    in_r6 = uVar7;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x123,0,"%s");
   }
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x33c) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x124,0,0xffffffff82000f98,0xffffffff8219f77c);
+  pVVar2 = (VehicleDef *)uVar5;
+  if (pVVar2->engineRampUpSnd == (snd_alias_list_t *)0x0) {
+    in_r6 = uVar7;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x124,0,"%s");
   }
-  if (*(int *)(iVar2 + 100) <= *(int *)(iVar2 + 0x14)) {
-    VehicleAudio_EngineSustain_Start(iVar2,param_2);
+  if ((pVVar3->audioState).engineRampUpTime <= pVVar3->time) {
+    VehicleAudio_EngineSustain_Start(pVVar3,pVVar2);
     __restgprlr_28();
     return;
   }
-  if (*(char *)(iVar2 + 0x48) == '\0') {
-    if (*(int *)(iVar1 + 0x340) < 1) {
-      MyAssertHandler(0xffffffff8219f5e0,0x12e,0,0xffffffff82000f98,0xffffffff8219f75c);
+  if ((pVVar3->audioState).throttle == false) {
+    if (pVVar2->engineRampUpLength < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x12e,0,"%s");
     }
-    dVar3 = (double)(float)((double)(longlong)(*(int *)(iVar2 + 100) - *(int *)(iVar2 + 0x14)) /
-                           (double)(longlong)*(int *)(iVar1 + 0x340));
-    VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x33c));
-    VehicleAudio_EngineRampDown_Start(dVar3,iVar2,param_2);
+    dVar8 = (double)((float)(longlong)((pVVar3->audioState).engineRampUpTime - pVVar3->time) /
+                    (float)(longlong)pVVar2->engineRampUpLength);
+    VehicleAudio_StopSound(pVVar3,pVVar2->engineRampUpSnd);
+    VehicleAudio_EngineRampDown_Start(pVVar3,pVVar2,(float)dVar8);
     __restgprlr_28();
     return;
   }
-  if (((*(uint *)(iVar2 + 0x18) & 2) != 0) && (*(int *)(iVar1 + 0x338) != 0)) {
-    dVar3 = 1.0;
-    if (*(char *)(iVar2 + 0x68) == '\0') {
-      if (*(int *)(iVar1 + 0x340) < 1) {
-        MyAssertHandler(0xffffffff8219f5e0,0x13a,0,0xffffffff82000f98,0xffffffff8219f75c);
+  if (((pVVar3->flags & 2) != 0) && (pVVar2->engineSustainSnd != (snd_alias_list_t *)0x0)) {
+    dVar8 = 1.0;
+    if ((pVVar3->audioState).engineRampUpDelay == false) {
+      if (pVVar2->engineRampUpLength < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp"
+                        ,0x13a,0,"%s");
       }
-      *(undefined1 *)(iVar2 + 0x68) = 1;
-      *(float *)(iVar2 + 0x6c) =
-           (float)(dVar3 - (double)(float)((double)(longlong)
-                                                   (*(int *)(iVar2 + 100) - *(int *)(iVar2 + 0x14))
-                                          / (double)(longlong)*(int *)(iVar1 + 0x340)));
-      VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x33c));
+      iVar1 = pVVar3->time;
+      (pVVar3->audioState).engineRampUpDelay = true;
+      lVar6 = (longlong)pVVar2->engineRampUpLength;
+      (pVVar3->audioState).engineRampUpDelayFrac =
+           (float)(dVar8 - (double)((float)(longlong)((pVVar3->audioState).engineRampUpTime - iVar1)
+                                   / (float)lVar6));
+      VehicleAudio_StopSound(pVVar3,pVVar2->engineRampUpSnd);
+      in_r6 = (undefined1)lVar6;
     }
-    VehicleAudio_PlaySoundInternal
-              (dVar3,(double)*(float *)(iVar2 + 0x5c),iVar2,*(undefined4 *)(iVar1 + 0x338),0);
-    *(int *)(iVar2 + 100) = *(int *)(iVar2 + 0x10) + *(int *)(iVar2 + 100);
-    __restgprlr_28();
+    bVar4 = VehicleAudio_PlaySoundInternal
+                      (pVVar3,pVVar2->engineSustainSnd,0,(float)dVar8,
+                       (pVVar3->audioState).inAirPitch,(bool)in_r6);
+    (pVVar3->audioState).engineRampUpTime =
+         pVVar3->frameTime + (pVVar3->audioState).engineRampUpTime;
+    __restgprlr_28(bVar4);
     return;
   }
-  if (*(char *)(iVar2 + 0x68) != '\0') {
-    VehicleAudio_EngineRampUp_Start((double)*(float *)(iVar2 + 0x6c),iVar2,param_2);
+  if ((pVVar3->audioState).engineRampUpDelay != false) {
+    VehicleAudio_EngineRampUp_Start(pVVar3,pVVar2,(pVVar3->audioState).engineRampUpDelayFrac);
   }
   __restgprlr_28();
   return;
@@ -450,24 +625,33 @@ void VehicleAudio_EngineRampUp(undefined8 param_1,ulonglong param_2)
 
 // 826B6EA8  VehicleAudio_EngineSustain_Start  (vehicle/vehicle_audio.cpp:333)
 
-void VehicleAudio_EngineSustain_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineSustain_Start(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  snd_alias_list_t *psVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x14e,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x14e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x14f,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x14f,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0x60) = 4;
-  iVar1 = *(int *)((int)param_2 + 0x338);
-  if (iVar1 != 0) {
-    VehicleAudio_PlaySoundInternal
-              (0x3ff0000000000000,(double)*(float *)(iVar2 + 0x5c),iVar2,iVar1,0);
+  (pVVar2->audioState).engineState = VEH_ENGINE_STATE_SUSTAIN;
+  psVar1 = *(snd_alias_list_t **)((int)uVar3 + 0x338);
+  if (psVar1 != (snd_alias_list_t *)0x0) {
+    VehicleAudio_PlaySoundInternal(pVVar2,psVar1,0,1.0,(pVVar2->audioState).inAirPitch,(bool)in_r6);
   }
   __restgprlr_28();
   return;
@@ -476,26 +660,35 @@ void VehicleAudio_EngineSustain_Start(undefined8 param_1,ulonglong param_2)
 
 // 826B7F70  VehicleAudio_EngineSustain  (vehicle/vehicle_audio.cpp:345)
 
-void VehicleAudio_EngineSustain(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineSustain(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  snd_alias_list_t *psVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x15a,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x15a,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x15b,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x15b,0,"%s");
   }
-  iVar1 = *(int *)((int)param_2 + 0x338);
-  if (iVar1 != 0) {
-    VehicleAudio_PlaySoundInternal
-              (0x3ff0000000000000,(double)*(float *)(iVar2 + 0x5c),iVar2,iVar1,0);
+  psVar1 = ((VehicleDef *)uVar3)->engineSustainSnd;
+  if (psVar1 != (snd_alias_list_t *)0x0) {
+    VehicleAudio_PlaySoundInternal(pVVar2,psVar1,0,1.0,(pVVar2->audioState).inAirPitch,(bool)in_r6);
   }
-  if (*(char *)(iVar2 + 0x48) == '\0') {
-    VehicleAudio_EngineRampDown_Start(0,iVar2,param_2);
+  if ((pVVar2->audioState).throttle == false) {
+    VehicleAudio_EngineRampDown_Start(pVVar2,(VehicleDef *)uVar3,0.0);
   }
   __restgprlr_28();
   return;
@@ -504,77 +697,100 @@ void VehicleAudio_EngineSustain(undefined8 param_1,ulonglong param_2)
 
 // 826B6F50  VehicleAudio_EngineRampDown_Start  (vehicle/vehicle_audio.cpp:358)
 
-void VehicleAudio_EngineRampDown_Start(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineRampDown_Start(VehicleClient *param_1,VehicleDef *param_2,float param_3)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
+  VehicleDef *pVVar2;
+  VehicleClient *pVVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  int iVar6;
   double extraout_f1;
-  undefined8 uVar4;
-  double dVar5;
+  double dVar7;
+  double dVar8;
   
-  iVar3 = __savegprlr_28();
-  dVar5 = extraout_f1;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x169,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar5 = (ulonglong)(int)param_2;
+  pVVar3 = (VehicleClient *)__savegprlr_28((double)param_3,param_1);
+  dVar8 = extraout_f1;
+  if (pVVar3 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x169,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x16a,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x16a,0,"%s");
   }
-  uVar4 = 0x3ff0000000000000;
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff8219f5e0,0x16b,0,0xffffffff8219f63c,dVar5,0,0x3ff0000000000000);
+  dVar7 = 1.0;
+  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x16b,0,"frac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  iVar2 = (int)param_2;
-  if (*(int *)(iVar2 + 0x344) == 0) {
-    VehicleAudio_EngineIdle_Start(iVar3,param_2);
+  pVVar2 = (VehicleDef *)uVar5;
+  if (pVVar2->engineRampDownSnd == (snd_alias_list_t *)0x0) {
+    VehicleAudio_EngineIdle_Start(pVVar3,pVVar2);
     __restgprlr_28();
     return;
   }
-  iVar1 = *(int *)(iVar2 + 0x348);
-  *(undefined4 *)(iVar3 + 0x60) = 5;
-  *(int *)(iVar3 + 0x70) =
-       (*(int *)(iVar3 + 0x14) - (int)((double)(longlong)iVar1 * dVar5)) + *(int *)(iVar2 + 0x348);
-  VehicleAudio_PlaySoundInternal(uVar4,uVar4,iVar3,*(undefined4 *)(iVar2 + 0x344));
-  __restgprlr_28();
+  iVar1 = pVVar2->engineRampDownLength;
+  iVar6 = pVVar3->time;
+  (pVVar3->audioState).engineState = VEH_ENGINE_STATE_RAMPDOWN;
+  iVar1 = (int)((double)(longlong)iVar1 * dVar8);
+  iVar6 = (iVar6 - iVar1) + pVVar2->engineRampDownLength;
+  (pVVar3->audioState).engineRampDownTime = iVar6;
+  bVar4 = VehicleAudio_PlaySoundInternal
+                    (pVVar3,pVVar2->engineRampDownSnd,iVar1,(float)dVar7,(float)dVar7,SUB41(iVar6,0)
+                    );
+  __restgprlr_28(bVar4);
   return;
 }
 
 
 // 826B8030  VehicleAudio_EngineRampDown  (vehicle/vehicle_audio.cpp:381)
 
-void VehicleAudio_EngineRampDown(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void VehicleAudio_EngineRampDown(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  double dVar3;
+  VehicleDef *pVVar1;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  double dVar4;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x180,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar2 == (VehicleClient *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x180,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x181,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x181,0,"%s");
   }
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x344) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x183,0,0xffffffff82000f98,0xffffffff8219f7b8);
+  pVVar1 = (VehicleDef *)uVar3;
+  if (pVVar1->engineRampDownSnd == (snd_alias_list_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x183,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x70) <= *(int *)(iVar2 + 0x14)) {
-    VehicleAudio_EngineIdle_Start(iVar2,param_2);
+  if ((pVVar2->audioState).engineRampDownTime <= pVVar2->time) {
+    VehicleAudio_EngineIdle_Start(pVVar2,pVVar1);
     __restgprlr_28();
     return;
   }
-  if (*(char *)(iVar2 + 0x48) != '\0') {
-    if (*(int *)(iVar1 + 0x348) < 1) {
-      MyAssertHandler(0xffffffff8219f5e0,0x18d,0,0xffffffff82000f98,0xffffffff8219f794);
+  if ((pVVar2->audioState).throttle != false) {
+    if (pVVar1->engineRampDownLength < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x18d,0,"%s");
     }
-    dVar3 = (double)(float)((double)(longlong)(*(int *)(iVar2 + 0x70) - *(int *)(iVar2 + 0x14)) /
-                           (double)(longlong)*(int *)(iVar1 + 0x348));
-    VehicleAudio_StopSound(iVar2,*(undefined4 *)(iVar1 + 0x344));
-    VehicleAudio_EngineRampUp_Start(dVar3,iVar2,param_2);
+    dVar4 = (double)((float)(longlong)((pVVar2->audioState).engineRampDownTime - pVVar2->time) /
+                    (float)(longlong)pVVar1->engineRampDownLength);
+    VehicleAudio_StopSound(pVVar2,pVVar1->engineRampDownSnd);
+    VehicleAudio_EngineRampUp_Start(pVVar2,pVVar1,(float)dVar4);
   }
   __restgprlr_28();
   return;
@@ -583,55 +799,73 @@ void VehicleAudio_EngineRampDown(undefined8 param_1,ulonglong param_2)
 
 // 826B70C0  VehicleAudio_PlayEngineBlendSounds  (vehicle/vehicle_audio.cpp:407)
 
-void VehicleAudio_PlayEngineBlendSounds(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_PlayEngineBlendSounds(VehicleClient *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
+  VehicleEngineState VVar1;
   int iVar2;
-  double dVar3;
-  double dVar4;
+  VehicleClient *pVVar3;
+  ulonglong uVar4;
+  char *in_r6;
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
+  double dVar9;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x19d,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar4 = (ulonglong)(int)param_2;
+  pVVar3 = (VehicleClient *)__savegprlr_28(param_1);
+  if (pVVar3 == (VehicleClient *)0x0) {
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x19d,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x19e,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar4 & 0xffffffff) == 0) {
+    in_r6 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x19e,0,"%s");
   }
-  if ((*(int *)(iVar2 + 0x60) != 0) && (*(int *)(iVar2 + 0x60) != 1)) {
-    iVar1 = (int)param_2;
-    dVar7 = 1.0;
-    dVar5 = (double)(ABS(*(float *)(iVar2 + 0x1c)) / *(float *)(iVar1 + 0x300));
-    dVar4 = dVar7;
-    if ((float)(dVar5 - 1.0) < 0.0) {
-      dVar4 = dVar5;
+  VVar1 = (pVVar3->audioState).engineState;
+  if ((VVar1 != VEH_ENGINE_STATE_OFF) && (VVar1 != VEH_ENGINE_STATE_STARTUP)) {
+    iVar2 = (int)uVar4;
+    dVar9 = 1.0;
+    dVar7 = (double)(ABS(pVVar3->localSpeed[0]) / *(float *)(iVar2 + 0x300));
+    dVar6 = dVar9;
+    if ((float)(dVar7 - 1.0) < 0.0) {
+      dVar6 = dVar7;
     }
-    dVar6 = 0.0;
-    if (-dVar5 < 0.0) {
-      dVar6 = dVar4;
+    dVar8 = 0.0;
+    if (-dVar7 < 0.0) {
+      dVar8 = dVar6;
     }
-    if ((*(int *)(iVar1 + 4) == 1) && (0.0 < *(float *)(iVar1 + 0x20))) {
-      dVar5 = (double)(ABS(*(float *)(iVar2 + 0x2c)) / *(float *)(iVar1 + 0x20));
-      dVar4 = dVar7;
-      if ((float)(dVar5 - 1.0) < 0.0) {
-        dVar4 = dVar5;
+    if ((*(int *)(iVar2 + 4) == 1) && (0.0 < *(float *)(iVar2 + 0x20))) {
+      dVar7 = (double)(ABS(pVVar3->rotateSpeed[1]) / *(float *)(iVar2 + 0x20));
+      dVar6 = dVar9;
+      if ((float)(dVar7 - 1.0) < 0.0) {
+        dVar6 = dVar7;
       }
-      dVar3 = 0.0;
-      if (-dVar5 < 0.0) {
-        dVar3 = dVar4;
+      dVar5 = 0.0;
+      if (-dVar7 < 0.0) {
+        dVar5 = dVar6;
       }
-      if (dVar6 < dVar3) {
-        dVar6 = dVar3;
+      if (dVar8 < dVar5) {
+        dVar8 = dVar5;
       }
     }
-    if ((*(int *)(iVar1 + 0x2f0) != 0) && (*(int *)(iVar1 + 0x2f4) != 0)) {
-      VehicleAudio_PlayBlendedSound((double)(float)(1.0 - dVar6),0x3ff0000000000000,iVar2);
+    if ((*(snd_alias_list_t **)(iVar2 + 0x2f0) != (snd_alias_list_t *)0x0) &&
+       (*(snd_alias_list_t **)(iVar2 + 0x2f4) != (snd_alias_list_t *)0x0)) {
+      VehicleAudio_PlayBlendedSound
+                (pVVar3,*(snd_alias_list_t **)(iVar2 + 0x2f0),*(snd_alias_list_t **)(iVar2 + 0x2f4),
+                 (float)(1.0 - dVar8),(int)in_r6,1.0);
     }
-    if ((*(int *)(iVar1 + 0x2f8) != 0) && (*(int *)(iVar1 + 0x2fc) != 0)) {
-      VehicleAudio_PlayBlendedSound(dVar6,dVar7,iVar2);
+    if ((*(snd_alias_list_t **)(iVar2 + 0x2f8) != (snd_alias_list_t *)0x0) &&
+       (*(snd_alias_list_t **)(iVar2 + 0x2fc) != (snd_alias_list_t *)0x0)) {
+      VehicleAudio_PlayBlendedSound
+                (pVVar3,*(snd_alias_list_t **)(iVar2 + 0x2f8),*(snd_alias_list_t **)(iVar2 + 0x2fc),
+                 (float)dVar8,(int)in_r6,(float)dVar9);
     }
   }
   __restgprlr_28();
@@ -641,40 +875,55 @@ void VehicleAudio_PlayEngineBlendSounds(undefined8 param_1,ulonglong param_2)
 
 // 826B7220  VehicleAudio_PlaySpeedSounds  (vehicle/vehicle_audio.cpp:451)
 
-void VehicleAudio_PlaySpeedSounds(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_PlaySpeedSounds(VehicleClient *param_1,VehicleDef *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  double dVar3;
-  double dVar4;
+  VehicleClient *pVVar2;
+  ulonglong uVar3;
+  undefined1 in_r6;
+  undefined1 uVar4;
   double dVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x1c6,0,0xffffffff82000f98,0xffffffff82026d30);
+  uVar3 = (ulonglong)(int)param_2;
+  pVVar2 = (VehicleClient *)__savegprlr_28(param_1);
+  uVar4 = 0x98;
+  if (pVVar2 == (VehicleClient *)0x0) {
+    in_r6 = uVar4;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x1c6,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x1c7,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar3 & 0xffffffff) == 0) {
+    in_r6 = uVar4;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x1c7,0,"%s");
   }
-  iVar1 = (int)param_2;
+  iVar1 = (int)uVar3;
   if (*(int *)(iVar1 + 0x364) != 0) {
-    dVar6 = 0.0;
+    dVar8 = 0.0;
     if (*(float *)(iVar1 + 0x368) <= 0.0) {
-      MyAssertHandler(0xffffffff8219f5e0,0x1cc,0,0xffffffff82000f98,0xffffffff8219f66c);
+      in_r6 = uVar4;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x1cc,0,"%s");
     }
-    dVar5 = (double)(ABS(*(float *)(iVar2 + 0x1c)) / *(float *)(iVar1 + 0x368));
-    dVar4 = 1.0;
-    if ((float)(dVar5 - 1.0) < 0.0) {
-      dVar4 = dVar5;
+    dVar7 = (double)(ABS(pVVar2->localSpeed[0]) / *(float *)(iVar1 + 0x368));
+    dVar6 = 1.0;
+    if ((float)(dVar7 - 1.0) < 0.0) {
+      dVar6 = dVar7;
     }
-    dVar3 = dVar6;
-    if (-dVar5 < 0.0) {
-      dVar3 = dVar4;
+    dVar5 = dVar8;
+    if (-dVar7 < 0.0) {
+      dVar5 = dVar6;
     }
-    if (dVar6 < dVar3) {
-      VehicleAudio_PlaySoundInternal(iVar2,*(undefined4 *)(iVar1 + 0x364),0);
+    if (dVar8 < dVar5) {
+      VehicleAudio_PlaySoundInternal
+                (pVVar2,*(snd_alias_list_t **)(iVar1 + 0x364),0,(float)dVar5,1.0,(bool)in_r6);
     }
   }
   __restgprlr_28();
@@ -684,97 +933,126 @@ void VehicleAudio_PlaySpeedSounds(undefined8 param_1,ulonglong param_2)
 
 // 826B7320  VehicleAudio_PlaySurfaceSounds  (vehicle/vehicle_audio.cpp:469)
 
-void VehicleAudio_PlaySurfaceSounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_PlaySurfaceSounds(centity_s *param_1,VehicleClient *param_2,VehicleDef *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  char cVar3;
-  uint uVar4;
-  ushort *puVar5;
-  int iVar6;
-  uint uVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  float fVar1;
+  VehicleClient *pVVar2;
+  int iVar3;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined8 in_r6;
+  undefined1 uVar7;
+  uint uVar8;
+  undefined8 uVar9;
+  ushort *puVar10;
+  int iVar11;
+  uint uVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
   
-  iVar2 = __savegprlr_21();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x1dd,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_21(param_1);
+  uVar9 = 0xffffffff82000f98;
+  if (iVar3 == 0) {
+    in_r6 = uVar9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x1dd,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x1de,0,0xffffffff82000f98,0xffffffff82026d30);
+  if ((uVar5 & 0xffffffff) == 0) {
+    in_r6 = uVar9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x1de,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x1df,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x1df,0,"%s");
+    in_r6 = uVar9;
   }
-  iVar6 = 0;
-  dVar11 = 1.0;
-  dVar13 = 1.5259021893143654e-05;
-  puVar5 = (ushort *)(iVar2 + 0x40);
-  dVar12 = dVar11;
-  uVar4 = 0;
+  iVar11 = 0;
+  dVar16 = 1.0;
+  dVar18 = 1.5259021893143654e-05;
+  puVar10 = (ushort *)(iVar3 + 0x40);
+  dVar17 = dVar16;
+  uVar8 = 0;
   do {
-    iVar1 = (int)param_2;
-    if ((*(byte *)(iVar2 + 0x4c + iVar6) < 0xfe) &&
-       (uVar7 = (uint)*(byte *)(iVar6 + iVar2 + 0x52), uVar7 != 0)) {
-      dVar14 = (double)(float)((double)*puVar5 * dVar13);
-      if (dVar14 < dVar11) {
-        dVar11 = dVar14;
-        if (0x1e < uVar7) {
-          MyAssertHandler(0xffffffff8219f5e0,0x1f1,0,0xffffffff8200e564,uVar7,0x1f);
-          dVar11 = dVar14;
+    pVVar2 = (VehicleClient *)uVar5;
+    if ((*(byte *)(iVar3 + 0x4c + iVar11) < 0xfe) &&
+       (uVar12 = (uint)*(byte *)(iVar11 + iVar3 + 0x52), uVar12 != 0)) {
+      dVar19 = (double)(float)((double)*puVar10 * dVar18);
+      if (dVar19 < dVar16) {
+        dVar16 = dVar19;
+        if (0x1e < uVar12) {
+          in_r6 = 0xffffffff8200e564;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp"
+                          ,0x1f1,0,"surfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)")
+          ;
+          dVar16 = dVar19;
         }
-        uVar4 = uVar7;
-        if (*(byte *)(iVar1 + 0x80) == uVar7) break;
+        uVar7 = (undefined1)in_r6;
+        uVar8 = uVar12;
+        if ((pVVar2->audioState).surfaceType == uVar12) break;
       }
     }
-    uVar7 = uVar4;
-    iVar6 = iVar6 + 1;
-    puVar5 = puVar5 + 1;
-    uVar4 = uVar7;
-  } while (iVar6 < 6);
-  *(char *)(iVar1 + 0x80) = (char)uVar7;
-  if (uVar7 != 0) {
-    iVar2 = (int)param_3;
-    if (*(int *)((uVar7 + 0xdc) * 4 + iVar2) != 0) {
-      dVar11 = 0.0;
-      if (*(float *)(iVar2 + 0x3ec) <= 0.0) {
-        MyAssertHandler(0xffffffff8219f5e0,0x1ff,0,0xffffffff82000f98,0xffffffff8219f6b0);
-      }
-      if ((double)*(float *)(iVar2 + 0x3f4) <= dVar11) {
-        MyAssertHandler(0xffffffff8219f5e0,0x200,0,0xffffffff82000f98,0xffffffff8219f690);
-      }
-      dVar9 = (double)(ABS(*(float *)(iVar1 + 0x1c)) / *(float *)(iVar2 + 0x3ec));
-      dVar14 = (double)(ABS(*(float *)(iVar1 + 0x20)) / *(float *)(iVar2 + 0x3f4));
-      dVar13 = dVar12;
-      if ((float)(dVar9 - dVar12) < 0.0) {
-        dVar13 = dVar9;
-      }
-      dVar8 = dVar12;
-      if ((float)(dVar14 - dVar12) < 0.0) {
-        dVar8 = dVar14;
-      }
-      dVar10 = dVar11;
-      if (-dVar9 < 0.0) {
-        dVar10 = dVar13;
-      }
-      dVar13 = dVar11;
-      if (-dVar14 < 0.0) {
-        dVar13 = dVar8;
-      }
-      dVar13 = (double)(float)((double)*(float *)(iVar2 + 0x3f0) * dVar13 + dVar10);
-      if (dVar11 < dVar13) {
-        cVar3 = VehicleAudio_PlaySoundInternal
-                          (dVar13,dVar12,param_2,
-                           *(undefined4 *)((*(byte *)(iVar1 + 0x80) + 0xdc) * 4 + iVar2),0);
-        if (cVar3 == '\0') {
-          VehicleAudio_PlaySoundInternal(dVar13,dVar12,param_2,*(undefined4 *)(iVar2 + 0x370),0);
-        }
+    uVar12 = uVar8;
+    uVar7 = (undefined1)in_r6;
+    iVar11 = iVar11 + 1;
+    puVar10 = puVar10 + 1;
+    uVar8 = uVar12;
+  } while (iVar11 < 6);
+  (pVVar2->audioState).surfaceType = (uchar)uVar12;
+  if ((uVar12 != 0) && (iVar3 = (int)uVar6, *(int *)((uVar12 + 0xdc) * 4 + iVar3) != 0)) {
+    dVar16 = 0.0;
+    if (*(float *)(iVar3 + 0x3ec) <= 0.0) {
+      uVar7 = 0x98;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x1ff,0,"%s");
+    }
+    if ((double)*(float *)(iVar3 + 0x3f4) <= dVar16) {
+      uVar7 = 0x98;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x200,0,"%s");
+    }
+    dVar14 = (double)(ABS(pVVar2->localSpeed[0]) / *(float *)(iVar3 + 0x3ec));
+    dVar19 = (double)(ABS(pVVar2->localSpeed[1]) / *(float *)(iVar3 + 0x3f4));
+    dVar18 = dVar17;
+    if ((float)(dVar14 - dVar17) < 0.0) {
+      dVar18 = dVar14;
+    }
+    dVar13 = dVar17;
+    if ((float)(dVar19 - dVar17) < 0.0) {
+      dVar13 = dVar19;
+    }
+    dVar15 = dVar16;
+    if (-dVar14 < 0.0) {
+      dVar15 = dVar18;
+    }
+    dVar18 = dVar16;
+    if (-dVar19 < 0.0) {
+      dVar18 = dVar13;
+    }
+    fVar1 = (float)((double)*(float *)(iVar3 + 0x3f0) * dVar18 + dVar15);
+    dVar18 = (double)fVar1;
+    if (dVar16 < dVar18) {
+      bVar4 = VehicleAudio_PlaySoundInternal
+                        (pVVar2,*(snd_alias_list_t **)
+                                 (((pVVar2->audioState).surfaceType + 0xdc) * 4 + iVar3),0,fVar1,
+                         (float)dVar17,(bool)uVar7);
+      if (!bVar4) {
+        VehicleAudio_PlaySoundInternal
+                  (pVVar2,*(snd_alias_list_t **)(iVar3 + 0x370),0,(float)dVar18,(float)dVar17,
+                   (bool)uVar7);
       }
     }
   }
@@ -785,57 +1063,76 @@ void VehicleAudio_PlaySurfaceSounds(undefined8 param_1,ulonglong param_2,ulonglo
 
 // 826B75A8  VehicleAudio_PlayTurretSounds  (vehicle/vehicle_audio.cpp:526)
 
-void VehicleAudio_PlayTurretSounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void VehicleAudio_PlayTurretSounds(centity_s *param_1,VehicleClient *param_2,VehicleDef *param_3)
 
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
-  bool bVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
+  bool bVar1;
+  snd_alias_list_t *psVar2;
+  snd_alias_list_t *psVar3;
+  VehicleClient *pVVar4;
+  bool bVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined1 in_r6;
+  undefined1 uVar9;
   double dVar10;
-  undefined8 uVar11;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   
-  __savegprlr_27();
-  iVar5 = __savefpr_28();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x217,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  __savegprlr_27(param_1);
+  iVar6 = __savefpr_28();
+  uVar9 = 0x98;
+  if (iVar6 == 0) {
+    in_r6 = uVar9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x217,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x218,0,0xffffffff82000f98,0xffffffff82026d30);
+  if ((uVar7 & 0xffffffff) == 0) {
+    in_r6 = uVar9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x218,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x219,0,0xffffffff82000f98,0xffffffff8200d194);
+  if ((uVar8 & 0xffffffff) == 0) {
+    in_r6 = uVar9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x219,0,"%s");
   }
-  iVar2 = *(int *)((int)param_3 + 0x2ac);
-  iVar3 = *(int *)((int)param_3 + 0x2b0);
-  if ((iVar2 != 0) || (iVar3 != 0)) {
-    dVar9 = 0.0027777778450399637;
-    dVar10 = 0.5;
-    dVar7 = (double)((*(float *)(iVar5 + 0xbc) - *(float *)(iVar5 + 300)) * 0.0027777778);
-    dVar6 = floor((double)(float)(dVar7 + 0.5));
-    dVar8 = 360.0;
-    dVar9 = (double)(float)((double)(*(float *)(iVar5 + 0xc0) - *(float *)(iVar5 + 0x130)) * dVar9);
-    dVar7 = (double)((float)(dVar7 - (double)(float)dVar6) * 360.0);
-    dVar6 = floor((double)(float)(dVar9 + dVar10));
-    iVar5 = (int)param_2;
-    cVar1 = *(char *)(iVar5 + 0x74);
-    if ((dVar10 < ABS(dVar7)) ||
-       (bVar4 = false,
-       dVar10 < ABS((double)(float)((double)(float)(dVar9 - (double)(float)dVar6) * dVar8)))) {
-      bVar4 = true;
+  psVar2 = *(snd_alias_list_t **)((int)uVar8 + 0x2ac);
+  psVar3 = *(snd_alias_list_t **)((int)uVar8 + 0x2b0);
+  if ((psVar2 != (snd_alias_list_t *)0x0) || (psVar3 != (snd_alias_list_t *)0x0)) {
+    dVar13 = 0.0027777778450399637;
+    dVar14 = 0.5;
+    dVar11 = (double)((*(float *)(iVar6 + 0xbc) - *(float *)(iVar6 + 300)) * 0.0027777778);
+    dVar10 = floor((double)(float)(dVar11 + 0.5));
+    dVar12 = 360.0;
+    dVar13 = (double)(float)((double)(*(float *)(iVar6 + 0xc0) - *(float *)(iVar6 + 0x130)) * dVar13
+                            );
+    dVar11 = (double)((float)(dVar11 - (double)(float)dVar10) * 360.0);
+    dVar10 = floor((double)(float)(dVar13 + dVar14));
+    pVVar4 = (VehicleClient *)uVar7;
+    bVar1 = (pVVar4->audioState).turretMoving;
+    if ((dVar14 < ABS(dVar11)) ||
+       (bVar5 = false,
+       dVar14 < ABS((double)(float)((double)(float)(dVar13 - (double)(float)dVar10) * dVar12)))) {
+      bVar5 = true;
     }
-    *(bool *)(iVar5 + 0x74) = bVar4;
-    uVar11 = 0x3ff0000000000000;
-    if ((iVar2 != 0) && (bVar4)) {
-      VehicleAudio_PlaySoundInternal(0x3ff0000000000000,0x3ff0000000000000,param_2,iVar2,0);
+    (pVVar4->audioState).turretMoving = bVar5;
+    dVar10 = 1.0;
+    if ((psVar2 != (snd_alias_list_t *)0x0) && (bVar5)) {
+      VehicleAudio_PlaySoundInternal(pVVar4,psVar2,0,1.0,1.0,(bool)in_r6);
     }
-    if (((iVar3 != 0) && (cVar1 != '\0')) && (*(char *)(iVar5 + 0x74) == '\0')) {
-      VehicleAudio_PlaySoundInternal(uVar11,uVar11,param_2,iVar3,0);
+    if (((psVar3 != (snd_alias_list_t *)0x0) && (bVar1 != false)) &&
+       ((pVVar4->audioState).turretMoving == false)) {
+      VehicleAudio_PlaySoundInternal(pVVar4,psVar3,0,(float)dVar10,(float)dVar10,(bool)in_r6);
     }
   }
   __restfpr_28();
@@ -846,110 +1143,126 @@ void VehicleAudio_PlayTurretSounds(undefined8 param_1,ulonglong param_2,ulonglon
 
 // 826B82F8  VehicleAudio_UpdateSounds  (vehicle/vehicle_audio.cpp:573)
 
-void VehicleAudio_UpdateSounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_UpdateSounds(LocalClientNum_t param_1,centity_s *param_2,VehicleClient *param_3)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  undefined8 uVar5;
-  char cVar8;
-  int iVar6;
-  int iVar7;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  dvar_t *pdVar3;
+  VehicleEngineState VVar4;
+  VehicleClient *pVVar5;
+  float fVar6;
+  float fVar7;
+  LocalClientNum_t LVar8;
+  centity_s *pcVar9;
+  VehicleDef *pVVar10;
+  DObj *pDVar11;
+  XModel *pXVar12;
+  char *pcVar13;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  int iVar17;
+  float fVar18;
+  bool bVar14;
   
-  uVar5 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x24a,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar16 = (ulonglong)(int)param_3;
+  uVar15 = (ulonglong)(int)param_2;
+  LVar8 = __savegprlr_27(param_1);
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x24a,0,"%s");
   }
-  cVar8 = VehicleCl_IsCorpse(param_2);
-  if (cVar8 != '\0') {
-    MyAssertHandler(0xffffffff8219f5e0,0x24b,0,0xffffffff82000f98,0xffffffff8219f708);
+  pcVar9 = (centity_s *)uVar15;
+  bVar14 = VehicleCl_IsCorpse(pcVar9);
+  if (bVar14) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x24b,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x24c,0,0xffffffff82000f98,0xffffffff82026d30);
+  if ((uVar16 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x24c,0,"%s");
   }
-  iVar2 = (int)param_2;
-  iVar3 = (int)param_3;
-  if (*(int *)(iVar3 + 8) != *(int *)(iVar2 + 0xc4)) {
-    MyAssertHandler(0xffffffff8219f5e0,0x250,0,0xffffffff82000f98,0xffffffff8219f808);
+  pVVar5 = (VehicleClient *)uVar16;
+  if (pVVar5->entIndex != (pcVar9->nextState).number) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x250,0,"%s");
   }
-  if (*(int *)(iVar3 + 8) == *(int *)(iVar2 + 0xc4)) {
-    iVar6 = VehicleCl_GetClientDef(param_3);
-    uVar5 = VehicleCl_GetEntDObj(uVar5,param_2);
-    iVar7 = DObjGetModel(uVar5,0);
-    *(float *)(iVar3 + 0x3c) = *(float *)(iVar2 + 0x14) + *(float *)(iVar7 + 0xf8);
-    *(float *)(iVar3 + 0x40) = *(float *)(iVar2 + 0x18) + *(float *)(iVar7 + 0xfc);
-    *(float *)(iVar3 + 0x44) = *(float *)(iVar2 + 0x1c) + *(float *)(iVar7 + 0x100);
-    uVar1 = *(uint *)(iVar3 + 0x18);
-    if (((uVar1 & 4) == 0) || (bVar4 = true, (uVar1 & 8) != 0)) {
-      bVar4 = false;
+  if (pVVar5->entIndex == (pcVar9->nextState).number) {
+    pVVar10 = VehicleCl_GetClientDef(pVVar5);
+    pDVar11 = VehicleCl_GetEntDObj(LVar8,pcVar9);
+    pXVar12 = DObjGetModel(pDVar11,0);
+    (pVVar5->audioState).entOrigin[0] = (pcVar9->pose).origin[0] + (pXVar12->bounds).midPoint[0];
+    (pVVar5->audioState).entOrigin[1] = (pcVar9->pose).origin[1] + (pXVar12->bounds).midPoint[1];
+    (pVVar5->audioState).entOrigin[2] = (pcVar9->pose).origin[2] + (pXVar12->bounds).midPoint[2];
+    uVar1 = pVVar5->flags;
+    if (((uVar1 & 4) == 0) || (bVar14 = true, (uVar1 & 8) != 0)) {
+      bVar14 = false;
     }
-    iVar2 = *(int *)(iVar3 + 0x54);
-    *(bool *)(iVar3 + 0x48) = bVar4;
-    iVar7 = *(int *)(iVar3 + 0x50) + iVar2;
-    if ((iVar2 < 1) || (iVar7 <= *(int *)(iVar3 + 0x14))) {
-      *(undefined4 *)(iVar3 + 0x58) = 0x3f800000;
+    iVar2 = (pVVar5->audioState).spawnTimeDelay;
+    (pVVar5->audioState).throttle = bVar14;
+    iVar17 = (pVVar5->audioState).spawnTime + iVar2;
+    if ((iVar2 < 1) || (iVar17 <= pVVar5->time)) {
+      (pVVar5->audioState).spawnVolumeScale = 1.0;
     }
     else {
-      dVar11 = (double)(float)((double)(longlong)(iVar7 - *(int *)(iVar3 + 0x14)) /
-                              (double)(longlong)iVar2);
-      dVar9 = 1.0;
-      if ((float)(dVar11 - 1.0) < 0.0) {
-        dVar9 = dVar11;
+      fVar18 = (float)(longlong)(iVar17 - pVVar5->time) / (float)(longlong)iVar2;
+      fVar7 = 1.0;
+      if (fVar18 - 1.0 < 0.0) {
+        fVar7 = fVar18;
       }
-      dVar10 = 0.0;
-      if (-dVar11 < 0.0) {
-        dVar10 = dVar9;
+      fVar6 = 0.0;
+      if (-fVar18 < 0.0) {
+        fVar6 = fVar7;
       }
-      *(float *)(iVar3 + 0x58) = (float)(1.0 - dVar10);
+      (pVVar5->audioState).spawnVolumeScale = 1.0 - fVar6;
     }
-    dVar9 = 1.0;
-    if (((uVar1 & 2) == 0) || (!bVar4)) {
-      iVar2 = *(int *)(iVar3 + 0x10);
-      iVar7 = DAT_8444fea8;
+    fVar18 = 1.0;
+    if (((uVar1 & 2) == 0) || (!bVar14)) {
+      iVar2 = pVVar5->frameTime;
+      pdVar3 = vehAudio_inAirPitchDownLerp;
     }
     else {
-      iVar2 = *(int *)(iVar3 + 0x10);
-      dVar9 = (double)*(float *)(iVar6 + 0x3f8);
-      iVar7 = DAT_8444feac;
+      iVar2 = pVVar5->frameTime;
+      fVar18 = pVVar10->inAirPitch;
+      pdVar3 = vehAudio_inAirPitchUpLerp;
     }
-    dVar9 = (double)LinearTrack(dVar9,(double)*(float *)(iVar3 + 0x5c),
-                                (double)*(float *)(iVar7 + 0xc),
-                                (double)((float)(longlong)iVar2 * 0.001));
-    uVar1 = *(uint *)(iVar3 + 0x60);
-    *(float *)(iVar3 + 0x5c) = (float)dVar9;
-    if (uVar1 < 6) {
-      if (uVar1 == 1) {
-        VehicleAudio_EngineStartUp(param_3,iVar6);
+    fVar18 = LinearTrack(fVar18,(pVVar5->audioState).inAirPitch,(pdVar3->current).value,
+                         (float)(longlong)iVar2 * 0.001);
+    VVar4 = (pVVar5->audioState).engineState;
+    (pVVar5->audioState).inAirPitch = fVar18;
+    if (VVar4 < (VEH_ENGINE_STATE_SUSTAIN|VEH_ENGINE_STATE_IDLE)) {
+      if (VVar4 == VEH_ENGINE_STATE_STARTUP) {
+        VehicleAudio_EngineStartUp(pVVar5,pVVar10);
       }
-      else if (uVar1 == 2) {
-        VehicleAudio_EngineIdle(param_3,iVar6);
+      else if (VVar4 == VEH_ENGINE_STATE_IDLE) {
+        VehicleAudio_EngineIdle(pVVar5,pVVar10);
       }
-      else if (uVar1 == 3) {
-        VehicleAudio_EngineRampUp(param_3,iVar6);
+      else if (VVar4 == VEH_ENGINE_STATE_RAMPUP) {
+        VehicleAudio_EngineRampUp(pVVar5,pVVar10);
       }
-      else if (uVar1 == 4) {
-        VehicleAudio_EngineSustain(param_3,iVar6);
+      else if (VVar4 == VEH_ENGINE_STATE_SUSTAIN) {
+        VehicleAudio_EngineSustain(pVVar5,pVVar10);
       }
-      else if (uVar1 == 0) {
-        VehicleAudio_EngineOff(param_3,iVar6);
+      else if (VVar4 == VEH_ENGINE_STATE_OFF) {
+        VehicleAudio_EngineOff(pVVar5,pVVar10);
       }
       else {
-        VehicleAudio_EngineRampDown(param_3,iVar6);
+        VehicleAudio_EngineRampDown(pVVar5,pVVar10);
       }
     }
-    else if (DAT_84013128 == 0) {
-      uVar5 = va(0xffffffff8219f7d4);
-      MyAssertHandler(0xffffffff8219f5e0,0x2a6,0,uVar5);
+    else if (alwaysfails == 0) {
+      pcVar13 = va("VehicleAudio_UpdateSounds: Invalid audio state %d\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                      0x2a6,0,pcVar13);
     }
-    VehicleAudio_PlayEngineBlendSounds(param_3,iVar6);
-    VehicleAudio_PlaySpeedSounds(param_3,iVar6);
-    VehicleAudio_PlaySurfaceSounds(param_2,param_3,iVar6);
-    VehicleAudio_PlayTurretSounds(param_2,param_3,iVar6);
+    VehicleAudio_PlayEngineBlendSounds(pVVar5,pVVar10);
+    VehicleAudio_PlaySpeedSounds(pVVar5,pVVar10);
+    VehicleAudio_PlaySurfaceSounds(pcVar9,pVVar5,pVVar10);
+    VehicleAudio_PlayTurretSounds(pcVar9,pVVar5,pVVar10);
   }
   __restgprlr_27();
   return;
@@ -958,84 +1271,119 @@ void VehicleAudio_UpdateSounds(undefined8 param_1,ulonglong param_2,ulonglong pa
 
 // 826B7770  VehicleAudio_CollisionEvent  (vehicle/vehicle_audio.cpp:690)
 
-void VehicleAudio_CollisionEvent(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_CollisionEvent(LocalClientNum_t param_1,centity_s *param_2,float param_3)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  LocalClientNum_t LVar3;
+  bool bVar6;
+  VehicleClient *pVVar4;
+  longlong lVar2;
+  ulonglong uVar7;
+  undefined1 in_r6;
   double extraout_f1;
-  undefined8 uVar5;
-  double dVar6;
+  double dVar8;
+  double dVar9;
+  VehicleDef *pVVar5;
   
-  uVar1 = __savegprlr_28();
-  dVar6 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x2b6,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar7 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_28((double)param_3,param_1);
+  dVar9 = extraout_f1;
+  if ((uVar7 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2b6,0,"%s");
   }
-  cVar4 = VehicleCl_IsCorpse(param_2);
-  if (cVar4 != '\0') {
-    MyAssertHandler(0xffffffff8219f5e0,0x2b7,0,0xffffffff82000f98,0xffffffff8219f708);
+  bVar6 = VehicleCl_IsCorpse((centity_s *)uVar7);
+  if (bVar6) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2b7,0,"%s");
   }
-  uVar5 = 0x3ff0000000000000;
-  if ((dVar6 < 0.0) || (1.0 < dVar6)) {
-    MyAssertHandler(dVar6,0xffffffff8219f5e0,0x2b8,0,0xffffffff8219f6d4,dVar6,0,0x3ff0000000000000);
+  dVar8 = 1.0;
+  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
+    in_r6 = 0xd4;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2b8,0,"impactScale not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  iVar2 = VehicleCl_GetClient(uVar1,param_2);
-  iVar3 = VehicleCl_GetClientDef();
-  if (*(int *)(iVar3 + 0x35c) != 0) {
-    if ((*(int *)(iVar2 + 0x78) <= *(int *)(iVar2 + 0x14)) ||
-       ((double)*(float *)(iVar2 + 0x7c) <= dVar6)) {
-      *(float *)(iVar2 + 0x7c) = (float)dVar6;
-      *(int *)(iVar2 + 0x78) = *(int *)(iVar2 + 0x14) + 500;
-      VehicleAudio_PlaySoundInternal(dVar6,uVar5,iVar2,*(undefined4 *)(iVar3 + 0x35c),0);
-    }
+  pVVar4 = VehicleCl_GetClient(LVar3,(centity_s *)uVar7);
+  pVVar5 = VehicleCl_GetClientDef(pVVar4);
+  lVar2 = (longlong)(int)pVVar5;
+  if ((pVVar5->collisionSnd != (snd_alias_list_t *)0x0) &&
+     ((iVar1 = pVVar4->time, (pVVar4->audioState).lastImpactTime <= iVar1 ||
+      ((double)(pVVar4->audioState).lastImpactScale <= dVar9)))) {
+    (pVVar4->audioState).lastImpactScale = (float)dVar9;
+    (pVVar4->audioState).lastImpactTime = iVar1 + 500;
+    bVar6 = VehicleAudio_PlaySoundInternal
+                      (pVVar4,pVVar5->collisionSnd,0,(float)dVar9,(float)dVar8,(bool)in_r6);
+    lVar2 = (longlong)bVar6;
   }
-  __restgprlr_28();
+  __restgprlr_28(lVar2);
   return;
 }
 
 
 // 826B78D0  VehicleAudio_SuspensionEvent  (vehicle/vehicle_audio.cpp:715)
 
-void VehicleAudio_SuspensionEvent(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void VehicleAudio_SuspensionEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  int iVar2;
+  LocalClientNum_t LVar2;
+  bool bVar6;
+  VehicleClient *pVVar3;
+  longlong lVar1;
+  char *pcVar5;
+  ulonglong uVar7;
+  snd_alias_list_t *psVar8;
+  undefined1 in_r6;
+  VehicleDef *pVVar4;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8219f5e0,0x2cf,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar7 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2cf,0,"%s");
   }
-  cVar3 = VehicleCl_IsCorpse(param_2);
-  if (cVar3 != '\0') {
-    MyAssertHandler(0xffffffff8219f5e0,0x2d0,0,0xffffffff82000f98,0xffffffff8219f708);
+  bVar6 = VehicleCl_IsCorpse((centity_s *)uVar7);
+  if (bVar6) {
+    in_r6 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp",
+                    0x2d0,0,"%s");
   }
-  uVar1 = VehicleCl_GetClient(uVar1,param_2);
-  iVar2 = VehicleCl_GetClientDef();
-  if ((int)param_3 == 0x73) {
-    iVar2 = *(int *)(iVar2 + 0x34c);
+  pVVar3 = VehicleCl_GetClient(LVar2,(centity_s *)uVar7);
+  pVVar4 = VehicleCl_GetClientDef(pVVar3);
+  lVar1 = (longlong)(int)pVVar4;
+  if (param_3 == 0x73) {
+    psVar8 = pVVar4->suspensionSoftSnd;
   }
   else {
-    if ((int)param_3 != 0x74) {
-      if (DAT_84013128 == 0) {
-        uVar1 = va(0xffffffff8219f724,param_3);
-        MyAssertHandler(0xffffffff8219f5e0,0x2e2,0,uVar1);
+    if (param_3 != 0x74) {
+      if (alwaysfails == 0) {
+        pcVar5 = va("VehicleAudio_SuspensionEvent: Invalid sound event %d\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_audio.cpp"
+                        ,0x2e2,0,pcVar5);
         __restgprlr_27();
         return;
       }
       goto LAB_826b79dc;
     }
-    iVar2 = *(int *)(iVar2 + 0x354);
+    psVar8 = pVVar4->suspensionHardSnd;
   }
-  if (iVar2 != 0) {
-    VehicleAudio_PlaySoundInternal(0x3ff0000000000000,uVar1,iVar2,0);
+  if (psVar8 != (snd_alias_list_t *)0x0) {
+    bVar6 = VehicleAudio_PlaySoundInternal(pVVar3,psVar8,0,1.0,1.0,(bool)in_r6);
+    lVar1 = (longlong)bVar6;
   }
 LAB_826b79dc:
-  __restgprlr_27();
+  __restgprlr_27(lVar1);
   return;
 }
 

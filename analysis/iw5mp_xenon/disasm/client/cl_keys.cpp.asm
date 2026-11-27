@@ -3548,7 +3548,7 @@ LAB_823404d0:
   823404FC  7C0903A6             mtspr CTR,r0
 switchD:
   82340500  4E800420             bctr
-caseD_9:
+caseD_a:
   8234052C  7FC3F378             or r3,r30,r30
   82340530  4848C039             bl 0x827cc568
   82340534  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
@@ -3575,12 +3575,12 @@ LAB_8234057c:
   82340580  4826A621             bl 0x825aaba0
   82340584  382104C0             addi r1,r1,0x4c0
   82340588  485D615C             b 0x829166e4
-caseD_0:
+caseD_1:
   8234058C  7FC3F378             or r3,r30,r30
   82340590  48004661             bl 0x82344bf0
   82340594  382104C0             addi r1,r1,0x4c0
   82340598  485D614C             b 0x829166e4
-caseD_6:
+caseD_7:
   8234059C  3D6082AA             lis r11,-0x7d56
   823405A0  394B1B00             addi r10,r11,0x1b00
   823405A4  816A0114             lwz r11,0x114(r10)

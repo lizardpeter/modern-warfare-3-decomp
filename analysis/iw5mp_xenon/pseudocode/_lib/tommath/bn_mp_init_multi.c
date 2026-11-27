@@ -10,13 +10,14 @@ void mp_init_multi(void)
   int *piVar1;
   undefined1 *puVar2;
   int *piVar3;
-  int iVar4;
+  void *pvVar4;
   int iVar5;
   int iVar6;
-  longlong lVar7;
+  int iVar7;
+  longlong lVar8;
   
   piVar3 = (int *)__savegprlr_27();
-  iVar6 = 0;
+  iVar7 = 0;
   puVar2 = &stack0x00000018;
   piVar1 = piVar3;
   while( true ) {
@@ -24,37 +25,37 @@ void mp_init_multi(void)
       __restgprlr_27(0);
       return;
     }
-    iVar4 = tom_game_malloc(0x100);
-    piVar1[3] = iVar4;
-    if (iVar4 == 0) break;
-    lVar7 = 0x40;
-    iVar4 = 0;
+    pvVar4 = tom_game_malloc(0x100);
+    piVar1[3] = (int)pvVar4;
+    if (pvVar4 == (void *)0x0) break;
+    lVar8 = 0x40;
+    iVar5 = 0;
     do {
-      *(undefined4 *)(iVar4 + piVar1[3]) = 0;
-      iVar4 = iVar4 + 4;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      *(undefined4 *)(iVar5 + piVar1[3]) = 0;
+      iVar5 = iVar5 + 4;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
     *piVar1 = 0;
     piVar1[1] = 0x40;
-    iVar6 = iVar6 + 1;
+    iVar7 = iVar7 + 1;
     piVar1[2] = 0;
     piVar1 = *(int **)(puVar2 + 4);
     puVar2 = puVar2 + 8;
   }
   puVar2 = &stack0x00000018;
-  while (iVar6 != 0) {
-    iVar6 = iVar6 + -1;
+  while (iVar7 != 0) {
+    iVar7 = iVar7 + -1;
     if (piVar3[3] != 0) {
-      iVar4 = 0;
+      iVar5 = 0;
       if (0 < *piVar3) {
-        iVar5 = 0;
+        iVar6 = 0;
         do {
-          iVar4 = iVar4 + 1;
-          *(undefined4 *)(iVar5 + piVar3[3]) = 0;
-          iVar5 = iVar5 + 4;
-        } while (iVar4 < *piVar3);
+          iVar5 = iVar5 + 1;
+          *(undefined4 *)(iVar6 + piVar3[3]) = 0;
+          iVar6 = iVar6 + 4;
+        } while (iVar5 < *piVar3);
       }
-      tom_game_free(piVar3[3]);
+      tom_game_free((void *)piVar3[3]);
       piVar3[3] = 0;
       *piVar3 = 0;
       piVar3[1] = 0;

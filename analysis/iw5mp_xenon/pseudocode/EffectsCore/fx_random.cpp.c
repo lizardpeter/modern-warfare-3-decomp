@@ -2,15 +2,19 @@
 
 // 8243A160  TRACK_fx_random  (EffectsCore/fx_random.cpp:99)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_fx_random(void)
 
 {
-  track_static_alloc_internal(0xffffffff82066ac8,0x7ec,0xffffffff820672b4,8);
+  track_static_alloc_internal(&fx_randomTable,0x7ec,"fx_randomTable",8);
   return;
 }
 
 
 // 8243A180  FX_InitRandom  (EffectsCore/fx_random.cpp:158)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void FX_InitRandom(void)
 
@@ -21,41 +25,44 @@ void FX_InitRandom(void)
 
 // 8243A188  FX_RandomDir  (EffectsCore/fx_random.cpp:183)
 
-void FX_RandomDir(undefined8 param_1,float *param_2)
+void FX_RandomDir(int param_1,float *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  int iVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  __savegprlr_28();
-  iVar2 = __savefpr_26();
-  dVar8 = 1.0;
-  dVar9 = (double)(*(float *)(&DAT_82066af0 + iVar2 * 4) * 2.0 - 1.0);
-  if ((dVar9 < -1.0) || (1.0 < dVar9)) {
-    MyAssertHandler(dVar9,0xffffffff82067300,0xbf,0,0xffffffff82004f10,0xffffffff820672dc,dVar9);
+  __savegprlr_28(param_1);
+  iVar3 = __savefpr_26();
+  dVar9 = 1.0;
+  dVar10 = (double)(*(float *)(&DAT_82066af0 + iVar3 * 4) * 2.0 - 1.0);
+  if ((dVar10 < -1.0) || (1.0 < dVar10)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_random.cpp",
+                    0xbf,0,"%s\n\t(height) = %g");
   }
-  dVar7 = (double)(float)(dVar9 * dVar9);
-  dVar6 = (double)(*(float *)(&DAT_82066aec + iVar2 * 4) * 6.2831855);
-  dVar5 = (double)SQRT((float)(dVar8 - dVar7));
-  dVar3 = sin(dVar6);
-  dVar4 = (double)(float)dVar3;
-  dVar3 = cos(dVar6);
-  dVar6 = (double)(float)(dVar4 * dVar5);
-  param_2[2] = (float)dVar9;
-  param_2[1] = (float)(dVar4 * dVar5);
-  dVar4 = (double)(float)((double)(float)dVar3 * dVar5);
-  *param_2 = (float)((double)(float)dVar3 * dVar5);
-  dVar3 = (double)(float)((double)(float)(dVar6 * dVar6 + (double)(float)(dVar4 * dVar4)) + dVar7);
-  if (0.002 <= ABS((float)(dVar3 - dVar8))) {
-    uVar1 = va(dVar4,dVar6,dVar9,0xffffffff82015f2c,dVar4,dVar6,dVar9,(double)(float)SQRT(dVar3));
-    MyAssertHandler(0xffffffff82067300,0xc9,0,0xffffffff820011f4,0xffffffff820672c4,uVar1);
+  dVar8 = (double)(float)(dVar10 * dVar10);
+  dVar7 = (double)(*(float *)(&DAT_82066aec + iVar3 * 4) * 6.2831855);
+  dVar6 = (double)SQRT((float)(dVar9 - dVar8));
+  dVar4 = sin(dVar7);
+  dVar5 = (double)(float)dVar4;
+  dVar4 = cos(dVar7);
+  fVar1 = (float)(dVar5 * dVar6);
+  param_2[2] = (float)dVar10;
+  param_2[1] = fVar1;
+  fVar2 = (float)((double)(float)dVar4 * dVar6);
+  *param_2 = fVar2;
+  if (0.002 <= ABS((float)((double)(float)((double)(fVar1 * fVar1 + fVar2 * fVar2) + dVar8) - dVar9)
+                  )) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_random.cpp",
+                    0xc9,0,"%s\n\t%s");
   }
   __restfpr_26();
   __restgprlr_28();

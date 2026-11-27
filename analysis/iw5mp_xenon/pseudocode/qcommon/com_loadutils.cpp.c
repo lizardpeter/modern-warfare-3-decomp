@@ -2,55 +2,122 @@
 
 // 824DCC10  Com_LoadInfoString_FastFile  (qcommon/com_loadutils.cpp:50)
 
-void Com_LoadInfoString_FastFile
-               (undefined8 param_1,undefined8 param_2,longlong param_3,longlong param_4)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * Com_LoadInfoString_FastFile(char *param_1,char *param_2,char *param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char *pcVar6;
-  longlong lVar4;
-  ulonglong uVar5;
+  char *pcVar2;
+  XAssetHeader XVar3;
+  int iVar4;
+  longlong lVar1;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = DB_FindXAssetHeader(0x24,uVar1,1);
-  iVar3 = DB_IsXAssetDefault(0x24,uVar1);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff820852cc,param_2,uVar1);
+  lVar6 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_3;
+  pcVar2 = (char *)__savegprlr_27(param_1,param_2);
+  XVar3 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar2,1);
+  iVar4 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar2);
+  if (iVar4 != 0) {
+    Com_Error(ERR_DROP,"\x15Could not load %s file [%s]\n");
   }
-  DB_GetRawBuffer(uVar2,param_4,0x2000);
-  lVar4 = param_3;
+  DB_GetRawBuffer(XVar3.rawfile,(char *)lVar6,0x2000);
+  lVar7 = lVar5;
   do {
-    pcVar6 = (char *)lVar4;
-    lVar4 = lVar4 + 1;
-  } while (*pcVar6 != '\0');
-  uVar5 = (lVar4 - param_3) - 1;
-  iVar3 = strncmp((char *)param_4,(char *)param_3,(size_t)uVar5);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff820852ac,uVar1,param_2);
+    pcVar2 = (char *)lVar7;
+    lVar7 = lVar7 + 1;
+  } while (*pcVar2 != '\0');
+  lVar1 = lVar6;
+  strncmp();
+  if ((int)lVar1 != 0) {
+    Com_Error(ERR_DROP,"\x15File [%s] is not a %s file\n");
   }
-  __restgprlr_27((uVar5 & 0xffffffff) + param_4);
-  return;
+  pcVar2 = (char *)__restgprlr_27(((lVar7 - lVar5) - 1U & 0xffffffff) + lVar6);
+  return pcVar2;
 }
 
 
 // 824DCCD8  Com_LoadInfoString  (qcommon/com_loadutils.cpp:69)
 
-void Com_LoadInfoString(undefined8 param_1,undefined8 param_2)
+char * Com_LoadInfoString(char *param_1,char *param_2,char *param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  char *pcVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = Com_LoadInfoString_FastFile();
-  iVar3 = Info_Validate();
-  if (iVar3 == 0) {
-    Com_Error(1,0xffffffff820852ec,uVar1,param_2);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  pcVar1 = Com_LoadInfoString_FastFile(pcVar1,param_2,param_3,param_4);
+  iVar2 = Info_Validate(pcVar1);
+  if (iVar2 == 0) {
+    Com_Error(ERR_DROP,"\x15File [%s] is not a valid %s\n");
   }
-  __restgprlr_29(uVar2);
-  return;
+  pcVar1 = (char *)__restgprlr_29(pcVar1);
+  return pcVar1;
+}
+
+
+// 824DCD28  Com_LoadRawTextFile_FastFile  (qcommon/com_loadutils.cpp:112)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * Com_LoadRawTextFile_FastFile(char *param_1,char *param_2,int param_3)
+
+{
+  char *pcVar1;
+  XAssetHeader XVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
+  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
+  if (iVar3 != 0) {
+    pcVar1 = (char *)__restgprlr_28(0);
+    return pcVar1;
+  }
+  DB_GetRawBuffer(XVar2.rawfile,(char *)lVar4,param_3);
+  pcVar1 = (char *)__restgprlr_28(lVar4);
+  return pcVar1;
+}
+
+
+// 824DCD30  Com_LoadRawTextFile  (qcommon/com_loadutils.cpp:119)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * Com_LoadRawTextFile(char *param_1,char *param_2,int param_3)
+
+{
+  char *pcVar1;
+  XAssetHeader XVar2;
+  int iVar3;
+  longlong lVar4;
+  
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
+  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
+  if (iVar3 != 0) {
+    pcVar1 = (char *)__restgprlr_28(0);
+    return pcVar1;
+  }
+  DB_GetRawBuffer(XVar2.rawfile,(char *)lVar4,param_3);
+  pcVar1 = (char *)__restgprlr_28(lVar4);
+  return pcVar1;
 }
 

@@ -7,7 +7,7 @@ void __unwind_68258(void)
 {
   int in_r12;
   
-  bdHash___bdHash(*(undefined4 *)(in_r12 + 0x14));
+  bdHash::~bdHash(*(bdHash **)(in_r12 + 0x14));
   return;
 }
 

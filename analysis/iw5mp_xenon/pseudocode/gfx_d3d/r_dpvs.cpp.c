@@ -2,27 +2,30 @@
 
 // 82726E10  TRACK_r_dpvs  (gfx_d3d/r_dpvs.cpp:133)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_dpvs(void)
 
 {
-  track_static_alloc_internal(0xffffffff845a1730,0x8dd0,0xffffffff821bc484,0x12);
+  track_static_alloc_internal(&dpvsGlob,0x8dd0,"dpvsGlob",0x12);
   return;
 }
 
 
 // 82726E30  R_DpvsPlaneDistToEye  (gfx_d3d/r_dpvs.cpp:140)
 
-double R_DpvsPlaneDistToEye(float *param_1)
+float R_DpvsPlaneDistToEye(DpvsPlane *param_1)
 
 {
-  return (double)(*param_1 * DAT_845a17d8 +
-                 param_1[3] * DAT_845a17e4 + param_1[1] * DAT_845a17dc + param_1[2] * DAT_845a17e0);
+  return param_1->coeffs[0] * dpvsGlob.viewOrg[0] +
+         param_1->coeffs[3] * dpvsGlob.viewOrg[3] +
+         param_1->coeffs[1] * dpvsGlob.viewOrg[1] + param_1->coeffs[2] * dpvsGlob.viewOrg[2];
 }
 
 
 // 82726E70  R_GetSidePlaneNormals  (gfx_d3d/r_dpvs.cpp:146)
 
-void R_GetSidePlaneNormals(undefined8 param_1,ulonglong param_2,longlong param_3)
+void R_GetSidePlaneNormals(float (*param_1) [3],uint param_2,float (*param_3) [3])
 
 {
   float fVar1;
@@ -36,42 +39,49 @@ void R_GetSidePlaneNormals(undefined8 param_1,ulonglong param_2,longlong param_3
   float *pfVar9;
   int iVar10;
   int iVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
+  int iVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  float *pfVar15;
+  ulonglong uVar16;
   longlong lVar17;
-  int iVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  undefined4 local_660 [6];
-  float afStack_648 [402];
+  longlong lVar18;
+  longlong lVar19;
+  int iVar21;
+  ulonglong uVar20;
+  longlong lVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  undefined4 local_660 [408];
   
-  uVar12 = ZEXT48(&stack0x00000000);
-  lVar13 = __savegprlr_24();
-  iVar8 = (int)(uVar12 - 0x6b0);
+  lVar22 = (longlong)(int)param_3;
+  uVar20 = (ulonglong)(int)param_2;
+  uVar13 = ZEXT48(&stack0x00000000);
+  lVar14 = __savegprlr_24(param_1);
+  iVar8 = (int)(uVar13 - 0x6b0);
   *(BADSPACEBASE **)iVar8 = register0x0000000c;
-  if (0x80 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x97,0,0xffffffff82000f98,0xffffffff821bc4d0);
+  if (0x80 < (uVar20 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x97,0,
+                    "%s");
   }
-  fVar7 = DAT_845a17e0;
-  fVar6 = DAT_845a17dc;
-  fVar5 = DAT_845a17d8;
-  iVar18 = (int)param_2;
-  iVar11 = (int)lVar13;
-  if (DAT_845a17e8 == 0) {
-    uVar14 = 0;
-    if (3 < iVar18) {
-      lVar15 = uVar12 - 0x680;
-      lVar16 = lVar13 + 0x14;
+  fVar7 = dpvsGlob.viewOrg[2];
+  fVar6 = dpvsGlob.viewOrg[1];
+  fVar5 = dpvsGlob.viewOrg[0];
+  iVar21 = (int)uVar20;
+  iVar11 = (int)lVar14;
+  iVar12 = (int)lVar22;
+  if (dpvsGlob.viewOrgIsDir == 0) {
+    uVar16 = 0;
+    if (3 < iVar21) {
+      lVar17 = uVar13 - 0x680;
+      lVar18 = lVar14 + 0x14;
       do {
-        pfVar9 = (float *)lVar16;
-        uVar14 = uVar14 + 4;
+        pfVar9 = (float *)lVar18;
+        uVar16 = uVar16 + 4;
         fVar1 = pfVar9[-4];
         fVar2 = pfVar9[-3];
-        iVar10 = (int)lVar15;
+        iVar10 = (int)lVar17;
         *(float *)(iVar10 + 0x20) = pfVar9[-5] - fVar5;
         fVar3 = pfVar9[-2];
         *(float *)(iVar10 + 0x24) = fVar1 - fVar6;
@@ -80,8 +90,8 @@ void R_GetSidePlaneNormals(undefined8 param_1,ulonglong param_2,longlong param_3
         fVar2 = *pfVar9;
         *(float *)(iVar10 + 0x2c) = fVar3 - fVar5;
         fVar3 = pfVar9[1];
-        lVar15 = lVar15 + 0x30;
-        *(float *)lVar15 = fVar1 - fVar6;
+        lVar17 = lVar17 + 0x30;
+        *(float *)lVar17 = fVar1 - fVar6;
         fVar1 = pfVar9[2];
         *(float *)((int)pfVar9 + ((iVar8 + 0x50) - iVar11)) = fVar2 - fVar7;
         fVar2 = pfVar9[3];
@@ -93,88 +103,88 @@ void R_GetSidePlaneNormals(undefined8 param_1,ulonglong param_2,longlong param_3
         *(float *)((int)pfVar9 + ((iVar8 + 0x5c) - iVar11)) = fVar2 - fVar7;
         *(float *)((int)pfVar9 + ((iVar8 + 0x60) - iVar11)) = fVar3 - fVar5;
         *(float *)((int)pfVar9 + ((iVar8 + 100) - iVar11)) = fVar4 - fVar6;
-        *(float *)((int)pfVar9 + ((int)afStack_648 - iVar11)) = fVar1 - fVar7;
-        lVar16 = lVar16 + 0x30;
-      } while ((uVar14 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
+        *(float *)((int)pfVar9 + ((iVar8 + 0x68) - iVar11)) = fVar1 - fVar7;
+        lVar18 = lVar18 + 0x30;
+      } while ((uVar16 & 0xffffffff) < (uVar20 - 3 & 0xffffffff));
     }
-    if ((uVar14 & 0xffffffff) < (param_2 & 0xffffffff)) {
-      lVar16 = param_2 - uVar14;
-      lVar17 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-      lVar15 = lVar17 + (uVar12 - 0x6b0) + 0x4c;
-      lVar13 = lVar17 + lVar13 + -4;
+    if ((uVar16 & 0xffffffff) < (uVar20 & 0xffffffff)) {
+      lVar18 = uVar20 - uVar16;
+      lVar19 = (uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+      lVar17 = lVar19 + (uVar13 - 0x6b0) + 0x4c;
+      lVar14 = lVar19 + lVar14 + -4;
       do {
-        iVar11 = (int)lVar13;
+        iVar11 = (int)lVar14;
         fVar1 = *(float *)(iVar11 + 8);
-        lVar13 = lVar13 + 0xc;
-        fVar2 = *(float *)lVar13;
-        *(float *)((int)lVar15 + 4) = *(float *)(iVar11 + 4) - fVar5;
-        *(float *)((int)lVar15 + 8) = fVar1 - fVar6;
-        lVar15 = lVar15 + 0xc;
-        *(float *)lVar15 = fVar2 - fVar7;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
+        lVar14 = lVar14 + 0xc;
+        fVar2 = *(float *)lVar14;
+        *(float *)((int)lVar17 + 4) = *(float *)(iVar11 + 4) - fVar5;
+        *(float *)((int)lVar17 + 8) = fVar1 - fVar6;
+        lVar17 = lVar17 + 0xc;
+        *(float *)lVar17 = fVar2 - fVar7;
+        lVar18 = lVar18 + -1;
+      } while (lVar18 != 0);
     }
-    local_660[iVar18 * 3] = *(undefined4 *)(iVar8 + 0x50);
-    local_660[iVar18 * 3 + 1] = *(undefined4 *)(iVar8 + 0x54);
-    local_660[iVar18 * 3 + 2] = *(undefined4 *)(iVar8 + 0x58);
-    if ((param_2 & 0xffffffff) != 0) {
-      lVar13 = uVar12 - 0x660;
-      lVar15 = param_3 + 8;
-      dVar21 = 1.0;
+    local_660[iVar21 * 3] = *(undefined4 *)(iVar8 + 0x50);
+    local_660[iVar21 * 3 + 1] = *(undefined4 *)(iVar8 + 0x54);
+    local_660[iVar21 * 3 + 2] = *(undefined4 *)(iVar8 + 0x58);
+    if ((uVar20 & 0xffffffff) != 0) {
+      lVar14 = uVar13 - 0x660;
+      lVar22 = lVar22 + 8;
+      dVar25 = 1.0;
       do {
-        Vec3Cross(((uVar12 - 0x65c) - param_3) + lVar15,lVar13,lVar15 + -8);
-        pfVar9 = (float *)lVar15;
+        pfVar9 = (float *)lVar22;
+        Vec3Cross((float *)(((iVar8 + 0x54) - iVar12) + (int)pfVar9),(float *)lVar14,pfVar9 + -2);
         fVar5 = pfVar9[-1];
         fVar6 = pfVar9[-2];
         fVar7 = *pfVar9;
-        param_2 = param_2 - 1;
-        lVar13 = lVar13 + 0xc;
-        dVar20 = (double)SQRT(fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5);
-        dVar19 = dVar21;
-        if (-dVar20 < 0.0) {
-          dVar19 = dVar20;
+        uVar20 = uVar20 - 1;
+        lVar14 = lVar14 + 0xc;
+        dVar24 = (double)SQRT(fVar7 * fVar7 + fVar6 * fVar6 + fVar5 * fVar5);
+        dVar23 = dVar25;
+        if (-dVar24 < 0.0) {
+          dVar23 = dVar24;
         }
-        fVar1 = (float)(dVar21 / dVar19);
+        fVar1 = (float)(dVar25 / dVar23);
         pfVar9[-2] = fVar6 * fVar1;
         pfVar9[-1] = fVar5 * fVar1;
         *pfVar9 = fVar7 * fVar1;
-        lVar15 = lVar15 + 0xc;
-      } while (param_2 != 0);
+        lVar22 = lVar22 + 0xc;
+      } while (uVar20 != 0);
       __restgprlr_24();
       return;
     }
   }
-  else if ((param_2 & 0xffffffff) != 0) {
-    lVar15 = lVar13 + 8;
-    lVar16 = ((param_2 - 1) + (param_2 - 1 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    dVar21 = 1.0;
+  else if ((uVar20 & 0xffffffff) != 0) {
+    lVar22 = lVar14 + 8;
+    lVar17 = ((uVar20 - 1) + (uVar20 - 1 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    dVar25 = 1.0;
     do {
-      iVar10 = (int)lVar16;
-      pfVar9 = (float *)lVar15;
+      iVar21 = (int)lVar17;
+      pfVar9 = (float *)lVar22;
+      pfVar15 = (float *)(iVar21 + iVar12);
       fVar5 = pfVar9[-1];
       fVar6 = *pfVar9;
-      *(float *)(iVar8 + 0x50) = pfVar9[-2] - *(float *)(iVar10 + iVar11);
-      fVar7 = *(float *)(iVar10 + iVar11 + 8);
-      *(float *)(iVar8 + 0x54) = fVar5 - *(float *)(iVar10 + iVar11 + 4);
+      *(float *)(iVar8 + 0x50) = pfVar9[-2] - *(float *)(iVar21 + iVar11);
+      fVar7 = *(float *)(iVar21 + iVar11 + 8);
+      *(float *)(iVar8 + 0x54) = fVar5 - *(float *)(iVar21 + iVar11 + 4);
       *(float *)(iVar8 + 0x58) = fVar6 - fVar7;
-      Vec3Cross(0xffffffff845a17d8,uVar12 - 0x660,lVar16 + param_3);
-      iVar18 = (int)(lVar16 + param_3);
-      fVar5 = *(float *)(iVar18 + 4);
-      fVar7 = *(float *)(iVar10 + (int)param_3);
-      fVar6 = *(float *)(iVar18 + 8);
-      param_2 = param_2 - 1;
-      dVar20 = (double)SQRT(fVar6 * fVar6 + fVar7 * fVar7 + fVar5 * fVar5);
-      dVar19 = dVar21;
-      if (-dVar20 < 0.0) {
-        dVar19 = dVar20;
+      Vec3Cross(dpvsGlob.viewOrg,(float *)(iVar8 + 0x50),pfVar15);
+      fVar5 = pfVar15[1];
+      fVar7 = *(float *)(iVar21 + iVar12);
+      fVar6 = pfVar15[2];
+      uVar20 = uVar20 - 1;
+      dVar24 = (double)SQRT(fVar6 * fVar6 + fVar7 * fVar7 + fVar5 * fVar5);
+      dVar23 = dVar25;
+      if (-dVar24 < 0.0) {
+        dVar23 = dVar24;
       }
-      fVar1 = (float)(dVar21 / dVar19);
-      *(float *)(iVar10 + (int)param_3) = fVar7 * fVar1;
-      lVar16 = (-8 - lVar13) + lVar15;
-      *(float *)(iVar18 + 4) = fVar5 * fVar1;
-      *(float *)(iVar18 + 8) = fVar6 * fVar1;
-      lVar15 = lVar15 + 0xc;
-    } while (param_2 != 0);
+      fVar1 = (float)(dVar25 / dVar23);
+      *(float *)(iVar21 + iVar12) = fVar7 * fVar1;
+      lVar17 = (-8 - lVar14) + lVar22;
+      pfVar15[1] = fVar5 * fVar1;
+      pfVar15[2] = fVar6 * fVar1;
+      lVar22 = lVar22 + 0xc;
+    } while (uVar20 != 0);
   }
   __restgprlr_24();
   return;
@@ -183,50 +193,54 @@ void R_GetSidePlaneNormals(undefined8 param_1,ulonglong param_2,longlong param_3
 
 // 827271A8  R_AddNearAndFarClipPlanes  (gfx_d3d/r_dpvs.cpp:178)
 
-void R_AddNearAndFarClipPlanes(undefined8 param_1,longlong param_2)
+int R_AddNearAndFarClipPlanes(DpvsPlane *param_1,uint param_2)
 
 {
   int iVar1;
   int iVar2;
-  undefined4 *puVar3;
+  DpvsPlane *pDVar3;
   int iVar5;
-  char cVar6;
+  bool bVar6;
   longlong lVar4;
+  longlong lVar7;
   
-  iVar5 = __savegprlr_27();
-  cVar6 = Sys_IsMainThread();
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xb3,0,0xffffffff82000f98,0xffffffff82010b48);
+  lVar7 = (longlong)(int)param_2;
+  iVar5 = __savegprlr_27(param_1);
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb3,0,
+                    "%s");
   }
-  if (DAT_845a17d0 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,0xb5,0,0xffffffff82000f98,0xffffffff821bc4f4);
+  if (dpvsGlob.nearPlane == (DpvsPlane *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb5,0,
+                    "%s");
   }
-  puVar3 = DAT_845a17d0;
-  iVar2 = (int)param_2 * 0x10;
-  lVar4 = param_2 + 1;
+  pDVar3 = dpvsGlob.nearPlane;
+  iVar2 = (int)lVar7 * 0x10;
+  lVar4 = lVar7 + 1;
   iVar1 = iVar2 + iVar5;
-  *(undefined4 *)(iVar2 + iVar5) = *DAT_845a17d0;
-  *(undefined4 *)(iVar1 + 4) = puVar3[1];
-  *(undefined4 *)(iVar1 + 8) = puVar3[2];
-  *(undefined4 *)(iVar1 + 0xc) = puVar3[3];
-  puVar3 = DAT_845a17d4;
-  if (DAT_845a17d4 != (undefined4 *)0x0) {
+  *(float *)(iVar2 + iVar5) = (dpvsGlob.nearPlane)->coeffs[0];
+  *(float *)(iVar1 + 4) = pDVar3->coeffs[1];
+  *(float *)(iVar1 + 8) = pDVar3->coeffs[2];
+  *(float *)(iVar1 + 0xc) = pDVar3->coeffs[3];
+  pDVar3 = dpvsGlob.farPlane;
+  if (dpvsGlob.farPlane != (DpvsPlane *)0x0) {
     iVar2 = (int)lVar4 * 0x10;
-    lVar4 = param_2 + 2;
+    lVar4 = lVar7 + 2;
     iVar1 = iVar2 + iVar5;
-    *(undefined4 *)(iVar2 + iVar5) = *DAT_845a17d4;
-    *(undefined4 *)(iVar1 + 4) = puVar3[1];
-    *(undefined4 *)(iVar1 + 8) = puVar3[2];
-    *(undefined4 *)(iVar1 + 0xc) = puVar3[3];
+    *(float *)(iVar2 + iVar5) = (dpvsGlob.farPlane)->coeffs[0];
+    *(float *)(iVar1 + 4) = pDVar3->coeffs[1];
+    *(float *)(iVar1 + 8) = pDVar3->coeffs[2];
+    *(float *)(iVar1 + 0xc) = pDVar3->coeffs[3];
   }
-  __restgprlr_27(lVar4);
-  return;
+  iVar5 = __restgprlr_27(lVar4);
+  return iVar5;
 }
 
 
 // 82727298  R_FurthestPointOnWinding  (gfx_d3d/r_dpvs.cpp:196)
 
-void R_FurthestPointOnWinding(longlong param_1,longlong param_2,float *param_3)
+float R_FurthestPointOnWinding(float (*param_1) [3],int param_2,DpvsPlane *param_3)
 
 {
   float fVar1;
@@ -235,116 +249,117 @@ void R_FurthestPointOnWinding(longlong param_1,longlong param_2,float *param_3)
   float fVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  float *pfVar8;
-  int iVar9;
+  float *pfVar7;
+  int iVar8;
+  longlong lVar9;
   longlong lVar10;
   ulonglong uVar11;
   
-  iVar7 = (int)param_2;
-  fVar1 = *param_3;
-  pfVar8 = (float *)param_1;
-  fVar2 = param_3[1];
-  fVar3 = param_3[2];
-  fVar4 = param_3[3];
-  fVar5 = pfVar8[2] * fVar3 + pfVar8[1] * fVar2 + fVar1 * *pfVar8 + fVar4;
-  fVar6 = pfVar8[iVar7 * 3 + -1] * fVar3 +
-          pfVar8[iVar7 * 3 + -2] * fVar2 + fVar1 * pfVar8[iVar7 * 3 + -3] + fVar4;
+  lVar10 = (longlong)(int)param_1;
+  fVar1 = param_3->coeffs[0];
+  fVar2 = param_3->coeffs[1];
+  fVar3 = param_3->coeffs[2];
+  fVar4 = param_3->coeffs[3];
+  fVar5 = (*param_1)[2] * fVar3 + (*param_1)[1] * fVar2 + fVar1 * (*param_1)[0] + fVar4;
+  fVar6 = param_1[param_2 + -1][2] * fVar3 +
+          param_1[param_2 + -1][1] * fVar2 + fVar1 * param_1[param_2 + -1][0] + fVar4;
   if (fVar5 <= fVar6) {
-    uVar11 = param_2 - 2;
+    uVar11 = (longlong)param_2 - 2;
     if (3 < (int)uVar11) {
-      fVar2 = param_3[1];
-      fVar3 = param_3[2];
-      fVar4 = param_3[3];
-      lVar10 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_1 + -4;
+      fVar2 = param_3->coeffs[1];
+      fVar3 = param_3->coeffs[2];
+      fVar4 = param_3->coeffs[3];
+      lVar9 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar10 + -4;
       do {
-        pfVar8 = (float *)lVar10;
-        fVar5 = pfVar8[3] * fVar3 + pfVar8[2] * fVar2 + pfVar8[1] * fVar1 + fVar4;
+        pfVar7 = (float *)lVar9;
+        fVar5 = pfVar7[3] * fVar3 + pfVar7[2] * fVar2 + pfVar7[1] * fVar1 + fVar4;
         if (fVar5 < fVar6) {
-          return;
+          return fVar6;
         }
-        fVar6 = *pfVar8 * fVar3 + pfVar8[-1] * fVar2 + pfVar8[-2] * fVar1 + fVar4;
+        fVar6 = *pfVar7 * fVar3 + pfVar7[-1] * fVar2 + pfVar7[-2] * fVar1 + fVar4;
         if (fVar6 < fVar5) {
-          return;
+          return fVar5;
         }
-        fVar5 = pfVar8[-3] * fVar3 + pfVar8[-4] * fVar2 + pfVar8[-5] * fVar1 + fVar4;
+        fVar5 = pfVar7[-3] * fVar3 + pfVar7[-4] * fVar2 + pfVar7[-5] * fVar1 + fVar4;
         if (fVar5 < fVar6) {
-          return;
+          return fVar6;
         }
-        fVar6 = pfVar8[-6] * fVar3 + pfVar8[-7] * fVar2 + pfVar8[-8] * fVar1 + fVar4;
+        fVar6 = pfVar7[-6] * fVar3 + pfVar7[-7] * fVar2 + pfVar7[-8] * fVar1 + fVar4;
         if (fVar6 < fVar5) {
-          return;
+          return fVar5;
         }
         uVar11 = uVar11 - 4;
-        lVar10 = lVar10 + -0x30;
+        lVar9 = lVar9 + -0x30;
       } while (3 < (int)uVar11);
     }
     if ((int)uVar11 < 1) {
-      return;
+      return fVar6;
     }
-    lVar10 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_1 + 8;
+    lVar10 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar10 + 8;
     do {
-      pfVar8 = (float *)lVar10;
-      fVar2 = *pfVar8 * param_3[2] + pfVar8[-1] * param_3[1] + pfVar8[-2] * fVar1 + param_3[3];
+      pfVar7 = (float *)lVar10;
+      fVar2 = *pfVar7 * param_3->coeffs[2] + pfVar7[-1] * param_3->coeffs[1] + pfVar7[-2] * fVar1 +
+              param_3->coeffs[3];
       if (fVar2 < fVar6) {
-        return;
+        return fVar6;
       }
       uVar11 = uVar11 - 1;
       lVar10 = lVar10 + -0xc;
       fVar6 = fVar2;
     } while (0 < (longlong)uVar11);
-    return;
+    return fVar2;
   }
-  iVar9 = iVar7 + -1;
+  iVar8 = param_2 + -1;
   uVar11 = 1;
-  if (iVar9 < 2) {
-    return;
+  if (iVar8 < 2) {
+    return fVar5;
   }
-  if (3 < iVar7 + -2) {
-    lVar10 = param_1 + 0x20;
+  if (3 < param_2 + -2) {
+    lVar9 = lVar10 + 0x20;
     do {
-      pfVar8 = (float *)lVar10;
-      fVar6 = pfVar8[-3] * fVar3 + pfVar8[-4] * fVar2 + pfVar8[-5] * fVar1 + fVar4;
+      pfVar7 = (float *)lVar9;
+      fVar6 = pfVar7[-3] * fVar3 + pfVar7[-4] * fVar2 + pfVar7[-5] * fVar1 + fVar4;
       if (fVar6 < fVar5) {
-        return;
+        return fVar5;
       }
-      fVar5 = *pfVar8 * fVar3 + pfVar8[-1] * fVar2 + pfVar8[-2] * fVar1 + fVar4;
+      fVar5 = *pfVar7 * fVar3 + pfVar7[-1] * fVar2 + pfVar7[-2] * fVar1 + fVar4;
       if (fVar5 < fVar6) {
-        return;
+        return fVar6;
       }
-      fVar6 = pfVar8[3] * fVar3 + pfVar8[2] * fVar2 + pfVar8[1] * fVar1 + fVar4;
+      fVar6 = pfVar7[3] * fVar3 + pfVar7[2] * fVar2 + pfVar7[1] * fVar1 + fVar4;
       if (fVar6 < fVar5) {
-        return;
+        return fVar5;
       }
-      fVar5 = fVar3 * pfVar8[6] + pfVar8[5] * fVar2 + pfVar8[4] * fVar1 + fVar4;
+      fVar5 = fVar3 * pfVar7[6] + pfVar7[5] * fVar2 + pfVar7[4] * fVar1 + fVar4;
       if (fVar5 < fVar6) {
-        return;
+        return fVar6;
       }
       uVar11 = uVar11 + 4;
-      lVar10 = lVar10 + 0x30;
-    } while ((int)uVar11 < iVar7 + -4);
+      lVar9 = lVar9 + 0x30;
+    } while ((int)uVar11 < param_2 + -4);
   }
-  if (iVar9 <= (int)uVar11) {
-    return;
+  if (iVar8 <= (int)uVar11) {
+    return fVar5;
   }
-  lVar10 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + param_1 + 8;
+  lVar10 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar10 + 8;
   do {
-    pfVar8 = (float *)lVar10;
-    fVar2 = *pfVar8 * param_3[2] + pfVar8[-1] * param_3[1] + pfVar8[-2] * fVar1 + param_3[3];
+    pfVar7 = (float *)lVar10;
+    fVar2 = *pfVar7 * param_3->coeffs[2] + pfVar7[-1] * param_3->coeffs[1] + pfVar7[-2] * fVar1 +
+            param_3->coeffs[3];
     if (fVar2 < fVar5) {
-      return;
+      return fVar5;
     }
     uVar11 = uVar11 + 1;
     lVar10 = lVar10 + 0xc;
     fVar5 = fVar2;
-  } while ((int)uVar11 < iVar9);
-  return;
+  } while ((int)uVar11 < iVar8);
+  return fVar2;
 }
 
 
 // 82727580  R_NearestPointOnWinding  (gfx_d3d/r_dpvs.cpp:233)
 
-void R_NearestPointOnWinding(undefined8 param_1,longlong param_2,float *param_3)
+float R_NearestPointOnWinding(float (*param_1) [3],int param_2,DpvsPlane *param_3)
 
 {
   float fVar1;
@@ -356,196 +371,202 @@ void R_NearestPointOnWinding(undefined8 param_1,longlong param_2,float *param_3)
   int iVar7;
   longlong lVar8;
   float *pfVar9;
-  int iVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  double dVar13;
+  longlong lVar10;
+  int iVar11;
+  ulonglong uVar12;
+  longlong lVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
   
-  lVar8 = __savefpr_28();
-  iVar7 = (int)param_2;
-  fVar1 = *param_3;
+  lVar10 = (longlong)param_2;
+  lVar8 = __savefpr_28(param_1);
+  iVar7 = (int)lVar10;
+  fVar1 = param_3->coeffs[0];
   pfVar9 = (float *)lVar8;
-  fVar2 = param_3[3];
+  fVar2 = param_3->coeffs[3];
   fVar3 = ABS(fVar2) * 1e-06;
-  dVar18 = (double)(pfVar9[2] * param_3[2] + pfVar9[1] * param_3[1] + fVar1 * *pfVar9 + fVar2);
-  dVar13 = (double)(pfVar9[iVar7 * 3 + -1] * param_3[2] +
-                    pfVar9[iVar7 * 3 + -2] * param_3[1] + fVar1 * pfVar9[iVar7 * 3 + -3] + fVar2);
-  if (ABS((float)(dVar13 - dVar18)) <= fVar3) {
-    uVar11 = 1;
-    iVar10 = (int)(param_2 + -1);
-    if (1 < iVar10) {
+  dVar19 = (double)(pfVar9[2] * param_3->coeffs[2] +
+                    pfVar9[1] * param_3->coeffs[1] + fVar1 * *pfVar9 + fVar2);
+  dVar14 = (double)(pfVar9[iVar7 * 3 + -1] * param_3->coeffs[2] +
+                    pfVar9[iVar7 * 3 + -2] * param_3->coeffs[1] + fVar1 * pfVar9[iVar7 * 3 + -3] +
+                   fVar2);
+  if (ABS((float)(dVar14 - dVar19)) <= fVar3) {
+    uVar12 = 1;
+    iVar11 = (int)(lVar10 + -1);
+    if (1 < iVar11) {
       if (3 < iVar7 + -2) {
-        fVar3 = param_3[1];
-        fVar4 = param_3[2];
-        lVar12 = lVar8 + 4;
+        fVar3 = param_3->coeffs[1];
+        fVar4 = param_3->coeffs[2];
+        lVar13 = lVar8 + 4;
         do {
-          iVar6 = (int)lVar12;
-          uVar11 = uVar11 + 4;
-          lVar12 = lVar12 + 0x30;
-          dVar17 = (double)(fVar4 * *(float *)(iVar6 + 0x10) +
+          iVar6 = (int)lVar13;
+          uVar12 = uVar12 + 4;
+          lVar13 = lVar13 + 0x30;
+          dVar18 = (double)(fVar4 * *(float *)(iVar6 + 0x10) +
                             fVar3 * *(float *)(iVar6 + 0xc) + fVar1 * *(float *)(iVar6 + 8) + fVar2)
           ;
-          dVar16 = (double)(fVar4 * *(float *)(iVar6 + 0x1c) +
+          dVar17 = (double)(fVar4 * *(float *)(iVar6 + 0x1c) +
                             fVar3 * *(float *)(iVar6 + 0x18) + fVar1 * *(float *)(iVar6 + 0x14) +
                            fVar2);
-          dVar15 = (double)(fVar4 * *(float *)(iVar6 + 0x28) +
+          dVar16 = (double)(fVar4 * *(float *)(iVar6 + 0x28) +
                             fVar3 * *(float *)(iVar6 + 0x24) + fVar1 * *(float *)(iVar6 + 0x20) +
                            fVar2);
-          dVar14 = (double)(fVar4 * *(float *)(iVar6 + 0x34) +
-                            fVar3 * *(float *)lVar12 + fVar1 * *(float *)(iVar6 + 0x2c) + fVar2);
-          if ((float)(dVar17 - dVar18) < 0.0) {
-            dVar18 = dVar17;
+          dVar15 = (double)(fVar4 * *(float *)(iVar6 + 0x34) +
+                            fVar3 * *(float *)lVar13 + fVar1 * *(float *)(iVar6 + 0x2c) + fVar2);
+          if ((float)(dVar18 - dVar19) < 0.0) {
+            dVar19 = dVar18;
           }
-          if ((float)(dVar16 - dVar18) < 0.0) {
-            dVar18 = dVar16;
+          if ((float)(dVar17 - dVar19) < 0.0) {
+            dVar19 = dVar17;
           }
-          if ((float)(dVar15 - dVar18) < 0.0) {
-            dVar18 = dVar15;
+          if ((float)(dVar16 - dVar19) < 0.0) {
+            dVar19 = dVar16;
           }
-          if ((float)(dVar14 - dVar18) < 0.0) {
-            dVar18 = dVar14;
+          if ((float)(dVar15 - dVar19) < 0.0) {
+            dVar19 = dVar15;
           }
-        } while ((int)uVar11 < iVar7 + -4);
+        } while ((int)uVar12 < iVar7 + -4);
       }
-      if ((int)uVar11 < iVar10) {
-        lVar12 = (param_2 + -1) - uVar11;
-        lVar8 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + -8;
+      if ((int)uVar12 < iVar11) {
+        lVar10 = (lVar10 + -1) - uVar12;
+        lVar8 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + -8;
         do {
           iVar7 = (int)lVar8;
           lVar8 = lVar8 + 0xc;
-          dVar14 = (double)(param_3[2] * *(float *)(iVar7 + 0x10) +
-                            param_3[1] * *(float *)lVar8 + fVar1 * *(float *)(iVar7 + 8) +
-                           param_3[3]);
-          if ((float)(dVar14 - dVar18) < 0.0) {
-            dVar18 = dVar14;
+          dVar15 = (double)(param_3->coeffs[2] * *(float *)(iVar7 + 0x10) +
+                            param_3->coeffs[1] * *(float *)lVar8 + fVar1 * *(float *)(iVar7 + 8) +
+                           param_3->coeffs[3]);
+          if ((float)(dVar15 - dVar19) < 0.0) {
+            dVar19 = dVar15;
           }
-          lVar12 = lVar12 + -1;
-        } while (lVar12 != 0);
+          lVar10 = lVar10 + -1;
+        } while (lVar10 != 0);
       }
     }
-    if ((float)(dVar13 - dVar18) < 0.0) {
-      dVar18 = dVar13;
+    if ((float)(dVar14 - dVar19) < 0.0) {
+      dVar19 = dVar14;
     }
-    __restfpr_28(dVar18);
-    return;
+    dVar19 = (double)__restfpr_28(dVar19);
+    return (float)dVar19;
   }
-  if (dVar13 <= dVar18) {
-    uVar11 = param_2 - 2;
-    if (3 < (int)uVar11) {
-      fVar2 = param_3[1];
-      fVar4 = param_3[2];
-      fVar5 = param_3[3];
-      lVar12 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + -4;
+  if (dVar14 <= dVar19) {
+    uVar12 = lVar10 - 2;
+    if (3 < (int)uVar12) {
+      fVar2 = param_3->coeffs[1];
+      fVar4 = param_3->coeffs[2];
+      fVar5 = param_3->coeffs[3];
+      lVar10 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + -4;
       do {
-        pfVar9 = (float *)lVar12;
-        dVar18 = (double)(fVar4 * pfVar9[3] + fVar2 * pfVar9[2] + fVar1 * pfVar9[1] + fVar5);
-        if ((float)(dVar18 - dVar13) < 0.0) {
-          dVar13 = dVar18;
+        pfVar9 = (float *)lVar10;
+        dVar19 = (double)(fVar4 * pfVar9[3] + fVar2 * pfVar9[2] + fVar1 * pfVar9[1] + fVar5);
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
         }
-        if (fVar3 < (float)(dVar18 - dVar13)) goto LAB_82727a38;
-        dVar18 = (double)(fVar4 * *pfVar9 + fVar2 * pfVar9[-1] + fVar1 * pfVar9[-2] + fVar5);
-        if ((float)(dVar18 - dVar13) < 0.0) {
-          dVar13 = dVar18;
+        if (fVar3 < (float)(dVar19 - dVar14)) goto LAB_82727a38;
+        dVar19 = (double)(fVar4 * *pfVar9 + fVar2 * pfVar9[-1] + fVar1 * pfVar9[-2] + fVar5);
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
         }
-        if (fVar3 < (float)(dVar18 - dVar13)) goto LAB_82727a38;
-        dVar18 = (double)(fVar4 * pfVar9[-3] + fVar2 * pfVar9[-4] + fVar1 * pfVar9[-5] + fVar5);
-        if ((float)(dVar18 - dVar13) < 0.0) {
-          dVar13 = dVar18;
+        if (fVar3 < (float)(dVar19 - dVar14)) goto LAB_82727a38;
+        dVar19 = (double)(fVar4 * pfVar9[-3] + fVar2 * pfVar9[-4] + fVar1 * pfVar9[-5] + fVar5);
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
         }
-        if (fVar3 < (float)(dVar18 - dVar13)) goto LAB_82727a38;
-        dVar18 = (double)(fVar4 * pfVar9[-6] + fVar2 * pfVar9[-7] + fVar1 * pfVar9[-8] + fVar5);
-        if ((float)(dVar18 - dVar13) < 0.0) {
-          dVar13 = dVar18;
+        if (fVar3 < (float)(dVar19 - dVar14)) goto LAB_82727a38;
+        dVar19 = (double)(fVar4 * pfVar9[-6] + fVar2 * pfVar9[-7] + fVar1 * pfVar9[-8] + fVar5);
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
         }
-        if (fVar3 < (float)(dVar18 - dVar13)) goto LAB_82727a38;
-        uVar11 = uVar11 - 4;
-        lVar12 = lVar12 + -0x30;
-      } while (3 < (int)uVar11);
+        if (fVar3 < (float)(dVar19 - dVar14)) goto LAB_82727a38;
+        uVar12 = uVar12 - 4;
+        lVar10 = lVar10 + -0x30;
+      } while (3 < (int)uVar12);
     }
-    if (0 < (int)uVar11) {
-      lVar8 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + 8;
+    if (0 < (int)uVar12) {
+      lVar8 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + 8;
       do {
         pfVar9 = (float *)lVar8;
-        dVar18 = (double)(param_3[2] * *pfVar9 + param_3[1] * pfVar9[-1] + fVar1 * pfVar9[-2] +
-                         param_3[3]);
-        if ((float)(dVar18 - dVar13) < 0.0) {
-          dVar13 = dVar18;
+        dVar19 = (double)(param_3->coeffs[2] * *pfVar9 +
+                          param_3->coeffs[1] * pfVar9[-1] + fVar1 * pfVar9[-2] + param_3->coeffs[3])
+        ;
+        if ((float)(dVar19 - dVar14) < 0.0) {
+          dVar14 = dVar19;
         }
-        if (fVar3 < (float)(dVar18 - dVar13)) break;
-        uVar11 = uVar11 - 1;
+        if (fVar3 < (float)(dVar19 - dVar14)) break;
+        uVar12 = uVar12 - 1;
         lVar8 = lVar8 + -0xc;
-      } while (0 < (longlong)uVar11);
+      } while (0 < (longlong)uVar12);
     }
   }
   else {
-    iVar10 = iVar7 + -1;
-    uVar11 = 1;
-    if (1 < iVar10) {
+    iVar11 = iVar7 + -1;
+    uVar12 = 1;
+    if (1 < iVar11) {
       if (3 < iVar7 + -2) {
-        fVar2 = param_3[1];
-        lVar12 = lVar8 + 0x20;
-        fVar4 = param_3[2];
-        fVar5 = param_3[3];
+        fVar2 = param_3->coeffs[1];
+        lVar10 = lVar8 + 0x20;
+        fVar4 = param_3->coeffs[2];
+        fVar5 = param_3->coeffs[3];
         do {
-          pfVar9 = (float *)lVar12;
-          dVar13 = (double)(fVar4 * pfVar9[-3] + fVar2 * pfVar9[-4] + fVar1 * pfVar9[-5] + fVar5);
-          if ((float)(dVar13 - dVar18) < 0.0) {
-            dVar18 = dVar13;
+          pfVar9 = (float *)lVar10;
+          dVar14 = (double)(fVar4 * pfVar9[-3] + fVar2 * pfVar9[-4] + fVar1 * pfVar9[-5] + fVar5);
+          if ((float)(dVar14 - dVar19) < 0.0) {
+            dVar19 = dVar14;
           }
-          if (fVar3 < (float)(dVar13 - dVar18)) goto LAB_82727a38;
-          dVar13 = (double)(fVar4 * *pfVar9 + fVar2 * pfVar9[-1] + fVar1 * pfVar9[-2] + fVar5);
-          if ((float)(dVar13 - dVar18) < 0.0) {
-            dVar18 = dVar13;
+          if (fVar3 < (float)(dVar14 - dVar19)) goto LAB_82727a38;
+          dVar14 = (double)(fVar4 * *pfVar9 + fVar2 * pfVar9[-1] + fVar1 * pfVar9[-2] + fVar5);
+          if ((float)(dVar14 - dVar19) < 0.0) {
+            dVar19 = dVar14;
           }
-          if (fVar3 < (float)(dVar13 - dVar18)) goto LAB_82727a38;
-          dVar13 = (double)(fVar4 * pfVar9[3] + fVar2 * pfVar9[2] + fVar1 * pfVar9[1] + fVar5);
-          if ((float)(dVar13 - dVar18) < 0.0) {
-            dVar18 = dVar13;
+          if (fVar3 < (float)(dVar14 - dVar19)) goto LAB_82727a38;
+          dVar14 = (double)(fVar4 * pfVar9[3] + fVar2 * pfVar9[2] + fVar1 * pfVar9[1] + fVar5);
+          if ((float)(dVar14 - dVar19) < 0.0) {
+            dVar19 = dVar14;
           }
-          if (fVar3 < (float)(dVar13 - dVar18)) goto LAB_82727a38;
-          dVar13 = (double)(fVar4 * pfVar9[6] + fVar2 * pfVar9[5] + fVar1 * pfVar9[4] + fVar5);
-          if ((float)(dVar13 - dVar18) < 0.0) {
-            dVar18 = dVar13;
+          if (fVar3 < (float)(dVar14 - dVar19)) goto LAB_82727a38;
+          dVar14 = (double)(fVar4 * pfVar9[6] + fVar2 * pfVar9[5] + fVar1 * pfVar9[4] + fVar5);
+          if ((float)(dVar14 - dVar19) < 0.0) {
+            dVar19 = dVar14;
           }
-          if (fVar3 < (float)(dVar13 - dVar18)) goto LAB_82727a38;
-          uVar11 = uVar11 + 4;
-          lVar12 = lVar12 + 0x30;
-        } while ((int)uVar11 < iVar7 + -4);
+          if (fVar3 < (float)(dVar14 - dVar19)) goto LAB_82727a38;
+          uVar12 = uVar12 + 4;
+          lVar10 = lVar10 + 0x30;
+        } while ((int)uVar12 < iVar7 + -4);
       }
-      if ((int)uVar11 < iVar10) {
-        lVar8 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + 8;
+      if ((int)uVar12 < iVar11) {
+        lVar8 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8 + 8;
         while( true ) {
           pfVar9 = (float *)lVar8;
-          dVar13 = (double)(param_3[2] * *pfVar9 + param_3[1] * pfVar9[-1] + fVar1 * pfVar9[-2] +
-                           param_3[3]);
-          if ((float)(dVar13 - dVar18) < 0.0) {
-            dVar18 = dVar13;
+          dVar14 = (double)(param_3->coeffs[2] * *pfVar9 +
+                            param_3->coeffs[1] * pfVar9[-1] + fVar1 * pfVar9[-2] +
+                           param_3->coeffs[3]);
+          if ((float)(dVar14 - dVar19) < 0.0) {
+            dVar19 = dVar14;
           }
-          if (fVar3 < (float)(dVar13 - dVar18)) break;
-          uVar11 = uVar11 + 1;
+          if (fVar3 < (float)(dVar14 - dVar19)) break;
+          uVar12 = uVar12 + 1;
           lVar8 = lVar8 + 0xc;
-          if (iVar10 <= (int)uVar11) {
-            __restfpr_28();
-            return;
+          if (iVar11 <= (int)uVar12) {
+            dVar19 = (double)__restfpr_28();
+            return (float)dVar19;
           }
         }
       }
     }
   }
 LAB_82727a38:
-  __restfpr_28();
-  return;
+  dVar19 = (double)__restfpr_28();
+  return (float)dVar19;
 }
 
 
 // 82727A50  R_FrustumClipPlanes  (gfx_d3d/r_dpvs.cpp:295)
 
-void R_FrustumClipPlanes(undefined8 param_1,longlong param_2,longlong param_3,longlong param_4)
+void R_FrustumClipPlanes(GfxMatrix *param_1,float (*param_2) [4],int param_3,DpvsPlane *param_4)
 
 {
   float fVar1;
@@ -554,26 +575,32 @@ void R_FrustumClipPlanes(undefined8 param_1,longlong param_2,longlong param_3,lo
   int iVar4;
   int iVar5;
   float *pfVar6;
-  float *pfVar7;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  float *pfVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   
-  pfVar6 = (float *)__savegprlr_19();
-  if (0 < (int)param_3) {
-    dVar11 = 1.0;
-    dVar12 = 0.0;
-    lVar9 = param_4 + -4;
-    lVar10 = param_2 + 8;
-    lVar8 = param_4 + 8;
-    iVar5 = (int)param_4 - (int)param_2;
+  lVar8 = (longlong)(int)param_4;
+  lVar9 = (longlong)param_3;
+  lVar7 = (longlong)(int)param_2;
+  pfVar6 = (float *)__savegprlr_19(param_1);
+  if (0 < (int)lVar9) {
+    dVar14 = 1.0;
+    dVar15 = 0.0;
+    lVar12 = lVar8 + -4;
+    lVar13 = lVar7 + 8;
+    lVar11 = lVar8 + 8;
+    iVar5 = (int)lVar8 - (int)lVar7;
     do {
-      pfVar2 = (float *)lVar10;
-      pfVar7 = (float *)((int)pfVar2 + iVar5);
-      pfVar3 = (float *)lVar8;
+      pfVar2 = (float *)lVar13;
+      pfVar10 = (float *)((int)pfVar2 + iVar5);
+      pfVar3 = (float *)lVar11;
       pfVar3[-2] = *pfVar2 * pfVar6[2] +
                    pfVar2[1] * pfVar6[3] + pfVar2[-2] * *pfVar6 + pfVar2[-1] * pfVar6[1];
       pfVar3[-1] = pfVar2[-2] * pfVar6[4] +
@@ -582,24 +609,25 @@ void R_FrustumClipPlanes(undefined8 param_1,longlong param_2,longlong param_3,lo
                 pfVar6[10] * *pfVar2 + pfVar2[1] * pfVar6[0xb] + pfVar2[-1] * pfVar6[9];
       pfVar3[1] = pfVar2[-2] * pfVar6[0xc] +
                   pfVar6[0xe] * *pfVar2 + pfVar2[1] * pfVar6[0xf] + pfVar2[-1] * pfVar6[0xd];
-      iVar4 = (int)lVar9;
+      iVar4 = (int)lVar12;
       fVar1 = *(float *)((int)pfVar2 + iVar5);
-      dVar13 = (double)SQRT(fVar1 * fVar1 +
+      dVar16 = (double)SQRT(fVar1 * fVar1 +
                             *(float *)(iVar4 + 8) * *(float *)(iVar4 + 8) +
                             *(float *)(iVar4 + 4) * *(float *)(iVar4 + 4));
-      if (dVar13 <= dVar12) {
-        MyAssertHandler(0xffffffff821bc490,0x133,0,0xffffffff82000f98,0xffffffff82084270);
+      if (dVar16 <= dVar15) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x133,
+                        0,"%s");
       }
-      fVar1 = (float)(dVar11 / dVar13);
-      param_3 = param_3 + -1;
-      lVar8 = lVar8 + 0x10;
-      lVar10 = lVar10 + 0x10;
+      fVar1 = (float)(dVar14 / dVar16);
+      lVar9 = lVar9 + -1;
+      lVar11 = lVar11 + 0x10;
+      lVar13 = lVar13 + 0x10;
       *(float *)(iVar4 + 4) = *(float *)(iVar4 + 4) * fVar1;
       *(float *)(iVar4 + 8) = *(float *)(iVar4 + 8) * fVar1;
-      *pfVar7 = fVar1 * *pfVar7;
-      lVar9 = lVar9 + 0x10;
-      *(float *)lVar9 = *(float *)(iVar4 + 0x10) * fVar1;
-    } while (param_3 != 0);
+      *pfVar10 = fVar1 * *pfVar10;
+      lVar12 = lVar12 + 0x10;
+      *(float *)lVar12 = *(float *)(iVar4 + 0x10) * fVar1;
+    } while (lVar9 != 0);
   }
   __restgprlr_19();
   return;
@@ -608,30 +636,27 @@ void R_FrustumClipPlanes(undefined8 param_1,longlong param_2,longlong param_3,lo
 
 // 82727C28  R_PortalAssertMsg  (gfx_d3d/r_dpvs.cpp:316)
 
-void R_PortalAssertMsg(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * R_PortalAssertMsg(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = va(0xffffffff821bc550,(double)DAT_845a17d8,(double)DAT_845a17dc,(double)DAT_845a17e0);
-  uVar1 = va(0xffffffff821bc528,uVar1,(double)DAT_845a17b0,(double)DAT_845a17b4,(double)DAT_845a17b8
-             ,(double)DAT_845a17bc);
-  uVar1 = va(0xffffffff821bc508,uVar1,(double)DAT_845a1730,(double)DAT_845a1734,(double)DAT_845a1738
-             ,(double)DAT_845a173c);
-  uVar1 = va(0xffffffff821bc508,uVar1,(double)DAT_845a1740,(double)DAT_845a1744,(double)DAT_845a1748
-             ,(double)DAT_845a174c);
-  uVar1 = va(0xffffffff821bc508,uVar1,(double)DAT_845a1750,(double)DAT_845a1754,(double)DAT_845a1758
-             ,(double)DAT_845a175c);
-  va(0xffffffff821bc508,uVar1,(double)DAT_845a1760,(double)DAT_845a1764,(double)DAT_845a1768,
-     (double)DAT_845a176c);
-  return;
+  va("\torg %.8gf, %.8gf, %.8gf\n");
+  va("%s\tplane %.8gf, %.8gf, %.8gf, %.8gf\n");
+  va("%s\t%.8gf, %.8gf, %.8gf, %.8gf\n");
+  va("%s\t%.8gf, %.8gf, %.8gf, %.8gf\n");
+  va("%s\t%.8gf, %.8gf, %.8gf, %.8gf\n");
+  pcVar1 = va("%s\t%.8gf, %.8gf, %.8gf, %.8gf\n");
+  return pcVar1;
 }
 
 
 // 82727DC8  R_ProjectPortal  (gfx_d3d/r_dpvs.cpp:331)
 
-void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *param_4,
-                    undefined4 *param_5)
+void R_ProjectPortal(int param_1,float (*param_2) [3],float *param_3,float *param_4,
+                    DpvsClipChildren *param_5)
 
 {
   float fVar1;
@@ -642,11 +667,11 @@ void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *p
   float *pfVar6;
   float *pfVar7;
   float *pfVar8;
-  int iVar10;
-  undefined8 uVar9;
-  int iVar11;
+  int iVar9;
+  dvar_t *pdVar10;
+  longlong lVar11;
   int iVar12;
-  undefined4 uVar13;
+  DpvsClipChildren DVar13;
   float *pfVar14;
   double dVar15;
   double dVar16;
@@ -654,24 +679,27 @@ void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *p
   float afStack_494 [4];
   float local_484 [289];
   
-  iVar10 = __savegprlr_23();
-  if (iVar10 < 3) {
-    MyAssertHandler(0xffffffff821bc490,0x155,0,0xffffffff821bc5a8,0xffffffff821bc5c0,iVar10);
+  lVar11 = (longlong)(int)param_2;
+  iVar9 = __savegprlr_23(param_1);
+  if (iVar9 < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x155,0,
+                    "%s\n\t(vertexCount) = %i");
   }
-  iVar11 = 0;
+  iVar12 = 0;
   *param_3 = 1.0;
   param_3[1] = 1.0;
   dVar15 = 0.125;
   *param_4 = -1.0;
   param_4[1] = -1.0;
-  if (0 < iVar10) {
+  if (0 < iVar9) {
     pfVar14 = afStack_494 + 1;
-    param_2 = param_2 + 4;
+    lVar11 = lVar11 + 4;
     do {
-      pfVar4 = (float *)param_2;
+      pfVar4 = (float *)lVar11;
       fVar1 = pfVar4[-1];
-      fVar5 = *pfVar4 * DAT_845a174c + fVar1 * DAT_845a173c + pfVar4[1] * DAT_845a175c +
-              DAT_845a176c;
+      fVar5 = *pfVar4 * dpvsGlob.viewProjMtx.m[1][3] +
+              fVar1 * dpvsGlob.viewProjMtx.m[0][3] + pfVar4[1] * dpvsGlob.viewProjMtx.m[2][3] +
+              dpvsGlob.viewProjMtx.m[3][3];
       if (fVar5 < 0.125) {
         *param_3 = -1.0;
         param_3[1] = -1.0;
@@ -681,10 +709,12 @@ void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *p
       }
       fVar5 = 1.0 / fVar5;
       fVar2 = *param_3;
-      fVar3 = *pfVar4 * DAT_845a1744 + fVar1 * DAT_845a1734 + pfVar4[1] * DAT_845a1754 +
-              DAT_845a1764;
-      fVar1 = (*pfVar4 * DAT_845a1740 + fVar1 * DAT_845a1730 + pfVar4[1] * DAT_845a1750 +
-              DAT_845a1760) * fVar5;
+      fVar3 = *pfVar4 * dpvsGlob.viewProjMtx.m[1][1] +
+              fVar1 * dpvsGlob.viewProjMtx.m[0][1] + pfVar4[1] * dpvsGlob.viewProjMtx.m[2][1] +
+              dpvsGlob.viewProjMtx.m[3][1];
+      fVar1 = (*pfVar4 * dpvsGlob.viewProjMtx.m[1][0] +
+               fVar1 * dpvsGlob.viewProjMtx.m[0][0] + pfVar4[1] * dpvsGlob.viewProjMtx.m[2][0] +
+              dpvsGlob.viewProjMtx.m[3][0]) * fVar5;
       *pfVar14 = fVar1;
       pfVar14[1] = fVar3 * fVar5;
       if (fVar1 < fVar2) {
@@ -700,30 +730,30 @@ void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *p
       if (param_4[1] < fVar1) {
         param_4[1] = fVar1;
       }
-      iVar11 = iVar11 + 1;
-      param_2 = param_2 + 0xc;
+      iVar12 = iVar12 + 1;
+      lVar11 = lVar11 + 0xc;
       pfVar14 = pfVar14 + 2;
-    } while (iVar11 < iVar10);
+    } while (iVar12 < iVar9);
   }
   dVar16 = -9.999999747378752e-06;
   dVar17 = (double)((param_4[1] - param_3[1]) * (*param_4 - *param_3) * 0.25);
   if (dVar17 < -9.999999747378752e-06) {
-    uVar9 = R_PortalAssertMsg();
-    uVar9 = va(dVar17,0xffffffff821bc56c,dVar17,(double)*param_3,(double)param_3[1],(double)*param_4
-               ,(double)param_4[1],uVar9);
-    MyAssertHandler(0xffffffff821bc490,0x174,0,0xffffffff820011f4,0xffffffff821bc590,uVar9);
+    R_PortalAssertMsg();
+    va("area %g bounds [%g,%g]-[%g,%g]\n%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x174,0,
+                    "%s\n\t%s");
   }
-  iVar11 = DAT_845aa818;
-  if ((double)*(float *)(DAT_845aa818 + 0xc) <= dVar17) {
+  pdVar10 = r_portalMinClipArea;
+  if ((double)(r_portalMinClipArea->current).value <= dVar17) {
     iVar12 = 1;
-    afStack_494[iVar10 * 2 + 1] = afStack_494[1];
+    afStack_494[iVar9 * 2 + 1] = afStack_494[1];
     fVar1 = 0.0;
-    afStack_494[iVar10 * 2 + 2] = afStack_494[2];
-    afStack_494[iVar10 * 2 + 3] = afStack_494[3];
-    afStack_494[iVar10 * 2 + 4] = local_484[0];
+    afStack_494[iVar9 * 2 + 2] = afStack_494[2];
+    afStack_494[iVar9 * 2 + 3] = afStack_494[3];
+    afStack_494[iVar9 * 2 + 4] = local_484[0];
     fVar5 = fVar1;
     fVar2 = fVar1;
-    if (1 < iVar10) {
+    if (1 < iVar9) {
       pfVar14 = afStack_494 + 4;
       do {
         pfVar4 = pfVar14 + -1;
@@ -735,29 +765,29 @@ void R_ProjectPortal(undefined8 param_1,longlong param_2,float *param_3,float *p
         pfVar14 = pfVar14 + 4;
         fVar5 = (*pfVar6 - *pfVar7) * *pfVar4 + fVar5;
         fVar2 = (*pfVar14 - fVar3) * *pfVar8 + fVar2;
-      } while (iVar12 <= iVar10 + -1);
+      } while (iVar12 <= iVar9 + -1);
     }
-    if (iVar12 <= iVar10) {
+    if (iVar12 <= iVar9) {
       fVar1 = (afStack_494[iVar12 * 2 + 4] - afStack_494[iVar12 * 2]) * afStack_494[iVar12 * 2 + 1];
     }
     dVar15 = (double)(float)((double)(fVar2 + fVar5 + fVar1) * dVar15);
     if (dVar15 < dVar16) {
-      uVar9 = R_PortalAssertMsg();
-      uVar9 = va(dVar15,0xffffffff821bc56c,dVar15,(double)*param_3,(double)param_3[1],
-                 (double)*param_4,(double)param_4[1],uVar9);
-      MyAssertHandler(0xffffffff821bc490,0x181,0,0xffffffff820011f4,0xffffffff821bc590,uVar9);
-      iVar11 = DAT_845aa818;
+      R_PortalAssertMsg();
+      va("area %g bounds [%g,%g]-[%g,%g]\n%s");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x181,0,
+                      "%s\n\t%s");
+      pdVar10 = r_portalMinClipArea;
     }
-    uVar13 = 0;
-    if ((double)*(float *)(iVar11 + 0xc) <= dVar15) {
+    DVar13 = DPVS_DONT_CLIP_CHILDREN;
+    if ((double)(pdVar10->current).value <= dVar15) {
 LAB_82728188:
-      uVar13 = 1;
+      DVar13 = DPVS_CLIP_CHILDREN;
     }
   }
   else {
-    uVar13 = 0;
+    DVar13 = DPVS_DONT_CLIP_CHILDREN;
   }
-  *param_5 = uVar13;
+  *param_5 = DVar13;
   __restgprlr_23();
   return;
 }
@@ -768,17 +798,28 @@ LAB_82728188:
 void R_UnprojectPoint(float *param_1,float *param_2)
 
 {
-  *param_2 = *param_1 * DAT_845a1770 + DAT_845a1780 * param_1[1] + DAT_845a17a0 + DAT_845a1790;
-  param_2[1] = *param_1 * DAT_845a1774 + DAT_845a1784 * param_1[1] + DAT_845a17a4 + DAT_845a1794;
-  param_2[2] = *param_1 * DAT_845a1778 + DAT_845a1788 * param_1[1] + DAT_845a17a8 + DAT_845a1798;
-  param_2[3] = *param_1 * DAT_845a177c + DAT_845a178c * param_1[1] + DAT_845a17ac + DAT_845a179c;
+  *param_2 = *param_1 * dpvsGlob.invViewProjMtx.m[0][0] +
+             dpvsGlob.invViewProjMtx.m[1][0] * param_1[1] + dpvsGlob.invViewProjMtx.m[3][0] +
+             dpvsGlob.invViewProjMtx.m[2][0];
+  param_2[1] = *param_1 * dpvsGlob.invViewProjMtx.m[0][1] +
+               dpvsGlob.invViewProjMtx.m[1][1] * param_1[1] + dpvsGlob.invViewProjMtx.m[3][1] +
+               dpvsGlob.invViewProjMtx.m[2][1];
+  param_2[2] = *param_1 * dpvsGlob.invViewProjMtx.m[0][2] +
+               dpvsGlob.invViewProjMtx.m[1][2] * param_1[1] + dpvsGlob.invViewProjMtx.m[3][2] +
+               dpvsGlob.invViewProjMtx.m[2][2];
+  param_2[3] = *param_1 * dpvsGlob.invViewProjMtx.m[0][3] +
+               dpvsGlob.invViewProjMtx.m[1][3] * param_1[1] + dpvsGlob.invViewProjMtx.m[3][3] +
+               dpvsGlob.invViewProjMtx.m[2][3];
   return;
 }
 
 
 // 82728268  R_Show2DPortal  (gfx_d3d/r_dpvs.cpp:410)
 
-void R_Show2DPortal(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_Show2DPortal(uint param_1,float (*param_2) [3])
 
 {
   ulonglong uVar1;
@@ -795,38 +836,48 @@ void R_Show2DPortal(undefined8 param_1,int param_2)
   float local_3d0;
   float local_3cc;
   float local_3c8;
-  undefined1 auStack_3c0 [48];
-  undefined1 local_390 [4];
+  float afStack_3c0 [12];
+  float local_390;
   float local_38c [227];
   
-  __savegprlr_23();
+  __savegprlr_23(param_1);
   uVar1 = __savefpr_24();
   dVar5 = 1.0;
-  dVar10 = (double)(1.0 / *(float *)(DAT_845aa690 + 0xc));
-  dVar4 = atan2((double)DAT_845a17b4,(double)DAT_845a17b0);
-  MatrixRotationZ((double)(((float)dVar4 - 1.5707964) * 57.295776),auStack_3c0);
+  dVar10 = (double)(1.0 / (r_showPortalsOverview->current).value);
+  dVar4 = atan2((double)dpvsGlob.viewPlane.coeffs[1],(double)dpvsGlob.viewPlane.coeffs[0]);
+  MatrixRotationZ((float (*) [3])afStack_3c0,((float)dVar4 - 1.5707964) * 57.295776);
   if ((uVar1 & 0xffffffff) != 0) {
     dVar4 = 0.0;
     dVar6 = 0.10000000149011612;
     pfVar3 = local_38c;
     uVar2 = uVar1;
     do {
-      local_3d0 = *(float *)((param_2 - (int)local_38c) + (int)pfVar3) - DAT_845a17d8;
-      local_3cc = *(float *)((int)pfVar3 + (param_2 - (int)local_38c) + 4) - DAT_845a17dc;
+      local_3d0 = *(float *)(((int)param_2 - (int)local_38c) + (int)pfVar3) - dpvsGlob.viewOrg[0];
+      local_3cc = *(float *)((int)pfVar3 + ((int)param_2 - (int)local_38c) + 4) -
+                  dpvsGlob.viewOrg[1];
       pfVar3[-1] = (float)((double)local_3d0 * dVar10);
       *pfVar3 = (float)((double)local_3cc * dVar10);
       pfVar3[1] = (float)dVar6;
-      MatrixTransformVector(pfVar3 + -1,auStack_3c0,&local_3d0);
-      dVar11 = (double)(DAT_845a177c * local_3d0 +
-                        DAT_845a179c * local_3c8 + DAT_845a178c * local_3cc + DAT_845a17ac);
-      dVar8 = (double)(DAT_845a1774 * local_3d0 +
-                       DAT_845a1794 * local_3c8 + DAT_845a1784 * local_3cc + DAT_845a17a4);
-      dVar9 = (double)(DAT_845a1790 * local_3c8 +
-                       DAT_845a1780 * local_3cc + DAT_845a1770 * local_3d0 + DAT_845a17a0);
-      dVar7 = (double)(DAT_845a1778 * local_3d0 +
-                       DAT_845a1798 * local_3c8 + DAT_845a1788 * local_3cc + DAT_845a17a8);
+      MatrixTransformVector(pfVar3 + -1,(float (*) [3])afStack_3c0,&local_3d0);
+      dVar11 = (double)(dpvsGlob.invViewProjMtx.m[0][3] * local_3d0 +
+                        dpvsGlob.invViewProjMtx.m[2][3] * local_3c8 +
+                        dpvsGlob.invViewProjMtx.m[1][3] * local_3cc +
+                       dpvsGlob.invViewProjMtx.m[3][3]);
+      dVar8 = (double)(dpvsGlob.invViewProjMtx.m[0][1] * local_3d0 +
+                       dpvsGlob.invViewProjMtx.m[2][1] * local_3c8 +
+                       dpvsGlob.invViewProjMtx.m[1][1] * local_3cc + dpvsGlob.invViewProjMtx.m[3][1]
+                      );
+      dVar9 = (double)(dpvsGlob.invViewProjMtx.m[2][0] * local_3c8 +
+                       dpvsGlob.invViewProjMtx.m[1][0] * local_3cc +
+                       dpvsGlob.invViewProjMtx.m[0][0] * local_3d0 + dpvsGlob.invViewProjMtx.m[3][0]
+                      );
+      dVar7 = (double)(dpvsGlob.invViewProjMtx.m[0][2] * local_3d0 +
+                       dpvsGlob.invViewProjMtx.m[2][2] * local_3c8 +
+                       dpvsGlob.invViewProjMtx.m[1][2] * local_3cc + dpvsGlob.invViewProjMtx.m[3][2]
+                      );
       if (dVar11 <= dVar4) {
-        MyAssertHandler(0xffffffff821bc490,0x1b6,0,0xffffffff82000f98,0xffffffff821bc5e4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x1b6,
+                        0,"%s");
       }
       dVar11 = (double)(float)(dVar5 / dVar11);
       uVar2 = uVar2 - 1;
@@ -836,7 +887,7 @@ void R_Show2DPortal(undefined8 param_1,int param_2)
       pfVar3 = pfVar3 + 3;
     } while (uVar2 != 0);
   }
-  R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,0xffffffff821bc5d4,uVar1,local_390,1);
+  R_AddDebugPolygon(&frontEndDataOut->debugGlobals,color,(int)uVar1,(float (*) [3])&local_390,true);
   __restfpr_24();
   __restgprlr_23();
   return;
@@ -845,32 +896,34 @@ void R_Show2DPortal(undefined8 param_1,int param_2)
 
 // 82728468  R_AddBevelPlanes  (gfx_d3d/r_dpvs.cpp:450)
 
-void R_AddBevelPlanes(undefined8 param_1,ulonglong param_2,longlong param_3,float *param_4,
-                     float *param_5,int param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+uint R_AddBevelPlanes(DpvsPlane *param_1,uint param_2,float (*param_3) [3],float (*param_4) [3],
+                     float *param_5,float *param_6,DpvsForceBevels param_7)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  int iVar5;
+  float *pfVar6;
+  longlong lVar7;
+  uint uVar8;
+  ulonglong uVar9;
   longlong lVar10;
-  float *pfVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  ulonglong uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  int iVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
   float local_170 [12];
-  float local_140 [3];
-  float local_134;
-  float local_130;
-  float local_12c;
-  float local_128;
+  float local_140 [7];
   float local_124;
   float local_120;
   float local_11c;
@@ -880,94 +933,109 @@ void R_AddBevelPlanes(undefined8 param_1,ulonglong param_2,longlong param_3,floa
   float local_10c;
   float local_108;
   
-  __savegprlr_20();
-  iVar6 = __savefpr();
-  fVar1 = *param_4;
+  lVar10 = (longlong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  lVar7 = __savegprlr_20(param_1);
+  __savefpr();
+  fVar1 = (*param_4)[0];
   fVar2 = param_5[1];
-  fVar3 = param_4[1];
+  fVar3 = (*param_4)[1];
   fVar4 = *param_5;
-  local_140[2] = 1.0 / (DAT_845a178c * fVar2 + DAT_845a177c * fVar1 + DAT_845a17ac + DAT_845a179c);
-  local_140[0] = (DAT_845a1780 * fVar2 + DAT_845a1770 * fVar1 + DAT_845a17a0 + DAT_845a1790) *
+  local_140[2] = 1.0 / (dpvsGlob.invViewProjMtx.m[1][3] * fVar2 +
+                        dpvsGlob.invViewProjMtx.m[0][3] * fVar1 + dpvsGlob.invViewProjMtx.m[3][3] +
+                       dpvsGlob.invViewProjMtx.m[2][3]);
+  local_140[0] = (dpvsGlob.invViewProjMtx.m[1][0] * fVar2 + dpvsGlob.invViewProjMtx.m[0][0] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][0] + dpvsGlob.invViewProjMtx.m[2][0]) *
                  local_140[2];
-  local_140[1] = (DAT_845a1784 * fVar2 + DAT_845a1774 * fVar1 + DAT_845a17a4 + DAT_845a1794) *
+  local_140[1] = (dpvsGlob.invViewProjMtx.m[1][1] * fVar2 + dpvsGlob.invViewProjMtx.m[0][1] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][1] + dpvsGlob.invViewProjMtx.m[2][1]) *
                  local_140[2];
-  local_12c = 1.0 / (DAT_845a178c * fVar3 + DAT_845a177c * fVar1 + DAT_845a17ac + DAT_845a179c);
-  local_140[2] = (DAT_845a1788 * fVar2 + DAT_845a1778 * fVar1 + DAT_845a17a8 + DAT_845a1798) *
+  local_140[5] = 1.0 / (dpvsGlob.invViewProjMtx.m[1][3] * fVar3 +
+                        dpvsGlob.invViewProjMtx.m[0][3] * fVar1 + dpvsGlob.invViewProjMtx.m[3][3] +
+                       dpvsGlob.invViewProjMtx.m[2][3]);
+  local_140[2] = (dpvsGlob.invViewProjMtx.m[1][2] * fVar2 + dpvsGlob.invViewProjMtx.m[0][2] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][2] + dpvsGlob.invViewProjMtx.m[2][2]) *
                  local_140[2];
-  local_124 = 1.0 / (DAT_845a178c * fVar3 + DAT_845a177c * fVar4 + DAT_845a17ac + DAT_845a179c);
-  local_134 = (DAT_845a1780 * fVar3 + DAT_845a1770 * fVar1 + DAT_845a17a0 + DAT_845a1790) *
-              local_12c;
-  local_130 = (DAT_845a1784 * fVar3 + DAT_845a1774 * fVar1 + DAT_845a17a4 + DAT_845a1794) *
-              local_12c;
-  local_12c = (DAT_845a1788 * fVar3 + DAT_845a1778 * fVar1 + DAT_845a17a8 + DAT_845a1798) *
-              local_12c;
-  local_120 = (DAT_845a1788 * fVar3 + DAT_845a1778 * fVar4 + DAT_845a17a8 + DAT_845a1798) *
-              local_124;
-  local_128 = (DAT_845a1780 * fVar3 + DAT_845a1770 * fVar4 + DAT_845a17a0 + DAT_845a1790) *
-              local_124;
-  local_124 = (DAT_845a1784 * fVar3 + DAT_845a1774 * fVar4 + DAT_845a17a4 + DAT_845a1794) *
-              local_124;
-  local_114 = 1.0 / (DAT_845a178c * fVar2 + DAT_845a177c * fVar4 + DAT_845a17ac + DAT_845a179c);
-  local_11c = (DAT_845a1780 * fVar2 + DAT_845a1770 * fVar4 + DAT_845a17a0 + DAT_845a1790) *
-              local_114;
-  local_118 = (DAT_845a1784 * fVar2 + DAT_845a1774 * fVar4 + DAT_845a17a4 + DAT_845a1794) *
-              local_114;
-  local_114 = (DAT_845a1788 * fVar2 + DAT_845a1778 * fVar4 + DAT_845a17a8 + DAT_845a1798) *
-              local_114;
+  local_124 = 1.0 / (dpvsGlob.invViewProjMtx.m[1][3] * fVar3 +
+                     dpvsGlob.invViewProjMtx.m[0][3] * fVar4 + dpvsGlob.invViewProjMtx.m[3][3] +
+                    dpvsGlob.invViewProjMtx.m[2][3]);
+  local_140[3] = (dpvsGlob.invViewProjMtx.m[1][0] * fVar3 + dpvsGlob.invViewProjMtx.m[0][0] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][0] + dpvsGlob.invViewProjMtx.m[2][0]) *
+                 local_140[5];
+  local_140[4] = (dpvsGlob.invViewProjMtx.m[1][1] * fVar3 + dpvsGlob.invViewProjMtx.m[0][1] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][1] + dpvsGlob.invViewProjMtx.m[2][1]) *
+                 local_140[5];
+  local_140[5] = (dpvsGlob.invViewProjMtx.m[1][2] * fVar3 + dpvsGlob.invViewProjMtx.m[0][2] * fVar1
+                  + dpvsGlob.invViewProjMtx.m[3][2] + dpvsGlob.invViewProjMtx.m[2][2]) *
+                 local_140[5];
+  local_120 = (dpvsGlob.invViewProjMtx.m[1][2] * fVar3 + dpvsGlob.invViewProjMtx.m[0][2] * fVar4 +
+               dpvsGlob.invViewProjMtx.m[3][2] + dpvsGlob.invViewProjMtx.m[2][2]) * local_124;
+  local_140[6] = (dpvsGlob.invViewProjMtx.m[1][0] * fVar3 + dpvsGlob.invViewProjMtx.m[0][0] * fVar4
+                  + dpvsGlob.invViewProjMtx.m[3][0] + dpvsGlob.invViewProjMtx.m[2][0]) * local_124;
+  local_124 = (dpvsGlob.invViewProjMtx.m[1][1] * fVar3 + dpvsGlob.invViewProjMtx.m[0][1] * fVar4 +
+               dpvsGlob.invViewProjMtx.m[3][1] + dpvsGlob.invViewProjMtx.m[2][1]) * local_124;
+  local_114 = 1.0 / (dpvsGlob.invViewProjMtx.m[1][3] * fVar2 +
+                     dpvsGlob.invViewProjMtx.m[0][3] * fVar4 + dpvsGlob.invViewProjMtx.m[3][3] +
+                    dpvsGlob.invViewProjMtx.m[2][3]);
+  local_11c = (dpvsGlob.invViewProjMtx.m[1][0] * fVar2 + dpvsGlob.invViewProjMtx.m[0][0] * fVar4 +
+               dpvsGlob.invViewProjMtx.m[3][0] + dpvsGlob.invViewProjMtx.m[2][0]) * local_114;
+  local_118 = (dpvsGlob.invViewProjMtx.m[1][1] * fVar2 + dpvsGlob.invViewProjMtx.m[0][1] * fVar4 +
+               dpvsGlob.invViewProjMtx.m[3][1] + dpvsGlob.invViewProjMtx.m[2][1]) * local_114;
+  local_114 = (dpvsGlob.invViewProjMtx.m[1][2] * fVar2 + dpvsGlob.invViewProjMtx.m[0][2] * fVar4 +
+               dpvsGlob.invViewProjMtx.m[3][2] + dpvsGlob.invViewProjMtx.m[2][2]) * local_114;
   local_110 = local_140[0];
   local_10c = local_140[1];
   local_108 = local_140[2];
-  R_GetSidePlaneNormals(local_140,4,local_170);
-  pfVar11 = (float *)(iVar6 + -4);
-  dVar16 = 0.0010000000474974513;
-  lVar9 = 0;
-  dVar15 = 9.999999974752427e-07;
-  iVar6 = 0;
-  lVar10 = 4;
+  R_GetSidePlaneNormals((float (*) [3])local_140,4,(float (*) [3])local_170);
+  lVar7 = lVar7 + -4;
+  dVar19 = 0.0010000000474974513;
+  dVar18 = 9.999999974752427e-07;
+  iVar14 = 0;
+  lVar13 = 4;
   do {
-    pfVar11[1] = *(float *)((int)local_170 + iVar6);
-    fVar1 = *(float *)((int)local_170 + iVar6 + 4);
-    fVar2 = *(float *)((int)local_170 + iVar6 + 8);
-    pfVar11[2] = fVar1;
-    pfVar11[3] = fVar2;
-    if ((param_6 == 0) && (uVar7 = 0, (param_2 & 0xffffffff) != 0)) {
-      lVar8 = param_3 + 8;
+    iVar5 = (int)lVar7;
+    *(undefined4 *)(iVar5 + 4) = *(undefined4 *)((int)local_170 + iVar14);
+    fVar1 = *(float *)((int)local_170 + iVar14 + 4);
+    fVar2 = *(float *)((int)local_170 + iVar14 + 8);
+    *(float *)(iVar5 + 8) = fVar1;
+    *(float *)(iVar5 + 0xc) = fVar2;
+    if ((param_6 == (float *)0x0) && (uVar11 = 0, (uVar9 & 0xffffffff) != 0)) {
+      lVar12 = lVar10 + 8;
       do {
-        pfVar5 = (float *)lVar8;
-        if (*(float *)(DAT_845aa6bc + 0xc) <
-            *pfVar5 * fVar2 + pfVar5[-2] * pfVar11[1] + pfVar5[-1] * fVar1) {
-          if ((*(uint *)(DAT_845aa724 + 0xc) & 2) != 0) {
-            R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,(int)local_140 + iVar6,
-                           (int)&local_134 + iVar6,0xffffffff82181898);
+        pfVar6 = (float *)lVar12;
+        if ((r_portalBevels->current).value <
+            *pfVar6 * fVar2 + pfVar6[-2] * *(float *)(iVar5 + 4) + pfVar6[-1] * fVar1) {
+          if (((r_showPortals->current).unsignedInt & 2) != 0) {
+            R_AddDebugLine(&frontEndDataOut->debugGlobals,(float *)((int)local_140 + iVar14),
+                           (float *)((int)local_140 + iVar14 + 0xc),colorMdCyan);
           }
           goto LAB_827287dc;
         }
-        uVar7 = uVar7 + 1;
-        lVar8 = lVar8 + 0xc;
-      } while ((uVar7 & 0xffffffff) < (param_2 & 0xffffffff));
+        uVar11 = uVar11 + 1;
+        lVar12 = lVar12 + 0xc;
+      } while ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff));
     }
-    if (*(int *)(DAT_845aa724 + 0xc) != 0) {
-      R_AddDebugLine((ulonglong)DAT_84628b00 + 0x18f0,(int)local_140 + iVar6,(int)&local_134 + iVar6
-                     ,0xffffffff82181888);
+    if ((r_showPortals->current).integer != 0) {
+      R_AddDebugLine(&frontEndDataOut->debugGlobals,(float *)((int)local_140 + iVar14),
+                     (float *)((int)local_140 + iVar14 + 0xc),colorLtCyan);
     }
-    lVar9 = lVar9 + 1;
-    dVar14 = (double)(*(float *)((int)local_140 + iVar6 + 8) * pfVar11[3] +
-                     *(float *)((int)local_140 + iVar6 + 4) * pfVar11[2] +
-                     *(float *)((int)local_140 + iVar6) * pfVar11[1]);
-    dVar13 = (double)(float)(ABS(dVar14) * dVar15);
-    dVar12 = dVar16;
-    if ((float)(dVar16 - dVar13) < 0.0) {
-      dVar12 = dVar13;
+    dVar17 = (double)(*(float *)((int)local_140 + iVar14 + 8) * *(float *)(iVar5 + 0xc) +
+                     *(float *)((int)local_140 + iVar14 + 4) * *(float *)(iVar5 + 8) +
+                     *(float *)((int)local_140 + iVar14) * *(float *)(iVar5 + 4));
+    dVar16 = (double)(float)(ABS(dVar17) * dVar18);
+    dVar15 = dVar19;
+    if ((float)(dVar19 - dVar16) < 0.0) {
+      dVar15 = dVar16;
     }
-    pfVar11 = pfVar11 + 4;
-    *pfVar11 = (float)(dVar12 - dVar14);
+    lVar7 = lVar7 + 0x10;
+    *(float *)lVar7 = (float)(dVar15 - dVar17);
 LAB_827287dc:
-    lVar10 = lVar10 + -1;
-    iVar6 = iVar6 + 0xc;
-    if (lVar10 == 0) {
-      __restfpr(lVar9);
-      __restgprlr_20();
-      return;
+    lVar13 = lVar13 + -1;
+    iVar14 = iVar14 + 0xc;
+    if (lVar13 == 0) {
+      __restfpr();
+      uVar8 = __restgprlr_20();
+      return uVar8;
     }
   } while( true );
 }
@@ -975,7 +1043,204 @@ LAB_827287dc:
 
 // 82728838  R_PortalClipPlanes  (gfx_d3d/r_dpvs.cpp:510)
 
-void R_PortalClipPlanes(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4)
+uint R_PortalClipPlanes(DpvsPlane *param_1,uint param_2,float (*param_3) [3],
+                       DpvsClipChildren *param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  float *pfVar4;
+  float *pfVar5;
+  DpvsPlane *pDVar6;
+  DpvsPlane *pDVar7;
+  bool bVar12;
+  float (*pafVar8) [3];
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  ulonglong uVar13;
+  uint uVar14;
+  DpvsPlane *pDVar15;
+  ulonglong uVar16;
+  IMAGE_DOS_HEADER *pIVar19;
+  longlong lVar17;
+  longlong lVar18;
+  longlong lVar20;
+  longlong lVar21;
+  float *pfVar22;
+  double dVar23;
+  float fVar24;
+  float afStack_670 [2];
+  float afStack_668 [2];
+  float local_660 [408];
+  
+  lVar18 = (longlong)(int)param_3;
+  uVar13 = (ulonglong)(int)param_2;
+  pDVar7 = (DpvsPlane *)__savegprlr_22(param_1);
+  bVar12 = Sys_IsMainThread();
+  if (!bVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x209,0,
+                    "%s");
+  }
+  if ((uVar13 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x20a,0,
+                    "%s\n\t(vertexCount) = %i");
+  }
+  pIVar19 = &IMAGE_DOS_HEADER_82000000;
+  dVar23 = 0.0;
+  if ((10 < uVar13) || ((r_portalBevelsOnly->current).enabled != false)) {
+    pfVar22 = (float *)0x1;
+  }
+  else {
+    pfVar22 = (float *)0x0;
+    bVar12 = false;
+    if ((r_portalBevels->current).value <= 0.0) goto LAB_82728914;
+  }
+  bVar12 = true;
+LAB_82728914:
+  pafVar8 = (float (*) [3])lVar18;
+  uVar14 = (uint)uVar13;
+  R_GetSidePlaneNormals(pafVar8,uVar14,(float (*) [3])local_660);
+  uVar11 = 0;
+  if ((bVar12) || (dVar23 < (double)(r_portalMinClipArea->current).value)) {
+    R_ProjectPortal(uVar14,pafVar8,afStack_670,afStack_668,param_4);
+    if (bVar12) {
+      uVar11 = R_AddBevelPlanes(pDVar7,uVar14,(float (*) [3])local_660,(float (*) [3])afStack_670,
+                                afStack_668,pfVar22,(DpvsForceBevels)pIVar19);
+    }
+  }
+  else {
+    *param_4 = DPVS_CLIP_CHILDREN;
+  }
+  if (10 >= uVar13) {
+    uVar16 = 0;
+    if (3 < (int)uVar14) {
+      pDVar15 = pDVar7 + uVar11;
+      lVar17 = ZEXT48(&stack0x00000000) - 0x658;
+      lVar20 = lVar18 + 0x14;
+      do {
+        pfVar22 = (float *)lVar17;
+        fVar24 = pfVar22[-1];
+        fVar1 = pfVar22[-2];
+        fVar2 = *pfVar22;
+        pfVar3 = (float *)lVar20;
+        if ((double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar24 * fVar24) != dVar23) {
+          pDVar15->coeffs[0] = fVar1;
+          uVar11 = uVar11 + 1;
+          pDVar15->coeffs[1] = fVar24;
+          pDVar15->coeffs[2] = fVar2;
+          pDVar15->coeffs[3] =
+               0.001 - (pfVar3[-3] * fVar2 +
+                       pfVar3[-5] * pDVar15->coeffs[0] + pfVar3[-4] * pDVar15->coeffs[1]);
+          pDVar15 = pDVar15 + 1;
+        }
+        fVar24 = pfVar22[1];
+        fVar2 = *(float *)(((int)local_660 - (int)pafVar8) + (int)pfVar3);
+        fVar1 = pfVar22[2];
+        if ((double)(fVar1 * fVar1 + fVar2 * fVar2 + fVar24 * fVar24) != dVar23) {
+          pDVar15->coeffs[0] = fVar24;
+          uVar11 = uVar11 + 1;
+          pDVar15->coeffs[1] = fVar1;
+          pDVar15->coeffs[2] = fVar2;
+          pDVar15->coeffs[3] =
+               0.001 - (fVar2 * *pfVar3 +
+                       pfVar3[-2] * pDVar15->coeffs[0] + pfVar3[-1] * pDVar15->coeffs[1]);
+          pDVar15 = pDVar15 + 1;
+        }
+        fVar24 = *(float *)((int)local_660 + (0xc - (int)pafVar8) + (int)pfVar3);
+        fVar1 = *(float *)((int)local_660 + (4 - (int)pafVar8) + (int)pfVar3);
+        fVar2 = *(float *)((int)local_660 + (8 - (int)pafVar8) + (int)pfVar3);
+        if ((double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar24 * fVar24) != dVar23) {
+          pDVar15->coeffs[0] = fVar1;
+          uVar11 = uVar11 + 1;
+          pDVar15->coeffs[1] = fVar2;
+          pDVar15->coeffs[2] = fVar24;
+          pDVar15->coeffs[3] =
+               0.001 - (pfVar3[3] * fVar24 +
+                       pfVar3[2] * pDVar15->coeffs[1] + pfVar3[1] * pDVar15->coeffs[0]);
+          pDVar15 = pDVar15 + 1;
+        }
+        fVar24 = *(float *)((int)local_660 + (0x18 - (int)pafVar8) + (int)pfVar3);
+        fVar1 = *(float *)((int)local_660 + (0x10 - (int)pafVar8) + (int)pfVar3);
+        fVar2 = *(float *)((int)local_660 + (0x14 - (int)pafVar8) + (int)pfVar3);
+        if ((double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar24 * fVar24) != dVar23) {
+          pDVar15->coeffs[0] = fVar1;
+          uVar11 = uVar11 + 1;
+          pDVar15->coeffs[1] = fVar2;
+          pDVar15->coeffs[2] = fVar24;
+          pDVar15->coeffs[3] =
+               0.001 - (pfVar3[6] * fVar24 +
+                       pfVar3[5] * pDVar15->coeffs[1] + pfVar3[4] * pDVar15->coeffs[0]);
+          pDVar15 = pDVar15 + 1;
+        }
+        uVar16 = uVar16 + 4;
+        lVar17 = lVar17 + 0x30;
+        lVar20 = lVar20 + 0x30;
+      } while ((uVar16 & 0xffffffff) < (uVar13 - 3 & 0xffffffff));
+    }
+    if ((uVar16 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+      lVar17 = uVar13 - uVar16;
+      lVar20 = (uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+      lVar21 = lVar20 + (ZEXT48(&stack0x00000000) - 0x658);
+      pfVar22 = pDVar7[uVar11 - 1].coeffs + 3;
+      lVar18 = lVar20 + lVar18 + 8;
+      do {
+        pfVar3 = (float *)lVar21;
+        fVar24 = pfVar3[-1];
+        fVar1 = pfVar3[-2];
+        fVar2 = *pfVar3;
+        if ((double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar24 * fVar24) != dVar23) {
+          pfVar22[1] = fVar1;
+          pfVar22[2] = fVar24;
+          uVar11 = uVar11 + 1;
+          pfVar22[3] = fVar2;
+          pfVar4 = pfVar22 + 2;
+          pfVar5 = pfVar22 + 1;
+          pfVar22 = pfVar22 + 4;
+          *pfVar22 = 0.001 - (*(float *)lVar18 * fVar2 +
+                             *(float *)(((int)pafVar8 - (int)(local_660 + 2)) + (int)pfVar3) *
+                             *pfVar5 + ((float *)lVar18)[-1] * *pfVar4);
+        }
+        lVar21 = lVar21 + 0xc;
+        lVar18 = lVar18 + 0xc;
+        lVar17 = lVar17 + -1;
+      } while (lVar17 != 0);
+    }
+  }
+  if (dpvsGlob.nearPlane == (DpvsPlane *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x22a,0,
+                    "%s");
+  }
+  pDVar6 = dpvsGlob.nearPlane;
+  pDVar15 = pDVar7 + uVar11;
+  pDVar7[uVar11].coeffs[0] = (dpvsGlob.nearPlane)->coeffs[0];
+  pDVar15->coeffs[1] = pDVar6->coeffs[1];
+  pDVar15->coeffs[2] = pDVar6->coeffs[2];
+  pDVar15->coeffs[3] = pDVar6->coeffs[3];
+  fVar24 = R_NearestPointOnWinding(pafVar8,uVar14,pDVar15);
+  if (dVar23 < (double)fVar24) {
+    pDVar15->coeffs[3] = (float)((double)pDVar15->coeffs[3] - (double)fVar24);
+  }
+  pDVar15 = dpvsGlob.farPlane;
+  iVar9 = uVar11 + 1;
+  iVar10 = iVar9;
+  if (dpvsGlob.farPlane != (DpvsPlane *)0x0) {
+    pDVar6 = pDVar7 + iVar9;
+    iVar10 = uVar11 + 2;
+    pDVar7[iVar9].coeffs[0] = (dpvsGlob.farPlane)->coeffs[0];
+    pDVar6->coeffs[1] = pDVar15->coeffs[1];
+    pDVar6->coeffs[2] = pDVar15->coeffs[2];
+    pDVar6->coeffs[3] = pDVar15->coeffs[3];
+  }
+  uVar11 = __restgprlr_22(iVar10);
+  return uVar11;
+}
+
+
+// 82728CF8  R_PortalClipPlanesNoFrustum  (gfx_d3d/r_dpvs.cpp:573)
+
+uint R_PortalClipPlanesNoFrustum(DpvsPlane *param_1,uint param_2,float (*param_3) [3])
 
 {
   float fVar1;
@@ -983,399 +1248,233 @@ void R_PortalClipPlanes(undefined8 param_1,ulonglong param_2,longlong param_3,un
   float fVar3;
   float *pfVar4;
   float *pfVar5;
-  float *pfVar6;
+  bool bVar9;
+  float (*pafVar6) [3];
   int iVar7;
-  bool bVar8;
-  int iVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
-  int iVar12;
-  char cVar14;
-  int iVar13;
-  int iVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  longlong lVar18;
-  longlong lVar19;
-  float *pfVar20;
-  undefined8 uVar21;
-  double dVar22;
-  double dVar23;
-  float local_660 [408];
-  
-  uVar11 = ZEXT48(&stack0x00000000);
-  iVar12 = __savegprlr_22();
-  cVar14 = Sys_IsMainThread();
-  if (cVar14 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x209,0,0xffffffff82000f98,0xffffffff82010b48);
-  }
-  if ((param_2 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821bc490,0x20a,0,0xffffffff821bc5a8,0xffffffff821bc5c0,param_2);
-  }
-  dVar23 = 0.0;
-  if ((10 < param_2) || (*(char *)(DAT_845aa8a8 + 0xc) != '\0')) {
-    uVar21 = 1;
-  }
-  else {
-    uVar21 = 0;
-    bVar8 = false;
-    if (*(float *)(DAT_845aa6bc + 0xc) <= 0.0) goto LAB_82728914;
-  }
-  bVar8 = true;
-LAB_82728914:
-  R_GetSidePlaneNormals(param_3,param_2,uVar11 - 0x660);
-  iVar13 = 0;
-  if ((bVar8) || (dVar23 < (double)*(float *)(DAT_845aa818 + 0xc))) {
-    R_ProjectPortal(param_2,param_3,uVar11 - 0x670,uVar11 - 0x668,param_4);
-    if (bVar8) {
-      iVar13 = R_AddBevelPlanes(iVar12,param_2,uVar11 - 0x660,uVar11 - 0x670,uVar11 - 0x668,uVar21);
-    }
-  }
-  else {
-    *(undefined4 *)param_4 = 1;
-  }
-  if (10 >= param_2) {
-    uVar16 = 0;
-    iVar15 = (int)param_3;
-    if (3 < (int)param_2) {
-      pfVar20 = (float *)(iVar13 * 0x10 + iVar12);
-      lVar17 = uVar11 - 0x658;
-      lVar18 = param_3 + 0x14;
-      do {
-        pfVar4 = (float *)lVar17;
-        fVar1 = pfVar4[-1];
-        fVar2 = pfVar4[-2];
-        fVar3 = *pfVar4;
-        pfVar5 = (float *)lVar18;
-        if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) != dVar23) {
-          *pfVar20 = fVar2;
-          iVar13 = iVar13 + 1;
-          pfVar20[1] = fVar1;
-          pfVar20[2] = fVar3;
-          pfVar20[3] = 0.001 - (pfVar5[-3] * fVar3 + pfVar5[-5] * *pfVar20 + pfVar5[-4] * pfVar20[1]
-                               );
-          pfVar20 = pfVar20 + 4;
-        }
-        fVar1 = pfVar4[1];
-        fVar3 = *(float *)(((int)local_660 - iVar15) + (int)pfVar5);
-        fVar2 = pfVar4[2];
-        if ((double)(fVar2 * fVar2 + fVar3 * fVar3 + fVar1 * fVar1) != dVar23) {
-          *pfVar20 = fVar1;
-          iVar13 = iVar13 + 1;
-          pfVar20[1] = fVar2;
-          pfVar20[2] = fVar3;
-          pfVar20[3] = 0.001 - (fVar3 * *pfVar5 + pfVar5[-2] * *pfVar20 + pfVar5[-1] * pfVar20[1]);
-          pfVar20 = pfVar20 + 4;
-        }
-        fVar1 = *(float *)((int)local_660 + (0xc - iVar15) + (int)pfVar5);
-        fVar2 = *(float *)((int)local_660 + (4 - iVar15) + (int)pfVar5);
-        fVar3 = *(float *)((int)local_660 + (8 - iVar15) + (int)pfVar5);
-        if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) != dVar23) {
-          *pfVar20 = fVar2;
-          iVar13 = iVar13 + 1;
-          pfVar20[1] = fVar3;
-          pfVar20[2] = fVar1;
-          pfVar20[3] = 0.001 - (pfVar5[3] * fVar1 + pfVar5[2] * pfVar20[1] + pfVar5[1] * *pfVar20);
-          pfVar20 = pfVar20 + 4;
-        }
-        fVar1 = *(float *)((int)local_660 + (0x18 - iVar15) + (int)pfVar5);
-        fVar2 = *(float *)((int)local_660 + (0x10 - iVar15) + (int)pfVar5);
-        fVar3 = *(float *)((int)local_660 + (0x14 - iVar15) + (int)pfVar5);
-        if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) != dVar23) {
-          *pfVar20 = fVar2;
-          iVar13 = iVar13 + 1;
-          pfVar20[1] = fVar3;
-          pfVar20[2] = fVar1;
-          pfVar20[3] = 0.001 - (pfVar5[6] * fVar1 + pfVar5[5] * pfVar20[1] + pfVar5[4] * *pfVar20);
-          pfVar20 = pfVar20 + 4;
-        }
-        uVar16 = uVar16 + 4;
-        lVar17 = lVar17 + 0x30;
-        lVar18 = lVar18 + 0x30;
-      } while ((uVar16 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
-    }
-    if ((uVar16 & 0xffffffff) < (param_2 & 0xffffffff)) {
-      lVar17 = param_2 - uVar16;
-      lVar18 = (uVar16 + (uVar16 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-      lVar19 = lVar18 + (uVar11 - 0x658);
-      pfVar20 = (float *)(iVar13 * 0x10 + iVar12 + -4);
-      lVar18 = lVar18 + param_3 + 8;
-      do {
-        pfVar4 = (float *)lVar19;
-        fVar1 = pfVar4[-1];
-        fVar2 = pfVar4[-2];
-        fVar3 = *pfVar4;
-        if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) != dVar23) {
-          pfVar20[1] = fVar2;
-          pfVar20[2] = fVar1;
-          iVar13 = iVar13 + 1;
-          pfVar20[3] = fVar3;
-          pfVar5 = pfVar20 + 2;
-          pfVar6 = pfVar20 + 1;
-          pfVar20 = pfVar20 + 4;
-          *pfVar20 = 0.001 - (*(float *)lVar18 * fVar3 +
-                             *(float *)((iVar15 - (int)(local_660 + 2)) + (int)pfVar4) * *pfVar6 +
-                             ((float *)lVar18)[-1] * *pfVar5);
-        }
-        lVar19 = lVar19 + 0xc;
-        lVar18 = lVar18 + 0xc;
-        lVar17 = lVar17 + -1;
-      } while (lVar17 != 0);
-    }
-  }
-  if (DAT_845a17d0 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,0x22a,0,0xffffffff82000f98,0xffffffff821bc4f4);
-  }
-  puVar10 = DAT_845a17d0;
-  iVar15 = iVar13 * 0x10 + iVar12;
-  *(undefined4 *)(iVar13 * 0x10 + iVar12) = *DAT_845a17d0;
-  *(undefined4 *)(iVar15 + 4) = puVar10[1];
-  *(undefined4 *)(iVar15 + 8) = puVar10[2];
-  *(undefined4 *)(iVar15 + 0xc) = puVar10[3];
-  dVar22 = (double)R_NearestPointOnWinding(param_3,param_2);
-  if (dVar23 < dVar22) {
-    *(float *)(iVar15 + 0xc) = (float)((double)*(float *)(iVar15 + 0xc) - dVar22);
-  }
-  puVar10 = DAT_845a17d4;
-  iVar15 = iVar13 + 1;
-  if (DAT_845a17d4 != (undefined4 *)0x0) {
-    iVar9 = iVar15 * 0x10;
-    iVar7 = iVar9 + iVar12;
-    iVar15 = iVar13 + 2;
-    *(undefined4 *)(iVar9 + iVar12) = *DAT_845a17d4;
-    *(undefined4 *)(iVar7 + 4) = puVar10[1];
-    *(undefined4 *)(iVar7 + 8) = puVar10[2];
-    *(undefined4 *)(iVar7 + 0xc) = puVar10[3];
-  }
-  __restgprlr_22(iVar15);
-  return;
-}
-
-
-// 82728CF8  R_PortalClipPlanesNoFrustum  (gfx_d3d/r_dpvs.cpp:573)
-
-void R_PortalClipPlanesNoFrustum(undefined8 param_1,ulonglong param_2,longlong param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float *pfVar4;
-  int iVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  char cVar9;
-  int iVar8;
+  uint uVar8;
   ulonglong uVar10;
-  longlong lVar11;
-  float *pfVar12;
+  ulonglong uVar11;
+  longlong lVar12;
+  float *pfVar14;
   longlong lVar13;
-  longlong lVar14;
-  float *pfVar15;
+  longlong lVar15;
+  longlong lVar16;
+  float *pfVar17;
   float local_650 [404];
   
-  uVar6 = ZEXT48(&stack0x00000000);
-  pfVar7 = (float *)__savegprlr_24();
-  cVar9 = Sys_IsMainThread();
-  if (cVar9 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x243,0,0xffffffff82000f98,0xffffffff82010b48);
+  lVar13 = (longlong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  pfVar5 = (float *)__savegprlr_24(param_1);
+  bVar9 = Sys_IsMainThread();
+  if (!bVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x243,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) < 3) {
-    MyAssertHandler(0xffffffff821bc490,0x244,0,0xffffffff821bc5a8,0xffffffff821bc5c0,param_2);
+  if ((uVar10 & 0xffffffff) < 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x244,0,
+                    "%s\n\t(vertexCount) = %i");
   }
-  R_GetSidePlaneNormals(param_3,param_2,uVar6 - 0x650);
-  iVar8 = 0;
-  if ((param_2 & 0xffffffff) < 0xb) {
-    uVar10 = 0;
-    iVar5 = (int)param_3;
-    if (3 < (int)param_2) {
-      lVar11 = uVar6 - 0x648;
-      lVar13 = param_3 + 0x14;
-      pfVar15 = pfVar7;
+  pafVar6 = (float (*) [3])lVar13;
+  R_GetSidePlaneNormals(pafVar6,(uint)uVar10,(float (*) [3])local_650);
+  iVar7 = 0;
+  if ((uVar10 & 0xffffffff) < 0xb) {
+    uVar11 = 0;
+    if (3 < (int)(uint)uVar10) {
+      lVar12 = ZEXT48(&stack0x00000000) - 0x648;
+      lVar15 = lVar13 + 0x14;
+      pfVar17 = pfVar5;
       do {
-        pfVar12 = (float *)lVar11;
-        fVar1 = *pfVar12;
-        fVar2 = pfVar12[-1];
-        fVar3 = pfVar12[-2];
-        pfVar4 = (float *)lVar13;
+        pfVar14 = (float *)lVar12;
+        fVar1 = *pfVar14;
+        fVar2 = pfVar14[-1];
+        fVar3 = pfVar14[-2];
+        pfVar4 = (float *)lVar15;
         if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 != 0.0) {
-          *pfVar15 = fVar3;
-          iVar8 = iVar8 + 1;
-          pfVar15[1] = fVar2;
-          pfVar15[2] = fVar1;
-          pfVar15[3] = 0.001 - (pfVar4[-3] * fVar1 + pfVar4[-5] * *pfVar15 + pfVar4[-4] * pfVar15[1]
+          *pfVar17 = fVar3;
+          iVar7 = iVar7 + 1;
+          pfVar17[1] = fVar2;
+          pfVar17[2] = fVar1;
+          pfVar17[3] = 0.001 - (pfVar4[-3] * fVar1 + pfVar4[-5] * *pfVar17 + pfVar4[-4] * pfVar17[1]
                                );
-          pfVar15 = pfVar15 + 4;
+          pfVar17 = pfVar17 + 4;
         }
-        fVar3 = *(float *)(((int)local_650 - iVar5) + (int)pfVar4);
-        fVar1 = pfVar12[2];
-        fVar2 = pfVar12[1];
+        fVar3 = *(float *)(((int)local_650 - (int)pafVar6) + (int)pfVar4);
+        fVar1 = pfVar14[2];
+        fVar2 = pfVar14[1];
         if (fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3 != 0.0) {
-          *pfVar15 = fVar2;
-          iVar8 = iVar8 + 1;
-          pfVar15[1] = fVar1;
-          pfVar15[2] = fVar3;
-          pfVar15[3] = 0.001 - (fVar3 * *pfVar4 + pfVar4[-2] * *pfVar15 + pfVar4[-1] * pfVar15[1]);
-          pfVar15 = pfVar15 + 4;
+          *pfVar17 = fVar2;
+          iVar7 = iVar7 + 1;
+          pfVar17[1] = fVar1;
+          pfVar17[2] = fVar3;
+          pfVar17[3] = 0.001 - (fVar3 * *pfVar4 + pfVar4[-2] * *pfVar17 + pfVar4[-1] * pfVar17[1]);
+          pfVar17 = pfVar17 + 4;
         }
-        fVar1 = *(float *)((int)local_650 + (0xc - iVar5) + (int)pfVar4);
-        fVar2 = *(float *)((int)local_650 + (4 - iVar5) + (int)pfVar4);
-        fVar3 = *(float *)((int)local_650 + (8 - iVar5) + (int)pfVar4);
+        fVar1 = *(float *)((int)local_650 + (0xc - (int)pafVar6) + (int)pfVar4);
+        fVar2 = *(float *)((int)local_650 + (4 - (int)pafVar6) + (int)pfVar4);
+        fVar3 = *(float *)((int)local_650 + (8 - (int)pafVar6) + (int)pfVar4);
         if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 != 0.0) {
-          *pfVar15 = fVar2;
-          iVar8 = iVar8 + 1;
-          pfVar15[1] = fVar3;
-          pfVar15[2] = fVar1;
-          pfVar15[3] = 0.001 - (pfVar4[3] * fVar1 + pfVar4[2] * pfVar15[1] + pfVar4[1] * *pfVar15);
-          pfVar15 = pfVar15 + 4;
+          *pfVar17 = fVar2;
+          iVar7 = iVar7 + 1;
+          pfVar17[1] = fVar3;
+          pfVar17[2] = fVar1;
+          pfVar17[3] = 0.001 - (pfVar4[3] * fVar1 + pfVar4[2] * pfVar17[1] + pfVar4[1] * *pfVar17);
+          pfVar17 = pfVar17 + 4;
         }
-        fVar1 = *(float *)((int)local_650 + (0x18 - iVar5) + (int)pfVar4);
-        fVar2 = *(float *)((int)local_650 + (0x10 - iVar5) + (int)pfVar4);
-        fVar3 = *(float *)((int)local_650 + (0x14 - iVar5) + (int)pfVar4);
+        fVar1 = *(float *)((int)local_650 + (0x18 - (int)pafVar6) + (int)pfVar4);
+        fVar2 = *(float *)((int)local_650 + (0x10 - (int)pafVar6) + (int)pfVar4);
+        fVar3 = *(float *)((int)local_650 + (0x14 - (int)pafVar6) + (int)pfVar4);
         if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 != 0.0) {
-          *pfVar15 = fVar2;
-          iVar8 = iVar8 + 1;
-          pfVar15[1] = fVar3;
-          pfVar15[2] = fVar1;
-          pfVar15[3] = 0.001 - (pfVar4[6] * fVar1 + pfVar4[5] * pfVar15[1] + pfVar4[4] * *pfVar15);
-          pfVar15 = pfVar15 + 4;
+          *pfVar17 = fVar2;
+          iVar7 = iVar7 + 1;
+          pfVar17[1] = fVar3;
+          pfVar17[2] = fVar1;
+          pfVar17[3] = 0.001 - (pfVar4[6] * fVar1 + pfVar4[5] * pfVar17[1] + pfVar4[4] * *pfVar17);
+          pfVar17 = pfVar17 + 4;
         }
-        uVar10 = uVar10 + 4;
-        lVar11 = lVar11 + 0x30;
-        lVar13 = lVar13 + 0x30;
-      } while ((uVar10 & 0xffffffff) < (param_2 - 3 & 0xffffffff));
+        uVar11 = uVar11 + 4;
+        lVar12 = lVar12 + 0x30;
+        lVar15 = lVar15 + 0x30;
+      } while ((uVar11 & 0xffffffff) < (uVar10 - 3 & 0xffffffff));
     }
-    if ((uVar10 & 0xffffffff) < (param_2 & 0xffffffff)) {
-      lVar11 = param_2 - uVar10;
-      lVar13 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-      lVar14 = lVar13 + (uVar6 - 0x648);
-      pfVar7 = pfVar7 + iVar8 * 4 + -1;
-      lVar13 = lVar13 + param_3 + 8;
+    if ((uVar11 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+      lVar12 = uVar10 - uVar11;
+      lVar15 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+      lVar16 = lVar15 + (ZEXT48(&stack0x00000000) - 0x648);
+      pfVar5 = pfVar5 + iVar7 * 4 + -1;
+      lVar13 = lVar15 + lVar13 + 8;
       do {
-        pfVar15 = (float *)lVar14;
-        fVar1 = pfVar15[-1];
-        fVar2 = pfVar15[-2];
-        fVar3 = *pfVar15;
+        pfVar17 = (float *)lVar16;
+        fVar1 = pfVar17[-1];
+        fVar2 = pfVar17[-2];
+        fVar3 = *pfVar17;
         if (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 != 0.0) {
-          pfVar7[1] = fVar2;
-          pfVar7[2] = fVar1;
-          iVar8 = iVar8 + 1;
-          pfVar7[3] = fVar3;
-          pfVar4 = pfVar7 + 2;
-          pfVar12 = pfVar7 + 1;
-          pfVar7 = pfVar7 + 4;
-          *pfVar7 = 0.001 - (*(float *)lVar13 * fVar3 +
-                            *(float *)((iVar5 - (int)(local_650 + 2)) + (int)pfVar15) * *pfVar12 +
-                            ((float *)lVar13)[-1] * *pfVar4);
+          pfVar5[1] = fVar2;
+          pfVar5[2] = fVar1;
+          iVar7 = iVar7 + 1;
+          pfVar5[3] = fVar3;
+          pfVar4 = pfVar5 + 2;
+          pfVar14 = pfVar5 + 1;
+          pfVar5 = pfVar5 + 4;
+          *pfVar5 = 0.001 - (*(float *)lVar13 * fVar3 +
+                            *(float *)(((int)pafVar6 - (int)(local_650 + 2)) + (int)pfVar17) *
+                            *pfVar14 + ((float *)lVar13)[-1] * *pfVar4);
         }
-        lVar14 = lVar14 + 0xc;
+        lVar16 = lVar16 + 0xc;
         lVar13 = lVar13 + 0xc;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
     }
   }
-  __restgprlr_24(iVar8);
-  return;
+  uVar8 = __restgprlr_24(iVar7);
+  return uVar8;
 }
 
 
 // 82729028  R_CellForPoint  (gfx_d3d/r_dpvs.cpp:605)
 
-longlong R_CellForPoint(float *param_1)
+int R_CellForPoint(float *param_1)
 
 {
   longlong lVar1;
   ulonglong uVar2;
   ushort *puVar3;
   longlong lVar4;
-  float *pfVar5;
+  cplane_s *pcVar5;
   
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x266,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x266,0,
+                    "%s");
   }
-  puVar3 = *(ushort **)(DAT_8461658c + 0x3c);
-  lVar1 = (ulonglong)*(uint *)(DAT_8461658c + 0x34) + 1;
+  puVar3 = ((rgp.world)->dpvsPlanes).nodes;
+  lVar1 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount + 1;
   uVar2 = (ulonglong)*puVar3;
   lVar4 = uVar2 - lVar1;
   if (-1 < lVar4) {
     do {
-      pfVar5 = (float *)((int)lVar4 * 0x14 + *(int *)(DAT_8461658c + 0x38));
+      pcVar5 = ((rgp.world)->dpvsPlanes).planes + (int)lVar4;
       puVar3 = puVar3 + (puVar3[1] - 2) *
-                        (uint)((pfVar5[2] * param_1[2] + pfVar5[1] * param_1[1] + *pfVar5 * *param_1
-                               ) - pfVar5[3] <= 0.0) + 2;
+                        (uint)((pcVar5->normal[2] * param_1[2] +
+                               pcVar5->normal[1] * param_1[1] + pcVar5->normal[0] * *param_1) -
+                               pcVar5->dist <= 0.0) + 2;
       uVar2 = (ulonglong)*puVar3;
       lVar4 = uVar2 - lVar1;
     } while (-1 < lVar4);
   }
-  return uVar2 - 1;
+  return (int)uVar2 + -1;
 }
 
 
 // 82729130  R_PortalBehindPlane  (gfx_d3d/r_dpvs.cpp:637)
 
-undefined8 R_PortalBehindPlane(int param_1,float *param_2)
+bool R_PortalBehindPlane(GfxPortal *param_1,DpvsPlane *param_2)
 
 {
   ulonglong uVar1;
-  float *pfVar2;
+  float (*pafVar2) [3];
   
-  uVar1 = (ulonglong)*(byte *)(param_1 + 0x22);
-  pfVar2 = *(float **)(param_1 + 0x1c);
-  if (*(byte *)(param_1 + 0x22) != 0) {
+  uVar1 = (ulonglong)param_1->vertexCount;
+  pafVar2 = param_1->vertices;
+  if (param_1->vertexCount != 0) {
     do {
-      if (0.0 < pfVar2[2] * param_2[2] + *pfVar2 * *param_2 + pfVar2[1] * param_2[1] + param_2[3]) {
-        return 0;
+      if (0.0 < (*pafVar2)[2] * param_2->coeffs[2] +
+                (*pafVar2)[0] * param_2->coeffs[0] + (*pafVar2)[1] * param_2->coeffs[1] +
+                param_2->coeffs[3]) {
+        return false;
       }
-      pfVar2 = pfVar2 + 3;
+      pafVar2 = pafVar2 + 1;
       uVar1 = uVar1 - 1;
     } while (uVar1 != 0);
   }
-  return 1;
+  return true;
 }
 
 
 // 82729198  R_PortalBehindAnyPlane  (gfx_d3d/r_dpvs.cpp:652)
 
-undefined8 R_PortalBehindAnyPlane(int param_1,int param_2,ulonglong param_3)
+bool R_PortalBehindAnyPlane(GfxPortal *param_1,DpvsPlane *param_2,uint param_3)
 
 {
   bool bVar1;
-  float *pfVar2;
+  longlong lVar2;
   float *pfVar3;
-  ulonglong uVar4;
+  float (*pafVar4) [3];
+  ulonglong uVar5;
   
-  if ((param_3 & 0xffffffff) != 0) {
-    pfVar2 = (float *)(param_2 + 8);
+  lVar2 = (longlong)(int)param_3;
+  if (param_3 != 0) {
+    pfVar3 = param_2->coeffs + 2;
     do {
-      if (*(byte *)(param_1 + 0x22) != 0) {
-        uVar4 = (ulonglong)*(byte *)(param_1 + 0x22);
-        pfVar3 = *(float **)(param_1 + 0x1c);
+      if (param_1->vertexCount != 0) {
+        uVar5 = (ulonglong)param_1->vertexCount;
+        pafVar4 = param_1->vertices;
         do {
-          if (0.0 < pfVar3[2] * *pfVar2 + *pfVar3 * pfVar2[-2] + pfVar3[1] * pfVar2[-1] + pfVar2[1])
-          {
+          if (0.0 < (*pafVar4)[2] * *pfVar3 +
+                    (*pafVar4)[0] * ((DpvsPlane *)(pfVar3 + -2))->coeffs[0] +
+                    (*pafVar4)[1] * pfVar3[-1] + pfVar3[1]) {
             bVar1 = false;
             goto LAB_82729204;
           }
-          pfVar3 = pfVar3 + 3;
-          uVar4 = uVar4 - 1;
-        } while (uVar4 != 0);
+          pafVar4 = pafVar4 + 1;
+          uVar5 = uVar5 - 1;
+        } while (uVar5 != 0);
       }
       bVar1 = true;
 LAB_82729204:
       if (bVar1) {
-        return 1;
+        return true;
       }
-      param_3 = param_3 - 1;
-      pfVar2 = pfVar2 + 4;
-    } while (param_3 != 0);
+      lVar2 = lVar2 + -1;
+      pfVar3 = pfVar3 + 4;
+    } while (lVar2 != 0);
   }
-  return 0;
+  return false;
 }
 
 
 // 82729238  R_ChopPortalWinding  (gfx_d3d/r_dpvs.cpp:667)
 
-void R_ChopPortalWinding(undefined8 param_1,uint *param_2,float *param_3,longlong param_4)
+float (*) [3]
+R_ChopPortalWinding(float (*param_1) [3],uint *param_2,DpvsPlane *param_3,float (*param_4) [3])
 
 {
   char cVar1;
@@ -1385,197 +1484,209 @@ void R_ChopPortalWinding(undefined8 param_1,uint *param_2,float *param_3,longlon
   float fVar5;
   float fVar6;
   longlong lVar7;
-  int iVar8;
-  uint uVar9;
-  float *pfVar10;
-  uint uVar11;
-  uint uVar12;
-  longlong lVar13;
-  float *pfVar14;
+  float (*pafVar8) [3];
+  int iVar9;
+  uint uVar10;
+  longlong lVar11;
+  float *pfVar12;
+  uint uVar13;
+  uint uVar14;
   longlong lVar15;
   float *pfVar16;
-  char *pcVar17;
-  int iVar18;
-  uint uVar19;
+  longlong lVar17;
+  float *pfVar18;
+  char *pcVar19;
+  int iVar20;
+  uint uVar21;
   char local_2e0 [144];
   float local_250 [148];
   
-  lVar7 = __savegprlr_25();
-  uVar19 = 0;
-  iVar8 = 0;
-  iVar18 = 0;
+  lVar11 = (longlong)(int)param_4;
+  lVar7 = __savegprlr_25(param_1);
+  uVar21 = 0;
+  iVar9 = 0;
+  iVar20 = 0;
   if (*param_2 != 0) {
-    fVar2 = param_3[1];
-    fVar3 = *param_3;
-    lVar15 = lVar7 + 8;
-    fVar4 = param_3[2];
-    fVar5 = param_3[3];
-    uVar9 = *param_2;
-    pcVar17 = local_2e0;
-    pfVar10 = local_250;
-    lVar13 = lVar15;
-    uVar12 = 0;
+    fVar2 = param_3->coeffs[1];
+    fVar3 = param_3->coeffs[0];
+    lVar17 = lVar7 + 8;
+    fVar4 = param_3->coeffs[2];
+    fVar5 = param_3->coeffs[3];
+    uVar10 = *param_2;
+    pcVar19 = local_2e0;
+    pfVar12 = local_250;
+    lVar15 = lVar17;
+    uVar14 = 0;
     do {
-      uVar11 = uVar12;
-      pfVar16 = (float *)lVar13;
-      fVar6 = pfVar16[-2];
-      *pcVar17 = '\x02';
-      fVar6 = (fVar4 * *pfVar16 + fVar2 * pfVar16[-1] + fVar3 * fVar6 + fVar5) - 0.001;
-      *pfVar10 = fVar6;
+      uVar13 = uVar14;
+      pfVar18 = (float *)lVar15;
+      fVar6 = pfVar18[-2];
+      *pcVar19 = '\x02';
+      fVar6 = (fVar4 * *pfVar18 + fVar2 * pfVar18[-1] + fVar3 * fVar6 + fVar5) - 0.001;
+      *pfVar12 = fVar6;
       if (-0.001 <= fVar6) {
         if (0.001 < fVar6) {
-          iVar8 = iVar8 + 1;
-          *pcVar17 = '\0';
+          iVar9 = iVar9 + 1;
+          *pcVar19 = '\0';
         }
       }
       else {
-        iVar18 = iVar18 + 1;
-        *pcVar17 = '\x01';
+        iVar20 = iVar20 + 1;
+        *pcVar19 = '\x01';
       }
-      uVar12 = uVar11 + 1;
-      lVar13 = lVar13 + 0xc;
-      pfVar10 = pfVar10 + 1;
-      pcVar17 = pcVar17 + 1;
-    } while (uVar12 < uVar9);
-    if (iVar8 != 0) {
-      if (iVar18 != 0) {
-        uVar9 = 0;
-        local_2e0[uVar11 + 1] = local_2e0[0];
-        lVar13 = param_4 + -4;
-        local_250[uVar12] = local_250[0];
-        pfVar10 = local_250;
+      uVar14 = uVar13 + 1;
+      lVar15 = lVar15 + 0xc;
+      pfVar12 = pfVar12 + 1;
+      pcVar19 = pcVar19 + 1;
+    } while (uVar14 < uVar10);
+    if (iVar9 != 0) {
+      if (iVar20 != 0) {
+        uVar10 = 0;
+        local_2e0[uVar13 + 1] = local_2e0[0];
+        lVar15 = lVar11 + -4;
+        local_250[uVar14] = local_250[0];
+        pfVar12 = local_250;
         do {
-          if (0x7f < uVar19) break;
-          pcVar17 = local_2e0 + uVar9;
-          cVar1 = *pcVar17;
-          pfVar16 = (float *)lVar15;
-          iVar8 = (int)lVar13;
+          if (0x7f < uVar21) break;
+          pcVar19 = local_2e0 + uVar10;
+          cVar1 = *pcVar19;
+          pfVar18 = (float *)lVar17;
+          iVar9 = (int)lVar15;
           if (cVar1 == '\x02') {
-            *(float *)(iVar8 + 4) = pfVar16[-2];
-            *(float *)(iVar8 + 8) = pfVar16[-1];
-            *(float *)(iVar8 + 0xc) = *pfVar16;
-            lVar13 = lVar13 + 0xc;
+            *(float *)(iVar9 + 4) = pfVar18[-2];
+            *(float *)(iVar9 + 8) = pfVar18[-1];
+            *(float *)(iVar9 + 0xc) = *pfVar18;
+            lVar15 = lVar15 + 0xc;
 LAB_82729444:
-            uVar19 = uVar19 + 1;
+            uVar21 = uVar21 + 1;
           }
           else {
             if (cVar1 == '\0') {
-              uVar19 = uVar19 + 1;
-              *(float *)(iVar8 + 4) = pfVar16[-2];
-              *(float *)(iVar8 + 8) = pfVar16[-1];
-              *(float *)(iVar8 + 0xc) = *pfVar16;
-              lVar13 = lVar13 + 0xc;
+              uVar21 = uVar21 + 1;
+              *(float *)(iVar9 + 4) = pfVar18[-2];
+              *(float *)(iVar9 + 8) = pfVar18[-1];
+              *(float *)(iVar9 + 0xc) = *pfVar18;
+              lVar15 = lVar15 + 0xc;
             }
-            if ((local_2e0[uVar9 + 1] != '\x02') && (local_2e0[uVar9 + 1] != cVar1)) {
-              uVar12 = *param_2;
-              trapWord(6,(ulonglong)uVar12,0);
-              fVar2 = *pfVar10 / (*pfVar10 - pfVar10[1]);
-              pfVar14 = (float *)(((int)(pcVar17 + (1 - (int)local_2e0)) -
-                                  ((uint)(pcVar17 + (1 - (int)local_2e0)) / uVar12) * uVar12) * 0xc
+            if ((local_2e0[uVar10 + 1] != '\x02') && (local_2e0[uVar10 + 1] != cVar1)) {
+              uVar14 = *param_2;
+              trapWord(6,(ulonglong)uVar14,0);
+              fVar2 = *pfVar12 / (*pfVar12 - pfVar12[1]);
+              pfVar16 = (float *)(((int)(pcVar19 + (1 - (int)local_2e0)) -
+                                  ((uint)(pcVar19 + (1 - (int)local_2e0)) / uVar14) * uVar14) * 0xc
                                  + (int)lVar7);
-              *(float *)((int)lVar13 + 4) = (*pfVar14 - pfVar16[-2]) * fVar2 + pfVar16[-2];
-              *(float *)((int)lVar13 + 8) = (pfVar14[1] - pfVar16[-1]) * fVar2 + pfVar16[-1];
-              lVar13 = lVar13 + 0xc;
-              *(float *)lVar13 = (pfVar14[2] - *pfVar16) * fVar2 + *pfVar16;
+              *(float *)((int)lVar15 + 4) = (*pfVar16 - pfVar18[-2]) * fVar2 + pfVar18[-2];
+              *(float *)((int)lVar15 + 8) = (pfVar16[1] - pfVar18[-1]) * fVar2 + pfVar18[-1];
+              lVar15 = lVar15 + 0xc;
+              *(float *)lVar15 = (pfVar16[2] - *pfVar18) * fVar2 + *pfVar18;
               goto LAB_82729444;
             }
           }
-          uVar9 = uVar9 + 1;
-          pfVar10 = pfVar10 + 1;
-          lVar15 = lVar15 + 0xc;
-        } while (uVar9 < *param_2);
-        if (uVar19 < 3) {
-          MyAssertHandler(0xffffffff821bc490,0x2e2,0,0xffffffff82000f98,0xffffffff821bc5fc);
+          uVar10 = uVar10 + 1;
+          pfVar12 = pfVar12 + 1;
+          lVar17 = lVar17 + 0xc;
+        } while (uVar10 < *param_2);
+        if (uVar21 < 3) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x2e2,0,"%s");
         }
-        *param_2 = uVar19;
-        lVar7 = param_4;
+        *param_2 = uVar21;
+        lVar7 = lVar11;
       }
-      __restgprlr_25(lVar7);
-      return;
+      pafVar8 = (float (*) [3])__restgprlr_25(lVar7);
+      return pafVar8;
     }
   }
   *param_2 = 0;
-  __restgprlr_25(0);
-  return;
+  pafVar8 = (float (*) [3])__restgprlr_25(0);
+  return pafVar8;
 }
 
 
 // 827294A0  R_FindNearestReflectionProbeInCell  (gfx_d3d/r_dpvs.cpp:745)
 
-void R_FindNearestReflectionProbeInCell(undefined8 param_1,int param_2,float *param_3)
+uint R_FindNearestReflectionProbeInCell(GfxWorldDraw *param_1,GfxCell *param_2,float *param_3)
 
 {
   byte bVar1;
   uint *puVar2;
-  float *pfVar3;
-  uint uVar4;
+  uint uVar3;
+  float *pfVar4;
   uint uVar5;
   uint uVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   
-  puVar2 = (uint *)__savegprlr_23();
+  puVar2 = (uint *)__savegprlr_23(param_1);
   if (puVar2 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,0x2f0,0,0xffffffff82000f98,0xffffffff821bc72c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x2f0,0,
+                    "%s");
   }
   if (0xfe < *puVar2) {
-    MyAssertHandler(0xffffffff821bc490,0x2f1,0,0xffffffff82000f98,0xffffffff821bc704);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x2f1,0,
+                    "%s");
   }
-  uVar4 = 0;
+  uVar3 = 0;
   dVar8 = 3.4028234663852886e+38;
   dVar9 = dVar8;
-  if ((*(char *)(param_2 + 0x20) == '\0') && (*(char *)(param_2 + 0x28) == '\0')) {
-    MyAssertHandler(0xffffffff821bc490,0x2f7,0,0xffffffff82000f98,0xffffffff821bc6b8);
+  if ((param_2->reflectionProbeCount == '\0') && (param_2->reflectionProbeReferenceCount == '\0')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x2f7,0,
+                    "%s");
   }
   uVar5 = 0;
-  if (*(char *)(param_2 + 0x20) != '\0') {
+  if (param_2->reflectionProbeCount != '\0') {
     do {
-      uVar6 = (uint)*(byte *)(*(int *)(param_2 + 0x24) + uVar5);
+      uVar6 = (uint)param_2->reflectionProbes[uVar5];
       if (*puVar2 <= uVar6) {
-        MyAssertHandler(0xffffffff821bc490,0x2fb,0,0xffffffff821bc668,uVar6);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x2fb,
+                        0,
+                        "probeIndex doesn\'t index worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
+                       );
       }
-      pfVar3 = (float *)(uVar6 * 0xc + puVar2[2]);
-      dVar7 = (double)((param_3[1] - pfVar3[1]) * (param_3[1] - pfVar3[1]) +
-                      (*param_3 - *pfVar3) * (*param_3 - *pfVar3) +
-                      (param_3[2] - pfVar3[2]) * (param_3[2] - pfVar3[2]));
+      pfVar4 = (float *)(uVar6 * 0xc + puVar2[2]);
+      dVar7 = (double)((param_3[1] - pfVar4[1]) * (param_3[1] - pfVar4[1]) +
+                      (*param_3 - *pfVar4) * (*param_3 - *pfVar4) +
+                      (param_3[2] - pfVar4[2]) * (param_3[2] - pfVar4[2]));
       if (dVar7 < dVar9) {
         dVar9 = dVar7;
-        uVar4 = uVar6;
+        uVar3 = uVar6;
       }
       uVar5 = uVar5 + 1;
-    } while (uVar5 < *(byte *)(param_2 + 0x20));
+    } while (uVar5 < param_2->reflectionProbeCount);
   }
-  if (uVar4 == 0) {
+  if (uVar3 == 0) {
     dVar9 = dVar8;
   }
   uVar5 = 0;
-  if (*(char *)(param_2 + 0x28) != '\0') {
+  if (param_2->reflectionProbeReferenceCount != '\0') {
     do {
-      bVar1 = *(byte *)(*(int *)(param_2 + 0x2c) + uVar5);
-      uVar6 = (uint)bVar1;
-      if (puVar2[4] <= uVar6) {
-        MyAssertHandler(0xffffffff821bc490,0x30a,0,0xffffffff821bc610,uVar6);
+      bVar1 = param_2->reflectionProbeReferences[uVar5];
+      if (puVar2[4] <= (uint)bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x30a,
+                        0,
+                        "probeIndex doesn\'t index worldDraw->reflectionProbeReferenceCount\n\t%i not in [0, %i)"
+                       );
       }
-      pfVar3 = (float *)(uVar6 * 0xc + puVar2[5]);
-      dVar8 = (double)((param_3[1] - pfVar3[1]) * (param_3[1] - pfVar3[1]) +
-                      (*param_3 - *pfVar3) * (*param_3 - *pfVar3) +
-                      (param_3[2] - pfVar3[2]) * (param_3[2] - pfVar3[2]));
+      pfVar4 = (float *)((uint)bVar1 * 0xc + puVar2[5]);
+      dVar8 = (double)((param_3[1] - pfVar4[1]) * (param_3[1] - pfVar4[1]) +
+                      (*param_3 - *pfVar4) * (*param_3 - *pfVar4) +
+                      (param_3[2] - pfVar4[2]) * (param_3[2] - pfVar4[2]));
       if (dVar8 < dVar9) {
-        uVar4 = *(byte *)(puVar2[6] + (uint)bVar1) + 1 & 0xff;
+        uVar3 = *(byte *)(puVar2[6] + (uint)bVar1) + 1 & 0xff;
         dVar9 = dVar8;
       }
       uVar5 = uVar5 + 1;
-    } while (uVar5 < *(byte *)(param_2 + 0x28));
+    } while (uVar5 < param_2->reflectionProbeReferenceCount);
   }
-  __restgprlr_23(uVar4);
-  return;
+  uVar3 = __restgprlr_23(uVar3);
+  return uVar3;
 }
 
 
 // 827296E8  R_FindNearestReflectionProbe  (gfx_d3d/r_dpvs.cpp:793)
 
-void R_FindNearestReflectionProbe(undefined8 param_1,float *param_2)
+uint R_FindNearestReflectionProbe(GfxWorldDraw *param_1,float *param_2)
 
 {
   float fVar1;
@@ -1585,12 +1696,14 @@ void R_FindNearestReflectionProbe(undefined8 param_1,float *param_2)
   uint uVar5;
   float *pfVar6;
   
-  puVar3 = (uint *)__savegprlr_28();
+  puVar3 = (uint *)__savegprlr_28(param_1);
   if (puVar3 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,799,0,0xffffffff82000f98,0xffffffff821bc72c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",799,0,"%s"
+                   );
   }
   if (0xfe < *puVar3) {
-    MyAssertHandler(0xffffffff821bc490,800,0,0xffffffff82000f98,0xffffffff821bc704);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",800,0,"%s"
+                   );
   }
   uVar4 = 0;
   fVar2 = 3.4028235e+38;
@@ -1608,53 +1721,56 @@ void R_FindNearestReflectionProbe(undefined8 param_1,float *param_2)
       uVar5 = uVar5 + 1 & 0xff;
     } while (uVar5 < *puVar3);
   }
-  __restgprlr_28(uVar4);
-  return;
+  uVar4 = __restgprlr_28(uVar4);
+  return uVar4;
 }
 
 
 // 827297F0  R_CalcReflectionProbeIndex  (gfx_d3d/r_dpvs.cpp:822)
 
-void R_CalcReflectionProbeIndex(void)
+uint R_CalcReflectionProbeIndex(float *param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  float *pfVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = R_CellForPoint();
-  if ((int)uVar2 == -1) {
-    R_FindNearestReflectionProbe(DAT_84613714,uVar1);
-    __restgprlr_29();
-    return;
+  pfVar1 = (float *)__savegprlr_29(param_1);
+  uVar2 = R_CellForPoint(pfVar1);
+  if (uVar2 == 0xffffffff) {
+    uVar2 = R_FindNearestReflectionProbe(g_worldDraw,pfVar1);
+    uVar2 = __restgprlr_29(uVar2);
+    return uVar2;
   }
-  if ((ulonglong)*(uint *)(DAT_8461658c + 0x34) <= (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x33e,0,0xffffffff821bc738,uVar2);
+  if ((uint)((rgp.world)->dpvsPlanes).cellCount <= uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x33e,0,
+                    "cellIndex doesn\'t index rgp.world->dpvsPlanes.cellCount\n\t%i not in [0, %i)")
+    ;
   }
-  R_FindNearestReflectionProbeInCell
-            (DAT_84613714,
-             (ulonglong)*(uint *)(DAT_8461658c + 0x4c) +
-             (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xfffffff) * 0x10,uVar1);
-  __restgprlr_29();
-  return;
+  uVar2 = R_FindNearestReflectionProbeInCell(g_worldDraw,(rgp.world)->cells + uVar2,pfVar1);
+  uVar2 = __restgprlr_29(uVar2);
+  return uVar2;
 }
 
 
 // 82729890  R_InitAndSortDrawSurfs  (gfx_d3d/r_dpvs.cpp:836)
 
-void R_InitAndSortDrawSurfs(undefined8 param_1,ulonglong param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_InitAndSortDrawSurfs(GfxDrawSurf *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = (int)((param_2 & 0x3fffffff) << 2);
-  iVar2 = iVar2 - *(int *)((int)&DAT_847b9650 + iVar1) >> 3;
-  *(int *)((int)&DAT_847b9628 + iVar1) = iVar2;
+  uVar3 = (ulonglong)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
+  iVar2 = iVar2 - *(int *)((int)scene.drawSurfs + iVar1) >> 3;
+  *(int *)((int)scene.drawSurfCount + iVar1) = iVar2;
   if (param_3 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-    R_SortDrawSurfs(*(undefined4 *)((int)&DAT_847b9650 + iVar1),iVar2);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(*(GfxDrawSurf **)((int)scene.drawSurfs + iVar1),iVar2);
     PIXEndNamedEvent();
   }
   __restgprlr_29();
@@ -1664,271 +1780,311 @@ void R_InitAndSortDrawSurfs(undefined8 param_1,ulonglong param_2,int param_3)
 
 // 827298F8  R_AddAllSceneEntSurfacesCameraCmd  (gfx_d3d/r_dpvs.cpp:852)
 
-void R_AddAllSceneEntSurfacesCameraCmd(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddAllSceneEntSurfacesCameraCmd(SceneEntCmd *param_1)
 
 {
   ushort uVar1;
-  uint uVar2;
+  GfxViewInfo *pGVar2;
   int iVar3;
-  uint *puVar7;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  uint uVar12;
+  DynEntityDef *pDVar4;
+  DynEntityClient *pDVar5;
+  ushort *puVar6;
+  uint uVar7;
+  uint uVar8;
+  DynEntityPose *pDVar9;
+  GfxBrushModel *pGVar10;
   ulonglong uVar11;
-  int iVar13;
-  char *pcVar14;
-  int iVar15;
-  uint uVar16;
+  float *pfVar12;
+  float *pfVar13;
+  ulonglong uVar14;
+  uchar *puVar15;
+  XModelDrawInfo *pXVar16;
   int iVar17;
-  int iVar18;
-  int iVar19;
-  undefined *puVar20;
-  uint *puVar21;
-  float *pfVar22;
-  uint uVar23;
-  undefined1 local_120;
-  undefined1 local_11f;
+  uint uVar19;
+  longlong lVar18;
+  BModelDrawInfo *pBVar20;
+  longlong lVar21;
+  GfxSceneEntityCull *pGVar23;
+  longlong lVar22;
+  undefined1 *local_180 [2];
+  uint in_stack_fffffe88;
+  XModelThermalMode in_stack_fffffe8c;
+  GfxLightingInfo local_120 [4];
   float local_118;
   float local_114;
   float local_110;
-  int local_100;
-  int local_fc;
-  int local_f8;
-  int local_f4;
-  int local_e0;
-  int local_dc;
-  int local_d8;
-  int local_d4;
-  undefined1 auStack_c0 [192];
+  GfxDrawSurf *local_100;
+  GfxDrawSurf *local_fc;
+  GfxDrawSurf *local_f8;
+  GfxDrawSurf *local_f4;
+  GfxDrawSurf *local_e0;
+  GfxDrawSurf *local_dc;
+  GfxDrawSurf *local_d8;
+  undefined4 local_d4;
+  float afStack_c0 [48];
   
-  puVar7 = (uint *)__savegprlr();
+  __savegprlr();
+  local_180[0] = (undefined1 *)register0x0000000c;
   Profile_Begin(0x1a5);
-  uVar2 = puVar7[3];
-  local_f4 = DAT_847b9634 * 8 + DAT_847b965c;
-  uVar16 = puVar7[2];
-  local_d4 = DAT_847b960c * 8 + DAT_847b965c;
-  uVar23 = *puVar7;
-  local_fc = DAT_847b962c * 8 + DAT_847b9654;
-  local_100 = DAT_847b9628 * 8 + DAT_847b9650;
-  local_e0 = DAT_847b9600 * 8 + DAT_847b9650;
-  local_dc = DAT_847b9604 * 8 + DAT_847b9654;
-  local_f8 = DAT_847b9630 * 8 + DAT_847b9658;
-  local_d8 = DAT_847b9608 * 8 + DAT_847b9658;
-  if (uVar16 < uVar2) {
-    pcVar14 = &DAT_847d38bc + uVar16;
-    puVar21 = &DAT_847c4524 + uVar16 * 0x1e;
+  uVar8 = param_1->sceneDObjEnd;
+  local_f4 = scene.drawSurfs[3] + scene.drawSurfCount[3];
+  uVar19 = param_1->sceneDObjBegin;
+  uVar11 = ((ulonglong)scene.drawSurfLimit[3] & 0x1fffffff) * 8 + ZEXT48(scene.drawSurfs[3]);
+  pGVar2 = param_1->viewInfo;
+  local_fc = scene.drawSurfs[1] + scene.drawSurfCount[1];
+  local_d4 = (undefined4)uVar11;
+  local_100 = scene.drawSurfs[0] + scene.drawSurfCount[0];
+  local_e0 = scene.drawSurfs[0] + scene.drawSurfLimit[0];
+  local_dc = scene.drawSurfs[1] + scene.drawSurfLimit[1];
+  local_f8 = scene.drawSurfs[2] + scene.drawSurfCount[2];
+  local_d8 = scene.drawSurfs[2] + scene.drawSurfLimit[2];
+  if (uVar19 < uVar8) {
+    puVar15 = scene.sceneDObjVisData[0] + uVar19;
+    pGVar23 = &scene.sceneDObj[uVar19].cull;
     do {
-      if (*pcVar14 == '\x01') {
-        if (puVar21[0x11] == 0) {
-          MyAssertHandler(0xffffffff821bc490,0x3a1,0,0xffffffff82000f98,0xffffffff821bc7ec);
+      if (*puVar15 == '\x01') {
+        if (*(DObj **)((int)(pGVar23 + 2) + 4) == (DObj *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x3a1,0,"%s");
         }
-        if (*puVar21 < 5) {
-          uVar4 = DObjGetName(puVar21[0x11]);
-          uVar4 = va(0xffffffff821bc7fc,uVar16,*puVar21,uVar4);
-          MyAssertHandler(0xffffffff821bc490,0x3a2,0,0xffffffff820011f4,0xffffffff821bc808,uVar4);
+        if (pGVar23->state < 5) {
+          DObjGetName(*(DObj **)((int)(pGVar23 + 2) + 4));
+          va("%d %d \'%s\'");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x3a2,0,"%s\n\t%s");
         }
-        uVar12 = puVar21[0x10];
-        uVar4 = CG_GetPoseLightingHandle(puVar21[0x12]);
-        lVar9 = (ulonglong)uVar23 + 0x288;
-        if ((puVar21[0x10] & 2) == 0) {
-          lVar9 = 0;
+        uVar7 = pGVar23[2].state;
+        puVar6 = CG_GetPoseLightingHandle(((GfxSceneEntityInfo *)((int)(pGVar23 + 2) + 8))->pose);
+        uVar11 = (ulonglong)(int)puVar6;
+        pfVar13 = pGVar2->viewModelAmbience;
+        if ((pGVar23[2].state & 2) == 0) {
+          pfVar13 = (float *)0x0;
         }
-        lVar8 = (ulonglong)uVar23 + 0x27c;
-        if ((uVar12 >> 8 & 1) == 0) {
-          lVar8 = 0;
+        pfVar12 = pGVar2->charAmbience;
+        if ((uVar7 >> 8 & 1) == 0) {
+          pfVar12 = (float *)0x0;
         }
-        uVar5 = R_AllocModelLighting_Box
-                          (puVar21 + -10,puVar21 + 1,uVar4,&local_120,lVar8,lVar9,uVar12 >> 9 & 1);
-        if ((uVar5 & 0xffffffff) == 0) {
-          *pcVar14 = '\0';
+        uVar7 = R_AllocModelLighting_Box
+                          ((float *)((int)(pGVar23 + -2) + 0x18),&pGVar23->bounds,puVar6,local_120,
+                           (float (*) [3])pfVar12,(float (*) [3])pfVar13,
+                           (bool)((byte)(uVar7 >> 9) & 1));
+        if (uVar7 == 0) {
+          *puVar15 = '\0';
         }
         else {
-          *(undefined1 *)((int)puVar21 + 0x4d) = local_120;
-          *(undefined1 *)(puVar21 + 0x13) = local_11f;
-          R_AddDObjSurfacesCamera(puVar21 + -10,uVar5,local_120,&local_100,&local_e0);
+          uVar11 = (ulonglong)local_120[0].primaryLightIndex;
+          *(uchar *)((int)(pGVar23 + 2) + 0xd) = local_120[0].primaryLightIndex;
+          *(uchar *)((int)(pGVar23 + 2) + 0xc) = local_120[0].reflectionProbeIndex;
+          R_AddDObjSurfacesCamera
+                    ((GfxSceneEntity *)((int)(pGVar23 + -2) + 0x18),uVar7,
+                     (uint)local_120[0].primaryLightIndex,&local_100,&local_e0);
         }
       }
-      uVar16 = uVar16 + 1;
-      puVar21 = puVar21 + 0x1e;
-      pcVar14 = pcVar14 + 1;
-    } while (uVar16 < uVar2);
+      uVar19 = uVar19 + 1;
+      pGVar23 = (GfxSceneEntityCull *)((int)(pGVar23 + 3) + 0x18);
+      puVar15 = puVar15 + 1;
+    } while (uVar19 < uVar8);
   }
-  uVar2 = puVar7[4];
-  if (uVar2 < puVar7[5]) {
-    pcVar14 = &DAT_847e66d4 + uVar2;
-    pfVar22 = (float *)(&DAT_847d4704 + uVar2 * 0x12);
-    iVar17 = puVar7[5] - uVar2;
+  uVar14 = (ulonglong)(uint)param_1->sceneModelBegin;
+  if (uVar14 < (uint)param_1->sceneModelEnd) {
+    lVar21 = uVar14 - 0x7b81992c;
+    lVar22 = (uVar14 + ((ulonglong)(uint)param_1->sceneModelBegin & 0x1fffffff) * 8 & 0x1fffffff) *
+             8 + -0x7b82b8fc;
+    lVar18 = (uint)param_1->sceneModelEnd - uVar14;
     do {
-      if (*pcVar14 == '\x01') {
-        uVar5 = R_AllocModelLighting_Sphere((double)*pfVar22,pfVar22 + 2,pfVar22 + -5);
-        if ((uVar5 & 0xffffffff) == 0) {
-          *pcVar14 = '\0';
+      uVar14 = uVar11;
+      if (*(char *)lVar21 == '\x01') {
+        uVar14 = lVar22 - 0x14;
+        pfVar13 = (float *)lVar22;
+        uVar8 = R_AllocModelLighting_Sphere
+                          (pfVar13 + 2,(float *)uVar14,*pfVar13,(ushort *)uVar11,
+                           (GfxLightingInfo *)pfVar13[1],(bool)((char)local_180 + '`'));
+        if (uVar8 == 0) {
+          *(char *)lVar21 = '\0';
+          uVar14 = uVar11;
         }
         else {
-          *(undefined1 *)(pfVar22 + 5) = local_11f;
-          *(undefined1 *)((int)pfVar22 + 0x16) = local_120;
+          *(uchar *)(pfVar13 + 5) = local_120[0].reflectionProbeIndex;
+          *(uchar *)((int)pfVar13 + 0x16) = local_120[0].primaryLightIndex;
           R_AddXModelSurfacesCamera
-                    (pfVar22 + -0xc,pfVar22[-0xb],pfVar22 + -5,uVar5,local_120,
-                     (uint)pfVar22[-1] >> 1 & 1,&local_100,&local_e0);
+                    ((XModelDrawInfo *)(pfVar13 + -0xc),(XModel *)pfVar13[-0xb],(float *)uVar14,
+                     uVar8,(uint)local_120[0].primaryLightIndex,(uint)pfVar13[-1] >> 1 & 1,
+                     &local_100,&local_e0,in_stack_fffffe88,in_stack_fffffe8c);
         }
       }
-      iVar17 = iVar17 + -1;
-      pfVar22 = pfVar22 + 0x12;
-      pcVar14 = pcVar14 + 1;
-    } while (iVar17 != 0);
+      lVar18 = lVar18 + -1;
+      lVar22 = lVar22 + 0x48;
+      lVar21 = lVar21 + 1;
+      uVar11 = uVar14;
+    } while (lVar18 != 0);
   }
-  uVar2 = puVar7[9];
-  uVar16 = puVar7[8];
-  iVar17 = *(int *)(DAT_8461658c + 0x2ac);
-  if (uVar16 < uVar2) {
-    iVar13 = uVar16 * 6;
+  uVar8 = param_1->sceneDynModelEnd;
+  uVar19 = param_1->sceneDynModelBegin;
+  puVar15 = ((rgp.world)->dpvsDyn).dynEntVisData[0][0];
+  if (uVar19 < uVar8) {
+    iVar17 = uVar19 * 6;
     do {
-      iVar15 = *(int *)(DAT_8461658c + 0x20c) + iVar13;
-      uVar1 = *(ushort *)(iVar15 + 4);
-      uVar23 = (uint)uVar1;
-      if (*(char *)((uint)uVar1 + iVar17) == '\x01') {
-        uVar12 = (uint)DAT_835a2944;
-        if (uVar12 <= uVar23) {
-          MyAssertHandler(0xffffffff821bc430,0x44,0,0xffffffff8205cca8,uVar23,uVar12);
-          uVar12 = (uint)DAT_835a2944;
+      pXVar16 = (XModelDrawInfo *)(&((rgp.world)->sceneDynModel->info).hasGfxEntIndex + iVar17);
+      uVar1._0_1_ = pXVar16[1].hasGfxEntIndex;
+      uVar1._1_1_ = pXVar16[1].lod;
+      if (puVar15[uVar1] == '\x01') {
+        if (cm.dynEntCount[0] <= uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x44,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        iVar19 = uVar23 * 0x20 + DAT_835a2950;
-        if (uVar12 <= uVar1) {
-          MyAssertHandler(0xffffffff821bc430,0x4b,0,0xffffffff8205cca8,uVar23);
-          uVar12 = (uint)DAT_835a2944;
+        pDVar9 = cm.dynEntPoseList[0] + uVar1;
+        if (cm.dynEntCount[0] <= uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x4b,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        iVar18 = uVar23 * 0x10 + DAT_835a2958;
-        if (uVar12 <= uVar1) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar23);
+        pDVar5 = cm.dynEntClientList[0];
+        if (cm.dynEntCount[0] <= uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        iVar3 = (uint)uVar1 * 0x60 + DAT_835a2948;
-        UnitQuatToAxis(iVar19,auStack_c0);
-        MatrixTransformVector((ulonglong)*(uint *)(iVar3 + 0x20) + 0xf8,auStack_c0,&local_118);
-        local_118 = *(float *)(iVar19 + 0x10) + local_118;
-        local_114 = *(float *)(iVar19 + 0x14) + local_114;
-        local_110 = *(float *)(iVar19 + 0x18) + local_110;
-        uVar5 = R_AllocModelLighting_PrimaryLight(&local_118,uVar23,iVar18 + 6,&local_120);
-        if ((uVar5 & 0xffffffff) == 0) {
-          *(undefined1 *)(uVar16 + iVar17) = 0;
+        pDVar4 = cm.dynEntDefList[0];
+        UnitQuatToAxis((float *)pDVar9,(float (*) [3])afStack_c0);
+        MatrixTransformVector
+                  (((pDVar4[uVar1].xModel)->bounds).midPoint,(float (*) [3])afStack_c0,&local_118);
+        pfVar13 = (pDVar9->pose).origin;
+        local_118 = *pfVar13 + local_118;
+        local_114 = (pDVar9->pose).origin[1] + local_114;
+        local_110 = (pDVar9->pose).origin[2] + local_110;
+        uVar7 = R_AllocModelLighting_PrimaryLight
+                          (&local_118,(uint)uVar1,&pDVar5[uVar1].lightingHandle,local_120);
+        if (uVar7 == 0) {
+          puVar15[uVar19] = '\0';
         }
         else {
           R_AddXModelSurfacesCamera
-                    (iVar15,*(undefined4 *)(iVar3 + 0x20),(float *)(iVar19 + 0x10),uVar5,local_120,0
-                     ,&local_100,&local_e0);
+                    (pXVar16,pDVar4[uVar1].xModel,pfVar13,uVar7,(uint)local_120[0].primaryLightIndex
+                     ,0,&local_100,&local_e0,in_stack_fffffe88,in_stack_fffffe8c);
         }
       }
-      uVar16 = uVar16 + 1;
-      iVar13 = iVar13 + 6;
-    } while (uVar16 < uVar2);
+      uVar19 = uVar19 + 1;
+      iVar17 = iVar17 + 6;
+    } while (uVar19 < uVar8);
   }
-  uVar2 = puVar7[6];
-  if (uVar2 < puVar7[7]) {
-    iVar17 = puVar7[7] - uVar2;
-    pcVar14 = &DAT_847ed2dc + uVar2;
-    puVar20 = &DAT_847e82f4 + uVar2 * 0x28;
+  uVar8 = param_1->sceneBrushBegin;
+  if (uVar8 < (uint)param_1->sceneBrushEnd) {
+    iVar17 = param_1->sceneBrushEnd - uVar8;
+    puVar15 = scene.sceneBrushVisData[0] + uVar8;
+    pfVar13 = scene.sceneBrush[uVar8].placement.origin;
     do {
-      if (*pcVar14 == '\x01') {
-        uVar5 = R_CellForPoint(puVar20);
-        if ((int)uVar5 == -1) {
-          uVar5 = R_FindNearestReflectionProbe(DAT_84613714,puVar20);
+      if (*puVar15 == '\x01') {
+        uVar8 = R_CellForPoint(pfVar13);
+        if (uVar8 == 0xffffffff) {
+          uVar8 = R_FindNearestReflectionProbe(g_worldDraw,pfVar13);
         }
         else {
-          if ((ulonglong)*(uint *)(DAT_8461658c + 0x34) <= (uVar5 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff821bc490,0x33e,0,0xffffffff821bc738,uVar5);
+          if ((uint)((rgp.world)->dpvsPlanes).cellCount <= uVar8) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0x33e,0,
+                            "cellIndex doesn\'t index rgp.world->dpvsPlanes.cellCount\n\t%i not in [0, %i)"
+                           );
           }
-          uVar5 = R_FindNearestReflectionProbeInCell
-                            (DAT_84613714,
-                             (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 +
-                             (ulonglong)*(uint *)(DAT_8461658c + 0x4c),puVar20);
+          uVar8 = R_FindNearestReflectionProbeInCell(g_worldDraw,(rgp.world)->cells + uVar8,pfVar13)
+          ;
         }
-        puVar20[0xc] = (char)uVar5;
-        if ((uVar5 & 0xff) != (uVar5 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821bc490,0x40a,0,0xffffffff821bc7cc,0xffffffff821bc790,uVar5);
+        *(char *)(pfVar13 + 3) = (char)uVar8;
+        if ((uVar8 & 0xff) != uVar8) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x40a,0,"%s\n\t(reflectionProbeIndex) = %i");
         }
         R_AddBModelSurfacesCamera
-                  (puVar20 + -0x18,*(undefined4 *)(puVar20 + -0x14),&local_100,&local_e0,uVar5);
+                  ((BModelDrawInfo *)(pfVar13 + -6),(GfxBrushModel *)pfVar13[-5],&local_100,
+                   &local_e0,uVar8);
       }
       iVar17 = iVar17 + -1;
-      pcVar14 = pcVar14 + 1;
-      puVar20 = puVar20 + 0x28;
+      puVar15 = puVar15 + 1;
+      pfVar13 = pfVar13 + 10;
     } while (iVar17 != 0);
   }
-  uVar2 = puVar7[10];
-  iVar17 = *(int *)(DAT_8461658c + 0x2b8);
-  if ((ulonglong)uVar2 < (ulonglong)puVar7[0xb]) {
-    iVar13 = uVar2 << 2;
-    lVar9 = (ulonglong)puVar7[0xb] - (ulonglong)uVar2;
+  uVar8 = param_1->sceneDynBrushBegin;
+  puVar15 = ((rgp.world)->dpvsDyn).dynEntVisData[1][0];
+  if ((ulonglong)uVar8 < (ulonglong)(uint)param_1->sceneDynBrushEnd) {
+    iVar17 = uVar8 << 2;
+    lVar18 = (ulonglong)(uint)param_1->sceneDynBrushEnd - (ulonglong)uVar8;
     do {
-      iVar15 = *(int *)(DAT_8461658c + 0x210) + iVar13;
-      uVar1 = *(ushort *)(iVar15 + 2);
-      uVar5 = (ulonglong)uVar1;
-      if (*(char *)((uint)uVar1 + iVar17) == '\x01') {
-        uVar11 = (ulonglong)DAT_835a2946;
-        if (uVar11 <= uVar5) {
-          MyAssertHandler(0xffffffff821bc430,0x44,0,0xffffffff8205cca8,uVar5,uVar11);
-          uVar11 = (ulonglong)DAT_835a2946;
+      pBVar20 = (BModelDrawInfo *)((int)&((rgp.world)->sceneDynBrush->info).surfId + iVar17);
+      uVar1 = pBVar20[1].surfId;
+      if (puVar15[uVar1] == '\x01') {
+        if (cm.dynEntCount[1] <= uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x44,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        uVar10 = (ulonglong)DAT_835a2954;
-        if (uVar11 <= uVar1) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar5);
+        pDVar9 = cm.dynEntPoseList[1];
+        if (cm.dynEntCount[1] <= uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        uVar4 = R_GetBrushModel(*(undefined2 *)((uint)uVar1 * 0x60 + DAT_835a294c + 0x24));
-        lVar8 = uVar5 * 0x20 + uVar10 + 0x10;
-        uVar5 = R_CellForPoint(lVar8);
-        if ((int)uVar5 == -1) {
-          uVar6 = R_FindNearestReflectionProbe(DAT_84613714,lVar8);
+        pGVar10 = R_GetBrushModel((uint)cm.dynEntDefList[1][uVar1].brushModel);
+        pfVar13 = pDVar9[uVar1].pose.origin;
+        uVar8 = R_CellForPoint(pfVar13);
+        if (uVar8 == 0xffffffff) {
+          uVar8 = R_FindNearestReflectionProbe(g_worldDraw,pfVar13);
         }
         else {
-          if ((ulonglong)*(uint *)(DAT_8461658c + 0x34) <= (uVar5 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff821bc490,0x33e,0,0xffffffff821bc738,uVar5);
+          if ((uint)((rgp.world)->dpvsPlanes).cellCount <= uVar8) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0x33e,0,
+                            "cellIndex doesn\'t index rgp.world->dpvsPlanes.cellCount\n\t%i not in [0, %i)"
+                           );
           }
-          uVar6 = R_FindNearestReflectionProbeInCell
-                            (DAT_84613714,
-                             (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xfffffff) * 0x10 +
-                             (ulonglong)*(uint *)(DAT_8461658c + 0x4c),lVar8);
+          uVar8 = R_FindNearestReflectionProbeInCell(g_worldDraw,(rgp.world)->cells + uVar8,pfVar13)
+          ;
         }
-        R_AddBModelSurfacesCamera(iVar15,uVar4,&local_100,&local_e0,uVar6);
+        R_AddBModelSurfacesCamera(pBVar20,pGVar10,&local_100,&local_e0,uVar8);
       }
-      lVar9 = lVar9 + -1;
-      iVar13 = iVar13 + 4;
-    } while (lVar9 != 0);
+      lVar18 = lVar18 + -1;
+      iVar17 = iVar17 + 4;
+    } while (lVar18 != 0);
   }
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   Profile_Begin(0x1a6);
-  uVar2 = puVar7[1];
-  iVar17 = local_f4 - DAT_847b965c >> 3;
-  DAT_847b9634 = iVar17;
-  if (uVar2 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-    R_SortDrawSurfs(DAT_847b965c,iVar17);
+  iVar17 = param_1->sortSurfs;
+  iVar3 = (int)local_f4 - (int)scene.drawSurfs[3] >> 3;
+  scene.drawSurfCount[3] = iVar3;
+  if (iVar17 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(scene.drawSurfs[3],iVar3);
     PIXEndNamedEvent();
   }
-  iVar17 = local_100 - DAT_847b9650 >> 3;
-  DAT_847b9628 = iVar17;
-  if (uVar2 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-    R_SortDrawSurfs(DAT_847b9650,iVar17);
+  iVar3 = (int)local_100 - (int)scene.drawSurfs[0] >> 3;
+  scene.drawSurfCount[0] = iVar3;
+  if (iVar17 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(scene.drawSurfs[0],iVar3);
     PIXEndNamedEvent();
   }
-  iVar17 = local_fc - DAT_847b9654 >> 3;
-  DAT_847b962c = iVar17;
-  if (uVar2 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-    R_SortDrawSurfs(DAT_847b9654,iVar17);
+  iVar3 = (int)local_fc - (int)scene.drawSurfs[1] >> 3;
+  scene.drawSurfCount[1] = iVar3;
+  if (iVar17 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(scene.drawSurfs[1],iVar3);
     PIXEndNamedEvent();
   }
-  iVar17 = local_f8 - DAT_847b9658 >> 3;
-  DAT_847b9630 = iVar17;
-  if (uVar2 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-    R_SortDrawSurfs(DAT_847b9658,iVar17);
+  iVar3 = (int)local_f8 - (int)scene.drawSurfs[2] >> 3;
+  scene.drawSurfCount[2] = iVar3;
+  if (iVar17 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(scene.drawSurfs[2],iVar3);
     PIXEndNamedEvent();
   }
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   __restgprlr();
   return;
 }
@@ -1936,261 +2092,279 @@ void R_AddAllSceneEntSurfacesCameraCmd(void)
 
 // 8272A200  R_AddAllSceneEntSurfacesRangeSunShadow  (gfx_d3d/r_dpvs.cpp:1088)
 
-void R_AddAllSceneEntSurfacesRangeSunShadow(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddAllSceneEntSurfacesRangeSunShadow(uint param_1)
 
 {
   ushort uVar1;
   int iVar2;
-  int iVar3;
+  long lVar3;
   ulonglong uVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
+  GfxDrawSurf *pGVar5;
+  GfxBrushModel *pGVar6;
+  int iVar7;
+  GfxDrawSurf *pGVar8;
+  ulonglong uVar9;
+  GfxWorld *pGVar10;
+  GfxSceneEntity *pGVar11;
   int iVar12;
   int iVar13;
-  uint uVar14;
-  undefined *puVar15;
-  uint uVar16;
+  BModelDrawInfo *pBVar14;
+  uint uVar15;
+  XModelDrawInfo *pXVar16;
+  GfxSceneBrush *pGVar17;
   
-  uVar4 = __savegprlr_16();
+  uVar4 = __savegprlr_16(param_1);
   Profile_Begin(0x1a7);
-  uVar16 = DAT_847c44f0;
-  iVar3 = (int)((uVar4 + 4 & 0x3fffffff) << 2);
+  iVar13 = scene.sceneDObjCount;
+  iVar7 = (int)((uVar4 + 4 & 0x3fffffff) << 2);
   iVar2 = (int)((uVar4 & 0xffffffff) << 9);
-  uVar14 = 0;
-  uVar7 = (ulonglong)*(uint *)((int)&DAT_847b9650 + iVar3);
-  lVar9 = ((ulonglong)*(uint *)((int)&DAT_847b9600 + iVar3) & 0x1fffffff) * 8 + uVar7;
-  if (DAT_847c44f0 != 0) {
-    lVar10 = -0x7b83bb04;
+  uVar15 = 0;
+  pGVar5 = *(GfxDrawSurf **)((int)scene.drawSurfs + iVar7);
+  pGVar8 = pGVar5 + *(int *)((int)scene.drawSurfLimit + iVar7);
+  if (scene.sceneDObjCount != 0) {
+    pGVar11 = scene.sceneDObj;
     do {
-      if ((&DAT_847d3abc)[uVar14 + iVar2] == '\x01') {
-        uVar7 = R_AddDObjSurfaces(lVar10,2,uVar7,lVar9);
+      if (*(char *)(uVar15 + iVar2 + -0x7b82c544) == '\x01') {
+        pGVar5 = R_AddDObjSurfaces(pGVar11,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar5,pGVar8);
       }
-      uVar14 = uVar14 + 1;
-      lVar10 = lVar10 + 0x78;
-    } while (uVar14 < uVar16);
+      uVar15 = uVar15 + 1;
+      pGVar11 = pGVar11 + 1;
+    } while (uVar15 < (uint)iVar13);
   }
-  if (DAT_847ee934 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x46f,0,0xffffffff82000f98,0xffffffff821bc830);
+  if (scene.sceneModelCountValidRead == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x46f,0,
+                    "%s");
   }
-  uVar16 = DAT_847d46c8;
-  uVar14 = 0;
-  if (DAT_847d46c8 != 0) {
-    puVar15 = &DAT_847d46d4;
+  lVar3 = scene.sceneModelCount;
+  uVar15 = 0;
+  if (scene.sceneModelCount != 0) {
+    pXVar16 = &scene.sceneModel[0].info;
     do {
-      if ((&DAT_847e6ad4)[uVar14 + (int)((uVar4 & 0xffffffff) << 10)] == '\x01') {
-        uVar7 = R_AddXModelSurfaces(puVar15,*(undefined4 *)(puVar15 + 4),2,uVar7,lVar9);
+      if (*(char *)(uVar15 + (int)((uVar4 & 0xffffffff) << 10) + -0x7b81952c) == '\x01') {
+        pGVar5 = R_AddXModelSurfaces(pXVar16,(XModel *)pXVar16[1],TECHNIQUE_BUILD_SHADOWMAP_DEPTH,
+                                     pGVar5,pGVar8);
       }
-      uVar14 = uVar14 + 1;
-      puVar15 = puVar15 + 0x48;
-    } while (uVar14 < uVar16);
+      uVar15 = uVar15 + 1;
+      pXVar16 = pXVar16 + 0x12;
+    } while (uVar15 < (uint)lVar3);
   }
-  uVar6 = (ulonglong)DAT_847ee8dc;
-  iVar12 = *(int *)((int)((uVar4 + 0xac & 0xffffffff) << 2) + DAT_8461658c);
-  iVar8 = DAT_8461658c;
-  if (uVar6 != 0) {
-    iVar11 = 0;
-    do {
-      iVar13 = *(int *)(iVar8 + 0x20c) + iVar11;
-      uVar1 = *(ushort *)(iVar13 + 4);
-      uVar16 = (uint)uVar1;
-      if (*(char *)((uint)uVar1 + iVar12) == '\x01') {
-        if (DAT_835a2944 <= uVar16) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar16);
-        }
-        uVar7 = R_AddXModelSurfaces(iVar13,*(undefined4 *)(uVar16 * 0x60 + DAT_835a2948 + 0x20),2,
-                                    uVar7,lVar9);
-        iVar8 = DAT_8461658c;
-      }
-      uVar6 = uVar6 - 1;
-      iVar11 = iVar11 + 6;
-    } while (uVar6 != 0);
-  }
-  uVar16 = DAT_847e82d4;
-  uVar14 = 0;
-  if (DAT_847e82d4 != 0) {
-    puVar15 = &DAT_847e82dc;
-    do {
-      if ((&DAT_847ed4dc)[uVar14 + iVar2] == '\x01') {
-        uVar7 = R_AddBModelSurfaces(puVar15,*(undefined4 *)(puVar15 + 4),2,uVar7,lVar9);
-      }
-      uVar14 = uVar14 + 1;
-      puVar15 = puVar15 + 0x28;
-      iVar8 = DAT_8461658c;
-    } while (uVar14 < uVar16);
-  }
-  uVar6 = (ulonglong)DAT_847ee8e0;
-  iVar2 = *(int *)((int)((uVar4 + 0xaf & 0xffffffff) << 2) + iVar8);
-  if (uVar6 != 0) {
+  uVar9 = (ulonglong)scene.sceneDynModelCount;
+  iVar13 = *(int *)((int)&(rgp.world)->name + (int)((uVar4 + 0xac & 0xffffffff) << 2));
+  pGVar10 = rgp.world;
+  if (uVar9 != 0) {
     iVar12 = 0;
     do {
-      iVar11 = *(int *)(iVar8 + 0x210) + iVar12;
-      uVar1 = *(ushort *)(iVar11 + 2);
-      uVar16 = (uint)uVar1;
-      if (*(char *)((uint)uVar1 + iVar2) == '\x01') {
-        if (DAT_835a2946 <= uVar16) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar16);
+      pXVar16 = (XModelDrawInfo *)(&(pGVar10->sceneDynModel->info).hasGfxEntIndex + iVar12);
+      uVar1._0_1_ = pXVar16[1].hasGfxEntIndex;
+      uVar1._1_1_ = pXVar16[1].lod;
+      if (*(char *)((uint)uVar1 + iVar13) == '\x01') {
+        if ((uint)cm.dynEntCount[0] <= (uint)uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        uVar5 = R_GetBrushModel(*(undefined2 *)(uVar16 * 0x60 + DAT_835a294c + 0x24));
-        R_AddBModelSurfaces(iVar11,uVar5,2,uVar7,lVar9);
-        iVar8 = DAT_8461658c;
+        pGVar5 = R_AddXModelSurfaces(pXVar16,cm.dynEntDefList[0][uVar1].xModel,
+                                     TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar5,pGVar8);
+        pGVar10 = rgp.world;
       }
-      uVar6 = uVar6 - 1;
-      iVar12 = iVar12 + 4;
-    } while (uVar6 != 0);
+      uVar9 = uVar9 - 1;
+      iVar12 = iVar12 + 6;
+    } while (uVar9 != 0);
   }
-  iVar2 = (int)uVar7 - *(int *)((int)&DAT_847b9650 + iVar3) >> 3;
-  *(int *)((int)&DAT_847b9628 + iVar3) = iVar2;
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-  R_SortDrawSurfs(*(undefined4 *)((int)&DAT_847b9650 + iVar3),iVar2);
+  lVar3 = scene.sceneBrushCount;
+  uVar15 = 0;
+  if (scene.sceneBrushCount != 0) {
+    pGVar17 = scene.sceneBrush;
+    do {
+      if (*(char *)(uVar15 + iVar2 + -0x7b812b24) == '\x01') {
+        pGVar5 = R_AddBModelSurfaces(&pGVar17->info,pGVar17->bmodel,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,
+                                     pGVar5,pGVar8);
+      }
+      uVar15 = uVar15 + 1;
+      pGVar17 = pGVar17 + 1;
+      pGVar10 = rgp.world;
+    } while (uVar15 < (uint)lVar3);
+  }
+  uVar9 = (ulonglong)scene.sceneDynBrushCount;
+  iVar2 = *(int *)((int)&pGVar10->name + (int)((uVar4 + 0xaf & 0xffffffff) << 2));
+  if (uVar9 != 0) {
+    iVar13 = 0;
+    do {
+      pBVar14 = (BModelDrawInfo *)((int)&(pGVar10->sceneDynBrush->info).surfId + iVar13);
+      uVar1 = pBVar14[1].surfId;
+      if (*(char *)((uint)uVar1 + iVar2) == '\x01') {
+        if ((uint)cm.dynEntCount[1] <= (uint)uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
+        }
+        pGVar6 = R_GetBrushModel((uint)cm.dynEntDefList[1][uVar1].brushModel);
+        R_AddBModelSurfaces(pBVar14,pGVar6,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar5,pGVar8);
+        pGVar10 = rgp.world;
+      }
+      uVar9 = uVar9 - 1;
+      iVar13 = iVar13 + 4;
+    } while (uVar9 != 0);
+  }
+  iVar2 = (int)pGVar5 - *(int *)((int)scene.drawSurfs + iVar7) >> 3;
+  *(int *)((int)scene.drawSurfCount + iVar7) = iVar2;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+  R_SortDrawSurfs(*(GfxDrawSurf **)((int)scene.drawSurfs + iVar7),iVar2);
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
-  __restgprlr_16();
+  iVar7 = Profile_EndInternal((double *)0x0);
+  __restgprlr_16(iVar7);
   return;
 }
 
 
 // 8272A570  R_AddAllSceneEntSurfacesSunShadow  (gfx_d3d/r_dpvs.cpp:1205)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_AddAllSceneEntSurfacesSunShadow(void)
 
 {
   ushort uVar1;
   int iVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  undefined1 *puVar7;
-  int iVar8;
-  longlong lVar9;
-  int iVar10;
+  long lVar3;
+  GfxDrawSurf *pGVar4;
+  GfxBrushModel *pGVar5;
+  GfxDrawSurf *pGVar6;
+  ulonglong uVar7;
+  GfxWorld *pGVar8;
+  int iVar9;
+  longlong lVar10;
   int iVar11;
-  undefined1 *puVar12;
-  uint *puVar13;
-  longlong lVar14;
-  longlong lVar15;
+  int iVar12;
+  int iVar13;
+  GfxDrawSurf **ppGVar14;
+  GfxSceneEntity *pGVar15;
   int iVar16;
-  int iVar17;
+  BModelDrawInfo *pBVar17;
   uint uVar18;
-  undefined *puVar19;
-  uint uVar20;
+  XModelDrawInfo *pXVar19;
+  GfxSceneBrush *pGVar20;
   
   __savegprlr();
-  puVar13 = &DAT_847b9660;
-  puVar7 = &DAT_847e6ad4;
-  puVar12 = &DAT_847ed4dc;
-  iVar11 = 0;
-  iVar10 = 700;
-  lVar9 = 2;
+  ppGVar14 = scene.drawSurfs + 4;
+  iVar9 = -0x7b81952c;
+  iVar13 = -0x7b812b24;
+  iVar12 = 0;
+  iVar11 = 700;
+  lVar10 = 2;
   do {
     Profile_Begin(0x1a7);
-    uVar20 = DAT_847c44f0;
-    uVar5 = (ulonglong)*puVar13;
-    iVar8 = iVar11 + 4;
+    iVar2 = scene.sceneDObjCount;
+    pGVar4 = *ppGVar14;
     uVar18 = 0;
-    lVar14 = ((ulonglong)puVar13[-0x14] & 0x1fffffff) * 8 + uVar5;
-    if (DAT_847c44f0 != 0) {
-      lVar15 = -0x7b83bb04;
+    pGVar6 = pGVar4 + (int)ppGVar14[-0x14];
+    if (scene.sceneDObjCount != 0) {
+      pGVar15 = scene.sceneDObj;
       do {
-        if (puVar12[uVar18 - 0x19a20] == '\x01') {
-          uVar5 = R_AddDObjSurfaces(lVar15,2,uVar5,lVar14);
+        if (*(char *)(uVar18 + iVar13 + -0x19a20) == '\x01') {
+          pGVar4 = R_AddDObjSurfaces(pGVar15,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar6);
         }
         uVar18 = uVar18 + 1;
-        lVar15 = lVar15 + 0x78;
-      } while (uVar18 < uVar20);
+        pGVar15 = pGVar15 + 1;
+      } while (uVar18 < (uint)iVar2);
     }
-    if (DAT_847ee934 == 0) {
+    if (scene.sceneModelCountValidRead == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x46f,0,
-                      &DAT_82000f98,"scene.sceneModelCountValidRead");
+                      "%s");
     }
-    uVar20 = DAT_847d46c8;
+    lVar3 = scene.sceneModelCount;
     uVar18 = 0;
-    if (DAT_847d46c8 != 0) {
-      puVar19 = &DAT_847d46d4;
+    if (scene.sceneModelCount != 0) {
+      pXVar19 = &scene.sceneModel[0].info;
       do {
-        if (puVar7[uVar18] == '\x01') {
-          uVar5 = R_AddXModelSurfaces(puVar19,*(undefined4 *)(puVar19 + 4),2,uVar5,lVar14);
+        if (*(char *)(iVar9 + uVar18) == '\x01') {
+          pGVar4 = R_AddXModelSurfaces(pXVar19,(XModel *)pXVar19[1],TECHNIQUE_BUILD_SHADOWMAP_DEPTH,
+                                       pGVar4,pGVar6);
         }
         uVar18 = uVar18 + 1;
-        puVar19 = puVar19 + 0x48;
-      } while (uVar18 < uVar20);
+        pXVar19 = pXVar19 + 0x12;
+      } while (uVar18 < (uint)lVar3);
     }
-    uVar4 = (ulonglong)DAT_847ee8dc;
-    iVar2 = *(int *)(iVar10 + DAT_8461658c + -0xc);
-    iVar6 = DAT_8461658c;
-    if (uVar4 != 0) {
+    uVar7 = (ulonglong)scene.sceneDynModelCount;
+    iVar2 = *(int *)((int)rgp.world + iVar11 + -0xc);
+    pGVar8 = rgp.world;
+    if (uVar7 != 0) {
       iVar16 = 0;
       do {
-        iVar17 = *(int *)(iVar6 + 0x20c) + iVar16;
-        uVar1 = *(ushort *)(iVar17 + 4);
-        uVar20 = (uint)uVar1;
+        pXVar19 = (XModelDrawInfo *)(&(pGVar8->sceneDynModel->info).hasGfxEntIndex + iVar16);
+        uVar1._0_1_ = pXVar19[1].hasGfxEntIndex;
+        uVar1._1_1_ = pXVar19[1].lod;
         if (*(char *)((uint)uVar1 + iVar2) == '\x01') {
-          if (DAT_835a2944 <= uVar20) {
-            MyAssertHandler(0xffffffff821bc430,0x3d,0,
+          if ((uint)cm.dynEntCount[0] <= (uint)uVar1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                            ,0x3d,0,
                             "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                            ,uVar20);
+                           );
           }
-          uVar5 = R_AddXModelSurfaces(iVar17,*(undefined4 *)(uVar20 * 0x60 + DAT_835a2948 + 0x20),2,
-                                      uVar5,lVar14);
-          iVar6 = DAT_8461658c;
+          pGVar4 = R_AddXModelSurfaces(pXVar19,cm.dynEntDefList[0][uVar1].xModel,
+                                       TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar6);
+          pGVar8 = rgp.world;
         }
-        uVar4 = uVar4 - 1;
+        uVar7 = uVar7 - 1;
         iVar16 = iVar16 + 6;
-      } while (uVar4 != 0);
+      } while (uVar7 != 0);
     }
-    uVar20 = DAT_847e82d4;
+    lVar3 = scene.sceneBrushCount;
     uVar18 = 0;
-    if (DAT_847e82d4 != 0) {
-      puVar19 = &DAT_847e82dc;
+    if (scene.sceneBrushCount != 0) {
+      pGVar20 = scene.sceneBrush;
       do {
-        if (puVar12[uVar18] == '\x01') {
-          uVar5 = R_AddBModelSurfaces(puVar19,*(undefined4 *)(puVar19 + 4),2,uVar5,lVar14);
+        if (*(char *)(iVar13 + uVar18) == '\x01') {
+          pGVar4 = R_AddBModelSurfaces(&pGVar20->info,pGVar20->bmodel,
+                                       TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar6);
         }
         uVar18 = uVar18 + 1;
-        puVar19 = puVar19 + 0x28;
-        iVar6 = DAT_8461658c;
-      } while (uVar18 < uVar20);
+        pGVar20 = pGVar20 + 1;
+        pGVar8 = rgp.world;
+      } while (uVar18 < (uint)lVar3);
     }
-    iVar2 = *(int *)(iVar10 + iVar6);
-    uVar4 = (ulonglong)DAT_847ee8e0;
-    if (uVar4 != 0) {
+    iVar2 = *(int *)((int)&pGVar8->name + iVar11);
+    uVar7 = (ulonglong)scene.sceneDynBrushCount;
+    if (uVar7 != 0) {
       iVar16 = 0;
       do {
-        iVar17 = *(int *)(iVar6 + 0x210) + iVar16;
-        uVar1 = *(ushort *)(iVar17 + 2);
-        uVar20 = (uint)uVar1;
+        pBVar17 = (BModelDrawInfo *)((int)&(pGVar8->sceneDynBrush->info).surfId + iVar16);
+        uVar1 = pBVar17[1].surfId;
         if (*(char *)((uint)uVar1 + iVar2) == '\x01') {
-          if (DAT_835a2946 <= uVar20) {
-            MyAssertHandler(0xffffffff821bc430,0x3d,0,
+          if ((uint)cm.dynEntCount[1] <= (uint)uVar1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                            ,0x3d,0,
                             "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                            ,uVar20);
+                           );
           }
-          uVar3 = R_GetBrushModel(*(undefined2 *)(uVar20 * 0x60 + DAT_835a294c + 0x24));
-          R_AddBModelSurfaces(iVar17,uVar3,2,uVar5,lVar14);
-          iVar6 = DAT_8461658c;
+          pGVar5 = R_GetBrushModel((uint)cm.dynEntDefList[1][uVar1].brushModel);
+          R_AddBModelSurfaces(pBVar17,pGVar5,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar6);
+          pGVar8 = rgp.world;
         }
-        uVar4 = uVar4 - 1;
+        uVar7 = uVar7 - 1;
         iVar16 = iVar16 + 4;
-      } while (uVar4 != 0);
+      } while (uVar7 != 0);
     }
-    iVar2 = (int)uVar5 - (&DAT_847b9650)[iVar8] >> 3;
-    (&DAT_847b9628)[iVar8] = iVar2;
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,"sort surfs");
-    R_SortDrawSurfs((&DAT_847b9650)[iVar8],iVar2);
+    iVar2 = (int)pGVar4 - (int)scene.drawSurfs[iVar12 + 4] >> 3;
+    scene.drawSurfCount[iVar12 + 4] = iVar2;
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+    R_SortDrawSurfs(scene.drawSurfs[iVar12 + 4],iVar2);
     PIXEndNamedEvent();
-    Profile_EndInternal(0);
-    lVar9 = lVar9 + -1;
-    iVar11 = iVar11 + 1;
-    iVar10 = iVar10 + 4;
-    puVar13 = puVar13 + 1;
-    puVar7 = puVar7 + 0x400;
-    puVar12 = puVar12 + 0x200;
-  } while (lVar9 != 0);
+    Profile_EndInternal((double *)0x0);
+    lVar10 = lVar10 + -1;
+    iVar12 = iVar12 + 1;
+    iVar11 = iVar11 + 4;
+    ppGVar14 = ppGVar14 + 1;
+    iVar9 = iVar9 + 0x400;
+    iVar13 = iVar13 + 0x200;
+  } while (lVar10 != 0);
   __restgprlr();
   return;
 }
@@ -2198,126 +2372,146 @@ void R_AddAllSceneEntSurfacesSunShadow(void)
 
 // 8272A908  R_AddAllSceneEntSurfacesSpotShadow  (gfx_d3d/r_dpvs.cpp:1214)
 
-void R_AddAllSceneEntSurfacesSpotShadow(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddAllSceneEntSurfacesSpotShadow(uint param_1,uint param_2)
 
 {
   ushort uVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
+  uint *puVar2;
+  int iVar3;
+  GfxDrawSurf *pGVar4;
   int iVar5;
   int iVar6;
-  undefined8 uVar4;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  int iVar10;
-  int iVar11;
-  ushort *puVar12;
+  GfxBrushModel *pGVar7;
+  GfxDrawSurf *pGVar8;
+  ulonglong uVar9;
+  GfxSceneEntity *pGVar10;
+  ushort *puVar11;
+  BModelDrawInfo *pBVar12;
   uint uVar13;
-  undefined *puVar14;
-  uint uVar15;
+  XModelDrawInfo *pXVar14;
+  uint uStack0000001c;
   
-  uVar3 = __savegprlr();
-  iVar5 = R_IsPrimaryLight(param_2);
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x4d3,0,0xffffffff82000f98,0xffffffff821bc874);
+  uVar9 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uStack0000001c = param_2;
+  iVar3 = R_IsPrimaryLight(param_2);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x4d3,0,
+                    "%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x4d4,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x4d4,0,
+                    "%s");
   }
-  uVar15 = DAT_847c44f0;
-  iVar5 = (int)((uVar3 + 6 & 0x3fffffff) << 2);
-  uVar7 = (ulonglong)*(uint *)((int)&DAT_847b9650 + iVar5);
-  lVar8 = ((ulonglong)*(uint *)((int)&DAT_847b9600 + iVar5) & 0x1fffffff) * 8 + uVar7;
+  iVar6 = scene.sceneDObjCount;
+  iVar3 = (int)((uVar9 + 6 & 0x3fffffff) << 2);
+  pGVar4 = *(GfxDrawSurf **)((int)scene.drawSurfs + iVar3);
+  pGVar8 = pGVar4 + *(int *)((int)scene.drawSurfLimit + iVar3);
   uVar13 = 0;
-  if (DAT_847c44f0 != 0) {
-    lVar9 = -0x7b83bb04;
+  if (scene.sceneDObjCount != 0) {
+    pGVar10 = scene.sceneDObj;
     do {
-      if ((&DAT_847d3ebc)[uVar13 + (int)((uVar3 & 0xffffffff) << 9)] == '\x01') {
-        uVar7 = R_AddDObjSurfaces(lVar9,2,uVar7,lVar8);
+      if (*(char *)(uVar13 + (int)((uVar9 & 0xffffffff) << 9) + -0x7b82c144) == '\x01') {
+        pGVar4 = R_AddDObjSurfaces(pGVar10,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar8);
       }
       uVar13 = uVar13 + 1;
-      lVar9 = lVar9 + 0x78;
-    } while (uVar13 < uVar15);
+      pGVar10 = pGVar10 + 1;
+    } while (uVar13 < (uint)iVar6);
   }
-  if (DAT_847ee938 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x4ef,0,0xffffffff82000f98,0xffffffff821bc850);
+  if (scene.sceneDObjModelCountValidRead == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x4ef,0,
+                    "%s");
   }
-  uVar15 = DAT_847d46d0;
+  iVar6 = scene.sceneDObjModelCount;
   uVar13 = 0;
-  if (DAT_847d46d0 != 0) {
-    puVar14 = &DAT_847d46d4;
+  if (scene.sceneDObjModelCount != 0) {
+    pXVar14 = &scene.sceneModel[0].info;
     do {
-      if ((&DAT_847e72d4)[uVar13 + (int)((uVar3 & 0xffffffff) << 10)] == '\x01') {
-        uVar7 = R_AddXModelSurfaces(puVar14,*(undefined4 *)(puVar14 + 4),2,uVar7,lVar8);
+      if (*(char *)(uVar13 + (int)((uVar9 & 0xffffffff) << 10) + -0x7b818d2c) == '\x01') {
+        pGVar4 = R_AddXModelSurfaces(pXVar14,(XModel *)pXVar14[1],TECHNIQUE_BUILD_SHADOWMAP_DEPTH,
+                                     pGVar4,pGVar8);
       }
       uVar13 = uVar13 + 1;
-      puVar14 = puVar14 + 0x48;
-    } while (uVar13 < uVar15);
+      pXVar14 = pXVar14 + 0x12;
+    } while (uVar13 < (uint)iVar6);
   }
-  uVar3 = (ulonglong)DAT_847ee8dc;
-  if (uVar3 != 0) {
-    iVar10 = 0;
+  uVar9 = (ulonglong)scene.sceneDynModelCount;
+  if (uVar9 != 0) {
+    iVar6 = 0;
     do {
-      iVar11 = *(int *)(DAT_8461658c + 0x20c) + iVar10;
-      uVar15 = (uint)*(ushort *)(iVar11 + 4);
-      iVar6 = R_IsDynEntVisibleToPrimaryLight(uVar15,0,param_2);
-      if (iVar6 != 0) {
-        if (DAT_835a2944 <= uVar15) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar15);
+      pXVar14 = (XModelDrawInfo *)(&((rgp.world)->sceneDynModel->info).hasGfxEntIndex + iVar6);
+      uVar1._0_1_ = pXVar14[1].hasGfxEntIndex;
+      uVar1._1_1_ = pXVar14[1].lod;
+      iVar5 = R_IsDynEntVisibleToPrimaryLight((uint)uVar1,DYNENT_DRAW_MODEL,param_2);
+      if (iVar5 != 0) {
+        if ((uint)cm.dynEntCount[0] <= (uint)uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        uVar7 = R_AddXModelSurfaces(iVar11,*(undefined4 *)(uVar15 * 0x60 + DAT_835a2948 + 0x20),2,
-                                    uVar7,lVar8);
+        pGVar4 = R_AddXModelSurfaces(pXVar14,cm.dynEntDefList[0][uVar1].xModel,
+                                     TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar8);
       }
-      uVar3 = uVar3 - 1;
-      iVar10 = iVar10 + 6;
-    } while (uVar3 != 0);
+      uVar9 = uVar9 - 1;
+      iVar6 = iVar6 + 6;
+    } while (uVar9 != 0);
   }
-  uVar2 = *(undefined4 *)(DAT_84628b00 + 0x150c);
-  uVar3 = (ulonglong)DAT_847e82d4;
-  if (uVar3 != 0) {
-    puVar12 = &DAT_847e82de;
+  uVar13 = frontEndDataOut->localClientNum;
+  uVar9 = (ulonglong)(uint)scene.sceneBrushCount;
+  if (uVar9 != 0) {
+    puVar11 = &scene.sceneBrush[0].entnum;
     do {
-      iVar6 = R_IsEntityVisibleToPrimaryLight(uVar2,*puVar12,(int)param_2);
-      iVar10 = DAT_847c40e8;
+      iVar6 = R_IsEntityVisibleToPrimaryLight(uVar13,(uint)*puVar11,uStack0000001c);
+      puVar2 = scene.entOverflowedDrawBuf;
       if (iVar6 != 0) {
-        uVar1 = *puVar12;
-        if (DAT_847c40e8 == 0) {
-          MyAssertHandler(0xffffffff82003098,0xb,0,&DAT_82000f98,0xffffffff8200308c);
+        uVar1 = *puVar11;
+        if (scene.entOverflowedDrawBuf == (uint *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                          0xb,0,"%s");
         }
         if (0x7ffffff7 < (ulonglong)uVar1) {
-          MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,(ulonglong)uVar1,0x7ffffff8);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                          0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
         }
-        if ((1 << (uVar1 & 0x1f) & *(uint *)(((int)(uint)uVar1 >> 5) * 4 + iVar10)) == 0) {
-          uVar7 = R_AddBModelSurfaces(puVar12 + -1,*(undefined4 *)(puVar12 + 1),2,uVar7,lVar8);
+        if ((1 << (uVar1 & 0x1f) & puVar2[(int)(uint)uVar1 >> 5]) == 0) {
+          pGVar4 = R_AddBModelSurfaces((BModelDrawInfo *)(puVar11 + -1),
+                                       *(GfxBrushModel **)(puVar11 + 1),
+                                       TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar8);
         }
       }
-      uVar3 = uVar3 - 1;
-      puVar12 = puVar12 + 0x14;
-    } while (uVar3 != 0);
+      uVar9 = uVar9 - 1;
+      puVar11 = puVar11 + 0x14;
+    } while (uVar9 != 0);
   }
-  uVar3 = (ulonglong)DAT_847ee8e0;
-  if (uVar3 != 0) {
-    iVar10 = 0;
+  uVar9 = (ulonglong)scene.sceneDynBrushCount;
+  if (uVar9 != 0) {
+    iVar6 = 0;
     do {
-      iVar11 = *(int *)(DAT_8461658c + 0x210) + iVar10;
-      uVar15 = (uint)*(ushort *)(iVar11 + 2);
-      iVar6 = R_IsDynEntVisibleToPrimaryLight(uVar15,1,(int)param_2);
-      if (iVar6 != 0) {
-        if (DAT_835a2946 <= uVar15) {
-          MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar15);
+      pBVar12 = (BModelDrawInfo *)((int)&((rgp.world)->sceneDynBrush->info).surfId + iVar6);
+      uVar1 = pBVar12[1].surfId;
+      iVar5 = R_IsDynEntVisibleToPrimaryLight((uint)uVar1,DYNENT_DRAW_BRUSH,uStack0000001c);
+      if (iVar5 != 0) {
+        if ((uint)cm.dynEntCount[1] <= (uint)uVar1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        uVar4 = R_GetBrushModel(*(undefined2 *)(uVar15 * 0x60 + DAT_835a294c + 0x24));
-        R_AddBModelSurfaces(iVar11,uVar4,2,uVar7,lVar8);
+        pGVar7 = R_GetBrushModel((uint)cm.dynEntDefList[1][uVar1].brushModel);
+        R_AddBModelSurfaces(pBVar12,pGVar7,TECHNIQUE_BUILD_SHADOWMAP_DEPTH,pGVar4,pGVar8);
       }
-      uVar3 = uVar3 - 1;
-      iVar10 = iVar10 + 4;
-    } while (uVar3 != 0);
+      uVar9 = uVar9 - 1;
+      iVar6 = iVar6 + 4;
+    } while (uVar9 != 0);
   }
-  iVar10 = (int)uVar7 - *(int *)((int)&DAT_847b9650 + iVar5) >> 3;
-  *(int *)((int)&DAT_847b9628 + iVar5) = iVar10;
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bc784);
-  R_SortDrawSurfs(*(undefined4 *)((int)&DAT_847b9650 + iVar5),iVar10);
+  iVar6 = (int)pGVar4 - *(int *)((int)scene.drawSurfs + iVar3) >> 3;
+  *(int *)((int)scene.drawSurfCount + iVar3) = iVar6;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"sort surfs");
+  R_SortDrawSurfs(*(GfxDrawSurf **)((int)scene.drawSurfs + iVar3),iVar6);
   PIXEndNamedEvent();
   __restgprlr();
   return;
@@ -2326,170 +2520,202 @@ void R_AddAllSceneEntSurfacesSpotShadow(undefined8 param_1,undefined8 param_2)
 
 // 8272AD70  R_AddSceneDObj  (gfx_d3d/r_dpvs.cpp:1328)
 
-void R_AddSceneDObj(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddSceneDObj(uint param_1,uint param_2)
 
 {
-  if (param_1 == DAT_84613768) {
-    MyAssertHandler(0xffffffff821bc490,0x531,0,0xffffffff82000f98,0xffffffff821bc89c);
+  if (param_1 == gfxCfg.entnumNone) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x531,0,
+                    "%s");
   }
-  *(undefined1 *)((&DAT_847ee8ec)[param_2] + param_1) = 1;
+  scene.dpvs.entVisData[param_2][param_1] = '\x01';
   return;
 }
 
 
 // 8272AE00  R_DrawBModel  (gfx_d3d/r_dpvs.cpp:1335)
 
-void R_DrawBModel(undefined8 param_1,int param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_DrawBModel(BModelDrawInfo *param_1,GfxBrushModel *param_2,GfxPlacement *param_3)
 
 {
   ushort uVar1;
   uint uVar2;
   undefined2 *puVar3;
-  uint *puVar4;
-  ulonglong uVar5;
+  int iVar4;
+  uint *puVar5;
   ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
-  longlong lVar9;
-  uint uVar10;
+  longlong lVar7;
+  ulonglong uVar8;
+  GfxSurface *pGVar9;
+  longlong lVar10;
+  longlong lVar11;
+  uint uVar12;
   char in_RESERVE;
   byte in_cr0;
-  longlong lVar11;
+  longlong lVar13;
   
-  puVar3 = (undefined2 *)__savegprlr_25();
-  uVar1 = *(ushort *)(param_2 + 0x34);
+  lVar7 = (longlong)(int)param_3;
+  puVar3 = (undefined2 *)__savegprlr_25(param_1);
+  uVar1 = param_2->surfaceCount;
   if ((ulonglong)uVar1 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x547,0,0xffffffff82000f98,0xffffffff821bc8c8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x547,0,
+                    "%s");
   }
-  lVar8 = (ulonglong)uVar1 * 8 + 0x1c;
-  uVar6 = (ulonglong)DAT_84628b00;
+  lVar10 = (ulonglong)uVar1 * 8 + 0x1c;
+  uVar8 = ZEXT48(frontEndDataOut);
   do {
-    puVar4 = (uint *)(uVar6 + 0x1548);
-    uVar10 = *puVar4;
-    uVar5 = (ulonglong)uVar10;
+    puVar5 = (uint *)(uVar8 + 0x1548);
+    uVar12 = *puVar5;
+    uVar6 = (ulonglong)uVar12;
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed(lVar8 + uVar5,0,uVar6 + 0x1548);
-      *puVar4 = uVar2;
+      uVar2 = storeWordConditionalIndexed(lVar10 + uVar6,0,uVar8 + 0x1548);
+      *puVar5 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (0x20000 < (uVar5 + lVar8 & 0xffffffff)) {
-    R_WarnOncePerFrame(8);
-    __restgprlr_25(0);
-    return;
+  if (0x20000 < (uVar6 + lVar10 & 0xffffffff)) {
+    R_WarnOncePerFrame(R_WARN_MAX_SCENE_SURFS_SIZE);
+    iVar4 = __restgprlr_25(0);
+    return iVar4;
   }
-  if ((uVar10 & 3) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x557,0,0xffffffff82000f98,0xffffffff821bc1bc);
+  if ((uVar12 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x557,0,
+                    "%s");
   }
-  param_3 = param_3 + -4;
-  lVar9 = DAT_84628b00 + uVar5;
-  lVar11 = 7;
-  lVar8 = lVar9 + 0x4dfc;
+  lVar7 = lVar7 + -4;
+  lVar11 = ZEXT48(frontEndDataOut) + uVar6;
+  lVar13 = 7;
+  lVar10 = lVar11 + 0x4dfc;
   do {
-    param_3 = param_3 + 4;
-    lVar8 = lVar8 + 4;
-    *(undefined4 *)lVar8 = *(undefined4 *)param_3;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  uVar6 = (lVar9 - (ulonglong)DAT_84628b00) + 0x1c;
-  if ((uVar6 & 3) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x55e,0,0xffffffff82000f98,0xffffffff821bc8b8);
+    lVar7 = lVar7 + 4;
+    lVar10 = lVar10 + 4;
+    *(undefined4 *)lVar10 = *(undefined4 *)lVar7;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar8 = (lVar11 - ZEXT48(frontEndDataOut)) + 0x1c;
+  if ((uVar8 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x55e,0,
+                    "%s");
   }
-  *puVar3 = (short)((uVar6 & 0xffffffff) >> 2);
-  uVar10 = 0;
-  iVar7 = (uint)*(ushort *)(param_2 + 0x36) * 0x18 + *(int *)(DAT_8461658c + 0x27c);
-  if (*(short *)(param_2 + 0x34) != 0) {
-    lVar8 = lVar9 + 0x4e18;
+  *puVar3 = (short)((uVar8 & 0xffffffff) >> 2);
+  uVar12 = 0;
+  pGVar9 = ((rgp.world)->dpvs).surfaces + param_2->startSurfIndex;
+  if (param_2->surfaceCount != 0) {
+    lVar7 = lVar11 + 0x4e18;
     do {
-      *(int *)((int)lVar8 + 4) = (int)lVar9 + 0x4e00;
-      uVar10 = uVar10 + 1;
-      lVar8 = lVar8 + 8;
-      *(int *)lVar8 = iVar7;
-      iVar7 = iVar7 + 0x18;
-    } while (uVar10 < *(ushort *)(param_2 + 0x34));
+      *(int *)((int)lVar7 + 4) = (int)lVar11 + 0x4e00;
+      uVar12 = uVar12 + 1;
+      lVar7 = lVar7 + 8;
+      *(undefined4 *)lVar7 = pGVar9;
+      pGVar9 = pGVar9 + 1;
+    } while (uVar12 < param_2->surfaceCount);
   }
-  __restgprlr_25(1);
-  return;
+  iVar4 = __restgprlr_25(1);
+  return iVar4;
 }
 
 
 // 8272AF98  R_CullDynBrushInCell  (gfx_d3d/r_dpvs.cpp:1407)
 
-void R_CullDynBrushInCell(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
+void R_CullDynBrushInCell(GfxSceneViewType param_1,uint param_2,DpvsPlane *param_3,uint param_4)
 
 {
   uint uVar1;
-  uint uVar2;
-  int iVar3;
+  int iVar2;
+  uint uVar3;
   int iVar4;
-  float *pfVar5;
-  int iVar6;
-  float *pfVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  double dVar11;
-  uint *local_b0;
+  DynEntityDef *pDVar5;
+  longlong lVar6;
+  GfxBrushModel *pGVar7;
+  int iVar8;
+  float *pfVar9;
+  uint *puVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  double dVar14;
+  DpvsPlane *pDStack00000024;
   uint local_ac;
   
-  iVar4 = __savegprlr();
-  if ((ulonglong)*(uint *)(DAT_8461658c + 0x34) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x58b,0,0xffffffff821bc738,param_2);
+  uVar13 = (ulonglong)(int)param_2;
+  lVar6 = (longlong)(int)param_1;
+  __savegprlr();
+  pDStack00000024 = param_3;
+  if ((ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount <= (uVar13 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x58b,0,
+                    "cellIndex doesn\'t index rgp.world->dpvsPlanes.cellCount\n\t%i not in [0, %i)")
+    ;
   }
-  uVar1 = *(uint *)(DAT_8461658c + 0x298);
+  uVar1 = ((rgp.world)->dpvsDyn).dynEntClientWordCount[1];
   local_ac = 0;
-  iVar4 = *(int *)((iVar4 + 0xae) * 4 + DAT_8461658c);
-  local_b0 = (uint *)(uVar1 * (int)param_2 * 4 + *(int *)(DAT_8461658c + 0x2a8));
+  iVar2 = *(int *)((int)&(rgp.world)->name + (int)((lVar6 + 0xaeU & 0xffffffff) << 2));
+  puVar10 = ((rgp.world)->dpvsDyn).dynEntCellBits[1] + uVar1 * (int)uVar13;
   if (uVar1 != 0) {
-    dVar11 = 0.0;
+    dVar14 = 0.0;
     do {
-      uVar8 = *local_b0;
-      uVar10 = LZCOUNT(uVar8);
-      if (uVar10 < 0x20) {
+      uVar11 = *puVar10;
+      uVar13 = LZCOUNT(uVar11);
+      if (uVar13 < 0x20) {
         do {
-          uVar9 = ((ulonglong)local_ac & 0x7ffffff) * 0x20 + uVar10;
-          if (0x20 < uVar10) {
-            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar10,0x21);
+          uVar12 = ((ulonglong)local_ac & 0x7ffffff) * 0x20 + uVar13;
+          if (0x20 < uVar13) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
-          if ((uVar2 & uVar8) == 0) {
-            MyAssertHandler(0xffffffff821bc490,0x59e,0,0xffffffff82000f98,0xffffffff8205cd08);
+          uVar3 = *(uint *)(&g_bitShift + (int)(uVar13 << 2));
+          if ((uVar3 & uVar11) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0x59e,0,"%s");
           }
-          iVar3 = (int)uVar9;
-          uVar8 = uVar8 & ~uVar2;
-          if (*(char *)(iVar3 + iVar4) == '\0') {
-            if ((ulonglong)DAT_835a2946 <= (uVar9 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff821bc430,0x3d,0,0xffffffff8205cca8,uVar9);
+          iVar4 = (int)uVar12;
+          uVar11 = uVar11 & ~uVar3;
+          if (*(char *)(iVar4 + iVar2) == '\0') {
+            if ((ulonglong)cm.dynEntCount[1] <= (uVar12 & 0xffffffff)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
+                              ,0x3d,0,
+                              "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                             );
             }
-            iVar6 = iVar3 * 0x60 + DAT_835a294c;
-            if (*(int *)(iVar6 + 0x20) != 0) {
-              MyAssertHandler(0xffffffff821bc490,0x5a5,0,0xffffffff82000f98,0xffffffff8205dc90);
+            pDVar5 = cm.dynEntDefList[1];
+            if (cm.dynEntDefList[1][iVar4].xModel != (XModel *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x5a5,0,"%s");
             }
-            if (*(short *)(iVar6 + 0x24) == 0) {
-              MyAssertHandler(0xffffffff821bc490,0x5a6,0,0xffffffff82000f98,0xffffffff82060434);
+            if (pDVar5[iVar4].brushModel == 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x5a6,0,"%s");
             }
-            pfVar5 = (float *)R_GetBrushModel(*(undefined2 *)(iVar6 + 0x24));
-            iVar6 = 0;
-            if (0 < param_4) {
-              pfVar7 = (float *)(param_3 + 4);
+            pGVar7 = R_GetBrushModel((uint)pDVar5[iVar4].brushModel);
+            iVar8 = 0;
+            if (0 < (int)param_4) {
+              pfVar9 = pDStack00000024->coeffs + 1;
               do {
-                if ((double)(*pfVar7 * pfVar5[1] +
-                             pfVar7[1] * pfVar5[2] +
-                             pfVar7[-1] * *pfVar5 +
-                             ABS(*pfVar7) * pfVar5[4] +
-                             ABS(pfVar7[-1]) * pfVar5[3] + ABS(pfVar7[1]) * pfVar5[5] + pfVar7[2])
-                    <= dVar11) goto LAB_8272b21c;
-                iVar6 = iVar6 + 1;
-                pfVar7 = pfVar7 + 4;
-              } while (iVar6 < param_4);
+                if ((double)(*pfVar9 * (pGVar7->writable).bounds.midPoint[1] +
+                             pfVar9[1] * (pGVar7->writable).bounds.midPoint[2] +
+                             ((DpvsPlane *)(pfVar9 + -1))->coeffs[0] *
+                             (pGVar7->writable).bounds.midPoint[0] +
+                             ABS(*pfVar9) * (pGVar7->writable).bounds.halfSize[1] +
+                             ABS(((DpvsPlane *)(pfVar9 + -1))->coeffs[0]) *
+                             (pGVar7->writable).bounds.halfSize[0] +
+                             ABS(pfVar9[1]) * (pGVar7->writable).bounds.halfSize[2] + pfVar9[2]) <=
+                    dVar14) goto LAB_8272b21c;
+                iVar8 = iVar8 + 1;
+                pfVar9 = pfVar9 + 4;
+              } while (iVar8 < (int)param_4);
             }
-            *(undefined1 *)(iVar3 + iVar4) = 1;
+            *(undefined1 *)(iVar4 + iVar2) = 1;
           }
 LAB_8272b21c:
-          uVar10 = LZCOUNT(uVar8);
-        } while (uVar10 < 0x20);
+          uVar13 = LZCOUNT(uVar11);
+        } while (uVar13 < 0x20);
       }
-      local_b0 = local_b0 + 1;
+      puVar10 = puVar10 + 1;
       local_ac = local_ac + 1;
     } while (local_ac < uVar1);
   }
@@ -2500,58 +2726,64 @@ LAB_8272b21c:
 
 // 8272B258  R_UpdateSceneEntUsageForDist  (gfx_d3d/r_dpvs.cpp:1462)
 
-void R_UpdateSceneEntUsageForDist(void)
+void R_UpdateSceneEntUsageForDist(GfxSceneEntity *param_1)
 
 {
   float fVar1;
-  int iVar2;
+  DObj *pDVar2;
   float fVar3;
   float fVar4;
-  int iVar6;
-  char cVar8;
-  ulonglong uVar5;
-  int iVar7;
-  ulonglong uVar9;
-  double dVar10;
+  int iVar5;
+  bool bVar9;
+  uint uVar6;
+  XModel *pXVar7;
+  uint uVar8;
+  uint uVar10;
   double dVar11;
+  double dVar12;
   
-  iVar6 = __savegprlr_25();
-  cVar8 = Sys_IsMainThread();
-  if (cVar8 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x5c0,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar5 = __savegprlr_25(param_1);
+  bVar9 = Sys_IsMainThread();
+  if (!bVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x5c0,0,
+                    "%s");
   }
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x5c2,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x5c2,0,
+                    "%s");
   }
-  iVar2 = *(int *)(iVar6 + 0x6c);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x5c5,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar2 = *(DObj **)(iVar5 + 0x6c);
+  if (pDVar2 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x5c5,0,
+                    "%s");
   }
-  uVar5 = DObjGetNumModels(iVar2);
-  if (0x20 < (uVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x5c8,1,0xffffffff82000f98,0xffffffff8205dd64);
+  uVar6 = DObjGetNumModels(pDVar2);
+  if (0x20 < uVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x5c8,1,
+                    "%s");
   }
-  if (DAT_84618054 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x5ca,0,0xffffffff82000f98,0xffffffff821b9988);
+  if (rg.correctedLodParms.valid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x5ca,0,
+                    "%s");
   }
-  uVar9 = 0;
-  fVar1 = DAT_84618040 - *(float *)(iVar6 + 0x1c);
-  fVar3 = DAT_84618048 - *(float *)(iVar6 + 0x24);
-  fVar4 = DAT_84618044 - *(float *)(iVar6 + 0x20);
-  dVar11 = (double)DAT_8461804c;
-  dVar10 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar1 * fVar1);
-  if ((uVar5 & 0xffffffff) != 0) {
+  uVar10 = 0;
+  fVar1 = rg.correctedLodParms.origin[0] - *(float *)(iVar5 + 0x1c);
+  fVar3 = rg.correctedLodParms.origin[2] - *(float *)(iVar5 + 0x24);
+  fVar4 = rg.correctedLodParms.origin[1] - *(float *)(iVar5 + 0x20);
+  dVar12 = (double)rg.correctedLodParms.invFovScale;
+  dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar1 * fVar1);
+  if (uVar6 != 0) {
     do {
-      iVar6 = DObjGetModel(iVar2,uVar9);
-      iVar7 = DB_GetXModelIndex();
-      uVar9 = uVar9 + 1;
-      fVar1 = (float)((double)(float)(dVar10 - (double)*(float *)(iVar6 + 0xf4)) * dVar11);
-      fVar3 = (float)(&DAT_8327db80)[iVar7];
-      if (fVar1 - (float)(&DAT_8327db80)[iVar7] < 0.0) {
+      pXVar7 = DObjGetModel(pDVar2,uVar10);
+      uVar8 = DB_GetXModelIndex(pXVar7);
+      uVar10 = uVar10 + 1;
+      fVar1 = (float)((double)(float)(dVar11 - (double)pXVar7->radius) * dVar12);
+      fVar3 = g_stream.modelDist[uVar8];
+      if (fVar1 - g_stream.modelDist[uVar8] < 0.0) {
         fVar3 = fVar1;
       }
-      (&DAT_8327db80)[iVar7] = fVar3;
-    } while ((uVar9 & 0xffffffff) < (uVar5 & 0xffffffff));
+      g_stream.modelDist[uVar8] = fVar3;
+    } while (uVar10 < uVar6);
   }
   __restgprlr_25();
   return;
@@ -2560,17 +2792,20 @@ void R_UpdateSceneEntUsageForDist(void)
 
 // 8272B408  R_DrawViewModelSceneEnt  (gfx_d3d/r_dpvs.cpp:1498)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_DrawViewModelSceneEnt(void)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
   uVar1 = 0;
-  if (DAT_847d46c4 != 0) {
+  if (scene.sceneDObjViewmodelCount != 0) {
     do {
-      R_SkinAndBoundSceneEnt((DAT_847d46c0 + uVar1) * 0x78 + -0x7b83bb04);
+      R_SkinAndBoundSceneEnt(scene.sceneDObj + scene.sceneDObjFirstViewmodelIndex + uVar1);
       uVar1 = uVar1 + 1;
-    } while ((uVar1 & 0xffffffff) < (ulonglong)DAT_847d46c4);
+    } while (uVar1 < scene.sceneDObjViewmodelCount);
   }
   return;
 }
@@ -2578,534 +2813,558 @@ void R_DrawViewModelSceneEnt(void)
 
 // 8272B490  R_DrawAllSceneEnt  (gfx_d3d/r_dpvs.cpp:1511)
 
-void R_DrawAllSceneEnt(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawAllSceneEnt(SceneEntCmd *param_1)
 
 {
   float fVar1;
   ushort uVar2;
-  int iVar3;
+  GfxViewInfo *pGVar3;
   uint uVar4;
   uint uVar5;
-  int iVar6;
-  uint uVar7;
-  int *piVar8;
-  int iVar9;
-  uint uVar10;
-  float fVar11;
+  XModel *pXVar6;
+  DObj *pDVar7;
+  GfxBrushModel *pGVar8;
+  uint *puVar9;
+  int *piVar10;
+  int iVar11;
   float fVar12;
-  int *piVar14;
-  undefined8 uVar13;
-  char cVar17;
-  int iVar15;
+  float fVar13;
+  uint uVar14;
+  bool bVar17;
+  uint uVar15;
   int iVar16;
-  byte bVar18;
-  int iVar19;
+  int *piVar18;
+  byte bVar19;
   byte bVar21;
   byte bVar22;
   int iVar20;
   ulonglong uVar23;
-  int *piVar24;
-  float *pfVar25;
-  uint uVar26;
-  uint *puVar27;
-  uint *puVar28;
-  undefined1 *puVar29;
-  longlong lVar30;
-  byte *pbVar31;
-  double dVar32;
-  double dVar33;
+  int iVar24;
+  uint *puVar25;
+  int iVar26;
+  float *pfVar27;
+  uint uVar28;
+  DpvsView *pDVar29;
+  DpvsView *pDVar30;
+  uchar *puVar31;
+  longlong lVar32;
+  byte *pbVar33;
   double dVar34;
+  double dVar35;
+  double dVar36;
+  SceneEntCmd *pSStack00000014;
+  char *local_e4;
   int iStack_d4;
-  undefined *local_d0 [52];
+  int local_d0 [52];
   
-  piVar14 = (int *)__savegprlr();
-  if (DAT_84618054 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x601,0,0xffffffff82000f98,0xffffffff821b9988);
+  __savegprlr();
+  pSStack00000014 = param_1;
+  if (rg.correctedLodParms.valid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x601,0,
+                    "%s");
   }
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x603,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x603,0,
+                    "%s");
   }
-  iVar3 = *piVar14;
-  lVar30 = 3;
-  iVar19 = *(int *)(iVar3 + 0x928) * 0x2b8;
-  puVar27 = (uint *)(&DAT_845a97fc + iVar19);
-  iVar6 = (&DAT_845aa2e0)[DAT_847ee8e8];
-  puVar28 = puVar27;
+  pGVar3 = param_1->viewInfo;
+  iVar24 = pGVar3->viewInfoIndex;
+  lVar32 = 3;
+  pDVar29 = dpvsGlob.views[iVar24];
+  puVar9 = dpvsGlob.entVisBits[scene.dpvs.localClientNum];
+  pDVar30 = pDVar29;
   do {
-    if ((*puVar28 & 0xffffffbe) != 0) {
-      MyAssertHandler(0xffffffff821bc490,0x60e,0,0xffffffff82000f98,0xffffffff821bc954);
+    if ((((DpvsView *)&pDVar30->renderFxFlagsCull)->renderFxFlagsCull & 0xffffffbe) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x60e,0,
+                      "%s");
     }
-    lVar30 = lVar30 + -1;
-    puVar28 = puVar28 + 0x3a;
-  } while (lVar30 != 0);
-  uVar4 = piVar14[3];
-  uVar26 = piVar14[2];
-  piVar24 = &iStack_d4;
-  puVar29 = &DAT_847d38bc;
-  lVar30 = 7;
+    lVar32 = lVar32 + -1;
+    pDVar30 = pDVar30 + 1;
+  } while (lVar32 != 0);
+  uVar4 = param_1->sceneDObjEnd;
+  uVar28 = param_1->sceneDObjBegin;
+  piVar18 = &iStack_d4;
+  iVar16 = -0x7b82c744;
+  lVar32 = 7;
   do {
-    piVar24 = piVar24 + 1;
-    *piVar24 = (int)puVar29;
-    Com_Memset(puVar29 + uVar26,0,uVar4 - uVar26);
-    lVar30 = lVar30 + -1;
-    puVar29 = puVar29 + 0x200;
-  } while (lVar30 != 0);
-  if (uVar26 < uVar4) {
-    iVar15 = (int)local_d0[0] - (int)local_d0[1];
-    iVar16 = (int)local_d0[2] - (int)local_d0[1];
-    puVar28 = &DAT_847c4564 + uVar26 * 0x1e;
-    pbVar31 = (byte *)((int)local_d0[1] + uVar26);
+    piVar18 = piVar18 + 1;
+    *piVar18 = iVar16;
+    Com_Memset((void *)(iVar16 + uVar28),0,uVar4 - uVar28);
+    lVar32 = lVar32 + -1;
+    iVar16 = iVar16 + 0x200;
+  } while (lVar32 != 0);
+  if (uVar28 < uVar4) {
+    iVar16 = local_d0[0] - local_d0[1];
+    iVar26 = local_d0[2] - local_d0[1];
+    puVar25 = (uint *)&scene.sceneDObj[uVar28].field_0x68;
+    pbVar33 = (byte *)(local_d0[1] + uVar28);
     do {
-      uVar5 = puVar28[-0x10];
+      uVar5 = puVar25[-0x10];
       if ((uVar5 != 0) && (uVar5 != 4)) {
         if (uVar5 < 2) {
-          uVar13 = DObjGetName(puVar28[1]);
-          uVar13 = va(0xffffffff821bc7fc,uVar26,uVar5,uVar13);
+          DObjGetName((DObj *)puVar25[1]);
+          va("%d %d \'%s\'");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                          0x622,0,0xffffffff820011f4,0xffffffff821bc8dc,uVar13);
+                          0x622,0,"%s\n\t%s");
         }
-        uVar5 = *puVar28;
+        uVar5 = *puVar25;
         uVar23 = (ulonglong)(uVar5 >> 0xd) & 0xfff;
-        uVar10 = uVar5 & 0x41;
-        uVar7 = (uint)(uVar23 >> 3) & 0x1ffffffc;
-        iVar9 = (int)uVar23;
+        uVar14 = uVar5 & 0x41;
+        uVar15 = (uint)(uVar23 >> 3) & 0x1ffffffc;
+        iVar11 = (int)uVar23;
         if ((uVar5 & 0x41) == 0) {
-          if ((*(uint *)(uVar7 + iVar6) &
-              *(uint *)((int)&DAT_82992400 + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
-            bVar21 = *(byte *)(DAT_847ee8ec + iVar9);
+          if ((*(uint *)(uVar15 + (int)puVar9) &
+              *(uint *)(&g_bitShift + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
+            bVar21 = scene.dpvs.entVisData[0][iVar11];
             if (bVar21 == 0) {
               bVar21 = 1;
             }
-            pbVar31[iVar15] = bVar21;
-            bVar22 = *(byte *)(DAT_847ee8f0 + iVar9);
+            pbVar33[iVar16] = bVar21;
+            bVar22 = scene.dpvs.entVisData[1][iVar11];
             if (bVar22 == 0) {
               bVar22 = 1;
             }
-            *pbVar31 = bVar22;
-            bVar18 = *(byte *)(DAT_847ee8f4 + iVar9);
-            if (bVar18 == 0) {
-              bVar18 = 1;
+            *pbVar33 = bVar22;
+            bVar19 = scene.dpvs.entVisData[2][iVar11];
+            if (bVar19 == 0) {
+              bVar19 = 1;
             }
             iVar20 = 0xc;
-            bVar21 = bVar18 | bVar22 | bVar21;
-            pbVar31[iVar16] = bVar18;
-            lVar30 = 4;
+            bVar21 = bVar19 | bVar22 | bVar21;
+            pbVar33[iVar26] = bVar19;
+            lVar32 = 4;
             do {
-              piVar24 = (int *)((int)local_d0 + iVar20);
-              piVar8 = (int *)((int)&DAT_847ee8ec + iVar20);
+              piVar18 = (int *)((int)local_d0 + iVar20);
+              piVar10 = (int *)((int)scene.dpvs.entVisData + iVar20);
               iVar20 = iVar20 + 4;
-              bVar22 = *(byte *)(*piVar8 + iVar9);
+              bVar22 = *(byte *)(*piVar10 + iVar11);
               bVar21 = bVar22 | bVar21;
-              *(byte *)(*piVar24 + uVar26) = bVar22;
-              lVar30 = lVar30 + -1;
-            } while (lVar30 != 0);
+              *(byte *)(*piVar18 + uVar28) = bVar22;
+              lVar32 = lVar32 + -1;
+            } while (lVar32 != 0);
             goto LAB_8272bb98;
           }
           iVar20 = 0xc;
-          lVar30 = 4;
-          bVar21 = *(byte *)(DAT_847ee8ec + iVar9);
-          pbVar31[iVar15] = bVar21;
-          bVar22 = *(byte *)(DAT_847ee8f0 + iVar9);
-          *pbVar31 = bVar22;
-          bVar21 = *(byte *)(DAT_847ee8f4 + iVar9) | bVar22 | bVar21;
-          pbVar31[iVar16] = *(byte *)(DAT_847ee8f4 + iVar9);
+          lVar32 = 4;
+          bVar21 = scene.dpvs.entVisData[0][iVar11];
+          pbVar33[iVar16] = bVar21;
+          bVar22 = scene.dpvs.entVisData[1][iVar11];
+          *pbVar33 = bVar22;
+          bVar21 = scene.dpvs.entVisData[2][iVar11] | bVar22 | bVar21;
+          pbVar33[iVar26] = scene.dpvs.entVisData[2][iVar11];
           do {
-            piVar24 = (int *)((int)local_d0 + iVar20);
-            piVar8 = (int *)((int)&DAT_847ee8ec + iVar20);
+            piVar18 = (int *)((int)local_d0 + iVar20);
+            piVar10 = (int *)((int)scene.dpvs.entVisData + iVar20);
             iVar20 = iVar20 + 4;
-            bVar22 = *(byte *)(*piVar8 + iVar9);
+            bVar22 = *(byte *)(*piVar10 + iVar11);
             bVar21 = bVar22 | bVar21;
-            *(byte *)(*piVar24 + uVar26) = bVar22;
-            lVar30 = lVar30 + -1;
-          } while (lVar30 != 0);
+            *(byte *)(*piVar18 + uVar28) = bVar22;
+            lVar32 = lVar32 + -1;
+          } while (lVar32 != 0);
           if ((bVar21 & 1) != 0) {
-            if (uVar26 - DAT_847d46c0 < DAT_847d46c4) {
+            if (uVar28 - scene.sceneDObjFirstViewmodelIndex < scene.sceneDObjViewmodelCount) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                              0x67d,0,&DAT_82000f98,0xffffffff821bc8f8);
+                              0x67d,0,"%s");
             }
-            if (puVar28[1] == 0) {
+            if (puVar25[1] == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                              0x67e,0,&DAT_82000f98,0xffffffff821bc7ec);
+                              0x67e,0,"%s");
             }
-            if (puVar28[-0x10] < 5) {
-              uVar13 = DObjGetName(puVar28[1]);
-              uVar13 = va(0xffffffff821bc7fc,uVar26,puVar28[-0x10],uVar13);
+            if (puVar25[-0x10] < 5) {
+              DObjGetName((DObj *)puVar25[1]);
+              va("%d %d \'%s\'");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                              0x67f,0,0xffffffff820011f4,0xffffffff821bc808,uVar13);
+                              0x67f,0,"%s\n\t%s");
             }
             goto LAB_8272bc00;
           }
         }
-        else if ((*(uint *)(uVar7 + iVar6) &
-                 *(uint *)((int)&DAT_82992400 + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
-          bVar22 = *(byte *)(DAT_847ee8ec + iVar9);
+        else if ((*(uint *)(uVar15 + (int)puVar9) &
+                 *(uint *)(&g_bitShift + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
+          bVar22 = scene.dpvs.entVisData[0][iVar11];
           if (bVar22 == 0) {
             bVar22 = 1;
           }
-          bVar22 = -((uVar10 & *puVar27) == 0) & bVar22;
-          pbVar31[iVar15] = bVar22;
-          bVar18 = *(byte *)(DAT_847ee8f0 + iVar9);
-          if (bVar18 == 0) {
-            bVar18 = 1;
+          bVar22 = -((uVar14 & pDVar29->renderFxFlagsCull) == 0) & bVar22;
+          pbVar33[iVar16] = bVar22;
+          bVar19 = scene.dpvs.entVisData[1][iVar11];
+          if (bVar19 == 0) {
+            bVar19 = 1;
           }
-          bVar18 = -((uVar10 & *(uint *)(&DAT_845a98e4 + iVar19)) == 0) & bVar18;
-          *pbVar31 = bVar18;
-          bVar21 = *(byte *)(DAT_847ee8f4 + iVar9);
+          bVar19 = -((uVar14 & dpvsGlob.views[iVar24][1].renderFxFlagsCull) == 0) & bVar19;
+          *pbVar33 = bVar19;
+          bVar21 = scene.dpvs.entVisData[2][iVar11];
           if (bVar21 == 0) {
             bVar21 = 1;
           }
           iVar20 = 0xc;
-          lVar30 = 4;
-          bVar21 = -((uVar10 & *(uint *)(iVar19 + -0x7ba56634)) == 0) & bVar21;
-          pbVar31[iVar16] = bVar21;
-          bVar21 = bVar21 | bVar18 | bVar22;
+          lVar32 = 4;
+          bVar21 = -((uVar14 & dpvsGlob.views[iVar24][2].renderFxFlagsCull) == 0) & bVar21;
+          pbVar33[iVar26] = bVar21;
+          bVar21 = bVar21 | bVar19 | bVar22;
           do {
-            piVar24 = (int *)((int)local_d0 + iVar20);
-            piVar8 = (int *)((int)&DAT_847ee8ec + iVar20);
+            piVar18 = (int *)((int)local_d0 + iVar20);
+            piVar10 = (int *)((int)scene.dpvs.entVisData + iVar20);
             iVar20 = iVar20 + 4;
-            bVar22 = *(byte *)(*piVar8 + iVar9);
+            bVar22 = *(byte *)(*piVar10 + iVar11);
             bVar21 = bVar22 | bVar21;
-            *(byte *)(*piVar24 + uVar26) = bVar22;
-            lVar30 = lVar30 + -1;
-          } while (lVar30 != 0);
+            *(byte *)(*piVar18 + uVar28) = bVar22;
+            lVar32 = lVar32 + -1;
+          } while (lVar32 != 0);
 LAB_8272bb98:
           if ((bVar21 & 1) != 0) {
-            R_SkinAndBoundSceneEnt(puVar28 + -0x1a);
-            if (puVar28[-0x10] < 5) {
-              pbVar31[iVar15] = 0;
-              *pbVar31 = 0;
-              pbVar31[iVar16] = 0;
-              pbVar31[(int)local_d0[3] - (int)local_d0[1]] = 0;
-              pbVar31[(int)local_d0[4] - (int)local_d0[1]] = 0;
-              pbVar31[(int)local_d0[5] - (int)local_d0[1]] = 0;
-              pbVar31[(int)local_d0[6] - (int)local_d0[1]] = 0;
+            R_SkinAndBoundSceneEnt((GfxSceneEntity *)(puVar25 + -0x1a));
+            if (puVar25[-0x10] < 5) {
+              pbVar33[iVar16] = 0;
+              *pbVar33 = 0;
+              pbVar33[iVar26] = 0;
+              pbVar33[local_d0[3] - local_d0[1]] = 0;
+              pbVar33[local_d0[4] - local_d0[1]] = 0;
+              pbVar33[local_d0[5] - local_d0[1]] = 0;
+              pbVar33[local_d0[6] - local_d0[1]] = 0;
             }
-            else if (DAT_847d46c4 <= uVar26 - DAT_847d46c0) goto LAB_8272bc00;
+            else if (scene.sceneDObjViewmodelCount <= uVar28 - scene.sceneDObjFirstViewmodelIndex)
+            goto LAB_8272bc00;
           }
         }
         else {
-          if ((uVar10 & *puVar27) == 0) {
-            bVar21 = *(byte *)(DAT_847ee8ec + iVar9);
+          if ((uVar14 & pDVar29->renderFxFlagsCull) == 0) {
+            bVar21 = scene.dpvs.entVisData[0][iVar11];
           }
           else {
             bVar21 = 0;
           }
-          pbVar31[iVar15] = bVar21;
-          if ((uVar10 & *(uint *)(&DAT_845a98e4 + iVar19)) == 0) {
-            bVar22 = *(byte *)(DAT_847ee8f0 + iVar9);
+          pbVar33[iVar16] = bVar21;
+          if ((uVar14 & dpvsGlob.views[iVar24][1].renderFxFlagsCull) == 0) {
+            bVar22 = scene.dpvs.entVisData[1][iVar11];
           }
           else {
             bVar22 = 0;
           }
-          *pbVar31 = bVar22;
-          if ((uVar10 & *(uint *)(iVar19 + -0x7ba56634)) == 0) {
-            bVar18 = *(byte *)(DAT_847ee8f4 + iVar9);
+          *pbVar33 = bVar22;
+          if ((uVar14 & dpvsGlob.views[iVar24][2].renderFxFlagsCull) == 0) {
+            bVar19 = scene.dpvs.entVisData[2][iVar11];
           }
           else {
-            bVar18 = 0;
+            bVar19 = 0;
           }
-          pbVar31[iVar16] = bVar18;
-          bVar18 = bVar18 | bVar22 | bVar21;
+          pbVar33[iVar26] = bVar19;
+          bVar19 = bVar19 | bVar22 | bVar21;
           iVar20 = 0xc;
-          lVar30 = 4;
+          lVar32 = 4;
           do {
-            piVar24 = (int *)((int)local_d0 + iVar20);
-            piVar8 = (int *)((int)&DAT_847ee8ec + iVar20);
+            piVar18 = (int *)((int)local_d0 + iVar20);
+            piVar10 = (int *)((int)scene.dpvs.entVisData + iVar20);
             iVar20 = iVar20 + 4;
-            bVar21 = *(byte *)(*piVar8 + iVar9);
-            bVar18 = bVar21 | bVar18;
-            *(byte *)(*piVar24 + uVar26) = bVar21;
-            lVar30 = lVar30 + -1;
-          } while (lVar30 != 0);
-          if ((bVar18 & 1) == 0) goto LAB_8272bc08;
-          if (uVar26 - DAT_847d46c0 < DAT_847d46c4) {
+            bVar21 = *(byte *)(*piVar10 + iVar11);
+            bVar19 = bVar21 | bVar19;
+            *(byte *)(*piVar18 + uVar28) = bVar21;
+            lVar32 = lVar32 + -1;
+          } while (lVar32 != 0);
+          if ((bVar19 & 1) == 0) goto LAB_8272bc08;
+          if (uVar28 - scene.sceneDObjFirstViewmodelIndex < scene.sceneDObjViewmodelCount) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                            0x645,0,&DAT_82000f98,0xffffffff821bc8f8);
+                            0x645,0,"%s");
           }
-          if (puVar28[1] == 0) {
+          if (puVar25[1] == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                            0x646,0,&DAT_82000f98,0xffffffff821bc7ec);
+                            0x646,0,"%s");
           }
-          if (puVar28[-0x10] < 5) {
-            uVar13 = DObjGetName(puVar28[1]);
-            uVar13 = va(0xffffffff821bc7fc,uVar26,puVar28[-0x10],uVar13);
+          if (puVar25[-0x10] < 5) {
+            DObjGetName((DObj *)puVar25[1]);
+            va("%d %d \'%s\'");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                            0x647,0,0xffffffff820011f4,0xffffffff821bc808,uVar13);
+                            0x647,0,"%s\n\t%s");
           }
 LAB_8272bc00:
-          R_UpdateSceneEntUsageForDist(puVar28 + -0x1a);
+          R_UpdateSceneEntUsageForDist((GfxSceneEntity *)(puVar25 + -0x1a));
         }
       }
 LAB_8272bc08:
-      uVar26 = uVar26 + 1;
-      puVar28 = puVar28 + 0x1e;
-      pbVar31 = pbVar31 + 1;
-    } while (uVar26 < uVar4);
+      uVar28 = uVar28 + 1;
+      puVar25 = puVar25 + 0x1e;
+      pbVar33 = pbVar33 + 1;
+    } while (uVar28 < uVar4);
   }
-  local_d0[0] = &DAT_847e66d4;
-  uVar4 = piVar14[5];
-  uVar26 = piVar14[4];
-  local_d0[1] = &DAT_847e6ad4;
-  local_d0[2] = &DAT_847e6ed4;
-  local_d0[3] = &DAT_847e72d4;
-  local_d0[4] = &DAT_847e76d4;
-  local_d0[5] = &DAT_847e7ad4;
-  local_d0[6] = &DAT_847e7ed4;
-  if (uVar26 < uVar4) {
-    puVar28 = &DAT_847d4700 + uVar26 * 0x12;
-    pbVar31 = &DAT_847e6ad4 + uVar26;
-    dVar32 = 0.0;
+  local_d0[0] = -0x7b81992c;
+  uVar4 = pSStack00000014->sceneModelEnd;
+  uVar28 = pSStack00000014->sceneModelBegin;
+  local_d0[1] = 0x847e6ad4;
+  local_d0[2] = 0x847e6ed4;
+  local_d0[3] = 0x847e72d4;
+  local_d0[4] = 0x847e76d4;
+  local_d0[5] = 0x847e7ad4;
+  local_d0[6] = 0x847e7ed4;
+  local_e4 = "Sys_IsMainThread2()";
+  if (uVar28 < uVar4) {
+    puVar25 = (uint *)&scene.sceneModel[uVar28].field_0x2c;
+    puVar31 = scene.sceneModelVisData[1] + uVar28;
+    dVar34 = 0.0;
     do {
-      uVar5 = *puVar28;
+      uVar5 = *puVar25;
       bVar21 = 0;
       uVar23 = (ulonglong)(uVar5 >> 0xd) & 0xfff;
-      uVar10 = uVar5 & 0x41;
-      uVar7 = (uint)uVar23;
+      uVar14 = uVar5 & 0x41;
+      uVar15 = (uint)uVar23;
       if ((uVar5 & 0x41) == 0) {
-        if (uVar23 == DAT_84613768) {
-          bVar22 = pbVar31[-0x400];
-          bVar21 = pbVar31[0x400] | *pbVar31;
+        if (uVar23 == gfxCfg.entnumNone) {
+          bVar22 = puVar31[-0x400];
+          bVar21 = puVar31[0x400] | *puVar31;
 LAB_8272c024:
           bVar21 = bVar21 | bVar22;
         }
         else {
-          if ((*(uint *)((uVar7 >> 3 & 0x1ffffffc) + iVar6) &
-              *(uint *)((int)&DAT_82992400 + ((uint)(uVar23 << 2) & 0x7c))) != 0) {
-            bVar22 = *(byte *)(DAT_847ee8ec + uVar7);
-            pbVar31[-0x400] = bVar22;
-            bVar22 = *(byte *)(DAT_847ee8f0 + uVar7) | bVar22;
-            *pbVar31 = *(byte *)(DAT_847ee8f0 + uVar7);
-            bVar21 = *(byte *)(DAT_847ee8f4 + uVar7);
-            pbVar31[0x400] = bVar21;
+          if ((*(uint *)((uVar15 >> 3 & 0x1ffffffc) + (int)puVar9) &
+              *(uint *)(&g_bitShift + ((uint)(uVar23 << 2) & 0x7c))) != 0) {
+            bVar22 = scene.dpvs.entVisData[0][uVar15];
+            puVar31[-0x400] = bVar22;
+            bVar22 = scene.dpvs.entVisData[1][uVar15] | bVar22;
+            *puVar31 = scene.dpvs.entVisData[1][uVar15];
+            bVar21 = scene.dpvs.entVisData[2][uVar15];
+            puVar31[0x400] = bVar21;
             goto LAB_8272c024;
           }
-          bVar21 = *(byte *)(DAT_847ee8ec + uVar7);
+          bVar21 = scene.dpvs.entVisData[0][uVar15];
           if (bVar21 == 0) {
             bVar21 = 1;
           }
-          pbVar31[-0x400] = bVar21;
-          bVar22 = *(byte *)(DAT_847ee8f0 + uVar7);
+          puVar31[-0x400] = bVar21;
+          bVar22 = scene.dpvs.entVisData[1][uVar15];
           if (bVar22 == 0) {
             bVar22 = 1;
           }
-          *pbVar31 = bVar22;
-          bVar18 = *(byte *)(DAT_847ee8f4 + uVar7);
-          if (bVar18 == 0) {
-            bVar18 = 1;
+          *puVar31 = bVar22;
+          bVar19 = scene.dpvs.entVisData[2][uVar15];
+          if (bVar19 == 0) {
+            bVar19 = 1;
           }
-          bVar21 = bVar18 | bVar22 | bVar21;
-          pbVar31[0x400] = bVar18;
+          bVar21 = bVar19 | bVar22 | bVar21;
+          puVar31[0x400] = bVar19;
         }
-        iVar15 = 0xc;
-        lVar30 = 4;
+        iVar16 = 0xc;
+        lVar32 = 4;
         do {
-          piVar24 = (int *)((int)local_d0 + iVar15);
-          piVar8 = (int *)((int)&DAT_847ee8ec + iVar15);
-          iVar15 = iVar15 + 4;
-          bVar22 = *(byte *)(*piVar8 + uVar7);
+          piVar18 = (int *)((int)local_d0 + iVar16);
+          piVar10 = (int *)((int)scene.dpvs.entVisData + iVar16);
+          iVar16 = iVar16 + 4;
+          bVar22 = *(byte *)(*piVar10 + uVar15);
           bVar21 = bVar22 | bVar21;
-          *(byte *)(*piVar24 + uVar26) = bVar22;
-          lVar30 = lVar30 + -1;
-        } while (lVar30 != 0);
+          *(byte *)(*piVar18 + uVar28) = bVar22;
+          lVar32 = lVar32 + -1;
+        } while (lVar32 != 0);
       }
       else {
-        if (uVar23 == DAT_84613768) {
-          if ((uVar10 & *puVar27) == 0) {
-            bVar21 = pbVar31[-0x400];
+        if (uVar23 == gfxCfg.entnumNone) {
+          if ((uVar14 & pDVar29->renderFxFlagsCull) == 0) {
+            bVar21 = puVar31[-0x400];
           }
           else {
-            pbVar31[-0x400] = 0;
+            puVar31[-0x400] = 0;
           }
-          if ((uVar10 & *(uint *)(&DAT_845a98e4 + iVar19)) == 0) {
-            bVar21 = *pbVar31 | bVar21;
-          }
-          else {
-            *pbVar31 = 0;
-          }
-          if ((uVar10 & *(uint *)(iVar19 + -0x7ba56634)) == 0) {
-            bVar21 = pbVar31[0x400] | bVar21;
+          if ((uVar14 & dpvsGlob.views[iVar24][1].renderFxFlagsCull) == 0) {
+            bVar21 = *puVar31 | bVar21;
           }
           else {
-            pbVar31[0x400] = 0;
+            *puVar31 = 0;
+          }
+          if ((uVar14 & dpvsGlob.views[iVar24][2].renderFxFlagsCull) == 0) {
+            bVar21 = puVar31[0x400] | bVar21;
+          }
+          else {
+            puVar31[0x400] = 0;
           }
         }
-        else if ((*(uint *)((uVar7 >> 3 & 0x1ffffffc) + iVar6) &
-                 *(uint *)((int)&DAT_82992400 + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
-          bVar22 = *(byte *)(DAT_847ee8ec + uVar7);
+        else if ((*(uint *)((uVar15 >> 3 & 0x1ffffffc) + (int)puVar9) &
+                 *(uint *)(&g_bitShift + ((uint)(uVar23 << 2) & 0x7c))) == 0) {
+          bVar22 = scene.dpvs.entVisData[0][uVar15];
           if (bVar22 == 0) {
             bVar22 = 1;
           }
-          bVar22 = -((uVar10 & *puVar27) == 0) & bVar22;
-          pbVar31[-0x400] = bVar22;
-          bVar18 = *(byte *)(DAT_847ee8f0 + uVar7);
-          if (bVar18 == 0) {
-            bVar18 = 1;
+          bVar22 = -((uVar14 & pDVar29->renderFxFlagsCull) == 0) & bVar22;
+          puVar31[-0x400] = bVar22;
+          bVar19 = scene.dpvs.entVisData[1][uVar15];
+          if (bVar19 == 0) {
+            bVar19 = 1;
           }
-          bVar18 = -((uVar10 & *(uint *)(&DAT_845a98e4 + iVar19)) == 0) & bVar18;
-          *pbVar31 = bVar18;
-          bVar21 = *(byte *)(DAT_847ee8f4 + uVar7);
+          bVar19 = -((uVar14 & dpvsGlob.views[iVar24][1].renderFxFlagsCull) == 0) & bVar19;
+          *puVar31 = bVar19;
+          bVar21 = scene.dpvs.entVisData[2][uVar15];
           if (bVar21 == 0) {
             bVar21 = 1;
           }
-          bVar21 = -((uVar10 & *(uint *)(iVar19 + -0x7ba56634)) == 0) & bVar21;
-          pbVar31[0x400] = bVar21;
-          bVar21 = bVar21 | bVar18 | bVar22;
+          bVar21 = -((uVar14 & dpvsGlob.views[iVar24][2].renderFxFlagsCull) == 0) & bVar21;
+          puVar31[0x400] = bVar21;
+          bVar21 = bVar21 | bVar19 | bVar22;
         }
         else {
-          if ((uVar10 & *puVar27) == 0) {
-            bVar22 = *(byte *)(DAT_847ee8ec + uVar7);
+          if ((uVar14 & pDVar29->renderFxFlagsCull) == 0) {
+            bVar22 = scene.dpvs.entVisData[0][uVar15];
           }
           else {
             bVar22 = 0;
           }
-          pbVar31[-0x400] = bVar22;
-          if ((uVar10 & *(uint *)(&DAT_845a98e4 + iVar19)) == 0) {
-            bVar21 = *(byte *)(DAT_847ee8f0 + uVar7);
+          puVar31[-0x400] = bVar22;
+          if ((uVar14 & dpvsGlob.views[iVar24][1].renderFxFlagsCull) == 0) {
+            bVar21 = scene.dpvs.entVisData[1][uVar15];
           }
           else {
             bVar21 = 0;
           }
-          *pbVar31 = bVar21;
+          *puVar31 = bVar21;
           bVar21 = bVar21 | bVar22;
-          if ((uVar10 & *(uint *)(iVar19 + -0x7ba56634)) == 0) {
-            bVar21 = *(byte *)(DAT_847ee8f4 + uVar7) | bVar21;
-            pbVar31[0x400] = *(byte *)(DAT_847ee8f4 + uVar7);
+          if ((uVar14 & dpvsGlob.views[iVar24][2].renderFxFlagsCull) == 0) {
+            bVar21 = scene.dpvs.entVisData[2][uVar15] | bVar21;
+            puVar31[0x400] = scene.dpvs.entVisData[2][uVar15];
           }
           else {
-            pbVar31[0x400] = 0;
+            puVar31[0x400] = 0;
           }
         }
-        iVar15 = 0xc;
-        lVar30 = 4;
+        iVar16 = 0xc;
+        lVar32 = 4;
         do {
-          piVar24 = (int *)((int)local_d0 + iVar15);
-          piVar8 = (int *)((int)&DAT_847ee8ec + iVar15);
-          iVar15 = iVar15 + 4;
-          bVar22 = *(byte *)(*piVar8 + uVar7);
+          piVar18 = (int *)((int)local_d0 + iVar16);
+          piVar10 = (int *)((int)scene.dpvs.entVisData + iVar16);
+          iVar16 = iVar16 + 4;
+          bVar22 = *(byte *)(*piVar10 + uVar15);
           bVar21 = bVar22 | bVar21;
-          *(byte *)(*piVar24 + uVar26) = bVar22;
-          lVar30 = lVar30 + -1;
-        } while (lVar30 != 0);
+          *(byte *)(*piVar18 + uVar28) = bVar22;
+          lVar32 = lVar32 + -1;
+        } while (lVar32 != 0);
       }
+      piVar18 = local_d0;
       if ((bVar21 & 1) != 0) {
-        uVar5 = puVar28[-10];
-        cVar17 = Sys_IsMainThread2();
-        if (cVar17 == '\0') {
+        pXVar6 = (XModel *)puVar25[-10];
+        bVar17 = Sys_IsMainThread2();
+        if (!bVar17) {
+          piVar18 = (int *)local_e4;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                          0x712,0,&DAT_82000f98,"Sys_IsMainThread2()");
+                          0x712,0,"%s");
         }
-        dVar34 = (double)(float)puVar28[-1];
-        dVar33 = (double)SQRT((DAT_84618040 - (float)puVar28[-4]) *
-                              (DAT_84618040 - (float)puVar28[-4]) +
-                              (DAT_84618048 - (float)puVar28[-2]) *
-                              (DAT_84618048 - (float)puVar28[-2]) +
-                              (DAT_84618044 - (float)puVar28[-3]) *
-                              (DAT_84618044 - (float)puVar28[-3]));
-        if (dVar34 == dVar32) {
-          MyAssertHandler(0xffffffff82003018,0xe5,0,&DAT_82000f98,0xffffffff82003004);
+        dVar36 = (double)(float)puVar25[-1];
+        dVar35 = (double)SQRT((rg.correctedLodParms.origin[0] - (float)puVar25[-4]) *
+                              (rg.correctedLodParms.origin[0] - (float)puVar25[-4]) +
+                              (rg.correctedLodParms.origin[2] - (float)puVar25[-2]) *
+                              (rg.correctedLodParms.origin[2] - (float)puVar25[-2]) +
+                              (rg.correctedLodParms.origin[1] - (float)puVar25[-3]) *
+                              (rg.correctedLodParms.origin[1] - (float)puVar25[-3]));
+        if (dVar36 == dVar34) {
+          piVar18 = (int *)"val";
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0xe5,0,"%s");
         }
-        iVar15 = DB_GetXModelIndex(uVar5);
-        fVar1 = (float)puVar28[-1];
-        uVar7 = puVar28[-9];
-        fVar11 = (float)((double)(float)(1.0 / dVar34) * dVar33 - (double)*(float *)(uVar5 + 0xf4))
-                 * DAT_8461804c;
-        fVar12 = (float)(&DAT_8327db80)[iVar15];
-        if (fVar11 - (float)(&DAT_8327db80)[iVar15] < 0.0) {
-          fVar12 = fVar11;
+        uVar15 = DB_GetXModelIndex(pXVar6);
+        uVar5 = *puVar25;
+        fVar1 = (float)puVar25[-1];
+        pDVar7 = (DObj *)puVar25[-9];
+        fVar12 = (float)((double)(float)(1.0 / dVar36) * dVar35 - (double)pXVar6->radius) *
+                 rg.correctedLodParms.invFovScale;
+        fVar13 = g_stream.modelDist[uVar15];
+        if (fVar12 - g_stream.modelDist[uVar15] < 0.0) {
+          fVar13 = fVar12;
         }
-        (&DAT_8327db80)[iVar15] = fVar12;
-        iVar15 = R_SkinXModel((double)fVar1,puVar28 + -0xb,uVar5,uVar7,puVar28 + -8);
-        if (iVar15 == 0) {
-          pbVar31[-0x400] = 0;
-          *pbVar31 = 0;
-          pbVar31[0x400] = 0;
-          pbVar31[0x800] = 0;
-          pbVar31[0xc00] = 0;
-          pbVar31[0x1000] = 0;
-          pbVar31[0x1400] = 0;
+        g_stream.modelDist[uVar15] = fVar13;
+        iVar16 = R_SkinXModel((XModelDrawInfo *)(puVar25 + -0xb),pXVar6,pDVar7,
+                              (GfxPlacement *)(puVar25 + -8),fVar1,(uint)piVar18,uVar5 >> 0x19);
+        if (iVar16 == 0) {
+          puVar31[-0x400] = 0;
+          *puVar31 = 0;
+          puVar31[0x400] = 0;
+          puVar31[0x800] = 0;
+          puVar31[0xc00] = 0;
+          puVar31[0x1000] = 0;
+          puVar31[0x1400] = 0;
         }
       }
-      uVar26 = uVar26 + 1;
-      puVar28 = puVar28 + 0x12;
-      pbVar31 = pbVar31 + 1;
-    } while (uVar26 < uVar4);
+      uVar28 = uVar28 + 1;
+      puVar25 = puVar25 + 0x12;
+      puVar31 = puVar31 + 1;
+    } while (uVar28 < uVar4);
   }
-  uVar4 = piVar14[6];
-  if (uVar4 < (uint)piVar14[7]) {
-    pbVar31 = &DAT_847ed4dc + uVar4;
-    pfVar25 = (float *)(&DAT_847e82fc + uVar4 * 0x28);
-    iVar19 = piVar14[7] - uVar4;
+  uVar4 = pSStack00000014->sceneBrushBegin;
+  if (uVar4 < (uint)pSStack00000014->sceneBrushEnd) {
+    puVar31 = scene.sceneBrushVisData[1] + uVar4;
+    pfVar27 = scene.sceneBrush[uVar4].placement.origin + 2;
+    iVar24 = pSStack00000014->sceneBrushEnd - uVar4;
     do {
-      uVar2 = *(ushort *)((int)pfVar25 + -0x1e);
-      if (uVar2 == DAT_84613768) {
+      uVar2 = *(ushort *)((int)pfVar27 + -0x1e);
+      if (uVar2 == gfxCfg.entnumNone) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x72b,
-                        0,&DAT_82000f98,0xffffffff821bc89c);
+                        0,"%s");
       }
-      if ((*(uint *)((uVar2 >> 3 & 0x1ffffffc) + iVar6) & (&DAT_82992400)[uVar2 & 0x1f]) == 0) {
-        bVar21 = *(byte *)(DAT_847ee8ec + (uint)uVar2);
+      if ((*(uint *)((uVar2 >> 3 & 0x1ffffffc) + (int)puVar9) &
+          *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4)) == 0) {
+        bVar21 = scene.dpvs.entVisData[0][uVar2];
         if (bVar21 == 0) {
           bVar21 = 1;
         }
-        pbVar31[-0x200] = bVar21;
-        bVar22 = *(byte *)(DAT_847ee8f0 + (uint)uVar2);
+        puVar31[-0x200] = bVar21;
+        bVar22 = scene.dpvs.entVisData[1][uVar2];
         if (bVar22 == 0) {
           bVar22 = 1;
         }
-        *pbVar31 = bVar22;
+        *puVar31 = bVar22;
         bVar22 = bVar22 | bVar21;
-        bVar21 = *(byte *)(DAT_847ee8f4 + (uint)uVar2);
+        bVar21 = scene.dpvs.entVisData[2][uVar2];
         if (bVar21 == 0) {
           bVar21 = 1;
         }
       }
       else {
-        bVar22 = *(byte *)(DAT_847ee8ec + (uint)uVar2);
-        pbVar31[-0x200] = bVar22;
-        bVar22 = *(byte *)(DAT_847ee8f0 + (uint)uVar2) | bVar22;
-        *pbVar31 = *(byte *)(DAT_847ee8f0 + (uint)uVar2);
-        bVar21 = *(byte *)(DAT_847ee8f4 + (uint)uVar2);
+        bVar22 = scene.dpvs.entVisData[0][uVar2];
+        puVar31[-0x200] = bVar22;
+        bVar22 = scene.dpvs.entVisData[1][uVar2] | bVar22;
+        *puVar31 = scene.dpvs.entVisData[1][uVar2];
+        bVar21 = scene.dpvs.entVisData[2][uVar2];
       }
-      pbVar31[0x200] = bVar21;
+      puVar31[0x200] = bVar21;
       if ((((bVar21 | bVar22) & 1) != 0) ||
-         (iVar15 = R_IsEntityVisibleToAnyShadowedPrimaryLight(iVar3,(uint)uVar2), iVar15 != 0)) {
-        fVar1 = pfVar25[-7];
-        cVar17 = Sys_IsMainThread2();
-        if (cVar17 == '\0') {
+         (iVar16 = R_IsEntityVisibleToAnyShadowedPrimaryLight(pGVar3,(uint)uVar2), iVar16 != 0)) {
+        pGVar8 = (GfxBrushModel *)pfVar27[-7];
+        bVar17 = Sys_IsMainThread2();
+        if (!bVar17) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                          0x74d,0,&DAT_82000f98,"Sys_IsMainThread2()");
+                          0x74d,0,"%s");
         }
-        iVar15 = ((int)fVar1 - *(int *)(DAT_8461658c + 0x138)) / 0x38;
-        fVar11 = (SQRT((DAT_84618040 - pfVar25[-2]) * (DAT_84618040 - pfVar25[-2]) +
-                       (DAT_84618048 - *pfVar25) * (DAT_84618048 - *pfVar25) +
-                       (DAT_84618044 - pfVar25[-1]) * (DAT_84618044 - pfVar25[-1])) -
-                 *(float *)((int)fVar1 + 0x30)) * DAT_8461804c;
-        fVar12 = (float)(&DAT_83279b80)[iVar15];
-        if (fVar11 - (float)(&DAT_83279b80)[iVar15] < 0.0) {
-          fVar12 = fVar11;
+        iVar16 = ((int)pGVar8 - (int)(rgp.world)->models) / 0x38;
+        fVar1 = (SQRT((rg.correctedLodParms.origin[0] - pfVar27[-2]) *
+                      (rg.correctedLodParms.origin[0] - pfVar27[-2]) +
+                      (rg.correctedLodParms.origin[2] - *pfVar27) *
+                      (rg.correctedLodParms.origin[2] - *pfVar27) +
+                      (rg.correctedLodParms.origin[1] - pfVar27[-1]) *
+                      (rg.correctedLodParms.origin[1] - pfVar27[-1])) - pGVar8->radius) *
+                rg.correctedLodParms.invFovScale;
+        fVar12 = g_stream.bmodelDist[iVar16];
+        if (fVar1 - g_stream.bmodelDist[iVar16] < 0.0) {
+          fVar12 = fVar1;
         }
-        (&DAT_83279b80)[iVar15] = fVar12;
-        iVar16 = R_DrawBModel(pfVar25 + -8,fVar1,pfVar25 + -6);
-        iVar15 = DAT_847c40e8;
+        g_stream.bmodelDist[iVar16] = fVar12;
+        iVar16 = R_DrawBModel((BModelDrawInfo *)(pfVar27 + -8),pGVar8,(GfxPlacement *)(pfVar27 + -6)
+                             );
+        puVar25 = scene.entOverflowedDrawBuf;
         if (iVar16 == 0) {
-          uVar2 = *(ushort *)((int)pfVar25 + -0x1e);
-          if (DAT_847c40e8 == 0) {
-            MyAssertHandler(0xffffffff82003098,0x12,0,&DAT_82000f98,0xffffffff8200308c);
+          uVar2 = *(ushort *)((int)pfVar27 + -0x1e);
+          if (scene.entOverflowedDrawBuf == (uint *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h"
+                            ,0x12,0,"%s");
           }
           if (0x7ffffff7 < (ulonglong)uVar2) {
-            MyAssertHandler(0xffffffff82003098,0x13,0,0xffffffff82003058,(ulonglong)uVar2,0x7ffffff8
-                           );
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h"
+                            ,0x13,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
           }
-          iVar16 = ((int)(uint)uVar2 >> 5) * 4;
-          *(uint *)(iVar16 + iVar15) = 1 << (uVar2 & 0x1f) | *(uint *)(iVar16 + iVar15);
-          pbVar31[-0x200] = 0;
-          *pbVar31 = 0;
-          pbVar31[0x200] = 0;
+          puVar25[(int)(uint)uVar2 >> 5] = 1 << (uVar2 & 0x1f) | puVar25[(int)(uint)uVar2 >> 5];
+          puVar31[-0x200] = 0;
+          *puVar31 = 0;
+          puVar31[0x200] = 0;
         }
       }
-      iVar19 = iVar19 + -1;
-      pfVar25 = pfVar25 + 10;
-      pbVar31 = pbVar31 + 1;
-    } while (iVar19 != 0);
+      iVar24 = iVar24 + -1;
+      pfVar27 = pfVar27 + 10;
+      puVar31 = puVar31 + 1;
+    } while (iVar24 != 0);
   }
   __restgprlr();
   return;
@@ -3114,223 +3373,248 @@ LAB_8272c024:
 
 // 8272C480  R_DrawAllDynEnt  (gfx_d3d/r_dpvs.cpp:1889)
 
-void R_DrawAllDynEnt(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
+void R_DrawAllDynEnt(GfxViewInfo *param_1)
 
 {
   float fVar1;
   ushort uVar2;
-  uint uVar3;
-  float fVar4;
-  float fVar5;
-  undefined4 uVar6;
-  int iVar7;
-  char cVar10;
-  int iVar8;
-  int iVar9;
+  uchar *puVar3;
+  uint uVar4;
+  XModel *pXVar5;
+  GfxSceneDynBrush *pGVar6;
+  float fVar7;
+  float fVar8;
+  DynEntityDef *pDVar9;
+  GfxWorld *pGVar10;
   uint uVar11;
-  undefined8 *puVar12;
-  int iVar13;
-  int iVar14;
+  int iVar12;
+  GfxSceneDynModel *pGVar13;
+  bool bVar16;
+  GfxBrushModel *pGVar14;
   int iVar15;
-  int iVar16;
-  int iVar17;
-  undefined1 *puVar18;
-  uint uVar19;
+  char *pcVar17;
+  uint uVar18;
+  undefined8 *puVar19;
   int iVar20;
-  longlong lVar21;
-  undefined8 uVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
+  int iVar21;
+  int iVar22;
+  uchar *puVar23;
+  uchar *puVar24;
+  uint uVar25;
+  GfxPlacement *pGVar26;
+  longlong lVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
+  double dVar31;
+  double dVar32;
+  double dVar33;
+  undefined4 uStack00000014;
+  char *local_110;
   undefined8 uStack_108;
-  undefined4 local_100 [9];
-  int local_dc;
-  int local_d4;
+  undefined8 local_100 [4];
+  uint local_dc;
+  uint local_d4;
   
   __savegprlr();
-  uVar6 = __savefpr_26();
+  uStack00000014 = __savefpr_26();
   Profile_Begin(0x19f);
-  if (DAT_84618054 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x780,0,0xffffffff82000f98,0xffffffff821b9988);
+  if (rg.correctedLodParms.valid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x780,0,
+                    "%s");
   }
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x782,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x782,0,
+                    "%s");
   }
-  iVar15 = *(int *)(DAT_8461658c + 0x2ac);
-  iVar14 = *(int *)(DAT_8461658c + 0x2b0);
-  iVar13 = *(int *)(DAT_8461658c + 0x2b4);
-  uVar3 = *(uint *)(DAT_8461658c + 0x29c);
-  if (DAT_84618054 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x78a,0,0xffffffff82000f98,0xffffffff821b9988);
+  puVar23 = ((rgp.world)->dpvsDyn).dynEntVisData[0][0];
+  puVar24 = ((rgp.world)->dpvsDyn).dynEntVisData[0][1];
+  puVar3 = ((rgp.world)->dpvsDyn).dynEntVisData[0][2];
+  uVar4 = ((rgp.world)->dpvsDyn).dynEntClientCount[0];
+  if (rg.correctedLodParms.valid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x78a,0,
+                    "%s");
   }
-  dVar26 = (double)DAT_8461804c;
-  dVar23 = (double)DAT_84618050;
-  uVar19 = 0;
-  if (uVar3 != 0) {
-    iVar17 = 0;
-    iVar16 = 0;
-    uVar22 = 0x3ff0000000000000;
-    iVar15 = iVar15 - iVar14;
-    iVar13 = iVar13 - iVar14;
+  dVar32 = (double)rg.correctedLodParms.invFovScale;
+  dVar29 = (double)rg.correctedLodParms.cappedLodScale;
+  uVar25 = 0;
+  local_110 = "Sys_IsMainThread()";
+  if (uVar4 != 0) {
+    iVar22 = 0;
+    iVar21 = 0;
+    dVar28 = 1.0;
+    iVar20 = (int)puVar23 - (int)puVar24;
+    iVar15 = (int)puVar3 - (int)puVar24;
     do {
-      puVar18 = (undefined1 *)(iVar14 + uVar19);
-      if ((((*(byte *)(iVar14 + uVar19) | puVar18[iVar15] | puVar18[iVar13]) & 1) != 0) ||
-         (iVar7 = R_IsDynEntVisibleToAnyShadowedPrimaryLight(uVar19,0), iVar7 != 0)) {
-        uVar11 = (uint)DAT_835a2944;
-        if (uVar11 <= uVar19) {
+      puVar23 = puVar24 + uVar25;
+      if ((((puVar24[uVar25] | puVar23[iVar20] | puVar23[iVar15]) & 1) != 0) ||
+         (iVar12 = R_IsDynEntVisibleToAnyShadowedPrimaryLight(uVar25,DYNENT_DRAW_MODEL), iVar12 != 0
+         )) {
+        uVar18 = (uint)cm.dynEntCount[0];
+        if (uVar18 <= uVar25) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                           ,0x44,0,
                           "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                          ,uVar19,uVar11);
-          uVar11 = (uint)DAT_835a2944;
+                         );
+          uVar18 = (uint)cm.dynEntCount[0];
         }
-        iVar7 = DAT_835a2950 + iVar16;
-        if (uVar11 <= uVar19) {
+        pGVar26 = (GfxPlacement *)((int)(cm.dynEntPoseList[0]->pose).quat + iVar21);
+        if (uVar18 <= uVar25) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                           ,0x3d,0,
                           "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                          ,uVar19);
+                         );
         }
-        fVar1 = DAT_84618044 - *(float *)(iVar7 + 0x14);
-        fVar4 = DAT_84618048 - *(float *)(iVar7 + 0x18);
-        fVar5 = DAT_84618040 - *(float *)(iVar7 + 0x10);
-        iVar9 = *(int *)(DAT_835a2948 + iVar17 + 0x20);
-        iVar20 = *(int *)(DAT_8461658c + 0x20c) + DAT_847ee8dc * 6;
-        dVar27 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar1 * fVar1);
-        dVar25 = (double)(float)(dVar27 * dVar23);
-        dVar24 = (double)(float)(dVar27 * dVar26);
-        if (iVar9 == 0) {
-          MyAssertHandler(0xffffffff821bc490,0x7ab,0,&DAT_82000f98,0xffffffff8205ce78);
+        fVar1 = rg.correctedLodParms.origin[1] - pGVar26->origin[1];
+        fVar7 = rg.correctedLodParms.origin[2] - pGVar26->origin[2];
+        pcVar17 = (char *)0x8c6dc;
+        fVar8 = rg.correctedLodParms.origin[0] - pGVar26->origin[0];
+        pXVar5 = *(XModel **)((int)(cm.dynEntDefList[0]->mass).centerOfMass + iVar22 + -0x18);
+        pGVar13 = (rgp.world)->sceneDynModel + scene.sceneDynModelCount;
+        dVar33 = (double)SQRT(fVar8 * fVar8 + fVar7 * fVar7 + fVar1 * fVar1);
+        dVar31 = (double)(float)(dVar33 * dVar29);
+        dVar30 = (double)(float)(dVar33 * dVar32);
+        if (pXVar5 == (XModel *)0x0) {
+          pcVar17 = "model";
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x7ab,0,"%s");
         }
-        cVar10 = Sys_IsMainThread();
-        if (cVar10 == '\0') {
-          MyAssertHandler(0xffffffff821bc490,0x7af,0,&DAT_82000f98,"Sys_IsMainThread()");
+        bVar16 = Sys_IsMainThread();
+        if (!bVar16) {
+          pcVar17 = local_110;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x7af,0,"%s");
         }
-        iVar8 = DB_GetXModelIndex(iVar9);
-        fVar1 = (float)((double)(float)(dVar27 - (double)*(float *)(iVar9 + 0xf4)) * dVar26);
-        fVar4 = (float)(&DAT_8327db80)[iVar8];
-        if (fVar1 - (float)(&DAT_8327db80)[iVar8] < 0.0) {
-          fVar4 = fVar1;
+        uVar18 = DB_GetXModelIndex(pXVar5);
+        fVar1 = (float)((double)(float)(dVar33 - (double)pXVar5->radius) * dVar32);
+        fVar7 = g_stream.modelDist[uVar18];
+        if (fVar1 - g_stream.modelDist[uVar18] < 0.0) {
+          fVar7 = fVar1;
         }
-        (&DAT_8327db80)[iVar8] = fVar4;
-        XModelGetLodForDist(dVar24,dVar25,iVar9);
-        iVar7 = R_SkinXModel(uVar22,iVar20,iVar9,0,iVar7);
-        if (iVar7 == 0) {
-          puVar18[iVar15] = 0;
-          *puVar18 = 0;
-          puVar18[iVar13] = 0;
+        g_stream.modelDist[uVar18] = fVar7;
+        XModelGetLodForDist(pXVar5,(float)dVar30,(float)dVar31);
+        iVar12 = R_SkinXModel(&pGVar13->info,pXVar5,(DObj *)0x0,pGVar26,(float)dVar28,(uint)pcVar17,
+                              0);
+        if (iVar12 == 0) {
+          puVar23[iVar20] = '\0';
+          *puVar23 = '\0';
+          puVar23[iVar15] = '\0';
         }
         else {
-          *(short *)(iVar20 + 4) = (short)uVar19;
-          if ((uVar19 & 0xffff) != uVar19) {
-            MyAssertHandler(0xffffffff821bc490,0x7ba,0,&DAT_82000f98,0xffffffff821bc9bc);
+          pGVar13->dynEntId = (ushort)uVar25;
+          if ((uVar25 & 0xffff) != uVar25) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0x7ba,0,"%s");
           }
-          DAT_847ee8dc = DAT_847ee8dc + 1;
+          scene.sceneDynModelCount = scene.sceneDynModelCount + 1;
         }
       }
-      uVar19 = uVar19 + 1;
-      iVar16 = iVar16 + 0x20;
-      iVar17 = iVar17 + 0x60;
-    } while (uVar19 < uVar3);
+      uVar25 = uVar25 + 1;
+      iVar21 = iVar21 + 0x20;
+      iVar22 = iVar22 + 0x60;
+    } while (uVar25 < uVar4);
   }
-  if (DAT_846180c2 == '\0') {
-    DAT_847ee8dc = 0;
+  if (rg.drawXModels == false) {
+    scene.sceneDynModelCount = 0;
   }
-  uVar3 = *(uint *)(DAT_8461658c + 0x2a0);
-  uVar19 = 0;
-  iVar15 = *(int *)(DAT_8461658c + 700);
-  if (uVar3 != 0) {
-    iVar13 = *(int *)(DAT_8461658c + 0x2b8) - iVar15;
-    iVar14 = *(int *)(DAT_8461658c + 0x2c0) - iVar15;
-    iVar16 = 0;
-    iVar17 = 0;
+  uVar4 = ((rgp.world)->dpvsDyn).dynEntClientCount[1];
+  uVar25 = 0;
+  puVar23 = ((rgp.world)->dpvsDyn).dynEntVisData[1][1];
+  if (uVar4 != 0) {
+    iVar20 = (int)((rgp.world)->dpvsDyn).dynEntVisData[1][0] - (int)puVar23;
+    iVar15 = (int)((rgp.world)->dpvsDyn).dynEntVisData[1][2] - (int)puVar23;
+    iVar21 = 0;
+    iVar22 = 0;
     do {
-      puVar18 = (undefined1 *)(iVar15 + uVar19);
-      if (((*(byte *)(iVar15 + uVar19) | puVar18[iVar13] | puVar18[iVar14]) & 1) != 0) {
-        uVar11 = (uint)DAT_835a2946;
-        if (uVar11 <= uVar19) {
+      puVar24 = puVar23 + uVar25;
+      if (((puVar23[uVar25] | puVar24[iVar20] | puVar24[iVar15]) & 1) != 0) {
+        uVar18 = (uint)cm.dynEntCount[1];
+        if (uVar18 <= uVar25) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                           ,0x44,0,
                           "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                          ,uVar19,uVar11);
-          uVar11 = (uint)DAT_835a2946;
+                         );
+          uVar18 = (uint)cm.dynEntCount[1];
         }
-        iVar7 = iVar17 + DAT_835a2954;
-        if (uVar11 <= uVar19) {
+        pGVar26 = (GfxPlacement *)((int)(cm.dynEntPoseList[1]->pose).quat + iVar22);
+        if (uVar18 <= uVar25) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                           ,0x3d,0,
                           "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
-                          ,uVar19);
+                         );
         }
-        iVar9 = iVar16 + DAT_835a294c;
-        if (*(int *)(iVar9 + 0x20) != 0) {
+        pDVar9 = cm.dynEntDefList[1];
+        if (*(int *)((int)(cm.dynEntDefList[1]->mass).centerOfMass + iVar21 + -0x18) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                          0x7d6,0,&DAT_82000f98,0xffffffff8205dc90);
+                          0x7d6,0,"%s");
         }
-        uVar2 = *(ushort *)(iVar9 + 0x24);
-        if (uVar2 == 0) {
+        uVar2 = *(ushort *)((int)(pDVar9->mass).centerOfMass + iVar21 + -0x14);
+        uVar18 = (uint)uVar2;
+        if (uVar18 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                          0x7d9,0,&DAT_82000f98,0xffffffff8205dca4);
+                          0x7d9,0,"%s");
         }
-        iVar9 = R_GetBrushModel(uVar2);
-        if (*(short *)(iVar9 + 0x34) != 0) {
-          cVar10 = Sys_IsMainThread();
-          if (cVar10 == '\0') {
+        pGVar14 = R_GetBrushModel((uint)uVar2);
+        if (pGVar14->surfaceCount != 0) {
+          bVar16 = Sys_IsMainThread();
+          if (!bVar16) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                            0x7e1,0,&DAT_82000f98,"Sys_IsMainThread()");
+                            0x7e1,0,"%s");
           }
-          iVar20 = DAT_8461658c;
-          fVar1 = DAT_84618044 - *(float *)(iVar7 + 0x14);
-          fVar4 = DAT_84618048 - *(float *)(iVar7 + 0x18);
-          fVar5 = DAT_84618040 - *(float *)(iVar7 + 0x10);
-          iVar8 = DAT_847ee8e0 * 4;
-          fVar1 = (float)((double)(SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar1 * fVar1) -
-                                  *(float *)(iVar9 + 0x30)) * dVar26);
-          fVar4 = (float)(&DAT_83279b80)[uVar2];
-          if (fVar1 - (float)(&DAT_83279b80)[uVar2] < 0.0) {
-            fVar4 = fVar1;
+          uVar11 = scene.sceneDynBrushCount;
+          pGVar10 = rgp.world;
+          fVar1 = rg.correctedLodParms.origin[1] - pGVar26->origin[1];
+          fVar7 = rg.correctedLodParms.origin[2] - pGVar26->origin[2];
+          fVar8 = rg.correctedLodParms.origin[0] - pGVar26->origin[0];
+          fVar1 = (float)((double)(SQRT(fVar8 * fVar8 + fVar7 * fVar7 + fVar1 * fVar1) -
+                                  pGVar14->radius) * dVar32);
+          fVar7 = g_stream.bmodelDist[uVar18];
+          if (fVar1 - g_stream.bmodelDist[uVar18] < 0.0) {
+            fVar7 = fVar1;
           }
-          (&DAT_83279b80)[uVar2] = fVar4;
-          iVar8 = iVar8 + *(int *)(iVar20 + 0x210);
-          iVar7 = R_DrawBModel(iVar8,iVar9,iVar7);
-          if (iVar7 == 0) {
-            puVar18[iVar13] = 0;
-            *puVar18 = 0;
-            puVar18[iVar14] = 0;
+          g_stream.bmodelDist[uVar18] = fVar7;
+          pGVar6 = pGVar10->sceneDynBrush;
+          iVar12 = R_DrawBModel(&pGVar6[uVar11].info,pGVar14,pGVar26);
+          if (iVar12 == 0) {
+            puVar24[iVar20] = '\0';
+            *puVar24 = '\0';
+            puVar24[iVar15] = '\0';
           }
           else {
-            *(short *)(iVar8 + 2) = (short)uVar19;
-            if ((uVar19 & 0xffff) != uVar19) {
+            pGVar6[uVar11].dynEntId = (ushort)uVar25;
+            if ((uVar25 & 0xffff) != uVar25) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
-                              0x7ec,0,&DAT_82000f98,0xffffffff821bc994);
+                              0x7ec,0,"%s");
             }
-            DAT_847ee8e0 = DAT_847ee8e0 + 1;
+            scene.sceneDynBrushCount = scene.sceneDynBrushCount + 1;
           }
         }
       }
-      uVar19 = uVar19 + 1;
-      iVar17 = iVar17 + 0x20;
-      iVar16 = iVar16 + 0x60;
-    } while (uVar19 < uVar3);
+      uVar25 = uVar25 + 1;
+      iVar22 = iVar22 + 0x20;
+      iVar21 = iVar21 + 0x60;
+    } while (uVar25 < uVar4);
   }
-  if (DAT_846180c3 == '\0') {
-    DAT_847ee8e0 = 0;
+  if (rg.drawBModels == false) {
+    scene.sceneDynBrushCount = 0;
   }
-  puVar12 = &uStack_108;
-  lVar21 = 6;
+  puVar19 = &uStack_108;
+  lVar27 = 6;
   do {
-    puVar12 = puVar12 + 1;
-    *puVar12 = 0;
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
-  local_dc = DAT_847ee8dc;
-  local_d4 = DAT_847ee8e0;
-  local_100[0] = uVar6;
-  R_AddWorkerCmd(0x14,local_100);
-  Profile_EndInternal(0);
-  __restfpr_26();
+    puVar19 = puVar19 + 1;
+    *puVar19 = 0;
+    lVar27 = lVar27 + -1;
+  } while (lVar27 != 0);
+  local_100[0]._0_4_ = uStack00000014;
+  local_dc = scene.sceneDynModelCount;
+  local_d4 = scene.sceneDynBrushCount;
+  R_AddWorkerCmd(WRKCMD_ADD_SCENE_ENT,local_100);
+  iVar15 = Profile_EndInternal((double *)0x0);
+  __restfpr_26(iVar15);
   __restgprlr();
   return;
 }
@@ -3338,56 +3622,65 @@ void R_DrawAllDynEnt(void)
 
 // 8272CB08  R_UnfilterEntFromCells  (gfx_d3d/r_dpvs.cpp:2056)
 
-void R_UnfilterEntFromCells(undefined8 param_1,ulonglong param_2)
+void R_UnfilterEntFromCells(uint param_1,uint param_2)
 
 {
   uint uVar1;
-  uint uVar2;
-  int iVar3;
+  uint *puVar2;
+  uint uVar3;
   int iVar4;
-  char cVar5;
-  uint uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  int iVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
   
-  iVar4 = __savegprlr_26();
-  cVar5 = Sys_IsMainThread();
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x810,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar7 = (ulonglong)(int)param_2;
+  iVar5 = __savegprlr_26(param_1);
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x810,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x811,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x811,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == (ulonglong)DAT_84613768) {
-    MyAssertHandler(0xffffffff821bc490,0x812,0,0xffffffff82000f98,0xffffffff821bc89c);
+  if ((uVar7 & 0xffffffff) == (ulonglong)gfxCfg.entnumNone) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x812,0,
+                    "%s");
   }
-  if (0x2000 < DAT_84613764 * DAT_8461375c) {
-    MyAssertHandler(0xffffffff821bc490,0x814,0,0xffffffff82000f98,0xffffffff821bca64);
+  if (0x2000 < gfxCfg.entCount * gfxCfg.maxClientViews) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x814,0,
+                    "%s");
   }
-  uVar1 = *(uint *)(DAT_8461658c + 0x34);
-  if ((DAT_84613764 & 0x1f) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x816,0,0xffffffff821bca2c,0xffffffff821bca48);
+  uVar1 = ((rgp.world)->dpvsPlanes).cellCount;
+  if ((gfxCfg.entCount & 0x1f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x816,0,
+                    "%s\n\t(gfxCfg.entCount) = %i");
   }
-  uVar10 = (longlong)(int)(DAT_84613764 >> 5) * (longlong)iVar4;
-  if (0xff < (uVar10 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x819,0,0xffffffff821bc9e8,uVar10,0x100);
+  uVar11 = (longlong)(int)(gfxCfg.entCount >> 5) * (longlong)iVar5;
+  if (0xff < (uVar11 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x819,0,
+                    "offset doesn\'t index MAX_TOTAL_ENT_COUNT >> 5\n\t%i not in [0, %i)");
   }
-  uVar2 = *(uint *)(DAT_8461658c + 0x40);
-  uVar8 = (param_2 & 0xffffffff) >> 3 & 0x1ffffffc;
-  lVar7 = ((ulonglong)uVar1 & 0x7fffffff) << 1;
-  uVar6 = ~*(uint *)((int)&DAT_82992400 + ((uint)((param_2 & 0xffffffff) << 2) & 0x7c));
-  iVar3 = (int)uVar8;
-  *(uint *)((&DAT_845aa2e0)[iVar4] + iVar3) = *(uint *)((&DAT_845aa2e0)[iVar4] + iVar3) & uVar6;
+  puVar2 = ((rgp.world)->dpvsPlanes).sceneEntCellBits;
+  uVar9 = (uVar7 & 0xffffffff) >> 3 & 0x1ffffffc;
+  lVar8 = ((ulonglong)uVar1 & 0x7fffffff) << 1;
+  uVar3 = *(uint *)(&g_bitShift + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c));
+  iVar4 = (int)uVar9;
+  *(uint *)((int)dpvsGlob.entVisBits[iVar5] + iVar4) =
+       *(uint *)((int)dpvsGlob.entVisBits[iVar5] + iVar4) & ~uVar3;
   if ((uVar1 & 0x7fffffff) != 0) {
-    lVar9 = uVar8 + (ulonglong)uVar2 + (uVar10 & 0x3fffffff) * 4 + -0x400;
+    lVar10 = uVar9 + ZEXT48(puVar2) + (uVar11 & 0x3fffffff) * 4 + -0x400;
     do {
-      iVar4 = (int)lVar9;
-      lVar9 = lVar9 + 0x400;
-      *(uint *)lVar9 = *(uint *)(iVar4 + 0x400) & uVar6;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      iVar5 = (int)lVar10;
+      lVar10 = lVar10 + 0x400;
+      *(uint *)lVar10 = *(uint *)(iVar5 + 0x400) & ~uVar3;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
   __restgprlr_26();
   return;
@@ -3396,19 +3689,19 @@ void R_UnfilterEntFromCells(undefined8 param_1,ulonglong param_2)
 
 // 8272CCD0  R_UnfilterThingFromCells  (gfx_d3d/r_dpvs.cpp:2090)
 
-void R_UnfilterThingFromCells(uint param_1,int param_2,int param_3)
+void R_UnfilterThingFromCells(uint param_1,uint *param_2,uint param_3)
 
 {
   uint uVar1;
   ulonglong uVar2;
   uint *puVar3;
   
-  uVar1 = (&DAT_82992400)[param_1 & 0x1f];
-  uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x34);
+  uVar1 = *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4);
+  uVar2 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount;
   if (uVar2 == 0) {
     return;
   }
-  puVar3 = (uint *)((param_1 >> 5) * 4 + param_2);
+  puVar3 = param_2 + (param_1 >> 5);
   do {
     *puVar3 = *puVar3 & ~uVar1;
     puVar3 = puVar3 + param_3;
@@ -3420,45 +3713,56 @@ void R_UnfilterThingFromCells(uint param_1,int param_2,int param_3)
 
 // 8272CD28  R_AddEntToCell  (gfx_d3d/r_dpvs.cpp:2115)
 
-void R_AddEntToCell(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddEntToCell(FilterEntInfo *param_1,uint param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
+  uint *puVar3;
+  uint uVar4;
   uint uVar5;
-  uint *puVar6;
-  char cVar7;
-  ulonglong uVar8;
+  int iVar6;
+  uint *puVar7;
+  bool bVar8;
+  longlong lVar9;
+  ulonglong uVar10;
   
-  puVar6 = (uint *)__savegprlr_25();
-  cVar7 = Sys_IsMainThread();
-  if (cVar7 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0x84b,0,0xffffffff82000f98,0xffffffff82010b48);
+  lVar9 = (longlong)(int)param_2;
+  puVar7 = (uint *)__savegprlr_25(param_1);
+  bVar8 = Sys_IsMainThread();
+  if (!bVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x84b,0,
+                    "%s");
   }
-  uVar1 = *puVar6;
-  if (DAT_8461375c <= uVar1) {
-    MyAssertHandler(0xffffffff821bc490,0x84e,0,0xffffffff821bcac0,uVar1);
+  uVar1 = *puVar7;
+  if (gfxCfg.maxClientViews <= uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x84e,0,
+                    "localClientNum doesn\'t index gfxCfg.maxClientViews\n\t%i not in [0, %i)");
   }
-  uVar2 = puVar6[1];
-  if (0x2000 < DAT_84613764 * DAT_8461375c) {
-    MyAssertHandler(0xffffffff821bc490,0x852,0,0xffffffff82000f98,0xffffffff821bca64);
+  uVar2 = puVar7[1];
+  if (0x2000 < gfxCfg.entCount * gfxCfg.maxClientViews) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x852,0,
+                    "%s");
   }
-  if ((DAT_84613764 & 7) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x853,0,0xffffffff821bca2c,0xffffffff821bcaa4,DAT_84613764);
+  if ((gfxCfg.entCount & 7) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x853,0,
+                    "%s\n\t(gfxCfg.entCount) = %i");
   }
-  uVar8 = (longlong)(int)(DAT_84613764 >> 5) * (longlong)(int)uVar1;
-  if (0xff < (uVar8 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x856,0,0xffffffff821bc9e8,uVar8,0x100);
+  uVar10 = (longlong)(int)(gfxCfg.entCount >> 5) * (longlong)(int)uVar1;
+  if (0xff < (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x856,0,
+                    "offset doesn\'t index MAX_TOTAL_ENT_COUNT >> 5\n\t%i not in [0, %i)");
   }
+  iVar6 = (int)((((ulonglong)puVar7[3] + lVar9 & 0xffffff) * 0x100 + uVar10 & 0xffffffff) << 2);
   uVar5 = uVar2 >> 3 & 0x1ffffffc;
-  uVar3 = (&DAT_82992400)[uVar2 & 0x1f];
-  iVar4 = (int)((((ulonglong)puVar6[3] + param_2 & 0xffffff) * 0x100 + uVar8 & 0xffffffff) << 2) +
-          *(int *)(DAT_8461658c + 0x40);
-  *(uint *)(uVar5 + iVar4) = *(uint *)(uVar5 + iVar4) | uVar3;
-  *(uint *)((&DAT_845aa2e0)[uVar1] + uVar5) = *(uint *)((&DAT_845aa2e0)[uVar1] + uVar5) | uVar3;
-  *(uint *)((&DAT_847ee910)[uVar1] + uVar2 * 4) = puVar6[2];
+  puVar3 = ((rgp.world)->dpvsPlanes).sceneEntCellBits;
+  uVar4 = *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4);
+  *(uint *)((int)puVar3 + uVar5 + iVar6) = *(uint *)((int)puVar3 + uVar5 + iVar6) | uVar4;
+  *(uint *)((int)dpvsGlob.entVisBits[uVar1] + uVar5) =
+       *(uint *)((int)dpvsGlob.entVisBits[uVar1] + uVar5) | uVar4;
+  scene.dpvs.entInfo[uVar1][uVar2] = *(GfxEntCellRefInfo *)(puVar7 + 2);
   __restgprlr_25();
   return;
 }
@@ -3466,40 +3770,43 @@ void R_AddEntToCell(undefined8 param_1,longlong param_2)
 
 // 8272CEE0  R_AddThingToCell  (gfx_d3d/r_dpvs.cpp:2147)
 
-void R_AddThingToCell(int param_1,uint param_2,int param_3,int param_4)
+void R_AddThingToCell(uint param_1,uint param_2,uint *param_3,uint param_4)
 
 {
   int iVar1;
   
-  iVar1 = (param_1 * param_4 + (param_2 >> 5)) * 4;
-  *(uint *)(iVar1 + param_3) = (&DAT_82992400)[param_2 & 0x1f] | *(uint *)(iVar1 + param_3);
+  iVar1 = param_1 * param_4 + (param_2 >> 5);
+  param_3[iVar1] = *(uint *)(&g_bitShift + (param_2 & 0x1f) * 4) | param_3[iVar1];
   return;
 }
 
 
 // 8272CF10  R_FilterEntIntoAllCells_r  (gfx_d3d/r_dpvs.cpp:2159)
 
-void R_FilterEntIntoAllCells_r(undefined8 param_1,longlong param_2)
+void R_FilterEntIntoAllCells_r(FilterEntInfo *param_1,mnode_t *param_2)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  int iVar1;
+  FilterEntInfo *pFVar2;
+  longlong lVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_29();
-  uVar3 = (ulonglong)*(ushort *)param_2;
-  lVar4 = (ulonglong)*(uint *)(DAT_8461658c + 0x34) + 1;
-  lVar2 = uVar3 - lVar4;
-  while (-1 < lVar2) {
-    lVar2 = param_2 + 4;
-    param_2 = (ulonglong)*(ushort *)((int)param_2 + 2) * 2 + param_2;
-    R_FilterEntIntoAllCells_r(uVar1,lVar2);
-    uVar3 = (ulonglong)*(ushort *)param_2;
-    lVar2 = uVar3 - lVar4;
+  lVar6 = (longlong)(int)param_2;
+  pFVar2 = (FilterEntInfo *)__savegprlr_29(param_1);
+  uVar4 = (ulonglong)*(ushort *)lVar6;
+  lVar5 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount + 1;
+  lVar3 = uVar4 - lVar5;
+  while (-1 < lVar3) {
+    iVar1 = (int)lVar6;
+    lVar6 = (ulonglong)*(ushort *)(iVar1 + 2) * 2 + lVar6;
+    R_FilterEntIntoAllCells_r(pFVar2,(mnode_t *)(iVar1 + 4));
+    uVar4 = (ulonglong)*(ushort *)lVar6;
+    lVar3 = uVar4 - lVar5;
   }
-  if ((int)uVar3 != 0) {
-    R_AddEntToCell(uVar1,uVar3 - 1);
+  if ((int)uVar4 != 0) {
+    R_AddEntToCell(pFVar2,(int)uVar4 - 1);
   }
   __restgprlr_29();
   return;
@@ -3508,89 +3815,95 @@ void R_FilterEntIntoAllCells_r(undefined8 param_1,longlong param_2)
 
 // 8272CF88  R_FilterEntIntoCells_r  (gfx_d3d/r_dpvs.cpp:2193)
 
-void R_FilterEntIntoCells_r(undefined8 param_1,longlong param_2,longlong param_3)
+void R_FilterEntIntoCells_r(FilterEntInfo *param_1,mnode_t *param_2,Bounds *param_3)
 
 {
   float fVar1;
   float fVar2;
-  undefined8 uVar3;
-  undefined4 *puVar5;
-  ulonglong uVar4;
-  int iVar6;
-  float *pfVar7;
-  uint uVar8;
-  longlong lVar9;
-  longlong lVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  int iVar3;
+  FilterEntInfo *pFVar4;
+  longlong lVar5;
+  undefined4 *puVar7;
+  ulonglong uVar6;
+  int iVar8;
+  cplane_s *pcVar9;
+  uint uVar10;
+  longlong lVar11;
+  longlong lVar12;
+  longlong lVar13;
   double dVar14;
   double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   undefined4 uStack_84;
-  float local_80 [4];
-  float local_70;
-  float local_6c;
+  Bounds local_80 [5];
   
-  __savegprlr_24();
-  uVar3 = __savefpr_28();
-  puVar5 = &uStack_84;
-  lVar10 = 6;
-  param_3 = param_3 + -4;
-  lVar9 = (ulonglong)*(uint *)(DAT_8461658c + 0x34) + 1;
+  lVar5 = (longlong)(int)param_3;
+  lVar12 = (longlong)(int)param_2;
+  __savegprlr_24(param_1);
+  pFVar4 = (FilterEntInfo *)__savefpr_28();
+  puVar7 = &uStack_84;
+  lVar13 = 6;
+  lVar5 = lVar5 + -4;
+  lVar11 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount + 1;
   do {
-    param_3 = param_3 + 4;
-    puVar5 = puVar5 + 1;
-    *puVar5 = *(undefined4 *)param_3;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  uVar4 = (ulonglong)*(ushort *)param_2;
-  lVar10 = uVar4 - lVar9;
-  if (-1 < lVar10) {
-    dVar12 = 0.5;
-    dVar13 = 0.0010000000474974513;
+    lVar5 = lVar5 + 4;
+    puVar7 = puVar7 + 1;
+    *puVar7 = *(undefined4 *)lVar5;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar6 = (ulonglong)*(ushort *)lVar12;
+  lVar5 = uVar6 - lVar11;
+  if (-1 < lVar5) {
+    dVar15 = 0.5;
+    dVar16 = 0.0010000000474974513;
     do {
-      pfVar7 = (float *)(*(int *)(DAT_8461658c + 0x38) + (int)lVar10 * 0x14);
-      dVar15 = (double)pfVar7[3];
-      fVar1 = (float)((double)(pfVar7[2] * local_80[2] +
-                              *pfVar7 * local_80[0] + pfVar7[1] * local_80[1]) - dVar15);
-      fVar2 = (float)((double)(ABS(pfVar7[1]) * local_70 +
-                              ABS(pfVar7[2]) * local_6c + ABS(*pfVar7) * local_80[3]) - dVar13);
+      pcVar9 = ((rgp.world)->dpvsPlanes).planes + (int)lVar5;
+      dVar18 = (double)pcVar9->dist;
+      fVar1 = (float)((double)(pcVar9->normal[2] * local_80[0].midPoint[2] +
+                              pcVar9->normal[0] * local_80[0].midPoint[0] +
+                              pcVar9->normal[1] * local_80[0].midPoint[1]) - dVar18);
+      fVar2 = (float)((double)(ABS(pcVar9->normal[1]) * local_80[0].halfSize[1] +
+                              ABS(pcVar9->normal[2]) * local_80[0].halfSize[2] +
+                              ABS(pcVar9->normal[0]) * local_80[0].halfSize[0]) - dVar16);
+      iVar3 = (int)lVar12;
       if (fVar1 <= fVar2) {
         if (fVar1 < -fVar2) {
-          iVar6 = 1;
+          iVar8 = 1;
           goto LAB_8272d068;
         }
-        uVar8 = (uint)*(byte *)(pfVar7 + 4);
-        lVar10 = (ulonglong)*(ushort *)((int)param_2 + 2) * 2;
-        if (uVar8 < 3) {
-          dVar11 = (double)(local_80[uVar8 + 3] + local_80[uVar8]);
-          dVar14 = (double)(local_80[uVar8] - local_80[uVar8 + 3]);
-          local_80[uVar8] = (float)((double)(float)(dVar11 + dVar15) * dVar12);
-          local_80[uVar8 + 3] = (float)((double)(float)(dVar11 - dVar15) * dVar12);
-          if (dVar15 < dVar11) {
-            R_FilterEntIntoCells_r(uVar3,param_2 + 4,local_80);
+        uVar10 = (uint)pcVar9->type;
+        lVar5 = (ulonglong)*(ushort *)(iVar3 + 2) * 2;
+        if (uVar10 < 3) {
+          dVar14 = (double)(local_80[0].halfSize[uVar10] + local_80[0].midPoint[uVar10]);
+          dVar17 = (double)(local_80[0].midPoint[uVar10] - local_80[0].halfSize[uVar10]);
+          local_80[0].midPoint[uVar10] = (float)((double)(float)(dVar14 + dVar18) * dVar15);
+          local_80[0].halfSize[uVar10] = (float)((double)(float)(dVar14 - dVar18) * dVar15);
+          if (dVar18 < dVar14) {
+            R_FilterEntIntoCells_r(pFVar4,(mnode_t *)(iVar3 + 4),local_80);
           }
-          param_2 = lVar10 + param_2;
-          local_80[uVar8] = (float)((double)(float)(dVar14 + dVar15) * dVar12);
-          local_80[uVar8 + 3] = (float)((double)(float)(dVar15 - dVar14) * dVar12);
+          lVar12 = lVar5 + lVar12;
+          local_80[0].midPoint[uVar10] = (float)((double)(float)(dVar17 + dVar18) * dVar15);
+          local_80[0].halfSize[uVar10] = (float)((double)(float)(dVar18 - dVar17) * dVar15);
         }
         else {
-          R_FilterEntIntoCells_r(uVar3,param_2 + 4,local_80);
-          param_2 = lVar10 + param_2;
+          R_FilterEntIntoCells_r(pFVar4,(mnode_t *)(iVar3 + 4),local_80);
+          lVar12 = lVar5 + lVar12;
         }
       }
       else {
-        iVar6 = 0;
+        iVar8 = 0;
 LAB_8272d068:
-        param_2 = ((longlong)(int)(*(ushort *)((int)param_2 + 2) - 2) * (longlong)iVar6 + 2U &
-                  0x7fffffff) * 2 + param_2;
+        lVar12 = ((longlong)(int)(*(ushort *)(iVar3 + 2) - 2) * (longlong)iVar8 + 2U & 0x7fffffff) *
+                 2 + lVar12;
       }
-      uVar4 = (ulonglong)*(ushort *)param_2;
-      lVar10 = uVar4 - lVar9;
-    } while (-1 < lVar10);
+      uVar6 = (ulonglong)*(ushort *)lVar12;
+      lVar5 = uVar6 - lVar11;
+    } while (-1 < lVar5);
   }
-  if ((int)uVar4 != 0) {
-    R_AddEntToCell(uVar3,uVar4 - 1);
+  if ((int)uVar6 != 0) {
+    R_AddEntToCell(pFVar4,(int)uVar6 - 1);
   }
   __restfpr_28();
   __restgprlr_24();
@@ -3601,94 +3914,97 @@ LAB_8272d068:
 // 8272D160  R_FilterThingIntoCells_r  (gfx_d3d/r_dpvs.cpp:2272)
 
 void R_FilterThingIntoCells_r
-               (undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
-               undefined8 param_5)
+               (mnode_t *param_1,uint param_2,Bounds *param_3,uint *param_4,uint param_5)
 
 {
   float fVar1;
   float fVar2;
   ushort uVar3;
   ushort *puVar4;
-  undefined4 *puVar6;
   ulonglong uVar5;
-  int iVar7;
-  float *pfVar8;
-  uint uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double dVar12;
-  double dVar13;
+  longlong lVar6;
+  undefined4 *puVar8;
+  ulonglong uVar7;
+  int iVar9;
+  cplane_s *pcVar10;
+  uint uVar11;
+  longlong lVar12;
+  longlong lVar13;
   double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
+  double dVar18;
   undefined4 uStack_94;
-  float local_90 [4];
-  float local_80;
-  float local_7c;
+  Bounds local_90 [6];
   
-  __savegprlr_22();
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  __savegprlr_22(param_1);
   puVar4 = (ushort *)__savefpr_28();
-  puVar6 = &uStack_94;
-  lVar11 = 6;
-  param_3 = param_3 + -4;
-  lVar10 = (ulonglong)*(uint *)(DAT_8461658c + 0x34) + 1;
+  puVar8 = &uStack_94;
+  lVar13 = 6;
+  lVar6 = lVar6 + -4;
+  lVar12 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount + 1;
   do {
-    param_3 = param_3 + 4;
-    puVar6 = puVar6 + 1;
-    *puVar6 = *(undefined4 *)param_3;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  uVar5 = (ulonglong)*puVar4;
-  lVar11 = uVar5 - lVar10;
-  if (-1 < lVar11) {
-    dVar13 = 0.5;
-    dVar14 = 0.0010000000474974513;
+    lVar6 = lVar6 + 4;
+    puVar8 = puVar8 + 1;
+    *puVar8 = *(undefined4 *)lVar6;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar7 = (ulonglong)*puVar4;
+  lVar6 = uVar7 - lVar12;
+  if (-1 < lVar6) {
+    dVar15 = 0.5;
+    dVar16 = 0.0010000000474974513;
     do {
-      pfVar8 = (float *)(*(int *)(DAT_8461658c + 0x38) + (int)lVar11 * 0x14);
-      dVar16 = (double)pfVar8[3];
-      fVar1 = (float)((double)(pfVar8[2] * local_90[2] +
-                              *pfVar8 * local_90[0] + pfVar8[1] * local_90[1]) - dVar16);
-      fVar2 = (float)((double)(ABS(pfVar8[1]) * local_80 +
-                              ABS(pfVar8[2]) * local_7c + ABS(*pfVar8) * local_90[3]) - dVar14);
+      pcVar10 = ((rgp.world)->dpvsPlanes).planes + (int)lVar6;
+      dVar18 = (double)pcVar10->dist;
+      fVar1 = (float)((double)(pcVar10->normal[2] * local_90[0].midPoint[2] +
+                              pcVar10->normal[0] * local_90[0].midPoint[0] +
+                              pcVar10->normal[1] * local_90[0].midPoint[1]) - dVar18);
+      fVar2 = (float)((double)(ABS(pcVar10->normal[1]) * local_90[0].halfSize[1] +
+                              ABS(pcVar10->normal[2]) * local_90[0].halfSize[2] +
+                              ABS(pcVar10->normal[0]) * local_90[0].halfSize[0]) - dVar16);
       if (fVar1 <= fVar2) {
         if (fVar1 < -fVar2) {
-          iVar7 = 1;
+          iVar9 = 1;
           goto LAB_8272d248;
         }
         uVar3 = puVar4[1];
-        uVar9 = (uint)*(byte *)(pfVar8 + 4);
-        if (uVar9 < 3) {
-          dVar12 = (double)(local_90[uVar9 + 3] + local_90[uVar9]);
-          dVar15 = (double)(local_90[uVar9] - local_90[uVar9 + 3]);
-          local_90[uVar9] = (float)((double)(float)(dVar12 + dVar16) * dVar13);
-          local_90[uVar9 + 3] = (float)((double)(float)(dVar12 - dVar16) * dVar13);
-          if (dVar16 < dVar12) {
-            R_FilterThingIntoCells_r(puVar4 + 2,param_2,local_90,param_4,param_5);
+        uVar11 = (uint)pcVar10->type;
+        if (uVar11 < 3) {
+          dVar14 = (double)(local_90[0].halfSize[uVar11] + local_90[0].midPoint[uVar11]);
+          dVar17 = (double)(local_90[0].midPoint[uVar11] - local_90[0].halfSize[uVar11]);
+          local_90[0].midPoint[uVar11] = (float)((double)(float)(dVar14 + dVar18) * dVar15);
+          local_90[0].halfSize[uVar11] = (float)((double)(float)(dVar14 - dVar18) * dVar15);
+          if (dVar18 < dVar14) {
+            R_FilterThingIntoCells_r((mnode_t *)(puVar4 + 2),(uint)uVar5,local_90,param_4,param_5);
           }
           puVar4 = puVar4 + uVar3;
-          local_90[uVar9] = (float)((double)(float)(dVar15 + dVar16) * dVar13);
-          local_90[uVar9 + 3] = (float)((double)(float)(dVar16 - dVar15) * dVar13);
+          local_90[0].midPoint[uVar11] = (float)((double)(float)(dVar17 + dVar18) * dVar15);
+          local_90[0].halfSize[uVar11] = (float)((double)(float)(dVar18 - dVar17) * dVar15);
         }
         else {
-          R_FilterThingIntoCells_r(puVar4 + 2,param_2,local_90,param_4,param_5);
+          R_FilterThingIntoCells_r((mnode_t *)(puVar4 + 2),(uint)uVar5,local_90,param_4,param_5);
           puVar4 = puVar4 + uVar3;
         }
       }
       else {
-        iVar7 = 0;
+        iVar9 = 0;
 LAB_8272d248:
-        puVar4 = puVar4 + (puVar4[1] - 2) * iVar7 + 2;
+        puVar4 = puVar4 + (puVar4[1] - 2) * iVar9 + 2;
       }
-      uVar5 = (ulonglong)*puVar4;
-      lVar11 = uVar5 - lVar10;
-    } while (-1 < lVar11);
+      uVar7 = (ulonglong)*puVar4;
+      lVar6 = uVar7 - lVar12;
+    } while (-1 < lVar6);
   }
-  if ((int)uVar5 != 0) {
-    iVar7 = (int)(((longlong)((int)uVar5 + -1) * (longlong)(int)param_5 +
-                   ((param_2 & 0xffffffff) >> 5) & 0xffffffff) << 2);
-    *(uint *)(iVar7 + (int)param_4) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((param_2 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)(iVar7 + (int)param_4);
+  if ((int)uVar7 != 0) {
+    iVar9 = (int)(((longlong)((int)uVar7 + -1) * (longlong)(int)param_5 +
+                   ((uVar5 & 0xffffffff) >> 5) & 0xffffffff) << 2);
+    *(uint *)(iVar9 + (int)param_4) =
+         *(uint *)(&g_bitShift + ((uint)((uVar5 & 0xffffffff) << 2) & 0x7c)) |
+         *(uint *)(iVar9 + (int)param_4);
   }
   __restfpr_28();
   __restgprlr_22();
@@ -3698,192 +4014,218 @@ LAB_8272d248:
 
 // 8272D370  R_FilterXModelIntoScene  (gfx_d3d/r_dpvs.cpp:2350)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_FilterXModelIntoScene
-               (undefined8 param_1,longlong param_2,ulonglong param_3,undefined4 param_4)
+               (XModel *param_1,GfxScaledPlacement *param_2,uint param_3,ushort *param_4)
 
 {
-  float fVar1;
+  DObj *pDVar1;
   float *pfVar2;
   float fVar3;
-  int iVar5;
-  undefined8 uVar4;
-  int iVar6;
-  char cVar8;
-  uint uVar7;
+  long lVar4;
+  XModel *pXVar5;
+  uint uVar6;
+  int iVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
   int *piVar10;
   int iVar12;
   ulonglong uVar11;
-  undefined4 *puVar13;
-  float *pfVar14;
+  GfxScaledPlacement *pGVar13;
+  DpvsPlane *pDVar15;
+  longlong lVar14;
   char in_RESERVE;
   byte in_cr0;
-  longlong lVar15;
-  double dVar16;
+  longlong lVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
-  undefined1 local_a0 [160];
+  double dVar22;
+  float fVar23;
+  uchar local_a0 [160];
   
-  __savegprlr_21();
-  iVar5 = __savefpr_26();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0x949,0,0xffffffff82000f98,0xffffffff8205ce78);
+  uVar8 = (ulonglong)(int)param_3;
+  lVar14 = (longlong)(int)param_2;
+  __savegprlr_21(param_1);
+  pXVar5 = (XModel *)__savefpr_26();
+  if (pXVar5 == (XModel *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x949,0,
+                    "%s");
   }
-  pfVar2 = (float *)param_2;
+  pfVar2 = (float *)lVar14;
   dVar21 = 0.0;
   if (pfVar2[7] <= 0.0) {
-    MyAssertHandler(0xffffffff821bc490,0x94a,0,0xffffffff82000f98,0xffffffff821bcc34);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x94a,0,
+                    "%s");
   }
-  dVar16 = (double)*pfVar2;
-  dVar18 = (double)pfVar2[2];
-  dVar17 = (double)pfVar2[3];
-  if (0.002 <= ABS((float)(dVar17 * dVar17 +
-                          (double)(float)(dVar18 * dVar18 +
-                                         (double)(float)(dVar16 * dVar16 +
-                                                        (double)(pfVar2[1] * pfVar2[1])))) - 1.0)) {
-    uVar4 = va(dVar16,(double)pfVar2[1],dVar18,dVar17,0xffffffff8200c4fc,dVar16,(double)pfVar2[1],
-               dVar18,dVar17);
-    MyAssertHandler(0xffffffff821bc490,0x94b,0,0xffffffff820011f4,0xffffffff821bcc08,uVar4);
+  if (0.002 <= ABS((pfVar2[3] * pfVar2[3] +
+                   pfVar2[2] * pfVar2[2] + *pfVar2 * *pfVar2 + pfVar2[1] * pfVar2[1]) - 1.0)) {
+    va("%g %g %g %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x94b,0,
+                    "%s\n\t%s");
   }
-  if (DAT_847ee92c != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x94d,0,0xffffffff82000f98,0xffffffff821bcbf4);
+  if (scene.allowAddDObj != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x94d,0,
+                    "%s");
   }
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff821bc490,0x950,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x950,0,
+                    "%s");
   }
-  dVar16 = (double)XModelGetRadius(iVar5);
-  dVar16 = (double)(float)(dVar16 * (double)pfVar2[7]);
-  iVar6 = 0;
-  uVar7 = 0;
-  piVar10 = (int *)(&DAT_845a98e0 + DAT_82a382e4 * 0x2b8);
+  fVar23 = XModelGetRadius(pXVar5);
+  dVar17 = (double)(fVar23 * pfVar2[7]);
+  iVar7 = 0;
+  uVar6 = 0;
+  piVar10 = &dpvsGlob.views[g_cgameClientNum][0].frustumPlaneCount;
   do {
     iVar12 = 0;
-    pfVar14 = (float *)(piVar10 + -0x38);
+    pDVar15 = (DpvsPlane *)(piVar10 + -0x38);
     if (0 < *piVar10) {
       do {
-        if ((double)(float)((double)(pfVar2[6] * pfVar14[2] +
-                                     pfVar2[4] * *pfVar14 + pfVar2[5] * pfVar14[1] + pfVar14[3]) +
-                           dVar16) <= dVar21) {
-          iVar6 = iVar6 + 1;
-          local_a0[uVar7] = 2;
+        if ((double)(float)((double)(pfVar2[6] * pDVar15->coeffs[2] +
+                                     pfVar2[4] * pDVar15->coeffs[0] + pfVar2[5] * pDVar15->coeffs[1]
+                                    + pDVar15->coeffs[3]) + dVar17) <= dVar21) {
+          iVar7 = iVar7 + 1;
+          local_a0[uVar6] = '\x02';
           goto LAB_8272d5bc;
         }
         iVar12 = iVar12 + 1;
-        pfVar14 = pfVar14 + 4;
+        pDVar15 = pDVar15 + 1;
       } while (iVar12 < *piVar10);
     }
-    local_a0[uVar7] = 1;
+    local_a0[uVar6] = '\x01';
 LAB_8272d5bc:
-    uVar7 = uVar7 + 1;
+    uVar6 = uVar6 + 1;
     piVar10 = piVar10 + 0x3a;
-    if (2 < uVar7) {
-      if (iVar6 == 3) {
-        if (DAT_8461803c == '\0') {
-          MyAssertHandler(0xffffffff821bc490,0x969,0,0xffffffff82000f98,0xffffffff82185198);
+    if (2 < uVar6) {
+      if (iVar7 == 3) {
+        if (rg.lodParms.valid == false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x969,0,"%s");
         }
-        dVar16 = (double)pfVar2[7];
-        dVar17 = (double)SQRT((DAT_84618028 - pfVar2[4]) * (DAT_84618028 - pfVar2[4]) +
-                              (DAT_84618030 - pfVar2[6]) * (DAT_84618030 - pfVar2[6]) +
-                              (DAT_8461802c - pfVar2[5]) * (DAT_8461802c - pfVar2[5]));
-        if (dVar16 == dVar21) {
-          MyAssertHandler(0xffffffff82003018,0xe5,0,0xffffffff82000f98,0xffffffff82003004);
+        dVar17 = (double)pfVar2[7];
+        dVar22 = (double)SQRT((rg.lodParms.origin[0] - pfVar2[4]) *
+                              (rg.lodParms.origin[0] - pfVar2[4]) +
+                              (rg.lodParms.origin[2] - pfVar2[6]) *
+                              (rg.lodParms.origin[2] - pfVar2[6]) +
+                              (rg.lodParms.origin[1] - pfVar2[5]) *
+                              (rg.lodParms.origin[1] - pfVar2[5]));
+        if (dVar17 == dVar21) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0xe5,0,"%s");
         }
-        iVar6 = DB_GetXModelIndex(iVar5);
-        fVar1 = ((float)((double)(float)(1.0 / dVar16) * dVar17 - (double)*(float *)(iVar5 + 0xf4))
-                + 256.0) * DAT_84618174 * 2.0;
-        fVar3 = *(float *)(&DAT_83277900 + iVar6 * 4);
-        if (fVar1 - *(float *)(&DAT_83277900 + iVar6 * 4) < 0.0) {
-          fVar3 = fVar1;
+        uVar6 = DB_GetXModelIndex(pXVar5);
+        fVar23 = ((float)((double)(float)(1.0 / dVar17) * dVar22 - (double)pXVar5->radius) + 256.0)
+                 * rg.invViewScale * 2.0;
+        fVar3 = g_stream.fxModelDist[uVar6];
+        if (fVar23 - g_stream.fxModelDist[uVar6] < 0.0) {
+          fVar3 = fVar23;
         }
-        *(float *)(&DAT_83277900 + iVar6 * 4) = fVar3;
+        g_stream.fxModelDist[uVar6] = fVar3;
         __restfpr_26();
         __restgprlr_21();
         return;
       }
-      if (*(char *)(DAT_845aa634 + 0xc) != '\0') {
-        if (DAT_8461803c == '\0') {
-          MyAssertHandler(0xffffffff821bc490,0x978,0,0xffffffff82000f98,0xffffffff82185198);
+      if ((r_drawXModels->current).enabled != false) {
+        if (rg.lodParms.valid == false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0x978,0,"%s");
         }
         dVar20 = (double)pfVar2[7];
-        dVar19 = (double)DAT_84618034;
-        dVar18 = (double)DAT_84618038;
-        dVar17 = (double)SQRT((DAT_84618028 - pfVar2[4]) * (DAT_84618028 - pfVar2[4]) +
-                              (DAT_84618030 - pfVar2[6]) * (DAT_84618030 - pfVar2[6]) +
-                              (DAT_8461802c - pfVar2[5]) * (DAT_8461802c - pfVar2[5]));
+        dVar19 = (double)rg.lodParms.invFovScale;
+        dVar18 = (double)rg.lodParms.cappedLodScale;
+        dVar22 = (double)SQRT((rg.lodParms.origin[0] - pfVar2[4]) *
+                              (rg.lodParms.origin[0] - pfVar2[4]) +
+                              (rg.lodParms.origin[2] - pfVar2[6]) *
+                              (rg.lodParms.origin[2] - pfVar2[6]) +
+                              (rg.lodParms.origin[1] - pfVar2[5]) *
+                              (rg.lodParms.origin[1] - pfVar2[5]));
         if (dVar20 == dVar21) {
-          MyAssertHandler(0xffffffff82003018,0xe5,0,0xffffffff82000f98,0xffffffff82003004);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0xe5,0,"%s");
         }
-        dVar17 = (double)(float)((double)(float)(1.0 / dVar20) * dVar17);
-        cVar8 = XModelGetLodForDist((double)(float)(dVar19 * dVar17),
-                                    (double)(float)(dVar18 * dVar17),iVar5);
-        if (-1 < cVar8) {
-          if ((param_3 & 2) == 0) {
+        dVar22 = (double)(float)((double)(float)(1.0 / dVar20) * dVar22);
+        iVar7 = XModelGetLodForDist(pXVar5,(float)(dVar19 * dVar22),(float)(dVar18 * dVar22));
+        if (-1 < (char)iVar7) {
+          if ((uVar8 & 2) == 0) {
             uVar11 = 0;
           }
           else {
             do {
-              uVar7 = DAT_847c40ec;
-              uVar11 = (ulonglong)DAT_847c40ec;
+              lVar4 = scene.gfxEntCount;
+              uVar11 = (ulonglong)(uint)scene.gfxEntCount;
               if (in_RESERVE != '\0') {
-                DAT_847c40ec = storeWordConditionalIndexed(uVar11 + 1,0,0xffffffff847c40ec);
+                scene.gfxEntCount = storeWordConditionalIndexed(uVar11 + 1,0,0xffffffff847c40ec);
                 in_cr0 = 2;
               }
             } while (!(bool)(in_cr0 >> 1 & 1));
             if (0x7f < uVar11) {
-              DAT_847c40ec = 0x80;
-              R_WarnOncePerFrame(3,0x80);
+              scene.gfxEntCount = 0x80;
+              R_WarnOncePerFrame(R_WARN_KNOWN_SPECIAL_MODELS);
               __restfpr_26();
               __restgprlr_21();
               return;
             }
-            *(float *)(&DAT_847c40f4 + uVar7 * 8) = (float)dVar21;
-            *(int *)(&DAT_847c40f0 + uVar7 * 8) = (int)(param_3 & 2);
+            scene.gfxEnts[lVar4].materialTime = (float)dVar21;
+            scene.gfxEnts[lVar4].renderFxFlags = (uint)(uVar8 & 2);
           }
-          uVar7 = R_AllocSceneModel();
-          if (uVar7 < 0x400) {
-            iVar6 = uVar7 * 0x48;
-            (&DAT_847d46d8)[uVar7 * 0x12] = iVar5;
-            if ((&DAT_847d46dc)[uVar7 * 0x12] != 0) {
-              MyAssertHandler(0xffffffff821bc490,0x9ad,1,0xffffffff82000f98,0xffffffff821bcbe0);
+          uVar6 = R_AllocSceneModel();
+          if (uVar6 < 0x400) {
+            pDVar1 = scene.sceneModel[uVar6].obj;
+            scene.sceneModel[uVar6].model = pXVar5;
+            if (pDVar1 != (DObj *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x9ad,1,"%s");
             }
             if (0x7f < uVar11) {
-              MyAssertHandler(0xffffffff821bc490,0x9af,0,0xffffffff821bcb98,uVar11,0x80);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x9af,0,
+                              "gfxEntIndex doesn\'t index GFX_SPECIAL_ENTITY_LIMIT\n\t%i not in [0, %i)"
+                             );
             }
-            uVar9 = (ulonglong)DAT_84613768;
+            uVar9 = (ulonglong)gfxCfg.entnumNone;
             if (0xfff < uVar9) {
-              MyAssertHandler(0xffffffff821bc490,0x9b0,0,0xffffffff821bcb50,uVar9,0x1000);
-              uVar9 = (ulonglong)DAT_84613768;
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x9b0,0,
+                              "gfxCfg.entnumNone doesn\'t index SCENE_ENTNUM_LIMIT\n\t%i not in [0, %i)"
+                             );
+              uVar9 = (ulonglong)gfxCfg.entnumNone;
             }
-            if (0x1fff < (param_3 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff821bc490,0x9b1,0,0xffffffff821bcb08,param_3,0x2000);
-              uVar9 = (ulonglong)DAT_84613768;
+            if (0x1fff < (uVar8 & 0xffffffff)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0x9b1,0,
+                              "renderFxFlags doesn\'t index RENDERFX_FLAGS_LIMIT\n\t%i not in [0, %i)"
+                             );
+              uVar9 = (ulonglong)gfxCfg.entnumNone;
             }
-            puVar13 = &DAT_847d46dc + uVar7 * 0x12;
-            (&DAT_847d4700)[uVar7 * 0x12] =
+            pGVar13 = (GfxScaledPlacement *)&scene.sceneModel[uVar6].obj;
+            *(uint *)&scene.sceneModel[uVar6].field_0x2c =
                  (uint)(((uVar11 & 0xfffff) << 0xc | uVar9 & 0xffffffff00000fff) << 0xd) |
-                 (uint)param_3 & 0x1fff;
-            param_2 = param_2 + -4;
-            lVar15 = 8;
+                 (uint)uVar8 & 0x1fff;
+            lVar14 = lVar14 + -4;
+            lVar16 = 8;
             do {
-              param_2 = param_2 + 4;
-              puVar13 = puVar13 + 1;
-              *puVar13 = *(undefined4 *)param_2;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-            (&DAT_847d4704)[uVar7 * 0x12] = (float)dVar16;
-            (&DAT_847d4708)[uVar7 * 0x12] = param_4;
-            (&DAT_847d4719)[iVar6] = cVar8;
-            *(undefined4 *)(&DAT_847d470c + iVar6) = (&DAT_847d46f0)[uVar7 * 0x12];
-            *(undefined4 *)(&DAT_847d4710 + iVar6) = (&DAT_847d46f4)[uVar7 * 0x12];
-            fVar1 = (float)(&DAT_847d46f8)[uVar7 * 0x12];
-            *(float *)(&DAT_847d4714 + iVar6) = fVar1;
-            *(float *)(&DAT_847d4714 + iVar6) = fVar1 + 4.0;
-            (&DAT_847e66d4)[uVar7] = local_a0[0];
-            (&DAT_847e6ad4)[uVar7] = local_a0[1];
-            (&DAT_847e6ed4)[uVar7] = local_a0[2];
+              lVar14 = lVar14 + 4;
+              pGVar13 = (GfxScaledPlacement *)((pGVar13->base).quat + 1);
+              (pGVar13->base).quat[0] = *(float *)lVar14;
+              lVar16 = lVar16 + -1;
+            } while (lVar16 != 0);
+            scene.sceneModel[uVar6].radius = (float)dVar17;
+            scene.sceneModel[uVar6].cachedLightingHandle = param_4;
+            scene.sceneModel[uVar6].lod = (char)iVar7;
+            scene.sceneModel[uVar6].lightingOrigin[0] =
+                 scene.sceneModel[uVar6].placement.base.origin[0];
+            scene.sceneModel[uVar6].lightingOrigin[1] =
+                 scene.sceneModel[uVar6].placement.base.origin[1];
+            fVar23 = scene.sceneModel[uVar6].placement.base.origin[2];
+            scene.sceneModel[uVar6].lightingOrigin[2] = fVar23;
+            scene.sceneModel[uVar6].lightingOrigin[2] = fVar23 + 4.0;
+            scene.sceneModelVisData[0][uVar6] = local_a0[0];
+            scene.sceneModelVisData[1][uVar6] = local_a0[1];
+            scene.sceneModelVisData[2][uVar6] = local_a0[2];
           }
         }
       }
@@ -3897,48 +4239,48 @@ LAB_8272d5bc:
 
 // 8272D998  R_FilterDObjIntoCells  (gfx_d3d/r_dpvs.cpp:2502)
 
-void R_FilterDObjIntoCells(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+void R_FilterDObjIntoCells(uint param_1,uint param_2,float *param_3,float param_4)
 
 {
-  ulonglong uVar1;
+  mnode_t *pmVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  uint uVar4;
   double extraout_f1;
-  double dVar2;
-  undefined4 local_60;
-  undefined4 local_5c;
-  float local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  float local_44;
-  float local_40;
-  float local_3c;
+  double dVar5;
+  FilterEntInfo local_60;
+  Bounds local_50 [3];
   
-  uVar1 = __savegprlr_27();
-  dVar2 = extraout_f1;
-  if ((param_2 & 0xffffffff) == (ulonglong)DAT_84613768) {
-    MyAssertHandler(0xffffffff821bc490,0x9ca,0,0xffffffff82000f98,0xffffffff821bc89c);
+  uVar3 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_27((double)param_4,param_1);
+  dVar5 = extraout_f1;
+  if ((uVar3 & 0xffffffff) == (ulonglong)gfxCfg.entnumNone) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x9ca,0,
+                    "%s");
   }
-  if ((ulonglong)DAT_8461375c <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x9cb,0,0xffffffff821bcac0,uVar1);
+  if (gfxCfg.maxClientViews <= uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x9cb,0,
+                    "localClientNum doesn\'t index gfxCfg.maxClientViews\n\t%i not in [0, %i)");
   }
-  R_UnfilterEntFromCells(uVar1,param_2);
-  local_58 = (float)dVar2;
-  local_60 = (undefined4)uVar1;
-  local_50 = *param_3;
-  local_54 = 0;
-  local_4c = param_3[1];
-  local_5c = (undefined4)param_2;
-  local_48 = param_3[2];
-  local_44 = (float)dVar2;
-  local_40 = (float)dVar2;
-  local_3c = (float)dVar2;
-  if (*(char *)(DAT_845aa7f0 + 0xc) != '\0') {
-    R_FilterEntIntoAllCells_r();
+  uVar4 = (uint)uVar3;
+  R_UnfilterEntFromCells(uVar2,uVar4);
+  local_60.info.radius = (float)dVar5;
+  local_50[0].midPoint[0] = *param_3;
+  local_60.cellOffset = 0;
+  local_50[0].midPoint[1] = param_3[1];
+  local_50[0].midPoint[2] = param_3[2];
+  local_50[0].halfSize[0] = (float)dVar5;
+  local_50[0].halfSize[1] = (float)dVar5;
+  local_50[0].halfSize[2] = (float)dVar5;
+  pmVar1 = (mnode_t *)((rgp.world)->dpvsPlanes).nodes;
+  local_60.localClientNum = uVar2;
+  local_60.entnum = uVar4;
+  if ((r_dpvsFilterDebug->current).enabled != false) {
+    R_FilterEntIntoAllCells_r(&local_60,pmVar1);
     __restgprlr_27();
     return;
   }
-  R_FilterEntIntoCells_r(&local_60,*(undefined4 *)(DAT_8461658c + 0x3c),&local_50);
+  R_FilterEntIntoCells_r(&local_60,pmVar1,local_50);
   __restgprlr_27();
   return;
 }
@@ -3946,33 +4288,38 @@ void R_FilterDObjIntoCells(undefined8 param_1,ulonglong param_2,undefined4 *para
 
 // 8272DAB0  R_FilterBModelIntoCells  (gfx_d3d/r_dpvs.cpp:2532)
 
-void R_FilterBModelIntoCells(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void R_FilterBModelIntoCells(uint param_1,uint param_2,GfxBrushModel *param_3)
 
 {
-  ulonglong uVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  mnode_t *pmVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  FilterEntInfo local_40 [4];
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == (ulonglong)DAT_84613768) {
-    MyAssertHandler(0xffffffff821bc490,0x9e7,0,0xffffffff82000f98,0xffffffff821bc89c);
+  uVar3 = (ulonglong)(int)param_2;
+  uVar2 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == (ulonglong)gfxCfg.entnumNone) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x9e7,0,
+                    "%s");
   }
-  if ((ulonglong)DAT_8461375c <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0x9e8,0,0xffffffff821bcac0,uVar1);
+  if (gfxCfg.maxClientViews <= uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0x9e8,0,
+                    "localClientNum doesn\'t index gfxCfg.maxClientViews\n\t%i not in [0, %i)");
   }
-  R_UnfilterEntFromCells(uVar1,param_2);
-  local_40 = (undefined4)uVar1;
-  local_3c = (undefined4)param_2;
-  local_38 = (undefined4)param_3;
-  local_34 = *(undefined4 *)(DAT_8461658c + 0x34);
-  if (*(char *)(DAT_845aa7f0 + 0xc) != '\0') {
-    R_FilterEntIntoAllCells_r();
+  uVar4 = (uint)uVar3;
+  R_UnfilterEntFromCells(uVar2,uVar4);
+  local_40[0].cellOffset = ((rgp.world)->dpvsPlanes).cellCount;
+  pmVar1 = (mnode_t *)((rgp.world)->dpvsPlanes).nodes;
+  local_40[0].localClientNum = uVar2;
+  local_40[0].entnum = uVar4;
+  local_40[0].info.bmodel = param_3;
+  if ((r_dpvsFilterDebug->current).enabled != false) {
+    R_FilterEntIntoAllCells_r(local_40,pmVar1);
     __restgprlr_27();
     return;
   }
-  R_FilterEntIntoCells_r(&local_40,*(undefined4 *)(DAT_8461658c + 0x3c),param_3);
+  R_FilterEntIntoCells_r(local_40,pmVar1,(Bounds *)param_3);
   __restgprlr_27();
   return;
 }
@@ -3980,215 +4327,224 @@ void R_FilterBModelIntoCells(undefined8 param_1,ulonglong param_2,undefined8 par
 
 // 8272DB90  R_FilterThingIntoCells  (gfx_d3d/r_dpvs.cpp:2560)
 
-void R_FilterThingIntoCells(ulonglong param_1,undefined8 param_2,longlong param_3,ulonglong param_4)
+void R_FilterThingIntoCells(uint param_1,Bounds *param_2,uint *param_3,uint param_4)
 
 {
   uint uVar1;
   ulonglong uVar2;
-  longlong lVar3;
+  uint *puVar3;
   
-  uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((param_1 & 0xffffffff) << 2) & 0x7c));
-  uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x34);
+  uVar1 = *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4);
+  uVar2 = (ulonglong)(uint)((rgp.world)->dpvsPlanes).cellCount;
   if (uVar2 != 0) {
-    lVar3 = ((param_1 & 0xffffffff) >> 5) * 4 + param_3;
+    puVar3 = param_3 + (param_1 >> 5);
     do {
-      *(uint *)lVar3 = *(uint *)lVar3 & ~uVar1;
-      lVar3 = (param_4 & 0x3fffffff) * 4 + lVar3;
+      *puVar3 = *puVar3 & ~uVar1;
+      puVar3 = puVar3 + param_4;
       uVar2 = uVar2 - 1;
     } while (uVar2 != 0);
   }
-  R_FilterThingIntoCells_r(*(undefined4 *)(DAT_8461658c + 0x3c),param_1,param_2,param_3);
+  R_FilterThingIntoCells_r
+            ((mnode_t *)((rgp.world)->dpvsPlanes).nodes,param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8272DC08  R_InitSceneEntity  (gfx_d3d/r_dpvs.cpp:2567)
 
-void R_InitSceneEntity(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_InitSceneEntity(GfxSceneEntity *param_1)
 
 {
-  ulonglong uVar1;
-  
-  DObjGetSurfaceData(*(undefined4 *)(param_1 + 0x6c),param_1 + 0x1c,param_1 + 0x48);
-  uVar1 = (ulonglong)(*(uint *)(param_1 + 0x68) >> 0xd);
+  DObjGetSurfaceData(param_1->obj,(param_1->placement).origin,param_1->lods);
   CG_PredictiveSkinCEntity
-            (param_1,(*(uint *)((&DAT_845aa2e0)[DAT_847ee8e8] +
-                               ((uint)((uVar1 & 0xfff) >> 3) & 0x1ffffffc)) &
-                     *(uint *)((int)&DAT_82992400 + (int)((uVar1 & 0x1f) << 2))) == 0);
+            (param_1,(uint)LZCOUNT(*(uint *)((int)dpvsGlob.entVisBits[scene.dpvs.localClientNum] +
+                                            (ZPULL(*(undefined4 *)&param_1->field_0x68,0xd,0xc) >> 3
+                                            & 0x1ffffffc)) &
+                                   *(uint *)(&g_bitShift +
+                                            ((uint)*(undefined4 *)&param_1->field_0x68 >> 0xd & 0x1f
+                                            ) * 4)) >> 5);
   return;
 }
 
 
 // 8272DCA0  R_FrustumCullEntities  (gfx_d3d/r_dpvs.cpp:2587)
 
-void R_FrustumCullEntities(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_FrustumCullEntities(uint param_1,int param_2)
 
 {
   ushort uVar1;
   uint uVar2;
   float fVar3;
-  float *pfVar4;
-  uint uVar5;
+  GfxBrushModel *pGVar4;
+  float *pfVar5;
   ulonglong uVar6;
-  char cVar8;
-  undefined8 uVar7;
-  undefined4 *puVar9;
-  int *piVar10;
+  bool bVar7;
+  GfxBrushModel **ppGVar8;
+  uchar **ppuVar9;
+  longlong lVar10;
   longlong lVar11;
   int iVar12;
   int iVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  float *pfVar16;
-  ulonglong uVar17;
-  double dVar18;
-  float local_b0;
-  float local_ac;
-  float local_a8;
-  float local_a4;
-  float local_a0;
-  float local_9c;
+  int iVar14;
+  longlong lVar15;
+  uint uVar16;
+  DObj **ppDVar17;
+  float *pfVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
+  double dVar21;
+  Bounds local_b0 [7];
   
-  uVar6 = __savegprlr_15();
-  cVar8 = Sys_IsMainThread();
-  if (cVar8 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xa28,0,0xffffffff82000f98,0xffffffff82010b48);
+  lVar11 = (longlong)param_2;
+  uVar6 = __savegprlr_15(param_1);
+  bVar7 = Sys_IsMainThread();
+  if (!bVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xa28,0,
+                    "%s");
   }
-  uVar5 = DAT_847c44f0;
-  param_2 = param_2 * 0x2b8;
-  dVar18 = 0.0;
-  uVar15 = 0;
-  if (DAT_847c44f0 != 0) {
-    puVar9 = &DAT_847c4568;
+  iVar13 = scene.sceneDObjCount;
+  lVar11 = lVar11 * 0x2b8;
+  dVar21 = 0.0;
+  uVar16 = 0;
+  if (scene.sceneDObjCount != 0) {
+    ppDVar17 = &scene.sceneDObj[0].obj;
     do {
-      uVar2 = puVar9[-0x11];
+      uVar2 = ((GfxSceneEntityCull *)(ppDVar17 + -0x11))->state;
       if ((uVar2 != 0) && (uVar2 != 4)) {
         if (uVar2 < 2) {
-          uVar7 = DObjGetName(*puVar9);
-          uVar7 = va(0xffffffff821bc7fc,uVar15,uVar2,uVar7);
-          MyAssertHandler(0xffffffff821bc490,0xa34,0,0xffffffff820011f4,0xffffffff821bc8dc,uVar7);
+          DObjGetName(*ppDVar17);
+          va("%d %d \'%s\'");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0xa34,0,"%s\n\t%s");
         }
-        uVar2 = puVar9[-1];
+        uVar2 = (uint)ppDVar17[-1];
         if ((uVar6 & 0xffffffff) != 0) {
-          lVar11 = param_2 + -0x7ba56800;
-          piVar10 = &DAT_847ee8ec;
-          uVar17 = uVar6;
+          lVar10 = lVar11 + -0x7ba56800;
+          ppuVar9 = scene.dpvs.entVisData;
+          uVar19 = uVar6;
           do {
-            iVar13 = *(int *)((int)lVar11 + 0xe0);
+            iVar14 = *(int *)((int)lVar10 + 0xe0);
             iVar12 = 0;
-            if (0 < iVar13) {
-              lVar14 = lVar11;
+            if (0 < iVar14) {
+              lVar15 = lVar10;
               do {
-                pfVar16 = (float *)lVar14;
-                if ((double)((float)puVar9[-0xe] * pfVar16[2] +
-                             (float)puVar9[-0xf] * pfVar16[1] +
-                             (float)puVar9[-0x10] * *pfVar16 +
-                             ABS(pfVar16[2]) * (float)puVar9[-0xb] +
-                             ABS(*pfVar16) * (float)puVar9[-0xd] +
-                             ABS(pfVar16[1]) * (float)puVar9[-0xc] + pfVar16[3]) <= dVar18) {
-                  *(undefined1 *)(*piVar10 + (uVar2 >> 0xd & 0xfff)) = 2;
+                pfVar18 = (float *)lVar15;
+                if ((double)((float)ppDVar17[-0xe] * pfVar18[2] +
+                             (float)ppDVar17[-0xf] * pfVar18[1] +
+                             ((Bounds *)(ppDVar17 + -0x10))->midPoint[0] * *pfVar18 +
+                             ABS(pfVar18[2]) * (float)ppDVar17[-0xb] +
+                             ABS(*pfVar18) * (float)ppDVar17[-0xd] +
+                             ABS(pfVar18[1]) * (float)ppDVar17[-0xc] + pfVar18[3]) <= dVar21) {
+                  (*ppuVar9)[uVar2 >> 0xd & 0xfff] = '\x02';
                   break;
                 }
                 iVar12 = iVar12 + 1;
-                lVar14 = lVar14 + 0x10;
-              } while (iVar12 < iVar13);
+                lVar15 = lVar15 + 0x10;
+              } while (iVar12 < iVar14);
             }
-            lVar11 = lVar11 + 0xe8;
-            piVar10 = piVar10 + 1;
-            uVar17 = uVar17 - 1;
-          } while (uVar17 != 0);
+            lVar10 = lVar10 + 0xe8;
+            ppuVar9 = ppuVar9 + 1;
+            uVar19 = uVar19 - 1;
+          } while (uVar19 != 0);
         }
-        if (*(char *)(DAT_845aa700 + 0xc) != '\0') {
-          R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,puVar9 + -0x10,0xffffffff82181878);
+        if ((r_showCullXModels->current).enabled != false) {
+          R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)(ppDVar17 + -0x10),colorCyan);
         }
       }
-      uVar15 = uVar15 + 1;
-      puVar9 = puVar9 + 0x1e;
-    } while ((uVar15 & 0xffffffff) < (ulonglong)uVar5);
+      uVar16 = uVar16 + 1;
+      ppDVar17 = ppDVar17 + 0x1e;
+    } while (uVar16 < (uint)iVar13);
   }
-  if (DAT_847ee938 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xa47,0,0xffffffff82000f98,0xffffffff821bc850);
+  if (scene.sceneDObjModelCountValidRead == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xa47,0,
+                    "%s");
   }
-  uVar15 = (ulonglong)DAT_847d46d0;
-  if (uVar15 != 0) {
-    pfVar16 = (float *)&DAT_847d46f0;
+  uVar19 = (ulonglong)(uint)scene.sceneDObjModelCount;
+  if (uVar19 != 0) {
+    pfVar18 = scene.sceneModel[0].placement.base.origin;
     do {
-      fVar3 = pfVar16[4];
+      fVar3 = pfVar18[4];
       if ((uVar6 & 0xffffffff) != 0) {
-        lVar11 = param_2 + -0x7ba56720;
-        piVar10 = &DAT_847ee8ec;
-        uVar17 = uVar6;
+        lVar10 = lVar11 + -0x7ba56720;
+        ppuVar9 = scene.dpvs.entVisData;
+        uVar20 = uVar6;
         do {
           iVar13 = 0;
-          lVar14 = lVar11 + -0xe0;
-          if (0 < *(int *)lVar11) {
+          lVar15 = lVar10 + -0xe0;
+          if (0 < *(int *)lVar10) {
             do {
-              pfVar4 = (float *)lVar14;
-              if ((double)(pfVar16[2] * pfVar4[2] + *pfVar16 * *pfVar4 + pfVar16[1] * pfVar4[1] +
-                           pfVar4[3] + pfVar16[5]) <= dVar18) {
-                *(undefined1 *)(*piVar10 + ((uint)fVar3 >> 0xd & 0xfff)) = 2;
+              pfVar5 = (float *)lVar15;
+              if ((double)(pfVar18[2] * pfVar5[2] + *pfVar18 * *pfVar5 + pfVar18[1] * pfVar5[1] +
+                           pfVar5[3] + pfVar18[5]) <= dVar21) {
+                (*ppuVar9)[(uint)fVar3 >> 0xd & 0xfff] = '\x02';
                 break;
               }
               iVar13 = iVar13 + 1;
-              lVar14 = lVar14 + 0x10;
-            } while (iVar13 < *(int *)lVar11);
+              lVar15 = lVar15 + 0x10;
+            } while (iVar13 < *(int *)lVar10);
           }
-          lVar11 = lVar11 + 0xe8;
-          piVar10 = piVar10 + 1;
-          uVar17 = uVar17 - 1;
-        } while (uVar17 != 0);
+          lVar10 = lVar10 + 0xe8;
+          ppuVar9 = ppuVar9 + 1;
+          uVar20 = uVar20 - 1;
+        } while (uVar20 != 0);
       }
-      if (*(char *)(DAT_845aa700 + 0xc) != '\0') {
-        local_a4 = pfVar16[5];
-        local_b0 = *pfVar16;
-        local_ac = pfVar16[1];
-        local_a8 = pfVar16[2];
-        local_a0 = local_a4;
-        local_9c = local_a4;
-        R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,&local_b0,0xffffffff82181878);
+      if ((r_showCullXModels->current).enabled != false) {
+        local_b0[0].halfSize[0] = pfVar18[5];
+        local_b0[0].midPoint[0] = *pfVar18;
+        local_b0[0].midPoint[1] = pfVar18[1];
+        local_b0[0].midPoint[2] = pfVar18[2];
+        local_b0[0].halfSize[1] = local_b0[0].halfSize[0];
+        local_b0[0].halfSize[2] = local_b0[0].halfSize[0];
+        R_AddDebugBox(&frontEndDataOut->debugGlobals,local_b0,colorCyan);
       }
-      uVar15 = uVar15 - 1;
-      pfVar16 = pfVar16 + 0x12;
-    } while (uVar15 != 0);
+      uVar19 = uVar19 - 1;
+      pfVar18 = pfVar18 + 0x12;
+    } while (uVar19 != 0);
   }
-  uVar15 = (ulonglong)DAT_847e82d4;
-  if (uVar15 != 0) {
-    puVar9 = &DAT_847e82e0;
+  uVar19 = (ulonglong)(uint)scene.sceneBrushCount;
+  if (uVar19 != 0) {
+    ppGVar8 = &scene.sceneBrush[0].bmodel;
     do {
-      uVar1 = *(ushort *)((int)puVar9 + -2);
-      pfVar16 = (float *)*puVar9;
+      uVar1 = *(ushort *)((int)ppGVar8 + -2);
+      pGVar4 = *ppGVar8;
       if ((uVar6 & 0xffffffff) != 0) {
-        lVar11 = param_2 + -0x7ba56800;
-        piVar10 = &DAT_847ee8ec;
-        uVar17 = uVar6;
+        lVar10 = lVar11 + -0x7ba56800;
+        ppuVar9 = scene.dpvs.entVisData;
+        uVar20 = uVar6;
         do {
-          iVar13 = *(int *)((int)lVar11 + 0xe0);
-          iVar12 = 0;
+          iVar13 = *(int *)((int)lVar10 + 0xe0);
+          iVar14 = 0;
           if (0 < iVar13) {
-            lVar14 = lVar11;
+            lVar15 = lVar10;
             do {
-              pfVar4 = (float *)lVar14;
-              if ((double)(pfVar16[1] * pfVar4[1] +
-                           *pfVar16 * *pfVar4 +
-                           pfVar16[2] * pfVar4[2] +
-                           ABS(*pfVar4) * pfVar16[3] +
-                           ABS(pfVar4[1]) * pfVar16[4] + ABS(pfVar4[2]) * pfVar16[5] + pfVar4[3]) <=
-                  dVar18) {
-                *(undefined1 *)(*piVar10 + (uint)uVar1) = 2;
+              pfVar18 = (float *)lVar15;
+              if ((double)((pGVar4->writable).bounds.midPoint[1] * pfVar18[1] +
+                           (pGVar4->writable).bounds.midPoint[0] * *pfVar18 +
+                           (pGVar4->writable).bounds.midPoint[2] * pfVar18[2] +
+                           ABS(*pfVar18) * (pGVar4->writable).bounds.halfSize[0] +
+                           ABS(pfVar18[1]) * (pGVar4->writable).bounds.halfSize[1] +
+                           ABS(pfVar18[2]) * (pGVar4->writable).bounds.halfSize[2] + pfVar18[3]) <=
+                  dVar21) {
+                (*ppuVar9)[uVar1] = '\x02';
                 break;
               }
-              iVar12 = iVar12 + 1;
-              lVar14 = lVar14 + 0x10;
-            } while (iVar12 < iVar13);
+              iVar14 = iVar14 + 1;
+              lVar15 = lVar15 + 0x10;
+            } while (iVar14 < iVar13);
           }
-          lVar11 = lVar11 + 0xe8;
-          piVar10 = piVar10 + 1;
-          uVar17 = uVar17 - 1;
-        } while (uVar17 != 0);
+          lVar10 = lVar10 + 0xe8;
+          ppuVar9 = ppuVar9 + 1;
+          uVar20 = uVar20 - 1;
+        } while (uVar20 != 0);
       }
-      uVar15 = uVar15 - 1;
-      puVar9 = puVar9 + 10;
-    } while (uVar15 != 0);
+      uVar19 = uVar19 - 1;
+      ppGVar8 = ppGVar8 + 10;
+    } while (uVar19 != 0);
   }
   __restgprlr_15();
   return;
@@ -4197,71 +4553,86 @@ void R_FrustumCullEntities(undefined8 param_1,longlong param_2)
 
 // 8272E0D8  R_AddCellDynBrushSurfacesInFrustumCmd  (gfx_d3d/r_dpvs.cpp:2680)
 
-void R_AddCellDynBrushSurfacesInFrustumCmd(undefined4 *param_1)
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
+void R_AddCellDynBrushSurfacesInFrustumCmd(void *param_1)
 
 {
-  if (*(char *)(DAT_845aa5dc + 0xc) == '\0') {
+  if ((r_drawDynEnts->current).enabled == false) {
     return;
   }
   R_CullDynBrushInCell
-            (*(undefined2 *)((int)param_1 + 10),param_1[1],*param_1,*(undefined1 *)(param_1 + 2));
+            ((uint)*(ushort *)((int)param_1 + 10),*(uint *)((int)param_1 + 4),*(DpvsPlane **)param_1
+             ,(uint)*(byte *)((int)param_1 + 8));
   return;
 }
 
 
 // 82730568  R_AddCellSurfacesAndCullGroupsInFrustumDelayed  (gfx_d3d/r_dpvs.cpp:2699)
 
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
 void R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-               (undefined8 param_1,ulonglong param_2,undefined4 param_3,undefined2 param_4,
-               undefined1 param_5)
+               (GfxSceneViewType param_1,uint param_2,DpvsPlane *param_3,uint param_4,uint param_5)
 
 {
   int iVar1;
-  undefined4 local_80;
-  int local_7c;
+  ulonglong uVar2;
+  undefined2 uVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  DpvsPlane *local_80;
+  uint local_7c;
   undefined1 local_78;
   undefined1 local_77;
   undefined2 local_76;
-  undefined4 local_70;
+  DpvsPlane *local_70;
   undefined4 local_6c;
   undefined1 local_68;
   undefined1 local_67;
   undefined2 local_66;
-  undefined4 local_60;
+  DpvsPlane *local_60;
   undefined2 local_5c;
   undefined2 local_5a;
-  undefined4 local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
+  float local_58;
+  float local_54;
+  float local_50;
+  FxGlassVisInfo *local_4c;
   
-  iVar1 = __savegprlr_25();
-  local_6c = *(undefined4 *)(*(int *)(DAT_8461658c + 0x48) + (int)((param_2 & 0xffffffff) << 2));
+  uVar4 = (undefined1)param_5;
+  uVar3 = (undefined2)param_4;
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_25(param_1);
+  local_6c = *(undefined4 *)
+              ((int)&(rgp.world)->aabbTrees->aabbTree + (int)((uVar2 & 0xffffffff) << 2));
   local_70 = param_3;
-  local_68 = (char)param_4;
-  local_67 = param_5;
+  local_68 = (char)uVar3;
+  local_67 = uVar4;
   local_66 = (short)iVar1;
-  R_AddWorkerCmd(0xe,&local_70);
+  R_AddWorkerCmd(WRKCMD_DPVS_CELL_STATIC,&local_70);
+  uVar5 = (uint)uVar2;
   local_80 = param_3;
-  local_7c = (int)param_2;
-  local_78 = (char)param_4;
-  local_77 = param_5;
+  local_7c = uVar5;
+  local_78 = (char)uVar3;
+  local_77 = uVar4;
   local_76 = (short)iVar1;
-  R_AddWorkerCmd(2,&local_80);
-  R_AddWorkerCmd(3,&local_80);
-  R_AddWorkerCmd(1,&local_80);
+  R_AddWorkerCmd(WRKCMD_DPVS_CELL_DYN_MODEL,&local_80);
+  R_AddWorkerCmd(WRKCMD_DPVS_CELL_SCENE_ENT,&local_80);
+  R_AddWorkerCmd(WRKCMD_DPVS_CELL_DYN_BRUSH,&local_80);
   if (iVar1 == 0) {
     local_60 = param_3;
-    local_5c = param_4;
-    if ((int)param_2 != (int)(param_2 & 0xffff)) {
-      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,param_2,param_2 & 0xffff);
+    local_5c = uVar3;
+    if (uVar5 != (uVar5 & 0xffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    local_58 = DAT_845a17d8;
-    local_54 = DAT_845a17dc;
-    local_50 = DAT_845a17e0;
-    local_5a = (short)param_2;
+    local_58 = dpvsGlob.viewOrg[0];
+    local_54 = dpvsGlob.viewOrg[1];
+    local_50 = dpvsGlob.viewOrg[2];
+    local_5a = (short)uVar2;
     local_4c = FX_GetGlassVisInfo();
-    R_AddWorkerCmd(0x16,&local_60);
+    R_AddWorkerCmd(WRKCMD_DPVS_CELL_GLASS,&local_60);
   }
   __restgprlr_25();
   return;
@@ -4279,40 +4650,43 @@ int R_ParentHeapIndex(int param_1)
 
 // 8272E118  R_FirstChildHeapIndex  (gfx_d3d/r_dpvs.cpp:2751)
 
-longlong R_FirstChildHeapIndex(ulonglong param_1)
+int R_FirstChildHeapIndex(int param_1)
 
 {
-  return (param_1 & 0x7fffffff) * 2 + 1;
+  return param_1 * 2 + 1;
 }
 
 
 // 8272E128  R_AssertValidQueue  (gfx_d3d/r_dpvs.cpp:2757)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_AssertValidQueue(void)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
+  PortalHeapNode *pPVar2;
+  PortalHeapNode *pPVar3;
   int iVar4;
   int iVar5;
   
   __savegprlr_26();
   iVar5 = 1;
-  if (1 < DAT_845a17ec) {
+  if (1 < dpvsGlob.queuedCount) {
+    pPVar2 = dpvsGlob.portalQueue + 1;
+    pPVar3 = dpvsGlob.portalQueue;
     iVar4 = 8;
-    iVar2 = DAT_845a17f0 + 8;
-    iVar3 = DAT_845a17f0;
-    iVar1 = DAT_845a17ec;
+    iVar1 = dpvsGlob.queuedCount;
     do {
-      if (*(float *)(iVar2 + 4) < *(float *)((iVar5 + -1 >> 1) * 8 + iVar3 + 4)) {
-        MyAssertHandler(0xffffffff821bc490,0xacd,0,0xffffffff82000f98,0xffffffff821bcc50);
-        iVar3 = DAT_845a17f0;
-        iVar1 = DAT_845a17ec;
+      if (pPVar2->dist < pPVar3[iVar5 + -1 >> 1].dist) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xacd,
+                        0,"%s");
+        pPVar3 = dpvsGlob.portalQueue;
+        iVar1 = dpvsGlob.queuedCount;
       }
       iVar5 = iVar5 + 1;
+      pPVar2 = (PortalHeapNode *)((int)&pPVar3[1].portal + iVar4);
       iVar4 = iVar4 + 8;
-      iVar2 = iVar4 + iVar3;
     } while (iVar5 < iVar1);
   }
   __restgprlr_26();
@@ -4322,56 +4696,63 @@ void R_AssertValidQueue(void)
 
 // 8272E1D0  R_EnqueuePortal  (gfx_d3d/r_dpvs.cpp:2772)
 
-void R_EnqueuePortal(void)
+void R_EnqueuePortal(GfxPortal *param_1)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
+  int iVar1;
+  PortalHeapNode *pPVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
+  ulonglong uVar4;
+  PortalHeapNode *pPVar5;
   char *pcVar6;
   double dVar7;
+  float fVar8;
   
-  pcVar6 = (char *)__savegprlr_28();
+  pcVar6 = (char *)__savegprlr_28(param_1);
   if (pcVar6 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,0xad9,0,0xffffffff82000f98,0xffffffff82183f54);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xad9,0,
+                    "%s");
   }
   if (*pcVar6 != '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xada,0,0xffffffff82000f98,0xffffffff821bcd50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xada,0,
+                    "%s");
   }
   if (*(int *)(pcVar6 + 4) == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xadb,0,0xffffffff82000f98,0xffffffff821bcd34);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xadb,0,
+                    "%s");
   }
   if ((byte)pcVar6[3] < 3) {
-    MyAssertHandler(0xffffffff821bc490,0xadc,0,0xffffffff82000f98,0xffffffff821bcd0c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xadc,0,
+                    "%s");
   }
-  if (0xff < (int)DAT_845a17ec) {
-    Com_Error(1,0xffffffff821bccf0,0x100);
+  if (0xff < dpvsGlob.queuedCount) {
+    Com_Error(ERR_DROP,"More than %i queued portals");
   }
   *pcVar6 = '\x01';
-  dVar7 = (double)R_FurthestPointOnWinding
-                            (*(undefined4 *)(pcVar6 + 0x1c),pcVar6[0x22],0xffffffff845a17b0);
-  uVar5 = (ulonglong)DAT_845a17ec;
-  uVar1 = DAT_845a17ec;
+  fVar8 = R_FurthestPointOnWinding
+                    (*(float (**) [3])(pcVar6 + 0x1c),(uint)(byte)pcVar6[0x22],&dpvsGlob.viewPlane);
+  dVar7 = (double)fVar8;
+  uVar4 = (ulonglong)(uint)dpvsGlob.queuedCount;
+  pPVar5 = dpvsGlob.portalQueue;
+  iVar1 = dpvsGlob.queuedCount;
   while( true ) {
-    uVar1 = (int)(uVar1 - 1) >> 1;
-    if (((longlong)(int)uVar1 < 0) ||
-       (puVar2 = (undefined4 *)(uVar1 * 8 + DAT_845a17f0), (double)(float)puVar2[1] <= dVar7))
-    break;
-    iVar4 = (int)((uVar5 & 0xffffffff) << 3);
-    iVar3 = iVar4 + DAT_845a17f0;
-    *(undefined4 *)(iVar4 + DAT_845a17f0) = *puVar2;
-    *(undefined4 *)(iVar3 + 4) = puVar2[1];
-    uVar5 = (longlong)(int)uVar1;
+    iVar1 = iVar1 + -1 >> 1;
+    dpvsGlob.portalQueue = pPVar5;
+    if (((longlong)iVar1 < 0) || (pPVar2 = pPVar5 + iVar1, (double)pPVar2->dist <= dVar7)) break;
+    iVar3 = (int)((uVar4 & 0xffffffff) << 3);
+    *(GfxPortal **)((int)&pPVar5->portal + iVar3) = pPVar2->portal;
+    *(float *)((int)&pPVar5->dist + iVar3) = pPVar2->dist;
+    uVar4 = (longlong)iVar1;
+    pPVar5 = dpvsGlob.portalQueue;
   }
-  if (((int)uVar5 < 0) || ((int)DAT_845a17ec < (int)uVar5)) {
-    MyAssertHandler(0xffffffff821bc490,0xaed,1,0xffffffff821bcca0,0xffffffff821bccb8,uVar5);
+  if (((int)uVar4 < 0) || (dpvsGlob.queuedCount < (int)uVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xaed,1,
+                    "%s\n\t(heapIndex) = %i");
   }
-  iVar3 = (int)((uVar5 & 0x1fffffff) << 3);
-  *(char **)(iVar3 + DAT_845a17f0) = pcVar6;
-  *(float *)(iVar3 + DAT_845a17f0 + 4) = (float)dVar7;
-  DAT_845a17ec = DAT_845a17ec + 1;
+  iVar1 = (int)((uVar4 & 0xffffffff) << 3);
+  *(char **)((int)&(dpvsGlob.portalQueue)->portal + iVar1) = pcVar6;
+  *(float *)((int)&(dpvsGlob.portalQueue)->dist + iVar1) = (float)dVar7;
+  dpvsGlob.queuedCount = dpvsGlob.queuedCount + 1;
   R_AssertValidQueue();
   __restgprlr_28();
   return;
@@ -4380,138 +4761,141 @@ void R_EnqueuePortal(void)
 
 // 8272E398  R_NextQueuedPortal  (gfx_d3d/r_dpvs.cpp:2807)
 
-undefined1 * R_NextQueuedPortal(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+GfxPortal * R_NextQueuedPortal(void)
 
 {
-  undefined1 *puVar1;
-  undefined4 *puVar2;
+  GfxPortal *pGVar1;
+  PortalHeapNode *pPVar2;
   int iVar3;
   int iVar4;
-  undefined4 *puVar5;
+  PortalHeapNode *pPVar5;
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
   
-  if (DAT_845a17ec < 1) {
-    MyAssertHandler(0xffffffff821bc490,0xafc,0,0xffffffff821bcd6c,0xffffffff821bcd8c);
+  if (dpvsGlob.queuedCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xafc,0,
+                    "%s\n\t(dpvsGlob.queuedCount) = %i");
   }
   uVar7 = 1;
-  puVar1 = (undefined1 *)*DAT_845a17f0;
-  *puVar1 = 0;
-  DAT_845a17ec = DAT_845a17ec + -1;
+  pGVar1 = (dpvsGlob.portalQueue)->portal;
+  (pGVar1->writable).isQueued = false;
+  dpvsGlob.queuedCount = dpvsGlob.queuedCount + -1;
   uVar6 = 0;
-  if (0 < DAT_845a17ec) {
+  if (0 < dpvsGlob.queuedCount) {
     do {
-      puVar5 = DAT_845a17f0;
+      pPVar5 = dpvsGlob.portalQueue;
       uVar8 = uVar7;
-      if (((int)uVar7 < DAT_845a17ec) &&
+      if (((int)uVar7 < dpvsGlob.queuedCount) &&
          (iVar3 = (int)(uVar7 << 3),
-         *(float *)((int)DAT_845a17f0 + iVar3 + 0xc) < *(float *)((int)DAT_845a17f0 + iVar3 + 4))) {
+         *(float *)((int)&dpvsGlob.portalQueue[1].dist + iVar3) <
+         *(float *)((int)&(dpvsGlob.portalQueue)->dist + iVar3))) {
         uVar8 = uVar7 + 1;
       }
-      puVar2 = DAT_845a17f0 + (int)uVar8 * 2;
-      if ((float)DAT_845a17f0[DAT_845a17ec * 2 + 1] <= (float)puVar2[1]) break;
+      pPVar2 = dpvsGlob.portalQueue + (int)uVar8;
+      if (dpvsGlob.portalQueue[dpvsGlob.queuedCount].dist <= pPVar2->dist) break;
       iVar3 = (int)((uVar6 & 0xffffffff) << 3);
       uVar7 = (uVar8 & 0x7fffffff) * 2 + 1;
-      *(undefined4 *)(iVar3 + (int)DAT_845a17f0) = *puVar2;
-      *(undefined4 *)((int)puVar5 + iVar3 + 4) = puVar2[1];
+      *(GfxPortal **)((int)&(dpvsGlob.portalQueue)->portal + iVar3) = pPVar2->portal;
+      *(float *)((int)&pPVar5->dist + iVar3) = pPVar2->dist;
       uVar6 = uVar8;
-    } while ((int)uVar7 <= DAT_845a17ec);
+    } while ((int)uVar7 <= dpvsGlob.queuedCount);
   }
-  puVar5 = DAT_845a17f0;
-  iVar4 = DAT_845a17ec;
-  iVar3 = (int)((uVar6 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar3 + (int)DAT_845a17f0) = DAT_845a17f0[DAT_845a17ec * 2];
-  *(undefined4 *)((int)puVar5 + iVar3 + 4) = puVar5[iVar4 * 2 + 1];
+  pPVar5 = dpvsGlob.portalQueue;
+  iVar4 = dpvsGlob.queuedCount;
+  iVar3 = (int)((uVar6 & 0xffffffff) << 3);
+  *(GfxPortal **)((int)&(dpvsGlob.portalQueue)->portal + iVar3) =
+       dpvsGlob.portalQueue[dpvsGlob.queuedCount].portal;
+  *(float *)((int)&pPVar5->dist + iVar3) = pPVar5[iVar4].dist;
   R_AssertValidQueue();
-  return puVar1;
+  return pGVar1;
 }
 
 
 // 8272E4C8  R_AllocHullPoints  (gfx_d3d/r_dpvs.cpp:2840)
 
-undefined4 * R_AllocHullPoints(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float (*) [2] R_AllocHullPoints(void)
 
 {
-  undefined4 *puVar1;
+  GfxHullPointsPool *pGVar1;
   
-  puVar1 = DAT_845a17f4;
-  if (DAT_845a17f4 == (undefined4 *)0x0) {
-    Com_Error(1,0xffffffff821bcda8,0x100);
+  pGVar1 = (GfxHullPointsPool *)(GfxHullPointsPool *)&(dpvsGlob.nextFreeHullPoints)->nextFree;
+  if (dpvsGlob.nextFreeHullPoints == (GfxHullPointsPool *)0x0) {
+    Com_Error(ERR_DROP,"more than %i queued portals");
   }
-  DAT_845a17f4 = (undefined4 *)*puVar1;
-  return puVar1;
+  dpvsGlob.nextFreeHullPoints = pGVar1->nextFree;
+  return pGVar1->points;
 }
 
 
 // 8272E528  R_FreeHullPoints  (gfx_d3d/r_dpvs.cpp:2853)
 
-void R_FreeHullPoints(undefined4 *param_1)
+void R_FreeHullPoints(float (*param_1) [2])
 
 {
-  *param_1 = DAT_845a17f4;
-  DAT_845a17f4 = param_1;
+  (*param_1)[0] = (float)dpvsGlob.nextFreeHullPoints;
+  dpvsGlob.nextFreeHullPoints = (GfxHullPointsPool *)param_1;
   return;
 }
 
 
 // 8272E540  R_AddVertToPortalHullPoints  (gfx_d3d/r_dpvs.cpp:2865)
 
-void R_AddVertToPortalHullPoints(undefined8 param_1,float *param_2)
+void R_AddVertToPortalHullPoints(GfxPortal *param_1,float *param_2)
 
 {
-  void *pvVar1;
-  void *pvVar2;
+  int iVar1;
+  float (*pafVar2) [2];
   uint uVar3;
-  undefined1 auStack_220 [544];
+  float afStack_220 [136];
   
-  pvVar1 = (void *)__savegprlr_29();
-  if (*(int *)((int)pvVar1 + 4) == 0) {
-    pvVar2 = (void *)R_AllocHullPoints();
-    *(void **)((int)pvVar1 + 4) = pvVar2;
-    *(undefined1 *)((int)pvVar1 + 3) = 0;
+  iVar1 = __savegprlr_29(param_1);
+  if (*(int *)(iVar1 + 4) == 0) {
+    pafVar2 = R_AllocHullPoints();
+    *(float (**) [2])(iVar1 + 4) = pafVar2;
+    *(undefined1 *)(iVar1 + 3) = 0;
   }
-  else {
-    pvVar2 = pvVar1;
-    if (*(char *)((int)pvVar1 + 3) == '@') {
-      Profile_Begin(0x4f);
-      uVar3 = Com_ConvexHull(*(undefined4 *)((int)pvVar1 + 4),*(undefined1 *)((int)pvVar1 + 3),
-                             auStack_220);
-      Profile_EndInternal(0);
-      if (uVar3 == 0x40) {
-        Com_Error(1,0xffffffff821bcdc4,0x40);
-      }
-      *(char *)((int)pvVar1 + 3) = (char)uVar3;
-      pvVar2 = memcpy(*(void **)((int)pvVar1 + 4),auStack_220,(uVar3 & 0xff) << 3);
+  else if (*(char *)(iVar1 + 3) == '@') {
+    Profile_Begin(0x4f);
+    uVar3 = Com_ConvexHull(*(float (**) [2])(iVar1 + 4),(uint)*(byte *)(iVar1 + 3),
+                           (float (*) [2])afStack_220);
+    Profile_EndInternal((double *)0x0);
+    if (uVar3 == 0x40) {
+      Com_Error(ERR_DROP,"More than %i points on a clipped portal\'s convex hull\n");
     }
+    *(char *)(iVar1 + 3) = (char)uVar3;
+    memcpy();
   }
-  *(float *)((uint)*(byte *)((int)pvVar1 + 3) * 8 + *(int *)((int)pvVar1 + 4)) =
-       *(float *)((int)pvVar1 + 0x2c) * param_2[2] +
-       *(float *)((int)pvVar1 + 0x28) * param_2[1] + *(float *)((int)pvVar1 + 0x24) * *param_2;
-  *(float *)((uint)*(byte *)((int)pvVar1 + 3) * 8 + *(int *)((int)pvVar1 + 4) + 4) =
-       *(float *)((int)pvVar1 + 0x38) * param_2[2] +
-       *(float *)((int)pvVar1 + 0x34) * param_2[1] + *(float *)((int)pvVar1 + 0x30) * *param_2;
-  *(char *)((int)pvVar1 + 3) = *(char *)((int)pvVar1 + 3) + '\x01';
-  __restgprlr_29(pvVar2);
+  *(float *)((uint)*(byte *)(iVar1 + 3) * 8 + *(int *)(iVar1 + 4)) =
+       *(float *)(iVar1 + 0x2c) * param_2[2] +
+       *(float *)(iVar1 + 0x28) * param_2[1] + *(float *)(iVar1 + 0x24) * *param_2;
+  *(float *)((uint)*(byte *)(iVar1 + 3) * 8 + *(int *)(iVar1 + 4) + 4) =
+       *(float *)(iVar1 + 0x38) * param_2[2] +
+       *(float *)(iVar1 + 0x34) * param_2[1] + *(float *)(iVar1 + 0x30) * *param_2;
+  *(char *)(iVar1 + 3) = *(char *)(iVar1 + 3) + '\x01';
+  __restgprlr_29();
   return;
 }
 
 
 // 8272E658  R_ShouldSkipPortal  (gfx_d3d/r_dpvs.cpp:2893)
 
-bool R_ShouldSkipPortal(int param_1)
+bool R_ShouldSkipPortal(GfxPortal *param_1,DpvsPlane *param_2,uint param_3)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (*(char *)(param_1 + 1) == '\0') {
-    if (*(float *)(param_1 + 0xc) * DAT_845a17d8 +
-        *(float *)(param_1 + 0x18) * DAT_845a17e4 +
-        *(float *)(param_1 + 0x10) * DAT_845a17dc + *(float *)(param_1 + 0x14) * DAT_845a17e0 <= 0.0
-       ) {
-      cVar1 = R_PortalBehindAnyPlane();
-      return cVar1 != '\0';
-    }
+  if (((param_1->writable).isAncestor == false) &&
+     ((param_1->plane).coeffs[0] * dpvsGlob.viewOrg[0] +
+      (param_1->plane).coeffs[3] * dpvsGlob.viewOrg[3] +
+      (param_1->plane).coeffs[1] * dpvsGlob.viewOrg[1] +
+      (param_1->plane).coeffs[2] * dpvsGlob.viewOrg[2] <= 0.0)) {
+    bVar1 = R_PortalBehindAnyPlane(param_1,param_2,param_3);
+    return (bool)('\x01' - !bVar1);
   }
   return true;
 }
@@ -4519,145 +4903,175 @@ bool R_ShouldSkipPortal(int param_1)
 
 // 8272E6F0  R_ChopPortal  (gfx_d3d/r_dpvs.cpp:2905)
 
-void R_ChopPortal(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                 longlong param_5,ulonglong param_6)
+int R_ChopPortal(GfxPortal *param_1,DpvsPlane *param_2,DpvsPlane *param_3,uint param_4,
+                float (*param_5) [128] [3],float (**param_6) [3])
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
+  int iVar1;
+  bool bVar3;
+  float (*paafVar2) [128] [3];
   ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   uint local_50 [20];
   
-  iVar2 = __savegprlr_24();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xb5e,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar5 = (ulonglong)(int)param_6;
+  uVar4 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_24(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb5e,0,
+                    "%s");
   }
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xb5f,0,0xffffffff82000f98,0xffffffff82183f54);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb5f,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xb60,0,0xffffffff82000f98,0xffffffff821bce18);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb60,0,
+                    "%s");
   }
-  if (((param_3 & 0xffffffff) == 0) && ((param_4 & 0xffffffff) != 0)) {
-    MyAssertHandler(0xffffffff821bc490,0xb61,0,0xffffffff82000f98,0xffffffff821bcdfc);
+  if (((uVar7 & 0xffffffff) == 0) && ((uVar4 & 0xffffffff) != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xb61,0,
+                    "%s");
   }
-  local_50[0] = (uint)*(byte *)(iVar2 + 0x22);
-  uVar1 = R_ChopPortalWinding(*(undefined4 *)(iVar2 + 0x1c),local_50,param_2,param_5);
+  local_50[0] = (uint)*(byte *)(iVar1 + 0x22);
+  paafVar2 = (float (*) [128] [3])
+             R_ChopPortalWinding(*(float (**) [3])(iVar1 + 0x1c),local_50,(DpvsPlane *)uVar6,
+                                 *param_5);
   if (local_50[0] == 0) {
 LAB_8272e7ec:
-    __restgprlr_24(0);
-    return;
+    iVar1 = __restgprlr_24(0);
+    return iVar1;
   }
-  if (DAT_845a17d4 != 0) {
-    uVar1 = R_ChopPortalWinding(uVar1,local_50,DAT_845a17d4,
-                                (ulonglong)((int)param_5 == (int)uVar1) * 0x600 + param_5);
+  if (dpvsGlob.farPlane != (DpvsPlane *)0x0) {
+    paafVar2 = (float (*) [128] [3])
+               R_ChopPortalWinding((float (*) [3])paafVar2,local_50,dpvsGlob.farPlane,
+                                   param_5[param_5 == paafVar2]);
     if (local_50[0] == 0) goto LAB_8272e7ec;
   }
-  uVar4 = 0;
-  if ((param_4 & 0xffffffff) != 0) {
+  uVar6 = 0;
+  if ((uVar4 & 0xffffffff) != 0) {
     do {
-      uVar1 = R_ChopPortalWinding(uVar1,local_50,param_3,
-                                  (ulonglong)((int)param_5 == (int)uVar1) * 0x600 + param_5);
+      paafVar2 = (float (*) [128] [3])
+                 R_ChopPortalWinding(*paafVar2,local_50,(DpvsPlane *)uVar7,
+                                     param_5[param_5 == paafVar2]);
       if (local_50[0] == 0) goto LAB_8272e7ec;
-      uVar4 = uVar4 + 1;
-      param_3 = param_3 + 0x10;
-    } while ((uVar4 & 0xffffffff) < (param_4 & 0xffffffff));
+      uVar6 = uVar6 + 1;
+      uVar7 = uVar7 + 0x10;
+    } while ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff));
   }
-  if ((param_6 & 0xffffffff) != 0) {
-    *(undefined4 *)param_6 = (int)uVar1;
+  if ((uVar5 & 0xffffffff) != 0) {
+    *(undefined4 *)uVar5 = paafVar2;
   }
-  __restgprlr_24(local_50[0]);
-  return;
+  iVar1 = __restgprlr_24(local_50[0]);
+  return iVar1;
 }
 
 
 // 8272E8A8  R_ChopPortalAndAddHullPoints  (gfx_d3d/r_dpvs.cpp:2948)
 
-void R_ChopPortalAndAddHullPoints(void)
+bool R_ChopPortalAndAddHullPoints
+               (GfxPortal *param_1,DpvsPlane *param_2,DpvsPlane *param_3,uint param_4)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  undefined4 local_c30;
+  GfxPortal *pGVar1;
+  int iVar2;
+  undefined1 uVar3;
+  float (*pafVar4) [3];
+  longlong lVar5;
+  float (*local_c30 [4]) [3];
+  float afStack_c20 [776];
   
-  uVar1 = __savegprlr_29();
-  lVar2 = R_ChopPortal();
-  if ((int)lVar2 == 0) {
-    __restgprlr_29();
-    return;
+  pGVar1 = (GfxPortal *)__savegprlr_29(param_1);
+  iVar2 = R_ChopPortal(pGVar1,param_2,param_3,param_4,(float (*) [128] [3])afStack_c20,local_c30);
+  lVar5 = (longlong)iVar2;
+  if (iVar2 != 0) {
+    pafVar4 = local_c30[0];
+    if (0 < iVar2) {
+      do {
+        R_AddVertToPortalHullPoints(pGVar1,*pafVar4);
+        lVar5 = lVar5 + -1;
+        pafVar4 = pafVar4 + 1;
+      } while (lVar5 != 0);
+    }
+    uVar3 = __restgprlr_29(1);
+    return (bool)uVar3;
   }
-  if (0 < (int)lVar2) {
-    uVar3 = (ulonglong)local_c30;
-    do {
-      R_AddVertToPortalHullPoints(uVar1,uVar3);
-      lVar2 = lVar2 + -1;
-      uVar3 = uVar3 + 0xc;
-    } while (lVar2 != 0);
-  }
-  __restgprlr_29(1);
-  return;
+  uVar3 = __restgprlr_29();
+  return (bool)uVar3;
 }
 
 
 // 8272E908  R_ChopPortalAndAddHullPointsNoFrustum  (gfx_d3d/r_dpvs.cpp:2965)
 
-void R_ChopPortalAndAddHullPointsNoFrustum(undefined8 param_1,ulonglong param_2)
+bool R_ChopPortalAndAddHullPointsNoFrustum
+               (GfxPortal *param_1,DpvsPlane *param_2,DpvsPlane *param_3,uint param_4)
 
 {
+  GfxPortal *pGVar1;
   int iVar2;
-  ulonglong uVar1;
-  ulonglong uVar3;
-  uint local_c30;
+  undefined1 uVar3;
+  float (*pafVar4) [3];
+  ulonglong uVar5;
+  float (*local_c30 [4]) [3];
+  float afStack_c20 [776];
   
-  iVar2 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    uVar1 = (ulonglong)*(byte *)(iVar2 + 0x22);
-    if (*(byte *)(iVar2 + 0x22) == 0) {
-      MyAssertHandler(0xffffffff821bc490,0xba4,0,0xffffffff82000f98,0xffffffff82064c68);
+  uVar5 = (ulonglong)(int)param_2;
+  pGVar1 = (GfxPortal *)__savegprlr_29(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    uVar5 = (ulonglong)pGVar1->vertexCount;
+    if (pGVar1->vertexCount == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xba4,0,
+                      "%s");
     }
-    local_c30 = *(uint *)(iVar2 + 0x1c);
+    pafVar4 = pGVar1->vertices;
   }
   else {
-    uVar1 = R_ChopPortal();
-    if ((int)uVar1 == 0) {
-      __restgprlr_29();
-      return;
+    iVar2 = R_ChopPortal(pGVar1,(DpvsPlane *)uVar5,param_3,param_4,(float (*) [128] [3])afStack_c20,
+                         local_c30);
+    uVar5 = (ulonglong)iVar2;
+    pafVar4 = local_c30[0];
+    if (iVar2 == 0) {
+      uVar3 = __restgprlr_29();
+      return (bool)uVar3;
     }
   }
-  uVar3 = (ulonglong)local_c30;
-  if (0 < (int)uVar1) {
+  if (0 < (int)uVar5) {
     do {
-      R_AddVertToPortalHullPoints(iVar2,uVar3);
-      uVar1 = uVar1 - 1;
-      uVar3 = uVar3 + 0xc;
-    } while (uVar1 != 0);
+      R_AddVertToPortalHullPoints(pGVar1,*pafVar4);
+      uVar5 = uVar5 - 1;
+      pafVar4 = pafVar4 + 1;
+    } while (uVar5 != 0);
   }
-  __restgprlr_29(1);
-  return;
+  uVar3 = __restgprlr_29(1);
+  return (bool)uVar3;
 }
 
 
 // 8272E9A8  R_IsCellInList  (gfx_d3d/r_dpvs.cpp:2991)
 
-bool R_IsCellInList(uint param_1,int param_2)
+int R_IsCellInList(uint param_1,uint *param_2)
 
 {
-  return (*(uint *)((param_1 >> 3 & 0x1ffffffc) + param_2) & (&DAT_82992400)[param_1 & 0x1f]) != 0;
+  return (uint)((*(uint *)((param_1 >> 3 & 0x1ffffffc) + (int)param_2) &
+                *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4)) != 0);
 }
 
 
 // 8272E9D0  R_AddCellToList  (gfx_d3d/r_dpvs.cpp:2997)
 
-void R_AddCellToList(uint param_1,int param_2)
+void R_AddCellToList(uint param_1,uint *param_2)
 
 {
   uint uVar1;
   
   uVar1 = param_1 >> 3 & 0x1ffffffc;
-  *(uint *)(uVar1 + param_2) = (&DAT_82992400)[param_1 & 0x1f] | *(uint *)(uVar1 + param_2);
+  *(uint *)(uVar1 + (int)param_2) =
+       *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4) | *(uint *)(uVar1 + (int)param_2);
   return;
 }
 
@@ -4665,53 +5079,56 @@ void R_AddCellToList(uint param_1,int param_2)
 // 8272E9F8  R_GetFurtherCellList_r  (gfx_d3d/r_dpvs.cpp:3003)
 
 void R_GetFurtherCellList_r
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (uint param_1,DpvsPlane *param_2,DpvsPlane *param_3,int param_4,DpvsPlane *param_5,
+               int param_6,float (*param_7) [128] [3],uint *param_8)
 
 {
-  int iVar1;
+  GfxCell *pGVar1;
   uint uVar2;
+  int iVar3;
+  bool bVar6;
   int iVar4;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar3;
+  uint uVar5;
   int iVar7;
   int iVar8;
-  int iVar9;
-  undefined1 auStack_180 [16];
-  undefined1 auStack_170 [368];
+  GfxPortal *pGVar9;
+  DpvsClipChildren aDStack_180 [4];
+  DpvsPlane aDStack_170 [23];
   
-  iVar4 = __savegprlr_19();
-  cVar6 = Sys_IsMainThread();
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xbc3,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar3 = __savegprlr_19(param_1);
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xbc3,0,
+                    "%s");
   }
   iVar7 = 0;
-  iVar4 = *(int *)(DAT_8461658c + 0x4c) + iVar4 * 0x30;
-  if (0 < *(int *)(iVar4 + 0x18)) {
+  pGVar1 = (rgp.world)->cells;
+  if (0 < pGVar1[iVar3].portalCount) {
     iVar8 = 0;
     do {
-      iVar9 = iVar8 + *(int *)(iVar4 + 0x1c);
-      iVar1 = (int)param_8;
-      if (((((*(uint *)((*(ushort *)(iVar9 + 0x20) >> 3 & 0x1ffffffc) + iVar1) &
-             (&DAT_82992400)[*(ushort *)(iVar9 + 0x20) & 0x1f]) == 0) &&
-           (cVar6 = R_ShouldSkipPortal(iVar9,param_3,param_4), cVar6 == '\0')) &&
-          (((int)param_6 < 1 ||
-           (cVar6 = R_PortalBehindAnyPlane(iVar9,param_5,param_6), cVar6 == '\0')))) &&
-         ((iVar5 = R_ChopPortal(iVar9,param_2,param_3,param_4,param_7,0), iVar5 != 0 &&
-          (uVar3 = R_PortalClipPlanes(auStack_170,*(undefined1 *)(iVar9 + 0x22),
-                                      *(undefined4 *)(iVar9 + 0x1c),auStack_180), 0 < (int)uVar3))))
-      {
-        uVar2 = *(ushort *)(iVar9 + 0x20) >> 3 & 0x1ffffffc;
-        *(uint *)(uVar2 + iVar1) =
-             (&DAT_82992400)[*(ushort *)(iVar9 + 0x20) & 0x1f] | *(uint *)(uVar2 + iVar1);
-        R_GetFurtherCellList_r
-                  (*(undefined2 *)(iVar9 + 0x20),param_2,param_3,param_4,auStack_170,uVar3,param_7,
-                   param_8);
+      pGVar9 = (GfxPortal *)((int)((pGVar1[iVar3].portals)->plane).coeffs + iVar8 + -0xc);
+      if ((*(uint *)((pGVar9->cellIndex >> 3 & 0x1ffffffc) + (int)param_8) &
+          *(uint *)(&g_bitShift + (pGVar9->cellIndex & 0x1f) * 4)) == 0) {
+        bVar6 = R_ShouldSkipPortal(pGVar9,param_3,param_4);
+        if ((!bVar6) &&
+           ((param_6 < 1 || (bVar6 = R_PortalBehindAnyPlane(pGVar9,param_5,param_6), !bVar6)))) {
+          iVar4 = R_ChopPortal(pGVar9,param_2,param_3,param_4,param_7,(float (**) [3])0x0);
+          if ((iVar4 != 0) &&
+             (uVar5 = R_PortalClipPlanes(aDStack_170,(uint)pGVar9->vertexCount,pGVar9->vertices,
+                                         aDStack_180), 0 < (int)uVar5)) {
+            uVar2 = pGVar9->cellIndex >> 3 & 0x1ffffffc;
+            *(uint *)(uVar2 + (int)param_8) =
+                 *(uint *)(&g_bitShift + (pGVar9->cellIndex & 0x1f) * 4) |
+                 *(uint *)(uVar2 + (int)param_8);
+            R_GetFurtherCellList_r
+                      ((uint)pGVar9->cellIndex,param_2,param_3,param_4,aDStack_170,uVar5,param_7,
+                       param_8);
+          }
+        }
       }
       iVar7 = iVar7 + 1;
       iVar8 = iVar8 + 0x3c;
-    } while (iVar7 < *(int *)(iVar4 + 0x18));
+    } while (iVar7 < pGVar1[iVar3].portalCount);
   }
   __restgprlr_19();
   return;
@@ -4725,68 +5142,77 @@ void R_SetCellVisible(uint param_1)
 {
   uint uVar1;
   
-  if (DAT_845aa2f0 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xbde,0,0xffffffff82000f98,0xffffffff821bce24);
+  if (dpvsGlob.cellBits == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xbde,0,
+                    "%s");
   }
   uVar1 = param_1 >> 3 & 0x1ffffffc;
-  *(uint *)(uVar1 + DAT_845aa2f0) =
-       (&DAT_82992400)[param_1 & 0x1f] | *(uint *)(uVar1 + DAT_845aa2f0);
+  *(uint *)(uVar1 + (int)dpvsGlob.cellBits) =
+       *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4) | *(uint *)(uVar1 + (int)dpvsGlob.cellBits);
   return;
 }
 
 
 // 82730680  R_VisitAllFurtherCells  (gfx_d3d/r_dpvs.cpp:3048)
 
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
 void R_VisitAllFurtherCells
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (uint param_1,DpvsPlane *param_2,DpvsPlane *param_3,uint param_4,uint param_5)
 
 {
   uint uVar1;
-  undefined8 *puVar2;
-  uint *puVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar2;
+  undefined8 *puVar3;
+  uint *puVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
   longlong lVar7;
   undefined8 uStack_d18;
-  uint local_d10 [836];
+  uint local_d10 [32];
+  float afStack_c90 [804];
   
-  __savegprlr_16();
-  puVar2 = &uStack_d18;
+  uVar2 = __savegprlr_16(param_1);
+  puVar3 = &uStack_d18;
   lVar7 = 0x10;
   do {
-    puVar2 = puVar2 + 1;
-    *puVar2 = 0;
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
     lVar7 = lVar7 + -1;
   } while (lVar7 != 0);
-  R_GetFurtherCellList_r();
-  uVar4 = 0;
-  puVar3 = local_d10;
+  R_GetFurtherCellList_r
+            (uVar2,param_2,param_3,param_4,(DpvsPlane *)0x0,0,(float (*) [128] [3])afStack_c90,
+             local_d10);
+  uVar5 = 0;
+  puVar4 = local_d10;
   do {
-    uVar5 = *puVar3;
-    while (uVar6 = LZCOUNT(uVar5), uVar6 < 0x20) {
+    uVar2 = *puVar4;
+    while (uVar6 = LZCOUNT(uVar2), uVar6 < 0x20) {
       if (0x20 < uVar6) {
-        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar6,0x21);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar6 << 2));
-      if ((uVar1 & uVar5) == 0) {
-        MyAssertHandler(0xffffffff821bc490,0xbfe,0,0xffffffff82000f98,0xffffffff8205cd08);
+      uVar1 = *(uint *)(&g_bitShift + (int)(uVar6 << 2));
+      if ((uVar1 & uVar2) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xbfe,
+                        0,"%s");
       }
-      uVar6 = uVar4 + uVar6;
-      uVar5 = uVar5 & ~uVar1;
-      R_AddCellSurfacesAndCullGroupsInFrustumDelayed(0,uVar6,param_3,param_4,param_5);
-      if (DAT_845aa2f0 == 0) {
-        MyAssertHandler(0xffffffff821bc490,0xbde,0,0xffffffff82000f98,0xffffffff821bce24);
+      uVar6 = uVar5 + uVar6;
+      uVar2 = uVar2 & ~uVar1;
+      R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+                (SCENE_VIEW_CAMERA,(uint)uVar6,param_3,param_4,param_5);
+      if (dpvsGlob.cellBits == (uint *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xbde,
+                        0,"%s");
       }
       uVar1 = (uint)((uVar6 & 0xffffffff) >> 3) & 0x1ffffffc;
-      *(uint *)(uVar1 + DAT_845aa2f0) =
-           *(uint *)((int)&DAT_82992400 + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c)) |
-           *(uint *)(uVar1 + DAT_845aa2f0);
+      *(uint *)(uVar1 + (int)dpvsGlob.cellBits) =
+           *(uint *)(&g_bitShift + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c)) |
+           *(uint *)(uVar1 + (int)dpvsGlob.cellBits);
     }
-    uVar4 = uVar4 + 0x20;
-    puVar3 = puVar3 + 1;
-  } while ((uVar4 & 0xffffffff) < 0x400);
+    uVar5 = uVar5 + 0x20;
+    puVar4 = puVar4 + 1;
+  } while ((uVar5 & 0xffffffff) < 0x400);
   __restgprlr_16();
   return;
 }
@@ -4794,21 +5220,24 @@ void R_VisitAllFurtherCells
 
 // 8272EC38  R_SetAncestorListStatus  (gfx_d3d/r_dpvs.cpp:3083)
 
-void R_SetAncestorListStatus(undefined8 param_1,ulonglong param_2)
+void R_SetAncestorListStatus(GfxPortal *param_1,bool param_2)
 
 {
   int iVar1;
-  undefined1 *puVar2;
+  ulonglong uVar2;
+  undefined1 *puVar3;
   
-  iVar1 = __savegprlr_25();
+  uVar2 = (ulonglong)param_2;
+  iVar1 = __savegprlr_25(param_1);
   if (iVar1 != 0) {
     do {
-      puVar2 = (undefined1 *)(iVar1 + 1);
-      if ((ulonglong)*(byte *)(iVar1 + 1) == (param_2 & 0xff)) {
-        MyAssertHandler(0xffffffff821bc490,0xc0e,0,0xffffffff82000f98,0xffffffff821bce38);
+      puVar3 = (undefined1 *)(iVar1 + 1);
+      if ((ulonglong)*(byte *)(iVar1 + 1) == (uVar2 & 0xff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xc0e,
+                        0,"%s");
       }
       iVar1 = *(int *)(iVar1 + 8);
-      *puVar2 = (char)param_2;
+      *puVar3 = (char)uVar2;
     } while (iVar1 != 0);
   }
   __restgprlr_25();
@@ -4818,154 +5247,169 @@ void R_SetAncestorListStatus(undefined8 param_1,ulonglong param_2)
 
 // 8272ECB0  R_SetRecursionAncestors  (gfx_d3d/r_dpvs.cpp:3094)
 
-void R_SetRecursionAncestors(undefined8 param_1)
+void R_SetRecursionAncestors(GfxPortal *param_1)
 
 {
-  R_SetAncestorListStatus(param_1,1);
+  R_SetAncestorListStatus(param_1,true);
   return;
 }
 
 
 // 8272ECB8  R_ClearRecursionAncestors  (gfx_d3d/r_dpvs.cpp:3100)
 
-void R_ClearRecursionAncestors(undefined8 param_1)
+void R_ClearRecursionAncestors(GfxPortal *param_1)
 
 {
-  R_SetAncestorListStatus(param_1,0);
+  R_SetAncestorListStatus(param_1,false);
   return;
 }
 
 
 // 82730808  R_VisitPortalsForCell  (gfx_d3d/r_dpvs.cpp:3106)
 
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
 void R_VisitPortalsForCell
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,longlong param_4,
-               ulonglong param_5,ulonglong param_6,undefined8 param_7,ulonglong param_8)
+               (uint param_1,GfxPortal *param_2,DpvsPlane *param_3,DpvsPlane *param_4,uint param_5,
+               uint param_6,uint param_7,uint param_8,DpvsClipChildren param_9)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  undefined8 uVar3;
-  char cVar5;
-  int iVar4;
-  undefined4 *puVar6;
+  byte bVar1;
+  GfxCell *pGVar2;
+  float (*pafVar3) [3];
+  GfxPortal *pGVar4;
+  bool bVar6;
+  int iVar5;
   ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  longlong lVar10;
-  undefined4 *puVar11;
-  char *pcVar12;
-  double dVar13;
+  DpvsPlane *pDVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  int iVar12;
+  longlong lVar13;
+  float *pfVar14;
+  ulonglong uVar15;
+  GfxPortal *pGVar16;
+  double dVar17;
+  uint uStack0000004c;
   int in_stack_00000054;
+  DpvsClipChildren in_stack_fffffee8;
   int local_c0;
-  undefined4 local_b4;
-  undefined4 local_b0;
+  int local_b4;
+  int local_b0;
   char *local_ac;
   
-  uVar3 = __savegprlr();
-  R_AddCellSurfacesAndCullGroupsInFrustumDelayed(0,uVar3,param_4,param_6,param_7);
-  R_SetCellVisible(uVar3);
-  R_SetAncestorListStatus(param_2,1);
+  uVar11 = (ulonglong)(int)param_8;
+  uVar15 = (ulonglong)(int)param_6;
+  uVar9 = (ulonglong)(int)param_5;
+  lVar13 = (longlong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_2;
+  __savegprlr();
+  uStack0000004c = (uint)uVar11;
+  pDVar8 = (DpvsPlane *)lVar13;
+  R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+            (SCENE_VIEW_CAMERA,param_1,pDVar8,(uint)uVar15,param_7);
+  R_SetCellVisible(param_1);
+  pGVar4 = (GfxPortal *)uVar7;
+  R_SetAncestorListStatus(pGVar4,true);
   if (in_stack_00000054 == 0) {
-    R_VisitAllFurtherCells(uVar3,param_3,param_4,param_6,param_7);
+    R_VisitAllFurtherCells(param_1,param_3,pDVar8,(uint)uVar15,param_7);
   }
   else {
     if (in_stack_00000054 != 1) {
-      MyAssertHandler(0xffffffff821bc490,0xc31,0,0xffffffff821bd2c4,0xffffffff821bd2dc,
-                      in_stack_00000054);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xc31,0,
+                      "%s\n\t(clipChildren) = %i");
     }
-    iVar9 = 0;
+    iVar12 = 0;
     local_c0 = 0;
-    iVar2 = *(int *)(DAT_8461658c + 0x4c) + (int)uVar3 * 0x30;
-    if (0 < *(int *)(iVar2 + 0x18)) {
-      lVar10 = (param_6 & 0xfffffff) * 0x10 + param_4;
-      dVar13 = -0.125;
+    pGVar2 = (rgp.world)->cells;
+    if (0 < pGVar2[param_1].portalCount) {
+      lVar13 = (uVar15 & 0xfffffff) * 0x10 + lVar13;
+      dVar17 = -0.125;
       local_ac = "parentPortal == NULL || parentPortal->writable.isAncestor";
-      uVar8 = param_8;
       do {
-        pcVar12 = (char *)(iVar9 + *(int *)(iVar2 + 0x1c));
-        cVar5 = R_ShouldSkipPortal(pcVar12,param_4,param_6);
-        if (cVar5 == '\0') {
-          if (DAT_845a17e8 != 0) {
-            MyAssertHandler(0xffffffff821bc490,0xc3a,0,0xffffffff82000f98,"!dpvsGlob.viewOrgIsDir");
+        pGVar16 = (GfxPortal *)((int)((pGVar2[param_1].portals)->plane).coeffs + iVar12 + -0xc);
+        bVar6 = R_ShouldSkipPortal(pGVar16,pDVar8,(uint)uVar15);
+        if (!bVar6) {
+          if (dpvsGlob.viewOrgIsDir != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0xc3a,0,"%s");
           }
-          if ((double)(*(float *)(pcVar12 + 0xc) * DAT_845a17d8 +
-                      *(float *)(pcVar12 + 0x18) * DAT_845a17e4 +
-                      *(float *)(pcVar12 + 0x10) * DAT_845a17dc +
-                      *(float *)(pcVar12 + 0x14) * DAT_845a17e0) <= dVar13) {
-            cVar5 = R_ChopPortalAndAddHullPoints(pcVar12,param_3,param_4,param_6);
-            if (cVar5 != '\0') {
-              if (*pcVar12 == '\0') {
-                *(int *)(pcVar12 + 8) = (int)param_2;
-                pcVar12[2] = (char)uVar8;
-                R_EnqueuePortal(pcVar12);
+          if ((double)((pGVar16->plane).coeffs[0] * dpvsGlob.viewOrg[0] +
+                      (pGVar16->plane).coeffs[3] * dpvsGlob.viewOrg[3] +
+                      (pGVar16->plane).coeffs[1] * dpvsGlob.viewOrg[1] +
+                      (pGVar16->plane).coeffs[2] * dpvsGlob.viewOrg[2]) <= dVar17) {
+            bVar6 = R_ChopPortalAndAddHullPoints(pGVar16,param_3,pDVar8,(uint)uVar15);
+            if (bVar6) {
+              if ((pGVar16->writable).isQueued == false) {
+                (pGVar16->writable).queuedParent = pGVar4;
+                (pGVar16->writable).recursionDepth = (uchar)uVar11;
+                R_EnqueuePortal(pGVar16);
               }
               else {
-                uVar7 = (ulonglong)(byte)pcVar12[2];
-                if ((int)uVar8 <= (int)(uint)(byte)pcVar12[2]) {
-                  uVar7 = uVar8;
+                bVar1 = (pGVar16->writable).recursionDepth;
+                uVar10 = (ulonglong)bVar1;
+                if ((int)uVar11 <= (int)(uint)bVar1) {
+                  uVar10 = uVar11;
                 }
-                pcVar12[2] = (char)uVar7;
-                if ((ulonglong)*(uint *)(pcVar12 + 8) != (param_2 & 0xffffffff)) {
-                  pcVar12[8] = '\0';
-                  pcVar12[9] = '\0';
-                  pcVar12[10] = '\0';
-                  pcVar12[0xb] = '\0';
+                (pGVar16->writable).recursionDepth = (uchar)uVar10;
+                if (ZEXT48((pGVar16->writable).queuedParent) != (uVar7 & 0xffffffff)) {
+                  (pGVar16->writable).queuedParent = (GfxPortal *)0x0;
                 }
               }
             }
           }
           else {
-            if (pcVar12[1] != '\0') {
-              MyAssertHandler(0xffffffff821bc490,0xc3d,1,0xffffffff82000f98,0xffffffff821bd24c);
+            if ((pGVar16->writable).isAncestor != false) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0xc3d,1,"%s");
             }
-            if (*pcVar12 != '\0') {
-              MyAssertHandler(0xffffffff821bc490,0xc3e,1,0xffffffff82000f98,
-                              "!portal->writable.isQueued");
+            if ((pGVar16->writable).isQueued != false) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                              0xc3e,1,"%s");
             }
-            cVar5 = pcVar12[0x22];
-            uVar1 = *(undefined4 *)(pcVar12 + 0x1c);
-            Vec3ProjectionCoords(pcVar12 + 0xc,&local_b0,&local_b4);
-            iVar4 = ProjectedWindingContainsCoplanarPoint
-                              (uVar1,cVar5,local_b0,local_b4,0xffffffff845a17d8);
-            if (iVar4 == 0) {
+            bVar1 = pGVar16->vertexCount;
+            pafVar3 = pGVar16->vertices;
+            Vec3ProjectionCoords((pGVar16->plane).coeffs,&local_b0,&local_b4);
+            iVar5 = ProjectedWindingContainsCoplanarPoint
+                              (pafVar3,(uint)bVar1,local_b0,local_b4,dpvsGlob.viewOrg);
+            if (iVar5 == 0) {
 LAB_82730aac:
-              if (pcVar12[1] != '\0') {
-                MyAssertHandler(0xffffffff821bc490,0xc4a,1,0xffffffff82000f98,0xffffffff821bd24c);
+              if ((pGVar16->writable).isAncestor != false) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp"
+                                ,0xc4a,1,"%s");
               }
-              if (((param_2 & 0xffffffff) != 0) && (*(char *)((int)param_2 + 1) == '\0')) {
-                MyAssertHandler(0xffffffff821bc490,0xc4b,1,0xffffffff82000f98,local_ac);
+              if (((uVar7 & 0xffffffff) != 0) && ((pGVar4->writable).isAncestor == false)) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp"
+                                ,0xc4b,1,"%s");
               }
             }
             else {
-              pcVar12[8] = '\0';
-              pcVar12[9] = '\0';
-              pcVar12[10] = '\0';
-              pcVar12[0xb] = '\0';
-              if ((param_6 & 0xffffffff) < (param_5 & 0xffffffff)) {
-                puVar6 = (undefined4 *)param_3;
-                param_6 = param_6 + 1;
-                puVar11 = (undefined4 *)lVar10;
-                *puVar11 = *puVar6;
-                puVar11[1] = puVar6[1];
-                puVar11[2] = puVar6[2];
-                puVar11[3] = puVar6[3];
-                lVar10 = lVar10 + 0x10;
+              (pGVar16->writable).queuedParent = (GfxPortal *)0x0;
+              if ((uVar15 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+                uVar15 = uVar15 + 1;
+                pfVar14 = (float *)lVar13;
+                *pfVar14 = param_3->coeffs[0];
+                pfVar14[1] = param_3->coeffs[1];
+                pfVar14[2] = param_3->coeffs[2];
+                pfVar14[3] = param_3->coeffs[3];
+                lVar13 = lVar13 + 0x10;
                 R_VisitPortalsForCell
-                          (*(undefined2 *)(pcVar12 + 0x20),pcVar12,pcVar12 + 0xc,param_4,param_5,
-                           param_6,param_7,(ulonglong)(byte)pcVar12[2] + 1);
+                          ((uint)pGVar16->cellIndex,pGVar16,&pGVar16->plane,pDVar8,(uint)uVar9,
+                           (uint)uVar15,param_7,(pGVar16->writable).recursionDepth + 1,
+                           in_stack_fffffee8);
                 goto LAB_82730aac;
               }
             }
-            uVar8 = param_8 & 0xffffffff;
+            uVar11 = (ulonglong)uStack0000004c;
           }
         }
-        iVar9 = iVar9 + 0x3c;
+        iVar12 = iVar12 + 0x3c;
         local_c0 = local_c0 + 1;
-      } while (local_c0 < *(int *)(iVar2 + 0x18));
+      } while (local_c0 < pGVar2[param_1].portalCount);
     }
   }
-  R_SetAncestorListStatus(param_2,0);
+  R_SetAncestorListStatus(pGVar4,false);
   __restgprlr();
   return;
 }
@@ -4974,71 +5418,74 @@ LAB_82730aac:
 // 8272ECC0  R_VisitPortalsForCellNoFrustum  (gfx_d3d/r_dpvs.cpp:3172)
 
 void R_VisitPortalsForCellNoFrustum
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+               (uint param_1,GfxPortal *param_2,DpvsPlane *param_3,DpvsPlane *param_4,uint param_5,
+               uint param_6,uint param_7)
 
 {
-  bool bVar1;
-  int iVar2;
-  char cVar3;
-  ulonglong uVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
-  double dVar8;
+  byte bVar1;
+  GfxCell *pGVar2;
+  uint uVar3;
+  GfxPortal *pGVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  GfxPortal *pGVar11;
+  double dVar12;
   
-  iVar2 = __savegprlr_21();
-  R_SetCellVisible();
-  R_SetAncestorListStatus(param_2,1);
-  iVar5 = 0;
-  iVar2 = *(int *)(DAT_8461658c + 0x4c) + iVar2 * 0x30;
-  if (0 < *(int *)(iVar2 + 0x18)) {
-    iVar6 = 0;
-    dVar8 = 0.0;
+  uVar7 = (ulonglong)(int)param_6;
+  uVar6 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_21(param_1);
+  R_SetCellVisible(uVar3);
+  pGVar4 = (GfxPortal *)uVar6;
+  R_SetAncestorListStatus(pGVar4,true);
+  iVar9 = 0;
+  pGVar2 = (rgp.world)->cells;
+  if (0 < pGVar2[uVar3].portalCount) {
+    iVar10 = 0;
+    dVar12 = 0.0;
     do {
-      pcVar7 = (char *)(*(int *)(iVar2 + 0x1c) + iVar6);
-      if (pcVar7[1] == '\0') {
-        if ((double)(*(float *)(pcVar7 + 0xc) * DAT_845a17d8 +
-                    *(float *)(pcVar7 + 0x18) * DAT_845a17e4 +
-                    *(float *)(pcVar7 + 0x10) * DAT_845a17dc +
-                    *(float *)(pcVar7 + 0x14) * DAT_845a17e0) <= dVar8) {
-          cVar3 = R_PortalBehindAnyPlane(pcVar7,param_4,param_5);
-          bVar1 = cVar3 != '\0';
+      pGVar11 = (GfxPortal *)((int)((pGVar2[uVar3].portals)->plane).coeffs + iVar10 + -0xc);
+      if ((pGVar11->writable).isAncestor == false) {
+        if ((double)((pGVar11->plane).coeffs[0] * dpvsGlob.viewOrg[0] +
+                    (pGVar11->plane).coeffs[3] * dpvsGlob.viewOrg[3] +
+                    (pGVar11->plane).coeffs[1] * dpvsGlob.viewOrg[1] +
+                    (pGVar11->plane).coeffs[2] * dpvsGlob.viewOrg[2]) <= dVar12) {
+          bVar5 = R_PortalBehindAnyPlane(pGVar11,param_4,param_5);
         }
         else {
-          bVar1 = true;
+          bVar5 = true;
         }
       }
       else {
-        bVar1 = true;
+        bVar5 = true;
       }
-      if ((!bVar1) &&
-         (cVar3 = R_ChopPortalAndAddHullPointsNoFrustum(pcVar7,param_3,param_4,param_5),
-         cVar3 != '\0')) {
-        if (*pcVar7 == '\0') {
-          *(int *)(pcVar7 + 8) = (int)param_2;
-          pcVar7[2] = (char)param_6;
-          R_EnqueuePortal(pcVar7);
+      if ((bVar5 == false) &&
+         (bVar5 = R_ChopPortalAndAddHullPointsNoFrustum(pGVar11,param_3,param_4,param_5), bVar5)) {
+        if ((pGVar11->writable).isQueued == false) {
+          (pGVar11->writable).queuedParent = pGVar4;
+          (pGVar11->writable).recursionDepth = (uchar)uVar7;
+          R_EnqueuePortal(pGVar11);
         }
         else {
-          uVar4 = (ulonglong)(byte)pcVar7[2];
-          if ((int)param_6 <= (int)(uint)(byte)pcVar7[2]) {
-            uVar4 = param_6;
+          bVar1 = (pGVar11->writable).recursionDepth;
+          uVar8 = (ulonglong)bVar1;
+          if ((int)uVar7 <= (int)(uint)bVar1) {
+            uVar8 = uVar7;
           }
-          pcVar7[2] = (char)uVar4;
-          if ((ulonglong)*(uint *)(pcVar7 + 8) != (param_2 & 0xffffffff)) {
-            pcVar7[8] = '\0';
-            pcVar7[9] = '\0';
-            pcVar7[10] = '\0';
-            pcVar7[0xb] = '\0';
+          (pGVar11->writable).recursionDepth = (uchar)uVar8;
+          if (ZEXT48((pGVar11->writable).queuedParent) != (uVar6 & 0xffffffff)) {
+            (pGVar11->writable).queuedParent = (GfxPortal *)0x0;
           }
         }
       }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 0x3c;
-    } while (iVar5 < *(int *)(iVar2 + 0x18));
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 0x3c;
+    } while (iVar9 < pGVar2[uVar3].portalCount);
   }
-  R_SetAncestorListStatus(param_2,0);
+  R_SetAncestorListStatus(pGVar4,false);
   __restgprlr_21();
   return;
 }
@@ -5046,226 +5493,211 @@ void R_VisitPortalsForCellNoFrustum
 
 // 82730BA0  R_VisitPortals  (gfx_d3d/r_dpvs.cpp:3209)
 
-void R_VisitPortals(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_VisitPortals(uint param_1,DpvsPlane *param_2,DpvsPlane *param_3,uint param_4)
 
 {
-  undefined1 *puVar1;
-  byte bVar2;
+  byte bVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
-  undefined2 uVar5;
-  float *pfVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  int iVar10;
-  undefined8 uVar11;
-  undefined4 *puVar12;
-  char cVar16;
-  int iVar13;
-  uint uVar14;
-  int iVar15;
-  uint uVar17;
+  float fVar5;
+  float fVar6;
+  float *pfVar7;
+  GfxHullPointsPool *pGVar8;
+  bool bVar12;
+  GfxPortal *pGVar9;
+  uint uVar10;
+  DpvsPlane *pDVar11;
+  uint uVar13;
+  float (*pafVar14) [3];
+  float (*pafVar15) [3];
+  float *pfVar16;
+  GfxHullPointsPool *pGVar17;
   float *pfVar18;
-  float *pfVar19;
-  float *pfVar20;
-  undefined4 *puVar21;
-  float *pfVar22;
-  ulonglong uVar23;
-  longlong lVar24;
-  longlong lVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  undefined1 local_e30 [56];
-  double local_df8 [3];
-  undefined4 local_ddc [3];
-  undefined4 local_dd0;
-  undefined4 local_dcc;
-  undefined4 local_dc8;
+  int iVar19;
+  int iVar20;
+  longlong lVar21;
+  double dVar22;
+  double dVar23;
+  DpvsClipChildren in_stack_fffff1d8;
+  DpvsClipChildren local_dc8;
   int local_dc4;
-  undefined1 auStack_dc0 [12];
-  float fStack_db4;
-  undefined1 local_db0 [764];
-  float fStack_ab4;
-  undefined1 local_ab0 [512];
-  undefined1 auStack_8b0 [2224];
+  LargeLocal LStack_dc0;
+  float afStack_db4 [192];
+  float afStack_ab4 [129];
+  PortalHeapNode aPStack_8b0 [278];
   
-  uVar11 = __savegprlr();
-  puVar1 = &stack0x00000000 + -0xe30;
-  *(BADSPACEBASE **)puVar1 = register0x0000000c;
-  LargeLocal__LargeLocal(&stack0x00000000 + -0xdc0,0x20000);
-  puVar12 = (undefined4 *)LargeLocal__GetBuf(&stack0x00000000 + -0xdc0);
+  __savegprlr();
+  LargeLocal::LargeLocal(&LStack_dc0,0x20000);
+  pGVar8 = LargeLocal::GetBuf(&LStack_dc0);
   Profile_Begin(0xaf);
-  cVar16 = Sys_IsMainThread();
-  *(char **)(&stack0x00000000 + -0xdd0) =
-       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp";
-  *(undefined **)(&stack0x00000000 + -0xdcc) = &DAT_82000f98;
-  if (cVar16 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xc9b,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar12 = Sys_IsMainThread();
+  if (!bVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xc9b,0,
+                    "%s");
   }
-  uVar23 = 0;
-  lVar25 = 0xff;
-  puVar21 = puVar12;
+  iVar19 = 0;
+  lVar21 = 0xff;
+  pGVar17 = pGVar8;
   do {
-    *puVar21 = puVar21 + 0x80;
-    lVar25 = lVar25 + -1;
-    puVar21 = puVar21 + 0x80;
-  } while (lVar25 != 0);
-  DAT_845a17f0 = &stack0x00000000 + -0x8b0;
-  *(undefined4 *)(&stack0x00000000 + -0xddc) = 1;
-  puVar12[0x7f80] = 0;
-  DAT_845a17ec = 0;
-  DAT_845a17f4 = puVar12;
-  R_VisitPortalsForCell(uVar11,0,param_2,param_3,0x10,param_4,param_4,0);
-  iVar15 = 0;
-  if (DAT_845a17ec != 0) {
-    dVar27 = 0.0;
-    dVar28 = 0.12487500160932541;
+    pGVar17->nextFree = pGVar17 + 1;
+    lVar21 = lVar21 + -1;
+    pGVar17 = pGVar17 + 1;
+  } while (lVar21 != 0);
+  dpvsGlob.portalQueue = aPStack_8b0;
+  pGVar8[0xff].nextFree = (GfxHullPointsPool *)0x0;
+  dpvsGlob.queuedCount = 0;
+  dpvsGlob.nextFreeHullPoints = pGVar8;
+  R_VisitPortalsForCell
+            (param_1,(GfxPortal *)0x0,param_2,param_3,0x10,param_4,param_4,0,in_stack_fffff1d8);
+  iVar20 = 0;
+  if (dpvsGlob.queuedCount != 0) {
+    dVar22 = 0.0;
+    dVar23 = 0.12487500160932541;
     do {
-      iVar13 = R_NextQueuedPortal();
-      if (iVar13 == 0) {
-        MyAssertHandler(*(undefined4 *)(&stack0x00000000 + -0xdd0),0xcab,0,
-                        *(undefined4 *)(&stack0x00000000 + -0xdcc),0xffffffff82183f54);
+      pGVar9 = R_NextQueuedPortal();
+      if (pGVar9 == (GfxPortal *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xcab,
+                        0,"%s");
       }
       Profile_Begin(0x4f);
-      uVar14 = Com_ConvexHull(*(undefined4 *)(iVar13 + 4),*(undefined1 *)(iVar13 + 3),
-                              &stack0x00000000 + -0xab0);
-      Profile_EndInternal(0);
-      puVar12 = *(undefined4 **)(iVar13 + 4);
-      *puVar12 = DAT_845a17f4;
-      DAT_845a17f4 = puVar12;
-      *(undefined4 *)(iVar13 + 4) = 0;
-      iVar10 = DAT_845aa688;
-      if (uVar14 != 0) {
-        *(int *)(&stack0x00000000 + -0xdc4) = iVar15 + 1;
-        if (iVar15 + 1 == *(int *)(iVar10 + 0xc)) goto joined_r0x8273117c;
-        dVar26 = (double)(*(float *)(iVar13 + 0x10) * DAT_845a17dc +
-                         *(float *)(iVar13 + 0xc) * DAT_845a17d8 +
-                         *(float *)(iVar13 + 0x18) * DAT_845a17e4 +
-                         *(float *)(iVar13 + 0x14) * DAT_845a17e0);
-        if (dVar28 < dVar26) {
-          *(double *)(&stack0x00000000 + -0xdf8) = dVar26;
-          MyAssertHandler(*(undefined4 *)(&stack0x00000000 + -0xdd0),0xcc2,0,0xffffffff821bd340,
-                          0xffffffff821bd304,*(undefined8 *)(&stack0x00000000 + -0xdf8));
+      uVar10 = Com_ConvexHull((pGVar9->writable).hullPoints,(uint)(pGVar9->writable).hullPointCount,
+                              (float (*) [2])(afStack_ab4 + 1));
+      Profile_EndInternal((double *)0x0);
+      pGVar8 = (GfxHullPointsPool *)(pGVar9->writable).hullPoints;
+      pGVar8->nextFree = dpvsGlob.nextFreeHullPoints;
+      dpvsGlob.nextFreeHullPoints = pGVar8;
+      (pGVar9->writable).hullPoints = (float (*) [2])0x0;
+      if (uVar10 != 0) {
+        local_dc4 = iVar20 + 1;
+        if (local_dc4 == (r_portalWalkLimit->current).integer) goto joined_r0x8273117c;
+        if (dVar23 < (double)((pGVar9->plane).coeffs[1] * dpvsGlob.viewOrg[1] +
+                             (pGVar9->plane).coeffs[0] * dpvsGlob.viewOrg[0] +
+                             (pGVar9->plane).coeffs[3] * dpvsGlob.viewOrg[3] +
+                             (pGVar9->plane).coeffs[2] * dpvsGlob.viewOrg[2])) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0xcc2,0,"%s\n\t(R_DpvsPlaneDistToEye( &portal->plane )) = %g");
         }
-        uVar17 = 0;
-        fVar7 = -*(float *)(iVar13 + 0x18);
-        fVar8 = *(float *)(iVar13 + 0xc) * fVar7;
-        fVar9 = *(float *)(iVar13 + 0x10) * fVar7;
-        fVar7 = *(float *)(iVar13 + 0x14) * fVar7;
-        if (3 < (int)uVar14) {
-          pfVar20 = (float *)(&stack0x00000000 + -0xab4);
-          pfVar19 = (float *)(iVar13 + 0x24);
-          pfVar18 = (float *)(iVar13 + 0x30);
-          pfVar22 = (float *)(&stack0x00000000 + -0xdb4);
+        uVar13 = 0;
+        fVar4 = -(pGVar9->plane).coeffs[3];
+        fVar5 = (pGVar9->plane).coeffs[0] * fVar4;
+        fVar6 = (pGVar9->plane).coeffs[1] * fVar4;
+        fVar4 = (pGVar9->plane).coeffs[2] * fVar4;
+        if (3 < (int)uVar10) {
+          pfVar16 = afStack_ab4;
+          pafVar15 = pGVar9->hullAxis;
+          pafVar14 = pGVar9->hullAxis + 1;
+          pfVar18 = afStack_db4;
           do {
-            fVar3 = pfVar20[1];
-            pfVar22[1] = *pfVar19 * fVar3 + fVar8;
-            pfVar22[2] = *(float *)(iVar13 + 0x28) * fVar3 + fVar9;
-            pfVar22[3] = fVar3 * *(float *)(iVar13 + 0x2c) + fVar7;
-            fVar3 = pfVar20[2];
-            pfVar22[1] = *pfVar18 * fVar3 + pfVar22[1];
-            pfVar22[2] = *(float *)(iVar13 + 0x34) * fVar3 + pfVar22[2];
-            pfVar22[3] = fVar3 * *(float *)(iVar13 + 0x38) + pfVar22[3];
-            fVar3 = pfVar20[3];
-            pfVar22[4] = *pfVar19 * fVar3 + fVar8;
-            pfVar22[5] = *(float *)(iVar13 + 0x28) * fVar3 + fVar9;
-            pfVar22[6] = fVar3 * *(float *)(iVar13 + 0x2c) + fVar7;
-            fVar3 = pfVar20[4];
-            pfVar22[4] = *pfVar18 * fVar3 + pfVar22[4];
-            pfVar22[5] = *(float *)(iVar13 + 0x34) * fVar3 + pfVar22[5];
-            pfVar22[6] = fVar3 * *(float *)(iVar13 + 0x38) + pfVar22[6];
-            fVar3 = pfVar20[5];
-            pfVar22[7] = *pfVar19 * fVar3 + fVar8;
-            pfVar22[8] = *(float *)(iVar13 + 0x28) * fVar3 + fVar9;
-            pfVar22[9] = fVar3 * *(float *)(iVar13 + 0x2c) + fVar7;
-            fVar3 = pfVar20[6];
-            pfVar22[7] = *pfVar18 * fVar3 + pfVar22[7];
-            pfVar22[8] = *(float *)(iVar13 + 0x34) * fVar3 + pfVar22[8];
-            fVar4 = pfVar20[7];
-            pfVar22[9] = fVar3 * *(float *)(iVar13 + 0x38) + pfVar22[9];
-            pfVar22[10] = *pfVar19 * fVar4 + fVar8;
-            pfVar22[0xb] = *(float *)(iVar13 + 0x28) * fVar4 + fVar9;
-            pfVar22[0xc] = fVar4 * *(float *)(iVar13 + 0x2c) + fVar7;
-            pfVar20 = pfVar20 + 8;
-            fVar3 = *pfVar20;
-            uVar17 = uVar17 + 4;
-            pfVar22[10] = *pfVar18 * fVar3 + pfVar22[10];
-            pfVar22[0xb] = *(float *)(iVar13 + 0x34) * fVar3 + pfVar22[0xb];
-            pfVar6 = pfVar22 + 0xc;
-            pfVar22 = pfVar22 + 0xc;
-            *pfVar22 = fVar3 * *(float *)(iVar13 + 0x38) + *pfVar6;
-          } while (uVar17 < uVar14 - 3);
+            fVar2 = pfVar16[1];
+            pfVar18[1] = (*pafVar15)[0] * fVar2 + fVar5;
+            pfVar18[2] = pGVar9->hullAxis[0][1] * fVar2 + fVar6;
+            pfVar18[3] = fVar2 * pGVar9->hullAxis[0][2] + fVar4;
+            fVar2 = pfVar16[2];
+            pfVar18[1] = (*pafVar14)[0] * fVar2 + pfVar18[1];
+            pfVar18[2] = pGVar9->hullAxis[1][1] * fVar2 + pfVar18[2];
+            pfVar18[3] = fVar2 * pGVar9->hullAxis[1][2] + pfVar18[3];
+            fVar2 = pfVar16[3];
+            pfVar18[4] = (*pafVar15)[0] * fVar2 + fVar5;
+            pfVar18[5] = pGVar9->hullAxis[0][1] * fVar2 + fVar6;
+            pfVar18[6] = fVar2 * pGVar9->hullAxis[0][2] + fVar4;
+            fVar2 = pfVar16[4];
+            pfVar18[4] = (*pafVar14)[0] * fVar2 + pfVar18[4];
+            pfVar18[5] = pGVar9->hullAxis[1][1] * fVar2 + pfVar18[5];
+            pfVar18[6] = fVar2 * pGVar9->hullAxis[1][2] + pfVar18[6];
+            fVar2 = pfVar16[5];
+            pfVar18[7] = (*pafVar15)[0] * fVar2 + fVar5;
+            pfVar18[8] = pGVar9->hullAxis[0][1] * fVar2 + fVar6;
+            pfVar18[9] = fVar2 * pGVar9->hullAxis[0][2] + fVar4;
+            fVar2 = pfVar16[6];
+            pfVar18[7] = (*pafVar14)[0] * fVar2 + pfVar18[7];
+            pfVar18[8] = pGVar9->hullAxis[1][1] * fVar2 + pfVar18[8];
+            fVar3 = pfVar16[7];
+            pfVar18[9] = fVar2 * pGVar9->hullAxis[1][2] + pfVar18[9];
+            pfVar18[10] = (*pafVar15)[0] * fVar3 + fVar5;
+            pfVar18[0xb] = pGVar9->hullAxis[0][1] * fVar3 + fVar6;
+            pfVar18[0xc] = fVar3 * pGVar9->hullAxis[0][2] + fVar4;
+            pfVar16 = pfVar16 + 8;
+            fVar2 = *pfVar16;
+            uVar13 = uVar13 + 4;
+            pfVar18[10] = (*pafVar14)[0] * fVar2 + pfVar18[10];
+            pfVar18[0xb] = pGVar9->hullAxis[1][1] * fVar2 + pfVar18[0xb];
+            pfVar7 = pfVar18 + 0xc;
+            pfVar18 = pfVar18 + 0xc;
+            *pfVar18 = fVar2 * pGVar9->hullAxis[1][2] + *pfVar7;
+          } while (uVar13 < uVar10 - 3);
         }
-        if (uVar17 < uVar14) {
-          iVar15 = uVar14 - uVar17;
-          pfVar20 = (float *)(puVar1 + uVar17 * 8 + 0x37c);
-          pfVar22 = (float *)(puVar1 + uVar17 * 0xc + 0x7c);
+        if (uVar13 < uVar10) {
+          iVar20 = uVar10 - uVar13;
+          pfVar16 = afStack_ab4 + uVar13 * 2;
+          pfVar18 = afStack_db4 + uVar13 * 3;
           do {
-            fVar3 = pfVar20[1];
-            fVar4 = *(float *)(iVar13 + 0x24) * fVar3 + fVar8;
-            pfVar22[1] = fVar4;
-            pfVar22[2] = *(float *)(iVar13 + 0x28) * fVar3 + fVar9;
-            pfVar22[3] = fVar3 * *(float *)(iVar13 + 0x2c) + fVar7;
-            pfVar20 = pfVar20 + 2;
-            fVar3 = *pfVar20;
-            pfVar22[1] = *(float *)(iVar13 + 0x30) * fVar3 + fVar4;
-            pfVar22[2] = *(float *)(iVar13 + 0x34) * fVar3 + pfVar22[2];
-            pfVar18 = pfVar22 + 3;
-            pfVar22 = pfVar22 + 3;
-            *pfVar22 = fVar3 * *(float *)(iVar13 + 0x38) + *pfVar18;
-            iVar15 = iVar15 + -1;
-          } while (iVar15 != 0);
+            fVar2 = pfVar16[1];
+            fVar3 = pGVar9->hullAxis[0][0] * fVar2 + fVar5;
+            pfVar18[1] = fVar3;
+            pfVar18[2] = pGVar9->hullAxis[0][1] * fVar2 + fVar6;
+            pfVar18[3] = fVar2 * pGVar9->hullAxis[0][2] + fVar4;
+            pfVar16 = pfVar16 + 2;
+            fVar2 = *pfVar16;
+            pfVar18[1] = pGVar9->hullAxis[1][0] * fVar2 + fVar3;
+            pfVar18[2] = pGVar9->hullAxis[1][1] * fVar2 + pfVar18[2];
+            pfVar7 = pfVar18 + 3;
+            pfVar18 = pfVar18 + 3;
+            *pfVar18 = fVar2 * pGVar9->hullAxis[1][2] + *pfVar7;
+            iVar20 = iVar20 + -1;
+          } while (iVar20 != 0);
         }
-        if ((*(int *)(DAT_845aa724 + 0xc) != 0) && (*(char *)(DAT_845aa8a8 + 0xc) == '\0')) {
-          R_AddDebugPolygon((ulonglong)DAT_84628b00 + 0x18f0,0xffffffff821bd374,uVar14,
-                            &stack0x00000000 + -0xdb0,1);
+        if (((r_showPortals->current).integer != 0) &&
+           ((r_portalBevelsOnly->current).enabled == false)) {
+          R_AddDebugPolygon(&frontEndDataOut->debugGlobals,color,uVar10,
+                            (float (*) [3])(afStack_db4 + 1),true);
         }
-        if (dVar27 < (double)*(float *)(DAT_845aa690 + 0xc)) {
-          R_Show2DPortal(uVar14,&stack0x00000000 + -0xdb0);
+        if (dVar22 < (double)(r_showPortalsOverview->current).value) {
+          R_Show2DPortal(uVar10,(float (*) [3])(afStack_db4 + 1));
         }
-        if (0x800 < (uVar23 + 0x10 & 0xffffffff)) {
-          R_WarnOncePerFrame(10);
-          R_WaitWorkerCmdsOfType(1);
-          R_WaitWorkerCmdsOfType(2);
-          R_WaitWorkerCmdsOfType(0xe);
-          R_WaitWorkerCmdsOfType(3);
-          R_WaitWorkerCmdsOfType(4);
-          uVar23 = 0;
+        if (0x800 < iVar19 + 0x10U) {
+          R_WarnOncePerFrame(R_WARN_PORTAL_PLANES);
+          R_WaitWorkerCmdsOfType(WRKCMD_DPVS_CELL_DYN_BRUSH);
+          R_WaitWorkerCmdsOfType(WRKCMD_DPVS_CELL_DYN_MODEL);
+          R_WaitWorkerCmdsOfType(WRKCMD_DPVS_CELL_STATIC);
+          R_WaitWorkerCmdsOfType(WRKCMD_DPVS_CELL_SCENE_ENT);
+          R_WaitWorkerCmdsOfType(WRKCMD_DPVS_ENTITY);
+          iVar19 = 0;
         }
-        lVar24 = (uVar23 & 0xfffffff) * 0x10 + -0x7ba5e804;
-        lVar25 = R_PortalClipPlanes(lVar24,uVar14,&stack0x00000000 + -0xdb0,
-                                    &stack0x00000000 + -0xdc8);
-        if (0x10 < (int)lVar25) {
-          MyAssertHandler(*(undefined4 *)(&stack0x00000000 + -0xdd0),0xce7,0,
-                          *(undefined4 *)(&stack0x00000000 + -0xdcc),0xffffffff821bce64);
+        pDVar11 = dpvsGlob.childPlanes + iVar19;
+        uVar10 = R_PortalClipPlanes(pDVar11,uVar10,(float (*) [3])(afStack_db4 + 1),&local_dc8);
+        if (0x10 < (int)uVar10) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0xce7,0,"%s");
         }
-        uVar23 = lVar25 + uVar23;
-        bVar2 = *(byte *)(iVar13 + 2);
-        if ((int)(uint)bVar2 < *(int *)(DAT_845aa584 + 0xc)) {
-          *(undefined4 *)(&stack0x00000000 + -0xdc8) = 1;
+        iVar19 = uVar10 + iVar19;
+        bVar1 = (pGVar9->writable).recursionDepth;
+        if ((int)(uint)bVar1 < (r_portalMinRecurseDepth->current).integer) {
+          local_dc8 = DPVS_CLIP_CHILDREN;
         }
-        uVar5 = *(undefined2 *)(iVar13 + 0x20);
-        *(undefined4 *)(&stack0x00000000 + -0xddc) = *(undefined4 *)(&stack0x00000000 + -0xdc8);
         R_VisitPortalsForCell
-                  (uVar5,iVar13,(float *)(iVar13 + 0xc),lVar24,0x800,lVar25,0,(ulonglong)bVar2 + 1);
-        iVar15 = *(int *)(&stack0x00000000 + -0xdc4);
+                  ((uint)pGVar9->cellIndex,pGVar9,&pGVar9->plane,pDVar11,0x800,uVar10,0,bVar1 + 1,
+                   in_stack_fffff1d8);
+        iVar20 = local_dc4;
       }
-    } while (DAT_845a17ec != 0);
+    } while (dpvsGlob.queuedCount != 0);
   }
 LAB_827311a4:
-  Profile_EndInternal(0);
-  LargeLocal___LargeLocal(&stack0x00000000 + -0xdc0);
+  Profile_EndInternal((double *)0x0);
+  LargeLocal::~LargeLocal(&LStack_dc0);
   __restgprlr();
   return;
 joined_r0x8273117c:
-  while (DAT_845a17ec != 0) {
-    iVar15 = R_NextQueuedPortal();
-    puVar12 = *(undefined4 **)(iVar15 + 4);
-    *puVar12 = DAT_845a17f4;
-    DAT_845a17f4 = puVar12;
-    *(undefined4 *)(iVar15 + 4) = 0;
+  while (dpvsGlob.queuedCount != 0) {
+    pGVar9 = R_NextQueuedPortal();
+    pGVar8 = (GfxHullPointsPool *)(pGVar9->writable).hullPoints;
+    pGVar8->nextFree = dpvsGlob.nextFreeHullPoints;
+    dpvsGlob.nextFreeHullPoints = pGVar8;
+    (pGVar9->writable).hullPoints = (float (*) [2])0x0;
   }
   goto LAB_827311a4;
 }
@@ -5273,10 +5705,10 @@ joined_r0x8273117c:
 
 // 8272EE58  R_VisitPortalsNoFrustum  (gfx_d3d/r_dpvs.cpp:3315)
 
-void R_VisitPortalsNoFrustum(void)
+void R_VisitPortalsNoFrustum(uint param_1)
 
 {
-  undefined1 *puVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
@@ -5285,155 +5717,159 @@ void R_VisitPortalsNoFrustum(void)
   float fVar7;
   float fVar8;
   float fVar9;
-  float *pfVar10;
+  float fVar10;
   float fVar11;
-  float fVar12;
-  float fVar13;
-  undefined8 uVar14;
-  undefined4 *puVar15;
-  char cVar18;
-  int iVar16;
-  uint uVar17;
-  int iVar19;
-  uint uVar20;
+  float *pfVar12;
+  uint uVar13;
+  GfxHullPointsPool *pGVar14;
+  bool bVar17;
+  GfxPortal *pGVar15;
+  undefined1 *puVar16;
+  int iVar18;
+  undefined1 *puVar19;
+  undefined1 *puVar20;
   float *pfVar21;
-  undefined4 *puVar22;
+  GfxHullPointsPool *pGVar22;
   float *pfVar23;
   longlong lVar24;
-  undefined1 local_db0 [80];
-  undefined1 auStack_d60 [12];
-  float fStack_d54;
-  undefined1 local_d50 [508];
-  float fStack_b54;
-  undefined1 local_b50 [768];
-  undefined1 auStack_850 [2128];
+  LargeLocal LStack_d60;
+  float afStack_d54 [128];
+  float afStack_b54 [3];
+  undefined1 local_b48 [760];
+  PortalHeapNode aPStack_850 [266];
   
-  uVar14 = __savegprlr_23();
-  puVar1 = &stack0x00000000 + -0xdb0;
-  *(BADSPACEBASE **)puVar1 = register0x0000000c;
-  LargeLocal__LargeLocal(&stack0x00000000 + -0xd60,0x20000);
-  puVar15 = (undefined4 *)LargeLocal__GetBuf(&stack0x00000000 + -0xd60);
+  uVar13 = __savegprlr_23(param_1);
+  LargeLocal::LargeLocal(&LStack_d60,0x20000);
+  pGVar14 = LargeLocal::GetBuf(&LStack_d60);
   Profile_Begin(0xaf);
-  cVar18 = Sys_IsMainThread();
-  if (cVar18 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xd02,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar17 = Sys_IsMainThread();
+  if (!bVar17) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd02,0,
+                    "%s");
   }
   lVar24 = 0xff;
-  puVar22 = puVar15;
+  pGVar22 = pGVar14;
   do {
-    *puVar22 = puVar22 + 0x80;
+    pGVar22->nextFree = pGVar22 + 1;
     lVar24 = lVar24 + -1;
-    puVar22 = puVar22 + 0x80;
+    pGVar22 = pGVar22 + 1;
   } while (lVar24 != 0);
-  DAT_845a17f0 = &stack0x00000000 + -0x850;
-  puVar15[0x7f80] = 0;
-  DAT_845a17ec = 0;
-  DAT_845a17f4 = puVar15;
-  R_VisitPortalsForCellNoFrustum(uVar14,0,0,0,0,0,0x1fe00,0);
-  while (DAT_845a17ec != 0) {
-    iVar16 = R_NextQueuedPortal();
-    if (iVar16 == 0) {
-      MyAssertHandler(0xffffffff821bc490,0xd0f,0,0xffffffff82000f98,0xffffffff82183f54);
+  dpvsGlob.portalQueue = aPStack_850;
+  pGVar14[0xff].nextFree = (GfxHullPointsPool *)0x0;
+  dpvsGlob.queuedCount = 0;
+  dpvsGlob.nextFreeHullPoints = pGVar14;
+  R_VisitPortalsForCellNoFrustum
+            (uVar13,(GfxPortal *)0x0,(DpvsPlane *)0x0,(DpvsPlane *)0x0,0,0,0x1fe00);
+  while (dpvsGlob.queuedCount != 0) {
+    pGVar15 = R_NextQueuedPortal();
+    if (pGVar15 == (GfxPortal *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd0f,0,
+                      "%s");
     }
     Profile_Begin(0x4f);
-    uVar17 = Com_ConvexHull(*(undefined4 *)(iVar16 + 4),*(undefined1 *)(iVar16 + 3),
-                            &stack0x00000000 + -0xd50);
-    Profile_EndInternal(0);
-    puVar15 = *(undefined4 **)(iVar16 + 4);
-    *puVar15 = DAT_845a17f4;
-    DAT_845a17f4 = puVar15;
-    *(undefined4 *)(iVar16 + 4) = 0;
-    if (uVar17 != 0) {
-      fVar11 = -*(float *)(iVar16 + 0x18);
-      uVar20 = 0;
-      fVar12 = *(float *)(iVar16 + 0xc) * fVar11;
-      fVar13 = *(float *)(iVar16 + 0x10) * fVar11;
-      fVar11 = *(float *)(iVar16 + 0x14) * fVar11;
-      if (3 < (int)uVar17) {
-        fVar2 = *(float *)(iVar16 + 0x24);
-        fVar3 = *(float *)(iVar16 + 0x28);
-        pfVar21 = (float *)(&stack0x00000000 + -0xd54);
-        fVar4 = *(float *)(iVar16 + 0x2c);
-        fVar5 = *(float *)(iVar16 + 0x30);
-        fVar6 = *(float *)(iVar16 + 0x34);
-        pfVar23 = (float *)(&stack0x00000000 + -0xb54);
-        fVar7 = *(float *)(iVar16 + 0x38);
+    puVar16 = (undefined1 *)
+              Com_ConvexHull((pGVar15->writable).hullPoints,(uint)(pGVar15->writable).hullPointCount
+                             ,(float (*) [2])(afStack_d54 + 1));
+    Profile_EndInternal((double *)0x0);
+    pGVar14 = (GfxHullPointsPool *)(pGVar15->writable).hullPoints;
+    pGVar14->nextFree = dpvsGlob.nextFreeHullPoints;
+    dpvsGlob.nextFreeHullPoints = pGVar14;
+    (pGVar15->writable).hullPoints = (float (*) [2])0x0;
+    if (puVar16 != (undefined1 *)0x0) {
+      fVar9 = -(pGVar15->plane).coeffs[3];
+      puVar19 = (undefined1 *)0x0;
+      fVar10 = (pGVar15->plane).coeffs[0] * fVar9;
+      fVar11 = (pGVar15->plane).coeffs[1] * fVar9;
+      fVar9 = (pGVar15->plane).coeffs[2] * fVar9;
+      if (3 < (int)puVar16) {
+        fVar1 = pGVar15->hullAxis[0][0];
+        fVar2 = pGVar15->hullAxis[0][1];
+        pfVar21 = afStack_d54;
+        fVar3 = pGVar15->hullAxis[0][2];
+        fVar4 = pGVar15->hullAxis[1][0];
+        fVar5 = pGVar15->hullAxis[1][1];
+        pfVar23 = afStack_b54;
+        fVar6 = pGVar15->hullAxis[1][2];
         do {
-          fVar8 = pfVar21[1];
-          uVar20 = uVar20 + 4;
-          pfVar23[1] = fVar2 * fVar8 + fVar12;
-          pfVar23[2] = fVar3 * fVar8 + fVar13;
-          pfVar23[3] = fVar4 * fVar8 + fVar11;
-          fVar8 = pfVar21[2];
-          pfVar23[1] = fVar5 * fVar8 + pfVar23[1];
-          pfVar23[2] = fVar6 * fVar8 + pfVar23[2];
-          fVar9 = pfVar21[3];
-          pfVar23[3] = fVar7 * fVar8 + pfVar23[3];
-          pfVar23[4] = fVar2 * fVar9 + fVar12;
-          pfVar23[5] = fVar3 * fVar9 + fVar13;
-          pfVar23[6] = fVar4 * fVar9 + fVar11;
-          fVar8 = pfVar21[4];
-          pfVar23[4] = fVar5 * fVar8 + pfVar23[4];
-          pfVar23[5] = fVar6 * fVar8 + pfVar23[5];
-          fVar9 = pfVar21[5];
-          pfVar23[6] = fVar7 * fVar8 + pfVar23[6];
-          pfVar23[7] = fVar2 * fVar9 + fVar12;
-          pfVar23[8] = fVar3 * fVar9 + fVar13;
-          pfVar23[9] = fVar4 * fVar9 + fVar11;
-          fVar8 = pfVar21[6];
-          pfVar23[7] = fVar5 * fVar8 + pfVar23[7];
-          pfVar23[8] = fVar6 * fVar8 + pfVar23[8];
-          fVar9 = pfVar21[7];
-          pfVar23[9] = fVar7 * fVar8 + pfVar23[9];
-          pfVar23[10] = fVar2 * fVar9 + fVar12;
-          pfVar23[0xb] = fVar3 * fVar9 + fVar13;
-          pfVar23[0xc] = fVar4 * fVar9 + fVar11;
+          fVar7 = pfVar21[1];
+          puVar19 = puVar19 + 4;
+          pfVar23[1] = fVar1 * fVar7 + fVar10;
+          pfVar23[2] = fVar2 * fVar7 + fVar11;
+          pfVar23[3] = fVar3 * fVar7 + fVar9;
+          fVar7 = pfVar21[2];
+          pfVar23[1] = fVar4 * fVar7 + pfVar23[1];
+          pfVar23[2] = fVar5 * fVar7 + pfVar23[2];
+          fVar8 = pfVar21[3];
+          pfVar23[3] = fVar6 * fVar7 + pfVar23[3];
+          pfVar23[4] = fVar1 * fVar8 + fVar10;
+          pfVar23[5] = fVar2 * fVar8 + fVar11;
+          pfVar23[6] = fVar3 * fVar8 + fVar9;
+          fVar7 = pfVar21[4];
+          pfVar23[4] = fVar4 * fVar7 + pfVar23[4];
+          pfVar23[5] = fVar5 * fVar7 + pfVar23[5];
+          fVar8 = pfVar21[5];
+          pfVar23[6] = fVar6 * fVar7 + pfVar23[6];
+          pfVar23[7] = fVar1 * fVar8 + fVar10;
+          pfVar23[8] = fVar2 * fVar8 + fVar11;
+          pfVar23[9] = fVar3 * fVar8 + fVar9;
+          fVar7 = pfVar21[6];
+          pfVar23[7] = fVar4 * fVar7 + pfVar23[7];
+          pfVar23[8] = fVar5 * fVar7 + pfVar23[8];
+          fVar8 = pfVar21[7];
+          pfVar23[9] = fVar6 * fVar7 + pfVar23[9];
+          pfVar23[10] = fVar1 * fVar8 + fVar10;
+          pfVar23[0xb] = fVar2 * fVar8 + fVar11;
+          pfVar23[0xc] = fVar3 * fVar8 + fVar9;
           pfVar21 = pfVar21 + 8;
-          fVar8 = *pfVar21;
-          pfVar23[10] = fVar5 * fVar8 + pfVar23[10];
-          pfVar23[0xb] = fVar6 * fVar8 + pfVar23[0xb];
-          pfVar10 = pfVar23 + 0xc;
+          fVar7 = *pfVar21;
+          pfVar23[10] = fVar4 * fVar7 + pfVar23[10];
+          pfVar23[0xb] = fVar5 * fVar7 + pfVar23[0xb];
+          pfVar12 = pfVar23 + 0xc;
           pfVar23 = pfVar23 + 0xc;
-          *pfVar23 = fVar7 * fVar8 + *pfVar10;
-        } while (uVar20 < uVar17 - 3);
+          *pfVar23 = fVar6 * fVar7 + *pfVar12;
+        } while (puVar19 < puVar16 + -3);
       }
-      if (uVar20 < uVar17) {
-        fVar2 = *(float *)(iVar16 + 0x24);
-        fVar3 = *(float *)(iVar16 + 0x28);
-        fVar4 = *(float *)(iVar16 + 0x2c);
-        fVar5 = *(float *)(iVar16 + 0x30);
-        fVar6 = *(float *)(iVar16 + 0x34);
-        iVar19 = uVar17 - uVar20;
-        fVar7 = *(float *)(iVar16 + 0x38);
-        pfVar21 = (float *)(puVar1 + uVar20 * 8 + 0x5c);
-        pfVar23 = (float *)(&stack0x00000000 + uVar20 * 0xc + -0xb54);
+      puVar20 = puVar19;
+      if (puVar19 < puVar16) {
+        fVar1 = pGVar15->hullAxis[0][0];
+        fVar2 = pGVar15->hullAxis[0][1];
+        fVar3 = pGVar15->hullAxis[0][2];
+        fVar4 = pGVar15->hullAxis[1][0];
+        fVar5 = pGVar15->hullAxis[1][1];
+        iVar18 = (int)puVar16 - (int)puVar19;
+        fVar6 = pGVar15->hullAxis[1][2];
+        puVar20 = local_b48 + (int)puVar19 * 0xc;
+        pfVar21 = afStack_d54 + (int)puVar19 * 2;
+        pfVar23 = afStack_b54 + (int)puVar19 * 3;
         do {
-          fVar8 = pfVar21[1];
-          fVar9 = fVar2 * fVar8 + fVar12;
-          pfVar23[1] = fVar9;
-          pfVar23[2] = fVar3 * fVar8 + fVar13;
-          pfVar23[3] = fVar4 * fVar8 + fVar11;
+          fVar7 = pfVar21[1];
+          fVar8 = fVar1 * fVar7 + fVar10;
+          pfVar23[1] = fVar8;
+          pfVar23[2] = fVar2 * fVar7 + fVar11;
+          pfVar23[3] = fVar3 * fVar7 + fVar9;
           pfVar21 = pfVar21 + 2;
-          fVar8 = *pfVar21;
-          pfVar23[1] = fVar5 * fVar8 + fVar9;
-          pfVar23[2] = fVar6 * fVar8 + pfVar23[2];
-          pfVar10 = pfVar23 + 3;
+          fVar7 = *pfVar21;
+          pfVar23[1] = fVar4 * fVar7 + fVar8;
+          pfVar23[2] = fVar5 * fVar7 + pfVar23[2];
+          pfVar12 = pfVar23 + 3;
           pfVar23 = pfVar23 + 3;
-          *pfVar23 = fVar7 * fVar8 + *pfVar10;
-          iVar19 = iVar19 + -1;
-        } while (iVar19 != 0);
+          *pfVar23 = fVar6 * fVar7 + *pfVar12;
+          iVar18 = iVar18 + -1;
+        } while (iVar18 != 0);
       }
-      uVar14 = R_PortalClipPlanesNoFrustum(0xffffffff845a17fc,uVar17,&stack0x00000000 + -0xb50);
-      if (0x10 < (int)uVar14) {
-        MyAssertHandler(0xffffffff821bc490,0xd22,0,0xffffffff82000f98,0xffffffff821bce64);
+      uVar13 = R_PortalClipPlanesNoFrustum
+                         (dpvsGlob.childPlanes,(uint)puVar16,(float (*) [3])(afStack_b54 + 1));
+      if (0x10 < (int)uVar13) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd22,
+                        0,"%s");
       }
       R_VisitPortalsForCellNoFrustum
-                (*(undefined2 *)(iVar16 + 0x20),iVar16,iVar16 + 0xc,0xffffffff845a17fc,uVar14,
-                 (ulonglong)*(byte *)(iVar16 + 2) + 1);
+                ((uint)pGVar15->cellIndex,pGVar15,&pGVar15->plane,dpvsGlob.childPlanes,uVar13,
+                 (pGVar15->writable).recursionDepth + 1,(uint)puVar20);
     }
   }
-  Profile_EndInternal(0);
-  LargeLocal___LargeLocal(&stack0x00000000 + -0xd60);
+  Profile_EndInternal((double *)0x0);
+  LargeLocal::~LargeLocal(&LStack_d60);
   __restgprlr_23();
   return;
 }
@@ -5441,140 +5877,152 @@ void R_VisitPortalsNoFrustum(void)
 
 // 8272F238  R_GenerateShadowMapCasterCells  (gfx_d3d/r_dpvs.cpp:3371)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GenerateShadowMapCasterCells(void)
 
 {
   float fVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  char *pcVar8;
-  longlong lVar7;
-  double dVar9;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  char *pcVar6;
+  uint uVar7;
+  double dVar8;
   
   __savegprlr_15();
-  iVar2 = *(int *)(DAT_8461658c + 0x34) + 0x1f >> 5;
-  pcVar3 = memset(*(void **)(DAT_8461658c + 0x204),0,*(int *)(DAT_8461658c + 0x34) * iVar2 * 4);
-  uVar5 = 1;
-  if (*(int *)(DAT_8461658c + 0x1c) != 0) {
-    dVar9 = 0.0;
-    pcVar3 = "lues from dvars rather than the level";
-    iVar4 = 0x50;
+  iVar2 = ((rgp.world)->dpvsPlanes).cellCount;
+  memset();
+  uVar4 = 1;
+  if ((rgp.world)->lastSunPrimaryLightIndex != 0) {
+    dVar8 = 0.0;
+    iVar3 = 0x50;
     do {
-      if (DAT_835f15dc == 0) {
-        pcVar3 = (char *)MyAssertHandler(0xffffffff821b9aa0,0x1f,0,0xffffffff82000f98,
-                                         0xffffffff82015af4);
+      if (comWorld.isInUse == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
+                        ,0x1f,0,"%s");
       }
-      if ((ulonglong)DAT_835f15e0 <= (uVar5 & 0xffffffff)) {
-        pcVar3 = (char *)MyAssertHandler(0xffffffff821b9aa0,0x20,0,0xffffffff82015b08,uVar5,
-                                         DAT_835f15e0);
+      if (comWorld.primaryLightCount <= uVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
+                        ,0x20,0,
+                        "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
+                       );
       }
-      pcVar8 = (char *)(iVar4 + DAT_835f15e4);
-      if (pcVar8 == (char *)0x0) {
-        pcVar3 = (char *)MyAssertHandler(0xffffffff821bc490,0xd3a,0,0xffffffff82000f98,
-                                         0xffffffff821bce90);
+      pcVar6 = (char *)((int)(comWorld.primaryLights)->color + iVar3 + -4);
+      if (pcVar6 == (char *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd3a,
+                        0,"%s");
       }
-      if (*pcVar8 != '\x01') {
-        pcVar3 = (char *)MyAssertHandler(0xffffffff821bc490,0xd3b,0,0xffffffff82000f98,
-                                         0xffffffff821bcea0);
+      if (*pcVar6 != '\x01') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd3b,
+                        0,"%s");
       }
-      fVar1 = *(float *)(pcVar8 + 0x10);
-      if ((double)(*(float *)(pcVar8 + 0x18) * *(float *)(pcVar8 + 0x18) +
-                  fVar1 * fVar1 + *(float *)(pcVar8 + 0x14) * *(float *)(pcVar8 + 0x14)) == dVar9) {
-        pcVar3 = (char *)MyAssertHandler(0xffffffff821bc490,0xd3c,0,0xffffffff82000f98,
-                                         0xffffffff821bcecc);
+      fVar1 = *(float *)(pcVar6 + 0x10);
+      if ((double)(*(float *)(pcVar6 + 0x18) * *(float *)(pcVar6 + 0x18) +
+                  fVar1 * fVar1 + *(float *)(pcVar6 + 0x14) * *(float *)(pcVar6 + 0x14)) == dVar8) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd3c,
+                        0,"%s");
       }
-      DAT_845a17d8 = -*(float *)(pcVar8 + 0x10);
-      DAT_845a17dc = -*(float *)(pcVar8 + 0x14);
-      DAT_845a17e8 = 1;
-      DAT_845a17e0 = -*(float *)(pcVar8 + 0x18);
-      DAT_845a17e4 = (float)dVar9;
-      DAT_845a17d4 = 0;
-      DAT_845a17d0 = 0;
-      lVar7 = 0;
-      if (0 < *(int *)(DAT_8461658c + 0x34)) {
-        iVar6 = 0;
+      dpvsGlob.viewOrg[0] = -*(float *)(pcVar6 + 0x10);
+      dpvsGlob.viewOrg[1] = -*(float *)(pcVar6 + 0x14);
+      dpvsGlob.viewOrgIsDir = 1;
+      dpvsGlob.viewOrg[2] = -*(float *)(pcVar6 + 0x18);
+      dpvsGlob.viewOrg[3] = (float)dVar8;
+      dpvsGlob.farPlane = (DpvsPlane *)0x0;
+      dpvsGlob.nearPlane = (DpvsPlane *)0x0;
+      uVar7 = 0;
+      if (0 < ((rgp.world)->dpvsPlanes).cellCount) {
+        iVar5 = 0;
         do {
-          DAT_845aa2f0 = *(int *)(DAT_8461658c + 0x204) + iVar6;
-          pcVar3 = (char *)R_VisitPortalsNoFrustum(lVar7);
-          lVar7 = lVar7 + 1;
-          iVar6 = iVar2 * 4 + iVar6;
-        } while ((int)lVar7 < *(int *)(DAT_8461658c + 0x34));
+          dpvsGlob.cellBits = (uint *)((int)(rgp.world)->cellCasterBits + iVar5);
+          R_VisitPortalsNoFrustum(uVar7);
+          uVar7 = uVar7 + 1;
+          iVar5 = (iVar2 + 0x1f >> 5) * 4 + iVar5;
+        } while ((int)uVar7 < ((rgp.world)->dpvsPlanes).cellCount);
       }
-      uVar5 = uVar5 + 1;
-      iVar4 = iVar4 + 0x50;
-    } while ((uVar5 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c));
+      uVar4 = uVar4 + 1;
+      iVar3 = iVar3 + 0x50;
+    } while (uVar4 <= (rgp.world)->lastSunPrimaryLightIndex);
   }
-  __restgprlr_15(pcVar3);
+  __restgprlr_15();
   return;
 }
 
 
 // 8272F470  R_GenerateSunLitSurfCells  (gfx_d3d/r_dpvs.cpp:3410)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_GenerateSunLitSurfCells(void)
 
 {
   ushort uVar1;
-  void *_Dst;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  void *pvVar5;
+  uint *puVar2;
+  uint uVar3;
+  uint uVar4;
+  GfxDrawSurf *pGVar5;
   int iVar6;
   uint uVar7;
   int iVar8;
   uint uVar9;
   uint uVar10;
-  int iVar11;
+  GfxWorld *pGVar11;
   
   __savegprlr_16();
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xd5f,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd5f,0,
+                    "%s");
   }
-  _Dst = *(void **)(DAT_8461658c + 0x208);
-  if (_Dst == (void *)0x0) {
-    MyAssertHandler(0xffffffff821bc490,0xd62,0,0xffffffff82000f98,0xffffffff821bcffc);
+  puVar2 = (rgp.world)->cellHasSunLitSurfsBits;
+  if (puVar2 == (uint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd62,0,
+                    "%s");
   }
-  iVar11 = DAT_8461658c;
-  uVar2 = *(uint *)(DAT_8461658c + 0x34);
-  pvVar5 = memset(_Dst,0,((int)(uVar2 + 0x1f) >> 5) << 2);
-  iVar3 = *(int *)(iVar11 + 0x1c);
-  if (iVar3 != 0) {
-    iVar4 = *(int *)(iVar11 + 0x288);
+  pGVar11 = rgp.world;
+  uVar3 = ((rgp.world)->dpvsPlanes).cellCount;
+  memset();
+  uVar4 = pGVar11->lastSunPrimaryLightIndex;
+  if (uVar4 != 0) {
+    pGVar5 = (pGVar11->dpvs).surfaceMaterials;
     uVar7 = 0;
-    if (uVar2 != 0) {
+    if (uVar3 != 0) {
       iVar6 = 0;
       do {
-        iVar8 = *(int *)(*(int *)(iVar11 + 0x48) + iVar6);
+        iVar8 = *(int *)((int)&pGVar11->aabbTrees->aabbTree + iVar6);
         uVar10 = (uint)*(ushort *)(iVar8 + 0x1c);
         uVar9 = (uint)*(ushort *)(iVar8 + 0x1a);
-        if (*(uint *)(iVar11 + 0x230) <= uVar10) {
-          pvVar5 = (void *)MyAssertHandler(0xffffffff821bc490,0xd73,0,0xffffffff821bcef0,uVar10);
-          iVar11 = DAT_8461658c;
+        if ((pGVar11->dpvs).staticSurfaceCount <= uVar10) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                          0xd73,0,
+                          "startSurfIndex doesn\'t index rgp.world->dpvs.staticSurfaceCount\n\t%i not in [0, %i)"
+                         );
+          pGVar11 = rgp.world;
         }
         if (uVar9 != 0) {
-          if (*(uint *)(iVar11 + 0x230) <= (uVar9 + uVar10) - 1) {
-            pvVar5 = (void *)MyAssertHandler(0xffffffff821bc490,0xd76,0,0xffffffff821bcf48,
-                                             uVar9 + uVar10 + -1);
-            iVar11 = DAT_8461658c;
+          if ((pGVar11->dpvs).staticSurfaceCount <= (uVar9 + uVar10) - 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",
+                            0xd76,0,
+                            "startSurfIndex + surfaceCount - 1 doesn\'t index rgp.world->dpvs.staticSurfaceCount\n\t%i not in [0, %i)"
+                           );
+            pGVar11 = rgp.world;
           }
           if (uVar9 != 0) {
             iVar8 = uVar10 << 1;
             do {
-              uVar1 = *(ushort *)(*(int *)(iVar11 + 0x274) + iVar8);
-              if (*(uint *)(iVar11 + 0x10) <= (uint)uVar1) {
-                pvVar5 = (void *)MyAssertHandler(0xffffffff821bc490,0xd7c,0,0xffffffff821bcfb0,
-                                                 (uint)uVar1);
-                iVar11 = DAT_8461658c;
+              uVar1 = *(ushort *)((int)(pGVar11->dpvs).sortedSurfIndex + iVar8);
+              if (pGVar11->surfaceCount <= (uint)uVar1) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp"
+                                ,0xd7c,0,
+                                "sortedSurfIndex doesn\'t index rgp.world->surfaceCount\n\t%i not in [0, %i)"
+                               );
+                pGVar11 = rgp.world;
               }
-              if (((*(ulonglong *)((uint)uVar1 * 8 + iVar4) >> 0x2c & 0xff) - 1 & 0xffffffff) <=
-                  (ulonglong)(iVar3 - 1)) {
+              if (((pGVar5[uVar1].packed >> 0x2c & 0xff) - 1 & 0xffffffff) <= (ulonglong)(uVar4 - 1)
+                 ) {
                 uVar10 = uVar7 >> 3 & 0x1ffffffc;
-                *(uint *)(uVar10 + (int)_Dst) =
-                     (&DAT_82992400)[uVar7 & 0x1f] | *(uint *)(uVar10 + (int)_Dst);
+                *(uint *)(uVar10 + (int)puVar2) =
+                     *(uint *)(&g_bitShift + (uVar7 & 0x1f) * 4) | *(uint *)(uVar10 + (int)puVar2);
               }
               uVar9 = uVar9 - 1;
               iVar8 = iVar8 + 2;
@@ -5583,376 +6031,386 @@ void R_GenerateSunLitSurfCells(void)
         }
         uVar7 = uVar7 + 1;
         iVar6 = iVar6 + 4;
-      } while (uVar7 < uVar2);
+      } while (uVar7 < uVar3);
     }
   }
-  __restgprlr_16(pvVar5);
+  __restgprlr_16();
   return;
 }
 
 
 // 827311C8  R_SetupDpvsForPoint  (gfx_d3d/r_dpvs.cpp:3463)
 
-void R_SetupDpvsForPoint(int param_1)
+void R_SetupDpvsForPoint(GfxViewParms *param_1)
 
 {
   float fVar1;
-  char cVar2;
+  bool bVar2;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xd8a,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xd8a,0,
+                    "%s");
   }
-  DAT_845a17d8 = *(float *)(param_1 + 0x100);
-  DAT_845a17dc = *(float *)(param_1 + 0x104);
-  DAT_845a17e0 = *(float *)(param_1 + 0x108);
-  DAT_845a17e8 = 0;
-  DAT_845a17e4 = 0x3f800000;
-  DAT_845a17b0 = *(float *)(param_1 + 0x10c);
-  DAT_845a17b4 = *(float *)(param_1 + 0x110);
-  DAT_845a17d0 = &DAT_845a17b0;
-  DAT_845a17b8 = *(float *)(param_1 + 0x114);
-  DAT_845a17bc = 0.1 - (*(float *)(param_1 + 0x114) * DAT_845a17e0 +
-                       *(float *)(param_1 + 0x110) * DAT_845a17dc +
-                       *(float *)(param_1 + 0x10c) * DAT_845a17d8);
-  fVar1 = DAT_845a17f8;
-  if (*(float *)(DAT_845aa5d4 + 0xc) != 0.0) {
-    fVar1 = *(float *)(DAT_845aa5d4 + 0xc);
+  dpvsGlob.viewOrg[0] = (param_1->camera).origin[0];
+  dpvsGlob.viewOrg[1] = (param_1->camera).origin[1];
+  dpvsGlob.viewOrg[2] = (param_1->camera).origin[2];
+  dpvsGlob.viewOrgIsDir = 0;
+  dpvsGlob.viewOrg[3] = 1.0;
+  dpvsGlob.viewPlane.coeffs[0] = (param_1->camera).axis[0][0];
+  dpvsGlob.viewPlane.coeffs[1] = (param_1->camera).axis[0][1];
+  dpvsGlob.viewPlane.coeffs[2] = (param_1->camera).axis[0][2];
+  dpvsGlob.nearPlane = &dpvsGlob.viewPlane;
+  dpvsGlob.viewPlane.coeffs[3] =
+       0.1 - (dpvsGlob.viewPlane.coeffs[2] * dpvsGlob.viewOrg[2] +
+             dpvsGlob.viewPlane.coeffs[1] * dpvsGlob.viewOrg[1] +
+             dpvsGlob.viewPlane.coeffs[0] * dpvsGlob.viewOrg[0]);
+  fVar1 = dpvsGlob.cullDist;
+  if ((r_zfar->current).value != 0.0) {
+    fVar1 = (r_zfar->current).value;
   }
   if (0.0 < fVar1) {
-    DAT_845a17c0 = -*(float *)(param_1 + 0x10c);
-    DAT_845a17c4 = -*(float *)(param_1 + 0x110);
-    DAT_845a17c8 = -*(float *)(param_1 + 0x114);
-    DAT_845a17d4 = &DAT_845a17c0;
-    DAT_845a17cc = fVar1 - (-*(float *)(param_1 + 0x114) * DAT_845a17e0 +
-                           -*(float *)(param_1 + 0x110) * DAT_845a17dc +
-                           -*(float *)(param_1 + 0x10c) * DAT_845a17d8);
+    dpvsGlob.fogPlane.coeffs[0] = -(param_1->camera).axis[0][0];
+    dpvsGlob.fogPlane.coeffs[1] = -(param_1->camera).axis[0][1];
+    dpvsGlob.fogPlane.coeffs[2] = -(param_1->camera).axis[0][2];
+    dpvsGlob.farPlane = &dpvsGlob.fogPlane;
+    dpvsGlob.fogPlane.coeffs[3] =
+         fVar1 - (dpvsGlob.fogPlane.coeffs[2] * dpvsGlob.viewOrg[2] +
+                 dpvsGlob.fogPlane.coeffs[1] * dpvsGlob.viewOrg[1] +
+                 dpvsGlob.fogPlane.coeffs[0] * dpvsGlob.viewOrg[0]);
     return;
   }
-  DAT_845a17d4 = (undefined4 *)0x0;
+  dpvsGlob.farPlane = (DpvsPlane *)0x0;
   return;
 }
 
 
 // 82731328  R_AddSunShadowSurfacesFrustumOnly  (gfx_d3d/r_dpvs.cpp:3493)
 
-void R_AddSunShadowSurfacesFrustumOnly(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
+void R_AddSunShadowSurfacesFrustumOnly(GfxSceneViewType param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
+  uint *puVar2;
   ulonglong uVar3;
   float *pfVar4;
-  uint uVar5;
-  longlong lVar6;
+  longlong lVar5;
+  ulonglong uVar6;
   longlong lVar7;
-  void *pvVar8;
-  int iVar9;
-  longlong lVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  int iVar13;
-  uint *puVar15;
-  longlong lVar14;
-  int iVar16;
+  uint uVar8;
+  float *pfVar9;
+  ulonglong uVar10;
+  int iVar11;
+  uint *puVar13;
+  longlong lVar12;
+  GfxWorld *pGVar14;
+  int iVar15;
+  uint uVar16;
   uint uVar17;
   double dVar18;
   uint local_e0 [56];
   
-  lVar6 = __savegprlr_23();
-  lVar10 = (param_2 + (param_2 & 0x7fffffff) * 2 + lVar6) * 0xe8;
-  uVar1 = *(uint *)(DAT_8461658c + 0x34);
-  lVar7 = lVar6;
+  uVar6 = (ulonglong)param_2;
+  lVar5 = __savegprlr_23(param_1);
+  lVar7 = (uVar6 + (uVar6 & 0x7fffffff) * 2 + lVar5) * 0xe8;
+  uVar1 = ((rgp.world)->dpvsPlanes).cellCount;
   if (uVar1 == 0) {
-    lVar7 = MyAssertHandler(0xffffffff821bc490,0xdb5,0,0xffffffff82000f98,0xffffffff821bd008);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xdb5,0,
+                    "%s");
   }
-  iVar16 = DAT_8461658c;
-  if (*(char *)(DAT_845aa69c + 0xc) == '\0') {
-    uVar12 = 0;
+  pGVar14 = rgp.world;
+  if ((sm_strictCull->current).enabled == false) {
+    uVar16 = 0;
     if (uVar1 != 0) {
-      iVar9 = 0;
+      iVar15 = 0;
       dVar18 = 0.0;
       do {
-        iVar2 = *(int *)(&DAT_845a98e0 + (int)lVar10);
-        iVar13 = 0;
-        pfVar11 = (float *)(*(int *)(iVar16 + 0x4c) + iVar9);
-        if (0 < iVar2) {
-          lVar14 = lVar10 + -0x7ba56800;
+        uVar17 = *(uint *)((int)(dpvsGlob.views[0][0].frustumPlanes + 0xe) + (int)lVar7);
+        iVar11 = 0;
+        pfVar9 = (float *)((int)(pGVar14->cells->bounds).midPoint + iVar15);
+        if (0 < (int)uVar17) {
+          lVar12 = lVar7 + -0x7ba56800;
           do {
-            pfVar4 = (float *)lVar14;
-            if ((double)(pfVar4[2] * pfVar11[2] +
-                         pfVar4[1] * pfVar11[1] +
-                         *pfVar4 * *pfVar11 +
-                         ABS(pfVar4[2]) * pfVar11[5] +
-                         ABS(*pfVar4) * pfVar11[3] + ABS(pfVar4[1]) * pfVar11[4] + pfVar4[3]) <=
+            pfVar4 = (float *)lVar12;
+            if ((double)(pfVar4[2] * pfVar9[2] +
+                         pfVar4[1] * pfVar9[1] +
+                         *pfVar4 * *pfVar9 +
+                         ABS(pfVar4[2]) * pfVar9[5] +
+                         ABS(*pfVar4) * pfVar9[3] + ABS(pfVar4[1]) * pfVar9[4] + pfVar4[3]) <=
                 dVar18) goto LAB_82731618;
-            iVar13 = iVar13 + 1;
-            lVar14 = lVar14 + 0x10;
-          } while (iVar13 < iVar2);
+            iVar11 = iVar11 + 1;
+            lVar12 = lVar12 + 0x10;
+          } while (iVar11 < (int)uVar17);
         }
-        lVar7 = R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-                          (lVar6,uVar12,lVar10 + -0x7ba56800,iVar2);
-        iVar16 = DAT_8461658c;
+        R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+                  ((GfxSceneViewType)lVar5,uVar16,(DpvsPlane *)(lVar7 + -0x7ba56800),uVar17,uVar17);
+        pGVar14 = rgp.world;
 LAB_82731618:
-        uVar12 = uVar12 + 1;
-        iVar9 = iVar9 + 0x30;
-      } while ((uVar12 & 0xffffffff) < (ulonglong)uVar1);
+        uVar16 = uVar16 + 1;
+        iVar15 = iVar15 + 0x30;
+      } while (uVar16 < uVar1);
     }
   }
   else {
-    uVar5 = uVar1 + 0x1f >> 5;
-    pvVar8 = memset(local_e0,0,uVar5 * 4);
-    lVar7 = (longlong)(int)pvVar8;
-    uVar12 = 0;
+    uVar16 = uVar1 + 0x1f >> 5;
+    memset();
+    uVar10 = 0;
     if (uVar1 != 0) {
-      iVar9 = 0;
+      iVar15 = 0;
       uVar3 = 0;
-      lVar14 = 0;
+      lVar12 = 0;
       do {
-        if (((*(uint *)(&DAT_845aa2f4 +
-                       ((uint)uVar3 & 0x1ffffffc) + (int)((param_2 & 0xffffffff) << 7)) &
-             *(uint *)((int)&DAT_82992400 + ((uint)lVar14 & 0x7c))) != 0) &&
-           (iVar2 = *(int *)(iVar16 + 0x204), uVar5 != 0)) {
-          puVar15 = local_e0;
-          uVar17 = uVar5;
+        if (((*(uint *)(((uint)uVar3 & 0x1ffffffc) + (int)((uVar6 & 0xffffffff) << 7) + -0x7ba55d0c)
+             & *(uint *)(&g_bitShift + ((uint)lVar12 & 0x7c))) != 0) &&
+           (puVar2 = pGVar14->cellCasterBits, uVar16 != 0)) {
+          puVar13 = local_e0;
+          uVar17 = uVar16;
           do {
-            *puVar15 = *(uint *)(((iVar2 + iVar9) - (int)local_e0) + (int)puVar15) | *puVar15;
-            puVar15 = puVar15 + 1;
+            *puVar13 = *(uint *)((int)puVar2 + (iVar15 - (int)local_e0) + (int)puVar13) | *puVar13;
+            puVar13 = puVar13 + 1;
             uVar17 = uVar17 - 1;
           } while (uVar17 != 0);
         }
-        uVar12 = uVar12 + 1;
-        iVar9 = iVar9 + uVar5 * 4;
-        uVar3 = (uVar12 & 0xffffffff) >> 3;
-        lVar14 = (uVar12 & 0xffffffff) << 2;
-      } while ((uVar12 & 0xffffffff) < (ulonglong)uVar1);
+        uVar10 = uVar10 + 1;
+        iVar15 = iVar15 + uVar16 * 4;
+        uVar3 = (uVar10 & 0xffffffff) >> 3;
+        lVar12 = (uVar10 & 0xffffffff) << 2;
+      } while ((uVar10 & 0xffffffff) < (ulonglong)uVar1);
     }
-    uVar12 = 0;
+    uVar16 = 0;
     if (uVar1 != 0) {
-      iVar9 = 0;
-      uVar3 = 0;
-      lVar14 = 0;
+      iVar15 = 0;
+      uVar17 = 0;
+      uVar8 = 0;
       dVar18 = 0.0;
       do {
-        if ((*(uint *)((int)local_e0 + ((uint)uVar3 & 0x1ffffffc)) &
-            *(uint *)((int)&DAT_82992400 + (int)lVar14)) != 0) {
-          iVar2 = *(int *)(&DAT_845a98e0 + (int)lVar10);
-          iVar13 = 0;
-          pfVar11 = (float *)(*(int *)(iVar16 + 0x4c) + iVar9);
-          if (0 < iVar2) {
-            lVar14 = lVar10 + -0x7ba56800;
+        if ((*(uint *)((int)local_e0 + (uVar17 & 0x1ffffffc)) & *(uint *)(&g_bitShift + uVar8)) != 0
+           ) {
+          uVar17 = *(uint *)((int)(dpvsGlob.views[0][0].frustumPlanes + 0xe) + (int)lVar7);
+          iVar11 = 0;
+          pfVar9 = (float *)((int)(pGVar14->cells->bounds).midPoint + iVar15);
+          if (0 < (int)uVar17) {
+            lVar12 = lVar7 + -0x7ba56800;
             do {
-              pfVar4 = (float *)lVar14;
-              if ((double)(pfVar11[2] * pfVar4[2] +
-                           pfVar11[1] * pfVar4[1] +
-                           *pfVar11 * *pfVar4 +
-                           ABS(pfVar4[2]) * pfVar11[5] +
-                           ABS(*pfVar4) * pfVar11[3] + ABS(pfVar4[1]) * pfVar11[4] + pfVar4[3]) <=
+              pfVar4 = (float *)lVar12;
+              if ((double)(pfVar9[2] * pfVar4[2] +
+                           pfVar9[1] * pfVar4[1] +
+                           *pfVar9 * *pfVar4 +
+                           ABS(pfVar4[2]) * pfVar9[5] +
+                           ABS(*pfVar4) * pfVar9[3] + ABS(pfVar4[1]) * pfVar9[4] + pfVar4[3]) <=
                   dVar18) goto LAB_82731538;
-              iVar13 = iVar13 + 1;
-              lVar14 = lVar14 + 0x10;
-            } while (iVar13 < iVar2);
+              iVar11 = iVar11 + 1;
+              lVar12 = lVar12 + 0x10;
+            } while (iVar11 < (int)uVar17);
           }
-          lVar7 = R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-                            (lVar6,uVar12,lVar10 + -0x7ba56800,iVar2);
-          iVar16 = DAT_8461658c;
+          R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+                    ((GfxSceneViewType)lVar5,uVar16,(DpvsPlane *)(lVar7 + -0x7ba56800),uVar17,uVar17
+                    );
+          pGVar14 = rgp.world;
         }
 LAB_82731538:
-        uVar12 = uVar12 + 1;
-        iVar9 = iVar9 + 0x30;
-        uVar3 = (uVar12 & 0xffffffff) >> 3;
-        lVar14 = (uVar12 & 0x1f) << 2;
-        if ((ulonglong)uVar1 <= (uVar12 & 0xffffffff)) {
-          __restgprlr_23(lVar7);
+        uVar16 = uVar16 + 1;
+        iVar15 = iVar15 + 0x30;
+        uVar17 = uVar16 >> 3;
+        uVar8 = uVar16 * 4 & 0x7c;
+        if (uVar1 <= uVar16) {
+          __restgprlr_23();
           return;
         }
       } while( true );
     }
   }
-  __restgprlr_23(lVar7);
+  __restgprlr_23();
   return;
 }
 
 
 // 8272F650  R_AnySunMightHaveShadowMap  (gfx_d3d/r_dpvs.cpp:3556)
 
-void R_AnySunMightHaveShadowMap(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool R_AnySunMightHaveShadowMap(GfxViewInfo *param_1)
 
 {
-  uint uVar1;
+  longlong lVar1;
   uint uVar2;
-  longlong lVar3;
+  int iVar3;
+  undefined1 uVar5;
   uint uVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
+  ulonglong uVar6;
   
-  iVar5 = __savegprlr_29();
-  if (*(char *)(iVar5 + 0x1ae) == '\x01') {
+  iVar3 = __savegprlr_29(param_1);
+  if (*(char *)(iVar3 + 0x1ae) == '\x01') {
 LAB_8272f66c:
-    __restgprlr_29(1);
-    return;
+    uVar5 = __restgprlr_29(1);
+    return (bool)uVar5;
   }
-  if ((*(char *)(iVar5 + 0x1ae) != '\x02') &&
-     (iVar6 = R_GetActivePrimarySunLight(iVar5 + 0x294), iVar6 != 0)) {
-    uVar1 = *(uint *)(DAT_8461658c + 0x34);
-    if (uVar1 == 0) {
-      MyAssertHandler(0xffffffff821bc490,0xdf6,0,0xffffffff82000f98,0xffffffff821bd008);
+  if ((*(char *)(iVar3 + 0x1ae) != '\x02') &&
+     (uVar4 = R_GetActivePrimarySunLight((GfxStageInfo *)(iVar3 + 0x294)), uVar4 != 0)) {
+    uVar4 = ((rgp.world)->dpvsPlanes).cellCount;
+    if (uVar4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xdf6,0,
+                      "%s");
     }
-    uVar7 = 0;
-    if (uVar1 != 0) {
-      lVar3 = 0;
+    uVar6 = 0;
+    if (uVar4 != 0) {
+      lVar1 = 0;
       do {
-        uVar4 = (uint)((uVar7 & 0xffffffff) >> 3) & 0x1ffffffc;
-        uVar2 = *(uint *)((int)&DAT_82992400 + ((uint)lVar3 & 0x7c));
-        if (((*(uint *)(&DAT_845aa2f4 + uVar4 + *(int *)(iVar5 + 0x928) * 0x80) & uVar2) != 0) &&
-           ((*(uint *)(*(int *)(DAT_8461658c + 0x208) + uVar4) & uVar2) != 0)) goto LAB_8272f66c;
-        uVar7 = uVar7 + 1;
-        lVar3 = (uVar7 & 0xffffffff) << 2;
-      } while ((uVar7 & 0xffffffff) < (ulonglong)uVar1);
+        uVar2 = (uint)((uVar6 & 0xffffffff) >> 3) & 0x1ffffffc;
+        if (((*(uint *)(uVar2 + *(int *)(iVar3 + 0x928) * 0x80 + -0x7ba55d0c) &
+             *(uint *)(&g_bitShift + ((uint)lVar1 & 0x7c))) != 0) &&
+           ((*(uint *)((int)(rgp.world)->cellHasSunLitSurfsBits + uVar2) &
+            *(uint *)(&g_bitShift + ((uint)lVar1 & 0x7c))) != 0)) goto LAB_8272f66c;
+        uVar6 = uVar6 + 1;
+        lVar1 = (uVar6 & 0xffffffff) << 2;
+      } while ((uVar6 & 0xffffffff) < (ulonglong)uVar4);
     }
   }
-  __restgprlr_29(0);
-  return;
+  uVar5 = __restgprlr_29(0);
+  return (bool)uVar5;
 }
 
 
 // 82731638  R_AddWorldSurfacesPortalWalk  (gfx_d3d/r_dpvs.cpp:3592)
 
-void R_AddWorldSurfacesPortalWalk(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
+
+void R_AddWorldSurfacesPortalWalk(float *param_1,int param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  char cVar4;
-  undefined *_Dst;
-  void *pvVar3;
-  longlong lVar5;
-  longlong lVar6;
+  uint uVar1;
+  int iVar2;
+  float *pfVar3;
+  bool bVar5;
+  uint uVar4;
+  ulonglong uVar6;
+  DpvsPlane *pDVar7;
+  uint *puVar8;
   
-  uVar2 = __savegprlr_27();
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xe0e,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar6 = (ulonglong)param_2;
+  pfVar3 = (float *)__savegprlr_27(param_1);
+  bVar5 = Sys_IsMainThread();
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe0e,0,
+                    "%s");
   }
-  if (*(int *)(DAT_8461658c + 0x34) == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xe0f,0,0xffffffff82000f98,0xffffffff821bd388);
+  if (((rgp.world)->dpvsPlanes).cellCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe0f,0,
+                    "%s");
   }
-  _Dst = &DAT_845aa2f4 + (int)((param_2 & 0xffffffff) << 7);
-  pvVar3 = memset(_Dst,0,(*(int *)(DAT_8461658c + 0x34) + 0x1f >> 5) << 2);
-  DAT_845aa2f0 = _Dst;
-  if (*(char *)(DAT_845aa81c + 0xc) == '\0') {
-    lVar5 = param_2 * 0x2b8;
-    iVar1 = (int)lVar5;
-    pvVar3 = (void *)R_CellForPoint(uVar2);
-    if (-1 < (int)pvVar3) {
-      if (*(char *)(DAT_845aa640 + 0xc) != '\0') {
-        DAT_845a17d4 = 0;
-        R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-                  (0,pvVar3,lVar5 + -0x7ba56800,*(undefined4 *)(&DAT_845a98e0 + iVar1),
-                   *(undefined4 *)(&DAT_845a98e0 + iVar1));
-        R_SetCellVisible(pvVar3);
+  puVar8 = (uint *)((int)dpvsGlob.cellVisibleBits[0] + (int)((uVar6 & 0xffffffff) << 7));
+  memset();
+  dpvsGlob.cellBits = puVar8;
+  if ((r_skipPvs->current).enabled == false) {
+    iVar2 = (int)uVar6;
+    uVar4 = R_CellForPoint(pfVar3);
+    if (-1 < (int)uVar4) {
+      pDVar7 = dpvsGlob.views[iVar2][0].frustumPlanes;
+      if ((r_singleCell->current).enabled != false) {
+        dpvsGlob.farPlane = (DpvsPlane *)0x0;
+        uVar1 = dpvsGlob.views[iVar2][0].frustumPlaneCount;
+        R_AddCellSurfacesAndCullGroupsInFrustumDelayed(SCENE_VIEW_CAMERA,uVar4,pDVar7,uVar1,uVar1);
+        R_SetCellVisible(uVar4);
         __restgprlr_27();
         return;
       }
-      R_VisitPortals(pvVar3,0xffffffff845a17b0,lVar5 + -0x7ba56800,
-                     *(undefined4 *)(&DAT_845a98e0 + iVar1));
+      R_VisitPortals(uVar4,&dpvsGlob.viewPlane,pDVar7,dpvsGlob.views[iVar2][0].frustumPlaneCount);
       __restgprlr_27();
       return;
     }
-    lVar6 = 0;
-    if (0 < *(int *)(DAT_8461658c + 0x34)) {
+    uVar4 = 0;
+    if (0 < ((rgp.world)->dpvsPlanes).cellCount) {
       do {
+        uVar1 = dpvsGlob.views[iVar2][0].frustumPlaneCount;
         R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-                  (0,lVar6,lVar5 + -0x7ba56800,*(undefined4 *)(&DAT_845a98e0 + iVar1),
-                   *(undefined4 *)(&DAT_845a98e0 + iVar1));
-        pvVar3 = (void *)R_SetCellVisible(lVar6);
-        lVar6 = lVar6 + 1;
-      } while ((int)lVar6 < *(int *)(DAT_8461658c + 0x34));
+                  (SCENE_VIEW_CAMERA,uVar4,dpvsGlob.views[iVar2][0].frustumPlanes,uVar1,uVar1);
+        R_SetCellVisible(uVar4);
+        uVar4 = uVar4 + 1;
+      } while ((int)uVar4 < ((rgp.world)->dpvsPlanes).cellCount);
     }
   }
-  __restgprlr_27(pvVar3);
+  __restgprlr_27();
   return;
 }
 
 
 // 8272F750  R_ShowCull  (gfx_d3d/r_dpvs.cpp:3639)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ShowCull(void)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
+  int iVar1;
+  long lVar2;
+  float *pfVar3;
+  Bounds *pBVar4;
+  XModel **ppXVar5;
+  GfxBrushModel **ppGVar6;
   uint uVar7;
-  double dVar8;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
-  float local_54;
-  float local_50;
-  float local_4c;
+  Bounds local_60 [4];
   
   __savegprlr_24();
-  uVar1 = DAT_847c44f0;
-  uVar4 = 0xffffffff821817f8;
-  if (*(char *)(DAT_845aa700 + 0xc) != '\0') {
+  iVar1 = scene.sceneDObjCount;
+  if ((r_showCullXModels->current).enabled != false) {
     uVar7 = 0;
-    if (DAT_847c44f0 != 0) {
-      lVar5 = -0x7b83bad8;
+    if (scene.sceneDObjCount != 0) {
+      pBVar4 = &scene.sceneDObj[0].cull.bounds;
       do {
-        uVar3 = uVar4;
-        if ((&DAT_847d38bc)[uVar7] != '\x01') {
-          uVar3 = 0xffffffff821817e8;
+        pfVar3 = colorGreen;
+        if (scene.sceneDObjVisData[0][uVar7] != '\x01') {
+          pfVar3 = colorRed;
         }
-        R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,lVar5,uVar3);
+        R_AddDebugBox(&frontEndDataOut->debugGlobals,pBVar4,pfVar3);
         uVar7 = uVar7 + 1;
-        lVar5 = lVar5 + 0x78;
-      } while (uVar7 < uVar1);
+        pBVar4 = pBVar4 + 5;
+      } while (uVar7 < (uint)iVar1);
     }
-    if (DAT_847ee934 == 0) {
-      MyAssertHandler(0xffffffff821bc490,0xe4f,0,0xffffffff82000f98,0xffffffff821bc830);
+    if (scene.sceneModelCountValidRead == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe4f,0,
+                      "%s");
     }
-    uVar1 = DAT_847d46c8;
+    lVar2 = scene.sceneModelCount;
     uVar7 = 0;
-    if (DAT_847d46c8 != 0) {
-      puVar6 = &DAT_847d46d8;
+    if (scene.sceneModelCount != 0) {
+      ppXVar5 = &scene.sceneModel[0].model;
       do {
-        puVar2 = (undefined4 *)CG_GetEntityOrigin(DAT_847ee8e8,(uint)puVar6[10] >> 0xd & 0xfff);
-        dVar8 = (double)XModelGetRadius(*puVar6);
-        local_60 = *puVar2;
-        local_5c = puVar2[1];
-        local_58 = puVar2[2];
-        local_54 = (float)dVar8;
-        local_50 = (float)dVar8;
-        local_4c = (float)dVar8;
-        uVar3 = uVar4;
-        if ((&DAT_847e66d4)[uVar7] != '\x01') {
-          uVar3 = 0xffffffff821817e8;
+        pfVar3 = CG_GetEntityOrigin(scene.dpvs.localClientNum,(uint)ppXVar5[10] >> 0xd & 0xfff);
+        local_60[0].halfSize[0] = XModelGetRadius(*ppXVar5);
+        local_60[0].midPoint[0] = *pfVar3;
+        local_60[0].midPoint[1] = pfVar3[1];
+        local_60[0].midPoint[2] = pfVar3[2];
+        pfVar3 = colorGreen;
+        if (scene.sceneModelVisData[0][uVar7] != '\x01') {
+          pfVar3 = colorRed;
         }
-        R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,&local_60,uVar3);
+        local_60[0].halfSize[1] = local_60[0].halfSize[0];
+        local_60[0].halfSize[2] = local_60[0].halfSize[0];
+        R_AddDebugBox(&frontEndDataOut->debugGlobals,local_60,pfVar3);
         uVar7 = uVar7 + 1;
-        puVar6 = puVar6 + 0x12;
-      } while (uVar7 < uVar1);
+        ppXVar5 = ppXVar5 + 0x12;
+      } while (uVar7 < (uint)lVar2);
     }
   }
-  uVar1 = DAT_847e82d4;
-  if (*(char *)(DAT_845aa7c4 + 0xc) != '\0') {
+  lVar2 = scene.sceneBrushCount;
+  if ((r_showCullBModels->current).enabled != false) {
     uVar7 = 0;
-    if (DAT_847e82d4 != 0) {
-      puVar6 = &DAT_847e82e0;
+    if (scene.sceneBrushCount != 0) {
+      ppGVar6 = &scene.sceneBrush[0].bmodel;
       do {
-        uVar3 = uVar4;
-        if ((&DAT_847ed2dc)[uVar7] != '\x01') {
-          uVar3 = 0xffffffff821817e8;
+        pfVar3 = colorGreen;
+        if (scene.sceneBrushVisData[0][uVar7] != '\x01') {
+          pfVar3 = colorRed;
         }
-        R_AddDebugBox((ulonglong)DAT_84628b00 + 0x18f0,*puVar6,uVar3);
+        R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)*ppGVar6,pfVar3);
         uVar7 = uVar7 + 1;
-        puVar6 = puVar6 + 10;
-      } while (uVar7 < uVar1);
+        ppGVar6 = ppGVar6 + 10;
+      } while (uVar7 < (uint)lVar2);
     }
   }
   __restgprlr_24();
@@ -5962,70 +6420,77 @@ void R_ShowCull(void)
 
 // 8272F940  R_InitSceneData  (gfx_d3d/r_dpvs.cpp:3695)
 
-void R_InitSceneData(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_InitSceneData(LocalClientNum_t param_1)
 
 {
   uint uVar1;
   int iVar2;
-  char cVar4;
-  void *pvVar3;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  bool bVar3;
+  uint uVar4;
+  longlong lVar5;
   
-  iVar2 = __savegprlr_26();
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xe75,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar2 = __savegprlr_26(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe75,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xe76,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe76,0,
+                    "%s");
   }
-  if (0x2000 < DAT_84613764 * DAT_8461375c) {
-    MyAssertHandler(0xffffffff821bc490,0xe78,0,0xffffffff82000f98,0xffffffff821bca64);
+  if (0x2000 < gfxCfg.entCount * gfxCfg.maxClientViews) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe78,0,
+                    "%s");
   }
-  uVar1 = *(uint *)(DAT_8461658c + 0x34);
-  if ((DAT_84613764 & 0x1f) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0xe7a,0,0xffffffff821bca2c,0xffffffff821bca48);
+  uVar1 = ((rgp.world)->dpvsPlanes).cellCount;
+  if ((gfxCfg.entCount & 0x1f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe7a,0,
+                    "%s\n\t(gfxCfg.entCount) = %i");
   }
-  uVar5 = (longlong)(int)(DAT_84613764 >> 5) * (longlong)iVar2;
-  if (0xff < (uVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0xe7d,0,0xffffffff821bc9e8,uVar5,0x100);
+  uVar4 = (gfxCfg.entCount >> 5) * iVar2;
+  if (0xff < uVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe7d,0,
+                    "offset doesn\'t index MAX_TOTAL_ENT_COUNT >> 5\n\t%i not in [0, %i)");
   }
-  lVar7 = ((ulonglong)uVar1 & 0x7fffffff) << 1;
+  lVar5 = ((ulonglong)uVar1 & 0x7fffffff) << 1;
   if ((uVar1 & 0x7fffffff) != 0) {
-    lVar6 = (uVar5 & 0x3fffffff) << 2;
+    iVar2 = uVar4 * 4;
     do {
-      Com_Memset((ulonglong)*(uint *)(DAT_8461658c + 0x40) + lVar6,0,DAT_84613764 >> 3 & 0x1ffffffc)
-      ;
-      lVar7 = lVar7 + -1;
-      lVar6 = lVar6 + 0x400;
-    } while (lVar7 != 0);
+      Com_Memset((void *)((int)((rgp.world)->dpvsPlanes).sceneEntCellBits + iVar2),0,
+                 gfxCfg.entCount >> 3 & 0x1ffffffc);
+      lVar5 = lVar5 + -1;
+      iVar2 = iVar2 + 0x400;
+    } while (lVar5 != 0);
   }
-  memset((void *)(&DAT_845aa2e0)[iVar2],0,DAT_84613764 >> 3 & 0x1ffffffc);
-  pvVar3 = memset((void *)(&DAT_847ee910)[iVar2],0,DAT_84613764 << 2);
-  __restgprlr_26(pvVar3);
+  memset();
+  memset();
+  __restgprlr_26();
   return;
 }
 
 
 // 8272FAF0  R_ClearCachedSceneLightIsUsed  (gfx_d3d/r_dpvs.cpp:3723)
 
-void R_ClearCachedSceneLightIsUsed(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_ClearCachedSceneLightIsUsed(LocalClientNum_t param_1)
 
 {
-  undefined4 *puVar1;
+  uint *puVar1;
   longlong lVar2;
   
   lVar2 = 8;
-  puVar1 = (undefined4 *)(param_1 * 0x80 + -0x7b846f04);
+  puVar1 = scene.cachedSceneLightIsUsed[param_1 - LOCAL_CLIENT_1] + 0x1f;
   do {
     puVar1 = puVar1 + 1;
     *puVar1 = 0;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
   lVar2 = 8;
-  puVar1 = (undefined4 *)(param_1 * 0x80 + -0x7b846d04);
+  puVar1 = scene.cachedSceneLightIsUsed[param_1 + LOCAL_CLIENT_3] + 0x1f;
   do {
     puVar1 = puVar1 + 1;
     *puVar1 = 0;
@@ -6037,32 +6502,39 @@ void R_ClearCachedSceneLightIsUsed(int param_1)
 
 // 8272FB48  DynEntCl_InitFilter  (gfx_d3d/r_dpvs.cpp:3730)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void DynEntCl_InitFilter(void)
 
 {
-  char cVar1;
-  int iVar2;
+  bool bVar1;
+  uint **ppuVar2;
   uint uVar3;
+  uint uVar4;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xe95,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe95,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xe96,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xe96,0,
+                    "%s");
   }
+  scene.sceneDynModelCount = 0;
+  ppuVar2 = ((rgp.world)->dpvsDyn).dynEntCellBits;
+  scene.sceneDynBrushCount = 0;
   uVar3 = 0x2a4;
-  DAT_847ee8dc = 0;
-  iVar2 = DAT_8461658c + 0x2a4;
-  DAT_847ee8e0 = 0;
   do {
-    Com_Memset(*(undefined4 *)(uVar3 + DAT_8461658c),0,
-               ((longlong)*(int *)(iVar2 + -0x10) * (longlong)*(int *)(DAT_8461658c + 0x34) &
-               0x3fffffffU) << 2);
-    uVar3 = uVar3 + 4;
-    iVar2 = uVar3 + DAT_8461658c;
-  } while (uVar3 < 0x2ac);
+    Com_Memset(*(void **)((int)&(rgp.world)->name + uVar3),0,
+               ((GfxWorldDpvsDynamic *)(ppuVar2 + -4))->dynEntClientWordCount[0] *
+               ((rgp.world)->dpvsPlanes).cellCount * 4);
+    uVar4 = uVar3 + 4;
+    ppuVar2 = (uint **)((int)&(rgp.world)->baseName + uVar3);
+    uVar3 = uVar4;
+  } while (uVar4 < 0x2ac);
   __restgprlr_29();
   return;
 }
@@ -6070,44 +6542,49 @@ void DynEntCl_InitFilter(void)
 
 // 8272FC30  R_InitSceneBuffers  (gfx_d3d/r_dpvs.cpp:3745)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_InitSceneBuffers(void)
 
 {
   bool bVar1;
   uint uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
-  uint uVar5;
-  longlong lVar6;
-  int iVar7;
+  uchar *puVar3;
+  void *pvVar4;
+  GfxSceneDpvs *pGVar5;
+  uint uVar6;
+  longlong lVar7;
+  int iVar8;
   
   __savegprlr_26();
-  if ((DAT_84613764 & 0x1f) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0xea5,1,0xffffffff82000f98,0xffffffff821bd028);
+  if ((gfxCfg.entCount & 0x1f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xea5,1,
+                    "%s");
   }
-  DAT_847c40e8 = R_AllocGlobalVariable(DAT_84613764 >> 3,0xffffffff821bd014);
-  lVar6 = 7;
-  puVar4 = &DAT_847ee8e8;
+  scene.entOverflowedDrawBuf = R_AllocGlobalVariable(gfxCfg.entCount >> 3,"R_InitSceneBuffers");
+  lVar7 = 7;
+  pGVar5 = &scene.dpvs;
   do {
-    uVar3 = R_AllocGlobalVariable(DAT_84613764,0xffffffff821bd014);
-    lVar6 = lVar6 + -1;
-    puVar4 = puVar4 + 1;
-    *puVar4 = uVar3;
-  } while (lVar6 != 0);
-  DAT_847ee908 = R_AllocGlobalVariable(DAT_84613764 << 1,0xffffffff821bd014);
-  DAT_847ee90c = R_AllocGlobalVariable(DAT_84613764 << 1,0xffffffff821bd014);
-  uVar5 = 0;
-  if (DAT_8461375c != 0) {
-    iVar7 = 0;
+    puVar3 = R_AllocGlobalVariable(gfxCfg.entCount,"R_InitSceneBuffers");
+    lVar7 = lVar7 + -1;
+    pGVar5 = (GfxSceneDpvs *)pGVar5->entVisData;
+    *(uchar **)pGVar5 = puVar3;
+  } while (lVar7 != 0);
+  scene.dpvs.sceneXModelIndex = R_AllocGlobalVariable(gfxCfg.entCount << 1,"R_InitSceneBuffers");
+  scene.dpvs.sceneDObjIndex = R_AllocGlobalVariable(gfxCfg.entCount << 1,"R_InitSceneBuffers");
+  uVar6 = 0;
+  if (gfxCfg.maxClientViews != 0) {
+    iVar8 = 0;
     do {
-      uVar3 = R_AllocGlobalVariable(DAT_84613764 >> 3 & 0x1ffffffc,0xffffffff821bd014);
-      uVar2 = DAT_84613764;
-      *(undefined4 *)((int)&DAT_845aa2e0 + iVar7) = uVar3;
-      uVar3 = R_AllocGlobalVariable(uVar2 << 2,0xffffffff821bd014);
-      uVar5 = uVar5 + 1;
-      bVar1 = uVar5 < DAT_8461375c;
-      *(undefined4 *)((int)&DAT_847ee910 + iVar7) = uVar3;
-      iVar7 = iVar7 + 4;
+      pvVar4 = R_AllocGlobalVariable(gfxCfg.entCount >> 3 & 0x1ffffffc,"R_InitSceneBuffers");
+      uVar2 = gfxCfg.entCount;
+      *(void **)((int)dpvsGlob.entVisBits + iVar8) = pvVar4;
+      pvVar4 = R_AllocGlobalVariable(uVar2 << 2,"R_InitSceneBuffers");
+      uVar6 = uVar6 + 1;
+      bVar1 = uVar6 < gfxCfg.maxClientViews;
+      *(void **)((int)scene.dpvs.entInfo + iVar8) = pvVar4;
+      iVar8 = iVar8 + 4;
     } while (bVar1);
   }
   __restgprlr_26();
@@ -6117,17 +6594,22 @@ void R_InitSceneBuffers(void)
 
 // 8272FD78  R_ClearDpvsScene  (gfx_d3d/r_dpvs.cpp:3790)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_ClearDpvsScene(void)
 
 {
   __savegprlr_29();
-  Com_Memset(DAT_847ee908,0xff,DAT_84613764 << 1);
-  if (*DAT_847ee908 != -1) {
-    MyAssertHandler(0xffffffff821bc490,0xed0,0,0xffffffff821bd098,0xffffffff821bd0c4);
+  Com_Memset(scene.dpvs.sceneXModelIndex,0xff,gfxCfg.entCount << 1);
+  if (*scene.dpvs.sceneXModelIndex != 0xffff) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xed0,0,
+                    "%s\n\t(scene.dpvs.sceneXModelIndex[0]) = %i");
   }
-  Com_Memset(DAT_847ee90c,0xff,DAT_84613764 << 1);
-  if (*DAT_847ee90c != -1) {
-    MyAssertHandler(0xffffffff821bc490,0xed3,0,0xffffffff821bd044,0xffffffff821bd06c);
+  Com_Memset(scene.dpvs.sceneDObjIndex,0xff,gfxCfg.entCount << 1);
+  if (*scene.dpvs.sceneDObjIndex != 0xffff) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xed3,0,
+                    "%s\n\t(scene.dpvs.sceneDObjIndex[0]) = %i");
   }
   __restgprlr_29();
   return;
@@ -6136,56 +6618,63 @@ void R_ClearDpvsScene(void)
 
 // 8272FE50  R_ClearDpvsSceneView  (gfx_d3d/r_dpvs.cpp:3800)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void R_ClearDpvsSceneView(void)
 
 {
-  int iVar1;
+  uchar **ppuVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  uint uVar5;
+  uint uVar3;
+  GfxSceneDpvs *pGVar4;
+  int iVar5;
+  longlong lVar6;
   
   __savegprlr_27();
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xedc,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xedc,0,
+                    "%s");
   }
-  if (*(int *)(DAT_8461658c + 0x4c) == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xedd,0,0xffffffff82000f98,0xffffffff821bd0f0);
+  if ((rgp.world)->cells == (GfxCell *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xedd,0,
+                    "%s");
   }
   FX_ClearGlassVisData();
-  if ((DAT_84613764 & 0x1f) != 0) {
-    MyAssertHandler(0xffffffff821bc490,0xee3,1,0xffffffff82000f98,0xffffffff821bd028);
+  if ((gfxCfg.entCount & 0x1f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xee3,1,
+                    "%s");
   }
-  Com_Memset(DAT_847c40e8,0,DAT_84613764 >> 3);
-  lVar4 = 7;
-  puVar3 = &DAT_847ee8e8;
+  Com_Memset(scene.entOverflowedDrawBuf,0,gfxCfg.entCount >> 3);
+  lVar6 = 7;
+  pGVar4 = &scene.dpvs;
   do {
-    puVar3 = puVar3 + 1;
-    Com_Memset(*puVar3,0,DAT_84613764);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    pGVar4 = (GfxSceneDpvs *)pGVar4->entVisData;
+    Com_Memset(*(uchar **)pGVar4,0,gfxCfg.entCount);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  ppuVar1 = ((rgp.world)->dpvs).surfaceVisData;
   uVar2 = 0x268;
-  iVar1 = DAT_8461658c + 0x268;
   do {
-    Com_Memset(*(undefined4 *)(iVar1 + -0xc),0,*(undefined4 *)(DAT_8461658c + 0x22c));
-    Com_Memset(*(undefined4 *)(uVar2 + DAT_8461658c),0,
-               *(undefined2 *)(*(int *)(DAT_8461658c + 0x138) + 0x34));
-    uVar5 = 0x29c;
-    iVar1 = uVar2 + 0x44;
+    Com_Memset(ppuVar1[-3],0,((rgp.world)->dpvs).smodelCount);
+    Com_Memset(*(void **)((int)&(rgp.world)->name + uVar2),0,(uint)(rgp.world)->models->surfaceCount
+              );
+    uVar3 = 0x29c;
+    iVar5 = uVar2 + 0x44;
     do {
-      Com_Memset(*(undefined4 *)(iVar1 + DAT_8461658c),0,*(undefined4 *)(uVar5 + DAT_8461658c));
-      uVar5 = uVar5 + 4;
-      iVar1 = iVar1 + 0xc;
-    } while (uVar5 < 0x2a4);
-    uVar2 = uVar2 + 4;
-    iVar1 = uVar2 + DAT_8461658c;
-  } while (uVar2 < 0x274);
-  Com_Memset(*(undefined4 *)(DAT_8461658c + 0x20c),0,
-             ((ulonglong)DAT_847ee8dc + ((ulonglong)DAT_847ee8dc & 0x7fffffff) * 2 & 0x7fffffff) <<
-             1);
-  DAT_847ee8dc = 0;
-  Com_Memset(*(undefined4 *)(DAT_8461658c + 0x210),0,DAT_847ee8e0 << 2);
-  DAT_847ee8e0 = 0;
+      Com_Memset(*(void **)((int)&(rgp.world)->name + iVar5),0,
+                 *(int *)((int)&(rgp.world)->name + uVar3));
+      uVar3 = uVar3 + 4;
+      iVar5 = iVar5 + 0xc;
+    } while (uVar3 < 0x2a4);
+    uVar3 = uVar2 + 4;
+    ppuVar1 = (uchar **)((int)&(rgp.world)->baseName + uVar2);
+    uVar2 = uVar3;
+  } while (uVar3 < 0x274);
+  Com_Memset((rgp.world)->sceneDynModel,0,scene.sceneDynModelCount * 6);
+  scene.sceneDynModelCount = 0;
+  Com_Memset((rgp.world)->sceneDynBrush,0,scene.sceneDynBrushCount << 2);
+  scene.sceneDynBrushCount = 0;
   __restgprlr_27();
   return;
 }
@@ -6193,29 +6682,35 @@ void R_ClearDpvsSceneView(void)
 
 // 82730028  R_CullDynamicSpotLightInCameraView  (gfx_d3d/r_dpvs.cpp:3840)
 
-void R_CullDynamicSpotLightInCameraView(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_CullDynamicSpotLightInCameraView(int param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  int iVar3;
-  undefined *puVar4;
+  int iVar1;
+  bool bVar2;
+  undefined8 in_r4;
+  GfxLightDef **ppGVar3;
+  int iVar4;
+  float *pfVar5;
   
-  __savegprlr_23();
-  iVar3 = 0;
-  if (0 < DAT_847b96bc) {
-    puVar2 = (uint *)&DAT_847b970c;
-    puVar4 = &DAT_847b96ec;
+  iVar1 = __savegprlr_23(param_1);
+  iVar4 = 0;
+  if (0 < scene.addedSpotLightCount) {
+    ppGVar3 = &scene.addedSpotLight[0].def;
+    pfVar5 = scene.addedSpotLight[0].origin;
     do {
-      if (puVar4[-0x28] != '\x02') {
-        MyAssertHandler(0xffffffff821bc490,0xf0c,1,0xffffffff82000f98,0xffffffff821bd104);
+      if (((GfxLight *)(pfVar5 + -10))->type != '\x02') {
+        in_r4 = 0xf0c;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf0c,
+                        1,"%s");
       }
-      uVar1 = R_CullPointAndRadius((double)*(float *)(puVar4 + 0xc),puVar4);
-      iVar3 = iVar3 + 1;
-      puVar2 = puVar2 + 1;
-      *puVar2 = uVar1 & 0xff;
-      puVar4 = puVar4 + 0x4c;
-    } while (iVar3 < DAT_847b96bc);
+      bVar2 = R_CullPointAndRadius(pfVar5,pfVar5[3],(DpvsPlane *)in_r4,iVar1 * 0x2b8 + 0x845a9800);
+      iVar4 = iVar4 + 1;
+      ppGVar3 = ppGVar3 + 1;
+      *ppGVar3 = (GfxLightDef *)(int)bVar2;
+      pfVar5 = pfVar5 + 0x13;
+    } while (iVar4 < scene.addedSpotLightCount);
   }
   __restgprlr_23();
   return;
@@ -6224,26 +6719,32 @@ void R_CullDynamicSpotLightInCameraView(void)
 
 // 82730108  R_CullDynamicPointLightsInCameraView  (gfx_d3d/r_dpvs.cpp:3859)
 
-void R_CullDynamicPointLightsInCameraView(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_CullDynamicPointLightsInCameraView(int param_1)
 
 {
-  undefined1 uVar1;
-  int iVar2;
-  undefined *puVar3;
+  int iVar1;
+  bool bVar2;
+  undefined8 in_r4;
+  int iVar3;
+  float *pfVar4;
   
-  __savegprlr_23();
-  iVar2 = 0;
-  if (0 < DAT_847b971c) {
-    puVar3 = &DAT_847b9748;
+  iVar1 = __savegprlr_23(param_1);
+  iVar3 = 0;
+  if (0 < scene.addedLightCount) {
+    pfVar4 = scene.addedLight[0].origin;
     do {
-      if (puVar3[-0x28] != '\x03') {
-        MyAssertHandler(0xffffffff821bc490,0xf1f,1,0xffffffff82000f98,0xffffffff821bd124);
+      if (((GfxLight *)(pfVar4 + -10))->type != '\x03') {
+        in_r4 = 0xf1f;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf1f,
+                        1,"%s");
       }
-      uVar1 = R_CullPointAndRadius((double)*(float *)(puVar3 + 0xc),puVar3);
-      puVar3 = puVar3 + 0x4c;
-      (&DAT_847ba0a0)[iVar2] = uVar1;
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < DAT_847b971c);
+      bVar2 = R_CullPointAndRadius(pfVar4,pfVar4[3],(DpvsPlane *)in_r4,iVar1 * 0x2b8 + 0x845a9800);
+      pfVar4 = pfVar4 + 0x13;
+      *(bool *)(iVar3 + -0x7b845f60) = bVar2;
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < scene.addedLightCount);
   }
   __restgprlr_23();
   return;
@@ -6252,68 +6753,73 @@ void R_CullDynamicPointLightsInCameraView(void)
 
 // 827317E8  R_SetupWorldSurfacesDpvs  (gfx_d3d/r_dpvs.cpp:3878)
 
-void R_SetupWorldSurfacesDpvs(undefined8 param_1,longlong param_2)
+void R_SetupWorldSurfacesDpvs(GfxViewParms *param_1,int param_2)
 
 {
-  int iVar1;
+  GfxViewParms *pGVar1;
+  bool bVar3;
   int iVar2;
-  char cVar4;
-  undefined4 uVar3;
+  DpvsPlane *pDVar4;
   undefined8 *puVar5;
-  undefined8 *puVar6;
-  longlong lVar7;
+  float *pfVar6;
+  float *pfVar7;
+  longlong lVar8;
   float local_50;
   float local_4c;
   float local_48;
   undefined4 local_44;
   
-  iVar2 = __savegprlr_26();
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xf2a,0,0xffffffff82000f98,0xffffffff82010b48);
+  pGVar1 = (GfxViewParms *)__savegprlr_26(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf2a,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf2b,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf2b,0,
+                    "%s");
   }
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf2c,0,0xffffffff82000f98,0xffffffff8201dd50);
+  if (pGVar1 == (GfxViewParms *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf2c,0,
+                    "%s");
   }
-  iVar1 = (int)(param_2 * 0x2b8);
-  lVar7 = 8;
-  puVar6 = (undefined8 *)(iVar2 + 0x78);
+  lVar8 = 8;
+  pfVar7 = (pGVar1->projectionMatrix).m[3] + 2;
   puVar5 = (undefined8 *)0x845a1728;
-  *(undefined4 *)(&DAT_845a97fc + iVar1) = 0;
+  dpvsGlob.views[param_2][0].renderFxFlagsCull = 0;
   do {
-    puVar6 = puVar6 + 1;
+    pfVar7 = pfVar7 + 2;
     puVar5 = puVar5 + 1;
-    *puVar5 = *puVar6;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  local_50 = -*(float *)(iVar2 + 0x100);
-  local_4c = -*(float *)(iVar2 + 0x104);
-  local_48 = -*(float *)(iVar2 + 0x108);
+    *puVar5 = *(undefined8 *)pfVar7;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  local_50 = -(pGVar1->camera).origin[0];
+  local_4c = -(pGVar1->camera).origin[1];
+  local_48 = -(pGVar1->camera).origin[2];
   local_44 = 0x3f800000;
-  MatrixTransformVector44(&local_50,iVar2 + 0x80,0xffffffff845a1760);
-  puVar6 = (undefined8 *)(iVar2 + 0xb8);
-  puVar5 = (undefined8 *)&DAT_845a1768;
-  lVar7 = 8;
+  MatrixTransformVector44
+            (&local_50,(float (*) [4])&pGVar1->viewProjectionMatrix,dpvsGlob.viewProjMtx.m[3]);
+  pfVar7 = (pGVar1->viewProjectionMatrix).m[3] + 2;
+  pfVar6 = dpvsGlob.viewProjMtx.m[3] + 2;
+  lVar8 = 8;
   do {
-    puVar6 = puVar6 + 1;
-    puVar5 = puVar5 + 1;
-    *puVar5 = *puVar6;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  lVar7 = param_2 * 0x2b8 + -0x7ba56800;
-  R_FrustumClipPlanes(0xffffffff845a1730,0xffffffff821bc3f0,4,lVar7);
-  if (*(float *)(iVar2 + 0x7c) != 0.0) {
-    MyAssertHandler(0xffffffff821bc490,0xf3d,0,0xffffffff82000f98,0xffffffff821bd3a8);
+    pfVar7 = pfVar7 + 2;
+    pfVar6 = pfVar6 + 2;
+    *(undefined8 *)pfVar6 = *(undefined8 *)pfVar7;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  pDVar4 = dpvsGlob.views[param_2][0].frustumPlanes;
+  R_FrustumClipPlanes(&dpvsGlob.viewProjMtx,standardFrustumSidePlanes,4,pDVar4);
+  if ((pGVar1->projectionMatrix).m[3][3] != 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf3d,0,
+                    "%s");
   }
-  R_SetupDpvsForPoint(iVar2);
-  DAT_845aa2dc = (undefined4)lVar7;
-  uVar3 = R_AddNearAndFarClipPlanes(lVar7,4);
-  *(undefined4 *)(&DAT_845a98e0 + iVar1) = uVar3;
-  if (*(char *)(DAT_845aa6ac + 0xc) != '\0') {
-    R_AddDebugFrustum(iVar2);
+  R_SetupDpvsForPoint(pGVar1);
+  dpvsGlob.sideFrustumPlanes = pDVar4;
+  iVar2 = R_AddNearAndFarClipPlanes(pDVar4,4);
+  dpvsGlob.views[param_2][0].frustumPlaneCount = iVar2;
+  if ((r_draw_frustum->current).enabled != false) {
+    R_AddDebugFrustum(pGVar1);
   }
   __restgprlr_26();
   return;
@@ -6322,72 +6828,83 @@ void R_SetupWorldSurfacesDpvs(undefined8 param_1,longlong param_2)
 
 // 827301D8  R_SetViewFrustumPlanes  (gfx_d3d/r_dpvs.cpp:3916)
 
-void R_SetViewFrustumPlanes(int param_1,int param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_SetViewFrustumPlanes(GfxViewInfo *param_1,int param_2)
 
 {
-  param_2 = param_2 * 0x2b8;
-  if (*(int *)(&DAT_845a98e0 + param_2) < 4) {
-    MyAssertHandler(0xffffffff821bc490,0xf52,0,0xffffffff821bd144,0xffffffff821bd16c);
+  if (dpvsGlob.views[param_2][0].frustumPlaneCount < 4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf52,0,
+                    "%s\n\t(dpvsView->frustumPlaneCount) = %i");
   }
-  *(undefined4 *)(param_1 + 0x1b8) = *(undefined4 *)(&DAT_845a9800 + param_2);
-  *(undefined4 *)(param_1 + 0x1bc) = *(undefined4 *)(&DAT_845a9804 + param_2);
-  *(undefined4 *)(param_1 + 0x1c0) = *(undefined4 *)(&DAT_845a9808 + param_2);
-  *(undefined4 *)(param_1 + 0x1c4) = *(undefined4 *)(&DAT_845a980c + param_2);
-  *(undefined4 *)(param_1 + 0x1c8) = *(undefined4 *)(&DAT_845a9810 + param_2);
-  *(undefined4 *)(param_1 + 0x1cc) = *(undefined4 *)(&DAT_845a9814 + param_2);
-  *(undefined4 *)(param_1 + 0x1d0) = *(undefined4 *)(&DAT_845a9818 + param_2);
-  *(undefined4 *)(param_1 + 0x1d4) = *(undefined4 *)(&DAT_845a981c + param_2);
-  *(undefined4 *)(param_1 + 0x1d8) = *(undefined4 *)(&DAT_845a9820 + param_2);
-  *(undefined4 *)(param_1 + 0x1dc) = *(undefined4 *)(&DAT_845a9824 + param_2);
-  *(undefined4 *)(param_1 + 0x1e0) = *(undefined4 *)(&DAT_845a9828 + param_2);
-  *(undefined4 *)(param_1 + 0x1e4) = *(undefined4 *)(&DAT_845a982c + param_2);
-  *(undefined4 *)(param_1 + 0x1e8) = *(undefined4 *)(&DAT_845a9830 + param_2);
-  *(undefined4 *)(param_1 + 0x1ec) = *(undefined4 *)(&DAT_845a9834 + param_2);
-  *(undefined4 *)(param_1 + 0x1f0) = *(undefined4 *)(&DAT_845a9838 + param_2);
-  *(undefined4 *)(param_1 + 500) = *(undefined4 *)(&DAT_845a983c + param_2);
+  param_1->frustumPlanes[0][0] = dpvsGlob.views[param_2][0].frustumPlanes[0].coeffs[0];
+  param_1->frustumPlanes[0][1] = dpvsGlob.views[param_2][0].frustumPlanes[0].coeffs[1];
+  param_1->frustumPlanes[0][2] = dpvsGlob.views[param_2][0].frustumPlanes[0].coeffs[2];
+  param_1->frustumPlanes[0][3] = dpvsGlob.views[param_2][0].frustumPlanes[0].coeffs[3];
+  param_1->frustumPlanes[1][0] = dpvsGlob.views[param_2][0].frustumPlanes[1].coeffs[0];
+  param_1->frustumPlanes[1][1] = dpvsGlob.views[param_2][0].frustumPlanes[1].coeffs[1];
+  param_1->frustumPlanes[1][2] = dpvsGlob.views[param_2][0].frustumPlanes[1].coeffs[2];
+  param_1->frustumPlanes[1][3] = dpvsGlob.views[param_2][0].frustumPlanes[1].coeffs[3];
+  param_1->frustumPlanes[2][0] = dpvsGlob.views[param_2][0].frustumPlanes[2].coeffs[0];
+  param_1->frustumPlanes[2][1] = dpvsGlob.views[param_2][0].frustumPlanes[2].coeffs[1];
+  param_1->frustumPlanes[2][2] = dpvsGlob.views[param_2][0].frustumPlanes[2].coeffs[2];
+  param_1->frustumPlanes[2][3] = dpvsGlob.views[param_2][0].frustumPlanes[2].coeffs[3];
+  param_1->frustumPlanes[3][0] = dpvsGlob.views[param_2][0].frustumPlanes[3].coeffs[0];
+  param_1->frustumPlanes[3][1] = dpvsGlob.views[param_2][0].frustumPlanes[3].coeffs[1];
+  param_1->frustumPlanes[3][2] = dpvsGlob.views[param_2][0].frustumPlanes[3].coeffs[2];
+  param_1->frustumPlanes[3][3] = dpvsGlob.views[param_2][0].frustumPlanes[3].coeffs[3];
   return;
 }
 
 
 // 827319B8  R_AddWorldSurfacesDpvs  (gfx_d3d/r_dpvs.cpp:3930)
 
-void R_AddWorldSurfacesDpvs(undefined8 param_1,longlong param_2)
+void R_AddWorldSurfacesDpvs(GfxViewParms *param_1,int param_2)
 
 {
   float *pfVar1;
-  int iVar2;
-  ulonglong uVar3;
-  char cVar4;
+  GfxViewParms *pGVar2;
+  bool bVar3;
   
-  uVar3 = __savegprlr_27();
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xf5d,0,0xffffffff82000f98,0xffffffff82010b48);
+  pGVar2 = (GfxViewParms *)__savegprlr_27(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf5d,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf5e,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf5e,0,
+                    "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf5f,0,0xffffffff82000f98,0xffffffff8201dd50);
+  if (pGVar2 == (GfxViewParms *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf5f,0,
+                    "%s");
   }
-  DAT_84618098 = (undefined4)uVar3;
-  R_AddWorldSurfacesPortalWalk(uVar3 + 0x100,param_2);
-  param_2 = param_2 * 0x2b8;
-  iVar2 = (int)param_2;
-  if (DAT_845a17d4 != (float *)0x0) {
-    if (*(int *)(&DAT_845a98e0 + iVar2) < 1) {
-      MyAssertHandler(0xffffffff821bc490,0xf69,0,0xffffffff821bd144,0xffffffff821bd444);
+  rg.debugViewParms = pGVar2;
+  R_AddWorldSurfacesPortalWalk((pGVar2->camera).origin,param_2);
+  if (dpvsGlob.farPlane != (DpvsPlane *)0x0) {
+    if (dpvsGlob.views[param_2][0].frustumPlaneCount < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf69,0,
+                      "%s\n\t(dpvsView->frustumPlaneCount) = %i");
     }
-    pfVar1 = (float *)(&DAT_845a97fc + *(int *)(&DAT_845a98e0 + iVar2) * 0x10 + iVar2);
-    if ((((pfVar1[-3] != *DAT_845a17d4) || (pfVar1[-2] != DAT_845a17d4[1])) ||
-        (pfVar1[-1] != DAT_845a17d4[2])) || (*pfVar1 != DAT_845a17d4[3])) {
-      MyAssertHandler(0xffffffff821bc490,0xf6a,0,0xffffffff82000f98,0xffffffff821bd3d8);
+    pfVar1 = (float *)(dpvsGlob.views[param_2][0].frustumPlaneCount * 0x10 +
+                      param_2 * 0x2b8 + -0x7ba56804);
+    if ((((pfVar1[-3] != (dpvsGlob.farPlane)->coeffs[0]) ||
+         (pfVar1[-2] != (dpvsGlob.farPlane)->coeffs[1])) ||
+        (pfVar1[-1] != (dpvsGlob.farPlane)->coeffs[2])) ||
+       (*pfVar1 != (dpvsGlob.farPlane)->coeffs[3])) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf6a,0,
+                      "%s");
     }
-    R_AddSkySurfacesDpvs(param_2 + -0x7ba56800,(ulonglong)*(uint *)(&DAT_845a98e0 + iVar2) - 1);
+    R_AddSkySurfacesDpvs
+              (dpvsGlob.views[param_2][0].frustumPlanes,
+               dpvsGlob.views[param_2][0].frustumPlaneCount + -1);
   }
-  if (*(int *)(DAT_845aa71c + 0xc) != 0) {
+  if ((r_vc_makelog->current).integer != 0) {
     R_ShowLightVisCachePoints
-              (uVar3 + 0x100,param_2 + -0x7ba56800,*(undefined4 *)(&DAT_845a98e0 + iVar2));
+              ((pGVar2->camera).origin,dpvsGlob.views[param_2][0].frustumPlanes,
+               dpvsGlob.views[param_2][0].frustumPlaneCount);
   }
   __restgprlr_27();
   return;
@@ -6397,95 +6914,107 @@ void R_AddWorldSurfacesDpvs(undefined8 param_1,longlong param_2)
 // 827302D0  R_SetupShadowSurfacesDpvs  (gfx_d3d/r_dpvs.cpp:3956)
 
 void R_SetupShadowSurfacesDpvs
-               (undefined8 param_1,void *param_2,ulonglong param_3,undefined4 param_4,int param_5,
+               (GfxViewParms *param_1,DpvsPlane *param_2,uint param_3,uint param_4,uint param_5,
                int param_6)
 
 {
   int iVar1;
-  char cVar3;
-  void *pvVar2;
+  bool bVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_24();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821bc490,0xf77,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar3 = (ulonglong)param_6;
+  iVar1 = __savegprlr_24(param_1,param_2,param_3);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf77,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf78,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf78,0,
+                    "%s");
   }
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bc490,0xf79,0,0xffffffff82000f98,0xffffffff8201dd50);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf79,0,
+                    "%s");
   }
-  iVar1 = (param_6 * 3 + param_5) * 0xe8;
-  *(undefined4 *)(&DAT_845a98e4 + iVar1) = 0x41;
-  pvVar2 = memcpy(&DAT_845a98e8 + iVar1,param_2,(size_t)((param_3 & 0xffffffff) << 4));
-  *(undefined4 *)(&DAT_845a99c8 + iVar1) = param_4;
-  __restgprlr_24(pvVar2);
+  iVar1 = (int)uVar3 + (int)((uVar3 & 0xffffffff) << 1) + param_5;
+  dpvsGlob.views[0][iVar1 + 1].renderFxFlagsCull = 0x41;
+  memcpy();
+  dpvsGlob.views[0][iVar1 + 1].frustumPlaneCount = param_4;
+  __restgprlr_24();
   return;
 }
 
 
 // 827303D0  R_GetFarPlaneDist  (gfx_d3d/r_dpvs.cpp:3973)
 
-double R_GetFarPlaneDist(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float R_GetFarPlaneDist(void)
 
 {
-  if ((double)*(float *)(DAT_845aa5d4 + 0xc) != 0.0) {
-    return (double)*(float *)(DAT_845aa5d4 + 0xc);
+  if ((r_zfar->current).value != 0.0) {
+    return (r_zfar->current).value;
   }
-  return (double)DAT_845a17f8;
+  return dpvsGlob.cullDist;
 }
 
 
 // 82730400  R_SetCullDist  (gfx_d3d/r_dpvs.cpp:3982)
 
-void R_SetCullDist(double param_1)
+void R_SetCullDist(float param_1)
 
 {
   if (param_1 <= 0.0) {
-    DAT_845a17f8 = 0.0;
+    dpvsGlob.cullDist = 0.0;
     return;
   }
-  DAT_845a17f8 = (float)param_1;
+  dpvsGlob.cullDist = param_1;
   return;
 }
 
 
 // 82730428  R_IsCellVisible  (gfx_d3d/r_dpvs.cpp:3991)
 
-void R_IsCellVisible(undefined8 param_1,ulonglong param_2)
+int R_IsCellVisible(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  if (0x3ff < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0xf98,0,0xffffffff821bd1d8,uVar1,0x400);
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (0x3ff < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf98,0,
+                    "cellIndex doesn\'t index MAX_MAP_CELLS\n\t%i not in [0, %i)");
   }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821bc490,0xf99,0,0xffffffff821bd190,param_2,4);
+  if (3 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xf99,0,
+                    "viewInfoIndex doesn\'t index GFX_MAX_CLIENT_VIEWINFOS\n\t%i not in [0, %i)");
   }
-  __restgprlr_29((*(uint *)(&DAT_845aa2f4 +
-                           (int)(((param_2 & 0x7ffffff) * 0x20 + (longlong)((int)uVar1 >> 5) &
-                                 0xffffffff) << 2)) &
-                 *(uint *)((int)&DAT_82992400 + ((uint)((uVar1 & 0xffffffff) << 2) & 0x7c))) != 0);
-  return;
+  iVar2 = __restgprlr_29((*(uint *)((int)dpvsGlob.cellVisibleBits[0] +
+                                   (int)(((uVar3 & 0x7ffffff) * 0x20 + (longlong)((int)uVar1 >> 5) &
+                                         0xffffffff) << 2)) &
+                         *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) != 0);
+  return iVar2;
 }
 
 
 // 827304E0  R_IsEntInScene  (gfx_d3d/r_dpvs.cpp:4000)
 
-longlong R_IsEntInScene(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool R_IsEntInScene(uint param_1)
 
 {
   longlong lVar1;
-  ulonglong uVar2;
   
-  if (DAT_84613764 <= param_1) {
-    MyAssertHandler(0xffffffff821bc490,0xfa1,0,0xffffffff821bd214,param_1);
+  if (gfxCfg.entCount <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs.cpp",0xfa1,0,
+                    "entnum doesn\'t index gfxCfg.entCount\n\t%i not in [0, %i)");
   }
-  uVar2 = (ulonglong)*(ushort *)(param_1 * 2 + DAT_847ee90c);
-  lVar1 = uVar2 - 0xffff;
-  return lVar1 - ((uVar2 - 0x10000) + (ulonglong)(lVar1 == 0));
+  lVar1 = (ulonglong)scene.dpvs.sceneDObjIndex[param_1] - 0xffff;
+  return (bool)((char)lVar1 - ((char)scene.dpvs.sceneDObjIndex[param_1] + (lVar1 == 0)));
 }
 

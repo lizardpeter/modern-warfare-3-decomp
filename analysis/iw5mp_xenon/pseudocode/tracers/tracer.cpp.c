@@ -2,52 +2,64 @@
 
 // 826DF8D0  Tracer_Spawn_ApplyOverrides  (tracers/tracer.cpp:24)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Tracer_Spawn_ApplyOverrides
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5)
+               (LocalClientNum_t param_1,centity_s *param_2,Weapon param_3,bool param_4,
+               TracerInfo *param_5)
 
 {
-  undefined8 uVar1;
-  int *piVar2;
-  char cVar3;
-  ulonglong uVar4;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  clientInfo_t *pcVar3;
+  bool bVar5;
+  DvarValue *pDVar4;
+  ulonglong uVar6;
+  ulonglong uVar7;
   uint local_50 [20];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x1e,0,0xffffffff82000f98,0xffffffff821a7900);
+  uVar7 = (ulonglong)(int)param_5;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x1e,0,
+                    "%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x1f,0,0xffffffff82000f98,0xffffffff82058c0c);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x1f,0,
+                    "%s");
   }
-  piVar2 = (int *)CG_GetClientInfo(uVar1,param_2);
-  if ((piVar2 == (int *)0x0) || (*piVar2 == 0)) {
+  pcVar3 = CG_GetClientInfo(LVar2,(centity_s *)uVar6);
+  if ((pcVar3 == (clientInfo_t *)0x0) || (pcVar3->infoValid == 0)) {
     local_50[0] = 0;
     local_50[1] = 0;
   }
   else {
-    BG_CopyPerks(piVar2 + 0x11,local_50);
+    BG_CopyPerks(pcVar3->perks,local_50);
   }
-  if ((*(char *)(DAT_82a3d610 + 0xc) != '\0') &&
-     (cVar3 = BG_WeaponBulletFire_ExplodeOnImpact(local_50,param_3,param_4), cVar3 != '\0')) {
-    uVar4 = (ulonglong)DAT_82a3832c;
-    *(undefined4 *)((int)param_5 + 0xc) = *(undefined4 *)(DAT_82a3d45c + 0xc);
-    Byte4PackVertexColor(uVar4 + 0xc,param_5 + 0x18);
-    Byte4PackVertexColor((ulonglong)DAT_82a38324 + 0xc,param_5 + 0x1c);
-    Byte4PackVertexColor((ulonglong)DAT_82a38308 + 0xc,param_5 + 0x20);
-    Byte4PackVertexColor((ulonglong)DAT_82a3ce44 + 0xc,param_5 + 0x24);
-    Byte4PackVertexColor((ulonglong)DAT_82a3d634 + 0xc,param_5 + 0x28);
+  iVar1 = (int)uVar7;
+  if (((tracer_explosiveOverride->current).enabled != false) &&
+     (bVar5 = BG_WeaponBulletFire_ExplodeOnImpact(local_50,param_3,param_4), bVar5)) {
+    pDVar4 = &tracer_explosiveColor1->current;
+    *(int *)(iVar1 + 0xc) = (tracer_explosiveWidth->current).integer;
+    Byte4PackVertexColor(&pDVar4->value,(uchar *)(iVar1 + 0x18));
+    Byte4PackVertexColor(&(tracer_explosiveColor2->current).value,(uchar *)(iVar1 + 0x1c));
+    Byte4PackVertexColor(&(tracer_explosiveColor3->current).value,(uchar *)(iVar1 + 0x20));
+    Byte4PackVertexColor(&(tracer_explosiveColor4->current).value,(uchar *)(iVar1 + 0x24));
+    Byte4PackVertexColor(&(tracer_explosiveColor5->current).value,(uchar *)(iVar1 + 0x28));
     __restgprlr_25();
     return;
   }
-  if ((*(char *)(DAT_82a3828c + 0xc) != '\0') && ((local_50[0] & 0x80000000) != 0)) {
-    uVar4 = (ulonglong)DAT_82a3d5d0;
-    *(undefined4 *)((int)param_5 + 0xc) = *(undefined4 *)(DAT_82a382b0 + 0xc);
-    Byte4PackVertexColor(uVar4 + 0xc,param_5 + 0x18);
-    Byte4PackVertexColor((ulonglong)DAT_82a38390 + 0xc,param_5 + 0x1c);
-    Byte4PackVertexColor((ulonglong)DAT_82a38254 + 0xc,param_5 + 0x20);
-    Byte4PackVertexColor((ulonglong)DAT_82a3d6ac + 0xc,param_5 + 0x24);
-    Byte4PackVertexColor((ulonglong)DAT_82a3833c + 0xc,param_5 + 0x28);
+  if (((tracer_stoppingPowerOverride->current).enabled != false) &&
+     ((local_50[0] & 0x80000000) != 0)) {
+    pDVar4 = &tracer_stoppingPowerColor1->current;
+    *(int *)(iVar1 + 0xc) = (tracer_stoppingPowerWidth->current).integer;
+    Byte4PackVertexColor(&pDVar4->value,(uchar *)(iVar1 + 0x18));
+    Byte4PackVertexColor(&(tracer_stoppingPowerColor2->current).value,(uchar *)(iVar1 + 0x1c));
+    Byte4PackVertexColor(&(tracer_stoppingPowerColor3->current).value,(uchar *)(iVar1 + 0x20));
+    Byte4PackVertexColor(&(tracer_stoppingPowerColor4->current).value,(uchar *)(iVar1 + 0x24));
+    Byte4PackVertexColor(&(tracer_stoppingPowerColor5->current).value,(uchar *)(iVar1 + 0x28));
   }
   __restgprlr_25();
   return;
@@ -56,194 +68,211 @@ void Tracer_Spawn_ApplyOverrides
 
 // 826DFAD0  Tracer_Spawn  (tracers/tracer.cpp:82)
 
-void Tracer_Spawn(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                 undefined8 param_5,undefined8 param_6)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Tracer_Spawn(LocalClientNum_t param_1,float *param_2,float *param_3,centity_s *param_4,
+                 Weapon param_5,bool param_6)
 
 {
   float fVar1;
   float fVar2;
-  uint uVar3;
-  float *pfVar4;
-  float fVar5;
-  float fVar6;
-  undefined8 uVar7;
-  int iVar9;
-  int iVar10;
-  undefined8 uVar8;
-  int iVar11;
-  uint uVar12;
+  Material *pMVar3;
+  uint uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  float fVar7;
+  float fVar8;
+  LocalClientNum_t LVar9;
+  cg_s *pcVar10;
+  TracerDef *pTVar11;
+  localEntity_s *plVar12;
   uint uVar13;
-  int iVar14;
-  longlong lVar15;
-  undefined1 *puVar16;
-  float *pfVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  uint uVar17;
+  int iVar18;
+  longlong lVar19;
+  uchar (*pauVar20) [4];
+  float *pfVar21;
   double dVar22;
   double dVar23;
   double dVar24;
-  undefined1 auStack_4b0 [1200];
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  char acStack_4b0 [1200];
   
-  __savegprlr_17();
-  uVar7 = __savefpr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x5e,0,0xffffffff82000f98,0xffffffff821a7a28);
+  uVar16 = (ulonglong)(int)param_4;
+  uVar15 = (ulonglong)(int)param_3;
+  uVar14 = (ulonglong)(int)param_2;
+  __savegprlr_17(param_1);
+  LVar9 = __savefpr_26();
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x5e,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x5f,0,0xffffffff82000f98,0xffffffff82066868);
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x5f,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x60,0,0xffffffff82000f98,0xffffffff821a7900);
+  if ((uVar16 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x60,0,
+                    "%s");
   }
-  iVar9 = CG_GetLocalClientGlobals(uVar7);
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff821a790c,99,0,0xffffffff82000f98,0xffffffff82002798);
+  pcVar10 = CG_GetLocalClientGlobals(LVar9);
+  if (pcVar10 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",99,0,"%s")
+    ;
   }
-  pfVar17 = (float *)param_3;
-  pfVar4 = (float *)param_2;
-  fVar2 = pfVar17[1] - pfVar4[1];
-  fVar5 = pfVar17[2] - pfVar4[2];
-  fVar6 = *pfVar17 - *pfVar4;
-  dVar22 = (double)SQRT(fVar6 * fVar6 + fVar5 * fVar5 + fVar2 * fVar2);
-  dVar19 = 1.0;
-  if (-dVar22 < 0.0) {
-    dVar19 = dVar22;
+  pfVar5 = (float *)uVar15;
+  pfVar6 = (float *)uVar14;
+  fVar2 = pfVar5[1] - pfVar6[1];
+  fVar7 = pfVar5[2] - pfVar6[2];
+  fVar8 = *pfVar5 - *pfVar6;
+  dVar26 = (double)SQRT(fVar8 * fVar8 + fVar7 * fVar7 + fVar2 * fVar2);
+  dVar23 = 1.0;
+  if (-dVar26 < 0.0) {
+    dVar23 = dVar26;
   }
-  fVar1 = (float)(1.0 / dVar19);
-  dVar21 = (double)(fVar1 * fVar6);
-  dVar20 = (double)(fVar2 * fVar1);
-  dVar19 = (double)(fVar5 * fVar1);
-  if (dVar22 <= 5.0) goto LAB_826e0044;
-  iVar10 = BG_TracerType(param_5,param_6);
-  if (iVar10 == 0) {
-    uVar8 = BG_GetWeaponName(param_5,auStack_4b0,0x400);
-    Com_PrintWarning(0x11,0xffffffff821a79e8,uVar8);
-    iVar10 = DAT_82a383e8;
-    if (DAT_82a383e8 == 0) {
-      MyAssertHandler(0xffffffff821a790c,0x74,1,0xffffffff82000f98,0xffffffff821a79dc);
-    }
-  }
-  iVar11 = CG_AllocLocalEntity(uVar7);
-  if (iVar11 == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x77,1,0xffffffff82000f98,0xffffffff82018d78);
-  }
-  *(float *)(iVar11 + 0x38) = (float)dVar22;
-  *(undefined4 *)(iVar11 + 8) = 0;
-  *(uint *)(iVar11 + 0x60) =
-       (uint)LZCOUNT(*(int *)(iVar9 + 0x3334) - *(int *)((int)param_4 + 0xc4)) >> 5;
-  *(undefined4 *)(iVar11 + 0x3c) = *(undefined4 *)(iVar10 + 0x10);
-  *(undefined4 *)(iVar11 + 0x40) = *(undefined4 *)(iVar10 + 0x14);
-  *(undefined4 *)(iVar11 + 0x44) = *(undefined4 *)(iVar10 + 0x1c);
-  *(undefined4 *)(iVar11 + 0x48) = *(undefined4 *)(iVar10 + 0x18);
-  iVar14 = *(int *)(iVar10 + 4);
-  *(int *)(iVar11 + 0x34) = iVar14;
-  if (iVar14 == 0) {
-    MyAssertHandler(0xffffffff821a790c,0x83,1,0xffffffff82000f98,0xffffffff821a79c8);
-  }
-  pfVar17 = (float *)(iVar10 + 0x28);
-  puVar16 = (undefined1 *)(iVar11 + 0x48);
-  lVar15 = 5;
-  dVar23 = 0.5;
-  dVar24 = 255.0;
-  do {
-    dVar18 = floor((double)(float)((double)pfVar17[-2] * dVar24 + dVar23));
-    iVar14 = (int)dVar18;
-    if (iVar14 < 0xff) {
-      if (iVar14 < 1) {
-        iVar14 = 0;
+  fVar1 = (float)(1.0 / dVar23);
+  dVar25 = (double)(fVar1 * fVar8);
+  dVar24 = (double)(fVar2 * fVar1);
+  dVar23 = (double)(fVar7 * fVar1);
+  if (5.0 < dVar26) {
+    pTVar11 = BG_TracerType(param_5,param_6);
+    if (pTVar11 == (TracerDef *)0x0) {
+      BG_GetWeaponName(param_5,acStack_4b0,0x400);
+      Com_PrintWarning(0x11,"WARNING: Tracer_Spawn using default Tracer for weapon \"%s\".\n");
+      pTVar11 = cgMedia.tracerDefault;
+      if (cgMedia.tracerDefault == (TracerDef *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x74,1
+                        ,"%s");
       }
     }
-    else {
-      iVar14 = 0xff;
+    plVar12 = CG_AllocLocalEntity(LVar9);
+    if (plVar12 == (localEntity_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x77,1,
+                      "%s");
     }
-    puVar16[5] = (char)iVar14;
-    dVar18 = floor((double)(float)((double)pfVar17[-1] * dVar24 + dVar23));
-    iVar14 = (int)dVar18;
-    if (iVar14 < 0xff) {
-      if (iVar14 < 1) {
-        iVar14 = 0;
+    (plVar12->tracer).clipDist = (float)dVar26;
+    plVar12->leType = LE_MOVING_TRACER;
+    (plVar12->tracer).isClientEmitter =
+         (uint)LZCOUNT(pcVar10->clientNum - (((centity_s *)uVar16)->nextState).number) >> 5;
+    (plVar12->tracer).length = pTVar11->beamLength;
+    (plVar12->tracer).width = pTVar11->beamWidth;
+    (plVar12->tracer).screwDist = pTVar11->screwDist;
+    (plVar12->tracer).screwRadius = pTVar11->screwRadius;
+    pMVar3 = pTVar11->material;
+    (plVar12->tracer).material = pMVar3;
+    if (pMVar3 == (Material *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x83,1,
+                      "%s");
+    }
+    pfVar21 = pTVar11->colors[0] + 2;
+    pauVar20 = (uchar (*) [4])&(plVar12->tracer).screwRadius;
+    lVar19 = 5;
+    dVar27 = 0.5;
+    dVar28 = 255.0;
+    do {
+      dVar22 = floor((double)(float)((double)(*(float (*) [4])(pfVar21 + -2))[0] * dVar28 + dVar27))
+      ;
+      iVar18 = (int)dVar22;
+      if (iVar18 < 0xff) {
+        if (iVar18 < 1) {
+          iVar18 = 0;
+        }
       }
-    }
-    else {
-      iVar14 = 0xff;
-    }
-    puVar16[6] = (char)iVar14;
-    dVar18 = floor((double)(float)((double)*pfVar17 * dVar24 + dVar23));
-    iVar14 = (int)dVar18;
-    if (iVar14 < 0xff) {
-      if (iVar14 < 1) {
-        iVar14 = 0;
+      else {
+        iVar18 = 0xff;
       }
-    }
-    else {
-      iVar14 = 0xff;
-    }
-    puVar16[7] = (char)iVar14;
-    dVar18 = floor((double)(float)((double)pfVar17[1] * dVar24 + dVar23));
-    iVar14 = (int)dVar18;
-    if (iVar14 < 0xff) {
-      if (iVar14 < 1) {
-        iVar14 = 0;
+      pauVar20[1][1] = (uchar)iVar18;
+      dVar22 = floor((double)(float)((double)pfVar21[-1] * dVar28 + dVar27));
+      iVar18 = (int)dVar22;
+      if (iVar18 < 0xff) {
+        if (iVar18 < 1) {
+          iVar18 = 0;
+        }
       }
+      else {
+        iVar18 = 0xff;
+      }
+      pauVar20[1][2] = (uchar)iVar18;
+      dVar22 = floor((double)(float)((double)*pfVar21 * dVar28 + dVar27));
+      iVar18 = (int)dVar22;
+      if (iVar18 < 0xff) {
+        if (iVar18 < 1) {
+          iVar18 = 0;
+        }
+      }
+      else {
+        iVar18 = 0xff;
+      }
+      pauVar20[1][3] = (uchar)iVar18;
+      dVar22 = floor((double)(float)((double)pfVar21[1] * dVar28 + dVar27));
+      iVar18 = (int)dVar22;
+      if (iVar18 < 0xff) {
+        if (iVar18 < 1) {
+          iVar18 = 0;
+        }
+      }
+      else {
+        iVar18 = 0xff;
+      }
+      lVar19 = lVar19 + -1;
+      pauVar20 = pauVar20 + 1;
+      (*pauVar20)[0] = (uchar)iVar18;
+      pfVar21 = pfVar21 + 4;
+    } while (lVar19 != 0);
+    if (pcVar10->frametime == 0) {
+      iVar18 = 0;
     }
     else {
-      iVar14 = 0xff;
+      uVar13 = rand();
+      uVar4 = pcVar10->frametime;
+      uVar17 = uVar13 - ((int)uVar13 / (int)uVar4) * uVar4;
+      trapWord(6,(ulonglong)uVar4,0);
+      trapWord(5,(ulonglong)uVar4 &
+                 ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),0xffff
+              );
+      iVar18 = ((int)uVar17 >> 1) + (uint)((int)uVar17 < 0 && (uVar17 & 1) != 0);
     }
-    lVar15 = lVar15 + -1;
-    puVar16 = puVar16 + 4;
-    *puVar16 = (char)iVar14;
-    pfVar17 = pfVar17 + 4;
-  } while (lVar15 != 0);
-  if (*(uint *)(iVar9 + 0x6b988) == 0) {
-    iVar14 = 0;
+    iVar18 = pcVar10->time - iVar18;
+    if (pTVar11->speed <= 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x8c,0,
+                      "%s");
+    }
+    fVar2 = pTVar11->speed;
+    (plVar12->pos).trType = TR_LINEAR;
+    (plVar12->pos).trTime = iVar18;
+    plVar12->endTime = iVar18 - (int)((float)(dVar26 / (double)fVar2) * -1000.0);
+    (plVar12->pos).trBase[0] = *pfVar6;
+    (plVar12->pos).trBase[1] = pfVar6[1];
+    (plVar12->pos).trBase[2] = pfVar6[2];
+    dVar26 = (double)pTVar11->speed;
+    (plVar12->pos).trDelta[0] = (float)(dVar26 * dVar25);
+    (plVar12->pos).trDelta[1] = (float)(dVar24 * dVar26);
+    (plVar12->pos).trDelta[2] = (float)(dVar23 * dVar26);
+    if (((((uint)(plVar12->pos).trBase[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)(plVar12->pos).trBase[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)(plVar12->pos).trBase[2] & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x93,0,
+                      "%s");
+    }
+    if (((((uint)(plVar12->pos).trDelta[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)(plVar12->pos).trDelta[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)(plVar12->pos).trDelta[2] & 0x7f800000) == 0x7f800000)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0x94,0,
+                      "%s");
+    }
+    Tracer_Spawn_ApplyOverrides(LVar9,(centity_s *)uVar16,param_5,param_6,&plVar12->tracer);
+    if ((tracer_debugDraw->current).enabled != false) {
+      CG_DebugLine(pfVar6,pfVar5,colorYellow,0,300);
+    }
   }
-  else {
-    uVar12 = rand();
-    uVar3 = *(uint *)(iVar9 + 0x6b988);
-    uVar13 = uVar12 - ((int)uVar12 / (int)uVar3) * uVar3;
-    trapWord(6,(ulonglong)uVar3,0);
-    trapWord(5,(ulonglong)uVar3 &
-               ~((((ulonglong)uVar12 & 0x7fffffff) << 1 | (ulonglong)(uVar12 >> 0x1f)) - 1),0xffff);
-    iVar14 = ((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0);
-  }
-  iVar14 = *(int *)(iVar9 + 0x6b98c) - iVar14;
-  if (*(float *)(iVar10 + 0xc) <= 0.0) {
-    MyAssertHandler(0xffffffff821a790c,0x8c,0,0xffffffff82000f98,0xffffffff821a79b0);
-  }
-  fVar2 = *(float *)(iVar10 + 0xc);
-  *(undefined4 *)(iVar11 + 0xc) = 2;
-  *(int *)(iVar11 + 0x10) = iVar14;
-  *(int *)(iVar11 + 0x30) = iVar14 - (int)((float)(dVar22 / (double)fVar2) * -1000.0);
-  *(float *)(iVar11 + 0x18) = *pfVar4;
-  *(float *)(iVar11 + 0x1c) = pfVar4[1];
-  *(float *)(iVar11 + 0x20) = pfVar4[2];
-  dVar22 = (double)*(float *)(iVar10 + 0xc);
-  *(float *)(iVar11 + 0x24) = (float)(dVar22 * dVar21);
-  *(float *)(iVar11 + 0x28) = (float)(dVar20 * dVar22);
-  *(float *)(iVar11 + 0x2c) = (float)(dVar19 * dVar22);
-  if ((*(uint *)(iVar11 + 0x18) & 0x7f800000) == 0x7f800000) {
-LAB_826dff7c:
-    MyAssertHandler(0xffffffff821a790c,0x93,0,0xffffffff82000f98,0xffffffff821a7950);
-  }
-  else {
-    if ((*(uint *)(iVar11 + 0x1c) & 0x7f800000) == 0x7f800000) goto LAB_826dff7c;
-    if ((*(uint *)(iVar11 + 0x20) & 0x7f800000) == 0x7f800000) goto LAB_826dff7c;
-  }
-  if ((*(uint *)(iVar11 + 0x24) & 0x7f800000) == 0x7f800000) {
-LAB_826dffe0:
-    MyAssertHandler(0xffffffff821a790c,0x94,0,0xffffffff82000f98,0xffffffff82018cf8);
-  }
-  else {
-    if ((*(uint *)(iVar11 + 0x28) & 0x7f800000) == 0x7f800000) goto LAB_826dffe0;
-    if ((*(uint *)(iVar11 + 0x2c) & 0x7f800000) == 0x7f800000) goto LAB_826dffe0;
-  }
-  Tracer_Spawn_ApplyOverrides(uVar7,param_4,param_5,param_6,iVar11 + 0x34);
-  if (*(char *)(DAT_82a38394 + 0xc) != '\0') {
-    CG_DebugLine(param_2,param_3,0xffffffff82181838,0,300);
-  }
-LAB_826e0044:
   __restfpr_26();
   __restgprlr_17();
   return;
@@ -252,91 +281,98 @@ LAB_826e0044:
 
 // 826E0058  Tracer_Draw  (tracers/tracer.cpp:164)
 
-void Tracer_Draw(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void Tracer_Draw(float *param_1,float *param_2,TracerInfo *param_3,TracerDrawFlags param_4)
 
 {
   float *pfVar1;
-  int *piVar2;
+  undefined4 *puVar2;
   float *pfVar3;
-  uint uVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  undefined1 local_90 [4];
-  float local_8c;
-  float local_88;
-  float local_84;
-  float local_80;
-  float local_7c;
-  float local_78;
-  undefined1 auStack_74 [20];
-  float local_60;
-  int local_5c;
-  undefined1 local_58;
-  int local_54;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  FxBeam local_90 [2];
   
-  pfVar3 = (float *)__savegprlr_26();
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pfVar3 = (float *)__savegprlr_26(param_1);
   if (pfVar3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff821a790c,0xab,0,0xffffffff82000f98,0xffffffff8202bebc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xab,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0xac,0,0xffffffff82000f98,0xffffffff821a7adc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xac,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0xad,0,0xffffffff82000f98,0xffffffff82058c0c);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xad,0,
+                    "%s");
   }
-  local_88 = pfVar3[1];
-  pfVar1 = (float *)param_2;
-  local_7c = pfVar1[1];
-  local_84 = pfVar3[2];
-  local_78 = pfVar1[2];
-  local_90[0] = 0;
-  local_8c = *pfVar3;
-  local_80 = *pfVar1;
-  dVar6 = 0.0;
-  dVar5 = (double)SQRT((local_80 - local_8c) * (local_80 - local_8c) +
-                       (local_78 - local_84) * (local_78 - local_84) +
-                       (local_7c - local_88) * (local_7c - local_88));
-  if (dVar5 <= 0.0) {
-    MyAssertHandler(dVar5,0xffffffff821a790c,0xb5,1,0xffffffff821a7ab8,0xffffffff821a7acc,dVar5);
+  local_90[0].begin[1] = pfVar3[1];
+  pfVar1 = (float *)uVar4;
+  local_90[0].end[1] = pfVar1[1];
+  local_90[0].begin[2] = pfVar3[2];
+  local_90[0].end[2] = pfVar1[2];
+  local_90[0].type = '\0';
+  local_90[0].begin[0] = *pfVar3;
+  local_90[0].end[0] = *pfVar1;
+  dVar9 = 0.0;
+  dVar8 = (double)SQRT((local_90[0].end[0] - local_90[0].begin[0]) *
+                       (local_90[0].end[0] - local_90[0].begin[0]) +
+                       (local_90[0].end[2] - local_90[0].begin[2]) *
+                       (local_90[0].end[2] - local_90[0].begin[2]) +
+                       (local_90[0].end[1] - local_90[0].begin[1]) *
+                       (local_90[0].end[1] - local_90[0].begin[1]));
+  if (dVar8 <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xb5,1,
+                    "%s\n\t(length) = %g");
   }
-  piVar2 = (int *)param_3;
-  dVar7 = (double)(float)piVar2[3];
-  if ((param_4 & 1) != 0) {
-    dVar7 = (double)(float)((double)*(float *)(DAT_82a3d690 + 0xc) * dVar7);
+  puVar2 = (undefined4 *)uVar5;
+  dVar10 = (double)(float)puVar2[3];
+  if ((uVar6 & 1) != 0) {
+    dVar10 = (double)(float)((double)(tracer_thermalWidthMult->current).value * dVar10);
   }
-  if ((piVar2[0xb] != 0) && ((float)((double)*(float *)(DAT_82a383a0 + 0xc) - dVar7) < 0.0)) {
-    dVar7 = (double)*(float *)(DAT_82a383a0 + 0xc);
+  if ((puVar2[0xb] != 0) &&
+     ((float)((double)(tracer_firstPersonMaxWidth->current).value - dVar10) < 0.0)) {
+    dVar10 = (double)(tracer_firstPersonMaxWidth->current).value;
   }
-  if (dVar7 <= dVar6) {
-    MyAssertHandler(dVar7,0xffffffff821a790c,0xc1,1,0xffffffff821a7a94,0xffffffff821a7aa8,dVar7);
+  if (dVar10 <= dVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xc1,1,
+                    "%s\n\t(width) = %g");
   }
-  local_60 = (float)dVar7;
-  local_5c = DAT_82a383ec;
-  if ((param_4 & 1) == 0) {
-    local_5c = *piVar2;
+  local_90[0].radius = (float)dVar10;
+  local_90[0].material = cgMedia.tracerThermalOverrideMat;
+  if ((uVar6 & 1) == 0) {
+    local_90[0].material = (Material *)*puVar2;
   }
-  if (local_5c == 0) {
-    MyAssertHandler(0xffffffff821a790c,199,1,0xffffffff82000f98,0xffffffff821a7a84);
+  if (local_90[0].material == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",199,1,"%s"
+                   );
   }
-  if ((double)(float)piVar2[4] <= dVar6) {
-    MyAssertHandler(0xffffffff821a790c,0xc9,0,0xffffffff82000f98,0xffffffff821a7a68);
+  if ((double)(float)puVar2[4] <= dVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xc9,0,
+                    "%s");
   }
-  uVar4 = (uint)((float)(dVar5 / (double)(float)piVar2[4]) * 8.0);
-  if ((int)uVar4 < 0xff) {
-    if ((int)uVar4 < 2) {
-      uVar4 = 1;
+  uVar7 = (uint)((float)(dVar8 / (double)(float)puVar2[4]) * 8.0);
+  if ((int)uVar7 < 0xff) {
+    if ((int)uVar7 < 2) {
+      uVar7 = 1;
     }
   }
   else {
-    uVar4 = 0xff;
+    uVar7 = 0xff;
   }
-  local_58 = (undefined1)uVar4;
-  if ((uVar4 & 0xff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0xcc,1,0xffffffff821a7a30,0xffffffff821a7a50,uVar4 & 0xff);
+  local_90[0].segmentCount = (uchar)uVar7;
+  if ((uVar7 & 0xff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xcc,1,
+                    "%s\n\t(beam.segmentCount) = %i");
   }
-  local_54 = piVar2[5];
-  Com_Memcpy(auStack_74,param_3 + 0x18,0x14);
+  local_90[0].field7_0x3c = *(FxBeam_u_60 *)(puVar2 + 5);
+  Com_Memcpy(local_90[0].colors,puVar2 + 6,0x14);
   FX_Beam_Add(local_90);
   __restgprlr_26();
   return;
@@ -345,46 +381,54 @@ void Tracer_Draw(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglon
 
 // 826E0318  Tracer_UpdateDrawRate  (tracers/tracer.cpp:219)
 
-void Tracer_UpdateDrawRate
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int Tracer_UpdateDrawRate(LocalClientNum_t param_1,Weapon param_2,bool param_3,centity_s *param_4)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar4;
-  uint uVar5;
+  LocalClientNum_t LVar2;
+  TracerDef *pTVar3;
+  int iVar4;
+  clientInfo_t *pcVar5;
+  centity_s *pcVar6;
+  ulonglong uVar7;
+  uchar uVar8;
+  uint uVar9;
   
-  uVar2 = __savegprlr_27();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a790c,0xe2,0,0xffffffff82000f98,0xffffffff8202aa48);
+  uVar7 = (ulonglong)(int)param_4;
+  LVar2 = __savegprlr_27(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xe2,0,
+                    "%s");
   }
-  iVar3 = BG_TracerType(param_2,param_3);
-  if (iVar3 != 0) {
-    uVar1 = *(uint *)(iVar3 + 8);
-    if ((uVar1 == 0) || (0xff < uVar1)) {
-      MyAssertHandler(0xffffffff821a790c,0xea,0,0xffffffff821a7ae4,uVar1,1,0xff);
+  pTVar3 = BG_TracerType(param_2,param_3);
+  if (pTVar3 != (TracerDef *)0x0) {
+    if ((pTVar3->drawInterval == 0) || (0xff < pTVar3->drawInterval)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\tracers\\tracer.cpp",0xea,0,
+                      "tracerDef->drawInterval not in [1, 255]\n\t%i not in [%i, %i]");
     }
-    uVar1 = *(uint *)(iVar3 + 8);
-    uVar5 = uVar1 & 0xff;
-    iVar3 = CG_GetClientInfo(uVar2,param_4);
-    if ((((iVar3 != 0) && (*(int *)(iVar3 + 0x530) != 0)) && ((uVar1 & 0xff) != 0)) &&
-       ((uVar1 & 1) == 0)) {
-      uVar5 = uVar5 + 1 & 0xff;
+    uVar1 = pTVar3->drawInterval;
+    uVar9 = uVar1 & 0xff;
+    pcVar6 = (centity_s *)uVar7;
+    pcVar5 = CG_GetClientInfo(LVar2,pcVar6);
+    if ((((pcVar5 != (clientInfo_t *)0x0) && (pcVar5->dualWielding != 0)) && ((uVar1 & 0xff) != 0))
+       && ((uVar1 & 1) == 0)) {
+      uVar9 = uVar9 + 1 & 0xff;
     }
-    iVar3 = (int)param_4;
-    if ((uVar5 < *(byte *)(iVar3 + 0x1c8)) || (*(byte *)(iVar3 + 0x1c8) == 0)) {
-      *(char *)(iVar3 + 0x1c8) = (char)uVar5;
+    if ((uVar9 < pcVar6->tracerDrawRateCounter) || (pcVar6->tracerDrawRateCounter == 0)) {
+      pcVar6->tracerDrawRateCounter = (uchar)uVar9;
     }
-    cVar4 = *(char *)(iVar3 + 0x1c8) + -1;
-    *(char *)(iVar3 + 0x1c8) = cVar4;
-    if (cVar4 == '\0') {
-      *(char *)(iVar3 + 0x1c8) = (char)uVar5;
-      __restgprlr_27(1);
-      return;
+    uVar8 = pcVar6->tracerDrawRateCounter + 0xff;
+    pcVar6->tracerDrawRateCounter = uVar8;
+    if (uVar8 == '\0') {
+      pcVar6->tracerDrawRateCounter = (uchar)uVar9;
+      iVar4 = __restgprlr_27(1);
+      return iVar4;
     }
   }
-  __restgprlr_27(0);
-  return;
+  iVar4 = __restgprlr_27(0);
+  return iVar4;
 }
 

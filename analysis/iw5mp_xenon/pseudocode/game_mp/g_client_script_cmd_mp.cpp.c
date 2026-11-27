@@ -2,188 +2,220 @@
 
 // 82464A58  ClientPlaying  (game_mp/g_client_script_cmd_mp.cpp:52)
 
-void ClientPlaying(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int ClientPlaying(gentity_s *param_1)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (*(int *)(iVar1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0x35,0,0xffffffff82000f98,0xffffffff8206d1bc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x35,0,"%s");
   }
   if (*(int *)(*(int *)(iVar1 + 0x158) + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0x36,0,0xffffffff82000f98,0xffffffff8206dedc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x36,0,"%s");
   }
-  __restgprlr_29(*(int *)(*(int *)(iVar1 + 0x158) + 0x3300) == 0);
-  return;
+  iVar1 = __restgprlr_29(*(int *)(*(int *)(iVar1 + 0x158) + 0x3300) == 0);
+  return iVar1;
 }
 
 
 // 82464AE8  PlayerCmd_buttonPressedDEVONLY  (game_mp/g_client_script_cmd_mp.cpp:75)
 
-void PlayerCmd_buttonPressedDEVONLY(uint param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_buttonPressedDEVONLY(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  char *pcVar2;
-  int iVar3;
-  uint uStack00000014;
+  char *pcVar1;
+  bool bVar5;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x4f,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    if (0x7ff < (uint)param_1 >> 0x10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x4f,0,"%s");
     }
-    if ((&DAT_833737d8)[param_1 * 0xa0] != 0) goto LAB_82464b7c;
-    uVar1 = va(0xffffffff8206d370,param_1);
+    if (g_entities[(uint)param_1 >> 0x10].client != (gclient_s *)0x0) goto LAB_82464b7c;
+    pcVar1 = va("entity %i is not a player");
   }
   else {
-    uVar1 = 0xffffffff8206d360;
+    pcVar1 = "not an entity";
   }
-  Scr_ObjectError(uVar1);
+  Scr_ObjectError(pcVar1);
 LAB_82464b7c:
-  cVar4 = DevGui_IsActive();
-  uVar1 = 0;
-  if (cVar4 == '\0') {
-    pcVar2 = (char *)Scr_GetString(0);
-    if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-      Scr_ParamError(0,0xffffffff8206e708);
+  bVar5 = DevGui_IsActive();
+  iVar2 = 0;
+  if (!bVar5) {
+    pcVar1 = Scr_GetString(0);
+    if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
+      Scr_ParamError(0,"usage: buttonPressed(<button name>)");
     }
-    CL_GetFirstActiveControllerIndex();
-    uVar1 = CL_LocalClientNumFromControllerIndex();
-    iVar3 = CL_IsKeyPressed(uVar1,pcVar2);
-    uVar1 = 1;
-    if (iVar3 == 0) {
-      uVar1 = 0;
+    iVar2 = CL_GetFirstActiveControllerIndex();
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+    iVar4 = CL_IsKeyPressed(LVar3,pcVar1);
+    iVar2 = 1;
+    if (iVar4 == 0) {
+      iVar2 = 0;
     }
   }
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar2);
   return;
 }
 
 
 // 82464BF8  PlayerCmd_pingPlayer  (game_mp/g_client_script_cmd_mp.cpp:114)
 
-void PlayerCmd_pingPlayer(uint param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_pingPlayer(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x73,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x73,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0xf8) = *(uint *)(puVar1[0x56] + 0xf8) | 0x200;
-  *(int *)(puVar1[0x56] + 0x36e8) = DAT_83580fac + 3000;
+  (pgVar3->client->ps).eFlags = (pgVar3->client->ps).eFlags | 0x200;
+  pgVar3->client->compassPingTime = level.time + 3000;
   return;
 }
 
 
 // 82464CD8  PlayerCmd_showScoreboard  (game_mp/g_client_script_cmd_mp.cpp:132)
 
-void PlayerCmd_showScoreboard(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_showScoreboard(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x85,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x85,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  Cmd_Score_f(puVar1);
+  Cmd_Score_f(pgVar3);
   return;
 }
 
 
 // 82464D98  PlayerCmd_setSpawnWeapon  (game_mp/g_client_script_cmd_mp.cpp:151)
 
-void PlayerCmd_setSpawnWeapon(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_setSpawnWeapon(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  uint uVar6;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar7;
-  longlong lVar5;
-  undefined1 *puVar8;
-  undefined4 *puVar9;
+  gclient_s *pgVar1;
+  ushort uVar2;
+  undefined4 uVar3;
+  char *pcVar4;
+  Weapon WVar5;
+  int iVar6;
+  uint uVar7;
+  PlayerEquippedWeaponState *pPVar8;
+  gentity_s *pgVar9;
+  ushort uStack00000014;
   short sStack00000016;
   
-  uVar6 = __savegprlr_25();
-  sStack00000016 = (short)uVar6;
-  uVar6 = uVar6 >> 0x10;
+  uVar3 = __savegprlr_25(param_1);
+  sStack00000016 = (short)uVar3;
+  uStack00000014 = (ushort)((uint)uVar3 >> 0x10);
+  uVar2 = uStack00000014;
+  uVar7 = (uint)uStack00000014;
+  _uStack00000014 = uVar3;
   if (sStack00000016 == 0) {
-    if (0x7ff < uVar6) {
-      MyAssertHandler(0xffffffff8206e6b8,0x9e,0,0xffffffff82000f98,0xffffffff8206d38c);
+    if (0x7ff < uVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x9e,0,"%s");
     }
-    puVar9 = &DAT_83373680 + uVar6 * 0xa0;
-    if ((&DAT_833737d8)[uVar6 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar6);
-      Scr_ObjectError();
+    pgVar9 = g_entities + uVar7;
+    if (g_entities[uVar7].client == (gclient_s *)0x0) {
+      pcVar4 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar4);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar9 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar9 = (gentity_s *)0x0;
   }
-  uVar3 = Scr_GetString(0);
-  uVar4 = G_GetWeaponForName();
-  iVar1 = puVar9[0x56];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0xa4,0,0xffffffff82000f98,0xffffffff82001fdc);
+  pcVar4 = Scr_GetString(0);
+  WVar5 = G_GetWeaponForName(pcVar4);
+  pgVar1 = pgVar9->client;
+  if (pgVar1 == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0xa4,0,"%s");
   }
-  iVar7 = BG_GetEquippedWeaponIndex(iVar1,uVar4);
-  if (-1 < iVar7) {
-    uVar2 = *(undefined4 *)((iVar7 + 0x9d) * 4 + iVar1);
-    puVar8 = (undefined1 *)(iVar7 * 0xc + iVar1 + 0x2b0);
-    if (puVar8 == (undefined1 *)0x0) {
-      MyAssertHandler(0xffffffff8206e6b8,0xad,0,0xffffffff82000f98,0xffffffff8200d52c);
+  iVar6 = BG_GetEquippedWeaponIndex(&pgVar1->ps,WVar5);
+  if (-1 < iVar6) {
+    WVar5 = (pgVar1->ps).weaponsEquipped[iVar6];
+    pPVar8 = (pgVar1->ps).weapEquippedData + iVar6;
+    if (pPVar8 == (PlayerEquippedWeaponState *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0xad,0,"%s");
     }
-    *(undefined4 *)(iVar1 + 0x370) = uVar2;
-    *(undefined4 *)(iVar1 + 0x24c) = 0;
-    *(undefined4 *)(iVar1 + 0x268) = 0;
-    lVar5 = BG_PlayerDualWieldingWeapon(iVar1,uVar2);
-    *(uint *)(iVar1 + 0x390) = (uint)(lVar5 != 0);
-    *puVar8 = 1;
-    G_SelectWeapon(uVar6,uVar2);
+    (pgVar1->ps).weapCommon.weapon = WVar5;
+    (pgVar1->ps).weapState[0].weaponState = 0;
+    (pgVar1->ps).weapState[1].weaponState = 0;
+    iVar6 = BG_PlayerDualWieldingWeapon(&pgVar1->ps,WVar5);
+    (pgVar1->ps).weapCommon.lastWeaponHand = (uint)(iVar6 != 0);
+    pPVar8->usedBefore = true;
+    G_SelectWeapon((uint)uVar2,WVar5);
     __restgprlr_25();
     return;
   }
-  va(0xffffffff8206e72c,uVar3);
-  Scr_Error();
+  pcVar4 = va("invalid SetSpawnWeapon: %s");
+  Scr_Error(pcVar4);
   __restgprlr_25();
   return;
 }
@@ -191,55 +223,62 @@ void PlayerCmd_setSpawnWeapon(void)
 
 // 82464F30  PlayerCmd_dropItem  (game_mp/g_client_script_cmd_mp.cpp:203)
 
-void PlayerCmd_dropItem(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void PlayerCmd_dropItem(scr_entref_t param_1)
 
 {
-  int iVar1;
-  undefined2 uVar2;
-  uint uVar5;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined4 *puVar6;
-  short sStack00000016;
+  WeaponDef *pWVar1;
+  uint uVar2;
+  ushort uVar3;
+  char *pcVar4;
+  Weapon WVar5;
+  Weapon WVar6;
+  gentity_s *pgVar7;
+  gentity_s *pgVar8;
+  uint uStack00000014;
   
-  uVar5 = __savegprlr_28();
-  sStack00000016 = (short)uVar5;
-  if (sStack00000016 == 0) {
-    uVar5 = uVar5 >> 0x10;
-    if (0x7ff < uVar5) {
-      MyAssertHandler(0xffffffff8206e6b8,0xd2,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_28(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0xd2,0,"%s");
     }
-    puVar6 = &DAT_83373680 + uVar5 * 0xa0;
-    if ((&DAT_833737d8)[uVar5 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar5);
-      Scr_ObjectError();
+    pgVar8 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar4 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar4);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar6 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar8 = (gentity_s *)0x0;
   }
-  uVar3 = Scr_GetString(0);
-  uVar4 = G_GetWeaponForName();
-  if ((uVar4 & 0xff) != 0) {
-    uVar5 = BG_GetAlternateWeapon(uVar4,0);
-    uVar2 = DAT_835a0c66;
-    iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
-    if (*(int *)(iVar1 + 0x38) != 3) {
-      uVar4 = Drop_Weapon(puVar6,uVar4);
-      if ((uVar4 & 0xffffffff) != 0) {
-        Item_SetStateFromTag(puVar6,uVar2,uVar4);
-        Item_SetDefaultVelocity(puVar6,uVar4);
-        G_EntEnablePhysics(uVar4,*(undefined4 *)(iVar1 + 0x4c0));
+  pcVar4 = Scr_GetString(0);
+  WVar5 = G_GetWeaponForName(pcVar4);
+  if ((WVar5.data & 0xff) != 0) {
+    WVar6 = BG_GetAlternateWeapon(WVar5,false);
+    uVar3 = scr_const.tag_weapon_right;
+    pWVar1 = bg_weaponDefs[WVar6.data & 0xff];
+    if (pWVar1->inventoryType != WEAPINVENTORY_ALTMODE) {
+      pgVar7 = Drop_Weapon(pgVar8,WVar5);
+      if (pgVar7 != (gentity_s *)0x0) {
+        Item_SetStateFromTag(pgVar8,(uint)uVar3,pgVar7);
+        Item_SetDefaultVelocity(pgVar8,pgVar7);
+        G_EntEnablePhysics(pgVar7,pWVar1->physCollmap);
       }
-      GScr_AddEntity(uVar4);
+      GScr_AddEntity(pgVar7);
       __restgprlr_28();
       return;
     }
-    va(0xffffffff8206e748,uVar3);
-    Scr_Error();
+    pcVar4 = va("You can\'t drop alternate fire weapon \'%s\'.  Drop the primary weapon instead.\n")
+    ;
+    Scr_Error(pcVar4);
   }
-  GScr_AddEntity(0);
+  GScr_AddEntity((gentity_s *)0x0);
   __restgprlr_28();
   return;
 }
@@ -247,48 +286,54 @@ void PlayerCmd_dropItem(void)
 
 // 82465090  PlayerCmd_DropScavengerBag  (game_mp/g_client_script_cmd_mp.cpp:255)
 
-void PlayerCmd_DropScavengerBag(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void PlayerCmd_DropScavengerBag(scr_entref_t param_1)
 
 {
-  uint uVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined4 *puVar4;
-  short sStack00000016;
+  uint uVar1;
+  char *pcVar2;
+  Weapon WVar3;
+  Weapon WVar4;
+  gentity_s *pgVar5;
+  uint uStack00000014;
   
-  uVar3 = __savegprlr_27();
-  sStack00000016 = (short)uVar3;
-  if (sStack00000016 == 0) {
-    uVar3 = uVar3 >> 0x10;
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206e6b8,0x105,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_27(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x105,0,"%s");
     }
-    puVar4 = &DAT_83373680 + uVar3 * 0xa0;
-    if ((&DAT_833737d8)[uVar3 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar3);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  if ((uVar2 & 0xff) == 0) {
-    va(0xffffffff8206e7ec,uVar1);
-    Scr_Error();
+  pcVar2 = Scr_GetString(0);
+  WVar3 = G_GetWeaponForName(pcVar2);
+  if ((WVar3.data & 0xff) == 0) {
+    pcVar2 = va("Scavenger Item \"%s\" does not exist or has not been pre-cached.");
+    Scr_Error(pcVar2);
   }
-  uVar3 = BG_GetAlternateWeapon(uVar2,0);
-  if (*(int *)((&DAT_829d84a0)[uVar3 & 0xff] + 0x38) != 5) {
-    va(0xffffffff8206e7a8,uVar1);
-    Scr_Error();
+  WVar4 = BG_GetAlternateWeapon(WVar3,false);
+  if (bg_weaponDefs[WVar4.data & 0xff]->inventoryType != WEAPINVENTORY_SCAVENGER) {
+    pcVar2 = va("Scavenger Item \"%s\" does not have the \'scavenger\' inventory type.");
+    Scr_Error(pcVar2);
   }
-  uVar2 = Drop_ScavengerBag(puVar4,uVar2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0x113,0,0xffffffff82000f98,0xffffffff8206e798);
+  pgVar5 = Drop_ScavengerBag(pgVar5,WVar3);
+  if (pgVar5 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x113,0,"%s");
   }
-  GScr_AddEntity(uVar2);
+  GScr_AddEntity(pgVar5);
   __restgprlr_27();
   return;
 }
@@ -296,293 +341,306 @@ void PlayerCmd_DropScavengerBag(void)
 
 // 824651E8  PlayerCmd_finishPlayerDamage  (game_mp/g_client_script_cmd_mp.cpp:303)
 
-void PlayerCmd_finishPlayerDamage(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_finishPlayerDamage(scr_entref_t param_1)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  undefined4 uVar5;
+  gclient_s *pgVar4;
+  char *pcVar5;
+  int iVar6;
+  int iVar7;
+  gentity_s *pgVar8;
+  uint uVar9;
+  meansOfDeath_t mVar10;
+  Weapon WVar11;
   uint uVar12;
-  longlong lVar6;
-  int iVar13;
-  int iVar14;
-  undefined4 *puVar15;
-  ulonglong uVar7;
-  undefined8 uVar8;
-  char *pcVar16;
-  ulonglong uVar9;
-  undefined2 uVar19;
-  undefined8 uVar10;
-  char cVar20;
-  undefined8 uVar11;
-  int iVar17;
-  int iVar18;
-  float *pfVar21;
-  undefined1 *puVar22;
-  undefined4 uVar23;
-  undefined4 *puVar24;
+  hitLocation_t hVar13;
+  weapType_t wVar14;
+  bool bVar17;
+  gentity_s *pgVar15;
+  byte bVar18;
+  gentity_s *pgVar16;
+  float *pfVar19;
+  float *pfVar20;
+  bool bVar21;
+  longlong lVar22;
+  gentity_s *pgVar23;
+  double dVar24;
   double dVar25;
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
-  short sStack00000016;
-  undefined4 *local_f8;
+  float fVar29;
+  scr_entref_t sStack00000014;
+  hitLocation_t in_stack_fffffea8;
+  int in_stack_fffffeac;
+  gentity_s *local_f8;
   float local_e0;
   float local_dc;
   float local_d8;
-  undefined1 auStack_d0 [16];
+  float afStack_d0 [4];
   float local_c0 [48];
   
-  uVar12 = __savegprlr();
-  sStack00000016 = (short)uVar12;
-  local_f8 = &DAT_834b3180;
-  pfVar21 = (float *)0x0;
-  puVar15 = &DAT_834b3180;
-  puVar22 = (undefined1 *)0x0;
-  if (sStack00000016 == 0) {
-    uVar12 = uVar12 >> 0x10;
-    if (0x7ff < uVar12) {
-      MyAssertHandler(0xffffffff8206e6b8,0x14d,0,0xffffffff82000f98,0xffffffff8206d38c);
+  __savegprlr();
+  sStack00000014.classnum = param_1.classnum;
+  local_f8 = g_entities + 0x7fe;
+  pfVar19 = (float *)0x0;
+  pgVar8 = g_entities + 0x7fe;
+  pfVar20 = (float *)0x0;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar9 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x14d,0,"%s");
     }
-    puVar24 = &DAT_83373680 + uVar12 * 0xa0;
-    if ((&DAT_833737d8)[uVar12 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar12);
-      Scr_ObjectError();
+    pgVar23 = g_entities + uVar9;
+    if (g_entities[uVar9].client == (gclient_s *)0x0) {
+      pcVar5 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar5);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar24 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar23 = (gentity_s *)0x0;
   }
-  iVar17 = 0;
-  if ((*(int *)(puVar24[0x56] + 0x38f8) != 0) && (DAT_83580fac < *(int *)(puVar24[0x56] + 0x38fc)))
+  pgVar15 = (gentity_s *)0x0;
+  if ((pgVar23->client->lastStand != 0) && (level.time < pgVar23->client->lastStandTime))
   goto LAB_82465b58;
-  lVar6 = Scr_GetInt(2);
-  iVar13 = (int)lVar6;
-  if (iVar13 < 1) goto LAB_82465b58;
-  iVar14 = Scr_GetType(0);
-  if ((iVar14 != 0) && (iVar14 = Scr_GetPointerType(0), iVar14 == 0x16)) {
-    local_f8 = (undefined4 *)Scr_GetEntity(0);
+  iVar6 = Scr_GetInt(2);
+  if (iVar6 < 1) goto LAB_82465b58;
+  iVar7 = Scr_GetType(0);
+  pgVar16 = (gentity_s *)0x834b3180;
+  if ((iVar7 != 0) && (iVar7 = Scr_GetPointerType(0), iVar7 == 0x16)) {
+    local_f8 = Scr_GetEntity(0);
+    pgVar16 = local_f8;
   }
-  iVar14 = Scr_GetType(1);
-  if ((iVar14 != 0) && (iVar14 = Scr_GetPointerType(1), iVar14 == 0x16)) {
-    puVar15 = (undefined4 *)Scr_GetEntity(1);
+  iVar7 = Scr_GetType(1);
+  if ((iVar7 != 0) && (iVar7 = Scr_GetPointerType(1), iVar7 == 0x16)) {
+    pgVar8 = Scr_GetEntity(1);
   }
-  uVar7 = Scr_GetInt(3);
-  uVar8 = G_MeansOfDeathFromScriptParam(4);
-  pcVar16 = (char *)Scr_GetString(5);
-  if ((((*pcVar16 == 'a') && (pcVar16[1] == 'l')) && (pcVar16[2] == 't')) && (pcVar16[3] == '_')) {
-    uVar23 = 1;
-    pcVar16 = pcVar16 + 4;
+  uVar9 = Scr_GetInt(3);
+  mVar10 = G_MeansOfDeathFromScriptParam(4);
+  pcVar5 = Scr_GetString(5);
+  if ((((*pcVar5 == 'a') && (pcVar5[1] == 'l')) && (pcVar5[2] == 't')) && (pcVar5[3] == '_')) {
+    bVar21 = true;
+    pcVar5 = pcVar5 + 4;
   }
   else {
-    uVar23 = 0;
+    bVar21 = false;
   }
-  uVar9 = G_GetWeaponForName(pcVar16);
-  if (((uVar9 & 0xff) == 0) && (uVar12 = Scr_GetConstString(5), uVar12 != DAT_835a0bfa)) {
-    uVar8 = Scr_GetString(5);
-    va(0xffffffff8206e938,uVar8);
-    Scr_Error();
+  WVar11 = G_GetWeaponForName(pcVar5);
+  if (((WVar11.data & 0xff) == 0) && (uVar12 = Scr_GetConstString(5), uVar12 != scr_const.none)) {
+    Scr_GetString(5);
+    pcVar5 = va("Weapon \"%s\" has not been precached");
+    Scr_Error(pcVar5);
     __restgprlr();
     return;
   }
-  iVar14 = Scr_GetType(6);
-  if (iVar14 != 0) {
-    Scr_GetVector(6,auStack_d0);
-    puVar22 = auStack_d0;
+  iVar7 = Scr_GetType(6);
+  if (iVar7 != 0) {
+    Scr_GetVector(6,afStack_d0);
+    pfVar20 = afStack_d0;
   }
-  iVar14 = Scr_GetType(7);
-  if (iVar14 != 0) {
+  iVar7 = Scr_GetType(7);
+  if (iVar7 != 0) {
     Scr_GetVector(7,local_c0);
-    pfVar21 = local_c0;
+    pfVar19 = local_c0;
   }
-  uVar19 = Scr_GetConstString(8);
-  uVar10 = G_GetHitLocationIndexFromString(uVar19);
-  if ((int)uVar10 == 0x13) goto LAB_82465b58;
+  uVar12 = Scr_GetConstString(8);
+  hVar13 = G_GetHitLocationIndexFromString((ushort)uVar12);
+  if (hVar13 == HITLOC_SHIELD) goto LAB_82465b58;
   Scr_GetInt(9);
-  dVar25 = (double)Scr_GetFloat(10);
-  dVar28 = 0.0;
-  dVar27 = 1.0;
-  if ((dVar25 < 0.0) || (1.0 < dVar25)) {
-    va(dVar25,0xffffffff8206e8f8,dVar25);
-    Scr_Error();
+  fVar29 = Scr_GetFloat(10);
+  dVar24 = (double)fVar29;
+  dVar27 = 0.0;
+  dVar26 = 1.0;
+  if ((dVar24 < 0.0) || (1.0 < dVar24)) {
+    pcVar5 = va("Given stun fraction (%.2f) is outside the allowed range (0,1).");
+    Scr_Error(pcVar5);
   }
-  iVar14 = puVar24[0x56];
-  if (*(int *)(iVar14 + 4) == 8) {
-    Scr_Error(0xffffffff8206e8c0);
+  pgVar4 = pgVar23->client;
+  if ((pgVar4->ps).pm_type == 8) {
+    Scr_Error("Trying to do damage to a client that is already dead");
     __restgprlr();
     return;
   }
-  dVar26 = dVar28;
-  dVar29 = dVar28;
-  if (pfVar21 != (float *)0x0) {
-    fVar2 = pfVar21[1];
-    fVar3 = *pfVar21;
-    fVar4 = pfVar21[2];
-    dVar26 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-    dVar28 = dVar27;
-    if (-dVar26 < 0.0) {
-      dVar28 = dVar26;
+  dVar25 = dVar27;
+  dVar28 = dVar27;
+  if (pfVar19 != (float *)0x0) {
+    fVar29 = pfVar19[1];
+    fVar2 = *pfVar19;
+    fVar3 = pfVar19[2];
+    dVar25 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar29 * fVar29);
+    dVar27 = dVar26;
+    if (-dVar25 < 0.0) {
+      dVar27 = dVar25;
     }
-    fVar1 = (float)(dVar27 / dVar28);
-    dVar28 = (double)(fVar2 * fVar1);
-    dVar26 = (double)(fVar3 * fVar1);
-    dVar29 = (double)(fVar4 * fVar1);
+    fVar1 = (float)(dVar26 / dVar27);
+    dVar27 = (double)(fVar29 * fVar1);
+    dVar25 = (double)(fVar2 * fVar1);
+    dVar28 = (double)(fVar3 * fVar1);
   }
-  local_d8 = (float)dVar29;
-  local_dc = (float)dVar28;
-  local_e0 = (float)dVar26;
-  if (((puVar24[0x61] & 8) == 0) && ((uVar7 & 4) == 0)) {
-    fVar2 = 0.3;
-    if ((*(uint *)(iVar14 + 0xc) & 1) == 0) {
-      if ((*(uint *)(iVar14 + 0xc) & 2) != 0) {
-        fVar2 = 0.15;
+  local_d8 = (float)dVar28;
+  local_dc = (float)dVar27;
+  local_e0 = (float)dVar25;
+  if (((pgVar23->flags & 8U) == 0) && ((uVar9 & 4) == 0)) {
+    uVar9 = (pgVar4->ps).pm_flags;
+    fVar29 = 0.3;
+    if ((uVar9 & 1) == 0) {
+      if ((uVar9 & 2) != 0) {
+        fVar29 = 0.15;
       }
     }
     else {
-      fVar2 = 0.02;
+      fVar29 = 0.02;
     }
-    iVar18 = (int)((float)(longlong)iVar13 * fVar2);
-    if (iVar18 < 0x3d) {
-      if (iVar18 == 0) goto LAB_82465698;
+    iVar7 = (int)((float)(longlong)iVar6 * fVar29);
+    if (iVar7 < 0x3d) {
+      if (iVar7 == 0) goto LAB_82465698;
     }
     else {
-      iVar18 = 0x3c;
+      iVar7 = 0x3c;
     }
-    if ((*(uint *)(iVar14 + 0xf8) & 0x3800) == 0) {
-      dVar27 = (double)(*(float *)(DAT_8337365c + 0xc) * (float)(longlong)iVar18 * 0.004);
-      *(float *)(iVar14 + 0x28) = *(float *)(iVar14 + 0x28) + (float)(dVar26 * dVar27);
-      *(float *)(iVar14 + 0x2c) = *(float *)(iVar14 + 0x2c) + (float)(dVar28 * dVar27);
-      *(float *)(iVar14 + 0x30) = *(float *)(iVar14 + 0x30) + (float)(dVar29 * dVar27);
-      if (*(int *)(puVar24[0x56] + 8) == 0) {
-        iVar18 = iVar18 << 1;
-        if (iVar18 < 0x32) {
-          iVar18 = 0x32;
+    if (((pgVar4->ps).eFlags & 0x3800U) == 0) {
+      dVar26 = (double)((g_knockback->current).value * (float)(longlong)iVar7 * 0.004);
+      (pgVar4->ps).velocity[0] = (pgVar4->ps).velocity[0] + (float)(dVar25 * dVar26);
+      (pgVar4->ps).velocity[1] = (pgVar4->ps).velocity[1] + (float)(dVar27 * dVar26);
+      (pgVar4->ps).velocity[2] = (pgVar4->ps).velocity[2] + (float)(dVar28 * dVar26);
+      if ((pgVar23->client->ps).pm_time == 0) {
+        iVar7 = iVar7 << 1;
+        if (iVar7 < 0x32) {
+          iVar7 = 0x32;
         }
-        else if (200 < iVar18) {
-          iVar18 = 200;
+        else if (200 < iVar7) {
+          iVar7 = 200;
         }
-        *(int *)(puVar24[0x56] + 8) = iVar18;
-        *(uint *)(puVar24[0x56] + 0xc) = *(uint *)(puVar24[0x56] + 0xc) | 0x100;
+        (pgVar23->client->ps).pm_time = iVar7;
+        (pgVar23->client->ps).pm_flags = (pgVar23->client->ps).pm_flags | 0x100;
       }
     }
   }
 LAB_82465698:
-  if ((puVar24[0x61] & 1) == 0) {
-    if (((((uVar9 & 0xff) != 0) && (iVar14 = BG_GetWeaponType(uVar9,uVar23), iVar14 == 1)) &&
-        (cVar20 = BG_IsBulletMOD(uVar8), cVar20 != '\0')) && ((int)uVar8 != 3)) {
-      uVar11 = BG_WeaponBulletFire_GetHitEvent(uVar8);
-      if ((int)uVar11 == 0) {
+  if ((pgVar23->flags & 1U) == 0) {
+    if (((((WVar11.data & 0xff) != 0) &&
+         (wVar14 = BG_GetWeaponType(WVar11,bVar21), wVar14 == WEAPTYPE_BULLET)) &&
+        (bVar17 = BG_IsBulletMOD(mVar10), bVar17)) && (mVar10 != MOD_EXPLOSIVE_BULLET)) {
+      uVar9 = BG_WeaponBulletFire_GetHitEvent(mVar10);
+      if (uVar9 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                        ,0x1c3,1,&DAT_82000f98,0xffffffff8206e8a8);
+                        ,0x1c3,1,"%s");
       }
-      if (puVar22 == (undefined1 *)0x0) {
+      if (pfVar20 == (float *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                        ,0x1c4,0,&DAT_82000f98,0xffffffff8206e8a0);
+                        ,0x1c4,0,"%s");
       }
-      iVar17 = G_TempEntity(puVar22,uVar11);
-      *(int *)(iVar17 + 200) = (int)uVar9;
-      *(undefined4 *)(iVar17 + 0xcc) = uVar23;
-      uVar12 = DirToByte(&local_e0);
-      *(undefined4 *)(iVar17 + 0x88) = 7;
-      *(uint *)(iVar17 + 0xa0) = uVar12 & 0xff;
-      *(uint *)(iVar17 + 0xd8) = (uint)LZCOUNT((int)uVar10 + -2) >> 5;
-      *(undefined4 *)(iVar17 + 0x78) = *puVar15;
-      *(undefined4 *)(iVar17 + 0x80) = *puVar24;
-      if (*(int *)(iVar17 + 0xfc) != 0) {
+      pgVar15 = G_TempEntity(pfVar20,uVar9);
+      (pgVar15->s).weapon = WVar11;
+      (pgVar15->s).inAltWeaponMode = (uint)bVar21;
+      bVar18 = DirToByte(&local_e0);
+      (pgVar15->s).surfType = 7;
+      (pgVar15->s).eventParm = (uint)bVar18;
+      (pgVar15->s).un1.eventParm2 = (uint)LZCOUNT(hVar13 - HITLOC_HEAD) >> 5;
+      (pgVar15->s).otherEntityNum = (pgVar8->s).number;
+      (pgVar15->s).groundEntityNum = (pgVar23->s).number;
+      if ((pgVar15->s).clientMask[0] != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                        ,0x1cd,0,&DAT_82000f98,0xffffffff8206e874);
+                        ,0x1cd,0,"%s");
       }
-      iVar14 = (((int)*(uint *)(puVar24[0x56] + 0x150) >> 5) + 0x3f) * 4;
-      *(uint *)(iVar14 + iVar17) =
-           1 << (*(uint *)(puVar24[0x56] + 0x150) & 0x1f) | *(uint *)(iVar14 + iVar17);
-      uVar11 = BG_WeaponBulletFire_GetClientHitEvent(uVar8);
-      if ((int)uVar11 == 0) {
+      uVar9 = (pgVar23->client->ps).clientNum;
+      iVar7 = (int)uVar9 >> 5;
+      (pgVar15->s).clientMask[iVar7] = 1 << (uVar9 & 0x1f) | (pgVar15->s).clientMask[iVar7];
+      uVar9 = BG_WeaponBulletFire_GetClientHitEvent(mVar10);
+      if (uVar9 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                        ,0x1d5,1,&DAT_82000f98,0xffffffff8206e8a8);
+                        ,0x1d5,1,"%s");
       }
-      if (puVar22 == (undefined1 *)0x0) {
+      if (pfVar20 == (float *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                        ,0x1d6,0,&DAT_82000f98,0xffffffff8206e8a0);
+                        ,0x1d6,0,"%s");
       }
-      iVar18 = G_TempEntity(puVar22,uVar11);
-      *(undefined4 *)(iVar18 + 0x88) = 7;
-      *(undefined4 *)(iVar18 + 0xd8) = 0;
-      *(int *)(iVar18 + 200) = (int)uVar9;
-      *(undefined4 *)(iVar18 + 0xcc) = uVar23;
-      *(undefined4 *)(iVar18 + 0x78) = *puVar15;
-      uVar5 = *(undefined4 *)(puVar24[0x56] + 0x150);
-      *(undefined4 *)(iVar18 + 0xfc) = 0xffffffff;
-      *(undefined4 *)(iVar18 + 0x90) = uVar5;
-      iVar14 = (((int)*(uint *)(puVar24[0x56] + 0x150) >> 5) + 0x3f) * 4;
-      *(uint *)(iVar14 + iVar18) =
-           *(uint *)(iVar14 + iVar18) & ~(1 << (*(uint *)(puVar24[0x56] + 0x150) & 0x1f));
+      pgVar16 = G_TempEntity(pfVar20,uVar9);
+      (pgVar16->s).surfType = 7;
+      (pgVar16->s).un1.eventParm2 = 0;
+      (pgVar16->s).weapon = WVar11;
+      (pgVar16->s).inAltWeaponMode = (uint)bVar21;
+      (pgVar16->s).otherEntityNum = (pgVar8->s).number;
+      iVar7 = (pgVar23->client->ps).clientNum;
+      (pgVar16->s).clientMask[0] = -1;
+      (pgVar16->s).clientNum = iVar7;
+      uVar9 = (pgVar23->client->ps).clientNum;
+      iVar7 = (int)uVar9 >> 5;
+      (pgVar16->s).clientMask[iVar7] = (pgVar16->s).clientMask[iVar7] & ~(1 << (uVar9 & 0x1f));
+      pgVar16 = local_f8;
     }
-    lVar6 = lVar6 - (ulonglong)(uint)(int)((double)(longlong)iVar13 * dVar25);
-    *(int *)(puVar24[0x56] + 0x3630) =
-         *(int *)(puVar24[0x56] + 0x3630) + (int)((double)(longlong)iVar13 * dVar25);
-    *(int *)(puVar24[0x56] + 0x362c) = *(int *)(puVar24[0x56] + 0x362c) + (int)lVar6;
-    iVar13 = puVar24[0x56];
-    if (pfVar21 == (float *)0x0) {
-      *(undefined4 *)(iVar13 + 0x3634) = puVar24[0x4e];
-      *(undefined4 *)(iVar13 + 0x3638) = puVar24[0x4f];
-      *(undefined4 *)(iVar13 + 0x363c) = puVar24[0x50];
-      *(undefined4 *)(puVar24[0x56] + 0x3640) = 1;
+    lVar22 = (longlong)iVar6 - (ulonglong)(uint)(int)((double)(longlong)iVar6 * dVar24);
+    pgVar23->client->damage_stun =
+         pgVar23->client->damage_stun + (int)((double)(longlong)iVar6 * dVar24);
+    pgVar23->client->damage_blood = pgVar23->client->damage_blood + (int)lVar22;
+    pgVar4 = pgVar23->client;
+    if (pfVar19 == (float *)0x0) {
+      pgVar4->damage_from[0] = (pgVar23->r).currentOrigin[0];
+      pgVar4->damage_from[1] = (pgVar23->r).currentOrigin[1];
+      pgVar4->damage_from[2] = (pgVar23->r).currentOrigin[2];
+      pgVar23->client->damage_fromWorld = 1;
     }
     else {
-      *(float *)(iVar13 + 0x3634) = local_e0;
-      *(float *)(iVar13 + 0x3638) = local_dc;
-      *(float *)(iVar13 + 0x363c) = local_d8;
-      *(undefined4 *)(puVar24[0x56] + 0x3640) = 0;
+      pgVar4->damage_from[0] = local_e0;
+      pgVar4->damage_from[1] = local_dc;
+      pgVar4->damage_from[2] = local_d8;
+      pgVar23->client->damage_fromWorld = 0;
     }
-    if (((puVar24[0x61] & 2) != 0) && ((longlong)((ulonglong)(uint)puVar24[0x67] - lVar6) < 1)) {
-      lVar6 = (ulonglong)(uint)puVar24[0x67] - 1;
+    if (((pgVar23->flags & 2U) != 0) && ((longlong)((ulonglong)(uint)pgVar23->health - lVar22) < 1))
+    {
+      lVar22 = (ulonglong)(uint)pgVar23->health - 1;
     }
-    BG_SetPlayerDamageFlinch(puVar24[0x56],lVar6,pfVar21);
-    if ((int)lVar6 != 0) {
-      puVar24[0x67] = puVar24[0x67] - (int)lVar6;
-      Scr_AddEntity(puVar15);
-      Scr_AddInt(lVar6);
-      Scr_Notify(puVar24,DAT_835a0baa,2);
+    iVar6 = (int)lVar22;
+    BG_SetPlayerDamageFlinch(&pgVar23->client->ps,iVar6,pfVar19);
+    if (iVar6 != 0) {
+      pgVar23->health = pgVar23->health - iVar6;
+      Scr_AddEntity(pgVar8);
+      Scr_AddInt(iVar6);
+      Scr_Notify(pgVar23,scr_const.damage,2);
     }
-    if (*(int *)(&DAT_82969858 + (uint)*(byte *)((int)puVar24 + 0x16d) * 0x28) == 0) {
-      Com_Printf(1,0xffffffff8206e840);
+    if (*(int *)(&DAT_82969858 + (uint)pgVar23->handler * 0x28) == 0) {
+      Com_Printf(1,"No die handler for player entity handler type %i");
     }
-    if ((int)puVar24[0x67] < 1) {
-      if ((*(int *)(puVar24[0x56] + 0x38f8) == 0) &&
-         (cVar20 = BG_HasPerk(puVar24[0x56] + 0x4ec,0x1c), cVar20 != '\0')) {
-        *(undefined4 *)(puVar24[0x56] + 0x38f8) = 1;
-        *(int *)(puVar24[0x56] + 0x38fc) = DAT_83580fac + 500;
-        Scr_PlayerLastStand(puVar24,local_f8,puVar15,lVar6,uVar8,uVar9,uVar23,&local_e0);
+    if (pgVar23->health < 1) {
+      if ((pgVar23->client->lastStand == 0) &&
+         (bVar17 = BG_HasPerk((pgVar23->client->ps).perks,0x1c), bVar17)) {
+        pgVar23->client->lastStand = 1;
+        pgVar23->client->lastStandTime = level.time + 500;
+        Scr_PlayerLastStand(pgVar23,pgVar16,pgVar8,iVar6,mVar10,WVar11,bVar21,&local_e0,
+                            in_stack_fffffea8,in_stack_fffffeac);
       }
       else {
-        if (iVar17 != 0) {
-          *(uint *)(iVar17 + 0xd8) = *(uint *)(iVar17 + 0xd8) | 2;
+        if (pgVar15 != (gentity_s *)0x0) {
+          (pgVar15->s).un1.eventParm2 = (pgVar15->s).un1.eventParm2 | 2;
         }
-        if (((int)puVar24[0x67] < -999) || (-1 < (int)puVar24[0x67])) {
-          puVar24[0x67] = 0xfffffc19;
+        if ((pgVar23->health < -999) || (-1 < pgVar23->health)) {
+          pgVar23->health = -999;
         }
-        if (*(code **)(&DAT_82969858 + (uint)*(byte *)((int)puVar24 + 0x16d) * 0x28) != (code *)0x0)
-        {
-          (**(code **)(&DAT_82969858 + (uint)*(byte *)((int)puVar24 + 0x16d) * 0x28))
-                    (puVar24,local_f8,puVar15,lVar6,uVar8,uVar9,uVar23,&local_e0);
+        if (*(code **)(&DAT_82969858 + (uint)pgVar23->handler * 0x28) != (code *)0x0) {
+          (**(code **)(&DAT_82969858 + (uint)pgVar23->handler * 0x28))
+                    (pgVar23,pgVar16,pgVar8,lVar22,mVar10,WVar11.data,bVar21,&local_e0);
         }
-        if (*(char *)((int)puVar24 + 0x103) == '\0') goto LAB_82465b58;
+        if ((pgVar23->r).isInUse == '\0') goto LAB_82465b58;
       }
     }
-    else if (*(code **)(&DAT_82969854 + (uint)*(byte *)((int)puVar24 + 0x16d) * 0x28) != (code *)0x0
-            ) {
-      (**(code **)(&DAT_82969854 + (uint)*(byte *)((int)puVar24 + 0x16d) * 0x28))
-                (puVar24,puVar15,lVar6,puVar22,uVar8,&local_e0,uVar10,uVar9);
+    else if (*(code **)(&DAT_82969854 + (uint)pgVar23->handler * 0x28) != (code *)0x0) {
+      (**(code **)(&DAT_82969854 + (uint)pgVar23->handler * 0x28))
+                (pgVar23,pgVar8,lVar22,pfVar20,mVar10,&local_e0,hVar13,WVar11.data);
     }
-    if (*(char *)((int)puVar24 + 0x103) == '\0') {
+    if ((pgVar23->r).isInUse == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
-                      ,0x244,0,&DAT_82000f98,0xffffffff8206e82c);
+                      ,0x244,0,"%s");
     }
-    *(undefined4 *)(puVar24[0x56] + 0x19c) = puVar24[0x67];
+    (pgVar23->client->ps).stats[0] = pgVar23->health;
   }
 LAB_82465b58:
   __restgprlr();
@@ -592,34 +650,41 @@ LAB_82465b58:
 
 // 82465B70  PlayerCmd_Suicide  (game_mp/g_client_script_cmd_mp.cpp:597)
 
-void PlayerCmd_Suicide(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_Suicide(scr_entref_t param_1)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  uint uStack00000014;
+  hitLocation_t in_stack_ffffff88;
+  int in_stack_ffffff8c;
   
-  uVar1 = __savegprlr_29();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
+  uStack00000014 = __savegprlr_29(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
     if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,599,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,599,0,"%s");
     }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  puVar2[0x67] = 0;
-  puVar2[0x61] = puVar2[0x61] & 0xfffffffc;
-  *(undefined4 *)(puVar2[0x56] + 0x19c) = 0;
-  player_die(puVar2,puVar2,puVar2,100000,0xc,0,0,0);
+  pgVar3->health = 0;
+  pgVar3->flags = pgVar3->flags & 0xfffffffc;
+  (pgVar3->client->ps).stats[0] = 0;
+  player_die(pgVar3,pgVar3,pgVar3,100000,0xc,(Weapon)0x0,false,(float *)0x0,in_stack_ffffff88,
+             in_stack_ffffff8c);
   __restgprlr_29();
   return;
 }
@@ -627,315 +692,373 @@ void PlayerCmd_Suicide(void)
 
 // 82465C60  PlayerCmd_CloseInGameMenu  (game_mp/g_client_script_cmd_mp.cpp:619)
 
-void PlayerCmd_CloseInGameMenu(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_CloseInGameMenu(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  uint uStack00000014;
+  ushort uVar1;
+  char *pcVar2;
+  uint uVar3;
+  ushort uStack00000014;
+  ushort uStack00000016;
   char acStack_40 [31];
   undefined1 local_21;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x26e,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000016 = param_1.classnum;
+  uStack00000014 = param_1.entnum;
+  uVar1 = uStack00000014;
+  uVar3 = (uint)uStack00000014;
+  _uStack00000014 = param_1;
+  if (uStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x26e,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82465cfc;
-    uVar2 = va(0xffffffff8206d370,uVar1);
+    if (g_entities[uVar3].client != (gclient_s *)0x0) goto LAB_82465cfc;
+    pcVar2 = va("entity %i is not a player");
   }
   else {
-    uVar2 = 0xffffffff8206d360;
+    pcVar2 = "not an entity";
   }
-  Scr_ObjectError(uVar2);
+  Scr_ObjectError(pcVar2);
 LAB_82465cfc:
-  _snprintf(acStack_40,0x20,"%c",0x46);
+  _snprintf(acStack_40,0x20,"%c");
   local_21 = 0;
-  SV_GameSendServerCommand(uVar1,1,acStack_40);
+  SV_GameSendServerCommand((uint)uVar1,SV_CMD_RELIABLE,acStack_40);
   return;
 }
 
 
 // 82465D48  iclientprintln  (game_mp/g_client_script_cmd_mp.cpp:635)
 
-void iclientprintln(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void iclientprintln(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  uint uStack00000014;
+  ushort uVar1;
+  char *pcVar2;
+  uint uVar3;
+  ushort uStack00000014;
+  ushort uStack00000016;
   char acStack_40 [31];
   undefined1 local_21;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x27e,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000016 = param_1.classnum;
+  uStack00000014 = param_1.entnum;
+  uVar1 = uStack00000014;
+  uVar3 = (uint)uStack00000014;
+  _uStack00000014 = param_1;
+  if (uStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x27e,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82465de4;
-    uVar2 = va(0xffffffff8206d370,uVar1);
+    if (g_entities[uVar3].client != (gclient_s *)0x0) goto LAB_82465de4;
+    pcVar2 = va("entity %i is not a player");
   }
   else {
-    uVar2 = 0xffffffff8206d360;
+    pcVar2 = "not an entity";
   }
-  Scr_ObjectError(uVar2);
+  Scr_ObjectError(pcVar2);
 LAB_82465de4:
-  _snprintf(acStack_40,0x20,"%c",0x66);
+  _snprintf(acStack_40,0x20,"%c");
   local_21 = 0;
-  Scr_MakeGameMessage(uVar1,acStack_40);
+  Scr_MakeGameMessage((uint)uVar1,acStack_40);
   return;
 }
 
 
 // 82465E28  iclientprintlnbold  (game_mp/g_client_script_cmd_mp.cpp:648)
 
-void iclientprintlnbold(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void iclientprintlnbold(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  uint uStack00000014;
+  ushort uVar1;
+  char *pcVar2;
+  uint uVar3;
+  ushort uStack00000014;
+  ushort uStack00000016;
   char acStack_40 [31];
   undefined1 local_21;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x28b,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000016 = param_1.classnum;
+  uStack00000014 = param_1.entnum;
+  uVar1 = uStack00000014;
+  uVar3 = (uint)uStack00000014;
+  _uStack00000014 = param_1;
+  if (uStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x28b,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_82465ec4;
-    uVar2 = va(0xffffffff8206d370,uVar1);
+    if (g_entities[uVar3].client != (gclient_s *)0x0) goto LAB_82465ec4;
+    pcVar2 = va("entity %i is not a player");
   }
   else {
-    uVar2 = 0xffffffff8206d360;
+    pcVar2 = "not an entity";
   }
-  Scr_ObjectError(uVar2);
+  Scr_ObjectError(pcVar2);
 LAB_82465ec4:
-  _snprintf(acStack_40,0x20,"%c",0x67);
+  _snprintf(acStack_40,0x20,"%c");
   local_21 = 0;
-  Scr_MakeGameMessage(uVar1,acStack_40);
+  Scr_MakeGameMessage((uint)uVar1,acStack_40);
   return;
 }
 
 
 // 82465F08  PlayerCmd_spawn  (game_mp/g_client_script_cmd_mp.cpp:661)
 
-void PlayerCmd_spawn(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_spawn(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [24];
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
+  float afStack_40 [4];
+  float afStack_30 [6];
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x299,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x299,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  Scr_GetVector(0,auStack_30);
-  Scr_GetVector(1,auStack_40);
-  ClientSpawn(puVar1,auStack_30,auStack_40);
+  Scr_GetVector(0,afStack_30);
+  Scr_GetVector(1,afStack_40);
+  ClientSpawn(pgVar3,afStack_30,afStack_40);
   return;
 }
 
 
 // 82465FE8  PlayerCmd_setEnterTime  (game_mp/g_client_script_cmd_mp.cpp:674)
 
-void PlayerCmd_setEnterTime(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_setEnterTime(scr_entref_t param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x2a3,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x2a3,0,"%s");
     }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  uVar1 = Scr_GetInt(0);
-  *(undefined4 *)(puVar2[0x56] + 0x33b0) = uVar1;
+  iVar3 = Scr_GetInt(0);
+  (pgVar4->client->sess).enterTime = iVar3;
   return;
 }
 
 
 // 824660B0  BodyEnd  (game_mp/g_client_script_cmd_mp.cpp:682)
 
-void BodyEnd(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void BodyEnd(gentity_s *param_1)
 
 {
-  *(undefined4 *)(param_1 + 0x11c) = 0x4000000;
-  *(undefined1 *)(param_1 + 0x102) = 0;
-  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) & 0xffefffff;
-  SV_LinkEntity();
+  uint uVar1;
+  
+  uVar1 = (param_1->s).lerp.eFlags;
+  (param_1->r).contents = 0x4000000;
+  (param_1->r).svFlags = '\0';
+  (param_1->s).lerp.eFlags = uVar1 & 0xffefffff;
+  SV_LinkEntity(param_1);
   return;
 }
 
 
 // 824660D0  PlayerCmd_ClonePlayer  (game_mp/g_client_script_cmd_mp.cpp:703)
 
-void PlayerCmd_ClonePlayer(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayerCmd_ClonePlayer(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  int iVar5;
-  uint uVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  undefined8 uVar6;
+  uchar uVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  gclient_s *pgVar5;
+  uint uVar6;
+  int iVar7;
+  dvar_t *pdVar8;
+  char *pcVar9;
   int iVar10;
-  int iVar11;
-  undefined4 *puVar12;
-  undefined4 *puVar13;
-  undefined4 *puVar14;
-  longlong lVar15;
-  short sStack00000016;
+  gentity_s *pgVar11;
+  DObj *pDVar12;
+  XAnimTree *pXVar13;
+  int iVar14;
+  entityShared_t *peVar15;
+  Bounds *pBVar16;
+  entityShared_t *peVar17;
+  Bounds *pBVar18;
+  gentity_s *pgVar19;
+  longlong lVar20;
+  uint uStack00000014;
   
-  uVar7 = __savegprlr_20();
-  sStack00000016 = (short)uVar7;
-  if (sStack00000016 == 0) {
-    uVar7 = uVar7 >> 0x10;
-    if (0x7ff < uVar7) {
-      MyAssertHandler(0xffffffff8206e6b8,0x2cb,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_20(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar6 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x2cb,0,"%s");
     }
-    puVar14 = &DAT_83373680 + uVar7 * 0xa0;
-    if ((&DAT_833737d8)[uVar7 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar7);
-      Scr_ObjectError();
+    pgVar19 = g_entities + uVar6;
+    if (g_entities[uVar6].client == (gclient_s *)0x0) {
+      pcVar9 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar9);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar14 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar19 = (gentity_s *)0x0;
   }
-  iVar8 = Scr_GetInt(0);
-  iVar3 = puVar14[0x56];
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0x2d0,0,0xffffffff82000f98,0xffffffff820386a4);
+  iVar10 = Scr_GetInt(0);
+  pgVar5 = pgVar19->client;
+  if (pgVar5 == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2d0,0,"%s");
   }
-  if (*(int *)(iVar3 + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff8206e6b8,0x2d1,0,0xffffffff82000f98,0xffffffff8206bda0);
+  if ((pgVar5->sess).connected == CON_DISCONNECTED) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2d1,0,"%s");
   }
-  puVar9 = (undefined4 *)G_SpawnPlayerClone();
-  puVar9[0x24] = *(undefined4 *)(iVar3 + 0x150);
-  puVar9[2] = puVar9[2] & 2 | *(uint *)(iVar3 + 0xf8) & 0xfffffffd | 0x140000;
-  G_SetOrigin(puVar9,iVar3 + 0x1c);
-  G_SetAngle(puVar9,puVar14 + 0x51);
-  puVar9[3] = 5;
-  puVar9[4] = DAT_83580fac;
-  uVar7 = *(uint *)(iVar3 + 0x28);
-  puVar9[9] = uVar7;
-  uVar1 = *(uint *)(iVar3 + 0x2c);
-  puVar9[10] = uVar1;
-  uVar2 = *(uint *)(iVar3 + 0x30);
-  puVar9[0xb] = uVar2;
-  if ((((uVar7 & 0x7f800000) == 0x7f800000) || ((uVar1 & 0x7f800000) == 0x7f800000)) ||
-     ((uVar2 & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8206e6b8,0x2de,0,0xffffffff82000f98,0xffffffff8206e9b8);
+  pgVar11 = G_SpawnPlayerClone();
+  uVar6 = (pgVar11->s).lerp.eFlags;
+  (pgVar11->s).clientNum = (pgVar5->ps).clientNum;
+  (pgVar11->s).lerp.eFlags = uVar6 & 2 | (pgVar5->ps).eFlags & 0xfffffffdU | 0x140000;
+  G_SetOrigin(pgVar11,(pgVar5->ps).origin);
+  G_SetAngle(pgVar11,(pgVar19->r).currentAngles);
+  (pgVar11->s).lerp.pos.trType = TR_GRAVITY;
+  (pgVar11->s).lerp.pos.trTime = level.time;
+  fVar2 = (pgVar5->ps).velocity[0];
+  (pgVar11->s).lerp.pos.trDelta[0] = fVar2;
+  fVar3 = (pgVar5->ps).velocity[1];
+  (pgVar11->s).lerp.pos.trDelta[1] = fVar3;
+  fVar4 = (pgVar5->ps).velocity[2];
+  (pgVar11->s).lerp.pos.trDelta[2] = fVar4;
+  if (((((uint)fVar2 & 0x7f800000) == 0x7f800000) || (((uint)fVar3 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)fVar4 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2de,0,"%s");
   }
-  puVar9[1] = 2;
-  *(undefined1 *)((int)puVar9 + 0x16a) = 1;
-  Com_GetServerDObjForEntnum(*(undefined4 *)(iVar3 + 0x150));
-  uVar6 = DObjGetTree();
-  iVar5 = DAT_8353ff9c;
-  if (*(float *)(DAT_8353ff9c + 0xc) < (float)puVar9[9]) {
-    puVar9[9] = *(float *)(DAT_8353ff9c + 0xc);
+  (pgVar11->s).eType = 2;
+  pgVar11->physicsObject = '\x01';
+  pDVar12 = Com_GetServerDObjForEntnum((pgVar5->ps).clientNum);
+  pXVar13 = DObjGetTree(pDVar12);
+  pdVar8 = g_clonePlayerMaxVelocity;
+  if ((g_clonePlayerMaxVelocity->current).value < (pgVar11->s).lerp.pos.trDelta[0]) {
+    (pgVar11->s).lerp.pos.trDelta[0] = (g_clonePlayerMaxVelocity->current).value;
   }
-  if (*(float *)(iVar5 + 0xc) < (float)puVar9[10]) {
-    puVar9[10] = *(float *)(iVar5 + 0xc);
+  if ((pdVar8->current).value < (pgVar11->s).lerp.pos.trDelta[1]) {
+    (pgVar11->s).lerp.pos.trDelta[1] = (pdVar8->current).value;
   }
-  if ((puVar9[9] & 0x7f800000) != 0x7f800000) {
-    if ((puVar9[10] & 0x7f800000) != 0x7f800000) {
-      if ((puVar9[0xb] & 0x7f800000) != 0x7f800000) goto LAB_82466350;
-    }
+  if (((((uint)(pgVar11->s).lerp.pos.trDelta[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(pgVar11->s).lerp.pos.trDelta[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(pgVar11->s).lerp.pos.trDelta[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2ec,0,"%s");
   }
-  MyAssertHandler(0xffffffff8206e6b8,0x2ec,0,0xffffffff82000f98,0xffffffff8206e9b8);
-LAB_82466350:
-  puVar9[0x6b] = DAT_83580fac;
-  iVar10 = G_GetFreePlayerCorpseIndex();
-  iVar5 = DAT_83580fac;
-  iVar11 = iVar10 * 0x5a0;
-  (&DAT_8359a90c)[iVar10 * 0x168] = *puVar9;
-  *(int *)(&DAT_8359a910 + iVar11) = iVar5;
-  (&DAT_8359aea4)[iVar11] = 1;
-  if (0x11 < *(uint *)(iVar3 + 0x150)) {
-    MyAssertHandler(0xffffffff8206e6b8,0x2f4,0,0xffffffff8206e970,*(uint *)(iVar3 + 0x150),0x12);
+  (pgVar11->field31_0x1ac).item[0].ammoCount = level.time;
+  iVar14 = G_GetFreePlayerCorpseIndex();
+  iVar7 = level.time;
+  g_scr_data.playerCorpseInfo[iVar14].entnum = (pgVar11->s).number;
+  g_scr_data.playerCorpseInfo[iVar14].time = iVar7;
+  g_scr_data.playerCorpseInfo[iVar14].falling = true;
+  if (0x11 < (uint)(pgVar5->ps).clientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2f4,0,"client->ps.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  memcpy(&DAT_8359a914 + iVar11,&DAT_83539a90 + *(int *)(iVar3 + 0x150) * 0x164,0x590);
-  (&DAT_8359ae2c)[iVar10 * 0x168] = (&DAT_8359a908)[iVar10 * 0x168];
-  *(int *)(iVar3 + 0xa8) = iVar10;
-  XAnimCloneAnimTree(uVar6,(&DAT_8359a908)[iVar10 * 0x168]);
-  puVar9[0x20] = 0x7ff;
-  if (*(char *)((int)puVar9 + 0x102) != '\0') {
-    MyAssertHandler(0xffffffff8206e6b8,0x2fd,0,0xffffffff82000f98,0xffffffff8206e95c);
+  memcpy();
+  g_scr_data.playerCorpseInfo[iVar14].ci.pXAnimTree = g_scr_data.playerCorpseInfo[iVar14].tree;
+  (pgVar5->ps).corpseIndex = iVar14;
+  XAnimCloneAnimTree(pXVar13,g_scr_data.playerCorpseInfo[iVar14].tree);
+  uVar1 = (pgVar11->r).svFlags;
+  (pgVar11->s).groundEntityNum = 0x7ff;
+  if (uVar1 != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                    ,0x2fd,0,"%s");
   }
-  *(undefined1 *)((int)puVar9 + 0x102) = 2;
-  puVar13 = puVar14 + 0x40;
-  puVar12 = puVar9 + 0x40;
-  lVar15 = 6;
+  (pgVar11->r).svFlags = '\x02';
+  peVar17 = &pgVar19->r;
+  peVar15 = &pgVar11->r;
+  lVar20 = 6;
   do {
-    puVar13 = puVar13 + 1;
-    puVar12 = puVar12 + 1;
-    *puVar12 = *puVar13;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  puVar13 = puVar14 + 0x47;
-  puVar12 = puVar9 + 0x47;
-  lVar15 = 6;
+    peVar17 = (entityShared_t *)&peVar17->box;
+    peVar15 = (entityShared_t *)&peVar15->box;
+    ((Bounds *)peVar15)->midPoint[0] = ((Bounds *)peVar17)->midPoint[0];
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  pBVar18 = (Bounds *)&(pgVar19->r).contents;
+  pBVar16 = (Bounds *)&(pgVar11->r).contents;
+  lVar20 = 6;
   do {
-    puVar13 = puVar13 + 1;
-    puVar12 = puVar12 + 1;
-    *puVar12 = *puVar13;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  puVar9[0x34] = *(undefined4 *)(iVar3 + 0x88);
-  uVar4 = *(undefined4 *)(iVar3 + 0x90);
-  puVar9[99] = 0x10001;
-  puVar9[0x47] = 0x4004000;
-  puVar9[0x35] = uVar4;
-  SV_LinkEntity(puVar9);
-  iVar8 = DAT_83580fac + iVar8;
-  *(undefined1 *)((int)puVar9 + 0x16d) = 0xd;
-  puVar9[0x66] = iVar8;
-  uVar6 = Com_GetServerDObjForEnt(puVar9);
-  BG_UpdatePlayerDObj(0xffffffffffffffff,uVar6,puVar9,&DAT_8359a914 + iVar11,0);
-  G_TransferLinkedEntities(puVar14,puVar9);
-  G_EntityStateSetPartBits(puVar9,puVar14 + 0x39);
-  GScr_AddEntity(puVar9);
+    pBVar18 = (Bounds *)(pBVar18->midPoint + 1);
+    pBVar16 = (Bounds *)(pBVar16->midPoint + 1);
+    pBVar16->midPoint[0] = pBVar18->midPoint[0];
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  (pgVar11->s).legsAnim = (pgVar5->ps).legsAnim;
+  iVar7 = (pgVar5->ps).torsoAnim;
+  pgVar11->clipmask = 0x10001;
+  (pgVar11->r).contents = 0x4004000;
+  (pgVar11->s).torsoAnim = iVar7;
+  SV_LinkEntity(pgVar11);
+  iVar10 = level.time + iVar10;
+  pgVar11->handler = '\r';
+  pgVar11->nextthink = iVar10;
+  pDVar12 = Com_GetServerDObjForEnt(pgVar11);
+  BG_UpdatePlayerDObj(LOCAL_CLIENT_INVALID,pDVar12,&pgVar11->s,
+                      &g_scr_data.playerCorpseInfo[iVar14].ci,0);
+  G_TransferLinkedEntities(pgVar19,pgVar11);
+  G_EntityStateSetPartBits(pgVar11,(pgVar19->s).partBits);
+  GScr_AddEntity(pgVar11);
   __restgprlr_20();
   return;
 }
@@ -943,46 +1066,49 @@ LAB_82466350:
 
 // 824664F0  PlayerCmd_IsTalking  (game_mp/g_client_script_cmd_mp.cpp:811)
 
-void PlayerCmd_IsTalking(uint param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_IsTalking(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  longlong lVar4;
+  gentity_s *pgVar5;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x32e,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x32e,0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  lVar2 = (ulonglong)DAT_83580fac - (ulonglong)*(uint *)(puVar3[0x56] + 0x3658);
-  if (-1 < lVar2) {
-    uVar1 = 1;
-    if ((int)lVar2 < *(int *)(DAT_8353ff10 + 0xc)) goto LAB_824665c8;
+  lVar4 = (ulonglong)(uint)level.time - (ulonglong)(uint)pgVar5->client->lastVoiceTime;
+  if ((lVar4 < 0) || (iVar3 = 1, (g_voiceChatTalkingDuration->current).integer <= (int)lVar4)) {
+    iVar3 = 0;
   }
-  uVar1 = 0;
-LAB_824665c8:
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar3);
   return;
 }
 
 
 // 824665E8  PlayerCmd_SayAll  (game_mp/g_client_script_cmd_mp.cpp:836)
 
-void PlayerCmd_SayAll(void)
+void PlayerCmd_SayAll(scr_entref_t param_1)
 
 {
   return;
@@ -991,7 +1117,7 @@ void PlayerCmd_SayAll(void)
 
 // 824665F0  PlayerCmd_SayTeam  (game_mp/g_client_script_cmd_mp.cpp:864)
 
-void PlayerCmd_SayTeam(void)
+void PlayerCmd_SayTeam(scr_entref_t param_1)
 
 {
   return;
@@ -1000,215 +1126,242 @@ void PlayerCmd_SayTeam(void)
 
 // 824665F8  PlayerCmd_AllowSpectateTeam  (game_mp/g_client_script_cmd_mp.cpp:894)
 
-void PlayerCmd_AllowSpectateTeam(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_AllowSpectateTeam(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  short sVar3;
-  int iVar2;
+  char *pcVar1;
+  uint uVar2;
+  int iVar3;
   uint uVar4;
-  undefined4 *puVar5;
+  gentity_s *pgVar5;
   uint uVar6;
-  uint uStack00000014;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,899,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,899,0,"%s");
     }
-    puVar5 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  sVar3 = Scr_GetConstString(0);
+  uVar2 = Scr_GetConstString(0);
+  uVar2 = uVar2 & 0xffff;
   uVar6 = 0;
-  if (sVar3 == DAT_835a0b94) {
+  if (uVar2 == scr_const.axis) {
     uVar6 = 2;
   }
-  else if (sVar3 == DAT_835a0b8c) {
+  else if (uVar2 == scr_const.allies) {
     uVar6 = 4;
   }
-  else if (sVar3 == DAT_835a0bfa) {
+  else if (uVar2 == scr_const.none) {
     uVar6 = 1;
   }
-  else if (sVar3 == DAT_835a0d62) {
+  else if (uVar2 == scr_const.freelook) {
     uVar6 = 0x10;
   }
   else {
-    Scr_ParamError(0,0xffffffff8206ea34);
+    Scr_ParamError(0,"team must be \"axis\", \"allies\", \"none\", or \"freelook\"");
   }
-  iVar2 = Scr_GetInt(1);
-  uVar1 = *(uint *)(puVar5[0x56] + 0x33c8);
-  uVar4 = uVar1 & ~uVar6;
-  if (iVar2 == 0) {
-    uVar4 = uVar1 | uVar6;
+  iVar3 = Scr_GetInt(1);
+  uVar2 = (pgVar5->client->sess).noSpectate;
+  uVar4 = uVar2 & ~uVar6;
+  if (iVar3 == 0) {
+    uVar4 = uVar2 | uVar6;
   }
-  *(uint *)(puVar5[0x56] + 0x33c8) = uVar4;
+  (pgVar5->client->sess).noSpectate = uVar4;
   return;
 }
 
 
 // 82466750  PlayerCmd_GetGuid  (game_mp/g_client_script_cmd_mp.cpp:925)
 
-void PlayerCmd_GetGuid(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_GetGuid(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uStack00000014;
+  ushort uVar1;
+  char *pcVar2;
+  uint uVar3;
+  ushort uStack00000014;
+  ushort uStack00000016;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uVar1 = param_1 >> 0x10;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x39e,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000016 = param_1.classnum;
+  uStack00000014 = param_1.entnum;
+  uVar1 = uStack00000014;
+  uVar3 = (uint)uStack00000014;
+  _uStack00000014 = param_1;
+  if (uStack00000016 == 0) {
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x39e,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar1 * 0xa0] != 0) goto LAB_824667ec;
-    uVar2 = va(0xffffffff8206d370,uVar1);
+    if (g_entities[uVar3].client != (gclient_s *)0x0) goto LAB_824667ec;
+    pcVar2 = va("entity %i is not a player");
   }
   else {
-    uVar2 = 0xffffffff8206d360;
+    pcVar2 = "not an entity";
   }
-  Scr_ObjectError(uVar2);
+  Scr_ObjectError(pcVar2);
 LAB_824667ec:
-  iVar3 = Scr_GetNumParam();
-  if (iVar3 != 0) {
-    Scr_Error(0xffffffff8206ea6c);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 0) {
+    Scr_Error("USAGE: self getGuid()\n");
   }
-  SV_GetGuid(uVar1);
-  Scr_AddString();
+  pcVar2 = SV_GetGuid((uint)uVar1);
+  Scr_AddString(pcVar2);
   return;
 }
 
 
 // 82466828  PlayerCmd_GetXuid  (game_mp/g_client_script_cmd_mp.cpp:936)
 
-void PlayerCmd_GetXuid(uint param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_GetXuid(scr_entref_t param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *pcVar3;
-  undefined4 *puVar4;
-  uint uStack00000014;
+  char *pcVar1;
+  uint uVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   char acStack_a0 [127];
   undefined1 local_21;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x3ad,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x3ad,0,"%s");
     }
-    puVar4 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar4 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 != 0) {
-    Scr_Error(0xffffffff8206ea8c);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    Scr_Error("USAGE: self getXuid()\n");
   }
-  if (puVar4[0x56] == 0) {
-    pcVar3 = "0";
+  if (pgVar3->client == (gclient_s *)0x0) {
+    pcVar1 = "0";
   }
   else {
-    uVar1 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,*(undefined4 *)(puVar4[0x56] + 0x33d0))
-    ;
-    _snprintf(acStack_a0,0x80,"%llx",uVar1);
-    pcVar3 = acStack_a0;
+    Session_GetXuidEvenIfInactive(&g_serverSession,(pgVar3->client->sess).cs.clientIndex);
+    _snprintf(acStack_a0,0x80,"%llx");
+    pcVar1 = acStack_a0;
     local_21 = 0;
   }
-  Scr_AddString(pcVar3);
+  Scr_AddString(pcVar1);
   return;
 }
 
 
 // 82466948  PlayerCmd_IsHost  (game_mp/g_client_script_cmd_mp.cpp:975)
 
-void PlayerCmd_IsHost(uint param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_IsHost(scr_entref_t param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  char *pcVar1;
+  uint uVar2;
+  bool bVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x3d0,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x3d0,0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 0) {
-    Scr_Error(0xffffffff8206eaa4);
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    Scr_Error("USAGE: self IsHost()\n");
   }
-  cVar2 = Session_IsHost(0xffffffff844c7860,*(undefined4 *)(puVar3[0x56] + 0x33d0));
-  Scr_AddInt(cVar2 != '\0');
+  bVar3 = Session_IsHost(&g_serverSession,(pgVar4->client->sess).cs.clientIndex);
+  Scr_AddInt((uint)bVar3);
   return;
 }
 
 
 // 82466A48  PlayerCmd_GetSpectatingPlayer  (game_mp/g_client_script_cmd_mp.cpp:1013)
 
-void PlayerCmd_GetSpectatingPlayer(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_GetSpectatingPlayer(scr_entref_t param_1)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  uint uStack00000014;
+  char *pcVar2;
+  uint uVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x3f6,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar3 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x3f6,0,"%s");
     }
-    puVar2 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar3;
+    if (g_entities[uVar3].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  iVar1 = Scr_GetNumParam();
-  if (iVar1 != 0) {
-    Scr_Error(0xffffffff8206eabc);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 0) {
+    Scr_Error("USAGE: self GetSpectatingPlayer()\n");
   }
-  if ((*(int *)(puVar2[0x56] + 0x3300) == 2) &&
-     (iVar1 = *(int *)(puVar2[0x56] + 0x35fc), -1 < iVar1)) {
+  if (((pgVar4->client->sess).sessionState == SESS_STATE_SPECTATOR) &&
+     (iVar1 = pgVar4->client->spectatorClient, -1 < iVar1)) {
     Scr_AddEntityNum(iVar1,0);
   }
   else {
@@ -1220,37 +1373,40 @@ void PlayerCmd_GetSpectatingPlayer(uint param_1)
 
 // 82466B48  PlayerCmd_PredictStreamPos  (game_mp/g_client_script_cmd_mp.cpp:1039)
 
-void PlayerCmd_PredictStreamPos(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_PredictStreamPos(scr_entref_t param_1)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
-  float local_70;
-  float local_6c;
-  float local_68;
-  undefined1 auStack_60 [96];
+  char *pcVar2;
+  gentity_s *pgVar3;
+  uint uStack00000014;
+  float local_70 [4];
+  char acStack_60 [96];
   
-  uVar1 = __savegprlr_29();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
+  uStack00000014 = __savegprlr_29(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
     if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x413,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x413,0,"%s");
     }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  Scr_GetVector(0,&local_70);
-  Com_sprintf(auStack_60,0x40,0xffffffff8206d7d4,0x51,(int)local_70,(int)local_6c,(int)local_68);
-  SV_GameSendServerCommand((int)(puVar2 + 0x1f323260) / 0x280,0,auStack_60);
+  Scr_GetVector(0,local_70);
+  Com_sprintf(acStack_60,0x40,"%c %i %i %i");
+  SV_GameSendServerCommand
+            ((int)&pgVar3[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,acStack_60);
   __restgprlr_29();
   return;
 }
@@ -1258,38 +1414,44 @@ void PlayerCmd_PredictStreamPos(void)
 
 // 82466C58  PlayerCmd_UpdateScores  (game_mp/g_client_script_cmd_mp.cpp:1064)
 
-void PlayerCmd_UpdateScores(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_UpdateScores(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
+  gentity_s *pgVar4;
+  uint uStack00000014;
   char acStack_70 [63];
   undefined1 local_31;
   
-  uVar1 = __savegprlr_27();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x429,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_27(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x429,0,"%s");
     }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar3 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar3);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  _snprintf(acStack_70,0x40,"%c %i",0x42,(ulonglong)DAT_83580fc4);
+  _snprintf(acStack_70,0x40,"%c %i");
   local_31 = 0;
-  SV_GameSendServerCommand((int)(puVar2 + 0x1f323260) / 0x280,0,acStack_70);
-  _snprintf(acStack_70,0x40,"%c %i",0x41,(ulonglong)DAT_83580fc0);
+  iVar1 = (int)&pgVar4[0x31e9ea].s.groundEntityNum / 0x280;
+  SV_GameSendServerCommand(iVar1,SV_CMD_CAN_IGNORE,acStack_70);
+  _snprintf(acStack_70,0x40,"%c %i");
   local_31 = 0;
-  SV_GameSendServerCommand((int)(puVar2 + 0x1f323260) / 0x280,0,acStack_70);
+  SV_GameSendServerCommand(iVar1,SV_CMD_CAN_IGNORE,acStack_70);
   __restgprlr_27();
   return;
 }
@@ -1297,57 +1459,60 @@ void PlayerCmd_UpdateScores(void)
 
 // 82466D70  PlayerCmd_UpdateDMScores  (game_mp/g_client_script_cmd_mp.cpp:1090)
 
-void PlayerCmd_UpdateDMScores(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_UpdateDMScores(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  uint *puVar3;
-  ulonglong uVar4;
-  undefined4 *puVar5;
-  short sStack00000016;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  gentity_s *pgVar7;
+  uint uStack00000014;
   char acStack_70 [63];
   undefined1 local_31;
   
-  uVar1 = __savegprlr_27();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
-    if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x445,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_27(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x445,0,"%s");
     }
-    puVar5 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar7 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar3 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar3);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar7 = (gentity_s *)0x0;
   }
-  uVar1 = (int)(puVar5 + 0x1f323260) / 0x280;
-  iVar2 = 0;
-  uVar4 = 0xffffffffffffffff;
-  if (0 < DAT_83580fec) {
-    puVar3 = &DAT_83580ff0;
+  iVar1 = (int)&pgVar7[0x31e9ea].s.groundEntityNum / 0x280;
+  iVar4 = 0;
+  iVar6 = -1;
+  if (0 < level.numConnectedClients) {
+    piVar5 = level.sortedClients;
     do {
-      uVar4 = (ulonglong)*puVar3;
-      if (*puVar3 != uVar1) break;
-      iVar2 = iVar2 + 1;
-      puVar3 = puVar3 + 1;
-      uVar4 = 0xffffffffffffffff;
-    } while (iVar2 < DAT_83580fec);
+      iVar6 = *piVar5;
+      if (*piVar5 != iVar1) break;
+      iVar4 = iVar4 + 1;
+      piVar5 = piVar5 + 1;
+      iVar6 = -1;
+    } while (iVar4 < level.numConnectedClients);
   }
-  _snprintf(acStack_70,0x40,"%c %i %i",0x43,uVar1,
-            (ulonglong)*(uint *)(uVar1 * 0x3980 + DAT_83580b00 + 0x3318));
+  _snprintf(acStack_70,0x40,"%c %i %i");
   local_31 = 0;
-  SV_GameSendServerCommand(uVar1,0,acStack_70);
-  if (-1 < (int)uVar4) {
-    _snprintf(acStack_70,0x40,"%c %i %i",0x43,uVar4,
-              (ulonglong)*(uint *)((int)uVar4 * 0x3980 + DAT_83580b00 + 0x3318));
+  SV_GameSendServerCommand(iVar1,SV_CMD_CAN_IGNORE,acStack_70);
+  if (-1 < iVar6) {
+    _snprintf(acStack_70,0x40,"%c %i %i");
     local_31 = 0;
-    SV_GameSendServerCommand(uVar1,0,acStack_70);
+    SV_GameSendServerCommand(iVar1,SV_CMD_CAN_IGNORE,acStack_70);
   }
   __restgprlr_27();
   return;
@@ -1356,96 +1521,103 @@ void PlayerCmd_UpdateDMScores(void)
 
 // 82466EF0  PlayerCmd_SetRank  (game_mp/g_client_script_cmd_mp.cpp:1138)
 
-void PlayerCmd_SetRank(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetRank(scr_entref_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  uint uVar4;
-  undefined8 uVar2;
-  undefined4 *puVar5;
-  uint uStack00000014;
+  char *pcVar1;
+  int iVar2;
+  uint uVar3;
+  gentity_s *pgVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x473,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar3 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x473,0,"%s");
     }
-    puVar5 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar3;
+    if (g_entities[uVar3].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar5 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  uVar1 = Scr_GetInt(0);
-  iVar3 = (int)uVar1;
-  if ((iVar3 < 0) || (0xff < iVar3)) {
-    uVar2 = 0xffffffff8206eaec;
+  iVar2 = Scr_GetInt(0);
+  if ((iVar2 < 0) || (0xff < iVar2)) {
+    pcVar1 = "\'%i\' is an illegal rank value.  Must be less than %i.\n";
   }
   else {
-    *(int *)(puVar5[0x56] + 0x3438) = iVar3;
-    uVar4 = Scr_GetNumParam(uVar1,uVar1);
-    if (uVar4 < 2) {
+    (pgVar4->client->sess).cs.rank = iVar2;
+    uVar3 = Scr_GetNumParam();
+    if (uVar3 < 2) {
       return;
     }
-    uVar1 = Scr_GetInt(1);
-    iVar3 = (int)uVar1;
-    if ((-1 < iVar3) && (iVar3 < 0x100)) {
-      *(int *)(puVar5[0x56] + 0x343c) = iVar3;
+    iVar2 = Scr_GetInt(1);
+    if ((-1 < iVar2) && (iVar2 < 0x100)) {
+      (pgVar4->client->sess).cs.prestige = iVar2;
       return;
     }
-    uVar2 = 0xffffffff8206eb24;
+    pcVar1 = "\'%i\' is an illegal prestige value.  Must be less than %i.\n";
   }
-  va(uVar2,uVar1,0x100);
-  Scr_Error();
+  pcVar1 = va(pcVar1);
+  Scr_Error(pcVar1);
   return;
 }
 
 
 // 82467020  PlayerCmd_SetCardTitle  (game_mp/g_client_script_cmd_mp.cpp:1182)
 
-void PlayerCmd_SetCardTitle(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetCardTitle(scr_entref_t param_1)
 
 {
   char *pcVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x4a3,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x4a3,0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  pcVar1 = (char *)Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   if (*pcVar1 == '\0') {
-    Scr_Error(0xffffffff8206ebc0);
+    Scr_Error("Handle can not be an empty string");
   }
   uVar2 = PlayerCards_GetTitleIndexFromHandle(pcVar1);
   if (uVar2 < 0x400) {
-    *(uint *)(puVar3[0x56] + 0x345c) = uVar2;
+    (pgVar3->client->sess).cs.playerCardTitle = uVar2;
   }
   else {
-    Scr_Error(0xffffffff8206eb60);
-    *(uint *)(puVar3[0x56] + 0x345c) = uVar2;
+    Scr_Error(
+             "Index is greater than the maximum allowed in code for networking. Limit needs to be increased."
+             );
+    (pgVar3->client->sess).cs.playerCardTitle = uVar2;
   }
   return;
 }
@@ -1453,42 +1625,48 @@ void PlayerCmd_SetCardTitle(uint param_1)
 
 // 82467130  PlayerCmd_SetCardIcon  (game_mp/g_client_script_cmd_mp.cpp:1217)
 
-void PlayerCmd_SetCardIcon(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetCardIcon(scr_entref_t param_1)
 
 {
   char *pcVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x4c6,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x4c6,0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  pcVar1 = (char *)Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   if (*pcVar1 == '\0') {
-    Scr_Error(0xffffffff8206ebc0);
+    Scr_Error("Handle can not be an empty string");
   }
   uVar2 = PlayerCards_GetIconIndexFromHandle(pcVar1);
   if (uVar2 < 0x400) {
-    *(uint *)(puVar3[0x56] + 0x3458) = uVar2;
+    (pgVar3->client->sess).cs.playerCardIcon = uVar2;
   }
   else {
-    Scr_Error(0xffffffff8206eb60);
-    *(uint *)(puVar3[0x56] + 0x3458) = uVar2;
+    Scr_Error(
+             "Index is greater than the maximum allowed in code for networking. Limit needs to be increased."
+             );
+    (pgVar3->client->sess).cs.playerCardIcon = uVar2;
   }
   return;
 }
@@ -1496,42 +1674,48 @@ void PlayerCmd_SetCardIcon(uint param_1)
 
 // 82467240  PlayerCmd_SetCardNameplate  (game_mp/g_client_script_cmd_mp.cpp:1252)
 
-void PlayerCmd_SetCardNameplate(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetCardNameplate(scr_entref_t param_1)
 
 {
   char *pcVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  uint uStack00000014;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x4e9,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar2 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x4e9,0,"%s");
     }
-    puVar3 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar1 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar1);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar3 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  pcVar1 = (char *)Scr_GetString(0);
+  pcVar1 = Scr_GetString(0);
   if (*pcVar1 == '\0') {
-    Scr_Error(0xffffffff8206ebc0);
+    Scr_Error("Handle can not be an empty string");
   }
   uVar2 = PlayerCards_GetNameplateIndexFromHandle(pcVar1);
   if (uVar2 < 0x40) {
-    *(uint *)(puVar3[0x56] + 0x3460) = uVar2;
+    (pgVar3->client->sess).cs.playerCardNameplate = uVar2;
   }
   else {
-    Scr_Error(0xffffffff8206eb60);
-    *(uint *)(puVar3[0x56] + 0x3460) = uVar2;
+    Scr_Error(
+             "Index is greater than the maximum allowed in code for networking. Limit needs to be increased."
+             );
+    (pgVar3->client->sess).cs.playerCardNameplate = uVar2;
   }
   return;
 }
@@ -1539,43 +1723,54 @@ void PlayerCmd_SetCardNameplate(uint param_1)
 
 // 82467350  PlayerCmd_SetCardDisplaySlot  (game_mp/g_client_script_cmd_mp.cpp:1287)
 
-void PlayerCmd_SetCardDisplaySlot(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetCardDisplaySlot(scr_entref_t param_1)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  uint *puVar3;
+  ushort uVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  gentity_s *pgVar4;
+  int iVar5;
+  uint uVar6;
+  ushort uStack00000014;
   short sStack00000016;
   char acStack_60 [63];
   undefined1 local_21;
   
-  uVar2 = __savegprlr_29();
+  uVar2 = __savegprlr_29(param_1);
   sStack00000016 = (short)uVar2;
-  uVar2 = uVar2 >> 0x10;
+  uStack00000014 = (ushort)((uint)uVar2 >> 0x10);
+  uVar1 = uStack00000014;
+  uVar6 = (uint)uStack00000014;
+  _uStack00000014 = uVar2;
   if (sStack00000016 == 0) {
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206e6b8,0x509,0,0xffffffff82000f98,0xffffffff8206d38c);
+    if (0x7ff < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x509,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar2 * 0xa0] != 0) goto LAB_824673e4;
-    uVar1 = va(0xffffffff8206d370,uVar2);
+    if (g_entities[uVar6].client != (gclient_s *)0x0) goto LAB_824673e4;
+    pcVar3 = va("entity %i is not a player");
   }
   else {
-    uVar1 = 0xffffffff8206d360;
+    pcVar3 = "not an entity";
   }
-  Scr_ObjectError(uVar1);
+  Scr_ObjectError(pcVar3);
 LAB_824673e4:
-  puVar3 = (uint *)Scr_GetEntity(0);
-  if (puVar3[0x56] == 0) {
-    Scr_Error(0xffffffff8206ec18);
+  pgVar4 = Scr_GetEntity(0);
+  if (pgVar4->client == (gclient_s *)0x0) {
+    Scr_Error("Player provided is not a client.");
   }
-  uVar1 = Scr_GetInt(1);
-  if (((int)uVar1 < 0) || (0x11 < (int)uVar1)) {
-    va(0xffffffff8206ebe4,uVar1,0x12);
-    Scr_Error();
+  iVar5 = Scr_GetInt(1);
+  if ((iVar5 < 0) || (0x11 < iVar5)) {
+    pcVar3 = va("Invalid slot number %i, must be between 0 and %i.");
+    Scr_Error(pcVar3);
   }
-  _snprintf(acStack_60,0x40,"%c %i %i",0x48,(ulonglong)*puVar3,uVar1);
+  _snprintf(acStack_60,0x40,"%c %i %i");
   local_21 = 0;
-  SV_GameSendServerCommand(uVar2,1,acStack_60);
+  SV_GameSendServerCommand((uint)uVar1,SV_CMD_RELIABLE,acStack_60);
   __restgprlr_29();
   return;
 }
@@ -1583,36 +1778,46 @@ LAB_824673e4:
 
 // 82467480  PlayerCmd_KC_RegWeaponForFXRemoval  (game_mp/g_client_script_cmd_mp.cpp:1321)
 
-void PlayerCmd_KC_RegWeaponForFXRemoval(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_KC_RegWeaponForFXRemoval(scr_entref_t param_1)
 
 {
-  uint uVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
+  ushort uVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  Weapon WVar4;
+  uint uVar5;
+  ushort uStack00000014;
   short sStack00000016;
   
-  uVar3 = __savegprlr_29();
-  sStack00000016 = (short)uVar3;
-  uVar3 = uVar3 >> 0x10;
+  uVar2 = __savegprlr_29(param_1);
+  sStack00000016 = (short)uVar2;
+  uStack00000014 = (ushort)((uint)uVar2 >> 0x10);
+  uVar1 = uStack00000014;
+  uVar5 = (uint)uStack00000014;
+  _uStack00000014 = uVar2;
   if (sStack00000016 == 0) {
-    if (0x7ff < uVar3) {
-      MyAssertHandler(0xffffffff8206e6b8,0x52d,0,0xffffffff82000f98,0xffffffff8206d38c);
+    if (0x7ff < uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x52d,0,"%s");
     }
-    if ((&DAT_833737d8)[uVar3 * 0xa0] != 0) goto LAB_82467514;
-    uVar1 = va(0xffffffff8206d370,uVar3);
+    if (g_entities[uVar5].client != (gclient_s *)0x0) goto LAB_82467514;
+    pcVar3 = va("entity %i is not a player");
   }
   else {
-    uVar1 = 0xffffffff8206d360;
+    pcVar3 = "not an entity";
   }
-  Scr_ObjectError(uVar1);
+  Scr_ObjectError(pcVar3);
 LAB_82467514:
-  uVar1 = Scr_GetString(0);
-  uVar2 = G_GetWeaponForName();
-  if ((uVar2 & 0xff) == 0) {
-    va(0xffffffff8206ec3c,uVar1);
-    Scr_Error();
+  pcVar3 = Scr_GetString(0);
+  WVar4 = G_GetWeaponForName(pcVar3);
+  if ((WVar4.data & 0xff) == 0) {
+    pcVar3 = va("invalid weapon: %s");
+    Scr_Error(pcVar3);
   }
-  G_RegisterWeaponForKillcamFXRemoval(uVar3,uVar2);
+  G_RegisterWeaponForKillcamFXRemoval((uint)uVar1,WVar4);
   __restgprlr_29();
   return;
 }
@@ -1620,32 +1825,36 @@ LAB_82467514:
 
 // 82467560  PlayerCmd_LastStandRevive  (game_mp/g_client_script_cmd_mp.cpp:1348)
 
-void PlayerCmd_LastStandRevive(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_LastStandRevive(scr_entref_t param_1)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
-  short sStack00000016;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  uint uStack00000014;
   
-  uVar1 = __savegprlr_29();
-  sStack00000016 = (short)uVar1;
-  if (sStack00000016 == 0) {
-    uVar1 = uVar1 >> 0x10;
+  uStack00000014 = __savegprlr_29(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
     if (0x7ff < uVar1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x545,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x545,0,"%s");
     }
-    puVar2 = &DAT_83373680 + uVar1 * 0xa0;
-    if ((&DAT_833737d8)[uVar1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar2 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(undefined4 *)(puVar2[0x56] + 0x38f8) = 0;
-  *(undefined4 *)(puVar2[0x56] + 0x38fc) = 0;
+  pgVar3->client->lastStand = 0;
+  pgVar3->client->lastStandTime = 0;
   __restgprlr_29();
   return;
 }
@@ -1653,66 +1862,79 @@ void PlayerCmd_LastStandRevive(void)
 
 // 82467618  PlayerCmd_SetSpectateDefaults  (game_mp/g_client_script_cmd_mp.cpp:1370)
 
-void PlayerCmd_SetSpectateDefaults(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_SetSpectateDefaults(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x55b,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x55b,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  Scr_GetVector(0,(ulonglong)(uint)puVar1[0x56] + 0x35e0);
-  Scr_GetVector(1,(ulonglong)(uint)puVar1[0x56] + 0x35ec);
+  Scr_GetVector(0,(pgVar3->client->sess).spectateDefaultPos);
+  Scr_GetVector(1,(pgVar3->client->sess).spectateDefaultAngles);
   return;
 }
 
 
 // 824676F0  PlayerCmd_GetThirdPersonCrosshairOffset  (game_mp/g_client_script_cmd_mp.cpp:1388)
 
-void PlayerCmd_GetThirdPersonCrosshairOffset(uint param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCmd_GetThirdPersonCrosshairOffset(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  float fVar4;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x56d,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x56d,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  if (*(char *)(DAT_829c54cc + 0xc) == '\0') {
-    Scr_Error(0xffffffff8206ec50);
+  if ((camera_thirdPerson->current).enabled == false) {
+    Scr_Error("Can not be called if \'camera_thirdPerson\' dvar is false");
   }
   else {
-    BG_GetThirdPersonCrosshairOffset(puVar1[0x56]);
-    Scr_AddFloat();
+    fVar4 = BG_GetThirdPersonCrosshairOffset(&pgVar3->client->ps);
+    Scr_AddFloat(fVar4);
   }
   return;
 }
@@ -1720,119 +1942,136 @@ void PlayerCmd_GetThirdPersonCrosshairOffset(uint param_1)
 
 // 824677D8  PlayerCmd_DisableWeaponPickup  (game_mp/g_client_script_cmd_mp.cpp:1412)
 
-void PlayerCmd_DisableWeaponPickup(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_DisableWeaponPickup(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x585,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x585,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) | 0x10000;
+  (pgVar3->client->ps).weapCommon.weapFlags = (pgVar3->client->ps).weapCommon.weapFlags | 0x10000;
   return;
 }
 
 
 // 824649D0  BG_IsBulletMOD  (bgame/bg_public.h:1418)
 
-undefined8 BG_IsBulletMOD(ulonglong param_1)
+bool BG_IsBulletMOD(meansOfDeath_t param_1)
 
 {
-  int iVar1;
-  
-  if (0xf < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8206c268,0x58b,0,0xffffffff8206e688,param_1,0x10);
+  if (MOD_IMPACT < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
+                    0x58b,0,"mod doesn\'t index MOD_NUM\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)param_1;
-  if ((0 < iVar1) && ((iVar1 < 4 || (iVar1 == 9)))) {
-    return 1;
+  if ((0 < (int)param_1) && (((int)param_1 < 4 || (param_1 == MOD_HEAD_SHOT)))) {
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 824678A0  PlayerCmd_EnableWeaponPickup  (game_mp/g_client_script_cmd_mp.cpp:1429)
 
-void PlayerCmd_EnableWeaponPickup(uint param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_EnableWeaponPickup(scr_entref_t param_1)
 
 {
-  undefined4 *puVar1;
-  uint uStack00000014;
+  uint uVar1;
+  char *pcVar2;
+  gentity_s *pgVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014._2_2_ = (short)param_1;
-  uStack00000014 = param_1;
-  if (uStack00000014._2_2_ == 0) {
-    param_1 = param_1 >> 0x10;
-    if (0x7ff < param_1) {
-      MyAssertHandler(0xffffffff8206e6b8,0x596,0,0xffffffff82000f98,0xffffffff8206d38c);
+  sStack00000014.classnum = param_1.classnum;
+  sStack00000014 = param_1;
+  if (sStack00000014.classnum == 0) {
+    uVar1 = (uint)param_1 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x596,0,"%s");
     }
-    puVar1 = &DAT_83373680 + param_1 * 0xa0;
-    if ((&DAT_833737d8)[param_1 * 0xa0] == 0) {
-      va(0xffffffff8206d370,param_1);
-      Scr_ObjectError();
+    pgVar3 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    puVar1 = (undefined4 *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar3 = (gentity_s *)0x0;
   }
-  *(uint *)(puVar1[0x56] + 0x374) = *(uint *)(puVar1[0x56] + 0x374) & 0xfffeffff;
+  (pgVar3->client->ps).weapCommon.weapFlags = (pgVar3->client->ps).weapCommon.weapFlags & 0xfffeffff
+  ;
   return;
 }
 
 
 // 82467968  PlayerCmd_IsSplitscreenPlayer  (game_mp/g_client_script_cmd_mp.cpp:1446)
 
-void PlayerCmd_IsSplitscreenPlayer(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_IsSplitscreenPlayer(scr_entref_t param_1)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int *piVar3;
-  short sStack00000016;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  gentity_s *pgVar4;
+  uint uStack00000014;
   
-  uVar2 = __savegprlr_28();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
-    if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206e6b8,0x5a7,0,0xffffffff82000f98,0xffffffff8206d38c);
+  uStack00000014 = __savegprlr_28(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar1 = uStack00000014 >> 0x10;
+    if (0x7ff < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x5a7,0,"%s");
     }
-    piVar3 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
+    pgVar4 = g_entities + uVar1;
+    if (g_entities[uVar1].client == (gclient_s *)0x0) {
+      pcVar2 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar2);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    piVar3 = (int *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar4 = (gentity_s *)0x0;
   }
-  if (piVar3[0x56] != 0) {
-    if (DAT_83f11410 <= *piVar3) {
-      MyAssertHandler(0xffffffff8206e6b8,0x5ac,0,0xffffffff82000f98,0xffffffff8206ec88);
+  if (pgVar4->client != (gclient_s *)0x0) {
+    if (svs.clientCount <= (pgVar4->s).number) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x5ac,0,"%s");
     }
-    piVar3 = (int *)(*piVar3 * 0x68b00 + DAT_83f11414);
-    if ((4 < *piVar3) && (uVar1 = 1, piVar3[0xc730] != 0)) goto LAB_82467a98;
+    if ((4 < svs.clients[(pgVar4->s).number].header.state) &&
+       (iVar3 = 1, svs.clients[(pgVar4->s).number].bIsSplitscreenClient != 0)) goto LAB_82467a98;
   }
-  uVar1 = 0;
+  iVar3 = 0;
 LAB_82467a98:
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar3);
   __restgprlr_28();
   return;
 }
@@ -1840,43 +2079,50 @@ LAB_82467a98:
 
 // 82467AA8  PlayerCmd_IsSplitscreenPlayerPrimary  (game_mp/g_client_script_cmd_mp.cpp:1477)
 
-void PlayerCmd_IsSplitscreenPlayerPrimary(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void PlayerCmd_IsSplitscreenPlayerPrimary(scr_entref_t param_1)
 
 {
+  int iVar1;
   uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  int *piVar4;
-  short sStack00000016;
+  char *pcVar3;
+  int iVar4;
+  gentity_s *pgVar5;
+  uint uStack00000014;
   
-  uVar2 = __savegprlr_28();
-  sStack00000016 = (short)uVar2;
-  if (sStack00000016 == 0) {
-    uVar2 = uVar2 >> 0x10;
+  uStack00000014 = __savegprlr_28(param_1);
+  if (uStack00000014._2_2_ == 0) {
+    uVar2 = uStack00000014 >> 0x10;
     if (0x7ff < uVar2) {
-      MyAssertHandler(0xffffffff8206e6b8,0x5c6,0,0xffffffff82000f98,0xffffffff8206d38c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x5c6,0,"%s");
     }
-    piVar4 = &DAT_83373680 + uVar2 * 0xa0;
-    if ((&DAT_833737d8)[uVar2 * 0xa0] == 0) {
-      va(0xffffffff8206d370,uVar2);
-      Scr_ObjectError();
+    pgVar5 = g_entities + uVar2;
+    if (g_entities[uVar2].client == (gclient_s *)0x0) {
+      pcVar3 = va("entity %i is not a player");
+      Scr_ObjectError(pcVar3);
     }
   }
   else {
-    Scr_ObjectError(0xffffffff8206d360);
-    piVar4 = (int *)0x0;
+    Scr_ObjectError("not an entity");
+    pgVar5 = (gentity_s *)0x0;
   }
-  if (piVar4[0x56] != 0) {
-    if (DAT_83f11410 <= *piVar4) {
-      MyAssertHandler(0xffffffff8206e6b8,0x5cb,0,0xffffffff82000f98,0xffffffff8206ec88);
+  if (pgVar5->client != (gclient_s *)0x0) {
+    if (svs.clientCount <= (pgVar5->s).number) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_client_script_cmd_mp.cpp"
+                      ,0x5cb,0,"%s");
     }
-    iVar3 = *piVar4 * 0x68b00 + DAT_83f11414;
-    if ((*(int *)(iVar3 + 0x31cc0) != 0) && (uVar1 = 0, *(int *)(iVar3 + 0x34) != 0))
+    iVar1 = (pgVar5->s).number;
+    if ((svs.clients[iVar1].bIsSplitscreenClient != 0) &&
+       (iVar4 = 0, svs.clients[iVar1].header.netchan.remoteAddress.localNetID != NS_CLIENT1))
     goto LAB_82467bd8;
   }
-  uVar1 = 1;
+  iVar4 = 1;
 LAB_82467bd8:
-  Scr_AddInt(uVar1);
+  Scr_AddInt(iVar4);
   __restgprlr_28();
   return;
 }
@@ -1884,56 +2130,58 @@ LAB_82467bd8:
 
 // 82467BE8  Player_GetMethod  (game_mp/g_client_script_cmd_mp.cpp:1568)
 
-void Player_GetMethod(void)
+uint Player_GetMethod(char **param_1)
 
 {
   char cVar1;
   char cVar2;
-  undefined4 *puVar3;
-  uint uVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
-  longlong lVar8;
+  uint *puVar3;
+  undefined4 *puVar4;
+  uint uVar5;
+  int iVar6;
+  BuiltinMethodDef *pBVar7;
+  char *pcVar8;
   char *pcVar9;
+  longlong lVar10;
+  uint *puVar11;
   
-  puVar3 = (undefined4 *)__savegprlr_29();
-  if (puVar3 == (undefined4 *)0x0) {
-    lVar8 = 0x26;
-    pcVar9 = "f to 0\n";
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
+  if (puVar4 == (undefined4 *)0x0) {
+    lVar10 = 0x26;
+    puVar11 = (uint *)0x8206e4b4;
     do {
-      pcVar7 = pcVar9 + 0x10;
-      pcVar9 = pcVar9 + 0xc;
-      Scr_RegisterFunction(*(undefined4 *)pcVar7,0,*(undefined4 *)pcVar9);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    __restgprlr_29(0);
-    return;
+      puVar3 = puVar11 + 4;
+      puVar11 = puVar11 + 3;
+      Scr_RegisterFunction(*puVar3,0,*puVar11);
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    uVar5 = __restgprlr_29(0);
+    return uVar5;
   }
-  piVar6 = &DAT_8206e4c0;
-  iVar5 = 0;
-  uVar4 = 0;
+  pBVar7 = methods;
+  iVar6 = 0;
+  uVar5 = 0;
   do {
-    pcVar9 = (&PTR_s_attach_8298e238)[*piVar6 + -0x8000];
-    pcVar7 = (char *)*puVar3;
+    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
+    pcVar9 = (char *)*puVar4;
     do {
-      cVar1 = *pcVar7;
-      cVar2 = *pcVar9;
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar8;
       if (cVar1 == '\0') break;
-      pcVar7 = pcVar7 + 1;
       pcVar9 = pcVar9 + 1;
+      pcVar8 = pcVar8 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar3 = (&PTR_s_attach_8298e238)[(&DAT_8206e4c0)[iVar5 * 3] + -0x8000];
-      __restgprlr_29((&DAT_8206e4c0)[iVar5 * 3]);
-      return;
+      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (methods[iVar6].name - 0x8000) * 4);
+      uVar5 = __restgprlr_29(methods[iVar6].name);
+      return uVar5;
     }
-    uVar4 = uVar4 + 0xc;
-    iVar5 = iVar5 + 1;
-    piVar6 = piVar6 + 3;
-    if (0x1c7 < uVar4) {
-      __restgprlr_29(0);
-      return;
+    uVar5 = uVar5 + 0xc;
+    iVar6 = iVar6 + 1;
+    pBVar7 = pBVar7 + 1;
+    if (0x1c7 < uVar5) {
+      uVar5 = __restgprlr_29(0);
+      return uVar5;
     }
   } while( true );
 }

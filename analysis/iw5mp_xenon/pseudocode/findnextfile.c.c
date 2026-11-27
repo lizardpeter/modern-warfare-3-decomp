@@ -2,19 +2,19 @@
 
 // 828A9830  FindNextFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/findnextfile.c:60)
 
-BOOL FindNextFileA(HANDLE hFindFile,LPWIN32_FIND_DATAA lpFindFileData)
+int FindNextFileA(void *param_1,_WIN32_FIND_DATAA *param_2)
 
 {
-  int iVar1;
-  undefined1 auStack_160 [328];
+  long lVar1;
+  _FILE_DIRECTORY_INFORMATION a_Stack_160 [4];
   
-  iVar1 = RtlFindNextFile(hFindFile,auStack_160,0x148);
-  if (-1 < iVar1) {
-    XapiDirectoryInformationToFindData(auStack_160,lpFindFileData);
+  lVar1 = RtlFindNextFile(param_1,a_Stack_160,0x148);
+  if (-1 < lVar1) {
+    XapiDirectoryInformationToFindData(a_Stack_160,param_2);
   }
   else {
-    RtlSetLastNTError();
+    RtlSetLastNTError(lVar1);
   }
-  return (BOOL)(-1 < iVar1);
+  return (int)(-1 < lVar1);
 }
 

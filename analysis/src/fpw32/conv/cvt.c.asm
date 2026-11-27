@@ -148,7 +148,7 @@ LAB_8291dff0:
   8291E008  38C00000             li r6,0x0
   8291E00C  4BFFFF9C             b 0x8291dfa8
 
-; 8291E020  cftoe2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:300)
+; 8291E020  _cftoe2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:300)
   8291E020  7D8802A6             mfspr r12,LR
   8291E024  4BFF8689             bl 0x829166ac
   8291E028  9421FF70             stwu r1,-0x90(r1)
@@ -316,7 +316,7 @@ LAB_8291e258:
   8291E268  38600000             li r3,0x0
   8291E26C  48001A7D             bl 0x8291fce8
 
-; 8291E270  cftoe_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:412)
+; 8291E270  _cftoe_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:412)
   8291E270  7D8802A6             mfspr r12,LR
   8291E274  4BFF8445             bl 0x829166b8
   8291E278  9421FF60             stwu r1,-0xa0(r1)
@@ -384,7 +384,7 @@ LAB_8291e358:
   8291E358  382100A0             addi r1,r1,0xa0
   8291E35C  4BFF83AC             b 0x82916708
 
-; 8291E360  cftoa_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:473)
+; 8291E360  _cftoa_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:473)
   8291E360  7D8802A6             mfspr r12,LR
   8291E364  4BFF834D             bl 0x829166b0
   8291E368  9421FF70             stwu r1,-0x90(r1)
@@ -684,7 +684,7 @@ LAB_8291e768:
   8291E768  38210090             addi r1,r1,0x90
   8291E76C  4BFF7F94             b 0x82916700
 
-; 8291E770  cftof2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:696)
+; 8291E770  _cftof2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:696)
   8291E770  7D8802A6             mfspr r12,LR
   8291E774  4BFF7F3D             bl 0x829166b0
   8291E778  9421FF70             stwu r1,-0x90(r1)
@@ -809,7 +809,7 @@ LAB_8291e91c:
   8291E91C  38210090             addi r1,r1,0x90
   8291E920  4BFF7DE0             b 0x82916700
 
-; 8291E928  cftof_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:798)
+; 8291E928  _cftof_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:798)
   8291E928  7D8802A6             mfspr r12,LR
   8291E92C  4BFF7D91             bl 0x829166bc
   8291E930  9421FF60             stwu r1,-0xa0(r1)
@@ -868,7 +868,7 @@ LAB_8291e9ec:
   8291E9EC  382100A0             addi r1,r1,0xa0
   8291E9F0  4BFF7D1C             b 0x8291670c
 
-; 8291E9F8  cftog_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:861)
+; 8291E9F8  _cftog_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:861)
   8291E9F8  7D8802A6             mfspr r12,LR
   8291E9FC  4BFF7CB5             bl 0x829166b0
   8291EA00  9421FF50             stwu r1,-0xb0(r1)

@@ -2,6 +2,8 @@
 
 // 822A4D18  CGScr_LoadAnimTrees  (cgame_mp/cg_animtree_mp.cpp:22)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CGScr_LoadAnimTrees(void)
 
 {
@@ -12,19 +14,29 @@ void CGScr_LoadAnimTrees(void)
 
 // 822A4D20  CG_SetDObjInfo  (cgame_mp/cg_animtree_mp.cpp:36)
 
-void CG_SetDObjInfo(undefined8 param_1,longlong param_2,undefined4 param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_SetDObjInfo(LocalClientNum_t param_1,int param_2,int param_3,XModel *param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  longlong lVar3;
   
-  uVar1 = __savegprlr_28();
-  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
-    MyAssertHandler(0xffffffff82010020,0x27,0,0xffffffff82000f98,0xffffffff82010068);
+  lVar3 = (longlong)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  if (((int)lVar3 < 0) || (0x7ff < (int)lVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0x27,0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  *(undefined4 *)((int)((param_2 + 0x1c161U & 0xffffffff) << 2) + iVar2) = param_3;
-  *(undefined4 *)((int)((param_2 + 0x1c961U & 0xffffffff) << 2) + iVar2) = param_4;
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  *(int *)((int)(pcVar2->predictedPlayerState).origin +
+          (int)((lVar3 + 0x1c161U & 0xffffffff) << 2) + -0x1c) = param_3;
+  *(XModel **)
+   ((int)(pcVar2->predictedPlayerState).origin + (int)((lVar3 + 0x1c961U & 0xffffffff) << 2) + -0x1c
+   ) = param_4;
   __restgprlr_28();
   return;
 }
@@ -32,43 +44,66 @@ void CG_SetDObjInfo(undefined8 param_1,longlong param_2,undefined4 param_3,undef
 
 // 822A4DA0  CG_CheckDObjInfoMatches  (cgame_mp/cg_animtree_mp.cpp:56)
 
-void CG_CheckDObjInfoMatches(undefined8 param_1,longlong param_2,int param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CheckDObjInfoMatches(LocalClientNum_t param_1,int param_2,int param_3,XModel *param_4)
 
 {
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
   undefined8 uVar1;
-  int iVar2;
+  int iVar4;
+  longlong lVar5;
+  ulonglong uVar6;
   
-  uVar1 = __savegprlr_28();
-  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
-    MyAssertHandler(0xffffffff82010020,0x3b,0,0xffffffff82000f98,0xffffffff82010068);
+  uVar6 = (ulonglong)(int)param_4;
+  lVar5 = (longlong)param_2;
+  LVar2 = __savegprlr_28(param_1);
+  if (((int)lVar5 < 0) || (0x7ff < (int)lVar5)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0x3b,0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  if (*(int *)((int)((param_2 + 0x1c161U & 0xffffffff) << 2) + iVar2) == param_3) {
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (*(int *)((int)(pcVar3->predictedPlayerState).origin +
+              (int)((lVar5 + 0x1c161U & 0xffffffff) << 2) + -0x1c) == param_3) {
     uVar1 = 1;
-    if ((ulonglong)*(uint *)((int)((param_2 + 0x1c961U & 0xffffffff) << 2) + iVar2) ==
-        (param_4 & 0xffffffff)) goto LAB_822a4e30;
+    if ((ulonglong)
+        *(uint *)((int)(pcVar3->predictedPlayerState).origin +
+                 (int)((lVar5 + 0x1c961U & 0xffffffff) << 2) + -0x1c) == (uVar6 & 0xffffffff))
+    goto LAB_822a4e30;
   }
   uVar1 = 0;
 LAB_822a4e30:
-  __restgprlr_28(uVar1);
-  return;
+  iVar4 = __restgprlr_28(uVar1);
+  return iVar4;
 }
 
 
 // 822A4E38  CG_SetDObjWeaponID  (cgame_mp/cg_animtree_mp.cpp:77)
 
-void CG_SetDObjWeaponID(undefined8 param_1,longlong param_2,undefined4 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_SetDObjWeaponID(LocalClientNum_t param_1,int param_2,Weapon param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  longlong lVar3;
   
-  uVar1 = __savegprlr_29();
-  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
-    MyAssertHandler(0xffffffff82010020,0x50,0,0xffffffff82000f98,0xffffffff82010068);
+  lVar3 = (longlong)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if (((int)lVar3 < 0) || (0x7ff < (int)lVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0x50,0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  *(undefined4 *)(iVar2 + (int)((param_2 + 0x1d161U & 0xffffffff) << 2)) = param_3;
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  *(Weapon *)
+   ((int)(pcVar2->predictedPlayerState).origin + (int)((lVar3 + 0x1d161U & 0xffffffff) << 2) + -0x1c
+   ) = param_3;
   __restgprlr_29();
   return;
 }
@@ -76,40 +111,55 @@ void CG_SetDObjWeaponID(undefined8 param_1,longlong param_2,undefined4 param_3)
 
 // 822A4EA8  CG_CheckDObjWeaponID  (cgame_mp/cg_animtree_mp.cpp:95)
 
-void CG_CheckDObjWeaponID(undefined8 param_1,longlong param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CheckDObjWeaponID(LocalClientNum_t param_1,int param_2,Weapon param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
   
-  uVar1 = __savegprlr_29();
-  if (((int)param_2 < 0) || (0x7ff < (int)param_2)) {
-    MyAssertHandler(0xffffffff82010020,0x62,0,0xffffffff82000f98,0xffffffff82010068);
+  lVar5 = (longlong)(int)param_3.data;
+  lVar4 = (longlong)param_2;
+  LVar1 = __savegprlr_29(param_1,lVar4,lVar5);
+  if (((int)lVar4 < 0) || (0x7ff < (int)lVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0x62,0,"%s");
   }
-  iVar2 = CG_GetLocalClientGlobals(uVar1);
-  __restgprlr_29(param_3 == *(int *)((int)((param_2 + 0x1d161U & 0xffffffff) << 2) + iVar2));
-  return;
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  iVar3 = __restgprlr_29((int)lVar5 ==
+                         *(int *)((int)(pcVar2->predictedPlayerState).origin +
+                                 (int)((lVar4 + 0x1d161U & 0xffffffff) << 2) + -0x1c));
+  return iVar3;
 }
 
 
 // 822A5348  CG_SafeDObjFree  (cgame_mp/cg_animtree_mp.cpp:118)
 
-void CG_SafeDObjFree(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_SafeDObjFree(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  centity_s *pcVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = CG_GetEntity();
-  if (*(int *)(iVar2 + 200) == 6) {
-    CG_FreeScriptModelAnim(uVar1,*(undefined4 *)(iVar2 + 0xc4));
+  LVar1 = __savegprlr_29(param_1);
+  pcVar2 = CG_GetEntity(LVar1,param_2);
+  if ((pcVar2->nextState).eType == 6) {
+    CG_FreeScriptModelAnim(LVar1,(pcVar2->nextState).number);
   }
-  Com_SafeClientDObjFree(param_2,uVar1);
-  CG_SetDObjInfo(uVar1,param_2,0,0);
-  if (*(int *)(iVar2 + 0x1e0) != 0) {
-    Com_XAnimFreeSmallTree();
-    *(undefined4 *)(iVar2 + 0x1e0) = 0;
+  Com_SafeClientDObjFree(param_2,LVar1);
+  CG_SetDObjInfo(LVar1,param_2,0,(XModel *)0x0);
+  if (pcVar2->tree != (XAnimTree *)0x0) {
+    Com_XAnimFreeSmallTree(pcVar2->tree);
+    pcVar2->tree = (XAnimTree *)0x0;
   }
   __restgprlr_29();
   return;
@@ -118,44 +168,55 @@ void CG_SafeDObjFree(undefined8 param_1,undefined8 param_2)
 
 // 822A53C0  CG_FreeEntityDObjInfo  (cgame_mp/cg_animtree_mp.cpp:147)
 
-void CG_FreeEntityDObjInfo(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_FreeEntityDObjInfo(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
+  XAnimTree *pXVar1;
+  int iVar2;
+  centity_s *pcVar3;
+  LocalClientNum_t LVar4;
+  cg_s *pcVar5;
+  int iVar6;
+  uint uVar7;
   
-  uVar2 = __savegprlr_17();
-  uVar5 = 0;
-  iVar4 = 0x72584;
+  LVar4 = __savegprlr_17(param_1);
+  uVar7 = 0;
+  iVar6 = 0x72584;
   do {
-    if (0x7ff < (uVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8200ffd8,0x6b4,0,0xffffffff820012f4,uVar5,0x800);
+    if (0x7ff < uVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                      0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
     }
-    if ((ulonglong)DAT_82a38328 <= (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8200ffd8,0x6b9,0,0xffffffff820012b0,uVar2);
+    if ((uint)cg_maxLocalClients <= LVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
+                      0x6b9,0,
+                      "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
     }
-    iVar3 = (int)uVar5;
-    iVar1 = ((int)uVar2 * 0x800 + iVar3) * 0x1ec + DAT_82a3ce28;
-    if (*(int *)(iVar1 + 200) == 6) {
-      CG_FreeScriptModelAnim(uVar2,*(undefined4 *)(iVar1 + 0xc4));
+    pcVar3 = cg_entitiesArray;
+    iVar2 = LVar4 * 0x800 + uVar7;
+    if (cg_entitiesArray[iVar2].nextState.eType == 6) {
+      CG_FreeScriptModelAnim(LVar4,cg_entitiesArray[iVar2].nextState.number);
     }
-    Com_SafeClientDObjFree(uVar5,uVar2);
-    if ((iVar3 < 0) || (0x7ff < iVar3)) {
-      MyAssertHandler(0xffffffff82010020,0x27,0,0xffffffff82000f98,0xffffffff82010068);
+    Com_SafeClientDObjFree(uVar7,LVar4);
+    if (((int)uVar7 < 0) || (0x7ff < (int)uVar7)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                      ,0x27,0,"%s");
     }
-    iVar3 = CG_GetLocalClientGlobals(uVar2);
-    *(undefined4 *)(iVar4 + iVar3) = 0;
-    *(undefined4 *)(iVar4 + iVar3 + -0x2000) = 0;
-    if (*(int *)(iVar1 + 0x1e0) != 0) {
-      Com_XAnimFreeSmallTree();
-      *(undefined4 *)(iVar1 + 0x1e0) = 0;
+    pcVar5 = CG_GetLocalClientGlobals(LVar4);
+    *(undefined4 *)((int)(pcVar5->predictedPlayerState).origin + iVar6 + -0x1c) = 0;
+    *(undefined4 *)((int)pcVar5 + iVar6 + -0x2000) = 0;
+    pXVar1 = pcVar3[iVar2].tree;
+    if (pXVar1 != (XAnimTree *)0x0) {
+      Com_XAnimFreeSmallTree(pXVar1);
+      pcVar3[iVar2].tree = (XAnimTree *)0x0;
     }
-    iVar4 = iVar4 + 4;
-    uVar5 = uVar5 + 1;
-  } while (iVar4 < 0x74584);
+    iVar6 = iVar6 + 4;
+    uVar7 = uVar7 + 1;
+  } while (iVar6 < 0x74584);
   __restgprlr_17();
   return;
 }
@@ -163,25 +224,29 @@ void CG_FreeEntityDObjInfo(void)
 
 // 822A4F20  CG_FreeScriptModelAnim  (cgame_mp/cg_animtree_mp.cpp:156)
 
-void CG_FreeScriptModelAnim(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_FreeScriptModelAnim(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar4;
+  LocalClientNum_t LVar1;
+  DObj *pDVar2;
+  XAnimTree *pXVar3;
+  centity_s *pcVar4;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = Com_GetClientDObj(param_2,uVar1);
-  if (((uVar2 & 0xffffffff) != 0) && (uVar3 = DObjGetTree(), (uVar3 & 0xffffffff) != 0)) {
-    DObjSetTree(uVar2,0);
-    iVar4 = CG_GetEntity(uVar1,param_2);
-    if ((uVar3 & 0xffffffff) != (ulonglong)*(uint *)(iVar4 + 0x1e0)) {
-      if (*(uint *)(iVar4 + 0x1e0) != 0) {
-        MyAssertHandler(0xffffffff82010020,0xb0,0,0xffffffff82000f98,0xffffffff82010090);
+  LVar1 = __savegprlr_28(param_1);
+  pDVar2 = Com_GetClientDObj(param_2,LVar1);
+  if ((pDVar2 != (DObj *)0x0) && (pXVar3 = DObjGetTree(pDVar2), pXVar3 != (XAnimTree *)0x0)) {
+    DObjSetTree(pDVar2,(XAnimTree *)0x0);
+    pcVar4 = CG_GetEntity(LVar1,param_2);
+    if (pXVar3 != pcVar4->tree) {
+      if (pcVar4->tree != (XAnimTree *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0xb0,0,"%s");
       }
-      if (*(char *)(iVar4 + 2) == '\x06') {
-        XAnimFreeSimpleTree(uVar3);
+      if ((pcVar4->pose).eType == '\x06') {
+        XAnimFreeSimpleTree(pXVar3);
       }
     }
   }
@@ -192,30 +257,36 @@ void CG_FreeScriptModelAnim(undefined8 param_1,undefined8 param_2)
 
 // 822A4FD0  CG_ClearScriptModelAnims  (cgame_mp/cg_animtree_mp.cpp:184)
 
-void CG_ClearScriptModelAnims(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_ClearScriptModelAnims(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  snapshot_s *psVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  int iVar4;
+  entityState_s *peVar5;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = CG_GetLocalClientGlobals();
-  iVar2 = *(int *)(iVar2 + 0x335c);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82010020,0xc0,0,0xffffffff82000f98,0xffffffff8201009c);
+  LVar2 = __savegprlr_28(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  psVar1 = pcVar3->nextSnap;
+  if (psVar1 == (snapshot_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0xc0,0,"%s");
   }
-  iVar3 = 0;
-  if (0 < *(int *)(iVar2 + 0x330c)) {
-    puVar4 = (undefined4 *)(iVar2 + 0x3314);
+  iVar4 = 0;
+  if (0 < psVar1->numEntities) {
+    peVar5 = psVar1->entities;
     do {
-      if (puVar4[1] == 6) {
-        CG_FreeScriptModelAnim(uVar1,*puVar4);
+      if (peVar5->eType == 6) {
+        CG_FreeScriptModelAnim(LVar2,peVar5->number);
       }
-      iVar3 = iVar3 + 1;
-      puVar4 = puVar4 + 0x40;
-    } while (iVar3 < *(int *)(iVar2 + 0x330c));
+      iVar4 = iVar4 + 1;
+      peVar5 = peVar5 + 1;
+    } while (iVar4 < psVar1->numEntities);
   }
   __restgprlr_28();
   return;
@@ -224,34 +295,48 @@ void CG_ClearScriptModelAnims(void)
 
 // 822A5060  CG_UpdateScriptModelAnim  (cgame_mp/cg_animtree_mp.cpp:204)
 
-void CG_UpdateScriptModelAnim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CG_UpdateScriptModelAnim(LocalClientNum_t param_1,centity_s *param_2,DObj *param_3)
 
 {
   int iVar1;
   bool bVar2;
   bool bVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
-  char cVar7;
-  int iVar6;
-  double dVar8;
+  LocalClientNum_t LVar4;
+  XAnimTree *pXVar5;
+  bool bVar9;
+  cg_s *pcVar7;
+  char *pcVar8;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  double dVar12;
+  DObj *pDVar6;
   
-  uVar4 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010020,0xd3,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  LVar4 = __savegprlr_23(param_1);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0xd3,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82010020,0xd4,0,0xffffffff82000f98,0xffffffff820040b4);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp",
+                    0xd4,0,"%s");
   }
-  uVar5 = DObjGetTree(param_3);
-  iVar1 = (int)param_2;
+  pDVar6 = (DObj *)uVar11;
+  pXVar5 = DObjGetTree(pDVar6);
+  iVar1 = (int)uVar10;
   if (*(int *)(iVar1 + 0x120) == 0) {
-    if ((uVar5 & 0xffffffff) != 0) {
-      DObjSetTree(param_3,0);
+    if (pXVar5 != (XAnimTree *)0x0) {
+      DObjSetTree(pDVar6,(XAnimTree *)0x0);
       if (*(int *)(iVar1 + 0x1e0) != 0) {
-        MyAssertHandler(0xffffffff82010020,0xe0,0,0xffffffff82000f98,0xffffffff82010090);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0xe0,0,"%s");
       }
-      XAnimFreeSimpleTree(uVar5);
+      XAnimFreeSimpleTree(pXVar5);
       __restgprlr_23();
       return;
     }
@@ -259,49 +344,51 @@ void CG_UpdateScriptModelAnim(undefined8 param_1,ulonglong param_2,ulonglong par
   else {
     bVar3 = true;
     bVar2 = false;
-    cVar7 = CL_Demo_IsPlaying(uVar4);
-    if (cVar7 != '\0') {
-      cVar7 = CL_Demo_GetJumpTimeFlag();
-      if (((cVar7 == '\0') || ((undefined4 *)*(int *)param_3 == (undefined4 *)0x0)) ||
-         (cVar7 = XAnimIsLooped(*(undefined4 *)*(int *)param_3,1), cVar7 == '\0')) {
-        if ((*(int *)(iVar1 + 0x124) == 0) || (*(int *)(iVar1 + 0xb4) == 0)) {
-          bVar3 = false;
-        }
-      }
-      else {
+    bVar9 = CL_Demo_IsPlaying(LVar4);
+    if (bVar9) {
+      bVar9 = CL_Demo_GetJumpTimeFlag();
+      if (((bVar9) && (pDVar6->tree != (XAnimTree *)0x0)) &&
+         (bVar9 = XAnimIsLooped(pDVar6->tree->anims,1), bVar9)) {
         bVar2 = true;
       }
+      else if ((*(int *)(iVar1 + 0x124) == 0) || (*(int *)(iVar1 + 0xb4) == 0)) {
+        bVar3 = false;
+      }
     }
-    if (((((uVar5 & 0xffffffff) == 0) || (*(int *)(iVar1 + 0x120) != *(int *)(iVar1 + 0xb0))) ||
+    if ((((pXVar5 == (XAnimTree *)0x0) || (*(int *)(iVar1 + 0x120) != *(int *)(iVar1 + 0xb0))) ||
         ((*(int *)(iVar1 + 0x124) != *(int *)(iVar1 + 0xb4) || (bVar2)))) && (bVar3)) {
-      iVar6 = CG_GetLocalClientGlobals(uVar4);
-      if (*(int *)(iVar6 + 0x335c) == 0) {
-        MyAssertHandler(0xffffffff82010020,0xfe,0,0xffffffff82000f98,0xffffffff82002858);
+      pcVar7 = CG_GetLocalClientGlobals(LVar4);
+      if (pcVar7->nextSnap == (snapshot_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0xfe,0,"%s");
       }
       if (0x3e < *(uint *)(iVar1 + 0x120)) {
-        MyAssertHandler(0xffffffff82010020,0x100,0,0xffffffff820100b0,*(uint *)(iVar1 + 0x120),0x3f)
-        ;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0x100,0,
+                        "nextLerp->animIndex doesn\'t index MAX_MP_ANIMS\n\t%i not in [0, %i)");
       }
-      uVar4 = CL_GetConfigString((ulonglong)*(uint *)(iVar1 + 0x120) + 0xe29);
-      dVar8 = (double)((float)(longlong)
-                              (*(int *)(*(int *)(iVar6 + 0x335c) + 0x3308) - *(int *)(iVar1 + 0x124)
-                              ) * 0.001);
-      if ((uVar5 & 0xffffffff) != 0) {
-        DObjSetTree(param_3,0);
+      pcVar8 = CL_GetConfigString(*(int *)(iVar1 + 0x120) + 0xe29);
+      dVar12 = (double)((float)(longlong)(pcVar7->nextSnap->serverTime - *(int *)(iVar1 + 0x124)) *
+                       0.001);
+      if (pXVar5 != (XAnimTree *)0x0) {
+        DObjSetTree(pDVar6,(XAnimTree *)0x0);
         if (*(int *)(iVar1 + 0x1e0) != 0) {
-          MyAssertHandler(0xffffffff82010020,0x107,0,0xffffffff82000f98,0xffffffff82010090);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                          ,0x107,0,"%s");
         }
-        XAnimFreeSimpleTree(uVar5);
+        XAnimFreeSimpleTree(pXVar5);
       }
       if (*(int *)(iVar1 + 0x1e0) != 0) {
-        MyAssertHandler(0xffffffff82010020,0x10b,0,0xffffffff82000f98,0xffffffff82010090);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0x10b,0,"%s");
       }
-      uVar5 = XAnimCreateSimpleTree(uVar4);
-      if ((uVar5 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82010020,0x10d,0,0xffffffff82000f98,0xffffffff820100a4);
+      pXVar5 = XAnimCreateSimpleTree(pcVar8);
+      if (pXVar5 == (XAnimTree *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_animtree_mp.cpp"
+                        ,0x10d,0,"%s");
       }
-      DObjSetTree(param_3,uVar5);
-      XAnimPlaySimpleTreeAnim(dVar8,param_3);
+      DObjSetTree(pDVar6,pXVar5);
+      XAnimPlaySimpleTreeAnim(pDVar6,(float)dVar12);
     }
   }
   __restgprlr_23();

@@ -6609,28 +6609,28 @@ LAB_823718d4:
   8237192C  7C0903A6             mtspr CTR,r0
 switchD:
   82371930  4E800420             bctr
-caseD_0:
+caseD_c:
   823719B8  3D608204             lis r11,-0x7dfc
   823719BC  7FA3EB78             or r3,r29,r29
   823719C0  388B2844             addi r4,r11,0x2844
   823719C4  4801B0E5             bl 0x8238caa8
   823719C8  38210180             addi r1,r1,0x180
   823719CC  485A4D3C             b 0x82916708
-caseD_19:
+caseD_25:
   823719D0  3D608204             lis r11,-0x7dfc
   823719D4  7FA3EB78             or r3,r29,r29
   823719D8  388B2830             addi r4,r11,0x2830
   823719DC  4801B0CD             bl 0x8238caa8
   823719E0  38210180             addi r1,r1,0x180
   823719E4  485A4D24             b 0x82916708
-caseD_5:
+caseD_11:
   823719E8  3D608204             lis r11,-0x7dfc
   823719EC  7FA3EB78             or r3,r29,r29
   823719F0  388B2814             addi r4,r11,0x2814
   823719F4  4801B0B5             bl 0x8238caa8
   823719F8  38210180             addi r1,r1,0x180
   823719FC  485A4D0C             b 0x82916708
-caseD_b:
+caseD_17:
   82371A00  48171F21             bl 0x824e3920
   82371A04  3D608204             lis r11,-0x7dfc
   82371A08  7FA3EB78             or r3,r29,r29
@@ -6638,21 +6638,21 @@ caseD_b:
   82371A10  4801B099             bl 0x8238caa8
   82371A14  38210180             addi r1,r1,0x180
   82371A18  485A4CF0             b 0x82916708
-caseD_c:
+caseD_18:
   82371A1C  3D608204             lis r11,-0x7dfc
   82371A20  7FA3EB78             or r3,r29,r29
   82371A24  388B27E4             addi r4,r11,0x27e4
   82371A28  4801B081             bl 0x8238caa8
   82371A2C  38210180             addi r1,r1,0x180
   82371A30  485A4CD8             b 0x82916708
-caseD_d:
+caseD_19:
   82371A34  3D608204             lis r11,-0x7dfc
   82371A38  7FA3EB78             or r3,r29,r29
   82371A3C  388B27D0             addi r4,r11,0x27d0
   82371A40  4801B069             bl 0x8238caa8
   82371A44  38210180             addi r1,r1,0x180
   82371A48  485A4CC0             b 0x82916708
-caseD_2:
+caseD_e:
   82371A4C  3D608204             lis r11,-0x7dfc
   82371A50  7FA3EB78             or r3,r29,r29
   82371A54  388BC760             subi r4,r11,0x38a0

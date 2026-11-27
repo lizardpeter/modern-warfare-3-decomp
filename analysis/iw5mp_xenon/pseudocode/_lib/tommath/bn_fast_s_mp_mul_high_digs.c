@@ -27,8 +27,7 @@ void fast_s_mp_mul_high_digs(undefined8 param_1,uint *param_2,undefined8 param_3
   uint *puVar15;
   
   puVar7 = (uint *)__savegprlr_20();
-  lVar20 = ZEXT48(&stack0x00000000) - 0x8c0;
-  *(BADSPACEBASE **)(int)lVar20 = register0x0000000c;
+  *(BADSPACEBASE **)(int)(ZEXT48(&stack0x00000000) - 0x8c0) = register0x0000000c;
   puVar4 = (uint *)param_3;
   if (((int)(*puVar7 + *param_2) <= (int)puVar4[1]) || (uVar5 = mp_grow(param_3), (int)uVar5 == 0))
   {
@@ -40,7 +39,7 @@ void fast_s_mp_mul_high_digs(undefined8 param_1,uint *param_2,undefined8 param_3
       uVar2 = param_2[3];
       uVar3 = puVar7[3];
       uVar16 = (ulonglong)*param_2 - 1;
-      lVar20 = (param_4 & 0x3fffffff) * 4 + lVar20 + 0x4c;
+      lVar20 = (param_4 & 0x3fffffff) * 4 + (ZEXT48(&stack0x00000000) - 0x8c0) + 0x4c;
       uVar6 = param_4;
       do {
         uVar14 = uVar16;
@@ -81,13 +80,12 @@ void fast_s_mp_mul_high_digs(undefined8 param_1,uint *param_2,undefined8 param_3
         *(uint *)lVar20 = (uint)uVar14 & 0xfffffff;
       } while ((int)uVar6 < (int)uVar18);
     }
-    lVar12 = (param_4 & 0x3fffffff) * 4;
     uVar1 = *puVar4;
     *puVar4 = uVar18;
-    lVar20 = lVar12 + (ulonglong)puVar4[3];
+    lVar20 = (param_4 & 0x3fffffff) * 4 + (ulonglong)puVar4[3];
     if ((int)param_4 < (int)uVar18) {
       uVar19 = lVar17 - param_4;
-      blkmov(lVar20,lVar12 + (ZEXT48(&stack0x00000000) - 0x870),(uVar19 & 0x3fffffff) << 2);
+      _blkmov();
       param_4 = uVar19 + param_4;
       lVar20 = (uVar19 & 0x3fffffff) * 4 + lVar20;
     }

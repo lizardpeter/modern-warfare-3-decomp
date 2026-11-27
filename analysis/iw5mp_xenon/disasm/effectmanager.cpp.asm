@@ -92,7 +92,7 @@ LAB_828d695c:
   828D6964  38210070             addi r1,r1,0x70
   828D6968  4803FDA4             b 0x8291670c
 
-; 828D66E0  XAUDIO::CEffectManager::GetObjectAdditionalSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:120)
+; 828D66E0  GetObjectAdditionalSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:120)
   828D66E0  7C6B1B78             or r11,r3,r3
   828D66E4  38600000             li r3,0x0
   828D66E8  2B0B0000             cmplwi cr6,r11,0x0
@@ -119,14 +119,14 @@ LAB_828d6730:
   828D6730  55431838             rlwinm r3,r10,0x3,0x0,0x1c
   828D6734  4E800020             blr
 
-; 828D62D0  XAUDIO::CEffectManager::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:138)
+; 828D62D0  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:138)
   828D62D0  81630004             lwz r11,0x4(r3)
   828D62D4  7C6A1B78             or r10,r3,r3
   828D62D8  386B0001             addi r3,r11,0x1
   828D62DC  906A0004             stw r3,0x4(r10)
   828D62E0  4E800020             blr
 
-; 828D6738  XAUDIO::CEffectManager::CEffectManager  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:138)
+; 828D6738  CEffectManager  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:138)
   828D6738  7D8802A6             mfspr r12,LR
   828D673C  9181FFF8             stw r12,-0x8(r1)
   828D6740  FBC1FFE8             std r30,-0x18(r1)
@@ -203,7 +203,7 @@ LAB_828d6830:
   828D6844  EBE1FFF0             ld r31,-0x10(r1)
   828D6848  4E800020             blr
 
-; 828D62E8  XAUDIO::CEffectManager::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:143)
+; 828D62E8  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:143)
   828D62E8  7D8802A6             mfspr r12,LR
   828D62EC  9181FFF8             stw r12,-0x8(r1)
   828D62F0  9421FFA0             stwu r1,-0x60(r1)
@@ -227,7 +227,7 @@ LAB_828d6328:
   828D6334  7D8803A6             mtspr LR,r12
   828D6338  4E800020             blr
 
-; 828D6340  XAUDIO::CEffectManager::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:148)
+; 828D6340  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.h:148)
   828D6340  2B030000             cmplwi cr6,r3,0x0
   828D6344  39630008             addi r11,r3,0x8
   828D6348  409A0008             bne cr6,0x828d6350
@@ -236,7 +236,7 @@ LAB_828d6350:
   828D6350  91640000             stw r11,0x0(r4)
   828D6354  4E800020             blr
 
-; 828D6358  XAUDIO::CEffectManager::QueryEffectSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:260)
+; 828D6358  QueryEffectSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:260)
   828D6358  89440000             lbz r10,0x0(r4)
   828D635C  7C6B1B78             or r11,r3,r3
   828D6360  7C832378             or r3,r4,r4
@@ -276,7 +276,7 @@ LAB_828d63cc:
   828D63D4  7D6903A6             mtspr CTR,r11
   828D63D8  4E800420             bctr
 
-; 828D63E0  XAUDIO::CEffectManager::CreateEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:296)
+; 828D63E0  CreateEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:296)
   828D63E0  7C6B1B78             or r11,r3,r3
   828D63E4  7C832378             or r3,r4,r4
   828D63E8  7CA42B78             or r4,r5,r5
@@ -317,7 +317,7 @@ LAB_828d6458:
   828D6460  7D6903A6             mtspr CTR,r11
   828D6464  4E800420             bctr
 
-; 828D6468  XAUDIO::CEffectManager::RegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:329)
+; 828D6468  RegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:329)
   828D6468  7D8802A6             mfspr r12,LR
   828D646C  48040241             bl 0x829166ac
   828D6470  9421FF70             stwu r1,-0x90(r1)
@@ -458,7 +458,7 @@ LAB_828d6658:
   828D665C  38210090             addi r1,r1,0x90
   828D6660  4804009C             b 0x829166fc
 
-; 828D6668  XAUDIO::CEffectManager::UnregisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:430)
+; 828D6668  UnregisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:430)
   828D6668  89640000             lbz r11,0x0(r4)
   828D666C  39000000             li r8,0x0
   828D6670  7D094378             or r9,r8,r8
@@ -493,7 +493,7 @@ LAB_828d66d8:
   828D66D8  38600000             li r3,0x0
   828D66DC  4E800020             blr
 
-; 828D6850  XAUDIO::CEffectManager::`scalar_deleting_destructor'  (line unknown)
+; 828D6850  `scalar_deleting_destructor'  (line unknown)
   828D6850  7D8802A6             mfspr r12,LR
   828D6854  9181FFF8             stw r12,-0x8(r1)
   828D6858  FBE1FFF0             std r31,-0x10(r1)

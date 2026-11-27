@@ -2,22 +2,28 @@
 
 // 82764D08  TRACK_r_rendercmds  (gfx_d3d/r_rendercmds.cpp:143)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void TRACK_r_rendercmds(void)
 
 {
-  track_static_alloc_internal(0xffffffff84628b80,0x11cf00,0xffffffff821cb024,0x12);
-  track_static_alloc_internal(0xffffffff84745a80,0x1c500,0xffffffff821cb018,0x12);
-  track_static_alloc_internal(0xffffffff84628b08,0x20,0xffffffff821cb008,0x12);
+  track_static_alloc_internal(s_backEndData,0x11cf00,"s_backEndData",0x12);
+  track_static_alloc_internal(g_viewInfo,0x1c500,"g_viewInfo",0x12);
+  track_static_alloc_internal(g_frontEndCmds,0x20,"g_frontEndCmds",0x12);
   return;
 }
 
 
 // 82764D80  R_PerformanceCounters  (gfx_d3d/r_rendercmds.cpp:156)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_PerformanceCounters(void)
 
 {
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb034);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"dev perf counters");
   Profile_ResetCounters(0);
   PIXEndNamedEvent();
   return;
@@ -26,33 +32,38 @@ void R_PerformanceCounters(void)
 
 // 82764DB8  R_InitRenderCommands  (gfx_d3d/r_rendercmds.cpp:170)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_InitRenderCommands(void)
 
 {
-  undefined4 uVar1;
+  void *pvVar1;
   undefined4 *puVar2;
-  longlong lVar3;
+  DebugGlobals *pDVar3;
   longlong lVar4;
   
   __savegprlr_26();
   DAT_84628b28 = 0x18000;
-  DAT_84628b04 = 0x12000;
+  s_renderCmdWarnSize = 0x12000;
   GenerateLightGridBasisDirs();
   R_InitModelLightingGlobals();
-  lVar3 = -0x7b9d5b90;
+  pDVar3 = &s_backEndData[0].debugGlobals;
   puVar2 = (undefined4 *)0x84628af8;
   lVar4 = 2;
   do {
-    uVar1 = R_AllocGlobalVariable(DAT_84628b28,0xffffffff821cb0a0);
+    pvVar1 = R_AllocGlobalVariable(DAT_84628b28,"rendercmds");
     puVar2 = puVar2 + 4;
-    *puVar2 = uVar1;
-    R_InitDebugEntry(lVar3);
+    *puVar2 = pvVar1;
+    R_InitDebugEntry(pDVar3);
     lVar4 = lVar4 + -1;
-    lVar3 = lVar3 + 0x8e780;
+    pDVar3 = (DebugGlobals *)&pDVar3[0x1b23].vertCount;
   } while (lVar4 != 0);
   R_InitSceneBuffers();
-  if (DAT_84628b00 != 0) {
-    MyAssertHandler(0xffffffff821cb048,0xd1,0,0xffffffff82000f98,0xffffffff821cb08c);
+  if (frontEndDataOut != (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",0xd1
+                    ,0,"%s");
   }
   __restgprlr_26();
   return;
@@ -61,19 +72,23 @@ void R_InitRenderCommands(void)
 
 // 82764E78  R_ShutdownRenderCommands  (gfx_d3d/r_rendercmds.cpp:218)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ShutdownRenderCommands(void)
 
 {
-  longlong lVar1;
+  DebugGlobals *pDVar1;
   longlong lVar2;
   
   __savegprlr_29();
   lVar2 = 2;
-  lVar1 = -0x7b9d5b90;
+  pDVar1 = &s_backEndData[0].debugGlobals;
   do {
-    R_ShutdownDebugEntry(lVar1);
+    R_ShutdownDebugEntry(pDVar1);
     lVar2 = lVar2 + -1;
-    lVar1 = lVar1 + 0x8e780;
+    pDVar1 = (DebugGlobals *)&pDVar1[0x1b23].vertCount;
   } while (lVar2 != 0);
   __restgprlr_29();
   return;
@@ -82,24 +97,28 @@ void R_ShutdownRenderCommands(void)
 
 // 82764EB8  R_InitDynamicMesh  (gfx_d3d/r_rendercmds.cpp:257)
 
-void R_InitDynamicMesh(undefined8 param_1,ulonglong param_2,int param_3,int param_4)
+void R_InitDynamicMesh(GfxMeshData *param_1,uint param_2,uint param_3,uint param_4)
 
 {
   undefined4 *puVar1;
-  undefined4 uVar2;
+  void *pvVar2;
+  ulonglong uVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
+  uVar3 = (ulonglong)(int)param_2;
+  puVar1 = (undefined4 *)__savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
     puVar1[10] = 0;
   }
   else {
-    uVar2 = R_AllocDynamicIndexBuffer(puVar1 + 2,(param_2 & 0x7fffffff) << 1,0xffffffff821cb0ac);
-    puVar1[10] = uVar2;
+    pvVar2 = R_AllocDynamicIndexBuffer
+                       ((D3DIndexBuffer *)(puVar1 + 2),(int)((uVar3 & 0xffffffff) << 1),
+                        "R_InitDynamicMesh");
+    puVar1[10] = pvVar2;
   }
-  puVar1[1] = (int)param_2;
+  puVar1[1] = (int)uVar3;
   puVar1[0x16] = param_4;
   *puVar1 = 0;
-  R_InitDynamicVertexBufferState(puVar1 + 0xb,(longlong)param_3 * (longlong)param_4);
+  R_InitDynamicVertexBufferState((GfxVertexBufferState *)(puVar1 + 0xb),param_3 * param_4);
   __restgprlr_27();
   return;
 }
@@ -107,15 +126,17 @@ void R_InitDynamicMesh(undefined8 param_1,ulonglong param_2,int param_3,int para
 
 // 82764F20  R_CmdBufSleep  (gfx_d3d/r_rendercmds.cpp:342)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_CmdBufSleep(void)
 
 {
-  DWORD DVar1;
+  ulong uVar1;
   int iVar2;
   int iVar3;
   
-  DVar1 = GetCurrentProcessorNumber();
-  if (DVar1 == 1) {
+  uVar1 = GetCurrentProcessorNumber();
+  if (uVar1 == 1) {
     iVar2 = Sys_Milliseconds();
     Sys_UnblockDatabaseThread();
     Sys_Sleep(0);
@@ -133,50 +154,52 @@ void R_CmdBufSleep(void)
 
 // 82764F98  R_CmdBufUpdateFences  (gfx_d3d/r_rendercmds.cpp:366)
 
-void R_CmdBufUpdateFences(int param_1)
+void R_CmdBufUpdateFences(GfxCmdRingBuf *param_1)
 
 {
-  int iVar1;
+  uint uVar1;
+  int iVar2;
   
-  if (*(int *)(param_1 + 0x18) == *(int *)(param_1 + 0x14)) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb0d4);
+  if (param_1->availIndex == param_1->fenceIndex) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait submit fence");
     R_CmdBufSleep();
     PIXEndNamedEvent();
     return;
   }
   sync(1);
-  iVar1 = R_HW_IsFencePending(((*(uint *)(param_1 + 0x18) & 0x7f) + 0x8a) * 4 + param_1);
-  if (iVar1 != 0) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb0c0);
+  iVar2 = R_HW_IsFencePending(param_1->fence + (param_1->availIndex & 0x7f));
+  if (iVar2 != 0) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait pending fence");
     R_CmdBufSleep();
     PIXEndNamedEvent();
     return;
   }
-  iVar1 = *(int *)(((*(uint *)(param_1 + 0x18) & 0x7f) + 10) * 4 + param_1);
-  *(uint *)(param_1 + 0x18) = *(uint *)(param_1 + 0x18) + 1;
-  *(int *)(param_1 + 0x1c) = iVar1 + 0x80000;
+  uVar1 = param_1->fencePos[param_1->availIndex & 0x7f];
+  param_1->availIndex = param_1->availIndex + 1;
+  param_1->availMemoryPos = uVar1 + 0x80000;
   return;
 }
 
 
 // 82765070  R_CmdBufUpdateFences2  (gfx_d3d/r_rendercmds.cpp:391)
 
-void R_CmdBufUpdateFences2(void)
+void R_CmdBufUpdateFences2(GfxCmdRingBuf *param_1)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   
-  iVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   if (*(int *)(iVar1 + 0x18) != *(int *)(iVar1 + 0x14)) {
     do {
       sync(1);
       iVar2 = ((*(uint *)(iVar1 + 0x18) & 0x7f) + 0x8a) * 4;
       if (*(int *)(iVar2 + iVar1) == 0) {
-        MyAssertHandler(0xffffffff821c4078,0xf,0,0xffffffff82000f98,0xffffffff821c40bc);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h",
+                        0xf,0,"%s");
       }
-      iVar2 = D3DDevice_IsFencePending(*(undefined4 *)(iVar2 + iVar1));
+      iVar2 = D3DDevice_IsFencePending(*(ulong *)(iVar2 + iVar1));
       if (iVar2 != 0) break;
       iVar3 = *(uint *)(iVar1 + 0x18) + 1;
       iVar2 = *(int *)(((*(uint *)(iVar1 + 0x18) & 0x7f) + 10) * 4 + iVar1);
@@ -193,20 +216,20 @@ void R_CmdBufUpdateFences2(void)
 
 /* WARNING: Removing unreachable block (ram,0x82765190) */
 
-void R_CmdBufReserveMemory(void)
+void R_CmdBufReserveMemory(GfxCmdRingBuf *param_1)
 
 {
   uint uVar1;
   ulonglong uVar2;
   int iVar3;
-  DWORD DVar4;
+  ulong uVar4;
   int iVar5;
   int iVar6;
   ulonglong uVar7;
   longlong lVar8;
   ulonglong uVar9;
   
-  iVar3 = __savegprlr_22();
+  iVar3 = __savegprlr_22(param_1);
   uVar7 = (ulonglong)*(uint *)(iVar3 + 4) + 0x7f;
   uVar2 = uVar7 & 0xffffff80;
   uVar9 = uVar2 + 0x83ff & 0xfff80000;
@@ -222,7 +245,8 @@ void R_CmdBufReserveMemory(void)
   lVar8 = uVar9 + 0x8400;
   *(int *)(iVar3 + 0x24) = (int)lVar8;
   if (0x40000 < (lVar8 - (ulonglong)*(uint *)(iVar3 + 0x428) & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cb048,0x1ba,0,0xffffffff82000f98,0xffffffff821cb0e8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1ba,0,"%s");
   }
   uVar1 = *(uint *)(iVar3 + 0x1c);
   do {
@@ -231,9 +255,9 @@ void R_CmdBufReserveMemory(void)
       return;
     }
     if (*(int *)(iVar3 + 0x18) == *(int *)(iVar3 + 0x14)) {
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb0d4);
-      DVar4 = GetCurrentProcessorNumber();
-      if (DVar4 == 1) {
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait submit fence");
+      uVar4 = GetCurrentProcessorNumber();
+      if (uVar4 == 1) {
         iVar5 = Sys_Milliseconds();
         Sys_UnblockDatabaseThread();
         Sys_Sleep(0);
@@ -254,18 +278,19 @@ LAB_8276528c:
       sync(1);
       iVar5 = ((*(uint *)(iVar3 + 0x18) & 0x7f) + 0x8a) * 4;
       if (*(int *)(iVar5 + iVar3) == 0) {
-        MyAssertHandler(0xffffffff821c4078,0xf,0,0xffffffff82000f98,0xffffffff821c40bc);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h",
+                        0xf,0,"%s");
       }
-      iVar5 = D3DDevice_IsFencePending(*(undefined4 *)(iVar5 + iVar3));
+      iVar5 = D3DDevice_IsFencePending(*(ulong *)(iVar5 + iVar3));
       if (iVar5 == 0) {
         iVar5 = *(int *)(((*(uint *)(iVar3 + 0x18) & 0x7f) + 10) * 4 + iVar3);
         *(uint *)(iVar3 + 0x18) = *(uint *)(iVar3 + 0x18) + 1;
         *(int *)(iVar3 + 0x1c) = iVar5 + 0x80000;
       }
       else {
-        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb0c0);
-        DVar4 = GetCurrentProcessorNumber();
-        if (DVar4 != 1) goto LAB_8276528c;
+        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait pending fence");
+        uVar4 = GetCurrentProcessorNumber();
+        if (uVar4 != 1) goto LAB_8276528c;
         iVar5 = Sys_Milliseconds();
         Sys_UnblockDatabaseThread();
         Sys_Sleep(0);
@@ -284,57 +309,67 @@ LAB_8276528c:
 
 // 82765368  R_CmdBufAllocCallback  (gfx_d3d/r_rendercmds.cpp:450)
 
-void R_CmdBufAllocCallback(undefined8 param_1,undefined8 param_2,uint *param_3,ulonglong param_4)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void * R_CmdBufAllocCallback(ulong param_1,ulong param_2,ulong *param_3,ulong param_4)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  DWORD DVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  uchar *puVar1;
+  GfxCmdRingBuf *pGVar2;
+  ulong uVar3;
+  void *pvVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   ulonglong uVar7;
+  ulonglong uVar8;
   
-  __savegprlr_27();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x1ca,0,0xffffffff82000f98,0xffffffff821cb1c8);
+  uVar5 = (ulonglong)(int)param_4;
+  __savegprlr_27(param_1,param_2);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1ca,0,"%s");
   }
-  trapWord(6,param_4,0);
-  if ((longlong)(int)(0x80 / (param_4 & 0xffffffff)) * (longlong)(int)param_4 != 0x80) {
-    MyAssertHandler(0xffffffff821cb048,0x1cb,0,0xffffffff821cb198,0xffffffff821cb1b0,param_4);
+  trapWord(6,uVar5,0);
+  if ((longlong)(int)(0x80 / (uVar5 & 0xffffffff)) * (longlong)(int)uVar5 != 0x80) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1cb,0,"%s\n\t(Alignment) = %i");
   }
-  uVar7 = (ulonglong)*param_3;
-  if (uVar7 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x1d0,0,0xffffffff82000f98,0xffffffff82036204);
+  uVar8 = (ulonglong)*param_3;
+  if (uVar8 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1d0,0,"%s");
   }
-  else if (0x8000 < uVar7) {
-    MyAssertHandler(0xffffffff821cb048,0x1d1,0,0xffffffff8203b444,0xffffffff821cb180,uVar7);
+  else if (0x8000 < uVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1d1,0,"%s\n\t(size) = %i");
   }
-  DVar4 = GetCurrentProcessorNumber();
-  iVar2 = *(int *)(&DAT_846177e4 + DVar4 * 4);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x1d4,0,0xffffffff82000f98,0xffffffff821bdff8);
+  uVar3 = GetCurrentProcessorNumber();
+  pGVar2 = dx.cmdBufForProcId[uVar3];
+  if (pGVar2 == (GfxCmdRingBuf *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1d4,0,"%s");
   }
-  uVar6 = (ulonglong)*(uint *)(iVar2 + 4) + (param_4 - 1) & ~(param_4 - 1);
-  lVar5 = uVar6 + uVar7;
-  uVar3 = lVar5 - 1U & 0xfff80000;
-  if (uVar3 != (uVar6 & 0xfff80000)) {
-    lVar5 = uVar3 + uVar7;
-    uVar6 = uVar3;
+  uVar7 = (ulonglong)pGVar2->memoryPos + (uVar5 - 1) & ~(uVar5 - 1);
+  lVar6 = uVar7 + uVar8;
+  uVar5 = lVar6 - 1U & 0xfff80000;
+  if (uVar5 != (uVar7 & 0xfff80000)) {
+    lVar6 = uVar5 + uVar8;
+    uVar7 = uVar5;
   }
-  uVar1 = *(uint *)(iVar2 + 0xc);
-  *(int *)(iVar2 + 4) = (int)lVar5;
-  if ((longlong)((ulonglong)*(uint *)(iVar2 + 0x24) - lVar5) < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x1e3,0,0xffffffff82000f98,0xffffffff821cb148);
+  puVar1 = pGVar2->memoryPool;
+  pGVar2->memoryPos = (uint)lVar6;
+  if ((longlong)((ulonglong)pGVar2->reserveMemoryPos1 - lVar6) < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x1e3,0,"%s");
   }
-  __restgprlr_27((ulonglong)uVar1 + (uVar6 & 0x7ffff));
-  return;
+  pvVar4 = (void *)__restgprlr_27(ZEXT48(puVar1) + (uVar7 & 0x7ffff));
+  return pvVar4;
 }
 
 
 // 827654F8  R_CmdBufFreeCallback  (gfx_d3d/r_rendercmds.cpp:490)
 
-void R_CmdBufFreeCallback(void)
+void R_CmdBufFreeCallback(ulong param_1)
 
 {
   return;
@@ -343,236 +378,250 @@ void R_CmdBufFreeCallback(void)
 
 // 82765500  R_CmdBufQueryCallback  (gfx_d3d/r_rendercmds.cpp:495)
 
-void R_CmdBufQueryCallback(void)
+void R_CmdBufQueryCallback(ulong param_1,ulong *param_2,ulong *param_3)
 
 {
-  if (DAT_84013128 != 0) {
+  if (alwaysfails != 0) {
     return;
   }
-  MyAssertHandler(0xffffffff821cb048,0x1f0,0,0xffffffff821cb1d4);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",0x1f0,
+                  0,"not implemented");
   return;
 }
 
 
 // 82765530  R_InitRenderBuffers  (gfx_d3d/r_rendercmds.cpp:562)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_InitRenderBuffers(void)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
-  undefined4 uVar7;
-  undefined4 uVar8;
-  undefined4 uVar9;
-  undefined4 uVar10;
-  undefined4 uVar11;
-  undefined4 uVar12;
-  undefined4 uVar13;
-  undefined4 uVar14;
-  undefined4 uVar15;
-  undefined4 uVar16;
-  undefined4 uVar17;
-  undefined4 uVar18;
-  undefined4 uVar19;
-  undefined4 uVar20;
-  undefined4 uVar21;
-  int iVar23;
-  undefined4 uVar24;
-  longlong lVar22;
-  int *piVar25;
-  ulonglong uVar26;
-  undefined4 *puVar27;
-  longlong lVar28;
-  undefined8 uVar29;
-  undefined8 uVar30;
+  D3DDevice *pDVar1;
+  D3DDevice *pDVar2;
+  D3DDevice *pDVar3;
+  D3DDevice *pDVar4;
+  D3DDevice *pDVar5;
+  D3DDevice *pDVar6;
+  D3DDevice *pDVar7;
+  D3DDevice *pDVar8;
+  D3DDevice *pDVar9;
+  D3DDevice *pDVar10;
+  D3DDevice *pDVar11;
+  D3DDevice *pDVar12;
+  D3DDevice *pDVar13;
+  D3DDevice *pDVar14;
+  D3DDevice *pDVar15;
+  D3DDevice *pDVar16;
+  D3DDevice *pDVar17;
+  D3DDevice *pDVar18;
+  D3DDevice *pDVar19;
+  D3DDevice *pDVar20;
+  D3DDevice *pDVar21;
+  D3DDevice *pDVar22;
+  ulong uVar23;
+  void *pvVar24;
+  ushort *puVar25;
+  D3DCommandBuffer *pDVar26;
+  ulonglong uVar27;
+  int *piVar28;
+  uint uVar29;
+  longlong lVar30;
+  ushort **ppuVar31;
+  double dVar32;
+  double dVar33;
   uint local_e0;
   
   __savegprlr();
-  iVar23 = D3DDevice_InsertFence(DAT_84616688);
-  if (iVar23 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x242,0,0xffffffff82000f98,0xffffffff821cb320);
-  }
-  lVar28 = 4;
-  puVar27 = (undefined4 *)0x84616324;
-  do {
-    uVar24 = PMem_Alloc_NoDebug(0x80000,0x80,0x404);
-    puVar27[0x107] = uVar24;
-    lVar28 = lVar28 + -1;
-    puVar27 = puVar27 + 0x10b;
-    *puVar27 = 0x80000;
-  } while (lVar28 != 0);
-  local_e0 = 2;
-  puVar27 = &DAT_84629f44;
-LAB_82765600:
-  uVar24 = R_AllocDynamicIndexBuffer(puVar27 + -8,0xc000,0xffffffff821cb0ac);
-  *puVar27 = uVar24;
-  puVar27[-9] = 0x6000;
-  puVar27[-10] = 0;
-  puVar27[0xc] = 0x20;
-  R_InitDynamicVertexBufferState(puVar27 + 1,0x80000);
-  uVar24 = R_AllocDynamicIndexBuffer(puVar27 + -0x1f,0x1e00,0xffffffff821cb0ac);
-  puVar27[-0x17] = uVar24;
-  puVar27[-0x20] = 0xf00;
-  puVar27[-0x21] = 0;
-  puVar27[-0xb] = 0x20;
-  R_InitDynamicVertexBufferState(puVar27 + -0x16,0x14000);
-  uVar24 = R_AllocDynamicIndexBuffer(puVar27 + 0xf,0x9000,0xffffffff821cb0ac);
-  puVar27[0x17] = uVar24;
-  puVar27[0xe] = 0x4800;
-  puVar27[0xd] = 0;
-  puVar27[0x23] = 0x20;
-  R_InitDynamicVertexBufferState(puVar27 + 0x18,0x42000);
-  uVar24 = R_AllocDynamicIndexBuffer(puVar27 + 0x26,0x4800,0xffffffff821cb0ac);
-  puVar27[0x2e] = uVar24;
-  puVar27[0x25] = 0x2400;
-  puVar27[0x24] = 0;
-  puVar27[0x3a] = 0x2c;
-  R_InitDynamicVertexBufferState(puVar27 + 0x2f,0x42000);
-  puVar27[0x45] = 0;
-  puVar27[0x3c] = 0;
-  puVar27[0x3b] = 0;
-  puVar27[0x51] = 0x14;
-  R_InitDynamicVertexBufferState(puVar27 + 0x46,0xb4000);
-  uVar2 = DAT_846166a4;
-  uVar1 = DAT_8461669c;
-  uVar24 = DAT_84616698;
-  piVar25 = puVar27 + 0xaf;
-  puVar27[0xaf] = DAT_84616694;
-  uVar3 = DAT_846166ac;
-  puVar27[0x6c] = iVar23;
-  puVar27[0x6d] = iVar23;
-  puVar27[0xe3] = uVar1;
-  puVar27[0x10f] = uVar24;
-  puVar27[0xe7] = uVar2;
-  uVar24 = DAT_846166a8;
-  puVar27[0x143] = DAT_846166a0;
-  uVar9 = DAT_846166d0;
-  uVar8 = DAT_846166cc;
-  puVar27[0xb3] = DAT_846166b0;
-  uVar12 = DAT_846166dc;
-  uVar11 = DAT_846166d8;
-  uVar10 = DAT_846166d4;
-  puVar27[0x12f] = DAT_846166fc;
-  uVar16 = DAT_846166ec;
-  uVar15 = DAT_846166e8;
-  uVar14 = DAT_846166e4;
-  uVar13 = DAT_846166e0;
-  puVar27[0x133] = DAT_84616700;
-  uVar5 = DAT_846166c0;
-  uVar4 = DAT_846166bc;
-  uVar2 = DAT_846166b8;
-  uVar1 = DAT_846166b4;
-  puVar27[0x137] = DAT_84616704;
-  uVar18 = DAT_846166f4;
-  uVar17 = DAT_846166f0;
-  uVar7 = DAT_846166c8;
-  uVar6 = DAT_846166c4;
-  puVar27[0x13b] = DAT_84616708;
-  uVar21 = DAT_8461672c;
-  uVar20 = DAT_8461670c;
-  uVar19 = DAT_846166f8;
-  puVar27[0x147] = uVar24;
-  puVar27[0xcf] = uVar8;
-  puVar27[0x13f] = uVar20;
-  uVar24 = DAT_84616710;
-  puVar27[0xd3] = uVar9;
-  puVar27[0xd7] = uVar10;
-  puVar27[0xdb] = uVar11;
-  puVar27[0xdf] = uVar12;
-  puVar27[0xef] = uVar24;
-  uVar24 = DAT_84616714;
-  puVar27[0x117] = uVar14;
-  puVar27[0x11b] = uVar15;
-  puVar27[0x11f] = uVar16;
-  puVar27[0xf3] = uVar24;
-  lVar28 = 0x27;
-  puVar27[0xf7] = DAT_84616718;
-  uVar24 = DAT_8461671c;
-  puVar27[0xeb] = uVar3;
-  puVar27[0x113] = uVar13;
-  puVar27[0xfb] = uVar24;
-  uVar24 = DAT_84616720;
-  puVar27[0xb7] = uVar1;
-  puVar27[0xbb] = uVar2;
-  puVar27[0xbf] = uVar4;
-  puVar27[0xc3] = uVar5;
-  puVar27[0xff] = uVar24;
-  uVar24 = DAT_84616724;
-  puVar27[199] = uVar6;
-  puVar27[0xcb] = uVar7;
-  puVar27[0x123] = uVar17;
-  puVar27[0x127] = uVar18;
-  puVar27[0x103] = uVar24;
-  uVar24 = DAT_84616728;
-  puVar27[299] = uVar19;
-  puVar27[0x10b] = uVar21;
-  puVar27[0x107] = uVar24;
-LAB_82765884:
-  if (*piVar25 == 0) {
+  uVar23 = D3DDevice_InsertFence(dx.device);
+  if (uVar23 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
-                    0x2b4,0,&DAT_82000f98,"data->drawOutput[contextIndex].cmdBuf.device");
+                    0x242,0,"%s");
   }
+  lVar30 = 4;
+  puVar25 = rgp.sortedMaterials + 0x15d2;
   do {
-    lVar22 = D3DDevice_CreateGrowableCommandBuffer
-                       (0,0xffffffff82765368,0xffffffff827654f8,0xffffffff82765500,piVar25,0x8000);
-    piVar25[1] = (int)lVar22;
-    uVar26 = -(ulonglong)(lVar22 == 0) & 0xffffffff8007000e;
-    if ((int)uVar26 < 0) goto LAB_827658fc;
-  } while (DAT_84013128 != 0);
-  goto LAB_82765924;
-LAB_827658fc:
+    pvVar24 = PMem_Alloc_NoDebug(0x80000,0x80,0x404);
+    *(void **)(puVar25 + 0x20e) = pvVar24;
+    lVar30 = lVar30 + -1;
+    puVar25 = puVar25 + 0x216;
+    puVar25[0] = 8;
+    puVar25[1] = 0;
+  } while (lVar30 != 0);
+  local_e0 = 2;
+  ppuVar31 = &s_backEndData[0].mesh[1].indices;
   do {
-    uVar29 = R_ErrorDescription(uVar26);
-    Sys_Error("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp (%i) dx.device->CreateGrowableCommandBuffer( 0, R_CmdBufAllocCallback, R_CmdBufFreeCallback, R_CmdBufQueryCallback, (DWORD)&drawOutput->cmdBuf, (32 * 1024), &drawOutput->cmdBuf.buf ) failed: %s\n"
-              ,0x2b5,uVar29);
-  } while (DAT_84013128 != 0);
-LAB_82765924:
-  lVar28 = lVar28 + -1;
-  piVar25 = piVar25 + 4;
-  if (lVar28 == 0) goto code_r0x82765930;
-  goto LAB_82765884;
-code_r0x82765930:
-  uVar26 = (ulonglong)local_e0;
-  puVar27 = puVar27 + 0x239e0;
-  local_e0 = (uint)(uVar26 - 1);
-  if (uVar26 - 1 == 0) {
-    puVar27 = &DAT_846182b0;
-    uVar29 = 0x3ff0000000000000;
-    lVar28 = 4;
-    uVar30 = 0;
+    puVar25 = R_AllocDynamicIndexBuffer
+                        ((D3DIndexBuffer *)(ppuVar31 + -8),0xc000,"R_InitDynamicMesh");
+    *ppuVar31 = puVar25;
+    ppuVar31[-9] = (ushort *)0x6000;
+    ((GfxMeshData *)(ppuVar31 + -10))->indexCount = 0;
+    ppuVar31[0xc] = (ushort *)0x20;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + 1),0x80000);
+    pvVar24 = R_AllocDynamicIndexBuffer
+                        ((D3DIndexBuffer *)(ppuVar31 + -0x1f),0x1e00,"R_InitDynamicMesh");
+    ppuVar31[-0x17] = pvVar24;
+    ppuVar31[-0x20] = (ushort *)0xf00;
+    ppuVar31[-0x21] = (ushort *)0x0;
+    ppuVar31[-0xb] = (ushort *)0x20;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + -0x16),0x14000);
+    pvVar24 = R_AllocDynamicIndexBuffer
+                        ((D3DIndexBuffer *)(ppuVar31 + 0xf),0x9000,"R_InitDynamicMesh");
+    ppuVar31[0x17] = pvVar24;
+    ppuVar31[0xe] = (ushort *)0x4800;
+    ppuVar31[0xd] = (ushort *)0x0;
+    ppuVar31[0x23] = (ushort *)0x20;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + 0x18),0x42000);
+    pvVar24 = R_AllocDynamicIndexBuffer
+                        ((D3DIndexBuffer *)(ppuVar31 + 0x26),0x4800,"R_InitDynamicMesh");
+    ppuVar31[0x2e] = pvVar24;
+    ppuVar31[0x25] = (ushort *)0x2400;
+    ppuVar31[0x24] = (ushort *)0x0;
+    ppuVar31[0x3a] = (ushort *)0x2c;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + 0x2f),0x42000);
+    ppuVar31[0x45] = (ushort *)0x0;
+    ppuVar31[0x3c] = (ushort *)0x0;
+    ppuVar31[0x3b] = (ushort *)0x0;
+    ppuVar31[0x51] = (ushort *)0x14;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + 0x46),0xb4000);
+    pDVar3 = dx.cmdBufDevice[4];
+    pDVar2 = dx.cmdBufDevice[2];
+    pDVar1 = dx.cmdBufDevice[1];
+    piVar28 = (int *)(ppuVar31 + 0xaf);
+    ppuVar31[0xaf] = (ushort *)dx.cmdBufDevice[0];
+    pDVar4 = dx.cmdBufDevice[6];
+    ppuVar31[0x6c] = (ushort *)uVar23;
+    ppuVar31[0x6d] = (ushort *)uVar23;
+    ppuVar31[0xe3] = (ushort *)pDVar2;
+    ppuVar31[0x10f] = (ushort *)pDVar1;
+    ppuVar31[0xe7] = (ushort *)pDVar3;
+    pDVar1 = dx.cmdBufDevice[5];
+    ppuVar31[0x143] = (ushort *)dx.cmdBufDevice[3];
+    pDVar10 = dx.cmdBufDevice[0xf];
+    pDVar9 = dx.cmdBufDevice[0xe];
+    ppuVar31[0xb3] = (ushort *)dx.cmdBufDevice[7];
+    pDVar13 = dx.cmdBufDevice[0x12];
+    pDVar12 = dx.cmdBufDevice[0x11];
+    pDVar11 = dx.cmdBufDevice[0x10];
+    ppuVar31[0x12f] = (ushort *)dx.cmdBufDevice[0x1a];
+    pDVar17 = dx.cmdBufDevice[0x16];
+    pDVar16 = dx.cmdBufDevice[0x15];
+    pDVar15 = dx.cmdBufDevice[0x14];
+    pDVar14 = dx.cmdBufDevice[0x13];
+    ppuVar31[0x133] = (ushort *)dx.cmdBufDevice[0x1b];
+    pDVar6 = dx.cmdBufDevice[0xb];
+    pDVar5 = dx.cmdBufDevice[10];
+    pDVar3 = dx.cmdBufDevice[9];
+    pDVar2 = dx.cmdBufDevice[8];
+    ppuVar31[0x137] = (ushort *)dx.cmdBufDevice[0x1c];
+    pDVar19 = dx.cmdBufDevice[0x18];
+    pDVar18 = dx.cmdBufDevice[0x17];
+    pDVar8 = dx.cmdBufDevice[0xd];
+    pDVar7 = dx.cmdBufDevice[0xc];
+    ppuVar31[0x13b] = (ushort *)dx.cmdBufDevice[0x1d];
+    pDVar22 = dx.cmdBufDevice[0x26];
+    pDVar21 = dx.cmdBufDevice[0x1e];
+    pDVar20 = dx.cmdBufDevice[0x19];
+    ppuVar31[0x147] = (ushort *)pDVar1;
+    ppuVar31[0xcf] = (ushort *)pDVar9;
+    ppuVar31[0x13f] = (ushort *)pDVar21;
+    pDVar1 = dx.cmdBufDevice[0x1f];
+    ppuVar31[0xd3] = (ushort *)pDVar10;
+    ppuVar31[0xd7] = (ushort *)pDVar11;
+    ppuVar31[0xdb] = (ushort *)pDVar12;
+    ppuVar31[0xdf] = (ushort *)pDVar13;
+    ppuVar31[0xef] = (ushort *)pDVar1;
+    pDVar1 = dx.cmdBufDevice[0x20];
+    ppuVar31[0x117] = (ushort *)pDVar15;
+    ppuVar31[0x11b] = (ushort *)pDVar16;
+    ppuVar31[0x11f] = (ushort *)pDVar17;
+    ppuVar31[0xf3] = (ushort *)pDVar1;
+    lVar30 = 0x27;
+    ppuVar31[0xf7] = (ushort *)dx.cmdBufDevice[0x21];
+    pDVar1 = dx.cmdBufDevice[0x22];
+    ppuVar31[0xeb] = (ushort *)pDVar4;
+    ppuVar31[0x113] = (ushort *)pDVar14;
+    ppuVar31[0xfb] = (ushort *)pDVar1;
+    pDVar1 = dx.cmdBufDevice[0x23];
+    ppuVar31[0xb7] = (ushort *)pDVar2;
+    ppuVar31[0xbb] = (ushort *)pDVar3;
+    ppuVar31[0xbf] = (ushort *)pDVar5;
+    ppuVar31[0xc3] = (ushort *)pDVar6;
+    ppuVar31[0xff] = (ushort *)pDVar1;
+    pDVar1 = dx.cmdBufDevice[0x24];
+    ppuVar31[199] = (ushort *)pDVar7;
+    ppuVar31[0xcb] = (ushort *)pDVar8;
+    ppuVar31[0x123] = (ushort *)pDVar18;
+    ppuVar31[0x127] = (ushort *)pDVar19;
+    ppuVar31[0x103] = (ushort *)pDVar1;
+    pDVar1 = dx.cmdBufDevice[0x25];
+    ppuVar31[299] = (ushort *)pDVar20;
+    ppuVar31[0x10b] = (ushort *)pDVar22;
+    ppuVar31[0x107] = (ushort *)pDVar1;
     do {
-      uVar24 = R_AllocDynamicIndexBuffer(puVar27 + -8,0xc,0xffffffff821cb0ac);
-      *puVar27 = uVar24;
-      puVar27[-9] = 6;
-      puVar27[-10] = 0;
-      puVar27[0xc] = 0x20;
-      R_InitDynamicVertexBufferState(puVar27 + 1,0x80);
-      R_SetQuadMesh(uVar30,uVar30,(double)DAT_84613720,(double)DAT_84613724,uVar30,uVar30,uVar29,
-                    uVar29,puVar27 + -0xe);
-      lVar28 = lVar28 + -1;
-      puVar27 = puVar27 + 0x1b;
-    } while (lVar28 != 0);
-    __restgprlr();
-    return;
-  }
-  goto LAB_82765600;
+      if (*piVar28 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x2b4,0,"%s");
+      }
+      do {
+        pDVar26 = D3DDevice_CreateGrowableCommandBuffer
+                            (0,R_CmdBufAllocCallback,R_CmdBufFreeCallback,R_CmdBufQueryCallback,
+                             (ulong)piVar28,0x8000);
+        piVar28[1] = (int)pDVar26;
+        uVar29 = -(uint)(pDVar26 == (D3DCommandBuffer *)0x0) & 0x8007000e;
+        if ((int)uVar29 < 0) {
+          R_ErrorDescription(uVar29);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error(
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp (%i) dx.device->CreateGrowableCommandBuffer( 0, R_CmdBufAllocCallback, R_CmdBufFreeCallback, R_CmdBufQueryCallback, (DWORD)&drawOutput->cmdBuf, (32 * 1024), &drawOutput->cmdBuf.buf ) failed: %s\n"
+                   );
+        }
+      } while (alwaysfails != 0);
+      lVar30 = lVar30 + -1;
+      piVar28 = piVar28 + 4;
+    } while (lVar30 != 0);
+    uVar27 = (ulonglong)local_e0;
+    ppuVar31 = ppuVar31 + 0x239e0;
+    local_e0 = (uint)(uVar27 - 1);
+  } while (uVar27 - 1 != 0);
+  ppuVar31 = &gfxMeshGlob.fullSceneViewMesh[0].meshData.indices;
+  dVar32 = 1.0;
+  lVar30 = 4;
+  dVar33 = 0.0;
+  do {
+    puVar25 = R_AllocDynamicIndexBuffer((D3DIndexBuffer *)(ppuVar31 + -8),0xc,"R_InitDynamicMesh");
+    *ppuVar31 = puVar25;
+    ppuVar31[-9] = (ushort *)0x6;
+    uVar23 = 0x80;
+    ((GfxMeshData *)(ppuVar31 + -10))->indexCount = 0;
+    ppuVar31[0xc] = (ushort *)0x20;
+    R_InitDynamicVertexBufferState((GfxVertexBufferState *)(ppuVar31 + 1),0x80);
+    R_SetQuadMesh((GfxQuadMeshData *)(ppuVar31 + -0xe),(float)dVar33,(float)dVar33,
+                  (float)vidConfig.sceneWidth,(float)vidConfig.sceneHeight,(float)dVar33,
+                  (float)dVar33,(float)dVar32,(float)dVar32,uVar23);
+    lVar30 = lVar30 + -1;
+    ppuVar31 = ppuVar31 + 0x1b;
+  } while (lVar30 != 0);
+  __restgprlr();
+  return;
 }
 
 
 // 82765A10  R_InitRenderThread  (gfx_d3d/r_rendercmds.cpp:840)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_InitRenderThread(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_SpawnRenderThread(0xffffffff8279a940);
-  if (cVar1 == '\0') {
-    Com_Error(0,0xffffffff821cb328);
+  bVar1 = Sys_SpawnRenderThread(RB_RenderThread);
+  if (!bVar1) {
+    Com_Error(ERR_FATAL,"Failed to create render thread");
   }
   return;
 }
@@ -580,48 +629,60 @@ void R_InitRenderThread(void)
 
 // 82765A58  R_SyncRenderThread  (gfx_d3d/r_rendercmds.cpp:849)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void R_SyncRenderThread(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
   __savegprlr_29();
-  cVar2 = Sys_IsRenderThread();
-  if (cVar2 == '\0') {
-    cVar2 = Sys_IsMainThread();
-    if (cVar2 == '\0') {
-      MyAssertHandler(0xffffffff821cb048,0x356,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsRenderThread();
+  if (!bVar2) {
+    bVar2 = Sys_IsMainThread();
+    if (!bVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x356,0,"%s");
     }
-    if (DAT_84617894 != 0) {
-      MyAssertHandler(0xffffffff821cb048,0x359,0,0xffffffff82000f98,0xffffffff821bad94);
+    if (r_glob.allowAddDrawCall != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x359,0,"%s");
     }
-    if (DAT_846178a0 != 0) {
-      MyAssertHandler(0xffffffff821cb048,0x362,0,0xffffffff82000f98,0xffffffff821cb3b8);
+    if (r_glob.remoteScreenUpdateNesting != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x362,0,"%s");
     }
-    if (DAT_84617885 != '\0') {
-      if (DAT_84616688 == 0) {
-        MyAssertHandler(0xffffffff821cb048,0x369,0,0xffffffff82000f98,0xffffffff821c5e94);
+    if (r_glob.startedRenderThread != false) {
+      if (dx.device == (D3DDevice *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x369,0,"%s");
       }
-      if (DAT_84617884 == '\0') {
-        if ((((DAT_84628b00 != 0) && (*(int *)(DAT_84628b00 + 0x1be4) != 0)) &&
-            (*(int *)(DAT_84628b00 + 0x1bf4) == 0)) && (*(int *)(DAT_84628b00 + 0x1bf8) == 0)) {
-          MyAssertHandler(0xffffffff821cb048,0x375,0,0xffffffff82000f98,0xffffffff821cb348);
+      if (r_glob.mainThreadHasOwnership == false) {
+        if ((((frontEndDataOut != (GfxBackEndData *)0x0) && (frontEndDataOut->beginReady != 0)) &&
+            (frontEndDataOut->finishReady == 0)) && (frontEndDataOut->abortReady == 0)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0x375,0,"%s");
         }
         iVar1 = R_HasDeviceOwnership();
         if (iVar1 != 0) {
-          MyAssertHandler(0xffffffff821cb048,0x378,0,0xffffffff82000f98,0xffffffff82059658);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0x378,0,"%s");
         }
         Profile_Begin(0xa4);
         Sys_FrontEndSleep();
-        Profile_EndInternal(0);
-        DAT_84617884 = '\x01';
+        Profile_EndInternal((double *)0x0);
+        r_glob.mainThreadHasOwnership = true;
         R_AcquireDeviceOwnership();
       }
       else {
         iVar1 = R_HasDeviceOwnership();
         if (iVar1 == 0) {
-          MyAssertHandler(0xffffffff821cb048,0x36f,0,0xffffffff82000f98,0xffffffff8217d420);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0x36f,0,"%s");
           __restgprlr_29();
           return;
         }
@@ -635,111 +696,136 @@ void R_SyncRenderThread(void)
 
 // 82765C20  R_ReleaseDeviceOwnershipForStreaming  (gfx_d3d/r_rendercmds.cpp:906)
 
-void R_ReleaseDeviceOwnershipForStreaming(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_ReleaseDeviceOwnershipForStreaming(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
   __savegprlr_28();
-  cVar2 = Sys_IsMainThread();
-  if ((cVar2 == '\0') || (DAT_84617885 == '\0')) {
-    iVar1 = R_HasDeviceOwnership();
-    if (iVar1 == 0) goto LAB_82765c8c;
-  }
-  else {
-    if (DAT_846178a0 != 0) {
+  bVar2 = Sys_IsMainThread();
+  if ((bVar2) && (r_glob.startedRenderThread != false)) {
+    if (r_glob.remoteScreenUpdateNesting != 0) {
       iVar1 = R_HasDeviceOwnership();
       if (iVar1 != 0) {
-        MyAssertHandler(0xffffffff821cb048,0x396,0,0xffffffff82000f98,0xffffffff82059658);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x396,0,"%s");
       }
 LAB_82765c8c:
-      __restgprlr_28(0);
-      return;
+      iVar1 = __restgprlr_28(0);
+      return iVar1;
     }
-    if (DAT_84617884 == '\0') {
+    if (r_glob.mainThreadHasOwnership == false) {
       iVar1 = R_HasDeviceOwnership();
       if (iVar1 != 0) {
-        MyAssertHandler(0xffffffff821cb048,0x3a2,0,0xffffffff82000f98,0xffffffff82059658);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x3a2,0,"%s");
       }
       Profile_Begin(0xa4);
       Sys_FrontEndSleep();
-      Profile_EndInternal(0);
-      DAT_84617884 = '\x01';
+      Profile_EndInternal((double *)0x0);
+      r_glob.mainThreadHasOwnership = true;
       iVar1 = R_HasDeviceOwnership();
       if (iVar1 != 0) {
-        MyAssertHandler(0xffffffff821cb048,0x3aa,0,0xffffffff82000f98,0xffffffff82059658);
-        __restgprlr_28(1);
-        return;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x3aa,0,"%s");
+        iVar1 = __restgprlr_28(1);
+        return iVar1;
       }
       goto LAB_82765d3c;
     }
   }
+  else {
+    iVar1 = R_HasDeviceOwnership();
+    if (iVar1 == 0) goto LAB_82765c8c;
+  }
   R_ReleaseDeviceOwnership();
 LAB_82765d3c:
-  __restgprlr_28(1);
-  return;
+  iVar1 = __restgprlr_28(1);
+  return iVar1;
 }
 
 
 // 82765D48  R_ClearCmdList  (gfx_d3d/r_rendercmds.cpp:946)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ClearCmdList(void)
 
 {
-  int iVar1;
+  GfxCmdArray *pGVar1;
   
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x3b5,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x3b5,0,"%s");
   }
-  iVar1 = *(int *)(DAT_84628b00 + 0x15b8);
-  *(undefined4 *)(iVar1 + 4) = 0;
-  *(undefined4 *)(iVar1 + 8) = 0;
-  *(undefined4 *)(iVar1 + 0xc) = 0;
+  pGVar1 = frontEndDataOut->commands;
+  pGVar1->usedTotal = 0;
+  pGVar1->usedCritical = 0;
+  pGVar1->lastCmd = (GfxCmdHeader *)0x0;
   return;
 }
 
 
 // 82765DB8  R_UpdateSkinCacheUsage  (gfx_d3d/r_rendercmds.cpp:958)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_UpdateSkinCacheUsage(void)
 
 {
-  if (*(int *)(DAT_84628b00 + 0x1570) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x3bf,0,0xffffffff82000f98,0xffffffff821cb3e0);
+  if (frontEndDataOut->skinnedCacheVb == (GfxVertexBufferState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x3bf,0,"%s");
   }
-  DAT_84618160 = -((**(uint **)(DAT_84628b00 + 0x1570) < 0x320000) - 1);
+  rg.skinnedCacheReachedThreshold = -(((uint)frontEndDataOut->skinnedCacheVb->used < 0x320000) - 1);
   return;
 }
 
 
 // 82765E40  R_SkinCacheReachedThreshold  (gfx_d3d/r_rendercmds.cpp:965)
 
-undefined4 R_SkinCacheReachedThreshold(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int R_SkinCacheReachedThreshold(void)
 
 {
-  return DAT_84618160;
+  return rg.skinnedCacheReachedThreshold;
 }
 
 
 // 82765E50  R_ReleaseThreadOwnership  (gfx_d3d/r_rendercmds.cpp:973)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ReleaseThreadOwnership(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
   __savegprlr_29();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x3ce,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x3ce,0,"%s");
   }
-  if (DAT_84617885 != '\0') {
-    if (DAT_84617884 == '\0') {
+  if (r_glob.startedRenderThread != false) {
+    if (r_glob.mainThreadHasOwnership == false) {
       iVar1 = R_HasDeviceOwnership();
       if (iVar1 != 0) {
-        MyAssertHandler(0xffffffff821cb048,0x3d6,0,0xffffffff82000f98,0xffffffff82059658);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0x3d6,0,"%s");
         __restgprlr_29();
         return;
       }
@@ -747,7 +833,7 @@ void R_ReleaseThreadOwnership(void)
     else {
       R_ReleaseDeviceOwnership();
       Sys_ReleaseThreadOwnership();
-      DAT_84617884 = '\0';
+      r_glob.mainThreadHasOwnership = false;
     }
   }
   __restgprlr_29();
@@ -757,11 +843,13 @@ void R_ReleaseThreadOwnership(void)
 
 // 82765F00  R_WaitRenderer  (gfx_d3d/r_rendercmds.cpp:997)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_WaitRenderer(void)
 
 {
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb400);
-  R_ProcessWorkerCmdsWithTimeout(0xffffffff82519fa8,1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait renderer");
+  R_ProcessWorkerCmdsWithTimeout(Sys_IsRendererReady,1);
   PIXEndNamedEvent();
   sync(1);
   return;
@@ -770,11 +858,13 @@ void R_WaitRenderer(void)
 
 // 82765F48  R_WaitRenderer2  (gfx_d3d/r_rendercmds.cpp:1018)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_WaitRenderer2(void)
 
 {
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb410);
-  R_ProcessWorkerCmdsWithTimeout(0xffffffff82519fc0,1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait renderer2");
+  R_ProcessWorkerCmdsWithTimeout(Sys_IsRendererReady2,1);
   PIXEndNamedEvent();
   sync(1);
   return;
@@ -783,70 +873,84 @@ void R_WaitRenderer2(void)
 
 // 82765F90  MayRenderFromBackend  (gfx_d3d/r_rendercmds.cpp:1054)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 bool MayRenderFromBackend(void)
 
 {
-  if (*(char *)(DAT_845aa6a0 + 0xc) == '\0') {
+  if ((r_smp_backend->current).enabled == false) {
     return false;
   }
-  return DAT_84617898 == '\0';
+  return !r_glob.isRenderingRemoteUpdate;
 }
 
 
 // 82765FC8  R_WakeRenderer  (gfx_d3d/r_rendercmds.cpp:1073)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_WakeRenderer(void)
 
 {
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb400);
-  R_ProcessWorkerCmdsWithTimeout(0xffffffff82519fa8,1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait renderer");
+  R_ProcessWorkerCmdsWithTimeout(Sys_IsRendererReady,1);
   PIXEndNamedEvent();
   sync(1);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb440);
-  Sys_WakeRenderer(DAT_84628b00);
-  if (DAT_84617884 != '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x438,0,0xffffffff82000f98,0xffffffff821cb420);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wake renderer");
+  Sys_WakeRenderer(frontEndDataOut);
+  if (r_glob.mainThreadHasOwnership != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x438,0,"%s");
   }
   PIXEndNamedEvent();
-  *(undefined4 *)(DAT_84628b00 + 0x1be4) = 1;
+  frontEndDataOut->beginReady = 1;
   return;
 }
 
 
 // 82766078  R_IssueRenderCommandsBegin  (gfx_d3d/r_rendercmds.cpp:1091)
 
-void R_IssueRenderCommandsBegin(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_IssueRenderCommandsBegin(uint param_1)
 
 {
   uint uVar1;
-  char cVar2;
+  bool bVar2;
   uint uVar3;
   
-  uVar1 = __savegprlr_28();
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x444,0,0xffffffff82000f98,0xffffffff821b90d8);
+  uVar1 = __savegprlr_28(param_1);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x444,0,"%s");
   }
-  if (*(char *)(DAT_845aa6a0 + 0xc) == '\0') {
+  if ((r_smp_backend->current).enabled == false) {
     uVar3 = 0;
   }
   else {
-    uVar3 = (uint)(DAT_84617898 == '\0');
+    uVar3 = (uint)(r_glob.isRenderingRemoteUpdate == false);
   }
-  *(uint *)(DAT_84628b00 + 0x1be0) = uVar3;
-  *(uint *)(DAT_84628b00 + 0x1bdc) = uVar1;
+  frontEndDataOut->renderFromBackEnd = uVar3;
+  frontEndDataOut->drawType = uVar1;
   if ((uVar1 & 2) != 0) {
     R_RegistedRenderFrame();
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb034);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"dev perf counters");
     Profile_ResetCounters(0);
     PIXEndNamedEvent();
   }
-  if (*(int *)(DAT_84628b00 + 0x1be0) != 0) {
-    cVar2 = Sys_IsMainThread2();
-    if (cVar2 == '\0') {
-      MyAssertHandler(0xffffffff821cb048,0x45b,0,0xffffffff82000f98,0xffffffff8205cec4);
+  if (frontEndDataOut->renderFromBackEnd != 0) {
+    bVar2 = Sys_IsMainThread2();
+    if (!bVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x45b,0,"%s");
     }
-    DAT_84628b2c = Sys_IsDatabaseReady2();
-    if (DAT_84628b2c != 0) {
+    g_databaseReady2 = Sys_IsDatabaseReady2();
+    if (g_databaseReady2 != 0) {
       R_WakeRenderer();
     }
   }
@@ -857,120 +961,144 @@ void R_IssueRenderCommandsBegin(void)
 
 // 82766190  R_IssueRenderCommandsShadow  (gfx_d3d/r_rendercmds.cpp:1129)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_IssueRenderCommandsShadow(void)
 
 {
   sync(1);
-  *(undefined4 *)(DAT_84628b00 + 0x1be8) = 1;
+  frontEndDataOut->shadowReady = 1;
   return;
 }
 
 
 // 827661A8  R_IssueRenderCommandsOpaque  (gfx_d3d/r_rendercmds.cpp:1138)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_IssueRenderCommandsOpaque(void)
 
 {
   sync(1);
-  *(undefined4 *)(DAT_84628b00 + 0x1bec) = 1;
+  frontEndDataOut->opaqueReady = 1;
   return;
 }
 
 
 // 827661C0  R_IssueRenderCommandsEmissive  (gfx_d3d/r_rendercmds.cpp:1147)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_IssueRenderCommandsEmissive(void)
 
 {
   sync(1);
-  *(undefined4 *)(DAT_84628b00 + 0x1bf0) = 1;
+  frontEndDataOut->emissiveReady = 1;
   return;
 }
 
 
 // 827661D8  R_IssueRenderCommandsEnd  (gfx_d3d/r_rendercmds.cpp:1156)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_IssueRenderCommandsEnd(void)
 
 {
-  int iVar1;
-  char cVar3;
+  GfxBackEndData *pGVar1;
+  bool bVar3;
   int iVar2;
   
   __savegprlr_25();
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 == '\0') && (cVar3 = Sys_IsRenderThread(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x48a,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar3 = Sys_IsMainThread();
+  if ((!bVar3) && (bVar3 = Sys_IsRenderThread(), !bVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x48a,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x48b,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x48b,0,"%s");
   }
-  DAT_84617894 = 0;
-  iVar2 = *(int *)(DAT_84628b00 + 0x1be0);
+  r_glob.allowAddDrawCall = 0;
+  iVar2 = frontEndDataOut->renderFromBackEnd;
   sync(1);
-  *(undefined4 *)(DAT_84628b00 + 0x1bf4) = 1;
-  if ((iVar2 != 0) && (DAT_84628b2c == 0)) {
+  frontEndDataOut->finishReady = 1;
+  if ((iVar2 != 0) && (g_databaseReady2 == 0)) {
     R_WakeRenderer();
   }
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     R_UpdateActiveWorkerThreads();
   }
   R_UpdateSkinCacheUsage();
-  iVar1 = DAT_84628b00;
-  DAT_84628b00 = 0;
+  pGVar1 = frontEndDataOut;
+  frontEndDataOut = (GfxBackEndData *)0x0;
   if (iVar2 != 0) {
-    cVar3 = Sys_IsMainThread();
-    if (cVar3 == '\0') {
-      MyAssertHandler(0xffffffff821cb048,0x4b0,0,0xffffffff82000f98,0xffffffff82010b48);
+    bVar3 = Sys_IsMainThread();
+    if (!bVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x4b0,0,"%s");
     }
     R_ReleaseThreadOwnership();
     __restgprlr_25();
     return;
   }
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     R_SyncRenderThread();
   }
   iVar2 = R_HasDeviceOwnership();
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x4c2,0,0xffffffff82000f98,0xffffffff8217d420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x4c2,0,"%s");
   }
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
-    if (DAT_84617890 != 0) {
-      MyAssertHandler(0xffffffff821cb048,0x4c6,0,0xffffffff82000f98,0xffffffff821cb478);
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
+    if (r_glob.mainThreadStopUpdatingSamplers != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x4c6,0,"%s");
     }
-    DAT_84617890 = 1;
+    r_glob.mainThreadStopUpdatingSamplers = 1;
     sync(1);
-    DAT_8461788c = DAT_8461788c + -1;
-    if (DAT_8461788c < 0) {
-      MyAssertHandler(0xffffffff821cb048,0x4cb,0,0xffffffff8208c9cc,0xffffffff8208c9f4,DAT_8461788c)
-      ;
+    r_glob.stopUpdatingSamplers = r_glob.stopUpdatingSamplers + -1;
+    if (r_glob.stopUpdatingSamplers < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x4cb,0,"%s\n\t(r_glob.stopUpdatingSamplers) = %i");
     }
   }
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x4d3,0,0xffffffff82000f98,0xffffffff8201f49c);
+  if (pGVar1 == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x4d3,0,"%s");
   }
-  RB_BeginFrame(iVar1);
+  RB_BeginFrame(pGVar1);
   RB_Draw3D();
   RB_CallExecuteRenderCommands();
-  RB_EndFrame(*(undefined4 *)(iVar1 + 0x1bdc));
+  RB_EndFrame(pGVar1->drawType);
   iVar2 = R_HasDeviceOwnership();
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x4db,0,0xffffffff82000f98,0xffffffff8217d420);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x4db,0,"%s");
   }
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
-    if (DAT_84617890 == 0) {
-      MyAssertHandler(0xffffffff821cb048,0x4df,0,0xffffffff82000f98,0xffffffff821cb450);
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
+    if (r_glob.mainThreadStopUpdatingSamplers == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x4df,0,"%s");
     }
-    DAT_84617890 = 0;
-    if (DAT_8461788c < 0) {
-      MyAssertHandler(0xffffffff821cb048,0x4e2,0,0xffffffff8208c9cc,0xffffffff8208c9f4,DAT_8461788c)
-      ;
+    r_glob.mainThreadStopUpdatingSamplers = 0;
+    if (r_glob.stopUpdatingSamplers < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x4e2,0,"%s\n\t(r_glob.stopUpdatingSamplers) = %i");
     }
-    DAT_8461788c = DAT_8461788c + 1;
+    r_glob.stopUpdatingSamplers = r_glob.stopUpdatingSamplers + 1;
   }
   __restgprlr_25();
   return;
@@ -979,17 +1107,22 @@ void R_IssueRenderCommandsEnd(void)
 
 // 827664A8  R_PreAbortRenderCommands  (gfx_d3d/r_rendercmds.cpp:1267)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_PreAbortRenderCommands(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x4f4,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x4f4,0,"%s");
   }
-  if (DAT_84628b00 != 0) {
-    *(undefined4 *)(DAT_84628b00 + 0x1bf8) = 1;
+  if (frontEndDataOut != (GfxBackEndData *)0x0) {
+    frontEndDataOut->abortReady = 1;
   }
   return;
 }
@@ -997,94 +1130,106 @@ void R_PreAbortRenderCommands(void)
 
 // 82766510  R_AbortRenderCommands  (gfx_d3d/r_rendercmds.cpp:1283)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_AbortRenderCommands(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x504,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x504,0,"%s");
   }
-  DAT_84618144 = 0;
-  DAT_84618148 = 0;
-  DAT_84628b00 = 0;
-  DAT_84617aa0 = 0;
+  rg.viewInfoCount = 0;
+  rg.pipInfoCount = 0;
+  frontEndDataOut = (GfxBackEndData *)0x0;
+  rg.inFrame = false;
   return;
 }
 
 
 // 82766590  R_AbortCommandBuffers  (gfx_d3d/r_rendercmds.cpp:1312)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_AbortCommandBuffers(void)
 
 {
-  int iVar1;
-  char cVar2;
-  int iVar3;
-  int iVar4;
+  uint uVar1;
+  GfxViewInfo *pGVar2;
+  GfxBackEndData *pGVar3;
+  bool bVar4;
+  GfxDrawListIter *pGVar5;
   
   __savegprlr_29();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x524,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x524,0,"%s");
   }
-  iVar1 = DAT_84628b00;
-  if (DAT_84628b00 != 0) {
-    while (iVar1 == DAT_846178a8) {
-      Com_Printf(0,0xffffffff821cb4a0);
+  pGVar3 = frontEndDataOut;
+  if (frontEndDataOut != (GfxBackEndData *)0x0) {
+    while (pGVar3 == r_glob.freezeDrawData) {
+      Com_Printf(0,"R_AbortCommandBuffers: waiting\n");
       Sys_Sleep(1);
     }
     sync(1);
-    iVar4 = *(int *)(iVar1 + 0x15bc) * 0x38a0 + *(int *)(iVar1 + 0x15cc);
-    if (*(int *)(iVar1 + 0x1be8) == 0) {
-      R_AbortCommandBuffer(iVar1,0x11,iVar4 + 0x2b50);
-      R_AbortCommandBuffer(iVar1,0x12,iVar4 + 0x2d48);
-      R_AbortCommandBuffer(iVar1,0x14,iVar4 + 0x3138);
-      R_AbortCommandBuffer(iVar1,0x15,iVar4 + 0x3330);
-      R_AbortCommandBuffer(iVar1,0x16,iVar4 + 0x3528);
-      R_AbortCommandBuffer(iVar1,0x17,iVar4 + 0x3720);
+    uVar1 = pGVar3->viewInfoIndex;
+    pGVar2 = pGVar3->viewInfo;
+    if (pGVar3->shadowReady == 0) {
+      R_AbortCommandBuffer(pGVar3,0x11,&pGVar2[uVar1].drawList[0x11].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x12,&pGVar2[uVar1].drawList[0x12].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x14,&pGVar2[uVar1].drawList[0x14].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x15,&pGVar2[uVar1].drawList[0x15].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x16,&pGVar2[uVar1].drawList[0x16].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x17,&pGVar2[uVar1].drawList[0x17].info.iterGroup.drawListIter);
     }
-    if (*(int *)(iVar1 + 0x1bec) == 0) {
-      R_AbortCommandBuffer(iVar1,0x10,iVar4 + 0x2958);
-      R_AbortCommandBuffer(iVar1,0x18,iVar1 + 0x2f58);
-      R_AbortCommandBuffer(iVar1,0x19,iVar1 + 0x30d8);
-      R_AbortCommandBuffer(iVar1,0x1a,iVar1 + 0x3258);
-      R_AbortCommandBuffer(iVar1,0x1b,iVar1 + 0x33d8);
-      R_AbortCommandBuffer(iVar1,0x1c,iVar1 + 0x3558);
-      R_AbortCommandBuffer(iVar1,0x1d,iVar1 + 0x36d8);
-      R_AbortCommandBuffer(iVar1,0x1e,iVar1 + 0x3858);
-      R_AbortCommandBuffer(iVar1,0x1f,iVar1 + 0x39d8);
-      R_AbortCommandBuffer(iVar1,0x20,iVar1 + 0x3b58);
-      R_AbortCommandBuffer(iVar1,0x21,iVar1 + 0x3cd8);
-      R_AbortCommandBuffer(iVar1,0x22,iVar1 + 0x3e58);
-      R_AbortCommandBuffer(iVar1,0x23,iVar1 + 0x3fd8);
-      R_AbortCommandBuffer(iVar1,0x24,iVar1 + 0x4158);
-      R_AbortCommandBuffer(iVar1,0x25,iVar1 + 0x42d8);
-      R_AbortCommandBuffer(iVar1,0x26,iVar1 + 0x4458);
-      R_AbortCommandBuffer(iVar1,0,iVar4 + 0x9d8);
-      R_AbortCommandBuffer(iVar1,1,iVar4 + 0xbd0);
-      R_AbortCommandBuffer(iVar1,2,iVar4 + 0xdc8);
-      R_AbortCommandBuffer(iVar1,3,iVar4 + 0xfc0);
-      R_AbortCommandBuffer(iVar1,4,iVar4 + 0x11b8);
-      R_AbortCommandBuffer(iVar1,5,iVar4 + 0x13b0);
-      R_AbortCommandBuffer(iVar1,6,iVar4 + 0x15a8);
-      R_AbortCommandBuffer(iVar1,7,iVar4 + 0x17a0);
-      R_AbortCommandBuffer(iVar1,8,iVar4 + 0x1998);
-      R_AbortCommandBuffer(iVar1,9,iVar4 + 0x1b90);
-      R_AbortCommandBuffer(iVar1,10,iVar4 + 0x1d88);
-      R_AbortCommandBuffer(iVar1,0xb,iVar4 + 0x1f80);
-      R_AbortCommandBuffer(iVar1,0xc,iVar4 + 0x2178);
-      R_AbortCommandBuffer(iVar1,0xd,iVar4 + 0x2370);
-      iVar3 = *(int *)(iVar1 + 0x45d0);
-      if (*(int *)(iVar4 + 0x934) != 0) {
-        R_AbortCommandBuffer(iVar1,0xf,iVar3);
-        iVar3 = iVar4 + 0x2568;
+    if (pGVar3->opaqueReady == 0) {
+      R_AbortCommandBuffer(pGVar3,0x10,&pGVar2[uVar1].drawList[0x10].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x18,&pGVar3->prepassIterGroup[0].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x19,&pGVar3->prepassIterGroup[1].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1a,&pGVar3->prepassIterGroup[2].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1b,&pGVar3->prepassIterGroup[3].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1c,&pGVar3->prepassIterGroup[4].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1d,&pGVar3->prepassIterGroup[5].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1e,&pGVar3->prepassIterGroup[6].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x1f,&pGVar3->prepassIterGroup[7].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x20,&pGVar3->prepassIterGroup[8].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x21,&pGVar3->prepassIterGroup[9].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x22,&pGVar3->prepassIterGroup[10].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x23,&pGVar3->prepassIterGroup[0xb].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x24,&pGVar3->prepassIterGroup[0xc].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x25,&pGVar3->prepassIterGroup[0xd].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0x26,&pGVar3->prepassIterGroup[0xe].drawListIter);
+      R_AbortCommandBuffer(pGVar3,0,&pGVar2[uVar1].drawList[0].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,1,&pGVar2[uVar1].drawList[1].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,2,&pGVar2[uVar1].drawList[2].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,3,&pGVar2[uVar1].drawList[3].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,4,&pGVar2[uVar1].drawList[4].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,5,&pGVar2[uVar1].drawList[5].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,6,&pGVar2[uVar1].drawList[6].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,7,&pGVar2[uVar1].drawList[7].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,8,&pGVar2[uVar1].drawList[8].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,9,&pGVar2[uVar1].drawList[9].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,10,&pGVar2[uVar1].drawList[10].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0xb,&pGVar2[uVar1].drawList[0xb].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0xc,&pGVar2[uVar1].drawList[0xc].info.iterGroup.drawListIter);
+      R_AbortCommandBuffer(pGVar3,0xd,&pGVar2[uVar1].drawList[0xd].info.iterGroup.drawListIter);
+      pGVar5 = pGVar3->litTransDrawListIter;
+      if (pGVar2[uVar1].isSplitTrans != 0) {
+        R_AbortCommandBuffer(pGVar3,0xf,pGVar5);
+        pGVar5 = &pGVar2[uVar1].drawList[0xe].info.iterGroup.drawListIter;
       }
-      R_AbortCommandBuffer(iVar1,0xe,iVar3);
+      R_AbortCommandBuffer(pGVar3,0xe,pGVar5);
     }
-    if (*(int *)(iVar1 + 0x1bf0) == 0) {
-      R_AbortCommandBuffer(iVar1,0x13,iVar4 + 0x2f40);
+    if (pGVar3->emissiveReady == 0) {
+      R_AbortCommandBuffer(pGVar3,0x13,&pGVar2[uVar1].drawList[0x13].info.iterGroup.drawListIter);
     }
   }
   __restgprlr_29();
@@ -1094,150 +1239,188 @@ void R_AbortCommandBuffers(void)
 
 // 827668D8  R_GetCommandBuffer  (gfx_d3d/r_rendercmds.cpp:1415)
 
-void R_GetCommandBuffer(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void * R_GetCommandBuffer(GfxRenderCommand param_1,int param_2)
 
 {
   int iVar1;
-  int *piVar2;
+  uchar *puVar2;
+  GfxCmdArray *pGVar3;
   undefined8 in_r0;
-  ulonglong uVar3;
-  char cVar6;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar7;
-  int iVar8;
-  uint uVar9;
+  ulonglong uVar4;
+  bool bVar7;
+  void *pvVar5;
+  GfxCmdHeader *pGVar6;
+  ulonglong uVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
   
-  uVar3 = __savegprlr_25();
-  cVar6 = Sys_IsMainThread();
-  if ((cVar6 == '\0') && (cVar6 = Sys_IsRenderThread(), cVar6 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x58b,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  uVar8 = (ulonglong)param_2;
+  uVar4 = __savegprlr_25(param_1);
+  bVar7 = Sys_IsMainThread();
+  if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x58b,0,"%s");
   }
-  iVar8 = (int)uVar3;
-  if ((iVar8 < 0) || (0x19 < iVar8)) {
-    MyAssertHandler(0xffffffff821cb048,0x58c,0,0xffffffff821cb61c,0xffffffff821cb634,uVar3);
+  iVar10 = (int)uVar4;
+  if ((iVar10 < 0) || (0x19 < iVar10)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x58c,0,"%s\n\t(renderCmd) = %i");
   }
-  if ((param_2 & 3) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x58d,0,0xffffffff8217c800,0xffffffff821cb608,param_2);
+  if ((uVar8 & 3) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x58d,0,"%s\n\t(bytes) = %i");
   }
-  uVar9 = (uint)param_2;
-  if (DAT_84628b28 <= (int)uVar9) {
-    MyAssertHandler(0xffffffff821cb048,0x58e,0,0xffffffff8217c800,0xffffffff821cb5e8,param_2);
+  uVar11 = (uint)uVar8;
+  if (DAT_84628b28 <= (int)uVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x58e,0,"%s\n\t(bytes) = %i");
   }
-  if (uVar9 != (uVar9 & 0xffff)) {
-    MyAssertHandler(0xffffffff821cb048,0x58f,0,0xffffffff8217c800,0xffffffff821cb5b4,param_2);
+  if (uVar11 != (uVar11 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x58f,0,"%s\n\t(bytes) = %i");
   }
-  if (DAT_84628b34 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x590,0,0xffffffff82000f98,0xffffffff821cb5a8);
+  if (s_cmdList == (GfxCmdArray *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x590,0,"%s");
   }
-  if (*DAT_84628b34 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x591,0,0xffffffff82000f98,0xffffffff821cb598);
+  if (s_cmdList->cmds == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x591,0,"%s");
   }
-  if (DAT_84617aa0 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0x592,0,0xffffffff82000f98,0xffffffff821cb58c);
+  if (rg.inFrame == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x592,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x593,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x593,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x595,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x595,0,"%s");
   }
-  if (DAT_84761f80 != 0) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821cb048,0x598,0,0xffffffff82027234);
+  if (xenonCompilerWorkaround != 0) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x598,0,"XENON_COMPILER_WORKAROUND memory corruption");
     }
     trapWord(0x1f,in_r0,0x16);
   }
-  if (((iVar8 < 9) && (DAT_84628b34[2] < 0x1e00)) && (0x1dff < (int)(DAT_84628b34[2] + uVar9))) {
-    Com_PrintWarning(8,0xffffffff821cb534,0x1e00);
+  if (((iVar10 < 9) && (s_cmdList->usedCritical < 0x1e00)) &&
+     (0x1dff < (int)(s_cmdList->usedCritical + uVar11))) {
+    Com_PrintWarning(8,"RENDERCOMMAND_CRITICAL_WARN_SIZE (%i bytes) reached\n");
   }
-  if ((DAT_84628b34[1] < DAT_84628b04) && (DAT_84628b04 <= (int)(DAT_84628b34[1] + uVar9))) {
-    Com_PrintWarning(8,0xffffffff821cb508,(double)((float)(longlong)DAT_84628b04 * 0.0009765625));
+  if ((s_cmdList->usedTotal < s_renderCmdWarnSize) &&
+     (s_renderCmdWarnSize <= (int)(s_cmdList->usedTotal + uVar11))) {
+    Com_PrintWarning(8,"RENDERCOMMAND_WARN_SIZE (%.0f KB) reached\n");
   }
-  piVar2 = DAT_84628b34;
-  iVar1 = DAT_84628b34[1];
-  iVar7 = DAT_84628b28 - iVar1;
-  if (8 < iVar8) {
-    iVar7 = DAT_84628b34[2] + iVar7 + -0x2000;
+  pGVar3 = s_cmdList;
+  iVar1 = s_cmdList->usedTotal;
+  iVar9 = DAT_84628b28 - iVar1;
+  if (8 < iVar10) {
+    iVar9 = s_cmdList->usedCritical + iVar9 + -0x2000;
   }
-  if (iVar7 < (int)uVar9) {
-    if (iVar8 < 9) {
-      uVar4 = va(0xffffffff821cb4e4,uVar3,iVar1,DAT_84628b34[2],param_2);
-      MyAssertHandler(0xffffffff821cb048,0x5a7,0,0xffffffff820011f4,0xffffffff821cb4c0,uVar4);
+  if (iVar9 < (int)uVar11) {
+    if (iVar10 < 9) {
+      va("rc %i used %i critical %i bytes %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x5a7,0,"%s\n\t%s");
     }
-    DAT_84628b34[3] = 0;
-    __restgprlr_25(0);
-    return;
+    s_cmdList->lastCmd = (GfxCmdHeader *)0x0;
+    pvVar5 = (void *)__restgprlr_25(0);
+    return pvVar5;
   }
-  iVar8 = *DAT_84628b34;
-  iVar7 = DAT_84628b34[2];
-  iVar5 = iVar1 + iVar8;
-  DAT_84628b34[3] = iVar5;
-  piVar2[1] = iVar1 + uVar9;
-  piVar2[2] = iVar7 + (-((int)((uVar3 & 0xffffffff) >> 0x1f) + (uint)(uVar3 < 9)) & uVar9);
-  *(short *)(iVar5 + 2) = (short)param_2;
-  *(short *)(iVar1 + iVar8) = (short)uVar3;
-  __restgprlr_25();
-  return;
+  puVar2 = s_cmdList->cmds;
+  iVar10 = s_cmdList->usedCritical;
+  pGVar6 = (GfxCmdHeader *)(puVar2 + iVar1);
+  s_cmdList->lastCmd = pGVar6;
+  pGVar3->usedTotal = iVar1 + uVar11;
+  pGVar3->usedCritical =
+       iVar10 + (-((int)((uVar4 & 0xffffffff) >> 0x1f) + (uint)(uVar4 < 9)) & uVar11);
+  pGVar6->byteCount = (ushort)uVar8;
+  *(short *)(puVar2 + iVar1) = (short)uVar4;
+  pvVar5 = (void *)__restgprlr_25();
+  return pvVar5;
 }
 
 
 // 82766C88  R_GrowCommandBuffer  (gfx_d3d/r_rendercmds.cpp:1463)
 
-void R_GrowCommandBuffer(void)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void * R_GrowCommandBuffer(int param_1)
 
 {
-  undefined2 *puVar1;
-  int iVar2;
+  uchar *puVar1;
+  uint uVar2;
   int iVar3;
-  longlong lVar4;
-  char cVar6;
-  ulonglong uVar5;
+  bool bVar6;
+  GfxCmdHeader *pGVar4;
+  void *pvVar5;
   
-  lVar4 = __savegprlr_27();
-  cVar6 = Sys_IsMainThread();
-  if ((cVar6 == '\0') && (cVar6 = Sys_IsRenderThread(), cVar6 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x5bb,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  iVar3 = __savegprlr_27(param_1);
+  bVar6 = Sys_IsMainThread();
+  if ((!bVar6) && (bVar6 = Sys_IsRenderThread(), !bVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5bb,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5bc,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5bc,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5be,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5be,0,"%s");
   }
-  puVar1 = (undefined2 *)DAT_84628b34[3];
-  iVar2 = *DAT_84628b34;
-  iVar3 = DAT_84628b34[1];
-  DAT_84628b34[1] = (int)puVar1 - iVar2;
-  uVar5 = R_GetCommandBuffer(*puVar1,(ulonglong)(ushort)puVar1[1] + lVar4);
-  if ((ulonglong)(uint)DAT_84628b34[3] != (uVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cb048,0x5c4,1,0xffffffff82000f98,0xffffffff821cb660);
+  pGVar4 = s_cmdList->lastCmd;
+  puVar1 = s_cmdList->cmds;
+  uVar2 = s_cmdList->usedTotal;
+  s_cmdList->usedTotal = (int)pGVar4 - (int)puVar1;
+  pGVar4 = R_GetCommandBuffer((uint)pGVar4->id,(uint)pGVar4->byteCount + iVar3);
+  if (s_cmdList->lastCmd != pGVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5c4,1,"%s");
   }
-  __restgprlr_27(-(uint)(uVar5 != 0) & iVar2 + iVar3);
-  return;
+  pvVar5 = (void *)__restgprlr_27(-(ulonglong)(pGVar4 != (GfxCmdHeader *)0x0) &
+                                  ZEXT48(puVar1) + (ulonglong)uVar2);
+  return pvVar5;
 }
 
 
 // 82766DB0  R_BeginDisplayCmdList2D  (gfx_d3d/r_rendercmds.cpp:1484)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_BeginDisplayCmdList2D(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x5cf,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5cf,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5d0,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5d0,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5d2,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5d2,0,"%s");
   }
-  *(int *)(*(int *)(DAT_84628b00 + 0x15bc) * 0x38a0 + *(int *)(DAT_84628b00 + 0x15cc) + 0x31c) =
-       DAT_84628b34[1] + *DAT_84628b34;
+  frontEndDataOut->viewInfo[frontEndDataOut->viewInfoIndex].displayCmds =
+       s_cmdList->cmds + s_cmdList->usedTotal;
   __restgprlr_29();
   return;
 }
@@ -1245,21 +1428,28 @@ void R_BeginDisplayCmdList2D(void)
 
 // 82766E98  R_BeginClientCmdList2D  (gfx_d3d/r_rendercmds.cpp:1507)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_BeginClientCmdList2D(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x5e4,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5e4,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5e5,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5e5,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x5e7,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x5e7,0,"%s");
   }
   R_BeginDisplayCmdList2D();
   __restgprlr_29();
@@ -1269,24 +1459,30 @@ void R_BeginClientCmdList2D(void)
 
 // 82766F58  R_ClearClientCmdList2D  (gfx_d3d/r_rendercmds.cpp:1547)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ClearClientCmdList2D(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x60e,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x60e,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x60f,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x60f,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x611,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x611,0,"%s");
   }
-  *(undefined4 *)
-   (*(int *)(DAT_84628b00 + 0x15bc) * 0x38a0 + *(int *)(DAT_84628b00 + 0x15cc) + 0x31c) = 0;
+  frontEndDataOut->viewInfo[frontEndDataOut->viewInfoIndex].displayCmds = (void *)0x0;
   __restgprlr_29();
   return;
 }
@@ -1294,23 +1490,30 @@ void R_ClearClientCmdList2D(void)
 
 // 82767030  R_BeginSharedCmdList  (gfx_d3d/r_rendercmds.cpp:1565)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_BeginSharedCmdList(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 == '\0') && (cVar1 = Sys_IsRenderThread(), cVar1 == '\0')) {
-    MyAssertHandler(0xffffffff821cb048,0x61e,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar1 = Sys_IsMainThread();
+  if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x61e,0,"%s");
   }
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x61f,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x61f,0,"%s");
   }
-  if (*(int *)(DAT_84628b00 + 0x1bf4) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x621,0,0xffffffff82000f98,0xffffffff821cb56c);
+  if (frontEndDataOut->finishReady != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x621,0,"%s");
   }
-  *(int *)(DAT_84628b00 + 0x15d0) = DAT_84628b34[1] + *DAT_84628b34;
+  frontEndDataOut->cmds = s_cmdList->cmds + s_cmdList->usedTotal;
   __restgprlr_29();
   return;
 }
@@ -1318,249 +1521,292 @@ void R_BeginSharedCmdList(void)
 
 // 82767108  R_AddCmdEndOfList  (gfx_d3d/r_rendercmds.cpp:1577)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdEndOfList(void)
 
 {
-  R_GetCommandBuffer(0,4);
+  R_GetCommandBuffer(RC_END_OF_LIST,4);
   return;
 }
 
 
 // 82767118  R_ToggleSmpFrame  (gfx_d3d/r_rendercmds.cpp:1583)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ToggleSmpFrame(void)
 
 {
-  undefined *puVar1;
-  char cVar4;
-  undefined4 uVar2;
-  void *pvVar3;
-  uint uVar5;
-  int iVar6;
+  GfxBackEndData *pGVar1;
+  bool bVar3;
+  int iVar2;
+  uint uVar4;
   
   __savegprlr_26();
-  if (DAT_84628b00 != (undefined *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x638,0,0xffffffff82000f98,0xffffffff821cb08c);
+  if (frontEndDataOut != (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x638,0,"%s");
   }
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 != '\0') {
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     R_ReleaseThreadOwnership();
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb410);
-  R_ProcessWorkerCmdsWithTimeout(0xffffffff82519fc0,1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait renderer2");
+  R_ProcessWorkerCmdsWithTimeout(Sys_IsRendererReady2,1);
   PIXEndNamedEvent();
   sync(1);
-  if (DAT_84618144 == 0) {
+  if (rg.viewInfoCount == 0) {
     CG_CalculateFPS();
   }
-  DAT_84617abc = DAT_84617abc + 1;
-  uVar5 = DAT_845a0b50 + 1;
+  rg.frontEndFrameCount = rg.frontEndFrameCount + 1;
+  uVar4 = gfxBuf.dynamicBufferFrame + 1;
   DAT_84628b30 = DAT_84628b30 - 1 & 1;
-  DAT_84628b00 = &DAT_84628b80 + DAT_84628b30 * 0x8e780;
-  DAT_845a0b50 = uVar5 + (((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0)) * -2;
-  uVar2 = Profile2_Update();
-  *(undefined4 *)(DAT_84628b00 + 0x4db8) = uVar2;
-  if (DAT_84617abc == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x654,0,0xffffffff82000f98,0xffffffff821cb7bc);
+  frontEndDataOut = s_backEndData + DAT_84628b30;
+  gfxBuf.dynamicBufferFrame =
+       uVar4 + (((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0)) * -2;
+  iVar2 = Profile2_Update();
+  frontEndDataOut->prof_index = iVar2;
+  if (rg.frontEndFrameCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x654,0,"%s");
   }
-  *(int *)(DAT_84628b00 + 0x15c0) = DAT_84618144;
-  *(undefined4 *)(DAT_84628b00 + 0x15c4) = DAT_84618148;
-  *(undefined **)(DAT_84628b00 + 0x15cc) = &DAT_84745a80 + DAT_84628b38 * 0xe280;
-  *(undefined4 **)(DAT_84628b00 + 0x15b8) = &DAT_84628b08 + DAT_84628b38 * 4;
-  if (DAT_84618144 == 0) {
+  frontEndDataOut->viewInfoCount = rg.viewInfoCount;
+  frontEndDataOut->pipInfoCount = rg.pipInfoCount;
+  frontEndDataOut->viewInfo = g_viewInfo[g_frameIndex];
+  frontEndDataOut->commands = g_frontEndCmds + g_frameIndex;
+  if (rg.viewInfoCount == 0) {
     R_ToggleModelLightingFrame();
   }
   R_ResetStatTracking();
-  *(undefined4 **)(DAT_84628b00 + 0x1570) = &DAT_845a0af0 + DAT_845a0b50 * 0xb;
-  DAT_845a0b48 = *(undefined4 *)(*(int *)(DAT_84628b00 + 0x1570) + 0x28);
-  if (DAT_84618024 != 0) {
-    *(int *)(DAT_84618024 + 0x18) =
-         (*(int **)(DAT_84628b00 + 0x1570))[1] - **(int **)(DAT_84628b00 + 0x1570);
-    iVar6 = *(int *)(DAT_84618024 + 0x18);
-    if (*(int *)(DAT_84618024 + 0x1c) <= *(int *)(DAT_84618024 + 0x18)) {
-      iVar6 = *(int *)(DAT_84618024 + 0x1c);
+  frontEndDataOut->skinnedCacheVb = gfxBuf.skinnedCacheVbPool + gfxBuf.dynamicBufferFrame;
+  gfxBuf.skinnedCacheLockAddr = frontEndDataOut->skinnedCacheVb->verts;
+  if (rg.stats != (trStatistics_t *)0x0) {
+    (rg.stats)->freeSkinCacheMem =
+         frontEndDataOut->skinnedCacheVb->total - frontEndDataOut->skinnedCacheVb->used;
+    iVar2 = (rg.stats)->freeSkinCacheMem;
+    if ((rg.stats)->minFreeSkinCacheMem <= (rg.stats)->freeSkinCacheMem) {
+      iVar2 = (rg.stats)->minFreeSkinCacheMem;
     }
-    *(int *)(DAT_84618024 + 0x1c) = iVar6;
-    uVar2 = R_GetMinFreeLightingModelCache();
-    *(undefined4 *)(DAT_84618024 + 0x20) = uVar2;
+    (rg.stats)->minFreeSkinCacheMem = iVar2;
+    iVar2 = R_GetMinFreeLightingModelCache();
+    (rg.stats)->minFreeLightingCache = iVar2;
   }
-  **(undefined4 **)(DAT_84628b00 + 0x1570) = 0;
-  DAT_84628b34 = *(undefined4 *)(DAT_84628b00 + 0x15b8);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821cb7a8);
-  iVar6 = *(int *)(DAT_84628b00 + 0x1544);
-  if ((iVar6 < 0) || (0x4000 < iVar6)) {
-    MyAssertHandler(0xffffffff821cb048,0x6a0,0,0xffffffff821cb728,iVar6,0,0x4000);
+  frontEndDataOut->skinnedCacheVb->used = 0;
+  s_cmdList = frontEndDataOut->commands;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"dev clear buffers");
+  if ((frontEndDataOut->drawSurfCount < 0) || (0x4000 < frontEndDataOut->drawSurfCount)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x6a0,0,
+                    "frontEndDataOut->drawSurfCount not in [0, static_cast< int >( ARRAY_COUNT( frontEndDataOut->drawSurfs ) )]\n\t%i not in [%i, %i]"
+                   );
   }
-  if (*(int *)(DAT_84628b00 + 0x1548) < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x6a1,0,0xffffffff821cb6e4,0xffffffff821cb708,
-                    *(undefined4 *)(DAT_84628b00 + 0x1548));
+  if (frontEndDataOut->surfPos < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x6a1,0,"%s\n\t(frontEndDataOut->surfPos) = %i");
   }
-  iVar6 = *(int *)(DAT_84628b00 + 0x1548);
-  if (0x20000 < iVar6) {
-    iVar6 = 0x20000;
+  iVar2 = frontEndDataOut->surfPos;
+  if (0x20000 < iVar2) {
+    iVar2 = 0x20000;
   }
-  *(int *)(DAT_84628b00 + 0x1548) = iVar6;
-  if ((*(int *)(DAT_84628b00 + 0x1560) < 0) || (0x100 < *(int *)(DAT_84628b00 + 0x1560))) {
-    MyAssertHandler(0xffffffff821cb048,0x6a3,0,0xffffffff821cb688,
-                    *(undefined4 *)(DAT_84628b00 + 0x1560),0,0x100);
+  frontEndDataOut->surfPos = iVar2;
+  if ((frontEndDataOut->cloudDataCount < 0) || (0x100 < frontEndDataOut->cloudDataCount)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x6a3,0,
+                    "frontEndDataOut->cloudDataCount not in [0, GFX_PARTICLE_CLOUD_LIMIT]\n\t%i not in [%i, %i]"
+                   );
   }
-  Com_Memset(DAT_84628b00 + 0x69c00,0xb0,*(int *)(DAT_84628b00 + 0x1544) << 3);
-  Com_Memset(DAT_84628b00 + 0x4e00,0xb0,*(undefined4 *)(DAT_84628b00 + 0x1548));
-  Com_Memset(DAT_84628b00 + 0x65c00,0xb0,*(int *)(DAT_84628b00 + 0x1560) << 6);
-  Com_Memset(DAT_84628b00 + 0x26000,0xb0,0x8000);
-  Com_Memset(DAT_84628b00 + 0x2e000,0xb0,0x2800);
-  Com_Memset(DAT_84628b00 + 0x1580,0xb0,0x38);
+  Com_Memset(frontEndDataOut->drawSurfs,0xb0,frontEndDataOut->drawSurfCount << 3);
+  Com_Memset(frontEndDataOut->surfsBuffer,0xb0,frontEndDataOut->surfPos);
+  Com_Memset(frontEndDataOut->cloudData,0xb0,frontEndDataOut->cloudDataCount << 6);
+  Com_Memset(frontEndDataOut->codeEmissiveSurfs,0xb0,0x8000);
+  Com_Memset(frontEndDataOut->codeTransSurfs,0xb0,0x2800);
+  Com_Memset(&frontEndDataOut->fogSettings,0xb0,0x38);
   PIXEndNamedEvent();
-  *(undefined4 *)(DAT_84628b00 + 0x1518) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x151c) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1520) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1544) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1548) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x154c) = 1;
-  *(undefined4 *)(DAT_84628b00 + 0x1560) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1550) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1554) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1558) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x155c) = 0;
-  R_ResetMesh(DAT_84628b00 + 0x1340);
-  R_ResetMesh(DAT_84628b00 + 0x139c);
-  *(undefined4 *)(DAT_84628b00 + 0x1564) = 0;
-  R_ResetMesh(DAT_84628b00 + 0x13f8);
-  *(undefined4 *)(DAT_84628b00 + 0x1568) = 0;
-  R_ResetMesh(DAT_84628b00 + 0x1454);
-  *(undefined4 *)(DAT_84628b00 + 0x156c) = 0;
-  R_ResetMesh(DAT_84628b00 + 0x14b0);
-  *(undefined4 *)(DAT_84628b00 + 0x157c) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x15d0) = 0;
-  puVar1 = DAT_84628b00;
-  *(undefined4 *)(DAT_84628b00 + 0x1924) = 0;
-  *(undefined4 *)(puVar1 + 0x18f4) = 0;
-  *(undefined4 *)(puVar1 + 0x190c) = 0;
-  pvVar3 = memset(DAT_84628b00 + 0x15e4,0,0x9c);
-  *(undefined4 *)(DAT_84628b00 + 0x15c8) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1be4) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1be8) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1bec) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1bf0) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1bf4) = 0;
-  *(undefined4 *)(DAT_84628b00 + 0x1bf8) = 0;
-  __restgprlr_26(pvVar3);
+  frontEndDataOut->bspSurfDataUsed = 0;
+  frontEndDataOut->smodelSurfDataUsed = 0;
+  frontEndDataOut->smodelSurfVisDataUsed = 0;
+  frontEndDataOut->drawSurfCount = 0;
+  frontEndDataOut->surfPos = 0;
+  frontEndDataOut->gfxEntCount = 1;
+  frontEndDataOut->cloudDataCount = 0;
+  frontEndDataOut->codeSurfCount[0] = 0;
+  frontEndDataOut->codeSurfCount[1] = 0;
+  frontEndDataOut->codeSurfArgsCount[0] = 0;
+  frontEndDataOut->codeSurfArgsCount[1] = 0;
+  R_ResetMesh(frontEndDataOut->mesh);
+  R_ResetMesh(frontEndDataOut->mesh + 1);
+  frontEndDataOut->glassSurfCount = 0;
+  R_ResetMesh(frontEndDataOut->mesh + 2);
+  frontEndDataOut->markSurfCount = 0;
+  R_ResetMesh(frontEndDataOut->mesh + 3);
+  frontEndDataOut->sparkSurfCount = 0;
+  R_ResetMesh(frontEndDataOut->mesh + 4);
+  frontEndDataOut->viewParmCount = 0;
+  frontEndDataOut->cmds = (void *)0x0;
+  pGVar1 = frontEndDataOut;
+  (frontEndDataOut->debugGlobals).lineCount = 0;
+  (pGVar1->debugGlobals).vertCount = 0;
+  (pGVar1->debugGlobals).stringCount = 0;
+  memset();
+  frontEndDataOut->isPIPClientView = 0;
+  frontEndDataOut->beginReady = 0;
+  frontEndDataOut->shadowReady = 0;
+  frontEndDataOut->opaqueReady = 0;
+  frontEndDataOut->emissiveReady = 0;
+  frontEndDataOut->finishReady = 0;
+  frontEndDataOut->abortReady = 0;
+  __restgprlr_26();
   return;
 }
 
 
 // 827675D8  R_UpdateImageDeltaStats  (gfx_d3d/r_rendercmds.cpp:1861)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_UpdateImageDeltaStats(void)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)DAT_84628b00;
-  if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x746,0,0xffffffff82000f98,0xffffffff821b90d8);
-    uVar1 = (ulonglong)DAT_84628b00;
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x746,0,"%s");
   }
-  DB_UpdateImageDeltaStats(uVar1 + 0x1944);
+  DB_UpdateImageDeltaStats(frontEndDataOut->imageRendered);
   return;
 }
 
 
 // 82767640  R_AllocViewParms  (gfx_d3d/r_rendercmds.cpp:1870)
 
-int R_AllocViewParms(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+GfxViewParms * R_AllocViewParms(void)
 
 {
   int iVar1;
+  GfxViewParms *pGVar2;
   
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x751,0,0xffffffff82000f98,0xffffffff821b90d8);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x751,0,"%s");
   }
-  if (3 < *(uint *)(DAT_84628b00 + 0x157c)) {
-    MyAssertHandler(0xffffffff821cb048,0x752,0,0xffffffff821cb7d8,*(uint *)(DAT_84628b00 + 0x157c),4
+  if (3 < (uint)frontEndDataOut->viewParmCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x752,0,
+                    "frontEndDataOut->viewParmCount doesn\'t index ARRAY_COUNT( frontEndDataOut->viewParms )\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = *(int *)(DAT_84628b00 + 0x157c) * 0x150 + DAT_84628b00;
-  *(int *)(DAT_84628b00 + 0x157c) = *(int *)(DAT_84628b00 + 0x157c) + 1;
-  return iVar1 + 0xe00;
+  iVar1 = frontEndDataOut->viewParmCount;
+  pGVar2 = frontEndDataOut->viewParms;
+  frontEndDataOut->viewParmCount = iVar1 + 1;
+  return pGVar2 + iVar1;
 }
 
 
 // 827676F0  R_RenderCommandMaterial  (gfx_d3d/r_rendercmds.cpp:1883)
 
-ulonglong R_RenderCommandMaterial(int param_1)
+Material * R_RenderCommandMaterial(Material *param_1)
 
 {
-  ulonglong uVar1;
+  Material *pMVar1;
   
-  if (param_1 != 0) {
-    uVar1 = Material_FromHandle();
-    return uVar1;
+  if (param_1 != (Material *)0x0) {
+    pMVar1 = Material_FromHandle(param_1);
+    return pMVar1;
   }
-  return (ulonglong)DAT_84616528;
+  return rgp.defaultMaterial;
 }
 
 
 // 82767710  R_AddCmdDrawStretchPic  (gfx_d3d/r_rendercmds.cpp:1889)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawStretchPic
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6,double param_7,double param_8)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float *param_9,Material *param_10)
 
 {
-  bool bVar1;
-  int iVar3;
-  char cVar5;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar6;
+  Material *pMVar1;
+  bool bVar3;
+  bool bVar4;
+  void *pvVar2;
+  char *pcVar5;
+  double dVar6;
   double dVar7;
-  undefined4 in_stack_00000054;
-  int in_stack_0000005c;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float *in_stack_00000054;
+  Material *in_stack_0000005c;
   
-  __savegprlr_29();
-  dVar7 = (double)__savefpr_24();
-  iVar3 = DAT_84616528;
-  if (in_stack_0000005c != 0) {
-    iVar3 = Material_FromHandle(in_stack_0000005c);
+  dVar10 = (double)param_5;
+  dVar11 = (double)param_6;
+  dVar12 = (double)param_7;
+  dVar13 = (double)param_8;
+  dVar9 = (double)param_4;
+  dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
+  __savegprlr_29((double)param_1,param_9,param_10);
+  dVar6 = (double)__savefpr_24();
+  pMVar1 = rgp.defaultMaterial;
+  if (in_stack_0000005c != (Material *)0x0) {
+    pMVar1 = Material_FromHandle(in_stack_0000005c);
   }
-  cVar5 = Material_HasTechnique(iVar3,9);
-  if (cVar5 == '\0') {
-    cVar5 = Material_HasTechnique(iVar3,5);
-    bVar1 = false;
-    if (cVar5 != '\0') goto LAB_827677a0;
-  }
-  else {
+  bVar3 = Material_HasTechnique(pMVar1,TECHNIQUE_LIT);
+  if (bVar3) {
 LAB_827677a0:
-    bVar1 = true;
-  }
-  if ((bVar1) && (cVar5 = Material_IsDefault(iVar3), cVar5 == '\0')) {
-    uVar2 = Material_GetName(in_stack_0000005c);
-    uVar6 = 0xffffffff821cb8e8;
+    bVar3 = true;
   }
   else {
-    if ((*(byte *)(iVar3 + 0x40) & 0x10) == 0) goto LAB_82767808;
-    uVar2 = Material_GetName(in_stack_0000005c);
-    uVar6 = 0xffffffff821cb870;
+    bVar4 = Material_HasTechnique(pMVar1,TECHNIQUE_EMISSIVE);
+    bVar3 = false;
+    if (bVar4) goto LAB_827677a0;
   }
-  Com_PrintWarning(8,uVar6,uVar2);
-  iVar3 = DAT_84616528;
+  if ((!bVar3) || (bVar3 = Material_IsDefault(pMVar1), bVar3)) {
+    if ((pMVar1->stateFlags & 0x10) == 0) goto LAB_82767808;
+    Material_GetName(in_stack_0000005c);
+    pcVar5 = 
+    "R_AddCmdDrawStretchPic: NOT DRAWING WITH MATERIAL \"%s\", because it uses the depth buffer. Set materialType to 2d.\n"
+    ;
+  }
+  else {
+    Material_GetName(in_stack_0000005c);
+    pcVar5 = 
+    "R_AddCmdDrawStretchPic: NOT DRAWING WITH MATERIAL \"%s\", because it has a fogable technique.\n"
+    ;
+  }
+  Com_PrintWarning(8,pcVar5);
+  pMVar1 = rgp.defaultMaterial;
 LAB_82767808:
-  if ((*(byte *)(iVar3 + 0x40) & 0x10) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x771,0,0xffffffff82000f98,0xffffffff821cb844);
+  if ((pMVar1->stateFlags & 0x10) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x771,0,"%s");
   }
-  iVar4 = R_GetCommandBuffer(9,0x2c);
-  if (iVar4 != 0) {
-    *(float *)(iVar4 + 8) = (float)dVar7;
-    *(int *)(iVar4 + 4) = iVar3;
-    *(float *)(iVar4 + 0xc) = (float)param_2;
-    *(float *)(iVar4 + 0x10) = (float)param_3;
-    *(float *)(iVar4 + 0x14) = (float)param_4;
-    *(float *)(iVar4 + 0x18) = (float)param_5;
-    *(float *)(iVar4 + 0x1c) = (float)param_6;
-    *(float *)(iVar4 + 0x20) = (float)param_7;
-    *(float *)(iVar4 + 0x24) = (float)param_8;
-    R_ConvertColorToBytes(in_stack_00000054,iVar4 + 0x28);
+  pvVar2 = R_GetCommandBuffer(RC_FIRST_NONCRITICAL,0x2c);
+  if (pvVar2 != (void *)0x0) {
+    *(float *)((int)pvVar2 + 8) = (float)dVar6;
+    *(Material **)((int)pvVar2 + 4) = pMVar1;
+    *(float *)((int)pvVar2 + 0xc) = (float)dVar7;
+    *(float *)((int)pvVar2 + 0x10) = (float)dVar8;
+    *(float *)((int)pvVar2 + 0x14) = (float)dVar9;
+    *(float *)((int)pvVar2 + 0x18) = (float)dVar10;
+    *(float *)((int)pvVar2 + 0x1c) = (float)dVar11;
+    *(float *)((int)pvVar2 + 0x20) = (float)dVar12;
+    *(float *)((int)pvVar2 + 0x24) = (float)dVar13;
+    R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar2 + 0x28));
   }
   __restfpr_24();
   __restgprlr_29();
@@ -1570,64 +1816,85 @@ LAB_82767808:
 
 // 82767898  R_AddCmdDrawStretchPicFlipST  (gfx_d3d/r_rendercmds.cpp:1927)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawStretchPicFlipST
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6,double param_7,double param_8)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float *param_9,Material *param_10)
 
 {
-  bool bVar1;
-  int iVar3;
-  char cVar5;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar6;
+  Material *pMVar1;
+  bool bVar3;
+  bool bVar4;
+  void *pvVar2;
+  char *pcVar5;
+  double dVar6;
   double dVar7;
-  undefined4 in_stack_00000054;
-  int in_stack_0000005c;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float *in_stack_00000054;
+  Material *in_stack_0000005c;
   
-  __savegprlr_29();
-  dVar7 = (double)__savefpr_24();
-  iVar3 = DAT_84616528;
-  if (in_stack_0000005c != 0) {
-    iVar3 = Material_FromHandle(in_stack_0000005c);
+  dVar10 = (double)param_5;
+  dVar11 = (double)param_6;
+  dVar12 = (double)param_7;
+  dVar13 = (double)param_8;
+  dVar9 = (double)param_4;
+  dVar8 = (double)param_3;
+  dVar7 = (double)param_2;
+  __savegprlr_29((double)param_1,param_9,param_10);
+  dVar6 = (double)__savefpr_24();
+  pMVar1 = rgp.defaultMaterial;
+  if (in_stack_0000005c != (Material *)0x0) {
+    pMVar1 = Material_FromHandle(in_stack_0000005c);
   }
-  cVar5 = Material_HasTechnique(iVar3,9);
-  if (cVar5 == '\0') {
-    cVar5 = Material_HasTechnique(iVar3,5);
-    bVar1 = false;
-    if (cVar5 != '\0') goto LAB_82767928;
-  }
-  else {
+  bVar3 = Material_HasTechnique(pMVar1,TECHNIQUE_LIT);
+  if (bVar3) {
 LAB_82767928:
-    bVar1 = true;
-  }
-  if ((bVar1) && (cVar5 = Material_IsDefault(iVar3), cVar5 == '\0')) {
-    uVar2 = Material_GetName(in_stack_0000005c);
-    uVar6 = 0xffffffff821cb9c8;
+    bVar3 = true;
   }
   else {
-    if ((*(byte *)(iVar3 + 0x40) & 0x10) == 0) goto LAB_82767990;
-    uVar2 = Material_GetName(in_stack_0000005c);
-    uVar6 = 0xffffffff821cb948;
+    bVar4 = Material_HasTechnique(pMVar1,TECHNIQUE_EMISSIVE);
+    bVar3 = false;
+    if (bVar4) goto LAB_82767928;
   }
-  Com_PrintWarning(8,uVar6,uVar2);
-  iVar3 = DAT_84616528;
+  if ((!bVar3) || (bVar3 = Material_IsDefault(pMVar1), bVar3)) {
+    if ((pMVar1->stateFlags & 0x10) == 0) goto LAB_82767990;
+    Material_GetName(in_stack_0000005c);
+    pcVar5 = 
+    "R_AddCmdDrawStretchPicFlipST: NOT DRAWING WITH MATERIAL \"%s\", because it uses the depth buffer. Set materialType to 2d.\n"
+    ;
+  }
+  else {
+    Material_GetName(in_stack_0000005c);
+    pcVar5 = 
+    "R_AddCmdDrawStretchPicFlipST: NOT DRAWING WITH MATERIAL \"%s\", because it has a fogable technique.\n"
+    ;
+  }
+  Com_PrintWarning(8,pcVar5);
+  pMVar1 = rgp.defaultMaterial;
 LAB_82767990:
-  if ((*(byte *)(iVar3 + 0x40) & 0x10) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0x797,0,0xffffffff82000f98,0xffffffff821cb844);
+  if ((pMVar1->stateFlags & 0x10) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x797,0,"%s");
   }
-  iVar4 = R_GetCommandBuffer(10,0x2c);
-  if (iVar4 != 0) {
-    *(float *)(iVar4 + 8) = (float)dVar7;
-    *(int *)(iVar4 + 4) = iVar3;
-    *(float *)(iVar4 + 0xc) = (float)param_2;
-    *(float *)(iVar4 + 0x10) = (float)param_3;
-    *(float *)(iVar4 + 0x14) = (float)param_4;
-    *(float *)(iVar4 + 0x18) = (float)param_5;
-    *(float *)(iVar4 + 0x1c) = (float)param_6;
-    *(float *)(iVar4 + 0x20) = (float)param_7;
-    *(float *)(iVar4 + 0x24) = (float)param_8;
-    R_ConvertColorToBytes(in_stack_00000054,iVar4 + 0x28);
+  pvVar2 = R_GetCommandBuffer(RC_STRETCH_PIC_FLIP_ST,0x2c);
+  if (pvVar2 != (void *)0x0) {
+    *(float *)((int)pvVar2 + 8) = (float)dVar6;
+    *(Material **)((int)pvVar2 + 4) = pMVar1;
+    *(float *)((int)pvVar2 + 0xc) = (float)dVar7;
+    *(float *)((int)pvVar2 + 0x10) = (float)dVar8;
+    *(float *)((int)pvVar2 + 0x14) = (float)dVar9;
+    *(float *)((int)pvVar2 + 0x18) = (float)dVar10;
+    *(float *)((int)pvVar2 + 0x1c) = (float)dVar11;
+    *(float *)((int)pvVar2 + 0x20) = (float)dVar12;
+    *(float *)((int)pvVar2 + 0x24) = (float)dVar13;
+    R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar2 + 0x28));
   }
   __restfpr_24();
   __restgprlr_29();
@@ -1637,36 +1904,55 @@ LAB_82767990:
 
 // 82767A20  R_AddCmdDrawStretchPicRotateXY  (gfx_d3d/r_rendercmds.cpp:1965)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawStretchPicRotateXY
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6,double param_7,double param_8,undefined8 param_9)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float param_9,float *param_10,Material *param_11)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  void *pvVar1;
+  Material *pMVar2;
   double dVar3;
-  undefined4 in_stack_0000005c;
-  int in_stack_00000064;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  float fVar12;
+  float *in_stack_0000005c;
+  Material *in_stack_00000064;
   
-  dVar3 = (double)__savefpr_23();
-  iVar1 = R_GetCommandBuffer(0xb,0x30);
-  if (iVar1 != 0) {
-    uVar2 = DAT_84616528;
-    if (in_stack_00000064 != 0) {
-      uVar2 = Material_FromHandle();
+  dVar11 = (double)param_9;
+  dVar9 = (double)param_7;
+  dVar10 = (double)param_8;
+  dVar7 = (double)param_5;
+  dVar8 = (double)param_6;
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  dVar3 = (double)__savefpr_23((double)param_1,param_10,param_11);
+  pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_XY,0x30);
+  if (pvVar1 != (void *)0x0) {
+    pMVar2 = rgp.defaultMaterial;
+    if (in_stack_00000064 != (Material *)0x0) {
+      pMVar2 = Material_FromHandle(in_stack_00000064);
     }
-    *(undefined4 *)(iVar1 + 4) = uVar2;
-    *(float *)(iVar1 + 8) = (float)dVar3;
-    *(float *)(iVar1 + 0xc) = (float)param_2;
-    *(float *)(iVar1 + 0x10) = (float)param_3;
-    *(float *)(iVar1 + 0x14) = (float)param_4;
-    *(float *)(iVar1 + 0x18) = (float)param_5;
-    *(float *)(iVar1 + 0x1c) = (float)param_6;
-    *(float *)(iVar1 + 0x20) = (float)param_7;
-    *(float *)(iVar1 + 0x24) = (float)param_8;
-    R_ConvertColorToBytes(in_stack_0000005c,iVar1 + 0x28);
-    dVar3 = (double)AngleNormalize360(param_9);
-    *(float *)(iVar1 + 0x2c) = (float)dVar3;
+    *(Material **)((int)pvVar1 + 4) = pMVar2;
+    *(float *)((int)pvVar1 + 8) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar5;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar6;
+    *(float *)((int)pvVar1 + 0x18) = (float)dVar7;
+    *(float *)((int)pvVar1 + 0x1c) = (float)dVar8;
+    *(float *)((int)pvVar1 + 0x20) = (float)dVar9;
+    *(float *)((int)pvVar1 + 0x24) = (float)dVar10;
+    R_ConvertColorToBytes(in_stack_0000005c,(uchar *)((int)pvVar1 + 0x28));
+    fVar12 = AngleNormalize360((float)dVar11);
+    *(float *)((int)pvVar1 + 0x2c) = fVar12;
   }
   __restfpr_23();
   return;
@@ -1675,41 +1961,68 @@ void R_AddCmdDrawStretchPicRotateXY
 
 // 82767AF0  R_AddCmdDrawStretchPicRotateST  (gfx_d3d/r_rendercmds.cpp:1988)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawStretchPicRotateST
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6,double param_7,double param_8,double param_9,double param_10,
-               double param_11,double param_12,undefined8 param_13)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float param_9,float param_10,float param_11,
+               float param_12,float param_13,float *param_14,Material *param_15)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  void *pvVar1;
+  Material *pMVar2;
   double dVar3;
-  undefined4 in_stack_0000007c;
-  int in_stack_00000084;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  float fVar16;
+  float *in_stack_0000007c;
+  Material *in_stack_00000084;
   
-  dVar3 = (double)__savefpr_19();
-  iVar1 = R_GetCommandBuffer(0xc,0x40);
-  if (iVar1 != 0) {
-    uVar2 = DAT_84616528;
-    if (in_stack_00000084 != 0) {
-      uVar2 = Material_FromHandle();
+  dVar15 = (double)param_13;
+  dVar11 = (double)param_9;
+  dVar12 = (double)param_10;
+  dVar13 = (double)param_11;
+  dVar14 = (double)param_12;
+  dVar6 = (double)param_4;
+  dVar7 = (double)param_5;
+  dVar8 = (double)param_6;
+  dVar9 = (double)param_7;
+  dVar10 = (double)param_8;
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  dVar3 = (double)__savefpr_19((double)param_1,param_14,param_15);
+  pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_ST,0x40);
+  if (pvVar1 != (void *)0x0) {
+    pMVar2 = rgp.defaultMaterial;
+    if (in_stack_00000084 != (Material *)0x0) {
+      pMVar2 = Material_FromHandle(in_stack_00000084);
     }
-    *(undefined4 *)(iVar1 + 4) = uVar2;
-    *(float *)(iVar1 + 8) = (float)dVar3;
-    *(float *)(iVar1 + 0xc) = (float)param_2;
-    *(float *)(iVar1 + 0x10) = (float)param_3;
-    *(float *)(iVar1 + 0x14) = (float)param_4;
-    *(float *)(iVar1 + 0x18) = (float)param_5;
-    *(float *)(iVar1 + 0x1c) = (float)param_6;
-    *(float *)(iVar1 + 0x20) = (float)param_7;
-    *(float *)(iVar1 + 0x24) = (float)param_8;
-    *(float *)(iVar1 + 0x28) = (float)param_9;
-    *(float *)(iVar1 + 0x2c) = (float)param_10;
-    *(float *)(iVar1 + 0x30) = (float)param_11;
-    *(float *)(iVar1 + 0x34) = (float)param_12;
-    R_ConvertColorToBytes(in_stack_0000007c,iVar1 + 0x38);
-    dVar3 = (double)AngleNormalize360(param_13);
-    *(float *)(iVar1 + 0x3c) = (float)dVar3;
+    *(Material **)((int)pvVar1 + 4) = pMVar2;
+    *(float *)((int)pvVar1 + 8) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar5;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar6;
+    *(float *)((int)pvVar1 + 0x18) = (float)dVar7;
+    *(float *)((int)pvVar1 + 0x1c) = (float)dVar8;
+    *(float *)((int)pvVar1 + 0x20) = (float)dVar9;
+    *(float *)((int)pvVar1 + 0x24) = (float)dVar10;
+    *(float *)((int)pvVar1 + 0x28) = (float)dVar11;
+    *(float *)((int)pvVar1 + 0x2c) = (float)dVar12;
+    *(float *)((int)pvVar1 + 0x30) = (float)dVar13;
+    *(float *)((int)pvVar1 + 0x34) = (float)dVar14;
+    R_ConvertColorToBytes(in_stack_0000007c,(uchar *)((int)pvVar1 + 0x38));
+    fVar16 = AngleNormalize360((float)dVar15);
+    *(float *)((int)pvVar1 + 0x3c) = fVar16;
   }
   __restfpr_19();
   return;
@@ -1718,27 +2031,29 @@ void R_AddCmdDrawStretchPicRotateST
 
 // 82767BE0  R_AddCmdDrawStretchRaw  (gfx_d3d/r_rendercmds.cpp:2015)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawStretchRaw
-               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-               undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8)
+               (int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+               uchar *param_7,int param_8,int param_9)
 
 {
   undefined4 uVar1;
-  int iVar2;
+  void *pvVar2;
   undefined4 in_stack_00000054;
   
-  uVar1 = __savegprlr_24();
-  iVar2 = R_GetCommandBuffer(0xd,0x28);
-  if (iVar2 != 0) {
-    *(undefined4 *)(iVar2 + 4) = uVar1;
-    *(undefined4 *)(iVar2 + 8) = param_2;
-    *(undefined4 *)(iVar2 + 0xc) = param_3;
-    *(undefined4 *)(iVar2 + 0x10) = param_4;
-    *(undefined4 *)(iVar2 + 0x14) = param_5;
-    *(undefined4 *)(iVar2 + 0x18) = param_6;
-    *(undefined4 *)(iVar2 + 0x1c) = param_7;
-    *(undefined4 *)(iVar2 + 0x20) = param_8;
-    *(undefined4 *)(iVar2 + 0x24) = in_stack_00000054;
+  uVar1 = __savegprlr_24(param_1);
+  pvVar2 = R_GetCommandBuffer(RC_STRETCH_RAW,0x28);
+  if (pvVar2 != (void *)0x0) {
+    *(undefined4 *)((int)pvVar2 + 4) = uVar1;
+    *(int *)((int)pvVar2 + 8) = param_2;
+    *(int *)((int)pvVar2 + 0xc) = param_3;
+    *(int *)((int)pvVar2 + 0x10) = param_4;
+    *(int *)((int)pvVar2 + 0x14) = param_5;
+    *(int *)((int)pvVar2 + 0x18) = param_6;
+    *(uchar **)((int)pvVar2 + 0x1c) = param_7;
+    *(int *)((int)pvVar2 + 0x20) = param_8;
+    *(undefined4 *)((int)pvVar2 + 0x24) = in_stack_00000054;
   }
   __restgprlr_24();
   return;
@@ -1747,111 +2062,139 @@ void R_AddCmdDrawStretchRaw
 
 // 82767C50  AddBaseDrawTextCmd  (gfx_d3d/r_rendercmds.cpp:2036)
 
-void AddBaseDrawTextCmd(undefined8 param_1,double param_2,double param_3,double param_4,
-                       double param_5,undefined8 param_6,int param_7,ulonglong param_8)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+GfxCmdDrawText2D *
+AddBaseDrawTextCmd(char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,
+                  float param_6,float param_7,float param_8,float *param_9,int param_10,int param_11
+                  ,char param_12)
 
 {
   char cVar1;
-  char *_Src;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  char *pcVar2;
+  GfxCmdDrawText2D *pGVar3;
+  void *pvVar4;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
+  char *pcVar8;
+  undefined4 uVar9;
   double extraout_f1;
-  double dVar5;
-  undefined4 in_stack_00000054;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float *in_stack_00000054;
   int in_stack_0000005c;
   int in_stack_00000064;
   undefined1 in_stack_0000006f;
   
-  __savegprlr_26();
-  _Src = (char *)__savefpr_27();
-  dVar5 = extraout_f1;
-  if (param_7 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x7f9,0,0xffffffff82000f98,0xffffffff821cba2c);
+  dVar13 = (double)param_8;
+  dVar12 = (double)param_7;
+  dVar11 = (double)param_6;
+  dVar10 = (double)param_5;
+  uVar7 = (ulonglong)(int)param_3;
+  lVar5 = (longlong)param_2;
+  __savegprlr_26((double)param_4,param_1,lVar5,uVar7,param_9,param_10,param_11,param_12);
+  iVar6 = (int)lVar5;
+  pcVar2 = (char *)__savefpr_27();
+  dVar14 = extraout_f1;
+  if (iVar6 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7f9,0,"%s");
   }
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fa,0,0xffffffff82000f98,0xffffffff82013b1c);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fa,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fb,0,0xffffffff82000f98,0xffffffff82058ccc);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fb,0,"%s");
   }
-  pcVar3 = _Src;
-  if ((*_Src == '\0') && (in_stack_00000064 < 0)) {
+  pcVar8 = pcVar2;
+  if ((*pcVar2 == '\0') && (in_stack_00000064 < 0)) {
 LAB_82767d18:
     __restfpr_27(0);
-    __restgprlr_26();
-    return;
+    pGVar3 = (GfxCmdDrawText2D *)__restgprlr_26();
+    return pGVar3;
   }
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 != '\0');
-  iVar2 = R_GetCommandBuffer(0x11,(uint)(pcVar3 + (0x53 - (int)_Src)) & 0xfffffffc);
-  if (iVar2 == 0) goto LAB_82767d18;
-  *(float *)(iVar2 + 4) = (float)dVar5;
-  *(int *)(iVar2 + 0x10) = (int)param_8;
-  *(float *)(iVar2 + 8) = (float)param_2;
-  *(float *)(iVar2 + 0xc) = (float)param_5;
-  *(float *)(iVar2 + 0x14) = (float)param_3;
-  *(float *)(iVar2 + 0x18) = (float)param_4;
-  R_ConvertColorToBytes(in_stack_00000054,iVar2 + 0x1c);
-  *(int *)(iVar2 + 0x20) = param_7;
-  *(undefined4 *)(iVar2 + 0x24) = 0;
+  pvVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar8 + (0x53 - (int)pcVar2)) & 0xfffffffc);
+  if (pvVar4 == (void *)0x0) goto LAB_82767d18;
+  *(float *)((int)pvVar4 + 4) = (float)dVar14;
+  *(int *)((int)pvVar4 + 0x10) = (int)uVar7;
+  *(float *)((int)pvVar4 + 8) = (float)dVar10;
+  *(float *)((int)pvVar4 + 0xc) = (float)dVar13;
+  *(float *)((int)pvVar4 + 0x14) = (float)dVar11;
+  *(float *)((int)pvVar4 + 0x18) = (float)dVar12;
+  R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar4 + 0x1c));
+  *(int *)((int)pvVar4 + 0x20) = iVar6;
+  *(undefined4 *)((int)pvVar4 + 0x24) = 0;
   if (in_stack_0000005c == 3) {
-    uVar4 = 4;
+    uVar9 = 4;
   }
   else if (in_stack_0000005c == 6) {
-    uVar4 = 0xc;
+    uVar9 = 0xc;
   }
   else if (in_stack_0000005c == 0x80) {
-    uVar4 = 1;
+    uVar9 = 1;
   }
   else if (in_stack_0000005c == 0x84) {
-    uVar4 = 5;
+    uVar9 = 5;
   }
   else if (in_stack_0000005c == 7) {
-    uVar4 = 0x400;
+    uVar9 = 0x400;
   }
   else if (in_stack_0000005c == 8) {
-    uVar4 = 0xc00;
+    uVar9 = 0xc00;
   }
   else if (in_stack_0000005c == 9) {
-    uVar4 = 0x1000;
+    uVar9 = 0x1000;
   }
   else {
     if (in_stack_0000005c != 10) goto LAB_82767e1c;
-    uVar4 = 0x2000;
+    uVar9 = 0x2000;
   }
-  *(undefined4 *)(iVar2 + 0x24) = uVar4;
+  *(undefined4 *)((int)pvVar4 + 0x24) = uVar9;
 LAB_82767e1c:
   if (-1 < in_stack_00000064) {
-    *(int *)(iVar2 + 0x28) = in_stack_00000064;
-    *(uint *)(iVar2 + 0x24) = *(uint *)(iVar2 + 0x24) | 2;
-    *(undefined1 *)(iVar2 + 0x2c) = in_stack_0000006f;
+    *(int *)((int)pvVar4 + 0x28) = in_stack_00000064;
+    *(uint *)((int)pvVar4 + 0x24) = *(uint *)((int)pvVar4 + 0x24) | 2;
+    *(undefined1 *)((int)pvVar4 + 0x2c) = in_stack_0000006f;
   }
   Profile_Begin(0x9d);
-  memcpy((void *)(iVar2 + 0x50),_Src,(size_t)(pcVar3 + (-1 - (int)_Src)));
-  Profile_EndInternal(0);
-  (pcVar3 + (-1 - (int)_Src))[iVar2 + 0x50] = '\0';
-  __restfpr_27(iVar2);
-  __restgprlr_26();
-  return;
+  memcpy();
+  Profile_EndInternal((double *)0x0);
+  *(char *)((int)pvVar4 + (int)(pcVar8 + (0x4f - (int)pcVar2))) = '\0';
+  __restfpr_27(pvVar4);
+  pGVar3 = (GfxCmdDrawText2D *)__restgprlr_26();
+  return pGVar3;
 }
 
 
 // 82767E78  R_AddCmdDrawTextWithCursor  (gfx_d3d/r_rendercmds.cpp:2100)
 
-void R_AddCmdDrawTextWithCursor(void)
+void R_AddCmdDrawTextWithCursor
+               (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float *param_9,int param_10,int param_11,char param_12)
 
 {
-  AddBaseDrawTextCmd();
+  int in_stack_00000054;
+  char in_stack_0000005f;
+  
+  AddBaseDrawTextCmd(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9,
+                     param_10,in_stack_00000054,in_stack_0000005f);
   return;
 }
 
 
 // 82767EB8  SetDrawText2DGlowParms  (gfx_d3d/r_rendercmds.cpp:2106)
 
-undefined8 SetDrawText2DGlowParms(int param_1,int param_2,float *param_3)
+bool SetDrawText2DGlowParms(GfxCmdDrawText2D *param_1,float *param_2,float *param_3)
 
 {
   float local_20;
@@ -1860,125 +2203,143 @@ undefined8 SetDrawText2DGlowParms(int param_1,int param_2,float *param_3)
   float local_14;
   
   if ((param_3 != (float *)0x0) && (param_3[3] != 0.0)) {
-    *(uint *)(param_1 + 0x24) = *(uint *)(param_1 + 0x24) | 0x30;
-    local_14 = *(float *)(param_2 + 0xc) * param_3[3];
+    param_1->renderFlags = param_1->renderFlags | 0x30;
+    local_14 = param_2[3] * param_3[3];
     local_18 = param_3[2] * 0.1;
     local_1c = param_3[1] * 0.1;
     local_20 = *param_3 * 0.1;
-    R_ConvertColorToBytes(&local_20,param_1 + 0x30);
-    return 1;
+    R_ConvertColorToBytes(&local_20,(param_1->glowForceColor).array);
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 82767F68  SetDrawText2DPulseFXParms  (gfx_d3d/r_rendercmds.cpp:2125)
 
-undefined8
-SetDrawText2DPulseFXParms
-          (int param_1,int param_2,int param_3,int param_4,undefined4 param_5,undefined4 param_6,
-          undefined4 param_7)
+bool SetDrawText2DPulseFXParms
+               (GfxCmdDrawText2D *param_1,Material *param_2,Material *param_3,int param_4,
+               int param_5,int param_6,int param_7)
 
 {
-  if (((param_2 != 0) && (param_3 != 0)) && (param_4 != 0)) {
-    *(int *)(param_1 + 0x44) = param_2;
-    *(int *)(param_1 + 0x48) = param_3;
-    *(int *)(param_1 + 0x34) = param_4;
-    *(uint *)(param_1 + 0x24) = *(uint *)(param_1 + 0x24) | 0xc0;
-    *(undefined4 *)(param_1 + 0x38) = param_5;
-    *(undefined4 *)(param_1 + 0x4c) = 0;
-    *(undefined4 *)(param_1 + 0x3c) = param_6;
-    *(undefined4 *)(param_1 + 0x40) = param_7;
-    return 1;
+  if (((param_2 != (Material *)0x0) && (param_3 != (Material *)0x0)) && (param_4 != 0)) {
+    param_1->fxMaterial = param_2;
+    param_1->fxMaterialGlow = param_3;
+    param_1->fxBirthTime = param_4;
+    param_1->renderFlags = param_1->renderFlags | 0xc0;
+    param_1->fxLetterTime = param_5;
+    param_1->padding = 0.0;
+    param_1->fxDecayStartTime = param_6;
+    param_1->fxDecayDuration = param_7;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 82767FD0  R_AddCmdDrawText  (gfx_d3d/r_rendercmds.cpp:2148)
 
-void R_AddCmdDrawText(undefined8 param_1,double param_2,double param_3,double param_4,double param_5
-                     ,undefined8 param_6,int param_7,ulonglong param_8)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdDrawText(char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,
+                     float param_6,float param_7,float param_8,float *param_9,int param_10)
 
 {
   char cVar1;
-  char *_Src;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  char *pcVar2;
+  void *pvVar3;
+  longlong lVar4;
+  int iVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  undefined4 uVar8;
   double extraout_f1;
-  double dVar5;
-  undefined4 in_stack_00000054;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  float *in_stack_00000054;
   int in_stack_0000005c;
   
-  __savegprlr_27();
-  _Src = (char *)__savefpr_27();
-  dVar5 = extraout_f1;
-  if (param_7 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x7f9,0,0xffffffff82000f98,0xffffffff821cba2c);
+  dVar11 = (double)param_7;
+  dVar12 = (double)param_8;
+  dVar10 = (double)param_6;
+  dVar9 = (double)param_5;
+  uVar6 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)param_2;
+  __savegprlr_27((double)param_4,param_1,lVar4,uVar6,param_9,param_10);
+  iVar5 = (int)lVar4;
+  pcVar2 = (char *)__savefpr_27();
+  dVar13 = extraout_f1;
+  if (iVar5 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7f9,0,"%s");
   }
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fa,0,0xffffffff82000f98,0xffffffff82013b1c);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fa,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fb,0,0xffffffff82000f98,0xffffffff82058ccc);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fb,0,"%s");
   }
-  pcVar3 = _Src;
-  if (*_Src == '\0') goto LAB_827681a4;
+  pcVar7 = pcVar2;
+  if (*pcVar2 == '\0') goto LAB_827681a4;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  iVar2 = R_GetCommandBuffer(0x11,(uint)(pcVar3 + (0x53 - (int)_Src)) & 0xfffffffc);
-  if (iVar2 == 0) goto LAB_827681a4;
-  *(float *)(iVar2 + 4) = (float)dVar5;
-  *(int *)(iVar2 + 0x10) = (int)param_8;
-  *(float *)(iVar2 + 8) = (float)param_2;
-  *(float *)(iVar2 + 0xc) = (float)param_5;
-  *(float *)(iVar2 + 0x14) = (float)param_3;
-  *(float *)(iVar2 + 0x18) = (float)param_4;
-  R_ConvertColorToBytes(in_stack_00000054,iVar2 + 0x1c);
-  *(int *)(iVar2 + 0x20) = param_7;
-  *(undefined4 *)(iVar2 + 0x24) = 0;
+  pvVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar7 + (0x53 - (int)pcVar2)) & 0xfffffffc);
+  if (pvVar3 == (void *)0x0) goto LAB_827681a4;
+  *(float *)((int)pvVar3 + 4) = (float)dVar13;
+  *(int *)((int)pvVar3 + 0x10) = (int)uVar6;
+  *(float *)((int)pvVar3 + 8) = (float)dVar9;
+  *(float *)((int)pvVar3 + 0xc) = (float)dVar12;
+  *(float *)((int)pvVar3 + 0x14) = (float)dVar10;
+  *(float *)((int)pvVar3 + 0x18) = (float)dVar11;
+  R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar3 + 0x1c));
+  *(int *)((int)pvVar3 + 0x20) = iVar5;
+  *(undefined4 *)((int)pvVar3 + 0x24) = 0;
   if (in_stack_0000005c == 3) {
-    uVar4 = 4;
+    uVar8 = 4;
 LAB_82768178:
-    *(undefined4 *)(iVar2 + 0x24) = uVar4;
+    *(undefined4 *)((int)pvVar3 + 0x24) = uVar8;
   }
   else {
     if (in_stack_0000005c == 6) {
-      uVar4 = 0xc;
+      uVar8 = 0xc;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 0x80) {
-      uVar4 = 1;
+      uVar8 = 1;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 0x84) {
-      uVar4 = 5;
+      uVar8 = 5;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 7) {
-      uVar4 = 0x400;
+      uVar8 = 0x400;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 8) {
-      uVar4 = 0xc00;
+      uVar8 = 0xc00;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 9) {
-      uVar4 = 0x1000;
+      uVar8 = 0x1000;
       goto LAB_82768178;
     }
     if (in_stack_0000005c == 10) {
-      uVar4 = 0x2000;
+      uVar8 = 0x2000;
       goto LAB_82768178;
     }
   }
   Profile_Begin(0x9d);
-  memcpy((void *)(iVar2 + 0x50),_Src,(size_t)(pcVar3 + (-1 - (int)_Src)));
-  Profile_EndInternal(0);
-  (pcVar3 + (-1 - (int)_Src))[iVar2 + 0x50] = '\0';
+  memcpy();
+  Profile_EndInternal((double *)0x0);
+  *(char *)((int)pvVar3 + (int)(pcVar7 + (0x4f - (int)pcVar2))) = '\0';
 LAB_827681a4:
   __restfpr_27();
   __restgprlr_27();
@@ -1988,96 +2349,115 @@ LAB_827681a4:
 
 // 827681B8  R_AddCmdDrawTextSubtitle  (gfx_d3d/r_rendercmds.cpp:2154)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawTextSubtitle
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               undefined8 param_6,int param_7,ulonglong param_8)
+               (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float *param_9,int param_10,float *param_11,bool param_12
+               )
 
 {
   char cVar1;
-  char *_Src;
-  int iVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  char *pcVar2;
+  GfxCmdDrawText2D *pGVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  char *pcVar6;
+  int iVar7;
   double extraout_f1;
-  double dVar5;
-  undefined4 in_stack_00000054;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float *in_stack_00000054;
   int in_stack_0000005c;
-  undefined4 in_stack_00000064;
+  float *in_stack_00000064;
   char in_stack_0000006f;
   
-  __savegprlr_26();
-  _Src = (char *)__savefpr_27();
-  dVar5 = extraout_f1;
-  if (param_7 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x7f9,0,0xffffffff82000f98,0xffffffff821cba2c);
+  dVar10 = (double)param_7;
+  dVar11 = (double)param_8;
+  dVar9 = (double)param_6;
+  dVar8 = (double)param_5;
+  uVar5 = (ulonglong)(int)param_3;
+  lVar4 = (longlong)param_2;
+  __savegprlr_26((double)param_4,param_1,lVar4,uVar5,param_9,param_10,param_11,param_12);
+  iVar7 = (int)lVar4;
+  pcVar2 = (char *)__savefpr_27();
+  dVar12 = extraout_f1;
+  if (iVar7 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7f9,0,"%s");
   }
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fa,0,0xffffffff82000f98,0xffffffff82013b1c);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fa,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fb,0,0xffffffff82000f98,0xffffffff82058ccc);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fb,0,"%s");
   }
-  pcVar3 = _Src;
-  if (*_Src == '\0') goto LAB_827683c4;
+  pcVar6 = pcVar2;
+  if (*pcVar2 == '\0') goto LAB_827683c4;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  iVar2 = R_GetCommandBuffer(0x11,(uint)(pcVar3 + (0x53 - (int)_Src)) & 0xfffffffc);
-  if (iVar2 == 0) goto LAB_827683c4;
-  *(float *)(iVar2 + 4) = (float)dVar5;
-  *(int *)(iVar2 + 0x10) = (int)param_8;
-  *(float *)(iVar2 + 8) = (float)param_2;
-  *(float *)(iVar2 + 0xc) = (float)param_5;
-  *(float *)(iVar2 + 0x14) = (float)param_3;
-  *(float *)(iVar2 + 0x18) = (float)param_4;
-  R_ConvertColorToBytes(in_stack_00000054,iVar2 + 0x1c);
-  *(int *)(iVar2 + 0x20) = param_7;
-  *(undefined4 *)(iVar2 + 0x24) = 0;
+  pGVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar6 + (0x53 - (int)pcVar2)) & 0xfffffffc);
+  if (pGVar3 == (GfxCmdDrawText2D *)0x0) goto LAB_827683c4;
+  pGVar3->x = (float)dVar12;
+  pGVar3->font = (Font_s *)uVar5;
+  pGVar3->y = (float)dVar8;
+  pGVar3->rotation = (float)dVar11;
+  pGVar3->xScale = (float)dVar9;
+  pGVar3->yScale = (float)dVar10;
+  R_ConvertColorToBytes(in_stack_00000054,(pGVar3->color).array);
+  pGVar3->maxChars = iVar7;
+  pGVar3->renderFlags = 0;
   if (in_stack_0000005c == 3) {
-    uVar4 = 4;
+    iVar7 = 4;
 LAB_82768364:
-    *(undefined4 *)(iVar2 + 0x24) = uVar4;
+    pGVar3->renderFlags = iVar7;
   }
   else {
     if (in_stack_0000005c == 6) {
-      uVar4 = 0xc;
+      iVar7 = 0xc;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 0x80) {
-      uVar4 = 1;
+      iVar7 = 1;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 0x84) {
-      uVar4 = 5;
+      iVar7 = 5;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 7) {
-      uVar4 = 0x400;
+      iVar7 = 0x400;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 8) {
-      uVar4 = 0xc00;
+      iVar7 = 0xc00;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 9) {
-      uVar4 = 0x1000;
+      iVar7 = 0x1000;
       goto LAB_82768364;
     }
     if (in_stack_0000005c == 10) {
-      uVar4 = 0x2000;
+      iVar7 = 0x2000;
       goto LAB_82768364;
     }
   }
   Profile_Begin(0x9d);
-  memcpy((void *)(iVar2 + 0x50),_Src,(size_t)(pcVar3 + (-1 - (int)_Src)));
-  Profile_EndInternal(0);
-  (pcVar3 + (-1 - (int)_Src))[iVar2 + 0x50] = '\0';
+  memcpy();
+  Profile_EndInternal((double *)0x0);
+  (pcVar6 + (0x4f - (int)pcVar2))[(int)(pGVar3->text + -0x50)] = '\0';
   if (in_stack_0000006f != '\0') {
-    *(uint *)(iVar2 + 0x24) = *(uint *)(iVar2 + 0x24) | 0x200;
+    pGVar3->renderFlags = pGVar3->renderFlags | 0x200;
   }
-  *(uint *)(iVar2 + 0x24) = *(uint *)(iVar2 + 0x24) | 0x100;
-  SetDrawText2DGlowParms(iVar2,in_stack_00000054,in_stack_00000064);
+  pGVar3->renderFlags = pGVar3->renderFlags | 0x100;
+  SetDrawText2DGlowParms(pGVar3,in_stack_00000054,in_stack_00000064);
 LAB_827683c4:
   __restfpr_27();
   __restgprlr_26();
@@ -2087,144 +2467,167 @@ LAB_827683c4:
 
 // 827683D8  R_AddCmdDrawTextWithEffects  (gfx_d3d/r_rendercmds.cpp:2169)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawTextWithEffects
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               undefined8 param_6,int param_7,ulonglong param_8)
+               (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
+               float param_7,float param_8,float *param_9,int param_10,float *param_11,
+               Material *param_12,Material *param_13,int param_14,int param_15,int param_16,
+               int param_17)
 
 {
-  bool bVar1;
-  char *_Src;
-  undefined4 *puVar2;
-  char cVar4;
-  int iVar3;
-  char *pcVar5;
-  undefined4 uVar6;
+  char cVar1;
+  char *pcVar2;
+  Material *pMVar3;
+  bool bVar5;
+  bool bVar6;
+  GfxCmdDrawText2D *pGVar4;
+  longlong lVar7;
+  ulonglong uVar8;
+  char *pcVar9;
+  int iVar10;
   double extraout_f1;
-  double dVar7;
-  undefined4 in_stack_00000054;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  float *in_stack_00000054;
   int in_stack_0000005c;
-  undefined4 in_stack_00000064;
-  int in_stack_0000006c;
-  int in_stack_00000074;
+  float *in_stack_00000064;
+  Material *in_stack_0000006c;
+  Material *in_stack_00000074;
   int in_stack_0000007c;
-  undefined4 in_stack_00000084;
-  undefined4 in_stack_0000008c;
-  undefined4 in_stack_00000094;
+  int in_stack_00000084;
+  int in_stack_0000008c;
+  int in_stack_00000094;
   
-  __savegprlr_24();
-  _Src = (char *)__savefpr_27();
-  dVar7 = extraout_f1;
-  puVar2 = DAT_84616528;
-  if (in_stack_0000006c != 0) {
-    puVar2 = (undefined4 *)Material_FromHandle(in_stack_0000006c);
+  dVar14 = (double)param_8;
+  dVar13 = (double)param_7;
+  dVar12 = (double)param_6;
+  dVar11 = (double)param_5;
+  uVar8 = (ulonglong)(int)param_3;
+  lVar7 = (longlong)param_2;
+  __savegprlr_24((double)param_4,param_1,lVar7,uVar8,param_9,param_10,param_11,param_12,param_13);
+  iVar10 = (int)lVar7;
+  pcVar2 = (char *)__savefpr_27();
+  dVar15 = extraout_f1;
+  pMVar3 = rgp.defaultMaterial;
+  if (in_stack_0000006c != (Material *)0x0) {
+    pMVar3 = Material_FromHandle(in_stack_0000006c);
   }
-  cVar4 = Material_HasTechnique(puVar2,9);
-  if (cVar4 == '\0') {
-    cVar4 = Material_HasTechnique(puVar2,5);
-    bVar1 = false;
-    if (cVar4 != '\0') goto LAB_8276846c;
-  }
-  else {
+  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
+  if (bVar5) {
 LAB_8276846c:
-    bVar1 = true;
-  }
-  if ((bVar1) && (cVar4 = Material_IsDefault(puVar2), cVar4 == '\0')) goto LAB_82768490;
-  puVar2 = DAT_84616528;
-  if (in_stack_00000074 != 0) {
-    puVar2 = (undefined4 *)Material_FromHandle(in_stack_00000074);
-  }
-  cVar4 = Material_HasTechnique(puVar2,9);
-  if (cVar4 == '\0') {
-    cVar4 = Material_HasTechnique(puVar2,5);
-    bVar1 = false;
-    if (cVar4 != '\0') goto LAB_82768504;
+    bVar5 = true;
   }
   else {
-LAB_82768504:
-    bVar1 = true;
+    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
+    bVar5 = false;
+    if (bVar6) goto LAB_8276846c;
   }
-  if ((bVar1) && (cVar4 = Material_IsDefault(puVar2), cVar4 == '\0')) {
+  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) goto LAB_82768490;
+  pMVar3 = rgp.defaultMaterial;
+  if (in_stack_00000074 != (Material *)0x0) {
+    pMVar3 = Material_FromHandle(in_stack_00000074);
+  }
+  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
+  if (bVar5) {
+LAB_82768504:
+    bVar5 = true;
+  }
+  else {
+    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
+    bVar5 = false;
+    if (bVar6) goto LAB_82768504;
+  }
+  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) {
 LAB_82768490:
-    R_WarnOncePerFrame(0x3d,*puVar2,_Src);
+    R_WarnOncePerFrame(R_WARN_FOGABLE_2DTEXT);
     __restfpr_27();
     __restgprlr_24();
     return;
   }
-  if (param_7 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x7f9,0,0xffffffff82000f98,0xffffffff821cba2c);
+  if (iVar10 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7f9,0,"%s");
   }
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fa,0,0xffffffff82000f98,0xffffffff82013b1c);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fa,0,"%s");
   }
-  if ((param_8 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x7fb,0,0xffffffff82000f98,0xffffffff82058ccc);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x7fb,0,"%s");
   }
-  pcVar5 = _Src;
-  if (*_Src == '\0') goto LAB_82768730;
+  pcVar9 = pcVar2;
+  if (*pcVar2 == '\0') goto LAB_82768730;
   do {
-    cVar4 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar4 != '\0');
-  iVar3 = R_GetCommandBuffer(0x11,(uint)(pcVar5 + (0x53 - (int)_Src)) & 0xfffffffc);
-  if (iVar3 == 0) goto LAB_82768730;
-  *(int *)(iVar3 + 0x10) = (int)param_8;
-  *(float *)(iVar3 + 4) = (float)dVar7;
-  *(float *)(iVar3 + 8) = (float)param_2;
-  *(float *)(iVar3 + 0xc) = (float)param_5;
-  *(float *)(iVar3 + 0x14) = (float)param_3;
-  *(float *)(iVar3 + 0x18) = (float)param_4;
-  R_ConvertColorToBytes(in_stack_00000054,iVar3 + 0x1c);
-  *(int *)(iVar3 + 0x20) = param_7;
-  *(undefined4 *)(iVar3 + 0x24) = 0;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
+  } while (cVar1 != '\0');
+  pGVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar9 + (0x53 - (int)pcVar2)) & 0xfffffffc);
+  if (pGVar4 == (GfxCmdDrawText2D *)0x0) goto LAB_82768730;
+  pGVar4->font = (Font_s *)uVar8;
+  pGVar4->x = (float)dVar15;
+  pGVar4->y = (float)dVar11;
+  pGVar4->rotation = (float)dVar14;
+  pGVar4->xScale = (float)dVar12;
+  pGVar4->yScale = (float)dVar13;
+  R_ConvertColorToBytes(in_stack_00000054,(pGVar4->color).array);
+  pGVar4->maxChars = iVar10;
+  pGVar4->renderFlags = 0;
   if (in_stack_0000005c == 3) {
-    uVar6 = 4;
+    iVar10 = 4;
 LAB_8276869c:
-    *(undefined4 *)(iVar3 + 0x24) = uVar6;
+    pGVar4->renderFlags = iVar10;
   }
   else {
     if (in_stack_0000005c == 6) {
-      uVar6 = 0xc;
+      iVar10 = 0xc;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 0x80) {
-      uVar6 = 1;
+      iVar10 = 1;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 0x84) {
-      uVar6 = 5;
+      iVar10 = 5;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 7) {
-      uVar6 = 0x400;
+      iVar10 = 0x400;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 8) {
-      uVar6 = 0xc00;
+      iVar10 = 0xc00;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 9) {
-      uVar6 = 0x1000;
+      iVar10 = 0x1000;
       goto LAB_8276869c;
     }
     if (in_stack_0000005c == 10) {
-      uVar6 = 0x2000;
+      iVar10 = 0x2000;
       goto LAB_8276869c;
     }
   }
   Profile_Begin(0x9d);
-  memcpy((void *)(iVar3 + 0x50),_Src,(size_t)(pcVar5 + (-1 - (int)_Src)));
-  Profile_EndInternal(0);
-  (pcVar5 + (-1 - (int)_Src))[iVar3 + 0x50] = '\0';
-  SetDrawText2DGlowParms(iVar3,in_stack_00000054,in_stack_00000064);
-  if (((in_stack_0000006c != 0) && (in_stack_00000074 != 0)) && (in_stack_0000007c != 0)) {
-    *(int *)(iVar3 + 0x44) = in_stack_0000006c;
-    *(int *)(iVar3 + 0x48) = in_stack_00000074;
-    *(undefined4 *)(iVar3 + 0x4c) = 0;
-    *(int *)(iVar3 + 0x34) = in_stack_0000007c;
-    *(uint *)(iVar3 + 0x24) = *(uint *)(iVar3 + 0x24) | 0xc0;
-    *(undefined4 *)(iVar3 + 0x38) = in_stack_00000084;
-    *(undefined4 *)(iVar3 + 0x3c) = in_stack_0000008c;
-    *(undefined4 *)(iVar3 + 0x40) = in_stack_00000094;
+  memcpy();
+  Profile_EndInternal((double *)0x0);
+  (pcVar9 + (0x4f - (int)pcVar2))[(int)(pGVar4->text + -0x50)] = '\0';
+  SetDrawText2DGlowParms(pGVar4,in_stack_00000054,in_stack_00000064);
+  if (((in_stack_0000006c != (Material *)0x0) && (in_stack_00000074 != (Material *)0x0)) &&
+     (in_stack_0000007c != 0)) {
+    pGVar4->fxMaterial = in_stack_0000006c;
+    pGVar4->fxMaterialGlow = in_stack_00000074;
+    pGVar4->padding = 0.0;
+    pGVar4->fxBirthTime = in_stack_0000007c;
+    pGVar4->renderFlags = pGVar4->renderFlags | 0xc0;
+    pGVar4->fxLetterTime = in_stack_00000084;
+    pGVar4->fxDecayStartTime = in_stack_0000008c;
+    pGVar4->fxDecayDuration = in_stack_00000094;
   }
 LAB_82768730:
   __restfpr_27();
@@ -2235,45 +2638,48 @@ LAB_82768730:
 
 // 82768740  R_AddCmdDrawTextInSpace  (gfx_d3d/r_rendercmds.cpp:2200)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawTextInSpace
-               (undefined8 param_1,undefined4 param_2,undefined4 *param_3,undefined4 *param_4,
-               undefined4 *param_5,undefined8 param_6)
+               (char *param_1,Font_s *param_2,float *param_3,float *param_4,float *param_5,
+               float *param_6)
 
 {
   char cVar1;
-  undefined4 uVar2;
-  char *_Src;
-  int iVar3;
-  char *pcVar4;
+  float fVar2;
+  char *pcVar3;
+  void *pvVar4;
+  char *pcVar5;
   
-  _Src = (char *)__savegprlr_24();
-  if (_Src == (char *)0x0) {
-    MyAssertHandler(0xffffffff821cb048,0x89d,0,0xffffffff82000f98,0xffffffff82013b1c);
+  pcVar3 = (char *)__savegprlr_24(param_1);
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x89d,0,"%s");
   }
-  pcVar4 = _Src;
-  if (*_Src != '\0') {
+  pcVar5 = pcVar3;
+  if (*pcVar3 != '\0') {
     do {
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    iVar3 = R_GetCommandBuffer(0x12,(uint)(pcVar4 + (0x33 - (int)_Src)) & 0xfffffffc);
-    if (iVar3 != 0) {
-      uVar2 = *param_3;
-      *(undefined4 *)(iVar3 + 0x10) = param_2;
-      *(undefined4 *)(iVar3 + 4) = uVar2;
-      *(undefined4 *)(iVar3 + 8) = param_3[1];
-      *(undefined4 *)(iVar3 + 0xc) = param_3[2];
-      *(undefined4 *)(iVar3 + 0x14) = *param_4;
-      *(undefined4 *)(iVar3 + 0x18) = param_4[1];
-      *(undefined4 *)(iVar3 + 0x1c) = param_4[2];
-      *(undefined4 *)(iVar3 + 0x20) = *param_5;
-      *(undefined4 *)(iVar3 + 0x24) = param_5[1];
-      *(undefined4 *)(iVar3 + 0x28) = param_5[2];
-      R_ConvertColorToBytes(param_6,iVar3 + 0x2c);
+    pvVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_3D,(uint)(pcVar5 + (0x33 - (int)pcVar3)) & 0xfffffffc);
+    if (pvVar4 != (void *)0x0) {
+      fVar2 = *param_3;
+      *(Font_s **)((int)pvVar4 + 0x10) = param_2;
+      *(float *)((int)pvVar4 + 4) = fVar2;
+      *(float *)((int)pvVar4 + 8) = param_3[1];
+      *(float *)((int)pvVar4 + 0xc) = param_3[2];
+      *(float *)((int)pvVar4 + 0x14) = *param_4;
+      *(float *)((int)pvVar4 + 0x18) = param_4[1];
+      *(float *)((int)pvVar4 + 0x1c) = param_4[2];
+      *(float *)((int)pvVar4 + 0x20) = *param_5;
+      *(float *)((int)pvVar4 + 0x24) = param_5[1];
+      *(float *)((int)pvVar4 + 0x28) = param_5[2];
+      R_ConvertColorToBytes(param_6,(uchar *)((int)pvVar4 + 0x2c));
       Profile_Begin(0x9d);
-      memcpy((void *)(iVar3 + 0x30),_Src,(size_t)(pcVar4 + (-1 - (int)_Src)));
-      Profile_EndInternal(0);
-      (pcVar4 + (-1 - (int)_Src))[iVar3 + 0x30] = '\0';
+      memcpy();
+      Profile_EndInternal((double *)0x0);
+      *(char *)((int)pvVar4 + (int)(pcVar5 + (0x2f - (int)pcVar3))) = '\0';
     }
   }
   __restgprlr_24();
@@ -2283,130 +2689,142 @@ void R_AddCmdDrawTextInSpace
 
 // 82768868  CopyPoolTextToCmd  (gfx_d3d/r_rendercmds.cpp:2233)
 
-void CopyPoolTextToCmd(undefined8 param_1,int param_2,int param_3,size_t param_4,ulonglong param_5)
+void CopyPoolTextToCmd(char *param_1,int param_2,int param_3,int param_4,GfxCmdDrawText2D *param_5)
 
 {
   int iVar1;
-  void *pvVar2;
-  void *_Dst;
-  void *_Src;
-  size_t _Size;
-  size_t _Size_00;
+  ulonglong uVar2;
   
-  pvVar2 = (void *)__savegprlr_27();
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x8bc,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  uVar2 = (ulonglong)(int)param_5;
+  __savegprlr_27(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x8bc,0,"%s");
   }
   Profile_Begin(0x9d);
-  _Size_00 = param_2 - param_3;
-  _Src = (void *)((int)pvVar2 + param_3);
-  iVar1 = (int)param_5;
-  _Dst = (void *)(iVar1 + 0x50);
-  _Size = param_4;
-  if ((int)_Size_00 < (int)param_4) {
-    memcpy(_Dst,_Src,_Size_00);
-    _Dst = (void *)(_Size_00 + iVar1 + 0x50);
-    _Src = pvVar2;
-    _Size = param_4 - _Size_00;
+  if (param_2 - param_3 < param_4) {
+    memcpy();
   }
-  memcpy(_Dst,_Src,_Size);
-  Profile_EndInternal(0);
-  *(undefined1 *)(param_4 + iVar1 + 0x50) = 0;
-  __restgprlr_27();
+  memcpy();
+  iVar1 = Profile_EndInternal((double *)0x0);
+  *(undefined1 *)(param_4 + (int)uVar2 + 0x50) = 0;
+  __restgprlr_27(iVar1);
   return;
 }
 
 
 // 82768910  AddBaseDrawConsoleTextCmd  (gfx_d3d/r_rendercmds.cpp:2256)
 
-void AddBaseDrawConsoleTextCmd
-               (undefined8 param_1,double param_2,double param_3,double param_4,undefined8 param_5,
-               undefined8 param_6,undefined8 param_7,longlong param_8,undefined4 param_9)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+GfxCmdDrawText2D *
+AddBaseDrawConsoleTextCmd
+          (char *param_1,int param_2,int param_3,int param_4,Font_s *param_5,float param_6,
+          float param_7,float param_8,float param_9,float *param_10,int param_11)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  undefined4 uVar3;
+  char *pcVar1;
+  GfxCmdDrawText2D *pGVar2;
+  int iVar3;
   double extraout_f1;
   double dVar4;
-  undefined4 in_stack_0000005c;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float *in_stack_0000005c;
   int in_stack_00000064;
   
-  __savegprlr_25();
-  uVar1 = __savefpr_28();
-  dVar4 = extraout_f1;
-  if ((int)param_8 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x8d4,0,0xffffffff82000f98,0xffffffff821cba48);
+  dVar6 = (double)param_9;
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_7;
+  __savegprlr_25((double)param_6,param_1);
+  pcVar1 = (char *)__savefpr_28();
+  dVar7 = extraout_f1;
+  if (param_4 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x8d4,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x8d5,0,0xffffffff82000f98,0xffffffff821cba3c);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x8d5,0,"%s");
   }
-  if (((int)param_8 == 0) ||
-     (iVar2 = R_GetCommandBuffer(0x11,param_8 + 0x54U & 0xfffffffc), iVar2 == 0)) {
+  if (param_4 == 0) {
+LAB_827689a8:
     __restfpr_28(0);
-    __restgprlr_25();
-    return;
+    pGVar2 = (GfxCmdDrawText2D *)__restgprlr_25();
+    return pGVar2;
   }
-  *(float *)(iVar2 + 4) = (float)dVar4;
-  *(float *)(iVar2 + 8) = (float)param_2;
-  *(undefined4 *)(iVar2 + 0x10) = param_9;
-  *(float *)(iVar2 + 0x14) = (float)param_3;
-  *(float *)(iVar2 + 0x18) = (float)param_4;
-  *(undefined4 *)(iVar2 + 0xc) = 0;
-  R_ConvertColorToBytes(in_stack_0000005c,iVar2 + 0x1c);
-  *(undefined4 *)(iVar2 + 0x24) = 0;
-  *(undefined4 *)(iVar2 + 0x20) = 0x7fffffff;
+  pGVar2 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,param_4 + 0x54U & 0xfffffffc);
+  if (pGVar2 == (GfxCmdDrawText2D *)0x0) goto LAB_827689a8;
+  pGVar2->x = (float)dVar7;
+  pGVar2->y = (float)dVar4;
+  pGVar2->font = param_5;
+  pGVar2->xScale = (float)dVar5;
+  pGVar2->yScale = (float)dVar6;
+  pGVar2->rotation = 0.0;
+  R_ConvertColorToBytes(in_stack_0000005c,(pGVar2->color).array);
+  pGVar2->renderFlags = 0;
+  pGVar2->maxChars = 0x7fffffff;
   if (in_stack_00000064 == 3) {
-    uVar3 = 4;
+    iVar3 = 4;
   }
   else if (in_stack_00000064 == 6) {
-    uVar3 = 0xc;
+    iVar3 = 0xc;
   }
   else if (in_stack_00000064 == 0x80) {
-    uVar3 = 1;
+    iVar3 = 1;
   }
   else if (in_stack_00000064 == 0x84) {
-    uVar3 = 5;
+    iVar3 = 5;
   }
   else if (in_stack_00000064 == 7) {
-    uVar3 = 0x400;
+    iVar3 = 0x400;
   }
   else {
     if (in_stack_00000064 != 8) goto LAB_82768a7c;
-    uVar3 = 0xc00;
+    iVar3 = 0xc00;
   }
-  *(undefined4 *)(iVar2 + 0x24) = uVar3;
+  pGVar2->renderFlags = iVar3;
 LAB_82768a7c:
-  CopyPoolTextToCmd(uVar1,param_6,param_7,param_8,iVar2);
-  __restfpr_28(iVar2);
-  __restgprlr_25();
-  return;
+  CopyPoolTextToCmd(pcVar1,param_2,param_3,param_4,pGVar2);
+  __restfpr_28(pGVar2);
+  pGVar2 = (GfxCmdDrawText2D *)__restgprlr_25();
+  return pGVar2;
 }
 
 
 // 82768AA8  R_AddCmdDrawConsoleText  (gfx_d3d/r_rendercmds.cpp:2303)
 
-void R_AddCmdDrawConsoleText(void)
+void R_AddCmdDrawConsoleText
+               (char *param_1,int param_2,int param_3,int param_4,Font_s *param_5,float param_6,
+               float param_7,float param_8,float param_9,float *param_10,int param_11)
 
 {
-  AddBaseDrawConsoleTextCmd();
+  AddBaseDrawConsoleTextCmd
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9,param_10,
+             param_11);
   return;
 }
 
 
 // 82768AD8  R_AddCmdDrawConsoleTextSubtitle  (gfx_d3d/r_rendercmds.cpp:2309)
 
-void R_AddCmdDrawConsoleTextSubtitle(void)
+void R_AddCmdDrawConsoleTextSubtitle
+               (char *param_1,int param_2,int param_3,int param_4,Font_s *param_5,float param_6,
+               float param_7,float param_8,float param_9,float *param_10,int param_11,
+               float *param_12)
 
 {
-  int iVar1;
-  undefined4 in_stack_0000005c;
-  undefined4 in_stack_0000006c;
+  GfxCmdDrawText2D *pGVar1;
+  float *in_stack_0000005c;
+  float *in_stack_0000006c;
   
-  iVar1 = AddBaseDrawConsoleTextCmd();
-  if (iVar1 != 0) {
-    *(uint *)(iVar1 + 0x24) = *(uint *)(iVar1 + 0x24) | 0x100;
-    SetDrawText2DGlowParms(iVar1,in_stack_0000005c,in_stack_0000006c);
+  pGVar1 = AddBaseDrawConsoleTextCmd
+                     (param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9,
+                      param_10,param_11);
+  if (pGVar1 != (GfxCmdDrawText2D *)0x0) {
+    pGVar1->renderFlags = pGVar1->renderFlags | 0x100;
+    SetDrawText2DGlowParms(pGVar1,in_stack_0000005c,in_stack_0000006c);
   }
   return;
 }
@@ -2414,81 +2832,96 @@ void R_AddCmdDrawConsoleTextSubtitle(void)
 
 // 82768B30  R_AddCmdDrawConsoleTextPulseFX  (gfx_d3d/r_rendercmds.cpp:2322)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_AddCmdDrawConsoleTextPulseFX
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8,
-               undefined8 param_9)
+               (char *param_1,int param_2,int param_3,int param_4,Font_s *param_5,float param_6,
+               float param_7,float param_8,float param_9,float *param_10,int param_11,
+               float *param_12,int param_13,int param_14,int param_15,int param_16,
+               Material *param_17,Material *param_18)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  undefined4 *puVar3;
-  char cVar5;
-  int iVar4;
-  undefined8 extraout_f1;
-  undefined8 uVar6;
-  undefined4 in_stack_0000005c;
-  undefined4 in_stack_0000006c;
+  char *pcVar2;
+  Material *pMVar3;
+  bool bVar5;
+  bool bVar6;
+  longlong lVar1;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float *in_stack_0000005c;
+  float *in_stack_0000006c;
   int in_stack_00000074;
-  undefined4 in_stack_0000007c;
-  undefined4 in_stack_00000084;
-  undefined4 in_stack_0000008c;
-  int in_stack_00000094;
-  int in_stack_0000009c;
+  int in_stack_0000007c;
+  int in_stack_00000084;
+  int in_stack_0000008c;
+  Material *in_stack_00000094;
+  Material *in_stack_0000009c;
+  GfxCmdDrawText2D *pGVar4;
   
-  __savegprlr_23();
-  uVar2 = __savefpr_28();
-  uVar6 = extraout_f1;
-  puVar3 = DAT_84616528;
-  if (in_stack_00000094 != 0) {
-    puVar3 = (undefined4 *)Material_FromHandle(in_stack_00000094);
+  dVar9 = (double)param_9;
+  dVar8 = (double)param_8;
+  dVar7 = (double)param_7;
+  __savegprlr_23((double)param_6,param_1);
+  pcVar2 = (char *)__savefpr_28();
+  dVar10 = extraout_f1;
+  pMVar3 = rgp.defaultMaterial;
+  if (in_stack_00000094 != (Material *)0x0) {
+    pMVar3 = Material_FromHandle(in_stack_00000094);
   }
-  cVar5 = Material_HasTechnique(puVar3,9);
-  if (cVar5 == '\0') {
-    cVar5 = Material_HasTechnique(puVar3,5);
-    bVar1 = false;
-    if (cVar5 != '\0') goto LAB_82768bc4;
-  }
-  else {
+  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
+  if (bVar5) {
 LAB_82768bc4:
-    bVar1 = true;
-  }
-  if ((bVar1) && (cVar5 = Material_IsDefault(puVar3), cVar5 == '\0')) goto LAB_82768be8;
-  puVar3 = DAT_84616528;
-  if (in_stack_0000009c != 0) {
-    puVar3 = (undefined4 *)Material_FromHandle(in_stack_0000009c);
-  }
-  cVar5 = Material_HasTechnique(puVar3,9);
-  if (cVar5 == '\0') {
-    cVar5 = Material_HasTechnique(puVar3,5);
-    bVar1 = false;
-    if (cVar5 != '\0') goto LAB_82768c5c;
+    bVar5 = true;
   }
   else {
-LAB_82768c5c:
-    bVar1 = true;
+    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
+    bVar5 = false;
+    if (bVar6) goto LAB_82768bc4;
   }
-  if ((!bVar1) || (cVar5 = Material_IsDefault(puVar3), cVar5 != '\0')) {
-    iVar4 = AddBaseDrawConsoleTextCmd
-                      (uVar6,param_2,param_3,param_4,uVar2,param_6,param_7,param_8,param_9);
-    if ((iVar4 != 0) &&
-       (((SetDrawText2DGlowParms(iVar4,in_stack_0000005c,in_stack_0000006c), in_stack_00000094 != 0
-         && (in_stack_0000009c != 0)) && (in_stack_00000074 != 0)))) {
-      *(int *)(iVar4 + 0x44) = in_stack_00000094;
-      *(int *)(iVar4 + 0x48) = in_stack_0000009c;
-      *(undefined4 *)(iVar4 + 0x4c) = 0;
-      *(uint *)(iVar4 + 0x24) = *(uint *)(iVar4 + 0x24) | 0xc0;
-      *(int *)(iVar4 + 0x34) = in_stack_00000074;
-      *(undefined4 *)(iVar4 + 0x38) = in_stack_0000007c;
-      *(undefined4 *)(iVar4 + 0x3c) = in_stack_00000084;
-      *(undefined4 *)(iVar4 + 0x40) = in_stack_0000008c;
+  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) goto LAB_82768be8;
+  pMVar3 = rgp.defaultMaterial;
+  if (in_stack_0000009c != (Material *)0x0) {
+    pMVar3 = Material_FromHandle(in_stack_0000009c);
+  }
+  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
+  if (bVar5) {
+LAB_82768c5c:
+    bVar5 = true;
+  }
+  else {
+    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
+    bVar5 = false;
+    if (bVar6) goto LAB_82768c5c;
+  }
+  if ((!bVar5) || (bVar5 = Material_IsDefault(pMVar3), bVar5)) {
+    pGVar4 = AddBaseDrawConsoleTextCmd
+                       (pcVar2,param_2,param_3,param_4,param_5,(float)dVar10,(float)dVar7,
+                        (float)dVar8,(float)dVar9,param_10,param_11);
+    lVar1 = (longlong)(int)pGVar4;
+    if (pGVar4 != (GfxCmdDrawText2D *)0x0) {
+      bVar5 = SetDrawText2DGlowParms(pGVar4,in_stack_0000005c,in_stack_0000006c);
+      lVar1 = (longlong)bVar5;
+      if (((in_stack_00000094 != (Material *)0x0) && (in_stack_0000009c != (Material *)0x0)) &&
+         (in_stack_00000074 != 0)) {
+        pGVar4->fxMaterial = in_stack_00000094;
+        pGVar4->fxMaterialGlow = in_stack_0000009c;
+        pGVar4->padding = 0.0;
+        pGVar4->renderFlags = pGVar4->renderFlags | 0xc0;
+        pGVar4->fxBirthTime = in_stack_00000074;
+        pGVar4->fxLetterTime = in_stack_0000007c;
+        pGVar4->fxDecayStartTime = in_stack_00000084;
+        pGVar4->fxDecayDuration = in_stack_0000008c;
+      }
     }
-    __restfpr_28();
+    __restfpr_28(lVar1);
     __restgprlr_23();
     return;
   }
 LAB_82768be8:
-  R_WarnOncePerFrame(0x3d,*puVar3,uVar2);
+  R_WarnOncePerFrame(R_WARN_FOGABLE_2DTEXT);
   __restfpr_28();
   __restgprlr_23();
   return;
@@ -2497,32 +2930,36 @@ LAB_82768be8:
 
 // 82768D38  R_AddCmdDrawQuadPic  (gfx_d3d/r_rendercmds.cpp:2353)
 
-void R_AddCmdDrawQuadPic(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdDrawQuadPic(float (*param_1) [2],float *param_2,Material *param_3)
 
 {
   undefined4 uVar1;
   undefined4 *puVar2;
-  int iVar3;
-  undefined4 uVar4;
+  void *pvVar3;
+  Material *pMVar4;
+  ulonglong uVar5;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  iVar3 = R_GetCommandBuffer(0xe,0x2c);
-  if (iVar3 != 0) {
-    uVar4 = DAT_84616528;
-    if ((param_3 & 0xffffffff) != 0) {
-      uVar4 = Material_FromHandle(param_3);
+  uVar5 = (ulonglong)(int)param_3;
+  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  pvVar3 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC,0x2c);
+  if (pvVar3 != (void *)0x0) {
+    pMVar4 = rgp.defaultMaterial;
+    if ((uVar5 & 0xffffffff) != 0) {
+      pMVar4 = Material_FromHandle((Material *)uVar5);
     }
     uVar1 = *puVar2;
-    *(undefined4 *)(iVar3 + 4) = uVar4;
-    *(undefined4 *)(iVar3 + 8) = uVar1;
-    *(undefined4 *)(iVar3 + 0xc) = puVar2[1];
-    *(undefined4 *)(iVar3 + 0x10) = puVar2[2];
-    *(undefined4 *)(iVar3 + 0x14) = puVar2[3];
-    *(undefined4 *)(iVar3 + 0x18) = puVar2[4];
-    *(undefined4 *)(iVar3 + 0x1c) = puVar2[5];
-    *(undefined4 *)(iVar3 + 0x20) = puVar2[6];
-    *(undefined4 *)(iVar3 + 0x24) = puVar2[7];
-    R_ConvertColorToBytes(param_2,iVar3 + 0x28);
+    *(Material **)((int)pvVar3 + 4) = pMVar4;
+    *(undefined4 *)((int)pvVar3 + 8) = uVar1;
+    *(undefined4 *)((int)pvVar3 + 0xc) = puVar2[1];
+    *(undefined4 *)((int)pvVar3 + 0x10) = puVar2[2];
+    *(undefined4 *)((int)pvVar3 + 0x14) = puVar2[3];
+    *(undefined4 *)((int)pvVar3 + 0x18) = puVar2[4];
+    *(undefined4 *)((int)pvVar3 + 0x1c) = puVar2[5];
+    *(undefined4 *)((int)pvVar3 + 0x20) = puVar2[6];
+    *(undefined4 *)((int)pvVar3 + 0x24) = puVar2[7];
+    R_ConvertColorToBytes(param_2,(uchar *)((int)pvVar3 + 0x28));
   }
   __restgprlr_28();
   return;
@@ -2531,40 +2968,50 @@ void R_AddCmdDrawQuadPic(undefined8 param_1,undefined8 param_2,ulonglong param_3
 
 // 82768DE0  R_AddCmdDrawQuadPicST  (gfx_d3d/r_rendercmds.cpp:2370)
 
-void R_AddCmdDrawQuadPicST(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdDrawQuadPicST
+               (float (*param_1) [2],float param_2,float param_3,float param_4,float param_5,
+               float *param_6,Material *param_7)
 
 {
   undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
-  undefined8 in_r8;
+  void *pvVar2;
+  Material *pMVar3;
+  float *in_r8;
   ulonglong in_r9;
   double extraout_f1;
   double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  __savegprlr_28();
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  __savegprlr_28((double)param_2,param_1,param_6,param_7);
   puVar1 = (undefined4 *)__savefpr_28();
-  dVar4 = extraout_f1;
-  iVar2 = R_GetCommandBuffer(0xf,0x3c);
-  if (iVar2 != 0) {
-    uVar3 = DAT_84616528;
+  dVar7 = extraout_f1;
+  pvVar2 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC_ST,0x3c);
+  if (pvVar2 != (void *)0x0) {
+    pMVar3 = rgp.defaultMaterial;
     if ((in_r9 & 0xffffffff) != 0) {
-      uVar3 = Material_FromHandle(in_r9);
+      pMVar3 = Material_FromHandle((Material *)in_r9);
     }
-    *(undefined4 *)(iVar2 + 4) = uVar3;
-    *(undefined4 *)(iVar2 + 8) = *puVar1;
-    *(undefined4 *)(iVar2 + 0xc) = puVar1[1];
-    *(undefined4 *)(iVar2 + 0x10) = puVar1[2];
-    *(undefined4 *)(iVar2 + 0x14) = puVar1[3];
-    *(undefined4 *)(iVar2 + 0x18) = puVar1[4];
-    *(undefined4 *)(iVar2 + 0x1c) = puVar1[5];
-    *(undefined4 *)(iVar2 + 0x20) = puVar1[6];
-    *(undefined4 *)(iVar2 + 0x24) = puVar1[7];
-    *(float *)(iVar2 + 0x28) = (float)dVar4;
-    *(float *)(iVar2 + 0x2c) = (float)param_2;
-    *(float *)(iVar2 + 0x30) = (float)param_3;
-    *(float *)(iVar2 + 0x34) = (float)param_4;
-    R_ConvertColorToBytes(in_r8,iVar2 + 0x38);
+    *(Material **)((int)pvVar2 + 4) = pMVar3;
+    *(undefined4 *)((int)pvVar2 + 8) = *puVar1;
+    *(undefined4 *)((int)pvVar2 + 0xc) = puVar1[1];
+    *(undefined4 *)((int)pvVar2 + 0x10) = puVar1[2];
+    *(undefined4 *)((int)pvVar2 + 0x14) = puVar1[3];
+    *(undefined4 *)((int)pvVar2 + 0x18) = puVar1[4];
+    *(undefined4 *)((int)pvVar2 + 0x1c) = puVar1[5];
+    *(undefined4 *)((int)pvVar2 + 0x20) = puVar1[6];
+    *(undefined4 *)((int)pvVar2 + 0x24) = puVar1[7];
+    *(float *)((int)pvVar2 + 0x28) = (float)dVar7;
+    *(float *)((int)pvVar2 + 0x2c) = (float)dVar4;
+    *(float *)((int)pvVar2 + 0x30) = (float)dVar5;
+    *(float *)((int)pvVar2 + 0x34) = (float)dVar6;
+    R_ConvertColorToBytes(in_r8,(uchar *)((int)pvVar2 + 0x38));
   }
   __restfpr_28();
   __restgprlr_28();
@@ -2574,30 +3021,39 @@ void R_AddCmdDrawQuadPicST(undefined8 param_1,double param_2,double param_3,doub
 
 // 82768EB8  R_AddCmdDrawFullScreenColoredQuad  (gfx_d3d/r_rendercmds.cpp:2391)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawFullScreenColoredQuad
-               (undefined8 param_1,double param_2,double param_3,double param_4)
+               (float param_1,float param_2,float param_3,float param_4,float *param_5,
+               Material *param_6)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  undefined8 in_r7;
+  void *pvVar1;
+  Material *pMVar2;
+  float *in_r7;
   ulonglong in_r8;
   double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  __savegprlr_29();
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  __savegprlr_29((double)param_1,param_5,param_6);
   dVar3 = (double)__savefpr_28();
-  iVar1 = R_GetCommandBuffer(0x10,0x1c);
-  if (iVar1 != 0) {
-    uVar2 = DAT_84616528;
+  pvVar1 = R_GetCommandBuffer(RC_DRAW_FULL_SCREEN_COLORED_QUAD,0x1c);
+  if (pvVar1 != (void *)0x0) {
+    pMVar2 = rgp.defaultMaterial;
     if ((in_r8 & 0xffffffff) != 0) {
-      uVar2 = Material_FromHandle(in_r8);
+      pMVar2 = Material_FromHandle((Material *)in_r8);
     }
-    *(undefined4 *)(iVar1 + 4) = uVar2;
-    *(float *)(iVar1 + 8) = (float)dVar3;
-    *(float *)(iVar1 + 0xc) = (float)param_2;
-    *(float *)(iVar1 + 0x10) = (float)param_3;
-    *(float *)(iVar1 + 0x14) = (float)param_4;
-    R_ConvertColorToBytes(in_r7,iVar1 + 0x18);
+    *(Material **)((int)pvVar1 + 4) = pMVar2;
+    *(float *)((int)pvVar1 + 8) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar5;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar6;
+    R_ConvertColorToBytes(in_r7,(uchar *)((int)pvVar1 + 0x18));
   }
   __restfpr_28();
   __restgprlr_29();
@@ -2607,26 +3063,29 @@ void R_AddCmdDrawFullScreenColoredQuad
 
 // 82768F50  R_AddCmdSetMaterialColor  (gfx_d3d/r_rendercmds.cpp:2409)
 
-void R_AddCmdSetMaterialColor(undefined4 *param_1)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSetMaterialColor(float *param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   
-  iVar1 = R_GetCommandBuffer(1,0x14);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x96e,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar1 = R_GetCommandBuffer(RC_SET_MATERIAL_COLOR,0x14);
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x96e,0,"%s");
   }
-  if (param_1 == (undefined4 *)0x0) {
-    *(undefined4 *)(iVar1 + 4) = 0;
-    *(undefined4 *)(iVar1 + 8) = 0;
-    *(undefined4 *)(iVar1 + 0xc) = 0;
-    *(undefined4 *)(iVar1 + 0x10) = 0;
+  if (param_1 == (float *)0x0) {
+    *(undefined4 *)((int)pvVar1 + 4) = 0;
+    *(undefined4 *)((int)pvVar1 + 8) = 0;
+    *(undefined4 *)((int)pvVar1 + 0xc) = 0;
+    *(undefined4 *)((int)pvVar1 + 0x10) = 0;
   }
   else {
-    *(undefined4 *)(iVar1 + 4) = *param_1;
-    *(undefined4 *)(iVar1 + 8) = param_1[1];
-    *(undefined4 *)(iVar1 + 0xc) = param_1[2];
-    *(undefined4 *)(iVar1 + 0x10) = param_1[3];
+    *(float *)((int)pvVar1 + 4) = *param_1;
+    *(float *)((int)pvVar1 + 8) = param_1[1];
+    *(float *)((int)pvVar1 + 0xc) = param_1[2];
+    *(float *)((int)pvVar1 + 0x10) = param_1[3];
   }
   return;
 }
@@ -2634,34 +3093,36 @@ void R_AddCmdSetMaterialColor(undefined4 *param_1)
 
 // 82769000  R_AddCmd2dLightProperties  (gfx_d3d/r_rendercmds.cpp:2441)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmd2dLightProperties
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4,
-               undefined4 *param_5)
+               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
   undefined4 *puVar1;
-  int iVar2;
+  void *pvVar2;
   
-  puVar1 = (undefined4 *)__savegprlr_26();
-  iVar2 = R_GetCommandBuffer(2,0x40);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x98e,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  puVar1 = (undefined4 *)__savegprlr_26(param_1);
+  pvVar2 = R_GetCommandBuffer(RC_SET_2D_LIGHT_PROPERTIES,0x40);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x98e,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 4) = *puVar1;
-  *(undefined4 *)(iVar2 + 8) = puVar1[1];
-  *(undefined4 *)(iVar2 + 0xc) = puVar1[2];
-  *(undefined4 *)(iVar2 + 0x10) = *param_2;
-  *(undefined4 *)(iVar2 + 0x14) = param_2[1];
-  *(undefined4 *)(iVar2 + 0x18) = param_2[2];
-  *(undefined4 *)(iVar2 + 0x1c) = *param_3;
-  *(undefined4 *)(iVar2 + 0x20) = param_3[1];
-  *(undefined4 *)(iVar2 + 0x24) = param_3[2];
-  *(undefined4 *)(iVar2 + 0x28) = *param_4;
-  *(undefined4 *)(iVar2 + 0x2c) = param_4[1];
-  *(undefined4 *)(iVar2 + 0x30) = param_4[2];
-  *(undefined4 *)(iVar2 + 0x34) = *param_5;
-  *(undefined4 *)(iVar2 + 0x38) = param_5[1];
-  *(undefined4 *)(iVar2 + 0x3c) = param_5[2];
+  *(undefined4 *)((int)pvVar2 + 4) = *puVar1;
+  *(undefined4 *)((int)pvVar2 + 8) = puVar1[1];
+  *(undefined4 *)((int)pvVar2 + 0xc) = puVar1[2];
+  *(float *)((int)pvVar2 + 0x10) = *param_2;
+  *(float *)((int)pvVar2 + 0x14) = param_2[1];
+  *(float *)((int)pvVar2 + 0x18) = param_2[2];
+  *(float *)((int)pvVar2 + 0x1c) = *param_3;
+  *(float *)((int)pvVar2 + 0x20) = param_3[1];
+  *(float *)((int)pvVar2 + 0x24) = param_3[2];
+  *(float *)((int)pvVar2 + 0x28) = *param_4;
+  *(float *)((int)pvVar2 + 0x2c) = param_4[1];
+  *(float *)((int)pvVar2 + 0x30) = param_4[2];
+  *(float *)((int)pvVar2 + 0x34) = *param_5;
+  *(float *)((int)pvVar2 + 0x38) = param_5[1];
+  *(float *)((int)pvVar2 + 0x3c) = param_5[2];
   __restgprlr_26();
   return;
 }
@@ -2669,28 +3130,32 @@ void R_AddCmd2dLightProperties
 
 // 827690E0  R_AddCmdSetViewportValues  (gfx_d3d/r_rendercmds.cpp:2474)
 
-void R_AddCmdSetViewportValues
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSetViewportValues(int param_1,int param_2,int param_3,int param_4)
 
 {
   undefined4 uVar1;
-  int iVar2;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_26();
-  if ((int)param_3 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x9ad,0,0xffffffff821ba4cc,0xffffffff821cba68,param_3);
+  uVar1 = __savegprlr_26(param_1);
+  if (param_3 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9ad,0,"%s\n\t(width) = %i");
   }
-  if ((int)param_4 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0x9ae,0,0xffffffff821ba49c,0xffffffff821cba58,param_4);
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9ae,0,"%s\n\t(height) = %i");
   }
-  iVar2 = R_GetCommandBuffer(6,0x14);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9b2,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar2 = R_GetCommandBuffer(RC_SET_VIEWPORT,0x14);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9b2,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 4) = uVar1;
-  *(undefined4 *)(iVar2 + 8) = param_2;
-  *(int *)(iVar2 + 0xc) = (int)param_3;
-  *(int *)(iVar2 + 0x10) = (int)param_4;
+  *(undefined4 *)((int)pvVar2 + 4) = uVar1;
+  *(int *)((int)pvVar2 + 8) = param_2;
+  *(int *)((int)pvVar2 + 0xc) = param_3;
+  *(int *)((int)pvVar2 + 0x10) = param_4;
   __restgprlr_26();
   return;
 }
@@ -2698,34 +3163,40 @@ void R_AddCmdSetViewportValues
 
 // 827691B0  R_AddCmdSetScissorRect  (gfx_d3d/r_rendercmds.cpp:2492)
 
-void R_AddCmdSetScissorRect
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSetScissorRect(int param_1,int param_2,int param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_26();
-  if ((int)uVar1 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9bf,0,0xffffffff821cbab0,0xffffffff821cbac0,uVar1);
+  iVar1 = __savegprlr_26(param_1);
+  if (iVar1 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9bf,0,"%s\n\t(x) = %i");
   }
-  if ((int)param_2 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9c0,0,0xffffffff821cba94,0xffffffff821cbaa4,param_2);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9c0,0,"%s\n\t(y) = %i");
   }
-  if ((int)param_3 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9c1,0,0xffffffff821ba4cc,0xffffffff821cba84,param_3);
+  if (param_3 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9c1,0,"%s\n\t(width) = %i");
   }
-  if ((int)param_4 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9c2,0,0xffffffff821ba49c,0xffffffff821cba74,param_4);
+  if (param_4 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9c2,0,"%s\n\t(height) = %i");
   }
-  iVar2 = R_GetCommandBuffer(7,0x14);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9c6,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar2 = R_GetCommandBuffer(RC_SET_SCISSOR,0x14);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9c6,0,"%s");
   }
-  *(int *)(iVar2 + 4) = (int)uVar1;
-  *(int *)(iVar2 + 8) = (int)param_2;
-  *(int *)(iVar2 + 0xc) = (int)param_3;
-  *(int *)(iVar2 + 0x10) = (int)param_4;
+  *(int *)((int)pvVar2 + 4) = iVar1;
+  *(int *)((int)pvVar2 + 8) = param_2;
+  *(int *)((int)pvVar2 + 0xc) = param_3;
+  *(int *)((int)pvVar2 + 0x10) = param_4;
   __restgprlr_26();
   return;
 }
@@ -2733,14 +3204,18 @@ void R_AddCmdSetScissorRect
 
 // 827692D8  R_AddCmdClearScissorRect  (gfx_d3d/r_rendercmds.cpp:2512)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdClearScissorRect(void)
 
 {
-  int iVar1;
+  void *pvVar1;
   
-  iVar1 = R_GetCommandBuffer(8,4);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0x9d7,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar1 = R_GetCommandBuffer(RC_CLEAR_SCISSOR,4);
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0x9d7,0,"%s");
   }
   return;
 }
@@ -2748,32 +3223,34 @@ void R_AddCmdClearScissorRect(void)
 
 // 82769330  R_SetTestLods  (gfx_d3d/r_rendercmds.cpp:2524)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_SetTestLods(void)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  int iVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
-  if (*(int *)(DAT_845aa888 + 0xc) == *(int *)(DAT_845aa888 + 0x2c)) {
-    XModelSetTestLods((double)*(float *)(DAT_845aa884 + 0xc),0);
-    XModelSetTestLods((double)*(float *)(DAT_845aa790 + 0xc),1);
-    XModelSetTestLods((double)*(float *)(DAT_845aa6b0 + 0xc),2);
-    XModelSetTestLods((double)*(float *)(DAT_845aa5e4 + 0xc),3);
+  if ((r_forceLod->current).integer == (r_forceLod->reset).integer) {
+    XModelSetTestLods(0,(r_highLodDist->current).value);
+    XModelSetTestLods(1,(r_mediumLodDist->current).value);
+    XModelSetTestLods(2,(r_lowLodDist->current).value);
+    XModelSetTestLods(3,(r_lowestLodDist->current).value);
   }
   else {
-    lVar1 = 0;
-    uVar3 = 0x3f50624de0000000;
-    uVar4 = 0;
+    iVar1 = 0;
+    dVar3 = 0.0010000000474974513;
+    dVar4 = 0.0;
     do {
-      uVar2 = uVar3;
-      if ((int)lVar1 == *(int *)(DAT_845aa888 + 0xc)) {
-        uVar2 = uVar4;
+      dVar2 = dVar3;
+      if (iVar1 == (r_forceLod->current).integer) {
+        dVar2 = dVar4;
       }
-      XModelSetTestLods(uVar2,lVar1);
-      lVar1 = lVar1 + 1;
-    } while ((int)lVar1 < 4);
+      XModelSetTestLods(iVar1,(float)dVar2);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 4);
   }
   return;
 }
@@ -2781,31 +3258,36 @@ void R_SetTestLods(void)
 
 // 82769420  R_AreAnyImageOverridesActive  (gfx_d3d/r_rendercmds.cpp:2543)
 
-longlong R_AreAnyImageOverridesActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool R_AreAnyImageOverridesActive(void)
 
 {
   longlong lVar1;
   
-  if (((DAT_846180c8 == 1) && (*(int *)(DAT_845aa5b0 + 0xc) == 1)) &&
-     (*(int *)(DAT_845aa88c + 0xc) == 1)) {
-    lVar1 = (ulonglong)*(uint *)(DAT_845aa758 + 0xc) - 1;
-    return lVar1 - (((ulonglong)*(uint *)(DAT_845aa758 + 0xc) - 2) + (ulonglong)(lVar1 == 0));
+  if (((rg.colorMap == 1) && ((r_detailMap->current).integer == 1)) &&
+     ((r_normalMap->current).integer == 1)) {
+    lVar1 = (ulonglong)(r_specularMap->current).unsignedInt - 1;
+    return (bool)((char)lVar1 - ((char)(r_specularMap->current).unsignedInt + -2 + (lVar1 == 0)));
   }
-  return 1;
+  return true;
 }
 
 
 // 82769480  R_SetOutdoorFeatherConst  (gfx_d3d/r_rendercmds.cpp:2557)
 
 /* WARNING: Removing unreachable block (ram,0x827694b0) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetOutdoorFeatherConst(void)
 
 {
-  DAT_8484ee10 = *(undefined4 *)(DAT_845aa6f0 + 0xc);
-  DAT_8484ee14 = DAT_8484ee10;
-  DAT_8484ee18 = DAT_8484ee10;
-  DAT_8484ee1c = DAT_8484ee10;
+  gfxCmdBufInput.consts[0x36][0] = (r_outdoorFeather->current).value;
+  gfxCmdBufInput.consts[0x36][1] = gfxCmdBufInput.consts[0x36][0];
+  gfxCmdBufInput.consts[0x36][2] = gfxCmdBufInput.consts[0x36][0];
+  gfxCmdBufInput.consts[0x36][3] = gfxCmdBufInput.consts[0x36][0];
   return;
 }
 
@@ -2813,19 +3295,23 @@ void R_SetOutdoorFeatherConst(void)
 // 82769508  R_EnvMapOverrideConstants  (gfx_d3d/r_rendercmds.cpp:2567)
 
 /* WARNING: Removing unreachable block (ram,0x827695b4) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_EnvMapOverrideConstants(void)
 
 {
   __savefpr_28();
-  if (*(float *)(DAT_845aa580 + 0xc) <= 0.0) {
-    MyAssertHandler(0xffffffff821cb048,0xa08,0,0xffffffff82000f98,0xffffffff821cbacc);
+  if ((r_envMapMaxIntensity->current).value <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xa08,0,"%s");
   }
-  if (*(char *)(DAT_845aa850 + 0xc) != '\0') {
-    DAT_8484ee24 = *(undefined4 *)(DAT_845aa580 + 0xc);
-    DAT_8484ee2c = *(undefined4 *)(DAT_845aa880 + 0xc);
-    DAT_8484ee28 = *(undefined4 *)(DAT_845aa810 + 0xc);
-    DAT_8484ee20 = *(undefined4 *)(DAT_845aa8d4 + 0xc);
+  if ((r_envMapOverride->current).enabled != false) {
+    gfxCmdBufInput.consts[0x37][1] = (r_envMapMaxIntensity->current).value;
+    gfxCmdBufInput.consts[0x37][3] = (r_envMapSunIntensity->current).value;
+    gfxCmdBufInput.consts[0x37][2] = (r_envMapExponent->current).value;
+    gfxCmdBufInput.consts[0x37][0] = (r_envMapMinIntensity->current).value;
   }
   __restfpr_28();
   return;
@@ -2834,10 +3320,12 @@ void R_EnvMapOverrideConstants(void)
 
 // 82769610  R_FogIsWorldLoaded  (gfx_d3d/r_rendercmds.cpp:2578)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool R_FogIsWorldLoaded(void)
 
 {
-  return DAT_845a0ad8 != '\0';
+  return (bool)('\x01' - (s_world.fogTypesAllowed == '\0'));
 }
 
 
@@ -2845,107 +3333,119 @@ bool R_FogIsWorldLoaded(void)
 
 /* WARNING: Removing unreachable block (ram,0x82769874) */
 /* WARNING: Removing unreachable block (ram,0x827698c4) */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_UpdateFrontEndDvarOptions(void)
 
 {
   int iVar1;
-  char cVar2;
-  longlong lVar3;
-  byte bVar4;
-  float *pfVar5;
-  double dVar6;
+  bool bVar2;
+  uchar uVar3;
+  longlong lVar4;
+  byte bVar5;
+  float *pfVar6;
+  double dVar7;
   
   __savegprlr_24();
-  if ((*(char *)(DAT_845aa858 + 0xc) != '\0') && ((ulonglong)DAT_8461658c != 0)) {
-    R_SetSunFromDvars((ulonglong)DAT_8461658c + 0x160);
+  if (((r_sun_from_dvars->current).enabled != false) && (rgp.world != (GfxWorld *)0x0)) {
+    R_SetSunFromDvars(&(rgp.world)->sun);
   }
   R_SetTestLods();
-  if (DAT_846180c8 == 1) {
-    if (*(int *)(DAT_845aa5b0 + 0xc) == 1) {
-      if (*(int *)(DAT_845aa88c + 0xc) == 1) {
-        lVar3 = (ulonglong)*(uint *)(DAT_845aa758 + 0xc) - 1;
-        DAT_84618058 = (char)lVar3 - ((char)*(uint *)(DAT_845aa758 + 0xc) + -2 + (lVar3 == 0));
+  if (rg.colorMap == 1) {
+    if ((r_detailMap->current).integer == 1) {
+      if ((r_normalMap->current).integer == 1) {
+        lVar4 = (ulonglong)(r_specularMap->current).unsignedInt - 1;
+        rg.hasAnyImageOverrides =
+             (bool)((char)lVar4 - ((char)(r_specularMap->current).unsignedInt + -2 + (lVar4 == 0)));
       }
       else {
-        DAT_84618058 = '\x01';
+        rg.hasAnyImageOverrides = true;
       }
     }
     else {
-      DAT_84618058 = '\x01';
+      rg.hasAnyImageOverrides = true;
     }
   }
   else {
-    DAT_84618058 = '\x01';
+    rg.hasAnyImageOverrides = true;
   }
-  cVar2 = R_CheckDvarModified(DAT_845aa7d4);
-  if (cVar2 != '\0') {
+  bVar2 = R_CheckDvarModified(r_showMissingLightGrid);
+  if (bVar2) {
     R_SyncRenderThread();
     R_ResetModelLighting();
   }
-  bVar4 = DAT_84617b4c | DAT_84617c9c | DAT_84617dec | DAT_84617f3c;
-  if ((bVar4 != 0) && ((DAT_845a0ad8 & 2) == 0)) {
-    if (DAT_845a0ad8 != 0) {
-      Com_PrintError(1,0xffffffff821cbb80);
+  bVar5 = rg.fogSettings[0][2].sunFogEnabled | rg.fogSettings[1][2].sunFogEnabled |
+          rg.fogSettings[2][2].sunFogEnabled | rg.fogSettings[3][2].sunFogEnabled;
+  if ((bVar5 != 0) && ((s_world.fogTypesAllowed & 2) == 0)) {
+    if (s_world.fogTypesAllowed != '\0') {
+      Com_PrintError(1,
+                     "dfog disabled in fast file.  Remove \'ignore_tech,dfog\' from the level csv if you want to use sunDirFog.\n"
+                    );
     }
-    bVar4 = 0;
+    bVar5 = 0;
   }
-  if ((bVar4 == 0) && ((DAT_845a0ad8 & 1) == 0)) {
-    pfVar5 = (float *)&DAT_84617b44;
-    dVar6 = 0.0;
-    bVar4 = DAT_845a0ad8;
+  if ((bVar5 == 0) && ((s_world.fogTypesAllowed & 1) == 0)) {
+    pfVar6 = &rg.fogSettings[0][2].density;
+    dVar7 = 0.0;
+    uVar3 = s_world.fogTypesAllowed;
     do {
-      if ((bVar4 != 0) && (dVar6 < (double)*pfVar5)) {
-        Com_PrintError(1,0xffffffff821cbaf8);
-        bVar4 = DAT_845a0ad8;
+      if ((uVar3 != '\0') && (dVar7 < (double)*pfVar6)) {
+        Com_PrintError(1,
+                       "normal fog disabled in fast file.  Remove \'ignore_tech,normal_fog\' from the level csv if you don\'t want to consistently use sunDirFog.\n"
+                      );
+        uVar3 = s_world.fogTypesAllowed;
       }
-      pfVar5 = pfVar5 + 0x54;
-    } while ((int)pfVar5 < -0x7b9e7f7c);
-    bVar4 = 1;
+      pfVar6 = pfVar6 + 0x54;
+    } while ((int)pfVar6 < -0x7b9e7f7c);
+    bVar5 = 1;
   }
-  if (((*(char *)(DAT_845aa714 + 0xb) != '\0') || (DAT_84618059 != bVar4)) ||
-     (*(char *)(DAT_845aa6dc + 0xb) != '\0')) {
-    DAT_84618059 = bVar4;
-    Dvar_ClearModified();
-    Dvar_ClearModified(DAT_845aa6dc);
+  if (((r_fullbright->modified != false) || (rg.useSunDirFog != (bool)bVar5)) ||
+     (r_debugShader->modified != false)) {
+    rg.useSunDirFog = (bool)bVar5;
+    Dvar_ClearModified(r_fullbright);
+    Dvar_ClearModified(r_debugShader);
     R_SyncRenderThread();
     R_InitDrawMethod();
   }
-  cVar2 = R_CheckDvarModified(DAT_845aa6f0);
-  if (cVar2 != '\0') {
-    DAT_8484ee10 = *(undefined4 *)(DAT_845aa6f0 + 0xc);
-    DAT_8484ee14 = DAT_8484ee10;
-    DAT_8484ee18 = DAT_8484ee10;
-    DAT_8484ee1c = DAT_8484ee10;
+  bVar2 = R_CheckDvarModified(r_outdoorFeather);
+  if (bVar2) {
+    gfxCmdBufInput.consts[0x36][0] = (r_outdoorFeather->current).value;
+    gfxCmdBufInput.consts[0x36][1] = gfxCmdBufInput.consts[0x36][0];
+    gfxCmdBufInput.consts[0x36][2] = gfxCmdBufInput.consts[0x36][0];
+    gfxCmdBufInput.consts[0x36][3] = gfxCmdBufInput.consts[0x36][0];
   }
-  iVar1 = *(int *)(DAT_845aa6dc + 0xc) * 0x10;
-  DAT_8484ed20 = *(undefined4 *)(&DAT_821cafb8 + iVar1);
-  DAT_8484ed24 = *(undefined4 *)(&DAT_821cafbc + iVar1);
-  DAT_8484ed28 = *(undefined4 *)(&DAT_821cafc0 + iVar1);
-  DAT_8484ed2c = *(undefined4 *)(&DAT_821cafc4 + iVar1);
-  cVar2 = R_CheckDvarModified(DAT_845aa850);
-  if (((cVar2 != '\0') || (cVar2 = R_CheckDvarModified(DAT_845aa8d4), cVar2 != '\0')) ||
-     ((cVar2 = R_CheckDvarModified(DAT_845aa580), cVar2 != '\0' ||
-      ((cVar2 = R_CheckDvarModified(DAT_845aa810), cVar2 != '\0' ||
-       (cVar2 = R_CheckDvarModified(DAT_845aa880), cVar2 != '\0')))))) {
+  iVar1 = (r_debugShader->current).integer;
+  gfxCmdBufInput.consts[0x27][0] = s_debugShaderConsts[iVar1][0];
+  gfxCmdBufInput.consts[0x27][1] = s_debugShaderConsts[iVar1][1];
+  gfxCmdBufInput.consts[0x27][2] = s_debugShaderConsts[iVar1][2];
+  gfxCmdBufInput.consts[0x27][3] = s_debugShaderConsts[iVar1][3];
+  bVar2 = R_CheckDvarModified(r_envMapOverride);
+  if (((bVar2) || (bVar2 = R_CheckDvarModified(r_envMapMinIntensity), bVar2)) ||
+     ((bVar2 = R_CheckDvarModified(r_envMapMaxIntensity), bVar2 ||
+      ((bVar2 = R_CheckDvarModified(r_envMapExponent), bVar2 ||
+       (bVar2 = R_CheckDvarModified(r_envMapSunIntensity), bVar2)))))) {
     R_EnvMapOverrideConstants();
   }
-  cVar2 = *(char *)(DAT_845aa610 + 0xc);
-  if (DAT_846180a0 != cVar2) {
+  bVar2 = (r_distortion->current).enabled;
+  if (rg.distortion != bVar2) {
     R_SyncRenderThread();
   }
-  DAT_8484eff4 = -(uint)(cVar2 != '\0') & DAT_847620d0;
-  DAT_846180c0 = *(undefined1 *)(DAT_845aa6c4 + 0xc);
-  DAT_846180c3 = *(undefined1 *)(DAT_845aa630 + 0xc);
-  if ((*(char *)(DAT_845aa7dc + 0xc) == '\0') ||
-     (DAT_846180c1 = 1, *(char *)(DAT_845aa664 + 0xc) == '\0')) {
-    DAT_846180c1 = 0;
+  gfxCmdBufInput.codeImages[9] =
+       (GfxImage *)(-(uint)(bVar2 != false) & (uint)gfxRenderTargets[4].image);
+  rg.drawWorld = (r_drawWorld->current).enabled;
+  rg.drawBModels = (r_drawBModels->current).enabled;
+  if (((r_drawSModels->current).enabled == false) ||
+     (rg.drawSModels = true, (r_drawRigidModels->current).enabled == false)) {
+    rg.drawSModels = false;
   }
-  DAT_846180c2 = *(undefined1 *)(DAT_845aa634 + 0xc);
-  DAT_846180c4 = *(undefined1 *)(DAT_845aa890 + 0xc);
-  DAT_846180c5 = *(undefined1 *)(DAT_845aa664 + 0xc);
-  DAT_846180c8 = *(undefined4 *)(DAT_845aa82c + 0xc);
-  DAT_846180a0 = cVar2;
+  rg.drawXModels = (r_drawXModels->current).enabled;
+  rg.drawSkinnedModels = (r_drawSkinnedModels->current).enabled;
+  rg.drawRigidModels = (r_drawRigidModels->current).enabled;
+  rg.colorMap = (r_colorMap->current).integer;
+  rg.distortion = bVar2;
   __restgprlr_24();
   return;
 }
@@ -2953,37 +3453,40 @@ void R_UpdateFrontEndDvarOptions(void)
 
 // 82769A58  R_BeginFrame  (gfx_d3d/r_rendercmds.cpp:2706)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_BeginFrame(void)
 
 {
-  char cVar3;
-  ulonglong uVar1;
+  bool bVar3;
+  uint uVar1;
   int iVar2;
   
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     uVar1 = DB_GetLoadedFlags();
     R_UpdateDynamicMemory(uVar1 & 2);
   }
-  if (DAT_84617aa0 != '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xab1,0,0xffffffff82000f98,0xffffffff821cbbec);
+  if (rg.inFrame != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xab1,0,"%s");
   }
-  DAT_84617aa0 = 1;
-  DAT_8461803c = 0;
-  DAT_84618054 = 0;
-  DAT_84618174 = 0x3f800000;
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 != '\0') {
+  rg.inFrame = true;
+  rg.lodParms.valid = false;
+  rg.correctedLodParms.valid = false;
+  rg.invViewScale = 1.0;
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     R_UpdateFrontEndDvarOptions();
   }
   Material_OverrideTechniqueSets();
-  if ((DAT_84616500 != 0) && (iVar2 = Sys_IsDatabaseReady(), iVar2 != 0)) {
+  if ((rgp.needSortMaterials != 0) && (iVar2 = Sys_IsDatabaseReady(), iVar2 != 0)) {
     DB_EnterStreamingTabulate();
-    DAT_84616500 = 0;
+    rgp.needSortMaterials = 0;
     sync(1);
     R_SyncRenderThread();
     Material_Sort();
-    if (DAT_8461658c != 0) {
+    if (rgp.world != (GfxWorld *)0x0) {
       R_SortWorldSurfaces();
     }
     DB_StreamTabulation();
@@ -2995,24 +3498,31 @@ void R_BeginFrame(void)
 
 // 82769B60  R_EndFrame  (gfx_d3d/r_rendercmds.cpp:2786)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_EndFrame(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  R_TransferDebugGlobals((ulonglong)DAT_84628b00 + 0x18f0);
-  R_GetCommandBuffer(0,4);
+  R_TransferDebugGlobals(&frontEndDataOut->debugGlobals);
+  R_GetCommandBuffer(RC_END_OF_LIST,4);
   R_ClearCmdList();
-  DAT_84618144 = 0;
-  DAT_84618148 = 0;
-  DAT_84628b38 = DAT_84628b38 - 1 & 1;
-  if (DAT_84617aa0 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xafa,0,0xffffffff82000f98,0xffffffff821cb58c);
+  rg.viewInfoCount = 0;
+  rg.pipInfoCount = 0;
+  g_frameIndex = g_frameIndex - 1 & 1;
+  if (rg.inFrame == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xafa,0,"%s");
   }
-  DAT_84617aa0 = 0;
-  cVar1 = Sys_IsMainThread();
-  if ((cVar1 != '\0') && (DAT_847eed80 == 0)) {
-    R_WaitWorkerCmdsOfType(0x21);
+  rg.inFrame = false;
+  bVar1 = Sys_IsMainThread();
+  if ((bVar1) && (g_waterLock == 0)) {
+    R_WaitWorkerCmdsOfType(WRKCMD_UPLOAD_WATER);
   }
   return;
 }
@@ -3020,46 +3530,55 @@ void R_EndFrame(void)
 
 // 82769C30  R_AddCmdClearScreen  (gfx_d3d/r_rendercmds.cpp:2908)
 
-void R_AddCmdClearScreen(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined1 param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdClearScreen(int param_1,float *param_2,float param_3,uchar param_4)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  void *pvVar2;
+  ulonglong uVar3;
   undefined4 *puVar4;
+  undefined1 in_r6;
   double extraout_f1;
   double dVar5;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = (uint)uVar1;
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_26((double)param_3,param_1,uVar3,param_4);
   dVar5 = extraout_f1;
-  if (uVar2 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb5f,0,0xffffffff82000f98,0xffffffff821cbcf0);
+  if (uVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb5f,0,"%s");
   }
   if ((uVar1 & 0xffffff40) != 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb60,0,0xffffffff821cbc54,0xffffffff821cbc70,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb60,0,"%s\n\t(whichToClear) = %i");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb61,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb61,0,"%s");
   }
   if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff821cb048,0xb62,0,0xffffffff821cbc1c,0xffffffff821cbc30,dVar5);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb62,0,"%s\n\t(depth) = %g");
   }
-  iVar3 = R_GetCommandBuffer(5,0x1c);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb66,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar2 = R_GetCommandBuffer(RC_CLEAR_SCREEN,0x1c);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb66,0,"%s");
   }
-  *(char *)(iVar3 + 4) = (char)uVar1;
-  if ((uVar2 & 0xff) != uVar2) {
-    MyAssertHandler(0xffffffff821cb048,0xb69,1,0xffffffff82000f98,0xffffffff821cbbf8);
+  *(char *)((int)pvVar2 + 4) = (char)uVar1;
+  if ((uVar1 & 0xff) != uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb69,1,"%s");
   }
-  *(float *)(iVar3 + 8) = (float)dVar5;
-  *(undefined1 *)(iVar3 + 5) = param_4;
-  puVar4 = (undefined4 *)param_2;
-  *(undefined4 *)(iVar3 + 0xc) = *puVar4;
-  *(undefined4 *)(iVar3 + 0x10) = puVar4[1];
-  *(undefined4 *)(iVar3 + 0x14) = puVar4[2];
-  *(undefined4 *)(iVar3 + 0x18) = puVar4[3];
+  *(float *)((int)pvVar2 + 8) = (float)dVar5;
+  *(undefined1 *)((int)pvVar2 + 5) = in_r6;
+  puVar4 = (undefined4 *)uVar3;
+  *(undefined4 *)((int)pvVar2 + 0xc) = *puVar4;
+  *(undefined4 *)((int)pvVar2 + 0x10) = puVar4[1];
+  *(undefined4 *)((int)pvVar2 + 0x14) = puVar4[2];
+  *(undefined4 *)((int)pvVar2 + 0x18) = puVar4[3];
   __restgprlr_26();
   return;
 }
@@ -3067,23 +3586,25 @@ void R_AddCmdClearScreen(undefined8 param_1,ulonglong param_2,undefined8 param_3
 
 // 82769DC0  R_AddCmdSaveScreen  (gfx_d3d/r_rendercmds.cpp:2929)
 
-void R_AddCmdSaveScreen(void)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSaveScreen(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = (int)uVar1;
-  if ((iVar2 < 0) || (3 < iVar2)) {
-    MyAssertHandler(0xffffffff821cb048,0xb74,0,0xffffffff821cbd00,uVar1,0,3);
+  iVar1 = __savegprlr_29(param_1);
+  if ((iVar1 < 0) || (3 < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb74,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
   }
-  iVar3 = R_GetCommandBuffer(3,8);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb7e,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar2 = R_GetCommandBuffer(RC_SAVE_SCREEN,8);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb7e,0,"%s");
   }
-  *(int *)(iVar3 + 4) = iVar2;
+  *(int *)((int)pvVar2 + 4) = iVar1;
   __restgprlr_29();
   return;
 }
@@ -3091,29 +3612,37 @@ void R_AddCmdSaveScreen(void)
 
 // 82769E50  R_AddCmdSaveScreenSection  (gfx_d3d/r_rendercmds.cpp:2954)
 
-void R_AddCmdSaveScreenSection(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSaveScreenSection(float param_1,float param_2,float param_3,float param_4,int param_5)
 
 {
-  int iVar1;
-  undefined8 in_r7;
-  int iVar2;
+  void *pvVar1;
+  int in_r7;
+  double dVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
   
-  __savegprlr_29();
-  dVar3 = (double)__savefpr_28();
-  iVar2 = (int)in_r7;
-  if ((iVar2 < 0) || (3 < iVar2)) {
-    MyAssertHandler(0xffffffff821cb048,0xb8d,0,0xffffffff821cbd00,in_r7,0,3);
+  dVar5 = (double)param_4;
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  __savegprlr_29((double)param_1,param_5);
+  dVar2 = (double)__savefpr_28();
+  if ((in_r7 < 0) || (3 < in_r7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb8d,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
   }
-  iVar1 = R_GetCommandBuffer(4,0x18);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xb91,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pvVar1 = R_GetCommandBuffer(RC_SAVE_SCREEN_SECTION,0x18);
+  if (pvVar1 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xb91,0,"%s");
   }
-  *(float *)(iVar1 + 4) = (float)dVar3;
-  *(int *)(iVar1 + 0x14) = iVar2;
-  *(float *)(iVar1 + 8) = (float)param_2;
-  *(float *)(iVar1 + 0xc) = (float)param_3;
-  *(float *)(iVar1 + 0x10) = (float)param_4;
+  *(float *)((int)pvVar1 + 4) = (float)dVar2;
+  *(int *)((int)pvVar1 + 0x14) = in_r7;
+  *(float *)((int)pvVar1 + 8) = (float)dVar3;
+  *(float *)((int)pvVar1 + 0xc) = (float)dVar4;
+  *(float *)((int)pvVar1 + 0x10) = (float)dVar5;
   __restfpr_28();
   __restgprlr_29();
   return;
@@ -3122,30 +3651,38 @@ void R_AddCmdSaveScreenSection(undefined8 param_1,double param_2,double param_3,
 
 // 82769F10  R_AddCmdBlendSavedScreenShockBlurred  (gfx_d3d/r_rendercmds.cpp:2977)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdBlendSavedScreenShockBlurred
-               (undefined8 param_1,double param_2,double param_3,double param_4)
+               (int param_1,float param_2,float param_3,float param_4,float param_5,int param_6)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 in_r8;
-  int iVar3;
+  void *pvVar2;
+  int in_r8;
   double extraout_f1;
+  double dVar3;
   double dVar4;
+  double dVar5;
+  double dVar6;
   
-  iVar1 = __savefpr_28();
-  iVar3 = (int)in_r8;
-  dVar4 = extraout_f1;
-  if ((iVar3 < 0) || (3 < iVar3)) {
-    MyAssertHandler(0xffffffff821cb048,0xba4,0,0xffffffff821cbd00,in_r8,0,3);
+  dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  iVar1 = __savefpr_28((double)param_2,param_1,param_6);
+  dVar6 = extraout_f1;
+  if ((in_r8 < 0) || (3 < in_r8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xba4,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
   }
-  if ((0 < iVar1) && (iVar2 = R_GetCommandBuffer(0x13,0x1c), iVar2 != 0)) {
-    *(float *)(iVar2 + 8) = (float)dVar4;
-    *(int *)(iVar2 + 4) = iVar1;
-    *(float *)(iVar2 + 0xc) = (float)param_2;
-    *(int *)(iVar2 + 0x18) = iVar3;
-    *(float *)(iVar2 + 0x10) = (float)param_3;
-    *(float *)(iVar2 + 0x14) = (float)param_4;
+  if ((0 < iVar1) &&
+     (pvVar2 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_BLURRED,0x1c), pvVar2 != (void *)0x0)) {
+    *(float *)((int)pvVar2 + 8) = (float)dVar6;
+    *(int *)((int)pvVar2 + 4) = iVar1;
+    *(float *)((int)pvVar2 + 0xc) = (float)dVar3;
+    *(int *)((int)pvVar2 + 0x18) = in_r8;
+    *(float *)((int)pvVar2 + 0x10) = (float)dVar4;
+    *(float *)((int)pvVar2 + 0x14) = (float)dVar5;
   }
   __restfpr_28();
   return;
@@ -3154,24 +3691,35 @@ void R_AddCmdBlendSavedScreenShockBlurred
 
 // 82769FD0  R_AddCmdBlendSavedScreenShockFlashed  (gfx_d3d/r_rendercmds.cpp:3014)
 
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdBlendSavedScreenShockFlashed
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6)
 
 {
-  int iVar1;
+  void *pvVar1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  dVar2 = (double)__savefpr_26();
-  iVar1 = R_GetCommandBuffer(0x14,0x20);
-  if (iVar1 != 0) {
-    *(float *)(iVar1 + 8) = (float)dVar2;
-    *(float *)(iVar1 + 0xc) = (float)param_2;
-    *(float *)(iVar1 + 0x10) = (float)param_3;
-    *(undefined1 *)(iVar1 + 4) = 0;
-    *(float *)(iVar1 + 0x14) = (float)param_4;
-    *(float *)(iVar1 + 0x18) = (float)param_5;
-    *(float *)(iVar1 + 0x1c) = (float)param_6;
+  dVar6 = (double)param_5;
+  dVar7 = (double)param_6;
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  dVar3 = (double)param_2;
+  dVar2 = (double)__savefpr_26((double)param_1);
+  pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
+  if (pvVar1 != (void *)0x0) {
+    *(float *)((int)pvVar1 + 8) = (float)dVar2;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar4;
+    *(undefined1 *)((int)pvVar1 + 4) = 0;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar5;
+    *(float *)((int)pvVar1 + 0x18) = (float)dVar6;
+    *(float *)((int)pvVar1 + 0x1c) = (float)dVar7;
   }
   __restfpr_26();
   return;
@@ -3180,22 +3728,30 @@ void R_AddCmdBlendSavedScreenShockFlashed
 
 // 8276A048  R_AddCmdRestoreSavedScreen  (gfx_d3d/r_rendercmds.cpp:3038)
 
-void R_AddCmdRestoreSavedScreen(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdRestoreSavedScreen(float param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
+  void *pvVar1;
   double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  dVar2 = (double)__savefpr_28();
-  iVar1 = R_GetCommandBuffer(0x14,0x20);
-  if (iVar1 != 0) {
-    *(float *)(iVar1 + 0x10) = (float)dVar2;
-    *(float *)(iVar1 + 0x14) = (float)param_2;
-    *(float *)(iVar1 + 0x18) = (float)param_3;
-    *(float *)(iVar1 + 0x1c) = (float)param_4;
-    *(undefined1 *)(iVar1 + 4) = 1;
-    *(undefined4 *)(iVar1 + 8) = 0;
-    *(undefined4 *)(iVar1 + 0xc) = 0;
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  dVar3 = (double)param_2;
+  dVar2 = (double)__savefpr_28((double)param_1);
+  pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
+  if (pvVar1 != (void *)0x0) {
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar2;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0x18) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x1c) = (float)dVar5;
+    *(undefined1 *)((int)pvVar1 + 4) = 1;
+    *(undefined4 *)((int)pvVar1 + 8) = 0;
+    *(undefined4 *)((int)pvVar1 + 0xc) = 0;
   }
   __restfpr_28();
   return;
@@ -3204,205 +3760,206 @@ void R_AddCmdRestoreSavedScreen(undefined8 param_1,double param_2,double param_3
 
 // 8276A0C0  R_AddCmdDrawPoints  (gfx_d3d/r_rendercmds.cpp:3062)
 
-void R_AddCmdDrawPoints(undefined8 param_1,ulonglong param_2,ulonglong param_3,void *param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdDrawPoints(short param_1,uchar param_2,uchar param_3,GfxPointVertex *param_4)
 
 {
-  short *psVar1;
-  short sVar3;
-  void *_Dst;
-  int iVar2;
-  size_t sVar4;
+  GfxCmdHeader *pGVar1;
+  short sVar4;
+  void *pvVar2;
+  int iVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
   
-  sVar3 = __savegprlr_23();
-  if (sVar3 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0xbfa,0,0xffffffff82000f98,0xffffffff82174c30);
+  uVar6 = (ulonglong)(char)param_3;
+  uVar5 = (ulonglong)(char)param_2;
+  sVar4 = __savegprlr_23(param_1,uVar5,uVar6,param_4);
+  if (sVar4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xbfa,0,"%s");
   }
-  if ((param_2 & 0xff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xbfb,0,0xffffffff82000f98,0xffffffff820589cc);
+  if ((uVar5 & 0xff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xbfb,0,"%s");
   }
-  psVar1 = *(short **)(DAT_84628b34 + 0xc);
-  if ((((psVar1 == (short *)0x0) || (*psVar1 != 0x15)) ||
-      (sVar4 = sVar3 * 0x10, 0xffff < (ushort)psVar1[1] + sVar4)) ||
-     ((((ulonglong)*(byte *)(psVar1 + 3) != (param_2 & 0xff) ||
-       ((ulonglong)*(byte *)((int)psVar1 + 7) != (param_3 & 0xff))) ||
-      (0x7fff < (int)psVar1[2] + (int)sVar3)))) {
-    sVar4 = sVar3 * 0x10;
-    iVar2 = R_GetCommandBuffer(0x15,sVar4 + 8);
-    if (iVar2 != 0) {
-      *(short *)(iVar2 + 4) = sVar3;
-      *(char *)(iVar2 + 6) = (char)param_2;
-      *(char *)(iVar2 + 7) = (char)param_3;
+  pGVar1 = s_cmdList->lastCmd;
+  if ((((pGVar1 == (GfxCmdHeader *)0x0) || (pGVar1->id != 0x15)) ||
+      (iVar3 = sVar4 * 0x10, 0xffff < (uint)pGVar1->byteCount + iVar3)) ||
+     ((((ulonglong)*(byte *)&pGVar1[1].byteCount != (uVar5 & 0xff) ||
+       ((ulonglong)(byte)pGVar1[1].byteCount != (uVar6 & 0xff))) ||
+      (0x7fff < (int)(short)pGVar1[1].id + (int)sVar4)))) {
+    pvVar2 = R_GetCommandBuffer(RC_DRAW_POINTS,sVar4 * 0x10 + 8);
+    iVar3 = 0;
+    if (pvVar2 != (void *)0x0) {
+      *(short *)((int)pvVar2 + 4) = sVar4;
+      *(char *)((int)pvVar2 + 6) = (char)uVar5;
+      *(char *)((int)pvVar2 + 7) = (char)uVar6;
       Profile_Begin(0x9d);
-      memcpy((void *)(iVar2 + 8),param_4,sVar4);
-      Profile_EndInternal(0);
+      memcpy();
+      iVar3 = Profile_EndInternal((double *)0x0);
     }
   }
   else {
-    _Dst = (void *)R_GrowCommandBuffer(sVar4);
-    if (_Dst != (void *)0x0) {
+    pvVar2 = R_GrowCommandBuffer(iVar3);
+    iVar3 = 0;
+    if (pvVar2 != (void *)0x0) {
       Profile_Begin(0x9d);
-      memcpy(_Dst,param_4,sVar4);
-      Profile_EndInternal(0);
-      psVar1[2] = psVar1[2] + sVar3;
-      __restgprlr_23();
+      memcpy();
+      iVar3 = Profile_EndInternal((double *)0x0);
+      pGVar1[1].id = pGVar1[1].id + sVar4;
+      __restgprlr_23(iVar3);
       return;
     }
   }
-  __restgprlr_23();
+  __restgprlr_23(iVar3);
   return;
 }
 
 
 // 8276A238  R_AddCmdDrawPoints2D  (gfx_d3d/r_rendercmds.cpp:3103)
 
-void R_AddCmdDrawPoints2D(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void R_AddCmdDrawPoints2D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 {
-  R_AddCmdDrawPoints(param_1,param_2,2,param_3);
+  R_AddCmdDrawPoints(param_1,param_2,'\x02',param_3);
   return;
 }
 
 
 // 8276A248  R_AddCmdDrawPoints3D  (gfx_d3d/r_rendercmds.cpp:3109)
 
-void R_AddCmdDrawPoints3D(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void R_AddCmdDrawPoints3D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 {
-  R_AddCmdDrawPoints(param_1,param_2,3,param_3);
+  R_AddCmdDrawPoints(param_1,param_2,'\x03',param_3);
   return;
 }
 
 
 // 8276A258  R_AddCmdDrawLines  (gfx_d3d/r_rendercmds.cpp:3115)
 
-void R_AddCmdDrawLines(undefined8 param_1,ulonglong param_2,ulonglong param_3,void *param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdDrawLines(short param_1,uchar param_2,uchar param_3,GfxPointVertex *param_4)
 
 {
-  short *psVar1;
-  short sVar3;
-  void *_Dst;
-  int iVar2;
-  longlong lVar4;
+  GfxCmdHeader *pGVar1;
+  short sVar4;
+  void *pvVar2;
+  int iVar3;
   ulonglong uVar5;
+  ulonglong uVar6;
   
-  sVar3 = __savegprlr_25();
-  uVar5 = (ulonglong)sVar3;
-  if (sVar3 < 1) {
-    MyAssertHandler(0xffffffff821cb048,0xc2f,0,0xffffffff821cbd30,0xffffffff821cbd48,uVar5);
+  uVar6 = (ulonglong)(char)param_3;
+  uVar5 = (ulonglong)(char)param_2;
+  sVar4 = __savegprlr_25(param_1,uVar5,uVar6,param_4);
+  if (sVar4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xc2f,0,"%s\n\t(lineCount) = %i");
   }
-  psVar1 = *(short **)(DAT_84628b34 + 0xc);
-  if ((((psVar1 == (short *)0x0) || (*psVar1 != 0x16)) ||
-      (lVar4 = (uVar5 & 0x7ffffff) * 0x20,
-      0xffff < ((ulonglong)(ushort)psVar1[1] + lVar4 & 0xffffffff))) ||
-     ((((ulonglong)*(byte *)(psVar1 + 3) != (param_2 & 0xff) ||
-       ((ulonglong)*(byte *)((int)psVar1 + 7) != (param_3 & 0xff))) ||
-      (0x7fff < (int)psVar1[2] + (int)sVar3)))) {
-    lVar4 = (uVar5 & 0x7ffffff) * 0x20;
-    iVar2 = R_GetCommandBuffer(0x16,lVar4 + 8);
-    if (iVar2 != 0) {
-      *(short *)(iVar2 + 4) = sVar3;
-      *(char *)(iVar2 + 6) = (char)param_2;
-      *(char *)(iVar2 + 7) = (char)param_3;
+  pGVar1 = s_cmdList->lastCmd;
+  if ((((pGVar1 == (GfxCmdHeader *)0x0) || (pGVar1->id != 0x16)) ||
+      (iVar3 = sVar4 * 0x20, 0xffff < (uint)pGVar1->byteCount + iVar3)) ||
+     ((((ulonglong)*(byte *)&pGVar1[1].byteCount != (uVar5 & 0xff) ||
+       ((ulonglong)(byte)pGVar1[1].byteCount != (uVar6 & 0xff))) ||
+      (0x7fff < (int)(short)pGVar1[1].id + (int)sVar4)))) {
+    pvVar2 = R_GetCommandBuffer(RC_DRAW_LINES,sVar4 * 0x20 + 8);
+    iVar3 = 0;
+    if (pvVar2 != (void *)0x0) {
+      *(short *)((int)pvVar2 + 4) = sVar4;
+      *(char *)((int)pvVar2 + 6) = (char)uVar5;
+      *(char *)((int)pvVar2 + 7) = (char)uVar6;
       Profile_Begin(0x9d);
-      memcpy((void *)(iVar2 + 8),param_4,(size_t)lVar4);
-      Profile_EndInternal(0);
+      memcpy();
+      iVar3 = Profile_EndInternal((double *)0x0);
     }
   }
   else {
-    _Dst = (void *)R_GrowCommandBuffer(lVar4);
-    if (_Dst != (void *)0x0) {
+    pvVar2 = R_GrowCommandBuffer(iVar3);
+    iVar3 = 0;
+    if (pvVar2 != (void *)0x0) {
       Profile_Begin(0x9d);
-      memcpy(_Dst,param_4,(size_t)lVar4);
-      Profile_EndInternal(0);
-      psVar1[2] = psVar1[2] + sVar3;
-      __restgprlr_25();
+      memcpy();
+      iVar3 = Profile_EndInternal((double *)0x0);
+      pGVar1[1].id = pGVar1[1].id + sVar4;
+      __restgprlr_25(iVar3);
       return;
     }
   }
-  __restgprlr_25();
+  __restgprlr_25(iVar3);
   return;
 }
 
 
 // 8276A3A8  R_AddCmdDrawLines2D  (gfx_d3d/r_rendercmds.cpp:3155)
 
-void R_AddCmdDrawLines2D(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void R_AddCmdDrawLines2D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 {
-  R_AddCmdDrawLines(param_1,param_2,2,param_3);
+  R_AddCmdDrawLines(param_1,param_2,'\x02',param_3);
   return;
 }
 
 
 // 8276A3B8  R_AddCmdDrawLines3D  (gfx_d3d/r_rendercmds.cpp:3161)
 
-void R_AddCmdDrawLines3D(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void R_AddCmdDrawLines3D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 {
-  R_AddCmdDrawLines(param_1,param_2,3,param_3);
+  R_AddCmdDrawLines(param_1,param_2,'\x03',param_3);
   return;
 }
 
 
 // 8276A3C8  R_AddCmdDrawTriangles  (gfx_d3d/r_rendercmds.cpp:3167)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdDrawTriangles
-               (undefined8 param_1,undefined8 param_2,undefined1 param_3,short param_4,void *param_5
-               ,short param_6,void *param_7,void *param_8)
+               (Material *param_1,MaterialTechniqueType param_2,uchar param_3,short param_4,
+               ushort *param_5,short param_6,float (*param_7) [4],float (*param_8) [3],
+               uchar (*param_9) [4],float (*param_10) [2])
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  char cVar3;
+  Material *pMVar1;
+  bool bVar3;
+  void *pvVar2;
   ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  void *in_stack_00000054;
-  void *in_stack_0000005c;
   
-  iVar2 = __savegprlr();
-  if (iVar2 == 0) {
-    uVar1 = (ulonglong)DAT_84616528;
+  uVar4 = (ulonglong)(int)param_1;
+  __savegprlr();
+  pMVar1 = rgp.defaultMaterial;
+  if ((uVar4 & 0xffffffff) != 0) {
+    pMVar1 = Material_FromHandle((Material *)uVar4);
   }
-  else {
-    uVar1 = Material_FromHandle();
+  if (pMVar1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xc6f,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cb048,0xc6f,0,0xffffffff82000f98,0xffffffff82020dcc);
-  }
-  cVar3 = Material_HasTechnique(uVar1,param_2);
-  if (cVar3 != '\0') {
+  bVar3 = Material_HasTechnique(pMVar1,param_2);
+  if (bVar3) {
     uVar4 = (ulonglong)param_6;
-    lVar13 = (uVar4 & 0xfffffff) * 0x10;
-    lVar12 = lVar13 + 0x14;
-    lVar11 = (uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-    lVar10 = (uVar4 & 0x3fffffff) * 4;
-    lVar9 = lVar11 + lVar12;
-    lVar8 = (uVar4 & 0x1fffffff) * 8;
-    lVar7 = lVar10 + lVar9;
-    lVar5 = ((longlong)param_4 + 1U & 0x7ffffffe) * 2;
-    lVar6 = lVar8 + lVar7;
-    iVar2 = R_GetCommandBuffer(0x17,lVar5 + lVar6);
-    if (iVar2 != 0) {
-      *(int *)(iVar2 + 4) = (int)uVar1;
-      *(int *)(iVar2 + 8) = (int)param_2;
-      *(undefined1 *)(iVar2 + 0xc) = param_3;
-      *(short *)(iVar2 + 0xe) = param_4;
-      *(short *)(iVar2 + 0x10) = param_6;
+    pvVar2 = R_GetCommandBuffer(RC_DRAW_TRIANGLES,
+                                ((param_4 + 1) * 2 & 0xfffffffcU) +
+                                (int)((uVar4 & 0xffffffff) << 3) +
+                                (int)((uVar4 & 0xffffffff) << 2) +
+                                (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
+                                (int)((uVar4 & 0xffffffff) << 4) + 0x14);
+    if (pvVar2 != (void *)0x0) {
+      *(Material **)((int)pvVar2 + 4) = pMVar1;
+      *(MaterialTechniqueType *)((int)pvVar2 + 8) = param_2;
+      *(uchar *)((int)pvVar2 + 0xc) = param_3;
+      *(short *)((int)pvVar2 + 0xe) = param_4;
+      *(short *)((int)pvVar2 + 0x10) = param_6;
       Profile_Begin(0x9d);
-      memcpy((void *)(iVar2 + 0x14),param_7,(size_t)lVar13);
-      memcpy((void *)(iVar2 + (int)lVar12),param_8,(size_t)lVar11);
-      memcpy((void *)(iVar2 + (int)lVar9),in_stack_00000054,(size_t)lVar10);
-      memcpy((void *)(iVar2 + (int)lVar7),in_stack_0000005c,(size_t)lVar8);
-      memcpy((void *)(iVar2 + (int)lVar6),param_5,(size_t)lVar5);
-      Profile_EndInternal(0);
+      memcpy();
+      memcpy();
+      memcpy();
+      memcpy();
+      memcpy();
+      Profile_EndInternal((double *)0x0);
     }
   }
   __restgprlr();
@@ -3412,47 +3969,71 @@ void R_AddCmdDrawTriangles
 
 // 8276A520  R_AddCmdDrawTriangles2D  (gfx_d3d/r_rendercmds.cpp:3222)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_AddCmdDrawTriangles2D
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+               (Material *param_1,MaterialTechniqueType param_2,short param_3,ushort *param_4,
+               short param_5,float (*param_6) [4],float (*param_7) [3],uchar (*param_8) [4],
+               float (*param_9) [2])
 
 {
-  R_AddCmdDrawTriangles(param_1,param_2,2,param_3,param_4,param_5,param_6,param_7);
+  uchar (*in_stack_ffffff98) [4];
+  float (*in_stack_ffffff9c) [2];
+  
+  R_AddCmdDrawTriangles
+            (param_1,param_2,'\x02',param_3,param_4,param_5,param_6,param_7,in_stack_ffffff98,
+             in_stack_ffffff9c);
   return;
 }
 
 
 // 8276A570  R_AddCmdDrawTriangles3D  (gfx_d3d/r_rendercmds.cpp:3228)
 
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_AddCmdDrawTriangles3D
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7)
+               (Material *param_1,MaterialTechniqueType param_2,short param_3,ushort *param_4,
+               short param_5,float (*param_6) [4],float (*param_7) [3],uchar (*param_8) [4],
+               float (*param_9) [2])
 
 {
-  R_AddCmdDrawTriangles(param_1,param_2,3,param_3,param_4,param_5,param_6,param_7);
+  uchar (*in_stack_ffffff98) [4];
+  float (*in_stack_ffffff9c) [2];
+  
+  R_AddCmdDrawTriangles
+            (param_1,param_2,'\x03',param_3,param_4,param_5,param_6,param_7,in_stack_ffffff98,
+             in_stack_ffffff9c);
   return;
 }
 
 
 // 8276A5C0  R_AddCmdSetCodeConstant  (gfx_d3d/r_rendercmds.cpp:3250)
 
-void R_AddCmdSetCodeConstant(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdSetCodeConstant(uint param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
   undefined4 uVar1;
-  int iVar2;
+  void *pvVar2;
   double extraout_f1;
   double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  uVar1 = __savefpr_28();
-  dVar3 = extraout_f1;
-  iVar2 = R_GetCommandBuffer(0x18,0x18);
-  if (iVar2 != 0) {
-    *(float *)(iVar2 + 8) = (float)dVar3;
-    *(undefined4 *)(iVar2 + 4) = uVar1;
-    *(float *)(iVar2 + 0xc) = (float)param_2;
-    *(float *)(iVar2 + 0x10) = (float)param_3;
-    *(float *)(iVar2 + 0x14) = (float)param_4;
+  dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  uVar1 = __savefpr_28((double)param_2,param_1);
+  dVar6 = extraout_f1;
+  pvVar2 = R_GetCommandBuffer(RC_SET_CODE_CONSTANT,0x18);
+  if (pvVar2 != (void *)0x0) {
+    *(float *)((int)pvVar2 + 8) = (float)dVar6;
+    *(undefined4 *)((int)pvVar2 + 4) = uVar1;
+    *(float *)((int)pvVar2 + 0xc) = (float)dVar3;
+    *(float *)((int)pvVar2 + 0x10) = (float)dVar4;
+    *(float *)((int)pvVar2 + 0x14) = (float)dVar5;
   }
   __restfpr_28();
   return;
@@ -3461,14 +4042,16 @@ void R_AddCmdSetCodeConstant(undefined8 param_1,double param_2,double param_3,do
 
 // 8276A630  R_AddCmdProjectionSet  (gfx_d3d/r_rendercmds.cpp:3267)
 
-void R_AddCmdProjectionSet(undefined4 param_1)
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
+void R_AddCmdProjectionSet(GfxProjectionTypes param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   
-  iVar1 = R_GetCommandBuffer(0x19,8);
-  if (iVar1 != 0) {
-    *(undefined4 *)(iVar1 + 4) = param_1;
+  pvVar1 = R_GetCommandBuffer(RC_PROJECTION_SET,8);
+  if (pvVar1 != (void *)0x0) {
+    *(GfxProjectionTypes *)((int)pvVar1 + 4) = param_1;
   }
   return;
 }
@@ -3476,14 +4059,17 @@ void R_AddCmdProjectionSet(undefined4 param_1)
 
 // 8276A670  R_AddCmdProjectionSet2D  (gfx_d3d/r_rendercmds.cpp:3280)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
+
 void R_AddCmdProjectionSet2D(void)
 
 {
-  int iVar1;
+  void *pvVar1;
   
-  iVar1 = R_GetCommandBuffer(0x19,8);
-  if (iVar1 != 0) {
-    *(undefined4 *)(iVar1 + 4) = 0;
+  pvVar1 = R_GetCommandBuffer(RC_PROJECTION_SET,8);
+  if (pvVar1 != (void *)0x0) {
+    *(undefined4 *)((int)pvVar1 + 4) = 0;
   }
   return;
 }
@@ -3491,31 +4077,38 @@ void R_AddCmdProjectionSet2D(void)
 
 // 8276A6A8  R_BeginRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3288)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_BeginRemoteScreenUpdate(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 != '\0') {
-    if (DAT_84617894 != 0) {
-      MyAssertHandler(0xffffffff821cb048,0xcdd,0,0xffffffff82000f98,0xffffffff821bad94);
+  bVar1 = Sys_IsMainThread();
+  if (bVar1) {
+    if (r_glob.allowAddDrawCall != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0xcdd,0,"%s");
     }
-    if (DAT_846178a0 < 0) {
-      MyAssertHandler(0xffffffff821cb048,0xce0,0,0xffffffff82000f98,0xffffffff821cbd74);
+    if (r_glob.remoteScreenUpdateNesting < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0xce0,0,"%s");
     }
-    if (DAT_84617885 != '\0') {
-      if (DAT_846178a0 != 0) {
-        DAT_846178a0 = DAT_846178a0 + 1;
+    if (r_glob.startedRenderThread != false) {
+      if (r_glob.remoteScreenUpdateNesting != 0) {
+        r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + 1;
         __restgprlr_29();
         return;
       }
-      if (DAT_8461789c != 0) {
-        MyAssertHandler(0xffffffff821cb048,0xceb,0,0xffffffff82000f98,0xffffffff821cbd58);
+      if (r_glob.screenUpdateNotify != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0xceb,0,"%s");
       }
       sync(1);
-      DAT_846178a0 = DAT_846178a0 + 1;
+      r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + 1;
       R_ReleaseThreadOwnership();
       Sys_NotifyRenderer();
     }
@@ -3527,49 +4120,57 @@ void R_BeginRemoteScreenUpdate(void)
 
 // 8276A7A0  R_EndRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3320)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_EndRemoteScreenUpdate(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_27();
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 != '\0') {
-    if (DAT_846178a0 < 0) {
-      MyAssertHandler(0xffffffff821cb048,0xcfc,0,0xffffffff82000f98,0xffffffff821cbd74);
+  bVar1 = Sys_IsMainThread();
+  if (bVar1) {
+    if (r_glob.remoteScreenUpdateNesting < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0xcfc,0,"%s");
     }
-    if (DAT_84617885 == '\0') {
-      if (DAT_846178a0 != 0) {
-        MyAssertHandler(0xffffffff821cb048,0xd00,0,0xffffffff82000f98,0xffffffff821cb3b8);
+    if (r_glob.startedRenderThread == false) {
+      if (r_glob.remoteScreenUpdateNesting != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0xd00,0,"%s");
         __restgprlr_27();
         return;
       }
     }
     else {
-      if (DAT_846178a0 < 1) {
-        MyAssertHandler(0xffffffff821cb048,0xd04,0,0xffffffff82000f98,0xffffffff821cbd9c);
+      if (r_glob.remoteScreenUpdateNesting < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0xd04,0,"%s");
       }
-      if (DAT_846178a0 != 1) {
-        DAT_846178a0 = DAT_846178a0 + -1;
+      if (r_glob.remoteScreenUpdateNesting != 1) {
+        r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + -1;
         __restgprlr_27();
         return;
       }
-      DAT_846178a0 = 1;
-      while (DAT_8461789c == 0) {
+      r_glob.remoteScreenUpdateNesting = 1;
+      while (r_glob.screenUpdateNotify == 0) {
         Sys_Sleep(1);
       }
-      DAT_8461789c = 0;
+      r_glob.screenUpdateNotify = 0;
       sync(1);
-      if (DAT_846178a0 < 1) {
-        MyAssertHandler(0xffffffff821cb048,0xd14,0,0xffffffff82000f98,0xffffffff821cbd9c);
+      if (r_glob.remoteScreenUpdateNesting < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0xd14,0,"%s");
       }
-      DAT_846178a0 = DAT_846178a0 + -1;
-      while (DAT_8461789c == 0) {
-        DAT_82fcc29c = DAT_82fcc29c + 1;
+      r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + -1;
+      while (r_glob.screenUpdateNotify == 0) {
+        g_mainThreadBlocked = g_mainThreadBlocked + 1;
         Sys_Sleep(1);
-        DAT_82fcc29c = DAT_82fcc29c + -1;
+        g_mainThreadBlocked = g_mainThreadBlocked - 1;
       }
-      DAT_8461789c = 0;
+      r_glob.screenUpdateNotify = 0;
     }
   }
   __restgprlr_27();
@@ -3579,42 +4180,50 @@ void R_EndRemoteScreenUpdate(void)
 
 // 8276A938  R_PushRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3365)
 
-void R_PushRemoteScreenUpdate(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_PushRemoteScreenUpdate(int param_1)
 
 {
   longlong lVar1;
-  char cVar2;
+  bool bVar2;
   
-  lVar1 = __savegprlr_25();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xd27,0,0xffffffff82000f98,0xffffffff82010b48);
+  lVar1 = __savegprlr_25(param_1);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd27,0,"%s");
   }
   if ((int)lVar1 < 0) {
-    MyAssertHandler(0xffffffff821cb048,0xd28,0,0xffffffff821cbdc4,0xffffffff821cbdec,lVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd28,0,"%s\n\t(remoteScreenUpdateNesting) = %i");
   }
   if ((int)lVar1 != 0) {
     do {
-      cVar2 = Sys_IsMainThread();
-      if (cVar2 != '\0') {
-        if (DAT_84617894 != 0) {
-          MyAssertHandler(0xffffffff821cb048,0xcdd,0,0xffffffff82000f98,0xffffffff821bad94);
+      bVar2 = Sys_IsMainThread();
+      if (bVar2) {
+        if (r_glob.allowAddDrawCall != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0xcdd,0,"%s");
         }
-        if (DAT_846178a0 < 0) {
-          MyAssertHandler(0xffffffff821cb048,0xce0,0,0xffffffff82000f98,0xffffffff821cbd74);
+        if (r_glob.remoteScreenUpdateNesting < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0xce0,0,"%s");
         }
-        if (DAT_84617885 != '\0') {
-          if (DAT_846178a0 == 0) {
-            if (DAT_8461789c != 0) {
-              MyAssertHandler(0xffffffff821cb048,0xceb,0,0xffffffff82000f98,0xffffffff821cbd58);
+        if (r_glob.startedRenderThread != false) {
+          if (r_glob.remoteScreenUpdateNesting == 0) {
+            if (r_glob.screenUpdateNotify != 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                              ,0xceb,0,"%s");
             }
             sync(1);
-            DAT_846178a0 = DAT_846178a0 + 1;
+            r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + 1;
             R_ReleaseThreadOwnership();
             Sys_NotifyRenderer();
           }
           else {
-            DAT_846178a0 = DAT_846178a0 + 1;
+            r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + 1;
           }
         }
       }
@@ -3628,135 +4237,160 @@ void R_PushRemoteScreenUpdate(void)
 
 // 8276AAA8  R_PopRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3379)
 
-void R_PopRemoteScreenUpdate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_PopRemoteScreenUpdate(void)
 
 {
-  bool bVar1;
+  int iVar1;
+  bool bVar3;
   int iVar2;
-  int iVar3;
-  char cVar4;
   
   __savegprlr_23();
-  cVar4 = Sys_IsMainThread();
-  iVar2 = DAT_846178a0;
-  iVar3 = DAT_846178a0;
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xd37,0,0xffffffff82000f98,0xffffffff82010b48);
-    iVar2 = DAT_846178a0;
-    iVar3 = DAT_846178a0;
+  bVar3 = Sys_IsMainThread();
+  iVar2 = r_glob.remoteScreenUpdateNesting;
+  iVar1 = r_glob.remoteScreenUpdateNesting;
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd37,0,"%s");
+    iVar2 = r_glob.remoteScreenUpdateNesting;
+    iVar1 = r_glob.remoteScreenUpdateNesting;
   }
-  while (DAT_846178a0 = iVar3, iVar3 = DAT_846178a0, iVar2 != 0) {
-    DAT_846178a0 = iVar2;
-    cVar4 = Sys_IsMainThread();
-    iVar2 = DAT_846178a0;
-    if (cVar4 != '\0') {
-      if (DAT_846178a0 < 0) {
-        MyAssertHandler(0xffffffff821cb048,0xcfc,0,0xffffffff82000f98,0xffffffff821cbd74);
+  while (r_glob.remoteScreenUpdateNesting = iVar1, iVar1 = r_glob.remoteScreenUpdateNesting,
+        iVar2 != 0) {
+    r_glob.remoteScreenUpdateNesting = iVar2;
+    bVar3 = Sys_IsMainThread();
+    iVar2 = r_glob.remoteScreenUpdateNesting;
+    if (bVar3) {
+      if (r_glob.remoteScreenUpdateNesting < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                        0xcfc,0,"%s");
       }
-      if (DAT_84617885 == '\0') {
-        iVar2 = DAT_846178a0;
-        if (DAT_846178a0 != 0) {
-          MyAssertHandler(0xffffffff821cb048,0xd00,0,0xffffffff82000f98,0xffffffff821cb3b8);
-          iVar2 = DAT_846178a0;
+      if (r_glob.startedRenderThread == false) {
+        iVar2 = r_glob.remoteScreenUpdateNesting;
+        if (r_glob.remoteScreenUpdateNesting != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0xd00,0,"%s");
+          iVar2 = r_glob.remoteScreenUpdateNesting;
         }
       }
       else {
-        if (DAT_846178a0 < 1) {
-          MyAssertHandler(0xffffffff821cb048,0xd04,0,0xffffffff82000f98,0xffffffff821cbd9c);
+        if (r_glob.remoteScreenUpdateNesting < 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                          ,0xd04,0,"%s");
         }
-        if (DAT_846178a0 == 1) {
-          DAT_846178a0 = 1;
-          while (DAT_8461789c == 0) {
+        if (r_glob.remoteScreenUpdateNesting == 1) {
+          r_glob.remoteScreenUpdateNesting = 1;
+          while (r_glob.screenUpdateNotify == 0) {
             Sys_Sleep(1);
           }
-          DAT_8461789c = 0;
+          r_glob.screenUpdateNotify = 0;
           sync(1);
-          if (DAT_846178a0 < 1) {
-            MyAssertHandler(0xffffffff821cb048,0xd14,0,0xffffffff82000f98,0xffffffff821cbd9c);
+          if (r_glob.remoteScreenUpdateNesting < 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
+                            ,0xd14,0,"%s");
           }
-          DAT_846178a0 = DAT_846178a0 + -1;
-          while (DAT_8461789c == 0) {
-            DAT_82fcc29c = DAT_82fcc29c + 1;
+          r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + -1;
+          while (r_glob.screenUpdateNotify == 0) {
+            g_mainThreadBlocked = g_mainThreadBlocked + 1;
             Sys_Sleep(1);
-            DAT_82fcc29c = DAT_82fcc29c + -1;
+            g_mainThreadBlocked = g_mainThreadBlocked - 1;
           }
-          DAT_8461789c = 0;
-          iVar2 = DAT_846178a0;
+          r_glob.screenUpdateNotify = 0;
+          iVar2 = r_glob.remoteScreenUpdateNesting;
         }
         else {
-          iVar2 = DAT_846178a0 + -1;
+          iVar2 = r_glob.remoteScreenUpdateNesting + -1;
         }
       }
     }
   }
-  bVar1 = DAT_846178a0 < 0;
-  DAT_846178a0 = iVar2;
-  if (bVar1) {
-    MyAssertHandler(0xffffffff821cb048,0xd3e,0,0xffffffff821cbdc4,0xffffffff821cbdec,iVar3);
+  bVar3 = r_glob.remoteScreenUpdateNesting < 0;
+  r_glob.remoteScreenUpdateNesting = iVar2;
+  if (bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd3e,0,"%s\n\t(remoteScreenUpdateNesting) = %i");
   }
-  __restgprlr_23(iVar3);
-  return;
+  iVar2 = __restgprlr_23(iVar1);
+  return iVar2;
 }
 
 
 // 8276ACB8  R_IsInRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3396)
 
-bool R_IsInRemoteScreenUpdate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_IsInRemoteScreenUpdate(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xd45,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd45,0,"%s");
   }
-  return DAT_846178a0 != 0;
+  return (uint)(r_glob.remoteScreenUpdateNesting != 0);
 }
 
 
 // 8276AD20  RB_IsInRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3404)
 
-undefined1 RB_IsInRemoteScreenUpdate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int RB_IsInRemoteScreenUpdate(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsRenderThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff821cb048,0xd4f,0,0xffffffff82000f98,0xffffffff82181f3c);
+  bVar1 = Sys_IsRenderThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                    0xd4f,0,"%s");
   }
   sync(1);
-  return DAT_84617898;
+  return (int)r_glob.isRenderingRemoteUpdate;
 }
 
 
 // 8276AD80  R_AnySunHasShadowMap  (gfx_d3d/r_rendercmds.cpp:3431)
 
-void R_AnySunHasShadowMap(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+bool R_AnySunHasShadowMap(GfxBackEndData *param_1)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  undefined1 uVar2;
+  uint uVar3;
   
-  iVar1 = __savegprlr_24();
-  uVar2 = 1;
-  if (*(int *)(DAT_8461658c + 0x1c) != 0) {
+  iVar1 = __savegprlr_24(param_1);
+  uVar3 = 1;
+  if ((rgp.world)->lastSunPrimaryLightIndex != 0) {
     do {
       if (iVar1 + 0x1524 == 0) {
-        MyAssertHandler(0xffffffff82003098,0xb,0,0xffffffff82000f98,0xffffffff8200308c);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0xb,0,"%s");
       }
-      if (0xff < (uVar2 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff82003098,0xc,0,0xffffffff82003058,uVar2,0x100);
+      if (0xff < uVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
       }
-      if ((1 << ((uint)uVar2 & 0x1f) & *(uint *)(((int)(uint)uVar2 >> 5) * 4 + iVar1 + 0x1524)) != 0
-         ) {
-        __restgprlr_24(1);
-        return;
+      if ((1 << (uVar3 & 0x1f) & *(uint *)(((int)uVar3 >> 5) * 4 + iVar1 + 0x1524)) != 0) {
+        uVar2 = __restgprlr_24(1);
+        return (bool)uVar2;
       }
-      uVar2 = uVar2 + 1;
-    } while ((uVar2 & 0xffffffff) <= (ulonglong)*(uint *)(DAT_8461658c + 0x1c));
+      uVar3 = uVar3 + 1;
+    } while (uVar3 <= (rgp.world)->lastSunPrimaryLightIndex);
   }
-  __restgprlr_24(0);
-  return;
+  uVar2 = __restgprlr_24(0);
+  return (bool)uVar2;
 }
 

@@ -2,64 +2,72 @@
 
 // 82737B68  R_DrawSunShadowMapCallback  (gfx_d3d/r_draw_sunshadow.cpp:37)
 
-void R_DrawSunShadowMapCallback(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GPUTimerId": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_DrawSunShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  int iVar5;
-  uint *puVar6;
-  undefined4 *puVar7;
-  ulonglong uVar8;
-  int iStack00000018;
-  int iStack0000001c;
-  undefined4 local_70;
-  undefined4 local_6c;
-  uint local_68;
-  uint local_64;
+  int iVar1;
+  GfxDrawList *pGVar2;
+  int iVar3;
+  GfxBackEndData *pGVar4;
+  D3DDevice *pDVar5;
+  GfxCmdBufSourceState *pGVar6;
+  GfxCmdBufState *pGVar7;
+  int *piVar8;
+  GfxViewport *pGVar9;
+  uchar in_r6;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
+  GfxViewport local_70 [7];
   
-  puVar6 = (uint *)__savegprlr_22();
-  uVar1 = *puVar6;
-  uVar8 = (ulonglong)uVar1;
-  puVar7 = (undefined4 *)puVar6[1];
-  uVar2 = puVar6[2];
-  uVar3 = puVar6[3];
-  uVar4 = puVar6[5];
-  R_SetRenderTarget(param_2,puVar6[4]);
-  iStack0000001c = (int)param_2;
-  iVar5 = *(int *)(iStack0000001c + 0xc0);
-  if (iVar5 == DAT_84616688) {
-    R_GPU_BeginTimer(uVar8 + 1);
-    if (iVar5 != DAT_84616688) {
-      MyAssertHandler(0xffffffff821bef90,0x4b,0,0xffffffff82000f98,0xffffffff821befd8);
+  piVar8 = (int *)__savegprlr_22(param_1);
+  iVar1 = *piVar8;
+  pGVar9 = (GfxViewport *)piVar8[1];
+  pGVar2 = (GfxDrawList *)piVar8[2];
+  iVar3 = piVar8[3];
+  pGVar4 = (GfxBackEndData *)piVar8[5];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,piVar8[4]);
+  pGVar7 = pGStack0000001c;
+  pDVar5 = (pGStack0000001c->prim).device;
+  if (pDVar5 == dx.device) {
+    R_GPU_BeginTimer(iVar1 + GPU_TIMER_SUN_SHADOW_0);
+    if (pDVar5 != dx.device) {
+      in_r6 = 0x98;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_sunshadow.cpp"
+                      ,0x4b,0,"%s");
     }
-    R_ClearScreen(0,iVar5,0xb0,0xffffffff821cfd24);
+    R_ClearScreen(pDVar5,0xb0,shadowmapClearColor,0.0,in_r6,(GfxViewport *)0x0);
     R_GPU_EndTimer();
-    R_RunCommandBuffer(uVar4,uVar8 + 0x11,(ulonglong)uVar2 + 0x80,puVar7,0xffffffff821bef7c);
+    R_RunCommandBuffer(pGVar4,iVar1 + 0x11,&(pGVar2->info).iterGroup.drawListIter,pGVar9,
+                       "sun shadow map");
   }
-  R_HW_EnableScissor(param_2,puVar7);
-  iStack00000018 = (int)((ulonglong)param_2 >> 0x20);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  R_HW_EnableScissor(param_2,pGVar9);
+  pGVar6 = pGStack00000018;
+  if (pGStack00000018->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(uint *)(iStack00000018 + 0x174c) = uVar1 + 0x11;
-  R_DrawSurfs_Unsorted(param_2,(ulonglong)uVar2);
+  pGVar6->drawListId = iVar1 + 0x11;
+  R_DrawSurfs_Unsorted(param_2,pGVar2);
   R_EndDrawList(param_2);
-  if (iVar5 == DAT_84616688) {
-    R_GPU_BeginTimer(uVar8 + 1);
-    if (*(int *)(DAT_845aa590 + 0xc) == 1) {
-      puVar7 = &local_70;
-      local_70 = 0;
-      local_6c = 0;
-      local_68 = uVar3;
-      local_64 = uVar3;
+  if (pDVar5 == dx.device) {
+    R_GPU_BeginTimer(iVar1 + GPU_TIMER_SUN_SHADOW_0);
+    if ((sm_showOverlay->current).integer == 1) {
+      pGVar9 = local_70;
+      local_70[0].x = 0;
+      local_70[0].y = 0;
+      local_70[0].width = iVar3;
+      local_70[0].height = iVar3;
     }
-    R_ResolveShadowmap(iStack0000001c,puVar7,0,(longlong)(int)uVar3 * (longlong)(int)uVar1);
+    R_ResolveShadowmap(pGVar7,pGVar9,0,iVar3 * iVar1);
     R_GPU_EndTimer();
   }
-  R_HW_DisableScissor(iStack0000001c);
+  R_HW_DisableScissor(pGVar7);
   __restgprlr_22();
   return;
 }
@@ -67,36 +75,41 @@ void R_DrawSunShadowMapCallback(undefined8 param_1,undefined8 param_2)
 
 // 82737D00  R_DrawSunShadowMap  (gfx_d3d/r_draw_sunshadow.cpp:162)
 
-void R_DrawSunShadowMap(undefined8 param_1,undefined4 param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawSunShadowMap(GfxViewInfo *param_1,GfxDrawList *param_2,uint param_3,
+                       GfxDrawCallOutput *param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
+  GfxRenderTargetId GVar1;
+  int iVar2;
   int iVar3;
-  longlong lVar4;
-  undefined4 local_17c0;
+  int iVar4;
+  uint local_17c0;
   int local_17bc;
-  undefined4 local_17b8;
-  undefined4 local_17b4;
-  undefined4 local_17b0;
-  uint local_17ac;
-  undefined1 auStack_17a0 [6048];
+  GfxDrawList *local_17b8;
+  int local_17b4;
+  GfxRenderTargetId local_17b0;
+  int local_17ac;
+  GfxCmdBufSourceState GStack_17a0;
   
-  iVar3 = __savegprlr_26();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821befec);
-  R_InitCmdBufSourceState(auStack_17a0,iVar3 + 0x330,0);
-  uVar1 = *(undefined4 *)(iVar3 + 0x93c);
-  uVar2 = *(undefined4 *)(iVar3 + 0x938);
-  R_SetRenderTargetSize(auStack_17a0,uVar1);
-  R_SetViewportValues(auStack_17a0,0,0,uVar2,uVar2);
-  local_17ac = *(uint *)(iVar3 + 0x91c);
-  local_17c0 = (undefined4)param_3;
-  lVar4 = param_3 * 0x160 + (ulonglong)local_17ac;
-  local_17bc = (int)lVar4 + 0x2450;
+  iVar4 = __savegprlr_26(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Sun Shadow Map");
+  R_InitCmdBufSourceState(&GStack_17a0,(GfxCmdBufInput *)(iVar4 + 0x330),0);
+  GVar1 = *(GfxRenderTargetId *)(iVar4 + 0x93c);
+  iVar2 = *(int *)(iVar4 + 0x938);
+  R_SetRenderTargetSize(&GStack_17a0,GVar1);
+  R_SetViewportValues(&GStack_17a0,0,0,iVar2,iVar2);
+  local_17ac = *(int *)(iVar4 + 0x91c);
+  iVar3 = param_3 * 0x160 + local_17ac;
+  local_17bc = iVar3 + 0x2450;
+  local_17c0 = param_3;
   local_17b8 = param_2;
-  local_17b4 = uVar2;
-  local_17b0 = uVar1;
-  R_DrawCall(0xffffffff82737b68,&local_17c0,auStack_17a0,iVar3 + 0x180,lVar4 + 0x2460,param_4);
+  local_17b4 = iVar2;
+  local_17b0 = GVar1;
+  R_DrawCall(R_DrawSunShadowMapCallback,&local_17c0,&GStack_17a0,(GfxSceneDef *)(iVar4 + 0x180),
+             (GfxViewParms *)(iVar3 + 0x2460),param_4);
   PIXEndNamedEvent();
   __restgprlr_26();
   return;

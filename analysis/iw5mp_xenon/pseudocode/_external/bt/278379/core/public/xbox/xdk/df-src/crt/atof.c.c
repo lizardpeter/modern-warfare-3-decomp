@@ -2,18 +2,18 @@
 
 // 82917830  _atof_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atof.c:49)
 
-double _atof_l(char *_String,_locale_t _Locale)
+double _atof_l(char *param_1,localeinfo_struct *param_2)
 
 {
   int *piVar1;
   uint uVar2;
-  FLT p_Var3;
-  undefined *puVar4;
+  _flt *p_Var3;
+  threadlocaleinfostruct *ptVar4;
   double dVar5;
   _flt _Stack_30;
   
-  puVar4 = PTR_DAT_829b07f8;
-  if (_String == (char *)0x0) {
+  ptVar4 = __initiallocalestructinfo.locinfo;
+  if (param_1 == (char *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
@@ -21,17 +21,17 @@ double _atof_l(char *_String,_locale_t _Locale)
   }
   else {
     while( true ) {
-      if (*(int *)(puVar4 + 0xac) < 2) {
-        uVar2 = *(ushort *)((uint)(byte)*_String * 2 + *(int *)(puVar4 + 200)) & 8;
+      if (ptVar4->mb_cur_max < 2) {
+        uVar2 = ptVar4->pctype[(byte)*param_1] & 8;
       }
       else {
-        uVar2 = _isctype_l((uint)(byte)*_String,8,(_locale_t)&PTR_DAT_829b07f8);
-        puVar4 = PTR_DAT_829b07f8;
+        uVar2 = _isctype_l((uint)(byte)*param_1,8,&__initiallocalestructinfo);
+        ptVar4 = __initiallocalestructinfo.locinfo;
       }
       if (uVar2 == 0) break;
-      _String = _String + 1;
+      param_1 = param_1 + 1;
     }
-    p_Var3 = _fltin2(&_Stack_30,_String,(_locale_t)&PTR_DAT_829b07f8);
+    p_Var3 = _fltin2(&_Stack_30,param_1,&__initiallocalestructinfo);
     dVar5 = p_Var3->dval;
   }
   return dVar5;
@@ -40,12 +40,12 @@ double _atof_l(char *_String,_locale_t _Locale)
 
 // 829178F0  atof  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/atof.c:70)
 
-double atof(char *_String)
+double atof(char *param_1)
 
 {
   double dVar1;
   
-  dVar1 = _atof_l(_String,(_locale_t)0x0);
+  dVar1 = _atof_l(param_1,(localeinfo_struct *)0x0);
   return dVar1;
 }
 

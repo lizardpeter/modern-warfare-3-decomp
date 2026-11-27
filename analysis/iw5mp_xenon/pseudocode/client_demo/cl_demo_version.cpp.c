@@ -2,68 +2,82 @@
 
 // 827E08E8  CL_Demo_GetVersion  (client_demo/cl_demo_version.cpp:19)
 
-undefined4 CL_Demo_GetVersion(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int CL_Demo_GetVersion(void)
 
 {
-  char cVar3;
-  undefined4 *puVar1;
-  int iVar2;
+  bool bVar3;
+  clientDemoPlayback_t *pcVar1;
+  clientConnection_t *pcVar2;
   
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821deea0,0x15,0,0xffffffff82000f98,0xffffffff821dc0d8);
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_version.cpp"
+                    ,0x15,0,"%s");
   }
-  puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();
-  iVar2 = CL_GetLocalClientConnection(*puVar1);
-  return *(undefined4 *)(iVar2 + 0x40258);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  pcVar2 = CL_GetLocalClientConnection(pcVar1->localClientNum);
+  return (pcVar2->clientDemo).header.version;
 }
 
 
 // 827E0950  CL_Demo_IsVersionAtLeast  (client_demo/cl_demo_version.cpp:35)
 
-longlong CL_Demo_IsVersionAtLeast(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_Demo_IsVersionAtLeast(int param_1)
 
 {
-  char cVar3;
-  undefined4 *puVar2;
-  ulonglong uVar1;
+  bool bVar3;
+  clientDemoPlayback_t *pcVar1;
+  uint uVar2;
   
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821deea0,0x24,0,0xffffffff82000f98,0xffffffff821dc0d8);
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_version.cpp"
+                    ,0x24,0,"%s");
   }
-  puVar2 = (undefined4 *)CL_Demo_GetPlaybackData();
-  cVar3 = CL_Demo_IsPlaying(*puVar2);
-  if (cVar3 == '\0') {
-    return 1;
+  pcVar1 = CL_Demo_GetPlaybackData();
+  bVar3 = CL_Demo_IsPlaying(pcVar1->localClientNum);
+  if (!bVar3) {
+    return true;
   }
-  uVar1 = CL_Demo_GetVersion();
-  return ((param_1 & 0xffffffff) >> 0x1f) + (longlong)((int)uVar1 >> 0x1f) +
-         (ulonglong)(param_1 <= uVar1);
+  uVar2 = CL_Demo_GetVersion();
+  return (bool)(((char)((int)uVar2 >> 0x1f) - (char)(param_1 >> 0x1f)) + ((uint)param_1 <= uVar2));
 }
 
 
 // 827E09F0  CL_Demo_SetupNetFieldListsForDemo  (client_demo/cl_demo_version.cpp:55)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_Demo_SetupNetFieldListsForDemo(void)
 
 {
-  char cVar3;
-  undefined4 *puVar1;
-  int iVar2;
+  bool bVar3;
+  clientDemoPlayback_t *pcVar1;
+  clientConnection_t *pcVar2;
+  int iVar4;
   
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff821deea0,0x15,0,0xffffffff82000f98,0xffffffff821dc0d8);
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_version.cpp"
+                    ,0x15,0,"%s");
   }
-  puVar1 = (undefined4 *)CL_Demo_GetPlaybackData();
-  iVar2 = CL_GetLocalClientConnection(*puVar1);
-  iVar2 = 1 - *(int *)(iVar2 + 0x40258);
-  if (iVar2 < 0) {
-    Com_Error(1,0xffffffff821deeec);
+  pcVar1 = CL_Demo_GetPlaybackData();
+  pcVar2 = CL_GetLocalClientConnection(pcVar1->localClientNum);
+  iVar4 = 1 - (pcVar2->clientDemo).header.version;
+  if (iVar4 < 0) {
+    Com_Error(ERR_DROP,"\x15Invalid Version Handling. Grab Bat !!!");
   }
-  PTR_PTR_8296d104 = (&PTR_PTR_8296d0fc)[iVar2];
-  PTR_PTR_8296d100 = (&PTR_PTR_8296d0f8)[iVar2];
+  iVar4 = iVar4 * 4;
+  g_netFieldList = *(NetFieldList **)(&g_demoNetFieldLists + iVar4);
+  g_entityStateNetFieldList = *(NetFieldList **)(&g_demoEntityStateNetFieldLists + iVar4);
   return;
 }
 

@@ -2,47 +2,54 @@
 
 // 82733EC0  R_DrawEmissiveCallback  (gfx_d3d/r_draw_emissive.cpp:182)
 
-void R_DrawEmissiveCallback(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawEmissiveCallback(void *param_1,GfxCmdBufContext param_2)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  int iStack00000018;
+  GfxDrawList *pGVar2;
+  GfxCmdBufSourceState *pGVar3;
+  int *piVar4;
+  GfxCmdBufSourceState *pGStack00000018;
+  GfxCmdBufState *pGStack0000001c;
   
-  piVar3 = (int *)__savegprlr_28();
-  iVar1 = *piVar3;
-  iVar2 = piVar3[1];
-  R_SetRenderTarget(param_2,*(undefined4 *)(iVar1 + 0x920));
-  iStack00000018 = (int)(param_2 >> 0x20);
-  R_Set3D(iStack00000018);
-  R_HW_EnableScissor(param_2,iVar1 + 0x170);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bdd84);
-  if (*(int *)(iStack00000018 + 0x174c) != 0x27) {
-    MyAssertHandler(0xffffffff821bdad0,0x4eb,0,0xffffffff82000f98,0xffffffff821bdd24);
+  piVar4 = (int *)__savegprlr_28(param_1);
+  iVar1 = *piVar4;
+  pGVar2 = (GfxDrawList *)piVar4[1];
+  _pGStack00000018 = param_2;
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
+  pGVar3 = pGStack00000018;
+  R_Set3D(pGStack00000018);
+  R_HW_EnableScissor(param_2,(GfxViewport *)(iVar1 + 0x170));
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"emissive");
+  if (pGVar3->drawListId != 0x27) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
+                    0,"%s");
   }
-  *(undefined4 *)(iStack00000018 + 0x174c) = 0x13;
-  R_DrawSurfs_Camera(param_2,iVar2);
+  pGVar3->drawListId = 0x13;
+  R_DrawSurfs_Camera(param_2,pGVar2);
   R_EndDrawList(param_2);
   PIXEndNamedEvent();
-  R_ShowTris(param_2,iVar1 + 0xb50);
-  R_ShowTris(param_2,iVar1 + 0xd48);
-  R_ShowTris(param_2,iVar1 + 0xf40);
-  R_ShowTris(param_2,iVar1 + 0x1138);
-  R_ShowTris(param_2,iVar1 + 0x1330);
-  R_ShowTris(param_2,iVar1 + 0x1528);
-  R_ShowTris(param_2,iVar1 + 0x1720);
-  R_ShowTris(param_2,iVar1 + 0x1918);
-  R_ShowTris(param_2,iVar1 + 0x1b10);
-  R_ShowTris(param_2,iVar1 + 0x1d08);
-  R_ShowTris(param_2,iVar1 + 0x1f00);
-  R_ShowTris(param_2,iVar1 + 0x20f8);
-  R_ShowTris(param_2,iVar1 + 0x958);
-  R_ShowTris(param_2,iVar1 + 0x22f0);
-  R_ShowTris(param_2,iVar1 + 0x26e0);
-  R_ShowTris(param_2,iVar1 + 0x24e8);
-  R_ShowTris(param_2,iVar1 + 0x2ec0);
-  R_HW_DisableScissor(param_2 & 0xffffffff);
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0xb50));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0xd48));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0xf40));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1138));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1330));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1528));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1720));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1918));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1b10));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1d08));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x1f00));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x20f8));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x958));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x22f0));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x26e0));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x24e8));
+  R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x2ec0));
+  R_HW_DisableScissor(pGStack0000001c);
   __restgprlr_28();
   return;
 }
@@ -50,22 +57,27 @@ void R_DrawEmissiveCallback(undefined8 param_1,ulonglong param_2)
 
 // 82734040  R_DrawEmissivePreWeave  (gfx_d3d/r_draw_emissive.cpp:341)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_DrawEmissivePreWeave
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4)
+               (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,
+               _func___cdecl_void_void_ptr_GfxCmdBufContext *param_4)
 
 {
-  int iVar1;
-  int local_1790;
-  undefined4 local_178c;
-  undefined1 auStack_1780 [6016];
+  GfxViewParms *pGVar1;
+  GfxViewParms *local_1790;
+  GfxDrawList *local_178c;
+  GfxCmdBufSourceState GStack_1780;
   
-  iVar1 = __savegprlr_29();
-  local_1790 = iVar1;
   local_178c = param_2;
-  R_InitCmdBufSourceState(auStack_1780,iVar1 + 0x330,1);
-  R_SetRenderTargetSize(auStack_1780,*(undefined4 *)(iVar1 + 0x920));
-  R_SetViewportStruct(auStack_1780,iVar1 + 0x150);
-  R_DrawCall(param_4,&local_1790,auStack_1780,iVar1 + 0x180,iVar1,param_3);
+  pGVar1 = (GfxViewParms *)__savegprlr_29(param_1);
+  local_1790 = pGVar1;
+  R_InitCmdBufSourceState(&GStack_1780,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1);
+  R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
+  R_SetViewportStruct(&GStack_1780,(GfxViewport *)(pGVar1 + 1));
+  R_DrawCall(param_4,&local_1790,&GStack_1780,(GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,
+             param_3);
   __restgprlr_29();
   return;
 }
@@ -73,14 +85,17 @@ void R_DrawEmissivePreWeave
 
 // 827340B0  R_DrawEmissive  (gfx_d3d/r_draw_emissive.cpp:378)
 
-void R_DrawEmissive(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_DrawEmissive(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
-  undefined8 uVar1;
+  GfxViewInfo *pGVar1;
   
-  uVar1 = __savegprlr_29();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821bdd90);
-  R_DrawEmissivePreWeave(uVar1,param_2,param_3,0xffffffff82733ec0);
+  pGVar1 = (GfxViewInfo *)__savegprlr_29(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Emissive");
+  R_DrawEmissivePreWeave(pGVar1,param_2,param_3,R_DrawEmissiveCallback);
   PIXEndNamedEvent();
   __restgprlr_29();
   return;
@@ -89,21 +104,25 @@ void R_DrawEmissive(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 82733E40  R_EndDrawList  (gfx_d3d/r_rendercmds.h:1265)
 
-void R_EndDrawList(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_EndDrawList(GfxCmdBufContext param_1)
 
 {
-  int iVar1;
-  int iStack00000010;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufSourceState *pGStack00000010;
   
-  iStack00000010 = (int)((ulonglong)param_1 >> 0x20);
-  iVar1 = iStack00000010;
-  if (*(int *)(iStack00000010 + 0x174c) == 0x27) {
-    _iStack00000010 = param_1;
-    MyAssertHandler(0xffffffff821bdad0,0x4f2,0,0xffffffff82000f98,0xffffffff821bdd54);
-    *(undefined4 *)(iVar1 + 0x174c) = 0x27;
+  pGStack00000010 = param_1.source;
+  pGVar1 = pGStack00000010;
+  if (pGStack00000010->drawListId == 0x27) {
+    _pGStack00000010 = param_1;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4f2,
+                    0,"%s");
+    pGVar1->drawListId = 0x27;
     return;
   }
-  *(undefined4 *)(iStack00000010 + 0x174c) = 0x27;
+  pGStack00000010->drawListId = 0x27;
   return;
 }
 

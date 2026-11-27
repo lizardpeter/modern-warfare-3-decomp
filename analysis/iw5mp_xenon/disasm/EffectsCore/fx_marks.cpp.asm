@@ -6690,7 +6690,7 @@ LAB_82436490:
   824364A0  CBE1FF90             lfd f31,-0x70(r1)
   824364A4  484E0244             b 0x829166e8
 
-; 82437910  std::_Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 82437910  _Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   82437910  7D8802A6             mfspr r12,LR
   82437914  484DED99             bl 0x829166ac
   82437918  9421FF70             stwu r1,-0x90(r1)
@@ -6961,7 +6961,7 @@ LAB_8243674c:
   8243674C  382100D0             addi r1,r1,0xd0
   82436750  484DFFA4             b 0x829166f4
 
-; 824379D0  std::_Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 824379D0  _Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   824379D0  7D8802A6             mfspr r12,LR
   824379D4  484DECD9             bl 0x829166ac
   824379D8  9421FF70             stwu r1,-0x90(r1)
@@ -7244,7 +7244,7 @@ LAB_824369d4:
   824369DC  382100A0             addi r1,r1,0xa0
   824369E0  484DFD14             b 0x829166f4
 
-; 82437B40  std::_Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 82437B40  _Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   82437B40  7D8802A6             mfspr r12,LR
   82437B44  484DEB65             bl 0x829166a8
   82437B48  9421FF50             stwu r1,-0xb0(r1)
@@ -7394,7 +7394,7 @@ LAB_82436ab0:
   82436AC0  EBE1FFF0             ld r31,-0x10(r1)
   82436AC4  4E800020             blr
 
-; 82438468  std::_Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82438468  _Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82438468  7D8802A6             mfspr r12,LR
   8243846C  484DE24D             bl 0x829166b8
   82438470  9421FF70             stwu r1,-0x90(r1)
@@ -7648,7 +7648,7 @@ LAB_82436d3c:
   82434B8C  EBE1FFF0             ld r31,-0x10(r1)
   82434B90  4E800020             blr
 
-; 82437EA0  std::_Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 82437EA0  _Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   82437EA0  7D8802A6             mfspr r12,LR
   82437EA4  484DE809             bl 0x829166ac
   82437EA8  9421FF60             stwu r1,-0xa0(r1)
@@ -7749,7 +7749,7 @@ LAB_82437ff0:
   82437FF0  382100A0             addi r1,r1,0xa0
   82437FF4  484DE708             b 0x829166fc
 
-; 82437C78  std::_Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 82437C78  _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   82437C78  7D8802A6             mfspr r12,LR
   82437C7C  484DEA3D             bl 0x829166b8
   82437C80  9421FF70             stwu r1,-0x90(r1)
@@ -7856,7 +7856,7 @@ LAB_82437de4:
   82437DE4  38210090             addi r1,r1,0x90
   82437DE8  484DE920             b 0x82916708
 
-; 82437DF0  std::_Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82437DF0  _Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82437DF0  7D8802A6             mfspr r12,LR
   82437DF4  484DE8BD             bl 0x829166b0
   82437DF8  9421FF70             stwu r1,-0x90(r1)
@@ -7902,7 +7902,7 @@ LAB_82437e88:
   82437E94  38210090             addi r1,r1,0x90
   82437E98  484DE868             b 0x82916700
 
-; 82437FF8  std::_Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 82437FF8  _Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   82437FF8  7D8802A6             mfspr r12,LR
   82437FFC  484DE6A9             bl 0x829166a4
   82438000  9421FEF0             stwu r1,-0x110(r1)
@@ -8226,7 +8226,7 @@ LAB_82438454:
   82438460  38210110             addi r1,r1,0x110
   82438464  484DE290             b 0x829166f4
 
-; 82438508  std::_Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82438508  _Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82438508  7D8802A6             mfspr r12,LR
   8243850C  484DE1A1             bl 0x829166ac
   82438510  9421FF60             stwu r1,-0xa0(r1)

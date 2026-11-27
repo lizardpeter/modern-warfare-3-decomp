@@ -7,8 +7,8 @@ void __unwind_71911(void)
 {
   int in_r12;
   
-  bdFastArray<unsigned___int64>___bdFastArray<unsigned___int64>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 4);
+  bdFastArray<unsigned___int64>::~bdFastArray<unsigned___int64>
+            ((bdFastArray<unsigned___int64> *)(*(int *)(in_r12 + 0x14) + 4));
   return;
 }
 
@@ -20,8 +20,8 @@ void __unwind_71956(void)
 {
   int in_r12;
   
-  bdFastArray<unsigned___int64>___bdFastArray<unsigned___int64>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 4);
+  bdFastArray<unsigned___int64>::~bdFastArray<unsigned___int64>
+            ((bdFastArray<unsigned___int64> *)(*(int *)(in_r12 + 0x14) + 4));
   return;
 }
 
@@ -33,7 +33,8 @@ void __unwind_71957(void)
 {
   int in_r12;
   
-  bdFastArray<__int64>___bdFastArray<__int64>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x10);
+  bdFastArray<__int64>::~bdFastArray<__int64>
+            ((bdFastArray<__int64> *)(*(int *)(in_r12 + 0x14) + 0x10));
   return;
 }
 

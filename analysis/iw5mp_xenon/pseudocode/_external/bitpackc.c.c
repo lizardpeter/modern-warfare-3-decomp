@@ -2,29 +2,30 @@
 
 // 828C77B8  BitPackCBuffer  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/bitpackc.c:103)
 
-void BitPackCBuffer(int *param_1,short param_2,short param_3)
+void BitPackCBuffer(C_BUFFER_TYPE *param_1,int param_2,int param_3)
 
 {
   ushort uVar1;
   ushort uVar2;
   ushort *puVar3;
   byte *pbVar4;
-  byte *pbVar5;
+  ulonglong uVar5;
+  byte *pbVar6;
   
-  puVar3 = (ushort *)param_1[4];
-  pbVar4 = (byte *)param_1[5];
-  uVar1 = *(ushort *)(param_1 + 1);
-  pbVar5 = (byte *)((uint)*puVar3 + *param_1);
+  puVar3 = param_1->pBufferWriteByteOffset;
+  pbVar4 = param_1->pBufferWriteBitOffset;
+  uVar1 = param_1->wBufferSize;
+  pbVar6 = param_1->pBuffer + *puVar3;
   if (*pbVar4 == 0) {
-    *pbVar5 = (byte)param_2;
+    *pbVar6 = (byte)param_2;
   }
   else {
-    *pbVar5 = (byte)((int)param_2 << (*pbVar4 & 0x3f)) | *pbVar5;
+    *pbVar6 = (byte)((int)(short)param_2 << (*pbVar4 & 0x3f)) | *pbVar6;
   }
-  uVar2 = (ushort)*pbVar4 + param_3 & 0xff;
-  *pbVar4 = (byte)((ushort)*pbVar4 + param_3);
-  if (uVar2 < 9) {
-    if (uVar2 == 8) {
+  uVar5 = (ulonglong)*pbVar4 + (longlong)param_3 & 0xff;
+  *pbVar4 = (byte)((ulonglong)*pbVar4 + (longlong)param_3);
+  if (uVar5 < 9) {
+    if (uVar5 == 8) {
       *pbVar4 = 0;
       uVar2 = *puVar3;
       *puVar3 = uVar2 + 1;
@@ -35,13 +36,14 @@ void BitPackCBuffer(int *param_1,short param_2,short param_3)
   }
   else {
     uVar2 = *puVar3;
-    pbVar5 = pbVar5 + 1;
+    pbVar6 = pbVar6 + 1;
     *puVar3 = uVar2 + 1;
     if (uVar1 <= (ushort)(uVar2 + 1)) {
       *puVar3 = 0;
-      pbVar5 = (byte *)*param_1;
+      pbVar6 = param_1->pBuffer;
     }
-    *pbVar5 = (byte)((int)param_2 >> ((int)(short)((param_3 - (ushort)*pbVar4) + 8) & 0x3fU));
+    *pbVar6 = (byte)((int)(short)param_2 >>
+                    ((int)(short)(((short)param_3 - (ushort)*pbVar4) + 8) & 0x3fU));
     *pbVar4 = *pbVar4 - 8;
   }
   return;

@@ -2,31 +2,50 @@
 
 // 826C0460  Vehicle_Register_FastFile  (vehicle/vehicle_load_obj.cpp:695)
 
-void Vehicle_Register_FastFile(ulonglong param_1)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+VehicleDef * Vehicle_Register_FastFile(char *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a0478,0x2b8,0,0xffffffff82000f98,0xffffffff82021a74);
+  XAssetHeader XVar1;
+  
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_load_obj.cpp",
+                    0x2b8,0,"%s");
   }
-  DB_FindXAssetHeader(0x2a,param_1,1);
-  return;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_VEHICLE,param_1,1);
+  return XVar1.vehDef;
 }
 
 
 // 826C04C8  Vehicle_Register  (vehicle/vehicle_load_obj.cpp:704)
 
-void Vehicle_Register(void)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+VehicleDef * Vehicle_Register(char *param_1)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
+  XAssetHeader XVar2;
+  VehicleDef *pVVar3;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a0478,0x2c1,0,0xffffffff82000f98,0xffffffff82021a74);
-    MyAssertHandler(0xffffffff821a0478,0x2b8,0,0xffffffff82000f98,0xffffffff82021a74);
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_load_obj.cpp",
+                    0x2c1,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_load_obj.cpp",
+                    0x2b8,0,"%s");
   }
-  DB_FindXAssetHeader(0x2a,uVar1,1);
-  __restgprlr_28();
-  return;
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_VEHICLE,pcVar1,1);
+  pVVar3 = (VehicleDef *)__restgprlr_28(XVar2.physPreset);
+  return pVVar3;
 }
 

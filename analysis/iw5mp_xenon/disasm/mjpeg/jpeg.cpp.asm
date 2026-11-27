@@ -11,7 +11,7 @@
   827E67DC  143FF1E1             vperm128 v1,v63,v62,v7
   827E67E0  4E800020             blr
 
-; 827E67E8  jpeg_encode::dct_vmx  (mjpeg/jpeg.cpp:87)
+; 827E67E8  dct_vmx  (mjpeg/jpeg.cpp:87)
   827E67E8  7D8802A6             mfspr r12,LR
   827E67EC  4812FEA5             bl 0x82916690
   827E67F0  7D2C42E6             mftb r9,TBLr
@@ -543,7 +543,7 @@
   827E7028  F9632A40             std r11,0x2a40(r3)
   827E702C  4812F6B4             b 0x829166e0
 
-; 827E7030  jpeg_encode::dct  (mjpeg/jpeg.cpp:285)
+; 827E7030  dct  (mjpeg/jpeg.cpp:285)
   827E7030  7D8802A6             mfspr r12,LR
   827E7034  4812F64D             bl 0x82916680
   827E7038  39200008             li r9,0x8
@@ -737,7 +737,7 @@ LAB_827e71c8:
   827E7320  4200FEA8             bdnz 0x827e71c8
   827E7324  4812F3AC             b 0x829166d0
 
-; 827E7328  jpeg_encode::init_quant  (mjpeg/jpeg.cpp:542)
+; 827E7328  init_quant  (mjpeg/jpeg.cpp:542)
   827E7328  7D8802A6             mfspr r12,LR
   827E732C  4812F391             bl 0x829166bc
   827E7330  39600008             li r11,0x8
@@ -1171,7 +1171,7 @@ LAB_827e7928:
   827E795C  4200FA04             bdnz 0x827e7360
   827E7960  4812EDAC             b 0x8291670c
 
-; 827E7968  jpeg_encode::quant  (mjpeg/jpeg.cpp:606)
+; 827E7968  quant  (mjpeg/jpeg.cpp:606)
   827E7968  FBC1FFF0             std r30,-0x10(r1)
   827E796C  FBE1FFF8             std r31,-0x8(r1)
   827E7970  7D2C42E6             mftb r9,TBLr
@@ -1238,7 +1238,7 @@ LAB_827e7998:
   827E7A60  EBE1FFF8             ld r31,-0x8(r1)
   827E7A64  4E800020             blr
 
-; 827E7A68  jpeg_encode::huffman  (mjpeg/jpeg.cpp:647)
+; 827E7A68  huffman  (mjpeg/jpeg.cpp:647)
   827E7A68  7D8802A6             mfspr r12,LR
   827E7A6C  4812EC35             bl 0x829166a0
   827E7A70  7C6B1B78             or r11,r3,r3
@@ -1635,7 +1635,7 @@ LAB_827e7fe4:
   827E8000  F9692A48             std r11,0x2a48(r9)
   827E8004  4812E6EC             b 0x829166f0
 
-; 827E8008  jpeg_encode::do_block  (mjpeg/jpeg.cpp:713)
+; 827E8008  do_block  (mjpeg/jpeg.cpp:713)
   827E8008  7D8802A6             mfspr r12,LR
   827E800C  4812E6AD             bl 0x829166b8
   827E8010  9421FF80             stwu r1,-0x80(r1)
@@ -1763,7 +1763,7 @@ LAB_827e7fe4:
   827E81F0  91230000             stw r9,0x0(r3)
   827E81F4  4E800020             blr
 
-; 827E81F8  jpeg_encode::write_header  (mjpeg/jpeg.cpp:763)
+; 827E81F8  write_header  (mjpeg/jpeg.cpp:763)
   827E81F8  7D8802A6             mfspr r12,LR
   827E81FC  4812E485             bl 0x82916680
   827E8200  DBA1FF50             stfd f29,-0xb0(r1)
@@ -2694,7 +2694,7 @@ LAB_827e8f70:
   827E8F94  CBE1FF60             lfd f31,-0xa0(r1)
   827E8F98  4812D738             b 0x829166d0
 
-; 827E8FA0  jpeg_encode::begin  (mjpeg/jpeg.cpp:1105)
+; 827E8FA0  begin  (mjpeg/jpeg.cpp:1105)
   827E8FA0  7D8802A6             mfspr r12,LR
   827E8FA4  4812D709             bl 0x829166ac
   827E8FA8  9421FF70             stwu r1,-0x90(r1)
@@ -2756,7 +2756,7 @@ LAB_827e8f70:
   827E9088  38210090             addi r1,r1,0x90
   827E908C  4812D670             b 0x829166fc
 
-; 827E9090  jpeg_encode::end  (mjpeg/jpeg.cpp:1141)
+; 827E9090  end  (mjpeg/jpeg.cpp:1141)
   827E9090  A1630284             lhz r11,0x284(r3)
   827E9094  2B0B0000             cmplwi cr6,r11,0x0
   827E9098  419A0054             beq cr6,0x827e90ec
@@ -2790,7 +2790,7 @@ LAB_827e90ec:
   827E90FC  38640001             addi r3,r4,0x1
   827E9100  4E800020             blr
 
-; 827E9108  jpeg_encode::encode  (mjpeg/jpeg.cpp:1162)
+; 827E9108  encode  (mjpeg/jpeg.cpp:1162)
   827E9108  7D8802A6             mfspr r12,LR
   827E910C  4812D575             bl 0x82916680
   827E9110  9421FF10             stwu r1,-0xf0(r1)

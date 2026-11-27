@@ -3,7 +3,7 @@
 ; 82916558  fpmath  (<external>/bt/278379/vctools/crt/src/fpw32/conv/fpinit.c:77)
   82916558  4BFFFF68             b 0x829164c0
 
-; 829164C0  cfltcvt_init  (<external>/bt/278379/vctools/crt/src/fpw32/conv/fpinit.c:105)
+; 829164C0  _cfltcvt_init  (<external>/bt/278379/vctools/crt/src/fpw32/conv/fpinit.c:105)
   829164C0  FBC1FFF0             std r30,-0x10(r1)
   829164C4  FBE1FFF8             std r31,-0x8(r1)
   829164C8  3D00829B             lis r8,-0x7d65

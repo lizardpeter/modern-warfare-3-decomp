@@ -2,39 +2,42 @@
 
 // 828C3C58  nciEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:150)
 
-void nciEncodeSase3200(undefined8 param_1,ulonglong param_2)
+ushort nciEncodeSase3200(void *param_1,NCI_CODEC_IO_BLOCK *param_2)
 
 {
-  int *piVar1;
+  undefined4 *puVar1;
   int *piVar3;
   undefined8 uVar2;
+  ushort uVar4;
+  ulonglong uVar5;
   undefined1 auStack_c0 [80];
-  undefined1 auStack_70 [112];
+  int aiStack_70 [28];
   
-  piVar3 = (int *)__savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
+  uVar5 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_28(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
     uVar2 = 0x181a;
   }
   else {
-    piVar1 = (int *)param_2;
-    if (piVar1[2] == 0) {
+    puVar1 = (undefined4 *)uVar5;
+    if (puVar1[2] == 0) {
       uVar2 = 0x17f2;
     }
-    else if (*piVar1 == 0) {
+    else if ((short *)*puVar1 == (short *)0x0) {
       uVar2 = 0x17ed;
     }
-    else if (*(ushort *)((int)piVar1 + 0xe) < *(ushort *)(piVar1 + 3)) {
-      if (*(ushort *)((int)piVar1 + 0x12) < *(ushort *)(piVar1 + 3)) {
-        if (*(byte *)(piVar1 + 4) < 8) {
-          if (*(byte *)(piVar1 + 5) < 8) {
+    else if (*(ushort *)((int)puVar1 + 0xe) < *(ushort *)(puVar1 + 3)) {
+      if (*(ushort *)((int)puVar1 + 0x12) < *(ushort *)(puVar1 + 3)) {
+        if (*(byte *)(puVar1 + 4) < 8) {
+          if (*(byte *)(puVar1 + 5) < 8) {
             if ((piVar3 == (int *)0x0) || (*piVar3 != 0xface)) {
               uVar2 = 0x17d4;
             }
             else if (*(char *)(piVar3 + 3) == '\n') {
-              NellyEncodeSC(*piVar1,piVar3[4],auStack_c0);
-              NellyQuantSC3(auStack_70,piVar3[4],auStack_c0);
-              NellyPackSC3(auStack_70,piVar1[2],param_2 + 0x12,param_2 + 0x14,
-                           *(undefined2 *)(piVar1 + 3),0);
+              NellyEncodeSC((short *)*puVar1,(void *)piVar3[4],auStack_c0);
+              NellyQuantSC3(aiStack_70,(void *)piVar3[4],auStack_c0);
+              NellyPackSC3(aiStack_70,(uchar *)puVar1[2],(ushort *)((int)puVar1 + 0x12),
+                           (uchar *)(puVar1 + 5),(uint)*(ushort *)(puVar1 + 3),0);
               uVar2 = 0;
             }
             else {
@@ -57,101 +60,108 @@ void nciEncodeSase3200(undefined8 param_1,ulonglong param_2)
       uVar2 = 0x1801;
     }
   }
-  __restgprlr_28(uVar2);
-  return;
+  uVar4 = __restgprlr_28(uVar2);
+  return uVar4;
 }
 
 
 // 828C3D78  nciEncode1by1  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:191)
 
-undefined8 nciEncode1by1(undefined4 *param_1,undefined4 *param_2)
+ushort nciEncode1by1(void **param_1,NCI_CODEC_IO_BLOCK **param_2,void **param_3)
 
 {
-  undefined8 uVar1;
+  ushort uVar1;
   longlong lVar2;
-  LARGE_INTEGER local_30;
-  LARGE_INTEGER local_28 [2];
+  _LARGE_INTEGER local_30;
+  _LARGE_INTEGER local_28 [2];
   
   QueryPerformanceCounter(&local_30);
   uVar1 = nciEncodeSase3200(*param_1,*param_2);
   QueryPerformanceCounter(local_28);
-  lVar2 = (longlong)local_28[0] - (longlong)local_30;
-  if (lVar2 < DAT_84897d80) {
-    DAT_84897d80 = lVar2;
+  lVar2 = local_28[0].QuadPart - (longlong)local_30;
+  if (lVar2 < EncoderPerfStats.minTicks) {
+    EncoderPerfStats.minTicks = lVar2;
   }
-  if (DAT_84897d90 < lVar2) {
-    DAT_84897d90 = lVar2;
+  if (EncoderPerfStats.maxTicks < lVar2) {
+    EncoderPerfStats.maxTicks = lVar2;
   }
-  DAT_84897d98 = DAT_84897d98 + lVar2;
-  DAT_84897da0._4_4_ = DAT_84897da0._4_4_ + 1;
+  EncoderPerfStats.cpuTicks = EncoderPerfStats.cpuTicks + lVar2;
+  EncoderPerfStats.count = EncoderPerfStats.count + 1;
   return uVar1;
 }
 
 
 // 828C3EE8  nciInitEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:278)
 
-undefined8 nciInitEncodeSase3200(undefined4 *param_1)
+ushort nciInitEncodeSase3200(void **param_1)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar2;
-  short sVar3;
+  undefined4 *puVar1;
+  ushort uVar2;
   
-  if (param_1 == (undefined4 *)0x0) {
-    uVar1 = 0x181a;
+  if (param_1 == (void **)0x0) {
+    uVar2 = 0x181a;
   }
   else {
-    *param_1 = 0;
-    if ((((DAT_848958c0 == (code *)0x0) || (DAT_848958c4 == 0)) || (DAT_848958c8 == 0)) ||
-       (((DAT_848958cc == 0 || (DAT_848958d0 == 0)) || (DAT_848958d4 == 0)))) {
-      uVar1 = 0x1771;
+    *param_1 = (void *)0x0;
+    if ((((callocfunc == (_func___cdecl_void_ptr_uint_uint *)0x0) ||
+         (freefunc == (_func___cdecl_void_void_ptr *)0x0)) ||
+        (memsetfunc == (_func___cdecl_void_ptr_void_ptr_int_uint *)0x0)) ||
+       (((memcpyfunc == (_func___cdecl_void_ptr_void_ptr_void_ptr_uint *)0x0 ||
+         (cosfunc == (_func___cdecl_double_double *)0x0)) ||
+        (sinfunc == (_func___cdecl_double_double *)0x0)))) {
+      uVar2 = 0x1771;
     }
     else {
-      puVar2 = (undefined4 *)(*DAT_848958c0)(1,0x2c);
-      if (puVar2 != (undefined4 *)0x0) {
-        *param_1 = puVar2;
-        *(undefined1 *)(puVar2 + 3) = 10;
-        puVar2[1] = 100;
-        *puVar2 = 0xface;
-        puVar2[2] = 3000;
-        sVar3 = NellyInitEncodeSC3(puVar2 + 4,puVar2[6]);
-        if (sVar3 == 0) {
+      puVar1 = (*callocfunc)(1,0x2c);
+      if (puVar1 != (undefined4 *)0x0) {
+        *param_1 = puVar1;
+        *(undefined1 *)(puVar1 + 3) = 10;
+        puVar1[1] = 100;
+        *puVar1 = 0xface;
+        puVar1[2] = 3000;
+        uVar2 = NellyInitEncodeSC3((void **)(puVar1 + 4),(void *)puVar1[6]);
+        if (uVar2 == 0) {
           return 0;
         }
         nciFreeEncodeSase3200(param_1);
       }
-      uVar1 = 6000;
+      uVar2 = 6000;
     }
   }
-  return uVar1;
+  return uVar2;
 }
 
 
 // 828C4000  nciInitEncode  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:321)
 
-void nciInitEncode(void)
+ushort nciInitEncode(void **param_1)
 
 {
-  DAT_84897d88 = 0;
-  DAT_84897d90 = 0;
-  DAT_84897d98 = 0;
-  DAT_84897da0 = 0;
-  DAT_84897d80 = 1000000000;
-  nciInitEncodeSase3200();
-  return;
+  ushort uVar1;
+  
+  EncoderPerfStats.avgTicks = 0;
+  EncoderPerfStats.maxTicks = 0;
+  EncoderPerfStats.cpuTicks = 0;
+  EncoderPerfStats.ticksPerSecond = 0;
+  EncoderPerfStats.count = 0;
+  EncoderPerfStats.minTicks = 1000000000;
+  uVar1 = nciInitEncodeSase3200(param_1);
+  return uVar1;
 }
 
 
 // 828C3E20  nciFreeEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:345)
 
-void nciFreeEncodeSase3200(void)
+ushort nciFreeEncodeSase3200(void **param_1)
 
 {
   int *piVar1;
   undefined4 *puVar3;
   undefined8 uVar2;
+  ushort uVar4;
   
-  puVar3 = (undefined4 *)__savegprlr_28();
+  puVar3 = (undefined4 *)__savegprlr_28(param_1);
   if (puVar3 == (undefined4 *)0x0) {
     uVar2 = 0x181a;
   }
@@ -162,16 +172,16 @@ void nciFreeEncodeSase3200(void)
     }
     else if (*(char *)(piVar1 + 3) == '\n') {
       *piVar1 = 0;
-      NellyFreeEncodeSC3(piVar1 + 4);
-      if (piVar1[9] != 0) {
-        (*DAT_848958c4)();
+      NellyFreeEncodeSC3((void **)(piVar1 + 4));
+      if ((void *)piVar1[9] != (void *)0x0) {
+        (*freefunc)((void *)piVar1[9]);
         piVar1[9] = 0;
       }
-      if (piVar1[10] != 0) {
-        (*DAT_848958c4)();
+      if ((void *)piVar1[10] != (void *)0x0) {
+        (*freefunc)((void *)piVar1[10]);
         piVar1[10] = 0;
       }
-      (*DAT_848958c4)(piVar1);
+      (*freefunc)(piVar1);
       uVar2 = 0;
       *puVar3 = 0;
     }
@@ -179,7 +189,7 @@ void nciFreeEncodeSase3200(void)
       uVar2 = 0x17e3;
     }
   }
-  __restgprlr_28(uVar2);
-  return;
+  uVar4 = __restgprlr_28(uVar2);
+  return uVar4;
 }
 

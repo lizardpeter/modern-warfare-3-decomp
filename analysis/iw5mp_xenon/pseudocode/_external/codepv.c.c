@@ -2,7 +2,7 @@
 
 // 828C7F70  QuanPvSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/codepv.c:79)
 
-int QuanPvSC3(double param_1,double param_2,double param_3)
+int QuanPvSC3(float param_1,float param_2,float param_3)
 
 {
   float fVar1;
@@ -12,14 +12,14 @@ int QuanPvSC3(double param_1,double param_2,double param_3)
   float *pfVar5;
   longlong lVar6;
   
-  fVar1 = (float)(param_3 * param_3);
-  pfVar5 = (float *)&DAT_822041d0;
+  fVar1 = param_3 * param_3;
+  pfVar5 = PvCodeBook;
   iVar3 = 0;
   iVar4 = 1;
   lVar6 = 7;
   do {
     pfVar5 = pfVar5 + 1;
-    fVar2 = (float)(param_3 - (double)*pfVar5) * (float)(param_3 - (double)*pfVar5);
+    fVar2 = (param_3 - *pfVar5) * (param_3 - *pfVar5);
     if (fVar2 < fVar1) {
       fVar1 = fVar2;
       iVar3 = iVar4;
@@ -27,31 +27,31 @@ int QuanPvSC3(double param_1,double param_2,double param_3)
     iVar4 = iVar4 + 1;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  return (uint)((float)((double)*(float *)(&DAT_822041d0 + iVar3 * 4) - param_2) *
-                (float)((double)*(float *)(&DAT_822041d0 + iVar3 * 4) - param_2) <
-               (float)(param_1 - param_2) * (float)(param_1 - param_2)) * 8 + iVar3;
+  return (uint)((PvCodeBook[iVar3] - param_2) * (PvCodeBook[iVar3] - param_2) <
+               (param_1 - param_2) * (param_1 - param_2)) * 8 + iVar3;
 }
 
 
 // 828C7FF0  UnQuanPvSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/codepv.c:182)
 
-void UnQuanPvSC3(undefined8 param_1,undefined8 param_2,float *param_3,float *param_4)
+void UnQuanPvSC3(int param_1,float param_2,float *param_3,float *param_4)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  float *in_r6;
   double extraout_f1;
   double dVar2;
-  double dVar3;
+  float fVar3;
   
-  uVar1 = __savegprlr_29();
-  dVar3 = extraout_f1;
-  dVar2 = (double)ScalarLUT(0xffffffff822041d0,8,uVar1 - (uVar1 & 8));
-  *param_4 = (float)dVar2;
-  if ((int)(uVar1 & 8) == 0) {
-    *param_3 = (float)dVar3;
+  uVar1 = __savegprlr_29((double)param_2,param_1,param_3);
+  dVar2 = extraout_f1;
+  fVar3 = ScalarLUT(PvCodeBook,8,uVar1 - (uVar1 & 8));
+  *in_r6 = fVar3;
+  if ((uVar1 & 8) == 0) {
+    *param_4 = (float)dVar2;
   }
   else {
-    *param_3 = (float)dVar2;
+    *param_4 = fVar3;
   }
   __restgprlr_29();
   return;

@@ -2,21 +2,21 @@
 
 // 826CBA40  Vehicle_AccelerateSpeed  (vehicle/vehicle_util.cpp:3)
 
-double Vehicle_AccelerateSpeed(double param_1,double param_2,double param_3,double param_4)
+float Vehicle_AccelerateSpeed(float param_1,float param_2,float param_3,float param_4)
 
 {
-  double dVar1;
+  float fVar1;
   
   if (param_2 <= param_1) {
-    dVar1 = -(double)(float)(param_3 * param_4 - param_1);
-    if (param_2 <= dVar1) {
-      return dVar1;
+    fVar1 = -(param_3 * param_4 - param_1);
+    if (param_2 <= fVar1) {
+      return fVar1;
     }
     return param_2;
   }
-  dVar1 = (double)(float)(param_3 * param_4 + param_1);
-  if (dVar1 <= param_2) {
-    return dVar1;
+  fVar1 = param_3 * param_4 + param_1;
+  if (fVar1 <= param_2) {
+    return fVar1;
   }
   return param_2;
 }

@@ -2,107 +2,122 @@
 
 // 82741520  TRACK_r_image  (gfx_d3d/r_image.cpp:157)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_r_image(void)
 
 {
-  track_static_alloc_internal(0xffffffff845b8b80,0x540,0xffffffff821c3d48,0x12);
+  track_static_alloc_internal(g_imageProgs,0x540,"g_imageProgs",0x12);
   return;
 }
 
 
 // 82741540  Image_Release  (gfx_d3d/r_image.cpp:282)
 
-void Image_Release(int param_1)
+void Image_Release(GfxImage *param_1)
 
 {
-  if (param_1 != 0) {
+  if (param_1 != (GfxImage *)0x0) {
     return;
   }
-  MyAssertHandler(0xffffffff821c3d58,0x11f,0,0xffffffff82000f98,0xffffffff82058d58);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x11f,0,
+                  "%s");
   return;
 }
 
 
 // 82741570  Image_AllocProg  (gfx_d3d/r_image.cpp:398)
 
-void Image_AllocProg(undefined8 param_1,ulonglong param_2,undefined1 param_3)
+GfxImage * Image_AllocProg(int param_1,uchar param_2,uchar param_3)
 
 {
   int iVar1;
-  int iVar2;
+  GfxImage *pGVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_26();
-  iVar2 = iVar1 * 0x70;
-  if (&DAT_845b8b80 + iVar2 == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff821c3d58,0x193,1,0xffffffff82000f98,0xffffffff82058d58);
+  uVar3 = (ulonglong)(char)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if (g_imageProgs + iVar1 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x193,1,
+                    "%s");
   }
-  *(undefined **)(&DAT_845b8bec + iVar2) = (&PTR_s__shadowmap_large_829a2888)[iVar1];
-  if ((param_2 & 0xff) == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x198,0,0xffffffff82000f98,0xffffffff821c3d98);
+  g_imageProgs[iVar1].name = g_imageProgNames[iVar1];
+  if ((uVar3 & 0xff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x198,0,
+                    "%s");
   }
-  (&DAT_845b8bba)[iVar2] = (char)param_2;
-  (&DAT_845b8bb9)[iVar2] = param_3;
-  __restgprlr_26(&DAT_845b8b80 + iVar2);
-  return;
+  g_imageProgs[iVar1].category = (uchar)uVar3;
+  g_imageProgs[iVar1].semantic = param_3;
+  pGVar2 = (GfxImage *)__restgprlr_26(g_imageProgs + iVar1);
+  return pGVar2;
 }
 
 
 // 82741618  Image_CopyProg  (gfx_d3d/r_image.cpp:427)
 
-void Image_CopyProg(undefined8 param_1,ulonglong param_2)
+GfxImage * Image_CopyProg(GfxImage *param_1,int param_2)
 
 {
-  void *_Src;
-  void *_Dst;
-  longlong lVar1;
+  int iVar1;
+  GfxImage *pGVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   
-  _Src = (void *)__savegprlr_29();
-  if (_Src == (void *)0x0) {
-    MyAssertHandler(0xffffffff821c3d58,0x1ae,0,0xffffffff82000f98,0xffffffff821c3dbc);
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x1ae,0,
+                    "%s");
   }
-  lVar1 = param_2 * 0x70 + -0x7ba47480;
-  _Dst = (void *)lVar1;
-  memcpy(_Dst,_Src,0x70);
-  *(undefined4 *)((int)_Dst + 0x6c) =
-       *(undefined4 *)((int)&PTR_s__shadowmap_large_829a2888 + (int)((param_2 & 0xffffffff) << 2));
-  __restgprlr_29(lVar1);
-  return;
+  lVar4 = uVar3 * 0x70 + -0x7ba47480;
+  memcpy();
+  *(undefined4 *)((int)lVar4 + 0x6c) =
+       *(undefined4 *)((int)g_imageProgNames + (int)((uVar3 & 0xffffffff) << 2));
+  pGVar2 = (GfxImage *)__restgprlr_29(lVar4);
+  return pGVar2;
 }
 
 
 // 82741698  Image_PhysicalAlloc  (gfx_d3d/r_image.cpp:443)
 
-void Image_PhysicalAlloc(undefined8 param_1,undefined8 param_2)
+void * Image_PhysicalAlloc(uint param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = PMem_Alloc_NoDebug(uVar1,0x1000,0x404);
-  track_static_alloc_internal(uVar2,uVar1,param_2,0x12);
-  __restgprlr_29(uVar2);
-  return;
+  uVar1 = __savegprlr_29(param_1);
+  pvVar2 = PMem_Alloc_NoDebug(uVar1,0x1000,0x404);
+  track_static_alloc_internal(pvVar2,uVar1,param_2,0x12);
+  pvVar2 = (void *)__restgprlr_29(pvVar2);
+  return pvVar2;
 }
 
 
 // 827416D8  Image_SetupRenderTarget  (gfx_d3d/r_image.cpp:737)
 
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void Image_SetupRenderTarget
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5)
+               (GfxImage *param_1,ushort param_2,ushort param_3,_D3DFORMAT param_4,char *param_5)
 
 {
-  int iVar1;
+  GfxImage *pGVar1;
+  uint uVar2;
+  uint uVar3;
   
-  iVar1 = __savegprlr_25();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x2e2,0,0xffffffff82000f98,0xffffffff82058d58);
+  uVar3 = (uint)(short)param_3;
+  uVar2 = (uint)(short)param_2;
+  pGVar1 = (GfxImage *)__savegprlr_25(param_1);
+  if (pGVar1 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x2e2,0,
+                    "%s");
   }
-  if (*(char *)(iVar1 + 0x39) != '\0') {
-    MyAssertHandler(0xffffffff821c3d58,0x2e3,0,0xffffffff82000f98,0xffffffff821c3dc8);
+  if (pGVar1->semantic != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x2e3,0,
+                    "%s");
   }
-  Image_SetupAndLoad(iVar1,param_2 & 0xffff,param_3 & 0xffff,1,0x2000003,param_4,param_5);
+  Image_SetupAndLoad(pGVar1,uVar2 & 0xffff,uVar3 & 0xffff,1,0x2000003,param_4,param_5);
   __restgprlr_25();
   return;
 }
@@ -110,79 +125,88 @@ void Image_SetupRenderTarget
 
 // 82741780  Load_Texture  (gfx_d3d/r_image.cpp:952)
 
-void Load_Texture(void)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void Load_Texture(GfxImage *param_1)
 
 {
-  char cVar1;
-  undefined4 uVar2;
-  longlong lVar3;
-  int iVar5;
-  ulonglong uVar4;
-  uint uVar6;
-  int iVar7;
+  uchar uVar1;
+  _D3DFORMAT _Var2;
+  GfxImage *pGVar3;
+  uchar *puVar4;
+  uint uVar5;
+  uchar *puVar6;
+  uint *in_stack_ffffff08;
+  D3DVolumeTexture *in_stack_ffffff0c;
+  uint *in_stack_ffffff10;
+  uint *in_stack_ffffff14;
   uint local_90;
-  undefined1 auStack_80 [4];
-  uint local_7c;
-  uint local_78;
-  uint local_74;
+  _XGTEXTURE_DESC a_Stack_80 [2];
   
-  iVar5 = __savegprlr_25();
-  uVar4 = ImageCache_GetImageBasePixels();
-  cVar1 = *(char *)(iVar5 + 0x38);
-  uVar2 = *(undefined4 *)(iVar5 + 0x34);
-  lVar3 = -(ulonglong)(uVar4 == 0);
-  if (cVar1 == '\x02') {
-    uVar6 = XGSetLineTextureHeader
-                      (*(undefined2 *)(iVar5 + 0x40),*(undefined1 *)(iVar5 + 0x46),0,uVar2,0,0,lVar3
-                       ,iVar5);
+  pGVar3 = (GfxImage *)__savegprlr_25(param_1);
+  puVar4 = ImageCache_GetImageBasePixels(pGVar3);
+  uVar1 = pGVar3->mapType;
+  _Var2 = pGVar3->format;
+  uVar5 = -(uint)(puVar4 == (uchar *)0x0);
+  if (uVar1 == '\x02') {
+    uVar5 = XGSetLineTextureHeader
+                      ((uint)pGVar3->width,(uint)pGVar3->levelCount,0,_Var2,0,0,uVar5,
+                       (D3DLineTexture *)pGVar3,in_stack_ffffff08,(uint *)in_stack_ffffff0c);
   }
-  else if (cVar1 == '\x03') {
-    uVar6 = XGSetTextureHeader(*(undefined2 *)(iVar5 + 0x40),*(undefined2 *)(iVar5 + 0x42),
-                               *(undefined1 *)(iVar5 + 0x46),0,uVar2,0,0,lVar3);
+  else if (uVar1 == '\x03') {
+    uVar5 = XGSetTextureHeader((uint)pGVar3->width,(uint)pGVar3->height,(uint)pGVar3->levelCount,0,
+                               _Var2,0,0,uVar5,(uint)in_stack_ffffff08,
+                               (D3DTexture *)in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
   }
-  else if (cVar1 == '\x04') {
-    uVar6 = XGSetVolumeTextureHeader
-                      (*(undefined2 *)(iVar5 + 0x40),*(undefined2 *)(iVar5 + 0x42),
-                       *(undefined2 *)(iVar5 + 0x44),*(undefined1 *)(iVar5 + 0x46),0,uVar2,0,0);
+  else if (uVar1 == '\x04') {
+    uVar5 = XGSetVolumeTextureHeader
+                      ((uint)pGVar3->width,(uint)pGVar3->height,(uint)pGVar3->depth,
+                       (uint)pGVar3->levelCount,0,_Var2,0,0,(uint)in_stack_ffffff08,
+                       in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
   }
   else {
-    if (cVar1 != '\x05') {
-      MyAssertHandler(0xffffffff821c3d58,0x3d9,0,0xffffffff82000f98,0xffffffff821c3ef0);
+    if (uVar1 != '\x05') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3d9,0
+                      ,"%s");
     }
-    uVar6 = XGSetCubeTextureHeader
-                      (*(undefined2 *)(iVar5 + 0x40),*(undefined1 *)(iVar5 + 0x46),0,uVar2,0,0,lVar3
-                       ,iVar5);
+    uVar5 = XGSetCubeTextureHeader
+                      ((uint)pGVar3->width,(uint)pGVar3->levelCount,0,_Var2,0,0,uVar5,
+                       (D3DCubeTexture *)pGVar3,in_stack_ffffff08,(uint *)in_stack_ffffff0c);
   }
-  if (DAT_845b9100 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x3df,0,0xffffffff82000f98,0xffffffff821c3ed4);
+  if (g_imageCacheDefaultPixels == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3df,0,
+                    "%s");
   }
-  iVar7 = *(int *)(iVar5 + 0x48);
-  if (*(int *)(iVar5 + 0x48) == 0) {
-    iVar7 = DAT_845b9100;
+  puVar6 = pGVar3->pixels;
+  if (pGVar3->pixels == (uchar *)0x0) {
+    puVar6 = g_imageCacheDefaultPixels;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    XGOffsetResourceAddress(iVar5,iVar7);
+  if (puVar4 == (uchar *)0x0) {
+    XGOffsetResourceAddress((D3DResource *)pGVar3,puVar6);
   }
   else {
     if ((local_90 & 0xfff) != 0) {
-      MyAssertHandler(0xffffffff821c3d58,1000,0,0xffffffff8205cfc0,0xffffffff821c3ebc,
-                      *(undefined4 *)(iVar5 + 0x6c));
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",1000,0,
+                      "%s\n\t(image->name) = %s");
     }
-    if (local_90 == uVar6) {
-      MyAssertHandler(0xffffffff821c3d58,0x3e9,0,0xffffffff8205cfc0,0xffffffff821c3ea8,
-                      *(undefined4 *)(iVar5 + 0x6c));
+    if (local_90 == uVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3e9,0
+                      ,"%s\n\t(image->name) = %s");
     }
-    XGOffsetBaseTextureAddress(iVar5,uVar4,iVar7);
+    XGOffsetBaseTextureAddress((D3DBaseTexture *)pGVar3,puVar4,puVar6);
   }
-  XGGetTextureDesc(iVar5,0,auStack_80);
-  if (local_7c != *(ushort *)(iVar5 + 0x40)) {
-    MyAssertHandler(0xffffffff821c3d58,0x3f5,1,0xffffffff82000f98,0xffffffff821c3e74);
+  XGGetTextureDesc((D3DBaseTexture *)pGVar3,0,a_Stack_80);
+  if (a_Stack_80[0].Width != pGVar3->width) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3f5,1,
+                    "%s");
   }
-  if (local_78 != *(ushort *)(iVar5 + 0x42)) {
-    MyAssertHandler(0xffffffff821c3d58,0x3f6,1,0xffffffff82000f98,0xffffffff821c3e40);
+  if (a_Stack_80[0].Height != pGVar3->height) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3f6,1,
+                    "%s");
   }
-  if ((local_74 != *(ushort *)(iVar5 + 0x44)) && (*(char *)(iVar5 + 0x38) != '\x05')) {
-    MyAssertHandler(0xffffffff821c3d58,0x3f7,1,0xffffffff82000f98,0xffffffff821c3de8);
+  if ((a_Stack_80[0].Depth != pGVar3->depth) && (pGVar3->mapType != '\x05')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x3f7,1,
+                    "%s");
   }
   __restgprlr_25();
   return;
@@ -191,107 +215,155 @@ void Load_Texture(void)
 
 // 82741A68  Image_FindExisting_FastFile  (gfx_d3d/r_image.cpp:1073)
 
-void Image_FindExisting_FastFile(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+GfxImage * Image_FindExisting_FastFile(char *param_1)
 
 {
-  DB_FindXAssetHeader(8,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMAGE,param_1,1);
+  return XVar1.image;
 }
 
 
 // 82741A78  Image_FindExisting  (gfx_d3d/r_image.cpp:1080)
 
-void Image_FindExisting(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+GfxImage * Image_FindExisting(char *param_1)
 
 {
-  DB_FindXAssetHeader(8,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMAGE,param_1,1);
+  return XVar1.image;
 }
 
 
 // 82741A88  Image_Register_FastFile  (gfx_d3d/r_image.cpp:1106)
 
-void Image_Register_FastFile(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+GfxImage * Image_Register_FastFile(char *param_1,uchar param_2,int param_3)
 
 {
-  DB_FindXAssetHeader(8,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMAGE,param_1,1);
+  return XVar1.image;
 }
 
 
 // 82741A98  Image_Register  (gfx_d3d/r_image.cpp:1113)
 
-void Image_Register(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+GfxImage * Image_Register(char *param_1,uchar param_2,int param_3)
 
 {
-  DB_FindXAssetHeader(8,param_1,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMAGE,param_1,1);
+  return XVar1.image;
 }
 
 
 // 82741AA8  Image_GetSurface  (gfx_d3d/r_image.cpp:1280)
 
-void Image_GetSurface(void)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+D3DSurface * Image_GetSurface(GfxImage *param_1)
 
 {
-  int iVar3;
-  longlong lVar1;
-  undefined8 uVar2;
-  ulonglong uVar4;
+  D3DTexture *pDVar1;
+  D3DSurface *pDVar2;
+  uint uVar3;
   
-  iVar3 = __savegprlr_27();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x503,0,0xffffffff82000f98,0xffffffff82058d58);
+  pDVar1 = (D3DTexture *)__savegprlr_27(param_1);
+  if (pDVar1 == (D3DTexture *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x503,0,
+                    "%s");
   }
-  if (*(char *)(iVar3 + 0x38) != '\x03') {
-    MyAssertHandler(0xffffffff821c3d58,0x504,0,0xffffffff82000f98,0xffffffff821c3f94);
+  if (pDVar1[1].field_0x4 != '\x03') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x504,0,
+                    "%s");
   }
   do {
-    lVar1 = D3DTexture_GetSurfaceLevel(iVar3,0);
-    uVar4 = -(ulonglong)(lVar1 == 0) & 0xffffffff8007000e;
-    if ((int)uVar4 < 0) {
-      do {
-        uVar2 = R_ErrorDescription(uVar4);
-        Sys_Error(0xffffffff821c3f10,0x506,uVar2);
-      } while (DAT_84013128 != 0);
-      __restgprlr_27(lVar1);
-      return;
+    pDVar2 = D3DTexture_GetSurfaceLevel(pDVar1,0);
+    uVar3 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar3 < 0) {
+      R_ErrorDescription(uVar3);
+                    /* WARNING: Subroutine does not return */
+      Sys_Error(
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp (%i) image->texture.map.GetSurfaceLevel( 0, &surface ) failed: %s\n"
+               );
     }
-  } while (DAT_84013128 != 0);
-  __restgprlr_27();
-  return;
+  } while (alwaysfails != 0);
+  pDVar2 = (D3DSurface *)__restgprlr_27();
+  return pDVar2;
 }
 
 
 // 82741B90  R_InitCodeImages  (gfx_d3d/r_image.cpp:1338)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void R_InitCodeImages(void)
 
 {
   __savegprlr_29();
-  DAT_84616508 = DB_FindXAssetHeader(8,0xffffffff8205b0c4,1);
-  if (DAT_84616508 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x53c,1,0xffffffff82000f98,0xffffffff821c4064);
+  rgp.whiteImage = (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$white",1);
+  if (rgp.whiteImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x53c,1,
+                    "%s");
   }
-  DAT_8461650c = DB_FindXAssetHeader(8,0xffffffff821c405c,1);
-  if (DAT_8461650c == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x53f,1,0xffffffff82000f98,0xffffffff821c404c);
+  rgp.blackImage = (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$black",1);
+  if (rgp.blackImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x53f,1,
+                    "%s");
   }
-  DAT_84616510 = DB_FindXAssetHeader(8,0xffffffff821c4044,1);
-  if (DAT_84616510 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x54a,1,0xffffffff82000f98,0xffffffff821c4034);
+  rgp.grayImage = (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$gray",1);
+  if (rgp.grayImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x54a,1,
+                    "%s");
   }
-  DAT_84616514 = DB_FindXAssetHeader(8,0xffffffff821c4020,1);
-  if (DAT_84616514 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x54d,1,0xffffffff82000f98,0xffffffff821c4004);
+  rgp.identityNormalMapImage =
+       (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$identitynormalmap",1);
+  if (rgp.identityNormalMapImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x54d,1,
+                    "%s");
   }
-  DAT_84616590 = DB_FindXAssetHeader(8,0xffffffff821c3ff0,1);
-  if (DAT_84616590 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x556,1,0xffffffff82000f98,0xffffffff821c3fdc);
+  rgp.colorManipImage = (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$colormanipulation",1);
+  if (rgp.colorManipImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x556,1,
+                    "%s");
   }
-  DAT_84616520 = DB_FindXAssetHeader(8,0xffffffff821c3fd0,1);
-  if (DAT_84616520 == 0) {
-    MyAssertHandler(0xffffffff821c3d58,0x55f,1,0xffffffff82000f98,0xffffffff821c3fb4);
+  rgp.streamingLoadingImage = (GfxImage *)DB_FindXAssetHeader(ASSET_TYPE_IMAGE,"$streaming",1);
+  if (rgp.streamingLoadingImage == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image.cpp",0x55f,1,
+                    "%s");
   }
   __restgprlr_29();
   return;
@@ -300,28 +372,32 @@ void R_InitCodeImages(void)
 
 // 82741D28  Image_SetSrgbTexture  (gfx_d3d/r_image.cpp:1507)
 
-void Image_SetSrgbTexture(int param_1,char param_2)
+void Image_SetSrgbTexture(GfxImage *param_1,bool param_2)
 
 {
   uint uVar1;
+  uint uVar2;
   
-  uVar1 = *(uint *)(param_1 + 0x1c) | 0xfc;
-  if (param_2 == '\0') {
-    uVar1 = *(uint *)(param_1 + 0x1c) & 0xffffff03;
+  uVar1 = *(uint *)((int)&param_1->texture + 0x1c);
+  uVar2 = uVar1 | 0xfc;
+  if (!param_2) {
+    uVar2 = uVar1 & 0xffffff03;
   }
-  *(uint *)(param_1 + 0x1c) = uVar1;
+  *(uint *)((int)&param_1->texture + 0x1c) = uVar2;
   return;
 }
 
 
 // 82741D48  R_InitImages  (gfx_d3d/r_image.cpp:1533)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void R_InitImages(void)
 
 {
   R_InitCodeImages();
   RB_InitImages();
-  DAT_84618164 = DAT_84618164 + 1.0;
+  rg.waterFloatTime = rg.waterFloatTime + 1.0;
   return;
 }
 

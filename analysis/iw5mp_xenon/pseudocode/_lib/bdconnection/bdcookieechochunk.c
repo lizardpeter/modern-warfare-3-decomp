@@ -7,7 +7,7 @@ void __unwind_71628(void)
 {
   int in_r12;
   
-  bdChunk___bdChunk(*(undefined4 *)(in_r12 + 0x14));
+  bdChunk::~bdChunk(*(bdChunk **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,8 @@ void __unwind_71629(void)
 {
   int in_r12;
   
-  bdReference<bdCookie>___bdReference<bdCookie>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
+  bdReference<bdCookie>::~bdReference<bdCookie>
+            ((bdReference<bdCookie> *)(*(int *)(in_r12 + 0x14) + 0x14));
   return;
 }
 
@@ -31,7 +32,8 @@ void __unwind_71722(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -43,7 +45,7 @@ void __unwind_71907(void)
 {
   int in_r12;
   
-  bdCookie__operator_delete(*(undefined4 *)(in_r12 + -0x48));
+  bdMemory::__3bdCookie__SAXPAX_Z(*(void **)(in_r12 + -0x48));
   return;
 }
 

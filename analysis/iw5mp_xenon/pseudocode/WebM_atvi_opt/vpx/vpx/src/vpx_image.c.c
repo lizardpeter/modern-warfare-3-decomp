@@ -2,43 +2,50 @@
 
 // 8283E770  img_alloc_helper  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:28)
 
-void img_alloc_helper(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                     ulonglong param_5,ulonglong param_6)
+vpx_image *
+img_alloc_helper(vpx_image *param_1,vpx_img_fmt param_2,uint param_3,uint param_4,uint param_5,
+                uchar *param_6)
 
 {
   bool bVar1;
-  int *_Dst;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
+  vpx_image *pvVar2;
+  uint uVar3;
+  uchar *puVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   uint uVar9;
   uint uVar10;
+  vpx_img_fmt vVar11;
+  uint uVar12;
+  uint uVar13;
+  uint uVar14;
   
-  _Dst = (int *)__savegprlr_19();
-  if ((param_5 & 0xffffffff) == 0) {
-    param_5 = 1;
+  uVar8 = (ulonglong)(int)param_6;
+  uVar7 = (ulonglong)(int)param_5;
+  uVar6 = (ulonglong)(int)param_2;
+  pvVar2 = (vpx_image *)__savegprlr_19(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    uVar7 = 1;
   }
-  if ((param_5 - 1 & param_5 & 0xffffffff) == 0) {
-    iVar4 = (int)param_2;
-    if (iVar4 < 0x103) {
-      if (iVar4 == 0x102) {
+  if ((uVar7 - 1 & uVar7 & 0xffffffff) == 0) {
+    vVar11 = (vpx_img_fmt)uVar6;
+    if ((int)vVar11 < 0x103) {
+      if (vVar11 == VPX_IMG_FMT_I420) {
 LAB_8283e844:
         iVar5 = 0xc;
       }
       else {
-        switch(iVar4 + -1) {
-        case 0:
-        case 7:
+        switch(vVar11 - VPX_IMG_FMT_RGB24) {
+        case VPX_IMG_FMT_NONE:
+        case VPX_IMG_FMT_YVYU:
           iVar5 = 0x18;
           break;
-        case 1:
-        case 8:
-        case 9:
-        case 10:
+        case VPX_IMG_FMT_RGB24:
+        case VPX_IMG_FMT_BGR24:
+        case VPX_IMG_FMT_RGB32_LE:
+        case VPX_IMG_FMT_ARGB:
           iVar5 = 0x20;
           break;
         default:
@@ -47,162 +54,173 @@ LAB_8283e844:
       }
     }
     else {
-      if (((iVar4 == 0x104) || (iVar4 == 0x301)) || (iVar4 == 0x303)) goto LAB_8283e844;
+      if (((vVar11 == VPX_IMG_FMT_VPXI420) || (vVar11 == VPX_IMG_FMT_YV12)) ||
+         (vVar11 == VPX_IMG_FMT_VPXYV12)) goto LAB_8283e844;
 switchD_8283e7dc_caseD_2:
       iVar5 = 0x10;
     }
-    if (iVar4 < 0x302) {
-      if ((iVar4 != 0x301) && (iVar4 != 0x102)) {
-        bVar1 = iVar4 == 0x104;
+    if ((int)vVar11 < 0x302) {
+      if ((vVar11 != VPX_IMG_FMT_YV12) && (vVar11 != VPX_IMG_FMT_I420)) {
+        bVar1 = vVar11 == VPX_IMG_FMT_VPXI420;
         goto LAB_8283e868;
       }
 LAB_8283e870:
-      iVar7 = 1;
+      uVar10 = 1;
     }
     else {
-      bVar1 = iVar4 == 0x303;
+      bVar1 = vVar11 == VPX_IMG_FMT_VPXYV12;
 LAB_8283e868:
-      iVar7 = 0;
+      uVar10 = 0;
       if (bVar1) goto LAB_8283e870;
     }
-    if (iVar4 < 0x302) {
-      if ((iVar4 != 0x301) && (iVar4 != 0x102)) {
-        bVar1 = iVar4 == 0x104;
+    if ((int)vVar11 < 0x302) {
+      if ((vVar11 != VPX_IMG_FMT_YV12) && (vVar11 != VPX_IMG_FMT_I420)) {
+        bVar1 = vVar11 == VPX_IMG_FMT_VPXI420;
         goto LAB_8283e894;
       }
 LAB_8283e89c:
-      iVar6 = 1;
+      uVar9 = 1;
     }
     else {
-      bVar1 = iVar4 == 0x303;
+      bVar1 = vVar11 == VPX_IMG_FMT_VPXYV12;
 LAB_8283e894:
-      iVar6 = 0;
+      uVar9 = 0;
       if (bVar1) goto LAB_8283e89c;
     }
-    uVar10 = (1 << iVar7) - 1;
-    uVar9 = uVar10 + (int)param_3 & ~uVar10;
-    uVar10 = (1 << iVar6) - 1;
-    uVar8 = uVar10 + (int)param_4 & ~uVar10;
-    uVar10 = uVar9;
-    if ((param_2 & 0x100) == 0) {
-      uVar10 = uVar9 * iVar5 >> 3;
+    uVar14 = (1 << uVar10) - 1;
+    uVar13 = uVar14 + param_3 & ~uVar14;
+    uVar14 = (1 << uVar9) - 1;
+    uVar12 = uVar14 + param_4 & ~uVar14;
+    uVar14 = uVar13;
+    if ((uVar6 & 0x100) == 0) {
+      uVar14 = uVar13 * iVar5 >> 3;
     }
-    uVar10 = (uVar10 + (int)param_5) - 1 & ~(uint)(param_5 - 1);
-    if (_Dst == (int *)0x0) {
-      _Dst = (int *)vpx_calloc(1,0x50);
-      if (_Dst == (int *)0x0) goto LAB_8283e9f0;
-      _Dst[0x13] = 1;
+    uVar14 = (uVar14 + (int)uVar7) - 1 & ~(uint)(uVar7 - 1);
+    if (pvVar2 == (vpx_image *)0x0) {
+      pvVar2 = vpx_calloc(1,0x50);
+      if (pvVar2 == (vpx_image *)0x0) goto LAB_8283e9f0;
+      pvVar2->self_allocd = 1;
     }
     else {
-      memset(_Dst,0,0x50);
+      memset();
     }
-    _Dst[0x11] = (int)param_6;
-    if ((param_6 & 0xffffffff) == 0) {
-      if ((param_2 & 0x100) == 0) {
-        uVar2 = (longlong)(int)uVar10 * (longlong)(int)uVar8;
+    pvVar2->img_data = (uchar *)uVar8;
+    if ((uVar8 & 0xffffffff) == 0) {
+      if ((uVar6 & 0x100) == 0) {
+        uVar3 = uVar14 * uVar12;
       }
       else {
-        uVar2 = ((longlong)(int)(uVar8 * uVar9) * (longlong)iVar5 & 0xffffffffU) >> 3;
+        uVar3 = uVar12 * uVar13 * iVar5 >> 3;
       }
-      iVar3 = vpx_malloc(uVar2);
-      _Dst[0x11] = iVar3;
-      _Dst[0x12] = 1;
+      puVar4 = vpx_malloc(uVar3);
+      pvVar2->img_data = puVar4;
+      pvVar2->img_data_owner = 1;
     }
-    if (_Dst[0x11] != 0) {
-      *_Dst = iVar4;
-      _Dst[1] = uVar9;
-      _Dst[2] = uVar8;
-      _Dst[5] = iVar7;
-      _Dst[6] = iVar6;
-      _Dst[0xf] = iVar5;
-      _Dst[0xe] = uVar10;
-      _Dst[0xb] = uVar10;
-      _Dst[0xd] = uVar10 >> iVar7;
-      _Dst[0xc] = uVar10 >> iVar7;
-      iVar4 = vpx_img_set_rect(_Dst,0,0,param_3,param_4);
-      if (iVar4 == 0) {
-        __restgprlr_19(_Dst);
-        return;
+    if (pvVar2->img_data != (uchar *)0x0) {
+      pvVar2->fmt = vVar11;
+      pvVar2->w = uVar13;
+      pvVar2->h = uVar12;
+      pvVar2->x_chroma_shift = uVar10;
+      pvVar2->y_chroma_shift = uVar9;
+      pvVar2->bps = iVar5;
+      pvVar2->stride[3] = uVar14;
+      pvVar2->stride[0] = uVar14;
+      pvVar2->stride[2] = uVar14 >> uVar10;
+      pvVar2->stride[1] = uVar14 >> uVar10;
+      iVar5 = vpx_img_set_rect(pvVar2,0,0,param_3,param_4);
+      if (iVar5 == 0) {
+        pvVar2 = (vpx_image *)__restgprlr_19(pvVar2);
+        return pvVar2;
       }
     }
   }
-  if (_Dst != (int *)0x0) {
-    if ((_Dst[0x11] != 0) && (_Dst[0x12] != 0)) {
-      vpx_free();
+  if (pvVar2 != (vpx_image *)0x0) {
+    if ((pvVar2->img_data != (uchar *)0x0) && (pvVar2->img_data_owner != 0)) {
+      vpx_free(pvVar2->img_data);
     }
-    if (_Dst[0x13] != 0) {
-      vpx_free(_Dst);
+    if (pvVar2->self_allocd != 0) {
+      vpx_free(pvVar2);
     }
   }
 LAB_8283e9f0:
-  __restgprlr_19(0);
-  return;
+  pvVar2 = (vpx_image *)__restgprlr_19(0);
+  return pvVar2;
 }
 
 
 // 8283EA00  vpx_img_alloc  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:160)
 
-void vpx_img_alloc(void)
+vpx_image *
+vpx_img_alloc(vpx_image *param_1,vpx_img_fmt param_2,uint param_3,uint param_4,uint param_5)
 
 {
-  img_alloc_helper();
-  return;
+  vpx_image *pvVar1;
+  
+  pvVar1 = img_alloc_helper(param_1,param_2,param_3,param_4,param_5,(uchar *)0x0);
+  return pvVar1;
 }
 
 
 // 8283E520  vpx_img_set_rect  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:179)
 
-undefined8 vpx_img_set_rect(uint *param_1,uint param_2,uint param_3,uint param_4,uint param_5)
+int vpx_img_set_rect(vpx_image *param_1,uint param_2,uint param_3,uint param_4,uint param_5)
 
 {
   uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
+  vpx_img_fmt vVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  uchar *puVar6;
+  int iVar7;
+  uchar *puVar8;
   
-  if ((param_1[1] < param_2 + param_4) || (uVar1 = param_1[2], uVar1 < param_3 + param_5)) {
-    return 0xffffffffffffffff;
+  if ((param_1->w < param_2 + param_4) || (uVar1 = param_1->h, uVar1 < param_3 + param_5)) {
+    return -1;
   }
-  uVar2 = *param_1;
-  param_1[3] = param_4;
-  param_1[4] = param_5;
-  if ((uVar2 & 0x100) == 0) {
-    param_1[7] = (param_1[0xf] * param_2 >> 3) + param_1[0xb] * param_3 + param_1[0x11];
+  vVar2 = param_1->fmt;
+  param_1->d_w = param_4;
+  param_1->d_h = param_5;
+  if ((vVar2 & 0x100) == VPX_IMG_FMT_NONE) {
+    param_1->planes[0] =
+         param_1->img_data + (param_1->bps * param_2 >> 3) + param_1->stride[0] * param_3;
     return 0;
   }
-  uVar3 = param_1[0x11];
-  if ((uVar2 & 0x400) != 0) {
-    iVar4 = param_1[0xe] * param_3 + uVar3;
-    uVar3 = param_1[0xe] * uVar1 + uVar3;
-    param_1[10] = iVar4 + param_2;
+  puVar8 = param_1->img_data;
+  if ((vVar2 & 0x400) != VPX_IMG_FMT_NONE) {
+    puVar6 = puVar8 + param_2 + param_1->stride[3] * param_3;
+    puVar8 = puVar8 + param_1->stride[3] * uVar1;
+    param_1->planes[3] = puVar6;
   }
-  iVar4 = param_1[0xb] * uVar1 + uVar3;
-  uVar1 = uVar1 >> (param_1[6] & 0x3f);
-  param_1[7] = param_1[0xb] * param_3 + uVar3 + param_2;
-  param_3 = param_3 >> (param_1[6] & 0x3f);
-  if ((uVar2 & 0x200) == 0) {
-    param_2 = param_2 >> (param_1[5] & 0x3f);
-    param_1[8] = param_1[0xc] * param_3 + param_2 + iVar4;
-    param_1[9] = uVar1 * param_1[0xc] + param_1[0xd] * param_3 + param_2 + iVar4;
+  iVar7 = param_1->stride[0] * uVar1;
+  uVar1 = uVar1 >> (param_1->y_chroma_shift & 0x3f);
+  param_1->planes[0] = puVar8 + param_2 + param_1->stride[0] * param_3;
+  uVar4 = param_3 >> (param_1->y_chroma_shift & 0x3f);
+  if ((vVar2 & 0x200) == VPX_IMG_FMT_NONE) {
+    iVar3 = param_1->stride[2];
+    uVar5 = param_2 >> (param_1->x_chroma_shift & 0x3f);
+    param_1->planes[1] = puVar8 + param_1->stride[1] * uVar4 + uVar5 + iVar7;
+    param_1->planes[2] = puVar8 + uVar1 * param_1->stride[1] + iVar3 * uVar4 + uVar5 + iVar7;
     return 0;
   }
-  param_2 = param_2 >> (param_1[5] & 0x3f);
-  param_1[9] = param_1[0xd] * param_3 + param_2 + iVar4;
-  param_1[8] = uVar1 * param_1[0xd] + param_1[0xc] * param_3 + param_2 + iVar4;
+  iVar3 = param_1->stride[1];
+  uVar5 = param_2 >> (param_1->x_chroma_shift & 0x3f);
+  param_1->planes[2] = puVar8 + param_1->stride[2] * uVar4 + uVar5 + iVar7;
+  param_1->planes[1] = puVar8 + uVar1 * param_1->stride[2] + iVar3 * uVar4 + uVar5 + iVar7;
   return 0;
 }
 
 
 // 8283E680  vpx_img_flip  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:236)
 
-void vpx_img_flip(void)
+void vpx_img_flip(vpx_image *param_1)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   iVar3 = *(uint *)(iVar1 + 0x10) - 1;
   iVar2 = (*(uint *)(iVar1 + 0x10) >> (*(uint *)(iVar1 + 0x18) & 0x3f)) - 1;
   *(int *)(iVar1 + 0x1c) = *(int *)(iVar1 + 0x2c) * iVar3 + *(int *)(iVar1 + 0x1c);
@@ -220,14 +238,14 @@ void vpx_img_flip(void)
 
 // 8283E710  vpx_img_free  (WebM_atvi_opt/vpx/vpx/src/vpx_image.c:259)
 
-void vpx_img_free(int param_1)
+void vpx_img_free(vpx_image *param_1)
 
 {
-  if (param_1 != 0) {
-    if ((*(int *)(param_1 + 0x44) != 0) && (*(int *)(param_1 + 0x48) != 0)) {
-      vpx_free();
+  if (param_1 != (vpx_image *)0x0) {
+    if ((param_1->img_data != (uchar *)0x0) && (param_1->img_data_owner != 0)) {
+      vpx_free(param_1->img_data);
     }
-    if (*(int *)(param_1 + 0x4c) != 0) {
+    if (param_1->self_allocd != 0) {
       vpx_free(param_1);
     }
   }

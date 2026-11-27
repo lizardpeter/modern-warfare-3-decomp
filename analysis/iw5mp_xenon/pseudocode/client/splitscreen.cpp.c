@@ -2,103 +2,123 @@
 
 // 8239ACF8  CL_IsSplitscreenControllerActive  (client/splitscreen.cpp:79)
 
-uint CL_IsSplitscreenControllerActive(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_IsSplitscreenControllerActive(int param_1)
 
 {
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50,0
+                    ,"%s\n\t(controllerIndex) = %i");
   }
-  return (uint)(&DAT_82b5c800)[param_1] >> 0x1f ^ 1;
+  return (bool)((byte)(cl_splitscreenControllerMap[param_1] >> 0x1f) ^ 1);
 }
 
 
 // 8239AD70  CL_AnySplitscreenControllerActive  (client/splitscreen.cpp:86)
 
-void CL_AnySplitscreenControllerActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AnySplitscreenControllerActive(void)
 
 {
-  int *piVar1;
-  longlong lVar2;
+  undefined1 uVar1;
+  LocalClientNum_t *pLVar2;
+  int iVar3;
   
   __savegprlr_26();
-  piVar1 = &DAT_82b5c800;
-  lVar2 = 0;
+  pLVar2 = cl_splitscreenControllerMap;
+  iVar3 = 0;
   while( true ) {
-    if (((int)lVar2 < 0) || (3 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar2);
+    if ((iVar3 < 0) || (3 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (-1 < *piVar1) break;
-    piVar1 = piVar1 + 1;
-    lVar2 = lVar2 + 1;
-    if (-0x7d4a37f1 < (int)piVar1) {
-      __restgprlr_26(0);
-      return;
+    if (-1 < (int)*pLVar2) break;
+    pLVar2 = pLVar2 + 1;
+    iVar3 = iVar3 + 1;
+    if (-0x7d4a37f1 < (int)pLVar2) {
+      uVar1 = __restgprlr_26(0);
+      return (bool)uVar1;
     }
   }
-  __restgprlr_26(1);
-  return;
+  uVar1 = __restgprlr_26(1);
+  return (bool)uVar1;
 }
 
 
 // 8239AE08  CL_GetNumActiveSplitscreenControllers  (client/splitscreen.cpp:98)
 
-void CL_GetNumActiveSplitscreenControllers(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_GetNumActiveSplitscreenControllers(void)
 
 {
-  longlong lVar1;
-  int *piVar2;
-  longlong lVar3;
+  int iVar1;
+  longlong lVar2;
+  LocalClientNum_t *pLVar3;
   
   __savegprlr_25();
-  piVar2 = &DAT_82b5c800;
-  lVar3 = 0;
-  lVar1 = 0;
+  pLVar3 = cl_splitscreenControllerMap;
+  iVar1 = 0;
+  lVar2 = 0;
   do {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar1 < 0) || (3 < iVar1)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (-1 < *piVar2) {
-      lVar1 = lVar1 + 1;
+    if (-1 < (int)*pLVar3) {
+      lVar2 = lVar2 + 1;
     }
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-  } while ((int)piVar2 < -0x7d4a37f0);
-  __restgprlr_25(lVar1);
-  return;
+    pLVar3 = pLVar3 + 1;
+    iVar1 = iVar1 + 1;
+  } while ((int)pLVar3 < -0x7d4a37f0);
+  iVar1 = __restgprlr_25(lVar2);
+  return iVar1;
 }
 
 
 // 8239AEA0  ClearControllerMap  (client/splitscreen.cpp:113)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void ClearControllerMap(void)
 
 {
-  DAT_82b5c800 = 0xffffffff;
-  DAT_82b5c804 = 0xffffffff;
-  DAT_82b5c808 = 0xffffffff;
-  DAT_82b5c80c = 0xffffffff;
+  cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
   return;
 }
 
 
 // 8239CA78  MapControllerToLocalClient  (client/splitscreen.cpp:119)
 
-void MapControllerToLocalClient(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MapControllerToLocalClient(int param_1,LocalClientNum_t param_2)
 
 {
   uint uVar1;
   
-  uVar1 = __savegprlr_27();
+  uVar1 = __savegprlr_27(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff820572d0,0x7a,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x7a,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b5c800)[uVar1] != -1) {
-    MyAssertHandler(0xffffffff820572d0,0x7b,0,0xffffffff82057968,(&DAT_82b5c800)[uVar1],
-                    0xffffffffffffffff);
+  if (cl_splitscreenControllerMap[uVar1] != LOCAL_CLIENT_INVALID) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x7b,0
+                    ,
+                    "cl_splitscreenControllerMap[controllerIndex] == LOCAL_CLIENT_INVALID\n\t%i, %i"
+                   );
   }
-  CL_SetLocalClientActive(param_2,1);
-  (&DAT_82b5c800)[uVar1] = (int)param_2;
-  Com_Printf(0xe,0xffffffff82057938,uVar1,param_2);
+  CL_SetLocalClientActive(param_2,true);
+  cl_splitscreenControllerMap[uVar1] = param_2;
+  Com_Printf(0xe,"mapping controller %i to localClientNum %i\n");
   __restgprlr_27();
   return;
 }
@@ -106,27 +126,33 @@ void MapControllerToLocalClient(undefined8 param_1,undefined8 param_2)
 
 // 8239CB20  UnMapControllerToLocalClient  (client/splitscreen.cpp:133)
 
-void UnMapControllerToLocalClient(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void UnMapControllerToLocalClient(int param_1)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
   uint uVar2;
   
-  uVar2 = __savegprlr_27();
+  uVar2 = __savegprlr_27(param_1);
   if (3 < uVar2) {
-    MyAssertHandler(0xffffffff820572d0,0x88,0,0xffffffff82031880,uVar2,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x88,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b5c800)[uVar2] == -1) {
-    MyAssertHandler(0xffffffff820572d0,0x89,0,0xffffffff82057a08,0xffffffffffffffff,
-                    0xffffffffffffffff);
+  if (cl_splitscreenControllerMap[uVar2] == LOCAL_CLIENT_INVALID) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x89,0
+                    ,
+                    "cl_splitscreenControllerMap[controllerIndex] != LOCAL_CLIENT_INVALID\n\t%i, %i"
+                   );
   }
-  iVar1 = (&DAT_82b5c800)[uVar2];
-  (&DAT_82b5c800)[uVar2] = 0xffffffff;
-  Com_Printf(0xe,0xffffffff820579d4,uVar2,iVar1);
-  if (iVar1 < 0) {
-    MyAssertHandler(0xffffffff820572d0,0x90,0,0xffffffff820579b8,iVar1,0);
+  LVar1 = cl_splitscreenControllerMap[uVar2];
+  cl_splitscreenControllerMap[uVar2] = LOCAL_CLIENT_INVALID;
+  Com_Printf(0xe,"unmapping controller %i from localClientNum %i\n");
+  if ((int)LVar1 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x90,0
+                    ,"localClientNum >= 0\n\t%i, %i");
   }
-  CL_SetLocalClientActive(iVar1,0);
+  CL_SetLocalClientActive(LVar1,false);
   __restgprlr_27();
   return;
 }
@@ -134,33 +160,38 @@ void UnMapControllerToLocalClient(void)
 
 // 8239CBF8  CL_UnMapInactiveClientControllers  (client/splitscreen.cpp:150)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_UnMapInactiveClientControllers(void)
 
 {
-  int iVar1;
-  int *piVar2;
-  longlong lVar3;
+  LocalClientNum_t LVar1;
+  LocalClientNum_t *pLVar2;
+  int iVar3;
   
   __savegprlr_22();
-  Com_Printf(0xe,0xffffffff82057a58);
-  piVar2 = &DAT_82b5c800;
-  lVar3 = 0;
+  Com_Printf(0xe,"CL_UnMapInactiveClientControllers called\n");
+  pLVar2 = cl_splitscreenControllerMap;
+  iVar3 = 0;
   do {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar3 < 0) || (3 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    iVar1 = *piVar2;
-    if (-1 < iVar1) {
-      if (3 < iVar1) {
-        MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,iVar1);
+    LVar1 = *pLVar2;
+    if (-1 < (int)LVar1) {
+      if (3 < (int)LVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x1c8,0,"%s\n\t(localClientNum) = %i");
       }
-      if ((&DAT_82b3e4f0)[iVar1 * 0x1e4] == '\0') {
-        UnMapControllerToLocalClient(lVar3);
+      if (clientUIActives[LVar1].active == false) {
+        UnMapControllerToLocalClient(iVar3);
       }
     }
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-  } while ((int)piVar2 < -0x7d4a37f0);
+    pLVar2 = pLVar2 + 1;
+    iVar3 = iVar3 + 1;
+  } while ((int)pLVar2 < -0x7d4a37f0);
   __restgprlr_22();
   return;
 }
@@ -168,74 +199,79 @@ void CL_UnMapInactiveClientControllers(void)
 
 // 8239CCE8  ValidateClientNumsAreSequentialAndSortedByControllerIndex  (client/splitscreen.cpp:172)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void ValidateClientNumsAreSequentialAndSortedByControllerIndex(void)
 
 {
   int iVar1;
   bool bVar2;
-  char cVar3;
-  longlong lVar4;
-  int iVar5;
+  longlong lVar3;
+  int iVar4;
+  LocalClientNum_t *pLVar5;
   int *piVar6;
-  int *piVar7;
-  longlong lVar8;
+  LocalClientNum_t LVar7;
   int iStack_64;
   int local_60 [24];
   
   __savegprlr_23();
-  if ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
-    MyAssertHandler(0xffffffff820572d0,0xb6,0,0xffffffff82000f98,0xffffffff82057ae4);
+  if (((splitscreen->current).enabled == false) || ((onlinegame->current).enabled != false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0xb6,0
+                    ,"%s");
   }
-  piVar6 = &DAT_82b5c800;
-  piVar7 = &iStack_64;
-  lVar4 = 0;
+  pLVar5 = cl_splitscreenControllerMap;
+  piVar6 = &iStack_64;
+  lVar3 = 0;
   bVar2 = false;
-  lVar8 = 0;
+  iVar4 = 0;
   do {
-    iVar5 = (int)lVar8;
-    if ((iVar5 < 0) || (3 < iVar5)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar8);
+    if ((iVar4 < 0) || (3 < iVar4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (-1 < *piVar6) {
-      if (*piVar6 != (int)lVar4) {
+    if (-1 < (int)*pLVar5) {
+      if (*pLVar5 != (LocalClientNum_t)lVar3) {
         bVar2 = true;
       }
-      piVar7 = piVar7 + 1;
-      *piVar7 = iVar5;
-      lVar4 = lVar4 + 1;
+      piVar6 = piVar6 + 1;
+      *piVar6 = iVar4;
+      lVar3 = lVar3 + 1;
     }
-    piVar6 = piVar6 + 1;
-    lVar8 = lVar8 + 1;
-  } while ((int)piVar6 < -0x7d4a37f0);
+    pLVar5 = pLVar5 + 1;
+    iVar4 = iVar4 + 1;
+  } while ((int)pLVar5 < -0x7d4a37f0);
   if (bVar2) {
-    Com_Printf(0x10,0xffffffff82057a88);
-    iVar5 = (int)lVar4;
-    if (0 < iVar5) {
-      piVar7 = &iStack_64;
+    Com_Printf(0x10,
+               "Local clientNums were out of order or non-sequential and so are being sorted and remapped.\n"
+              );
+    iVar4 = (int)lVar3;
+    if (0 < iVar4) {
+      piVar6 = &iStack_64;
       do {
-        piVar7 = piVar7 + 1;
-        UnMapControllerToLocalClient(*piVar7);
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
+        piVar6 = piVar6 + 1;
+        UnMapControllerToLocalClient(*piVar6);
+        lVar3 = lVar3 + -1;
+      } while (lVar3 != 0);
     }
-    lVar4 = 0;
-    if (0 < iVar5) {
-      piVar7 = local_60;
+    LVar7 = LOCAL_CLIENT_0;
+    if (0 < iVar4) {
+      piVar6 = local_60;
       do {
-        iVar1 = *piVar7;
-        MapControllerToLocalClient(iVar1,lVar4);
+        iVar1 = *piVar6;
+        MapControllerToLocalClient(iVar1,LVar7);
         GamerProfile_ExecControllerBindings(iVar1);
-        Key_SetCatcher(lVar4,4);
-        Key_AddCatcher(lVar4,0x10);
-        Key_ClearStates(lVar4);
-        cVar3 = Live_IsSplitScreenSignIn();
-        if (cVar3 == '\0') {
-          Key_RemoveCatcher(lVar4,0xfffffffffffffffb);
-          Key_AddCatcher(lVar4,0x10);
+        Key_SetCatcher(LVar7,4);
+        Key_AddCatcher(LVar7,0x10);
+        Key_ClearStates(LVar7);
+        bVar2 = Live_IsSplitScreenSignIn();
+        if (!bVar2) {
+          Key_RemoveCatcher(LVar7,-5);
+          Key_AddCatcher(LVar7,0x10);
         }
-        lVar4 = lVar4 + 1;
-        piVar7 = piVar7 + 1;
-      } while ((int)lVar4 < iVar5);
+        LVar7 = LVar7 + LOCAL_CLIENT_1;
+        piVar6 = piVar6 + 1;
+      } while ((int)LVar7 < iVar4);
     }
   }
   __restgprlr_23();
@@ -245,346 +281,393 @@ void ValidateClientNumsAreSequentialAndSortedByControllerIndex(void)
 
 // 8239AEC0  CL_SetControllerInUse  (client/splitscreen.cpp:236)
 
-void CL_SetControllerInUse(undefined4 param_1)
+void CL_SetControllerInUse(int param_1)
 
 {
   UI_ExpressionState_PlayerDataModified();
-  DAT_82b5c820 = param_1;
+  cl_controller_in_use = param_1;
   return;
 }
 
 
 // 8239AEF8  CL_DoesControllerIndexHaveALocalClientNum  (client/splitscreen.cpp:244)
 
-void CL_DoesControllerIndexHaveALocalClientNum(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_DoesControllerIndexHaveALocalClientNum(int param_1,LocalClientNum_t *param_2)
 
 {
-  int iVar1;
-  char cVar2;
-  int *piVar3;
+  LocalClientNum_t LVar1;
+  undefined1 uVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  LocalClientNum_t *pLVar5;
   
-  iVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820572d0,0xf5,0,0xffffffff82000f98,0xffffffff82057378);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0xf5,0
+                    ,"%s");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler(0xffffffff820572d0,0xf8,0,0xffffffff82039774,0xffffffff82057344,iVar1);
+  if (((int)LVar1 < 0) || (3 < (int)LVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0xf8,0
+                    ,"%s\n\t(controllerIndex) = %i");
   }
-  piVar3 = (int *)param_2;
-  if (DAT_82966e98 == 0) {
-    if (iVar1 == DAT_82b5c820) {
-      *piVar3 = 0;
-      __restgprlr_29(1);
-      return;
+  pLVar5 = (LocalClientNum_t *)uVar4;
+  if (cl_multi_gamepads_enabled == 0) {
+    if (LVar1 == cl_controller_in_use) {
+      *pLVar5 = LOCAL_CLIENT_0;
+      uVar2 = __restgprlr_29(1);
+      return (bool)uVar2;
     }
   }
   else {
-    cVar2 = CL_IsSplitscreenControllerActive(iVar1);
-    if (cVar2 != '\0') {
-      *piVar3 = (&DAT_82b5c800)[iVar1];
-      __restgprlr_29(1);
-      return;
+    bVar3 = CL_IsSplitscreenControllerActive(LVar1);
+    if (bVar3) {
+      *pLVar5 = cl_splitscreenControllerMap[LVar1];
+      uVar2 = __restgprlr_29(1);
+      return (bool)uVar2;
     }
-    if (((iVar1 < 4) && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-       (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-      *piVar3 = iVar1;
-      __restgprlr_29(1);
-      return;
+    if ((((int)LVar1 < 4) && ((onlinegame->current).enabled == false)) &&
+       ((systemlink->current).enabled == false)) {
+      *pLVar5 = LVar1;
+      uVar2 = __restgprlr_29(1);
+      return (bool)uVar2;
     }
   }
-  *piVar3 = -1;
-  __restgprlr_29(0);
-  return;
+  *pLVar5 = LOCAL_CLIENT_INVALID;
+  uVar2 = __restgprlr_29(0);
+  return (bool)uVar2;
 }
 
 
 // 8239B030  CL_LocalClientNumFromControllerIndex  (client/splitscreen.cpp:289)
 
-undefined4 CL_LocalClientNumFromControllerIndex(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+LocalClientNum_t CL_LocalClientNumFromControllerIndex(int param_1)
 
 {
-  char cVar1;
-  undefined4 local_20 [4];
+  bool bVar1;
+  LocalClientNum_t local_20 [4];
   
-  cVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20);
-  if (cVar1 != '\0') {
+  bVar1 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_20);
+  if (bVar1) {
     return local_20[0];
   }
-  Com_PrintWarning(0xe,0xffffffff82057390,param_1);
-  return 0;
+  Com_PrintWarning(0xe,
+                   "Request for controller %i\'s clientNum, but that controller doesn\'t have a clientNum\n  -This is OK to show up a couple of times during initialization, but worry if this is spamming\n"
+                  );
+  return LOCAL_CLIENT_0;
 }
 
 
 // 8239B0A0  CL_LocalClientNumFromMappedControllerIndex  (client/splitscreen.cpp:303)
 
-ulonglong CL_LocalClientNumFromMappedControllerIndex(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+LocalClientNum_t CL_LocalClientNumFromMappedControllerIndex(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = CL_IsSplitscreenControllerActive();
-  if (cVar1 != '\0') {
-    return (ulonglong)(uint)(&DAT_82b5c800)[param_1];
+  bVar1 = CL_IsSplitscreenControllerActive(param_1);
+  if (bVar1) {
+    return cl_splitscreenControllerMap[param_1];
   }
-  return 0xffffffffffffffff;
+  return LOCAL_CLIENT_INVALID;
 }
 
 
 // 8239B100  CL_SplitscreenControllerIndexFromClientNum  (client/splitscreen.cpp:312)
 
-undefined8 CL_SplitscreenControllerIndexFromClientNum(int param_1,int *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_SplitscreenControllerIndexFromClientNum(LocalClientNum_t param_1,int *param_2)
 
 {
   int iVar1;
   
   if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff820572d0,0x139,0,0xffffffff82000f98,0xffffffff82057448);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x139,
+                    0,"%s");
   }
   *param_2 = 0;
   do {
     iVar1 = *param_2;
-    if (param_1 == (&DAT_82b5c800)[iVar1]) {
-      return 1;
+    if (param_1 == cl_splitscreenControllerMap[iVar1]) {
+      return true;
     }
     *param_2 = iVar1 + 1;
   } while (iVar1 + 1 < 4);
-  return 0;
+  return false;
 }
 
 
 // 8239B1A8  CL_ControllerIndexFromClientNum  (client/splitscreen.cpp:327)
 
-ulonglong CL_ControllerIndexFromClientNum(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_ControllerIndexFromClientNum(LocalClientNum_t param_1)
 
 {
-  char cVar1;
-  uint local_20 [4];
+  bool bVar1;
+  int local_20 [4];
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x149,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x149,
+                    0,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  if (DAT_82966e98 != 0) {
-    cVar1 = CL_SplitscreenControllerIndexFromClientNum(param_1,local_20);
-    if (cVar1 != '\0') {
-      return (ulonglong)local_20[0];
+  if (cl_multi_gamepads_enabled != 0) {
+    bVar1 = CL_SplitscreenControllerIndexFromClientNum(param_1,local_20);
+    if (bVar1) {
+      return local_20[0];
     }
     return param_1;
   }
-  return (ulonglong)DAT_82b5c820;
+  return cl_controller_in_use;
 }
 
 
 // 8239B260  CL_GetLocalClientActiveCount  (client/splitscreen.cpp:350)
 
-char CL_GetLocalClientActiveCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int CL_GetLocalClientActiveCount(void)
 
 {
-  char cVar1;
+  uint uVar1;
   
-  cVar1 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
-    cVar1 = cVar1 + '\x01';
+  uVar1 = (uint)clientUIActives[0].active;
+  if (clientUIActives[1].active) {
+    uVar1 = uVar1 + 1;
   }
-  if (DAT_82b3e8b8 != '\0') {
-    cVar1 = cVar1 + '\x01';
+  if (clientUIActives[2].active) {
+    uVar1 = uVar1 + 1;
   }
-  if (DAT_82b3ea9c == '\0') {
-    return cVar1;
+  if (!clientUIActives[3].active) {
+    return uVar1;
   }
-  return cVar1 + '\x01';
+  return uVar1 + 1;
 }
 
 
 // 8239B2B0  CL_GetActiveGamepadCount  (client/splitscreen.cpp:370)
 
-void CL_GetActiveGamepadCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_GetActiveGamepadCount(void)
 
 {
-  char cVar2;
-  ulonglong uVar1;
-  longlong lVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  uint local_50 [20];
+  bool bVar3;
+  LocalClientNum_t LVar1;
+  int iVar2;
+  longlong lVar4;
+  clientUIActive_t *pcVar5;
+  LocalClientNum_t LVar6;
+  LocalClientNum_t local_50 [20];
   
   __savegprlr_24();
-  pcVar4 = &DAT_82b3e4f0;
-  uVar5 = 0;
-  lVar3 = 0;
+  pcVar5 = clientUIActives;
+  LVar6 = LOCAL_CLIENT_0;
+  lVar4 = 0;
   do {
-    if (3 < (uVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820572d0,0x149,0,0xffffffff820011a8,uVar5,4);
+    if (LOCAL_CLIENT_3 < LVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x149,0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if (DAT_82966e98 == 0) {
-      uVar1 = (ulonglong)DAT_82b5c820;
+    LVar1 = cl_controller_in_use;
+    if ((cl_multi_gamepads_enabled != 0) &&
+       (bVar3 = CL_SplitscreenControllerIndexFromClientNum(LVar6,(int *)local_50), LVar1 = LVar6,
+       bVar3)) {
+      LVar1 = local_50[0];
     }
-    else {
-      cVar2 = CL_SplitscreenControllerIndexFromClientNum(uVar5,local_50);
-      uVar1 = uVar5;
-      if (cVar2 != '\0') {
-        uVar1 = (ulonglong)local_50[0];
-      }
+    if ((pcVar5->active != false) && (bVar3 = GPad_IsActive(LVar1), bVar3)) {
+      lVar4 = lVar4 + 1;
     }
-    if ((*pcVar4 != '\0') && (cVar2 = GPad_IsActive(uVar1), cVar2 != '\0')) {
-      lVar3 = lVar3 + 1;
-    }
-    pcVar4 = pcVar4 + 0x1e4;
-    uVar5 = uVar5 + 1;
-  } while ((int)pcVar4 < -0x7d4c1380);
-  __restgprlr_24(lVar3);
-  return;
+    pcVar5 = pcVar5 + 1;
+    LVar6 = LVar6 + LOCAL_CLIENT_1;
+  } while ((int)pcVar5 < -0x7d4c1380);
+  iVar2 = __restgprlr_24(lVar4);
+  return iVar2;
 }
 
 
 // 8239CE98  CL_GetFirstActiveLocalClient  (client/splitscreen.cpp:391)
 
-void CL_GetFirstActiveLocalClient(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+LocalClientNum_t CL_GetFirstActiveLocalClient(void)
 
 {
-  char *pcVar1;
-  longlong lVar2;
+  LocalClientNum_t LVar1;
+  clientUIActive_t *pcVar2;
+  longlong lVar3;
   
   __savegprlr_26();
-  pcVar1 = &DAT_82b3e4f0;
-  lVar2 = 0;
+  pcVar2 = clientUIActives;
+  lVar3 = 0;
   while( true ) {
-    if (((int)lVar2 < 0) || (3 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar2);
+    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x1c8,0,"%s\n\t(localClientNum) = %i");
     }
-    if (*pcVar1 != '\0') break;
-    pcVar1 = pcVar1 + 0x1e4;
-    lVar2 = lVar2 + 1;
-    if (-0x7d4c1381 < (int)pcVar1) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff820572d0,0x192,0,0xffffffff82057b24);
+    if (pcVar2->active != false) break;
+    pcVar2 = pcVar2 + 1;
+    lVar3 = lVar3 + 1;
+    if (-0x7d4c1381 < (int)pcVar2) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x192,0,"CL_GetFirstActiveLocalClient: No active clients.");
       }
-      __restgprlr_26(0xffffffffffffffff);
-      return;
+      LVar1 = __restgprlr_26(0xffffffffffffffff);
+      return LVar1;
     }
   }
-  __restgprlr_26(lVar2);
-  return;
+  LVar1 = __restgprlr_26(lVar3);
+  return LVar1;
 }
 
 
 // 8239CF58  CL_IsFirstActiveLocalClient  (client/splitscreen.cpp:414)
 
-void CL_IsFirstActiveLocalClient(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_IsFirstActiveLocalClient(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  char *pcVar2;
-  longlong lVar3;
+  uint uVar1;
+  undefined1 uVar2;
+  clientUIActive_t *pcVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_26();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x1a2,0,0xffffffff820011a8,uVar1,4);
+  uVar1 = __savegprlr_26(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x1a2,
+                    0,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  lVar3 = 0;
+  iVar4 = 0;
   if (0 < (int)uVar1) {
-    pcVar2 = &DAT_82b3e4f0;
+    pcVar3 = clientUIActives;
     do {
-      if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-        MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar3);
+      if ((iVar4 < 0) || (3 < iVar4)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x1c8,0,"%s\n\t(localClientNum) = %i");
       }
-      if (*pcVar2 != '\0') {
-        __restgprlr_26(0);
-        return;
+      if (pcVar3->active != false) {
+        uVar2 = __restgprlr_26(0);
+        return (bool)uVar2;
       }
-      lVar3 = lVar3 + 1;
-      pcVar2 = pcVar2 + 0x1e4;
-    } while ((int)lVar3 < (int)uVar1);
+      iVar4 = iVar4 + 1;
+      pcVar3 = pcVar3 + 1;
+    } while (iVar4 < (int)uVar1);
   }
-  __restgprlr_26(1);
-  return;
+  uVar2 = __restgprlr_26(1);
+  return (bool)uVar2;
 }
 
 
 // 8239D020  CL_IsLastActiveLocalClient  (client/splitscreen.cpp:435)
 
-void CL_IsLastActiveLocalClient(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_IsLastActiveLocalClient(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  char *pcVar2;
-  longlong lVar3;
+  uint uVar1;
+  undefined1 uVar2;
+  clientUIActive_t *pcVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_26();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x1b7,0,0xffffffff820011a8,uVar1,4);
+  uVar1 = __savegprlr_26(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x1b7,
+                    0,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  lVar3 = 3;
+  iVar4 = 3;
   if ((int)uVar1 < 3) {
-    pcVar2 = &DAT_82b3ea9c;
+    pcVar3 = clientUIActives + 3;
     do {
-      if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-        MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar3);
+      if ((iVar4 < 0) || (3 < iVar4)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x1c8,0,"%s\n\t(localClientNum) = %i");
       }
-      if (*pcVar2 != '\0') {
-        __restgprlr_26(0);
-        return;
+      if (pcVar3->active != false) {
+        uVar2 = __restgprlr_26(0);
+        return (bool)uVar2;
       }
-      lVar3 = lVar3 + -1;
-      pcVar2 = pcVar2 + -0x1e4;
-    } while ((int)uVar1 < (int)lVar3);
+      iVar4 = iVar4 + -1;
+      pcVar3 = pcVar3 + -1;
+    } while ((int)uVar1 < iVar4);
   }
-  __restgprlr_26(1);
-  return;
+  uVar2 = __restgprlr_26(1);
+  return (bool)uVar2;
 }
 
 
 // 8239B388  CL_IsLocalClientActive  (client/splitscreen.cpp:454)
 
-undefined1 CL_IsLocalClientActive(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_IsLocalClientActive(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,param_1);
+  if (((int)param_1 < 0) || (3 < (int)param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x1c8,
+                    0,"%s\n\t(localClientNum) = %i");
   }
-  return (&DAT_82b3e4f0)[iVar1 * 0x1e4];
+  return clientUIActives[param_1].active;
 }
 
 
 // 8239B3F8  IsConnected  (client/splitscreen.cpp:465)
 
-ulonglong IsConnected(ulonglong param_1)
+bool IsConnected(connstate_t param_1)
 
 {
-  return ((~param_1 & 0xffffffff) >> 0x1f) + (ulonglong)(param_1 < 3) & 1;
+  return (bool)((char)((~(longlong)(int)param_1 & 0xffffffffU) >> 0x1f) +
+                ((ulonglong)(longlong)(int)param_1 < 3) & 1);
 }
 
 
 // 8239B418  CL_SetLocalClientActive  (client/splitscreen.cpp:471)
 
-void CL_SetLocalClientActive(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_SetLocalClientActive(LocalClientNum_t param_1,bool param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  LocalClientNum_t LVar1;
+  ulonglong uVar2;
   
-  uVar3 = __savegprlr_27();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x1d9,0,0xffffffff820011a8,uVar3,4);
+  uVar2 = (ulonglong)param_2;
+  LVar1 = __savegprlr_27(param_1);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x1d9,
+                    0,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  iVar2 = (int)uVar3;
-  iVar1 = iVar2 * 0x1e4;
-  if ((ulonglong)(byte)(&DAT_82b3e4f0)[iVar1] != (param_2 & 0xff)) {
-    if ((param_2 & 0xff) == 0) {
-      if (2 < (int)(&DAT_82b3e54c)[iVar2 * 0x79]) {
-        CL_Disconnect(uVar3);
-        (&DAT_82b3e4f0)[iVar1] = (char)param_2;
+  if ((ulonglong)clientUIActives[LVar1].active != (uVar2 & 0xff)) {
+    if ((uVar2 & 0xff) == 0) {
+      if (2 < (int)clientUIActives[LVar1].connectionState) {
+        CL_Disconnect(LVar1);
+        clientUIActives[LVar1].active = SUB81(uVar2,0);
         __restgprlr_27();
         return;
       }
     }
-    else if ((iVar2 != 0) && (DAT_82966e98 == 0)) {
-      MyAssertHandler(0xffffffff820572d0,0x1e5,0,0xffffffff82000f98,0xffffffff82057458);
+    else if ((LVar1 != LOCAL_CLIENT_0) && (cl_multi_gamepads_enabled == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x1e5,0,"%s");
     }
-    (&DAT_82b3e4f0)[iVar1] = (char)param_2;
+    clientUIActives[LVar1].active = SUB81(uVar2,0);
   }
   __restgprlr_27();
   return;
@@ -593,58 +676,62 @@ void CL_SetLocalClientActive(undefined8 param_1,ulonglong param_2)
 
 // 8239B4E8  CL_IsControllerActive  (client/splitscreen.cpp:494)
 
-undefined8 CL_IsControllerActive(ulonglong param_1)
+bool CL_IsControllerActive(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x1f0,0,0xffffffff82031880,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x1f0,
+                    0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((DAT_82966e98 != 0) || (uVar1 = 0, (int)param_1 == DAT_82b5c820)) {
-    uVar1 = 1;
+  if ((cl_multi_gamepads_enabled != 0) || (bVar1 = false, param_1 == cl_controller_in_use)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8239B568  CL_ControllerIndexFromActiveClient  (client/splitscreen.cpp:511)
 
-ulonglong CL_ControllerIndexFromActiveClient(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_ControllerIndexFromActiveClient(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  LocalClientNum_t LVar1;
+  clientUIActive_t *pcVar2;
+  LocalClientNum_t LVar3;
+  int iVar4;
+  LocalClientNum_t *pLVar5;
   
-  if (DAT_82966e98 == 0) {
-    if (param_1 != 0) {
-      MyAssertHandler(0xffffffff820572d0,0x208,0,0xffffffff82000f98,0xffffffff8205748c);
+  if (cl_multi_gamepads_enabled == 0) {
+    if (param_1 != LOCAL_CLIENT_0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x208,0,"%s");
     }
-    return (ulonglong)DAT_82b5c820;
+    return cl_controller_in_use;
   }
-  iVar1 = 0;
-  pcVar2 = &DAT_82b3e4f0;
-  iVar3 = 0;
+  LVar1 = LOCAL_CLIENT_0;
+  pcVar2 = clientUIActives;
+  LVar3 = LOCAL_CLIENT_0;
   do {
-    if (*pcVar2 != '\0') {
-      if (iVar1 == param_1) {
-        uVar4 = 0;
-        piVar5 = &DAT_82b5c800;
+    if (pcVar2->active != false) {
+      if (LVar1 == param_1) {
+        iVar4 = 0;
+        pLVar5 = cl_splitscreenControllerMap;
         do {
-          if (*piVar5 == iVar3) {
-            return uVar4;
+          if (*pLVar5 == LVar3) {
+            return iVar4;
           }
-          piVar5 = piVar5 + 1;
-          uVar4 = uVar4 + 1;
-        } while ((int)piVar5 < -0x7d4a37f0);
+          pLVar5 = pLVar5 + 1;
+          iVar4 = iVar4 + 1;
+        } while ((int)pLVar5 < -0x7d4a37f0);
       }
-      iVar1 = iVar1 + 1;
+      LVar1 = LVar1 + LOCAL_CLIENT_1;
     }
-    pcVar2 = pcVar2 + 0x1e4;
-    iVar3 = iVar3 + 1;
+    pcVar2 = pcVar2 + 1;
+    LVar3 = LVar3 + LOCAL_CLIENT_1;
   } while ((int)pcVar2 < -0x7d4c1380);
   return 0;
 }
@@ -652,119 +739,141 @@ ulonglong CL_ControllerIndexFromActiveClient(int param_1)
 
 // 8239B660  CL_LocalActiveIndexFromClientNum  (client/splitscreen.cpp:562)
 
-void CL_LocalActiveIndexFromClientNum(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_LocalActiveIndexFromClientNum(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  uint uVar2;
+  longlong lVar1;
   int iVar3;
-  char *pcVar4;
+  uint uVar4;
+  clientUIActive_t *pcVar5;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_82966e98 != 0) {
-    if (3 < (uVar1 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820572d0,0x23b,0,0xffffffff820011a8,uVar1,4);
+  uVar2 = __savegprlr_29(param_1);
+  if (cl_multi_gamepads_enabled != 0) {
+    if (3 < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x23b,0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    pcVar4 = &DAT_82b3e4f0;
-    if ((&DAT_82b3e4f0)[(int)uVar1 * 0x1e4] == '\0') {
-      MyAssertHandler(0xffffffff820572d0,0x23c,0,0xffffffff82000f98,0xffffffff820574f8);
+    pcVar5 = clientUIActives;
+    if (clientUIActives[uVar2].active == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x23c,0,"%s");
     }
-    lVar2 = 0;
-    iVar3 = 0;
+    lVar1 = 0;
+    uVar4 = 0;
     do {
-      if (iVar3 == (int)uVar1) goto LAB_8239b74c;
-      if (*pcVar4 != '\0') {
-        lVar2 = lVar2 + 1;
+      if (uVar4 == uVar2) goto LAB_8239b74c;
+      if (pcVar5->active != false) {
+        lVar1 = lVar1 + 1;
       }
-      pcVar4 = pcVar4 + 0x1e4;
-      iVar3 = iVar3 + 1;
-    } while ((int)pcVar4 < -0x7d4c1380);
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff820572d0,0x248,0,0xffffffff820574a8);
+      pcVar5 = pcVar5 + 1;
+      uVar4 = uVar4 + 1;
+    } while ((int)pcVar5 < -0x7d4c1380);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x248,0,
+                      "CL_LocalActiveIndexFromClientNum(): Code should have returned in for() loop."
+                     );
     }
   }
-  lVar2 = 0;
+  lVar1 = 0;
 LAB_8239b74c:
-  __restgprlr_29(lVar2);
-  return;
+  iVar3 = __restgprlr_29(lVar1);
+  return iVar3;
 }
 
 
 // 8239B758  CL_GetFirstActiveControllerIndex  (client/splitscreen.cpp:596)
 
-void CL_GetFirstActiveControllerIndex(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_GetFirstActiveControllerIndex(void)
 
 {
-  char *pcVar1;
-  longlong lVar2;
+  int iVar1;
+  clientUIActive_t *pcVar2;
+  LocalClientNum_t LVar3;
   
   __savegprlr_26();
-  pcVar1 = &DAT_82b3e4f0;
-  lVar2 = 0;
+  pcVar2 = clientUIActives;
+  LVar3 = LOCAL_CLIENT_0;
   while( true ) {
-    if (((int)lVar2 < 0) || (3 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar2);
+    if (((int)LVar3 < 0) || (3 < (int)LVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x1c8,0,"%s\n\t(localClientNum) = %i");
     }
-    if (*pcVar1 != '\0') break;
-    pcVar1 = pcVar1 + 0x1e4;
-    lVar2 = lVar2 + 1;
-    if (-0x7d4c1381 < (int)pcVar1) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff820572d0,0x25c,0,0xffffffff82057520);
+    if (pcVar2->active != false) break;
+    pcVar2 = pcVar2 + 1;
+    LVar3 = LVar3 + LOCAL_CLIENT_1;
+    if (-0x7d4c1381 < (int)pcVar2) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x25c,0,"No active clients when we expected there to be one!");
       }
-      __restgprlr_26(0);
-      return;
+      iVar1 = __restgprlr_26(0);
+      return iVar1;
     }
   }
-  CL_ControllerIndexFromClientNum(lVar2);
-  __restgprlr_26();
-  return;
+  iVar1 = CL_ControllerIndexFromClientNum(LVar3);
+  iVar1 = __restgprlr_26(iVar1);
+  return iVar1;
 }
 
 
 // 8239B820  CL_AllLocalClientsInactive  (client/splitscreen.cpp:610)
 
-void CL_AllLocalClientsInactive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_AllLocalClientsInactive(void)
 
 {
-  char *pcVar1;
-  longlong lVar2;
+  undefined1 uVar1;
+  clientUIActive_t *pcVar2;
+  int iVar3;
   
   __savegprlr_26();
-  pcVar1 = &DAT_82b3e4f0;
-  lVar2 = 0;
+  pcVar2 = clientUIActives;
+  iVar3 = 0;
   while( true ) {
-    if (((int)lVar2 < 0) || (3 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar2);
+    if ((iVar3 < 0) || (3 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x1c8,0,"%s\n\t(localClientNum) = %i");
     }
-    if (*pcVar1 != '\0') break;
-    pcVar1 = pcVar1 + 0x1e4;
-    lVar2 = lVar2 + 1;
-    if (-0x7d4c1381 < (int)pcVar1) {
-      __restgprlr_26(1);
-      return;
+    if (pcVar2->active != false) break;
+    pcVar2 = pcVar2 + 1;
+    iVar3 = iVar3 + 1;
+    if (-0x7d4c1381 < (int)pcVar2) {
+      uVar1 = __restgprlr_26(1);
+      return (bool)uVar1;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar1 = __restgprlr_26(0);
+  return (bool)uVar1;
 }
 
 
 // 8239B8B8  EnoughPlayersToStartSplitscreen  (client/splitscreen.cpp:625)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool EnoughPlayersToStartSplitscreen(void)
 
 {
   char cVar1;
   
-  cVar1 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
+  cVar1 = clientUIActives[0].active;
+  if (clientUIActives[1].active) {
+    cVar1 = clientUIActives[0].active + '\x01';
+  }
+  if (clientUIActives[2].active) {
     cVar1 = cVar1 + '\x01';
   }
-  if (DAT_82b3e8b8 != '\0') {
-    cVar1 = cVar1 + '\x01';
-  }
-  if (DAT_82b3ea9c != '\0') {
+  if (clientUIActives[3].active) {
     cVar1 = cVar1 + '\x01';
   }
   return cVar1 != '\0';
@@ -773,67 +882,76 @@ bool EnoughPlayersToStartSplitscreen(void)
 
 // 8239B920  CL_EnableSplitscreenControls  (client/splitscreen.cpp:632)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_EnableSplitscreenControls(void)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined4 uVar2;
-  int *piVar4;
-  longlong lVar5;
-  undefined4 local_60 [24];
+  int iVar1;
+  bool bVar2;
+  LocalClientNum_t *pLVar3;
+  LocalClientNum_t LVar4;
+  int iVar5;
+  LocalClientNum_t local_60 [24];
   
   __savegprlr_22();
   GamerProfile_UpdateProfilePlayTimes();
-  DAT_82966e98 = 1;
-  Com_Printf(0xe,0xffffffff82057598,*(undefined1 *)(DAT_82b3ecb8 + 0xc));
+  cl_multi_gamepads_enabled = 1;
+  Com_Printf(0xe,
+             "CL_EnableSplitscreenControls() called. cl_multi_gamepads_enabled = true. splitscreen->current.enabled = %d\n"
+            );
   Live_ClearForcedSignin();
-  if (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-     (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-    lVar5 = 0;
+  if ((((splitscreen->current).enabled == false) && ((onlinegame->current).enabled == false)) &&
+     ((systemlink->current).enabled == false)) {
+    LVar4 = LOCAL_CLIENT_0;
     do {
-      CL_SetLocalClientActive(lVar5,1);
-      lVar5 = lVar5 + 1;
-    } while ((int)lVar5 < 4);
+      CL_SetLocalClientActive(LVar4,true);
+      LVar4 = LVar4 + LOCAL_CLIENT_1;
+    } while ((int)LVar4 < 4);
     __restgprlr_22();
     return;
   }
-  piVar4 = &DAT_82b5c800;
-  DAT_82b3e4f0 = 0;
-  DAT_82b3e6d4 = 0;
-  DAT_82b3e8b8 = 0;
-  DAT_82b3ea9c = 0;
-  lVar5 = 0;
+  pLVar3 = cl_splitscreenControllerMap;
+  clientUIActives[0].active = false;
+  clientUIActives[1].active = false;
+  clientUIActives[2].active = false;
+  clientUIActives[3].active = false;
+  iVar5 = 0;
   do {
-    if (((int)lVar5 < 0) || (3 < (int)lVar5)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar5);
+    if ((iVar5 < 0) || (3 < iVar5)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (-1 < *piVar4) {
-      if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') &&
-         (uVar1 = CL_GetLocalClientActiveCount(), 1 < (int)uVar1)) {
-        MyAssertHandler(0xffffffff820572d0,0x29e,0,0xffffffff82057558,uVar1,2);
+    if (-1 < (int)*pLVar3) {
+      if (((onlinegame->current).enabled != false) &&
+         (iVar1 = CL_GetLocalClientActiveCount(), 1 < iVar1)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x29e,0,"CL_GetLocalClientActiveCount() < MAX_PARTY_CLIENT_COUNT\n\t%i, %i")
+        ;
       }
-      cVar3 = CL_DoesControllerIndexHaveALocalClientNum(lVar5,local_60);
-      uVar2 = local_60[0];
-      if (cVar3 == '\0') {
-        Com_PrintWarning(0xe,0xffffffff82057390,lVar5);
-        uVar2 = 0;
+      bVar2 = CL_DoesControllerIndexHaveALocalClientNum(iVar5,local_60);
+      LVar4 = local_60[0];
+      if (!bVar2) {
+        Com_PrintWarning(0xe,
+                         "Request for controller %i\'s clientNum, but that controller doesn\'t have a clientNum\n  -This is OK to show up a couple of times during initialization, but worry if this is spamming\n"
+                        );
+        LVar4 = LOCAL_CLIENT_0;
       }
-      CL_SetLocalClientActive(uVar2,1);
-      GamerProfile_ExecControllerBindings(lVar5);
-      if (DAT_82b5c828 == '\0') {
-        DAT_82b5c828 = 1;
-        cVar3 = LiveStorage_ShouldReadOfflineStats(lVar5);
-        if ((cVar3 != '\0') && (cVar3 = LiveStorage_DoWeHaveStatsForSource(lVar5,1), cVar3 == '\0'))
-        {
-          LiveStorage_ReadStats(lVar5);
+      CL_SetLocalClientActive(LVar4,true);
+      GamerProfile_ExecControllerBindings(iVar5);
+      if (s_devHackPreventReEntry == false) {
+        s_devHackPreventReEntry = true;
+        bVar2 = LiveStorage_ShouldReadOfflineStats(iVar5);
+        if ((bVar2) && (bVar2 = LiveStorage_DoWeHaveStatsForSource(iVar5,STATS_OFFLINE), !bVar2)) {
+          LiveStorage_ReadStats(iVar5);
         }
-        DAT_82b5c828 = '\0';
+        s_devHackPreventReEntry = false;
       }
     }
-    piVar4 = piVar4 + 1;
-    lVar5 = lVar5 + 1;
-  } while ((int)piVar4 < -0x7d4a37f0);
+    pLVar3 = pLVar3 + 1;
+    iVar5 = iVar5 + 1;
+  } while ((int)pLVar3 < -0x7d4a37f0);
   __restgprlr_22();
   return;
 }
@@ -841,57 +959,58 @@ void CL_EnableSplitscreenControls(void)
 
 // 8239BB38  CL_DisableSplitscreenControls  (client/splitscreen.cpp:706)
 
-void CL_DisableSplitscreenControls(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_DisableSplitscreenControls(int param_1)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  int *piVar4;
-  uint uVar5;
+  LocalClientNum_t LVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
-  uVar2 = __savegprlr_23();
+  iVar1 = __savegprlr_23(param_1);
   GamerProfile_UpdateProfilePlayTimes();
-  iVar1 = DAT_82966e98;
-  DAT_82966e98 = 0;
-  Com_DPrintf(0xe,0xffffffff82057660);
-  if (DAT_82b3e4f0 != '\x01') {
-    DAT_82b3e4f0 = '\x01';
+  iVar4 = cl_multi_gamepads_enabled;
+  cl_multi_gamepads_enabled = 0;
+  Com_DPrintf(0xe,"CL_DisableSplitscreenControls() called. cl_multi_gamepads_enabled = false\n");
+  if (clientUIActives[0].active != true) {
+    clientUIActives[0].active = true;
   }
-  Key_ClearStates(0);
-  lVar3 = 1;
+  Key_ClearStates(LOCAL_CLIENT_0);
+  LVar2 = LOCAL_CLIENT_1;
   do {
-    CL_SetLocalClientActive(lVar3,0);
-    lVar3 = lVar3 + 1;
-  } while ((int)lVar3 < 4);
-  if (iVar1 != 0) {
+    CL_SetLocalClientActive(LVar2,false);
+    LVar2 = LVar2 + LOCAL_CLIENT_1;
+  } while ((int)LVar2 < 4);
+  if (iVar4 != 0) {
     UI_ExpressionState_PlayerDataModified();
-    DAT_82b5c820 = (uint)uVar2;
-    if (((int)DAT_82b5c820 < 0) || (3 < (int)DAT_82b5c820)) {
-      MyAssertHandler(0xffffffff820572d0,0x2d9,0,0xffffffff82057604,0xffffffff82057624,uVar2);
-      uVar2 = (ulonglong)DAT_82b5c820;
+    cl_controller_in_use = iVar1;
+    if ((iVar1 < 0) || (3 < iVar1)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x2d9,0,"%s\n\t(cl_controller_in_use) = %i");
     }
-    GamerProfile_UpdateSystemVarsFromProfile(uVar2);
-    GamerProfile_ExecControllerBindings(DAT_82b5c820);
-    piVar4 = &DAT_82b5c800;
-    lVar3 = 0;
+    GamerProfile_UpdateSystemVarsFromProfile(cl_controller_in_use);
+    GamerProfile_ExecControllerBindings(cl_controller_in_use);
+    pLVar3 = cl_splitscreenControllerMap;
+    iVar4 = 0;
     do {
-      uVar5 = (uint)lVar3;
-      if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
+      if (((onlinegame->current).enabled == false) && ((systemlink->current).enabled == false)) {
 LAB_8239bc8c:
-        if (uVar5 != DAT_82b5c820) {
-          Live_NotPlaying(lVar3);
+        if (iVar4 != cl_controller_in_use) {
+          Live_NotPlaying(iVar4);
         }
       }
       else {
-        if (((int)uVar5 < 0) || (3 < (int)uVar5)) {
-          MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+        if ((iVar4 < 0) || (3 < iVar4)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                          0x50,0,"%s\n\t(controllerIndex) = %i");
         }
-        if (*piVar4 < 0) goto LAB_8239bc8c;
+        if ((int)*pLVar3 < 0) goto LAB_8239bc8c;
       }
-      piVar4 = piVar4 + 1;
-      lVar3 = lVar3 + 1;
-    } while ((int)piVar4 < -0x7d4a37f0);
+      pLVar3 = pLVar3 + 1;
+      iVar4 = iVar4 + 1;
+    } while ((int)pLVar3 < -0x7d4a37f0);
   }
   __restgprlr_23();
   return;
@@ -900,25 +1019,30 @@ LAB_8239bc8c:
 
 // 8239BCC0  CL_UpdateSplitscreenControls  (client/splitscreen.cpp:752)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_UpdateSplitscreenControls(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (DAT_82b3ecb8 == 0) {
-    MyAssertHandler(0xffffffff820572d0,0x2f2,0,0xffffffff82000f98,0xffffffff8203364c);
+  if (splitscreen == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x2f2,
+                    0,"%s");
   }
-  if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-    if (DAT_82966e98 != 0) {
-      CL_DisableSplitscreenControls(DAT_82b5c824);
+  if ((splitscreen->current).enabled == false) {
+    if (cl_multi_gamepads_enabled != 0) {
+      CL_DisableSplitscreenControls(cl_last_controller_input);
       return;
     }
   }
   else {
     CL_EnableSplitscreenControls();
-    cVar1 = EnoughPlayersToStartSplitscreen();
-    if (cVar1 == '\0') {
-      Com_Error(1,0xffffffff820576b0);
+    bVar1 = EnoughPlayersToStartSplitscreen();
+    if (!bVar1) {
+      Com_Error(ERR_DROP,
+                "Not enough players to start split screen. Use the sign in screen or launch the game with the <autosignin> command."
+               );
     }
   }
   return;
@@ -927,52 +1051,56 @@ void CL_UpdateSplitscreenControls(void)
 
 // 8239BD80  CL_IncNoSplitscreenControl  (client/splitscreen.cpp:772)
 
-void CL_IncNoSplitscreenControl(undefined8 param_1)
+void CL_IncNoSplitscreenControl(char *param_1)
 
 {
-  Com_DPrintf(0xe,0xffffffff82057728,param_1,(ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc),
-              (ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc) + 1);
-  if (*(int *)(DAT_82b3e4c4 + 0xc) == 0) {
-    CL_DisableSplitscreenControls(DAT_82b5c824);
+  Com_DPrintf(0xe,"IncNoSplitscreenControl() called with context \'%s\' - ref count (%d->%d)\n");
+  if ((splitscreen_disabled_ref_count->current).integer == 0) {
+    CL_DisableSplitscreenControls(cl_last_controller_input);
   }
-  Dvar_SetInt(DAT_82b3e4c4,(ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc) + 1);
+  Dvar_SetInt(splitscreen_disabled_ref_count,(splitscreen_disabled_ref_count->current).integer + 1);
   return;
 }
 
 
 // 8239BDF8  CL_IncNoSplitscreenControl_f  (client/splitscreen.cpp:796)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_IncNoSplitscreenControl_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    uVar1 = Cmd_Argv(0);
-    Com_Printf(0xe,0xffffffff82057774,uVar1);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Cmd_Argv(0);
+    Com_Printf(0xe,"USAGE: %s <context>\n");
     return;
   }
-  Cmd_Argv(1);
-  CL_IncNoSplitscreenControl();
+  pcVar2 = Cmd_Argv(1);
+  CL_IncNoSplitscreenControl(pcVar2);
   return;
 }
 
 
 // 8239BE58  CL_DecNoSplitscreenControl  (client/splitscreen.cpp:810)
 
-void CL_DecNoSplitscreenControl(undefined8 param_1)
+void CL_DecNoSplitscreenControl(char *param_1)
 
 {
-  if (*(int *)(DAT_82b3e4c4 + 0xc) == 0) {
-    Com_PrintWarning(0xe,0xffffffff820577e0);
+  if ((splitscreen_disabled_ref_count->current).integer == 0) {
+    Com_PrintWarning(0xe,
+                     "CL_DecNoSplitscreenControl() called with context \'%s\' but ref count is already zero!  Aborting!\n"
+                    );
     return;
   }
-  Com_DPrintf(0xe,0xffffffff82057790,param_1,(ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc),
-              (ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc) - 1);
-  Dvar_SetInt(DAT_82b3e4c4,(ulonglong)*(uint *)(DAT_82b3e4c4 + 0xc) - 1);
-  if ((*(int *)(DAT_82b3e4c4 + 0xc) == 0) && (*(char *)(DAT_82aa1a8c + 0xc) != '\0')) {
+  Com_DPrintf(0xe,"DecNoSplitscreenControl() called with context \'%s\' - ref count (%d->%d)\n");
+  Dvar_SetInt(splitscreen_disabled_ref_count,(splitscreen_disabled_ref_count->current).integer + -1)
+  ;
+  if (((splitscreen_disabled_ref_count->current).integer == 0) &&
+     ((splitscreen_control_desired->current).enabled != false)) {
     CL_EnableSplitscreenControls();
   }
   return;
@@ -981,82 +1109,84 @@ void CL_DecNoSplitscreenControl(undefined8 param_1)
 
 // 8239BF08  CL_DecNoSplitscreenControl_f  (client/splitscreen.cpp:835)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_DecNoSplitscreenControl_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    uVar1 = Cmd_Argv(0);
-    Com_Printf(0xe,0xffffffff82057774,uVar1);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Cmd_Argv(0);
+    Com_Printf(0xe,"USAGE: %s <context>\n");
     return;
   }
-  Cmd_Argv(1);
-  CL_DecNoSplitscreenControl();
+  pcVar2 = Cmd_Argv(1);
+  CL_DecNoSplitscreenControl(pcVar2);
   return;
 }
 
 
 // 8239BF68  CL_ForceNoSplitscreenControl  (client/splitscreen.cpp:849)
 
-void CL_ForceNoSplitscreenControl(undefined8 param_1,ulonglong param_2)
+void CL_ForceNoSplitscreenControl(char *param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  Com_DPrintf(0xe,0xffffffff82057844,param_1);
-  Dvar_SetInt(DAT_82b3e4c4,0);
-  Dvar_SetBool(DAT_82aa1a8c,0);
-  uVar1 = (ulonglong)DAT_82b5c824;
-  if ((int)param_2 != -1) {
-    uVar1 = param_2;
+  Com_DPrintf(0xe,"ForceNoSplitscreenControl() called with context \'%s\')\n");
+  Dvar_SetInt(splitscreen_disabled_ref_count,0);
+  Dvar_SetBool(splitscreen_control_desired,false);
+  iVar1 = cl_last_controller_input;
+  if (param_2 != -1) {
+    iVar1 = param_2;
   }
-  CL_DisableSplitscreenControls(uVar1);
+  CL_DisableSplitscreenControls(iVar1);
   return;
 }
 
 
 // 8239BFE0  CL_ForceNoSplitscreenControl_f  (client/splitscreen.cpp:878)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_ForceNoSplitscreenControl_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char *_Str;
-  ulonglong uVar3;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   
-  uVar3 = (ulonglong)DAT_82b5c824;
-  iVar2 = Cmd_Argc();
-  if ((iVar2 != 2) && (iVar2 = Cmd_Argc(), iVar2 != 3)) {
-    uVar1 = Cmd_Argv(0);
-    Com_Printf(0xe,0xffffffff8205787c,uVar1);
+  iVar3 = cl_last_controller_input;
+  iVar1 = Cmd_Argc();
+  if ((iVar1 != 2) && (iVar1 = Cmd_Argc(), iVar1 != 3)) {
+    Cmd_Argv(0);
+    Com_Printf(0xe,"USAGE: %s <context> [controller]\n");
     return;
   }
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 3) {
-    _Str = (char *)Cmd_Argv(2);
-    iVar2 = atoi(_Str);
-    uVar3 = (ulonglong)iVar2;
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 3) {
+    pcVar2 = Cmd_Argv(2);
+    iVar3 = atoi(pcVar2);
     UI_ExpressionState_PlayerDataModified();
-    DAT_82b5c820 = iVar2;
+    cl_controller_in_use = iVar3;
   }
-  uVar1 = Cmd_Argv(1);
-  CL_ForceNoSplitscreenControl(uVar1,uVar3);
+  pcVar2 = Cmd_Argv(1);
+  CL_ForceNoSplitscreenControl(pcVar2,iVar3);
   return;
 }
 
 
 // 8239C090  CL_ForceSplitscreenControl  (client/splitscreen.cpp:900)
 
-void CL_ForceSplitscreenControl(undefined8 param_1)
+void CL_ForceSplitscreenControl(char *param_1)
 
 {
-  Com_DPrintf(0xe,0xffffffff820578a0,param_1);
-  Dvar_SetInt(DAT_82b3e4c4,0);
-  Dvar_SetBool(DAT_82aa1a8c,1);
+  Com_DPrintf(0xe,"ForceSplitscreenControl() called with context \'%s\')\n");
+  Dvar_SetInt(splitscreen_disabled_ref_count,0);
+  Dvar_SetBool(splitscreen_control_desired,true);
   CL_EnableSplitscreenControls();
   return;
 }
@@ -1064,22 +1194,23 @@ void CL_ForceSplitscreenControl(undefined8 param_1)
 
 // 8239C0E8  CL_ForceSplitscreenControl_f  (client/splitscreen.cpp:915)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_ForceSplitscreenControl_f(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 != 2) {
-    uVar1 = Cmd_Argv(0);
-    Com_Printf(0xe,0xffffffff82057774,uVar1);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Cmd_Argv(0);
+    Com_Printf(0xe,"USAGE: %s <context>\n");
     return;
   }
-  uVar1 = Cmd_Argv(1);
-  Com_DPrintf(0xe,0xffffffff820578a0,uVar1);
-  Dvar_SetInt(DAT_82b3e4c4,0);
-  Dvar_SetBool(DAT_82aa1a8c,1);
+  Cmd_Argv(1);
+  Com_DPrintf(0xe,"ForceSplitscreenControl() called with context \'%s\')\n");
+  Dvar_SetInt(splitscreen_disabled_ref_count,0);
+  Dvar_SetBool(splitscreen_control_desired,true);
   CL_EnableSplitscreenControls();
   return;
 }
@@ -1087,167 +1218,195 @@ void CL_ForceSplitscreenControl_f(void)
 
 // 8239C180  CL_AllSplitscreenPlayersSignedIn  (client/splitscreen.cpp:934)
 
-void CL_AllSplitscreenPlayersSignedIn(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AllSplitscreenPlayersSignedIn(void)
 
 {
-  char cVar1;
-  int *piVar2;
-  longlong lVar3;
+  bool bVar1;
+  undefined1 uVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
   __savegprlr_26();
-  piVar2 = &DAT_82b5c800;
-  lVar3 = 0;
+  pLVar3 = cl_splitscreenControllerMap;
+  iVar4 = 0;
   while( true ) {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar4 < 0) || (3 < iVar4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if ((-1 < *piVar2) && (cVar1 = Live_IsSignedIn(lVar3), cVar1 == '\0')) break;
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-    if (-0x7d4a37f1 < (int)piVar2) {
-      __restgprlr_26(1);
-      return;
+    if ((-1 < (int)*pLVar3) && (bVar1 = Live_IsSignedIn(iVar4), !bVar1)) break;
+    pLVar3 = pLVar3 + 1;
+    iVar4 = iVar4 + 1;
+    if (-0x7d4a37f1 < (int)pLVar3) {
+      uVar2 = __restgprlr_26(1);
+      return (bool)uVar2;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar2 = __restgprlr_26(0);
+  return (bool)uVar2;
 }
 
 
 // 8239C230  CL_AllSplitScreenPlayersCanSaveProgress  (client/splitscreen.cpp:972)
 
-void CL_AllSplitScreenPlayersCanSaveProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AllSplitScreenPlayersCanSaveProgress(void)
 
 {
-  char cVar1;
-  int *piVar2;
-  longlong lVar3;
+  bool bVar1;
+  undefined1 uVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
   __savegprlr_26();
-  piVar2 = &DAT_82b5c800;
-  lVar3 = 0;
+  pLVar3 = cl_splitscreenControllerMap;
+  iVar4 = 0;
   while( true ) {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar4 < 0) || (3 < iVar4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if ((-1 < *piVar2) &&
-       (cVar1 = LiveStorage_LocalClientOfflineProfileCanSave(lVar3), cVar1 == '\0')) break;
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-    if (-0x7d4a37f1 < (int)piVar2) {
-      __restgprlr_26(1);
-      return;
+    if ((-1 < (int)*pLVar3) && (bVar1 = LiveStorage_LocalClientOfflineProfileCanSave(iVar4), !bVar1)
+       ) break;
+    pLVar3 = pLVar3 + 1;
+    iVar4 = iVar4 + 1;
+    if (-0x7d4a37f1 < (int)pLVar3) {
+      uVar2 = __restgprlr_26(1);
+      return (bool)uVar2;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar2 = __restgprlr_26(0);
+  return (bool)uVar2;
 }
 
 
 // 8239C2E0  CL_AllSplitScreenPlayersAreSignedIn  (client/splitscreen.cpp:990)
 
-void CL_AllSplitScreenPlayersAreSignedIn(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AllSplitScreenPlayersAreSignedIn(void)
 
 {
-  char cVar1;
-  int *piVar2;
-  longlong lVar3;
+  bool bVar1;
+  undefined1 uVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
   __savegprlr_26();
-  piVar2 = &DAT_82b5c800;
-  lVar3 = 0;
+  pLVar3 = cl_splitscreenControllerMap;
+  iVar4 = 0;
   while( true ) {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar4 < 0) || (3 < iVar4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if ((-1 < *piVar2) && (cVar1 = GamerProfile_IsProfileLoggedIn(lVar3), cVar1 == '\0')) break;
-    piVar2 = piVar2 + 1;
-    lVar3 = lVar3 + 1;
-    if (-0x7d4a37f1 < (int)piVar2) {
-      __restgprlr_26(1);
-      return;
+    if ((-1 < (int)*pLVar3) && (bVar1 = GamerProfile_IsProfileLoggedIn(iVar4), !bVar1)) break;
+    pLVar3 = pLVar3 + 1;
+    iVar4 = iVar4 + 1;
+    if (-0x7d4a37f1 < (int)pLVar3) {
+      uVar2 = __restgprlr_26(1);
+      return (bool)uVar2;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar2 = __restgprlr_26(0);
+  return (bool)uVar2;
 }
 
 
 // 8239C390  CL_AnySplitscreenPlayersAreSignedIn  (client/splitscreen.cpp:1006)
 
-void CL_AnySplitscreenPlayersAreSignedIn(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AnySplitscreenPlayersAreSignedIn(void)
 
 {
-  char cVar1;
-  int *piVar2;
-  longlong lVar3;
+  bool bVar1;
+  undefined1 uVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
   __savegprlr_25();
-  if (DAT_82966e98 != 0) {
-    piVar2 = &DAT_82b5c800;
-    lVar3 = 0;
+  if (cl_multi_gamepads_enabled != 0) {
+    pLVar3 = cl_splitscreenControllerMap;
+    iVar4 = 0;
     do {
-      if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
+      if ((splitscreen->current).enabled == false) {
 LAB_8239c420:
-        cVar1 = GamerProfile_IsProfileLoggedIn(lVar3);
-        if (cVar1 != '\0') {
-          __restgprlr_25(1);
-          return;
+        bVar1 = GamerProfile_IsProfileLoggedIn(iVar4);
+        if (bVar1) {
+          uVar2 = __restgprlr_25(1);
+          return (bool)uVar2;
         }
       }
       else {
-        if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-          MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+        if ((iVar4 < 0) || (3 < iVar4)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                          0x50,0,"%s\n\t(controllerIndex) = %i");
         }
-        if (-1 < *piVar2) goto LAB_8239c420;
+        if (-1 < (int)*pLVar3) goto LAB_8239c420;
       }
-      piVar2 = piVar2 + 1;
-      lVar3 = lVar3 + 1;
-    } while ((int)piVar2 < -0x7d4a37f0);
+      pLVar3 = pLVar3 + 1;
+      iVar4 = iVar4 + 1;
+    } while ((int)pLVar3 < -0x7d4a37f0);
   }
-  __restgprlr_25(0);
-  return;
+  uVar2 = __restgprlr_25(0);
+  return (bool)uVar2;
 }
 
 
 // 8239C460  CL_AnySplitscreenPlayersAreSignedInToLive  (client/splitscreen.cpp:1025)
 
-void CL_AnySplitscreenPlayersAreSignedInToLive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AnySplitscreenPlayersAreSignedInToLive(void)
 
 {
-  char cVar1;
-  int *piVar2;
-  longlong lVar3;
+  bool bVar1;
+  undefined1 uVar2;
+  LocalClientNum_t *pLVar3;
+  int iVar4;
   
   __savegprlr_25();
-  if (DAT_82966e98 != 0) {
-    piVar2 = &DAT_82b5c800;
-    lVar3 = 0;
+  if (cl_multi_gamepads_enabled != 0) {
+    pLVar3 = cl_splitscreenControllerMap;
+    iVar4 = 0;
     do {
-      if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
+      if ((splitscreen->current).enabled == false) {
 LAB_8239c4f0:
-        cVar1 = Live_IsUserSignedInToLive(lVar3);
-        if (cVar1 != '\0') {
-          __restgprlr_25(1);
-          return;
+        bVar1 = Live_IsUserSignedInToLive(iVar4);
+        if (bVar1) {
+          uVar2 = __restgprlr_25(1);
+          return (bool)uVar2;
         }
       }
       else {
-        if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-          MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+        if ((iVar4 < 0) || (3 < iVar4)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                          0x50,0,"%s\n\t(controllerIndex) = %i");
         }
-        if (-1 < *piVar2) goto LAB_8239c4f0;
+        if (-1 < (int)*pLVar3) goto LAB_8239c4f0;
       }
-      piVar2 = piVar2 + 1;
-      lVar3 = lVar3 + 1;
-    } while ((int)piVar2 < -0x7d4a37f0);
+      pLVar3 = pLVar3 + 1;
+      iVar4 = iVar4 + 1;
+    } while ((int)pLVar3 < -0x7d4a37f0);
   }
-  __restgprlr_25(0);
-  return;
+  uVar2 = __restgprlr_25(0);
+  return (bool)uVar2;
 }
 
 
 // 8239D450  CL_EndSplitscreenSignin  (client/splitscreen.cpp:1045)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_EndSplitscreenSignin(void)
 
@@ -1255,36 +1414,36 @@ void CL_EndSplitscreenSignin(void)
   int iVar1;
   int iVar2;
   byte bVar3;
-  longlong lVar4;
+  LocalClientNum_t LVar4;
   
-  lVar4 = 0;
+  LVar4 = LOCAL_CLIENT_0;
   do {
-    Key_RemoveCatcher(lVar4,0xfffffffffffffffb);
-    Key_AddCatcher(lVar4,0x10);
-    iVar2 = DAT_82b5c824;
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 4);
-  bVar3 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
+    Key_RemoveCatcher(LVar4,-5);
+    Key_AddCatcher(LVar4,0x10);
+    iVar1 = cl_last_controller_input;
+    LVar4 = LVar4 + LOCAL_CLIENT_1;
+  } while ((int)LVar4 < 4);
+  bVar3 = clientUIActives[0].active != false;
+  if (clientUIActives[1].active != false) {
     bVar3 = bVar3 + 1;
   }
-  if (DAT_82b3e8b8 != '\0') {
+  if (clientUIActives[2].active != false) {
     bVar3 = bVar3 + 1;
   }
-  if (DAT_82b3ea9c != '\0') {
+  if (clientUIActives[3].active != false) {
     bVar3 = bVar3 + 1;
   }
   if ((bVar3 < 2) &&
-     ((*(char *)(DAT_82aa1af8 + 0xc) != '\0' || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')))) {
-    Com_DPrintf(0xe,0xffffffff82057844,0xffffffff82057be0);
-    Dvar_SetInt(DAT_82b3e4c4,0);
-    Dvar_SetBool(DAT_82aa1a8c,0);
-    iVar1 = DAT_82b5c824;
-    if (iVar2 != -1) {
-      iVar1 = iVar2;
+     (((onlinegame->current).enabled != false || ((systemlink->current).enabled != false)))) {
+    Com_DPrintf(0xe,"ForceNoSplitscreenControl() called with context \'%s\')\n");
+    Dvar_SetInt(splitscreen_disabled_ref_count,0);
+    Dvar_SetBool(splitscreen_control_desired,false);
+    iVar2 = cl_last_controller_input;
+    if (iVar1 != -1) {
+      iVar2 = iVar1;
     }
-    CL_DisableSplitscreenControls(iVar1);
-    Dvar_SetBool(DAT_82b3ecb8,0);
+    CL_DisableSplitscreenControls(iVar2);
+    Dvar_SetBool(splitscreen,false);
   }
   Live_EndSplitscreenSignin();
   CL_SyncSigninWidgets();
@@ -1294,115 +1453,127 @@ void CL_EndSplitscreenSignin(void)
 
 // 8239C530  CL_ClearControllerMapCmd  (client/splitscreen.cpp:1068)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_ClearControllerMapCmd(void)
 
 {
-  DAT_82b5c800 = 0xffffffff;
-  DAT_82b5c804 = 0xffffffff;
-  DAT_82b5c808 = 0xffffffff;
-  DAT_82b5c80c = 0xffffffff;
+  cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
   return;
 }
 
 
 // 8239D590  ContinueSplitscreenSignin  (client/splitscreen.cpp:1074)
 
-void ContinueSplitscreenSignin(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void ContinueSplitscreenSignin(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar4;
+  LocalClientNum_t LVar1;
+  UiContext *pUVar2;
+  int iVar3;
+  bool bVar4;
+  char cVar5;
   
-  uVar1 = __savegprlr_29();
-  cVar4 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
-    cVar4 = cVar4 + '\x01';
+  LVar1 = __savegprlr_29(param_1);
+  cVar5 = clientUIActives[0].active != false;
+  if (clientUIActives[1].active != false) {
+    cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3e8b8 != '\0') {
-    cVar4 = cVar4 + '\x01';
+  if (clientUIActives[2].active != false) {
+    cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3ea9c != '\0') {
-    cVar4 = cVar4 + '\x01';
+  if (clientUIActives[3].active != false) {
+    cVar5 = cVar5 + '\x01';
   }
-  if (cVar4 != '\0') {
-    uVar2 = UI_GetClientDC(0);
-    uVar3 = CL_ControllerIndexFromClientNum(uVar1);
-    if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
+  if (cVar5 != '\0') {
+    pUVar2 = UI_GetClientDC(LOCAL_CLIENT_0);
+    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+    if ((systemlink->current).enabled != false) {
       CL_EndSplitscreenSignin();
-      Menus_CloseByName(uVar2,0xffffffff82057c48);
-      Menus_OpenByName(uVar2,0xffffffff82057c38);
-      __restgprlr_29();
+      Menus_CloseByName(pUVar2,"menu_splitscreensignin");
+      iVar3 = Menus_OpenByName(pUVar2,"menu_systemlink");
+      __restgprlr_29(iVar3);
       return;
     }
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
+    if ((onlinegame->current).enabled != false) {
       CL_EndSplitscreenSignin();
-      Menus_CloseByName(uVar2,0xffffffff82057c48);
-      Live_StartPrivateParty(uVar1,uVar3);
-      Menus_OpenByName(uVar2,0xffffffff82057c28);
-      __restgprlr_29();
+      Menus_CloseByName(pUVar2,"menu_splitscreensignin");
+      Live_StartPrivateParty(LVar1,iVar3);
+      iVar3 = Menus_OpenByName(pUVar2,"menu_xboxlive");
+      __restgprlr_29(iVar3);
       return;
     }
-    cVar4 = CL_AllSplitScreenPlayersCanSaveProgress();
-    if (cVar4 == '\0') {
+    bVar4 = CL_AllSplitScreenPlayersCanSaveProgress();
+    if (!bVar4) {
       CL_EndSplitscreenSignin();
-      Menus_OpenByName(uVar2,0xffffffff82057c14);
-      __restgprlr_29();
+      iVar3 = Menus_OpenByName(pUVar2,"savegame_error_mp");
+      __restgprlr_29(iVar3);
       return;
     }
     CL_EndSplitscreenSignin();
-    Menus_CloseByName(uVar2,0xffffffff82057c48);
-    Menus_OpenByName(uVar2,0xffffffff82057bf8);
+    Menus_CloseByName(pUVar2,"menu_splitscreensignin");
+    LVar1 = Menus_OpenByName(pUVar2,"menu_gamesetup_splitscreen");
   }
-  __restgprlr_29();
+  __restgprlr_29(LVar1);
   return;
 }
 
 
 // 8239D6F0  CL_MakeLocalClientActive  (client/splitscreen.cpp:1137)
 
-void CL_MakeLocalClientActive(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_MakeLocalClientActive(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar2;
-  char *pcVar4;
-  longlong lVar5;
+  int iVar1;
+  bool bVar3;
+  LocalClientNum_t LVar2;
+  clientUIActive_t *pcVar4;
   
-  uVar1 = __savegprlr_24();
-  cVar3 = CL_IsSplitscreenControllerActive();
-  if (cVar3 == '\0') {
-    pcVar4 = &DAT_82b3e4f0;
-    lVar5 = 0;
+  iVar1 = __savegprlr_24(param_1);
+  bVar3 = CL_IsSplitscreenControllerActive(iVar1);
+  if (bVar3) {
+    if (param_2 != 0) {
+      Cbuf_AddCall(LOCAL_CLIENT_0,ContinueSplitscreenSignin);
+      __restgprlr_24();
+      return;
+    }
+  }
+  else {
+    pcVar4 = clientUIActives;
+    LVar2 = LOCAL_CLIENT_0;
     do {
-      if (((int)lVar5 < 0) || (3 < (int)lVar5)) {
-        MyAssertHandler(0xffffffff820572d0,0x1c8,0,0xffffffff820300d8,0xffffffff820300f4,lVar5);
+      if (((int)LVar2 < 0) || (3 < (int)LVar2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x1c8,0,"%s\n\t(localClientNum) = %i");
       }
-      if (*pcVar4 == '\0') {
-        MapControllerToLocalClient(uVar1,lVar5);
-        GamerProfile_ExecControllerBindings(uVar1);
+      if (pcVar4->active == false) {
+        MapControllerToLocalClient(iVar1,LVar2);
+        GamerProfile_ExecControllerBindings(iVar1);
         if (param_2 != 0) {
-          uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
-          Key_SetCatcher(uVar2,4);
-          uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
-          Key_AddCatcher(uVar1,0x10);
+          LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+          Key_SetCatcher(LVar2,4);
+          LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+          Key_AddCatcher(LVar2,0x10);
         }
         break;
       }
-      pcVar4 = pcVar4 + 0x1e4;
-      lVar5 = lVar5 + 1;
+      pcVar4 = pcVar4 + 1;
+      LVar2 = LVar2 + LOCAL_CLIENT_1;
     } while ((int)pcVar4 < -0x7d4c1380);
-    if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
+    if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) {
       ValidateClientNumsAreSequentialAndSortedByControllerIndex();
     }
     CL_SyncSigninWidgets();
-  }
-  else if (param_2 != 0) {
-    Cbuf_AddCall(0,0xffffffff8239d590);
-    __restgprlr_24();
-    return;
   }
   __restgprlr_24();
   return;
@@ -1411,42 +1582,46 @@ void CL_MakeLocalClientActive(undefined8 param_1,int param_2)
 
 // 8239D820  CL_EnsureClientIsActive  (client/splitscreen.cpp:1178)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_EnsureClientIsActive(int param_1)
 
 {
-  char cVar1;
-  undefined1 *puVar2;
-  longlong lVar3;
+  bool bVar1;
+  char *pcVar2;
+  int iVar3;
   longlong lVar4;
-  undefined4 local_20 [2];
+  LocalClientNum_t local_20 [2];
   
-  local_20[0] = 4;
-  lVar3 = 0;
-  puVar2 = (undefined1 *)0x82b3e30c;
+  local_20[0] = LOCAL_CLIENT_COUNT;
+  iVar3 = 0;
+  pcVar2 = cl_pinglist[0xf].info + 0x24c;
   lVar4 = 4;
   do {
-    puVar2 = puVar2 + 0x1e4;
-    *puVar2 = 0;
+    pcVar2 = pcVar2 + 0x1e4;
+    *pcVar2 = '\0';
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50,0
+                    ,"%s\n\t(controllerIndex) = %i");
   }
-  if ((int)(&DAT_82b5c800)[param_1] < 0) {
-    DAT_82b5c800 = 0xffffffff;
-    DAT_82b5c804 = 0xffffffff;
-    DAT_82b5c808 = 0xffffffff;
-    DAT_82b5c80c = 0xffffffff;
+  if ((int)cl_splitscreenControllerMap[param_1] < 0) {
+    cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+    cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+    cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+    cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
     CL_MakeLocalClientActive(param_1,0);
   }
   else {
     do {
-      cVar1 = CL_DoesControllerIndexHaveALocalClientNum(lVar3,local_20);
-      if (cVar1 != '\0') {
-        CL_SetLocalClientActive(local_20[0],1);
+      bVar1 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,local_20);
+      if (bVar1) {
+        CL_SetLocalClientActive(local_20[0],true);
       }
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < 4);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 4);
   }
   return;
 }
@@ -1454,40 +1629,43 @@ void CL_EnsureClientIsActive(int param_1)
 
 // 8239E498  CL_EnsureUnpluggedSplitscreenControllersAreInactive  (client/splitscreen.cpp:1209)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_EnsureUnpluggedSplitscreenControllersAreInactive(void)
 
 {
-  char cVar1;
+  bool bVar1;
   int *piVar2;
-  longlong lVar3;
+  int iVar3;
   
   __savegprlr_29();
-  if ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
-    MyAssertHandler(0xffffffff820572d0,0x4bc,0,0xffffffff82000f98,0xffffffff82057ae4);
+  if (((splitscreen->current).enabled == false) || ((onlinegame->current).enabled != false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x4bc,
+                    0,"%s");
   }
-  if (((DAT_82966e98 != 0) &&
-      (cVar1 = CL_AllLocalClientsConnectionStateDisconnected(), cVar1 != '\0')) &&
-     (*(char *)(DAT_82b3ecac + 0xc) == '\0')) {
-    lVar3 = 0;
-    piVar2 = &DAT_82b5c810;
+  if (((cl_multi_gamepads_enabled != 0) &&
+      (bVar1 = CL_AllLocalClientsConnectionStateDisconnected(), bVar1)) &&
+     ((splitscreen_ingame->current).enabled == false)) {
+    iVar3 = 0;
+    piVar2 = s_wasSplitscreenControllerActive;
     do {
-      cVar1 = GPad_IsActive(lVar3);
+      bVar1 = GPad_IsActive(iVar3);
       if (*piVar2 != 0) {
-        if (cVar1 == '\0') {
-          cVar1 = CL_IsSplitscreenControllerActive(lVar3);
-          if (cVar1 != '\0') {
-            CL_SplitscreenControllerUnplugged(lVar3);
+        if (bVar1) {
+          bVar1 = CL_IsSplitscreenControllerActive(iVar3);
+          if (!bVar1) {
+            CL_SplitscreenControllerPluggedIn(iVar3);
           }
         }
         else {
-          cVar1 = CL_IsSplitscreenControllerActive(lVar3);
-          if (cVar1 == '\0') {
-            CL_SplitscreenControllerPluggedIn(lVar3);
+          bVar1 = CL_IsSplitscreenControllerActive(iVar3);
+          if (bVar1) {
+            CL_SplitscreenControllerUnplugged(iVar3);
           }
         }
       }
       piVar2 = piVar2 + 1;
-      lVar3 = lVar3 + 1;
+      iVar3 = iVar3 + 1;
     } while ((int)piVar2 < -0x7d4a37e0);
     ValidateClientNumsAreSequentialAndSortedByControllerIndex();
     CL_SyncSigninWidgets();
@@ -1499,28 +1677,32 @@ void CL_EnsureUnpluggedSplitscreenControllersAreInactive(void)
 
 // 8239D920  CL_SplitscreenControllerPluggedIn  (client/splitscreen.cpp:1242)
 
-void CL_SplitscreenControllerPluggedIn(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_SplitscreenControllerPluggedIn(int param_1)
 
 {
-  uint uVar2;
-  char cVar3;
-  undefined8 uVar1;
+  uint uVar1;
+  bool bVar3;
+  LocalClientNum_t LVar2;
   
-  uVar2 = __savegprlr_29();
-  if (3 < uVar2) {
-    MyAssertHandler(0xffffffff820572d0,0x4db,0,0xffffffff82057c60,uVar2,4);
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x4db,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (((((&DAT_82b5c810)[uVar2] != 0) &&
-       (cVar3 = CL_IsSplitscreenControllerActive(uVar2), cVar3 == '\0')) &&
-      (cVar3 = Live_IsSplitScreenSignIn(), cVar3 == '\0')) &&
-     ((cVar3 = CL_AllLocalClientsConnectionStateDisconnected(), cVar3 != '\0' &&
-      (*(char *)(DAT_82b3ecac + 0xc) == '\0')))) {
-    CL_MakeLocalClientActive(uVar2,1);
-    uVar1 = CL_LocalClientNumFromControllerIndex(uVar2);
-    Key_RemoveCatcher(uVar1,0xfffffffffffffffb);
-    Key_AddCatcher(uVar1,0x10);
-    CL_SyncSigninWidgets();
-    (&DAT_82b5c810)[uVar2] = 0;
+  if (s_wasSplitscreenControllerActive[uVar1] != 0) {
+    bVar3 = CL_IsSplitscreenControllerActive(uVar1);
+    if ((((!bVar3) && (bVar3 = Live_IsSplitScreenSignIn(), !bVar3)) &&
+        (bVar3 = CL_AllLocalClientsConnectionStateDisconnected(), bVar3)) &&
+       ((splitscreen_ingame->current).enabled == false)) {
+      CL_MakeLocalClientActive(uVar1,1);
+      LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+      Key_RemoveCatcher(LVar2,-5);
+      Key_AddCatcher(LVar2,0x10);
+      CL_SyncSigninWidgets();
+      s_wasSplitscreenControllerActive[uVar1] = 0;
+    }
   }
   __restgprlr_29();
   return;
@@ -1529,23 +1711,24 @@ void CL_SplitscreenControllerPluggedIn(void)
 
 // 8239E350  CL_SplitscreenControllerUnplugged  (client/splitscreen.cpp:1266)
 
-void CL_SplitscreenControllerUnplugged(uint param_1)
+void CL_SplitscreenControllerUnplugged(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff820572d0,0x4f3,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x4f3,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar1 = CL_IsSplitscreenControllerActive(param_1);
-  if (cVar1 != '\0') {
-    cVar1 = Live_IsSplitScreenSignIn();
-    if (cVar1 == '\0') {
-      cVar1 = CL_AllLocalClientsConnectionStateDisconnected();
-      if ((cVar1 != '\0') && (*(char *)(DAT_82b3ecac + 0xc) == '\0')) {
+  bVar1 = CL_IsSplitscreenControllerActive(param_1);
+  if (bVar1) {
+    bVar1 = Live_IsSplitScreenSignIn();
+    if (!bVar1) {
+      bVar1 = CL_AllLocalClientsConnectionStateDisconnected();
+      if ((bVar1) && ((splitscreen_ingame->current).enabled == false)) {
         CL_MakeLocalClientInactive(param_1);
       }
-      (&DAT_82b5c810)[param_1] = 1;
+      s_wasSplitscreenControllerActive[param_1] = 1;
       return;
     }
     CL_MakeLocalClientInactive(param_1);
@@ -1556,16 +1739,17 @@ void CL_SplitscreenControllerUnplugged(uint param_1)
 
 // 8239E428  CL_MakeActiveLocalClientInactive  (client/splitscreen.cpp:1288)
 
-void CL_MakeActiveLocalClientInactive(ulonglong param_1)
+void CL_MakeActiveLocalClientInactive(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x509,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x509,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar1 = CL_IsSplitscreenControllerActive(param_1);
-  if (cVar1 != '\0') {
+  bVar1 = CL_IsSplitscreenControllerActive(param_1);
+  if (bVar1) {
     CL_MakeLocalClientInactive(param_1);
   }
   return;
@@ -1574,25 +1758,27 @@ void CL_MakeActiveLocalClientInactive(ulonglong param_1)
 
 // 8239DA00  CL_MakeLocalClientInactive  (client/splitscreen.cpp:1297)
 
-void CL_MakeLocalClientInactive(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_MakeLocalClientInactive(int param_1)
 
 {
-  char cVar1;
-  longlong lVar2;
+  bool bVar1;
+  LocalClientNum_t LVar2;
   
-  cVar1 = CL_IsSplitscreenControllerActive();
-  if (cVar1 == '\0') {
-    lVar2 = 0;
+  bVar1 = CL_IsSplitscreenControllerActive(param_1);
+  if (!bVar1) {
+    LVar2 = LOCAL_CLIENT_0;
     do {
-      CL_SetLocalClientActive(lVar2,1);
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < 4);
-    UI_EscMenu(0,0xffffffff82057c48);
-    Cbuf_AddText(0,0xffffffff82057ca8);
+      CL_SetLocalClientActive(LVar2,true);
+      LVar2 = LVar2 + LOCAL_CLIENT_1;
+    } while ((int)LVar2 < 4);
+    UI_EscMenu(LOCAL_CLIENT_0,"menu_splitscreensignin");
+    Cbuf_AddText(LOCAL_CLIENT_0,"endsplitscreensignin; closemenu menu_splitscreensignin\n");
     return;
   }
   UnMapControllerToLocalClient(param_1);
-  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
+  if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) {
     ValidateClientNumsAreSequentialAndSortedByControllerIndex();
   }
   CL_SyncSigninWidgets();
@@ -1602,20 +1788,23 @@ void CL_MakeLocalClientInactive(undefined8 param_1)
 
 // 8239DAC0  CL_ResetSplitscreenSignin  (client/splitscreen.cpp:1338)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_ResetSplitscreenSignin(void)
 
 {
-  longlong lVar1;
+  LocalClientNum_t LVar1;
   
-  lVar1 = 0;
-  DAT_82b5c800 = 0xffffffff;
-  DAT_82b5c804 = 0xffffffff;
-  DAT_82b5c808 = 0xffffffff;
-  DAT_82b5c80c = 0xffffffff;
+  LVar1 = LOCAL_CLIENT_0;
+  cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
   do {
-    CL_SetLocalClientActive(lVar1,0);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 4);
+    CL_SetLocalClientActive(LVar1,false);
+    LVar1 = LVar1 + LOCAL_CLIENT_1;
+  } while ((int)LVar1 < 4);
   CL_SyncSigninWidgets();
   return;
 }
@@ -1623,44 +1812,51 @@ void CL_ResetSplitscreenSignin(void)
 
 // 8239DB20  CL_StartSplitscreenSignin  (client/splitscreen.cpp:1355)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_StartSplitscreenSignin(void)
 
 {
-  char cVar1;
+  bool bVar1;
   int iVar2;
-  longlong lVar3;
-  undefined4 local_50 [20];
+  LocalClientNum_t LVar3;
+  int iVar4;
+  LocalClientNum_t local_50 [20];
   
   __savegprlr_24();
-  lVar3 = 0;
+  LVar3 = LOCAL_CLIENT_0;
   do {
-    CL_SetLocalClientActive(lVar3,0);
-    Key_SetCatcher(lVar3,4);
-    Key_AddCatcher(lVar3,0x10);
-    Key_ClearStates(lVar3);
-    lVar3 = lVar3 + 1;
-  } while ((int)lVar3 < 4);
-  lVar3 = 0;
+    CL_SetLocalClientActive(LVar3,false);
+    Key_SetCatcher(LVar3,4);
+    Key_AddCatcher(LVar3,0x10);
+    Key_ClearStates(LVar3);
+    LVar3 = LVar3 + LOCAL_CLIENT_1;
+  } while ((int)LVar3 < 4);
+  iVar4 = 0;
   iVar2 = 0;
   do {
-    if (((int)lVar3 < 0) || (3 < (int)lVar3)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar3);
+    if ((iVar4 < 0) || (3 < iVar4)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (*(int *)((int)&DAT_82b5c800 + iVar2) < 0) {
-      *(undefined4 *)((int)&DAT_82b5c810 + iVar2) = 0;
+    if (*(int *)((int)cl_splitscreenControllerMap + iVar2) < 0) {
+      *(undefined4 *)((int)s_wasSplitscreenControllerActive + iVar2) = 0;
     }
     else {
-      cVar1 = CL_DoesControllerIndexHaveALocalClientNum(lVar3,local_50);
-      if (cVar1 == '\0') {
-        Com_PrintWarning(0xe,0xffffffff82057390,lVar3);
-        CL_SetLocalClientActive(0,1);
+      bVar1 = CL_DoesControllerIndexHaveALocalClientNum(iVar4,local_50);
+      if (bVar1) {
+        CL_SetLocalClientActive(local_50[0],true);
       }
       else {
-        CL_SetLocalClientActive(local_50[0],1);
+        Com_PrintWarning(0xe,
+                         "Request for controller %i\'s clientNum, but that controller doesn\'t have a clientNum\n  -This is OK to show up a couple of times during initialization, but worry if this is spamming\n"
+                        );
+        CL_SetLocalClientActive(LOCAL_CLIENT_0,true);
       }
     }
     iVar2 = iVar2 + 4;
-    lVar3 = lVar3 + 1;
+    iVar4 = iVar4 + 1;
   } while (iVar2 < 0x10);
   Live_StartSplitscreenSignin();
   ValidateClientNumsAreSequentialAndSortedByControllerIndex();
@@ -1672,36 +1868,40 @@ void CL_StartSplitscreenSignin(void)
 
 // 8239C550  CL_AutoSignin  (client/splitscreen.cpp:1402)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_AutoSignin(void)
 
 {
-  char cVar1;
-  int iVar2;
-  int *piVar3;
+  bool bVar1;
+  LocalClientNum_t LVar2;
+  LocalClientNum_t *pLVar3;
   int iVar4;
   
   __savegprlr_25();
-  iVar2 = 0;
-  DAT_82b5c800 = 0xffffffff;
-  DAT_82b5c804 = 0xffffffff;
-  DAT_82b5c808 = 0xffffffff;
-  DAT_82b5c80c = 0xffffffff;
+  LVar2 = LOCAL_CLIENT_0;
+  cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
   do {
     iVar4 = 0;
-    piVar3 = &DAT_82b5c800;
+    pLVar3 = cl_splitscreenControllerMap;
     do {
       if ((iVar4 < 0) || (3 < iVar4)) {
-        MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,iVar4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                        0x50,0,"%s\n\t(controllerIndex) = %i");
       }
-      if ((*piVar3 < 0) && (cVar1 = GPad_IsActive(iVar4), cVar1 != '\0')) {
-        (&DAT_82b5c800)[iVar4] = iVar2;
+      if (((int)*pLVar3 < 0) && (bVar1 = GPad_IsActive(iVar4), bVar1)) {
+        cl_splitscreenControllerMap[iVar4] = LVar2;
         break;
       }
-      piVar3 = piVar3 + 1;
+      pLVar3 = pLVar3 + 1;
       iVar4 = iVar4 + 1;
-    } while ((int)piVar3 < -0x7d4a37f0);
-    iVar2 = iVar2 + 1;
-    if (3 < iVar2) {
+    } while ((int)pLVar3 < -0x7d4a37f0);
+    LVar2 = LVar2 + LOCAL_CLIENT_1;
+    if (3 < (int)LVar2) {
       __restgprlr_25();
       return;
     }
@@ -1711,31 +1911,31 @@ void CL_AutoSignin(void)
 
 // 8239C620  GuestSponsorErrorMessage  (client/splitscreen.cpp:1431)
 
-void GuestSponsorErrorMessage
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+void GuestSponsorErrorMessage(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  undefined4 uVar2;
-  undefined8 uVar1;
-  undefined8 local_50;
-  undefined8 local_48;
-  undefined8 local_40;
-  undefined8 local_38;
-  undefined8 local_30;
+  int iVar1;
+  char *pcVar2;
+  ConversionArguments local_50 [2];
   
-  __savegprlr_29();
-  local_50 = 0;
-  local_48 = 0;
-  local_40 = 0;
-  local_38 = 0;
-  local_30 = 0;
-  uVar2 = Live_GetLocalClientName();
-  local_50 = CONCAT44(local_50._0_4_,uVar2);
-  uVar2 = Live_GetLocalClientName(param_2);
-  local_48 = CONCAT44(uVar2,local_48._4_4_);
-  local_50 = CONCAT44(2,local_50._4_4_);
-  uVar1 = UI_SafeTranslateString(0xffffffff820578d8);
-  UI_ReplaceConversions(uVar1,&local_50,param_3,param_4);
+  iVar1 = __savegprlr_29(param_1);
+  local_50[0].argCount = 0;
+  local_50[0].args[0] = (char *)0x0;
+  local_50[0].args[1] = (char *)0x0;
+  local_50[0].args[2] = (char *)0x0;
+  local_50[0].args[3] = (char *)0x0;
+  local_50[0].args[4] = (char *)0x0;
+  local_50[0].args[5] = (char *)0x0;
+  local_50[0].args[6] = (char *)0x0;
+  local_50[0].args[7] = (char *)0x0;
+  local_50[0].args[8] = (char *)0x0;
+  pcVar2 = Live_GetLocalClientName(iVar1);
+  local_50[0].args[0] = pcVar2;
+  pcVar2 = Live_GetLocalClientName(param_2);
+  local_50[0].args[1] = pcVar2;
+  local_50[0].argCount = 2;
+  pcVar2 = UI_SafeTranslateString("MPUI_GUEST_SPONSOR_ERROR");
+  UI_ReplaceConversions(pcVar2,local_50,param_3,param_4);
   __restgprlr_29();
   return;
 }
@@ -1743,133 +1943,150 @@ void GuestSponsorErrorMessage
 
 // 8239DC48  CL_HandleSplitscreenSignIn  (client/splitscreen.cpp:1445)
 
-void CL_HandleSplitscreenSignIn(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_HandleSplitscreenSignIn(int param_1,bool param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
+  ulong uVar2;
+  PartyData *pPVar3;
   int iVar4;
-  char cVar5;
-  undefined8 uVar2;
+  bool bVar6;
+  ulong64 uVar1;
+  undefined1 uVar7;
+  _XUSER_SIGNIN_STATE _Var5;
+  ulonglong uVar8;
   int local_440;
-  undefined1 auStack_43c [12];
-  undefined1 auStack_430 [1072];
+  LocalClientNum_t aLStack_43c [3];
+  char acStack_430 [1072];
   
-  uVar1 = __savegprlr_27();
-  if (*(int *)(DAT_84546d98 + 0xc) != 0) {
-    iVar3 = CL_Live_SplitscreenGetCurrentLobby();
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff820572d0,0x5b5,0,0xffffffff82000f98,0xffffffff820321a4);
+  uVar8 = (ulonglong)param_2;
+  uVar2 = __savegprlr_27(param_1);
+  if ((splitscreen_online_enabled->current).integer != 0) {
+    pPVar3 = CL_Live_SplitscreenGetCurrentLobby();
+    if (pPVar3 == (PartyData *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                      0x5b5,0,"%s");
     }
-    if (((*(int *)(iVar3 + 0x1ef4) != 0) && (iVar4 = Party_AreWeHost(iVar3), iVar4 != 0)) &&
-       ((ulonglong)*(uint *)(iVar3 + 0x1ebc) != (uVar1 & 0xffffffff))) {
-      if ((param_2 & 0xff) != 0) {
+    if (((pPVar3->inParty != 0) && (iVar4 = Party_AreWeHost(pPVar3), iVar4 != 0)) &&
+       ((pPVar3->splitscreenData).mainControllerIndex != uVar2)) {
+      if ((uVar8 & 0xff) != 0) {
         iVar4 = CL_GetLocalClientActiveCount();
         if (1 < iVar4) {
-          cVar5 = CL_IsSplitscreenControllerActive(uVar1);
-          if (cVar5 != '\0') {
-            CL_MakeLocalClientInactive(uVar1);
+          bVar6 = CL_IsSplitscreenControllerActive(uVar2);
+          if (bVar6) {
+            CL_MakeLocalClientInactive(uVar2);
           }
-          __restgprlr_27(1);
-          return;
+          uVar7 = __restgprlr_27(1);
+          return (bool)uVar7;
         }
-        if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-          MyAssertHandler(0xffffffff820572d0,0x5df,0,0xffffffff82000f98,0xffffffff820304bc);
+        if ((onlinegame->current).enabled == false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                          0x5df,0,"%s");
         }
-        iVar4 = XUserGetSigninState(uVar1);
-        if (iVar4 < 2) {
-          Live_StartSplitscreenSigninLive();
-          __restgprlr_27(1);
-          return;
+        _Var5 = XUserGetSigninState(uVar2);
+        if ((int)_Var5 < 2) {
+          Live_StartSplitscreenSigninLive(uVar2);
+          uVar7 = __restgprlr_27(1);
+          return (bool)uVar7;
         }
-        iVar4 = XUserGetSigninState(uVar1);
-        if (iVar4 == 2) {
-          cVar5 = Live_UserIsGuest(uVar1);
-          if (cVar5 == '\0') {
-            cVar5 = Live_CanUserPlayOnline(uVar1,&local_440);
-            if ((cVar5 == '\0') && (local_440 != 9)) {
-              iVar3 = Live_IsInForcedSplitscreenSigninLive(uVar1);
-              if (iVar3 == 0) {
-                Live_StartSplitscreenSigninLive();
-                __restgprlr_27(1);
-                return;
-              }
-              Live_HandleOnlineRequirementFailed(uVar1,local_440,1,0);
-              __restgprlr_27(1);
-              return;
+        _Var5 = XUserGetSigninState(uVar2);
+        if (_Var5 == eXUserSigninState_SignedInToLive) {
+          bVar6 = Live_UserIsGuest(uVar2);
+          if (bVar6) {
+            iVar4 = LiveStorage_GetUserSponsor(uVar2);
+            bVar6 = CL_DoesControllerIndexHaveALocalClientNum(iVar4,aLStack_43c);
+            if (!bVar6) {
+              GuestSponsorErrorMessage(uVar2,iVar4,acStack_430,0x400);
+              Com_SetErrorMessage(acStack_430);
+              UI_OpenMenu(LOCAL_CLIENT_0,"error_popmenu_party");
+              uVar7 = __restgprlr_27(1);
+              return (bool)uVar7;
             }
           }
           else {
-            uVar2 = LiveStorage_GetUserSponsor();
-            cVar5 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,auStack_43c);
-            if (cVar5 == '\0') {
-              GuestSponsorErrorMessage(uVar1,uVar2,auStack_430,0x400);
-              Com_SetErrorMessage(auStack_430);
-              UI_OpenMenu(0,0xffffffff82036918);
-              __restgprlr_27(1);
-              return;
+            bVar6 = Live_CanUserPlayOnline(uVar2,&local_440);
+            if ((!bVar6) && (local_440 != 9)) {
+              iVar4 = Live_IsInForcedSplitscreenSigninLive(uVar2);
+              if (iVar4 == 0) {
+                Live_StartSplitscreenSigninLive(uVar2);
+                uVar7 = __restgprlr_27(1);
+                return (bool)uVar7;
+              }
+              Live_HandleOnlineRequirementFailed(uVar2,local_440,1,0);
+              uVar7 = __restgprlr_27(1);
+              return (bool)uVar7;
             }
           }
-          Dvar_SetBool(DAT_82b3ecb8,1);
-          CL_ForceSplitscreenControl(0xffffffff82057d00);
-          CL_MakeLocalClientActive(uVar1,0);
-          cVar5 = Live_UserIsGuest(uVar1);
-          if (cVar5 != '\0') {
-            LiveStorage_CopySponsorStats(uVar1);
+          Dvar_SetBool(splitscreen,true);
+          CL_ForceSplitscreenControl("CL_HandleSplitscreenSignIn");
+          CL_MakeLocalClientActive(uVar2,0);
+          bVar6 = Live_UserIsGuest(uVar2);
+          if (bVar6) {
+            LiveStorage_CopySponsorStats(uVar2);
           }
-          Live_SyncOnlineDataFrame(uVar1);
-          cVar5 = LiveStorage_IsWaitingOnStats(uVar1);
-          if ((cVar5 == '\0') && (iVar4 = Live_WaitForOnlineServicesDialog(uVar1), iVar4 == 0)) {
-            cVar5 = CL_Live_LocalClientJoinPrivateParty(uVar1);
-            if (cVar5 == '\0') {
-              CL_MakeLocalClientInactive(uVar1);
-              CL_ForceNoSplitscreenControl(0xffffffff82057ce0,*(undefined4 *)(iVar3 + 0x1ebc));
-              Dvar_SetBool(DAT_82b3ecb8,0);
+          Live_SyncOnlineDataFrame(uVar2);
+          bVar6 = LiveStorage_IsWaitingOnStats(uVar2);
+          if ((!bVar6) && (iVar4 = Live_WaitForOnlineServicesDialog(uVar2), iVar4 == 0)) {
+            bVar6 = CL_Live_LocalClientJoinPrivateParty(uVar2);
+            if (!bVar6) {
+              CL_MakeLocalClientInactive(uVar2);
+              CL_ForceNoSplitscreenControl
+                        ("CL_HandleSplitscreenSignIn_2",
+                         (pPVar3->splitscreenData).mainControllerIndex);
+              Dvar_SetBool(splitscreen,false);
             }
-            *(undefined4 *)(iVar3 + 0x1ec4) = 0;
-            __restgprlr_27(1);
-            return;
+            (pPVar3->splitscreenData).waitingForStats = 0;
+            uVar7 = __restgprlr_27(1);
+            return (bool)uVar7;
           }
-          *(undefined4 *)(iVar3 + 0x1ec4) = 1;
+          (pPVar3->splitscreenData).waitingForStats = 1;
         }
-        __restgprlr_27(1);
-        return;
+        uVar7 = __restgprlr_27(1);
+        return (bool)uVar7;
       }
-      cVar5 = CL_IsSplitscreenControllerActive(uVar1);
-      if (cVar5 != '\0') {
-        if ((ulonglong)*(uint *)(iVar3 + 0x1ebc) == (uVar1 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff820572d0,0x5c2,0,0xffffffff82000f98,0xffffffff82057d88);
+      bVar6 = CL_IsSplitscreenControllerActive(uVar2);
+      if (bVar6) {
+        if ((pPVar3->splitscreenData).mainControllerIndex == uVar2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",
+                          0x5c2,0,"%s");
         }
-        uVar2 = Live_GetXuid(uVar1);
-        uVar2 = Party_FindMemberByXUID(iVar3,uVar2);
-        if ((int)uVar2 != -1) {
-          PartyHost_RemovePlayer(iVar3,uVar2,0,0xffffffff820068af);
-          Party_ClearOtherSplitscreenClient(iVar3 + 0x1eb8);
-          CL_MakeLocalClientInactive(uVar1);
+        uVar1 = Live_GetXuid(uVar2);
+        iVar4 = Party_FindMemberByXUID(pPVar3,uVar1);
+        if (iVar4 != -1) {
+          PartyHost_RemovePlayer(pPVar3,iVar4,0,"");
+          Party_ClearOtherSplitscreenClient(&pPVar3->splitscreenData);
+          CL_MakeLocalClientInactive(uVar2);
           iVar4 = CL_GetLocalClientActiveCount();
           if ((iVar4 < 2) &&
-             ((*(char *)(DAT_82aa1af8 + 0xc) != '\0' || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')))) {
-            CL_ForceNoSplitscreenControl(0xffffffff82057d1c,*(undefined4 *)(iVar3 + 0x1ebc));
-            Dvar_SetBool(DAT_82b3ecb8,0);
+             (((onlinegame->current).enabled != false || ((systemlink->current).enabled != false))))
+          {
+            CL_ForceNoSplitscreenControl
+                      ("CL_HandleSplitscreenSignIn_1",(pPVar3->splitscreenData).mainControllerIndex)
+            ;
+            Dvar_SetBool(splitscreen,false);
           }
-          __restgprlr_27(1);
-          return;
+          uVar7 = __restgprlr_27(1);
+          return (bool)uVar7;
         }
-        Com_Printf(0xe,0xffffffff82057d40);
+        Com_Printf(0xe,"Trying to remove local player from the party when they weren\'t present.");
       }
     }
   }
-  __restgprlr_27(0);
-  return;
+  uVar7 = __restgprlr_27(0);
+  return (bool)uVar7;
 }
 
 
 // 8239C698  CL_Live_Start4PlayerSignin  (client/splitscreen.cpp:1589)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_Start4PlayerSignin(void)
 
 {
-  DAT_82966e98 = 1;
+  cl_multi_gamepads_enabled = 1;
   Live_StartSplitscreenSignin();
   return;
 }
@@ -1877,78 +2094,79 @@ void CL_Live_Start4PlayerSignin(void)
 
 // 8239E010  DoButton_Activate  (client/splitscreen.cpp:1609)
 
-void DoButton_Activate(ulonglong param_1)
+void DoButton_Activate(int param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = (ulonglong)DAT_82b5c824;
-  if (-1 < (int)param_1) {
-    uVar1 = param_1;
+  iVar1 = cl_last_controller_input;
+  if (-1 < param_1) {
+    iVar1 = param_1;
   }
-  if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-    CL_MakeLocalClientActive(uVar1,1);
+  if (((onlinegame->current).enabled == false) && ((systemlink->current).enabled == false)) {
+    CL_MakeLocalClientActive(iVar1,1);
     return;
   }
-  CL_HandleSplitscreenSignIn(uVar1,1);
+  CL_HandleSplitscreenSignIn(iVar1,true);
   return;
 }
 
 
 // 8239E060  DoButton_Deactivate  (client/splitscreen.cpp:1643)
 
-void DoButton_Deactivate(ulonglong param_1)
+void DoButton_Deactivate(int param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = (ulonglong)DAT_82b5c824;
-  if (-1 < (int)param_1) {
-    uVar1 = param_1;
+  iVar1 = cl_last_controller_input;
+  if (-1 < param_1) {
+    iVar1 = param_1;
   }
-  CL_MakeLocalClientInactive(uVar1);
+  CL_MakeLocalClientInactive(iVar1);
   return;
 }
 
 
 // 8239E080  CL_HandleSigninButtons  (client/splitscreen.cpp:1660)
 
-void CL_HandleSigninButtons(longlong param_1,char param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_HandleSigninButtons(int param_1,bool param_2)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar3;
-  ulonglong uVar4;
+  bool bVar2;
+  LocalClientNum_t LVar1;
+  ulonglong uVar3;
   
-  if ((param_2 != '\0') && (uVar4 = param_1 - 1, (uVar4 & 0xffffffff) < 4)) {
-    bVar1 = (int)uVar4 != 0;
-    if (param_1 == 2 && bVar1) {
-      CL_MakeLocalClientInactive(DAT_82b5c824);
+  if ((param_2) && (uVar3 = (longlong)param_1 - 1, (uVar3 & 0xffffffff) < 4)) {
+    bVar2 = (int)uVar3 != 0;
+    if ((longlong)param_1 == 2 && bVar2) {
+      CL_MakeLocalClientInactive(cl_last_controller_input);
     }
-    else if (uVar4 == 2 && bVar1) {
-      uVar2 = CL_LocalClientNumFromControllerIndex(DAT_82b5c824);
-      if (((*(char *)(DAT_82aa1af8 + 0xc) == '\0') &&
-          (cVar3 = CL_IsSplitscreenControllerActive(DAT_82b5c824), cVar3 != '\0')) &&
-         (cVar3 = CL_IsLocalClientActive(uVar2), cVar3 != '\0')) {
+    else if (uVar3 == 2 && bVar2) {
+      LVar1 = CL_LocalClientNumFromControllerIndex(cl_last_controller_input);
+      if ((((onlinegame->current).enabled == false) &&
+          (bVar2 = CL_IsSplitscreenControllerActive(cl_last_controller_input), bVar2)) &&
+         (bVar2 = CL_IsLocalClientActive(LVar1), bVar2)) {
         XShowSigninUI(1,0x10000);
       }
     }
-    else if (bVar1) {
-      if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') &&
-         (cVar3 = CL_IsSplitscreenControllerActive(DAT_82b5c824), cVar3 != '\0')) {
-        CL_LocalClientNumFromControllerIndex(DAT_82b5c824);
-        cVar3 = CL_IsLocalClientActive();
-        if (cVar3 != '\0') {
-          LiveStorage_SplitScreenReselectSaveDevice(DAT_82b5c824);
+    else if (bVar2) {
+      if (((onlinegame->current).enabled == false) &&
+         (bVar2 = CL_IsSplitscreenControllerActive(cl_last_controller_input), bVar2)) {
+        LVar1 = CL_LocalClientNumFromControllerIndex(cl_last_controller_input);
+        bVar2 = CL_IsLocalClientActive(LVar1);
+        if (bVar2) {
+          LiveStorage_SplitScreenReselectSaveDevice(cl_last_controller_input);
         }
       }
     }
-    else if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-      CL_MakeLocalClientActive(DAT_82b5c824,1);
+    else if (((onlinegame->current).enabled == false) && ((systemlink->current).enabled == false)) {
+      CL_MakeLocalClientActive(cl_last_controller_input,1);
     }
     else {
-      CL_HandleSplitscreenSignIn(DAT_82b5c824,1);
+      CL_HandleSplitscreenSignIn(cl_last_controller_input,true);
     }
   }
   return;
@@ -1957,103 +2175,107 @@ void CL_HandleSigninButtons(longlong param_1,char param_2)
 
 // 8239D0E8  CL_SyncSigninWidgets  (client/splitscreen.cpp:1729)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_SyncSigninWidgets(void)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
   char cVar5;
-  int *piVar6;
-  longlong lVar7;
+  LocalClientNum_t *pLVar6;
+  LocalClientNum_t LVar7;
   
   __savegprlr();
-  cVar5 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
+  cVar5 = clientUIActives[0].active != false;
+  if (clientUIActives[1].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3e8b8 != '\0') {
+  if (clientUIActives[2].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3ea9c != '\0') {
+  if (clientUIActives[3].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  piVar6 = &DAT_82b5c800;
-  lVar7 = 0;
+  pLVar6 = cl_splitscreenControllerMap;
+  LVar7 = LOCAL_CLIENT_0;
   do {
-    uVar1 = CL_ControllerIndexFromClientNum(lVar7);
-    if (((int)lVar7 < 0) || (3 < (int)lVar7)) {
-      MyAssertHandler(0xffffffff820572d0,0x50,0,0xffffffff82039774,0xffffffff82057314,lVar7);
+    iVar1 = CL_ControllerIndexFromClientNum(LVar7);
+    if (((int)LVar7 < 0) || (3 < (int)LVar7)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x50
+                      ,0,"%s\n\t(controllerIndex) = %i");
     }
-    if (*piVar6 < 0) {
-      uVar1 = va(0xffffffff82057b7c,lVar7);
-      Dvar_SetBoolByName(uVar1,0);
-      uVar1 = va(0xffffffff82057b8c,lVar7);
-      Dvar_SetBoolByName(uVar1,1);
-      uVar1 = va(0xffffffff82057bbc,lVar7);
-      Dvar_SetBoolByName(uVar1,0);
-      uVar1 = va(0xffffffff82057bcc,lVar7);
-      Dvar_SetBoolByName(uVar1,0);
-      uVar1 = va(0xffffffff82057bac,lVar7);
-      Dvar_SetBoolByName(uVar1,0);
-      uVar1 = va(0xffffffff82057b9c,lVar7);
-      Dvar_SetBoolByName(uVar1,0);
-      uVar1 = va(0xffffffff82057b6c,lVar7);
-      Dvar_SetStringByName(uVar1,0xffffffff820068af);
+    if ((int)*pLVar6 < 0) {
+      pcVar3 = va("leavegame%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("joingame%i_vis");
+      Dvar_SetBoolByName(pcVar3,true);
+      pcVar3 = va("signin%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("changeusers%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("startgame%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("waiting%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("playername%i");
+      Dvar_SetStringByName(pcVar3,"");
     }
     else {
-      iVar4 = CL_GetLocalClientSignInState(uVar1);
-      if (iVar4 < 1) {
-        va(0xffffffff82057924,uVar1);
-        uVar2 = UI_SafeTranslateString();
+      iVar2 = CL_GetLocalClientSignInState(iVar1);
+      if (iVar2 < 1) {
+        pcVar3 = va("XBOXLIVE_PLAYER%i");
+        pcVar3 = UI_SafeTranslateString(pcVar3);
       }
       else {
-        uVar2 = Live_GetLocalClientName(uVar1);
+        pcVar3 = Live_GetLocalClientName(iVar1);
       }
-      uVar3 = va(0xffffffff82057b6c,lVar7);
-      Dvar_SetStringByName(uVar3,uVar2);
-      uVar2 = va(0xffffffff82057b7c,lVar7);
-      Dvar_SetBoolByName(uVar2,1);
-      uVar2 = va(0xffffffff82057b8c,lVar7);
-      Dvar_SetBoolByName(uVar2,0);
-      uVar2 = va(0xffffffff82057b9c,lVar7);
-      Dvar_SetBoolByName(uVar2,cVar5 == '\0');
-      uVar2 = va(0xffffffff82057bac,lVar7);
-      Dvar_SetBoolByName(uVar2,cVar5 != '\0');
-      iVar4 = CL_GetLocalClientSignInState(uVar1);
-      if (iVar4 < 1) {
-        uVar1 = va(0xffffffff82057bbc,lVar7);
-        Dvar_SetBoolByName(uVar1,1);
-        uVar1 = va(0xffffffff82057bcc,lVar7);
+      pcVar4 = va("playername%i");
+      Dvar_SetStringByName(pcVar4,pcVar3);
+      pcVar3 = va("leavegame%i_vis");
+      Dvar_SetBoolByName(pcVar3,true);
+      pcVar3 = va("joingame%i_vis");
+      Dvar_SetBoolByName(pcVar3,false);
+      pcVar3 = va("waiting%i_vis");
+      Dvar_SetBoolByName(pcVar3,cVar5 == '\0');
+      pcVar3 = va("startgame%i_vis");
+      Dvar_SetBoolByName(pcVar3,cVar5 != '\0');
+      iVar1 = CL_GetLocalClientSignInState(iVar1);
+      if (iVar1 < 1) {
+        pcVar3 = va("signin%i_vis");
+        Dvar_SetBoolByName(pcVar3,true);
+        pcVar3 = va("changeusers%i_vis");
       }
       else {
-        uVar1 = va(0xffffffff82057bbc,lVar7);
-        Dvar_SetBoolByName(uVar1,0);
-        uVar1 = va(0xffffffff82057bcc,lVar7);
+        pcVar3 = va("signin%i_vis");
+        Dvar_SetBoolByName(pcVar3,false);
+        pcVar3 = va("changeusers%i_vis");
       }
-      Dvar_SetBoolByName(uVar1,iVar4 >= 1);
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        uVar1 = va(0xffffffff82057bbc,lVar7);
-        Dvar_SetBoolByName(uVar1,0);
-        uVar1 = va(0xffffffff82057bcc,lVar7);
-        Dvar_SetBoolByName(uVar1,0);
+      Dvar_SetBoolByName(pcVar3,iVar1 >= 1);
+      if ((onlinegame->current).enabled != false) {
+        pcVar3 = va("signin%i_vis");
+        Dvar_SetBoolByName(pcVar3,false);
+        pcVar3 = va("changeusers%i_vis");
+        Dvar_SetBoolByName(pcVar3,false);
       }
     }
-    piVar6 = piVar6 + 1;
-    lVar7 = lVar7 + 1;
-  } while ((int)piVar6 < -0x7d4a37f0);
-  cVar5 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
+    pLVar6 = pLVar6 + 1;
+    LVar7 = LVar7 + LOCAL_CLIENT_1;
+  } while ((int)pLVar6 < -0x7d4a37f0);
+  cVar5 = clientUIActives[0].active != false;
+  if (clientUIActives[1].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3e8b8 != '\0') {
+  if (clientUIActives[2].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  if (DAT_82b3ea9c != '\0') {
+  if (clientUIActives[3].active != false) {
     cVar5 = cVar5 + '\x01';
   }
-  Dvar_SetBoolByName(0xffffffff82057b58,cVar5 == '\0');
+  Dvar_SetBoolByName("allusersinactive",cVar5 == '\0');
   __restgprlr();
   return;
 }
@@ -2061,219 +2283,260 @@ void CL_SyncSigninWidgets(void)
 
 // 8239C6A8  CL_IsLocalClientDisconnected  (client/splitscreen.cpp:1797)
 
-void CL_IsLocalClientDisconnected(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CL_IsLocalClientDisconnected(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820572d0,0x706,0,0xffffffff820011a8,uVar1,4);
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x706,
+                    0,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  if ((&DAT_82b3e4f0)[(int)uVar1 * 0x1e4] == '\0') {
-    MyAssertHandler(0xffffffff820572d0,0x708,0,0xffffffff820011f4,0xffffffff820574f8,
-                    0xffffffff820578f4);
+  if (clientUIActives[uVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x708,
+                    0,"%s\n\t%s");
   }
-  __restgprlr_29((uint)((uint)(&DAT_82b3e54c)[(int)uVar1 * 0x79] < 3) -
-                 ((int)(&DAT_82b3e54c)[(int)uVar1 * 0x79] >> 0x1f));
-  return;
+  iVar2 = __restgprlr_29((uint)(clientUIActives[uVar1].connectionState < CA_CONNECTING) -
+                         ((int)clientUIActives[uVar1].connectionState >> 0x1f));
+  return iVar2;
 }
 
 
 // 8239C750  CL_AllLocalClientsDisconnected  (client/splitscreen.cpp:1807)
 
-undefined8 CL_AllLocalClientsDisconnected(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CL_AllLocalClientsDisconnected(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
-  int *piVar3;
+  connstate_t *pcVar3;
   
-  cVar2 = Sys_IsMainThread();
-  if ((cVar2 == '\0') && (cVar2 = Sys_IsRenderThread(), cVar2 == '\0')) {
-    MyAssertHandler(0xffffffff820572d0,0x714,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar2 = Sys_IsMainThread();
+  if ((!bVar2) && (bVar2 = Sys_IsRenderThread(), !bVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\splitscreen.cpp",0x714,
+                    0,"%s");
   }
-  cVar2 = Sys_IsMainThread();
-  if ((cVar2 != '\0') && (iVar1 = UI_IsFullscreen(0), iVar1 == 0)) {
-    piVar3 = &DAT_82b3e54c;
+  bVar2 = Sys_IsMainThread();
+  if ((bVar2) && (iVar1 = UI_IsFullscreen(LOCAL_CLIENT_0), iVar1 == 0)) {
+    pcVar3 = &clientUIActives[0].connectionState;
     do {
-      if ((*(char *)(piVar3 + -0x17) != '\0') && (2 < *piVar3)) {
-        return 0;
+      if ((((clientUIActive_t *)(pcVar3 + -0x17))->active != false) && (2 < (int)*pcVar3)) {
+        return false;
       }
-      piVar3 = piVar3 + 0x79;
-    } while ((int)piVar3 < -0x7d4c1324);
+      pcVar3 = pcVar3 + 0x79;
+    } while ((int)pcVar3 < -0x7d4c1324);
   }
-  return 1;
+  return true;
 }
 
 
 // 8239C820  CL_AllLocalClientsConnectionStateDisconnected  (client/splitscreen.cpp:1841)
 
-void CL_AllLocalClientsConnectionStateDisconnected(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_AllLocalClientsConnectionStateDisconnected(void)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
+  undefined1 uVar1;
+  connstate_t *pcVar2;
+  uint uVar3;
   
   __savegprlr_27();
-  uVar2 = 0;
-  piVar1 = &DAT_82b3e54c;
+  uVar3 = 0;
+  pcVar2 = &clientUIActives[0].connectionState;
   while( true ) {
-    if (3 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar2,4);
+    if (3 < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
+                      ,0x4aa,0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if (0 < *piVar1) break;
-    piVar1 = piVar1 + 0x79;
-    uVar2 = uVar2 + 1;
-    if (-0x7d4c1325 < (int)piVar1) {
-      __restgprlr_27(1);
-      return;
+    if (0 < (int)*pcVar2) break;
+    pcVar2 = pcVar2 + 0x79;
+    uVar3 = uVar3 + 1;
+    if (-0x7d4c1325 < (int)pcVar2) {
+      uVar1 = __restgprlr_27(1);
+      return (bool)uVar1;
     }
   }
-  __restgprlr_27(0);
-  return;
+  uVar1 = __restgprlr_27(0);
+  return (bool)uVar1;
 }
 
 
 // 8239C8A8  CL_AnyLocalClientStateActive  (client/splitscreen.cpp:1855)
 
-undefined8 CL_AnyLocalClientStateActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_AnyLocalClientStateActive(void)
 
 {
-  int *piVar1;
+  connstate_t *pcVar1;
   
-  piVar1 = &DAT_82b3e54c;
+  pcVar1 = &clientUIActives[0].connectionState;
   do {
-    if (*piVar1 == 10) {
-      return 1;
+    if (*pcVar1 == CA_ACTIVE) {
+      return true;
     }
-    piVar1 = piVar1 + 0x79;
-  } while ((int)piVar1 < -0x7d4c1324);
-  return 0;
+    pcVar1 = pcVar1 + 0x79;
+  } while ((int)pcVar1 < -0x7d4c1324);
+  return false;
 }
 
 
 // 8239C8E0  CL_AnyLocalClientChallenging  (client/splitscreen.cpp:1869)
 
-undefined8 CL_AnyLocalClientChallenging(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_AnyLocalClientChallenging(void)
 
 {
-  int *piVar1;
+  connstate_t *pcVar1;
   
-  piVar1 = &DAT_82b3e54c;
-  while ((*(char *)(piVar1 + -0x17) == '\0' || (*piVar1 != 4))) {
-    piVar1 = piVar1 + 0x79;
-    if (-0x7d4c1325 < (int)piVar1) {
-      return 0;
+  pcVar1 = &clientUIActives[0].connectionState;
+  while ((((clientUIActive_t *)(pcVar1 + -0x17))->active == false || (*pcVar1 != CA_CHALLENGING))) {
+    pcVar1 = pcVar1 + 0x79;
+    if (-0x7d4c1325 < (int)pcVar1) {
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 8239C928  CL_AllLocalClientStatesActive  (client/splitscreen.cpp:1893)
 
-undefined8 CL_AllLocalClientStatesActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_AllLocalClientStatesActive(void)
 
 {
-  int *piVar1;
+  connstate_t *pcVar1;
   
-  piVar1 = &DAT_82b3e54c;
-  while ((*(char *)(piVar1 + -0x17) == '\0' || (*piVar1 == 10))) {
-    piVar1 = piVar1 + 0x79;
-    if (-0x7d4c1325 < (int)piVar1) {
-      return 1;
+  pcVar1 = &clientUIActives[0].connectionState;
+  while ((((clientUIActive_t *)(pcVar1 + -0x17))->active == false || (*pcVar1 == CA_ACTIVE))) {
+    pcVar1 = pcVar1 + 0x79;
+    if (-0x7d4c1325 < (int)pcVar1) {
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 8239C970  CL_GetUsernameForLocalClient  (client/splitscreen.cpp:1932)
 
-void CL_GetUsernameForLocalClient(undefined8 param_1)
+char * CL_GetUsernameForLocalClient(int param_1)
 
 {
   int iVar1;
+  char *pcVar2;
   
-  iVar1 = CL_GetLocalClientSignInState();
+  iVar1 = CL_GetLocalClientSignInState(param_1);
   if (0 < iVar1) {
-    Live_GetLocalClientName(param_1);
-    return;
+    pcVar2 = Live_GetLocalClientName(param_1);
+    return pcVar2;
   }
-  va(0xffffffff82057924,param_1);
-  UI_SafeTranslateString();
-  return;
+  pcVar2 = va("XBOXLIVE_PLAYER%i");
+  pcVar2 = UI_SafeTranslateString(pcVar2);
+  return pcVar2;
 }
 
 
 // 8239C9D8  CL_IsRenderingSplitScreen  (client/splitscreen.cpp:1953)
 
-undefined8 CL_IsRenderingSplitScreen(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CL_IsRenderingSplitScreen(void)
 
 {
   bool bVar1;
   byte bVar2;
-  int *piVar3;
+  connstate_t *pcVar3;
   
-  bVar2 = DAT_82b3e4f0 != '\0';
-  if (DAT_82b3e6d4 != '\0') {
+  bVar2 = clientUIActives[0].active;
+  if (clientUIActives[1].active) {
+    bVar2 = clientUIActives[0].active + 1;
+  }
+  if (clientUIActives[2].active) {
     bVar2 = bVar2 + 1;
   }
-  if (DAT_82b3e8b8 != '\0') {
-    bVar2 = bVar2 + 1;
-  }
-  if (DAT_82b3ea9c != '\0') {
+  if (clientUIActives[3].active) {
     bVar2 = bVar2 + 1;
   }
   if (1 < bVar2) {
-    piVar3 = &DAT_82b3e54c;
+    pcVar3 = &clientUIActives[0].connectionState;
     do {
-      if (*piVar3 == 10) {
+      if (*pcVar3 == CA_ACTIVE) {
         bVar1 = true;
         goto LAB_8239ca50;
       }
-      piVar3 = piVar3 + 0x79;
-    } while ((int)piVar3 < -0x7d4c1324);
+      pcVar3 = pcVar3 + 0x79;
+    } while ((int)pcVar3 < -0x7d4c1324);
     bVar1 = false;
 LAB_8239ca50:
     if (bVar1) {
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 8239E1D8  CL_Splitscreen_RegisterCommands  (client/splitscreen.cpp:1963)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Splitscreen_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff82057e8c,0xffffffff8239bdf8,0xffffffff82b5c8e0);
-  Cmd_AddCommandInternal(0xffffffff82057e74,0xffffffff8239bf08,0xffffffff82b5c8cc);
-  Cmd_AddCommandInternal(0xffffffff82057e58,0xffffffff8239bfe0,0xffffffff82b5c8b8);
-  Cmd_AddCommandInternal(0xffffffff82057e40,0xffffffff8239c0e8,0xffffffff82b5c8a4);
-  Cmd_AddCommandInternal(0xffffffff82057e34,0xffffffff8239c698,0xffffffff82b5c890);
-  Cmd_AddCommandInternal(0xffffffff82057e1c,0xffffffff8239dac0,0xffffffff82b5c87c);
-  Cmd_AddCommandInternal(0xffffffff82057e04,0xffffffff8239db20,0xffffffff82b5c868);
-  Cmd_AddCommandInternal(0xffffffff82057dec,0xffffffff8239d450,0xffffffff82b5c854);
-  Cmd_AddCommandInternal(0xffffffff82057dd8,0xffffffff8239c530,0xffffffff82b5c840);
-  Cmd_AddCommandInternal(0xffffffff82057dcc,0xffffffff8239c550,0xffffffff82b5c82c);
+  Cmd_AddCommandInternal
+            ("incnosplitscreencontrol",CL_IncNoSplitscreenControl_f,
+             &CL_IncNoSplitscreenControl_f_VAR);
+  Cmd_AddCommandInternal
+            ("decnosplitscreencontrol",CL_DecNoSplitscreenControl_f,
+             &CL_DecNoSplitscreenControl_f_VAR);
+  Cmd_AddCommandInternal
+            ("forcenosplitscreencontrol",CL_ForceNoSplitscreenControl_f,
+             &CL_ForceNoSplitscreenControl_f_VAR);
+  Cmd_AddCommandInternal
+            ("forcesplitscreencontrol",CL_ForceSplitscreenControl_f,
+             &CL_ForceSplitscreenControl_f_VAR);
+  Cmd_AddCommandInternal("xsignin4",CL_Live_Start4PlayerSignin,&CL_Live_Start4PlayerSignin_VAR);
+  Cmd_AddCommandInternal
+            ("resetsplitscreensignin",CL_ResetSplitscreenSignin,&CL_ResetSplitscreenSignin_VAR);
+  Cmd_AddCommandInternal
+            ("startsplitscreensignin",CL_StartSplitscreenSignin,&CL_StartSplitscreenSignin_VAR);
+  Cmd_AddCommandInternal
+            ("endsplitscreensignin",CL_EndSplitscreenSignin,&CL_EndSplitscreenSignin_VAR);
+  Cmd_AddCommandInternal
+            ("clearcontrollermap",CL_ClearControllerMapCmd,&CL_ClearControllerMapCmd_VAR);
+  Cmd_AddCommandInternal("autosignin",CL_AutoSignin,&CL_AutoSignin_VAR);
   return;
 }
 
 
 // 8239E310  CL_Splitscreen_Init  (client/splitscreen.cpp:1991)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Splitscreen_Init(void)
 
 {
   CL_Splitscreen_RegisterCommands();
-  DAT_82b5c800 = 0xffffffff;
-  DAT_82b5c804 = 0xffffffff;
-  DAT_82b5c808 = 0xffffffff;
-  DAT_82b5c80c = 0xffffffff;
+  cl_splitscreenControllerMap[0] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[1] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[2] = LOCAL_CLIENT_INVALID;
+  cl_splitscreenControllerMap[3] = LOCAL_CLIENT_INVALID;
   return;
 }
 

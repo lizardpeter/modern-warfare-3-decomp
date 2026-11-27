@@ -2,33 +2,33 @@
 
 // 8283EA50  c0_fixed  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:57)
 
-short c0_fixed(int param_1)
+short c0_fixed(uint param_1)
 
 {
   uint uVar1;
   
   uVar1 = (uint)((ulonglong)
                  ((longlong)
-                  (int)(uint)(ushort)((ulonglong)((longlong)DAT_829a6260 * (longlong)param_1) >>
-                                     0x10) * (longlong)param_1) >> 0x10) & 0xffff;
-  return -(short)((int)(uVar1 - (ushort)((ulonglong)((longlong)(int)uVar1 * (longlong)param_1) >>
-                                        0x10)) >> 4);
+                  (int)(uint)(ushort)((ulonglong)((longlong)a_i * (longlong)(int)param_1) >> 0x10) *
+                 (longlong)(int)param_1) >> 0x10) & 0xffff;
+  return -(short)((int)(uVar1 - (ushort)((ulonglong)((longlong)(int)uVar1 * (longlong)(int)param_1)
+                                        >> 0x10)) >> 4);
 }
 
 
 // 8283EA88  c1_fixed  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:78)
 
-undefined2 c1_fixed(int param_1)
+short c1_fixed(uint param_1)
 
 {
   return (short)((int)(((uint)(ushort)((ulonglong)
                                        ((longlong)
                                         (int)(uint)(ushort)((ulonglong)
                                                             ((longlong)
-                                                             (int)((DAT_829a6260 >> 3) * 0xfffe +
-                                                                   0x6000U & 0xffff) *
-                                                            (longlong)param_1) >> 0x10) *
-                                       (longlong)param_1) >> 0x10) -
+                                                             (int)((a_i >> 3) * 0xfffe + 0x6000U &
+                                                                  0xffff) * (longlong)(int)param_1)
+                                                           >> 0x10) * (longlong)(int)param_1) >>
+                                      0x10) -
                        (uint)(ushort)((ulonglong)
                                       ((longlong)
                                        (int)(uint)(ushort)((ulonglong)
@@ -36,16 +36,16 @@ undefined2 c1_fixed(int param_1)
                                                             (int)(uint)(ushort)((ulonglong)
                                                                                 ((longlong)
                                                                                  (int)(0x4000U - (
-                                                  DAT_829a6260 >> 3) & 0xffff) * (longlong)param_1)
-                                                  >> 0x10) * (longlong)param_1) >> 0x10) *
-                                      (longlong)param_1) >> 0x10)) +
-                      ((uint)(DAT_829a6260 * param_1) >> 0x13)) >> 1);
+                                                  a_i >> 3) & 0xffff) * (longlong)(int)param_1) >>
+                                                  0x10) * (longlong)(int)param_1) >> 0x10) *
+                                      (longlong)(int)param_1) >> 0x10)) + (a_i * param_1 >> 0x13))
+                >> 1);
 }
 
 
 // 8283EAF8  c2_fixed  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:107)
 
-undefined2 c2_fixed(int param_1)
+short c2_fixed(uint param_1)
 
 {
   return (short)((int)(((uint)(ushort)((ulonglong)
@@ -55,68 +55,65 @@ undefined2 c2_fixed(int param_1)
                                                              (int)(uint)(ushort)((ulonglong)
                                                                                  ((longlong)
                                                                                   (int)(0x4000U - (
-                                                  DAT_829a6260 >> 3) & 0xffff) * (longlong)param_1)
-                                                  >> 0x10) * (longlong)param_1) >> 0x10) *
-                                       (longlong)param_1) >> 0x10) -
+                                                  a_i >> 3) & 0xffff) * (longlong)(int)param_1) >>
+                                                  0x10) * (longlong)(int)param_1) >> 0x10) *
+                                       (longlong)(int)param_1) >> 0x10) -
                        (uint)(ushort)((ulonglong)
                                       ((longlong)
                                        (int)(uint)(ushort)((ulonglong)
                                                            ((longlong)
-                                                            (int)(0x6000U - (DAT_829a6260 >> 3) &
-                                                                 0xffff) * (longlong)param_1) >>
-                                                          0x10) * (longlong)param_1) >> 0x10)) +
-                      0x2000) >> 1);
+                                                            (int)(0x6000U - (a_i >> 3) & 0xffff) *
+                                                           (longlong)(int)param_1) >> 0x10) *
+                                      (longlong)(int)param_1) >> 0x10)) + 0x2000) >> 1);
 }
 
 
 // 8283EB50  c3_fixed  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:135)
 
-undefined2 c3_fixed(int param_1)
+short c3_fixed(uint param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (uint)(ushort)((ulonglong)((longlong)DAT_829a6260 * (longlong)param_1) >> 0x10);
+  uVar1 = (uint)(ushort)((ulonglong)((longlong)a_i * (longlong)(int)param_1) >> 0x10);
   return (short)((int)(((uint)(ushort)((ulonglong)
-                                       ((longlong)
-                                        (int)((uint)((DAT_829a6260 >> 1) * param_1) >> 0xf & 0xffff)
-                                       * (longlong)param_1) >> 0x10) -
+                                       ((longlong)(int)((a_i >> 1) * param_1 >> 0xf & 0xffff) *
+                                       (longlong)(int)param_1) >> 0x10) -
                        ((int)(uint)(ushort)((ulonglong)
                                             ((longlong)
                                              (int)(uint)(ushort)((ulonglong)
                                                                  ((longlong)(int)uVar1 *
-                                                                 (longlong)param_1) >> 0x10) *
-                                            (longlong)param_1) >> 0x10) >> 1)) - ((int)uVar1 >> 1))
-                >> 3);
+                                                                 (longlong)(int)param_1) >> 0x10) *
+                                            (longlong)(int)param_1) >> 0x10) >> 1)) -
+                      ((int)uVar1 >> 1)) >> 3);
 }
 
 
 // 8283EBA0  gcd  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:247)
 
-longlong gcd(longlong param_1,longlong param_2)
+int gcd(int param_1,int param_2)
 
 {
   bool bVar1;
+  int iVar2;
   int iVar3;
-  longlong lVar2;
-  int iVar4;
   
-  iVar3 = (int)param_1;
-  if ((0 < iVar3) && (iVar4 = (int)param_2, 0 < iVar4)) {
-    if (iVar3 != iVar4) {
-      bVar1 = iVar3 < iVar4;
-      lVar2 = param_2;
+  if ((0 < param_1) && (0 < param_2)) {
+    if (param_1 != param_2) {
+      bVar1 = param_1 < param_2;
+      iVar3 = param_2;
+      iVar2 = param_1;
       do {
-        param_2 = param_1;
+        param_2 = iVar2;
+        iVar2 = iVar3;
         if (bVar1) {
-          param_2 = lVar2 - param_1;
-          lVar2 = param_1;
+          iVar3 = iVar2 - param_2;
+          iVar2 = param_2;
+          param_2 = iVar3;
         }
-        iVar3 = (int)lVar2;
-        bVar1 = iVar3 < (int)param_2;
-        param_1 = lVar2;
-        lVar2 = param_2;
-      } while ((int)param_2 != iVar3);
+        bVar1 = iVar2 < param_2;
+        iVar3 = param_2;
+      } while (param_2 != iVar2);
     }
     return param_2;
   }
@@ -126,51 +123,52 @@ longlong gcd(longlong param_1,longlong param_2)
 
 // 8283EBF0  bicubic_coefficient_init  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:272)
 
-void * bicubic_coefficient_init(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void bicubic_coefficient_init(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = vpx_memset(&DAT_84897360,0,0x40);
-  DAT_829a625c = 0;
-  return pvVar1;
+  vpx_memset(&g_b_scaler,0,0x40);
+  g_first_time = 0;
+  return;
 }
 
 
 // 8283EC30  bicubic_coefficient_destroy  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:278)
 
-void * bicubic_coefficient_destroy(void *param_1)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void bicubic_coefficient_destroy(void)
 
 {
-  if (DAT_829a625c == 0) {
-    if (DAT_84897380 != 0) {
-      vpx_free();
+  if (g_first_time == 0) {
+    if (g_b_scaler.l_w != (short *)0x0) {
+      vpx_free(g_b_scaler.l_w);
     }
-    if (DAT_84897384 != 0) {
-      vpx_free();
+    if (g_b_scaler.l_h != (short *)0x0) {
+      vpx_free(g_b_scaler.l_h);
     }
-    if (DAT_84897388 != 0) {
-      vpx_free();
+    if (g_b_scaler.l_h_uv != (short *)0x0) {
+      vpx_free(g_b_scaler.l_h_uv);
     }
-    if (DAT_8489738c != 0) {
-      vpx_free();
+    if (g_b_scaler.c_w != (short *)0x0) {
+      vpx_free(g_b_scaler.c_w);
     }
-    if (DAT_84897390 != 0) {
-      vpx_free();
+    if (g_b_scaler.c_h != (short *)0x0) {
+      vpx_free(g_b_scaler.c_h);
     }
-    if (DAT_84897394 != 0) {
-      vpx_free();
+    if (g_b_scaler.c_h_uv != (short *)0x0) {
+      vpx_free(g_b_scaler.c_h_uv);
     }
-    param_1 = vpx_memset(&DAT_84897360,0,0x40);
+    vpx_memset(&g_b_scaler,0,0x40);
   }
-  return param_1;
+  return;
 }
 
 
 // 8283ECE0  bicubic_coefficient_setup  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:303)
 
-void bicubic_coefficient_setup
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+int bicubic_coefficient_setup(int param_1,int param_2,int param_3,int param_4)
 
 {
   uint uVar1;
@@ -179,478 +177,499 @@ void bicubic_coefficient_setup
   ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  int iVar12;
+  int iVar10;
+  int iVar11;
+  uint uVar12;
   ulonglong uVar13;
   int iVar14;
-  int iVar15;
-  int iVar16;
-  longlong lVar17;
-  longlong lVar18;
-  longlong lVar19;
-  int iVar20;
+  longlong lVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  int iVar18;
+  int iVar19;
+  longlong lVar20;
   int iVar21;
+  int iVar22;
   int iVar23;
-  longlong lVar22;
+  ulonglong uVar24;
   int iStack_8c;
+  int iVar7;
+  int iVar8;
+  int iVar9;
   
-  uVar3 = __savegprlr_17();
-  if (DAT_829a625c != 0) {
-    vpx_memset(&DAT_84897360,0,0x40);
-    DAT_829a625c = 0;
+  uVar13 = (ulonglong)param_4;
+  uVar24 = (ulonglong)param_3;
+  uVar16 = (ulonglong)param_2;
+  uVar3 = __savegprlr_17(param_1);
+  if (g_first_time != 0) {
+    vpx_memset(&g_b_scaler,0,0x40);
+    g_first_time = 0;
   }
-  iVar16 = (int)uVar3;
-  iVar23 = (int)param_2;
-  iVar20 = (int)param_3;
-  iVar21 = (int)param_4;
-  if ((((iVar16 != DAT_84897360) || (iVar23 != DAT_84897364)) || (iVar20 != DAT_84897368)) ||
-     (iVar21 != DAT_8489736c)) {
-    DAT_84897360 = iVar16;
-    DAT_84897364 = iVar23;
-    DAT_84897368 = iVar20;
-    DAT_8489736c = iVar21;
-    if ((iVar20 < 1) || (iVar21 < 1)) {
-      __restgprlr_17(0xffffffffffffffff);
-      return;
+  iVar11 = (int)uVar3;
+  iVar23 = (int)uVar16;
+  iVar21 = (int)uVar24;
+  iVar22 = (int)uVar13;
+  if ((((iVar11 != g_b_scaler.in_width) || (iVar23 != g_b_scaler.in_height)) ||
+      (iVar21 != g_b_scaler.out_width)) || (iVar22 != g_b_scaler.out_height)) {
+    g_b_scaler.in_width = iVar11;
+    g_b_scaler.in_height = iVar23;
+    g_b_scaler.out_width = iVar21;
+    g_b_scaler.out_height = iVar22;
+    if ((iVar21 < 1) || (iVar22 < 1)) {
+      iVar11 = __restgprlr_17(0xffffffffffffffff);
+      return iVar11;
     }
-    uVar4 = gcd(param_3,uVar3);
-    uVar5 = gcd(param_4,param_2);
-    uVar13 = (longlong)(iVar23 >> 1) + (ulonglong)(iVar23 < 0 && (param_2 & 1) != 0);
-    uVar6 = gcd(param_4,uVar13);
-    uVar11 = uVar5 & ~(((param_2 & 0x7fffffff) << 1 | (param_2 & 0xffffffff) >> 0x1f) - 1);
-    DAT_84897378 = iVar21 / (int)uVar5;
-    uVar9 = uVar6 & ~(((param_4 & 0x7fffffff) << 1 | (param_4 & 0xffffffff) >> 0x1f) - 1);
-    uVar8 = uVar6 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1);
-    DAT_84897374 = iVar20 / (int)uVar4;
-    DAT_8489737c = iVar21 / (int)uVar6;
+    iVar7 = gcd(iVar21,iVar11);
+    uVar4 = (ulonglong)iVar7;
+    iVar8 = gcd(iVar22,iVar23);
+    uVar5 = (ulonglong)iVar8;
+    uVar17 = (longlong)(iVar23 >> 1) + (ulonglong)(iVar23 < 0 && (uVar16 & 1) != 0);
+    iVar9 = gcd(iVar22,(int)uVar17);
+    uVar6 = (ulonglong)iVar9;
+    g_b_scaler.nh = iVar22 / iVar8;
+    g_b_scaler.nw = iVar21 / iVar7;
+    g_b_scaler.nh_uv = iVar22 / iVar9;
     trapWord(6,uVar5,0);
-    trapWord(5,uVar4 & ~(((param_3 & 0x7fffffff) << 1 | (param_3 & 0xffffffff) >> 0x1f) - 1),0xffff)
-    ;
+    trapWord(5,uVar4 & ~(((uVar24 & 0x7fffffff) << 1 | (uVar24 & 0xffffffff) >> 0x1f) - 1),0xffff);
     trapWord(5,uVar4 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
     trapWord(6,uVar5,0);
     trapWord(6,uVar4,0);
     trapWord(6,uVar6,0);
-    lVar18 = (longlong)(iVar16 / (int)uVar4);
     trapWord(6,uVar4,0);
-    trapWord(5,uVar5 & ~(((param_4 & 0x7fffffff) << 1 | (param_4 & 0xffffffff) >> 0x1f) - 1),0xffff)
-    ;
-    lVar19 = (longlong)(iVar23 / (int)uVar5);
-    trapWord(5,uVar11,0xffff);
-    trapWord(5,uVar9,0xffff);
-    lVar17 = (longlong)((int)uVar13 / (int)uVar6);
+    trapWord(5,uVar5 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    trapWord(5,uVar5 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    trapWord(5,uVar6 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    lVar20 = (longlong)((int)uVar17 / iVar9);
     trapWord(6,uVar6,0);
-    trapWord(5,uVar8,0xffff);
-    if (DAT_84897380 != 0) {
-      vpx_free(DAT_84897380,uVar8,uVar9,uVar11);
+    trapWord(5,uVar6 & ~(((uVar17 & 0x7fffffff) << 1 | (uVar17 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (g_b_scaler.l_w != (short *)0x0) {
+      vpx_free(g_b_scaler.l_w);
     }
-    if (DAT_84897384 != 0) {
-      vpx_free();
+    if (g_b_scaler.l_h != (short *)0x0) {
+      vpx_free(g_b_scaler.l_h);
     }
-    if (DAT_84897388 != 0) {
-      vpx_free();
+    if (g_b_scaler.l_h_uv != (short *)0x0) {
+      vpx_free(g_b_scaler.l_h_uv);
     }
-    DAT_84897380 = vpx_memalign(0x20,(param_3 & 0x7fffffff) << 1);
-    lVar22 = (param_4 & 0x7fffffff) << 1;
-    DAT_84897384 = vpx_memalign(0x20,lVar22);
-    DAT_84897388 = vpx_memalign(0x20,lVar22);
-    if (DAT_8489738c != 0) {
-      vpx_free(DAT_8489738c);
+    g_b_scaler.l_w = vpx_memalign(0x20,(uint)((uVar24 & 0xffffffff) << 1));
+    uVar1 = (uint)((uVar13 & 0xffffffff) << 1);
+    g_b_scaler.l_h = vpx_memalign(0x20,uVar1);
+    g_b_scaler.l_h_uv = vpx_memalign(0x20,uVar1);
+    if (g_b_scaler.c_w != (short *)0x0) {
+      vpx_free(g_b_scaler.c_w);
     }
-    if (DAT_84897390 != 0) {
-      vpx_free();
+    if (g_b_scaler.c_h != (short *)0x0) {
+      vpx_free(g_b_scaler.c_h);
     }
-    if (DAT_84897394 != 0) {
-      vpx_free();
+    if (g_b_scaler.c_h_uv != (short *)0x0) {
+      vpx_free(g_b_scaler.c_h_uv);
     }
-    DAT_8489738c = vpx_memalign(0x20,DAT_84897374 << 3);
-    DAT_84897390 = vpx_memalign(0x20,DAT_84897378 << 3);
-    DAT_84897394 = vpx_memalign(0x20,DAT_8489737c << 3);
-    iVar2 = DAT_829a6260;
-    uVar3 = (ulonglong)DAT_84897374;
-    DAT_8489739c = &DAT_848973a0;
-    DAT_84897398 = &DAT_848976c0;
-    lVar22 = 0;
-    iVar12 = 0;
-    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)(int)DAT_84897374) * 4294967296.0);
-    iVar23 = DAT_829a6260 >> 3;
-    iVar21 = DAT_829a6260 >> 1;
-    if (0 < (int)DAT_84897374) {
-      iVar14 = 0;
+    g_b_scaler.c_w = vpx_memalign(0x20,g_b_scaler.nw << 3);
+    g_b_scaler.c_h = vpx_memalign(0x20,g_b_scaler.nh << 3);
+    g_b_scaler.c_h_uv = vpx_memalign(0x20,g_b_scaler.nh_uv << 3);
+    iVar2 = a_i;
+    uVar3 = (ulonglong)(uint)g_b_scaler.nw;
+    g_b_scaler.hbuf_uv = g_hbuf_uv;
+    g_b_scaler.hbuf = g_hbuf;
+    lVar15 = 0;
+    iVar14 = 0;
+    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)g_b_scaler.nw) * 4294967296.0);
+    iVar22 = a_i >> 3;
+    iVar9 = a_i >> 1;
+    if (0 < g_b_scaler.nw) {
+      iVar18 = 0;
       do {
-        if ((int)uVar3 < (int)lVar22) {
-          lVar22 = lVar22 - uVar3;
+        if ((int)uVar3 < (int)lVar15) {
+          lVar15 = lVar15 - uVar3;
         }
-        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar22) >> 0x10);
-        iVar12 = iVar12 + 1;
-        uVar10 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
-        *(short *)(iVar14 + DAT_8489738c) =
+        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar15) >> 0x10);
+        iVar14 = iVar14 + 1;
+        uVar12 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
+        *(short *)(iVar18 + (int)g_b_scaler.c_w) =
              (short)((int)(((uint)(ushort)((ulonglong)
-                                           ((longlong)(int)(iVar21 * uVar1 >> 0xf & 0xffff) *
+                                           ((longlong)(int)(iVar9 * uVar1 >> 0xf & 0xffff) *
                                            (longlong)(int)uVar1) >> 0x10) -
                            ((int)(uint)(ushort)((ulonglong)
                                                 ((longlong)
                                                  (int)(uint)(ushort)((ulonglong)
-                                                                     ((longlong)(int)uVar10 *
+                                                                     ((longlong)(int)uVar12 *
                                                                      (longlong)(int)uVar1) >> 0x10)
                                                 * (longlong)(int)uVar1) >> 0x10) >> 1)) -
-                          ((int)uVar10 >> 1)) >> 3);
-        iVar7 = (int)((ulonglong)
-                      ((longlong)
-                       (int)(uint)(ushort)((ulonglong)
-                                           ((longlong)
-                                            (int)(uint)(ushort)((ulonglong)
-                                                                ((longlong)
-                                                                 (int)(0x4000U - iVar23 & 0xffff) *
-                                                                (longlong)(int)uVar1) >> 0x10) *
-                                           (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1) >>
-                     0x10);
-        lVar22 = lVar18 + lVar22;
-        iVar15 = (int)((ulonglong)((longlong)(int)uVar10 * (longlong)(int)uVar1) >> 0x10);
-        *(short *)(iVar14 + DAT_8489738c + 2) =
-             (short)((int)((iVar7 - (uint)(ushort)((ulonglong)
-                                                   ((longlong)
-                                                    (int)(uint)(ushort)((ulonglong)
-                                                                        ((longlong)
-                                                                         (int)(0x6000U - iVar23 &
-                                                                              0xffff) *
-                                                                        (longlong)(int)uVar1) >>
-                                                                       0x10) * (longlong)(int)uVar1)
-                                                  >> 0x10)) + 0x2000) >> 1);
-        *(short *)(iVar14 + DAT_8489738c + 4) =
+                          ((int)uVar12 >> 1)) >> 3);
+        iVar10 = (int)((ulonglong)
+                       ((longlong)
+                        (int)(uint)(ushort)((ulonglong)
+                                            ((longlong)
+                                             (int)(uint)(ushort)((ulonglong)
+                                                                 ((longlong)
+                                                                  (int)(0x4000U - iVar22 & 0xffff) *
+                                                                 (longlong)(int)uVar1) >> 0x10) *
+                                            (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1)
+                      >> 0x10);
+        lVar15 = iVar11 / iVar7 + lVar15;
+        iVar19 = (int)((ulonglong)((longlong)(int)uVar12 * (longlong)(int)uVar1) >> 0x10);
+        *(short *)((int)g_b_scaler.c_w + iVar18 + 2) =
+             (short)((int)((iVar10 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)
+                                                     (int)(uint)(ushort)((ulonglong)
+                                                                         ((longlong)
+                                                                          (int)(0x6000U - iVar22 &
+                                                                               0xffff) *
+                                                                         (longlong)(int)uVar1) >>
+                                                                        0x10) * (longlong)(int)uVar1
+                                                    ) >> 0x10)) + 0x2000) >> 1);
+        *(short *)((int)g_b_scaler.c_w + iVar18 + 4) =
              (short)((int)(((uint)(ushort)((ulonglong)
                                            ((longlong)
                                             (int)(uint)(ushort)((ulonglong)
                                                                 ((longlong)
-                                                                 (int)(iVar23 * 0xfffe + 0x6000U &
+                                                                 (int)(iVar22 * 0xfffe + 0x6000U &
                                                                       0xffff) * (longlong)(int)uVar1
                                                                 ) >> 0x10) * (longlong)(int)uVar1)
-                                          >> 0x10) + (uVar10 >> 3)) - iVar7) >> 1);
-        *(short *)(iVar14 + DAT_8489738c + 6) =
-             -(short)((int)(iVar15 - (uint)(ushort)((ulonglong)
-                                                    ((longlong)iVar15 * (longlong)(int)uVar1) >>
+                                          >> 0x10) + (uVar12 >> 3)) - iVar10) >> 1);
+        *(short *)((int)g_b_scaler.c_w + iVar18 + 6) =
+             -(short)((int)(iVar19 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)iVar19 * (longlong)(int)uVar1) >>
                                                    0x10)) >> 4);
-        iVar14 = iVar14 + 8;
-        uVar3 = (ulonglong)DAT_84897374;
-      } while (iVar12 < (int)DAT_84897374);
+        iVar18 = iVar18 + 8;
+        uVar3 = (ulonglong)(uint)g_b_scaler.nw;
+      } while (iVar14 < g_b_scaler.nw);
     }
-    uVar4 = (ulonglong)DAT_84897378;
-    lVar22 = 0;
-    iVar12 = 0;
-    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)(int)DAT_84897378) * 4294967296.0);
-    if (0 < (int)DAT_84897378) {
-      iVar14 = 0;
+    uVar16 = (ulonglong)(uint)g_b_scaler.nh;
+    lVar15 = 0;
+    iVar14 = 0;
+    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)g_b_scaler.nh) * 4294967296.0);
+    if (0 < g_b_scaler.nh) {
+      iVar18 = 0;
       do {
-        if ((int)uVar4 < (int)lVar22) {
-          lVar22 = lVar22 - uVar4;
+        if ((int)uVar16 < (int)lVar15) {
+          lVar15 = lVar15 - uVar16;
         }
-        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar22) >> 0x10);
-        uVar10 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
-        iVar7 = (int)((ulonglong)((longlong)(int)uVar10 * (longlong)(int)uVar1) >> 0x10);
-        *(short *)(iVar14 + DAT_84897390) =
-             -(short)((int)(iVar7 - (uint)(ushort)((ulonglong)
-                                                   ((longlong)iVar7 * (longlong)(int)uVar1) >> 0x10)
-                           ) >> 4);
-        iVar7 = (int)((ulonglong)
-                      ((longlong)
-                       (int)(uint)(ushort)((ulonglong)
-                                           ((longlong)
-                                            (int)(uint)(ushort)((ulonglong)
-                                                                ((longlong)
-                                                                 (int)(0x4000U - iVar23 & 0xffff) *
-                                                                (longlong)(int)uVar1) >> 0x10) *
-                                           (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1) >>
-                     0x10);
-        *(short *)(iVar14 + DAT_84897390 + 2) =
+        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar15) >> 0x10);
+        uVar12 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
+        iVar10 = (int)((ulonglong)((longlong)(int)uVar12 * (longlong)(int)uVar1) >> 0x10);
+        *(short *)(iVar18 + (int)g_b_scaler.c_h) =
+             -(short)((int)(iVar10 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)iVar10 * (longlong)(int)uVar1) >>
+                                                   0x10)) >> 4);
+        iVar10 = (int)((ulonglong)
+                       ((longlong)
+                        (int)(uint)(ushort)((ulonglong)
+                                            ((longlong)
+                                             (int)(uint)(ushort)((ulonglong)
+                                                                 ((longlong)
+                                                                  (int)(0x4000U - iVar22 & 0xffff) *
+                                                                 (longlong)(int)uVar1) >> 0x10) *
+                                            (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1)
+                      >> 0x10);
+        *(short *)((int)g_b_scaler.c_h + iVar18 + 2) =
              (short)((int)(((uint)(ushort)((ulonglong)
                                            ((longlong)
                                             (int)(uint)(ushort)((ulonglong)
                                                                 ((longlong)
-                                                                 (int)(iVar23 * 0xfffe + 0x6000U &
+                                                                 (int)(iVar22 * 0xfffe + 0x6000U &
                                                                       0xffff) * (longlong)(int)uVar1
                                                                 ) >> 0x10) * (longlong)(int)uVar1)
-                                          >> 0x10) + (uVar10 >> 3)) - iVar7) >> 1);
-        iVar12 = iVar12 + 1;
-        *(short *)(iVar14 + DAT_84897390 + 4) =
-             (short)((int)((iVar7 - (uint)(ushort)((ulonglong)
-                                                   ((longlong)
-                                                    (int)(uint)(ushort)((ulonglong)
-                                                                        ((longlong)
-                                                                         (int)(0x6000U - iVar23 &
-                                                                              0xffff) *
-                                                                        (longlong)(int)uVar1) >>
-                                                                       0x10) * (longlong)(int)uVar1)
-                                                  >> 0x10)) + 0x2000) >> 1);
-        iVar7 = iVar14 + DAT_84897390;
-        lVar22 = lVar19 + lVar22;
-        iVar14 = iVar14 + 8;
-        *(short *)(iVar7 + 6) =
+                                          >> 0x10) + (uVar12 >> 3)) - iVar10) >> 1);
+        iVar14 = iVar14 + 1;
+        *(short *)((int)g_b_scaler.c_h + iVar18 + 4) =
+             (short)((int)((iVar10 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)
+                                                     (int)(uint)(ushort)((ulonglong)
+                                                                         ((longlong)
+                                                                          (int)(0x6000U - iVar22 &
+                                                                               0xffff) *
+                                                                         (longlong)(int)uVar1) >>
+                                                                        0x10) * (longlong)(int)uVar1
+                                                    ) >> 0x10)) + 0x2000) >> 1);
+        lVar15 = iVar23 / iVar8 + lVar15;
+        *(short *)((int)g_b_scaler.c_h + iVar18 + 6) =
              (short)((int)(((uint)(ushort)((ulonglong)
-                                           ((longlong)(int)(iVar21 * uVar1 >> 0xf & 0xffff) *
+                                           ((longlong)(int)(iVar9 * uVar1 >> 0xf & 0xffff) *
                                            (longlong)(int)uVar1) >> 0x10) -
                            ((int)(uint)(ushort)((ulonglong)
                                                 ((longlong)
                                                  (int)(uint)(ushort)((ulonglong)
-                                                                     ((longlong)(int)uVar10 *
+                                                                     ((longlong)(int)uVar12 *
                                                                      (longlong)(int)uVar1) >> 0x10)
                                                 * (longlong)(int)uVar1) >> 0x10) >> 1)) -
-                          ((int)uVar10 >> 1)) >> 3);
-        uVar4 = (ulonglong)DAT_84897378;
-      } while (iVar12 < (int)DAT_84897378);
-      uVar3 = (ulonglong)DAT_84897374;
+                          ((int)uVar12 >> 1)) >> 3);
+        uVar16 = (ulonglong)(uint)g_b_scaler.nh;
+        iVar18 = iVar18 + 8;
+      } while (iVar14 < g_b_scaler.nh);
+      uVar3 = (ulonglong)(uint)g_b_scaler.nw;
     }
-    lVar22 = 0;
-    iVar12 = 0;
-    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)(int)DAT_8489737c) * 4294967296.0);
-    if (0 < (int)DAT_8489737c) {
-      iVar14 = 0;
+    lVar15 = 0;
+    iVar14 = 0;
+    iStack_8c = (int)(longlong)((1.0 / (double)(longlong)g_b_scaler.nh_uv) * 4294967296.0);
+    if (0 < g_b_scaler.nh_uv) {
+      iVar18 = 0;
       do {
-        if ((int)DAT_8489737c < (int)lVar22) {
-          lVar22 = lVar22 - (ulonglong)DAT_8489737c;
+        if (g_b_scaler.nh_uv < (int)lVar15) {
+          lVar15 = lVar15 - (ulonglong)(uint)g_b_scaler.nh_uv;
         }
-        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar22) >> 0x10);
-        uVar10 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
-        iVar7 = (int)((ulonglong)((longlong)(int)uVar10 * (longlong)(int)uVar1) >> 0x10);
-        *(short *)(iVar14 + DAT_84897394) =
-             -(short)((int)(iVar7 - (uint)(ushort)((ulonglong)
-                                                   ((longlong)iVar7 * (longlong)(int)uVar1) >> 0x10)
-                           ) >> 4);
-        iVar7 = (int)((ulonglong)
-                      ((longlong)
-                       (int)(uint)(ushort)((ulonglong)
-                                           ((longlong)
-                                            (int)(uint)(ushort)((ulonglong)
-                                                                ((longlong)
-                                                                 (int)(0x4000U - iVar23 & 0xffff) *
-                                                                (longlong)(int)uVar1) >> 0x10) *
-                                           (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1) >>
-                     0x10);
-        *(short *)(iVar14 + DAT_84897394 + 2) =
+        uVar1 = (uint)(ushort)((ulonglong)((longlong)iStack_8c * (longlong)(int)lVar15) >> 0x10);
+        uVar12 = (uint)((ulonglong)((longlong)iVar2 * (longlong)(int)uVar1) >> 0x10) & 0xffff;
+        iVar10 = (int)((ulonglong)((longlong)(int)uVar12 * (longlong)(int)uVar1) >> 0x10);
+        *(short *)(iVar18 + (int)g_b_scaler.c_h_uv) =
+             -(short)((int)(iVar10 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)iVar10 * (longlong)(int)uVar1) >>
+                                                   0x10)) >> 4);
+        iVar10 = (int)((ulonglong)
+                       ((longlong)
+                        (int)(uint)(ushort)((ulonglong)
+                                            ((longlong)
+                                             (int)(uint)(ushort)((ulonglong)
+                                                                 ((longlong)
+                                                                  (int)(0x4000U - iVar22 & 0xffff) *
+                                                                 (longlong)(int)uVar1) >> 0x10) *
+                                            (longlong)(int)uVar1) >> 0x10) * (longlong)(int)uVar1)
+                      >> 0x10);
+        *(short *)((int)g_b_scaler.c_h_uv + iVar18 + 2) =
              (short)((int)(((uint)(ushort)((ulonglong)
                                            ((longlong)
                                             (int)(uint)(ushort)((ulonglong)
                                                                 ((longlong)
-                                                                 (int)(iVar23 * 0xfffe + 0x6000U &
+                                                                 (int)(iVar22 * 0xfffe + 0x6000U &
                                                                       0xffff) * (longlong)(int)uVar1
                                                                 ) >> 0x10) * (longlong)(int)uVar1)
-                                          >> 0x10) + (uVar10 >> 3)) - iVar7) >> 1);
-        iVar12 = iVar12 + 1;
-        *(short *)(iVar14 + DAT_84897394 + 4) =
-             (short)((int)((iVar7 - (uint)(ushort)((ulonglong)
-                                                   ((longlong)
-                                                    (int)(uint)(ushort)((ulonglong)
-                                                                        ((longlong)
-                                                                         (int)(0x6000U - iVar23 &
-                                                                              0xffff) *
-                                                                        (longlong)(int)uVar1) >>
-                                                                       0x10) * (longlong)(int)uVar1)
-                                                  >> 0x10)) + 0x2000) >> 1);
-        iVar7 = iVar14 + DAT_84897394;
-        lVar22 = lVar17 + lVar22;
-        iVar14 = iVar14 + 8;
-        *(short *)(iVar7 + 6) =
+                                          >> 0x10) + (uVar12 >> 3)) - iVar10) >> 1);
+        iVar14 = iVar14 + 1;
+        *(short *)((int)g_b_scaler.c_h_uv + iVar18 + 4) =
+             (short)((int)((iVar10 - (uint)(ushort)((ulonglong)
+                                                    ((longlong)
+                                                     (int)(uint)(ushort)((ulonglong)
+                                                                         ((longlong)
+                                                                          (int)(0x6000U - iVar22 &
+                                                                               0xffff) *
+                                                                         (longlong)(int)uVar1) >>
+                                                                        0x10) * (longlong)(int)uVar1
+                                                    ) >> 0x10)) + 0x2000) >> 1);
+        lVar15 = lVar20 + lVar15;
+        *(short *)((int)g_b_scaler.c_h_uv + iVar18 + 6) =
              (short)((int)(((uint)(ushort)((ulonglong)
-                                           ((longlong)(int)(iVar21 * uVar1 >> 0xf & 0xffff) *
+                                           ((longlong)(int)(iVar9 * uVar1 >> 0xf & 0xffff) *
                                            (longlong)(int)uVar1) >> 0x10) -
                            ((int)(uint)(ushort)((ulonglong)
                                                 ((longlong)
                                                  (int)(uint)(ushort)((ulonglong)
-                                                                     ((longlong)(int)uVar10 *
+                                                                     ((longlong)(int)uVar12 *
                                                                      (longlong)(int)uVar1) >> 0x10)
                                                 * (longlong)(int)uVar1) >> 0x10) >> 1)) -
-                          ((int)uVar10 >> 1)) >> 3);
-      } while (iVar12 < (int)DAT_8489737c);
-      uVar4 = (ulonglong)DAT_84897378;
-      uVar3 = (ulonglong)DAT_84897374;
+                          ((int)uVar12 >> 1)) >> 3);
+        iVar18 = iVar18 + 8;
+      } while (iVar14 < g_b_scaler.nh_uv);
+      uVar16 = (ulonglong)(uint)g_b_scaler.nh;
+      uVar3 = (ulonglong)(uint)g_b_scaler.nw;
     }
-    iVar21 = 0;
-    if (0 < iVar20) {
-      iVar20 = 0;
-      uVar4 = 0;
+    iVar22 = 0;
+    if (0 < iVar21) {
+      iVar21 = 0;
+      uVar16 = 0;
       while( true ) {
-        *(short *)(iVar20 + DAT_84897380) = (short)((int)uVar4 / (int)uVar3);
+        *(short *)(iVar21 + (int)g_b_scaler.l_w) = (short)((int)uVar16 / (int)uVar3);
         trapWord(6,uVar3,0);
-        trapWord(5,uVar3 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff)
-        ;
-        if (*(short *)(iVar20 + DAT_84897380) + 2 <= iVar16) {
-          DAT_84897370 = iVar21;
+        trapWord(5,uVar3 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),
+                 0xffff);
+        if (*(short *)(iVar21 + (int)g_b_scaler.l_w) + 2 <= iVar11) {
+          g_b_scaler.max_usable_out_width = iVar22;
         }
-        iVar21 = iVar21 + 1;
-        uVar4 = uVar4 + lVar18;
-        iVar20 = iVar20 + 2;
-        param_3 = param_3 - 1;
-        if (param_3 == 0) break;
-        uVar3 = (ulonglong)DAT_84897374;
+        iVar22 = iVar22 + 1;
+        uVar16 = uVar16 + (longlong)(iVar11 / iVar7);
+        iVar21 = iVar21 + 2;
+        uVar24 = uVar24 - 1;
+        if (uVar24 == 0) break;
+        uVar3 = (ulonglong)(uint)g_b_scaler.nw;
       }
-      uVar4 = (ulonglong)DAT_84897378;
+      uVar16 = (ulonglong)(uint)g_b_scaler.nh;
     }
-    lVar18 = param_4 + 1;
-    if (0 < lVar18) {
-      iVar16 = 0;
+    lVar15 = uVar13 + 1;
+    if (0 < lVar15) {
+      iVar11 = 0;
       uVar3 = 0;
-      uVar5 = 0;
+      uVar24 = 0;
       while( true ) {
-        uVar6 = uVar5 & 0xffffffff;
-        uVar8 = uVar5 & 0x7fffffff;
-        *(short *)(iVar16 + DAT_84897384) = (short)((int)uVar5 / (int)uVar4);
-        trapWord(6,uVar4,0);
-        uVar5 = uVar5 + lVar19;
-        trapWord(5,uVar4 & ~((uVar8 << 1 | uVar6 >> 0x1f) - 1),0xffff);
-        trapWord(6,(ulonglong)DAT_8489737c,0);
-        trapWord(5,(ulonglong)DAT_8489737c &
+        uVar13 = uVar24 & 0xffffffff;
+        uVar4 = uVar24 & 0x7fffffff;
+        *(short *)(iVar11 + (int)g_b_scaler.l_h) = (short)((int)uVar24 / (int)uVar16);
+        trapWord(6,uVar16,0);
+        uVar24 = uVar24 + (longlong)(iVar23 / iVar8);
+        trapWord(5,uVar16 & ~((uVar4 << 1 | uVar13 >> 0x1f) - 1),0xffff);
+        trapWord(6,(ulonglong)(uint)g_b_scaler.nh_uv,0);
+        trapWord(5,(ulonglong)(uint)g_b_scaler.nh_uv &
                    ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        *(short *)(iVar16 + DAT_84897388) = (short)((int)uVar3 / (int)DAT_8489737c);
-        uVar3 = uVar3 + lVar17;
-        iVar16 = iVar16 + 2;
-        lVar18 = lVar18 + -1;
-        if (lVar18 == 0) break;
-        uVar4 = (ulonglong)DAT_84897378;
+        *(short *)(iVar11 + (int)g_b_scaler.l_h_uv) = (short)((int)uVar3 / g_b_scaler.nh_uv);
+        uVar3 = uVar3 + lVar20;
+        iVar11 = iVar11 + 2;
+        lVar15 = lVar15 + -1;
+        if (lVar15 == 0) break;
+        uVar16 = (ulonglong)(uint)g_b_scaler.nh;
       }
     }
   }
-  __restgprlr_17(0);
-  return;
+  iVar11 = __restgprlr_17(0);
+  return iVar11;
 }
 
 
 // 8283F4B8  bicubic_scale  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:494)
 
-void bicubic_scale(undefined8 param_1,int param_2,int param_3,undefined8 param_4,ulonglong param_5,
-                  uint param_6,int param_7,longlong param_8)
+int bicubic_scale(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+                 uchar *param_7,uchar *param_8)
 
 {
   short sVar1;
   short *psVar2;
   short *psVar3;
-  int iVar4;
-  int iVar5;
-  byte *pbVar6;
+  short *psVar4;
+  short *psVar5;
+  uchar *puVar6;
   longlong lVar7;
-  undefined4 uVar8;
+  ulonglong uVar8;
   int iVar9;
-  byte *pbVar11;
-  ulonglong uVar10;
-  ulonglong uVar12;
-  int iVar13;
-  short *psVar14;
-  ulonglong uVar15;
-  short *psVar16;
-  byte bVar17;
-  byte *pbVar18;
-  longlong lVar19;
+  longlong lVar10;
+  byte *pbVar12;
+  ulonglong uVar11;
+  ulonglong uVar13;
+  int iVar14;
+  short *psVar15;
+  longlong lVar16;
+  ulonglong uVar17;
+  short *psVar18;
+  byte bVar19;
+  byte *pbVar20;
+  longlong lVar21;
+  int iStack0000001c;
+  uint uStack0000003c;
+  uchar *puStack00000044;
   uint local_b0;
   
-  iVar9 = (int)param_4;
-  uVar8 = (undefined4)((ulonglong)param_4 >> 0x20);
-  lVar7 = __savegprlr();
-  iVar5 = DAT_84897390;
-  iVar4 = DAT_8489738c;
-  psVar3 = DAT_84897380;
-  uVar15 = 0;
-  local_b0 = (uint)param_5;
-  psVar14 = DAT_84897384;
+  lVar16 = (longlong)(int)param_8;
+  uVar11 = (ulonglong)param_5;
+  lVar10 = (longlong)param_4;
+  uVar8 = (ulonglong)param_3;
+  lVar7 = (longlong)param_1;
+  __savegprlr();
+  psVar5 = g_b_scaler.c_h;
+  psVar4 = g_b_scaler.c_w;
+  psVar3 = g_b_scaler.l_w;
+  uVar17 = 0;
+  local_b0 = (uint)uVar11;
+  psVar15 = g_b_scaler.l_h;
   if (0 < (int)local_b0) {
     do {
-      pbVar6 = DAT_84897398;
-      pbVar11 = (byte *)(*psVar14 * param_3 + param_7);
-      pbVar18 = pbVar11;
-      if ((((int)uVar15 != 0) && ((int)*psVar14 < param_2 + -2)) &&
-         (iVar13 = 0, pbVar18 = pbVar6, 0 < (int)lVar7)) {
-        psVar16 = (short *)((int)uVar15 * 8 + iVar5);
-        lVar19 = lVar7;
+      puVar6 = g_b_scaler.hbuf;
+      iVar9 = (int)uVar8;
+      pbVar12 = param_7 + *psVar15 * iVar9;
+      pbVar20 = pbVar12;
+      if ((((int)uVar17 != 0) && ((int)*psVar15 < param_2 + -2)) &&
+         (iVar14 = 0, pbVar20 = puVar6, 0 < (int)lVar7)) {
+        psVar18 = psVar5 + (int)uVar17 * 4;
+        lVar21 = lVar7;
         do {
-          pbVar6[iVar13] =
-               (byte)((int)((uint)pbVar11[iVar13 + param_3] * (int)psVar16[1] +
-                            (uint)pbVar11[iVar13 - param_3] * (int)psVar16[3] +
-                            (uint)pbVar11[iVar13 + param_3 * 2] * (int)*psVar16 +
-                           (uint)pbVar11[iVar13] * (int)psVar16[2]) >> 0xc);
-          iVar13 = iVar13 + 1;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
+          puVar6[iVar14] =
+               (uchar)((int)((uint)pbVar12[iVar14 + iVar9] * (int)psVar18[1] +
+                             (uint)pbVar12[iVar14 - iVar9] * (int)psVar18[3] +
+                             (uint)pbVar12[iVar14 + (int)((uVar8 & 0xffffffff) << 1)] *
+                             (int)*psVar18 + (uint)pbVar12[iVar14] * (int)psVar18[2]) >> 0xc);
+          iVar14 = iVar14 + 1;
+          lVar21 = lVar21 + -1;
+        } while (lVar21 != 0);
       }
-      uVar15 = uVar15 + 1;
-      uVar12 = 0;
-      iVar13 = 0;
-      uVar15 = (ulonglong)(DAT_84897378 >> 0x1f) -
-               (((uVar15 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar15 < DAT_84897378)) & uVar15;
-      if (0 < iVar9) {
-        lVar19 = CONCAT44(uVar8,iVar9);
-        psVar16 = psVar3;
+      uVar17 = uVar17 + 1;
+      uVar13 = 0;
+      iVar9 = 0;
+      uVar17 = (ulonglong)((uint)g_b_scaler.nh >> 0x1f) -
+               (((uVar17 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar17 < (uint)g_b_scaler.nh)) &
+               uVar17;
+      lVar21 = lVar10;
+      psVar18 = psVar3;
+      if (0 < (int)lVar10) {
         do {
-          sVar1 = *psVar16;
-          uVar10 = uVar12 + 1;
-          psVar2 = (short *)((int)uVar12 * 8 + iVar4);
-          uVar12 = (ulonglong)(DAT_84897374 >> 0x1f) -
-                   (((uVar10 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar10 < DAT_84897374)) & uVar10;
-          bVar17 = (byte)((int)((uint)pbVar18[sVar1 + 1] * (int)psVar2[2] +
-                                (uint)pbVar18[sVar1 + 2] * (int)psVar2[3] +
-                                (uint)pbVar18[sVar1 + -1] * (int)*psVar2 +
-                               (int)psVar2[1] * (uint)pbVar18[sVar1]) >> 0xc);
+          sVar1 = *psVar18;
+          uVar11 = uVar13 + 1;
+          psVar2 = psVar4 + (int)uVar13 * 4;
+          uVar13 = (ulonglong)((uint)g_b_scaler.nw >> 0x1f) -
+                   (((uVar11 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar11 < (uint)g_b_scaler.nw)) &
+                   uVar11;
+          bVar19 = (byte)((int)((uint)pbVar20[sVar1 + 1] * (int)psVar2[2] +
+                                (uint)pbVar20[sVar1 + 2] * (int)psVar2[3] +
+                                (uint)pbVar20[sVar1 + -1] * (int)*psVar2 +
+                               (int)psVar2[1] * (uint)pbVar20[sVar1]) >> 0xc);
           if ((int)lVar7 <= sVar1 + 2) {
-            bVar17 = pbVar18[sVar1];
+            bVar19 = pbVar20[sVar1];
           }
           if (sVar1 == 0) {
-            bVar17 = *pbVar18;
+            bVar19 = *pbVar20;
           }
-          psVar16 = psVar16 + 1;
-          *(byte *)(iVar13 + (int)param_8) = bVar17;
-          iVar13 = iVar13 + 1;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        param_5 = (ulonglong)local_b0;
+          *(byte *)(iVar9 + (int)lVar16) = bVar19;
+          iVar9 = iVar9 + 1;
+          lVar21 = lVar21 + -1;
+          psVar18 = psVar18 + 1;
+        } while (lVar21 != 0);
+        uVar11 = (ulonglong)local_b0;
       }
-      param_5 = param_5 - 1;
-      local_b0 = (uint)param_5;
-      param_8 = param_8 + (ulonglong)param_6;
-      psVar14 = psVar14 + 1;
-    } while (param_5 != 0);
+      uVar11 = uVar11 - 1;
+      local_b0 = (uint)uVar11;
+      lVar16 = lVar16 + (ulonglong)(uint)param_6;
+      psVar15 = psVar15 + 1;
+    } while (uVar11 != 0);
   }
-  __restgprlr(0);
-  return;
+  iVar9 = 0;
+  iStack0000001c = param_2;
+  uStack0000003c = param_6;
+  puStack00000044 = param_7;
+  __restgprlr();
+  return iVar9;
 }
 
 
 // 8283F6E8  bicubic_scale_frame_reset  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:581)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void bicubic_scale_frame_reset(void)
 
 {
-  DAT_84897368 = 0;
-  DAT_8489736c = 0;
+  g_b_scaler.out_width = 0;
+  g_b_scaler.out_height = 0;
   return;
 }
 
 
 // 8283F708  bicubic_scale_frame  (WebM_atvi_opt/vpx/vpx_scale/generic/bicubic_scaler.c:588)
 
-void bicubic_scale_frame(undefined8 param_1,int *param_2,ulonglong param_3,ulonglong param_4)
+void bicubic_scale_frame(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int param_3,
+                        int param_4)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   
-  puVar1 = (undefined4 *)__savegprlr_28();
-  iVar2 = (int)param_3;
-  iVar3 = (int)param_4;
-  param_2[1] = iVar3;
-  *param_2 = iVar2;
-  lVar5 = (longlong)(iVar2 >> 1) + (ulonglong)(iVar2 < 0 && (param_3 & 1) != 0);
-  param_2[2] = iVar2;
-  iVar2 = (int)lVar5;
-  param_2[3] = iVar2;
-  lVar4 = (longlong)(iVar3 >> 1) + (ulonglong)(iVar3 < 0 && (param_4 & 1) != 0);
-  param_2[5] = iVar2;
-  param_2[4] = (int)lVar4;
-  bicubic_scale(*puVar1,puVar1[1],puVar1[2],param_3,param_4,param_3,puVar1[6],param_2[6]);
-  bicubic_scale(puVar1[3],puVar1[4],puVar1[5],lVar5,lVar4,param_2[5],puVar1[7],param_2[7]);
-  bicubic_scale(puVar1[3],puVar1[4],puVar1[5]);
-  __restgprlr_28();
+  uVar4 = (ulonglong)param_4;
+  uVar3 = (ulonglong)param_3;
+  piVar1 = (int *)__savegprlr_28(param_1);
+  iVar2 = (int)uVar3;
+  iVar5 = (int)uVar4;
+  param_2->y_height = iVar5;
+  param_2->y_width = iVar2;
+  iVar7 = (iVar2 >> 1) + (uint)(iVar2 < 0 && (uVar3 & 1) != 0);
+  param_2->y_stride = iVar2;
+  param_2->uv_width = iVar7;
+  iVar6 = (iVar5 >> 1) + (uint)(iVar5 < 0 && (uVar4 & 1) != 0);
+  param_2->uv_stride = iVar7;
+  param_2->uv_height = iVar6;
+  bicubic_scale(*piVar1,piVar1[1],piVar1[2],iVar2,iVar5,iVar2,(uchar *)piVar1[6],param_2->y_buffer);
+  bicubic_scale(piVar1[3],piVar1[4],piVar1[5],iVar7,iVar6,param_2->uv_stride,(uchar *)piVar1[7],
+                param_2->u_buffer);
+  iVar2 = bicubic_scale(piVar1[3],piVar1[4],piVar1[5],iVar7,iVar6,param_2->uv_stride,
+                        (uchar *)piVar1[8],param_2->v_buffer);
+  __restgprlr_28(iVar2);
   return;
 }
 

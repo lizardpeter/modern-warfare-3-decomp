@@ -2,35 +2,37 @@
 
 // 8234BDC8  Live_CheckPlayerIsSignedIn  (client_mp/cl_main_xenon_mp.cpp:66)
 
-void Live_CheckPlayerIsSignedIn(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_CheckPlayerIsSignedIn(LocalClientNum_t param_1)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
-  longlong lVar3;
+  LocalClientNum_t LVar3;
   
-  if (DAT_82966e98 == 0) {
-    CL_ControllerIndexFromClientNum();
-    iVar1 = CL_GetLocalClientSignInState();
+  if (cl_multi_gamepads_enabled == 0) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    iVar1 = CL_GetLocalClientSignInState(iVar1);
     if (0 < iVar1) {
       return;
     }
   }
   else {
-    lVar3 = 0;
+    LVar3 = LOCAL_CLIENT_0;
     do {
-      cVar2 = CL_IsLocalClientActive(lVar3);
-      if (cVar2 != '\0') {
-        CL_ControllerIndexFromClientNum(lVar3);
-        iVar1 = CL_GetLocalClientSignInState();
+      bVar2 = CL_IsLocalClientActive(LVar3);
+      if (bVar2) {
+        iVar1 = CL_ControllerIndexFromClientNum(LVar3);
+        iVar1 = CL_GetLocalClientSignInState(iVar1);
         if (0 < iVar1) {
           return;
         }
       }
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < 4);
+      LVar3 = LVar3 + LOCAL_CLIENT_1;
+    } while ((int)LVar3 < 4);
   }
-  Live_ThrowError(1,0xffffffff820343d8);
+  Live_ThrowError(ERR_DROP,"XBOXLIVE_MUSTLOGIN");
   return;
 }
 
@@ -43,18 +45,20 @@ void CL_ControllerInserted(int param_1)
   if ((-1 < param_1) && (param_1 < 4)) {
     return;
   }
-  MyAssertHandler(0xffffffff820343f0,0x5b,0,0xffffffff82000f98,0xffffffff8203443c);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp",
+                  0x5b,0,"%s");
   return;
 }
 
 
 // 8234BE90  CL_ControllerRemoved  (client_mp/cl_main_xenon_mp.cpp:96)
 
-void CL_ControllerRemoved(undefined8 param_1)
+void CL_ControllerRemoved(int param_1)
 
 {
-  if (((int)param_1 < 0) || (3 < (int)param_1)) {
-    MyAssertHandler(0xffffffff820343f0,0x61,0,0xffffffff82000f98,0xffffffff8203443c);
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp"
+                    ,0x61,0,"%s");
   }
   IN_GamepadsReset(param_1);
   return;
@@ -62,6 +66,8 @@ void CL_ControllerRemoved(undefined8 param_1)
 
 
 // 8234BEF8  CL_GlobalServers_f  (client_mp/cl_main_xenon_mp.cpp:106)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_GlobalServers_f(void)
 
@@ -72,7 +78,9 @@ void CL_GlobalServers_f(void)
 
 // 8234BF00  CL_ServerStatusResponse  (client_mp/cl_main_xenon_mp.cpp:111)
 
-void CL_ServerStatusResponse(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_ServerStatusResponse(netadr_t param_1,msg_t *param_2)
 
 {
   return;
@@ -81,74 +89,83 @@ void CL_ServerStatusResponse(void)
 
 // 8234CB80  CL_SetServerInfoByAddress  (client_mp/cl_main_xenon_mp.cpp:115)
 
-void CL_SetServerInfoByAddress
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined2 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CL_SetServerInfoByAddress(netadr_t param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  char *pcVar2;
+  int iVar4;
+  long64 lVar1;
+  ulonglong in_r5;
+  undefined4 in_r6;
+  XNKEY *pXVar5;
+  undefined4 uStack0000002c;
+  XNADDR aXStack_c0 [5];
   char *pcVar3;
-  undefined *puVar4;
-  undefined1 auStack_c0 [192];
   
   __savegprlr();
-  uVar1 = Info_ValueForKey(param_3);
-  StringToXNAddr(uVar1,auStack_c0);
-  puVar4 = &DAT_82aa1c7c;
+  pcVar3 = (char *)in_r5;
+  uStack0000002c = in_r6;
+  pcVar2 = Info_ValueForKey(pcVar3,"xnaddr");
+  StringToXNAddr(pcVar2,aXStack_c0);
+  pXVar5 = &cls.localServers[0].xnkey;
   do {
-    iVar2 = NET_CompareXNAddr(auStack_c0);
-    if ((iVar2 != 0) && (puVar4 != (undefined *)0x24)) {
-      if ((param_3 & 0xffffffff) != 0) {
-        Info_ValueForKey(param_3,0xffffffff820344c0);
-        uVar1 = StringToInt64();
-        *(undefined8 *)(puVar4 + 0x10) = uVar1;
-        uVar1 = Info_ValueForKey(param_3,0xffffffff820344b8);
-        StringToInt128(uVar1,puVar4);
-        uVar1 = Info_ValueForKey(param_3,"xnaddr");
-        StringToXNAddr(uVar1,puVar4 + -0x24);
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82014e8c);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x35] = (char)iVar2;
-        uVar1 = Info_ValueForKey(param_3,0xffffffff820344a4);
-        I_strncpyz(puVar4 + 0x44,uVar1,0x20);
-        uVar1 = Info_ValueForKey(param_3,0xffffffff82010974);
-        I_strncpyz(puVar4 + 100,uVar1,0x20);
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82022f7c);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x36] = (char)iVar2;
-        uVar1 = Info_ValueForKey(param_3,0xffffffff8203449c);
-        I_strncpyz(puVar4 + 0x84,uVar1,0x18);
-        uVar1 = Info_ValueForKey(param_3,0xffffffff820337c4);
-        I_strncpyz(puVar4 + 0x9c,uVar1,0x10);
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034494);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x34] = (char)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff8203448c);
-        iVar2 = atoi(pcVar3);
-        *(short *)(puVar4 + 0x3e) = (short)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034484);
-        iVar2 = atoi(pcVar3);
-        *(short *)(puVar4 + 0x40) = (short)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034480);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x38] = (char)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff8203447c);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x39] = (char)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034478);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x3a] = (char)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034474);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x3b] = (char)iVar2;
-        pcVar3 = (char *)Info_ValueForKey(param_3,0xffffffff82034470);
-        iVar2 = atoi(pcVar3);
-        puVar4[0x3c] = (char)iVar2;
+    iVar4 = NET_CompareXNAddr(aXStack_c0,(XNADDR *)((int)(pXVar5 + -3) + 0xc));
+    if ((iVar4 != 0) && (pXVar5 != (XNKEY *)0x24)) {
+      if ((in_r5 & 0xffffffff) != 0) {
+        pcVar2 = Info_ValueForKey(pcVar3,"xnkid");
+        lVar1 = StringToInt64(pcVar2);
+        *(long64 *)((XNKID *)(pXVar5 + 1))->ab = lVar1;
+        pcVar2 = Info_ValueForKey(pcVar3,"xnkey");
+        StringToInt128(pcVar2,pXVar5->ab);
+        pcVar2 = Info_ValueForKey(pcVar3,"xnaddr");
+        StringToXNAddr(pcVar2,(XNADDR *)((int)(pXVar5 + -3) + 0xc));
+        pcVar2 = Info_ValueForKey(pcVar3,"clients");
+        iVar4 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar5 + 3) + 5) = (uchar)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"hostname");
+        I_strncpyz((char *)((int)(pXVar5 + 4) + 4),pcVar2,0x20);
+        pcVar2 = Info_ValueForKey(pcVar3,"mapname");
+        I_strncpyz((char *)((int)(pXVar5 + 6) + 4),pcVar2,0x20);
+        pcVar2 = Info_ValueForKey(pcVar3,"sv_maxclients");
+        iVar4 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar5 + 3) + 6) = (uchar)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"game");
+        I_strncpyz((char *)((int)(pXVar5 + 8) + 4),pcVar2,0x18);
+        pcVar2 = Info_ValueForKey(pcVar3,"gametype");
+        I_strncpyz((char *)((int)(pXVar5 + 9) + 0xc),pcVar2,0x10);
+        pcVar2 = Info_ValueForKey(pcVar3,"nettype");
+        iVar4 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar5 + 3) + 4) = (uchar)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"minping");
+        iVar4 = atoi(pcVar2);
+        *(short *)((int)(pXVar5 + 3) + 0xe) = (short)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"maxping");
+        iVar4 = atoi(pcVar2);
+        *(short *)(pXVar5 + 4) = (short)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"ff");
+        iVar4 = atoi(pcVar2);
+        *(char *)((int)(pXVar5 + 3) + 8) = (char)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"kc");
+        iVar4 = atoi(pcVar2);
+        *(char *)((int)(pXVar5 + 3) + 9) = (char)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"st");
+        iVar4 = atoi(pcVar2);
+        *(char *)((int)(pXVar5 + 3) + 10) = (char)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"hw");
+        iVar4 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar5 + 3) + 0xb) = (uchar)iVar4;
+        pcVar2 = Info_ValueForKey(pcVar3,"mod");
+        iVar4 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar5 + 3) + 0xc) = (uchar)iVar4;
       }
-      *(undefined2 *)(puVar4 + 0x42) = param_4;
+      *(short *)((int)(pXVar5 + 4) + 2) = (short)uStack0000002c;
     }
-    puVar4 = puVar4 + 0xd0;
-  } while ((int)puVar4 < -0x7d55d684);
+    pXVar5 = pXVar5 + 0xd;
+  } while ((int)pXVar5 < -0x7d55d684);
   __restgprlr();
   return;
 }
@@ -156,64 +173,70 @@ void CL_SetServerInfoByAddress
 
 // 8234BF08  CL_SetServerInfo  (client_mp/cl_main_xenon_mp.cpp:131)
 
-void CL_SetServerInfo(undefined8 param_1,ulonglong param_2,undefined2 param_3)
+void CL_SetServerInfo(serverInfo_t *param_1,char *param_2,int param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  XNADDR *pXVar2;
   char *pcVar3;
+  long64 lVar1;
   int iVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  undefined2 uVar7;
   
-  iVar2 = __savegprlr_29();
-  if (iVar2 != 0) {
-    if ((param_2 & 0xffffffff) != 0) {
-      Info_ValueForKey(param_2,0xffffffff820344c0);
-      uVar1 = StringToInt64();
-      *(undefined8 *)(iVar2 + 0x34) = uVar1;
-      uVar1 = Info_ValueForKey(param_2,0xffffffff820344b8);
-      StringToInt128(uVar1,iVar2 + 0x24);
-      uVar1 = Info_ValueForKey(param_2,0xffffffff820344b0);
-      StringToXNAddr(uVar1,iVar2);
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82014e8c);
+  uVar7 = (undefined2)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pXVar2 = (XNADDR *)__savegprlr_29(param_1);
+  if (pXVar2 != (XNADDR *)0x0) {
+    if ((uVar6 & 0xffffffff) != 0) {
+      pcVar5 = (char *)uVar6;
+      pcVar3 = Info_ValueForKey(pcVar5,"xnkid");
+      lVar1 = StringToInt64(pcVar3);
+      *(long64 *)pXVar2[1].abOnline = lVar1;
+      pcVar3 = Info_ValueForKey(pcVar5,"xnkey");
+      StringToInt128(pcVar3,(uchar *)(pXVar2 + 1));
+      pcVar3 = Info_ValueForKey(pcVar5,"xnaddr");
+      StringToXNAddr(pcVar3,pXVar2);
+      pcVar3 = Info_ValueForKey(pcVar5,"clients");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x59) = (char)iVar4;
-      uVar1 = Info_ValueForKey(param_2,0xffffffff820344a4);
-      I_strncpyz(iVar2 + 0x68,uVar1,0x20);
-      uVar1 = Info_ValueForKey(param_2,0xffffffff82010974);
-      I_strncpyz(iVar2 + 0x88,uVar1,0x20);
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82022f7c);
+      pXVar2[2].abOnline[1] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"hostname");
+      I_strncpyz((char *)(pXVar2[2].abOnline + 0x10),pcVar3,0x20);
+      pcVar3 = Info_ValueForKey(pcVar5,"mapname");
+      I_strncpyz((char *)(pXVar2[3].abOnline + 0xc),pcVar3,0x20);
+      pcVar3 = Info_ValueForKey(pcVar5,"sv_maxclients");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x5a) = (char)iVar4;
-      uVar1 = Info_ValueForKey(param_2,0xffffffff8203449c);
-      I_strncpyz(iVar2 + 0xa8,uVar1,0x18);
-      uVar1 = Info_ValueForKey(param_2,0xffffffff820337c4);
-      I_strncpyz(iVar2 + 0xc0,uVar1,0x10);
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034494);
+      pXVar2[2].abOnline[2] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"game");
+      I_strncpyz((char *)(pXVar2[4].abOnline + 8),pcVar3,0x18);
+      pcVar3 = Info_ValueForKey(pcVar5,"gametype");
+      I_strncpyz((char *)(pXVar2[5].abEnet + 2),pcVar3,0x10);
+      pcVar3 = Info_ValueForKey(pcVar5,"nettype");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x58) = (char)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff8203448c);
+      pXVar2[2].abOnline[0] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"minping");
       iVar4 = atoi(pcVar3);
-      *(short *)(iVar2 + 0x62) = (short)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034484);
+      *(short *)(pXVar2[2].abOnline + 10) = (short)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"maxping");
       iVar4 = atoi(pcVar3);
-      *(short *)(iVar2 + 100) = (short)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034480);
+      *(short *)(pXVar2[2].abOnline + 0xc) = (short)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"ff");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x5c) = (char)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff8203447c);
+      pXVar2[2].abOnline[4] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"kc");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x5d) = (char)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034478);
+      pXVar2[2].abOnline[5] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"st");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x5e) = (char)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034474);
+      pXVar2[2].abOnline[6] = (uchar)iVar4;
+      pcVar3 = Info_ValueForKey(pcVar5,"hw");
       iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x5f) = (char)iVar4;
-      pcVar3 = (char *)Info_ValueForKey(param_2,0xffffffff82034470);
-      iVar4 = atoi(pcVar3);
-      *(char *)(iVar2 + 0x60) = (char)iVar4;
+      pXVar2[2].abOnline[7] = (uchar)iVar4;
+      pcVar5 = Info_ValueForKey(pcVar5,"mod");
+      iVar4 = atoi(pcVar5);
+      pXVar2[2].abOnline[8] = (uchar)iVar4;
     }
-    *(undefined2 *)(iVar2 + 0x66) = param_3;
+    *(undefined2 *)(pXVar2[2].abOnline + 0xe) = uVar7;
   }
   __restgprlr_29();
   return;
@@ -222,148 +245,170 @@ void CL_SetServerInfo(undefined8 param_1,ulonglong param_2,undefined2 param_3)
 
 // 8234CE00  CL_ServerInfoPacket  (client_mp/cl_main_xenon_mp.cpp:171)
 
-void CL_ServerInfoPacket(undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CL_ServerInfoPacket(netadr_t param_1,msg_t *param_2,int param_3)
 
 {
-  byte bVar1;
-  byte bVar2;
-  char cVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  char *pcVar7;
-  int iVar8;
+  char cVar1;
+  char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
+  uint uVar7;
+  uint uVar8;
   int iVar9;
-  undefined8 uVar6;
-  byte *pbVar10;
-  byte *pbVar11;
-  byte *pbVar12;
-  undefined *puVar13;
-  int iStack00000010;
-  byte local_8c0 [36];
-  byte abStack_89c [12];
-  byte local_890 [8];
-  undefined8 local_888;
-  undefined8 local_880;
+  long64 lVar2;
+  ulong64 uVar3;
+  msg_t *in_r5;
+  int in_r6;
+  serverInfo_t *psVar10;
+  longlong lVar11;
+  serverInfo_t *psVar12;
+  uchar *puVar13;
+  int iVar14;
+  XNADDR *pXVar15;
+  netadr_t in_stack_fffff6f8;
+  XNADDR local_8c0;
+  XNADDR XStack_89c;
   undefined8 local_878;
   undefined4 local_870;
   char acStack_861 [1025];
-  undefined1 auStack_460 [1120];
+  char acStack_460 [1120];
   
-  uVar4 = __savegprlr_22();
-  uVar5 = MSG_ReadString(param_3,auStack_460,0x400);
-  pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82032520);
-  iVar8 = atoi(pcVar7);
-  pcVar7 = (char *)Dvar_GetString(0xffffffff820347a4);
-  if (*pcVar7 == '\0') {
-    iVar9 = GetProtocolVersion();
+  pcVar4 = (char *)__savegprlr_22(param_2);
+  pcVar5 = MSG_ReadString(in_r5,acStack_460,0x400);
+  pcVar6 = Info_ValueForKey(pcVar5,"protocol");
+  uVar7 = atoi(pcVar6);
+  pcVar6 = Dvar_GetString("debug_protocol");
+  if (*pcVar6 == '\0') {
+    uVar8 = GetProtocolVersion();
   }
   else {
-    iVar9 = atoi(pcVar7);
+    uVar8 = atoi(pcVar6);
   }
-  if (iVar8 != iVar9) {
-    Com_Printf(0xe,0xffffffff82034780,uVar5);
+  if (uVar7 != uVar8) {
+    Com_Printf(0xe,"Different protocol info packet: %s\n");
   }
-  uVar6 = Info_ValueForKey(uVar5,0xffffffff820344b0);
-  StringToXNAddr(uVar6,local_8c0);
-  iVar8 = 0;
-  puVar13 = &DAT_82b3a110;
+  pcVar6 = Info_ValueForKey(pcVar5,"xnaddr");
+  StringToXNAddr(pcVar6,&local_8c0);
+  iVar14 = 0;
+  pXVar15 = &cl_pinglist[0].xnaddr;
   do {
-    if ((*(int *)(puVar13 + 0x28) == 0) &&
-       (iVar9 = NET_CompareXNAddr(local_8c0,puVar13), iVar9 != 0)) {
-      (&DAT_82b3a138)[iVar8 * 0x10f] = (param_4 - (&DAT_82b3a134)[iVar8 * 0x10f]) + 1;
-      uVar6 = Info_ValueForKey(uVar5,0xffffffff820344a4);
-      Com_DPrintf(0xe,0xffffffff82034738,(&DAT_82b3a138)[iVar8 * 0x10f],uVar6);
-      I_strncpyz(&DAT_82b3a13c + iVar8 * 0x43c,uVar5,0x400);
-      iStack00000010 = (int)((ulonglong)uVar4 >> 0x20);
-      if ((iStack00000010 < 3) || (uVar6 = 1, 4 < iStack00000010)) {
-        uVar6 = 0;
-      }
-      uVar6 = va(0xffffffff82013b64,uVar6);
-      Info_SetValueForKey(&DAT_82b3a13c + iVar8 * 0x43c,0xffffffff82034494,uVar6);
-      CL_SetServerInfoByAddress(uVar4,param_2,uVar5,(&DAT_82b3a138)[iVar8 * 0x10f]);
+    if ((pXVar15[1].inaOnline.S_un.S_addr == 0) &&
+       (iVar9 = NET_CompareXNAddr(&local_8c0,pXVar15), iVar9 != 0)) {
+      cl_pinglist[iVar14].time = (in_r6 - cl_pinglist[iVar14].start) + 1;
+      Info_ValueForKey(pcVar5,"hostname");
+      Com_DPrintf(0xe,"ping time %dms from %s\n");
+      I_strncpyz(cl_pinglist[iVar14].info,pcVar5,0x400);
+      pcVar5 = va("%d");
+      Info_SetValueForKey(cl_pinglist[iVar14].info,"nettype",pcVar5);
+      CL_SetServerInfoByAddress(in_stack_fffff6f8,pcVar4,param_3);
       __restgprlr_22();
       return;
     }
-    puVar13 = puVar13 + 0x43c;
-    iVar8 = iVar8 + 1;
-  } while ((int)puVar13 < -0x7d4c1b30);
-  if (DAT_82aa2958 == 0) {
-    pbVar10 = &DAT_82aa1c58;
+    pXVar15 = (XNADDR *)&pXVar15[0x1e].inaOnline;
+    iVar14 = iVar14 + 1;
+  } while ((int)pXVar15 < -0x7d4c1b30);
+  if (cls.pingUpdateSource == 0) {
+    psVar10 = cls.localServers;
     do {
-      pbVar12 = local_8c0;
-      pbVar11 = pbVar10;
+      pXVar15 = &local_8c0;
+      psVar12 = psVar10;
       do {
-        bVar1 = *pbVar12;
-        bVar2 = *pbVar11;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar12 = pbVar12 + 1;
-        pbVar11 = pbVar11 + 1;
-      } while (pbVar12 != abStack_89c);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) goto LAB_8234d208;
-      pbVar10 = pbVar10 + 0xd0;
-    } while ((int)pbVar10 < -0x7d55d6a8);
-    iVar8 = 0;
-    pbVar10 = &DAT_82aa1c58;
-    local_888 = 0;
-    local_880 = 0;
+        lVar11 = (ulonglong)(pXVar15->ina).S_un.S_un_b.s_b1 -
+                 (ulonglong)(psVar12->xnaddr).ina.S_un.S_un_b.s_b1;
+        if (lVar11 != 0) break;
+        pXVar15 = (XNADDR *)((int)&(pXVar15->ina).S_un + 1);
+        psVar12 = (serverInfo_t *)((int)&(psVar12->xnaddr).ina.S_un + 1);
+      } while (pXVar15 != &XStack_89c);
+      if ((int)lVar11 == 0) goto LAB_8234d208;
+      psVar10 = psVar10 + 1;
+    } while ((int)psVar10 < -0x7d55d6a8);
+    iVar14 = 0;
+    psVar10 = cls.localServers;
+    XStack_89c.abEnet[2] = '\0';
+    XStack_89c.abEnet[3] = '\0';
+    XStack_89c.abEnet[4] = '\0';
+    XStack_89c.abEnet[5] = '\0';
+    XStack_89c.abOnline[0] = '\0';
+    XStack_89c.abOnline[1] = '\0';
+    XStack_89c.abOnline[2] = '\0';
+    XStack_89c.abOnline[3] = '\0';
+    XStack_89c.abOnline[4] = '\0';
+    XStack_89c.abOnline[5] = '\0';
+    XStack_89c.abOnline[6] = '\0';
+    XStack_89c.abOnline[7] = '\0';
+    XStack_89c.abOnline[8] = '\0';
+    XStack_89c.abOnline[9] = '\0';
+    XStack_89c.abOnline[10] = '\0';
+    XStack_89c.abOnline[0xb] = '\0';
+    XStack_89c.abOnline[0xc] = '\0';
+    XStack_89c.abOnline[0xd] = '\0';
+    XStack_89c.abOnline[0xe] = '\0';
+    XStack_89c.abOnline[0xf] = '\0';
+    XStack_89c.abOnline[0x10] = '\0';
+    XStack_89c.abOnline[0x11] = '\0';
+    XStack_89c.abOnline[0x12] = '\0';
+    XStack_89c.abOnline[0x13] = '\0';
     local_878 = 0;
     local_870 = 0;
     do {
-      pbVar12 = local_890;
-      pbVar11 = pbVar10;
+      puVar13 = XStack_89c.abEnet + 2;
+      psVar12 = psVar10;
       do {
-        bVar1 = *pbVar11;
-        bVar2 = *pbVar12;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar11 = pbVar11 + 1;
-        pbVar12 = pbVar12 + 1;
-      } while (pbVar11 != pbVar10 + 0x24);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) break;
-      pbVar10 = pbVar10 + 0xd0;
-      iVar8 = iVar8 + 1;
-    } while ((int)pbVar10 < -0x7d55d6a8);
-    if (iVar8 == 0x10) {
-      Com_DPrintf(0xe,0xffffffff82034750);
+        lVar11 = (ulonglong)(psVar12->xnaddr).ina.S_un.S_un_b.s_b1 - (ulonglong)*puVar13;
+        if (lVar11 != 0) break;
+        psVar12 = (serverInfo_t *)((int)&(psVar12->xnaddr).ina.S_un + 1);
+        puVar13 = puVar13 + 1;
+      } while (psVar12 != (serverInfo_t *)&psVar10->xnkey);
+      if ((int)lVar11 == 0) break;
+      psVar10 = psVar10 + 1;
+      iVar14 = iVar14 + 1;
+    } while ((int)psVar10 < -0x7d55d6a8);
+    if (iVar14 == 0x10) {
+      Com_DPrintf(0xe,"MAX_OTHER_SERVERS hit, dropping infoResponse\n");
       __restgprlr_22();
       return;
     }
-    DAT_82aa1c50 = iVar8 + 1;
-    Info_ValueForKey(uVar5,0xffffffff820344c0);
-    uVar4 = StringToInt64();
-    iVar9 = iVar8 * 0xd0;
-    (&DAT_82aa1c8c)[iVar8 * 0x1a] = uVar4;
-    uVar4 = Info_ValueForKey(uVar5,0xffffffff820344b8);
-    StringToInt128(uVar4,&DAT_82aa1c7c + iVar9);
-    uVar4 = Info_ValueForKey(uVar5,0xffffffff820344b0);
-    StringToXNAddr(uVar4,&DAT_82aa1c58 + iVar9);
-    pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034730);
-    iVar8 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c94 + iVar9) = iVar8;
-    pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034728);
-    iVar8 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c98 + iVar9) = iVar8;
-    pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034720);
-    iVar8 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1c9c + iVar9) = iVar8;
-    pcVar7 = (char *)Info_ValueForKey(uVar5,0xffffffff82034718);
-    iVar8 = atoi(pcVar7);
-    *(int *)(&DAT_82aa1ca0 + iVar9) = iVar8;
-    Info_ValueForKey(uVar5,0xffffffff82034710);
-    uVar4 = StringToInt64();
-    *(undefined8 *)(&DAT_82aa1ca8 + iVar9) = uVar4;
-    CL_SetServerInfo(&DAT_82aa1c58 + iVar9,uVar5,1);
-    uVar4 = MSG_ReadString(param_3,auStack_460,0x400);
-    I_strncpyz(acStack_861 + 1,uVar4,0x400);
-    pcVar7 = acStack_861 + 1;
+    cls.numlocalservers = iVar14 + 1;
+    pcVar4 = Info_ValueForKey(pcVar5,"xnkid");
+    lVar2 = StringToInt64(pcVar4);
+    *(long64 *)cls.localServers[iVar14].xnkid.ab = lVar2;
+    pcVar4 = Info_ValueForKey(pcVar5,"xnkey");
+    StringToInt128(pcVar4,cls.localServers[iVar14].xnkey.ab);
+    pcVar4 = Info_ValueForKey(pcVar5,"xnaddr");
+    StringToXNAddr(pcVar4,&cls.localServers[iVar14].xnaddr);
+    pcVar4 = Info_ValueForKey(pcVar5,"pslots");
+    iVar9 = atoi(pcVar4);
+    cls.localServers[iVar14].publicSlots = iVar9;
+    pcVar4 = Info_ValueForKey(pcVar5,"pused");
+    iVar9 = atoi(pcVar4);
+    cls.localServers[iVar14].publicSlotsUsed = iVar9;
+    pcVar4 = Info_ValueForKey(pcVar5,"prslots");
+    iVar9 = atoi(pcVar4);
+    cls.localServers[iVar14].privateSlots = iVar9;
+    pcVar4 = Info_ValueForKey(pcVar5,"prused");
+    iVar9 = atoi(pcVar4);
+    cls.localServers[iVar14].privateSlotsUsed = iVar9;
+    pcVar4 = Info_ValueForKey(pcVar5,"nonce");
+    uVar3 = StringToInt64(pcVar4);
+    cls.localServers[iVar14].nonce = uVar3;
+    CL_SetServerInfo(cls.localServers + iVar14,pcVar5,1);
+    pcVar4 = MSG_ReadString(in_r5,acStack_460,0x400);
+    I_strncpyz(acStack_861 + 1,pcVar4,0x400);
+    pcVar4 = acStack_861 + 1;
     do {
-      cVar3 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar3 != '\0');
-    if (pcVar7 + (-1 - (int)(acStack_861 + 1)) != (char *)0x0) {
-      if (acStack_861[(int)(pcVar7 + (-1 - (int)(acStack_861 + 1)))] != '\n') {
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    if (pcVar4 + (-1 - (int)(acStack_861 + 1)) != (char *)0x0) {
+      if (acStack_861[(int)(pcVar4 + (-1 - (int)(acStack_861 + 1)))] != '\n') {
         strncat(acStack_861 + 1,"\n",0x400);
       }
-      Com_Printf(0xe,0xffffffff82034700,acStack_861 + 1);
+      Com_Printf(0xe,"xenoninfo: %s");
     }
   }
 LAB_8234d208:
@@ -374,128 +419,153 @@ LAB_8234d208:
 
 // 8234C0F8  CL_Connect  (client_mp/cl_main_xenon_mp.cpp:306)
 
-void CL_Connect(undefined8 param_1,ulonglong param_2,undefined8 param_3,uint param_4,uint param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CL_Connect(LocalClientNum_t param_1,_XSESSION_INFO *param_2,ulong64 param_3,int param_4,
+               int param_5)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  int iVar3;
-  byte *pbVar4;
-  char cVar7;
-  int iVar5;
-  undefined2 uVar6;
-  undefined8 uVar8;
-  byte *pbVar9;
-  longlong lVar10;
-  longlong lVar11;
-  uint *puVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  undefined2 local_b0 [2];
-  undefined4 local_ac;
-  undefined *local_a8;
+  LocalClientNum_t LVar2;
+  clientConnection_t *pcVar3;
+  XNADDR *pXVar4;
+  bool bVar8;
+  clientActive_t *pcVar5;
+  int iVar6;
+  ushort uVar7;
+  ulonglong uVar9;
+  char *pcVar10;
+  XNADDR *pXVar11;
+  longlong lVar12;
+  longlong lVar13;
+  int *piVar14;
+  LocalClientNum_t LVar15;
+  ulonglong uVar16;
+  LocalClientNum_t LStack00000014;
+  ulong64 uStack00000020;
+  int iStack0000002c;
+  int iStack00000034;
+  ushort local_b0 [2];
+  <unnamed_type_S_un> local_ac;
+  char *local_a8;
   char *local_a4;
   
-  uVar2 = __savegprlr();
+  uVar9 = (ulonglong)(int)param_2;
+  uVar16 = (ulonglong)(int)param_1;
+  __savegprlr();
+  LVar2 = (LocalClientNum_t)uVar16;
   local_a4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp";
-  local_a8 = &DAT_82000f98;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820343f0,0x13c,0,0xffffffff82000f98,0xffffffff82034334);
+  local_a8 = "%s";
+  LStack00000014 = LVar2;
+  uStack00000020 = param_3;
+  iStack0000002c = param_4;
+  iStack00000034 = param_5;
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp"
+                    ,0x13c,0,"%s");
   }
-  Com_Printf(0xe,0xffffffff820344e8,uVar2);
-  local_ac = 0;
-  if (*(char *)(DAT_82aa1ae4 + 0xc) != '\0') {
-    Live_CheckPlayerIsSignedIn(uVar2);
+  Com_Printf(0xe,"CL_Connect called for local client %i\n");
+  local_ac.S_addr = 0;
+  if ((systemlink->current).enabled != false) {
+    Live_CheckPlayerIsSignedIn(LVar2);
   }
   CCS_ClearConstantConfigStrings();
-  SND_StopSounds(0);
+  SND_StopSounds(SND_STOP_ALL);
   CL_AllocatePerLocalClientMemory(1);
-  iVar3 = CL_GetLocalClientConnection(uVar2);
-  *(undefined1 *)(iVar3 + 0x28) = 0;
+  pcVar3 = CL_GetLocalClientConnection(LVar2);
+  pcVar3->serverMessage[0] = '\0';
   SV_KillLocalServer();
   local_b0[0] = 0;
-  DAT_82b3eca4 = 0;
+  cl_serverLoadingMap = false;
   SV_Frame(0);
-  Con_Close(uVar2);
-  pbVar4 = (byte *)Xenon_GetXNAddr();
-  lVar11 = param_2 + 8;
-  pbVar9 = pbVar4 + 0x24;
+  Con_Close(LVar2);
+  pXVar4 = Xenon_GetXNAddr();
+  lVar13 = uVar9 + 8;
+  pXVar11 = pXVar4 + 1;
   do {
-    lVar10 = (ulonglong)*pbVar4 - (ulonglong)*(byte *)lVar11;
-    if (lVar10 != 0) break;
-    pbVar4 = pbVar4 + 1;
-    lVar11 = lVar11 + 1;
-  } while (pbVar4 != pbVar9);
-  if ((int)lVar10 == 0) {
-    uVar8 = 0xffffffff8202c774;
+    lVar12 = (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1 - (ulonglong)*(byte *)lVar13;
+    if (lVar12 != 0) break;
+    pXVar4 = (XNADDR *)((int)&(pXVar4->ina).S_un + 1);
+    lVar13 = lVar13 + 1;
+  } while (pXVar4 != pXVar11);
+  if ((int)lVar12 == 0) {
+    pcVar10 = "localhost";
   }
   else {
-    uVar8 = 0xffffffff820342f8;
+    pcVar10 = "Remote Xbox 360";
   }
-  I_strncpyz(0xffffffff82aa1b08,uVar8,0x100);
+  I_strncpyz(cls.servername,pcVar10,0x100);
   bVar1 = true;
-  uVar13 = 0;
-  uVar14 = uVar2;
-  if (0 < DAT_82aa1ae8) {
-    puVar12 = &DAT_82b3e544;
+  LVar15 = LOCAL_CLIENT_0;
+  if (0 < cl_maxLocalClients) {
+    piVar14 = &clientUIActives[0].keyCatchers;
     do {
-      cVar7 = CL_IsLocalClientActive(uVar13);
-      if (cVar7 != '\0') {
-        CL_Disconnect(uVar13);
-        CL_SetLocalClientActive(uVar13,1);
-        iVar3 = CL_GetLocalClientConnection(uVar13);
-        iVar5 = CL_GetLocalClientGlobals(uVar13);
-        if (3 < (uVar13 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8202c1d8,0x47f,0,0xffffffff820011a8,uVar13,4);
-          MyAssertHandler(0xffffffff8202c1d8,0x4b5,0,0xffffffff82024a10,uVar13,4);
+      bVar8 = CL_IsLocalClientActive(LVar15);
+      if (bVar8) {
+        CL_Disconnect(LVar15);
+        CL_SetLocalClientActive(LVar15,true);
+        pcVar3 = CL_GetLocalClientConnection(LVar15);
+        pcVar5 = CL_GetLocalClientGlobals(LVar15);
+        if (LOCAL_CLIENT_3 < LVar15) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
+                          0x47f,0,
+                          "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                         );
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
+                          0x4b5,0,
+                          "client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
         }
-        puVar12[2] = 3;
+        piVar14[2] = CA_CONNECTING;
         Live_SetCurrentGametype();
-        uVar8 = CL_ControllerIndexFromClientNum(uVar13);
+        iVar6 = CL_ControllerIndexFromClientNum(LVar15);
         if (bVar1) {
           bVar1 = false;
-          if (DAT_844c7870 != 0) {
-            MyAssertHandler(local_a4,0x17c,0,local_a8,0xffffffff82030408);
+          if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+            MyAssertHandler(local_a4,0x17c,0,local_a8);
           }
-          cVar7 = Session_StartClient(0xffffffff844c7860,uVar8,0x20,param_2,param_3,
-                                      (ulonglong)param_4 - (ulonglong)param_5);
-          if (cVar7 == '\0') {
-            Com_Error(1,0xffffffff8203252c);
+          bVar8 = Session_StartClient(&g_serverSession,iVar6,0x20,(_XSESSION_INFO *)uVar9,
+                                      uStack00000020,iStack0000002c - iStack00000034,iStack00000034)
+          ;
+          if (!bVar8) {
+            Com_Error(ERR_DROP,"EXE_HOSTUNREACH");
           }
-          cVar7 = Xenon_RegisterRemoteXenon(param_2,&local_ac,local_b0);
-          if (cVar7 == '\0') {
-            Com_Error(1,0xffffffff8203252c);
+          bVar8 = Xenon_RegisterRemoteXenon
+                            ((_XSESSION_INFO *)uVar9,(in_addr *)&local_ac.S_un_b,local_b0);
+          if (!bVar8) {
+            Com_Error(ERR_DROP,"EXE_HOSTUNREACH");
           }
         }
         else {
           R_BeginRemoteScreenUpdate();
-          LiveStorage_SaveStats(uVar13);
+          LiveStorage_SaveStats(LVar15);
           R_EndRemoteScreenUpdate();
         }
-        *(undefined4 *)(iVar3 + 0x10) = 4;
-        *(undefined4 *)(iVar3 + 0x14) = local_ac;
-        if (*(short *)(iVar3 + 0x18) == 0) {
-          uVar6 = BigShort(local_b0[0]);
-          *(undefined2 *)(iVar3 + 0x18) = uVar6;
+        (pcVar3->serverAddress).type = NA_IP;
+        *(<unnamed_type_S_un> *)(pcVar3->serverAddress).ip = local_ac;
+        if ((pcVar3->serverAddress).port == 0) {
+          uVar7 = BigShort(local_b0[0]);
+          (pcVar3->serverAddress).port = uVar7;
         }
-        uVar6 = BigShort(*(undefined2 *)(iVar3 + 0x18));
-        Com_Printf(0xe,0xffffffff820344c8,0xffffffff82aa1b08,*(undefined1 *)(iVar3 + 0x14),
-                   *(undefined1 *)(iVar3 + 0x15),*(undefined1 *)(iVar3 + 0x16),
-                   *(undefined1 *)(iVar3 + 0x17),uVar6);
-        UI_CloseAll(uVar13);
-        *puVar12 = *puVar12 & 1;
-        *(undefined4 *)(iVar3 + 0x20) = 0xfffe7961;
-        *(undefined4 *)(iVar3 + 0x24) = 0;
-        uVar14 = uVar2 & 0xffffffff;
-        *(undefined4 *)(iVar5 + 4) = 0;
+        BigShort((pcVar3->serverAddress).port);
+        Com_Printf(0xe,"%s resolved to %i.%i.%i.%i:%i\n");
+        UI_CloseAll(LVar15);
+        *piVar14 = *piVar14 & 1;
+        pcVar3->connectTime = -99999;
+        pcVar3->connectPacketCount = 0;
+        uVar16 = (ulonglong)LStack00000014;
+        pcVar5->timeoutcount = 0;
       }
-      uVar13 = uVar13 + 1;
-      puVar12 = puVar12 + 0x79;
-    } while ((int)uVar13 < DAT_82aa1ae8);
+      LVar2 = (LocalClientNum_t)uVar16;
+      LVar15 = LVar15 + LOCAL_CLIENT_1;
+      piVar14 = piVar14 + 0x79;
+    } while ((int)LVar15 < cl_maxLocalClients);
   }
-  DAT_82aa30e0 = 0;
-  memcpy(&DAT_844c7874,(void *)param_2,0x3c);
-  UI_CloseAll(uVar14);
+  cls.mapPreloaded = false;
+  memcpy();
+  UI_CloseAll(LVar2);
   __restgprlr();
   return;
 }
@@ -503,47 +573,50 @@ void CL_Connect(undefined8 param_1,ulonglong param_2,undefined8 param_3,uint par
 
 // 8234C498  CL_Connect_f  (client_mp/cl_main_xenon_mp.cpp:444)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Connect_f(void)
 
 {
-  int iVar6;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
   char *pcVar7;
   int iVar8;
-  undefined8 uVar5;
-  undefined8 local_80;
-  undefined1 auStack_78 [36];
-  undefined1 auStack_54 [84];
+  ulong64 uVar1;
+  _XSESSION_INFO local_80 [2];
   
   __savegprlr_25();
-  if (((*(char *)(DAT_83666174 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) ||
-     (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
-    iVar6 = Cmd_Argc();
-    if (iVar6 != 7) {
-      Com_Printf(0,0xffffffff82034510);
+  if ((((com_sv_running->current).enabled == false) || ((onlinegame->current).enabled == false)) ||
+     ((xblive_privatematch->current).enabled != false)) {
+    iVar2 = Cmd_Argc();
+    if (iVar2 != 7) {
+      Com_Printf(0,
+                 "usage: connect [xnaddr] [xnkey] [xnkid] [numPublicSlots] [numPrivateSlots] [nonce]\n"
+                );
       __restgprlr_25();
       return;
     }
-    uVar1 = Cmd_LocalClientNum();
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') || (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')) {
-      Live_CheckPlayerIsSignedIn(uVar1);
+    LVar3 = Cmd_LocalClientNum();
+    if (((onlinegame->current).enabled != false) || ((systemlink->current).enabled != false)) {
+      Live_CheckPlayerIsSignedIn(LVar3);
     }
-    uVar2 = Cmd_Argv(1);
-    uVar3 = Cmd_Argv(2);
-    uVar4 = Cmd_Argv(3);
-    pcVar7 = (char *)Cmd_Argv(4);
-    iVar6 = atoi(pcVar7);
-    pcVar7 = (char *)Cmd_Argv(5);
+    pcVar4 = Cmd_Argv(1);
+    pcVar5 = Cmd_Argv(2);
+    pcVar6 = Cmd_Argv(3);
+    pcVar7 = Cmd_Argv(4);
+    iVar2 = atoi(pcVar7);
+    pcVar7 = Cmd_Argv(5);
     iVar8 = atoi(pcVar7);
-    uVar5 = Cmd_Argv(6);
-    local_80 = StringToInt64(uVar4);
-    StringToInt128(uVar3,auStack_54);
-    StringToXNAddr(uVar2,auStack_78);
-    uVar2 = StringToInt64(uVar5);
-    CL_Connect(uVar1,&local_80,uVar2,iVar6,iVar8);
+    pcVar7 = Cmd_Argv(6);
+    local_80[0].sessionID.ab = (uchar  [8])StringToInt64(pcVar6);
+    StringToInt128(pcVar5,local_80[0].keyExchangeKey.ab);
+    StringToXNAddr(pcVar4,&local_80[0].hostAddress);
+    uVar1 = StringToInt64(pcVar7);
+    CL_Connect(LVar3,local_80,uVar1,iVar2,iVar8);
   }
   __restgprlr_25();
   return;
@@ -552,39 +625,45 @@ void CL_Connect_f(void)
 
 // 8234C5D8  CL_Live_ShowMarketplace  (client_mp/cl_main_xenon_mp.cpp:489)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_ShowMarketplace(void)
 
 {
-  Cmd_LocalControllerIndex();
-  Live_ShowMarketplaceUI();
+  int iVar1;
+  
+  iVar1 = Cmd_LocalControllerIndex();
+  Live_ShowMarketplaceUI(iVar1);
   return;
 }
 
 
 // 8234C608  Playlist_ReadFromDisk  (client_mp/cl_main_xenon_mp.cpp:505)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Playlist_ReadFromDisk(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int local_20 [4];
+  int iVar1;
+  char *pcVar2;
+  char *local_20 [4];
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    uVar1 = 0xffffffff82034580;
+  iVar1 = Cmd_Argc();
+  if (iVar1 < 2) {
+    pcVar2 = "playlists.info";
   }
   else {
-    uVar1 = Cmd_Argv(1);
+    pcVar2 = Cmd_Argv(1);
   }
-  iVar2 = FS_ReadFile(uVar1,local_20);
-  if (iVar2 != 0) {
-    if (local_20[0] != 0) {
-      Playlist_ParsePlaylists();
+  iVar1 = FS_ReadFile(pcVar2,local_20);
+  if (iVar1 != 0) {
+    if (local_20[0] != (char *)0x0) {
+      Playlist_ParsePlaylists(local_20[0]);
       FS_FreeFile(local_20[0]);
       return;
     }
-    Com_PrintError(0x10,0xffffffff82034564,uVar1);
+    Com_PrintError(0x10,"Unable to find file \'%s\'\n");
   }
   return;
 }
@@ -592,19 +671,21 @@ void Playlist_ReadFromDisk(void)
 
 // 8234C6A8  CL_UpdateDvarsFromProfile  (client_mp/cl_main_xenon_mp.cpp:535)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_UpdateDvarsFromProfile(void)
 
 {
   int iVar1;
-  char *_Str;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    GamerProfile_UpdateSystemVarsFromProfile(DAT_82b5c824);
+    GamerProfile_UpdateSystemVarsFromProfile(cl_last_controller_input);
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar1 = atoi(_Str);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
   GamerProfile_UpdateSystemVarsFromProfile(iVar1);
   return;
 }
@@ -612,52 +693,58 @@ void CL_UpdateDvarsFromProfile(void)
 
 // 8234C700  CL_UpdateGamerProfile  (client_mp/cl_main_xenon_mp.cpp:548)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_UpdateGamerProfile(void)
 
 {
   int iVar1;
-  char *_Str;
+  char *pcVar2;
   
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
-    GamerProfile_UpdateCommand(DAT_82b5c824,0);
+    GamerProfile_UpdateCommand(cl_last_controller_input,false);
     return;
   }
-  _Str = (char *)Cmd_Argv(1);
-  iVar1 = atoi(_Str);
-  GamerProfile_UpdateCommand(iVar1,1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = atoi(pcVar2);
+  GamerProfile_UpdateCommand(iVar1,true);
   return;
 }
 
 
 // 8234C760  CL_Live_JoinParty  (client_mp/cl_main_xenon_mp.cpp:569)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Live_JoinParty(void)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  char *pcVar3;
+  char *pcVar4;
+  char *pcVar5;
   
   __savegprlr_28();
-  iVar4 = Cmd_Argc();
-  if (iVar4 < 4) {
-    Com_Printf(0,0xffffffff82034590);
+  iVar1 = Cmd_Argc();
+  if (iVar1 < 4) {
+    Com_Printf(0,"usage: xpartyjoin [xnaddr] [xnkey] [xnkid]\n");
     __restgprlr_28();
     return;
   }
-  uVar1 = Cmd_LocalClientNum();
-  uVar2 = Cmd_Argv(1);
-  uVar3 = Cmd_Argv(2);
-  Cmd_Argv(3);
-  DAT_8425a060 = StringToInt64();
-  StringToInt128(uVar3,0xffffffff8425a08c);
-  StringToXNAddr(uVar2,0xffffffff8425a068);
-  DAT_8425a054 = 2;
-  DAT_8425a09c = 1;
-  CL_ControllerIndexFromClientNum(uVar1);
-  DAT_8425a058 = Live_GetXuid();
+  LVar2 = Cmd_LocalClientNum();
+  pcVar3 = Cmd_Argv(1);
+  pcVar4 = Cmd_Argv(2);
+  pcVar5 = Cmd_Argv(3);
+  g_launchData.inviteHostInfo._0_8_ = StringToInt64(pcVar5);
+  StringToInt128(pcVar4,g_launchData.inviteHostInfo + 0x2c);
+  StringToXNAddr(pcVar3,(XNADDR *)(g_launchData.inviteHostInfo + 8));
+  g_launchData.inviteState = INVITE_MPACCEPTED;
+  g_launchData.fromGameInvite = true;
+  iVar1 = CL_ControllerIndexFromClientNum(LVar2);
+  g_launchData.invitedXUID = Live_GetXuid(iVar1);
   Live_StartConfirmAcceptInvitation();
   __restgprlr_28();
   return;
@@ -666,30 +753,36 @@ void CL_Live_JoinParty(void)
 
 // 8234C810  CL_Live_ResetSkill  (client_mp/cl_main_xenon_mp.cpp:610)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_ResetSkill(void)
 
 {
-  Cmd_LocalControllerIndex();
-  Live_ResetSkill();
+  int iVar1;
+  
+  iVar1 = Cmd_LocalControllerIndex();
+  Live_ResetSkill(iVar1);
   return;
 }
 
 
 // 8234C838  CL_Live_ResetSkillForAllPlayers  (client_mp/cl_main_xenon_mp.cpp:616)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_ResetSkillForAllPlayers(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 2) {
-    uVar1 = Cmd_Argv(1);
-    iVar2 = I_stricmp(uVar1,0xffffffff820345bc);
-    if (iVar2 == 0) {
-      Cmd_LocalControllerIndex();
-      Live_ResetSkillForAllPlayers();
+  iVar1 = Cmd_Argc();
+  if (iVar1 == 2) {
+    pcVar2 = Cmd_Argv(1);
+    iVar1 = I_stricmp(pcVar2,"ok");
+    if (iVar1 == 0) {
+      iVar1 = Cmd_LocalControllerIndex();
+      Live_ResetSkillForAllPlayers(iVar1);
     }
   }
   return;
@@ -698,36 +791,45 @@ void CL_Live_ResetSkillForAllPlayers(void)
 
 // 8234C888  CL_Live_GetPermissions  (client_mp/cl_main_xenon_mp.cpp:628)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_Live_GetPermissions(void)
 
 {
-  char cVar1;
-  longlong lVar2;
+  bool bVar1;
+  LocalClientNum_t LVar2;
   
-  lVar2 = 0;
+  LVar2 = LOCAL_CLIENT_0;
   do {
-    cVar1 = CL_IsLocalClientActive(lVar2);
-    if (cVar1 != '\0') {
-      Live_GetPermissions(lVar2);
+    bVar1 = CL_IsLocalClientActive(LVar2);
+    if (bVar1) {
+      Live_GetPermissions(LVar2);
     }
-    lVar2 = lVar2 + 1;
-  } while ((int)lVar2 < 4);
+    LVar2 = LVar2 + LOCAL_CLIENT_1;
+  } while ((int)LVar2 < 4);
   return;
 }
 
 
 // 8234C8D8  CL_Live_ReadStats  (client_mp/cl_main_xenon_mp.cpp:640)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_ReadStats(void)
 
 {
-  Cmd_LocalControllerIndex();
-  Live_ReadStats();
+  int iVar1;
+  
+  iVar1 = Cmd_LocalControllerIndex();
+  Live_ReadStats(iVar1);
   return;
 }
 
 
 // 8234C900  CL_Hitch  (client_mp/cl_main_xenon_mp.cpp:646)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Hitch(void)
 
@@ -739,28 +841,33 @@ void CL_Hitch(void)
 
 // 8234C908  CL_ChooseNextPlaylist  (client_mp/cl_main_xenon_mp.cpp:654)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_ChooseNextPlaylist(void)
 
 {
-  Cmd_LocalControllerIndex();
-  Party_ChooseNextPlaylist();
+  int iVar1;
+  
+  iVar1 = Cmd_LocalControllerIndex();
+  Party_ChooseNextPlaylist(iVar1);
   return;
 }
 
 
 // 8234C930  CL_Live_InviteLiveParty  (client_mp/cl_main_xenon_mp.cpp:661)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_InviteLiveParty(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  ulong uVar1;
   
   R_BeginRemoteScreenUpdate();
   uVar1 = Cmd_LocalControllerIndex();
-  uVar2 = XPartySendGameInvites(uVar1,0);
-  if ((uVar2 & 0xffffffff) != 0) {
-    Com_PrintWarning(0x10,0xffffffff820345c0,uVar2);
+  uVar1 = XPartySendGameInvites(uVar1,(_XOVERLAPPED *)0x0);
+  if (uVar1 != 0) {
+    Com_PrintWarning(0x10,"XPartySendGameInvites fail: res %i\n");
   }
   R_EndRemoteScreenUpdate();
   return;
@@ -769,17 +876,18 @@ void CL_Live_InviteLiveParty(void)
 
 // 8234C980  CL_Live_SessionManagementUI  (client_mp/cl_main_xenon_mp.cpp:677)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Live_SessionManagementUI(void)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  ulong uVar1;
   
   R_BeginRemoteScreenUpdate();
   uVar1 = Cmd_LocalControllerIndex();
-  uVar2 = XShowCommunitySessionsUI(uVar1,1);
-  if ((uVar2 & 0xffffffff) != 0) {
-    Com_PrintWarning(0x10,0xffffffff820345e4,uVar2);
+  uVar1 = XShowCommunitySessionsUI(uVar1,1);
+  if (uVar1 != 0) {
+    Com_PrintWarning(0x10,"XShowCommunitySessionsUI fail: res %i\n");
   }
   R_EndRemoteScreenUpdate();
   return;
@@ -788,28 +896,36 @@ void CL_Live_SessionManagementUI(void)
 
 // 8234C9D0  CL_Xenon_RegisterCommands  (client_mp/cl_main_xenon_mp.cpp:694)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_Xenon_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff820346ec,0xffffffff8234c5d8,0xffffffff82b3f544);
-  Cmd_AddCommandInternal(0xffffffff820346e0,0xffffffff8234c810,0xffffffff82b3f530);
-  Cmd_AddCommandInternal(0xffffffff820346d0,0xffffffff8234c930,0xffffffff82b3f51c);
-  Cmd_AddCommandInternal(0xffffffff820346c0,0xffffffff8234c980,0xffffffff82b3f508);
-  Cmd_AddCommandInternal(0xffffffff820346b0,0xffffffff8234c888,0xffffffff82b3f4f4);
-  Cmd_AddCommandInternal(0xffffffff820346a4,0xffffffff8234c8d8,0xffffffff82b3f4e0);
-  Cmd_AddCommandInternal(0xffffffff8203469c,0xffffffff8234c900,0xffffffff82b3f4cc);
-  Cmd_AddCommandInternal(0xffffffff82034688,0xffffffff8234c908,0xffffffff82b3f4b8);
-  Cmd_AddCommandInternal(0xffffffff82034670,0xffffffff8234c608,0xffffffff82b3f4a4);
-  Cmd_AddCommandInternal(0xffffffff8203465c,0xffffffff8234c700,0xffffffff82b3f490);
-  Cmd_AddCommandInternal(0xffffffff82034644,0xffffffff8234c6a8,0xffffffff82b3f47c);
-  Cmd_AddCommandInternal(0xffffffff82034634,0xffffffff8234c600,0xffffffff82b3f468);
-  Cmd_AddCommandInternal(0xffffffff82034628,0xffffffff8234c760,0xffffffff82b3f454);
-  Cmd_AddCommandInternal(0xffffffff8203460c,0xffffffff8234c838,0xffffffff82b3f440);
+  Cmd_AddCommandInternal("xshowmarketplace",CL_Live_ShowMarketplace,&CL_Live_ShowMarketplace_VAR);
+  Cmd_AddCommandInternal("xresetskill",CL_Live_ResetSkill,&CL_Live_ResetSkill_VAR);
+  Cmd_AddCommandInternal("inviteliveparty",CL_Live_InviteLiveParty,&CL_Live_InviteLiveParty_VAR);
+  Cmd_AddCommandInternal
+            ("showcommunityui",CL_Live_SessionManagementUI,&CL_Live_SessionManagementUI_VAR);
+  Cmd_AddCommandInternal("xgetpermissions",CL_Live_GetPermissions,&CL_Live_GetPermissions_VAR);
+  Cmd_AddCommandInternal("xreadstats",CL_Live_ReadStats,&CL_Live_ReadStats_VAR);
+  Cmd_AddCommandInternal("hitch",CL_Hitch,&CL_Hitch_VAR);
+  Cmd_AddCommandInternal("xplaylistchoosegame",CL_ChooseNextPlaylist,&CL_ChooseNextPlaylist_VAR);
+  Cmd_AddCommandInternal("xplaylistreadfromdisk",Playlist_ReadFromDisk,&Playlist_ReadFromDisk_VAR);
+  Cmd_AddCommandInternal("updategamerprofile",CL_UpdateGamerProfile,&CL_UpdateGamerProfile_VAR);
+  Cmd_AddCommandInternal
+            ("updatedvarsfromprofile",CL_UpdateDvarsFromProfile,&CL_UpdateDvarsFromProfile_VAR);
+  Cmd_AddCommandInternal("confirminvite",CL_Live_ConfirmInvite,&CL_Live_ConfirmInvite_VAR);
+  Cmd_AddCommandInternal("xpartyjoin",CL_Live_JoinParty,&CL_Live_JoinParty_VAR);
+  Cmd_AddCommandInternal
+            ("xresetskillforallplayers",CL_Live_ResetSkillForAllPlayers,
+             &CL_Live_ResetSkillForAllPlayers_VAR);
   return;
 }
 
 
 // 8234CB78  CL_Xenon_RegisterDvars  (client_mp/cl_main_xenon_mp.cpp:729)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Xenon_RegisterDvars(void)
 

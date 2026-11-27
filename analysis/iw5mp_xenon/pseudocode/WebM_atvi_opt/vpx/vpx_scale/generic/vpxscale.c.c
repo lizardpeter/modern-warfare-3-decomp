@@ -2,19 +2,17 @@
 
 // 828404B8  horizontal_line_copy  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:103)
 
-void * horizontal_line_copy(void *param_1,size_t param_2,void *param_3)
+void horizontal_line_copy(uchar *param_1,uint param_2,uchar *param_3,uint param_4)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = vpx_memcpy(param_3,param_1,param_2);
-  return pvVar1;
+  vpx_memcpy(param_3,param_1,param_2);
+  return;
 }
 
 
 // 828404D0  null_scale  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:132)
 
-void null_scale(void)
+void null_scale(uchar *param_1,uint param_2,uint param_3)
 
 {
   return;
@@ -23,31 +21,39 @@ void null_scale(void)
 
 // 828404D8  scale1d_2t1_i  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:174)
 
-void scale1d_2t1_i(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                  undefined1 *param_5,uint param_6,undefined8 param_7,int param_8)
+void scale1d_2t1_i(uchar *param_1,int param_2,uint param_3,uint param_4,uchar *param_5,int param_6,
+                  uint param_7,uint param_8)
 
 {
   int iVar1;
   undefined1 *puVar2;
-  uint uVar3;
+  ulonglong uVar3;
   longlong lVar4;
-  longlong lVar5;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  longlong lVar9;
   
-  puVar2 = (undefined1 *)__savegprlr_28();
-  *param_5 = *puVar2;
-  lVar5 = (param_2 & 0x7fffffff) * 2;
-  if (param_6 < param_6 * param_8) {
-    lVar4 = lVar5;
-    uVar3 = param_6;
+  uVar5 = (ulonglong)param_6;
+  lVar4 = (longlong)(int)param_5;
+  uVar3 = (ulonglong)param_2;
+  puVar2 = (undefined1 *)__savegprlr_28(param_1,uVar3,param_3,param_4,lVar4,uVar5,param_7);
+  uVar8 = (longlong)(int)uVar5 * (longlong)(int)param_8;
+  *(undefined1 *)lVar4 = *puVar2;
+  lVar9 = (uVar3 & 0x7fffffff) * 2;
+  if ((uVar5 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    uVar6 = uVar5;
+    lVar7 = lVar9;
     do {
-      iVar1 = (int)lVar4;
-      lVar4 = lVar4 + lVar5;
-      param_5[uVar3] =
-           (char)(((ulonglong)(byte)puVar2[iVar1 - (int)param_2] +
-                  (ulonglong)(byte)puVar2[iVar1 + (int)param_2]) * 3 +
+      iVar1 = (int)lVar7;
+      lVar7 = lVar7 + lVar9;
+      ((undefined1 *)lVar4)[(int)uVar6] =
+           (char)(((ulonglong)(byte)puVar2[iVar1 - (int)uVar3] +
+                  (ulonglong)(byte)puVar2[iVar1 + (int)uVar3]) * 3 +
                   (ulonglong)(byte)puVar2[iVar1] * 10 + 8 >> 4);
-      uVar3 = uVar3 + param_6;
-    } while (uVar3 < param_6 * param_8);
+      uVar6 = uVar6 + uVar5;
+    } while ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff));
   }
   __restgprlr_28();
   return;
@@ -56,72 +62,79 @@ void scale1d_2t1_i(undefined8 param_1,ulonglong param_2,undefined8 param_3,undef
 
 // 82840558  scale1d_2t1_ps  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:230)
 
-void scale1d_2t1_ps(int param_1,uint param_2,undefined8 param_3,undefined8 param_4,int param_5,
-                   int param_6,undefined8 param_7,int param_8)
+void scale1d_2t1_ps(uchar *param_1,int param_2,uint param_3,uint param_4,uchar *param_5,int param_6,
+                   uint param_7,uint param_8)
 
 {
-  undefined1 *puVar1;
+  uchar *puVar1;
   uint uVar2;
   
   uVar2 = 0;
   if (param_6 * param_8 == 0) {
     return;
   }
-  puVar1 = (undefined1 *)(param_1 + (param_2 & 0x7fffffff) * -2);
+  puVar1 = param_1 + param_2 * -2;
   do {
     puVar1 = puVar1 + param_2 * 2;
-    *(undefined1 *)(uVar2 + param_5) = *puVar1;
+    param_5[uVar2] = *puVar1;
     uVar2 = uVar2 + param_6;
-  } while (uVar2 < (uint)(param_6 * param_8));
+  } while (uVar2 < param_6 * param_8);
   return;
 }
 
 
 // 82840588  scale1d_c  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:277)
 
-void scale1d_c(undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4,int param_5,
-              int param_6,undefined8 param_7,int param_8)
+void scale1d_c(uchar *param_1,int param_2,uint param_3,uint param_4,uchar *param_5,int param_6,
+              uint param_7,uint param_8)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  undefined4 uVar3;
-  uint uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  uint uVar8;
-  uint uVar9;
+  ulonglong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  uint uVar13;
   
-  uVar4 = (uint)param_7;
-  uVar3 = (undefined4)((ulonglong)param_7 >> 0x20);
-  lVar1 = __savegprlr_26();
-  uVar9 = (uint)*(byte *)lVar1;
-  lVar2 = lVar1 + param_2;
-  uVar8 = (uint)((byte *)lVar1)[(int)param_2];
-  lVar1 = CONCAT44(uVar3,uVar4);
-  uVar6 = 0;
-  uVar5 = 0;
-  if (param_6 * param_8 != 0) {
+  uVar7 = (ulonglong)(int)param_7;
+  lVar6 = (longlong)param_6;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)param_2;
+  lVar1 = __savegprlr_26(param_1,lVar3,lVar4,param_4);
+  uVar13 = (uint)*(byte *)lVar1;
+  lVar5 = lVar1 + lVar3;
+  uVar12 = (uint)((byte *)lVar1)[(int)lVar3];
+  uVar11 = (longlong)(int)lVar6 * (longlong)(int)param_8;
+  uVar9 = 0;
+  uVar8 = 0;
+  uVar2 = uVar7;
+  if (uVar11 != 0) {
     do {
-      iVar7 = (int)uVar6;
-      uVar6 = uVar6 + param_3;
-      trapWord(6,CONCAT44(uVar3,uVar4),0);
-      *(char *)(uVar5 + param_5) =
-           (char)(((longlong)(int)uVar8 * (longlong)iVar7 +
-                   (longlong)(int)uVar9 * (longlong)(int)lVar1 + (ulonglong)(uVar4 >> 1) &
-                  0xffffffff) / (ulonglong)uVar4);
-      if ((ulonglong)uVar4 < (uVar6 & 0xffffffff)) {
+      iVar10 = (int)uVar9;
+      uVar9 = uVar9 + lVar4;
+      trapWord(6,uVar7,0);
+      param_5[(int)uVar8] =
+           (uchar)(((longlong)(int)uVar12 * (longlong)iVar10 +
+                    (longlong)(int)uVar13 * (longlong)(int)uVar2 + ((uVar7 & 0xffffffff) >> 1) &
+                   0xffffffff) / (uVar7 & 0xffffffff));
+      if ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff)) {
         do {
-          uVar6 = uVar6 - CONCAT44(uVar3,uVar4);
-          uVar9 = (uint)*(byte *)lVar2;
-          lVar2 = lVar2 + param_2;
-          uVar8 = (uint)*(byte *)lVar2;
-        } while ((ulonglong)uVar4 < (uVar6 & 0xffffffff));
+          uVar9 = uVar9 - uVar7;
+          uVar13 = (uint)*(byte *)lVar5;
+          lVar5 = lVar5 + lVar3;
+          uVar12 = (uint)*(byte *)lVar5;
+        } while ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff));
       }
-      uVar5 = uVar5 + param_6;
-      lVar1 = CONCAT44(uVar3,uVar4) - uVar6;
-    } while (uVar5 < (uint)(param_6 * param_8));
+      uVar8 = uVar8 + lVar6;
+      uVar2 = uVar7 - uVar9;
+    } while ((uVar8 & 0xffffffff) < (uVar11 & 0xffffffff));
   }
   __restgprlr_26();
   return;
@@ -130,36 +143,42 @@ void scale1d_c(undefined8 param_1,longlong param_2,longlong param_3,undefined8 p
 
 // 82840610  Scale2D  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:359)
 
-void Scale2D(undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,longlong param_5
-            ,longlong param_6,ulonglong param_7,ulonglong param_8)
+void Scale2D(uchar *param_1,int param_2,uint param_3,uint param_4,uchar *param_5,int param_6,
+            uint param_7,uint param_8,uchar *param_9,uchar param_10,uint param_11,uint param_12,
+            uint param_13,uint param_14,uint param_15)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  void *pvVar3;
-  int iVar4;
+  uint uVar2;
+  uchar *puVar3;
+  longlong lVar4;
   int iVar5;
-  ulonglong uVar6;
-  int iVar7;
+  longlong lVar6;
+  uint uVar7;
   bool bVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   longlong lVar11;
   ulonglong uVar12;
-  code *pcVar13;
+  _func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint_uint *p_Var13;
   ulonglong uVar14;
   ulonglong uVar15;
   longlong lVar16;
-  code *pcVar17;
-  longlong lVar18;
-  code *pcVar19;
-  int iVar20;
-  int iVar21;
+  int iVar18;
+  longlong lVar17;
+  _func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *p_Var19;
+  longlong lVar20;
+  code *pcVar21;
   ulonglong uVar22;
-  longlong lVar23;
-  size_t _Size;
-  longlong lVar24;
-  void *in_stack_00000054;
+  ulonglong uVar23;
+  int iVar24;
+  ulonglong uVar25;
+  uint uVar26;
+  ulonglong uVar27;
+  longlong lVar28;
+  uint uStack0000002c;
+  uint uStack00000044;
+  uchar *in_stack_00000054;
   byte in_stack_0000005f;
   uint in_stack_00000064;
   uint in_stack_0000006c;
@@ -169,103 +188,107 @@ void Scale2D(undefined8 param_1,longlong param_2,longlong param_3,ulonglong para
   code *local_ac;
   code *local_a8;
   
-  uVar2 = __savegprlr();
-  iVar5 = (int)param_4;
-  iVar7 = (int)param_7;
-  pcVar19 = scale1d_c;
+  uVar27 = (ulonglong)(int)param_8;
+  uVar23 = (ulonglong)(int)param_7;
+  lVar6 = (longlong)param_6;
+  lVar20 = (longlong)(int)param_5;
+  lVar11 = (longlong)(int)param_3;
+  lVar4 = (longlong)param_2;
+  uVar22 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uVar7 = (uint)uVar23;
+  pcVar21 = scale1d_c;
   local_ac = scale1d_c;
-  uVar22 = 1;
+  uVar25 = 1;
   bVar1 = false;
   local_a8 = scale1d_c;
   bVar8 = true;
-  iVar4 = (int)param_2;
-  uVar14 = uVar2;
-  if (iVar4 < 0) {
-    uVar14 = (longlong)(iVar5 + -1) * (longlong)iVar4 + uVar2;
+  iVar5 = (int)lVar4;
+  uVar14 = uVar22;
+  if (iVar5 < 0) {
+    uVar14 = (longlong)(int)(param_4 - 1) * (longlong)iVar5 + uVar22;
   }
   uVar15 = (ulonglong)in_stack_0000006c;
   uVar12 = (ulonglong)in_stack_00000064;
   trapWord(6,uVar12,0);
   uVar9 = ((uVar15 + ((ulonglong)in_stack_0000006c & 0x3fffffff) * 4 & 0x7fffffff) << 1) / uVar12;
-  pcVar17 = DAT_8487cdb8;
-  if (((uVar9 != 5) && (pcVar17 = DAT_8487cdbc, uVar9 != 6)) && (pcVar17 = DAT_8487cdc0, uVar9 != 8)
-     ) {
+  p_Var19 = vp8_horizontal_line_2_1_scale;
+  if (((uVar9 != 5) && (p_Var19 = vp8_horizontal_line_5_3_scale, uVar9 != 6)) &&
+     (p_Var19 = vp8_horizontal_line_5_4_scale, uVar9 != 8)) {
     bVar8 = false;
-    pcVar17 = (code *)0x0;
+    p_Var19 = (_func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *)0x0;
   }
-  uVar6 = (ulonglong)in_stack_00000074;
-  trapWord(6,uVar6,0);
+  uVar9 = (ulonglong)in_stack_00000074;
+  trapWord(6,uVar9,0);
   uVar10 = (((ulonglong)in_stack_0000007c + ((ulonglong)in_stack_0000007c & 0x3fffffff) * 4 &
-            0x7fffffff) << 1) / uVar6;
-  _Size = (size_t)param_6;
-  uVar9 = uVar2;
+            0x7fffffff) << 1) / uVar9;
+  uVar26 = (uint)lVar6;
+  uStack0000002c = param_4;
+  uStack00000044 = uVar7;
   if (uVar10 == 5) {
     bVar1 = in_stack_00000084 == 0;
-    pcVar13 = DAT_8487cdb4;
+    p_Var13 = vp8_vertical_band_2_1_scale_i;
     if (!bVar1) {
-      pcVar13 = DAT_8487cdb0;
+      p_Var13 = vp8_vertical_band_2_1_scale;
     }
     lVar16 = 2;
 LAB_82840760:
     if (bVar8) {
-      if ((param_4 & 0xffffffff) == (param_8 & 0xffffffff)) {
-        if (0 < (int)param_8) {
+      uVar2 = (uint)lVar11;
+      if ((ulonglong)param_4 == (uVar27 & 0xffffffff)) {
+        if (0 < (int)uVar27) {
           do {
-            (*pcVar17)(uVar2,param_3,param_5,param_7);
-            param_8 = param_8 - 1;
-            uVar2 = uVar2 + param_2;
-            param_5 = param_5 + param_6;
-          } while (param_8 != 0);
+            (*p_Var19)((uchar *)uVar22,uVar2,(uchar *)lVar20,uVar7);
+            uVar27 = uVar27 - 1;
+            uVar22 = uVar22 + lVar4;
+            lVar20 = lVar20 + lVar6;
+          } while (uVar27 != 0);
           __restgprlr();
           return;
         }
       }
       else {
-        uVar12 = uVar2;
         if (bVar1) {
-          if ((uVar2 & 0xffffffff) < (uVar14 & 0xffffffff)) {
-            uVar12 = uVar14;
+          if ((uVar22 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+            uVar22 = uVar14;
           }
-          uVar2 = (*pcVar17)(uVar12,param_3,ZEXT48(in_stack_00000054),param_7);
+          (*p_Var19)((uchar *)uVar22,uVar2,in_stack_00000054,uVar7);
         }
-        trapWord(6,uVar22,0);
-        uVar9 = (uVar22 + param_8) - 1;
-        iVar5 = (int)uVar9 / (int)uVar22;
-        lVar11 = (longlong)iVar5;
-        trapWord(5,uVar22 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff
-                );
-        uVar9 = uVar2;
-        if (0 < iVar5) {
-          lVar18 = param_6 + ZEXT48(in_stack_00000054);
-          iVar5 = (int)lVar16;
-          uVar2 = param_7;
+        trapWord(6,uVar25,0);
+        uVar27 = (uVar25 + uVar27) - 1;
+        iVar18 = (int)uVar27 / (int)uVar25;
+        lVar11 = (longlong)iVar18;
+        trapWord(5,uVar25 & ~(((uVar27 & 0x7fffffff) << 1 | (uVar27 & 0xffffffff) >> 0x1f) - 1),
+                 0xffff);
+        if (0 < iVar18) {
+          iVar18 = (int)lVar16;
           do {
-            uVar9 = uVar12;
-            lVar23 = lVar18;
-            lVar24 = lVar16;
-            if (iVar5 != 0) {
+            uVar27 = uVar22;
+            lVar17 = lVar6 + ZEXT48(in_stack_00000054);
+            lVar28 = lVar16;
+            if (iVar18 != 0) {
               do {
-                uVar2 = uVar9;
-                if ((uVar9 & 0xffffffff) < (uVar14 & 0xffffffff)) {
-                  uVar2 = uVar14;
+                puVar3 = (uchar *)uVar27;
+                if ((uVar27 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+                  puVar3 = (uchar *)uVar14;
                 }
-                (*pcVar17)(uVar2,param_3,lVar23,iVar7);
-                lVar24 = lVar24 + -1;
-                uVar9 = uVar9 + param_2;
-                lVar23 = lVar23 + param_6;
-              } while (lVar24 != 0);
-              uVar2 = param_7 & 0xffffffff;
+                (*p_Var19)(puVar3,uVar2,(uchar *)lVar17,uStack00000044);
+                lVar28 = lVar28 + -1;
+                uVar27 = uVar27 + lVar4;
+                lVar17 = lVar17 + lVar6;
+              } while (lVar28 != 0);
+              uVar23 = (ulonglong)uStack00000044;
             }
-            pvVar3 = (void *)(*pcVar13)(lVar18,param_6,param_5,param_6,uVar2);
+            (*p_Var13)((uchar *)(lVar6 + ZEXT48(in_stack_00000054)),uVar26,(uchar *)lVar20,uVar26,
+                       (uint)uVar23);
             if (bVar1) {
-              pvVar3 = vpx_memcpy(in_stack_00000054,(void *)(iVar5 * _Size + (int)in_stack_00000054)
-                                  ,(size_t)uVar2);
+              vpx_memcpy(in_stack_00000054,in_stack_00000054 + iVar18 * uVar26,(uint)uVar23);
             }
             lVar11 = lVar11 + -1;
-            uVar12 = (longlong)iVar5 * (longlong)iVar4 + uVar12;
-            param_5 = (longlong)(int)uVar22 * (longlong)(int)_Size + param_5;
+            uVar22 = (longlong)iVar18 * (longlong)iVar5 + uVar22;
+            lVar20 = (longlong)(int)uVar25 * (longlong)(int)uVar26 + lVar20;
           } while (lVar11 != 0);
-          __restgprlr(pvVar3);
+          __restgprlr();
           return;
         }
       }
@@ -275,22 +298,22 @@ LAB_82840760:
   else {
     if (uVar10 == 6) {
       lVar16 = 5;
-      uVar22 = 3;
-      pcVar13 = DAT_8487cdac;
+      uVar25 = 3;
+      p_Var13 = vp8_vertical_band_5_3_scale;
       goto LAB_82840760;
     }
     if (uVar10 == 8) {
       lVar16 = 5;
-      uVar22 = 4;
-      pcVar13 = DAT_8487cda8;
+      uVar25 = 4;
+      p_Var13 = vp8_vertical_band_5_4_scale;
       goto LAB_82840760;
     }
   }
   if ((uVar12 == 2) && (uVar15 == 1)) {
     local_ac = scale1d_2t1_ps;
-    pcVar19 = scale1d_2t1_ps;
+    pcVar21 = scale1d_2t1_ps;
   }
-  if ((uVar6 == 2) && ((ulonglong)in_stack_0000007c == 1)) {
+  if ((uVar9 == 2) && ((ulonglong)in_stack_0000007c == 1)) {
     if (in_stack_00000084 == 0) {
       local_a8 = scale1d_2t1_i;
     }
@@ -298,526 +321,541 @@ LAB_82840760:
       local_a8 = scale1d_2t1_ps;
     }
   }
-  if ((param_8 & 0xffffffff) == (param_4 & 0xffffffff)) {
-    if (0 < (int)param_8) {
+  if ((uVar27 & 0xffffffff) == (ulonglong)param_4) {
+    if (0 < (int)uVar27) {
       do {
-        (*pcVar19)(uVar2,1,uVar12,param_3 + 1,param_5,1,uVar15,param_7);
-        param_8 = param_8 - 1;
-        uVar2 = uVar2 + param_2;
-        param_5 = param_5 + param_6;
-      } while (param_8 != 0);
+        (*pcVar21)(uVar22,1,uVar12,lVar11 + 1,lVar20,1,uVar15,uVar23);
+        uVar27 = uVar27 - 1;
+        uVar22 = uVar22 + lVar4;
+        lVar20 = lVar20 + lVar6;
+      } while (uVar27 != 0);
       __restgprlr();
       return;
     }
   }
   else {
-    if ((param_4 & 0xffffffff) < (param_8 & 0xffffffff)) {
-      uVar6 = (ulonglong)in_stack_0000005f - 1;
-      trapWord(6,param_8,0);
-      uVar14 = ((longlong)(int)uVar6 * (longlong)iVar5 & 0xffffffffU) / (param_8 & 0xffffffff);
+    if ((ulonglong)param_4 < (uVar27 & 0xffffffff)) {
+      uVar9 = (ulonglong)in_stack_0000005f - 1;
+      trapWord(6,uVar27,0);
+      uVar14 = ((longlong)(int)uVar9 * (longlong)(int)param_4 & 0xffffffffU) / (uVar27 & 0xffffffff)
+      ;
     }
     else {
       uVar14 = (ulonglong)in_stack_0000005f - 1;
-      trapWord(6,uVar6,0);
-      uVar6 = ((longlong)(int)uVar14 * (longlong)(int)in_stack_0000007c & 0xffffffffU) / uVar6;
+      trapWord(6,uVar9,0);
+      uVar9 = ((longlong)(int)uVar14 * (longlong)(int)in_stack_0000007c & 0xffffffffU) / uVar9;
     }
-    uVar10 = ZEXT48(in_stack_00000054);
-    uVar9 = (*pcVar19)(uVar2,1,uVar12,param_3 + 1,uVar10,1,uVar15,param_7);
-    trapWord(6,uVar6,0);
-    uVar22 = ((uVar6 + param_8) - 1 & 0xffffffff) / (uVar6 & 0xffffffff);
-    if (0 < (int)uVar22) {
+    uVar25 = ZEXT48(in_stack_00000054);
+    (*pcVar21)(uVar22,1,uVar12,lVar11 + 1,uVar25,1,uVar15,uVar23);
+    trapWord(6,uVar9,0);
+    uVar23 = ((uVar9 + uVar27) - 1 & 0xffffffff) / (uVar9 & 0xffffffff);
+    if (0 < (int)uVar23) {
       lVar16 = 0;
-      param_5 = param_5 - uVar10;
-      lVar11 = uVar2 + param_2;
+      lVar20 = lVar20 - uVar25;
+      lVar17 = uVar22 + lVar4;
       do {
-        iVar21 = 1;
-        iVar20 = (int)(uVar14 + 1);
-        uVar9 = uVar10;
-        lVar18 = lVar11;
-        uVar2 = uVar10;
-        if (1 < iVar20) {
+        iVar24 = 1;
+        iVar18 = (int)(uVar14 + 1);
+        uVar27 = uVar25;
+        lVar28 = lVar17;
+        uVar22 = uVar25;
+        if (1 < iVar18) {
           do {
-            uVar2 = param_6 + uVar2;
-            if ((int)lVar16 + iVar21 < iVar5) {
-              (*local_ac)(lVar18,1,in_stack_00000064,param_3 + 1,uVar2,1,in_stack_0000006c,iVar7);
+            uVar22 = lVar6 + uVar22;
+            if ((int)lVar16 + iVar24 < (int)uStack0000002c) {
+              (*local_ac)(lVar28,1,in_stack_00000064,lVar11 + 1,uVar22,1,in_stack_0000006c,
+                          uStack00000044);
             }
             else {
-              vpx_memcpy((void *)uVar2,(void *)uVar9,_Size);
+              vpx_memcpy((void *)uVar22,(void *)uVar27,uVar26);
             }
-            iVar21 = iVar21 + 1;
-            uVar9 = uVar9 + param_6;
-            lVar18 = lVar18 + param_2;
-          } while (iVar21 < iVar20);
+            iVar24 = iVar24 + 1;
+            uVar27 = uVar27 + lVar6;
+            lVar28 = lVar28 + lVar4;
+          } while (iVar24 < iVar18);
         }
-        uVar9 = param_7 & 0xffffffff;
-        uVar2 = uVar10;
-        if (0 < iVar7) {
+        uVar27 = (ulonglong)uStack00000044;
+        uVar22 = uVar25;
+        if (0 < (int)uStack00000044) {
           do {
-            (*local_a8)(uVar2,param_6,in_stack_00000074,uVar14 + 1,param_5 + uVar2,param_6,
-                        in_stack_0000007c,uVar6);
-            uVar9 = uVar9 - 1;
-            uVar2 = uVar2 + 1;
-          } while (uVar9 != 0);
+            (*local_a8)(uVar22,lVar6,in_stack_00000074,uVar14 + 1,lVar20 + uVar22,lVar6,
+                        in_stack_0000007c,uVar9);
+            uVar27 = uVar27 - 1;
+            uVar22 = uVar22 + 1;
+          } while (uVar27 != 0);
         }
-        pvVar3 = vpx_memcpy(in_stack_00000054,(void *)((int)uVar14 * _Size + (int)in_stack_00000054)
-                            ,_Size);
-        uVar9 = (ulonglong)(int)pvVar3;
-        uVar22 = uVar22 - 1;
-        lVar11 = lVar11 + (longlong)(int)uVar14 * (longlong)iVar4;
-        param_5 = param_5 + (longlong)(int)uVar6 * (longlong)(int)_Size;
+        vpx_memcpy(in_stack_00000054,in_stack_00000054 + (int)uVar14 * uVar26,uVar26);
+        uVar23 = uVar23 - 1;
+        lVar17 = lVar17 + (longlong)(int)uVar14 * (longlong)iVar5;
+        lVar20 = lVar20 + (longlong)(int)uVar9 * (longlong)(int)uVar26;
         lVar16 = lVar16 + uVar14;
-      } while (uVar22 != 0);
+      } while (uVar23 != 0);
     }
   }
 LAB_82840ad4:
-  __restgprlr(uVar9);
+  __restgprlr();
   return;
 }
 
 
 // 82840AE0  vp8_scale_frame  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:620)
 
-void vp8_scale_frame(undefined8 param_1,int *param_2,undefined8 param_3,undefined8 param_4,
-                    ulonglong param_5,int param_6,ulonglong param_7,int param_8)
+void vp8_scale_frame(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,uchar *param_3,
+                    uchar param_4,uint param_5,uint param_6,uint param_7,uint param_8,uint param_9)
 
 {
   uint uVar1;
   int iVar2;
-  int *piVar3;
-  void *pvVar4;
-  int iVar5;
+  uint *puVar3;
+  uint uVar4;
+  uint uVar5;
   ulonglong uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  int iVar11;
-  longlong lVar10;
+  ulonglong uVar7;
+  int iVar9;
+  longlong lVar8;
+  uchar *in_stack_ffffff08;
+  uchar in_stack_ffffff0f;
+  uint in_stack_ffffff10;
+  uint in_stack_ffffff14;
+  uint in_stack_ffffff18;
+  uint in_stack_ffffff1c;
+  uint in_stack_ffffff20;
   
-  piVar3 = (int *)__savegprlr_19();
-  trapWord(6,param_7,0);
-  trapWord(6,param_5,0);
-  uVar6 = (((longlong)piVar3[1] * (longlong)param_8 + param_7) - 1 & 0xffffffff) /
-          (param_7 & 0xffffffff);
-  uVar8 = (((longlong)*piVar3 * (longlong)param_6 + param_5) - 1 & 0xffffffff) /
-          (param_5 & 0xffffffff);
-  Scale2D(piVar3[6],piVar3[2],*piVar3,piVar3[1],param_2[6],param_2[2],uVar8,uVar6);
-  iVar5 = (int)uVar8;
-  iVar7 = (int)uVar6;
-  if (iVar5 < *param_2) {
-    iVar11 = 0;
-    if (0 < iVar7) {
+  uVar6 = (ulonglong)(int)param_7;
+  uVar7 = (ulonglong)(int)param_5;
+  puVar3 = (uint *)__savegprlr_19(param_1);
+  trapWord(6,uVar6,0);
+  trapWord(6,uVar7,0);
+  uVar6 = (((longlong)(int)puVar3[1] * (longlong)(int)param_8 + uVar6) - 1 & 0xffffffff) /
+          (uVar6 & 0xffffffff);
+  uVar7 = (((longlong)(int)*puVar3 * (longlong)(int)param_6 + uVar7) - 1 & 0xffffffff) /
+          (uVar7 & 0xffffffff);
+  uVar4 = (uint)uVar7;
+  uVar5 = (uint)uVar6;
+  Scale2D((uchar *)puVar3[6],puVar3[2],*puVar3,puVar3[1],param_2->y_buffer,param_2->y_stride,uVar4,
+          uVar5,in_stack_ffffff08,in_stack_ffffff0f,in_stack_ffffff10,in_stack_ffffff14,
+          in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20);
+  if ((int)uVar4 < param_2->y_width) {
+    iVar9 = 0;
+    if (0 < (int)uVar5) {
       do {
-        iVar2 = param_2[2] * iVar11 + iVar5 + param_2[6];
-        vpx_memset((void *)(iVar2 + -1),(uint)*(byte *)(iVar2 + -2),(*param_2 - iVar5) + 1);
-        iVar11 = iVar11 + 1;
-      } while (iVar11 < iVar7);
+        iVar2 = param_2->y_stride * iVar9 + uVar4;
+        vpx_memset(param_2->y_buffer + iVar2 + -1,(uint)param_2->y_buffer[iVar2 + -2],
+                   (param_2->y_width - uVar4) + 1);
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < (int)uVar5);
     }
   }
-  if ((iVar7 < param_2[1]) && (lVar10 = uVar6 - 1, (int)lVar10 < param_2[1])) {
+  if (((int)uVar5 < param_2->y_height) && (lVar8 = uVar6 - 1, (int)lVar8 < param_2->y_height)) {
     do {
-      vpx_memcpy((void *)(param_2[2] * (int)lVar10 + param_2[6]),
-                 (void *)(param_2[2] * (iVar7 + -2) + param_2[6]),*param_2 + 1);
-      lVar10 = lVar10 + 1;
-    } while ((int)lVar10 < param_2[1]);
+      vpx_memcpy(param_2->y_buffer + param_2->y_stride * (int)lVar8,
+                 param_2->y_buffer + param_2->y_stride * (uVar5 - 2),param_2->y_width + 1);
+      lVar8 = lVar8 + 1;
+    } while ((int)lVar8 < param_2->y_height);
   }
-  lVar10 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar6 & 1) != 0);
-  iVar7 = (iVar5 >> 1) + (uint)(iVar5 < 0 && (uVar8 & 1) != 0);
-  Scale2D(piVar3[7],piVar3[5],piVar3[3],piVar3[4],param_2[7],param_2[5],iVar7,lVar10);
-  if (iVar7 < param_2[3]) {
-    iVar5 = 0;
-    if (0 < param_2[4]) {
+  uVar5 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar6 & 1) != 0);
+  uVar4 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar7 & 1) != 0);
+  Scale2D((uchar *)puVar3[7],puVar3[5],puVar3[3],puVar3[4],param_2->u_buffer,param_2->uv_stride,
+          uVar4,uVar5,in_stack_ffffff08,in_stack_ffffff0f,in_stack_ffffff10,in_stack_ffffff14,
+          in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20);
+  if ((int)uVar4 < param_2->uv_width) {
+    iVar9 = 0;
+    if (0 < param_2->uv_height) {
       do {
-        iVar11 = iVar5 * param_2[5] + param_2[7] + iVar7;
-        vpx_memset((void *)(iVar11 + -1),(uint)*(byte *)(iVar11 + -2),(param_2[3] - iVar7) + 1);
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < param_2[4]);
+        iVar2 = uVar4 + iVar9 * param_2->uv_stride;
+        vpx_memset(param_2->u_buffer + iVar2 + -1,(uint)param_2->u_buffer[iVar2 + -2],
+                   (param_2->uv_width - uVar4) + 1);
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < param_2->uv_height);
     }
   }
-  iVar5 = (int)lVar10;
-  if (iVar5 < param_2[4]) {
-    uVar1 = param_2[1];
-    lVar9 = lVar10 + -1;
-    if ((int)lVar9 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) {
+  if ((int)uVar5 < param_2->uv_height) {
+    uVar1 = param_2->y_height;
+    iVar9 = uVar5 - 1;
+    if (iVar9 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) {
       do {
-        vpx_memcpy((void *)(param_2[5] * (int)lVar9 + param_2[7]),
-                   (void *)(param_2[5] * (iVar5 + -2) + param_2[7]),param_2[3]);
-        uVar1 = param_2[1];
-        lVar9 = lVar9 + 1;
-      } while ((int)lVar9 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)));
+        vpx_memcpy(param_2->u_buffer + param_2->uv_stride * iVar9,
+                   param_2->u_buffer + param_2->uv_stride * (uVar5 - 2),param_2->uv_width);
+        uVar1 = param_2->y_height;
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)));
     }
   }
-  pvVar4 = (void *)Scale2D(piVar3[8],piVar3[5],piVar3[3],piVar3[4],param_2[8],param_2[5],iVar7,
-                           lVar10);
-  if (iVar7 < param_2[3]) {
-    iVar11 = 0;
-    if (0 < param_2[4]) {
+  Scale2D((uchar *)puVar3[8],puVar3[5],puVar3[3],puVar3[4],param_2->v_buffer,param_2->uv_stride,
+          uVar4,uVar5,in_stack_ffffff08,in_stack_ffffff0f,in_stack_ffffff10,in_stack_ffffff14,
+          in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20);
+  if ((int)uVar4 < param_2->uv_width) {
+    iVar9 = 0;
+    if (0 < param_2->uv_height) {
       do {
-        iVar2 = iVar11 * param_2[5] + param_2[8] + iVar7;
-        pvVar4 = vpx_memset((void *)(iVar2 + -1),(uint)*(byte *)(iVar2 + -2),
-                            (param_2[3] - iVar7) + 1);
-        iVar11 = iVar11 + 1;
-      } while (iVar11 < param_2[4]);
+        iVar2 = uVar4 + iVar9 * param_2->uv_stride;
+        vpx_memset(param_2->v_buffer + iVar2 + -1,(uint)param_2->v_buffer[iVar2 + -2],
+                   (param_2->uv_width - uVar4) + 1);
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < param_2->uv_height);
     }
   }
-  if (iVar5 < param_2[4]) {
-    uVar1 = param_2[1];
-    lVar10 = lVar10 + -1;
-    if ((int)lVar10 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) {
+  if ((int)uVar5 < param_2->uv_height) {
+    uVar4 = param_2->y_height;
+    iVar9 = uVar5 - 1;
+    if (iVar9 < (int)(((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0))) {
       do {
-        pvVar4 = vpx_memcpy((void *)(param_2[5] * (int)lVar10 + param_2[8]),
-                            (void *)(param_2[5] * (iVar5 + -2) + param_2[8]),param_2[3]);
-        uVar1 = param_2[1];
-        lVar10 = lVar10 + 1;
-      } while ((int)lVar10 < (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)));
+        vpx_memcpy(param_2->v_buffer + param_2->uv_stride * iVar9,
+                   param_2->v_buffer + param_2->uv_stride * (uVar5 - 2),param_2->uv_width);
+        uVar4 = param_2->y_height;
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < (int)(((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0)));
     }
   }
-  __restgprlr_19(pvVar4);
+  __restgprlr_19();
   return;
 }
 
 
 // 82840E20  any_ratio_2d_scale  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:699)
 
-void any_ratio_2d_scale(undefined8 param_1,ulonglong param_2,longlong param_3,undefined8 param_4,
-                       int param_5,longlong param_6,longlong param_7,undefined8 param_8)
+int any_ratio_2d_scale(SCALE_VARS *param_1,uchar *param_2,int param_3,uint param_4,uint param_5,
+                      uchar *param_6,uint param_7,uint param_8,uint param_9)
 
 {
   uint uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar2;
+  uchar *puVar3;
+  longlong lVar4;
+  int iVar5;
+  longlong lVar6;
   uint uVar7;
-  ulonglong uVar8;
+  uint uVar8;
   longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
+  ulonglong uVar10;
   code *pcVar12;
   code *pcVar13;
   ulonglong uVar14;
   code *pcVar15;
   longlong lVar16;
-  longlong lVar17;
-  longlong lVar18;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  longlong lVar20;
+  longlong lVar21;
   uint in_stack_00000054;
+  uchar *puVar11;
   
-  iVar3 = __savegprlr();
-  uVar1 = *(uint *)(iVar3 + 8);
-  uVar2 = *(uint *)(iVar3 + 0x10);
-  iVar10 = 1;
-  iVar4 = (int)param_3;
-  uVar11 = param_2;
-  if (iVar4 < 0) {
-    uVar11 = (longlong)(param_5 + -1) * (longlong)iVar4 + param_2;
+  lVar6 = (longlong)(int)param_7;
+  lVar16 = (longlong)(int)param_6;
+  lVar4 = (longlong)param_3;
+  uVar18 = (ulonglong)(int)param_2;
+  __savegprlr();
+  uVar8 = param_1->HScale;
+  uVar1 = param_1->VScale;
+  iVar2 = 1;
+  iVar5 = (int)lVar4;
+  uVar10 = uVar18;
+  if (iVar5 < 0) {
+    uVar10 = (longlong)(int)(param_5 - 1) * (longlong)iVar5 + uVar18;
   }
-  uVar7 = *(int *)(iVar3 + 0xc) * 0x1e;
-  uVar5 = (((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1;
-  trapWord(6,(ulonglong)uVar1,0);
-  trapWord(5,(ulonglong)uVar1 & ~uVar5,0xffff);
-  switch((int)uVar7 / (int)uVar1) {
+  puVar11 = (uchar *)uVar10;
+  uVar7 = param_1->HRatio * 0x1e;
+  trapWord(6,(ulonglong)uVar8,0);
+  pcVar15 = (_func___cdecl_void_uchar_ptr_uint_uchar_ptr_uint *)0x0;
+  trapWord(5,(ulonglong)uVar8 &
+             ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1),0xffff);
+  switch((int)uVar7 / (int)uVar8) {
   case 0xf:
-    pcVar15 = DAT_8487cd8c;
+    pcVar15 = vp8_horizontal_line_1_2_scale;
     break;
   default:
-    iVar10 = 0;
-    pcVar15 = (code *)0x0;
+    iVar2 = 0;
     break;
   case 0x12:
-    pcVar15 = DAT_8487cd90;
+    pcVar15 = vp8_horizontal_line_3_5_scale;
     break;
   case 0x14:
-    pcVar15 = DAT_8487cd98;
+    pcVar15 = vp8_horizontal_line_2_3_scale;
     break;
   case 0x16:
-    pcVar15 = DAT_8487cd94;
+    pcVar15 = vp8_horizontal_line_3_4_scale;
     break;
   case 0x18:
-    pcVar15 = DAT_8487cd9c;
+    pcVar15 = vp8_horizontal_line_4_5_scale;
     break;
   case 0x1e:
     pcVar15 = horizontal_line_copy;
   }
-  uVar8 = (ulonglong)*(uint *)(iVar3 + 0x14) * 0x1e;
-  trapWord(6,(ulonglong)uVar2,0);
-  uVar6 = (ulonglong)uVar2 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1);
-  trapWord(5,uVar6,0xffff);
-  switch((int)uVar8 / (int)uVar2) {
+  uVar8 = param_1->VRatio * 0x1e;
+  trapWord(6,(ulonglong)uVar1,0);
+  trapWord(5,(ulonglong)uVar1 &
+             ~((((ulonglong)uVar8 & 0x7fffffff) << 1 | (ulonglong)(uVar8 >> 0x1f)) - 1),0xffff);
+  switch((int)uVar8 / (int)uVar1) {
   case 0xf:
     uVar14 = 1;
-    uVar8 = 2;
-    pcVar13 = DAT_8487cda0;
-    pcVar12 = DAT_8487cda4;
+    uVar19 = 2;
+    pcVar13 = vp8_vertical_band_1_2_scale;
+    pcVar12 = vp8_last_vertical_band_1_2_scale;
     break;
   default:
     goto switchD_82840f80_caseD_10;
   case 0x12:
     uVar14 = 3;
-    uVar8 = 5;
-    pcVar13 = DAT_8487cd7c;
-    pcVar12 = DAT_8487cd80;
+    uVar19 = 5;
+    pcVar13 = vp8_vertical_band_3_5_scale;
+    pcVar12 = vp8_last_vertical_band_3_5_scale;
     break;
   case 0x14:
     uVar14 = 2;
-    uVar8 = 3;
-    pcVar13 = DAT_8487cd74;
-    pcVar12 = DAT_8487cd78;
+    uVar19 = 3;
+    pcVar13 = vp8_vertical_band_2_3_scale;
+    pcVar12 = vp8_last_vertical_band_2_3_scale;
     break;
   case 0x16:
     uVar14 = 3;
-    uVar8 = 4;
-    pcVar13 = DAT_8487cd84;
-    pcVar12 = DAT_8487cd88;
+    uVar19 = 4;
+    pcVar13 = vp8_vertical_band_3_4_scale;
+    pcVar12 = vp8_last_vertical_band_3_4_scale;
     break;
   case 0x18:
-    uVar8 = 5;
-    pcVar13 = DAT_8487cd6c;
-    pcVar12 = DAT_8487cd70;
+    uVar19 = 5;
+    pcVar13 = vp8_vertical_band_4_5_scale;
+    pcVar12 = vp8_last_vertical_band_4_5_scale;
     goto LAB_82841060;
   case 0x1e:
-    uVar8 = 4;
     pcVar13 = null_scale;
     pcVar12 = null_scale;
+    uVar19 = 4;
 LAB_82841060:
     uVar14 = 4;
   }
-  if (iVar10 != 0) {
-    (*pcVar15)(param_2,param_4,param_6,param_8,uVar5,uVar6);
-    trapWord(6,uVar8,0);
-    lVar9 = ((uVar8 + in_stack_00000054) - 1 & 0xffffffff) / uVar8 - 1;
+  if (iVar2 != 0) {
+    (*pcVar15)((uchar *)uVar18,param_4,(uchar *)lVar16,param_8);
+    trapWord(6,uVar19,0);
+    lVar9 = ((uVar19 + in_stack_00000054) - 1 & 0xffffffff) / uVar19 - 1;
+    uVar8 = (uint)lVar6;
     if (lVar9 != 0) {
-      lVar18 = param_6;
+      lVar21 = lVar16;
       do {
         if (1 < uVar14) {
-          lVar17 = uVar14 - 1;
-          lVar16 = lVar18;
-          uVar5 = param_2;
+          lVar20 = uVar14 - 1;
+          lVar16 = lVar21;
+          uVar17 = uVar18;
           do {
-            uVar5 = uVar5 + param_3;
-            lVar16 = lVar16 + param_7;
-            uVar6 = uVar5;
-            if ((uVar5 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-              uVar6 = uVar11;
+            uVar17 = uVar17 + lVar4;
+            lVar16 = lVar16 + lVar6;
+            puVar3 = (uchar *)uVar17;
+            if ((uVar17 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+              puVar3 = puVar11;
             }
-            (*pcVar15)(uVar6,param_4,lVar16,param_8);
-            lVar17 = lVar17 + -1;
-          } while (lVar17 != 0);
+            (*pcVar15)(puVar3,param_4,(uchar *)lVar16,param_8);
+            lVar20 = lVar20 + -1;
+          } while (lVar20 != 0);
         }
-        param_2 = (longlong)(int)uVar14 * (longlong)iVar4 + param_2;
-        uVar5 = param_2;
-        if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-          uVar5 = uVar11;
+        uVar18 = (longlong)(int)uVar14 * (longlong)iVar5 + uVar18;
+        puVar3 = (uchar *)uVar18;
+        if ((uVar18 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+          puVar3 = puVar11;
         }
-        param_6 = (longlong)(int)uVar8 * (longlong)(int)param_7 + lVar18;
-        (*pcVar15)(uVar5,param_4,param_6,param_8);
-        (*pcVar13)(lVar18,param_7,param_8);
+        lVar16 = (longlong)(int)uVar19 * (longlong)(int)uVar8 + lVar21;
+        (*pcVar15)(puVar3,param_4,(uchar *)lVar16,param_8);
+        (*pcVar13)((uchar *)lVar21,uVar8,param_8);
         lVar9 = lVar9 + -1;
-        lVar18 = param_6;
+        lVar21 = lVar16;
       } while (lVar9 != 0);
     }
     if (1 < uVar14) {
-      lVar18 = uVar14 - 1;
-      lVar9 = param_6;
+      lVar21 = uVar14 - 1;
+      lVar9 = lVar16;
       do {
-        param_2 = param_2 + param_3;
-        lVar9 = lVar9 + param_7;
-        uVar5 = param_2;
-        if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-          uVar5 = uVar11;
+        uVar18 = uVar18 + lVar4;
+        lVar9 = lVar9 + lVar6;
+        puVar3 = (uchar *)uVar18;
+        if ((uVar18 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+          puVar3 = puVar11;
         }
-        (*pcVar15)(uVar5,param_4,lVar9,param_8);
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+        (*pcVar15)(puVar3,param_4,(uchar *)lVar9,param_8);
+        lVar21 = lVar21 + -1;
+      } while (lVar21 != 0);
     }
-    (*pcVar12)(param_6,param_7,param_8);
-    __restgprlr(iVar10);
-    return;
+    (*pcVar12)((uchar *)lVar16,uVar8,param_8);
+    __restgprlr();
+    return iVar2;
   }
 switchD_82840f80_caseD_10:
-  __restgprlr(0);
-  return;
+  iVar2 = 0;
+  __restgprlr();
+  return iVar2;
 }
 
 
 // 828411B8  any_ratio_frame_scale  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:888)
 
-void any_ratio_frame_scale(undefined8 param_1,longlong param_2,longlong param_3)
+int any_ratio_frame_scale(SCALE_VARS *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  size_t _Size;
-  int iVar3;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  int iVar7;
-  int iVar8;
-  int *piVar11;
+  YV12_BUFFER_CONFIG *pYVar7;
+  YV12_BUFFER_CONFIG *pYVar8;
+  SCALE_VARS *pSVar10;
   ulonglong uVar9;
-  undefined8 uVar10;
-  ulonglong uVar12;
-  uint uVar13;
-  ulonglong uVar14;
+  int iVar11;
+  int iVar12;
+  ulonglong uVar13;
+  uint uVar14;
   ulonglong uVar15;
-  uint uVar16;
-  int iVar17;
+  ulonglong uVar16;
+  uint uVar17;
   int iVar18;
   int iVar19;
+  uint in_stack_ffffff38;
   
-  piVar11 = (int *)__savegprlr_18();
-  uVar16 = piVar11[3];
-  iVar3 = *piVar11;
-  iVar19 = piVar11[1];
-  uVar4 = piVar11[5];
-  uVar5 = piVar11[2];
-  uVar15 = (ulonglong)uVar5;
-  uVar6 = piVar11[4];
-  uVar14 = (ulonglong)uVar6;
-  iVar7 = piVar11[6];
-  iVar8 = piVar11[7];
-  uVar12 = ((longlong)iVar3 * (longlong)(int)uVar16 + uVar15) - 1;
-  uVar9 = ((longlong)iVar19 * (longlong)(int)uVar4 + uVar14) - 1;
-  iVar1 = (int)uVar12 / (int)uVar5;
+  pSVar10 = (SCALE_VARS *)__savegprlr_18(param_1);
+  uVar17 = pSVar10->HRatio;
+  uVar3 = pSVar10->expanded_frame_width;
+  iVar12 = pSVar10->expanded_frame_height;
+  uVar4 = pSVar10->VRatio;
+  uVar5 = pSVar10->HScale;
+  uVar16 = (ulonglong)uVar5;
+  uVar6 = pSVar10->VScale;
+  uVar15 = (ulonglong)uVar6;
+  pYVar7 = pSVar10->src_yuv_config;
+  pYVar8 = pSVar10->dst_yuv_config;
+  uVar13 = ((longlong)(int)uVar3 * (longlong)(int)uVar17 + uVar16) - 1;
+  uVar9 = ((longlong)iVar12 * (longlong)(int)uVar4 + uVar15) - 1;
+  uVar1 = (int)uVar13 / (int)uVar5;
+  trapWord(6,uVar16,0);
+  trapWord(5,uVar16 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  uVar2 = (int)uVar9 / (int)uVar6;
   trapWord(6,uVar15,0);
-  trapWord(5,uVar15 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar2 = (int)uVar9 / (int)uVar6;
-  trapWord(6,uVar14,0);
-  trapWord(5,uVar14 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  if (uVar16 == 3) {
-    _Size = (int)(((iVar1 + 2) / 3) * uVar5 * 3) / 3;
+  trapWord(5,uVar15 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if (uVar17 == 3) {
+    uVar5 = (int)(((int)(uVar1 + 2) / 3) * uVar5 * 3) / 3;
   }
   else {
-    uVar13 = iVar1 + 7;
-    trapWord(6,(ulonglong)uVar16,0);
-    uVar9 = (longlong)(int)(((int)uVar13 >> 3) + (uint)((int)uVar13 < 0 && (uVar13 & 7) != 0)) *
+    uVar14 = uVar1 + 7;
+    trapWord(6,(ulonglong)uVar17,0);
+    uVar9 = (longlong)(int)(((int)uVar14 >> 3) + (uint)((int)uVar14 < 0 && (uVar14 & 7) != 0)) *
             (longlong)(int)uVar5;
-    uVar12 = (uVar9 & 0x1fffffff) << 3;
-    _Size = (int)uVar12 / (int)uVar16;
-    trapWord(5,(ulonglong)uVar16 &
-               ~(((uVar12 & 0x7fffffff) << 1 | (uVar9 & 0x1fffffff) >> 0x1c) - 1),0xffff);
+    uVar13 = (uVar9 & 0x1fffffff) << 3;
+    uVar5 = (int)uVar13 / (int)uVar17;
+    trapWord(5,(ulonglong)uVar17 &
+               ~(((uVar13 & 0x7fffffff) << 1 | (uVar9 & 0x1fffffff) >> 0x1c) - 1),0xffff);
   }
   if (uVar4 == 3) {
-    iVar17 = (int)(((iVar2 + 2) / 3) * uVar6 * 3) / 3;
+    iVar18 = (int)(((int)(uVar2 + 2) / 3) * uVar6 * 3) / 3;
   }
   else {
-    uVar16 = iVar2 + 7;
+    uVar17 = uVar2 + 7;
     trapWord(6,(ulonglong)uVar4,0);
-    uVar12 = (longlong)(int)(((int)uVar16 >> 3) + (uint)((int)uVar16 < 0 && (uVar16 & 7) != 0)) *
+    uVar13 = (longlong)(int)(((int)uVar17 >> 3) + (uint)((int)uVar17 < 0 && (uVar17 & 7) != 0)) *
              (longlong)(int)uVar6;
-    uVar9 = (uVar12 & 0x1fffffff) << 3;
-    iVar17 = (int)uVar9 / (int)uVar4;
-    trapWord(5,(ulonglong)uVar4 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar12 & 0x1fffffff) >> 0x1c) - 1)
+    uVar9 = (uVar13 & 0x1fffffff) << 3;
+    iVar18 = (int)uVar9 / (int)uVar4;
+    trapWord(5,(ulonglong)uVar4 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar13 & 0x1fffffff) >> 0x1c) - 1)
              ,0xffff);
   }
-  uVar10 = any_ratio_2d_scale(piVar11,*(undefined4 *)(iVar7 + 0x18),*(undefined4 *)(iVar7 + 8),iVar1
-                              ,iVar2,param_2 + (ulonglong)*(uint *)(iVar8 + 0x18),
-                              *(undefined4 *)(iVar8 + 8),iVar3);
-  iVar18 = 0;
-  if (0 < iVar17) {
+  iVar11 = any_ratio_2d_scale(pSVar10,pYVar7->y_buffer,pYVar7->y_stride,uVar1,uVar2,
+                              pYVar8->y_buffer + param_2,pYVar8->y_stride,uVar3,in_stack_ffffff38);
+  iVar19 = 0;
+  if (0 < iVar18) {
     do {
-      vpx_memset((void *)(*(int *)(iVar8 + 8) * iVar18 + iVar3 + (int)param_2 +
-                         *(int *)(iVar8 + 0x18)),0,_Size - iVar3);
-      iVar18 = iVar18 + 1;
-    } while (iVar18 < iVar17);
+      vpx_memset(pYVar8->y_buffer + pYVar8->y_stride * iVar19 + uVar3 + param_2,0,uVar5 - uVar3);
+      iVar19 = iVar19 + 1;
+    } while (iVar19 < iVar18);
   }
-  for (; iVar19 < iVar17; iVar19 = iVar19 + 1) {
-    vpx_memset((void *)(*(int *)(iVar8 + 8) * iVar19 + (int)param_2 + *(int *)(iVar8 + 0x18)),0,
-               _Size);
+  for (; iVar12 < iVar18; iVar12 = iVar12 + 1) {
+    vpx_memset(pYVar8->y_buffer + pYVar8->y_stride * iVar12 + param_2,0,uVar5);
   }
-  if ((int)uVar10 == 0) {
-    __restgprlr_18(0);
-    return;
+  if (iVar11 == 0) {
+    iVar12 = __restgprlr_18(0);
+    return iVar12;
   }
-  uVar16 = *(uint *)(iVar7 + 8);
-  iVar1 = iVar1 + 1 >> 1;
-  iVar2 = iVar2 + 1 >> 1;
-  iVar3 = iVar3 + 1 >> 1;
-  any_ratio_2d_scale(piVar11,*(undefined4 *)(iVar7 + 0x1c),
-                     (longlong)((int)uVar16 >> 1) +
-                     (ulonglong)((int)uVar16 < 0 && (uVar16 & 1) != 0),iVar1,iVar2,
-                     (ulonglong)*(uint *)(iVar8 + 0x1c) + param_3,*(undefined4 *)(iVar8 + 0x14),
-                     iVar3);
-  uVar16 = *(uint *)(iVar7 + 8);
-  any_ratio_2d_scale(piVar11,*(undefined4 *)(iVar7 + 0x20),
-                     (longlong)((int)uVar16 >> 1) +
-                     (ulonglong)((int)uVar16 < 0 && (uVar16 & 1) != 0),iVar1,iVar2,
-                     (ulonglong)*(uint *)(iVar8 + 0x20) + param_3,*(undefined4 *)(iVar8 + 0x14),
-                     iVar3);
-  __restgprlr_18(uVar10);
-  return;
+  uVar17 = pYVar7->y_stride;
+  uVar4 = (int)(uVar1 + 1) >> 1;
+  uVar2 = (int)(uVar2 + 1) >> 1;
+  uVar3 = (int)(uVar3 + 1) >> 1;
+  any_ratio_2d_scale(pSVar10,pYVar7->u_buffer,
+                     ((int)uVar17 >> 1) + (uint)((int)uVar17 < 0 && (uVar17 & 1) != 0),uVar4,uVar2,
+                     pYVar8->u_buffer + param_3,pYVar8->uv_stride,uVar3,in_stack_ffffff38);
+  uVar1 = pYVar7->y_stride;
+  any_ratio_2d_scale(pSVar10,pYVar7->v_buffer,
+                     ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0),uVar4,uVar2,
+                     pYVar8->v_buffer + param_3,pYVar8->uv_stride,uVar3,in_stack_ffffff38);
+  iVar12 = __restgprlr_18(iVar11);
+  return iVar12;
 }
 
 
 // 82841430  center_image  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:970)
 
-void center_image(undefined8 param_1,int *param_2)
+void center_image(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2)
 
 {
-  size_t sVar1;
-  size_t *psVar3;
-  longlong lVar2;
-  void *pvVar4;
-  void *pvVar5;
-  uint uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  int iVar10;
-  void *pvVar11;
-  longlong lVar12;
+  uint *puVar2;
+  longlong lVar1;
+  void *pvVar3;
+  uint uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  int iVar8;
+  void *pvVar9;
+  longlong lVar10;
+  uchar *puVar11;
+  int iVar12;
   int iVar13;
-  int iVar14;
   
-  psVar3 = (size_t *)__savegprlr_25();
-  uVar7 = param_2[1] - psVar3[1];
+  puVar2 = (uint *)__savegprlr_25(param_1);
+  uVar5 = param_2->y_height - puVar2[1];
+  iVar12 = 0;
+  uVar4 = param_2->y_width - *puVar2;
+  pvVar9 = (void *)puVar2[6];
+  uVar5 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+  lVar1 = (longlong)((int)uVar4 >> 1);
+  uVar6 = lVar1 + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  lVar10 = (longlong)param_2->y_stride * (longlong)(int)uVar5 + ZEXT48(param_2->y_buffer) + uVar6;
+  if (0 < (int)puVar2[1]) {
+    do {
+      pvVar3 = vpx_memcpy((void *)lVar10,pvVar9,*puVar2);
+      lVar1 = (longlong)(int)pvVar3;
+      iVar12 = iVar12 + 1;
+      pvVar9 = (void *)((int)pvVar9 + puVar2[2]);
+      lVar10 = (ulonglong)(uint)param_2->y_stride + lVar10;
+    } while (iVar12 < (int)puVar2[1]);
+  }
+  iVar12 = param_2->uv_stride;
   iVar13 = 0;
-  uVar6 = *param_2 - *psVar3;
-  pvVar11 = (void *)psVar3[6];
-  uVar7 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  lVar2 = (longlong)((int)uVar6 >> 1);
-  uVar8 = lVar2 + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  lVar12 = (longlong)param_2[2] * (longlong)(int)uVar7 + (ulonglong)(uint)param_2[6] + uVar8;
-  if (0 < (int)psVar3[1]) {
+  iVar8 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+  uVar4 = puVar2[4];
+  pvVar9 = (void *)puVar2[7];
+  iVar7 = ((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+  puVar11 = param_2->u_buffer + iVar7 + iVar12 * iVar8;
+  if (0 < (int)uVar4) {
     do {
-      pvVar4 = vpx_memcpy((void *)lVar12,pvVar11,*psVar3);
-      lVar2 = (longlong)(int)pvVar4;
+      pvVar3 = vpx_memcpy(puVar11,pvVar9,puVar2[3]);
+      lVar1 = (longlong)(int)pvVar3;
+      iVar12 = param_2->uv_stride;
       iVar13 = iVar13 + 1;
-      pvVar11 = (void *)((int)pvVar11 + psVar3[2]);
-      lVar12 = (ulonglong)(uint)param_2[2] + lVar12;
-    } while (iVar13 < (int)psVar3[1]);
+      uVar4 = puVar2[4];
+      puVar11 = puVar11 + iVar12;
+      pvVar9 = (void *)((int)pvVar9 + puVar2[5]);
+    } while (iVar13 < (int)uVar4);
   }
-  iVar13 = param_2[5];
-  iVar14 = 0;
-  iVar10 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  sVar1 = psVar3[4];
-  pvVar11 = (void *)psVar3[7];
-  iVar9 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  pvVar4 = (void *)(iVar13 * iVar10 + param_2[7] + iVar9);
-  if (0 < (int)sVar1) {
+  pvVar9 = (void *)puVar2[8];
+  iVar13 = 0;
+  puVar11 = param_2->v_buffer + iVar7 + iVar12 * iVar8;
+  if (0 < (int)uVar4) {
     do {
-      pvVar5 = vpx_memcpy(pvVar4,pvVar11,psVar3[3]);
-      lVar2 = (longlong)(int)pvVar5;
-      iVar13 = param_2[5];
-      iVar14 = iVar14 + 1;
-      sVar1 = psVar3[4];
-      pvVar4 = (void *)(iVar13 + (int)pvVar4);
-      pvVar11 = (void *)((int)pvVar11 + psVar3[5]);
-    } while (iVar14 < (int)sVar1);
+      pvVar3 = vpx_memcpy(puVar11,pvVar9,puVar2[3]);
+      lVar1 = (longlong)(int)pvVar3;
+      iVar13 = iVar13 + 1;
+      pvVar9 = (void *)((int)pvVar9 + puVar2[5]);
+      puVar11 = puVar11 + param_2->uv_stride;
+    } while (iVar13 < (int)puVar2[4]);
   }
-  pvVar11 = (void *)psVar3[8];
-  iVar14 = 0;
-  pvVar4 = (void *)(iVar13 * iVar10 + param_2[8] + iVar9);
-  if (0 < (int)sVar1) {
-    do {
-      pvVar5 = vpx_memcpy(pvVar4,pvVar11,psVar3[3]);
-      lVar2 = (longlong)(int)pvVar5;
-      iVar14 = iVar14 + 1;
-      pvVar11 = (void *)((int)pvVar11 + psVar3[5]);
-      pvVar4 = (void *)(param_2[5] + (int)pvVar4);
-    } while (iVar14 < (int)psVar3[4]);
-  }
-  __restgprlr_25(lVar2);
+  __restgprlr_25(lVar1);
   return;
 }
 
@@ -825,42 +863,33 @@ void center_image(undefined8 param_1,int *param_2)
 // 82841580  vp8_yv12_scale_or_center  (WebM_atvi_opt/vpx/vpx_scale/generic/vpxscale.c:1047)
 
 void vp8_yv12_scale_or_center
-               (undefined4 param_1,int *param_2,int param_3,int param_4,uint param_5,
-               undefined4 param_6,undefined4 param_7,undefined4 param_8)
+               (YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,int param_3,int param_4,
+               int param_5,int param_6,int param_7,int param_8,int param_9)
 
 {
-  longlong lVar1;
+  int iVar1;
   uint uVar2;
   int iVar3;
-  undefined4 in_stack_00000054;
-  int local_30;
-  int local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  int *local_14;
+  SCALE_VARS local_30;
   
-  if (param_5 < 2) {
-    uVar2 = param_2[1] - param_4;
+  if ((uint)param_5 < 2) {
+    uVar2 = param_2->y_height - param_4;
     iVar3 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-    local_1c = in_stack_00000054;
-    uVar2 = *param_2 - param_3;
-    lVar1 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-    local_30 = param_3;
-    local_2c = param_4;
-    local_28 = param_6;
-    local_24 = param_7;
-    local_20 = param_8;
-    local_18 = param_1;
-    local_14 = param_2;
+    uVar2 = param_2->y_width - param_3;
+    iVar1 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+    local_30.expanded_frame_width = param_3;
+    local_30.expanded_frame_height = param_4;
+    local_30.HScale = param_6;
+    local_30.HRatio = param_7;
+    local_30.VScale = param_8;
+    local_30.src_yuv_config = param_1;
+    local_30.dst_yuv_config = param_2;
     any_ratio_frame_scale
-              (&local_30,(longlong)param_2[2] * (longlong)iVar3 + lVar1,
-               (longlong)(iVar3 >> 1) * (longlong)param_2[5] + (longlong)((int)lVar1 >> 1));
+              (&local_30,param_2->y_stride * iVar3 + iVar1,
+               (iVar3 >> 1) * param_2->uv_stride + (iVar1 >> 1));
   }
   else if (param_5 == 2) {
-    center_image();
+    center_image(param_1,param_2);
     return;
   }
   return;

@@ -2,11 +2,12 @@
 
 // 827A8B30  RB_HW_BeginOcclusionQuery  (gfx_d3d/rb_query_d3d.h:25)
 
-void RB_HW_BeginOcclusionQuery(ulonglong param_1)
+void RB_HW_BeginOcclusionQuery(D3DQuery *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821d75e0,0x1a,0,0xffffffff82000f98,0xffffffff8202e070);
+  if (param_1 == (D3DQuery *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query_d3d.h",0x1a,0
+                    ,"%s");
   }
   D3DQuery_Issue(param_1,2);
   return;
@@ -15,17 +16,19 @@ void RB_HW_BeginOcclusionQuery(ulonglong param_1)
 
 // 827A8BF8  TRACK_rb_query  (gfx_d3d/rb_query.cpp:37)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_rb_query(void)
 
 {
-  track_static_alloc_internal(0xffffffff84848478,0x2c0,0xffffffff821d763c,0x12);
+  track_static_alloc_internal(occlusionQueryArray,0x2c0,"occlusionQueryArray",0x12);
   return;
 }
 
 
 // 827A8B90  RB_HW_ReadOcclusionQuery  (gfx_d3d/rb_query_d3d.h:38)
 
-ulonglong RB_HW_ReadOcclusionQuery(undefined8 param_1)
+uint RB_HW_ReadOcclusionQuery(D3DQuery *param_1)
 
 {
   int iVar1;
@@ -33,196 +36,222 @@ ulonglong RB_HW_ReadOcclusionQuery(undefined8 param_1)
   
   iVar1 = D3DQuery_GetData(param_1,local_10,4,1);
   if (iVar1 == 1) {
-    Com_PrintError(1,0xffffffff821d7624);
+    Com_PrintError(1,"Occlusion query failed\n");
   }
   else if (-1 < iVar1) {
-    return (ulonglong)local_10[0];
+    return local_10[0];
   }
-  return 0xffffffffffffffff;
+  return 0xffffffff;
 }
 
 
 // 827A8C18  RB_CalcOcclusionQuerySamples  (gfx_d3d/rb_query.cpp:48)
 
-longlong RB_CalcOcclusionQuerySamples(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+int RB_CalcOcclusionQuerySamples(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  if ((DAT_84848738 == '\0') || (DAT_84848739 == '\0')) {
-    MyAssertHandler(0xffffffff821d76b8,0x3a,0,0xffffffff82000f98,0xffffffff821d7680);
+  if ((!s_occlusionQueriesInited) || (!s_occlusionQueriesAllocated)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x3a,0,
+                    "%s");
   }
-  if (DAT_84617814 == 2) {
-    lVar1 = 4;
+  if (dx.multiSampleType == D3DMULTISAMPLE_4_SAMPLES) {
+    iVar1 = 4;
   }
   else {
-    if (DAT_84617814 != 1) {
-      MyAssertHandler(0xffffffff821d76b8,0x72,0,0xffffffff82000f98,0xffffffff821d7650);
+    if (dx.multiSampleType != D3DMULTISAMPLE_2_SAMPLES) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x72,0
+                      ,"%s");
     }
-    lVar1 = 2;
+    iVar1 = 2;
   }
-  return lVar1 << 8;
+  return iVar1 << 8;
 }
 
 
 // 827A8CD8  RB_SetTessQuad  (gfx_d3d/rb_query.cpp:139)
 
-void RB_SetTessQuad(void)
+GfxVertex * RB_SetTessQuad(GfxColor param_1)
 
 {
-  short sVar1;
-  int iVar2;
+  ushort uVar1;
+  uint uVar2;
   uint uVar3;
-  undefined4 uVar4;
+  GfxVertex *pGVar4;
   
-  uVar4 = __savegprlr_28();
-  if (DAT_8483400c != 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x90,0,0xffffffff82000f98,0xffffffff821d7710);
+  uVar3 = __savegprlr_28(param_1.packed);
+  if (tess.vertexCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x90,0,
+                    "%s");
   }
-  if (DAT_84834008 != 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x91,0,0xffffffff82000f98,0xffffffff821d76f8);
+  if (tess.indexCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x91,0,
+                    "%s");
   }
-  uVar3 = DAT_8483400c;
-  sVar1 = (short)DAT_8483400c;
-  *(short *)(&DAT_84832800 + DAT_84834008 * 2) = sVar1 + 3;
-  *(short *)(&DAT_84832802 + DAT_84834008 * 2) = sVar1;
-  *(short *)(&DAT_84832804 + DAT_84834008 * 2) = sVar1 + 2;
-  *(short *)(&DAT_84832806 + DAT_84834008 * 2) = sVar1 + 2;
-  *(short *)(&DAT_84832808 + DAT_84834008 * 2) = sVar1;
-  iVar2 = (uVar3 & 0xffff) * 0x20;
-  *(short *)(&DAT_8483280a + DAT_84834008 * 2) = sVar1 + 1;
-  *(undefined4 *)(&DAT_8482281c + iVar2) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822814 + iVar2) = 0;
-  *(undefined4 *)(&DAT_84822818 + iVar2) = 0;
-  *(undefined4 *)(&DAT_8482283c + iVar2) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822810 + iVar2) = uVar4;
-  *(undefined4 *)(&DAT_84822834 + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_84822838 + iVar2) = 0;
-  *(undefined4 *)(&DAT_8482285c + iVar2) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822830 + iVar2) = uVar4;
-  *(undefined4 *)(&DAT_84822854 + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_84822858 + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_8482287c + iVar2) = 0x1ff00000;
-  *(undefined4 *)(&DAT_84822850 + iVar2) = uVar4;
-  *(undefined4 *)(&DAT_84822874 + iVar2) = 0;
-  *(undefined4 *)(&DAT_84822878 + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_84822870 + iVar2) = uVar4;
-  DAT_8483400c = DAT_8483400c + 4;
-  DAT_84834008 = DAT_84834008 + 6;
-  __restgprlr_28();
-  return;
+  uVar2 = tess.vertexCount;
+  uVar1 = (ushort)tess.vertexCount;
+  tess.indices[tess.indexCount] = uVar1 + 3;
+  tess.indices[tess.indexCount + 1] = uVar1;
+  tess.indices[tess.indexCount + 2] = uVar1 + 2;
+  tess.indices[tess.indexCount + 3] = uVar1 + 2;
+  tess.indices[tess.indexCount + 4] = uVar1;
+  uVar2 = uVar2 & 0xffff;
+  tess.indices[tess.indexCount + 5] = uVar1 + 1;
+  tess.verts[uVar2].normal.packed = 0x1ff00000;
+  tess.verts[uVar2].texCoord[0] = 0.0;
+  tess.verts[uVar2].texCoord[1] = 0.0;
+  tess.verts[uVar2 + 1].normal.packed = 0x1ff00000;
+  tess.verts[uVar2].color.packed = uVar3;
+  tess.verts[uVar2 + 1].texCoord[0] = 1.0;
+  tess.verts[uVar2 + 1].texCoord[1] = 0.0;
+  tess.verts[uVar2 + 2].normal.packed = 0x1ff00000;
+  tess.verts[uVar2 + 1].color.packed = uVar3;
+  tess.verts[uVar2 + 2].texCoord[0] = 1.0;
+  tess.verts[uVar2 + 2].texCoord[1] = 1.0;
+  tess.verts[uVar2 + 3].normal.packed = 0x1ff00000;
+  tess.verts[uVar2 + 2].color.packed = uVar3;
+  tess.verts[uVar2 + 3].texCoord[0] = 0.0;
+  tess.verts[uVar2 + 3].texCoord[1] = 1.0;
+  tess.verts[uVar2 + 3].color.packed = uVar3;
+  tess.vertexCount = tess.vertexCount + 4;
+  tess.indexCount = tess.indexCount + 6;
+  pGVar4 = (GfxVertex *)__restgprlr_28();
+  return pGVar4;
 }
 
 
 // 827A8EC0  RB_TessRectBillboard  (gfx_d3d/rb_query.cpp:181)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void RB_TessRectBillboard
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (float *param_1,bool param_2,float param_3,float param_4,GfxColor param_5,
+               float param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float *pfVar5;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  GfxViewParms *pGVar9;
+  float *pfVar10;
+  GfxVertex *pGVar11;
+  ulonglong uVar12;
+  GfxColor in_r7;
   double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   double dVar13;
-  undefined1 auStack_70 [8];
-  int local_68;
-  int local_64;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  GfxViewport aGStack_70 [7];
   
-  __savegprlr_27();
-  pfVar5 = (float *)__savefpr_26();
-  dVar7 = extraout_f1;
-  R_GetViewport(0xffffffff8484c7e0,auStack_70);
-  iVar4 = DAT_8484deb0;
-  dVar6 = (double)(float)(param_2 / (double)(longlong)local_64);
-  dVar7 = (double)(float)(dVar7 / (double)(longlong)local_68);
-  if ((param_5 & 0xff) == 0) {
-    fVar1 = *pfVar5;
-    fVar2 = pfVar5[1];
-    fVar3 = pfVar5[2];
+  dVar16 = (double)param_6;
+  dVar13 = (double)param_4;
+  uVar12 = (ulonglong)param_2;
+  __savegprlr_27((double)param_3,param_1,uVar12,param_5.packed);
+  pfVar10 = (float *)__savefpr_26();
+  dVar14 = extraout_f1;
+  R_GetViewport(&gfxCmdBufSourceState,aGStack_70);
+  pGVar9 = gfxCmdBufSourceState.viewParms3D;
+  dVar13 = (double)(float)(dVar13 / (double)(longlong)aGStack_70[0].height);
+  dVar14 = (double)(float)(dVar14 / (double)(longlong)aGStack_70[0].width);
+  if ((uVar12 & 0xff) == 0) {
+    fVar1 = *pfVar10;
+    fVar2 = pfVar10[1];
+    fVar3 = pfVar10[2];
   }
   else {
-    fVar1 = (float)((double)*(float *)(DAT_8484deb0 + 0x10c) * param_3 +
-                   (double)(*pfVar5 - *(float *)(DAT_8484deb0 + 0x100)));
-    fVar2 = (float)((double)*(float *)(DAT_8484deb0 + 0x110) * param_3 +
-                   (double)(pfVar5[1] - *(float *)(DAT_8484deb0 + 0x104)));
-    fVar3 = (float)((double)*(float *)(DAT_8484deb0 + 0x114) * param_3 +
-                   (double)(pfVar5[2] - *(float *)(DAT_8484deb0 + 0x108)));
+    fVar1 = (float)((double)((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][0] * dVar16 +
+                   (double)(*pfVar10 - ((gfxCmdBufSourceState.viewParms3D)->camera).origin[0]));
+    fVar2 = (float)((double)((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][1] * dVar16 +
+                   (double)(pfVar10[1] - ((gfxCmdBufSourceState.viewParms3D)->camera).origin[1]));
+    fVar3 = (float)((double)((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][2] * dVar16 +
+                   (double)(pfVar10[2] - ((gfxCmdBufSourceState.viewParms3D)->camera).origin[2]));
   }
-  dVar13 = (double)fVar1;
-  dVar11 = (double)fVar2;
-  dVar9 = (double)fVar3;
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d76b8,0xce,0,0xffffffff82000f98,0xffffffff821b9c84);
+  dVar20 = (double)fVar1;
+  dVar18 = (double)fVar2;
+  dVar16 = (double)fVar3;
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0xce,0,
+                    "%s");
   }
-  dVar10 = (double)(float)((double)*(float *)(iVar4 + 0x84) * dVar13 +
-                          (double)(float)((double)*(float *)(iVar4 + 0xa4) * dVar9 +
-                                         (double)(float)((double)*(float *)(iVar4 + 0x94) * dVar11))
-                          );
-  dVar12 = (double)(float)((double)*(float *)(iVar4 + 0x80) * dVar13 +
-                          (double)(float)((double)*(float *)(iVar4 + 0xa0) * dVar9 +
-                                         (double)(float)((double)*(float *)(iVar4 + 0x90) * dVar11))
-                          );
-  dVar8 = (double)(float)((double)*(float *)(iVar4 + 0x88) * dVar13 +
-                         (double)(float)((double)*(float *)(iVar4 + 0xa8) * dVar9 +
-                                        (double)(float)((double)*(float *)(iVar4 + 0x98) * dVar11)))
-  ;
-  dVar9 = (double)(float)((double)*(float *)(iVar4 + 0x8c) * dVar13 +
-                         (double)(float)((double)*(float *)(iVar4 + 0xac) * dVar9 +
-                                        (double)(float)((double)*(float *)(iVar4 + 0x9c) * dVar11)))
-  ;
-  if ((param_5 & 0xff) != 0) {
-    dVar12 = (double)(float)((double)*(float *)(iVar4 + 0xb0) + dVar12);
-    dVar10 = (double)(float)((double)*(float *)(iVar4 + 0xb4) + dVar10);
-    dVar8 = (double)(float)((double)*(float *)(iVar4 + 0xb8) + dVar8);
-    dVar9 = (double)(float)((double)*(float *)(iVar4 + 0xbc) + dVar9);
+  dVar17 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[0][1] * dVar20 +
+                          (double)(float)((double)(pGVar9->viewProjectionMatrix).m[2][1] * dVar16 +
+                                         (double)(float)((double)(pGVar9->viewProjectionMatrix).m[1]
+                                                                 [1] * dVar18)));
+  dVar19 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[0][0] * dVar20 +
+                          (double)(float)((double)(pGVar9->viewProjectionMatrix).m[2][0] * dVar16 +
+                                         (double)(float)((double)(pGVar9->viewProjectionMatrix).m[1]
+                                                                 [0] * dVar18)));
+  dVar15 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[0][2] * dVar20 +
+                          (double)(float)((double)(pGVar9->viewProjectionMatrix).m[2][2] * dVar16 +
+                                         (double)(float)((double)(pGVar9->viewProjectionMatrix).m[1]
+                                                                 [2] * dVar18)));
+  dVar16 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[0][3] * dVar20 +
+                          (double)(float)((double)(pGVar9->viewProjectionMatrix).m[2][3] * dVar16 +
+                                         (double)(float)((double)(pGVar9->viewProjectionMatrix).m[1]
+                                                                 [3] * dVar18)));
+  if ((uVar12 & 0xff) != 0) {
+    dVar19 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[3][0] + dVar19);
+    dVar17 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[3][1] + dVar17);
+    dVar15 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[3][2] + dVar15);
+    dVar16 = (double)(float)((double)(pGVar9->viewProjectionMatrix).m[3][3] + dVar16);
   }
-  pfVar5 = (float *)RB_SetTessQuad(param_8);
-  *pfVar5 = (float)dVar12;
-  pfVar5[1] = (float)dVar10;
-  pfVar5[2] = (float)dVar8;
-  dVar6 = (double)(float)(dVar9 * dVar6);
-  pfVar5[3] = (float)dVar9;
-  dVar11 = (double)(float)(dVar9 * dVar7);
-  pfVar5[0xb] = (float)dVar9;
-  pfVar5[8] = (float)dVar12;
-  pfVar5[9] = (float)dVar10;
-  pfVar5[10] = (float)dVar8;
-  pfVar5[0x13] = (float)dVar9;
-  pfVar5[0x10] = (float)dVar12;
-  pfVar5[0x11] = (float)dVar10;
-  pfVar5[0x12] = (float)dVar8;
-  pfVar5[0x1b] = (float)dVar9;
-  pfVar5[0x18] = (float)dVar12;
-  pfVar5[0x19] = (float)dVar10;
-  pfVar5[0x1a] = (float)dVar8;
-  fVar1 = pfVar5[2];
-  dVar7 = (double)(float)(dVar9 * 2.9999999242136255e-05);
-  fVar2 = *pfVar5;
-  pfVar5[1] = (float)(dVar6 + (double)pfVar5[1]);
-  pfVar5[2] = (float)((double)fVar1 + dVar7);
-  pfVar5[9] = (float)((double)pfVar5[9] - dVar6);
-  pfVar5[10] = (float)((double)pfVar5[10] + dVar7);
-  pfVar5[0x10] = (float)((double)pfVar5[0x10] - dVar11);
-  pfVar5[0x11] = (float)((double)pfVar5[0x11] - dVar6);
-  pfVar5[8] = (float)((double)pfVar5[8] + dVar11);
-  *pfVar5 = (float)(dVar11 + (double)fVar2);
-  pfVar5[0x12] = (float)((double)pfVar5[0x12] + dVar7);
-  pfVar5[0x18] = (float)(dVar12 - dVar11);
-  pfVar5[0x19] = (float)(dVar10 + dVar6);
-  pfVar5[0x1a] = (float)(dVar8 + dVar7);
-  __restfpr_26((double)(float)((double)fVar1 + dVar7),(double)(float)(dVar11 + (double)fVar2),dVar8)
-  ;
+  pGVar11 = RB_SetTessQuad(in_r7);
+  pGVar11->xyzw[0] = (float)dVar19;
+  pGVar11->xyzw[1] = (float)dVar17;
+  pGVar11->xyzw[2] = (float)dVar15;
+  dVar13 = (double)(float)(dVar16 * dVar13);
+  pGVar11->xyzw[3] = (float)dVar16;
+  dVar18 = (double)(float)(dVar16 * dVar14);
+  pGVar11[1].xyzw[3] = (float)dVar16;
+  pGVar11[1].xyzw[0] = (float)dVar19;
+  pGVar11[1].xyzw[1] = (float)dVar17;
+  pGVar11[1].xyzw[2] = (float)dVar15;
+  pGVar11[2].xyzw[3] = (float)dVar16;
+  pGVar11[2].xyzw[0] = (float)dVar19;
+  pGVar11[2].xyzw[1] = (float)dVar17;
+  pGVar11[2].xyzw[2] = (float)dVar15;
+  pGVar11[3].xyzw[3] = (float)dVar16;
+  pGVar11[3].xyzw[0] = (float)dVar19;
+  pGVar11[3].xyzw[1] = (float)dVar17;
+  pGVar11[3].xyzw[2] = (float)dVar15;
+  fVar2 = pGVar11[1].xyzw[1];
+  fVar3 = pGVar11[1].xyzw[2];
+  fVar4 = pGVar11[2].xyzw[0];
+  fVar5 = pGVar11[2].xyzw[1];
+  dVar14 = (double)(float)(dVar16 * 2.9999999242136255e-05);
+  fVar6 = pGVar11[2].xyzw[2];
+  fVar7 = pGVar11->xyzw[0];
+  fVar8 = pGVar11[1].xyzw[0];
+  pGVar11->xyzw[1] = (float)(dVar13 + (double)pGVar11->xyzw[1]);
+  fVar1 = (float)((double)pGVar11->xyzw[2] + dVar14);
+  pGVar11->xyzw[2] = fVar1;
+  pGVar11[1].xyzw[1] = (float)((double)fVar2 - dVar13);
+  pGVar11[1].xyzw[2] = (float)((double)fVar3 + dVar14);
+  pGVar11[2].xyzw[0] = (float)((double)fVar4 - dVar18);
+  pGVar11[2].xyzw[1] = (float)((double)fVar5 - dVar13);
+  pGVar11[1].xyzw[0] = (float)((double)fVar8 + dVar18);
+  fVar2 = (float)(dVar18 + (double)fVar7);
+  pGVar11->xyzw[0] = fVar2;
+  pGVar11[2].xyzw[2] = (float)((double)fVar6 + dVar14);
+  pGVar11[3].xyzw[0] = (float)(dVar19 - dVar18);
+  pGVar11[3].xyzw[1] = (float)(dVar17 + dVar13);
+  pGVar11[3].xyzw[2] = (float)(dVar15 + dVar14);
+  __restfpr_26((double)fVar1,(double)fVar2,dVar15);
   __restgprlr_27();
   return;
 }
@@ -230,7 +259,10 @@ void RB_TessRectBillboard
 
 // 827A9150  RB_GetSampleRectRelativeArea  (gfx_d3d/rb_query.cpp:256)
 
-void RB_GetSampleRectRelativeArea(undefined8 param_1,int param_2,int param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+float RB_GetSampleRectRelativeArea(float *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
@@ -238,100 +270,113 @@ void RB_GetSampleRectRelativeArea(undefined8 param_1,int param_2,int param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  int iVar6;
-  float *pfVar7;
-  uint uVar8;
-  int iVar9;
-  int iVar10;
+  uint uVar6;
+  GfxViewParms *pGVar7;
+  float *pfVar8;
+  uint uVar9;
+  uint uVar10;
   uint uVar11;
-  double dVar12;
+  uint uVar12;
   double dVar13;
   double dVar14;
-  undefined8 uVar15;
-  double dVar16;
+  double dVar15;
+  undefined8 uVar16;
   double dVar17;
+  double dVar18;
   
-  __savegprlr_27();
-  pfVar7 = (float *)__savefpr_27();
-  iVar10 = DAT_8484deb0;
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x10c,0,0xffffffff82000f98,0xffffffff821b9c84);
+  __savegprlr_27(param_1);
+  pfVar8 = (float *)__savefpr_27();
+  pGVar7 = gfxCmdBufSourceState.viewParms3D;
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x10c,0,
+                    "%s");
   }
-  iVar6 = DAT_8461372c;
-  iVar9 = DAT_84613728;
-  fVar2 = *pfVar7;
-  fVar3 = pfVar7[2];
-  fVar4 = pfVar7[1];
-  uVar15 = 0;
-  fVar5 = *(float *)(iVar10 + 0x9c) * fVar4 +
-          *(float *)(iVar10 + 0xac) * fVar3 + *(float *)(iVar10 + 0x8c) * fVar2;
+  uVar6 = vidConfig.displayHeight;
+  uVar10 = vidConfig.displayWidth;
+  fVar2 = *pfVar8;
+  fVar3 = pfVar8[2];
+  fVar4 = pfVar8[1];
+  uVar16 = 0;
+  fVar5 = (pGVar7->viewProjectionMatrix).m[1][3] * fVar4 +
+          (pGVar7->viewProjectionMatrix).m[2][3] * fVar3 +
+          (pGVar7->viewProjectionMatrix).m[0][3] * fVar2;
   if (0.0 < fVar5) {
-    dVar17 = 1.0;
-    dVar14 = (double)(1.0 / fVar5);
-    dVar16 = 0.5;
-    dVar13 = (double)(*(float *)(iVar10 + 0x84) * fVar2 +
-                     *(float *)(iVar10 + 0x94) * fVar4 + *(float *)(iVar10 + 0xa4) * fVar3);
-    dVar12 = floor((double)((((float)(dVar14 * (double)(*(float *)(iVar10 + 0x80) * fVar2 +
-                                                       *(float *)(iVar10 + 0x90) * fVar4 +
-                                                       *(float *)(iVar10 + 0xa0) * fVar3) + 1.0) *
-                              (float)(longlong)DAT_84613728 - (float)(longlong)param_2) + 1.0) * 0.5
-                           ));
-    uVar11 = (uint)dVar12;
-    dVar12 = floor((double)(float)((double)(float)((double)((float)(dVar14 * dVar13 + dVar17) *
-                                                            (float)(longlong)iVar6 -
-                                                           (float)(longlong)param_3) + dVar17) *
-                                  dVar16));
-    uVar8 = 0xffffffffU - ((int)uVar11 >> 0x1f) & uVar11;
-    uVar1 = (uint)dVar12;
-    iVar10 = uVar11 + param_2;
-    if (iVar9 < (int)(uVar11 + param_2)) {
-      iVar10 = iVar9;
+    dVar18 = 1.0;
+    dVar15 = (double)(1.0 / fVar5);
+    dVar17 = 0.5;
+    dVar14 = (double)((pGVar7->viewProjectionMatrix).m[0][1] * fVar2 +
+                     (pGVar7->viewProjectionMatrix).m[1][1] * fVar4 +
+                     (pGVar7->viewProjectionMatrix).m[2][1] * fVar3);
+    dVar13 = floor((double)((((float)(dVar15 * (double)((pGVar7->viewProjectionMatrix).m[0][0] *
+                                                        fVar2 + (pGVar7->viewProjectionMatrix).m[1]
+                                                                [0] * fVar4 +
+                                                                (pGVar7->viewProjectionMatrix).m[2]
+                                                                [0] * fVar3) + 1.0) *
+                              (float)(longlong)(int)vidConfig.displayWidth -
+                             (float)(longlong)param_2) + 1.0) * 0.5));
+    uVar12 = (uint)dVar13;
+    dVar13 = floor((double)(float)((double)(float)((double)((float)(dVar15 * dVar14 + dVar18) *
+                                                            (float)(longlong)(int)uVar6 -
+                                                           (float)(longlong)param_3) + dVar18) *
+                                  dVar17));
+    uVar9 = 0xffffffffU - ((int)uVar12 >> 0x1f) & uVar12;
+    uVar1 = (uint)dVar13;
+    uVar11 = uVar12 + param_2;
+    if ((int)uVar10 < (int)(uVar12 + param_2)) {
+      uVar11 = uVar10;
     }
-    uVar11 = 0xffffffffU - ((int)uVar1 >> 0x1f) & uVar1;
-    iVar9 = uVar1 + param_3;
-    if (iVar6 < (int)(uVar1 + param_3)) {
-      iVar9 = iVar6;
+    uVar12 = 0xffffffffU - ((int)uVar1 >> 0x1f) & uVar1;
+    uVar10 = uVar1 + param_3;
+    if ((int)uVar6 < (int)(uVar1 + param_3)) {
+      uVar10 = uVar6;
     }
-    if (((int)uVar8 < iVar10) && ((int)uVar11 < iVar9)) {
-      __restfpr_27((double)(float)((double)(longlong)(int)((iVar9 - uVar11) * (iVar10 - uVar8)) /
+    if (((int)uVar9 < (int)uVar11) && ((int)uVar12 < (int)uVar10)) {
+      __restfpr_27((double)(float)((double)(longlong)(int)((uVar10 - uVar12) * (uVar11 - uVar9)) /
                                   (double)(longlong)(param_2 * param_3)));
-      __restgprlr_27();
-      return;
+      dVar13 = (double)__restgprlr_27();
+      return (float)dVar13;
     }
   }
-  __restfpr_27(uVar15);
-  __restgprlr_27();
-  return;
+  __restfpr_27(uVar16);
+  dVar13 = (double)__restgprlr_27();
+  return (float)dVar13;
 }
 
 
 // 827A9388  RB_UpdateVisibilityWithoutQuery  (gfx_d3d/rb_query.cpp:305)
 
-void RB_UpdateVisibilityWithoutQuery(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void RB_UpdateVisibilityWithoutQuery(OcclusionQuery *param_1)
 
 {
   int iVar1;
   double dVar2;
-  double dVar3;
+  float fVar3;
   float local_30;
   float local_2c;
   float local_28;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x134,0,0xffffffff82000f98,0xffffffff821d772c);
+  if (param_1 == (OcclusionQuery *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x134,0,
+                    "%s");
   }
-  dVar2 = (double)RB_GetSampleRectRelativeArea((float *)(param_1 + 4),0x10,0x10);
-  *(float *)(param_1 + 0x14) = (float)dVar2;
-  dVar3 = 0.0;
-  if (dVar2 != 0.0) {
-    local_30 = *(float *)(param_1 + 4) * 262144.0 + *(float *)(DAT_8484deb0 + 0x100);
-    local_2c = *(float *)(param_1 + 8) * 262144.0 + *(float *)(DAT_8484deb0 + 0x104);
-    local_28 = *(float *)(param_1 + 0xc) * 262144.0 + *(float *)(DAT_8484deb0 + 0x108);
-    iVar1 = R_LightSightTrace(*(undefined4 *)(param_1 + 0x1c),DAT_8484deb0 + 0x100,&local_30,
-                              0xffffffff82174a3c,0,0x2003);
-    *(int *)(param_1 + 0x1c) = iVar1;
+  fVar3 = RB_GetSampleRectRelativeArea(param_1->position,0x10,0x10);
+  param_1->lastVisibility = fVar3;
+  dVar2 = 0.0;
+  if (fVar3 != 0.0) {
+    local_30 = param_1->position[0] * 262144.0 +
+               ((gfxCmdBufSourceState.viewParms3D)->camera).origin[0];
+    local_2c = param_1->position[1] * 262144.0 +
+               ((gfxCmdBufSourceState.viewParms3D)->camera).origin[1];
+    local_28 = param_1->position[2] * 262144.0 +
+               ((gfxCmdBufSourceState.viewParms3D)->camera).origin[2];
+    iVar1 = R_LightSightTrace(param_1->hitNum,((gfxCmdBufSourceState.viewParms3D)->camera).origin,
+                              &local_30,&bounds_origin,0,0x2003);
+    param_1->hitNum = iVar1;
     if (iVar1 != 0) {
-      *(float *)(param_1 + 0x14) = (float)dVar3;
+      param_1->lastVisibility = (float)dVar2;
     }
   }
   return;
@@ -340,72 +385,83 @@ void RB_UpdateVisibilityWithoutQuery(int param_1)
 
 // 827A9488  RB_DrawOcclusionQuerySprite  (gfx_d3d/rb_query.cpp:323)
 
-void RB_DrawOcclusionQuerySprite(void)
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_DrawOcclusionQuerySprite(OcclusionQuery *param_1)
 
 {
   float fVar1;
-  int iVar4;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar5;
-  uint uVar6;
+  OcclusionQuery *pOVar2;
+  uint uVar3;
+  uint uVar4;
+  GfxColor GVar5;
+  int iVar6;
+  uint uVar7;
   
-  iVar4 = __savegprlr_25();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x14c,0,0xffffffff82000f98,0xffffffff821d772c);
+  pOVar2 = (OcclusionQuery *)__savegprlr_25(param_1);
+  if (pOVar2 == (OcclusionQuery *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x14c,0,
+                    "%s");
   }
-  if (*(char *)(iVar4 + 3) != '\0') {
-    uVar6 = DAT_846178a4 +
-            (((int)DAT_846178a4 >> 1) + (uint)((int)DAT_846178a4 < 0 && (DAT_846178a4 & 1) != 0) &
+  if (pOVar2->isValidPos != false) {
+    uVar7 = r_glob.backEndFrameCount +
+            ((r_glob.backEndFrameCount >> 1) +
+             (uint)(r_glob.backEndFrameCount < 0 && (r_glob.backEndFrameCount & 1U) != 0) &
             0x7fffffff) * -2;
-    if (1 < uVar6) {
-      MyAssertHandler(0xffffffff821d76b8,0x152,0,0xffffffff821d77a0,uVar6,2);
+    if (1 < uVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x152,
+                      0,
+                      "queryIndex doesn\'t index ARRAY_COUNT( occlusionQuery->query )\n\t%i not in [0, %i)"
+                     );
     }
-    iVar5 = (uVar6 + 9) * 4;
-    if (*(int *)(iVar5 + iVar4) == 0) {
-      MyAssertHandler(0xffffffff821d76b8,0x159,0,0xffffffff82000f98,0xffffffff821d776c);
+    iVar6 = (uVar7 + 9) * 4;
+    if (*(int *)(iVar6 + (int)pOVar2) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x159,
+                      0,"%s");
     }
-    if (*(int *)(iVar5 + iVar4) == 0) {
-      RB_UpdateVisibilityWithoutQuery(iVar4);
+    if (*(int *)(iVar6 + (int)pOVar2) == 0) {
+      RB_UpdateVisibilityWithoutQuery(pOVar2);
       __restgprlr_25();
       return;
     }
     Profile_Begin(0x74);
-    RB_SetTessTechnique(DAT_84616530,4,5);
+    GVar5.packed = 5;
+    RB_SetTessTechnique(rgp.additiveMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_COUNT_GEO);
     RB_SetIdentity();
-    RB_TessRectBillboard
-              (0x4030000000000000,0x4030000000000000,(double)*(float *)(iVar4 + 0x10),iVar4 + 4,
-               *(undefined1 *)(iVar4 + 2));
-    if (*(char *)(uVar6 + iVar4 + 0x20) == '\0') {
+    RB_TessRectBillboard(pOVar2->position,pOVar2->isWorldPos,16.0,16.0,GVar5,pOVar2->depthBias);
+    if (*(char *)((int)pOVar2 + uVar7 + 0x20) == '\0') {
       fVar1 = 0.0;
     }
     else {
-      uVar2 = RB_HW_ReadOcclusionQuery(*(undefined4 *)(iVar5 + iVar4));
-      if ((int)uVar2 == -1) {
-        *(undefined1 *)(iVar4 + 1) = 1;
+      uVar3 = RB_HW_ReadOcclusionQuery(*(D3DQuery **)(iVar6 + (int)pOVar2));
+      if (uVar3 == 0xffffffff) {
+        pOVar2->error = true;
       }
-      uVar3 = RB_CalcOcclusionQuerySamples();
-      if ((uVar3 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff821d76b8,0x17e,0,0xffffffff821d773c,0xffffffff821d7758,uVar3);
+      uVar4 = RB_CalcOcclusionQuerySamples();
+      if (uVar4 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",
+                        0x17e,0,"%s\n\t(spriteSamples) = %i");
       }
-      if ((uVar3 & 0xffffffff) < (uVar2 & 0xffffffff)) {
-        *(undefined1 *)(iVar4 + 1) = 1;
-        R_WarnOncePerFrame(0x3f,uVar2,uVar3);
+      if (uVar4 < uVar3) {
+        pOVar2->error = true;
+        R_WarnOncePerFrame(R_WARN_OCCLUSION_QUERY);
       }
-      fVar1 = (float)(uVar2 & 0xffffffff) / (float)(uVar3 & 0xffffffff);
-      if (1.0 - fVar1 < 0.0) {
+      fVar1 = (float)uVar3 / (float)uVar4;
+      if (1.0 - (float)uVar3 / (float)uVar4 < 0.0) {
         fVar1 = 1.0;
       }
     }
-    if (*(char *)(iVar4 + 1) == '\0') {
-      *(float *)(iVar4 + 0x14) = fVar1;
+    if (pOVar2->error == false) {
+      pOVar2->lastVisibility = fVar1;
     }
-    *(undefined1 *)(iVar4 + 1) = 0;
-    RB_HW_BeginOcclusionQuery(*(undefined4 *)(iVar5 + iVar4));
+    pOVar2->error = false;
+    RB_HW_BeginOcclusionQuery(*(D3DQuery **)(iVar6 + (int)pOVar2));
     RB_EndTessSurface();
-    D3DQuery_Issue(*(undefined4 *)(iVar5 + iVar4),1);
-    *(undefined1 *)(uVar6 + iVar4 + 0x20) = 1;
-    Profile_EndInternal(0);
+    D3DQuery_Issue(*(D3DQuery **)(iVar6 + (int)pOVar2),1);
+    *(undefined1 *)((int)pOVar2 + uVar7 + 0x20) = 1;
+    Profile_EndInternal((double *)0x0);
   }
   __restgprlr_25();
   return;
@@ -414,38 +470,45 @@ void RB_DrawOcclusionQuerySprite(void)
 
 // 827A96B8  RB_DrawOcclusionQueries  (gfx_d3d/rb_query.cpp:426)
 
-void RB_DrawOcclusionQueries(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_DrawOcclusionQueries(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   int iVar2;
-  char *pcVar3;
+  OcclusionQuery *pOVar3;
   
-  uVar1 = __savegprlr_25();
-  if ((DAT_84848738 == '\0') || (DAT_84848739 == '\0')) {
-    MyAssertHandler(0xffffffff821d76b8,0x1ae,0,0xffffffff82000f98,0xffffffff821d7680);
+  uVar1 = __savegprlr_25(param_1);
+  if ((s_occlusionQueriesInited == false) || (s_occlusionQueriesAllocated == false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x1ae,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x1af,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x1af,0,
+                    "%s");
   }
-  if ((ulonglong)DAT_84613760 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821d76b8,0x1b0,0,0xffffffff821d77f8,uVar1);
+  if (gfxCfg.maxClientRenderViews <= uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x1b0,0,
+                    "localClientNum doesn\'t index gfxCfg.maxClientRenderViews\n\t%i not in [0, %i)"
+                   );
   }
   RB_SetIdentity();
-  pcVar3 = &DAT_84848478;
+  pOVar3 = occlusionQueryArray;
   do {
-    if ((*pcVar3 != '\0') && (*(int *)(pcVar3 + 0x18) == (int)uVar1)) {
-      RB_DrawOcclusionQuerySprite(pcVar3);
+    if ((pOVar3->enabled != false) && (pOVar3->localClientNum == uVar1)) {
+      RB_DrawOcclusionQuerySprite(pOVar3);
       iVar2 = R_HasDeviceOwnership();
       if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff821ca3d0,0xaf,0,0xffffffff82000f98,0xffffffff8217d420);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf
+                        ,0,"%s");
       }
-      if (DAT_8483400c != 0) {
+      if (tess.vertexCount != 0) {
         RB_EndTessSurface();
       }
     }
-    pcVar3 = pcVar3 + 0x2c;
-  } while ((int)pcVar3 < -0x7b7b78c8);
+    pOVar3 = pOVar3 + 1;
+  } while ((int)pOVar3 < -0x7b7b78c8);
   __restgprlr_25();
   return;
 }
@@ -453,26 +516,28 @@ void RB_DrawOcclusionQueries(void)
 
 // 827A9810  RB_InitOcclusionQueries  (gfx_d3d/rb_query.cpp:450)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RB_InitOcclusionQueries(void)
 
 {
   longlong lVar1;
-  undefined1 *_Dst;
+  OcclusionQuery *pOVar2;
   
   __savegprlr_28();
-  Sys_EnterCriticalSection(0x2c);
-  if (DAT_84848738 == '\0') {
+  Sys_EnterCriticalSection(CRITSECT_OCCLUSION_QUERY);
+  if (s_occlusionQueriesInited == false) {
     lVar1 = 0x10;
-    _Dst = &DAT_84848478;
+    pOVar2 = occlusionQueryArray;
     do {
-      memset(_Dst,0,0x2c);
-      *(undefined4 *)(_Dst + 0x18) = 0xffffffff;
+      memset();
+      pOVar2->localClientNum = -1;
       lVar1 = lVar1 + -1;
-      _Dst = _Dst + 0x2c;
+      pOVar2 = pOVar2 + 1;
     } while (lVar1 != 0);
-    DAT_84848738 = '\x01';
+    s_occlusionQueriesInited = true;
   }
-  Sys_LeaveCriticalSection(0x2c);
+  Sys_LeaveCriticalSection(CRITSECT_OCCLUSION_QUERY);
   __restgprlr_28();
   return;
 }
@@ -480,49 +545,51 @@ void RB_InitOcclusionQueries(void)
 
 // 827A9880  RB_AllocOcclusionQueries  (gfx_d3d/rb_query.cpp:479)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void RB_AllocOcclusionQueries(void)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  undefined1 *puVar4;
-  undefined4 *puVar5;
+  D3DQuery *pDVar1;
+  longlong lVar2;
+  OcclusionQuery *pOVar3;
+  D3DQuery **ppDVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  ulonglong uVar8;
   
   __savegprlr_21();
-  Sys_EnterCriticalSection(0x2c);
-  if (DAT_84848739 != '\0') {
-    MyAssertHandler(0xffffffff821d76b8,0x1ea,0,0xffffffff82000f98,0xffffffff821d7844);
+  Sys_EnterCriticalSection(CRITSECT_OCCLUSION_QUERY);
+  if (s_occlusionQueriesAllocated != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x1ea,0,
+                    "%s");
   }
-  puVar4 = &DAT_84848478;
-  lVar3 = 0x10;
+  pOVar3 = occlusionQueryArray;
+  lVar2 = 0x10;
   do {
-    puVar5 = (undefined4 *)(puVar4 + 0x20);
-    uVar6 = 0;
+    ppDVar4 = (D3DQuery **)pOVar3->issued;
+    uVar5 = 0;
     do {
       do {
-        lVar1 = D3DDevice_CreateQueryTiled(DAT_84616688,9,1);
-        uVar8 = -(ulonglong)(lVar1 == 0) & 0xffffffff8007000e;
-      } while (DAT_84013128 != 0);
-      if ((int)uVar8 < 0) {
-        uVar2 = R_ErrorDescription(uVar8);
-        Com_Printf(8,0xffffffff821c6178,uVar2,uVar8);
-        lVar1 = 0;
+        pDVar1 = D3DDevice_CreateQueryTiled(dx.device,D3DQUERYTYPE_OCCLUSION,1);
+        uVar6 = -(uint)(pDVar1 == (D3DQuery *)0x0) & 0x8007000e;
+      } while (alwaysfails != 0);
+      if ((int)uVar6 < 0) {
+        R_ErrorDescription(uVar6);
+        Com_Printf(8,"Occlusion query creation failed: %s (0x%08x)\n");
+        pDVar1 = (D3DQuery *)0x0;
       }
-      puVar5 = puVar5 + 1;
-      *puVar5 = (int)lVar1;
-      uVar7 = uVar6 + 1;
-      puVar4[uVar6 + 0x20] = 0;
-      uVar6 = uVar7;
-    } while (uVar7 < 2);
-    lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 0x2c;
-  } while (lVar3 != 0);
-  DAT_84848739 = 1;
-  Sys_LeaveCriticalSection(0x2c);
+      ppDVar4 = ppDVar4 + 1;
+      *ppDVar4 = pDVar1;
+      uVar6 = uVar5 + 1;
+      pOVar3->issued[uVar5] = false;
+      uVar5 = uVar6;
+    } while (uVar6 < 2);
+    lVar2 = lVar2 + -1;
+    pOVar3 = pOVar3 + 1;
+  } while (lVar2 != 0);
+  s_occlusionQueriesAllocated = true;
+  Sys_LeaveCriticalSection(CRITSECT_OCCLUSION_QUERY);
   __restgprlr_21();
   return;
 }
@@ -530,86 +597,93 @@ void RB_AllocOcclusionQueries(void)
 
 // 827A9988  RB_AllocOcclusionQuery  (gfx_d3d/rb_query.cpp:547)
 
-void RB_AllocOcclusionQuery(undefined8 param_1,ulonglong param_2,undefined1 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ushort RB_AllocOcclusionQuery(LocalClientNum_t param_1,float *param_2,bool param_3,float param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int iVar4;
+  int iVar1;
+  ushort uVar2;
+  ulonglong uVar3;
+  float *pfVar4;
   uint uVar5;
   longlong lVar6;
   double extraout_f1;
   double dVar7;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28((double)param_4,param_1);
   dVar7 = extraout_f1;
-  Sys_EnterCriticalSection(0x2c);
-  if ((DAT_84848738 == '\0') || (DAT_84848739 == '\0')) {
-    MyAssertHandler(0xffffffff821d76b8,0x22c,0,0xffffffff82000f98,0xffffffff821d7680);
+  Sys_EnterCriticalSection(CRITSECT_OCCLUSION_QUERY);
+  if ((s_occlusionQueriesInited == false) || (s_occlusionQueriesAllocated == false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x22c,0,
+                    "%s");
   }
   uVar5 = 0;
   do {
-    iVar4 = uVar5 * 0x2c;
-    if ((&DAT_84848478)[iVar4] == '\0') {
-      *(undefined1 *)(iVar4 + -0x7b7b7b86) = param_3;
-      *(undefined1 *)(iVar4 + -0x7b7b7b87) = 0;
-      (&DAT_84848478)[iVar4] = '\x01';
-      if ((param_2 & 0xffffffff) == 0) {
-        (&DAT_8484847b)[iVar4] = 0;
+    if (occlusionQueryArray[uVar5].enabled == false) {
+      occlusionQueryArray[uVar5].isWorldPos = param_3;
+      occlusionQueryArray[uVar5].error = false;
+      occlusionQueryArray[uVar5].enabled = true;
+      if ((uVar3 & 0xffffffff) == 0) {
+        occlusionQueryArray[uVar5].isValidPos = false;
       }
       else {
-        (&DAT_8484847b)[iVar4] = 1;
-        puVar2 = (undefined4 *)param_2;
-        *(undefined4 *)(&DAT_8484847c + iVar4) = *puVar2;
-        *(undefined4 *)(&DAT_84848480 + iVar4) = puVar2[1];
-        *(undefined4 *)(&DAT_84848484 + iVar4) = puVar2[2];
+        occlusionQueryArray[uVar5].isValidPos = true;
+        pfVar4 = (float *)uVar3;
+        occlusionQueryArray[uVar5].position[0] = *pfVar4;
+        occlusionQueryArray[uVar5].position[1] = pfVar4[1];
+        occlusionQueryArray[uVar5].position[2] = pfVar4[2];
       }
-      *(float *)(iVar4 + -0x7b7b7b78) = (float)dVar7;
-      (&DAT_84848490)[uVar5 * 0xb] = uVar1;
-      iVar3 = 0;
-      *(undefined4 *)(iVar4 + -0x7b7b7b6c) = 0;
-      *(undefined4 *)(&DAT_8484848c + iVar4) = 0;
+      occlusionQueryArray[uVar5].depthBias = (float)dVar7;
+      occlusionQueryArray[uVar5].localClientNum = iVar1;
+      iVar1 = 0;
+      occlusionQueryArray[uVar5].hitNum = 0;
+      occlusionQueryArray[uVar5].lastVisibility = 0.0;
       lVar6 = 2;
       do {
-        (&DAT_84848498)[iVar3 + iVar4] = 0;
-        iVar3 = iVar3 + 1;
+        *(undefined1 *)(uVar5 * 0x2c + -0x7b7b7b68 + iVar1) = 0;
+        iVar1 = iVar1 + 1;
         lVar6 = lVar6 + -1;
       } while (lVar6 != 0);
-      Sys_LeaveCriticalSection(0x2c);
-      __restgprlr_28(uVar5);
-      return;
+      Sys_LeaveCriticalSection(CRITSECT_OCCLUSION_QUERY);
+      uVar2 = __restgprlr_28(uVar5);
+      return uVar2;
     }
     uVar5 = uVar5 + 1 & 0xffff;
   } while (uVar5 < 0x10);
-  Sys_LeaveCriticalSection(0x2c);
-  R_WarnOncePerFrame(0x40,0x10);
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  Sys_LeaveCriticalSection(CRITSECT_OCCLUSION_QUERY);
+  R_WarnOncePerFrame(R_WARN_MAX_OCCLUSION_QUERIES);
+  uVar2 = __restgprlr_28(0xffffffffffffffff);
+  return uVar2;
 }
 
 
 // 827A9AE0  RB_FreeOcclusionQuery  (gfx_d3d/rb_query.cpp:598)
 
-void RB_FreeOcclusionQuery(void)
+void RB_FreeOcclusionQuery(ushort param_1)
 
 {
   uint uVar1;
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   uVar1 = uVar1 & 0xffff;
   if (0xf < uVar1) {
-    MyAssertHandler(0xffffffff821d76b8,599,0,0xffffffff821d7888,uVar1,0x10);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",599,0,
+                    "handle doesn\'t index ARRAY_COUNT( occlusionQueryArray )\n\t%i not in [0, %i)")
+    ;
   }
-  Sys_EnterCriticalSection(0x2c);
-  if ((DAT_84848738 == '\0') || (DAT_84848739 == '\0')) {
-    MyAssertHandler(0xffffffff821d76b8,0x25c,0,0xffffffff82000f98,0xffffffff821d7680);
+  Sys_EnterCriticalSection(CRITSECT_OCCLUSION_QUERY);
+  if ((s_occlusionQueriesInited == false) || (s_occlusionQueriesAllocated == false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x25c,0,
+                    "%s");
   }
-  if ((&DAT_84848478)[uVar1 * 0x2c] == '\0') {
-    MyAssertHandler(0xffffffff821d76b8,0x25d,0,0xffffffff82000f98,0xffffffff821d7864);
+  if (occlusionQueryArray[uVar1].enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x25d,0,
+                    "%s");
   }
-  (&DAT_84848478)[uVar1 * 0x2c] = 0;
-  Sys_LeaveCriticalSection(0x2c);
+  occlusionQueryArray[uVar1].enabled = false;
+  Sys_LeaveCriticalSection(CRITSECT_OCCLUSION_QUERY);
   __restgprlr_28();
   return;
 }
@@ -617,69 +691,70 @@ void RB_FreeOcclusionQuery(void)
 
 // 827A9BB8  R_UpdateOverTime  (gfx_d3d/rb_query.cpp:615)
 
-void R_UpdateOverTime(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                     undefined8 param_5,undefined8 param_6,undefined8 param_7)
+float R_UpdateOverTime(float param_1,float param_2,int param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  double dVar4;
+  int in_r6;
+  int in_r7;
+  double dVar1;
+  double dVar2;
   
-  dVar4 = (double)__savegprlr_28();
-  iVar1 = (int)param_7;
-  if (iVar1 < 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x268,0,0xffffffff821d792c,0xffffffff821d7944,param_7);
+  dVar2 = (double)param_2;
+  dVar1 = (double)__savegprlr_28((double)param_1,param_3,param_4);
+  if (in_r7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x268,0,
+                    "%s\n\t(frametime) = %i");
   }
-  iVar3 = (int)param_5;
-  if (iVar3 < 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x269,0,0xffffffff821d7900,0xffffffff821d7918,param_5);
+  if (param_5 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x269,0,
+                    "%s\n\t(iFadeInTime) = %i");
   }
-  iVar2 = (int)param_6;
-  if (iVar2 < 0) {
-    MyAssertHandler(0xffffffff821d76b8,0x26a,0,0xffffffff821d78d4,0xffffffff821d78ec,param_6);
+  if (in_r6 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x26a,0,
+                    "%s\n\t(iFadeOutTime) = %i");
   }
-  if (param_2 <= dVar4) {
-    if (dVar4 <= param_2) {
+  if (dVar2 <= dVar1) {
+    if (dVar1 <= dVar2) {
 LAB_827a9d10:
-      __restgprlr_28(dVar4);
-      return;
+      dVar1 = (double)__restgprlr_28(dVar1);
+      return (float)dVar1;
     }
-    if (0 < iVar2) {
-      dVar4 = (double)(float)(dVar4 - (double)((float)(longlong)iVar1 / (float)(longlong)iVar2));
-      if (param_2 <= dVar4) goto LAB_827a9d10;
+    if (0 < in_r6) {
+      dVar1 = (double)(float)(dVar1 - (double)((float)(longlong)in_r7 / (float)(longlong)in_r6));
+      if (dVar2 <= dVar1) goto LAB_827a9d10;
     }
   }
-  else if (0 < iVar3) {
-    dVar4 = (double)(float)((double)((float)(longlong)iVar1 / (float)(longlong)iVar3) + dVar4);
-    if (dVar4 <= param_2) goto LAB_827a9d10;
+  else if (0 < param_5) {
+    dVar1 = (double)(float)((double)((float)(longlong)in_r7 / (float)(longlong)param_5) + dVar1);
+    if (dVar1 <= dVar2) goto LAB_827a9d10;
   }
-  __restgprlr_28(param_2);
-  return;
+  dVar1 = (double)__restgprlr_28(dVar2);
+  return (float)dVar1;
 }
 
 
 // 827A9D28  RB_SetOcclusionQueryPosition  (gfx_d3d/rb_query.cpp:643)
 
-void RB_SetOcclusionQueryPosition(undefined8 param_1,undefined4 *param_2)
+void RB_SetOcclusionQueryPosition(ushort param_1,float *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  uVar2 = __savegprlr_29();
-  uVar2 = uVar2 & 0xffff;
-  if (0xf < uVar2) {
-    MyAssertHandler(0xffffffff821d76b8,0x28b,0,0xffffffff821d7888,uVar2,0x10);
+  uVar1 = __savegprlr_29(param_1);
+  uVar1 = uVar1 & 0xffff;
+  if (0xf < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x28b,0,
+                    "handle doesn\'t index ARRAY_COUNT( occlusionQueryArray )\n\t%i not in [0, %i)")
+    ;
   }
-  iVar1 = uVar2 * 0x2c;
-  if ((&DAT_84848478)[iVar1] == '\0') {
-    MyAssertHandler(0xffffffff821d76b8,0x28c,0,0xffffffff82000f98,0xffffffff821d7864);
+  if (occlusionQueryArray[uVar1].enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x28c,0,
+                    "%s");
   }
-  *(undefined4 *)(&DAT_8484847c + iVar1) = *param_2;
-  *(undefined4 *)(&DAT_84848480 + iVar1) = param_2[1];
-  *(undefined4 *)(&DAT_84848484 + iVar1) = param_2[2];
-  (&DAT_8484847b)[iVar1] = 1;
+  occlusionQueryArray[uVar1].position[0] = *param_2;
+  occlusionQueryArray[uVar1].position[1] = param_2[1];
+  occlusionQueryArray[uVar1].position[2] = param_2[2];
+  occlusionQueryArray[uVar1].isValidPos = true;
   __restgprlr_29();
   return;
 }
@@ -687,43 +762,48 @@ void RB_SetOcclusionQueryPosition(undefined8 param_1,undefined4 *param_2)
 
 // 827A9DD0  RB_GetOcclusionQueryVisibility  (gfx_d3d/rb_query.cpp:664)
 
-double RB_GetOcclusionQueryVisibility(uint param_1)
+float RB_GetOcclusionQueryVisibility(ushort param_1)
 
 {
-  param_1 = param_1 & 0xffff;
-  if (0xf < param_1) {
-    MyAssertHandler(0xffffffff821d76b8,0x2a0,0,0xffffffff821d7888,param_1,0x10);
+  uint uVar1;
+  
+  uVar1 = (uint)param_1;
+  if (0xf < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x2a0,0,
+                    "handle doesn\'t index ARRAY_COUNT( occlusionQueryArray )\n\t%i not in [0, %i)")
+    ;
   }
-  if ((&DAT_84848478)[param_1 * 0x2c] == '\0') {
-    MyAssertHandler(0xffffffff821d76b8,0x2a1,0,0xffffffff82000f98,0xffffffff821d7864);
+  if (occlusionQueryArray[uVar1].enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x2a1,0,
+                    "%s");
   }
-  return (double)*(float *)(&DAT_8484848c + param_1 * 0x2c);
+  return occlusionQueryArray[uVar1].lastVisibility;
 }
 
 
 // 827A9E70  RB_Query_Restore  (gfx_d3d/rb_query.cpp:683)
 
-void RB_Query_Restore(void)
+void RB_Query_Restore(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
+  MemoryFile *pMVar1;
   int iVar2;
-  undefined1 *puVar3;
+  int iVar3;
   longlong lVar4;
   
-  uVar1 = __savegprlr_28();
-  puVar3 = &DAT_84848498;
+  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
+  iVar3 = -0x7b7b7b68;
   do {
-    MemFile_ReadData(uVar1,0x20,puVar3 + -0x20);
+    MemFile_ReadData(pMVar1,0x20,(void *)(iVar3 + -0x20));
     iVar2 = 0;
     lVar4 = 2;
     do {
-      puVar3[iVar2] = 0;
+      *(undefined1 *)(iVar3 + iVar2) = 0;
       iVar2 = iVar2 + 1;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    puVar3 = puVar3 + 0x2c;
-  } while ((int)puVar3 < -0x7b7b78a8);
+    iVar3 = iVar3 + 0x2c;
+  } while (iVar3 < -0x7b7b78a8);
   __restgprlr_28();
   return;
 }
@@ -731,18 +811,18 @@ void RB_Query_Restore(void)
 
 // 827A9ED0  RB_Query_Save  (gfx_d3d/rb_query.cpp:699)
 
-void RB_Query_Save(void)
+void RB_Query_Save(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
+  MemoryFile *pMVar1;
+  OcclusionQuery *pOVar2;
   
-  uVar1 = __savegprlr_29();
-  lVar2 = -0x7b7b7b88;
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  pOVar2 = occlusionQueryArray;
   do {
-    MemFile_WriteData(uVar1,0x20,lVar2);
-    lVar2 = lVar2 + 0x2c;
-  } while ((int)lVar2 < -0x7b7b78c8);
+    MemFile_WriteData(pMVar1,0x20,pOVar2);
+    pOVar2 = pOVar2 + 1;
+  } while ((int)pOVar2 < -0x7b7b78c8);
   __restgprlr_29();
   return;
 }
@@ -750,25 +830,25 @@ void RB_Query_Save(void)
 
 // 827A9F18  RB_Query_Archive  (gfx_d3d/rb_query.cpp:710)
 
-void RB_Query_Archive(void)
+void RB_Query_Archive(MemoryFile *param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  longlong lVar3;
+  MemoryFile *pMVar1;
+  bool bVar2;
+  OcclusionQuery *pOVar3;
   
-  uVar1 = __savegprlr_29();
-  cVar2 = MemFile_IsWriting();
-  if (cVar2 != '\0') {
-    lVar3 = -0x7b7b7b88;
+  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
+  bVar2 = MemFile_IsWriting(pMVar1);
+  if (bVar2) {
+    pOVar3 = occlusionQueryArray;
     do {
-      MemFile_WriteData(uVar1,0x20,lVar3);
-      lVar3 = lVar3 + 0x2c;
-    } while ((int)lVar3 < -0x7b7b78c8);
+      MemFile_WriteData(pMVar1,0x20,pOVar3);
+      pOVar3 = pOVar3 + 1;
+    } while ((int)pOVar3 < -0x7b7b78c8);
     __restgprlr_29();
     return;
   }
-  RB_Query_Restore(uVar1);
+  RB_Query_Restore(pMVar1);
   __restgprlr_29();
   return;
 }

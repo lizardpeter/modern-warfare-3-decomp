@@ -2,55 +2,70 @@
 
 // 82313E80  CG_RegisterVisionSetsDvars  (cgame/cg_visionsets.cpp:33)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_RegisterVisionSetsDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  ushort in_r4;
+  char *in_r5;
+  double dVar1;
+  double dVar2;
   
-  uVar2 = 0x40c3880000000000;
-  uVar1 = 0;
-  DAT_82a77188 = Dvar_RegisterFloat(0x3fb99999a0000000,0,0x40c3880000000000,0xffffffff82029348);
-  DAT_82a77180 = Dvar_RegisterFloat(0x3fd3333340000000,uVar1,uVar2,0xffffffff82029284);
-  DAT_82a77184 = Dvar_RegisterBool(0xffffffff82029268,0,0x40,0xffffffff820068af);
+  dVar2 = 10000.0;
+  dVar1 = 0.0;
+  DAT_82a77188 = Dvar_RegisterFloat("nightVisionFadeInOutTime",0.1,0.0,10000.0,in_r4,in_r5);
+  nightVisionPowerOnTime =
+       Dvar_RegisterFloat("nightVisionPowerOnTime",0.3,(float)dVar1,(float)dVar2,0,
+                          "bind <key> [command] : attach a command to a key\n");
+  nightVisionDisableEffects = Dvar_RegisterBool("nightVisionDisableEffects",false,0x40,"");
   return;
 }
 
 
 // 82313F50  CG_AddVisionSetMenuItem  (cgame/cg_visionsets.cpp:42)
 
-void CG_AddVisionSetMenuItem(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_AddVisionSetMenuItem(XAssetHeader param_1,void *param_2)
 
 {
   int *piVar1;
-  int iVar2;
-  int iVar3;
-  size_t _Count;
+  char *pcVar2;
+  char *pcVar3;
+  uint uVar4;
   char acStack_330 [256];
   char acStack_230 [256];
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_27();
+  piVar1 = (int *)__savegprlr_27(param_1.physPreset,param_2);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82029428,0x31,0,0xffffffff82000f98,0xffffffff82029414);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x31,
+                    0,"%s");
   }
   if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff82029428,0x32,0,0xffffffff82000f98,0xffffffff820293fc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x32,
+                    0,"%s");
   }
-  iVar2 = I_stristr(*piVar1,0xffffffff820293f4);
-  if (iVar2 != 0) {
-    iVar3 = I_stristr(*piVar1,0xffffffff820293f0);
-    if (iVar3 == 0) {
-      MyAssertHandler(0xffffffff82029428,0x3a,1,0xffffffff82000f98,0xffffffff820293dc);
+  pcVar2 = I_stristr((char *)*piVar1,".vision");
+  if (pcVar2 != (char *)0x0) {
+    pcVar3 = I_stristr((char *)*piVar1,"/");
+    if (pcVar3 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                      0x3a,1,"%s");
     }
-    _Count = iVar2 - (iVar3 + 1);
-    if (0xff < (int)_Count) {
-      MyAssertHandler(0xffffffff82029428,0x3e,1,0xffffffff82000f98,0xffffffff82029388);
+    uVar4 = (int)pcVar2 - (int)(pcVar3 + 1);
+    if (0xff < (int)uVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                      0x3e,1,"%s");
     }
-    strncpy(acStack_330,(char *)(iVar3 + 1),_Count);
-    acStack_330[_Count] = '\0';
-    _snprintf(acStack_130,0x100,"Renderer/Vision Sets/%.25s",acStack_330);
-    _snprintf(acStack_230,0x100,"vis %s",acStack_330);
+    strncpy(acStack_330,pcVar3 + 1,uVar4);
+    acStack_330[uVar4] = '\0';
+    _snprintf(acStack_130,0x100,"Renderer/Vision Sets/%.25s");
+    _snprintf(acStack_230,0x100,"vis %s");
     DevGui_AddCommand(acStack_130,acStack_230);
   }
   __restgprlr_27();
@@ -60,181 +75,228 @@ void CG_AddVisionSetMenuItem(void)
 
 // 823140A0  CG_InitVisionSetsMenu  (cgame/cg_visionsets.cpp:76)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_InitVisionSetsMenu(void)
 
 {
-  DB_EnumXAssets(0x24,0xffffffff82313f50,0,0);
+  DB_EnumXAssets(ASSET_TYPE_RAWFILE,CG_AddVisionSetMenuItem,(void *)0x0,false);
   return;
 }
 
 
 // 823140B8  RawBufferOpen  (cgame/cg_visionsets.cpp:145)
 
-void RawBufferOpen(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+char * RawBufferOpen(char *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined1 auStack_60 [96];
+  char *pcVar1;
+  char acStack_60 [96];
   
-  uVar1 = __savegprlr_29();
-  Com_sprintf(auStack_60,0x40,param_2,uVar1);
-  uVar2 = Com_LoadRawTextFile(auStack_60,param_3,param_4);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintError(0x11,0xffffffff8200abb8,auStack_60);
-    Com_sprintf(auStack_60,0x40,param_2,0xffffffff8200352c);
-    uVar2 = Com_LoadRawTextFile(auStack_60,param_3,param_4);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintError(0x11,0xffffffff82029470,auStack_60);
-      uVar2 = 0;
+  __savegprlr_29(param_1);
+  Com_sprintf(acStack_60,0x40,param_2);
+  pcVar1 = Com_LoadRawTextFile(acStack_60,param_3,param_4);
+  if (pcVar1 == (char *)0x0) {
+    Com_PrintError(0x11,"couldn\'t open \'%s\'.\n");
+    Com_sprintf(acStack_60,0x40,param_2);
+    pcVar1 = Com_LoadRawTextFile(acStack_60,param_3,param_4);
+    if (pcVar1 == (char *)0x0) {
+      Com_PrintError(0x11,"couldn\'t open \'%s\'. This is a default file that you should have.\n");
+      pcVar1 = (char *)0x0;
     }
   }
-  __restgprlr_29(uVar2);
-  return;
+  pcVar1 = (char *)__restgprlr_29(pcVar1);
+  return pcVar1;
 }
 
 
 // 82314160  ApplyTokenToField  (cgame/cg_visionsets.cpp:168)
 
-void ApplyTokenToField(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool ApplyTokenToField(uint param_1,char *param_2,visionSetVars_t *param_3)
 
 {
   uint uVar1;
-  char *_Src;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  char *pcVar7;
   undefined4 local_50;
   int local_4c;
   undefined4 local_48;
   undefined4 local_44;
-  undefined4 local_40 [16];
+  undefined4 local_40;
   
-  uVar1 = __savegprlr_27();
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
   if (0x1c < uVar1) {
-    MyAssertHandler(0xffffffff82029428,0xb3,0,0xffffffff820294f8,uVar1,0x1c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0xb3,
+                    0,"fieldNum not in [0, ARRAY_COUNT( visionDefFields )]\n\t%i not in [0, %i]");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0xb4,0,0xffffffff82000f98,0xffffffff820294f0);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0xb4,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0xb5,0,0xffffffff82000f98,0xffffffff820294e4);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0xb5,
+                    0,"%s");
   }
-  iVar2 = (&DAT_82963f70)[uVar1 * 3];
-  pcVar3 = (char *)((&DAT_82963f6c)[uVar1 * 3] + (int)param_3);
-  _Src = (char *)param_2;
-  if (iVar2 == 0) {
-    iVar2 = sscanf(_Src,"%i",&local_4c);
-    if (iVar2 == 1) {
-      *pcVar3 = '\x01' - (local_4c == 0);
-      __restgprlr_27(1);
-      return;
+  iVar3 = visionDefFields[uVar1].fieldType;
+  pcVar7 = (char *)(visionDefFields[uVar1].offset + (int)uVar6);
+  pcVar2 = (char *)uVar5;
+  if (iVar3 == 0) {
+    iVar3 = sscanf(pcVar2,"%i");
+    if (iVar3 == 1) {
+      *pcVar7 = '\x01' - (local_4c == 0);
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
   }
-  else if (iVar2 == 1) {
-    iVar2 = sscanf(_Src,"%f",&local_50);
-    if (iVar2 == 1) {
-      *(undefined4 *)pcVar3 = local_50;
-      __restgprlr_27();
-      return;
+  else if (iVar3 == 1) {
+    iVar3 = sscanf(pcVar2,"%f");
+    if (iVar3 == 1) {
+      *(undefined4 *)pcVar7 = local_50;
+      uVar4 = __restgprlr_27();
+      return (bool)uVar4;
     }
   }
   else {
-    if (iVar2 != 2) {
-      MyAssertHandler(0xffffffff82029428,0xcc,0,0xffffffff82000f98,0xffffffff820294c0);
+    if (iVar3 != 2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                      0xcc,0,"%s");
     }
-    iVar2 = sscanf(_Src,"%f %f %f",&local_48,&local_44,local_40);
-    if (iVar2 == 3) {
-      *(undefined4 *)pcVar3 = local_48;
-      *(undefined4 *)(pcVar3 + 4) = local_44;
-      *(undefined4 *)(pcVar3 + 8) = local_40[0];
-      __restgprlr_27(1);
-      return;
+    iVar3 = sscanf(pcVar2,"%f %f %f");
+    if (iVar3 == 3) {
+      *(undefined4 *)pcVar7 = local_48;
+      *(undefined4 *)(pcVar7 + 4) = local_44;
+      *(undefined4 *)(pcVar7 + 8) = local_40;
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
   }
-  __restgprlr_27(0);
-  return;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 82314308  LoadVisionSettingsFromBuffer  (cgame/cg_visionsets.cpp:218)
 
-void LoadVisionSettingsFromBuffer(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+bool LoadVisionSettingsFromBuffer(char *param_1,char *param_2,visionSetVars_t *param_3)
 
 {
   bool bVar1;
-  char *_Src;
-  int iVar2;
-  undefined8 uVar3;
-  uint uVar4;
-  uint uVar5;
-  undefined **ppuVar6;
-  char *pcVar7;
-  undefined4 in_stack_00000014;
-  undefined4 in_stack_0000001c;
+  char *pcVar2;
+  int iVar3;
+  undefined1 uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  uint uVar7;
+  visField_t *pvVar8;
+  char *pcVar9;
+  char *pcStack00000014;
+  char *pcStack0000001c;
   undefined4 local_dc;
-  int local_d8 [2];
+  int local_d8;
   undefined4 local_d0;
   undefined4 local_cc;
-  undefined4 local_c8 [2];
-  char local_c0 [8];
-  undefined8 local_b8;
-  undefined8 local_b0;
-  undefined4 local_a8;
+  undefined4 local_c8;
+  char local_c0 [192];
   
-  in_stack_00000014 = __savegprlr();
-  in_stack_0000001c = (undefined4)param_2;
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0xdf,0,0xffffffff82000f98);
+  uVar5 = (ulonglong)(int)param_3;
+  __savegprlr();
+  pcStack00000014 = param_1;
+  pcStack0000001c = param_2;
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0xdf,
+                    0,"%s");
   }
-  local_b8 = 0;
-  local_b0 = 0;
-  local_a8 = 0;
+  local_c0[0] = '\0';
+  local_c0[1] = '\0';
+  local_c0[2] = '\0';
+  local_c0[3] = '\0';
+  local_c0[4] = '\0';
+  local_c0[5] = '\0';
+  local_c0[6] = '\0';
+  local_c0[7] = '\0';
+  local_c0[8] = '\0';
+  local_c0[9] = '\0';
+  local_c0[10] = '\0';
+  local_c0[0xb] = '\0';
+  local_c0[0xc] = '\0';
+  local_c0[0xd] = '\0';
+  local_c0[0xe] = '\0';
+  local_c0[0xf] = '\0';
+  local_c0[0x10] = '\0';
+  local_c0[0x11] = '\0';
+  local_c0[0x12] = '\0';
+  local_c0[0x13] = '\0';
+  local_c0[0x14] = '\0';
+  local_c0[0x15] = '\0';
+  local_c0[0x16] = '\0';
+  local_c0[0x17] = '\0';
+  local_c0[0x18] = '\0';
+  local_c0[0x19] = '\0';
+  local_c0[0x1a] = '\0';
+  local_c0[0x1b] = '\0';
   Com_BeginParseSession(param_2);
-  _Src = (char *)Com_Parse(&stack0x00000014);
-  if (*_Src != '\0') {
+  pcVar2 = Com_Parse(&stack0x00000014);
+  if (*pcVar2 != '\0') {
     do {
-      uVar4 = 0;
-      ppuVar6 = &PTR_s_r_glow_82963f68;
-      uVar5 = uVar4;
+      uVar6 = 0;
+      pvVar8 = visionDefFields;
+      uVar7 = uVar6;
       do {
-        if ((local_c0[uVar4] == '\0') && (iVar2 = I_stricmp(_Src,*ppuVar6), iVar2 == 0)) {
-          _Src = (char *)Com_ParseOnLine(&stack0x00000014);
-          if (0x1c < uVar4) {
-            MyAssertHandler(0xffffffff82029428,0xb3,0,0xffffffff820294f8,uVar4,0x1c);
+        if ((local_c0[uVar6] == '\0') && (iVar3 = I_stricmp(pcVar2,pvVar8->name), iVar3 == 0)) {
+          pcVar2 = Com_ParseOnLine(&stack0x00000014);
+          if (0x1c < uVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp"
+                            ,0xb3,0,
+                            "fieldNum not in [0, ARRAY_COUNT( visionDefFields )]\n\t%i not in [0, %i]"
+                           );
           }
-          if (_Src == (char *)0x0) {
-            MyAssertHandler(0xffffffff82029428,0xb4,0,0xffffffff82000f98,0xffffffff820294f0);
+          if (pcVar2 == (char *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp"
+                            ,0xb4,0,"%s");
           }
-          if ((param_3 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff82029428,0xb5,0,0xffffffff82000f98,"settings");
+          if ((uVar5 & 0xffffffff) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp"
+                            ,0xb5,0,"%s");
           }
-          iVar2 = (&DAT_82963f70)[uVar4 * 3];
-          pcVar7 = (char *)((&DAT_82963f6c)[uVar4 * 3] + (int)param_3);
-          if (iVar2 == 0) {
-            iVar2 = sscanf(_Src,"%i",local_d8);
-            if (iVar2 == 1) {
-              *pcVar7 = '\x01' - (local_d8[0] == 0);
+          iVar3 = visionDefFields[uVar6].fieldType;
+          pcVar9 = (char *)(visionDefFields[uVar6].offset + (int)uVar5);
+          if (iVar3 == 0) {
+            iVar3 = sscanf(pcVar2,"%i");
+            if (iVar3 == 1) {
+              *pcVar9 = '\x01' - (local_d8 == 0);
               goto LAB_823145c4;
             }
             bVar1 = false;
           }
-          else if (iVar2 == 1) {
-            iVar2 = sscanf(_Src,"%f",&local_dc);
-            if (iVar2 == 1) {
-              *(undefined4 *)pcVar7 = local_dc;
+          else if (iVar3 == 1) {
+            iVar3 = sscanf(pcVar2,"%f");
+            if (iVar3 == 1) {
+              *(undefined4 *)pcVar9 = local_dc;
               goto LAB_823145c4;
             }
             bVar1 = false;
           }
           else {
-            if (iVar2 != 2) {
-              MyAssertHandler(0xffffffff82029428,0xcc,0,0xffffffff82000f98,0xffffffff820294c0);
+            if (iVar3 != 2) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp"
+                              ,0xcc,0,"%s");
             }
-            iVar2 = sscanf(_Src,"%f %f %f",&local_d0,&local_cc,local_c8);
-            if (iVar2 == 3) {
-              *(undefined4 *)pcVar7 = local_d0;
-              *(undefined4 *)(pcVar7 + 4) = local_cc;
-              *(undefined4 *)(pcVar7 + 8) = local_c8[0];
+            iVar3 = sscanf(pcVar2,"%f %f %f");
+            if (iVar3 == 3) {
+              *(undefined4 *)pcVar9 = local_d0;
+              *(undefined4 *)(pcVar9 + 4) = local_cc;
+              *(undefined4 *)(pcVar9 + 8) = local_c8;
 LAB_823145c4:
               bVar1 = true;
             }
@@ -242,231 +304,254 @@ LAB_823145c4:
               bVar1 = false;
             }
           }
-          uVar3 = 0xffffffff82029540;
           if (bVar1) {
-            local_c0[uVar4] = '\x01';
+            local_c0[uVar6] = '\x01';
             goto LAB_8231443c;
           }
+          pcVar9 = "WARNING: malformed dvar \'%s\' in file \'%s\'\n";
           break;
         }
-        uVar5 = uVar5 + 0xc;
-        uVar4 = uVar4 + 1;
-        ppuVar6 = ppuVar6 + 3;
-        uVar3 = 0xffffffff8202956c;
-      } while (uVar5 < 0x150);
-      Com_PrintWarning(0x10,uVar3,_Src,in_stack_0000001c);
+        uVar7 = uVar7 + 0xc;
+        uVar6 = uVar6 + 1;
+        pvVar8 = pvVar8 + 1;
+        pcVar9 = "WARNING: unknown dvar \'%s\' in file \'%s\'\n";
+      } while (uVar7 < 0x150);
+      Com_PrintWarning(0x10,pcVar9);
 LAB_8231443c:
       Com_SkipRestOfLine(&stack0x00000014);
-      _Src = (char *)Com_Parse(&stack0x00000014);
-    } while (*_Src != '\0');
+      pcVar2 = Com_Parse(&stack0x00000014);
+    } while (*pcVar2 != '\0');
   }
   Com_EndParseSession();
-  __restgprlr(1);
-  return;
+  uVar4 = 1;
+  __restgprlr();
+  return (bool)uVar4;
 }
 
 
 // 823145E8  LoadVisionFile  (cgame/cg_visionsets.cpp:264)
 
-void LoadVisionFile(undefined8 param_1,ulonglong param_2)
+bool LoadVisionFile(char *param_1,visionSetVars_t *param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  void *_Dst;
-  double dVar4;
-  double dVar5;
-  undefined1 auStack_90 [16];
-  undefined1 auStack_80 [128];
+  visionSetVars_t *pvVar1;
+  char *pcVar2;
+  char *pcVar3;
+  undefined1 uVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  double dVar7;
+  double dVar8;
+  LargeLocal aLStack_90 [2];
+  char acStack_80 [128];
   
-  uVar1 = __savegprlr_27();
-  LargeLocal__LargeLocal(auStack_90,0x18000);
-  uVar2 = LargeLocal__GetBuf(auStack_90);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x10f,0,0xffffffff82000f98,0xffffffff82021a74);
+  uVar6 = (ulonglong)(int)param_2;
+  pcVar2 = (char *)__savegprlr_27(param_1);
+  LargeLocal::LargeLocal(aLStack_90,0x18000);
+  pcVar3 = LargeLocal::GetBuf(aLStack_90);
+  if (pcVar2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x10f
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x110,0,0xffffffff82000f98,0xffffffff820295b0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x110
+                    ,0,"%s");
   }
-  uVar3 = RawBufferOpen(uVar1,0xffffffff8202959c,uVar2,0x18000);
-  if ((uVar3 & 0xffffffff) == 0) {
-    LargeLocal___LargeLocal(auStack_90);
-    __restgprlr_27(0);
-    return;
+  pcVar2 = RawBufferOpen(pcVar2,"vision/%s.vision",pcVar3,0x18000);
+  if (pcVar2 == (char *)0x0) {
+    LargeLocal::~LargeLocal(aLStack_90);
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
-  _Dst = (void *)param_2;
-  memset(_Dst,0,0x98);
-  dVar4 = 1.0;
-  dVar5 = -100000000.0;
-  *(undefined4 *)((int)_Dst + 0x68) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0x6c) = 0x3f800000;
-  *(undefined4 *)((int)_Dst + 0x34) = 0xccbebc20;
-  *(undefined4 *)((int)_Dst + 0x38) = 0xccbebc20;
-  *(undefined4 *)((int)_Dst + 0x4c) = 0xccbebc20;
-  Com_sprintf(auStack_80,0x40,0xffffffff8202959c,uVar1);
-  uVar2 = LoadVisionSettingsFromBuffer(uVar3,auStack_80,param_2);
-  if ((double)*(float *)((int)_Dst + 0x34) == dVar5) {
-    *(undefined4 *)((int)_Dst + 0x34) = *(undefined4 *)((int)_Dst + 0x30);
+  memset();
+  dVar7 = 1.0;
+  dVar8 = -100000000.0;
+  pvVar1 = (visionSetVars_t *)uVar6;
+  pvVar1->charPrimaryDiffuseScale = 1.0;
+  pvVar1->charPrimarySpecularScale = 1.0;
+  pvVar1->filmDesaturationDark = -1e+08;
+  pvVar1->filmHeroSaturation = -1e+08;
+  pvVar1->filmMediumTint[0] = -1e+08;
+  Com_sprintf(acStack_80,0x40,"vision/%s.vision");
+  bVar5 = LoadVisionSettingsFromBuffer(pcVar2,acStack_80,pvVar1);
+  if ((double)pvVar1->filmDesaturationDark == dVar8) {
+    pvVar1->filmDesaturationDark = pvVar1->filmDesaturation;
   }
-  if ((double)*(float *)((int)_Dst + 0x38) == dVar5) {
-    *(float *)((int)_Dst + 0x38) = (float)dVar4;
+  if ((double)pvVar1->filmHeroSaturation == dVar8) {
+    pvVar1->filmHeroSaturation = (float)dVar7;
   }
-  if ((double)*(float *)((int)_Dst + 0x4c) == dVar5) {
-    *(float *)((int)_Dst + 0x4c) =
-         (*(float *)((int)_Dst + 0x58) + *(float *)((int)_Dst + 0x40)) * 0.5;
-    *(float *)((int)_Dst + 0x50) =
-         (*(float *)((int)_Dst + 0x5c) + *(float *)((int)_Dst + 0x44)) * 0.5;
-    *(float *)((int)_Dst + 0x54) =
-         (*(float *)((int)_Dst + 0x60) + *(float *)((int)_Dst + 0x48)) * 0.5;
+  if ((double)pvVar1->filmMediumTint[0] == dVar8) {
+    pvVar1->filmMediumTint[0] = (pvVar1->filmDarkTint[0] + pvVar1->filmLightTint[0]) * 0.5;
+    pvVar1->filmMediumTint[1] = (pvVar1->filmDarkTint[1] + pvVar1->filmLightTint[1]) * 0.5;
+    pvVar1->filmMediumTint[2] = (pvVar1->filmDarkTint[2] + pvVar1->filmLightTint[2]) * 0.5;
   }
-  LargeLocal___LargeLocal(auStack_90);
-  __restgprlr_27(uVar2);
-  return;
+  LargeLocal::~LargeLocal(aLStack_90);
+  uVar4 = __restgprlr_27(bVar5);
+  return (bool)uVar4;
 }
 
 
 // 823147B0  GetVisionSet  (cgame/cg_visionsets.cpp:300)
 
-void GetVisionSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool GetVisionSet(ClientVisionSetData *param_1,char *param_2,visionSetVars_t *param_3)
 
 {
   int iVar1;
+  undefined1 uVar3;
   int iVar2;
-  char cVar3;
-  char *pcVar4;
+  bool bVar4;
   char *pcVar5;
-  void *_Src;
-  int iVar6;
-  uint uVar7;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  char *pcVar8;
+  char *pcVar9;
+  int iVar10;
   
-  iVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x130,0,0xffffffff82000f98,0xffffffff82021a74);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x130
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x131,0,0xffffffff82000f98,0xffffffff820295b0);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x131
+                    ,0,"%s");
   }
-  if (*(char *)param_2 != '\0') {
-    pcVar4 = (char *)(iVar1 + 0x260);
-    iVar6 = 0;
-    pcVar5 = pcVar4;
+  pcVar5 = (char *)uVar7;
+  if (*pcVar5 != '\0') {
+    pcVar8 = (char *)(iVar1 + 0x260);
+    iVar10 = 0;
+    pcVar9 = pcVar8;
     do {
-      iVar2 = I_stricmp(param_2,pcVar5);
+      iVar2 = I_stricmp(pcVar5,pcVar9);
       if (iVar2 == 0) break;
-      iVar6 = iVar6 + 1;
-      pcVar5 = pcVar5 + 0x40;
-    } while (iVar6 < 4);
-    if (iVar6 != 4) {
-      memcpy((void *)param_3,(void *)(iVar6 * 0x98 + iVar1),0x98);
-      __restgprlr_26(1);
-      return;
+      iVar10 = iVar10 + 1;
+      pcVar9 = pcVar9 + 0x40;
+    } while (iVar10 < 4);
+    if (iVar10 != 4) {
+      memcpy();
+      uVar3 = __restgprlr_26(1);
+      return (bool)uVar3;
     }
     uVar7 = 0;
     do {
-      if (*pcVar4 == '\0') break;
+      if (*pcVar8 == '\0') break;
       uVar7 = uVar7 + 1;
-      pcVar4 = pcVar4 + 0x40;
+      pcVar8 = pcVar8 + 0x40;
     } while ((int)uVar7 < 4);
-    uVar7 = -(uint)(uVar7 != 4) & uVar7;
-    _Src = (void *)(uVar7 * 0x98 + iVar1);
-    cVar3 = LoadVisionFile(param_2,_Src);
-    if (cVar3 != '\0') {
-      memcpy((void *)param_3,_Src,0x98);
-      I_strncpyz(uVar7 * 0x40 + iVar1 + 0x260,param_2,0x40);
-      __restgprlr_26(1);
-      return;
+    uVar7 = -(ulonglong)(uVar7 != 4) & uVar7;
+    bVar4 = LoadVisionFile(pcVar5,(visionSetVars_t *)((int)uVar7 * 0x98 + iVar1));
+    if (bVar4) {
+      memcpy();
+      I_strncpyz((char *)((int)((uVar7 & 0xffffffff) << 6) + iVar1 + 0x260),pcVar5,0x40);
+      uVar3 = __restgprlr_26(1);
+      return (bool)uVar3;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar3 = __restgprlr_26(0);
+  return (bool)uVar3;
 }
 
 
 // 82314918  LerpBool  (cgame/cg_visionsets.cpp:342)
 
-ulonglong LerpBool(double param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,int param_5
-                  )
+bool LerpBool(bool param_1,bool param_2,float param_3,visionSetLerpStyle_t param_4)
 
 {
-  ulonglong uVar1;
+  bool bVar1;
+  int in_r6;
   
-  if (param_5 == 1) {
-    MyAssertHandler(0xffffffff82029428,0x157,0,0xffffffff82000f98,0xffffffff820295c0);
+  if (in_r6 == 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x157
+                    ,0,"%s");
   }
-  else if ((3 < param_5) && (param_5 < 6)) {
-    if (param_1 < 0.5) {
-      return param_3;
+  else if ((3 < in_r6) && (in_r6 < 6)) {
+    if (param_3 < 0.5) {
+      return param_2;
     }
-    return param_2;
+    return param_1;
   }
-  if (((param_3 & 0xff) != 0) || (uVar1 = 0, (param_2 & 0xff) != 0)) {
-    uVar1 = 1;
+  if ((param_2) || (bVar1 = false, param_1)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 823149D0  LerpFloat  (cgame/cg_visionsets.cpp:361)
 
-double LerpFloat(double param_1,double param_2,double param_3)
+float LerpFloat(float param_1,float param_2,float param_3,visionSetLerpStyle_t param_4)
 
 {
+  float fVar1;
   int in_r6;
-  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_2;
+  dVar2 = (double)param_1;
   if (in_r6 == 1) {
-    MyAssertHandler(0xffffffff82029428,0x16a,0,0xffffffff82000f98,0xffffffff820295c0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x16a
+                    ,0,"%s");
 LAB_82314a6c:
-    MyAssertHandler(0xffffffff82029428,0x178,0,0xffffffff82000f98,0xffffffff820295e0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x178
+                    ,0,"%s");
 LAB_82314a88:
-    if (0.5 <= param_3) {
-      dVar1 = (double)(float)((double)((float)(param_1 - param_2) * (float)(param_3 - 0.5)) * 2.0 +
-                             param_2);
+    if (0.5 <= dVar3) {
+      fVar1 = (float)((double)((float)(dVar2 - dVar4) * (float)(dVar3 - 0.5)) * 2.0 + dVar4);
     }
     else {
-      dVar1 = (double)(float)((double)(float)((double)(float)(param_2 - param_1) * param_3) * 2.0 +
-                             param_1);
+      fVar1 = (float)((double)(float)((double)(float)(dVar4 - dVar2) * dVar3) * 2.0 + dVar2);
     }
   }
   else {
     if (in_r6 != 2) {
       if (in_r6 != 3) {
         if (in_r6 == 5) {
-          dVar1 = sin((double)(float)(param_3 * 1.5707963705062866));
-          param_3 = (double)(float)dVar1;
+          dVar3 = sin((double)(float)(dVar3 * 1.5707963705062866));
+          dVar3 = (double)(float)dVar3;
         }
         else if (in_r6 != 4) goto LAB_82314a6c;
         goto LAB_82314a88;
       }
-      dVar1 = sin((double)(float)(param_3 * 1.5707963705062866));
-      param_3 = (double)(float)dVar1;
+      dVar3 = sin((double)(float)(dVar3 * 1.5707963705062866));
+      dVar3 = (double)(float)dVar3;
     }
-    dVar1 = (double)(float)((double)(float)(param_2 - param_1) * param_3 + param_1);
+    fVar1 = (float)((double)(float)(dVar4 - dVar2) * dVar3 + dVar2);
   }
-  return dVar1;
+  return fVar1;
 }
 
 
 // 82314B08  LerpVec3  (cgame/cg_visionsets.cpp:386)
 
-void LerpVec3(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 param_4,float *param_5
-             )
+void LerpVec3(float *param_1,float *param_2,float param_3,visionSetLerpStyle_t param_4,
+             float *param_5)
 
 {
   float *pfVar1;
-  undefined8 extraout_f1;
-  double dVar2;
-  undefined8 uVar3;
+  float *pfVar2;
+  longlong lVar3;
+  float *pfVar4;
+  float *in_r7;
+  double extraout_f1;
+  double dVar5;
+  float fVar6;
   
-  pfVar1 = (float *)__savegprlr_28();
-  uVar3 = extraout_f1;
-  dVar2 = (double)LerpFloat((double)*pfVar1,(double)*param_2,extraout_f1);
-  *param_5 = (float)dVar2;
-  dVar2 = (double)LerpFloat((double)pfVar1[1],(double)param_2[1],uVar3);
-  param_5[1] = (float)dVar2;
-  dVar2 = (double)LerpFloat((double)pfVar1[2],(double)param_2[2],uVar3);
-  param_5[2] = (float)dVar2;
+  lVar3 = (longlong)(int)param_2;
+  pfVar1 = (float *)__savegprlr_28((double)param_3,param_1,lVar3,param_4,param_5);
+  pfVar4 = (float *)lVar3;
+  dVar5 = extraout_f1;
+  pfVar2 = pfVar1;
+  fVar6 = LerpFloat(*pfVar1,*pfVar4,(float)extraout_f1,(visionSetLerpStyle_t)pfVar1);
+  *in_r7 = fVar6;
+  fVar6 = LerpFloat(pfVar1[1],pfVar4[1],(float)dVar5,(visionSetLerpStyle_t)pfVar2);
+  in_r7[1] = fVar6;
+  fVar6 = LerpFloat(pfVar1[2],pfVar4[2],(float)dVar5,(visionSetLerpStyle_t)pfVar2);
+  in_r7[2] = fVar6;
   __restgprlr_28();
   return;
 }
@@ -474,79 +559,103 @@ void LerpVec3(undefined8 param_1,float *param_2,undefined8 param_3,undefined8 pa
 
 // 82314B80  LerpVisionSet  (cgame/cg_visionsets.cpp:416)
 
-void LerpVisionSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void LerpVisionSet(visionSetVars_t *param_1,visionSetVars_t *param_2,visionSetVars_t *param_3,
+                  visionSetLerpStyle_t param_4,float param_5)
 
 {
   uint uVar1;
   uint uVar2;
   ulonglong uVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  uint *puVar6;
-  float *pfVar7;
-  longlong lVar8;
+  void *pvVar5;
+  float *pfVar6;
+  ulonglong uVar4;
+  ulonglong uVar8;
   float *pfVar9;
-  longlong lVar10;
-  float *pfVar11;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  int *piVar14;
   double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float fVar18;
+  bool bVar7;
   
-  uVar3 = __savegprlr_20();
-  dVar14 = extraout_f1;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_20((double)param_5,param_1);
+  uVar13 = 0xffffffff82029428;
+  uVar4 = uVar3;
+  uVar11 = uVar10;
+  dVar17 = extraout_f1;
   if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1a7,0,0xffffffff82000f98,0xffffffff82001400);
+    uVar11 = 0;
+    uVar4 = uVar13;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1a7
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1a8,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar8 & 0xffffffff) == 0) {
+    uVar11 = 0;
+    uVar4 = uVar13;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1a8
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1a9,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar10 & 0xffffffff) == 0) {
+    uVar11 = 0;
+    uVar4 = uVar13;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1a9
+                    ,0,"%s");
   }
-  dVar13 = 0.0;
-  dVar12 = 1.0;
-  if ((dVar14 < 0.0) || (1.0 < dVar14)) {
-    MyAssertHandler(dVar14,0xffffffff82029428,0x1aa,0,0xffffffff82029638,dVar14,0,0x3ff0000000000000
-                   );
+  dVar16 = 0.0;
+  dVar15 = 1.0;
+  if ((dVar17 < 0.0) || (1.0 < dVar17)) {
+    uVar11 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1aa
+                    ,0,"fraction not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
+    uVar4 = uVar13;
   }
-  if (dVar14 == dVar13) {
-    Com_Memcpy(param_3,uVar3,0x98);
+  pvVar5 = (void *)uVar10;
+  if (dVar17 == dVar16) {
+    Com_Memcpy(pvVar5,(void *)uVar3,0x98);
     __restgprlr_20();
     return;
   }
-  if (dVar14 == dVar12) {
-    Com_Memcpy(param_3,param_2,0x98);
+  if (dVar17 == dVar15) {
+    Com_Memcpy(pvVar5,(void *)uVar8,0x98);
     __restgprlr_20();
     return;
   }
-  lVar5 = 0x1c;
-  puVar6 = &DAT_82963f6c;
+  lVar12 = 0x1c;
+  piVar14 = &visionDefFields[0].offset;
   do {
-    uVar1 = *puVar6;
-    uVar2 = puVar6[1];
-    lVar10 = uVar1 + uVar3;
-    lVar8 = uVar1 + param_2;
-    pfVar7 = (float *)(uVar1 + (int)param_3);
-    pfVar9 = (float *)lVar8;
-    pfVar11 = (float *)lVar10;
+    uVar1 = *piVar14;
+    uVar2 = piVar14[1];
+    uVar13 = uVar1 + uVar3;
+    pfVar9 = (float *)(uVar1 + (int)(void *)uVar8);
+    pfVar6 = (float *)uVar13;
     if (uVar2 == 0) {
-      uVar4 = LerpBool(dVar14,*(undefined1 *)pfVar11,*(undefined1 *)pfVar9);
-      *(undefined1 *)pfVar7 = uVar4;
+      bVar7 = LerpBool(*(bool *)pfVar6,*(bool *)pfVar9,(float)dVar17,(visionSetLerpStyle_t)uVar11);
+      uVar4 = (ulonglong)bVar7;
+      *(bool *)(uVar1 + (int)pvVar5) = bVar7;
     }
     else if (uVar2 == 1) {
-      dVar12 = (double)LerpFloat((double)*pfVar11,(double)*pfVar9,dVar14);
-      *pfVar7 = (float)dVar12;
+      fVar18 = LerpFloat(*pfVar6,*pfVar9,(float)dVar17,(visionSetLerpStyle_t)uVar4);
+      *(float *)(uVar1 + (int)pvVar5) = fVar18;
     }
     else {
       if (uVar2 != 2) {
-        MyAssertHandler(0xffffffff82029428,0x1c9,0,0xffffffff82000f98,0xffffffff820294c0);
+        uVar11 = 0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                        0x1c9,0,"%s");
       }
-      LerpVec3(dVar14,lVar10,lVar8);
+      LerpVec3(pfVar6,pfVar9,(float)dVar17,(visionSetLerpStyle_t)uVar11,(float *)param_4);
+      uVar4 = uVar13;
     }
-    lVar5 = lVar5 + -1;
-    puVar6 = puVar6 + 3;
-  } while (lVar5 != 0);
+    lVar12 = lVar12 + -1;
+    piVar14 = piVar14 + 3;
+  } while (lVar12 != 0);
   __restgprlr_20();
   return;
 }
@@ -554,53 +663,67 @@ void LerpVisionSet(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82314DB0  UpdateVarsLerp  (cgame/cg_visionsets.cpp:471)
 
-void UpdateVarsLerp(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                   ulonglong param_5)
+void UpdateVarsLerp(int param_1,visionSetVars_t *param_2,visionSetVars_t *param_3,
+                   visionSetLerpData_t *param_4,visionSetVars_t *param_5)
 
 {
-  int iVar1;
+  visionSetLerpStyle_t vVar1;
   int *piVar2;
-  int iVar3;
-  void *pvVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   
-  iVar3 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1da,0,0xffffffff82000f98,0xffffffff82001400);
+  uVar10 = (ulonglong)(int)param_5;
+  uVar9 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  iVar6 = __savegprlr_25(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1da
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1db,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1db
+                    ,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1dc,0,0xffffffff82000f98,0xffffffff820296dc);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1dc
+                    ,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82029428,0x1dd,0,0xffffffff82000f98,0xffffffff82012420);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x1dd
+                    ,0,"%s");
   }
-  piVar2 = (int *)param_4;
-  iVar1 = piVar2[2];
-  if ((iVar1 != 0) && (iVar1 != 1)) {
-    if (*piVar2 + piVar2[1] < iVar3) {
-      if ((((iVar1 < 2) || (3 < iVar1)) && (param_3 = param_2, iVar1 != 4)) && (iVar1 != 5)) {
-        MyAssertHandler(0xffffffff82029428,0x1fb,0,0xffffffff82000f98,0xffffffff82029670);
+  piVar2 = (int *)uVar9;
+  vVar1 = piVar2[2];
+  if ((vVar1 != VISIONSETLERP_UNDEFINED) && (vVar1 != VISIONSETLERP_NONE)) {
+    if (*piVar2 + piVar2[1] < iVar6) {
+      if (((((int)vVar1 < 2) || (3 < (int)vVar1)) && (vVar1 != VISIONSETLERP_BACKFORTH_LINEAR)) &&
+         (vVar1 != VISIONSETLERP_BACKFORTH_SMOOTH)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                        0x1fb,0,"%s");
       }
-      pvVar4 = memcpy((void *)param_5,(void *)param_3,0x98);
+      memcpy();
       piVar2[2] = 1;
-      __restgprlr_25(pvVar4);
+      __restgprlr_25();
       return;
     }
-    dVar7 = (double)(float)((double)(longlong)(iVar3 - *piVar2) / (double)(longlong)piVar2[1]);
-    dVar6 = 1.0;
-    if ((float)(dVar7 - 1.0) < 0.0) {
-      dVar6 = dVar7;
+    fVar5 = (float)(longlong)(iVar6 - *piVar2) / (float)(longlong)piVar2[1];
+    fVar3 = 1.0;
+    if (fVar5 - 1.0 < 0.0) {
+      fVar3 = fVar5;
     }
-    dVar5 = 0.0;
-    if (-dVar7 < 0.0) {
-      dVar5 = dVar6;
+    fVar4 = 0.0;
+    if (-fVar5 < 0.0) {
+      fVar4 = fVar3;
     }
-    LerpVisionSet(dVar5,param_2,param_3,param_5);
+    LerpVisionSet((visionSetVars_t *)uVar7,(visionSetVars_t *)uVar8,(visionSetVars_t *)uVar10,vVar1,
+                  fVar4);
   }
   __restgprlr_25();
   return;
@@ -609,112 +732,125 @@ void UpdateVarsLerp(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulong
 
 // 82314F68  VisionFadeValue  (cgame/cg_visionsets.cpp:533)
 
-void VisionFadeValue(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+float VisionFadeValue(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  PlayerHandIndex PVar1;
   int iVar2;
   int iVar3;
   int iVar4;
+  int iVar5;
   int iVar6;
-  ulonglong uVar5;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  undefined8 uVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  WeaponDef *pWVar7;
+  LocalClientNum_t LVar8;
+  cg_s *pcVar9;
+  Weapon WVar10;
+  Weapon WVar11;
+  int iVar12;
+  int iVar13;
+  bool bVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   
-  __savegprlr_28();
-  iVar6 = CG_GetLocalClientGlobals();
-  if ((iVar6 == 0) || (uVar10 = 1, (*(uint *)(iVar6 + 0x374) & 0x8000) == 0)) {
-    uVar10 = 0;
+  LVar8 = __savegprlr_28(param_1);
+  pcVar9 = CG_GetLocalClientGlobals(LVar8);
+  if ((pcVar9 == (cg_s *)0x0) ||
+     (bVar14 = true, ((pcVar9->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar14 = false;
   }
-  iVar8 = *(int *)(iVar6 + 0x390);
-  uVar5 = BG_GetViewmodelWeapon(iVar6);
-  uVar7 = BG_GetAlternateWeapon(uVar5,uVar10);
-  iVar4 = (&DAT_829d84a0)[uVar7 & 0xff];
-  if ((uVar5 & 0xff) != 0) {
-    if (iVar8 == 1) {
-      iVar8 = *(int *)(iVar4 + 0x38c);
-      iVar1 = *(int *)(iVar4 + 0x390);
-      iVar2 = *(int *)(iVar4 + 0x394);
-      iVar9 = *(int *)(iVar4 + 0x398);
-      iVar3 = *(int *)(iVar4 + 0x39c);
-      iVar4 = *(int *)(iVar4 + 0x3a0);
+  PVar1 = (pcVar9->predictedPlayerState).weapCommon.lastWeaponHand;
+  WVar10 = BG_GetViewmodelWeapon(&pcVar9->predictedPlayerState);
+  WVar11 = BG_GetAlternateWeapon(WVar10,bVar14);
+  pWVar7 = bg_weaponDefs[WVar11.data & 0xff];
+  if ((WVar10.data & 0xff) != 0) {
+    if (PVar1 == WEAPON_HAND_LEFT) {
+      iVar12 = (pWVar7->akimboStateTimers).nightVisionWearTime;
+      iVar2 = (pWVar7->akimboStateTimers).nightVisionWearTimeFadeOutEnd;
+      iVar3 = (pWVar7->akimboStateTimers).nightVisionWearTimePowerUp;
+      iVar13 = (pWVar7->akimboStateTimers).nightVisionRemoveTime;
+      iVar4 = (pWVar7->akimboStateTimers).nightVisionRemoveTimePowerDown;
+      iVar5 = (pWVar7->akimboStateTimers).nightVisionRemoveTimeFadeInStart;
     }
     else {
-      iVar8 = *(int *)(iVar4 + 0x2c8);
-      iVar1 = *(int *)(iVar4 + 0x2cc);
-      iVar2 = *(int *)(iVar4 + 0x2d0);
-      iVar9 = *(int *)(iVar4 + 0x2d4);
-      iVar3 = *(int *)(iVar4 + 0x2d8);
-      iVar4 = *(int *)(iVar4 + 0x2dc);
+      iVar12 = (pWVar7->stateTimers).nightVisionWearTime;
+      iVar2 = (pWVar7->stateTimers).nightVisionWearTimeFadeOutEnd;
+      iVar3 = (pWVar7->stateTimers).nightVisionWearTimePowerUp;
+      iVar13 = (pWVar7->stateTimers).nightVisionRemoveTime;
+      iVar4 = (pWVar7->stateTimers).nightVisionRemoveTimePowerDown;
+      iVar5 = (pWVar7->stateTimers).nightVisionRemoveTimeFadeInStart;
     }
-    if (*(int *)(iVar6 + 0x24c) == 0x1d) {
-      iVar8 = iVar8 - *(int *)(iVar6 + 0x240);
-      if (iVar8 <= iVar1) {
-        dVar13 = (double)((float)(longlong)(iVar1 - iVar8) /
+    iVar6 = (pcVar9->predictedPlayerState).weapState[0].weaponState;
+    if (iVar6 == 0x1d) {
+      iVar12 = iVar12 - (pcVar9->predictedPlayerState).weapState[0].weaponTime;
+      if (iVar12 <= iVar2) {
+        dVar17 = (double)((float)(longlong)(iVar2 - iVar12) /
                          (*(float *)(DAT_82a77188 + 0xc) * 1000.0));
-        dVar12 = 1.0;
-        if ((float)(dVar13 - 1.0) < 0.0) {
-          dVar12 = dVar13;
+        dVar15 = 1.0;
+        if ((float)(dVar17 - 1.0) < 0.0) {
+          dVar15 = dVar17;
         }
-        dVar11 = 0.0;
-        if (-dVar13 < 0.0) {
-          dVar11 = dVar12;
+        dVar16 = 0.0;
+        if (-dVar17 < 0.0) {
+          dVar16 = dVar15;
         }
-        __restgprlr_28(dVar11);
-        return;
+        dVar15 = (double)__restgprlr_28(dVar16);
+        return (float)dVar15;
       }
-      if (iVar2 <= iVar8) {
-        dVar13 = (double)((float)(longlong)(iVar8 - iVar2) /
-                         (*(float *)(DAT_82a77180 + 0xc) * 1000.0));
-        dVar12 = 1.0;
-        if ((float)(dVar13 - 1.0) < 0.0) {
-          dVar12 = dVar13;
+      if (iVar3 <= iVar12) {
+        dVar17 = (double)((float)(longlong)(iVar12 - iVar3) /
+                         ((nightVisionPowerOnTime->current).value * 1000.0));
+        dVar15 = 1.0;
+        if ((float)(dVar17 - 1.0) < 0.0) {
+          dVar15 = dVar17;
         }
-        dVar11 = 0.0;
-        if (-dVar13 < 0.0) {
-          dVar11 = dVar12;
+        dVar16 = 0.0;
+        if (-dVar17 < 0.0) {
+          dVar16 = dVar15;
         }
-        __restgprlr_28(dVar11);
-        return;
+        dVar15 = (double)__restgprlr_28(dVar16);
+        return (float)dVar15;
       }
 LAB_823150fc:
-      __restgprlr_28(0);
-      return;
+      dVar15 = (double)__restgprlr_28(0);
+      return (float)dVar15;
     }
-    if (*(int *)(iVar6 + 0x24c) == 0x1e) {
-      iVar9 = iVar9 - *(int *)(iVar6 + 0x240);
-      if (iVar3 <= iVar9) {
-        if (iVar4 <= iVar9) {
-          dVar13 = (double)((float)(longlong)(iVar9 - iVar4) /
+    if (iVar6 == 0x1e) {
+      iVar13 = iVar13 - (pcVar9->predictedPlayerState).weapState[0].weaponTime;
+      if (iVar4 <= iVar13) {
+        if (iVar5 <= iVar13) {
+          dVar17 = (double)((float)(longlong)(iVar13 - iVar5) /
                            (*(float *)(DAT_82a77188 + 0xc) * 1000.0));
-          dVar12 = 1.0;
-          if ((float)(dVar13 - 1.0) < 0.0) {
-            dVar12 = dVar13;
+          dVar15 = 1.0;
+          if ((float)(dVar17 - 1.0) < 0.0) {
+            dVar15 = dVar17;
           }
-          dVar11 = 0.0;
-          if (-dVar13 < 0.0) {
-            dVar11 = dVar12;
+          dVar16 = 0.0;
+          if (-dVar17 < 0.0) {
+            dVar16 = dVar15;
           }
-          __restgprlr_28(dVar11);
-          return;
+          dVar15 = (double)__restgprlr_28(dVar16);
+          return (float)dVar15;
         }
         goto LAB_823150fc;
       }
     }
   }
-  __restgprlr_28(0x3ff0000000000000);
-  return;
+  dVar15 = (double)__restgprlr_28(0x3ff0000000000000);
+  return (float)dVar15;
 }
 
 
 // 82315EC8  CG_VisionSetsUpdate  (cgame/cg_visionsets.cpp:623)
 
-void CG_VisionSetsUpdate(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_VisionSetsUpdate(LocalClientNum_t param_1,ClientVisionSetData *param_2,int param_3)
 
 {
   undefined4 uVar1;
@@ -723,103 +859,110 @@ void CG_VisionSetsUpdate(undefined8 param_1,longlong param_2,undefined8 param_3)
   undefined4 uVar4;
   undefined4 uVar5;
   int iVar6;
-  undefined4 *puVar7;
-  float fVar8;
-  float *pfVar9;
-  float fVar10;
+  ClientVisionSetData *pCVar7;
+  undefined4 *puVar8;
+  visionSetVars_t *pvVar9;
+  float *pfVar10;
   float fVar11;
-  undefined8 uVar12;
-  longlong lVar13;
-  int *piVar14;
-  int iVar15;
-  int iVar16;
-  longlong lVar17;
+  float fVar12;
+  LocalClientNum_t LVar13;
+  int iVar14;
+  longlong lVar15;
+  int *piVar16;
+  int iVar17;
   longlong lVar18;
-  bool bVar19;
+  longlong lVar19;
   longlong lVar20;
-  double dVar21;
-  double dVar22;
+  bool bVar21;
+  longlong lVar22;
+  double dVar23;
+  float fVar24;
   char local_100 [16];
   float local_f0 [20];
   float local_a0 [40];
   
-  uVar12 = __savegprlr_24();
-  lVar18 = param_2 + 0xe58;
-  if (*(char *)((int)param_2 + 0xe58) == '\0') {
-    I_strncpyz(lVar18,PTR_s_default_829640b8,0x40);
-    Com_Printf(0xe,0xffffffff82029720,lVar18,0,param_3);
-    VisionSetCurrent(param_2,0,lVar18);
+  lVar20 = (longlong)(int)param_2;
+  LVar13 = __savegprlr_24(param_1);
+  pCVar7 = (ClientVisionSetData *)lVar20;
+  if (pCVar7->visionName[0][0] == '\0') {
+    I_strncpyz(pCVar7->visionName[0],MYDEFAULTVISIONNAME,0x40);
+    iVar14 = 0;
+    Com_Printf(0xe,"Vision Set: Transition of Normal vision to \"%s\", duration %i, at time %i.\n");
+    VisionSetCurrent(pCVar7,VISIONSET_NORMAL,pCVar7->visionName[0],iVar14);
   }
-  lVar17 = param_2 + 0xaf8;
-  iVar15 = 0;
-  lVar13 = param_2 + 0xe18;
-  lVar20 = 6;
-  iVar16 = 0;
-  lVar18 = lVar17;
+  lVar19 = lVar20 + 0xaf8;
+  iVar14 = 0;
+  lVar15 = lVar20 + 0xe18;
+  lVar22 = 6;
+  iVar17 = 0;
+  lVar18 = lVar19;
   do {
-    piVar14 = (int *)lVar13;
-    iVar6 = *piVar14;
-    local_100[iVar15] = '\0';
-    if (((iVar6 != 0) && (iVar6 != 1)) && ((int)param_3 <= piVar14[-1] + piVar14[-2])) {
-      puVar7 = (undefined4 *)lVar18;
-      uVar1 = puVar7[-1];
-      uVar2 = *puVar7;
-      uVar3 = puVar7[4];
-      uVar4 = puVar7[5];
-      uVar5 = puVar7[6];
-      *(undefined4 *)((int)local_a0 + iVar16) = puVar7[-2];
-      local_100[iVar15] = '\x01';
-      *(undefined4 *)((int)local_a0 + iVar16 + 4) = uVar1;
-      *(undefined4 *)((int)local_a0 + iVar16 + 8) = uVar2;
-      *(undefined4 *)((int)local_f0 + iVar16) = uVar3;
-      *(undefined4 *)((int)local_f0 + iVar16 + 4) = uVar4;
-      *(undefined4 *)((int)local_f0 + iVar16 + 8) = uVar5;
+    piVar16 = (int *)lVar15;
+    iVar6 = *piVar16;
+    local_100[iVar14] = '\0';
+    if (((iVar6 != 0) && (iVar6 != 1)) && (param_3 <= piVar16[-1] + piVar16[-2])) {
+      puVar8 = (undefined4 *)lVar18;
+      uVar1 = puVar8[-1];
+      uVar2 = *puVar8;
+      uVar3 = puVar8[4];
+      uVar4 = puVar8[5];
+      uVar5 = puVar8[6];
+      *(undefined4 *)((int)local_a0 + iVar17) = puVar8[-2];
+      local_100[iVar14] = '\x01';
+      *(undefined4 *)((int)local_a0 + iVar17 + 4) = uVar1;
+      *(undefined4 *)((int)local_a0 + iVar17 + 8) = uVar2;
+      *(undefined4 *)((int)local_f0 + iVar17) = uVar3;
+      *(undefined4 *)((int)local_f0 + iVar17 + 4) = uVar4;
+      *(undefined4 *)((int)local_f0 + iVar17 + 8) = uVar5;
     }
-    iVar15 = iVar15 + 1;
-    lVar13 = lVar13 + 0xc;
-    iVar16 = iVar16 + 0xc;
+    iVar14 = iVar14 + 1;
+    lVar15 = lVar15 + 0xc;
+    iVar17 = iVar17 + 0xc;
     lVar18 = lVar18 + 0x98;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  lVar13 = param_2 + 0x6f0;
-  param_2 = param_2 + 0xe10;
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
+  lVar15 = lVar20 + 0x6f0;
+  lVar20 = lVar20 + 0xe10;
   lVar18 = 6;
   do {
-    UpdateVarsLerp(param_3,lVar13 + -0x390,lVar13,param_2,lVar13 + 0x390);
+    pvVar9 = (visionSetVars_t *)lVar15;
+    UpdateVarsLerp(param_3,pvVar9 + -6,pvVar9,(visionSetLerpData_t *)lVar20,pvVar9 + 6);
     lVar18 = lVar18 + -1;
-    param_2 = param_2 + 0xc;
-    lVar13 = lVar13 + 0x98;
+    lVar20 = lVar20 + 0xc;
+    lVar15 = lVar15 + 0x98;
   } while (lVar18 != 0);
-  bVar19 = false;
-  iVar15 = 0;
-  iVar16 = 0;
-  dVar22 = 0.0;
+  bVar21 = false;
+  iVar14 = 0;
+  iVar17 = 0;
+  dVar23 = 0.0;
   do {
-    if (bVar19) break;
-    if (local_100[iVar15] != '\0') {
-      pfVar9 = (float *)lVar17;
-      fVar8 = pfVar9[-2] - *(float *)((int)local_a0 + iVar16);
-      fVar10 = *pfVar9 - *(float *)((int)local_a0 + iVar16 + 8);
-      fVar11 = pfVar9[-1] - *(float *)((int)local_a0 + iVar16 + 4);
-      bVar19 = 0.0 < fVar11 * fVar11 + fVar10 * fVar10 + fVar8 * fVar8;
-      if (!bVar19) {
-        fVar8 = pfVar9[4] - *(float *)((int)local_f0 + iVar16);
-        fVar10 = pfVar9[6] - *(float *)((int)local_f0 + iVar16 + 8);
-        fVar11 = pfVar9[5] - *(float *)((int)local_f0 + iVar16 + 4);
-        bVar19 = 0.0 < fVar11 * fVar11 + fVar10 * fVar10 + fVar8 * fVar8;
+    if (bVar21) break;
+    if (local_100[iVar14] != '\0') {
+      pfVar10 = (float *)lVar19;
+      fVar24 = pfVar10[-2] - *(float *)((int)local_a0 + iVar17);
+      fVar11 = *pfVar10 - *(float *)((int)local_a0 + iVar17 + 8);
+      fVar12 = pfVar10[-1] - *(float *)((int)local_a0 + iVar17 + 4);
+      bVar21 = 0.0 < fVar12 * fVar12 + fVar11 * fVar11 + fVar24 * fVar24;
+      if (!bVar21) {
+        fVar24 = pfVar10[4] - *(float *)((int)local_f0 + iVar17);
+        fVar11 = pfVar10[6] - *(float *)((int)local_f0 + iVar17 + 8);
+        fVar12 = pfVar10[5] - *(float *)((int)local_f0 + iVar17 + 4);
+        bVar21 = 0.0 < fVar12 * fVar12 + fVar11 * fVar11 + fVar24 * fVar24;
       }
     }
-    iVar16 = iVar16 + 0xc;
-    iVar15 = iVar15 + 1;
-    lVar17 = lVar17 + 0x98;
-  } while (iVar16 < 0x48);
-  if (((!bVar19) && (dVar21 = (double)VisionFadeValue(uVar12), dVar21 != dVar22)) && (dVar21 != 1.0)
-     ) {
-    DAT_84628660 = 1;
-    __restgprlr_24();
-    return;
+    iVar17 = iVar17 + 0xc;
+    iVar14 = iVar14 + 1;
+    lVar19 = lVar19 + 0x98;
+  } while (iVar17 < 0x48);
+  if (!bVar21) {
+    fVar24 = VisionFadeValue(LVar13);
+    if (((double)fVar24 != dVar23) && ((double)fVar24 != 1.0)) {
+      r_blendingCharacterOrViewModelAmbients = true;
+      __restgprlr_24();
+      return;
+    }
   }
-  DAT_84628660 = bVar19;
+  r_blendingCharacterOrViewModelAmbients = bVar21;
   __restgprlr_24();
   return;
 }
@@ -827,190 +970,214 @@ void CG_VisionSetsUpdate(undefined8 param_1,longlong param_2,undefined8 param_3)
 
 // 823151A0  VisionSetCurrent  (cgame/cg_visionsets.cpp:684)
 
-bool VisionSetCurrent(int param_1,int param_2,undefined8 param_3)
+bool VisionSetCurrent(ClientVisionSetData *param_1,visionSetMode_t param_2,char *param_3,int param_4
+                     )
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = GetVisionSet(param_1,param_3,param_2 * 0x98 + param_1 + 0xa80);
-  if (cVar1 != '\0') {
-    *(undefined4 *)(param_2 * 0xc + param_1 + 0xe18) = 1;
+  bVar1 = GetVisionSet(param_1,param_3,param_1->visionSetCurrent + param_2);
+  if (bVar1) {
+    param_1->visionSetLerpData[param_2].style = VISIONSETLERP_NONE;
   }
-  return cVar1 != '\0';
+  return bVar1;
 }
 
 
 // 82315218  CG_VisionSetStaticLerp_To  (cgame/cg_visionsets.cpp:702)
 
-void CG_VisionSetStaticLerp_To
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+bool CG_VisionSetStaticLerp_To
+               (ClientVisionSetData *param_1,visionSetMode_t param_2,visionSetLerpStyle_t param_3,
+               char *param_4,char *param_5,float param_6,int param_7)
 
 {
   int iVar1;
-  longlong lVar2;
-  char cVar3;
-  char cVar4;
-  undefined8 uVar5;
-  longlong lVar6;
+  ClientVisionSetData *pCVar2;
+  bool bVar3;
+  bool bVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  visionSetMode_t vVar7;
+  char *pcVar8;
+  char *pcVar9;
   double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   
-  lVar2 = __savegprlr_24();
-  dVar9 = extraout_f1;
-  if (((int)param_2 < 0) || (6 < (int)param_2)) {
-    MyAssertHandler(0xffffffff82029428,0x2bf,0,0xffffffff820296e8,param_2,0,6);
+  uVar6 = (ulonglong)(int)param_2;
+  pCVar2 = (ClientVisionSetData *)__savegprlr_24((double)param_6,param_1);
+  vVar7 = (visionSetMode_t)uVar6;
+  dVar12 = extraout_f1;
+  if (((int)vVar7 < 0) || (pcVar9 = param_4, 6 < (int)vVar7)) {
+    pcVar9 = "mode not in [0, VISIONSETCOUNT]\n\t%i not in [%i, %i]";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x2bf
+                    ,0,"mode not in [0, VISIONSETCOUNT]\n\t%i not in [%i, %i]");
   }
-  dVar8 = 0.0;
-  dVar7 = 1.0;
-  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
-    MyAssertHandler(dVar9,0xffffffff82029428,0x2c0,0,0xffffffff82029638,dVar9,0,0x3ff0000000000000);
+  dVar11 = 0.0;
+  dVar10 = 1.0;
+  if ((dVar12 < 0.0) || (1.0 < dVar12)) {
+    pcVar9 = "fraction not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x2c0
+                    ,0,"fraction not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  uVar5 = param_4;
-  if (((dVar9 != dVar8) && (uVar5 = param_5, dVar9 != dVar7)) &&
-     (iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)lVar2,
-     *(int *)(iVar1 + 0xe18) != 0)) {
-    lVar6 = param_2 * 0x98 + lVar2;
-    cVar3 = GetVisionSet(lVar2,param_4,lVar6 + 0x360);
-    cVar4 = GetVisionSet(lVar2,param_5,lVar6 + 0x6f0);
-    if ((cVar3 != '\0') && (cVar4 != '\0')) {
-      LerpVisionSet(dVar9,lVar6 + 0x360,lVar6 + 0x6f0,lVar6 + 0xa80,param_3);
-      *(undefined4 *)(iVar1 + 0xe18) = 1;
-      __restgprlr_24(1);
-      return;
+  pcVar8 = param_4;
+  if (((dVar12 != dVar11) && (pcVar8 = param_5, dVar12 != dVar10)) &&
+     (iVar1 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 2),
+     *(int *)((int)&pCVar2->visionSetLerpData[0].style + iVar1) != 0)) {
+    bVar4 = GetVisionSet(pCVar2,param_4,pCVar2->visionSetFrom + vVar7);
+    bVar3 = GetVisionSet(pCVar2,param_5,pCVar2->visionSetTo + vVar7);
+    if ((bVar4) && (bVar3)) {
+      LerpVisionSet(pCVar2->visionSetFrom + vVar7,pCVar2->visionSetTo + vVar7,
+                    pCVar2->visionSetCurrent + vVar7,param_3,(float)dVar12);
+      *(undefined4 *)((int)&pCVar2->visionSetLerpData[0].style + iVar1) = 1;
+      uVar5 = __restgprlr_24(1);
+      return (bool)uVar5;
     }
-    __restgprlr_24(0);
-    return;
+    uVar5 = __restgprlr_24(0);
+    return (bool)uVar5;
   }
-  VisionSetCurrent(lVar2,param_2,uVar5);
-  __restgprlr_24();
-  return;
+  bVar4 = VisionSetCurrent(pCVar2,vVar7,pcVar8,(int)pcVar9);
+  uVar5 = __restgprlr_24(bVar4);
+  return (bool)uVar5;
 }
 
 
 // 823153E0  CG_VisionSetStartLerp_To  (cgame/cg_visionsets.cpp:728)
 
-void CG_VisionSetStartLerp_To
-               (undefined8 param_1,longlong param_2,undefined4 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+bool CG_VisionSetStartLerp_To
+               (ClientVisionSetData *param_1,visionSetMode_t param_2,visionSetLerpStyle_t param_3,
+               char *param_4,int param_5,int param_6)
 
 {
-  int iVar1;
-  longlong lVar2;
-  char cVar3;
-  int iVar4;
-  longlong lVar5;
+  ClientVisionSetData *pCVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  longlong lVar4;
+  visionSetMode_t vVar5;
+  char *pcVar6;
   
-  lVar2 = __savegprlr_24();
-  iVar4 = (int)param_2;
-  if ((iVar4 < 0) || (6 < iVar4)) {
-    MyAssertHandler(0xffffffff82029428,0x2db,0,0xffffffff820296e8,param_2,0,6);
+  lVar4 = (longlong)(int)param_2;
+  pCVar1 = (ClientVisionSetData *)__savegprlr_24(param_1);
+  vVar5 = (visionSetMode_t)lVar4;
+  if (((int)vVar5 < 0) || (pcVar6 = param_4, 6 < (int)vVar5)) {
+    pcVar6 = "mode not in [0, VISIONSETCOUNT]\n\t%i not in [%i, %i]";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x2db
+                    ,0,"mode not in [0, VISIONSETCOUNT]\n\t%i not in [%i, %i]");
   }
-  if (iVar4 == 0) {
-    Com_Printf(0xe,0xffffffff82029720,param_4,param_5,param_6);
+  if (vVar5 == VISIONSET_NORMAL) {
+    pcVar6 = (char *)param_5;
+    Com_Printf(0xe,"Vision Set: Transition of Normal vision to \"%s\", duration %i, at time %i.\n");
   }
-  if (0 < (int)param_5) {
-    iVar4 = iVar4 * 0xc + (int)lVar2;
-    if (*(int *)(iVar4 + 0xe18) != 0) {
-      lVar5 = param_2 * 0x98 + lVar2;
-      cVar3 = GetVisionSet(lVar2,param_4,lVar5 + 0x6f0);
-      if (cVar3 == '\0') {
-        __restgprlr_24(0);
-        return;
+  if (0 < param_5) {
+    if (pCVar1->visionSetLerpData[vVar5].style != VISIONSETLERP_UNDEFINED) {
+      bVar2 = GetVisionSet(pCVar1,param_4,pCVar1->visionSetTo + vVar5);
+      if (!bVar2) {
+        uVar3 = __restgprlr_24(0);
+        return (bool)uVar3;
       }
-      iVar1 = (int)lVar5;
-      memcpy((void *)(iVar1 + 0x360),(void *)(iVar1 + 0xa80),0x98);
-      *(undefined4 *)(iVar4 + 0xe18) = param_3;
-      *(int *)(iVar4 + 0xe14) = (int)param_5;
-      *(int *)((int)((param_2 + 300U + (param_2 + 300U & 0x7fffffff) * 2 & 0xffffffff) << 2) +
-              (int)lVar2) = (int)param_6;
-      __restgprlr_24(1);
-      return;
+      memcpy();
+      pCVar1->visionSetLerpData[vVar5].style = param_3;
+      pCVar1->visionSetLerpData[vVar5].timeDuration = param_5;
+      *(int *)((int)pCVar1->visionSetPreLoaded[0].filmLightTint +
+              (int)((lVar4 + 300U + (lVar4 + 300U & 0x7fffffff) * 2 & 0xffffffff) << 2) + -0x40) =
+           param_6;
+      uVar3 = __restgprlr_24(1);
+      return (bool)uVar3;
     }
   }
-  VisionSetCurrent(lVar2,param_2,param_4);
-  __restgprlr_24();
-  return;
+  bVar2 = VisionSetCurrent(pCVar1,vVar5,param_4,(int)pcVar6);
+  uVar3 = __restgprlr_24(bVar2);
+  return (bool)uVar3;
 }
 
 
 // 82315508  SetDefaultVision  (cgame/cg_visionsets.cpp:757)
 
-void SetDefaultVision(undefined8 param_1,undefined8 param_2)
+void SetDefaultVision(ClientVisionSetData *param_1,int param_2)
 
 {
-  longlong lVar1;
-  longlong lVar2;
+  ClientVisionSetData *pCVar1;
+  bool bVar2;
+  int iVar3;
   
-  lVar1 = __savegprlr_29();
-  lVar2 = lVar1 + 0xe58;
-  I_strncpyz(lVar2,PTR_s_default_829640b8,0x40);
-  Com_Printf(0xe,0xffffffff82029720,lVar2,0,param_2);
-  VisionSetCurrent(lVar1,0,lVar2);
-  __restgprlr_29();
+  pCVar1 = (ClientVisionSetData *)__savegprlr_29(param_1,param_2);
+  I_strncpyz(pCVar1->visionName[0],MYDEFAULTVISIONNAME,0x40);
+  iVar3 = 0;
+  Com_Printf(0xe,"Vision Set: Transition of Normal vision to \"%s\", duration %i, at time %i.\n");
+  bVar2 = VisionSetCurrent(pCVar1,VISIONSET_NORMAL,pCVar1->visionName[0],iVar3);
+  __restgprlr_29(bVar2);
   return;
 }
 
 
 // 82315568  CG_VisionSetMyChanges  (cgame/cg_visionsets.cpp:767)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void CG_VisionSetMyChanges(void)
 
 {
-  undefined4 uVar1;
-  char cVar3;
-  int iVar2;
-  ulonglong uVar4;
-  char *pcVar5;
-  int iVar6;
+  bool bVar2;
+  cg_s *pcVar1;
+  LocalClientNum_t LVar3;
+  char *pcVar4;
+  ClientVisionSetData *pCVar5;
+  ulonglong uVar6;
   int iVar7;
-  int *local_b0;
+  connstate_t *local_b0;
   
   __savegprlr();
-  uVar4 = 0;
-  if (0 < DAT_82aa1ae8) {
-    local_b0 = &DAT_82b3e54c;
+  LVar3 = LOCAL_CLIENT_0;
+  if (0 < cl_maxLocalClients) {
+    local_b0 = &clientUIActives[0].connectionState;
     do {
-      cVar3 = CL_IsLocalClientActive(uVar4);
-      if (cVar3 != '\0') {
-        if (3 < (uVar4 & 0xffffffff)) {
+      bVar2 = CL_IsLocalClientActive(LVar3);
+      if (bVar2) {
+        if (LOCAL_CLIENT_3 < LVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                           ,0x4aa,0,
                           "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
-                          ,uVar4,4);
+                         );
         }
-        if ((7 < *local_b0) &&
-           (iVar2 = CG_GetLocalClientGlobals(uVar4), *(int *)(iVar2 + 0x335c) != 0)) {
-          *(undefined1 *)(iVar2 + 0x1072c0) = 0;
-          iVar7 = 0;
-          *(undefined1 *)(iVar2 + 0x107300) = 0;
-          *(undefined1 *)(iVar2 + 0x107340) = 0;
-          *(undefined1 *)(iVar2 + 0x107380) = 0;
+        if ((7 < (int)*local_b0) &&
+           (pcVar1 = CG_GetLocalClientGlobals(LVar3), pcVar1->nextSnap != (snapshot_s *)0x0)) {
+          (pcVar1->cvsData).visionSetPreLoadedName[0][0] = '\0';
+          uVar6 = 0;
+          (pcVar1->cvsData).visionSetPreLoadedName[1][0] = '\0';
+          (pcVar1->cvsData).visionSetPreLoadedName[2][0] = '\0';
+          (pcVar1->cvsData).visionSetPreLoadedName[3][0] = '\0';
           do {
-            pcVar5 = (char *)(iVar7 * 0x40 + iVar2 + 0x107eb8);
-            if (*pcVar5 != '\0') {
-              uVar1 = *(undefined4 *)(iVar2 + 0x6b98c);
-              iVar6 = iVar2 + 0x107060;
+            pcVar4 = (pcVar1->cvsData).visionName[0] + (int)((uVar6 & 0xffffffff) << 6);
+            if (*pcVar4 != '\0') {
+              iVar7 = (int)uVar6;
+              pCVar5 = &pcVar1->cvsData;
               if ((iVar7 < 0) || (6 < iVar7)) {
-                MyAssertHandler(0xffffffff82029428,0x2db,0,0xffffffff820296e8,iVar7,0,6);
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp"
+                                ,0x2db,0,"mode not in [0, VISIONSETCOUNT]\n\t%i not in [%i, %i]");
               }
               if (iVar7 == 0) {
-                Com_Printf(0xe,0xffffffff82029720,pcVar5,0,uVar1);
+                Com_Printf(0xe,
+                           "Vision Set: Transition of Normal vision to \"%s\", duration %i, at time %i.\n"
+                          );
               }
-              cVar3 = GetVisionSet(iVar6,pcVar5,iVar7 * 0x98 + iVar6 + 0xa80);
-              if (cVar3 != '\0') {
-                *(undefined4 *)(iVar7 * 0xc + iVar6 + 0xe18) = 1;
+              bVar2 = GetVisionSet(pCVar5,pcVar4,pCVar5->visionSetCurrent + iVar7);
+              if (bVar2) {
+                *(undefined4 *)
+                 ((int)&pCVar5->visionSetLerpData[0].style +
+                 (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = 1;
               }
             }
-            iVar7 = iVar7 + 1;
-          } while (iVar7 < 6);
+            uVar6 = uVar6 + 1;
+          } while ((int)uVar6 < 6);
         }
       }
-      uVar4 = uVar4 + 1;
+      LVar3 = LVar3 + LOCAL_CLIENT_1;
       local_b0 = local_b0 + 0x79;
-    } while ((int)uVar4 < DAT_82aa1ae8);
+    } while ((int)LVar3 < cl_maxLocalClients);
   }
   __restgprlr();
   return;
@@ -1019,307 +1186,406 @@ void CG_VisionSetMyChanges(void)
 
 // 82316228  LoadVisionFileForTweaks  (cgame/cg_visionsets.cpp:807)
 
-bool LoadVisionFileForTweaks(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool LoadVisionFileForTweaks(visionSetVars_t *param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  bool bVar3;
-  char *pcVar4;
+  cg_s *pcVar1;
+  bool bVar2;
+  char cVar3;
+  char (*pacVar4) [64];
   
-  iVar1 = CG_GetLocalClientGlobals(0);
-  cVar2 = CG_LookingThroughNightVisionGoggles(0);
-  if (cVar2 == '\0') {
-    pcVar4 = (char *)(iVar1 + 0x107eb8);
+  pcVar1 = CG_GetLocalClientGlobals(LOCAL_CLIENT_0);
+  bVar2 = CG_LookingThroughNightVisionGoggles(LOCAL_CLIENT_0);
+  if (bVar2) {
+    pacVar4 = (pcVar1->cvsData).visionName + 1;
   }
   else {
-    pcVar4 = (char *)(iVar1 + 0x107ef8);
+    pacVar4 = (pcVar1->cvsData).visionName;
   }
-  if (*pcVar4 == '\0') {
-    bVar3 = false;
+  if ((*pacVar4)[0] == '\0') {
+    cVar3 = '\0';
   }
   else {
-    cVar2 = GetVisionSet(iVar1 + 0x107060,pcVar4,param_1);
-    bVar3 = cVar2 != '\0';
+    bVar2 = GetVisionSet(&pcVar1->cvsData,*pacVar4,param_1);
+    cVar3 = '\x01' - !bVar2;
   }
-  return bVar3;
+  return (bool)cVar3;
 }
 
 
 // 823162B8  CG_VisionSetUpdateTweaksFromFile_Glow  (cgame/cg_visionsets.cpp:833)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_VisionSetUpdateTweaksFromFile_Glow(void)
 
 {
-  char cVar1;
-  undefined1 local_a0 [4];
-  float local_9c;
-  float local_98;
-  float local_94;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_84;
-  float local_80;
+  bool bVar1;
+  visionSetVars_t local_a0;
   
-  cVar1 = LoadVisionFileForTweaks(local_a0);
-  if (cVar1 == '\0') {
-    Com_PrintWarning(0x10,0xffffffff820298f8);
+  bVar1 = LoadVisionFileForTweaks(&local_a0);
+  if (!bVar1) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Couldn\'t update glow tweak vars from file.  Vision file is likely not in use.\n"
+                    );
     return;
   }
-  Dvar_SetBoolByName(0xffffffff820298e4,local_a0[0]);
-  Dvar_SetFloatByName((double)local_8c,0xffffffff820298d0);
-  Dvar_SetFloatByName((double)local_88,0xffffffff820298bc);
-  Dvar_SetFloatByName((double)local_84,0xffffffff8202989c);
-  Dvar_SetFloatByName((double)local_80,0xffffffff8202987c);
-  Dvar_SetFloatByName((double)local_94,0xffffffff82029860);
-  Dvar_SetFloatByName((double)local_90,0xffffffff82029844);
-  Dvar_SetFloatByName((double)local_9c,0xffffffff8202982c);
-  Dvar_SetFloatByName((double)local_98,0xffffffff8202980c);
+  Dvar_SetBoolByName("r_glowTweakEnable",local_a0.glowEnable);
+  Dvar_SetFloatByName("r_glowTweakRadius0",local_a0.glowRadius0);
+  Dvar_SetFloatByName("r_glowTweakRadius1",local_a0.glowRadius1);
+  Dvar_SetFloatByName("r_glowTweakSkyBleedIntensity0",local_a0.glowSkyBleedIntensity0);
+  Dvar_SetFloatByName("r_glowTweakSkyBleedIntensity1",local_a0.glowSkyBleedIntensity1);
+  Dvar_SetFloatByName("r_glowTweakBloomIntensity0",local_a0.glowBloomIntensity0);
+  Dvar_SetFloatByName("r_glowTweakBloomIntensity1",local_a0.glowBloomIntensity1);
+  Dvar_SetFloatByName("r_glowTweakBloomCutoff",local_a0.glowBloomCutoff);
+  Dvar_SetFloatByName("r_glowTweakBloomDesaturation",local_a0.glowBloomDesaturation);
   return;
 }
 
 
 // 82316398  CG_VisionSetUpdateTweaksFromFile_Film  (cgame/cg_visionsets.cpp:857)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_VisionSetUpdateTweaksFromFile_Film(void)
 
 {
-  char cVar1;
-  undefined1 auStack_a0 [36];
-  undefined1 local_7c;
-  float local_78;
-  float local_74;
-  float local_70;
-  float local_6c;
-  float local_68;
-  undefined1 local_64;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_54;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_44;
-  float local_40;
+  bool bVar1;
+  visionSetVars_t vStack_a0;
   
-  cVar1 = LoadVisionFileForTweaks(auStack_a0);
-  if (cVar1 == '\0') {
-    Com_PrintWarning(0x10,0xffffffff82029a38);
+  bVar1 = LoadVisionFileForTweaks(&vStack_a0);
+  if (!bVar1) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Couldn\'t update film tweak vars from file.  Vision file is likely not in use.\n"
+                    );
     return;
   }
-  Dvar_SetBoolByName(0xffffffff82029a24,local_7c);
-  Dvar_SetFloatByName((double)local_74,0xffffffff82029a10);
-  Dvar_SetFloatByName((double)local_78,0xffffffff820299f8);
-  Dvar_SetFloatByName((double)local_70,0xffffffff820299e0);
-  Dvar_SetFloatByName((double)local_6c,0xffffffff820299c4);
-  Dvar_SetFloatByName((double)local_68,0xffffffff820299a8);
-  Dvar_SetBoolByName(0xffffffff82029994,local_64);
-  Dvar_SetVec3ByName((double)local_60,(double)local_5c,(double)local_58,0xffffffff8202997c);
-  Dvar_SetVec3ByName((double)local_54,(double)local_50,(double)local_4c,0xffffffff82029964);
-  Dvar_SetVec3ByName((double)local_48,(double)local_44,(double)local_40,0xffffffff82029950);
+  Dvar_SetBoolByName("r_filmTweakEnable",vStack_a0.filmEnable);
+  Dvar_SetFloatByName("r_filmTweakContrast",vStack_a0.filmContrast);
+  Dvar_SetFloatByName("r_filmTweakBrightness",vStack_a0.filmBrightness);
+  Dvar_SetFloatByName("r_filmTweakDesaturation",vStack_a0.filmDesaturation);
+  Dvar_SetFloatByName("r_filmTweakDesaturationDark",vStack_a0.filmDesaturationDark);
+  Dvar_SetFloatByName("r_filmTweakHeroSaturation",vStack_a0.filmHeroSaturation);
+  Dvar_SetBoolByName("r_filmTweakInvert",vStack_a0.filmInvert);
+  Dvar_SetVec3ByName("r_filmTweakLightTint",vStack_a0.filmLightTint[0],vStack_a0.filmLightTint[1],
+                     vStack_a0.filmLightTint[2]);
+  Dvar_SetVec3ByName("r_filmTweakMediumTint",vStack_a0.filmMediumTint[0],vStack_a0.filmMediumTint[1]
+                     ,vStack_a0.filmMediumTint[2]);
+  Dvar_SetVec3ByName("r_filmTweakDarkTint",vStack_a0.filmDarkTint[0],vStack_a0.filmDarkTint[1],
+                     vStack_a0.filmDarkTint[2]);
   return;
 }
 
 
 // 823164A0  CG_VisionSetUpdateTweaksFromFile_CharPrimary  (cgame/cg_visionsets.cpp:882)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_VisionSetUpdateTweaksFromFile_CharPrimary(void)
 
 {
-  char cVar1;
-  undefined1 auStack_a0 [100];
-  undefined1 local_3c;
-  float local_38;
-  float local_34;
-  float local_30;
-  float local_2c;
-  float local_28;
+  bool bVar1;
+  visionSetVars_t vStack_a0;
   
-  cVar1 = LoadVisionFileForTweaks(auStack_a0);
-  if (cVar1 == '\0') {
-    Com_PrintWarning(0x10,0xffffffff82029a90);
+  bVar1 = LoadVisionFileForTweaks(&vStack_a0);
+  if (!bVar1) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Couldn\'t update character primary light tweak vars from file.  Vision file is likely not in use.\n"
+                    );
     return;
   }
-  Dvar_SetBoolByName(0xffffffff820290d8,local_3c);
-  Dvar_SetFloatByName((double)local_38,0xffffffff820290b4);
-  Dvar_SetFloatByName((double)local_34,0xffffffff82029090);
-  Dvar_SetVec3ByName((double)local_30,(double)local_2c,(double)local_28,0xffffffff8202907c);
+  Dvar_SetBoolByName("r_primaryLightUseTweaks",vStack_a0.charPrimaryUseTweaks);
+  Dvar_SetFloatByName("r_primaryLightTweakDiffuseStrength",vStack_a0.charPrimaryDiffuseScale);
+  Dvar_SetFloatByName("r_primaryLightTweakSpecularStrength",vStack_a0.charPrimarySpecularScale);
+  Dvar_SetVec3ByName("r_charLightAmbient",vStack_a0.charLightAmbient[0],
+                     vStack_a0.charLightAmbient[1],vStack_a0.charLightAmbient[2]);
   return;
 }
 
 
 // 82316538  CG_VisionSetUpdateTweaksFromFile_ViewModelPrimary  (cgame/cg_visionsets.cpp:904)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_VisionSetUpdateTweaksFromFile_ViewModelPrimary(void)
 
 {
-  char cVar1;
-  undefined1 auStack_a0 [124];
-  undefined1 local_24;
-  float local_20;
-  float local_1c;
-  float local_18;
-  float local_14;
-  float local_10;
+  bool bVar1;
+  visionSetVars_t vStack_a0;
   
-  cVar1 = LoadVisionFileForTweaks(auStack_a0);
-  if (cVar1 == '\0') {
-    Com_PrintWarning(0x10,0xffffffff82029b00);
+  bVar1 = LoadVisionFileForTweaks(&vStack_a0);
+  if (!bVar1) {
+    Com_PrintWarning(0x10,
+                     "WARNING: Couldn\'t update view model primary light tweak vars from file.  Vision file is likely not in use.\n"
+                    );
     return;
   }
-  Dvar_SetBoolByName(0xffffffff82029058,local_24);
-  Dvar_SetFloatByName((double)local_20,0xffffffff8202902c);
-  Dvar_SetFloatByName((double)local_1c,0xffffffff82028ffc);
-  Dvar_SetVec3ByName((double)local_18,(double)local_14,(double)local_10,0xffffffff82028fe4);
+  Dvar_SetBoolByName("r_viewModelPrimaryLightUseTweaks",vStack_a0.viewModelPrimaryUseTweaks);
+  Dvar_SetFloatByName("r_viewModelPrimaryLightTweakDiffuseStrength",
+                      vStack_a0.viewModelPrimaryDiffuseScale);
+  Dvar_SetFloatByName("r_viewModelPrimaryLightTweakSpecularStrength",
+                      vStack_a0.viewModelPrimarySpecularScale);
+  Dvar_SetVec3ByName("r_viewModelLightAmbient",vStack_a0.viewModelLightAmbient[0],
+                     vStack_a0.viewModelLightAmbient[1],vStack_a0.viewModelLightAmbient[2]);
   return;
+}
+
+
+// 82316168  CG_LookingThroughNightVision  (cgame/cg_visionsets.cpp:981)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* bool __cdecl CG_LookingThroughNightVision(enum LocalClientNum_t) */
+
+bool CG_LookingThroughNightVision(LocalClientNum_t param_1)
+
+{
+  PlayerHandIndex PVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  WeaponDef *pWVar6;
+  LocalClientNum_t LVar8;
+  bool bVar11;
+  cg_s *pcVar9;
+  Weapon WVar10;
+  undefined1 uVar12;
+  undefined8 uVar7;
+  int iVar13;
+  
+  LVar8 = __savegprlr_29(param_1);
+  if (LOCAL_CLIENT_3 < LVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  if ((9 < (int)clientUIActives[LVar8].connectionState) &&
+     ((nightVisionDisableEffects->current).enabled == false)) {
+    bVar11 = CG_KillCamEntityEnabled(LVar8);
+    if (!bVar11) {
+      pcVar9 = CG_GetLocalClientGlobals(LVar8);
+      if ((pcVar9 == (cg_s *)0x0) ||
+         (bVar11 = true, ((pcVar9->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+        bVar11 = false;
+      }
+      PVar1 = (pcVar9->predictedPlayerState).weapCommon.lastWeaponHand;
+      WVar10 = BG_GetViewmodelWeapon(&pcVar9->predictedPlayerState);
+      WVar10 = BG_GetAlternateWeapon(WVar10,bVar11);
+      pWVar6 = bg_weaponDefs[WVar10.data & 0xff];
+      if (PVar1 == WEAPON_HAND_LEFT) {
+        iVar2 = (pWVar6->akimboStateTimers).nightVisionWearTime;
+        iVar3 = (pWVar6->akimboStateTimers).nightVisionWearTimeFadeOutEnd;
+        iVar4 = (pWVar6->akimboStateTimers).nightVisionRemoveTime;
+        iVar13 = (pWVar6->akimboStateTimers).nightVisionRemoveTimePowerDown;
+      }
+      else {
+        iVar2 = (pWVar6->stateTimers).nightVisionWearTime;
+        iVar3 = (pWVar6->stateTimers).nightVisionWearTimeFadeOutEnd;
+        iVar4 = (pWVar6->stateTimers).nightVisionRemoveTime;
+        iVar13 = (pWVar6->stateTimers).nightVisionRemoveTimePowerDown;
+      }
+      if (((pcVar9->cvsData).thermalVisionActive == false) &&
+         ((pcVar9->cvsData).remoteMissileCam == false)) {
+        iVar5 = (pcVar9->predictedPlayerState).weapState[0].weaponState;
+        if (iVar5 == 0x1d) {
+          if (iVar3 <= iVar2 - (pcVar9->predictedPlayerState).weapState[0].weaponTime) {
+            uVar12 = __restgprlr_29(1);
+            return (bool)uVar12;
+          }
+        }
+        else if (iVar5 == 0x1e) {
+          if (iVar4 - (pcVar9->predictedPlayerState).weapState[0].weaponTime <= iVar13) {
+            uVar12 = __restgprlr_29(1);
+            return (bool)uVar12;
+          }
+        }
+        else {
+          uVar7 = 1;
+          if (((pcVar9->predictedPlayerState).weapCommon.weapFlags & 0x40U) != 0) goto LAB_823158ec;
+        }
+      }
+    }
+  }
+  uVar7 = 0;
+LAB_823158ec:
+  uVar12 = __restgprlr_29(uVar7);
+  return (bool)uVar12;
 }
 
 
 // 82315758  CG_LookingThroughNightVisionGoggles  (cgame/cg_visionsets.cpp:999)
 
-void CG_LookingThroughNightVisionGoggles(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool CG_LookingThroughNightVisionGoggles(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  PlayerHandIndex PVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  char cVar9;
-  int iVar7;
-  undefined8 uVar6;
-  uint uVar8;
-  int iVar10;
-  undefined8 uVar11;
+  int iVar5;
+  WeaponDef *pWVar6;
+  LocalClientNum_t LVar8;
+  bool bVar11;
+  cg_s *pcVar9;
+  Weapon WVar10;
+  undefined1 uVar12;
+  undefined8 uVar7;
+  int iVar13;
   
-  uVar5 = __savegprlr_29();
-  if (3 < (uVar5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,uVar5,4);
+  LVar8 = __savegprlr_29(param_1);
+  if (LOCAL_CLIENT_3 < LVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((9 < (int)(&DAT_82b3e54c)[(int)uVar5 * 0x79]) && (*(char *)(DAT_82a77184 + 0xc) == '\0')) &&
-     (cVar9 = CG_KillCamEntityEnabled(uVar5), cVar9 == '\0')) {
-    iVar7 = CG_GetLocalClientGlobals(uVar5);
-    if ((iVar7 == 0) || (uVar11 = 1, (*(uint *)(iVar7 + 0x374) & 0x8000) == 0)) {
-      uVar11 = 0;
-    }
-    iVar10 = *(int *)(iVar7 + 0x390);
-    uVar6 = BG_GetViewmodelWeapon(iVar7);
-    uVar8 = BG_GetAlternateWeapon(uVar6,uVar11);
-    iVar4 = (&DAT_829d84a0)[uVar8 & 0xff];
-    if (iVar10 == 1) {
-      iVar1 = *(int *)(iVar4 + 0x38c);
-      iVar2 = *(int *)(iVar4 + 0x390);
-      iVar3 = *(int *)(iVar4 + 0x398);
-      iVar10 = *(int *)(iVar4 + 0x39c);
-    }
-    else {
-      iVar1 = *(int *)(iVar4 + 0x2c8);
-      iVar2 = *(int *)(iVar4 + 0x2cc);
-      iVar3 = *(int *)(iVar4 + 0x2d4);
-      iVar10 = *(int *)(iVar4 + 0x2d8);
-    }
-    if ((*(char *)(iVar7 + 0x108038) == '\0') && (*(char *)(iVar7 + 0x108039) == '\0')) {
-      if (*(int *)(iVar7 + 0x24c) == 0x1d) {
-        if (iVar2 <= iVar1 - *(int *)(iVar7 + 0x240)) {
-          __restgprlr_29(1);
-          return;
-        }
+  if ((9 < (int)clientUIActives[LVar8].connectionState) &&
+     ((nightVisionDisableEffects->current).enabled == false)) {
+    bVar11 = CG_KillCamEntityEnabled(LVar8);
+    if (!bVar11) {
+      pcVar9 = CG_GetLocalClientGlobals(LVar8);
+      if ((pcVar9 == (cg_s *)0x0) ||
+         (bVar11 = true, ((pcVar9->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+        bVar11 = false;
       }
-      else if (*(int *)(iVar7 + 0x24c) == 0x1e) {
-        if (iVar3 - *(int *)(iVar7 + 0x240) <= iVar10) {
-          __restgprlr_29(1);
-          return;
-        }
+      PVar1 = (pcVar9->predictedPlayerState).weapCommon.lastWeaponHand;
+      WVar10 = BG_GetViewmodelWeapon(&pcVar9->predictedPlayerState);
+      WVar10 = BG_GetAlternateWeapon(WVar10,bVar11);
+      pWVar6 = bg_weaponDefs[WVar10.data & 0xff];
+      if (PVar1 == WEAPON_HAND_LEFT) {
+        iVar2 = (pWVar6->akimboStateTimers).nightVisionWearTime;
+        iVar3 = (pWVar6->akimboStateTimers).nightVisionWearTimeFadeOutEnd;
+        iVar4 = (pWVar6->akimboStateTimers).nightVisionRemoveTime;
+        iVar13 = (pWVar6->akimboStateTimers).nightVisionRemoveTimePowerDown;
       }
       else {
-        uVar11 = 1;
-        if ((*(uint *)(iVar7 + 0x374) & 0x40) != 0) goto LAB_823158ec;
+        iVar2 = (pWVar6->stateTimers).nightVisionWearTime;
+        iVar3 = (pWVar6->stateTimers).nightVisionWearTimeFadeOutEnd;
+        iVar4 = (pWVar6->stateTimers).nightVisionRemoveTime;
+        iVar13 = (pWVar6->stateTimers).nightVisionRemoveTimePowerDown;
+      }
+      if (((pcVar9->cvsData).thermalVisionActive == false) &&
+         ((pcVar9->cvsData).remoteMissileCam == false)) {
+        iVar5 = (pcVar9->predictedPlayerState).weapState[0].weaponState;
+        if (iVar5 == 0x1d) {
+          if (iVar3 <= iVar2 - (pcVar9->predictedPlayerState).weapState[0].weaponTime) {
+            uVar12 = __restgprlr_29(1);
+            return (bool)uVar12;
+          }
+        }
+        else if (iVar5 == 0x1e) {
+          if (iVar4 - (pcVar9->predictedPlayerState).weapState[0].weaponTime <= iVar13) {
+            uVar12 = __restgprlr_29(1);
+            return (bool)uVar12;
+          }
+        }
+        else {
+          uVar7 = 1;
+          if (((pcVar9->predictedPlayerState).weapCommon.weapFlags & 0x40U) != 0) goto LAB_823158ec;
+        }
       }
     }
   }
-  uVar11 = 0;
+  uVar7 = 0;
 LAB_823158ec:
-  __restgprlr_29(uVar11);
-  return;
+  uVar12 = __restgprlr_29(uVar7);
+  return (bool)uVar12;
 }
 
 
 // 823158F8  FadeRefDef  (cgame/cg_visionsets.cpp:1074)
 
-void FadeRefDef(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FadeRefDef(refdef_t *param_1,float param_2)
 
 {
   int iVar1;
-  double extraout_f1;
-  double dVar2;
+  ulonglong uVar2;
   double dVar3;
   double dVar4;
   double dVar5;
+  double dVar6;
+  float fStack0000001c;
   
-  iVar1 = __savefpr();
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82029428,0x433,0,0xffffffff82000f98,0xffffffff820297b4);
+  dVar3 = (double)param_2;
+  uVar2 = (ulonglong)(int)param_1;
+  __savefpr();
+  fStack0000001c = (float)dVar3;
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x433
+                    ,0,"%s");
   }
-  dVar5 = 0.0;
-  dVar3 = 1.0;
-  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    MyAssertHandler(dVar4,0xffffffff82029428,0x434,0,0xffffffff8202976c,0xffffffff82029784,dVar4);
+  dVar6 = 0.0;
+  dVar5 = 1.0;
+  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x434
+                    ,0,"%s\n\t(brightness) = %g");
   }
-  dVar2 = (double)(float)(dVar3 - dVar4);
-  dVar3 = (double)(float)extraout_f1;
-  *(float *)(iVar1 + 200) = (float)(dVar4 * (double)*(float *)(iVar1 + 200) + dVar2);
+  iVar1 = (int)uVar2;
+  dVar4 = (double)(float)(dVar5 - dVar3);
+  dVar5 = (double)fStack0000001c;
+  *(float *)(iVar1 + 200) = (float)(dVar3 * (double)*(float *)(iVar1 + 200) + dVar4);
   *(float *)(iVar1 + 0xcc) =
-       (float)((double)*(float *)(iVar1 + 0xcc) * dVar4 + (double)(float)(dVar2 * dVar5));
-  *(float *)(iVar1 + 0x88) = (float)((double)*(float *)(iVar1 + 0x88) * dVar3 - dVar2);
+       (float)((double)*(float *)(iVar1 + 0xcc) * dVar3 + (double)(float)(dVar4 * dVar6));
+  *(float *)(iVar1 + 0x88) = (float)((double)*(float *)(iVar1 + 0x88) * dVar5 - dVar4);
   *(float *)(iVar1 + 0x8c) =
-       (float)((double)*(float *)(iVar1 + 0x8c) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0x8c) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0x90) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0x90) + (double)(float)(dVar2 * dVar5));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0x90) + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0x94) =
-       (float)((double)*(float *)(iVar1 + 0x94) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0x94) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0x98) =
-       (float)((double)*(float *)(iVar1 + 0x98) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0x98) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xa0) =
-       (float)((double)*(float *)(iVar1 + 0xa0) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xa0) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xa4) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0xa4) + (double)(float)(dVar2 * dVar5));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0xa4) + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xa8) =
-       (float)((double)*(float *)(iVar1 + 0xa8) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xa8) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xb0) =
-       (float)((double)*(float *)(iVar1 + 0xb0) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xb0) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xac) =
-       (float)((double)*(float *)(iVar1 + 0xac) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xac) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xb4) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0xb4) + (double)(float)(dVar2 * dVar5));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0xb4) + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xc0) =
-       (float)((double)*(float *)(iVar1 + 0xc0) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xc0) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xdc) =
-       (float)((double)*(float *)(iVar1 + 0xdc) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xdc) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xb8) =
-       (float)((double)*(float *)(iVar1 + 0xb8) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xb8) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xe8) =
-       (float)((double)*(float *)(iVar1 + 0xe8) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xe8) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xbc) =
-       (float)((double)*(float *)(iVar1 + 0xbc) * dVar3 + (double)(float)(dVar2 * dVar5));
+       (float)((double)*(float *)(iVar1 + 0xbc) * dVar5 + (double)(float)(dVar4 * dVar6));
   *(float *)(iVar1 + 0xec) =
-       (float)((double)*(float *)(iVar1 + 0xec) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xec) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xf0) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0xf0) + (double)(float)(dVar2 * 0.0));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0xf0) + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xe0) =
-       (float)((double)*(float *)(iVar1 + 0xe0) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xe0) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xd8) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0xd8) + (double)(float)(dVar2 * 0.0));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0xd8) + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xe4) =
-       (float)((double)*(float *)(iVar1 + 0xe4) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xe4) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xf4) =
-       (float)((double)*(float *)(iVar1 + 0xf4) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xf4) * dVar5 + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xf8) =
-       (float)(dVar3 * (double)*(float *)(iVar1 + 0xf8) + (double)(float)(dVar2 * 0.0));
+       (float)(dVar5 * (double)*(float *)(iVar1 + 0xf8) + (double)(float)(dVar4 * 0.0));
   *(float *)(iVar1 + 0xfc) =
-       (float)((double)*(float *)(iVar1 + 0xfc) * dVar3 + (double)(float)(dVar2 * 0.0));
+       (float)((double)*(float *)(iVar1 + 0xfc) * dVar5 + (double)(float)(dVar4 * 0.0));
   __restfpr();
   return;
 }
@@ -1327,128 +1593,131 @@ void FadeRefDef(void)
 
 // 82315BC8  CG_VisionSetApplyToRefdef  (cgame/cg_visionsets.cpp:1115)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CG_VisionSetApplyToRefdef
-               (undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-               longlong param_5,ulonglong param_6)
+               (LocalClientNum_t param_1,refdef_t *param_2,ClientVisionSetData *param_3,bool param_4
+               ,float param_5,float param_6)
 
 {
-  int iVar1;
-  undefined1 *puVar2;
-  int iVar3;
-  undefined8 uVar4;
-  char cVar5;
-  longlong lVar6;
-  longlong lVar7;
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  int iVar4;
+  visionSetVars_t *pvVar5;
   double extraout_f1;
-  double dVar8;
+  double dVar6;
+  double dVar7;
+  visionSetVars_t local_e0;
   
-  uVar4 = __savegprlr_26();
-  iVar3 = (int)param_4;
-  dVar8 = extraout_f1;
-  cVar5 = CG_KillCamEntityEnabled();
-  iVar1 = (int)param_5;
-  if (cVar5 == '\0') {
-    cVar5 = CL_Demo_IsFollowCamera(uVar4);
-    if ((cVar5 != '\0') || (cVar5 = CL_Demo_IsFreeCamera(uVar4), cVar5 != '\0')) {
-      lVar6 = 5;
+  dVar6 = (double)param_6;
+  uVar3 = (ulonglong)param_4;
+  LVar1 = __savegprlr_26((double)param_5,param_1);
+  dVar7 = extraout_f1;
+  bVar2 = CG_KillCamEntityEnabled(LVar1);
+  if (!bVar2) {
+    bVar2 = CL_Demo_IsFollowCamera(LVar1);
+    if ((bVar2) || (bVar2 = CL_Demo_IsFreeCamera(LVar1), bVar2)) {
+      iVar4 = 5;
       goto LAB_82315ca0;
     }
-    if (*(char *)(iVar1 + 0xfd8) != '\0') {
-      lVar6 = 3;
+    if (param_3->thermalVisionActive != false) {
+      iVar4 = 3;
       goto LAB_82315ca0;
     }
-    if (*(char *)(iVar1 + 0xfd9) != '\0') {
-      lVar6 = 2;
+    if (param_3->remoteMissileCam != false) {
+      iVar4 = 2;
       goto LAB_82315ca0;
     }
-    if ((param_6 & 0xff) != 0) {
-      lVar6 = 1;
+    if ((uVar3 & 0xff) != 0) {
+      iVar4 = 1;
       goto LAB_82315ca0;
     }
-    if (*(char *)(iVar1 + 0xfda) != '\0') {
-      lVar6 = 4;
-      if (*(int *)(iVar1 + 0xe48) != 0) goto LAB_82315ca0;
-      Com_PrintWarning(0x10,0xffffffff820297b8);
+    if (param_3->painVisionActive != false) {
+      iVar4 = 4;
+      if (param_3->visionSetLerpData[4].style != VISIONSETLERP_UNDEFINED) goto LAB_82315ca0;
+      Com_PrintWarning(0x10,
+                       "Pain vision set was not set in script.  Call VisionSetPain() from script.\n"
+                      );
     }
   }
-  lVar6 = 0;
+  iVar4 = 0;
 LAB_82315ca0:
-  if (*(int *)((int)lVar6 * 0xc + iVar1 + 0xe18) == 0) {
-    *(undefined1 *)(iVar3 + 0x84) = 0;
-    *(undefined1 *)(iVar3 + 0xc4) = 0;
-    *(undefined4 *)(iVar3 + 0xd8) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xdc) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xe8) = 0;
-    *(undefined4 *)(iVar3 + 0xec) = 0;
-    *(undefined4 *)(iVar3 + 0xf0) = 0;
-    *(undefined4 *)(iVar3 + 0xe0) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xe4) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xf4) = 0;
-    *(undefined4 *)(iVar3 + 0xf8) = 0;
-    *(undefined4 *)(iVar3 + 0xfc) = 0;
+  if (param_3->visionSetLerpData[iVar4].style == VISIONSETLERP_UNDEFINED) {
+    (param_2->film).enabled = false;
+    (param_2->glow).enabled = false;
+    (param_2->charPrimaryLightScale).diffuseScale = 1.0;
+    (param_2->charPrimaryLightScale).specularScale = 1.0;
+    param_2->charAmbience[0] = 0.0;
+    param_2->charAmbience[1] = 0.0;
+    param_2->charAmbience[2] = 0.0;
+    (param_2->viewModelPrimaryLightScale).diffuseScale = 1.0;
+    (param_2->viewModelPrimaryLightScale).specularScale = 1.0;
+    param_2->viewModelAmbience[0] = 0.0;
+    param_2->viewModelAmbience[1] = 0.0;
+    param_2->viewModelAmbience[2] = 0.0;
     __restgprlr_26();
     return;
   }
-  lVar7 = lVar6 * 0x98 + param_5 + 0xa80;
-  if ((int)lVar6 == 4) {
-    LerpVisionSet((double)*(float *)(iVar1 + 0xfdc),param_5 + 0xa80,lVar7,
-                  ZEXT48(&stack0x00000000) - 0xe0,3);
-    lVar7 = ZEXT48(&stack0x00000000) - 0xe0;
+  pvVar5 = param_3->visionSetCurrent + iVar4;
+  if (iVar4 == 4) {
+    LerpVisionSet(param_3->visionSetCurrent,pvVar5,&local_e0,VISIONSETLERP_TO_SMOOTH,
+                  param_3->painVisionLerp);
+    pvVar5 = &local_e0;
   }
-  puVar2 = (undefined1 *)lVar7;
-  *(undefined1 *)(iVar3 + 0x84) = puVar2[0x24];
-  *(undefined4 *)(iVar3 + 0x88) = *(undefined4 *)(puVar2 + 0x28);
-  *(undefined4 *)(iVar3 + 0x8c) = *(undefined4 *)(puVar2 + 0x2c);
-  *(undefined4 *)(iVar3 + 0x90) = *(undefined4 *)(puVar2 + 0x30);
-  *(undefined4 *)(iVar3 + 0x94) = *(undefined4 *)(puVar2 + 0x34);
-  *(undefined4 *)(iVar3 + 0x98) = *(undefined4 *)(puVar2 + 0x38);
-  *(undefined1 *)(iVar3 + 0x9c) = puVar2[0x3c];
-  *(undefined4 *)(iVar3 + 0xa0) = *(undefined4 *)(puVar2 + 0x58);
-  *(undefined4 *)(iVar3 + 0xa4) = *(undefined4 *)(puVar2 + 0x5c);
-  *(undefined4 *)(iVar3 + 0xa8) = *(undefined4 *)(puVar2 + 0x60);
-  *(undefined4 *)(iVar3 + 0xac) = *(undefined4 *)(puVar2 + 0x4c);
-  *(undefined4 *)(iVar3 + 0xb0) = *(undefined4 *)(puVar2 + 0x50);
-  *(undefined4 *)(iVar3 + 0xb4) = *(undefined4 *)(puVar2 + 0x54);
-  *(undefined4 *)(iVar3 + 0xb8) = *(undefined4 *)(puVar2 + 0x40);
-  *(undefined4 *)(iVar3 + 0xbc) = *(undefined4 *)(puVar2 + 0x44);
-  *(undefined4 *)(iVar3 + 0xc0) = *(undefined4 *)(puVar2 + 0x48);
-  *(undefined1 *)(iVar3 + 0xc4) = *puVar2;
-  *(undefined4 *)(iVar3 + 200) = *(undefined4 *)(puVar2 + 4);
-  *(undefined4 *)(iVar3 + 0xcc) = *(undefined4 *)(puVar2 + 8);
-  *(undefined4 *)(iVar3 + 0xd0) = *(undefined4 *)(puVar2 + 0xc);
-  if (puVar2[100] == '\0') {
-    *(undefined4 *)(iVar3 + 0xd8) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xdc) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xe8) = 0;
-    *(undefined4 *)(iVar3 + 0xec) = 0;
-    *(undefined4 *)(iVar3 + 0xf0) = 0;
-  }
-  else {
-    *(undefined4 *)(iVar3 + 0xd8) = *(undefined4 *)(puVar2 + 0x68);
-    *(undefined4 *)(iVar3 + 0xdc) = *(undefined4 *)(puVar2 + 0x6c);
-    *(undefined4 *)(iVar3 + 0xe8) = *(undefined4 *)(puVar2 + 0x70);
-    *(undefined4 *)(iVar3 + 0xec) = *(undefined4 *)(puVar2 + 0x74);
-    *(undefined4 *)(iVar3 + 0xf0) = *(undefined4 *)(puVar2 + 0x78);
-  }
-  if (puVar2[0x7c] == '\0') {
-    *(undefined4 *)(iVar3 + 0xe0) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xe4) = 0x3f800000;
-    *(undefined4 *)(iVar3 + 0xf4) = 0;
-    *(undefined4 *)(iVar3 + 0xf8) = 0;
-    *(undefined4 *)(iVar3 + 0xfc) = 0;
+  (param_2->film).enabled = pvVar5->filmEnable;
+  (param_2->film).brightness = pvVar5->filmBrightness;
+  (param_2->film).contrast = pvVar5->filmContrast;
+  (param_2->film).desaturation = pvVar5->filmDesaturation;
+  (param_2->film).desaturationDark = pvVar5->filmDesaturationDark;
+  (param_2->film).heroSaturation = pvVar5->filmHeroSaturation;
+  (param_2->film).invert = pvVar5->filmInvert;
+  (param_2->film).tintDark[0] = pvVar5->filmDarkTint[0];
+  (param_2->film).tintDark[1] = pvVar5->filmDarkTint[1];
+  (param_2->film).tintDark[2] = pvVar5->filmDarkTint[2];
+  (param_2->film).tintMedium[0] = pvVar5->filmMediumTint[0];
+  (param_2->film).tintMedium[1] = pvVar5->filmMediumTint[1];
+  (param_2->film).tintMedium[2] = pvVar5->filmMediumTint[2];
+  (param_2->film).tintLight[0] = pvVar5->filmLightTint[0];
+  (param_2->film).tintLight[1] = pvVar5->filmLightTint[1];
+  (param_2->film).tintLight[2] = pvVar5->filmLightTint[2];
+  (param_2->glow).enabled = pvVar5->glowEnable;
+  (param_2->glow).bloomCutoff = pvVar5->glowBloomCutoff;
+  (param_2->glow).bloomDesaturation = pvVar5->glowBloomDesaturation;
+  (param_2->glow).bloomIntensity = pvVar5->glowBloomIntensity0;
+  if (pvVar5->charPrimaryUseTweaks == false) {
+    (param_2->charPrimaryLightScale).diffuseScale = 1.0;
+    (param_2->charPrimaryLightScale).specularScale = 1.0;
+    param_2->charAmbience[0] = 0.0;
+    param_2->charAmbience[1] = 0.0;
+    param_2->charAmbience[2] = 0.0;
   }
   else {
-    *(undefined4 *)(iVar3 + 0xe0) = *(undefined4 *)(puVar2 + 0x80);
-    *(undefined4 *)(iVar3 + 0xe4) = *(undefined4 *)(puVar2 + 0x84);
-    *(undefined4 *)(iVar3 + 0xf4) = *(undefined4 *)(puVar2 + 0x88);
-    *(undefined4 *)(iVar3 + 0xf8) = *(undefined4 *)(puVar2 + 0x8c);
-    *(undefined4 *)(iVar3 + 0xfc) = *(undefined4 *)(puVar2 + 0x90);
+    (param_2->charPrimaryLightScale).diffuseScale = pvVar5->charPrimaryDiffuseScale;
+    (param_2->charPrimaryLightScale).specularScale = pvVar5->charPrimarySpecularScale;
+    param_2->charAmbience[0] = pvVar5->charLightAmbient[0];
+    param_2->charAmbience[1] = pvVar5->charLightAmbient[1];
+    param_2->charAmbience[2] = pvVar5->charLightAmbient[2];
   }
-  *(float *)(iVar3 + 0xd4) = (float)((double)*(float *)(puVar2 + 0x14) * param_2);
-  if (dVar8 != 1.0) {
-    FadeRefDef(dVar8,param_4);
+  if (pvVar5->viewModelPrimaryUseTweaks == false) {
+    (param_2->viewModelPrimaryLightScale).diffuseScale = 1.0;
+    (param_2->viewModelPrimaryLightScale).specularScale = 1.0;
+    param_2->viewModelAmbience[0] = 0.0;
+    param_2->viewModelAmbience[1] = 0.0;
+    param_2->viewModelAmbience[2] = 0.0;
   }
-  *(undefined4 *)(iVar3 + 0x4b28) = *(undefined4 *)(puVar2 + 0x94);
+  else {
+    (param_2->viewModelPrimaryLightScale).diffuseScale = pvVar5->viewModelPrimaryDiffuseScale;
+    (param_2->viewModelPrimaryLightScale).specularScale = pvVar5->viewModelPrimarySpecularScale;
+    param_2->viewModelAmbience[0] = pvVar5->viewModelLightAmbient[0];
+    param_2->viewModelAmbience[1] = pvVar5->viewModelLightAmbient[1];
+    param_2->viewModelAmbience[2] = pvVar5->viewModelLightAmbient[2];
+  }
+  (param_2->glow).radius = (float)((double)pvVar5->glowRadius0 * dVar6);
+  if (dVar7 != 1.0) {
+    FadeRefDef(param_2,(float)dVar7);
+  }
+  param_2->primaryLightOverride = pvVar5->primaryLightOverride;
   __restgprlr_26();
   return;
 }
@@ -1456,27 +1725,29 @@ LAB_82315ca0:
 
 // 82316170  CG_NightVision  (cgame/cg_visionsets.cpp:1255)
 
-undefined8 CG_NightVision(undefined8 param_1,float *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CG_NightVision(LocalClientNum_t param_1,float *param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  double dVar3;
+  bool bVar1;
+  float fVar2;
   
-  cVar2 = CL_Demo_IsFollowCamera();
-  if ((cVar2 == '\0') && (cVar2 = CL_Demo_IsFreeCamera(param_1), cVar2 == '\0')) {
-    if (param_2 == (float *)0x0) {
-      MyAssertHandler(0xffffffff82029428,0x4f6,0,0xffffffff82000f98,0xffffffff82029804);
-    }
-    CG_LookingThroughNightVisionGoggles(param_1);
-    dVar3 = (double)VisionFadeValue(param_1);
-    *param_2 = (float)dVar3;
-    uVar1 = CG_LookingThroughNightVisionGoggles(param_1);
-  }
-  else {
-    uVar1 = 0;
+  bVar1 = CL_Demo_IsFollowCamera(param_1);
+  if ((bVar1) || (bVar1 = CL_Demo_IsFreeCamera(param_1), bVar1)) {
+    bVar1 = false;
     *param_2 = 1.0;
   }
-  return uVar1;
+  else {
+    if (param_2 == (float *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",
+                      0x4f6,0,"%s");
+    }
+    CG_LookingThroughNightVisionGoggles(param_1);
+    fVar2 = VisionFadeValue(param_1);
+    *param_2 = fVar2;
+    bVar1 = CG_LookingThroughNightVisionGoggles(param_1);
+  }
+  return bVar1;
 }
 

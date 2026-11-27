@@ -7,7 +7,7 @@ void __unwind_69179(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 

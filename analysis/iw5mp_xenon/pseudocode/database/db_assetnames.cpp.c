@@ -2,748 +2,1140 @@
 
 // 823A18D8  DB_PhysPresetGetName  (database/db_assetnames.cpp:101)
 
-undefined4 DB_PhysPresetGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_PhysPresetGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A18E8  DB_PhysPresetSetName  (database/db_assetnames.cpp:107)
 
-void DB_PhysPresetSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_PhysPresetSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A18F8  DB_PhysCollmapGetName  (database/db_assetnames.cpp:113)
 
-undefined4 DB_PhysCollmapGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_PhysCollmapGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1908  DB_PhysCollmapSetName  (database/db_assetnames.cpp:119)
 
-void DB_PhysCollmapSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_PhysCollmapSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1918  DB_XAnimPartsGetName  (database/db_assetnames.cpp:125)
 
-undefined4 DB_XAnimPartsGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_XAnimPartsGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1928  DB_XAnimPartsSetName  (database/db_assetnames.cpp:131)
 
-void DB_XAnimPartsSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_XAnimPartsSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1938  DB_XModelSurfsGetName  (database/db_assetnames.cpp:137)
 
-undefined4 DB_XModelSurfsGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_XModelSurfsGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1948  DB_XModelSurfsSetName  (database/db_assetnames.cpp:143)
 
-void DB_XModelSurfsSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_XModelSurfsSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1958  DB_XModelGetName  (database/db_assetnames.cpp:149)
 
-undefined4 DB_XModelGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_XModelGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1968  DB_XModelSetName  (database/db_assetnames.cpp:155)
 
-void DB_XModelSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_XModelSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1978  DB_MaterialGetName  (database/db_assetnames.cpp:161)
 
-undefined4 DB_MaterialGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_MaterialGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1988  DB_MaterialSetName  (database/db_assetnames.cpp:167)
 
-void DB_MaterialSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_MaterialSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1998  DB_PixelShaderGetName  (database/db_assetnames.cpp:175)
 
-undefined4 DB_PixelShaderGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_PixelShaderGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A19A8  DB_PixelShaderSetName  (database/db_assetnames.cpp:181)
 
-void DB_PixelShaderSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_PixelShaderSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A19B8  DB_MaterialTechniqueSetGetName  (database/db_assetnames.cpp:221)
 
-undefined4 DB_MaterialTechniqueSetGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_MaterialTechniqueSetGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A19C8  DB_MaterialTechniqueSetSetName  (database/db_assetnames.cpp:227)
 
-void DB_MaterialTechniqueSetSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_MaterialTechniqueSetSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A19D8  DB_ImageGetName  (database/db_assetnames.cpp:233)
 
-undefined4 DB_ImageGetName(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_ImageGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)(*param_1 + 0x6c);
+  return param_1->image->name;
 }
 
 
 // 823A19E8  DB_ImageSetName  (database/db_assetnames.cpp:239)
 
-void DB_ImageSetName(int *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ImageSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)(*param_1 + 0x6c) = param_2;
+  param_1->image->name = param_2;
   return;
 }
 
 
 // 823A19F8  DB_SoundGetName  (database/db_assetnames.cpp:245)
 
-undefined4 DB_SoundGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_SoundGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1A08  DB_SoundSetName  (database/db_assetnames.cpp:251)
 
-void DB_SoundSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SoundSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1A18  DB_SndCurveGetName  (database/db_assetnames.cpp:257)
 
-undefined4 DB_SndCurveGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_SndCurveGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1A28  DB_SndCurveSetName  (database/db_assetnames.cpp:263)
 
-void DB_SndCurveSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SndCurveSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1A38  DB_LoadedSoundGetName  (database/db_assetnames.cpp:269)
 
-undefined4 DB_LoadedSoundGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_LoadedSoundGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1A48  DB_LoadedSoundSetName  (database/db_assetnames.cpp:275)
 
-void DB_LoadedSoundSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LoadedSoundSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1A58  DB_ClipMapGetName  (database/db_assetnames.cpp:281)
 
-undefined4 DB_ClipMapGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_ClipMapGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1A68  DB_ClipMapSetName  (database/db_assetnames.cpp:287)
 
-void DB_ClipMapSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ClipMapSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1A78  DB_ComWorldGetName  (database/db_assetnames.cpp:293)
 
-undefined4 DB_ComWorldGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_ComWorldGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1A88  DB_ComWorldSetName  (database/db_assetnames.cpp:299)
 
-void DB_ComWorldSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ComWorldSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1A98  DB_GlassWorldGetName  (database/db_assetnames.cpp:305)
 
-undefined4 DB_GlassWorldGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_GlassWorldGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1AA8  DB_GlassWorldSetName  (database/db_assetnames.cpp:311)
 
-void DB_GlassWorldSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_GlassWorldSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1AB8  DB_PathDataGetName  (database/db_assetnames.cpp:317)
 
-undefined4 DB_PathDataGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_PathDataGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1AC8  DB_PathDataSetName  (database/db_assetnames.cpp:323)
 
-void DB_PathDataSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_PathDataSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1AD8  DB_VehicleTrackGetName  (database/db_assetnames.cpp:329)
 
-undefined4 DB_VehicleTrackGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_VehicleTrackGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1AE8  DB_VehicleTrackSetName  (database/db_assetnames.cpp:335)
 
-void DB_VehicleTrackSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_VehicleTrackSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1AF8  DB_MapEntsGetName  (database/db_assetnames.cpp:341)
 
-undefined4 DB_MapEntsGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_MapEntsGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1B08  DB_MapEntsSetName  (database/db_assetnames.cpp:347)
 
-void DB_MapEntsSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_MapEntsSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1B18  DB_FxWorldGetName  (database/db_assetnames.cpp:353)
 
-undefined4 DB_FxWorldGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_FxWorldGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1B28  DB_FxWorldSetName  (database/db_assetnames.cpp:359)
 
-void DB_FxWorldSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FxWorldSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1B38  DB_GfxWorldGetName  (database/db_assetnames.cpp:365)
 
-undefined4 DB_GfxWorldGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_GfxWorldGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1B48  DB_GfxWorldSetName  (database/db_assetnames.cpp:371)
 
-void DB_GfxWorldSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_GfxWorldSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1B58  DB_LightDefGetName  (database/db_assetnames.cpp:377)
 
-undefined4 DB_LightDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_LightDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1B68  DB_LightDefSetName  (database/db_assetnames.cpp:383)
 
-void DB_LightDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LightDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1B78  DB_FontGetName  (database/db_assetnames.cpp:389)
 
-undefined4 DB_FontGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_FontGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1B88  DB_FontSetName  (database/db_assetnames.cpp:395)
 
-void DB_FontSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FontSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1B98  DB_MenuListGetName  (database/db_assetnames.cpp:401)
 
-undefined4 DB_MenuListGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_MenuListGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1BA8  DB_MenuListSetName  (database/db_assetnames.cpp:407)
 
-void DB_MenuListSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_MenuListSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1BB8  DB_MenuGetName  (database/db_assetnames.cpp:413)
 
-undefined4 DB_MenuGetName(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_MenuGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)(*param_1 + 4);
+  return *(char **)&(param_1->material->info).gameFlags;
 }
 
 
 // 823A1BC8  DB_MenuSetName  (database/db_assetnames.cpp:419)
 
-void DB_MenuSetName(int *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_MenuSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)(*param_1 + 4) = param_2;
+  *(char **)&(param_1->material->info).gameFlags = param_2;
   return;
 }
 
 
 // 823A1BD8  DB_LocalizeEntryGetName  (database/db_assetnames.cpp:425)
 
-undefined4 DB_LocalizeEntryGetName(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_LocalizeEntryGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)(*param_1 + 4);
+  return *(char **)&(param_1->material->info).gameFlags;
 }
 
 
 // 823A1BE8  DB_LocalizeEntrySetName  (database/db_assetnames.cpp:431)
 
-void DB_LocalizeEntrySetName(int *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LocalizeEntrySetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)(*param_1 + 4) = param_2;
+  *(char **)&(param_1->material->info).gameFlags = param_2;
   return;
 }
 
 
 // 823A1BF8  DB_WeaponAttachmentGetName  (database/db_assetnames.cpp:437)
 
-undefined4 DB_WeaponAttachmentGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_WeaponAttachmentGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1C08  DB_WeaponAttachmentSetName  (database/db_assetnames.cpp:443)
 
-void DB_WeaponAttachmentSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_WeaponAttachmentSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1C18  DB_WeaponDefGetName  (database/db_assetnames.cpp:449)
 
-undefined4 DB_WeaponDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_WeaponDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1C28  DB_WeaponDefSetName  (database/db_assetnames.cpp:455)
 
-void DB_WeaponDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_WeaponDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1C38  DB_SndDriverGlobalsGetName  (database/db_assetnames.cpp:461)
 
-undefined4 DB_SndDriverGlobalsGetName(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_SndDriverGlobalsGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)(*param_1 + 4);
+  return *(char **)&(param_1->material->info).gameFlags;
 }
 
 
 // 823A1C48  DB_SndDriverGlobalsSetName  (database/db_assetnames.cpp:467)
 
-void DB_SndDriverGlobalsSetName(int *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SndDriverGlobalsSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)(*param_1 + 4) = param_2;
+  *(char **)&(param_1->material->info).gameFlags = param_2;
   return;
 }
 
 
 // 823A1C58  DB_EffectDefGetName  (database/db_assetnames.cpp:474)
 
-undefined4 DB_EffectDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_EffectDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1C68  DB_EffectDefSetName  (database/db_assetnames.cpp:480)
 
-void DB_EffectDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_EffectDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1C78  DB_FxImpactTableGetName  (database/db_assetnames.cpp:486)
 
-undefined4 DB_FxImpactTableGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_FxImpactTableGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1C88  DB_FxImpactTableSetName  (database/db_assetnames.cpp:492)
 
-void DB_FxImpactTableSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FxImpactTableSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1C98  DB_SurfaceFxTableGetName  (database/db_assetnames.cpp:498)
 
-undefined4 DB_SurfaceFxTableGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_SurfaceFxTableGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1CA8  DB_SurfaceFxTableSetName  (database/db_assetnames.cpp:504)
 
-void DB_SurfaceFxTableSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SurfaceFxTableSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1CB8  DB_RawFileGetName  (database/db_assetnames.cpp:510)
 
-undefined4 DB_RawFileGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_RawFileGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1CC8  DB_RawFileSetName  (database/db_assetnames.cpp:516)
 
-void DB_RawFileSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_RawFileSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1CD8  DB_ScriptFileGetName  (database/db_assetnames.cpp:522)
 
-undefined4 DB_ScriptFileGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_ScriptFileGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1CE8  DB_ScriptFileSetName  (database/db_assetnames.cpp:528)
 
-void DB_ScriptFileSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ScriptFileSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1CF8  DB_StringTableGetName  (database/db_assetnames.cpp:534)
 
-undefined4 DB_StringTableGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_StringTableGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D08  DB_StringTableSetName  (database/db_assetnames.cpp:540)
 
-void DB_StringTableSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_StringTableSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1D18  DB_LeaderboardDefGetName  (database/db_assetnames.cpp:546)
 
-undefined4 DB_LeaderboardDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_LeaderboardDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D28  DB_LeaderboardDefSetName  (database/db_assetnames.cpp:552)
 
-void DB_LeaderboardDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LeaderboardDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1D38  DB_StructuredDataDefGetName  (database/db_assetnames.cpp:558)
 
-undefined4 DB_StructuredDataDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_StructuredDataDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D48  DB_StructuredDataDefSetName  (database/db_assetnames.cpp:564)
 
-void DB_StructuredDataDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_StructuredDataDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1D58  DB_TracerDefGetName  (database/db_assetnames.cpp:570)
 
-undefined4 DB_TracerDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_TracerDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D68  DB_TracerDefSetName  (database/db_assetnames.cpp:576)
 
-void DB_TracerDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_TracerDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1D78  DB_VehicleDefGetName  (database/db_assetnames.cpp:582)
 
-undefined4 DB_VehicleDefGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_VehicleDefGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D88  DB_AddonMapEntsGetName  (database/db_assetnames.cpp:587)
 
-undefined4 DB_AddonMapEntsGetName(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_AddonMapEntsGetName(XAssetHeader *param_1)
 
 {
-  return *(undefined4 *)*param_1;
+  return param_1->physPreset->name;
 }
 
 
 // 823A1D98  DB_AddonMapEntsSetName  (database/db_assetnames.cpp:593)
 
-void DB_AddonMapEntsSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_AddonMapEntsSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A1DA8  DB_VehicleDefSetName  (database/db_assetnames.cpp:599)
 
-void DB_VehicleDefSetName(undefined4 *param_1,undefined4 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_VehicleDefSetName(XAssetHeader *param_1,char *param_2)
 
 {
-  *(undefined4 *)*param_1 = param_2;
+  param_1->physPreset->name = param_2;
   return;
 }
 
 
 // 823A2080  DB_SizeofXAsset<PhysPreset>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<PhysPreset>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<PhysPreset>(void)
 
 {
   return 0x44;
@@ -752,7 +1144,9 @@ undefined8 DB_SizeofXAsset<PhysPreset>(void)
 
 // 823A2088  DB_SizeofXAsset<PhysCollmap>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<PhysCollmap>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<PhysCollmap>(void)
 
 {
   return 0x48;
@@ -761,7 +1155,9 @@ undefined8 DB_SizeofXAsset<PhysCollmap>(void)
 
 // 823A2090  DB_SizeofXAsset<XAnimParts>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<XAnimParts>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<XAnimParts>(void)
 
 {
   return 0x58;
@@ -770,7 +1166,9 @@ undefined8 DB_SizeofXAsset<XAnimParts>(void)
 
 // 823A2098  DB_SizeofXAsset<XModelSurfs>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<XModelSurfs>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<XModelSurfs>(void)
 
 {
   return 0x24;
@@ -779,7 +1177,9 @@ undefined8 DB_SizeofXAsset<XModelSurfs>(void)
 
 // 823A20A0  DB_SizeofXAsset<XModel>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<XModel>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<XModel>(void)
 
 {
   return 0x124;
@@ -788,7 +1188,9 @@ undefined8 DB_SizeofXAsset<XModel>(void)
 
 // 823A20A8  DB_SizeofXAsset<Material>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<Material>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<Material>(void)
 
 {
   return 0x58;
@@ -797,7 +1199,9 @@ undefined8 DB_SizeofXAsset<Material>(void)
 
 // 823A20B0  DB_SizeofXAsset<MaterialPixelShader>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<MaterialPixelShader>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<MaterialPixelShader>(void)
 
 {
   return 0x10;
@@ -806,7 +1210,9 @@ undefined8 DB_SizeofXAsset<MaterialPixelShader>(void)
 
 // 823A20B8  DB_SizeofXAsset<MaterialTechniqueSet>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<MaterialTechniqueSet>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<MaterialTechniqueSet>(void)
 
 {
   return 0xa0;
@@ -815,7 +1221,9 @@ undefined8 DB_SizeofXAsset<MaterialTechniqueSet>(void)
 
 // 823A20C0  DB_SizeofXAsset<GfxImage>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<GfxImage>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<GfxImage>(void)
 
 {
   return 0x70;
@@ -824,7 +1232,9 @@ undefined8 DB_SizeofXAsset<GfxImage>(void)
 
 // 823A20C8  DB_SizeofXAsset<snd_alias_list_t>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<snd_alias_list_t>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<snd_alias_list_t>(void)
 
 {
   return 0xc;
@@ -833,7 +1243,9 @@ undefined8 DB_SizeofXAsset<snd_alias_list_t>(void)
 
 // 823A20D0  DB_SizeofXAsset<SndCurve>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<SndCurve>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<SndCurve>(void)
 
 {
   return 0x88;
@@ -842,7 +1254,9 @@ undefined8 DB_SizeofXAsset<SndCurve>(void)
 
 // 823A20D8  DB_SizeofXAsset<LoadedSound>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<LoadedSound>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<LoadedSound>(void)
 
 {
   return 0xa0;
@@ -851,7 +1265,9 @@ undefined8 DB_SizeofXAsset<LoadedSound>(void)
 
 // 823A20E0  DB_SizeofXAsset<clipMap_t>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<clipMap_t>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<clipMap_t>(void)
 
 {
   return 0x100;
@@ -860,7 +1276,9 @@ undefined8 DB_SizeofXAsset<clipMap_t>(void)
 
 // 823A20E8  DB_SizeofXAsset<ComWorld>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<ComWorld>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<ComWorld>(void)
 
 {
   return 0x10;
@@ -869,7 +1287,9 @@ undefined8 DB_SizeofXAsset<ComWorld>(void)
 
 // 823A20F0  DB_SizeofXAsset<GlassWorld>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<GlassWorld>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<GlassWorld>(void)
 
 {
   return 8;
@@ -878,7 +1298,9 @@ undefined8 DB_SizeofXAsset<GlassWorld>(void)
 
 // 823A20F8  DB_SizeofXAsset<PathData>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<PathData>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<PathData>(void)
 
 {
   return 0x2c;
@@ -887,7 +1309,9 @@ undefined8 DB_SizeofXAsset<PathData>(void)
 
 // 823A2100  DB_SizeofXAsset<VehicleTrack>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<VehicleTrack>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<VehicleTrack>(void)
 
 {
   return 0xc;
@@ -896,7 +1320,9 @@ undefined8 DB_SizeofXAsset<VehicleTrack>(void)
 
 // 823A2108  DB_SizeofXAsset<MapEnts>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<MapEnts>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<MapEnts>(void)
 
 {
   return 0x60;
@@ -905,7 +1331,9 @@ undefined8 DB_SizeofXAsset<MapEnts>(void)
 
 // 823A2110  DB_SizeofXAsset<FxWorld>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<FxWorld>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<FxWorld>(void)
 
 {
   return 0x74;
@@ -914,7 +1342,9 @@ undefined8 DB_SizeofXAsset<FxWorld>(void)
 
 // 823A2118  DB_SizeofXAsset<GfxWorld>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<GfxWorld>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<GfxWorld>(void)
 
 {
   return 0x2d4;
@@ -923,7 +1353,9 @@ undefined8 DB_SizeofXAsset<GfxWorld>(void)
 
 // 823A2120  DB_SizeofXAsset<GfxLightDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<GfxLightDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<GfxLightDef>(void)
 
 {
   return 0x18;
@@ -932,7 +1364,9 @@ undefined8 DB_SizeofXAsset<GfxLightDef>(void)
 
 // 823A2128  DB_SizeofXAsset<Font_s>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<Font_s>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<Font_s>(void)
 
 {
   return 0x18;
@@ -941,7 +1375,9 @@ undefined8 DB_SizeofXAsset<Font_s>(void)
 
 // 823A2130  DB_SizeofXAsset<MenuList>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<MenuList>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<MenuList>(void)
 
 {
   return 0xc;
@@ -950,7 +1386,9 @@ undefined8 DB_SizeofXAsset<MenuList>(void)
 
 // 823A2138  DB_SizeofXAsset<menuDef_t>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<menuDef_t>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<menuDef_t>(void)
 
 {
   return 0xbc;
@@ -959,7 +1397,9 @@ undefined8 DB_SizeofXAsset<menuDef_t>(void)
 
 // 823A2140  DB_SizeofXAsset<LocalizeEntry>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<LocalizeEntry>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<LocalizeEntry>(void)
 
 {
   return 8;
@@ -968,7 +1408,9 @@ undefined8 DB_SizeofXAsset<LocalizeEntry>(void)
 
 // 823A2148  DB_SizeofXAsset<WeaponAttachment>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<WeaponAttachment>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<WeaponAttachment>(void)
 
 {
   return 0xa4;
@@ -977,7 +1419,9 @@ undefined8 DB_SizeofXAsset<WeaponAttachment>(void)
 
 // 823A2150  DB_SizeofXAsset<WeaponDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<WeaponDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<WeaponDef>(void)
 
 {
   return 0x7a4;
@@ -986,7 +1430,9 @@ undefined8 DB_SizeofXAsset<WeaponDef>(void)
 
 // 823A2158  DB_SizeofXAsset<SndDriverGlobals>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<SndDriverGlobals>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<SndDriverGlobals>(void)
 
 {
   return 8;
@@ -995,7 +1441,9 @@ undefined8 DB_SizeofXAsset<SndDriverGlobals>(void)
 
 // 823A2160  DB_SizeofXAsset<FxEffectDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<FxEffectDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<FxEffectDef>(void)
 
 {
   return 0x34;
@@ -1004,7 +1452,9 @@ undefined8 DB_SizeofXAsset<FxEffectDef>(void)
 
 // 823A2168  DB_SizeofXAsset<FxImpactTable>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<FxImpactTable>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<FxImpactTable>(void)
 
 {
   return 8;
@@ -1013,7 +1463,9 @@ undefined8 DB_SizeofXAsset<FxImpactTable>(void)
 
 // 823A2170  DB_SizeofXAsset<SurfaceFxTable>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<SurfaceFxTable>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<SurfaceFxTable>(void)
 
 {
   return 8;
@@ -1022,7 +1474,9 @@ undefined8 DB_SizeofXAsset<SurfaceFxTable>(void)
 
 // 823A2178  DB_SizeofXAsset<RawFile>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<RawFile>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<RawFile>(void)
 
 {
   return 0x10;
@@ -1031,7 +1485,9 @@ undefined8 DB_SizeofXAsset<RawFile>(void)
 
 // 823A2180  DB_SizeofXAsset<ScriptFile>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<ScriptFile>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<ScriptFile>(void)
 
 {
   return 0x18;
@@ -1040,7 +1496,9 @@ undefined8 DB_SizeofXAsset<ScriptFile>(void)
 
 // 823A2188  DB_SizeofXAsset<StringTable>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<StringTable>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<StringTable>(void)
 
 {
   return 0x10;
@@ -1049,7 +1507,9 @@ undefined8 DB_SizeofXAsset<StringTable>(void)
 
 // 823A2190  DB_SizeofXAsset<LeaderboardDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<LeaderboardDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<LeaderboardDef>(void)
 
 {
   return 0x20;
@@ -1058,7 +1518,9 @@ undefined8 DB_SizeofXAsset<LeaderboardDef>(void)
 
 // 823A2198  DB_SizeofXAsset<StructuredDataDefSet>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<StructuredDataDefSet>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<StructuredDataDefSet>(void)
 
 {
   return 0xc;
@@ -1067,7 +1529,9 @@ undefined8 DB_SizeofXAsset<StructuredDataDefSet>(void)
 
 // 823A21A0  DB_SizeofXAsset<TracerDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<TracerDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<TracerDef>(void)
 
 {
   return 0x70;
@@ -1076,7 +1540,9 @@ undefined8 DB_SizeofXAsset<TracerDef>(void)
 
 // 823A21A8  DB_SizeofXAsset<VehicleDef>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<VehicleDef>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<VehicleDef>(void)
 
 {
   return 0x3fc;
@@ -1085,7 +1551,9 @@ undefined8 DB_SizeofXAsset<VehicleDef>(void)
 
 // 823A21B0  DB_SizeofXAsset<AddonMapEnts>  (database/db_assetnames.cpp:732)
 
-undefined8 DB_SizeofXAsset<AddonMapEnts>(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_SizeofXAsset<AddonMapEnts>(void)
 
 {
   return 0x34;
@@ -1094,58 +1562,86 @@ undefined8 DB_SizeofXAsset<AddonMapEnts>(void)
 
 // 823A1DB8  DB_GetXAssetHeaderName  (database/db_assetnames.cpp:801)
 
-void DB_GetXAssetHeaderName(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_GetXAssetHeaderName(int param_1,XAssetHeader *param_2)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
+  ulonglong uVar3;
   
-  iVar3 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82058e08,0x324,0,0xffffffff82000f98,0xffffffff82058e00);
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x324,0,"%s");
   }
-  if ((&PTR_DB_PhysPresetGetName_82967100)[iVar3] == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff82058e08,0x325,0,0xffffffff82000f98,0xffffffff82058de0);
+  if (DB_XAssetGetNameHandler[iVar1] == (_func___cdecl_char_ptr_XAssetHeader_ptr *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x325,0,"%s");
   }
-  if (*(int *)param_2 == 0) {
-    MyAssertHandler(0xffffffff82058e08,0x326,0,0xffffffff82000f98,0xffffffff82058dd0);
+  if (((XAssetHeader *)uVar3)->physPreset == (PhysPreset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x326,0,"%s");
   }
-  uVar1 = (*(code *)(&PTR_DB_PhysPresetGetName_82967100)[iVar3])(param_2);
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar2 = va(0xffffffff82058dac,(&PTR_s_physpreset_82967050)[iVar3]);
-    MyAssertHandler(0xffffffff82058e08,0x328,0,0xffffffff820011f4,0xffffffff82021a74,uVar2);
+  pcVar2 = (*DB_XAssetGetNameHandler[iVar1])((XAssetHeader *)uVar3);
+  if (pcVar2 == (char *)0x0) {
+    va("Name not found for asset type %s\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x328,0,"%s\n\t%s");
   }
-  __restgprlr_27(uVar1);
-  return;
+  pcVar2 = (char *)__restgprlr_27(pcVar2);
+  return pcVar2;
 }
 
 
 // 823A1EC0  DB_GetXAssetName  (database/db_assetnames.cpp:814)
 
-void DB_GetXAssetName(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_GetXAssetName(XAsset *param_1)
 
 {
-  if (param_1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82058e08,0x32f,0,0xffffffff82000f98,0xffffffff82058e50);
+  char *pcVar1;
+  
+  if (param_1 == (XAsset *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x32f,0,"%s");
   }
-  DB_GetXAssetHeaderName(*param_1,param_1 + 1);
-  return;
+  pcVar1 = DB_GetXAssetHeaderName(param_1->type,&param_1->header);
+  return pcVar1;
 }
 
 
 // 823A1F20  DB_SetXAssetName  (database/db_assetnames.cpp:821)
 
-void DB_SetXAssetName(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SetXAssetName(XAsset *param_1,char *param_2)
 
 {
   int *piVar1;
+  longlong lVar2;
   
-  piVar1 = (int *)__savegprlr_29();
-  if ((&PTR_DB_PhysPresetSetName_829671b0)[*piVar1] == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff82058e08,0x336,0,0xffffffff82000f98,0xffffffff82058e58);
+  lVar2 = (longlong)(int)param_2;
+  piVar1 = (int *)__savegprlr_29(param_1,lVar2);
+  if (DB_XAssetSetNameHandler[*piVar1] == (_func___cdecl_void_XAssetHeader_ptr_char_ptr *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x336,0,"%s");
   }
-  (*(code *)(&PTR_DB_PhysPresetSetName_829671b0)[*piVar1])(piVar1 + 1,param_2);
+  (*DB_XAssetSetNameHandler[*piVar1])((XAssetHeader *)(piVar1 + 1),(char *)lVar2);
   __restgprlr_29();
   return;
 }
@@ -1153,25 +1649,29 @@ void DB_SetXAssetName(undefined8 param_1,undefined8 param_2)
 
 // 823A1F98  DB_GetXAssetTypeSize  (database/db_assetnames.cpp:828)
 
-void DB_GetXAssetTypeSize(int param_1)
+int DB_GetXAssetTypeSize(int param_1)
 
 {
-  if ((&PTR_DB_SizeofXAsset<PhysPreset>_82967260)[param_1] == (undefined *)0x0) {
-    MyAssertHandler(0xffffffff82058e08,0x33d,0,0xffffffff82000f98,0xffffffff82058e80);
+  int iVar1;
+  
+  if (DB_GetXAssetSizeHandler[param_1] == (_func___cdecl_int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x33d,0,"%s");
   }
-  (*(code *)(&PTR_DB_SizeofXAsset<PhysPreset>_82967260)[param_1])();
-  return;
+  iVar1 = (*DB_GetXAssetSizeHandler[param_1])();
+  return iVar1;
 }
 
 
 // 823A2010  DB_GetXAssetTypeName  (database/db_assetnames.cpp:834)
 
-undefined * DB_GetXAssetTypeName(int param_1)
+char * DB_GetXAssetTypeName(int param_1)
 
 {
   if ((param_1 < 0) || (0x2b < param_1)) {
-    MyAssertHandler(0xffffffff82058e08,0x343,0,0xffffffff82000f98,0xffffffff82058ea0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
+                    0x343,0,"%s");
   }
-  return (&PTR_s_physpreset_82967050)[param_1];
+  return *(char **)(&g_assetNames + param_1 * 4);
 }
 

@@ -4,7 +4,7 @@
 
 /* WARNING: Control flow encountered bad instruction data */
 
-void XLaunchNewImage(char *param_1,ulonglong param_2)
+void XLaunchNewImage(char *param_1,ulong param_2)
 
 {
   char cVar1;

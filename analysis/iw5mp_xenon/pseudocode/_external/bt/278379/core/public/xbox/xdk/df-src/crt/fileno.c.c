@@ -2,20 +2,20 @@
 
 // 82922348  _fileno  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fileno.c:40)
 
-int _fileno(FILE *_File)
+int _fileno(_iobuf *param_1)
 
 {
   int *piVar1;
   int iVar2;
   
-  if (_File == (FILE *)0x0) {
+  if (param_1 == (_iobuf *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
     iVar2 = -1;
   }
   else {
-    iVar2 = _File->_file;
+    iVar2 = param_1->_file;
   }
   return iVar2;
 }

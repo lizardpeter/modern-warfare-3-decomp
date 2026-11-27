@@ -2,95 +2,95 @@
 
 // 828B0014  FUN_828b0014  (line unknown)
 
-void FUN_828b0014(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void FUN_828b0014(undefined8 param_1,undefined8 param_2,uint param_3)
 
 {
-  int iVar1;
-  uint uVar2;
+  long lVar1;
+  ulong uVar2;
+  int iVar3;
+  uint uVar4;
   uint unaff_r21;
-  void *unaff_r22;
+  int unaff_r22;
   undefined2 *unaff_r23;
-  uint unaff_r24;
+  ulong unaff_r24;
   uint unaff_r25;
-  undefined4 unaff_000000d0;
   int unaff_r26;
-  void *unaff_r27;
-  int unaff_r28;
-  uint unaff_r29;
-  int unaff_r30;
-  void *unaff_r31;
-  longlong lVar3;
-  int in_stack_00000050;
-  undefined4 in_stack_00000054;
+  uchar *unaff_r27;
+  _STFC_VOLUME_EXTENSION *unaff_r28;
+  ulong unaff_r29;
+  void *unaff_r30;
+  uchar *unaff_r31;
+  void *in_stack_00000050;
+  ulong in_stack_00000054;
   
   while (*(int *)(unaff_r26 + 8) != 0) {
-    iVar1 = IoIsNameInExpression(CONCAT44(unaff_000000d0,unaff_r26) + 4,unaff_r31,param_3,0);
-    if (iVar1 != 0) break;
+    uVar2 = IoIsNameInExpression((_UNICODE_STRING *)(unaff_r26 + 4),unaff_r31,param_3,0);
+    if (uVar2 != 0) break;
     while( true ) {
       do {
         while( true ) {
-          unaff_r31 = (void *)((int)unaff_r31 + 0x40);
+          unaff_r31 = unaff_r31 + 0x40;
           unaff_r29 = unaff_r29 + 0x40;
           if (unaff_r31 == unaff_r27) {
-            if (unaff_r30 != 0) {
-              uVar2 = unaff_r30 - *(int *)(unaff_r28 + 0x34);
-              unaff_r30 = 0;
-              in_stack_00000050 = 0;
-              iVar1 = (((int)uVar2 >> 0xc) + (uint)((int)uVar2 < 0 && (uVar2 & 0xfff) != 0)) * 8 +
-                      *(int *)(unaff_r28 + 0x30);
-              *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+            if (unaff_r30 != (void *)0x0) {
+              uVar4 = (int)unaff_r30 - (int)unaff_r28->BlockArray;
+              unaff_r30 = (void *)0x0;
+              in_stack_00000050 = (void *)0x0;
+              iVar3 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
+              unaff_r28->BlockCache[iVar3].ReferenceCount =
+                   unaff_r28->BlockCache[iVar3].ReferenceCount + 0xff;
             }
             if (unaff_r25 <= unaff_r29) {
-              lVar3 = -0x3fffffcc;
+              lVar1 = -0x3fffffcc;
               goto LAB_828b0050;
             }
-            lVar3 = StfcByteOffsetToBlockNumber
-                              (unaff_r28,unaff_r28 + 0x38,unaff_r29,&stack0x00000054,
-                               &stack0x00000058,0);
-            if (lVar3 < 0) goto LAB_828b0050;
-            lVar3 = StfcMapReadableDataBlock(unaff_r28,in_stack_00000054,&stack0x00000050);
+            lVar1 = StfcByteOffsetToBlockNumber
+                              (unaff_r28,(_STFC_FCB *)&unaff_r28->RootDirectoryFcb,unaff_r29,
+                               &stack0x00000054,(ulong *)&stack0x00000058,(ulong *)0x0);
+            if (lVar1 < 0) goto LAB_828b0050;
+            lVar1 = StfcMapReadableDataBlock(unaff_r28,in_stack_00000054,&stack0x00000050);
             unaff_r30 = in_stack_00000050;
-            if (lVar3 < 0) goto LAB_828b0050;
-            unaff_r27 = (void *)(in_stack_00000050 + 0x1000);
-            unaff_r31 = (void *)((unaff_r29 & 0xfff) + in_stack_00000050);
+            if (lVar1 < 0) goto LAB_828b0050;
+            unaff_r27 = (uchar *)((int)in_stack_00000050 + 0x1000);
+            unaff_r31 = (uchar *)((unaff_r29 & 0xfff) + (int)in_stack_00000050);
           }
-          param_3 = (ulonglong)*(byte *)((int)unaff_r31 + 0x28) & 0x3f;
-          if ((*(byte *)((int)unaff_r31 + 0x28) & 0x3f) != 0) break;
+          param_3 = unaff_r31[0x28] & 0x3f;
+          if ((unaff_r31[0x28] & 0x3f) != 0) break;
           if (unaff_r24 == 0xffffffff) {
             unaff_r24 = unaff_r29;
           }
         }
-      } while (*(ushort *)((int)unaff_r31 + 0x32) != unaff_r21);
+      } while (*(ushort *)(unaff_r31 + 0x32) != unaff_r21);
       if (unaff_r26 != 0) break;
-      iVar1 = RtlCompareStringN(*(undefined4 *)(unaff_r23 + 2),*unaff_r23,unaff_r31,param_3,1);
-      if (iVar1 == 0) goto LAB_828b0038;
+      iVar3 = RtlCompareStringN(*(undefined4 *)(unaff_r23 + 2),*unaff_r23,unaff_r31,param_3,1);
+      if (iVar3 == 0) goto LAB_828b0038;
     }
   }
 LAB_828b0038:
-  memcpy(unaff_r22,unaff_r31,0x40);
-  *(uint *)((int)unaff_r22 + 0x40) = unaff_r29;
-  lVar3 = 0;
+  memcpy();
+  *(ulong *)(unaff_r22 + 0x40) = unaff_r29;
+  lVar1 = 0;
 LAB_828b0050:
-  if (unaff_r30 != 0) {
-    uVar2 = unaff_r30 - *(int *)(unaff_r28 + 0x34);
-    iVar1 = (((int)uVar2 >> 0xc) + (uint)((int)uVar2 < 0 && (uVar2 & 0xfff) != 0)) * 8 +
-            *(int *)(unaff_r28 + 0x30);
-    *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
+  if (unaff_r30 != (void *)0x0) {
+    uVar4 = (int)unaff_r30 - (int)unaff_r28->BlockArray;
+    iVar3 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
+    unaff_r28->BlockCache[iVar3].ReferenceCount = unaff_r28->BlockCache[iVar3].ReferenceCount + 0xff
+    ;
   }
-  *(uint *)((int)unaff_r22 + 0x44) = unaff_r24;
-  __restgprlr_21(lVar3);
+  *(ulong *)(unaff_r22 + 0x44) = unaff_r24;
+  __restgprlr_21(lVar1);
   return;
 }
 
 
 // 828B5AB0  FUN_828b5ab0  (line unknown)
 
-LONG FUN_828b5ab0(_EXCEPTION_POINTERS *param_1)
+long FUN_828b5ab0(_EXCEPTION_POINTERS *param_1)
 
 {
-  LONG LVar1;
+  long lVar1;
   
-  LVar1 = UnhandledExceptionFilter(param_1);
-  return LVar1;
+  lVar1 = UnhandledExceptionFilter(param_1);
+  return lVar1;
 }
 

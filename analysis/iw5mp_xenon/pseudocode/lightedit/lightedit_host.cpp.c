@@ -2,31 +2,35 @@
 
 // 826DD550  LightEdit_SetInitialState  (lightedit/lightedit_host.cpp:90)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_SetInitialState(void)
 
 {
-  DAT_844cc0d4 = 1;
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
-  DAT_844cd0e4 = 0;
+  g_lightedit.state = LS_INITIAL;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
+  g_lightedit.sentMapName[0] = '\0';
   return;
 }
 
 
 // 826DD588  LightEdit_Alloc  (lightedit/lightedit_host.cpp:100)
 
-void LightEdit_Alloc(undefined8 param_1)
+void * LightEdit_Alloc(uint param_1)
 
 {
-  Z_TryVirtualAlloc(param_1,0xffffffff821a7290,0);
-  return;
+  void *pvVar1;
+  
+  pvVar1 = Z_TryVirtualAlloc(param_1,"LightEdit",0);
+  return pvVar1;
 }
 
 
 // 826DD598  LightEdit_Free  (lightedit/lightedit_host.cpp:106)
 
-void LightEdit_Free(undefined8 param_1)
+void LightEdit_Free(void *param_1)
 
 {
   Z_VirtualFree(param_1,0);
@@ -36,153 +40,174 @@ void LightEdit_Free(undefined8 param_1)
 
 // 826DF1C8  LightEdit_Connect  (lightedit/lightedit_host.cpp:112)
 
-void LightEdit_Connect(undefined4 param_1)
+void LightEdit_Connect(void *param_1)
 
 {
-  if (DAT_844cc0d0 != 0) {
-    LightEdit_Disconnect();
+  if (g_lightedit.connection != (void *)0x0) {
+    LightEdit_Disconnect(g_lightedit.connection);
   }
-  DAT_844cc0d0 = param_1;
-  DAT_844cc0d4 = 1;
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
-  DAT_844cd0e4 = 0;
+  g_lightedit.connection = param_1;
+  g_lightedit.state = LS_INITIAL;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
+  g_lightedit.sentMapName[0] = '\0';
   return;
 }
 
 
 // 826DD5A0  LightEdit_Disconnect  (lightedit/lightedit_host.cpp:122)
 
-void LightEdit_Disconnect(int param_1)
+void LightEdit_Disconnect(void *param_1)
 
 {
-  if (DAT_844cc0d0 != param_1) {
-    MyAssertHandler(0xffffffff821a72a0,0x7b,0,0xffffffff82000f98,0xffffffff821a72e8);
+  if (g_lightedit.connection != param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x7b,0,"%s");
   }
-  DAT_844cc0d4 = 0;
-  DAT_844cc0d0 = 0;
+  g_lightedit.state = LS_DISCONNECTED;
+  g_lightedit.connection = (void *)0x0;
   return;
 }
 
 
 // 826DD610  LightEdit_SendStageIndex  (lightedit/lightedit_host.cpp:130)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void LightEdit_SendStageIndex(void)
 
 {
-  undefined8 uVar1;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined1 auStack_40 [48];
+  uint uVar1;
+  float local_50;
+  float local_4c;
+  float local_48;
+  msg_t mStack_40;
   
-  if (DAT_82a383cc == 0) {
-    uVar1 = CL_GetLocalClientConnectionState(0);
-    uVar1 = va(0xffffffff82001208,uVar1,0);
-    MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar1);
+  if (cgArray == (cg_s *)0x0) {
+    CL_GetLocalClientConnectionState(LOCAL_CLIENT_0);
+    va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\../cgame_mp/cg_local_mp.h"
+                    ,0x682,0,"%s\n\t%s");
   }
-  local_50 = *(undefined4 *)(DAT_82a383cc + 0x6b9c8);
-  local_4c = *(undefined4 *)(DAT_82a383cc + 0x6b9cc);
-  local_48 = *(undefined4 *)(DAT_82a383cc + 0x6b9d0);
+  local_50 = (cgArray->refdef).view.org[0];
+  local_4c = (cgArray->refdef).view.org[1];
+  local_48 = (cgArray->refdef).view.org[2];
   uVar1 = R_GetActiveStageIndex(&local_50);
-  LightEdit_InitMsg(auStack_40,2);
-  MSG_WriteByte(auStack_40,uVar1);
-  LightEdit_SendMsg(DAT_844cc0d0,auStack_40);
+  LightEdit_InitMsg(&mStack_40,LIGHTMSG_STAGE_INDEX);
+  MSG_WriteByte(&mStack_40,uVar1);
+  LightEdit_SendMsg(g_lightedit.connection,&mStack_40);
   return;
 }
 
 
 // 826DD6E8  LightEdit_ProcessUpdateStageMsg  (lightedit/lightedit_host.cpp:152)
 
-void LightEdit_ProcessUpdateStageMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateStageMsg(msg_t *param_1)
 
 {
   float fVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  undefined4 *puVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
+  byte bVar2;
+  cg_s *pcVar3;
+  msg_t *pmVar4;
+  uint uVar5;
+  Stage *pSVar6;
+  ComPrimaryLight *pCVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined4 local_58;
+  double dVar12;
+  double dVar13;
+  float local_60;
+  float local_5c;
+  float local_58;
   float local_50;
   float local_4c;
   float local_48;
-  undefined1 auStack_40 [64];
+  float afStack_40 [16];
   
-  piVar3 = (int *)__savegprlr_28();
-  uVar2 = MSG_ReadByte();
-  MSG_ReadVec3(piVar3,&local_60);
-  MSG_ReadVec3(piVar3,auStack_40);
-  MSG_ReadVec3(piVar3,&local_50);
-  MSG_ReadFloat(piVar3);
-  if (*piVar3 != 0) {
-    MyAssertHandler(0xffffffff821a72a0,0xa8,0,0xffffffff82000f98,0xffffffff8208f29c);
+  pmVar4 = (msg_t *)__savegprlr_28(param_1);
+  uVar5 = MSG_ReadByte(pmVar4);
+  MSG_ReadVec3(pmVar4,&local_60);
+  MSG_ReadVec3(pmVar4,afStack_40);
+  MSG_ReadVec3(pmVar4,&local_50);
+  MSG_ReadFloat(pmVar4);
+  if (pmVar4->overflowed != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0xa8,0,"%s");
   }
-  puVar4 = (undefined4 *)R_GetStageByIndex(uVar2);
-  if (puVar4 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a72a0,0xab,0,0xffffffff82000f98,0xffffffff820df2a8);
+  pSVar6 = R_GetStageByIndex(uVar5);
+  if (pSVar6 == (Stage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0xab,0,"%s");
   }
-  if (0 < *(int *)(DAT_844cc0c8 + 0xc)) {
-    Com_Printf(0xe,0xffffffff821a7310,uVar2,*puVar4);
+  if (0 < (le_verbose->current).integer) {
+    Com_Printf(0xe,"Lightedit updating sun stage index %d name %s\n");
   }
-  if (DAT_82a383cc == 0) {
-    uVar2 = CL_GetLocalClientConnectionState(0);
-    uVar2 = va(0xffffffff82001208,uVar2,0);
-    MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar2);
+  if (cgArray == (cg_s *)0x0) {
+    CL_GetLocalClientConnectionState(LOCAL_CLIENT_0);
+    va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\../cgame_mp/cg_local_mp.h"
+                    ,0x682,0,"%s\n\t%s");
   }
-  dVar11 = 1.0;
-  iVar5 = (uint)*(byte *)((int)puVar4 + 0x12) * 0x4c + DAT_82a383cc;
-  *(undefined4 *)(iVar5 + 0x6bb24) = local_60;
-  *(undefined4 *)(iVar5 + 0x6bb28) = local_5c;
-  *(undefined4 *)(iVar5 + 0x6bb2c) = local_58;
-  *(float *)(iVar5 + 0x6bb30) = local_50;
-  *(float *)(iVar5 + 0x6bb34) = local_4c;
-  *(float *)(iVar5 + 0x6bb38) = local_48;
-  dVar6 = (double)SQRT(local_48 * local_48 + local_50 * local_50 + local_4c * local_4c);
-  dVar9 = dVar11;
-  if (-dVar6 < 0.0) {
-    dVar9 = dVar6;
+  pcVar3 = cgArray;
+  bVar2 = pSVar6->sunPrimaryLightIndex;
+  dVar13 = 1.0;
+  (cgArray->refdef).primaryLights[bVar2].color[0] = local_60;
+  (pcVar3->refdef).primaryLights[bVar2].color[1] = local_5c;
+  (pcVar3->refdef).primaryLights[bVar2].color[2] = local_58;
+  (pcVar3->refdef).primaryLights[bVar2].dir[0] = local_50;
+  (pcVar3->refdef).primaryLights[bVar2].dir[1] = local_4c;
+  (pcVar3->refdef).primaryLights[bVar2].dir[2] = local_48;
+  dVar8 = (double)SQRT(local_48 * local_48 + local_50 * local_50 + local_4c * local_4c);
+  dVar11 = dVar13;
+  if (-dVar8 < 0.0) {
+    dVar11 = dVar8;
   }
-  fVar1 = (float)(1.0 / dVar9);
-  *(float *)(iVar5 + 0x6bb30) = local_50 * fVar1;
-  *(float *)(iVar5 + 0x6bb34) = local_4c * fVar1;
-  *(float *)(iVar5 + 0x6bb38) = local_48 * fVar1;
-  iVar5 = Com_GetPrimaryLight(*(undefined1 *)((int)puVar4 + 0x12));
-  *(undefined4 *)(iVar5 + 4) = local_60;
-  *(undefined4 *)(iVar5 + 8) = local_5c;
-  *(undefined4 *)(iVar5 + 0xc) = local_58;
-  dVar8 = (double)local_50;
-  *(float *)(iVar5 + 0x10) = local_50;
-  dVar7 = (double)local_4c;
-  *(float *)(iVar5 + 0x14) = local_4c;
-  dVar6 = (double)local_48;
-  *(float *)(iVar5 + 0x18) = local_48;
-  dVar10 = (double)SQRT((float)(dVar6 * dVar6 +
-                               (double)(float)(dVar8 * dVar8 + (double)(float)(dVar7 * dVar7))));
-  dVar9 = dVar11;
-  if (-dVar10 < 0.0) {
-    dVar9 = dVar10;
+  fVar1 = (float)(1.0 / dVar11);
+  (pcVar3->refdef).primaryLights[bVar2].dir[0] = local_50 * fVar1;
+  (pcVar3->refdef).primaryLights[bVar2].dir[1] = local_4c * fVar1;
+  (pcVar3->refdef).primaryLights[bVar2].dir[2] = local_48 * fVar1;
+  pCVar7 = Com_GetPrimaryLight((uint)pSVar6->sunPrimaryLightIndex);
+  pCVar7->color[0] = local_60;
+  pCVar7->color[1] = local_5c;
+  pCVar7->color[2] = local_58;
+  dVar10 = (double)local_50;
+  pCVar7->dir[0] = local_50;
+  dVar9 = (double)local_4c;
+  pCVar7->dir[1] = local_4c;
+  dVar8 = (double)local_48;
+  pCVar7->dir[2] = local_48;
+  dVar12 = (double)SQRT((float)(dVar8 * dVar8 +
+                               (double)(float)(dVar10 * dVar10 + (double)(float)(dVar9 * dVar9))));
+  dVar11 = dVar13;
+  if (-dVar12 < 0.0) {
+    dVar11 = dVar12;
   }
-  dVar9 = (double)(float)(dVar11 / dVar9);
-  *(float *)(iVar5 + 0x10) = (float)(dVar8 * dVar9);
-  *(float *)(iVar5 + 0x14) = (float)(dVar7 * dVar9);
-  *(float *)(iVar5 + 0x18) = (float)(dVar6 * dVar9);
-  __restgprlr_28(dVar7,dVar6,dVar8);
+  dVar11 = (double)(float)(dVar13 / dVar11);
+  pCVar7->dir[0] = (float)(dVar10 * dVar11);
+  pCVar7->dir[1] = (float)(dVar9 * dVar11);
+  pCVar7->dir[2] = (float)(dVar8 * dVar11);
+  __restgprlr_28(dVar9,dVar8,dVar10);
   return;
 }
 
 
 // 826DD938  LightEdit_ProcessUpdatePointLightMsg  (lightedit/lightedit_host.cpp:195)
 
-void LightEdit_ProcessUpdatePointLightMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdatePointLightMsg(msg_t *param_1)
 
 {
   return;
@@ -191,81 +216,81 @@ void LightEdit_ProcessUpdatePointLightMsg(void)
 
 // 826DD940  LightEdit_ProcessUpdateLightmapBeginMsg  (lightedit/lightedit_host.cpp:200)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessUpdateLightmapBeginMsg(void)
 
 {
-  if (DAT_844cc0d4 < 2) {
-    Com_PrintWarning(0x10,0xffffffff821a7340);
+  if ((int)g_lightedit.state < 2) {
+    Com_PrintWarning(0x10,"LightEdit: Got update begin message but state was not LS_RUNNING\n");
     return;
   }
-  DAT_844cc0d4 = 3;
-  DAT_844cd1e4 = 0;
-  DAT_844cd1e8 = 0;
+  g_lightedit.state = LS_UPDATING_LIGHTMAPS;
+  g_lightedit.lexCount = 0;
+  g_lightedit.updateCount = 0;
   return;
 }
 
 
 // 826DD980  LightEdit_SwapShort  (lightedit/lightedit_host.cpp:214)
 
-ulonglong LightEdit_SwapShort(ulonglong param_1)
+ushort LightEdit_SwapShort(ushort param_1)
 
 {
-  return (param_1 & 0xff) << 8 | (param_1 & 0xffffffff) >> 8 & 0xff;
+  return param_1 << 8 | param_1 >> 8;
 }
 
 
 // 826DD990  LightEdit_SwapInt  (lightedit/lightedit_host.cpp:224)
 
-ulonglong LightEdit_SwapInt(ulonglong param_1)
+uint LightEdit_SwapInt(uint param_1)
 
 {
-  return (((param_1 & 0xffff) << 0x10 | param_1 & 0xffff) & 0xffff00) << 8 |
-         ((param_1 & 0xffffffff) >> 0x10 | param_1 & 0xffff0000) >> 8 & 0xffff;
+  return ((param_1 << 0x10 | param_1 & 0xffff) & 0xffff00) << 8 |
+         (param_1 >> 0x10 | param_1 & 0xffff0000) >> 8 & 0xffff;
 }
 
 
 // 826DD9B0  LightEdit_WriteFloat  (lightedit/lightedit_host.cpp:234)
 
-void LightEdit_WriteFloat(double param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_WriteFloat(msg_t *param_1,float param_2)
 
 {
   float fStack0000001c;
   
-  fStack0000001c = (float)param_1;
-  MSG_WriteLong(param_2,((ulonglong)((uint)fStack0000001c >> 0x10) |
-                        (ulonglong)(uint)fStack0000001c & 0xffffffffffff0000) >> 8 & 0xffff |
-                        ((((ulonglong)(uint)fStack0000001c & 0xffff) << 0x10 |
-                         (ulonglong)(uint)fStack0000001c & 0xffffffff0000ffff) & 0xffff00) << 8);
+  fStack0000001c = param_2;
+  MSG_WriteLong(param_1,((uint)param_2 >> 0x10 | (uint)param_2 & 0xffff0000) >> 8 & 0xffff |
+                        (((int)param_2 << 0x10 | (uint)param_2 & 0xffff) & 0xffff00) << 8);
   return;
 }
 
 
 // 826DD9F8  LightEdit_WriteVector  (lightedit/lightedit_host.cpp:240)
 
-void LightEdit_WriteVector(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_WriteVector(msg_t *param_1,float *param_2,uint param_3)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
-  int iVar4;
-  longlong lVar5;
+  msg_t *pmVar2;
+  longlong lVar3;
+  ulonglong uVar4;
   
-  iVar4 = (int)param_3;
-  uVar3 = (undefined4)((ulonglong)param_3 >> 0x20);
-  uVar2 = __savegprlr_29();
-  if (iVar4 != 0) {
-    param_2 = param_2 + -4;
-    lVar5 = CONCAT44(uVar3,iVar4);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  pmVar2 = (msg_t *)__savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) != 0) {
+    lVar3 = lVar3 + -4;
     do {
-      param_2 = param_2 + 4;
-      uVar1 = *(uint *)param_2;
-      MSG_WriteLong(uVar2,((ulonglong)(uVar1 >> 0x10) | (ulonglong)uVar1 & 0xffffffffffff0000) >> 8
-                          & 0xffff |
-                          ((((ulonglong)uVar1 & 0xffff) << 0x10 |
-                           (ulonglong)uVar1 & 0xffffffff0000ffff) & 0xffff00) << 8);
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      lVar3 = lVar3 + 4;
+      uVar1 = *(uint *)lVar3;
+      MSG_WriteLong(pmVar2,(uVar1 >> 0x10 | uVar1 & 0xffff0000) >> 8 & 0xffff |
+                           ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8);
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
   }
   __restgprlr_29();
   return;
@@ -274,42 +299,44 @@ void LightEdit_WriteVector(undefined8 param_1,longlong param_2,undefined8 param_
 
 // 826DDA58  LightEdit_ReadFloat  (lightedit/lightedit_host.cpp:249)
 
-double LightEdit_ReadFloat(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+float LightEdit_ReadFloat(msg_t *param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = MSG_ReadLong();
-  return (double)(float)(((uint)(uVar1 >> 0x10) & 0xffff | (uint)uVar1 & 0xffff0000) >> 8 & 0xffff |
-                        (uint)(((uVar1 & 0xffff) << 0x10 | uVar1 & 0xffff) << 8) & 0xffff0000);
+  uVar1 = MSG_ReadLong(param_1);
+  return (float)((uVar1 >> 0x10 | uVar1 & 0xffff0000) >> 8 & 0xffff |
+                ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8);
 }
 
 
 // 826DDAA0  LightEdit_ReadVector  (lightedit/lightedit_host.cpp:255)
 
-void LightEdit_ReadVector(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ReadVector(msg_t *param_1,float *param_2,uint param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined4 uVar3;
-  int iVar4;
-  longlong lVar5;
+  msg_t *pmVar1;
+  uint uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
   
-  iVar4 = (int)param_3;
-  uVar3 = (undefined4)((ulonglong)param_3 >> 0x20);
-  uVar1 = __savegprlr_29();
-  if (iVar4 != 0) {
-    param_2 = param_2 + -4;
-    lVar5 = CONCAT44(uVar3,iVar4);
+  uVar4 = (ulonglong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  pmVar1 = (msg_t *)__savegprlr_29(param_1);
+  if ((uVar4 & 0xffffffff) != 0) {
+    lVar3 = lVar3 + -4;
     do {
-      uVar2 = MSG_ReadLong(uVar1);
-      lVar5 = lVar5 + -1;
-      param_2 = param_2 + 4;
-      *(uint *)param_2 =
-           ((uint)(uVar2 >> 0x10) & 0xffff | (uint)uVar2 & 0xffff0000) >> 8 & 0xffff |
-           (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
-    } while (lVar5 != 0);
+      uVar2 = MSG_ReadLong(pmVar1);
+      uVar4 = uVar4 - 1;
+      lVar3 = lVar3 + 4;
+      *(uint *)lVar3 =
+           (uVar2 >> 0x10 | uVar2 & 0xffff0000) >> 8 & 0xffff |
+           ((uVar2 << 0x10 | uVar2 & 0xffff) & 0xffff00) << 8;
+    } while (uVar4 != 0);
   }
   __restgprlr_29();
   return;
@@ -318,15 +345,15 @@ void LightEdit_ReadVector(undefined8 param_1,longlong param_2,undefined8 param_3
 
 // 826DDAF8  LightEdit_DecodeTiledOffsetPrimary  (lightedit/lightedit_host.cpp:291)
 
-uint LightEdit_DecodeTiledOffsetPrimary(uint param_1,uint param_2,ulonglong param_3)
+uint LightEdit_DecodeTiledOffsetPrimary(uint param_1,uint param_2,uint param_3)
 
 {
   uint uVar1;
   
   uVar1 = ((param_2 & 0x18) + (param_1 >> 2 & 7)) * 8;
-  uVar1 = (((int)((param_3 & 0xffffffff) >> 2) + 0x1fU >> 5) * (param_2 >> 7) + (param_1 >> 7)) *
-          0x400 + ((param_2 & 4) * 2 + (uVar1 & 0xfffffff0)) * 2 + (param_2 >> 2 & 8) * 0x40 +
-          (uVar1 & 0xf);
+  uVar1 = (((param_3 >> 2) + 0x1f >> 5) * (param_2 >> 7) + (param_1 >> 7)) * 0x400 +
+          ((param_2 & 4) * 2 + (uVar1 & 0xfffffff0)) * 2 + (param_2 >> 2 & 8) * 0x40 + (uVar1 & 0xf)
+  ;
   return (((param_2 & 0x40) * 4 + (uVar1 & 0xfffffe00)) * 2 + (uVar1 & 0x1c0)) * 4 +
          (((param_2 >> 1 & 0x7ffffff0) + (param_1 >> 2)) * 8 & 0xc0) + (uVar1 & 0x3f) >> 3;
 }
@@ -334,13 +361,13 @@ uint LightEdit_DecodeTiledOffsetPrimary(uint param_1,uint param_2,ulonglong para
 
 // 826DDBA8  LightEdit_DecodeTiledOffsetSecondary  (lightedit/lightedit_host.cpp:305)
 
-uint LightEdit_DecodeTiledOffsetSecondary(uint param_1,uint param_2,int param_3)
+uint LightEdit_DecodeTiledOffsetSecondary(uint param_1,uint param_2,uint param_3)
 
 {
   uint uVar1;
   
   uVar1 = ((param_2 & 6) * 4 + (param_1 & 7)) * 4;
-  uVar1 = ((param_3 + 0x1fU >> 5) * (param_2 >> 5) + (param_1 >> 5)) * 0x200 +
+  uVar1 = ((param_3 + 0x1f >> 5) * (param_2 >> 5) + (param_1 >> 5)) * 0x200 +
           ((param_2 & 1) * 8 + (uVar1 & 0xfffffff0)) * 2 + (param_2 & 8) * 0x20 + (uVar1 & 0xf);
   return (((param_2 & 0x10) * 0x10 + (uVar1 & 0xfffffe00)) * 2 + (uVar1 & 0x1c0)) * 4 +
          ((param_2 & 0x7ffffff8) * 2 + param_1 & 0x18) * 8 + (uVar1 & 0x3f) >> 2;
@@ -349,74 +376,80 @@ uint LightEdit_DecodeTiledOffsetSecondary(uint param_1,uint param_2,int param_3)
 
 // 826DDC50  LightEdit_PatchCompressedTexel  (lightedit/lightedit_host.cpp:320)
 
-ulonglong LightEdit_PatchCompressedTexel
-                    (ulonglong param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+ulong64 LightEdit_PatchCompressedTexel(ulong64 param_1,uint param_2,uint param_3,uchar param_4)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = ((~param_3 & 3) * 4 + (param_2 & 3)) * 4;
-  return (param_4 >> 4 & 0xf) << lVar1 | param_1 & ~(0xfL << lVar1);
+  iVar1 = ((~param_3 & 3) * 4 + (param_2 & 3)) * 4;
+  return ((ulonglong)(longlong)(char)param_4 >> 4 & 0xf) << iVar1 | param_1 & ~(0xfL << iVar1);
 }
 
 
 // 826DDC80  LightEdit_PatchLightmap  (lightedit/lightedit_host.cpp:341)
 
-void LightEdit_PatchLightmap
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void LightEdit_PatchLightmap(uchar param_1,uint param_2,uint param_3,uint param_4)
 
 {
   int iVar1;
   longlong lVar2;
   uint uVar3;
-  uint uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  uVar8 = __savegprlr_24();
-  if (DAT_84613714 == 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x15e,0,0xffffffff82000f98,0xffffffff821a7440);
+  uVar11 = (ulonglong)(int)param_4;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  uVar7 = __savegprlr_24(param_1);
+  if (g_worldDraw == (GfxWorldDraw *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x15e,0,"%s");
   }
-  uVar6 = uVar8 & 0x7f;
-  if (*(uint *)(DAT_84613714 + 0x1c) <= uVar6) {
-    MyAssertHandler(0xffffffff821a72a0,0x163,0,0xffffffff821a73f8,uVar6);
+  uVar5 = uVar7 & 0x7f;
+  if ((uint)g_worldDraw->lightmapCount <= uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x163,0,
+                    "lmapIndex doesn\'t index g_worldDraw->lightmapCount\n\t%i not in [0, %i)");
   }
-  uVar4 = (uint)param_3;
-  uVar7 = (uint)param_2;
-  if (((uVar8 & 0xffffffff) >> 7 & 1) != 0) {
-    iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3));
-    uVar3 = ((uVar4 & 0x18) + (uVar7 >> 2 & 7)) * 8;
-    uVar7 = (((*(ushort *)(iVar1 + 0x40) >> 2) + 0x1f >> 5) * (uVar4 >> 7) + (uVar7 >> 7)) * 0x400 +
-            ((uVar4 & 4) * 2 + (uVar3 & 0xfffffff0)) * 2 + (uVar4 >> 2 & 8) * 0x40 + (uVar3 & 0xf);
-    uVar4 = (((uVar4 & 0x40) * 4 + (uVar7 & 0xfffffe00)) * 2 + (uVar7 & 0x1c0)) * 4 +
-            ((((uint)((param_3 & 0xffffffff) >> 1) & 0x7ffffff0) +
-             (int)((param_2 & 0xffffffff) >> 2)) * 8 & 0xc0) + (uVar7 & 0x3f) >> 3;
-    if ((int)((uint)*(ushort *)(iVar1 + 0x42) * (uint)*(ushort *)(iVar1 + 0x40)) <= (int)uVar4) {
-      MyAssertHandler(0xffffffff821a72a0,0x16b,0,0xffffffff82000f98,0xffffffff821a73c4);
+  uVar8 = (uint)uVar10;
+  uVar6 = (uint)uVar9;
+  if (((uVar7 & 0xffffffff) >> 7 & 1) != 0) {
+    iVar1 = *(int *)((int)&g_worldDraw->lightmaps->primary + (int)(uVar5 << 3));
+    uVar3 = ((uVar8 & 0x18) + (uVar6 >> 2 & 7)) * 8;
+    uVar6 = (((*(ushort *)(iVar1 + 0x40) >> 2) + 0x1f >> 5) * (uVar8 >> 7) + (uVar6 >> 7)) * 0x400 +
+            ((uVar8 & 4) * 2 + (uVar3 & 0xfffffff0)) * 2 + (uVar8 >> 2 & 8) * 0x40 + (uVar3 & 0xf);
+    uVar8 = (((uVar8 & 0x40) * 4 + (uVar6 & 0xfffffe00)) * 2 + (uVar6 & 0x1c0)) * 4 +
+            ((((uint)((uVar10 & 0xffffffff) >> 1) & 0x7ffffff0) + (int)((uVar9 & 0xffffffff) >> 2))
+             * 8 & 0xc0) + (uVar6 & 0x3f) >> 3;
+    if ((int)((uint)*(ushort *)(iVar1 + 0x42) * (uint)*(ushort *)(iVar1 + 0x40)) <= (int)uVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                      ,0x16b,0,"%s");
     }
-    iVar5 = uVar4 * 8;
-    lVar2 = ((~param_3 & 3) * 4 + (param_2 & 3)) * 4;
-    *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) =
-         (param_4 >> 4 & 0xf) << lVar2 |
-         *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar5) & ~(0xfL << lVar2);
+    iVar4 = uVar8 * 8;
+    lVar2 = ((~uVar10 & 3) * 4 + (uVar9 & 3)) * 4;
+    *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar4) =
+         (uVar11 >> 4 & 0xf) << lVar2 |
+         *(ulonglong *)(*(int *)(iVar1 + 0x48) + iVar4) & ~(0xfL << lVar2);
     __restgprlr_24();
     return;
   }
-  iVar1 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)(uVar6 << 3) + 4);
-  uVar3 = (((uint)((param_3 & 0xffffffff) << 2) & 0x18) + (uVar7 & 7)) * 4;
-  uVar8 = (ulonglong)
-          (((*(ushort *)(iVar1 + 0x40) + 0x1f >> 5) * (uVar4 >> 5) + (uVar7 >> 5)) * 0x200) +
-          ((param_3 & 1) * 8 + ((ulonglong)uVar3 & 0xfffffff0)) * 2 + (ulonglong)((uVar4 & 8) << 5)
-          + ((ulonglong)uVar3 & 0xf);
-  uVar8 = (((((param_3 & 0x10) * 0x10 + (uVar8 & 0xfffffe00)) * 2 & 0xfffffffe) + (uVar8 & 0x1c0)) *
-           4 & 0xfffffffc) + ((param_3 & 0x7ffffff8) * 2 + param_2 & 0x18) * 8 + (uVar8 & 0x3f);
-  if (((longlong)(int)(uint)*(ushort *)(iVar1 + 0x42) *
-       (longlong)(int)(uint)*(ushort *)(iVar1 + 0x40) * 4 & 0xfffffffcU) <= uVar8) {
-    MyAssertHandler(0xffffffff821a72a0,0x17b,0,0xffffffff82000f98,0xffffffff821a7384);
+  iVar1 = *(int *)((int)&g_worldDraw->lightmaps->secondary + (int)(uVar5 << 3));
+  uVar3 = (((uint)((uVar10 & 0xffffffff) << 2) & 0x18) + (uVar6 & 7)) * 4;
+  uVar6 = ((*(ushort *)(iVar1 + 0x40) + 0x1f >> 5) * (uVar8 >> 5) + (uVar6 >> 5)) * 0x200 +
+          ((uVar8 & 1) * 8 + (uVar3 & 0xfffffff0)) * 2 + (uVar8 & 8) * 0x20 + (uVar3 & 0xf);
+  uVar8 = (((uVar8 & 0x10) * 0x10 + (uVar6 & 0xfffffe00)) * 2 + (uVar6 & 0x1c0)) * 4 +
+          ((uint)(((uVar10 & 0x7ffffff8) * 2 + uVar9 & 0xffffffff) << 3) & 0xc0) + (uVar6 & 0x3f);
+  if ((uint)*(ushort *)(iVar1 + 0x42) * (uint)*(ushort *)(iVar1 + 0x40) * 4 <= uVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x17b,0,"%s");
   }
-  *(int *)(*(int *)(iVar1 + 0x48) + (int)uVar8) = (int)param_4;
+  *(int *)(*(int *)(iVar1 + 0x48) + uVar8) = (int)uVar11;
   __restgprlr_24();
   return;
 }
@@ -424,44 +457,49 @@ void LightEdit_PatchLightmap
 
 // 826DDF38  LightEdit_ProcessUpdateLightmapMsg  (lightedit/lightedit_host.cpp:388)
 
-void LightEdit_ProcessUpdateLightmapMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateLightmapMsg(msg_t *param_1)
 
 {
-  int *piVar1;
+  msg_t *pmVar1;
   byte local_40 [2];
   ushort local_3e;
   ushort local_3c [2];
   uint local_38 [14];
   
-  piVar1 = (int *)__savegprlr_27();
-  DAT_844cd1e8 = DAT_844cd1e8 + 1;
-  if (piVar1[7] < piVar1[4]) {
+  pmVar1 = (msg_t *)__savegprlr_27(param_1);
+  g_lightedit.updateCount = g_lightedit.updateCount + 1;
+  if (pmVar1->readcount < pmVar1->maxsize) {
     do {
-      DAT_844cd1e4 = DAT_844cd1e4 + 1;
-      MSG_ReadData(piVar1,local_40,1);
-      MSG_ReadData(piVar1,local_3c,2);
-      MSG_ReadData(piVar1,&local_3e,2);
-      if (*piVar1 != 0) {
-        MyAssertHandler(0xffffffff821a72a0,0x193,0,0xffffffff82000f98,0xffffffff8208f29c);
+      g_lightedit.lexCount = g_lightedit.lexCount + 1;
+      MSG_ReadData(pmVar1,local_40,1);
+      MSG_ReadData(pmVar1,local_3c,2);
+      MSG_ReadData(pmVar1,&local_3e,2);
+      if (pmVar1->overflowed != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x193,0,"%s");
       }
       local_3c[0] = local_3c[0] << 8 | local_3c[0] >> 8;
       local_3e = local_3e << 8 | local_3e >> 8;
       if ((local_40[0] & 0x80) == 0) {
-        MSG_ReadData(piVar1,local_38,4);
-        if (*piVar1 != 0) {
-          MyAssertHandler(0xffffffff821a72a0,0x1a2,0,0xffffffff82000f98,0xffffffff8208f29c);
+        MSG_ReadData(pmVar1,local_38,4);
+        if (pmVar1->overflowed != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                          ,0x1a2,0,"%s");
         }
         local_38[0] = (local_38[0] >> 0x10 | local_38[0] & 0xffff0000) >> 8 & 0xffff |
                       ((local_38[0] << 0x10 | local_38[0] & 0xffff) & 0xffff00) << 8;
       }
       else {
-        local_38[0] = MSG_ReadByte();
-        if (*piVar1 != 0) {
-          MyAssertHandler(0xffffffff821a72a0,0x19d,0,0xffffffff82000f98,0xffffffff8208f29c);
+        local_38[0] = MSG_ReadByte(pmVar1);
+        if (pmVar1->overflowed != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                          ,0x19d,0,"%s");
         }
       }
-      LightEdit_PatchLightmap(local_40[0],local_3c[0],local_3e,local_38[0]);
-    } while (piVar1[7] < piVar1[4]);
+      LightEdit_PatchLightmap(local_40[0],(uint)local_3c[0],(uint)local_3e,local_38[0]);
+    } while (pmVar1->readcount < pmVar1->maxsize);
   }
   __restgprlr_27();
   return;
@@ -470,61 +508,71 @@ void LightEdit_ProcessUpdateLightmapMsg(void)
 
 // 826DE0D0  LightEdit_ProcessUpdateLightmapEndMsg  (lightedit/lightedit_host.cpp:430)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessUpdateLightmapEndMsg(void)
 
 {
-  if (DAT_844cc0d4 != 3) {
-    Com_PrintWarning(0x10,0xffffffff821a7480);
+  if (g_lightedit.state != LS_UPDATING_LIGHTMAPS) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update end message but state was not LS_UPDATING_LIGHTMAPS\n");
     return;
   }
-  Com_Printf(0x10,0xffffffff821a744c,DAT_844cd1e8,DAT_844cd1e4);
+  Com_Printf(0x10,"Got %d update messages for a total of %d lexels\n");
   return;
 }
 
 
 // 826DE108  LightEdit_SetGridPhase  (lightedit/lightedit_host.cpp:442)
 
-void LightEdit_SetGridPhase(undefined4 param_1)
+void LightEdit_SetGridPhase(LightGridComponent param_1)
 
 {
-  DAT_844cc0d8 = param_1;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
+  g_lightedit.gridPhase = param_1;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
   return;
 }
 
 
 // 826DE128  LightEdit_ProcessUpdateLightGridBeginMsg  (lightedit/lightedit_host.cpp:450)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessUpdateLightGridBeginMsg(void)
 
 {
-  if (DAT_844cc0d4 < 2) {
-    Com_PrintWarning(0x10,0xffffffff821a74d0);
+  if ((int)g_lightedit.state < 2) {
+    Com_PrintWarning(0x10,"LightEdit: Got update grid begin message but state was not LS_RUNNING\n")
+    ;
     return;
   }
   Com_SyncThreads();
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
-  DAT_844cc0d4 = 4;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
+  g_lightedit.state = LS_UPDATING_LIGHTGRID;
   return;
 }
 
 
 // 826DE1A8  LightEdit_ProcessUpdateLightGridEndMsg  (lightedit/lightedit_host.cpp:464)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessUpdateLightGridEndMsg(void)
 
 {
-  if (DAT_844cc0d4 != 4) {
-    Com_PrintWarning(0x10,0xffffffff821a7518);
+  if (g_lightedit.state != LS_UPDATING_LIGHTGRID) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update grid end message but state was not LS_UPDATING_LIGHTGRID\n"
+                    );
     return;
   }
-  DAT_844cc0d4 = 2;
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
+  g_lightedit.state = LS_RUNNING;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
   Com_SyncThreads();
   R_ResetModelLighting();
   return;
@@ -533,25 +581,32 @@ void LightEdit_ProcessUpdateLightGridEndMsg(void)
 
 // 826DE220  LightEdit_ProcessUpdateLightGridBeginPhaseMsg  (lightedit/lightedit_host.cpp:480)
 
-void LightEdit_ProcessUpdateLightGridBeginPhaseMsg(int *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateLightGridBeginPhaseMsg(msg_t *param_1)
 
 {
-  int iVar1;
+  LightGridComponent LVar1;
   
-  if (DAT_844cc0d4 == 4) {
-    if (DAT_844cc0d8 != 0) {
-      Com_PrintWarning(0x10,0xffffffff821a7568);
+  if (g_lightedit.state == LS_UPDATING_LIGHTGRID) {
+    if (g_lightedit.gridPhase != LIGHTGRID_NONE) {
+      Com_PrintWarning(0x10,
+                       "LightEdit: Light grid phase begin message received, but we are already updating a lightgrid phase."
+                      );
     }
-    iVar1 = MSG_ReadByte(param_1);
-    if (*param_1 != 0) {
-      MyAssertHandler(0xffffffff821a72a0,0x1ef,0,0xffffffff82000f98,0xffffffff8208f29c);
+    LVar1 = MSG_ReadByte(param_1);
+    if (param_1->overflowed != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                      ,0x1ef,0,"%s");
     }
-    DAT_844cc0dc = 0;
-    DAT_844cc0e0 = 0;
-    DAT_844cc0d8 = iVar1;
+    g_lightedit.receivedBytes = 0;
+    g_lightedit.expectedBytes = 0;
+    g_lightedit.gridPhase = LVar1;
   }
   else {
-    Com_PrintWarning(0x10,0xffffffff821a75d0);
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update grid phase begin message but state was not LS_UPDATING_LIGHTGRID\n"
+                    );
   }
   return;
 }
@@ -559,73 +614,78 @@ void LightEdit_ProcessUpdateLightGridBeginPhaseMsg(int *param_1)
 
 // 826DE2E8  LightEdit_FixNetGridHeader  (lightedit/lightedit_host.cpp:502)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_FixNetGridHeader(void)
 
 {
   ushort uVar1;
-  int iVar2;
-  ushort *puVar3;
-  longlong lVar4;
-  int iVar5;
+  uint uVar2;
+  GfxWorld *pGVar3;
+  ushort *puVar4;
+  longlong lVar5;
+  int iVar6;
   
-  iVar2 = DAT_8461658c;
-  lVar4 = ((ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 7) * 2 + DAT_8461658c + 0xfc) -
-          (ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 4) * 2 + DAT_8461658c + 0xfc)) +
-          1;
-  if (lVar4 == 0) {
+  pGVar3 = rgp.world;
+  uVar2 = ((rgp.world)->lightGrid).rowAxis;
+  lVar5 = ((ulonglong)((rgp.world)->lightGrid).maxs[uVar2] -
+          (ulonglong)((rgp.world)->lightGrid).mins[uVar2]) + 1;
+  if (lVar5 == 0) {
     return;
   }
-  iVar5 = 0;
+  iVar6 = 0;
   do {
-    puVar3 = (ushort *)(*(int *)(iVar2 + 0x118) + iVar5);
-    iVar5 = iVar5 + 2;
-    uVar1 = *puVar3;
-    *puVar3 = uVar1 << 8 | uVar1 >> 8;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    puVar4 = (ushort *)((int)(pGVar3->lightGrid).rowDataStart + iVar6);
+    iVar6 = iVar6 + 2;
+    uVar1 = *puVar4;
+    *puVar4 = uVar1 << 8 | uVar1 >> 8;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 826DE350  LightEdit_FixNetRowData  (lightedit/lightedit_host.cpp:518)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_FixNetRowData(void)
 
 {
-  int iVar1;
+  GfxWorld *pGVar1;
   int iVar2;
-  longlong lVar3;
-  uint uVar4;
-  ushort *puVar5;
+  ulonglong uVar3;
+  longlong lVar4;
+  uint uVar5;
+  ushort *puVar6;
   
   __savegprlr_28();
-  iVar1 = DAT_8461658c;
-  lVar3 = ((ulonglong)
+  pGVar1 = rgp.world;
+  uVar3 = (ulonglong)((rgp.world)->lightGrid).rowAxis;
+  lVar4 = ((ulonglong)
            *(ushort *)
-            ((int)(((ulonglong)*(uint *)(DAT_8461658c + 0x110) + 7 & 0xffffffff) << 1) +
-            DAT_8461658c + 0xfc) -
+            ((int)((rgp.world)->lightGrid).mins + (int)((uVar3 + 7 & 0xffffffff) << 1) + -8) -
           (ulonglong)
           *(ushort *)
-           ((int)(((ulonglong)*(uint *)(DAT_8461658c + 0x110) + 4 & 0xffffffff) << 1) +
-           DAT_8461658c + 0xfc)) + 1;
-  if (lVar3 != 0) {
+           ((int)((rgp.world)->lightGrid).mins + (int)((uVar3 + 4 & 0xffffffff) << 1) + -8)) + 1;
+  if (lVar4 != 0) {
     iVar2 = 0;
     do {
-      uVar4 = (uint)*(ushort *)(iVar2 + *(int *)(iVar1 + 0x118));
-      if (uVar4 != 0xffff) {
-        puVar5 = (ushort *)(uVar4 * 4 + *(int *)(iVar1 + 0x120));
-        uVar4 = *(uint *)(puVar5 + 4);
-        puVar5[2] = puVar5[2] << 8 | puVar5[2] >> 8;
-        puVar5[3] = puVar5[3] << 8 | puVar5[3] >> 8;
-        *puVar5 = *puVar5 << 8 | *puVar5 >> 8;
-        puVar5[1] = puVar5[1] << 8 | puVar5[1] >> 8;
-        *(uint *)(puVar5 + 4) =
-             uVar4 >> 0x18 | uVar4 >> 8 & 0xff00 |
-             ((uVar4 << 0x10 | uVar4 & 0xffff) & 0xffff00) << 8;
+      uVar5 = (uint)*(ushort *)(iVar2 + (int)(pGVar1->lightGrid).rowDataStart);
+      if (uVar5 != 0xffff) {
+        puVar6 = (ushort *)((pGVar1->lightGrid).rawRowData + uVar5 * 4);
+        uVar5 = *(uint *)(puVar6 + 4);
+        puVar6[2] = puVar6[2] << 8 | puVar6[2] >> 8;
+        puVar6[3] = puVar6[3] << 8 | puVar6[3] >> 8;
+        *puVar6 = *puVar6 << 8 | *puVar6 >> 8;
+        puVar6[1] = puVar6[1] << 8 | puVar6[1] >> 8;
+        *(uint *)(puVar6 + 4) =
+             uVar5 >> 0x18 | uVar5 >> 8 & 0xff00 |
+             ((uVar5 << 0x10 | uVar5 & 0xffff) & 0xffff00) << 8;
       }
       iVar2 = iVar2 + 2;
-      lVar3 = lVar3 + -1;
-    } while (lVar3 != 0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
   __restgprlr_28();
   return;
@@ -634,60 +694,68 @@ void LightEdit_FixNetRowData(void)
 
 // 826DE438  LightEdit_ProcessUpdateLightGridEndPhaseMsg  (lightedit/lightedit_host.cpp:546)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessUpdateLightGridEndPhaseMsg(void)
 
 {
-  if (DAT_844cc0d4 != 4) {
-    Com_PrintWarning(0x10,0xffffffff821a75d0);
+  if (g_lightedit.state != LS_UPDATING_LIGHTGRID) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update grid phase begin message but state was not LS_UPDATING_LIGHTGRID\n"
+                    );
     return;
   }
-  if (DAT_844cc0d8 == 0) {
-    Com_PrintWarning(0x10,0xffffffff821a7628);
+  if (g_lightedit.gridPhase == LIGHTGRID_NONE) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Light grid phase end message received, but we are not updating a lightgrid phase."
+                    );
   }
-  if (DAT_844cc0d8 == 1) {
+  if (g_lightedit.gridPhase == LIGHTGRID_HEADER) {
     LightEdit_FixNetGridHeader();
   }
-  else if (DAT_844cc0d8 == 3) {
+  else if (g_lightedit.gridPhase == LIGHTGRID_ROWS) {
     LightEdit_FixNetRowData();
   }
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
   return;
 }
 
 
 // 826DE4E8  LightEdit_ProcessUpdateGridHeaderMsg  (lightedit/lightedit_host.cpp:573)
 
-void LightEdit_ProcessUpdateGridHeaderMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateGridHeaderMsg(msg_t *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  GfxWorld *pGVar1;
+  msg_t *pmVar2;
+  uint uVar3;
+  int iVar4;
   
-  piVar2 = (int *)__savegprlr_26();
-  iVar1 = DAT_8461658c;
-  uVar4 = (ulonglong)DAT_844cc0dc;
-  uVar3 = (((ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 7) * 2 + DAT_8461658c + 0xfc) -
-           (ulonglong)*(ushort *)((*(int *)(DAT_8461658c + 0x110) + 4) * 2 + DAT_8461658c + 0xfc)) +
-           1 & 0x7fffffff) * 2;
-  if (uVar4 < uVar3) {
-    lVar5 = (ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[7];
-    if ((int)(uVar3 - uVar4) < (int)((ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[7])) {
-      lVar5 = uVar3 - uVar4;
+  pmVar2 = (msg_t *)__savegprlr_26(param_1);
+  pGVar1 = rgp.world;
+  uVar3 = ((rgp.world)->lightGrid).rowAxis;
+  uVar3 = (((uint)((rgp.world)->lightGrid).maxs[uVar3] - (uint)((rgp.world)->lightGrid).mins[uVar3])
+          + 1) * 2;
+  if (g_lightedit.receivedBytes < uVar3) {
+    iVar4 = pmVar2->maxsize - pmVar2->readcount;
+    if ((int)(uVar3 - g_lightedit.receivedBytes) < iVar4) {
+      iVar4 = uVar3 - g_lightedit.receivedBytes;
     }
-    if (uVar3 < (uVar4 + lVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821a72a0,0x24c,0,0xffffffff82000f98,0xffffffff821a7688);
-      uVar4 = (ulonglong)DAT_844cc0dc;
+    if (uVar3 < g_lightedit.receivedBytes + iVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                      ,0x24c,0,"%s");
     }
-    MSG_ReadData(piVar2,*(uint *)(iVar1 + 0x118) + uVar4,lVar5);
-    if (*piVar2 != 0) {
-      MyAssertHandler(0xffffffff821a72a0,0x24e,0,0xffffffff82000f98,0xffffffff8208f29c);
+    MSG_ReadData(pmVar2,(void *)((int)(pGVar1->lightGrid).rowDataStart + g_lightedit.receivedBytes),
+                 iVar4);
+    if (pmVar2->overflowed != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                      ,0x24e,0,"%s");
     }
-    DAT_844cc0dc = DAT_844cc0dc + (int)lVar5;
+    g_lightedit.receivedBytes = g_lightedit.receivedBytes + iVar4;
   }
   __restgprlr_26();
   return;
@@ -696,72 +764,72 @@ void LightEdit_ProcessUpdateGridHeaderMsg(void)
 
 // 826DE5F0  LightEdit_ProcessUpdateGridColorsMsg  (lightedit/lightedit_host.cpp:597)
 
-void LightEdit_ProcessUpdateGridColorsMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateGridColorsMsg(msg_t *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  int *piVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  GfxWorld *pGVar1;
+  msg_t *pmVar2;
+  GfxLightGridColors *pGVar3;
+  uint uVar4;
+  ulonglong uVar5;
   uint local_f0;
   uint local_ec [3];
   undefined1 auStack_e0 [224];
   
-  piVar2 = (int *)__savegprlr_26();
-  iVar1 = DAT_8461658c;
-  if (DAT_844cc0dc != 0) {
-    uVar5 = piVar2[4] - piVar2[7];
-    piVar4 = piVar2;
-    while (0xa7 < uVar5) {
-      MSG_ReadData(piVar2,local_ec,4);
-      local_ec[0] = local_ec[0] >> 0x18 | local_ec[0] >> 8 & 0xff00 |
+  pmVar2 = (msg_t *)__savegprlr_26(param_1);
+  pGVar1 = rgp.world;
+  if (g_lightedit.receivedBytes != 0) {
+    uVar4 = pmVar2->maxsize - pmVar2->readcount;
+    while (0xa7 < uVar4) {
+      MSG_ReadData(pmVar2,local_ec,4);
+      local_ec[0] = (local_ec[0] >> 0x10 | local_ec[0] & 0xffff0000) >> 8 & 0xffff |
                     ((local_ec[0] << 0x10 | local_ec[0] & 0xffff) & 0xffff00) << 8;
-      if (*piVar2 != 0) {
-        MyAssertHandler(0xffffffff821a72a0,0x284,0,0xffffffff82000f98,0xffffffff8208f29c);
+      if (pmVar2->overflowed != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x284,0,"%s");
       }
-      DAT_844cc0dc = DAT_844cc0dc + 4;
-      piVar4 = (int *)MSG_ReadData(piVar2,auStack_e0,0xa8);
-      if (*piVar2 != 0) {
-        piVar4 = (int *)MyAssertHandler(0xffffffff821a72a0,0x288,0,0xffffffff82000f98,
-                                        0xffffffff8208f29c);
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
+      MSG_ReadData(pmVar2,auStack_e0,0xa8);
+      if (pmVar2->overflowed != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x288,0,"%s");
       }
-      DAT_844cc0dc = DAT_844cc0dc + 0xa8;
-      if (local_ec[0] < *(uint *)(iVar1 + 300)) {
-        piVar4 = memcpy((void *)(local_ec[0] * 0xa8 + *(int *)(iVar1 + 0x130)),auStack_e0,0xa8);
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + 0xa8;
+      if (local_ec[0] < (pGVar1->lightGrid).colorCount) {
+        memcpy();
       }
-      uVar5 = piVar2[4] - piVar2[7];
+      uVar4 = pmVar2->maxsize - pmVar2->readcount;
     }
-    __restgprlr_26(piVar4);
+    __restgprlr_26();
     return;
   }
-  MSG_ReadData(piVar2,&local_f0,4);
-  uVar6 = ((ulonglong)(local_f0 >> 0x10) | (ulonglong)local_f0 & 0xffffffffffff0000) >> 8 & 0xffff |
+  MSG_ReadData(pmVar2,&local_f0,4);
+  uVar5 = ((ulonglong)(local_f0 >> 0x10) | (ulonglong)local_f0 & 0xffffffffffff0000) >> 8 & 0xffff |
           ((((ulonglong)local_f0 & 0xffff) << 0x10 | (ulonglong)local_f0 & 0xffffffff0000ffff) &
           0xffff00) << 8;
-  local_f0 = (uint)uVar6;
-  if (DAT_844cd1f8 < uVar6) {
-    if (DAT_844cd1f4 != '\0') {
-      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x130),0);
-      uVar6 = (ulonglong)local_f0;
+  local_f0 = (uint)uVar5;
+  if (g_lightedit.maxColorCount < uVar5) {
+    if (g_lightedit.colorsOwned != false) {
+      Z_VirtualFree((pGVar1->lightGrid).colors,0);
     }
-    iVar3 = Z_TryVirtualAlloc(uVar6 * 0xa8,0xffffffff821a7290,0);
-    if (iVar3 != 0) {
-      *(int *)(iVar1 + 0x130) = iVar3;
-      *(uint *)(iVar1 + 300) = local_f0;
-      DAT_844cd1f8 = local_f0;
-      DAT_844cd1f4 = 1;
-      DAT_844cc0dc = DAT_844cc0dc + 4;
+    pGVar3 = Z_TryVirtualAlloc(local_f0 * 0xa8,"LightEdit",0);
+    if (pGVar3 != (GfxLightGridColors *)0x0) {
+      (pGVar1->lightGrid).colors = pGVar3;
+      (pGVar1->lightGrid).colorCount = local_f0;
+      g_lightedit.colorsOwned = true;
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
+      g_lightedit.maxColorCount = local_f0;
       __restgprlr_26();
       return;
     }
-    *(undefined4 *)(iVar1 + 0x130) = DAT_844cd1ec;
-    *(uint *)(iVar1 + 300) = DAT_844cd1f0;
-    DAT_844cd1f4 = '\0';
-    DAT_844cd1f8 = DAT_844cd1f0;
+    (pGVar1->lightGrid).colors = g_lightedit.originalColors;
+    (pGVar1->lightGrid).colorCount = g_lightedit.originalColorCount;
+    g_lightedit.colorsOwned = false;
+    g_lightedit.maxColorCount = g_lightedit.originalColorCount;
   }
-  DAT_844cc0dc = DAT_844cc0dc + 4;
+  g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
   __restgprlr_26();
   return;
 }
@@ -769,66 +837,67 @@ void LightEdit_ProcessUpdateGridColorsMsg(void)
 
 // 826DE810  LightEdit_ProcessUpdateGridRowsMsg  (lightedit/lightedit_host.cpp:658)
 
-void LightEdit_ProcessUpdateGridRowsMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateGridRowsMsg(msg_t *param_1)
 
 {
-  int iVar1;
-  int *piVar3;
-  ulonglong uVar2;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar1;
+  GfxWorld *pGVar2;
+  msg_t *pmVar4;
+  ulonglong uVar3;
+  uchar *puVar5;
+  int iVar6;
   uint local_40 [16];
   
-  piVar3 = (int *)__savegprlr_26();
-  iVar1 = DAT_8461658c;
-  if (DAT_844cc0e0 != 0) {
-    uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 0x11c);
-    uVar5 = (ulonglong)DAT_844cc0dc;
-    if (uVar5 < uVar2) {
-      lVar6 = (ulonglong)(uint)piVar3[4] - (ulonglong)(uint)piVar3[7];
-      if ((int)(uVar2 - uVar5) < (int)((ulonglong)(uint)piVar3[4] - (ulonglong)(uint)piVar3[7])) {
-        lVar6 = uVar2 - uVar5;
+  pmVar4 = (msg_t *)__savegprlr_26(param_1);
+  pGVar2 = rgp.world;
+  if (g_lightedit.expectedBytes != 0) {
+    uVar1 = ((rgp.world)->lightGrid).rawRowDataSize;
+    if (g_lightedit.receivedBytes < uVar1) {
+      iVar6 = pmVar4->maxsize - pmVar4->readcount;
+      if ((int)(uVar1 - g_lightedit.receivedBytes) < iVar6) {
+        iVar6 = uVar1 - g_lightedit.receivedBytes;
       }
-      if (uVar2 < (uVar5 + lVar6 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821a72a0,0x2c2,0,0xffffffff82000f98,0xffffffff821a76c8);
-        uVar5 = (ulonglong)DAT_844cc0dc;
+      if (uVar1 < g_lightedit.receivedBytes + iVar6) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x2c2,0,"%s");
       }
-      MSG_ReadData(piVar3,*(uint *)(iVar1 + 0x120) + uVar5,lVar6);
-      if (*piVar3 != 0) {
-        MyAssertHandler(0xffffffff821a72a0,0x2c6,0,0xffffffff82000f98,0xffffffff8208f29c);
+      MSG_ReadData(pmVar4,(pGVar2->lightGrid).rawRowData + g_lightedit.receivedBytes,iVar6);
+      if (pmVar4->overflowed != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x2c6,0,"%s");
       }
-      DAT_844cc0dc = DAT_844cc0dc + (int)lVar6;
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + iVar6;
     }
     __restgprlr_26();
     return;
   }
-  MSG_ReadData(piVar3,local_40,4);
-  uVar2 = ((ulonglong)(local_40[0] >> 0x10) | (ulonglong)local_40[0] & 0xffffffffffff0000) >> 8 &
+  MSG_ReadData(pmVar4,local_40,4);
+  uVar3 = ((ulonglong)(local_40[0] >> 0x10) | (ulonglong)local_40[0] & 0xffffffffffff0000) >> 8 &
           0xffff | ((((ulonglong)local_40[0] & 0xffff) << 0x10 |
                     (ulonglong)local_40[0] & 0xffffffff0000ffff) & 0xffff00) << 8;
-  local_40[0] = (uint)uVar2;
-  if (DAT_844cd208 < uVar2) {
-    if (DAT_844cd204 != '\0') {
-      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x120),0);
-      uVar2 = (ulonglong)local_40[0];
+  local_40[0] = (uint)uVar3;
+  if (g_lightedit.maxRowSize < uVar3) {
+    if (g_lightedit.rowDataOwned != false) {
+      Z_VirtualFree((pGVar2->lightGrid).rawRowData,0);
     }
-    iVar4 = Z_TryVirtualAlloc(uVar2,0xffffffff821a7290,0);
-    if (iVar4 != 0) {
-      *(int *)(iVar1 + 0x120) = iVar4;
-      *(uint *)(iVar1 + 0x11c) = local_40[0];
-      DAT_844cc0e0 = local_40[0];
-      DAT_844cd204 = 1;
-      DAT_844cd208 = DAT_844cc0e0;
+    puVar5 = Z_TryVirtualAlloc(local_40[0],"LightEdit",0);
+    if (puVar5 != (uchar *)0x0) {
+      (pGVar2->lightGrid).rawRowData = puVar5;
+      (pGVar2->lightGrid).rawRowDataSize = local_40[0];
+      g_lightedit.rowDataOwned = true;
+      g_lightedit.maxRowSize = local_40[0];
+      g_lightedit.expectedBytes = local_40[0];
       __restgprlr_26();
       return;
     }
-    *(undefined4 *)(iVar1 + 0x120) = DAT_844cd1fc;
-    *(uint *)(iVar1 + 0x11c) = DAT_844cd200;
-    DAT_844cd204 = '\0';
-    DAT_844cd208 = DAT_844cd200;
+    (pGVar2->lightGrid).rawRowData = g_lightedit.originalRowData;
+    (pGVar2->lightGrid).rawRowDataSize = g_lightedit.originalRowDataSize;
+    g_lightedit.rowDataOwned = false;
+    g_lightedit.maxRowSize = g_lightedit.originalRowDataSize;
   }
-  DAT_844cc0e0 = local_40[0];
+  g_lightedit.expectedBytes = local_40[0];
   __restgprlr_26();
   return;
 }
@@ -836,21 +905,24 @@ void LightEdit_ProcessUpdateGridRowsMsg(void)
 
 // 826DF238  LightEdit_FixNetGridEntry  (lightedit/lightedit_host.cpp:718)
 
-void LightEdit_FixNetGridEntry(ushort *param_1)
+void LightEdit_FixNetGridEntry(GfxLightGridEntry *param_1)
 
 {
   ushort uVar1;
-  ulonglong uVar2;
+  uint uVar2;
+  uint uVar3;
   
-  uVar2 = ((ulonglong)*param_1 & 0xff) << 8;
-  uVar1 = *param_1 >> 8;
-  *param_1 = (ushort)uVar2 | uVar1;
-  if ((ulonglong)*(uint *)(DAT_8461658c + 300) <= (uVar2 | uVar1)) {
-    uVar2 = (ulonglong)*(uint *)(DAT_8461658c + 300) - 1;
-    if ((int)uVar2 != (int)(uVar2 & 0xffff)) {
-      MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar2,uVar2 & 0xffff);
+  uVar2 = (param_1->colorsIndex & 0xff) << 8;
+  uVar1 = param_1->colorsIndex >> 8;
+  param_1->colorsIndex = (ushort)uVar2 | uVar1;
+  uVar3 = ((rgp.world)->lightGrid).colorCount;
+  if (uVar3 <= (uVar2 | uVar1)) {
+    uVar3 = uVar3 - 1;
+    if (uVar3 != (uVar3 & 0xffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    *param_1 = (ushort)uVar2;
+    param_1->colorsIndex = (ushort)uVar3;
   }
   return;
 }
@@ -858,72 +930,77 @@ void LightEdit_FixNetGridEntry(ushort *param_1)
 
 // 826DF2D0  LightEdit_ProcessUpdateGridEntriesMsg  (lightedit/lightedit_host.cpp:727)
 
-void LightEdit_ProcessUpdateGridEntriesMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateGridEntriesMsg(msg_t *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  int iVar3;
+  GfxWorld *pGVar1;
+  msg_t *pmVar2;
+  GfxLightGridEntry *pGVar3;
   uint uVar4;
   ulonglong uVar5;
   uint local_50;
   uint local_4c;
-  undefined4 local_48 [18];
+  GfxLightGridEntry local_48 [18];
   
-  piVar2 = (int *)__savegprlr_26();
-  iVar1 = DAT_8461658c;
-  if (DAT_844cc0dc != 0) {
-    uVar4 = piVar2[4] - piVar2[7];
+  pmVar2 = (msg_t *)__savegprlr_26(param_1);
+  pGVar1 = rgp.world;
+  if (g_lightedit.receivedBytes != 0) {
+    uVar4 = pmVar2->maxsize - pmVar2->readcount;
     while (3 < uVar4) {
-      MSG_ReadData(piVar2,&local_4c,4);
-      local_4c = local_4c >> 0x18 | local_4c >> 8 & 0xff00 |
+      MSG_ReadData(pmVar2,&local_4c,4);
+      local_4c = (local_4c >> 0x10 | local_4c & 0xffff0000) >> 8 & 0xffff |
                  ((local_4c << 0x10 | local_4c & 0xffff) & 0xffff00) << 8;
-      if (*piVar2 != 0) {
-        MyAssertHandler(0xffffffff821a72a0,0x307,0,0xffffffff82000f98,0xffffffff8208f29c);
+      if (pmVar2->overflowed != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                        ,0x307,0,"%s");
       }
-      if (local_4c < *(uint *)(iVar1 + 0x124)) {
-        MSG_ReadData(piVar2,local_48,4);
-        if (*piVar2 != 0) {
-          MyAssertHandler(0xffffffff821a72a0,0x30c,0,0xffffffff82000f98,0xffffffff8208f29c);
+      if (local_4c < (pGVar1->lightGrid).entryCount) {
+        MSG_ReadData(pmVar2,local_48,4);
+        if (pmVar2->overflowed != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                          ,0x30c,0,"%s");
         }
         LightEdit_FixNetGridEntry(local_48);
-        *(undefined4 *)(local_4c * 4 + *(int *)(iVar1 + 0x128)) = local_48[0];
+        (pGVar1->lightGrid).entries[local_4c] = local_48[0];
       }
-      DAT_844cc0dc = DAT_844cc0dc + 4;
-      uVar4 = piVar2[4] - piVar2[7];
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
+      uVar4 = pmVar2->maxsize - pmVar2->readcount;
     }
     __restgprlr_26();
     return;
   }
-  MSG_ReadData(piVar2,&local_50,4);
-  if (*piVar2 != 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x2e3,0,0xffffffff82000f98,0xffffffff8208f29c);
+  MSG_ReadData(pmVar2,&local_50,4);
+  if (pmVar2->overflowed != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x2e3,0,"%s");
   }
   uVar5 = ((ulonglong)(local_50 >> 0x10) | (ulonglong)local_50 & 0xffffffffffff0000) >> 8 & 0xffff |
           ((((ulonglong)local_50 & 0xffff) << 0x10 | (ulonglong)local_50 & 0xffffffff0000ffff) &
           0xffff00) << 8;
   local_50 = (uint)uVar5;
-  if (DAT_844cd218 < uVar5) {
-    if (DAT_844cd214 != '\0') {
-      Z_VirtualFree(*(undefined4 *)(iVar1 + 0x128),0);
+  if (g_lightedit.maxEntryCount < uVar5) {
+    if (g_lightedit.entriesOwned != false) {
+      Z_VirtualFree((pGVar1->lightGrid).entries,0);
       uVar5 = (ulonglong)local_50;
     }
-    iVar3 = Z_TryVirtualAlloc((uVar5 & 0x3fffffff) << 2,0xffffffff821a7290,0);
-    if (iVar3 != 0) {
-      *(int *)(iVar1 + 0x128) = iVar3;
-      *(uint *)(iVar1 + 0x124) = local_50;
-      DAT_844cd218 = local_50;
-      DAT_844cd214 = 1;
-      DAT_844cc0dc = DAT_844cc0dc + 4;
+    pGVar3 = Z_TryVirtualAlloc((int)(uVar5 << 2),"LightEdit",0);
+    if (pGVar3 != (GfxLightGridEntry *)0x0) {
+      (pGVar1->lightGrid).entries = pGVar3;
+      (pGVar1->lightGrid).entryCount = local_50;
+      g_lightedit.entriesOwned = true;
+      g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
+      g_lightedit.maxEntryCount = local_50;
       __restgprlr_26();
       return;
     }
-    *(undefined4 *)(iVar1 + 0x128) = DAT_844cd20c;
-    *(uint *)(iVar1 + 0x124) = DAT_844cd210;
-    DAT_844cd214 = '\0';
-    DAT_844cd218 = DAT_844cd210;
+    (pGVar1->lightGrid).entries = g_lightedit.originalEntries;
+    (pGVar1->lightGrid).entryCount = g_lightedit.originalEntryCount;
+    g_lightedit.entriesOwned = false;
+    g_lightedit.maxEntryCount = g_lightedit.originalEntryCount;
   }
-  DAT_844cc0dc = DAT_844cc0dc + 4;
+  g_lightedit.receivedBytes = g_lightedit.receivedBytes + 4;
   __restgprlr_26();
   return;
 }
@@ -931,53 +1008,64 @@ void LightEdit_ProcessUpdateGridEntriesMsg(void)
 
 // 826DF518  LightEdit_ProcessUpdateLightGridMsg  (lightedit/lightedit_host.cpp:792)
 
-void LightEdit_ProcessUpdateLightGridMsg(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessUpdateLightGridMsg(msg_t *param_1)
 
 {
   bool bVar1;
   ulonglong uVar2;
   
-  if (DAT_844cc0d4 != 4) {
-    Com_PrintWarning(0x10,0xffffffff821a7848);
+  if (g_lightedit.state != LS_UPDATING_LIGHTGRID) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update grid message but state was not LS_UPDATING_LIGHTGRID\n")
+    ;
     return;
   }
-  if (DAT_844cc0d8 == 0) {
-    Com_PrintWarning(0x10,0xffffffff821a77f8);
+  if (g_lightedit.gridPhase == LIGHTGRID_NONE) {
+    Com_PrintWarning(0x10,
+                     "LightEdit: Got update grid message, but we are not updating a lightgrid phase."
+                    );
     return;
   }
-  uVar2 = (ulonglong)DAT_844cc0d8 - 1;
+  uVar2 = (ulonglong)g_lightedit.gridPhase - 1;
   if (3 < (uVar2 & 0xffffffff)) {
     return;
   }
   bVar1 = (int)uVar2 != 0;
-  if ((ulonglong)DAT_844cc0d8 != 2 || !bVar1) {
+  if ((ulonglong)g_lightedit.gridPhase != 2 || !bVar1) {
     if (uVar2 == 2 && bVar1) {
-      LightEdit_ProcessUpdateGridRowsMsg();
+      LightEdit_ProcessUpdateGridRowsMsg(param_1);
       return;
     }
     if (!bVar1) {
-      LightEdit_ProcessUpdateGridHeaderMsg();
+      LightEdit_ProcessUpdateGridHeaderMsg(param_1);
       return;
     }
-    LightEdit_ProcessUpdateGridEntriesMsg();
+    LightEdit_ProcessUpdateGridEntriesMsg(param_1);
     return;
   }
-  LightEdit_ProcessUpdateGridColorsMsg();
+  LightEdit_ProcessUpdateGridColorsMsg(param_1);
   return;
 }
 
 
 // 826DE9C0  LightEdit_SendCrosshairPixel  (lightedit/lightedit_host.cpp:824)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void LightEdit_SendCrosshairPixel(void)
 
 {
   uint uVar1;
   float fVar2;
-  undefined8 uVar3;
-  uint *puVar4;
-  float *pfVar5;
-  longlong lVar6;
+  uint *puVar3;
+  float *pfVar4;
+  longlong lVar5;
   float local_98;
   float local_94;
   float local_90;
@@ -985,113 +1073,114 @@ void LightEdit_SendCrosshairPixel(void)
   float local_84;
   float local_80;
   uint uStack_7c;
-  float local_78;
-  float local_74;
-  float local_70;
-  int local_60;
-  float local_5c [3];
-  undefined1 auStack_50 [56];
+  float local_78 [6];
+  GfxLightEditTrace local_60;
+  msg_t mStack_50;
   
-  if (DAT_82a383cc == 0) {
-    uVar3 = CL_GetLocalClientConnectionState(0);
-    uVar3 = va(0xffffffff82001208,uVar3,0);
-    MyAssertHandler(0xffffffff821a7240,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar3);
+  if (cgArray == (cg_s *)0x0) {
+    CL_GetLocalClientConnectionState(LOCAL_CLIENT_0);
+    va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\../cgame_mp/cg_local_mp.h"
+                    ,0x682,0,"%s\n\t%s");
   }
-  local_98 = *(float *)(DAT_82a383cc + 0x6b9c8);
-  local_94 = *(float *)(DAT_82a383cc + 0x6b9cc);
-  local_90 = *(float *)(DAT_82a383cc + 0x6b9d0);
-  local_88 = *(float *)(DAT_82a383cc + 0x6b9d4);
-  local_84 = *(float *)(DAT_82a383cc + 0x6b9d8);
-  local_80 = *(float *)(DAT_82a383cc + 0x6b9dc);
+  local_98 = (cgArray->refdef).view.org[0];
+  local_94 = (cgArray->refdef).view.org[1];
+  local_90 = (cgArray->refdef).view.org[2];
+  local_88 = (cgArray->refdef).view.axis[0][0];
+  local_84 = (cgArray->refdef).view.axis[0][1];
+  local_80 = (cgArray->refdef).view.axis[0][2];
   R_LightEditTrace(&local_98,&local_88,&local_60);
-  LightEdit_InitMsg(auStack_50,0xd);
-  if (local_60 == 0) {
-    MSG_WriteByte(auStack_50,0x1f);
+  LightEdit_InitMsg(&mStack_50,LIGHTMSG_CROSSHAIR_PIXEL);
+  if (local_60.surface == (GfxSurface *)0x0) {
+    MSG_WriteByte(&mStack_50,0x1f);
   }
   else {
-    if (*(char *)(local_60 + 0x14) == '\x1f') {
-      MyAssertHandler(0xffffffff821a72a0,0x351,0,0xffffffff82000f98,0xffffffff821a770c);
+    if (((local_60.surface)->laf).fields.lightmapIndex == '\x1f') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp"
+                      ,0x351,0,"%s");
     }
-    local_78 = local_88 * local_5c[0] + local_98;
-    local_74 = local_84 * local_5c[0] + local_94;
-    local_70 = local_80 * local_5c[0] + local_90;
-    MSG_WriteByte(auStack_50,*(undefined1 *)(local_60 + 0x14));
-    MSG_WriteByte(auStack_50,*(undefined1 *)(local_60 + 0x16));
-    lVar6 = 3;
-    puVar4 = &uStack_7c;
+    local_78[0] = local_88 * local_60.dist + local_98;
+    local_78[1] = local_84 * local_60.dist + local_94;
+    local_78[2] = local_80 * local_60.dist + local_90;
+    MSG_WriteByte(&mStack_50,(uint)((local_60.surface)->laf).fields.lightmapIndex);
+    MSG_WriteByte(&mStack_50,(uint)((local_60.surface)->laf).fields.primaryLightIndex);
+    lVar5 = 3;
+    puVar3 = &uStack_7c;
     do {
-      puVar4 = puVar4 + 1;
-      uVar1 = *puVar4;
-      MSG_WriteLong(auStack_50,
-                    ((ulonglong)(uVar1 >> 0x10) | (ulonglong)uVar1 & 0xffffffffffff0000) >> 8 &
-                    0xffff | ((((ulonglong)uVar1 & 0xffff) << 0x10 |
-                              (ulonglong)uVar1 & 0xffffffff0000ffff) & 0xffff00) << 8);
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    pfVar5 = local_5c;
-    lVar6 = 2;
+      puVar3 = puVar3 + 1;
+      uVar1 = *puVar3;
+      MSG_WriteLong(&mStack_50,
+                    (uVar1 >> 0x10 | uVar1 & 0xffff0000) >> 8 & 0xffff |
+                    ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    pfVar4 = &local_60.dist;
+    lVar5 = 2;
     do {
-      pfVar5 = pfVar5 + 1;
-      fVar2 = *pfVar5;
-      MSG_WriteLong(auStack_50,
-                    ((ulonglong)((uint)fVar2 >> 0x10) | (ulonglong)(uint)fVar2 & 0xffffffffffff0000)
-                    >> 8 & 0xffff |
-                    ((((ulonglong)(uint)fVar2 & 0xffff) << 0x10 |
-                     (ulonglong)(uint)fVar2 & 0xffffffff0000ffff) & 0xffff00) << 8);
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      pfVar4 = pfVar4 + 1;
+      fVar2 = *pfVar4;
+      MSG_WriteLong(&mStack_50,
+                    ((uint)fVar2 >> 0x10 | (uint)fVar2 & 0xffff0000) >> 8 & 0xffff |
+                    (((int)fVar2 << 0x10 | (uint)fVar2 & 0xffff) & 0xffff00) << 8);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  LightEdit_SendMsg(DAT_844cc0d0,auStack_50);
+  LightEdit_SendMsg(g_lightedit.connection,&mStack_50);
   return;
 }
 
 
 // 826DEBD8  LightEdit_ProcessClearDebugLines  (lightedit/lightedit_host.cpp:861)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_ProcessClearDebugLines(void)
 
 {
-  DAT_844cd21c = 0;
+  g_lightedit.debugLineCount = 0;
   return;
 }
 
 
 // 826DEBF0  LightEdit_ProcessAddDebugLine  (lightedit/lightedit_host.cpp:869)
 
-void LightEdit_ProcessAddDebugLine(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void LightEdit_ProcessAddDebugLine(msg_t *param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined4 uVar3;
-  int iVar4;
-  uint *puVar5;
+  uint uVar1;
+  msg_t *pmVar2;
+  uint uVar3;
+  GfxColor *pGVar4;
+  float *pfVar5;
   longlong lVar6;
   
-  uVar1 = __savegprlr_28();
-  if (DAT_844cd21c != 0x100) {
-    iVar4 = DAT_844cd21c * 0x1c;
+  pmVar2 = (msg_t *)__savegprlr_28(param_1);
+  uVar1 = g_lightedit.debugLineCount;
+  if (g_lightedit.debugLineCount != 0x100) {
     lVar6 = 3;
-    puVar5 = (uint *)(&DAT_844cd21c + DAT_844cd21c * 7);
-    DAT_844cd21c = DAT_844cd21c + 1;
+    pGVar4 = &g_lightedit.debugLines[g_lightedit.debugLineCount - 1].color;
+    g_lightedit.debugLineCount = g_lightedit.debugLineCount + 1;
     do {
-      uVar2 = MSG_ReadLong(uVar1);
+      uVar3 = MSG_ReadLong(pmVar2);
       lVar6 = lVar6 + -1;
-      puVar5 = puVar5 + 1;
-      *puVar5 = (uint)(uVar2 >> 0x18) & 0xff | (uint)(uVar2 >> 8) & 0xff00 |
-                (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
+      pGVar4 = pGVar4 + 1;
+      pGVar4->packed =
+           (uVar3 >> 0x10 | uVar3 & 0xffff0000) >> 8 & 0xffff |
+           ((uVar3 << 0x10 | uVar3 & 0xffff) & 0xffff00) << 8;
     } while (lVar6 != 0);
-    puVar5 = (uint *)(iVar4 + -0x7bb32dd8);
+    pfVar5 = g_lightedit.debugLines[uVar1].start + 2;
     lVar6 = 3;
     do {
-      uVar2 = MSG_ReadLong(uVar1);
+      uVar3 = MSG_ReadLong(pmVar2);
       lVar6 = lVar6 + -1;
-      puVar5 = puVar5 + 1;
-      *puVar5 = (uint)(uVar2 >> 0x18) & 0xff | (uint)(uVar2 >> 8) & 0xff00 |
-                (uint)(((uVar2 & 0xffff) << 0x10 | uVar2 & 0xffff) << 8) & 0xffff0000;
+      pfVar5 = pfVar5 + 1;
+      *pfVar5 = (float)((uVar3 >> 0x10 | uVar3 & 0xffff0000) >> 8 & 0xffff |
+                       ((uVar3 << 0x10 | uVar3 & 0xffff) & 0xffff00) << 8);
     } while (lVar6 != 0);
-    uVar3 = MSG_ReadLong(uVar1);
-    *(undefined4 *)(&DAT_844cd238 + iVar4) = uVar3;
+    uVar3 = MSG_ReadLong(pmVar2);
+    g_lightedit.debugLines[uVar1].color.packed = uVar3;
   }
   __restgprlr_28();
   return;
@@ -1100,138 +1189,154 @@ void LightEdit_ProcessAddDebugLine(void)
 
 // 826DF590  LightEdit_ProcessMessage  (lightedit/lightedit_host.cpp:886)
 
-void LightEdit_ProcessMessage(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool LightEdit_ProcessMessage(void *param_1,uchar *param_2,uint param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  int local_70 [28];
+  void *pvVar1;
+  uint uVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  msg_t local_70 [2];
   
-  iVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x37b,0,0xffffffff82000f98,0xffffffff8201805c);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pvVar1 = (void *)__savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x37b,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x37c,0,0xffffffff82000f98,0xffffffff821a78f4);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x37c,0,"%s");
   }
-  if ((iVar2 == 0) || (DAT_844cc0d0 != iVar2)) {
-    MyAssertHandler(0xffffffff821a72a0,0x37d,0,0xffffffff82000f98,0xffffffff821a78c0);
+  if ((pvVar1 == (void *)0x0) || (g_lightedit.connection != pvVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x37d,0,"%s");
   }
-  MSG_InitReadOnly(local_70,param_2,param_3);
+  MSG_InitReadOnly(local_70,(uchar *)uVar4,(int)uVar5);
   MSG_BeginReading(local_70);
-  uVar3 = MSG_ReadByte(local_70);
-  uVar1 = uVar3 & 0xff;
-  if (uVar3 != uVar1) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar1);
+  uVar2 = MSG_ReadByte(local_70);
+  if (uVar2 != (uVar2 & 0xff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  if (local_70[0] != 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x382,0,0xffffffff82000f98,0xffffffff82034958);
+  if (local_70[0].overflowed != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x382,0,"%s");
   }
-  if (0 < *(int *)(DAT_844cc0c8 + 0xc)) {
-    Com_Printf(0x10,0xffffffff821a7894,uVar1,param_3 - 1);
+  if (0 < (le_verbose->current).integer) {
+    Com_Printf(0x10,"Processing LE message 0x%2x with length %d\n");
   }
-  switch(uVar1) {
+  switch(uVar2 & 0xff) {
   case 0:
-    MSG_ReadString(local_70,0xffffffff844cee38,0x400);
-    Com_Printf(0x10,0xffffffff844cee38);
-    __restgprlr_26(1);
-    return;
+    MSG_ReadString(local_70,msgBuf,0x400);
+    Com_Printf(0x10,msgBuf);
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 2:
     LightEdit_SendStageIndex();
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 3:
     LightEdit_ProcessUpdateStageMsg(local_70);
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 5:
     break;
   case 6:
     LightEdit_ProcessUpdateLightmapMsg(local_70);
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 7:
-    if (DAT_844cc0d4 != 3) {
-      Com_PrintWarning(0x10,0xffffffff821a7480);
-      __restgprlr_26(1);
-      return;
+    if (g_lightedit.state != LS_UPDATING_LIGHTMAPS) {
+      Com_PrintWarning(0x10,
+                       "LightEdit: Got update end message but state was not LS_UPDATING_LIGHTMAPS\n"
+                      );
+      uVar3 = __restgprlr_26(1);
+      return (bool)uVar3;
     }
-    Com_Printf(0x10,0xffffffff821a744c,DAT_844cd1e8,DAT_844cd1e4);
-    __restgprlr_26(1);
-    return;
+    Com_Printf(0x10,"Got %d update messages for a total of %d lexels\n");
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 8:
     LightEdit_ProcessUpdateLightGridBeginMsg();
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 9:
     LightEdit_ProcessUpdateLightGridBeginPhaseMsg(local_70);
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 10:
     LightEdit_ProcessUpdateLightGridMsg(local_70);
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 0xb:
     LightEdit_ProcessUpdateLightGridEndMsg();
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 0xc:
     LightEdit_ProcessUpdateLightGridEndPhaseMsg();
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 0xd:
     LightEdit_SendCrosshairPixel();
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 0xe:
-    DAT_844cd21c = 0;
-    __restgprlr_26(1);
-    return;
+    g_lightedit.debugLineCount = 0;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   case 0xf:
     LightEdit_ProcessAddDebugLine(local_70);
   default:
-    __restgprlr_26(1);
-    return;
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   }
-  if (DAT_844cc0d4 < 2) {
-    Com_PrintWarning(0x10,0xffffffff821a7340);
-    __restgprlr_26(1);
-    return;
+  if ((int)g_lightedit.state < 2) {
+    Com_PrintWarning(0x10,"LightEdit: Got update begin message but state was not LS_RUNNING\n");
+    uVar3 = __restgprlr_26(1);
+    return (bool)uVar3;
   }
-  DAT_844cc0d4 = 3;
-  DAT_844cd1e4 = 0;
-  DAT_844cd1e8 = 0;
-  __restgprlr_26(1);
-  return;
+  g_lightedit.state = LS_UPDATING_LIGHTMAPS;
+  g_lightedit.lexCount = 0;
+  g_lightedit.updateCount = 0;
+  uVar3 = __restgprlr_26(1);
+  return (bool)uVar3;
 }
 
 
 // 826DECB0  LightEdit_SendMapName  (lightedit/lightedit_host.cpp:958)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void LightEdit_SendMapName(void)
 
 {
   uint uVar1;
-  undefined1 auStack_50 [80];
+  msg_t mStack_50;
   
   __savegprlr_29();
-  if (DAT_844cc0d0 == 0) {
-    MyAssertHandler(0xffffffff821a72a0,0x3c1,0,0xffffffff82000f98,0xffffffff821a7768);
+  if (g_lightedit.connection == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x3c1,0,"%s");
   }
-  if (DAT_844cc0d4 != 1) {
-    MyAssertHandler(0xffffffff821a72a0,0x3c2,0,0xffffffff82000f98,0xffffffff821a7748);
+  if (g_lightedit.state != LS_INITIAL) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_host.cpp",
+                    0x3c2,0,"%s");
   }
-  if ((DAT_8461658c != 0) && (DAT_844cd0e4 != '\0')) {
-    LightEdit_InitMsg(auStack_50,1);
-    MSG_WriteString(auStack_50,0xffffffff844cd0e4);
-    uVar1 = *(uint *)(DAT_8461658c + 0x2c4);
-    MSG_WriteLong(auStack_50,
-                  ((ulonglong)(uVar1 >> 0x10) | (ulonglong)uVar1 & 0xffffffffffff0000) >> 8 & 0xffff
-                  | ((((ulonglong)uVar1 & 0xffff) << 0x10 | (ulonglong)uVar1 & 0xffffffff0000ffff) &
-                    0xffff00) << 8);
-    LightEdit_SendMsg(DAT_844cc0d0,auStack_50);
-    DAT_844cc0d4 = 2;
+  if ((rgp.world != (GfxWorld *)0x0) && (g_lightedit.sentMapName[0] != '\0')) {
+    LightEdit_InitMsg(&mStack_50,LIGHTMSG_SET_MAP);
+    MSG_WriteString(&mStack_50,g_lightedit.sentMapName);
+    uVar1 = (rgp.world)->mapVtxChecksum;
+    MSG_WriteLong(&mStack_50,
+                  (uVar1 >> 0x10 | uVar1 & 0xffff0000) >> 8 & 0xffff |
+                  ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8);
+    LightEdit_SendMsg(g_lightedit.connection,&mStack_50);
+    g_lightedit.state = LS_RUNNING;
   }
   __restgprlr_29();
   return;
@@ -1240,10 +1345,10 @@ void LightEdit_SendMapName(void)
 
 // 826DEDA8  LightEdit_DrawDebugLines  (lightedit/lightedit_host.cpp:977)
 
-void LightEdit_DrawDebugLines(void)
+void LightEdit_DrawDebugLines(DebugGlobals *param_1)
 
 {
-  undefined8 uVar1;
+  DebugGlobals *pDVar1;
   uint uVar2;
   byte *pbVar3;
   double dVar4;
@@ -1252,19 +1357,20 @@ void LightEdit_DrawDebugLines(void)
   float local_38;
   float local_34;
   
-  uVar1 = __savegprlr_28();
-  if (((DAT_844cc0d0 != 0) && (1 < DAT_844cc0d4)) && (uVar2 = 0, DAT_844cd21c != 0)) {
-    pbVar3 = &DAT_844cd23a;
+  pDVar1 = (DebugGlobals *)__savegprlr_28(param_1);
+  if (((g_lightedit.connection != (void *)0x0) && (1 < (int)g_lightedit.state)) &&
+     (uVar2 = 0, g_lightedit.debugLineCount != 0)) {
+    pbVar3 = g_lightedit.debugLines[0].color.array + 2;
     dVar4 = 0.003921568859368563;
     do {
       local_3c = (float)((double)pbVar3[-1] * dVar4);
       local_40 = (float)((double)pbVar3[-2] * dVar4);
       local_34 = (float)((double)pbVar3[1] * dVar4);
       local_38 = (float)((double)*pbVar3 * dVar4);
-      R_AddDebugLine(uVar1,pbVar3 + -0x1a,pbVar3 + -0xe,&local_40);
+      R_AddDebugLine(pDVar1,(float *)(pbVar3 + -0x1a),(float *)(pbVar3 + -0xe),&local_40);
       uVar2 = uVar2 + 1;
       pbVar3 = pbVar3 + 0x1c;
-    } while (uVar2 < DAT_844cd21c);
+    } while (uVar2 < g_lightedit.debugLineCount);
   }
   __restgprlr_28();
   return;
@@ -1272,6 +1378,8 @@ void LightEdit_DrawDebugLines(void)
 
 
 // 826DEEA0  LightEdit_UpdateRunning  (lightedit/lightedit_host.cpp:998)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LightEdit_UpdateRunning(void)
 
@@ -1282,6 +1390,8 @@ void LightEdit_UpdateRunning(void)
 
 // 826DEEA8  LightEdit_UpdateUpdatingLightmaps  (lightedit/lightedit_host.cpp:1003)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_UpdateUpdatingLightmaps(void)
 
 {
@@ -1290,6 +1400,8 @@ void LightEdit_UpdateUpdatingLightmaps(void)
 
 
 // 826DEEB0  LightEdit_UpdateUpdatingLightGrid  (lightedit/lightedit_host.cpp:1008)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LightEdit_UpdateUpdatingLightGrid(void)
 
@@ -1300,21 +1412,23 @@ void LightEdit_UpdateUpdatingLightGrid(void)
 
 // 826DEEB8  LightEdit_UpdateMap  (lightedit/lightedit_host.cpp:1013)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_UpdateMap(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
   
-  uVar1 = Dvar_GetString(0xffffffff82010974);
-  iVar2 = I_stricmp(0xffffffff844cd0e4,uVar1);
+  pcVar1 = Dvar_GetString("mapname");
+  iVar2 = I_stricmp(g_lightedit.sentMapName,pcVar1);
   if (iVar2 != 0) {
-    DAT_844cc0d4 = 1;
-    DAT_844cc0d8 = 0;
-    DAT_844cc0dc = 0;
-    DAT_844cc0e0 = 0;
-    DAT_844cd0e4 = 0;
-    I_strncpyz(0xffffffff844cd0e4,uVar1,0x100);
+    g_lightedit.state = LS_INITIAL;
+    g_lightedit.gridPhase = LIGHTGRID_NONE;
+    g_lightedit.receivedBytes = 0;
+    g_lightedit.expectedBytes = 0;
+    g_lightedit.sentMapName[0] = '\0';
+    I_strncpyz(g_lightedit.sentMapName,pcVar1,0x100);
   }
   return;
 }
@@ -1322,64 +1436,73 @@ void LightEdit_UpdateMap(void)
 
 // 826DEF48  LightEdit_DisableModelLightingUpdate  (lightedit/lightedit_host.cpp:1027)
 
-ulonglong LightEdit_DisableModelLightingUpdate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LightEdit_DisableModelLightingUpdate(void)
 
 {
-  return (longlong)((int)DAT_844cc0d4 >> 0x1f) + (ulonglong)(3 < DAT_844cc0d4) & 0xff;
+  return (bool)((char)((int)g_lightedit.state >> 0x1f) + (LS_UPDATING_LIGHTMAPS < g_lightedit.state)
+               );
 }
 
 
 // 826DEF70  LightEdit_MapUnload  (lightedit/lightedit_host.cpp:1033)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_MapUnload(void)
 
 {
-  int iVar1;
+  GfxWorld *pGVar1;
   
-  iVar1 = DAT_8461658c;
-  DAT_844cd1f8 = 0;
-  if (DAT_844cd1f4 != '\0') {
-    Z_VirtualFree(*(undefined4 *)(DAT_8461658c + 0x130),0);
+  pGVar1 = rgp.world;
+  g_lightedit.maxColorCount = 0;
+  if (g_lightedit.colorsOwned) {
+    Z_VirtualFree(((rgp.world)->lightGrid).colors,0);
   }
-  DAT_844cd208 = 0;
-  if (DAT_844cd204 != '\0') {
-    Z_VirtualFree(*(undefined4 *)(iVar1 + 0x120),0);
+  g_lightedit.maxRowSize = 0;
+  if (g_lightedit.rowDataOwned != false) {
+    Z_VirtualFree((pGVar1->lightGrid).rawRowData,0);
   }
-  DAT_844cd218 = 0;
-  if (DAT_844cd214 != '\0') {
-    Z_VirtualFree(*(undefined4 *)(iVar1 + 0x128),0);
+  g_lightedit.maxEntryCount = 0;
+  if (g_lightedit.entriesOwned != false) {
+    Z_VirtualFree((pGVar1->lightGrid).entries,0);
   }
-  DAT_844cc0d4 = 1;
-  DAT_844cc0d8 = 0;
-  DAT_844cc0dc = 0;
-  DAT_844cc0e0 = 0;
-  DAT_844cd0e4 = 0;
+  g_lightedit.state = LS_INITIAL;
+  g_lightedit.gridPhase = LIGHTGRID_NONE;
+  g_lightedit.receivedBytes = 0;
+  g_lightedit.expectedBytes = 0;
+  g_lightedit.sentMapName[0] = '\0';
   return;
 }
 
 
 // 826DF038  LightEdit_MapLoad  (lightedit/lightedit_host.cpp:1055)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_MapLoad(void)
 
 {
-  DAT_844cd1ec = *(undefined4 *)(DAT_8461658c + 0x130);
-  DAT_844cd1f0 = *(undefined4 *)(DAT_8461658c + 300);
-  DAT_844cd1f4 = 0;
-  DAT_844cd1f8 = *(undefined4 *)(DAT_8461658c + 300);
-  DAT_844cd1fc = *(undefined4 *)(DAT_8461658c + 0x120);
-  DAT_844cd200 = *(undefined4 *)(DAT_8461658c + 0x11c);
-  DAT_844cd204 = 0;
-  DAT_844cd208 = *(undefined4 *)(DAT_8461658c + 0x11c);
-  DAT_844cd20c = *(undefined4 *)(DAT_8461658c + 0x128);
-  DAT_844cd210 = *(undefined4 *)(DAT_8461658c + 0x124);
-  DAT_844cd214 = 0;
-  DAT_844cd218 = *(undefined4 *)(DAT_8461658c + 0x124);
+  g_lightedit.originalColors = ((rgp.world)->lightGrid).colors;
+  g_lightedit.originalColorCount = ((rgp.world)->lightGrid).colorCount;
+  g_lightedit.colorsOwned = false;
+  g_lightedit.maxColorCount = ((rgp.world)->lightGrid).colorCount;
+  g_lightedit.originalRowData = ((rgp.world)->lightGrid).rawRowData;
+  g_lightedit.originalRowDataSize = ((rgp.world)->lightGrid).rawRowDataSize;
+  g_lightedit.rowDataOwned = false;
+  g_lightedit.maxRowSize = ((rgp.world)->lightGrid).rawRowDataSize;
+  g_lightedit.originalEntries = ((rgp.world)->lightGrid).entries;
+  g_lightedit.originalEntryCount = ((rgp.world)->lightGrid).entryCount;
+  g_lightedit.entriesOwned = false;
+  g_lightedit.maxEntryCount = ((rgp.world)->lightGrid).entryCount;
   return;
 }
 
 
 // 826DF0B8  LightEdit_Frame  (lightedit/lightedit_host.cpp:1078)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LightEdit_Frame(void)
 
@@ -1387,19 +1510,19 @@ void LightEdit_Frame(void)
   bool bVar1;
   ulonglong uVar2;
   
-  if (DAT_844cc0d0 != 0) {
+  if (g_lightedit.connection != (void *)0x0) {
     LightEdit_UpdateMap();
-    uVar2 = (ulonglong)DAT_844cc0d4 - 1;
+    uVar2 = (ulonglong)g_lightedit.state - 1;
     if ((uVar2 & 0xffffffff) < 4) {
       bVar1 = (int)uVar2 == 0;
-      if ((((ulonglong)DAT_844cc0d4 != 2 || bVar1) && (uVar2 != 2 || bVar1)) && (bVar1)) {
+      if ((((ulonglong)g_lightedit.state != 2 || bVar1) && (uVar2 != 2 || bVar1)) && (bVar1)) {
         LightEdit_SendMapName();
         return;
       }
     }
     else {
-      Com_PrintWarning(0x10,0xffffffff821a7780);
-      NET_RemoteDbgDisconnectClient(DAT_844cc0d0);
+      Com_PrintWarning(0x10,"LightEdit update called with unknown state %d.  Disconnecting.\n");
+      NET_RemoteDbgDisconnectClient(g_lightedit.connection);
     }
   }
   return;
@@ -1408,17 +1531,22 @@ void LightEdit_Frame(void)
 
 // 826DF148  LightEdit_Init  (lightedit/lightedit_host.cpp:1107)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LightEdit_Init(void)
 
 {
-  memset(&DAT_844cc0d0,0,0x2d50);
-  DAT_844cc0c8 = Dvar_RegisterInt(0xffffffff821a77d0,0,0,10,4,0xffffffff821a77dc);
-  Cmd_AddCommandInternal(0xffffffff821a77c0,0xffffffff826de9c0,0xffffffff844cee20);
+  memset();
+  le_verbose = Dvar_RegisterInt("le_verbose",0,0,10,4,"Light edit system verbosity");
+  Cmd_AddCommandInternal
+            ("le_debugpixel",LightEdit_SendCrosshairPixel,&LightEdit_SendCrosshairPixel_VAR);
   return;
 }
 
 
 // 826DF1C0  LightEdit_Shutdown  (lightedit/lightedit_host.cpp:1116)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LightEdit_Shutdown(void)
 

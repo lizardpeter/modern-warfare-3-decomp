@@ -2,114 +2,128 @@
 
 // 824A9AD8  G_LevelSpawnString  (game_mp/g_spawn_mp.cpp:12)
 
-void G_LevelSpawnString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int G_LevelSpawnString(uint param_1,char *param_2,char **param_3)
 
 {
-  G_SpawnString(0xffffffff83581038,param_1,param_2,param_3);
-  return;
+  int iVar1;
+  
+  iVar1 = G_SpawnString(&level.spawnVar,param_1,param_2,param_3);
+  return iVar1;
 }
 
 
 // 824A9AF8  G_SpawnFloat  (game_mp/g_spawn_mp.cpp:18)
 
-undefined8 G_SpawnFloat(undefined8 param_1,undefined8 param_2,float *param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int G_SpawnFloat(uint param_1,char *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   double dVar2;
   char *local_20 [2];
   
-  uVar1 = G_SpawnString(0xffffffff83581038,param_1,param_2,local_20);
+  iVar1 = G_SpawnString(&level.spawnVar,param_1,param_2,local_20);
   dVar2 = atof(local_20[0]);
   *param_3 = (float)dVar2;
-  return uVar1;
+  return iVar1;
 }
 
 
 // 824A9B60  G_SpawnInt  (game_mp/g_spawn_mp.cpp:29)
 
-undefined8 G_SpawnInt(undefined8 param_1,undefined8 param_2,int *param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int G_SpawnInt(uint param_1,char *param_2,int *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   char *local_20 [2];
   
-  uVar1 = G_SpawnString(0xffffffff83581038,param_1,param_2,local_20);
+  iVar1 = G_SpawnString(&level.spawnVar,param_1,param_2,local_20);
   iVar2 = atoi(local_20[0]);
   *param_3 = iVar2;
-  return uVar1;
+  return iVar1;
 }
 
 
 // 824A9BC0  G_SpawnVector  (game_mp/g_spawn_mp.cpp:40)
 
-undefined8 G_SpawnVector(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int G_SpawnVector(uint param_1,char *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   char *local_20 [2];
   
-  uVar1 = G_SpawnString(0xffffffff83581038,param_1,param_2,local_20);
-  *param_3 = 0;
-  param_3[1] = 0;
-  param_3[2] = 0;
-  sscanf(local_20[0],"%f %f %f",param_3,param_3 + 1,param_3 + 2);
-  return uVar1;
+  iVar1 = G_SpawnString(&level.spawnVar,param_1,param_2,local_20);
+  *param_3 = 0.0;
+  param_3[1] = 0.0;
+  param_3[2] = 0.0;
+  sscanf(local_20[0],"%f %f %f");
+  return iVar1;
 }
 
 
 // 824A9C48  Scr_ReadOnlyField  (game_mp/g_spawn_mp.cpp:52)
 
-void Scr_ReadOnlyField(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_ReadOnlyField(gentity_s *param_1,int param_2)
 
 {
-  Scr_Error(0xffffffff8207d818);
+  Scr_Error("Tried to set a read only entity field");
   return;
 }
 
 
 // 824A9C58  G_SetEntityScriptVariableInternal  (game_mp/g_spawn_mp.cpp:164)
 
-ulonglong G_SetEntityScriptVariableInternal(undefined8 param_1,undefined8 param_2)
+uint G_SetEntityScriptVariableInternal(uint param_1,char *param_2)
 
 {
-  ulonglong uVar1;
-  char *_Src;
-  int iVar3;
-  undefined8 uVar2;
+  uint uVar1;
+  int iVar2;
+  char *pcVar3;
   double dVar4;
   int local_30 [2];
-  undefined4 local_28;
-  undefined4 local_24;
-  undefined4 local_20 [2];
+  float local_28 [4];
   
   uVar1 = Scr_FindField(param_1,local_30);
-  if ((uVar1 & 0xffffffff) != 0) {
+  if (uVar1 != 0) {
     if ((local_30[0] - 2U < 5) && (local_30[0] != 3)) {
-      _Src = (char *)param_2;
       if (local_30[0] == 4) {
-        local_28 = 0;
-        local_24 = 0;
-        local_20[0] = 0;
-        sscanf(_Src,"%f %f %f",&local_28,&local_24,local_20);
-        Scr_AddVector(&local_28);
+        local_28[0] = 0.0;
+        local_28[1] = 0.0;
+        local_28[2] = 0.0;
+        sscanf(param_2,"%f %f %f");
+        Scr_AddVector(local_28);
       }
       else if (local_30[0] == 5) {
-        dVar4 = atof(_Src);
-        Scr_AddFloat((double)(float)dVar4);
+        dVar4 = atof(param_2);
+        Scr_AddFloat((float)dVar4);
       }
       else if (local_30[0] == 2) {
         Scr_AddString(param_2);
       }
       else {
-        iVar3 = atoi(_Src);
-        Scr_AddInt(iVar3);
+        iVar2 = atoi(param_2);
+        Scr_AddInt(iVar2);
       }
     }
-    else if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8207d884);
-      MyAssertHandler(0xffffffff8207d840,0xc2,0,uVar2);
+    else if (alwaysfails == 0) {
+      pcVar3 = va("G_SetEntityScriptVariableInternal: bad case %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0xc2
+                      ,0,pcVar3);
     }
   }
   return uVar1;
@@ -118,14 +132,17 @@ ulonglong G_SetEntityScriptVariableInternal(undefined8 param_1,undefined8 param_
 
 // 824AB280  G_SetEntityScriptVariable  (game_mp/g_spawn_mp.cpp:209)
 
-void G_SetEntityScriptVariable(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_SetEntityScriptVariable(uint param_1,char *param_2,gentity_s *param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = G_SetEntityScriptVariableInternal();
-  if ((uVar1 & 0xffffffff) != 0) {
-    Scr_SetDynamicEntityField(*param_3,0,uVar1);
+  uVar1 = G_SetEntityScriptVariableInternal(param_1,param_2);
+  if (uVar1 != 0) {
+    Scr_SetDynamicEntityField((param_3->s).number,0,uVar1);
   }
   return;
 }
@@ -133,91 +150,90 @@ void G_SetEntityScriptVariable(undefined8 param_1,undefined8 param_2,undefined4 
 
 // 824AB2C8  G_ParseEntityField  (game_mp/g_spawn_mp.cpp:233)
 
-void G_ParseEntityField(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_ParseEntityField(char *param_1,char *param_2,gentity_s *param_3)
 
 {
-  undefined8 uVar1;
-  uint uVar3;
-  ulonglong uVar2;
-  char *_Src;
-  undefined2 uVar5;
-  int iVar4;
-  undefined4 *puVar6;
+  <unnamed_type_index> <Var1;
+  <unnamed_type_index> <Var2;
+  char *pcVar3;
+  uint uVar4;
+  int iVar5;
+  ushort uVar6;
   ushort *puVar7;
-  undefined **ppuVar8;
+  ent_field_t *peVar8;
   double dVar9;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38 [14];
   
-  uVar1 = __savegprlr_28();
-  uVar3 = SL_FindString();
-  ppuVar8 = &PTR_DAT_8207d610;
-  puVar7 = &DAT_835a0dfa;
-  puVar6 = (undefined4 *)param_3;
+  pcVar3 = (char *)__savegprlr_28(param_1);
+  uVar4 = SL_FindString(pcVar3);
+  peVar8 = fields;
+  puVar7 = &scr_const.code_classname;
   do {
-    if (*puVar7 == uVar3) {
-      _Src = (char *)param_2;
-      switch(ppuVar8[3]) {
-      case (undefined *)0x0:
-        iVar4 = atoi(_Src);
-        *(int *)(ppuVar8[2] + (int)puVar6) = iVar4;
+    if (*puVar7 == uVar4) {
+      switch(peVar8->type) {
+      case F_INT:
+        iVar5 = atoi(param_2);
+        *(int *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = iVar5;
         __restgprlr_28();
         return;
-      case (undefined *)0x3:
-        dVar9 = atof(_Src);
-        *(float *)(ppuVar8[2] + (int)puVar6) = (float)dVar9;
+      case F_FLOAT:
+        dVar9 = atof(param_2);
+        *(float *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = (float)dVar9;
         __restgprlr_28();
         return;
-      case (undefined *)0x5:
-        if (*(short *)(ppuVar8[2] + (int)puVar6) != 0) {
-          MyAssertHandler(0xffffffff8207d840,0x105,0,0xffffffff82000f98,0xffffffff8207dc2c);
+      case F_STRING:
+        if (*(short *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                          0x105,0,"%s");
         }
-        Scr_SetString(ZEXT48(ppuVar8[2]) + param_3,0);
-        uVar5 = G_NewString(param_2);
-        *(undefined2 *)(ppuVar8[2] + (int)puVar6) = uVar5;
+        Scr_SetString((ushort *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18),0);
+        uVar4 = G_NewString(param_2);
+        *(short *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = (short)uVar4;
         __restgprlr_28();
         return;
-      case (undefined *)0x6:
-        local_40 = 0;
-        local_3c = 0;
-        local_38[0] = 0;
-        iVar4 = sscanf(_Src,"%f %f %f",&local_40,&local_3c,local_38);
-        *(undefined4 *)(ppuVar8[2] + (int)puVar6) = local_40;
-        *(undefined4 *)((int)puVar6 + (int)(ppuVar8[2] + 4)) = local_3c;
-        *(undefined4 *)((int)puVar6 + (int)(ppuVar8[2] + 8)) = local_38[0];
-        __restgprlr_28(iVar4);
+      case F_VECTOR:
+        iVar5 = sscanf(param_2,"%f %f %f");
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = 0;
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x14) = 0;
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x10) = 0;
+        __restgprlr_28(iVar5);
         return;
-      case (undefined *)0xb:
-        if (*_Src == '*') {
-          iVar4 = atoi(_Src + 1);
-          uVar3 = truncate_cast<unsigned_short>(iVar4);
-          puVar6[0x23] = uVar3 & 0xffff;
-          *(undefined1 *)((int)puVar6 + 0x101) = 4;
+      case F_MODEL:
+        if (*param_2 == '*') {
+          iVar5 = atoi(param_2 + 1);
+          uVar6 = truncate_cast<unsigned_short>(iVar5);
+          <Var1.brushModel._0_2_ = 0;
+          <Var1.brushModel._2_2_ = uVar6;
+          (param_3->s).index = <Var1;
+          (param_3->r).modelType = '\x04';
           __restgprlr_28();
           return;
         }
-        if (*_Src != '?') {
+        if (*param_2 != '?') {
           G_SetModel(param_3,param_2);
           __restgprlr_28();
           return;
         }
-        iVar4 = atoi(_Src + 1);
-        uVar3 = truncate_cast<unsigned_short>(iVar4);
-        puVar6[0x23] = uVar3 & 0xffff;
-        *(undefined1 *)((int)puVar6 + 0x101) = 3;
+        iVar5 = atoi(param_2 + 1);
+        uVar6 = truncate_cast<unsigned_short>(iVar5);
+        <Var2.brushModel._0_2_ = 0;
+        <Var2.brushModel._2_2_ = uVar6;
+        (param_3->s).index = <Var2;
+        (param_3->r).modelType = '\x03';
         __restgprlr_28();
         return;
       }
       goto switchD_824ab360_caseD_1;
     }
-    ppuVar8 = ppuVar8 + 6;
-    puVar7 = (ushort *)*ppuVar8;
+    peVar8 = peVar8 + 1;
+    puVar7 = peVar8->name;
   } while (puVar7 != (ushort *)0x0);
-  uVar1 = SL_GetCanonicalString(uVar1);
-  uVar2 = G_SetEntityScriptVariableInternal(uVar1,param_2);
-  if ((uVar2 & 0xffffffff) != 0) {
-    Scr_SetDynamicEntityField(*puVar6,0,uVar2);
+  uVar4 = SL_GetCanonicalString(pcVar3);
+  uVar4 = G_SetEntityScriptVariableInternal(uVar4,param_2);
+  if (uVar4 != 0) {
+    Scr_SetDynamicEntityField((param_3->s).number,0,uVar4);
   }
 switchD_824ab360_caseD_1:
   __restgprlr_28();
@@ -227,113 +243,121 @@ switchD_824ab360_caseD_1:
 
 // 824AB500  G_ParseEntityFields  (game_mp/g_spawn_mp.cpp:318)
 
-void G_ParseEntityFields(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_ParseEntityFields(gentity_s *param_1,char *param_2)
 
 {
-  undefined4 uVar1;
-  char *_Src;
-  undefined4 *puVar4;
-  uint uVar5;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  undefined2 uVar8;
-  uint uVar6;
-  int iVar7;
-  ushort *puVar9;
+  char *pcVar1;
+  char *pcVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  <unnamed_type_index> <Var6;
+  SpawnVar *pSVar7;
+  gentity_s *pgVar8;
+  uint uVar9;
   int iVar10;
-  undefined4 *puVar11;
-  undefined **ppuVar12;
-  double dVar13;
-  double dVar14;
-  float local_b0;
-  float local_ac;
-  float local_a8 [42];
+  ushort uVar11;
+  ulonglong uVar12;
+  ushort *puVar13;
+  int iVar14;
+  ent_field_t *peVar15;
+  double dVar16;
+  double dVar17;
   
-  puVar4 = (undefined4 *)__savegprlr_15();
-  if (DAT_83581038 == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x141,0,0xffffffff82000f98,0xffffffff82073d24);
+  uVar12 = (ulonglong)(int)param_2;
+  pgVar8 = (gentity_s *)__savegprlr_15(param_1);
+  if (level.spawnVar.spawnVarsValid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x141,
+                    0,"%s");
   }
-  iVar10 = 0;
-  if (0 < DAT_8358103c) {
-    dVar14 = 0.0;
-    puVar11 = &DAT_83581040;
+  iVar14 = 0;
+  if (0 < level.spawnVar.numSpawnVars) {
+    dVar17 = 0.0;
+    pSVar7 = &level.spawnVar;
     do {
-      uVar1 = *puVar11;
-      _Src = (char *)puVar11[1];
-      uVar5 = SL_FindString(uVar1);
-      puVar9 = &DAT_835a0dfa;
-      ppuVar12 = &PTR_DAT_8207d610;
+      pcVar1 = pSVar7->spawnVars[0][0];
+      pcVar2 = pSVar7->spawnVars[0][1];
+      uVar9 = SL_FindString(pcVar1);
+      puVar13 = &scr_const.code_classname;
+      peVar15 = fields;
       do {
-        if (*puVar9 == uVar5) {
-          switch(ppuVar12[3]) {
-          case (undefined *)0x0:
-            iVar7 = atoi(_Src);
-            *(int *)(ppuVar12[2] + (int)puVar4) = iVar7;
+        if (*puVar13 == uVar9) {
+          switch(peVar15->type) {
+          case F_INT:
+            iVar10 = atoi(pcVar2);
+            *(int *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = iVar10;
             break;
-          case (undefined *)0x3:
-            dVar13 = atof(_Src);
-            *(float *)(ppuVar12[2] + (int)puVar4) = (float)dVar13;
+          case F_FLOAT:
+            dVar16 = atof(pcVar2);
+            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = (float)dVar16;
             break;
-          case (undefined *)0x5:
-            if (*(short *)(ppuVar12[2] + (int)puVar4) != 0) {
-              MyAssertHandler(0xffffffff8207d840,0x105,0,0xffffffff82000f98,0xffffffff8207dc2c);
+          case F_STRING:
+            if (*(short *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) != 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp"
+                              ,0x105,0,"%s");
             }
-            Scr_SetString(ppuVar12[2] + (int)puVar4,0);
-            uVar8 = G_NewString(_Src);
-            *(undefined2 *)(ppuVar12[2] + (int)puVar4) = uVar8;
+            Scr_SetString((ushort *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18),0);
+            uVar9 = G_NewString(pcVar2);
+            *(short *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = (short)uVar9;
             break;
-          case (undefined *)0x6:
-            local_b0 = (float)dVar14;
-            local_ac = (float)dVar14;
-            local_a8[0] = (float)dVar14;
-            sscanf(_Src,"%f %f %f",&local_b0,&local_ac,local_a8);
-            *(float *)(ppuVar12[2] + (int)puVar4) = local_b0;
-            *(float *)(ppuVar12[2] + (int)puVar4 + 4) = local_ac;
-            *(float *)(ppuVar12[2] + (int)puVar4 + 8) = local_a8[0];
+          case F_VECTOR:
+            fVar3 = (float)dVar17;
+            fVar4 = (float)dVar17;
+            fVar5 = (float)dVar17;
+            sscanf(pcVar2,"%f %f %f");
+            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = fVar3;
+            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x14) = fVar4;
+            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x10) = fVar5;
             break;
-          case (undefined *)0xb:
-            if (*_Src == '*') {
-              uVar6 = atoi(_Src + 1);
-              uVar5 = uVar6 & 0xffff;
-              if (uVar6 != uVar5) {
-                MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar6,uVar5);
+          case F_MODEL:
+            if (*pcVar2 == '*') {
+              uVar9 = atoi(pcVar2 + 1);
+              if (uVar9 != (uVar9 & 0xffff)) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                                ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
               }
-              puVar4[0x23] = uVar5;
-              *(undefined1 *)((int)puVar4 + 0x101) = 4;
+              (pgVar8->s).index.brushModel = uVar9 & 0xffff;
+              (pgVar8->r).modelType = '\x04';
             }
-            else if (*_Src == '?') {
-              iVar7 = atoi(_Src + 1);
-              uVar5 = truncate_cast<unsigned_short>(iVar7);
-              *(undefined1 *)((int)puVar4 + 0x101) = 3;
-              puVar4[0x23] = uVar5 & 0xffff;
+            else if (*pcVar2 == '?') {
+              iVar10 = atoi(pcVar2 + 1);
+              uVar11 = truncate_cast<unsigned_short>(iVar10);
+              <Var6.brushModel._0_2_ = 0;
+              <Var6.brushModel._2_2_ = uVar11;
+              (pgVar8->r).modelType = '\x03';
+              (pgVar8->s).index = <Var6;
             }
             else {
-              G_SetModel(puVar4,_Src);
+              G_SetModel(pgVar8,pcVar2);
             }
           }
           goto switchD_824ab698_caseD_1;
         }
-        ppuVar12 = ppuVar12 + 6;
-        puVar9 = (ushort *)*ppuVar12;
-      } while (puVar9 != (ushort *)0x0);
-      uVar2 = SL_GetCanonicalString(uVar1);
-      uVar3 = G_SetEntityScriptVariableInternal(uVar2,_Src);
-      if ((uVar3 & 0xffffffff) != 0) {
-        Scr_SetDynamicEntityField(*puVar4,0,uVar3);
+        peVar15 = peVar15 + 1;
+        puVar13 = peVar15->name;
+      } while (puVar13 != (ushort *)0x0);
+      uVar9 = SL_GetCanonicalString(pcVar1);
+      uVar9 = G_SetEntityScriptVariableInternal(uVar9,pcVar2);
+      if (uVar9 != 0) {
+        Scr_SetDynamicEntityField((pgVar8->s).number,0,uVar9);
       }
 switchD_824ab698_caseD_1:
-      iVar10 = iVar10 + 1;
-      puVar11 = puVar11 + 2;
-    } while (iVar10 < DAT_8358103c);
+      iVar14 = iVar14 + 1;
+      pSVar7 = (SpawnVar *)pSVar7->spawnVars;
+    } while (iVar14 < level.spawnVar.numSpawnVars);
   }
-  G_SetOrigin(puVar4,puVar4 + 0x4e);
-  G_SetAngle(puVar4,puVar4 + 0x51);
-  if (*(short *)((int)puVar4 + 0x172) != 0) {
-    MyAssertHandler(0xffffffff8207d840,0x14e,0,0xffffffff82000f98,0xffffffff8207d9c8);
+  G_SetOrigin(pgVar8,(pgVar8->r).currentOrigin);
+  G_SetAngle(pgVar8,(pgVar8->r).currentAngles);
+  if (pgVar8->classname != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x14e,
+                    0,"%s");
   }
-  if ((param_2 & 0xffffffff) != 0) {
-    uVar8 = G_NewString(param_2);
-    *(undefined2 *)((int)puVar4 + 0x172) = uVar8;
+  if ((uVar12 & 0xffffffff) != 0) {
+    uVar9 = G_NewString((char *)uVar12);
+    pgVar8->classname = (ushort)uVar9;
   }
   __restgprlr_15();
   return;
@@ -342,70 +366,76 @@ switchD_824ab698_caseD_1:
 
 // 824A9D68  G_SpawnStruct  (game_mp/g_spawn_mp.cpp:347)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void G_SpawnStruct(void)
 
 {
-  char *_Src;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
+  char *pcVar4;
   int iVar5;
-  undefined4 *puVar6;
+  char **ppcVar6;
   double dVar7;
   double dVar8;
   int local_80 [2];
   float local_78;
   float local_74;
-  float local_70 [28];
+  float local_70;
   
   __savegprlr_22();
-  if (DAT_83581038 == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x163,0,0xffffffff82000f98,0xffffffff82073d24);
+  if (level.spawnVar.spawnVarsValid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x163,
+                    0,"%s");
   }
-  if (DAT_8359a904 == 0) {
-    MyAssertHandler(0xffffffff8207d840,0x165,0,0xffffffff82000f98,0xffffffff8207d8b4);
+  if (g_scr_data.createstruct == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x165,
+                    0,"%s");
   }
-  Scr_AddExecThread(DAT_8359a904,0);
+  Scr_AddExecThread(g_scr_data.createstruct,0);
   uVar1 = Scr_GetObject(0);
   iVar5 = 0;
-  if (0 < DAT_8358103c) {
-    puVar6 = &DAT_83581044;
+  if (0 < level.spawnVar.numSpawnVars) {
+    ppcVar6 = level.spawnVar.spawnVars[0] + 1;
     dVar8 = 0.0;
     do {
-      uVar2 = SL_GetCanonicalString(puVar6[-1]);
-      _Src = (char *)*puVar6;
-      uVar3 = Scr_FindField(uVar2,local_80);
-      if ((uVar3 & 0xffffffff) != 0) {
+      uVar2 = SL_GetCanonicalString((*(char *(*) [2])(ppcVar6 + -1))[0]);
+      pcVar4 = *ppcVar6;
+      uVar2 = Scr_FindField(uVar2,local_80);
+      if (uVar2 != 0) {
         if ((local_80[0] - 2U < 5) && (local_80[0] != 3)) {
           if (local_80[0] == 4) {
             local_78 = (float)dVar8;
             local_74 = (float)dVar8;
-            local_70[0] = (float)dVar8;
-            sscanf(_Src,"%f %f %f",&local_78,&local_74,local_70);
+            local_70 = (float)dVar8;
+            sscanf(pcVar4,"%f %f %f");
             Scr_AddVector(&local_78);
           }
           else if (local_80[0] == 5) {
-            dVar7 = atof(_Src);
-            Scr_AddFloat((double)(float)dVar7);
+            dVar7 = atof(pcVar4);
+            Scr_AddFloat((float)dVar7);
           }
           else if (local_80[0] == 2) {
-            Scr_AddString(_Src);
+            Scr_AddString(pcVar4);
           }
           else {
-            iVar4 = atoi(_Src);
-            Scr_AddInt(iVar4);
+            iVar3 = atoi(pcVar4);
+            Scr_AddInt(iVar3);
           }
         }
-        else if (DAT_84013128 == 0) {
-          uVar2 = va(0xffffffff8207d884);
-          MyAssertHandler(0xffffffff8207d840,0xc2,0,uVar2);
+        else if (alwaysfails == 0) {
+          pcVar4 = va("G_SetEntityScriptVariableInternal: bad case %d");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                          0xc2,0,pcVar4);
         }
-        Scr_SetStructField(uVar1,uVar3);
+        Scr_SetStructField(uVar1,uVar2);
       }
       iVar5 = iVar5 + 1;
-      puVar6 = puVar6 + 2;
-    } while (iVar5 < DAT_8358103c);
+      ppcVar6 = ppcVar6 + 2;
+    } while (iVar5 < level.spawnVar.numSpawnVars);
   }
   __restgprlr_22();
   return;
@@ -414,7 +444,10 @@ void G_SpawnStruct(void)
 
 // 824A9F30  G_DuplicateEntityFieldsForSpawn  (game_mp/g_spawn_mp.cpp:378)
 
-void G_DuplicateEntityFieldsForSpawn(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_DuplicateEntityFieldsForSpawn(gentity_s *param_1,gentity_s *param_2)
 
 {
   int iVar1;
@@ -422,32 +455,39 @@ void G_DuplicateEntityFieldsForSpawn(undefined8 param_1,int param_2)
   int iVar3;
   int *piVar4;
   
-  iVar3 = __savegprlr_28();
-  piVar4 = &DAT_8207d618;
+  iVar3 = __savegprlr_28(param_1);
+  piVar4 = &fields[0].ofs;
   do {
     switch(piVar4[1]) {
     case 0:
-      *(undefined4 *)(*piVar4 + iVar3) = *(undefined4 *)(*piVar4 + param_2);
+      *(undefined4 *)(*piVar4 + iVar3) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
       break;
     default:
-      Com_PrintError(1,0xffffffff8207d8cc);
+      Com_PrintError(1,"G_DuplicateEntityFieldsForSpawn(): Unhandled type #%i.");
       break;
     case 3:
-      *(undefined4 *)(*piVar4 + iVar3) = *(undefined4 *)(*piVar4 + param_2);
+      *(undefined4 *)(*piVar4 + iVar3) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
       break;
     case 5:
-      Scr_SetString(*piVar4 + iVar3,*(undefined2 *)(*piVar4 + param_2));
+      Scr_SetString((ushort *)(*piVar4 + iVar3),
+                    (uint)*(ushort *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18));
       break;
     case 6:
       iVar1 = *piVar4;
-      *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar1 + param_2);
-      *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar1 + param_2 + 4);
-      *(undefined4 *)(iVar1 + iVar3 + 8) = *(undefined4 *)(iVar1 + param_2 + 8);
+      *(undefined4 *)(iVar1 + iVar3) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x18);
+      *(undefined4 *)(iVar1 + iVar3 + 4) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x14);
+      *(undefined4 *)(iVar1 + iVar3 + 8) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x10);
       break;
     case 7:
       break;
     case 0xb:
-      *(undefined2 *)(*piVar4 + iVar3) = *(undefined2 *)(*piVar4 + param_2);
+      *(undefined2 *)(*piVar4 + iVar3) =
+           *(undefined2 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
     }
     piVar2 = piVar4 + 4;
     piVar4 = piVar4 + 6;
@@ -459,19 +499,24 @@ void G_DuplicateEntityFieldsForSpawn(undefined8 param_1,int param_2)
 
 // 824AA048  G_DuplicateScriptFields  (game_mp/g_spawn_mp.cpp:422)
 
-void G_DuplicateScriptFields(undefined8 param_1,int *param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_DuplicateScriptFields(gentity_s *param_1,gentity_s *param_2)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_26();
+  piVar1 = (int *)__savegprlr_26(param_1);
   if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x1a7,0,0xffffffff82000f98,0xffffffff8207d92c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1a7,
+                    0,"%s");
   }
-  if (*param_2 != (int)(param_2 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x1a8,0,0xffffffff82000f98,0xffffffff8207d904);
+  if ((param_2->s).number != (int)&param_2[0x31e9ea].s.groundEntityNum / 0x280) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1a8,
+                    0,"%s");
   }
-  Scr_CopyEntityNum(*param_2,*piVar1,0);
+  Scr_CopyEntityNum((param_2->s).number,*piVar1,0);
   __restgprlr_26();
   return;
 }
@@ -479,233 +524,260 @@ void G_DuplicateScriptFields(undefined8 param_1,int *param_2)
 
 // 824AA0F0  G_GetItemForClassname  (game_mp/g_spawn_mp.cpp:436)
 
-undefined8 G_GetItemForClassname(longlong param_1)
+Weapon G_GetItemForClassname(char *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  char *pcVar1;
+  Weapon WVar2;
   
-  iVar2 = strncmp((char *)param_1,"weapon_",7);
-  if (iVar2 == 0) {
-    uVar1 = G_GetWeaponForName(param_1 + 7);
+  pcVar1 = param_1;
+  strncmp();
+  if (pcVar1 == (char *)0x0) {
+    WVar2 = G_GetWeaponForName(param_1 + 7);
   }
   else {
-    uVar1 = 0;
+    WVar2.data = 0;
   }
-  return uVar1;
+  return (Weapon)WVar2.data;
 }
 
 
 // 824AA150  G_FindSpawnFunc  (game_mp/g_spawn_mp.cpp:448)
 
-void G_FindSpawnFunc(undefined8 param_1,longlong param_2,int param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+SpawnFuncEntry * G_FindSpawnFunc(char *param_1,SpawnFuncEntry *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  longlong lVar3;
-  uint uVar4;
+  SpawnFuncEntry *pSVar3;
+  longlong lVar4;
+  longlong lVar5;
+  uint uVar6;
   
-  uVar1 = __savegprlr_27();
-  uVar4 = 0;
-  lVar3 = param_2;
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  uVar6 = 0;
+  lVar5 = lVar4;
   if (0 < param_3) {
     do {
-      iVar2 = IsParentClassname(uVar1,*(undefined4 *)lVar3);
+      iVar2 = IsParentClassname(pcVar1,(char *)*(undefined4 *)lVar5);
       if (iVar2 != 0) {
-        __restgprlr_27(((ulonglong)uVar4 & 0x1fffffff) * 8 + param_2);
-        return;
+        pSVar3 = (SpawnFuncEntry *)__restgprlr_27(((ulonglong)uVar6 & 0x1fffffff) * 8 + lVar4);
+        return pSVar3;
       }
-      uVar4 = uVar4 + 1;
-      lVar3 = lVar3 + 8;
-    } while ((int)uVar4 < param_3);
+      uVar6 = uVar6 + 1;
+      lVar5 = lVar5 + 8;
+    } while ((int)uVar6 < param_3);
   }
-  __restgprlr_27(0);
-  return;
+  pSVar3 = (SpawnFuncEntry *)__restgprlr_27(0);
+  return pSVar3;
 }
 
 
 // 824AB820  G_CallSpawn  (game_mp/g_spawn_mp.cpp:472)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void G_CallSpawn(void)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  Weapon WVar2;
+  gentity_s *pgVar3;
   int iVar4;
-  int iVar5;
-  undefined *puVar6;
-  undefined **ppuVar7;
-  undefined **ppuVar8;
-  int local_30 [12];
+  char *pcVar5;
+  SpawnFuncEntry *pSVar6;
+  SpawnFuncEntry *pSVar7;
+  char *local_30 [12];
   
   __savegprlr_28();
-  if (DAT_83581038 == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x1de,1,0xffffffff82000f98,0xffffffff82073d24);
+  if (level.spawnVar.spawnVarsValid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1de,
+                    1,"%s");
   }
-  G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
-  if (local_30[0] == 0) {
-    MyAssertHandler(0xffffffff8207d840,0x1e1,0,0xffffffff82000f98,0xffffffff8207dca0);
+  G_SpawnString(&level.spawnVar,0x2c4,"",local_30);
+  if (local_30[0] == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1e1,
+                    0,"%s");
   }
-  iVar3 = IsDynClassname(local_30[0]);
-  if ((iVar3 != 0) || (iVar3 = IsNodeClassname(local_30[0]), iVar3 != 0)) goto LAB_824aba48;
-  iVar3 = IsParentClassname(local_30[0],0xffffffff8207dc8c);
-  if (iVar3 != 0) {
-    VehPath_SpawnNode();
+  iVar1 = IsDynClassname(local_30[0]);
+  if ((iVar1 != 0) || (iVar1 = IsNodeClassname(local_30[0]), iVar1 != 0)) goto LAB_824aba48;
+  iVar1 = IsParentClassname(local_30[0],"info_vehicle_node");
+  if (iVar1 != 0) {
+    VehPath_SpawnNode(local_30[0]);
     __restgprlr_28();
     return;
   }
-  iVar3 = IsActorClassname(local_30[0]);
-  if (iVar3 != 0) {
-    Com_PrintError(1,0xffffffff8207dc50,local_30[0]);
+  iVar1 = IsActorClassname(local_30[0]);
+  if (iVar1 != 0) {
+    Com_PrintError(1,"classname \'%s\' should not be added to MP map - discarding.\n");
     __restgprlr_28();
     return;
   }
-  uVar1 = G_GetItemForClassname(local_30[0]);
-  iVar3 = local_30[0];
-  if ((uVar1 & 0xff) != 0) {
-    uVar2 = G_Spawn();
-    G_ParseEntityFields(uVar2,local_30[0]);
-    G_SpawnItem(uVar2,uVar1);
+  WVar2 = G_GetItemForClassname(local_30[0]);
+  pcVar5 = local_30[0];
+  if ((WVar2.data & 0xff) != 0) {
+    pgVar3 = G_Spawn();
+    G_ParseEntityFields(pgVar3,local_30[0]);
+    G_SpawnItem(pgVar3,WVar2);
     __restgprlr_28();
     return;
   }
-  iVar5 = 0;
-  ppuVar8 = &PTR_s_trigger_use_touch_8207d778;
-  ppuVar7 = &PTR_s_info_notnull_8207d7f0;
+  iVar1 = 0;
+  pSVar7 = s_bspOnlySpawns;
+  pSVar6 = s_bspOrDynamicSpawns;
   do {
-    iVar4 = IsParentClassname(iVar3,*ppuVar7);
+    iVar4 = IsParentClassname(pcVar5,pSVar6->classname);
     if (iVar4 != 0) {
-      ppuVar7 = &PTR_s_info_notnull_8207d7f0 + iVar5 * 2;
-      if (ppuVar7 != (undefined **)0x0) goto LAB_824ab9f8;
+      pSVar6 = s_bspOrDynamicSpawns + iVar1;
+      if (pSVar6 != (SpawnFuncEntry *)0x0) goto LAB_824ab9f8;
       break;
     }
-    ppuVar7 = ppuVar7 + 2;
-    iVar5 = iVar5 + 1;
-  } while ((int)ppuVar7 < -0x7df827e8);
-  iVar3 = 0;
-  while (iVar5 = IsParentClassname(local_30[0],*ppuVar8), iVar5 == 0) {
-    ppuVar8 = ppuVar8 + 2;
-    iVar3 = iVar3 + 1;
-    if (-0x7df82811 < (int)ppuVar8) goto code_r0x824ab9e0;
+    pSVar6 = pSVar6 + 1;
+    iVar1 = iVar1 + 1;
+  } while ((int)pSVar6 < -0x7df827e8);
+  iVar1 = 0;
+  while (iVar4 = IsParentClassname(local_30[0],pSVar7->classname), iVar4 == 0) {
+    pSVar7 = pSVar7 + 1;
+    iVar1 = iVar1 + 1;
+    if (-0x7df82811 < (int)pSVar7) goto code_r0x824ab9e0;
   }
-  ppuVar7 = &PTR_s_trigger_use_touch_8207d778 + iVar3 * 2;
-  if (ppuVar7 == (undefined **)0x0) goto LAB_824aba0c;
+  pSVar6 = s_bspOnlySpawns + iVar1;
+  if (pSVar6 == (SpawnFuncEntry *)0x0) goto LAB_824aba0c;
 LAB_824ab9f8:
-  if ((code *)ppuVar7[1] == G_FreeEntity) goto LAB_824aba48;
+  if (pSVar6->callback == G_FreeEntity) goto LAB_824aba48;
 LAB_824aba0c:
-  uVar2 = G_Spawn();
-  if (ppuVar7 == (undefined **)0x0) {
-    puVar6 = (undefined *)0x0;
+  pgVar3 = G_Spawn();
+  if (pSVar6 == (SpawnFuncEntry *)0x0) {
+    pcVar5 = (char *)0x0;
   }
   else {
-    puVar6 = *ppuVar7;
+    pcVar5 = pSVar6->classname;
   }
-  G_ParseEntityFields(uVar2,puVar6);
-  if (ppuVar7 != (undefined **)0x0) {
-    (*(code *)ppuVar7[1])(uVar2);
+  G_ParseEntityFields(pgVar3,pcVar5);
+  if (pSVar6 != (SpawnFuncEntry *)0x0) {
+    (*pSVar6->callback)(pgVar3);
   }
 LAB_824aba48:
   __restgprlr_28();
   return;
 code_r0x824ab9e0:
-  ppuVar7 = (undefined **)0x0;
+  pSVar6 = (SpawnFuncEntry *)0x0;
   goto LAB_824aba0c;
 }
 
 
 // 824AA1B8  G_CallSpawnEntity  (game_mp/g_spawn_mp.cpp:542)
 
-void G_CallSpawnEntity(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int G_CallSpawnEntity(gentity_s *param_1)
 
 {
+  gentity_s *pgVar1;
   int iVar2;
-  longlong lVar1;
-  int iVar3;
-  undefined2 uVar5;
-  int iVar4;
-  ulonglong uVar6;
-  undefined **ppuVar7;
+  char *pcVar3;
+  char *pcVar4;
+  Weapon WVar5;
+  uint uVar6;
+  int iVar7;
+  SpawnFuncEntry *pSVar8;
   
-  iVar2 = __savegprlr_25();
-  if (DAT_83581038 != '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x223,1,0xffffffff82000f98,0xffffffff8207d9d8);
+  pgVar1 = (gentity_s *)__savegprlr_25(param_1);
+  if (level.spawnVar.spawnVarsValid != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x223,
+                    1,"%s");
   }
-  if (*(short *)(iVar2 + 0x172) != 0) {
-    MyAssertHandler(0xffffffff8207d840,0x224,0,0xffffffff82000f98,0xffffffff8207d9c8);
+  if (pgVar1->classname != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x224,
+                    0,"%s");
   }
-  if (*(short *)(iVar2 + 0x174) == 0) {
-    Com_Printf(0xf,0xffffffff8207d9a4);
-    __restgprlr_25(0);
-    return;
+  if (pgVar1->script_classname == 0) {
+    Com_Printf(0xf,"G_CallSpawnEntity: NULL classname\n");
+    iVar2 = __restgprlr_25(0);
+    return iVar2;
   }
-  lVar1 = SL_ConvertToString();
-  uVar6 = 0;
-  iVar3 = strncmp((char *)lVar1,"weapon_",7);
-  if (iVar3 == 0) {
-    uVar6 = G_GetWeaponForName(lVar1 + 7);
+  pcVar3 = SL_ConvertToString((uint)pgVar1->script_classname);
+  WVar5.data = 0;
+  pcVar4 = pcVar3;
+  strncmp();
+  if (pcVar4 == (char *)0x0) {
+    WVar5 = G_GetWeaponForName(pcVar3 + 7);
   }
-  if ((uVar6 & 0xff) != 0) {
-    uVar5 = G_NewString(lVar1);
-    *(undefined2 *)(iVar2 + 0x172) = uVar5;
-    G_SpawnItem(iVar2,uVar6);
-    __restgprlr_25(1);
-    return;
+  if ((WVar5.data & 0xff) != 0) {
+    uVar6 = G_NewString(pcVar3);
+    pgVar1->classname = (ushort)uVar6;
+    G_SpawnItem(pgVar1,WVar5);
+    iVar2 = __restgprlr_25(1);
+    return iVar2;
   }
-  iVar3 = 0;
-  ppuVar7 = &PTR_s_info_notnull_8207d7f0;
+  iVar2 = 0;
+  pSVar8 = s_bspOrDynamicSpawns;
   do {
-    iVar4 = IsParentClassname(lVar1,*ppuVar7);
-    if (iVar4 != 0) {
-      if (&PTR_s_info_notnull_8207d7f0 + iVar3 * 2 != (undefined **)0x0) {
-        uVar5 = G_NewString((&PTR_s_info_notnull_8207d7f0)[iVar3 * 2]);
-        *(undefined2 *)(iVar2 + 0x172) = uVar5;
-        if ((code *)(&PTR_SP_info_notnull_8207d7f4)[iVar3 * 2] == G_FreeEntity) {
-          MyAssertHandler(0xffffffff8207d840,0x23f,0,0xffffffff82000f98,0xffffffff8207d958);
+    iVar7 = IsParentClassname(pcVar3,pSVar8->classname);
+    if (iVar7 != 0) {
+      if (s_bspOrDynamicSpawns + iVar2 != (SpawnFuncEntry *)0x0) {
+        uVar6 = G_NewString(s_bspOrDynamicSpawns[iVar2].classname);
+        pgVar1->classname = (ushort)uVar6;
+        if (s_bspOrDynamicSpawns[iVar2].callback == G_FreeEntity) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                          0x23f,0,"%s");
         }
-        (*(code *)(&PTR_SP_info_notnull_8207d7f4)[iVar3 * 2])(iVar2);
-        if (*(char *)(iVar2 + 0x103) == '\0') {
-          MyAssertHandler(0xffffffff8207d840,0x241,0,0xffffffff82000f98,0xffffffff8206caf8);
+        (*s_bspOrDynamicSpawns[iVar2].callback)(pgVar1);
+        if ((pgVar1->r).isInUse == '\0') {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                          0x241,0,"%s");
         }
-        __restgprlr_25(1);
-        return;
+        iVar2 = __restgprlr_25(1);
+        return iVar2;
       }
       break;
     }
-    ppuVar7 = ppuVar7 + 2;
-    iVar3 = iVar3 + 1;
-  } while ((int)ppuVar7 < -0x7df827e8);
-  Com_Printf(0xf,0xffffffff8207d980,lVar1);
-  __restgprlr_25(0);
-  return;
+    pSVar8 = pSVar8 + 1;
+    iVar2 = iVar2 + 1;
+  } while ((int)pSVar8 < -0x7df827e8);
+  Com_Printf(0xf,"%s cannot be spawned dynamically\n");
+  iVar2 = __restgprlr_25(0);
+  return iVar2;
 }
 
 
 // 824AA3A8  GScr_AddFieldsForEntity  (game_mp/g_spawn_mp.cpp:588)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void GScr_AddFieldsForEntity(void)
 
 {
   uint uVar1;
   int iVar2;
-  undefined **ppuVar3;
+  ent_field_t *peVar3;
   
   __savegprlr_23();
-  ppuVar3 = &PTR_DAT_8207d610;
+  peVar3 = fields;
   iVar2 = 0;
   do {
     uVar1 = iVar2 / 0x18;
     if ((uVar1 & 0xe000) != 0) {
-      MyAssertHandler(0xffffffff8207d840,0x251,0,0xffffffff82000f98,0xffffffff82070830);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x251,0,"%s");
     }
     if (uVar1 != (uVar1 & 0xffff)) {
-      MyAssertHandler(0xffffffff8207d840,0x252,0,0xffffffff82000f98,0xffffffff8206c644);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x252,0,"%s");
     }
-    Scr_AddClassField(0,*(undefined2 *)*ppuVar3,ppuVar3[1],uVar1 & 0xffff);
-    ppuVar3 = ppuVar3 + 6;
+    Scr_AddClassField(0,(uint)*peVar3->name,peVar3->canonicalString,uVar1 & 0xffff);
+    peVar3 = peVar3 + 1;
     iVar2 = iVar2 + 0x18;
-  } while (*ppuVar3 != (undefined *)0x0);
+  } while (peVar3->name != (ushort *)0x0);
   GScr_AddFieldsForClient();
   VehicleScript_AddFields();
   __restgprlr_23();
@@ -715,105 +787,117 @@ void GScr_AddFieldsForEntity(void)
 
 // 824AA478  GScr_AddFieldsForRadiant  (game_mp/g_spawn_mp.cpp:609)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void GScr_AddFieldsForRadiant(void)
 
 {
-  Scr_AddFields(0xffffffff8207d9f8,0xffffffff8202de74);
+  Scr_AddFields("radiant","txt");
   return;
 }
 
 
 // 824ABD98  Scr_SetEntityField  (game_mp/g_spawn_mp.cpp:624)
 
-void Scr_SetEntityField(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int Scr_SetEntityField(int param_1,int param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  undefined4 *puVar3;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar2 = __savegprlr_28();
+  uVar4 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28(param_1);
   if (0x7ff < uVar2) {
-    MyAssertHandler(0xffffffff8207d840,0x275,0,0xffffffff82000f98,0xffffffff8207dcc8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x275,
+                    0,"%s");
   }
-  puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-  if ((&DAT_83373783)[uVar2 * 0x280] == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x278,0,0xffffffff82073850,0xffffffff8207da00,*puVar3);
+  if (g_entities[uVar2].r.isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x278,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  uVar1 = (uint)param_2;
+  uVar1 = (uint)uVar4;
   if ((uVar1 & 0xe000) == 0x6000) {
-    if ((&DAT_833737d8)[uVar2 * 0xa0] != 0) {
-      Scr_SetClientField((&DAT_833737d8)[uVar2 * 0xa0],param_2 << 0x20 | param_2 & 0xffff1fff);
-      __restgprlr_28(1);
-      return;
+    if (g_entities[uVar2].client != (gclient_s *)0x0) {
+      Scr_SetClientField(g_entities[uVar2].client,uVar1 & 0xffff1fff);
+      iVar3 = __restgprlr_28(1);
+      return iVar3;
     }
   }
   else {
     if ((uVar1 & 0xe000) != 0x8000) {
-      if (0xd < (param_2 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8207d840,0x28f,0,0xffffffff82000f98,0xffffffff820707a8);
+      if (0xd < (uVar4 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                        0x28f,0,"%s");
       }
-      if ((code *)(&PTR_Scr_ReadOnlyField_8207d620)[uVar1 * 6] != (code *)0x0) {
-        (*(code *)(&PTR_Scr_ReadOnlyField_8207d620)[uVar1 * 6])(puVar3,param_2);
-        __restgprlr_28(1);
-        return;
+      if (fields[uVar1].setter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
+        (*fields[uVar1].setter)(g_entities + uVar2,uVar1);
+        iVar3 = __restgprlr_28(1);
+        return iVar3;
       }
-      Scr_SetGenericField(puVar3,(&DAT_8207d61c)[uVar1 * 6],(&DAT_8207d618)[uVar1 * 6]);
-      __restgprlr_28(1);
-      return;
+      Scr_SetGenericField((uchar *)(g_entities + uVar2),fields[uVar1].type,fields[uVar1].ofs);
+      iVar3 = __restgprlr_28(1);
+      return iVar3;
     }
-    if (*(int *)(&DAT_833737e0 + uVar2 * 0x280) != 0) {
-      VehicleScript_SetField
-                (*(int *)(&DAT_833737e0 + uVar2 * 0x280),param_2 << 0x20 | param_2 & 0xffff1fff);
-      __restgprlr_28(1);
-      return;
+    if (g_entities[uVar2].vehicle != (Vehicle *)0x0) {
+      VehicleScript_SetField(g_entities[uVar2].vehicle,uVar1 & 0xffff1fff);
+      iVar3 = __restgprlr_28(1);
+      return iVar3;
     }
   }
-  __restgprlr_28(0);
-  return;
+  iVar3 = __restgprlr_28(0);
+  return iVar3;
 }
 
 
 // 824ABA50  Scr_SetGenericField  (game_mp/g_spawn_mp.cpp:676)
 
-void Scr_SetGenericField(int param_1,undefined4 param_2,int param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_SetGenericField(uchar *param_1,fieldtype_t param_2,int param_3)
 
 {
-  undefined4 uVar2;
-  undefined8 uVar1;
-  double dVar3;
-  undefined4 local_30;
+  uint uVar1;
+  int iVar2;
+  gentity_s *pgVar3;
+  float fVar4;
+  float local_30;
   undefined4 local_2c;
   undefined4 local_28;
   
   switch(param_2) {
-  case 0:
-    uVar2 = Scr_GetInt(0);
-    *(undefined4 *)(param_1 + param_3) = uVar2;
+  case F_INT:
+    iVar2 = Scr_GetInt(0);
+    *(int *)(param_1 + param_3) = iVar2;
     break;
-  case 3:
-    dVar3 = (double)Scr_GetFloat(0);
-    *(float *)(param_1 + param_3) = (float)dVar3;
+  case F_FLOAT:
+    fVar4 = Scr_GetFloat(0);
+    *(float *)(param_1 + param_3) = fVar4;
     break;
-  case 5:
+  case F_STRING:
     uVar1 = Scr_GetConstStringIncludeNull(0);
-    Scr_SetString(param_1 + param_3,uVar1);
+    Scr_SetString((ushort *)(param_1 + param_3),uVar1);
     break;
-  case 6:
+  case F_VECTOR:
     Scr_GetVector(0,&local_30);
-    *(undefined4 *)(param_1 + param_3) = local_30;
+    *(float *)(param_1 + param_3) = local_30;
     *(undefined4 *)(param_1 + param_3 + 4) = local_2c;
     *(undefined4 *)(param_1 + param_3 + 8) = local_28;
     break;
-  case 7:
-    uVar2 = Scr_GetEntityAllowNull(0);
-    *(undefined4 *)(param_1 + param_3) = uVar2;
+  case F_ENTITY:
+    pgVar3 = Scr_GetEntityAllowNull(0);
+    *(gentity_s **)(param_1 + param_3) = pgVar3;
     break;
-  case 8:
-    uVar1 = Scr_GetEntityAllowNull(0);
-    EntHandle__setEnt(param_1 + param_3,uVar1);
+  case F_ENTHANDLE:
+    pgVar3 = Scr_GetEntityAllowNull(0);
+    EntHandle::setEnt((EntHandle *)(param_1 + param_3),pgVar3);
     break;
-  case 9:
+  case F_ANGLES_YAW:
     Scr_GetVector(0,&local_30);
     *(undefined4 *)(param_1 + param_3) = local_2c;
   }
@@ -823,27 +907,29 @@ void Scr_SetGenericField(int param_1,undefined4 param_2,int param_3)
 
 // 824ABF08  Scr_SetObjectField  (game_mp/g_spawn_mp.cpp:716)
 
-undefined8 Scr_SetObjectField(ulonglong param_1,undefined8 param_2,undefined8 param_3)
+int Scr_SetObjectField(uint param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  int iVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    uVar1 = Scr_SetEntityField(param_2,param_3);
-    return uVar1;
+  if (param_1 == 0) {
+    iVar2 = Scr_SetEntityField(param_2,param_3);
+    return iVar2;
   }
-  if ((param_1 & 0xffffffff) == 1) {
-    Scr_SetHudElemField();
+  if (param_1 == 1) {
+    Scr_SetHudElemField(param_2,param_3);
   }
   else {
-    if ((param_1 & 0xffffffff) == 3) {
-      va(0xffffffff8207dcec);
-      Scr_Error();
+    if (param_1 == 3) {
+      pcVar1 = va("vehicle node is read-only");
+      Scr_Error(pcVar1);
       return 1;
     }
-    if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff8207dd08,param_1);
-      MyAssertHandler(0xffffffff8207d840,0x2d8,0,uVar1);
+    if (alwaysfails == 0) {
+      pcVar1 = va("bad class num %u");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x2d8,0,pcVar1);
       return 1;
     }
   }
@@ -853,44 +939,49 @@ undefined8 Scr_SetObjectField(ulonglong param_1,undefined8 param_2,undefined8 pa
 
 // 824ABFD0  Scr_GetEntityField  (game_mp/g_spawn_mp.cpp:742)
 
-void Scr_GetEntityField(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_GetEntityField(int param_1,int param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  undefined4 *puVar3;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_28();
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28(param_1);
   if (0x7ff < uVar2) {
-    MyAssertHandler(0xffffffff8207d840,0x2eb,0,0xffffffff82000f98,0xffffffff8207dcc8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x2eb,
+                    0,"%s");
   }
-  puVar3 = &DAT_83373680 + uVar2 * 0xa0;
-  if ((&DAT_83373783)[uVar2 * 0x280] == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x2ee,0,0xffffffff82073850,0xffffffff8207da00,*puVar3);
+  if (g_entities[uVar2].r.isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x2ee,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  uVar1 = (uint)param_2;
+  uVar1 = (uint)uVar3;
   if ((uVar1 & 0xe000) == 0x6000) {
-    if ((&DAT_833737d8)[uVar2 * 0xa0] != 0) {
-      Scr_GetClientField((&DAT_833737d8)[uVar2 * 0xa0],param_2 << 0x20 | param_2 & 0xffff1fff);
+    if (g_entities[uVar2].client != (gclient_s *)0x0) {
+      Scr_GetClientField(g_entities[uVar2].client,uVar1 & 0xffff1fff);
     }
   }
   else {
     if ((uVar1 & 0xe000) != 0x8000) {
-      if (0xd < (param_2 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8207d840,0x305,0,0xffffffff82000f98,0xffffffff820707a8);
+      if (0xd < (uVar3 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                        0x305,0,"%s");
       }
-      if (*(code **)(&DAT_8207d624 + uVar1 * 0x18) != (code *)0x0) {
-        (**(code **)(&DAT_8207d624 + uVar1 * 0x18))(puVar3,param_2);
+      if (fields[uVar1].getter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
+        (*fields[uVar1].getter)(g_entities + uVar2,uVar1);
         __restgprlr_28();
         return;
       }
-      Scr_GetGenericField(puVar3,(&DAT_8207d61c)[uVar1 * 6],(&DAT_8207d618)[uVar1 * 6]);
+      Scr_GetGenericField((uchar *)(g_entities + uVar2),fields[uVar1].type,fields[uVar1].ofs);
       __restgprlr_28();
       return;
     }
-    if (*(int *)(&DAT_833737e0 + uVar2 * 0x280) != 0) {
-      VehicleScript_GetField
-                (*(int *)(&DAT_833737e0 + uVar2 * 0x280),param_2 << 0x20 | param_2 & 0xffff1fff);
+    if (g_entities[uVar2].vehicle != (Vehicle *)0x0) {
+      VehicleScript_GetField(g_entities[uVar2].vehicle,uVar1 & 0xffff1fff);
       __restgprlr_28();
       return;
     }
@@ -902,62 +993,68 @@ void Scr_GetEntityField(undefined8 param_1,ulonglong param_2)
 
 // 824ABB70  Scr_GetGenericField  (game_mp/g_spawn_mp.cpp:793)
 
-void Scr_GetGenericField(int param_1,undefined4 param_2,int param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_GetGenericField(uchar *param_1,fieldtype_t param_2,int param_3)
 
 {
   int iVar1;
-  undefined4 local_20;
+  gentity_s *pgVar2;
+  uint uVar3;
+  float local_20;
   undefined4 local_1c;
   undefined4 local_18;
   
   switch(param_2) {
-  case 0:
-    Scr_AddInt(*(undefined4 *)(param_1 + param_3));
+  case F_INT:
+    Scr_AddInt(*(int *)(param_1 + param_3));
     return;
-  case 3:
-    Scr_AddFloat((double)*(float *)(param_1 + param_3));
+  case F_FLOAT:
+    Scr_AddFloat(*(float *)(param_1 + param_3));
     return;
-  case 4:
-    Scr_AddString(param_1 + param_3);
+  case F_CSTRING:
+    Scr_AddString((char *)(param_1 + param_3));
     return;
-  case 5:
-    if (*(short *)(param_1 + param_3) == 0) {
+  case F_STRING:
+    uVar3 = (uint)*(ushort *)(param_1 + param_3);
+    if (uVar3 == 0) {
       return;
     }
     goto LAB_824abd08;
-  case 6:
-    Scr_AddVector(param_1 + param_3);
+  case F_VECTOR:
+    Scr_AddVector((float *)(param_1 + param_3));
     return;
-  case 7:
-    if (*(int *)(param_1 + param_3) != 0) {
-      Scr_AddEntity();
+  case F_ENTITY:
+    if (*(gentity_s **)(param_1 + param_3) != (gentity_s *)0x0) {
+      Scr_AddEntity(*(gentity_s **)(param_1 + param_3));
       return;
     }
     break;
-  case 8:
-    iVar1 = EntHandle__isDefined(param_1 + param_3);
+  case F_ENTHANDLE:
+    iVar1 = EntHandle::isDefined((EntHandle *)(param_1 + param_3));
     if (iVar1 != 0) {
-      EntHandle__ent(param_1 + param_3);
-      Scr_AddEntity();
+      pgVar2 = EntHandle::ent((EntHandle *)(param_1 + param_3));
+      Scr_AddEntity(pgVar2);
       return;
     }
     break;
-  case 9:
+  case F_ANGLES_YAW:
     local_1c = *(undefined4 *)(param_1 + param_3);
-    local_20 = 0;
+    local_20 = 0.0;
     local_18 = 0;
     Scr_AddVector(&local_20);
     return;
-  case 10:
-    if (*(short *)(param_1 + param_3) != 0) {
-      Scr_AddObject();
+  case F_OBJECT:
+    if (*(ushort *)(param_1 + param_3) != 0) {
+      Scr_AddObject((uint)*(ushort *)(param_1 + param_3));
       return;
     }
     break;
-  case 0xb:
-    G_ModelName(*(undefined2 *)(param_1 + param_3));
+  case F_MODEL:
+    uVar3 = G_ModelName((uint)*(ushort *)(param_1 + param_3));
 LAB_824abd08:
-    Scr_AddConstString();
+    Scr_AddConstString(uVar3);
   }
   return;
 }
@@ -965,26 +1062,27 @@ LAB_824abd08:
 
 // 824AC120  Scr_GetObjectField  (game_mp/g_spawn_mp.cpp:846)
 
-void Scr_GetObjectField(ulonglong param_1,undefined8 param_2,undefined8 param_3)
+void Scr_GetObjectField(uint param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
+  if (param_1 == 0) {
     Scr_GetEntityField(param_2,param_3);
   }
   else {
-    if ((param_1 & 0xffffffff) == 1) {
-      Scr_GetHudElemField();
+    if (param_1 == 1) {
+      Scr_GetHudElemField(param_2,param_3);
       return;
     }
-    if ((param_1 & 0xffffffff) == 3) {
-      VehPathScr_GetNodeField();
+    if (param_1 == 3) {
+      VehPathScr_GetNodeField(param_2,param_3);
       return;
     }
-    if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff8207dd08,param_1);
-      MyAssertHandler(0xffffffff8207d840,0x35b,0,uVar1);
+    if (alwaysfails == 0) {
+      pcVar1 = va("bad class num %u");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x35b,0,pcVar1);
       return;
     }
   }
@@ -994,116 +1092,135 @@ void Scr_GetObjectField(ulonglong param_1,undefined8 param_2,undefined8 param_3)
 
 // 824AA490  Scr_FreeEntity  (game_mp/g_spawn_mp.cpp:871)
 
-void Scr_FreeEntity(int *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_FreeEntity(gentity_s *param_1)
 
 {
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x368,0,0xffffffff82000f98,0xffffffff82002614);
+  if (param_1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x368,
+                    0,"%s");
   }
-  if (*param_1 != (int)(param_1 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x369,0,0xffffffff8207da14);
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x369,
+                    0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
-  if (*(char *)((int)param_1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x36a,0,0xffffffff82073850,0xffffffff8207da00,*param_1);
+  if ((param_1->r).isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x36a,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  if (param_1[0x56] != 0) {
-    Scr_FreeClientFields();
+  if (param_1->client != (gclient_s *)0x0) {
+    Scr_FreeClientFields(param_1->client);
   }
   Scr_FreeEntityFields(param_1);
-  Scr_FreeEntityNum(*param_1,0);
+  Scr_FreeEntityNum((param_1->s).number,0);
   return;
 }
 
 
 // 824AA580  Scr_AddEntity  (game_mp/g_spawn_mp.cpp:890)
 
-void Scr_AddEntity(int *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_AddEntity(gentity_s *param_1)
 
 {
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x37b,0,0xffffffff82000f98,0xffffffff82002614);
+  if (param_1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x37b,
+                    0,"%s");
   }
-  if (*param_1 != (int)(param_1 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x37c,0,0xffffffff8207da14);
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x37c,
+                    0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
-  if (*(char *)((int)param_1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x37d,0,0xffffffff82073850,0xffffffff8207da00,*param_1);
+  if ((param_1->r).isInUse == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x37d,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  Scr_AddEntityNum(*param_1,0);
+  Scr_AddEntityNum((param_1->s).number,0);
   return;
 }
 
 
 // 824AA658  Scr_GetEntityAllowNull  (game_mp/g_spawn_mp.cpp:905)
 
-longlong Scr_GetEntityAllowNull(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * Scr_GetEntityAllowNull(uint param_1)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_entref_t sVar2;
+  ushort uStack_1e;
   
-  iVar1 = Scr_GetType();
+  iVar1 = Scr_GetType(param_1);
   if (iVar1 != 0) {
-    uVar2 = Scr_GetEntityRef(param_1);
-    uStack_1e = (short)uVar2;
+    sVar2 = Scr_GetEntityRef(param_1);
+    uStack_1e = sVar2.classnum;
     if (uStack_1e == 0) {
-      local_20 = (ushort)((uint)uVar2 >> 0x10);
-      if (0x7ff < (ulonglong)local_20) {
-        MyAssertHandler(0xffffffff8207d840,0x394,0,0xffffffff82000f98,0xffffffff8206d38c);
+      if (0x7ff < (uint)sVar2 >> 0x10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                        0x394,0,"%s");
       }
-      return (ulonglong)local_20 * 0x280 + -0x7cc8c980;
+      return g_entities + ((uint)sVar2 >> 0x10);
     }
   }
-  return 0;
+  return (gentity_s *)0x0;
 }
 
 
 // 824AA708  Scr_GetEntity  (game_mp/g_spawn_mp.cpp:930)
 
-longlong Scr_GetEntity(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * Scr_GetEntity(uint param_1)
 
 {
-  undefined4 uVar1;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_entref_t sVar1;
+  ushort uStack_1e;
   
-  uVar1 = Scr_GetEntityRef();
-  uStack_1e = (short)uVar1;
+  sVar1 = Scr_GetEntityRef(param_1);
+  uStack_1e = sVar1.classnum;
   if (uStack_1e == 0) {
-    local_20 = (ushort)((uint)uVar1 >> 0x10);
-    if (0x7ff < (ulonglong)local_20) {
-      MyAssertHandler(0xffffffff8207d840,0x3a8,0,0xffffffff82000f98,0xffffffff8206d38c);
+    if (0x7ff < (uint)sVar1 >> 0x10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x3a8,0,"%s");
     }
-    return (ulonglong)local_20 * 0x280 + -0x7cc8c980;
+    return g_entities + ((uint)sVar1 >> 0x10);
   }
-  Scr_ParamError(param_1,0xffffffff8206d360);
-  return 0;
+  Scr_ParamError(param_1,"not an entity");
+  return (gentity_s *)0x0;
 }
 
 
 // 824AA7B8  Scr_FreeHudElem  (game_mp/g_spawn_mp.cpp:950)
 
-void Scr_FreeHudElem(void)
+void Scr_FreeHudElem(game_hudelem_s *param_1)
 
 {
   uint uVar1;
-  int *piVar2;
+  game_hudelem_s *pgVar2;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x3b9,0,0xffffffff82000f98,0xffffffff8207045c);
+  pgVar2 = (game_hudelem_s *)__savegprlr_28(param_1);
+  if (pgVar2 == (game_hudelem_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3b9,
+                    0,"%s");
   }
-  uVar1 = (int)(piVar2 + 0x1f32e6c4) / 0xb4;
+  uVar1 = (int)&pgVar2[0xb17c98].elem.color / 0xb4;
   if (0x3ff < uVar1) {
-    MyAssertHandler(0xffffffff8207d840,0x3ba,0,0xffffffff8207da60,uVar1,0x400);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3ba,
+                    0,"hud - g_hudelems doesn\'t index MAX_HUDELEMS_TOTAL\n\t%i not in [0, %i)");
   }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff8207d840,0x3bb,0,0xffffffff82000f98,0xffffffff8207da40);
+  if ((pgVar2->elem).type == HE_TYPE_FREE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3bb,
+                    0,"%s");
   }
-  Scr_NotifyNum(uVar1,1,DAT_835a0bae,0);
-  Scr_FreeHudElemConstStrings(piVar2);
+  Scr_NotifyNum(uVar1,1,(uint)scr_const.death,0);
+  Scr_FreeHudElemConstStrings(pgVar2);
   Scr_FreeEntityNum(uVar1,1);
   __restgprlr_28();
   return;
@@ -1112,24 +1229,25 @@ void Scr_FreeHudElem(void)
 
 // 824AA898  Scr_AddHudElem  (game_mp/g_spawn_mp.cpp:973)
 
-void Scr_AddHudElem(void)
+void Scr_AddHudElem(game_hudelem_s *param_1)
 
 {
-  uint uVar1;
-  int *piVar2;
+  int *piVar1;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x3ce,0,0xffffffff82000f98,0xffffffff8207045c);
+  piVar1 = (int *)__savegprlr_28(param_1);
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3ce,
+                    0,"%s");
   }
-  uVar1 = (int)(piVar2 + 0x1f32e6c4) / 0xb4;
-  if (0x3ff < uVar1) {
-    MyAssertHandler(0xffffffff8207d840,0x3cf,0,0xffffffff8207da60,uVar1,0x400);
+  if (0x3ff < (uint)((int)(piVar1 + 0x1f32e6c4) / 0xb4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3cf,
+                    0,"hud - g_hudelems doesn\'t index MAX_HUDELEMS_TOTAL\n\t%i not in [0, %i)");
   }
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff8207d840,0x3d0,0,0xffffffff82000f98,0xffffffff8207da40);
+  if (*piVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3d0,
+                    0,"%s");
   }
-  Scr_AddEntityNum(uVar1,1);
+  Scr_AddEntityNum((int)(piVar1 + 0x1f32e6c4) / 0xb4,1);
   __restgprlr_28();
   return;
 }
@@ -1137,66 +1255,80 @@ void Scr_AddHudElem(void)
 
 // 824AA958  Scr_GetHudElem  (game_mp/g_spawn_mp.cpp:988)
 
-longlong Scr_GetHudElem(undefined8 param_1)
+game_hudelem_s * Scr_GetHudElem(uint param_1)
 
 {
-  undefined4 uVar1;
-  undefined2 local_20;
-  undefined2 uStack_1e;
+  scr_entref_t sVar1;
+  ushort local_20;
+  ushort uStack_1e;
   
-  uVar1 = Scr_GetEntityRef();
-  uStack_1e = (short)uVar1;
+  sVar1 = Scr_GetEntityRef(param_1);
+  uStack_1e = sVar1.classnum;
   if (uStack_1e == 1) {
-    local_20 = (ushort)((uint)uVar1 >> 0x10);
-    if (0x3ff < (ulonglong)local_20) {
-      MyAssertHandler(0xffffffff8207d840,0x3e2,0,0xffffffff82000f98,0xffffffff8207dab8);
+    local_20 = sVar1.entnum;
+    if (0x3ff < local_20) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x3e2,0,"%s");
     }
-    return (ulonglong)local_20 * 0xb4 + -0x7ccb9b10;
+    return g_hudelems + local_20;
   }
-  Scr_ParamError(param_1,0xffffffff8207daa8);
-  return 0;
+  Scr_ParamError(param_1,"not a hudelem");
+  return (game_hudelem_s *)0x0;
 }
 
 
 // 824AAA00  Scr_ExecEntThread  (game_mp/g_spawn_mp.cpp:1008)
 
-void Scr_ExecEntThread(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+ushort Scr_ExecEntThread(gentity_s *param_1,int param_2,uint param_3)
 
 {
   int *piVar1;
+  ushort uVar2;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x3f1,0,0xffffffff82000f98,0xffffffff82002614);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f1,
+                    0,"%s");
   }
   if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x3f2,0,0xffffffff8207da14);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f2,
+                    0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
   if (*(char *)((int)piVar1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x3f3,0,0xffffffff82073850,0xffffffff8207da00,*piVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f3,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  Scr_ExecEntThreadNum(*piVar1,0,param_2,param_3);
-  __restgprlr_28();
-  return;
+  uVar2 = Scr_ExecEntThreadNum(*piVar1,0,param_2,param_3);
+  uVar2 = __restgprlr_28(uVar2);
+  return uVar2;
 }
 
 
 // 824AAAD0  Scr_AddExecEntThread  (game_mp/g_spawn_mp.cpp:1023)
 
-void Scr_AddExecEntThread(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_AddExecEntThread(gentity_s *param_1,int param_2,uint param_3)
 
 {
   int *piVar1;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x400,0,0xffffffff82000f98,0xffffffff82002614);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x400,
+                    0,"%s");
   }
   if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
-    MyAssertHandler(0xffffffff8207d840,0x401,0,0xffffffff8207da14);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x401,
+                    0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
   if (*(char *)((int)piVar1 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x402,0,0xffffffff82073850,0xffffffff8207da00,*piVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x402,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
   Scr_AddExecEntThreadNum(*piVar1,0,param_2,param_3);
   __restgprlr_28();
@@ -1206,25 +1338,32 @@ void Scr_AddExecEntThread(undefined8 param_1,undefined8 param_2,undefined8 param
 
 // 824AABA0  Scr_Notify  (game_mp/g_spawn_mp.cpp:1038)
 
-void Scr_Notify(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Scr_Notify(gentity_s *param_1,ushort param_2,uint param_3)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
+  int *piVar1;
+  uint uVar2;
   
-  piVar2 = (int *)__savegprlr_27();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8207d840,0x40f,0,0xffffffff82000f98,0xffffffff82002614);
+  uVar2 = (uint)(short)param_2;
+  piVar1 = (int *)__savegprlr_27(param_1);
+  if (piVar1 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x40f,
+                    0,"%s");
   }
-  if (*piVar2 != (int)(piVar2 + 0x1f323260) / 0x280) {
-    uVar1 = SL_ConvertToString(param_2 & 0xffff);
-    uVar1 = va(0xffffffff8207db00,*piVar2,(int)(piVar2 + 0x1f323260) / 0x280,uVar1);
-    MyAssertHandler(0xffffffff8207d840,0x410,0,0xffffffff820011f4,0xffffffff8207dadc,uVar1);
+  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+    SL_ConvertToString(uVar2 & 0xffff);
+    va("s.number = %i, index = %i, stringValue = %s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x410,
+                    0,"%s\n\t%s");
   }
-  if (*(char *)((int)piVar2 + 0x103) == '\0') {
-    MyAssertHandler(0xffffffff8207d840,0x411,0,0xffffffff82073850,0xffffffff8207da00,*piVar2);
+  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x411,
+                    0,"%s\n\t(ent->s.number) = %i");
   }
-  Scr_NotifyNum(*piVar2,0,param_2 & 0xffff,param_3);
+  Scr_NotifyNum(*piVar1,0,uVar2 & 0xffff,param_3);
   __restgprlr_27();
   return;
 }
@@ -1232,45 +1371,52 @@ void Scr_Notify(undefined8 param_1,ulonglong param_2,undefined8 param_3)
 
 // 824AAC98  Scr_GetEnt  (game_mp/g_spawn_mp.cpp:1053)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_GetEnt(void)
 
 {
   bool bVar1;
-  short sVar5;
-  undefined8 uVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
+  gentity_s *pgVar5;
   int iVar6;
-  int iVar7;
-  undefined4 *puVar8;
+  uint uVar7;
+  int iVar8;
+  gentity_s *pgVar9;
   
   __savegprlr_26();
-  sVar5 = Scr_GetConstString(0);
-  uVar2 = Scr_GetString(1);
-  iVar3 = Scr_GetOffset(0,uVar2);
-  if (-1 < iVar3) {
-    if (0xd < iVar3) {
-      MyAssertHandler(0xffffffff8207d840,0x42f,0,0xffffffff82000f98,0xffffffff8207db58);
+  uVar2 = Scr_GetConstString(0);
+  pcVar3 = Scr_GetString(1);
+  iVar4 = Scr_GetOffset(0,pcVar3);
+  if (-1 < iVar4) {
+    if (0xd < iVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                      0x42f,0,"%s");
     }
-    if ((&DAT_8207d61c)[iVar3 * 6] == 5) {
-      puVar8 = &DAT_83373680;
-      puVar4 = (undefined4 *)0x0;
-      iVar7 = 0;
-      iVar6 = DAT_83580b08;
-      if (0 < DAT_83580b08) {
+    if (fields[iVar4].type == F_STRING) {
+      pgVar9 = g_entities;
+      pgVar5 = (gentity_s *)0x0;
+      iVar8 = 0;
+      iVar6 = level.num_entities;
+      if (0 < level.num_entities) {
         do {
-          if ((((*(char *)((int)puVar8 + 0x103) != '\0') &&
-               (*(short *)((&DAT_8207d618)[iVar3 * 6] + (int)puVar8) != 0)) &&
-              (*(short *)((&DAT_8207d618)[iVar3 * 6] + (int)puVar8) == sVar5)) &&
-             (bVar1 = puVar4 != (undefined4 *)0x0, puVar4 = puVar8, bVar1)) {
-            Scr_Error(0xffffffff8207db2c);
-            iVar6 = DAT_83580b08;
+          if (((((pgVar9->r).isInUse != '\0') &&
+               (uVar7 = (uint)*(ushort *)
+                               ((int)(pgVar9->s).lerp.pos.trBase + fields[iVar4].ofs + -0x18),
+               uVar7 != 0)) && (uVar7 == (uVar2 & 0xffff))) &&
+             (bVar1 = pgVar5 != (gentity_s *)0x0, pgVar5 = pgVar9, bVar1)) {
+            Scr_Error("getent used with more than one entity");
+            iVar6 = level.num_entities;
           }
-          iVar7 = iVar7 + 1;
-          puVar8 = puVar8 + 0xa0;
-        } while (iVar7 < iVar6);
-        if (puVar4 != (undefined4 *)0x0) {
-          Scr_AddEntity();
+          iVar8 = iVar8 + 1;
+          pgVar9 = pgVar9 + 1;
+        } while (iVar8 < iVar6);
+        if (pgVar5 != (gentity_s *)0x0) {
+          Scr_AddEntity(pgVar5);
         }
       }
     }
@@ -1282,62 +1428,69 @@ void Scr_GetEnt(void)
 
 // 824AADB0  Scr_GetEntArray  (game_mp/g_spawn_mp.cpp:1106)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Scr_GetEntArray(void)
 
 {
-  int iVar2;
-  short sVar3;
-  undefined8 uVar1;
-  int iVar4;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
   int iVar5;
-  undefined4 *puVar6;
+  int iVar6;
+  gentity_s *pgVar7;
   
   __savegprlr_27();
-  iVar2 = Scr_GetNumParam();
-  if (iVar2 == 0) {
+  uVar1 = Scr_GetNumParam();
+  if (uVar1 == 0) {
     Scr_MakeArray();
-    puVar6 = &DAT_83373680;
-    iVar4 = 0;
-    iVar2 = DAT_83580b08;
-    if (0 < DAT_83580b08) {
+    pgVar7 = g_entities;
+    iVar5 = 0;
+    iVar3 = level.num_entities;
+    if (0 < level.num_entities) {
       do {
-        if (*(char *)((int)puVar6 + 0x103) != '\0') {
-          Scr_AddEntity(puVar6);
+        if ((pgVar7->r).isInUse != '\0') {
+          Scr_AddEntity(pgVar7);
           Scr_AddArray();
-          iVar2 = DAT_83580b08;
+          iVar3 = level.num_entities;
         }
-        iVar4 = iVar4 + 1;
-        puVar6 = puVar6 + 0xa0;
-      } while (iVar4 < iVar2);
+        iVar5 = iVar5 + 1;
+        pgVar7 = pgVar7 + 1;
+      } while (iVar5 < iVar3);
       __restgprlr_27();
       return;
     }
   }
   else {
-    sVar3 = Scr_GetConstString(0);
-    uVar1 = Scr_GetString(1);
-    iVar2 = Scr_GetOffset(0,uVar1);
-    if (-1 < iVar2) {
-      if (0xd < iVar2) {
-        MyAssertHandler(0xffffffff8207d840,0x470,0,0xffffffff82000f98,0xffffffff8207db58);
+    uVar1 = Scr_GetConstString(0);
+    pcVar2 = Scr_GetString(1);
+    iVar3 = Scr_GetOffset(0,pcVar2);
+    if (-1 < iVar3) {
+      if (0xd < iVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
+                        0x470,0,"%s");
       }
-      if ((&DAT_8207d61c)[iVar2 * 6] == 5) {
+      if (fields[iVar3].type == F_STRING) {
         Scr_MakeArray();
-        puVar6 = &DAT_83373680;
-        iVar5 = 0;
-        iVar4 = DAT_83580b08;
-        if (0 < DAT_83580b08) {
+        pgVar7 = g_entities;
+        iVar6 = 0;
+        iVar5 = level.num_entities;
+        if (0 < level.num_entities) {
           do {
-            if (((*(char *)((int)puVar6 + 0x103) != '\0') &&
-                (*(short *)((&DAT_8207d618)[iVar2 * 6] + (int)puVar6) != 0)) &&
-               (*(short *)((&DAT_8207d618)[iVar2 * 6] + (int)puVar6) == sVar3)) {
-              Scr_AddEntity(puVar6);
+            if ((((pgVar7->r).isInUse != '\0') &&
+                (uVar4 = (uint)*(ushort *)
+                                ((int)(pgVar7->s).lerp.pos.trBase + fields[iVar3].ofs + -0x18),
+                uVar4 != 0)) && (uVar4 == (uVar1 & 0xffff))) {
+              Scr_AddEntity(pgVar7);
               Scr_AddArray();
-              iVar4 = DAT_83580b08;
+              iVar5 = level.num_entities;
             }
-            iVar5 = iVar5 + 1;
-            puVar6 = puVar6 + 0xa0;
-          } while (iVar5 < iVar4);
+            iVar6 = iVar6 + 1;
+            pgVar7 = pgVar7 + 1;
+          } while (iVar6 < iVar5);
         }
       }
     }
@@ -1349,76 +1502,85 @@ void Scr_GetEntArray(void)
 
 // 824AAF10  GScr_SetDynamicEntityField  (game_mp/g_spawn_mp.cpp:1165)
 
-void GScr_SetDynamicEntityField(undefined4 *param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void GScr_SetDynamicEntityField(gentity_s *param_1,uint param_2)
 
 {
-  Scr_SetDynamicEntityField(*param_1,0,param_2);
+  Scr_SetDynamicEntityField((param_1->s).number,0,param_2);
   return;
 }
 
 
 // 824AAF20  SP_worldspawn  (game_mp/g_spawn_mp.cpp:1171)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void SP_worldspawn(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  char *pcVar2;
   double dVar3;
-  double _X;
+  double dVar4;
   char *local_30 [12];
   
   __savegprlr_29();
-  G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
-  iVar2 = I_stricmp(local_30[0],0xffffffff8207dc08);
-  if (iVar2 != 0) {
-    Com_Error(1,0xffffffff8207dbd4);
+  G_SpawnString(&level.spawnVar,0x2c4,"",local_30);
+  iVar1 = I_stricmp(local_30[0],"worldspawn");
+  if (iVar1 != 0) {
+    Com_Error(ERR_DROP,"\x15SP_worldspawn: The first entity isn\'t \'worldspawn\'");
   }
-  SV_SetConfigstring(2,0xffffffff8201dfe8);
-  G_SpawnString(0xffffffff83581038,0x30a,0xffffffff820068af,local_30);
+  SV_SetConfigstring(CS_GAME_VERSION,"cod");
+  G_SpawnString(&level.spawnVar,0x30a,"",local_30);
   if (*local_30[0] == '\0') {
-    uVar1 = 0xffffffff820068af;
+    pcVar2 = "";
   }
   else {
-    uVar1 = va(0xffffffff82079048,local_30[0],0,1000,1);
+    pcVar2 = va("n\\%s\\t\\%i\\v\\%i\\e\\%i");
   }
-  SV_SetConfigstring(0x3d6,uVar1);
-  SV_SetConfigstring(0x3d7,0xffffffff820068af);
-  G_SpawnString(0xffffffff83581038,0x30b,0xffffffff820068af,local_30);
+  SV_SetConfigstring(CS_AMBIENT,pcVar2);
+  SV_SetConfigstring(CS_AMBIENT_LAST,"");
+  G_SpawnString(&level.spawnVar,0x30b,"",local_30);
   if (*local_30[0] == '\0') {
-    uVar1 = 0xffffffff820068af;
+    pcVar2 = "";
   }
   else {
-    uVar1 = va(0xffffffff82079048,local_30[0],0,1000,1);
+    pcVar2 = va("n\\%s\\t\\%i\\v\\%i\\e\\%i");
   }
-  SV_SetConfigstring(0x3d8,uVar1);
-  G_SpawnString(0xffffffff83581038,0x30c,0xffffffff820068af,local_30);
-  SV_SetConfigstring(4,local_30[0]);
-  SV_SetConfigstring(0xe,*(undefined4 *)(DAT_8353ff88 + 0xc));
-  G_SpawnString(0xffffffff83581038,0x30d,0xffffffff820068af,local_30);
+  SV_SetConfigstring(CS_AMBIENT_AC130,pcVar2);
+  G_SpawnString(&level.spawnVar,0x30c,"",local_30);
+  SV_SetConfigstring(CS_MESSAGE,local_30[0]);
+  SV_SetConfigstring(CS_MOTD,(g_motd->current).string);
+  G_SpawnString(&level.spawnVar,0x30d,"",local_30);
   if (*local_30[0] == '\0') {
-    SV_SetConfigstring(0x3f9,0xffffffff8203248c);
-    DAT_83583360 = 1.0;
-    DAT_83583364 = 0.0;
+    SV_SetConfigstring(CS_NORTHYAW,"0");
+    level.compassNorth[0] = 1.0;
+    level.compassNorth[1] = 0.0;
   }
   else {
-    SV_SetConfigstring(0x3f9);
+    SV_SetConfigstring(CS_NORTHYAW,local_30[0]);
     dVar3 = atof(local_30[0]);
-    _X = (double)((float)dVar3 * 0.017453292);
-    dVar3 = sin(_X);
-    DAT_83583364 = (float)dVar3;
-    dVar3 = cos(_X);
-    DAT_83583360 = (float)dVar3;
+    dVar4 = (double)((float)dVar3 * 0.017453292);
+    dVar3 = sin(dVar4);
+    level.compassNorth[1] = (float)dVar3;
+    dVar3 = cos(dVar4);
+    level.compassNorth[0] = (float)dVar3;
   }
-  G_SpawnString(0xffffffff83581038,0x2c7,0xffffffff8203248c,local_30);
-  DAT_834b3300 = atoi(local_30[0]);
-  DAT_834b3180 = 0x7fe;
-  Scr_SetString(0xffffffff834b32f2,DAT_835a0ca6);
-  Scr_SetString(0xffffffff834b32f4,DAT_835a0ca6);
-  DAT_834b3283 = 1;
-  iVar2 = EntHandle__isDefined(0xffffffff834b32d0);
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff8207d840,0x4d8,0,0xffffffff82000f98,0xffffffff8207dba0);
+  G_SpawnString(&level.spawnVar,0x2c7,"0",local_30);
+  g_entities[0x7fe].spawnflags = atoi(local_30[0]);
+  g_entities[0x7fe].s.number = 0x7fe;
+  Scr_SetString(&g_entities[0x7fe].classname,(uint)scr_const.worldspawn);
+  Scr_SetString(&g_entities[0x7fe].script_classname,(uint)scr_const.worldspawn);
+  g_entities[0x7fe].r.isInUse = '\x01';
+  iVar1 = EntHandle::isDefined(&g_entities[0x7fe].r.ownerNum);
+  if (iVar1 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x4d8,
+                    0,"%s");
   }
   __restgprlr_29();
   return;
@@ -1427,20 +1589,24 @@ void SP_worldspawn(void)
 
 // 824ABD20  G_SpawnEntitiesFromString  (game_mp/g_spawn_mp.cpp:1252)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void G_SpawnEntitiesFromString(void)
 
 {
   int iVar1;
   
-  iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+  iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   if (iVar1 == 0) {
-    Com_Error(1,0xffffffff8207dcac);
+    Com_Error(ERR_DROP,"\x15SpawnEntities: no entities");
   }
   SP_worldspawn();
-  iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+  iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   while (iVar1 != 0) {
     G_CallSpawn();
-    iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+    iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   }
   G_ResetEntityParsePoint();
   return;
@@ -1449,26 +1615,32 @@ void G_SpawnEntitiesFromString(void)
 
 // 824AB1B8  G_LoadStructs  (game_mp/g_spawn_mp.cpp:1276)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void G_LoadStructs(void)
 
 {
+  ushort uVar2;
   int iVar1;
-  undefined4 local_30 [12];
+  char *local_30 [12];
   
   __savegprlr_29();
-  if (DAT_8359a900 == 0) {
-    MyAssertHandler(0xffffffff8207d840,0x500,0,0xffffffff82000f98,0xffffffff8207dc14);
+  if (g_scr_data.initstructs == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x500,
+                    0,"%s");
   }
-  Scr_ExecThread(DAT_8359a900,0);
-  Scr_FreeThread();
-  iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+  uVar2 = Scr_ExecThread(g_scr_data.initstructs,0);
+  Scr_FreeThread(uVar2);
+  iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   while (iVar1 != 0) {
-    G_SpawnString(0xffffffff83581038,0x2c4,0xffffffff820068af,local_30);
-    iVar1 = IsParentClassname(local_30[0],0xffffffff8207d54c);
+    G_SpawnString(&level.spawnVar,0x2c4,"",local_30);
+    iVar1 = IsParentClassname(local_30[0],"script_struct");
     if (iVar1 != 0) {
       G_SpawnStruct();
     }
-    iVar1 = G_ParseSpawnVars2(0xffffffff83581038);
+    iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   }
   G_ResetEntityParsePoint();
   __restgprlr_29();

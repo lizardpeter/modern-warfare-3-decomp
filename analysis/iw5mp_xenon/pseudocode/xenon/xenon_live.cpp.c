@@ -2,7 +2,7 @@
 
 // 82644140  IsEqualXUID  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/xbox.h:46)
 
-undefined8 IsEqualXUID(longlong param_1,longlong param_2)
+int IsEqualXUID(ulong64 param_1,ulong64 param_2)
 
 {
   if (param_1 == param_2) {
@@ -14,120 +14,143 @@ undefined8 IsEqualXUID(longlong param_1,longlong param_2)
 
 // 8293E4C0  `dynamic_initializer_for_'overlappedTasks''  (xenon/xenon_live.cpp:518)
 
-int _dynamic_initializer_for__overlappedTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__overlappedTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  _XUSER_PROPERTY *p_Var1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x84254648;
+  lVar2 = 0x20;
+  p_Var1 = sessionWriteStatsData[0x1e].skill;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
-  return iVar1;
+    p_Var1 = (_XUSER_PROPERTY *)((int)(p_Var1 + 6) + 0x10);
+    *(undefined4 *)p_Var1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__overlappedTasks__);
+  return;
 }
 
 
 // 82644158  Live_GetCurrentSession  (xenon/xenon_live.cpp:606)
 
-ulonglong Live_GetCurrentSession(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+SessionData * Live_GetCurrentSession(void)
 
 {
   int iVar1;
   
-  iVar1 = Party_InParty(0xffffffff82b55118);
+  iVar1 = Party_InParty(&g_partyData);
   if (iVar1 != 0) {
-    return (ulonglong)DAT_82b55118;
+    return g_partyData.session;
   }
-  return 0xffffffff844c7860;
+  return &g_serverSession;
 }
 
 
 // 826441B8  Live_GetCurrentPresenceSession  (xenon/xenon_live.cpp:625)
 
-ulonglong Live_GetCurrentPresenceSession(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+SessionData * Live_GetCurrentPresenceSession(void)
 
 {
   int iVar1;
   
-  iVar1 = Party_InParty(0xffffffff82b55118);
+  iVar1 = Party_InParty(&g_partyData);
   if (iVar1 != 0) {
-    return (ulonglong)DAT_82b55120;
+    return g_partyData.presenceSession;
   }
-  return 0xffffffff844c7860;
+  return &g_serverSession;
 }
 
 
 // 82644218  Live_GetSharableSession  (xenon/xenon_live.cpp:650)
 
-ulonglong Live_GetSharableSession(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+SessionData * Live_GetSharableSession(void)
 
 {
   int iVar1;
   
-  iVar1 = Party_InParty(0xffffffff82b55118);
+  iVar1 = Party_InParty(&g_partyData);
   if (iVar1 != 0) {
-    return (ulonglong)DAT_82b55118;
+    return g_partyData.session;
   }
-  return 0xffffffff844c7860;
+  return &g_serverSession;
 }
 
 
 // 82644278  Live_GetLocalNatType  (xenon/xenon_live.cpp:658)
 
-undefined4 Live_GetLocalNatType(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetLocalNatType(void)
 
 {
-  return DAT_8299519c;
+  return g_natType;
 }
 
 
 // 82644288  Live_InPrivateParty  (xenon/xenon_live.cpp:665)
 
-ulonglong Live_InPrivateParty(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_InPrivateParty(void)
 
 {
-  return (-(ulonglong)DAT_82b5700c & ~(ulonglong)DAT_82b5700c & 0xffffffff) >> 0x1f;
+  return (bool)((byte)((byte)(-(ulonglong)(uint)g_partyData.inParty >> 0x18) &
+                      ~(byte)((uint)g_partyData.inParty >> 0x18)) >> 7);
 }
 
 
 // 826442A8  Session_StatsWriteInProgressForPlayer  (xenon/xenon_live.cpp:671)
 
-void Session_StatsWriteInProgressForPlayer(void)
+bool Session_StatsWriteInProgressForPlayer(ulong64 param_1)
 
 {
   longlong lVar1;
   char *pcVar2;
-  int *piVar3;
+  undefined1 uVar3;
+  int *piVar4;
   
   lVar1 = __savegprlr_24();
-  Sys_EnterCriticalSection(0x16);
-  piVar3 = &DAT_84254770;
+  Sys_EnterCriticalSection(CRITSECT_LIVE);
+  piVar4 = &overlappedTasks.tasks[0].type;
   do {
-    if ((*(char *)(piVar3 + 1) != '\0') && (*piVar3 == 2)) {
-      pcVar2 = (char *)TaskManager_GetTaskData(piVar3 + -0x24);
+    if ((*(bool *)(piVar4 + 1) != false) && (*piVar4 == 2)) {
+      pcVar2 = TaskManager_GetTaskData((overlappedTask *)(piVar4 + -0x24));
       if (pcVar2 == (char *)0x0) {
-        MyAssertHandler(0xffffffff8218b718,0x2ae,0,0xffffffff82000f98,0xffffffff8201f49c);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x2ae,0,"%s");
       }
       if (*pcVar2 == '\0') {
-        MyAssertHandler(0xffffffff8218b718,0x2af,0,0xffffffff82000f98,0xffffffff8218b758);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x2af,0,"%s");
       }
       if (*(longlong *)(pcVar2 + 8) == lVar1) {
-        Sys_LeaveCriticalSection(0x16);
-        __restgprlr_24(1);
-        return;
+        Sys_LeaveCriticalSection(CRITSECT_LIVE);
+        uVar3 = __restgprlr_24(1);
+        return (bool)uVar3;
       }
     }
-    piVar3 = piVar3 + 0x28;
-    if (-0x7bdaa491 < (int)piVar3) {
-      Sys_LeaveCriticalSection(0x16);
-      __restgprlr_24(0);
-      return;
+    piVar4 = piVar4 + 0x28;
+    if (-0x7bdaa491 < (int)piVar4) {
+      Sys_LeaveCriticalSection(CRITSECT_LIVE);
+      uVar3 = __restgprlr_24(0);
+      return (bool)uVar3;
     }
   } while( true );
 }
@@ -135,135 +158,156 @@ void Session_StatsWriteInProgressForPlayer(void)
 
 // 82644398  Live_GetLocalClientName  (xenon/xenon_live.cpp:710)
 
-void Live_GetLocalClientName(void)
+char * Live_GetLocalClientName(int param_1)
 
 {
   longlong lVar1;
+  char *pcVar2;
   
-  lVar1 = __savegprlr_29();
+  lVar1 = __savegprlr_29(param_1);
   if ((int)lVar1 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0x2c7,0,0xffffffff82000f98,0xffffffff8218b768);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2c7,0,
+                    "%s");
   }
   if (3 < (int)lVar1) {
-    MyAssertHandler(0xffffffff8218b718,0x2c8,0,0xffffffff82000f98,0xffffffff82092310);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2c8,0,
+                    "%s");
   }
-  __restgprlr_29(lVar1 * 0x2058 + -0x7bdb4a74);
-  return;
+  pcVar2 = (char *)__restgprlr_29(lVar1 * 0x2058 + -0x7bdb4a74);
+  return pcVar2;
 }
 
 
 // 82644420  Live_GetLocalClientXuidString  (xenon/xenon_live.cpp:718)
 
-void Live_GetLocalClientXuidString(void)
+char * Live_GetLocalClientXuidString(int param_1)
 
 {
   longlong lVar1;
+  char *pcVar2;
   
-  lVar1 = __savegprlr_29();
+  lVar1 = __savegprlr_29(param_1);
   if ((int)lVar1 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0x2cf,0,0xffffffff82000f98,0xffffffff8218b768);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2cf,0,
+                    "%s");
   }
   if (3 < (int)lVar1) {
-    MyAssertHandler(0xffffffff8218b718,0x2d0,0,0xffffffff82000f98,0xffffffff82092310);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d0,0,
+                    "%s");
   }
   lVar1 = lVar1 * 0x2058 + -0x7bdb4a48;
   if (lVar1 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x2d1,0,0xffffffff82000f98,0xffffffff8218b780);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d1,0,
+                    "%s");
   }
-  __restgprlr_29(lVar1);
-  return;
+  pcVar2 = (char *)__restgprlr_29(lVar1);
+  return pcVar2;
 }
 
 
 // 826444C8  Live_GetLocalClientOfflineXuidString  (xenon/xenon_live.cpp:726)
 
-void Live_GetLocalClientOfflineXuidString(void)
+char * Live_GetLocalClientOfflineXuidString(int param_1)
 
 {
   longlong lVar1;
+  char *pcVar2;
   
-  lVar1 = __savegprlr_29();
+  lVar1 = __savegprlr_29(param_1);
   if ((int)lVar1 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0x2d7,0,0xffffffff82000f98,0xffffffff8218b768);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d7,0,
+                    "%s");
   }
   if (3 < (int)lVar1) {
-    MyAssertHandler(0xffffffff8218b718,0x2d8,0,0xffffffff82000f98,0xffffffff82092310);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d8,0,
+                    "%s");
   }
   lVar1 = lVar1 * 0x2058 + -0x7bdb4a28;
   if (lVar1 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x2d9,0,0xffffffff82000f98,0xffffffff8218b7ac);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2d9,0,
+                    "%s");
   }
-  __restgprlr_29(lVar1);
-  return;
+  pcVar2 = (char *)__restgprlr_29(lVar1);
+  return pcVar2;
 }
 
 
 // 82644570  CL_GetLocalClientSignInState  (xenon/xenon_live.cpp:735)
 
-undefined4 CL_GetLocalClientSignInState(undefined8 param_1)
+int CL_GetLocalClientSignInState(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,param_1);
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2e0,0,
+                    "%s\n\t(controllerIndex) = %i");
   }
-  return (&DAT_8424b588)[iVar1 * 0x816];
+  return xenonUserData[param_1].signinState;
 }
 
 
 // 8264CAA8  Live_GetOurClientNum  (xenon/xenon_live.cpp:743)
 
-void Live_GetOurClientNum(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Live_GetOurClientNum(int param_1,SessionData *param_2)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
   int iVar2;
   
-  uVar1 = Live_GetXuid();
+  uVar1 = Live_GetXuid(param_1);
   iVar2 = Session_FindRegisteredUser(param_2,uVar1);
   if (iVar2 == -1) {
     uVar1 = Live_GetOfflineXuid(param_1);
-    Session_FindRegisteredUser(param_2,uVar1);
+    iVar2 = Session_FindRegisteredUser(param_2,uVar1);
   }
-  return;
+  return iVar2;
 }
 
 
 // 82648478  Live_Init  (xenon/xenon_live.cpp:757)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_Init(void)
 
 {
   int iVar1;
-  longlong lVar2;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined1 local_34;
+  ulong uVar2;
+  XNetStartupParams local_40 [4];
   
   __savegprlr_28();
-  memset(&DAT_84253cc8,0,0xa00);
-  local_3c = 0x936;
-  local_38 = 0x10100;
-  local_34 = 1;
-  local_40 = 0xd010000;
-  iVar1 = XNetStartup(&local_40);
+  memset();
+  local_40[0].cfgSockDefaultRecvBufsizeInK = '\0';
+  local_40[0].cfgSockDefaultSendBufsizeInK = '\0';
+  local_40[0].cfgKeyRegMax = '\t';
+  local_40[0].cfgSecRegMax = '6';
+  local_40[0].cfgQosDataLimitDiv4 = '\0';
+  local_40[0].cfgQosProbeTimeoutInSeconds = '\x01';
+  local_40[0].cfgQosProbeRetries = '\x01';
+  local_40[0].cfgQosSrvMaxSimultaneousResponses = '\0';
+  local_40[0].cfgQosPairWaitTimeInSeconds = '\x01';
+  local_40[0].cfgSizeOfStruct = '\r';
+  local_40[0].cfgFlags = '\x01';
+  local_40[0].cfgSockMaxDgramSockets = '\0';
+  local_40[0].cfgSockMaxStreamSockets = '\0';
+  iVar1 = XNetStartup(local_40);
   if (iVar1 != 0) {
-    Sys_Error(0xffffffff8218d2c8);
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("Failed to start Xbox Live\n");
   }
-  iVar1 = XOnlineStartup();
-  if (iVar1 != 0) {
-    Sys_Error(0xffffffff8218d2c8);
+  uVar2 = XOnlineStartup();
+  if (uVar2 != 0) {
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("Failed to start Xbox Live\n");
   }
-  memset(&DAT_8424b588,0,0x8160);
-  lVar2 = 0;
+  memset();
+  uVar2 = 0;
   do {
-    XUserSetContext(lVar2,0x8001,0);
-    lVar2 = lVar2 + 1;
-  } while ((int)lVar2 < 4);
-  TaskManager_ConstructTaskSet(0xffffffff842546d8,0xffffffff8218d2bc);
+    XUserSetContext(uVar2,0x8001,0);
+    uVar2 = uVar2 + 1;
+  } while ((int)uVar2 < 4);
+  TaskManager_ConstructTaskSet(&overlappedTasks,"Live_Init");
   Party_Init();
   Lobby_Init();
   Session_Init();
@@ -271,7 +315,7 @@ void Live_Init(void)
   SetupDWLogging();
   dwLogOn_Init();
   LB_Init();
-  DAT_842537fa = 1;
+  g_shouldWeHost = true;
   LiveStorage_Init();
   XPresenceInitialize(400);
   MeetPlayer_Initialize();
@@ -279,78 +323,110 @@ void Live_Init(void)
   Friends_Init();
   NewsFeed_Init();
   StructuredData_ValidateRegisterDvars();
-  DAT_84253a7c = 64000;
-  DAT_8425391c = 64000;
-  DAT_842536e8 = XNotifyCreateListener(0xef);
-  if ((DAT_842536e8 == 0) || (DAT_842536e8 == -1)) {
-    Sys_Error(0xffffffff8218d288);
+  s_uploadBitsPerSec = 64000;
+  s_downloadBitsPerSec = 64000;
+  notifications = XNotifyCreateListener(0xef);
+  if ((notifications != (void *)0x0) && (notifications != (void *)0xffffffff)) {
+    XNotifyPositionUI(9);
+    Live_RegisterCommonDvars();
+    s_localSignin = false;
+    s_liveSignin = false;
+    s_vaultSignin = false;
+    s_anySignin = false;
+    s_splitscreenOnlineSigninController = -1;
+    DAT_8424a653 = 0;
+    xblive_loggedin = Dvar_RegisterBool("xblive_loggedin",false,0,"User is logged into xbox live");
+    xenon_voiceDebug = Dvar_RegisterBool("xenon_voiceDebug",false,0,"Debug voice communication");
+    xenon_voiceDegrade = Dvar_RegisterBool("xenon_voiceDegrade",false,0,"Degrade voice quality");
+    xenon_maxVoicePacketsPerSec =
+         Dvar_RegisterInt("xenon_maxVoicePacketsPerSec",100,0,0x7fffffff,0,
+                          "Max voice packets per second a client will send");
+    xenon_maxVoicePacketsPerSecForServer =
+         Dvar_RegisterInt("xenon_maxVoicePacketsPerSecForServer",0x14,0,0x7fffffff,0,
+                          "Max voice packets per second the server will send");
+    disconnectOnSignOut =
+         Dvar_RegisterBool("disconnectOnSignOut",true,0,
+                           "If true, the player will be kicked back to the main menu if they sign out of their profile\n"
+                          );
+    session_nonblocking =
+         Dvar_RegisterBool("session_nonblocking",true,0,"Non-blocking Session code");
+    partyChatDisallowed =
+         Dvar_RegisterBool("partyChatDisallowed",false,0,"Whether to disallow Xbox Live Party Chat")
+    ;
+    partyChatDisconnectTimer =
+         Dvar_RegisterInt("partyChatDisconnectTimer",2000,0,0x7fffffff,0,
+                          "Time to wait after user responds to Party Chat dialog before kicking (msec)"
+                         );
+    unlockAllItems = Dvar_RegisterBool("unlockAllItems",false,4,"Simulate all items being unlocked")
+    ;
+    lockAllItems = Dvar_RegisterBool("lockAllItems",false,4,"Simulate all items being locked");
+    xblive_hostingprivateparty =
+         Dvar_RegisterBool("xblive_hostingprivateparty",false,0,
+                           "true only if we\'re hosting a party");
+    xblive_privatematch =
+         Dvar_RegisterBool("xblive_privatematch",false,0,"Current game is a private match");
+    xblive_mappacks =
+         Dvar_RegisterInt("xblive_mappacks",0,0,2,0,
+                          "0 = original maps only, 1 = new maps only, 2 = both original and new");
+    debug_onlinePlayEvenIfDown =
+         Dvar_RegisterBool("debug_onlinePlayEvenIfDown",false,0,
+                           "Allow people to play online even if Live is down");
+    xenon_presence_cooloff_timer =
+         Dvar_RegisterInt("xenon_presence_cooloff_timer",60000,0,0x7fffffff,0,
+                          "Number of milliseconds after the friends popup is closed before unsubscribing to met players"
+                         );
+    xenon_presence_initial_timer =
+         Dvar_RegisterInt("xenon_presence_initial_timer",30000,0,0x7fffffff,0,
+                          "Number of milliseconds after the exe launches before allowing xenon presence subscriptions"
+                         );
+    demonwareConsideredConnectedTime =
+         Dvar_RegisterInt("demonwareConsideredConnectedTime",5000,0,0x7fffffff,0,
+                          "Number of milliseconds after being disconnected from demonware before considering shutting down."
+                         );
+    SocialConfig_Init();
+    Facebook_Init();
+    Facebook_InitFriends();
+    Commerce_Init();
+    UserGroups_Init();
+    Entitlements_Init();
+    EliteClan_Init();
+    LiveTracker_Init();
+    ComGroups_Init();
+    Social_InitPresence();
+    LiveCounter_Init();
+    Facebook_InitPosting();
+    PlayercardCache_Init();
+    g_LiveInited = 1;
+    __restgprlr_28();
+    return;
   }
-  XNotifyPositionUI(9);
-  Live_RegisterCommonDvars();
-  DAT_842537fb = 0;
-  DAT_84253a79 = 0;
-  DAT_842537f9 = 0;
-  DAT_8424a650 = 0;
-  DAT_82995198 = 0xffffffff;
-  DAT_8424a653 = 0;
-  DAT_8424a648 = Dvar_RegisterBool(0xffffffff8218d258,0,0,0xffffffff8218d268,0xffffffff84250000,0,0,
-                                   0);
-  DAT_84253bbc = Dvar_RegisterBool(0xffffffff8218d228,0,0,0xffffffff8218d23c);
-  DAT_842536ec = Dvar_RegisterBool(0xffffffff8218d214,0,0,0xffffffff8218d1fc);
-  DAT_84253890 = Dvar_RegisterInt(0xffffffff8218d1b0,100,0,0x7fffffff,0,0xffffffff8218d1cc);
-  DAT_84253880 = Dvar_RegisterInt(0xffffffff8218d154,0x14,0,0x7fffffff,0,0xffffffff8218d17c);
-  DAT_842536f0 = Dvar_RegisterBool(0xffffffff8218d0e0,1,0,0xffffffff8218d0f8);
-  DAT_84253bc4 = Dvar_RegisterBool(0xffffffff8218d0b0,1,0,0xffffffff8218d0c4);
-  DAT_8424a654 = Dvar_RegisterBool(0xffffffff8218d070,0,0,0xffffffff8218d084);
-  DAT_84253888 = Dvar_RegisterInt(0xffffffff8218d054,2000,0,0x7fffffff,0,0xffffffff8218d008);
-  DAT_836108a4 = Dvar_RegisterBool(0xffffffff8218cfd4,0,4,0xffffffff8218cfe4);
-  DAT_83633888 = Dvar_RegisterBool(0xffffffff8218cfa4,0,4,0xffffffff8218cfb4);
-  DAT_842546c8 = Dvar_RegisterBool(0xffffffff8218cf64,0,0,0xffffffff8218cf80);
-  DAT_84253bb8 = Dvar_RegisterBool(0xffffffff8218cf30,0,0,0xffffffff8218cf44);
-  DAT_84253894 = Dvar_RegisterInt(0xffffffff8218ced4,0,0,2,0,0xffffffff8218cee8);
-  DAT_8424a64c = Dvar_RegisterBool(0xffffffff82018f84,0,0,0xffffffff8218cea0);
-  DAT_84253bc0 = Dvar_RegisterInt(0xffffffff8218ce1c,60000,0,0x7fffffff,0,0xffffffff8218ce40);
-  DAT_842537fc = Dvar_RegisterInt(0xffffffff8218cda0,30000,0,0x7fffffff,0,0xffffffff8218cdc0);
-  DAT_84584ef4 = Dvar_RegisterInt(0xffffffff8218cd7c,5000,0,0x7fffffff,0,0xffffffff8218cd18);
-  SocialConfig_Init();
-  Facebook_Init();
-  Facebook_InitFriends();
-  Commerce_Init();
-  UserGroups_Init();
-  Entitlements_Init();
-  EliteClan_Init();
-  LiveTracker_Init();
-  ComGroups_Init();
-  Social_InitPresence();
-  LiveCounter_Init();
-  Facebook_InitPosting();
-  PlayercardCache_Init();
-  DAT_84253884 = 1;
-  __restgprlr_28();
-  return;
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Failed to create Xbox Live notification listener.\n");
 }
 
 
 // 826445E0  Live_Shutdown  (xenon/xenon_live.cpp:998)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_Shutdown(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  if (DAT_84253884 != 0) {
+  if (g_LiveInited != 0) {
     XOnlineCleanup();
-    lVar1 = 0;
+    iVar1 = 0;
     do {
-      GamerProfile_LogOutProfile(lVar1);
-      lVar1 = lVar1 + 1;
-    } while ((int)lVar1 < 4);
-    lVar1 = 0;
+      GamerProfile_LogOutProfile(iVar1);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 4);
+    iVar1 = 0;
     do {
-      Live_CancelPotentiallyBlockingTasks(lVar1);
-      Live_DisconnectFromWebServices(lVar1);
-      lVar1 = lVar1 + 1;
-    } while ((int)lVar1 < 4);
+      Live_CancelPotentiallyBlockingTasks(iVar1);
+      Live_DisconnectFromWebServices(iVar1);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 4);
     LiveStorage_Shutdown();
     ComGroups_DeInit();
     LB_EndOngoingTasks();
@@ -359,8 +435,8 @@ void Live_Shutdown(void)
     dwLogOn_Shutdown();
     Session_Shutdown();
     Friends_Shutdown();
-    TaskManager_DestructTaskSet(0xffffffff842546d8);
-    Dvar_SetBool(DAT_8424a648,0);
+    TaskManager_DestructTaskSet(&overlappedTasks);
+    Dvar_SetBool(xblive_loggedin,false);
   }
   return;
 }
@@ -368,22 +444,22 @@ void Live_Shutdown(void)
 
 // 82644690  Live_GetPortForLocalXUID  (xenon/xenon_live.cpp:1052)
 
-longlong Live_GetPortForLocalXUID(longlong param_1)
+int Live_GetPortForLocalXUID(ulong64 param_1)
 
 {
-  longlong lVar1;
-  longlong *plVar2;
+  int iVar1;
+  ulong64 *puVar2;
   
   if (param_1 != 0) {
-    lVar1 = 0;
-    plVar2 = &DAT_8424b5d0;
+    iVar1 = 0;
+    puVar2 = &xenonUserData[0].xuidOffline;
     do {
-      if ((plVar2[-4] == param_1) || (*plVar2 == param_1)) {
-        return lVar1;
+      if ((puVar2[-4] == param_1) || (*puVar2 == param_1)) {
+        return iVar1;
       }
-      plVar2 = plVar2 + 0x40b;
-      lVar1 = lVar1 + 1;
-    } while ((int)plVar2 < -0x7bdac8d0);
+      puVar2 = puVar2 + 0x40b;
+      iVar1 = iVar1 + 1;
+    } while ((int)puVar2 < -0x7bdac8d0);
   }
   return -1;
 }
@@ -391,71 +467,75 @@ longlong Live_GetPortForLocalXUID(longlong param_1)
 
 // 826446E8  Live_XUIDIsLocalPlayer  (xenon/xenon_live.cpp:1069)
 
-ulonglong Live_XUIDIsLocalPlayer(void)
+bool Live_XUIDIsLocalPlayer(ulong64 param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = Live_GetPortForLocalXUID();
-  return (uVar1 & 0xffffffff) >> 0x1f ^ 1;
+  iVar1 = Live_GetPortForLocalXUID(param_1);
+  return (bool)((byte)((uint)iVar1 >> 0x1f) ^ 1);
 }
 
 
 // 82644710  Live_LookUpAchievementString  (xenon/xenon_live.cpp:1075)
 
-void Live_LookUpAchievementString(void)
+int Live_LookUpAchievementString(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
+  Achievements *pAVar4;
   int iVar5;
   
-  uVar1 = __savegprlr_28();
-  pcVar3 = s_BACK_IN_THE_FIGHT_829951a0;
-  iVar5 = 0;
-  if (s_BACK_IN_THE_FIGHT_829951a0[0] != '\0') {
-    iVar4 = 0;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  pAVar4 = gameAchievementList;
+  iVar3 = 0;
+  if (gameAchievementList[0].achievementName[0] != '\0') {
+    iVar5 = 0;
     do {
-      iVar2 = I_stricmp(uVar1,pcVar3);
+      iVar2 = I_stricmp(pcVar1,pAVar4->achievementName);
       if (iVar2 == 0) {
-        __restgprlr_28(*(undefined4 *)(&DAT_829951c0 + iVar4));
-        return;
+        iVar3 = __restgprlr_28(*(undefined4 *)
+                                (gameAchievementList[0].achievementName + iVar5 + 0x20));
+        return iVar3;
       }
-      iVar5 = iVar5 + 1;
-      iVar4 = iVar5 * 0x24;
-      pcVar3 = s_BACK_IN_THE_FIGHT_829951a0 + iVar4;
-    } while (s_BACK_IN_THE_FIGHT_829951a0[iVar4] != '\0');
+      iVar3 = iVar3 + 1;
+      iVar5 = iVar3 * 0x24;
+      pAVar4 = gameAchievementList + iVar3;
+    } while (gameAchievementList[iVar3].achievementName[0] != '\0');
   }
-  uVar1 = va(0xffffffff8218b7e0,uVar1);
-  Com_PrintError(0x10,uVar1);
-  __restgprlr_28(0);
-  return;
+  pcVar1 = va("Unknown achievement %s!\n");
+  Com_PrintError(0x10,pcVar1);
+  iVar3 = __restgprlr_28(0);
+  return iVar3;
 }
 
 
 // 826447A8  Live_GetFreeAchievementSlot  (xenon/xenon_live.cpp:1091)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 int Live_GetFreeAchievementSlot(void)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
   
-  uVar1 = TaskManager_CountTasksInProgress(0xffffffff842546d8,3);
-  if (0xf < (int)uVar1) {
-    MyAssertHandler(0xffffffff8218b718,0x449,0,0xffffffff8218b820,0xffffffff8218b84c,uVar1);
+  iVar1 = TaskManager_CountTasksInProgress(&overlappedTasks,3);
+  if (0xf < iVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x449,0,
+                    "%s\n\t(numAchievementsBeingGivenAtOnce) = %i");
   }
-  iVar2 = 0;
+  iVar1 = 0;
   do {
-    if ((&DAT_84253a68)[iVar2] == '\0') {
-      return iVar2;
+    if (s_achievementWriteActive[iVar1] == false) {
+      return iVar1;
     }
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 0x10);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x451,0,0xffffffff8218b7fc);
+    iVar1 = iVar1 + 1;
+  } while (iVar1 < 0x10);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x451,0,
+                    "All achievement write slots full!\n");
   }
   return -1;
 }
@@ -463,54 +543,56 @@ int Live_GetFreeAchievementSlot(void)
 
 // 82648940  Live_GiveAchievement  (xenon/xenon_live.cpp:1111)
 
-void Live_GiveAchievement(undefined8 param_1,undefined8 param_2)
+void Live_GiveAchievement(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  undefined4 uVar5;
-  int iVar6;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  int iVar7;
-  int iVar8;
+  ulong uVar1;
+  ulong uVar2;
+  int iVar3;
+  overlappedTask *poVar4;
+  _XOVERLAPPED *p_Var5;
   
-  uVar1 = __savegprlr_27();
-  iVar7 = (int)uVar1;
-  if ((iVar7 < 0) || (3 < iVar7)) {
-    MyAssertHandler(0xffffffff8218b718,0x45e,0,0xffffffff8218d428,0xffffffff8218d448,uVar1);
+  uVar1 = __savegprlr_27(param_1);
+  if (((int)uVar1 < 0) || (3 < (int)uVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x45e,0,
+                    "%s\n\t(localControllerIndex) = %i");
   }
-  if ((&DAT_8424b588)[iVar7 * 0x816] == 0) {
-    Com_PrintWarning(0x10,0xffffffff8218d3d0,param_2,uVar1);
+  if (xenonUserData[uVar1].signinState == 0) {
+    Com_PrintWarning(0x10,
+                     "Can\'t give achievement \"%s\" to controller %i because they are not signed in to XBL.\n"
+                    );
     __restgprlr_27();
     return;
   }
-  uVar5 = Live_LookUpAchievementString(param_2);
-  iVar6 = Live_GetFreeAchievementSlot();
-  if (iVar6 == -1) {
-    Com_PrintWarning(0x10,0xffffffff8218d370,param_2,uVar1);
+  uVar2 = Live_LookUpAchievementString(param_2);
+  iVar3 = Live_GetFreeAchievementSlot();
+  if (iVar3 == -1) {
+    Com_PrintWarning(0x10,
+                     "Can\'t give achievement \"%s\" to controller %i because there are too many simultaneous writes.\n"
+                    );
     __restgprlr_27();
     return;
   }
-  if ((iVar6 < 0) || (0xf < iVar6)) {
-    MyAssertHandler(0xffffffff8218b718,0x470,0,0xffffffff8218d320,iVar6,0,0xf);
+  if ((iVar3 < 0) || (0xf < iVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x470,0,
+                    "slot not in [0, MAX_SIMULTANEOUS_ACHIEVEMENT_WRITES - 1]\n\t%i not in [%i, %i]"
+                   );
   }
-  iVar8 = iVar6 * 8;
-  *(int *)(&DAT_84255ae8 + iVar8) = iVar7;
-  (&DAT_84253a68)[iVar6] = 1;
-  *(undefined4 *)(&DAT_84255aec + iVar8) = uVar5;
-  TaskManager_GetOpenTaskSlot(0xffffffff842546d8,uVar1,3);
-  uVar2 = TaskManager_TaskToXOverlapped();
-  uVar3 = TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar2);
-  TaskManager_SetTaskData(uVar3,&DAT_84253a68 + iVar6);
-  uVar4 = XUserWriteAchievements(1,&DAT_84255ae8 + iVar8,uVar2);
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 0x3e5)) {
-    iVar7 = CL_GetLocalClientSignInState(uVar1);
-    if (iVar7 == 2) {
-      Com_PrintError(0x10,0xffffffff8218d2e4,uVar4);
+  achievements[iVar3].dwUserIndex = uVar1;
+  s_achievementWriteActive[iVar3] = true;
+  achievements[iVar3].dwAchievementId = uVar2;
+  poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar1,3);
+  p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
+  TaskManager_SetTaskData(poVar4,s_achievementWriteActive + iVar3);
+  uVar2 = XUserWriteAchievements(1,achievements + iVar3,p_Var5);
+  if ((uVar2 != 0) && (uVar2 != 0x3e5)) {
+    iVar3 = CL_GetLocalClientSignInState(uVar1);
+    if (iVar3 == 2) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XUserWriteAchievements\n");
     }
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar2);
-    TaskManager_ClearTask();
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
+    TaskManager_ClearTask(poVar4);
   }
   __restgprlr_27();
   return;
@@ -519,79 +601,85 @@ void Live_GiveAchievement(undefined8 param_1,undefined8 param_2)
 
 // 82644860  Live_GiveAchievementComplete  (xenon/xenon_live.cpp:1162)
 
-void Live_GiveAchievementComplete(void)
+taskCompleteResults Live_GiveAchievementComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined1 *puVar4;
-  undefined8 uVar1;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
+  undefined1 *puVar5;
+  ulong uVar6;
   
-  iVar2 = __savegprlr_27();
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar2 * 0xa0);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x490,0,0xffffffff82000f98,0xffffffff8218b914);
+  iVar1 = __savegprlr_27(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x490,0,
+                    "%s");
   }
-  if ((&DAT_84254774)[iVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x492,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (overlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x492,0,
+                    "%s");
   }
-  if ((&DAT_84254770)[iVar2 * 0x28] != 3) {
-    MyAssertHandler(0xffffffff8218b718,0x493,0,0xffffffff82000f98,0xffffffff8218b8d8);
+  if (overlappedTasks.tasks[iVar1].type != 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x493,0,
+                    "%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  puVar4 = (undefined1 *)TaskManager_GetTaskData();
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  iVar2 = (int)uVar1;
-  if ((iVar2 != 0) && (iVar2 != 1)) {
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-    TaskManager_ClearTask();
-    *puVar4 = 0;
-    if (iVar2 == -0x7fffbffb) {
-      Com_PrintError(0x10,0xffffffff8218b8a8);
-      __restgprlr_27(2);
-      return;
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  puVar5 = TaskManager_GetTaskData(poVar4);
+  uVar6 = XGetOverlappedExtendedError(p_Var2);
+  if ((uVar6 != 0) && (uVar6 != 1)) {
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar4);
+    *puVar5 = 0;
+    if (uVar6 == 0x80004005) {
+      Com_PrintError(0x10,"Microsoft error awarding achievement (E_FAIL)\n");
+      tVar3 = __restgprlr_27(2);
+      return tVar3;
     }
-    Com_PrintError(0x10,0xffffffff8218b874,uVar1);
-    __restgprlr_27(2);
-    return;
+    Com_PrintError(0x10,"Microsoft error awarding achievement - error %x\n");
+    tVar3 = __restgprlr_27(2);
+    return tVar3;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  TaskManager_ClearTask();
-  *puVar4 = 0;
-  __restgprlr_27(1);
-  return;
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  TaskManager_ClearTask(poVar4);
+  *puVar5 = 0;
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 82648B00  Live_GetStatusFlags  (xenon/xenon_live.cpp:1203)
 
-ulonglong Live_GetStatusFlags(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Live_GetStatusFlags(LocalClientNum_t param_1)
 
 {
-  char cVar2;
-  ulonglong uVar1;
-  ulonglong uVar3;
+  bool bVar2;
+  uint uVar1;
+  uint uVar3;
   
   uVar3 = 0;
-  cVar2 = LiveStorage_GettingStats();
-  if (cVar2 != '\0') {
+  bVar2 = LiveStorage_GettingStats(param_1);
+  if (bVar2) {
     uVar3 = 4;
   }
-  cVar2 = LiveStorage_WritingStats(param_1);
-  if (cVar2 != '\0') {
+  bVar2 = LiveStorage_WritingStats(param_1);
+  if (bVar2) {
     uVar3 = uVar3 | 0x20;
   }
-  cVar2 = LiveStorage_GettingPlaylists();
-  if (cVar2 != '\0') {
+  bVar2 = LiveStorage_GettingPlaylists();
+  if (bVar2) {
     uVar3 = uVar3 | 8;
   }
-  cVar2 = Live_IsInPartyChat();
+  bVar2 = Live_IsInPartyChat();
   uVar1 = uVar3 | 0x80;
-  if (cVar2 == '\0') {
+  if (!bVar2) {
     uVar1 = uVar3;
   }
   return uVar1;
@@ -600,23 +688,26 @@ ulonglong Live_GetStatusFlags(undefined8 param_1)
 
 // 826449E8  Live_GetFreeStatsWriteDataSlot  (xenon/xenon_live.cpp:1233)
 
-longlong Live_GetFreeStatsWriteDataSlot(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetFreeStatsWriteDataSlot(void)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  SessionWriteStatsData *pSVar2;
   
-  lVar1 = 0;
-  pcVar2 = &DAT_84253cc8;
+  iVar1 = 0;
+  pSVar2 = sessionWriteStatsData;
   do {
-    if (*pcVar2 == '\0') {
-      return lVar1;
+    if (pSVar2->active == false) {
+      return iVar1;
     }
-    pcVar2 = pcVar2 + 0x50;
-    lVar1 = lVar1 + 1;
-  } while ((int)pcVar2 < -0x7bdab938);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x4db,0,0xffffffff8218b930);
+    pSVar2 = pSVar2 + 1;
+    iVar1 = iVar1 + 1;
+  } while ((int)pSVar2 < -0x7bdab938);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4db,0,
+                    "All slots are full");
   }
   return -1;
 }
@@ -624,106 +715,127 @@ longlong Live_GetFreeStatsWriteDataSlot(void)
 
 // 82644A68  Live_IsInLiveGame  (xenon/xenon_live.cpp:1249)
 
-undefined8 Live_IsInLiveGame(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Live_IsInLiveGame(void)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((DAT_844c7870 == 0) || (uVar1 = 1, *(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
-    uVar1 = 0;
+  if ((g_serverSession.dyn.sessionHandle == (void *)0x0) ||
+     (bVar1 = true, (onlinegame->current).enabled == false)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 82648B90  Live_SetPlayerTeamRank  (xenon/xenon_live.cpp:1256)
 
-void Live_SetPlayerTeamRank
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_SetPlayerTeamRank(int param_1,int param_2,ulong64 param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  char cVar8;
-  ulonglong uVar2;
-  undefined4 uVar6;
-  int iVar7;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar9;
+  uint uVar2;
+  bool bVar10;
+  ulong64 uVar1;
+  int iVar3;
+  PartyMember *pPVar4;
+  char *pcVar5;
+  overlappedTask *poVar6;
+  _XOVERLAPPED *p_Var7;
+  overlappedTask *poVar8;
+  ulong uVar9;
+  ulonglong uVar11;
+  uint uVar12;
   
-  uVar1 = __savegprlr_18();
-  cVar8 = Sys_IsServerThread();
-  if (cVar8 != '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x4ef,0,0xffffffff82000f98,0xffffffff8218d698);
+  uVar11 = (ulonglong)param_2;
+  uVar2 = __savegprlr_18(param_1);
+  bVar10 = Sys_IsServerThread();
+  if (bVar10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4ef,0,
+                    "%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0x4f1,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar11 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4f1,0,
+                    "clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0x4f2,0,0xffffffff82031880,uVar1,4);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4f2,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((int)param_4 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0x4f3,0,0xffffffff82022304,0xffffffff82160194,param_4);
+  if (param_4 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4f3,0,
+                    "%s\n\t(team) = %i");
   }
-  uVar2 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,param_2);
-  if (param_3 != uVar2) {
-    uVar6 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,param_2);
-    MyAssertHandler(0xffffffff8218b718,0x4f4,0,0xffffffff8218d648,param_3 & 0xffffffff,uVar6);
+  uVar12 = (uint)uVar11;
+  uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,uVar12);
+  if (param_3 != uVar1) {
+    Session_GetXuidEvenIfInactive(&g_serverSession,uVar12);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4f4,0,
+                    "player == Session_GetXuidEvenIfInactive( &g_serverSession, clientNum )\n\t%i, %i"
+                   );
   }
-  iVar7 = Live_GetFreeStatsWriteDataSlot();
-  if (-1 < iVar7) {
-    iVar9 = iVar7 * 0x50;
-    if ((&DAT_84253cc8)[iVar9] != '\0') {
-      MyAssertHandler(0xffffffff8218b718,0x4fa,0,0xffffffff82000f98,0xffffffff8218d624);
+  iVar3 = Live_GetFreeStatsWriteDataSlot();
+  if (-1 < iVar3) {
+    if (sessionWriteStatsData[iVar3].active != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x4fa,
+                      0,"%s");
     }
-    *(int *)(&DAT_84253cf8 + iVar9) = (int)param_5;
-    *(int *)(&DAT_84253d10 + iVar9) = (int)param_4;
-    *(ulonglong *)(&DAT_84253cd0 + iVar9) = param_3;
-    *(undefined **)(&DAT_84253ce0 + iVar9) = &DAT_84253ce8 + iVar9;
-    *(undefined4 *)(&DAT_84253ce8 + iVar9) = 0x1000800a;
-    (&DAT_84253cf0)[iVar9] = 1;
-    *(undefined4 *)(&DAT_84253d00 + iVar9) = 0x1000800b;
-    *(undefined4 *)(&DAT_84253cd8 + iVar9) = 0xffff0000;
-    (&DAT_84253d08)[iVar9] = 1;
-    *(undefined4 *)(&DAT_84253cdc + iVar9) = 2;
-    (&DAT_84253cc8)[iVar9] = 1;
-    Com_Printf(0x10,0xffffffff8218d5c0,param_2,param_3,iVar7,param_4,param_5);
-    iVar7 = Lobby_GetMember(param_2);
-    if (*(int *)(iVar7 + 0x108) < 1) {
-      uVar3 = va(0xffffffff8218d57c,param_4,param_5);
+    sessionWriteStatsData[iVar3].skill[0].value.field1_0x8.nData = param_5;
+    sessionWriteStatsData[iVar3].skill[1].value.field1_0x8.nData = param_4;
+    sessionWriteStatsData[iVar3].xuid = param_3;
+    sessionWriteStatsData[iVar3].views[0].pProperties = sessionWriteStatsData[iVar3].skill;
+    sessionWriteStatsData[iVar3].skill[0].dwPropertyId = 0x1000800a;
+    sessionWriteStatsData[iVar3].skill[0].value.type = '\x01';
+    sessionWriteStatsData[iVar3].skill[1].dwPropertyId = 0x1000800b;
+    sessionWriteStatsData[iVar3].views[0].dwViewId = 0xffff0000;
+    sessionWriteStatsData[iVar3].skill[1].value.type = '\x01';
+    sessionWriteStatsData[iVar3].views[0].dwNumProperties = 2;
+    sessionWriteStatsData[iVar3].active = true;
+    Com_Printf(0x10,
+               "Writing match results for client %i (%llx) in slot %i - user was on team %i and had a rank of %i\n"
+              );
+    pPVar4 = Lobby_GetMember(uVar12);
+    if (pPVar4->trueSkill < 1) {
+      pcVar5 = va("skill: JiP, team %i, score %i");
     }
     else {
-      uVar3 = va(0xffffffff8218d59c,*(int *)(iVar7 + 0x108),param_4,param_5);
+      pcVar5 = va("skill: %i, team %i, score %i");
     }
-    LSP_LogStringAboutUser(uVar1,param_3,uVar3);
-    Sys_EnterCriticalSection(0x16);
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff842546d8,uVar1,2);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Sys_LeaveCriticalSection(0x16);
-      Com_PrintError(0x10,0xffffffff8218d530);
+    LSP_LogStringAboutUser(uVar2,param_3,pcVar5);
+    Sys_EnterCriticalSection(CRITSECT_LIVE);
+    poVar6 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar2,2);
+    if (poVar6 == (overlappedTask *)0x0) {
+      Sys_LeaveCriticalSection(CRITSECT_LIVE);
+      Com_PrintError(0x10,
+                     "Live_SetPlayerTeamRank ran out of task slots while reporting team stats\n");
       __restgprlr_18();
       return;
     }
-    uVar4 = TaskManager_TaskToXOverlapped(uVar2);
-    if ((uVar4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8218b718,0x52f,0,0xffffffff82000f98,0xffffffff8218d514);
+    p_Var7 = TaskManager_TaskToXOverlapped(poVar6);
+    if (p_Var7 == (_XOVERLAPPED *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x52f,
+                      0,"%s");
     }
-    uVar5 = TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar4);
-    if ((uVar2 & 0xffffffff) != (uVar5 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8218b718,0x531,0,0xffffffff82000f98,0xffffffff8218d4b8);
+    poVar8 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var7);
+    if (poVar6 != poVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x531,
+                      0,"%s");
     }
-    TaskManager_SetTaskData(uVar2,&DAT_84253cc8 + iVar9);
-    uVar3 = XSessionWriteStats(DAT_844c7870,param_3,1,&DAT_84253cd8 + iVar9,uVar4);
-    if (((int)uVar3 != 0) && ((int)uVar3 != 0x3e5)) {
-      iVar7 = CL_GetLocalClientSignInState(uVar1);
-      if (iVar7 == 2) {
-        Com_PrintError(0x10,0xffffffff8218d484,uVar3);
+    TaskManager_SetTaskData(poVar6,sessionWriteStatsData + iVar3);
+    uVar9 = XSessionWriteStats(g_serverSession.dyn.sessionHandle,param_3,1,
+                               sessionWriteStatsData[iVar3].views,p_Var7);
+    if ((uVar9 != 0) && (uVar9 != 0x3e5)) {
+      iVar3 = CL_GetLocalClientSignInState(uVar2);
+      if (iVar3 == 2) {
+        Com_PrintError(0x10,"XSessionWriteStats failed: Microsoft error %x\n");
       }
-      TaskManager_ClearTask(uVar2);
+      TaskManager_ClearTask(poVar6);
     }
-    Sys_LeaveCriticalSection(0x16);
+    Sys_LeaveCriticalSection(CRITSECT_LIVE);
   }
   __restgprlr_18();
   return;
@@ -732,202 +844,214 @@ void Live_SetPlayerTeamRank
 
 // 82648F10  Live_SetPlayerTeamRankComplete  (xenon/xenon_live.cpp:1352)
 
-void Live_SetPlayerTeamRankComplete(void)
+taskCompleteResults Live_SetPlayerTeamRankComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined1 *puVar4;
-  undefined8 uVar1;
-  int iVar5;
-  int iVar6;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
+  undefined1 *puVar5;
+  ulong uVar6;
   
-  iVar2 = __savegprlr_25();
-  iVar6 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar6);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x54e,0,0xffffffff82000f98,0xffffffff8218d514);
+  iVar1 = __savegprlr_25(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x54e,0,
+                    "%s");
   }
-  if ((&DAT_84254774)[iVar6] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x550,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (overlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x550,0,
+                    "%s");
   }
-  if ((&DAT_84254770)[iVar2 * 0x28] != 2) {
-    MyAssertHandler(0xffffffff8218b718,0x551,0,0xffffffff82000f98,0xffffffff8218d7b4);
+  if (overlappedTasks.tasks[iVar1].type != 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x551,0,
+                    "%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_25(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_25(0);
+    return tVar3;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  puVar4 = (undefined1 *)TaskManager_GetTaskData();
-  if (puVar4 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x558,0,0xffffffff82000f98,0xffffffff8218d7a4);
-    Com_PrintError(0x10,0xffffffff8218d778);
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-    TaskManager_ClearTask();
-    __restgprlr_25(2);
-    return;
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  puVar5 = TaskManager_GetTaskData(poVar4);
+  if (puVar5 == (undefined1 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x558,0,
+                    "%s");
+    Com_PrintError(0x10,"statsWriteData is NULL for TASK_WRITESTATS\n");
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar4);
+    tVar3 = __restgprlr_25(2);
+    return tVar3;
   }
-  *puVar4 = 0;
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  iVar5 = (int)uVar1;
-  if (iVar5 != 0) {
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-    TaskManager_ClearTask();
-    iVar2 = CL_GetLocalClientSignInState((&DAT_84254775)[iVar6]);
-    if (iVar2 == 2) {
-      if (iVar5 == -0x7fffbffb) {
-        Com_PrintError(0x10,0xffffffff8218d750);
+  *puVar5 = 0;
+  uVar6 = XGetOverlappedExtendedError(p_Var2);
+  if (uVar6 != 0) {
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar4);
+    iVar1 = CL_GetLocalClientSignInState((uint)overlappedTasks.tasks[iVar1].controllerIndex);
+    if (iVar1 == 2) {
+      if (uVar6 == 0x80004005) {
+        Com_PrintError(0x10,"Microsoft error writing stats (E_FAIL)\n");
       }
-      else if (iVar5 == -0x7fea6ffd) {
-        Com_PrintError(0x10,0xffffffff8218d6e4,*(undefined8 *)(puVar4 + 8));
-        __restgprlr_25(2);
-        return;
+      else if (uVar6 == 0x80159003) {
+        Com_PrintError(0x10,"Microsoft error writing stats - user not found, user was %llx\n");
+        tVar3 = __restgprlr_25(2);
+        return tVar3;
       }
-      Com_PrintError(0x10,0xffffffff8218d724,uVar1);
+      Com_PrintError(0x10,"Microsoft error writing stats - error %x\n");
     }
-    __restgprlr_25(2);
-    return;
+    tVar3 = __restgprlr_25(2);
+    return tVar3;
   }
-  Com_Printf(0x10,0xffffffff8218d6b0,*(undefined8 *)(puVar4 + 8),iVar2);
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  TaskManager_ClearTask();
-  __restgprlr_25(1);
-  return;
+  Com_Printf(0x10,"Stats write complete for player %llx in slot %i.\n");
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  TaskManager_ClearTask(poVar4);
+  tVar3 = __restgprlr_25(1);
+  return tVar3;
 }
 
 
 // 82649130  Live_CheckTeamRanks  (xenon/xenon_live.cpp:1404)
 
-void Live_CheckTeamRanks(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_CheckTeamRanks(int param_1)
 
 {
-  undefined4 uVar1;
-  uint uVar6;
-  char cVar10;
-  int iVar7;
-  ulonglong uVar2;
-  undefined4 uVar8;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar9;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  int iVar13;
+  long lVar1;
+  uint uVar2;
+  bool bVar13;
+  ClientTeamRank *pCVar4;
+  ulong64 uVar3;
+  int iVar5;
+  PartyMember *pPVar6;
+  char *pcVar7;
+  overlappedTask *poVar8;
+  _XOVERLAPPED *p_Var9;
+  overlappedTask *poVar10;
+  ulong uVar11;
+  int iVar12;
+  uint uVar14;
+  ulong64 uVar15;
+  uint uStack00000014;
   
-  uVar6 = __savegprlr();
-  cVar10 = Sys_IsServerThread();
-  if (cVar10 != '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x581,0);
+  __savegprlr();
+  uStack00000014 = param_1;
+  bVar13 = Sys_IsServerThread();
+  if (bVar13) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x581,0,
+                    "%s");
   }
-  uVar11 = 0;
+  uVar14 = 0;
   do {
-    cVar10 = SV_Live_HasTeamRankStatsAvailable(uVar11);
-    if (cVar10 != '\0') {
-      cVar10 = SV_Live_ShouldReportTeamRanks();
-      if (cVar10 == '\0') {
-        MyAssertHandler(0xffffffff8218b718,0x588,0,0xffffffff820011f4,
-                        "SV_Live_ShouldReportTeamRanks()",
-                        "There are still stats to report but we\'re no longer in a proper state to do so"
-                       );
+    bVar13 = SV_Live_HasTeamRankStatsAvailable(uVar14);
+    if (bVar13) {
+      bVar13 = SV_Live_ShouldReportTeamRanks();
+      if (!bVar13) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x588,0,"%s\n\t%s");
       }
-      cVar10 = Session_IsUserRegistered(0xffffffff844c7860,uVar11);
-      if (cVar10 == '\0') {
-        MyAssertHandler(0xffffffff8218b718,0x589,0,0xffffffff820011f4,
-                        "Session_IsUserRegistered( &g_serverSession, clientNum )",
-                        "Lost client we were trying to reports stats for");
+      bVar13 = Session_IsUserRegistered(&g_serverSession,uVar14);
+      if (!bVar13) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x589,0,"%s\n\t%s");
       }
       sync(1);
-      iVar7 = SV_Live_GetTeamRankEntry(uVar11);
-      uVar1 = *(undefined4 *)(iVar7 + 8);
-      iVar9 = *(int *)(iVar7 + 4);
-      uVar12 = *(ulonglong *)(iVar7 + 0x10);
-      cVar10 = Sys_IsServerThread();
-      if (cVar10 != '\0') {
-        MyAssertHandler(0xffffffff8218b718,0x4ef,0,&DAT_82000f98,"!Sys_IsServerThread()");
+      pCVar4 = SV_Live_GetTeamRankEntry(uVar14);
+      lVar1 = pCVar4->rank;
+      iVar12 = pCVar4->team;
+      uVar15 = pCVar4->xuid;
+      bVar13 = Sys_IsServerThread();
+      if (bVar13) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x4ef,0,"%s");
       }
-      if (0x11 < (uVar11 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8218b718,0x4f1,0,
-                        "clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)",uVar11,0x12);
+      if (0x11 < uVar14) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x4f1,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if (3 < uVar6) {
-        MyAssertHandler(0xffffffff8218b718,0x4f2,0,
-                        "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)",uVar6,4
+      uVar2 = uStack00000014;
+      if (3 < uStack00000014) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x4f2,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)"
                        );
       }
-      if (iVar9 < 0) {
-        MyAssertHandler(0xffffffff8218b718,0x4f3,0,"%s\n\t(team) = %i","(team >= 0)",iVar9);
+      if (iVar12 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x4f3,0,"%s\n\t(team) = %i");
       }
-      uVar2 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,uVar11);
-      if (uVar12 != uVar2) {
-        uVar8 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,uVar11);
-        MyAssertHandler(0xffffffff8218b718,0x4f4,0,
+      uVar3 = Session_GetXuidEvenIfInactive(&g_serverSession,uVar14);
+      if (uVar15 != uVar3) {
+        Session_GetXuidEvenIfInactive(&g_serverSession,uVar14);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x4f4,0,
                         "player == Session_GetXuidEvenIfInactive( &g_serverSession, clientNum )\n\t%i, %i"
-                        ,uVar12 & 0xffffffff,uVar8);
+                       );
       }
-      iVar7 = Live_GetFreeStatsWriteDataSlot();
-      if (-1 < iVar7) {
-        iVar13 = iVar7 * 0x50;
-        if ((&DAT_84253cc8)[iVar13] != '\0') {
-          MyAssertHandler(0xffffffff8218b718,0x4fa,0,&DAT_82000f98,
-                          "!sessionWriteStatsData[slot].active");
+      iVar5 = Live_GetFreeStatsWriteDataSlot();
+      if (-1 < iVar5) {
+        if (sessionWriteStatsData[iVar5].active != false) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                          0x4fa,0,"%s");
         }
-        (&DAT_84253cc8)[iVar13] = 1;
-        *(ulonglong *)(&DAT_84253cd0 + iVar13) = uVar12;
-        *(undefined4 *)(&DAT_84253cf8 + iVar13) = uVar1;
-        (&DAT_84253cf0)[iVar13] = 1;
-        *(undefined4 *)(&DAT_84253cd8 + iVar13) = 0xffff0000;
-        *(undefined4 *)(&DAT_84253ce8 + iVar13) = 0x1000800a;
-        *(undefined4 *)(&DAT_84253d00 + iVar13) = 0x1000800b;
-        *(undefined4 *)(&DAT_84253cdc + iVar13) = 2;
-        *(int *)(&DAT_84253d10 + iVar13) = iVar9;
-        (&DAT_84253d08)[iVar13] = 1;
-        *(undefined **)(&DAT_84253ce0 + iVar13) = &DAT_84253ce8 + iVar13;
-        Com_Printf(0x10,0xffffffff8218d5c0,uVar11,uVar12,iVar7,iVar9,uVar1);
-        iVar7 = Lobby_GetMember(uVar11);
-        if (*(int *)(iVar7 + 0x108) < 1) {
-          uVar3 = va("skill: JiP, team %i, score %i",iVar9,uVar1);
+        sessionWriteStatsData[iVar5].active = true;
+        sessionWriteStatsData[iVar5].xuid = uVar15;
+        sessionWriteStatsData[iVar5].skill[0].value.field1_0x8.nData = lVar1;
+        sessionWriteStatsData[iVar5].skill[0].value.type = '\x01';
+        sessionWriteStatsData[iVar5].views[0].dwViewId = 0xffff0000;
+        sessionWriteStatsData[iVar5].skill[0].dwPropertyId = 0x1000800a;
+        sessionWriteStatsData[iVar5].skill[1].dwPropertyId = 0x1000800b;
+        sessionWriteStatsData[iVar5].views[0].dwNumProperties = 2;
+        sessionWriteStatsData[iVar5].skill[1].value.field1_0x8.nData = iVar12;
+        sessionWriteStatsData[iVar5].skill[1].value.type = '\x01';
+        sessionWriteStatsData[iVar5].views[0].pProperties = sessionWriteStatsData[iVar5].skill;
+        Com_Printf(0x10,
+                   "Writing match results for client %i (%llx) in slot %i - user was on team %i and had a rank of %i\n"
+                  );
+        pPVar6 = Lobby_GetMember(uVar14);
+        if (pPVar6->trueSkill < 1) {
+          pcVar7 = va("skill: JiP, team %i, score %i");
         }
         else {
-          uVar3 = va("skill: %i, team %i, score %i",*(int *)(iVar7 + 0x108),iVar9,uVar1);
+          pcVar7 = va("skill: %i, team %i, score %i");
         }
-        LSP_LogStringAboutUser(uVar6,uVar12,uVar3);
-        Sys_EnterCriticalSection(0x16);
-        uVar2 = TaskManager_GetOpenTaskSlot(&DAT_842546d8,uVar6,2);
-        if ((uVar2 & 0xffffffff) == 0) {
-          Sys_LeaveCriticalSection(0x16);
+        LSP_LogStringAboutUser(uVar2,uVar15,pcVar7);
+        Sys_EnterCriticalSection(CRITSECT_LIVE);
+        poVar8 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar2,2);
+        if (poVar8 == (overlappedTask *)0x0) {
+          Sys_LeaveCriticalSection(CRITSECT_LIVE);
           Com_PrintError(0x10,
                          "Live_SetPlayerTeamRank ran out of task slots while reporting team stats\n"
                         );
         }
         else {
-          uVar4 = TaskManager_TaskToXOverlapped(uVar2);
-          if ((uVar4 & 0xffffffff) == 0) {
-            MyAssertHandler(0xffffffff8218b718,0x52f,0,&DAT_82000f98,"statsWriteOverlapped");
+          p_Var9 = TaskManager_TaskToXOverlapped(poVar8);
+          if (p_Var9 == (_XOVERLAPPED *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                            0x52f,0,"%s");
           }
-          uVar5 = TaskManager_TaskFromXOverlapped(&DAT_842546d8,uVar4);
-          if ((uVar2 & 0xffffffff) != (uVar5 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff8218b718,0x531,0,&DAT_82000f98,
-                            "statsWriteTask == TaskManager_TaskFromXOverlapped( &overlappedTasks, statsWriteOverlapped )"
-                           );
+          poVar10 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var9);
+          if (poVar8 != poVar10) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                            0x531,0,"%s");
           }
-          TaskManager_SetTaskData(uVar2,&DAT_84253cc8 + iVar13);
-          uVar3 = XSessionWriteStats(DAT_844c7870,uVar12,1,&DAT_84253cd8 + iVar13,uVar4);
-          if (((int)uVar3 != 0) && ((int)uVar3 != 0x3e5)) {
-            iVar9 = CL_GetLocalClientSignInState(uVar6);
-            if (iVar9 == 2) {
-              Com_PrintError(0x10,"XSessionWriteStats failed: Microsoft error %x\n",uVar3);
+          TaskManager_SetTaskData(poVar8,sessionWriteStatsData + iVar5);
+          uVar11 = XSessionWriteStats(g_serverSession.dyn.sessionHandle,uVar15,1,
+                                      sessionWriteStatsData[iVar5].views,p_Var9);
+          if ((uVar11 != 0) && (uVar11 != 0x3e5)) {
+            iVar12 = CL_GetLocalClientSignInState(uVar2);
+            if (iVar12 == 2) {
+              Com_PrintError(0x10,"XSessionWriteStats failed: Microsoft error %x\n");
             }
-            TaskManager_ClearTask(uVar2);
+            TaskManager_ClearTask(poVar8);
           }
-          Sys_LeaveCriticalSection(0x16);
+          Sys_LeaveCriticalSection(CRITSECT_LIVE);
         }
       }
-      SV_Live_ClearTeamRankEntry(uVar11);
+      SV_Live_ClearTeamRankEntry(uVar14);
     }
-    uVar11 = uVar11 + 1;
-  } while ((int)uVar11 < 0x12);
+    uVar14 = uVar14 + 1;
+  } while ((int)uVar14 < 0x12);
   __restgprlr();
   return;
 }
@@ -935,76 +1059,82 @@ void Live_CheckTeamRanks(void)
 
 // 82649618  Session_CleanUpStatsWrites  (xenon/xenon_live.cpp:1430)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_CleanUpStatsWrites(void)
 
 {
   byte bVar1;
-  int *piVar3;
+  _XOVERLAPPED *p_Var2;
+  overlappedTask *poVar3;
   undefined1 *puVar4;
-  undefined8 uVar2;
-  int iVar5;
+  ulong uVar5;
   int iVar6;
-  int local_b0;
+  int *piVar7;
   
   __savegprlr();
   R_BeginRemoteScreenUpdate();
   iVar6 = 0;
-  local_b0 = 0;
   do {
-    if (((&DAT_84254774)[iVar6] == '\0') || (*(int *)((int)&DAT_84254770 + iVar6) != 2))
+    piVar7 = (int *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar6);
+    if ((*(char *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar6 + 4) == '\0') || (*piVar7 != 2))
     goto LAB_8264988c;
     while( true ) {
-      piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar6);
-      if (piVar3 == (int *)0x0) {
-        MyAssertHandler(0xffffffff8218b718,0x54e,0,0xffffffff82000f98,0xffffffff8218d514);
+      p_Var2 = TaskManager_TaskToXOverlapped
+                         ((overlappedTask *)
+                          (overlappedTasks.tasks[0].u.storageRequest.filename + iVar6 + -0x28));
+      if (p_Var2 == (_XOVERLAPPED *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x54e,0,"%s");
       }
-      if ((&DAT_84254774)[iVar6] == '\0') {
-        MyAssertHandler(0xffffffff8218b718,0x550,0,0xffffffff82000f98,0xffffffff8217aa38);
+      if (*(char *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar6 + 4) == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x550,0,"%s");
       }
-      if (*(int *)((int)&DAT_84254770 + iVar6) != 2) {
-        MyAssertHandler(0xffffffff8218b718,0x551,0,0xffffffff82000f98,0xffffffff8218d7b4);
+      if (*piVar7 != 2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x551,0,"%s");
       }
-      if (*piVar3 != 0x3e5) break;
+      if (p_Var2->InternalLow != 0x3e5) break;
       Sys_Sleep(1);
     }
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-    puVar4 = (undefined1 *)TaskManager_GetTaskData();
+    poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    puVar4 = TaskManager_GetTaskData(poVar3);
     if (puVar4 == (undefined1 *)0x0) {
-      MyAssertHandler(0xffffffff8218b718,0x558,0,0xffffffff82000f98,0xffffffff8218d7a4);
-      Com_PrintError(0x10,0xffffffff8218d778);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x558,
+                      0,"%s");
+      Com_PrintError(0x10,"statsWriteData is NULL for TASK_WRITESTATS\n");
 LAB_8264987c:
-      TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-      TaskManager_ClearTask();
+      poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+      TaskManager_ClearTask(poVar3);
     }
     else {
       *puVar4 = 0;
-      uVar2 = XGetOverlappedExtendedError(piVar3);
-      iVar5 = (int)uVar2;
-      if (iVar5 == 0) {
-        Com_Printf(0x10,0xffffffff8218d6b0,*(undefined8 *)(puVar4 + 8),local_b0);
+      uVar5 = XGetOverlappedExtendedError(p_Var2);
+      if (uVar5 == 0) {
+        Com_Printf(0x10,"Stats write complete for player %llx in slot %i.\n");
         goto LAB_8264987c;
       }
-      TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-      TaskManager_ClearTask();
-      bVar1 = (&DAT_84254775)[iVar6];
+      poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+      TaskManager_ClearTask(poVar3);
+      bVar1 = *(byte *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar6 + 5);
       if (3 < bVar1) {
-        MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,bVar1);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x2e0,0,"%s\n\t(controllerIndex) = %i");
       }
-      if ((&DAT_8424b588)[(uint)bVar1 * 0x816] == 2) {
-        if (iVar5 == -0x7fffbffb) {
+      if (xenonUserData[bVar1].signinState == 2) {
+        if (uVar5 == 0x80004005) {
           Com_PrintError(0x10,"Microsoft error writing stats (E_FAIL)\n");
         }
-        else if (iVar5 == -0x7fea6ffd) {
-          Com_PrintError(0x10,"Microsoft error writing stats - user not found, user was %llx\n",
-                         *(undefined8 *)(puVar4 + 8));
+        else if (uVar5 == 0x80159003) {
+          Com_PrintError(0x10,"Microsoft error writing stats - user not found, user was %llx\n");
           goto LAB_8264988c;
         }
-        Com_PrintError(0x10,0xffffffff8218d724,uVar2);
+        Com_PrintError(0x10,"Microsoft error writing stats - error %x\n");
       }
     }
 LAB_8264988c:
     iVar6 = iVar6 + 0xa0;
-    local_b0 = local_b0 + 1;
     if (0x13ff < iVar6) {
       R_EndRemoteScreenUpdate();
       __restgprlr();
@@ -1016,22 +1146,27 @@ LAB_8264988c:
 
 // 82644AA0  Live_CheckNetConnection  (xenon/xenon_live.cpp:1464)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Live_CheckNetConnection(void)
 
 {
-  int iVar1;
+  ulong uVar1;
+  PartyData *pPVar2;
   
-  iVar1 = XNetGetEthernetLinkStatus();
-  if (iVar1 == 0) {
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,0);
+  uVar1 = XNetGetEthernetLinkStatus();
+  if (uVar1 == 0) {
+    if ((onlinegame->current).enabled != false) {
+      Dvar_SetBool(splitscreen,false);
     }
-    Dvar_SetBool(DAT_82aa1af8,0);
-    Dvar_SetBool(DAT_82aa1ae4,0);
-    Lobby_GetPartyData();
-    Party_StopParty();
-    Party_StopParty(0xffffffff82b55118);
-    Live_ThrowError(1,0xffffffff8208bb14);
+    Dvar_SetBool(onlinegame,false);
+    Dvar_SetBool(systemlink,false);
+    pPVar2 = Lobby_GetPartyData();
+    Party_StopParty(pPVar2);
+    Party_StopParty(&g_partyData);
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_NETCONNECTION");
   }
   return;
 }
@@ -1039,398 +1174,445 @@ void Live_CheckNetConnection(void)
 
 // 82644B38  Live_ClearForcedSignin  (xenon/xenon_live.cpp:1487)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_ClearForcedSignin(void)
 
 {
-  DAT_84253a79 = 0;
-  DAT_8424a650 = 0;
+  s_liveSignin = false;
+  s_anySignin = false;
   DAT_8424a653 = 0;
-  DAT_842537fb = 0;
-  DAT_842537f9 = 0;
-  DAT_82995198 = 0xffffffff;
+  s_localSignin = false;
+  s_vaultSignin = false;
+  s_splitscreenOnlineSigninController = -1;
   return;
 }
 
 
 // 82644B78  Live_ContentRatingAllowed  (xenon/xenon_live.cpp:1502)
 
-void Live_ContentRatingAllowed(undefined8 param_1,undefined4 *param_2)
+int Live_ContentRatingAllowed(int param_1,char **param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   int local_20 [2];
   
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x5e2,0,0xffffffff82000f98,0xffffffff8207965c);
+  if (param_2 == (char **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x5e2,0,
+                    "%s");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xfe,local_20);
-  if ((int)uVar1 != 0) {
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_20);
+  if (uVar1 != 0) {
     local_20[0] = 0;
-    Com_Printf(0x10,0xffffffff82032158,uVar1);
+    Com_Printf(0x10,"XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n");
   }
   if (local_20[0] == 0) {
     *param_2 = "XBOXLIVE_MPNOTALLOWED";
   }
-  return;
+  return local_20[0];
 }
 
 
 // 8264CB08  Live_StartSigninAny  (xenon/xenon_live.cpp:1553)
 
-undefined8 Live_StartSigninAny(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Live_StartSigninAny(int param_1)
 
 {
-  int iVar3;
-  char cVar4;
-  ulonglong uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  bool bVar5;
+  LocalClientNum_t LVar2;
+  ulong uVar3;
+  char *pcVar4;
   
-  iVar3 = CL_GetLocalClientSignInState();
-  if ((0 < iVar3) && (cVar4 = Live_UserIsGuest(param_1), cVar4 == '\0')) {
-    CL_LocalClientNumFromControllerIndex(param_1);
-    CL_XenonHudIsOffscreen();
+  iVar1 = CL_GetLocalClientSignInState(param_1);
+  if ((0 < iVar1) && (bVar5 = Live_UserIsGuest(param_1), !bVar5)) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
+    CL_XenonHudIsOffscreen(LVar2);
     Live_ClearForcedAnySignInByUI(param_1);
     UI_ClearCompletionResolve();
     return 0;
   }
-  uVar1 = XShowSigninUI(1,0);
-  if ((uVar1 & 0xffffffff) != 0) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8218b944,uVar1);
-      MyAssertHandler(0xffffffff8218b718,0x628,0,uVar2);
+  uVar3 = XShowSigninUI(1,0);
+  if (uVar3 != 0) {
+    if (alwaysfails == 0) {
+      pcVar4 = va("Unable to launch signin UI, error code %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x628,
+                      0,pcVar4);
     }
     return 0;
   }
-  DAT_8424a650 = 1;
+  s_anySignin = true;
   return 1;
 }
 
 
 // 826498B0  Live_UserIsGuest  (xenon/xenon_live.cpp:1586)
 
-undefined8 Live_UserIsGuest(undefined8 param_1)
+bool Live_UserIsGuest(int param_1)
 
 {
-  int iVar1;
-  char cVar2;
-  undefined1 auStack_40 [8];
-  uint local_38;
+  ulong uVar1;
+  bool bVar2;
+  _XUSER_SIGNIN_INFO _Stack_40;
   
-  iVar1 = XUserGetSigninInfo(param_1,0,auStack_40);
-  if (iVar1 == 0) {
-    if ((local_38 & 2) != 0) {
-      return 1;
+  uVar1 = XUserGetSigninInfo(param_1,0,&_Stack_40);
+  if (uVar1 == 0) {
+    if ((_Stack_40.dwInfoFlags & 2) != 0) {
+      return true;
     }
   }
   else {
-    cVar2 = Live_IsSignedIn(param_1);
-    if ((cVar2 != '\0') && ((&DAT_8424b5e9)[(int)param_1 * 0x2058] != '\0')) {
-      return 1;
+    bVar2 = Live_IsSignedIn(param_1);
+    if ((bVar2) && (xenonUserData[param_1].isGuest != false)) {
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82644C28  Live_IsGuestByXUID  (xenon/xenon_live.cpp:1610)
 
-undefined8 Live_IsGuestByXUID(ulonglong param_1)
+bool Live_IsGuestByXUID(ulong64 param_1)
 
 {
   if ((param_1 & 0x40000000000000) != 0) {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
+}
+
+
+// 82644C48  Live_CloseOnlineMenus  (xenon/xenon_live.cpp:1655)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_CloseOnlineMenus(char *param_1)
+
+{
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_connecting");
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_acceptinginvite");
+  UI_CloseMenu(LOCAL_CLIENT_0,"popup_gettingdata");
+  UI_CloseMenu(LOCAL_CLIENT_0,"menu_xboxlive");
+  UI_CloseMenu(LOCAL_CLIENT_0,"menu_systemlink");
+  UI_CloseMenu(LOCAL_CLIENT_0,"savegame_error_mp");
+  if ((onlinegame->current).enabled != false) {
+    Dvar_SetBool(splitscreen,false);
+  }
+  Dvar_SetBool(onlinegame,false);
+  Dvar_SetBool(systemlink,false);
+  Party_ClosePartyUI(&g_partyData,param_1);
+  Party_StopParty(&g_partyData);
+  Cbuf_AddText(LOCAL_CLIENT_0,"forcesplitscreencontrol Live_CloseMpOnlineMenus;");
+  return;
 }
 
 
 // 82644C50  Live_IsWaitingForOnlineServices  (xenon/xenon_live.cpp:1665)
 
-longlong Live_IsWaitingForOnlineServices(void)
+int Live_IsWaitingForOnlineServices(int param_1)
 
 {
-  longlong lVar1;
+  DWOnlineStatus DVar1;
   
-  lVar1 = dwGetLogOnStatus();
-  return (lVar1 + -2) - (lVar1 + -3 + (ulonglong)(lVar1 + -2 == 0));
+  DVar1 = dwGetLogOnStatus(param_1);
+  return (int)((longlong)(int)DVar1 + -2) -
+         (DVar1 + ~DW_LIVE_CONNECTED + (uint)((longlong)(int)DVar1 + -2 == 0));
 }
 
 
 // 82649950  Live_CanUserPlayOnline  (xenon/xenon_live.cpp:1676)
 
-void Live_CanUserPlayOnline(undefined8 param_1,ulonglong param_2)
+bool Live_CanUserPlayOnline(int param_1,int *param_2)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   int iVar2;
-  char cVar3;
-  undefined4 *puVar4;
+  bool bVar4;
+  undefined1 uVar5;
+  ulong uVar3;
+  ulonglong uVar6;
+  undefined4 *puVar7;
   int local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x690,0,0xffffffff82000f98,0xffffffff8218d888);
+  uVar6 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x690,0,
+                    "%s");
   }
   iVar2 = CL_GetLocalClientSignInState(uVar1);
-  puVar4 = (undefined4 *)param_2;
+  puVar7 = (undefined4 *)uVar6;
   if ((iVar2 != 2) && (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 == 0)) {
 LAB_82649a00:
-    *puVar4 = 1;
-    __restgprlr_29(0);
-    return;
+    *puVar7 = 1;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  cVar3 = Live_UserIsGuest(uVar1);
-  if (cVar3 != '\0') {
-    *puVar4 = 2;
-    __restgprlr_29(0);
-    return;
+  bVar4 = Live_UserIsGuest(uVar1);
+  if (bVar4) {
+    *puVar7 = 2;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  iVar2 = XUserCheckPrivilege(uVar1,0xfe,local_30);
-  if (iVar2 == 0x4dd) {
+  uVar3 = XUserCheckPrivilege(uVar1,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_30);
+  if (uVar3 == 0x4dd) {
     iVar2 = Live_OnlinePlayEvenIfDown();
     if (iVar2 == 0) goto LAB_82649a00;
   }
-  else if (iVar2 != 0) {
+  else if (uVar3 != 0) {
     local_30[0] = 0;
-    Com_PrintError(0x10,0xffffffff82032158);
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n");
   }
-  if (DAT_844d823a != '\0') {
-    *puVar4 = 3;
-    __restgprlr_29(0);
-    return;
+  if (g_banned != false) {
+    *puVar7 = 3;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  if (DAT_844d8238 != '\0') {
-    *puVar4 = 4;
-    __restgprlr_29(0);
-    return;
+  if (g_oldBuild != false) {
+    *puVar7 = 4;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  if (DAT_844d823b != '\0') {
-    *puVar4 = 5;
-    __restgprlr_29(0);
-    return;
+  if (g_betaOver != false) {
+    *puVar7 = 5;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  if ((local_30[0] == 0) && (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 == 0)) {
-    *puVar4 = 8;
-    __restgprlr_29();
-    return;
+  if (local_30[0] == 0) {
+    iVar2 = Live_OnlinePlayEvenIfDown();
+    if (iVar2 == 0) {
+      *puVar7 = 8;
+      uVar5 = __restgprlr_29();
+      return (bool)uVar5;
+    }
   }
   iVar2 = Live_IsWaitingForConnection(uVar1);
   if (iVar2 != 0) {
-    *puVar4 = 9;
-    __restgprlr_29(0);
-    return;
+    *puVar7 = 9;
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  *puVar4 = 0;
-  __restgprlr_29(1);
-  return;
+  *puVar7 = 0;
+  uVar5 = __restgprlr_29(1);
+  return (bool)uVar5;
 }
 
 
 // 82649AF8  Live_CanUserAccessOnlineVault  (xenon/xenon_live.cpp:1772)
 
-undefined8 Live_CanUserAccessOnlineVault(undefined8 param_1,undefined4 *param_2)
+bool Live_CanUserAccessOnlineVault(int param_1,int *param_2)
 
 {
-  char cVar4;
-  undefined8 uVar1;
-  int iVar3;
-  longlong lVar2;
-  undefined4 uVar5;
+  bool bVar3;
+  int iVar1;
+  ulong uVar2;
   uint local_20;
   uint local_1c;
   
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x6f1,0,0xffffffff82000f98,0xffffffff8218d888);
+  if (param_2 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x6f1,0,
+                    "%s");
   }
-  cVar4 = Live_CanUserPlayOnline(param_1,param_2);
-  if (cVar4 == '\0') {
-    uVar1 = 0;
-  }
-  else {
-    cVar4 = SocialConfig_Ok();
-    if (cVar4 == '\0') {
-      uVar5 = 0x10;
-      uVar1 = 0;
-    }
-    else {
-      iVar3 = OnlineVault_IsRestricted(param_1);
-      if (iVar3 == 0) {
-        lVar2 = XUserCheckPrivilege(param_1,0xf7,&local_20);
-        local_20 = -(uint)(lVar2 == 0) & local_20;
-        lVar2 = XUserCheckPrivilege(param_1,0xf6);
-        if ((local_20 == 0) && ((-(uint)(lVar2 == 0) & local_1c) == 0)) {
-          uVar5 = 0xd;
-          uVar1 = 0;
+  bVar3 = Live_CanUserPlayOnline(param_1,param_2);
+  if (bVar3) {
+    bVar3 = SocialConfig_Ok();
+    if (bVar3) {
+      iVar1 = OnlineVault_IsRestricted(param_1);
+      if (iVar1 == 0) {
+        uVar2 = XUserCheckPrivilege(param_1,XPRIVILEGE_USER_CREATED_CONTENT,(int *)&local_20);
+        local_20 = -(uint)(uVar2 == 0) & local_20;
+        uVar2 = XUserCheckPrivilege(param_1,XPRIVILEGE_USER_CREATED_CONTENT_FRIENDS_ONLY,
+                                    (int *)&local_1c);
+        if ((local_20 == 0) && ((-(uint)(uVar2 == 0) & local_1c) == 0)) {
+          iVar1 = 0xd;
+          bVar3 = false;
         }
         else {
-          uVar5 = 0;
-          uVar1 = 1;
+          iVar1 = 0;
+          bVar3 = true;
         }
       }
       else {
-        uVar5 = 0xe;
-        uVar1 = 0;
+        iVar1 = 0xe;
+        bVar3 = false;
       }
     }
-    *param_2 = uVar5;
+    else {
+      iVar1 = 0x10;
+      bVar3 = false;
+    }
+    *param_2 = iVar1;
   }
-  return uVar1;
+  else {
+    bVar3 = false;
+  }
+  return bVar3;
 }
 
 
 // 82649C20  Live_CanUserPlayAny  (xenon/xenon_live.cpp:1824)
 
-undefined8 Live_CanUserPlayAny(undefined8 param_1,undefined4 *param_2)
+bool Live_CanUserPlayAny(int param_1,int *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  undefined4 uVar4;
+  int iVar1;
+  bool bVar2;
   
-  if (param_2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x721,0,0xffffffff82000f98,0xffffffff8218d888);
+  if (param_2 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x721,0,
+                    "%s");
   }
-  iVar2 = CL_GetLocalClientSignInState(param_1);
-  if (iVar2 < 1) {
-    uVar4 = 0xc;
-    uVar1 = 0;
+  iVar1 = CL_GetLocalClientSignInState(param_1);
+  if (iVar1 < 1) {
+    iVar1 = 0xc;
+    bVar2 = false;
   }
   else {
-    cVar3 = Live_UserIsGuest(param_1);
-    if (cVar3 == '\0') {
-      uVar4 = 0;
-      uVar1 = 1;
+    bVar2 = Live_UserIsGuest(param_1);
+    if (bVar2) {
+      iVar1 = 0xf;
+      bVar2 = false;
     }
     else {
-      uVar4 = 0xf;
-      uVar1 = 0;
+      iVar1 = 0;
+      bVar2 = true;
     }
   }
-  *param_2 = uVar4;
-  return uVar1;
+  *param_2 = iVar1;
+  return bVar2;
 }
 
 
 // 82644C80  Live_StartSigninLive  (xenon/xenon_live.cpp:1845)
 
-undefined8 Live_StartSigninLive(void)
+int Live_StartSigninLive(int param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  ulong uVar1;
+  char *pcVar2;
   
   Live_CheckNetConnection();
   uVar1 = XShowSigninUI(1,0x1000002);
-  if (((uVar1 & 0xffffffff) != 0) && ((uVar1 & 0xffffffff) != 5)) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8218b944,uVar1);
-      MyAssertHandler(0xffffffff8218b718,0x741,0,uVar2);
+  if ((uVar1 != 0) && (uVar1 != 5)) {
+    if (alwaysfails == 0) {
+      pcVar2 = va("Unable to launch signin UI, error code %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x741,
+                      0,pcVar2);
     }
     return 0;
   }
-  DAT_84253a79 = 1;
+  s_liveSignin = true;
   return 1;
 }
 
 
 // 82644D20  Live_StartSigninVault  (xenon/xenon_live.cpp:1868)
 
-undefined8 Live_StartSigninVault(void)
+int Live_StartSigninVault(int param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  ulong uVar1;
+  char *pcVar2;
   
   Live_CheckNetConnection();
   uVar1 = XShowSigninUI(1,0x1000002);
-  if (((uVar1 & 0xffffffff) != 0) && ((uVar1 & 0xffffffff) != 5)) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8218b944,uVar1);
-      MyAssertHandler(0xffffffff8218b718,0x758,0,uVar2);
+  if ((uVar1 != 0) && (uVar1 != 5)) {
+    if (alwaysfails == 0) {
+      pcVar2 = va("Unable to launch signin UI, error code %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x758,
+                      0,pcVar2);
     }
     return 0;
   }
-  DAT_842537f9 = 1;
+  s_vaultSignin = true;
   return 1;
 }
 
 
 // 82644DC0  Live_StartSplitscreenSigninLive  (xenon/xenon_live.cpp:1893)
 
-undefined8 Live_StartSplitscreenSigninLive(undefined4 param_1)
+int Live_StartSplitscreenSigninLive(int param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  ulong uVar1;
+  char *pcVar2;
   
   Live_CheckNetConnection();
   uVar1 = XShowSigninUI(1,0x10002);
-  if (((uVar1 & 0xffffffff) != 0) && ((uVar1 & 0xffffffff) != 5)) {
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8218b944,uVar1);
-      MyAssertHandler(0xffffffff8218b718,0x770,0,uVar2);
+  if ((uVar1 != 0) && (uVar1 != 5)) {
+    if (alwaysfails == 0) {
+      pcVar2 = va("Unable to launch signin UI, error code %d");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x770,
+                      0,pcVar2);
     }
     return 0;
   }
-  DAT_82995198 = param_1;
+  s_splitscreenOnlineSigninController = param_1;
   return 1;
 }
 
 
 // 82644E68  Live_IsInForcedSplitscreenSigninLive  (xenon/xenon_live.cpp:1914)
 
-bool Live_IsInForcedSplitscreenSigninLive(int param_1)
+int Live_IsInForcedSplitscreenSigninLive(int param_1)
 
 {
-  return param_1 == DAT_82995198;
+  return (uint)LZCOUNT(param_1 - s_splitscreenOnlineSigninController) >> 5;
 }
 
 
 // 82649CC8  Live_GetMostRestrictiveVoiceCommunicationSetting  (xenon/xenon_live.cpp:1923)
 
-void Live_GetMostRestrictiveVoiceCommunicationSetting(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+voiceCommunicationSetting Live_GetMostRestrictiveVoiceCommunicationSetting(void)
 
 {
-  char cVar2;
-  int iVar1;
-  undefined8 uVar3;
-  int *piVar4;
-  longlong lVar5;
+  bool bVar4;
+  _XUSER_SIGNIN_STATE _Var1;
+  ulong uVar2;
+  voiceCommunicationSetting vVar3;
+  undefined8 uVar5;
+  XenonUserData *pXVar6;
+  ulong uVar7;
   int local_50;
   int local_4c [19];
   
   __savegprlr_24();
-  piVar4 = &DAT_8424b588;
-  uVar3 = 0;
-  lVar5 = 0;
+  pXVar6 = xenonUserData;
+  uVar5 = 0;
+  uVar7 = 0;
   do {
-    if (((int)lVar5 < 0) || (3 < (int)lVar5)) {
-      MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,lVar5);
+    if (((int)uVar7 < 0) || (3 < (int)uVar7)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2e0,
+                      0,"%s\n\t(controllerIndex) = %i");
     }
-    if ((*piVar4 == 2) && (cVar2 = Live_UserIsGuest(lVar5), cVar2 == '\0')) {
-      iVar1 = XUserGetSigninState(lVar5);
-      if (iVar1 != 0) {
-        local_50 = 0;
-        local_4c[0] = 0;
-        iVar1 = XUserCheckPrivilege(lVar5,0xfc,&local_50);
-        if (iVar1 != 0) {
+    if (((pXVar6->signinState == 2) && (bVar4 = Live_UserIsGuest(uVar7), !bVar4)) &&
+       (_Var1 = XUserGetSigninState(uVar7), _Var1 != eXUserSigninState_NotSignedIn)) {
+      local_50 = 0;
+      local_4c[0] = 0;
+      uVar2 = XUserCheckPrivilege(uVar7,XPRIVILEGE_COMMUNICATIONS,&local_50);
+      if (uVar2 != 0) {
 LAB_82649dd8:
-          __restgprlr_24(2);
-          return;
-        }
-        if (local_50 == 0) {
-          iVar1 = XUserCheckPrivilege(lVar5,0xfb,local_4c);
-          if ((iVar1 != 0) || (local_4c[0] == 0)) goto LAB_82649dd8;
-          uVar3 = 1;
-        }
+        vVar3 = __restgprlr_24(2);
+        return vVar3;
+      }
+      if (local_50 == 0) {
+        uVar2 = XUserCheckPrivilege(uVar7,XPRIVILEGE_COMMUNICATIONS_FRIENDS_ONLY,local_4c);
+        if ((uVar2 != 0) || (local_4c[0] == 0)) goto LAB_82649dd8;
+        uVar5 = 1;
       }
     }
-    piVar4 = piVar4 + 0x816;
-    lVar5 = lVar5 + 1;
-    if (-0x7bdac919 < (int)piVar4) {
-      __restgprlr_24(uVar3);
-      return;
+    pXVar6 = pXVar6 + 1;
+    uVar7 = uVar7 + 1;
+    if (-0x7bdac919 < (int)pXVar6) {
+      vVar3 = __restgprlr_24(uVar5);
+      return vVar3;
     }
   } while( true );
 }
@@ -1438,287 +1620,302 @@ LAB_82649dd8:
 
 // 82649DE8  Live_CalculateControllerVoiceCommunicationSetting  (xenon/xenon_live.cpp:1964)
 
-undefined8 Live_CalculateControllerVoiceCommunicationSetting(undefined8 param_1)
+voiceCommunicationSetting Live_CalculateControllerVoiceCommunicationSetting(int param_1)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  int iVar2;
+  bool bVar4;
+  voiceCommunicationSetting vVar1;
+  _XUSER_SIGNIN_STATE _Var2;
+  ulong uVar3;
   int local_20;
   int local_1c [3];
   
-  cVar3 = Live_UserIsGuest();
-  if ((cVar3 != '\0') || (iVar2 = XUserGetSigninState(param_1), iVar2 == 0)) {
-    uVar1 = Live_GetMostRestrictiveVoiceCommunicationSetting();
-    return uVar1;
+  bVar4 = Live_UserIsGuest(param_1);
+  if ((bVar4) || (_Var2 = XUserGetSigninState(param_1), _Var2 == eXUserSigninState_NotSignedIn)) {
+    vVar1 = Live_GetMostRestrictiveVoiceCommunicationSetting();
+    return vVar1;
   }
   local_20 = 0;
   local_1c[0] = 0;
-  iVar2 = XUserCheckPrivilege(param_1,0xfc,&local_20);
-  if (iVar2 != 0) {
-    return 2;
+  uVar3 = XUserCheckPrivilege(param_1,XPRIVILEGE_COMMUNICATIONS,&local_20);
+  if (uVar3 != 0) {
+    return TALK_TO_NOBODY_I_HATE_EVERYONE;
   }
   if (local_20 == 0) {
-    iVar2 = XUserCheckPrivilege(param_1,0xfb,local_1c);
-    if (iVar2 != 0) {
-      return 2;
+    uVar3 = XUserCheckPrivilege(param_1,XPRIVILEGE_COMMUNICATIONS_FRIENDS_ONLY,local_1c);
+    if (uVar3 != 0) {
+      return TALK_TO_NOBODY_I_HATE_EVERYONE;
     }
     if (local_1c[0] == 0) {
-      return 2;
+      return TALK_TO_NOBODY_I_HATE_EVERYONE;
     }
   }
-  return 0;
+  return TALK_TO_EVERYONE;
 }
 
 
 // 82644E80  Live_GetOurVoiceCommunicationSetting  (xenon/xenon_live.cpp:2000)
 
-undefined4 Live_GetOurVoiceCommunicationSetting(int param_1)
+voiceCommunicationSetting Live_GetOurVoiceCommunicationSetting(int param_1)
 
 {
-  return *(undefined4 *)(&DAT_8424d5d8 + param_1 * 0x2058);
+  return xenonUserData[param_1].voiceCommunicationSetting;
 }
 
 
 // 82644E98  Live_StartTeamMatchComplete  (xenon/xenon_live.cpp:2010)
 
-void Live_StartTeamMatchComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Live_StartTeamMatchComplete(int param_1)
 
 {
   int iVar1;
-  int iVar3;
-  int *piVar4;
-  ulonglong uVar2;
-  int iVar5;
-  int iVar6;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
+  PartyData *pPVar5;
+  ulong uVar6;
   int iVar7;
   int iVar8;
-  uint uVar9;
-  uint uVar10;
-  longlong *plVar11;
-  int iVar13;
-  undefined8 uVar12;
-  undefined8 uVar14;
+  PartyData *pPVar9;
+  int iVar10;
+  uint uVar11;
+  uint uVar12;
+  ulong64 *puVar13;
+  int *piVar14;
+  undefined8 uVar15;
+  uint uVar16;
   
-  iVar3 = __savegprlr_18();
-  iVar8 = iVar3 * 0xa0;
-  if ((&DAT_84254774)[iVar8] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x7e6,0,0xffffffff82000f98,0xffffffff8217aa38);
+  iVar1 = __savegprlr_18(param_1);
+  if (overlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x7e6,0,
+                    "%s");
   }
-  if ((&DAT_84254770)[iVar3 * 0x28] != 6) {
-    MyAssertHandler(0xffffffff8218b718,0x7e7,0,0xffffffff82000f98,0xffffffff8218ba9c);
+  if (overlappedTasks.tasks[iVar1].type != 6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x7e7,0,
+                    "%s");
   }
-  piVar4 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar8);
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x7ea,0,0xffffffff82000f98,0xffffffff82092610);
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x7ea,0,
+                    "%s");
   }
-  if (*piVar4 == 0x3e5) {
-    __restgprlr_18(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_18(0);
+    return tVar3;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar4);
-  iVar3 = TaskManager_GetTaskData();
-  uVar2 = XGetOverlappedExtendedError(piVar4);
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar4);
-  TaskManager_ClearTask();
-  if ((uVar2 & 0xffffffff) == 0) {
-    if (DAT_8424a774 != 1) {
-      Com_PrintError(0x10,0xffffffff8218ba34);
-      uVar14 = 2;
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  pPVar5 = TaskManager_GetTaskData(poVar4);
+  uVar6 = XGetOverlappedExtendedError(p_Var2);
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  TaskManager_ClearTask(poVar4);
+  if (uVar6 == 0) {
+    if (trueSkillData.trueskillBuf._0_4_ != 1) {
+      Com_PrintError(0x10,"Microsoft error - Wrong number of views fetched: %i\n");
+      uVar15 = 2;
       goto LAB_82645174;
     }
-    uVar9 = 0;
-    if (*(int *)(DAT_8424a778 + 8) != 0) {
-      iVar5 = 0;
+    uVar11 = 0;
+    if (*(int *)(trueSkillData.trueskillBuf._4_4_ + 8) != 0) {
+      iVar7 = 0;
       do {
-        uVar2 = 0;
-        plVar11 = (longlong *)(*(int *)(DAT_8424a778 + 0xc) + iVar5);
-        piVar4 = (int *)(iVar3 + 0x160);
+        uVar16 = 0;
+        puVar13 = (ulong64 *)(*(int *)(trueSkillData.trueskillBuf._4_4_ + 0xc) + iVar7);
+        piVar14 = &pPVar5->partyMembers[0].trueSkill;
         do {
-          if ((*(char *)(piVar4 + -0x42) == '\x06') && (*piVar4 == 0)) {
-            iVar6 = irand(0,0x33);
-            *piVar4 = iVar6;
-            uVar14 = Lobby_GetPartyData();
-            PartyHost_MarkMemberInfoDirty(uVar14,uVar2);
-            iVar6 = *piVar4;
-            uVar14 = Party_GetMemberName(iVar3,uVar2);
-            Com_Printf(0x10,0xffffffff8218b9e0,uVar14,uVar2,iVar6);
+          if ((((PartyMember *)(piVar14 + -0x42))->status == '\x06') && (*piVar14 == 0)) {
+            iVar8 = irand(0,0x33);
+            *piVar14 = iVar8;
+            pPVar9 = Lobby_GetPartyData();
+            PartyHost_MarkMemberInfoDirty(pPVar9,uVar16);
+            Party_GetMemberName(pPVar5,uVar16);
+            Com_Printf(0x10,"%s (client %i) has a trueskill of %lld\n");
           }
-          else if (*plVar11 == *(longlong *)(piVar4 + 8)) {
-            uVar10 = 0;
-            if (*(int *)(plVar11 + 5) != 0) {
-              iVar6 = 0;
+          else if (*puVar13 == *(ulong64 *)(piVar14 + 8)) {
+            uVar12 = 0;
+            if (*(int *)(puVar13 + 5) != 0) {
+              iVar8 = 0;
               do {
-                iVar13 = iVar6 + *(int *)((int)plVar11 + 0x2c);
-                if (*(short *)(iVar6 + *(int *)((int)plVar11 + 0x2c)) == 0x3d) {
-                  iVar1 = (int)uVar2 * 0x150 + iVar3;
-                  iVar7 = (int)*(undefined8 *)(iVar13 + 0x10);
-                  if (*(int *)(iVar1 + 0x160) != iVar7) {
-                    *(int *)(iVar1 + 0x160) = iVar7;
-                    uVar14 = Lobby_GetPartyData();
-                    PartyHost_MarkMemberInfoDirty(uVar14,uVar2);
-                    uVar12 = *(undefined8 *)(iVar13 + 0x10);
-                    uVar14 = Party_GetMemberName(iVar3,uVar2);
-                    Com_Printf(0x10,0xffffffff8218b9e0,uVar14,uVar2,uVar12);
+                if (*(short *)(iVar8 + *(int *)((int)puVar13 + 0x2c)) == 0x3d) {
+                  iVar10 = (int)*(undefined8 *)(iVar8 + *(int *)((int)puVar13 + 0x2c) + 0x10);
+                  if (pPVar5->partyMembers[uVar16].trueSkill != iVar10) {
+                    pPVar5->partyMembers[uVar16].trueSkill = iVar10;
+                    pPVar9 = Lobby_GetPartyData();
+                    PartyHost_MarkMemberInfoDirty(pPVar9,uVar16);
+                    Party_GetMemberName(pPVar5,uVar16);
+                    Com_Printf(0x10,"%s (client %i) has a trueskill of %lld\n");
                   }
                 }
                 else {
-                  Com_PrintError(0x10,0xffffffff8218ba08);
+                  Com_PrintError(0x10,"Microsoft error - Unexpected column: %i\n.");
                 }
-                uVar10 = uVar10 + 1;
-                iVar6 = iVar6 + 0x18;
-              } while (uVar10 < *(uint *)(plVar11 + 5));
+                uVar12 = uVar12 + 1;
+                iVar8 = iVar8 + 0x18;
+              } while (uVar12 < *(uint *)(puVar13 + 5));
             }
             break;
           }
-          uVar2 = uVar2 + 1;
-          piVar4 = piVar4 + 0x54;
-        } while ((uVar2 & 0xffffffff) < 0x12);
-        uVar9 = uVar9 + 1;
-        iVar5 = iVar5 + 0x30;
-      } while (uVar9 < *(uint *)(DAT_8424a778 + 8));
+          uVar16 = uVar16 + 1;
+          piVar14 = piVar14 + 0x54;
+        } while (uVar16 < 0x12);
+        uVar11 = uVar11 + 1;
+        iVar7 = iVar7 + 0x30;
+      } while (uVar11 < *(uint *)(trueSkillData.trueskillBuf._4_4_ + 8));
     }
   }
   else {
-    iVar5 = Live_OnlinePlayEvenIfDown();
-    if (iVar5 == 0) {
-      Com_PrintError(0x10,0xffffffff8218ba6c,uVar2);
-      uVar14 = 2;
+    iVar7 = Live_OnlinePlayEvenIfDown();
+    if (iVar7 == 0) {
+      Com_PrintError(0x10,"Microsoft error fetching true skill stats: %x\n");
+      uVar15 = 2;
       goto LAB_82645174;
     }
   }
-  uVar14 = 1;
+  uVar15 = 1;
 LAB_82645174:
-  if (((*(int *)(iVar3 + 0x1ef4) != 0) && (*(int *)(iVar3 + 0x1eec) != 0)) &&
-     (0 < *(int *)(iVar3 + 0x1ee0))) {
-    PartyHost_StartTeamMatch(iVar3,(&DAT_84254775)[iVar8]);
-    __restgprlr_18(uVar14);
-    return;
+  if (((pPVar5->inParty != 0) && (pPVar5->areWeHost != 0)) && (0 < pPVar5->gameStartTime)) {
+    PartyHost_StartTeamMatch(pPVar5,(uint)overlappedTasks.tasks[iVar1].controllerIndex);
+    tVar3 = __restgprlr_18(uVar15);
+    return tVar3;
   }
-  Com_PrintWarning(0x19,0xffffffff8218b970,*(int *)(iVar3 + 0x1ef4),*(undefined4 *)(iVar3 + 0x1eec),
-                   *(undefined4 *)(iVar3 + 0x1ee0));
-  __restgprlr_18(uVar14);
-  return;
+  Com_PrintWarning(0x19,
+                   "Live_StartTeamMatchComplete finished, but the party state change prevented the match from starting %i %i %i.\n"
+                  );
+  tVar3 = __restgprlr_18(uVar15);
+  return tVar3;
 }
 
 
 // 826451D8  Live_GetTrueSkillSpec  (xenon/xenon_live.cpp:2109)
 
-void Live_GetTrueSkillSpec(int *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_GetTrueSkillSpec(PartyData *param_1)
 
 {
   int iVar1;
   
   iVar1 = Playlist_GetPlaylistIdForNum
-                    (*(undefined4 *)(*param_1 + 0x4f8),*(undefined4 *)(DAT_82aa1adc + 0xc));
-  Com_Printf(0x10,0xffffffff8218bad4,iVar1);
-  DAT_8424a6f0 = 1;
-  DAT_8424a6f4 = 0x3d;
-  DAT_8424a6ec = (&DAT_829950f8)[iVar1];
+                    ((param_1->session->dyn).sessionCreateController,(playlist->current).integer);
+  Com_Printf(0x10,"Setting trueskill spec to %i\n");
+  trueSkillData.spec.dwNumColumnIds = 1;
+  trueSkillData.spec.rgwColumnIds[0] = 0x3d;
+  trueSkillData.spec.dwViewId = statsGameModeList[iVar1];
   return;
 }
 
 
 // 82649EC0  Live_StartTeamMatch  (xenon/xenon_live.cpp:2122)
 
-void Live_StartTeamMatch(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_StartTeamMatch(PartyData *param_1,int param_2)
 
 {
-  int iVar3;
-  int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  PartyData *pPVar1;
+  int iVar2;
+  undefined1 uVar6;
+  ulong uVar3;
+  overlappedTask *poVar4;
+  _XOVERLAPPED *p_Var5;
+  int *piVar7;
+  longlong lVar8;
   
-  iVar3 = __savegprlr_25();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x84f,0,0xffffffff82000f98,0xffffffff820321a4);
+  pPVar1 = (PartyData *)__savegprlr_25(param_1);
+  if (pPVar1 == (PartyData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x84f,0,
+                    "%s");
   }
-  iVar4 = TaskManager_CancelTasks(0xffffffff842546d8,6);
-  if (iVar4 == 0) {
-    Com_PrintError(0x10,0xffffffff82004d30,0xffffffff8218d9c4);
-    __restgprlr_25(0);
-    return;
+  iVar2 = TaskManager_CancelTasks(&overlappedTasks,6);
+  if (iVar2 == 0) {
+    Com_PrintError(0x10,"%s\n");
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  Live_GetTrueSkillSpec(iVar3);
-  puVar6 = (undefined4 *)(iVar3 + 0x160);
-  uVar5 = 0;
-  lVar7 = 0x12;
-  DAT_8424a6e8 = 0;
+  Live_GetTrueSkillSpec(pPVar1);
+  piVar7 = &pPVar1->partyMembers[0].trueSkill;
+  uVar3 = 0;
+  lVar8 = 0x12;
+  trueSkillData.xuidCount = 0;
   do {
-    if (4 < *(byte *)(puVar6 + -0x42)) {
-      *puVar6 = 0;
-      (&DAT_8424a658)[DAT_8424a6e8] = *(undefined8 *)(puVar6 + 8);
-      uVar5 = (ulonglong)DAT_8424a6e8 + 1;
-      DAT_8424a6e8 = (uint)uVar5;
+    if (4 < ((PartyMember *)(piVar7 + -0x42))->status) {
+      *piVar7 = 0;
+      trueSkillData.xuids[trueSkillData.xuidCount] = *(ulong64 *)(piVar7 + 8);
+      uVar3 = trueSkillData.xuidCount + 1;
+      trueSkillData.xuidCount = uVar3;
     }
-    puVar6 = puVar6 + 0x54;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x866,1,0xffffffff82000f98,0xffffffff8218d9a8);
-    uVar5 = (ulonglong)DAT_8424a6e8;
+    piVar7 = piVar7 + 0x54;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  if (uVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x866,1,
+                    "%s");
   }
-  Com_Printf(0x10,0xffffffff8218d960,uVar5);
-  DAT_8424b584 = 0;
-  uVar5 = XUserReadStats(0x415608cb,DAT_8424a6e8,0xffffffff8424a658,1,0xffffffff8424a6ec,
-                         0xffffffff8424b584,0,0);
-  if ((uVar5 & 0xffffffff) != 0x7a) {
-    Com_PrintError(0x10,0xffffffff8218d918,uVar5);
-    __restgprlr_25(0);
-    return;
+  Com_Printf(0x10,"Requesting trueskill values for %i players - calling XUserReadStats()\n");
+  trueSkillData.bufSize = 0;
+  uVar3 = XUserReadStats(0x415608cb,trueSkillData.xuidCount,trueSkillData.xuids,1,
+                         &trueSkillData.spec,&trueSkillData.bufSize,(_XUSER_STATS_READ_RESULTS *)0x0
+                         ,(_XOVERLAPPED *)0x0);
+  if (uVar3 != 0x7a) {
+    Com_PrintError(0x10,"Microsoft error - unable to determine buffer size, error code: %i\n");
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  if (0xe10 < DAT_8424b584) {
-    Com_PrintError(0x10,0xffffffff8218d8e0,DAT_8424b584,0xe10);
-    __restgprlr_25(0);
-    return;
+  if (0xe10 < trueSkillData.bufSize) {
+    Com_PrintError(0x10,"Microsoft error - Not enough space for data: %i > %i\n");
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  TaskManager_GetOpenTaskSlot(0xffffffff842546d8,param_2,6);
-  uVar1 = TaskManager_TaskToXOverlapped();
-  uVar2 = TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar1);
-  TaskManager_SetTaskData(uVar2,iVar3);
-  uVar5 = XUserReadStats(0x415608cb,DAT_8424a6e8,0xffffffff8424a658,1,0xffffffff8424a6ec,
-                         0xffffffff8424b584,0xffffffff8424a774,uVar1);
-  if ((uVar5 & 0xffffffff) != 0x3e5) {
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar1);
-    TaskManager_ClearTask();
-    iVar3 = CL_GetLocalClientSignInState(param_2);
-    if (iVar3 == 2) {
-      Com_PrintError(0x10,0xffffffff8218d898,uVar5);
+  poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,param_2,6);
+  p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
+  TaskManager_SetTaskData(poVar4,pPVar1);
+  uVar3 = XUserReadStats(0x415608cb,trueSkillData.xuidCount,trueSkillData.xuids,1,
+                         &trueSkillData.spec,&trueSkillData.bufSize,
+                         (_XUSER_STATS_READ_RESULTS *)trueSkillData.trueskillBuf,p_Var5);
+  if (uVar3 != 0x3e5) {
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
+    TaskManager_ClearTask(poVar4);
+    iVar2 = CL_GetLocalClientSignInState(param_2);
+    if (iVar2 == 2) {
+      Com_PrintError(0x10,"Microsoft error - Unable to start async fetch of true skill data: %i\n");
     }
-    __restgprlr_25(0);
-    return;
+    uVar6 = __restgprlr_25(0);
+    return (bool)uVar6;
   }
-  __restgprlr_25(1);
-  return;
+  uVar6 = __restgprlr_25(1);
+  return (bool)uVar6;
 }
 
 
 // 82645258  Live_ResetSkill  (xenon/xenon_live.cpp:2192)
 
-void Live_ResetSkill(void)
+void Live_ResetSkill(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  ulong uVar1;
+  ulong uVar2;
   longlong lVar3;
-  undefined4 *puVar4;
+  int *piVar4;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0x891,0,0xffffffff82031880,uVar1,4);
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x891,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   lVar3 = 0x28;
-  puVar4 = &DAT_829950f8;
+  piVar4 = statsGameModeList;
   do {
-    iVar2 = XUserResetStatsView(uVar1,*puVar4,0);
-    if (iVar2 != 0) {
-      Com_PrintError(0x10,0xffffffff8218baf4,uVar1);
+    uVar2 = XUserResetStatsView(uVar1,*piVar4,(_XOVERLAPPED *)0x0);
+    if (uVar2 != 0) {
+      Com_PrintError(0x10,"Microsoft error trying to reset true skill for controller %i\n");
     }
     lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 1;
+    piVar4 = piVar4 + 1;
   } while (lVar3 != 0);
   __restgprlr_28();
   return;
@@ -1727,28 +1924,29 @@ void Live_ResetSkill(void)
 
 // 826452E8  Live_ResetSkillForAllPlayers  (xenon/xenon_live.cpp:2208)
 
-void Live_ResetSkillForAllPlayers(void)
+void Live_ResetSkillForAllPlayers(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  uint uVar1;
+  ulong uVar2;
   longlong lVar3;
-  undefined4 *puVar4;
+  int *piVar4;
   
-  uVar1 = __savegprlr_27();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0x8a1,0,0xffffffff82031880,uVar1,4);
+  uVar1 = __savegprlr_27(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x8a1,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  puVar4 = &DAT_829950f8;
+  piVar4 = statsGameModeList;
   lVar3 = 0x28;
   do {
-    Com_Printf(0x10,0xffffffff8218bb34,*puVar4);
-    iVar2 = XUserResetStatsViewAllUsers(*puVar4,0);
-    if (iVar2 != 0) {
-      Com_PrintError(0x10,0xffffffff8218baf4,uVar1);
+    Com_Printf(0x10,"Resetting everyone\'s trueskill for trueskill view %i\n");
+    uVar2 = XUserResetStatsViewAllUsers(*piVar4,(_XOVERLAPPED *)0x0);
+    if (uVar2 != 0) {
+      Com_PrintError(0x10,"Microsoft error trying to reset true skill for controller %i\n");
     }
     lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 1;
+    piVar4 = piVar4 + 1;
   } while (lVar3 != 0);
   __restgprlr_27();
   return;
@@ -1757,105 +1955,116 @@ void Live_ResetSkillForAllPlayers(void)
 
 // 8264A110  Live_ReadStats  (xenon/xenon_live.cpp:2230)
 
-void Live_ReadStats(void)
+void Live_ReadStats(int param_1)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  short *psVar4;
-  undefined4 *puVar5;
+  short sVar1;
+  _XUSER_STATS_VIEW *p_Var2;
+  ulong uVar3;
+  _XUSER_STATS_READ_RESULTS *p_Var4;
+  int *piVar5;
   uint uVar6;
-  undefined4 *puVar7;
+  longlong lVar7;
   int iVar8;
-  uint *puVar9;
+  longlong lVar9;
   undefined2 *puVar10;
   uint uVar11;
   int iVar12;
-  int iVar13;
   uint uVar14;
-  int iVar15;
-  int iVar16;
+  ulonglong uVar13;
+  ulonglong uVar15;
   int iVar17;
+  ulonglong uVar16;
+  int iVar18;
+  uint uStack00000014;
   uint local_1600;
-  undefined8 local_15f0 [3];
+  ulong64 local_15f0 [3];
   undefined2 local_15d8 [2796];
   
-  iVar3 = __savegprlr();
-  local_15f0[0] = Live_GetXuid();
-  iVar15 = iVar3 * 0x2058;
-  puVar5 = &DAT_829950f8;
+  uVar13 = (ulonglong)param_1;
+  __savegprlr();
+  uStack00000014 = (uint)uVar13;
+  local_15f0[0] = Live_GetXuid(uStack00000014);
+  uVar15 = uVar13 * 0x2058;
+  piVar5 = statsGameModeList;
   local_1600 = 0;
-  *(undefined8 *)(&DAT_8424b5f0 + iVar15) = 0;
-  puVar7 = (undefined4 *)(&DAT_8424d538 + iVar15);
-  puVar9 = (uint *)(&DAT_8424b5f8 + iVar15);
+  *(undefined8 *)((int)(xenonUserData[0].statsResults + -1) + 0xc0 + (int)uVar15) = 0;
+  lVar7 = uVar15 - 0x7bdb2ac8;
+  lVar9 = uVar15 - 0x7bdb4a08;
   puVar10 = local_15d8;
+  uVar16 = uVar15;
   do {
-    uVar1 = *puVar5;
+    iVar8 = *piVar5;
     *(undefined4 *)(puVar10 + -2) = 2;
     *puVar10 = 0x3d;
     puVar10[1] = 0x3e;
-    *puVar7 = 200;
-    *(undefined4 *)(puVar10 + -4) = uVar1;
-    uVar2 = XUserReadStats(0,1,local_15f0,1,puVar10 + -4,puVar7,puVar9,0);
-    if ((int)uVar2 != 0) {
-      if ((iVar3 < 0) || (3 < iVar3)) {
-        MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,iVar3);
+    *(ulong *)lVar7 = 200;
+    *(int *)(puVar10 + -4) = iVar8;
+    p_Var4 = (_XUSER_STATS_READ_RESULTS *)lVar9;
+    uVar3 = XUserReadStats(0,1,local_15f0,1,(_XUSER_STATS_SPEC *)(puVar10 + -4),(ulong *)lVar7,
+                           p_Var4,(_XOVERLAPPED *)0x0);
+    if (uVar3 != 0) {
+      if (((int)uVar13 < 0) || (3 < (int)uVar13)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x2e0,0,"%s\n\t(controllerIndex) = %i");
       }
-      if ((&DAT_8424b588)[iVar3 * 0x816] == 2) {
-        Com_Printf(0x10,0xffffffff8218da04,uVar2);
+      if (*(int *)(xenonUserData[0].gamertag + (int)uVar16 + -4) == 2) {
+        Com_Printf(0x10,"Microsoft error %i trying to read stats\n");
         __restgprlr();
         return;
       }
       goto LAB_8264a348;
     }
     uVar6 = 0;
-    if (*puVar9 != 0) {
+    if (p_Var4->dwNumViews != 0) {
       iVar8 = 0;
       do {
-        iVar13 = puVar9[1] + iVar8;
-        uVar2 = Live_LookupGametypeFromStatsView(*(undefined4 *)(puVar9[1] + iVar8));
-        Com_Printf(0x10,0xffffffff8218da50,uVar2);
-        if ((*(int *)(iVar13 + 0xc) != 0) && (uVar11 = 0, *(int *)(iVar13 + 8) != 0)) {
+        p_Var2 = p_Var4->pViews;
+        Live_LookupGametypeFromStatsView(*(int *)((int)&p_Var2->dwViewId + iVar8));
+        Com_Printf(0x10,"Gametype: %s\n");
+        if ((*(int *)((int)&p_Var2->pRows + iVar8) != 0) &&
+           (uVar11 = 0, *(int *)((int)&p_Var2->dwNumRows + iVar8) != 0)) {
           iVar12 = 0;
           do {
             uVar14 = 0;
-            iVar17 = iVar12 + *(int *)(iVar13 + 0xc);
-            if (*(int *)(iVar17 + 0x28) != 0) {
-              iVar16 = 0;
+            iVar18 = iVar12 + *(int *)((int)&p_Var2->pRows + iVar8);
+            if (*(int *)(iVar18 + 0x28) != 0) {
+              iVar17 = 0;
               do {
-                psVar4 = (short *)(*(int *)(iVar17 + 0x2c) + iVar16);
-                if (*psVar4 == 0x3d) {
-                  Com_Printf(0x10,0xffffffff8218da60,*(undefined8 *)(psVar4 + 8));
+                sVar1 = *(short *)(*(int *)(iVar18 + 0x2c) + iVar17);
+                if (sVar1 == 0x3d) {
+                  Com_Printf(0x10,"Skill is %i\n");
                 }
-                else if (*psVar4 == 0x3e) {
-                  Com_Printf(0x10,0xffffffff8218da70,*(undefined8 *)(psVar4 + 8));
-                  *(longlong *)(&DAT_8424b5f0 + DAT_82b5c820 * 0x2058) =
-                       *(longlong *)(*(int *)(iVar17 + 0x2c) + iVar16 + 0x10) +
-                       *(longlong *)(&DAT_8424b5f0 + DAT_82b5c820 * 0x2058);
+                else if (sVar1 == 0x3e) {
+                  Com_Printf(0x10,"Games Played: %i\n");
+                  xenonUserData[cl_controller_in_use].totalGamesPlayed =
+                       *(longlong *)(*(int *)(iVar18 + 0x2c) + iVar17 + 0x10) +
+                       xenonUserData[cl_controller_in_use].totalGamesPlayed;
                 }
                 else {
-                  Com_Printf(0x10,0xffffffff8218da84);
+                  Com_Printf(0x10,"Unknown columnId %x\n");
                 }
                 uVar14 = uVar14 + 1;
-                iVar16 = iVar16 + 0x18;
-              } while (uVar14 < *(uint *)(iVar17 + 0x28));
+                iVar17 = iVar17 + 0x18;
+              } while (uVar14 < *(uint *)(iVar18 + 0x28));
             }
             uVar11 = uVar11 + 1;
             iVar12 = iVar12 + 0x30;
-          } while (uVar11 < *(uint *)(iVar13 + 8));
+          } while (uVar11 < *(uint *)((int)&p_Var2->dwNumRows + iVar8));
+          uVar13 = (ulonglong)uStack00000014;
+          uVar16 = uVar15 & 0xffffffff;
         }
         uVar6 = uVar6 + 1;
         iVar8 = iVar8 + 0x10;
-      } while (uVar6 < *puVar9);
+      } while (uVar6 < p_Var4->dwNumViews);
     }
-    puVar5 = puVar5 + 1;
-    puVar7 = puVar7 + 1;
+    piVar5 = piVar5 + 1;
+    lVar7 = lVar7 + 4;
     local_1600 = local_1600 + 4;
-    puVar9 = puVar9 + 0x32;
+    lVar9 = lVar9 + 200;
     puVar10 = puVar10 + 0x44;
   } while (local_1600 < 0xa0);
-  Com_Printf(0x10,0xffffffff8218da30,*(undefined8 *)(&DAT_8424b5f0 + iVar15));
+  Com_Printf(0x10,"You have played %i games total\n");
 LAB_8264a348:
   __restgprlr();
   return;
@@ -1864,327 +2073,364 @@ LAB_8264a348:
 
 // 8264A3B0  Live_ReadStatsComplete  (xenon/xenon_live.cpp:2301)
 
-void Live_ReadStatsComplete(void)
+int Live_ReadStatsComplete(int param_1)
 
 {
+  short sVar1;
   int iVar2;
-  int *piVar3;
-  uint *puVar4;
-  undefined8 uVar1;
-  short *psVar5;
-  uint uVar6;
+  _XOVERLAPPED *p_Var3;
+  overlappedTask *poVar4;
+  uint *puVar5;
+  ulong uVar6;
   uint uVar7;
-  int iVar8;
+  uint uVar8;
   int iVar9;
-  uint uVar10;
-  int iVar11;
+  int iVar10;
+  uint uVar11;
   int iVar12;
+  int iVar13;
   
-  iVar2 = __savegprlr_17();
-  iVar9 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar9);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x909,0,0xffffffff82000f98,0xffffffff8218db64);
+  iVar2 = __savegprlr_17(param_1);
+  p_Var3 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar2);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x909,0,
+                    "%s");
   }
-  if ((&DAT_84254774)[iVar9] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x90b,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (overlappedTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x90b,0,
+                    "%s");
   }
-  if ((&DAT_84254770)[iVar2 * 0x28] != 5) {
-    MyAssertHandler(0xffffffff8218b718,0x90c,0,0xffffffff82000f98,0xffffffff8218db30);
+  if (overlappedTasks.tasks[iVar2].type != 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x90c,0,
+                    "%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_17(0);
-    return;
+  if (p_Var3->InternalLow == 0x3e5) {
+    iVar2 = __restgprlr_17(0);
+    return iVar2;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  puVar4 = (uint *)TaskManager_GetTaskData();
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  if ((int)uVar1 == 0) {
-    Com_Printf(0x10,0xffffffff8218dac4);
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-    TaskManager_ClearTask();
-    uVar6 = 0;
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+  puVar5 = TaskManager_GetTaskData(poVar4);
+  uVar6 = XGetOverlappedExtendedError(p_Var3);
+  if (uVar6 == 0) {
+    Com_Printf(0x10,"One stat read complete\n");
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+    TaskManager_ClearTask(poVar4);
+    uVar7 = 0;
     iVar2 = 0;
     do {
-      iVar9 = iVar2 + puVar4[1];
-      uVar1 = Live_LookupGametypeFromStatsView(*(undefined4 *)(iVar2 + puVar4[1]));
-      Com_Printf(0x10,0xffffffff8218da50,uVar1);
-      if ((*(int *)(iVar9 + 0xc) != 0) && (uVar7 = 0, *(int *)(iVar9 + 8) != 0)) {
-        iVar8 = 0;
+      iVar10 = iVar2 + puVar5[1];
+      Live_LookupGametypeFromStatsView(*(int *)(iVar2 + puVar5[1]));
+      Com_Printf(0x10,"Gametype: %s\n");
+      if ((*(int *)(iVar10 + 0xc) != 0) && (uVar8 = 0, *(int *)(iVar10 + 8) != 0)) {
+        iVar9 = 0;
         do {
-          uVar10 = 0;
-          iVar12 = *(int *)(iVar9 + 0xc) + iVar8;
-          if (*(int *)(iVar12 + 0x28) != 0) {
-            iVar11 = 0;
+          uVar11 = 0;
+          iVar13 = *(int *)(iVar10 + 0xc) + iVar9;
+          if (*(int *)(iVar13 + 0x28) != 0) {
+            iVar12 = 0;
             do {
-              psVar5 = (short *)(iVar11 + *(int *)(iVar12 + 0x2c));
-              if (*psVar5 == 0x3d) {
-                Com_Printf(0x10,0xffffffff8218da60,*(undefined8 *)(psVar5 + 8));
+              sVar1 = *(short *)(iVar12 + *(int *)(iVar13 + 0x2c));
+              if (sVar1 == 0x3d) {
+                Com_Printf(0x10,"Skill is %i\n");
               }
-              else if (*psVar5 == 0x3e) {
-                Com_Printf(0x10,0xffffffff8218da70,*(undefined4 *)(psVar5 + 8));
-                *(longlong *)(&DAT_8424b5f0 + DAT_82b5c820 * 0x2058) =
-                     *(longlong *)(iVar11 + *(int *)(iVar12 + 0x2c) + 0x10) +
-                     *(longlong *)(&DAT_8424b5f0 + DAT_82b5c820 * 0x2058);
+              else if (sVar1 == 0x3e) {
+                Com_Printf(0x10,"Games Played: %i\n");
+                xenonUserData[cl_controller_in_use].totalGamesPlayed =
+                     *(longlong *)(iVar12 + *(int *)(iVar13 + 0x2c) + 0x10) +
+                     xenonUserData[cl_controller_in_use].totalGamesPlayed;
               }
               else {
-                Com_Printf(0x10,0xffffffff8218da9c);
+                Com_Printf(0x10,"Microsoft error - Unknown columnId %x\n");
               }
-              uVar10 = uVar10 + 1;
-              iVar11 = iVar11 + 0x18;
-            } while (uVar10 < *(uint *)(iVar12 + 0x28));
+              uVar11 = uVar11 + 1;
+              iVar12 = iVar12 + 0x18;
+            } while (uVar11 < *(uint *)(iVar13 + 0x28));
           }
-          uVar7 = uVar7 + 1;
-          iVar8 = iVar8 + 0x30;
-        } while (uVar7 < *(uint *)(iVar9 + 8));
+          uVar8 = uVar8 + 1;
+          iVar9 = iVar9 + 0x30;
+        } while (uVar8 < *(uint *)(iVar10 + 8));
       }
-      uVar6 = uVar6 + 1;
+      uVar7 = uVar7 + 1;
       iVar2 = iVar2 + 0x10;
-    } while (uVar6 <= *puVar4);
-    __restgprlr_17(1);
-    return;
+    } while (uVar7 <= *puVar5);
+    iVar2 = __restgprlr_17(1);
+    return iVar2;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar3);
-  TaskManager_ClearTask();
-  iVar2 = CL_GetLocalClientSignInState((&DAT_84254775)[iVar9]);
+  poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+  TaskManager_ClearTask(poVar4);
+  iVar2 = CL_GetLocalClientSignInState((uint)overlappedTasks.tasks[iVar2].controllerIndex);
   if (iVar2 == 2) {
-    if ((int)uVar1 == -0x7fffbffb) {
-      Com_Printf(0x10,0xffffffff8218db08);
-      __restgprlr_17(2);
-      return;
+    if (uVar6 == 0x80004005) {
+      Com_Printf(0x10,"Microsoft error reading stats (E_FAIL)\n");
+      iVar2 = __restgprlr_17(2);
+      return iVar2;
     }
-    Com_Printf(0x10,0xffffffff8218dadc,uVar1);
+    Com_Printf(0x10,"Microsoft error reading stats - error %x\n");
   }
-  __restgprlr_17(2);
-  return;
+  iVar2 = __restgprlr_17(2);
+  return iVar2;
 }
 
 
 // 82645388  Live_SendInvite  (xenon/xenon_live.cpp:2428)
 
-void Live_SendInvite(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_SendInvite(int param_1,ulong64 param_2)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
+  ulong uVar2;
+  PartyData *pPVar3;
+  int iVar4;
+  undefined1 uVar11;
+  SessionData *pSVar5;
+  bool bVar12;
   int iVar6;
-  undefined8 uVar2;
-  char cVar9;
-  longlong lVar3;
-  undefined4 uVar7;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  DWORD DVar8;
-  longlong *plVar10;
-  longlong in_stack_00000018;
+  overlappedTask *poVar7;
+  _XOVERLAPPED *p_Var8;
+  ulong uVar9;
+  LocalClientNum_t LVar10;
+  RecentlyInvitedPlayers *pRVar14;
+  longlong lVar13;
+  ulong64 uStack00000018;
   
-  uVar1 = __savegprlr_27();
-  in_stack_00000018 = param_2;
-  Lobby_GetPartyData();
-  iVar6 = Party_IsRunning();
-  lVar3 = in_stack_00000018;
-  if (iVar6 != 0) {
-    uVar2 = Lobby_GetPartyData();
-    iVar6 = Party_FindMemberByXUID(uVar2,lVar3);
-    if (iVar6 != -1) goto LAB_826453c4;
+  uVar2 = __savegprlr_27(param_1);
+  uStack00000018 = param_2;
+  pPVar3 = Lobby_GetPartyData();
+  iVar4 = Party_IsRunning(pPVar3);
+  uVar1 = uStack00000018;
+  if (iVar4 != 0) {
+    pPVar3 = Lobby_GetPartyData();
+    iVar4 = Party_FindMemberByXUID(pPVar3,uVar1);
+    if (iVar4 != -1) goto LAB_826453c4;
   }
-  iVar6 = Party_IsRunning(0xffffffff82b55118);
-  if ((iVar6 != 0) &&
-     (iVar6 = Party_FindMemberByXUID(0xffffffff82b55118,in_stack_00000018), iVar6 != -1)) {
+  iVar4 = Party_IsRunning(&g_partyData);
+  if ((iVar4 != 0) && (iVar4 = Party_FindMemberByXUID(&g_partyData,uStack00000018), iVar4 != -1)) {
 LAB_826453c4:
-    FriendsMenu_ShowErrorMessage(0xffffffff8218bc4c);
-    __restgprlr_27(0);
-    return;
+    FriendsMenu_ShowErrorMessage("MENU_FRIEND_ALREADY_CONNECTED");
+    uVar11 = __restgprlr_27(0);
+    return (bool)uVar11;
   }
-  iVar6 = Lobby_GetSession();
-  if (*(int *)(iVar6 + 0x10) != 0) {
-    Lobby_GetSession();
-    cVar9 = Session_IsFull();
-    if (cVar9 != '\0') goto LAB_8264542c;
+  pSVar5 = Lobby_GetSession();
+  if ((pSVar5->dyn).sessionHandle != (void *)0x0) {
+    pSVar5 = Lobby_GetSession();
+    bVar12 = Session_IsFull(pSVar5);
+    if (bVar12) goto LAB_8264542c;
   }
-  if ((*(int *)(DAT_82b55118 + 0x10) == 0) || (cVar9 = Session_IsFull(), cVar9 == '\0')) {
-    iVar6 = 0;
-    plVar10 = &DAT_84253920;
+  if ((((g_partyData.session)->dyn).sessionHandle == (void *)0x0) ||
+     (bVar12 = Session_IsFull(g_partyData.session), !bVar12)) {
+    iVar4 = 0;
+    pRVar14 = &recentlyInvitedPlayers;
     do {
-      if (*plVar10 == in_stack_00000018) {
-        lVar3 = Sys_Milliseconds();
-        if ((0 < (longlong)(lVar3 - (ulonglong)*(uint *)(&DAT_84253928 + iVar6 * 0x10))) &&
-           ((int)(lVar3 - (ulonglong)*(uint *)(&DAT_84253928 + iVar6 * 0x10)) < 15000)) {
-          FriendsMenu_ShowErrorMessage(0xffffffff8218bc1c);
-          __restgprlr_27(0);
-          return;
+      if (pRVar14->playerInviteRecord[0].playerInvited == uStack00000018) {
+        iVar6 = Sys_Milliseconds();
+        lVar13 = (longlong)iVar6 -
+                 (ulonglong)(uint)recentlyInvitedPlayers.playerInviteRecord[iVar4].timeInvited;
+        if ((0 < lVar13) && ((int)lVar13 < 15000)) {
+          FriendsMenu_ShowErrorMessage("MENU_INVITE_SPAM");
+          uVar11 = __restgprlr_27(0);
+          return (bool)uVar11;
         }
-        uVar7 = Sys_Milliseconds();
-        *(undefined4 *)(&DAT_84253928 + iVar6 * 0x10) = uVar7;
+        iVar6 = Sys_Milliseconds();
+        recentlyInvitedPlayers.playerInviteRecord[iVar4].timeInvited = iVar6;
         break;
       }
-      plVar10 = plVar10 + 2;
-      iVar6 = iVar6 + 1;
-    } while ((int)plVar10 < -0x7bdac5a0);
-    if (iVar6 == 0x14) {
-      DAT_84253a60 = -((uint)(DAT_84253a60 < 0x14) - ((int)DAT_84253a60 >> 0x1f)) & DAT_84253a60;
-      (&DAT_84253920)[DAT_84253a60 * 2] = in_stack_00000018;
-      uVar7 = Sys_Milliseconds();
-      *(undefined4 *)(&DAT_84253928 + DAT_84253a60 * 0x10) = uVar7;
-      DAT_84253a60 = DAT_84253a60 + 1;
+      pRVar14 = (RecentlyInvitedPlayers *)(pRVar14->playerInviteRecord + 1);
+      iVar4 = iVar4 + 1;
+    } while ((int)pRVar14 < -0x7bdac5a0);
+    if (iVar4 == 0x14) {
+      recentlyInvitedPlayers.currPlayerInviteRecordListPos =
+           -((uint)((uint)recentlyInvitedPlayers.currPlayerInviteRecordListPos < 0x14) -
+            (recentlyInvitedPlayers.currPlayerInviteRecordListPos >> 0x1f)) &
+           recentlyInvitedPlayers.currPlayerInviteRecordListPos;
+      recentlyInvitedPlayers.playerInviteRecord
+      [recentlyInvitedPlayers.currPlayerInviteRecordListPos].playerInvited = uStack00000018;
+      iVar4 = Sys_Milliseconds();
+      recentlyInvitedPlayers.playerInviteRecord
+      [recentlyInvitedPlayers.currPlayerInviteRecordListPos].timeInvited = iVar4;
+      recentlyInvitedPlayers.currPlayerInviteRecordListPos =
+           recentlyInvitedPlayers.currPlayerInviteRecordListPos + 1;
     }
-    cVar9 = TaskManager_TaskIsInProgress(0xffffffff842546d8,7);
-    if (cVar9 != '\0') {
-      FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
-      __restgprlr_27(0);
-      return;
+    bVar12 = TaskManager_TaskIsInProgress(&overlappedTasks,7);
+    if (bVar12) {
+      FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
+      uVar11 = __restgprlr_27(0);
+      return (bool)uVar11;
     }
-    TaskManager_GetOpenTaskSlot(0xffffffff842546d8,uVar1,7);
-    uVar4 = TaskManager_TaskToXOverlapped();
-    if ((uVar4 & 0xffffffff) == 0) {
-      Com_PrintError(0x10,0xffffffff8218bbc8);
-      FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
-      __restgprlr_27(0);
-      return;
+    poVar7 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar2,7);
+    p_Var8 = TaskManager_TaskToXOverlapped(poVar7);
+    if (p_Var8 == (_XOVERLAPPED *)0x0) {
+      Com_PrintError(0x10,"Error sending game invite, could not create task.\n");
+      FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
+      uVar11 = __restgprlr_27(0);
+      return (bool)uVar11;
     }
-    uVar5 = XInviteSend(uVar1,1,&stack0x00000018,0,uVar4);
-    if (((uVar5 & 0xffffffff) != 0) && ((uVar5 & 0xffffffff) != 0x3e5)) {
-      TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar4);
-      TaskManager_ClearTask();
-      DVar8 = GetLastError();
-      Com_PrintError(0x10,0xffffffff8218bb88,uVar5,DVar8);
-      FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
-      __restgprlr_27(0);
-      return;
+    uVar9 = XInviteSend(uVar2,1,&stack0x00000018,(wchar_t *)0x0,p_Var8);
+    if ((uVar9 != 0) && (uVar9 != 0x3e5)) {
+      poVar7 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var8);
+      TaskManager_ClearTask(poVar7);
+      GetLastError();
+      Com_PrintError(0x10,"Error: XInviteSend failed with result:(0x%x) and error:(0x%x)");
+      FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
+      uVar11 = __restgprlr_27(0);
+      return (bool)uVar11;
     }
-    uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
-    UI_OpenMenu(uVar1,0xffffffff8218bb6c);
-    __restgprlr_27(1);
-    return;
+    LVar10 = CL_LocalClientNumFromControllerIndex(uVar2);
+    UI_OpenMenu(LVar10,"popup_friend_invite_sent");
+    uVar11 = __restgprlr_27(1);
+    return (bool)uVar11;
   }
 LAB_8264542c:
-  FriendsMenu_ShowErrorMessage(0xffffffff8218bc30);
-  __restgprlr_27(0);
-  return;
+  FriendsMenu_ShowErrorMessage("MENU_INVITE_SESSION_FULL");
+  uVar11 = __restgprlr_27(0);
+  return (bool)uVar11;
 }
 
 
 // 82645640  Live_SendInviteComplete  (xenon/xenon_live.cpp:2518)
 
-void Live_SendInviteComplete(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Live_SendInviteComplete(int param_1)
 
 {
-  int iVar3;
-  int *piVar4;
-  ulonglong uVar1;
-  undefined8 uVar2;
-  int iVar5;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  LocalClientNum_t LVar6;
   
-  iVar3 = __savegprlr_27();
-  iVar5 = iVar3 * 0xa0;
-  if ((&DAT_84254774)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x9da,0,0xffffffff82000f98,0xffffffff8217aa38);
+  iVar1 = __savegprlr_27(param_1);
+  if (overlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x9da,0,
+                    "%s");
   }
-  if ((&DAT_84254770)[iVar3 * 0x28] != 7) {
-    MyAssertHandler(0xffffffff8218b718,0x9db,0,0xffffffff82000f98,0xffffffff8218bc98);
+  if (overlappedTasks.tasks[iVar1].type != 7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x9db,0,
+                    "%s");
   }
-  piVar4 = (int *)TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar5);
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x9de,0,0xffffffff82000f98,0xffffffff82092610);
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x9de,0,
+                    "%s");
   }
-  if (*piVar4 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar4);
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,piVar4);
-  TaskManager_ClearTask();
-  if ((uVar1 & 0xffffffff) != 0) {
-    Com_PrintError(0x10,0xffffffff8218bc6c,uVar1,uVar1 & 0xffff);
-    uVar2 = CL_LocalClientNumFromControllerIndex((&DAT_84254775)[iVar5]);
-    UI_CloseMenu(uVar2,0xffffffff8218bb6c);
-    FriendsMenu_ShowErrorMessage(0xffffffff8218bbfc);
-    __restgprlr_27(2);
-    return;
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+  TaskManager_ClearTask(poVar5);
+  if (uVar4 != 0) {
+    Com_PrintError(0x10,"Microsoft error sending invite: %x (%u)\n");
+    LVar6 = CL_LocalClientNumFromControllerIndex((uint)overlappedTasks.tasks[iVar1].controllerIndex)
+    ;
+    UI_CloseMenu(LVar6,"popup_friend_invite_sent");
+    FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
+    tVar3 = __restgprlr_27(2);
+    return tVar3;
   }
-  __restgprlr_27(1);
-  return;
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 82645790  Live_GetControllerIndexForPendingInvitation  (xenon/xenon_live.cpp:2550)
 
-longlong Live_GetControllerIndexForPendingInvitation(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetControllerIndexForPendingInvitation(void)
 
 {
-  longlong lVar1;
-  int *piVar2;
+  int iVar1;
+  XenonUserData *pXVar2;
   
-  piVar2 = &DAT_8424b588;
-  lVar1 = 0;
-  while ((*piVar2 != 2 || (DAT_8425a058 != *(longlong *)(piVar2 + 10)))) {
-    piVar2 = piVar2 + 0x816;
-    lVar1 = lVar1 + 1;
-    if (-0x7bdac919 < (int)piVar2) {
+  pXVar2 = xenonUserData;
+  iVar1 = 0;
+  while ((pXVar2->signinState != 2 || (g_launchData.invitedXUID != pXVar2->xuid))) {
+    pXVar2 = pXVar2 + 1;
+    iVar1 = iVar1 + 1;
+    if (-0x7bdac919 < (int)pXVar2) {
       return -1;
     }
   }
-  return lVar1;
+  return iVar1;
 }
 
 
 // 8264A680  Live_StartAcceptingInvitation_Internal  (xenon/xenon_live.cpp:2568)
 
-void Live_StartAcceptingInvitation_Internal(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_StartAcceptingInvitation_Internal(int param_1,_XINVITE_INFO *param_2)
 
 {
-  longlong *plVar1;
-  undefined8 uVar2;
+  ulong64 *puVar1;
+  int iVar3;
   int iVar4;
-  longlong lVar3;
-  char cVar5;
-  longlong lVar6;
-  byte *pbVar7;
+  ulong64 uVar2;
+  char *pcVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  _XSESSION_INFO *p_Var9;
+  longlong lVar10;
   
-  uVar2 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0xa09,0,0xffffffff82000f98,0xffffffff8218dbe4);
+  uVar7 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_29(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xa09,0,
+                    "%s");
   }
-  plVar1 = (longlong *)param_2;
-  if ((*(int *)(plVar1 + 2) == 0x415608cb) &&
-     (iVar4 = Live_GetPortForLocalXUID(plVar1[1]), iVar4 < 0)) {
-    lVar3 = Live_GetXuid(uVar2);
-    if (lVar3 == *plVar1) {
-      lVar3 = param_2 + 0x14;
-      DAT_8425a058 = *plVar1;
-      memcpy(&DAT_8425a060,(void *)lVar3,0x3c);
-      DAT_8425a054 = 0;
-      DAT_8425a09c = (byte)((byte)(-(ulonglong)*(uint *)(plVar1 + 10) >> 0x18) &
-                           ~(byte)(*(uint *)(plVar1 + 10) >> 0x18)) >> 7;
+  puVar1 = (ulong64 *)uVar7;
+  if ((*(int *)(puVar1 + 2) == 0x415608cb) &&
+     (iVar4 = Live_GetPortForLocalXUID(puVar1[1]), iVar4 < 0)) {
+    uVar2 = Live_GetXuid(iVar3);
+    if (uVar2 == *puVar1) {
+      lVar10 = uVar7 + 0x14;
+      g_launchData.invitedXUID = *puVar1;
+      memcpy();
+      g_launchData.inviteState = INVITE_NONE;
+      g_launchData.fromGameInvite =
+           (bool)((byte)((byte)(-(ulonglong)*(uint *)(puVar1 + 10) >> 0x18) &
+                        ~(byte)(*(uint *)(puVar1 + 10) >> 0x18)) >> 7);
       XSetLaunchData(0xffffffff84259cc8,1000);
-      if (DAT_844c7870 != 0) {
-        pbVar7 = &DAT_844c7874;
+      if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+        p_Var9 = &g_serverSession.dyn.sessionInfo;
         do {
-          lVar6 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)lVar3;
-          if (lVar6 != 0) break;
-          pbVar7 = pbVar7 + 1;
-          lVar3 = lVar3 + 1;
-        } while (pbVar7 != &DAT_844c787c);
-        if (((int)lVar6 == 0) &&
-           ((cVar5 = CL_AllLocalClientsDisconnected(), cVar5 == '\0' ||
-            (cVar5 = Lobby_IsInRunningLobby(), cVar5 != '\0')))) {
-          Com_Printf(0x10,0xffffffff8218af48);
+          lVar8 = (ulonglong)(p_Var9->sessionID).ab[0] - (ulonglong)*(byte *)lVar10;
+          if (lVar8 != 0) break;
+          p_Var9 = (_XSESSION_INFO *)((p_Var9->sessionID).ab + 1);
+          lVar10 = lVar10 + 1;
+        } while (p_Var9 != (_XSESSION_INFO *)&g_serverSession.dyn.sessionInfo.hostAddress);
+        if (((int)lVar8 == 0) &&
+           ((bVar6 = CL_AllLocalClientsDisconnected(), !bVar6 ||
+            (bVar6 = Lobby_IsInRunningLobby(), bVar6)))) {
+          Com_Printf(0x10,"Received invite to current session.  Not doing anything about it\n");
           __restgprlr_29();
           return;
         }
       }
-      cVar5 = CL_AllLocalClientsDisconnected();
-      if ((cVar5 != '\0') &&
-         ((iVar4 = Party_InParty(0xffffffff82b55118), iVar4 != 0 &&
-          (cVar5 = PartyUI_ShouldShowInviteWarning(0xffffffff82b55118), cVar5 != '\0')))) {
-        UI_ShowAcceptInviteWarning(0);
+      bVar6 = CL_AllLocalClientsDisconnected();
+      if ((bVar6) &&
+         ((iVar3 = Party_InParty(&g_partyData), iVar3 != 0 &&
+          (bVar6 = PartyUI_ShouldShowInviteWarning(&g_partyData), bVar6)))) {
+        UI_ShowAcceptInviteWarning(LOCAL_CLIENT_0);
         __restgprlr_29();
         return;
       }
       Live_StartConfirmAcceptInvitation();
     }
-    else if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff8218db78,uVar2,lVar3);
-      MyAssertHandler(0xffffffff8218b718,0xa14,0,uVar2);
+    else if (alwaysfails == 0) {
+      pcVar5 = va(
+                 "Received invite but the controller %i xuid does not match the one in the invite, aborting. (%llx vs %llx)"
+                 );
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xa14,
+                      0,pcVar5);
       __restgprlr_29();
       return;
     }
@@ -2196,15 +2442,15 @@ void Live_StartAcceptingInvitation_Internal(undefined8 param_1,ulonglong param_2
 
 // 8264A860  Live_StartAcceptingInvitation  (xenon/xenon_live.cpp:2615)
 
-void Live_StartAcceptingInvitation(undefined8 param_1)
+void Live_StartAcceptingInvitation(int param_1)
 
 {
-  int iVar1;
-  undefined1 auStack_70 [96];
+  ulong uVar1;
+  _XINVITE_INFO _Stack_70;
   
-  iVar1 = XInviteGetAcceptedInfo(param_1,auStack_70);
-  if (-1 < iVar1) {
-    Live_StartAcceptingInvitation_Internal(param_1,auStack_70);
+  uVar1 = XInviteGetAcceptedInfo(param_1,&_Stack_70);
+  if (-1 < (int)uVar1) {
+    Live_StartAcceptingInvitation_Internal(param_1,&_Stack_70);
   }
   return;
 }
@@ -2212,20 +2458,16 @@ void Live_StartAcceptingInvitation(undefined8 param_1)
 
 // 8264A8A8  Live_DevAcceptInvitation  (xenon/xenon_live.cpp:2629)
 
-void Live_DevAcceptInvitation(undefined8 param_1)
+void Live_DevAcceptInvitation(int param_1)
 
 {
-  undefined8 local_70;
-  undefined8 local_68;
-  undefined4 local_60;
-  undefined1 auStack_5c [60];
-  undefined4 local_20;
+  _XINVITE_INFO local_70;
   
-  local_70 = Live_GetXuid();
-  local_68 = 0x1234;
-  local_60 = 0x415608cb;
-  memset(auStack_5c,0xab,0x3c);
-  local_20 = 1;
+  local_70.xuidInvitee = Live_GetXuid(param_1);
+  local_70.xuidInviter = 0x1234;
+  local_70.dwTitleID = 0x415608cb;
+  memset();
+  local_70.fFromGameInvite = 1;
   Live_StartAcceptingInvitation_Internal(param_1,&local_70);
   return;
 }
@@ -2233,176 +2475,188 @@ void Live_DevAcceptInvitation(undefined8 param_1)
 
 // 826457E8  Live_HasAcceptedInvitation  (xenon/xenon_live.cpp:2642)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool Live_HasAcceptedInvitation(void)
 
 {
-  return DAT_8425a054 == 2;
+  return g_launchData.inviteState == INVITE_MPACCEPTED;
 }
 
 
 // 82645808  Live_HasPendingInvitation  (xenon/xenon_live.cpp:2652)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool Live_HasPendingInvitation(void)
 
 {
-  return DAT_8425a054 == 1;
+  return g_launchData.inviteState == INVITE_PENDING;
 }
 
 
 // 82645828  Live_CheckInviteHostInfo  (xenon/xenon_live.cpp:2658)
 
-bool Live_CheckInviteHostInfo(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Live_CheckInviteHostInfo(netadr_t *param_1)
 
 {
-  byte bVar1;
-  byte bVar2;
-  int iVar3;
-  byte *pbVar4;
-  byte *pbVar5;
-  undefined1 auStack_40 [16];
-  byte local_30 [48];
+  int iVar1;
+  longlong lVar2;
+  XNADDR *pXVar3;
+  uchar *puVar4;
+  XNKID aXStack_40 [2];
+  XNADDR local_30;
   
-  iVar3 = NET_GetXnAddrForNetAddr(param_1,local_30,auStack_40);
-  if (iVar3 == 0) {
+  iVar1 = NET_GetXnAddrForNetAddr(param_1,&local_30,aXStack_40);
+  if (iVar1 == 0) {
     return false;
   }
-  pbVar4 = local_30;
-  pbVar5 = &DAT_8425a068;
+  pXVar3 = &local_30;
+  puVar4 = g_launchData.inviteHostInfo + 8;
   do {
-    bVar1 = *pbVar5;
-    bVar2 = *pbVar4;
-    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar5 = pbVar5 + 1;
-    pbVar4 = pbVar4 + 1;
-  } while (pbVar5 != &DAT_8425a08c);
-  return (int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0;
+    lVar2 = (ulonglong)*puVar4 - (ulonglong)(pXVar3->ina).S_un.S_un_b.s_b1;
+    if (lVar2 != 0) break;
+    puVar4 = puVar4 + 1;
+    pXVar3 = (XNADDR *)((int)&(pXVar3->ina).S_un + 1);
+  } while (puVar4 != g_launchData.inviteHostInfo + 0x2c);
+  return (int)lVar2 == 0;
 }
 
 
 // 826458A8  Live_GetPermissions  (xenon/xenon_live.cpp:2672)
 
-void Live_GetPermissions(longlong param_1)
+void Live_GetPermissions(int param_1)
 
 {
-  ulonglong uVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
-  undefined4 local_20;
-  undefined4 local_1c;
+  ulong uVar1;
+  int local_40 [10];
   
-  uVar1 = XUserCheckPrivilege(param_1,0xfe,&local_40);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_40 = 0;
-    Com_PrintError(0x10,0xffffffff82032158,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_40);
+  if (uVar1 != 0) {
+    local_40[0] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xfc,&local_3c);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_3c = 0;
-    Com_PrintError(0x10,0xffffffff8218c080,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_COMMUNICATIONS,local_40 + 1);
+  if (uVar1 != 0) {
+    local_40[1] = 0;
+    Com_PrintError(0x10,"XUserCheckPrivilege for XPRIVILEGE_COMMUNICATIONS failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xfb,&local_38);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_38 = 0;
-    Com_PrintError(0x10,0xffffffff8218c028,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_COMMUNICATIONS_FRIENDS_ONLY,local_40 + 2);
+  if (uVar1 != 0) {
+    local_40[2] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_COMMUNICATIONS_FRIENDS_ONLY failed - error %x.\n"
+                  );
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf9,&local_34);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_34 = 0;
-    Com_PrintError(0x10,0xffffffff8218bfe0,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_PROFILE_VIEWING,local_40 + 3);
+  if (uVar1 != 0) {
+    local_40[3] = 0;
+    Com_PrintError(0x10,"XUserCheckPrivilege for XPRIVILEGE_PROFILE_VIEWING failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf8,&local_30);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_30 = 0;
-    Com_PrintError(0x10,0xffffffff8218bf88,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_PROFILE_VIEWING_FRIENDS_ONLY,local_40 + 4);
+  if (uVar1 != 0) {
+    local_40[4] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_PROFILE_VIEWING_FRIENDS_ONLY failed - error %x.\n"
+                  );
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf7,&local_2c);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_2c = 0;
-    Com_PrintError(0x10,0xffffffff8218bf38,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_USER_CREATED_CONTENT,local_40 + 5);
+  if (uVar1 != 0) {
+    local_40[5] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_USER_CREATED_CONTENT failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf6,&local_28);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_28 = 0;
-    Com_PrintError(0x10,0xffffffff8218bed8,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_USER_CREATED_CONTENT_FRIENDS_ONLY,local_40 + 6);
+  if (uVar1 != 0) {
+    local_40[6] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_USER_CREATED_CONTENT_FRIENDS_ONLY failed - error %x.\n"
+                  );
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf5,&local_24);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_24 = 0;
-    Com_PrintError(0x10,0xffffffff8218be90,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_PURCHASE_CONTENT,local_40 + 7);
+  if (uVar1 != 0) {
+    local_40[7] = 0;
+    Com_PrintError(0x10,"XUserCheckPrivilege for XPRIVILEGE_PURCHASE_CONTENT failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf4,&local_20);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_20 = 0;
-    Com_PrintError(0x10,0xffffffff8218be50,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_PRESENCE,local_40 + 8);
+  if (uVar1 != 0) {
+    local_40[8] = 0;
+    Com_PrintError(0x10,"XUserCheckPrivilege for XPRIVILEGE_PRESENCE failed - error %x.\n");
   }
-  uVar1 = XUserCheckPrivilege(param_1,0xf3,&local_1c);
-  if ((uVar1 & 0xffffffff) != 0) {
-    local_1c = 0;
-    Com_PrintError(0x10,0xffffffff8218be00,uVar1);
+  uVar1 = XUserCheckPrivilege(param_1,XPRIVILEGE_PRESENCE_FRIENDS_ONLY,local_40 + 9);
+  if (uVar1 != 0) {
+    local_40[9] = 0;
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_PRESENCE_FRIENDS_ONLY failed - error %x.\n");
   }
-  Com_Printf(0x10,0xffffffff8218bde8,param_1 * 0x2058 + -0x7bdb4a74);
-  Com_Printf(0x10,0xffffffff8218bdd4,local_40);
-  Com_Printf(0x10,0xffffffff8218bdc0,local_3c);
-  Com_Printf(0x10,0xffffffff8218bd9c,local_38);
-  Com_Printf(0x10,0xffffffff8218bd84,local_34);
-  Com_Printf(0x10,0xffffffff8218bd60,local_30);
-  Com_Printf(0x10,0xffffffff8218bd44,local_2c);
-  Com_Printf(0x10,0xffffffff8218bd18,local_28);
-  Com_Printf(0x10,0xffffffff8218bd00,local_24);
-  Com_Printf(0x10,0xffffffff8218bcf0,local_20);
-  Com_Printf(0x10,0xffffffff8218bcd0,local_1c);
+  Com_Printf(0x10,"Client %s permissions:\n");
+  Com_Printf(0x10,"multiplayer: %i\n");
+  Com_Printf(0x10,"communication: %i\n");
+  Com_Printf(0x10,"communication(friends only): %i\n");
+  Com_Printf(0x10,"profile viewing: %i\n");
+  Com_Printf(0x10,"profile viewing (friends only): %i\n");
+  Com_Printf(0x10,"user created content: %i\n");
+  Com_Printf(0x10,"user created content (friends only): %i\n");
+  Com_Printf(0x10,"purchase content: %i\n");
+  Com_Printf(0x10,"presence: %i\n");
+  Com_Printf(0x10,"presence (friends only): %i\n");
   return;
 }
 
 
 // 8264A910  Live_AreAllUsersSignedOut  (xenon/xenon_live.cpp:2772)
 
-void Live_AreAllUsersSignedOut(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_AreAllUsersSignedOut(void)
 
 {
-  int *piVar1;
-  longlong lVar2;
+  undefined1 uVar1;
+  XenonUserData *pXVar2;
+  int iVar3;
   
   __savegprlr_26();
-  piVar1 = &DAT_8424b588;
-  lVar2 = 0;
+  pXVar2 = xenonUserData;
+  iVar3 = 0;
   while( true ) {
-    if (((int)lVar2 < 0) || (3 < (int)lVar2)) {
-      MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,lVar2);
+    if ((iVar3 < 0) || (3 < iVar3)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x2e0,
+                      0,"%s\n\t(controllerIndex) = %i");
     }
-    if (0 < *piVar1) break;
-    piVar1 = piVar1 + 0x816;
-    lVar2 = lVar2 + 1;
-    if (-0x7bdac919 < (int)piVar1) {
-      __restgprlr_26(1);
-      return;
+    if (0 < pXVar2->signinState) break;
+    pXVar2 = pXVar2 + 1;
+    iVar3 = iVar3 + 1;
+    if (-0x7bdac919 < (int)pXVar2) {
+      uVar1 = __restgprlr_26(1);
+      return (bool)uVar1;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar1 = __restgprlr_26(0);
+  return (bool)uVar1;
 }
 
 
 // 82645BA8  Live_AllUsersSignedOut  (xenon/xenon_live.cpp:2785)
 
-void Live_AllUsersSignedOut(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void Live_AllUsersSignedOut(LocalClientNum_t param_1)
 
 {
-  Dvar_SetBool(DAT_8424a648,0);
-  DAT_8424a650 = 0;
+  Dvar_SetBool(xblive_loggedin,false);
+  s_anySignin = false;
   DAT_8424a653 = 0;
-  DAT_842537fb = 0;
-  DAT_84253a79 = 0;
-  DAT_82995198 = 0xffffffff;
-  if ((DAT_82aa1c14 != 0) &&
-     (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) ||
-      (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')))) {
+  s_localSignin = false;
+  s_liveSignin = false;
+  s_splitscreenOnlineSigninController = -1;
+  if ((cls.uiStarted != 0) &&
+     ((((splitscreen->current).enabled == false || ((onlinegame->current).enabled != false)) ||
+      ((systemlink->current).enabled != false)))) {
     UI_SetActiveMenu(param_1,0);
   }
   return;
@@ -2411,18 +2665,22 @@ void Live_AllUsersSignedOut(undefined8 param_1)
 
 // 82645C78  ShouldDisconnectForSignInOrOut  (xenon/xenon_live.cpp:2810)
 
-bool ShouldDisconnectForSignInOrOut(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool ShouldDisconnectForSignInOrOut(int param_1)
 
 {
-  char cVar2;
-  longlong lVar1;
+  bool bVar3;
+  LocalClientNum_t LVar1;
+  connstate_t cVar2;
   
-  cVar2 = CL_IsControllerActive();
-  if ((cVar2 != '\0') &&
-     ((DAT_82966e98 == 0 || (cVar2 = CL_IsSplitscreenControllerActive(param_1), cVar2 != '\0')))) {
-    CL_LocalClientNumFromControllerIndex(param_1);
-    lVar1 = CL_GetLocalClientConnectionState();
-    return lVar1 != 0;
+  bVar3 = CL_IsControllerActive(param_1);
+  if ((bVar3) &&
+     ((cl_multi_gamepads_enabled == 0 || (bVar3 = CL_IsSplitscreenControllerActive(param_1), bVar3))
+     )) {
+    LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+    cVar2 = CL_GetLocalClientConnectionState(LVar1);
+    return (bool)('\x01' - (cVar2 == CA_DISCONNECTED));
   }
   return false;
 }
@@ -2430,42 +2688,44 @@ bool ShouldDisconnectForSignInOrOut(undefined8 param_1)
 
 // 82645D00  Live_IsSwitchingProfiles  (xenon/xenon_live.cpp:2835)
 
-void Live_IsSwitchingProfiles(void)
+bool Live_IsSwitchingProfiles(int param_1)
 
 {
   char cVar1;
   char cVar2;
-  int iVar4;
-  int iVar5;
+  ulong uVar4;
+  ulong uVar5;
   undefined8 uVar3;
-  char *pcVar6;
+  undefined1 uVar6;
   char *pcVar7;
-  longlong local_70 [2];
+  char *pcVar8;
+  ulong64 local_70 [2];
   char local_60 [16];
-  undefined1 auStack_50 [80];
+  _XUSER_SIGNIN_INFO a_Stack_50 [2];
   
-  iVar4 = __savegprlr_28();
-  iVar5 = XUserGetSigninInfo(iVar4,0,auStack_50);
-  if (iVar5 == 0) {
-    uVar3 = XUserGetXUID(iVar4,local_70);
-    if ((int)uVar3 < 0) {
-      MyAssertHandler(0xffffffff8218b718,0xb1e,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar3);
+  uVar4 = __savegprlr_28(param_1);
+  uVar5 = XUserGetSigninInfo(uVar4,0,a_Stack_50);
+  if (uVar5 == 0) {
+    uVar5 = XUserGetXUID(uVar4,local_70);
+    if ((int)uVar5 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xb1e,
+                      0,"%s\n\t(res) = %08x");
     }
-    uVar3 = XUserGetName(iVar4,local_60,0x10);
-    if ((int)uVar3 < 0) {
-      MyAssertHandler(0xffffffff8218b718,0xb21,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar3);
+    uVar5 = XUserGetName(uVar4,local_60,0x10);
+    if ((int)uVar5 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xb21,
+                      0,"%s\n\t(res) = %08x");
     }
     if (local_70[0] != 0) {
-      if (((&DAT_8424b5b0)[iVar4 * 0x40b] != 0) && (local_70[0] != (&DAT_8424b5b0)[iVar4 * 0x40b]))
-      {
-        pcVar7 = local_60;
-        pcVar6 = &DAT_8424b58c + iVar4 * 0x2058;
+      if ((xenonUserData[uVar4].xuid != 0) && (local_70[0] != xenonUserData[uVar4].xuid)) {
+        pcVar8 = local_60;
+        pcVar7 = (char *)(uVar4 * 0x2058 + -0x7bdb4a74);
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar6;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar7;
           if (cVar1 == '\0') break;
+          pcVar8 = pcVar8 + 1;
           pcVar7 = pcVar7 + 1;
-          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         uVar3 = 1;
         if (cVar1 != cVar2) goto LAB_82645e10;
@@ -2474,89 +2734,91 @@ void Live_IsSwitchingProfiles(void)
   }
   uVar3 = 0;
 LAB_82645e10:
-  __restgprlr_28(uVar3);
-  return;
+  uVar6 = __restgprlr_28(uVar3);
+  return (bool)uVar6;
 }
 
 
 // 82645E18  Live_BeingSignedOutByAnotherController  (xenon/xenon_live.cpp:2868)
 
-void Live_BeingSignedOutByAnotherController(void)
+int Live_BeingSignedOutByAnotherController(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong local_50;
-  int local_44;
+  ulong uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  int iVar4;
+  _XUSER_SIGNIN_INFO local_50 [2];
   
-  uVar1 = __savegprlr_28();
-  iVar2 = XUserGetSigninInfo(uVar1,0,&local_50);
-  if ((iVar2 == 0x525) && (iVar2 = (int)uVar1, (&DAT_8424b5b0)[iVar2 * 0x40b] != 0)) {
-    lVar4 = 0;
+  uVar1 = __savegprlr_28(param_1);
+  uVar2 = XUserGetSigninInfo(uVar1,0,local_50);
+  if ((uVar2 == 0x525) && (xenonUserData[uVar1].xuid != 0)) {
+    uVar2 = 0;
     do {
-      if ((((iVar2 != (int)lVar4) && (iVar3 = XUserGetSigninInfo(lVar4,0,&local_50), iVar3 == 0)) &&
-          (local_44 != 0)) && (local_50 == (&DAT_8424b5b0)[iVar2 * 0x40b])) {
-        __restgprlr_28(1);
-        return;
+      if ((((uVar1 != uVar2) && (uVar3 = XUserGetSigninInfo(uVar2,0,local_50), uVar3 == 0)) &&
+          (local_50[0].UserSigninState != eXUserSigninState_NotSignedIn)) &&
+         (local_50[0].xuid == xenonUserData[uVar1].xuid)) {
+        iVar4 = __restgprlr_28(1);
+        return iVar4;
       }
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < 4);
+      uVar2 = uVar2 + 1;
+    } while ((int)uVar2 < 4);
   }
-  __restgprlr_28(0);
-  return;
+  iVar4 = __restgprlr_28(0);
+  return iVar4;
 }
 
 
 // 82645EC0  Live_isActiveUserSignedOut  (xenon/xenon_live.cpp:2897)
 
-undefined8 Live_isActiveUserSignedOut(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_isActiveUserSignedOut(int param_1,LocalClientNum_t param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (((((int)param_2 < 0) || (DAT_82966e98 == 0)) ||
-      (cVar2 = CL_IsLocalClientActive(param_2), cVar2 == '\0')) &&
-     (((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) ||
-      (cVar2 = CL_IsSplitscreenControllerActive(param_1), cVar2 == '\0')))) {
-    if ((DAT_82966e98 != 0) || (uVar1 = 1, DAT_82b5c820 != (int)param_1)) {
-      uVar1 = 0;
-    }
+  if ((((-1 < (int)param_2) && (cl_multi_gamepads_enabled != 0)) &&
+      (bVar1 = CL_IsLocalClientActive(param_2), bVar1)) ||
+     ((((splitscreen->current).enabled != false && ((onlinegame->current).enabled != false)) &&
+      (bVar1 = CL_IsSplitscreenControllerActive(param_1), bVar1)))) {
+    bVar1 = true;
   }
-  else {
-    uVar1 = 1;
+  else if ((cl_multi_gamepads_enabled != 0) || (bVar1 = true, cl_controller_in_use != param_1)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 82645F88  Live_UserSignedOut  (xenon/xenon_live.cpp:2913)
 
-void Live_UserSignedOut(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Live_UserSignedOut(int param_1,char **param_2)
 
 {
   int iVar1;
-  char cVar3;
+  bool bVar4;
   int iVar2;
-  char cVar4;
-  int iVar5;
-  longlong lVar6;
-  int local_50 [20];
+  bool bVar5;
+  PartyData *pPVar3;
+  undefined1 uVar6;
+  longlong lVar7;
+  LocalClientNum_t local_50 [20];
   
-  iVar1 = __savegprlr_25();
-  cVar3 = Live_IsSwitchingProfiles();
+  iVar1 = __savegprlr_25(param_1);
+  bVar4 = Live_IsSwitchingProfiles(iVar1);
   iVar2 = Live_BeingSignedOutByAnotherController(iVar1);
   GamerProfile_LogOutProfile(iVar1);
-  iVar5 = iVar1 * 0x2058;
-  lVar6 = 0;
-  (&DAT_8424b588)[iVar1 * 0x816] = 0;
-  (&DAT_8424b5e9)[iVar5] = 0;
-  (&DAT_8424b5b0)[iVar1 * 0x40b] = 0;
-  (&DAT_8424b58c)[iVar5] = 0;
-  (&DAT_8424b5b8)[iVar5] = 0;
-  Dvar_SetString(DAT_82b3ec84,&DAT_8424b58c + iVar5);
+  lVar7 = 0;
+  xenonUserData[iVar1].signinState = 0;
+  xenonUserData[iVar1].isGuest = false;
+  xenonUserData[iVar1].xuid = 0;
+  xenonUserData[iVar1].gamertag[0] = '\0';
+  xenonUserData[iVar1].xuidString[0] = '\0';
+  Dvar_SetString(name,xenonUserData[iVar1].gamertag);
   IWNet_CancelTasksForController(iVar1);
   LiveAntiCheat_UserSignedOut(iVar1);
   dwMail_UserSignedOut(iVar1);
@@ -2576,455 +2838,490 @@ void Live_UserSignedOut(undefined8 param_1,undefined4 *param_2)
   LiveAntiCheat_PlayerBanClearInfo(iVar1);
   LiveStorage_NewUser(iVar1);
   Live_DisconnectFromWebServices(iVar1);
-  if (cVar3 == '\0') {
+  if (!bVar4) {
     Live_ClearForcedLiveSignInByUI(iVar1);
     Live_ClearForcedAnySignInByUI(iVar1);
     UI_ClearCompletionResolve();
   }
   CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_50);
-  cVar4 = Live_isActiveUserSignedOut(iVar1,local_50[0]);
-  if (cVar4 != '\0') {
-    if ((((-1 < local_50[0]) && (CL_GetLocalClientConnectionState(), DAT_82966e98 != 0)) &&
-        (*(char *)(DAT_82b3ecb8 + 0xc) == '\0')) && (cVar3 == '\0')) {
-      CL_SetLocalClientActive(local_50[0],0);
+  bVar5 = Live_isActiveUserSignedOut(iVar1,local_50[0]);
+  if (bVar5) {
+    if ((((-1 < (int)local_50[0]) &&
+         (CL_GetLocalClientConnectionState(local_50[0]), cl_multi_gamepads_enabled != 0)) &&
+        ((splitscreen->current).enabled == false)) && (!bVar4)) {
+      CL_SetLocalClientActive(local_50[0],false);
     }
-    if (((DAT_84253a79 == '\0') && (DAT_842537fb == '\0')) && (DAT_8424a650 == '\0')) {
-      if (((*(char *)(DAT_82aa1af8 + 0xc) == '\0') ||
-          (cVar3 = CL_IsSplitscreenControllerActive(iVar1), cVar3 == '\0')) &&
-         ((DAT_82966e98 != 0 || (DAT_82b5c820 != iVar1)))) {
-        Com_Printf(0x10,0xffffffff8218c15c,iVar1);
-      }
-      else if (*(char *)(DAT_842536f0 + 0xc) == '\0') {
-        Com_Printf(0x10,0xffffffff8218c178);
-        Lobby_GetPartyData();
-        Party_StopParty();
-        Party_StopParty(0xffffffff82b55118);
+    if (((s_liveSignin == false) && (s_localSignin == false)) && (s_anySignin == false)) {
+      if ((((onlinegame->current).enabled != false) &&
+          (bVar4 = CL_IsSplitscreenControllerActive(iVar1), bVar4)) ||
+         ((cl_multi_gamepads_enabled == 0 && (cl_controller_in_use == iVar1)))) {
+        if ((disconnectOnSignOut->current).enabled == false) {
+          Com_Printf(0x10,"The active profile signed out\n");
+          pPVar3 = Lobby_GetPartyData();
+          Party_StopParty(pPVar3);
+          Party_StopParty(&g_partyData);
+        }
+        else {
+          Com_Printf(0x10,
+                     "Since the active profile signed out, we are going to send them back to the main menu\n"
+                    );
+          lVar7 = 1;
+          *param_2 = "XBOXLIVE_SIGNEDOUT";
+        }
       }
       else {
-        Com_Printf(0x10,0xffffffff8218c198);
-        lVar6 = 1;
-        *param_2 = "XBOXLIVE_SIGNEDOUT";
+        Com_Printf(0x10,"Controller #%i signed out\n");
       }
     }
-    if ((lVar6 == 0) && (cVar3 = ShouldDisconnectForSignInOrOut(iVar1), cVar3 != '\0')) {
-      Com_Printf(0x10,0xffffffff8218c0f8,iVar1);
-      lVar6 = 1;
+    if ((lVar7 == 0) && (bVar4 = ShouldDisconnectForSignInOrOut(iVar1), bVar4)) {
+      Com_Printf(0x10,
+                 "Since controller %i signed out while in a game, we are going to send them back to the main menu\n"
+                );
+      lVar7 = 1;
       *param_2 = "XBOXLIVE_SIGNEDOUT";
     }
   }
-  if (((DAT_82966e98 != 0) || (DAT_82b5c820 == iVar1)) || (iVar2 != 0)) {
+  if (((cl_multi_gamepads_enabled != 0) || (cl_controller_in_use == iVar1)) || (iVar2 != 0)) {
     Memcard_UnselectSaveDevice(iVar1);
   }
-  __restgprlr_25(lVar6);
-  return;
+  uVar6 = __restgprlr_25(lVar7);
+  return (bool)uVar6;
 }
 
 
 // 82646278  Live_UserSignedIn  (xenon/xenon_live.cpp:3132)
 
-void Live_UserSignedIn(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Live_UserSignedIn(int param_1,char **param_2)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  int iVar5;
-  char cVar6;
+  ulong uVar1;
+  ulong uVar2;
+  int iVar3;
+  LocalClientNum_t LVar4;
+  _XUSER_SIGNIN_STATE _Var5;
+  bool bVar6;
   uint uVar7;
-  undefined4 local_90 [2];
-  longlong local_88;
-  undefined1 auStack_80 [16];
-  undefined8 local_70 [14];
+  uint local_90 [2];
+  ulong64 local_88;
+  char acStack_80 [16];
+  _XUSER_SIGNIN_INFO local_70 [2];
   
-  iVar4 = __savegprlr_24();
-  uVar1 = XUserGetXUID(iVar4,&local_88);
-  if ((int)uVar1 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0xc4a,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar1);
+  uVar1 = __savegprlr_24(param_1);
+  uVar2 = XUserGetXUID(uVar1,&local_88);
+  if ((int)uVar2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xc4a,0,
+                    "%s\n\t(res) = %08x");
   }
   if (local_88 == 0) {
-    Com_PrintError(0xe,0xffffffff8218c26c);
-    Live_UserSignedOut(iVar4,param_2);
-    __restgprlr_24(0);
-    return;
+    Com_PrintError(0xe,"Live_UserSignedIn - Null XUID. Aborting\n");
+    Live_UserSignedOut(uVar1,param_2);
+    iVar3 = __restgprlr_24(0);
+    return iVar3;
   }
-  uVar1 = XUserGetName(iVar4,auStack_80,0x10);
-  if ((int)uVar1 < 0) {
-    MyAssertHandler(0xffffffff8218b718,0xc54,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar1);
+  uVar2 = XUserGetName(uVar1,acStack_80,0x10);
+  if ((int)uVar2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xc54,0,
+                    "%s\n\t(res) = %08x");
   }
-  LiveStorage_NewUser(iVar4);
-  uVar1 = CL_LocalClientNumFromControllerIndex(iVar4);
-  Dvar_SetBool(DAT_8424a648,1);
+  LiveStorage_NewUser(uVar1);
+  LVar4 = CL_LocalClientNumFromControllerIndex(uVar1);
+  Dvar_SetBool(xblive_loggedin,true);
   if (local_88 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0xc5e,0,0xffffffff82000f98,0xffffffff8218c264);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xc5e,0,
+                    "%s");
   }
-  (&DAT_8424b5b0)[iVar4 * 0x40b] = local_88;
-  XUserGetSigninInfo(iVar4,2,local_70);
-  (&DAT_8424b5d0)[iVar4 * 0x40b] = local_70[0];
-  I_strncpyz(&DAT_8424b58c + iVar4 * 0x2058,auStack_80,0x10);
-  XUIDToString(&DAT_8424b5d0 + iVar4 * 0x40b,&DAT_8424b5d8 + iVar4 * 0x2058);
-  Dvar_SetString(DAT_82b3ec84,&DAT_8424b58c + iVar4 * 0x2058);
-  if ((&DAT_8424b588)[iVar4 * 0x816] == 0) {
-    lVar2 = Sys_Milliseconds();
-    GamerProfile_LogInProfile(iVar4);
-    lVar3 = Sys_Milliseconds();
-    Com_Printf(0x10,0xffffffff8218c23c,lVar3 - lVar2);
+  xenonUserData[uVar1].xuid = local_88;
+  XUserGetSigninInfo(uVar1,2,local_70);
+  xenonUserData[uVar1].xuidOffline = local_70[0].xuid;
+  I_strncpyz(xenonUserData[uVar1].gamertag,acStack_80,0x10);
+  XUIDToString(&xenonUserData[uVar1].xuidOffline,xenonUserData[uVar1].xuidOfflineString);
+  Dvar_SetString(name,xenonUserData[uVar1].gamertag);
+  if (xenonUserData[uVar1].signinState == 0) {
+    Sys_Milliseconds();
+    GamerProfile_LogInProfile(uVar1);
+    Sys_Milliseconds();
+    Com_Printf(0x10,"GamerProfile_LogInProfile took %ims\n");
   }
   local_90[0] = GetProtocolVersion();
-  XUserSetProperty(iVar4,0x10000014,4,local_90);
-  if ((DAT_842537fb == 0) && (DAT_84253a79 == '\0')) {
-    if (DAT_8424a650 == '\0') goto LAB_826464e4;
-    iVar5 = XUserGetSigninState(iVar4);
-    if (iVar5 < 1) {
-      MyAssertHandler(0xffffffff8218b718,0xc89,0,0xffffffff82000f98,0xffffffff8218c1f0);
+  XUserSetProperty(uVar1,0x10000014,4,local_90);
+  if ((s_localSignin == false) && (s_liveSignin == false)) {
+    if (s_anySignin == false) goto LAB_826464e4;
+    _Var5 = XUserGetSigninState(uVar1);
+    if ((int)_Var5 < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xc89,
+                      0,"%s");
     }
   }
   else {
-    if (DAT_82966e98 != 0) goto LAB_826464e4;
-    uVar7 = (uint)DAT_842537fb;
-    iVar5 = CL_GetLocalClientSignInState(iVar4);
-    if (iVar5 != ((uint)LZCOUNT(uVar7) >> 5) + 1) goto LAB_826464e4;
+    if (cl_multi_gamepads_enabled != 0) goto LAB_826464e4;
+    uVar7 = (uint)s_localSignin;
+    iVar3 = CL_GetLocalClientSignInState(uVar1);
+    if (iVar3 != ((uint)LZCOUNT(uVar7) >> 5) + 1) goto LAB_826464e4;
   }
-  CL_SetControllerInUse(iVar4);
+  CL_SetControllerInUse(uVar1);
 LAB_826464e4:
-  if (((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-     (cVar6 = Menu_IsMenuOpenAndVisible(0,0xffffffff82057c14), cVar6 != '\0')) {
-    UI_CloseMenu(0,0xffffffff82057c14);
-    Cbuf_ExecuteBuffer(uVar1,iVar4,0xffffffff82057e04);
+  if ((((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) &&
+     (bVar6 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"savegame_error_mp"), bVar6)) {
+    UI_CloseMenu(LOCAL_CLIENT_0,"savegame_error_mp");
+    Cbuf_ExecuteBuffer(LVar4,uVar1,"startsplitscreensignin");
   }
-  ComGroups_RegisterPlayer(iVar4);
-  Friends_ResetUser(iVar4);
-  MeetPlayer_Reset(iVar4);
-  __restgprlr_24(1);
-  return;
+  ComGroups_RegisterPlayer(uVar1);
+  Friends_ResetUser(uVar1);
+  MeetPlayer_Reset(uVar1);
+  iVar3 = __restgprlr_24(1);
+  return iVar3;
 }
 
 
 // 82646570  Live_UserSignedInLocally  (xenon/xenon_live.cpp:3263)
 
-void Live_UserSignedInLocally(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_UserSignedInLocally(int param_1,char **param_2)
 
 {
   byte bVar1;
   byte bVar2;
+  ulong uVar3;
+  int iVar4;
+  undefined1 uVar8;
+  ulong uVar5;
+  bool bVar9;
+  LocalClientNum_t LVar6;
   int iVar7;
-  longlong lVar3;
-  int iVar8;
-  longlong lVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  char cVar10;
-  int iVar9;
-  byte *pbVar11;
-  undefined8 uVar12;
-  undefined *puVar13;
-  byte *pbVar14;
-  byte local_b0 [8];
-  byte abStack_a8 [8];
-  undefined1 auStack_a0 [32];
-  longlong local_80 [16];
+  ulong64 *puVar10;
+  undefined8 uVar11;
+  ulong64 *puVar12;
+  ulong64 local_b0;
+  ulong64 uStack_a8;
+  char acStack_a0 [32];
+  _XUSER_SIGNIN_INFO local_80 [3];
   
-  iVar7 = __savegprlr_23();
-  iVar9 = (&DAT_8424b588)[iVar7 * 0x816];
-  uVar12 = 0;
-  Com_Printf(0x10,0xffffffff8218c528,iVar7,iVar9);
-  if (iVar9 == 0) {
-    lVar3 = Sys_Milliseconds();
-    iVar8 = Live_UserSignedIn(iVar7,param_2);
-    if (iVar8 == 0) {
-      Com_PrintError(0x10,0xffffffff8218c50c);
-      __restgprlr_23(0);
-      return;
+  uVar3 = __savegprlr_23(param_1);
+  iVar7 = xenonUserData[uVar3].signinState;
+  uVar11 = 0;
+  Com_Printf(0x10,"Controller #%i signed in locally from state %i\n");
+  if (iVar7 == 0) {
+    Sys_Milliseconds();
+    iVar4 = Live_UserSignedIn(uVar3,param_2);
+    if (iVar4 == 0) {
+      Com_PrintError(0x10,"Live_UserSignedIn failed\n");
+      uVar8 = __restgprlr_23(0);
+      return (bool)uVar8;
     }
-    lVar4 = Sys_Milliseconds();
-    Com_Printf(0x10,0xffffffff8218c4ec,lVar4 - lVar3);
+    Sys_Milliseconds();
+    Com_Printf(0x10,"Live_UserSignedIn took %ims\n");
   }
-  if ((&DAT_8424b5b0)[iVar7 * 0x40b] == 0) {
-    uVar5 = va(0xffffffff8218c4c4,iVar9);
-    MyAssertHandler(0xffffffff8218b718,0xce2,0,0xffffffff820011f4,0xffffffff8218c4a0,uVar5);
+  if (xenonUserData[uVar3].xuid == 0) {
+    va("oldState was %i, now signed in locally");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xce2,0,
+                    "%s\n\t%s");
   }
-  uVar6 = XUserGetSigninInfo(iVar7,2,local_80);
-  if ((uVar6 & 0xffffffff) != 0) {
-    Com_Printf(0x10,0xffffffff8218c458,uVar6);
-    __restgprlr_23(0);
-    return;
+  uVar5 = XUserGetSigninInfo(uVar3,2,local_80);
+  if (uVar5 != 0) {
+    Com_Printf(0x10,"Live_UserSignedInLocally could not get XUserGetSigninInfo - error %x\n");
+    uVar8 = __restgprlr_23(0);
+    return (bool)uVar8;
   }
-  if (local_80[0] == 0) {
-    Com_Printf(0x10,0xffffffff8218c42c,uVar6);
-    __restgprlr_23(0);
-    return;
+  if (local_80[0].xuid == 0) {
+    Com_Printf(0x10,"Live_UserSignedInLocally has NULL xuid\n");
+    uVar8 = __restgprlr_23(0);
+    return (bool)uVar8;
   }
-  (&DAT_8424b5b0)[iVar7 * 0x40b] = local_80[0];
-  pbVar14 = (byte *)(&DAT_8424b5d0 + iVar7 * 0x40b);
-  (&DAT_8424b588)[iVar7 * 0x816] = 1;
-  puVar13 = &DAT_8424b5d8 + iVar7 * 0x2058;
-  *(longlong *)pbVar14 = local_80[0];
-  Com_Printf(0x10,0xffffffff8218c408,puVar13);
-  XUIDToString(local_80,puVar13);
-  Com_Printf(0x10,0xffffffff8218c400,puVar13);
-  XUIDToString(pbVar14,puVar13);
-  XUIDToString(pbVar14,auStack_a0);
-  StringToXUID(auStack_a0,local_b0);
-  pbVar11 = local_b0;
+  xenonUserData[uVar3].xuid = local_80[0].xuid;
+  puVar12 = (ulong64 *)(uVar3 * 0x2058 + -0x7bdb4a30);
+  xenonUserData[uVar3].signinState = 1;
+  *puVar12 = local_80[0].xuid;
+  Com_Printf(0x10,"Changing xuidofflinestring from %s");
+  XUIDToString(&local_80[0].xuid,xenonUserData[uVar3].xuidOfflineString);
+  Com_Printf(0x10," to %s\n");
+  XUIDToString(puVar12,xenonUserData[uVar3].xuidOfflineString);
+  XUIDToString(puVar12,acStack_a0);
+  StringToXUID(acStack_a0,&local_b0);
+  puVar10 = &local_b0;
   do {
-    bVar1 = *pbVar11;
-    bVar2 = *pbVar14;
+    bVar1 = *(byte *)puVar10;
+    bVar2 = *(byte *)puVar12;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar11 = pbVar11 + 1;
-    pbVar14 = pbVar14 + 1;
-  } while (pbVar11 != abStack_a8);
+    puVar10 = (ulong64 *)((int)puVar10 + 1);
+    puVar12 = (ulong64 *)((int)puVar12 + 1);
+  } while (puVar10 != &uStack_a8);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    MyAssertHandler(0xffffffff8218b718,0xd00,0,0xffffffff82000f98,0xffffffff8218c3a8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xd00,0,
+                    "%s");
   }
-  Dvar_SetString(DAT_82b3ec84,&DAT_8424b58c + iVar7 * 0x2058);
-  if (iVar9 == 2) {
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-      cVar10 = CL_IsSplitscreenControllerActive(iVar7);
-      if ((cVar10 != '\0') || ((DAT_82966e98 == 0 && (DAT_82b5c820 == iVar7)))) {
-        if ((*(char *)(DAT_83666174 + 0xc) == '\0') || (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
-          Dvar_SetBool(DAT_82b3ecb8,0);
-          Dvar_SetBool(DAT_82aa1af8,0);
-          Live_ThrowError(1,0xffffffff8208bb60);
+  Dvar_SetString(name,xenonUserData[uVar3].gamertag);
+  if (iVar7 == 2) {
+    if ((onlinegame->current).enabled != false) {
+      bVar9 = CL_IsSplitscreenControllerActive(uVar3);
+      if ((bVar9) || ((cl_multi_gamepads_enabled == 0 && (cl_controller_in_use == uVar3)))) {
+        if (((com_sv_running->current).enabled == false) ||
+           ((xblive_privatematch->current).enabled != false)) {
+          Dvar_SetBool(splitscreen,false);
+          Dvar_SetBool(onlinegame,false);
+          Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
         }
         else {
-          cVar10 = SV_IsMigrating();
-          if (cVar10 == '\0') {
-            uVar5 = CL_LocalClientNumFromControllerIndex(iVar7);
-            Cbuf_AddText(uVar5,0xffffffff8218c390);
+          bVar9 = SV_IsMigrating();
+          if (!bVar9) {
+            LVar6 = CL_LocalClientNumFromControllerIndex(uVar3);
+            Cbuf_AddText(LVar6,"hostmigration_start\n");
           }
         }
       }
       goto LAB_826468ec;
     }
-    if (*(char *)(DAT_83f71e80 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_83f71e80,0);
-      Live_ThrowError(1,0xffffffff8208bb60);
+    if ((ui_onlineRequired->current).enabled != false) {
+      Dvar_SetBool(ui_onlineRequired,false);
+      Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
       goto LAB_826468ec;
     }
-    CL_LocalClientNumFromControllerIndex(iVar7);
-    cVar10 = CL_Demo_IsPlaying();
-    if (cVar10 == '\0') goto LAB_826468ec;
-    Com_PrintWarning(0x10,0xffffffff8218c320);
+    LVar6 = CL_LocalClientNumFromControllerIndex(uVar3);
+    bVar9 = CL_Demo_IsPlaying(LVar6);
+    if (!bVar9) goto LAB_826468ec;
+    Com_PrintWarning(0x10,
+                     "Since the active profile signed in locally and out of live, we are going to send them back to the main menu\n"
+                    );
   }
   else {
-    cVar10 = ShouldDisconnectForSignInOrOut(iVar7);
-    if (cVar10 == '\0') goto LAB_826468ec;
-    Com_Printf(0x10,0xffffffff8218c2c0,iVar7);
+    bVar9 = ShouldDisconnectForSignInOrOut(uVar3);
+    if (!bVar9) goto LAB_826468ec;
+    Com_Printf(0x10,
+               "Since controller %i signed in while in a game, we are going to send them back to the main menu\n"
+              );
   }
-  uVar12 = 1;
-  *(undefined4 *)param_2 = "XBOXLIVE_SIGNINCHANGED";
+  uVar11 = 1;
+  *param_2 = "XBOXLIVE_SIGNINCHANGED";
 LAB_826468ec:
-  iVar9 = Live_WasForcedAnySignInByUI(iVar7);
-  if (iVar9 != 0) {
-    Live_ClearForcedAnySignInByUI(iVar7);
-    UI_RunResolveItemDefAction(0);
+  iVar7 = Live_WasForcedAnySignInByUI(uVar3);
+  if (iVar7 != 0) {
+    Live_ClearForcedAnySignInByUI(uVar3);
+    UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
   }
-  lVar3 = Sys_Milliseconds();
-  Content_FindContentPacks(iVar7);
-  lVar4 = Sys_Milliseconds();
-  Com_Printf(0x10,0xffffffff8218c298,lVar4 - lVar3);
-  __restgprlr_23(uVar12);
-  return;
+  Sys_Milliseconds();
+  Content_FindContentPacks(uVar3);
+  Sys_Milliseconds();
+  Com_Printf(0x10,"Content_FindContentPacks took %ims\n");
+  uVar8 = __restgprlr_23(uVar11);
+  return (bool)uVar8;
 }
 
 
 // 82646940  Live_IsUserSignedInToDemonware  (xenon/xenon_live.cpp:3450)
 
-bool Live_IsUserSignedInToDemonware(void)
+bool Live_IsUserSignedInToDemonware(int param_1)
 
 {
-  int iVar1;
+  DWOnlineStatus DVar1;
   
-  iVar1 = dwGetLogOnStatus();
-  return iVar1 == 2;
+  DVar1 = dwGetLogOnStatus(param_1);
+  return DVar1 == DW_LIVE_CONNECTED;
 }
 
 
 // 82646970  Live_IsUserSignedInToLive  (xenon/xenon_live.cpp:3461)
 
-bool Live_IsUserSignedInToLive(void)
+bool Live_IsUserSignedInToLive(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = CL_GetLocalClientSignInState();
+  iVar1 = CL_GetLocalClientSignInState(param_1);
   return iVar1 == 2;
 }
 
 
 // 826469A0  Live_IsUserSignedInLocally  (xenon/xenon_live.cpp:3467)
 
-bool Live_IsUserSignedInLocally(void)
+bool Live_IsUserSignedInLocally(int param_1)
 
 {
   int iVar1;
   
-  iVar1 = CL_GetLocalClientSignInState();
+  iVar1 = CL_GetLocalClientSignInState(param_1);
   return iVar1 == 1;
 }
 
 
 // 826469D0  Live_IsUserSignedIn  (xenon/xenon_live.cpp:3473)
 
-ulonglong Live_IsUserSignedIn(void)
+bool Live_IsUserSignedIn(int param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = CL_GetLocalClientSignInState();
-  return (-uVar1 & ~uVar1 & 0xffffffff) >> 0x1f;
+  iVar1 = CL_GetLocalClientSignInState(param_1);
+  return (bool)((byte)((byte)((ulonglong)-(longlong)iVar1 >> 0x18) & ~(byte)((uint)iVar1 >> 0x18))
+               >> 7);
 }
 
 
 // 8264A9B0  Live_UserSignedInToLive  (xenon/xenon_live.cpp:3479)
 
-void Live_UserSignedInToLive(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool Live_UserSignedInToLive(int param_1,char **param_2)
 
 {
   int iVar1;
+  ulong uVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar2;
-  char cVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  undefined *puVar8;
-  undefined4 local_70;
+  undefined1 uVar7;
+  ulong uVar4;
+  bool bVar8;
+  StatsSource SVar5;
+  connstate_t cVar6;
+  char *pcVar9;
+  longlong lVar10;
+  LocalClientNum_t local_70;
   int local_6c [3];
-  longlong local_60 [12];
+  _XUSER_SIGNIN_INFO local_60 [2];
   
-  iVar3 = __savegprlr_26();
-  lVar7 = 0;
-  local_70 = CL_LocalClientNumFromControllerIndex();
-  DW_SetDisableLogonRetry(0);
-  Com_Printf(0x10,0xffffffff8218ddf4,iVar3);
-  iVar1 = (&DAT_8424b588)[iVar3 * 0x816];
-  if (((iVar1 == 0) && (iVar4 = Live_UserSignedIn(iVar3,param_2), iVar4 == 0)) ||
-     (iVar4 = XUserGetSigninInfo(iVar3,1,local_60), iVar4 != 0)) {
-    __restgprlr_26(0);
-    return;
+  uVar2 = __savegprlr_26(param_1);
+  lVar10 = 0;
+  local_70 = CL_LocalClientNumFromControllerIndex(uVar2);
+  DW_SetDisableLogonRetry(false);
+  Com_Printf(0x10,"Controller #%i signed in to live\n");
+  iVar1 = xenonUserData[uVar2].signinState;
+  if (((iVar1 == 0) && (iVar3 = Live_UserSignedIn(uVar2,param_2), iVar3 == 0)) ||
+     (uVar4 = XUserGetSigninInfo(uVar2,1,local_60), uVar4 != 0)) {
+    uVar7 = __restgprlr_26(0);
+    return (bool)uVar7;
   }
-  (&DAT_8424b5b0)[iVar3 * 0x40b] = local_60[0];
-  if (local_60[0] == 0) {
-    uVar2 = va(0xffffffff8218dda0,iVar1);
-    MyAssertHandler(0xffffffff8218b718,0xdb6,0,0xffffffff820011f4,0xffffffff8218c4a0,uVar2);
+  xenonUserData[uVar2].xuid = local_60[0].xuid;
+  if (local_60[0].xuid == 0) {
+    va("oldState was %i, now signed in locally but we thought they were signed in to Live");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xdb6,0,
+                    "%s\n\t%s");
   }
-  (&DAT_8424b588)[iVar3 * 0x816] = 2;
-  cVar5 = Live_UserIsGuest(iVar3);
-  if (cVar5 != '\0') {
-    (&DAT_8424b5e9)[iVar3 * 0x2058] = 1;
+  xenonUserData[uVar2].signinState = 2;
+  bVar8 = Live_UserIsGuest(uVar2);
+  if (bVar8) {
+    xenonUserData[uVar2].isGuest = true;
   }
-  puVar8 = &DAT_8424b5b8 + iVar3 * 0x2058;
-  Com_Printf(0x10,0xffffffff8218dd80,puVar8);
-  XUIDToString(local_60,puVar8);
-  Com_Printf(0x10,0xffffffff8218c400,puVar8);
-  LiveStorage_FetchMotd(iVar3);
-  LiveStorage_FetchFFotD(iVar3);
-  LiveStorage_FetchPlaylists(iVar3);
+  Com_Printf(0x10,"Changing xuidstring from %s");
+  XUIDToString(&local_60[0].xuid,xenonUserData[uVar2].xuidString);
+  Com_Printf(0x10," to %s\n");
+  LiveStorage_FetchMotd(uVar2);
+  LiveStorage_FetchFFotD(uVar2);
+  LiveStorage_FetchPlaylists(uVar2);
   NewsFeed_ForceUpdate();
-  cVar5 = CL_IsControllerActive(iVar3);
-  puVar6 = (undefined4 *)param_2;
-  if ((cVar5 != '\0') && (cVar5 = Live_UserIsGuest(iVar3), cVar5 == '\0')) {
-    cVar5 = LiveStorage_ShouldReadOnlineStats(iVar3);
-    if (cVar5 != '\0') {
-      LiveStorage_DownloadStats(iVar3);
-      iVar4 = LiveStorage_GetActiveStatsSource(iVar3);
-      if (((iVar4 == 0) && (iVar4 = CL_GetLocalClientConnectionState(local_70), 2 < iVar4)) &&
-         (cVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,&local_70), cVar5 != '\0')) {
-        Com_Printf(0x10,0xffffffff8218dd08);
-        lVar7 = 1;
-        *puVar6 = "XBOXLIVE_SIGNINCHANGED";
+  bVar8 = CL_IsControllerActive(uVar2);
+  if ((bVar8) && (bVar8 = Live_UserIsGuest(uVar2), !bVar8)) {
+    bVar8 = LiveStorage_ShouldReadOnlineStats(uVar2);
+    if (bVar8) {
+      LiveStorage_DownloadStats(uVar2);
+      SVar5 = LiveStorage_GetActiveStatsSource(uVar2);
+      if (((SVar5 == STATS_ONLINE) &&
+          (cVar6 = CL_GetLocalClientConnectionState(local_70), 2 < (int)cVar6)) &&
+         (bVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_70), bVar8)) {
+        Com_Printf(0x10,
+                   "Since the active profile signed into live and is using online stats, we are going to send them back to the main menu\n"
+                  );
+        lVar10 = 1;
+        *param_2 = "XBOXLIVE_SIGNINCHANGED";
       }
     }
-    cVar5 = LiveStorage_ShouldReadOfflineStats(iVar3);
-    if (cVar5 != '\0') {
-      iVar4 = LiveStorage_GetActiveStatsSource(iVar3);
-      if (((iVar4 == 1) && (iVar4 = CL_GetLocalClientConnectionState(local_70), 2 < iVar4)) &&
-         (cVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar3,&local_70), cVar5 != '\0')) {
-        Com_Printf(0x10,0xffffffff8218dc90);
-        lVar7 = 1;
-        *puVar6 = "XBOXLIVE_SIGNINCHANGED";
+    bVar8 = LiveStorage_ShouldReadOfflineStats(uVar2);
+    if (bVar8) {
+      SVar5 = LiveStorage_GetActiveStatsSource(uVar2);
+      if (((SVar5 == STATS_OFFLINE) &&
+          (cVar6 = CL_GetLocalClientConnectionState(local_70), 2 < (int)cVar6)) &&
+         (bVar8 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_70), bVar8)) {
+        Com_Printf(0x10,
+                   "Since the active profile signed into live and is using offline stats, we are going to send them back to the main menu\n"
+                  );
+        lVar10 = 1;
+        *param_2 = "XBOXLIVE_SIGNINCHANGED";
       }
       else {
-        LiveStorage_ReadStats(iVar3);
+        LiveStorage_ReadStats(uVar2);
       }
     }
   }
-  cVar5 = LiveStorage_IsTimeSynced();
-  if (cVar5 == '\0') {
-    LiveStorage_SyncTime(iVar3);
+  bVar8 = LiveStorage_IsTimeSynced();
+  if (!bVar8) {
+    LiveStorage_SyncTime(uVar2);
   }
-  LiveStorage_MarkPeriodicChallengesOutOfDate(iVar3);
-  Live_GetPermissions(iVar3);
-  Friends_MarkForUpdate(iVar3);
+  LiveStorage_MarkPeriodicChallengesOutOfDate(uVar2);
+  Live_GetPermissions(uVar2);
+  Friends_MarkForUpdate(uVar2);
   LiveParty_Update();
-  LiveAntiCheat_UserSignedInToLive(iVar3);
-  dwMail_UserSignedInToLive(iVar3);
-  if (DAT_84253a79 == '\0') goto LAB_8264ad24;
-  if (DAT_844d823a == '\0') {
-    if (DAT_844d8238 != '\0') {
-      uVar2 = 0xffffffff8218dc74;
+  LiveAntiCheat_UserSignedInToLive(uVar2);
+  dwMail_UserSignedInToLive(uVar2);
+  if (s_liveSignin == false) goto LAB_8264ad24;
+  if (g_banned == false) {
+    if (g_oldBuild != false) {
+      pcVar9 = "MP_BUILDEXPIRED";
       goto LAB_8264acbc;
     }
-    if (DAT_844d823b != '\0') {
-      uVar2 = 0xffffffff8218dc64;
+    if (g_betaOver != false) {
+      pcVar9 = "MP_BETACLOSED";
       goto LAB_8264acbc;
     }
   }
   else {
-    uVar2 = 0xffffffff8218dc84;
+    pcVar9 = "MP_BANNED";
 LAB_8264acbc:
-    Live_ThrowError(1,uVar2);
+    Live_ThrowError(ERR_DROP,pcVar9);
   }
-  uVar2 = XUserCheckPrivilege(iVar3,0xfe,local_6c);
-  if ((int)uVar2 != 0) {
+  uVar4 = XUserCheckPrivilege(uVar2,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_6c);
+  if (uVar4 != 0) {
     local_6c[0] = 0;
-    Com_PrintError(0x10,0xffffffff82032158,uVar2);
+    Com_PrintError(0x10,
+                   "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n");
   }
   if (local_6c[0] == 0) {
-    Com_Printf(0x10,0xffffffff8218dbf0);
-    lVar7 = 1;
-    *puVar6 = "XBOXLIVE_MPNOTALLOWED";
+    Com_Printf(0x10,
+               "Since the active profile doesn\'t have permission to play MP, so we are going to send them back to the main menu\n"
+              );
+    lVar10 = 1;
+    *param_2 = "XBOXLIVE_MPNOTALLOWED";
   }
 LAB_8264ad24:
-  iVar4 = Live_WasForcedLiveSignInByUI(iVar3);
-  if ((iVar4 != 0) || (iVar4 = Live_WasForcedAnySignInByUI(iVar3), iVar4 != 0)) {
-    Live_ClearForcedLiveSignInByUI(iVar3);
-    Live_ClearForcedAnySignInByUI(iVar3);
-    UI_RunResolveItemDefAction(0);
+  iVar3 = Live_WasForcedLiveSignInByUI(uVar2);
+  if ((iVar3 != 0) || (iVar3 = Live_WasForcedAnySignInByUI(uVar2), iVar3 != 0)) {
+    Live_ClearForcedLiveSignInByUI(uVar2);
+    Live_ClearForcedAnySignInByUI(uVar2);
+    UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
   }
-  if (((lVar7 == 0) && (iVar1 == 0)) &&
-     (cVar5 = ShouldDisconnectForSignInOrOut(iVar3), cVar5 != '\0')) {
-    Com_Printf(0x10,0xffffffff8218c2c0,iVar3);
-    lVar7 = 1;
-    *puVar6 = "XBOXLIVE_SIGNINCHANGED";
+  if (((lVar10 == 0) && (iVar1 == 0)) && (bVar8 = ShouldDisconnectForSignInOrOut(uVar2), bVar8)) {
+    Com_Printf(0x10,
+               "Since controller %i signed in while in a game, we are going to send them back to the main menu\n"
+              );
+    lVar10 = 1;
+    *param_2 = "XBOXLIVE_SIGNINCHANGED";
   }
-  Content_FindContentPacks(iVar3);
-  if ((DAT_82966e98 == 0) && (DAT_82b5c820 != iVar3)) {
-    Live_NotPlaying(iVar3);
+  Content_FindContentPacks(uVar2);
+  if ((cl_multi_gamepads_enabled == 0) && (cl_controller_in_use != uVar2)) {
+    Live_NotPlaying(uVar2);
   }
-  __restgprlr_26(lVar7);
-  return;
+  uVar7 = __restgprlr_26(lVar10);
+  return (bool)uVar7;
 }
 
 
 // 82646A00  Live_HandleClientSplitscreenOnlineSignin  (xenon/xenon_live.cpp:3707)
 
-void Live_HandleClientSplitscreenOnlineSignin(undefined8 param_1,int param_2)
+void Live_HandleClientSplitscreenOnlineSignin(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = __savegprlr_29();
-  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0xe7c,0,0xffffffff82000f98,0xffffffff820304bc);
+  uVar1 = __savegprlr_29(param_1);
+  if ((onlinegame->current).enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xe7c,0,
+                    "%s");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0xe7d,0,0xffffffff82031880,uVar1,4);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xe7d,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   if (1 < param_2) {
     GamerProfile_ExecControllerBindings(uVar1);
-    CL_HandleSplitscreenSignIn(uVar1,1);
+    CL_HandleSplitscreenSignIn(uVar1,true);
   }
   __restgprlr_29();
   return;
@@ -3033,28 +3330,36 @@ void Live_HandleClientSplitscreenOnlineSignin(undefined8 param_1,int param_2)
 
 // 82646AA0  Live_HandleClientSplitscreenSignin  (xenon/xenon_live.cpp:3721)
 
-void Live_HandleClientSplitscreenSignin(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_HandleClientSplitscreenSignin(int param_1,bool param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  LocalClientNum_t LVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-    MyAssertHandler(0xffffffff8218b718,0xe8d,0,0xffffffff82000f98,0xffffffff8203030c);
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if ((onlinegame->current).enabled != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xe8d,0,
+                    "%s");
   }
-  if (DAT_82966e98 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0xe8f,0,0xffffffff82000f98,0xffffffff82085dd8);
+  if (cl_multi_gamepads_enabled == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xe8f,0,
+                    "%s");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0xe90,0,0xffffffff82031880,uVar1,4);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xe90,0,
+                    "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
-  CL_SetLocalClientActive(uVar2,param_2);
-  if ((param_2 & 0xff) != 0) {
+  LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+  CL_SetLocalClientActive(LVar2,SUB81(uVar3,0));
+  if ((uVar3 & 0xff) != 0) {
     GamerProfile_ExecControllerBindings(uVar1);
   }
-  Voice_DisableLocalMics(0xffffffff844c7860);
+  Voice_DisableLocalMics(&g_serverSession);
   __restgprlr_28();
   return;
 }
@@ -3062,91 +3367,102 @@ void Live_HandleClientSplitscreenSignin(undefined8 param_1,ulonglong param_2)
 
 // 82646B80  Live_IsSignedIn  (xenon/xenon_live.cpp:3743)
 
-void Live_IsSignedIn(void)
+bool Live_IsSignedIn(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  uint uVar2;
+  char *pcVar3;
+  undefined1 uVar4;
   
-  uVar3 = __savegprlr_28();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0xea0,0,0xffffffff8218c590,uVar3,4);
+  uVar2 = __savegprlr_28(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xea0,0,
+                    "controllerIndex doesn\'t index ARRAY_COUNT( xenonUserData )\n\t%i not in [0, %i)"
+                   );
   }
-  iVar1 = (int)uVar3;
-  if ((0 < (int)(&DAT_8424b588)[iVar1 * 0x816]) && ((&DAT_8424b5b0)[iVar1 * 0x40b] == 0)) {
-    (&DAT_8424b588)[iVar1 * 0x816] = 0;
-    iVar2 = DAT_84013128;
-    (&DAT_8424b5e9)[iVar1 * 0x2058] = 0;
-    if (iVar2 == 0) {
-      uVar4 = va(0xffffffff8218c558,uVar3,0);
-      MyAssertHandler(0xffffffff8218b718,0xea8,0,uVar4);
+  if ((0 < xenonUserData[uVar2].signinState) && (xenonUserData[uVar2].xuid == 0)) {
+    xenonUserData[uVar2].signinState = 0;
+    iVar1 = alwaysfails;
+    xenonUserData[uVar2].isGuest = false;
+    if (iVar1 == 0) {
+      pcVar3 = va("controller %i has a signinState of %i but no xuid!");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xea8,
+                      0,pcVar3);
     }
   }
-  __restgprlr_28((-(ulonglong)(uint)(&DAT_8424b588)[iVar1 * 0x816] &
-                  ~(ulonglong)(uint)(&DAT_8424b588)[iVar1 * 0x816] & 0xffffffff) >> 0x1f);
-  return;
+  uVar4 = __restgprlr_28((-(ulonglong)(uint)xenonUserData[uVar2].signinState &
+                          ~(ulonglong)(uint)xenonUserData[uVar2].signinState & 0xffffffff) >> 0x1f);
+  return (bool)uVar4;
 }
 
 
 // 82646C48  Live_GetXuid  (xenon/xenon_live.cpp:3761)
 
-void Live_GetXuid(void)
+ulong64 Live_GetXuid(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  uint uVar2;
+  bool bVar3;
+  ulong64 uVar1;
   
-  uVar1 = __savegprlr_29();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0xeb2,0,0xffffffff8218c590,uVar1,4);
+  uVar2 = __savegprlr_29(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xeb2,0,
+                    "controllerIndex doesn\'t index ARRAY_COUNT( xenonUserData )\n\t%i not in [0, %i)"
+                   );
   }
-  cVar2 = Live_IsSignedIn(uVar1);
-  if (cVar2 == '\0') {
-    Live_ThrowError(1,0xffffffff82030e34);
+  bVar3 = Live_IsSignedIn(uVar2);
+  if (!bVar3) {
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUT");
   }
-  if ((&DAT_8424b5b0)[(int)uVar1 * 0x40b] == 0) {
-    MyAssertHandler(0xffffffff8218b718,0xeb5,0,0xffffffff82000f98,0xffffffff8218c4a0);
+  if (xenonUserData[uVar2].xuid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xeb5,0,
+                    "%s");
   }
-  __restgprlr_29((&DAT_8424b5b0)[(int)uVar1 * 0x40b]);
-  return;
+  uVar1 = __restgprlr_29(xenonUserData[uVar2].xuid);
+  return uVar1;
 }
 
 
 // 8264ADE0  Live_GetOfflineXuid  (xenon/xenon_live.cpp:3771)
 
-void Live_GetOfflineXuid(void)
+ulong64 Live_GetOfflineXuid(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  uint uVar2;
+  bool bVar3;
+  ulong64 uVar1;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0xebc,0,0xffffffff8218c590,uVar1,4);
+  uVar2 = __savegprlr_28(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xebc,0,
+                    "controllerIndex doesn\'t index ARRAY_COUNT( xenonUserData )\n\t%i not in [0, %i)"
+                   );
   }
-  cVar2 = Live_IsSignedIn(uVar1);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0xebd,0,0xffffffff82000f98,0xffffffff82036d4c);
+  bVar3 = Live_IsSignedIn(uVar2);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xebd,0,
+                    "%s");
   }
-  cVar2 = Live_UserIsGuest(uVar1);
-  if ((cVar2 == '\0') && ((&DAT_8424b5d0)[(int)uVar1 * 0x40b] == 0)) {
-    MyAssertHandler(0xffffffff8218b718,0xec2,0,0xffffffff82000f98,0xffffffff8218de18);
+  bVar3 = Live_UserIsGuest(uVar2);
+  if ((!bVar3) && (xenonUserData[uVar2].xuidOffline == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0xec2,0,
+                    "%s");
   }
-  __restgprlr_28((&DAT_8424b5d0)[(int)uVar1 * 0x40b]);
-  return;
+  uVar1 = __restgprlr_28(xenonUserData[uVar2].xuidOffline);
+  return uVar1;
 }
 
 
 // 82646CF8  Live_GetLSPXuid  (xenon/xenon_live.cpp:3786)
 
-void Live_GetLSPXuid(undefined8 param_1,undefined8 *param_2)
+void Live_GetLSPXuid(int param_1,ulong64 *param_2)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
   
-  uVar1 = Live_GetXuid();
+  uVar1 = Live_GetXuid(param_1);
   *param_2 = uVar1;
   return;
 }
@@ -3154,52 +3470,60 @@ void Live_GetLSPXuid(undefined8 param_1,undefined8 *param_2)
 
 // 82646D28  Live_IsSystemUiActive  (xenon/xenon_live.cpp:3795)
 
-undefined1 Live_IsSystemUiActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_IsSystemUiActive(void)
 
 {
-  return DAT_84253a78;
+  return s_isSystemUiActive;
 }
 
 
 // 82646D38  Live_IsSplitScreenSignIn  (xenon/xenon_live.cpp:3801)
 
-undefined1 Live_IsSplitScreenSignIn(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_IsSplitScreenSignIn(void)
 
 {
-  return DAT_84253a7a;
+  return s_fakeSplitscreenSignin;
 }
 
 
 // 82646D48  Live_StartSplitscreenSignin  (xenon/xenon_live.cpp:3807)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_StartSplitscreenSignin(void)
 
 {
-  DAT_84253a7a = 1;
+  s_fakeSplitscreenSignin = true;
   return;
 }
 
 
 // 82646D58  Live_EndSplitscreenSignin  (xenon/xenon_live.cpp:3813)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_EndSplitscreenSignin(void)
 
 {
-  DAT_84253a7a = 0;
+  s_fakeSplitscreenSignin = false;
   return;
 }
 
 
 // 82646D68  Live_ShowFriendsList  (xenon/xenon_live.cpp:3819)
 
-void Live_ShowFriendsList(void)
+void Live_ShowFriendsList(int param_1)
 
 {
-  int iVar1;
+  ulong uVar1;
   
-  iVar1 = XShowFriendsUI();
-  if (iVar1 < 0) {
-    Live_ThrowError(1,0xffffffff8218c5e0);
+  uVar1 = XShowFriendsUI(param_1);
+  if ((int)uVar1 < 0) {
+    Live_ThrowError(ERR_DROP,"Failed to show friends list!\n");
   }
   return;
 }
@@ -3207,7 +3531,9 @@ void Live_ShowFriendsList(void)
 
 // 82646DA0  Live_GetEliteOfferID  (xenon/xenon_live.cpp:3830)
 
-undefined8 Live_GetEliteOfferID(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ulong64 Live_GetEliteOfferID(void)
 
 {
   return 0x4156089854b45000;
@@ -3216,36 +3542,39 @@ undefined8 Live_GetEliteOfferID(void)
 
 // 8264AEB8  Live_LaunchEliteSearch  (xenon/xenon_live.cpp:3843)
 
-void Live_LaunchEliteSearch(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_LaunchEliteSearch(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined4 local_30 [12];
+  int iVar1;
+  ulong uVar2;
+  LocalClientNum_t LVar3;
+  void *local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  DAT_842546d1 = '\0';
-  uVar2 = XContentCreateCrossTitleEnumerator(0xff,0,0x7000,0,1,0,local_30);
-  if ((uVar2 & 0xffffffff) != 0) {
-    Com_Printf(0x10,0xffffffff8218c680,uVar2);
+  iVar1 = __savegprlr_28(param_1);
+  g_CrossTitleData_Valid = false;
+  uVar2 = XContentCreateCrossTitleEnumerator(0xff,0,0x7000,0,1,(ulong *)0x0,local_30);
+  if (uVar2 != 0) {
+    Com_Printf(0x10,"Microsoft error code 0x%x from XContentCreateCrossTitleEnumerator()\n");
     __restgprlr_28();
     return;
   }
   do {
-    iVar3 = XEnumerateCrossTitle(local_30[0],0xffffffff84253a80,0x138,0,0);
-    if (iVar3 != 0) goto LAB_8264af5c;
-  } while (DAT_84253bb4 != 0x41560898);
-  DAT_842546d1 = '\x01';
+    uVar2 = XEnumerateCrossTitle
+                      (local_30[0],&g_CrossTitleData,0x138,(ulong *)0x0,(_XOVERLAPPED *)0x0);
+    if (uVar2 != 0) goto LAB_8264af5c;
+  } while (g_CrossTitleData.dwTitleId != 0x41560898);
+  g_CrossTitleData_Valid = true;
 LAB_8264af5c:
   XCloseHandle(local_30[0]);
-  if (DAT_842546d1 == '\0') {
-    Live_LaunchEliteStore(uVar1);
+  if (g_CrossTitleData_Valid == false) {
+    Live_LaunchEliteStore(iVar1);
     __restgprlr_28();
     return;
   }
-  uVar1 = CL_LocalClientNumFromControllerIndex();
-  UI_OpenMenu(uVar1,0xffffffff8218de44);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+  UI_OpenMenu(LVar3,"popup_switch_to_elite");
   __restgprlr_28();
   return;
 }
@@ -3253,27 +3582,27 @@ LAB_8264af5c:
 
 // 82646DB8  Live_LaunchEliteLaunch  (xenon/xenon_live.cpp:3898)
 
-void Live_LaunchEliteLaunch(char param_1)
+void Live_LaunchEliteLaunch(int param_1)
 
 {
-  ulonglong uVar1;
+  ulong uVar1;
   undefined4 local_30;
   byte local_2c;
   undefined4 local_28;
   
-  if (DAT_842546d1 != '\0') {
+  if (g_CrossTitleData_Valid) {
     LB_EndOngoingTasks();
     Session_EmptyGraveYard();
     Com_SyncThreads();
     Sys_SuspendOtherThreads();
     R_ShutdownDirect3D();
-    local_2c = param_1 << 5 | 0x80U | local_2c & 0x1f;
+    local_2c = (byte)(param_1 << 5) | 0x80 | local_2c & 0x1f;
     local_30 = 1;
     local_28 = 0x415608cb;
     XSetLaunchData(&local_30,0x18);
-    uVar1 = XContentCrossTitleLaunchImage(0xff,0xffffffff84253a80,0xffffffff8218c640);
-    if ((uVar1 & 0xffffffff) != 0) {
-      Com_Printf(0x10,0xffffffff8218c600,uVar1);
+    uVar1 = XContentCrossTitleLaunchImage(0xff,&g_CrossTitleData,"default.xex");
+    if (uVar1 != 0) {
+      Com_Printf(0x10,"Microsoft error code 0x%x from XContentCrossTitleLaunchImage()\n");
     }
   }
   return;
@@ -3282,25 +3611,28 @@ void Live_LaunchEliteLaunch(char param_1)
 
 // 82646E70  Live_LaunchEliteStore  (xenon/xenon_live.cpp:3943)
 
-void Live_LaunchEliteStore(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_LaunchEliteStore(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined1 auStack_50 [64];
+  int iVar1;
+  LocalClientNum_t LVar2;
+  ulong uVar3;
+  char acStack_50 [64];
   
-  iVar2 = CL_GetLocalClientSignInState();
-  if (iVar2 != 2) {
-    Com_SetErrorMessage(0xffffffff8208ba5c);
-    uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
-    UI_OpenMenu(uVar1,0xffffffff82036918);
-    Com_sprintf(auStack_50,0x40,0xffffffff8218c670,param_1);
-    Dvar_SetString(DAT_8366735c,auStack_50);
+  iVar1 = CL_GetLocalClientSignInState(param_1);
+  if (iVar1 != 2) {
+    Com_SetErrorMessage("PLATFORM_COMMERCE_NO_ONLINE_ERROR");
+    LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
+    UI_OpenMenu(LVar2,"error_popmenu_party");
+    Com_sprintf(acStack_50,0x40,"xsigninlive %d");
+    Dvar_SetString(com_errorResolveCommand,acStack_50);
     return;
   }
-  iVar2 = XShowMarketplaceUI(param_1,1,0x4156089854b45000,0xffffffffffffffff);
-  if (iVar2 != 0) {
-    Live_ThrowError(1,0xffffffff8218c64c);
+  uVar3 = XShowMarketplaceUI(param_1,1,0x4156089854b45000,0xffffffff);
+  if (uVar3 != 0) {
+    Live_ThrowError(ERR_DROP,"Failed to show the Marketplace UI!");
   }
   return;
 }
@@ -3308,33 +3640,36 @@ void Live_LaunchEliteStore(undefined8 param_1)
 
 // 82646F40  Live_IsEliteAppPresent  (xenon/xenon_live.cpp:3972)
 
-undefined8 Live_IsEliteAppPresent(void)
+bool Live_IsEliteAppPresent(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  undefined4 local_160 [4];
+  ulong uVar1;
+  void *local_160 [4];
   undefined1 auStack_150 [308];
   int local_1c;
   
-  uVar1 = XContentCreateCrossTitleEnumerator(0xff,0,0x7000,0,1,0,local_160);
-  if ((uVar1 & 0xffffffff) == 0) {
-    while (iVar2 = XEnumerateCrossTitle(local_160[0],auStack_150,0x138,0,0), iVar2 == 0) {
+  uVar1 = XContentCreateCrossTitleEnumerator(0xff,0,0x7000,0,1,(ulong *)0x0,local_160);
+  if (uVar1 == 0) {
+    while (uVar1 = XEnumerateCrossTitle
+                             (local_160[0],auStack_150,0x138,(ulong *)0x0,(_XOVERLAPPED *)0x0),
+          uVar1 == 0) {
       if (local_1c == 0x41560898) {
         XCloseHandle(local_160[0]);
-        return 1;
+        return true;
       }
     }
     XCloseHandle(local_160[0]);
   }
   else {
-    Com_Printf(0x10,0xffffffff8218c680,uVar1);
+    Com_Printf(0x10,"Microsoft error code 0x%x from XContentCreateCrossTitleEnumerator()\n");
   }
-  return 0;
+  return false;
 }
 
 
 // 82647008  Live_SendIntroducerMessage  (xenon/xenon_live.cpp:4019)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Live_SendIntroducerMessage(void)
 
@@ -3345,161 +3680,177 @@ void Live_SendIntroducerMessage(void)
 
 // 82647010  Live_AreWeAcceptingInvite  (xenon/xenon_live.cpp:4026)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 bool Live_AreWeAcceptingInvite(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = PartyAtomic_IsJoiningOnPresence(0xffffffff82b59110);
-  return lVar1 != 0;
+  iVar1 = PartyAtomic_IsJoiningOnPresence(&g_partyJoinInfo);
+  return (bool)('\x01' - (iVar1 == 0));
 }
 
 
 // 82647040  Live_ShowMarketplaceUI  (xenon/xenon_live.cpp:4038)
 
-undefined8 Live_ShowMarketplaceUI(undefined8 param_1)
+bool Live_ShowMarketplaceUI(int param_1)
 
 {
   int iVar1;
+  ulong uVar2;
   
-  iVar1 = CL_GetLocalClientSignInState();
+  iVar1 = CL_GetLocalClientSignInState(param_1);
   if (iVar1 == 2) {
-    iVar1 = XShowMarketplaceUI(param_1,0,0,0xffffffffffffffff);
-    if (-1 < iVar1) {
-      return 1;
+    uVar2 = XShowMarketplaceUI(param_1,0,0,0xffffffff);
+    if (-1 < (int)uVar2) {
+      return true;
     }
-    Live_ThrowError(1,0xffffffff8218c64c);
+    Live_ThrowError(ERR_DROP,"Failed to show the Marketplace UI!");
   }
   else {
     XShowSigninUI(1,0x1000002);
   }
-  return 0;
+  return false;
 }
 
 
 // 826470D0  Live_CanHostServer  (xenon/xenon_live.cpp:4062)
 
-ulonglong Live_CanHostServer(undefined8 param_1)
+bool Live_CanHostServer(int param_1)
 
 {
-  ulonglong uVar1;
+  char cVar2;
+  int iVar1;
   
-  if (DAT_8424a64c == 0) {
-    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
+                    ,0x1d3,0,"%s");
   }
-  if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
-    if ((DAT_8299519c == 3) || (DAT_842537fa == '\0')) {
-      uVar1 = 0;
+  if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
+    if ((g_natType == XONLINE_NAT_STRICT) || (g_shouldWeHost == false)) {
+      cVar2 = '\0';
     }
     else {
-      uVar1 = Live_GetNecessaryBandwidth(param_1);
-      uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) + (longlong)((int)DAT_84253a7c >> 0x1f) +
-              (ulonglong)(uVar1 <= DAT_84253a7c) & 0xff;
+      iVar1 = Live_GetNecessaryBandwidth(param_1);
+      cVar2 = ((char)(s_uploadBitsPerSec >> 0x1f) - (char)(iVar1 >> 0x1f)) +
+              ((ulonglong)(longlong)iVar1 <= (ulonglong)(uint)s_uploadBitsPerSec);
     }
   }
   else {
-    uVar1 = 1;
+    cVar2 = '\x01';
   }
-  return uVar1;
+  return (bool)cVar2;
 }
 
 
 // 82647198  Live_GetUploadSpeed  (xenon/xenon_live.cpp:4076)
 
-undefined4 Live_GetUploadSpeed(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetUploadSpeed(void)
 
 {
-  return DAT_84253a7c;
+  return s_uploadBitsPerSec;
 }
 
 
 // 826471A8  Live_GetDownloadSpeed  (xenon/xenon_live.cpp:4082)
 
-undefined4 Live_GetDownloadSpeed(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_GetDownloadSpeed(void)
 
 {
-  return DAT_8425391c;
+  return s_downloadBitsPerSec;
 }
 
 
 // 826471B8  Live_GetBandwidthTestComplete  (xenon/xenon_live.cpp:4088)
 
-void Live_GetBandwidthTestComplete(void)
+taskCompleteResults Live_GetBandwidthTestComplete(int param_1)
 
 {
+  byte bVar1;
   int iVar2;
-  ulonglong uVar1;
+  _XOVERLAPPED *p_Var3;
+  overlappedTask *poVar4;
+  taskCompleteResults tVar5;
   
-  iVar2 = __savegprlr_27();
-  uVar1 = TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar2 * 0xa0);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x1000,0,0xffffffff82000f98,0xffffffff8218c7b8);
+  iVar2 = __savegprlr_27(param_1);
+  p_Var3 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar2);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1000,0
+                    ,"%s");
   }
-  if ((&DAT_84254774)[iVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x1002,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (overlappedTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1002,0
+                    ,"%s");
   }
-  if ((&DAT_84254770)[iVar2 * 0x28] != 4) {
-    MyAssertHandler(0xffffffff8218b718,0x1003,0,0xffffffff82000f98,0xffffffff8218c780);
+  if (overlappedTasks.tasks[iVar2].type != 4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1003,0
+                    ,"%s");
   }
-  if (DAT_842536f4 == (int *)0x0) {
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar1);
-    TaskManager_ClearTask();
-    __restgprlr_27(2);
-    return;
+  if (s_serviceQos == (XNQOS *)0x0) {
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+    TaskManager_ClearTask(poVar4);
+    tVar5 = __restgprlr_27(2);
+    return tVar5;
   }
-  if (*DAT_842536f4 != 0) {
-    if (((*(byte *)(DAT_842536f4 + 2) & 4) != 0) || ((*(byte *)(DAT_842536f4 + 2) & 1) != 0)) {
-      if (*DAT_842536f4 != 1) {
-        MyAssertHandler(0xffffffff8218b718,0x1013,0,0xffffffff8218c744,0xffffffff8218c764);
-      }
-      DAT_84253a7c = DAT_842536f4[6];
-      DAT_8425391c = DAT_842536f4[7];
-      Com_Printf(0x10,0xffffffff8218c708,
-                 (longlong)((int)DAT_84253a7c >> 3) +
-                 (ulonglong)((int)DAT_84253a7c < 0 && (DAT_84253a7c & 7) != 0));
-      Com_Printf(0x10,0xffffffff8218c6c8,
-                 (longlong)((int)DAT_8425391c >> 3) +
-                 (ulonglong)((int)DAT_8425391c < 0 && (DAT_8425391c & 7) != 0));
-      XNetQosRelease(DAT_842536f4);
-      DAT_842536f4 = (int *)0x0;
-      TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar1);
-      TaskManager_ClearTask();
-      __restgprlr_27(1);
-      return;
+  if ((s_serviceQos->cxnqos != 0) &&
+     ((bVar1 = s_serviceQos->axnqosinfo[0].bFlags, (bVar1 & 4) != 0 || ((bVar1 & 1) != 0)))) {
+    if (s_serviceQos->cxnqos != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1013
+                      ,0,"%s\n\t(s_serviceQos->cxnqos) = %i");
     }
+    s_uploadBitsPerSec = s_serviceQos->axnqosinfo[0].dwUpBitsPerSec;
+    s_downloadBitsPerSec = s_serviceQos->axnqosinfo[0].dwDnBitsPerSec;
+    Com_Printf(0x10,"Our upload bandwidth is approximately %i bytes per second\n");
+    Com_Printf(0x10,"Our download bandwidth is approximately %i bytes per second\n");
+    XNetQosRelease(s_serviceQos);
+    s_serviceQos = (XNQOS *)0x0;
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+    TaskManager_ClearTask(poVar4);
+    tVar5 = __restgprlr_27(1);
+    return tVar5;
   }
-  __restgprlr_27(0);
-  return;
+  tVar5 = __restgprlr_27(0);
+  return tVar5;
 }
 
 
 // 82647378  Live_GetOurBandwidth  (xenon/xenon_live.cpp:4151)
 
-void Live_GetOurBandwidth(void)
+void Live_GetOurBandwidth(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
   
-  uVar1 = __savegprlr_29();
-  TaskManager_GetOpenTaskSlot(0xffffffff842546d8,uVar1,4);
-  uVar1 = TaskManager_TaskToXOverlapped();
-  iVar2 = XNetQosServiceLookup(0,0,0xffffffff842536f4);
-  if (iVar2 == 0x271d) {
-    if (DAT_842536f4 != 0) {
-      XNetQosRelease();
+  iVar1 = __savegprlr_29(param_1);
+  poVar2 = TaskManager_GetOpenTaskSlot(&overlappedTasks,iVar1,4);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  iVar1 = XNetQosServiceLookup(0,(void *)0x0,&s_serviceQos);
+  if (iVar1 == 0x271d) {
+    if (s_serviceQos != (XNQOS *)0x0) {
+      XNetQosRelease(s_serviceQos);
     }
-    DAT_842536f4 = 0;
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar1);
-    TaskManager_ClearTask();
+    s_serviceQos = (XNQOS *)0x0;
+    poVar2 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+    TaskManager_ClearTask(poVar2);
     __restgprlr_29();
     return;
   }
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff8218b718,0x1049,0,0xffffffff82174e08,0xffffffff8218c7e4);
+  if (iVar1 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1049,0
+                    ,"%s\n\t(res) = %i");
   }
-  if (DAT_842536f4 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x104a,0,0xffffffff82000f98,0xffffffff8218c7d4);
+  if (s_serviceQos == (XNQOS *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x104a,0
+                    ,"%s");
   }
   __restgprlr_29();
   return;
@@ -3508,76 +3859,82 @@ void Live_GetOurBandwidth(void)
 
 // 82647460  Live_ShouldWeHost  (xenon/xenon_live.cpp:4177)
 
-void Live_ShouldWeHost(char param_1)
+void Live_ShouldWeHost(bool param_1)
 
 {
-  if (DAT_842537fa == '\0') {
+  if (!g_shouldWeHost) {
     return;
   }
-  DAT_842537fa = param_1;
-  if (param_1 != '\0') {
+  g_shouldWeHost = param_1;
+  if (param_1) {
     return;
   }
-  Com_Printf(0xe,0xffffffff8218c7f0);
+  Com_Printf(0xe,"We should never host - setting g_shouldWeHost to false\n");
   return;
 }
 
 
 // 82647498  Live_EstimateQoSPercentage  (xenon/xenon_live.cpp:4193)
 
-void Live_EstimateQoSPercentage(undefined8 param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_EstimateQoSPercentage(XNQOS *param_1,qosData *param_2)
 
 {
   uint uVar1;
   uint *puVar2;
   int iVar3;
-  int iVar4;
-  short *psVar5;
-  uint uVar6;
-  double dVar7;
+  PartyData *pPVar4;
+  dvar_t *pdVar5;
+  short *psVar6;
+  uint uVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
   
-  puVar2 = (uint *)__savegprlr_22();
+  puVar2 = (uint *)__savegprlr_22(param_1);
   iVar3 = Sys_Milliseconds();
   uVar1 = *puVar2;
-  uVar6 = 0;
-  dVar11 = 0.0;
+  uVar7 = 0;
+  dVar12 = 0.0;
   if (uVar1 != 0) {
-    psVar5 = (short *)((int)puVar2 + 10);
-    dVar10 = 0.9800000190734863;
-    dVar9 = 1.0;
-    iVar4 = DAT_84584ee8;
+    psVar6 = (short *)((int)puVar2 + 10);
+    dVar11 = 0.9800000190734863;
+    dVar10 = 1.0;
+    pdVar5 = live_qosec_maxtime;
     do {
-      if ((*(byte *)(psVar5 + -1) & 1) == 0) {
-        if (*psVar5 != 0) {
-          if (*(int *)(iVar4 + 0xc) < 1) {
-            MyAssertHandler(0xffffffff8218b718,0x1075,0,0xffffffff82000f98,0xffffffff8218c828);
-            iVar4 = DAT_84584ee8;
+      if ((*(byte *)(psVar6 + -1) & 1) == 0) {
+        if (*psVar6 != 0) {
+          if ((pdVar5->current).integer < 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                            0x1075,0,"%s");
+            pdVar5 = live_qosec_maxtime;
           }
-          dVar8 = (double)((float)(longlong)(iVar3 - *(int *)(param_2 + 0xd0)) /
-                          (float)(longlong)*(int *)(iVar4 + 0xc));
-          dVar7 = dVar10;
-          if ((float)(dVar8 - dVar10) < 0.0) {
-            dVar7 = dVar8;
+          dVar9 = (double)((float)(longlong)(iVar3 - param_2->startTime) /
+                          (float)(longlong)(pdVar5->current).integer);
+          dVar8 = dVar11;
+          if ((float)(dVar9 - dVar11) < 0.0) {
+            dVar8 = dVar9;
           }
-          dVar11 = (double)(float)(dVar7 + dVar11);
+          dVar12 = (double)(float)(dVar8 + dVar12);
         }
       }
       else {
-        dVar11 = (double)(float)(dVar11 + dVar9);
+        dVar12 = (double)(float)(dVar12 + dVar10);
       }
-      uVar6 = uVar6 + 1;
-      psVar5 = psVar5 + 0xc;
-    } while (uVar6 < *puVar2);
+      uVar7 = uVar7 + 1;
+      psVar6 = psVar6 + 0xc;
+    } while (uVar7 < *puVar2);
   }
   if (uVar1 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x107a,0,0xffffffff82000f98,0xffffffff8208eb58);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x107a,0
+                    ,"%s");
   }
-  Lobby_GetPartyData();
-  Party_SetQoSProgress((double)((float)(dVar11 * 100.0) / (float)(longlong)(int)uVar1));
+  pPVar4 = Lobby_GetPartyData();
+  Party_SetQoSProgress(pPVar4,(float)(dVar12 * 100.0) / (float)(longlong)(int)uVar1);
   __restgprlr_22();
   return;
 }
@@ -3585,40 +3942,45 @@ void Live_EstimateQoSPercentage(undefined8 param_1,int param_2)
 
 // 82647618  Live_QoSProbeEarlyComplete  (xenon/xenon_live.cpp:4228)
 
-void Live_QoSProbeEarlyComplete(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Live_QoSProbeEarlyComplete(XNQOS *param_1,qosData *param_2)
 
 {
   byte bVar1;
   int iVar2;
-  int *piVar4;
-  char cVar7;
+  int *piVar3;
+  bool bVar7;
+  PartyData *pPVar4;
   int iVar5;
-  longlong lVar3;
   int iVar6;
   ulonglong uVar8;
   uint uVar9;
   
-  piVar4 = (int *)__savegprlr_28();
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x1089,0,0xffffffff82000f98,0xffffffff8218c850);
+  uVar8 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_28(param_1);
+  if (piVar3 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1089,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x108a,0,0xffffffff82000f98,0xffffffff8201f49c);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x108a,0
+                    ,"%s");
   }
-  cVar7 = Lobby_AreWeHost();
-  if (cVar7 == '\0') {
-    Lobby_GetPartyData();
-    iVar5 = PartyClient_HasQoSRequestActive();
-    __restgprlr_28(iVar5 == 0);
-    return;
+  bVar7 = Lobby_AreWeHost();
+  if (!bVar7) {
+    pPVar4 = Lobby_GetPartyData();
+    iVar5 = PartyClient_HasQoSRequestActive(pPVar4);
+    iVar5 = __restgprlr_28(iVar5 == 0);
+    return iVar5;
   }
-  iVar2 = (int)param_2;
+  iVar2 = (int)uVar8;
   bVar1 = *(byte *)(iVar2 + 0xe0);
   uVar9 = (uint)bVar1;
-  iVar5 = *piVar4;
+  iVar5 = *piVar3;
   if (uVar9 != 0) {
-    lVar3 = Sys_Milliseconds();
-    iVar6 = (int)lVar3;
+    iVar6 = Sys_Milliseconds();
     if (*(uint *)(iVar2 + 0xdc) != uVar9) {
       if (*(int *)(iVar2 + 0xd4) == 0) {
         *(int *)(iVar2 + 0xd4) = iVar6;
@@ -3626,275 +3988,293 @@ void Live_QoSProbeEarlyComplete(undefined8 param_1,ulonglong param_2)
       *(int *)(iVar2 + 0xd8) = iVar6;
       *(uint *)(iVar2 + 0xdc) = (uint)bVar1;
     }
-    if (((*(uint *)(DAT_84584f00 + 0xc) <= uVar9) &&
-        ((uint)(*(int *)(DAT_84584ee0 + 0xc) * iVar5) <= uVar9 * 100)) &&
-       (*(int *)(DAT_84584eec + 0xc) <= iVar6 - *(int *)(iVar2 + 0xd4))) {
-      uVar8 = lVar3 - (ulonglong)*(uint *)(iVar2 + 0xd8);
-      __restgprlr_28((ulonglong)(*(uint *)(DAT_84584f04 + 0xc) >> 0x1f) +
-                     (longlong)((int)uVar8 >> 0x1f) +
-                     (ulonglong)(*(uint *)(DAT_84584f04 + 0xc) <= uVar8));
-      return;
+    if ((((live_qosec_minprobes->current).unsignedInt <= uVar9) &&
+        ((uint)((live_qosec_minpercent->current).integer * iVar5) <= uVar9 * 100)) &&
+       ((live_qosec_firstupdatems->current).integer <= iVar6 - *(int *)(iVar2 + 0xd4))) {
+      uVar8 = (longlong)iVar6 - (ulonglong)*(uint *)(iVar2 + 0xd8);
+      iVar5 = __restgprlr_28((ulonglong)((live_qosec_lastupdatems->current).unsignedInt >> 0x1f) +
+                             (longlong)((int)uVar8 >> 0x1f) +
+                             (ulonglong)((live_qosec_lastupdatems->current).unsignedInt <= uVar8));
+      return iVar5;
     }
   }
-  __restgprlr_28(0);
-  return;
+  iVar5 = __restgprlr_28(0);
+  return iVar5;
 }
 
 
 // 82647768  Live_QoSProbeComplete  (xenon/xenon_live.cpp:4278)
 
-void Live_QoSProbeComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Live_QoSProbeComplete(int param_1)
 
 {
-  undefined1 uVar1;
-  ushort uVar2;
-  uint *puVar3;
-  ushort uVar4;
+  byte bVar1;
+  byte bVar2;
+  ushort uVar3;
+  uint uVar4;
+  XNKID *pXVar5;
+  XNQOS *pXVar6;
+  ulonglong uVar7;
   int iVar8;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int *piVar9;
-  int iVar10;
-  undefined8 uVar7;
-  char cVar11;
-  undefined8 uVar12;
-  int *piVar13;
-  uint uVar14;
-  int iVar15;
-  ushort *puVar16;
-  uint uVar17;
+  _XOVERLAPPED *p_Var9;
+  overlappedTask *poVar10;
+  qosData *pqVar11;
+  PartyData *pPVar12;
+  int iVar13;
+  taskCompleteResults tVar14;
+  char *pcVar15;
+  bool bVar16;
+  XNKID **ppXVar17;
   uint uVar18;
+  ushort *puVar19;
   uint local_cc;
   uint local_c0;
   
-  iVar8 = __savegprlr();
-  uVar5 = Sys_Milliseconds();
-  iVar15 = iVar8 * 0xa0;
-  uVar6 = TaskManager_TaskToXOverlapped(&DAT_842546e0 + iVar15);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x10ce,0,0xffffffff82000f98,0xffffffff8218cbc4);
+  uVar7 = (ulonglong)param_1;
+  __savegprlr();
+  iVar8 = Sys_Milliseconds();
+  iVar13 = (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x7ffffff) << 5);
+  p_Var9 = TaskManager_TaskToXOverlapped
+                     ((overlappedTask *)
+                      (overlappedTasks.tasks[0].u.storageRequest.filename + iVar13 + -0x28));
+  if (p_Var9 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10ce,0
+                    ,"%s");
   }
-  if ((&DAT_84254774)[iVar15] == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x10d0,0,0xffffffff82000f98,0xffffffff8217aa38);
+  if (*(char *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar13 + 4) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10d0,0
+                    ,"%s");
   }
-  if ((&DAT_84254770)[iVar8 * 0x28] != 1) {
-    MyAssertHandler(0xffffffff8218b718,0x10d1,0,0xffffffff82000f98,0xffffffff8218cb90);
+  if (*(int *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar13) != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10d1,0
+                    ,"%s");
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar6);
-  piVar9 = (int *)TaskManager_GetTaskData();
-  if (piVar9 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x10d5,0,0xffffffff82000f98,0xffffffff8208e364);
+  poVar10 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var9);
+  pqVar11 = TaskManager_GetTaskData(poVar10);
+  if (pqVar11 == (qosData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10d5,0
+                    ,"%s");
   }
-  if ((*piVar9 < 0) || (0 < *piVar9)) {
-    MyAssertHandler(0xffffffff8218b718,0x10d6,0,0xffffffff8218cb48,0xffffffff8218cb64);
+  if ((pqVar11->qosIndex < 0) || (0 < pqVar11->qosIndex)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10d6,0
+                    ,"%s\n\t(data->qosIndex) = %i");
   }
-  puVar3 = *(uint **)(&DAT_84253918 + *piVar9 * 4);
-  if (puVar3 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff8218b718,0x10d9,0,0xffffffff82000f98,0xffffffff8218cb3c);
+  pXVar6 = s_qos[pqVar11->qosIndex];
+  if (pXVar6 == (XNQOS *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10d9,0
+                    ,"%s");
   }
-  if (*puVar3 == 0) {
-    MyAssertHandler(0xffffffff8218b718,0x10da,0,0xffffffff82000f98,0xffffffff8218cb2c);
+  if (pXVar6->cxnqos == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x10da,0
+                    ,"%s");
   }
-  uVar14 = 0;
-  uVar1 = (&DAT_84254775)[iVar15];
-  iVar15 = 0;
-  *(undefined1 *)(piVar9 + 0x38) = 0;
-  iVar8 = 0;
+  uVar18 = 0;
+  bVar2 = *(byte *)((int)(&overlappedTasks.tasks[0].u + 1) + iVar13 + 5);
+  pqVar11->numValidResponses = '\0';
   local_cc = 0x7fffffff;
-  Lobby_GetPartyData();
-  iVar10 = Party_IsRunning();
-  if (iVar10 != 0) {
-    Live_EstimateQoSPercentage(puVar3,piVar9);
+  pPVar12 = Lobby_GetPartyData();
+  iVar13 = Party_IsRunning(pPVar12);
+  if (iVar13 != 0) {
+    Live_EstimateQoSPercentage(pXVar6,pqVar11);
     local_c0 = 0;
-    if (*puVar3 != 0) {
-      piVar13 = piVar9 + 2;
-      puVar16 = (ushort *)((int)puVar3 + 0x16);
-      iVar8 = 0;
-      iVar15 = 0;
+    if (pXVar6->cxnqos != 0) {
+      ppXVar17 = pqVar11->qosSessionIds;
+      puVar19 = &pXVar6->axnqosinfo[0].wRttMedInMsecs;
       do {
-        uVar4 = puVar16[-7];
-        if ((uVar4 & 0x100) == 0) {
-          if ((uVar4 & 0x400) != 0) {
-            uVar14 = uVar14 + 1 & 0xff;
-            Com_PrintWarning(0x10,0xffffffff8218cad8);
+        bVar1 = ((XNQOSINFO *)(puVar19 + -7))->bFlags;
+        if ((bVar1 & 1) == 0) {
+          if ((bVar1 & 4) != 0) {
+            uVar18 = uVar18 + 1 & 0xff;
+            Com_PrintWarning(0x10,"The remote host has disabled QoS listening!\n");
           }
         }
         else {
-          if (*piVar13 == 0) {
+          if (*ppXVar17 == (XNKID *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
-                            0x10f2,0,&DAT_82000f98,"data->qosSessionIds[result] != NULL");
+                            0x10f2,0,"%s");
           }
-          uVar14 = uVar14 + 1 & 0xff;
-          if (*puVar16 == 0xffff) {
-            if (((uVar4 & 0x200) != 0) && ((uVar4 & 0x400) == 0)) {
-              uVar7 = 0xffffffff8218c9a8;
-              uVar12 = 0x1104;
+          uVar18 = uVar18 + 1 & 0xff;
+          if (*puVar19 == 0xffff) {
+            if (((bVar1 & 2) != 0) && ((bVar1 & 4) == 0)) {
+              iVar13 = 0x1104;
               goto LAB_82647a4c;
             }
           }
           else {
-            *(char *)(piVar9 + 0x38) = *(char *)(piVar9 + 0x38) + '\x01';
-            if ((uVar4 & 0x200) == 0) {
-              uVar12 = 0x10fe;
-              uVar7 = 0xffffffff8218c978;
+            pqVar11->numValidResponses = pqVar11->numValidResponses + '\x01';
+            if ((bVar1 & 2) == 0) {
+              iVar13 = 0x10fe;
 LAB_82647a4c:
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp"
-                              ,uVar12,0,&DAT_82000f98,uVar7);
+                              ,iVar13,0,"%s");
             }
           }
-          if (1000 < (int)uVar5 - DAT_84255ae4) {
-            Com_DPrintf(0x10,0xffffffff8218ca40,(ulonglong)*puVar3 - (ulonglong)puVar3[1],
-                        (ulonglong)*puVar3,(uVar5 & 0xffffffff) - (ulonglong)(uint)piVar9[0x34],
-                        *(undefined1 *)(piVar9 + 0x38));
-            DAT_84255ae4 = (int)uVar5;
+          if (1000 < iVar8 - lastPrint) {
+            Com_DPrintf(0x10,
+                        "QoS probe has completed %i/%i results in %ims! (numValidResponses=[%d])\n")
+            ;
+            lastPrint = iVar8;
           }
-          uVar4 = *puVar16;
-          uVar18 = (uint)uVar4;
-          iVar8 = iVar8 + 1;
-          uVar2 = puVar16[-1];
-          iVar15 = uVar18 + iVar15;
-          uVar17 = -(uint)(uVar18 != 0xffff) & *(uint *)(puVar16 + 1);
-          if (uVar4 < local_cc) {
-            local_cc = (uint)uVar4;
+          uVar3 = *puVar19;
+          uVar4 = *(uint *)(puVar19 + 1);
+          if (uVar3 < local_cc) {
+            local_cc = (uint)uVar3;
           }
-          iVar10 = *piVar13;
-          uVar7 = Lobby_GetPartyData();
-          uVar7 = Party_FindPartyByXNKId(uVar7,iVar10);
-          if (-1 < (int)uVar7) {
-            uVar12 = Lobby_GetPartyData();
-            iVar10 = Party_SetPartyQoS(uVar12,uVar7,uVar18,0,uVar17);
-            if (iVar10 != 0) {
-              Com_DPrintf(0x10,0xffffffff8218ca90,uVar7,uVar18,uVar2,uVar17);
+          pXVar5 = *ppXVar17;
+          pPVar12 = Lobby_GetPartyData();
+          iVar13 = Party_FindPartyByXNKId(pPVar12,pXVar5);
+          if (-1 < iVar13) {
+            pPVar12 = Lobby_GetPartyData();
+            iVar13 = Party_SetPartyQoS(pPVar12,iVar13,(uint)uVar3,0,-(uint)(uVar3 != 0xffff) & uVar4
+                                      );
+            if (iVar13 != 0) {
+              Com_DPrintf(0x10,
+                          "Party %i has avg ping %i, min ping %i, upload speed is %u bits/sec.\n");
             }
           }
         }
-        piVar13 = piVar13 + 1;
-        puVar16 = puVar16 + 0xc;
+        ppXVar17 = ppXVar17 + 1;
+        puVar19 = puVar19 + 0xc;
         local_c0 = local_c0 + 1;
-      } while (local_c0 < *puVar3);
-      uVar5 = uVar5 & 0xffffffff;
-      uVar6 = uVar6 & 0xffffffff;
+      } while (local_c0 < pXVar6->cxnqos);
     }
   }
-  if ((*puVar3 - puVar3[1] != uVar14) && (1000 < (int)uVar5 - DAT_84255ae0)) {
-    Com_DPrintf(0x10,0xffffffff8218c910,*puVar3,puVar3[1],uVar14);
-    DAT_84255ae0 = (int)uVar5;
+  if ((pXVar6->cxnqos - pXVar6->cxnqosPending != uVar18) && (1000 < iVar8 - lastCountErrorPrint)) {
+    Com_DPrintf(0x10,
+                "warning: qos->cxnqos (total count) [%d] - qos->cxnqosPending (pending) [%d] != numberProcessed [%d]\n"
+               );
+    lastCountErrorPrint = iVar8;
   }
-  iVar10 = Live_QoSProbeEarlyComplete(puVar3,piVar9);
-  if ((iVar10 == 0) && (uVar14 < *puVar3)) {
+  tVar14 = Live_QoSProbeEarlyComplete(pXVar6,pqVar11);
+  if ((tVar14 == TASK_NOTCOMPLETE) && (uVar18 < pXVar6->cxnqos)) {
     __restgprlr();
-    return;
+    return tVar14;
   }
-  Com_Printf(0x19,0xffffffff8218c8ec);
-  uVar7 = Sys_Milliseconds();
-  uVar7 = va(0xffffffff8218c8c0,uVar7,
-             (double)(float)((double)(longlong)iVar15 / (double)(longlong)iVar8),local_cc);
-  LSP_LogStringToDW(uVar1,uVar7,2);
-  XNetQosRelease(puVar3);
-  *(undefined4 *)(&DAT_84253918 + *piVar9 * 4) = 0;
-  TaskManager_TaskFromXOverlapped(&DAT_842546d8,uVar6);
-  TaskManager_ClearTask();
-  Lobby_GetPartyData();
-  PartyHost_CleanUpNonResponsiveQoS();
-  PartyHost_CleanUpNonResponsiveQoS(0xffffffff82b55118);
-  Com_Printf(0x10,0xffffffff8218c89c,piVar9[1],uVar5 - (uint)piVar9[0x34]);
-  cVar11 = Session_SearchInProgress();
-  if (cVar11 != '\0') {
+  Com_Printf(0x19,"Live_QoSProbeComplete - Complete\n");
+  Sys_Milliseconds();
+  pcVar15 = va("qos_data time: %d avg_ping: %f min_ping: %d");
+  LSP_LogStringToDW((uint)bVar2,pcVar15,DW_STRING_EVENT_LSP_LOG_MATCHMAKING_DATA);
+  XNetQosRelease(pXVar6);
+  s_qos[pqVar11->qosIndex] = (XNQOS *)0x0;
+  poVar10 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var9);
+  TaskManager_ClearTask(poVar10);
+  pPVar12 = Lobby_GetPartyData();
+  PartyHost_CleanUpNonResponsiveQoS(pPVar12);
+  PartyHost_CleanUpNonResponsiveQoS(&g_partyData);
+  Com_Printf(0x10,"QoS against %i targets took %ims\n");
+  bVar16 = Session_SearchInProgress();
+  if (bVar16) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x115c,0
-                    ,&DAT_82000f98,0xffffffff82047aec);
+                    ,"%s");
   }
-  cVar11 = TaskManager_TaskIsInProgress(&DAT_842546d8,1);
-  if (cVar11 != '\0') {
+  bVar16 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
+  if (bVar16) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x115d,0
-                    ,&DAT_82000f98,0xffffffff8218c858);
+                    ,"%s");
   }
-  __restgprlr(1);
-  return;
+  tVar14 = TASK_COMPLETE;
+  __restgprlr();
+  return tVar14;
 }
 
 
 // 8264AF98  Live_StartQoSProbe  (xenon/xenon_live.cpp:4456)
 
-void Live_StartQoSProbe(undefined8 param_1,longlong param_2,int param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_StartQoSProbe(int param_1,int param_2,_XSESSION_INFO **param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  XNQOS *pXVar1;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  void *pvVar5;
-  undefined4 uVar6;
-  undefined8 uVar3;
-  int iVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  int *_Dst;
-  longlong lVar10;
-  int local_2f0 [52];
-  int local_220 [52];
-  int local_150 [84];
+  int iVar5;
+  overlappedTask *poVar6;
+  _XOVERLAPPED *p_Var7;
+  uint uVar8;
+  XNKID **ppXVar9;
+  qosData *pqVar10;
+  longlong lVar11;
+  ulong in_stack_fffffca8;
+  ulong in_stack_fffffcac;
+  void *in_stack_fffffcb0;
+  XNQOS **in_stack_fffffcb4;
+  XNADDR *local_2f0 [52];
+  XNKEY *local_220 [52];
+  XNKID *local_150 [84];
   
-  uVar2 = __savegprlr_17();
-  iVar7 = (int)param_2;
-  if ((iVar7 < 1) || (0x32 < iVar7)) {
-    MyAssertHandler(0xffffffff8218b718,0x1177,0,0xffffffff8218df08,0xffffffff8218df20,param_2);
+  lVar11 = (longlong)param_2;
+  iVar3 = __savegprlr_17(param_1);
+  uVar8 = (uint)lVar11;
+  if (((int)uVar8 < 1) || (0x32 < (int)uVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1177,0
+                    ,"%s\n\t(numXenons) = %i");
   }
   R_BeginRemoteScreenUpdate();
-  iVar4 = TaskManager_CountTasksInProgress(0xffffffff842546d8,1);
+  iVar4 = TaskManager_CountTasksInProgress(&overlappedTasks,1);
   if (0 < iVar4) {
-    Live_CleanUpQoSProbes(uVar2);
+    Live_CleanUpQoSProbes(iVar3);
   }
-  iVar4 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
+  iVar4 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
   if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff8218b718,0x1183,0,0xffffffff82000f98,0xffffffff82040f3c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1183,0
+                    ,"%s");
   }
-  iVar4 = TaskManager_CountTasksInProgress(0xffffffff842546d8,1);
+  iVar4 = TaskManager_CountTasksInProgress(&overlappedTasks,1);
   if (0 < iVar4) {
-    MyAssertHandler(0xffffffff8218b718,0x1188,0,0xffffffff8218ded4,0xffffffff8218def0,iVar4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1188,0
+                    ,"%s\n\t(countInProgress) = %i");
   }
-  iVar8 = iVar4 * 0xe4;
-  _Dst = (int *)(&DAT_84253bc8 + iVar8);
-  pvVar5 = memset(_Dst,0,0xe4);
-  *_Dst = iVar4;
-  *(int *)(&DAT_84253bcc + iVar8) = iVar7;
-  uVar6 = Sys_Milliseconds(pvVar5);
-  iVar1 = *(int *)(&DAT_84253918 + iVar4 * 4);
-  *(undefined4 *)(&DAT_84253c98 + iVar8) = uVar6;
-  if (iVar1 != 0) {
-    MyAssertHandler(0xffffffff8218b718,0x1192,0,0xffffffff82000f98,0xffffffff8218dec4);
+  pqVar10 = s_qosData + iVar4;
+  memset();
+  pqVar10->qosIndex = iVar4;
+  s_qosData[iVar4].numXnAddrs = uVar8;
+  iVar5 = Sys_Milliseconds();
+  pXVar1 = s_qos[iVar4];
+  s_qosData[iVar4].startTime = iVar5;
+  if (pXVar1 != (XNQOS *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1192,0
+                    ,"%s");
   }
-  Com_DPrintf(0x10,0xffffffff8218de94,param_2,*(undefined4 *)(&DAT_84253c98 + iVar8));
-  if (0 < iVar7) {
-    puVar9 = (undefined4 *)(&DAT_84253bcc + iVar8);
-    iVar7 = 0;
-    lVar10 = param_2;
+  Com_DPrintf(0x10,"Starting QoS probes on %i hosts at time %i!\n");
+  if (0 < (int)uVar8) {
+    ppXVar9 = (XNKID **)&s_qosData[iVar4].numXnAddrs;
+    iVar5 = 0;
     do {
-      iVar1 = *(int *)((param_3 - (int)local_2f0) + (int)local_2f0 + iVar7);
-      *(int *)((int)local_2f0 + iVar7) = iVar1 + 8;
-      *(int *)((int)local_150 + iVar7) = iVar1;
-      *(int *)((int)local_220 + iVar7) = iVar1 + 0x2c;
-      Com_DPrintf(0x10,0xffffffff8218de6c,*(undefined8 *)((int)local_150 + iVar7));
-      lVar10 = lVar10 + -1;
-      puVar9 = puVar9 + 1;
-      *puVar9 = *(undefined4 *)((int)local_150 + iVar7);
-      iVar7 = iVar7 + 4;
-    } while (lVar10 != 0);
+      iVar2 = *(int *)(((int)param_3 - (int)local_2f0) + (int)local_2f0 + iVar5);
+      *(int *)((int)local_2f0 + iVar5) = iVar2 + 8;
+      *(int *)((int)local_150 + iVar5) = iVar2;
+      *(int *)((int)local_220 + iVar5) = iVar2 + 0x2c;
+      Com_DPrintf(0x10,"Adding sessionId (%llx) to QoS task\n");
+      lVar11 = lVar11 + -1;
+      ppXVar9 = ppXVar9 + 1;
+      *ppXVar9 = *(XNKID **)((int)local_150 + iVar5);
+      iVar5 = iVar5 + 4;
+    } while (lVar11 != 0);
   }
-  TaskManager_GetOpenTaskSlot(0xffffffff842546d8,uVar2,1);
-  uVar2 = TaskManager_TaskToXOverlapped();
-  uVar3 = TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar2);
-  TaskManager_SetTaskData(uVar3,_Dst);
+  poVar6 = TaskManager_GetOpenTaskSlot(&overlappedTasks,iVar3,1);
+  p_Var7 = TaskManager_TaskToXOverlapped(poVar6);
+  poVar6 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var7);
+  TaskManager_SetTaskData(poVar6,pqVar10);
   R_EndRemoteScreenUpdate();
-  iVar7 = XNetQosLookup(param_2,local_2f0,local_150,local_220,0,0,0,1);
-  if (iVar7 == 0x271d) {
-    XNetQosRelease(*(int *)(&DAT_84253918 + iVar4 * 4));
-    *(undefined4 *)(&DAT_84253918 + *_Dst * 4) = 0;
-    TaskManager_TaskFromXOverlapped(0xffffffff842546d8,uVar2);
-    TaskManager_ClearTask();
+  iVar3 = XNetQosLookup(uVar8,local_2f0,local_150,local_220,0,(in_addr *)0x0,(ulong *)0x0,1,
+                        in_stack_fffffca8,in_stack_fffffcac,in_stack_fffffcb0,in_stack_fffffcb4);
+  if (iVar3 == 0x271d) {
+    XNetQosRelease(s_qos[iVar4]);
+    s_qos[pqVar10->qosIndex] = (XNQOS *)0x0;
+    poVar6 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var7);
+    TaskManager_ClearTask(poVar6);
     __restgprlr_17();
     return;
   }
-  if (iVar7 != 0) {
-    MyAssertHandler(0xffffffff8218b718,0x11b5,0,0xffffffff82000f98,0xffffffff8218de5c);
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x11b5,0
+                    ,"%s");
   }
   __restgprlr_17();
   return;
@@ -3903,29 +4283,28 @@ void Live_StartQoSProbe(undefined8 param_1,longlong param_2,int param_3)
 
 // 82647D28  Live_CleanUpQoSProbes  (xenon/xenon_live.cpp:4538)
 
-void Live_CleanUpQoSProbes(void)
+void Live_CleanUpQoSProbes(int param_1)
 
 {
-  undefined8 uVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined *puVar5;
+  int iVar1;
+  int *piVar2;
+  int iVar3;
+  overlappedTask *poVar4;
   
-  uVar1 = __savegprlr_24();
-  puVar5 = &DAT_842546e0;
+  iVar1 = __savegprlr_24(param_1);
+  poVar4 = overlappedTasks.tasks;
   do {
-    if ((puVar5[0x94] != '\0') && (*(int *)(puVar5 + 0x90) == 1)) {
-      piVar3 = (int *)TaskManager_GetTaskData(puVar5);
-      uVar2 = XNetQosRelease(*(undefined4 *)(&DAT_84253918 + *piVar3 * 4));
-      if (((int)uVar2 != 0) && (iVar4 = CL_GetLocalClientSignInState(uVar1), iVar4 == 2)) {
-        Com_Printf(0x10,0xffffffff8218cbd4,uVar2);
+    if ((poVar4->active != false) && (poVar4->type == 1)) {
+      piVar2 = TaskManager_GetTaskData(poVar4);
+      iVar3 = XNetQosRelease(s_qos[*piVar2]);
+      if ((iVar3 != 0) && (iVar3 = CL_GetLocalClientSignInState(iVar1), iVar3 == 2)) {
+        Com_Printf(0x10,"Microsoft error code 0x%x from XNetQosRelease()\n");
       }
-      *(undefined4 *)(&DAT_84253918 + *piVar3 * 4) = 0;
-      TaskManager_ClearTask(puVar5);
+      s_qos[*piVar2] = (XNQOS *)0x0;
+      TaskManager_ClearTask(poVar4);
     }
-    puVar5 = puVar5 + 0xa0;
-  } while ((int)puVar5 < -0x7bdaa520);
+    poVar4 = poVar4 + 1;
+  } while ((int)poVar4 < -0x7bdaa520);
   __restgprlr_24();
   return;
 }
@@ -3933,92 +4312,104 @@ void Live_CleanUpQoSProbes(void)
 
 // 82647DE8  Live_QoSInProgress  (xenon/xenon_live.cpp:4571)
 
-void Live_QoSInProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_QoSInProgress(void)
 
 {
-  TaskManager_TaskIsInProgress(0xffffffff842546d8,1);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
+  return bVar1;
 }
 
 
 // 82647DF8  Live_BandwidthTestInProgress  (xenon/xenon_live.cpp:4577)
 
-void Live_BandwidthTestInProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_BandwidthTestInProgress(void)
 
 {
-  TaskManager_TaskIsInProgress(0xffffffff842546d8,4);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgress(&overlappedTasks,4);
+  return bVar1;
 }
 
 
 // 8264B248  Live_CheckOngoingTasks  (xenon/xenon_live.cpp:4586)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_CheckOngoingTasks(void)
 
 {
-  uint uVar2;
-  int iVar3;
-  undefined8 uVar1;
-  int *piVar4;
-  longlong lVar5;
+  int iVar1;
+  taskCompleteResults tVar2;
+  uint uVar3;
+  char *pcVar4;
+  int *piVar5;
+  int iVar6;
   
   __savegprlr_20();
-  Sys_EnterCriticalSection(0x16);
-  lVar5 = 0;
-  piVar4 = &DAT_84254770;
+  Sys_EnterCriticalSection(CRITSECT_LIVE);
+  iVar6 = 0;
+  piVar5 = &overlappedTasks.tasks[0].type;
   do {
-    if (*(char *)(piVar4 + 1) != '\0') {
-      iVar3 = *piVar4;
-      if (iVar3 - 1U < 7) {
-        if (iVar3 == 2) {
-          Live_SetPlayerTeamRankComplete(lVar5);
+    if (*(bool *)(piVar5 + 1) != false) {
+      iVar1 = *piVar5;
+      if (iVar1 - 1U < 7) {
+        if (iVar1 == 2) {
+          Live_SetPlayerTeamRankComplete(iVar6);
         }
-        else if (iVar3 == 3) {
-          uVar2 = Live_GiveAchievementComplete(lVar5);
-          if (1 < uVar2) {
-            Com_PrintError(0x10,0xffffffff8218dfb0);
+        else if (iVar1 == 3) {
+          tVar2 = Live_GiveAchievementComplete(iVar6);
+          if (TASK_COMPLETE < tVar2) {
+            Com_PrintError(0x10,"Error giving achievement\n");
           }
         }
-        else if (iVar3 == 4) {
-          iVar3 = Live_GetBandwidthTestComplete(lVar5);
-          if ((iVar3 != 0) && (iVar3 != 1)) {
-            Com_PrintError(0x10,0xffffffff8218df68);
+        else if (iVar1 == 4) {
+          tVar2 = Live_GetBandwidthTestComplete(iVar6);
+          if ((tVar2 != TASK_NOTCOMPLETE) && (tVar2 != TASK_COMPLETE)) {
+            Com_PrintError(0x10,"Error getting player bandwidth test results\n");
           }
         }
-        else if (iVar3 == 5) {
-          uVar2 = Live_ReadStatsComplete(lVar5);
-          if (1 < uVar2) {
-            Com_PrintError(0x10,0xffffffff8218df98);
+        else if (iVar1 == 5) {
+          uVar3 = Live_ReadStatsComplete(iVar6);
+          if (1 < uVar3) {
+            Com_PrintError(0x10,"Error reading stats\n");
           }
         }
-        else if (iVar3 == 6) {
-          uVar2 = Live_StartTeamMatchComplete(lVar5);
-          if (1 < uVar2) {
-            Com_PrintError(0x10,0xffffffff8218dfcc);
+        else if (iVar1 == 6) {
+          tVar2 = Live_StartTeamMatchComplete(iVar6);
+          if (TASK_COMPLETE < tVar2) {
+            Com_PrintError(0x10,"Error starting team match\n");
           }
         }
-        else if (iVar3 == 1) {
-          uVar2 = Live_QoSProbeComplete(lVar5);
-          if (1 < uVar2) {
-            Com_PrintError(0x10,0xffffffff8218df44);
+        else if (iVar1 == 1) {
+          tVar2 = Live_QoSProbeComplete(iVar6);
+          if (TASK_COMPLETE < tVar2) {
+            Com_PrintError(0x10,"Error getting player QoS results\n");
           }
         }
         else {
-          uVar2 = Live_SendInviteComplete(lVar5);
-          if (1 < uVar2) {
-            Com_PrintError(0x10,0xffffffff8218dfe8);
+          tVar2 = Live_SendInviteComplete(iVar6);
+          if (TASK_COMPLETE < tVar2) {
+            Com_PrintError(0x10,"Error sending invite\n");
           }
         }
       }
-      else if (DAT_84013128 == 0) {
-        uVar1 = va(0xffffffff8218e000);
-        MyAssertHandler(0xffffffff8218b718,0x125b,0,uVar1);
+      else if (alwaysfails == 0) {
+        pcVar4 = va("Unknown live task type %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x125b,0,pcVar4);
       }
     }
-    piVar4 = piVar4 + 0x28;
-    lVar5 = lVar5 + 1;
-  } while ((int)piVar4 < -0x7bdaa490);
-  Sys_LeaveCriticalSection(0x16);
+    piVar5 = piVar5 + 0x28;
+    iVar6 = iVar6 + 1;
+  } while ((int)piVar5 < -0x7bdaa490);
+  Sys_LeaveCriticalSection(CRITSECT_LIVE);
   __restgprlr_20();
   return;
 }
@@ -4026,60 +4417,71 @@ void Live_CheckOngoingTasks(void)
 
 // 8264B408  Live_InitSigninState  (xenon/xenon_live.cpp:4710)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_InitSigninState(void)
 
 {
-  int iVar3;
-  longlong lVar1;
-  longlong lVar2;
-  char cVar4;
-  undefined8 uVar5;
-  int *piVar6;
-  longlong lVar7;
-  undefined1 auStack_70 [112];
+  _XUSER_SIGNIN_STATE _Var1;
+  bool bVar2;
+  bool bVar3;
+  char *pcVar4;
+  XenonUserData *pXVar5;
+  ulong uVar6;
+  char *apcStack_70 [28];
   
   __savegprlr_21();
   CL_ResetLastGamePadEventTime();
   GamerProfile_InitAllProfiles();
-  piVar6 = &DAT_8424b588;
-  lVar7 = 0;
+  pXVar5 = xenonUserData;
+  uVar6 = 0;
   do {
-    iVar3 = XUserGetSigninState(lVar7);
-    if (iVar3 == 1) {
-      lVar1 = Sys_Milliseconds();
-      Live_UserSignedInLocally(lVar7,auStack_70);
-      lVar2 = Sys_Milliseconds();
-      uVar5 = 0xffffffff8218e01c;
+    _Var1 = XUserGetSigninState(uVar6);
+    if (_Var1 == eXUserSigninState_SignedInLocally) {
+      Sys_Milliseconds();
+      Live_UserSignedInLocally(uVar6,apcStack_70);
+      Sys_Milliseconds();
+      pcVar4 = "Live_UserSignedInLocally took %ims\n";
 LAB_8264b528:
-      Com_Printf(0x10,uVar5,lVar2 - lVar1);
+      Com_Printf(0x10,pcVar4);
     }
-    else if (iVar3 == 2) {
-      lVar1 = Sys_Milliseconds();
-      if (*piVar6 == 2) {
-        MyAssertHandler(0xffffffff8218b718,0x1287,0,0xffffffff82000f98,0xffffffff8218e040);
+    else if (_Var1 == eXUserSigninState_SignedInToLive) {
+      Sys_Milliseconds();
+      if (pXVar5->signinState == 2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x1287,0,"%s");
       }
-      Live_UserSignedInToLive(lVar7,auStack_70);
-      if (*piVar6 != 2) {
+      Live_UserSignedInToLive(uVar6,apcStack_70);
+      if (pXVar5->signinState != 2) {
         Sys_Sleep(100);
-        Live_UserSignedInToLive(lVar7,auStack_70);
-        if (*piVar6 != 2) {
-          Com_Printf(0x10,0xffffffff8218e090,piVar6 + 1,lVar7);
-          Live_UserSignedOut(lVar7,auStack_70);
+        Live_UserSignedInToLive(uVar6,apcStack_70);
+        if (pXVar5->signinState != 2) {
+          Com_Printf(0x10,
+                     "Since we are unable to sign in properly, we\'re going to pretend that %s signed out of controller %i\n"
+                    );
+          Live_UserSignedOut(uVar6,apcStack_70);
         }
       }
-      lVar2 = Sys_Milliseconds();
-      uVar5 = 0xffffffff8218e0f8;
+      Sys_Milliseconds();
+      pcVar4 = "Live_UserSignedInToLive took %ims\n";
       goto LAB_8264b528;
     }
-    cVar4 = GamerProfile_IsProfileLoggedIn(lVar7);
-    if ((cVar4 != '\0') && (cVar4 = GamerProfile_WasErrorOnRead(lVar7), cVar4 != '\0')) {
-      Com_Printf(0x10,0xffffffff8218e120,piVar6 + 1,lVar7);
-      Live_UserSignedOut(lVar7,auStack_70);
+    bVar2 = GamerProfile_IsProfileLoggedIn(uVar6);
+    bVar3 = false;
+    if (bVar2) {
+      bVar2 = GamerProfile_WasErrorOnRead(uVar6);
+      bVar3 = false;
+      if (bVar2) {
+        Com_Printf(0x10,
+                   "Since we had an error reading their gamer profile, we\'re going to pretend that %s signed out of controller %i\n"
+                  );
+        bVar3 = Live_UserSignedOut(uVar6,apcStack_70);
+      }
     }
-    piVar6 = piVar6 + 0x816;
-    lVar7 = lVar7 + 1;
-    if (-0x7bdac919 < (int)piVar6) {
-      __restgprlr_21();
+    pXVar5 = pXVar5 + 1;
+    uVar6 = uVar6 + 1;
+    if (-0x7bdac919 < (int)pXVar5) {
+      __restgprlr_21(bVar3);
       return;
     }
   } while( true );
@@ -4088,220 +4490,244 @@ LAB_8264b528:
 
 // 82647E08  Live_ReturnToSplitScreenMenu  (xenon/xenon_live.cpp:4772)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Live_ReturnToSplitScreenMenu(void)
 
 {
-  UI_ReturnToSplitScreenMenu(0);
+  UI_ReturnToSplitScreenMenu(LOCAL_CLIENT_0);
   return;
 }
 
 
 // 82647E10  Live_UpdateVoiceFriendSettings  (xenon/xenon_live.cpp:4800)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Live_UpdateVoiceFriendSettings(void)
 
 {
-  Voice_SetAllFriendFlags(0xffffffff844c7860);
-  Voice_SetAllFriendFlags(0xffffffff844c6c08);
-  Voice_SetAllFriendFlags(0xffffffff844ac9b0);
+  Voice_SetAllFriendFlags(&g_serverSession);
+  Voice_SetAllFriendFlags(&g_partySession);
+  Voice_SetAllFriendFlags(&g_partyPresenceSession);
   return;
 }
 
 
 // 8264B5A0  Live_CheckNotifications_SignInChanged  (xenon/xenon_live.cpp:4810)
 
-void Live_CheckNotifications_SignInChanged(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_CheckNotifications_SignInChanged(LocalClientNum_t param_1,ulong param_2)
 
 {
   char cVar1;
-  bool bVar2;
-  undefined4 *puVar3;
-  undefined4 uVar6;
-  ulonglong uVar4;
-  int iVar7;
-  undefined8 uVar5;
-  byte bVar8;
-  char cVar9;
-  char *pcVar10;
-  char *pcVar11;
-  byte bVar12;
-  longlong *plVar13;
-  longlong lVar14;
-  uint local_f0;
-  char *local_ec;
-  undefined4 *local_e8;
-  undefined *local_e4;
-  longlong local_e0 [2];
+  char cVar2;
+  LocalClientNum_t LVar3;
+  bool *pbVar4;
+  XenonUserData *pXVar5;
+  _XUSER_SIGNIN_STATE _Var6;
+  ulong uVar7;
+  bool bVar11;
+  connstate_t cVar8;
+  char *pcVar9;
+  bool bVar12;
+  int iVar10;
+  ulonglong uVar13;
+  char *pcVar14;
+  byte bVar15;
+  ulong64 *puVar16;
+  ulong uVar17;
+  uint uVar18;
+  LocalClientNum_t LStack00000014;
+  char *local_f0;
+  bool *local_ec;
+  XenonUserData *local_e8;
+  int local_e4;
+  ulong64 local_e0 [2];
   char local_d0 [16];
-  undefined1 auStack_c0 [8];
-  undefined4 local_b8;
+  _XUSER_SIGNIN_INFO a_Stack_c0 [4];
   
-  uVar6 = __savegprlr();
-  lVar14 = 0;
-  local_b8 = 0;
-  bVar12 = 0;
-  local_f0 = 0;
-  bVar2 = false;
+  uVar13 = (ulonglong)(int)param_2;
+  __savegprlr();
+  uVar17 = 0;
+  a_Stack_c0[0].dwInfoFlags = 0;
+  bVar15 = 0;
+  local_f0 = (char *)0x0;
+  bVar12 = false;
+  LStack00000014 = param_1;
   NET_ClearLiveAddrCache();
-  local_e8 = &DAT_8424b588;
-  plVar13 = &DAT_8424b5b0;
-  local_e4 = &DAT_82990000;
-  local_ec = &DAT_8424a650;
+  local_e8 = xenonUserData;
+  puVar16 = &xenonUserData[0].xuid;
+  local_e4 = -0x7d670000;
+  local_ec = &s_anySignin;
   do {
-    pcVar10 = local_ec;
-    uVar4 = XUserGetSigninState(lVar14);
-    iVar7 = XUserGetSigninInfo(lVar14,0,auStack_c0);
-    if (iVar7 == 0) {
-      uVar5 = XUserGetXUID(lVar14,local_e0);
-      if ((int)uVar5 < 0) {
-        MyAssertHandler(0xffffffff8218b718,0x12ea,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar5);
+    pbVar4 = local_ec;
+    _Var6 = XUserGetSigninState(uVar17);
+    uVar7 = XUserGetSigninInfo(uVar17,0,a_Stack_c0);
+    if (uVar7 == 0) {
+      uVar7 = XUserGetXUID(uVar17,local_e0);
+      if ((int)uVar7 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x12ea,0,"%s\n\t(res) = %08x");
       }
-      uVar5 = XUserGetName(lVar14,local_d0,0x10);
-      if ((int)uVar5 < 0) {
-        MyAssertHandler(0xffffffff8218b718,0x12ed,0,0xffffffff8218c0e0,0xffffffff8218c0c8,uVar5);
+      uVar7 = XUserGetName(uVar17,local_d0,0x10);
+      if ((int)uVar7 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x12ed,0,"%s\n\t(res) = %08x");
       }
     }
     else {
       local_e0[0] = 0;
       local_d0[0] = '\0';
     }
-    if (pcVar10[3] != '\0') {
-      Live_HandleClientSplitscreenSignin(lVar14,(-uVar4 & ~uVar4 & 0xffffffff) >> 0x1f);
+    if (pbVar4[3] != false) {
+      Live_HandleClientSplitscreenSignin
+                (uVar17,(bool)((byte)((byte)((ulonglong)-(longlong)(int)_Var6 >> 0x18) &
+                                     ~(byte)(_Var6 >> 0x18)) >> 7));
     }
-    if (((local_e0[0] != 0) && (*plVar13 != 0)) && (local_e0[0] != *plVar13)) {
-      pcVar10 = (char *)((int)plVar13 + -0x24);
-      pcVar11 = local_d0;
+    if (((local_e0[0] != 0) && (*puVar16 != 0)) && (local_e0[0] != *puVar16)) {
+      pcVar9 = (char *)((int)puVar16 + -0x24);
+      pcVar14 = local_d0;
       do {
-        cVar9 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar9 == '\0') break;
-        pcVar11 = pcVar11 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar9 == cVar1);
-      if (cVar9 == cVar1) {
-        *plVar13 = local_e0[0];
+        cVar1 = *pcVar14;
+        cVar2 = *pcVar9;
+        if (cVar1 == '\0') break;
+        pcVar14 = pcVar14 + 1;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
+        *puVar16 = local_e0[0];
       }
       else {
-        Com_Printf(0x10,0xffffffff8218e190);
-        bVar8 = Live_UserSignedOut(lVar14,&local_f0);
-        bVar12 = bVar8 | bVar12;
+        Com_Printf(0x10,
+                   "xuid changed from %llx to %llx and gamertag went from \'%s\' to \'%s\', signing out old user (controller %i)\n"
+                  );
+        bVar11 = Live_UserSignedOut(uVar17,&local_f0);
+        bVar15 = bVar11 | bVar15;
       }
     }
-    if ((int)uVar4 != *(int *)(plVar13 + -5)) {
-      bVar2 = true;
-      if (((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-         (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) {
-        UI_ReturnToSplitScreenMenu(0);
+    if (_Var6 != ((XenonUserData *)(puVar16 + -5))->signinState) {
+      bVar12 = true;
+      if ((((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) &&
+         ((systemlink->current).enabled == false)) {
+        UI_ReturnToSplitScreenMenu(LOCAL_CLIENT_0);
       }
-      if ((uVar4 & 0xffffffff) == 0) {
-        Com_Printf(0x10,0xffffffff8218e1fc,(int)plVar13 + -0x24,lVar14);
-        bVar8 = Live_UserSignedOut(lVar14,&local_f0);
+      if (_Var6 == eXUserSigninState_NotSignedIn) {
+        Com_Printf(0x10,"Gamer %s signed out of their controller (%i)\n");
+        bVar11 = Live_UserSignedOut(uVar17,&local_f0);
 LAB_8264b828:
-        bVar12 = bVar8 | bVar12;
+        bVar15 = bVar11 | bVar15;
       }
       else {
-        if ((uVar4 & 0xffffffff) == 1) {
-          bVar8 = Live_UserSignedInLocally(lVar14,&local_f0);
+        if (_Var6 == eXUserSigninState_SignedInLocally) {
+          bVar11 = Live_UserSignedInLocally(uVar17,&local_f0);
           goto LAB_8264b828;
         }
-        if ((uVar4 & 0xffffffff) < 3) {
-          bVar8 = Live_UserSignedInToLive(lVar14,&local_f0);
+        if (_Var6 < (eXUserSigninState_SignedInToLive|eXUserSigninState_SignedInLocally)) {
+          bVar11 = Live_UserSignedInToLive(uVar17,&local_f0);
           goto LAB_8264b828;
         }
       }
-      if (((bVar12 == 0) && (local_ec[3] == '\0')) && (*(int *)(local_e4 + 0x5198) == (int)lVar14))
-      {
-        Live_HandleClientSplitscreenOnlineSignin(lVar14,uVar4);
+      if (((bVar15 == 0) && (local_ec[3] == false)) && (*(ulong *)(local_e4 + 0x5198) == uVar17)) {
+        Live_HandleClientSplitscreenOnlineSignin(uVar17,_Var6);
       }
-      if ((((0 < (int)uVar4) && (*(char *)(DAT_82b3ecb8 + 0xc) != '\0')) &&
-          (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-         ((bVar12 == 0 && (iVar7 = CL_GetLocalClientConnectionState(uVar6), 4 < iVar7)))) {
-        uVar5 = Dvar_InfoString(uVar6,0x200);
-        Com_DPrintf(0x10,0xffffffff8218e230,uVar5);
-        uVar5 = va(0xffffffff82031208,uVar5);
-        CL_AddReliableCommand(uVar6,uVar5);
+      LVar3 = LStack00000014;
+      if ((((0 < (int)_Var6) && ((splitscreen->current).enabled != false)) &&
+          ((onlinegame->current).enabled == false)) &&
+         ((bVar15 == 0 && (cVar8 = CL_GetLocalClientConnectionState(LStack00000014), 4 < (int)cVar8)
+          ))) {
+        Dvar_InfoString(LVar3,0x200);
+        Com_DPrintf(0x10,
+                    "We\'re playing splitscreen and someone just signed in - we\'ll send a userinfo string for them: %s\n"
+                   );
+        pcVar9 = va("userinfo \"%s\"");
+        CL_AddReliableCommand(LVar3,pcVar9);
       }
-      cVar9 = GamerProfile_IsProfileLoggedIn(lVar14);
-      if ((cVar9 != '\0') && (cVar9 = GamerProfile_WasErrorOnRead(lVar14), cVar9 != '\0')) {
-        Com_Printf(0x10,0xffffffff8218e298,(int)plVar13 + -0x24,lVar14);
-        Live_UserSignedOut(lVar14,&local_f0);
+      bVar11 = GamerProfile_IsProfileLoggedIn(uVar17);
+      if ((bVar11) && (bVar11 = GamerProfile_WasErrorOnRead(uVar17), bVar11)) {
+        Com_Printf(0x10,
+                   "Gamer %s didn\'t sign out of their controller (%i), but we\'re pretending they did because we had an error reading their gamer profile\n"
+                  );
+        Live_UserSignedOut(uVar17,&local_f0);
       }
     }
-    plVar13 = plVar13 + 0x40b;
-    lVar14 = lVar14 + 1;
-  } while ((int)plVar13 < (int)(local_e8 + 0x2062));
-  if (DAT_84253a7a != '\0') {
+    puVar16 = puVar16 + 0x40b;
+    uVar17 = uVar17 + 1;
+  } while ((int)puVar16 < (int)&local_e8[4].xuid);
+  if (s_fakeSplitscreenSignin != false) {
     CL_SyncSigninWidgets();
   }
-  if (((!bVar2) && (DAT_82966e98 == 0)) && ((param_2 & 0xffffffff) != 0)) {
-    lVar14 = 0;
+  if (((!bVar12) && (cl_multi_gamepads_enabled == 0)) && ((uVar13 & 0xffffffff) != 0)) {
+    uVar18 = 0;
     do {
-      if ((ulonglong)(uint)(1 << ((uint)lVar14 & 0x3f)) == (param_2 & 0xffffffff)) {
-        CL_SetControllerInUse(lVar14);
-        DAT_82b5c824 = (uint)lVar14;
+      if ((ulonglong)(uint)(1 << (uVar18 & 0x3f)) == (uVar13 & 0xffffffff)) {
+        CL_SetControllerInUse(uVar18);
+        cl_last_controller_input = uVar18;
         break;
       }
-      lVar14 = lVar14 + 1;
-    } while ((int)lVar14 < 4);
+      uVar18 = uVar18 + 1;
+    } while ((int)uVar18 < 4);
   }
-  if ((DAT_842537fb != '\0') && ((param_2 & 0xffffffff) != 0)) {
-    lVar14 = 0;
+  if ((s_localSignin != false) && ((uVar13 & 0xffffffff) != 0)) {
+    uVar18 = 0;
     do {
-      if ((ulonglong)(uint)(1 << ((uint)lVar14 & 0x3f)) == (param_2 & 0xffffffff)) {
-        CL_SetControllerInUse(lVar14);
-        DAT_82b5c824 = (uint)lVar14;
+      if ((ulonglong)(uint)(1 << (uVar18 & 0x3f)) == (uVar13 & 0xffffffff)) {
+        CL_SetControllerInUse(uVar18);
+        cl_last_controller_input = uVar18;
         break;
       }
-      lVar14 = lVar14 + 1;
-    } while ((int)lVar14 < 4);
+      uVar18 = uVar18 + 1;
+    } while ((int)uVar18 < 4);
   }
-  if ((*local_ec == '\0') || (0 < (int)local_e8[DAT_82b5c820 * 0x816])) {
-    uVar4 = (ulonglong)local_f0;
+  pcVar9 = local_f0;
+  if ((*local_ec != false) && (local_e8[cl_controller_in_use].signinState < 1)) {
+    bVar15 = 1;
+    pcVar9 = "XBOXLIVE_MUSTLOGIN";
   }
-  else {
-    bVar12 = 1;
-    uVar4 = 0xffffffff820343d8;
-  }
-  if (DAT_84253a79 != '\0') {
-    if (local_e8[DAT_82b5c820 * 0x816] == 2) {
-      cVar9 = Live_CanUserPlayOnline(DAT_82b5c820,&local_e8);
-      puVar3 = local_e8;
-      if ((cVar9 == '\0') && (iVar7 = Live_RequiresSignInResolve(local_e8), iVar7 != 0)) {
-        bVar12 = 1;
-        uVar4 = Live_GetFailureReason(puVar3,0);
+  if (s_liveSignin != false) {
+    if (local_e8[cl_controller_in_use].signinState == 2) {
+      bVar12 = Live_CanUserPlayOnline(cl_controller_in_use,(int *)&local_e8);
+      pXVar5 = local_e8;
+      if ((!bVar12) && (iVar10 = Live_RequiresSignInResolve((int)local_e8), iVar10 != 0)) {
+        bVar15 = 1;
+        pcVar9 = Live_GetFailureReason((OnlinePlayFailureReason)pXVar5,0);
       }
     }
     else {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      bVar12 = 1;
-      uVar4 = 0xffffffff8208bb60;
+      Dvar_SetBool(onlinegame,false);
+      bVar15 = 1;
+      pcVar9 = "XBOXLIVE_SIGNEDOUTOFLIVE";
     }
   }
-  if (((DAT_842537f9 != '\0') &&
-      (cVar9 = Live_CanUserPlayOnline(DAT_82b5c820,&local_e8), puVar3 = local_e8, cVar9 == '\0')) &&
-     (iVar7 = Live_RequiresSignInResolve(local_e8), iVar7 != 0)) {
-    bVar12 = 1;
-    uVar4 = Live_GetFailureReason(puVar3,1);
+  if (((s_vaultSignin != false) &&
+      (bVar12 = Live_CanUserPlayOnline(cl_controller_in_use,(int *)&local_e8), pXVar5 = local_e8,
+      !bVar12)) && (iVar10 = Live_RequiresSignInResolve((int)local_e8), iVar10 != 0)) {
+    bVar15 = 1;
+    pcVar9 = Live_GetFailureReason((OnlinePlayFailureReason)pXVar5,1);
   }
-  cVar9 = Live_AreAllUsersSignedOut();
-  if (cVar9 != '\0') {
-    Live_AllUsersSignedOut(uVar6);
+  bVar12 = Live_AreAllUsersSignedOut();
+  if (bVar12) {
+    Live_AllUsersSignedOut(LStack00000014);
   }
-  DAT_84253a79 = 0;
-  DAT_842537fb = 0;
-  local_ec[3] = '\0';
-  DAT_842537f9 = 0;
-  *local_ec = '\0';
+  s_liveSignin = false;
+  s_localSignin = false;
+  local_ec[3] = false;
+  s_vaultSignin = false;
+  *local_ec = false;
   *(undefined4 *)(local_e4 + 0x5198) = 0xffffffff;
-  if (bVar12 != 0) {
-    Live_DisconnectOnSignInStatusChanged(uVar4);
+  if (bVar15 != 0) {
+    Live_DisconnectOnSignInStatusChanged(pcVar9);
   }
-  Voice_SetAllFriendFlags(0xffffffff844c7860);
-  Voice_SetAllFriendFlags(0xffffffff844c6c08);
-  Voice_SetAllFriendFlags(0xffffffff844ac9b0);
+  Voice_SetAllFriendFlags(&g_serverSession);
+  Voice_SetAllFriendFlags(&g_partySession);
+  Voice_SetAllFriendFlags(&g_partyPresenceSession);
   __restgprlr();
   return;
 }
@@ -4309,95 +4735,104 @@ LAB_8264b828:
 
 // 82647E50  Live_IsInPartyChat  (xenon/xenon_live.cpp:5059)
 
-undefined8 Live_IsInPartyChat(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_IsInPartyChat(void)
 
 {
   int iVar1;
   uint uVar2;
-  uint *puVar3;
-  uint local_f10 [11];
-  uint local_ee4 [953];
+  ulong *puVar3;
+  _XPARTY_USER_LIST local_f10;
   
-  iVar1 = XPartyGetUserList(local_f10);
+  iVar1 = XPartyGetUserList(&local_f10);
   if (iVar1 != -0x7f82fffd) {
     uVar2 = 0;
-    if (local_f10[0] != 0) {
-      puVar3 = local_ee4;
+    if (local_f10.dwUserCount != 0) {
+      puVar3 = &local_f10.Users[0].dwFlags;
       do {
         if (((*puVar3 & 1) != 0) && ((*puVar3 & 2) != 0)) {
-          return 1;
+          return true;
         }
         uVar2 = uVar2 + 1;
         puVar3 = puVar3 + 0x1e;
-      } while (uVar2 < local_f10[0]);
+      } while (uVar2 < local_f10.dwUserCount);
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82647EE0  Live_IsInPartyChatWhileDisallowed  (xenon/xenon_live.cpp:5077)
 
-undefined8 Live_IsInPartyChatWhileDisallowed(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_IsInPartyChatWhileDisallowed(void)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) &&
-      (cVar2 = Lobby_IsInLobby(), cVar2 != '\0')) && (*(char *)(DAT_8424a654 + 0xc) != '\0')) {
-    uVar1 = Live_IsInPartyChat();
-    return uVar1;
+  if (((((onlinegame->current).enabled != false) &&
+       ((xblive_privatematch->current).enabled == false)) && (bVar1 = Lobby_IsInLobby(), bVar1)) &&
+     ((partyChatDisallowed->current).enabled != false)) {
+    bVar1 = Live_IsInPartyChat();
+    return bVar1;
   }
-  return 0;
+  return false;
 }
 
 
 // 82647F60  Live_CheckPartyChatQuitTimer  (xenon/xenon_live.cpp:5092)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Live_CheckPartyChatQuitTimer(void)
 
 {
-  longlong lVar1;
-  char cVar3;
-  undefined8 uVar2;
+  int iVar1;
+  bool bVar4;
+  LocalClientNum_t LVar2;
+  PartyData *pPVar3;
   
-  if (DAT_8424a652 != '\0') {
-    lVar1 = Sys_Milliseconds();
-    if (-1 < (longlong)(lVar1 - (ulonglong)DAT_8425388c)) {
-      DAT_8424a652 = '\0';
-      cVar3 = Live_IsInPartyChatWhileDisallowed();
-      if (cVar3 != '\0') {
-        cVar3 = Lobby_IsInLobby();
-        if (cVar3 == '\0') {
-          MyAssertHandler(0xffffffff8218b718,0x13f0,0,0xffffffff82000f98,0xffffffff82032564);
-        }
-        cVar3 = CL_AllLocalClientsDisconnected();
-        if (cVar3 == '\0') {
-          if (((*(char *)(DAT_83666174 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) != '\0'))
-             && (*(char *)(DAT_84253bb8 + 0xc) == '\0')) {
-            DAT_84253a7b = 1;
-            uVar2 = CL_GetFirstActiveLocalClient();
-            Cbuf_AddText(uVar2,0xffffffff8218c390);
-            return;
-          }
-          Party_StopParty(0xffffffff82b55118);
-          Lobby_GetPartyData();
-          Party_StopParty();
-          Live_ThrowError(1,0xffffffff8218cc3c);
+  if ((s_partyChatWaitingForQuitTimer) &&
+     (iVar1 = Sys_Milliseconds(),
+     -1 < (longlong)((longlong)iVar1 - (ulonglong)(uint)s_partyChatQuitTime))) {
+    s_partyChatWaitingForQuitTimer = false;
+    bVar4 = Live_IsInPartyChatWhileDisallowed();
+    if (bVar4) {
+      bVar4 = Lobby_IsInLobby();
+      if (!bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x13f0,0,"%s");
+      }
+      bVar4 = CL_AllLocalClientsDisconnected();
+      if (!bVar4) {
+        if ((((com_sv_running->current).enabled != false) &&
+            ((onlinegame->current).enabled != false)) &&
+           ((xblive_privatematch->current).enabled == false)) {
+          g_partyChatQuitting = true;
+          LVar2 = CL_GetFirstActiveLocalClient();
+          Cbuf_AddText(LVar2,"hostmigration_start\n");
           return;
         }
-        cVar3 = Lobby_IsInRunningLobby();
-        if (cVar3 == '\0') {
-          MyAssertHandler(0xffffffff8218b718,0x1402,0,0xffffffff820011f4,0xffffffff820520fc,
-                          0xffffffff8218cc08);
-        }
-        if ((DAT_82b5700c != 0) && (DAT_82b57004 == 0)) {
-          Party_StopParty();
-        }
-        uVar2 = Lobby_GetPartyData();
-        Party_ClosePartyUI(uVar2,0xffffffff8218cc3c);
+        Party_StopParty(&g_partyData);
+        pPVar3 = Lobby_GetPartyData();
+        Party_StopParty(pPVar3);
+        Live_ThrowError(ERR_DROP,"PLATFORM_PARTYCHATNOTALLOWED");
+        return;
       }
+      bVar4 = Lobby_IsInRunningLobby();
+      if (!bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                        0x1402,0,"%s\n\t%s");
+      }
+      if ((g_partyData.inParty != 0) && (g_partyData.areWeHost == 0)) {
+        Party_StopParty(&g_partyData);
+      }
+      pPVar3 = Lobby_GetPartyData();
+      Party_ClosePartyUI(pPVar3,"PLATFORM_PARTYCHATNOTALLOWED");
     }
   }
   return;
@@ -4406,70 +4841,76 @@ void Live_CheckPartyChatQuitTimer(void)
 
 // 8264BBB0  Live_CheckNotifications_UI  (xenon/xenon_live.cpp:5136)
 
-void Live_CheckNotifications_UI(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_CheckNotifications_UI(int param_1,ulong param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  LocalClientNum_t LVar2;
   int iVar3;
-  char cVar4;
-  ulonglong uVar2;
-  int *piVar5;
+  bool bVar5;
+  char *pcVar4;
   longlong lVar6;
-  int iVar7;
-  undefined1 auStack_50 [80];
+  XenonUserData *pXVar7;
+  char *apcStack_50 [20];
   
-  __savegprlr_25();
-  uVar1 = CL_LocalClientNumFromControllerIndex();
-  DAT_84253a78 = '\x01' - (param_2 == 0);
+  lVar6 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_25(param_1);
+  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+  s_isSystemUiActive = (bool)('\x01' - (lVar6 == 0));
   CL_ResetLastGamePadEventTime();
-  if (DAT_84253a78 == '\0') {
-    CL_XenonHudIsOffscreen(uVar1);
-    piVar5 = &DAT_8424b588;
-    lVar6 = 0;
+  if (s_isSystemUiActive == false) {
+    CL_XenonHudIsOffscreen(LVar2);
+    pXVar7 = xenonUserData;
+    iVar1 = 0;
     do {
-      iVar3 = Live_WasForcedLiveSignInByUI(lVar6);
-      iVar7 = (int)lVar6;
+      iVar3 = Live_WasForcedLiveSignInByUI(iVar1);
       if (iVar3 != 0) {
-        Live_ClearForcedLiveSignInByUI(lVar6);
-        if ((iVar7 < 0) || (3 < iVar7)) {
-          MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,lVar6);
+        Live_ClearForcedLiveSignInByUI(iVar1);
+        if ((iVar1 < 0) || (3 < iVar1)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                          0x2e0,0,"%s\n\t(controllerIndex) = %i");
         }
-        if (((*piVar5 != 2) || (iVar3 = Live_ContentRatingAllowed(lVar6,auStack_50), iVar3 == 0)) ||
-           (cVar4 = Live_UserIsGuest(lVar6), cVar4 != '\0')) {
+        if (((pXVar7->signinState != 2) ||
+            (iVar3 = Live_ContentRatingAllowed(iVar1,apcStack_50), iVar3 == 0)) ||
+           (bVar5 = Live_UserIsGuest(iVar1), bVar5)) {
           UI_ClearCompletionResolve();
         }
       }
-      iVar3 = Live_WasForcedAnySignInByUI(lVar6);
+      iVar3 = Live_WasForcedAnySignInByUI(iVar1);
       if (iVar3 != 0) {
-        Live_ClearForcedAnySignInByUI(lVar6);
-        if ((iVar7 < 0) || (3 < iVar7)) {
-          MyAssertHandler(0xffffffff8218b718,0x2e0,0,0xffffffff82039774,0xffffffff82057314,lVar6);
+        Live_ClearForcedAnySignInByUI(iVar1);
+        if ((iVar1 < 0) || (3 < iVar1)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",
+                          0x2e0,0,"%s\n\t(controllerIndex) = %i");
         }
-        if ((*piVar5 < 1) || (cVar4 = Live_UserIsGuest(lVar6), cVar4 != '\0')) {
+        if ((pXVar7->signinState < 1) || (bVar5 = Live_UserIsGuest(iVar1), bVar5)) {
           UI_ClearCompletionResolve();
         }
       }
-      piVar5 = piVar5 + 0x816;
-      lVar6 = lVar6 + 1;
-    } while ((int)piVar5 < -0x7bdac918);
-    if ((((DAT_8424a653 != '\0') || (DAT_842537fb != '\0')) || (DAT_8424a650 != '\0')) &&
-       ((uVar2 = UI_GetTopActiveMenuName(0), (uVar2 & 0xffffffff) == 0 ||
-        (iVar3 = I_stricmp(uVar2,0xffffffff8207b5b4), iVar3 != 0)))) {
-      UI_SetActiveMenu(0,1);
+      pXVar7 = pXVar7 + 1;
+      iVar1 = iVar1 + 1;
+    } while ((int)pXVar7 < -0x7bdac918);
+    if ((((DAT_8424a653 != '\0') || (s_localSignin != false)) || (s_anySignin != false)) &&
+       ((pcVar4 = UI_GetTopActiveMenuName(LOCAL_CLIENT_0), pcVar4 == (char *)0x0 ||
+        (iVar1 = I_stricmp(pcVar4,"main"), iVar1 != 0)))) {
+      UI_SetActiveMenu(LOCAL_CLIENT_0,1);
     }
-    if ((DAT_842537f8 != '\0') && (cVar4 = Live_IsInPartyChatWhileDisallowed(), cVar4 != '\0')) {
-      DAT_8424a652 = 1;
-      iVar3 = Sys_Milliseconds();
-      DAT_8425388c = iVar3 + *(int *)(DAT_84253888 + 0xc);
+    if ((s_partyChatWaitingForQuitResponse != false) &&
+       (bVar5 = Live_IsInPartyChatWhileDisallowed(), bVar5)) {
+      s_partyChatWaitingForQuitTimer = true;
+      iVar1 = Sys_Milliseconds();
+      s_partyChatQuitTime = (int)((partyChatDisconnectTimer->current).string + iVar1);
       Live_CheckPartyChatQuitTimer();
     }
-    DAT_842537f8 = '\0';
-    DAT_84253a79 = 0;
+    s_partyChatWaitingForQuitResponse = false;
+    s_liveSignin = false;
     DAT_8424a653 = '\0';
-    DAT_842537fb = '\0';
-    DAT_8424a650 = '\0';
-    DAT_842537f9 = 0;
-    DAT_82995198 = 0xffffffff;
+    s_localSignin = false;
+    s_anySignin = false;
+    s_vaultSignin = false;
+    s_splitscreenOnlineSigninController = -1;
   }
   __restgprlr_25();
   return;
@@ -4478,94 +4919,102 @@ void Live_CheckNotifications_UI(undefined8 param_1,longlong param_2)
 
 // 8264BDF0  Live_CheckNotifications  (xenon/xenon_live.cpp:5209)
 
-void Live_CheckNotifications(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_CheckNotifications(int param_1)
 
 {
-  bool bVar1;
-  uint uVar2;
-  undefined4 uVar4;
-  char cVar6;
-  int iVar5;
-  char cVar7;
-  undefined8 uVar3;
-  ulonglong uVar8;
-  longlong lVar9;
-  uint local_120;
+  ulong uVar1;
+  bool bVar7;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  bool bVar8;
+  int iVar4;
+  PartyData *pPVar5;
+  ulong uVar6;
+  ulonglong uVar9;
+  int iStack00000014;
+  ulong local_120;
   uint local_11c;
   char *local_118;
   char *local_114;
-  undefined *local_110;
+  char *local_110;
   char *local_10c;
   char *local_108;
-  undefined4 *local_104;
+  _func___cdecl_int **local_104;
   char *local_100;
   char *local_fc;
-  undefined *local_f8;
+  int local_f8;
   char *local_f4;
-  undefined1 auStack_f0 [240];
+  _XINVITE_INFO a_Stack_f0 [2];
   
-  uVar4 = __savegprlr();
-  cVar6 = Sys_IsMainThread();
-  if (cVar6 != '\0') {
-    if (DAT_8424a648 == 0) {
-      MyAssertHandler(0xffffffff8218b718,0x1463,0,0xffffffff82000f98,0xffffffff8218d258);
+  __savegprlr();
+  iStack00000014 = param_1;
+  bVar7 = Sys_IsMainThread();
+  if (bVar7) {
+    if (xblive_loggedin == (dvar_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x1463
+                      ,0,"%s");
     }
-    local_f8 = &DAT_84250000;
-    iVar5 = XNotifyGetNext(DAT_842536e8,0,&local_11c,&local_120);
-    if (iVar5 != 0) {
+    local_f8 = -0x7bdb0000;
+    iVar2 = XNotifyGetNext(notifications,0,&local_11c,&local_120);
+    if (iVar2 != 0) {
       local_fc = "Live says our connection status changed, we are now disconnected.\n";
       local_100 = "User purchased Live membership\n";
-      local_104 = &DAT_82960000;
-      local_110 = &DAT_8216cd54;
+      local_104 = __xri_a;
+      local_110 = "Open";
       local_114 = "Moderate";
       local_108 = "Live says our nat type is %s\n";
       local_118 = "Strict";
       local_10c = "Link state changed - disconnected\n";
       local_f4 = "Link state changed - connected\n";
       do {
-        uVar2 = local_120;
+        uVar1 = local_120;
+        iVar2 = iStack00000014;
         if (local_11c < 0x10014) {
           if (local_11c != 0x10013) {
-            switch(local_11c - 9) {
-            case 0:
-              Live_CheckNotifications_UI(uVar4,local_120);
+            switch(local_11c) {
+            case 9:
+              Live_CheckNotifications_UI(iStack00000014,local_120);
               break;
-            case 1:
-              uVar3 = CL_LocalClientNumFromControllerIndex(uVar4);
-              Live_CheckNotifications_SignInChanged(uVar3,local_120);
+            case 10:
+              LVar3 = CL_LocalClientNumFromControllerIndex(iStack00000014);
+              Live_CheckNotifications_SignInChanged(LVar3,local_120);
               break;
-            case 2:
+            case 0xb:
               Memcard_CheckForStorageDeviceChange();
-              lVar9 = 0;
+              LVar3 = LOCAL_CLIENT_0;
 LAB_8264c044:
-              uVar3 = CL_ControllerIndexFromClientNum(lVar9);
-              iVar5 = CL_GetLocalClientSignInState();
-              if (iVar5 < 1) goto code_r0x8264c05c;
+              iVar2 = CL_ControllerIndexFromClientNum(LVar3);
+              iVar4 = CL_GetLocalClientSignInState(iVar2);
+              if (iVar4 < 1) goto code_r0x8264c05c;
               Content_CheckIfMountedContentPacksAreGone();
 LAB_8264c070:
-              Content_FindContentPacks(uVar3);
+              Content_FindContentPacks(iVar2);
               break;
             default:
-              goto switchD_8264bf78_caseD_3;
-            case 5:
-            case 8:
+              goto switchD_8264bf78_caseD_c;
+            case 0xe:
+            case 0x11:
               break;
-            case 9:
+            case 0x12:
               GPad_UpdateAll();
-              if ((local_104[0x1ba6] != 0) && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
-                cVar6 = CL_AllLocalClientsConnectionStateDisconnected();
-                lVar9 = 0;
+              if ((local_104[0x1ba6] != (_func___cdecl_int *)0x0) &&
+                 ((onlinegame->current).enabled == false)) {
+                bVar7 = CL_AllLocalClientsConnectionStateDisconnected();
+                iVar2 = 0;
                 do {
-                  cVar7 = GPad_IsActive(lVar9);
-                  if (cVar7 == '\0') {
-                    CL_SplitscreenControllerUnplugged(lVar9);
+                  bVar8 = GPad_IsActive(iVar2);
+                  if (bVar8) {
+                    CL_SplitscreenControllerPluggedIn(iVar2);
                   }
                   else {
-                    CL_SplitscreenControllerPluggedIn();
+                    CL_SplitscreenControllerUnplugged(iVar2);
                   }
-                  lVar9 = lVar9 + 1;
-                } while ((int)lVar9 < 4);
-                if (cVar6 != '\0') {
+                  iVar2 = iVar2 + 1;
+                } while (iVar2 < 4);
+                if (bVar7) {
                   CL_SyncSigninWidgets();
                 }
               }
@@ -4574,80 +5023,83 @@ LAB_8264c070:
         }
         else if (local_11c < 0x4000002) {
           if (local_11c == 0x4000001) {
-            Friends_MarkForUpdate(uVar4);
-            MeetPlayer_MarkPresenceForUpdate(uVar4);
+            Friends_MarkForUpdate(iStack00000014);
+            MeetPlayer_MarkPresenceForUpdate(iVar2);
             LiveParty_MarkPresenceForUpdate();
           }
           else {
-            switch(local_11c + 0xfdffffff) {
-            case 0:
-              Com_Printf(0x10,0xffffffff8218e320,local_120);
+            switch(local_11c) {
+            case 0x2000001:
+              Com_Printf(0x10,"Xbox Live connection status has changed (0x%x)\n");
               NET_ClearLiveAddrCache();
-              uVar8 = (ulonglong)local_120;
-              if (uVar8 < 0x80151001) {
-                if (uVar8 == 0x80151000) {
+              uVar9 = (ulonglong)local_120;
+              if (uVar9 < 0x80151001) {
+                if (uVar9 == 0x80151000) {
 LAB_8264c234:
-                  DAT_8424a651 = 0;
-                  Com_DPrintf(0xe,0xffffffff8218e3d0,local_11c >> 0x10 & 0x1ff,
-                              local_11c >> 0x19 & 0x3f,local_11c & 0xffff);
-                  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+                  g_online = false;
+                  Com_DPrintf(0xe,
+                              "We got a notification that our connection to LIVE was lost - specifically for notification version %i, area %i, index %i\n"
+                             );
+                  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
                   Live_DeclineInvitation();
-                  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') &&
-                     (cVar6 = CL_AllLocalClientsDisconnected(), cVar6 == '\0')) {
-                    Dvar_SetBool(DAT_82b3ecb8,0);
-                    Dvar_SetBool(DAT_82aa1af8,0);
-                    Lobby_GetPartyData();
-                    Party_StopParty();
-                    Party_StopParty(0xffffffff82b55118);
-                    Live_ThrowError(1,0xffffffff8218e3b8);
+                  if (((onlinegame->current).enabled != false) &&
+                     (bVar7 = CL_AllLocalClientsDisconnected(), !bVar7)) {
+                    Dvar_SetBool(splitscreen,false);
+                    Dvar_SetBool(onlinegame,false);
+                    pPVar5 = Lobby_GetPartyData();
+                    Party_StopParty(pPVar5);
+                    Party_StopParty(&g_partyData);
+                    Live_ThrowError(ERR_DROP,"EXE_LOSTCONNECTION");
                   }
                 }
-                else if (uVar8 - 0x1510f0 == 0) {
-                  DAT_8424a651 = 1;
-                  Live_GetOurBandwidth(uVar4);
-                  DAT_8299519c = XOnlineGetNatType();
-                  if (DAT_8299519c == 3) {
-                    Com_Printf(0xe,local_108,local_118);
+                else if (uVar9 - 0x1510f0 == 0) {
+                  g_online = true;
+                  Live_GetOurBandwidth(iStack00000014);
+                  g_natType = XOnlineGetNatType();
+                  if (g_natType == XONLINE_NAT_STRICT) {
+                    Com_Printf(0xe,local_108);
                   }
-                  else if (DAT_8299519c == 2) {
-                    Com_Printf(0xe,local_108,local_114);
+                  else if (g_natType == XONLINE_NAT_MODERATE) {
+                    Com_Printf(0xe,local_108);
                   }
-                  else if (DAT_8299519c == 1) {
-                    Com_Printf(0xe,local_108,local_110);
+                  else if (g_natType == XONLINE_NAT_OPEN) {
+                    Com_Printf(0xe,local_108);
                   }
                   else {
-                    uVar3 = va(0xffffffff8218e350);
-                    Com_Printf(0xe,local_108,uVar3);
+                    va("Unknown type %i");
+                    Com_Printf(0xe,local_108);
                   }
                 }
                 else {
-                  if ((uVar8 - 0x1510f0 & 0xffffffff) != 1) goto LAB_8264c2bc;
+                  if ((uVar9 - 0x1510f0 & 0xffffffff) != 1) goto LAB_8264c2bc;
                   Com_Printf(0xe,local_fc);
                 }
               }
-              else if ((uVar8 + 0x7feaefff & 0xffffffff) < 6) {
-                bVar1 = (int)(uVar8 + 0x7feaefff) != 0;
-                if (((uVar8 != 0xffffffff80151002 || !bVar1) &&
-                    (uVar8 != 0xffffffff80151003 || !bVar1)) &&
-                   ((uVar8 == 0xffffffff80151004 && bVar1 ||
-                    ((uVar8 == 0xffffffff80151005 && bVar1 || (bVar1)))))) goto LAB_8264c234;
-                DAT_8424a651 = 0;
-                Com_DPrintf(0xe,0xffffffff8218e360);
-                PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+              else if ((uVar9 + 0x7feaefff & 0xffffffff) < 6) {
+                bVar7 = (int)(uVar9 + 0x7feaefff) != 0;
+                if (((uVar9 != 0xffffffff80151002 || !bVar7) &&
+                    (uVar9 != 0xffffffff80151003 || !bVar7)) &&
+                   ((uVar9 == 0xffffffff80151004 && bVar7 ||
+                    ((uVar9 == 0xffffffff80151005 && bVar7 || (bVar7)))))) goto LAB_8264c234;
+                g_online = false;
+                Com_DPrintf(0xe,
+                            "We got a notification that our logon to LIVE failed, we are canceling any invitation.\n"
+                           );
+                PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
                 Live_DeclineInvitation();
               }
               else {
 LAB_8264c2bc:
-                Com_PrintWarning(0x10,0xffffffff8218e4ec);
+                Com_PrintWarning(0x10,"Unhandled connection status! (0x%x)\n");
               }
               break;
-            case 1:
-              iVar5 = XInviteGetAcceptedInfo(local_120,auStack_f0);
-              if (-1 < iVar5) {
-                Live_StartAcceptingInvitation_Internal(uVar2,auStack_f0);
+            case 0x2000002:
+              uVar6 = XInviteGetAcceptedInfo(local_120,a_Stack_f0);
+              if (-1 < (int)uVar6) {
+                Live_StartAcceptingInvitation_Internal(uVar1,a_Stack_f0);
               }
               break;
-            case 2:
+            case 0x2000003:
               if (local_120 == 0) {
                 Com_Printf(0x10,local_10c);
               }
@@ -4656,124 +5108,122 @@ LAB_8264c2bc:
               }
               break;
             default:
-              goto switchD_8264bf78_caseD_3;
-            case 6:
-              lVar9 = 0;
+              goto switchD_8264bf78_caseD_c;
+            case 0x2000007:
+              LVar3 = LOCAL_CLIENT_0;
               do {
-                uVar3 = CL_ControllerIndexFromClientNum(lVar9);
-                iVar5 = CL_GetLocalClientSignInState();
-                if (0 < iVar5) goto LAB_8264c070;
-                lVar9 = lVar9 + 1;
-              } while ((int)lVar9 < 4);
+                iVar2 = CL_ControllerIndexFromClientNum(LVar3);
+                iVar4 = CL_GetLocalClientSignInState(iVar2);
+                if (0 < iVar4) goto LAB_8264c070;
+                LVar3 = LVar3 + LOCAL_CLIENT_1;
+              } while ((int)LVar3 < 4);
               break;
-            case 7:
+            case 0x2000008:
               Com_Printf(0x10,local_100);
               break;
-            case 8:
+            case 0x2000009:
               break;
-            case 9:
-              MeetPlayer_MarkPresenceForUpdate(uVar4);
+            case 0x200000a:
+              MeetPlayer_MarkPresenceForUpdate(iStack00000014);
               LiveParty_MarkPresenceForUpdate();
             }
           }
         }
         else if (local_11c < 0xa000004) {
           if (local_11c < 0xa000001) {
-            if ((local_11c < 0x4000002) || (0x4000003 < local_11c)) goto switchD_8264bf78_caseD_3;
-            Friends_MarkForUpdate(uVar4);
-            Voice_SetAllFriendFlags(0xffffffff844c7860);
-            Voice_SetAllFriendFlags(0xffffffff844c6c08);
-            Voice_SetAllFriendFlags(0xffffffff844ac9b0);
+            if ((local_11c < 0x4000002) || (0x4000003 < local_11c)) goto switchD_8264bf78_caseD_c;
+            Friends_MarkForUpdate(iStack00000014);
+            Voice_SetAllFriendFlags(&g_serverSession);
+            Voice_SetAllFriendFlags(&g_partySession);
+            Voice_SetAllFriendFlags(&g_partyPresenceSession);
           }
         }
         else if (local_11c == 0xe040002) {
           LiveParty_Update();
         }
         else {
-switchD_8264bf78_caseD_3:
-          Com_Printf(0x10,0xffffffff8218e44c,local_11c >> 0x10 & 0x1ff,local_11c >> 0x19 & 0x3f,
-                     local_11c & 0xffff);
+switchD_8264bf78_caseD_c:
+          Com_Printf(0x10,"Unknown notification version %i, area %i, index %i\n");
         }
-switchD_8264bf78_caseD_5:
-        iVar5 = XNotifyGetNext(*(undefined4 *)(local_f8 + 0x36e8),0,&local_11c,&local_120);
-      } while (iVar5 != 0);
+switchD_8264bf78_caseD_e:
+        iVar2 = XNotifyGetNext(*(undefined4 *)(local_f8 + 0x36e8),0,&local_11c,&local_120);
+      } while (iVar2 != 0);
     }
   }
   __restgprlr();
   return;
 code_r0x8264c05c:
-  lVar9 = lVar9 + 1;
-  if (3 < (int)lVar9) goto switchD_8264bf78_caseD_5;
+  LVar3 = LVar3 + LOCAL_CLIENT_1;
+  if (3 < (int)LVar3) goto switchD_8264bf78_caseD_e;
   goto LAB_8264c044;
 }
 
 
 // 82648118  Live_CloseGettingDataPopup  (xenon/xenon_live.cpp:5462)
 
-void Live_CloseGettingDataPopup(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_CloseGettingDataPopup(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar3;
-  longlong lVar4;
-  undefined4 local_30 [12];
+  int iVar1;
+  bool bVar2;
+  bool bVar3;
+  int iVar4;
+  LocalClientNum_t local_30 [12];
   
-  uVar2 = __savegprlr_29();
-  local_30[0] = 0;
-  cVar3 = SocialConfig_Ok();
-  if (cVar3 == '\0') {
-    bVar1 = false;
-  }
-  else {
-    cVar3 = LiveStorage_IsWaitingOnStats(uVar2);
-    if (cVar3 == '\0') {
-      cVar3 = LiveStorage_DoWeHavePlaylists();
-      if (cVar3 == '\0') {
-        bVar1 = false;
-      }
-      else {
-        cVar3 = LiveStorage_DoWeHaveFFotD();
-        if (cVar3 == '\0') {
-          bVar1 = false;
-        }
-        else {
-          cVar3 = LiveStorage_IsTimeSynced();
-          if (cVar3 == '\0') {
-            bVar1 = false;
-          }
-          else {
-            cVar3 = LiveStorage_ShouldReadPeriodicChallenges(uVar2);
-            bVar1 = cVar3 == '\0';
-          }
-        }
-      }
+  iVar1 = __savegprlr_29(param_1);
+  local_30[0] = LOCAL_CLIENT_0;
+  bVar2 = SocialConfig_Ok();
+  if (bVar2) {
+    bVar2 = LiveStorage_IsWaitingOnStats(iVar1);
+    if (bVar2) {
+      bVar2 = false;
     }
     else {
-      bVar1 = false;
-    }
-  }
-  lVar4 = 0;
-  do {
-    cVar3 = CL_DoesControllerIndexHaveALocalClientNum(lVar4,local_30);
-    if (cVar3 != '\0') {
-      cVar3 = LiveStorage_IsWaitingOnStats(lVar4);
-      if (cVar3 == '\0') {
-        cVar3 = LiveStorage_ShouldReadPeriodicChallenges(lVar4);
-        bVar1 = (bool)(cVar3 == '\0' & bVar1);
+      bVar2 = LiveStorage_DoWeHavePlaylists();
+      if (bVar2) {
+        bVar2 = LiveStorage_DoWeHaveFFotD();
+        if (bVar2) {
+          bVar2 = LiveStorage_IsTimeSynced();
+          if (bVar2) {
+            bVar2 = LiveStorage_ShouldReadPeriodicChallenges(iVar1);
+            bVar2 = !bVar2;
+          }
+          else {
+            bVar2 = false;
+          }
+        }
+        else {
+          bVar2 = false;
+        }
       }
       else {
-        bVar1 = false;
+        bVar2 = false;
       }
     }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 4);
-  if ((bVar1) && (cVar3 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,local_30), cVar3 != '\0'))
-  {
-    cVar3 = Menu_IsMenuOpenAndVisible(0,0xffffffff820861dc);
-    if (cVar3 != '\0') {
-      ClosePopupGettingData(0);
+  }
+  else {
+    bVar2 = false;
+  }
+  iVar4 = 0;
+  do {
+    bVar3 = CL_DoesControllerIndexHaveALocalClientNum(iVar4,local_30);
+    if (bVar3) {
+      bVar3 = LiveStorage_IsWaitingOnStats(iVar4);
+      if (bVar3) {
+        bVar2 = false;
+      }
+      else {
+        bVar3 = LiveStorage_ShouldReadPeriodicChallenges(iVar4);
+        bVar2 = (bool)(!bVar3 & bVar2);
+      }
     }
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 4);
+  if (((bVar2) && (bVar2 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_30), bVar2)) &&
+     (bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata"), bVar2)) {
+    ClosePopupGettingData(LOCAL_CLIENT_0);
   }
   __restgprlr_29();
   return;
@@ -4782,12 +5232,16 @@ void Live_CloseGettingDataPopup(void)
 
 // 8264C418  Live_ControllerFrame  (xenon/xenon_live.cpp:5511)
 
-void Live_ControllerFrame(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_ControllerFrame(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
+  int iVar1;
+  bool bVar4;
+  DWOnlineStatus DVar2;
+  PartyData *pPVar3;
   
   Live_CheckForFullDisconnect(param_2);
   Live_CheckNotifications(param_2);
@@ -4797,25 +5251,38 @@ void Live_ControllerFrame(undefined8 param_1,undefined8 param_2)
   Live_CloseGettingDataPopup(param_2);
   CL_Live_CheckSplitscreenOnlineStats(param_2);
   CL_Demo_EnumFrame(param_2);
-  iVar2 = CL_GetLocalClientSignInState(param_2);
-  if ((iVar2 == 2) && (cVar3 = Live_UserIsGuest(param_2), cVar3 == '\0')) {
+  iVar1 = CL_GetLocalClientSignInState(param_2);
+  if ((iVar1 != 2) || (bVar4 = Live_UserIsGuest(param_2), bVar4)) {
+    iVar1 = Live_OnlinePlayEvenIfDown();
+    if ((iVar1 != 0) && (bVar4 = Live_IsSignedIn(param_2), bVar4)) {
+      bVar4 = LiveStorage_DoWeHavePlaylists();
+      if (!bVar4) {
+        LiveStorage_LoadPlaylistsFromFastfile(param_2);
+      }
+      bVar4 = LSP_Connected();
+      if (!bVar4) {
+        LSP_FindTitleServers(param_2);
+      }
+    }
+  }
+  else {
     Live_CheckPlaylistVersionUpdate();
-    cVar3 = LiveStorage_DoWeHavePlaylists();
-    if ((cVar3 == '\0') || (cVar3 = Playlist_IsOutOfDate(), cVar3 != '\0')) {
+    bVar4 = LiveStorage_DoWeHavePlaylists();
+    if ((!bVar4) || (bVar4 = Playlist_IsOutOfDate(), bVar4)) {
       LiveStorage_FetchPlaylists(param_2);
     }
-    iVar2 = dwGetLogOnStatus(param_2);
-    if (iVar2 == 2) {
-      cVar3 = LiveStorage_DoWeHaveMotd();
-      if (cVar3 == '\0') {
+    DVar2 = dwGetLogOnStatus(param_2);
+    if (DVar2 == DW_LIVE_CONNECTED) {
+      bVar4 = LiveStorage_DoWeHaveMotd();
+      if (!bVar4) {
         LiveStorage_FetchMotd(param_2);
       }
-      cVar3 = LiveStorage_DoWeHaveFFotD();
-      if (cVar3 == '\0') {
+      bVar4 = LiveStorage_DoWeHaveFFotD();
+      if (!bVar4) {
         LiveStorage_FetchFFotD(param_2);
       }
-      cVar3 = LiveStorage_IsTimeSynced();
-      if (cVar3 == '\0') {
+      bVar4 = LiveStorage_IsTimeSynced();
+      if (!bVar4) {
         LiveStorage_SyncTime(param_2);
       }
       MeetPlayer_Update(param_2);
@@ -4823,23 +5290,20 @@ void Live_ControllerFrame(undefined8 param_1,undefined8 param_2)
       LiveCounter_Update(param_2);
       LiveStorage_FetchPlaylistPopulation(param_2);
     }
-    cVar3 = LiveStorage_ShouldReadOnlineStats(param_2);
-    if ((cVar3 != '\0') && (cVar3 = LiveStorage_DoWeHaveStatsForSource(param_2,0), cVar3 == '\0')) {
+    bVar4 = LiveStorage_ShouldReadOnlineStats(param_2);
+    if ((bVar4) && (bVar4 = LiveStorage_DoWeHaveStatsForSource(param_2,STATS_ONLINE), !bVar4)) {
       LiveStorage_DownloadStats(param_2);
     }
-    cVar3 = LiveStorage_DoWeNeedOnlineStatsWrite(param_2);
-    if (cVar3 != '\0') {
-      iVar2 = dwGetLogOnStatus(param_2);
-      if (iVar2 == 2) {
-        LiveStorage_UploadStats(param_2);
-      }
+    bVar4 = LiveStorage_DoWeNeedOnlineStatsWrite(param_2);
+    if ((bVar4) && (DVar2 = dwGetLogOnStatus(param_2), DVar2 == DW_LIVE_CONNECTED)) {
+      LiveStorage_UploadStats(param_2);
     }
-    cVar3 = LiveStorage_ShouldReadPeriodicChallenges(param_2);
-    if (cVar3 != '\0') {
+    bVar4 = LiveStorage_ShouldReadPeriodicChallenges(param_2);
+    if (bVar4) {
       LiveStorage_CheckPeriodicChallengeUpdate(param_2);
     }
-    cVar3 = LSP_Connected();
-    if (cVar3 == '\0') {
+    bVar4 = LSP_Connected();
+    if (!bVar4) {
       LSP_FindTitleServers(param_2);
     }
     LiveParty_Frame(param_2);
@@ -4847,28 +5311,18 @@ void Live_ControllerFrame(undefined8 param_1,undefined8 param_2)
     Xenon_PresenceUpdate(param_2);
     Live_SyncOnlineDataFrame(param_2);
   }
-  else {
-    iVar2 = Live_OnlinePlayEvenIfDown();
-    if ((iVar2 != 0) && (cVar3 = Live_IsSignedIn(param_2), cVar3 != '\0')) {
-      cVar3 = LiveStorage_DoWeHavePlaylists();
-      if (cVar3 == '\0') {
-        LiveStorage_LoadPlaylistsFromFastfile(param_2);
-      }
-      cVar3 = LSP_Connected();
-      if (cVar3 == '\0') {
-        LSP_FindTitleServers(param_2);
-      }
-    }
-  }
-  cVar3 = LiveStorage_ShouldReadOfflineStats(param_2);
-  if ((cVar3 != '\0') && (cVar3 = LiveStorage_DoWeHaveStatsForSource(param_2,1), cVar3 == '\0')) {
+  bVar4 = LiveStorage_ShouldReadOfflineStats(param_2);
+  if ((bVar4) && (bVar4 = LiveStorage_DoWeHaveStatsForSource(param_2,STATS_OFFLINE), !bVar4)) {
     LiveStorage_ReadStats(param_2);
   }
-  cVar3 = Live_UserIsGuest(param_2);
-  if (cVar3 == '\0') {
-    uVar1 = Lobby_GetPartyData();
-    Party_AddRecentPlayers(uVar1,param_2);
-    Party_AddRecentPlayers(0xffffffff82b55118,param_2);
+  bVar4 = Live_UserIsGuest(param_2);
+  if (bVar4) {
+    LiveStorage_CopySponsorStats(param_2);
+  }
+  else {
+    pPVar3 = Lobby_GetPartyData();
+    Party_AddRecentPlayers(pPVar3,param_2);
+    Party_AddRecentPlayers(&g_partyData,param_2);
     Facebook_Update(param_2);
     Facebook_UpdateFriends(param_2);
     Commerce_Update(param_2);
@@ -4882,37 +5336,36 @@ void Live_ControllerFrame(undefined8 param_1,undefined8 param_2)
     Facebook_UpdatePosting(param_2);
     PlayercardCache_Update(param_2);
   }
-  else {
-    LiveStorage_CopySponsorStats(param_2);
-  }
   return;
 }
 
 
 // 8264C748  Live_SignedInControllerFrame  (xenon/xenon_live.cpp:5769)
 
-void Live_SignedInControllerFrame(ulonglong param_1)
+void Live_SignedInControllerFrame(uint param_1)
 
 {
-  char cVar3;
-  undefined4 uVar1;
+  bool bVar4;
+  voiceCommunicationSetting vVar1;
   int iVar2;
+  DWOnlineStatus DVar3;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218b718,0x168a,0,0xffffffff82031880,param_1,4);
+  if (3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x168a,0
+                    ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = Live_IsSignedIn(param_1);
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x168b,0,0xffffffff82000f98,0xffffffff82036d4c);
+  bVar4 = Live_IsSignedIn(param_1);
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x168b,0
+                    ,"%s");
   }
-  uVar1 = Live_CalculateControllerVoiceCommunicationSetting(param_1);
-  *(undefined4 *)(&DAT_8424d5d8 + (int)param_1 * 0x2058) = uVar1;
+  vVar1 = Live_CalculateControllerVoiceCommunicationSetting(param_1);
+  xenonUserData[param_1].voiceCommunicationSetting = vVar1;
   iVar2 = CL_GetLocalClientSignInState(param_1);
-  if ((iVar2 == 2) && (cVar3 = Live_UserIsGuest(param_1), cVar3 == '\0')) {
-    iVar2 = dwGetLogOnStatus(param_1);
-    if ((iVar2 == 2) && (cVar3 = LiveStorage_CS_IsInited(param_1), cVar3 == '\0')) {
-      LiveStorage_CS_Init(param_1);
-    }
+  if ((((iVar2 == 2) && (bVar4 = Live_UserIsGuest(param_1), !bVar4)) &&
+      (DVar3 = dwGetLogOnStatus(param_1), DVar3 == DW_LIVE_CONNECTED)) &&
+     (bVar4 = LiveStorage_CS_IsInited(param_1), !bVar4)) {
+    LiveStorage_CS_Init(param_1);
   }
   LiveStorage_RemoteConsoleCheckPump(param_1);
   return;
@@ -4921,22 +5374,26 @@ void Live_SignedInControllerFrame(ulonglong param_1)
 
 // 82648278  Live_CheckInvites  (xenon/xenon_live.cpp:5800)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_CheckInvites(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  if (DAT_8425a054 == 2) {
-    uVar1 = Live_GetControllerIndexForPendingInvitation();
-    if ((int)uVar1 < 0) {
-      Com_PrintWarning(0x19,0xffffffff8218cc60);
+  if (g_launchData.inviteState == INVITE_MPACCEPTED) {
+    iVar1 = Live_GetControllerIndexForPendingInvitation();
+    if (iVar1 < 0) {
+      Com_PrintWarning(0x19,
+                       "Silently declining invitation because no user is signed in with a xuid that was the one invited.\n"
+                      );
       Live_DeclineInvitation();
       return;
     }
-    iVar2 = Live_IsWaitingForConnection(uVar1);
+    iVar2 = Live_IsWaitingForConnection(iVar1);
     if (iVar2 != 0) {
-      Live_WaitForOnlineServicesDialog(uVar1);
+      Live_WaitForOnlineServicesDialog(iVar1);
       return;
     }
     Live_ConfirmAcceptInvitation();
@@ -4947,6 +5404,8 @@ void Live_CheckInvites(void)
 
 // 82648318  Live_CheckSplitscreenControlsState  (xenon/xenon_live.cpp:5829)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_CheckSplitscreenControlsState(void)
 
 {
@@ -4956,35 +5415,45 @@ void Live_CheckSplitscreenControlsState(void)
 
 // 82648320  Live_ShutdownDueToTerminalError  (xenon/xenon_live.cpp:5857)
 
-void Live_ShutdownDueToTerminalError(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_ShutdownDueToTerminalError(int param_1)
 
 {
-  Com_Printf(0x10,0xffffffff8218ccc4);
+  Com_Printf(0x10,">>>>>> Live_ShutdownDueToTerminalError called\n");
   Live_DisconnectFromWebServices(param_1);
-  UI_SetActiveMenu(0,1);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,1);
   return;
 }
 
 
 // 8264C860  Live_Frame  (xenon/xenon_live.cpp:5866)
 
-void Live_Frame(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_Frame(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  longlong lVar6;
+  int iVar1;
+  bool bVar6;
+  int iVar2;
+  int iVar3;
+  PartyData *pPVar4;
+  DWOnlineStatus DVar5;
+  undefined8 in_r5;
+  LocalClientNum_t LVar7;
+  uint uVar8;
   
-  uVar1 = __savegprlr_29();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8217e2b4);
-  cVar5 = Sys_IsMainThread();
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff8218b718,0x16f0,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar1 = __savegprlr_29(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Live_Frame");
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_live.cpp",0x16f0,0
+                    ,"%s");
   }
-  uVar2 = CL_ControllerIndexFromActiveClient(0);
+  iVar2 = CL_ControllerIndexFromActiveClient(LOCAL_CLIENT_0);
   Live_CheckOngoingTasks();
   Live_CheckOngoingSessionTasks();
   Content_CheckOngoingSessionTasks();
@@ -4992,61 +5461,62 @@ void Live_Frame(void)
   IWNet_SendCommands();
   LB_CheckOngoingTasks();
   LiveAntiCheat_Update();
-  lVar6 = 0;
+  iVar3 = 0;
   do {
-    DW_Frame(lVar6);
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 4);
-  lVar6 = 0;
+    DW_Frame(iVar3);
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 4);
+  LVar7 = LOCAL_CLIENT_0;
   do {
-    cVar5 = CL_IsLocalClientActive(lVar6);
-    if (cVar5 != '\0') {
-      uVar3 = CL_ControllerIndexFromClientNum(lVar6);
-      Live_ControllerFrame(lVar6,uVar3);
+    bVar6 = CL_IsLocalClientActive(LVar7);
+    if (bVar6) {
+      iVar3 = CL_ControllerIndexFromClientNum(LVar7);
+      Live_ControllerFrame(LVar7,iVar3,(int)in_r5);
     }
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 4);
-  lVar6 = 0;
+    LVar7 = LVar7 + LOCAL_CLIENT_1;
+  } while ((int)LVar7 < 4);
+  uVar8 = 0;
   do {
-    cVar5 = Live_IsSignedIn(lVar6);
-    if (cVar5 != '\0') {
-      Live_SignedInControllerFrame(lVar6);
+    bVar6 = Live_IsSignedIn(uVar8);
+    if (bVar6) {
+      Live_SignedInControllerFrame(uVar8);
     }
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 4);
-  cVar5 = CL_AllLocalClientsInactive();
-  if (cVar5 != '\0') {
-    Live_CheckNotifications(uVar2);
+    uVar8 = uVar8 + 1;
+  } while ((int)uVar8 < 4);
+  bVar6 = CL_AllLocalClientsInactive();
+  if (bVar6) {
+    Live_CheckNotifications(iVar2);
   }
   Live_CheckPartyChatQuitTimer();
   LiveStorage_CheckOngoingSessionTasks();
   Friends_CheckOngoingTasks();
-  NewsFeed_Frame(uVar2);
+  NewsFeed_Frame(iVar2);
   PartyAtomic_PartyJoinFrame();
-  uVar3 = Lobby_GetPartyData();
-  Party_Frame(uVar3,uVar2,uVar1);
-  Party_Frame(0xffffffff82b55118,uVar2,uVar1);
+  pPVar4 = Lobby_GetPartyData();
+  Party_Frame(pPVar4,iVar2,iVar1);
+  Party_Frame(&g_partyData,iVar2,iVar1);
   Session_Frame();
   Social_UpdatePresence();
   dwMail_Frame();
-  iVar4 = dwGetLogOnStatus(uVar2);
-  if (iVar4 == 2) {
-    LiveTracker_Process(uVar2);
+  DVar5 = dwGetLogOnStatus(iVar2);
+  if (DVar5 == DW_LIVE_CONNECTED) {
+    LiveTracker_Process(iVar2);
   }
   Memcard_CheckOngoingTasks();
-  Live_CheckTeamRanks(uVar2);
+  Live_CheckTeamRanks(iVar2);
   Live_CheckInvites();
-  Live_UpdateMatchMaking(uVar2);
-  if ((((*(char *)(DAT_82aa1af8 + 0xc) == '\0') || (*(char *)(DAT_84253bb8 + 0xc) != '\0')) ||
-      (cVar5 = Lobby_IsInLobby(), cVar5 == '\0')) || (*(char *)(DAT_8424a654 + 0xc) == '\0')) {
-    cVar5 = '\0';
+  Live_UpdateMatchMaking(iVar2);
+  if (((((onlinegame->current).enabled == false) ||
+       ((xblive_privatematch->current).enabled != false)) || (bVar6 = Lobby_IsInLobby(), !bVar6)) ||
+     ((partyChatDisallowed->current).enabled == false)) {
+    bVar6 = false;
   }
   else {
-    cVar5 = Live_IsInPartyChat();
+    bVar6 = Live_IsInPartyChat();
   }
-  if (((cVar5 != '\0') && (DAT_84253a78 == '\0')) &&
-     ((DAT_8424a652 == '\0' && (DAT_84253a7b == '\0')))) {
-    DAT_842537f8 = 1;
+  if (((bVar6 != false) && (s_isSystemUiActive == false)) &&
+     ((s_partyChatWaitingForQuitTimer == false && (g_partyChatQuitting == false)))) {
+    s_partyChatWaitingForQuitResponse = true;
     XShowRequiredGameVoiceChannelUI();
   }
   Live_DisplayActiveDialog();
@@ -5058,18 +5528,20 @@ void Live_Frame(void)
 
 // 82648370  Live_DCacheInitialize  (xenon/xenon_live.cpp:6023)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_DCacheInitialize(void)
 
 {
-  int iVar1;
+  ulong uVar1;
   
-  if (DAT_842546d2 == '\0') {
-    iVar1 = XMountUtilityDrive(0,0x1000,0x10000);
-    if (iVar1 == 0) {
-      DAT_842546d2 = 1;
+  if (!s_dCacheEnabled) {
+    uVar1 = XMountUtilityDrive(0,0x1000,0x10000);
+    if (uVar1 == 0) {
+      s_dCacheEnabled = true;
       return;
     }
-    Com_Printf(6,0xffffffff8218ccf4);
+    Com_Printf(6,"dcache: initialization failure.\n");
   }
   return;
 }
@@ -5077,22 +5549,26 @@ void Live_DCacheInitialize(void)
 
 // 826483E8  Live_IsDCacheInitialized  (xenon/xenon_live.cpp:6042)
 
-undefined1 Live_IsDCacheInitialized(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Live_IsDCacheInitialized(void)
 
 {
-  return DAT_842546d2;
+  return s_dCacheEnabled;
 }
 
 
 // 826483F8  Live_DCacheShutdown  (xenon/xenon_live.cpp:6048)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_DCacheShutdown(void)
 
 {
-  if (DAT_842546d2 != '\0') {
+  if (s_dCacheEnabled) {
     XFlushUtilityDrive();
     XUnmountUtilityDrive();
-    DAT_842546d2 = '\0';
+    s_dCacheEnabled = false;
   }
   return;
 }
@@ -5100,10 +5576,12 @@ void Live_DCacheShutdown(void)
 
 // 82648440  Live_DCacheFlush  (xenon/xenon_live.cpp:6059)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_DCacheFlush(void)
 
 {
-  if (DAT_842546d2 != '\0') {
+  if (s_dCacheEnabled) {
     R_BeginRemoteScreenUpdate();
     XFlushUtilityDrive();
     R_EndRemoteScreenUpdate();
@@ -5114,10 +5592,12 @@ void Live_DCacheFlush(void)
 
 // 829400F8  `dynamic_atexit_destructor_for_'overlappedTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__overlappedTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff842546d8);
+  OverlappedTaskSet::~OverlappedTaskSet(&overlappedTasks);
   return;
 }
 

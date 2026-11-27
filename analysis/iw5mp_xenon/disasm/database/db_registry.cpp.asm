@@ -4916,12 +4916,6 @@ LAB_823ed710:
   823ED718  7D445378             or r4,r10,r10
   823ED71C  3869B724             subi r3,r9,0x48dc
   823ED720  48260CB1             bl 0x8264e3d0
-  823ED724  38210070             addi r1,r1,0x70
-  823ED728  8181FFF8             lwz r12,-0x8(r1)
-  823ED72C  7D8803A6             mtspr LR,r12
-  823ED730  EBC1FFE8             ld r30,-0x18(r1)
-  823ED734  EBE1FFF0             ld r31,-0x10(r1)
-  823ED738  4E800020             blr
 
 ; 823ED740  DB_IsDevZone  (database/db_registry.cpp:3303)
   823ED740  7D8802A6             mfspr r12,LR
@@ -5835,7 +5829,6 @@ LAB_823ee450:
   823EE484  3D608206             lis r11,-0x7dfa
   823EE488  386BB9C4             subi r3,r11,0x463c
   823EE48C  4825FF45             bl 0x8264e3d0
-  823EE490  817CF084             lwz r11,-0xf7c(r28)
 LAB_823ee494:
   823EE494  556A103A             rlwinm r10,r11,0x2,0x0,0x1d
   823EE498  396B0001             addi r11,r11,0x1
@@ -5984,7 +5977,6 @@ LAB_823ee65c:
   823EE698  7EE4BB78             or r4,r23,r23
   823EE69C  386BBA78             subi r3,r11,0x4588
   823EE6A0  4825FD31             bl 0x8264e3d0
-  823EE6A4  4800002C             b 0x823ee6d0
 LAB_823ee6a8:
   823EE6A8  3D608296             lis r11,-0x7d6a
   823EE6AC  57EA103A             rlwinm r10,r31,0x2,0x0,0x1d
@@ -8873,7 +8865,6 @@ LAB_823f57f4:
   823F57F8  38810060             addi r4,r1,0x60
   823F57FC  386BC54C             subi r3,r11,0x3ab4
   823F5800  48258BD1             bl 0x8264e3d0
-  823F5804  4BFFFEC0             b 0x823f56c4
 LAB_823f5808:
   823F5808  2B1F0000             cmplwi cr6,r31,0x0
   823F580C  93FD0008             stw r31,0x8(r29)

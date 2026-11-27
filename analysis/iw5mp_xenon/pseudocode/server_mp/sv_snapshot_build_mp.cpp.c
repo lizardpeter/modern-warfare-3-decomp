@@ -2,156 +2,179 @@
 
 // 8257DFE0  SV_ClearBaselineFlagForAllClients  (server_mp/sv_snapshot_build_mp.cpp:30)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void SV_ClearBaselineFlagForAllClients(void)
 
 {
-  int iVar1;
+  client_t *pcVar1;
   int iVar2;
   int iVar3;
   
   iVar2 = 0;
-  if (DAT_83f11410 < 1) {
+  if (svs.clientCount < 1) {
     return;
   }
+  pcVar1 = svs.clients;
   iVar3 = 0;
-  iVar1 = DAT_83f11414;
   do {
-    *(undefined4 *)(iVar1 + 0x10) = 0;
+    (pcVar1->header).hasAckedBaselineData = 0;
     iVar2 = iVar2 + 1;
+    pcVar1 = (client_t *)(svs.clients[1].header.netchan.remoteAddress.ip + iVar3 + -0x2c);
     iVar3 = iVar3 + 0x68b00;
-    iVar1 = iVar3 + DAT_83f11414;
-  } while (iVar2 < DAT_83f11410);
+  } while (iVar2 < svs.clientCount);
   return;
 }
 
 
 // 8257E058  SV_CanClientsSeeEntity  (server_mp/sv_snapshot_build_mp.cpp:41)
 
-longlong SV_CanClientsSeeEntity(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool SV_CanClientsSeeEntity(gentity_s *param_1)
 
 {
-  longlong lVar1;
+  uint uVar1;
+  longlong lVar2;
   
-  if ((*(char *)(param_1 + 0x100) != '\0') && ((*(byte *)(param_1 + 0x102) & 1) == 0)) {
-    lVar1 = (ulonglong)*(uint *)(param_1 + 0xfc) + 1;
-    return lVar1 - ((ulonglong)*(uint *)(param_1 + 0xfc) + (ulonglong)(lVar1 == 0));
+  if (((param_1->r).isLinked != '\0') && (((param_1->r).svFlags & 1) == 0)) {
+    uVar1 = (param_1->s).clientMask[0];
+    lVar2 = (ulonglong)uVar1 + 1;
+    return (bool)((char)lVar2 - ((char)uVar1 + (lVar2 == 0)));
   }
-  return 0;
+  return false;
 }
 
 
 // 8257E090  SV_AddEntitiesClientsCanSee  (server_mp/sv_snapshot_build_mp.cpp:66)
 
-void SV_AddEntitiesClientsCanSee(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_AddEntitiesClientsCanSee(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  char cVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  void *pvVar1;
+  bool bVar3;
+  int iVar2;
+  longlong lVar4;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   int iVar8;
   longlong lVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
+  ulonglong uVar10;
   
   __savegprlr_26();
-  uVar2 = DAT_83f11428;
-  lVar10 = 0;
-  uVar12 = (ulonglong)DAT_83f11428;
-  trapWord(6,(ulonglong)DAT_83f11418,0);
-  uVar7 = (((ulonglong)DAT_83f11428 & 0x7fffffff) << 1 | (ulonglong)(DAT_83f11428 >> 0x1f)) - 1;
-  lVar5 = (longlong)((int)DAT_83f11428 / (int)DAT_83f11418) * (longlong)(int)DAT_83f11418;
-  uVar3 = uVar12 - lVar5;
-  trapWord(5,(ulonglong)DAT_83f11418 & ~uVar7,0xffff);
-  dataCacheBlockTouch((uVar3 & 0xffffff) * 0x100 + (ulonglong)DAT_83d0ed84);
-  cVar4 = SV_Loaded(uVar3,lVar5,uVar7);
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff82160e18,0x4c,0,0xffffffff82000f98,0xffffffff82160e68);
+  iVar2 = svs.nextSnapshotEntities;
+  lVar7 = 0;
+  uVar10 = (ulonglong)(uint)svs.nextSnapshotEntities;
+  trapWord(6,(ulonglong)(uint)svs.numSnapshotEntities,0);
+  trapWord(5,(ulonglong)(uint)svs.numSnapshotEntities &
+             ~((((ulonglong)(uint)svs.nextSnapshotEntities & 0x7fffffff) << 1 |
+               (ulonglong)((uint)svs.nextSnapshotEntities >> 0x1f)) - 1),0xffff);
+  dataCacheBlockTouch((uVar10 - (longlong)(svs.nextSnapshotEntities / svs.numSnapshotEntities) *
+                                (longlong)svs.numSnapshotEntities & 0xffffff) * 0x100 +
+                      ZEXT48(svs.snapshotEntities));
+  bVar3 = SV_Loaded();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0x4c,0,"%s");
   }
-  iVar11 = 0;
-  if (0 < DAT_83cfc504) {
-    lVar5 = 0;
-    iVar8 = DAT_83cfc504;
+  iVar8 = 0;
+  if (0 < sv.num_entities) {
+    lVar9 = 0;
+    iVar5 = sv.num_entities;
     do {
-      lVar6 = lVar5 + (ulonglong)DAT_83cfc500;
-      dataCacheBlockTouch(lVar6 + 0x280);
-      dataCacheBlockTouch(lVar6 + 0x300);
-      iVar1 = (int)lVar6;
-      if (*(char *)(iVar1 + 0x100) == '\0') {
-        uVar3 = 0;
+      lVar4 = lVar9 + ZEXT48(sv.gentities);
+      dataCacheBlockTouch(lVar4 + 0x280);
+      dataCacheBlockTouch(lVar4 + 0x300);
+      pvVar1 = (void *)lVar4;
+      if (*(char *)((int)pvVar1 + 0x100) == '\0') {
+        uVar6 = 0;
       }
-      else if ((*(byte *)(iVar1 + 0x102) & 1) == 0) {
-        lVar9 = (ulonglong)*(uint *)(iVar1 + 0xfc) + 1;
-        uVar3 = lVar9 - ((ulonglong)*(uint *)(iVar1 + 0xfc) + (ulonglong)(lVar9 == 0));
+      else if ((*(byte *)((int)pvVar1 + 0x102) & 1) == 0) {
+        lVar4 = (ulonglong)*(uint *)((int)pvVar1 + 0xfc) + 1;
+        uVar6 = lVar4 - ((ulonglong)*(uint *)((int)pvVar1 + 0xfc) + (ulonglong)(lVar4 == 0));
       }
       else {
-        uVar3 = 0;
+        uVar6 = 0;
       }
-      if ((uVar3 & 0xff) != 0) {
-        lVar10 = lVar10 + 1;
-        if ((int)lVar10 == 0x400) {
-          Com_PrintError(1,0xffffffff82160dd0,0x400);
-          DAT_83f11428 = (int)uVar12;
-          __restgprlr_26(lVar10);
-          return;
+      if ((uVar6 & 0xff) != 0) {
+        lVar7 = lVar7 + 1;
+        if ((int)lVar7 == 0x400) {
+          Com_PrintError(1,"Hit MAX_SNAPSHOT_ENTITIES[%d] in server snapshot - ignoring the rest.\n"
+                        );
+          svs.nextSnapshotEntities = (int)uVar10;
+          iVar2 = __restgprlr_26(lVar7);
+          return iVar2;
         }
-        uVar3 = ((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1;
-        iVar8 = (int)uVar12 / (int)DAT_83f11418;
-        trapWord(6,(ulonglong)DAT_83f11418,0);
-        uVar7 = uVar12 - (longlong)iVar8 * (longlong)(int)DAT_83f11418;
-        trapWord(5,(ulonglong)DAT_83f11418 & ~uVar3,0xffff);
-        uVar12 = uVar12 + 1;
-        Com_Memcpy128((uVar7 & 0xffffff) * 0x100 + (ulonglong)DAT_83d0ed84,lVar6,0x100,iVar8,uVar3);
-        iVar8 = DAT_83cfc504;
+        trapWord(6,(ulonglong)(uint)svs.numSnapshotEntities,0);
+        uVar6 = uVar10 - (longlong)((int)uVar10 / svs.numSnapshotEntities) *
+                         (longlong)svs.numSnapshotEntities;
+        trapWord(5,(ulonglong)(uint)svs.numSnapshotEntities &
+                   ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
+        uVar10 = uVar10 + 1;
+        Com_Memcpy128((void *)((int)((svs.snapshotEntities)->lerp).pos.trBase +
+                              (int)((uVar6 & 0xffffffff) << 8) + -0x18),pvVar1,0x100);
+        iVar5 = sv.num_entities;
       }
-      iVar11 = iVar11 + 1;
-      lVar5 = lVar5 + 0x280;
-      uVar2 = (uint)uVar12;
-    } while (iVar11 < iVar8);
+      iVar2 = (int)uVar10;
+      iVar8 = iVar8 + 1;
+      lVar9 = lVar9 + 0x280;
+    } while (iVar8 < iVar5);
   }
-  DAT_83f11428 = uVar2;
-  __restgprlr_26(lVar10);
-  return;
+  svs.nextSnapshotEntities = iVar2;
+  iVar2 = __restgprlr_26(lVar7);
+  return iVar2;
 }
 
 
 // 8257E260  SV_CreateBaseline  (server_mp/sv_snapshot_build_mp.cpp:115)
 
-void SV_CreateBaseline(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_CreateBaseline(void)
 
 {
   int *piVar1;
-  char cVar3;
-  longlong lVar2;
+  bool bVar3;
+  int iVar2;
   longlong lVar4;
   ulonglong uVar5;
   int iVar6;
   byte bVar7;
-  int iVar8;
+  longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
   
   __savegprlr_26();
-  if (DAT_83f11424 != 0) {
-    MyAssertHandler(0xffffffff82160e18,0x79,0,0xffffffff82160ec0,0xffffffff82160ee4);
+  if (svs.nextNoDeltaEntity != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0x79,0,"%s\n\t(svs.nextNoDeltaEntity) = %i");
   }
-  uVar5 = (ulonglong)DAT_83f11424;
-  lVar10 = (uVar5 & 0xffffff) * 0x100;
-  dataCacheBlockTouch(lVar10 + (ulonglong)DAT_83d0ed88);
-  cVar3 = SV_Loaded();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff82160e18,0x7d,0,0xffffffff82000f98,0xffffffff82160e68);
+  uVar5 = (ulonglong)(uint)svs.nextNoDeltaEntity;
+  lVar9 = ((ulonglong)(uint)svs.nextNoDeltaEntity & 0xffffff) * 0x100;
+  dataCacheBlockTouch(lVar9 + ZEXT48(svs.noDeltaEntities));
+  bVar3 = SV_Loaded();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0x7d,0,"%s");
   }
-  iVar8 = 0;
-  if (0 < DAT_83cfc504) {
-    lVar9 = 0;
-    iVar6 = DAT_83cfc504;
+  iVar2 = 0;
+  if (0 < sv.num_entities) {
+    lVar8 = 0;
+    iVar6 = sv.num_entities;
     do {
-      lVar4 = lVar9 + (ulonglong)DAT_83cfc500;
+      lVar4 = lVar8 + ZEXT48(sv.gentities);
       dataCacheBlockTouch(lVar4 + 0x280);
       dataCacheBlockTouch(lVar4 + 0x300);
       piVar1 = (int *)lVar4;
@@ -162,103 +185,114 @@ void SV_CreateBaseline(void)
         }
         if (bVar7 != 0) {
           if ((int)uVar5 == 0x400) {
-            Com_PrintError(1,0xffffffff82160e78,0x400);
+            Com_PrintError(1,
+                           "Hit NUM_NODELTA_ENTITIES[%d] in baseline snapshot - ignoring the rest.\n"
+                          );
             break;
           }
           uVar5 = uVar5 + 1;
-          lVar2 = lVar10 + (ulonglong)DAT_83d0ed88;
-          lVar10 = lVar10 + 0x100;
-          Com_Memcpy128(lVar2,lVar4,0x100);
-          iVar6 = DAT_83cfc504;
+          iVar6 = (int)lVar9;
+          lVar9 = lVar9 + 0x100;
+          Com_Memcpy128((void *)((int)((svs.noDeltaEntities)->lerp).pos.trBase + iVar6 + -0x18),
+                        piVar1,0x100);
+          iVar6 = sv.num_entities;
         }
       }
-      iVar8 = iVar8 + 1;
-      lVar9 = lVar9 + 0x280;
-    } while (iVar8 < iVar6);
+      iVar2 = iVar2 + 1;
+      lVar8 = lVar8 + 0x280;
+    } while (iVar2 < iVar6);
   }
-  DAT_83f11424 = (uint)uVar5;
+  svs.nextNoDeltaEntity = (int)uVar5;
   SV_ClearBaselineFlagForAllClients();
-  __restgprlr_26(uVar5);
-  return;
+  iVar2 = __restgprlr_26(uVar5);
+  return iVar2;
 }
 
 
 // 8257E3F0  SV_SaveSnapshotForTime  (server_mp/sv_snapshot_build_mp.cpp:170)
 
-void SV_SaveSnapshotForTime(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_SaveSnapshotForTime(int param_1)
 
 {
-  undefined4 uVar2;
-  char cVar3;
-  undefined8 uVar1;
-  int *_Dst;
-  void *_Src;
-  int iVar4;
+  serverSnapshot_t *psVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar4;
   ulonglong uVar5;
-  int *piVar6;
+  client_t *pcVar6;
   int iVar7;
-  longlong lVar8;
+  int iVar8;
+  clientState_s *pcVar9;
   int aiStack_d0 [52];
   
-  uVar2 = __savegprlr_16();
-  (&DAT_83f1dfd0)[DAT_83f1e010] = uVar2;
-  memset(&DAT_83f1da50 + DAT_83f1e010 * 0x58,0,0x58);
+  iVar2 = __savegprlr_16(param_1);
+  svs.serverSnapshotTimes[svs.nextServerSnapshotIndex] = iVar2;
+  memset();
+  iVar2 = svs.nextServerSnapshotIndex;
   iVar7 = 0;
-  iVar4 = DAT_83f1e010 * 0x58;
-  DAT_83f1e010 = DAT_83f1e010 + 1 & 0xf;
-  *(undefined4 *)(&DAT_83f1daa0 + iVar4) = DAT_83f11428;
-  *(uint *)(&DAT_83f1daa4 + iVar4) = DAT_83f1142c;
+  psVar1 = svs.snapshots + svs.nextServerSnapshotIndex;
+  svs.nextServerSnapshotIndex = svs.nextServerSnapshotIndex + 1U & 0xf;
+  psVar1->firstEntityIndex = svs.nextSnapshotEntities;
+  svs.snapshots[iVar2].firstClientIndex = svs.nextSnapshotClients;
   Com_Memset(aiStack_d0,0,0x48);
-  uVar2 = SV_AddEntitiesClientsCanSee();
-  DAT_83f1e018 = uVar2;
-  if (DAT_83f11410 < *(int *)(DAT_83d0b55c + 0xc)) {
-    MyAssertHandler(0xffffffff82160e18,0xcf,0,0xffffffff82000f98,0xffffffff8215a9fc);
+  iVar3 = SV_AddEntitiesClientsCanSee();
+  svs.activeEntities = iVar3;
+  if (svs.clientCount < (sv_maxclients->current).integer) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0xcf,0,"%s");
   }
-  cVar3 = Lobby_IsInRunningLobby();
-  if (cVar3 != '\0') {
-    if (*(int *)(DAT_82b59048 + 0xc) != *(int *)(DAT_83d0b55c + 0xc)) {
-      uVar1 = va(0xffffffff8215f610);
-      MyAssertHandler(0xffffffff82160e18,0xd2,0,0xffffffff820011f4,0xffffffff8215f660,uVar1);
-    }
+  bVar4 = Lobby_IsInRunningLobby();
+  if ((bVar4) && ((party_maxplayers->current).integer != (sv_maxclients->current).integer)) {
+    va("party_maxplayers->current.integer != sv_maxclients->current.integer, %i != %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0xd2,0,"%s\n\t%s");
   }
-  lVar8 = 0;
-  if (0 < DAT_83f11410) {
-    uVar5 = (ulonglong)DAT_83f1142c;
-    piVar6 = DAT_83f11414;
+  iVar8 = 0;
+  if (0 < svs.clientCount) {
+    uVar5 = (ulonglong)(uint)svs.nextSnapshotClients;
+    pcVar6 = svs.clients;
     do {
-      if (2 < *piVar6) {
-        trapWord(6,(ulonglong)DAT_83f1141c,0);
-        trapWord(5,(ulonglong)DAT_83f1141c &
+      if (2 < (pcVar6->header).state) {
+        trapWord(6,(ulonglong)(uint)svs.numSnapshotClients,0);
+        trapWord(5,(ulonglong)(uint)svs.numSnapshotClients &
                    ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        _Dst = (int *)(((int)uVar5 - ((int)uVar5 / (int)DAT_83f1141c) * DAT_83f1141c) * 0xe0 +
-                      DAT_83f11430);
-        _Src = (void *)G_GetClientState(lVar8);
-        memcpy(_Dst,_Src,0xe0);
-        if (*_Dst != (int)lVar8) {
-          MyAssertHandler(0xffffffff82160e18,0xdb,0,0xffffffff82000f98,0xffffffff82160f00);
+        pcVar9 = svs.snapshotClients +
+                 ((int)uVar5 - ((int)uVar5 / svs.numSnapshotClients) * svs.numSnapshotClients);
+        G_GetClientState(iVar8);
+        memcpy();
+        if (pcVar9->clientIndex != iVar8) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0xdb,0,"%s");
         }
-        if (aiStack_d0[*_Dst] != 0) {
-          MyAssertHandler(0xffffffff82160e18,0xde,0,0xffffffff82000f98,0xffffffff82024de0);
+        if (aiStack_d0[pcVar9->clientIndex] != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0xde,0,"%s");
         }
-        uVar5 = (ulonglong)DAT_83f1142c + 1;
-        aiStack_d0[*_Dst] = 1;
-        DAT_83f1142c = (uint)uVar5;
-        if (0x7ffffffd < (int)DAT_83f1142c) {
-          MyAssertHandler(0xffffffff82160e18,0xe3,0,0xffffffff82000f98,0xffffffff82160f20);
-          uVar5 = (ulonglong)DAT_83f1142c;
+        uVar5 = (ulonglong)(uint)svs.nextSnapshotClients + 1;
+        aiStack_d0[pcVar9->clientIndex] = 1;
+        svs.nextSnapshotClients = (int)uVar5;
+        if (0x7ffffffd < svs.nextSnapshotClients) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0xe3,0,"%s");
+          uVar5 = (ulonglong)(uint)svs.nextSnapshotClients;
         }
         iVar7 = iVar7 + 1;
-        if (*(int *)(&DAT_83f1daa4 + iVar4) + iVar7 != (int)uVar5) {
-          MyAssertHandler(0xffffffff82160e18,0xe5,0,0xffffffff82000f98,0xffffffff82160f48);
-          uVar5 = (ulonglong)DAT_83f1142c;
+        if (svs.snapshots[iVar2].firstClientIndex + iVar7 != (int)uVar5) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0xe5,0,"%s");
+          uVar5 = (ulonglong)(uint)svs.nextSnapshotClients;
         }
       }
-      lVar8 = lVar8 + 1;
-      piVar6 = piVar6 + 0x1a2c0;
-    } while ((int)lVar8 < DAT_83f11410);
+      iVar8 = iVar8 + 1;
+      pcVar6 = pcVar6 + 1;
+    } while (iVar8 < svs.clientCount);
   }
-  *(int *)(&DAT_83f1da9c + iVar4) = iVar7;
-  *(undefined4 *)(&DAT_83f1da98 + iVar4) = uVar2;
+  svs.snapshots[iVar2].clientCount = iVar7;
+  svs.snapshots[iVar2].entityCount = iVar3;
   __restgprlr_16();
   return;
 }
@@ -266,285 +300,304 @@ void SV_SaveSnapshotForTime(void)
 
 // 8257E740  SV_CanClientsSeeArchivedEntity  (server_mp/sv_snapshot_build_mp.cpp:239)
 
-uint SV_CanClientsSeeArchivedEntity(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool SV_CanClientsSeeArchivedEntity(archivedEntity_s *param_1)
 
 {
-  return ~*(uint *)(param_1 + 0x100) & 1;
+  return (bool)(~(byte)(param_1->r).svFlags & 1);
 }
 
 
 // 8257E750  SV_AddCachedEntitiesClientsCanSee  (server_mp/sv_snapshot_build_mp.cpp:252)
 
-void SV_AddCachedEntitiesClientsCanSee(undefined8 param_1,int param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int SV_AddCachedEntitiesClientsCanSee(int param_1,int param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  void *_Src;
-  longlong lVar3;
-  char cVar4;
+  int iVar1;
+  longlong lVar2;
+  bool bVar4;
+  int iVar3;
   ulonglong uVar5;
-  int iVar6;
+  longlong lVar6;
+  archivedEntity_s *paVar7;
   int iVar8;
-  longlong lVar7;
-  int *piVar9;
   int aiStack_2060 [2072];
   
-  lVar3 = __savegprlr_22();
-  cVar4 = SV_Loaded();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff82160e18,0x102,0,0xffffffff82000f98,0xffffffff82160e68);
+  lVar2 = __savegprlr_22(param_1);
+  bVar4 = SV_Loaded();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0x102,0,"%s");
   }
   Com_Memset(aiStack_2060,0,0x2000);
   iVar8 = 0;
-  iVar6 = (int)lVar3;
-  if (0 < iVar6) {
+  iVar3 = (int)lVar2;
+  if (0 < iVar3) {
     do {
-      iVar2 = ((iVar8 + param_2) % 0x2a30) * 0x11c;
-      uVar1 = *(uint *)(iVar2 + DAT_83d0ed80);
-      piVar9 = (int *)(iVar2 + DAT_83d0ed80);
-      if (0x7ff < uVar1) {
-        MyAssertHandler(0xffffffff82160e18,0x10c,0,0xffffffff82160f90,uVar1,0x800);
+      iVar1 = (iVar8 + param_2) % 0x2a30;
+      paVar7 = svs.cachedSnapshotEntities + iVar1;
+      if (0x7ff < (uint)svs.cachedSnapshotEntities[iVar1].s.number) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                        ,0x10c,0,"ent->s.number doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if (aiStack_2060[*piVar9] != 0) {
-        MyAssertHandler(0xffffffff82160e18,0x10f,0,0xffffffff82000f98,0xffffffff82160fd0);
+      if (aiStack_2060[(paVar7->s).number] != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                        ,0x10f,0,"%s");
       }
       iVar8 = iVar8 + 1;
-      aiStack_2060[*piVar9] = (int)piVar9;
-    } while (iVar8 < iVar6);
+      aiStack_2060[(paVar7->s).number] = (int)paVar7;
+    } while (iVar8 < iVar3);
   }
-  lVar7 = 0;
+  lVar6 = 0;
   iVar8 = 0;
-  if (0 < iVar6) {
-    uVar5 = (ulonglong)DAT_83f11428;
+  if (0 < iVar3) {
+    uVar5 = (ulonglong)(uint)svs.nextSnapshotEntities;
     do {
-      _Src = (void *)(((iVar8 + param_2) % 0x2a30) * 0x11c + DAT_83d0ed80);
-      if ((~*(uint *)((int)_Src + 0x100) & 1) != 0) {
-        trapWord(6,(ulonglong)DAT_83f11418,0);
-        trapWord(5,(ulonglong)DAT_83f11418 &
+      if ((~svs.cachedSnapshotEntities[(iVar8 + param_2) % 0x2a30].r.svFlags & 1U) != 0) {
+        trapWord(6,(ulonglong)(uint)svs.numSnapshotEntities,0);
+        trapWord(5,(ulonglong)(uint)svs.numSnapshotEntities &
                    ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        memcpy((void *)((int)((uVar5 - (longlong)((int)uVar5 / (int)DAT_83f11418) *
-                                       (longlong)(int)DAT_83f11418 & 0xffffffff) << 8) +
-                       DAT_83d0ed84),_Src,0x100);
-        lVar7 = lVar7 + 1;
-        uVar5 = (ulonglong)DAT_83f11428 + 1;
-        DAT_83f11428 = (uint)uVar5;
+        memcpy();
+        lVar6 = lVar6 + 1;
+        uVar5 = (ulonglong)(uint)svs.nextSnapshotEntities + 1;
+        svs.nextSnapshotEntities = (int)uVar5;
       }
-      lVar3 = lVar3 + -1;
+      lVar2 = lVar2 + -1;
       iVar8 = iVar8 + 1;
-    } while (lVar3 != 0);
+    } while (lVar2 != 0);
   }
-  __restgprlr_22(lVar7);
-  return;
+  iVar3 = __restgprlr_22(lVar6);
+  return iVar3;
 }
 
 
 // 8257E958  SV_SaveSnapshotForArchivedTime  (server_mp/sv_snapshot_build_mp.cpp:296)
 
-void SV_SaveSnapshotForArchivedTime(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool SV_SaveSnapshotForArchivedTime(int param_1)
 
 {
-  undefined8 uVar1;
+  serverSnapshot_t *psVar1;
   int iVar2;
-  undefined4 uVar3;
-  int *_Dst;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
+  int iVar3;
+  cachedSnapshot_t *pcVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
   int iVar7;
+  int iVar8;
+  clientState_s *pcVar9;
   int local_c0 [4];
   int aiStack_b0 [44];
   
-  uVar1 = __savegprlr_20();
-  if (DAT_83ced708 != 2) {
-    MyAssertHandler(0xffffffff82160e18,0x135,0,0xffffffff82000f98,0xffffffff82161048);
+  iVar3 = __savegprlr_20(param_1);
+  if (sv.state != SS_GAME) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                    ,0x135,0,"%s");
   }
-  iVar7 = (int)uVar1;
-  (&DAT_83f1dfd0)[DAT_83f1e010] = iVar7;
-  memset(&DAT_83f1da50 + DAT_83f1e010 * 0x58,0,0x58);
-  iVar6 = 0;
-  iVar4 = DAT_83f1e010 * 0x58;
-  DAT_83f1e010 = DAT_83f1e010 + 1 & 0xf;
-  *(undefined4 *)(&DAT_83f1daa0 + iVar4) = DAT_83f11428;
-  *(uint *)(&DAT_83f1daa4 + iVar4) = DAT_83f1142c;
-  local_c0[0] = DAT_83f11404 - iVar7;
-  iVar2 = SV_GetCachedSnapshot(local_c0);
-  if (iVar2 != 0) {
-    if (local_c0[0] != DAT_83f11404 - iVar7) {
-      Com_PrintWarning(0x10,0xffffffff82160ff0,uVar1);
+  svs.serverSnapshotTimes[svs.nextServerSnapshotIndex] = iVar3;
+  memset();
+  iVar2 = svs.nextServerSnapshotIndex;
+  iVar7 = 0;
+  psVar1 = svs.snapshots + svs.nextServerSnapshotIndex;
+  svs.nextServerSnapshotIndex = svs.nextServerSnapshotIndex + 1U & 0xf;
+  psVar1->firstEntityIndex = svs.nextSnapshotEntities;
+  svs.snapshots[iVar2].firstClientIndex = svs.nextSnapshotClients;
+  local_c0[0] = svs.time - iVar3;
+  pcVar4 = SV_GetCachedSnapshot(local_c0);
+  if (pcVar4 != (cachedSnapshot_t *)0x0) {
+    if (local_c0[0] != svs.time - iVar3) {
+      Com_PrintWarning(0x10,
+                       "Failed to get cached snapshot for time %i, we asked for offset %i and got %i instead\n"
+                      );
     }
     Com_Memset(aiStack_b0,0,0x48);
-    uVar3 = SV_AddCachedEntitiesClientsCanSee
-                      (*(undefined4 *)(iVar2 + 8),*(undefined4 *)(iVar2 + 0xc));
-    iVar7 = 0;
-    if (0 < *(int *)(iVar2 + 0x10)) {
-      uVar5 = (ulonglong)DAT_83f1142c;
+    iVar3 = SV_AddCachedEntitiesClientsCanSee(pcVar4->num_entities,pcVar4->first_entity);
+    iVar8 = 0;
+    if (0 < pcVar4->num_clients) {
+      uVar6 = (ulonglong)(uint)svs.nextSnapshotClients;
       do {
-        _Dst = (int *)(((int)uVar5 - ((int)uVar5 / (int)DAT_83f1141c) * DAT_83f1141c) * 0xe0 +
-                      DAT_83f11430);
-        trapWord(6,(ulonglong)DAT_83f1141c,0);
-        trapWord(5,(ulonglong)DAT_83f1141c &
-                   ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        memcpy(_Dst,(void *)(((*(int *)(iVar2 + 0x14) + iVar7) % 0x144) * 0x3400 + DAT_83f11440 +
-                            0x3304),0xe0);
-        if (aiStack_b0[*_Dst] != 0) {
-          MyAssertHandler(0xffffffff82160e18,0x159,0,0xffffffff82000f98,0xffffffff82024de0);
+        pcVar9 = svs.snapshotClients +
+                 ((int)uVar6 - ((int)uVar6 / svs.numSnapshotClients) * svs.numSnapshotClients);
+        trapWord(6,(ulonglong)(uint)svs.numSnapshotClients,0);
+        trapWord(5,(ulonglong)(uint)svs.numSnapshotClients &
+                   ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+        memcpy();
+        if (aiStack_b0[pcVar9->clientIndex] != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0x159,0,"%s");
         }
+        iVar8 = iVar8 + 1;
         iVar7 = iVar7 + 1;
-        iVar6 = iVar6 + 1;
-        uVar5 = (ulonglong)DAT_83f1142c + 1;
-        aiStack_b0[*_Dst] = 1;
-        DAT_83f1142c = (uint)uVar5;
-      } while (iVar7 < *(int *)(iVar2 + 0x10));
+        uVar6 = (ulonglong)(uint)svs.nextSnapshotClients + 1;
+        aiStack_b0[pcVar9->clientIndex] = 1;
+        svs.nextSnapshotClients = (int)uVar6;
+      } while (iVar8 < pcVar4->num_clients);
     }
-    if (*(int *)(&DAT_83f1daa4 + iVar4) + iVar6 != DAT_83f1142c) {
-      MyAssertHandler(0xffffffff82160e18,0x15f,0,0xffffffff82000f98,0xffffffff82160f48);
+    if (svs.snapshots[iVar2].firstClientIndex + iVar7 != svs.nextSnapshotClients) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                      ,0x15f,0,"%s");
     }
-    *(undefined4 *)(&DAT_83f1da98 + iVar4) = uVar3;
-    *(int *)(&DAT_83f1da9c + iVar4) = iVar6;
-    __restgprlr_20(1);
-    return;
+    svs.snapshots[iVar2].entityCount = iVar3;
+    svs.snapshots[iVar2].clientCount = iVar7;
+    uVar5 = __restgprlr_20(1);
+    return (bool)uVar5;
   }
-  __restgprlr_20();
-  return;
+  uVar5 = __restgprlr_20();
+  return (bool)uVar5;
 }
 
 
 // 8257EC38  SV_BuildClientSnapshot  (server_mp/sv_snapshot_build_mp.cpp:374)
 
-void SV_BuildClientSnapshot(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_BuildClientSnapshot(client_t *param_1)
 
 {
   int iVar1;
   uint uVar2;
-  int *piVar5;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  void *pvVar6;
-  int *piVar7;
+  int *piVar3;
+  int iVar4;
+  bool bVar6;
+  playerState_s *ppVar5;
+  int iVar7;
   int *piVar8;
-  ulonglong uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  undefined *puVar12;
-  int iVar13;
+  int iVar9;
+  int *piVar10;
+  int iVar11;
+  int iVar12;
   
-  piVar5 = (int *)__savegprlr_17();
-  uVar2 = piVar5[2];
-  if (((int)uVar2 < 0) || (DAT_83f1e024 <= (int)(piVar5[6] - uVar2))) {
-    piVar8 = (int *)0x0;
+  piVar3 = (int *)__savegprlr_17(param_1);
+  uVar2 = piVar3[2];
+  if (((int)uVar2 < 0) || (svs.packetBackupCount <= (int)(piVar3[6] - uVar2))) {
+    piVar10 = (int *)0x0;
   }
   else {
-    piVar8 = piVar5 + (uVar2 & DAT_83f1ec84) * 0xce0 + 0xd4c0;
-    if (piVar8 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82160e18,0x187,0,0xffffffff82000f98,0xffffffff821611a8);
+    piVar10 = piVar3 + (uVar2 & svsHeader.packetBackupMask) * 0xce0 + 0xd4c0;
+    if (piVar10 == (int *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                      ,0x187,0,"%s");
     }
   }
-  iVar1 = ((int)piVar5 - DAT_83f11414) / 0x68b00;
-  uVar3 = G_GetClientArchiveTime(iVar1);
-  uVar9 = uVar3;
-  if ((int)uVar3 == 0) {
-    uVar11 = (ulonglong)DAT_83f11404;
-  }
-  else {
-    uVar11 = DAT_83f11404 - uVar3;
+  iVar1 = ((int)piVar3 - (int)svs.clients) / 0x68b00;
+  iVar4 = G_GetClientArchiveTime(iVar1);
+  iVar9 = svs.time;
+  if (iVar4 != 0) {
+    iVar9 = svs.time - iVar4;
   }
 LAB_8257ed2c:
-  puVar12 = (undefined *)0x0;
-  iVar13 = 0;
+  iVar11 = 0;
+  iVar12 = 0;
   do {
-    iVar10 = 0;
-    piVar7 = &DAT_83f1dfd0;
+    iVar7 = 0;
+    piVar8 = svs.serverSnapshotTimes;
     do {
-      if ((int)uVar11 == *piVar7) {
-        puVar12 = &DAT_83f1da50 + iVar10 * 0x58;
+      if (iVar9 == *piVar8) {
+        iVar11 = iVar7 * 0x58 + -0x7c0e25b0;
         break;
       }
-      piVar7 = piVar7 + 1;
-      iVar10 = iVar10 + 1;
-    } while ((int)piVar7 < -0x7c0e1ff0);
-    iVar10 = (int)uVar9;
-    if (puVar12 == (undefined *)0x0) {
+      piVar8 = piVar8 + 1;
+      iVar7 = iVar7 + 1;
+    } while ((int)piVar8 < -0x7c0e1ff0);
+    if (iVar11 == 0) {
 LAB_8257edcc:
-      puVar12 = (undefined *)0x0;
-      if (1 < iVar13) goto LAB_8257f04c;
-      if (iVar10 == 0) {
-        if (DAT_83f1e02c == 0) {
+      iVar11 = 0;
+      if (1 < iVar12) goto LAB_8257f04c;
+      if (iVar4 == 0) {
+        if (svs.baselineCreated == 0) {
           SV_CreateBaseline();
-          DAT_83f1e02c = 1;
+          svs.baselineCreated = 1;
         }
-        uVar3 = SV_SaveSnapshotForTime(uVar11);
+        SV_SaveSnapshotForTime(iVar9);
       }
       else {
-        uVar3 = SV_SaveSnapshotForArchivedTime(uVar11);
-        if ((uVar3 & 0xff) == 0) break;
+        bVar6 = SV_SaveSnapshotForArchivedTime(iVar9);
+        if (!bVar6) break;
       }
     }
-    else if ((*(int *)(puVar12 + 0x50) < DAT_83f1ec1c - DAT_83f1ec0c) ||
-            (*(int *)(puVar12 + 0x54) < DAT_83f1ec20 - DAT_83f1ec10)) {
-      (&DAT_83f1dfd0)[(int)(puVar12 + 0x7c0e25b0) / 0x58] = 0;
+    else if ((*(int *)(iVar11 + 0x50) <
+              svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities) ||
+            (*(int *)(iVar11 + 0x54) < svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients)
+            ) {
+      svs.serverSnapshotTimes[(iVar11 + 0x7c0e25b0) / 0x58] = 0;
       goto LAB_8257edcc;
     }
-    iVar13 = iVar13 + 1;
-    if (puVar12 != (undefined *)0x0) {
-      if (*(int *)(puVar12 + 0x50) < DAT_83f1ec1c - DAT_83f1ec0c) {
-        MyAssertHandler(0xffffffff82160e18,0x1c1,0,0xffffffff82000f98,0xffffffff82161148);
+    iVar12 = iVar12 + 1;
+    if (iVar11 != 0) {
+      if (*(int *)(iVar11 + 0x50) < svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities)
+      {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                        ,0x1c1,0,"%s");
       }
-      if (*(int *)(puVar12 + 0x54) < DAT_83f1ec20 - DAT_83f1ec10) {
-        MyAssertHandler(0xffffffff82160e18,0x1c2,0,0xffffffff82000f98,0xffffffff821610e8);
+      if (*(int *)(iVar11 + 0x54) < svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                        ,0x1c2,0,"%s");
       }
-      iVar13 = *(int *)(puVar12 + 0x4c);
-      uVar2 = piVar5[6] & DAT_83f1e028;
-      piVar5[uVar2 * 0xce0 + 0xe187] = (int)uVar11;
-      piVar5[uVar2 * 0xce0 + 0xe181] = iVar13;
-      piVar5[uVar2 * 0xce0 + 0xe183] = *(int *)(puVar12 + 0x54);
-      piVar5[uVar2 * 0xce0 + 0xe188] = iVar10;
-      if (piVar8 != (int *)0x0) {
-        if (piVar8[0xcc2] == -10000000) {
-          if (piVar8[0xcc9] == 0) {
-            MyAssertHandler(0xffffffff82160e18,0x1cd,0,0xffffffff82000f98,0xffffffff821610d0);
+      iVar12 = *(int *)(iVar11 + 0x4c);
+      piVar8 = piVar3 + (piVar3[6] & svs.packetBackupMask) * 0xce0;
+      piVar8[0xe187] = iVar9;
+      piVar8[0xe181] = iVar12;
+      piVar8[0xe183] = *(int *)(iVar11 + 0x54);
+      piVar8[0xe188] = iVar4;
+      if (piVar10 != (int *)0x0) {
+        if (piVar10[0xcc2] == -10000000) {
+          if (piVar10[0xcc9] == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                            ,0x1cd,0,"%s");
           }
-          piVar5[4] = 1;
+          piVar3[4] = 1;
         }
-        else if (piVar8[0xcc9] != 0) {
-          MyAssertHandler(0xffffffff82160e18,0x1d3,0,0xffffffff82000f98,0xffffffff821610b8);
+        else if (piVar10[0xcc9] != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0x1d3,0,"%s");
         }
       }
-      if (piVar5[4] == 0) {
-        piVar5[uVar2 * 0xce0 + 0xe189] = 1;
-        piVar5[uVar2 * 0xce0 + 0xe182] = -10000000;
-        iVar13 = DAT_83f11424;
-        piVar5[uVar2 * 0xce0 + 0xe181] = 0;
+      if (piVar3[4] == 0) {
+        piVar8[0xe189] = 1;
+        piVar8[0xe182] = -10000000;
+        iVar9 = svs.nextNoDeltaEntity;
+        piVar8[0xe181] = 0;
       }
       else {
-        piVar5[uVar2 * 0xce0 + 0xe189] = 0;
-        iVar13 = *(int *)(puVar12 + 0x50);
-        piVar5[uVar2 * 0xce0 + 0xe182] = iVar13;
-        if (iVar13 == -10000000) {
-          MyAssertHandler(0xffffffff82160e18,0x1db,0,0xffffffff82000f98,0xffffffff82161088);
+        piVar8[0xe189] = 0;
+        iVar9 = *(int *)(iVar11 + 0x50);
+        piVar8[0xe182] = iVar9;
+        if (iVar9 == -10000000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                          ,0x1db,0,"%s");
         }
-        iVar13 = *(int *)(puVar12 + 0x48);
+        iVar9 = *(int *)(iVar11 + 0x48);
       }
-      piVar5[uVar2 * 0xce0 + 0xe180] = iVar13;
-      if (iVar10 < 0) {
-        MyAssertHandler(0xffffffff82160e18,0x1e5,0,0xffffffff8216105c,0xffffffff82161074,uVar9);
+      piVar8[0xe180] = iVar9;
+      if (iVar4 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_build_mp.cpp"
+                        ,0x1e5,0,"%s\n\t(deltaTime) = %i");
       }
-      if (((piVar5[0x8506] != 0) && (*piVar5 != 1)) && (DAT_83ced708 == 2)) {
-        uVar4 = SV_GetPlayerstateForClientNum(iVar1);
-        Com_Memcpy128(piVar5 + uVar2 * 0xce0 + 0xd4c0,uVar4,0x3300);
+      if (((piVar3[0x8506] != 0) && (*piVar3 != 1)) && (sv.state == SS_GAME)) {
+        ppVar5 = SV_GetPlayerstateForClientNum(iVar1);
+        Com_Memcpy128(piVar8 + 0xd4c0,ppVar5,0x3300);
         __restgprlr_17();
         return;
       }
-      pvVar6 = memset(piVar5 + uVar2 * 0xce0 + 0xd4c0,0,0x3300);
-      uVar3 = (ulonglong)(int)pvVar6;
+      memset();
 LAB_8257f04c:
-      __restgprlr_17(uVar3);
+      __restgprlr_17();
       return;
     }
   } while( true );
-  uVar3 = G_SetClientArchiveTime(iVar1,0);
-  uVar11 = (ulonglong)DAT_83f11404;
-  uVar9 = 0;
+  G_SetClientArchiveTime(iVar1,0);
+  iVar4 = 0;
+  iVar9 = svs.time;
   goto LAB_8257ed2c;
 }
 

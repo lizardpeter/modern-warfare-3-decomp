@@ -933,7 +933,7 @@ LAB_8268cfc0:
   8268CFDC  EBE1FFF0             ld r31,-0x10(r1)
   8268CFE0  4E800020             blr
 
-; 8268CFE8  dxJointLimitMotor::init  (physics/ode/src/joint.cpp:413)
+; 8268CFE8  init  (physics/ode/src/joint.cpp:413)
   8268CFE8  3D608200             lis r11,-0x7e00
   8268CFEC  3D408201             lis r10,-0x7dff
   8268CFF0  3D208200             lis r9,-0x7e00
@@ -959,7 +959,7 @@ LAB_8268cfc0:
   8268D040  D0030028             stfs f0,0x28(r3)
   8268D044  4E800020             blr
 
-; 8268D048  dxJointLimitMotor::set  (physics/ode/src/joint.cpp:429)
+; 8268D048  set  (physics/ode/src/joint.cpp:429)
   8268D048  2B040008             cmplwi cr6,r4,0x8
   8268D04C  4D990020             bgtlr cr6
   8268D050  7C8903A6             mtspr CTR,r4
@@ -1011,7 +1011,7 @@ LAB_8268d0e8:
   8268D0E8  D023001C             stfs f1,0x1c(r3)
   8268D0EC  4E800020             blr
 
-; 8268D0F0  dxJointLimitMotor::get  (physics/ode/src/joint.cpp:463)
+; 8268D0F0  get  (physics/ode/src/joint.cpp:463)
   8268D0F0  2B040008             cmplwi cr6,r4,0x8
   8268D0F4  41990074             bgt cr6,0x8268d168
   8268D0F8  7C8903A6             mtspr CTR,r4
@@ -1055,7 +1055,7 @@ LAB_8268d168:
   8268D16C  C02B13F8             lfs f1,0x13f8(r11)
   8268D170  4E800020             blr
 
-; 8268D178  dxJointLimitMotor::testRotationalLimit  (physics/ode/src/joint.cpp:480)
+; 8268D178  testRotationalLimit  (physics/ode/src/joint.cpp:480)
   8268D178  C0030008             lfs f0,0x8(r3)
   8268D17C  7C6B1B78             or r11,r3,r3
   8268D180  FF010000             fcmpu cr6,f1,f0
@@ -1082,7 +1082,7 @@ LAB_8268d1c4:
   8268D1CC  914B0024             stw r10,0x24(r11)
   8268D1D0  4E800020             blr
 
-; 8268D1D8  dxJointLimitMotor::addLimot  (physics/ode/src/joint.cpp:499)
+; 8268D1D8  addLimot  (physics/ode/src/joint.cpp:499)
   8268D1D8  7D8802A6             mfspr r12,LR
   8268D1DC  482894C1             bl 0x8291669c
   8268D1E0  DBA1FF88             stfd f29,-0x78(r1)

@@ -2,135 +2,145 @@
 
 // 828C6C40  NellyEncodeSC  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:244)
 
-void NellyEncodeSC(undefined8 param_1,longlong param_2,undefined8 param_3)
+ushort NellyEncodeSC(short *param_1,void *param_2,void *param_3)
 
 {
   float fVar1;
-  undefined4 uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  undefined4 *puVar5;
-  float fVar6;
+  void *pvVar2;
+  void *pvVar3;
+  void *pvVar4;
+  float fVar5;
   int iVar7;
-  int iVar9;
-  undefined8 uVar8;
+  undefined8 uVar6;
+  float *pfVar8;
+  ushort uVar9;
   float *pfVar10;
-  short *psVar11;
-  float *pfVar12;
-  longlong lVar13;
-  double dVar14;
+  ENC_MEM_BLK *pEVar11;
+  short *psVar12;
+  SUBFRAME_PARAM_SC *pSVar13;
+  longlong lVar14;
+  float fVar15;
+  float *in_stack_ffffef18;
   longlong local_10a0;
   float fStack_1094;
-  undefined1 local_1090 [1056];
-  undefined1 auStack_c70 [1040];
-  undefined1 auStack_860 [2144];
+  float local_1090 [264];
+  float afStack_c70 [260];
+  float afStack_860 [536];
   
-  iVar9 = __savegprlr_24();
-  puVar5 = (undefined4 *)param_2;
-  uVar2 = *puVar5;
-  iVar7 = (int)param_3;
-  pfVar12 = (float *)(iVar7 + 8);
-  iVar3 = puVar5[0x12];
-  if ((puVar5[8] & puVar5[10]) == 0) {
-    uVar8 = 1;
+  iVar7 = __savegprlr_24(param_1);
+  pvVar2 = ((ENC_MEM_BLK *)param_2)->CircBuf_mblk;
+  pSVar13 = ((PARAM_SC *)param_3)->SubParam + 1;
+  pvVar3 = ((ENC_MEM_BLK *)param_2)->pVFontMblk;
+  if ((((ENC_MEM_BLK *)param_2)->iSCRateValid & ((ENC_MEM_BLK *)param_2)->iSCTargetRate) == 0) {
+    uVar6 = 1;
   }
   else {
     pfVar10 = &fStack_1094;
-    psVar11 = (short *)(iVar9 + -2);
-    lVar13 = 0xa0;
+    psVar12 = (short *)(iVar7 + -2);
+    lVar14 = 0xa0;
     do {
-      psVar11 = psVar11 + 1;
-      local_10a0 = (longlong)*psVar11;
+      psVar12 = psVar12 + 1;
+      local_10a0 = (longlong)*psVar12;
       pfVar10 = pfVar10 + 1;
       *pfVar10 = (float)local_10a0;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    PutFrameSpCBM(uVar2,0,0xa0,local_1090);
-    dVar14 = (double)CoarsePitchAndFrameEnergy(uVar2,puVar5[4],param_2 + 0x2c);
-    *pfVar12 = (float)dVar14;
-    uVar4 = puVar5[6];
-    uVar8 = NellyAdaptiveWindow();
-    lVar13 = EstOnset(uVar4,uVar2,0x91,uVar8,local_1090);
-    GetFrameSpCBM(uVar2,lVar13 + 0x91,uVar8,local_1090);
-    ScaleVector(0x4000000000000000,local_1090,uVar8);
-    HammingWindowNormSC(local_1090,uVar8);
-    NellyFftCenter512(local_1090,uVar8,9,auStack_860,auStack_c70);
-    OuterFrameParam(uVar2,auStack_860,auStack_c70,param_3,param_2,uVar8,lVar13,&local_10a0);
-    MidFrameParam((double)local_10a0._0_4_,param_2,param_3,0xe1,(short)puVar5[10]);
-    puVar5[0xd] = *pfVar12;
-    uVar2 = *(undefined4 *)(iVar7 + 0xc);
-    puVar5[9] = puVar5[10];
-    puVar5[0xc] = uVar2;
-    if (puVar5[0x13] != 0) {
-      nemAgcVadMain((double)*(float *)(param_2 + 0x2c),(double)*(float *)(iVar7 + 0xc));
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
+    PutFrameSpCBM(pvVar2,0,0xa0,local_1090);
+    fVar15 = CoarsePitchAndFrameEnergy
+                       (pvVar2,((ENC_MEM_BLK *)param_2)->LDPDA_mblk,
+                        &((ENC_MEM_BLK *)param_2)->frameEnergy);
+    pSVar13->Pitch = fVar15;
+    pvVar4 = ((ENC_MEM_BLK *)param_2)->Onset_mblk;
+    pfVar8 = (float *)NellyAdaptiveWindow(fVar15);
+    iVar7 = EstOnset(pvVar4,pvVar2,0x91,(int)pfVar8,local_1090);
+    pfVar10 = pfVar8;
+    GetFrameSpCBM(pvVar2,iVar7 + 0x91,(int)pfVar8,local_1090);
+    ScaleVector(local_1090,(int)pfVar8,2.0,pfVar10);
+    HammingWindowNormSC(local_1090,(int)pfVar8);
+    NellyFftCenter512(local_1090,(int)pfVar8,9,afStack_860,afStack_c70);
+    pEVar11 = param_2;
+    OuterFrameParam(pvVar2,afStack_860,afStack_c70,param_3,param_2,(int)pfVar8,iVar7,
+                    (int *)&local_10a0,in_stack_ffffef18);
+    MidFrameParam(param_2,param_3,0xe1,(int)(short)((ENC_MEM_BLK *)param_2)->iSCTargetRate,
+                  local_10a0._0_4_,(int)pEVar11);
+    ((ENC_MEM_BLK *)param_2)->uq_Pitch_1 = pSVar13->Pitch;
+    fVar15 = ((PARAM_SC *)param_3)->SubParam[1].Pv;
+    ((ENC_MEM_BLK *)param_2)->iSCRate_1 = ((ENC_MEM_BLK *)param_2)->iSCTargetRate;
+    ((ENC_MEM_BLK *)param_2)->uq_Pv_1 = fVar15;
+    if (((ENC_MEM_BLK *)param_2)->pvVadAgcMblk != (void *)0x0) {
+      nemAgcVadMain(((ENC_MEM_BLK *)param_2)->pvVadAgcMblk,((ENC_MEM_BLK *)param_2)->frameEnergy,
+                    ((PARAM_SC *)param_3)->SubParam[1].Pv);
     }
-    if (puVar5[0x11] != 0) {
-      fVar1 = *(float *)(iVar3 + 0xc);
-      fVar6 = (8000.0 / *pfVar12) * *(float *)(iVar3 + 0x14) * *(float *)(iVar3 + 0x10) +
-              *(float *)(iVar3 + 0x18);
-      if (fVar6 < 50.0) {
-        fVar6 = 50.0;
+    if (((ENC_MEM_BLK *)param_2)->dwVFid != 0) {
+      fVar15 = *(float *)((int)pvVar3 + 0xc);
+      fVar1 = ((PARAM_SC *)param_3)->SubParam[1].Pv;
+      fVar5 = (8000.0 / pSVar13->Pitch) * *(float *)((int)pvVar3 + 0x14) *
+              *(float *)((int)pvVar3 + 0x10) + *(float *)((int)pvVar3 + 0x18);
+      if (fVar5 < 50.0) {
+        fVar5 = 50.0;
       }
-      if (1000.0 < fVar6) {
-        fVar6 = 1000.0;
+      if (1000.0 < fVar5) {
+        fVar5 = 1000.0;
       }
-      *pfVar12 = 8000.0 / fVar6;
-      *(float *)(iVar7 + 0xc) = fVar1 * *(float *)(iVar7 + 0xc);
+      pSVar13->Pitch = 8000.0 / fVar5;
+      ((PARAM_SC *)param_3)->SubParam[1].Pv = fVar15 * fVar1;
     }
-    uVar8 = 0;
+    uVar6 = 0;
   }
-  __restgprlr_24(uVar8);
-  return;
+  uVar9 = __restgprlr_24(uVar6);
+  return uVar9;
 }
 
 
 // 828C6550  NellyInitEncodeSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:406)
 
-void NellyInitEncodeSC3(undefined8 param_1,undefined4 param_2)
+ushort NellyInitEncodeSC3(void **param_1,void *param_2)
 
 {
-  int *piVar2;
+  undefined4 *puVar2;
   undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  short sVar5;
-  double dVar6;
+  void **ppvVar3;
+  void *pvVar4;
+  int iVar5;
+  short sVar6;
+  ushort uVar7;
+  double dVar8;
   
-  piVar2 = (int *)__savegprlr_26();
-  if (piVar2 != (int *)0x0) {
-    *piVar2 = 0;
-    iVar3 = (*DAT_848958c0)(1,0x58);
-    if (iVar3 != 0) {
-      *piVar2 = iVar3;
-      *(undefined4 *)(iVar3 + 0x40) = param_2;
-      *(undefined4 *)(iVar3 + 0x44) = 1;
-      iVar4 = (*DAT_848958c0)(1,0x28);
-      *(int *)(iVar3 + 0x48) = iVar4;
-      if (iVar4 != 0) {
-        *(undefined2 *)(iVar4 + 0x1c) = 0;
-        *(undefined2 *)(iVar4 + 0x24) = 0;
-        dVar6 = 0.0;
-        *(undefined4 *)(iVar4 + 0xc) = 0x3f800000;
-        *(undefined4 *)(iVar4 + 0x10) = 0x3f800000;
-        *(undefined4 *)(iVar4 + 0x14) = 0x3f800000;
-        *(undefined4 *)(iVar4 + 0x18) = 0;
-        *(undefined4 *)(iVar4 + 0x20) = 0x3f800000;
-        iVar4 = InitSpCBM(0x173,iVar3);
-        if (iVar4 == 0) {
-          *(float *)(iVar3 + 8) = (float)dVar6;
-          sVar5 = NellyInitLDPDA(iVar3 + 0x10);
-          if (sVar5 == 0) {
-            sVar5 = NellyInitVocalFry(iVar3 + 0x14);
-            if ((sVar5 == 0) && (sVar5 = NellyInitEstOnset(iVar3 + 0x18), sVar5 == 0)) {
-              *(float *)(iVar3 + 0x1c) = (float)dVar6;
-              *(float *)(iVar3 + 0x30) = (float)dVar6;
-              *(undefined4 *)(iVar3 + 0x20) = 1;
-              *(float *)(iVar3 + 0x38) = (float)dVar6;
-              *(undefined4 *)(iVar3 + 0x28) = 1;
+  puVar2 = (undefined4 *)__savegprlr_26(param_1);
+  if (puVar2 != (undefined4 *)0x0) {
+    *puVar2 = 0;
+    ppvVar3 = (*callocfunc)(1,0x58);
+    if (ppvVar3 != (void **)0x0) {
+      *puVar2 = ppvVar3;
+      ppvVar3[0x10] = param_2;
+      ppvVar3[0x11] = (void *)0x1;
+      pvVar4 = (*callocfunc)(1,0x28);
+      ppvVar3[0x12] = pvVar4;
+      if (pvVar4 != (void *)0x0) {
+        *(undefined2 *)((int)pvVar4 + 0x1c) = 0;
+        *(undefined2 *)((int)pvVar4 + 0x24) = 0;
+        dVar8 = 0.0;
+        *(undefined4 *)((int)pvVar4 + 0xc) = 0x3f800000;
+        *(undefined4 *)((int)pvVar4 + 0x10) = 0x3f800000;
+        *(undefined4 *)((int)pvVar4 + 0x14) = 0x3f800000;
+        *(undefined4 *)((int)pvVar4 + 0x18) = 0;
+        *(undefined4 *)((int)pvVar4 + 0x20) = 0x3f800000;
+        iVar5 = InitSpCBM(0x173,ppvVar3);
+        if (iVar5 == 0) {
+          ppvVar3[2] = (void *)(float)dVar8;
+          uVar7 = NellyInitLDPDA(ppvVar3 + 4);
+          if (uVar7 == 0) {
+            uVar7 = NellyInitVocalFry(ppvVar3 + 5);
+            if ((uVar7 == 0) && (sVar6 = NellyInitEstOnset(ppvVar3 + 6), sVar6 == 0)) {
+              ppvVar3[7] = (void *)(float)dVar8;
+              ppvVar3[0xc] = (void *)(float)dVar8;
+              ppvVar3[8] = (void *)0x1;
+              ppvVar3[0xe] = (void *)(float)dVar8;
+              ppvVar3[10] = (void *)0x1;
               uVar1 = 0;
-              *(undefined4 *)(iVar3 + 0x4c) = 0;
-              *(undefined4 *)(iVar3 + 0x34) = 0x42c80000;
-              *(undefined4 *)(iVar3 + 0x3c) = 0x42c80000;
+              ppvVar3[0x13] = (void *)0x0;
+              ppvVar3[0xd] = (void *)0x42c80000;
+              ppvVar3[0xf] = (void *)0x42c80000;
               goto LAB_828c6670;
             }
           }
@@ -140,29 +150,29 @@ void NellyInitEncodeSC3(undefined8 param_1,undefined4 param_2)
   }
   uVar1 = 1;
 LAB_828c6670:
-  __restgprlr_26(uVar1);
-  return;
+  uVar7 = __restgprlr_26(uVar1);
+  return uVar7;
 }
 
 
 // 828C6680  NellyFreeEncodeSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:544)
 
-undefined8 NellyFreeEncodeSC3(int *param_1)
+ushort NellyFreeEncodeSC3(void **param_1)
 
 {
-  int iVar1;
+  void **ppvVar1;
   
-  iVar1 = *param_1;
-  if (iVar1 != 0) {
-    FreeSpCBM(iVar1);
-    NellyFreeLDPDA(iVar1 + 0x10);
-    NellyFreeVocalFry(iVar1 + 0x14);
-    NellyFreeEstOnset(iVar1 + 0x18);
-    if (*(int *)(iVar1 + 0x48) != 0) {
-      (*DAT_848958c4)();
-      *(undefined4 *)(iVar1 + 0x48) = 0;
+  ppvVar1 = *param_1;
+  if (ppvVar1 != (void **)0x0) {
+    FreeSpCBM(ppvVar1);
+    NellyFreeLDPDA(ppvVar1 + 4);
+    NellyFreeVocalFry(ppvVar1 + 5);
+    NellyFreeEstOnset(ppvVar1 + 6);
+    if (ppvVar1[0x12] != (void *)0x0) {
+      (*freefunc)(ppvVar1[0x12]);
+      ppvVar1[0x12] = (void *)0x0;
     }
-    (*DAT_848958c4)(iVar1);
+    (*freefunc)(ppvVar1);
   }
   return 0;
 }
@@ -170,61 +180,60 @@ undefined8 NellyFreeEncodeSC3(int *param_1)
 
 // 828C6710  CoarsePitchAndFrameEnergy  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:660)
 
-void CoarsePitchAndFrameEnergy(undefined8 param_1,undefined8 param_2,float *param_3)
+float CoarsePitchAndFrameEnergy(void *param_1,void *param_2,float *param_3)
 
 {
   float fVar1;
-  float fVar2;
+  float *pfVar2;
   float *pfVar3;
   float *pfVar4;
   float *pfVar5;
   float *pfVar6;
-  float *pfVar7;
-  longlong lVar8;
-  double dVar9;
-  float local_cc0 [291];
-  float fStack_834;
-  undefined1 auStack_830 [1040];
-  undefined1 auStack_420 [1032];
+  longlong lVar7;
+  float fVar8;
+  float local_cc0 [290];
+  float local_838 [262];
+  float afStack_420 [258];
   
   GetFrameSpCBM(param_1,0x91,0x123,local_cc0);
-  pfVar5 = local_cc0;
-  pfVar6 = (float *)&DAT_82202738;
-  pfVar7 = local_cc0;
-  pfVar4 = &fStack_834;
-  lVar8 = 0x91;
+  pfVar4 = local_cc0;
+  pfVar5 = Kaiwin0;
+  pfVar6 = local_cc0;
+  pfVar3 = local_838 + 1;
+  lVar7 = 0x91;
   do {
-    fVar1 = *pfVar7;
-    pfVar7 = pfVar7 + 1;
-    fVar2 = *pfVar6;
+    fVar8 = *pfVar6;
     pfVar6 = pfVar6 + 1;
-    *pfVar5 = fVar1 * fVar2;
-    pfVar3 = pfVar4 + -1;
-    pfVar4 = pfVar4 + -1;
-    *pfVar4 = fVar2 * *pfVar3;
+    fVar1 = *pfVar5;
     pfVar5 = pfVar5 + 1;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *pfVar5 = *pfVar7 * *pfVar6;
-  dVar9 = (double)DotProd(local_cc0,local_cc0,0x123);
-  *param_3 = (float)(dVar9 * 0.003436426166445017);
-  NellyFftCenter512(local_cc0,0x123,9,auStack_830,auStack_420);
-  NellyLDPDA(auStack_830,auStack_420,param_2);
-  return;
+    *pfVar4 = fVar8 * fVar1;
+    pfVar2 = pfVar3 + -1;
+    pfVar3 = pfVar3 + -1;
+    *pfVar3 = fVar1 * *pfVar2;
+    pfVar4 = pfVar4 + 1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  *pfVar4 = *pfVar6 * *pfVar5;
+  fVar8 = DotProd(local_cc0,local_cc0,0x123);
+  *param_3 = fVar8 * 0.0034364262;
+  NellyFftCenter512(local_cc0,0x123,9,local_838 + 2,afStack_420);
+  fVar8 = NellyLDPDA(local_838 + 2,afStack_420,param_2);
+  return fVar8;
 }
 
 
 // 828C67F8  NellyLinearInterpolate  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:834)
 
-void NellyLinearInterpolate(undefined8 param_1,longlong param_2,ulonglong param_3)
+void NellyLinearInterpolate(float param_1,float *param_2,int param_3)
 
 {
   double dVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  uint uVar6;
+  uint uVar5;
+  longlong lVar6;
+  ulonglong in_r5;
   uint *puVar7;
   longlong lVar8;
   float *pfVar10;
@@ -237,62 +246,62 @@ void NellyLinearInterpolate(undefined8 param_1,longlong param_2,ulonglong param_
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
+  float fVar19;
   float afStack_5a0 [8];
   uint auStack_580 [352];
   
-  __savegprlr_21();
+  lVar6 = (longlong)param_3;
+  __savegprlr_21((double)param_1,param_2);
   dVar15 = (double)__savefpr_28();
-  dVar17 = (double)(longlong)(int)((uint)param_3 - 1);
-  iVar13 = (int)(dVar17 / dVar15) + 1;
+  dVar16 = (double)(longlong)(int)((uint)in_r5 - 1);
+  iVar13 = (int)(dVar16 / dVar15) + 1;
   if (0x50 < iVar13) {
     iVar13 = 0x50;
   }
-  fVar2 = 0.0;
+  fVar19 = 0.0;
   pfVar14 = afStack_5a0 + iVar13 + 4;
   puVar7 = auStack_580 + iVar13 * 2;
   if (0 < iVar13) {
-    dVar18 = 0.5;
+    dVar17 = 0.5;
     puVar12 = puVar7;
     iVar11 = iVar13;
     do {
-      dVar19 = (double)fVar2;
-      dVar1 = dVar19 + dVar18;
-      dVar16 = (double)NellyLog2((double)*(float *)((int)dVar1 * 4 + (int)param_2));
-      *(float *)(((int)afStack_5a0 - (int)puVar7) + (int)puVar12) = (float)dVar16;
+      dVar18 = (double)fVar19;
+      dVar1 = dVar18 + dVar17;
+      fVar19 = NellyLog2(*(float *)((int)dVar1 * 4 + (int)lVar6));
+      *(float *)(((int)afStack_5a0 - (int)puVar7) + (int)puVar12) = fVar19;
       *puVar12 = (int)dVar1;
-      *(float *)(((int)pfVar14 - (int)puVar7) + (int)puVar12) = (float)dVar19;
+      *(float *)(((int)pfVar14 - (int)puVar7) + (int)puVar12) = (float)dVar18;
       iVar11 = iVar11 + -1;
-      fVar2 = (float)(dVar19 + dVar15);
+      fVar19 = (float)(dVar18 + dVar15);
       puVar12 = puVar12 + 1;
     } while (iVar11 != 0);
   }
-  dVar15 = (double)NellyLog2((double)*(float *)((int)((param_3 & 0xffffffff) << 2) + (int)param_2 +
-                                               -4));
-  afStack_5a0[iVar13] = (float)dVar15;
-  puVar7[iVar13] = (uint)param_3;
-  pfVar14[iVar13] = (float)dVar17;
+  fVar19 = NellyLog2(*(float *)((int)((in_r5 & 0xffffffff) << 2) + (int)lVar6 + -4));
+  afStack_5a0[iVar13] = fVar19;
+  puVar7[iVar13] = (uint)in_r5;
+  pfVar14[iVar13] = (float)dVar16;
   if (1 < iVar13 + 1) {
     iVar11 = (int)puVar7 - (int)pfVar14;
     pfVar10 = pfVar14;
     do {
       puVar7 = puVar7 + 1;
-      uVar6 = *(uint *)(iVar11 + (int)pfVar10);
-      fVar2 = pfVar10[1];
-      fVar3 = *pfVar10;
-      dVar15 = (double)(longlong)(int)uVar6;
-      if ((int)uVar6 < (int)*puVar7) {
-        fVar4 = *(float *)(((int)afStack_5a0 - (int)pfVar14) + (int)pfVar10);
-        lVar8 = (ulonglong)*puVar7 - (ulonglong)uVar6;
-        fVar5 = *(float *)((int)afStack_5a0 + (4 - (int)pfVar14) + (int)pfVar10);
-        lVar9 = ((ulonglong)uVar6 & 0x3fffffff) * 4 + param_2 + -4;
+      uVar5 = *(uint *)(iVar11 + (int)pfVar10);
+      fVar19 = pfVar10[1];
+      fVar2 = *pfVar10;
+      dVar15 = (double)(longlong)(int)uVar5;
+      if ((int)uVar5 < (int)*puVar7) {
+        fVar3 = *(float *)(((int)afStack_5a0 - (int)pfVar14) + (int)pfVar10);
+        lVar8 = (ulonglong)*puVar7 - (ulonglong)uVar5;
+        fVar4 = *(float *)((int)afStack_5a0 + (4 - (int)pfVar14) + (int)pfVar10);
+        lVar9 = ((ulonglong)uVar5 & 0x3fffffff) * 4 + lVar6 + -4;
         do {
-          dVar17 = dVar15 - (double)fVar3;
+          dVar16 = dVar15 - (double)fVar2;
           dVar15 = (double)(float)(dVar15 + 1.0);
           lVar9 = lVar9 + 4;
           *(float *)lVar9 =
-               (float)dVar17 * (fVar5 - fVar4) * (1.0 / (float)((double)fVar2 - (double)fVar3)) +
-               fVar4;
+               (float)dVar16 * (fVar4 - fVar3) * (1.0 / (float)((double)fVar19 - (double)fVar2)) +
+               fVar3;
           lVar8 = lVar8 + -1;
         } while (lVar8 != 0);
       }
@@ -308,108 +317,111 @@ void NellyLinearInterpolate(undefined8 param_1,longlong param_2,ulonglong param_
 
 // 828C69C0  OuterFrameParam  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/encsc.c:922)
 
-void OuterFrameParam(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4,
-                    longlong param_5,undefined8 param_6,longlong param_7,float *param_8)
+void OuterFrameParam(void *param_1,float *param_2,float *param_3,PARAM_SC *param_4,
+                    ENC_MEM_BLK *param_5,int param_6,int param_7,int *param_8,float *param_9)
 
 {
   int iVar1;
-  float fVar2;
+  short sVar2;
   short sVar3;
-  short sVar4;
-  int iVar5;
-  float fVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  int iVar9;
-  int iVar10;
-  float *pfVar11;
-  float *pfVar12;
-  longlong lVar13;
-  double dVar14;
+  void *pvVar4;
+  float fVar5;
+  float *pfVar6;
+  void *pvVar7;
+  float *pfVar8;
+  SUBFRAME_PARAM_SC *pSVar9;
+  float *pfVar10;
+  int *piVar11;
+  int iVar12;
+  int iVar13;
+  longlong lVar14;
   double dVar15;
   double dVar16;
-  undefined4 local_c30 [2];
+  double dVar17;
+  float fVar18;
+  int local_c30 [2];
   longlong local_c28;
   undefined8 local_c20;
-  undefined1 auStack_c10 [400];
+  float afStack_c10 [100];
   float local_a80 [255];
   float local_684;
-  undefined1 auStack_680 [396];
+  float afStack_680 [99];
   float fStack_4f4;
   float local_4f0 [316];
   
-  uVar7 = __savegprlr_23();
-  iVar5 = (int)param_5;
-  iVar9 = *(int *)(iVar5 + 0x48);
-  NellySTFTpeaks(param_2,param_3,local_a80,auStack_680,auStack_c10,local_c30,100);
-  dVar16 = (double)(512.0 / *(float *)((int)param_4 + 8));
-  NellySeevocFlattop(dVar16,local_a80,auStack_680,auStack_c10,local_c30[0],local_a80);
-  uVar8 = NellySTCVoicing(param_5 + 8,local_a80,param_4 + 8,param_4 + 0xc,auStack_680,auStack_c10,
-                          local_c30[0],100);
-  NellyLinearInterpolate(dVar16,uVar8,local_a80,0x100);
-  fVar2 = *(float *)(iVar9 + 0x20);
-  sVar4 = *(short *)(iVar9 + 0x1c);
-  dVar16 = 0.0;
-  if ((fVar2 != 1.0) || (sVar4 != 0)) {
-    sVar3 = *(short *)(iVar9 + 0x24);
-    iVar9 = 0;
-    iVar10 = 0;
-    lVar13 = 0x100;
-    dVar14 = dVar16;
-    dVar15 = dVar16;
+  pvVar7 = (void *)__savegprlr_23(param_1);
+  pvVar4 = param_5->pVFontMblk;
+  piVar11 = local_c30;
+  pSVar9 = param_4->SubParam + 1;
+  NellySTFTpeaks(param_2,param_3,local_a80,afStack_680,afStack_c10,piVar11,100);
+  fVar18 = 512.0 / param_4->SubParam[1].Pitch;
+  dVar17 = (double)fVar18;
+  NellySeevocFlattop(local_a80,afStack_680,afStack_c10,local_c30[0],local_a80,fVar18,(int)piVar11);
+  pfVar10 = &param_4->SubParam[1].Pv;
+  pfVar8 = &param_5->fVoicing_km1;
+  NellySTCVoicing(pfVar8,local_a80,&pSVar9->Pitch,pfVar10,afStack_680,afStack_c10,local_c30[0],100);
+  NellyLinearInterpolate((float)dVar17,pfVar8,(int)local_a80);
+  fVar18 = *(float *)((int)pvVar4 + 0x20);
+  sVar3 = *(short *)((int)pvVar4 + 0x1c);
+  dVar17 = 0.0;
+  if ((fVar18 != 1.0) || (sVar3 != 0)) {
+    sVar2 = *(short *)((int)pvVar4 + 0x24);
+    iVar12 = 0;
+    iVar13 = 0;
+    lVar14 = 0x100;
+    dVar15 = dVar17;
+    dVar16 = dVar17;
     do {
-      local_c28 = (longlong)iVar9;
-      iVar1 = (int)((float)local_c28 * fVar2);
+      local_c28 = (longlong)iVar12;
+      iVar1 = (int)((float)local_c28 * fVar18);
       local_c20._6_2_ = (short)iVar1;
-      local_c20._6_2_ = local_c20._6_2_ + sVar4;
-      if (iVar9 < sVar3) {
+      local_c20._6_2_ = local_c20._6_2_ + sVar3;
+      if (iVar12 < sVar2) {
 LAB_828c6b24:
-        fVar6 = *(float *)((int)local_a80 + iVar10);
+        fVar5 = *(float *)((int)local_a80 + iVar13);
 LAB_828c6b2c:
-        pfVar11 = (float *)((int)local_4f0 + iVar10);
-        *pfVar11 = fVar6;
+        pfVar8 = (float *)((int)local_4f0 + iVar13);
+        *pfVar8 = fVar5;
       }
       else {
-        fVar6 = local_684;
+        fVar5 = local_684;
         if ((longlong)local_c20._6_2_ < 0) {
           if (local_c20._6_2_ < 0x100) goto LAB_828c6b24;
           goto LAB_828c6b2c;
         }
         if (local_c20._6_2_ >= 0x100) goto LAB_828c6b2c;
-        pfVar11 = (float *)((int)local_4f0 + iVar10);
-        *(undefined4 *)((int)local_4f0 + iVar10) =
+        pfVar8 = (float *)((int)local_4f0 + iVar13);
+        *(undefined4 *)((int)local_4f0 + iVar13) =
              *(undefined4 *)((int)local_a80 + (int)(((longlong)local_c20._6_2_ & 0xffffffffU) << 2))
         ;
       }
-      dVar14 = (double)(float)((double)*pfVar11 + dVar14);
-      iVar9 = iVar9 + 1;
-      pfVar11 = (float *)((int)local_a80 + iVar10);
-      iVar10 = iVar10 + 4;
-      dVar15 = (double)(float)((double)*pfVar11 + dVar15);
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    pfVar11 = &fStack_4f4;
-    lVar13 = 0x100;
+      dVar15 = (double)(float)((double)*pfVar8 + dVar15);
+      iVar12 = iVar12 + 1;
+      pfVar8 = (float *)((int)local_a80 + iVar13);
+      iVar13 = iVar13 + 4;
+      dVar16 = (double)(float)((double)*pfVar8 + dVar16);
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
+    pfVar8 = &fStack_4f4;
+    lVar14 = 0x100;
     do {
-      pfVar12 = pfVar11 + 1;
-      pfVar11 = pfVar11 + 1;
-      *pfVar11 = *pfVar12 + (float)(dVar15 - dVar14) * 0.00390625;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
+      pfVar6 = pfVar8 + 1;
+      pfVar8 = pfVar8 + 1;
+      *pfVar8 = *pfVar6 + (float)(dVar16 - dVar15) * 0.00390625;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
     local_c20 = (longlong)iVar1;
-    (*DAT_848958cc)(local_a80,local_4f0,0x100);
+    (*memcpyfunc)(local_a80,local_4f0,0x100);
   }
-  NellyLogEnvelopeToAs(local_a80,0xc,param_4 + 0x10,auStack_680,auStack_c10);
-  K2ASK(0xc,auStack_c10,param_4 + 0x14);
-  GetFrameSpCBM(uVar7,param_7 + 0x91,param_6,local_4f0);
-  ScaleVector(0x4000000000000000,local_4f0,param_6);
+  NellyLogEnvelopeToAs(local_a80,0xc,&param_4->fLog2Gain,afStack_680,afStack_c10);
+  K2ASK(0xc,afStack_c10,param_4->pfASK);
+  pfVar8 = (float *)param_6;
+  GetFrameSpCBM(pvVar7,param_7 + 0x91,param_6,local_4f0);
+  ScaleVector(local_4f0,param_6,2.0,pfVar8);
   HammingWindowNormSC(local_4f0,param_6);
-  pfVar12 = (float *)(param_4 + 8);
-  TDPitchRefine((double)*pfVar12,dVar16,local_4f0,param_6);
-  pfVar11 = (float *)(param_4 + 0xc);
-  dVar16 = (double)ModifyPv((double)*param_8,(double)*pfVar11,(double)*(float *)(iVar5 + 0x30),
-                            (double)*pfVar12,(double)*(float *)(iVar5 + 0x34));
-  *pfVar11 = (float)dVar16;
+  TDPitchRefine(local_4f0,param_6,pSVar9->Pitch,pfVar8,(float)dVar17);
+  fVar18 = ModifyPv((float)*param_8,*pfVar10,param_5->uq_Pv_1,pSVar9->Pitch,param_5->uq_Pitch_1);
+  *pfVar10 = fVar18;
   __restgprlr_23();
   return;
 }

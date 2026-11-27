@@ -2,122 +2,140 @@
 
 // 828D5180  XMAPlaybackInitialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:154)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void XMAPlaybackInitialize(void)
 
 {
-  DAT_84895948 = (uint)DAT_7fea1803 << 0x18 | (uint)DAT_7fea1802 << 0x10 | (uint)DAT_7fea1801 << 8 |
-                 (uint)DAT_7fea1800;
+  XAUDIO::XMAHARDWARE::pContextArray =
+       (_XMA_CONTEXT_DATA *)
+       ((uint)DAT_7fea1803 << 0x18 | (uint)DAT_7fea1802 << 0x10 | (uint)DAT_7fea1801 << 8 |
+       (uint)DAT_7fea1800);
   return;
 }
 
 
 // 828D5198  XMAPlaybackCreate  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:171)
 
-void XMAPlaybackCreate(undefined8 param_1,longlong param_2,ulonglong param_3,int *param_4,
-                      ulonglong param_5)
+undefined4
+XMAPlaybackCreate(ulong param_1,XMA_PLAYBACK_INIT *param_2,ulong param_3,XMAPLAYBACK **param_4,
+                 uchar *param_5,ulong param_6)
 
 {
   byte bVar1;
   uint uVar2;
   uint uVar3;
-  undefined4 *puVar4;
-  byte *pbVar5;
+  byte *pbVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint uVar10;
-  undefined8 uVar9;
-  longlong lVar11;
+  ulong uVar7;
+  void *pvVar8;
+  undefined4 uVar9;
+  XMAPLAYBACK *pXVar10;
+  uint uVar11;
   int iVar12;
   ulonglong uVar13;
-  int iVar14;
+  ulonglong uVar14;
   longlong lVar15;
-  uint *puVar16;
+  longlong lVar16;
+  int iVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  longlong lVar20;
+  uint *puVar21;
   
-  uVar7 = __savegprlr_23();
-  lVar8 = XMAPlaybackGetRequiredBufferSize();
-  if (((param_5 & 0xffffffff) == 0) &&
-     (param_5 = XAUDIO__CXMemMemoryManager__XMemAlloc(0xffffffff8489594c,lVar8,0xffffffffa7820007),
-     (param_5 & 0xffffffff) == 0)) {
-    __restgprlr_23(0xffffffff8007000e);
-    return;
+  uVar14 = (ulonglong)(int)param_5;
+  uVar13 = (ulonglong)(int)param_3;
+  lVar20 = (longlong)(int)param_2;
+  uVar6 = __savegprlr_23(param_1);
+  uVar7 = XMAPlaybackGetRequiredBufferSize((ulong)uVar6,(XMA_PLAYBACK_INIT *)lVar20);
+  if ((uVar14 & 0xffffffff) == 0) {
+    pvVar8 = XAUDIO::CXMemMemoryManager::XMemAlloc(&XAUDIO::g_MemoryManager,uVar7,0xa7820007);
+    uVar14 = (ulonglong)(int)pvVar8;
+    if (pvVar8 == (void *)0x0) {
+      uVar9 = __restgprlr_23(0xffffffff8007000e);
+      return uVar9;
+    }
   }
-  uVar6 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + 0x8f & 0xffffff80;
-  uVar13 = lVar8 - uVar6;
-  XMemSet128(param_5,0,lVar8);
-  puVar4 = (undefined4 *)param_5;
-  *puVar4 = (int)uVar7;
-  lVar15 = uVar6 + param_5;
-  lVar8 = 0;
-  puVar4[2] = puVar4 + 4;
-  if ((uVar13 & 0xffffffff) != 0) {
-    lVar11 = ((uVar13 - 1 & 0xffffffff) >> 7) + 1;
+  uVar5 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + 0x8f & 0xffffff80;
+  uVar18 = (longlong)(int)uVar7 - uVar5;
+  pXVar10 = (XMAPLAYBACK *)uVar14;
+  XMemSet128(pXVar10,0,uVar7);
+  pXVar10->dwNumContexts = (ulong)uVar6;
+  lVar19 = uVar5 + uVar14;
+  lVar16 = 0;
+  pXVar10->pStreamInfo = (XMAPLAYBACKSTREAM *)(pXVar10 + 1);
+  if ((uVar18 & 0xffffffff) != 0) {
+    lVar15 = ((uVar18 - 1 & 0xffffffff) >> 7) + 1;
     do {
-      dataCacheBlockFlush(lVar8 + lVar15);
-      lVar8 = lVar8 + 0x80;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      dataCacheBlockFlush(lVar16 + lVar19);
+      lVar16 = lVar16 + 0x80;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
   }
-  puVar4[1] = (uint)param_3 | 0x30000;
-  if ((uVar7 & 0xffffffff) != 0) {
-    param_2 = param_2 + 8;
-    iVar14 = 0;
+  pXVar10->dwStatus = (uint)uVar13 | 0x30000;
+  if ((uVar6 & 0xffffffff) != 0) {
+    lVar20 = lVar20 + 8;
+    iVar12 = 0;
     do {
-      puVar16 = (uint *)(iVar14 + puVar4[2]);
-      puVar16[0x11] = (uint)lVar15;
-      pbVar5 = (byte *)param_2;
-      uVar10 = *(uint *)(pbVar5 + -8);
-      if (uVar10 < 0x5dc1) {
-        iVar12 = 0;
+      puVar21 = (uint *)((int)(pXVar10->pStreamInfo->contextShadow).Reserved4 + iVar12 + -0x28);
+      puVar21[0x11] = (uint)lVar19;
+      pbVar4 = (byte *)lVar20;
+      uVar11 = *(uint *)(pbVar4 + -8);
+      if (uVar11 < 0x5dc1) {
+        iVar17 = 0;
       }
-      else if (uVar10 < 0x7d01) {
-        iVar12 = 1;
+      else if (uVar11 < 0x7d01) {
+        iVar17 = 1;
       }
       else {
-        iVar12 = (-(uint)(0xac44 < uVar10) & 1) + 2;
+        iVar17 = (-(uint)(0xac44 < uVar11) & 1) + 2;
       }
-      uVar10 = puVar16[1];
-      uVar2 = iVar12 << 0x1b;
-      puVar16[1] = uVar2 | uVar10 & 0xe7ffffff;
-      uVar3 = (*pbVar5 - 1 & 1) << 0x1d;
-      puVar16[1] = uVar3 | uVar2 | uVar10 & 0xc7ffffff;
-      puVar16[1] = (pbVar5[1] & 0xf) << 0x14 | uVar3 | uVar2 | uVar10 & 0xc70fffff;
-      uVar10 = MmGetPhysicalAddress(lVar15);
-      puVar16[7] = uVar10;
-      bVar1 = *pbVar5;
-      iVar12 = *(int *)(pbVar5 + -4);
-      puVar16[1] = puVar16[1] | 0x80000000;
-      *puVar16 = ((uint)bVar1 * iVar12 & 0xf80) << 0xf | *puVar16 & 0xf83fffff;
-      lVar15 = ((longlong)(int)(uint)*pbVar5 * (longlong)*(int *)(pbVar5 + -4) & 0x7fffffffU) * 2 +
-               lVar15;
-      puVar16[0x12] = (uint)lVar15;
-      uVar10 = MmGetPhysicalAddress(lVar15);
-      puVar16[8] = uVar10;
-      uVar7 = uVar7 - 1;
-      lVar15 = (ulonglong)*pbVar5 * 0x100 + lVar15;
-      iVar14 = iVar14 + 0x60;
-      param_2 = param_2 + 0xc;
-    } while (uVar7 != 0);
+      uVar11 = puVar21[1];
+      uVar2 = iVar17 << 0x1b;
+      puVar21[1] = uVar2 | uVar11 & 0xe7ffffff;
+      uVar3 = (*pbVar4 - 1 & 1) << 0x1d;
+      puVar21[1] = uVar3 | uVar2 | uVar11 & 0xc7ffffff;
+      puVar21[1] = (pbVar4[1] & 0xf) << 0x14 | uVar3 | uVar2 | uVar11 & 0xc70fffff;
+      uVar11 = MmGetPhysicalAddress(lVar19);
+      puVar21[7] = uVar11;
+      bVar1 = *pbVar4;
+      iVar17 = *(int *)(pbVar4 + -4);
+      puVar21[1] = puVar21[1] | 0x80000000;
+      *puVar21 = ((uint)bVar1 * iVar17 & 0xf80) << 0xf | *puVar21 & 0xf83fffff;
+      lVar19 = ((longlong)(int)(uint)*pbVar4 * (longlong)*(int *)(pbVar4 + -4) & 0x7fffffffU) * 2 +
+               lVar19;
+      puVar21[0x12] = (uint)lVar19;
+      uVar11 = MmGetPhysicalAddress(lVar19);
+      puVar21[8] = uVar11;
+      uVar6 = uVar6 - 1;
+      lVar19 = (ulonglong)*pbVar4 * 0x100 + lVar19;
+      iVar12 = iVar12 + 0x60;
+      lVar20 = lVar20 + 0xc;
+    } while (uVar6 != 0);
   }
-  if (((param_3 & 1) == 0) && (uVar9 = XMAPlaybackAllocateContexts(param_5), (int)uVar9 < 0)) {
-    XMAPlaybackDestroy(param_5);
-    __restgprlr_23(uVar9);
-    return;
+  if ((uVar13 & 1) == 0) {
+    iVar12 = XMAPlaybackAllocateContexts(pXVar10);
+    if (iVar12 < 0) {
+      XMAPlaybackDestroy(pXVar10);
+      uVar9 = __restgprlr_23(iVar12);
+      return uVar9;
+    }
   }
-  *param_4 = (int)puVar4;
-  __restgprlr_23(0);
-  return;
+  *param_4 = pXVar10;
+  uVar9 = __restgprlr_23(0);
+  return uVar9;
 }
 
 
 // 828D53A0  XMAPlaybackDestroy  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:310)
 
-undefined8 XMAPlaybackDestroy(int param_1)
+undefined4 XMAPlaybackDestroy(XMAPLAYBACK *param_1)
 
 {
-  XMAPlaybackFreeContexts();
-  if ((*(uint *)(param_1 + 4) & 2) == 0) {
-    XAUDIO__CXMemMemoryManager__XMemFree(0xffffffff8489594c,param_1,0xffffffffa7820007);
+  XMAPlaybackFreeContexts(param_1);
+  if ((param_1->dwStatus & 2) == 0) {
+    XAUDIO::CXMemMemoryManager::XMemFree(&XAUDIO::g_MemoryManager,param_1,0xa7820007);
   }
   return 0;
 }
@@ -125,191 +143,203 @@ undefined8 XMAPlaybackDestroy(int param_1)
 
 // 828D53F8  XMAPlaybackGetRequiredBufferSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:334)
 
-void XMAPlaybackGetRequiredBufferSize(undefined8 param_1,longlong param_2)
+ulong XMAPlaybackGetRequiredBufferSize(ulong param_1,XMA_PLAYBACK_INIT *param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  ulong uVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
+  ulonglong uVar6;
   longlong lVar7;
   longlong lVar8;
+  longlong lVar9;
+  longlong lVar10;
   
-  uVar2 = __savegprlr_29();
-  lVar7 = 0;
-  lVar6 = 0;
-  lVar3 = 0;
-  uVar4 = 0;
+  lVar4 = (longlong)(int)param_2;
+  uVar2 = __savegprlr_29(param_1);
+  lVar9 = 0;
+  lVar8 = 0;
+  lVar5 = 0;
+  uVar6 = 0;
   if (1 < (int)uVar2) {
-    lVar8 = param_2 + -8;
-    lVar5 = ((uVar2 - 2 & 0xffffffff) >> 1) + 1;
-    uVar4 = lVar5 * 2 & 0xfffffffe;
+    lVar10 = lVar4 + -8;
+    lVar7 = ((uVar2 - 2 & 0xffffffff) >> 1) + 1;
+    uVar6 = lVar7 * 2 & 0xfffffffe;
     do {
-      iVar1 = (int)lVar8;
-      lVar8 = lVar8 + 0x18;
-      lVar7 = ((longlong)(*(int *)(iVar1 + 0xc) + 0x80) *
-               (longlong)(int)(uint)*(byte *)(iVar1 + 0x10) & 0x7fffffffU) * 2 + lVar7;
-      lVar6 = ((longlong)(*(int *)lVar8 + 0x80) * (longlong)(int)(uint)*(byte *)(iVar1 + 0x1c) &
-              0x7fffffffU) * 2 + lVar6;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      iVar1 = (int)lVar10;
+      lVar10 = lVar10 + 0x18;
+      lVar9 = ((longlong)(*(int *)(iVar1 + 0xc) + 0x80) *
+               (longlong)(int)(uint)*(byte *)(iVar1 + 0x10) & 0x7fffffffU) * 2 + lVar9;
+      lVar8 = ((longlong)(*(int *)lVar10 + 0x80) * (longlong)(int)(uint)*(byte *)(iVar1 + 0x1c) &
+              0x7fffffffU) * 2 + lVar8;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  if (uVar4 < (uVar2 & 0xffffffff)) {
-    iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)param_2;
-    lVar3 = ((longlong)(*(int *)(iVar1 + 4) + 0x80) * (longlong)(int)(uint)*(byte *)(iVar1 + 8) &
+  if (uVar6 < (uVar2 & 0xffffffff)) {
+    iVar1 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)lVar4;
+    lVar5 = ((longlong)(*(int *)(iVar1 + 4) + 0x80) * (longlong)(int)(uint)*(byte *)(iVar1 + 8) &
             0x7fffffffU) << 1;
   }
-  __restgprlr_29(lVar6 + lVar7 + lVar3 +
-                 ((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + 0x8f & 0xffffff80));
-  return;
+  uVar3 = __restgprlr_29(lVar8 + lVar9 + lVar5 +
+                         ((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20 + 0x8f & 0xffffff80)
+                        );
+  return uVar3;
 }
 
 
 // 828D5DB8  XMAPlaybackAllocateContexts  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:386)
 
-void XMAPlaybackAllocateContexts(void)
+undefined4 XMAPlaybackAllocateContexts(XMAPLAYBACK *param_1)
 
 {
   uint uVar1;
   ulonglong uVar2;
   uint *puVar3;
   int iVar4;
-  undefined8 uVar5;
-  uint uVar6;
-  int iVar7;
+  undefined4 uVar5;
+  undefined8 uVar6;
+  uint uVar7;
   int iVar8;
+  int iVar9;
   
-  puVar3 = (uint *)__savegprlr_23();
-  uVar5 = 0;
+  puVar3 = (uint *)__savegprlr_23(param_1);
   uVar6 = 0;
+  uVar7 = 0;
   if (*puVar3 != 0) {
-    iVar7 = 0;
+    iVar8 = 0;
     do {
-      iVar8 = iVar7 + puVar3[2];
-      if (*(int *)(iVar8 + 0x40) == 0) {
-        uVar5 = XMACreateContext((undefined4 *)(iVar8 + 0x40));
-        if ((int)uVar5 < 0) goto LAB_828d5e74;
-        iVar4 = MmGetPhysicalAddress(*(undefined4 *)(iVar8 + 0x40));
-        uVar1 = iVar4 - DAT_84895948 >> 6;
+      iVar9 = iVar8 + puVar3[2];
+      if (*(int *)(iVar9 + 0x40) == 0) {
+        uVar6 = XMACreateContext((undefined4 *)(iVar9 + 0x40));
+        if ((int)uVar6 < 0) goto LAB_828d5e74;
+        iVar4 = MmGetPhysicalAddress(*(undefined4 *)(iVar9 + 0x40));
+        uVar1 = iVar4 - (int)XAUDIO::XMAHARDWARE::pContextArray >> 6;
         uVar2 = (ulonglong)uVar1 & 0xffff;
-        *(short *)(iVar8 + 0x50) = (short)uVar1;
+        *(short *)(iVar9 + 0x50) = (short)uVar1;
         uVar1 = 1 << ((uint)uVar2 & 0x1f);
         *(uint *)(((int)(uVar2 >> 5) + 0x1ffa86a0) * 4) =
              uVar1 << 0x18 | (uVar1 & 0xff00) << 8 | uVar1 >> 8 & 0xff00 | uVar1 >> 0x18;
         enforceInOrderExecutionIO();
       }
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x60;
-    } while (uVar6 < *puVar3);
+      uVar7 = uVar7 + 1;
+      iVar8 = iVar8 + 0x60;
+    } while (uVar7 < *puVar3);
   }
   puVar3[1] = puVar3[1] | 0x40000;
 LAB_828d5e74:
-  __restgprlr_23(uVar5);
-  return;
+  uVar5 = __restgprlr_23(uVar6);
+  return uVar5;
 }
 
 
 // 828D54B8  XMAPlaybackFreeContexts  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:432)
 
-void XMAPlaybackFreeContexts(void)
+undefined4 XMAPlaybackFreeContexts(XMAPLAYBACK *param_1)
 
 {
   uint *puVar1;
-  uint uVar2;
-  int iVar3;
+  undefined4 uVar2;
+  uint uVar3;
+  int iVar4;
   
-  puVar1 = (uint *)__savegprlr_28();
-  uVar2 = 0;
+  puVar1 = (uint *)__savegprlr_28(param_1);
+  uVar3 = 0;
   if (*puVar1 != 0) {
-    iVar3 = 0;
+    iVar4 = 0;
     do {
-      if (*(int *)(iVar3 + puVar1[2] + 0x40) != 0) {
+      if (*(int *)(iVar4 + puVar1[2] + 0x40) != 0) {
         XMAReleaseContext();
-        *(undefined4 *)(iVar3 + puVar1[2] + 0x40) = 0;
+        *(undefined4 *)(iVar4 + puVar1[2] + 0x40) = 0;
       }
-      uVar2 = uVar2 + 1;
-      iVar3 = iVar3 + 0x60;
-    } while (uVar2 < *puVar1);
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 0x60;
+    } while (uVar3 < *puVar1);
   }
   puVar1[1] = puVar1[1] & 0xfffbffff;
-  __restgprlr_28(0);
-  return;
+  uVar2 = __restgprlr_28(0);
+  return uVar2;
 }
 
 
 // 828D5530  XMAPlaybackQueryContextsAllocated  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:460)
 
-uint XMAPlaybackQueryContextsAllocated(int param_1)
+int XMAPlaybackQueryContextsAllocated(XMAPLAYBACK *param_1)
 
 {
-  return *(uint *)(param_1 + 4) >> 0x12 & 1;
+  return param_1->dwStatus >> 0x12 & 1;
 }
 
 
 // 828D5540  XMAPlaybackSubmitData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:476)
 
-void XMAPlaybackSubmitData(undefined8 param_1,int param_2,undefined8 param_3,ulonglong param_4)
+undefined4 XMAPlaybackSubmitData(XMAPLAYBACK *param_1,ulong param_2,void *param_3,ulong param_4)
 
 {
   uint uVar1;
-  int iVar2;
-  uint uVar3;
+  uint uVar2;
+  int iVar3;
   uint uVar4;
-  undefined4 *puVar5;
-  uint *puVar6;
+  ulong uVar5;
+  undefined4 uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulong *puVar9;
+  uint *puVar10;
   
-  iVar2 = __savegprlr_28();
-  uVar4 = (uint)((param_4 & 0xffffffff) >> 0xb);
-  puVar6 = (uint *)(param_2 * 0x60 + *(int *)(iVar2 + 8));
-  uVar1 = *(uint *)(param_2 * 0x60 + *(int *)(iVar2 + 8)) >> 0x14;
-  puVar5 = (undefined4 *)param_3;
-  if ((uVar1 & 1) == 0) {
-    uVar3 = MmGetPhysicalAddress(param_3);
-    puVar6[5] = uVar3;
-    *puVar6 = *puVar6 & 0xfffff000 | uVar4 & 0xfff | 0x100000;
-    puVar6[0x15] = (uint)puVar5;
+  uVar8 = (ulonglong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  iVar3 = __savegprlr_28(param_1);
+  puVar10 = (uint *)(param_2 * 0x60 + *(int *)(iVar3 + 8));
+  uVar2 = *(uint *)(param_2 * 0x60 + *(int *)(iVar3 + 8)) >> 0x14;
+  puVar9 = (ulong *)lVar7;
+  uVar1 = (uint)((uVar8 & 0xffffffff) >> 0xb);
+  if ((uVar2 & 1) == 0) {
+    uVar4 = MmGetPhysicalAddress(lVar7);
+    puVar10[5] = uVar4;
+    *puVar10 = *puVar10 & 0xfffff000 | uVar1 & 0xfff | 0x100000;
+    puVar10[0x15] = (uint)puVar9;
   }
   else {
-    if ((uVar1 & 2) != 0) {
-      __restgprlr_28(0xffffffff80070005);
-      return;
+    if ((uVar2 & 2) != 0) {
+      uVar6 = __restgprlr_28(0xffffffff80070005);
+      return uVar6;
     }
-    uVar3 = MmGetPhysicalAddress(param_3);
-    puVar6[6] = uVar3;
-    puVar6[1] = puVar6[1] & 0xfffff000 | uVar4 & 0xfff;
-    *puVar6 = *puVar6 | 0x200000;
-    puVar6[0x16] = (uint)puVar5;
+    uVar4 = MmGetPhysicalAddress(lVar7);
+    puVar10[6] = uVar4;
+    puVar10[1] = puVar10[1] & 0xfffff000 | uVar1 & 0xfff;
+    *puVar10 = *puVar10 | 0x200000;
+    puVar10[0x16] = (uint)puVar9;
   }
-  if (((uVar1 & 3) == 0) && (uVar4 = XMAPlaybackGetFrameOffsetFromPacketHeader(*puVar5), uVar4 != 0)
+  if (((uVar2 & 3) == 0) && (uVar5 = XMAPlaybackGetFrameOffsetFromPacketHeader(*puVar9), uVar5 != 0)
      ) {
-    puVar6[2] = puVar6[2] & 0xfc000000 | uVar4 & 0x3ffffff;
+    puVar10[2] = puVar10[2] & 0xfc000000 | uVar5 & 0x3ffffff;
   }
-  __restgprlr_28(0);
-  return;
+  uVar6 = __restgprlr_28(0);
+  return uVar6;
 }
 
 
 // 828D5618  XMAPlaybackQueryInputDataPending  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:547)
 
-undefined8 XMAPlaybackQueryInputDataPending(int param_1,int param_2,uint param_3)
+int XMAPlaybackQueryInputDataPending(XMAPLAYBACK *param_1,ulong param_2,void *param_3)
 
 {
   uint uVar1;
-  uint *puVar2;
+  XMAPLAYBACKSTREAM *pXVar2;
   
-  puVar2 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  if ((*(uint *)(param_1 + 4) & 0x20000) == 0) {
-    uVar1 = *(uint *)puVar2[0x10];
+  pXVar2 = param_1->pStreamInfo + param_2;
+  if ((param_1->dwStatus & 0x20000) == 0) {
+    uVar1 = *(uint *)pXVar2->pHardwareContext;
   }
   else {
-    uVar1 = *puVar2;
+    uVar1 = *(uint *)&pXVar2->contextShadow;
   }
-  if (((uVar1 >> 0x14 & 1) != 0) && (puVar2[0x15] == param_3)) {
+  if (((uVar1 >> 0x14 & 1) != 0) && (pXVar2->pDataSubmitted[0] == param_3)) {
     return 1;
   }
-  if (((uVar1 >> 0x14 & 2) != 0) && (puVar2[0x16] == param_3)) {
+  if (((uVar1 >> 0x14 & 2) != 0) && (pXVar2->pDataSubmitted[1] == param_3)) {
     return 1;
   }
   return 0;
@@ -318,47 +348,50 @@ undefined8 XMAPlaybackQueryInputDataPending(int param_1,int param_2,uint param_3
 
 // 828D5698  XMAPlaybackQueryReadyForMoreData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:582)
 
-longlong XMAPlaybackQueryReadyForMoreData(int param_1,ulonglong param_2)
+int XMAPlaybackQueryReadyForMoreData(XMAPLAYBACK *param_1,ulong param_2)
 
 {
   ulonglong uVar1;
   longlong lVar2;
   
-  lVar2 = (param_2 & 0x7fffffff) * 2;
-  if ((*(uint *)(param_1 + 4) & 0x20000) != 0) {
-    uVar1 = (ulonglong)*(uint *)((int)((param_2 + lVar2 & 0xffffffff) << 5) + *(int *)(param_1 + 8))
-            & 0x300000;
+  lVar2 = ((ulonglong)param_2 & 0x7fffffff) * 2;
+  if ((param_1->dwStatus & 0x20000) != 0) {
+    uVar1 = (ulonglong)
+            *(uint *)((int)(param_1->pStreamInfo->contextShadow).Reserved4 +
+                     (int)(((int)param_2 + lVar2 & 0xffffffffU) << 5) + -0x28) & 0x300000;
     lVar2 = uVar1 - 0x300000;
-    return lVar2 - ((uVar1 - 0x300001) + (ulonglong)(lVar2 == 0));
+    return (int)lVar2 - ((int)uVar1 + -0x300001 + (uint)(lVar2 == 0));
   }
   uVar1 = (ulonglong)
-          **(uint **)((int)((param_2 + lVar2 & 0xffffffff) << 5) + *(int *)(param_1 + 8) + 0x40) &
-          0x300000;
+          **(uint **)((int)param_1->pStreamInfo->pDataSubmitted +
+                     (int)(((int)param_2 + lVar2 & 0xffffffffU) << 5) + -0x14) & 0x300000;
   lVar2 = uVar1 - 0x300000;
-  return lVar2 - ((uVar1 - 0x300001) + (ulonglong)(lVar2 == 0));
+  return (int)lVar2 - ((int)uVar1 + -0x300001 + (uint)(lVar2 == 0));
 }
 
 
 // 828D56F8  XMAPlaybackIsIdle  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:609)
 
-bool XMAPlaybackIsIdle(int param_1,ulonglong param_2)
+int XMAPlaybackIsIdle(XMAPLAYBACK *param_1,ulong param_2)
 
 {
   longlong lVar1;
   
-  lVar1 = (param_2 & 0x7fffffff) * 2;
-  if ((*(uint *)(param_1 + 4) & 0x20000) != 0) {
-    return (*(uint *)((int)((param_2 + lVar1 & 0xffffffff) << 5) + *(int *)(param_1 + 8)) >> 0x14 &
-           3) == 0;
+  lVar1 = ((ulonglong)param_2 & 0x7fffffff) * 2;
+  if ((param_1->dwStatus & 0x20000) != 0) {
+    return (uint)LZCOUNT(*(uint *)((int)(param_1->pStreamInfo->contextShadow).Reserved4 +
+                                  (int)(((int)param_2 + lVar1 & 0xffffffffU) << 5) + -0x28) >> 0x14
+                         & 3) >> 5;
   }
-  return (**(uint **)((int)((param_2 + lVar1 & 0xffffffff) << 5) + *(int *)(param_1 + 8) + 0x40) >>
-          0x14 & 3) == 0;
+  return (uint)LZCOUNT(**(uint **)((int)param_1->pStreamInfo->pDataSubmitted +
+                                  (int)(((int)param_2 + lVar1 & 0xffffffffU) << 5) + -0x14) >> 0x14
+                       & 3) >> 5;
 }
 
 
 // 828D5E80  XMAPlaybackRequestModifyLock  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:648)
 
-undefined8 XMAPlaybackRequestModifyLock(uint *param_1)
+undefined4 XMAPlaybackRequestModifyLock(XMAPLAYBACK *param_1)
 
 {
   ushort uVar1;
@@ -366,24 +399,24 @@ undefined8 XMAPlaybackRequestModifyLock(uint *param_1)
   uint uVar3;
   int iVar4;
   
-  if ((param_1[1] & 0x30000) != 0) {
-    param_1[1] = param_1[1] | 0x10000;
+  if ((param_1->dwStatus & 0x30000) != 0) {
+    param_1->dwStatus = param_1->dwStatus | 0x10000;
     return 0;
   }
   uVar3 = 0;
-  if (*param_1 != 0) {
+  if (param_1->dwNumContexts != 0) {
     iVar4 = 0;
     do {
-      uVar1 = *(ushort *)(param_1[2] + iVar4 + 0x50);
+      uVar1 = *(ushort *)((int)param_1->pStreamInfo->pDataSubmitted + iVar4 + -4);
       uVar2 = 1 << (uVar1 & 0x1f);
       *(uint *)(((uVar1 >> 5) + 0x1ffa8690) * 4) =
            uVar2 << 0x18 | (uVar2 & 0xff00) << 8 | uVar2 >> 8 & 0xff00 | uVar2 >> 0x18;
       enforceInOrderExecutionIO();
       uVar3 = uVar3 + 1;
       iVar4 = iVar4 + 0x60;
-    } while (uVar3 < *param_1);
+    } while (uVar3 < param_1->dwNumContexts);
   }
-  param_1[1] = param_1[1] | 0x10000;
+  param_1->dwStatus = param_1->dwStatus | 0x10000;
   return 0;
 }
 
@@ -392,48 +425,50 @@ undefined8 XMAPlaybackRequestModifyLock(uint *param_1)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
-void XMAPlaybackWaitUntilModifyLockObtained(void)
+undefined4 XMAPlaybackWaitUntilModifyLockObtained(XMAPLAYBACK *param_1)
 
 {
   longlong lVar1;
   longlong lVar2;
-  uint *puVar4;
+  XMAPLAYBACK *pXVar4;
   int iVar5;
   ulonglong uVar3;
+  undefined4 uVar6;
+  ulong uVar7;
   
-  puVar4 = (uint *)__savegprlr_29();
+  pXVar4 = (XMAPLAYBACK *)__savegprlr_29(param_1);
   lVar1 = TBLr;
-  iVar5 = XMAPlaybackQueryModifyLockObtained();
+  iVar5 = XMAPlaybackQueryModifyLockObtained(pXVar4);
   while( true ) {
     if (iVar5 != 0) {
-      __restgprlr_29(0);
-      return;
+      uVar6 = __restgprlr_29(0);
+      return uVar6;
     }
     lVar2 = TBLr;
     uVar3 = KeQueryPerformanceFrequency();
     if (uVar3 >> 3 < (ulonglong)(lVar2 - lVar1)) break;
-    iVar5 = XMAPlaybackQueryModifyLockObtained(puVar4);
+    iVar5 = XMAPlaybackQueryModifyLockObtained(pXVar4);
   }
-  uVar3 = 0;
+  uVar7 = 0;
   enforceInOrderExecutionIO();
   _DAT_7fea1804 = 0x3000000;
   enforceInOrderExecutionIO();
-  XMAPlaybackQueryModifyLockObtained(puVar4);
-  if (*puVar4 != 0) {
+  XMAPlaybackQueryModifyLockObtained(pXVar4);
+  if (pXVar4->dwNumContexts != 0) {
     do {
-      XMAPlaybackFlushData(puVar4,uVar3);
-      uVar3 = uVar3 + 1;
-    } while ((uVar3 & 0xffffffff) < (ulonglong)*puVar4);
+      XMAPlaybackFlushData(pXVar4,uVar7);
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < pXVar4->dwNumContexts);
   }
-  puVar4[1] = puVar4[1] | 0x80000;
-  __restgprlr_29(1);
-  return;
+  pXVar4->dwStatus = pXVar4->dwStatus | 0x80000;
+  uVar6 = __restgprlr_29(1);
+  return uVar6;
 }
 
 
 // 828D5FE0  XMAPlaybackQueryModifyLockObtained  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:772)
 
-undefined8 XMAPlaybackQueryModifyLockObtained(uint *param_1)
+int XMAPlaybackQueryModifyLockObtained(XMAPLAYBACK *param_1)
 
 {
   uint uVar1;
@@ -456,10 +491,10 @@ undefined8 XMAPlaybackQueryModifyLockObtained(uint *param_1)
   undefined4 uVar18;
   undefined4 uVar19;
   
-  if ((param_1[1] & 0x20000) == 0) {
+  if ((param_1->dwStatus & 0x20000) == 0) {
     uVar6 = 0;
-    if (*param_1 != 0) {
-      puVar7 = (ushort *)(param_1[2] + 0x50);
+    if (param_1->dwNumContexts != 0) {
+      puVar7 = &param_1->pStreamInfo->hardwareIndex;
       do {
         if ((ulonglong)*puVar7 ==
             (((ulonglong)DAT_7fea181b << 0x18 | (ulonglong)DAT_7fea181a << 0x10 |
@@ -468,13 +503,13 @@ undefined8 XMAPlaybackQueryModifyLockObtained(uint *param_1)
         }
         uVar6 = uVar6 + 1;
         puVar7 = puVar7 + 0x30;
-      } while (uVar6 < *param_1);
+      } while (uVar6 < param_1->dwNumContexts);
     }
     uVar6 = 0;
-    if (*param_1 != 0) {
+    if (param_1->dwNumContexts != 0) {
       iVar5 = 0;
       do {
-        puVar8 = (uint *)(iVar5 + param_1[2]);
+        puVar8 = (uint *)((int)(param_1->pStreamInfo->contextShadow).Reserved4 + iVar5 + -0x28);
         puVar4 = puVar8 + 4;
         uVar1 = puVar8[0x10];
         puVar2 = (undefined4 *)(uVar1 + 0x10 & 0xfffffff0);
@@ -510,21 +545,21 @@ undefined8 XMAPlaybackQueryModifyLockObtained(uint *param_1)
         if ((uVar1 >> 0x14 & 1) == 0) {
           puVar8[5] = 0;
           *puVar8 = uVar1 & 0xfffff000;
-          *(undefined4 *)(iVar5 + param_1[2] + 0x54) = 0;
+          *(undefined4 *)((int)param_1->pStreamInfo->pDataSubmitted + iVar5) = 0;
         }
         if ((uVar1 >> 0x14 & 2) == 0) {
           puVar8[6] = 0;
           puVar8[1] = puVar8[1] & 0xfffff000;
-          *(undefined4 *)(iVar5 + param_1[2] + 0x58) = 0;
+          *(undefined4 *)((int)param_1->pStreamInfo->pDataSubmitted + iVar5 + 4) = 0;
         }
         if ((uVar1 >> 0x14 & 3) == 0) {
           *puVar4 = *puVar4 & 0x7fffffff;
         }
         uVar6 = uVar6 + 1;
         iVar5 = iVar5 + 0x60;
-      } while (uVar6 < *param_1);
+      } while (uVar6 < param_1->dwNumContexts);
     }
-    param_1[1] = param_1[1] | 0x20000;
+    param_1->dwStatus = param_1->dwStatus | 0x20000;
   }
   return 1;
 }
@@ -532,14 +567,14 @@ undefined8 XMAPlaybackQueryModifyLockObtained(uint *param_1)
 
 // 828D6128  XMAPlaybackResumePlayback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:848)
 
-undefined8 XMAPlaybackResumePlayback(uint *param_1)
+undefined4 XMAPlaybackResumePlayback(XMAPLAYBACK *param_1)
 
 {
   ushort uVar1;
   undefined4 *puVar2;
   undefined4 *puVar3;
   ulonglong uVar4;
-  uint *puVar5;
+  XMAPLAYBACKSTREAM *pXVar5;
   uint uVar6;
   longlong lVar7;
   int iVar8;
@@ -558,29 +593,30 @@ undefined8 XMAPlaybackResumePlayback(uint *param_1)
   undefined4 uVar21;
   undefined4 uVar22;
   
-  uVar9 = *param_1;
+  uVar9 = param_1->dwNumContexts;
   if (uVar9 != 0) {
-    puVar5 = (uint *)param_1[2];
+    pXVar5 = param_1->pStreamInfo;
     uVar4 = (ulonglong)uVar9;
     do {
       lVar10 = 0;
-      if ((*puVar5 >> 0xe & 0x1f00) != 0) {
-        lVar7 = ((((ulonglong)(*puVar5 >> 0xe) & 0x1f00) - 1 & 0xffffffff) >> 7) + 1;
+      if (((undefined4 *)&pXVar5->contextShadow)->SizeWrite != 0) {
+        lVar7 = ((((ulonglong)((uint)*(undefined4 *)&pXVar5->contextShadow >> 0xe) & 0x1f00) - 1 &
+                 0xffffffff) >> 7) + 1;
         do {
-          dataCacheBlockFlush(lVar10 + (ulonglong)puVar5[0x11]);
+          dataCacheBlockFlush(lVar10 + ZEXT48(pXVar5->pOutput));
           lVar10 = lVar10 + 0x80;
           lVar7 = lVar7 + -1;
         } while (lVar7 != 0);
       }
       uVar4 = uVar4 - 1;
-      puVar5 = puVar5 + 0x18;
+      pXVar5 = pXVar5 + 1;
     } while (uVar4 != 0);
   }
-  if (((param_1[1] & 0x20000) != 0) && (uVar6 = 0, uVar9 != 0)) {
+  if (((param_1->dwStatus & 0x20000) != 0) && (uVar6 = 0, uVar9 != 0)) {
     iVar8 = 0;
     do {
       uVar6 = uVar6 + 1;
-      uVar11 = iVar8 + param_1[2];
+      uVar11 = (int)(param_1->pStreamInfo->contextShadow).Reserved4 + iVar8 + -0x28;
       iVar8 = iVar8 + 0x60;
       uVar9 = *(uint *)(uVar11 + 0x40);
       puVar2 = (undefined4 *)(uVar11 + 0x10 & 0xfffffff0);
@@ -612,61 +648,62 @@ undefined8 XMAPlaybackResumePlayback(uint *param_1)
       puVar2[1] = uVar16;
       puVar2[2] = uVar17;
       puVar2[3] = uVar18;
-    } while (uVar6 < *param_1);
+    } while (uVar6 < param_1->dwNumContexts);
   }
   uVar9 = 0;
-  if (*param_1 != 0) {
+  if (param_1->dwNumContexts != 0) {
     iVar8 = 0;
     do {
-      uVar1 = *(ushort *)(iVar8 + param_1[2] + 0x50);
+      uVar1 = *(ushort *)((int)param_1->pStreamInfo->pDataSubmitted + iVar8 + -4);
       uVar6 = 1 << (uVar1 & 0x1f);
       *(uint *)(((uVar1 >> 5) + 0x1ffa8650) * 4) =
            uVar6 << 0x18 | (uVar6 & 0xff00) << 8 | uVar6 >> 8 & 0xff00 | uVar6 >> 0x18;
       enforceInOrderExecutionIO();
       uVar9 = uVar9 + 1;
       iVar8 = iVar8 + 0x60;
-    } while (uVar9 < *param_1);
+    } while (uVar9 < param_1->dwNumContexts);
   }
-  param_1[1] = param_1[1] & 0xfffcffff;
+  param_1->dwStatus = param_1->dwStatus & 0xfffcffff;
   return 0;
 }
 
 
 // 828D5758  XMAPlaybackQueryAvailableData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:914)
 
-uint XMAPlaybackQueryAvailableData(int param_1,int param_2)
+ulong XMAPlaybackQueryAvailableData(XMAPLAYBACK *param_1,ulong param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  uint *puVar3;
-  uint uVar4;
+  undefined1 *puVar1;
+  uint uVar2;
+  XMAPLAYBACKSTREAM *pXVar3;
+  XMAPLAYBACKSTREAM *pXVar4;
+  uint uVar5;
   
-  puVar2 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  puVar3 = puVar2;
-  if ((*(uint *)(param_1 + 4) & 0x20000) == 0) {
-    puVar3 = (uint *)puVar2[0x10];
+  pXVar3 = param_1->pStreamInfo + param_2;
+  pXVar4 = pXVar3;
+  if ((param_1->dwStatus & 0x20000) == 0) {
+    pXVar4 = (XMAPLAYBACKSTREAM *)pXVar3->pHardwareContext;
   }
-  if ((puVar3[1] & 0x80000000) == 0) {
-    uVar4 = *puVar3 >> 0x16 & 0x1f;
+  if ((pXVar4->contextShadow).ValidWrite == 0) {
+    uVar5 = pXVar4.SizeWrite;
   }
   else {
-    uVar4 = *puVar3 >> 0x1b;
-    uVar1 = puVar3[9] & 0x1f;
-    if (uVar4 < uVar1) {
-      uVar4 = ((*puVar3 >> 0x16 & 0x1f) - uVar1) + uVar4;
+    uVar5 = pXVar4.OffsetWrite;
+    uVar2 = (pXVar4->contextShadow).WriteBufferOffsetRead;
+    if (uVar5 < uVar2) {
+      uVar5 = (pXVar4.SizeWrite - uVar2) + uVar5;
     }
     else {
-      uVar4 = uVar4 - uVar1;
+      uVar5 = uVar5 - uVar2;
     }
   }
-  return uVar4 * 0x100 - (uint)*(ushort *)((int)puVar2 + 0x52) >> (puVar3[1] >> 0x1d & 1) + 1;
+  return uVar5 * 0x100 - (uint)pXVar3->partialBytesRead >> (pXVar4->contextShadow).NumChannels + 1;
 }
 
 
 // 828D57E8  XMAPlaybackConsumeDecodedData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1002)
 
-void XMAPlaybackConsumeDecodedData(undefined8 param_1,int param_2,int param_3,int *param_4)
+ulong XMAPlaybackConsumeDecodedData(XMAPLAYBACK *param_1,ulong param_2,ulong param_3,void **param_4)
 
 {
   ushort uVar1;
@@ -675,299 +712,319 @@ void XMAPlaybackConsumeDecodedData(undefined8 param_1,int param_2,int param_3,in
   uint *puVar4;
   ulonglong uVar5;
   int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  uint uVar10;
+  int iVar7;
+  ulong uVar8;
   ulonglong uVar9;
+  uint uVar10;
+  uint uVar12;
+  ulonglong uVar11;
   
-  iVar6 = __savegprlr_29();
-  param_2 = param_2 * 0x60;
-  puVar4 = (uint *)(param_2 + *(int *)(iVar6 + 8));
+  iVar7 = __savegprlr_29(param_1);
+  iVar6 = param_2 * 0x60;
+  puVar4 = (uint *)(iVar6 + *(int *)(iVar7 + 8));
   uVar1 = *(ushort *)((int)puVar4 + 0x52);
-  *param_4 = (puVar4[9] & 0x1f) * 0x100 + puVar4[0x11] + (uint)uVar1;
+  *param_4 = (void *)((puVar4[9] & 0x1f) * 0x100 + puVar4[0x11] + (uint)uVar1);
   uVar3 = param_3 << (puVar4[1] >> 0x1d & 1) + 1;
-  uVar8 = 0;
-  uVar10 = uVar3;
+  uVar10 = 0;
+  uVar12 = uVar3;
   if (uVar1 != 0) {
-    uVar8 = 0x100 - uVar1;
-    if (uVar3 < uVar8) {
-      uVar10 = 0;
-      *(ushort *)(param_2 + *(int *)(iVar6 + 8) + 0x52) = (short)uVar3 + uVar1;
-      uVar8 = uVar3;
+    uVar10 = 0x100 - uVar1;
+    if (uVar3 < uVar10) {
+      uVar12 = 0;
+      *(ushort *)(iVar6 + *(int *)(iVar7 + 8) + 0x52) = (short)uVar3 + uVar1;
+      uVar10 = uVar3;
     }
     else {
-      *(undefined2 *)(param_2 + *(int *)(iVar6 + 8) + 0x52) = 0;
-      uVar10 = (puVar4[9] & 0x1f) + 1;
+      *(undefined2 *)(iVar6 + *(int *)(iVar7 + 8) + 0x52) = 0;
+      uVar12 = (puVar4[9] & 0x1f) + 1;
       puVar4[1] = puVar4[1] | 0x80000000;
-      uVar10 = -(uint)(uVar10 < (*puVar4 >> 0x16 & 0x1f)) & uVar10;
-      puVar4[9] = uVar10 & 0x1f | puVar4[9] & 0xffffffe0;
-      uVar10 = -(uint)(uVar10 != 0) & uVar3 - uVar8;
+      uVar12 = -(uint)(uVar12 < (*puVar4 >> 0x16 & 0x1f)) & uVar12;
+      puVar4[9] = uVar12 & 0x1f | puVar4[9] & 0xffffffe0;
+      uVar12 = -(uint)(uVar12 != 0) & uVar3 - uVar10;
     }
   }
-  uVar7 = (ulonglong)(uVar10 >> 8);
+  uVar9 = (ulonglong)(uVar12 >> 8);
   uVar3 = *puVar4;
-  uVar10 = uVar10 & 0xff;
+  uVar12 = uVar12 & 0xff;
   uVar5 = (ulonglong)puVar4[9] & 0x1f;
   uVar2 = (ulonglong)(uVar3 >> 0x1b);
-  uVar9 = 0;
+  uVar11 = 0;
   if (uVar5 < uVar2) {
-    uVar9 = uVar2 - uVar5;
+    uVar11 = uVar2 - uVar5;
   }
   else if ((uVar2 < uVar5) || ((puVar4[1] & 0x80000000) == 0)) {
-    uVar9 = ((ulonglong)(uVar3 >> 0x16) & 0x1f) - uVar5;
+    uVar11 = ((ulonglong)(uVar3 >> 0x16) & 0x1f) - uVar5;
   }
-  if (uVar7 != 0) {
-    if ((uVar9 & 0xffffffff) <= uVar7) {
-      uVar7 = uVar9;
+  if (uVar9 != 0) {
+    if ((uVar11 & 0xffffffff) <= uVar9) {
+      uVar9 = uVar11;
     }
-    uVar8 = (int)uVar7 * 0x100 + uVar8;
+    uVar10 = (int)uVar9 * 0x100 + uVar10;
     puVar4[1] = puVar4[1] | 0x80000000;
-    uVar9 = uVar9 - uVar7;
-    puVar4[9] = -(uint)(uVar5 + uVar7 < ((ulonglong)(uVar3 >> 0x16) & 0x1f)) & (uint)(uVar5 + uVar7)
+    uVar11 = uVar11 - uVar9;
+    puVar4[9] = -(uint)(uVar5 + uVar9 < ((ulonglong)(uVar3 >> 0x16) & 0x1f)) & (uint)(uVar5 + uVar9)
                 & 0x1f | puVar4[9] & 0xffffffe0;
   }
-  if ((uVar10 != 0) && ((uVar9 & 0xffffffff) != 0)) {
-    uVar8 = uVar10 + uVar8;
-    *(short *)(param_2 + *(int *)(iVar6 + 8) + 0x52) = (short)uVar10;
+  if ((uVar12 != 0) && ((uVar11 & 0xffffffff) != 0)) {
+    uVar10 = uVar12 + uVar10;
+    *(short *)(iVar6 + *(int *)(iVar7 + 8) + 0x52) = (short)uVar12;
   }
-  param_2 = param_2 + *(int *)(iVar6 + 8);
-  *(uint *)(param_2 + 0x4c) = *(int *)(param_2 + 0x4c) + (uVar8 >> (puVar4[1] >> 0x1d & 1) + 1);
-  __restgprlr_29();
-  return;
+  iVar6 = iVar6 + *(int *)(iVar7 + 8);
+  *(uint *)(iVar6 + 0x4c) = *(int *)(iVar6 + 0x4c) + (uVar10 >> (puVar4[1] >> 0x1d & 1) + 1);
+  uVar8 = __restgprlr_29();
+  return uVar8;
 }
 
 
 // 828D5998  XMAPlaybackAccessDecodedData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1134)
 
-uint XMAPlaybackAccessDecodedData(int param_1,int param_2,int *param_3)
+ulong XMAPlaybackAccessDecodedData(XMAPLAYBACK *param_1,ulong param_2,void **param_3)
 
 {
   ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
-  uint *puVar6;
-  uint uVar7;
+  undefined1 *puVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  XMAPLAYBACKSTREAM *pXVar7;
+  uint uVar8;
   
-  iVar3 = 0;
-  puVar6 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  uVar1 = *(ushort *)((int)puVar6 + 0x52);
-  *param_3 = (puVar6[9] & 0x1f) * 0x100 + puVar6[0x11] + (uint)uVar1;
-  uVar2 = *puVar6 >> 0x1b;
-  uVar7 = puVar6[9] & 0x1f;
-  uVar4 = puVar6[1] >> 0x1f;
+  iVar4 = 0;
+  pXVar7 = param_1->pStreamInfo + param_2;
+  uVar1 = pXVar7->partialBytesRead;
+  *param_3 = (void *)((int)pXVar7->pOutput +
+                     (uint)uVar1 + (pXVar7->contextShadow).WriteBufferOffsetRead * 0x100);
+  uVar3 = pXVar7.OffsetWrite;
+  uVar8 = (pXVar7->contextShadow).WriteBufferOffsetRead;
+  uVar5 = (pXVar7->contextShadow).ValidWrite;
   if (uVar1 != 0) {
-    iVar3 = 0x100 - (uint)uVar1;
-    uVar7 = uVar7 + 1;
-    uVar4 = 1;
+    iVar4 = 0x100 - (uint)uVar1;
+    uVar8 = uVar8 + 1;
+    uVar5 = 1;
   }
-  iVar5 = 0;
-  if (uVar7 < uVar2) {
-    iVar5 = uVar2 - uVar7;
+  iVar6 = 0;
+  if (uVar8 < uVar3) {
+    iVar6 = uVar3 - uVar8;
   }
-  else if ((uVar2 < uVar7) || (uVar4 == 0)) {
-    iVar5 = (*puVar6 >> 0x16 & 0x1f) - uVar7;
+  else if ((uVar3 < uVar8) || (uVar5 == 0)) {
+    iVar6 = pXVar7.SizeWrite - uVar8;
   }
-  return (uint)(iVar5 * 0x100 + iVar3) >> (puVar6[1] >> 0x1d & 1) + 1;
+  return (uint)(iVar6 * 0x100 + iVar4) >> (pXVar7->contextShadow).NumChannels + 1;
 }
 
 
 // 828D5A40  XMAPlaybackRewindDecodePosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1208)
 
-undefined8 XMAPlaybackRewindDecodePosition(int param_1,int param_2,uint param_3)
+int XMAPlaybackRewindDecodePosition(XMAPLAYBACK *param_1,ulong param_2,ulong param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
-  undefined8 uVar3;
+  undefined4 uVar1;
+  undefined4 uVar2;
+  int iVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  uint *puVar6;
+  XMAPLAYBACKSTREAM *pXVar6;
   
-  uVar3 = 1;
-  puVar6 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  uVar1 = puVar6[1];
-  uVar2 = *puVar6;
-  uVar5 = (ulonglong)(uVar2 >> 0x16) & 0x1f;
-  uVar4 = (ulonglong)(param_3 >> (7 - (uVar1 >> 0x1d & 1) & 0x3f));
+  iVar3 = 1;
+  pXVar6 = param_1->pStreamInfo + param_2;
+  uVar1 = *(undefined4 *)&(pXVar6->contextShadow).field_0x4;
+  uVar2 = *(undefined4 *)&pXVar6->contextShadow;
+  uVar5 = ((undefined4 *)&pXVar6->contextShadow)->SizeWrite;
+  uVar4 = (ulonglong)(param_3 >> (7 - ZPULL(uVar1,0x1d,1) & 0x3f));
   if (uVar4 < uVar5) {
-    uVar4 = ((uVar2 >> 0x1b) - uVar4) + uVar5;
+    uVar4 = (pXVar6.OffsetWrite - uVar4) + uVar5;
     if (uVar5 <= (uVar4 & 0xffffffff)) {
-      puVar6[1] = uVar1 | 0x80000000;
-      *puVar6 = (uint)((uVar4 - uVar5 & 0xffffffff) << 0x1b) | uVar2 & 0x7ffffff;
-      return uVar3;
+      *(uint *)&(pXVar6->contextShadow).field_0x4 = uVar1 | 0x80000000;
+      *(uint *)&pXVar6->contextShadow =
+           (uint)((uVar4 - uVar5 & 0xffffffff) << 0x1b) | uVar2 & 0x7ffffff;
+      return 1;
     }
   }
   else {
-    uVar3 = 0;
-    uVar4 = (ulonglong)puVar6[2] & 0x3ffffff;
+    iVar3 = 0;
+    uVar4 = (pXVar6->contextShadow).OffsetRead;
   }
-  puVar6[1] = uVar1 | 0x80000000;
-  *puVar6 = (uint)((uVar4 & 0xffffffff) << 0x1b) | uVar2 & 0x7ffffff;
-  return uVar3;
+  *(uint *)&(pXVar6->contextShadow).field_0x4 = uVar1 | 0x80000000;
+  *(uint *)&pXVar6->contextShadow = (uint)((uVar4 & 0xffffffff) << 0x1b) | uVar2 & 0x7ffffff;
+  return iVar3;
 }
 
 
 // 828D5AC8  XMAPlaybackFlushData  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1258)
 
-undefined8 XMAPlaybackFlushData(int param_1,int param_2)
+undefined4 XMAPlaybackFlushData(XMAPLAYBACK *param_1,ulong param_2)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  uint *puVar3;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  undefined4 uVar4;
+  undefined1 *puVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  XMAPLAYBACKSTREAM *pXVar8;
   
-  uVar2 = 0;
-  puVar3 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  lVar1 = ((ulonglong)(puVar3[1] >> 0x1d) & 1) + 1;
-  if (lVar1 != 0) {
+  uVar7 = 0;
+  pXVar8 = param_1->pStreamInfo + param_2;
+  lVar6 = (pXVar8->contextShadow).NumChannels + 1;
+  if (lVar6 != 0) {
     do {
-      dataCacheBlockClearToZero(uVar2 + puVar3[0x12]);
-      uVar2 = uVar2 + 0x80;
-    } while ((uVar2 & 0xffffffff) < (ulonglong)(lVar1 * 0x100));
+      dataCacheBlockClearToZero(uVar7 + ZEXT48(pXVar8->pOverlapAdd));
+      uVar7 = uVar7 + 0x80;
+    } while ((uVar7 & 0xffffffff) < (ulonglong)(lVar6 * 0x100));
   }
-  puVar3[5] = 0;
-  puVar3[6] = 0;
-  puVar3[4] = puVar3[4] & 0x7fffffff;
-  puVar3[0x15] = 0;
-  puVar3[0x16] = 0;
-  puVar3[0x13] = 0;
-  *puVar3 = *puVar3 & 0x7cff000;
-  puVar3[9] = puVar3[9] & 0xffffffe0;
-  puVar3[1] = puVar3[1] & 0x7ffff000 | 0x80000000;
-  *(undefined2 *)((int)puVar3 + 0x52) = 0;
-  puVar3[2] = 0;
-  puVar3[3] = puVar3[3] & 0x3ffffff;
+  uVar1 = *(uint *)&pXVar8->contextShadow;
+  uVar2 = *(uint *)&(pXVar8->contextShadow).field_0x4;
+  uVar3 = *(uint *)&(pXVar8->contextShadow).field_0x24;
+  (pXVar8->contextShadow).PtrRead0 = 0;
+  (pXVar8->contextShadow).PtrRead1 = 0;
+  (pXVar8->contextShadow).CurrentBuffer = 0;
+  pXVar8->pDataSubmitted[0] = (void *)0x0;
+  pXVar8->pDataSubmitted[1] = (void *)0x0;
+  pXVar8->streamPosition = 0;
+  *(uint *)&pXVar8->contextShadow = uVar1 & 0x7cff000;
+  *(uint *)&(pXVar8->contextShadow).field_0x24 = uVar3 & 0xffffffe0;
+  *(uint *)&(pXVar8->contextShadow).field_0x4 = uVar2 & 0x7ffff000 | 0x80000000;
+  pXVar8->partialBytesRead = 0;
+  puVar5 = &(pXVar8->contextShadow).field_0x8;
+  (pXVar8->contextShadow).OffsetRead = 0;
+  (pXVar8->contextShadow).ErrorSet = 0;
+  (pXVar8->contextShadow).ErrorStatus = 0;
+  *(uint *)&(pXVar8->contextShadow).field_0xc = (pXVar8->contextShadow).LoopStartOffset;
   return 0;
 }
 
 
 // 828D5B78  XMAPlaybackGetErrorBits  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1313)
 
-uint XMAPlaybackGetErrorBits(int param_1,int param_2)
+ulong XMAPlaybackGetErrorBits(XMAPLAYBACK *param_1,ulong param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x60 + *(int *)(param_1 + 8);
-  if ((*(uint *)(param_1 + 4) & 0x20000) != 0) {
-    return *(uint *)(iVar1 + 8) >> 0x1a & 0x1f;
+  if ((param_1->dwStatus & 0x20000) != 0) {
+    return param_1->pStreamInfo[param_2].contextShadow.ErrorStatus;
   }
-  return *(uint *)(*(int *)(iVar1 + 0x40) + 8) >> 0x1a & 0x1f;
+  return *(uint *)(param_1->pStreamInfo[param_2].pHardwareContext + 8) >> 0x1a & 0x1f;
 }
 
 
 // 828D5BB8  XMAPlaybackGetParseError  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1339)
 
-uint XMAPlaybackGetParseError(int param_1,int param_2)
+ulong XMAPlaybackGetParseError(XMAPLAYBACK *param_1,ulong param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x60 + *(int *)(param_1 + 8);
-  if ((*(uint *)(param_1 + 4) & 0x20000) != 0) {
-    return *(uint *)(iVar1 + 0xc) >> 0x1a & 0x1f;
+  if ((param_1->dwStatus & 0x20000) != 0) {
+    return param_1->pStreamInfo[param_2].contextShadow.ParserErrorStatus;
   }
-  return *(uint *)(*(int *)(iVar1 + 0x40) + 0xc) >> 0x1a & 0x1f;
+  return *(uint *)(param_1->pStreamInfo[param_2].pHardwareContext + 0xc) >> 0x1a & 0x1f;
 }
 
 
 // 828D5BF8  XMAPlaybackSetLoop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1392)
 
-undefined8 XMAPlaybackSetLoop(int param_1,int param_2,uint *param_3)
+undefined4 XMAPlaybackSetLoop(XMAPLAYBACK *param_1,ulong param_2,XMA_PLAYBACK_LOOP *param_3)
 
 {
-  uint uVar1;
+  byte bVar1;
   uint uVar2;
-  uint *puVar3;
+  uint uVar3;
+  uint uVar4;
+  XMAPLAYBACKSTREAM *pXVar5;
   
-  puVar3 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  uVar1 = puVar3[1];
-  *puVar3 = (uint)*(byte *)((int)param_3 + 10) << 0xc | *puVar3 & 0xfff00fff;
-  uVar2 = (*(byte *)(param_3 + 2) & 3) << 0xc;
-  puVar3[1] = uVar2 | uVar1 & 0xffffcfff;
-  puVar3[1] = (*(byte *)((int)param_3 + 9) & 7) << 0x11 | uVar2 | uVar1 & 0xfff1cfff;
-  puVar3[3] = *param_3 & 0x3ffffff | puVar3[3] & 0xfc000000;
-  puVar3[4] = puVar3[4] & 0xfc000000 | param_3[1] & 0x3ffffff;
+  pXVar5 = param_1->pStreamInfo + param_2;
+  uVar2 = *(uint *)&(pXVar5->contextShadow).field_0x4;
+  *(uint *)&pXVar5->contextShadow =
+       (uint)param_3->numLoops << 0xc | *(uint *)&pXVar5->contextShadow & 0xfff00fff;
+  bVar1 = param_3->dwLoopSubframeEnd;
+  (pXVar5->contextShadow).LoopSubframeEnd = (uint)bVar1;
+  *(uint *)&(pXVar5->contextShadow).field_0x4 =
+       (param_3->dwLoopSubframeSkip & 7) << 0x11 | (bVar1 & 3) << 0xc | uVar2 & 0xfff1cfff;
+  (pXVar5->contextShadow).LoopStartOffset = param_3->dwLoopStartOffset;
+  (pXVar5->contextShadow).LoopEndOffset = param_3->dwLoopEndOffset;
   return 0;
 }
 
 
 // 828D5C70  XMAPlaybackGetRemainingLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1425)
 
-uint XMAPlaybackGetRemainingLoopCount(int param_1,ulonglong param_2)
+ulong XMAPlaybackGetRemainingLoopCount(XMAPLAYBACK *param_1,ulong param_2)
 
 {
   longlong lVar1;
   
-  lVar1 = (param_2 & 0x7fffffff) * 2;
-  if ((*(uint *)(param_1 + 4) & 0x20000) != 0) {
-    return *(uint *)((int)((param_2 + lVar1 & 0xffffffff) << 5) + *(int *)(param_1 + 8)) >> 0xc &
-           0xff;
+  lVar1 = ((ulonglong)param_2 & 0x7fffffff) * 2;
+  if ((param_1->dwStatus & 0x20000) != 0) {
+    return *(uint *)((int)(param_1->pStreamInfo->contextShadow).Reserved4 +
+                    (int)(((int)param_2 + lVar1 & 0xffffffffU) << 5) + -0x28) >> 0xc & 0xff;
   }
-  return **(uint **)((int)((param_2 + lVar1 & 0xffffffff) << 5) + *(int *)(param_1 + 8) + 0x40) >>
-         0xc & 0xff;
+  return **(uint **)((int)param_1->pStreamInfo->pDataSubmitted +
+                    (int)(((int)param_2 + lVar1 & 0xffffffffU) << 5) + -0x14) >> 0xc & 0xff;
 }
 
 
 // 828D5CB8  XMAPlaybackGetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1451)
 
-undefined4 XMAPlaybackGetStreamPosition(int param_1,int param_2)
+ulong XMAPlaybackGetStreamPosition(XMAPLAYBACK *param_1,ulong param_2)
 
 {
-  return *(undefined4 *)(param_2 * 0x60 + *(int *)(param_1 + 8) + 0x4c);
+  return param_1->pStreamInfo[param_2].streamPosition;
 }
 
 
 // 828D5CD8  XMAPlaybackQueryCurrentPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1468)
 
-undefined8 XMAPlaybackQueryCurrentPosition(int param_1,int param_2,uint *param_3)
+undefined4
+XMAPlaybackQueryCurrentPosition(XMAPLAYBACK *param_1,ulong param_2,XMA_PLAYBACK_POSITION *param_3)
 
 {
-  uint *puVar1;
-  uint *puVar2;
+  XMAPLAYBACKSTREAM *pXVar1;
+  XMAPLAYBACKSTREAM *pXVar2;
   
-  puVar1 = (uint *)(param_2 * 0x60 + *(int *)(param_1 + 8));
-  puVar2 = puVar1;
-  if ((*(uint *)(param_1 + 4) & 0x20000) == 0) {
-    puVar2 = (uint *)puVar1[0x10];
+  pXVar1 = param_1->pStreamInfo + param_2;
+  pXVar2 = pXVar1;
+  if ((param_1->dwStatus & 0x20000) == 0) {
+    pXVar2 = (XMAPLAYBACKSTREAM *)pXVar1->pHardwareContext;
   }
-  if ((*puVar2 & 0x300000) == 0) {
-    *param_3 = 0;
-    param_3[1] = 0;
-    param_3[2] = 0;
+  if (pXVar2->ValidBuffer == 0) {
+    param_3->pCurrentData = (void *)0x0;
+    param_3->dwPacketBitOffset = 0;
+    param_3->dwCurrentSubframe = 0;
     return 0;
   }
-  *param_3 = puVar1[0x15 - ((int)puVar2[4] >> 0x1f)];
-  param_3[1] = puVar2[2] & 0x3ffffff;
-  param_3[2] = *(byte *)(puVar2 + 1) & 7;
+  param_3->pCurrentData =
+       *(void **)((0x15 - (*(int *)&(pXVar2->contextShadow).field_0x10 >> 0x1f)) * 4 + (int)pXVar1);
+  param_3->dwPacketBitOffset = (pXVar2->contextShadow).OffsetRead;
+  param_3->dwCurrentSubframe = (pXVar2->contextShadow).NumSubframesToSkip;
   return 0;
 }
 
 
 // 828D5D60  XMAPlaybackSetDecodePosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1511)
 
-undefined8 XMAPlaybackSetDecodePosition(int param_1,int param_2,uint param_3,uint param_4)
+undefined4
+XMAPlaybackSetDecodePosition(XMAPLAYBACK *param_1,ulong param_2,ulong param_3,ulong param_4)
 
 {
-  int iVar1;
+  XMAPLAYBACKSTREAM *pXVar1;
+  uint uVar2;
   
-  iVar1 = param_2 * 0x60 + *(int *)(param_1 + 8);
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) & 0xfc000000 | param_3 & 0x3ffffff;
-  *(uint *)(iVar1 + 4) = (param_4 & 7) << 0x18 | *(uint *)(iVar1 + 4) & 0xf8ffffff;
+  pXVar1 = param_1->pStreamInfo;
+  uVar2 = *(uint *)&pXVar1[param_2].contextShadow.field_0x4;
+  *(uint *)&pXVar1[param_2].contextShadow.field_0x8 =
+       *(uint *)&pXVar1[param_2].contextShadow.field_0x8 & 0xfc000000 | param_3 & 0x3ffffff;
+  *(ulong *)&pXVar1[param_2].contextShadow.field_0x4 = (param_4 & 7) << 0x18 | uVar2 & 0xf8ffffff;
   return 0;
 }
 
 
 // 828D5D98  XMAPlaybackGetFrameOffsetFromPacketHeader  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xmahardwareabstraction.cpp:1536)
 
-longlong XMAPlaybackGetFrameOffsetFromPacketHeader(ulonglong param_1)
+ulong XMAPlaybackGetFrameOffsetFromPacketHeader(ulong param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0x7fff) {
+  if (param_1 == 0x7fff) {
     return 0;
   }
-  return ((param_1 & 0xffffffff) >> 0xb & 0x7fff) + 0x20;
+  return (param_1 >> 0xb & 0x7fff) + 0x20;
 }
 

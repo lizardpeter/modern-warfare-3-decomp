@@ -2,6 +2,8 @@
 
 // 82417FE0  TRACK_fx_draw  (EffectsCore/fx_draw.cpp:41)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_fx_draw(void)
 
 {
@@ -11,37 +13,39 @@ void TRACK_fx_draw(void)
 
 // 82417FE8  FX_DrawSpotLightEffect  (EffectsCore/fx_draw.cpp:48)
 
-void FX_DrawSpotLightEffect(undefined8 param_1,undefined8 param_2,int *param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_DrawSpotLightEffect(FxSystem *param_1,FxCamera *param_2,FxEffect *param_3,int param_4)
 
 {
-  int iVar1;
-  byte *pbVar2;
-  int iVar3;
-  int local_130;
-  int *local_12c;
-  undefined4 local_120;
-  undefined4 local_88;
+  FxSystem *pFVar1;
+  FxElem *pFVar2;
+  FxElemDef *pFVar3;
+  FxDrawState local_130;
   
-  iVar1 = __savegprlr_26();
-  if ((param_3[1] & 0x2000U) == 0) {
-    if (*(int *)(iVar1 + 0x78) < 1) {
-      MyAssertHandler(0xffffffff820614f0,0x41,0,0xffffffff82000f98,0xffffffff820614c8);
+  pFVar1 = (FxSystem *)__savegprlr_26(param_1);
+  if ((param_3->status & 0x2000U) == 0) {
+    if (pFVar1->activeSpotLightEffectCount < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                      0x41,0,"%s");
     }
-    local_120 = 0;
-    local_130 = iVar1;
-    local_12c = param_3;
-    local_88 = param_4;
+    local_130.codeSurfGlob = (GfxCodeSurfGlob *)0x0;
+    local_130.system = pFVar1;
+    local_130.effect = param_3;
+    local_130.msecDraw = param_4;
     FX_DrawElement_Setup_Camera(&local_130,param_2);
-    iVar3 = *(int *)(*local_12c + 0x30);
-    if (*(int *)(iVar1 + 0x7c) < 1) {
-      MyAssertHandler(0xffffffff820614f0,0x59,0,0xffffffff82000f98,0xffffffff820614a0);
+    pFVar3 = (local_130.effect)->def->elemDefs;
+    if (pFVar1->activeSpotLightElemCount < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                      0x59,0,"%s");
     }
-    pbVar2 = (byte *)FX_ElemFromHandleConst(iVar1,*(undefined2 *)(iVar1 + 0x82));
-    iVar3 = (*pbVar2 & 0x3fffffc) * 0x40 + iVar3;
-    if (*(char *)(iVar3 + 0xb0) != '\t') {
-      MyAssertHandler(0xffffffff820614f0,0x5c,0,0xffffffff82000f98,0xffffffff82061470);
+    pFVar2 = FX_ElemFromHandleConst(pFVar1,pFVar1->activeSpotLightElemHandle);
+    pFVar3 = (FxElemDef *)(pFVar3->spawnOrigin + (*(byte *)pFVar2 & 0x3fffffc) * 8 + -7);
+    if (pFVar3->elemType != '\t') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                      0x5c,0,"%s");
     }
-    FXIR_DrawElement(param_2,iVar3,pbVar2,*(undefined2 *)(iVar1 + 0x82),&local_130);
+    FXIR_DrawElement(param_2,pFVar3,pFVar2,pFVar1->activeSpotLightElemHandle,&local_130);
   }
   __restgprlr_26();
   return;
@@ -50,55 +54,64 @@ void FX_DrawSpotLightEffect(undefined8 param_1,undefined8 param_2,int *param_3,u
 
 // 82419350  FX_PoolFromHandle_Generic<FxTrailElem>  (EffectsCore/fx_system_handle.h:83)
 
-longlong FX_PoolFromHandle_Generic<FxTrailElem>(longlong param_1,ushort param_2)
+FxTrailElem * FX_PoolFromHandle_Generic<FxTrailElem>(FxPool<FxTrailElem> *param_1,ushort param_2)
 
 {
-  undefined8 uVar1;
-  
   if ((0x3fff < param_2) || ((param_2 & 7) != 0)) {
-    uVar1 = va(0xffffffff82060820,param_1,param_2);
-    MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar1);
+    va("%p %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                    ,0x54,0,"%s\n\t%s");
   }
-  return (ulonglong)param_2 * 4 + param_1;
+  return (FxTrailElem *)((int)&param_1->field0_0x0 + (uint)param_2 * 4);
 }
 
 
 // 824193E0  FX_ElemFromHandleConst  (EffectsCore/fx_system_handle.h:97)
 
-void FX_ElemFromHandleConst(int param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+FxElem * FX_ElemFromHandleConst(FxSystem *param_1,ushort param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82060828,0x62,0,0xffffffff82000f98,0xffffffff82038694);
+  FxElem *pFVar1;
+  
+  if (param_1 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                    ,0x62,0,"%s");
   }
-  FX_PoolFromHandle_Generic<FxElem>(*(undefined4 *)(param_1 + 0x3c),param_2);
-  return;
+  pFVar1 = FX_PoolFromHandle_Generic<FxElem>(param_1->elems,param_2);
+  return pFVar1;
 }
 
 
 // 82418108  FXW_DrawSpotLight  (EffectsCore/fx_draw.cpp:99)
 
-void FXW_DrawSpotLight(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_DrawSpotLight(FxSystem *param_1,FxCamera *param_2)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar1;
+  FxSystem *pFVar2;
+  FxEffect *pFVar3;
   
-  iVar3 = __savegprlr_28();
-  if (*(int *)((int)param_2 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x68,0,0xffffffff82000f98,0xffffffff82061590);
+  pFVar2 = (FxSystem *)__savegprlr_28(param_1);
+  if (param_2->isValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x68,
+                    0,"%s");
   }
-  if (0 < *(int *)(iVar3 + 0x7c)) {
-    if (*(int *)(iVar3 + 0x78) != 1) {
-      MyAssertHandler(0xffffffff820614f0,0x75,0,0xffffffff82000f98,0xffffffff82061560);
+  if (0 < pFVar2->activeSpotLightElemCount) {
+    if (pFVar2->activeSpotLightEffectCount != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                      0x75,0,"%s");
     }
-    if (*(int *)(iVar3 + 0x7c) != 1) {
-      MyAssertHandler(0xffffffff820614f0,0x76,0,0xffffffff82000f98,0xffffffff82061534);
+    if (pFVar2->activeSpotLightElemCount != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                      0x76,0,"%s");
     }
-    uVar1 = *(undefined4 *)(iVar3 + 0x90);
-    uVar2 = FX_EffectFromHandleConst(iVar3,*(undefined2 *)(iVar3 + 0x80));
-    FX_DrawSpotLightEffect(iVar3,param_2,uVar2,uVar1);
+    iVar1 = pFVar2->msecDraw;
+    pFVar3 = FX_EffectFromHandleConst(pFVar2,pFVar2->activeSpotLightEffectHandle);
+    FX_DrawSpotLightEffect(pFVar2,param_2,pFVar3,iVar1);
   }
   __restgprlr_28();
   return;
@@ -107,51 +120,57 @@ void FXW_DrawSpotLight(undefined8 param_1,undefined8 param_2)
 
 // 82419450  FX_TrailElemFromHandle  (EffectsCore/fx_system_handle.h:118)
 
-void FX_TrailElemFromHandle(int param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+FxTrailElem * FX_TrailElemFromHandle(FxSystem *param_1,ushort param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82060828,0x77,0,0xffffffff82000f98,0xffffffff82038694);
+  FxTrailElem *pFVar1;
+  
+  if (param_1 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                    ,0x77,0,"%s");
   }
-  FX_PoolFromHandle_Generic<FxTrailElem>(*(undefined4 *)(param_1 + 0x38),param_2);
-  return;
+  pFVar1 = FX_PoolFromHandle_Generic<FxTrailElem>(param_1->trailElems,param_2);
+  return pFVar1;
 }
 
 
 // 824181E0  FXIR_DrawTrail  (EffectsCore/fx_draw.cpp:128)
 
-void FXIR_DrawTrail(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIR_DrawTrail(FxDrawState *param_1,FxTrail *param_2)
 
 {
-  float fVar1;
-  int *piVar2;
+  FxSystem *pFVar1;
+  FxTrailDef *pFVar2;
   int iVar3;
   int iVar4;
-  float *pfVar5;
-  int iVar6;
-  longlong *plVar7;
-  int *piVar10;
-  uint uVar11;
-  int *piVar12;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  int *piVar13;
-  uint uVar14;
-  uint uVar15;
-  longlong *plVar18;
-  uint *puVar19;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar20;
-  int iVar21;
-  longlong lVar22;
+  char *pcVar5;
+  uint uVar6;
+  float *pfVar7;
+  int iVar8;
+  ulonglong uVar9;
+  longlong *plVar10;
+  FxDrawState *pFVar11;
+  FxTrailElem *pFVar12;
+  bool bVar15;
+  GfxPackedVertex *pGVar13;
+  FxElemVisuals FVar14;
+  FxElemVisualState *pFVar16;
+  uint uVar17;
+  uint uVar18;
+  FxElemDef *pFVar20;
+  longlong *plVar21;
+  int *piVar22;
+  ulonglong uVar19;
   int iVar23;
-  int iVar24;
-  short sVar25;
-  longlong lVar26;
-  double extraout_f1;
-  double dVar27;
-  double dVar28;
+  longlong lVar24;
+  int iVar25;
+  int iVar26;
+  ushort uVar27;
+  longlong lVar28;
   double dVar29;
   double dVar30;
   double dVar31;
@@ -167,10 +186,13 @@ void FXIR_DrawTrail(undefined8 param_1,int param_2)
   double dVar41;
   double dVar42;
   double dVar43;
+  double dVar44;
+  double dVar45;
+  float fVar46;
   ushort local_400 [2];
-  int *local_3fc;
+  r_double_index_t *local_3fc;
   float local_3f8 [2];
-  uint local_3f0;
+  FxElemExtendedDefPtr local_3f0;
   float local_3ec;
   float local_3e8;
   float local_3e4;
@@ -180,11 +202,11 @@ void FXIR_DrawTrail(undefined8 param_1,int param_2)
   float local_3d4;
   float local_3d0;
   float local_3cc;
-  int local_3c8;
-  int local_3c4;
-  int local_3c0;
+  float local_3c8;
+  float local_3c4;
+  float local_3c0;
   float local_3bc;
-  int local_3b8;
+  undefined4 local_3b8;
   float local_3b0;
   float local_3ac;
   float local_3a8;
@@ -198,305 +220,305 @@ void FXIR_DrawTrail(undefined8 param_1,int param_2)
   float local_380;
   float local_37c;
   longlong local_378;
-  int local_370;
-  float fStack_36c;
-  float local_368;
-  float local_364;
-  float local_360;
-  float local_35c;
+  undefined8 local_370;
+  float local_368 [4];
   float local_358;
   float local_354;
   float local_350;
   float local_34c;
   float local_33c;
-  undefined1 auStack_330 [4];
-  float local_32c;
-  float local_328;
-  float local_324;
-  float local_320;
-  float local_31c;
-  float local_318;
-  float local_314;
-  float local_310;
-  float local_30c;
-  float local_2fc;
-  uint local_2f0 [188];
+  FxTrailSegmentDrawState FStack_330;
+  int local_2f0 [188];
   
-  __savegprlr_17();
-  piVar10 = (int *)__savefpr_18();
-  piVar2 = (int *)*piVar10;
-  iVar23 = *(char *)(param_2 + 6) * 0x100 + *(int *)(*(int *)piVar10[1] + 0x30);
-  piVar10[3] = iVar23;
-  piVar12 = piVar10;
-  if ((*(char *)(iVar23 + 0xb1) != '\0') && (sVar25 = *(short *)(param_2 + 2), sVar25 != -1)) {
-    uVar11 = 0;
-    lVar22 = 0;
-    if (sVar25 != -1) {
-      puVar19 = local_2f0;
+  __savegprlr_17(param_1);
+  pFVar11 = (FxDrawState *)__savefpr_18();
+  pFVar1 = pFVar11->system;
+  pFVar20 = pFVar11->effect->def->elemDefs + param_2->defIndex;
+  pFVar11->elemDef = pFVar20;
+  if ((pFVar20->visualCount != '\0') && (uVar27 = param_2->firstTrailElemHandle, uVar27 != 0xffff))
+  {
+    pFVar12 = (FxTrailElem *)0x0;
+    lVar24 = 0;
+    if (uVar27 != 0xffff) {
+      piVar22 = local_2f0;
       do {
-        if (piVar2 == (int *)0x0) {
-          MyAssertHandler(0xffffffff82060828,0x77,0,0xffffffff82000f98,0xffffffff82038694);
+        if (pFVar1 == (FxSystem *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                          ,0x77,0,"%s");
         }
-        uVar11 = FX_PoolFromHandle_Generic<FxTrailElem>(piVar2[0xe],sVar25);
-        if (uVar11 == 0) {
-          MyAssertHandler(0xffffffff820614f0,0xb6,0,0xffffffff82000f98,0xffffffff82061754);
+        pFVar12 = FX_PoolFromHandle_Generic<FxTrailElem>(pFVar1->trailElems,uVar27);
+        if (pFVar12 == (FxTrailElem *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0xb6,0,"%s");
         }
-        sVar25 = *(short *)(uVar11 + 0x14);
-        if ((int)lVar22 < 0x80) {
-          *puVar19 = uVar11;
+        uVar27 = pFVar12->nextTrailElemHandle;
+        if ((int)lVar24 < 0x80) {
+          *piVar22 = (int)pFVar12;
         }
-        lVar22 = lVar22 + 1;
-        puVar19 = puVar19 + 1;
-      } while (sVar25 != -1);
-      if (0x80 < (int)lVar22) {
-        R_WarnOncePerFrame(0x30,lVar22);
-        lVar22 = 0x80;
+        lVar24 = lVar24 + 1;
+        piVar22 = piVar22 + 1;
+      } while (uVar27 != 0xffff);
+      if (0x80 < (int)lVar24) {
+        R_WarnOncePerFrame(R_WARN_MAX_TRAIL_ELEMS_PER_TRAIL);
+        lVar24 = 0x80;
       }
     }
-    lVar20 = 0;
-    iVar23 = (int)lVar22;
-    if (0 < iVar23) {
-      puVar19 = local_2f0;
+    iVar23 = 0;
+    iVar25 = (int)lVar24;
+    if (0 < iVar25) {
+      piVar22 = local_2f0;
+      iVar23 = 0;
       do {
-        uVar11 = *puVar19;
-        if (*(int *)(uVar11 + 0x10) <= piVar10[0x2a]) {
-          lVar20 = lVar20 + 1;
+        pFVar12 = (FxTrailElem *)*piVar22;
+        if (pFVar12->msecBegin <= pFVar11->msecDraw) {
+          iVar23 = iVar23 + 1;
         }
-        puVar19 = puVar19 + 1;
-        lVar22 = lVar22 + -1;
-      } while (lVar22 != 0);
+        piVar22 = piVar22 + 1;
+        lVar24 = lVar24 + -1;
+      } while (lVar24 != 0);
     }
-    iVar3 = *(int *)(*(int *)(piVar10[3] + 0xf4) + 0x14);
-    iVar4 = *(int *)(*(int *)(piVar10[3] + 0xf4) + 0x1c);
-    iVar21 = (int)lVar20;
-    piVar12 = (int *)R_ReserveCodeSurfVerts(piVar10[4],(longlong)iVar3 * (longlong)iVar21,local_400)
-    ;
-    if (((uint)piVar12 & 0xff) != 0) {
-      uVar8 = R_CodeSurfVertIter_Begin(piVar10[4],local_400[0]);
-      lVar22 = 0;
-      dVar42 = 1.0;
-      lVar26 = 7;
-      plVar7 = &local_378;
+    pFVar2 = (pFVar11->elemDef->extended).trailDef;
+    iVar3 = pFVar2->vertCount;
+    iVar4 = pFVar2->indCount;
+    bVar15 = R_ReserveCodeSurfVerts(pFVar11->codeSurfGlob,iVar3 * iVar23,local_400);
+    if (bVar15) {
+      pGVar13 = R_CodeSurfVertIter_Begin(pFVar11->codeSurfGlob,local_400[0]);
+      lVar24 = 0;
+      dVar44 = 1.0;
+      lVar28 = 7;
+      plVar10 = &local_378;
       do {
-        plVar18 = plVar7;
-        plVar7 = plVar18 + 1;
-        *plVar7 = 0;
-        lVar26 = lVar26 + -1;
-      } while (lVar26 != 0);
-      *(undefined4 *)(plVar18 + 2) = 0;
-      iVar24 = 0;
-      if (0 < iVar23) {
-        puVar19 = local_2f0;
+        plVar21 = plVar10;
+        plVar10 = plVar21 + 1;
+        *plVar10 = 0;
+        lVar28 = lVar28 + -1;
+      } while (lVar28 != 0);
+      *(undefined4 *)(plVar21 + 2) = 0;
+      iVar26 = 0;
+      if (0 < iVar25) {
+        piVar22 = local_2f0;
         do {
-          uVar11 = *puVar19;
-          if (*(int *)(uVar11 + 0x10) <= piVar10[0x2a]) break;
-          iVar24 = iVar24 + 1;
-          puVar19 = puVar19 + 1;
-        } while (iVar24 < iVar23);
+          pFVar12 = (FxTrailElem *)*piVar22;
+          if (pFVar12->msecBegin <= pFVar11->msecDraw) break;
+          iVar26 = iVar26 + 1;
+          piVar22 = piVar22 + 1;
+        } while (iVar26 < iVar25);
       }
-      dVar43 = dVar42;
-      if (uVar11 == 0) {
-        MyAssertHandler(0xffffffff820614f0,0xf1,0,0xffffffff82000f98,0xffffffff82061748);
+      dVar45 = dVar44;
+      if (pFVar12 == (FxTrailElem *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                        0xf1,0,"%s");
       }
-      piVar12 = (int *)FX_DrawTrail_GetTextureOffset((double)*(float *)(uVar11 + 0xc),piVar10);
-      if (iVar24 < iVar23) {
-        iVar6 = iVar24 << 2;
-        dVar32 = 0.0;
-        dVar31 = extraout_f1;
+      fVar46 = FX_DrawTrail_GetTextureOffset(pFVar11,pFVar12->spawnDist);
+      dVar29 = (double)fVar46;
+      if (iVar26 < iVar25) {
+        iVar8 = iVar26 << 2;
+        dVar34 = 0.0;
         do {
-          pfVar5 = *(float **)((int)local_2f0 + iVar6);
-          if ((int)pfVar5[4] <= piVar10[0x2a]) {
-            uVar16 = (ulonglong)*(ushort *)(piVar10[1] + 0x16) +
-                     (ulonglong)*(byte *)((int)pfVar5 + 0x1e) * 0x128 +
-                     (ulonglong)*(uint *)(piVar10[3] + 0xfc);
-            uVar17 = (uVar16 & 0xffffffff) * 0x11a3019b >> 0x20;
-            piVar10[0x12] =
-                 (int)uVar16 + (int)(((uVar16 - uVar17 & 0xffffffff) >> 1) + uVar17 >> 8) * -0x1df &
+          pfVar7 = *(float **)((int)local_2f0 + iVar8);
+          if ((int)pfVar7[4] <= pFVar11->msecDraw) {
+            uVar19 = (ulonglong)pFVar11->effect->randomSeed +
+                     (ulonglong)*(byte *)((int)pfVar7 + 0x1e) * 0x128 +
+                     (ulonglong)(uint)pFVar11->elemDef->randomSeed;
+            uVar9 = (uVar19 & 0xffffffff) * 0x11a3019b >> 0x20;
+            pFVar11->randomSeed =
+                 (int)uVar19 + (int)(((uVar19 - uVar9 & 0xffffffff) >> 1) + uVar9 >> 8) * -0x1df &
                  0xffff;
-            FX_DrawElement_Setup_Time(piVar10,pfVar5[4],local_3f8);
-            if ((*(uint *)piVar10[3] & 0xc0) != 0) {
-              MyAssertHandler(0xffffffff820614f0,0x100,0,0xffffffff82061710,0xffffffff820616c0);
+            FX_DrawElement_Setup_Time(pFVar11,(int)pfVar7[4],local_3f8);
+            if ((pFVar11->elemDef->flags & 0xc0U) != 0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                              ,0x100,0,"%s\n\t((draw->elemDef->flags & FX_ELEM_RUN_MASK)) = %i");
             }
-            FX_DrawElement_Setup_Camera(piVar10,0);
-            FX_DrawElement_Setup_VisualState(piVar10);
-            FX_EvaluateVisualState((double)(float)piVar10[0x13],piVar10 + 0x22);
-            FX_TrailElem_UncompressBasis(pfVar5 + 6,&local_390);
-            puVar19 = (uint *)piVar10[3];
-            local_3b8 = piVar10[0x1c];
-            local_3c8 = piVar10[0x1e];
-            local_3c4 = piVar10[0x1f];
-            local_3c0 = piVar10[0x20];
-            local_3f0 = puVar19[0x3d];
-            dVar38 = (double)local_364;
-            dVar37 = (double)local_368;
-            dVar36 = (double)fStack_36c;
-            local_3ec = *pfVar5;
-            dVar39 = (double)local_3ec;
-            local_3e8 = pfVar5[1];
-            dVar40 = (double)local_3e8;
-            local_3e4 = pfVar5[2];
-            dVar41 = (double)local_3e4;
-            dVar35 = (double)local_384;
-            dVar34 = (double)local_380;
-            dVar33 = (double)local_37c;
+            pFVar16 = (FxElemVisualState *)0x0;
+            FX_DrawElement_Setup_Camera(pFVar11,(FxCamera *)0x0);
+            FX_DrawElement_Setup_VisualState(pFVar11);
+            FX_EvaluateVisualState(&pFVar11->preVisState,pFVar11->msecLifeSpan,pFVar16);
+            FX_TrailElem_UncompressBasis((char (*) [3])(pfVar7 + 6),(float (*) [3])&local_390);
+            pFVar20 = pFVar11->elemDef;
+            local_3b8 = *(undefined4 *)(pFVar11->visState).color;
+            local_3c8 = (pFVar11->visState).rotationTotal;
+            local_3c4 = (pFVar11->visState).size[0];
+            local_3c0 = (pFVar11->visState).size[1];
+            local_3f0 = pFVar20->extended;
+            dVar40 = (double)local_368[1];
+            dVar39 = (double)local_368[0];
+            dVar38 = (double)local_370._4_4_;
+            local_3ec = *pfVar7;
+            dVar41 = (double)local_3ec;
+            local_3e8 = pfVar7[1];
+            dVar42 = (double)local_3e8;
+            local_3e4 = pfVar7[2];
+            dVar43 = (double)local_3e4;
+            dVar37 = (double)local_384;
+            dVar36 = (double)local_380;
+            dVar35 = (double)local_37c;
             local_3e0 = local_390;
             local_3dc = local_38c;
             local_3d8 = local_388;
             local_3d4 = local_384;
             local_3d0 = local_380;
             local_3cc = local_37c;
-            local_378 = (longlong)*(int *)(puVar19[0x3d] + 4);
-            local_3bc = (float)((double)(pfVar5[3] / (float)local_378) + dVar31);
-            if (((*puVar19 & 0x4000) != 0) && (iVar24 != 0)) {
-              local_39c = (float)(dVar40 - dVar37);
-              local_398 = (float)(dVar41 - dVar38);
-              local_3a0 = (float)(dVar39 - dVar36);
-              dVar28 = (double)SQRT(local_3a0 * local_3a0 +
+            local_378 = (longlong)((pFVar20->extended).trailDef)->repeatDist;
+            local_3bc = (float)((double)(pfVar7[3] / (float)local_378) + dVar29);
+            if (((pFVar20->flags & 0x4000U) != 0) && (iVar26 != 0)) {
+              local_39c = (float)(dVar42 - dVar39);
+              local_398 = (float)(dVar43 - dVar40);
+              local_3a0 = (float)(dVar41 - dVar38);
+              dVar31 = (double)SQRT(local_3a0 * local_3a0 +
                                     local_398 * local_398 + local_39c * local_39c);
-              dVar29 = dVar43;
-              if (-dVar28 < 0.0) {
-                dVar29 = dVar28;
+              dVar32 = dVar45;
+              if (-dVar31 < 0.0) {
+                dVar32 = dVar31;
               }
-              fVar1 = (float)(dVar43 / dVar29);
-              local_3a0 = fVar1 * local_3a0;
-              local_39c = fVar1 * local_39c;
-              dVar28 = (double)local_39c;
-              local_398 = local_398 * fVar1;
-              dVar27 = -(double)local_3a0;
-              dVar30 = (double)SQRT((float)(dVar27 * dVar27 + (double)(float)(dVar28 * dVar28)));
-              dVar29 = dVar43;
-              if (-dVar30 < 0.0) {
-                dVar29 = dVar30;
+              fVar46 = (float)(dVar45 / dVar32);
+              local_3a0 = fVar46 * local_3a0;
+              local_39c = fVar46 * local_39c;
+              dVar31 = (double)local_39c;
+              local_398 = local_398 * fVar46;
+              dVar30 = -(double)local_3a0;
+              dVar33 = (double)SQRT((float)(dVar30 * dVar30 + (double)(float)(dVar31 * dVar31)));
+              dVar32 = dVar45;
+              if (-dVar33 < 0.0) {
+                dVar32 = dVar33;
               }
-              dVar29 = (double)(float)(dVar43 / dVar29);
-              local_3b0 = (float)(dVar29 * dVar28);
-              local_3ac = (float)(dVar27 * dVar29);
-              local_3a8 = (float)(dVar29 * dVar32);
-              if (dVar30 != dVar32) {
+              dVar32 = (double)(float)(dVar45 / dVar32);
+              local_3b0 = (float)(dVar32 * dVar31);
+              local_3ac = (float)(dVar30 * dVar32);
+              local_3a8 = (float)(dVar32 * dVar34);
+              if (dVar33 != dVar34) {
                 local_3e0 = local_3b0;
                 local_3dc = local_3ac;
                 local_3d8 = local_3a8;
                 Vec3Cross(&local_3b0,&local_3a0,&local_3d4);
-                dVar41 = (double)local_3e4;
-                dVar40 = (double)local_3e8;
-                dVar39 = (double)local_3ec;
-                dVar34 = (double)SQRT(local_3d4 * local_3d4 +
+                dVar43 = (double)local_3e4;
+                dVar42 = (double)local_3e8;
+                dVar41 = (double)local_3ec;
+                dVar36 = (double)SQRT(local_3d4 * local_3d4 +
                                       local_3cc * local_3cc + local_3d0 * local_3d0);
-                dVar33 = dVar43;
-                if (-dVar34 < 0.0) {
-                  dVar33 = dVar34;
+                dVar35 = dVar45;
+                if (-dVar36 < 0.0) {
+                  dVar35 = dVar36;
                 }
-                fVar1 = (float)(dVar43 / dVar33);
-                local_3d4 = local_3d4 * fVar1;
-                dVar35 = (double)local_3d4;
-                local_3d0 = local_3d0 * fVar1;
-                dVar34 = (double)local_3d0;
-                local_3cc = local_3cc * fVar1;
-                dVar33 = (double)local_3cc;
+                fVar46 = (float)(dVar45 / dVar35);
+                local_3d4 = local_3d4 * fVar46;
+                dVar37 = (double)local_3d4;
+                local_3d0 = local_3d0 * fVar46;
+                dVar36 = (double)local_3d0;
+                local_3cc = local_3cc * fVar46;
+                dVar35 = (double)local_3cc;
               }
             }
-            dVar29 = (double)local_3f8[0];
-            if (dVar29 < dVar43) {
-              if (iVar24 == 0) {
-                local_3b8 = CONCAT13(-(*(char *)((int)pfVar5 + 0x1e) != '\0') & local_3b8._0_1_,
+            dVar32 = (double)local_3f8[0];
+            if (dVar32 < dVar45) {
+              if (iVar26 == 0) {
+                local_3b8 = CONCAT13(-(*(char *)((int)pfVar7 + 0x1e) != '\0') & local_3b8._0_1_,
                                      local_3b8._1_3_);
               }
-              else if (dVar43 <= dVar42) {
-                iVar6 = -0x370;
-                if (local_370 == 0) {
-                  iVar6 = -0x3f0;
-                }
-                memcpy(auStack_330,&stack0x00000000 + iVar6,0x3c);
-                dVar42 = (double)((float)(dVar43 - dVar42) / (float)(dVar29 - dVar42));
-                local_2fc = (float)((double)(float)((double)local_3bc - (double)local_33c) * dVar42
-                                   + (double)local_33c);
-                local_31c = (float)((double)(float)((double)local_3dc - (double)local_35c) * dVar42
-                                   + (double)local_35c);
-                local_32c = (float)((double)(float)(dVar39 - dVar36) * dVar42 + dVar36);
-                local_328 = (float)((double)(float)(dVar40 - dVar37) * dVar42 + dVar37);
-                local_320 = (float)((double)(float)((double)local_3e0 - (double)local_360) * dVar42
-                                   + (double)local_360);
-                local_318 = (float)((double)(float)((double)local_3d8 - (double)local_358) * dVar42
-                                   + (double)local_358);
-                local_314 = (float)((double)(float)(dVar35 - (double)local_354) * dVar42 +
-                                   (double)local_354);
-                local_310 = (float)((double)(float)(dVar34 - (double)local_350) * dVar42 +
-                                   (double)local_350);
-                local_30c = (float)((double)(float)(dVar33 - (double)local_34c) * dVar42 +
-                                   (double)local_34c);
-                local_324 = (float)((double)(float)(dVar41 - dVar38) * dVar42 + dVar38);
-                uVar8 = FX_GenTrail_VertsForSegment(auStack_330,uVar8);
-                lVar22 = lVar22 + 1;
+              else if (dVar45 <= dVar44) {
+                memcpy();
+                dVar44 = (double)((float)(dVar45 - dVar44) / (float)(dVar32 - dVar44));
+                FStack_330.uCoord =
+                     (float)((double)(float)((double)local_3bc - (double)local_33c) * dVar44 +
+                            (double)local_33c);
+                FStack_330.basis[0][1] =
+                     (float)((double)(float)((double)local_3dc - (double)local_368[3]) * dVar44 +
+                            (double)local_368[3]);
+                FStack_330.posWorld[0] = (float)((double)(float)(dVar41 - dVar38) * dVar44 + dVar38)
+                ;
+                FStack_330.posWorld[1] = (float)((double)(float)(dVar42 - dVar39) * dVar44 + dVar39)
+                ;
+                FStack_330.basis[0][0] =
+                     (float)((double)(float)((double)local_3e0 - (double)local_368[2]) * dVar44 +
+                            (double)local_368[2]);
+                FStack_330.basis[0][2] =
+                     (float)((double)(float)((double)local_3d8 - (double)local_358) * dVar44 +
+                            (double)local_358);
+                FStack_330.basis[1][0] =
+                     (float)((double)(float)(dVar37 - (double)local_354) * dVar44 +
+                            (double)local_354);
+                FStack_330.basis[1][1] =
+                     (float)((double)(float)(dVar36 - (double)local_350) * dVar44 +
+                            (double)local_350);
+                FStack_330.basis[1][2] =
+                     (float)((double)(float)(dVar35 - (double)local_34c) * dVar44 +
+                            (double)local_34c);
+                FStack_330.posWorld[2] = (float)((double)(float)(dVar43 - dVar40) * dVar44 + dVar40)
+                ;
+                pGVar13 = FX_GenTrail_VertsForSegment(&FStack_330,pGVar13);
+                lVar24 = lVar24 + 1;
               }
-              uVar8 = FX_GenTrail_VertsForSegment(&local_3f0,uVar8);
-              lVar22 = lVar22 + 1;
-              dVar29 = (double)local_3f8[0];
+              pGVar13 = FX_GenTrail_VertsForSegment((FxTrailSegmentDrawState *)&local_3f0,pGVar13);
+              lVar24 = lVar24 + 1;
+              dVar32 = (double)local_3f8[0];
             }
-            dVar42 = dVar29;
-            piVar12 = memcpy(&local_370,&local_3f0,0x3c);
+            dVar44 = dVar32;
+            memcpy();
           }
-          iVar24 = iVar24 + 1;
-          iVar6 = iVar24 * 4;
-        } while (iVar24 < iVar23);
+          iVar26 = iVar26 + 1;
+          iVar8 = iVar26 * 4;
+        } while (iVar26 < iVar25);
       }
-      iVar23 = (int)lVar22;
-      if (iVar23 != iVar21) {
-        if (iVar21 <= iVar23) {
-          uVar9 = va(0xffffffff82061678,lVar22,lVar20);
-          MyAssertHandler(0xffffffff820614f0,0x143,0,0xffffffff820011f4,0xffffffff8206164c,uVar9);
+      iVar25 = (int)lVar24;
+      if (iVar25 != iVar23) {
+        if (iVar23 <= iVar25) {
+          va("Too optimistic: exactSegmentCount = %i, upperBoundSegmentCount = %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x143,0,"%s\n\t%s");
         }
-        piVar12 = (int *)R_ReturnCodeSurfVerts
-                                   (piVar10[4],(longlong)(iVar21 - iVar23) * (longlong)iVar3,uVar8);
+        R_ReturnCodeSurfVerts(pFVar11->codeSurfGlob,(iVar23 - iVar25) * iVar3,pGVar13);
       }
-      if (1 < iVar23) {
-        lVar22 = lVar22 + -1;
-        uVar17 = (longlong)(int)lVar22 * (longlong)iVar4;
-        lVar20 = uVar17 + (uVar17 & 0x7fffffff) * 2;
-        piVar12 = (int *)R_ReserveCodeSurfIndices(piVar10[4],lVar20,&local_3fc);
-        if (((uint)piVar12 & 0xff) != 0) {
-          piVar13 = (int *)FX_GetElemVisuals(piVar10[3],piVar10[0x12]);
-          piVar12 = piVar13;
-          if ((int *)piVar2[2] != piVar13) {
-            if (piVar2[1] != 0) {
-              if (piVar2[3] == 0) {
-                MyAssertHandler(0xffffffff820614f0,0x152,0,0xffffffff82000f98,0xffffffff8206163c);
+      if (1 < iVar25) {
+        lVar24 = lVar24 + -1;
+        uVar6 = (int)lVar24 * iVar4 * 3;
+        bVar15 = R_ReserveCodeSurfIndices(pFVar11->codeSurfGlob,uVar6,&local_3fc);
+        if (bVar15) {
+          FVar14 = FX_GetElemVisuals(pFVar11->elemDef,pFVar11->randomSeed);
+          if ((pFVar1->sprite).material != FVar14.anonymous) {
+            if ((pFVar1->sprite).indexCount != 0) {
+              if ((pFVar1->sprite).name == (char *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                                ,0x152,0,"%s");
               }
-              if (piVar2[2] == 0) {
-                MyAssertHandler(0xffffffff820614f0,0x153,0,0xffffffff82000f98,0xffffffff82061628);
+              if ((pFVar1->sprite).material == (Material *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                                ,0x153,0,"%s");
               }
-              if (*piVar2 == 0) {
-                MyAssertHandler(0xffffffff820614f0,0x154,0,0xffffffff82000f98,0xffffffff82061618);
+              if ((pFVar1->sprite).indices == (r_double_index_t *)0x0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                                ,0x154,0,"%s");
               }
-              piVar12 = (int *)R_AddCodeSurf(piVar10[4],piVar2[2],*piVar2,piVar2[1],0,0,piVar2[3]);
-              piVar2[1] = 0;
+              R_AddCodeSurf(pFVar11->codeSurfGlob,(pFVar1->sprite).material,(pFVar1->sprite).indices
+                            ,(pFVar1->sprite).indexCount,0,0,(pFVar1->sprite).name);
+              (pFVar1->sprite).indexCount = 0;
             }
-            iVar23 = **(int **)piVar10[1];
-            piVar2[2] = (int)piVar13;
-            piVar2[3] = iVar23;
-            *piVar2 = (int)local_3fc;
+            pcVar5 = pFVar11->effect->def->name;
+            (pFVar1->sprite).material = (Material *)FVar14;
+            (pFVar1->sprite).name = pcVar5;
+            (pFVar1->sprite).indices = local_3fc;
           }
-          if (local_3fc != (int *)(piVar2[1] * 2 + *piVar2)) {
-            piVar12 = (int *)MyAssertHandler(0xffffffff820614f0,0x15d,0,0xffffffff82000f98,
-                                             0xffffffff820615a0);
+          if (local_3fc !=
+              (r_double_index_t *)(((pFVar1->sprite).indices)->value + (pFVar1->sprite).indexCount))
+          {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                            ,0x15d,0,"%s");
           }
-          piVar2[1] = (int)lVar20 + piVar2[1];
-          uVar11 = *(uint *)(*(int *)(piVar10[3] + 0xf4) + 0x14);
-          if (0 < (int)lVar22) {
-            uVar14 = (uint)local_400[0];
+          (pFVar1->sprite).indexCount = uVar6 + (pFVar1->sprite).indexCount;
+          uVar6 = ((pFVar11->elemDef->extended).trailDef)->vertCount;
+          if (0 < (int)lVar24) {
+            uVar17 = (uint)local_400[0];
             do {
-              local_3fc = (int *)FX_GenTrail_IndsForSegment(piVar10,uVar14,local_3fc);
-              lVar22 = lVar22 + -1;
-              uVar15 = (uint)local_400[0] + (uVar11 & 0xffff);
-              uVar14 = uVar15 & 0xffff;
-              local_400[0] = (ushort)uVar15;
-              piVar12 = local_3fc;
-            } while (lVar22 != 0);
+              local_3fc = FX_GenTrail_IndsForSegment(pFVar11,(ushort)uVar17,local_3fc);
+              lVar24 = lVar24 + -1;
+              uVar18 = (uint)local_400[0] + (uVar6 & 0xffff);
+              uVar17 = uVar18 & 0xffff;
+              local_400[0] = (ushort)uVar18;
+            } while (lVar24 != 0);
           }
         }
       }
     }
   }
-  __restfpr_18(piVar12);
+  __restfpr_18();
   __restgprlr_17();
   return;
 }
@@ -504,7 +526,7 @@ void FXIR_DrawTrail(undefined8 param_1,int param_2)
 
 // 82417F78  FX_TrailElem_UncompressBasis  (EffectsCore/fx_effect_types.h:311)
 
-void FX_TrailElem_UncompressBasis(int param_1,int param_2)
+void FX_TrailElem_UncompressBasis(char (*param_1) [3],float (*param_2) [3])
 
 {
   char *pcVar1;
@@ -520,11 +542,11 @@ void FX_TrailElem_UncompressBasis(int param_1,int param_2)
     lVar6 = 3;
     iVar3 = iVar4;
     do {
-      pcVar1 = (char *)(iVar3 + param_1);
+      pcVar1 = *param_1 + iVar3;
       iVar2 = iVar4 + iVar5;
       iVar5 = iVar5 + 1;
       iVar3 = iVar4 + iVar5;
-      *(float *)(iVar2 * 4 + param_2) = (float)(longlong)*pcVar1 * 0.007874016;
+      (*param_2)[iVar2] = (float)(longlong)*pcVar1 * 0.007874016;
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
     iVar4 = iVar4 + 3;
@@ -535,39 +557,43 @@ void FX_TrailElem_UncompressBasis(int param_1,int param_2)
 
 // 82418A18  FXIR_DrawTrailsForEffect  (EffectsCore/fx_draw.cpp:363)
 
-void FXIR_DrawTrailsForEffect(undefined8 param_1,ulonglong param_2,int param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIR_DrawTrailsForEffect
+               (GfxCodeSurfGlob *param_1,FxSystem *param_2,FxEffect *param_3,int param_4)
 
 {
   ushort uVar1;
-  int iVar2;
+  FxPool<FxTrail> *pFVar2;
   uint uVar3;
-  undefined8 uVar4;
-  ushort *puVar5;
-  int local_140;
-  int local_13c;
-  int local_130;
-  undefined4 local_98;
+  ulonglong uVar4;
+  FxTrail *pFVar5;
+  FxDrawState local_140;
   
-  local_130 = __savegprlr_23();
-  if (local_130 == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x173,0,0xffffffff82000f98,0xffffffff82020220);
+  uVar4 = (ulonglong)(int)param_2;
+  local_140.codeSurfGlob = (GfxCodeSurfGlob *)__savegprlr_23(param_1);
+  if (local_140.codeSurfGlob == (GfxCodeSurfGlob *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x173
+                    ,0,"%s");
   }
-  uVar1 = *(ushort *)(param_3 + 0x10);
-  local_140 = (int)param_2;
-  local_13c = param_3;
-  local_98 = param_4;
+  uVar1 = param_3->firstTrailHandle;
+  local_140.system = (FxSystem *)uVar4;
+  local_140.effect = param_3;
+  local_140.msecDraw = param_4;
   while (uVar3 = (uint)uVar1, uVar3 != 0xffff) {
-    if ((param_2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff82060828,0x85,0,0xffffffff82000f98,0xffffffff82038694);
+    if ((uVar4 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                      ,0x85,0,"%s");
     }
-    iVar2 = *(int *)((int)param_2 + 0x14);
+    pFVar2 = ((FxSystem *)uVar4)->trails;
     if ((0x1ff < uVar3) || ((uVar1 & 3) != 0)) {
-      uVar4 = va(0xffffffff82060820,iVar2,uVar3);
-      MyAssertHandler(0xffffffff82060828,0x54,0,0xffffffff820011f4,0xffffffff82060a50,uVar4);
+      va("%p %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                      ,0x54,0,"%s\n\t%s");
     }
-    puVar5 = (ushort *)(uVar3 * 4 + iVar2);
-    FXIR_DrawTrail(&local_140,puVar5);
-    uVar1 = *puVar5;
+    pFVar5 = (FxTrail *)((int)&pFVar2->field0_0x0 + uVar3 * 4);
+    FXIR_DrawTrail(&local_140,pFVar5);
+    uVar1 = pFVar5->nextTrailHandle;
   }
   __restgprlr_23();
   return;
@@ -576,46 +602,47 @@ void FXIR_DrawTrailsForEffect(undefined8 param_1,ulonglong param_2,int param_3,u
 
 // 82418B38  FXIR_DrawSpriteEffect  (EffectsCore/fx_draw.cpp:396)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void FXIR_DrawSpriteEffect
-               (undefined8 param_1,ulonglong param_2,int *param_3,int param_4,undefined8 param_5)
+               (GfxCodeSurfGlob *param_1,FxSystem *param_2,FxEffect *param_3,int param_4,
+               FxDrawState *param_5)
 
 {
-  ushort uVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  int iVar4;
-  byte *pbVar5;
-  ulonglong uVar6;
-  int iVar7;
+  FxElemDef *pFVar1;
+  GfxCodeSurfGlob *pGVar2;
+  FxElem *pFVar3;
+  ushort uVar4;
+  ulonglong uVar5;
+  FxSystem *pFVar6;
+  FxElemDef *pFVar7;
   
-  iVar4 = __savegprlr_21();
-  if (((param_3[1] & 0x2000U) == 0) && (*(short *)(param_3 + 2) != -1)) {
-    piVar2 = (int *)param_5;
-    piVar2[1] = (int)param_3;
-    piVar2[0x2a] = param_4;
-    *piVar2 = (int)param_2;
-    piVar2[4] = iVar4;
-    FX_DrawElement_Setup_Camera(param_5,0);
-    uVar1 = *(ushort *)(param_3 + 2);
-    iVar4 = *(int *)(*param_3 + 0x30);
+  uVar5 = (ulonglong)(int)param_2;
+  pGVar2 = (GfxCodeSurfGlob *)__savegprlr_21(param_1);
+  if (((param_3->status & 0x2000U) == 0) && (param_3->firstElemHandle[0] != 0xffff)) {
+    param_5->effect = param_3;
+    param_5->msecDraw = param_4;
+    pFVar6 = (FxSystem *)uVar5;
+    param_5->system = pFVar6;
+    param_5->codeSurfGlob = pGVar2;
+    FX_DrawElement_Setup_Camera(param_5,(FxCamera *)0x0);
+    uVar4 = param_3->firstElemHandle[0];
+    pFVar1 = param_3->def->elemDefs;
     FX_EvaluateOcclusionFade(param_5);
-    uVar6 = (ulonglong)uVar1;
-    uVar3 = uVar6;
-    while (uVar3 != 0xffff) {
-      if ((param_2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff82060828,0x62,0,0xffffffff82000f98,0xffffffff82038694);
+    for (; uVar4 != 0xffff; uVar4 = FX_GetNextElemInEffect(pFVar6,uVar4)) {
+      if ((uVar5 & 0xffffffff) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x62,0,"%s");
       }
-      pbVar5 = (byte *)FX_PoolFromHandle_Generic<FxElem>(*(undefined4 *)((int)param_2 + 0x3c),uVar6)
-      ;
-      iVar7 = (*pbVar5 & 0x3fffffc) * 0x40 + iVar4;
-      if (3 < *(byte *)(iVar7 + 0xb0)) {
-        MyAssertHandler(0xffffffff820614f0,0x1b2,0,0xffffffff82061768,*(byte *)(iVar7 + 0xb0),3);
+      pFVar3 = FX_PoolFromHandle_Generic<FxElem>(pFVar6->elems,uVar4);
+      pFVar7 = (FxElemDef *)(pFVar1->spawnOrigin + (*(byte *)pFVar3 & 0x3fffffc) * 8 + -7);
+      if (3 < pFVar7->elemType) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",
+                        0x1b2,0,"elemDef->elemType <= FX_ELEM_TYPE_LAST_SPRITE\n\t%i, %i");
       }
-      if (*(char *)(iVar7 + 0xb1) != '\0') {
-        FXIR_DrawElement(0,iVar7,pbVar5,uVar6,param_5);
+      if (pFVar7->visualCount != '\0') {
+        FXIR_DrawElement((FxCamera *)0x0,pFVar7,pFVar3,uVar4,param_5);
       }
-      uVar6 = FX_GetNextElemInEffect(param_2,uVar6);
-      uVar3 = uVar6 & 0xffff;
     }
   }
   __restgprlr_21();
@@ -625,7 +652,7 @@ void FXIR_DrawSpriteEffect
 
 // 82417E18  Profile2_UpdateEntry  (universal/profile.h:422)
 
-void Profile2_UpdateEntry(ulonglong param_1)
+void Profile2_UpdateEntry(int param_1)
 
 {
   bool bVar1;
@@ -641,10 +668,10 @@ void Profile2_UpdateEntry(ulonglong param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  lVar10 = (param_1 & 0x3fffffff) * 4;
-  iVar9 = *(int *)((int)&DAT_84184df8 + (int)lVar10);
+  lVar10 = ((ulonglong)(uint)param_1 & 0x3fffffff) * 4;
+  iVar9 = *(int *)((int)g_prof2_begin_count + (int)lVar10);
   if (iVar9 < 0) {
-    Profile2_ClearEntry();
+    Profile2_ClearEntry(param_1);
     iVar9 = 0;
   }
   sync(1);
@@ -677,41 +704,44 @@ void Profile2_UpdateEntry(ulonglong param_1)
 
 // 82418C78  FXIR_DrawNonSpriteEffect  (EffectsCore/fx_draw.cpp:444)
 
-void FXIR_DrawNonSpriteEffect(undefined8 param_1,int *param_2,longlong param_3,undefined4 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIR_DrawNonSpriteEffect(FxSystem *param_1,FxEffect *param_2,uint param_3,int param_4)
 
 {
-  int iVar1;
-  uint uVar2;
-  byte *pbVar3;
-  ulonglong uVar4;
-  int iVar5;
-  uint local_150;
-  int *local_14c;
-  undefined4 local_140;
-  undefined4 local_a8;
+  FxElemDef *pFVar1;
+  FxSystem *pFVar2;
+  FxElem *pFVar3;
+  ushort uVar4;
+  longlong lVar5;
+  FxElemDef *pFVar6;
+  FxDrawState local_150;
   
-  uVar2 = __savegprlr_21();
-  if ((param_2[1] & 0x2000U) == 0) {
-    local_140 = 0;
-    local_150 = uVar2;
-    local_14c = param_2;
-    local_a8 = param_4;
-    FX_DrawElement_Setup_Camera(&local_150,0);
-    uVar4 = (ulonglong)*(ushort *)((int)((param_3 + 4U & 0xffffffff) << 1) + (int)param_2);
+  lVar5 = (longlong)(int)param_3;
+  pFVar2 = (FxSystem *)__savegprlr_21(param_1);
+  if ((param_2->status & 0x2000U) == 0) {
+    local_150.codeSurfGlob = (GfxCodeSurfGlob *)0x0;
+    local_150.system = pFVar2;
+    local_150.effect = param_2;
+    local_150.msecDraw = param_4;
+    FX_DrawElement_Setup_Camera(&local_150,(FxCamera *)0x0);
+    uVar4 = *(ushort *)((int)param_2->firstElemHandle + (int)((lVar5 + 4U & 0xffffffff) << 1) + -8);
     if (uVar4 != 0xffff) {
-      iVar1 = *(int *)(*param_2 + 0x30);
+      pFVar1 = param_2->def->elemDefs;
       do {
-        if (uVar2 == 0) {
-          MyAssertHandler(0xffffffff82060828,0x62,0,0xffffffff82000f98,0xffffffff82038694);
+        if (pFVar2 == (FxSystem *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                          ,0x62,0,"%s");
         }
-        pbVar3 = (byte *)FX_PoolFromHandle_Generic<FxElem>(*(undefined4 *)(uVar2 + 0x3c),uVar4);
-        iVar5 = (*pbVar3 & 0x3fffffc) * 0x40 + iVar1;
-        if (*(byte *)(iVar5 + 0xb0) < 4) {
-          MyAssertHandler(0xffffffff820614f0,0x1de,0,0xffffffff820617d0,0xffffffff820617a0);
+        pFVar3 = FX_PoolFromHandle_Generic<FxElem>(pFVar2->elems,uVar4);
+        pFVar6 = (FxElemDef *)(pFVar1->spawnOrigin + (*(byte *)pFVar3 & 0x3fffffc) * 8 + -7);
+        if (pFVar6->elemType < 4) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x1de,0,"%s\n\t(elemDef->elemType) = %i");
         }
-        FXIR_DrawElement(0,iVar5,pbVar3,uVar4,&local_150);
-        uVar4 = FX_GetNextElemInEffect(uVar2,uVar4);
-      } while ((uVar4 & 0xffff) != 0xffff);
+        FXIR_DrawElement((FxCamera *)0x0,pFVar6,pFVar3,uVar4,&local_150);
+        uVar4 = FX_GetNextElemInEffect(pFVar2,uVar4);
+      } while (uVar4 != 0xffff);
     }
   }
   __restgprlr_21();
@@ -721,7 +751,7 @@ void FXIR_DrawNonSpriteEffect(undefined8 param_1,int *param_2,longlong param_3,u
 
 // 82417EC8  Profile2_Begin  (universal/profile.h:446)
 
-void Profile2_Begin(ulonglong param_1)
+void Profile2_Begin(int param_1)
 
 {
   uint uVar1;
@@ -730,8 +760,8 @@ void Profile2_Begin(ulonglong param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  Profile2_UpdateEntry();
-  lVar2 = (param_1 & 0x3fffffff) * 4 + -0x7be7b208;
+  Profile2_UpdateEntry(param_1);
+  lVar2 = ((ulonglong)(uint)param_1 & 0x3fffffff) * 4 + -0x7be7b208;
   do {
     puVar3 = (uint *)lVar2;
     if (in_RESERVE != '\0') {
@@ -746,7 +776,7 @@ void Profile2_Begin(ulonglong param_1)
 
 // 82417F20  Profile2_End  (universal/profile.h:453)
 
-void Profile2_End(ulonglong param_1)
+void Profile2_End(int param_1)
 
 {
   uint uVar1;
@@ -755,8 +785,8 @@ void Profile2_End(ulonglong param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  Profile2_UpdateEntry();
-  lVar2 = (param_1 & 0x3fffffff) * 4 + -0x7be7b208;
+  Profile2_UpdateEntry(param_1);
+  lVar2 = ((ulonglong)(uint)param_1 & 0x3fffffff) * 4 + -0x7be7b208;
   do {
     puVar3 = (uint *)lVar2;
     if (in_RESERVE != '\0') {
@@ -771,102 +801,115 @@ void Profile2_End(ulonglong param_1)
 
 // 82418DA8  FXIR_DrawSpriteElems  (EffectsCore/fx_draw.cpp:486)
 
-void FXIR_DrawSpriteElems(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIR_DrawSpriteElems(GfxCodeSurfGlob *param_1,FxSystem *param_2,int param_3)
 
 {
-  undefined2 uVar1;
+  ushort uVar1;
   uint uVar2;
-  int *piVar3;
-  undefined8 uVar4;
+  FxSystem *pFVar3;
+  GfxCodeSurfGlob *pGVar4;
+  FxEffect *pFVar5;
   int iVar6;
-  int iVar7;
-  undefined8 uVar5;
-  ulonglong uVar8;
-  uint uVar9;
-  uint *puVar10;
-  undefined1 auStack_360 [236];
-  uint uStack_274;
+  ulonglong uVar7;
+  uint uVar8;
+  uint *puVar9;
+  FxDrawState FStack_360;
   uint local_270 [156];
   
-  uVar4 = __savegprlr_20();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x1f7,0,0xffffffff82000f98,0xffffffff82061838);
+  uVar7 = (ulonglong)(int)param_2;
+  pGVar4 = (GfxCodeSurfGlob *)__savegprlr_20(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x1f7
+                    ,0,"%s");
   }
-  piVar3 = (int *)param_2;
-  if (piVar3[0x38] == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x1f8,0,0xffffffff82000f98,0xffffffff82061814);
+  pFVar3 = (FxSystem *)uVar7;
+  if ((pFVar3->camera).isValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x1f8
+                    ,0,"%s");
   }
-  R_CodeSurfAssertLimits(uVar4,0x800,0x4000,0x6000);
-  piVar3[0x16] = 0;
-  uVar8 = 0;
-  *piVar3 = 0;
-  piVar3[1] = 0;
-  piVar3[3] = 0;
-  piVar3[2] = 0;
-  FX_InitCodeSurf(uVar4);
-  uVar9 = piVar3[0x1a];
-  if (uVar9 != piVar3[0x1b]) {
-    puVar10 = &uStack_274;
-    uVar2 = uVar9 << 1;
+  R_CodeSurfAssertLimits(pGVar4,0x800,0x4000,0x6000);
+  pFVar3->gfxCloudCount = 0;
+  uVar7 = 0;
+  (pFVar3->sprite).indices = (r_double_index_t *)0x0;
+  (pFVar3->sprite).indexCount = 0;
+  (pFVar3->sprite).name = (char *)0x0;
+  (pFVar3->sprite).material = (Material *)0x0;
+  FX_InitCodeSurf(pGVar4);
+  uVar8 = pFVar3->firstActiveEffect;
+  if (uVar8 != pFVar3->firstNewEffect) {
+    puVar9 = FStack_360.cameraBitangent.field0_0x0.vector4_u32 + 3;
+    uVar2 = uVar8 << 1;
     do {
-      iVar6 = FX_EffectFromHandleConst(param_2,*(undefined2 *)((uVar2 & 0x7fe) + piVar3[0x1d]));
-      FXIR_DrawSpriteEffect(uVar4,param_2,iVar6,param_3,auStack_360);
-      if (*(short *)(iVar6 + 0x10) != -1) {
-        if (0x7f < (uVar8 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff820614f0,0x21e,0,0xffffffff82000f98,0xffffffff820617f0);
+      pFVar5 = FX_EffectFromHandleConst
+                         (pFVar3,*(ushort *)((uVar2 & 0x7fe) + (int)pFVar3->allEffectHandles));
+      FXIR_DrawSpriteEffect(pGVar4,pFVar3,pFVar5,param_3,&FStack_360);
+      if (pFVar5->firstTrailHandle != 0xffff) {
+        if (0x7f < (uVar7 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x21e,0,"%s");
         }
-        if (piVar3[1] != 0) {
-          FX_AddCodeSurf(uVar4,piVar3[2],*piVar3,piVar3[1],piVar3[3]);
+        uVar2 = (pFVar3->sprite).indexCount;
+        if (uVar2 != 0) {
+          FX_AddCodeSurf(pGVar4,(pFVar3->sprite).material,(pFVar3->sprite).indices,uVar2,
+                         (pFVar3->sprite).name);
         }
-        *piVar3 = 0;
-        piVar3[1] = 0;
-        piVar3[3] = 0;
-        piVar3[2] = 0;
-        iVar7 = FX_ReserveCodeSurf(uVar4);
-        uVar8 = uVar8 + 1;
-        puVar10 = puVar10 + 1;
-        *puVar10 = iVar7 << 0x10 | uVar9 & 0x3ff;
+        (pFVar3->sprite).indices = (r_double_index_t *)0x0;
+        (pFVar3->sprite).indexCount = 0;
+        (pFVar3->sprite).name = (char *)0x0;
+        (pFVar3->sprite).material = (Material *)0x0;
+        iVar6 = FX_ReserveCodeSurf(pGVar4);
+        uVar7 = uVar7 + 1;
+        puVar9 = puVar9 + 1;
+        *puVar9 = iVar6 << 0x10 | uVar8 & 0x3ff;
       }
-      FXIR_DrawNonSpriteEffect(param_2,iVar6,2,param_3);
-      uVar9 = uVar9 + 1;
-      uVar2 = uVar9 * 2;
-    } while (uVar9 != piVar3[0x1b]);
+      FXIR_DrawNonSpriteEffect(pFVar3,pFVar5,2,param_3);
+      uVar8 = uVar8 + 1;
+      uVar2 = uVar8 * 2;
+    } while (uVar8 != pFVar3->firstNewEffect);
   }
-  if (piVar3[1] != 0) {
-    FX_AddCodeSurf(uVar4,piVar3[2],*piVar3,piVar3[1],piVar3[3]);
-    *piVar3 = 0;
-    piVar3[1] = 0;
-    piVar3[3] = 0;
-    piVar3[2] = 0;
+  uVar8 = (pFVar3->sprite).indexCount;
+  if (uVar8 != 0) {
+    FX_AddCodeSurf(pGVar4,(pFVar3->sprite).material,(pFVar3->sprite).indices,uVar8,
+                   (pFVar3->sprite).name);
+    (pFVar3->sprite).indices = (r_double_index_t *)0x0;
+    (pFVar3->sprite).indexCount = 0;
+    (pFVar3->sprite).name = (char *)0x0;
+    (pFVar3->sprite).material = (Material *)0x0;
   }
-  if ((uVar8 & 0xffffffff) != 0) {
-    puVar10 = local_270;
+  if ((uVar7 & 0xffffffff) != 0) {
+    puVar9 = local_270;
     do {
-      uVar1 = *(undefined2 *)((*puVar10 & 0x3ff) * 2 + piVar3[0x1d]);
-      FX_FlushCodeSurf(uVar4,*puVar10 >> 0x10);
-      uVar5 = FX_EffectFromHandleConst(param_2,uVar1);
-      FXIR_DrawTrailsForEffect(uVar4,param_2,uVar5,param_3);
-      if (piVar3[1] != 0) {
-        if (piVar3[3] == 0) {
-          MyAssertHandler(0xffffffff820614f0,0x253,0,0xffffffff82000f98,0xffffffff8206163c);
+      uVar1 = pFVar3->allEffectHandles[*puVar9 & 0x3ff];
+      FX_FlushCodeSurf(pGVar4,*puVar9 >> 0x10);
+      pFVar5 = FX_EffectFromHandleConst(pFVar3,uVar1);
+      FXIR_DrawTrailsForEffect(pGVar4,pFVar3,pFVar5,param_3);
+      if ((pFVar3->sprite).indexCount != 0) {
+        if ((pFVar3->sprite).name == (char *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x253,0,"%s");
         }
-        if (piVar3[2] == 0) {
-          MyAssertHandler(0xffffffff820614f0,0x254,0,0xffffffff82000f98,0xffffffff82061628);
+        if ((pFVar3->sprite).material == (Material *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x254,0,"%s");
         }
-        if (*piVar3 == 0) {
-          MyAssertHandler(0xffffffff820614f0,0x255,0,0xffffffff82000f98,0xffffffff82061618);
+        if ((pFVar3->sprite).indices == (r_double_index_t *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp"
+                          ,0x255,0,"%s");
         }
-        R_AddCodeSurf(uVar4,piVar3[2],*piVar3,piVar3[1],0,0,piVar3[3]);
-        *piVar3 = 0;
-        piVar3[1] = 0;
-        piVar3[3] = 0;
-        piVar3[2] = 0;
+        R_AddCodeSurf(pGVar4,(pFVar3->sprite).material,(pFVar3->sprite).indices,
+                      (pFVar3->sprite).indexCount,0,0,(pFVar3->sprite).name);
+        (pFVar3->sprite).indices = (r_double_index_t *)0x0;
+        (pFVar3->sprite).indexCount = 0;
+        (pFVar3->sprite).name = (char *)0x0;
+        (pFVar3->sprite).material = (Material *)0x0;
       }
-      uVar8 = uVar8 - 1;
-      puVar10 = puVar10 + 1;
-    } while (uVar8 != 0);
+      uVar7 = uVar7 - 1;
+      puVar9 = puVar9 + 1;
+    } while (uVar7 != 0);
   }
-  FX_FinishCodeSurf(uVar4);
+  FX_FinishCodeSurf(pGVar4);
   __restgprlr_20();
   return;
 }
@@ -874,60 +917,69 @@ void FXIR_DrawSpriteElems(undefined8 param_1,ulonglong param_2,undefined8 param_
 
 // 82419098  FX_GenerateVerts  (EffectsCore/fx_draw.cpp:623)
 
-void FX_GenerateVerts(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_GenerateVerts(FxGenerateVertsCmd *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  FxSystem *pFVar1;
+  FxGenerateVertsCmd *pFVar2;
   int iVar3;
   char in_RESERVE;
   byte in_cr0;
-  undefined4 local_40 [16];
+  GfxCodeSurfGlob *local_40 [16];
   
-  piVar2 = (int *)__savegprlr_26();
-  iVar1 = *piVar2;
+  pFVar2 = (FxGenerateVertsCmd *)__savegprlr_26(param_1);
+  pFVar1 = pFVar2->system;
   Profile2_UpdateEntry(0xe);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e30 = storeWordConditionalIndexed((ulonglong)DAT_84184e30 + 1,0,0xffffffff84184e30);
+      g_prof2_begin_count[0xe] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xe] + 1,0,0xffffffff84184e30);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar3 = R_BeginCodeSurfs(1,1,local_40);
+  iVar3 = R_BeginCodeSurfs(GFX_CODE_SURF_USER_FX,GFX_CODE_SURFLIST_EMISSIVE,local_40);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x282,0,0xffffffff82000f98,0xffffffff82061864);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x282
+                    ,0,"%s");
   }
-  iVar3 = *(int *)(iVar1 + 0x90);
+  iVar3 = pFVar1->msecDraw;
   if (iVar3 < 0) {
-    R_EndCodeSurfs(local_40[0],1);
+    R_EndCodeSurfs(local_40[0],GFX_CODE_SURF_USER_FX);
     Profile2_UpdateEntry(0xe);
     do {
       if (in_RESERVE != '\0') {
-        DAT_84184e30 = storeWordConditionalIndexed((ulonglong)DAT_84184e30 - 1,0,0xffffffff84184e30)
-        ;
+        g_prof2_begin_count[0xe] =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_prof2_begin_count[0xe] - 1,0,0xffffffff84184e30);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     __restgprlr_26();
     return;
   }
-  FX_SpriteGenerateVerts(local_40[0],piVar2);
-  FX_Beam_GenerateVerts(local_40[0],piVar2);
-  if (piVar2[2] == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x28f,0,0xffffffff82000f98,0xffffffff8206184c);
+  FX_SpriteGenerateVerts(local_40[0],pFVar2);
+  FX_Beam_GenerateVerts(local_40[0],pFVar2);
+  if (pFVar2->postLightInfo == (FxPostLightInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x28f
+                    ,0,"%s");
   }
-  FX_PostLight_GenerateVerts(local_40[0],piVar2[2],iVar1);
-  if ((*(uint *)(iVar1 + 0xb4) & 3) == 0) {
-    FX_WaitEnterReadSystemLock(*(undefined4 *)(iVar1 + 0xb0));
-    FXIR_DrawSpriteElems(local_40[0],iVar1,iVar3);
-    FX_ExitReadSystemLock(*(undefined4 *)(iVar1 + 0xb0));
+  FX_PostLight_GenerateVerts(local_40[0],pFVar2->postLightInfo,pFVar1);
+  if ((pFVar1->systemFlags & 3) == 0) {
+    FX_WaitEnterReadSystemLock(pFVar1->lock);
+    FXIR_DrawSpriteElems(local_40[0],pFVar1,iVar3);
+    FX_ExitReadSystemLock(pFVar1->lock);
   }
-  R_EndCodeSurfs(local_40[0],1);
-  FX_ToggleVisBlockerFrame(iVar1,*piVar2);
+  R_EndCodeSurfs(local_40[0],GFX_CODE_SURF_USER_FX);
+  FX_ToggleVisBlockerFrame(pFVar1,pFVar2->system);
   Profile2_UpdateEntry(0xe);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e30 = storeWordConditionalIndexed((ulonglong)DAT_84184e30 - 1,0,0xffffffff84184e30);
+      g_prof2_begin_count[0xe] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xe] - 1,0,0xffffffff84184e30);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -938,27 +990,31 @@ void FX_GenerateVerts(void)
 
 // 82419230  FX_DrawNonSpriteElems  (EffectsCore/fx_draw.cpp:679)
 
-void FX_DrawNonSpriteElems(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_DrawNonSpriteElems(FxSystem *param_1,FxPass5Cmd *param_2)
 
 {
   uint uVar1;
   uint *puVar2;
   uint uVar3;
-  int iVar5;
-  undefined8 uVar4;
+  FxSystem *pFVar4;
+  FxEffect *pFVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar5 = __savegprlr_28();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x2ac,0,0xffffffff82000f98,0xffffffff82061890);
+  pFVar4 = (FxSystem *)__savegprlr_28(param_1);
+  if (pFVar4 == (FxSystem *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x2ac
+                    ,0,"%s");
   }
-  if (*(int *)(iVar5 + 0xe0) == 0) {
-    MyAssertHandler(0xffffffff820614f0,0x2ad,0,0xffffffff82000f98,0xffffffff82061874);
+  if ((pFVar4->camera).isValid == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw.cpp",0x2ad
+                    ,0,"%s");
   }
   R_BeginSparkMeshVerts();
-  FX_WaitEnterReadSystemLock(*(undefined4 *)(iVar5 + 0xb0));
-  puVar2 = *(uint **)(param_2 + 0x18);
+  FX_WaitEnterReadSystemLock(pFVar4->lock);
+  puVar2 = (uint *)param_2->effectIter;
   do {
     uVar1 = *puVar2;
     if (in_RESERVE != '\0') {
@@ -967,12 +1023,11 @@ void FX_DrawNonSpriteElems(undefined8 param_1,int param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((int)uVar1 < *(int *)(iVar5 + 0x6c)) {
+  if ((int)uVar1 < pFVar4->firstNewEffect) {
     do {
-      uVar4 = FX_EffectFromHandleConst
-                        (iVar5,*(undefined2 *)((uVar1 & 0x3ff) * 2 + *(int *)(iVar5 + 0x74)));
-      FXIR_DrawNonSpriteEffect(iVar5,uVar4,1,*(undefined4 *)(iVar5 + 0x90));
-      puVar2 = *(uint **)(param_2 + 0x18);
+      pFVar5 = FX_EffectFromHandleConst(pFVar4,pFVar4->allEffectHandles[uVar1 & 0x3ff]);
+      FXIR_DrawNonSpriteEffect(pFVar4,pFVar5,1,pFVar4->msecDraw);
+      puVar2 = (uint *)param_2->effectIter;
       do {
         uVar1 = *puVar2;
         if (in_RESERVE != '\0') {
@@ -981,9 +1036,9 @@ void FX_DrawNonSpriteElems(undefined8 param_1,int param_2)
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-    } while ((int)uVar1 < *(int *)(iVar5 + 0x6c));
+    } while ((int)uVar1 < pFVar4->firstNewEffect);
   }
-  FX_ExitReadSystemLock(*(undefined4 *)(iVar5 + 0xb0));
+  FX_ExitReadSystemLock(pFVar4->lock);
   R_EndSparkMeshVerts();
   __restgprlr_28();
   return;

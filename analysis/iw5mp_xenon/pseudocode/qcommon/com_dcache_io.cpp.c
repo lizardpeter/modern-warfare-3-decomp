@@ -2,758 +2,812 @@
 
 // 824D7AE8  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 {
-  Com_BlockChecksumKey32(param_1,param_2,0);
-  return;
+  uint uVar1;
+  
+  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
+  return uVar1;
 }
 
 
 // 824D7AF0  DCache_IO_CreateFile  (qcommon/com_dcache_io.cpp:54)
 
-void DCache_IO_CreateFile(undefined8 param_1,ulonglong param_2)
+dcacheFileResult_t DCache_IO_CreateFile(char *param_1,long param_2,void **param_3)
 
 {
+  char *pcVar2;
+  void *pvVar3;
   undefined8 uVar1;
-  LPCSTR pCVar3;
-  HANDLE pvVar4;
-  undefined8 uVar2;
+  dcacheFileResult_t dVar4;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x39,0,0xffffffff82000f98,0xffffffff820363b8);
+  uVar5 = (ulonglong)param_2;
+  __savegprlr_29(param_1,uVar5,param_3);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x39,0,"%s");
   }
-  pCVar3 = (LPCSTR)va(0xffffffff82083ecc,uVar1);
-  pvVar4 = CreateFileA(pCVar3,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,1,0,(HANDLE)0x0);
-  uVar2 = 2;
-  *(undefined4 *)param_2 = pvVar4;
-  if ((pvVar4 == (HANDLE)0x0) || (pvVar4 == (HANDLE)0xffffffff)) {
-    pCVar3 = (LPCSTR)va(0xffffffff82083ecc,uVar1);
-    pvVar4 = CreateFileA(pCVar3,0xc0000000,0,(LPSECURITY_ATTRIBUTES)0x0,3,0,(HANDLE)0x0);
-    uVar2 = 1;
-    *(undefined4 *)param_2 = pvVar4;
-    if ((pvVar4 == (HANDLE)0x0) || (pvVar4 == (HANDLE)0xffffffff)) {
-      Com_PrintError(0x10,0xffffffff82083ea4);
-      uVar2 = 0;
+  pcVar2 = va("cache:\\%s");
+  pvVar3 = CreateFileA(pcVar2,0xc0000000,0,(void *)0x0,1,0,(void *)0x0);
+  uVar1 = 2;
+  *(undefined4 *)uVar5 = pvVar3;
+  if ((pvVar3 == (void *)0x0) || (pvVar3 == (void *)0xffffffff)) {
+    pcVar2 = va("cache:\\%s");
+    pvVar3 = CreateFileA(pcVar2,0xc0000000,0,(void *)0x0,3,0,(void *)0x0);
+    uVar1 = 1;
+    *(undefined4 *)uVar5 = pvVar3;
+    if ((pvVar3 == (void *)0x0) || (pvVar3 == (void *)0xffffffff)) {
+      Com_PrintError(0x10,"dcache: Could not create file handle.\n");
+      uVar1 = 0;
     }
   }
-  __restgprlr_29(uVar2);
-  return;
+  dVar4 = __restgprlr_29(uVar1);
+  return dVar4;
 }
 
 
 // 824D7BE0  DCache_IO_ReadBytes  (qcommon/com_dcache_io.cpp:128)
 
-void DCache_IO_ReadBytes(undefined8 param_1,int param_2,DWORD param_3,LPVOID param_4)
+int DCache_IO_ReadBytes(void *param_1,int param_2,int param_3,char *param_4)
 
 {
-  HANDLE hFile;
-  BOOL BVar1;
-  DWORD local_30 [12];
+  void *pvVar1;
+  int iVar2;
+  ulong local_30 [12];
   
-  hFile = (HANDLE)__savegprlr_28();
+  pvVar1 = (void *)__savegprlr_28(param_1);
   local_30[0] = 0;
-  if (hFile == (HANDLE)0x0) {
-    Com_PrintError(0x10,0xffffffff82083f54);
+  if (pvVar1 == (void *)0x0) {
+    Com_PrintError(0x10,"dcache: No file handle\n.");
   }
   else {
-    BVar1 = SetFilePointerEx(hFile,(LARGE_INTEGER)(longlong)param_2,(PLARGE_INTEGER)0x0,0);
-    if (BVar1 == 0) {
-      Com_PrintError(0x10,0xffffffff82083f70,(longlong)param_2);
+    iVar2 = SetFilePointerEx(pvVar1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
+    if (iVar2 == 0) {
+      Com_PrintError(0x10,"dcache: Could not move to %d.\n");
     }
     else {
-      ReadFile(hFile,param_4,param_3,local_30,(LPOVERLAPPED)0x0);
+      ReadFile(pvVar1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
     }
   }
   if (local_30[0] == 0) {
-    Com_PrintError(0x10,0xffffffff82083f1c);
+    Com_PrintError(0x10,"dcache: Read requested resulted in 0 bytes being read.\n");
   }
-  __restgprlr_28(local_30[0]);
-  return;
+  iVar2 = __restgprlr_28(local_30[0]);
+  return iVar2;
 }
 
 
 // 824D7C90  DCache_IO_WriteBytes  (qcommon/com_dcache_io.cpp:183)
 
-void DCache_IO_WriteBytes(undefined8 param_1,int param_2,DWORD param_3,LPCVOID param_4)
+int DCache_IO_WriteBytes(void *param_1,int param_2,int param_3,char *param_4)
 
 {
-  HANDLE hFile;
-  DWORD local_30 [12];
+  void *pvVar1;
+  int iVar2;
+  ulong local_30 [12];
   
-  hFile = (HANDLE)__savegprlr_29();
+  pvVar1 = (void *)__savegprlr_29(param_1);
   local_30[0] = 0;
-  if (hFile != (HANDLE)0x0) {
-    SetFilePointerEx(hFile,(LARGE_INTEGER)(longlong)param_2,(PLARGE_INTEGER)0x0,0);
-    WriteFile(hFile,param_4,param_3,local_30,(LPOVERLAPPED)0x0);
+  if (pvVar1 != (void *)0x0) {
+    SetFilePointerEx(pvVar1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
+    WriteFile(pvVar1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
   }
-  __restgprlr_29(local_30[0]);
-  return;
+  iVar2 = __restgprlr_29(local_30[0]);
+  return iVar2;
 }
 
 
 // 824D7CF0  DCache_IO_GetFileOffsetFromBlockIndex  (qcommon/com_dcache_io.cpp:224)
 
-longlong DCache_IO_GetFileOffsetFromBlockIndex(ulonglong param_1)
+int DCache_IO_GetFileOffsetFromBlockIndex(int param_1)
 
 {
-  return (param_1 & 0x7fff) << 0x11;
+  return param_1 << 0x11;
 }
 
 
 // 824D7CF8  DCache_IO_WriteBlock  (qcommon/com_dcache_io.cpp:230)
 
-void DCache_IO_WriteBlock(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int DCache_IO_WriteBlock(int param_1,char *param_2,int param_3)
 
 {
-  HANDLE hFile;
-  ulonglong uVar1;
-  int iVar2;
-  char cVar4;
-  undefined4 uVar3;
-  DWORD local_30 [12];
+  void *pvVar1;
+  ulonglong uVar2;
+  dcacheTOC_t *pdVar3;
+  bool bVar6;
+  uint uVar4;
+  int iVar5;
+  ulong local_30 [12];
   
-  uVar1 = __savegprlr_28();
-  iVar2 = DCache_TOC_GetTOC();
-  cVar4 = DCache_TOC_IsBlockReserved(uVar1);
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff82083ed8,0xed,0,0xffffffff82000f98,0xffffffff82083f90);
+  uVar2 = __savegprlr_28(param_1);
+  pdVar3 = DCache_TOC_GetTOC();
+  bVar6 = DCache_TOC_IsBlockReserved((int)uVar2);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0xed,0,"%s");
   }
-  uVar3 = Com_BlockChecksumKey32(param_2,param_3,0);
+  uVar4 = Com_BlockChecksumKey32(param_2,param_3,0);
   local_30[0] = 0;
-  *(undefined4 *)((int)((uVar1 + 0x2302 & 0xffffffff) << 2) + iVar2) = uVar3;
-  hFile = DAT_835f161c;
-  if (DAT_835f161c != (HANDLE)0x0) {
-    SetFilePointerEx(DAT_835f161c,(LARGE_INTEGER)(longlong)(int)((uVar1 & 0xffffffff) << 0x11),
-                     (PLARGE_INTEGER)0x0,0);
-    WriteFile(hFile,(LPCVOID)param_2,(DWORD)param_3,local_30,(LPOVERLAPPED)0x0);
-    __restgprlr_28(local_30[0]);
-    return;
+  *(uint *)(pdVar3->m_fileInfo[0].m_bitfield + (int)((uVar2 + 0x2302 & 0xffffffff) << 2) + -0x18) =
+       uVar4;
+  pvVar1 = s_dcacheFileHandle;
+  if (s_dcacheFileHandle != (void *)0x0) {
+    SetFilePointerEx(s_dcacheFileHandle,
+                     (_LARGE_INTEGER)(longlong)(int)((uVar2 & 0xffffffff) << 0x11),
+                     (_LARGE_INTEGER *)0x0,0);
+    WriteFile(pvVar1,param_2,param_3,local_30,(_OVERLAPPED *)0x0);
+    iVar5 = __restgprlr_28(local_30[0]);
+    return iVar5;
   }
-  __restgprlr_28(0);
-  return;
+  iVar5 = __restgprlr_28(0);
+  return iVar5;
 }
 
 
 // 824D7DD0  DCache_IO_WriteBlockWithOffset  (qcommon/com_dcache_io.cpp:250)
 
-void DCache_IO_WriteBlockWithOffset(undefined8 param_1,int param_2,LPCVOID param_3,DWORD param_4)
+int DCache_IO_WriteBlockWithOffset(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  HANDLE hFile;
-  int iVar1;
-  char cVar2;
-  DWORD local_40 [16];
+  void *pvVar1;
+  int iVar2;
+  bool bVar3;
+  ulong local_40 [16];
   
-  iVar1 = __savegprlr_26();
-  cVar2 = DCache_TOC_IsBlockReserved();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff82083ed8,0xff,0,0xffffffff82000f98,0xffffffff82083f90);
+  iVar2 = __savegprlr_26(param_1);
+  bVar3 = DCache_TOC_IsBlockReserved(iVar2);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0xff,0,"%s");
   }
-  if (0x20000 - param_2 < (int)param_4) {
-    MyAssertHandler(0xffffffff82083ed8,0x100,0,0xffffffff82000f98,0xffffffff82083fbc);
+  if (0x20000 - param_2 < param_4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x100,0,"%s");
   }
-  hFile = DAT_835f161c;
+  pvVar1 = s_dcacheFileHandle;
   local_40[0] = 0;
-  if (DAT_835f161c != (HANDLE)0x0) {
-    SetFilePointerEx(DAT_835f161c,(LARGE_INTEGER)(longlong)(iVar1 * 0x20000 + param_2),
-                     (PLARGE_INTEGER)0x0,0);
-    WriteFile(hFile,param_3,param_4,local_40,(LPOVERLAPPED)0x0);
+  if (s_dcacheFileHandle != (void *)0x0) {
+    SetFilePointerEx(s_dcacheFileHandle,(_LARGE_INTEGER)(longlong)(iVar2 * 0x20000 + param_2),
+                     (_LARGE_INTEGER *)0x0,0);
+    WriteFile(pvVar1,param_3,param_4,local_40,(_OVERLAPPED *)0x0);
   }
-  __restgprlr_26(local_40[0]);
-  return;
+  iVar2 = __restgprlr_26(local_40[0]);
+  return iVar2;
 }
 
 
 // 824D7EB0  DCache_IO_ReadBlockWithOffset  (qcommon/com_dcache_io.cpp:263)
 
-void DCache_IO_ReadBlockWithOffset
-               (undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4)
+int DCache_IO_ReadBlockWithOffset(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_26();
-  cVar2 = DCache_TOC_IsBlockReserved();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff82083ed8,0x10c,0,0xffffffff82000f98,0xffffffff82083f90);
+  iVar1 = __savegprlr_26(param_1);
+  bVar2 = DCache_TOC_IsBlockReserved(iVar1);
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x10c,0,"%s");
   }
-  if (0x20000 - (int)param_2 < (int)param_4) {
-    MyAssertHandler(0xffffffff82083ed8,0x10d,0,0xffffffff82000f98,0xffffffff82083fbc);
+  if (0x20000 - param_2 < param_4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x10d,0,"%s");
   }
-  DCache_IO_ReadBytes(DAT_835f161c,(uVar1 & 0x7fff) * 0x20000 + param_2,param_4,param_3);
-  __restgprlr_26();
-  return;
+  iVar1 = DCache_IO_ReadBytes(s_dcacheFileHandle,iVar1 * 0x20000 + param_2,param_4,param_3);
+  iVar1 = __restgprlr_26(iVar1);
+  return iVar1;
 }
 
 
 // 824D7F58  DCache_IO_ReadBlock  (qcommon/com_dcache_io.cpp:276)
 
-void DCache_IO_ReadBlock(undefined8 param_1,undefined8 param_2,longlong param_3,ulonglong param_4)
+int DCache_IO_ReadBlock(int param_1,char *param_2,int param_3,bool param_4)
 
 {
   ulonglong uVar1;
-  int iVar3;
-  char cVar5;
-  undefined8 uVar2;
-  int iVar4;
-  longlong lVar6;
+  dcacheTOC_t *pdVar2;
+  bool bVar6;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar7;
   
-  uVar1 = __savegprlr_25();
-  iVar3 = DCache_TOC_GetTOC();
-  cVar5 = DCache_TOC_IsBlockReserved(uVar1);
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff82083ed8,0x11b,0,0xffffffff82000f98,0xffffffff82083f90);
+  uVar7 = (ulonglong)param_4;
+  uVar1 = __savegprlr_25(param_1);
+  pdVar2 = DCache_TOC_GetTOC();
+  bVar6 = DCache_TOC_IsBlockReserved((int)uVar1);
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x11b,0,"%s");
   }
-  lVar6 = (uVar1 & 0x7fff) * 0x20000;
-  uVar2 = DCache_IO_ReadBytes(DAT_835f161c,lVar6,param_3,param_2);
-  if ((int)uVar2 == (int)param_3) {
-    iVar4 = Com_BlockChecksumKey32(param_2,param_3,0);
-    if ((param_4 & 0xff) != 0) {
-      if (iVar4 != *(int *)((int)((uVar1 + 0x2302 & 0xffffffff) << 2) + iVar3)) {
-        Com_PrintError(0x10,0xffffffff82084030,uVar1);
-        Com_Printf(0x10,0xffffffff82083fe8,param_3,lVar6,lVar6 + param_3);
-        goto LAB_824d803c;
-      }
+  uVar3 = DCache_IO_ReadBytes(s_dcacheFileHandle,(int)((uVar1 & 0xffffffff) << 0x11),param_3,param_2
+                             );
+  if (uVar3 == param_3) {
+    uVar4 = Com_BlockChecksumKey32(param_2,param_3,0);
+    if (((uVar7 & 0xff) == 0) ||
+       (uVar4 == *(uint *)(pdVar2->m_fileInfo[0].m_bitfield +
+                          (int)((uVar1 + 0x2302 & 0xffffffff) << 2) + -0x18))) {
+      iVar5 = __restgprlr_25(uVar3);
+      return iVar5;
     }
-    __restgprlr_25(uVar2);
-    return;
+    Com_PrintError(0x10,"dcache: Checksum mismatch for block %d.\n");
+    Com_Printf(0x10,"dcache: \t  FILE: Had tried to read %d bytes from file offset %d to %d.\n");
   }
-LAB_824d803c:
-  __restgprlr_25(0);
-  return;
+  iVar5 = __restgprlr_25(0);
+  return iVar5;
 }
 
 
 // 824D8058  DCache_IO_GetBlockIndexForOffset  (qcommon/com_dcache_io.cpp:310)
 
-void DCache_IO_GetBlockIndexForOffset(undefined8 param_1,ulonglong param_2)
+int DCache_IO_GetBlockIndexForOffset(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  int iVar4;
+  longlong lVar5;
   
-  uVar1 = __savegprlr_28();
-  iVar3 = 0;
-  lVar4 = 0;
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  iVar4 = 0;
+  lVar5 = 0;
   do {
-    cVar2 = DCache_TOC_IsBitSet(uVar1,lVar4);
-    if (cVar2 != '\0') {
-      if (iVar3 == ((int)param_2 >> 0x11) + (uint)((int)param_2 < 0 && (param_2 & 0x1ffff) != 0)) {
-        __restgprlr_28(lVar4);
-        return;
+    bVar2 = DCache_TOC_IsBitSet(iVar1,(int)lVar5);
+    if (bVar2) {
+      if (iVar4 == ((int)uVar3 >> 0x11) + (uint)((int)uVar3 < 0 && (uVar3 & 0x1ffff) != 0)) {
+        iVar1 = __restgprlr_28(lVar5);
+        return iVar1;
       }
-      iVar3 = iVar3 + 1;
+      iVar4 = iVar4 + 1;
     }
-    lVar4 = lVar4 + 1;
-  } while ((int)lVar4 < 0x800);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x145,0,0xffffffff8208405c);
+    lVar5 = lVar5 + 1;
+  } while ((int)lVar5 < 0x800);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x145,0,"dcache: Reached end of blocks and could not fit an offset.");
   }
-  __restgprlr_28(0);
-  return;
+  iVar1 = __restgprlr_28(0);
+  return iVar1;
 }
 
 
 // 824D80F0  DCache_IO_StreamFileData  (qcommon/com_dcache_io.cpp:334)
 
-void DCache_IO_StreamFileData
-               (undefined8 param_1,ulonglong param_2,longlong param_3,longlong param_4)
+int DCache_IO_StreamFileData(int param_1,int param_2,int param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
   longlong lVar7;
   ulonglong uVar8;
   int iVar9;
   longlong lVar10;
   
-  uVar1 = __savegprlr_18();
-  lVar10 = param_2 + ((longlong)((int)param_2 >> 0x11) +
-                      (ulonglong)((int)param_2 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) * -0x20000
-  ;
-  uVar2 = DCache_IO_GetBlockIndexForOffset();
-  lVar5 = 0x20000 - lVar10;
-  if ((int)param_3 <= (int)lVar5) {
-    lVar5 = param_3;
+  lVar6 = (longlong)param_3;
+  uVar8 = (ulonglong)param_2;
+  iVar1 = __savegprlr_18(param_1);
+  iVar5 = (int)uVar8;
+  lVar10 = uVar8 + ((longlong)(iVar5 >> 0x11) + (ulonglong)(iVar5 < 0 && (uVar8 & 0x1ffff) != 0) &
+                   0x7fff) * -0x20000;
+  iVar2 = DCache_IO_GetBlockIndexForOffset(iVar1,iVar5);
+  lVar7 = 0x20000 - lVar10;
+  if ((int)lVar6 <= (int)lVar7) {
+    lVar7 = lVar6;
   }
-  lVar5 = DCache_IO_WriteBlockWithOffset(uVar2,lVar10,param_4,lVar5);
-  if ((int)lVar5 < 1) {
-    MyAssertHandler(0xffffffff82083ed8,0x15a,0,0xffffffff82000f98,0xffffffff820840a4);
+  iVar2 = DCache_IO_WriteBlockWithOffset(iVar2,(int)lVar10,param_4,(int)lVar7);
+  lVar7 = (longlong)iVar2;
+  if (iVar2 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x15a,0,"%s");
   }
-  uVar8 = param_3 - lVar5;
+  uVar8 = lVar6 - lVar7;
   if (0 < (longlong)uVar8) {
     iVar9 = (int)uVar8;
-    iVar6 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0);
+    iVar2 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0);
     if (uVar8 != ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0) &
                  0x7fff) << 0x11) {
-      iVar6 = iVar6 + 1;
+      iVar2 = iVar2 + 1;
     }
-    lVar7 = 0;
-    lVar10 = lVar5;
-    if (0 < iVar6) {
+    iVar9 = 0;
+    lVar6 = lVar7;
+    if (0 < iVar2) {
       do {
-        if ((int)uVar8 < 1) {
-          MyAssertHandler(0xffffffff82083ed8,0x16c,0,0xffffffff82000f98,0xffffffff820589cc);
+        iVar4 = (int)uVar8;
+        if (iVar4 < 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
+                          ,0x16c,0,"%s");
         }
-        lVar3 = DCache_IO_GetBlockIndexForOffset(uVar1,param_2);
-        uVar4 = uVar8;
-        if (0x20000 < (int)uVar8) {
-          uVar4 = 0x20000;
+        iVar3 = DCache_IO_GetBlockIndexForOffset(iVar1,iVar5);
+        if (0x20000 < iVar4) {
+          iVar4 = 0x20000;
         }
-        lVar3 = DCache_IO_WriteBlock(lVar3 + lVar7 + 1,lVar10 + param_4,uVar4);
-        if ((int)lVar3 < 1) {
-          MyAssertHandler(0xffffffff82083ed8,0x175,0,0xffffffff82000f98,0xffffffff820840a4);
+        iVar4 = DCache_IO_WriteBlock(iVar3 + iVar9 + 1,param_4 + (int)lVar6,iVar4);
+        lVar10 = (longlong)iVar4;
+        if (iVar4 < 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
+                          ,0x175,0,"%s");
         }
-        lVar7 = lVar7 + 1;
-        uVar8 = uVar8 - lVar3;
-        lVar5 = lVar3 + lVar5;
-        lVar10 = lVar3 + lVar10;
-      } while ((int)lVar7 < iVar6);
+        iVar9 = iVar9 + 1;
+        uVar8 = uVar8 - lVar10;
+        lVar7 = lVar10 + lVar7;
+        lVar6 = lVar10 + lVar6;
+      } while (iVar9 < iVar2);
     }
   }
   if ((int)uVar8 != 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x17d,0,0xffffffff82000f98,0xffffffff82084098);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x17d,0,"%s");
   }
-  __restgprlr_18(lVar5);
-  return;
+  iVar1 = __restgprlr_18(lVar7);
+  return iVar1;
 }
 
 
 // 824D8280  DCache_IO_WriteFileData  (qcommon/com_dcache_io.cpp:386)
 
-void DCache_IO_WriteFileData(undefined8 param_1,ulonglong param_2,longlong param_3)
+bool DCache_IO_WriteFileData(int param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  dcacheTOC_t *pdVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  undefined8 uVar2;
-  longlong lVar3;
-  ulonglong uVar6;
+  undefined1 uVar6;
   int iVar7;
   longlong lVar8;
-  int iVar9;
+  ulonglong uVar9;
   
-  uVar1 = __savegprlr_22();
-  iVar4 = DCache_TOC_GetTOC();
-  iVar9 = (int)param_2;
-  iVar7 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (param_2 & 0x1ffff) != 0);
-  if (param_2 !=
-      ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) <<
-      0x11) {
+  uVar9 = (ulonglong)param_2;
+  iVar1 = __savegprlr_22(param_1);
+  pdVar2 = DCache_TOC_GetTOC();
+  iVar4 = (int)uVar9;
+  iVar7 = (iVar4 >> 0x11) + (uint)(iVar4 < 0 && (uVar9 & 0x1ffff) != 0);
+  if (uVar9 != ((longlong)(iVar4 >> 0x11) + (ulonglong)(iVar4 < 0 && (uVar9 & 0x1ffff) != 0) &
+               0x7fff) << 0x11) {
     iVar7 = iVar7 + 1;
   }
-  iVar4 = (int)uVar1 * 0x118 + iVar4;
-  if (*(int *)(iVar4 + 0x14) != iVar9) {
-    MyAssertHandler(0xffffffff82083ed8,0x18c,0,0xffffffff82000f98,0xffffffff82084130);
+  if (pdVar2->m_fileInfo[iVar1].m_size != iVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x18c,0,"%s");
   }
-  iVar5 = DCache_TOC_GetBlocksUsed(uVar1);
-  if (iVar5 != iVar7) {
-    MyAssertHandler(0xffffffff82083ed8,0x18d,0,0xffffffff82000f98,0xffffffff820840f4);
+  iVar3 = DCache_TOC_GetBlocksUsed(iVar1);
+  if (iVar3 != iVar7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x18d,0,"%s");
   }
-  if ((*(int *)(iVar4 + 0x14) == iVar9) && (iVar4 = DCache_TOC_GetBlocksUsed(uVar1), iVar4 == iVar7)
-     ) {
+  if ((pdVar2->m_fileInfo[iVar1].m_size == iVar4) &&
+     (iVar4 = DCache_TOC_GetBlocksUsed(iVar1), iVar4 == iVar7)) {
     lVar8 = 0;
     iVar4 = 0;
     if (0 < iVar7) {
       do {
-        if ((int)param_2 < 1) {
-          MyAssertHandler(0xffffffff82083ed8,0x197,0,0xffffffff82000f98,0xffffffff820589cc);
+        iVar3 = (int)uVar9;
+        if (iVar3 < 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
+                          ,0x197,0,"%s");
         }
-        uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,lVar8);
-        uVar6 = param_2;
-        if (0x20000 < (int)param_2) {
-          uVar6 = 0x20000;
+        iVar5 = DCache_IO_GetBlockIndexForOffset(iVar1,(int)lVar8);
+        if (0x20000 < iVar3) {
+          iVar3 = 0x20000;
         }
-        lVar3 = DCache_IO_WriteBlock(uVar2,lVar8 + param_3,uVar6);
-        if ((int)lVar3 == 0) {
-          Com_PrintError(0x10,0xffffffff820840b8);
+        iVar3 = DCache_IO_WriteBlock(iVar5,param_3 + (int)lVar8,iVar3);
+        if (iVar3 == 0) {
+          Com_PrintError(0x10,"dcache: Write requested resulted in 0 bytes being written.\n");
           goto LAB_824d83e0;
         }
         iVar4 = iVar4 + 1;
-        lVar8 = lVar3 + lVar8;
-        param_2 = param_2 - lVar3;
+        lVar8 = iVar3 + lVar8;
+        uVar9 = uVar9 - (longlong)iVar3;
       } while (iVar4 < iVar7);
     }
     XFlushUtilityDrive();
-    __restgprlr_22(1);
-    return;
+    uVar6 = __restgprlr_22(1);
+    return (bool)uVar6;
   }
 LAB_824d83e0:
-  __restgprlr_22(0);
-  return;
+  uVar6 = __restgprlr_22(0);
+  return (bool)uVar6;
 }
 
 
 // 824D83F0  DCache_IO_ReadFileData  (qcommon/com_dcache_io.cpp:437)
 
-void DCache_IO_ReadFileData(undefined8 param_1,ulonglong param_2,longlong param_3)
+bool DCache_IO_ReadFileData(int param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  dcacheTOC_t *pdVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  undefined8 uVar2;
-  longlong lVar3;
-  ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
+  undefined1 uVar5;
+  int iVar6;
+  int iVar8;
+  ulonglong uVar7;
+  longlong lVar9;
   
-  uVar1 = __savegprlr_25();
-  iVar5 = (int)param_2;
-  iVar7 = (iVar5 >> 0x11) + (uint)(iVar5 < 0 && (param_2 & 0x1ffff) != 0);
-  if (param_2 !=
-      ((longlong)(iVar5 >> 0x11) + (ulonglong)(iVar5 < 0 && (param_2 & 0x1ffff) != 0) & 0x7fff) *
-      0x20000) {
-    iVar7 = iVar7 + 1;
+  uVar7 = (ulonglong)param_2;
+  iVar1 = __savegprlr_25(param_1);
+  iVar3 = (int)uVar7;
+  iVar6 = (iVar3 >> 0x11) + (uint)(iVar3 < 0 && (uVar7 & 0x1ffff) != 0);
+  if (uVar7 != ((longlong)(iVar3 >> 0x11) + (ulonglong)(iVar3 < 0 && (uVar7 & 0x1ffff) != 0) &
+               0x7fff) << 0x11) {
+    iVar6 = iVar6 + 1;
   }
-  iVar4 = DCache_TOC_GetTOC();
-  if (*(int *)(iVar4 + (int)uVar1 * 0x118 + 0x14) != iVar5) {
-    MyAssertHandler(0xffffffff82083ed8,0x1bd,0,0xffffffff82000f98,0xffffffff8208415c);
+  pdVar2 = DCache_TOC_GetTOC();
+  if (pdVar2->m_fileInfo[iVar1].m_size != iVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x1bd,0,"%s");
   }
-  iVar5 = DCache_TOC_GetBlocksUsed(uVar1);
-  if (iVar5 != iVar7) {
-    MyAssertHandler(0xffffffff82083ed8,0x1be,0,0xffffffff82000f98,0xffffffff820840f4);
+  iVar3 = DCache_TOC_GetBlocksUsed(iVar1);
+  if (iVar3 != iVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x1be,0,"%s");
   }
-  lVar8 = 0;
-  iVar5 = 0;
-  if (0 < iVar7) {
+  lVar9 = 0;
+  iVar3 = 0;
+  if (0 < iVar6) {
     do {
-      uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,lVar8);
-      uVar6 = param_2;
-      if (0x20000 < (int)param_2) {
-        uVar6 = 0x20000;
+      iVar4 = DCache_IO_GetBlockIndexForOffset(iVar1,(int)lVar9);
+      iVar8 = (int)uVar7;
+      if (0x20000 < iVar8) {
+        iVar8 = 0x20000;
       }
-      lVar3 = DCache_IO_ReadBlock(uVar2,lVar8 + param_3,uVar6,1);
-      if ((int)lVar3 == 0) {
-        __restgprlr_25(0);
-        return;
+      iVar4 = DCache_IO_ReadBlock(iVar4,param_3 + (int)lVar9,iVar8,true);
+      if (iVar4 == 0) {
+        uVar5 = __restgprlr_25(0);
+        return (bool)uVar5;
       }
-      iVar5 = iVar5 + 1;
-      lVar8 = lVar3 + lVar8;
-      param_2 = param_2 - lVar3;
-    } while (iVar5 < iVar7);
+      iVar3 = iVar3 + 1;
+      lVar9 = iVar4 + lVar9;
+      uVar7 = uVar7 - (longlong)iVar4;
+    } while (iVar3 < iVar6);
   }
-  __restgprlr_25(1);
-  return;
+  uVar5 = __restgprlr_25(1);
+  return (bool)uVar5;
 }
 
 
 // 824D8508  DCache_IO_WriteToCache  (qcommon/com_dcache_io.cpp:475)
 
-undefined8
-DCache_IO_WriteToCache(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+bool DCache_IO_WriteToCache(ulong64 param_1,dcacheLocation_t param_2,int param_3,char *param_4)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  bool bVar2;
   
-  uVar1 = DCache_GetFileIndex();
-  if ((int)uVar1 == -1) {
-    Com_PrintError(0x10,0xffffffff8208419c);
-    uVar1 = 0;
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
+    Com_PrintError(0x10,"dcache: Tried to write a file that is not allocated.\n");
+    bVar2 = false;
   }
   else {
-    uVar1 = DCache_IO_WriteFileData(uVar1,param_3,param_4);
+    bVar2 = DCache_IO_WriteFileData(iVar1,param_3,param_4);
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 824D8570  DCache_IO_StreamToCache  (qcommon/com_dcache_io.cpp:489)
 
-void DCache_IO_StreamToCache
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+int DCache_IO_StreamToCache
+              (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5)
 
 {
-  undefined8 uVar1;
+  ulong64 uVar1;
+  int iVar2;
   
-  __savegprlr_29();
-  uVar1 = DCache_GetFileIndex();
-  if ((int)uVar1 == -1) {
-    Com_PrintError(0x10,0xffffffff820841d4);
-    __restgprlr_29(0);
-    return;
+  uVar1 = __savegprlr_29();
+  iVar2 = DCache_GetFileIndex(uVar1,param_2);
+  if (iVar2 == -1) {
+    Com_PrintError(0x10,"dcache: Tried to stream a file that is not allocated.\n");
+    iVar2 = __restgprlr_29(0);
+    return iVar2;
   }
-  DCache_IO_StreamFileData(uVar1,param_3,param_4,param_5);
-  __restgprlr_29();
-  return;
+  iVar2 = DCache_IO_StreamFileData(iVar2,param_3,param_4,param_5);
+  iVar2 = __restgprlr_29(iVar2);
+  return iVar2;
 }
 
 
 // 824D8C38  DCache_IO_StreamToCacheComplete  (qcommon/com_dcache_io.cpp:502)
 
-void DCache_IO_StreamToCacheComplete(undefined8 param_1,undefined8 param_2,undefined4 param_3)
+bool DCache_IO_StreamToCacheComplete(ulong64 param_1,dcacheLocation_t param_2,int param_3)
 
 {
-  int iVar1;
+  ulong64 uVar1;
   int iVar2;
+  undefined1 uVar4;
+  dcacheTOC_t *pdVar3;
   
-  __savegprlr_29();
-  iVar1 = DCache_GetFileIndex();
-  if (iVar1 == -1) {
-    Com_PrintError(0x10,0xffffffff82084428);
-    __restgprlr_29(0);
-    return;
+  uVar1 = __savegprlr_29();
+  iVar2 = DCache_GetFileIndex(uVar1,param_2);
+  if (iVar2 == -1) {
+    Com_PrintError(0x10,"dcache: Tried to complete a streamed file that is not allocated.\n");
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  iVar2 = DCache_TOC_GetTOC();
-  *(undefined4 *)(iVar1 * 0x118 + iVar2 + 0x14) = param_3;
-  if (*(char *)(iVar2 + 4) != '\x02') {
-    MyAssertHandler(0xffffffff82083ed8,0x202,0,0xffffffff82000f98,0xffffffff82084400);
+  pdVar3 = DCache_TOC_GetTOC();
+  pdVar3->m_fileInfo[iVar2].m_size = param_3;
+  if (pdVar3->m_version != '\x02') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x202,0,"%s");
   }
-  DCache_IO_SerializeTOC(iVar2);
+  DCache_IO_SerializeTOC(pdVar3);
   XFlushUtilityDrive();
-  __restgprlr_29(1);
-  return;
+  uVar4 = __restgprlr_29(1);
+  return (bool)uVar4;
 }
 
 
 // 824D85C8  DCache_IO_ReadFromCacheByOffset  (qcommon/com_dcache_io.cpp:525)
 
-void DCache_IO_ReadFromCacheByOffset
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,longlong param_4,
-               ulonglong param_5,undefined4 *param_6)
+bool DCache_IO_ReadFromCacheByOffset
+               (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5,
+               int *param_6)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
+  ulong64 uVar1;
+  int iVar2;
+  undefined1 uVar4;
+  int iVar3;
+  ulonglong uVar5;
   longlong lVar6;
-  longlong lVar7;
+  ulonglong uVar7;
+  longlong lVar8;
+  int iVar9;
+  int iVar10;
+  longlong lVar11;
+  longlong lVar12;
   
-  __savegprlr_18();
-  uVar1 = DCache_GetFileIndex();
-  if ((int)uVar1 == -1) {
-    Com_PrintError(0x10,0xffffffff8208420c);
-    __restgprlr_18(0);
-    return;
+  uVar7 = (ulonglong)(int)param_5;
+  lVar11 = (longlong)param_4;
+  uVar5 = (ulonglong)param_3;
+  uVar1 = __savegprlr_18();
+  iVar2 = DCache_GetFileIndex(uVar1,param_2);
+  if (iVar2 == -1) {
+    Com_PrintError(0x10,"dcache: Tried to read a file that is not allocated.\n");
+    uVar4 = __restgprlr_18(0);
+    return (bool)uVar4;
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x216,0,0xffffffff82000f98,0xffffffff8200e484);
-    __restgprlr_18(0);
-    return;
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x216,0,"%s");
+    uVar4 = __restgprlr_18(0);
+    return (bool)uVar4;
   }
-  param_4 = param_4 - param_3;
-  lVar7 = param_3 + ((longlong)((int)param_3 >> 0x11) +
-                     (ulonglong)((int)param_3 < 0 && (param_3 & 0x1ffff) != 0) & 0x7fff) * -0x20000;
-  if (param_4 < 1) {
-    MyAssertHandler(0xffffffff82083ed8,0x221,0,0xffffffff82000f98,0xffffffff820589cc);
+  iVar9 = (int)uVar5;
+  lVar11 = lVar11 - uVar5;
+  lVar12 = uVar5 + ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (uVar5 & 0x1ffff) != 0) &
+                   0x7fff) * -0x20000;
+  if (lVar11 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x221,0,"%s");
   }
-  uVar2 = DCache_IO_GetBlockIndexForOffset(uVar1,param_3);
-  lVar5 = 0x20000 - lVar7;
-  if ((int)param_4 <= (int)lVar5) {
-    lVar5 = param_4;
+  iVar3 = DCache_IO_GetBlockIndexForOffset(iVar2,iVar9);
+  lVar8 = 0x20000 - lVar12;
+  if ((int)lVar11 <= (int)lVar8) {
+    lVar8 = lVar11;
   }
-  lVar7 = DCache_IO_ReadBlockWithOffset(uVar2,lVar7,param_5,lVar5);
-  if ((int)lVar7 < 1) {
-    MyAssertHandler(0xffffffff82083ed8,0x22a,0,0xffffffff82000f98,0xffffffff82083da0);
+  iVar3 = DCache_IO_ReadBlockWithOffset(iVar3,(int)lVar12,(char *)uVar7,(int)lVar8);
+  lVar12 = (longlong)iVar3;
+  if (iVar3 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x22a,0,"%s");
   }
-  param_4 = param_4 - lVar7;
-  if (0 < param_4) {
-    lVar6 = 0;
-    lVar5 = lVar7;
+  lVar11 = lVar11 - lVar12;
+  if (0 < lVar11) {
+    iVar10 = 0;
+    lVar8 = lVar12;
     do {
-      if ((int)param_4 < 1) {
-        MyAssertHandler(0xffffffff82083ed8,0x235,0,0xffffffff82000f98,0xffffffff820589cc);
+      if ((int)lVar11 < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
+                        ,0x235,0,"%s");
       }
-      lVar3 = DCache_IO_GetBlockIndexForOffset(uVar1,param_3);
-      lVar4 = param_4;
-      if (0x20000 < (int)param_4) {
-        lVar4 = 0x20000;
+      iVar3 = DCache_IO_GetBlockIndexForOffset(iVar2,iVar9);
+      lVar6 = lVar11;
+      if (0x20000 < (int)lVar11) {
+        lVar6 = 0x20000;
       }
-      lVar4 = DCache_IO_ReadBlock(lVar3 + lVar6 + 1,lVar5 + param_5,lVar4,0);
-      if ((int)lVar4 < 1) {
-        MyAssertHandler(0xffffffff82083ed8,0x23e,0,0xffffffff82000f98,0xffffffff82083da0);
+      iVar3 = DCache_IO_ReadBlock(iVar3 + iVar10 + 1,(char *)uVar7 + (int)lVar8,(int)lVar6,false);
+      lVar6 = (longlong)iVar3;
+      if (iVar3 < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
+                        ,0x23e,0,"%s");
       }
-      param_4 = param_4 - lVar4;
-      lVar5 = lVar4 + lVar5;
-      lVar7 = lVar4 + lVar7;
-      lVar6 = lVar6 + 1;
-    } while (0 < param_4);
+      lVar11 = lVar11 - lVar6;
+      lVar8 = lVar6 + lVar8;
+      lVar12 = lVar6 + lVar12;
+      iVar3 = (int)lVar12;
+      iVar10 = iVar10 + 1;
+    } while (0 < lVar11);
   }
-  if ((int)param_4 != 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x246,0,0xffffffff82000f98,0xffffffff82084098);
+  if ((int)lVar11 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x246,0,"%s");
   }
-  *param_6 = (int)lVar7;
-  __restgprlr_18(1);
-  return;
+  *param_6 = iVar3;
+  uVar4 = __restgprlr_18(1);
+  return (bool)uVar4;
 }
 
 
 // 824D87C0  DCache_IO_ReadFromCache  (qcommon/com_dcache_io.cpp:589)
 
-bool DCache_IO_ReadFromCache
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+bool DCache_IO_ReadFromCache(ulong64 param_1,dcacheLocation_t param_2,int param_3,char *param_4)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   char cVar2;
   bool bVar3;
   
-  uVar1 = DCache_GetFileIndex();
-  if ((int)uVar1 == -1) {
-    Com_PrintError(0x10,0xffffffff8208420c);
-    bVar3 = false;
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
+    Com_PrintError(0x10,"dcache: Tried to read a file that is not allocated.\n");
+    cVar2 = '\0';
   }
-  else if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x256,0,0xffffffff82000f98,0xffffffff8200e484);
-    Com_PrintError(0x10,0xffffffff8208427c);
-    bVar3 = false;
+  else if (param_4 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x256,0,"%s");
+    Com_PrintError(0x10,"dcache: Invalid buffer passed in.\n");
+    cVar2 = '\0';
   }
-  else if ((int)param_3 < 1) {
-    MyAssertHandler(0xffffffff82083ed8,0x25d,0,0xffffffff82000f98,0xffffffff82084270);
-    Com_PrintError(0x10,0xffffffff82084244,param_3);
-    bVar3 = false;
+  else if (param_3 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x25d,0,"%s");
+    Com_PrintError(0x10,"dcache: Invalid file length %d passed in.\n");
+    cVar2 = '\0';
   }
   else {
-    cVar2 = DCache_IO_ReadFileData(uVar1,param_3,param_4);
-    bVar3 = cVar2 != '\0';
+    bVar3 = DCache_IO_ReadFileData(iVar1,param_3,param_4);
+    cVar2 = '\x01' - !bVar3;
   }
-  return bVar3;
+  return (bool)cVar2;
 }
 
 
 // 824D88C0  DCache_IsFileResultValid  (qcommon/com_dcache_io.cpp:622)
 
-undefined8 DCache_IsFileResultValid(uint param_1,undefined8 param_2)
+bool DCache_IsFileResultValid(dcacheFileResult_t param_1,char *param_2)
 
 {
-  if (param_1 == 0) {
-    return 0;
+  if (param_1 == DCACHE_FILERESULT_ERROR) {
+    return false;
   }
-  if (param_1 == 1) {
-    Com_Printf(0x10,0xffffffff820842a0,param_2);
+  if (param_1 == DCACHE_FILERESULT_OPENED) {
+    Com_Printf(0x10,"Found dcache file \'%s\'. Opened existing.\n");
   }
-  else if (param_1 < 3) {
-    Com_Printf(0x10,0xffffffff820842cc,param_2);
-    return 1;
+  else if (param_1 < (DCACHE_FILERESULT_CREATED|DCACHE_FILERESULT_OPENED)) {
+    Com_Printf(0x10,"Did not find dcache file \'%s\'. Created a new one.\n");
+    return true;
   }
-  return 1;
+  return true;
 }
 
 
 // 824D8940  DCache_IO_DeserializeTOC  (qcommon/com_dcache_io.cpp:641)
 
-undefined8 DCache_IO_DeserializeTOC(undefined8 param_1)
+bool DCache_IO_DeserializeTOC(dcacheTOC_t *param_1)
 
 {
   int iVar1;
   
-  iVar1 = DCache_IO_ReadBytes(DAT_835f1620,0,0xad10,param_1);
+  iVar1 = DCache_IO_ReadBytes(s_dcacheTOCFileHandle,0,0xad10,(char *)param_1);
   if (iVar1 != 0xad10) {
-    Com_PrintError(0x10,0xffffffff82084300);
-    return 0;
+    Com_PrintError(0x10,"dcache: Could not deserialize the TOC from disk.\n");
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 824D89A8  DCache_IO_SerializeTOC  (qcommon/com_dcache_io.cpp:652)
 
-undefined8 DCache_IO_SerializeTOC(undefined4 *param_1)
+bool DCache_IO_SerializeTOC(dcacheTOC_t *param_1)
 
 {
-  HANDLE hFile;
-  undefined4 uVar1;
-  BOOL BVar2;
-  DWORD local_20 [2];
+  void *pvVar1;
+  uint uVar2;
+  ulong local_20 [2];
   
-  uVar1 = Com_BlockChecksumKey32(param_1 + 1,0xad0c,0);
-  *param_1 = uVar1;
-  hFile = DAT_835f1620;
+  uVar2 = Com_BlockChecksumKey32(&param_1->m_version,0xad0c,0);
+  param_1->m_tocChecksum = uVar2;
+  pvVar1 = s_dcacheTOCFileHandle;
   local_20[0] = 0;
-  if (DAT_835f1620 != (HANDLE)0x0) {
-    SetFilePointerEx(DAT_835f1620,(LARGE_INTEGER)0x0,(PLARGE_INTEGER)0x0,0);
-    BVar2 = WriteFile(hFile,param_1,0xad10,local_20,(LPOVERLAPPED)0x0);
+  if (s_dcacheTOCFileHandle != (void *)0x0) {
+    SetFilePointerEx(s_dcacheTOCFileHandle,(_LARGE_INTEGER)0x0,(_LARGE_INTEGER *)0x0,0);
+    WriteFile(pvVar1,param_1,0xad10,local_20,(_OVERLAPPED *)0x0);
     if (local_20[0] == 0xad10) {
-      XFlushUtilityDrive(BVar2);
-      return 1;
+      XFlushUtilityDrive();
+      return true;
     }
   }
-  Com_PrintError(0x10,0xffffffff82084334);
-  return 0;
+  Com_PrintError(0x10,"dcache: Could not serialize the TOC to disk\n");
+  return false;
 }
 
 
 // 824D8A60  DCache_IO_Init  (qcommon/com_dcache_io.cpp:670)
 
-undefined8 DCache_IO_Init(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool DCache_IO_Init(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar4;
-  int *piVar3;
+  dcacheTOC_t *pdVar1;
+  dcacheFileResult_t dVar2;
+  bool bVar4;
+  uint uVar3;
+  void **in_r5;
   
-  iVar2 = DCache_TOC_GetTOC();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82083ed8,0x29f,0,0xffffffff82000f98,0xffffffff82083e4c);
+  pdVar1 = DCache_TOC_GetTOC();
+  if (pdVar1 == (dcacheTOC_t *)0x0) {
+    in_r5 = (void **)0x0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
+                    0x29f,0,"%s");
   }
-  iVar2 = DCache_TOC_GetTOC();
-  if (iVar2 != 0) {
-    uVar1 = DCache_IO_CreateFile(0xffffffff820843f4,0xffffffff835f1620);
-    cVar4 = DCache_IsFileResultValid(uVar1,0xffffffff820843f4);
-    if (cVar4 != '\0') {
-      uVar1 = DCache_IO_CreateFile(0xffffffff820843e8,0xffffffff835f161c);
-      cVar4 = DCache_IsFileResultValid(uVar1,0xffffffff820843e8);
-      if (cVar4 != '\0') {
-        if ((int)uVar1 == 1) {
-          piVar3 = (int *)DCache_TOC_GetTOC();
-          cVar4 = DCache_IO_DeserializeTOC();
-          if (cVar4 == '\0') {
-            DCache_TOC_FlushTOC();
-            DCache_IO_SerializeTOC(piVar3);
+  pdVar1 = DCache_TOC_GetTOC();
+  if (pdVar1 != (dcacheTOC_t *)0x0) {
+    dVar2 = DCache_IO_CreateFile("toc.cache",-0x7ca0e9e0,in_r5);
+    bVar4 = DCache_IsFileResultValid(dVar2,"toc.cache");
+    if (bVar4) {
+      dVar2 = DCache_IO_CreateFile("data.cache",-0x7ca0e9e4,in_r5);
+      bVar4 = DCache_IsFileResultValid(dVar2,"data.cache");
+      if (bVar4) {
+        if (dVar2 == DCACHE_FILERESULT_OPENED) {
+          pdVar1 = DCache_TOC_GetTOC();
+          bVar4 = DCache_IO_DeserializeTOC(pdVar1);
+          if (bVar4) {
+            Com_Printf(0x10,"dcache: TOC recovered from disk.\n");
+            uVar3 = Com_BlockChecksumKey32(&pdVar1->m_version,0xad0c,0);
+            if ((pdVar1->m_version != '\x02') || (uVar3 != pdVar1->m_tocChecksum)) {
+              DCache_TOC_FlushTOC();
+              DCache_IO_SerializeTOC(pdVar1);
+              Com_PrintWarning(0x10,"dcache: TOC version or checksum mismatch. Cache flushed.\n");
+            }
           }
           else {
-            Com_Printf(0x10,0xffffffff820843c4);
-            iVar2 = Com_BlockChecksumKey32(piVar3 + 1,0xad0c,0);
-            if ((*(char *)(piVar3 + 1) != '\x02') || (iVar2 != *piVar3)) {
-              DCache_TOC_FlushTOC();
-              DCache_IO_SerializeTOC(piVar3);
-              Com_PrintWarning(0x10,0xffffffff82084388);
-            }
+            DCache_TOC_FlushTOC();
+            DCache_IO_SerializeTOC(pdVar1);
           }
         }
         else {
-          DCache_TOC_GetTOC();
-          DCache_IO_SerializeTOC();
-          Com_Printf(0x10,0xffffffff82084364);
+          pdVar1 = DCache_TOC_GetTOC();
+          DCache_IO_SerializeTOC(pdVar1);
+          Com_Printf(0x10,"dcache: TOC initial write to disk.\n");
         }
-        return 1;
+        return true;
       }
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 824D8BD8  DCache_IO_Shutdown  (qcommon/com_dcache_io.cpp:725)
 
-BOOL DCache_IO_Shutdown(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void DCache_IO_Shutdown(void)
 
 {
-  BOOL BVar1;
-  
-  if (DAT_835f1620 != (HANDLE)0x0) {
-    CloseHandle(DAT_835f1620);
-    DAT_835f1620 = (HANDLE)0x0;
+  if (s_dcacheTOCFileHandle != (void *)0x0) {
+    CloseHandle(s_dcacheTOCFileHandle);
+    s_dcacheTOCFileHandle = (void *)0x0;
   }
-  BVar1 = 0;
-  if (DAT_835f161c != (HANDLE)0x0) {
-    BVar1 = CloseHandle(DAT_835f161c);
-    DAT_835f161c = (HANDLE)0x0;
+  if (s_dcacheFileHandle != (void *)0x0) {
+    CloseHandle(s_dcacheFileHandle);
+    s_dcacheFileHandle = (void *)0x0;
   }
-  return BVar1;
+  return;
 }
 

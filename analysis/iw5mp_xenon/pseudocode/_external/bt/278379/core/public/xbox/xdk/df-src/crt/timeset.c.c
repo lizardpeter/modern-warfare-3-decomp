@@ -2,67 +2,67 @@
 
 // 82923678  _get_daylight  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/timeset.c:35)
 
-errno_t _get_daylight(int *_Daylight)
+int _get_daylight(int *param_1)
 
 {
   int *piVar1;
-  errno_t eVar2;
+  int iVar2;
   
-  if (_Daylight == (int *)0x0) {
+  if (param_1 == (int *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    eVar2 = 0x16;
+    iVar2 = 0x16;
   }
   else {
-    eVar2 = 0;
-    *_Daylight = DAT_829b082c;
+    iVar2 = 0;
+    *param_1 = _daylight;
   }
-  return eVar2;
+  return iVar2;
 }
 
 
 // 829236C8  _get_dstbias  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/timeset.c:44)
 
-errno_t _get_dstbias(long *_Daylight_savings_bias)
+int _get_dstbias(long *param_1)
 
 {
   int *piVar1;
-  errno_t eVar2;
+  int iVar2;
   
-  if (_Daylight_savings_bias == (long *)0x0) {
+  if (param_1 == (long *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    eVar2 = 0x16;
+    iVar2 = 0x16;
   }
   else {
-    eVar2 = 0;
-    *_Daylight_savings_bias = DAT_829b0830;
+    iVar2 = 0;
+    *param_1 = _dstbias;
   }
-  return eVar2;
+  return iVar2;
 }
 
 
 // 82923718  _get_timezone  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/timeset.c:53)
 
-errno_t _get_timezone(long *_Timezone)
+int _get_timezone(long *param_1)
 
 {
   int *piVar1;
-  errno_t eVar2;
+  int iVar2;
   
-  if (_Timezone == (long *)0x0) {
+  if (param_1 == (long *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    eVar2 = 0x16;
+    iVar2 = 0x16;
   }
   else {
-    eVar2 = 0;
-    *_Timezone = DAT_829b0828;
+    iVar2 = 0;
+    *param_1 = _timezone;
   }
-  return eVar2;
+  return iVar2;
 }
 
 
@@ -73,7 +73,7 @@ errno_t _get_timezone(long *_Timezone)
 int * __daylight(void)
 
 {
-  return &DAT_829b082c;
+  return &_daylight;
 }
 
 
@@ -84,7 +84,7 @@ int * __daylight(void)
 long * __dstbias(void)
 
 {
-  return &DAT_829b0830;
+  return &_dstbias;
 }
 
 
@@ -95,7 +95,7 @@ long * __dstbias(void)
 long * __timezone(void)
 
 {
-  return &DAT_829b0828;
+  return &_timezone;
 }
 
 
@@ -106,6 +106,6 @@ long * __timezone(void)
 char ** __tzname(void)
 
 {
-  return &PTR_DAT_829b08b8;
+  return _tzname;
 }
 

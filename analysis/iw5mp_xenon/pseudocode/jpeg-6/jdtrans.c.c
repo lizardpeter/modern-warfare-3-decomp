@@ -2,88 +2,89 @@
 
 // 827C51D8  jpeg_read_coefficients  (jpeg-6/jdtrans.c:46)
 
-undefined4 jpeg_read_coefficients(int *param_1)
+jvirt_barray_control ** jpeg_read_coefficients(jpeg_decompress_struct *param_1)
 
 {
-  int iVar1;
+  jpeg_progress_mgr *pjVar1;
   int iVar2;
   int iVar3;
   
-  if (param_1[5] == 0xca) {
-    transdecode_master_selection();
-    param_1[5] = 0xd1;
+  if (param_1->global_state == 0xca) {
+    transdecode_master_selection(param_1);
+    param_1->global_state = 0xd1;
   }
-  if (param_1[5] == 0xd1) {
+  if (param_1->global_state == 0xd1) {
     while( true ) {
-      if ((undefined4 *)param_1[2] != (undefined4 *)0x0) {
-        (**(code **)param_1[2])(param_1);
+      if (param_1->progress != (jpeg_progress_mgr *)0x0) {
+        (*param_1->progress->progress_monitor)((jpeg_common_struct *)param_1);
       }
-      iVar2 = (**(code **)param_1[0x66])(param_1);
+      iVar2 = (*param_1->inputctl->consume_input)(param_1);
       if (iVar2 == 0) {
-        return 0;
+        return (jvirt_barray_control **)0x0;
       }
       if (iVar2 == 2) break;
-      iVar1 = param_1[2];
-      if ((iVar1 != 0) && ((iVar2 == 3 || (iVar2 == 1)))) {
-        iVar3 = *(int *)(iVar1 + 4) + 1;
-        *(int *)(iVar1 + 4) = iVar3;
-        iVar2 = *(int *)(param_1[2] + 8);
+      pjVar1 = param_1->progress;
+      if ((pjVar1 != (jpeg_progress_mgr *)0x0) && ((iVar2 == 3 || (iVar2 == 1)))) {
+        iVar3 = pjVar1->pass_counter + 1;
+        pjVar1->pass_counter = iVar3;
+        iVar2 = param_1->progress->pass_limit;
         if (iVar2 <= iVar3) {
-          *(int *)(param_1[2] + 8) = param_1[0x49] + iVar2;
+          param_1->progress->pass_limit = param_1->total_iMCU_rows + iVar2;
         }
       }
     }
-    param_1[5] = 0xd2;
+    param_1->global_state = 0xd2;
   }
-  if (((param_1[5] == 0xd2) || (param_1[5] == 0xcf)) && (*(char *)(param_1 + 0x12) != '\0')) {
-    return *(undefined4 *)(param_1[100] + 0x10);
+  if (((param_1->global_state == 0xd2) || (param_1->global_state == 0xcf)) &&
+     (param_1->buffered_image != '\0')) {
+    return param_1->coef->coef_arrays;
   }
-  *(undefined4 *)(*param_1 + 0x14) = 0x14;
-  *(int *)(*param_1 + 0x18) = param_1[5];
-  (**(code **)*param_1)(param_1);
-  return 0;
+  param_1->err->msg_code = 0x14;
+  (param_1->err->msg_parm).i[0] = param_1->global_state;
+  (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+  return (jvirt_barray_control **)0x0;
 }
 
 
 // 827C50B8  transdecode_master_selection  (jpeg-6/jdtrans.c:98)
 
-void transdecode_master_selection(int *param_1)
+void transdecode_master_selection(jpeg_decompress_struct *param_1)
 
 {
   int iVar1;
   
-  *(undefined1 *)(param_1 + 0x12) = 1;
-  if (*(char *)((int)param_1 + 0xd1) == '\0') {
-    if (*(char *)(param_1 + 0x34) == '\0') {
+  param_1->buffered_image = '\x01';
+  if (param_1->arith_code == '\0') {
+    if (param_1->progressive_mode == '\0') {
       jinit_huff_decoder(param_1);
     }
     else {
-      jinit_phuff_decoder();
+      jinit_phuff_decoder(param_1);
     }
   }
   else {
-    *(undefined4 *)(*param_1 + 0x14) = 1;
-    (**(code **)*param_1)();
+    param_1->err->msg_code = 1;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  jinit_d_coef_controller(param_1,1);
-  (**(code **)(param_1[1] + 0x18))(param_1);
-  (**(code **)(param_1[0x66] + 8))(param_1);
-  if (param_1[2] != 0) {
-    if (*(char *)(param_1 + 0x34) == '\0') {
-      if (*(char *)(param_1[0x66] + 0x10) == '\0') {
+  jinit_d_coef_controller(param_1,'\x01');
+  (*param_1->mem->realize_virt_arrays)((jpeg_common_struct *)param_1);
+  (*param_1->inputctl->start_input_pass)(param_1);
+  if (param_1->progress != (jpeg_progress_mgr *)0x0) {
+    if (param_1->progressive_mode == '\0') {
+      if (param_1->inputctl->has_multiple_scans == '\0') {
         iVar1 = 1;
       }
       else {
-        iVar1 = param_1[0xb];
+        iVar1 = param_1->num_components;
       }
     }
     else {
-      iVar1 = param_1[0xb] * 3 + 2;
+      iVar1 = param_1->num_components * 3 + 2;
     }
-    *(undefined4 *)(param_1[2] + 4) = 0;
-    *(int *)(param_1[2] + 8) = param_1[0x49] * iVar1;
-    *(undefined4 *)(param_1[2] + 0xc) = 0;
-    *(undefined4 *)(param_1[2] + 0x10) = 1;
+    param_1->progress->pass_counter = 0;
+    param_1->progress->pass_limit = param_1->total_iMCU_rows * iVar1;
+    param_1->progress->completed_passes = 0;
+    param_1->progress->total_passes = 1;
   }
   return;
 }

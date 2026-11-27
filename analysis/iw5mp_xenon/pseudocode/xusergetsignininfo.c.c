@@ -2,15 +2,21 @@
 
 // 828A5008  XUserGetSigninInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xusergetsignininfo.c:34)
 
-void XUserGetSigninInfo(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+ulong XUserGetSigninInfo(ulong param_1,ulong param_2,_XUSER_SIGNIN_INFO *param_3)
 
 {
   undefined8 uVar1;
+  undefined4 uVar2;
+  ulong uVar3;
+  longlong lVar4;
+  longlong lVar5;
   
-  uVar1 = __savegprlr_29();
-  XamUserGetSigninInfo(uVar1,param_2,param_3);
-  uVar1 = Win32FromHRESULT();
-  __restgprlr_29(uVar1);
-  return;
+  lVar5 = (longlong)(int)param_3;
+  lVar4 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1,lVar4,lVar5);
+  uVar2 = XamUserGetSigninInfo(uVar1,lVar4,lVar5);
+  uVar3 = Win32FromHRESULT(uVar2);
+  uVar3 = __restgprlr_29(uVar3);
+  return uVar3;
 }
 

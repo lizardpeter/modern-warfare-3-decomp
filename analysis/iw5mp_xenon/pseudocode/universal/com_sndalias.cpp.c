@@ -2,59 +2,62 @@
 
 // 825E6C28  Com_GetVolumeFalloffCurveValue  (universal/com_sndalias.cpp:181)
 
-void Com_GetVolumeFalloffCurveValue(int param_1)
+float Com_GetVolumeFalloffCurveValue(SndCurve *param_1,float param_2)
 
 {
-  GraphGetValueFromFraction(*(undefined2 *)(param_1 + 4),param_1 + 8);
-  return;
+  float fVar1;
+  
+  fVar1 = GraphGetValueFromFraction((uint)param_1->knotCount,param_1->knots,param_2);
+  return fVar1;
 }
 
 
 // 825E6C38  Com_GetVolumeFalloffCurve  (universal/com_sndalias.cpp:192)
 
-undefined2 Com_GetVolumeFalloffCurve(int param_1,int *param_2)
+int Com_GetVolumeFalloffCurve(SndCurve *param_1,float (**param_2) [2])
 
 {
-  *param_2 = param_1 + 8;
-  return *(undefined2 *)(param_1 + 4);
+  *param_2 = param_1->knots;
+  return (int)param_1->knotCount;
 }
 
 
 // 825E6C48  Com_VolumeFalloffCurveGraphEventCallback  (universal/com_sndalias.cpp:207)
 
-void Com_VolumeFalloffCurveGraphEventCallback(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Com_VolumeFalloffCurveGraphEventCallback
+               (DevGraph *param_1,DevEventType param_2,LocalClientNum_t param_3)
 
 {
-  int *piVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  undefined1 auStack_2050 [32];
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  char acStack_2050 [32];
   char acStack_2030 [8240];
   
-  piVar1 = (int *)__savegprlr_28();
-  if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82176d90,0xd5,0,0xffffffff82000f98,0xffffffff82021900);
+  lVar2 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1,lVar2,param_3);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0xd5,0,"%s");
   }
-  uVar3 = (ulonglong)(uint)piVar1[6];
-  if (0x1f < uVar3) {
-    MyAssertHandler(0xffffffff82176d90,0xd7,0,0xffffffff82176d48,uVar3,0x20);
+  if (0x1f < *(uint *)(iVar1 + 0x18)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0xd7,0,
+                    "curveIndex doesn\'t index SA_VOLUMEFALLOFFCURVECOUNT\n\t%i not in [0, %i)");
   }
-  if (param_2 == 2) {
-    sprintf(acStack_2030,"Volume Falloff Curve #%02d\nKnot Count: %d\n",uVar3,
-            (ulonglong)*(ushort *)piVar1[1]);
-    iVar4 = 0;
-    if (*(short *)piVar1[1] != 0) {
-      iVar2 = 0;
+  if ((int)lVar2 == 2) {
+    sprintf(acStack_2030,"Volume Falloff Curve #%02d\nKnot Count: %d\n");
+    iVar3 = 0;
+    if (**(short **)(iVar1 + 4) != 0) {
       do {
-        Com_sprintf(auStack_2050,0x20,0xffffffff82021e78,(double)*(float *)(*piVar1 + iVar2),
-                    (double)((float *)(*piVar1 + iVar2))[1]);
-        I_strncat(acStack_2030,0x2000,auStack_2050);
-        iVar4 = iVar4 + 1;
-        iVar2 = iVar2 + 8;
-      } while (iVar4 < (int)(uint)*(ushort *)piVar1[1]);
+        Com_sprintf(acStack_2050,0x20,"%.4f %.4f\n");
+        I_strncat(acStack_2030,0x2000,acStack_2050);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < (int)(uint)**(ushort **)(iVar1 + 4));
     }
-    Com_Printf(9,0xffffffff82176d14,acStack_2030);
+    Com_Printf(9,"^6%s");
   }
   __restgprlr_28();
   return;
@@ -63,29 +66,32 @@ void Com_VolumeFalloffCurveGraphEventCallback(undefined8 param_1,int param_2)
 
 // 825E6D78  Com_GetGraphList  (universal/com_sndalias.cpp:263)
 
-void Com_GetGraphList(undefined8 param_1,uint *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Com_GetGraphList(XAssetHeader param_1,void *param_2)
 
 {
-  uint uVar1;
+  void *pvVar1;
   undefined4 *puVar2;
-  int iVar3;
   char acStack_130 [304];
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  uVar1 = *param_2;
-  if ((int)uVar1 < 0x20) {
-    iVar3 = uVar1 * 0x20;
+  puVar2 = (undefined4 *)__savegprlr_28(param_1.physPreset);
+  pvVar1 = *(void **)param_2;
+  if ((int)pvVar1 < 0x20) {
     if (*(char *)*puVar2 != '\0') {
-      sprintf(acStack_130,"Main:1/Snd:6/Volume Falloff Curves/%s:%d",(char *)*puVar2,
-              (ulonglong)uVar1);
-      *(uint *)(&DAT_8404ee0c + iVar3) = uVar1;
-      *(undefined2 *)(&DAT_8404edfc + iVar3) = 0x10;
-      *(undefined4 **)(&DAT_8404edf4 + iVar3) = puVar2 + 2;
-      *(undefined4 **)(&DAT_8404edf8 + iVar3) = puVar2 + 1;
-      *(code **)(&DAT_8404ee04 + iVar3) = Com_VolumeFalloffCurveGraphEventCallback;
-      (&DAT_8404ee10)[iVar3] = 1;
-      DevGui_AddGraph(acStack_130,&DAT_8404edf4 + iVar3);
-      *param_2 = *param_2 + 1;
+      sprintf(acStack_130,"Main:1/Snd:6/Volume Falloff Curves/%s:%d");
+      g_sa.curveDevGraphs[(int)pvVar1].data = pvVar1;
+      g_sa.curveDevGraphs[(int)pvVar1].knotCountMax = 0x10;
+      g_sa.curveDevGraphs[(int)pvVar1].knots = (float (*) [2])(puVar2 + 2);
+      g_sa.curveDevGraphs[(int)pvVar1].knotCount = (ushort *)(puVar2 + 1);
+      g_sa.curveDevGraphs[(int)pvVar1].eventCallback = Com_VolumeFalloffCurveGraphEventCallback;
+      g_sa.curveDevGraphs[(int)pvVar1].disableEditingEndPoints = true;
+      DevGui_AddGraph(acStack_130,g_sa.curveDevGraphs + (int)pvVar1);
+      *(int *)param_2 = *(int *)param_2 + 1;
     }
   }
   __restgprlr_28();
@@ -95,18 +101,32 @@ void Com_GetGraphList(undefined8 param_1,uint *param_2)
 
 // 825E6E20  Com_InitSoundDevGuiGraphs_FastFile  (universal/com_sndalias.cpp:293)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void Com_InitSoundDevGuiGraphs_FastFile(void)
 
 {
   undefined4 local_10 [4];
   
   local_10[0] = 0;
-  DB_EnumXAssets(10,0xffffffff825e6d78,local_10,0);
+  DB_EnumXAssets(ASSET_TYPE_SOUND_CURVE,Com_GetGraphList,local_10,false);
   return;
 }
 
 
 // 825E6E60  Com_InitSoundDevGuiGraphs  (universal/com_sndalias.cpp:303)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void Com_InitSoundDevGuiGraphs(void)
 
@@ -114,81 +134,166 @@ void Com_InitSoundDevGuiGraphs(void)
   undefined4 local_10 [4];
   
   local_10[0] = 0;
-  DB_EnumXAssets(10,0xffffffff825e6d78,local_10,0);
+  DB_EnumXAssets(ASSET_TYPE_SOUND_CURVE,Com_GetGraphList,local_10,false);
   return;
 }
 
 
 // 825E6EA0  Com_GetSpeakerMap  (universal/com_sndalias.cpp:407)
 
-longlong Com_GetSpeakerMap(longlong param_1,longlong param_2)
+XAUDIOCHANNELMAP * Com_GetSpeakerMap(SpeakerMap *param_1,int param_2)
 
 {
-  char cVar1;
+  bool bVar1;
+  longlong lVar2;
   
-  if (((int)param_2 != 1) && ((int)param_2 != 2)) {
-    MyAssertHandler(0xffffffff82176d90,0x19b,0,0xffffffff82176e04,0xffffffff82176e24,param_2);
+  if ((param_2 != 1) && (param_2 != 2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x19b,0,"%s\n\t(sourceChannelCount) = %i");
   }
-  cVar1 = SND_IsMultiChannel();
-  return ((((param_2 + -1) - (param_2 + -2 + (ulonglong)(param_2 + -1 == 0)) & 0x7fffffff) * 2 -
-          (ulonglong)(cVar1 == '\0')) + 2 & 0x1fffffff) * 8 + param_1;
+  bVar1 = SND_IsMultiChannel();
+  lVar2 = (longlong)param_2 + -1;
+  return (XAUDIOCHANNELMAP *)
+         ((int)(param_1->channelMaps + -1) + 8 +
+         (int)((((lVar2 - ((longlong)param_2 + -2 + (ulonglong)(lVar2 == 0)) & 0x7fffffff) * 2 -
+                (ulonglong)!bVar1) + 2 & 0xffffffff) << 3));
 }
 
 
 // 825E6F40  Com_TryFindSoundAlias_FastFile  (universal/com_sndalias.cpp:610)
 
-ulonglong Com_TryFindSoundAlias_FastFile(ulonglong param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+snd_alias_list_t * Com_TryFindSoundAlias_FastFile(char *param_1)
 
 {
-  ulonglong uVar1;
+  XAssetHeader XVar1;
   int iVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x265,0,0xffffffff82000f98,0xffffffff82021a74);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x265,0,"%s");
   }
-  uVar1 = DB_FindXAssetHeader(9,param_1,0);
-  if (((uVar1 & 0xffffffff) == 0) || (iVar2 = DB_IsXAssetDefault(9,param_1), iVar2 != 0)) {
-    uVar1 = 0;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,param_1,0);
+  if ((XVar1.physPreset == (PhysPreset *)0x0) ||
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,param_1), iVar2 != 0)) {
+    XVar1.physPreset = (PhysPreset *)0x0;
   }
-  return uVar1;
+  return XVar1.sound;
 }
 
 
 // 825E6FD8  Com_FindSoundAlias_FastFile  (universal/com_sndalias.cpp:624)
 
-ulonglong Com_FindSoundAlias_FastFile(ulonglong param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+snd_alias_list_t * Com_FindSoundAlias_FastFile(char *param_1)
 
 {
-  ulonglong uVar1;
+  XAssetHeader XVar1;
   int iVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x273,0,0xffffffff82000f98,0xffffffff82021a74);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x273,0,"%s");
   }
-  uVar1 = DB_FindXAssetHeader(9,param_1,0);
-  if (((uVar1 & 0xffffffff) == 0) || (iVar2 = DB_IsXAssetDefault(9,param_1), iVar2 != 0)) {
-    Com_PrintError(10,0xffffffff82176e5c,param_1);
-    uVar1 = 0;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,param_1,0);
+  if ((XVar1.physPreset == (PhysPreset *)0x0) ||
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,param_1), iVar2 != 0)) {
+    Com_PrintError(10,"Missing soundalias \"%s\".\n");
+    XVar1.physPreset = (PhysPreset *)0x0;
   }
-  return uVar1;
+  return XVar1.sound;
+}
+
+
+// 825E7088  Com_TryFindSoundAlias  (universal/com_sndalias.cpp:643)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* struct snd_alias_list_t * __cdecl Com_TryFindSoundAlias(char const *) */
+
+snd_alias_list_t * Com_TryFindSoundAlias(char *param_1)
+
+{
+  XAssetHeader XVar1;
+  int iVar2;
+  
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x265,0,"%s");
+  }
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,param_1,0);
+  if ((XVar1.physPreset == (PhysPreset *)0x0) ||
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,param_1), iVar2 != 0)) {
+    XVar1.physPreset = (PhysPreset *)0x0;
+  }
+  return XVar1.sound;
+}
+
+
+// 825E7090  Com_FindSoundAlias  (universal/com_sndalias.cpp:649)
+
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* struct snd_alias_list_t * __cdecl Com_FindSoundAlias(char const *) */
+
+snd_alias_list_t * Com_FindSoundAlias(char *param_1)
+
+{
+  XAssetHeader XVar1;
+  int iVar2;
+  
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x273,0,"%s");
+  }
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,param_1,0);
+  if ((XVar1.physPreset == (PhysPreset *)0x0) ||
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,param_1), iVar2 != 0)) {
+    Com_PrintError(10,"Missing soundalias \"%s\".\n");
+    XVar1.physPreset = (PhysPreset *)0x0;
+  }
+  return XVar1.sound;
 }
 
 
 // 825E7098  Load_SndAliasCustom  (universal/com_sndalias.cpp:656)
 
-void Load_SndAliasCustom(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_SndAliasCustom(snd_alias_list_t **param_1)
 
 {
-  int iVar1;
+  XAssetHeader XVar1;
   
-  if (*param_1 != 0) {
-    DAT_82cc68c8 = param_1;
-    Load_XStringPtr(0);
-    if (*DAT_82cc68c8 == 0) {
-      MyAssertHandler(0xffffffff82176d90,0x295,0,0xffffffff82000f98,0xffffffff82176e78);
+  if (*param_1 != (snd_alias_list_t *)0x0) {
+    varXStringPtr = (char ***)param_1;
+    Load_XStringPtr(false);
+    if (*varXStringPtr == (char **)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                      0x295,0,"%s");
     }
-    iVar1 = DB_FindXAssetHeader(9,*(undefined4 *)*DAT_82cc68c8,1);
-    *param_1 = iVar1;
+    XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,**varXStringPtr,1);
+    *param_1 = (snd_alias_list_t *)XVar1;
   }
   return;
 }
@@ -196,101 +301,107 @@ void Load_SndAliasCustom(int *param_1)
 
 // 825E7138  SND_GetAliasOffset  (universal/com_sndalias.cpp:668)
 
-void SND_GetAliasOffset(void)
+int SND_GetAliasOffset(snd_alias_t *param_1)
 
 {
-  int *piVar2;
-  int iVar3;
+  snd_alias_t *psVar2;
+  snd_alias_list_t *psVar3;
   longlong lVar1;
-  int *piVar4;
+  int iVar4;
+  snd_alias_t *psVar5;
   
-  piVar2 = (int *)__savegprlr_28();
-  if (*piVar2 == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x2a1,0,0xffffffff82000f98,0xffffffff82176e94);
+  psVar2 = (snd_alias_t *)__savegprlr_28(param_1);
+  if (psVar2->aliasName == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x2a1,0,"%s");
   }
-  iVar3 = Com_FindSoundAlias_FastFile(*piVar2);
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x2a4,0,0xffffffff82000f98,0xffffffff82176e88);
+  psVar3 = Com_FindSoundAlias_FastFile(psVar2->aliasName);
+  if (psVar3 == (snd_alias_list_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x2a4,0,"%s");
   }
   lVar1 = 0;
-  piVar4 = *(int **)(iVar3 + 4);
-  if (0 < *(int *)(iVar3 + 8)) {
+  psVar5 = psVar3->head;
+  if (0 < psVar3->count) {
     do {
-      if (piVar4 == piVar2) goto LAB_825e71e0;
+      if (psVar5 == psVar2) goto LAB_825e71e0;
       lVar1 = lVar1 + 1;
-      piVar4 = piVar4 + 0x1c;
-    } while ((int)lVar1 < *(int *)(iVar3 + 8));
+      psVar5 = psVar5 + 1;
+    } while ((int)lVar1 < psVar3->count);
   }
   lVar1 = 0;
 LAB_825e71e0:
-  __restgprlr_28(lVar1);
-  return;
+  iVar4 = __restgprlr_28(lVar1);
+  return iVar4;
 }
 
 
 // 825E71E8  SND_GetAliasWithOffset  (universal/com_sndalias.cpp:694)
 
-ulonglong SND_GetAliasWithOffset(ulonglong param_1,undefined8 param_2)
+snd_alias_t * SND_GetAliasWithOffset(char *param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  snd_alias_list_t *psVar2;
+  snd_alias_t *psVar3;
   int iVar4;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82176d90,699,0,0xffffffff82000f98,0xffffffff82021a74);
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    699,0,"%s");
   }
-  iVar2 = Com_FindSoundAlias_FastFile(param_1);
-  if (iVar2 != 0) {
-    iVar1 = *(int *)(iVar2 + 8);
+  psVar2 = Com_FindSoundAlias_FastFile(param_1);
+  if (psVar2 != (snd_alias_list_t *)0x0) {
+    iVar1 = psVar2->count;
     iVar4 = 0;
-    uVar3 = (ulonglong)*(uint *)(iVar2 + 4);
+    psVar3 = psVar2->head;
     if (0 < iVar1) {
       do {
-        if (iVar4 == (int)param_2) {
-          return uVar3;
+        if (iVar4 == param_2) {
+          return psVar3;
         }
         iVar4 = iVar4 + 1;
-        uVar3 = uVar3 + 0x70;
+        psVar3 = psVar3 + 1;
       } while (iVar4 < iVar1);
     }
     if (iVar1 != 0) {
-      return (ulonglong)*(uint *)(iVar2 + 4);
+      return psVar2->head;
     }
   }
-  Com_Error(1,0xffffffff82176ea8,param_1,param_2);
-  return 0;
+  Com_Error(ERR_DROP,"SND_GetAliasWithOffset: could not find sound alias \'%s\' with offset %d");
+  return (snd_alias_t *)0x0;
 }
 
 
 // 825E72B8  Com_GetSoundFileName  (universal/com_sndalias.cpp:764)
 
-void Com_GetSoundFileName(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void Com_GetSoundFileName(snd_alias_t *param_1,char *param_2,int param_3)
 
 {
   char *pcVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_27();
+  iVar2 = __savegprlr_27(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x2ff,0,0xffffffff82000f98,0xffffffff8201d9d0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x2ff,0,"%s");
   }
   if (*(int *)(iVar2 + 0x14) == 0) {
-    MyAssertHandler(0xffffffff82176d90,0x300,0,0xffffffff82000f98,0xffffffff82176efc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_sndalias.cpp",
+                    0x300,0,"%s");
   }
   pcVar1 = *(char **)(iVar2 + 0x14);
   if (*pcVar1 == '\x01') {
-    I_strncpyz(param_2,**(undefined4 **)(pcVar1 + 4),param_3);
+    I_strncpyz(param_2,(char *)**(undefined4 **)(pcVar1 + 4),param_3);
     __restgprlr_27();
     return;
   }
   if (*pcVar1 == '\x03') {
-    Com_sprintf(param_2,param_3,0xffffffff82176ef0);
-    __restgprlr_27();
+    iVar2 = Com_sprintf(param_2,param_3,"voice data");
+    __restgprlr_27(iVar2);
     return;
   }
-  StreamFileNameGetName(pcVar1 + 4,param_2,param_3);
+  StreamFileNameGetName((StreamFileName *)(pcVar1 + 4),param_2,param_3);
   __restgprlr_27();
   return;
 }
@@ -298,51 +409,47 @@ void Com_GetSoundFileName(undefined8 param_1,undefined8 param_2,undefined8 param
 
 // 825E7398  Com_GetSoundAliasSeed  (universal/com_sndalias.cpp:1064)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-undefined4 Com_GetSoundAliasSeed(void)
+int Com_GetSoundAliasSeed(void)
 
 {
-  return _DAT_8404f1f4;
+  return g_sa.randSeed;
 }
 
 
 // 825E73A8  Com_SetSoundAliasSeed  (universal/com_sndalias.cpp:1070)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-void Com_SetSoundAliasSeed(undefined4 param_1)
+void Com_SetSoundAliasSeed(int param_1)
 
 {
-  _DAT_8404f1f4 = param_1;
+  g_sa.randSeed = param_1;
   return;
 }
 
 
 // 825E73B8  Com_SoundAliasRand  (universal/com_sndalias.cpp:1076)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-ushort Com_SoundAliasRand(void)
+int Com_SoundAliasRand(void)
 
 {
-  ushort uVar1;
-  int iVar2;
-  
-  _DAT_8404f1f4 = _DAT_8404f1f4 * 0x343fd + 0x269ec3;
-  iVar2 = _DAT_8404f1f4;
-  DAT_8404f1f4 = (ushort)((uint)_DAT_8404f1f4 >> 0x10);
-  uVar1 = DAT_8404f1f4 & 0x7fff;
-  _DAT_8404f1f4 = iVar2;
-  return uVar1;
+  g_sa.randSeed = g_sa.randSeed * 0x343fd + 0x269ec3;
+  return (uint)g_sa.randSeed >> 0x10 & 0x7fff;
 }
 
 
 // 825E73E8  Com_PickSoundAliasFromListInternal  (universal/com_sndalias.cpp:1083)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-void Com_PickSoundAliasFromListInternal(undefined8 param_1,ulonglong param_2)
+snd_alias_t * Com_PickSoundAliasFromListInternal(snd_alias_list_t *param_1,bool param_2)
 
 {
   float fVar1;
@@ -350,133 +457,141 @@ void Com_PickSoundAliasFromListInternal(undefined8 param_1,ulonglong param_2)
   ushort uVar3;
   undefined4 *puVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
+  snd_alias_t *psVar6;
+  ulonglong uVar7;
   int iVar8;
-  float *pfVar9;
-  float *pfVar10;
+  int iVar9;
+  int iVar10;
   float *pfVar11;
-  float fVar12;
+  float *pfVar12;
+  float *pfVar13;
+  float fVar14;
   
-  puVar4 = (undefined4 *)__savegprlr_29();
+  uVar7 = (ulonglong)param_2;
+  puVar4 = (undefined4 *)__savegprlr_29(param_1);
   if (puVar4 != (undefined4 *)0x0) {
-    iVar5 = DB_IsXAssetDefault(9,*puVar4);
+    iVar5 = DB_IsXAssetDefault(ASSET_TYPE_SOUND,(char *)*puVar4);
     if (iVar5 == 0) {
-      pfVar9 = (float *)puVar4[1];
-      pfVar11 = pfVar9 + 0x13;
-      fVar1 = *pfVar11;
-      fVar12 = pfVar9[6];
-      iVar6 = 1;
+      pfVar11 = (float *)puVar4[1];
+      pfVar13 = pfVar11 + 0x13;
+      fVar1 = *pfVar13;
+      fVar14 = pfVar11[6];
+      iVar8 = 1;
       iVar5 = 1;
-      pfVar10 = pfVar9 + 6;
-      iVar8 = _DAT_8404f1f4;
+      pfVar12 = pfVar11 + 6;
+      iVar10 = g_sa.randSeed;
       if (puVar4[2] != 1) {
         do {
-          iVar7 = iVar8 * 0x343fd;
-          fVar1 = pfVar10[0x29] + fVar1;
-          iVar8 = iVar8 * 0x343fd + 0x269ec3;
-          iVar7 = iVar7 + 0x269ec3;
-          DAT_8404f1f4 = (ushort)((uint)iVar7 >> 0x10);
-          if ((float)(DAT_8404f1f4 & 0x7fff) * fVar1 < pfVar10[0x29] * 32768.0) {
-            pfVar9 = pfVar10 + 0x16;
+          iVar9 = iVar10 * 0x343fd;
+          fVar1 = pfVar12[0x29] + fVar1;
+          iVar10 = iVar10 * 0x343fd + 0x269ec3;
+          iVar9 = iVar9 + 0x269ec3;
+          g_sa.randSeed._0_2_ = (ushort)((uint)iVar9 >> 0x10);
+          if ((float)(g_sa.randSeed._0_2_ & 0x7fff) * fVar1 < pfVar12[0x29] * 32768.0) {
+            pfVar11 = pfVar12 + 0x16;
           }
-          fVar2 = pfVar10[0x1c];
-          if ((int)fVar12 < (int)fVar2) {
-            fVar12 = fVar2;
+          fVar2 = pfVar12[0x1c];
+          if ((int)fVar14 < (int)fVar2) {
+            fVar14 = fVar2;
           }
           iVar5 = puVar4[2];
-          iVar6 = iVar6 + 1;
-          _DAT_8404f1f4 = iVar7;
-          pfVar10 = pfVar10 + 0x1c;
-        } while (iVar6 != iVar5);
+          iVar8 = iVar8 + 1;
+          g_sa.randSeed = iVar9;
+          pfVar12 = pfVar12 + 0x1c;
+        } while (iVar8 != iVar5);
       }
-      if ((2 < iVar5) && (fVar12 == pfVar9[6])) {
-        iVar6 = 0;
+      if ((2 < iVar5) && (fVar14 == pfVar11[6])) {
+        iVar8 = 0;
         fVar1 = 0.0;
-        iVar8 = _DAT_8404f1f4;
+        iVar10 = g_sa.randSeed;
         if (0 < iVar5) {
           do {
-            if (fVar12 != pfVar11[-0xd]) {
-              fVar1 = *pfVar11 + fVar1;
-              iVar8 = iVar8 * 0x343fd + 0x269ec3;
-              DAT_8404f1f4 = (ushort)((uint)iVar8 >> 0x10);
-              uVar3 = DAT_8404f1f4 & 0x7fff;
-              _DAT_8404f1f4 = iVar8;
-              if ((float)uVar3 * fVar1 < *pfVar11 * 32768.0) {
-                pfVar9 = pfVar11 + -0x13;
+            if (fVar14 != pfVar13[-0xd]) {
+              fVar1 = *pfVar13 + fVar1;
+              iVar10 = iVar10 * 0x343fd + 0x269ec3;
+              g_sa.randSeed._0_2_ = (ushort)((uint)iVar10 >> 0x10);
+              uVar3 = g_sa.randSeed._0_2_ & 0x7fff;
+              g_sa.randSeed = iVar10;
+              if ((float)uVar3 * fVar1 < *pfVar13 * 32768.0) {
+                pfVar11 = pfVar13 + -0x13;
               }
             }
-            iVar6 = iVar6 + 1;
-            pfVar11 = pfVar11 + 0x1c;
-          } while (iVar6 < (int)puVar4[2]);
+            iVar8 = iVar8 + 1;
+            pfVar13 = pfVar13 + 0x1c;
+          } while (iVar8 < (int)puVar4[2]);
         }
       }
-      pfVar9[6] = (float)((int)fVar12 + 1);
-      __restgprlr_29(pfVar9);
-      return;
+      pfVar11[6] = (float)((int)fVar14 + 1);
+      psVar6 = (snd_alias_t *)__restgprlr_29(pfVar11);
+      return psVar6;
     }
-    if ((param_2 & 0xff) != 0) {
-      Com_PrintWarning(9,0xffffffff82176f10,*puVar4);
+    if ((uVar7 & 0xff) != 0) {
+      Com_PrintWarning(9,"Sound not loaded: \"%s\"\n");
     }
   }
-  __restgprlr_29(0);
-  return;
+  psVar6 = (snd_alias_t *)__restgprlr_29(0);
+  return psVar6;
 }
 
 
 // 825E7598  Com_PickSoundAliasFromList  (universal/com_sndalias.cpp:1147)
 
-void Com_PickSoundAliasFromList(undefined8 param_1)
+snd_alias_t * Com_PickSoundAliasFromList(snd_alias_list_t *param_1)
 
 {
-  Com_PickSoundAliasFromListInternal(param_1,1);
-  return;
+  snd_alias_t *psVar1;
+  
+  psVar1 = Com_PickSoundAliasFromListInternal(param_1,true);
+  return psVar1;
 }
 
 
 // 825E75A0  Com_PickSoundAliasFromListNoError  (universal/com_sndalias.cpp:1153)
 
-void Com_PickSoundAliasFromListNoError(undefined8 param_1)
+snd_alias_t * Com_PickSoundAliasFromListNoError(snd_alias_list_t *param_1)
 
 {
-  Com_PickSoundAliasFromListInternal(param_1,0);
-  return;
+  snd_alias_t *psVar1;
+  
+  psVar1 = Com_PickSoundAliasFromListInternal(param_1,false);
+  return psVar1;
 }
 
 
 // 825E75A8  Com_PickSoundAlias  (universal/com_sndalias.cpp:1164)
 
-void Com_PickSoundAlias(void)
+snd_alias_t * Com_PickSoundAlias(char *param_1)
 
 {
-  undefined8 uVar1;
+  snd_alias_list_t *psVar1;
+  snd_alias_t *psVar2;
   
-  uVar1 = Com_FindSoundAlias_FastFile();
-  Com_PickSoundAliasFromListInternal(uVar1,1);
-  return;
+  psVar1 = Com_FindSoundAlias_FastFile(param_1);
+  psVar2 = Com_PickSoundAliasFromListInternal(psVar1,true);
+  return psVar2;
 }
 
 
 // 825E75D0  Com_AliasNameRefersToSingleAlias  (universal/com_sndalias.cpp:1173)
 
-bool Com_AliasNameRefersToSingleAlias(void)
+bool Com_AliasNameRefersToSingleAlias(char *param_1)
 
 {
-  int iVar1;
+  snd_alias_list_t *psVar1;
   
-  iVar1 = Com_FindSoundAlias_FastFile();
-  if (iVar1 == 0) {
+  psVar1 = Com_FindSoundAlias_FastFile(param_1);
+  if (psVar1 == (snd_alias_list_t *)0x0) {
     return false;
   }
-  return *(int *)(iVar1 + 8) == 1;
+  return psVar1->count == 1;
 }
 
 
 // 825E7628  Com_IsSoundAliasLooping  (universal/com_sndalias.cpp:1275)
 
-uint Com_IsSoundAliasLooping(int param_1)
+bool Com_IsSoundAliasLooping(snd_alias_list_t *param_1)
 
 {
-  return *(uint *)(*(int *)(param_1 + 4) + 0x3c) & 1;
+  return (bool)((byte)param_1->head->flags & 1);
 }
 

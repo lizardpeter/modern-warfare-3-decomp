@@ -2,24 +2,29 @@
 
 // 8275C848  R_DObjCalcPose  (gfx_d3d/r_model_pose.cpp:35)
 
-void R_DObjCalcPose(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
+DObjAnimMat * R_DObjCalcPose(GfxSceneEntity *param_1,DObj *param_2,int *param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
+  int iVar1;
+  DObj *pDVar2;
+  DObjAnimMat *pDVar3;
+  ulonglong uVar4;
+  int local_50;
+  int local_4c;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
   
-  iVar2 = __savegprlr_27();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821c9db8,0x27,0,0xffffffff82000f98,0xffffffff82016400);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",0x27
+                    ,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c9db8,0x28,0,0xffffffff82000f98,0xffffffff820040b4);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",0x28
+                    ,0,"%s");
   }
   local_50 = *param_3;
   local_4c = param_3[1];
@@ -27,68 +32,55 @@ void R_DObjCalcPose(undefined8 param_1,ulonglong param_2,undefined4 *param_3)
   local_44 = param_3[3];
   local_40 = param_3[4];
   local_3c = param_3[5];
-  DObjLock(param_2);
+  pDVar2 = (DObj *)uVar4;
+  DObjLock(pDVar2);
   Profile_Begin(0x139);
-  uVar1 = CG_DObjCalcPose(*(undefined4 *)(iVar2 + 0x70),param_2,&local_50);
-  Profile_EndInternal(0);
-  DObjUnlock(param_2);
-  __restgprlr_27(uVar1);
-  return;
+  pDVar3 = CG_DObjCalcPose(*(cpose_t **)(iVar1 + 0x70),pDVar2,&local_50);
+  Profile_EndInternal((double *)0x0);
+  DObjUnlock(pDVar2);
+  pDVar3 = (DObjAnimMat *)__restgprlr_27(pDVar3);
+  return pDVar3;
 }
 
 
 // 8275C928  R_SetNoDraw  (gfx_d3d/r_model_pose.cpp:73)
 
-void R_SetNoDraw(int param_1)
+void R_SetNoDraw(GfxSceneEntity *param_1,GfxSceneEntity *param_2)
 
 {
-  if (*(int *)(param_1 + 0x28) != 1) {
-    MyAssertHandler(0xffffffff821c9db8,0x4a,0,0xffffffff821bc2dc,0xffffffff821c9dfc,
-                    *(undefined4 *)(param_1 + 0x28));
+  if ((param_1->cull).state != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",0x4a
+                    ,0,"%s\n\t(sceneEnt->cull.state) = %i");
   }
   sync(1);
-  *(undefined4 *)(param_1 + 0x28) = 4;
+  (param_1->cull).state = 4;
   return;
 }
 
 
 // 8275C840  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 8275C990  R_UpdateSceneEntBounds_CheckEstimate  (gfx_d3d/r_model_pose.cpp:172)
 
-void R_UpdateSceneEntBounds_CheckEstimate(undefined8 param_1,uint param_2)
+void R_UpdateSceneEntBounds_CheckEstimate(GfxSceneEntity *param_1,Float4Bounds *param_2)
 
 {
   ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  longlong lVar2;
+  longlong lVar3;
   longlong lVar4;
-  undefined4 *puVar5;
-  char cVar6;
-  longlong lVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
+  bool bVar5;
+  longlong lVar6;
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
   float local_e0;
   float local_dc;
   float local_d8;
@@ -102,53 +94,40 @@ void R_UpdateSceneEntBounds_CheckEstimate(undefined8 param_1,uint param_2)
   float local_b0;
   float local_ac;
   
+  lVar2 = (longlong)(int)param_1;
   uVar1 = ZEXT48(&stack0x00000000);
-  iVar3 = __savefpr();
-  lVar4 = uVar1 - 0xc4;
-  puVar5 = (undefined4 *)(iVar3 + 0x28);
-  lVar7 = 6;
+  __savefpr();
+  lVar3 = uVar1 - 0xc4;
+  lVar4 = lVar2 + 0x28;
+  lVar6 = 6;
   do {
-    puVar5 = puVar5 + 1;
     lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = *puVar5;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  auVar23 = *(undefined1 (*) [16])(param_2 & 0xfffffff0);
-  auVar22 = vectorSplatWord(auVar23,0);
-  auVar21 = vectorSplatWord(auVar23,1);
-  auVar23 = vectorSplatWord(auVar23,2);
-  storeVectorElementWordIndexed(auVar22,uVar1 - 0xe0);
-  storeVectorElementWordIndexed(auVar21,uVar1 - 0xdc);
-  storeVectorElementWordIndexed(auVar23,uVar1 - 0xd8);
-  auVar22 = *(undefined1 (*) [16])(param_2 + 0x10 & 0xfffffff0);
-  auVar23 = vectorSplatWord(auVar22,0);
-  auVar21 = vectorSplatWord(auVar22,1);
-  storeVectorElementWordIndexed(auVar23,uVar1 - 0xd4);
-  auVar23 = vectorSplatWord(auVar22,2);
-  storeVectorElementWordIndexed(auVar21,uVar1 - 0xd0);
-  storeVectorElementWordIndexed(auVar23,uVar1 - 0xcc);
-  cVar6 = '\0';
+    lVar3 = lVar3 + 4;
+    *(undefined4 *)lVar3 = *(undefined4 *)lVar4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  auVar9 = *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0);
+  auVar8 = vectorSplatWord(auVar9,0);
+  auVar7 = vectorSplatWord(auVar9,1);
+  auVar9 = vectorSplatWord(auVar9,2);
+  storeVectorElementWordIndexed(auVar8,uVar1 - 0xe0);
+  storeVectorElementWordIndexed(auVar7,uVar1 - 0xdc);
+  storeVectorElementWordIndexed(auVar9,uVar1 - 0xd8);
+  auVar8 = *(undefined1 (*) [16])((uint)&param_2->halfSize & 0xfffffff0);
+  auVar9 = vectorSplatWord(auVar8,0);
+  auVar7 = vectorSplatWord(auVar8,1);
+  storeVectorElementWordIndexed(auVar9,uVar1 - 0xd4);
+  auVar9 = vectorSplatWord(auVar8,2);
+  storeVectorElementWordIndexed(auVar7,uVar1 - 0xd0);
+  storeVectorElementWordIndexed(auVar9,uVar1 - 0xcc);
+  bVar5 = false;
   if ((ABS(local_c0 - local_e0) <= local_b4 * 1.2 - local_d4) &&
-     (cVar6 = '\0', ABS(local_bc - local_dc) <= local_b0 * 1.2 - local_d0)) {
-    cVar6 = '\x01' - (local_ac * 1.2 - local_cc < ABS(local_b8 - local_d8));
+     (bVar5 = false, ABS(local_bc - local_dc) <= local_b0 * 1.2 - local_d0)) {
+    bVar5 = ABS(local_b8 - local_d8) <= local_ac * 1.2 - local_cc;
   }
-  if (cVar6 == '\0') {
-    dVar20 = (double)(local_c0 - local_b4);
-    dVar19 = (double)(local_bc - local_b0);
-    dVar18 = (double)(local_b8 - local_ac);
-    dVar17 = (double)(local_b4 + local_c0);
-    dVar16 = (double)(local_b0 + local_bc);
-    dVar15 = (double)(local_ac + local_b8);
-    dVar14 = (double)(local_e0 - local_d4);
-    dVar13 = (double)(float)(dVar14 - dVar20);
-    dVar12 = (double)(float)((double)(local_dc - local_d0) - dVar19);
-    dVar11 = (double)(float)((double)(local_d8 - local_cc) - dVar18);
-    dVar10 = (double)(float)(dVar17 - (double)(local_d4 + local_e0));
-    dVar9 = (double)(float)(dVar16 - (double)(local_d0 + local_dc));
-    dVar8 = (double)(float)(dVar15 - (double)(local_cc + local_d8));
-    uVar2 = DObjGetName(*(undefined4 *)(iVar3 + 0x6c));
-    R_WarnOncePerFrame(dVar13,dVar12,dVar11,dVar10,dVar9,dVar8,dVar20,dVar19,dVar18,dVar17,dVar16,
-                       dVar15,dVar14,0x41,uVar2,dVar13,dVar12,dVar11,dVar10,dVar9,dVar8);
+  if (!bVar5) {
+    DObjGetName(*(DObj **)((int)lVar2 + 0x6c));
+    R_WarnOncePerFrame(R_WARN_ESTIMATED_BOUNDS_TOO_SMALL);
   }
   __restfpr();
   return;
@@ -157,252 +136,310 @@ void R_UpdateSceneEntBounds_CheckEstimate(undefined8 param_1,uint param_2)
 
 // 8275CBF8  R_ScaleBounds  (gfx_d3d/r_model_pose.cpp:211)
 
-void R_ScaleBounds(int param_1)
+void R_ScaleBounds(Float4Bounds *param_1,float param_2)
 
 {
   undefined1 auVar1 [16];
   
   auVar1 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x1c);
   auVar1 = vectorSplatWord(auVar1,0);
-  auVar1 = vectorMultiplyFloatingPoint(auVar1,*(undefined1 (*) [16])(param_1 + 0x10U & 0xfffffff0));
-  *(undefined1 (*) [16])(param_1 + 0x10U & 0xfffffff0) = auVar1;
+  auVar1 = vectorMultiplyFloatingPoint
+                     (auVar1,*(undefined1 (*) [16])((uint)&param_1->halfSize & 0xfffffff0));
+  *(undefined1 (*) [16])((uint)&param_1->halfSize & 0xfffffff0) = auVar1;
   return;
 }
 
 
 // 8275CC20  R_UpdateSceneEntBounds  (gfx_d3d/r_model_pose.cpp:218)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
-void R_UpdateSceneEntBounds(undefined8 param_1,int *param_2,int *param_3,int param_4)
+DObjAnimMat *
+R_UpdateSceneEntBounds(GfxSceneEntity *param_1,GfxSceneEntity **param_2,DObj **param_3,int param_4)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint *puVar9;
-  ulonglong uVar10;
-  uint *puVar11;
-  uint *puVar12;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  uint uVar5;
+  DObj *pDVar6;
+  uint uVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  __vector4_u_0 _Var12;
+  __vector4_u_0 _Var13;
+  ulonglong uVar14;
+  DObjAnimMat *pDVar15;
+  int iVar16;
+  DObj *pDVar17;
+  ulonglong uVar18;
+  longlong lVar19;
+  uint *puVar20;
+  GfxSceneEntity *pGVar21;
+  ulonglong uVar22;
+  int iVar23;
+  XBoneInfo **ppXVar24;
+  float *pfVar25;
   char in_RESERVE;
   byte in_cr0;
-  double dVar13;
-  undefined1 auVar14 [16];
-  undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
-  undefined1 auVar17 [16];
-  undefined1 auVar18 [16];
-  undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 local_460 [16];
-  undefined1 local_450 [16];
-  undefined1 local_440 [16];
-  undefined1 local_430 [16];
-  uint auStack_420 [8];
-  undefined1 local_400 [16];
-  undefined1 local_3f0 [16];
-  uint local_3e0 [248];
+  double dVar26;
+  double dVar27;
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  __vector4_u_0 _Var31;
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  undefined1 auVar37 [16];
+  undefined1 auVar38 [16];
+  undefined1 auVar39 [16];
+  undefined1 auVar40 [16];
+  __vector4_u_0 _Var41;
+  __vector4_u_0 _Var42;
+  undefined1 auStack_420 [32];
+  Float4Bounds local_400;
+  XBoneInfo *local_3e0 [248];
   
-  __savegprlr_15();
-  uVar3 = __savefpr_27();
-  lVar8 = uVar3 + 0x28;
+  __savegprlr_15(param_1);
+  uVar14 = __savefpr_27();
+  lVar19 = uVar14 + 0x28;
   do {
-    puVar9 = (uint *)lVar8;
-    uVar1 = *puVar9;
-    if (uVar1 != 0) {
+    puVar20 = (uint *)lVar19;
+    uVar5 = *puVar20;
+    if (uVar5 != 0) {
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar8);
-        *puVar9 = uVar2;
+        uVar7 = storeWordConditionalIndexed((ulonglong)uVar5,0,lVar19);
+        *puVar20 = uVar7;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed(1,0,lVar8);
-      *puVar9 = uVar2;
+      uVar7 = storeWordConditionalIndexed(1,0,lVar19);
+      *puVar20 = uVar7;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar6 = (int)uVar3;
-  if (uVar1 == 0) {
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff821c9db8,0x111,0,0xffffffff82000f98,0xffffffff821bc334);
+  pGVar21 = (GfxSceneEntity *)uVar14;
+  if (uVar5 == 0) {
+    if ((uVar14 & 0xffffffff) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                      0x111,0,"%s");
     }
-    *param_2 = iVar6;
-    if (*(int *)(iVar6 + 0x6c) == 0) {
-      MyAssertHandler(0xffffffff821c9db8,0x114,0,0xffffffff82000f98,0xffffffff821c9ec4);
+    *param_2 = pGVar21;
+    if (pGVar21->obj == (DObj *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                      0x114,0,"%s");
     }
-    iVar6 = *(int *)(iVar6 + 0x6c);
-    *param_3 = iVar6;
-    if (iVar6 == 0) {
-      MyAssertHandler(0xffffffff821c9db8,0x117,0,0xffffffff82000f98,0xffffffff820040b4);
+    pDVar6 = pGVar21->obj;
+    *param_3 = pDVar6;
+    if (pDVar6 == (DObj *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                      0x117,0,"%s");
     }
-    iVar4 = DObjGetSurfacesWithCollision(iVar6,auStack_420,uVar3 + 0x48);
-    if (iVar4 != 0) {
-      iVar4 = R_DObjCalcPose(uVar3,iVar6,auStack_420);
-      if (iVar4 != 0) {
-        iVar5 = DObjSkelAreBonesUpToDate(iVar6,auStack_420);
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff821c9db8,0x137,0,0xffffffff82000f98,0xffffffff821c9e98);
-        }
-        auVar27 = vectorSplatImmediateSignedWord(0);
-        auVar17 = _DAT_8217a010;
-        DObjGetBoneInfo(iVar6,local_3e0);
-        iVar6 = DObjNumBones(iVar6);
-        uVar10 = 0xffffffff80000000;
-        iVar5 = 0;
-        dVar13 = 1.0;
-        if (0 < iVar6) {
-          puVar11 = local_3e0;
-          puVar12 = (uint *)(iVar4 + 4);
-          auVar16 = _DAT_8217a060;
-          do {
-            if ((auStack_420[iVar5 >> 5] & uVar10) != 0) {
-              if (((((puVar12[-1] & 0x7f800000) == 0x7f800000) ||
-                   ((*puVar12 & 0x7f800000) == 0x7f800000)) ||
-                  ((puVar12[1] & 0x7f800000) == 0x7f800000)) ||
-                 ((puVar12[2] & 0x7f800000) == 0x7f800000)) {
-                MyAssertHandler(0xffffffff820656f0,0x22e,0,0xffffffff82000f98,0xffffffff820159f0);
-                auVar16 = _DAT_8217a060;
-              }
-              if ((puVar12[6] & 0x7f800000) == 0x7f800000) {
-                MyAssertHandler(0xffffffff820656f0,0x22f,0,0xffffffff82000f98,0xffffffff820159d4);
-                auVar16 = _DAT_8217a060;
-              }
-              uVar7 = (ulonglong)*puVar11;
-              auVar26 = loadVectorLeftIndexed(uVar7);
-              auVar25 = loadVectorRightIndexed(uVar7 + 0x10);
-              auVar24 = vectorSplatImmediateSignedWord(0xff);
-              auVar26 = auVar26 | auVar25;
-              auVar25 = loadVectorRightIndexed(uVar7 + 0x1c);
-              auVar23 = loadVectorLeftIndexed(uVar7 + 0xc);
-              auVar23 = auVar23 | auVar25;
-              auVar22 = vectorShiftLeftWord128(auVar24,auVar24);
-              auVar21 = vectorShiftLeftWord128(auVar24,auVar24);
-              auVar20 = vectorSplatWord(auVar23,0);
-              auVar19 = vectorShiftLeftWord128(auVar24,auVar24);
-              auVar25 = vectorSplatWord(auVar26,0);
-              auVar18 = vectorShiftLeftWord128(auVar24,auVar24);
-              auVar15 = vectorSplatWord(auVar23,1);
-              auVar14 = vectorSplatWord(auVar26,1);
-              auVar24 = vectorSplatWord(auVar23,2);
-              auVar23 = vectorSplatWord(auVar26,2);
-              auVar25 = vectorMultiplyAddFloatingPoint(auVar25,local_460,local_430);
-              auVar20 = vectorMultiplyFloatingPoint(auVar20,local_460 & ~auVar22);
-              auVar25 = vectorMultiplyAddFloatingPoint(auVar14,local_450,auVar25);
-              auVar14 = vectorMultiplyAddFloatingPoint(auVar15,local_450 & ~auVar21,auVar20);
-              auVar20 = vectorMultiplyAddFloatingPoint(auVar23,local_440,auVar25);
-              auVar25 = vectorMultiplyAddFloatingPoint(auVar24,local_440 & ~auVar19,auVar14);
-              auVar20 = vectorSubtractFloatingPoint128(auVar20,auVar27);
-              auVar17 = vectorSubtractFloatingPoint128(auVar25,auVar17);
-              auVar23 = vectorMinimumFloatingPoint128(auVar20,auVar17);
-              auVar17 = vectorMaximumFloatingPoint128(auVar20,auVar17 ^ auVar18);
-              auVar20 = vectorAddFloatingPoint128(auVar17,auVar23);
-              auVar17 = vectorSubtractFloatingPoint128(auVar17,auVar23);
-              auVar27 = vectorMultiplyAddFloatingPoint128(auVar20,auVar16,auVar27);
-              auVar17 = vectorMultiplyAddFloatingPoint128(auVar17,auVar16,auVar25);
-            }
-            iVar5 = iVar5 + 1;
-            puVar12 = puVar12 + 8;
-            puVar11 = puVar11 + 1;
-            uVar10 = (uVar10 & 1) << 0x1f | (uVar10 & 0xffffffff) >> 1;
-            local_400 = auVar27;
-            local_3f0 = auVar17;
-          } while (iVar5 < iVar6);
-        }
-        if (*(char *)(DAT_845aa8c8 + 0xc) != '\0') {
-          R_UpdateSceneEntBounds_CheckEstimate(uVar3,local_400);
-        }
-        if ((double)*(float *)((ulonglong)DAT_845aa87c + 0xc) != dVar13) {
-          auVar16 = loadVectorLeftIndexed((ulonglong)DAT_845aa87c + 0xc);
-          auVar16 = vectorSplatWord(auVar16,0);
-          auVar17 = vectorMultiplyFloatingPoint(auVar16,auVar17);
-        }
-        auVar23 = vectorSplatWord(auVar27,0);
-        auVar20 = vectorSplatWord(auVar27,1);
-        auVar25 = vectorSplatWord(auVar27,2);
-        auVar16 = vectorSplatWord(auVar17,0);
-        auVar27 = vectorSplatWord(auVar17,1);
-        auVar17 = vectorSplatWord(auVar17,2);
-        storeVectorElementWordIndexed(auVar23,uVar3 + 0x2c);
-        storeVectorElementWordIndexed(auVar20,uVar3 + 0x30);
-        storeVectorElementWordIndexed(auVar25,uVar3 + 0x34);
-        storeVectorElementWordIndexed(auVar16,uVar3 + 0x38);
-        storeVectorElementWordIndexed(auVar27,uVar3 + 0x3c);
-        storeVectorElementWordIndexed(auVar17,uVar3 + 0x40);
-        if (*puVar9 != 1) {
-          MyAssertHandler(0xffffffff821c9db8,0x15d,0,0xffffffff821c9e34,0xffffffff821c9e5c,*puVar9,4
-                         );
-        }
-        sync(1);
-        *puVar9 = 2;
-        goto LAB_8275d264;
+    pDVar17 = (DObj *)auStack_420;
+    iVar16 = DObjGetSurfacesWithCollision(pDVar6,(int *)pDVar17,pGVar21->lods);
+    if ((iVar16 != 0) &&
+       (pDVar17 = pDVar6, pDVar15 = R_DObjCalcPose(pGVar21,pDVar6,(int *)auStack_420),
+       pDVar15 != (DObjAnimMat *)0x0)) {
+      iVar16 = DObjSkelAreBonesUpToDate(pDVar6,(int *)auStack_420);
+      if (iVar16 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                        0x137,0,"%s");
       }
+      _Var42 = (__vector4_u_0)vectorSplatImmediateSignedWord(0);
+      local_400.halfSize.field0_0x0._s_2 = g_worldMins.field0_0x0;
+      _Var41 = g_worldMins.field0_0x0;
+      local_400.midPoint.field0_0x0 = _Var42;
+      DObjGetBoneInfo(pDVar6,local_3e0);
+      iVar16 = DObjNumBones(pDVar6);
+      uVar22 = 0xffffffff80000000;
+      iVar23 = 0;
+      dVar27 = 1.0;
+      _Var12 = local_400.midPoint.field0_0x0;
+      _Var13 = local_400.halfSize.field0_0x0;
+      if (0 < iVar16) {
+        dVar26 = 0.0;
+        ppXVar24 = local_3e0;
+        pfVar25 = pDVar15->quat + 1;
+        _Var31 = g_oneHalf.field0_0x0;
+        do {
+          if ((*(uint *)(auStack_420 + (iVar23 >> 5) * 4) & uVar22) != 0) {
+            if ((((((uint)((DObjAnimMat *)(pfVar25 + -1))->quat[0] & 0x7f800000) == 0x7f800000) ||
+                 (((uint)*pfVar25 & 0x7f800000) == 0x7f800000)) ||
+                (((uint)pfVar25[1] & 0x7f800000) == 0x7f800000)) ||
+               (((uint)pfVar25[2] & 0x7f800000) == 0x7f800000)) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                              ,0x22e,0,"%s");
+              _Var31 = g_oneHalf.field0_0x0;
+            }
+            if (((uint)pfVar25[6] & 0x7f800000) == 0x7f800000) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
+                              ,0x22f,0,"%s");
+              _Var31 = g_oneHalf.field0_0x0;
+            }
+            fVar1 = pfVar25[1];
+            fVar2 = pfVar25[6];
+            uVar18 = ZEXT48(*ppXVar24);
+            fVar3 = *pfVar25;
+            fVar10 = fVar3 * fVar2;
+            fVar11 = ((DObjAnimMat *)(pfVar25 + -1))->quat[0] * fVar2;
+            fVar4 = pfVar25[2];
+            auVar40 = loadVectorLeftIndexed(uVar18);
+            auVar39 = loadVectorRightIndexed(uVar18 + 0x10);
+            auVar38 = vectorSplatImmediateSignedWord(0xff);
+            auVar40 = auVar40 | auVar39;
+            fVar8 = fVar1 * fVar1 * fVar2;
+            auVar37 = loadVectorRightIndexed(uVar18 + 0x1c);
+            auVar39 = loadVectorLeftIndexed(uVar18 + 0xc);
+            fVar9 = ((DObjAnimMat *)(pfVar25 + -1))->quat[0] * fVar11;
+            auVar39 = auVar39 | auVar37;
+            fVar2 = fVar4 * fVar1 * fVar2;
+            auVar36 = vectorShiftLeftWord128(auVar38,auVar38);
+            auVar35 = vectorShiftLeftWord128(auVar38,auVar38);
+            auVar34 = vectorSplatWord(auVar39,0);
+            auVar33 = vectorShiftLeftWord128(auVar38,auVar38);
+            auVar37 = vectorSplatWord(auVar40,0);
+            auVar32 = vectorShiftLeftWord128(auVar38,auVar38);
+            auVar30 = vectorSplatWord(auVar39,1);
+            auVar29 = vectorSplatWord(auVar40,1);
+            auVar28 = vectorSplatWord(auVar39,2);
+            auVar38 = vectorSplatWord(auVar40,2);
+            auVar39._0_4_ = (float)(dVar27 - (double)(fVar8 + fVar3 * fVar10));
+            auVar39._4_4_ = fVar2 + fVar3 * fVar11;
+            auVar39._8_4_ = fVar1 * fVar11 - fVar4 * fVar10;
+            auVar39._12_4_ = (float)dVar26;
+            auVar40._0_4_ = pfVar25[3] + scene.def.viewOffset[0];
+            auVar40._4_4_ = pfVar25[4] + scene.def.viewOffset[1];
+            auVar40._8_4_ = pfVar25[5] + scene.def.viewOffset[2];
+            auVar40._12_4_ = (float)dVar27;
+            auVar40 = vectorMultiplyAddFloatingPoint(auVar37,auVar39,auVar40);
+            auVar36 = vectorMultiplyFloatingPoint(auVar34,auVar39 & ~auVar36);
+            auVar37._0_4_ = fVar3 * fVar11 - fVar2;
+            auVar37._4_4_ = (float)(dVar27 - (double)(fVar8 + fVar9));
+            auVar37._8_4_ = fVar1 * fVar10 + fVar4 * fVar11;
+            auVar37._12_4_ = (float)dVar26;
+            auVar34._0_4_ = fVar4 * fVar10 + fVar1 * fVar11;
+            auVar34._4_4_ = fVar1 * fVar10 - fVar4 * fVar11;
+            auVar34._8_4_ = (float)(dVar27 - (double)(fVar3 * fVar10 + fVar9));
+            auVar34._12_4_ = (float)dVar26;
+            auVar39 = vectorMultiplyAddFloatingPoint(auVar29,auVar37,auVar40);
+            auVar40 = vectorMultiplyAddFloatingPoint(auVar30,auVar37 & ~auVar35,auVar36);
+            auVar37 = vectorMultiplyAddFloatingPoint(auVar38,auVar34,auVar39);
+            auVar39 = vectorMultiplyAddFloatingPoint(auVar28,auVar34 & ~auVar33,auVar40);
+            auVar34 = vectorSubtractFloatingPoint128(auVar37,(undefined1  [16])_Var42);
+            auVar37 = vectorSubtractFloatingPoint128(auVar39,(undefined1  [16])_Var41);
+            auVar40 = vectorMinimumFloatingPoint128(auVar34,auVar37);
+            auVar37 = vectorMaximumFloatingPoint128(auVar34,auVar37 ^ auVar32);
+            auVar34 = vectorAddFloatingPoint128(auVar37,auVar40);
+            auVar37 = vectorSubtractFloatingPoint128(auVar37,auVar40);
+            _Var42.vector4_f32 =
+                 (float  [4])
+                 vectorMultiplyAddFloatingPoint128(auVar34,_Var31.vector4_f32,_Var42.vector4_f32);
+            _Var41.vector4_f32 =
+                 (float  [4])vectorMultiplyAddFloatingPoint128(auVar37,_Var31.vector4_f32,auVar39);
+          }
+          iVar23 = iVar23 + 1;
+          pfVar25 = pfVar25 + 8;
+          ppXVar24 = ppXVar24 + 1;
+          uVar22 = (uVar22 & 1) << 0x1f | (uVar22 & 0xffffffff) >> 1;
+          _Var12 = _Var42;
+          _Var13 = _Var41;
+        } while (iVar23 < iVar16);
+      }
+      local_400.halfSize.field0_0x0 = _Var13;
+      local_400.midPoint.field0_0x0 = _Var12;
+      if ((r_warnBounds->current).enabled != false) {
+        R_UpdateSceneEntBounds_CheckEstimate(pGVar21,&local_400);
+      }
+      if ((double)*(float *)(ZEXT48(r_scaleBounds) + 0xc) != dVar27) {
+        auVar39 = loadVectorLeftIndexed(ZEXT48(r_scaleBounds) + 0xc);
+        auVar39 = vectorSplatWord(auVar39,0);
+        _Var41.vector4_f32 = (float  [4])vectorMultiplyFloatingPoint(auVar39,_Var41.vector4_f32);
+      }
+      auVar38 = vectorSplatWord((undefined1  [16])_Var42,0);
+      auVar36 = vectorSplatWord((undefined1  [16])_Var42,1);
+      auVar40 = vectorSplatWord((undefined1  [16])_Var42,2);
+      auVar34 = vectorSplatWord((undefined1  [16])_Var41,0);
+      auVar37 = vectorSplatWord((undefined1  [16])_Var41,1);
+      auVar39 = vectorSplatWord((undefined1  [16])_Var41,2);
+      storeVectorElementWordIndexed(auVar38,uVar14 + 0x2c);
+      storeVectorElementWordIndexed(auVar36,uVar14 + 0x30);
+      storeVectorElementWordIndexed(auVar40,uVar14 + 0x34);
+      storeVectorElementWordIndexed(auVar34,uVar14 + 0x38);
+      storeVectorElementWordIndexed(auVar37,uVar14 + 0x3c);
+      storeVectorElementWordIndexed(auVar39,uVar14 + 0x40);
+      if (*puVar20 != 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                        0x15d,0,"%s\n\t(localSceneEnt->cull.state) = %i");
+      }
+      sync(1);
+      *puVar20 = 2;
+      goto LAB_8275d264;
     }
-    R_SetNoDraw(uVar3);
+    R_SetNoDraw(pGVar21,(GfxSceneEntity *)pDVar17);
   }
   else {
-    *param_2 = 0;
+    *param_2 = (GfxSceneEntity *)0x0;
     if (param_4 != 0) {
       while( true ) {
-        uVar1 = *puVar9;
-        if (uVar1 == 0) {
-          MyAssertHandler(0xffffffff821c9db8,0xf5,0,0xffffffff8215b66c,0xffffffff821c9ed8,0);
+        uVar5 = *puVar20;
+        if (uVar5 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp"
+                          ,0xf5,0,"%s\n\t(state) = %i");
         }
-        if (uVar1 != 1) break;
+        if (uVar5 != 1) break;
         Sys_Sleep(0);
       }
-      if (uVar1 != 4) {
-        *param_2 = iVar6;
-        iVar6 = *(int *)(iVar6 + 0x6c);
-        *param_3 = iVar6;
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff821c9db8,0x104,0,0xffffffff82000f98,0xffffffff820040b4);
+      if (uVar5 != 4) {
+        *param_2 = pGVar21;
+        pDVar6 = pGVar21->obj;
+        *param_3 = pDVar6;
+        if (pDVar6 == (DObj *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp"
+                          ,0x104,0,"%s");
         }
-        iVar4 = I_dmaGetDObjSkel(iVar6);
-        if (iVar4 == 0) {
-          MyAssertHandler(0xffffffff821c9db8,0x10c,0,0xffffffff82000f98,0xffffffff8219c0a4);
+        pDVar15 = I_dmaGetDObjSkel(pDVar6);
+        if (pDVar15 == (DObjAnimMat *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp"
+                          ,0x10c,0,"%s");
         }
         goto LAB_8275d264;
       }
     }
   }
-  iVar4 = 0;
+  pDVar15 = (DObjAnimMat *)0x0;
 LAB_8275d264:
-  __restfpr_27(iVar4);
-  __restgprlr_15();
-  return;
+  __restfpr_27(pDVar15);
+  pDVar15 = (DObjAnimMat *)__restgprlr_15();
+  return pDVar15;
 }
 
 
 // 8275D288  R_UpdateGfxEntityBoundsCmd  (gfx_d3d/r_model_pose.cpp:369)
 
-void R_UpdateGfxEntityBoundsCmd(void)
+void R_UpdateGfxEntityBoundsCmd(void *param_1)
 
 {
   undefined4 *puVar1;
-  int iVar2;
-  int local_30;
-  undefined1 auStack_2c [44];
+  DObjAnimMat *pDVar2;
+  GfxSceneEntity *local_30;
+  DObj *apDStack_2c [11];
   
-  puVar1 = (undefined4 *)__savegprlr_29();
+  puVar1 = (undefined4 *)__savegprlr_29(param_1);
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821c9db8,0x177,0,0xffffffff82000f98,0xffffffff8201f49c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                    0x177,0,"%s");
   }
-  iVar2 = R_UpdateSceneEntBounds(*puVar1,&local_30,auStack_2c,0);
-  if ((iVar2 != 0) && (local_30 == 0)) {
-    MyAssertHandler(0xffffffff821c9db8,0x17e,0,0xffffffff82000f98,0xffffffff821bc334);
+  pDVar2 = R_UpdateSceneEntBounds((GfxSceneEntity *)*puVar1,&local_30,apDStack_2c,0);
+  if ((pDVar2 != (DObjAnimMat *)0x0) && (local_30 == (GfxSceneEntity *)0x0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_pose.cpp",
+                    0x17e,0,"%s");
   }
   __restgprlr_29();
   return;

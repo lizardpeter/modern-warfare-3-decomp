@@ -2,25 +2,28 @@
 
 // 82359840  CL_DrawEstrangedClientName  (client_mp/cl_voice_debug.cpp:36)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void CL_DrawEstrangedClientName
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+               (ScreenPlacement *param_1,SessionData *param_2,LocalClientNum_t param_3,int param_4,
+               int param_5)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
   int iVar2;
-  longlong lVar3;
-  undefined1 auStack_60 [96];
+  char acStack_60 [96];
   
-  uVar1 = __savegprlr_29();
-  iVar2 = CL_GetClientName(param_2,param_3,auStack_60,0x40);
+  pSVar1 = (ScreenPlacement *)__savegprlr_29(param_1);
+  iVar2 = CL_GetClientName((LocalClientNum_t)param_2,param_3,acStack_60,0x40);
   if (iVar2 == 0) {
-    Com_sprintf(auStack_60,0x40,0xffffffff820385f8,param_3);
+    Com_sprintf(acStack_60,0x40,"client %i");
   }
-  lVar3 = (longlong)*(int *)(DAT_82b3fa34 + 0xc) * (longlong)(param_4 + 1);
-  CL_DrawText((double)*(float *)(DAT_82b3f858 + 0xc),
-              (double)((float)(longlong)(int)lVar3 + *(float *)(DAT_82b3f858 + 0x10)),
-              (double)*(float *)(DAT_82b3fa30 + 0xc),(double)*(float *)(DAT_82b3fa30 + 0xc),uVar1,
-              auStack_60,0x7fffffff,DAT_82a39350,lVar3,DAT_82b3fa30,1,1);
+  iVar2 = (estrangedClientHeight->current).integer * (param_4 + 1);
+  CL_DrawText(pSVar1,acStack_60,0x7fffffff,cgMedia.smallDevFont,(estrangedClientPos->current).value,
+              (float)(longlong)iVar2 + (estrangedClientPos->current).vector[1],iVar2,
+              (int)estrangedClientSize,(estrangedClientSize->current).value,
+              (estrangedClientSize->current).value,(float *)0x1,1);
   __restgprlr_29();
   return;
 }
@@ -28,61 +31,66 @@ void CL_DrawEstrangedClientName
 
 // 82359920  CL_DrawClientsWeCantTalkTo  (client_mp/cl_voice_debug.cpp:57)
 
-void CL_DrawClientsWeCantTalkTo(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void CL_DrawClientsWeCantTalkTo(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  longlong lVar7;
-  longlong lVar8;
+  SessionData *pSVar1;
+  SessionData *pSVar2;
+  bool bVar7;
+  int iVar3;
+  ScreenPlacement *pSVar4;
+  LocalClientNum_t LVar5;
+  connstate_t cVar6;
+  undefined8 in_r7;
+  int iVar8;
+  LocalClientNum_t LVar9;
   
-  uVar1 = __savegprlr_20();
-  lVar7 = 0;
-  if (*(char *)(DAT_82b3f85c + 0xc) != '\0') {
-    uVar2 = Live_GetCurrentSession();
-    cVar6 = Live_IsSignedIn(param_2);
-    if ((cVar6 != '\0') &&
-       ((*(char *)(DAT_82aa1af8 + 0xc) != '\0' ||
-        ((iVar5 = CL_IsLocalClientInGame(uVar1), iVar5 != 0 &&
-         (*(char *)(DAT_82aa1ae4 + 0xc) != '\0')))))) {
-      uVar3 = ScrPlace_GetActivePlacement(uVar1);
-      if (DAT_82a39350 == 0) {
-        DAT_82a39350 = CL_RegisterFont(0xffffffff82013870,1);
+  pSVar1 = (SessionData *)__savegprlr_20(param_1);
+  iVar8 = 0;
+  if ((estrangedClientList->current).enabled != false) {
+    pSVar2 = Live_GetCurrentSession();
+    bVar7 = Live_IsSignedIn(param_2);
+    if ((bVar7) &&
+       (((onlinegame->current).enabled != false ||
+        ((iVar3 = CL_IsLocalClientInGame((LocalClientNum_t)pSVar1), iVar3 != 0 &&
+         ((systemlink->current).enabled != false)))))) {
+      pSVar4 = ScrPlace_GetActivePlacement((LocalClientNum_t)pSVar1);
+      if (cgMedia.smallDevFont == (Font_s *)0x0) {
+        cgMedia.smallDevFont = CL_RegisterFont("fonts/smalldevfont",1);
       }
-      uVar4 = Live_GetOurClientNum(param_2,uVar2);
-      if ((int)uVar4 < 0) {
-        iVar5 = CL_GetLocalClientConnectionState(uVar1);
-        if ((iVar5 < 3) || (cVar6 = CL_Demo_IsPlaying(uVar1), cVar6 == '\0')) {
-          CL_DrawText((double)*(float *)(DAT_82b3f858 + 0xc),(double)*(float *)(DAT_82b3f858 + 0x10)
-                      ,(double)*(float *)(DAT_82b3fa30 + 0xc),(double)*(float *)(DAT_82b3fa30 + 0xc)
-                      ,uVar3,0xffffffff8203861c,0x7fffffff,DAT_82a39350,0xffffffff82040000,
-                      DAT_82b3fa30,1,1);
+      LVar5 = Live_GetOurClientNum(param_2,pSVar2);
+      if ((int)LVar5 < 0) {
+        cVar6 = CL_GetLocalClientConnectionState((LocalClientNum_t)pSVar1);
+        if (((int)cVar6 < 3) || (bVar7 = CL_Demo_IsPlaying((LocalClientNum_t)pSVar1), !bVar7)) {
+          CL_DrawText(pSVar4,"We don\'t know our client num",0x7fffffff,cgMedia.smallDevFont,
+                      (estrangedClientPos->current).value,(estrangedClientPos->current).vector[1],
+                      -0x7dfc0000,(int)estrangedClientSize,(estrangedClientSize->current).value,
+                      (estrangedClientSize->current).value,(float *)0x1,1);
           __restgprlr_20();
           return;
         }
       }
       else {
-        lVar8 = 0;
+        LVar9 = LOCAL_CLIENT_0;
         do {
-          cVar6 = Session_IsUserRegistered(uVar2,lVar8);
-          if (((cVar6 != '\0') && ((int)uVar4 != (int)lVar8)) &&
-             (iVar5 = CL_CanWeConnectToClient(uVar2,uVar4,lVar8), iVar5 == 0)) {
-            if ((int)lVar7 == 0) {
-              CL_DrawText((double)*(float *)(DAT_82b3f858 + 0xc),
-                          (double)*(float *)(DAT_82b3f858 + 0x10),
-                          (double)*(float *)(DAT_82b3fa30 + 0xc),
-                          (double)*(float *)(DAT_82b3fa30 + 0xc),uVar3,0xffffffff82038604,0x7fffffff
-                          ,DAT_82a39350);
+          bVar7 = Session_IsUserRegistered(pSVar2,LVar9);
+          if (((bVar7) && (LVar5 != LVar9)) &&
+             (iVar3 = CL_CanWeConnectToClient(pSVar2,LVar5,LVar9), iVar3 == 0)) {
+            if (iVar8 == 0) {
+              CL_DrawText(pSVar4,"Can\'t get packets to:",0x7fffffff,cgMedia.smallDevFont,
+                          (estrangedClientPos->current).value,
+                          (estrangedClientPos->current).vector[1],(int)in_r7,
+                          (int)estrangedClientSize,(estrangedClientSize->current).value,
+                          (estrangedClientSize->current).value,(float *)0x1,1);
             }
-            CL_DrawEstrangedClientName(uVar3,uVar1,lVar8,lVar7);
-            lVar7 = lVar7 + 1;
+            CL_DrawEstrangedClientName(pSVar4,pSVar1,LVar9,iVar8,(int)in_r7);
+            iVar8 = iVar8 + 1;
           }
-          lVar8 = lVar8 + 1;
-        } while ((int)lVar8 < 0x12);
+          LVar9 = LVar9 + LOCAL_CLIENT_1;
+        } while ((int)LVar9 < 0x12);
       }
     }
   }

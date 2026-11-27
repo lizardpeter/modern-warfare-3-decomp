@@ -2,21 +2,21 @@
 
 // 827B70C0  jpeg_abort  (jpeg-6/jcomapi.c:30)
 
-void jpeg_abort(int param_1)
+void jpeg_abort(jpeg_common_struct *param_1)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   
-  if (*(int *)(param_1 + 4) != 0) {
-    (**(code **)(*(int *)(param_1 + 4) + 0x24))(param_1,1);
-    if (*(char *)(param_1 + 0x10) == '\0') {
-      uVar1 = 100;
+  if (param_1->mem != (jpeg_memory_mgr *)0x0) {
+    (*param_1->mem->free_pool)(param_1,1);
+    if (param_1->is_decompressor == '\0') {
+      iVar1 = 100;
     }
     else {
-      uVar1 = 200;
-      *(undefined4 *)(param_1 + 0x114) = 0;
+      iVar1 = 200;
+      param_1[8].global_state = 0;
     }
-    *(undefined4 *)(param_1 + 0x14) = uVar1;
+    param_1->global_state = iVar1;
   }
   return;
 }
@@ -24,40 +24,40 @@ void jpeg_abort(int param_1)
 
 // 827B7128  jpeg_destroy  (jpeg-6/jcomapi.c:70)
 
-void jpeg_destroy(int param_1)
+void jpeg_destroy(jpeg_common_struct *param_1)
 
 {
-  if (*(int *)(param_1 + 4) != 0) {
-    (**(code **)(*(int *)(param_1 + 4) + 0x28))();
+  if (param_1->mem != (jpeg_memory_mgr *)0x0) {
+    (*param_1->mem->self_destruct)(param_1);
   }
-  *(undefined4 *)(param_1 + 4) = 0;
-  *(undefined4 *)(param_1 + 0x14) = 0;
+  param_1->mem = (jpeg_memory_mgr *)0x0;
+  param_1->global_state = 0;
   return;
 }
 
 
 // 827B7178  jpeg_alloc_quant_table  (jpeg-6/jcomapi.c:87)
 
-void jpeg_alloc_quant_table(int param_1)
+JQUANT_TBL * jpeg_alloc_quant_table(jpeg_common_struct *param_1)
 
 {
-  int iVar1;
+  JQUANT_TBL *pJVar1;
   
-  iVar1 = (*(code *)**(undefined4 **)(param_1 + 4))(param_1,0,0x82);
-  *(undefined1 *)(iVar1 + 0x80) = 0;
-  return;
+  pJVar1 = (*param_1->mem->alloc_small)(param_1,0,0x82);
+  pJVar1->sent_table = '\0';
+  return pJVar1;
 }
 
 
 // 827B71B8  jpeg_alloc_huff_table  (jpeg-6/jcomapi.c:99)
 
-void jpeg_alloc_huff_table(int param_1)
+JHUFF_TBL * jpeg_alloc_huff_table(jpeg_common_struct *param_1)
 
 {
-  int iVar1;
+  JHUFF_TBL *pJVar1;
   
-  iVar1 = (*(code *)**(undefined4 **)(param_1 + 4))(param_1,0,0x112);
-  *(undefined1 *)(iVar1 + 0x111) = 0;
-  return;
+  pJVar1 = (*param_1->mem->alloc_small)(param_1,0,0x112);
+  pJVar1->sent_table = '\0';
+  return pJVar1;
 }
 

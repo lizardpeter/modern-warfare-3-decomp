@@ -3,18 +3,19 @@
 // 828B5AE8  XapiInitDebugHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapidebugheap.c:21)
 
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
-bool XapiInitDebugHeap(void)
+int XapiInitDebugHeap(void)
 
 {
   ulonglong uVar1;
   undefined8 *puVar2;
   longlong lVar3;
   undefined8 uStack_48;
-  undefined4 local_40 [12];
+  _RTL_HEAP_PARAMETERS local_40;
   
   if ((_DAT_00000156 & 0x10) == 0) {
-    uVar1 = (ulonglong)DAT_84897d4c;
+    uVar1 = ZEXT48(XapiDebugHeap);
   }
   else {
     puVar2 = &uStack_48;
@@ -24,13 +25,13 @@ bool XapiInitDebugHeap(void)
       *puVar2 = 0;
       lVar3 = lVar3 + -1;
     } while (lVar3 != 0);
-    uVar1 = (ulonglong)DAT_84897d4c;
-    local_40[0] = 0x30;
+    uVar1 = ZEXT48(XapiDebugHeap);
+    local_40.Length = 0x30;
     if (uVar1 == 0) {
-      uVar1 = RtlCreateHeap(0xc1002,0,0x100000,0x1000,0,local_40);
-      DAT_84897d4c = (uint)uVar1;
+      XapiDebugHeap = RtlCreateHeap(0xc1002,(void *)0x0,0x100000,0x1000,(void *)0x0,&local_40);
+      uVar1 = (ulonglong)(int)XapiDebugHeap;
     }
   }
-  return uVar1 != 0;
+  return (uint)(uVar1 != 0);
 }
 

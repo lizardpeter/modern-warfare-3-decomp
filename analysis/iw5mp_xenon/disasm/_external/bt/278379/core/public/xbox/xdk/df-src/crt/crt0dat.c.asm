@@ -157,7 +157,7 @@ LAB_8291ac54:
   8291AA8C  7D8803A6             mtspr LR,r12
   8291AA90  4E800020             blr
 
-; 8291AA98  initterm  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:620)
+; 8291AA98  _initterm  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:620)
   8291AA98  7D8802A6             mfspr r12,LR
   8291AA9C  9181FFF8             stw r12,-0x8(r1)
   8291AAA0  FBC1FFE8             std r30,-0x18(r1)

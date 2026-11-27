@@ -2,24 +2,26 @@
 
 // 828C38E8  XHVResamplerProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/xhvsrc.c:118)
 
-ulonglong XHVResamplerProcess(int param_1,undefined2 *param_2,undefined2 *param_3,ulonglong param_4,
-                             uint param_5)
+uint XHVResamplerProcess(XHVRESAMPLER *param_1,short *param_2,short *param_3,ulong param_4,
+                        ulong param_5)
 
 {
   ushort uVar1;
-  uint uVar2;
-  short *psVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
-  double *pdVar6;
-  undefined2 *puVar7;
-  uint uVar8;
+  short *psVar2;
+  ulonglong uVar3;
+  ushort *puVar4;
+  double *pdVar5;
+  uint uVar6;
+  short *psVar7;
+  ulong uVar8;
   ulonglong uVar9;
-  undefined8 *puVar10;
+  double *pdVar10;
   ulonglong uVar11;
-  longlong lVar12;
-  double dVar13;
+  ulonglong uVar12;
+  longlong lVar13;
+  double dVar14;
   
+  uVar11 = (ulonglong)(int)param_4;
   uVar9 = 1;
   if (param_5 == 0) {
     uVar9 = 2;
@@ -30,61 +32,59 @@ ulonglong XHVResamplerProcess(int param_1,undefined2 *param_2,undefined2 *param_
         return 0;
       }
       uVar9 = 6;
-      puVar10 = &DAT_829afaa0;
+      pdVar10 = SIXTH_COEFFICIENTS;
       goto LAB_828c3964;
     }
-    if ((param_4 & 0xffffffff) != 0) {
-      param_3 = param_3 + -1;
-      uVar4 = param_4;
-      puVar7 = param_2;
+    if (param_4 != 0) {
+      psVar2 = param_3 + -1;
+      psVar7 = param_2;
       do {
-        param_3 = param_3 + 1;
-        *puVar7 = *param_3;
-        puVar7[1] = 0;
-        puVar7 = puVar7 + 2;
-        uVar4 = uVar4 - 1;
-      } while (uVar4 != 0);
+        psVar2 = psVar2 + 1;
+        *psVar7 = *psVar2;
+        psVar7[1] = 0;
+        psVar7 = psVar7 + 2;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
     }
-    param_4 = (param_4 & 0x7fffffff) << 1;
+    uVar11 = ((ulonglong)param_4 & 0x7fffffff) << 1;
     param_3 = param_2;
   }
-  puVar10 = (undefined8 *)0x829af9a0;
+  pdVar10 = HALF_COEFFICIENTS;
 LAB_828c3964:
-  uVar4 = 0;
-  if ((param_4 & 0xffffffff) != 0) {
-    puVar5 = param_2 + -1;
-    psVar3 = param_3 + -1;
+  uVar3 = 0;
+  if ((uVar11 & 0xffffffff) != 0) {
+    puVar4 = (ushort *)(param_2 + -1);
+    psVar2 = param_3 + -1;
     do {
       if (uVar9 != 0) {
-        uVar4 = uVar4 + uVar9;
-        uVar11 = uVar9;
+        uVar3 = uVar3 + uVar9;
+        uVar12 = uVar9;
         do {
-          psVar3 = psVar3 + 1;
-          *(double *)(*(int *)(param_1 + 0x100) * 8 + param_1) =
-               (double)(longlong)*psVar3 * 1.41421356;
-          *(uint *)(param_1 + 0x100) = *(int *)(param_1 + 0x100) + 1U & 0x1f;
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+          psVar2 = psVar2 + 1;
+          param_1->PreviousSamples[param_1->Offset] = (double)(longlong)*psVar2 * 1.41421356;
+          param_1->Offset = param_1->Offset + 1 & 0x1f;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
       }
-      uVar8 = *(uint *)(param_1 + 0x100);
-      pdVar6 = (double *)(puVar10 + -1);
-      lVar12 = 0x20;
-      dVar13 = 0.0;
+      uVar8 = param_1->Offset;
+      pdVar5 = pdVar10 + -1;
+      lVar13 = 0x20;
+      dVar14 = 0.0;
       do {
-        uVar2 = uVar8 & 0x1f;
-        pdVar6 = pdVar6 + 1;
+        uVar6 = uVar8 & 0x1f;
+        pdVar5 = pdVar5 + 1;
         uVar8 = uVar8 + 1;
-        dVar13 = *(double *)(uVar2 * 8 + param_1) * *pdVar6 + dVar13;
-        lVar12 = lVar12 + -1;
-      } while (lVar12 != 0);
-      uVar8 = (int)((int)dVar13 - 0x7fffU) >> 0x10;
-      uVar8 = uVar8 & (int)dVar13 | ~uVar8 & 0x7fff;
-      uVar1 = (ushort)(uVar8 + 0x8000 >> 0x10);
-      puVar5 = puVar5 + 1;
-      *puVar5 = (ushort)uVar8 & ~uVar1 | uVar1 & 0x8000;
-    } while ((uVar4 & 0xffffffff) < (param_4 & 0xffffffff));
+        dVar14 = param_1->PreviousSamples[uVar6] * *pdVar5 + dVar14;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      uVar6 = (int)((int)dVar14 - 0x7fffU) >> 0x10;
+      uVar6 = uVar6 & (int)dVar14 | ~uVar6 & 0x7fff;
+      uVar1 = (ushort)(uVar6 + 0x8000 >> 0x10);
+      puVar4 = puVar4 + 1;
+      *puVar4 = (ushort)uVar6 & ~uVar1 | uVar1 & 0x8000;
+    } while ((uVar3 & 0xffffffff) < (uVar11 & 0xffffffff));
   }
   trapWord(6,uVar9,0);
-  return (uVar4 & 0xffffffff) / uVar9;
+  return (uint)((uVar3 & 0xffffffff) / uVar9);
 }
 

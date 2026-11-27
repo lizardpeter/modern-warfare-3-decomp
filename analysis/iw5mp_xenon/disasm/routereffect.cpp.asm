@@ -78,7 +78,7 @@ LAB_828d32ac:
   828D32C4  38210080             addi r1,r1,0x80
   828D32C8  4804343C             b 0x82916704
 
-; 828D24B8  XAUDIO::CRouterEffect::AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:122)
+; 828D24B8  AddRef  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:122)
   828D24B8  81230008             lwz r9,0x8(r3)
   828D24BC  7C6B1B78             or r11,r3,r3
   828D24C0  39430004             addi r10,r3,0x4
@@ -86,7 +86,7 @@ LAB_828d32ac:
   828D24C8  906B0008             stw r3,0x8(r11)
   828D24CC  4E800020             blr
 
-; 828D24D0  XAUDIO::CRouterEffect::Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:127)
+; 828D24D0  Release  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:127)
   828D24D0  7D8802A6             mfspr r12,LR
   828D24D4  9181FFF8             stw r12,-0x8(r1)
   828D24D8  9421FFA0             stwu r1,-0x60(r1)
@@ -107,7 +107,7 @@ LAB_828d2508:
   828D2510  7D8803A6             mtspr LR,r12
   828D2514  4E800020             blr
 
-; 828D2518  XAUDIO::CRouterEffect::GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:132)
+; 828D2518  GetInfo  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:132)
   828D2518  39600006             li r11,0x6
   828D251C  39400000             li r10,0x0
   828D2520  99640000             stb r11,0x0(r4)
@@ -115,40 +115,40 @@ LAB_828d2508:
   828D2528  B1440002             sth r10,0x2(r4)
   828D252C  4E800020             blr
 
-; 828D2530  XAUDIO::CRouterEffect::GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:140)
+; 828D2530  GetContext  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:140)
   828D2530  8163000C             lwz r11,0xc(r3)
   828D2534  38600000             li r3,0x0
   828D2538  91640000             stw r11,0x0(r4)
   828D253C  4E800020             blr
 
-; 828D2540  XAUDIO::CRouterEffect::GetMode  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:145)
+; 828D2540  GetMode  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:145)
   828D2540  8963001A             lbz r11,0x1a(r3)
   828D2544  38600000             li r3,0x0
   828D2548  99640000             stb r11,0x0(r4)
   828D254C  4E800020             blr
 
-; 828D2550  XAUDIO::CRouterEffect::SetMode  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:151)
+; 828D2550  SetMode  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:151)
   828D2550  9883001A             stb r4,0x1a(r3)
   828D2554  38600000             li r3,0x0
   828D2558  4E800020             blr
 
-; 828D2560  XAUDIO::CRouterEffect::SetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:158)
+; 828D2560  SetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:158)
   828D2560  81630000             lwz r11,0x0(r3)
   828D2564  38A00000             li r5,0x0
   828D2568  814B0038             lwz r10,0x38(r11)
   828D256C  7D4903A6             mtspr CTR,r10
   828D2570  4E800420             bctr
 
-; 828D31B0  XAUDIO::CRouterEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:163)
+; 828D31B0  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:163)
   828D31B0  3963FFFC             subi r11,r3,0x4
   828D31B4  91640000             stw r11,0x0(r4)
   828D31B8  4E800020             blr
 
-; 828D2578  XAUDIO::CRouterEffect::QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:168)
+; 828D2578  QueryInterface  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.h:168)
   828D2578  90640000             stw r3,0x0(r4)
   828D257C  4E800020             blr
 
-; 828D2580  XAUDIO::CRouterEffect::Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:170)
+; 828D2580  Initialize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:170)
   828D2580  7D8802A6             mfspr r12,LR
   828D2584  9181FFF8             stw r12,-0x8(r1)
   828D2588  FBC1FFE8             std r30,-0x18(r1)
@@ -203,7 +203,7 @@ LAB_828d2630:
   828D2640  EBE1FFF0             ld r31,-0x10(r1)
   828D2644  4E800020             blr
 
-; 828D2328  XAUDIO::CRouterEffect::GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:214)
+; 828D2328  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:214)
   828D2328  7D8802A6             mfspr r12,LR
   828D232C  9181FFF8             stw r12,-0x8(r1)
   828D2330  FBE1FFF0             std r31,-0x10(r1)
@@ -273,7 +273,7 @@ LAB_828d2414:
   828D2420  EBE1FFF0             ld r31,-0x10(r1)
   828D2424  4E800020             blr
 
-; 828D2428  XAUDIO::CRouterEffect::SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:268)
+; 828D2428  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:268)
   828D2428  548B063E             rlwinm r11,r4,0x0,0x18,0x1f
   828D242C  2B0B0001             cmplwi cr6,r11,0x1
   828D2430  409A0024             bne cr6,0x828d2454
@@ -313,7 +313,7 @@ LAB_828d24a8:
   828D24AC  60630057             ori r3,r3,0x57
   828D24B0  4E800020             blr
 
-; 828D2648  XAUDIO::CRouterEffect::GetChannelMap  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:317)
+; 828D2648  GetChannelMap  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:317)
   828D2648  7D8802A6             mfspr r12,LR
   828D264C  48044061             bl 0x829166ac
   828D2650  9421FF70             stwu r1,-0x90(r1)
@@ -407,7 +407,7 @@ LAB_828d2794:
   828D2798  38210090             addi r1,r1,0x90
   828D279C  48043F60             b 0x829166fc
 
-; 828D27A0  XAUDIO::CRouterEffect::SetChannelMap  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:372)
+; 828D27A0  SetChannelMap  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:372)
   828D27A0  7D8802A6             mfspr r12,LR
   828D27A4  48043F11             bl 0x829166b4
   828D27A8  9421FF80             stwu r1,-0x80(r1)
@@ -576,7 +576,7 @@ LAB_828d29f8:
   828D29FC  38210080             addi r1,r1,0x80
   828D2A00  48043D04             b 0x82916704
 
-; 828D2A08  XAUDIO::CRouterEffect::GetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:447)
+; 828D2A08  GetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:447)
   828D2A08  7D8802A6             mfspr r12,LR
   828D2A0C  48043CA9             bl 0x829166b4
   828D2A10  9421FF80             stwu r1,-0x80(r1)
@@ -661,7 +661,7 @@ LAB_828d2b2c:
   828D2B30  38210080             addi r1,r1,0x80
   828D2B34  48043BD0             b 0x82916704
 
-; 828D2B38  XAUDIO::CRouterEffect::SetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:493)
+; 828D2B38  SetChannelVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:493)
   828D2B38  7D8802A6             mfspr r12,LR
   828D2B3C  48043B75             bl 0x829166b0
   828D2B40  9421FF70             stwu r1,-0x90(r1)
@@ -791,7 +791,7 @@ LAB_828d2d04:
   828D2D0C  38210090             addi r1,r1,0x90
   828D2D10  480439F0             b 0x82916700
 
-; 828D2E00  XAUDIO::CRouterEffect::Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:545)
+; 828D2E00  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/routereffect.cpp:545)
   828D2E00  7D8802A6             mfspr r12,LR
   828D2E04  480438A9             bl 0x829166ac
   828D2E08  DBC1FFB0             stfd f30,-0x50(r1)
@@ -1089,23 +1089,23 @@ LAB_828d2d9c:
   828D2DF4  4200FFA8             bdnz 0x828d2d9c
   828D2DF8  4E800020             blr
 
-; 828D31A8  [thunk]:XAUDIO::CRouterEffect::`vector_deleting_destructor'  (line unknown)
+; 828D31A8  `vector_deleting_destructor'`adjustor{4}'  (line unknown)
   828D31A8  3863FFFC             subi r3,r3,0x4
   828D31AC  4800002C             b 0x828d31d8
 
-; 828D31C0  [thunk]:XAUDIO::CRouterEffect::Release`adjustor{4}'  (line unknown)
+; 828D31C0  Release`adjustor{4}'  (line unknown)
   828D31C0  3863FFFC             subi r3,r3,0x4
   828D31C4  4BFFF30C             b 0x828d24d0
 
-; 828D31C8  [thunk]:XAUDIO::CRouterEffect::GetContext`adjustor{4}'  (line unknown)
+; 828D31C8  GetContext`adjustor{4}'  (line unknown)
   828D31C8  3863FFFC             subi r3,r3,0x4
   828D31CC  4BFFF364             b 0x828d2530
 
-; 828D31D0  [thunk]:XAUDIO::CRouterEffect::AddRef`adjustor{4}'  (line unknown)
+; 828D31D0  AddRef`adjustor{4}'  (line unknown)
   828D31D0  3863FFFC             subi r3,r3,0x4
   828D31D4  4BFFF2E4             b 0x828d24b8
 
-; 828D31D8  XAUDIO::CRouterEffect::`scalar_deleting_destructor'  (line unknown)
+; 828D31D8  `scalar_deleting_destructor'  (line unknown)
   828D31D8  3D608220             lis r11,-0x7de0
   828D31DC  3D408220             lis r10,-0x7de0
   828D31E0  392B73D0             addi r9,r11,0x73d0

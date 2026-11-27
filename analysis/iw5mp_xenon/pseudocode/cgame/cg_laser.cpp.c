@@ -2,40 +2,80 @@
 
 // 822D45A0  CG_LaserRegisterDvars  (cgame/cg_laser.cpp:51)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_LaserRegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  ushort uVar1;
+  char *pcVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
   __savegprlr_28();
   __savefpr_28();
-  DAT_82a22d70 = Dvar_RegisterBool(0xffffffff820189f0,0,4,0xffffffff82018a00);
-  uVar4 = 0x47efffffe0000000;
-  uVar1 = 0x3ff0000000000000;
-  uVar2 = 0x4097700000000000;
-  DAT_82a22d50 = Dvar_RegisterFloat(0x4097700000000000,0x3ff0000000000000,0x47efffffe0000000,
-                                    0xffffffff820189bc);
-  DAT_82a22d68 = Dvar_RegisterFloat(uVar2,uVar1,uVar4,0xffffffff82018978);
-  uVar3 = 0x3f50624de0000000;
-  DAT_82a22d60 = Dvar_RegisterFloat(0x3fe99999a0000000,0x3f50624de0000000,uVar4,0xffffffff82018948);
-  DAT_82a22d4c = Dvar_RegisterBool(0xffffffff820188f4,1,0,0xffffffff82018900);
-  DAT_82a22d7c = Dvar_RegisterBool(0xffffffff820188d4,0,0,0xffffffff82018858);
-  uVar2 = 0xc7efffffe0000000;
-  DAT_82a22d6c = Dvar_RegisterFloat(0x402e000000000000,0xc7efffffe0000000,uVar4,0xffffffff820187ec);
-  DAT_82a22d64 = Dvar_RegisterFloat(0x4008000000000000,uVar3,uVar4,0xffffffff820187a0);
-  DAT_82a22d48 = Dvar_RegisterFloat(0x402a000000000000,uVar2,uVar4,0xffffffff82018734);
-  DAT_82a22d84 = Dvar_RegisterFloat(0xc008000000000000,uVar2,uVar4,0xffffffff82018720);
-  DAT_82a22d40 = Dvar_RegisterFloat(0x3fe0000000000000,uVar2,uVar4,0xffffffff82018694);
-  uVar2 = 0;
-  DAT_82a22d80 = Dvar_RegisterFloat(0x3fc99999a0000000,0,uVar4,0xffffffff82018650);
-  DAT_82a22d78 = Dvar_RegisterBool(0xffffffff82018618,0,4,0xffffffff82018624);
-  DAT_82a22d5c = Dvar_RegisterFloat(0x40b3880000000000,uVar1,uVar4,0xffffffff82018608);
-  DAT_82a22d58 = Dvar_RegisterFloat(0x403e000000000000,uVar3,uVar4,0xffffffff820185f8);
-  DAT_82a22d54 = Dvar_RegisterFloat(0x4059000000000000,uVar3,uVar4,0xffffffff820185e0);
-  DAT_82a22d44 = Dvar_RegisterFloat(uVar2,uVar2,uVar4,0xffffffff820185cc);
+  laserForceOn = Dvar_RegisterBool("laserForceOn",false,4,
+                                   "Force laser sights on in all possible places (for debug purposes)."
+                                  );
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  dVar7 = 3.4028234663852886e+38;
+  dVar4 = 1.0;
+  dVar5 = 1500.0;
+  laserRange = Dvar_RegisterFloat("laserRange",1500.0,1.0,3.4028235e+38,0,
+                                  "the motion tracker after being detected");
+  laserRangePlayer =
+       Dvar_RegisterFloat("laserRangePlayer",(float)dVar5,(float)dVar4,(float)dVar7,uVar1,pcVar2);
+  dVar6 = 0.0010000000474974513;
+  laserRadius = Dvar_RegisterFloat("laserRadius",0.8,0.001,(float)dVar7,0,
+                                   IMAGE_DOS_HEADER_82000000.e_magic);
+  laserLight = Dvar_RegisterBool("laserLight",true,0,
+                                 "Whether to draw the light emitted from a laser (not the laser itself)"
+                                );
+  pcVar2 = (char *)0x0;
+  laserLightWithoutNightvision =
+       Dvar_RegisterBool("laserLightWithoutNightvision",false,0,
+                         "Whether to draw the light emitted from a laser (not the laser itself) when nightvision is off. Player always gets light."
+                        );
+  dVar5 = -3.4028234663852886e+38;
+  laserLightBodyTweak =
+       Dvar_RegisterFloat("laserLightBodyTweak",15.0,-3.4028235e+38,(float)dVar7,0,pcVar2);
+  laserLightRadius =
+       Dvar_RegisterFloat("laserLightRadius",3.0,(float)dVar6,(float)dVar7,0,
+                          s_centerPrint[3].text + 0x1dc);
+  pcVar2 = "the motion tracker after being detected";
+  uVar1 = 0;
+  laserLightBeginOffset =
+       Dvar_RegisterFloat("laserLightBeginOffset",13.0,(float)dVar5,(float)dVar7,0,
+                          "the motion tracker after being detected");
+  laserLightEndOffset =
+       Dvar_RegisterFloat("laserLightEndOffset",-3.0,(float)dVar5,(float)dVar7,uVar1,pcVar2);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  laserEndOffset =
+       Dvar_RegisterFloat("laserEndOffset",0.5,(float)dVar5,(float)dVar7,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  dVar5 = 0.0;
+  laserFlarePct = Dvar_RegisterFloat("laserFlarePct",0.2,0.0,(float)dVar7,uVar1,pIVar3->e_magic);
+  uVar1 = 0;
+  pcVar2 = &DAT_00000004;
+  laserDebug = Dvar_RegisterBool("laserDebug",false,4,"Enables the display of various debug info.");
+  laserRange_alt =
+       Dvar_RegisterFloat("laserRange_alt",5000.0,(float)dVar4,(float)dVar7,uVar1,pcVar2);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  laserRadius_alt =
+       Dvar_RegisterFloat("laserRadius_alt",30.0,(float)dVar6,(float)dVar7,0,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  laserLightRadius_alt =
+       Dvar_RegisterFloat("laserLightRadius_alt",100.0,(float)dVar6,(float)dVar7,uVar1,
+                          pIVar3->e_magic);
+  laserFlarePct_alt =
+       Dvar_RegisterFloat("laserFlarePct_alt",(float)dVar5,(float)dVar5,(float)dVar7,uVar1,
+                          pIVar3->e_magic);
   __restfpr_28();
   __restgprlr_28();
   return;
@@ -44,162 +84,158 @@ void CG_LaserRegisterDvars(void)
 
 // 822D48F0  CG_LaserForceOnEnabled  (cgame/cg_laser.cpp:76)
 
-undefined1 CG_LaserForceOnEnabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CG_LaserForceOnEnabled(void)
 
 {
-  return *(undefined1 *)(DAT_82a22d70 + 0xc);
+  return (laserForceOn->current).enabled;
 }
 
 
 // 822D4900  UseAltLaser  (cgame/cg_laser.cpp:86)
 
-uint UseAltLaser(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool UseAltLaser(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(uint *)(iVar1 + 0x10) >> 2 & 1;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  return (bool)((byte)((uint)(pcVar1->predictedPlayerState).otherFlags >> 2) & 1);
 }
 
 
 // 822D4928  AddCore  (cgame/cg_laser.cpp:108)
 
-void AddCore(undefined8 param_1,int param_2,float *param_3,float *param_4,undefined8 param_5,
-            int param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void AddCore(LocalClientNum_t param_1,centity_s *param_2,orientation_t *param_3,float *param_4,
+            LaserOwnerEnum param_5,LaserLightEnum param_6)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  uint uVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  float fVar4;
+  uint uVar5;
+  LocalClientNum_t LVar6;
+  cg_s *pcVar7;
+  int iVar8;
+  dvar_t *pdVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   float local_120;
   float local_11c;
   float local_118;
   float local_110;
   float local_10c;
   float local_108;
-  float local_100;
-  float local_fc;
-  float local_f8;
-  float local_f4;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  undefined4 local_e4;
-  undefined4 local_e0;
+  FxPostLight local_100;
   longlong local_d8;
-  undefined1 local_d0 [4];
-  float local_cc;
-  float local_c8;
-  float local_c4;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  undefined4 local_b4;
-  uint local_b0;
-  float local_a0;
-  undefined4 local_9c;
-  undefined1 local_98;
-  float local_94;
-  float local_90 [5];
-  uint local_7c;
-  char local_61;
+  FxBeam local_d0;
+  trace_t local_90 [2];
   
-  __savegprlr_24();
-  iVar5 = CG_GetLocalClientGlobals();
-  uVar4 = *(uint *)(iVar5 + 0x10) >> 2 & 1;
+  LVar6 = __savegprlr_24(param_1);
+  pcVar7 = CG_GetLocalClientGlobals(LVar6);
+  uVar5 = (uint)(pcVar7->predictedPlayerState).otherFlags >> 2 & 1;
   Com_Memset(local_90,0,0x34);
-  iVar5 = DAT_82a22d68;
-  if ((int)param_5 != 1) {
-    if ((int)param_5 != 0) {
-      MyAssertHandler(0xffffffff82018ad4,0x87,0,0xffffffff82018a6c,0xffffffff82018a88,param_5);
+  pdVar9 = laserRangePlayer;
+  if (param_5 != LASER_OWNER_PLAYER) {
+    if (param_5 != LASER_OWNER_NON_PLAYER) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_laser.cpp",0x87,0,
+                      "%s\n\t(laserOwner) = %i");
     }
-    iVar5 = DAT_82a22d50;
-    if (uVar4 != 0) {
-      iVar5 = DAT_82a22d5c;
+    pdVar9 = laserRange;
+    if (uVar5 != 0) {
+      pdVar9 = laserRange_alt;
     }
   }
-  dVar7 = (double)*(float *)(iVar5 + 0xc);
-  local_110 = *param_3;
-  local_10c = param_3[1];
-  local_108 = param_3[2];
-  local_120 = (float)(dVar7 * (double)param_3[3] + (double)local_110);
-  local_11c = (float)((double)param_3[4] * dVar7 + (double)local_10c);
-  local_118 = (float)((double)param_3[5] * dVar7 + (double)local_108);
-  CG_TraceCapsule(local_90,&local_110,&local_120,0xffffffff82174a3c,*(undefined4 *)(param_2 + 0xc4),
+  dVar11 = (double)(pdVar9->current).value;
+  local_110 = param_3->origin[0];
+  local_10c = param_3->origin[1];
+  local_108 = param_3->origin[2];
+  local_120 = (float)(dVar11 * (double)param_3->axis[0][0] + (double)local_110);
+  local_11c = (float)((double)param_3->axis[0][1] * dVar11 + (double)local_10c);
+  local_118 = (float)((double)param_3->axis[0][2] * dVar11 + (double)local_108);
+  CG_TraceCapsule(local_90,&local_110,&local_120,&bounds_origin,(param_2->nextState).number,
                   0x2806861);
-  if (local_61 == '\0') {
-    dVar6 = (double)local_90[0];
-    dVar7 = (double)(float)(dVar6 * dVar7);
-    local_d0[0] = 1;
-    fVar1 = (float)(dVar7 - (double)*(float *)(DAT_82a22d40 + 0xc));
-    local_120 = fVar1 * param_3[3] + *param_3;
-    local_11c = param_3[4] * fVar1 + param_3[1];
-    local_118 = param_3[5] * fVar1 + param_3[2];
-    if (1.000100016593933 < dVar6) {
-      MyAssertHandler(0xffffffff82018ad4,0x9b,0,0xffffffff82000f98,0xffffffff82018a44);
-      dVar6 = (double)local_90[0];
+  if (local_90[0].startsolid == false) {
+    dVar10 = (double)local_90[0].fraction;
+    dVar11 = (double)(float)(dVar10 * dVar11);
+    local_d0.type = '\x01';
+    fVar1 = (float)(dVar11 - (double)(laserEndOffset->current).value);
+    local_120 = fVar1 * param_3->axis[0][0] + param_3->origin[0];
+    local_11c = param_3->axis[0][1] * fVar1 + param_3->origin[1];
+    local_118 = param_3->axis[0][2] * fVar1 + param_3->origin[2];
+    if (1.000100016593933 < dVar10) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_laser.cpp",0x9b,0,
+                      "%s");
+      dVar10 = (double)local_90[0].fraction;
     }
-    dVar8 = 1.0;
-    local_cc = local_110;
-    local_c8 = local_10c;
-    local_c4 = local_108;
-    local_c0 = local_120;
-    local_bc = local_11c;
-    local_b8 = local_118;
-    iVar5 = (int)((float)(1.0 - dVar6) * 255.0);
-    local_d8 = (longlong)iVar5;
-    iVar5 = ClampInt(iVar5,0,0xff);
-    local_b0 = iVar5 << 0x18 | 0xffffff;
-    local_b4 = 0xffffffff;
-    iVar5 = DAT_82a22d80;
-    if (uVar4 != 0) {
-      iVar5 = DAT_82a22d44;
+    dVar12 = 1.0;
+    local_d0.begin[0] = local_110;
+    local_d0.begin[1] = local_10c;
+    local_d0.begin[2] = local_108;
+    local_d0.end[0] = local_120;
+    local_d0.end[1] = local_11c;
+    local_d0.end[2] = local_118;
+    iVar8 = (int)((float)(1.0 - dVar10) * 255.0);
+    local_d8 = (longlong)iVar8;
+    iVar8 = ClampInt(iVar8,0,0xff);
+    local_d0.colors[1].packed = iVar8 << 0x18 | 0xffffff;
+    local_d0.colors[0].packed = 0xffffffff;
+    pdVar9 = laserFlarePct;
+    if (uVar5 != 0) {
+      pdVar9 = laserFlarePct_alt;
     }
-    dVar6 = (double)(float)((double)(*(float *)(iVar5 + 0xc) *
-                                    SQRT((*param_4 - local_120) * (*param_4 - local_120) +
-                                         (param_4[2] - local_118) * (param_4[2] - local_118) +
-                                         (param_4[1] - local_11c) * (param_4[1] - local_11c))) *
-                            0.009999999776482582 + dVar8);
-    iVar5 = DAT_82a22d60;
-    if (uVar4 != 0) {
-      iVar5 = DAT_82a22d58;
+    dVar10 = (double)(float)((double)((pdVar9->current).value *
+                                     SQRT((*param_4 - local_120) * (*param_4 - local_120) +
+                                          (param_4[2] - local_118) * (param_4[2] - local_118) +
+                                          (param_4[1] - local_11c) * (param_4[1] - local_11c))) *
+                             0.009999999776482582 + dVar12);
+    pdVar9 = laserRadius;
+    if (uVar5 != 0) {
+      pdVar9 = laserRadius_alt;
     }
-    local_a0 = *(float *)(iVar5 + 0xc);
-    local_94 = (float)((double)local_a0 * dVar6);
-    local_98 = 1;
-    local_9c = DAT_82a383f0;
-    FX_Beam_Add(local_d0);
-    if ((*(char *)(DAT_82a22d4c + 0xc) != '\0') && (param_6 == 1)) {
-      fVar2 = *(float *)(DAT_82a22d48 + 0xc);
-      fVar1 = (float)(dVar7 - (double)*(float *)(DAT_82a22d84 + 0xc));
-      if ((local_7c & 0x2004000) != 0) {
-        fVar1 = *(float *)(DAT_82a22d6c + 0xc) + fVar1;
+    local_d0.radius = (pdVar9->current).value;
+    local_d0.field7_0x3c = (FxBeam_u_60)(float)((double)local_d0.radius * dVar10);
+    local_d0.segmentCount = '\x01';
+    local_d0.material = cgMedia.laserMaterial;
+    FX_Beam_Add(&local_d0);
+    if (((laserLight->current).enabled != false) && (param_6 == LASER_LIGHT_ON)) {
+      fVar2 = (laserLightBeginOffset->current).value;
+      fVar1 = (float)(dVar11 - (double)(laserLightEndOffset->current).value);
+      if ((local_90[0].contents & 0x2004000U) != 0) {
+        fVar1 = (laserLightBodyTweak->current).value + fVar1;
       }
       if (fVar1 - fVar2 < 4.0) {
         fVar2 = (fVar1 + fVar2) * 0.5;
         fVar1 = fVar2 + 2.0;
         fVar2 = fVar2 - 2.0;
       }
-      fVar3 = param_3[3];
-      local_100 = fVar3 * fVar2 + *param_3;
-      local_f4 = fVar3 * fVar1 + *param_3;
-      local_fc = param_3[4] * fVar2 + param_3[1];
-      local_f0 = param_3[4] * fVar1 + param_3[1];
-      local_f8 = param_3[5] * fVar2 + param_3[2];
-      local_ec = param_3[5] * fVar1 + param_3[2];
-      iVar5 = DAT_82a22d64;
-      if (uVar4 != 0) {
-        iVar5 = DAT_82a22d54;
+      fVar3 = param_3->axis[0][0];
+      fVar4 = param_3->axis[0][1];
+      local_100.begin[0] = fVar3 * fVar2 + param_3->origin[0];
+      local_100.end[0] = fVar3 * fVar1 + param_3->origin[0];
+      fVar3 = param_3->axis[0][2];
+      local_100.begin[1] = fVar4 * fVar2 + param_3->origin[1];
+      local_100.end[1] = fVar4 * fVar1 + param_3->origin[1];
+      local_100.begin[2] = fVar3 * fVar2 + param_3->origin[2];
+      local_100.end[2] = fVar3 * fVar1 + param_3->origin[2];
+      pdVar9 = laserLightRadius;
+      if (uVar5 != 0) {
+        pdVar9 = laserLightRadius_alt;
       }
-      local_e8 = (float)((double)*(float *)(iVar5 + 0xc) * dVar6);
-      local_e4 = 0xffffffff;
-      local_e0 = DAT_82a383f4;
+      local_100.radius = (float)((double)(pdVar9->current).value * dVar10);
+      local_100.color.packed = 0xffffffff;
+      local_100.material = cgMedia.laserLightMaterial;
       FX_PostLight_Add(&local_100);
     }
   }
@@ -210,104 +246,124 @@ void AddCore(undefined8 param_1,int param_2,float *param_3,float *param_4,undefi
 
 // 822D4D20  CG_GetActiveWeaponBoneIndex  (cgame/cg_laser.cpp:219)
 
-void CG_GetActiveWeaponBoneIndex
-               (undefined8 param_1,ulonglong param_2,int param_3,ulonglong param_4,
-               undefined8 param_5)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool CG_GetActiveWeaponBoneIndex
+               (DObj *param_1,playerState_s *param_2,entityState_s *param_3,ushort param_4,
+               uchar *param_5)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  uint *puVar5;
-  int *piVar6;
-  uint uVar7;
-  longlong lVar8;
-  bool bVar9;
-  bool bVar10;
-  uint local_50 [20];
+  Weapon WVar2;
+  XModel **ppXVar3;
+  WeaponDef *pWVar4;
+  XModel *pXVar5;
+  int iVar6;
+  Weapon WVar7;
+  undefined1 uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  Weapon *pWVar11;
+  int *piVar12;
+  uint uVar13;
+  uint uVar14;
+  bool bVar15;
+  bool bVar16;
+  Weapon local_50 [20];
   
-  iVar3 = __savegprlr_24();
-  bVar9 = param_2 == 0;
-  if (bVar9) {
-    puVar5 = (uint *)(param_3 + 200);
+  uVar10 = (uint)(short)param_4;
+  uVar9 = (ulonglong)(int)param_2;
+  iVar6 = __savegprlr_24(param_1);
+  bVar15 = uVar9 == 0;
+  if (bVar15) {
+    pWVar11 = &param_3->weapon;
   }
   else {
-    local_50[0] = BG_GetViewmodelWeapon(param_2);
-    puVar5 = local_50;
+    local_50[0] = BG_GetViewmodelWeapon((playerState_s *)uVar9);
+    pWVar11 = local_50;
   }
-  uVar7 = *puVar5;
-  if (bVar9) {
-    bVar10 = *(int *)(param_3 + 0xcc) != 0;
+  WVar2 = *pWVar11;
+  if (bVar15) {
+    bVar16 = param_3->inAltWeaponMode != 0;
   }
-  else if (((param_2 & 0xffffffff) == 0) ||
-          (bVar10 = true, (*(uint *)((int)param_2 + 0x374) & 0x8000) == 0)) {
-    bVar10 = false;
+  else if (((uVar9 & 0xffffffff) == 0) ||
+          (bVar16 = true, ((((playerState_s *)uVar9)->weapCommon).weapFlags & 0x8000U) == 0)) {
+    bVar16 = false;
   }
-  uVar4 = BG_GetAlternateWeapon(uVar7,bVar10);
-  iVar2 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82018ad4,0xeb,0,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar7 = BG_GetAlternateWeapon(WVar2,bVar16);
+  pWVar4 = bg_weaponDefs[WVar7.data & 0xff];
+  if (pWVar4 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_laser.cpp",0xeb,0,
+                    "%s");
   }
-  if (bVar9) {
-    iVar2 = *(int *)(iVar2 + 0x1e0);
+  if (bVar15) {
+    ppXVar3 = pWVar4->worldModel;
   }
   else {
-    iVar2 = *(int *)(iVar2 + 4);
+    ppXVar3 = pWVar4->gunXModel;
   }
-  iVar2 = *(int *)((uVar7 >> 6 & 0x3c) + iVar2);
-  if (iVar2 != 0) {
-    bVar1 = *(byte *)(iVar3 + 9);
-    lVar8 = 0;
-    uVar7 = 0;
+  pXVar5 = *(XModel **)((WVar2.data >> 6 & 0x3c) + (int)ppXVar3);
+  if (pXVar5 != (XModel *)0x0) {
+    bVar1 = *(byte *)(iVar6 + 9);
+    uVar14 = 0;
+    uVar13 = 0;
     if (bVar1 != 0) {
-      piVar6 = (int *)(*(int *)(iVar3 + 0x98) + -4);
+      piVar12 = (int *)(*(int *)(iVar6 + 0x98) + -4);
       do {
-        if ((iVar2 == piVar6[1]) &&
-           (iVar3 = XModelGetBoneIndex(iVar2,param_4 & 0xffff,lVar8,param_5), iVar3 != 0)) {
-          __restgprlr_24(1);
-          return;
+        if ((pXVar5 == (XModel *)piVar12[1]) &&
+           (iVar6 = XModelGetBoneIndex(pXVar5,uVar10 & 0xffff,uVar14,param_5), iVar6 != 0)) {
+          uVar8 = __restgprlr_24(1);
+          return (bool)uVar8;
         }
-        piVar6 = piVar6 + 1;
-        uVar7 = uVar7 + 1;
-        lVar8 = (ulonglong)*(byte *)(*piVar6 + 4) + lVar8;
-      } while (uVar7 < bVar1);
+        piVar12 = piVar12 + 1;
+        uVar13 = uVar13 + 1;
+        uVar14 = *(byte *)(*piVar12 + 4) + uVar14;
+      } while (uVar13 < bVar1);
     }
   }
-  *(undefined1 *)param_5 = 0xff;
-  __restgprlr_24(0);
-  return;
+  *param_5 = 0xff;
+  uVar8 = __restgprlr_24(0);
+  return (bool)uVar8;
 }
 
 
 // 822D4E98  CG_LaserDraw  (cgame/cg_laser.cpp:258)
 
-void CG_LaserDraw(undefined8 param_1,undefined8 param_2,longlong param_3,undefined8 param_4,
-                 undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CG_LaserDraw(LocalClientNum_t param_1,playerState_s *param_2,centity_s *param_3,DObj *param_4,
+                 cpose_t *param_5,float *param_6,LaserOwnerEnum param_7,LaserLightEnum param_8)
 
 {
-  undefined8 uVar1;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  bool bVar3;
   int iVar2;
-  undefined1 local_a0 [16];
-  undefined1 auStack_90 [12];
-  undefined1 auStack_84 [132];
+  byte local_a0 [16];
+  orientation_t aoStack_90 [3];
   
-  uVar1 = __savegprlr_21();
+  LVar1 = __savegprlr_21(param_1);
   local_a0[0] = 0xfe;
-  cVar3 = CG_GetActiveWeaponBoneIndex(param_4);
-  if (cVar3 == '\0') {
+  bVar3 = CG_GetActiveWeaponBoneIndex
+                    (param_4,param_2,&param_3->nextState,scr_const.tag_laser,local_a0);
+  if (!bVar3) {
     local_a0[0] = 0xfe;
-    cVar3 = CG_GetActiveWeaponBoneIndex(param_4,param_2,param_3 + 0xc4,DAT_835a0c48,local_a0);
-    if (cVar3 == '\0') {
+    bVar3 = CG_GetActiveWeaponBoneIndex
+                      (param_4,param_2,&param_3->nextState,scr_const.tag_flash,local_a0);
+    if (!bVar3) {
       local_a0[0] = 0xfe;
-      iVar2 = DObjGetBoneIndex(param_4,DAT_835a0c5a,local_a0);
+      iVar2 = DObjGetBoneIndex(param_4,(uint)scr_const.tag_laser,local_a0);
       if (iVar2 == 0) {
         local_a0[0] = 0xfe;
-        iVar2 = DObjGetBoneIndex(param_4,DAT_835a0c48,local_a0);
+        iVar2 = DObjGetBoneIndex(param_4,(uint)scr_const.tag_flash,local_a0);
         if (iVar2 == 0) {
-          if (*(char *)(DAT_82a22d78 + 0xc) != '\0') {
-            Com_PrintWarning(0xe,0xffffffff82018b18,*(undefined4 *)(param_3 + 0xc4));
+          if ((laserDebug->current).enabled != false) {
+            Com_PrintWarning(0xe,
+                             "Can\'t draw laser from ent #%i.  No \"TAG_FLASH\" or \"TAG_LASER\".\n"
+                            );
             __restgprlr_21();
             return;
           }
@@ -316,8 +372,9 @@ void CG_LaserDraw(undefined8 param_1,undefined8 param_2,longlong param_3,undefin
       }
     }
   }
-  CG_DObjGetWorldBoneMatrix(param_5,param_4,local_a0[0],auStack_84,auStack_90);
-  AddCore(uVar1,param_3,auStack_90,param_6,param_7,param_8);
+  CG_DObjGetWorldBoneMatrix
+            (param_5,param_4,(uint)local_a0[0],aoStack_90[0].axis,aoStack_90[0].origin);
+  AddCore(LVar1,param_3,aoStack_90,param_6,param_7,param_8);
 LAB_822d4fbc:
   __restgprlr_21();
   return;
@@ -326,67 +383,77 @@ LAB_822d4fbc:
 
 // 822D4FC8  CG_LaserClearAll  (cgame/cg_laser.cpp:299)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_LaserClearAll(void)
 
 {
-  DAT_82a22d74 = 0;
+  g_laserCount = 0;
   return;
 }
 
 
 // 822D4FD8  CG_LaserAdd  (cgame/cg_laser.cpp:305)
 
-void CG_LaserAdd(undefined8 param_1,undefined2 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_LaserAdd(LocalClientNum_t param_1,int param_2)
 
 {
-  undefined2 *puVar1;
+  ushort *puVar1;
   
-  if (DAT_82a22d74 == 0x60) {
+  if (g_laserCount == 0x60) {
     return;
   }
-  puVar1 = &DAT_82a22d88 + DAT_82a22d74;
-  DAT_82a22d74 = DAT_82a22d74 + 1;
-  *puVar1 = param_2;
+  puVar1 = g_laserEntnums + g_laserCount;
+  g_laserCount = g_laserCount + 1;
+  *puVar1 = (ushort)param_2;
   return;
 }
 
 
 // 822D5000  CG_LaserDrawAll  (cgame/cg_laser.cpp:327)
 
-void CG_LaserDrawAll(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_LaserDrawAll(LocalClientNum_t param_1)
 
 {
   ushort uVar1;
-  undefined8 uVar2;
-  int iVar5;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
+  DObj *pDVar5;
   int iVar6;
-  ushort *puVar7;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
+  int iVar7;
+  ushort *puVar8;
+  float local_50;
+  float local_4c;
+  float local_48;
   
-  uVar2 = __savegprlr_26();
-  iVar5 = CG_GetLocalClientGlobals();
-  puVar7 = &DAT_82a22d88;
-  iVar6 = 0;
-  local_50 = *(undefined4 *)(iVar5 + 0x6b9fc);
-  local_4c = *(undefined4 *)(iVar5 + 0x6ba00);
-  local_48 = *(undefined4 *)(iVar5 + 0x6ba04);
-  iVar5 = DAT_82a22d74;
-  if (0 < DAT_82a22d74) {
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  puVar8 = g_laserEntnums;
+  iVar7 = 0;
+  local_50 = (pcVar3->refdef).viewOffset[0];
+  local_4c = (pcVar3->refdef).viewOffset[1];
+  local_48 = (pcVar3->refdef).viewOffset[2];
+  iVar6 = g_laserCount;
+  if (0 < g_laserCount) {
     do {
-      uVar1 = *puVar7;
-      if ((uint)uVar1 != (uint)uVar2) {
-        uVar3 = CG_GetEntity(uVar2,uVar1);
-        uVar4 = Com_GetClientDObj(uVar1,uVar2);
-        CG_LaserDraw(uVar2,0,uVar3,uVar4,uVar3,&local_50,0,1);
-        iVar5 = DAT_82a22d74;
+      uVar1 = *puVar8;
+      if (uVar1 != LVar2) {
+        pcVar4 = CG_GetEntity(LVar2,(uint)uVar1);
+        pDVar5 = Com_GetClientDObj((uint)uVar1,LVar2);
+        CG_LaserDraw(LVar2,(playerState_s *)0x0,pcVar4,pDVar5,&pcVar4->pose,&local_50,
+                     LASER_OWNER_NON_PLAYER,LASER_LIGHT_ON);
+        iVar6 = g_laserCount;
       }
-      iVar6 = iVar6 + 1;
-      puVar7 = puVar7 + 1;
-    } while (iVar6 < iVar5);
+      iVar7 = iVar7 + 1;
+      puVar8 = puVar8 + 1;
+    } while (iVar7 < iVar6);
   }
   __restgprlr_26();
   return;
@@ -395,23 +462,29 @@ void CG_LaserDrawAll(void)
 
 // 822D4530  ClampInt  (universal/com_math.h:616)
 
-void ClampInt(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int ClampInt(int param_1,int param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  longlong lVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_29();
-  if ((int)param_3 <= (int)param_2) {
-    MyAssertHandler(0xffffffff82003018,0x269,0,0xffffffff82000f98,0xffffffff820185c0);
+  lVar4 = (longlong)param_3;
+  lVar3 = (longlong)param_2;
+  lVar1 = __savegprlr_29(param_1);
+  if ((int)lVar4 <= (int)lVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x269,0,
+                    "%s");
   }
-  if ((int)uVar1 < (int)param_2) {
-    __restgprlr_29(param_2);
-    return;
+  if ((int)lVar1 < (int)lVar3) {
+    iVar2 = __restgprlr_29(lVar3);
+    return iVar2;
   }
-  if ((int)uVar1 <= (int)param_3) {
-    param_3 = uVar1;
+  if ((int)lVar1 <= (int)lVar4) {
+    lVar4 = lVar1;
   }
-  __restgprlr_29(param_3);
-  return;
+  iVar2 = __restgprlr_29(lVar4);
+  return iVar2;
 }
 

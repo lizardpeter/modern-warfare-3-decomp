@@ -2,21 +2,23 @@
 
 // 824476C0  FXI_FreePool_Generic<FxElem>  (EffectsCore/fx_pool.h:25)
 
-void FXI_FreePool_Generic<FxElem>(undefined8 param_1,uint *param_2,int param_3)
+void FXI_FreePool_Generic<FxElem>(FxElem *param_1,int *param_2,FxPool<FxElem> *param_3)
 
 {
   uint uVar1;
   uint uVar2;
   uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27();
-  uVar2 = (int)puVar3 - param_3 >> 5;
+  puVar3 = (uint *)__savegprlr_27(param_1);
+  uVar2 = (int)puVar3 - (int)param_3 >> 5;
   if (0x7ff < uVar2) {
-    MyAssertHandler(0xffffffff82067c08,0x25,0,0xffffffff82067c80,uVar2,0x800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
+                    "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
   uVar1 = *param_2;
   if (((int)uVar1 < -1) || (0x7ff < (int)uVar1)) {
-    MyAssertHandler(0xffffffff82067c08,0x28,0,0xffffffff82000f98,0xffffffff82067c48);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
+                    "%s");
   }
   *puVar3 = uVar1;
   *param_2 = uVar2;
@@ -27,85 +29,93 @@ void FXI_FreePool_Generic<FxElem>(undefined8 param_1,uint *param_2,int param_3)
 
 // 82447118  FXW_UpdatePass2Internal  (EffectsCore/fx_update.cpp:53)
 
-void FXW_UpdatePass2Internal(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_UpdatePass2Internal(FxPass2Cmd *param_1)
 
 {
-  int iVar1;
+  FxSystem *pFVar1;
   undefined2 *puVar2;
-  int *piVar4;
-  undefined8 uVar3;
+  undefined4 *puVar3;
+  FxEffect *pFVar4;
   int iVar5;
   int iVar6;
   int iVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  piVar4 = (int *)__savegprlr_26();
-  iVar1 = *piVar4;
-  memcpy((void *)(iVar1 + 0xd4),(void *)(*(int *)(iVar1 + 0xb8) + 0x34d84),0xb0);
-  if ((*(uint *)(iVar1 + 0xb4) & 1) != 0) {
-    FX_ExitWriteSystemLock(piVar4[3]);
-    FX_ExitWriteSystemLock(piVar4[10]);
+  puVar3 = (undefined4 *)__savegprlr_26(param_1);
+  pFVar1 = (FxSystem *)*puVar3;
+  memcpy();
+  if ((pFVar1->systemFlags & 1) != 0) {
+    FX_ExitWriteSystemLock((FxAccessLock *)puVar3[3]);
+    FX_ExitWriteSystemLock((FxAccessLock *)puVar3[10]);
     __restgprlr_26();
     return;
   }
-  if (*(int *)(iVar1 + 200) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x4a,0,0xffffffff82000f98,0xffffffff820695e8);
+  if (pFVar1->numSpawnElementRequest != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x4a,0,"%s");
   }
-  if (*(int *)(iVar1 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x4c,0,0xffffffff82000f98,0xffffffff820695c4);
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x4c,0,"%s");
   }
   Profile2_UpdateEntry(10);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e20 = storeWordConditionalIndexed((ulonglong)DAT_84184e20 + 1,0,0xffffffff84184e20);
+      g_prof2_begin_count[10] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[10] + 1,0,0xffffffff84184e20);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  FXW_FinalizeSpotLight(iVar1);
+  FXW_FinalizeSpotLight(pFVar1);
   iVar5 = 0;
   iVar6 = 0;
   do {
-    if (*(short *)(piVar4[0xd] + iVar6) == -1) {
+    if (*(ushort *)(puVar3[0xd] + iVar6) == 0xffff) {
       iVar6 = iVar5 << 1;
       iVar7 = 0;
       goto LAB_8244724c;
     }
-    uVar3 = FX_EffectFromHandle(iVar1);
-    FXW_UpdateEffectBolt(iVar1,uVar3);
+    pFVar4 = FX_EffectFromHandle(pFVar1,*(ushort *)(puVar3[0xd] + iVar6));
+    FXW_UpdateEffectBolt(pFVar1,pFVar4);
     iVar6 = iVar6 + 2;
     iVar5 = iVar5 + 1;
   } while (iVar6 < 0x800);
   goto LAB_824472b4;
   while( true ) {
-    uVar3 = FX_EffectFromHandle(iVar1);
-    FXW_UpdateEffectBolt(iVar1,uVar3);
+    pFVar4 = FX_EffectFromHandle(pFVar1,*(ushort *)(puVar3[6] + iVar7));
+    FXW_UpdateEffectBolt(pFVar1,pFVar4);
     iVar5 = iVar5 + 1;
-    puVar2 = (undefined2 *)(piVar4[6] + iVar7);
+    puVar2 = (undefined2 *)(puVar3[6] + iVar7);
     iVar7 = iVar7 + 2;
-    *(undefined2 *)(piVar4[0xd] + iVar6) = *puVar2;
+    *(undefined2 *)(puVar3[0xd] + iVar6) = *puVar2;
     iVar6 = iVar6 + 2;
     if (0x7ff < iVar7) break;
 LAB_8244724c:
     if (0x7ff < iVar6) goto LAB_824472b4;
-    if (*(short *)(piVar4[6] + iVar7) == -1) break;
+    if (*(ushort *)(puVar3[6] + iVar7) == 0xffff) break;
   }
   if (iVar5 < 0x400) {
-    *(undefined2 *)(iVar5 * 2 + piVar4[0xd]) = 0xffff;
+    *(undefined2 *)(iVar5 * 2 + puVar3[0xd]) = 0xffff;
   }
 LAB_824472b4:
   Profile2_UpdateEntry(10);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e20 = storeWordConditionalIndexed((ulonglong)DAT_84184e20 - 1,0,0xffffffff84184e20);
+      g_prof2_begin_count[10] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[10] - 1,0,0xffffffff84184e20);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  FX_ExitWriteSystemLock(piVar4[3]);
-  if (*(short *)piVar4[0xd] != -1) {
-    FXW_UpdatePass0Worker(piVar4 + 7);
+  FX_ExitWriteSystemLock((FxAccessLock *)puVar3[3]);
+  if (*(short *)puVar3[0xd] != -1) {
+    FXW_UpdatePass0Worker((FxPass0Cmd *)(puVar3 + 7));
   }
-  FX_ExitWriteSystemLock(piVar4[10]);
+  FX_ExitWriteSystemLock((FxAccessLock *)puVar3[10]);
   __restgprlr_26();
   return;
 }
@@ -113,48 +123,57 @@ LAB_824472b4:
 
 // 82447BF0  FXW_UpdatePass4Internal  (EffectsCore/fx_update.cpp:143)
 
-void FXW_UpdatePass4Internal(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_UpdatePass4Internal(FxPass4Cmd *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  FxSystem *pFVar1;
+  FxPass4Cmd *pFVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  piVar2 = (int *)__savegprlr_27();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff820697c4);
+  pFVar2 = (FxPass4Cmd *)__savegprlr_27(param_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"fx update 2");
   Profile2_UpdateEntry(0xc);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e28 = storeWordConditionalIndexed((ulonglong)DAT_84184e28 + 1,0,0xffffffff84184e28);
+      g_prof2_begin_count[0xc] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xc] + 1,0,0xffffffff84184e28);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar1 = *piVar2;
-  FXIW_UpdatePass4Camera(iVar1);
-  if (piVar2[2] != piVar2[1]) {
-    MyAssertHandler(0xffffffff82069618,0xaa,0,0xffffffff82000f98,0xffffffff8206978c);
+  pFVar1 = (FxSystem *)pFVar2->_padding_;
+  FXIW_UpdatePass4Camera(pFVar1);
+  if (pFVar2->_padding_ != pFVar2->_padding_) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0xaa,0,"%s");
   }
-  FXIW_UpdatePass4Effects(iVar1,piVar2);
-  FXIW_UpdatePass4Create(iVar1,piVar2);
-  FXW_UpdatePass4ProcessCommands(iVar1,piVar2);
-  CG_AddSceneTracerBeams(piVar2[1]);
-  CG_GenerateSceneVerts(piVar2[1]);
-  if ((*(uint *)(iVar1 + 0xb4) & 3) == 0) {
-    FXW_SortEffects(iVar1);
+  FXIW_UpdatePass4Effects(pFVar1,pFVar2);
+  FXIW_UpdatePass4Create(pFVar1,pFVar2);
+  FXW_UpdatePass4ProcessCommands(pFVar1,pFVar2);
+  CG_AddSceneTracerBeams(pFVar2->_padding_);
+  CG_GenerateSceneVerts(pFVar2->_padding_);
+  if ((pFVar1->systemFlags & 3) == 0) {
+    FXW_SortEffects(pFVar1);
   }
-  if (*(int *)(iVar1 + 200) != 0) {
-    MyAssertHandler(0xffffffff82069618,0xca,0,0xffffffff82000f98,0xffffffff820695e8);
+  if (pFVar1->numSpawnElementRequest != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0xca,0,"%s");
   }
-  if (*(int *)(iVar1 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0xcc,0,0xffffffff82000f98,0xffffffff820695c4);
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0xcc,0,"%s");
   }
-  *(undefined4 *)piVar2[0xb] = *(undefined4 *)(iVar1 + 0x68);
-  FX_ExitWriteSystemLock(piVar2[3]);
+  *pFVar2->effectIter = pFVar1->firstActiveEffect;
+  FX_ExitWriteSystemLock((FxAccessLock *)pFVar2->_padding_);
   Profile2_UpdateEntry(0xc);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e28 = storeWordConditionalIndexed((ulonglong)DAT_84184e28 - 1,0,0xffffffff84184e28);
+      g_prof2_begin_count[0xc] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xc] - 1,0,0xffffffff84184e28);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -166,33 +185,38 @@ void FXW_UpdatePass4Internal(void)
 
 // 82447310  FXW_UpdatePass5Internal  (EffectsCore/fx_update.cpp:219)
 
-void FXW_UpdatePass5Internal(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
+void FXW_UpdatePass5Internal(FxPass5Cmd *param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  FxSystem *pFVar2;
   uint *puVar3;
   uint uVar4;
-  int *piVar5;
-  char cVar6;
+  FxPass5Cmd *pFVar5;
+  bool bVar6;
   char in_RESERVE;
   byte in_cr0;
-  undefined1 auStack_70 [112];
+  FxGenerateVertsCmd FStack_70;
   
-  piVar5 = (int *)__savegprlr_29();
-  iVar2 = *piVar5;
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8206965c);
+  pFVar5 = (FxPass5Cmd *)__savegprlr_29(param_1);
+  pFVar2 = (FxSystem *)pFVar5->_padding_;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"fx surfs");
   Profile2_UpdateEntry(0xd);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e2c = storeWordConditionalIndexed((ulonglong)DAT_84184e2c + 1,0,0xffffffff84184e2c);
+      g_prof2_begin_count[0xd] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xd] + 1,0,0xffffffff84184e2c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (((*(uint *)(iVar2 + 0xb4) & 3) == 0) && (cVar6 = R_ShouldGenerateFxVerts(), cVar6 != '\0')) {
-    FX_DrawNonSpriteElems(iVar2,piVar5);
+  if (((pFVar2->systemFlags & 3) == 0) && (bVar6 = R_ShouldGenerateFxVerts(), bVar6)) {
+    FX_DrawNonSpriteElems(pFVar2,pFVar5);
   }
-  puVar3 = (uint *)piVar5[7];
+  puVar3 = (uint *)pFVar5->count;
   do {
     uVar1 = *puVar3;
     if (in_RESERVE != '\0') {
@@ -202,13 +226,15 @@ void FXW_UpdatePass5Internal(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   if ((int)((ulonglong)uVar1 - 1) == 0) {
-    FX_FillGenerateVertsCmd(piVar5,auStack_70);
-    R_AddWorkerCmd(0x1b,auStack_70);
+    FX_FillGenerateVertsCmd((FxCmd *)pFVar5,&FStack_70);
+    R_AddWorkerCmd(WRKCMD_END_FRONTEND_NONEMISSIVE,&FStack_70);
   }
   Profile2_UpdateEntry(0xd);
   do {
     if (in_RESERVE != '\0') {
-      DAT_84184e2c = storeWordConditionalIndexed((ulonglong)DAT_84184e2c - 1,0,0xffffffff84184e2c);
+      g_prof2_begin_count[0xd] =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_prof2_begin_count[0xd] - 1,0,0xffffffff84184e2c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -220,32 +246,37 @@ void FXW_UpdatePass5Internal(void)
 
 // 82447AE0  FXW_UpdatePass4ProcessCommands  (EffectsCore/fx_update.cpp:253)
 
-void FXW_UpdatePass4ProcessCommands(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXW_UpdatePass4ProcessCommands(FxSystem *param_1,FxPass4Cmd *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  FxSystem *pFVar1;
   
-  iVar2 = __savegprlr_27();
-  if (*(int *)(iVar2 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0xfe,0,0xffffffff82000f98,0xffffffff820695c4);
+  pFVar1 = (FxSystem *)__savegprlr_27(param_1);
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0xfe,0,"%s");
   }
-  iVar1 = (int)param_2;
-  FXW_ProcessRetriggerRequests(iVar2,*(undefined4 *)(iVar1 + 0x28),*(undefined4 *)(iVar1 + 0x3c));
-  *(undefined4 *)(iVar1 + 0x3c) = 0;
-  if (*(int *)(iVar2 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x103,0,0xffffffff82000f98,0xffffffff820695c4);
+  FXW_ProcessRetriggerRequests
+            (pFVar1,param_2->retriggerEffectRequest,param_2->numRetriggerEffectRequest);
+  param_2->numRetriggerEffectRequest = 0;
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x103,0,"%s");
   }
-  FXW_UpdatePass4ProcessStopBoltedEffectRequests(iVar2,param_2);
-  FXIW_UpdatePass4ProcessKillRequests(iVar2,param_2);
-  if ((*(uint *)(iVar2 + 0xb4) & 8) != 0) {
-    FXW_RunGarbageCollection(iVar2);
+  FXW_UpdatePass4ProcessStopBoltedEffectRequests(pFVar1,param_2);
+  FXIW_UpdatePass4ProcessKillRequests(pFVar1,param_2);
+  if ((pFVar1->systemFlags & 8) != 0) {
+    FXW_RunGarbageCollection(pFVar1);
   }
-  if (*(int *)(iVar2 + 200) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x10f,0,0xffffffff82000f98,0xffffffff820695e8);
+  if (pFVar1->numSpawnElementRequest != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x10f,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x111,0,0xffffffff82000f98,0xffffffff820695c4);
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x111,0,"%s");
   }
   __restgprlr_27();
   return;
@@ -254,20 +285,24 @@ void FXW_UpdatePass4ProcessCommands(undefined8 param_1,undefined8 param_2)
 
 // 82447408  FXIW_UpdatePass4Effects  (EffectsCore/fx_update.cpp:309)
 
-void FXIW_UpdatePass4Effects(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_UpdatePass4Effects(FxSystem *param_1,FxPass4Cmd *param_2)
 
 {
-  int iVar1;
+  FxSystem *pFVar1;
   
-  iVar1 = __savegprlr_27();
-  if (*(int *)(iVar1 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x144,0,0xffffffff82000f98,0xffffffff820695c4);
+  pFVar1 = (FxSystem *)__savegprlr_27(param_1);
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x144,0,"%s");
   }
   FXW_ProcessRetriggerRequests
-            (iVar1,*(undefined4 *)(param_2 + 0x28),*(undefined4 *)(param_2 + 0x3c));
-  *(undefined4 *)(param_2 + 0x3c) = 0;
-  if (*(int *)(iVar1 + 0xd0) != 0) {
-    MyAssertHandler(0xffffffff82069618,0x148,0,0xffffffff82000f98,0xffffffff820695c4);
+            (pFVar1,param_2->retriggerEffectRequest,param_2->numRetriggerEffectRequest);
+  param_2->numRetriggerEffectRequest = 0;
+  if (pFVar1->numUpdateElement != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                    0x148,0,"%s");
   }
   __restgprlr_27();
   return;
@@ -276,47 +311,54 @@ void FXIW_UpdatePass4Effects(undefined8 param_1,int param_2)
 
 // 824474A0  FXIW_UpdatePass4Create  (EffectsCore/fx_update.cpp:333)
 
-void FXIW_UpdatePass4Create(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_UpdatePass4Create(FxSystem *param_1,FxPass4Cmd *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
+  ushort uVar1;
+  FxEffect *pFVar2;
+  FxSystem *pFVar3;
+  int iVar4;
+  ulonglong uVar5;
   
-  iVar2 = __savegprlr_20();
+  pFVar3 = (FxSystem *)__savegprlr_20(param_1);
   do {
-    iVar3 = 0;
+    iVar4 = 0;
     do {
-      uVar4 = (uint)*(ushort *)(*(int *)(param_2 + 0x18) + iVar3);
-      if (uVar4 == 0xffff) break;
-      if (iVar2 == 0) {
-        MyAssertHandler(0xffffffff82060828,0x23,0,0xffffffff82000f98,0xffffffff82038694);
+      uVar1 = *(ushort *)((int)param_2->createPass + iVar4);
+      uVar5 = (ulonglong)uVar1;
+      if (uVar5 == 0xffff) break;
+      if (pFVar3 == (FxSystem *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x23,0,"%s");
       }
-      if (uVar4 < 0x9000) {
-        if (uVar4 != (uVar4 / 0x24) * 0x24) goto LAB_82447550;
+      if (uVar5 < 0x9000) {
+        if (uVar5 != (uVar5 / 0x24) * 0x24) goto LAB_82447550;
       }
       else {
 LAB_82447550:
-        uVar1 = va(0xffffffff82060820,*(undefined4 *)(iVar2 + 0x10),uVar4);
-        MyAssertHandler(0xffffffff82060828,0x24,0,0xffffffff820011f4,0xffffffff82060798,uVar1);
+        va("%p %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
+                        ,0x24,0,"%s\n\t%s");
       }
-      iVar5 = uVar4 * 4 + *(int *)(iVar2 + 0x10);
-      if (*(char *)(iVar5 + 0x26) != -1) {
-        FXW_UpdateEffectBolt(iVar2,iVar5);
+      pFVar2 = (FxEffect *)(pFVar3->effects->firstElemHandle + (uint)uVar1 * 2 + -4);
+      if (pFVar2->bolt != 0xff) {
+        FXW_UpdateEffectBolt(pFVar3,pFVar2);
       }
-      FXW_UpdateEffect(iVar2,0,iVar5,*(undefined2 *)(*(int *)(param_2 + 0x18) + iVar3));
-      iVar3 = iVar3 + 2;
-    } while (iVar3 < 0x800);
-    **(undefined2 **)(param_2 + 0x18) = 0xffff;
-    iVar3 = FXW_CreateNewEffects(iVar2,0,*(undefined4 *)(param_2 + 0x18),0);
-    if (iVar3 == 0) {
-      if (*(int *)(iVar2 + 200) != 0) {
-        MyAssertHandler(0xffffffff82069618,0x16a,0,0xffffffff82000f98,0xffffffff820695e8);
+      FXW_UpdateEffect(pFVar3,0,pFVar2,*(ushort *)((int)param_2->createPass + iVar4));
+      iVar4 = iVar4 + 2;
+    } while (iVar4 < 0x800);
+    *param_2->createPass = 0xffff;
+    iVar4 = FXW_CreateNewEffects(pFVar3,0,param_2->createPass,0);
+    if (iVar4 == 0) {
+      if (pFVar3->numSpawnElementRequest != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                        ,0x16a,0,"%s");
       }
-      if (*(int *)(iVar2 + 0xd0) != 0) {
-        MyAssertHandler(0xffffffff82069618,0x16c,0,0xffffffff82000f98,0xffffffff820695c4);
+      if (pFVar3->numUpdateElement != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                        ,0x16c,0,"%s");
       }
       __restgprlr_20();
       return;
@@ -327,130 +369,134 @@ LAB_82447550:
 
 // 82447750  FXIW_UpdatePass4ProcessKillRequests  (EffectsCore/fx_update.cpp:369)
 
-void FXIW_UpdatePass4ProcessKillRequests(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void FXIW_UpdatePass4ProcessKillRequests(FxSystem *param_1,FxPass4Cmd *param_2)
 
 {
-  undefined4 uVar1;
-  bool bVar2;
-  int iVar5;
-  int *piVar6;
-  undefined8 uVar3;
-  short sVar10;
-  short sVar11;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar4;
-  ushort uVar12;
-  int *piVar9;
-  short *psVar13;
-  uint *puVar14;
-  int iVar15;
-  int iVar16;
-  ulonglong uVar17;
-  uint uVar18;
-  undefined4 *puVar19;
+  bool bVar1;
+  FxSystem *pFVar2;
+  FxEffect *pFVar3;
+  FxElem *pFVar4;
+  ushort uVar6;
+  ushort uVar7;
+  uint uVar5;
+  ushort *puVar8;
+  FxElemDef *pFVar9;
+  int iVar10;
+  int iVar11;
+  KillEffectDefRequest *pKVar12;
+  ulonglong uVar13;
+  FxEffect **ppFVar14;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar5 = __savegprlr_19();
-  iVar15 = 0;
-  if (0 < *(int *)(iVar5 + 0xc0)) {
-    iVar16 = 0;
+  pFVar2 = (FxSystem *)__savegprlr_19(param_1);
+  iVar10 = 0;
+  if (0 < pFVar2->numDeleteElementRequest) {
+    iVar11 = 0;
     do {
-      psVar13 = (short *)(iVar16 + *(int *)(iVar5 + 0xbc));
-      sVar11 = psVar13[1];
-      if (sVar11 == -1) {
-        if (*psVar13 == -1) {
-          if (*(int *)(psVar13 + 2) != 0) {
-            Phys_ObjDestroy(1);
+      puVar8 = (ushort *)((int)&pFVar2->deleteElementRequest->effectHandle + iVar11);
+      uVar7 = puVar8[1];
+      uVar6 = *puVar8;
+      if (uVar7 == 0xffff) {
+        if (uVar6 == 0xffff) {
+          if (*(int *)(puVar8 + 2) != 0) {
+            Phys_ObjDestroy(PHYS_WORLD_FX,*(int *)(puVar8 + 2));
             do {
               if (in_RESERVE != '\0') {
-                DAT_8427b8e4 = storeWordConditionalIndexed
-                                         ((ulonglong)DAT_8427b8e4 - 1,0,0xffffffff8427b8e4);
+                g_fxPhysObjCount =
+                     storeWordConditionalIndexed
+                               ((ulonglong)(uint)g_fxPhysObjCount - 1,0,0xffffffff8427b8e4);
                 in_cr0 = 2;
               }
             } while (!(bool)(in_cr0 >> 1 & 1));
           }
         }
         else {
-          iVar7 = FX_EffectFromHandle(iVar5);
-          if ((*(short *)(iVar7 + 0x14) != -1) &&
-             (iVar8 = FX_OcclusionQueryRefCount(iVar5,iVar7), iVar8 == 0)) {
-            RB_FreeOcclusionQuery(*(undefined2 *)(iVar7 + 0x14));
-            *(undefined2 *)(iVar7 + 0x14) = 0xffff;
+          pFVar3 = FX_EffectFromHandle(pFVar2,uVar6);
+          if ((pFVar3->occlusionQueryHandle != 0xffff) &&
+             (uVar5 = FX_OcclusionQueryRefCount(pFVar2,pFVar3), uVar5 == 0)) {
+            RB_FreeOcclusionQuery(pFVar3->occlusionQueryHandle);
+            pFVar3->occlusionQueryHandle = 0xffff;
           }
         }
       }
       else {
-        piVar6 = (int *)FX_EffectFromHandle(iVar5);
-        uVar3 = FX_PoolFromHandle_Generic<FxElem>(*(undefined4 *)(iVar5 + 0x3c),sVar11);
-        puVar14 = (uint *)(*(int *)(iVar16 + *(int *)(iVar5 + 0xbc) + 4) * 0x100 +
-                          *(int *)(*piVar6 + 0x30));
-        if (((*puVar14 & 0x80000000) == 0) || (bVar2 = true, puVar14[0x38] == 0)) {
-          bVar2 = false;
+        pFVar3 = FX_EffectFromHandle(pFVar2,uVar6);
+        pFVar4 = FX_PoolFromHandle_Generic<FxElem>(pFVar2->elems,uVar7);
+        pFVar9 = pFVar3->def->elemDefs +
+                 *(int *)((int)&pFVar2->deleteElementRequest->field2_0x4 + iVar11);
+        if (((pFVar9->flags & 0x80000000U) == 0) ||
+           (bVar1 = true, (pFVar9->effectEmitted).handle == (FxEffectDef *)0x0)) {
+          bVar1 = false;
         }
-        if (bVar2) {
-          FXW_FreeChildEffectElem(iVar5,sVar11);
+        if (bVar1) {
+          FXW_FreeChildEffectElem(pFVar2,uVar7);
         }
-        sVar10 = FX_GetElemChild(iVar5,sVar11);
-        if (sVar10 != -1) {
-          MyAssertHandler(0xffffffff82069618,0x188,0,0xffffffff82000f98,0xffffffff820696bc);
+        uVar6 = FX_GetElemChild(pFVar2,uVar7);
+        if (uVar6 != 0xffff) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                          ,0x188,0,"%s");
         }
-        sVar10 = FX_GetNextElemInEffect(iVar5,sVar11);
-        if (sVar10 != -1) {
-          MyAssertHandler(0xffffffff82069618,0x189,0,0xffffffff82000f98,0xffffffff82069700);
+        uVar6 = FX_GetNextElemInEffect(pFVar2,uVar7);
+        if (uVar6 != 0xffff) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                          ,0x189,0,"%s");
         }
-        sVar11 = FX_GetPrevElemInEffect(iVar5,sVar11);
-        if (sVar11 != -1) {
-          MyAssertHandler(0xffffffff82069618,0x18a,0,0xffffffff82000f98,0xffffffff82069748);
+        uVar7 = FX_GetPrevElemInEffect(pFVar2,uVar7);
+        if (uVar7 != 0xffff) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                          ,0x18a,0,"%s");
         }
-        FXI_FreePool_Generic<FxElem>(uVar3,iVar5 + 0x4c,*(undefined4 *)(iVar5 + 0x3c));
+        FXI_FreePool_Generic<FxElem>(pFVar4,&pFVar2->firstFreeElem,pFVar2->elems);
       }
-      iVar15 = iVar15 + 1;
-      iVar16 = iVar16 + 8;
-    } while (iVar15 < *(int *)(iVar5 + 0xc0));
+      iVar10 = iVar10 + 1;
+      iVar11 = iVar11 + 8;
+    } while (iVar10 < pFVar2->numDeleteElementRequest);
   }
-  *(undefined4 *)(iVar5 + 0xc0) = 0;
-  uVar17 = (ulonglong)*(uint *)(param_2 + 0x34);
-  if (0 < (int)*(uint *)(param_2 + 0x34)) {
-    puVar19 = (undefined4 *)(*(int *)(param_2 + 0x20) + -4);
+  pFVar2->numDeleteElementRequest = 0;
+  uVar13 = (ulonglong)(uint)param_2->numThroughWithEffectIndex;
+  if (0 < param_2->numThroughWithEffectIndex) {
+    ppFVar14 = param_2->throughWithEffectRequest + -1;
     do {
-      if ((*(uint *)(puVar19[1] + 4) & 0x1fff) == 0) {
-        MyAssertHandler(0xffffffff82069618,0x1a9,0,0xffffffff82000f98,0xffffffff82069668);
+      if ((ppFVar14[1]->status & 0x1fffU) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp"
+                        ,0x1a9,0,"%s");
       }
-      FXW_PreventRewind(iVar5,puVar19[1]);
-      FXW_StopEffect(iVar5,puVar19[1]);
-      uVar1 = puVar19[1];
-      uVar4 = FXW_GetEffectFlags(iVar5);
-      FXW_PutEffectFlags(iVar5,uVar1,uVar4 & 0x7fff);
-      uVar1 = puVar19[1];
-      uVar12 = FXW_GetEffectFlags(iVar5);
-      FXW_PutEffectFlags(iVar5,uVar1,uVar12 | 0x2000);
-      puVar19 = puVar19 + 1;
-      FXW_DelRefToEffect(iVar5,*puVar19);
-      uVar17 = uVar17 - 1;
-    } while (uVar17 != 0);
+      FXW_PreventRewind(pFVar2,ppFVar14[1]);
+      FXW_StopEffect(pFVar2,ppFVar14[1]);
+      pFVar3 = ppFVar14[1];
+      uVar7 = FXW_GetEffectFlags(pFVar2,pFVar3);
+      FXW_PutEffectFlags(pFVar2,pFVar3,uVar7 & 0x7fff);
+      pFVar3 = ppFVar14[1];
+      uVar7 = FXW_GetEffectFlags(pFVar2,pFVar3);
+      FXW_PutEffectFlags(pFVar2,pFVar3,uVar7 | 0x2000);
+      ppFVar14 = ppFVar14 + 1;
+      FXW_DelRefToEffect(pFVar2,*ppFVar14);
+      uVar13 = uVar13 - 1;
+    } while (uVar13 != 0);
   }
-  uVar17 = (ulonglong)*(uint *)(param_2 + 0x38);
-  piVar6 = *(int **)(param_2 + 0x24);
-  if (0 < (int)*(uint *)(param_2 + 0x38)) {
+  uVar13 = (ulonglong)(uint)param_2->numKillEffectDefIndex;
+  pKVar12 = param_2->killEffectDefRequest;
+  if (0 < param_2->numKillEffectDefIndex) {
     do {
-      uVar18 = *(uint *)(iVar5 + 0x68);
-      if (uVar18 != *(uint *)(iVar5 + 0x6c)) {
+      uVar5 = pFVar2->firstActiveEffect;
+      if (uVar5 != pFVar2->firstNewEffect) {
         do {
-          piVar9 = (int *)FX_EffectFromHandle(iVar5,*(undefined2 *)
-                                                     ((uVar18 & 0x3ff) * 2 + *(int *)(iVar5 + 0x74))
-                                             );
-          if ((*piVar9 == *piVar6) && ((piVar6[1] < 0 || (piVar6[1] <= piVar9[0xb])))) {
-            uVar3 = FX_EffectToHandle(iVar5,piVar9);
-            FXW_KillEffect(iVar5,piVar9,uVar3,0);
+          pFVar3 = FX_EffectFromHandle(pFVar2,pFVar2->allEffectHandles[uVar5 & 0x3ff]);
+          if ((pFVar3->def == pKVar12->defHandle) &&
+             ((pKVar12->time < 0 || (pKVar12->time <= pFVar3->msecBegin)))) {
+            uVar7 = FX_EffectToHandle(pFVar2,pFVar3);
+            FXW_KillEffect(pFVar2,pFVar3,uVar7,0);
           }
-          uVar18 = uVar18 + 1;
-        } while (uVar18 != *(uint *)(iVar5 + 0x6c));
+          uVar5 = uVar5 + 1;
+        } while (uVar5 != pFVar2->firstNewEffect);
       }
-      uVar17 = uVar17 - 1;
-      piVar6 = piVar6 + 2;
-    } while (uVar17 != 0);
+      uVar13 = uVar13 - 1;
+      pKVar12 = pKVar12 + 1;
+    } while (uVar13 != 0);
   }
   __restgprlr_19();
   return;
@@ -459,15 +505,18 @@ void FXIW_UpdatePass4ProcessKillRequests(undefined8 param_1,int param_2)
 
 // 82447648  FXIW_UpdatePass4Camera  (EffectsCore/fx_update.cpp:454)
 
-void * FXIW_UpdatePass4Camera(void *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FXIW_UpdatePass4Camera(FxSystem *param_1)
 
 {
-  if ((*(uint *)((int)param_1 + 0xb4) & 1) == 0) {
-    if (*(int *)((int)param_1 + 0xe0) == 0) {
-      MyAssertHandler(0xffffffff82069618,0x1ca,0,0xffffffff82000f98,0xffffffff82061874);
+  if ((param_1->systemFlags & 1) == 0) {
+    if ((param_1->camera).isValid == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update.cpp",
+                      0x1ca,0,"%s");
     }
-    param_1 = memcpy((void *)((int)param_1 + 0x184),(void *)((int)param_1 + 0xd4),0xb0);
+    memcpy();
   }
-  return param_1;
+  return;
 }
 

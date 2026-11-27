@@ -2,37 +2,54 @@
 
 // 828B87D8  XUserReadProfileSettings  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/profile.cpp:33)
 
-void XUserReadProfileSettings
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+ulong XUserReadProfileSettings
+                (ulong param_1,ulong param_2,ulong param_3,ulong *param_4,ulong *param_5,
+                _XUSER_READ_PROFILE_SETTING_RESULT *param_6,_XOVERLAPPED *param_7)
 
 {
   undefined8 uVar1;
-  int iVar2;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar1 = __savegprlr_25();
-  iVar2 = XVerifySameFamily();
-  if (iVar2 == 0) {
-    XamUserReadProfileSettings(uVar1,param_2,0,0,param_3,param_4,param_5,param_6);
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1,lVar3,lVar4,lVar5,lVar6,lVar7);
+  uVar2 = XVerifySameFamily((ulong)uVar1);
+  if (uVar2 == 0) {
+    XamUserReadProfileSettings(uVar1,lVar3,0,0,lVar4,lVar5,lVar6,lVar7);
   }
-  __restgprlr_25();
-  return;
+  uVar2 = __restgprlr_25();
+  return uVar2;
 }
 
 
 // 828B8840  XUserWriteProfileSettings  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/profile.cpp:110)
 
-void XUserWriteProfileSettings
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+ulong XUserWriteProfileSettings
+                (ulong param_1,ulong param_2,_XUSER_PROFILE_SETTING *param_3,_XOVERLAPPED *param_4)
 
 {
   undefined8 uVar1;
+  ulong uVar2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
   undefined1 auStack_30 [48];
   
-  uVar1 = __savegprlr_28();
+  lVar5 = (longlong)(int)param_4;
+  lVar4 = (longlong)(int)param_3;
+  lVar3 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1,lVar3,lVar4,lVar5);
   XamUserGetXUID(uVar1,3,auStack_30);
-  XamUserWriteProfileSettings(0,uVar1,param_2,param_3,param_4);
-  __restgprlr_28();
-  return;
+  XamUserWriteProfileSettings(0,uVar1,lVar3,lVar4,lVar5);
+  uVar2 = __restgprlr_28();
+  return uVar2;
 }
 

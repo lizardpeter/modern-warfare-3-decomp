@@ -2,24 +2,27 @@
 
 // 824DF240  Com_BlockChecksum32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/checksum.h:9)
 
-void Com_BlockChecksum32(undefined8 param_1,undefined8 param_2)
+uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 {
-  Com_BlockChecksumKey32(param_1,param_2,0);
-  return;
+  uint uVar1;
+  
+  uVar1 = Com_BlockChecksumKey32(param_1,param_2,0);
+  return uVar1;
 }
 
 
 // 824EEEF0  StructuredData_GetByteOffset  (universal/com_structureddatadef.h:97)
 
-ulonglong StructuredData_GetByteOffset(ulonglong param_1,int *param_2)
+uint StructuredData_GetByteOffset(uint param_1,StructuredDataType *param_2)
 
 {
-  if (param_2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82085860,0x62,0,0xffffffff82000f98,0xffffffff820858b8);
+  if (param_2 == (StructuredDataType *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x62,0,"%s");
   }
-  if (*param_2 == 2) {
-    param_1 = (param_1 & 0xffffffff) >> 3;
+  if (param_2->type == DATA_BOOL) {
+    param_1 = param_1 >> 3;
   }
   return param_1;
 }
@@ -27,147 +30,177 @@ ulonglong StructuredData_GetByteOffset(ulonglong param_1,int *param_2)
 
 // 824EEF68  StructuredData_ByteOffset  (universal/com_structureddatadef.h:110)
 
-void StructuredData_ByteOffset(int param_1)
+uint StructuredData_ByteOffset(StructuredDataStructProperty *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82085860,0x6f,0,0xffffffff82000f98,0xffffffff820858c4);
+  uint uVar1;
+  
+  if (param_1 == (StructuredDataStructProperty *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x6f,0,"%s");
   }
-  StructuredData_GetByteOffset(*(undefined4 *)(param_1 + 0xc),param_1 + 4);
-  return;
+  uVar1 = StructuredData_GetByteOffset(param_1->offset,&param_1->type);
+  return uVar1;
+}
+
+
+// 824DF248  time  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/time.inl:128)
+
+long64 time(long64 *param_1)
+
+{
+  ulonglong uVar1;
+  _FILETIME a_Stack_20 [2];
+  
+  GetSystemTimeAsFileTime(a_Stack_20);
+  uVar1 = ((longlong)a_Stack_20[0] + 0xfe624e212ac18000U) / 10000000;
+  if (0x793406fff < uVar1) {
+    uVar1 = 0xffffffffffffffff;
+  }
+  if (param_1 != (long64 *)0x0) {
+    *param_1 = uVar1;
+  }
+  return uVar1;
 }
 
 
 // 8293D668  `dynamic_initializer_for_'s_eliteCACData''  (qcommon/com_storage.cpp:134)
 
-int _dynamic_initializer_for__s_eliteCACData__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_eliteCACData__(void)
 
 {
-  int iVar1;
-  
-  bdFileInfo__bdFileInfo(0xffffffff8365b708);
-  bdFileData__bdFileData(0xffffffff8365b7b8,0,0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_eliteCACData__);
-  return iVar1;
+  bdFileInfo::bdFileInfo(&s_eliteCACData.eliteCACFileTask.m_infoResult);
+  bdFileData::bdFileData(&s_eliteCACData.eliteCACFileTask.m_dataResult,(void *)0x0,0);
+  atexit(_dynamic_atexit_destructor_for__s_eliteCACData__);
+  return;
 }
 
 
 // 8293D6B8  `dynamic_initializer_for_'g_fetchPlaylistsTask''  (qcommon/com_storage.cpp:146)
 
-int _dynamic_initializer_for__g_fetchPlaylistsTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_fetchPlaylistsTask__(void)
 
 {
-  int iVar1;
-  
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_fetchPlaylistsTask__);
-  return iVar1;
+  atexit(_dynamic_atexit_destructor_for__g_fetchPlaylistsTask__);
+  return;
 }
 
 
 // 8293D6C8  `dynamic_initializer_for_'g_fetchPlaylistsFileTask''  (qcommon/com_storage.cpp:147)
 
-int _dynamic_initializer_for__g_fetchPlaylistsFileTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_fetchPlaylistsFileTask__(void)
 
 {
-  int iVar1;
-  
-  bdFileInfo__bdFileInfo(0xffffffff8365bb70);
-  bdFileData__bdFileData(0xffffffff8365bc20,0,0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_fetchPlaylistsFileTask__);
-  return iVar1;
+  bdFileInfo::bdFileInfo(&g_fetchPlaylistsFileTask.m_infoResult);
+  bdFileData::bdFileData(&g_fetchPlaylistsFileTask.m_dataResult,(void *)0x0,0);
+  atexit(_dynamic_atexit_destructor_for__g_fetchPlaylistsFileTask__);
+  return;
 }
 
 
 // 8293D718  `dynamic_initializer_for_'s_fetchPlaylistsFileInfoTask''  (qcommon/com_storage.cpp:150)
 
-int _dynamic_initializer_for__s_fetchPlaylistsFileInfoTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_fetchPlaylistsFileInfoTask__(void)
 
 {
-  int iVar1;
-  
-  bdFileInfo__bdFileInfo(0xffffffff8365d718);
-  bdFileData__bdFileData(0xffffffff8365d7c8,0,0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_fetchPlaylistsFileInfoTask__);
-  return iVar1;
+  bdFileInfo::bdFileInfo(&s_fetchPlaylistsFileInfoTask.m_infoResult);
+  bdFileData::bdFileData(&s_fetchPlaylistsFileInfoTask.m_dataResult,(void *)0x0,0);
+  atexit(_dynamic_atexit_destructor_for__s_fetchPlaylistsFileInfoTask__);
+  return;
 }
 
 
 // 8293D768  `dynamic_initializer_for_'matchDataTags''  (qcommon/com_storage.cpp:168)
 
-int _dynamic_initializer_for__matchDataTags__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__matchDataTags__(void)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  bdTag *this;
+  longlong lVar1;
   
-  bdEventLogID__bdEventLogID(0xffffffff8365d3c0);
-  bdEventLogID__bdEventLogID(0xffffffff8365d3d0);
-  lVar3 = 0x20;
-  lVar2 = -0x7c9a2c20;
+  bdEventLogID::bdEventLogID(&matchDataTags.matchId);
+  bdEventLogID::bdEventLogID(&matchDataTags.recipieId);
+  lVar1 = 0x20;
+  this = matchDataTags.tags;
   do {
-    bdTag__bdTag(lVar2);
-    lVar3 = lVar3 + -1;
-    lVar2 = lVar2 + 0x18;
-  } while (-1 < lVar3);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__matchDataTags__);
-  return iVar1;
+    bdTag::bdTag(this);
+    lVar1 = lVar1 + -1;
+    this = this + 1;
+  } while (-1 < lVar1);
+  atexit(_dynamic_atexit_destructor_for__matchDataTags__);
+  return;
 }
 
 
 // 8293D7D8  `dynamic_initializer_for_'storageTasks''  (qcommon/com_storage.cpp:177)
 
-int _dynamic_initializer_for__storageTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__storageTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  char *pcVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x8365bba8;
+  lVar2 = 0x20;
+  pcVar1 = g_fetchPlaylistsFileTask.m_infoResult.m_fileName + 0x10;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__storageTasks__);
-  return iVar1;
+    pcVar1 = pcVar1 + 0xa0;
+    pcVar1[0] = '\0';
+    pcVar1[1] = '\0';
+    pcVar1[2] = '\0';
+    pcVar1[3] = '\0';
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__storageTasks__);
+  return;
 }
 
 
 // 8293D808  `dynamic_initializer_for_'bdServerTime''  (qcommon/com_storage.cpp:188)
 
-int _dynamic_initializer_for__bdServerTime__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__bdServerTime__(void)
 
 {
-  int iVar1;
-  
-  bdTimeStamp__bdTimeStamp(0xffffffff8365b360);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__bdServerTime__);
-  return iVar1;
+  bdTimeStamp::bdTimeStamp(&bdServerTime);
+  atexit(_dynamic_atexit_destructor_for__bdServerTime__);
+  return;
 }
 
 
 // 8293D840  `dynamic_initializer_for_'s_metPlayerFileFileTasks''  (qcommon/com_storage.cpp:238)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__s_metPlayerFileFileTasks__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  undefined8 *puVar3;
+  ulong64 *puVar3;
   
   __savegprlr_29();
   lVar2 = 3;
-  puVar3 = &DAT_8365d048;
+  puVar3 = &s_metPlayerFileFileTasks[0].m_fileID;
   do {
-    *(undefined4 *)(puVar3 + -1) = 0;
-    *(undefined4 *)((int)puVar3 + -4) = 0;
+    ((dwFileTask *)(puVar3 + -1))->m_filename = (char *)0x0;
+    *(bdLobbyErrorCode *)((int)puVar3 + -4) = BD_NO_ERROR;
     *puVar3 = 0;
-    *(undefined4 *)(puVar3 + 1) = 0;
-    bdFileInfo__bdFileInfo(puVar3 + 2);
-    bdFileData__bdFileData(puVar3 + 0x18,0,0);
+    *(uint *)(puVar3 + 1) = 0;
+    bdFileInfo::bdFileInfo((bdFileInfo *)(puVar3 + 2));
+    bdFileData::bdFileData((bdFileData *)(puVar3 + 0x18),(void *)0x0,0);
     lVar2 = lVar2 + -1;
     puVar3 = puVar3 + 0x1c;
   } while (-1 < lVar2);
@@ -179,23 +212,25 @@ void _dynamic_initializer_for__s_metPlayerFileFileTasks__(void)
 
 // 8293D8A8  `dynamic_initializer_for_'s_entitlementConfigFileTasks''  (qcommon/com_storage.cpp:242)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_initializer_for__s_entitlementConfigFileTasks__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  undefined8 *puVar3;
+  ulong64 *puVar3;
   
   __savegprlr_29();
   lVar2 = 3;
-  puVar3 = &DAT_8365b7e0;
+  puVar3 = &s_entitlementConfigFileTasks[0].m_fileID;
   do {
-    *(undefined4 *)(puVar3 + -1) = 0;
-    *(undefined4 *)((int)puVar3 + -4) = 0;
+    ((dwFileTask *)(puVar3 + -1))->m_filename = (char *)0x0;
+    *(bdLobbyErrorCode *)((int)puVar3 + -4) = BD_NO_ERROR;
     *puVar3 = 0;
-    *(undefined4 *)(puVar3 + 1) = 0;
-    bdFileInfo__bdFileInfo(puVar3 + 2);
-    bdFileData__bdFileData(puVar3 + 0x18,0,0);
+    *(uint *)(puVar3 + 1) = 0;
+    bdFileInfo::bdFileInfo((bdFileInfo *)(puVar3 + 2));
+    bdFileData::bdFileData((bdFileData *)(puVar3 + 0x18),(void *)0x0,0);
     lVar2 = lVar2 + -1;
     puVar3 = puVar3 + 0x1c;
   } while (-1 < lVar2);
@@ -207,23 +242,25 @@ void _dynamic_initializer_for__s_entitlementConfigFileTasks__(void)
 
 // 8293D910  `dynamic_initializer_for_'s_socialConfigFileTasks''  (qcommon/com_storage.cpp:246)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_initializer_for__s_socialConfigFileTasks__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  undefined8 *puVar3;
+  ulong64 *puVar3;
   
   __savegprlr_29();
   lVar2 = 3;
-  puVar3 = &DAT_8365d7e8;
+  puVar3 = &s_socialConfigFileTasks[0].m_fileID;
   do {
-    *(undefined4 *)(puVar3 + -1) = 0;
-    *(undefined4 *)((int)puVar3 + -4) = 0;
+    ((dwFileTask *)(puVar3 + -1))->m_filename = (char *)0x0;
+    *(bdLobbyErrorCode *)((int)puVar3 + -4) = BD_NO_ERROR;
     *puVar3 = 0;
-    *(undefined4 *)(puVar3 + 1) = 0;
-    bdFileInfo__bdFileInfo(puVar3 + 2);
-    bdFileData__bdFileData(puVar3 + 0x18,0,0);
+    *(uint *)(puVar3 + 1) = 0;
+    bdFileInfo::bdFileInfo((bdFileInfo *)(puVar3 + 2));
+    bdFileData::bdFileData((bdFileData *)(puVar3 + 0x18),(void *)0x0,0);
     lVar2 = lVar2 + -1;
     puVar3 = puVar3 + 0x1c;
   } while (-1 < lVar2);
@@ -235,23 +272,25 @@ void _dynamic_initializer_for__s_socialConfigFileTasks__(void)
 
 // 8293D978  `dynamic_initializer_for_'g_statsFileFileTasks''  (qcommon/com_storage.cpp:258)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_initializer_for__g_statsFileFileTasks__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  undefined8 *puVar3;
+  ulong64 *puVar3;
   
   __savegprlr_29();
   lVar2 = 3;
-  puVar3 = &DAT_8365b370;
+  puVar3 = &g_statsFileFileTasks[0].m_fileID;
   do {
-    *(undefined4 *)(puVar3 + -1) = 0;
-    *(undefined4 *)((int)puVar3 + -4) = 0;
+    ((dwFileTask *)(puVar3 + -1))->m_filename = (char *)0x0;
+    *(bdLobbyErrorCode *)((int)puVar3 + -4) = BD_NO_ERROR;
     *puVar3 = 0;
-    *(undefined4 *)(puVar3 + 1) = 0;
-    bdFileInfo__bdFileInfo(puVar3 + 2);
-    bdFileData__bdFileData(puVar3 + 0x18,0,0);
+    *(uint *)(puVar3 + 1) = 0;
+    bdFileInfo::bdFileInfo((bdFileInfo *)(puVar3 + 2));
+    bdFileData::bdFileData((bdFileData *)(puVar3 + 0x18),(void *)0x0,0);
     lVar2 = lVar2 + -1;
     puVar3 = puVar3 + 0x1c;
   } while (-1 < lVar2);
@@ -263,177 +302,209 @@ void _dynamic_initializer_for__g_statsFileFileTasks__(void)
 
 // 824DF250  LiveStorage_ShowResetStatsError  (qcommon/com_storage.cpp:411)
 
-void LiveStorage_ShowResetStatsError(void)
+void LiveStorage_ShowResetStatsError(int param_1,StatsSource param_2)
 
 {
-  Com_Error(1,0xffffffff8208591c);
+  Com_Error(ERR_DROP,"MENU_RESETCUSTOMCLASSES");
   return;
 }
 
 
 // 824E6E88  LiveStorage_SetMatchDataTags  (qcommon/com_storage.cpp:427)
 
-void LiveStorage_SetMatchDataTags(void)
+bool LiveStorage_SetMatchDataTags(StructuredDataBuffer *param_1)
 
 {
   char cVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
+  StructuredDataBuffer *pSVar2;
+  StructuredDataDef *pSVar3;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  int iVar7;
-  char *pcVar8;
-  longlong lVar9;
-  undefined1 local_f0 [16];
-  longlong local_e0 [2];
-  char local_d0 [8];
-  undefined8 local_c8;
-  undefined8 local_c0;
-  undefined8 local_b8;
-  undefined1 auStack_b0 [32];
-  undefined1 auStack_90 [32];
-  undefined1 auStack_70 [112];
+  int iVar6;
+  undefined1 uVar7;
+  char *local_f0;
+  char *local_ec;
+  char *local_e8;
+  ulong64 local_e0;
+  char local_d0 [64];
+  char acStack_90 [32];
+  char acStack_70 [112];
   
-  uVar2 = __savegprlr_24();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1ac,0,0xffffffff82000f98,0xffffffff8200e484);
+  pSVar2 = (StructuredDataBuffer *)__savegprlr_24(param_1);
+  if (pSVar2 == (StructuredDataBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x1ac
+                    ,0,"%s");
   }
-  I_strncpyz(&stack0x00000000 + -0xb0,0xffffffff8207c298,0x20);
-  I_strncpyz(&stack0x00000000 + -0x90,0xffffffff8203248c,0x20);
-  I_strncpyz(&stack0x00000000 + -0x70,0xffffffff82032494,0x20);
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff82087800,0xe900);
-  memset(&DAT_8361cc60,0,0x3804);
-  lVar9 = 0;
-  DAT_8365d6f8 = 0;
+  local_f0 = local_d0 + 0x20;
+  local_ec = acStack_90;
+  local_e8 = acStack_70;
+  I_strncpyz(local_d0 + 0x20,"players",0x20);
+  I_strncpyz(acStack_90,"0",0x20);
+  I_strncpyz(acStack_70,"xuid",0x20);
+  pSVar3 = StructuredDataDef_GetAsset("mp/matchData.def",0xe900);
+  memset();
+  iVar6 = 0;
+  matchDataTags.numTags = 0;
   do {
-    uVar4 = va(0xffffffff82013b64,lVar9);
-    I_strncpyz(&stack0x00000000 + -0x90,uVar4,0x20);
-    pcVar5 = (char *)LiveStorage_MatchDataGetString(&stack0x00000000 + -0xf0,3,uVar2,uVar3);
-    pcVar6 = pcVar5;
+    pcVar4 = va("%d");
+    I_strncpyz(acStack_90,pcVar4,0x20);
+    pcVar5 = LiveStorage_MatchDataGetString(&local_f0,3,pSVar2,pSVar3);
+    pcVar4 = pcVar5;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    if (((int)pcVar6 - (int)pcVar5 != 1) &&
-       (sscanf(pcVar5,"%llx",&stack0x00000000 + -0xe0), local_e0[0] != 0)) {
-      (&DAT_8365d3e8)[DAT_8365d6f8 * 3] = 4;
-      (&DAT_8365d3f0)[DAT_8365d6f8 * 3] = local_e0[0];
-      DAT_8365d6f8 = DAT_8365d6f8 + 1;
+    if (((int)pcVar4 - (int)pcVar5 != 1) && (sscanf(pcVar5,"%llx"), local_e0 != 0)) {
+      matchDataTags.tags[matchDataTags.numTags].m_priTag = 4;
+      matchDataTags.tags[matchDataTags.numTags].m_secTag = local_e0;
+      matchDataTags.numTags = matchDataTags.numTags + 1;
     }
-    lVar9 = lVar9 + 1;
-  } while ((int)lVar9 < 0x1e);
-  I_strncpyz(&stack0x00000000 + -0xb0,0xffffffff82043710,0x20);
-  uVar4 = LiveStorage_MatchDataGetString(&stack0x00000000 + -0xf0,1,uVar2,uVar3);
-  I_strncpyz(&stack0x00000000 + -0xb0,0xffffffff820337c4,0x20);
-  pcVar6 = (char *)LiveStorage_MatchDataGetString(&stack0x00000000 + -0xf0,1,uVar2,uVar3);
-  iVar7 = CL_Demo_GetIndexForMapName(uVar4);
-  if (iVar7 != -1) {
-    (&DAT_8365d3e8)[DAT_8365d6f8 * 3] = 1;
-    (&DAT_8365d3f0)[DAT_8365d6f8 * 3] = (longlong)iVar7;
-    DAT_8365d6f8 = DAT_8365d6f8 + 1;
-    pcVar8 = strstr(pcVar6," hc");
-    pcVar5 = pcVar6;
-    if (pcVar8 != (char *)0x0) {
+    iVar6 = iVar6 + 1;
+  } while (iVar6 < 0x1e);
+  I_strncpyz(local_d0 + 0x20,"map",0x20);
+  pcVar4 = LiveStorage_MatchDataGetString(&local_f0,1,pSVar2,pSVar3);
+  I_strncpyz(local_d0 + 0x20,"gametype",0x20);
+  pcVar5 = LiveStorage_MatchDataGetString(&local_f0,1,pSVar2,pSVar3);
+  iVar6 = CL_Demo_GetIndexForMapName(pcVar4);
+  if (iVar6 != -1) {
+    matchDataTags.tags[matchDataTags.numTags].m_priTag = 1;
+    matchDataTags.tags[matchDataTags.numTags].m_secTag = (longlong)iVar6;
+    matchDataTags.numTags = matchDataTags.numTags + 1;
+    pcVar4 = strstr(pcVar5," hc");
+    if (pcVar4 != (char *)0x0) {
       do {
         cVar1 = *pcVar5;
         pcVar5 = pcVar5 + 1;
       } while (cVar1 != '\0');
-      local_c8 = 0;
-      local_c0 = 0;
-      local_b8 = 0;
-      memcpy(local_d0,pcVar6,(size_t)(pcVar5 + (-4 - (int)pcVar6)));
-      pcVar6 = &stack0x00000000 + -0xd0;
+      local_d0[0] = '\0';
+      local_d0[1] = '\0';
+      local_d0[2] = '\0';
+      local_d0[3] = '\0';
+      local_d0[4] = '\0';
+      local_d0[5] = '\0';
+      local_d0[6] = '\0';
+      local_d0[7] = '\0';
+      local_d0[8] = '\0';
+      local_d0[9] = '\0';
+      local_d0[10] = '\0';
+      local_d0[0xb] = '\0';
+      local_d0[0xc] = '\0';
+      local_d0[0xd] = '\0';
+      local_d0[0xe] = '\0';
+      local_d0[0xf] = '\0';
+      local_d0[0x10] = '\0';
+      local_d0[0x11] = '\0';
+      local_d0[0x12] = '\0';
+      local_d0[0x13] = '\0';
+      local_d0[0x14] = '\0';
+      local_d0[0x15] = '\0';
+      local_d0[0x16] = '\0';
+      local_d0[0x17] = '\0';
+      local_d0[0x18] = '\0';
+      local_d0[0x19] = '\0';
+      local_d0[0x1a] = '\0';
+      local_d0[0x1b] = '\0';
+      local_d0[0x1c] = '\0';
+      local_d0[0x1d] = '\0';
+      local_d0[0x1e] = '\0';
+      local_d0[0x1f] = '\0';
+      memcpy();
+      pcVar5 = local_d0;
     }
-    iVar7 = CL_Demo_GetIndexForGameType(pcVar6);
-    if (iVar7 != -1) {
-      (&DAT_8365d3e8)[DAT_8365d6f8 * 3] = 0;
-      (&DAT_8365d3f0)[DAT_8365d6f8 * 3] = (longlong)iVar7;
-      DAT_8365d6f8 = DAT_8365d6f8 + 1;
-      __restgprlr_24(1);
-      return;
+    iVar6 = CL_Demo_GetIndexForGameType(pcVar5);
+    if (iVar6 != -1) {
+      matchDataTags.tags[matchDataTags.numTags].m_priTag = 0;
+      matchDataTags.tags[matchDataTags.numTags].m_secTag = (longlong)iVar6;
+      matchDataTags.numTags = matchDataTags.numTags + 1;
+      uVar7 = __restgprlr_24(1);
+      return (bool)uVar7;
     }
   }
-  DAT_8365d6f8 = 0;
-  __restgprlr_24(0);
-  return;
+  matchDataTags.numTags = 0;
+  uVar7 = __restgprlr_24(0);
+  return (bool)uVar7;
 }
 
 
 // 824E71A8  LiveStorage_SendMatchData  (qcommon/com_storage.cpp:508)
 
-void LiveStorage_SendMatchData(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+void LiveStorage_SendMatchData(int param_1,ulong64 param_2,StructuredDataBuffer *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar4;
-  int iVar3;
-  int *piVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
+  int iVar1;
+  overlappedTask *poVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  StructuredDataBuffer *pSVar5;
+  DWRecordEventType DVar6;
+  ulong64 uVar7;
   
-  uVar1 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1fd,0,0xffffffff82000f98,0xffffffff8200e484);
+  uVar4 = (ulonglong)(int)param_3;
+  iVar1 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x1fd
+                    ,0,"%s");
   }
-  piVar5 = (int *)param_3;
-  if (*piVar5 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1fe,0,0xffffffff82000f98,0xffffffff820878e8);
+  pSVar5 = (StructuredDataBuffer *)uVar4;
+  if (pSVar5->data == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x1fe
+                    ,0,"%s");
   }
-  if (0xe900 < (uint)piVar5[1]) {
-    MyAssertHandler(0xffffffff820859c8,0x1ff,0,0xffffffff82000f98,0xffffffff820878c0);
+  if (0xe900 < pSVar5->size) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x1ff
+                    ,0,"%s");
   }
-  if (DAT_84546d20 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x203,0,0xffffffff82000f98,0xffffffff820878ac);
+  if (matchdata_active == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x203
+                    ,0,"%s");
   }
-  if (*(int *)(DAT_84546d20 + 0xc) == 0) {
-    Com_Printf(0x10,0xffffffff8208788c);
+  if ((matchdata_active->current).integer == 0) {
+    Com_Printf(0x10,"Match data events are disabled\n");
     __restgprlr_27();
     return;
   }
-  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,8);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintWarning(0x10,0xffffffff82087860);
+  poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar1,8);
+  if (poVar2 == (overlappedTask *)0x0) {
+    Com_PrintWarning(0x10,"Couldn\'t allocate task for storage upload\n");
     __restgprlr_27();
     return;
   }
-  cVar4 = LiveStorage_SetMatchDataTags(param_3);
-  if (cVar4 == '\0') {
-    Com_PrintError(0x10,0xffffffff82087834);
-    TaskManager_ClearTask(uVar2);
+  bVar3 = LiveStorage_SetMatchDataTags(pSVar5);
+  if (!bVar3) {
+    Com_PrintError(0x10,"Could not set up tag array for match data\n");
+    TaskManager_ClearTask(poVar2);
     __restgprlr_27();
     return;
   }
-  uVar1 = MSG_CompressWithZLib(*piVar5,piVar5[1],0xffffffff8361cc64,0x3800);
-  DAT_8361cc60 = (int)uVar1;
-  if (DAT_8361cc60 < 1) {
-    memset(&DAT_8361cc60,0,0x3804);
-    DAT_8365d6f8 = 0;
-    Com_PrintWarning(0x10,0xffffffff82087814);
+  iVar1 = MSG_CompressWithZLib(pSVar5->data,pSVar5->size,matchDataGlob.matchData,0x3800);
+  matchDataGlob.size = iVar1;
+  if (iVar1 < 1) {
+    memset();
+    matchDataTags.numTags = 0;
+    Com_PrintWarning(0x10,"Problem compressing match data\n");
   }
-  else if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-    cVar4 = *(char *)(DAT_84253bb8 + 0xc);
-    (&DAT_8365d3e8)[DAT_8365d6f8 * 3] = 8;
-    if (cVar4 == '\0') {
+  else if ((onlinegame->current).enabled != false) {
+    bVar3 = (xblive_privatematch->current).enabled;
+    matchDataTags.tags[matchDataTags.numTags].m_priTag = 8;
+    if (bVar3 == false) {
       uVar7 = 1;
-      uVar6 = 1;
+      DVar6 = DW_EVENT_MATCHDATA;
     }
     else {
       uVar7 = 2;
-      uVar6 = 2;
+      DVar6 = DW_EVENT_MATCHDATA_PRIVATE;
     }
-    (&DAT_8365d3f0)[DAT_8365d6f8 * 3] = uVar7;
-    DAT_8365d6f8 = DAT_8365d6f8 + 1;
-    iVar3 = dwRecordEvent(uVar2,0xffffffff8361cc64,uVar1,uVar6);
-    if (iVar3 == 0) {
-      TaskManager_ClearTask(uVar2);
+    matchDataTags.tags[matchDataTags.numTags].m_secTag = uVar7;
+    matchDataTags.numTags = matchDataTags.numTags + 1;
+    iVar1 = dwRecordEvent(poVar2,matchDataGlob.matchData,iVar1,DVar6,&matchDataTags.matchId);
+    if (iVar1 == 0) {
+      TaskManager_ClearTask(poVar2);
       __restgprlr_27();
       return;
     }
     goto LAB_824e740c;
   }
-  TaskManager_ClearTask(uVar2);
+  TaskManager_ClearTask(poVar2);
 LAB_824e740c:
   __restgprlr_27();
   return;
@@ -442,296 +513,305 @@ LAB_824e740c:
 
 // 824DF260  LiveStorage_SendMatchDataComplete  (qcommon/com_storage.cpp:579)
 
-void LiveStorage_SendMatchDataComplete(void)
+taskCompleteResults LiveStorage_SendMatchDataComplete(int param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
+  int iVar1;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   int iVar4;
   
-  iVar3 = __savegprlr_28();
-  iVar4 = iVar3 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x24a,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar1 = __savegprlr_28(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x24a
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 8) {
-    MyAssertHandler(0xffffffff820859c8,0x24b,0,0xffffffff82000f98,0xffffffff820859a4);
+  if (storageTasks.tasks[iVar1].type != 8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x24b
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventComplete(&DAT_8365bc40 + iVar4);
-  iVar3 = (int)uVar1;
-  if (iVar3 == 0) {
-    __restgprlr_28();
-    return;
+  tVar2 = dwRecordEventComplete(storageTasks.tasks + iVar1);
+  if (tVar2 == TASK_NOTCOMPLETE) {
+    tVar2 = __restgprlr_28();
+    return tVar2;
   }
-  if (iVar3 == 2) {
-    Com_PrintError(0x10,0xffffffff82085988);
+  if (tVar2 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to write match data\n");
   }
-  else if (iVar3 == 1) {
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar4],9);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085960);
-      uVar1 = 2;
+  else if (tVar2 == TASK_COMPLETE) {
+    poVar3 = TaskManager_GetOpenTaskSlot
+                       (&storageTasks,(uint)storageTasks.tasks[iVar1].controllerIndex,9);
+    if (poVar3 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate task for set tags\n");
+      tVar2 = TASK_ERROR;
     }
-    iVar3 = dwSetTagsEventRecord(uVar2,0xffffffff8365d3e0,DAT_8365d6f8);
-    if (iVar3 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085934);
-      TaskManager_ClearTask(uVar2);
-      uVar1 = 2;
+    iVar4 = dwSetTagsEventRecord
+                      (poVar3,matchDataTags.tags,matchDataTags.numTags,&matchDataTags.matchId);
+    if (iVar4 == 0) {
+      Com_PrintWarning(0x10,"Couldn\'t start set tags for matchsummary\n");
+      TaskManager_ClearTask(poVar3);
+      tVar2 = TASK_ERROR;
     }
   }
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar4);
-  memset(&DAT_8361cc60,0,0x3804);
-  __restgprlr_28(uVar1);
-  return;
+  TaskManager_ClearTask(storageTasks.tasks + iVar1);
+  memset();
+  tVar2 = __restgprlr_28(tVar2);
+  return tVar2;
 }
 
 
 // 824DF3C0  LiveStorage_SetTagsMatchDataComplete  (qcommon/com_storage.cpp:624)
 
-void LiveStorage_SetTagsMatchDataComplete(void)
+taskCompleteResults LiveStorage_SetTagsMatchDataComplete(int param_1)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  int iVar1;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
+  char *pcVar4;
   int iVar5;
   
-  iVar4 = __savegprlr_28();
-  iVar5 = iVar4 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x277,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar1 = __savegprlr_28(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x277
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar4 * 0x28] != 9) {
-    MyAssertHandler(0xffffffff820859c8,0x278,0,0xffffffff82000f98,0xffffffff82085aa0);
+  if (storageTasks.tasks[iVar1].type != 9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x278
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventSetTagsComplete(&DAT_8365bc40 + iVar5);
-  iVar4 = (int)uVar1;
-  if (iVar4 == 0) {
-    __restgprlr_28();
-    return;
+  tVar2 = dwRecordEventSetTagsComplete(storageTasks.tasks + iVar1);
+  if (tVar2 == TASK_NOTCOMPLETE) {
+    tVar2 = __restgprlr_28();
+    return tVar2;
   }
-  if (iVar4 == 2) {
-    Com_PrintError(0x10,0xffffffff82085a7c);
+  if (tVar2 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to set tags on match data\n");
   }
-  else if (iVar4 == 1) {
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar5],10);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085a4c);
-      uVar1 = 2;
+  else if (tVar2 == TASK_COMPLETE) {
+    poVar3 = TaskManager_GetOpenTaskSlot
+                       (&storageTasks,(uint)storageTasks.tasks[iVar1].controllerIndex,10);
+    if (poVar3 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate task for recording matachid\n");
+      tVar2 = TASK_ERROR;
     }
-    uVar3 = Playlist_GetPlaylistIdForNum((&DAT_8365bcd5)[iVar5],*(undefined4 *)(DAT_82aa1adc + 0xc))
-    ;
-    uVar3 = va(0xffffffff82085a3c,uVar3,DAT_8365d3c8);
-    iVar4 = dwRecordStringEvent(uVar2,uVar3,4);
-    if (iVar4 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085a0c);
-      TaskManager_ClearTask(uVar2);
-      uVar1 = 2;
+    Playlist_GetPlaylistIdForNum
+              ((uint)storageTasks.tasks[iVar1].controllerIndex,(playlist->current).integer);
+    pcVar4 = va("pl:%d,id:%llu");
+    iVar5 = dwRecordStringEvent(poVar3,pcVar4,DW_EVENT_MATCH_RECORD_FINISHED);
+    if (iVar5 == 0) {
+      Com_PrintWarning(0x10,"Couldn\'t start record record event for matchid\n");
+      TaskManager_ClearTask(poVar3);
+      tVar2 = TASK_ERROR;
     }
   }
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar5);
-  DAT_8365d6f8 = 0;
-  __restgprlr_28(uVar1);
-  return;
+  TaskManager_ClearTask(storageTasks.tasks + iVar1);
+  matchDataTags.numTags = 0;
+  tVar2 = __restgprlr_28(tVar2);
+  return tVar2;
 }
 
 
 // 824DF538  LiveStorage_RecordMatchIDComplete  (qcommon/com_storage.cpp:672)
 
-void LiveStorage_RecordMatchIDComplete(void)
+taskCompleteResults LiveStorage_RecordMatchIDComplete(int param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar4;
-  undefined *puVar5;
+  overlappedTask *poVar1;
+  int iVar2;
+  taskCompleteResults tVar3;
+  GameStateInfo *pGVar4;
+  overlappedTask *poVar5;
+  StructuredDataDef *pSVar6;
   
-  iVar3 = __savegprlr_28();
-  iVar4 = iVar3 * 0xa0;
-  puVar5 = &DAT_8365bc40 + iVar4;
-  if ((&DAT_8365bcd4)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x2a7,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar2 = __savegprlr_28(param_1);
+  poVar1 = storageTasks.tasks + iVar2;
+  if (storageTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x2a7
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 10) {
-    MyAssertHandler(0xffffffff820859c8,0x2a8,0,0xffffffff82000f98,0xffffffff82085b4c);
+  if (storageTasks.tasks[iVar2].type != 10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x2a8
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventComplete(puVar5);
-  iVar3 = (int)uVar1;
-  if (iVar3 == 0) {
-    __restgprlr_28();
-    return;
+  tVar3 = dwRecordEventComplete(poVar1);
+  if (tVar3 == TASK_NOTCOMPLETE) {
+    tVar3 = __restgprlr_28();
+    return tVar3;
   }
-  if (iVar3 == 1) {
-    iVar3 = GameStateInfo_Get();
-    if (*(int *)(iVar3 + 4) != 0) {
-      uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar4],0xb);
-      if ((uVar2 & 0xffffffff) == 0) {
-        Com_PrintWarning(0x10,0xffffffff82085b18);
-        uVar1 = 2;
+  if (tVar3 == TASK_COMPLETE) {
+    pGVar4 = GameStateInfo_Get();
+    if (pGVar4->usingRecipe != 0) {
+      poVar5 = TaskManager_GetOpenTaskSlot
+                         (&storageTasks,(uint)storageTasks.tasks[iVar2].controllerIndex,0xb);
+      if (poVar5 == (overlappedTask *)0x0) {
+        Com_PrintWarning(0x10,"Couldn\'t allocate task for recording match recipe\n");
+        tVar3 = TASK_ERROR;
       }
-      iVar4 = StructuredDataDef_GetAsset(0xffffffff8203d614,0xc00);
-      iVar3 = dwRecordEvent(uVar2,*(undefined4 *)(iVar3 + 8),*(undefined4 *)(iVar4 + 0x30),3,
-                            0xffffffff8365d3d0);
-      if (iVar3 == 0) {
-        Com_PrintWarning(0x10,0xffffffff82085ae0);
-        TaskManager_ClearTask(uVar2);
-        TaskManager_ClearTask(puVar5);
-        __restgprlr_28(2);
-        return;
+      pSVar6 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+      iVar2 = dwRecordEvent(poVar5,pGVar4->matchRules->data,pSVar6->size,DW_EVENT_MATCHDATA_RECIPE,
+                            &matchDataTags.recipieId);
+      if (iVar2 == 0) {
+        Com_PrintWarning(0x10,"Couldn\'t start record record event for match recipe\n");
+        TaskManager_ClearTask(poVar5);
+        TaskManager_ClearTask(poVar1);
+        tVar3 = __restgprlr_28(2);
+        return tVar3;
       }
     }
   }
-  else if (iVar3 == 2) {
-    Com_PrintError(0x10,0xffffffff82085ac4);
+  else if (tVar3 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to record match id\n");
   }
-  TaskManager_ClearTask(puVar5);
-  __restgprlr_28(uVar1);
-  return;
+  TaskManager_ClearTask(poVar1);
+  tVar3 = __restgprlr_28(tVar3);
+  return tVar3;
 }
 
 
 // 824DF6C0  LiveStorage_SendMatchRecipeComplete  (qcommon/com_storage.cpp:720)
 
-void LiveStorage_SendMatchRecipeComplete(void)
+taskCompleteResults LiveStorage_SendMatchRecipeComplete(int param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar4;
-  undefined *puVar5;
+  overlappedTask *poVar1;
+  int iVar2;
+  taskCompleteResults tVar3;
+  overlappedTask *poVar4;
   
-  iVar3 = __savegprlr_28();
-  iVar4 = iVar3 * 0xa0;
-  puVar5 = &DAT_8365bc40 + iVar4;
-  if ((&DAT_8365bcd4)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x2d7,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar2 = __savegprlr_28(param_1);
+  poVar1 = storageTasks.tasks + iVar2;
+  if (storageTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x2d7
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0xb) {
-    MyAssertHandler(0xffffffff820859c8,0x2d8,0,0xffffffff82000f98,0xffffffff82085bec);
+  if (storageTasks.tasks[iVar2].type != 0xb) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x2d8
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventComplete(puVar5);
-  iVar3 = (int)uVar1;
-  if (iVar3 == 0) {
-    __restgprlr_28();
-    return;
+  tVar3 = dwRecordEventComplete(poVar1);
+  if (tVar3 == TASK_NOTCOMPLETE) {
+    tVar3 = __restgprlr_28();
+    return tVar3;
   }
-  if (iVar3 == 2) {
-    Com_PrintError(0x10,0xffffffff82085bcc);
-    TaskManager_ClearTask(puVar5);
-    __restgprlr_28(uVar1);
-    return;
+  if (tVar3 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to write match recipe\n");
+    TaskManager_ClearTask(poVar1);
+    tVar3 = __restgprlr_28(2);
+    return tVar3;
   }
-  if (iVar3 == 1) {
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar4],0xc);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085b9c);
-      uVar1 = 2;
+  if (tVar3 == TASK_COMPLETE) {
+    poVar4 = TaskManager_GetOpenTaskSlot
+                       (&storageTasks,(uint)storageTasks.tasks[iVar2].controllerIndex,0xc);
+    if (poVar4 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate task for set tags(recipe)\n");
+      tVar3 = TASK_ERROR;
     }
-    DAT_8365d3e8 = 7;
-    DAT_8365d400 = 8;
-    DAT_8365d408 = 3;
-    DAT_8365d6f8 = 2;
-    DAT_8365d3f0 = DAT_8365d3c8;
-    iVar3 = dwSetTagsEventRecord(uVar2,0xffffffff8365d3e0,2,0xffffffff8365d3d0);
-    if (iVar3 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82085b70);
-      TaskManager_ClearTask(uVar2);
-      uVar1 = 2;
+    matchDataTags.tags[0].m_priTag = 7;
+    matchDataTags.tags[1].m_priTag = 8;
+    matchDataTags.tags[1].m_secTag = 3;
+    matchDataTags.numTags = 2;
+    matchDataTags.tags[0].m_secTag = matchDataTags.matchId.m_eventLogID;
+    iVar2 = dwSetTagsEventRecord(poVar4,matchDataTags.tags,2,&matchDataTags.recipieId);
+    if (iVar2 == 0) {
+      Com_PrintWarning(0x10,"Couldn\'t start set tags for match recipe\n");
+      TaskManager_ClearTask(poVar4);
+      tVar3 = TASK_ERROR;
     }
   }
-  TaskManager_ClearTask(puVar5);
-  __restgprlr_28(uVar1);
-  return;
+  TaskManager_ClearTask(poVar1);
+  tVar3 = __restgprlr_28(tVar3);
+  return tVar3;
 }
 
 
 // 824DF848  LiveStorage_UpdateMatchRecipeTagsComplete  (qcommon/com_storage.cpp:769)
 
-void LiveStorage_UpdateMatchRecipeTagsComplete(void)
+taskCompleteResults LiveStorage_UpdateMatchRecipeTagsComplete(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  taskCompleteResults tVar2;
   
-  iVar2 = __savegprlr_29();
-  if ((&DAT_8365bcd4)[iVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x308,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar1 = __savegprlr_29(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x308
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0xc) {
-    MyAssertHandler(0xffffffff820859c8,0x309,0,0xffffffff82000f98,0xffffffff82085c30);
+  if (storageTasks.tasks[iVar1].type != 0xc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x309
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventComplete(&DAT_8365bc40 + iVar2 * 0xa0);
-  if ((int)uVar1 == 0) {
-    __restgprlr_29();
-    return;
+  tVar2 = dwRecordEventComplete(storageTasks.tasks + iVar1);
+  if (tVar2 == TASK_NOTCOMPLETE) {
+    tVar2 = __restgprlr_29();
+    return tVar2;
   }
-  if ((int)uVar1 == 2) {
-    Com_PrintWarning(0x10,0xffffffff82085c0c);
+  if (tVar2 == TASK_ERROR) {
+    Com_PrintWarning(0x10,"Couldn\'t set tags for match recipe\n");
   }
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar2 * 0xa0);
-  DAT_8365d6f8 = 0;
-  __restgprlr_29(uVar1);
-  return;
+  TaskManager_ClearTask(storageTasks.tasks + iVar1);
+  matchDataTags.numTags = 0;
+  tVar2 = __restgprlr_29(tVar2);
+  return tVar2;
 }
 
 
 // 824DF928  LiveStorage_LogComplete  (qcommon/com_storage.cpp:797)
 
-void LiveStorage_LogComplete(void)
+taskCompleteResults LiveStorage_LogComplete(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  taskCompleteResults tVar2;
   
-  iVar2 = __savegprlr_29();
-  if ((&DAT_8365bcd4)[iVar2 * 0xa0] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x324,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar1 = __savegprlr_29(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x324
+                    ,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0xd) {
-    MyAssertHandler(0xffffffff820859c8,0x325,0,0xffffffff82000f98,0xffffffff82085c78);
+  if (storageTasks.tasks[iVar1].type != 0xd) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x325
+                    ,0,"%s");
   }
-  uVar1 = dwRecordEventComplete(&DAT_8365bc40 + iVar2 * 0xa0);
-  if ((int)uVar1 == 0) {
-    __restgprlr_29();
-    return;
+  tVar2 = dwRecordEventComplete(storageTasks.tasks + iVar1);
+  if (tVar2 == TASK_NOTCOMPLETE) {
+    tVar2 = __restgprlr_29();
+    return tVar2;
   }
-  if ((int)uVar1 == 2) {
-    Com_PrintWarning(0x10,0xffffffff82085c58);
+  if (tVar2 == TASK_ERROR) {
+    Com_PrintWarning(0x10,"Unable to log challenge data\n");
   }
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar2 * 0xa0);
-  __restgprlr_29(uVar1);
-  return;
+  TaskManager_ClearTask(storageTasks.tasks + iVar1);
+  tVar2 = __restgprlr_29(tVar2);
+  return tVar2;
 }
 
 
 // 824E7418  LiveStorage_LogPrestige  (qcommon/com_storage.cpp:824)
 
-void LiveStorage_LogPrestige(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void LiveStorage_LogPrestige(int param_1,ulong64 param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
+  int iVar1;
+  StatsSource SVar2;
+  overlappedTask *poVar3;
   char acStack_120 [288];
   
-  uVar1 = __savegprlr_29();
-  iVar3 = LiveStorage_GetActiveStatsSource();
-  if (iVar3 == 0) {
-    uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0xd);
-    if ((uVar2 & 0xffffffff) == 0) {
-      Com_PrintWarning(0x10,0xffffffff820851c0);
+  iVar1 = __savegprlr_29(param_1,param_2,param_3);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar1,0xd);
+    if (poVar3 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate task for storage upload");
       __restgprlr_29();
       return;
     }
-    memset(acStack_120,0,0x100);
-    _snprintf(acStack_120,0x100,"%llu %d",param_2,param_3);
-    iVar3 = dwRecordStringEvent(uVar2,acStack_120,3);
-    if (iVar3 == 0) {
-      TaskManager_ClearTask(uVar2);
+    memset();
+    _snprintf(acStack_120,0x100,"%llu %d");
+    iVar1 = dwRecordStringEvent(poVar3,acStack_120,DW_EVENT_LOGPRESTIGE);
+    if (iVar1 == 0) {
+      TaskManager_ClearTask(poVar3);
     }
   }
   __restgprlr_29();
@@ -741,82 +821,94 @@ void LiveStorage_LogPrestige(undefined8 param_1,undefined8 param_2,undefined8 pa
 
 // 824EEA20  LiveStorage_ResetStatsWithConfirmation  (qcommon/com_storage.cpp:853)
 
-void LiveStorage_ResetStatsWithConfirmation(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetStatsWithConfirmation
+               (int param_1,StatsSource param_2,ResetStatsReason param_3)
 
 {
-  bool bVar1;
-  int iVar3;
-  char cVar5;
-  undefined8 uVar2;
+  dvar_t *pdVar1;
+  int iVar2;
+  bool bVar5;
+  LocalClientNum_t LVar3;
   int iVar4;
-  int iVar6;
+  ulonglong uVar6;
   
-  iVar3 = __savegprlr_27();
-  iVar4 = DAT_82aa1af8;
-  iVar6 = (int)param_2;
-  DAT_8363388c = iVar6;
-  if (iVar6 == 0) {
-    (&DAT_8361cc10)[iVar3 * 0x14] = 1;
-    if ((((*(char *)(iVar4 + 0xc) == '\0') && (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) &&
-        (*(char *)(DAT_82b3ecb8 + 0xc) == '\0')) &&
-       (cVar5 = Live_HasAcceptedInvitation(), cVar5 == '\0')) {
-      Com_Printf(0x10,0xffffffff82089a58,iVar3,0,param_3);
-      iVar3 = iVar3 * 0x9238;
-      (&DAT_836398d2)[iVar3] = 0;
-      (&DAT_836398d0)[iVar3] = 0;
-      (&DAT_836398d3)[iVar3] = 0;
-      (&DAT_836398d4)[iVar3] = 0;
+  uVar6 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_27(param_1);
+  pdVar1 = onlinegame;
+  s_resetStatsConfirmationSource = param_2;
+  if (param_2 == STATS_ONLINE) {
+    controllerStorageData[iVar2].dontDownloadAtMainMenu = true;
+    if (((((pdVar1->current).enabled == false) && ((systemlink->current).enabled == false)) &&
+        ((splitscreen->current).enabled == false)) && (bVar5 = Live_HasAcceptedInvitation(), !bVar5)
+       ) {
+      Com_Printf(0x10,
+                 "Want to show \'reset stats\' confirmation for controller %i, stats source %i, reason %i, but aborting because we are at the main menu.\n"
+                );
+      controllerStatData[iVar2].playerStats[0].statWriteNeeded = false;
+      controllerStatData[iVar2].playerStats[0].statsFetched = false;
+      controllerStatData[iVar2].playerStats[0].firstTimeRunning = false;
+      controllerStatData[iVar2].playerStats[0].allowSavingProgress = false;
       __restgprlr_27();
       return;
     }
   }
-  if ((DAT_82b3e544 & 4) != 0) {
-    Cmd_ExecuteSingleCommand(0,iVar3,0xffffffff82089a3c);
+  if ((clientUIActives[0].keyCatchers & 4U) != 0) {
+    Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,iVar2,"endsplitscreensignin\n");
   }
-  if (DAT_82966e98 != 0) {
-    uVar2 = CL_LocalClientNumFromControllerIndex(iVar3);
-    Cmd_ExecuteSingleCommand(uVar2,iVar3,0xffffffff820899f8);
-    CL_SetControllerInUse(iVar3);
-    CL_LocalClientNumFromControllerIndex(iVar3);
-    iVar4 = CL_ControllerIndexFromClientNum();
-    if (iVar4 != iVar3) {
-      CL_LocalClientNumFromControllerIndex(iVar3);
-      uVar2 = CL_ControllerIndexFromClientNum();
-      MyAssertHandler(0xffffffff820859c8,0x377,0,0xffffffff82085e40,uVar2,iVar3);
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+    Cmd_ExecuteSingleCommand
+              (LVar3,iVar2,"forcenosplitscreencontrol LiveStorage_ResetStatsWithConfirmation\n");
+    CL_SetControllerInUse(iVar2);
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    if (iVar4 != iVar2) {
+      LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+      CL_ControllerIndexFromClientNum(LVar3);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x377,0,
+                      "CL_ControllerIndexFromClientNum( CL_LocalClientNumFromControllerIndex( controllerIndex ) ) == controllerIndex\n\t%i, %i"
+                     );
     }
-    if (DAT_82966e98 != 0) {
-      MyAssertHandler(0xffffffff820859c8,0x37a,0,0xffffffff82000f98,0xffffffff82085c98);
+    if (cl_multi_gamepads_enabled != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x37a,0,"%s");
     }
   }
-  if (DAT_82b5c820 != iVar3) {
-    Com_Printf(0x10,0xffffffff82089968,iVar3,param_2,param_3);
-    iVar4 = iVar6 * 0x3005 + iVar3 * 0x9238;
-    (&DAT_836398d2)[iVar4] = 0;
-    (&DAT_836398d0)[iVar4] = 0;
-    (&DAT_836398d3)[iVar4] = 0;
-    (&DAT_836398d4)[iVar4] = 0;
+  if (cl_controller_in_use != iVar2) {
+    Com_Printf(0x10,
+               "Want to show \'reset stats\' confirmation for controller %i, stats source %i, reason %i, but aborting because the controller is not in use.\n"
+              );
+    controllerStatData[iVar2].playerStats[param_2].statWriteNeeded = false;
+    controllerStatData[iVar2].playerStats[param_2].statsFetched = false;
+    controllerStatData[iVar2].playerStats[param_2].firstTimeRunning = false;
+    controllerStatData[iVar2].playerStats[param_2].allowSavingProgress = false;
     __restgprlr_27();
     return;
   }
-  Com_Printf(0x10,0xffffffff82089918,iVar3,param_2,param_3);
-  if ((param_3 & 0xffffffff) < 4) {
-    bVar1 = (int)param_3 != 0;
-    if (param_3 == 1 && bVar1) {
-      Com_SetErrorMessage(0xffffffff820898cc);
+  Com_Printf(0x10,"Showing reset stats confirmation for controller %i, stats source %i, reason %i\n"
+            );
+  if ((uVar6 & 0xffffffff) < 4) {
+    bVar5 = (int)uVar6 != 0;
+    if (uVar6 == 1 && bVar5) {
+      Com_SetErrorMessage("MENU_CORRUPT_STATS_WARNING_ONLINE");
     }
-    else if ((param_3 == 2 && bVar1) || (bVar1)) {
-      Com_SetErrorMessage(0xffffffff820898a8);
+    else if ((uVar6 == 2 && bVar5) || (bVar5)) {
+      Com_SetErrorMessage("MENU_STATS_WRONG_VERSION_WARNING");
     }
     else {
-      Com_SetErrorMessage(0xffffffff820898f0);
+      Com_SetErrorMessage("MENU_CORRUPT_STATS_WARNING_OFFLINE");
     }
   }
-  else if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x393,0,0xffffffff8202882c);
+  else if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x393
+                    ,0,"unreachable");
   }
-  uVar2 = CL_LocalClientNumFromControllerIndex(iVar3);
-  UI_OpenMenu(uVar2,0xffffffff82088ea8);
-  LiveStorage_ResetStats(iVar3,param_2);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+  UI_OpenMenu(LVar3,"menu_resetstats_warning");
+  LiveStorage_ResetStats(iVar2,param_2);
   __restgprlr_27();
   return;
 }
@@ -824,113 +916,125 @@ void LiveStorage_ResetStatsWithConfirmation(undefined8 param_1,undefined8 param_
 
 // 824E74C8  LiveStorage_ResetStatsCancel  (qcommon/com_storage.cpp:938)
 
-void LiveStorage_ResetStatsCancel(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetStatsCancel(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  int iVar3;
+  StatsSource SVar1;
+  uint uVar2;
+  bool bVar3;
   
-  uVar1 = CL_ControllerIndexFromClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x3ac,0,0xffffffff82057c60,uVar1,4);
+  uVar2 = CL_ControllerIndexFromClientNum(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x3ac
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (DAT_82966e98 != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x3af,0,0xffffffff82000f98,0xffffffff82085c98);
+  if (cl_multi_gamepads_enabled != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x3af
+                    ,0,"%s");
   }
-  iVar3 = DAT_8363388c * 0x3005 + (int)uVar1 * 0x9238;
-  (&DAT_836398d2)[iVar3] = 0;
-  (&DAT_836398d0)[iVar3] = 0;
-  (&DAT_836398d3)[iVar3] = 0;
-  (&DAT_836398d4)[iVar3] = 0;
-  cVar2 = Live_HasAcceptedInvitation();
-  if (cVar2 != '\0') {
+  SVar1 = s_resetStatsConfirmationSource;
+  controllerStatData[uVar2].playerStats[s_resetStatsConfirmationSource].statWriteNeeded = false;
+  controllerStatData[uVar2].playerStats[SVar1].statsFetched = false;
+  controllerStatData[uVar2].playerStats[SVar1].firstTimeRunning = false;
+  controllerStatData[uVar2].playerStats[SVar1].allowSavingProgress = false;
+  bVar3 = Live_HasAcceptedInvitation();
+  if (bVar3) {
     Live_DeclineInvitation();
   }
-  Dvar_SetBool(DAT_82b3e4c8,0);
-  if (*(char *)(DAT_82b3ecb8 + 0xc) != '\0') {
-    CL_MakeActiveLocalClientInactive(uVar1);
+  Dvar_SetBool(useonlinestats,false);
+  if ((splitscreen->current).enabled != false) {
+    CL_MakeActiveLocalClientInactive(uVar2);
     CL_EndSplitscreenSignin();
   }
-  UI_SetActiveMenu(0,0);
-  UI_SetActiveMenu(0,1);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,0);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,1);
   return;
 }
 
 
 // 824DF9F8  LiveStorage_ResetStatsConfirm  (qcommon/com_storage.cpp:978)
 
-void LiveStorage_ResetStatsConfirm(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetStatsConfirm(LocalClientNum_t param_1)
 
 {
-  if (DAT_82966e98 != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x3d4,0,0xffffffff82000f98,0xffffffff82085c98);
+  if (cl_multi_gamepads_enabled != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x3d4
+                    ,0,"%s");
   }
   CL_ControllerIndexFromClientNum(param_1);
-  Com_Error(1,0xffffffff8208591c);
+  Com_Error(ERR_DROP,"MENU_RESETCUSTOMCLASSES");
   return;
 }
 
 
 // 824DFA70  LiveStorage_DiscardStats  (qcommon/com_storage.cpp:990)
 
-void LiveStorage_DiscardStats(int param_1,int param_2)
+void LiveStorage_DiscardStats(int param_1,StatsSource param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x3005 + param_1 * 0x9238;
-  (&DAT_836398d2)[iVar1] = 0;
-  (&DAT_836398d0)[iVar1] = 0;
-  (&DAT_836398d3)[iVar1] = 0;
-  (&DAT_836398d4)[iVar1] = 0;
+  controllerStatData[param_1].playerStats[param_2].statWriteNeeded = false;
+  controllerStatData[param_1].playerStats[param_2].statsFetched = false;
+  controllerStatData[param_1].playerStats[param_2].firstTimeRunning = false;
+  controllerStatData[param_1].playerStats[param_2].allowSavingProgress = false;
   return;
 }
 
 
 // 824EED00  LiveStorage_FinalizeStatsRead  (qcommon/com_storage.cpp:1000)
 
-void LiveStorage_FinalizeStatsRead(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_FinalizeStatsRead(int param_1,StatsSource param_2,StructuredDataDef *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar4;
+  int iVar2;
+  bool bVar3;
+  longlong lVar4;
   longlong lVar5;
-  byte *pbVar6;
-  longlong lVar7;
-  undefined4 local_40 [16];
+  uint *puVar6;
+  StatsSource SVar7;
+  longlong lVar8;
+  uint local_40 [16];
   
-  uVar2 = __savegprlr_27();
-  lVar7 = param_2 * 0x3005 + (longlong)(int)uVar2 * 0x9238;
-  iVar1 = (int)lVar7;
-  (&DAT_836398d0)[iVar1] = 1;
-  (&DAT_836398d3)[iVar1] = 0;
-  ClosePopupGettingData(0);
-  uVar3 = Com_BlockChecksumKey32(lVar7 + -0x7c9c972c,0x2ffc,0);
-  lVar7 = lVar7 + -0x7c9c9730;
-  local_40[0] = (undefined4)uVar3;
-  pbVar6 = (byte *)local_40;
+  lVar4 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_27(param_1);
+  lVar8 = lVar4 * 0x3005 + (longlong)iVar2 * 0x9238;
+  iVar1 = (int)lVar8;
+  controllerStatData[0].playerStats[0].data[iVar1 + 0x3000] = '\x01';
+  controllerStatData[0].playerStats[0].data[iVar1 + 0x3003] = '\0';
+  ClosePopupGettingData(LOCAL_CLIENT_0);
+  local_40[0] = Com_BlockChecksumKey32
+                          (controllerStatData[0].playerStats[0].data + iVar1 + 4,0x2ffc,0);
+  lVar8 = lVar8 + -0x7c9c9730;
+  puVar6 = local_40;
+  iVar1 = (int)lVar8;
   do {
-    lVar5 = (ulonglong)*(byte *)lVar7 - (ulonglong)*pbVar6;
+    lVar5 = (ulonglong)*(byte *)lVar8 - (ulonglong)*(byte *)puVar6;
     if (lVar5 != 0) break;
-    lVar7 = lVar7 + 1;
-    pbVar6 = pbVar6 + 1;
-  } while ((undefined *)lVar7 != &DAT_836368d4 + iVar1);
+    lVar8 = lVar8 + 1;
+    puVar6 = (uint *)((int)puVar6 + 1);
+  } while ((int)lVar8 != iVar1 + 4);
+  SVar7 = (StatsSource)lVar4;
   if ((int)lVar5 != 0) {
-    Com_PrintError(0x10,0xffffffff82089ae0);
-    LiveStorage_ResetStatsWithConfirmation(uVar2,param_2,(int)param_2 == 0);
+    Com_PrintError(0x10,
+                   "Stats had a checksum of %u but we expected a checksum of %u; resetting stats\n")
+    ;
+    LiveStorage_ResetStatsWithConfirmation(iVar2,SVar7,(uint)LZCOUNT(SVar7) >> 5);
     __restgprlr_27();
     return;
   }
-  cVar4 = LiveStorage_UpdatePersistentDataVersion(uVar2,param_2,param_3,uVar3);
-  if (cVar4 == '\0') {
-    LiveStorage_ResetStatsWithConfirmation(uVar2,param_2,3);
+  bVar3 = LiveStorage_UpdatePersistentDataVersion(iVar2,SVar7,param_3);
+  if (!bVar3) {
+    LiveStorage_ResetStatsWithConfirmation(iVar2,SVar7,RESET_STATS_REASON_BAD_PLAYERDATA_VERSION);
     __restgprlr_27();
     return;
   }
-  LiveStorage_FinalizeStatsReadCommon(uVar2,param_2);
+  LiveStorage_FinalizeStatsReadCommon(iVar2,SVar7);
   __restgprlr_27();
   return;
 }
@@ -938,56 +1042,53 @@ void LiveStorage_FinalizeStatsRead(undefined8 param_1,longlong param_2,undefined
 
 // 824EC7A0  LiveStorage_SetCustomClassNames  (qcommon/com_storage.cpp:1030)
 
-void LiveStorage_SetCustomClassNames(void)
+void LiveStorage_SetCustomClassNames(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar3;
+  int iVar1;
+  bool bVar3;
   char *pcVar2;
-  longlong lVar4;
-  longlong lVar5;
-  undefined1 auStack_70 [8];
-  undefined1 auStack_68 [8];
+  char acStack_70 [8];
+  StructuredDataBuffer SStack_68;
   char *local_60;
-  undefined1 *local_5c;
-  undefined *local_58;
+  char *local_5c;
+  char *local_58;
   char acStack_50 [80];
   
-  uVar1 = __savegprlr_25();
-  cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(&stack0x00000000 + -0x68,uVar1);
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x415,0,0xffffffff82000f98,0xffffffff82087f6c);
+  iVar1 = __savegprlr_25(param_1);
+  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_68,iVar1);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x415
+                    ,0,"%s");
   }
   local_60 = "customClasses";
-  local_5c = auStack_70;
-  local_58 = &DAT_82021a74;
-  lVar4 = 0;
+  local_5c = acStack_70;
+  local_58 = "name";
+  iVar1 = 0;
   do {
-    lVar5 = lVar4 + 1;
-    Com_sprintf(&stack0x00000000 + -0x50,0x10,0xffffffff82088dd4,lVar5);
-    pcVar2 = (char *)SEH_LocalizeTextMessage(&stack0x00000000 + -0x50,0xffffffff82088de4,1);
+    iVar1 = iVar1 + 1;
+    Com_sprintf(acStack_50,0x10,"CLASS_SLOT%i");
+    pcVar2 = SEH_LocalizeTextMessage(acStack_50,"custom class name",LOCMSG_NOERR);
     if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-      pcVar2 = &stack0x00000000 + -0x50;
+      pcVar2 = acStack_50;
     }
-    Com_sprintf(&stack0x00000000 + -0x70,4,0xffffffff8200c28c,lVar4);
-    LiveStorage_DataSetInternalString(&stack0x00000000 + -0x60,3,pcVar2,&stack0x00000000 + -0x68,0);
-    lVar4 = lVar5;
-  } while ((int)lVar5 < 0xf);
-  local_58 = &DAT_82021a74;
-  local_5c = auStack_70;
+    Com_sprintf(acStack_70,4,"%i");
+    LiveStorage_DataSetInternalString(&local_60,3,pcVar2,&SStack_68,(uchar *)0x0);
+  } while (iVar1 < 0xf);
+  local_58 = "name";
+  local_5c = acStack_70;
+  iVar1 = 0;
   local_60 = "privateMatchCustomClasses";
-  lVar4 = 0;
   do {
-    lVar5 = lVar4 + 1;
-    Com_sprintf(&stack0x00000000 + -0x50,0x10,0xffffffff82088dd4,lVar5);
-    pcVar2 = (char *)SEH_LocalizeTextMessage(&stack0x00000000 + -0x50,0xffffffff82088de4,1);
+    iVar1 = iVar1 + 1;
+    Com_sprintf(acStack_50,0x10,"CLASS_SLOT%i");
+    pcVar2 = SEH_LocalizeTextMessage(acStack_50,"custom class name",LOCMSG_NOERR);
     if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-      pcVar2 = &stack0x00000000 + -0x50;
+      pcVar2 = acStack_50;
     }
-    Com_sprintf(&stack0x00000000 + -0x70,4,0xffffffff8200c28c,lVar4);
-    LiveStorage_DataSetInternalString(&stack0x00000000 + -0x60,3,pcVar2,&stack0x00000000 + -0x68,0);
-    lVar4 = lVar5;
-  } while ((int)lVar5 < 5);
+    Com_sprintf(acStack_70,4,"%i");
+    LiveStorage_DataSetInternalString(&local_60,3,pcVar2,&SStack_68,(uchar *)0x0);
+  } while (iVar1 < 5);
   __restgprlr_25();
   return;
 }
@@ -995,51 +1096,54 @@ void LiveStorage_SetCustomClassNames(void)
 
 // 824ED918  LiveStorage_PrestigeResetForCmd  (qcommon/com_storage.cpp:1082)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_PrestigeResetForCmd(void)
 
 {
-  int iVar3;
-  undefined4 uVar4;
-  char cVar6;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar5;
-  undefined1 auStack_50 [80];
+  int iVar1;
+  StatsSource SVar2;
+  bool bVar5;
+  StructuredDataDef *pSVar3;
+  StructuredDataDef *pSVar4;
+  StructuredDataBuffer aSStack_50 [10];
   
   __savegprlr_25();
-  iVar3 = Cmd_LocalControllerIndex();
-  uVar4 = LiveStorage_GetActiveStatsSource();
-  iVar5 = iVar3 * 0x14;
-  if ((&DAT_8361cc08)[iVar5] != '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x5e8,0,0xffffffff82000f98,0xffffffff82085d68);
+  iVar1 = Cmd_LocalControllerIndex();
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (controllerStorageData[iVar1].resettingStats != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x5e8
+                    ,0,"%s");
   }
-  (&DAT_8361cc08)[iVar5] = 1;
-  *(undefined4 *)(&DAT_8361cc0c + iVar5) = uVar4;
-  cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_50,iVar3);
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x44c,0,0xffffffff82000f98,0xffffffff82087f6c);
+  controllerStorageData[iVar1].resettingStats = true;
+  controllerStorageData[iVar1].resetStatsSource = SVar2;
+  bVar5 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_50,iVar1);
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x44c
+                    ,0,"%s");
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff82089400,0x2ffc);
-  Com_Printf(0x10,0xffffffff820893c0,iVar3);
-  StructuredData_TranslateDefinition(uVar1,uVar2,auStack_50);
-  Com_Printf(0x10,0xffffffff82089380,iVar3);
-  StructuredData_TranslateDefinition(uVar2,uVar1,auStack_50);
-  LiveStorage_StatsInit(iVar3,0);
-  Cmd_ExecuteSingleCommand(0,iVar3,0xffffffff82089368);
-  Cmd_ExecuteSingleCommand(0,iVar3,0xffffffff82089344);
-  uVar1 = LiveStorage_GetActiveStatsSource(iVar3);
-  GamerProfile_UpdateProfileFromStats(iVar3,uVar1);
-  LiveStorage_OpenPlayerDataRead(iVar3);
-  iVar5 = LiveStorage_GetActiveStatsSource(iVar3);
-  if (iVar5 == 0) {
+  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  pSVar4 = StructuredDataDef_GetAsset("mp/prestigedata.def",0x2ffc);
+  Com_Printf(0x10,"Converting player data to prestige format for controller %i\n");
+  StructuredData_TranslateDefinition(pSVar3,pSVar4,aSStack_50);
+  Com_Printf(0x10,"Converting player data back to normal format for controller %i\n");
+  StructuredData_TranslateDefinition(pSVar4,pSVar3,aSStack_50);
+  LiveStorage_StatsInit(iVar1,false);
+  Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,iVar1,"exec mp/stats_init.cfg");
+  Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,iVar1,"exec mp/stats_init_privatematch.cfg");
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  GamerProfile_UpdateProfileFromStats(iVar1,SVar2);
+  LiveStorage_OpenPlayerDataRead(iVar1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
     LiveStorage_UpdatePlayerCardItem
-              (iVar3,0,0xffffffff82026928,0xffffffff82038d6c,0xffffffff82026918);
+              (iVar1,STATS_ONLINE,"mp/cardIconTable.csv","cardIcon","iconUnlocked");
     LiveStorage_UpdatePlayerCardItem
-              (iVar3,0,0xffffffff820268f8,0xffffffff82038d60,0xffffffff820268e8);
+              (iVar1,STATS_ONLINE,"mp/cardTitleTable.csv","cardTitle","titleUnlocked");
   }
-  LiveStorage_ResetStats_ClearStatsSource(iVar3);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar3);
+  LiveStorage_ResetStats_ClearStatsSource(iVar1);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
   __restgprlr_25();
   return;
 }
@@ -1047,217 +1151,238 @@ void LiveStorage_PrestigeResetForCmd(void)
 
 // 824EC940  LiveStorage_GetRankForCmd  (qcommon/com_storage.cpp:1137)
 
-void LiveStorage_GetRankForCmd(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int LiveStorage_GetRankForCmd(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  uVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_PlayerDataGetIntByName(uVar1,0xffffffff8203ab24);
-  CL_GetRankForXpMP();
-  return;
+  iVar1 = Cmd_LocalControllerIndex();
+  iVar1 = LiveStorage_PlayerDataGetIntByName(iVar1,"experience");
+  iVar1 = CL_GetRankForXpMP(iVar1);
+  return iVar1;
 }
 
 
 // 824DFAB8  LiveStorage_PersistentDataEnabled  (qcommon/com_storage.cpp:1144)
 
-undefined8 LiveStorage_PersistentDataEnabled(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_PersistentDataEnabled(void)
 
 {
-  return 1;
+  return true;
 }
 
 
 // 824E7600  LiveStorage_GetPlayerUnlockDataBuffer  (qcommon/com_storage.cpp:1156)
 
-undefined8 LiveStorage_GetPlayerUnlockDataBuffer(int *param_1,undefined8 param_2)
+bool LiveStorage_GetPlayerUnlockDataBuffer(StructuredDataBuffer *param_1,int param_2)
 
 {
-  char cVar3;
-  int iVar2;
-  undefined8 uVar1;
-  int iVar4;
+  bool bVar3;
+  uchar *puVar1;
+  StatsSource SVar2;
+  uint uVar4;
   
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    uVar1 = LiveStorage_GetActiveStatsSource(param_2);
-    iVar2 = LiveStorage_GetPersistentDataBufferForSource(param_2,uVar1);
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar3) {
+    puVar1 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    iVar2 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar2 = LiveStorage_GetActiveStatsSource(param_2);
+    puVar1 = LiveStorage_GetPersistentDataBufferForSource(param_2,SVar2);
   }
-  if (iVar2 == 0) {
-    if (param_1 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82085860,0x53,0,0xffffffff82000f98,0xffffffff82012420);
+  if (puVar1 == (uchar *)0x0) {
+    if (param_1 == (StructuredDataBuffer *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                      ,0x53,0,"%s");
     }
-    iVar4 = 0;
-    uVar1 = 0;
-    *param_1 = 0;
+    uVar4 = 0;
+    bVar3 = false;
+    param_1->data = (uchar *)0x0;
   }
   else {
-    if (param_1 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82085860,0x53,0,0xffffffff82000f98,0xffffffff82012420);
+    if (param_1 == (StructuredDataBuffer *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                      ,0x53,0,"%s");
     }
-    iVar4 = 0x2ffc;
-    *param_1 = iVar2;
-    uVar1 = 1;
+    uVar4 = 0x2ffc;
+    param_1->data = puVar1;
+    bVar3 = true;
   }
-  param_1[1] = iVar4;
-  return uVar1;
+  param_1->size = uVar4;
+  return bVar3;
 }
 
 
 // 824DFAC0  LiveStorage_GetActiveStatsSource  (qcommon/com_storage.cpp:1172)
 
-void LiveStorage_GetActiveStatsSource(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+StatsSource LiveStorage_GetActiveStatsSource(int param_1)
 
 {
   int iVar2;
+  StatsSource SVar3;
+  LocalClientNum_t LVar4;
+  connstate_t cVar5;
+  bool bVar7;
+  int iVar6;
   undefined8 uVar1;
-  char cVar4;
-  int iVar3;
   
-  iVar2 = __savegprlr_29();
-  iVar3 = iVar2 * 0x14;
-  if ((&DAT_8361cc08)[iVar3] != '\0') {
-    __restgprlr_29(*(undefined4 *)(&DAT_8361cc0c + iVar3));
-    return;
+  iVar2 = __savegprlr_29(param_1);
+  if (controllerStorageData[iVar2].resettingStats != false) {
+    SVar3 = __restgprlr_29(controllerStorageData[iVar2].resetStatsSource);
+    return SVar3;
   }
-  if ((&DAT_8361cc00)[iVar3] != '\0') {
-    uVar1 = CL_LocalClientNumFromControllerIndex(iVar2);
-    iVar2 = CL_GetLocalClientConnectionState();
-    if (iVar2 < 3) {
-      MyAssertHandler(0xffffffff820859c8,0x4a8,0,0xffffffff820300d8,0xffffffff82085cb4,uVar1);
+  if (controllerStorageData[iVar2].useGameStatsSource != false) {
+    LVar4 = CL_LocalClientNumFromControllerIndex(iVar2);
+    cVar5 = CL_GetLocalClientConnectionState(LVar4);
+    if ((int)cVar5 < 3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x4a8,0,"%s\n\t(localClientNum) = %i");
     }
-    __restgprlr_29(*(undefined4 *)(&DAT_8361cc04 + iVar3));
-    return;
+    SVar3 = __restgprlr_29(controllerStorageData[iVar2].gameStatsSource);
+    return SVar3;
   }
-  cVar4 = Live_HasAcceptedInvitation();
-  if (cVar4 != '\0') {
+  bVar7 = Live_HasAcceptedInvitation();
+  if (bVar7) {
 LAB_824dfba4:
-    __restgprlr_29(0);
-    return;
+    SVar3 = __restgprlr_29(0);
+    return SVar3;
   }
-  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-    if (((*(char *)(DAT_82b3e4c8 + 0xc) != '\0') &&
-        (cVar4 = Live_IsUserSignedInToLive(iVar2), cVar4 != '\0')) &&
-       (cVar4 = Live_UserIsGuest(iVar2), cVar4 == '\0')) goto LAB_824dfba4;
-    if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
-       (uVar1 = 0, *(char *)(DAT_82b3ecb8 + 0xc) == '\0')) goto LAB_824dfc1c;
+  if ((onlinegame->current).enabled == false) {
+    if ((((useonlinestats->current).enabled != false) &&
+        (bVar7 = Live_IsUserSignedInToLive(iVar2), bVar7)) &&
+       (bVar7 = Live_UserIsGuest(iVar2), !bVar7)) goto LAB_824dfba4;
+    if (((systemlink->current).enabled == false) &&
+       (uVar1 = 0, (splitscreen->current).enabled == false)) goto LAB_824dfc1c;
   }
   else {
-    iVar3 = Live_OnlinePlayEvenIfDown();
-    if ((iVar3 == 0) || (cVar4 = Live_IsUserSignedInToLive(iVar2), cVar4 != '\0'))
-    goto LAB_824dfba4;
+    iVar6 = Live_OnlinePlayEvenIfDown();
+    if ((iVar6 == 0) || (bVar7 = Live_IsUserSignedInToLive(iVar2), bVar7)) goto LAB_824dfba4;
   }
   uVar1 = 1;
 LAB_824dfc1c:
-  __restgprlr_29(uVar1);
-  return;
+  SVar3 = __restgprlr_29(uVar1);
+  return SVar3;
 }
 
 
 // 824DFC28  LiveStorage_ShouldReadOnlineStats  (qcommon/com_storage.cpp:1250)
 
-undefined8 LiveStorage_ShouldReadOnlineStats(int param_1)
+bool LiveStorage_ShouldReadOnlineStats(int param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  StatsSource SVar1;
+  bool bVar2;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  if (iVar1 != 0) {
-    return 0;
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if (SVar1 != STATS_ONLINE) {
+    return false;
   }
-  cVar2 = Live_HasAcceptedInvitation();
-  if ((((cVar2 == '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) &&
-      (*(char *)(DAT_82aa1ae4 + 0xc) == '\0')) &&
-     ((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' && ((&DAT_8361cc10)[param_1 * 0x14] != '\0')))) {
-    return 0;
+  bVar2 = Live_HasAcceptedInvitation();
+  if ((((!bVar2) && ((onlinegame->current).enabled == false)) &&
+      ((systemlink->current).enabled == false)) &&
+     (((splitscreen->current).enabled == false &&
+      (controllerStorageData[param_1].dontDownloadAtMainMenu != false)))) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 824DFCF0  LiveStorage_ShouldReadOfflineStats  (qcommon/com_storage.cpp:1275)
 
-undefined8 LiveStorage_ShouldReadOfflineStats(undefined8 param_1)
+bool LiveStorage_ShouldReadOfflineStats(int param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  StatsSource SVar1;
+  int iVar2;
+  bool bVar3;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  if ((iVar1 == 1) &&
-     (((*(char *)(DAT_82aa1ae4 + 0xc) != '\0' || (*(char *)(DAT_82b3ecb8 + 0xc) != '\0')) ||
-      (iVar1 = Live_OnlinePlayEvenIfDown(), iVar1 != 0)))) {
-    if ((DAT_82966e98 != 0) && (cVar2 = CL_IsSplitscreenControllerActive(param_1), cVar2 == '\0')) {
-      return 0;
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if ((SVar1 == STATS_OFFLINE) &&
+     ((((systemlink->current).enabled != false || ((splitscreen->current).enabled != false)) ||
+      (iVar2 = Live_OnlinePlayEvenIfDown(), iVar2 != 0)))) {
+    if ((cl_multi_gamepads_enabled != 0) &&
+       (bVar3 = CL_IsSplitscreenControllerActive(param_1), !bVar3)) {
+      return false;
     }
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 
 // 824DFDA0  LiveStorage_ClientUsingOnlineStatsOffline  (qcommon/com_storage.cpp:1311)
 
-undefined8 LiveStorage_ClientUsingOnlineStatsOffline(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_ClientUsingOnlineStatsOffline(LocalClientNum_t param_1)
 
 {
-  char cVar2;
+  bool bVar3;
   int iVar1;
+  StatsSource SVar2;
   
-  cVar2 = Live_HasAcceptedInvitation();
-  if ((cVar2 == '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
-    CL_ControllerIndexFromClientNum(param_1);
-    iVar1 = LiveStorage_GetActiveStatsSource();
-    if (iVar1 == 0) {
-      if (*(char *)(DAT_82b3e4c8 + 0xc) == '\0') {
-        MyAssertHandler(0xffffffff820859c8,0x52b,0,0xffffffff82000f98,0xffffffff82085cf4);
+  bVar3 = Live_HasAcceptedInvitation();
+  if ((!bVar3) && ((onlinegame->current).enabled == false)) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+    if (SVar2 == STATS_ONLINE) {
+      if ((useonlinestats->current).enabled == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x52b,0,"%s");
       }
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 824E76E8  LiveStorage_EnsureWeHaveStats_Online  (qcommon/com_storage.cpp:1335)
 
-void LiveStorage_EnsureWeHaveStats_Online(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_EnsureWeHaveStats_Online(int param_1)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
   
-  uVar1 = CL_LocalClientNumFromControllerIndex();
-  Com_Printf(0x10,0xffffffff82087930);
-  ShowPopupGettingData(uVar1);
+  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  Com_Printf(0x10,"LiveStorage_EnsureWeHaveStats_Online() blocking on stats download.\n");
+  ShowPopupGettingData(LVar1);
   R_BeginRemoteScreenUpdate();
   LiveStorage_DownloadStats(param_1);
   LiveStorage_FinishDownloadingStats(param_1);
   R_EndRemoteScreenUpdate();
-  ClosePopupGettingData(uVar1);
-  Com_Printf(0x10,0xffffffff82087900);
+  ClosePopupGettingData(LVar1);
+  Com_Printf(0x10,"LiveStorage_EnsureWeHaveStats_Online() done.\n");
   return;
 }
 
 
 // 824E7768  LiveStorage_EnsureWeHaveStats_Offline  (qcommon/com_storage.cpp:1412)
 
-void LiveStorage_EnsureWeHaveStats_Offline(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_EnsureWeHaveStats_Offline(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  LocalClientNum_t LVar1;
+  bool bVar2;
   
-  uVar1 = 0;
-  if (DAT_82966e98 != 0) {
-    uVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  LVar1 = LOCAL_CLIENT_0;
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
   }
-  cVar2 = LiveStorage_MaySetPersistentData(uVar1);
-  if (cVar2 == '\0') {
-    Com_Error(1,0xffffffff82087978);
+  bVar2 = LiveStorage_MaySetPersistentData(LVar1);
+  if (!bVar2) {
+    Com_Error(ERR_DROP,"Unable to read offline stats because we are connected to a server\n");
   }
   LiveStorage_ReadStats(param_1);
   return;
@@ -1266,32 +1391,31 @@ void LiveStorage_EnsureWeHaveStats_Offline(undefined8 param_1)
 
 // 824E77D8  LiveStorage_EnsureWeHaveStats  (qcommon/com_storage.cpp:1426)
 
-void LiveStorage_EnsureWeHaveStats(void)
+void LiveStorage_EnsureWeHaveStats(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
+  int iVar1;
+  StatsSource SVar2;
   
-  uVar1 = __savegprlr_27();
-  iVar3 = LiveStorage_GetActiveStatsSource();
-  iVar4 = (int)uVar1 * 0x9238;
-  if ((&DAT_836398d0)[iVar3 * 0x3005 + iVar4] == '\0') {
-    uVar2 = LiveStorage_GetActiveStatsSource(uVar1);
-    if ((int)uVar2 == 0) {
-      LiveStorage_EnsureWeHaveStats_Online(uVar1);
+  iVar1 = __savegprlr_27(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (controllerStatData[iVar1].playerStats[SVar2].statsFetched == false) {
+    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+    if (SVar2 == STATS_ONLINE) {
+      LiveStorage_EnsureWeHaveStats_Online(iVar1);
     }
     else {
-      if ((int)uVar2 != 1) {
-        MyAssertHandler(0xffffffff820859c8,0x59b,0,0xffffffff82087a0c,0xffffffff82087a24,uVar2);
+      if (SVar2 != STATS_OFFLINE) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x59b,0,"%s\n\t(statsSource) = %i");
       }
-      LiveStorage_EnsureWeHaveStats_Offline(uVar1);
+      LiveStorage_EnsureWeHaveStats_Offline(iVar1);
     }
-    iVar3 = LiveStorage_GetActiveStatsSource(uVar1);
-    if ((&DAT_836398d0)[iVar3 * 0x3005 + iVar4] == '\0') {
-      uVar1 = va(0xffffffff820879ec,uVar1,uVar2);
-      MyAssertHandler(0xffffffff820859c8,0x5a8,0,0xffffffff820011f4,0xffffffff820879bc,uVar1);
+    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+    if (controllerStatData[iVar1].playerStats[SVar2].statsFetched == false) {
+      va("controller %i, stats source %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x5a8,0,"%s\n\t%s");
     }
   }
   __restgprlr_27();
@@ -1301,7 +1425,9 @@ void LiveStorage_EnsureWeHaveStats(void)
 
 // 824DFE58  LiveStorage_SetPostDownloadCommand  (qcommon/com_storage.cpp:1453)
 
-void LiveStorage_SetPostDownloadCommand(undefined4 param_1,char *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_SetPostDownloadCommand(LocalClientNum_t param_1,char *param_2)
 
 {
   char cVar1;
@@ -1313,12 +1439,14 @@ void LiveStorage_SetPostDownloadCommand(undefined4 param_1,char *param_2)
     pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
   if ((uint)((int)pcVar2 - (int)param_2) < 0x401) {
-    I_strncpyz(0xffffffff83620468,param_2,0x400);
-    DAT_8361cc54 = param_1;
+    I_strncpyz(postDownloadCommand,param_2,0x400);
+    postDownloadCommandLocalClientNum = param_1;
   }
   else {
-    DAT_83620468 = 0;
-    Com_PrintError(0x10,0xffffffff82085d18,param_2,0x3ff);
+    postDownloadCommand[0] = '\0';
+    Com_PrintError(0x10,
+                   "Command \"%s\" is too big to fit in post download command buffer (max %i chars)\n"
+                  );
   }
   return;
 }
@@ -1326,13 +1454,15 @@ void LiveStorage_SetPostDownloadCommand(undefined4 param_1,char *param_2)
 
 // 824DFF00  LiveStorage_ExecPostDownloadCommand  (qcommon/com_storage.cpp:1467)
 
-void LiveStorage_ExecPostDownloadCommand(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ExecPostDownloadCommand(LocalClientNum_t param_1)
 
 {
-  if ((DAT_8361cc54 == (int)param_1) && (DAT_83620468 != '\0')) {
-    Cbuf_AddText();
-    Cbuf_AddText(param_1,0xffffffff82031834);
-    LiveStorage_SetPostDownloadCommand(0,0xffffffff820068af);
+  if ((postDownloadCommandLocalClientNum == param_1) && (postDownloadCommand[0] != '\0')) {
+    Cbuf_AddText(param_1,postDownloadCommand);
+    Cbuf_AddText(param_1,";");
+    LiveStorage_SetPostDownloadCommand(LOCAL_CLIENT_0,"");
   }
   return;
 }
@@ -1340,40 +1470,50 @@ void LiveStorage_ExecPostDownloadCommand(undefined8 param_1)
 
 // 824DFF70  LiveStorage_StatsDownloadCancelCmd  (qcommon/com_storage.cpp:1481)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_StatsDownloadCancelCmd(void)
 
 {
-  LiveStorage_SetPostDownloadCommand(0,0xffffffff820068af);
+  LiveStorage_SetPostDownloadCommand(LOCAL_CLIENT_0,"");
   return;
 }
 
 
 // 824EEE18  LiveStorage_ResetActiveStats  (qcommon/com_storage.cpp:1488)
 
-void LiveStorage_ResetActiveStats(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetActiveStats(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined8 uVar4;
+  int iVar1;
+  StatsSource SVar2;
+  LocalClientNum_t LVar3;
+  bool bVar4;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = LiveStorage_GetActiveStatsSource();
-  uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-  cVar5 = LiveStorage_MaySetPersistentData();
-  if (cVar5 == '\0') {
-    uVar4 = CL_GetLocalClientConnectionState(uVar3);
-    Com_PrintError(0x10,0xffffffff82085f70,0xffffffff82089b88,uVar4,uVar3);
-    Com_Error(1,0xffffffff82085f18,0xffffffff82089b88,uVar4);
+  iVar1 = __savegprlr_27(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+  bVar4 = LiveStorage_MaySetPersistentData(LVar3);
+  if (!bVar4) {
+    CL_GetLocalClientConnectionState(LVar3);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
-  if ((&DAT_836398d0)[(int)uVar2 * 0x3005 + (int)uVar1 * 0x9238] == '\0') {
-    Com_PrintError(0x10,0xffffffff82089b30);
+  if (controllerStatData[iVar1].playerStats[SVar2].statsFetched == false) {
+    Com_PrintError(0x10,
+                   "Cannot reset stats because we have not downloaded them or read them from a save device."
+                  );
     __restgprlr_27();
     return;
   }
-  LiveStorage_ResetStats(uVar1,uVar2);
+  LiveStorage_ResetStats(iVar1,SVar2);
   __restgprlr_27();
   return;
 }
@@ -1381,18 +1521,18 @@ void LiveStorage_ResetActiveStats(void)
 
 // 824DFF80  LiveStorage_ResetStats_SetStatsSource  (qcommon/com_storage.cpp:1511)
 
-void LiveStorage_ResetStats_SetStatsSource(undefined8 param_1,undefined4 param_2)
+void LiveStorage_ResetStats_SetStatsSource(int param_1,StatsSource param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
-  iVar1 = iVar1 * 0x14;
-  if ((&DAT_8361cc08)[iVar1] != '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x5e8,0,0xffffffff82000f98,0xffffffff82085d68);
+  iVar1 = __savegprlr_28(param_1);
+  if (controllerStorageData[iVar1].resettingStats != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x5e8
+                    ,0,"%s");
   }
-  (&DAT_8361cc08)[iVar1] = 1;
-  *(undefined4 *)(&DAT_8361cc0c + iVar1) = param_2;
+  controllerStorageData[iVar1].resettingStats = true;
+  controllerStorageData[iVar1].resetStatsSource = param_2;
   __restgprlr_28();
   return;
 }
@@ -1403,13 +1543,13 @@ void LiveStorage_ResetStats_SetStatsSource(undefined8 param_1,undefined4 param_2
 void LiveStorage_ResetStats_ClearStatsSource(int param_1)
 
 {
-  param_1 = param_1 * 0x14;
-  if ((&DAT_8361cc08)[param_1] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x5ef,0,0xffffffff82000f98,0xffffffff82085da0);
-    (&DAT_8361cc08)[param_1] = 0;
+  if (controllerStorageData[param_1].resettingStats == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x5ef
+                    ,0,"%s");
+    controllerStorageData[param_1].resettingStats = false;
   }
   else {
-    (&DAT_8361cc08)[param_1] = 0;
+    controllerStorageData[param_1].resettingStats = false;
   }
   return;
 }
@@ -1420,191 +1560,195 @@ void LiveStorage_ResetStats_ClearStatsSource(int param_1)
 void LiveStorage_CheckNotResettingStats(int param_1)
 
 {
-  if ((&DAT_8361cc08)[param_1 * 0x14] == '\0') {
+  if (controllerStorageData[param_1].resettingStats == false) {
     return;
   }
-  MyAssertHandler(0xffffffff820859c8,0x5f6,0,0xffffffff82000f98,0xffffffff82085d68);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x5f6,0
+                  ,"%s");
   return;
 }
 
 
 // 824EDAF8  LiveStorage_CheckOngoingSessionTasks  (qcommon/com_storage.cpp:1531)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_CheckOngoingSessionTasks(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  longlong lVar3;
-  undefined4 *local_b0;
+  taskCompleteResults tVar1;
+  char *pcVar2;
+  int iVar3;
+  int *local_b0;
   
   __savegprlr();
-  local_b0 = &DAT_8365bcd0;
-  lVar3 = 0;
+  local_b0 = &storageTasks.tasks[0].type;
+  iVar3 = 0;
   do {
-    if (*(char *)(local_b0 + 1) != '\0') {
+    if (*(bool *)(local_b0 + 1) != false) {
       switch(*local_b0) {
       case 1:
-        iVar2 = LiveStorage_MotdFetchComplete(lVar3);
-        if (iVar2 == 2) {
+        tVar1 = LiveStorage_MotdFetchComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
           Com_Printf(0x10,"Error getting motd\n");
         }
         break;
       case 2:
-        iVar2 = LiveStorage_PlaylistFetchComplete(lVar3);
-        if (iVar2 == 2) {
+        tVar1 = LiveStorage_PlaylistFetchComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
           Com_Printf(0x10,"Error getting playlists\n");
         }
         break;
       case 3:
-        LiveStorage_CheckForRemoteConsoleChallengeComplete(lVar3);
+        LiveStorage_CheckForRemoteConsoleChallengeComplete(iVar3);
         break;
       case 4:
-        LiveStorage_DownloadRemoteConsoleChallengeComplete(lVar3);
+        LiveStorage_DownloadRemoteConsoleChallengeComplete(iVar3);
         break;
       case 5:
-        LiveStorage_CheckForRemoteConsoleDeleteComplete(lVar3);
+        LiveStorage_CheckForRemoteConsoleDeleteComplete(iVar3);
         break;
       case 6:
-        iVar2 = LiveStorage_StatsReadComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089414);
+        tVar1 = LiveStorage_StatsReadComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error getting stats\n");
         }
         break;
       case 7:
-        iVar2 = LiveStorage_StatsWriteComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff8208942c);
+        tVar1 = LiveStorage_StatsWriteComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error writing stats\n");
         }
         break;
       case 8:
-        LiveStorage_SendMatchDataComplete(lVar3);
+        LiveStorage_SendMatchDataComplete(iVar3);
         break;
       case 9:
-        LiveStorage_SetTagsMatchDataComplete(lVar3);
+        LiveStorage_SetTagsMatchDataComplete(iVar3);
         break;
       case 10:
-        LiveStorage_RecordMatchIDComplete(lVar3);
+        LiveStorage_RecordMatchIDComplete(iVar3);
         break;
       case 0xb:
-        LiveStorage_SendMatchRecipeComplete(lVar3);
+        LiveStorage_SendMatchRecipeComplete(iVar3);
         break;
       case 0xc:
-        LiveStorage_UpdateMatchRecipeTagsComplete(lVar3);
+        LiveStorage_UpdateMatchRecipeTagsComplete(iVar3);
         break;
       case 0xd:
-        LiveStorage_LogComplete(lVar3);
+        LiveStorage_LogComplete(iVar3);
         break;
       case 0xe:
-        iVar2 = LiveStorage_GetServerTimeComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089444);
+        tVar1 = LiveStorage_GetServerTimeComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error getting server time\n");
         }
         break;
       case 0xf:
-        iVar2 = LiveStorage_ReadMetPlayerListComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089460);
+        tVar1 = LiveStorage_ReadMetPlayerListComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error getting met player list\n");
         }
         break;
       case 0x10:
-        iVar2 = LiveStorage_WriteMetPlayerListComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089480);
+        tVar1 = LiveStorage_WriteMetPlayerListComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error writing met player list\n");
         }
         break;
       case 0x11:
-        LiveStorage_FFotDFetchComplete(lVar3);
+        LiveStorage_FFotDFetchComplete(iVar3);
         break;
       case 0x12:
-        LiveStorage_ReadEntitlementConfigFileComplete(lVar3);
+        LiveStorage_ReadEntitlementConfigFileComplete(iVar3);
         break;
       case 0x13:
-        iVar2 = LiveStorage_CS_GetListingComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff820894a0);
+        tVar1 = LiveStorage_CS_GetListingComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error getting listing of files\n");
         }
         break;
       case 0x14:
-        iVar2 = LiveStorage_CS_GetDescriptorsComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff820894c0);
+        tVar1 = LiveStorage_CS_GetDescriptorsComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error getting descriptors\n");
         }
         break;
       case 0x15:
-        iVar2 = LiveStorage_CS_SearchComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff820894dc);
+        tVar1 = LiveStorage_CS_SearchComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error searching file share\n");
         }
         break;
       case 0x16:
-        iVar2 = LiveStorage_CS_ReadFileComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff820894f8);
+        tVar1 = LiveStorage_CS_ReadFileComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error reading file\n");
         }
         break;
       case 0x17:
-        iVar2 = LiveStorage_CS_RemoveFileComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff8208950c);
+        tVar1 = LiveStorage_CS_RemoveFileComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error removing file\n");
         }
         break;
       case 0x18:
-        iVar2 = LiveStorage_CS_WriteFileComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089524);
+        tVar1 = LiveStorage_CS_WriteFileComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error writing file\n");
         }
         break;
       case 0x19:
-        iVar2 = LiveStorage_CS_SetTagsComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089538);
+        tVar1 = LiveStorage_CS_SetTagsComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error setting tags\n");
         }
         break;
       case 0x1a:
-        iVar2 = LiveStorage_CS_CopyFromOtherUserComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff8208954c);
+        tVar1 = LiveStorage_CS_CopyFromOtherUserComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error copying file from another user\n");
         }
         break;
       case 0x1b:
-        iVar2 = LiveStorage_CS_UploadSummaryMetadataComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089574);
+        tVar1 = LiveStorage_CS_UploadSummaryMetadataComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error uploading summary metadata.\n");
         }
         break;
       case 0x1c:
-        iVar2 = LiveStorage_CS_DownloadSummaryDataComplete(lVar3);
-        if (iVar2 == 2) {
-          Com_Printf(0x10,0xffffffff82089598);
+        tVar1 = LiveStorage_CS_DownloadSummaryDataComplete(iVar3);
+        if (tVar1 == TASK_ERROR) {
+          Com_Printf(0x10,"Error download summary data.\n");
         }
         break;
       case 0x1d:
-        LiveStorage_GetFileInfoComplete(lVar3);
+        LiveStorage_GetFileInfoComplete(iVar3);
         break;
       case 0x1e:
-        LiveStorage_ReadSocialConfigFileComplete(lVar3);
+        LiveStorage_ReadSocialConfigFileComplete(iVar3);
         break;
       case 0x1f:
-        LiveStorage_CheckForEliteClassFileComplete(lVar3);
+        LiveStorage_CheckForEliteClassFileComplete(iVar3);
         break;
       case 0x20:
-        LiveStorage_DownloadEliteCacFileComplete(lVar3);
+        LiveStorage_DownloadEliteCacFileComplete(iVar3);
         break;
       case 0x21:
-        LiveStorage_DeleteEliteClassFileComplete(lVar3);
+        LiveStorage_DeleteEliteClassFileComplete(iVar3);
         break;
       case 0x22:
-        LiveStorage_FetchPlaylistPopulationComplete(lVar3);
+        LiveStorage_FetchPlaylistPopulationComplete(iVar3);
         break;
       default:
-        if (DAT_84013128 == 0) {
-          uVar1 = va(0xffffffff82085288);
-          MyAssertHandler(0xffffffff820859c8,0x6bc,0,uVar1);
+        if (alwaysfails == 0) {
+          pcVar2 = va("Unknown live storage task type %i\n");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp"
+                          ,0x6bc,0,pcVar2);
         }
       }
     }
-    lVar3 = lVar3 + 1;
+    iVar3 = iVar3 + 1;
     local_b0 = local_b0 + 0x28;
   } while ((int)local_b0 < -0x7c9a2f30);
   __restgprlr();
@@ -1614,28 +1758,28 @@ void LiveStorage_CheckOngoingSessionTasks(void)
 
 // 824E00C8  LiveStorage_WriteChecksumToBuffer  (qcommon/com_storage.cpp:1731)
 
-void LiveStorage_WriteChecksumToBuffer(undefined4 *param_1,longlong param_2)
+void LiveStorage_WriteChecksumToBuffer(uchar *param_1,int param_2)
 
 {
-  undefined4 uVar1;
+  uint uVar1;
   
-  uVar1 = Com_BlockChecksumKey32(param_1 + 1,param_2 + -4,0);
-  *param_1 = uVar1;
+  uVar1 = Com_BlockChecksumKey32(param_1 + 4,param_2 - 4,0);
+  *(uint *)param_1 = uVar1;
   return;
 }
 
 
 // 824EC970  LiveStorage_ReadXuidFromStats  (qcommon/com_storage.cpp:1740)
 
-undefined8 LiveStorage_ReadXuidFromStats(undefined8 param_1)
+ulong64 LiveStorage_ReadXuidFromStats(int param_1)
 
 {
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined8 local_18;
+  int local_20;
+  int local_1c;
+  ulong64 local_18;
   
-  local_20 = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff82088e08);
-  local_1c = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff82088df8);
+  local_20 = LiveStorage_PlayerDataGetIntByName(param_1,"playerXuidHigh");
+  local_1c = LiveStorage_PlayerDataGetIntByName(param_1,"playerXuidLow");
   Com_Memcpy(&local_18,&local_20,8);
   return local_18;
 }
@@ -1643,78 +1787,74 @@ undefined8 LiveStorage_ReadXuidFromStats(undefined8 param_1)
 
 // 824EC9D0  LiveStorage_WriteXuidToStats  (qcommon/com_storage.cpp:1759)
 
-void LiveStorage_WriteXuidToStats(undefined8 param_1,undefined8 param_2)
+void LiveStorage_WriteXuidToStats(int param_1,ulong64 param_2)
 
 {
-  undefined8 uStack00000018;
-  undefined4 local_20;
-  undefined4 local_1c;
+  ulong64 uStack00000018;
+  int local_20;
+  int local_1c;
   
   uStack00000018 = param_2;
   Com_Memcpy(&local_20,&stack0x00000018,8);
-  LiveStorage_PlayerDataSetIntByName(param_1,0xffffffff82088e08,local_20);
-  LiveStorage_PlayerDataSetIntByName(param_1,0xffffffff82088df8,local_1c);
+  LiveStorage_PlayerDataSetIntByName(param_1,"playerXuidHigh",local_20);
+  LiveStorage_PlayerDataSetIntByName(param_1,"playerXuidLow",local_1c);
   return;
 }
 
 
 // 824EDFC8  LiveStorage_ResetStats  (qcommon/com_storage.cpp:1776)
 
-void LiveStorage_ResetStats(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetStats(int param_1,StatsSource param_2)
 
 {
   int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  undefined4 uVar4;
-  longlong lVar5;
-  int iVar6;
-  int iVar7;
+  LocalClientNum_t LVar2;
+  uint uVar3;
   
-  iVar3 = __savegprlr_24();
-  lVar5 = param_2 * 0x3005 + (longlong)iVar3 * 0x9238;
-  iVar1 = (int)lVar5;
-  if ((&DAT_836398d0)[iVar1] == '\0') {
-    uVar2 = va(0xffffffff820879ec,iVar3,param_2);
-    MyAssertHandler(0xffffffff820859c8,0x6f3,0,0xffffffff820011f4,0xffffffff820895e8,uVar2);
+  iVar1 = __savegprlr_24(param_1);
+  if (controllerStatData[iVar1].playerStats[param_2].statsFetched == false) {
+    va("controller %i, stats source %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x6f3
+                    ,0,"%s\n\t%s");
   }
-  iVar7 = iVar3 * 0x14;
-  if ((&DAT_8361cc08)[iVar7] != '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x5e8,0,0xffffffff82000f98,0xffffffff82085d68);
+  if (controllerStorageData[iVar1].resettingStats != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x5e8
+                    ,0,"%s");
   }
-  iVar6 = (int)param_2;
-  (&DAT_8361cc08)[iVar7] = 1;
-  *(int *)(&DAT_8361cc0c + iVar7) = iVar6;
-  if (iVar6 == 0) {
-    LiveStorage_FinishDownloadingStats(iVar3);
+  controllerStorageData[iVar1].resettingStats = true;
+  controllerStorageData[iVar1].resetStatsSource = param_2;
+  if (param_2 == STATS_ONLINE) {
+    LiveStorage_FinishDownloadingStats(iVar1);
   }
-  memset(&DAT_836368d0 + iVar1,0,0x3000);
-  uVar2 = 0;
-  if (DAT_82966e98 != 0) {
-    uVar2 = CL_LocalClientNumFromControllerIndex(iVar3);
+  memset();
+  LVar2 = LOCAL_CLIENT_0;
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
   }
-  LiveStorage_StatsInit(iVar3,1);
-  Cmd_ExecuteSingleCommand(uVar2,iVar3,0xffffffff82089368);
-  Cmd_ExecuteSingleCommand(uVar2,iVar3,0xffffffff82089344);
-  GamerProfile_UpdateProfileFromStats(iVar3,param_2);
-  LiveStorage_OpenPlayerDataRead(iVar3);
-  if (iVar6 == 0) {
+  LiveStorage_StatsInit(iVar1,true);
+  Cmd_ExecuteSingleCommand(LVar2,iVar1,"exec mp/stats_init.cfg");
+  Cmd_ExecuteSingleCommand(LVar2,iVar1,"exec mp/stats_init_privatematch.cfg");
+  GamerProfile_UpdateProfileFromStats(iVar1,param_2);
+  LiveStorage_OpenPlayerDataRead(iVar1);
+  if (param_2 == STATS_ONLINE) {
     LiveStorage_UpdatePlayerCardItem
-              (iVar3,0,0xffffffff82026928,0xffffffff82038d6c,0xffffffff82026918);
+              (iVar1,STATS_ONLINE,"mp/cardIconTable.csv","cardIcon","iconUnlocked");
     LiveStorage_UpdatePlayerCardItem
-              (iVar3,0,0xffffffff820268f8,0xffffffff82038d60,0xffffffff820268e8);
+              (iVar1,STATS_ONLINE,"mp/cardTitleTable.csv","cardTitle","titleUnlocked");
   }
-  uVar4 = Com_BlockChecksumKey32(lVar5 + -0x7c9c972c,0x2ffc,0);
-  *(undefined4 *)(&DAT_836368d0 + iVar1) = uVar4;
-  if (*(int *)(DAT_8365e118 + 0xc) == 0) {
-    (&DAT_836398d2)[iVar1] = 0;
+  uVar3 = Com_BlockChecksumKey32(controllerStatData[iVar1].playerStats[param_2].data + 4,0x2ffc,0);
+  *(uint *)controllerStatData[iVar1].playerStats[param_2].data = uVar3;
+  if ((com_developer->current).integer == 0) {
+    controllerStatData[iVar1].playerStats[param_2].statWriteNeeded = false;
   }
   else {
-    (&DAT_836398d2)[iVar1] = 1;
-    LiveStorage_SaveStats(iVar3);
+    controllerStatData[iVar1].playerStats[param_2].statWriteNeeded = true;
+    LiveStorage_SaveStats(iVar1);
   }
-  LiveStorage_ResetStats_ClearStatsSource(iVar3);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar3);
+  LiveStorage_ResetStats_ClearStatsSource(iVar1);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
   UI_ExpressionState_PlayerDataModified();
   __restgprlr_24();
   return;
@@ -1723,39 +1863,42 @@ void LiveStorage_ResetStats(undefined8 param_1,longlong param_2)
 
 // 824ECA38  LiveStorage_SaveStats  (qcommon/com_storage.cpp:1836)
 
-void LiveStorage_SaveStats(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_SaveStats(int param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  char cVar6;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar4;
+  bool bVar4;
+  StatsSource SVar2;
+  int iVar3;
   
-  uVar2 = __savegprlr_29();
-  cVar6 = Menu_IsMenuOpenAndVisible(0,0xffffffff82088ea8);
-  if (cVar6 != '\0') {
-    Com_Printf(0x10,0xffffffff82088e6c,uVar2);
+  iVar1 = __savegprlr_29(param_1);
+  bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"menu_resetstats_warning");
+  if (bVar4) {
+    Com_Printf(0x10,"Not saving stats: menu_resetstats_warning is up (cont %i)\n");
     __restgprlr_29();
     return;
   }
-  uVar3 = LiveStorage_GetActiveStatsSource(uVar2);
-  iVar1 = (int)uVar3;
-  if (((&DAT_836398d0)[iVar1 * 0x3005 + (int)uVar2 * 0x9238] != '\0') &&
-     (iVar5 = LiveStorage_GetPersistentDataVersion(uVar2,uVar3), iVar5 < 1)) {
-    uVar4 = LiveStorage_GetPersistentDataVersion(uVar2,uVar3);
-    MyAssertHandler(0xffffffff820859c8,0x73b,0,0xffffffff82088e18,uVar4,0);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if ((controllerStatData[iVar1].playerStats[SVar2].statsFetched != false) &&
+     (iVar3 = LiveStorage_GetPersistentDataVersion(iVar1,SVar2), iVar3 < 1)) {
+    LiveStorage_GetPersistentDataVersion(iVar1,SVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x73b
+                    ,0,
+                    "LiveStorage_GetPersistentDataVersion( controllerIndex, statsSource ) > 0\n\t%i, %i"
+                   );
   }
-  if (iVar1 != 0) {
-    if (iVar1 != 1) {
-      MyAssertHandler(0xffffffff820859c8,0x73e,0,0xffffffff82087a0c,0xffffffff82087a24,uVar3);
+  if (SVar2 != STATS_ONLINE) {
+    if (SVar2 != STATS_OFFLINE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x73e,0,"%s\n\t(statsSource) = %i");
     }
-    LiveStorage_WriteStats(uVar2);
+    LiveStorage_WriteStats(iVar1);
     __restgprlr_29();
     return;
   }
-  LiveStorage_UploadStats(uVar2);
+  LiveStorage_UploadStats(iVar1);
   __restgprlr_29();
   return;
 }
@@ -1763,51 +1906,58 @@ void LiveStorage_SaveStats(void)
 
 // 824E0108  LiveStorage_OpenPlayerDataRead  (qcommon/com_storage.cpp:1870)
 
-void LiveStorage_OpenPlayerDataRead(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_OpenPlayerDataRead(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  int iVar1;
+  int iVar2;
+  LocalClientNum_t LVar3;
   int iVar4;
-  char cVar5;
-  longlong lVar6;
+  bool bVar5;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = R_PopRemoteScreenUpdate();
-  if (DAT_82966e98 != 0) {
-    uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-    Cmd_ExecuteSingleCommand(uVar3,uVar1,0xffffffff82085eb8);
-    CL_SetControllerInUse(uVar1);
-    CL_LocalClientNumFromControllerIndex(uVar1);
-    iVar4 = CL_ControllerIndexFromClientNum();
-    if (iVar4 != (int)uVar1) {
-      CL_LocalClientNumFromControllerIndex(uVar1);
-      uVar3 = CL_ControllerIndexFromClientNum();
-      MyAssertHandler(0xffffffff820859c8,0x75d,0,0xffffffff82085e40,uVar3,uVar1);
+  iVar1 = __savegprlr_28(param_1);
+  iVar2 = R_PopRemoteScreenUpdate();
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    Cmd_ExecuteSingleCommand(LVar3,iVar1,"incnosplitscreencontrol LiveStorage_OpenPlayerDataRead\n")
+    ;
+    CL_SetControllerInUse(iVar1);
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    iVar4 = CL_ControllerIndexFromClientNum(LVar3);
+    if (iVar4 != iVar1) {
+      LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+      CL_ControllerIndexFromClientNum(LVar3);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x75d,0,
+                      "CL_ControllerIndexFromClientNum( CL_LocalClientNumFromControllerIndex( controllerIndex ) ) == controllerIndex\n\t%i, %i"
+                     );
     }
-    uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-    UI_OpenMenu(uVar3,0xffffffff82085e2c);
-    uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-    Cmd_ExecuteSingleCommand(uVar3,uVar1,0xffffffff82085df4);
-    if (DAT_82966e98 == 0) {
-      MyAssertHandler(0xffffffff820859c8,0x762,0,0xffffffff82000f98,0xffffffff82085dd8);
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    UI_OpenMenu(LVar3,"playerdataread");
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    Cmd_ExecuteSingleCommand(LVar3,iVar1,"decnosplitscreencontrol LiveStorage_OpenPlayerDataRead\n")
+    ;
+    if (cl_multi_gamepads_enabled == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x762,0,"%s");
     }
-    lVar6 = 0;
+    iVar1 = 0;
     do {
-      cVar5 = CL_IsSplitscreenControllerActive(lVar6);
-      if (cVar5 != '\0') {
-        GamerProfile_ExecControllerBindings(lVar6);
+      bVar5 = CL_IsSplitscreenControllerActive(iVar1);
+      if (bVar5) {
+        GamerProfile_ExecControllerBindings(iVar1);
       }
-      lVar6 = lVar6 + 1;
-    } while ((int)lVar6 < 4);
-    R_PushRemoteScreenUpdate(uVar2);
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < 4);
+    R_PushRemoteScreenUpdate(iVar2);
     __restgprlr_28();
     return;
   }
-  uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
-  UI_OpenMenu(uVar1,0xffffffff82085e2c);
-  R_PushRemoteScreenUpdate(uVar2);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+  UI_OpenMenu(LVar3,"playerdataread");
+  R_PushRemoteScreenUpdate(iVar2);
   __restgprlr_28();
   return;
 }
@@ -1815,16 +1965,16 @@ void LiveStorage_OpenPlayerDataRead(void)
 
 // 824E78D8  LiveStorage_FinalizeStatsReadCommon  (qcommon/com_storage.cpp:1914)
 
-void LiveStorage_FinalizeStatsReadCommon(undefined8 param_1,int param_2)
+void LiveStorage_FinalizeStatsReadCommon(int param_1,StatsSource param_2)
 
 {
-  GamerProfile_UpdateProfileFromStats();
+  GamerProfile_UpdateProfileFromStats(param_1,param_2);
   LiveStorage_OpenPlayerDataRead(param_1);
-  if (param_2 == 0) {
+  if (param_2 == STATS_ONLINE) {
     LiveStorage_UpdatePlayerCardItem
-              (param_1,0,0xffffffff82026928,0xffffffff82038d6c,0xffffffff82026918);
+              (param_1,STATS_ONLINE,"mp/cardIconTable.csv","cardIcon","iconUnlocked");
     LiveStorage_UpdatePlayerCardItem
-              (param_1,0,0xffffffff820268f8,0xffffffff82038d60,0xffffffff820268e8);
+              (param_1,STATS_ONLINE,"mp/cardTitleTable.csv","cardTitle","titleUnlocked");
   }
   GamerProfile_UpdateProfileAndSaveIfNeeded(param_1);
   UI_ExpressionState_PlayerDataModified();
@@ -1834,52 +1984,55 @@ void LiveStorage_FinalizeStatsReadCommon(undefined8 param_1,int param_2)
 
 // 824EE1D8  LiveStorage_StatPrestigeResetCmd  (qcommon/com_storage.cpp:1935)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_StatPrestigeResetCmd(void)
 
 {
+  int iVar2;
+  StatsSource SVar3;
   int iVar4;
-  undefined8 uVar1;
-  longlong lVar2;
-  undefined8 uVar3;
-  char cVar5;
+  int iVar5;
+  bool bVar6;
+  ulong64 uVar1;
   
   __savegprlr_28();
-  iVar4 = Cmd_Argc();
-  if (iVar4 != 1) {
-    Com_PrintError(0xf,0xffffffff82089694);
+  iVar2 = Cmd_Argc();
+  if (iVar2 != 1) {
+    Com_PrintError(0xf,"prestigeReset usage: prestigeReset\n");
     __restgprlr_28();
     return;
   }
-  uVar1 = Cmd_LocalControllerIndex();
-  iVar4 = LiveStorage_GetActiveStatsSource();
-  if ((&DAT_836398d0)[iVar4 * 0x3005 + (int)uVar1 * 0x9238] == '\0') {
-    Com_PrintError(0xf,0xffffffff82089670);
+  iVar2 = Cmd_LocalControllerIndex();
+  SVar3 = LiveStorage_GetActiveStatsSource(iVar2);
+  if (controllerStatData[iVar2].playerStats[SVar3].statsFetched == false) {
+    Com_PrintError(0xf,"prestigeReset: we don\'t have stats\n");
     __restgprlr_28();
     return;
   }
-  lVar2 = LiveStorage_PlayerDataGetIntByName(uVar1,0xffffffff8203ab18);
-  uVar3 = Cmd_LocalControllerIndex();
-  LiveStorage_PlayerDataGetIntByName(uVar3,0xffffffff8203ab24);
-  iVar4 = CL_GetRankForXpMP();
-  if (iVar4 < 0x36) {
-    Com_PrintError(0xf,0xffffffff82089648);
+  iVar4 = LiveStorage_PlayerDataGetIntByName(iVar2,"prestige");
+  iVar5 = Cmd_LocalControllerIndex();
+  iVar5 = LiveStorage_PlayerDataGetIntByName(iVar5,"experience");
+  iVar5 = CL_GetRankForXpMP(iVar5);
+  if (iVar5 < 0x36) {
+    Com_PrintError(0xf,"prestigeReset not enough experience\n");
     __restgprlr_28();
     return;
   }
-  if (9 < (int)lVar2) {
-    Com_PrintError(0xf,0xffffffff8208962c);
+  if (9 < iVar4) {
+    Com_PrintError(0xf,"prestigeReset max prestige\n");
     __restgprlr_28();
     return;
   }
   LiveStorage_PrestigeResetForCmd();
-  LiveStorage_PlayerDataSetIntByName(uVar1,0xffffffff8203ab18,lVar2 + 1);
-  LiveStorage_PlayerDataSetIntByName(uVar1,0xffffffff8203ab24,0);
-  LiveStorage_StatsWriteNeeded(uVar1);
-  LiveStorage_SaveStats(uVar1);
-  cVar5 = Live_IsSignedIn(uVar1);
-  if ((cVar5 != '\0') && (cVar5 = Live_IsUserSignedInToLive(uVar1), cVar5 != '\0')) {
-    uVar3 = Live_GetXuid(uVar1);
-    LiveStorage_LogPrestige(uVar1,uVar3,lVar2 + 1);
+  LiveStorage_PlayerDataSetIntByName(iVar2,"prestige",iVar4 + 1);
+  LiveStorage_PlayerDataSetIntByName(iVar2,"experience",0);
+  LiveStorage_StatsWriteNeeded(iVar2);
+  LiveStorage_SaveStats(iVar2);
+  bVar6 = Live_IsSignedIn(iVar2);
+  if ((bVar6) && (bVar6 = Live_IsUserSignedInToLive(iVar2), bVar6)) {
+    uVar1 = Live_GetXuid(iVar2);
+    LiveStorage_LogPrestige(iVar2,uVar1,iVar4 + 1);
   }
   __restgprlr_28();
   return;
@@ -1888,51 +2041,54 @@ void LiveStorage_StatPrestigeResetCmd(void)
 
 // 824EE348  LiveStorage_StatResetCmd  (qcommon/com_storage.cpp:1991)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_StatResetCmd(void)
 
 {
-  int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  StatsSource SVar2;
+  StructuredDataDef *pSVar3;
+  StructuredDataDef *pSVar4;
+  StatsSource SVar5;
+  StructuredDataBuffer aSStack_30 [6];
   
   __savegprlr_28();
-  iVar5 = Cmd_Argc();
-  if (iVar5 != 1) {
-    Com_PrintError(0xf,0xffffffff820896f0);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 1) {
+    Com_PrintError(0xf,"statsReset usage: statsReset\n");
     __restgprlr_28();
     return;
   }
-  uVar1 = Cmd_LocalControllerIndex();
-  iVar5 = LiveStorage_GetActiveStatsSource();
-  if ((&DAT_836398d0)[iVar5 * 0x3005 + (int)uVar1 * 0x9238] == '\0') {
-    Com_PrintError(0xf,0xffffffff820896cc);
+  iVar1 = Cmd_LocalControllerIndex();
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (controllerStatData[iVar1].playerStats[SVar2].statsFetched == false) {
+    Com_PrintError(0xf,"statsReset: we don\'t have stats.\n");
     __restgprlr_28();
     return;
   }
-  uVar2 = LiveStorage_GetActiveStatsSource(uVar1);
-  LiveStorage_ResetStats_SetStatsSource(uVar1,uVar2);
-  LiveStorage_GetPlayerUnlockDataBuffer(auStack_30,uVar1);
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  uVar4 = StructuredDataDef_GetAsset(0xffffffff820896b8,0x2ffc);
-  StructuredData_TranslateDefinition(uVar3,uVar4,auStack_30);
-  StructuredData_TranslateDefinition(uVar4,uVar3,auStack_30);
-  LiveStorage_StatsInit(uVar1,0);
-  Cmd_ExecuteSingleCommand(0,0,0xffffffff82089368);
-  Cmd_ExecuteSingleCommand(0,0,0xffffffff82089344);
-  uVar3 = LiveStorage_GetActiveStatsSource(uVar1);
-  GamerProfile_UpdateProfileFromStats(0,uVar3);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  LiveStorage_ResetStats_SetStatsSource(iVar1,SVar2);
+  LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar1);
+  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  pSVar4 = StructuredDataDef_GetAsset("mp/resetdata.def",0x2ffc);
+  StructuredData_TranslateDefinition(pSVar3,pSVar4,aSStack_30);
+  StructuredData_TranslateDefinition(pSVar4,pSVar3,aSStack_30);
+  LiveStorage_StatsInit(iVar1,false);
+  Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,0,"exec mp/stats_init.cfg");
+  Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,0,"exec mp/stats_init_privatematch.cfg");
+  SVar5 = LiveStorage_GetActiveStatsSource(iVar1);
+  GamerProfile_UpdateProfileFromStats(0,SVar5);
   LiveStorage_OpenPlayerDataRead(0);
-  uVar3 = LiveStorage_GetActiveStatsSource(uVar1);
-  LiveStorage_UpdatePlayerCardFromProfile(0,uVar3);
-  LiveStorage_ResetStats_ClearStatsSource(uVar1);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(uVar1);
-  LiveStorage_StatsWriteNeeded(uVar1);
-  LiveStorage_SaveStats(uVar1);
-  if ((int)uVar2 == 0) {
-    Entitlements_ReProcessEntitlements(uVar1);
+  SVar5 = LiveStorage_GetActiveStatsSource(iVar1);
+  LiveStorage_UpdatePlayerCardFromProfile(0,SVar5);
+  LiveStorage_ResetStats_ClearStatsSource(iVar1);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
+  LiveStorage_StatsWriteNeeded(iVar1);
+  LiveStorage_SaveStats(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    Entitlements_ReProcessEntitlements(iVar1);
   }
   __restgprlr_28();
   return;
@@ -1941,46 +2097,50 @@ void LiveStorage_StatResetCmd(void)
 
 // 824ECB58  LiveStorage_StatsInit  (qcommon/com_storage.cpp:2058)
 
-void LiveStorage_StatsInit(undefined8 param_1,ulonglong param_2)
+void LiveStorage_StatsInit(int param_1,bool param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  void *_Dst;
-  undefined8 uVar2;
+  int iVar2;
+  bool bVar5;
+  uchar *puVar3;
+  StatsSource SVar4;
+  ulong64 uVar1;
+  ulonglong uVar6;
   
-  uVar1 = __savegprlr_29();
-  cVar3 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar3 == '\0') {
-    uVar2 = LiveStorage_GetActiveStatsSource(uVar1);
-    _Dst = (void *)LiveStorage_GetPersistentDataBufferForSource(uVar1,uVar2);
+  uVar6 = (ulonglong)param_2;
+  iVar2 = __savegprlr_29(param_1);
+  bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar5) {
+    puVar3 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    _Dst = (void *)CL_Demo_GetPersistentDataBufferForDemo();
+    SVar4 = LiveStorage_GetActiveStatsSource(iVar2);
+    puVar3 = LiveStorage_GetPersistentDataBufferForSource(iVar2,SVar4);
   }
-  if (_Dst == (void *)0x0) {
-    MyAssertHandler(0xffffffff820859c8,0x80e,0,0xffffffff82000f98,0xffffffff8205af0c);
+  if (puVar3 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x80e
+                    ,0,"%s");
   }
-  if ((param_2 & 0xff) != 0) {
-    memset(_Dst,0,0x2ffc);
+  if ((uVar6 & 0xff) != 0) {
+    memset();
   }
-  LiveStorage_SetPersistentDataVersion(uVar1);
-  cVar3 = Live_IsSignedIn(uVar1);
-  if (cVar3 != '\0') {
-    GamerProfile_UpdateSystemVarsFromProfile(uVar1);
+  LiveStorage_SetPersistentDataVersion(iVar2);
+  bVar5 = Live_IsSignedIn(iVar2);
+  if (bVar5) {
+    GamerProfile_UpdateSystemVarsFromProfile(iVar2);
   }
-  LiveStorage_SetCustomClassNames(uVar1);
-  cVar3 = Live_IsSignedIn(uVar1);
-  if (cVar3 != '\0') {
-    GamerProfile_UpdateProfileAndSaveIfNeeded(uVar1);
+  LiveStorage_SetCustomClassNames(iVar2);
+  bVar5 = Live_IsSignedIn(iVar2);
+  if (bVar5) {
+    GamerProfile_UpdateProfileAndSaveIfNeeded(iVar2);
   }
-  cVar3 = Live_IsSignedIn(uVar1);
-  if (cVar3 != '\0') {
-    uVar2 = Live_GetXuid(uVar1);
-    LiveStorage_WriteXuidToStats(uVar1,uVar2);
+  bVar5 = Live_IsSignedIn(iVar2);
+  if (bVar5) {
+    uVar1 = Live_GetXuid(iVar2);
+    LiveStorage_WriteXuidToStats(iVar2,uVar1);
   }
-  LiveStorage_InitPeriodicChallenges(uVar1);
-  LiveStorage_CheckPeriodicChallengeUpdate(uVar1);
+  LiveStorage_InitPeriodicChallenges(iVar2);
+  LiveStorage_CheckPeriodicChallengeUpdate(iVar2);
   __restgprlr_29();
   return;
 }
@@ -1988,163 +2148,184 @@ void LiveStorage_StatsInit(undefined8 param_1,ulonglong param_2)
 
 // 824ECC70  LiveStorage_StatsInitCmd  (qcommon/com_storage.cpp:2102)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_StatsInitCmd(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   
-  uVar1 = Cmd_LocalControllerIndex();
-  LiveStorage_StatsInit(uVar1,1);
+  iVar1 = Cmd_LocalControllerIndex();
+  LiveStorage_StatsInit(iVar1,true);
   return;
 }
 
 
 // 824E0250  LiveStorage_SetLookedUpDataFromString  (qcommon/com_storage.cpp:2108)
 
-void LiveStorage_SetLookedUpDataFromString
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+StructuredData_SetResult
+LiveStorage_SetLookedUpDataFromString
+          (StructuredDataLookup *param_1,StructuredDataBuffer *param_2,uchar *param_3,char *param_4)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  char cVar6;
-  int iVar5;
-  char *pcVar7;
-  longlong lVar8;
-  double dVar9;
+  char cVar2;
+  StructuredDataLookup *pSVar3;
+  LookupResultDataType LVar4;
+  char *pcVar5;
+  bool bVar8;
+  int iVar6;
+  StructuredData_SetResult SVar7;
+  char *pcVar9;
+  longlong lVar10;
+  longlong lVar11;
+  double dVar12;
   
-  uVar2 = __savegprlr_28();
-  uVar3 = StructuredData_GetLookupResultType();
-  if ((uVar3 & 0xffffffff) < 5) {
-    pcVar4 = (char *)param_4;
-    if ((int)uVar3 == 0) {
-      iVar5 = atoi(pcVar4);
-      StructuredData_SetInt_FlagModified(uVar2,param_2,param_3,iVar5);
-      __restgprlr_28();
-      return;
+  lVar11 = (longlong)(int)param_4;
+  pSVar3 = (StructuredDataLookup *)__savegprlr_28(param_1);
+  LVar4 = StructuredData_GetLookupResultType(pSVar3);
+  pcVar5 = (char *)lVar11;
+  if (LVar4 < (LOOKUP_RESULT_SHORT|LOOKUP_RESULT_BOOL)) {
+    if (LVar4 == LOOKUP_RESULT_INT) {
+      iVar6 = atoi(pcVar5);
+      SVar7 = StructuredData_SetInt_FlagModified(pSVar3,param_2,param_3,iVar6);
+      SVar7 = __restgprlr_28(SVar7);
+      return SVar7;
     }
-    if (uVar3 == 1) {
-      cVar6 = I_isdigit(*pcVar4);
-      if ((cVar6 != '\0') || (*pcVar4 == '-')) {
-        iVar5 = atoi(pcVar4);
-        StructuredData_SetBool_FlagModified(uVar2,param_2,param_3,iVar5 != 0);
-        __restgprlr_28();
-        return;
+    if (LVar4 == LOOKUP_RESULT_BOOL) {
+      bVar8 = I_isdigit((int)*pcVar5);
+      if ((bVar8) || (*pcVar5 == '-')) {
+        iVar6 = atoi(pcVar5);
+        SVar7 = StructuredData_SetBool_FlagModified
+                          (pSVar3,param_2,param_3,(bool)('\x01' - (iVar6 == 0)));
+        SVar7 = __restgprlr_28(SVar7);
+        return SVar7;
       }
-      pcVar7 = "true";
-      lVar8 = param_4;
-      pcVar4 = pcVar7;
+      pcVar9 = "true";
+      lVar10 = lVar11;
+      pcVar5 = pcVar9;
       do {
-        cVar6 = *(char *)lVar8;
-        cVar1 = *pcVar4;
-        if (cVar6 == '\0') break;
-        lVar8 = lVar8 + 1;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar6 == cVar1);
-      if (cVar6 != cVar1) {
-        pcVar4 = "false";
-        lVar8 = param_4;
+        cVar1 = *(char *)lVar10;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
+        lVar10 = lVar10 + 1;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 != cVar2) {
+        pcVar5 = "false";
+        lVar10 = lVar11;
         do {
-          cVar6 = *(char *)lVar8;
-          cVar1 = *pcVar4;
-          if (cVar6 == '\0') break;
-          lVar8 = lVar8 + 1;
-          pcVar4 = pcVar4 + 1;
-        } while (cVar6 == cVar1);
-        if (cVar6 != cVar1) {
-          __restgprlr_28(5);
-          return;
+          cVar1 = *(char *)lVar10;
+          cVar2 = *pcVar5;
+          if (cVar1 == '\0') break;
+          lVar10 = lVar10 + 1;
+          pcVar5 = pcVar5 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 != cVar2) {
+          SVar7 = __restgprlr_28(5);
+          return SVar7;
         }
       }
       do {
-        cVar6 = *(char *)param_4;
-        cVar1 = *pcVar7;
-        if (cVar6 == '\0') break;
-        param_4 = param_4 + 1;
-        pcVar7 = pcVar7 + 1;
-      } while (cVar6 == cVar1);
-      StructuredData_SetBool_FlagModified(uVar2,param_2,param_3,cVar6 == cVar1);
-      __restgprlr_28();
-      return;
+        cVar1 = *(char *)lVar11;
+        cVar2 = *pcVar9;
+        if (cVar1 == '\0') break;
+        lVar11 = lVar11 + 1;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar1 == cVar2);
+      SVar7 = StructuredData_SetBool_FlagModified(pSVar3,param_2,param_3,cVar1 == cVar2);
+      SVar7 = __restgprlr_28(SVar7);
+      return SVar7;
     }
-    if (uVar3 != 2) {
-      if (uVar3 == 3) {
-        dVar9 = atof(pcVar4);
-        StructuredData_SetFloat_FlagModified((double)(float)dVar9,uVar2,param_2,param_3);
-        __restgprlr_28();
-        return;
+    if (LVar4 != LOOKUP_RESULT_STRING) {
+      if (LVar4 == LOOKUP_RESULT_FLOAT) {
+        dVar12 = atof(pcVar5);
+        SVar7 = StructuredData_SetFloat_FlagModified(pSVar3,param_2,param_3,(float)dVar12);
+        SVar7 = __restgprlr_28(SVar7);
+        return SVar7;
       }
-      iVar5 = atoi(pcVar4);
-      StructuredData_SetShort_FlagModified(uVar2,param_2,param_3,(short)iVar5);
-      __restgprlr_28();
-      return;
+      iVar6 = atoi(pcVar5);
+      SVar7 = StructuredData_SetShort_FlagModified(pSVar3,param_2,param_3,(short)iVar6);
+      SVar7 = __restgprlr_28(SVar7);
+      return SVar7;
     }
   }
-  if ((int)uVar3 != 2) {
-    MyAssertHandler(0xffffffff820859c8,0x85a,0,0xffffffff82000f98,0xffffffff82085ef0);
+  if (LVar4 != LOOKUP_RESULT_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x85a
+                    ,0,"%s");
   }
-  StructuredData_SetString_FlagModified(uVar2,param_2,param_3,param_4);
-  __restgprlr_28();
-  return;
+  SVar7 = StructuredData_SetString_FlagModified(pSVar3,param_2,param_3,pcVar5);
+  SVar7 = __restgprlr_28(SVar7);
+  return SVar7;
 }
 
 
 // 824E0460  LiveStorage_MaySetPersistentData  (qcommon/com_storage.cpp:2148)
 
-ulonglong LiveStorage_MaySetPersistentData(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_MaySetPersistentData(LocalClientNum_t param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820858d0,0x4aa,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  return ((~(ulonglong)(uint)(&DAT_82b3e54c)[(int)param_1 * 0x79] & 0xffffffff) >> 0x1f) +
-         (ulonglong)(2 < (ulonglong)(uint)(&DAT_82b3e54c)[(int)param_1 * 0x79]) & 1;
+  return (bool)((char)((~(ulonglong)clientUIActives[param_1].connectionState & 0xffffffff) >> 0x1f)
+                + (2 < (ulonglong)clientUIActives[param_1].connectionState) & 1);
 }
 
 
 // 824E7978  LiveStorage_GetDailyChallengeId  (qcommon/com_storage.cpp:2162)
 
-void LiveStorage_GetDailyChallengeId(undefined8 param_1,ulonglong param_2)
+int LiveStorage_GetDailyChallengeId(StructuredDataBuffer *param_1,int param_2)
 
 {
-  undefined1 *local_70;
-  undefined1 *local_6c;
-  undefined1 auStack_60 [32];
-  undefined1 auStack_40 [40];
+  int iVar1;
+  char *local_70;
+  char *local_6c;
+  char acStack_60 [32];
+  char acStack_40 [40];
   
-  if (2 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x875,0,0xffffffff82087a78,param_2,3);
+  if (2 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x875
+                    ,0,
+                    "dailyChallengeIndex doesn\'t index DAILY_CHALLENGE_COUNT\n\t%i not in [0, %i)")
+    ;
   }
-  I_strncpyz(auStack_60,0xffffffff82087a64,0x20);
-  Com_sprintf(auStack_40,0x20,0xffffffff82013b64,param_2);
-  local_70 = auStack_60;
-  local_6c = auStack_40;
-  LiveStorage_DataGetInternalInt(&local_70,2,param_1);
-  return;
+  I_strncpyz(acStack_60,"dailyChallengeId",0x20);
+  Com_sprintf(acStack_40,0x20,"%d");
+  local_70 = acStack_60;
+  local_6c = acStack_40;
+  iVar1 = LiveStorage_DataGetInternalInt(&local_70,2,param_1);
+  return iVar1;
 }
 
 
 // 824E7A28  LiveStorage_GetWeeklyChallengeId  (qcommon/com_storage.cpp:2177)
 
-void LiveStorage_GetWeeklyChallengeId(undefined8 param_1,ulonglong param_2)
+int LiveStorage_GetWeeklyChallengeId(StructuredDataBuffer *param_1,int param_2)
 
 {
-  undefined1 *local_70;
-  undefined1 *local_6c;
-  undefined1 auStack_60 [32];
-  undefined1 auStack_40 [40];
+  int iVar1;
+  char *local_70;
+  char *local_6c;
+  char acStack_60 [32];
+  char acStack_40 [40];
   
-  if (2 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x884,0,0xffffffff82087ad8,param_2,3);
+  if (2 < (uint)param_2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x884
+                    ,0,
+                    "weeklyChallengeIndex doesn\'t index WEEKLY_CHALLENGE_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  I_strncpyz(auStack_60,0xffffffff82087ac4,0x20);
-  Com_sprintf(auStack_40,0x20,0xffffffff82013b64,param_2);
-  local_70 = auStack_60;
-  local_6c = auStack_40;
-  LiveStorage_DataGetInternalInt(&local_70,2,param_1);
-  return;
+  I_strncpyz(acStack_60,"weeklyChallengeId",0x20);
+  Com_sprintf(acStack_40,0x20,"%d");
+  local_70 = acStack_60;
+  local_6c = acStack_40;
+  iVar1 = LiveStorage_DataGetInternalInt(&local_70,2,param_1);
+  return iVar1;
 }
 
 
@@ -2153,80 +2334,83 @@ void LiveStorage_GetWeeklyChallengeId(undefined8 param_1,ulonglong param_2)
 void LiveStorage_MarkPeriodicChallengesOutOfDate(int param_1)
 
 {
-  (&DAT_8361cc11)[param_1 * 0x14] = 1;
+  controllerStorageData[param_1].generateChallenges = true;
   return;
 }
 
 
 // 824E7AD8  LiveStorage_ShouldReadPeriodicChallenges  (qcommon/com_storage.cpp:2198)
 
-undefined8 LiveStorage_ShouldReadPeriodicChallenges(int param_1)
+bool LiveStorage_ShouldReadPeriodicChallenges(int param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((*(uint *)(DAT_84584ed8 + 0xc) & 0x80) != 0) {
-    return 1;
+  if (((live_test_onlinedataoff->current).unsignedInt & 0x80) != 0) {
+    return true;
   }
-  if (((&DAT_8361cc11)[param_1 * 0x14] == '\0') ||
-     (uVar1 = 1, (&DAT_836398d0)[param_1 * 0x9238] == '\0')) {
-    uVar1 = 0;
+  if ((controllerStorageData[param_1].generateChallenges == false) ||
+     (bVar1 = true, controllerStatData[param_1].playerStats[0].statsFetched == false)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 824E7B50  LiveStorage_InitPeriodicChallenges  (qcommon/com_storage.cpp:2209)
 
-void LiveStorage_InitPeriodicChallenges(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_InitPeriodicChallenges(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  ulonglong uVar4;
-  undefined1 *local_b0;
-  undefined1 *local_ac;
-  undefined1 auStack_a8 [8];
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [32];
-  undefined1 auStack_70 [32];
-  undefined1 auStack_50 [80];
+  int iVar1;
+  LocalClientNum_t LVar2;
+  bool bVar4;
+  StructuredDataDef *pSVar3;
+  uint uVar5;
+  char *local_b0;
+  char *local_ac;
+  StructuredDataBuffer SStack_a8;
+  StructuredDataLookup SStack_a0;
+  char acStack_90 [32];
+  char acStack_70 [32];
+  char acStack_50 [80];
   
-  iVar2 = __savegprlr_28();
-  local_b0 = auStack_70;
-  local_ac = auStack_50;
-  uVar1 = 0;
-  if (DAT_82966e98 != 0) {
-    uVar1 = CL_LocalClientNumFromControllerIndex(iVar2);
+  iVar1 = __savegprlr_28(param_1);
+  local_b0 = acStack_70;
+  local_ac = acStack_50;
+  LVar2 = LOCAL_CLIENT_0;
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
   }
-  cVar3 = LiveStorage_MaySetPersistentData(uVar1);
-  if (cVar3 != '\0') {
-    cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_a8,iVar2);
-    if (cVar3 == '\0') {
-      Com_PrintError(0xe,0xffffffff82087b28);
+  bVar4 = LiveStorage_MaySetPersistentData(LVar2);
+  if (bVar4) {
+    bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_a8,iVar1);
+    if (!bVar4) {
+      Com_PrintError(0xe,"Cannot set data: we do not have player stats\n");
       __restgprlr_28();
       return;
     }
-    uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    StructuredData_InitializeLookup(uVar1,auStack_a0);
-    uVar4 = 0;
+    pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    StructuredData_InitializeLookup(pSVar3,&SStack_a0);
+    uVar5 = 0;
     do {
-      I_strncpyz(auStack_70,0xffffffff82087a64,0x20);
-      Com_sprintf(auStack_50,0x20,0xffffffff82013b64,uVar4);
-      Com_sprintf(auStack_90,0x20,0xffffffff82013b64,0xffffffffffffffff);
-      LiveStorage_DataSetInternalString(&local_b0,2,auStack_90,auStack_a8,0);
-      uVar4 = uVar4 + 1;
-    } while ((uVar4 & 0xffffffff) < 3);
-    uVar4 = 0;
+      I_strncpyz(acStack_70,"dailyChallengeId",0x20);
+      Com_sprintf(acStack_50,0x20,"%d");
+      Com_sprintf(acStack_90,0x20,"%d");
+      LiveStorage_DataSetInternalString(&local_b0,2,acStack_90,&SStack_a8,(uchar *)0x0);
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < 3);
+    uVar5 = 0;
     do {
-      I_strncpyz(auStack_70,0xffffffff82087ac4,0x20);
-      Com_sprintf(auStack_50,0x20,0xffffffff82013b64,uVar4);
-      Com_sprintf(auStack_90,0x20,0xffffffff82013b64,0xffffffffffffffff);
-      LiveStorage_DataSetInternalString(&local_b0,2,auStack_90,auStack_a8,0);
-      uVar4 = uVar4 + 1;
-    } while ((uVar4 & 0xffffffff) < 3);
-    (&DAT_8361cc11)[iVar2 * 0x14] = 1;
+      I_strncpyz(acStack_70,"weeklyChallengeId",0x20);
+      Com_sprintf(acStack_50,0x20,"%d");
+      Com_sprintf(acStack_90,0x20,"%d");
+      LiveStorage_DataSetInternalString(&local_b0,2,acStack_90,&SStack_a8,(uchar *)0x0);
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < 3);
+    controllerStorageData[iVar1].generateChallenges = true;
   }
   __restgprlr_28();
   return;
@@ -2235,108 +2419,108 @@ void LiveStorage_InitPeriodicChallenges(void)
 
 // 824E7CE8  LiveStorage_CheckPeriodicChallengeUpdate  (qcommon/com_storage.cpp:2253)
 
-void LiveStorage_CheckPeriodicChallengeUpdate(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void LiveStorage_CheckPeriodicChallengeUpdate(int param_1)
 
 {
-  int iVar4;
-  undefined8 uVar1;
-  char cVar6;
-  int iVar5;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar7;
-  longlong lVar8;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  bool bVar7;
+  int iVar3;
+  StructuredDataDef *pSVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar8;
   ulonglong uVar9;
-  undefined1 *local_100;
-  undefined1 *local_fc;
-  undefined1 auStack_f8 [8];
-  undefined4 local_f0 [4];
-  undefined1 auStack_e0 [32];
-  undefined1 auStack_c0 [32];
-  undefined1 auStack_a0 [32];
-  undefined1 auStack_80 [128];
+  char *local_100;
+  char *local_fc;
+  StructuredDataBuffer SStack_f8;
+  StringTable *local_f0 [4];
+  char acStack_e0 [32];
+  char acStack_c0 [32];
+  char acStack_a0 [32];
+  StructuredDataLookup aSStack_80 [8];
   
-  iVar4 = __savegprlr_19();
-  local_100 = auStack_c0;
-  local_fc = auStack_a0;
-  if ((-((*(uint *)(DAT_84584ed8 + 0xc) & 0x10) == 0) & DAT_836368c4) != 0) {
-    uVar1 = 0;
-    if (DAT_82966e98 != 0) {
-      uVar1 = CL_LocalClientNumFromControllerIndex(iVar4);
+  iVar1 = __savegprlr_19(param_1);
+  local_100 = acStack_c0;
+  local_fc = acStack_a0;
+  if ((-(((live_test_onlinedataoff->current).unsignedInt & 0x10) == 0) & s_UTCSynced) != 0) {
+    LVar2 = LOCAL_CLIENT_0;
+    if (cl_multi_gamepads_enabled != 0) {
+      LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
     }
-    cVar6 = LiveStorage_MaySetPersistentData(uVar1);
-    if (cVar6 != '\0') {
-      if ((&DAT_8361cc11)[iVar4 * 0x14] == '\0') {
-        MyAssertHandler(0xffffffff820859c8,0x8e5,0,0xffffffff82000f98,0xffffffff82087c50);
+    bVar7 = LiveStorage_MaySetPersistentData(LVar2);
+    if (bVar7) {
+      if (controllerStorageData[iVar1].generateChallenges == false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x8e5,0,"%s");
       }
-      iVar5 = DB_IsXAssetDefault(0x26,0xffffffff8200af50);
-      if (iVar5 != 0) {
-        MyAssertHandler(0xffffffff820859c8,0x8e6,0,0xffffffff820011f4,0xffffffff82087be8,
-                        0xffffffff82087c30);
+      iVar3 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/dailyChallengesTable.csv");
+      if (iVar3 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x8e6,0,"%s\n\t%s");
       }
-      iVar5 = DB_IsXAssetDefault(0x26,0xffffffff8200af6c);
-      if (iVar5 != 0) {
-        MyAssertHandler(0xffffffff820859c8,0x8e7,0,0xffffffff820011f4,0xffffffff82087b78,
-                        0xffffffff82087bc0);
+      iVar3 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/weeklyChallengesTable.csv");
+      if (iVar3 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x8e7,0,"%s\n\t%s");
       }
-      cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_f8,iVar4);
-      if (cVar6 == '\0') {
-        Com_PrintError(0xe,0xffffffff82087b28);
+      bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_f8,iVar1);
+      if (!bVar7) {
+        Com_PrintError(0xe,"Cannot set data: we do not have player stats\n");
         __restgprlr_19();
         return;
       }
-      uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-      StructuredData_InitializeLookup(uVar1,auStack_80);
-      uVar2 = LiveStorage_GetUTC();
-      StringTable_GetAsset(0xffffffff8200af50,local_f0);
-      uVar3 = StringTable_GetRowCount(local_f0[0]);
+      pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+      StructuredData_InitializeLookup(pSVar4,aSStack_80);
+      uVar5 = LiveStorage_GetUTC();
+      StringTable_GetAsset("mp/dailyChallengesTable.csv",local_f0);
+      uVar6 = StringTable_GetRowCount(local_f0[0]);
       uVar9 = 0;
       do {
-        I_strncpyz(auStack_c0,0xffffffff82087a64,0x20);
-        Com_sprintf(auStack_a0,0x20,0xffffffff82013b64,uVar9);
-        uVar7 = uVar9 + ((uVar2 & 0xffffffff) / 0x15180) * 3;
-        trapWord(6,uVar3,0);
-        lVar8 = uVar7 - (longlong)(int)((uVar7 & 0xffffffff) / (uVar3 & 0xffffffff)) *
-                        (longlong)(int)uVar3;
-        iVar5 = LiveStorage_DataGetInternalInt(&local_100,2,auStack_f8);
-        if (iVar5 != (int)lVar8) {
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,lVar8);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
-          I_strncpyz(auStack_c0,0xffffffff82086338,0x20);
-          Com_sprintf(auStack_a0,0x20,0xffffffff82087b68,uVar9);
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,0);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
-          I_strncpyz(auStack_c0,0xffffffff82086348,0x20);
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,0);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
+        I_strncpyz(acStack_c0,"dailyChallengeId",0x20);
+        Com_sprintf(acStack_a0,0x20,"%d");
+        uVar8 = uVar9 + ((ulonglong)uVar5 / 0x15180) * 3;
+        trapWord(6,(longlong)(int)uVar6,0);
+        iVar3 = LiveStorage_DataGetInternalInt(&local_100,2,&SStack_f8);
+        if (iVar3 != (int)uVar8 - (int)((uVar8 & 0xffffffff) / (ulonglong)uVar6) * uVar6) {
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
+          I_strncpyz(acStack_c0,"challengeState",0x20);
+          Com_sprintf(acStack_a0,0x20,"ch_daily_%d");
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
+          I_strncpyz(acStack_c0,"challengeProgress",0x20);
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
         }
         uVar9 = uVar9 + 1;
       } while ((uVar9 & 0xffffffff) < 3);
-      StringTable_GetAsset(0xffffffff8200af6c,local_f0);
-      uVar3 = StringTable_GetRowCount(local_f0[0]);
+      StringTable_GetAsset("mp/weeklyChallengesTable.csv",local_f0);
+      uVar6 = StringTable_GetRowCount(local_f0[0]);
       uVar9 = 0;
       do {
-        I_strncpyz(auStack_c0,0xffffffff82087ac4,0x20);
-        Com_sprintf(auStack_a0,0x20,0xffffffff82013b64,uVar9);
-        uVar7 = uVar9 + ((uVar2 & 0xffffffff) / 0x93a80) * 3;
-        trapWord(6,uVar3,0);
-        lVar8 = uVar7 - (longlong)(int)((uVar7 & 0xffffffff) / (uVar3 & 0xffffffff)) *
-                        (longlong)(int)uVar3;
-        iVar5 = LiveStorage_DataGetInternalInt(&local_100,2,auStack_f8);
-        if (iVar5 != (int)lVar8) {
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,lVar8);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
-          I_strncpyz(auStack_c0,0xffffffff82086338,0x20);
-          Com_sprintf(auStack_a0,0x20,0xffffffff82087b58,uVar9);
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,0);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
-          I_strncpyz(auStack_c0,0xffffffff82086348,0x20);
-          Com_sprintf(auStack_e0,0x20,0xffffffff82013b64,0);
-          LiveStorage_DataSetInternalString(&local_100,2,auStack_e0,auStack_f8,0);
+        I_strncpyz(acStack_c0,"weeklyChallengeId",0x20);
+        Com_sprintf(acStack_a0,0x20,"%d");
+        uVar8 = uVar9 + ((ulonglong)uVar5 / 0x93a80) * 3;
+        trapWord(6,(longlong)(int)uVar6,0);
+        iVar3 = LiveStorage_DataGetInternalInt(&local_100,2,&SStack_f8);
+        if (iVar3 != (int)uVar8 - (int)((uVar8 & 0xffffffff) / (ulonglong)uVar6) * uVar6) {
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
+          I_strncpyz(acStack_c0,"challengeState",0x20);
+          Com_sprintf(acStack_a0,0x20,"ch_weekly_%d");
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
+          I_strncpyz(acStack_c0,"challengeProgress",0x20);
+          Com_sprintf(acStack_e0,0x20,"%d");
+          LiveStorage_DataSetInternalString(&local_100,2,acStack_e0,&SStack_f8,(uchar *)0x0);
         }
         uVar9 = uVar9 + 1;
       } while ((uVar9 & 0xffffffff) < 3);
-      (&DAT_8361cc11)[iVar4 * 0x14] = 0;
+      controllerStorageData[iVar1].generateChallenges = false;
     }
   }
   __restgprlr_19();
@@ -2346,74 +2530,82 @@ void LiveStorage_CheckPeriodicChallengeUpdate(void)
 
 // 824E0508  LiveStorage_DoWeHaveStatsForSource  (qcommon/com_storage.cpp:2368)
 
-undefined1 LiveStorage_DoWeHaveStatsForSource(int param_1,int param_2)
+bool LiveStorage_DoWeHaveStatsForSource(int param_1,StatsSource param_2)
 
 {
-  return (&DAT_836398d0)[param_2 * 0x3005 + param_1 * 0x9238];
+  return controllerStatData[param_1].playerStats[param_2].statsFetched;
 }
 
 
 // 824E0530  LiveStorage_DoWeHaveStats  (qcommon/com_storage.cpp:2374)
 
-undefined1 LiveStorage_DoWeHaveStats(int param_1)
+bool LiveStorage_DoWeHaveStats(int param_1)
 
 {
-  int iVar1;
+  StatsSource SVar1;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  return (&DAT_836398d0)[iVar1 * 0x3005 + param_1 * 0x9238];
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  return controllerStatData[param_1].playerStats[SVar1].statsFetched;
 }
 
 
 // 824E8158  LiveStorage_IsWaitingOnStats  (qcommon/com_storage.cpp:2387)
 
-undefined8 LiveStorage_IsWaitingOnStats(int param_1)
+bool LiveStorage_IsWaitingOnStats(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((*(uint *)(DAT_84584ed8 + 0xc) & 0x20) != 0) {
-    return 1;
+  if (((live_test_onlinedataoff->current).unsignedInt & 0x20) != 0) {
+    return true;
   }
-  if (((&DAT_836398d0)[param_1 * 0x9238] != '\0') &&
-     (cVar1 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,6), cVar1 == '\0')) {
-    return 0;
+  if ((controllerStatData[param_1].playerStats[0].statsFetched != false) &&
+     (bVar1 = TaskManager_TaskIsInProgressForController(&storageTasks,6,param_1), !bVar1)) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 824E0580  LiveStorage_MaySetPersistentData_ControllerIndex  (qcommon/com_storage.cpp:2399)
 
-void LiveStorage_MaySetPersistentData_ControllerIndex(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_MaySetPersistentData_ControllerIndex(int param_1)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  bool bVar2;
   
-  uVar1 = 0;
-  if (DAT_82966e98 != 0) {
-    uVar1 = CL_LocalClientNumFromControllerIndex();
+  LVar1 = LOCAL_CLIENT_0;
+  if (cl_multi_gamepads_enabled != 0) {
+    LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
   }
-  LiveStorage_MaySetPersistentData(uVar1);
-  return;
+  bVar2 = LiveStorage_MaySetPersistentData(LVar1);
+  return bVar2;
 }
 
 
 // 824E05C0  LiveStorage_EnsureMaySetPersistentData  (qcommon/com_storage.cpp:2413)
 
-void LiveStorage_EnsureMaySetPersistentData(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_EnsureMaySetPersistentData(LocalClientNum_t param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar2;
+  LocalClientNum_t LVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_29();
-  cVar3 = LiveStorage_MaySetPersistentData();
-  if (cVar3 == '\0') {
-    uVar2 = CL_GetLocalClientConnectionState(uVar1);
-    Com_PrintError(0x10,0xffffffff82085f70,param_2,uVar2,uVar1);
-    Com_Error(1,0xffffffff82085f18,param_2,uVar2);
+  LVar1 = __savegprlr_29(param_1,param_2);
+  bVar2 = LiveStorage_MaySetPersistentData(LVar1);
+  if (!bVar2) {
+    CL_GetLocalClientConnectionState(LVar1);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
   __restgprlr_29();
   return;
@@ -2422,137 +2614,150 @@ void LiveStorage_EnsureMaySetPersistentData(undefined8 param_1,undefined8 param_
 
 // 824E0630  PrintArgs  (qcommon/com_storage.cpp:2426)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PrintArgs(void)
 
 {
+  int iVar1;
   int iVar2;
-  undefined8 uVar1;
-  longlong lVar3;
   
-  Com_Printf(0x10,0xffffffff82085fe0);
-  lVar3 = 0;
-  iVar2 = Cmd_Argc();
-  if (0 < iVar2) {
+  Com_Printf(0x10,"Command was: ");
+  iVar2 = 0;
+  iVar1 = Cmd_Argc();
+  if (0 < iVar1) {
     do {
-      uVar1 = Cmd_Argv(lVar3);
-      Com_Printf(0x10,0xffffffff82085fdc,uVar1);
-      lVar3 = lVar3 + 1;
-      iVar2 = Cmd_Argc();
-    } while ((int)lVar3 < iVar2);
+      Cmd_Argv(iVar2);
+      Com_Printf(0x10,"%s ");
+      iVar2 = iVar2 + 1;
+      iVar1 = Cmd_Argc();
+    } while (iVar2 < iVar1);
   }
-  Com_Printf(0x10,0xffffffff820044d8);
+  Com_Printf(0x10,"\n");
   return;
 }
 
 
 // 824E06C0  LiveStorage_Argc  (qcommon/com_storage.cpp:2440)
 
-longlong LiveStorage_Argc(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int LiveStorage_Argc(void)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = Cmd_Argc();
-  return lVar1 + 1;
+  iVar1 = Cmd_Argc();
+  return iVar1 + 1;
 }
 
 
 // 824E06E8  LiveStorage_Argv  (qcommon/com_storage.cpp:2446)
 
-undefined8 LiveStorage_Argv(longlong param_1)
+char * LiveStorage_Argv(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((int)param_1 < 1) {
-    MyAssertHandler(0xffffffff820859c8,0x98f,0,0xffffffff82012bbc,0xffffffff82086000,param_1);
+  if (param_1 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x98f
+                    ,0,"%s\n\t(argIndex) = %i");
   }
-  if ((int)param_1 == 1) {
-    return 0xffffffff82085ff0;
+  if (param_1 == 1) {
+    return "customClasses";
   }
-  uVar1 = Cmd_Argv(param_1 + -1);
-  return uVar1;
+  pcVar1 = Cmd_Argv(param_1 + -1);
+  return pcVar1;
 }
 
 
 // 824E0770  LiveStorage_PrivateMatch_Argv  (qcommon/com_storage.cpp:2455)
 
-undefined8 LiveStorage_PrivateMatch_Argv(longlong param_1)
+char * LiveStorage_PrivateMatch_Argv(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((int)param_1 < 1) {
-    MyAssertHandler(0xffffffff820859c8,0x998,0,0xffffffff82012bbc,0xffffffff82086000,param_1);
+  if (param_1 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0x998
+                    ,0,"%s\n\t(argIndex) = %i");
   }
-  if ((int)param_1 == 1) {
-    return 0xffffffff82086010;
+  if (param_1 == 1) {
+    return "privateMatchCustomClasses";
   }
-  uVar1 = Cmd_Argv(param_1 + -1);
-  return uVar1;
+  pcVar1 = Cmd_Argv(param_1 + -1);
+  return pcVar1;
 }
 
 
 // 824E81F0  LiveStorage_CustomClassesSetCmd_Internal  (qcommon/com_storage.cpp:2465)
 
-void LiveStorage_CustomClassesSetCmd_Internal(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_CustomClassesSetCmd_Internal(_func___cdecl_char_ptr_int *param_1)
 
 {
-  bool bVar1;
-  code *pcVar4;
-  undefined8 uVar2;
-  char cVar6;
-  undefined8 uVar3;
-  int iVar5;
+  _func___cdecl_char_ptr_int *p_Var1;
+  LocalClientNum_t LVar2;
+  bool bVar7;
+  int iVar3;
+  StructuredDataDef *pSVar4;
+  char *pcVar5;
+  StructuredData_SetResult SVar6;
   int local_50 [2];
-  undefined1 auStack_48 [8];
-  undefined1 auStack_40 [64];
+  StructuredDataBuffer SStack_48;
+  StructuredDataLookup aSStack_40 [4];
   
-  pcVar4 = (code *)__savegprlr_28();
-  uVar2 = Cmd_LocalClientNum();
-  cVar6 = LiveStorage_MaySetPersistentData();
-  if (cVar6 == '\0') {
-    uVar3 = CL_GetLocalClientConnectionState(uVar2);
-    Com_PrintError(0x10,0xffffffff82085f70,0xffffffff82087d28,uVar3,uVar2);
-    Com_Error(1,0xffffffff82085f18,0xffffffff82087d28,uVar3);
+  p_Var1 = (_func___cdecl_char_ptr_int *)__savegprlr_28(param_1);
+  LVar2 = Cmd_LocalClientNum();
+  bVar7 = LiveStorage_MaySetPersistentData(LVar2);
+  if (!bVar7) {
+    CL_GetLocalClientConnectionState(LVar2);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
-  uVar2 = Cmd_LocalControllerIndex();
-  cVar6 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_48,uVar2);
-  if (cVar6 == '\0') {
-    Com_PrintError(0xe,0xffffffff82087cf0);
+  iVar3 = Cmd_LocalControllerIndex();
+  bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_48,iVar3);
+  if (!bVar7) {
+    Com_PrintError(0xe,"Cannot set data: we have not downloaded player stats\n");
     __restgprlr_28();
     return;
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  cVar6 = StructuredData_NavigateFromCmd(uVar2,0xffffffff824e06c0,pcVar4,auStack_40,local_50);
-  if (cVar6 != '\0') {
-    iVar5 = Cmd_Argc();
-    if (iVar5 + 1 <= local_50[0]) {
-      Com_PrintError(0x10,0xffffffff82087cc8);
+  pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  bVar7 = StructuredData_NavigateFromCmd(pSVar4,LiveStorage_Argc,p_Var1,aSStack_40,local_50);
+  if (bVar7) {
+    iVar3 = Cmd_Argc();
+    if (iVar3 + 1 <= local_50[0]) {
+      Com_PrintError(0x10,"Not enough arguments to setPlayerData\n");
       __restgprlr_28();
       return;
     }
-    iVar5 = Cmd_Argc();
-    if (local_50[0] < iVar5) {
-      Com_PrintError(0x10,0xffffffff82087ca0);
+    iVar3 = Cmd_Argc();
+    if (local_50[0] < iVar3) {
+      Com_PrintError(0x10,"Too many arguments to setPlayerData\n");
       __restgprlr_28();
       return;
     }
-    uVar2 = (*pcVar4)();
-    iVar5 = LiveStorage_SetLookedUpDataFromString(auStack_40,auStack_48,0,uVar2);
-    if ((iVar5 == 0) || (bVar1 = false, iVar5 == 1)) {
-      bVar1 = true;
+    pcVar5 = (*p_Var1)(local_50[0]);
+    SVar6 = LiveStorage_SetLookedUpDataFromString(aSStack_40,&SStack_48,(uchar *)0x0,pcVar5);
+    if ((SVar6 == SETRESULT_SUCCESS_CHANGED) || (bVar7 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE)
+       ) {
+      bVar7 = true;
     }
-    if (bVar1) {
-      if (iVar5 == 0) {
-        Cmd_LocalControllerIndex();
-        LiveStorage_StatsWriteNeeded();
+    if (bVar7) {
+      if (SVar6 == SETRESULT_SUCCESS_CHANGED) {
+        iVar3 = Cmd_LocalControllerIndex();
+        LiveStorage_StatsWriteNeeded(iVar3);
         __restgprlr_28();
         return;
       }
     }
     else {
-      Com_PrintError(0x10,0xffffffff82087c8c,(&PTR_s_Value_changed_82992d4c)[iVar5]);
+      Com_PrintError(0x10,"setPlayerData: %s\n");
       PrintArgs();
     }
   }
@@ -2563,85 +2768,97 @@ void LiveStorage_CustomClassesSetCmd_Internal(void)
 
 // 824E83A8  LiveStorage_CustomClassesSetCmd  (qcommon/com_storage.cpp:2510)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_CustomClassesSetCmd(void)
 
 {
-  LiveStorage_CustomClassesSetCmd_Internal(0xffffffff824e06e8);
+  LiveStorage_CustomClassesSetCmd_Internal(LiveStorage_Argv);
   return;
 }
 
 
 // 824E83B8  LiveStorage_PrivateMatchCustomClassesSetCmd  (qcommon/com_storage.cpp:2515)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_PrivateMatchCustomClassesSetCmd(void)
 
 {
-  LiveStorage_CustomClassesSetCmd_Internal(0xffffffff824e0770);
+  LiveStorage_CustomClassesSetCmd_Internal(LiveStorage_PrivateMatch_Argv);
   return;
 }
 
 
 // 824E83C8  LiveStorage_DataSetCmd  (qcommon/com_storage.cpp:2522)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_DataSetCmd(void)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar5;
-  undefined8 uVar3;
-  int iVar4;
+  LocalClientNum_t LVar1;
+  bool bVar6;
+  int iVar2;
+  StructuredDataDef *pSVar3;
+  char *pcVar4;
+  StructuredData_SetResult SVar5;
   int local_40 [2];
-  undefined1 auStack_38 [8];
-  undefined1 auStack_30 [48];
+  StructuredDataBuffer SStack_38;
+  StructuredDataLookup aSStack_30 [3];
   
   __savegprlr_29();
-  Com_PrintWarning(0x10,0xffffffff82087d60);
-  uVar2 = Cmd_LocalClientNum();
-  cVar5 = LiveStorage_MaySetPersistentData();
-  if (cVar5 == '\0') {
-    uVar3 = CL_GetLocalClientConnectionState(uVar2);
-    Com_PrintError(0x10,0xffffffff82085f70,0xffffffff82087d48,uVar3,uVar2);
-    Com_Error(1,0xffffffff82085f18,0xffffffff82087d48,uVar3);
+  Com_PrintWarning(0x10,"Calling dev only command \'setPlayerData\'.\n");
+  LVar1 = Cmd_LocalClientNum();
+  bVar6 = LiveStorage_MaySetPersistentData(LVar1);
+  if (!bVar6) {
+    CL_GetLocalClientConnectionState(LVar1);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
-  uVar2 = Cmd_LocalControllerIndex();
-  cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_38,uVar2);
-  if (cVar5 == '\0') {
-    Com_PrintError(0xe,0xffffffff82087cf0);
+  iVar2 = Cmd_LocalControllerIndex();
+  bVar6 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_38,iVar2);
+  if (!bVar6) {
+    Com_PrintError(0xe,"Cannot set data: we have not downloaded player stats\n");
     __restgprlr_29();
     return;
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  cVar5 = StructuredData_NavigateFromCmd
-                    (uVar2,0xffffffff822b2778,0xffffffff822b2820,auStack_30,local_40);
-  if (cVar5 != '\0') {
-    iVar4 = Cmd_Argc();
-    if (iVar4 <= local_40[0]) {
-      Com_PrintError(0x10,0xffffffff82087cc8);
+  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  bVar6 = StructuredData_NavigateFromCmd(pSVar3,Cmd_Argc,Cmd_Argv,aSStack_30,local_40);
+  if (bVar6) {
+    iVar2 = Cmd_Argc();
+    if (iVar2 <= local_40[0]) {
+      Com_PrintError(0x10,"Not enough arguments to setPlayerData\n");
       __restgprlr_29();
       return;
     }
-    iVar4 = Cmd_Argc();
-    if (local_40[0] < iVar4 + -1) {
-      Com_PrintError(0x10,0xffffffff82087ca0);
+    iVar2 = Cmd_Argc();
+    if (local_40[0] < iVar2 + -1) {
+      Com_PrintError(0x10,"Too many arguments to setPlayerData\n");
       __restgprlr_29();
       return;
     }
-    uVar2 = Cmd_Argv();
-    iVar4 = LiveStorage_SetLookedUpDataFromString(auStack_30,auStack_38,0,uVar2);
-    if ((iVar4 == 0) || (bVar1 = false, iVar4 == 1)) {
-      bVar1 = true;
+    pcVar4 = Cmd_Argv(local_40[0]);
+    SVar5 = LiveStorage_SetLookedUpDataFromString(aSStack_30,&SStack_38,(uchar *)0x0,pcVar4);
+    if ((SVar5 == SETRESULT_SUCCESS_CHANGED) || (bVar6 = false, SVar5 == SETRESULT_SUCCESS_NOCHANGE)
+       ) {
+      bVar6 = true;
     }
-    if (bVar1) {
-      if (iVar4 == 0) {
-        Cmd_LocalControllerIndex();
-        LiveStorage_StatsWriteNeeded();
+    if (bVar6) {
+      if (SVar5 == SETRESULT_SUCCESS_CHANGED) {
+        iVar2 = Cmd_LocalControllerIndex();
+        LiveStorage_StatsWriteNeeded(iVar2);
         __restgprlr_29();
         return;
       }
     }
     else {
-      Com_PrintError(0x10,0xffffffff82087c8c,(&PTR_s_Value_changed_82992d4c)[iVar4]);
+      Com_PrintError(0x10,"setPlayerData: %s\n");
       PrintArgs();
     }
   }
@@ -2652,32 +2869,35 @@ void LiveStorage_DataSetCmd(void)
 
 // 824E8588  LiveStorage_DataGetCmd  (qcommon/com_storage.cpp:2571)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_DataGetCmd(void)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  int iVar2;
+  int iVar1;
+  bool bVar4;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
   int local_30 [2];
-  undefined1 auStack_28 [8];
-  undefined1 auStack_20 [32];
+  StructuredDataBuffer SStack_28;
+  StructuredDataLookup aSStack_20 [2];
   
-  uVar1 = Cmd_LocalControllerIndex();
-  cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_28,uVar1);
-  if (cVar3 == '\0') {
-    Com_Printf(0xe,0xffffffff82087d8c);
+  iVar1 = Cmd_LocalControllerIndex();
+  bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_28,iVar1);
+  if (!bVar4) {
+    Com_Printf(0xe,"Cannot get data: we have not downloaded player stats\n");
     return;
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_NavigateFromCmd(uVar1,0xffffffff822b2778,0xffffffff822b2820,auStack_20,local_30);
-  iVar2 = StructuredData_GetLookupState(auStack_20);
-  if (iVar2 != 2) {
-    iVar2 = Cmd_Argc();
-    if (local_30[0] < iVar2) {
-      Com_Printf(0x10,0xffffffff82031790);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_NavigateFromCmd(pSVar2,Cmd_Argc,Cmd_Argv,aSStack_20,local_30);
+  LVar3 = StructuredData_GetLookupState(aSStack_20);
+  if (LVar3 != LOOKUP_ERROR) {
+    iVar1 = Cmd_Argc();
+    if (local_30[0] < iVar1) {
+      Com_Printf(0x10,"Too many arguments\n");
       return;
     }
-    StructuredData_PrintLookup(auStack_20,auStack_28);
+    StructuredData_PrintLookup(aSStack_20,&SStack_28);
   }
   return;
 }
@@ -2685,119 +2905,93 @@ void LiveStorage_DataGetCmd(void)
 
 // 824E8658  LiveStorage_DataDumpCmd  (qcommon/com_storage.cpp:2602)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_DataDumpCmd(void)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_10 [16];
+  int iVar1;
+  bool bVar3;
+  StructuredDataDef *pSVar2;
+  StructuredDataBuffer aSStack_10 [2];
   
-  uVar1 = Cmd_LocalControllerIndex();
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_10,uVar1);
-  if (cVar2 == '\0') {
-    Com_Printf(0xe,0xffffffff82087d8c);
+  iVar1 = Cmd_LocalControllerIndex();
+  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_10,iVar1);
+  if (!bVar3) {
+    Com_Printf(0xe,"Cannot get data: we have not downloaded player stats\n");
     return;
   }
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_PrintAllData(uVar1,auStack_10);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_PrintAllData(pSVar2,aSStack_10);
   return;
 }
 
 
 // 824ECC98  LiveStorage_DumpUnlockedItemsCmd  (qcommon/com_storage.cpp:2619)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_DumpUnlockedItemsCmd(void)
 
 {
-  undefined4 uVar1;
-  uint uVar3;
+  StringTable *pSVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
   int iVar4;
-  char cVar5;
-  undefined8 uVar2;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  int iVar9;
-  undefined8 uVar10;
-  undefined2 *puVar11;
-  ulonglong uVar12;
-  bool bVar13;
-  undefined4 local_90 [2];
-  undefined1 auStack_88 [136];
+  bool bVar5;
+  bool *pbVar6;
+  int iVar7;
+  StringTable *local_90 [2];
+  StructuredDataBuffer aSStack_88 [17];
   
   __savegprlr_17();
-  uVar3 = Cmd_LocalClientNum();
-  Com_Printf(0xe,0xffffffff82088fdc);
-  Com_Printf(0xe,0xffffffff82088fa8,uVar3);
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff820858d0,0x47f,0,0xffffffff820011a8,uVar3,4);
+  LVar2 = Cmd_LocalClientNum();
+  Com_Printf(0xe,"=================================\n");
+  Com_Printf(0xe,"Dumping unlocked item state for local client %i\n\n");
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../client_mp/client_mp.h"
+                    ,0x47f,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar9 = uVar3 * 0x1e4;
-  uVar10 = 0xffffffff82003cf8;
-  uVar6 = uVar10;
-  if ((&DAT_82b3e69d)[iVar9] == '\0') {
-    uVar6 = 0xffffffff82003cf0;
+  Com_Printf(0xe,"itemsUnlockedInited = %s\n\n");
+  StringTable_GetAsset("mp/unlocktable.csv",local_90);
+  iVar3 = StringTable_GetRowCount(local_90[0]);
+  if (0xa00 < iVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xa53
+                    ,0,"%s");
   }
-  Com_Printf(0xe,0xffffffff82088f8c,uVar6);
-  StringTable_GetAsset(0xffffffff82026898,local_90);
-  iVar4 = StringTable_GetRowCount(local_90[0]);
-  if (0xa00 < iVar4) {
-    MyAssertHandler(0xffffffff820859c8,0xa53,0,0xffffffff82000f98,0xffffffff820268ac);
-  }
-  uVar12 = 0;
-  if (0 < iVar4) {
+  iVar7 = 0;
+  if (0 < iVar3) {
     do {
-      uVar1 = local_90[0];
-      bVar13 = (1 << ((uint)uVar12 & 7) &
-               (uint)(byte)(&DAT_82b3e55d)[(int)((uVar12 & 0xffffffff) >> 3) + iVar9]) != 0;
-      uVar6 = CL_ControllerIndexFromClientNum(uVar3);
-      cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_88,uVar6);
-      if (cVar5 == '\0') {
-        CL_ControllerIndexFromClientNum(uVar3);
-        ShowPopupGettingData();
-        cVar5 = '\0';
+      pSVar1 = local_90[0];
+      iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+      bVar5 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_88,iVar4);
+      if (bVar5) {
+        LiveStorage_IsItemUnlockedFromTable(aSStack_88,pSVar1,iVar7);
       }
       else {
-        cVar5 = LiveStorage_IsItemUnlockedFromTable(auStack_88,uVar1,uVar12);
+        iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+        ShowPopupGettingData(iVar4);
       }
-      uVar2 = StringTable_GetColumnValueForRow(local_90[0],uVar12,0);
-      uVar6 = 0xffffffff82088f30;
-      if (bVar13) {
-        if (cVar5 == '\0') {
-          uVar6 = 0xffffffff82088f40;
-        }
-      }
-      else if (cVar5 != '\0') {
-        uVar6 = 0xffffffff82088f38;
-      }
-      uVar8 = 0xffffffff82088f48;
-      if (cVar5 == '\0') {
-        uVar8 = 0xffffffff82088f54;
-      }
-      uVar7 = 0xffffffff82088f48;
-      if (!bVar13) {
-        uVar7 = 0xffffffff82088f54;
-      }
-      Com_Printf(0xe,0xffffffff82088f60,uVar6,uVar2,uVar7,uVar8);
-      uVar12 = uVar12 + 1;
-    } while ((int)uVar12 < iVar4);
+      StringTable_GetColumnValueForRow(local_90[0],iVar7,0);
+      Com_Printf(0xe,"%s \"%s\"\twas previously %s and is now %s\n");
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < iVar3);
   }
-  if ((&DAT_82b3e69e)[iVar9] == '\0') {
-    uVar10 = 0xffffffff82003cf0;
-  }
-  Com_Printf(0xe,0xffffffff82088f0c,uVar10);
-  Com_Printf(0xe,0xffffffff82088eec,*(undefined4 *)(&DAT_82b3e6c0 + iVar9));
-  iVar4 = 0;
-  if (0 < *(int *)(&DAT_82b3e6c0 + iVar9)) {
-    puVar11 = (undefined2 *)(&DAT_82b3e69e + iVar9);
+  Com_Printf(0xe,"\nitemsUnlockedLastGameDirty = %s\n");
+  Com_Printf(0xe,"itemsUnlockedLastGame (%i):\n");
+  iVar3 = 0;
+  if (0 < clientUIActives[LVar2].itemsUnlockedLastGameCount) {
+    pbVar6 = &clientUIActives[LVar2].itemsUnlockedLastGameDirty;
     do {
-      puVar11 = puVar11 + 1;
-      uVar6 = StringTable_GetColumnValueForRow(local_90[0],*puVar11,0);
-      Com_Printf(0xe,0xffffffff82088ee4,uVar6);
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < *(int *)(&DAT_82b3e6c0 + iVar9));
+      pbVar6 = pbVar6 + 2;
+      StringTable_GetColumnValueForRow(local_90[0],(uint)*(ushort *)pbVar6,0);
+      Com_Printf(0xe," \"%s\"\n");
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < clientUIActives[LVar2].itemsUnlockedLastGameCount);
   }
-  Com_Printf(0xe,0xffffffff82088ec0);
+  Com_Printf(0xe,"\n=================================\n");
   __restgprlr_17();
   return;
 }
@@ -2805,33 +2999,36 @@ void LiveStorage_DumpUnlockedItemsCmd(void)
 
 // 824E86C8  LiveStorage_UnlockIconCmd  (qcommon/com_storage.cpp:2677)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_UnlockIconCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int local_20 [4];
+  bool bVar4;
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087dc4);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: unlockIcon \"cardicon_grunt\" ");
   }
-  StringTable_GetAsset(0xffffffff82026928,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xa7d,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xa7d
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    cVar4 = GamerProfile_IsCardIconUnlocked(uVar2,uVar1);
-    if (cVar4 == '\0') {
-      uVar2 = Cmd_LocalControllerIndex();
-      LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269fc,uVar1,1);
-      uVar2 = Cmd_LocalControllerIndex();
-      LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff82026918,uVar1,1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    bVar4 = GamerProfile_IsCardIconUnlocked(iVar3,iVar1);
+    if (!bVar4) {
+      iVar3 = Cmd_LocalControllerIndex();
+      LiveStorage_SetPlayerCardItemField(iVar3,"iconNew",iVar1,true);
+      iVar3 = Cmd_LocalControllerIndex();
+      LiveStorage_SetPlayerCardItemField(iVar3,"iconUnlocked",iVar1,true);
     }
   }
   return;
@@ -2840,33 +3037,36 @@ void LiveStorage_UnlockIconCmd(void)
 
 // 824E87B8  LiveStorage_UnlockTitleCmd  (qcommon/com_storage.cpp:2703)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_UnlockTitleCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int local_20 [4];
+  bool bVar4;
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087de8);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: unlockTitle \"cardtitle_backsmasher\" ");
   }
-  StringTable_GetAsset(0xffffffff820268f8,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xa97,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xa97
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    cVar4 = GamerProfile_IsCardTitleUnlocked(uVar2,uVar1);
-    if (cVar4 == '\0') {
-      uVar2 = Cmd_LocalControllerIndex();
-      LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269f0,uVar1,1);
-      uVar2 = Cmd_LocalControllerIndex();
-      LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820268e8,uVar1,1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    bVar4 = GamerProfile_IsCardTitleUnlocked(iVar3,iVar1);
+    if (!bVar4) {
+      iVar3 = Cmd_LocalControllerIndex();
+      LiveStorage_SetPlayerCardItemField(iVar3,"titleNew",iVar1,true);
+      iVar3 = Cmd_LocalControllerIndex();
+      LiveStorage_SetPlayerCardItemField(iVar3,"titleUnlocked",iVar1,true);
     }
   }
   return;
@@ -2875,29 +3075,32 @@ void LiveStorage_UnlockTitleCmd(void)
 
 // 824E88A8  LiveStorage_LockIconCmd  (qcommon/com_storage.cpp:2729)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_LockIconCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int local_20 [4];
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087e14);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: lockIcon \"cardicon_grunt\" ");
   }
-  StringTable_GetAsset(0xffffffff82026928,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xab1,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xab1
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269fc,uVar1,0);
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff82026918,uVar1,0);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItemField(iVar3,"iconNew",iVar1,false);
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItemField(iVar3,"iconUnlocked",iVar1,false);
   }
   return;
 }
@@ -2905,29 +3108,32 @@ void LiveStorage_LockIconCmd(void)
 
 // 824E8980  LiveStorage_LockTitleCmd  (qcommon/com_storage.cpp:2750)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_LockTitleCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int local_20 [4];
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087e38);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: lockTitle \"cardtitle_backsmasher\" ");
   }
-  StringTable_GetAsset(0xffffffff820268f8,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xac6,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xac6
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820269f0,uVar1,0);
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItemField(uVar2,0xffffffff820268e8,uVar1,0);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItemField(iVar3,"titleNew",iVar1,false);
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItemField(iVar3,"titleUnlocked",iVar1,false);
   }
   return;
 }
@@ -2935,27 +3141,30 @@ void LiveStorage_LockTitleCmd(void)
 
 // 824E8A58  LiveStorage_SetPlayerIconCmd  (qcommon/com_storage.cpp:2771)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_SetPlayerIconCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int local_20 [4];
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087e64);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: setPlayerIcon \"cardicon_grunt\" ");
   }
-  StringTable_GetAsset(0xffffffff82026928,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xadb,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xadb
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItem(uVar2,0xffffffff82038d6c,uVar1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItem(iVar3,"cardIcon",iVar1);
   }
   return;
 }
@@ -2963,27 +3172,30 @@ void LiveStorage_SetPlayerIconCmd(void)
 
 // 824E8B10  LiveStorage_SetPlayerTitleCmd  (qcommon/com_storage.cpp:2789)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_SetPlayerTitleCmd(void)
 
 {
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int local_20 [4];
+  StringTable *local_20 [4];
   
-  iVar3 = Cmd_Argc();
-  if (iVar3 != 2) {
-    Com_Printf(0xe,0xffffffff82087e8c);
+  iVar1 = Cmd_Argc();
+  if (iVar1 != 2) {
+    Com_Printf(0xe,"Usage: setPlayerTitle \"cardtitle_backsmasher\" ");
   }
-  StringTable_GetAsset(0xffffffff820268f8,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xaed,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xaed
+                    ,0,"%s");
   }
-  uVar1 = Cmd_Argv(1);
-  uVar1 = StringTable_LookupRowNumForValue(local_20[0],0,uVar1);
-  if (-1 < (int)uVar1) {
-    uVar2 = Cmd_LocalControllerIndex();
-    LiveStorage_SetPlayerCardItem(uVar2,0xffffffff82038d60,uVar1);
+  pcVar2 = Cmd_Argv(1);
+  iVar1 = StringTable_LookupRowNumForValue(local_20[0],0,pcVar2);
+  if (-1 < iVar1) {
+    iVar3 = Cmd_LocalControllerIndex();
+    LiveStorage_SetPlayerCardItem(iVar3,"cardTitle",iVar1);
   }
   return;
 }
@@ -2991,39 +3203,39 @@ void LiveStorage_SetPlayerTitleCmd(void)
 
 // 824E07F8  LiveStorage_UpdateProfileFromStatsCmd  (qcommon/com_storage.cpp:2807)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_UpdateProfileFromStatsCmd(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  StatsSource SVar2;
   
-  uVar1 = Cmd_LocalControllerIndex();
-  uVar2 = LiveStorage_GetActiveStatsSource();
-  GamerProfile_UpdateProfileFromStats(uVar1,uVar2);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(uVar1);
+  iVar1 = Cmd_LocalControllerIndex();
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  GamerProfile_UpdateProfileFromStats(iVar1,SVar2);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
   return;
 }
 
 
 // 824E0840  LiveStorage_DataSetPrintStrings  (qcommon/com_storage.cpp:2821)
 
-void LiveStorage_DataSetPrintStrings(undefined8 param_1,longlong param_2,undefined8 param_3)
+void LiveStorage_DataSetPrintStrings(char **param_1,int param_2,char *param_3)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  longlong lVar1;
   
-  iVar1 = __savegprlr_28();
-  Com_Printf(0x10,0xffffffff82086034);
-  if (0 < (int)param_2) {
-    puVar2 = (undefined4 *)(iVar1 + -4);
+  lVar1 = (longlong)param_2;
+  __savegprlr_28(param_1,lVar1,param_3);
+  Com_Printf(0x10,"Tried to set data: ");
+  if (0 < (int)lVar1) {
     do {
-      puVar2 = puVar2 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar2);
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      Com_Printf(0x10,"%s ");
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  Com_Printf(0x10,0xffffffff8208602c,param_3);
+  Com_Printf(0x10," = %s\n");
   __restgprlr_28();
   return;
 }
@@ -3031,23 +3243,21 @@ void LiveStorage_DataSetPrintStrings(undefined8 param_1,longlong param_2,undefin
 
 // 824E08B0  LiveStorage_DataGetPrintStrings  (qcommon/com_storage.cpp:2837)
 
-void LiveStorage_DataGetPrintStrings(undefined8 param_1,longlong param_2)
+void LiveStorage_DataGetPrintStrings(char **param_1,int param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  longlong lVar1;
   
-  iVar1 = __savegprlr_29();
-  Com_Printf(0x10,0xffffffff82086048);
-  if (0 < (int)param_2) {
-    puVar2 = (undefined4 *)(iVar1 + -4);
+  lVar1 = (longlong)param_2;
+  __savegprlr_29(param_1);
+  Com_Printf(0x10,"Tried to get data: ");
+  if (0 < (int)lVar1) {
     do {
-      puVar2 = puVar2 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar2);
-      param_2 = param_2 + -1;
-    } while (param_2 != 0);
+      Com_Printf(0x10,"%s ");
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  Com_Printf(0x10,0xffffffff820044d8);
+  Com_Printf(0x10,"\n");
   __restgprlr_29();
   return;
 }
@@ -3056,41 +3266,46 @@ void LiveStorage_DataGetPrintStrings(undefined8 param_1,longlong param_2)
 // 824E0918  LiveStorage_MatchDataSetInternalInt  (qcommon/com_storage.cpp:2851)
 
 void LiveStorage_MatchDataSetInternalInt
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+               (char **param_1,int param_2,int param_3,StructuredDataBuffer *param_4,uchar *param_5,
+               StructuredDataDef *param_6)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
+  char **ppcVar1;
+  bool bVar3;
+  StructuredData_SetResult SVar2;
+  longlong lVar4;
+  int iVar5;
   int local_70 [4];
-  undefined1 auStack_60 [16];
-  undefined1 auStack_50 [80];
+  StructuredDataLookup SStack_60;
+  char acStack_50 [80];
   
-  uVar2 = __savegprlr_27();
-  Com_sprintf(auStack_50,0x20,0xffffffff82013b64,param_3);
-  StructuredData_InitializeLookup(param_6,auStack_60);
-  cVar4 = StructuredData_NavigateByStrings(auStack_60,uVar2,param_2,local_70);
-  if (cVar4 == '\0') {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,auStack_50);
-    Com_Error(1,0xffffffff820860dc);
+  lVar4 = (longlong)param_2;
+  ppcVar1 = (char **)__savegprlr_27(param_1,lVar4,param_3);
+  Com_sprintf(acStack_50,0x20,"%d");
+  StructuredData_InitializeLookup(param_6,&SStack_60);
+  iVar5 = (int)lVar4;
+  bVar3 = StructuredData_NavigateByStrings(&SStack_60,ppcVar1,iVar5,local_70);
+  if (!bVar3) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,iVar5,acStack_50);
+    Com_Error(ERR_DROP,"Error setting persistent data: see console\n");
     __restgprlr_27();
     return;
   }
-  if (local_70[0] != (int)param_2) {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,auStack_50);
-    Com_Error(1,0xffffffff82086090);
+  if (local_70[0] != iVar5) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,iVar5,acStack_50);
+    Com_Error(ERR_DROP,"Error setting persistent data: incorrect number of arguments; see console\n"
+             );
     __restgprlr_27();
     return;
   }
-  iVar3 = LiveStorage_SetLookedUpDataFromString(auStack_60,param_4,param_5,auStack_50);
-  if ((iVar3 == 0) || (bVar1 = false, iVar3 == 1)) {
-    bVar1 = true;
+  SVar2 = LiveStorage_SetLookedUpDataFromString(&SStack_60,param_4,param_5,acStack_50);
+  if ((SVar2 == SETRESULT_SUCCESS_CHANGED) || (bVar3 = false, SVar2 == SETRESULT_SUCCESS_NOCHANGE))
+  {
+    bVar3 = true;
   }
-  if (!bVar1) {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,auStack_50);
-    Com_Error(1,0xffffffff8208605c,(&PTR_s_Value_changed_82992d4c)[iVar3]);
+  if (!bVar3) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,iVar5,acStack_50);
+    Com_Error(ERR_DROP,"Error setting persistent data: %s; see console\n");
   }
   __restgprlr_27();
   return;
@@ -3099,84 +3314,96 @@ void LiveStorage_MatchDataSetInternalInt
 
 // 824E0A50  LiveStorage_MatchDataGetString  (qcommon/com_storage.cpp:2894)
 
-void LiveStorage_MatchDataGetString
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4)
+char * LiveStorage_MatchDataGetString
+                 (char **param_1,int param_2,StructuredDataBuffer *param_3,
+                 StructuredDataDef *param_4)
 
 {
-  undefined8 uVar1;
-  char cVar3;
-  undefined8 uVar2;
+  char **ppcVar1;
+  bool bVar4;
+  LookupResultDataType LVar2;
+  char *pcVar3;
+  ulonglong uVar5;
+  ulonglong uVar6;
   int local_60 [4];
-  undefined1 auStack_50 [80];
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xb4f,0,0xffffffff82000f98,0xffffffff8200e484);
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  ppcVar1 = (char **)__savegprlr_26(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xb4f
+                    ,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xb50,0,0xffffffff82000f98,0xffffffff8206070c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xb50
+                    ,0,"%s");
   }
-  StructuredData_InitializeLookup(param_4,auStack_50);
-  cVar3 = StructuredData_NavigateByStrings(auStack_50,uVar1,param_2,local_60);
-  if (cVar3 == '\0') {
-    LiveStorage_DataGetPrintStrings(uVar1,param_2);
-    Com_Error(1,0xffffffff8208615c);
+  StructuredData_InitializeLookup((StructuredDataDef *)uVar6,aSStack_50);
+  bVar4 = StructuredData_NavigateByStrings(aSStack_50,ppcVar1,param_2,local_60);
+  if (!bVar4) {
+    LiveStorage_DataGetPrintStrings(ppcVar1,param_2);
+    Com_Error(ERR_DROP,"Error getting persistent data: see console\n");
   }
-  if (local_60[0] != (int)param_2) {
-    LiveStorage_DataGetPrintStrings(uVar1,param_2);
-    Com_Error(1,0xffffffff82086090);
+  if (local_60[0] != param_2) {
+    LiveStorage_DataGetPrintStrings(ppcVar1,param_2);
+    Com_Error(ERR_DROP,"Error setting persistent data: incorrect number of arguments; see console\n"
+             );
   }
-  uVar2 = StructuredData_GetLookupResultType(auStack_50);
-  if ((int)uVar2 != 2) {
-    LiveStorage_DataGetPrintStrings(uVar1,param_2);
-    Com_Error(1,0xffffffff82086108,uVar2);
-    __restgprlr_26(0xffffffff820068af);
-    return;
+  LVar2 = StructuredData_GetLookupResultType(aSStack_50);
+  if (LVar2 != LOOKUP_RESULT_STRING) {
+    LiveStorage_DataGetPrintStrings(ppcVar1,param_2);
+    Com_Error(ERR_DROP,
+              "Error getting persistent data: result type was a %i, expected string; see console\n")
+    ;
+    pcVar3 = (char *)__restgprlr_26(0xffffffff820068af);
+    return pcVar3;
   }
-  StructuredData_GetString(auStack_50,param_3);
-  __restgprlr_26();
-  return;
+  pcVar3 = StructuredData_GetString(aSStack_50,(StructuredDataBuffer *)uVar5);
+  pcVar3 = (char *)__restgprlr_26(pcVar3);
+  return pcVar3;
 }
 
 
 // 824E0B90  LiveStorage_DataSetInternalString  (qcommon/com_storage.cpp:2931)
 
 void LiveStorage_DataSetInternalString
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (char **param_1,int param_2,char *param_3,StructuredDataBuffer *param_4,
+               uchar *param_5)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar5;
-  int iVar4;
+  char **ppcVar1;
+  StructuredDataDef *pSVar2;
+  bool bVar4;
+  StructuredData_SetResult SVar3;
   int local_50 [4];
-  undefined1 auStack_40 [64];
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar2 = __savegprlr_27();
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_InitializeLookup(uVar3,auStack_40);
-  cVar5 = StructuredData_NavigateByStrings(auStack_40,uVar2,param_2,local_50);
-  if (cVar5 == '\0') {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,param_3);
-    Com_Error(1,0xffffffff820860dc);
+  ppcVar1 = (char **)__savegprlr_27(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar2,aSStack_40);
+  bVar4 = StructuredData_NavigateByStrings(aSStack_40,ppcVar1,param_2,local_50);
+  if (!bVar4) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,param_2,param_3);
+    Com_Error(ERR_DROP,"Error setting persistent data: see console\n");
     __restgprlr_27();
     return;
   }
-  if (local_50[0] != (int)param_2) {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,param_3);
-    Com_Error(1,0xffffffff82086090);
+  if (local_50[0] != param_2) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,param_2,param_3);
+    Com_Error(ERR_DROP,"Error setting persistent data: incorrect number of arguments; see console\n"
+             );
     __restgprlr_27();
     return;
   }
-  iVar4 = LiveStorage_SetLookedUpDataFromString(auStack_40,param_4,param_5,param_3);
-  if ((iVar4 == 0) || (bVar1 = false, iVar4 == 1)) {
-    bVar1 = true;
+  SVar3 = LiveStorage_SetLookedUpDataFromString(aSStack_40,param_4,param_5,param_3);
+  if ((SVar3 == SETRESULT_SUCCESS_CHANGED) || (bVar4 = false, SVar3 == SETRESULT_SUCCESS_NOCHANGE))
+  {
+    bVar4 = true;
   }
-  if (!bVar1) {
-    LiveStorage_DataSetPrintStrings(uVar2,param_2,param_3);
-    Com_Error(1,0xffffffff8208605c,(&PTR_s_Value_changed_82992d4c)[iVar4]);
+  if (!bVar4) {
+    LiveStorage_DataSetPrintStrings(ppcVar1,param_2,param_3);
+    Com_Error(ERR_DROP,"Error setting persistent data: %s; see console\n");
   }
   __restgprlr_27();
   return;
@@ -3186,16 +3413,17 @@ void LiveStorage_DataSetInternalString
 // 824E0CB8  LiveStorage_DataSetInternalInt  (qcommon/com_storage.cpp:2973)
 
 void LiveStorage_DataSetInternalInt
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (char **param_1,int param_2,int param_3,StructuredDataBuffer *param_4,uchar *param_5)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_50 [80];
+  char **ppcVar1;
+  longlong lVar2;
+  char acStack_50 [80];
   
-  uVar1 = __savegprlr_28();
-  Com_sprintf(auStack_50,0x20,0xffffffff82013b64,param_3);
-  LiveStorage_DataSetInternalString(uVar1,param_2,auStack_50,param_4,param_5);
+  lVar2 = (longlong)param_2;
+  ppcVar1 = (char **)__savegprlr_28(param_1,lVar2,param_3);
+  Com_sprintf(acStack_50,0x20,"%d");
+  LiveStorage_DataSetInternalString(ppcVar1,(int)lVar2,acStack_50,param_4,param_5);
   __restgprlr_28();
   return;
 }
@@ -3204,61 +3432,62 @@ void LiveStorage_DataSetInternalInt
 // 824E0D10  LiveStorage_DataSetInternalIntByName  (qcommon/com_storage.cpp:2983)
 
 void LiveStorage_DataSetInternalIntByName
-               (undefined4 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+               (char *param_1,int param_2,StructuredDataBuffer *param_3,uchar *param_4)
 
 {
-  undefined4 uStack00000014;
-  undefined1 auStack_40 [40];
+  char *pcStack00000014;
+  char acStack_40 [40];
   
-  uStack00000014 = param_1;
-  Com_sprintf(auStack_40,0x20,0xffffffff82013b64,param_2);
-  LiveStorage_DataSetInternalString(&stack0x00000014,1,auStack_40,param_3,param_4);
+  pcStack00000014 = param_1;
+  Com_sprintf(acStack_40,0x20,"%d");
+  LiveStorage_DataSetInternalString(&stack0x00000014,1,acStack_40,param_3,param_4);
   return;
 }
 
 
 // 824E8BC8  LiveStorage_PlayerDataSetIntByName  (qcommon/com_storage.cpp:2990)
 
-void LiveStorage_PlayerDataSetIntByName(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+void LiveStorage_PlayerDataSetIntByName(int param_1,char *param_2,int param_3)
 
 {
-  char cVar1;
-  undefined4 uStack0000001c;
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [32];
+  bool bVar1;
+  char *pcStack0000001c;
+  StructuredDataBuffer aSStack_40 [2];
+  char acStack_30 [32];
   
-  uStack0000001c = param_2;
-  cVar1 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_40,param_1);
-  if (cVar1 == '\0') {
-    Com_Error(1,0xffffffff82087ebc,uStack0000001c,param_3);
+  pcStack0000001c = param_2;
+  bVar1 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_1);
+  if (!bVar1) {
+    Com_Error(ERR_DROP,"Cannot set data \"%s\" to %i: we don\'t have stats yet\n");
   }
-  Com_sprintf(auStack_30,0x20,0xffffffff82013b64,param_3);
-  LiveStorage_DataSetInternalString(&stack0x0000001c,1,auStack_30,auStack_40,0);
+  Com_sprintf(acStack_30,0x20,"%d");
+  LiveStorage_DataSetInternalString(&stack0x0000001c,1,acStack_30,aSStack_40,(uchar *)0x0);
   return;
 }
 
 
 // 824E0D78  LiveStorage_DataGetInternalLookup  (qcommon/com_storage.cpp:3001)
 
-void LiveStorage_DataGetInternalLookup(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void LiveStorage_DataGetInternalLookup(StructuredDataLookup *param_1,char **param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
+  StructuredDataLookup *pSVar1;
+  StructuredDataDef *pSVar2;
+  bool bVar3;
   int local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_InitializeLookup(uVar2,uVar1);
-  cVar3 = StructuredData_NavigateByStrings(uVar1,param_2,param_3,local_30);
-  if (cVar3 == '\0') {
+  pSVar1 = (StructuredDataLookup *)__savegprlr_29(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar2,pSVar1);
+  bVar3 = StructuredData_NavigateByStrings(pSVar1,param_2,param_3,local_30);
+  if (!bVar3) {
     LiveStorage_DataGetPrintStrings(param_2,param_3);
-    Com_Error(1,0xffffffff8208615c);
+    Com_Error(ERR_DROP,"Error getting persistent data: see console\n");
   }
-  if (local_30[0] != (int)param_3) {
+  if (local_30[0] != param_3) {
     LiveStorage_DataGetPrintStrings(param_2,param_3);
-    Com_Error(1,0xffffffff82086090);
+    Com_Error(ERR_DROP,"Error setting persistent data: incorrect number of arguments; see console\n"
+             );
   }
   __restgprlr_29();
   return;
@@ -3267,298 +3496,333 @@ void LiveStorage_DataGetInternalLookup(undefined8 param_1,undefined8 param_2,und
 
 // 824E0E18  LiveStorage_DataGetInternalString  (qcommon/com_storage.cpp:3022)
 
-void LiveStorage_DataGetInternalString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+char * LiveStorage_DataGetInternalString(char **param_1,int param_2,StructuredDataBuffer *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 auStack_40 [64];
+  char **ppcVar1;
+  LookupResultDataType LVar2;
+  char *pcVar3;
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar1 = __savegprlr_28();
-  LiveStorage_DataGetInternalLookup(auStack_40,uVar1,param_2);
-  uVar2 = StructuredData_GetLookupResultType(auStack_40);
-  if ((int)uVar2 != 2) {
-    LiveStorage_DataGetPrintStrings(uVar1,param_2);
-    Com_Error(1,0xffffffff82086108,uVar2);
-    __restgprlr_28(0xffffffff820068af);
-    return;
+  ppcVar1 = (char **)__savegprlr_28(param_1);
+  LiveStorage_DataGetInternalLookup(aSStack_40,ppcVar1,param_2);
+  LVar2 = StructuredData_GetLookupResultType(aSStack_40);
+  if (LVar2 != LOOKUP_RESULT_STRING) {
+    LiveStorage_DataGetPrintStrings(ppcVar1,param_2);
+    Com_Error(ERR_DROP,
+              "Error getting persistent data: result type was a %i, expected string; see console\n")
+    ;
+    pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
+    return pcVar3;
   }
-  StructuredData_GetString(auStack_40,param_3);
-  __restgprlr_28();
-  return;
+  pcVar3 = StructuredData_GetString(aSStack_40,param_3);
+  pcVar3 = (char *)__restgprlr_28(pcVar3);
+  return pcVar3;
 }
 
 
 // 824E0E98  LiveStorage_DataGetInternalInt  (qcommon/com_storage.cpp:3043)
 
-void LiveStorage_DataGetInternalInt(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int LiveStorage_DataGetInternalInt(char **param_1,int param_2,StructuredDataBuffer *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar4;
-  undefined2 uVar3;
-  undefined1 auStack_30 [48];
+  char **ppcVar1;
+  LookupResultDataType LVar2;
+  bool bVar5;
+  int iVar3;
+  short sVar4;
+  StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29();
-  LiveStorage_DataGetInternalLookup(auStack_30,uVar1,param_2);
-  iVar2 = StructuredData_GetLookupResultType(auStack_30);
-  if (iVar2 == 1) {
-    cVar4 = StructuredData_GetBool(auStack_30,param_3);
-    __restgprlr_29(cVar4 != '\0');
-    return;
+  ppcVar1 = (char **)__savegprlr_29(param_1);
+  LiveStorage_DataGetInternalLookup(aSStack_30,ppcVar1,param_2);
+  LVar2 = StructuredData_GetLookupResultType(aSStack_30);
+  if (LVar2 == LOOKUP_RESULT_BOOL) {
+    bVar5 = StructuredData_GetBool(aSStack_30,param_3);
+    iVar3 = __restgprlr_29(bVar5);
+    return iVar3;
   }
-  if (iVar2 == 0) {
-    StructuredData_GetInt(auStack_30,param_3);
-    __restgprlr_29();
-    return;
+  if (LVar2 == LOOKUP_RESULT_INT) {
+    iVar3 = StructuredData_GetInt(aSStack_30,param_3);
+    iVar3 = __restgprlr_29(iVar3);
+    return iVar3;
   }
-  if (iVar2 == 4) {
-    uVar3 = StructuredData_GetShort(auStack_30,param_3);
-    __restgprlr_29(uVar3);
-    return;
+  if (LVar2 == LOOKUP_RESULT_SHORT) {
+    sVar4 = StructuredData_GetShort(aSStack_30,param_3);
+    iVar3 = __restgprlr_29(sVar4);
+    return iVar3;
   }
-  if (iVar2 != 2) {
-    MyAssertHandler(0xffffffff820859c8,0xbf9,0,0xffffffff82000f98,0xffffffff82085ef0);
+  if (LVar2 != LOOKUP_RESULT_STRING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xbf9
+                    ,0,"%s");
   }
-  LiveStorage_DataGetPrintStrings(uVar1,param_2);
-  Com_Error(1,0xffffffff82086188);
-  __restgprlr_29(0);
-  return;
+  LiveStorage_DataGetPrintStrings(ppcVar1,param_2);
+  Com_Error(ERR_DROP,
+            "Error getting persistent data: result type was a string, expected int; see console\n");
+  iVar3 = __restgprlr_29(0);
+  return iVar3;
 }
 
 
 // 824E0F80  LiveStorage_DataGetInternalIntByName  (qcommon/com_storage.cpp:3074)
 
-void LiveStorage_DataGetInternalIntByName(undefined4 param_1,undefined8 param_2)
+int LiveStorage_DataGetInternalIntByName(char *param_1,StructuredDataBuffer *param_2)
 
 {
-  undefined4 uStack00000014;
+  int iVar1;
+  char *pcStack00000014;
   
-  uStack00000014 = param_1;
-  LiveStorage_DataGetInternalInt(&stack0x00000014,1,param_2);
-  return;
+  pcStack00000014 = param_1;
+  iVar1 = LiveStorage_DataGetInternalInt(&stack0x00000014,1,param_2);
+  return iVar1;
 }
 
 
 // 824E0FB0  ShowPopupGettingData  (qcommon/com_storage.cpp:3079)
 
-void ShowPopupGettingData(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool ShowPopupGettingData(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  char cVar4;
-  int iVar3;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  bool bVar4;
+  StatsSource SVar3;
+  undefined1 uVar5;
   
-  uVar1 = __savegprlr_26();
-  uVar2 = CL_LocalClientNumFromControllerIndex();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820858d0,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  iVar1 = __savegprlr_26(param_1);
+  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((int)(&DAT_82b3e54c)[(int)uVar2 * 0x79] < 3) ||
-     (cVar4 = CL_Demo_IsPlaying(uVar2), cVar4 == '\0')) {
-    if (3 < (uVar2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff820858d0,0x4aa,0,0xffffffff820011a8,uVar2,4);
+  if (((int)clientUIActives[LVar2].connectionState < 3) ||
+     (bVar4 = CL_Demo_IsPlaying(LVar2), !bVar4)) {
+    if (LOCAL_CLIENT_3 < LVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../client_mp/client_mp.h"
+                      ,0x4aa,0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if (2 < (int)(&DAT_82b3e54c)[(int)uVar2 * 0x79]) {
-      MyAssertHandler(0xffffffff820859c8,0xc24,0,0xffffffff820861f0,
-                      (&DAT_82b3e54c)[(int)uVar2 * 0x79],3);
+    if (2 < (int)clientUIActives[LVar2].connectionState) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0xc24,0,"clcState < CA_CONNECTING\n\t%i, %i");
     }
-    cVar4 = Sys_IsMainThread();
-    if (((cVar4 != '\0') && (iVar3 = LiveStorage_GetActiveStatsSource(uVar1), iVar3 != 1)) &&
-       (cVar4 = Menu_IsMenuOpenAndVisible(0,0xffffffff820861dc), cVar4 == '\0')) {
-      UI_OpenMenu(0,0xffffffff820861dc);
-      __restgprlr_26(1);
-      return;
+    bVar4 = Sys_IsMainThread();
+    if (((bVar4) && (SVar3 = LiveStorage_GetActiveStatsSource(iVar1), SVar3 != STATS_OFFLINE)) &&
+       (bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata"), !bVar4)) {
+      UI_OpenMenu(LOCAL_CLIENT_0,"popup_gettingdata");
+      uVar5 = __restgprlr_26(1);
+      return (bool)uVar5;
     }
   }
-  __restgprlr_26(0);
-  return;
+  uVar5 = __restgprlr_26(0);
+  return (bool)uVar5;
 }
 
 
 // 824E10E0  LiveStorage_ShowPopupGettingDataIfNeeded  (qcommon/com_storage.cpp:3130)
 
-undefined8 LiveStorage_ShowPopupGettingDataIfNeeded(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_ShowPopupGettingDataIfNeeded(int param_1)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0' ||
-       (*(char *)(DAT_82aa1ae4 + 0xc) != '\0' || *(char *)(DAT_82aa1af8 + 0xc) != '\0')) &&
-     (cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff82057c48), cVar2 == '\0')) {
-    uVar1 = ShowPopupGettingData(param_1);
-    return uVar1;
+  if (((splitscreen->current).enabled != false ||
+       ((systemlink->current).enabled != false || (onlinegame->current).enabled != false)) &&
+     (bVar1 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"menu_splitscreensignin"), !bVar1)) {
+    bVar1 = ShowPopupGettingData(param_1);
+    return bVar1;
   }
-  return 0;
+  return false;
 }
 
 
 // 824E8C58  LiveStorage_PlayerDataGetString  (qcommon/com_storage.cpp:3163)
 
-void LiveStorage_PlayerDataGetString(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+char * LiveStorage_PlayerDataGetString(int param_1,char **param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  bool bVar3;
+  char *pcVar2;
+  StructuredDataBuffer aSStack_30 [6];
   
-  uVar1 = __savegprlr_29();
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_30,uVar1);
-  if (cVar2 == '\0') {
-    ShowPopupGettingData(uVar1);
-    __restgprlr_29(0xffffffff820068af);
-    return;
+  iVar1 = __savegprlr_29(param_1);
+  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar1);
+  if (!bVar3) {
+    ShowPopupGettingData(iVar1);
+    pcVar2 = (char *)__restgprlr_29(0xffffffff820068af);
+    return pcVar2;
   }
-  LiveStorage_DataGetInternalString(param_2,param_3,auStack_30);
-  __restgprlr_29();
-  return;
+  pcVar2 = LiveStorage_DataGetInternalString(param_2,param_3,aSStack_30);
+  pcVar2 = (char *)__restgprlr_29(pcVar2);
+  return pcVar2;
 }
 
 
 // 824E8CB8  LiveStorage_PlayerDataGetStringByName  (qcommon/com_storage.cpp:3178)
 
-undefined8 LiveStorage_PlayerDataGetStringByName(undefined8 param_1,undefined4 param_2)
+char * LiveStorage_PlayerDataGetStringByName(int param_1,char *param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  undefined4 uStack0000001c;
-  undefined1 auStack_20 [16];
+  bool bVar2;
+  char *pcVar1;
+  char *pcStack0000001c;
+  StructuredDataBuffer aSStack_20 [2];
   
-  uStack0000001c = param_2;
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_20,param_1);
-  if (cVar2 == '\0') {
+  pcStack0000001c = param_2;
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_20,param_1);
+  if (!bVar2) {
     ShowPopupGettingData(param_1);
-    return 0xffffffff820068af;
+    return "";
   }
-  uVar1 = LiveStorage_DataGetInternalString(&stack0x0000001c,1,auStack_20);
-  return uVar1;
+  pcVar1 = LiveStorage_DataGetInternalString(&stack0x0000001c,1,aSStack_20);
+  return pcVar1;
 }
 
 
 // 824E8D30  LiveStorage_PlayerDataGetInt  (qcommon/com_storage.cpp:3192)
 
-void LiveStorage_PlayerDataGetInt(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int LiveStorage_PlayerDataGetInt(int param_1,char **param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_30 [48];
+  int iVar1;
+  bool bVar2;
+  StructuredDataBuffer aSStack_30 [6];
   
-  uVar1 = __savegprlr_29();
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_30,uVar1);
-  if (cVar2 == '\0') {
-    ShowPopupGettingData(uVar1);
-    __restgprlr_29(0);
-    return;
+  iVar1 = __savegprlr_29(param_1);
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar1);
+  if (!bVar2) {
+    ShowPopupGettingData(iVar1);
+    iVar1 = __restgprlr_29(0);
+    return iVar1;
   }
-  LiveStorage_DataGetInternalInt(param_2,param_3,auStack_30);
-  __restgprlr_29();
-  return;
+  iVar1 = LiveStorage_DataGetInternalInt(param_2,param_3,aSStack_30);
+  iVar1 = __restgprlr_29(iVar1);
+  return iVar1;
 }
 
 
 // 824E8D90  LiveStorage_PlayerDataGetIntByName  (qcommon/com_storage.cpp:3206)
 
-undefined8 LiveStorage_PlayerDataGetIntByName(undefined8 param_1,undefined4 param_2)
+int LiveStorage_PlayerDataGetIntByName(int param_1,char *param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  undefined4 uStack0000001c;
-  undefined1 auStack_20 [16];
+  bool bVar2;
+  int iVar1;
+  char *pcStack0000001c;
+  StructuredDataBuffer aSStack_20 [2];
   
-  uStack0000001c = param_2;
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_20,param_1);
-  if (cVar2 == '\0') {
+  pcStack0000001c = param_2;
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_20,param_1);
+  if (!bVar2) {
     ShowPopupGettingData(param_1);
     return 0;
   }
-  uVar1 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,auStack_20);
-  return uVar1;
+  iVar1 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,aSStack_20);
+  return iVar1;
 }
 
 
 // 824E8E08  LiveStorage_UpdatePersistentDataVersion  (qcommon/com_storage.cpp:3220)
 
-void LiveStorage_UpdatePersistentDataVersion
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_UpdatePersistentDataVersion
+               (int param_1,StatsSource param_2,StructuredDataDef *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined8 uVar4;
-  uint local_60 [24];
+  int iVar1;
+  StructuredDataDefSet *pSVar2;
+  LocalClientNum_t LVar3;
+  bool bVar4;
+  undefined1 uVar5;
+  StructuredDataBuffer local_60 [12];
   
-  uVar1 = __savegprlr_23();
-  uVar2 = StructuredDataDefSet_GetAsset(0xffffffff8202639c);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xc9a,0,0xffffffff82000f98,0xffffffff82087f1c);
+  iVar1 = __savegprlr_23(param_1);
+  pSVar2 = StructuredDataDefSet_GetAsset("mp/playerdata.def");
+  if (pSVar2 == (StructuredDataDefSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xc9a
+                    ,0,"%s");
   }
-  uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-  cVar5 = LiveStorage_MaySetPersistentData();
-  if (cVar5 == '\0') {
-    uVar4 = CL_GetLocalClientConnectionState(uVar3);
-    Com_PrintError(0x10,0xffffffff82085f70,0xffffffff82087ef4,uVar4,uVar3);
-    Com_Error(1,0xffffffff82085f18,0xffffffff82087ef4,uVar4);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+  bVar4 = LiveStorage_MaySetPersistentData(LVar3);
+  if (!bVar4) {
+    CL_GetLocalClientConnectionState(LVar3);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
-  local_60[0] = LiveStorage_GetPersistentDataBufferForSource(uVar1,param_2);
-  if (local_60[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xca3,0,0xffffffff82000f98,0xffffffff8201f49c);
-    MyAssertHandler(0xffffffff82085860,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  local_60[0].data = LiveStorage_GetPersistentDataBufferForSource(iVar1,param_2);
+  if (local_60[0].data == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xca3
+                    ,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_60[1] = 0x2ffc;
-  StructuredData_UpdateVersion(uVar2,local_60,param_3);
-  __restgprlr_23();
-  return;
+  local_60[0].size = 0x2ffc;
+  bVar4 = StructuredData_UpdateVersion(pSVar2,local_60,param_3);
+  uVar5 = __restgprlr_23(bVar4);
+  return (bool)uVar5;
 }
 
 
 // 824E8F40  LiveStorage_SetPersistentDataVersion  (qcommon/com_storage.cpp:3243)
 
-void LiveStorage_SetPersistentDataVersion(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_SetPersistentDataVersion(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  char cVar6;
-  undefined8 uVar4;
-  uint uVar5;
-  uint local_50 [20];
+  int iVar1;
+  StructuredDataDef *pSVar2;
+  LocalClientNum_t LVar3;
+  bool bVar6;
+  uchar *puVar4;
+  StatsSource SVar5;
+  StructuredDataBuffer local_50 [10];
   
-  uVar1 = __savegprlr_25();
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xcb1,0,0xffffffff82000f98,0xffffffff8206070c);
+  iVar1 = __savegprlr_25(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xcb1
+                    ,0,"%s");
   }
-  uVar3 = CL_LocalClientNumFromControllerIndex(uVar1);
-  cVar6 = LiveStorage_MaySetPersistentData();
-  if (cVar6 == '\0') {
-    uVar4 = CL_GetLocalClientConnectionState(uVar3);
-    Com_PrintError(0x10,0xffffffff82085f70,0xffffffff82087f24,uVar4,uVar3);
-    Com_Error(1,0xffffffff82085f18,0xffffffff82087f24,uVar4);
+  LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+  bVar6 = LiveStorage_MaySetPersistentData(LVar3);
+  if (!bVar6) {
+    CL_GetLocalClientConnectionState(LVar3);
+    Com_PrintError(0x10,
+                   "Trying to set persistent player data while connected to a server (%s, clcState = %i, localClientNum = %i).\n"
+                  );
+    Com_Error(ERR_DROP,
+              "Trying to set persistent player data while connected to a server (%s, clcState = %i)!"
+             );
   }
-  cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar6 == '\0') {
-    uVar3 = LiveStorage_GetActiveStatsSource(uVar1);
-    uVar5 = LiveStorage_GetPersistentDataBufferForSource(uVar1,uVar3);
+  bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar6) {
+    puVar4 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    uVar5 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar5 = LiveStorage_GetActiveStatsSource(iVar1);
+    puVar4 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar5);
   }
-  if (uVar5 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xcba,0,0xffffffff82000f98,0xffffffff8201f49c);
-    MyAssertHandler(0xffffffff82085860,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  if (puVar4 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xcba
+                    ,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_50[1] = 0x2ffc;
-  local_50[0] = uVar5;
-  StructuredData_SetDataVersion(uVar2,local_50);
+  local_50[0].size = 0x2ffc;
+  local_50[0].data = puVar4;
+  StructuredData_SetDataVersion(pSVar2,local_50);
   __restgprlr_25();
   return;
 }
@@ -3566,51 +3830,62 @@ void LiveStorage_SetPersistentDataVersion(void)
 
 // 824E9090  LiveStorage_GetPersistentDataVersion  (qcommon/com_storage.cpp:3266)
 
-void LiveStorage_GetPersistentDataVersion(void)
+int LiveStorage_GetPersistentDataVersion(int param_1,StatsSource param_2)
 
 {
-  uint local_20 [2];
+  int iVar1;
+  StructuredDataBuffer local_20;
   
-  local_20[0] = LiveStorage_GetPersistentDataBufferForSource();
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xcc7,0,0xffffffff82000f98,0xffffffff8201f49c);
-    MyAssertHandler(0xffffffff82085860,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  local_20.data = LiveStorage_GetPersistentDataBufferForSource(param_1,param_2);
+  if (local_20.data == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xcc7
+                    ,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_20[1] = 0x2ffc;
-  StructuredData_GetDataVersion(local_20);
-  return;
+  local_20.size = 0x2ffc;
+  iVar1 = StructuredData_GetDataVersion(&local_20);
+  return iVar1;
 }
 
 
 // 824E11A0  LiveStorage_GetPersistentDataDefVersion  (qcommon/com_storage.cpp:3278)
 
-void LiveStorage_GetPersistentDataDefVersion(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int LiveStorage_GetPersistentDataDefVersion(void)
 
 {
-  ulonglong uVar1;
+  StructuredDataDef *pSVar1;
+  int iVar2;
   
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xcd2,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar1 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar1 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xcd2
+                    ,0,"%s");
   }
-  StructuredData_GetVersion(uVar1);
-  return;
+  iVar2 = StructuredData_GetVersion(pSVar1);
+  return iVar2;
 }
 
 
 // 824E1210  LiveStorage_GetPersistentDataDefFormatChecksum  (qcommon/com_storage.cpp:3288)
 
-void LiveStorage_GetPersistentDataDefFormatChecksum(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint LiveStorage_GetPersistentDataDefFormatChecksum(void)
 
 {
-  ulonglong uVar1;
+  StructuredDataDef *pSVar1;
+  uint uVar2;
   
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xcdc,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar1 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar1 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xcdc
+                    ,0,"%s");
   }
-  StructuredData_GetFormatChecksum(uVar1);
-  return;
+  uVar2 = StructuredData_GetFormatChecksum(pSVar1);
+  return uVar2;
 }
 
 
@@ -3619,134 +3894,143 @@ void LiveStorage_GetPersistentDataDefFormatChecksum(void)
 void LiveStorage_NewUser_Common(int param_1)
 
 {
-  int iVar1;
+  playerStorageData *ppVar1;
   
-  Com_Printf(0x10,0xffffffff820862f8,param_1);
+  Com_Printf(0x10,"LiveStorage_NewUser called for controller %i\n");
   if ((param_1 < 0) || (3 < param_1)) {
-    MyAssertHandler(0xffffffff820859c8,0xce5,0,0xffffffff82039774,0xffffffff82086218,param_1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xce5
+                    ,0,"%s\n\t(controllerIndex) = %i");
   }
-  iVar1 = param_1 * 0x14;
-  *(undefined4 *)(&DAT_8361cc00 + iVar1) = 0;
-  *(undefined4 *)(&DAT_8361cc04 + iVar1) = 0;
-  *(undefined4 *)(&DAT_8361cc08 + iVar1) = 0;
-  *(undefined4 *)(&DAT_8361cc0c + iVar1) = 0;
-  *(undefined4 *)(&DAT_8361cc10 + iVar1) = 0;
-  *(undefined4 *)(&DAT_83620868 + param_1 * 4) = 0;
-  DAT_8365b1c0 = 0;
+  *(undefined4 *)(controllerStorageData + param_1) = 0;
+  controllerStorageData[param_1].gameStatsSource = STATS_ONLINE;
+  *(undefined4 *)&controllerStorageData[param_1].resettingStats = 0;
+  controllerStorageData[param_1].resetStatsSource = STATS_ONLINE;
+  ppVar1 = controllerStorageData + param_1;
+  ppVar1->dontDownloadAtMainMenu = false;
+  ppVar1->generateChallenges = false;
+  *(undefined2 *)&ppVar1->field_0x12 = 0;
+  g_NumFetchPlaylistPopulationCheckAttempts[param_1] = 0;
+  g_NumFetchPlaylistAttempts = 0;
   return;
 }
 
 
 // 824E9128  LiveStorage_RecordPlayTime  (qcommon/com_storage.cpp:3316)
 
-void LiveStorage_RecordPlayTime(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_RecordPlayTime(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   char *local_40 [2];
-  undefined1 auStack_38 [8];
-  undefined1 auStack_30 [32];
+  StructuredDataBuffer SStack_38;
+  char acStack_30 [32];
   
-  uVar1 = CL_ControllerIndexFromClientNum();
-  cVar2 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_38,uVar1);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0xd09,0,0xffffffff82000f98,0xffffffff82087f6c);
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_38,iVar1);
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xd09
+                    ,0,"%s");
   }
-  uVar1 = Sys_GetTimeAsSeconds();
+  Sys_GetTimeAsSeconds();
   local_40[0] = "lastPlayedTime";
-  Com_sprintf(auStack_30,0x20,0xffffffff82013b64,uVar1);
-  LiveStorage_DataSetInternalString(local_40,1,auStack_30,auStack_38,0);
-  Com_Printf(0x10,0xffffffff82087f4c,uVar1);
+  Com_sprintf(acStack_30,0x20,"%d");
+  LiveStorage_DataSetInternalString(local_40,1,acStack_30,&SStack_38,(uchar *)0x0);
+  Com_Printf(0x10,"Saving lastPlayedTime of %u.\n");
   return;
 }
 
 
 // 824E1340  LiveStorage_GetAndResetLastPlayTime  (qcommon/com_storage.cpp:3348)
 
-void LiveStorage_GetAndResetLastPlayTime(undefined8 param_1,undefined8 param_2)
+uint LiveStorage_GetAndResetLastPlayTime(StructuredDataBuffer *param_1,uchar *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  StructuredDataBuffer *pSVar1;
+  int iVar2;
+  uint uVar3;
   char *local_50 [4];
-  undefined1 auStack_40 [64];
+  char acStack_40 [64];
   
-  uVar1 = __savegprlr_29();
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_29(param_1);
   local_50[0] = "lastPlayedTime";
-  uVar2 = LiveStorage_DataGetInternalInt(local_50,1,uVar1);
-  Com_sprintf(auStack_40,0x20,0xffffffff82013b64,0);
-  LiveStorage_DataSetInternalString(local_50,1,auStack_40,uVar1,param_2);
-  __restgprlr_29(uVar2);
-  return;
+  iVar2 = LiveStorage_DataGetInternalInt(local_50,1,pSVar1);
+  Com_sprintf(acStack_40,0x20,"%d");
+  LiveStorage_DataSetInternalString(local_50,1,acStack_40,pSVar1,param_2);
+  uVar3 = __restgprlr_29(iVar2);
+  return uVar3;
 }
 
 
 // 824E13B0  LiveStorage_GetChallengeState  (qcommon/com_storage.cpp:3362)
 
-undefined8 LiveStorage_GetChallengeState(undefined8 param_1,undefined4 param_2)
+int LiveStorage_GetChallengeState(StructuredDataBuffer *param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   char *local_10;
-  undefined4 local_c;
+  char *local_c;
   
   local_10 = "challengeState";
   local_c = param_2;
-  uVar1 = LiveStorage_DataGetInternalInt(&local_10,2,param_1);
-  if ((int)uVar1 < 1) {
-    uVar1 = 1;
+  iVar1 = LiveStorage_DataGetInternalInt(&local_10,2,param_1);
+  if (iVar1 < 1) {
+    iVar1 = 1;
   }
-  return uVar1;
+  return iVar1;
 }
 
 
 // 824E13F8  LiveStorage_GetChallengeProgress  (qcommon/com_storage.cpp:3373)
 
-void LiveStorage_GetChallengeProgress(undefined8 param_1,undefined4 param_2)
+int LiveStorage_GetChallengeProgress(StructuredDataBuffer *param_1,char *param_2)
 
 {
+  int iVar1;
   char *local_10;
-  undefined4 local_c;
+  char *local_c;
   
   local_10 = "challengeProgress";
   local_c = param_2;
-  LiveStorage_DataGetInternalInt(&local_10,2,param_1);
-  return;
+  iVar1 = LiveStorage_DataGetInternalInt(&local_10,2,param_1);
+  return iVar1;
 }
 
 
 // 824E1438  LiveStorage_FilterCacheDirtyCmd  (qcommon/com_storage.cpp:3385)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_FilterCacheDirtyCmd(void)
 
 {
-  DAT_836368c0 = 0;
-  DAT_8361cc58 = 0;
+  s_filterCacheCount = 0;
+  s_filterCacheNextUpdateTime = 0;
   return;
 }
 
 
 // 824ECF60  SetPercentComplete  (qcommon/com_storage.cpp:3409)
 
-void SetPercentComplete(undefined8 param_1)
+void SetPercentComplete(int param_1)
 
 {
+  StatsSource SVar1;
   int iVar2;
-  longlong lVar1;
   int iVar3;
+  int iVar4;
   
-  iVar2 = LiveStorage_GetActiveStatsSource();
-  if (iVar2 == 0) {
-    lVar1 = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff8203ab18);
-    LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff8203ab24);
-    iVar2 = CL_GetRankForXpMP();
-    iVar3 = CL_GetMaxRankMP();
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if (SVar1 == STATS_ONLINE) {
+    iVar2 = LiveStorage_PlayerDataGetIntByName(param_1,"prestige");
+    iVar3 = LiveStorage_PlayerDataGetIntByName(param_1,"experience");
+    iVar3 = CL_GetRankForXpMP(iVar3);
+    iVar4 = CL_GetMaxRankMP();
     GamerProfile_SetPercentCompleteMP
-              (param_1,lVar1 * 100 -
-                       (ulonglong)
-                       (uint)(int)((float)((double)(longlong)(iVar2 + 1) / (double)(longlong)iVar3)
-                                  * -100.0));
+              (param_1,iVar2 * 100 -
+                       (int)(((float)(longlong)(iVar3 + 1) / (float)(longlong)iVar4) * -100.0));
   }
   return;
 }
@@ -3754,178 +4038,195 @@ void SetPercentComplete(undefined8 param_1)
 
 // 824E1458  LiveStorage_ReportStatsValidationFailure  (qcommon/com_storage.cpp:3440)
 
-void LiveStorage_ReportStatsValidationFailure(undefined8 param_1)
+void LiveStorage_ReportStatsValidationFailure(int param_1)
 
 {
-  Com_Printf(0x10,0xffffffff8208635c,param_1);
-  LiveAntiCheat_ReportUserAndHost(param_1,0,1);
+  Com_Printf(0x10,"Reporting stats validation failure for controller %d");
+  LiveAntiCheat_ReportUserAndHost(param_1,REPORT_BOOSTING_LOBBY_CLIENT,REPORT_BOOSTING_LOBBY_SERVER)
+  ;
   return;
 }
 
 
 // 824E14A8  LiveStorage_ValidateChallengeConsistency  (qcommon/com_storage.cpp:3449)
 
-void LiveStorage_ValidateChallengeConsistency(undefined8 param_1,undefined8 param_2)
+int LiveStorage_ValidateChallengeConsistency
+              (int param_1,StructuredDataBuffer *param_2,StructuredDataBuffer *param_3)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  undefined8 uVar4;
+  StructuredDataBuffer *pSVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar6;
+  int iVar7;
+  char *pcVar8;
+  uint uVar9;
   int iVar10;
-  undefined8 uVar5;
-  undefined4 uVar11;
-  longlong lVar6;
-  undefined8 uVar7;
-  char *pcVar12;
-  uint uVar13;
-  ulonglong uVar8;
-  undefined8 uVar9;
-  uint uVar14;
+  uint uVar11;
+  StructuredDataBuffer *pSVar12;
+  int iVar13;
+  int iVar14;
   longlong lVar15;
   longlong lVar16;
-  longlong lVar17;
-  longlong lVar18;
-  int local_b0;
+  ulonglong uVar17;
+  StringTable *local_b0;
   char *local_ac;
   char *local_a8;
-  undefined4 local_a4;
+  char *local_a4;
   char *local_a0;
-  undefined4 local_9c;
+  char *local_9c;
   char *local_98;
-  undefined4 local_94;
+  char *local_94;
   char *local_90;
-  undefined4 local_8c;
+  char *local_8c;
   
-  uVar1 = __savegprlr_17();
+  lVar16 = (longlong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_17(param_1,lVar16,param_3);
   local_ac = "experience";
-  lVar15 = 0;
-  lVar2 = LiveStorage_DataGetInternalInt(&local_ac,1,uVar1);
-  lVar3 = LiveStorage_DataGetInternalInt(&local_ac,1,param_2);
-  uVar4 = CL_GetMaxXPMP();
-  StringTable_GetAsset(0xffffffff8200af8c,&local_b0);
-  if (local_b0 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xd98,0,0xffffffff82000f98,0xffffffff82086574);
+  iVar13 = 0;
+  iVar2 = LiveStorage_DataGetInternalInt(&local_ac,1,pSVar1);
+  pSVar12 = (StructuredDataBuffer *)lVar16;
+  iVar3 = LiveStorage_DataGetInternalInt(&local_ac,1,pSVar12);
+  iVar4 = CL_GetMaxXPMP();
+  StringTable_GetAsset("mp/allChallengesTable.csv",&local_b0);
+  if (local_b0 == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xd98
+                    ,0,"%s");
   }
-  iVar10 = StringTable_GetRowCount(local_b0);
-  lVar16 = 0;
-  if (0 < iVar10) {
+  iVar5 = StringTable_GetRowCount(local_b0);
+  iVar14 = 0;
+  iVar7 = 0;
+  if (0 < iVar5) {
     do {
-      uVar5 = StringTable_GetColumnValueForRow(local_b0,lVar16,0);
-      uVar11 = (undefined4)uVar5;
+      iVar13 = iVar7;
+      pcVar6 = StringTable_GetColumnValueForRow(local_b0,iVar14,0);
       local_a8 = "challengeState";
-      local_a4 = uVar11;
-      lVar6 = LiveStorage_DataGetInternalInt(&local_a8,2,param_2);
-      if ((int)lVar6 < 1) {
-        lVar6 = 1;
+      local_a4 = pcVar6;
+      iVar7 = LiveStorage_DataGetInternalInt(&local_a8,2,pSVar12);
+      lVar16 = (longlong)iVar7;
+      if (iVar7 < 1) {
+        lVar16 = 1;
       }
       local_a0 = "challengeProgress";
-      local_9c = uVar11;
-      uVar7 = LiveStorage_DataGetInternalInt(&local_a0,2,param_2);
-      pcVar12 = (char *)StringTable_GetColumnValueForRow
-                                  (local_b0,lVar16,(lVar6 + 2U & 0x7fffffff) << 1);
-      if ((pcVar12 != (char *)0x0) && (*pcVar12 != '\0')) {
-        uVar13 = atoi(pcVar12);
-        uVar14 = (int)uVar13 >> 0x1f;
-        if (((uVar13 ^ uVar14) != uVar14) && ((int)((uVar13 ^ uVar14) - uVar14) < (int)uVar7)) {
-          Com_PrintError(0x10,0xffffffff82086420,uVar5,uVar7,lVar6);
-          __restgprlr_17(0);
-          return;
+      local_9c = pcVar6;
+      iVar7 = LiveStorage_DataGetInternalInt(&local_a0,2,pSVar12);
+      pcVar8 = StringTable_GetColumnValueForRow
+                         (local_b0,iVar14,(int)((lVar16 + 2U & 0xffffffff) << 1));
+      if ((pcVar8 != (char *)0x0) && (*pcVar8 != '\0')) {
+        uVar9 = atoi(pcVar8);
+        uVar11 = (int)uVar9 >> 0x1f;
+        if (((uVar9 ^ uVar11) != uVar11) && ((int)((uVar9 ^ uVar11) - uVar11) < iVar7)) {
+          Com_PrintError(0x10,
+                         "LiveStorage_ValidateChallengeConsistency -- challenge %s is not consistent: progress %d, state %d, target %d\n"
+                        );
+          iVar2 = __restgprlr_17(0);
+          return iVar2;
         }
       }
       local_98 = "challengeState";
-      local_94 = uVar11;
-      uVar8 = LiveStorage_DataGetInternalInt(&local_98,2,uVar1);
-      if ((int)uVar8 < 1) {
-        uVar8 = 1;
+      local_94 = pcVar6;
+      iVar10 = LiveStorage_DataGetInternalInt(&local_98,2,pSVar1);
+      uVar17 = (ulonglong)iVar10;
+      if (iVar10 < 1) {
+        uVar17 = 1;
       }
       local_90 = "challengeProgress";
-      local_8c = uVar11;
-      uVar9 = LiveStorage_DataGetInternalInt(&local_90,2,uVar1);
-      if (((int)lVar6 < (int)uVar8) || ((int)uVar7 < (int)uVar9)) {
-        Com_PrintError(0x10,0xffffffff82086398,uVar5,uVar8,uVar9,uVar7,lVar6);
-        __restgprlr_17(0);
-        return;
+      local_8c = pcVar6;
+      iVar10 = LiveStorage_DataGetInternalInt(&local_90,2,pSVar1);
+      if (((int)lVar16 < (int)uVar17) || (iVar7 < iVar10)) {
+        Com_PrintError(0x10,
+                       "LiveStorage_ValidateChallengeConsistency -- challenge %s has regressed: validProgress %d, validState %d, newProgress %d, newState %d\n"
+                      );
+        iVar2 = __restgprlr_17(0);
+        return iVar2;
       }
-      if ((int)uVar8 < (int)lVar6) {
-        lVar6 = lVar6 - uVar8;
-        lVar17 = (uVar8 & 0x7fffffff) * 2 + 5;
+      if ((int)uVar17 < (int)lVar16) {
+        lVar16 = lVar16 - uVar17;
+        lVar15 = (uVar17 & 0x7fffffff) * 2 + 5;
         do {
-          pcVar12 = (char *)StringTable_GetColumnValueForRow(local_b0,lVar16,lVar17);
-          if ((pcVar12 == (char *)0x0) || (*pcVar12 == '\0')) {
-            lVar18 = 0;
+          pcVar6 = StringTable_GetColumnValueForRow(local_b0,iVar14,(int)lVar15);
+          if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+            iVar7 = 0;
           }
           else {
-            uVar14 = atoi(pcVar12);
-            lVar18 = (longlong)(int)(uVar14 ^ (int)uVar14 >> 0x1f) - (longlong)((int)uVar14 >> 0x1f)
-            ;
+            uVar11 = atoi(pcVar6);
+            iVar7 = (uVar11 ^ (int)uVar11 >> 0x1f) - ((int)uVar11 >> 0x1f);
           }
-          Com_Printf(0x10,0xffffffff82086538,uVar5,lVar18);
-          lVar6 = lVar6 + -1;
-          lVar15 = lVar18 + lVar15;
-          lVar17 = lVar17 + 2;
-        } while (lVar6 != 0);
+          Com_Printf(0x10,"Stats Validation: challenge %s completed for %d experience\n");
+          lVar16 = lVar16 + -1;
+          iVar13 = iVar7 + iVar13;
+          lVar15 = lVar15 + 2;
+        } while (lVar16 != 0);
       }
-      lVar16 = lVar16 + 1;
-    } while ((int)lVar16 < iVar10);
+      iVar14 = iVar14 + 1;
+      iVar7 = iVar13;
+    } while (iVar14 < iVar5);
   }
-  if (((int)lVar2 + (int)lVar15 < (int)uVar4) && ((int)(lVar3 - lVar2) < (int)lVar15)) {
-    Com_PrintError(0x10,0xffffffff82086490,lVar15,lVar3 - lVar2,lVar3,lVar2,uVar4);
-    __restgprlr_17(0);
-    return;
+  if ((iVar2 + iVar13 < iVar4) && (iVar3 - iVar2 < iVar13)) {
+    Com_PrintError(0x10,
+                   "LiveStorage_ValidateChallengeConsistency -- total challenge experience %d is greater than total experience %d -- newExperience %d, prevExperience %d, maxExperience\n"
+                  );
+    iVar2 = __restgprlr_17(0);
+    return iVar2;
   }
-  __restgprlr_17(1);
-  return;
+  iVar2 = __restgprlr_17(1);
+  return iVar2;
 }
 
 
 // 824E91E8  LiveStorage_ValidateStats  (qcommon/com_storage.cpp:3532)
 
-void LiveStorage_ValidateStats(void)
+void LiveStorage_ValidateStats(int param_1)
 
 {
-  int iVar2;
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar4;
-  int iVar5;
-  undefined1 auStack_40 [8];
-  undefined1 auStack_38 [56];
+  int iVar1;
+  StatsSource SVar2;
+  uchar *puVar3;
+  int iVar4;
+  uchar (*pauVar5) [12284];
+  char *pcVar6;
+  StructuredDataBuffer *pSVar7;
+  StructuredDataBuffer SStack_40;
+  StructuredDataBuffer aSStack_38 [7];
   
-  iVar2 = __savegprlr_28();
-  if (DAT_8404f208 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xdd2,0,0xffffffff82000f98,0xffffffff82088064);
+  iVar1 = __savegprlr_28(param_1);
+  if (validate_apply_revert_full == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xdd2
+                    ,0,"%s");
   }
-  iVar3 = LiveStorage_GetActiveStatsSource(iVar2);
-  if (iVar3 == 0) {
-    if (*(int *)(&DAT_836368b0 + iVar2 * 4) != 0) {
-      uVar1 = LiveStorage_GetPersistentDataBuffer(iVar2);
-      if ((uVar1 & 0xffffffff) == 0) {
-        Com_PrintError(0x10,0xffffffff82087fa8,iVar2);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    if (s_validStatsAvailable[iVar1] != 0) {
+      puVar3 = LiveStorage_GetPersistentDataBuffer(iVar1);
+      if (puVar3 == (uchar *)0x0) {
+        Com_PrintError(0x10,"No player stats available to validate for controller %d\n");
         __restgprlr_28();
         return;
       }
-      StructuredData_MakeBuffer(auStack_40,uVar1,0x2ffc);
-      iVar5 = iVar2 * 0x2ffc + -0x7c9ef3f0;
-      StructuredData_MakeBuffer(auStack_38,iVar5,0x2ffc);
-      iVar3 = LiveStorage_ValidateChallengeConsistency(auStack_38,auStack_40);
-      if (iVar3 == 0) {
-        uVar4 = 0xffffffff82088020;
+      StructuredData_MakeBuffer(&SStack_40,puVar3,0x2ffc);
+      pSVar7 = (StructuredDataBuffer *)0x2ffc;
+      pauVar5 = s_validStatsData + iVar1;
+      StructuredData_MakeBuffer(aSStack_38,*pauVar5,0x2ffc);
+      iVar4 = LiveStorage_ValidateChallengeConsistency((int)aSStack_38,&SStack_40,pSVar7);
+      if (iVar4 == 0) {
+        pcVar6 = "Player stats for controller %d failed challenge consistency check\n";
       }
       else {
-        iVar3 = StructuredData_ValidatePersistentDataIntegrityFull(iVar5,uVar1);
-        if (iVar3 != 0) goto LAB_824e9340;
-        uVar4 = 0xffffffff82087fe4;
+        iVar4 = StructuredData_ValidatePersistentDataIntegrityFull(*pauVar5,puVar3);
+        if (iVar4 != 0) goto LAB_824e9340;
+        pcVar6 = "Player stats for controller %d failed validation check\n";
       }
-      Com_PrintError(0x10,uVar4,iVar2);
-      if (*(char *)(DAT_8404f208 + 0xc) != '\0') {
-        Com_Memcpy(uVar1,iVar5,0x2ffc);
+      Com_PrintError(0x10,pcVar6);
+      if ((validate_apply_revert_full->current).enabled != false) {
+        Com_Memcpy(puVar3,pauVar5,0x2ffc);
       }
-      LiveStorage_ReportStatsValidationFailure(iVar2);
+      LiveStorage_ReportStatsValidationFailure(iVar1);
       __restgprlr_28();
       return;
     }
-    Com_PrintError(0x10,0xffffffff82087f78,iVar2);
+    Com_PrintError(0x10,"No valid stats to compare to for controller %d\n");
   }
 LAB_824e9340:
   __restgprlr_28();
@@ -3938,14 +4239,14 @@ LAB_824e9340:
 void LiveStorage_StoreValidStats(int param_1)
 
 {
-  int iVar2;
-  ulonglong uVar1;
+  StatsSource SVar1;
+  uchar *puVar2;
   
-  iVar2 = LiveStorage_GetActiveStatsSource();
-  if ((iVar2 == 0) &&
-     (uVar1 = LiveStorage_GetPersistentDataBuffer(param_1), (uVar1 & 0xffffffff) != 0)) {
-    *(undefined4 *)(&DAT_836368b0 + param_1 * 4) = 1;
-    Com_Memcpy(param_1 * 0x2ffc + -0x7c9ef3f0,uVar1,0x2ffc);
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if ((SVar1 == STATS_ONLINE) &&
+     (puVar2 = LiveStorage_GetPersistentDataBuffer(param_1), puVar2 != (uchar *)0x0)) {
+    s_validStatsAvailable[param_1] = 1;
+    Com_Memcpy(s_validStatsData + param_1,puVar2,0x2ffc);
   }
   return;
 }
@@ -3953,40 +4254,46 @@ void LiveStorage_StoreValidStats(int param_1)
 
 // 824ED020  LiveStorage_EndGame  (qcommon/com_storage.cpp:3604)
 
-void LiveStorage_EndGame(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_EndGame(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  char cVar4;
+  LocalClientNum_t LVar2;
+  uint uVar3;
+  bool bVar4;
   
-  uVar2 = __savegprlr_28();
-  uVar3 = CL_ControllerIndexFromClientNum();
-  cVar4 = Live_UserIsGuest();
-  if (cVar4 != '\0') {
-    (&DAT_8361cc00)[(int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 2)] = 0;
-    Com_Printf(0x10,0xffffffff820890dc);
+  LVar2 = __savegprlr_28(param_1);
+  uVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  bVar4 = Live_UserIsGuest(uVar3);
+  if (bVar4) {
+    (&controllerStorageData[0].useGameStatsSource)
+    [(int)(((longlong)(int)uVar3 + ((ulonglong)uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 2)] = false;
+    Com_Printf(0x10,"LiveStorage_EndGame called on guest account.\n");
     __restgprlr_28();
     return;
   }
-  iVar1 = (int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-  if ((&DAT_8361cc00)[iVar1] == '\0') {
-    Com_Printf(0x10,0xffffffff82089090);
+  iVar1 = (int)(((longlong)(int)uVar3 + ((ulonglong)uVar3 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  if ((&controllerStorageData[0].useGameStatsSource)[iVar1] == false) {
+    Com_Printf(0x10,"LiveStorage_EndGame called when not in a game. Probably just signed out.\n");
     __restgprlr_28();
     return;
   }
-  cVar4 = LiveStorage_DoWeHaveStats(uVar3);
-  if (cVar4 != '\0') {
-    LiveStorage_RecordPlayTime(uVar2);
+  bVar4 = LiveStorage_DoWeHaveStats(uVar3);
+  if (bVar4) {
+    LiveStorage_RecordPlayTime(LVar2);
     SetPercentComplete(uVar3);
-    GamerProfile_UpdateProfileFromStats(uVar3,*(undefined4 *)(&DAT_8361cc04 + iVar1));
-    (&DAT_8361cc00)[iVar1] = 0;
+    GamerProfile_UpdateProfileFromStats
+              (uVar3,*(StatsSource *)((int)&controllerStorageData[0].gameStatsSource + iVar1));
+    (&controllerStorageData[0].useGameStatsSource)[iVar1] = false;
     __restgprlr_28();
     return;
   }
-  Com_PrintWarning(0x10,0xffffffff82089000);
-  (&DAT_8361cc00)[iVar1] = 0;
+  Com_PrintWarning(0x10,
+                   "Unable to save lastPlayedTime because we don\'t have stats. Rest XP may not accumulate. This should only happen if you just signed in or out."
+                  );
+  (&controllerStorageData[0].useGameStatsSource)[iVar1] = false;
   __restgprlr_28();
   return;
 }
@@ -3994,31 +4301,33 @@ void LiveStorage_EndGame(void)
 
 // 824E93C0  LiveStorage_BeginGame  (qcommon/com_storage.cpp:3651)
 
-void LiveStorage_BeginGame(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_BeginGame(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
   int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  int iVar5;
+  StatsSource SVar3;
+  StatsSource SVar4;
   
-  __savegprlr_28();
-  iVar2 = CL_ControllerIndexFromClientNum();
-  iVar5 = iVar2 * 0x14;
-  if ((&DAT_8361cc00)[iVar5] == '\0') {
-    uVar4 = LiveStorage_GetActiveStatsSource();
-    (&DAT_8361cc00)[iVar5] = 1;
-    *(undefined4 *)(&DAT_8361cc04 + iVar5) = uVar4;
+  LVar1 = __savegprlr_28(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (controllerStorageData[iVar2].useGameStatsSource == false) {
+    SVar4 = LiveStorage_GetActiveStatsSource(iVar2);
+    controllerStorageData[iVar2].useGameStatsSource = true;
+    controllerStorageData[iVar2].gameStatsSource = SVar4;
   }
   else {
-    (&DAT_8361cc00)[iVar5] = 0;
-    iVar1 = *(int *)(&DAT_8361cc04 + iVar5);
-    iVar3 = LiveStorage_GetActiveStatsSource();
-    if (iVar1 != iVar3) {
-      MyAssertHandler(0xffffffff820859c8,0xe4d,0,0xffffffff82088080,0xffffffff820880c8,iVar1);
+    controllerStorageData[iVar2].useGameStatsSource = false;
+    SVar4 = controllerStorageData[iVar2].gameStatsSource;
+    SVar3 = LiveStorage_GetActiveStatsSource(iVar2);
+    if (SVar4 != SVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0xe4d,0,"%s\n\t(controllerStorageData[controllerIndex].gameStatsSource) = %i")
+      ;
     }
-    (&DAT_8361cc00)[iVar5] = 1;
+    controllerStorageData[iVar2].useGameStatsSource = true;
   }
   LiveStorage_EnsureWeHaveStats(iVar2);
   LiveStorage_StoreValidStats(iVar2);
@@ -4029,81 +4338,85 @@ void LiveStorage_BeginGame(void)
 
 // 824E1788  LiveStorage_GetStatBuffer  (qcommon/com_storage.cpp:3683)
 
-void LiveStorage_GetStatBuffer(void)
+uchar * LiveStorage_GetStatBuffer(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  StatsSource SVar2;
+  uchar *puVar3;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = LiveStorage_GetActiveStatsSource();
-  iVar3 = iVar2 * 0x3005 + (int)uVar1 * 0x9238;
-  if ((&DAT_836398d0)[iVar3] == '\0') {
-    uVar1 = va(0xffffffff820865d4,uVar1,iVar2);
-    MyAssertHandler(0xffffffff820859c8,0xe6c,0,0xffffffff820011f4,0xffffffff82086588,uVar1);
+  iVar1 = __savegprlr_29(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (controllerStatData[iVar1].playerStats[SVar2].statsFetched == false) {
+    va("controller: %i statsSource: %i\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xe6c
+                    ,0,"%s\n\t%s");
   }
-  __restgprlr_29(&DAT_836368d0 + iVar3);
-  return;
+  puVar3 = (uchar *)__restgprlr_29(controllerStatData[iVar1].playerStats + SVar2);
+  return puVar3;
 }
 
 
 // 824E1818  LiveStorage_GetStableStatBuffer  (qcommon/com_storage.cpp:3698)
 
-undefined * LiveStorage_GetStableStatBuffer(int param_1)
+uchar * LiveStorage_GetStableStatBuffer(int param_1)
 
 {
-  if ((&DAT_836398d0)[param_1 * 0x9238] == '\0') {
-    return (undefined *)0x0;
+  if (controllerStatData[param_1].playerStats[0].statsFetched == false) {
+    return (uchar *)0x0;
   }
-  return &DAT_8363c8dc + param_1 * 0x9238;
+  return controllerStatData[param_1].writeStatsBuffer;
 }
 
 
 // 824E1850  LiveStorage_GetPersistentDataBufferForSource  (qcommon/com_storage.cpp:3707)
 
-void LiveStorage_GetPersistentDataBufferForSource(undefined8 param_1,longlong param_2)
+uchar * LiveStorage_GetPersistentDataBufferForSource(int param_1,StatsSource param_2)
 
 {
-  char cVar1;
+  uchar uVar1;
   int iVar2;
   int iVar3;
   int iVar4;
+  uchar *puVar5;
+  longlong lVar6;
   
-  iVar3 = __savegprlr_29();
+  lVar6 = (longlong)(int)param_2;
+  iVar3 = __savegprlr_29(param_1);
   iVar2 = (int)((longlong)iVar3 * 0x9238);
-  cVar1 = (&DAT_836398d0)[(int)param_2 * 0x3005 + iVar2];
+  uVar1 = controllerStatData[0].playerStats[(int)lVar6].data[iVar2 + 0x3000];
   while( true ) {
-    if (cVar1 != '\0') {
-      __restgprlr_29(param_2 * 0x3005 + (longlong)iVar3 * 0x9238 + -0x7c9c972c);
-      return;
+    if (uVar1 != '\0') {
+      puVar5 = (uchar *)__restgprlr_29(lVar6 * 0x3005 + (longlong)iVar3 * 0x9238 + -0x7c9c972c);
+      return puVar5;
     }
     iVar4 = Live_OnlinePlayEvenIfDown();
-    if ((iVar4 == 0) || ((int)param_2 != 0)) break;
-    param_2 = 1;
-    cVar1 = (&DAT_8363c8d5)[iVar2];
+    if ((iVar4 == 0) || ((int)lVar6 != 0)) break;
+    lVar6 = 1;
+    uVar1 = controllerStatData[0].playerStats[1].data[iVar2 + 0x3000];
   }
-  __restgprlr_29(0);
-  return;
+  puVar5 = (uchar *)__restgprlr_29(0);
+  return puVar5;
 }
 
 
 // 824E18D8  LiveStorage_GetPersistentDataBuffer  (qcommon/com_storage.cpp:3724)
 
-void LiveStorage_GetPersistentDataBuffer(undefined8 param_1)
+uchar * LiveStorage_GetPersistentDataBuffer(int param_1)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar3;
+  uchar *puVar1;
+  StatsSource SVar2;
   
-  cVar2 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar2 != '\0') {
-    CL_Demo_GetPersistentDataBufferForDemo();
-    return;
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar3) {
+    puVar1 = CL_Demo_GetPersistentDataBufferForDemo();
+    return puVar1;
   }
-  uVar1 = LiveStorage_GetActiveStatsSource(param_1);
-  LiveStorage_GetPersistentDataBufferForSource(param_1,uVar1);
-  return;
+  SVar2 = LiveStorage_GetActiveStatsSource(param_1);
+  puVar1 = LiveStorage_GetPersistentDataBufferForSource(param_1,SVar2);
+  return puVar1;
 }
 
 
@@ -4112,10 +4425,10 @@ void LiveStorage_GetPersistentDataBuffer(undefined8 param_1)
 void LiveStorage_StatsWriteNeeded(int param_1)
 
 {
-  int iVar1;
+  StatsSource SVar1;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  (&DAT_836398d2)[iVar1 * 0x3005 + param_1 * 0x9238] = 1;
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  controllerStatData[param_1].playerStats[SVar1].statWriteNeeded = true;
   UI_ExpressionState_PlayerDataModified();
   return;
 }
@@ -4123,10 +4436,10 @@ void LiveStorage_StatsWriteNeeded(int param_1)
 
 // 824E1998  LiveStorage_StatsWriteNeededForSource  (qcommon/com_storage.cpp:3763)
 
-void LiveStorage_StatsWriteNeededForSource(int param_1,int param_2)
+void LiveStorage_StatsWriteNeededForSource(int param_1,StatsSource param_2)
 
 {
-  (&DAT_836398d2)[param_2 * 0x3005 + param_1 * 0x9238] = 1;
+  controllerStatData[param_1].playerStats[param_2].statWriteNeeded = true;
   UI_ExpressionState_PlayerDataModified();
   return;
 }
@@ -4137,45 +4450,48 @@ void LiveStorage_StatsWriteNeededForSource(int param_1,int param_2)
 void LiveStorage_StatsWriteNotNeeded(int param_1)
 
 {
-  int iVar1;
+  StatsSource SVar1;
   
-  iVar1 = LiveStorage_GetActiveStatsSource();
-  (&DAT_836398d2)[iVar1 * 0x3005 + param_1 * 0x9238] = 0;
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  controllerStatData[param_1].playerStats[SVar1].statWriteNeeded = false;
   return;
 }
 
 
 // 824E1A20  LiveStorage_GettingStats  (qcommon/com_storage.cpp:3787)
 
-void LiveStorage_GettingStats(undefined8 param_1)
+bool LiveStorage_GettingStats(int param_1)
 
 {
-  TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,6,param_1);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgressForController(&storageTasks,6,param_1);
+  return bVar1;
 }
 
 
 // 824EE4D0  LiveStorage_WaitForWriteStatsBuffer  (qcommon/com_storage.cpp:3795)
 
-void LiveStorage_WaitForWriteStatsBuffer(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_WaitForWriteStatsBuffer(int param_1)
 
 {
   char cVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar2;
+  LocalClientNum_t LVar3;
   
-  iVar3 = __savegprlr_29();
-  iVar3 = iVar3 * 0x9238;
-  if ((&DAT_8363c8da)[iVar3] != '\0') {
-    uVar2 = CL_LocalClientNumFromControllerIndex();
-    UI_BeginReadingDeviceUI();
-    cVar1 = (&DAT_8363c8da)[iVar3];
+  iVar2 = __savegprlr_29(param_1);
+  if (controllerStatData[iVar2].writeStatsBufferInUse != false) {
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar2);
+    UI_BeginReadingDeviceUI(LVar3);
+    cVar1 = controllerStatData[iVar2].writeStatsBufferInUse;
     while (cVar1 != '\0') {
       Sys_Sleep(1);
       LiveStorage_CheckOngoingSessionTasks();
-      cVar1 = (&DAT_8363c8da)[iVar3];
+      cVar1 = controllerStatData[iVar2].writeStatsBufferInUse;
     }
-    UI_EndReadingSaveDeviceUI(uVar2);
+    UI_EndReadingSaveDeviceUI(LVar3);
   }
   sync(1);
   __restgprlr_29();
@@ -4185,21 +4501,19 @@ void LiveStorage_WaitForWriteStatsBuffer(void)
 
 // 824EE548  LiveStorage_NewUser  (qcommon/com_storage.cpp:3835)
 
-void LiveStorage_NewUser(undefined8 param_1)
+void LiveStorage_NewUser(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = (int)param_1;
-  if ((iVar1 < 0) || (3 < iVar1)) {
-    MyAssertHandler(0xffffffff820859c8,0xefc,0,0xffffffff82039774,0xffffffff82057314,param_1);
+  if ((param_1 < 0) || (3 < param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xefc
+                    ,0,"%s\n\t(controllerIndex) = %i");
   }
   LiveStorage_WaitForWriteStatsBuffer(param_1);
-  memset(&DAT_836368d0 + iVar1 * 0x9238,0,0x9238);
-  DAT_8363fb04 = &DAT_8365b368;
-  DAT_83648d3c = &DAT_8365b448;
-  DAT_83651f74 = &DAT_8365b528;
-  DAT_8365b1ac = &DAT_8365b608;
+  memset();
+  controllerStatData[0].fileTask = g_statsFileFileTasks;
+  controllerStatData[1].fileTask = g_statsFileFileTasks + 1;
+  controllerStatData[2].fileTask = g_statsFileFileTasks + 2;
+  controllerStatData[3].fileTask = g_statsFileFileTasks + 3;
   LiveStorage_NewUser_Common(param_1);
   return;
 }
@@ -4207,33 +4521,37 @@ void LiveStorage_NewUser(undefined8 param_1)
 
 // 824ED118  LiveStorage_UploadStatsCmd  (qcommon/com_storage.cpp:3865)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_UploadStatsCmd(void)
 
 {
-  Cmd_LocalControllerIndex();
-  LiveStorage_SaveStats();
+  int iVar1;
+  
+  iVar1 = Cmd_LocalControllerIndex();
+  LiveStorage_SaveStats(iVar1);
   return;
 }
 
 
 // 824E1A38  LiveStorage_ReadStatsCmd  (qcommon/com_storage.cpp:3872)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_ReadStatsCmd(void)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  uVar1 = Cmd_LocalControllerIndex();
-  cVar2 = LiveStorage_ShouldReadOnlineStats();
-  if (cVar2 != '\0') {
-    if ((&DAT_836398d0)[(int)uVar1 * 0x9238] == '\0') {
-      LiveStorage_DownloadStats(uVar1);
-    }
+  iVar1 = Cmd_LocalControllerIndex();
+  bVar2 = LiveStorage_ShouldReadOnlineStats(iVar1);
+  if ((bVar2) && (controllerStatData[iVar1].playerStats[0].statsFetched == false)) {
+    LiveStorage_DownloadStats(iVar1);
   }
-  cVar2 = LiveStorage_ShouldReadOfflineStats(uVar1);
-  if (cVar2 != '\0') {
-    LiveStorage_ReadStats(uVar1);
+  bVar2 = LiveStorage_ShouldReadOfflineStats(iVar1);
+  if (bVar2) {
+    LiveStorage_ReadStats(iVar1);
   }
   return;
 }
@@ -4241,125 +4559,145 @@ void LiveStorage_ReadStatsCmd(void)
 
 // 824E1AC0  LiveStorage_ReselectSaveDeviceCmd  (qcommon/com_storage.cpp:3893)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_ReselectSaveDeviceCmd(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Live_IsSignedIn(DAT_82b5c824);
-  if (cVar1 == '\0') {
-    Live_StartSigninAny();
+  bVar1 = Live_IsSignedIn(cl_last_controller_input);
+  if (!bVar1) {
+    Live_StartSigninAny(cl_last_controller_input);
     return;
   }
-  LiveStorage_SplitScreenReselectSaveDevice(DAT_82b5c824);
+  LiveStorage_SplitScreenReselectSaveDevice(cl_last_controller_input);
   return;
 }
 
 
 // 824E1B20  InitRequiredTask  (qcommon/com_storage.cpp:3908)
 
-void InitRequiredTask(undefined4 *param_1)
+void InitRequiredTask(RequiredTask *param_1)
 
 {
-  *param_1 = 0;
-  param_1[2] = 500;
-  param_1[1] = 0;
-  param_1[3] = 0;
+  param_1->failures = 0;
+  param_1->interval = 500;
+  param_1->backoffs = 0;
+  param_1->lastTime = 0;
   return;
 }
 
 
 // 824EE628  LiveStorage_InitCommon  (qcommon/com_storage.cpp:3918)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_InitCommon(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff82089858,0xffffffff824ee1d8,0xffffffff8365dcc8);
-  Cmd_AddCommandInternal(0xffffffff8208984c,0xffffffff824ee348,0xffffffff8365dcb4);
-  Cmd_AddCommandInternal(0xffffffff82089838,0xffffffff824e83a8,0xffffffff8365dca0);
-  Cmd_AddCommandInternal(0xffffffff82089818,0xffffffff824e83b8,0xffffffff8365dc8c);
-  Cmd_AddCommandInternal(0xffffffff82089804,0xffffffff824ecc70,0xffffffff8365dc78);
-  Cmd_AddCommandInternal(0xffffffff820897f4,0xffffffff824e83c8,0xffffffff8365dc64);
-  Cmd_AddCommandInternal(0xffffffff820897e4,0xffffffff824e8588,0xffffffff8365dc50);
-  Cmd_AddCommandInternal(0xffffffff820897d4,0xffffffff824e8658,0xffffffff8365dc3c);
-  Cmd_AddCommandInternal(0xffffffff820897c0,0xffffffff824ecc98,0xffffffff8365dc28);
-  Cmd_AddCommandInternal(0xffffffff820897ac,0xffffffff824dff70,0xffffffff8365dc14);
-  Cmd_AddCommandInternal(0xffffffff820897a0,0xffffffff824e86c8,0xffffffff8365dc00);
-  Cmd_AddCommandInternal(0xffffffff82089794,0xffffffff824e87b8,0xffffffff8365dbec);
-  Cmd_AddCommandInternal(0xffffffff82089788,0xffffffff824e88a8,0xffffffff8365dbd8);
-  Cmd_AddCommandInternal(0xffffffff8208977c,0xffffffff824e8980,0xffffffff8365dbc4);
-  Cmd_AddCommandInternal(0xffffffff8208976c,0xffffffff824e8a58,0xffffffff8365dbb0);
-  Cmd_AddCommandInternal(0xffffffff8208975c,0xffffffff824e8b10,0xffffffff8365db9c);
-  Cmd_AddCommandInternal(0xffffffff82089744,0xffffffff824e07f8,0xffffffff8365db88);
-  Cmd_AddCommandInternal(0xffffffff8208972c,0xffffffff824e6a38,0xffffffff8365db74);
-  Cmd_AddCommandInternal(0xffffffff82089710,0xffffffff824e1438,0xffffffff8365db60);
+  Cmd_AddCommandInternal
+            ("prestigeReset",LiveStorage_StatPrestigeResetCmd,&LiveStorage_StatPrestigeResetCmd_VAR)
+  ;
+  Cmd_AddCommandInternal("statsReset",LiveStorage_StatResetCmd,&LiveStorage_StatResetCmd_VAR);
+  Cmd_AddCommandInternal
+            ("setCustomClasses",LiveStorage_CustomClassesSetCmd,&LiveStorage_CustomClassesSetCmd_VAR
+            );
+  Cmd_AddCommandInternal
+            ("setPrivateMatchCustomClasses",LiveStorage_PrivateMatchCustomClassesSetCmd,
+             &LiveStorage_PrivateMatchCustomClassesSetCmd_VAR);
+  Cmd_AddCommandInternal("defaultStatsInit",LiveStorage_StatsInitCmd,&LiveStorage_StatsInitCmd_VAR);
+  Cmd_AddCommandInternal("setPlayerData",LiveStorage_DataSetCmd,&LiveStorage_DataSetCmd_VAR);
+  Cmd_AddCommandInternal("getPlayerData",LiveStorage_DataGetCmd,&LiveStorage_DataGetCmd_VAR);
+  Cmd_AddCommandInternal("dumpPlayerData",LiveStorage_DataDumpCmd,&LiveStorage_DataDumpCmd_VAR);
+  Cmd_AddCommandInternal
+            ("dumpUnlockedItems",LiveStorage_DumpUnlockedItemsCmd,
+             &LiveStorage_DumpUnlockedItemsCmd_VAR);
+  Cmd_AddCommandInternal
+            ("statsdownloadcancel",LiveStorage_StatsDownloadCancelCmd,
+             &LiveStorage_StatsDownloadCancelCmd_VAR);
+  Cmd_AddCommandInternal("unlockIcon",LiveStorage_UnlockIconCmd,&LiveStorage_UnlockIconCmd_VAR);
+  Cmd_AddCommandInternal("unlockTitle",LiveStorage_UnlockTitleCmd,&LiveStorage_UnlockTitleCmd_VAR);
+  Cmd_AddCommandInternal("lockIcon",LiveStorage_LockIconCmd,&LiveStorage_LockIconCmd_VAR);
+  Cmd_AddCommandInternal("lockTitle",LiveStorage_LockTitleCmd,&LiveStorage_LockTitleCmd_VAR);
+  Cmd_AddCommandInternal
+            ("setPlayerIcon",LiveStorage_SetPlayerIconCmd,&LiveStorage_SetPlayerIconCmd_VAR);
+  Cmd_AddCommandInternal
+            ("setPlayerTitle",LiveStorage_SetPlayerTitleCmd,&LiveStorage_SetPlayerTitleCmd_VAR);
+  Cmd_AddCommandInternal
+            ("updateProfileFromStats",LiveStorage_UpdateProfileFromStatsCmd,
+             &LiveStorage_UpdateProfileFromStatsCmd_VAR);
+  Cmd_AddCommandInternal
+            ("createeliteclassfile",LiveStorage_CreateEliteClassFileFromMpData,
+             &LiveStorage_CreateEliteClassFileFromMpData_VAR);
+  Cmd_AddCommandInternal
+            ("challengeFilterCacheDirty",LiveStorage_FilterCacheDirtyCmd,
+             &LiveStorage_FilterCacheDirtyCmd_VAR);
   return;
 }
 
 
 // 824EE858  LiveStorage_Init  (qcommon/com_storage.cpp:3963)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_Init(void)
 
 {
-  void *pvVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
-  undefined4 local_110;
-  undefined4 local_10c;
-  undefined8 local_108;
-  undefined4 local_100;
-  undefined1 auStack_f8 [176];
-  undefined1 auStack_48 [72];
+  int *piVar1;
+  dwFileTask *this;
+  dwFileTask local_110;
   
   __savegprlr_27();
   LiveStorage_InitCommon();
-  TaskManager_ConstructTaskSet(0xffffffff8365bc38,0xffffffff82089894);
+  TaskManager_ConstructTaskSet(&storageTasks,"LiveStorage_Init");
   LiveStorage_InitMotd();
   LiveStorage_InitWriteStatsThread();
-  DAT_836108a8 = 0;
-  DAT_836108ac = 0;
-  DAT_836108b0 = 500;
-  DAT_836108b4 = 0;
-  DAT_836108b8 = 0;
-  DAT_836108bc = 0;
-  DAT_836108c0 = 500;
-  DAT_836108c4 = 0;
-  DAT_836108c8 = 0;
-  DAT_836108cc = 0;
-  DAT_836108d0 = 500;
-  DAT_836108d4 = 0;
-  DAT_836108d8 = 0;
-  DAT_836108dc = 0;
-  DAT_836108e0 = 500;
-  DAT_836108e4 = 0;
-  memset(&DAT_836368d0,0,0x248e0);
-  lVar3 = -0x7c9a4c98;
-  puVar2 = &DAT_836368cc;
+  statsFetchTask[0].failures = 0;
+  statsFetchTask[0].backoffs = 0;
+  statsFetchTask[0].interval = 500;
+  statsFetchTask[0].lastTime = 0;
+  statsFetchTask[1].failures = 0;
+  statsFetchTask[1].backoffs = 0;
+  statsFetchTask[1].interval = 500;
+  statsFetchTask[1].lastTime = 0;
+  statsFetchTask[2].failures = 0;
+  statsFetchTask[2].backoffs = 0;
+  statsFetchTask[2].interval = 500;
+  statsFetchTask[2].lastTime = 0;
+  statsFetchTask[3].failures = 0;
+  statsFetchTask[3].backoffs = 0;
+  statsFetchTask[3].interval = 500;
+  statsFetchTask[3].lastTime = 0;
+  memset();
+  this = g_statsFileFileTasks;
+  piVar1 = &s_filterChallengeCompletedCount;
   do {
-    local_110 = 0;
-    local_10c = 0;
-    local_108 = 0;
-    local_100 = 0;
-    bdFileInfo__bdFileInfo(auStack_f8);
-    bdFileData__bdFileData(auStack_48,0,0);
-    dwFileTask__operator_(lVar3,&local_110);
-    bdFileData___bdFileData(auStack_48);
-    bdFileInfo___bdFileInfo(auStack_f8);
-    puVar2 = puVar2 + 0x248e;
-    *puVar2 = (int)lVar3;
-    lVar3 = lVar3 + 0xe0;
-  } while ((int)lVar3 < -0x7c9a4918);
-  Cmd_AddCommandInternal(0xffffffff82089888,0xffffffff824ed118,0xffffffff8365dd04);
-  Cmd_AddCommandInternal(0xffffffff8208987c,0xffffffff824e1a38,0xffffffff8365dcf0);
-  Cmd_AddCommandInternal(0xffffffff82089868,0xffffffff824e1ac0,0xffffffff8365dcdc);
-  pvVar1 = memset(&DAT_8361cc60,0,0x3804);
-  DAT_8365d6f8 = 0;
-  LiveStorage_ResetRemoteConsoleCheckStatus(pvVar1);
-  DAT_8365b6e8 = 0;
-  DAT_8365b6e9 = 0;
-  DAT_8365b6ea = 0;
-  DAT_8365b6eb = 0;
+    local_110.m_filename = (char *)0x0;
+    local_110.m_error = BD_NO_ERROR;
+    local_110.m_fileID = 0;
+    local_110.m_fileSize = 0;
+    bdFileInfo::bdFileInfo(&local_110.m_infoResult);
+    bdFileData::bdFileData(&local_110.m_dataResult,(void *)0x0,0);
+    dwFileTask::operator=(this,&local_110);
+    bdFileData::~bdFileData(&local_110.m_dataResult);
+    bdFileInfo::~bdFileInfo(&local_110.m_infoResult);
+    piVar1 = piVar1 + 0x248e;
+    *piVar1 = (int)this;
+    this = this + 1;
+  } while ((int)this < -0x7c9a4918);
+  Cmd_AddCommandInternal("uploadStats",LiveStorage_UploadStatsCmd,&LiveStorage_UploadStatsCmd_VAR);
+  Cmd_AddCommandInternal("readStats",LiveStorage_ReadStatsCmd,&LiveStorage_ReadStatsCmd_VAR);
+  Cmd_AddCommandInternal
+            ("reselectSaveDevice",LiveStorage_ReselectSaveDeviceCmd,
+             &LiveStorage_ReselectSaveDeviceCmd_VAR);
+  memset();
+  matchDataTags.numTags = 0;
+  LiveStorage_ResetRemoteConsoleCheckStatus();
+  s_eliteCACData.checkedForECACFile[0] = false;
+  s_eliteCACData.checkedForECACFile[1] = false;
+  s_eliteCACData.checkedForECACFile[2] = false;
+  s_eliteCACData.checkedForECACFile[3] = false;
   __restgprlr_27();
   return;
 }
@@ -4367,155 +4705,185 @@ void LiveStorage_Init(void)
 
 // 824E1B40  LiveStorage_Shutdown  (qcommon/com_storage.cpp:4050)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_Shutdown(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff8365bc38);
+  TaskManager_DestructTaskSet(&storageTasks);
   return;
 }
 
 
 // 824E1B50  LiveStorage_ErrorCleanup  (qcommon/com_storage.cpp:4079)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_ErrorCleanup(void)
 
 {
-  DAT_8361cc08 = 0;
-  DAT_8361cc1c = 0;
-  DAT_8361cc30 = 0;
-  DAT_8361cc44 = 0;
+  controllerStorageData[0].resettingStats = false;
+  controllerStorageData[1].resettingStats = false;
+  controllerStorageData[2].resettingStats = false;
+  controllerStorageData[3].resettingStats = false;
   return;
 }
 
 
 // 824E1B80  LiveStorage_PlayerDataGetArrayBoolByName  (qcommon/com_storage.cpp:4089)
 
-void LiveStorage_PlayerDataGetArrayBoolByName
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool LiveStorage_PlayerDataGetArrayBoolByName
+               (StructuredDataBuffer *param_1,char *param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  undefined1 uVar5;
+  LookupResultDataType LVar4;
+  bool bVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xffd,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xffd
+                    ,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0xffe,0,0xffffffff82000f98,0xffffffff820865f4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",0xffe
+                    ,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1001,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1001,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 0) {
-    StructuredData_LookupWithString(auStack_50,param_3);
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if (iVar3 == 2) {
-      iVar3 = StructuredData_GetLookupError();
-      Com_Error(1,0xffffffff82026358,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
-      __restgprlr_26(0);
-      return;
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar7);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
+    StructuredData_LookupWithString(aSStack_50,(char *)uVar8);
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_ERROR) {
+      StructuredData_GetLookupError(aSStack_50);
+      Com_Error(ERR_DROP,"Could not look up \"%s\" entry of \"%s\" array in playerdata.def: %s");
+      uVar5 = __restgprlr_26(0);
+      return (bool)uVar5;
     }
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if ((iVar3 == 1) && (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 == 1)) {
-      StructuredData_GetBool(auStack_50,uVar1);
-      __restgprlr_26();
-      return;
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if ((LVar3 == LOOKUP_FINISHED) &&
+       (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 == LOOKUP_RESULT_BOOL)) {
+      bVar6 = StructuredData_GetBool(aSStack_50,pSVar1);
+      uVar5 = __restgprlr_26(bVar6);
+      return (bool)uVar5;
     }
   }
-  Com_Error(1,0xffffffff820262e4,param_2);
-  __restgprlr_26(0);
-  return;
+  Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
+  uVar5 = __restgprlr_26(0);
+  return (bool)uVar5;
 }
 
 
 // 824E1CF8  LiveStorage_PlayerDataGetArrayBoolByIndex  (qcommon/com_storage.cpp:4125)
 
-void LiveStorage_PlayerDataGetArrayBoolByIndex
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+bool LiveStorage_PlayerDataGetArrayBoolByIndex
+               (StructuredDataBuffer *param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  undefined1 uVar5;
+  LookupResultDataType LVar4;
+  bool bVar6;
+  ulonglong uVar7;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1021,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar7 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1021,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1024,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1024,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 0) {
-    StructuredData_LookupWithInt(auStack_50,param_3);
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if (iVar3 == 2) {
-      iVar3 = StructuredData_GetLookupError();
-      Com_Error(1,0xffffffff82086610,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
-      __restgprlr_26(0);
-      return;
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar7);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
+    StructuredData_LookupWithInt(aSStack_50,param_3);
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_ERROR) {
+      StructuredData_GetLookupError(aSStack_50);
+      Com_Error(ERR_DROP,"Could not look up \"%d\" entry of \"%s\" array in playerdata.def: %s");
+      uVar5 = __restgprlr_26(0);
+      return (bool)uVar5;
     }
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if ((iVar3 == 1) && (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 == 1)) {
-      StructuredData_GetBool(auStack_50,uVar1);
-      __restgprlr_26();
-      return;
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if ((LVar3 == LOOKUP_FINISHED) &&
+       (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 == LOOKUP_RESULT_BOOL)) {
+      bVar6 = StructuredData_GetBool(aSStack_50,pSVar1);
+      uVar5 = __restgprlr_26(bVar6);
+      return (bool)uVar5;
     }
   }
-  Com_Error(1,0xffffffff820262e4,param_2);
-  __restgprlr_26(0);
-  return;
+  Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
+  uVar5 = __restgprlr_26(0);
+  return (bool)uVar5;
 }
 
 
 // 824E1E50  LiveStorage_PlayerDataSetArrayBoolByName  (qcommon/com_storage.cpp:4160)
 
 void LiveStorage_PlayerDataSetArrayBoolByName
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (StructuredDataBuffer *param_1,char *param_2,char *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
+  ulonglong uVar6;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1044,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1044,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1047,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1047,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff820262e4,param_2);
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 != LOOKUP_IN_PROGRESS) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
   }
-  StructuredData_LookupWithString(auStack_50,param_3);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 2) {
-    iVar3 = StructuredData_GetLookupError(auStack_50);
-    Com_Error(1,0xffffffff82026358,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
+  StructuredData_LookupWithString(aSStack_50,param_3);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_ERROR) {
+    StructuredData_GetLookupError(aSStack_50);
+    Com_Error(ERR_DROP,"Could not look up \"%s\" entry of \"%s\" array in playerdata.def: %s");
   }
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if ((iVar3 != 1) || (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 != 1)) {
-    Com_Error(1,0xffffffff820262e4,param_2);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if ((LVar3 != LOOKUP_FINISHED) ||
+     (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 != LOOKUP_RESULT_BOOL)) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
   }
-  StructuredData_SetBool(auStack_50,uVar1,param_4);
-  __restgprlr_25();
+  SVar5 = StructuredData_SetBool(aSStack_50,pSVar1,param_4);
+  __restgprlr_25(SVar5);
   return;
 }
 
@@ -4523,171 +4891,203 @@ void LiveStorage_PlayerDataSetArrayBoolByName
 // 824E1FB0  LiveStorage_PlayerDataSetArrayBoolByIndex  (qcommon/com_storage.cpp:4187)
 
 void LiveStorage_PlayerDataSetArrayBoolByIndex
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (StructuredDataBuffer *param_1,char *param_2,int param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
+  ulonglong uVar6;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x105f,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x105f,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1062,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1062,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff820262e4,param_2);
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 != LOOKUP_IN_PROGRESS) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
   }
-  StructuredData_LookupWithInt(auStack_50,param_3);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 2) {
-    iVar3 = StructuredData_GetLookupError(auStack_50);
-    Com_Error(1,0xffffffff82086610,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
+  StructuredData_LookupWithInt(aSStack_50,param_3);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_ERROR) {
+    StructuredData_GetLookupError(aSStack_50);
+    Com_Error(ERR_DROP,"Could not look up \"%d\" entry of \"%s\" array in playerdata.def: %s");
   }
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if ((iVar3 != 1) || (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 != 1)) {
-    Com_Error(1,0xffffffff820262e4,param_2);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if ((LVar3 != LOOKUP_FINISHED) ||
+     (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 != LOOKUP_RESULT_BOOL)) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of bools in playerdata.def");
   }
-  StructuredData_SetBool(auStack_50,uVar1,param_4);
-  __restgprlr_25();
+  SVar5 = StructuredData_SetBool(aSStack_50,pSVar1,param_4);
+  __restgprlr_25(SVar5);
   return;
 }
 
 
 // 824E2110  LiveStorage_PlayerDataGetArrayIntByName  (qcommon/com_storage.cpp:4214)
 
-void LiveStorage_PlayerDataGetArrayIntByName(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+int LiveStorage_PlayerDataGetArrayIntByName
+              (StructuredDataBuffer *param_1,char *param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  int iVar4;
+  LookupResultDataType LVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x107a,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x107a,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x107b,0,0xffffffff82000f98,0xffffffff820865f4);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x107b,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x107e,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x107e,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 0) {
-    StructuredData_LookupWithString(auStack_50,param_3);
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if (iVar3 == 2) {
-      iVar3 = StructuredData_GetLookupError();
-      Com_Error(1,0xffffffff82026358,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
-      __restgprlr_26(0);
-      return;
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
+    StructuredData_LookupWithString(aSStack_50,(char *)uVar7);
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_ERROR) {
+      StructuredData_GetLookupError(aSStack_50);
+      Com_Error(ERR_DROP,"Could not look up \"%s\" entry of \"%s\" array in playerdata.def: %s");
+      iVar4 = __restgprlr_26(0);
+      return iVar4;
     }
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if ((iVar3 == 1) && (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 == 0)) {
-      StructuredData_GetInt(auStack_50,uVar1);
-      __restgprlr_26();
-      return;
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if ((LVar3 == LOOKUP_FINISHED) &&
+       (LVar5 = StructuredData_GetLookupResultType(aSStack_50), LVar5 == LOOKUP_RESULT_INT)) {
+      iVar4 = StructuredData_GetInt(aSStack_50,pSVar1);
+      iVar4 = __restgprlr_26(iVar4);
+      return iVar4;
     }
   }
-  Com_Error(1,0xffffffff82086654,param_2);
-  __restgprlr_26(0);
-  return;
+  Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
+  iVar4 = __restgprlr_26(0);
+  return iVar4;
 }
 
 
 // 824E2288  LiveStorage_PlayerDataGetArrayIntByIndex  (qcommon/com_storage.cpp:4250)
 
-void LiveStorage_PlayerDataGetArrayIntByIndex
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int LiveStorage_PlayerDataGetArrayIntByIndex
+              (StructuredDataBuffer *param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  int iVar4;
+  LookupResultDataType LVar5;
+  ulonglong uVar6;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x109e,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x109e,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x10a1,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x10a1,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 0) {
-    StructuredData_LookupWithInt(auStack_50,param_3);
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if (iVar3 == 2) {
-      iVar3 = StructuredData_GetLookupError();
-      Com_Error(1,0xffffffff82086610,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
-      __restgprlr_26(0);
-      return;
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
+    StructuredData_LookupWithInt(aSStack_50,param_3);
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_ERROR) {
+      StructuredData_GetLookupError(aSStack_50);
+      Com_Error(ERR_DROP,"Could not look up \"%d\" entry of \"%s\" array in playerdata.def: %s");
+      iVar4 = __restgprlr_26(0);
+      return iVar4;
     }
-    iVar3 = StructuredData_GetLookupState(auStack_50);
-    if ((iVar3 == 1) && (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 == 0)) {
-      StructuredData_GetInt(auStack_50,uVar1);
-      __restgprlr_26();
-      return;
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if ((LVar3 == LOOKUP_FINISHED) &&
+       (LVar5 = StructuredData_GetLookupResultType(aSStack_50), LVar5 == LOOKUP_RESULT_INT)) {
+      iVar4 = StructuredData_GetInt(aSStack_50,pSVar1);
+      iVar4 = __restgprlr_26(iVar4);
+      return iVar4;
     }
   }
-  Com_Error(1,0xffffffff82086654,param_2);
-  __restgprlr_26(0);
-  return;
+  Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
+  iVar4 = __restgprlr_26(0);
+  return iVar4;
 }
 
 
 // 824E23E0  LiveStorage_PlayerDataSetArrayIntByName  (qcommon/com_storage.cpp:4285)
 
 void LiveStorage_PlayerDataSetArrayIntByName
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (StructuredDataBuffer *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
+  ulonglong uVar6;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x10c1,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x10c1,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x10c4,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x10c4,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff82086654,param_2);
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 != LOOKUP_IN_PROGRESS) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
   }
-  StructuredData_LookupWithString(auStack_50,param_3);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 2) {
-    iVar3 = StructuredData_GetLookupError(auStack_50);
-    Com_Error(1,0xffffffff82026358,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
+  StructuredData_LookupWithString(aSStack_50,param_3);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_ERROR) {
+    StructuredData_GetLookupError(aSStack_50);
+    Com_Error(ERR_DROP,"Could not look up \"%s\" entry of \"%s\" array in playerdata.def: %s");
   }
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if ((iVar3 != 1) || (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 != 0)) {
-    Com_Error(1,0xffffffff82086654,param_2);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if ((LVar3 != LOOKUP_FINISHED) ||
+     (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 != LOOKUP_RESULT_INT)) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
   }
-  StructuredData_SetInt(auStack_50,uVar1,param_4);
-  __restgprlr_25();
+  SVar5 = StructuredData_SetInt(aSStack_50,pSVar1,param_4);
+  __restgprlr_25(SVar5);
   return;
 }
 
@@ -4695,51 +5095,58 @@ void LiveStorage_PlayerDataSetArrayIntByName
 // 824E2540  LiveStorage_PlayerDataSetArrayIntByIndex  (qcommon/com_storage.cpp:4312)
 
 void LiveStorage_PlayerDataSetArrayIntByIndex
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (StructuredDataBuffer *param_1,char *param_2,int param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  undefined1 auStack_50 [80];
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
+  ulonglong uVar6;
+  StructuredDataLookup aSStack_50 [5];
   
-  uVar1 = __savegprlr_25();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x10dc,0,0xffffffff82000f98,0xffffffff82086600);
+  uVar6 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_25(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x10dc,0,"%s");
   }
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x10df,0,0xffffffff82000f98,0xffffffff8206070c);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar2 == (StructuredDataDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x10df,0,"%s");
   }
-  StructuredData_InitializeLookup(uVar2,auStack_50);
-  StructuredData_LookupWithString(auStack_50,param_2);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 != 0) {
-    Com_Error(1,0xffffffff82086654,param_2);
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
+  StructuredData_LookupWithString(aSStack_50,(char *)uVar6);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 != LOOKUP_IN_PROGRESS) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
   }
-  StructuredData_LookupWithInt(auStack_50,param_3);
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if (iVar3 == 2) {
-    iVar3 = StructuredData_GetLookupError(auStack_50);
-    Com_Error(1,0xffffffff82086610,param_3,param_2,(&PTR_DAT_82992d38)[iVar3]);
+  StructuredData_LookupWithInt(aSStack_50,param_3);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_ERROR) {
+    StructuredData_GetLookupError(aSStack_50);
+    Com_Error(ERR_DROP,"Could not look up \"%d\" entry of \"%s\" array in playerdata.def: %s");
   }
-  iVar3 = StructuredData_GetLookupState(auStack_50);
-  if ((iVar3 != 1) || (iVar3 = StructuredData_GetLookupResultType(auStack_50), iVar3 != 0)) {
-    Com_Error(1,0xffffffff82086654,param_2);
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if ((LVar3 != LOOKUP_FINISHED) ||
+     (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 != LOOKUP_RESULT_INT)) {
+    Com_Error(ERR_DROP,"Expected \"%s\" to be an array of ints in playerdata.def");
   }
-  StructuredData_SetInt(auStack_50,uVar1,param_4);
-  __restgprlr_25();
+  SVar5 = StructuredData_SetInt(aSStack_50,pSVar1,param_4);
+  __restgprlr_25(SVar5);
   return;
 }
 
 
 // 824E26A0  IsChallengeComplete  (qcommon/com_storage.cpp:4339)
 
-ulonglong IsChallengeComplete(undefined8 param_1,undefined8 param_2)
+bool IsChallengeComplete(StructuredDataBuffer *param_1,char *param_2)
 
 {
   char cVar1;
-  ulonglong uVar2;
+  int iVar2;
   char *pcVar3;
   ulonglong uVar4;
   char *local_70;
@@ -4763,124 +5170,153 @@ ulonglong IsChallengeComplete(undefined8 param_1,undefined8 param_2)
   }
   local_6c = acStack_62 + 2;
   local_70 = "challengeState";
-  uVar2 = LiveStorage_DataGetInternalInt(&local_70,2,param_1);
-  return ((~(uVar2 ^ uVar4) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar4) & 1;
+  iVar2 = LiveStorage_DataGetInternalInt(&local_70,2,param_1);
+  return (bool)((char)((~((longlong)iVar2 ^ uVar4) & 0xffffffff) >> 0x1f) +
+                ((ulonglong)(longlong)iVar2 <= uVar4) & 1);
 }
 
 
 // 824E2778  LiveStorage_IsChallengeComplete  (qcommon/com_storage.cpp:4365)
 
-void LiveStorage_IsChallengeComplete(undefined8 param_1,ulonglong param_2)
+bool LiveStorage_IsChallengeComplete(StructuredDataBuffer *param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  StructuredDataBuffer *pSVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  char *pcVar6;
-  ulonglong uVar5;
-  undefined1 auStack_80 [128];
+  bool bVar3;
+  undefined1 uVar4;
+  char *pcVar5;
+  int iVar6;
+  longlong lVar7;
+  longlong lVar8;
+  char *pcVar10;
+  ulonglong uVar9;
+  char acStack_80 [128];
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1113,0,0xffffffff82000f98,0xffffffff8208668c);
+  uVar9 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1113,0,"%s");
   }
-  if (*(char *)param_2 != '\0') {
-    lVar4 = 0;
-    lVar3 = 0;
-    uVar5 = param_2;
+  pcVar5 = (char *)uVar9;
+  if (*pcVar5 != '\0') {
+    lVar8 = 0;
+    iVar6 = 0;
+    lVar7 = 1 - uVar9;
     do {
-      pcVar6 = (char *)uVar5;
-      if (((*pcVar6 == 0x3b) || (iVar2 = isspace((int)*pcVar6), iVar2 != 0)) || (*pcVar6 == '\0')) {
-        if ((int)lVar4 < (int)lVar3) {
-          lVar3 = (lVar3 - lVar4) + 1;
-          if (0x3f < (int)lVar3) {
-            lVar3 = 0x40;
+      pcVar10 = (char *)uVar9;
+      if (((*pcVar10 == 0x3b) || (iVar2 = isspace((int)*pcVar10), iVar2 != 0)) || (*pcVar10 == '\0')
+         ) {
+        iVar2 = (int)lVar8;
+        if (iVar2 < iVar6) {
+          iVar6 = (iVar6 - iVar2) + 1;
+          if (0x3f < iVar6) {
+            iVar6 = 0x40;
           }
-          I_strncpyz(auStack_80,lVar4 + param_2,lVar3);
-          IsChallengeComplete(uVar1,auStack_80);
-          __restgprlr_26();
-          return;
+          I_strncpyz(acStack_80,pcVar5 + iVar2,iVar6);
+          bVar3 = IsChallengeComplete(pSVar1,acStack_80);
+          uVar4 = __restgprlr_26(bVar3);
+          return (bool)uVar4;
         }
-        lVar4 = (1 - param_2) + uVar5;
-        if (*pcVar6 == '\0') break;
+        lVar8 = lVar7 + uVar9;
+        if (*pcVar10 == '\0') break;
       }
-      lVar3 = lVar3 + 1;
-      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 1;
+      uVar9 = uVar9 + 1;
     } while( true );
   }
-  __restgprlr_26(1);
-  return;
+  uVar4 = __restgprlr_26(1);
+  return (bool)uVar4;
 }
 
 
 // 824E2868  LiveStorage_IsWeaponItemUnlockedFromTable  (qcommon/com_storage.cpp:4402)
 
-void LiveStorage_IsWeaponItemUnlockedFromTable
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+bool LiveStorage_IsWeaponItemUnlockedFromTable
+               (StructuredDataBuffer *param_1,char *param_2,char *param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  char *pcVar3;
-  int iVar4;
+  StructuredDataBuffer *pSVar1;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
+  undefined1 uVar6;
   uint uVar5;
-  uint uVar6;
-  int local_50;
-  int local_4c;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  StringTable *local_50;
+  StringTable *local_4c;
   char *local_48;
-  undefined4 local_44;
+  char *local_44;
   
-  uVar1 = __savegprlr_26();
-  local_44 = (undefined4)param_2;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  pcVar2 = (char *)uVar7;
   local_48 = "weaponRank";
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x113e,0,0xffffffff82000f98,0xffffffff8200e484);
+  local_44 = pcVar2;
+  if (pSVar1 == (StructuredDataBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x113e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x113f,0,0xffffffff82000f98,0xffffffff82086890);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x113f,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1140,0,0xffffffff82000f98,0xffffffff82086888);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1140,0,"%s");
   }
-  if (((int)param_4 < 2) || (5 < (int)param_4)) {
-    MyAssertHandler(0xffffffff820859c8,0x1141,0,0xffffffff82086808,param_4,2,5);
+  if ((param_4 < 2) || (5 < param_4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1141,0,
+                    "itemCol not in [WEAPON_RANK_TABLE_WEAPONCLASS_ATTACHMENT_COL, WEAPON_RANK_TABLE_WEAPONCLASS_RETICLE_COL]\n\t%i not in [%i, %i]"
+                   );
   }
-  StringTable_GetAsset(0xffffffff820867ec,&local_50);
-  if (local_50 == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1144,0,0xffffffff82000f98,0xffffffff820867dc);
+  StringTable_GetAsset("mp/weaponRankTable.csv",&local_50);
+  if (local_50 == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1144,0,"%s");
   }
-  StringTable_GetAsset(0xffffffff820867c8,&local_4c);
-  if (local_4c == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1147,0,0xffffffff82000f98,0xffffffff820867bc);
+  StringTable_GetAsset("mp/statstable.csv",&local_4c);
+  if (local_4c == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1147,0,"%s");
   }
-  uVar2 = StringTable_Lookup(local_4c,4,param_2,2);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_Error(1,0xffffffff82086768,param_2,param_3);
+  pcVar2 = StringTable_Lookup(local_4c,4,pcVar2,2);
+  if (pcVar2 == (char *)0x0) {
+    Com_Error(ERR_DROP,
+              "Unknown weapon specified for unlockable weapon item -- weapon is %s, item is %s\n");
   }
-  pcVar3 = (char *)StringTable_Lookup(local_50,0,uVar2,param_4);
-  if (pcVar3 == (char *)0x0) {
-    Com_Error(1,0xffffffff82086700,param_2,param_3,param_4);
+  pcVar2 = StringTable_Lookup(local_50,0,pcVar2,param_4);
+  if (pcVar2 == (char *)0x0) {
+    Com_Error(ERR_DROP,
+              "Unknown column specified for unlockable weapon item -- weapon is %s, item is %s, type col is %d\n"
+             );
   }
-  iVar4 = atoi(pcVar3);
-  pcVar3 = (char *)StringTable_Lookup(local_50,iVar4,param_3,4);
-  if (pcVar3 == (char *)0x0) {
-    Com_Error(1,0xffffffff820866a0,param_2,param_3,param_4);
+  iVar3 = atoi(pcVar2);
+  pcVar2 = StringTable_Lookup(local_50,iVar3,(char *)uVar8,4);
+  if (pcVar2 == (char *)0x0) {
+    Com_Error(ERR_DROP,
+              "Unknown item specified for unlockable weapon item -- weapon is %s, item is %s, type col is %d\n"
+             );
   }
-  uVar5 = atoi(pcVar3);
-  if (pcVar3 == (char *)0x0) {
-    __restgprlr_26(1);
-    return;
+  uVar4 = atoi(pcVar2);
+  if (pcVar2 == (char *)0x0) {
+    uVar6 = __restgprlr_26(1);
+    return (bool)uVar6;
   }
-  uVar6 = LiveStorage_DataGetInternalInt(&local_48,2,uVar1);
-  __restgprlr_26((((int)uVar6 >> 0x1f) - ((int)uVar5 >> 0x1f)) + (uint)(uVar5 <= uVar6) & 0xff);
-  return;
+  uVar5 = LiveStorage_DataGetInternalInt(&local_48,2,pSVar1);
+  uVar6 = __restgprlr_26((((int)uVar5 >> 0x1f) - ((int)uVar4 >> 0x1f)) + (uint)(uVar4 <= uVar5) &
+                         0xff);
+  return (bool)uVar6;
 }
 
 
 // 824E2AB8  LiveStorage_GetWeaponItemName  (qcommon/com_storage.cpp:4452)
 
-void LiveStorage_GetWeaponItemName(undefined8 param_1,ulonglong param_2)
+char * LiveStorage_GetWeaponItemName(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
@@ -4888,300 +5324,326 @@ void LiveStorage_GetWeaponItemName(undefined8 param_1,ulonglong param_2)
   char *pcVar3;
   char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
+  ulonglong uVar6;
   ulonglong uVar7;
   longlong lVar8;
   
-  pcVar4 = (char *)__savegprlr_27();
+  uVar6 = (ulonglong)(int)param_2;
+  pcVar4 = (char *)__savegprlr_27(param_1,uVar6,param_3);
   if (pcVar4 == (char *)0x0) {
-    MyAssertHandler(0xffffffff820859c8,0x1168,0,0xffffffff82000f98,0xffffffff82086924);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1168,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1169,0,0xffffffff82000f98,0xffffffff82086914);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1169,0,"%s");
   }
   cVar1 = *pcVar4;
-  uVar7 = param_2;
-  pcVar6 = pcVar4;
+  uVar7 = uVar6;
   while (((pcVar5 = (char *)uVar7, cVar1 != '\0' && (cVar1 != '_')) && (cVar1 != ' '))) {
     *pcVar5 = cVar1;
     uVar7 = uVar7 + 1;
-    pcVar6 = pcVar6 + 1;
-    cVar1 = *pcVar6;
+    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar4;
   }
-  pcVar3 = (char *)param_2;
+  pcVar3 = (char *)uVar6;
   if ((((int)pcVar5 - (int)pcVar3 != 3) || (*pcVar3 != 'i')) ||
-     ((pcVar3[1] != 'w' || ((pcVar3[2] != '5' || (*pcVar6 != '_')))))) {
+     ((pcVar3[1] != 'w' || ((pcVar3[2] != '5' || (*pcVar4 != '_')))))) {
     *pcVar5 = '\0';
     uVar7 = uVar7 + 1;
     pcVar5 = "riotshield";
     do {
-      cVar1 = *(char *)param_2;
+      cVar1 = *(char *)uVar6;
       cVar2 = *pcVar5;
       if (cVar1 == '\0') break;
-      param_2 = param_2 + 1;
+      uVar6 = uVar6 + 1;
       pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) goto LAB_824e2c50;
-    Com_Error(1,0xffffffff820868a8,pcVar4);
+    Com_Error(ERR_DROP,
+              "Incorrect format for unlockable weapon item -- must be in the form of iw5_<weapon> <item>, input was %s\n"
+             );
   }
-  *(char *)uVar7 = *pcVar6;
+  *(char *)uVar7 = *pcVar4;
   lVar8 = uVar7 + 1;
   pcVar5 = (char *)lVar8;
-  pcVar6 = pcVar6 + 1;
-  cVar1 = *pcVar6;
+  pcVar4 = pcVar4 + 1;
+  cVar1 = *pcVar4;
   while (cVar1 != '\0') {
     pcVar5 = (char *)lVar8;
     if (cVar1 == ' ') goto LAB_824e2c4c;
     *pcVar5 = cVar1;
     lVar8 = lVar8 + 1;
     pcVar5 = (char *)lVar8;
-    pcVar6 = pcVar6 + 1;
-    cVar1 = *pcVar6;
+    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar4;
   }
-  Com_Error(1,0xffffffff820868a8,pcVar4);
+  Com_Error(ERR_DROP,
+            "Incorrect format for unlockable weapon item -- must be in the form of iw5_<weapon> <item>, input was %s\n"
+           );
 LAB_824e2c4c:
   *pcVar5 = '\0';
 LAB_824e2c50:
-  __restgprlr_27(pcVar6 + 1);
-  return;
+  pcVar4 = (char *)__restgprlr_27(pcVar4 + 1);
+  return pcVar4;
 }
 
 
 // 824E2C60  GetLevel  (qcommon/com_storage.cpp:4500)
 
-void GetLevel(undefined8 param_1)
+int GetLevel(StructuredDataBuffer *param_1)
 
 {
+  int iVar1;
   char *local_10 [4];
   
   local_10[0] = "experience";
-  LiveStorage_DataGetInternalInt(local_10,1,param_1);
-  CL_GetRankForXpMP();
-  return;
+  iVar1 = LiveStorage_DataGetInternalInt(local_10,1,param_1);
+  iVar1 = CL_GetRankForXpMP(iVar1);
+  return iVar1;
 }
 
 
 // 824E9470  LiveStorage_IsItemUnlockedFromTable  (qcommon/com_storage.cpp:4515)
 
-void LiveStorage_IsItemUnlockedFromTable(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+bool LiveStorage_IsItemUnlockedFromTable
+               (StructuredDataBuffer *param_1,StringTable *param_2,int param_3)
 
 {
-  bool bVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  char *_Str;
+  char cVar1;
+  char cVar2;
+  bool bVar3;
+  bool bVar4;
+  StructuredDataBuffer *pSVar5;
+  undefined1 uVar14;
+  uint uVar6;
+  char *pcVar7;
   char *pcVar8;
   char *pcVar9;
-  undefined8 uVar6;
-  char cVar11;
-  int iVar10;
-  longlong lVar7;
-  char cVar12;
-  undefined8 uVar13;
-  char *pcVar14;
-  char *pcVar15;
-  ulonglong uVar16;
-  int local_470;
+  char *pcVar10;
+  char *pcVar11;
+  int iVar12;
+  bool bVar15;
+  bool bVar16;
+  int iVar13;
+  bool bVar17;
+  byte bVar18;
+  int iVar19;
+  ulonglong uVar20;
+  char *pcVar21;
+  StringTable *local_470;
   char *local_46c [3];
-  undefined1 auStack_460 [1120];
+  char acStack_460 [1120];
   
-  uVar3 = __savegprlr_21();
-  if (*(char *)(DAT_836108a4 + 0xc) != '\0') goto LAB_824e949c;
-  if (*(char *)(DAT_83633888 + 0xc) != '\0') {
-    __restgprlr_21(0);
-    return;
+  uVar20 = (ulonglong)param_3;
+  pSVar5 = (StructuredDataBuffer *)__savegprlr_21(param_1);
+  if ((unlockAllItems->current).enabled != false) goto LAB_824e949c;
+  if ((lockAllItems->current).enabled != false) {
+    uVar14 = __restgprlr_21(0);
+    return (bool)uVar14;
   }
-  uVar16 = 1;
-  bVar2 = false;
-  bVar1 = false;
-  uVar4 = StringTable_GetRowCount(param_2);
-  if ((uVar4 & 0xffffffff) <= (param_3 & 0xffffffff)) {
-    uVar5 = StringTable_GetRowCount(param_2);
-    MyAssertHandler(0xffffffff820859c8,0x11be,0,0xffffffff82088158,param_3,uVar5);
+  bVar16 = true;
+  bVar4 = false;
+  bVar3 = false;
+  uVar6 = StringTable_GetRowCount(param_2);
+  if ((ulonglong)uVar6 <= (uVar20 & 0xffffffff)) {
+    StringTable_GetRowCount(param_2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x11be,0,
+                    "row doesn\'t index StringTable_GetRowCount( unlockTable )\n\t%i not in [0, %i)"
+                   );
   }
-  _Str = (char *)StringTable_GetColumnValueForRow(param_2,param_3,2);
-  uVar5 = StringTable_GetColumnValueForRow(param_2,param_3,3);
-  pcVar8 = (char *)StringTable_GetColumnValueForRow(param_2,param_3,1);
-  pcVar9 = (char *)StringTable_GetColumnValueForRow(param_2,param_3,7);
-  pcVar14 = "title";
-  pcVar15 = pcVar8;
+  iVar19 = (int)uVar20;
+  pcVar7 = StringTable_GetColumnValueForRow(param_2,iVar19,2);
+  pcVar8 = StringTable_GetColumnValueForRow(param_2,iVar19,3);
+  pcVar9 = StringTable_GetColumnValueForRow(param_2,iVar19,1);
+  pcVar10 = StringTable_GetColumnValueForRow(param_2,iVar19,7);
+  pcVar21 = "title";
+  pcVar11 = pcVar9;
   do {
-    cVar11 = *pcVar15;
-    cVar12 = *pcVar14;
-    if (cVar11 == '\0') break;
-    pcVar15 = pcVar15 + 1;
-    pcVar14 = pcVar14 + 1;
-  } while (cVar11 == cVar12);
-  if (cVar11 == cVar12) {
-    StringTable_GetAsset(0xffffffff820268f8,&local_470);
-    if (local_470 == 0) {
-      MyAssertHandler(0xffffffff820859c8,0x11c8,0,0xffffffff82000f98,0xffffffff8203aaf0);
+    cVar1 = *pcVar11;
+    cVar2 = *pcVar21;
+    if (cVar1 == '\0') break;
+    pcVar11 = pcVar11 + 1;
+    pcVar21 = pcVar21 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 == cVar2) {
+    StringTable_GetAsset("mp/cardTitleTable.csv",&local_470);
+    if (local_470 == (StringTable *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x11c8,0,"%s");
     }
-    uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-    uVar6 = StringTable_LookupRowNumForValue(local_470,0,uVar6);
-    if ((-1 < (int)uVar6) &&
-       (cVar11 = LiveStorage_PlayerDataGetArrayBoolByIndex(uVar3,0xffffffff820268e8,uVar6),
-       cVar11 != '\0')) {
-      bVar2 = true;
+    pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+    iVar12 = StringTable_LookupRowNumForValue(local_470,0,pcVar11);
+    if ((-1 < iVar12) &&
+       (bVar15 = LiveStorage_PlayerDataGetArrayBoolByIndex(pSVar5,"titleUnlocked",iVar12), bVar15))
+    {
+      bVar4 = true;
     }
   }
   else {
-    pcVar14 = "icon";
-    pcVar15 = pcVar8;
+    pcVar21 = "icon";
+    pcVar11 = pcVar9;
     do {
-      cVar11 = *pcVar15;
-      cVar12 = *pcVar14;
-      if (cVar11 == '\0') break;
-      pcVar15 = pcVar15 + 1;
-      pcVar14 = pcVar14 + 1;
-    } while (cVar11 == cVar12);
-    if (cVar11 == cVar12) {
-      StringTable_GetAsset(0xffffffff82026928,&local_470);
-      if (local_470 == 0) {
-        MyAssertHandler(0xffffffff820859c8,0x11d9,0,0xffffffff82000f98,0xffffffff8203aaf0);
+      cVar1 = *pcVar11;
+      cVar2 = *pcVar21;
+      if (cVar1 == '\0') break;
+      pcVar11 = pcVar11 + 1;
+      pcVar21 = pcVar21 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      StringTable_GetAsset("mp/cardIconTable.csv",&local_470);
+      if (local_470 == (StringTable *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x11d9,0,"%s");
       }
-      uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-      uVar6 = StringTable_LookupRowNumForValue(local_470,0,uVar6);
-      if ((-1 < (int)uVar6) &&
-         (cVar11 = LiveStorage_PlayerDataGetArrayBoolByIndex(uVar3,0xffffffff82026918,uVar6),
-         cVar11 != '\0')) {
-        bVar2 = true;
+      pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+      iVar12 = StringTable_LookupRowNumForValue(local_470,0,pcVar11);
+      if ((-1 < iVar12) &&
+         (bVar15 = LiveStorage_PlayerDataGetArrayBoolByIndex(pSVar5,"iconUnlocked",iVar12), bVar15))
+      {
+        bVar4 = true;
       }
     }
     else {
-      pcVar14 = "weaponAttachment";
-      pcVar15 = pcVar8;
+      pcVar21 = "weaponAttachment";
+      pcVar11 = pcVar9;
       do {
-        cVar11 = *pcVar15;
-        cVar12 = *pcVar14;
-        if (cVar11 == '\0') break;
-        pcVar15 = pcVar15 + 1;
-        pcVar14 = pcVar14 + 1;
-      } while (cVar11 == cVar12);
-      if (cVar11 == cVar12) {
-        uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-        uVar6 = LiveStorage_GetWeaponItemName(uVar6,auStack_460);
-        uVar13 = 2;
+        cVar1 = *pcVar11;
+        cVar2 = *pcVar21;
+        if (cVar1 == '\0') break;
+        pcVar11 = pcVar11 + 1;
+        pcVar21 = pcVar21 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
+        iVar12 = 0;
+        pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+        pcVar11 = LiveStorage_GetWeaponItemName(pcVar11,acStack_460,iVar12);
+        iVar12 = 2;
       }
       else {
-        pcVar14 = "weaponCamo";
-        pcVar15 = pcVar8;
+        pcVar21 = "weaponCamo";
+        pcVar11 = pcVar9;
         do {
-          cVar11 = *pcVar15;
-          cVar12 = *pcVar14;
-          if (cVar11 == '\0') break;
-          pcVar15 = pcVar15 + 1;
-          pcVar14 = pcVar14 + 1;
-        } while (cVar11 == cVar12);
-        if (cVar11 == cVar12) {
-          uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-          uVar6 = LiveStorage_GetWeaponItemName(uVar6,auStack_460);
-          uVar13 = 3;
+          cVar1 = *pcVar11;
+          cVar2 = *pcVar21;
+          if (cVar1 == '\0') break;
+          pcVar11 = pcVar11 + 1;
+          pcVar21 = pcVar21 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) {
+          iVar12 = 0;
+          pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+          pcVar11 = LiveStorage_GetWeaponItemName(pcVar11,acStack_460,iVar12);
+          iVar12 = 3;
         }
         else {
-          pcVar14 = "weaponBuff";
-          pcVar15 = pcVar8;
+          pcVar21 = "weaponBuff";
+          pcVar11 = pcVar9;
           do {
-            cVar11 = *pcVar15;
-            cVar12 = *pcVar14;
-            if (cVar11 == '\0') break;
-            pcVar15 = pcVar15 + 1;
-            pcVar14 = pcVar14 + 1;
-          } while (cVar11 == cVar12);
-          if (cVar11 == cVar12) {
-            uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-            uVar6 = LiveStorage_GetWeaponItemName(uVar6,auStack_460);
-            uVar13 = 4;
+            cVar1 = *pcVar11;
+            cVar2 = *pcVar21;
+            if (cVar1 == '\0') break;
+            pcVar11 = pcVar11 + 1;
+            pcVar21 = pcVar21 + 1;
+          } while (cVar1 == cVar2);
+          if (cVar1 == cVar2) {
+            iVar12 = 0;
+            pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+            pcVar11 = LiveStorage_GetWeaponItemName(pcVar11,acStack_460,iVar12);
+            iVar12 = 4;
           }
           else {
-            pcVar14 = "weaponReticle";
-            pcVar15 = pcVar8;
+            pcVar21 = "weaponReticle";
+            pcVar11 = pcVar9;
             do {
-              cVar11 = *pcVar15;
-              cVar12 = *pcVar14;
-              if (cVar11 == '\0') break;
-              pcVar15 = pcVar15 + 1;
-              pcVar14 = pcVar14 + 1;
-            } while (cVar11 == cVar12);
-            if (cVar11 != cVar12) goto LAB_824e985c;
-            uVar6 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-            uVar6 = LiveStorage_GetWeaponItemName(uVar6,auStack_460);
-            uVar13 = 5;
+              cVar1 = *pcVar11;
+              cVar2 = *pcVar21;
+              if (cVar1 == '\0') break;
+              pcVar11 = pcVar11 + 1;
+              pcVar21 = pcVar21 + 1;
+            } while (cVar1 == cVar2);
+            if (cVar1 != cVar2) goto LAB_824e985c;
+            iVar12 = 0;
+            pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+            pcVar11 = LiveStorage_GetWeaponItemName(pcVar11,acStack_460,iVar12);
+            iVar12 = 5;
           }
         }
       }
-      uVar16 = LiveStorage_IsWeaponItemUnlockedFromTable(uVar3,auStack_460,uVar6,uVar13);
+      bVar16 = LiveStorage_IsWeaponItemUnlockedFromTable(pSVar5,acStack_460,pcVar11,iVar12);
     }
   }
 LAB_824e985c:
-  if ((*pcVar9 != '\0') && (cVar11 = LiveStorage_IsChallengeComplete(uVar3,pcVar9), cVar11 != '\0'))
-  {
-    bVar1 = true;
+  if ((*pcVar10 != '\0') && (bVar15 = LiveStorage_IsChallengeComplete(pSVar5,pcVar10), bVar15)) {
+    bVar3 = true;
   }
-  if (*_Str != '\0') {
-    iVar10 = atoi(_Str);
+  if (*pcVar7 != '\0') {
+    iVar12 = atoi(pcVar7);
     local_46c[0] = "experience";
-    LiveStorage_DataGetInternalInt(local_46c,1,uVar3);
-    lVar7 = CL_GetRankForXpMP();
-    uVar16 = -(ulonglong)!CARRY8(lVar7 - iVar10,(longlong)iVar10 ^ 0x80000000) & uVar16;
+    iVar13 = LiveStorage_DataGetInternalInt(local_46c,1,pSVar5);
+    iVar13 = CL_GetRankForXpMP(iVar13);
+    bVar16 = (bool)(-!CARRY8((longlong)iVar13 - (longlong)iVar12,(longlong)iVar12 ^ 0x80000000) &
+                   bVar16);
   }
-  cVar11 = LiveStorage_IsChallengeComplete(uVar3,uVar5);
-  uVar5 = StringTable_GetColumnValueForRow(param_2,param_3,0);
-  cVar12 = LiveStorage_IsItemUnlockedFromEntitlements(uVar3,uVar5,pcVar8);
-  if (cVar12 != '\0') {
-    bVar2 = true;
+  bVar15 = LiveStorage_IsChallengeComplete(pSVar5,pcVar8);
+  pcVar11 = StringTable_GetColumnValueForRow(param_2,iVar19,0);
+  bVar17 = LiveStorage_IsItemUnlockedFromEntitlements(pSVar5,pcVar11,pcVar9);
+  if (bVar17) {
+    bVar4 = true;
   }
-  if (!bVar1) {
-    uVar4 = 1;
-    if (!bVar2) {
-      uVar4 = -(ulonglong)(cVar11 != '\0') & uVar16;
+  if (!bVar3) {
+    bVar18 = 1;
+    if (!bVar4) {
+      bVar18 = -bVar15 & bVar16;
     }
-    __restgprlr_21(uVar4);
-    return;
+    uVar14 = __restgprlr_21(bVar18);
+    return (bool)uVar14;
   }
 LAB_824e949c:
-  __restgprlr_21(1);
-  return;
+  uVar14 = __restgprlr_21(1);
+  return (bool)uVar14;
 }
 
 
 // 824E9948  LiveStorage_IsItemUnlockedFromTable_LocalClient  (qcommon/com_storage.cpp:4674)
 
-void LiveStorage_IsItemUnlockedFromTable_LocalClient
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_IsItemUnlockedFromTable_LocalClient
+               (LocalClientNum_t param_1,StringTable *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  undefined1 auStack_30 [48];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar3;
+  undefined1 uVar4;
+  StructuredDataBuffer aSStack_30 [6];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = CL_ControllerIndexFromClientNum();
-  cVar3 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_30,uVar2);
-  if (cVar3 == '\0') {
-    CL_ControllerIndexFromClientNum(uVar1);
-    ShowPopupGettingData();
-    __restgprlr_29(0);
-    return;
+  LVar1 = __savegprlr_29(param_1);
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar2);
+  if (!bVar3) {
+    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+    ShowPopupGettingData(iVar2);
+    uVar4 = __restgprlr_29(0);
+    return (bool)uVar4;
   }
-  LiveStorage_IsItemUnlockedFromTable(auStack_30,param_2,param_3);
-  __restgprlr_29();
-  return;
+  bVar3 = LiveStorage_IsItemUnlockedFromTable(aSStack_30,param_2,param_3);
+  uVar4 = __restgprlr_29(bVar3);
+  return (bool)uVar4;
 }
 
 
 // 824E2CA0  LiveStorage_IsItemUnlockedFromEntitlements  (qcommon/com_storage.cpp:4691)
 
-undefined8
-LiveStorage_IsItemUnlockedFromEntitlements(undefined8 param_1,undefined8 param_2,char *param_3)
+bool LiveStorage_IsItemUnlockedFromEntitlements
+               (StructuredDataBuffer *param_1,char *param_2,char *param_3)
 
 {
   char cVar1;
   char cVar2;
-  undefined8 uVar3;
+  bool bVar3;
   char *pcVar4;
   char *pcVar5;
   
@@ -5195,8 +5657,8 @@ LiveStorage_IsItemUnlockedFromEntitlements(undefined8 param_1,undefined8 param_2
     pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    uVar3 = LiveStorage_PlayerDataGetArrayBoolByName(param_1,0xffffffff82086948,param_2);
-    return uVar3;
+    bVar3 = LiveStorage_PlayerDataGetArrayBoolByName(param_1,"persistentWeaponsUnlocked",param_2);
+    return bVar3;
   }
   pcVar5 = "perk";
   do {
@@ -5207,55 +5669,54 @@ LiveStorage_IsItemUnlockedFromEntitlements(undefined8 param_1,undefined8 param_2
     pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    uVar3 = LiveStorage_PlayerDataGetArrayBoolByName(param_1,0xffffffff82086930,param_2);
-    return uVar3;
+    bVar3 = LiveStorage_PlayerDataGetArrayBoolByName(param_1,"persistentPerksUnlocked",param_2);
+    return bVar3;
   }
-  return 0;
+  return false;
 }
 
 
 // 824E99B0  LiveStorage_SyncTime  (qcommon/com_storage.cpp:4709)
 
-void LiveStorage_SyncTime(void)
+void LiveStorage_SyncTime(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  ulonglong uVar2;
+  int iVar1;
+  bool bVar5;
+  bdLobbyService *this;
+  Status SVar2;
   int iVar3;
-  int iVar4;
+  overlappedTask *poVar4;
   
-  uVar1 = __savegprlr_27();
-  cVar5 = Live_IsUserSignedInToDemonware();
-  if (cVar5 != '\0') {
-    uVar2 = dwGetLobbyService(uVar1);
-    if ((uVar2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff820859c8,0x126e,0,0xffffffff82000f98,0xffffffff8203b92c);
+  iVar1 = __savegprlr_27(param_1);
+  bVar5 = Live_IsUserSignedInToDemonware(iVar1);
+  if (bVar5) {
+    this = dwGetLobbyService(iVar1);
+    if (this == (bdLobbyService *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x126e,0,"%s");
     }
-    iVar3 = bdLobbyService__getStatus(uVar2);
-    if ((iVar3 == 2) &&
-       (cVar5 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0xe,uVar1),
-       cVar5 == '\0')) {
-      iVar3 = Sys_Milliseconds();
-      if (DAT_8361cc5c + DAT_83610c08 <= iVar3) {
-        iVar4 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0xe);
-        dwGetServerTime(uVar1,iVar4,0xffffffff8365b360);
-        if (*(int *)(iVar4 + 8) != 0) {
-          DAT_83610c08 = iVar3;
-          if (DAT_8361cc5c == 0) {
-            DAT_8361cc5c = 500;
-            __restgprlr_27();
-            return;
-          }
-          if (DAT_8361cc5c < 20000) {
-            DAT_8361cc5c = DAT_8361cc5c * 5;
-          }
+    SVar2 = bdLobbyService::getStatus(this);
+    if (((SVar2 == BD_CONNECTED) &&
+        (bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0xe,iVar1), !bVar5)) &&
+       (iVar3 = Sys_Milliseconds(), s_UTCLastInterval + s_UTCLastAttempt <= iVar3)) {
+      poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar1,0xe);
+      dwGetServerTime(iVar1,poVar4,&bdServerTime);
+      if ((poVar4->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) {
+        s_UTCLastAttempt = iVar3;
+        if (s_UTCLastInterval == 0) {
+          s_UTCLastInterval = 500;
           __restgprlr_27();
           return;
         }
-        if (*(char *)(iVar4 + 0x94) != '\0') {
-          TaskManager_ClearTask(iVar4);
+        if (s_UTCLastInterval < 20000) {
+          s_UTCLastInterval = s_UTCLastInterval * 5;
         }
+        __restgprlr_27();
+        return;
+      }
+      if (poVar4->active != false) {
+        TaskManager_ClearTask(poVar4);
       }
     }
   }
@@ -5266,435 +5727,477 @@ void LiveStorage_SyncTime(void)
 
 // 824E2D38  LiveStorage_GetServerTimeComplete  (qcommon/com_storage.cpp:4754)
 
-void LiveStorage_GetServerTimeComplete(void)
+taskCompleteResults LiveStorage_GetServerTimeComplete(int param_1)
 
 {
+  overlappedTask *poVar1;
   int iVar3;
-  undefined8 uVar1;
-  __time64_t _Var2;
-  int iVar4;
-  undefined *puVar5;
+  taskCompleteResults tVar4;
+  long64 lVar2;
   
-  iVar3 = __savegprlr_29();
-  iVar4 = iVar3 * 0xa0;
-  puVar5 = &DAT_8365bc40 + iVar4;
-  if ((&DAT_8365bcd4)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x1297,0,0xffffffff82000f98,0xffffffff820851b0);
+  iVar3 = __savegprlr_29(param_1);
+  poVar1 = storageTasks.tasks + iVar3;
+  if (storageTasks.tasks[iVar3].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1297,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0xe) {
-    MyAssertHandler(0xffffffff820859c8,0x1298,0,0xffffffff82000f98,0xffffffff82086980);
+  if (storageTasks.tasks[iVar3].type != 0xe) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1298,0,"%s");
   }
-  uVar1 = dwGetServerTimeComplete((&DAT_8365bcd5)[iVar4],puVar5);
-  if ((int)uVar1 == 1) {
-    TaskManager_ClearTask(puVar5);
-    _Var2 = _time64((__time64_t *)0x0);
-    DAT_836368c4 = 1;
-    DAT_836108a0 = DAT_8365b364 - (int)_Var2;
+  tVar4 = dwGetServerTimeComplete((uint)storageTasks.tasks[iVar3].controllerIndex,poVar1);
+  if (tVar4 == TASK_COMPLETE) {
+    TaskManager_ClearTask(poVar1);
+    lVar2 = _time64((long64 *)0x0);
+    s_UTCSynced = true;
+    s_UTCOffset = bdServerTime.m_timeStamp - (int)lVar2;
   }
-  else if ((int)uVar1 == 2) {
-    if ((&DAT_8365bcd4)[iVar4] != '\0') {
-      TaskManager_ClearTask(puVar5);
+  else if (tVar4 == TASK_ERROR) {
+    if (storageTasks.tasks[iVar3].active != false) {
+      TaskManager_ClearTask(poVar1);
     }
-    Com_PrintWarning(0x10,0xffffffff82086964);
-    __restgprlr_29(uVar1);
-    return;
+    Com_PrintWarning(0x10,"DW GetServerTime() failed!\n");
+    tVar4 = __restgprlr_29(2);
+    return tVar4;
   }
-  __restgprlr_29(uVar1);
-  return;
+  tVar4 = __restgprlr_29(tVar4);
+  return tVar4;
 }
 
 
 // 824E2E58  LiveStorage_GetUTC  (qcommon/com_storage.cpp:4783)
 
-longlong LiveStorage_GetUTC(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint LiveStorage_GetUTC(void)
 
 {
-  ulonglong uVar1;
+  long64 lVar1;
   
-  if (DAT_836368c4 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x12b0,0,0xffffffff82000f98,0xffffffff8208699c);
+  if (!s_UTCSynced) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x12b0,0,"%s");
   }
-  uVar1 = _time64((__time64_t *)0x0);
-  return (uVar1 & 0xffffffff) + (ulonglong)DAT_836108a0;
+  lVar1 = _time64((long64 *)0x0);
+  return (int)lVar1 + s_UTCOffset;
 }
 
 
 // 824E2EC0  LiveStorage_GetUTCOffset  (qcommon/com_storage.cpp:4790)
 
-undefined4 LiveStorage_GetUTCOffset(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint LiveStorage_GetUTCOffset(void)
 
 {
-  if (DAT_836368c4 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x12b7,0,0xffffffff82000f98,0xffffffff8208699c);
-    return DAT_836108a0;
+  if (!s_UTCSynced) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x12b7,0,"%s");
+    return s_UTCOffset;
   }
-  return DAT_836108a0;
+  return s_UTCOffset;
 }
 
 
 // 824E2F30  LiveStorage_IsTimeSynced  (qcommon/com_storage.cpp:4797)
 
-byte LiveStorage_IsTimeSynced(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_IsTimeSynced(void)
 
 {
-  return -((*(uint *)(DAT_84584ed8 + 0xc) & 0x10) == 0) & DAT_836368c4;
+  return (bool)(-(((live_test_onlinedataoff->current).unsignedInt & 0x10) == 0) & s_UTCSynced);
 }
 
 
 // 824E2F58  LiveStorage_ChallengeCompare  (qcommon/com_storage.cpp:4811)
 
-longlong LiveStorage_ChallengeCompare(uint *param_1,uint *param_2)
+int LiveStorage_ChallengeCompare(void *param_1,void *param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar2;
   
-  uVar1 = -((int)param_1[1] >> 0x1f);
-  if (uVar1 != param_2[1] >> 0x1f) {
-    return (-(ulonglong)(uVar1 != 0) & 0xfffffffe) + 1;
+  uVar1 = -((int)*(uint *)((int)param_1 + 4) >> 0x1f);
+  if (uVar1 != *(uint *)((int)param_2 + 4) >> 0x1f) {
+    return (-(uint)(uVar1 != 0) & 0xfffffffe) + 1;
   }
-  uVar2 = (ulonglong)param_2[1] & 0x7fffffff;
-  uVar3 = (ulonglong)param_1[1] & 0x7fffffff;
-  if (uVar3 != uVar2) {
-    return uVar3 - uVar2;
+  uVar1 = *(uint *)((int)param_2 + 4) & 0x7fffffff;
+  uVar2 = *(uint *)((int)param_1 + 4) & 0x7fffffff;
+  if (uVar2 != uVar1) {
+    return uVar2 - uVar1;
   }
-  return (ulonglong)*param_1 - (ulonglong)*param_2;
+  return *(int *)param_1 - *(int *)param_2;
 }
 
 
 // 824E9AF0  LiveStorage_IsChallengeUnlocked  (qcommon/com_storage.cpp:4837)
 
-void LiveStorage_IsChallengeUnlocked(undefined8 param_1,undefined8 param_2)
+bool LiveStorage_IsChallengeUnlocked(StructuredDataBuffer *param_1,char *param_2)
 
 {
+  StructuredDataBuffer *pSVar2;
+  int iVar3;
+  bool bVar6;
+  char *pcVar4;
+  int iVar5;
+  undefined1 uVar7;
   undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar6;
-  int iVar4;
-  char *pcVar5;
-  undefined8 uVar3;
-  longlong lVar7;
-  undefined4 local_60;
-  undefined4 local_5c;
-  int local_58 [2];
-  undefined1 auStack_50 [80];
+  int iVar8;
+  StringTable *local_60;
+  StringTable *local_5c;
+  StringTable *local_58 [2];
+  char acStack_50 [80];
   
-  uVar1 = __savegprlr_27();
-  StringTable_GetAsset(0xffffffff82026898,&local_60);
-  StringTable_GetAsset(0xffffffff820264b8,&local_5c);
-  uVar2 = StringTable_LookupRowNumForValue(local_60,0,param_2);
-  if ((-1 < (int)uVar2) &&
-     (cVar6 = LiveStorage_IsItemUnlockedFromTable(uVar1,local_60,uVar2), cVar6 == '\0')) {
+  pSVar2 = (StructuredDataBuffer *)__savegprlr_27(param_1);
+  StringTable_GetAsset("mp/unlocktable.csv",&local_60);
+  StringTable_GetAsset("mp/challengeTable.csv",&local_5c);
+  iVar3 = StringTable_LookupRowNumForValue(local_60,0,param_2);
+  if ((-1 < iVar3) && (bVar6 = LiveStorage_IsItemUnlockedFromTable(pSVar2,local_60,iVar3), !bVar6))
+  {
 LAB_824e9c30:
-    __restgprlr_27(0);
-    return;
+    uVar7 = __restgprlr_27(0);
+    return (bool)uVar7;
   }
-  iVar4 = StringTable_GetRowCount(local_5c);
-  lVar7 = 0;
-  if (0 < iVar4) {
+  iVar3 = StringTable_GetRowCount(local_5c);
+  iVar8 = 0;
+  if (0 < iVar3) {
     do {
-      pcVar5 = (char *)StringTable_GetColumnValueForRow(local_5c,lVar7,4);
-      if (*pcVar5 != '\0') {
-        StringTable_GetAsset(pcVar5,local_58);
-        if ((local_58[0] != 0) &&
-           (uVar2 = StringTable_LookupRowNumForValue(local_58[0],0,param_2), -1 < (int)uVar2)) {
-          pcVar5 = (char *)StringTable_GetColumnValueForRow(local_5c,lVar7,0);
-          iVar4 = atoi(pcVar5);
-          Com_sprintf(auStack_50,0x20,0xffffffff820881a4,iVar4);
-          uVar3 = StringTable_LookupRowNumForValue(local_60,0,auStack_50);
-          if ((-1 < (int)uVar3) &&
-             (cVar6 = LiveStorage_IsItemUnlockedFromTable(uVar1,local_60,uVar3), cVar6 == '\0'))
+      pcVar4 = StringTable_GetColumnValueForRow(local_5c,iVar8,4);
+      if (*pcVar4 != '\0') {
+        StringTable_GetAsset(pcVar4,local_58);
+        if ((local_58[0] != (StringTable *)0x0) &&
+           (iVar5 = StringTable_LookupRowNumForValue(local_58[0],0,param_2), -1 < iVar5)) {
+          pcVar4 = StringTable_GetColumnValueForRow(local_5c,iVar8,0);
+          atoi(pcVar4);
+          Com_sprintf(acStack_50,0x20,"tier_%d");
+          iVar3 = StringTable_LookupRowNumForValue(local_60,0,acStack_50);
+          if ((-1 < iVar3) &&
+             (bVar6 = LiveStorage_IsItemUnlockedFromTable(pSVar2,local_60,iVar3), !bVar6))
           goto LAB_824e9c30;
-          pcVar5 = (char *)StringTable_GetColumnValueForRow(local_58[0],uVar2,1);
-          if ((*pcVar5 == '\0') ||
-             (uVar2 = StringTable_LookupRowNumForValue(local_60,0,pcVar5), (int)uVar2 < 0)) break;
-          cVar6 = LiveStorage_IsItemUnlockedFromTable(uVar1,local_60,uVar2);
+          pcVar4 = StringTable_GetColumnValueForRow(local_58[0],iVar5,1);
+          if ((*pcVar4 == '\0') ||
+             (iVar3 = StringTable_LookupRowNumForValue(local_60,0,pcVar4), iVar3 < 0)) break;
+          bVar6 = LiveStorage_IsItemUnlockedFromTable(pSVar2,local_60,iVar3);
           uVar1 = 0;
-          if (cVar6 != '\0') break;
+          if (bVar6) break;
           goto LAB_824e9c94;
         }
       }
-      lVar7 = lVar7 + 1;
-      if (iVar4 <= (int)lVar7) {
-        __restgprlr_27(1);
-        return;
+      iVar8 = iVar8 + 1;
+      if (iVar3 <= iVar8) {
+        uVar7 = __restgprlr_27(1);
+        return (bool)uVar7;
       }
     } while( true );
   }
   uVar1 = 1;
 LAB_824e9c94:
-  __restgprlr_27(uVar1);
-  return;
+  uVar7 = __restgprlr_27(uVar1);
+  return (bool)uVar7;
 }
 
 
 // 824E2FB0  LiveStorage_GatherCustomClassFilters_r  (qcommon/com_storage.cpp:4923)
 
-void LiveStorage_GatherCustomClassFilters_r
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5,undefined8 param_6,ulonglong param_7,undefined8 param_8)
+int LiveStorage_GatherCustomClassFilters_r
+              (StructuredDataBuffer *param_1,StringTable *param_2,StructuredDataDef *param_3,
+              StructuredDataType *param_4,uint param_5,char **param_6,int param_7,int param_8)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  uint *puVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int *piVar10;
-  int *piVar11;
-  int iVar12;
+  StructuredDataBuffer *pSVar2;
+  int iVar3;
+  StructuredDataEnumEntry *pSVar4;
+  StructuredDataStructProperty *pSVar5;
+  int iVar6;
+  int iVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  StructuredDataEnumedArray *pSVar13;
+  StructuredDataEnum *pSVar14;
+  StructuredDataIndexedArray *pSVar15;
+  StructuredDataStruct *pSVar16;
   
-  uVar2 = __savegprlr_20();
-  iVar4 = (int)param_8;
-  if (iVar4 <= (int)param_7) {
-    Com_PrintError(0xd,0xffffffff82086ae8);
-    __restgprlr_20(param_7);
-    return;
+  uVar11 = (ulonglong)param_7;
+  uVar8 = (ulonglong)(int)param_5;
+  pSVar2 = (StructuredDataBuffer *)__savegprlr_20(param_1);
+  uVar9 = (uint)uVar8;
+  if (param_8 <= (int)uVar11) {
+    Com_PrintError(0xd,"Challenge Sort Error: exceeded maximum number of filters\n");
+    iVar3 = __restgprlr_20(uVar11);
+    return iVar3;
   }
-  puVar5 = (uint *)param_4;
-  uVar7 = (ulonglong)*puVar5 - 4;
-  if ((uVar7 & 0xffffffff) < 4) {
-    bVar1 = (int)uVar7 != 0;
-    iVar12 = (int)param_3;
-    if ((ulonglong)*puVar5 == 5 && bVar1) {
-      if (*(uint *)(iVar12 + 0x10) <= puVar5[1]) {
-        MyAssertHandler(0xffffffff820859c8,0x1356,0,0xffffffff82086aa0);
+  uVar12 = (ulonglong)param_4->type - 4;
+  if ((uVar12 & 0xffffffff) < 4) {
+    bVar1 = (int)uVar12 != 0;
+    if ((ulonglong)param_4->type == 5 && bVar1) {
+      if ((uint)param_3->structCount <= (param_4->u).stringDataLength) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1356,0,
+                        "type->u.structIndex doesn\'t index def->structCount\n\t%i not in [0, %i)");
       }
-      iVar9 = 0;
-      piVar11 = (int *)(puVar5[1] * 0x10 + *(int *)(iVar12 + 0x14));
-      if (0 < *(int *)(puVar5[1] * 0x10 + *(int *)(iVar12 + 0x14))) {
-        iVar12 = 0;
-        while ((int)param_7 < iVar4) {
-          if (*(int *)(iVar12 + piVar11[1] + 4) == 2) {
-            iVar8 = iVar12 + piVar11[1];
-            lVar6 = (ulonglong)*(uint *)(iVar8 + 0xc) + (param_5 & 0x1fffffff) * 8;
+      iVar3 = 0;
+      pSVar16 = param_3->structs + (param_4->u).stringDataLength;
+      if (0 < param_3->structs[(param_4->u).stringDataLength].propertyCount) {
+        iVar6 = 0;
+        while ((int)uVar11 < param_8) {
+          pSVar5 = (StructuredDataStructProperty *)((int)&pSVar16->properties->name + iVar6);
+          if ((pSVar5->type).type == DATA_BOOL) {
+            iVar7 = (int)&pSVar16->properties->name + iVar6;
+            uVar10 = *(int *)(iVar7 + 0xc) + (int)((uVar8 & 0xffffffff) << 3);
           }
           else {
-            lVar6 = StructuredData_ByteOffset();
-            lVar6 = lVar6 + param_5;
-            iVar8 = iVar12 + piVar11[1];
+            uVar10 = StructuredData_ByteOffset(pSVar5);
+            uVar10 = uVar10 + uVar9;
+            iVar7 = (int)&pSVar16->properties->name + iVar6;
           }
-          param_7 = LiveStorage_GatherCustomClassFilters_r
-                              (uVar2,param_2,param_3,iVar8 + 4,lVar6,param_6,param_7,param_8);
-          iVar9 = iVar9 + 1;
-          iVar12 = iVar12 + 0x14;
-          if (*piVar11 <= iVar9) {
-            __restgprlr_20();
-            return;
+          iVar7 = LiveStorage_GatherCustomClassFilters_r
+                            (pSVar2,param_2,param_3,(StructuredDataType *)(iVar7 + 4),uVar10,param_6
+                             ,(int)uVar11,param_8);
+          uVar11 = (ulonglong)iVar7;
+          iVar3 = iVar3 + 1;
+          iVar6 = iVar6 + 0x14;
+          if (pSVar16->propertyCount <= iVar3) {
+            iVar3 = __restgprlr_20();
+            return iVar3;
           }
         }
       }
     }
-    else if (uVar7 == 2 && bVar1) {
-      if (*(uint *)(iVar12 + 0x18) <= puVar5[1]) {
-        MyAssertHandler(0xffffffff820859c8,0x1366,0,0xffffffff82086a48);
+    else if (uVar12 == 2 && bVar1) {
+      if ((uint)param_3->indexedArrayCount <= (param_4->u).stringDataLength) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1366,0,
+                        "type->u.indexedArrayIndex doesn\'t index def->indexedArrayCount\n\t%i not in [0, %i)"
+                       );
       }
-      piVar11 = (int *)(puVar5[1] * 0x10 + *(int *)(iVar12 + 0x1c));
-      if (piVar11[1] == 2) {
-        param_5 = (param_5 & 0x1fffffff) << 3;
+      pSVar15 = param_3->indexedArrays + (param_4->u).stringDataLength;
+      if ((pSVar15->elementType).type == DATA_BOOL) {
+        uVar9 = (uint)((uVar8 & 0xffffffff) << 3);
       }
-      iVar12 = 0;
-      if (0 < *piVar11) {
-        while ((int)param_7 < iVar4) {
-          param_7 = LiveStorage_GatherCustomClassFilters_r
-                              (uVar2,param_2,param_3,piVar11 + 1,
-                               (longlong)piVar11[3] * (longlong)iVar12 + param_5,param_6,param_7,
-                               param_8);
-          iVar12 = iVar12 + 1;
-          if (*piVar11 <= iVar12) {
-            __restgprlr_20();
-            return;
+      iVar3 = 0;
+      if (0 < pSVar15->arraySize) {
+        while ((int)uVar11 < param_8) {
+          iVar6 = LiveStorage_GatherCustomClassFilters_r
+                            (pSVar2,param_2,param_3,&pSVar15->elementType,
+                             pSVar15->elementSize * iVar3 + uVar9,param_6,(int)uVar11,param_8);
+          uVar11 = (ulonglong)iVar6;
+          iVar3 = iVar3 + 1;
+          if (pSVar15->arraySize <= iVar3) {
+            iVar3 = __restgprlr_20();
+            return iVar3;
           }
         }
       }
     }
     else if (bVar1) {
-      if (*(uint *)(iVar12 + 0x20) <= puVar5[1]) {
-        MyAssertHandler(0xffffffff820859c8,0x1374,0,0xffffffff820869f8);
+      if ((uint)param_3->enumedArrayCount <= (param_4->u).stringDataLength) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1374,0,
+                        "type->u.enumedArrayIndex doesn\'t index def->enumedArrayCount\n\t%i not in [0, %i)"
+                       );
       }
-      piVar11 = (int *)(puVar5[1] * 0x10 + *(int *)(iVar12 + 0x24));
-      if (*(uint *)(iVar12 + 8) <= *(uint *)(puVar5[1] * 0x10 + *(int *)(iVar12 + 0x24))) {
-        MyAssertHandler(0xffffffff820859c8,0x1377,0,0xffffffff820869a8);
+      pSVar13 = param_3->enumedArrays + (param_4->u).stringDataLength;
+      if ((uint)param_3->enumCount <=
+          (uint)param_3->enumedArrays[(param_4->u).stringDataLength].enumIndex) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1377,0,
+                        "enumedArrayData->enumIndex doesn\'t index def->enumCount\n\t%i not in [0, %i)"
+                       );
       }
-      piVar10 = (int *)(*piVar11 * 0xc + *(int *)(iVar12 + 0xc));
-      if (piVar11[1] == 2) {
-        param_5 = (param_5 & 0x1fffffff) << 3;
+      pSVar14 = param_3->enums + pSVar13->enumIndex;
+      if ((pSVar13->elementType).type == DATA_BOOL) {
+        uVar9 = (uint)((uVar8 & 0xffffffff) << 3);
       }
-      iVar12 = 0;
-      if (0 < *piVar10) {
-        iVar9 = 0;
+      iVar3 = 0;
+      if (0 < pSVar14->entryCount) {
+        iVar6 = 0;
         do {
-          if (iVar4 <= (int)param_7) break;
-          param_7 = LiveStorage_GatherCustomClassFilters_r
-                              (uVar2,param_2,param_3,piVar11 + 1,
-                               (longlong)(int)(uint)*(ushort *)(piVar10[2] + iVar9 + 4) *
-                               (longlong)piVar11[3] + param_5,param_6,param_7,param_8);
-          iVar12 = iVar12 + 1;
-          iVar9 = iVar9 + 8;
-        } while (iVar12 < *piVar10);
+          if (param_8 <= (int)uVar11) break;
+          iVar7 = LiveStorage_GatherCustomClassFilters_r
+                            (pSVar2,param_2,param_3,&pSVar13->elementType,
+                             (uint)*(ushort *)((int)&pSVar14->entries->index + iVar6) *
+                             pSVar13->elementSize + uVar9,param_6,(int)uVar11,param_8);
+          uVar11 = (ulonglong)iVar7;
+          iVar3 = iVar3 + 1;
+          iVar6 = iVar6 + 8;
+        } while (iVar3 < pSVar14->entryCount);
       }
     }
     else {
-      puVar3 = (undefined4 *)StructuredData_GetEnumEntryAtOffset(param_3,param_4,param_5,uVar2);
-      iVar4 = StringTable_LookupRowNumForValue(param_2,0,*puVar3);
-      if (-1 < iVar4) {
-        *(undefined4 *)((int)((param_7 & 0xffffffff) << 2) + (int)param_6) = *puVar3;
-        __restgprlr_20(param_7 + 1);
-        return;
+      pSVar4 = StructuredData_GetEnumEntryAtOffset(param_3,param_4,uVar9,pSVar2);
+      iVar3 = StringTable_LookupRowNumForValue(param_2,0,pSVar4->string);
+      if (-1 < iVar3) {
+        *(char **)((int)((uVar11 & 0xffffffff) << 2) + (int)param_6) = pSVar4->string;
+        iVar3 = __restgprlr_20(uVar11 + 1);
+        return iVar3;
       }
     }
   }
-  __restgprlr_20(param_7);
-  return;
+  iVar3 = __restgprlr_20(uVar11);
+  return iVar3;
 }
 
 
 // 824E3308  LiveStorage_GatherCustomClassFilters  (qcommon/com_storage.cpp:4999)
 
-void LiveStorage_GatherCustomClassFilters
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+int LiveStorage_GatherCustomClassFilters
+              (StructuredDataBuffer *param_1,StringTable *param_2,int param_3,char **param_4,
+              int param_5)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 local_50;
-  int *local_4c;
-  undefined4 local_48;
+  StructuredDataBuffer *pSVar1;
+  StructuredDataDef *pSVar2;
+  char *pcVar3;
+  int iVar4;
+  StructuredDataLookup local_50 [5];
   
-  uVar1 = __savegprlr_25();
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_InitializeLookup(uVar2,&local_50);
-  StructuredData_LookupWithString(&local_50,0xffffffff82085ff0);
-  if (*local_4c != 6) {
-    uVar2 = va(0xffffffff82086b5c,0xffffffff82085ff0,0xffffffff8202639c);
-    Com_Error(1,uVar2);
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_25(param_1);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar2,local_50);
+  StructuredData_LookupWithString(local_50,"customClasses");
+  if ((local_50[0].type)->type != DATA_INDEXED_ARRAY) {
+    pcVar3 = va("%s does not reference a valid custom class in %s");
+    Com_Error(ERR_DROP,pcVar3);
   }
-  StructuredData_LookupWithInt(&local_50,param_3);
-  if (*local_4c != 5) {
-    uVar2 = va(0xffffffff82086b24,0xffffffff82085ff0,param_3,0xffffffff8202639c);
-    Com_Error(1,uVar2);
+  StructuredData_LookupWithInt(local_50,param_3);
+  if ((local_50[0].type)->type != DATA_STRUCT) {
+    pcVar3 = va("%s[%d] does not reference a valid custom class in %s");
+    Com_Error(ERR_DROP,pcVar3);
   }
-  LiveStorage_GatherCustomClassFilters_r(uVar1,param_2,local_50,local_4c,local_48,param_4,0,param_5)
-  ;
-  __restgprlr_25();
-  return;
+  iVar4 = LiveStorage_GatherCustomClassFilters_r
+                    (pSVar1,param_2,local_50[0].def,local_50[0].type,local_50[0].offset,param_4,0,
+                     param_5);
+  iVar4 = __restgprlr_25(iVar4);
+  return iVar4;
 }
 
 
 // 824E9CA0  LiveStorage_AddChallengeInFilter  (qcommon/com_storage.cpp:5020)
 
-void LiveStorage_AddChallengeInFilter(undefined8 param_1,ulonglong param_2)
+void LiveStorage_AddChallengeInFilter(StructuredDataBuffer *param_1,ChallengeFilterInfo *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  uint uVar7;
-  undefined8 uVar3;
-  char *pcVar8;
+  char *pcVar1;
+  int *piVar2;
+  ChallengeSortInfo *pCVar3;
+  StructuredDataBuffer *pSVar4;
+  uint uVar5;
+  char *pcVar6;
+  char *pcVar7;
+  int iVar8;
+  bool bVar10;
   int iVar9;
-  undefined8 uVar4;
-  char cVar10;
-  longlong lVar5;
-  longlong lVar6;
-  char *_Str;
-  int iVar11;
+  ulonglong uVar11;
+  int iVar12;
   char *local_40;
   int local_3c;
   
-  uVar2 = __savegprlr_26();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x13aa,0,0xffffffff82000f98,0xffffffff8200e484);
+  uVar11 = (ulonglong)(int)param_2;
+  pSVar4 = (StructuredDataBuffer *)__savegprlr_26(param_1);
+  if (pSVar4 == (StructuredDataBuffer *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x13aa,0,"%s");
   }
-  piVar1 = (int *)param_2;
-  if (((((param_2 & 0xffffffff) == 0) || (piVar1[1] == 0)) || (*piVar1 == 0)) || (piVar1[3] == 0)) {
-    MyAssertHandler(0xffffffff820859c8,0x13ab,0,0xffffffff82000f98,0xffffffff82088348);
+  piVar2 = (int *)uVar11;
+  if (((((uVar11 & 0xffffffff) == 0) || (piVar2[1] == 0)) || (*piVar2 == 0)) || (piVar2[3] == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x13ab,0,"%s");
   }
-  uVar7 = StringTable_GetRowCount(piVar1[1]);
-  if (uVar7 <= (uint)piVar1[2]) {
-    uVar3 = StringTable_GetRowCount(piVar1[1]);
-    MyAssertHandler(0xffffffff820859c8,0x13ac,0,0xffffffff820882e0,piVar1[2],uVar3);
+  uVar5 = StringTable_GetRowCount((StringTable *)piVar2[1]);
+  if (uVar5 <= (uint)piVar2[2]) {
+    StringTable_GetRowCount((StringTable *)piVar2[1]);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x13ac,0,
+                    "info->challengeRow doesn\'t index StringTable_GetRowCount( info->challengeTable )\n\t%i not in [0, %i)"
+                   );
   }
-  uVar3 = StringTable_GetColumnValueForRow(piVar1[1],piVar1[2],0);
-  pcVar8 = (char *)StringTable_GetColumnValueForRow(piVar1[1],piVar1[2],5);
-  if (0x3ff < DAT_83610c0c) {
-    Com_PrintError(0xd,0xffffffff82088280,uVar3);
+  pcVar6 = StringTable_GetColumnValueForRow((StringTable *)piVar2[1],piVar2[2],0);
+  pcVar7 = StringTable_GetColumnValueForRow((StringTable *)piVar2[1],piVar2[2],5);
+  if (0x3ff < s_sortedChallengeCount) {
+    Com_PrintError(0xd,
+                   "Challenge Sort Error: exceeded maximum number of sorted challenges. Skipping challenge %s\n"
+                  );
     __restgprlr_26();
     return;
   }
-  if (pcVar8 != (char *)0x0) {
-    while (*pcVar8 != '\0') {
-      if ((((char *)piVar1[4] == (char *)0x0) || (*(char *)piVar1[4] == '\0')) ||
-         (iVar9 = I_strcmp(pcVar8), iVar9 == 0)) {
-        cVar10 = LiveStorage_IsChallengeUnlocked(uVar2,uVar3);
-        if (cVar10 == '\0') {
-          DAT_8361cc50 = DAT_8361cc50 + 1;
-        }
-        else {
-          local_3c = piVar1[3];
+  if (pcVar7 != (char *)0x0) {
+    while (*pcVar7 != '\0') {
+      pcVar1 = (char *)piVar2[4];
+      if (((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) ||
+         (iVar8 = I_strcmp(pcVar7,pcVar1), iVar8 == 0)) {
+        bVar10 = LiveStorage_IsChallengeUnlocked(pSVar4,pcVar6);
+        if (bVar10) {
+          local_3c = piVar2[3];
           local_40 = "challengeState";
-          lVar5 = LiveStorage_DataGetInternalInt(&local_40,2,uVar2);
-          if ((int)lVar5 < 1) {
-            lVar5 = 1;
+          iVar8 = LiveStorage_DataGetInternalInt(&local_40,2,pSVar4);
+          if (iVar8 < 1) {
+            iVar8 = 1;
           }
-          local_3c = piVar1[3];
+          local_3c = piVar2[3];
           local_40 = "challengeProgress";
-          lVar6 = LiveStorage_DataGetInternalInt(&local_40,2,uVar2);
-          pcVar8 = (char *)StringTable_GetColumnValueForRow
-                                     (piVar1[1],piVar1[2],(lVar5 + 2U & 0x7fffffff) << 1);
-          _Str = (char *)StringTable_GetColumnValueForRow(piVar1[1],piVar1[2],4);
-          if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
-            lVar5 = 0;
+          iVar9 = LiveStorage_DataGetInternalInt(&local_40,2,pSVar4);
+          pcVar6 = StringTable_GetColumnValueForRow
+                             ((StringTable *)piVar2[1],piVar2[2],(iVar8 + 2) * 2);
+          pcVar7 = StringTable_GetColumnValueForRow((StringTable *)piVar2[1],piVar2[2],4);
+          if ((pcVar6 == (char *)0x0) || (*pcVar6 == '\0')) {
+            iVar8 = 0;
           }
           else {
-            uVar7 = atoi(pcVar8);
-            lVar5 = (longlong)(int)(uVar7 ^ (int)uVar7 >> 0x1f) - (longlong)((int)uVar7 >> 0x1f);
+            uVar5 = atoi(pcVar6);
+            iVar8 = (uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f);
           }
-          if ((_Str == (char *)0x0) || (*_Str == '\0')) {
-            iVar9 = 1;
+          if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
+            iVar12 = 1;
           }
           else {
-            uVar7 = atoi(_Str);
-            iVar9 = (uVar7 ^ (int)uVar7 >> 0x1f) - ((int)uVar7 >> 0x1f);
+            uVar5 = atoi(pcVar7);
+            iVar12 = (uVar5 ^ (int)uVar5 >> 0x1f) - ((int)uVar5 >> 0x1f);
           }
-          iVar11 = (int)lVar5;
-          if (iVar11 < (int)lVar6) {
-            if (0 < iVar11) {
-              Com_PrintWarning(0xd,0xffffffff82088210,uVar3,lVar5,lVar6);
+          if (iVar8 < iVar9) {
+            if (0 < iVar8) {
+              Com_PrintWarning(0xd,
+                               "Challenge Sort Warning: challenge progress exceeds challenge target, challenge:%s target:%d progress:%d\n"
+                              );
             }
           }
           else {
-            if ((int)lVar6 < 0) {
-              Com_PrintWarning(0xd,0xffffffff820881b0,uVar3,lVar5,lVar6);
-              lVar6 = 0;
+            if (iVar9 < 0) {
+              Com_PrintWarning(0xd,
+                               "Challenge Sort Warning: challenge progress is negative, challenge:%s target:%d progress:%d\n"
+                              );
+              iVar9 = 0;
             }
-            if (iVar11 != (int)lVar6) {
-              uVar7 = (iVar11 - (int)lVar6) * iVar9;
-              if (0x7fffffff < uVar7) {
-                uVar7 = 0x7fffffff;
+            if (iVar8 != iVar9) {
+              uVar5 = (iVar8 - iVar9) * iVar12;
+              if (0x7fffffff < uVar5) {
+                uVar5 = 0x7fffffff;
               }
-              iVar9 = DAT_83610c0c * 0xc;
-              DAT_83610c0c = DAT_83610c0c + 1;
-              *(int *)(&DAT_83633890 + iVar9) = piVar1[2];
-              *(uint *)(&DAT_83633894 + iVar9) = (uint)(lVar6 != 0) << 0x1f | uVar7 & 0x7fffffff;
-              *(int *)(&DAT_83633898 + iVar9) = piVar1[3];
+              s_sortedChallenges[s_sortedChallengeCount].challengeIndex = piVar2[2];
+              s_sortedChallenges[s_sortedChallengeCount].challengeValue = uVar5;
+              s_sortedChallenges[s_sortedChallengeCount].challengeStarted = (uint)(iVar9 != 0);
+              pCVar3 = s_sortedChallenges + s_sortedChallengeCount;
+              s_sortedChallengeCount = s_sortedChallengeCount + 1;
+              pCVar3->storageName = (char *)piVar2[3];
               goto LAB_824ea018;
             }
           }
-          DAT_836368cc = DAT_836368cc + 1;
+          s_filterChallengeCompletedCount = s_filterChallengeCompletedCount + 1;
+        }
+        else {
+          s_filterChallengeLockedCount = s_filterChallengeLockedCount + 1;
         }
 LAB_824ea018:
-        DAT_8365b1b0 = DAT_8365b1b0 + 1;
+        s_filterChallengeCount = s_filterChallengeCount + 1;
         break;
       }
-      uVar4 = StringTable_LookupRowNumForValue(*piVar1,0,pcVar8);
-      pcVar8 = (char *)StringTable_GetColumnValueForRow(*piVar1,uVar4,1);
-      if (pcVar8 == (char *)0x0) {
+      iVar8 = StringTable_LookupRowNumForValue((StringTable *)*piVar2,0,pcVar7);
+      pcVar7 = StringTable_GetColumnValueForRow((StringTable *)*piVar2,iVar8,1);
+      if (pcVar7 == (char *)0x0) {
         __restgprlr_26();
         return;
       }
@@ -5707,133 +6210,136 @@ LAB_824ea018:
 
 // 824EA030  LiveStorage_SortChallenges  (qcommon/com_storage.cpp:5108)
 
-void LiveStorage_SortChallenges(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void LiveStorage_SortChallenges(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  int iVar2;
+  int iVar1;
+  bool bVar4;
+  char *pcVar2;
   int iVar3;
-  int iVar4;
+  ulonglong uVar5;
   int iVar6;
   longlong lVar7;
-  longlong lVar8;
+  int iVar8;
   undefined4 *puVar9;
   longlong lVar10;
-  undefined1 auStack_b0 [16];
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
-  undefined4 local_90;
+  StructuredDataBuffer aSStack_b0 [2];
+  ChallengeFilterInfo local_a0;
   undefined4 uStack_84;
-  int local_80 [32];
+  char *local_80 [32];
   
-  uVar1 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x13fe,0,0xffffffff82000f98,0xffffffff8208855c);
+  uVar5 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_22(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x13fe,0,"%s");
   }
-  DAT_8365b1b0 = 0;
-  DAT_83610c0c = 0;
-  DAT_8361cc50 = 0;
-  DAT_836368cc = 0;
-  cVar5 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_b0,uVar1);
-  if (cVar5 == '\0') {
-    Com_PrintError(0xe,0xffffffff8208852c);
+  s_filterChallengeCount = 0;
+  s_sortedChallengeCount = 0;
+  s_filterChallengeLockedCount = 0;
+  s_filterChallengeCompletedCount = 0;
+  bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_b0,iVar1);
+  if (!bVar4) {
+    Com_PrintError(0xe,"Cannot get data: we do not have player stats\n");
     __restgprlr_22();
     return;
   }
-  iVar2 = DB_IsXAssetDefault(0x26,0xffffffff82088514);
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1414,0,0xffffffff820011f4,0xffffffff820884a8,
-                    0xffffffff820884f0);
+  iVar1 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/challengeFilters.csv");
+  if (iVar1 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1414,0,"%s\n\t%s");
   }
-  StringTable_GetAsset(0xffffffff82088514,&local_a0);
-  iVar2 = I_strcmp(param_2,0xffffffff82088494);
-  if (iVar2 == 0) {
-    iVar2 = DB_IsXAssetDefault(0x26,0xffffffff8200af50);
-    if (iVar2 != 0) {
-      MyAssertHandler(0xffffffff820859c8,0x141a,0,0xffffffff820011f4,0xffffffff82087be8,
-                      0xffffffff82088478);
+  StringTable_GetAsset("mp/challengeFilters.csv",&local_a0.filterTable);
+  pcVar2 = (char *)uVar5;
+  iVar1 = I_strcmp(pcVar2,"daily_challenges");
+  if (iVar1 == 0) {
+    iVar1 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/dailyChallengesTable.csv");
+    if (iVar1 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x141a,0,"%s\n\t%s");
     }
-    StringTable_GetAsset(0xffffffff8200af50,&local_9c);
-    iVar2 = 3;
+    StringTable_GetAsset("mp/dailyChallengesTable.csv",&local_a0.challengeTable);
+    iVar1 = 3;
     iVar6 = 0;
   }
   else {
-    iVar2 = I_strcmp(param_2,0xffffffff82088464);
-    if (iVar2 == 0) {
-      iVar2 = DB_IsXAssetDefault(0x26,0xffffffff8200af6c);
-      if (iVar2 != 0) {
-        MyAssertHandler(0xffffffff820859c8,0x1424,0,0xffffffff820011f4,0xffffffff82087b78,
-                        0xffffffff82088478);
+    iVar1 = I_strcmp(pcVar2,"weekly_challenges");
+    if (iVar1 == 0) {
+      iVar1 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/weeklyChallengesTable.csv");
+      if (iVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1424,0,"%s\n\t%s");
       }
-      StringTable_GetAsset(0xffffffff8200af6c,&local_9c);
-      iVar2 = 3;
+      StringTable_GetAsset("mp/weeklyChallengesTable.csv",&local_a0.challengeTable);
+      iVar1 = 3;
       iVar6 = 1;
     }
     else {
-      iVar2 = DB_IsXAssetDefault(0x26,0xffffffff8200af8c);
-      if (iVar2 != 0) {
-        MyAssertHandler(0xffffffff820859c8,0x142f,0,0xffffffff820011f4,0xffffffff82088420,
-                        0xffffffff82088478);
+      iVar1 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/allChallengesTable.csv");
+      if (iVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x142f,0,"%s\n\t%s");
       }
-      StringTable_GetAsset(0xffffffff8200af8c,&local_9c);
-      iVar2 = StringTable_GetRowCount(local_9c);
-      if (0x3ff < iVar2) {
-        Com_PrintWarning(0xd,0xffffffff820883d8,0x400);
+      StringTable_GetAsset("mp/allChallengesTable.csv",&local_a0.challengeTable);
+      iVar1 = StringTable_GetRowCount(local_a0.challengeTable);
+      if (0x3ff < iVar1) {
+        Com_PrintWarning(0xd,"mp/challengeTable.csv has more than the maximum %d sorted challenges")
+        ;
       }
       iVar6 = 2;
     }
   }
-  iVar3 = I_strncmp(param_2,0xffffffff82085ff0,0xd);
-  iVar4 = (int)param_2;
+  iVar3 = I_strncmp(pcVar2,"customClasses",0xd);
   if (iVar3 == 0) {
-    iVar3 = isdigit((int)*(char *)(iVar4 + 0xd));
+    iVar3 = isdigit((int)pcVar2[0xd]);
     if (iVar3 == 0) {
-      Com_PrintWarning(0xd,0xffffffff82088390,param_2);
+      Com_PrintWarning(0xd,"Challenge Sort Warning: invalid custom class filter applied: %s\n");
       lVar7 = 0;
     }
     else {
-      iVar4 = atoi((char *)(iVar4 + 0xd));
-      lVar7 = LiveStorage_GatherCustomClassFilters(auStack_b0,local_a0,iVar4,local_80,10);
+      iVar3 = atoi(pcVar2 + 0xd);
+      iVar3 = LiveStorage_GatherCustomClassFilters
+                        (aSStack_b0,local_a0.filterTable,iVar3,local_80,10);
+      lVar7 = (longlong)iVar3;
     }
   }
   else {
     lVar7 = 1;
-    local_80[0] = iVar4;
+    local_80[0] = pcVar2;
   }
-  lVar8 = 0;
-  if (0 < iVar2) {
-    iVar4 = 0;
+  iVar3 = 0;
+  if (0 < iVar1) {
+    iVar8 = 0;
     do {
       if (iVar6 == 0) {
-        local_94 = *(undefined4 *)((int)&PTR_s_ch_daily_0_8296bf94 + iVar4);
-        local_98 = LiveStorage_GetDailyChallengeId(auStack_b0);
+        local_a0.storageName = *(char **)((int)s_dailyChallengeNames + iVar8);
+        local_a0.challengeRow = LiveStorage_GetDailyChallengeId(aSStack_b0,iVar3);
       }
       else if (iVar6 == 1) {
-        local_94 = *(undefined4 *)((int)&PTR_s_ch_weekly_0_8296bff8 + iVar4);
-        local_98 = LiveStorage_GetWeeklyChallengeId(auStack_b0);
+        local_a0.storageName = *(char **)((int)s_weeklyChallengeNames + iVar8);
+        local_a0.challengeRow = LiveStorage_GetWeeklyChallengeId(aSStack_b0,iVar3);
       }
       else {
-        local_94 = StringTable_GetColumnValueForRow(local_9c,lVar8,0);
-        local_98 = (undefined4)lVar8;
+        local_a0.storageName = StringTable_GetColumnValueForRow(local_a0.challengeTable,iVar3,0);
+        local_a0.challengeRow = iVar3;
       }
       if (0 < (int)lVar7) {
         puVar9 = &uStack_84;
         lVar10 = lVar7;
         do {
           puVar9 = puVar9 + 1;
-          local_90 = *puVar9;
-          LiveStorage_AddChallengeInFilter(auStack_b0,&local_a0);
+          local_a0.filterName = (char *)*puVar9;
+          LiveStorage_AddChallengeInFilter(aSStack_b0,&local_a0);
           lVar10 = lVar10 + -1;
         } while (lVar10 != 0);
       }
-      lVar8 = lVar8 + 1;
-      iVar4 = iVar4 + 4;
-    } while ((int)lVar8 < iVar2);
+      iVar3 = iVar3 + 1;
+      iVar8 = iVar8 + 4;
+    } while (iVar3 < iVar1);
   }
-  qsort(&DAT_83633890,DAT_83610c0c,0xc,LiveStorage_ChallengeCompare);
+  qsort(s_sortedChallenges,s_sortedChallengeCount,0xc,LiveStorage_ChallengeCompare);
   __restgprlr_22();
   return;
 }
@@ -5841,17 +6347,17 @@ void LiveStorage_SortChallenges(undefined8 param_1,ulonglong param_2)
 
 // 824EA3D8  LiveStorage_SetChallengeSortFilter  (qcommon/com_storage.cpp:5234)
 
-void LiveStorage_SetChallengeSortFilter(undefined8 param_1,undefined8 param_2)
+void LiveStorage_SetChallengeSortFilter(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = I_strcmp(0xffffffff83636890);
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_2);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_2,0x20);
-    LiveStorage_SortChallenges(uVar1,param_2);
+    I_strncpyz(s_challengeSortFilter,param_2,0x20);
+    LiveStorage_SortChallenges(iVar1,param_2);
   }
   __restgprlr_29();
   return;
@@ -5860,324 +6366,344 @@ void LiveStorage_SetChallengeSortFilter(undefined8 param_1,undefined8 param_2)
 
 // 824EA428  LiveStorage_SortedChallengeCount  (qcommon/com_storage.cpp:5244)
 
-void LiveStorage_SortedChallengeCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_SortedChallengeCount(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = I_strcmp(0xffffffff83636890);
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_2);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_2,0x20);
-    LiveStorage_SortChallenges(uVar1,param_2);
+    I_strncpyz(s_challengeSortFilter,param_2,0x20);
+    LiveStorage_SortChallenges(iVar1,param_2);
   }
-  __restgprlr_29(DAT_83610c0c);
-  return;
+  iVar1 = __restgprlr_29(s_sortedChallengeCount);
+  return iVar1;
 }
 
 
 // 824E33F8  LiveStorage_SortedChallengeCurrentCount  (qcommon/com_storage.cpp:5252)
 
-undefined4 LiveStorage_SortedChallengeCurrentCount(void)
+int LiveStorage_SortedChallengeCurrentCount(int param_1)
 
 {
-  return DAT_83610c0c;
+  return s_sortedChallengeCount;
 }
 
 
 // 824EA480  LiveStorage_FilteredChallengeCount  (qcommon/com_storage.cpp:5258)
 
-void LiveStorage_FilteredChallengeCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilteredChallengeCount(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = I_strcmp(0xffffffff83636890);
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_2);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_2,0x20);
-    LiveStorage_SortChallenges(uVar1,param_2);
+    I_strncpyz(s_challengeSortFilter,param_2,0x20);
+    LiveStorage_SortChallenges(iVar1,param_2);
   }
-  __restgprlr_29(DAT_8365b1b0);
-  return;
+  iVar1 = __restgprlr_29(s_filterChallengeCount);
+  return iVar1;
 }
 
 
 // 824EA4D8  LiveStorage_FilteredChallengeLockedCount  (qcommon/com_storage.cpp:5266)
 
-void LiveStorage_FilteredChallengeLockedCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilteredChallengeLockedCount(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = I_strcmp(0xffffffff83636890);
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_2);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_2,0x20);
-    LiveStorage_SortChallenges(uVar1,param_2);
+    I_strncpyz(s_challengeSortFilter,param_2,0x20);
+    LiveStorage_SortChallenges(iVar1,param_2);
   }
-  __restgprlr_29(DAT_8361cc50);
-  return;
+  iVar1 = __restgprlr_29(s_filterChallengeLockedCount);
+  return iVar1;
 }
 
 
 // 824EA530  LiveStorage_FilteredChallengeCompleteCount  (qcommon/com_storage.cpp:5274)
 
-void LiveStorage_FilteredChallengeCompleteCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilteredChallengeCompleteCount(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = I_strcmp(0xffffffff83636890);
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_2);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_2,0x20);
-    LiveStorage_SortChallenges(uVar1,param_2);
+    I_strncpyz(s_challengeSortFilter,param_2,0x20);
+    LiveStorage_SortChallenges(iVar1,param_2);
   }
-  __restgprlr_29(DAT_836368cc);
-  return;
+  iVar1 = __restgprlr_29(s_filterChallengeCompletedCount);
+  return iVar1;
 }
 
 
 // 824EA588  LiveStorage_SortedChallengeIndex  (qcommon/com_storage.cpp:5282)
 
-void LiveStorage_SortedChallengeIndex(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+int LiveStorage_SortedChallengeIndex(int param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = I_strcmp(0xffffffff83636890,param_3);
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_3);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_3,0x20);
-    LiveStorage_SortChallenges(uVar1,param_3);
+    I_strncpyz(s_challengeSortFilter,param_3,0x20);
+    LiveStorage_SortChallenges(iVar1,param_3);
   }
-  if ((ulonglong)DAT_83610c0c <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x14a5,0,0xffffffff82088568,param_2);
+  if ((ulonglong)(uint)s_sortedChallengeCount <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x14a5,0,
+                    "sortedIndex doesn\'t index s_sortedChallengeCount\n\t%i not in [0, %i)");
   }
-  __restgprlr_28(*(undefined4 *)
-                  (&DAT_83633890 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2)))
-  ;
-  return;
+  iVar1 = __restgprlr_28(*(undefined4 *)
+                          ((int)&s_sortedChallenges[0].challengeIndex +
+                          (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2)));
+  return iVar1;
 }
 
 
 // 824EA628  LiveStorage_SortedChallengeName  (qcommon/com_storage.cpp:5292)
 
-void LiveStorage_SortedChallengeName(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+char * LiveStorage_SortedChallengeName(int param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
-  iVar2 = I_strcmp(0xffffffff83636890,param_3);
+  uVar4 = (ulonglong)param_2;
+  iVar1 = __savegprlr_28(param_1);
+  iVar2 = I_strcmp(s_challengeSortFilter,param_3);
   if (iVar2 != 0) {
-    I_strncpyz(0xffffffff83636890,param_3,0x20);
-    LiveStorage_SortChallenges(uVar1,param_3);
+    I_strncpyz(s_challengeSortFilter,param_3,0x20);
+    LiveStorage_SortChallenges(iVar1,param_3);
   }
-  if ((ulonglong)DAT_83610c0c <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x14af,0,0xffffffff82088568,param_2);
+  if ((ulonglong)(uint)s_sortedChallengeCount <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x14af,0,
+                    "sortedIndex doesn\'t index s_sortedChallengeCount\n\t%i not in [0, %i)");
   }
-  __restgprlr_28(*(undefined4 *)
-                  (&DAT_83633898 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2)))
-  ;
-  return;
+  pcVar3 = (char *)__restgprlr_28(*(undefined4 *)
+                                   ((int)&s_sortedChallenges[0].storageName +
+                                   (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2)));
+  return pcVar3;
 }
 
 
 // 824EA6D0  LiveStorage_IsSortedChallengeTiered  (qcommon/com_storage.cpp:5302)
 
-bool LiveStorage_IsSortedChallengeTiered(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+bool LiveStorage_IsSortedChallengeTiered(int param_1,int param_2,char *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  longlong lVar3;
-  int local_20 [2];
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
+  StringTable *local_20 [2];
   
-  uVar1 = LiveStorage_SortedChallengeIndex();
-  iVar4 = I_strcmp(param_3,0xffffffff82088494);
-  if (iVar4 == 0) {
-    uVar2 = 0xffffffff8200af50;
+  iVar1 = LiveStorage_SortedChallengeIndex(param_1,param_2,param_3);
+  iVar2 = I_strcmp(param_3,"daily_challenges");
+  if (iVar2 == 0) {
+    pcVar3 = "mp/dailyChallengesTable.csv";
   }
   else {
-    iVar4 = I_strcmp(param_3,0xffffffff82088464);
-    if (iVar4 == 0) {
-      uVar2 = 0xffffffff8200af6c;
+    iVar2 = I_strcmp(param_3,"weekly_challenges");
+    if (iVar2 == 0) {
+      pcVar3 = "mp/weeklyChallengesTable.csv";
     }
     else {
-      uVar2 = 0xffffffff8200af8c;
+      pcVar3 = "mp/allChallengesTable.csv";
     }
   }
-  StringTable_GetAsset(uVar2,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x14c6,0,0xffffffff82000f98,0xffffffff82086574);
+  StringTable_GetAsset(pcVar3,local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x14c6,0,"%s");
   }
-  uVar1 = StringTable_GetColumnValueForRow(local_20[0],uVar1,3);
-  lVar3 = I_strcmp(uVar1,0xffffffff820885ac);
-  return lVar3 != 0;
+  pcVar3 = StringTable_GetColumnValueForRow(local_20[0],iVar1,3);
+  iVar1 = I_strcmp(pcVar3,"CHALLENGE_BLANK");
+  return (bool)('\x01' - (iVar1 == 0));
 }
 
 
 // 824ED140  LiveStorage_FilterCacheUpdate  (qcommon/com_storage.cpp:5327)
 
-void LiveStorage_FilterCacheUpdate(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void LiveStorage_FilterCacheUpdate(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  char cVar8;
-  longlong lVar2;
-  char *pcVar5;
+  int iVar1;
+  int iVar2;
+  bool bVar9;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
   int iVar6;
-  longlong lVar3;
-  uint uVar7;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  undefined1 auStack_a8 [8];
+  char *pcVar7;
+  uint uVar8;
+  ulonglong uVar10;
+  char *pcVar11;
+  int iVar12;
+  ChallengeFilterCacheInfo *pCVar13;
+  int iVar14;
+  int iVar15;
+  StringTable *local_b0;
+  StringTable *local_ac;
+  StructuredDataBuffer SStack_a8;
   char *local_a0;
-  undefined4 local_9c;
+  char *local_9c;
   char *local_98;
-  undefined4 local_94;
+  char *local_94;
   
-  uVar1 = __savegprlr_16();
-  iVar4 = LiveStorage_FilterCacheIndex();
-  if ((iVar4 == -1) && ((DAT_836368c0 == 0 || (iVar4 = Sys_Milliseconds(), DAT_8361cc58 <= iVar4))))
-  {
-    iVar4 = Sys_Milliseconds();
-    DAT_8361cc58 = iVar4 + 0x28;
-    cVar8 = LiveStorage_GetPlayerUnlockDataBuffer(auStack_a8,uVar1);
-    if (cVar8 == '\0') {
-      Com_PrintError(0xd,0xffffffff8208852c);
+  uVar10 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_16(param_1);
+  pcVar11 = (char *)uVar10;
+  iVar2 = LiveStorage_FilterCacheIndex(iVar1,pcVar11);
+  if ((iVar2 == -1) &&
+     ((s_filterCacheCount == 0 || (iVar2 = Sys_Milliseconds(), s_filterCacheNextUpdateTime <= iVar2)
+      ))) {
+    iVar2 = Sys_Milliseconds();
+    s_filterCacheNextUpdateTime = iVar2 + 0x28;
+    bVar9 = LiveStorage_GetPlayerUnlockDataBuffer(&SStack_a8,iVar1);
+    iVar1 = s_filterCacheCount;
+    if (!bVar9) {
+      Com_PrintError(0xd,"Cannot get data: we do not have player stats\n");
       __restgprlr_16();
       return;
     }
-    if (0x13 < DAT_836368c0) {
-      Com_PrintWarning(0xd,0xffffffff820891f0,param_2);
+    if (0x13 < s_filterCacheCount) {
+      Com_PrintWarning(0xd,"Challenge Filter Warning: maximum filter cache size reached: %s\n");
       __restgprlr_16();
       return;
     }
-    iVar9 = DAT_836368c0 * 0x28;
-    DAT_836368c0 = DAT_836368c0 + 1;
-    I_strncpyz(&DAT_836108e8 + iVar9,param_2,0x20);
-    *(undefined4 *)(&DAT_83610908 + iVar9) = 0;
-    *(undefined4 *)(&DAT_8361090c + iVar9) = 0;
-    iVar4 = DB_IsXAssetDefault(0x26,0xffffffff82088514);
-    if (iVar4 != 0) {
-      MyAssertHandler(0xffffffff820859c8,0x1507,0,0xffffffff820011f4,0xffffffff820884a8,
-                      0xffffffff820884f0);
+    pCVar13 = s_filterCacheInfos + s_filterCacheCount;
+    s_filterCacheCount = s_filterCacheCount + 1;
+    I_strncpyz(pCVar13->filterName,pcVar11,0x20);
+    s_filterCacheInfos[iVar1].challengesCount = 0;
+    s_filterCacheInfos[iVar1].challengesCompletedCount = 0;
+    iVar2 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/challengeFilters.csv");
+    if (iVar2 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x1507,0,"%s\n\t%s");
     }
-    StringTable_GetAsset(0xffffffff82088514,&local_ac);
-    iVar4 = I_strcmp(param_2,0xffffffff82088494);
-    if (iVar4 == 0) {
-      iVar4 = DB_IsXAssetDefault(0x26,0xffffffff8200af50);
-      if (iVar4 != 0) {
-        MyAssertHandler(0xffffffff820859c8,0x150d,0,0xffffffff820011f4,0xffffffff82087be8,
-                        0xffffffff82088478);
+    StringTable_GetAsset("mp/challengeFilters.csv",&local_ac);
+    iVar2 = I_strcmp(pcVar11,"daily_challenges");
+    if (iVar2 == 0) {
+      iVar2 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/dailyChallengesTable.csv");
+      if (iVar2 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x150d,0,"%s\n\t%s");
       }
-      StringTable_GetAsset(0xffffffff8200af50,&local_b0);
-      iVar4 = 3;
-      iVar10 = 0;
+      StringTable_GetAsset("mp/dailyChallengesTable.csv",&local_b0);
+      iVar2 = 3;
+      iVar12 = 0;
     }
     else {
-      iVar4 = I_strcmp(param_2,0xffffffff82088464);
-      if (iVar4 == 0) {
-        iVar4 = DB_IsXAssetDefault(0x26,0xffffffff8200af6c);
-        if (iVar4 != 0) {
-          MyAssertHandler(0xffffffff820859c8,0x1517,0,0xffffffff820011f4,0xffffffff82087b78,
-                          0xffffffff82088478);
+      iVar2 = I_strcmp(pcVar11,"weekly_challenges");
+      if (iVar2 == 0) {
+        iVar2 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/weeklyChallengesTable.csv");
+        if (iVar2 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp"
+                          ,0x1517,0,"%s\n\t%s");
         }
-        StringTable_GetAsset(0xffffffff8200af6c,&local_b0);
-        iVar4 = 3;
-        iVar10 = 1;
+        StringTable_GetAsset("mp/weeklyChallengesTable.csv",&local_b0);
+        iVar2 = 3;
+        iVar12 = 1;
       }
       else {
-        iVar4 = DB_IsXAssetDefault(0x26,0xffffffff8200af8c);
-        if (iVar4 != 0) {
-          MyAssertHandler(0xffffffff820859c8,0x1522,0,0xffffffff820011f4,0xffffffff82088420,
-                          0xffffffff82088478);
+        iVar2 = DB_IsXAssetDefault(ASSET_TYPE_STRINGTABLE,"mp/allChallengesTable.csv");
+        if (iVar2 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp"
+                          ,0x1522,0,"%s\n\t%s");
         }
-        StringTable_GetAsset(0xffffffff8200af8c,&local_b0);
-        iVar4 = StringTable_GetRowCount(local_b0);
-        iVar10 = 2;
+        StringTable_GetAsset("mp/allChallengesTable.csv",&local_b0);
+        iVar2 = StringTable_GetRowCount(local_b0);
+        iVar12 = 2;
       }
     }
-    lVar12 = 0;
-    if (0 < iVar4) {
-      iVar11 = 0;
+    iVar15 = 0;
+    if (0 < iVar2) {
+      iVar14 = 0;
       do {
-        if (iVar10 == 0) {
-          uVar13 = (ulonglong)*(uint *)((int)&PTR_s_ch_daily_0_8296bf94 + iVar11);
-          lVar2 = LiveStorage_GetDailyChallengeId(auStack_a8);
+        if (iVar12 == 0) {
+          pcVar7 = *(char **)((int)s_dailyChallengeNames + iVar14);
+          iVar3 = LiveStorage_GetDailyChallengeId(&SStack_a8,iVar15);
         }
-        else if (iVar10 == 1) {
-          uVar13 = (ulonglong)*(uint *)((int)&PTR_s_ch_weekly_0_8296bff8 + iVar11);
-          lVar2 = LiveStorage_GetWeeklyChallengeId(auStack_a8);
+        else if (iVar12 == 1) {
+          pcVar7 = *(char **)((int)s_weeklyChallengeNames + iVar14);
+          iVar3 = LiveStorage_GetWeeklyChallengeId(&SStack_a8,iVar15);
         }
         else {
-          uVar13 = StringTable_GetColumnValueForRow(local_b0,lVar12,0);
-          lVar2 = lVar12;
+          pcVar7 = StringTable_GetColumnValueForRow(local_b0,iVar15,0);
+          iVar3 = iVar15;
         }
-        pcVar5 = (char *)StringTable_GetColumnValueForRow(local_b0,lVar2,5);
+        pcVar4 = StringTable_GetColumnValueForRow(local_b0,iVar3,5);
         while( true ) {
-          if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) goto LAB_824ed5d4;
-          if (((param_2 & 0xffffffff) == 0) ||
-             ((*(char *)param_2 == '\0' || (iVar6 = I_strcmp(param_2,pcVar5), iVar6 == 0)))) break;
-          uVar1 = StringTable_LookupRowNumForValue(local_ac,0,pcVar5);
-          pcVar5 = (char *)StringTable_GetColumnValueForRow(local_ac,uVar1,1);
+          if ((pcVar4 == (char *)0x0) || (*pcVar4 == '\0')) goto LAB_824ed5d4;
+          if (((uVar10 & 0xffffffff) == 0) ||
+             ((*pcVar11 == '\0' || (iVar5 = I_strcmp(pcVar11,pcVar4), iVar5 == 0)))) break;
+          iVar5 = StringTable_LookupRowNumForValue(local_ac,0,pcVar4);
+          pcVar4 = StringTable_GetColumnValueForRow(local_ac,iVar5,1);
         }
-        *(int *)(&DAT_83610908 + iVar9) = *(int *)(&DAT_83610908 + iVar9) + 1;
-        cVar8 = LiveStorage_IsChallengeUnlocked(auStack_a8,uVar13);
-        if (cVar8 != '\0') {
+        s_filterCacheInfos[iVar1].challengesCount = s_filterCacheInfos[iVar1].challengesCount + 1;
+        bVar9 = LiveStorage_IsChallengeUnlocked(&SStack_a8,pcVar7);
+        if (bVar9) {
           local_a0 = "challengeState";
-          local_9c = (int)uVar13;
-          lVar3 = LiveStorage_DataGetInternalInt(&local_a0,2,auStack_a8);
-          if ((int)lVar3 < 1) {
-            lVar3 = 1;
+          local_9c = pcVar7;
+          iVar5 = LiveStorage_DataGetInternalInt(&local_a0,2,&SStack_a8);
+          if (iVar5 < 1) {
+            iVar5 = 1;
           }
           local_98 = "challengeProgress";
-          local_94 = (int)uVar13;
-          uVar1 = LiveStorage_DataGetInternalInt(&local_98,2,auStack_a8);
-          pcVar5 = (char *)StringTable_GetColumnValueForRow
-                                     (local_b0,lVar2,(lVar3 + 2U & 0x7fffffff) << 1);
-          if ((pcVar5 == (char *)0x0) || (*pcVar5 == '\0')) {
-            lVar2 = 0;
+          local_94 = pcVar7;
+          iVar6 = LiveStorage_DataGetInternalInt(&local_98,2,&SStack_a8);
+          pcVar7 = StringTable_GetColumnValueForRow(local_b0,iVar3,(iVar5 + 2) * 2);
+          if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
+            iVar3 = 0;
           }
           else {
-            uVar7 = atoi(pcVar5);
-            lVar2 = (longlong)(int)(uVar7 ^ (int)uVar7 >> 0x1f) - (longlong)((int)uVar7 >> 0x1f);
+            uVar8 = atoi(pcVar7);
+            iVar3 = (uVar8 ^ (int)uVar8 >> 0x1f) - ((int)uVar8 >> 0x1f);
           }
-          iVar6 = (int)lVar2;
-          if (iVar6 < (int)uVar1) {
-            if (0 < iVar6) {
-              Com_PrintWarning(0xd,0xffffffff82089110,uVar13,lVar2,uVar1);
+          if (iVar3 < iVar6) {
+            if (0 < iVar3) {
+              Com_PrintWarning(0xd,
+                               "Challenge Filter Cache Warning: challenge progress exceeds challenge target, challenge:%s target:%d progress:%d\n"
+                              );
             }
           }
           else {
-            if ((int)uVar1 < 0) {
-              Com_PrintWarning(0xd,0xffffffff82089188,uVar13,lVar2,uVar1);
-              uVar1 = 0;
+            if (iVar6 < 0) {
+              Com_PrintWarning(0xd,
+                               "Challenge Filter Cache Warning: challenge progress is negative, challenge:%s target:%d progress:%d\n"
+                              );
+              iVar6 = 0;
             }
-            if (iVar6 != (int)uVar1) goto LAB_824ed5d4;
+            if (iVar3 != iVar6) goto LAB_824ed5d4;
           }
-          *(int *)(&DAT_8361090c + iVar9) = *(int *)(&DAT_8361090c + iVar9) + 1;
+          s_filterCacheInfos[iVar1].challengesCompletedCount =
+               s_filterCacheInfos[iVar1].challengesCompletedCount + 1;
         }
 LAB_824ed5d4:
-        lVar12 = lVar12 + 1;
-        iVar11 = iVar11 + 4;
-      } while ((int)lVar12 < iVar4);
+        iVar15 = iVar15 + 1;
+        iVar14 = iVar14 + 4;
+      } while (iVar15 < iVar2);
     }
   }
   __restgprlr_16();
@@ -6187,191 +6713,216 @@ LAB_824ed5d4:
 
 // 824EA7B8  LiveStorage_FilterCacheExists  (qcommon/com_storage.cpp:5487)
 
-longlong LiveStorage_FilterCacheExists(void)
+bool LiveStorage_FilterCacheExists(int param_1,char *param_2)
 
 {
-  longlong lVar1;
+  int iVar1;
   
-  lVar1 = LiveStorage_FilterCacheIndex();
-  return (lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0));
+  iVar1 = LiveStorage_FilterCacheIndex(param_1,param_2);
+  return (bool)((char)((longlong)iVar1 + 1) - ((char)iVar1 + ((longlong)iVar1 + 1 == 0)));
 }
 
 
 // 824E3408  LiveStorage_FilterCacheIndex  (qcommon/com_storage.cpp:5493)
 
-void LiveStorage_FilterCacheIndex(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilterCacheIndex(int param_1,char *param_2)
 
 {
   int iVar1;
-  longlong lVar2;
+  ChallengeFilterCacheInfo *pCVar2;
   longlong lVar3;
   
-  __savegprlr_28();
-  lVar2 = -0x7c9ef718;
+  __savegprlr_28(param_1);
+  pCVar2 = s_filterCacheInfos;
   lVar3 = 0;
-  if (0 < DAT_836368c0) {
+  if (0 < s_filterCacheCount) {
     do {
-      iVar1 = I_strncmp(lVar2,param_2,0x20);
+      iVar1 = I_strncmp(pCVar2->filterName,param_2,0x20);
       if (iVar1 == 0) {
-        __restgprlr_28(lVar3);
-        return;
+        iVar1 = __restgprlr_28(lVar3);
+        return iVar1;
       }
       lVar3 = lVar3 + 1;
-      lVar2 = lVar2 + 0x28;
-    } while ((int)lVar3 < DAT_836368c0);
+      pCVar2 = pCVar2 + 1;
+    } while ((int)lVar3 < s_filterCacheCount);
   }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  iVar1 = __restgprlr_28(0xffffffffffffffff);
+  return iVar1;
 }
 
 
 // 824ED5F0  LiveStorage_FilterCacheCount  (qcommon/com_storage.cpp:5510)
 
-undefined4 LiveStorage_FilterCacheCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilterCacheCount(int param_1,char *param_2)
 
 {
   uint uVar1;
-  undefined4 uVar2;
+  int iVar2;
   
-  LiveStorage_FilterCacheUpdate();
+  LiveStorage_FilterCacheUpdate(param_1,param_2);
   uVar1 = LiveStorage_FilterCacheIndex(param_1,param_2);
   if (uVar1 == 0xffffffff) {
-    uVar2 = 0;
+    iVar2 = 0;
   }
   else {
-    if (DAT_836368c0 <= uVar1) {
-      MyAssertHandler(0xffffffff820859c8,0x158f,0,0xffffffff82089234,uVar1);
+    if ((uint)s_filterCacheCount <= uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x158f,0,"cacheIndex doesn\'t index s_filterCacheCount\n\t%i not in [0, %i)");
     }
-    uVar2 = *(undefined4 *)(&DAT_83610908 + uVar1 * 0x28);
+    iVar2 = s_filterCacheInfos[uVar1].challengesCount;
   }
-  return uVar2;
+  return iVar2;
 }
 
 
 // 824ED698  LiveStorage_FilterCacheCompleteCount  (qcommon/com_storage.cpp:5528)
 
-undefined4 LiveStorage_FilterCacheCompleteCount(undefined8 param_1,undefined8 param_2)
+int LiveStorage_FilterCacheCompleteCount(int param_1,char *param_2)
 
 {
   uint uVar1;
-  undefined4 uVar2;
+  int iVar2;
   
-  LiveStorage_FilterCacheUpdate();
+  LiveStorage_FilterCacheUpdate(param_1,param_2);
   uVar1 = LiveStorage_FilterCacheIndex(param_1,param_2);
   if (uVar1 == 0xffffffff) {
-    uVar2 = 0;
+    iVar2 = 0;
   }
   else {
-    if (DAT_836368c0 <= uVar1) {
-      MyAssertHandler(0xffffffff820859c8,0x15a1,0,0xffffffff82089234,uVar1);
+    if ((uint)s_filterCacheCount <= uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x15a1,0,"cacheIndex doesn\'t index s_filterCacheCount\n\t%i not in [0, %i)");
     }
-    uVar2 = *(undefined4 *)(&DAT_8361090c + uVar1 * 0x28);
+    iVar2 = s_filterCacheInfos[uVar1].challengesCompletedCount;
   }
-  return uVar2;
+  return iVar2;
 }
 
 
 // 824E3478  LiveStorage_DoWeHavePlaylists  (qcommon/com_storage.cpp:5548)
 
-byte LiveStorage_DoWeHavePlaylists(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_DoWeHavePlaylists(void)
 
 {
-  return -((*(uint *)(DAT_84584ed8 + 0xc) & 4) == 0) & DAT_8365b1b9;
+  return (bool)(-(((live_test_onlinedataoff->current).unsignedInt & 4) == 0) & g_playlistsFetched);
 }
 
 
 // 824E34A0  LiveStorage_FetchPlaylists  (qcommon/com_storage.cpp:5559)
 
-void LiveStorage_FetchPlaylists(void)
+void LiveStorage_FetchPlaylists(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
+  uint uVar1;
+  longlong lVar2;
+  bool bVar8;
+  DWOnlineStatus DVar4;
+  int iVar5;
+  longlong lVar3;
+  bool bVar9;
+  overlappedTask *poVar6;
+  int iVar7;
   
-  uVar2 = __savegprlr_26();
-  if ((((*(uint *)(DAT_84584ed8 + 0xc) & 4) != 0) ||
-      (((DAT_8365b1b9 != '\0' && (DAT_8365b1b8 == '\0')) ||
-       (cVar4 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,2), cVar4 != '\0')))) ||
-     ((cVar4 = Live_IsUserSignedInToLive(uVar2), cVar4 == '\0' ||
-      (iVar3 = dwGetLogOnStatus(uVar2), iVar3 != 2)))) goto LAB_824e35e4;
-  iVar3 = Sys_Milliseconds();
-  bVar1 = false;
-  if (DAT_8365b1c0 == 0) {
+  lVar2 = __savegprlr_26(param_1);
+  lVar3 = lVar2;
+  if ((((live_test_onlinedataoff->current).unsignedInt & 4) != 0) ||
+     ((g_playlistsFetched != false && (s_playlistOutOfDate == false)))) goto LAB_824e35e4;
+  bVar8 = TaskManager_TaskIsInProgress(&storageTasks,2);
+  lVar3 = (longlong)bVar8;
+  if (lVar3 != 0) goto LAB_824e35e4;
+  iVar7 = (int)lVar2;
+  bVar8 = Live_IsUserSignedInToLive(iVar7);
+  lVar3 = 0;
+  if (!bVar8) goto LAB_824e35e4;
+  DVar4 = dwGetLogOnStatus(iVar7);
+  lVar3 = (longlong)(int)DVar4;
+  if (DVar4 != DW_LIVE_CONNECTED) goto LAB_824e35e4;
+  iVar5 = Sys_Milliseconds();
+  bVar8 = false;
+  uVar1 = (iVar5 - g_LastFetchPlaylistAttemptTime) / 1000;
+  lVar3 = (longlong)(int)uVar1;
+  if (g_NumFetchPlaylistAttempts == 0) {
 LAB_824e3574:
-    bVar1 = true;
+    bVar8 = true;
   }
   else {
-    cVar4 = Live_GetShouldDemonwareRetry((iVar3 - DAT_8365b1c4) / 1000,DAT_8365b1c0,0x3c);
-    if (cVar4 != '\0') goto LAB_824e3574;
+    bVar9 = Live_GetShouldDemonwareRetry(uVar1,g_NumFetchPlaylistAttempts,0x3c);
+    lVar3 = (longlong)bVar9;
+    if (lVar3 != 0) goto LAB_824e3574;
   }
-  if (bVar1) {
-    DAT_8365b1c0 = DAT_8365b1c0 + 1;
-    DAT_8365b1c4 = iVar3;
-    iVar3 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar2,2);
-    if (iVar3 != 0) {
-      DAT_8365bc2c = 0xf000;
-      DAT_8365bc30 = &DAT_83624888;
-      DAT_8365bb58 = *(undefined4 *)(DAT_83666164 + 0xc);
-      *(undefined4 **)(iVar3 + 0x98) = &DAT_8365bb58;
-      dwFetchPublisherFile(iVar3,0xffffffff8365bb58);
+  if (bVar8) {
+    g_NumFetchPlaylistAttempts = g_NumFetchPlaylistAttempts + 1;
+    g_LastFetchPlaylistAttemptTime = iVar5;
+    poVar6 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar7,2);
+    lVar3 = (longlong)(int)poVar6;
+    if (poVar6 != (overlappedTask *)0x0) {
+      g_fetchPlaylistsFileTask.m_bufferSize = 0xf000;
+      g_fetchPlaylistsFileTask.m_buffer = s_playlistAggrBuffer;
+      g_fetchPlaylistsFileTask.m_filename = (playlistAggrFilename->current).string;
+      poVar6->data = &g_fetchPlaylistsFileTask;
+      iVar7 = dwFetchPublisherFile(poVar6,&g_fetchPlaylistsFileTask);
+      lVar3 = (longlong)iVar7;
     }
   }
 LAB_824e35e4:
-  __restgprlr_26();
+  __restgprlr_26(lVar3);
   return;
 }
 
 
 // 824E35F0  LiveStorage_GettingPlaylists  (qcommon/com_storage.cpp:5621)
 
-void LiveStorage_GettingPlaylists(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_GettingPlaylists(void)
 
 {
-  TaskManager_TaskIsInProgress(0xffffffff8365bc38,2);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgress(&storageTasks,2);
+  return bVar1;
 }
 
 
 // 824EA7E8  LiveStorage_IsWaitingOnPlaylists  (qcommon/com_storage.cpp:5627)
 
-undefined8 LiveStorage_IsWaitingOnPlaylists(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool LiveStorage_IsWaitingOnPlaylists(LocalClientNum_t param_1)
 
 {
-  char cVar1;
-  undefined8 uVar2;
+  bool bVar1;
   
-  cVar1 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,2);
-  if (((cVar1 != '\0') || ((-((*(uint *)(DAT_84584ed8 + 0xc) & 4) == 0) & DAT_8365b1b9) == 0)) ||
-     (uVar2 = 0, DAT_8365b1b8 != '\0')) {
-    uVar2 = 1;
+  bVar1 = TaskManager_TaskIsInProgress(&storageTasks,2);
+  if (((bVar1) ||
+      ((-(((live_test_onlinedataoff->current).unsignedInt & 4) == 0) & g_playlistsFetched) == 0)) ||
+     (bVar1 = false, s_playlistOutOfDate != false)) {
+    bVar1 = true;
   }
-  return uVar2;
+  return bVar1;
 }
 
 
 // 824E3600  DecompressIntoBuffer  (qcommon/com_storage.cpp:5634)
 
-void DecompressIntoBuffer(undefined8 param_1,int param_2,int param_3,int param_4)
+int DecompressIntoBuffer(void *param_1,int param_2,void *param_3,int param_4)
 
 {
   longlong lVar1;
-  undefined8 uVar2;
+  void *pvVar2;
   int iVar3;
   undefined8 *puVar5;
   ulonglong uVar4;
   longlong lVar6;
-  undefined1 auStack_80 [8];
+  LargeLocal LStack_80;
   undefined8 uStack_78;
-  int local_70;
-  int iStack_6c;
-  uint local_64;
-  int local_60;
+  db_z_stream_s local_70 [2];
   
-  lVar1 = __savegprlr_25();
-  LargeLocal__LargeLocal(auStack_80,0x10000);
-  uVar2 = LargeLocal__GetBuf(auStack_80);
+  lVar1 = __savegprlr_25(param_1);
+  LargeLocal::LargeLocal(&LStack_80,0x10000);
+  pvVar2 = LargeLocal::GetBuf(&LStack_80);
   puVar5 = &uStack_78;
   lVar6 = 6;
   do {
@@ -6379,280 +6930,304 @@ void DecompressIntoBuffer(undefined8 param_1,int param_2,int param_3,int param_4
     *puVar5 = 0;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  local_70 = param_3;
-  iStack_6c = param_4;
-  memset((void *)uVar2,0,0x10000);
-  DB_Zip_InitThreadMemory(&local_70,uVar2,0x10000);
-  iVar3 = db_inflateInit_(&local_70,0xffffffff820593e8,0x30);
+  local_70[0].next_in = param_3;
+  local_70[0].avail_in = param_4;
+  memset();
+  DB_Zip_InitThreadMemory(local_70,pvVar2,0x10000);
+  iVar3 = db_inflateInit_(local_70,"1.1.4",0x30);
   if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1619,0,0xffffffff82000f98,0xffffffff82059ad0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1619,0,"%s");
   }
-  local_64 = (uint)lVar1;
-  local_60 = param_2;
-  uVar2 = db_inflate(&local_70,2);
-  if ((int)uVar2 != 1) {
-    MyAssertHandler(0xffffffff820859c8,0x1622,0,0xffffffff8205c70c,0xffffffff8205c71c,uVar2);
+  local_70[0].next_out = (uchar *)lVar1;
+  local_70[0].avail_out = param_2;
+  iVar3 = db_inflate(local_70,2);
+  if (iVar3 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1622,0,"%s\n\t(err) = %i");
   }
-  uVar4 = (ulonglong)local_64;
-  if (local_70 - param_3 != param_4) {
-    MyAssertHandler(0xffffffff820859c8,0x1627,0,0xffffffff82000f98,0xffffffff82086ba8);
+  uVar4 = ZEXT48(local_70[0].next_out);
+  if ((int)local_70[0].next_in - (int)param_3 != param_4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1627,0,"%s");
   }
   if (param_2 < (int)(uVar4 - lVar1)) {
-    MyAssertHandler(0xffffffff820859c8,0x1628,0,0xffffffff82000f98,0xffffffff82086b90);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1628,0,"%s");
   }
-  if (iStack_6c != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1629,0,0xffffffff82000f98,0xffffffff8205c684);
+  if (local_70[0].avail_in != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1629,0,"%s");
   }
-  iVar3 = db_inflateEnd(&local_70);
+  iVar3 = db_inflateEnd(local_70);
   if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff820859c8,0x162f,0,0xffffffff82000f98,0xffffffff82059ad0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x162f,0,"%s");
   }
-  DB_Zip_ShutdownThreadMemory(&local_70);
-  LargeLocal___LargeLocal(auStack_80);
-  __restgprlr_25(uVar4 - lVar1);
-  return;
+  DB_Zip_ShutdownThreadMemory(local_70);
+  LargeLocal::~LargeLocal(&LStack_80);
+  iVar3 = __restgprlr_25(uVar4 - lVar1);
+  return iVar3;
 }
 
 
 // 824E37C8  DecompressPlaylistFromPackedPlaylist  (qcommon/com_storage.cpp:5687)
 
-void DecompressPlaylistFromPackedPlaylist(undefined8 param_1,undefined8 param_2)
+bool DecompressPlaylistFromPackedPlaylist(void *param_1,int param_2)
 
 {
   undefined2 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  undefined2 uVar2;
+  void *pvVar3;
+  undefined1 uVar4;
   
-  uVar2 = __savegprlr_27();
-  uVar1 = DAT_8362488c;
-  if (DAT_83624888 != 1) {
-    Com_PrintError(0x10,0xffffffff82086be0);
-    __restgprlr_27(0);
-    return;
+  pvVar3 = (void *)__savegprlr_27(param_1);
+  uVar2 = s_playlistAggrBuffer._4_2_;
+  uVar1 = s_playlistAggrBuffer._2_2_;
+  if (s_playlistAggrBuffer._0_2_ != 1) {
+    Com_PrintError(0x10,"playlists.aggr version is incorrect, got %d expected 1\n");
+    uVar4 = __restgprlr_27(0);
+    return (bool)uVar4;
   }
-  uVar3 = (ulonglong)DAT_8362488a;
-  memset((void *)uVar2,0,(size_t)param_2);
-  DecompressIntoBuffer(uVar2,param_2,uVar3 - 0x7c9db778,uVar1);
-  __restgprlr_27(1);
-  return;
+  memset();
+  DecompressIntoBuffer(pvVar3,param_2,s_playlistAggrBuffer + (ushort)uVar1,(uint)(ushort)uVar2);
+  uVar4 = __restgprlr_27(1);
+  return (bool)uVar4;
 }
 
 
 // 824E3848  GetRecipeFromPackedPlaylist  (qcommon/com_storage.cpp:5710)
 
-void GetRecipeFromPackedPlaylist(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int GetRecipeFromPackedPlaylist(int param_1,void *param_2,int param_3)
 
 {
   uint uVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_83624888 != 1) {
-    Com_PrintError(0x10,0xffffffff82086be0);
-    __restgprlr_27(0);
-    return;
+  uVar1 = __savegprlr_27(param_1);
+  if (s_playlistAggrBuffer._0_2_ != 1) {
+    Com_PrintError(0x10,"playlists.aggr version is incorrect, got %d expected 1\n");
+    iVar2 = __restgprlr_27(0);
+    return iVar2;
   }
-  if (DAT_8365b1b9 == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x165a,0,0xffffffff82000f98,0xffffffff82086c4c);
+  if (g_playlistsFetched == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x165a,0,"%s");
   }
-  if (DAT_8362488e <= uVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x165d,0,0xffffffff82086c18,uVar1);
+  if ((ushort)s_playlistAggrBuffer._6_2_ <= uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x165d,0,"index doesn\'t index recipeCount\n\t%i not in [0, %i)");
   }
-  DecompressIntoBuffer
-            (param_2,param_3,(ulonglong)*(ushort *)(&DAT_83624890 + uVar1 * 4) - 0x7c9db778,
-             *(undefined2 *)(&DAT_83624892 + uVar1 * 4));
-  __restgprlr_27();
-  return;
+  iVar2 = DecompressIntoBuffer
+                    (param_2,param_3,
+                     s_playlistAggrBuffer + *(ushort *)(s_playlistAggrBuffer + uVar1 * 4 + 8),
+                     (uint)*(ushort *)(s_playlistAggrBuffer + uVar1 * 4 + 10));
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 824ED740  LiveStorage_PlaylistFetchComplete  (qcommon/com_storage.cpp:5739)
 
-void LiveStorage_PlaylistFetchComplete(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults LiveStorage_PlaylistFetchComplete(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
-  int iVar4;
+  int iVar1;
+  bdLobbyService *pbVar2;
+  Status SVar3;
+  taskCompleteResults tVar4;
+  bool bVar5;
   
-  iVar2 = __savegprlr_27();
-  iVar4 = iVar2 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar4] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x166e,0,0xffffffff82000f98,0xffffffff82084c8c);
+  iVar1 = __savegprlr_27(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x166e,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 2) {
-    MyAssertHandler(0xffffffff820859c8,0x166f,0,0xffffffff82000f98,0xffffffff8208930c);
+  if (storageTasks.tasks[iVar1].type != 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x166f,0,"%s");
   }
-  iVar2 = dwGetLobbyService((&DAT_8365bcd5)[iVar4]);
-  if (iVar2 != 0) {
-    dwGetLobbyService((&DAT_8365bcd5)[iVar4]);
-    iVar2 = bdLobbyService__getStatus();
-    if (iVar2 != 2) goto LAB_824ed7f8;
+  pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+  if (pbVar2 != (bdLobbyService *)0x0) {
+    pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+    SVar3 = bdLobbyService::getStatus(pbVar2);
+    if (SVar3 != BD_CONNECTED) goto LAB_824ed7f8;
   }
-  uVar1 = dwFetchFileComplete(&DAT_8365bc40 + iVar4,0xffffffff8365bb58);
-  if ((int)uVar1 == 1) {
-    if (DAT_8365bb68 < 0xf001) {
-      if (DAT_83620464 == 0) {
+  tVar4 = dwFetchFileComplete(storageTasks.tasks + iVar1,&g_fetchPlaylistsFileTask);
+  if (tVar4 == TASK_COMPLETE) {
+    if (g_fetchPlaylistsFileTask.m_fileSize < 0xf001) {
+      if (s_playlistBuffer == (uchar *)0x0) {
 LAB_824ed7f8:
-        __restgprlr_27(0);
-        return;
+        tVar4 = __restgprlr_27(0);
+        return tVar4;
       }
-      cVar3 = DecompressPlaylistFromPackedPlaylist(DAT_83620464,0x3c000);
-      if (cVar3 == '\0') {
-        Com_Error(0,0xffffffff820892ac);
-      }
-      else {
-        Com_Printf(0x10,0xffffffff82089294,DAT_8365bb68);
-        Playlist_ParsePlaylists(DAT_83620464);
-        DAT_8365b1b9 = 1;
-        DAT_8365b1b8 = 0;
+      bVar5 = DecompressPlaylistFromPackedPlaylist(s_playlistBuffer,0x3c000);
+      if (bVar5) {
+        Com_Printf(0x10,"Playlist was %i bytes\n");
+        Playlist_ParsePlaylists((char *)s_playlistBuffer);
+        g_playlistsFetched = true;
+        s_playlistOutOfDate = false;
         Playlist_ValidatePlaylistNum();
         PlaylistFeeder_SetInitialSelected();
-        Live_SetPlaylistVersion((&DAT_8365bcd5)[iVar4]);
-        DAT_8365b1c0 = 0;
-        LiveStorage_UpdatePlaylistFileInfo((&DAT_8365bcd5)[iVar4]);
+        Live_SetPlaylistVersion((uint)storageTasks.tasks[iVar1].controllerIndex);
+        g_NumFetchPlaylistAttempts = 0;
+        LiveStorage_UpdatePlaylistFileInfo((uint)storageTasks.tasks[iVar1].controllerIndex);
+      }
+      else {
+        Com_Error(ERR_FATAL,"\x15Couldn\'t decompress aggregate playlist file into buffer.\n");
       }
     }
     else {
-      Com_Error(uVar1,0xffffffff820892e8);
-      uVar1 = 2;
+      Com_Error(ERR_DROP,"Insufficient space for playlists");
+      tVar4 = TASK_ERROR;
     }
   }
-  else if ((int)uVar1 == 0) goto LAB_824ed8f4;
-  ClosePopupGettingData(0);
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar4);
+  else if (tVar4 == TASK_NOTCOMPLETE) goto LAB_824ed8f4;
+  ClosePopupGettingData(LOCAL_CLIENT_0);
+  TaskManager_ClearTask(storageTasks.tasks + iVar1);
 LAB_824ed8f4:
-  if ((int)uVar1 == 2) {
-    Com_PrintError(0x10,0xffffffff82089274);
+  if (tVar4 == TASK_ERROR) {
+    Com_PrintError(0x10,"Unable to retrieve playlist\n");
   }
-  __restgprlr_27(uVar1);
-  return;
+  tVar4 = __restgprlr_27(tVar4);
+  return tVar4;
 }
 
 
 // 824E3920  Playlist_MarkAsOutOfDate  (qcommon/com_storage.cpp:5811)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Playlist_MarkAsOutOfDate(void)
 
 {
-  DAT_8365b1b8 = 1;
+  s_playlistOutOfDate = true;
   return;
 }
 
 
 // 824E3930  Playlist_IsOutOfDate  (qcommon/com_storage.cpp:5817)
 
-undefined1 Playlist_IsOutOfDate(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Playlist_IsOutOfDate(void)
 
 {
-  return DAT_8365b1b8;
+  return s_playlistOutOfDate;
 }
 
 
 // 824EA870  Live_GetPlayerCardIconHandle  (qcommon/com_storage.cpp:5826)
 
-void Live_GetPlayerCardIconHandle(undefined8 param_1)
+char * Live_GetPlayerCardIconHandle(int param_1)
 
 {
-  undefined8 uVar1;
-  int local_20 [4];
+  int iVar1;
+  char *pcVar2;
+  StringTable *local_20 [4];
   
-  StringTable_GetAsset(0xffffffff82026928,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x16ca,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardIconTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x16ca,0,"%s");
   }
-  uVar1 = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff82038d6c);
-  StringTable_GetColumnValueForRow(local_20[0],uVar1,0);
-  return;
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"cardIcon");
+  pcVar2 = StringTable_GetColumnValueForRow(local_20[0],iVar1,0);
+  return pcVar2;
 }
 
 
 // 824EA8F8  Live_GetPlayerCardTitleHandle  (qcommon/com_storage.cpp:5843)
 
-void Live_GetPlayerCardTitleHandle(undefined8 param_1)
+char * Live_GetPlayerCardTitleHandle(int param_1)
 
 {
-  undefined8 uVar1;
-  int local_20 [4];
+  int iVar1;
+  char *pcVar2;
+  StringTable *local_20 [4];
   
-  StringTable_GetAsset(0xffffffff820268f8,local_20);
-  if (local_20[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x16db,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset("mp/cardTitleTable.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x16db,0,"%s");
   }
-  uVar1 = LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff82038d60);
-  StringTable_GetColumnValueForRow(local_20[0],uVar1,0);
-  return;
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"cardTitle");
+  pcVar2 = StringTable_GetColumnValueForRow(local_20[0],iVar1,0);
+  return pcVar2;
 }
 
 
 // 824EA980  Live_GetPlayerCardNameplateHandle  (qcommon/com_storage.cpp:5860)
 
-void Live_GetPlayerCardNameplateHandle(undefined8 param_1)
+char * Live_GetPlayerCardNameplateHandle(int param_1)
 
 {
-  LiveStorage_PlayerDataGetStringByName(param_1,0xffffffff820885bc);
-  return;
+  char *pcVar1;
+  
+  pcVar1 = LiveStorage_PlayerDataGetStringByName(param_1,"cardNameplate");
+  return pcVar1;
 }
 
 
 // 824E3940  LiveStorage_SetPlayerCardItem  (qcommon/com_storage.cpp:5871)
 
-void LiveStorage_SetPlayerCardItem(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+void LiveStorage_SetPlayerCardItem(int param_1,char *param_2,int param_3)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  char cVar6;
-  uint uVar5;
-  int iVar7;
-  undefined4 in_stack_0000001c;
-  uint local_60 [2];
-  undefined8 local_58;
-  undefined8 local_50;
-  undefined1 auStack_40 [64];
+  int iVar1;
+  StatsSource SVar2;
+  int iVar3;
+  bool bVar7;
+  uchar *puVar4;
+  StructuredDataDef *pSVar5;
+  LookupState LVar6;
+  char *pcStack0000001c;
+  StructuredDataBuffer local_60;
+  GamerProfileData local_58;
+  GamerProfileData local_50;
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar2 = __savegprlr_28();
-  in_stack_0000001c = param_2;
-  iVar4 = LiveStorage_GetActiveStatsSource();
-  iVar7 = (int)param_3;
-  if (iVar4 == 0) {
-    local_50 = GamerProfile_GetDataByName(uVar2,in_stack_0000001c);
-    local_58._0_4_ = (int)((ulonglong)local_50 >> 0x20);
-    bVar1 = local_58._0_4_ != 3;
-    local_58 = local_50;
-    if (bVar1) {
-      MyAssertHandler(0xffffffff820859c8,0x16fe,0,0xffffffff82000f98,0xffffffff82086c98);
+  pcStack0000001c = param_2;
+  iVar1 = __savegprlr_28(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    local_58 = GamerProfile_GetDataByName(iVar1,pcStack0000001c);
+    local_50 = local_58;
+    if (local_58.type != TYPE_SHORT) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x16fe,0,"%s");
     }
-    if (local_58._4_2_ != iVar7) {
-      local_50._4_4_ = CONCAT22((short)param_3,local_50._6_2_);
-      if ((short)param_3 != iVar7) {
-        MyAssertHandler(0xffffffff820859c8,0x1703,0,0xffffffff82000f98,0xffffffff82086c60);
+    if (SEXT24(local_58.u.intVal._0_2_) != param_3) {
+      local_50.u.shortVal = (short)param_3;
+      if ((short)param_3 != param_3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1703,0,"%s");
       }
-      uVar3 = GamerProfile_GetDataIndexByName(in_stack_0000001c);
-      GamerProfile_SetData(uVar2,uVar3,local_50);
+      iVar3 = GamerProfile_GetDataIndexByName(pcStack0000001c);
+      GamerProfile_SetData(iVar1,iVar3,local_50);
     }
   }
-  cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar6 == '\0') {
-    uVar3 = LiveStorage_GetActiveStatsSource(uVar2);
-    uVar5 = LiveStorage_GetPersistentDataBufferForSource(uVar2,uVar3);
+  bVar7 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar7) {
+    puVar4 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    uVar5 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+    puVar4 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
   }
-  if (uVar5 != 0) {
-    uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    local_60[1] = 0x2ffc;
-    local_60[0] = uVar5;
-    StructuredData_InitializeLookup(uVar3,auStack_40);
-    StructuredData_LookupWithString(auStack_40,in_stack_0000001c);
-    iVar4 = StructuredData_GetLookupState(auStack_40);
-    if ((iVar4 == 1) &&
-       (iVar4 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,local_60), iVar4 != iVar7)) {
-      LiveStorage_DataSetInternalIntByName(in_stack_0000001c,param_3,local_60,0);
-      LiveStorage_StatsWriteNeeded(uVar2);
+  if (puVar4 != (uchar *)0x0) {
+    pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    local_60.size = 0x2ffc;
+    local_60.data = puVar4;
+    StructuredData_InitializeLookup(pSVar5,aSStack_40);
+    StructuredData_LookupWithString(aSStack_40,pcStack0000001c);
+    LVar6 = StructuredData_GetLookupState(aSStack_40);
+    if ((LVar6 == LOOKUP_FINISHED) &&
+       (iVar3 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,&local_60), iVar3 != param_3)) {
+      LiveStorage_DataSetInternalIntByName(pcStack0000001c,param_3,&local_60,(uchar *)0x0);
+      LiveStorage_StatsWriteNeeded(iVar1);
     }
   }
   __restgprlr_28();
@@ -6662,54 +7237,53 @@ void LiveStorage_SetPlayerCardItem(undefined8 param_1,undefined4 param_2,undefin
 
 // 824E3AC0  LiveStorage_SetPlayerCardItemField  (qcommon/com_storage.cpp:5933)
 
-void LiveStorage_SetPlayerCardItemField
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+void LiveStorage_SetPlayerCardItemField(int param_1,char *param_2,int param_3,bool param_4)
 
 {
-  undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar2;
-  char cVar6;
-  uint uVar5;
-  undefined8 uVar3;
-  uint local_50 [4];
-  undefined1 auStack_40 [4];
-  int *local_3c;
+  int iVar1;
+  StatsSource SVar2;
+  bool bVar6;
+  uchar *puVar3;
+  StructuredDataDef *pSVar4;
+  LookupState LVar5;
+  ulonglong uVar7;
+  StructuredDataBuffer local_50 [2];
+  StructuredDataLookup aSStack_40 [4];
   
-  uVar1 = __savegprlr_27();
-  iVar4 = LiveStorage_GetActiveStatsSource();
-  if (iVar4 == 0) {
-    uVar2 = GamerProfile_GetBit(uVar1,param_3,param_2);
-    if ((param_4 & 0xff) != (uVar2 & 0xff)) {
-      if ((param_4 & 0xff) == 0) {
-        GamerProfile_ClearBit(uVar1,param_3,param_2);
+  uVar7 = (ulonglong)param_4;
+  iVar1 = __savegprlr_27(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 == STATS_ONLINE) {
+    bVar6 = GamerProfile_GetBit(iVar1,param_3,param_2);
+    if ((uVar7 & 0xff) != (longlong)bVar6) {
+      if ((uVar7 & 0xff) == 0) {
+        GamerProfile_ClearBit(iVar1,param_3,param_2);
       }
       else {
-        GamerProfile_SetBit();
+        GamerProfile_SetBit(iVar1,param_3,param_2);
       }
     }
   }
-  cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar6 == '\0') {
-    uVar3 = LiveStorage_GetActiveStatsSource(uVar1);
-    uVar5 = LiveStorage_GetPersistentDataBufferForSource(uVar1,uVar3);
+  bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar6) {
+    puVar3 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    uVar5 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+    puVar3 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
   }
-  if (uVar5 != 0) {
-    uVar3 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-    local_50[1] = 0x2ffc;
-    local_50[0] = uVar5;
-    StructuredData_InitializeLookup(uVar3,auStack_40);
-    StructuredData_LookupWithString(auStack_40,param_2);
-    iVar4 = StructuredData_GetLookupState(auStack_40);
-    if ((iVar4 != 2) && (*local_3c == 6)) {
-      uVar2 = LiveStorage_PlayerDataGetArrayBoolByIndex(local_50,param_2,param_3);
-      if ((uVar2 & 0xff) != (param_4 & 0xff)) {
-        LiveStorage_PlayerDataSetArrayBoolByIndex(local_50,param_2,param_3,param_4);
-        LiveStorage_StatsWriteNeeded(uVar1);
-      }
+  if (puVar3 != (uchar *)0x0) {
+    pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    local_50[0].size = 0x2ffc;
+    local_50[0].data = puVar3;
+    StructuredData_InitializeLookup(pSVar4,aSStack_40);
+    StructuredData_LookupWithString(aSStack_40,param_2);
+    LVar5 = StructuredData_GetLookupState(aSStack_40);
+    if (((LVar5 != LOOKUP_ERROR) && ((aSStack_40[0].type)->type == DATA_INDEXED_ARRAY)) &&
+       (bVar6 = LiveStorage_PlayerDataGetArrayBoolByIndex(local_50,param_2,param_3),
+       (longlong)bVar6 != (uVar7 & 0xff))) {
+      LiveStorage_PlayerDataSetArrayBoolByIndex(local_50,param_2,param_3,SUB81(uVar7,0));
+      LiveStorage_StatsWriteNeeded(iVar1);
     }
   }
   __restgprlr_27();
@@ -6720,25 +7294,28 @@ void LiveStorage_SetPlayerCardItemField
 // 824E3BF8  LiveStorage_SetPlayerCardItemFieldByName  (qcommon/com_storage.cpp:5986)
 
 void LiveStorage_SetPlayerCardItemFieldByName
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+               (int param_1,char *param_2,char *param_3,char *param_4,int param_5,bool param_6)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int local_50 [20];
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  StringTable *local_50 [20];
   
-  uVar1 = __savegprlr_24();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1766,0,0xffffffff82000f98,0xffffffff82086cb8);
+  uVar3 = (ulonglong)(int)param_3;
+  iVar1 = __savegprlr_24(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1766,0,"%s");
   }
-  StringTable_GetAsset(param_3,local_50);
-  if (local_50[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x1769,0,0xffffffff82000f98,0xffffffff8203aaf0);
+  StringTable_GetAsset((char *)uVar3,local_50);
+  if (local_50[0] == (StringTable *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1769,0,"%s");
   }
-  uVar2 = StringTable_LookupRowNumForValue(local_50[0],param_5,param_4);
-  if (-1 < (int)uVar2) {
-    LiveStorage_SetPlayerCardItemField(uVar1,param_2,uVar2,param_6);
+  iVar2 = StringTable_LookupRowNumForValue(local_50[0],param_5,param_4);
+  if (-1 < iVar2) {
+    LiveStorage_SetPlayerCardItemField(iVar1,param_2,iVar2,param_6);
   }
   __restgprlr_24();
   return;
@@ -6748,56 +7325,58 @@ void LiveStorage_SetPlayerCardItemFieldByName
 // 824E3CB8  LiveStorage_UpdatePlayerCardItem  (qcommon/com_storage.cpp:6003)
 
 void LiveStorage_UpdatePlayerCardItem
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,int param_4,
-               undefined8 param_5)
+               (int param_1,StatsSource param_2,char *param_3,char *param_4,char *param_5)
 
 {
-  bool bVar1;
+  int iVar1;
+  bool bVar3;
   int iVar2;
-  undefined8 uVar3;
-  char cVar6;
-  undefined8 uVar4;
-  short sVar5;
-  int in_stack_0000002c;
-  undefined8 local_80;
-  uint local_78 [2];
-  undefined8 local_70;
-  undefined1 auStack_60 [96];
+  ulonglong uVar4;
+  char *pcStack0000002c;
+  GamerProfileData local_80;
+  StructuredDataBuffer local_78;
+  GamerProfileData local_70;
+  char acStack_60 [96];
   
-  uVar3 = __savegprlr_26();
-  in_stack_0000002c = param_4;
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x177a,0,0xffffffff82000f98,0xffffffff820362e8);
+  uVar4 = (ulonglong)(int)param_3;
+  pcStack0000002c = param_4;
+  iVar1 = __savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x177a,0,"%s");
   }
-  if (in_stack_0000002c == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x177b,0,0xffffffff82000f98,0xffffffff82086cc4);
+  if (pcStack0000002c == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x177b,0,"%s");
   }
-  local_78[0] = LiveStorage_GetPersistentDataBufferForSource(uVar3,param_2);
-  if (local_78[0] == 0) {
-    MyAssertHandler(0xffffffff820859c8,0x177e,0,0xffffffff82000f98,0xffffffff8201f49c);
-    MyAssertHandler(0xffffffff82085860,0x54,0,0xffffffff82000f98,0xffffffff82030240);
+  local_78.data = LiveStorage_GetPersistentDataBufferForSource(iVar1,param_2);
+  if (local_78.data == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x177e,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_structureddatadef.h"
+                    ,0x54,0,"%s");
   }
-  local_78[1] = 0x2ffc;
-  local_80 = GamerProfile_GetDataByName(uVar3,in_stack_0000002c);
-  local_70._0_4_ = (int)((ulonglong)local_80 >> 0x20);
-  iVar2 = local_70._0_4_;
-  bVar1 = local_70._0_4_ != 3;
+  local_78.size = 0x2ffc;
+  local_80 = GamerProfile_GetDataByName(iVar1,pcStack0000002c);
+  local_70.type = local_80.type;
+  local_80.type = local_70.type;
+  bVar3 = local_70.type != TYPE_SHORT;
   local_70 = local_80;
-  if (bVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x1782,0,0xffffffff82000f98,0xffffffff82086c98);
+  if (bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1782,0,"%s");
   }
-  cVar6 = GamerProfile_GetBit(uVar3,local_70._4_2_,param_5);
-  if (cVar6 == '\0') {
-    local_80._4_4_ = (uint)(ushort)local_80;
-    local_80 = CONCAT44(iVar2,local_80._4_4_);
-    uVar4 = GamerProfile_GetDataIndexByName(in_stack_0000002c);
-    GamerProfile_SetData(uVar3,uVar4,local_80);
+  bVar3 = GamerProfile_GetBit(iVar1,SEXT24(local_70.u.intVal._0_2_),param_5);
+  if (!bVar3) {
+    local_80.u.shortVal = 0;
+    iVar2 = GamerProfile_GetDataIndexByName(pcStack0000002c);
+    GamerProfile_SetData(iVar1,iVar2,local_80);
   }
-  sVar5 = LiveStorage_DataGetInternalInt(&stack0x0000002c,1,local_78);
-  if (sVar5 != local_80._4_2_) {
-    Com_sprintf(auStack_60,0x20,0xffffffff82013b64,local_80._4_2_);
-    LiveStorage_DataSetInternalString(&stack0x0000002c,1,auStack_60,local_78,0);
-    (&DAT_836398d2)[(int)param_2 * 0x3005 + (int)uVar3 * 0x9238] = 1;
+  iVar2 = LiveStorage_DataGetInternalInt(&stack0x0000002c,1,&local_78);
+  if (iVar2 != SEXT24(local_80.u.intVal._0_2_)) {
+    Com_sprintf(acStack_60,0x20,"%d");
+    LiveStorage_DataSetInternalString(&stack0x0000002c,1,acStack_60,&local_78,(uchar *)0x0);
+    controllerStatData[iVar1].playerStats[param_2].statWriteNeeded = true;
     UI_ExpressionState_PlayerDataModified();
   }
   __restgprlr_26();
@@ -6807,14 +7386,14 @@ void LiveStorage_UpdatePlayerCardItem
 
 // 824E3E90  LiveStorage_UpdatePlayerCardFromProfile  (qcommon/com_storage.cpp:6038)
 
-void LiveStorage_UpdatePlayerCardFromProfile(undefined8 param_1,undefined8 param_2)
+void LiveStorage_UpdatePlayerCardFromProfile(int param_1,StatsSource param_2)
 
 {
-  if ((int)param_2 == 0) {
+  if (param_2 == STATS_ONLINE) {
     LiveStorage_UpdatePlayerCardItem
-              (param_1,param_2,0xffffffff82026928,0xffffffff82038d6c,0xffffffff82026918);
+              (param_1,STATS_ONLINE,"mp/cardIconTable.csv","cardIcon","iconUnlocked");
     LiveStorage_UpdatePlayerCardItem
-              (param_1,0,0xffffffff820268f8,0xffffffff82038d60,0xffffffff820268e8);
+              (param_1,STATS_ONLINE,"mp/cardTitleTable.csv","cardTitle","titleUnlocked");
   }
   return;
 }
@@ -6822,239 +7401,305 @@ void LiveStorage_UpdatePlayerCardFromProfile(undefined8 param_1,undefined8 param
 
 // 824EA990  Live_GetXpMP  (qcommon/com_storage.cpp:6051)
 
-void Live_GetXpMP(undefined8 param_1)
+int Live_GetXpMP(int param_1)
 
 {
-  LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff8203ab24);
-  return;
+  int iVar1;
+  
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"experience");
+  return iVar1;
 }
 
 
 // 824EA9A0  Live_GetRankMP  (qcommon/com_storage.cpp:6064)
 
-void Live_GetRankMP(undefined8 param_1)
+int Live_GetRankMP(int param_1)
 
 {
-  LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff8203ab24);
-  CL_GetRankForXpMP();
-  return;
+  int iVar1;
+  
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"experience");
+  iVar1 = CL_GetRankForXpMP(iVar1);
+  return iVar1;
 }
 
 
 // 824EA9D0  Live_GetPrestigeMP  (qcommon/com_storage.cpp:6075)
 
-void Live_GetPrestigeMP(undefined8 param_1)
+int Live_GetPrestigeMP(int param_1)
 
 {
-  LiveStorage_PlayerDataGetIntByName(param_1,0xffffffff8203ab18);
-  return;
+  int iVar1;
+  
+  iVar1 = LiveStorage_PlayerDataGetIntByName(param_1,"prestige");
+  return iVar1;
+}
+
+
+// 824E3F00  Live_GetXpSO  (qcommon/com_storage.cpp:6088)
+
+int Live_GetXpSO(int param_1)
+
+{
+  GamerProfileData GVar1;
+  GamerProfileDataType GStack_10;
+  GamerProfileDataUnion GStack_c;
+  
+  GVar1 = GamerProfile_GetDataByName(param_1,"experience_SO");
+  GStack_10 = GVar1.type;
+  if (GStack_10 != TYPE_INT) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
+                    0x129c,0,"%s");
+  }
+  GStack_c = GVar1.u;
+  return GStack_c.intVal;
 }
 
 
 // 824E3F08  Live_GetRankSO  (qcommon/com_storage.cpp:6101)
 
-void Live_GetRankSO(void)
+int Live_GetRankSO(int param_1)
 
 {
-  GamerProfile_GetExperienceSO();
-  CL_GetRankForXpSO();
-  return;
+  int iVar1;
+  
+  iVar1 = GamerProfile_GetExperienceSO(param_1);
+  iVar1 = CL_GetRankForXpSO(iVar1);
+  return iVar1;
+}
+
+
+// 824E3F30  Live_GetPrestigeSO  (qcommon/com_storage.cpp:6112)
+
+int Live_GetPrestigeSO(int param_1)
+
+{
+  GamerProfileData GVar1;
+  GamerProfileDataType GStack_10;
+  GamerProfileDataUnion GStack_c;
+  
+  GVar1 = GamerProfile_GetDataByName(param_1,"prestige_SO");
+  GStack_10 = GVar1.type;
+  if (GStack_10 != TYPE_INT) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\gamerprofile.cpp",
+                    0x12b2,0,"%s");
+  }
+  GStack_c = GVar1.u;
+  return GStack_c.intVal;
 }
 
 
 // 824E3F38  LiveStorage_ReadMetPlayerList  (qcommon/com_storage.cpp:6126)
 
-void LiveStorage_ReadMetPlayerList
-               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+void LiveStorage_ReadMetPlayerList(int param_1,char *param_2,uchar *param_3,int param_4)
 
 {
-  uint uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 *puVar4;
+  uint uVar2;
+  longlong lVar1;
+  overlappedTask *poVar3;
+  int iVar4;
+  dwFileTask *pdVar6;
+  bool bVar5;
   
-  uVar1 = __savegprlr_26();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x17f2,0,0xffffffff82031880,uVar1,4);
+  uVar2 = __savegprlr_26(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x17f2,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0xf,uVar1);
-  if (cVar3 == '\0') {
-    puVar4 = &DAT_8365d040 + uVar1 * 0x38;
-    iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0xf);
-    if (iVar2 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82086d04);
+  bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0xf,uVar2);
+  lVar1 = (longlong)bVar5;
+  if (lVar1 == 0) {
+    pdVar6 = s_metPlayerFileFileTasks + uVar2;
+    poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar2,0xf);
+    if (poVar3 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate storage task for met player file download");
       __restgprlr_26();
       return;
     }
-    Com_Printf(0x10,0xffffffff82086cd0,uVar1);
-    *puVar4 = param_2;
-    *(undefined4 *)(&DAT_8365d114 + uVar1 * 0xe0) = param_4;
-    *(undefined4 *)(&DAT_8365d118 + uVar1 * 0xe0) = param_3;
-    *(undefined4 **)(iVar2 + 0x98) = puVar4;
-    dwFetchUserFile(iVar2,puVar4);
+    Com_Printf(0x10,"LiveStorage_ReadMetPlayerList for controller %d\n");
+    pdVar6->m_filename = param_2;
+    s_metPlayerFileFileTasks[uVar2].m_bufferSize = param_4;
+    s_metPlayerFileFileTasks[uVar2].m_buffer = param_3;
+    poVar3->data = pdVar6;
+    iVar4 = dwFetchUserFile(poVar3,pdVar6);
+    lVar1 = (longlong)iVar4;
   }
-  __restgprlr_26();
+  __restgprlr_26(lVar1);
   return;
 }
 
 
 // 824E4020  LiveStorage_ReadMetPlayerListComplete  (qcommon/com_storage.cpp:6158)
 
-undefined8 LiveStorage_ReadMetPlayerListComplete(int param_1)
+taskCompleteResults LiveStorage_ReadMetPlayerListComplete(int param_1)
 
 {
-  undefined8 uVar1;
+  taskCompleteResults tVar1;
   
-  param_1 = param_1 * 0xa0;
-  uVar1 = dwFetchFileComplete(&DAT_8365bc40 + param_1,
-                              (ulonglong)(byte)(&DAT_8365bcd5)[param_1] * 0xe0 + -0x7c9a2fc0);
-  if ((int)uVar1 != 0) {
-    if ((int)uVar1 == 2) {
-      MeetPlayer_Reset((&DAT_8365bcd5)[param_1]);
+  tVar1 = dwFetchFileComplete(storageTasks.tasks + param_1,
+                              s_metPlayerFileFileTasks + storageTasks.tasks[param_1].controllerIndex
+                             );
+  if (tVar1 != TASK_NOTCOMPLETE) {
+    if (tVar1 == TASK_ERROR) {
+      MeetPlayer_Reset((uint)storageTasks.tasks[param_1].controllerIndex);
     }
-    MeetPlayer_SetMetPlayerListDownloaded((&DAT_8365bcd5)[param_1]);
-    TaskManager_ClearTask(&DAT_8365bc40 + param_1);
+    MeetPlayer_SetMetPlayerListDownloaded((uint)storageTasks.tasks[param_1].controllerIndex);
+    TaskManager_ClearTask(storageTasks.tasks + param_1);
   }
-  return uVar1;
+  return tVar1;
 }
 
 
 // 824E40B8  LiveStorage_WriteMetPlayerList  (qcommon/com_storage.cpp:6185)
 
-void LiveStorage_WriteMetPlayerList
-               (undefined8 param_1,undefined4 param_2,undefined8 param_3,undefined8 param_4)
+void LiveStorage_WriteMetPlayerList(int param_1,char *param_2,uchar *param_3,int param_4)
 
 {
-  uint uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 *puVar4;
+  uint uVar2;
+  longlong lVar1;
+  overlappedTask *poVar3;
+  int iVar4;
+  dwFileTask *pdVar6;
+  bool bVar5;
   
-  uVar1 = __savegprlr_26();
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x182d,0,0xffffffff82031880,uVar1,4);
+  uVar2 = __savegprlr_26(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x182d,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x10,uVar1);
-  if (cVar3 == '\0') {
-    puVar4 = &DAT_8365d040 + uVar1 * 0x38;
-    iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0x10);
-    if (iVar2 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82086d74);
+  bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x10,uVar2);
+  lVar1 = (longlong)bVar5;
+  if (lVar1 == 0) {
+    pdVar6 = s_metPlayerFileFileTasks + uVar2;
+    poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar2,0x10);
+    if (poVar3 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate storage task for met player file upload");
       __restgprlr_26();
       return;
     }
-    Com_Printf(0x10,0xffffffff82086d40,uVar1);
-    *puVar4 = param_2;
-    *(undefined4 **)(iVar2 + 0x98) = puVar4;
-    dwCreateFile(iVar2,puVar4,param_3,param_4);
+    Com_Printf(0x10,"LiveStorage_WriteMetPlayerList for controller %d\n");
+    pdVar6->m_filename = param_2;
+    poVar3->data = pdVar6;
+    iVar4 = dwCreateFile(poVar3,pdVar6,param_3,param_4);
+    lVar1 = (longlong)iVar4;
   }
-  __restgprlr_26();
+  __restgprlr_26(lVar1);
   return;
 }
 
 
 // 824E41A0  LiveStorage_WriteMetPlayerListComplete  (qcommon/com_storage.cpp:6216)
 
-undefined8 LiveStorage_WriteMetPlayerListComplete(int param_1)
+taskCompleteResults LiveStorage_WriteMetPlayerListComplete(int param_1)
 
 {
-  undefined8 uVar1;
+  taskCompleteResults tVar1;
   
-  param_1 = param_1 * 0xa0;
-  uVar1 = dwCreateFileComplete
-                    (&DAT_8365bc40 + param_1,
-                     (ulonglong)(byte)(&DAT_8365bcd5)[param_1] * 0xe0 + -0x7c9a2fc0);
-  if ((int)uVar1 != 0) {
-    MeetPlayer_ClearUploadFlags((&DAT_8365bcd5)[param_1]);
-    TaskManager_ClearTask(&DAT_8365bc40 + param_1);
+  tVar1 = dwCreateFileComplete
+                    (storageTasks.tasks + param_1,
+                     s_metPlayerFileFileTasks + storageTasks.tasks[param_1].controllerIndex);
+  if (tVar1 != TASK_NOTCOMPLETE) {
+    MeetPlayer_ClearUploadFlags((uint)storageTasks.tasks[param_1].controllerIndex);
+    TaskManager_ClearTask(storageTasks.tasks + param_1);
   }
-  return uVar1;
+  return tVar1;
 }
 
 
 // 824E4228  LiveStorage_ReadEntitlementConfigFile  (qcommon/com_storage.cpp:6240)
 
-void LiveStorage_ReadEntitlementConfigFile
-               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+bool LiveStorage_ReadEntitlementConfigFile(int param_1,char *param_2,uchar *param_3,int param_4)
 
 {
   uint uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 *puVar4;
+  bool bVar3;
+  overlappedTask *poVar2;
+  undefined1 uVar4;
+  dwFileTask *pdVar5;
   
-  uVar1 = __savegprlr_27();
+  uVar1 = __savegprlr_27(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x1864,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1864,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x12,uVar1);
-  if (cVar3 == '\0') {
-    puVar4 = &DAT_8365b7d8 + uVar1 * 0x38;
-    iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0x12);
-    if (iVar2 != 0) {
-      *puVar4 = param_2;
-      *(undefined4 *)(&DAT_8365b8ac + uVar1 * 0xe0) = param_4;
-      *(undefined4 *)(&DAT_8365b8b0 + uVar1 * 0xe0) = param_3;
-      *(undefined4 **)(iVar2 + 0x98) = puVar4;
-      dwFetchPublisherFile(iVar2,puVar4);
-      __restgprlr_27(1);
-      return;
+  bVar3 = TaskManager_TaskIsInProgressForController(&storageTasks,0x12,uVar1);
+  if (!bVar3) {
+    pdVar5 = s_entitlementConfigFileTasks + uVar1;
+    poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar1,0x12);
+    if (poVar2 != (overlappedTask *)0x0) {
+      pdVar5->m_filename = param_2;
+      s_entitlementConfigFileTasks[uVar1].m_bufferSize = param_4;
+      s_entitlementConfigFileTasks[uVar1].m_buffer = param_3;
+      poVar2->data = pdVar5;
+      dwFetchPublisherFile(poVar2,pdVar5);
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
-    Com_PrintWarning(0x10,0xffffffff82086db0);
+    Com_PrintWarning(0x10,"Couldn\'t allocate storage task for entitlement config file download");
   }
-  __restgprlr_27(0);
-  return;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 824E4300  LiveStorage_ReadEntitlementConfigFileComplete  (qcommon/com_storage.cpp:6273)
 
-undefined8 LiveStorage_ReadEntitlementConfigFileComplete(int param_1)
+taskCompleteResults LiveStorage_ReadEntitlementConfigFileComplete(int param_1)
 
 {
-  undefined8 uVar1;
+  taskCompleteResults tVar1;
+  uint uVar2;
   
-  param_1 = param_1 * 0xa0;
-  uVar1 = dwFetchFileComplete(&DAT_8365bc40 + param_1,
-                              (ulonglong)(byte)(&DAT_8365bcd5)[param_1] * 0xe0 + -0x7c9a4828);
-  if ((int)uVar1 != 0) {
-    if ((int)uVar1 == 2) {
-      Entitlement_ConfigFileDownload_Failed();
+  tVar1 = dwFetchFileComplete(storageTasks.tasks + param_1,
+                              s_entitlementConfigFileTasks +
+                              storageTasks.tasks[param_1].controllerIndex);
+  if (tVar1 != TASK_NOTCOMPLETE) {
+    uVar2 = (uint)storageTasks.tasks[param_1].controllerIndex;
+    if (tVar1 == TASK_ERROR) {
+      Entitlement_ConfigFileDownload_Failed(uVar2);
     }
     else {
-      Entitlement_ConfigFileDownloaded((&DAT_8365bcd5)[param_1]);
+      Entitlement_ConfigFileDownloaded(uVar2);
     }
-    TaskManager_ClearTask(&DAT_8365bc40 + param_1);
+    TaskManager_ClearTask(storageTasks.tasks + param_1);
   }
-  return uVar1;
+  return tVar1;
 }
 
 
 // 824EA9E0  LiveStorage_UpdatePlaylistFileInfo  (qcommon/com_storage.cpp:6306)
 
-void LiveStorage_UpdatePlaylistFileInfo(void)
+void LiveStorage_UpdatePlaylistFileInfo(int param_1)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar4;
+  char *pcVar1;
+  int iVar2;
+  bdLobbyService *pbVar3;
+  Status SVar4;
+  int iVar5;
+  bool bVar6;
   
-  uVar2 = __savegprlr_29();
-  iVar3 = dwGetLobbyService();
-  if (iVar3 != 0) {
-    dwGetLobbyService(uVar2);
-    iVar3 = bdLobbyService__getStatus();
-    if (((iVar3 == 2) && (DAT_8365b1b9 != '\0')) && (DAT_8365b1ba == '\0')) {
-      uVar1 = *(undefined4 *)(DAT_83666164 + 0xc);
-      if ((DAT_8365b1c8 != -1) && (iVar3 = Sys_Milliseconds(), DAT_8365b1c8 < iVar3)) {
-        LiveStorage_GetFileInfo(uVar2,uVar1);
+  iVar2 = __savegprlr_29(param_1);
+  pbVar3 = dwGetLobbyService(iVar2);
+  if (pbVar3 != (bdLobbyService *)0x0) {
+    pbVar3 = dwGetLobbyService(iVar2);
+    SVar4 = bdLobbyService::getStatus(pbVar3);
+    if (((SVar4 == BD_CONNECTED) && (g_playlistsFetched != false)) &&
+       (g_bFetchingPlaylistInfo == false)) {
+      pcVar1 = (playlistAggrFilename->current).string;
+      if ((s_time_to_check != -1) && (iVar5 = Sys_Milliseconds(), s_time_to_check < iVar5)) {
+        LiveStorage_GetFileInfo(iVar2,pcVar1);
       }
-      if (((DAT_8365b1bb != '\0') && (cVar4 = LSP_IsNewPlaylistAvailable(), cVar4 == '\0')) &&
-         ((DAT_8365d728 != DAT_8365bb80 || (DAT_8365d72c != DAT_8365bb84)))) {
+      if (((g_bHavePlaylistInfo != false) && (bVar6 = LSP_IsNewPlaylistAvailable(), !bVar6)) &&
+         ((s_fetchPlaylistsFileInfoTask.m_infoResult.m_createTime !=
+           g_fetchPlaylistsFileTask.m_infoResult.m_createTime ||
+          (s_fetchPlaylistsFileInfoTask.m_infoResult.m_modifedTime !=
+           g_fetchPlaylistsFileTask.m_infoResult.m_modifedTime)))) {
         LSP_SetPlaylistAvailable();
-        DAT_8365bb80 = DAT_8365d728;
-        DAT_8365bb84 = DAT_8365d72c;
+        g_fetchPlaylistsFileTask.m_infoResult.m_createTime =
+             s_fetchPlaylistsFileInfoTask.m_infoResult.m_createTime;
+        g_fetchPlaylistsFileTask.m_infoResult.m_modifedTime =
+             s_fetchPlaylistsFileInfoTask.m_infoResult.m_modifedTime;
       }
     }
   }
@@ -7065,89 +7710,88 @@ void LiveStorage_UpdatePlaylistFileInfo(void)
 
 // 824E4398  LiveStorage_GetFileInfo  (qcommon/com_storage.cpp:6351)
 
-void LiveStorage_GetFileInfo(undefined8 param_1,undefined4 param_2)
+bool LiveStorage_GetFileInfo(int param_1,char *param_2)
 
 {
-  ulonglong uVar1;
-  char cVar3;
-  int iVar2;
+  uint uVar1;
+  bool bVar4;
+  overlappedTask *poVar2;
+  undefined1 uVar5;
+  int iVar3;
   
-  uVar1 = __savegprlr_29();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff820859c8,0x18d2,0,0xffffffff82031880,uVar1,4);
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x18d2,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x1d,uVar1);
-  if (cVar3 == '\0') {
-    iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0x1d);
-    if (iVar2 == 0) {
-      Com_PrintWarning(0x10,0xffffffff82086df4);
+  bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1d,uVar1);
+  if (!bVar4) {
+    poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar1,0x1d);
+    if (poVar2 == (overlappedTask *)0x0) {
+      Com_PrintWarning(0x10,"Couldn\'t allocate storage task to get file info");
     }
     else {
-      DAT_8365d700 = param_2;
-      *(undefined4 **)(iVar2 + 0x98) = &DAT_8365d700;
-      iVar2 = dwFetchFileInfo(iVar2,0xffffffff8365d700);
-      if (iVar2 != 0) {
-        DAT_8365b1ba = 1;
-        DAT_8365b1bb = 0;
-        __restgprlr_29(1);
-        return;
+      s_fetchPlaylistsFileInfoTask.m_filename = param_2;
+      poVar2->data = &s_fetchPlaylistsFileInfoTask;
+      iVar3 = dwFetchFileInfo(poVar2,&s_fetchPlaylistsFileInfoTask);
+      if (iVar3 != 0) {
+        g_bFetchingPlaylistInfo = true;
+        g_bHavePlaylistInfo = false;
+        uVar5 = __restgprlr_29(1);
+        return (bool)uVar5;
       }
     }
   }
-  __restgprlr_29(0);
-  return;
+  uVar5 = __restgprlr_29(0);
+  return (bool)uVar5;
 }
 
 
 // 824E4478  LiveStorage_GetFileInfoComplete  (qcommon/com_storage.cpp:6383)
 
-void LiveStorage_GetFileInfoComplete(void)
+taskCompleteResults LiveStorage_GetFileInfoComplete(int param_1)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar1;
+  taskCompleteResults tVar2;
   
-  uVar1 = __savegprlr_28();
-  lVar4 = (uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20 + -0x7c9a43c0;
-  uVar2 = dwFetchFileInfoComplete(lVar4,0xffffffff8365d700);
-  if ((int)uVar2 != 0) {
-    DAT_8365b1ba = 0;
-    TaskManager_ClearTask(lVar4);
-    if (((int)uVar2 != 2) && (DAT_8365b1bb = 1, DAT_8365bb80 == 0)) {
-      DAT_8365bb80 = DAT_8365d728;
-      DAT_8365bb84 = DAT_8365d72c;
+  iVar1 = __savegprlr_28(param_1);
+  tVar2 = dwFetchFileInfoComplete(storageTasks.tasks + iVar1,&s_fetchPlaylistsFileInfoTask);
+  if (tVar2 != TASK_NOTCOMPLETE) {
+    g_bFetchingPlaylistInfo = false;
+    TaskManager_ClearTask(storageTasks.tasks + iVar1);
+    if ((tVar2 != TASK_ERROR) &&
+       (g_bHavePlaylistInfo = true, g_fetchPlaylistsFileTask.m_infoResult.m_createTime == 0)) {
+      g_fetchPlaylistsFileTask.m_infoResult.m_createTime =
+           s_fetchPlaylistsFileInfoTask.m_infoResult.m_createTime;
+      g_fetchPlaylistsFileTask.m_infoResult.m_modifedTime =
+           s_fetchPlaylistsFileInfoTask.m_infoResult.m_modifedTime;
     }
-    if (0 < *(int *)(DAT_8365e13c + 0xc)) {
-      iVar3 = Sys_Milliseconds();
-      DAT_8365b1c8 = iVar3 + *(int *)(DAT_8365e13c + 0xc) * 60000;
-      __restgprlr_28(uVar2);
-      return;
+    if (0 < (playListUpdateCheckMinutes->current).integer) {
+      iVar1 = Sys_Milliseconds();
+      s_time_to_check = iVar1 + (playListUpdateCheckMinutes->current).integer * 60000;
+      tVar2 = __restgprlr_28(tVar2);
+      return tVar2;
     }
-    DAT_8365b1c8 = 0xffffffff;
+    s_time_to_check = -1;
   }
-  __restgprlr_28(uVar2);
-  return;
+  tVar2 = __restgprlr_28(tVar2);
+  return tVar2;
 }
 
 
 // 824E4560  LiveStorage_GetUserSponsor  (qcommon/com_storage.cpp:6423)
 
-ulonglong LiveStorage_GetUserSponsor(ulonglong param_1)
+int LiveStorage_GetUserSponsor(int param_1)
 
 {
-  char cVar2;
-  int iVar1;
-  undefined1 auStack_40 [20];
-  uint local_2c;
+  bool bVar2;
+  ulong uVar1;
+  _XUSER_SIGNIN_INFO _Stack_40;
   
-  cVar2 = Live_UserIsGuest();
-  if (cVar2 != '\0') {
-    iVar1 = XUserGetSigninInfo(param_1,0,auStack_40);
-    if (iVar1 == 0) {
-      return (ulonglong)local_2c;
-    }
+  bVar2 = Live_UserIsGuest(param_1);
+  if ((bVar2) && (uVar1 = XUserGetSigninInfo(param_1,0,&_Stack_40), uVar1 == 0)) {
+    return _Stack_40.dwSponsorUserIndex;
   }
   return param_1;
 }
@@ -7155,41 +7799,34 @@ ulonglong LiveStorage_GetUserSponsor(ulonglong param_1)
 
 // 824E45B8  LiveStorage_CopySponsorStats  (qcommon/com_storage.cpp:6443)
 
-void LiveStorage_CopySponsorStats(void)
+void LiveStorage_CopySponsorStats(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar4;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  undefined1 auStack_60 [20];
-  uint local_4c;
+  ulong uVar1;
+  bool bVar5;
+  ulong uVar2;
+  StatsSource SVar3;
+  StatsSource SVar4;
+  _XUSER_SIGNIN_INFO a_Stack_60 [2];
   
-  uVar1 = __savegprlr_26();
-  iVar6 = (int)uVar1 * 0x9238;
-  if ((&DAT_836398d0)[iVar6] != '\0') goto LAB_824e4680;
-  cVar4 = Live_UserIsGuest();
-  if (cVar4 == '\0') {
-LAB_824e4618:
-    uVar7 = uVar1;
+  uVar1 = __savegprlr_26(param_1);
+  if (controllerStatData[uVar1].playerStats[0].statsFetched != false) goto LAB_824e4680;
+  bVar5 = Live_UserIsGuest(uVar1);
+  if (bVar5) {
+    uVar2 = XUserGetSigninInfo(uVar1,0,a_Stack_60);
+    if (uVar2 != 0) goto LAB_824e4618;
   }
   else {
-    iVar3 = XUserGetSigninInfo(uVar1,0,auStack_60);
-    uVar7 = (ulonglong)local_4c;
-    if (iVar3 != 0) goto LAB_824e4618;
+LAB_824e4618:
+    a_Stack_60[0].dwSponsorUserIndex = uVar1;
   }
-  uVar2 = LiveStorage_GetActiveStatsSource(uVar7);
-  iVar3 = LiveStorage_GetActiveStatsSource(uVar7);
-  iVar5 = (int)uVar7 * 0x9238;
-  if ((&DAT_836398d0)[iVar3 * 0x3005 + iVar5] != '\0') {
-    iVar3 = (int)uVar2 * 0x3005;
-    iVar6 = iVar3 + iVar6;
-    memcpy(&DAT_836368d0 + iVar6,&DAT_836368d0 + iVar3 + iVar5,0x3000);
-    (&DAT_836398d0)[iVar6] = 1;
-    GamerProfile_UpdateProfileFromStats(uVar1,uVar2);
+  SVar3 = LiveStorage_GetActiveStatsSource(a_Stack_60[0].dwSponsorUserIndex);
+  SVar4 = LiveStorage_GetActiveStatsSource(a_Stack_60[0].dwSponsorUserIndex);
+  if (controllerStatData[a_Stack_60[0].dwSponsorUserIndex].playerStats[SVar4].statsFetched != false)
+  {
+    memcpy();
+    controllerStatData[uVar1].playerStats[SVar3].statsFetched = true;
+    GamerProfile_UpdateProfileFromStats(uVar1,SVar3);
   }
 LAB_824e4680:
   __restgprlr_26();
@@ -7199,106 +7836,111 @@ LAB_824e4680:
 
 // 824E4688  LiveStorage_ReadSocialConfigFile  (qcommon/com_storage.cpp:6480)
 
-void LiveStorage_ReadSocialConfigFile
-               (undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+bool LiveStorage_ReadSocialConfigFile(int param_1,char *param_2,uchar *param_3,int param_4)
 
 {
   uint uVar1;
-  char cVar3;
-  int iVar2;
-  undefined4 *puVar4;
+  bool bVar3;
+  overlappedTask *poVar2;
+  undefined1 uVar4;
+  dwFileTask *pdVar5;
   
-  uVar1 = __savegprlr_27();
+  uVar1 = __savegprlr_27(param_1);
   if (3 < uVar1) {
-    MyAssertHandler(0xffffffff820859c8,0x1954,0,0xffffffff82031880,uVar1,4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1954,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  cVar3 = TaskManager_TaskIsInProgressForController(0xffffffff8365bc38,0x1e,uVar1);
-  if (cVar3 == '\0') {
-    puVar4 = &DAT_8365d7e0 + uVar1 * 0x38;
-    iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar1,0x1e);
-    if (iVar2 != 0) {
-      *puVar4 = param_2;
-      *(undefined4 *)(&DAT_8365d8b4 + uVar1 * 0xe0) = param_4;
-      *(undefined4 *)(&DAT_8365d8b8 + uVar1 * 0xe0) = param_3;
-      *(undefined4 **)(iVar2 + 0x98) = puVar4;
-      dwFetchPublisherFile(iVar2,puVar4);
-      __restgprlr_27(1);
-      return;
+  bVar3 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1e,uVar1);
+  if (!bVar3) {
+    pdVar5 = s_socialConfigFileTasks + uVar1;
+    poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar1,0x1e);
+    if (poVar2 != (overlappedTask *)0x0) {
+      pdVar5->m_filename = param_2;
+      s_socialConfigFileTasks[uVar1].m_bufferSize = param_4;
+      s_socialConfigFileTasks[uVar1].m_buffer = param_3;
+      poVar2->data = pdVar5;
+      dwFetchPublisherFile(poVar2,pdVar5);
+      uVar4 = __restgprlr_27(1);
+      return (bool)uVar4;
     }
-    Com_PrintWarning(0x10,0xffffffff82086e24);
+    Com_PrintWarning(0x10,"Couldn\'t allocate storage task for social config file download");
   }
-  __restgprlr_27(0);
-  return;
+  uVar4 = __restgprlr_27(0);
+  return (bool)uVar4;
 }
 
 
 // 824E4760  LiveStorage_ReadSocialConfigFileComplete  (qcommon/com_storage.cpp:6513)
 
-undefined8 LiveStorage_ReadSocialConfigFileComplete(int param_1)
+taskCompleteResults LiveStorage_ReadSocialConfigFileComplete(int param_1)
 
 {
-  undefined8 uVar1;
+  taskCompleteResults tVar1;
+  uint uVar2;
   
-  param_1 = param_1 * 0xa0;
-  uVar1 = dwFetchFileComplete(&DAT_8365bc40 + param_1,
-                              (ulonglong)(byte)(&DAT_8365bcd5)[param_1] * 0xe0 + -0x7c9a2820);
-  if ((int)uVar1 != 0) {
-    if ((int)uVar1 == 2) {
-      SocialConfig_FileDownload_Failed();
+  tVar1 = dwFetchFileComplete(storageTasks.tasks + param_1,
+                              s_socialConfigFileTasks + storageTasks.tasks[param_1].controllerIndex)
+  ;
+  if (tVar1 != TASK_NOTCOMPLETE) {
+    uVar2 = (uint)storageTasks.tasks[param_1].controllerIndex;
+    if (tVar1 == TASK_ERROR) {
+      SocialConfig_FileDownload_Failed(uVar2);
     }
     else {
-      SocialConfig_FileDownloaded((&DAT_8365bcd5)[param_1]);
+      SocialConfig_FileDownloaded(uVar2);
     }
-    TaskManager_ClearTask(&DAT_8365bc40 + param_1);
+    TaskManager_ClearTask(storageTasks.tasks + param_1);
   }
-  return uVar1;
+  return tVar1;
 }
 
 
 // 824E47F8  LiveStorage_CheckConnection  (qcommon/com_storage.cpp:6543)
 
-undefined8 LiveStorage_CheckConnection(undefined8 param_1)
+bool LiveStorage_CheckConnection(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Live_IsUserSignedInToLive();
-  if ((cVar1 != '\0') && (cVar1 = Live_IsUserSignedInToDemonware(param_1), cVar1 != '\0')) {
-    return 1;
+  bVar1 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar1) && (bVar1 = Live_IsUserSignedInToDemonware(param_1), bVar1)) {
+    return true;
   }
-  Com_PrintError(0x10,0xffffffff82086e68);
-  return 0;
+  Com_PrintError(0x10,"Tried to perform a DW operation without a connection to LSP and DW.\n");
+  return false;
 }
 
 
 // 824E4870  LiveStorage_ClearDWOverlappedTasks  (qcommon/com_storage.cpp:6559)
 
-void LiveStorage_ClearDWOverlappedTasks(undefined8 param_1)
+void LiveStorage_ClearDWOverlappedTasks(int param_1)
 
 {
-  TaskManager_ClearOverlappedTasksForController(0xffffffff8365bc40,param_1);
+  TaskManager_ClearOverlappedTasksForController(storageTasks.tasks,param_1);
   return;
 }
 
 
 // 824E4888  LiveStorage_ResetEliteCACCheckForController  (qcommon/com_storage.cpp:6566)
 
-void LiveStorage_ResetEliteCACCheckForController(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_ResetEliteCACCheckForController(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  char cVar3;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  bool bVar3;
   
-  iVar2 = __savegprlr_29();
-  (&DAT_8365b6e8)[iVar2] = 0;
-  if (iVar2 == DAT_8365b7d0) {
-    uVar1 = CL_LocalClientNumFromControllerIndex();
-    cVar3 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82086eb0);
-    if (cVar3 != '\0') {
-      uVar1 = CL_LocalClientNumFromControllerIndex(iVar2);
-      UI_CloseMenu(uVar1,0xffffffff82086eb0);
-      DAT_8365b6ec = 0;
+  iVar1 = __savegprlr_29(param_1);
+  s_eliteCACData.checkedForECACFile[iVar1] = false;
+  if (iVar1 == s_eliteCACData.activeControllerUI) {
+    LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+    bVar3 = Menu_IsMenuOpenAndVisible(LVar2,"cac_elite_popup");
+    if (bVar3) {
+      LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+      UI_CloseMenu(LVar2,"cac_elite_popup");
+      s_eliteCACData.checkingForECACFile = false;
     }
   }
   __restgprlr_29();
@@ -7308,61 +7950,60 @@ void LiveStorage_ResetEliteCACCheckForController(void)
 
 // 824EAAD0  LiveStorage_CheckECACWeaponSetup  (qcommon/com_storage.cpp:6580)
 
-void LiveStorage_CheckECACWeaponSetup
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+bool LiveStorage_CheckECACWeaponSetup
+               (StructuredDataDef *param_1,StructuredDataBuffer *param_2,
+               StructuredDataBuffer *param_3,int param_4,int param_5,bool param_6)
 
 {
   char cVar1;
   char cVar2;
   bool bVar3;
-  undefined8 uVar4;
+  StructuredDataDef *pSVar4;
   char *pcVar5;
   char *pcVar6;
   char *pcVar7;
   char *pcVar8;
-  undefined4 uVar9;
+  char *pcVar9;
+  undefined1 uVar13;
   char *pcVar10;
-  char cVar14;
-  char *pcVar11;
+  int iVar11;
+  bool bVar14;
   int iVar12;
-  int iVar13;
-  undefined8 uVar15;
-  bool bVar16;
-  int iVar17;
-  undefined4 *puVar18;
+  ulonglong uVar15;
+  undefined4 *puVar16;
+  char *pcVar17;
+  char *pcVar18;
   char *pcVar19;
-  char *pcVar20;
-  char *pcVar21;
-  char **ppcVar22;
-  longlong lVar23;
-  undefined4 local_1f0;
-  undefined4 local_1ec;
-  undefined4 local_1e8;
-  undefined4 local_1e4;
+  char **ppcVar20;
+  int iVar21;
+  StringTable *local_1f0;
+  StringTable *local_1ec;
+  StringTable *local_1e8;
+  StringTable *local_1e4;
   char *local_1e0 [4];
-  undefined1 *local_1d0;
-  undefined1 *local_1cc;
-  undefined1 *local_1c8;
-  undefined1 *local_1c4;
-  undefined1 *local_1c0;
-  undefined1 *local_1bc;
-  undefined4 local_1b0 [12];
-  undefined1 auStack_180 [32];
-  undefined1 auStack_160 [32];
-  undefined1 auStack_140 [32];
-  undefined1 auStack_120 [32];
-  undefined1 auStack_100 [32];
-  undefined1 auStack_e0 [32];
+  char *local_1d0;
+  char *local_1cc;
+  char *local_1c8;
+  char *local_1c4;
+  char *local_1c0;
+  char *local_1bc;
+  int local_1b0 [12];
+  char acStack_180 [32];
+  char acStack_160 [32];
+  char acStack_140 [32];
+  char acStack_120 [32];
+  char acStack_100 [32];
+  char acStack_e0 [32];
   undefined4 local_c0 [48];
   
-  uVar4 = __savegprlr_16();
-  local_1d0 = auStack_180;
-  local_1cc = auStack_160;
-  local_1c8 = auStack_140;
-  local_1c4 = auStack_120;
-  local_1c0 = auStack_100;
-  local_1bc = auStack_e0;
+  uVar15 = (ulonglong)param_6;
+  pSVar4 = (StructuredDataDef *)__savegprlr_16(param_1);
+  local_1d0 = acStack_180;
+  local_1cc = acStack_160;
+  local_1c8 = acStack_140;
+  local_1c4 = acStack_120;
+  local_1c0 = acStack_100;
+  local_1bc = acStack_e0;
   local_1b0[0] = 0xb;
   local_1b0[2] = 0xd;
   local_1b0[3] = 0xe;
@@ -7374,816 +8015,832 @@ void LiveStorage_CheckECACWeaponSetup
   local_1b0[7] = 0x12;
   local_1b0[9] = 0x14;
   local_1b0[10] = 0x15;
-  bVar3 = false;
-  StringTable_GetAsset(0xffffffff820867c8,&local_1ec);
-  StringTable_GetAsset(0xffffffff820889fc,&local_1e8);
-  StringTable_GetAsset(0xffffffff820867ec,&local_1f0);
-  StringTable_GetAsset(0xffffffff82026898,&local_1e4);
-  if ((param_6 & 0xff) == 0) {
-    uVar15 = 0xffffffff82085ff0;
+  bVar14 = false;
+  StringTable_GetAsset("mp/statstable.csv",&local_1ec);
+  StringTable_GetAsset("mp/attachmentCombos.csv",&local_1e8);
+  StringTable_GetAsset("mp/weaponRankTable.csv",&local_1f0);
+  StringTable_GetAsset("mp/unlocktable.csv",&local_1e4);
+  if ((uVar15 & 0xff) == 0) {
+    pcVar5 = "customClasses";
   }
   else {
-    uVar15 = 0xffffffff82086010;
+    pcVar5 = "privateMatchCustomClasses";
   }
-  I_strncpyz(auStack_180,uVar15,0x20);
-  uVar15 = va(0xffffffff82013b64,param_5);
-  I_strncpyz(auStack_160,uVar15,0x20);
-  I_strncpyz(auStack_140,0xffffffff82000f9c,0x20);
-  I_strncpyz(auStack_120,0xffffffff820889f8,0x20);
-  pcVar5 = (char *)LiveStorage_MatchDataGetString(&local_1d0,4,param_2,uVar4);
-  I_strncpyz(auStack_140,0xffffffff820889e8,0x20);
-  uVar15 = va(0xffffffff82013b64,param_4);
-  I_strncpyz(auStack_120,uVar15,0x20);
-  I_strncpyz(auStack_100,0xffffffff820267a8,0x20);
-  pcVar6 = (char *)LiveStorage_MatchDataGetString(&local_1d0,5,param_2,uVar4);
-  pcVar7 = (char *)StringTable_Lookup(local_1ec,4,pcVar6,2);
-  I_strncpyz(auStack_100,0xffffffff820889e0,0x20);
-  pcVar8 = (char *)LiveStorage_MatchDataGetString(&local_1d0,5,param_2,uVar4);
-  iVar12 = (int)param_4;
+  I_strncpyz(acStack_180,pcVar5,0x20);
+  pcVar5 = va("%d");
+  I_strncpyz(acStack_160,pcVar5,0x20);
+  I_strncpyz(acStack_140,"perks",0x20);
+  I_strncpyz(acStack_120,"2",0x20);
+  pcVar6 = LiveStorage_MatchDataGetString(&local_1d0,4,param_2,pSVar4);
+  I_strncpyz(acStack_140,"weaponSetups",0x20);
+  pcVar5 = va("%d");
+  I_strncpyz(acStack_120,pcVar5,0x20);
+  I_strncpyz(acStack_100,"weapon",0x20);
+  pcVar7 = LiveStorage_MatchDataGetString(&local_1d0,5,param_2,pSVar4);
+  pcVar8 = StringTable_Lookup(local_1ec,4,pcVar7,2);
+  I_strncpyz(acStack_100,"buff",0x20);
+  pcVar9 = LiveStorage_MatchDataGetString(&local_1d0,5,param_2,pSVar4);
   pcVar19 = "weapon_projectile";
-  pcVar20 = "weapon_pistol";
-  pcVar21 = "weapon_machine_pistol";
-  pcVar11 = pcVar21;
-  pcVar10 = pcVar7;
-  if (iVar12 == 0) {
+  pcVar18 = "weapon_pistol";
+  pcVar17 = "weapon_machine_pistol";
+  pcVar5 = pcVar17;
+  pcVar10 = pcVar8;
+  if (param_4 == 0) {
     do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar11;
-      if (cVar14 == '\0') break;
-      pcVar11 = pcVar11 + 1;
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar5;
+      if (cVar1 == '\0') break;
+      pcVar5 = pcVar5 + 1;
       pcVar10 = pcVar10 + 1;
-    } while (cVar14 == cVar1);
-    pcVar11 = pcVar20;
-    pcVar10 = pcVar7;
-    if (cVar14 == cVar1) {
+    } while (cVar1 == cVar2);
+    pcVar5 = pcVar18;
+    pcVar10 = pcVar8;
+    if (cVar1 == cVar2) {
 LAB_824eadac:
-      Com_Printf(0x10,0xffffffff82088960,param_5,0,pcVar7);
-      __restgprlr_16(0);
-      return;
+      Com_Printf(0x10,"class parsing error class %d weaponindex %d wrong group name %s\n");
+      uVar13 = __restgprlr_16(0);
+      return (bool)uVar13;
     }
     do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar11;
-      if (cVar14 == '\0') break;
-      pcVar11 = pcVar11 + 1;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar14 == cVar1);
-    pcVar11 = pcVar19;
-    pcVar10 = pcVar7;
-    if (cVar14 == cVar1) goto LAB_824eadac;
-    do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar11;
-      if (cVar14 == '\0') break;
-      pcVar11 = pcVar11 + 1;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 == cVar1) goto LAB_824eadac;
-  }
-  else if (iVar12 == 1) {
-    pcVar11 = "specialty_twoprimaries";
-    do {
-      cVar14 = *pcVar5;
-      cVar1 = *pcVar11;
-      if (cVar14 == '\0') break;
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar5;
+      if (cVar1 == '\0') break;
       pcVar5 = pcVar5 + 1;
-      pcVar11 = pcVar11 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 == cVar1) {
-      bVar3 = true;
-      pcVar11 = pcVar21;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar1 == cVar2);
+    pcVar5 = pcVar8;
+    pcVar10 = pcVar19;
+    if (cVar1 == cVar2) goto LAB_824eadac;
+    do {
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar10;
+      if (cVar1 == '\0') break;
+      pcVar5 = pcVar5 + 1;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) goto LAB_824eadac;
+  }
+  else if (param_4 == 1) {
+    pcVar5 = "specialty_twoprimaries";
+    do {
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar5;
+      if (cVar1 == '\0') break;
+      pcVar6 = pcVar6 + 1;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      bVar14 = true;
+      pcVar5 = pcVar17;
       do {
-        cVar14 = *pcVar10;
-        cVar1 = *pcVar11;
-        if (cVar14 == '\0') break;
+        cVar1 = *pcVar10;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
         pcVar10 = pcVar10 + 1;
-        pcVar11 = pcVar11 + 1;
-      } while (cVar14 == cVar1);
-      pcVar11 = pcVar20;
-      pcVar10 = pcVar7;
-      if (cVar14 == cVar1) {
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      pcVar5 = pcVar18;
+      pcVar10 = pcVar8;
+      if (cVar1 == cVar2) {
 LAB_824eb1e0:
-        Com_Printf(0x10,0xffffffff82088860,param_5,1,pcVar7);
-        __restgprlr_16(0);
-        return;
+        Com_Printf(0x10,
+                   "class parsing error class %d weaponindex %d wrong group name %s overKill is active\n"
+                  );
+        uVar13 = __restgprlr_16(0);
+        return (bool)uVar13;
       }
       do {
-        cVar14 = *pcVar10;
-        cVar1 = *pcVar11;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar10;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      pcVar11 = pcVar19;
-      pcVar10 = pcVar7;
-      if (cVar14 == cVar1) goto LAB_824eb1e0;
+      } while (cVar1 == cVar2);
+      pcVar5 = pcVar8;
+      pcVar10 = pcVar19;
+      if (cVar1 == cVar2) goto LAB_824eb1e0;
       do {
-        cVar14 = *pcVar10;
-        cVar1 = *pcVar11;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eb1e0;
-      I_strncpyz(auStack_120,0xffffffff8203248c,0x20);
-      pcVar10 = (char *)LiveStorage_MatchDataGetString(&local_1d0,5,param_2,uVar4);
-      pcVar11 = pcVar6;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eb1e0;
+      I_strncpyz(acStack_120,"0",0x20);
+      pcVar10 = LiveStorage_MatchDataGetString(&local_1d0,5,param_2,pSVar4);
+      pcVar5 = pcVar7;
       do {
-        cVar14 = *pcVar10;
-        cVar1 = *pcVar11;
-        if (cVar14 == '\0') break;
+        cVar1 = *pcVar10;
+        cVar2 = *pcVar5;
+        if (cVar1 == '\0') break;
         pcVar10 = pcVar10 + 1;
-        pcVar11 = pcVar11 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) {
-        Com_Printf(0x10,0xffffffff820888b8,param_5);
-        __restgprlr_16(0);
-        return;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
+        Com_Printf(0x10,
+                   "second primary weapon can\'t be the same is the first primary weapon class index %d\n"
+                  );
+        uVar13 = __restgprlr_16(0);
+        return (bool)uVar13;
       }
-      uVar15 = va(0xffffffff82013b64,1);
-      I_strncpyz(auStack_120,uVar15,0x20);
+      pcVar5 = va("%d");
+      I_strncpyz(acStack_120,pcVar5,0x20);
     }
     else {
-      bVar3 = false;
+      bVar14 = false;
       pcVar10 = "weapon_assault";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) {
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
 LAB_824eaf68:
-        Com_Printf(0x10,0xffffffff82088960,param_5,1,pcVar7);
-        __restgprlr_16(0);
-        return;
+        Com_Printf(0x10,"class parsing error class %d weaponindex %d wrong group name %s\n");
+        uVar13 = __restgprlr_16(0);
+        return (bool)uVar13;
       }
       pcVar10 = "weapon_smg";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eaf68;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eaf68;
       pcVar10 = "weapon_lmg";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eaf68;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eaf68;
       pcVar10 = "weapon_sniper";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eaf68;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eaf68;
       pcVar10 = "weapon_shotgun";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eaf68;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eaf68;
       pcVar10 = "weapon_riot";
-      pcVar11 = pcVar7;
+      pcVar5 = pcVar8;
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar10;
-        if (cVar14 == '\0') break;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar10;
+        if (cVar1 == '\0') break;
+        pcVar5 = pcVar5 + 1;
         pcVar10 = pcVar10 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 == cVar1) goto LAB_824eaf68;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_824eaf68;
     }
   }
-  iVar13 = 0;
+  iVar11 = 0;
   do {
-    uVar9 = StringTable_Lookup(local_1ec,4,pcVar6,*(undefined4 *)((int)local_1b0 + iVar13));
-    *(undefined4 *)((int)local_c0 + iVar13) = uVar9;
-    iVar13 = iVar13 + 4;
-  } while (iVar13 < 0x2c);
-  iVar13 = 0;
-  ppcVar22 = local_1e0;
-  pcVar11 = "none";
+    pcVar5 = StringTable_Lookup(local_1ec,4,pcVar7,*(int *)((int)local_1b0 + iVar11));
+    *(char **)((int)local_c0 + iVar11) = pcVar5;
+    iVar11 = iVar11 + 4;
+  } while (iVar11 < 0x2c);
+  iVar11 = 0;
+  ppcVar20 = local_1e0;
+  pcVar5 = "none";
   do {
-    I_strncpyz(auStack_100,0xffffffff82058cac,0x20);
-    uVar15 = va(0xffffffff82013b64,iVar13);
-    I_strncpyz(auStack_e0,uVar15,0x20);
-    pcVar6 = (char *)LiveStorage_MatchDataGetString(&local_1d0,6,param_2,uVar4);
-    *ppcVar22 = pcVar6;
-    pcVar10 = pcVar11;
-    pcVar5 = pcVar6;
+    I_strncpyz(acStack_100,"attachment",0x20);
+    pcVar10 = va("%d");
+    I_strncpyz(acStack_e0,pcVar10,0x20);
+    pcVar7 = LiveStorage_MatchDataGetString(&local_1d0,6,param_2,pSVar4);
+    *ppcVar20 = pcVar7;
+    pcVar10 = pcVar7;
+    pcVar6 = pcVar5;
     do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar5;
-      if (cVar14 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 != cVar1) {
-      bVar16 = false;
-      iVar17 = 0;
-      puVar18 = local_c0;
-      do {
-        pcVar10 = (char *)*puVar18;
-        pcVar5 = pcVar6;
-        do {
-          cVar14 = *pcVar5;
-          cVar1 = *pcVar10;
-          if (cVar14 == '\0') break;
-          pcVar5 = pcVar5 + 1;
-          pcVar10 = pcVar10 + 1;
-        } while (cVar14 == cVar1);
-        if (cVar14 == cVar1) {
-          bVar16 = true;
-          break;
-        }
-        iVar17 = iVar17 + 1;
-        puVar18 = puVar18 + 1;
-      } while (iVar17 < 0xb);
-      if (!bVar16) {
-        Com_Printf(0x10,0xffffffff820887a8,param_5,param_4,pcVar7,local_1e0[iVar13]);
-        __restgprlr_16(0);
-        return;
-      }
-      if ((iVar12 == 1) && (iVar13 == 1)) {
-        Com_Printf(0x10,0xffffffff82088748,param_5);
-        __restgprlr_16(0);
-        return;
-      }
-    }
-    iVar13 = iVar13 + 1;
-    ppcVar22 = ppcVar22 + 1;
-    pcVar10 = pcVar11;
-    pcVar5 = local_1e0[1];
-  } while (iVar13 < 2);
-  do {
-    cVar14 = *pcVar10;
-    cVar1 = *pcVar5;
-    if (cVar14 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar14 == cVar1);
-  pcVar6 = "specialty_bling";
-  pcVar10 = pcVar6;
-  pcVar5 = pcVar8;
-  if (cVar14 != cVar1) {
-    do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar5;
-      if (cVar14 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 != cVar1) {
-      Com_Printf(0x10,0xffffffff82088810,param_5);
-      __restgprlr_16(0);
-      return;
-    }
-    uVar4 = StringTable_LookupRowNumForValue(local_1e8,0,local_1e0[1]);
-    pcVar5 = "no";
-    pcVar10 = (char *)StringTable_Lookup(local_1e8,0,local_1e0[0],uVar4);
-    do {
-      cVar14 = *pcVar10;
-      cVar1 = *pcVar5;
-      if (cVar14 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 == cVar1) {
-      Com_Printf(0x10,0xffffffff82088700,param_5,local_1e0[0],local_1e0[1]);
-      __restgprlr_16(0);
-      return;
-    }
-  }
-  if ((bVar3) && (pcVar10 = pcVar8, iVar12 == 1)) {
-    do {
-      cVar14 = *pcVar6;
-      cVar1 = *pcVar10;
-      if (cVar14 == '\0') break;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar10;
+      if (cVar1 == '\0') break;
       pcVar6 = pcVar6 + 1;
       pcVar10 = pcVar10 + 1;
-    } while (cVar14 == cVar1);
-    if (cVar14 == cVar1) {
-      Com_Printf(0x10,0xffffffff820886c8,param_5);
-      __restgprlr_16(0);
-      return;
+    } while (cVar1 == cVar2);
+    if (cVar1 != cVar2) {
+      bVar3 = false;
+      iVar12 = 0;
+      puVar16 = local_c0;
+      do {
+        pcVar10 = (char *)*puVar16;
+        pcVar6 = pcVar7;
+        do {
+          cVar1 = *pcVar6;
+          cVar2 = *pcVar10;
+          if (cVar1 == '\0') break;
+          pcVar6 = pcVar6 + 1;
+          pcVar10 = pcVar10 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) {
+          bVar3 = true;
+          break;
+        }
+        iVar12 = iVar12 + 1;
+        puVar16 = puVar16 + 1;
+      } while (iVar12 < 0xb);
+      if (!bVar3) {
+        Com_Printf(0x10,
+                   "illegal attachment for the weapon group classindex %d weaponIndex %d weapongroup %s attachment %s\n"
+                  );
+        uVar13 = __restgprlr_16(0);
+        return (bool)uVar13;
+      }
+      if ((param_4 == 1) && (iVar11 == 1)) {
+        Com_Printf(0x10,
+                   "we are not allowed to have a secondary attachment on the secondary weapon classIndex %d\n"
+                  );
+        uVar13 = __restgprlr_16(0);
+        return (bool)uVar13;
+      }
     }
-    uVar4 = StringTable_LookupRowNumForValue(local_1e4,0,0xffffffff820886b0);
-    cVar14 = LiveStorage_IsItemUnlockedFromTable(param_3,local_1e4,uVar4);
+    iVar11 = iVar11 + 1;
+    ppcVar20 = ppcVar20 + 1;
+    pcVar10 = local_1e0[1];
+    pcVar6 = pcVar5;
+  } while (iVar11 < 2);
+  do {
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar10;
+    if (cVar1 == '\0') break;
+    pcVar10 = pcVar10 + 1;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 == cVar2);
+  pcVar7 = "specialty_bling";
+  pcVar10 = pcVar7;
+  pcVar6 = pcVar9;
+  if (cVar1 != cVar2) {
     do {
-      cVar1 = *pcVar11;
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar6;
+      if (cVar1 == '\0') break;
+      pcVar10 = pcVar10 + 1;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 != cVar2) {
+      Com_Printf(0x10,"can\'t have 2 attachment if you do not have bling classIndex %d\n");
+      uVar13 = __restgprlr_16(0);
+      return (bool)uVar13;
+    }
+    iVar11 = StringTable_LookupRowNumForValue(local_1e8,0,local_1e0[1]);
+    pcVar6 = "no";
+    pcVar10 = StringTable_Lookup(local_1e8,0,local_1e0[0],iVar11);
+    do {
+      cVar1 = *pcVar10;
+      cVar2 = *pcVar6;
+      if (cVar1 == '\0') break;
+      pcVar10 = pcVar10 + 1;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      Com_Printf(0x10,"invalid attachment compo classIndex %d attachment1 %s attachment 2 %s\n");
+      uVar13 = __restgprlr_16(0);
+      return (bool)uVar13;
+    }
+  }
+  if ((bVar14) && (pcVar10 = pcVar9, param_4 == 1)) {
+    do {
+      cVar1 = *pcVar7;
+      cVar2 = *pcVar10;
+      if (cVar1 == '\0') break;
+      pcVar7 = pcVar7 + 1;
+      pcVar10 = pcVar10 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      Com_Printf(0x10,"can\'t have bling on secondary weapon classIndex %d\n");
+      uVar13 = __restgprlr_16(0);
+      return (bool)uVar13;
+    }
+    iVar11 = StringTable_LookupRowNumForValue(local_1e4,0,"specialty_overkillpro");
+    bVar14 = LiveStorage_IsItemUnlockedFromTable(param_3,local_1e4,iVar11);
+    do {
+      cVar1 = *pcVar5;
       cVar2 = *local_1e0[0];
       if (cVar1 == '\0') break;
-      pcVar11 = pcVar11 + 1;
+      pcVar5 = pcVar5 + 1;
       local_1e0[0] = local_1e0[0] + 1;
     } while (cVar1 == cVar2);
-    if ((cVar1 != cVar2) && (cVar14 == '\0')) {
-      Com_Printf(0x10,0xffffffff82088650,param_5);
-      __restgprlr_16(0);
-      return;
+    if ((cVar1 != cVar2) && (!bVar14)) {
+      Com_Printf(0x10,
+                 "no attachments allowed on secondary primary weapon unless you have overkill pro classIndex %d\n"
+                );
+      uVar13 = __restgprlr_16(0);
+      return (bool)uVar13;
     }
   }
   pcVar10 = "specialty_null";
-  pcVar11 = pcVar8;
+  pcVar5 = pcVar9;
   do {
-    cVar14 = *pcVar10;
-    cVar1 = *pcVar11;
-    if (cVar14 == '\0') break;
+    cVar1 = *pcVar10;
+    cVar2 = *pcVar5;
+    if (cVar1 == '\0') break;
     pcVar10 = pcVar10 + 1;
-    pcVar11 = pcVar11 + 1;
-  } while (cVar14 == cVar1);
-  pcVar11 = pcVar7;
-  if (cVar14 == cVar1) {
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 == cVar2);
+  pcVar5 = pcVar8;
+  if (cVar1 == cVar2) {
 LAB_824eb670:
-    __restgprlr_16(1);
-    return;
+    uVar13 = __restgprlr_16(1);
+    return (bool)uVar13;
   }
   do {
-    cVar14 = *pcVar11;
-    cVar1 = *pcVar21;
-    if (cVar14 == '\0') break;
-    pcVar21 = pcVar21 + 1;
-    pcVar11 = pcVar11 + 1;
-  } while (cVar14 == cVar1);
-  pcVar11 = pcVar7;
-  if (cVar14 != cVar1) {
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar17;
+    if (cVar1 == '\0') break;
+    pcVar17 = pcVar17 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 == cVar2);
+  pcVar5 = pcVar8;
+  if (cVar1 != cVar2) {
     do {
-      cVar14 = *pcVar11;
-      cVar1 = *pcVar20;
-      if (cVar14 == '\0') break;
-      pcVar20 = pcVar20 + 1;
-      pcVar11 = pcVar11 + 1;
-    } while (cVar14 == cVar1);
-    pcVar11 = pcVar7;
-    if (cVar14 != cVar1) {
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar18;
+      if (cVar1 == '\0') break;
+      pcVar18 = pcVar18 + 1;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 == cVar2);
+    pcVar5 = pcVar8;
+    if (cVar1 != cVar2) {
       do {
-        cVar14 = *pcVar11;
-        cVar1 = *pcVar19;
-        if (cVar14 == '\0') break;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar19;
+        if (cVar1 == '\0') break;
         pcVar19 = pcVar19 + 1;
-        pcVar11 = pcVar11 + 1;
-      } while (cVar14 == cVar1);
-      if (cVar14 != cVar1) {
-        pcVar11 = (char *)StringTable_Lookup(local_1f0,0,pcVar7,4);
-        iVar12 = atoi(pcVar11);
-        pcVar11 = (char *)StringTable_Lookup(local_1f0,0,pcVar7,1);
-        iVar13 = atoi(pcVar11);
-        bVar3 = false;
-        lVar23 = 0;
-        if (0 < iVar13) {
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 != cVar2) {
+        pcVar5 = StringTable_Lookup(local_1f0,0,pcVar8,4);
+        iVar11 = atoi(pcVar5);
+        pcVar5 = StringTable_Lookup(local_1f0,0,pcVar8,1);
+        iVar12 = atoi(pcVar5);
+        bVar14 = false;
+        iVar21 = 0;
+        if (0 < iVar12) {
           do {
-            uVar4 = va(0xffffffff82013b64,lVar23);
-            pcVar10 = (char *)StringTable_Lookup(local_1f0,0,uVar4,iVar12);
-            pcVar11 = pcVar8;
+            pcVar5 = va("%d");
+            pcVar10 = StringTable_Lookup(local_1f0,0,pcVar5,iVar11);
+            pcVar5 = pcVar9;
             if (pcVar10 != (char *)0x0) {
               do {
-                cVar14 = *pcVar10;
-                cVar1 = *pcVar11;
-                if (cVar14 == '\0') break;
+                cVar1 = *pcVar10;
+                cVar2 = *pcVar5;
+                if (cVar1 == '\0') break;
                 pcVar10 = pcVar10 + 1;
-                pcVar11 = pcVar11 + 1;
-              } while (cVar14 == cVar1);
-              if (cVar14 == cVar1) {
-                bVar3 = true;
+                pcVar5 = pcVar5 + 1;
+              } while (cVar1 == cVar2);
+              if (cVar1 == cVar2) {
+                bVar14 = true;
                 break;
               }
             }
-            lVar23 = lVar23 + 1;
-          } while ((int)lVar23 < iVar13);
+            iVar21 = iVar21 + 1;
+          } while (iVar21 < iVar12);
         }
-        if (!bVar3) {
-          Com_Printf(0x10,0xffffffff82088608,param_5,pcVar7);
-          __restgprlr_16(0);
-          return;
+        if (!bVar14) {
+          Com_Printf(0x10,"weapon buff did not match weapon group. classIndex %d groupname %s\n");
+          uVar13 = __restgprlr_16(0);
+          return (bool)uVar13;
         }
         goto LAB_824eb670;
       }
     }
   }
-  Com_Printf(0x10,0xffffffff820885cc,param_5,pcVar7);
-  __restgprlr_16(0);
-  return;
+  Com_Printf(0x10,"these weapons do not have buffs classindex %d groupname %s\n");
+  uVar13 = __restgprlr_16(0);
+  return (bool)uVar13;
 }
 
 
 // 824E48F8  LiveStorage_CheckECACClassSetup  (qcommon/com_storage.cpp:6798)
 
-void LiveStorage_CheckECACClassSetup
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+bool LiveStorage_CheckECACClassSetup
+               (StructuredDataDef *param_1,StructuredDataBuffer *param_2,int param_3,bool param_4)
 
 {
   char cVar1;
   char cVar2;
-  undefined8 uVar3;
-  undefined4 uVar4;
-  undefined4 uVar5;
+  StructuredDataDef *pSVar3;
+  StructuredDataBuffer *pSVar4;
+  char *pcVar5;
+  undefined1 uVar9;
   char *pcVar6;
   char *pcVar7;
   char *pcVar8;
-  undefined4 uVar10;
-  undefined8 uVar9;
-  undefined4 uVar11;
-  char *pcVar12;
-  longlong lVar13;
-  undefined4 *puVar14;
-  longlong lVar15;
-  undefined1 *local_180;
-  undefined1 *local_17c;
-  undefined1 *local_178;
-  undefined1 *local_174;
+  ulonglong uVar10;
+  int iVar11;
+  undefined4 *puVar12;
+  int iVar13;
+  StructuredDataDef *pSStack00000014;
+  StructuredDataBuffer *pSStack0000001c;
+  int iStack00000024;
+  char *local_180;
+  char *local_17c;
+  char *local_178;
+  char *local_174;
+  undefined4 local_170;
   undefined4 uStack_164;
-  char *local_160;
-  char *local_15c;
-  char *local_158;
-  char *local_154;
+  char *local_160 [4];
   char *local_150;
   char *local_14c;
   char *local_148;
-  undefined1 auStack_140 [32];
-  undefined1 auStack_120 [32];
-  undefined1 auStack_100 [32];
-  undefined1 auStack_e0 [224];
+  char acStack_140 [32];
+  char acStack_120 [32];
+  char acStack_100 [32];
+  char acStack_e0 [224];
   
-  uVar3 = __savegprlr();
-  uVar4 = (undefined4)uVar3;
-  local_180 = auStack_140;
-  uVar11 = (undefined4)param_3;
-  local_17c = auStack_120;
-  uVar10 = (undefined4)param_2;
-  local_178 = auStack_100;
-  local_174 = auStack_e0;
-  lVar13 = 0;
-  if ((param_4 & 0xff) == 0) {
-    uVar9 = 0xffffffff82085ff0;
+  uVar10 = (ulonglong)param_4;
+  __savegprlr();
+  local_180 = acStack_140;
+  local_17c = acStack_120;
+  local_178 = acStack_100;
+  local_174 = acStack_e0;
+  iVar11 = 0;
+  local_170 = 0;
+  if ((uVar10 & 0xff) == 0) {
+    pcVar5 = "customClasses";
   }
   else {
-    uVar9 = 0xffffffff82086010;
+    pcVar5 = "privateMatchCustomClasses";
   }
-  I_strncpyz(auStack_140,uVar9,0x20);
-  uVar9 = va(0xffffffff82013b64,param_3);
-  I_strncpyz(auStack_120,uVar9,0x20);
-  I_strncpyz(auStack_100,0xffffffff82000f9c,0x20);
-  lVar15 = 0;
-  puVar14 = &uStack_164;
+  pSStack00000014 = param_1;
+  pSStack0000001c = param_2;
+  iStack00000024 = param_3;
+  I_strncpyz(acStack_140,pcVar5,0x20);
+  pcVar5 = va("%d");
+  I_strncpyz(acStack_120,pcVar5,0x20);
+  I_strncpyz(acStack_100,"perks",0x20);
+  iVar13 = 0;
+  puVar12 = &uStack_164;
   do {
-    uVar9 = va(0xffffffff82013b64,lVar15);
-    I_strncpyz(auStack_e0,uVar9,0x20);
-    uVar5 = LiveStorage_MatchDataGetString(&local_180,4,param_2,uVar3);
-    lVar15 = lVar15 + 1;
-    puVar14 = puVar14 + 1;
-    *puVar14 = uVar5;
-  } while ((int)lVar15 < 7);
-  pcVar8 = "frag_grenade_mp";
-  pcVar12 = local_160;
+    pcVar5 = va("%d");
+    I_strncpyz(acStack_e0,pcVar5,0x20);
+    pcVar5 = LiveStorage_MatchDataGetString(&local_180,4,param_2,param_1);
+    iVar13 = iVar13 + 1;
+    puVar12 = puVar12 + 1;
+    *puVar12 = pcVar5;
+  } while (iVar13 < 7);
+  pcVar6 = "frag_grenade_mp";
+  pcVar5 = local_160[0];
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "semtex_mp";
-    pcVar12 = local_160;
+    pcVar6 = "semtex_mp";
+    pcVar5 = local_160[0];
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar8 = "throwingknife_mp";
-      pcVar12 = local_160;
+      pcVar6 = "throwingknife_mp";
+      pcVar5 = local_160[0];
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar5 = pcVar5 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar8 = "bouncingbetty_mp";
-        pcVar12 = local_160;
+        pcVar6 = "bouncingbetty_mp";
+        pcVar5 = local_160[0];
         do {
-          cVar1 = *pcVar12;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar12 = pcVar12 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar5 = pcVar5 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar8 = "claymore_mp";
-          pcVar12 = local_160;
+          pcVar6 = "claymore_mp";
+          pcVar5 = local_160[0];
           do {
-            cVar1 = *pcVar12;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar5;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
-            pcVar12 = pcVar12 + 1;
-            pcVar8 = pcVar8 + 1;
+            pcVar5 = pcVar5 + 1;
+            pcVar6 = pcVar6 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            pcVar12 = "c4_mp";
+            pcVar5 = "c4_mp";
             do {
-              cVar1 = *local_160;
-              cVar2 = *pcVar12;
+              cVar1 = *local_160[0];
+              cVar2 = *pcVar5;
               if (cVar1 == '\0') break;
-              local_160 = local_160 + 1;
-              pcVar12 = pcVar12 + 1;
+              local_160[0] = local_160[0] + 1;
+              pcVar5 = pcVar5 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 != cVar2) {
-              Com_Printf(0x10,0xffffffff82087564,param_3);
-              __restgprlr(0);
-              return;
+              Com_Printf(0x10,"invalid grenade classIndex %d grenade %s\n");
+              uVar9 = 0;
+              __restgprlr();
+              return (bool)uVar9;
             }
           }
         }
       }
     }
   }
-  pcVar8 = "specialty_paint";
-  pcVar12 = local_15c;
+  pcVar6 = "specialty_paint";
+  pcVar5 = local_160[1];
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "specialty_fastreload";
-    pcVar12 = local_15c;
+    pcVar6 = "specialty_fastreload";
+    pcVar5 = local_160[1];
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar8 = "specialty_blindeye";
-      pcVar12 = local_15c;
+      pcVar6 = "specialty_blindeye";
+      pcVar5 = local_160[1];
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar5 = pcVar5 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar8 = "specialty_longersprint";
-        pcVar12 = local_15c;
+        pcVar6 = "specialty_longersprint";
+        pcVar5 = local_160[1];
         do {
-          cVar1 = *pcVar12;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar12 = pcVar12 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar5 = pcVar5 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar12 = "specialty_scavenger";
+          pcVar5 = "specialty_scavenger";
           do {
-            cVar1 = *local_15c;
-            cVar2 = *pcVar12;
+            cVar1 = *local_160[1];
+            cVar2 = *pcVar5;
             if (cVar1 == '\0') break;
-            local_15c = local_15c + 1;
-            pcVar12 = pcVar12 + 1;
+            local_160[1] = local_160[1] + 1;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            Com_Printf(0x10,0xffffffff8208752c,param_3);
-            __restgprlr(0);
-            return;
+            Com_Printf(0x10,"invalid perk 1 classIndex %d perk 1 %s\n");
+            uVar9 = 0;
+            __restgprlr();
+            return (bool)uVar9;
           }
         }
       }
     }
   }
-  pcVar8 = "specialty_quickdraw";
-  pcVar12 = local_158;
+  pcVar6 = "specialty_quickdraw";
+  pcVar5 = local_160[2];
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "_specialty_blastshield";
-    pcVar12 = local_158;
+    pcVar6 = "_specialty_blastshield";
+    pcVar5 = local_160[2];
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar8 = "specialty_hardline";
-      pcVar12 = local_158;
+      pcVar6 = "specialty_hardline";
+      pcVar5 = local_160[2];
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar5 = pcVar5 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar8 = "specialty_coldblooded";
-        pcVar12 = local_158;
+        pcVar6 = "specialty_coldblooded";
+        pcVar5 = local_160[2];
         do {
-          cVar1 = *pcVar12;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar12 = pcVar12 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar5 = pcVar5 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar12 = "specialty_twoprimaries";
+          pcVar5 = "specialty_twoprimaries";
           do {
-            cVar1 = *local_158;
-            cVar2 = *pcVar12;
+            cVar1 = *local_160[2];
+            cVar2 = *pcVar5;
             if (cVar1 == '\0') break;
-            local_158 = local_158 + 1;
-            pcVar12 = pcVar12 + 1;
+            local_160[2] = local_160[2] + 1;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            Com_Printf(0x10,0xffffffff820874d8,param_3);
-            __restgprlr(0);
-            return;
+            Com_Printf(0x10,"invalid perk 2 classIndex %d perk 2 %s\n");
+            uVar9 = 0;
+            __restgprlr();
+            return (bool)uVar9;
           }
         }
       }
     }
   }
-  pcVar8 = "specialty_autospot";
-  pcVar12 = local_154;
+  pcVar6 = "specialty_autospot";
+  pcVar5 = local_160[3];
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "specialty_stalker";
-    pcVar12 = local_154;
+    pcVar6 = "specialty_stalker";
+    pcVar5 = local_160[3];
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar8 = "specialty_detectexplosive";
-      pcVar12 = local_154;
+      pcVar6 = "specialty_detectexplosive";
+      pcVar5 = local_160[3];
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar5 = pcVar5 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar8 = "specialty_bulletaccuracy";
-        pcVar12 = local_154;
+        pcVar6 = "specialty_bulletaccuracy";
+        pcVar5 = local_160[3];
         do {
-          cVar1 = *pcVar12;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar12 = pcVar12 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar5 = pcVar5 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar12 = "specialty_quieter";
+          pcVar5 = "specialty_quieter";
           do {
-            cVar1 = *local_154;
-            cVar2 = *pcVar12;
+            cVar1 = *local_160[3];
+            cVar2 = *pcVar5;
             if (cVar1 == '\0') break;
-            local_154 = local_154 + 1;
-            pcVar12 = pcVar12 + 1;
+            local_160[3] = local_160[3] + 1;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            Com_Printf(0x10,0xffffffff8208749c,param_3);
-            __restgprlr(0);
-            return;
+            Com_Printf(0x10,"invalid perk 3 classIndex %d perk 3 %s\n");
+            uVar9 = 0;
+            __restgprlr();
+            return (bool)uVar9;
           }
         }
       }
     }
   }
-  pcVar12 = "specialty_null";
+  pcVar5 = "specialty_null";
   do {
     cVar1 = *local_150;
-    cVar2 = *pcVar12;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
     local_150 = local_150 + 1;
-    pcVar12 = pcVar12 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Printf(0x10,0xffffffff8208744c,param_3);
-    __restgprlr(0);
-    return;
+    Com_Printf(0x10,"invalid perk 4 classIndex %d perk 4 should be specialty_null\n");
+    uVar9 = 0;
+    __restgprlr();
+    return (bool)uVar9;
   }
-  pcVar8 = "flash_grenade_mp";
-  pcVar12 = local_148;
+  pcVar6 = "flash_grenade_mp";
+  pcVar5 = local_148;
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "concussion_grenade_mp";
-    pcVar12 = local_148;
+    pcVar6 = "concussion_grenade_mp";
+    pcVar5 = local_148;
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar8 = "specialty_scrambler";
-      pcVar12 = local_148;
+      pcVar6 = "specialty_scrambler";
+      pcVar5 = local_148;
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar8 = pcVar8 + 1;
+        pcVar5 = pcVar5 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar8 = "emp_grenade_mp";
-        pcVar12 = local_148;
+        pcVar6 = "emp_grenade_mp";
+        pcVar5 = local_148;
         do {
-          cVar1 = *pcVar12;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar12 = pcVar12 + 1;
-          pcVar8 = pcVar8 + 1;
+          pcVar5 = pcVar5 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar8 = "smoke_grenade_mp";
-          pcVar12 = local_148;
+          pcVar6 = "smoke_grenade_mp";
+          pcVar5 = local_148;
           do {
-            cVar1 = *pcVar12;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar5;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
-            pcVar12 = pcVar12 + 1;
-            pcVar8 = pcVar8 + 1;
+            pcVar5 = pcVar5 + 1;
+            pcVar6 = pcVar6 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            pcVar8 = "trophy_mp";
-            pcVar12 = local_148;
+            pcVar6 = "trophy_mp";
+            pcVar5 = local_148;
             do {
-              cVar1 = *pcVar12;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar5;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
-              pcVar12 = pcVar12 + 1;
-              pcVar8 = pcVar8 + 1;
+              pcVar5 = pcVar5 + 1;
+              pcVar6 = pcVar6 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 != cVar2) {
-              pcVar8 = "specialty_tacticalinsertion";
-              pcVar12 = local_148;
+              pcVar6 = "specialty_tacticalinsertion";
+              pcVar5 = local_148;
               do {
-                cVar1 = *pcVar12;
-                cVar2 = *pcVar8;
+                cVar1 = *pcVar5;
+                cVar2 = *pcVar6;
                 if (cVar1 == '\0') break;
-                pcVar12 = pcVar12 + 1;
-                pcVar8 = pcVar8 + 1;
+                pcVar5 = pcVar5 + 1;
+                pcVar6 = pcVar6 + 1;
               } while (cVar1 == cVar2);
               if (cVar1 != cVar2) {
-                pcVar12 = "specialty_portable_radar";
+                pcVar5 = "specialty_portable_radar";
                 do {
                   cVar1 = *local_148;
-                  cVar2 = *pcVar12;
+                  cVar2 = *pcVar5;
                   if (cVar1 == '\0') break;
                   local_148 = local_148 + 1;
-                  pcVar12 = pcVar12 + 1;
+                  pcVar5 = pcVar5 + 1;
                 } while (cVar1 == cVar2);
                 if (cVar1 != cVar2) {
-                  Com_Printf(0x10,0xffffffff82087378,param_3);
-                  __restgprlr(0);
-                  return;
+                  Com_Printf(0x10,"invalid tatical classIndex %d tatical %s\n");
+                  uVar9 = 0;
+                  __restgprlr();
+                  return (bool)uVar9;
                 }
               }
             }
@@ -8192,204 +8849,205 @@ void LiveStorage_CheckECACClassSetup
       }
     }
   }
-  pcVar8 = "streaktype_specialist";
-  pcVar12 = local_14c;
+  pcVar6 = "streaktype_specialist";
+  pcVar5 = local_14c;
   do {
-    cVar1 = *pcVar12;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar12 = pcVar12 + 1;
-    pcVar8 = pcVar8 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar8 = "streaktype_support";
-    pcVar12 = local_14c;
+    pcVar6 = "streaktype_support";
+    pcVar5 = local_14c;
     do {
-      cVar1 = *pcVar12;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar12 = pcVar12 + 1;
-      pcVar8 = pcVar8 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar12 = "streaktype_assault";
+      pcVar5 = "streaktype_assault";
       do {
         cVar1 = *local_14c;
-        cVar2 = *pcVar12;
+        cVar2 = *pcVar5;
         if (cVar1 == '\0') break;
         local_14c = local_14c + 1;
-        pcVar12 = pcVar12 + 1;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        Com_Printf(0x10,0xffffffff82087304,param_3);
-        __restgprlr(0);
-        return;
+        Com_Printf(0x10,"invalid streak type classIndex %d streak type %s\n");
+        uVar9 = 0;
+        __restgprlr();
+        return (bool)uVar9;
       }
     }
   }
-  I_strncpyz(auStack_100,0xffffffff820872f4,0x20);
-  pcVar12 = "none";
+  I_strncpyz(acStack_100,"assaultStreaks",0x20);
+  pcVar5 = "none";
   do {
-    uVar3 = va(&DAT_82013b64,lVar13);
-    I_strncpyz(auStack_e0,uVar3,0x20);
-    pcVar6 = (char *)LiveStorage_MatchDataGetString(&local_180,4,uVar10,uVar4);
-    pcVar8 = pcVar12;
-    pcVar7 = pcVar6;
+    pcVar6 = va("%d");
+    I_strncpyz(acStack_e0,pcVar6,0x20);
+    pcVar7 = LiveStorage_MatchDataGetString(&local_180,4,pSStack0000001c,pSStack00000014);
+    pcVar6 = pcVar7;
+    pcVar8 = pcVar5;
     do {
       cVar1 = *pcVar8;
-      cVar2 = *pcVar7;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
       pcVar8 = pcVar8 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
-    pcVar8 = "uav";
-    pcVar7 = pcVar6;
+    pcVar6 = "uav";
+    pcVar8 = pcVar7;
     if (cVar1 != cVar2) {
       do {
-        cVar1 = *pcVar7;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar8;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
+        pcVar6 = pcVar6 + 1;
         pcVar8 = pcVar8 + 1;
-        pcVar7 = pcVar7 + 1;
       } while (cVar1 == cVar2);
-      pcVar8 = "airdrop_assault";
-      pcVar7 = pcVar6;
+      pcVar6 = "airdrop_assault";
+      pcVar8 = pcVar7;
       if (cVar1 != cVar2) {
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
+          pcVar6 = pcVar6 + 1;
           pcVar8 = pcVar8 + 1;
-          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
-        pcVar8 = "ims";
-        pcVar7 = pcVar6;
+        pcVar6 = "ims";
+        pcVar8 = pcVar7;
         if (cVar1 != cVar2) {
           do {
-            cVar1 = *pcVar7;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar8;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
+            pcVar6 = pcVar6 + 1;
             pcVar8 = pcVar8 + 1;
-            pcVar7 = pcVar7 + 1;
           } while (cVar1 == cVar2);
-          pcVar8 = "predator_missile";
-          pcVar7 = pcVar6;
+          pcVar6 = "predator_missile";
+          pcVar8 = pcVar7;
           if (cVar1 != cVar2) {
             do {
-              cVar1 = *pcVar7;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar8;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
+              pcVar6 = pcVar6 + 1;
               pcVar8 = pcVar8 + 1;
-              pcVar7 = pcVar7 + 1;
             } while (cVar1 == cVar2);
-            pcVar8 = "airdrop_sentry_minigun";
-            pcVar7 = pcVar6;
+            pcVar6 = "airdrop_sentry_minigun";
+            pcVar8 = pcVar7;
             if (cVar1 != cVar2) {
               do {
-                cVar1 = *pcVar7;
-                cVar2 = *pcVar8;
+                cVar1 = *pcVar8;
+                cVar2 = *pcVar6;
                 if (cVar1 == '\0') break;
+                pcVar6 = pcVar6 + 1;
                 pcVar8 = pcVar8 + 1;
-                pcVar7 = pcVar7 + 1;
               } while (cVar1 == cVar2);
-              pcVar8 = "precision_airstrike";
-              pcVar7 = pcVar6;
+              pcVar6 = "precision_airstrike";
+              pcVar8 = pcVar7;
               if (cVar1 != cVar2) {
                 do {
-                  cVar1 = *pcVar7;
-                  cVar2 = *pcVar8;
+                  cVar1 = *pcVar8;
+                  cVar2 = *pcVar6;
                   if (cVar1 == '\0') break;
+                  pcVar6 = pcVar6 + 1;
                   pcVar8 = pcVar8 + 1;
-                  pcVar7 = pcVar7 + 1;
                 } while (cVar1 == cVar2);
-                pcVar8 = "helicopter";
-                pcVar7 = pcVar6;
+                pcVar6 = "helicopter";
+                pcVar8 = pcVar7;
                 if (cVar1 != cVar2) {
                   do {
-                    cVar1 = *pcVar7;
-                    cVar2 = *pcVar8;
+                    cVar1 = *pcVar8;
+                    cVar2 = *pcVar6;
                     if (cVar1 == '\0') break;
+                    pcVar6 = pcVar6 + 1;
                     pcVar8 = pcVar8 + 1;
-                    pcVar7 = pcVar7 + 1;
                   } while (cVar1 == cVar2);
-                  pcVar8 = "littlebird_flock";
-                  pcVar7 = pcVar6;
+                  pcVar6 = "littlebird_flock";
+                  pcVar8 = pcVar7;
                   if (cVar1 != cVar2) {
                     do {
-                      cVar1 = *pcVar7;
-                      cVar2 = *pcVar8;
+                      cVar1 = *pcVar8;
+                      cVar2 = *pcVar6;
                       if (cVar1 == '\0') break;
+                      pcVar6 = pcVar6 + 1;
                       pcVar8 = pcVar8 + 1;
-                      pcVar7 = pcVar7 + 1;
                     } while (cVar1 == cVar2);
-                    pcVar8 = "littlebird_support";
-                    pcVar7 = pcVar6;
+                    pcVar6 = "littlebird_support";
+                    pcVar8 = pcVar7;
                     if (cVar1 != cVar2) {
                       do {
-                        cVar1 = *pcVar7;
-                        cVar2 = *pcVar8;
+                        cVar1 = *pcVar8;
+                        cVar2 = *pcVar6;
                         if (cVar1 == '\0') break;
+                        pcVar6 = pcVar6 + 1;
                         pcVar8 = pcVar8 + 1;
-                        pcVar7 = pcVar7 + 1;
                       } while (cVar1 == cVar2);
-                      pcVar8 = "remote_mortar";
-                      pcVar7 = pcVar6;
+                      pcVar6 = "remote_mortar";
+                      pcVar8 = pcVar7;
                       if (cVar1 != cVar2) {
                         do {
-                          cVar1 = *pcVar7;
-                          cVar2 = *pcVar8;
+                          cVar1 = *pcVar8;
+                          cVar2 = *pcVar6;
                           if (cVar1 == '\0') break;
+                          pcVar6 = pcVar6 + 1;
                           pcVar8 = pcVar8 + 1;
-                          pcVar7 = pcVar7 + 1;
                         } while (cVar1 == cVar2);
-                        pcVar8 = "airdrop_remote_tank";
-                        pcVar7 = pcVar6;
+                        pcVar6 = "airdrop_remote_tank";
+                        pcVar8 = pcVar7;
                         if (cVar1 != cVar2) {
                           do {
-                            cVar1 = *pcVar7;
-                            cVar2 = *pcVar8;
+                            cVar1 = *pcVar8;
+                            cVar2 = *pcVar6;
                             if (cVar1 == '\0') break;
+                            pcVar6 = pcVar6 + 1;
                             pcVar8 = pcVar8 + 1;
-                            pcVar7 = pcVar7 + 1;
                           } while (cVar1 == cVar2);
-                          pcVar8 = "ac130";
-                          pcVar7 = pcVar6;
+                          pcVar6 = "ac130";
+                          pcVar8 = pcVar7;
                           if (cVar1 != cVar2) {
                             do {
-                              cVar1 = *pcVar7;
-                              cVar2 = *pcVar8;
+                              cVar1 = *pcVar8;
+                              cVar2 = *pcVar6;
                               if (cVar1 == '\0') break;
+                              pcVar6 = pcVar6 + 1;
                               pcVar8 = pcVar8 + 1;
-                              pcVar7 = pcVar7 + 1;
                             } while (cVar1 == cVar2);
-                            pcVar8 = "helicopter_flares";
-                            pcVar7 = pcVar6;
+                            pcVar6 = "helicopter_flares";
+                            pcVar8 = pcVar7;
                             if (cVar1 != cVar2) {
                               do {
-                                cVar1 = *pcVar7;
-                                cVar2 = *pcVar8;
+                                cVar1 = *pcVar8;
+                                cVar2 = *pcVar6;
                                 if (cVar1 == '\0') break;
+                                pcVar6 = pcVar6 + 1;
                                 pcVar8 = pcVar8 + 1;
-                                pcVar7 = pcVar7 + 1;
                               } while (cVar1 == cVar2);
-                              pcVar8 = "airdrop_juggernaut";
-                              pcVar7 = pcVar6;
+                              pcVar6 = "airdrop_juggernaut";
+                              pcVar8 = pcVar7;
                               if (cVar1 != cVar2) {
                                 do {
-                                  cVar1 = *pcVar7;
-                                  cVar2 = *pcVar8;
+                                  cVar1 = *pcVar8;
+                                  cVar2 = *pcVar6;
                                   if (cVar1 == '\0') break;
+                                  pcVar6 = pcVar6 + 1;
                                   pcVar8 = pcVar8 + 1;
-                                  pcVar7 = pcVar7 + 1;
                                 } while (cVar1 == cVar2);
-                                pcVar8 = "osprey_gunner";
+                                pcVar6 = "osprey_gunner";
                                 if (cVar1 != cVar2) {
                                   do {
-                                    cVar1 = *pcVar6;
-                                    cVar2 = *pcVar8;
+                                    cVar1 = *pcVar7;
+                                    cVar2 = *pcVar6;
                                     if (cVar1 == '\0') break;
+                                    pcVar7 = pcVar7 + 1;
                                     pcVar6 = pcVar6 + 1;
-                                    pcVar8 = pcVar8 + 1;
                                   } while (cVar1 == cVar2);
                                   if (cVar1 != cVar2) goto LAB_824e5f1c;
                                 }
@@ -8407,141 +9065,142 @@ void LiveStorage_CheckECACClassSetup
         }
       }
     }
-    lVar13 = lVar13 + 1;
-  } while ((int)lVar13 < 3);
-  I_strncpyz(auStack_100,0xffffffff82087200,0x20);
-  lVar13 = 0;
+    iVar11 = iVar11 + 1;
+  } while (iVar11 < 3);
+  I_strncpyz(acStack_100,"defenseStreaks",0x20);
+  pSVar3 = pSStack00000014;
+  iVar11 = 0;
   do {
-    uVar3 = va(&DAT_82013b64,lVar13);
-    I_strncpyz(auStack_e0,uVar3,0x20);
-    pcVar6 = (char *)LiveStorage_MatchDataGetString(&local_180,4,uVar10,uVar4);
-    pcVar8 = pcVar12;
-    pcVar7 = pcVar6;
+    pcVar6 = va("%d");
+    I_strncpyz(acStack_e0,pcVar6,0x20);
+    pcVar7 = LiveStorage_MatchDataGetString(&local_180,4,pSStack0000001c,pSVar3);
+    pcVar6 = pcVar7;
+    pcVar8 = pcVar5;
     do {
       cVar1 = *pcVar8;
-      cVar2 = *pcVar7;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
       pcVar8 = pcVar8 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
-    pcVar8 = "uav_support";
-    pcVar7 = pcVar6;
+    pcVar6 = "uav_support";
+    pcVar8 = pcVar7;
     if (cVar1 != cVar2) {
       do {
-        cVar1 = *pcVar7;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar8;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
+        pcVar6 = pcVar6 + 1;
         pcVar8 = pcVar8 + 1;
-        pcVar7 = pcVar7 + 1;
       } while (cVar1 == cVar2);
-      pcVar8 = "counter_uav";
-      pcVar7 = pcVar6;
+      pcVar6 = "counter_uav";
+      pcVar8 = pcVar7;
       if (cVar1 != cVar2) {
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
+          pcVar6 = pcVar6 + 1;
           pcVar8 = pcVar8 + 1;
-          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
-        pcVar8 = "deployable_vest";
-        pcVar7 = pcVar6;
+        pcVar6 = "deployable_vest";
+        pcVar8 = pcVar7;
         if (cVar1 != cVar2) {
           do {
-            cVar1 = *pcVar7;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar8;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
+            pcVar6 = pcVar6 + 1;
             pcVar8 = pcVar8 + 1;
-            pcVar7 = pcVar7 + 1;
           } while (cVar1 == cVar2);
-          pcVar8 = "airdrop_trap";
-          pcVar7 = pcVar6;
+          pcVar6 = "airdrop_trap";
+          pcVar8 = pcVar7;
           if (cVar1 != cVar2) {
             do {
-              cVar1 = *pcVar7;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar8;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
+              pcVar6 = pcVar6 + 1;
               pcVar8 = pcVar8 + 1;
-              pcVar7 = pcVar7 + 1;
             } while (cVar1 == cVar2);
-            pcVar8 = "sam_turret";
-            pcVar7 = pcVar6;
+            pcVar6 = "sam_turret";
+            pcVar8 = pcVar7;
             if (cVar1 != cVar2) {
               do {
-                cVar1 = *pcVar7;
-                cVar2 = *pcVar8;
+                cVar1 = *pcVar8;
+                cVar2 = *pcVar6;
                 if (cVar1 == '\0') break;
+                pcVar6 = pcVar6 + 1;
                 pcVar8 = pcVar8 + 1;
-                pcVar7 = pcVar7 + 1;
               } while (cVar1 == cVar2);
-              pcVar8 = "remote_uav";
-              pcVar7 = pcVar6;
+              pcVar6 = "remote_uav";
+              pcVar8 = pcVar7;
               if (cVar1 != cVar2) {
                 do {
-                  cVar1 = *pcVar7;
-                  cVar2 = *pcVar8;
+                  cVar1 = *pcVar8;
+                  cVar2 = *pcVar6;
                   if (cVar1 == '\0') break;
+                  pcVar6 = pcVar6 + 1;
                   pcVar8 = pcVar8 + 1;
-                  pcVar7 = pcVar7 + 1;
                 } while (cVar1 == cVar2);
-                pcVar8 = "triple_uav";
-                pcVar7 = pcVar6;
+                pcVar6 = "triple_uav";
+                pcVar8 = pcVar7;
                 if (cVar1 != cVar2) {
                   do {
-                    cVar1 = *pcVar7;
-                    cVar2 = *pcVar8;
+                    cVar1 = *pcVar8;
+                    cVar2 = *pcVar6;
                     if (cVar1 == '\0') break;
+                    pcVar6 = pcVar6 + 1;
                     pcVar8 = pcVar8 + 1;
-                    pcVar7 = pcVar7 + 1;
                   } while (cVar1 == cVar2);
-                  pcVar8 = "remote_mg_turret";
-                  pcVar7 = pcVar6;
+                  pcVar6 = "remote_mg_turret";
+                  pcVar8 = pcVar7;
                   if (cVar1 != cVar2) {
                     do {
-                      cVar1 = *pcVar7;
-                      cVar2 = *pcVar8;
+                      cVar1 = *pcVar8;
+                      cVar2 = *pcVar6;
                       if (cVar1 == '\0') break;
+                      pcVar6 = pcVar6 + 1;
                       pcVar8 = pcVar8 + 1;
-                      pcVar7 = pcVar7 + 1;
                     } while (cVar1 == cVar2);
-                    pcVar8 = "stealth_airstrike";
-                    pcVar7 = pcVar6;
+                    pcVar6 = "stealth_airstrike";
+                    pcVar8 = pcVar7;
                     if (cVar1 != cVar2) {
                       do {
-                        cVar1 = *pcVar7;
-                        cVar2 = *pcVar8;
+                        cVar1 = *pcVar8;
+                        cVar2 = *pcVar6;
                         if (cVar1 == '\0') break;
+                        pcVar6 = pcVar6 + 1;
                         pcVar8 = pcVar8 + 1;
-                        pcVar7 = pcVar7 + 1;
                       } while (cVar1 == cVar2);
-                      pcVar8 = "emp";
-                      pcVar7 = pcVar6;
+                      pcVar6 = "emp";
+                      pcVar8 = pcVar7;
                       if (cVar1 != cVar2) {
                         do {
-                          cVar1 = *pcVar7;
-                          cVar2 = *pcVar8;
+                          cVar1 = *pcVar8;
+                          cVar2 = *pcVar6;
                           if (cVar1 == '\0') break;
+                          pcVar6 = pcVar6 + 1;
                           pcVar8 = pcVar8 + 1;
-                          pcVar7 = pcVar7 + 1;
                         } while (cVar1 == cVar2);
-                        pcVar8 = "airdrop_juggernaut_recon";
-                        pcVar7 = pcVar6;
+                        pcVar6 = "airdrop_juggernaut_recon";
+                        pcVar8 = pcVar7;
                         if (cVar1 != cVar2) {
                           do {
-                            cVar1 = *pcVar7;
-                            cVar2 = *pcVar8;
+                            cVar1 = *pcVar8;
+                            cVar2 = *pcVar6;
                             if (cVar1 == '\0') break;
+                            pcVar6 = pcVar6 + 1;
                             pcVar8 = pcVar8 + 1;
-                            pcVar7 = pcVar7 + 1;
                           } while (cVar1 == cVar2);
-                          pcVar8 = "escort_airdrop";
+                          pcVar6 = "escort_airdrop";
                           if (cVar1 != cVar2) {
                             do {
-                              cVar1 = *pcVar6;
-                              cVar2 = *pcVar8;
+                              cVar1 = *pcVar7;
+                              cVar2 = *pcVar6;
                               if (cVar1 == '\0') break;
+                              pcVar7 = pcVar7 + 1;
                               pcVar6 = pcVar6 + 1;
-                              pcVar8 = pcVar8 + 1;
                             } while (cVar1 == cVar2);
                             if (cVar1 != cVar2) goto LAB_824e5f1c;
                           }
@@ -8556,167 +9215,169 @@ void LiveStorage_CheckECACClassSetup
         }
       }
     }
-    lVar13 = lVar13 + 1;
-  } while ((int)lVar13 < 3);
-  I_strncpyz(auStack_100,0xffffffff82087144,0x20);
-  lVar13 = 0;
+    iVar11 = iVar11 + 1;
+  } while (iVar11 < 3);
+  I_strncpyz(acStack_100,"specialistStreaks",0x20);
+  iVar11 = 0;
   do {
-    uVar3 = va(&DAT_82013b64,lVar13);
-    I_strncpyz(auStack_e0,uVar3,0x20);
-    pcVar6 = (char *)LiveStorage_MatchDataGetString(&local_180,4,uVar10,uVar4);
-    pcVar8 = pcVar12;
-    pcVar7 = pcVar6;
+    pcVar6 = va("%d");
+    I_strncpyz(acStack_e0,pcVar6,0x20);
+    pcVar7 = LiveStorage_MatchDataGetString(&local_180,4,pSStack0000001c,pSVar3);
+    pcVar6 = pcVar7;
+    pcVar8 = pcVar5;
     do {
       cVar1 = *pcVar8;
-      cVar2 = *pcVar7;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
       pcVar8 = pcVar8 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
-    pcVar8 = "specialty_longersprint_ks";
-    pcVar7 = pcVar6;
+    pcVar6 = "specialty_longersprint_ks";
+    pcVar8 = pcVar7;
     if (cVar1 != cVar2) {
       do {
-        cVar1 = *pcVar7;
-        cVar2 = *pcVar8;
+        cVar1 = *pcVar8;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
+        pcVar6 = pcVar6 + 1;
         pcVar8 = pcVar8 + 1;
-        pcVar7 = pcVar7 + 1;
       } while (cVar1 == cVar2);
-      pcVar8 = "specialty_fastreload_ks";
-      pcVar7 = pcVar6;
+      pcVar6 = "specialty_fastreload_ks";
+      pcVar8 = pcVar7;
       if (cVar1 != cVar2) {
         do {
-          cVar1 = *pcVar7;
-          cVar2 = *pcVar8;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
+          pcVar6 = pcVar6 + 1;
           pcVar8 = pcVar8 + 1;
-          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
-        pcVar8 = "specialty_scavenger_ks";
-        pcVar7 = pcVar6;
+        pcVar6 = "specialty_scavenger_ks";
+        pcVar8 = pcVar7;
         if (cVar1 != cVar2) {
           do {
-            cVar1 = *pcVar7;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar8;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
+            pcVar6 = pcVar6 + 1;
             pcVar8 = pcVar8 + 1;
-            pcVar7 = pcVar7 + 1;
           } while (cVar1 == cVar2);
-          pcVar8 = "specialty_blindeye_ks";
-          pcVar7 = pcVar6;
+          pcVar6 = "specialty_blindeye_ks";
+          pcVar8 = pcVar7;
           if (cVar1 != cVar2) {
             do {
-              cVar1 = *pcVar7;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar8;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
+              pcVar6 = pcVar6 + 1;
               pcVar8 = pcVar8 + 1;
-              pcVar7 = pcVar7 + 1;
             } while (cVar1 == cVar2);
-            pcVar8 = "specialty_paint_ks";
-            pcVar7 = pcVar6;
+            pcVar6 = "specialty_paint_ks";
+            pcVar8 = pcVar7;
             if (cVar1 != cVar2) {
               do {
-                cVar1 = *pcVar7;
-                cVar2 = *pcVar8;
+                cVar1 = *pcVar8;
+                cVar2 = *pcVar6;
                 if (cVar1 == '\0') break;
+                pcVar6 = pcVar6 + 1;
                 pcVar8 = pcVar8 + 1;
-                pcVar7 = pcVar7 + 1;
               } while (cVar1 == cVar2);
-              pcVar8 = "specialty_hardline_ks";
-              pcVar7 = pcVar6;
+              pcVar6 = "specialty_hardline_ks";
+              pcVar8 = pcVar7;
               if (cVar1 != cVar2) {
                 do {
-                  cVar1 = *pcVar7;
-                  cVar2 = *pcVar8;
+                  cVar1 = *pcVar8;
+                  cVar2 = *pcVar6;
                   if (cVar1 == '\0') break;
+                  pcVar6 = pcVar6 + 1;
                   pcVar8 = pcVar8 + 1;
-                  pcVar7 = pcVar7 + 1;
                 } while (cVar1 == cVar2);
-                pcVar8 = "specialty_coldblooded_ks";
-                pcVar7 = pcVar6;
+                pcVar6 = "specialty_coldblooded_ks";
+                pcVar8 = pcVar7;
                 if (cVar1 != cVar2) {
                   do {
-                    cVar1 = *pcVar7;
-                    cVar2 = *pcVar8;
+                    cVar1 = *pcVar8;
+                    cVar2 = *pcVar6;
                     if (cVar1 == '\0') break;
+                    pcVar6 = pcVar6 + 1;
                     pcVar8 = pcVar8 + 1;
-                    pcVar7 = pcVar7 + 1;
                   } while (cVar1 == cVar2);
-                  pcVar8 = "specialty_quickdraw_ks";
-                  pcVar7 = pcVar6;
+                  pcVar6 = "specialty_quickdraw_ks";
+                  pcVar8 = pcVar7;
                   if (cVar1 != cVar2) {
                     do {
-                      cVar1 = *pcVar7;
-                      cVar2 = *pcVar8;
+                      cVar1 = *pcVar8;
+                      cVar2 = *pcVar6;
                       if (cVar1 == '\0') break;
+                      pcVar6 = pcVar6 + 1;
                       pcVar8 = pcVar8 + 1;
-                      pcVar7 = pcVar7 + 1;
                     } while (cVar1 == cVar2);
-                    pcVar8 = "_specialty_blastshield_ks";
-                    pcVar7 = pcVar6;
+                    pcVar6 = "_specialty_blastshield_ks";
+                    pcVar8 = pcVar7;
                     if (cVar1 != cVar2) {
                       do {
-                        cVar1 = *pcVar7;
-                        cVar2 = *pcVar8;
+                        cVar1 = *pcVar8;
+                        cVar2 = *pcVar6;
                         if (cVar1 == '\0') break;
+                        pcVar6 = pcVar6 + 1;
                         pcVar8 = pcVar8 + 1;
-                        pcVar7 = pcVar7 + 1;
                       } while (cVar1 == cVar2);
-                      pcVar8 = "specialty_detectexplosive_ks";
-                      pcVar7 = pcVar6;
+                      pcVar6 = "specialty_detectexplosive_ks";
+                      pcVar8 = pcVar7;
                       if (cVar1 != cVar2) {
                         do {
-                          cVar1 = *pcVar7;
-                          cVar2 = *pcVar8;
+                          cVar1 = *pcVar8;
+                          cVar2 = *pcVar6;
                           if (cVar1 == '\0') break;
+                          pcVar6 = pcVar6 + 1;
                           pcVar8 = pcVar8 + 1;
-                          pcVar7 = pcVar7 + 1;
                         } while (cVar1 == cVar2);
-                        pcVar8 = "specialty_autospot_ks";
-                        pcVar7 = pcVar6;
+                        pcVar6 = "specialty_autospot_ks";
+                        pcVar8 = pcVar7;
                         if (cVar1 != cVar2) {
                           do {
-                            cVar1 = *pcVar7;
-                            cVar2 = *pcVar8;
+                            cVar1 = *pcVar8;
+                            cVar2 = *pcVar6;
                             if (cVar1 == '\0') break;
+                            pcVar6 = pcVar6 + 1;
                             pcVar8 = pcVar8 + 1;
-                            pcVar7 = pcVar7 + 1;
                           } while (cVar1 == cVar2);
-                          pcVar8 = "specialty_bulletaccuracy_ks";
-                          pcVar7 = pcVar6;
+                          pcVar6 = "specialty_bulletaccuracy_ks";
+                          pcVar8 = pcVar7;
                           if (cVar1 != cVar2) {
                             do {
-                              cVar1 = *pcVar7;
-                              cVar2 = *pcVar8;
+                              cVar1 = *pcVar8;
+                              cVar2 = *pcVar6;
                               if (cVar1 == '\0') break;
+                              pcVar6 = pcVar6 + 1;
                               pcVar8 = pcVar8 + 1;
-                              pcVar7 = pcVar7 + 1;
                             } while (cVar1 == cVar2);
-                            pcVar8 = "specialty_quieter_ks";
-                            pcVar7 = pcVar6;
+                            pcVar6 = "specialty_quieter_ks";
+                            pcVar8 = pcVar7;
                             if (cVar1 != cVar2) {
                               do {
-                                cVar1 = *pcVar7;
-                                cVar2 = *pcVar8;
+                                cVar1 = *pcVar8;
+                                cVar2 = *pcVar6;
                                 if (cVar1 == '\0') break;
+                                pcVar6 = pcVar6 + 1;
                                 pcVar8 = pcVar8 + 1;
-                                pcVar7 = pcVar7 + 1;
                               } while (cVar1 == cVar2);
-                              pcVar8 = "specialty_stalker_ks";
+                              pcVar6 = "specialty_stalker_ks";
                               if (cVar1 != cVar2) {
                                 do {
-                                  cVar1 = *pcVar6;
-                                  cVar2 = *pcVar8;
+                                  cVar1 = *pcVar7;
+                                  cVar2 = *pcVar6;
                                   if (cVar1 == '\0') break;
+                                  pcVar7 = pcVar7 + 1;
                                   pcVar6 = pcVar6 + 1;
-                                  pcVar8 = pcVar8 + 1;
                                 } while (cVar1 == cVar2);
                                 if (cVar1 != cVar2) {
 LAB_824e5f1c:
-                                  Com_Printf(0x10,0xffffffff82086f00,uVar11);
-                                  __restgprlr(0);
-                                  return;
+                                  Com_Printf(0x10,"invalid killstreak classIndex %d killstreak %s\n"
+                                            );
+                                  uVar9 = 0;
+                                  __restgprlr();
+                                  return (bool)uVar9;
                                 }
                               }
                             }
@@ -8732,232 +9393,248 @@ LAB_824e5f1c:
         }
       }
     }
-    lVar13 = lVar13 + 1;
-  } while ((int)lVar13 < 3);
-  I_strncpyz(auStack_100,0xffffffff82086fd4,0x20);
-  pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_180,3,uVar10,uVar4);
-  pcVar6 = "specialty_juiced";
-  pcVar8 = pcVar7;
+    iVar11 = iVar11 + 1;
+  } while (iVar11 < 3);
+  I_strncpyz(acStack_100,"deathstreak",0x20);
+  pSVar4 = pSStack0000001c;
+  pcVar8 = LiveStorage_MatchDataGetString(&local_180,3,pSStack0000001c,pSVar3);
+  pcVar7 = "specialty_juiced";
+  pcVar6 = pcVar8;
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar6;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar7;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar6 = pcVar6 + 1;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    pcVar6 = "specialty_revenge";
-    pcVar8 = pcVar7;
+    pcVar7 = "specialty_revenge";
+    pcVar6 = pcVar8;
     do {
-      cVar1 = *pcVar8;
-      cVar2 = *pcVar6;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar8 = pcVar8 + 1;
       pcVar6 = pcVar6 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      pcVar6 = "specialty_finalstand";
-      pcVar8 = pcVar7;
+      pcVar7 = "specialty_finalstand";
+      pcVar6 = pcVar8;
       do {
-        cVar1 = *pcVar8;
-        cVar2 = *pcVar6;
+        cVar1 = *pcVar6;
+        cVar2 = *pcVar7;
         if (cVar1 == '\0') break;
-        pcVar8 = pcVar8 + 1;
         pcVar6 = pcVar6 + 1;
+        pcVar7 = pcVar7 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
-        pcVar6 = "specialty_grenadepulldeath";
-        pcVar8 = pcVar7;
+        pcVar7 = "specialty_grenadepulldeath";
+        pcVar6 = pcVar8;
         do {
-          cVar1 = *pcVar8;
-          cVar2 = *pcVar6;
+          cVar1 = *pcVar6;
+          cVar2 = *pcVar7;
           if (cVar1 == '\0') break;
-          pcVar8 = pcVar8 + 1;
           pcVar6 = pcVar6 + 1;
+          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
-          pcVar6 = "specialty_c4death";
-          pcVar8 = pcVar7;
+          pcVar7 = "specialty_c4death";
+          pcVar6 = pcVar8;
           do {
-            cVar1 = *pcVar8;
-            cVar2 = *pcVar6;
+            cVar1 = *pcVar6;
+            cVar2 = *pcVar7;
             if (cVar1 == '\0') break;
-            pcVar8 = pcVar8 + 1;
             pcVar6 = pcVar6 + 1;
+            pcVar7 = pcVar7 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
-            pcVar8 = "specialty_stopping_power";
+            pcVar6 = "specialty_stopping_power";
             do {
-              cVar1 = *pcVar7;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar8;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
-              pcVar7 = pcVar7 + 1;
               pcVar8 = pcVar8 + 1;
+              pcVar6 = pcVar6 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 != cVar2) {
-              Com_Printf(0x10,0xffffffff82086f30,uVar11);
-              __restgprlr(0);
-              return;
+              Com_Printf(0x10,"invalid deathstreak classIndex %d deathstreak %s\n");
+              uVar9 = 0;
+              __restgprlr();
+              return (bool)uVar9;
             }
           }
         }
       }
     }
   }
-  I_strncpyz(auStack_100,0xffffffff82086ef0,0x20);
-  pcVar8 = (char *)LiveStorage_MatchDataGetString(&local_180,3,uVar10,uVar4);
+  I_strncpyz(acStack_100,"specialGrenade",0x20);
+  pcVar6 = LiveStorage_MatchDataGetString(&local_180,3,pSVar4,pSVar3);
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar12;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar12 = pcVar12 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    __restgprlr(1);
-    return;
+    uVar9 = 1;
+    __restgprlr();
+    return (bool)uVar9;
   }
-  Com_Printf(0x10,0xffffffff82086ec0,uVar11);
-  __restgprlr(0);
-  return;
+  Com_Printf(0x10,"speacial grenade should be none classIndex %d \n");
+  uVar9 = 0;
+  __restgprlr();
+  return (bool)uVar9;
 }
 
 
 // 824EB680  LiveStorage_CacCheckWeaponUnlocks  (qcommon/com_storage.cpp:6952)
 
-void LiveStorage_CacCheckWeaponUnlocks
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+bool LiveStorage_CacCheckWeaponUnlocks
+               (int param_1,StructuredDataLookup *param_2,StructuredDataBuffer *param_3,
+               StructuredDataBuffer *param_4,StructuredDataDef *param_5)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char *pcVar5;
+  char cVar2;
+  char *pcVar3;
+  char *pcVar4;
+  int iVar5;
   int iVar6;
-  undefined8 uVar4;
-  char cVar9;
+  bool bVar10;
   char *pcVar7;
-  int iVar8;
-  char *pcVar10;
-  longlong lVar11;
-  longlong lVar12;
-  undefined4 local_190;
-  undefined4 local_18c;
-  undefined4 local_188 [2];
-  undefined1 *local_180;
-  undefined1 *local_17c;
-  undefined1 *local_178;
-  undefined1 *local_174;
-  undefined1 *local_170;
-  undefined1 *local_16c;
-  undefined1 auStack_160 [32];
-  undefined1 auStack_140 [32];
-  undefined1 auStack_120 [32];
-  undefined1 auStack_100 [32];
-  undefined1 auStack_e0 [32];
-  undefined1 auStack_c0 [192];
+  char *pcVar8;
+  int iVar9;
+  undefined1 uVar11;
+  int iVar12;
+  StringTable *local_190;
+  StringTable *local_18c;
+  StringTable *local_188 [2];
+  char *local_180;
+  char *local_17c;
+  char *local_178;
+  char *local_174;
+  char *local_170;
+  char *local_16c;
+  char acStack_160 [32];
+  char acStack_140 [32];
+  char acStack_120 [32];
+  char acStack_100 [32];
+  char acStack_e0 [32];
+  char acStack_c0 [192];
   
-  uVar2 = __savegprlr();
-  local_180 = auStack_160;
-  local_17c = auStack_140;
-  local_178 = auStack_120;
-  local_174 = auStack_100;
-  local_170 = auStack_e0;
-  local_16c = auStack_c0;
-  StringTable_GetAsset(0xffffffff820867c8,local_188);
-  StringTable_GetAsset(0xffffffff820867ec,&local_190);
-  StringTable_GetAsset(0xffffffff82026898,&local_18c);
-  I_strncpyz(auStack_160,0xffffffff82085ff0,0x20);
-  uVar3 = va(0xffffffff82013b64,uVar2);
-  I_strncpyz(auStack_140,uVar3,0x20);
-  I_strncpyz(auStack_120,0xffffffff820889e8,0x20);
-  lVar11 = 0;
+  __savegprlr();
+  local_180 = acStack_160;
+  local_17c = acStack_140;
+  local_178 = acStack_120;
+  local_174 = acStack_100;
+  local_170 = acStack_e0;
+  local_16c = acStack_c0;
+  StringTable_GetAsset("mp/statstable.csv",local_188);
+  StringTable_GetAsset("mp/weaponRankTable.csv",&local_190);
+  StringTable_GetAsset("mp/unlocktable.csv",&local_18c);
+  I_strncpyz(acStack_160,"customClasses",0x20);
+  pcVar3 = va("%d");
+  I_strncpyz(acStack_140,pcVar3,0x20);
+  I_strncpyz(acStack_120,"weaponSetups",0x20);
+  iVar12 = 0;
   do {
-    uVar3 = va(0xffffffff82013b64,lVar11);
-    I_strncpyz(auStack_100,uVar3,0x20);
-    I_strncpyz(auStack_e0,0xffffffff820267a8,0x20);
-    pcVar5 = (char *)LiveStorage_MatchDataGetString(&local_180,5,param_2,param_4);
-    pcVar7 = "riotshield";
-    pcVar10 = pcVar5;
+    pcVar3 = va("%d");
+    I_strncpyz(acStack_100,pcVar3,0x20);
+    I_strncpyz(acStack_e0,"weapon",0x20);
+    pcVar4 = LiveStorage_MatchDataGetString
+                       (&local_180,5,(StructuredDataBuffer *)param_2,(StructuredDataDef *)param_4);
+    pcVar3 = "riotshield";
+    pcVar7 = pcVar4;
     do {
-      cVar9 = *pcVar7;
-      cVar1 = *pcVar10;
-      if (cVar9 == '\0') break;
+      cVar1 = *pcVar3;
+      cVar2 = *pcVar7;
+      if (cVar1 == '\0') break;
+      pcVar3 = pcVar3 + 1;
       pcVar7 = pcVar7 + 1;
-      pcVar10 = pcVar10 + 1;
-    } while (cVar9 == cVar1);
-    pcVar7 = "throwingknife";
-    pcVar10 = pcVar5;
-    if (cVar9 != cVar1) {
+    } while (cVar1 == cVar2);
+    pcVar3 = "throwingknife";
+    pcVar7 = pcVar4;
+    if (cVar1 != cVar2) {
       do {
-        cVar9 = *pcVar7;
-        cVar1 = *pcVar10;
-        if (cVar9 == '\0') break;
+        cVar1 = *pcVar3;
+        cVar2 = *pcVar7;
+        if (cVar1 == '\0') break;
+        pcVar3 = pcVar3 + 1;
         pcVar7 = pcVar7 + 1;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar9 == cVar1);
-      if (cVar9 != cVar1) {
-        uVar3 = StringTable_Lookup(local_188[0],4,pcVar5,2);
-        iVar6 = LiveStorage_PlayerDataGetArrayIntByName(param_3,0xffffffff8208689c,pcVar5);
-        uVar4 = StringTable_LookupRowNumForValue(local_18c,0,pcVar5);
-        if ((-1 < (int)uVar4) &&
-           (cVar9 = LiveStorage_IsItemUnlockedFromTable(param_3,local_18c,uVar4), cVar9 != '\0')) {
-          lVar12 = 0;
+      } while (cVar1 == cVar2);
+      if (cVar1 != cVar2) {
+        pcVar3 = StringTable_Lookup(local_188[0],4,pcVar4,2);
+        iVar5 = LiveStorage_PlayerDataGetArrayIntByName(param_3,"weaponRank",pcVar4);
+        iVar6 = StringTable_LookupRowNumForValue(local_18c,0,pcVar4);
+        if ((-1 < iVar6) &&
+           (bVar10 = LiveStorage_IsItemUnlockedFromTable(param_3,local_18c,iVar6), bVar10)) {
+          iVar6 = 0;
           do {
-            I_strncpyz(auStack_e0,0xffffffff82058cac,0x20);
-            uVar4 = va(0xffffffff82013b64,lVar12);
-            I_strncpyz(auStack_c0,uVar4,0x20);
-            pcVar5 = (char *)LiveStorage_MatchDataGetString(&local_180,6,param_2,param_4);
+            I_strncpyz(acStack_e0,"attachment",0x20);
+            pcVar7 = va("%d");
+            I_strncpyz(acStack_c0,pcVar7,0x20);
+            pcVar8 = LiveStorage_MatchDataGetString
+                               (&local_180,6,(StructuredDataBuffer *)param_2,
+                                (StructuredDataDef *)param_4);
             pcVar7 = "none";
-            pcVar10 = pcVar5;
+            pcVar4 = pcVar8;
             do {
-              cVar9 = *pcVar7;
-              cVar1 = *pcVar10;
-              if (cVar9 == '\0') break;
+              cVar1 = *pcVar7;
+              cVar2 = *pcVar4;
+              if (cVar1 == '\0') break;
               pcVar7 = pcVar7 + 1;
-              pcVar10 = pcVar10 + 1;
-            } while (cVar9 == cVar1);
-            if (cVar9 != cVar1) {
-              pcVar7 = (char *)StringTable_Lookup(local_190,0,uVar3,2);
-              iVar8 = atoi(pcVar7);
-              pcVar7 = (char *)StringTable_Lookup(local_190,iVar8,pcVar5,4);
-              iVar8 = atoi(pcVar7);
-              if (iVar6 < iVar8) goto LAB_824eba58;
+              pcVar4 = pcVar4 + 1;
+            } while (cVar1 == cVar2);
+            if (cVar1 != cVar2) {
+              pcVar7 = StringTable_Lookup(local_190,0,pcVar3,2);
+              iVar9 = atoi(pcVar7);
+              pcVar7 = StringTable_Lookup(local_190,iVar9,pcVar8,4);
+              iVar9 = atoi(pcVar7);
+              if (iVar5 < iVar9) goto LAB_824eba58;
             }
-            lVar12 = lVar12 + 1;
-          } while ((int)lVar12 < 2);
-          I_strncpyz(auStack_e0,0xffffffff82088a38,0x20);
-          pcVar5 = (char *)LiveStorage_MatchDataGetString(&local_180,5,param_2,param_4);
-          pcVar7 = (char *)StringTable_Lookup(local_190,0,uVar3,3);
-          iVar8 = atoi(pcVar7);
-          pcVar7 = (char *)StringTable_Lookup(local_190,iVar8,pcVar5,4);
-          iVar8 = atoi(pcVar7);
-          if (iVar8 <= iVar6) {
-            I_strncpyz(auStack_e0,0xffffffff820889e0,0x20);
-            pcVar5 = (char *)LiveStorage_MatchDataGetString(&local_180,5,param_2,param_4);
-            pcVar7 = (char *)StringTable_Lookup(local_190,0,uVar3,4);
-            iVar8 = atoi(pcVar7);
-            pcVar7 = (char *)StringTable_Lookup(local_190,iVar8,pcVar5,4);
-            iVar8 = atoi(pcVar7);
-            if (iVar8 <= iVar6) {
-              cVar9 = LiveStorage_CheckECACWeaponSetup(param_4,param_2,param_3,lVar11,uVar2,0);
-              if (cVar9 == '\0') goto LAB_824eba70;
+            iVar6 = iVar6 + 1;
+          } while (iVar6 < 2);
+          I_strncpyz(acStack_e0,"camo",0x20);
+          pcVar7 = LiveStorage_MatchDataGetString
+                             (&local_180,5,(StructuredDataBuffer *)param_2,
+                              (StructuredDataDef *)param_4);
+          pcVar4 = StringTable_Lookup(local_190,0,pcVar3,3);
+          iVar6 = atoi(pcVar4);
+          pcVar7 = StringTable_Lookup(local_190,iVar6,pcVar7,4);
+          iVar6 = atoi(pcVar7);
+          if (iVar6 <= iVar5) {
+            I_strncpyz(acStack_e0,"buff",0x20);
+            pcVar7 = LiveStorage_MatchDataGetString
+                               (&local_180,5,(StructuredDataBuffer *)param_2,
+                                (StructuredDataDef *)param_4);
+            pcVar3 = StringTable_Lookup(local_190,0,pcVar3,4);
+            iVar6 = atoi(pcVar3);
+            pcVar3 = StringTable_Lookup(local_190,iVar6,pcVar7,4);
+            iVar6 = atoi(pcVar3);
+            if (iVar6 <= iVar5) {
+              bVar10 = LiveStorage_CheckECACWeaponSetup
+                                 ((StructuredDataDef *)param_4,(StructuredDataBuffer *)param_2,
+                                  param_3,iVar12,param_1,false);
+              if (!bVar10) goto LAB_824eba70;
               goto LAB_824eba40;
             }
           }
         }
 LAB_824eba58:
-        Com_Printf(0x10,0xffffffff82088a14,pcVar5,uVar2);
+        Com_Printf(0x10,"%s is not unlocked classIndex %d\n");
 LAB_824eba70:
-        __restgprlr(0);
-        return;
+        uVar11 = 0;
+        __restgprlr();
+        return (bool)uVar11;
       }
     }
 LAB_824eba40:
-    lVar11 = lVar11 + 1;
-    if (1 < (int)lVar11) {
-      __restgprlr(1);
-      return;
+    iVar12 = iVar12 + 1;
+    if (1 < iVar12) {
+      uVar11 = 1;
+      __restgprlr();
+      return (bool)uVar11;
     }
   } while( true );
 }
@@ -8965,292 +9642,320 @@ LAB_824eba40:
 
 // 824EBA80  LiveStorage_CheckECACAgainstUnlocks  (qcommon/com_storage.cpp:7040)
 
-void LiveStorage_CheckECACAgainstUnlocks(void)
+bool LiveStorage_CheckECACAgainstUnlocks(int param_1)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar9;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
+  char cVar2;
+  int iVar3;
+  uint uVar4;
+  bool bVar14;
+  uchar *puVar5;
+  StatsSource SVar6;
+  StructuredDataDef *pSVar7;
+  int iVar8;
+  char *pcVar9;
   char *pcVar10;
-  undefined8 *puVar11;
-  longlong lVar12;
+  int iVar11;
+  int iVar12;
   char *pcVar13;
-  longlong lVar14;
-  longlong lVar15;
-  undefined4 local_1c0 [2];
-  undefined1 auStack_1b8 [8];
-  undefined1 auStack_1b0 [16];
-  undefined1 *local_1a0;
-  undefined1 *local_19c;
-  undefined1 *local_198;
-  undefined1 *local_194;
+  undefined1 uVar15;
+  undefined8 uVar16;
+  uint *puVar17;
+  char *pcVar18;
+  longlong lVar19;
+  StringTable *local_1c0 [2];
+  undefined1 auStack_1b8 [24];
+  char *local_1a0;
+  char *local_19c;
+  char *local_198;
+  char *local_194;
   undefined1 *local_190;
-  undefined1 auStack_180 [32];
-  undefined1 auStack_160 [32];
-  undefined1 auStack_140 [32];
-  undefined1 auStack_120 [32];
+  char acStack_180 [32];
+  char acStack_160 [32];
+  char acStack_140 [32];
+  char acStack_120 [32];
   undefined1 auStack_100 [32];
-  undefined1 auStack_e0 [8];
-  undefined8 uStack_d8;
+  StructuredDataLookup SStack_e0;
   char local_d0 [208];
   
-  uVar2 = __savegprlr_16();
-  local_1a0 = auStack_180;
-  local_19c = auStack_160;
-  local_198 = auStack_140;
-  local_194 = auStack_120;
+  iVar3 = __savegprlr_16(param_1);
+  local_1a0 = acStack_180;
+  local_19c = acStack_160;
+  local_198 = acStack_140;
+  local_194 = acStack_120;
   local_190 = auStack_100;
-  uVar3 = StructuredDataDef_GetSize(0xffffffff820877cc);
-  StructuredData_MakeBuffer(auStack_1b8,0xffffffff8361cc64,uVar3);
-  cVar9 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar9 == '\0') {
-    uVar3 = LiveStorage_GetActiveStatsSource(uVar2);
-    uVar3 = LiveStorage_GetPersistentDataBufferForSource(uVar2,uVar3);
+  uVar4 = StructuredDataDef_GetSize("mp/eliteCreateAClass.def");
+  StructuredData_MakeBuffer((StructuredDataBuffer *)auStack_1b8,matchDataGlob.matchData,uVar4);
+  bVar14 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar14) {
+    puVar5 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    uVar3 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar6 = LiveStorage_GetActiveStatsSource(iVar3);
+    puVar5 = LiveStorage_GetPersistentDataBufferForSource(iVar3,SVar6);
   }
-  uVar4 = StructuredDataDef_GetSize(0xffffffff8202639c);
-  StructuredData_MakeBuffer(auStack_1b0,uVar3,uVar4);
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff820877cc,0x3800);
-  StructuredData_InitializeLookup(uVar3,auStack_e0);
-  iVar5 = LiveStorage_PlayerDataGetIntByName(uVar2,0xffffffff82088aa0);
-  iVar6 = LiveStorage_PlayerDataGetIntByName(uVar2,0xffffffff82088a84);
-  iVar5 = iVar5 + iVar6 + 5;
-  StringTable_GetAsset(0xffffffff82026898,local_1c0);
-  if (0xf < iVar5) {
-    MyAssertHandler(0xffffffff820859c8,0x1b93,0,0xffffffff82000f98,0xffffffff82088a5c);
+  uVar4 = StructuredDataDef_GetSize("mp/playerdata.def");
+  StructuredData_MakeBuffer((StructuredDataBuffer *)(auStack_1b8 + 8),puVar5,uVar4);
+  pSVar7 = StructuredDataDef_GetAsset("mp/eliteCreateAClass.def",0x3800);
+  StructuredData_InitializeLookup(pSVar7,&SStack_e0);
+  iVar8 = LiveStorage_PlayerDataGetIntByName(iVar3,"extraCustomClassesEntitlement");
+  iVar3 = LiveStorage_PlayerDataGetIntByName(iVar3,"extraCustomClassesPrestige");
+  iVar3 = iVar8 + iVar3 + 5;
+  StringTable_GetAsset("mp/unlocktable.csv",local_1c0);
+  if (0xf < iVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1b93,0,"%s");
   }
-  StructuredData_PrintAllData(uVar3,auStack_1b8);
-  uVar2 = StringTable_LookupRowNumForValue(local_1c0[0],0,0xffffffff82088a58);
-  if ((-1 < (int)uVar2) &&
-     (cVar9 = LiveStorage_IsItemUnlockedFromTable(auStack_1b0,local_1c0[0],uVar2), cVar9 != '\0')) {
-    lVar12 = 0;
-    if (0 < iVar5) {
-      pcVar13 = "none";
+  StructuredData_PrintAllData(pSVar7,(StructuredDataBuffer *)auStack_1b8);
+  iVar8 = StringTable_LookupRowNumForValue(local_1c0[0],0,"cac");
+  if ((-1 < iVar8) &&
+     (bVar14 = LiveStorage_IsItemUnlockedFromTable
+                         ((StructuredDataBuffer *)(auStack_1b8 + 8),local_1c0[0],iVar8), bVar14)) {
+    iVar8 = 0;
+    if (0 < iVar3) {
+      uVar16 = 0xffffffff82000000;
+      pcVar18 = "none";
       do {
-        cVar9 = LiveStorage_CacCheckWeaponUnlocks(lVar12,auStack_1b8,auStack_1b0,uVar3);
-        if (cVar9 == '\0') goto LAB_824ec104;
-        I_strncpyz(auStack_180,0xffffffff82085ff0,0x20);
-        uVar2 = va(0xffffffff82013b64,lVar12);
-        I_strncpyz(auStack_160,uVar2,0x20);
-        I_strncpyz(auStack_140,0xffffffff82000f9c,0x20);
-        lVar14 = 0;
+        bVar14 = LiveStorage_CacCheckWeaponUnlocks
+                           (iVar8,(StructuredDataLookup *)auStack_1b8,
+                            (StructuredDataBuffer *)(auStack_1b8 + 8),(StructuredDataBuffer *)pSVar7
+                            ,(StructuredDataDef *)uVar16);
+        if (!bVar14) goto LAB_824ec104;
+        I_strncpyz(acStack_180,"customClasses",0x20);
+        pcVar9 = va("%d");
+        I_strncpyz(acStack_160,pcVar9,0x20);
+        I_strncpyz(acStack_140,"perks",0x20);
+        iVar12 = 0;
         do {
-          uVar2 = va(0xffffffff82013b64,lVar14);
-          I_strncpyz(auStack_120,uVar2,0x20);
-          pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_1a0,4,auStack_1b8,uVar3);
-          pcVar10 = "specialty_null";
-          pcVar8 = pcVar7;
+          pcVar9 = va("%d");
+          I_strncpyz(acStack_120,pcVar9,0x20);
+          pcVar10 = LiveStorage_MatchDataGetString
+                              (&local_1a0,4,(StructuredDataBuffer *)auStack_1b8,pSVar7);
+          pcVar9 = pcVar10;
+          pcVar13 = "specialty_null";
           do {
-            cVar9 = *pcVar10;
-            cVar1 = *pcVar8;
-            if (cVar9 == '\0') break;
-            pcVar10 = pcVar10 + 1;
-            pcVar8 = pcVar8 + 1;
-          } while (cVar9 == cVar1);
-          if ((cVar9 != cVar1) &&
-             ((uVar2 = StringTable_LookupRowNumForValue(local_1c0[0],0,pcVar7), (int)uVar2 < 0 ||
-              (cVar9 = LiveStorage_IsItemUnlockedFromTable(auStack_1b0,local_1c0[0],uVar2),
-              cVar9 == '\0')))) goto LAB_824ec0ec;
-          lVar14 = lVar14 + 1;
-        } while ((int)lVar14 < 7);
-        I_strncpyz(auStack_140,0xffffffff82086fd4,0x20);
-        pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_1a0,3,auStack_1b8,uVar3);
-        pcVar10 = "specialty_null";
-        pcVar8 = pcVar7;
+            cVar1 = *pcVar13;
+            cVar2 = *pcVar9;
+            if (cVar1 == '\0') break;
+            pcVar13 = pcVar13 + 1;
+            pcVar9 = pcVar9 + 1;
+          } while (cVar1 == cVar2);
+          if ((cVar1 != cVar2) &&
+             ((iVar11 = StringTable_LookupRowNumForValue(local_1c0[0],0,pcVar10), iVar11 < 0 ||
+              (bVar14 = LiveStorage_IsItemUnlockedFromTable
+                                  ((StructuredDataBuffer *)(auStack_1b8 + 8),local_1c0[0],iVar11),
+              !bVar14)))) goto LAB_824ec0ec;
+          iVar12 = iVar12 + 1;
+        } while (iVar12 < 7);
+        I_strncpyz(acStack_140,"deathstreak",0x20);
+        pcVar10 = LiveStorage_MatchDataGetString
+                            (&local_1a0,3,(StructuredDataBuffer *)auStack_1b8,pSVar7);
+        pcVar9 = "specialty_null";
+        pcVar13 = pcVar10;
         do {
-          cVar9 = *pcVar10;
-          cVar1 = *pcVar8;
-          if (cVar9 == '\0') break;
-          pcVar10 = pcVar10 + 1;
-          pcVar8 = pcVar8 + 1;
-        } while (cVar9 == cVar1);
-        if (cVar9 != cVar1) {
-          uVar2 = StringTable_LookupRowNumForValue(local_1c0[0],0,pcVar7);
-          if (((int)uVar2 < 0) ||
-             (cVar9 = LiveStorage_IsItemUnlockedFromTable(auStack_1b0,local_1c0[0],uVar2),
-             cVar9 == '\0')) {
+          cVar1 = *pcVar9;
+          cVar2 = *pcVar13;
+          if (cVar1 == '\0') break;
+          pcVar9 = pcVar9 + 1;
+          pcVar13 = pcVar13 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 != cVar2) {
+          iVar12 = StringTable_LookupRowNumForValue(local_1c0[0],0,pcVar10);
+          if ((iVar12 < 0) ||
+             (bVar14 = LiveStorage_IsItemUnlockedFromTable
+                                 ((StructuredDataBuffer *)(auStack_1b8 + 8),local_1c0[0],iVar12),
+             !bVar14)) {
 LAB_824ec0ec:
-            Com_Printf(0x10,0xffffffff82088a14,pcVar7,lVar12);
+            Com_Printf(0x10,"%s is not unlocked classIndex %d\n");
             goto LAB_824ec104;
           }
-          I_strncpyz(auStack_140,0xffffffff820872f4,0x20);
-          lVar14 = 0;
+          I_strncpyz(acStack_140,"assaultStreaks",0x20);
+          iVar12 = 0;
           do {
-            uVar2 = va(0xffffffff82013b64,lVar14);
-            I_strncpyz(auStack_120,uVar2,0x20);
-            pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_1a0,4,auStack_1b8,uVar3);
-            pcVar10 = pcVar13;
-            pcVar8 = pcVar7;
+            pcVar9 = va("%d");
+            I_strncpyz(acStack_120,pcVar9,0x20);
+            pcVar10 = LiveStorage_MatchDataGetString
+                                (&local_1a0,4,(StructuredDataBuffer *)auStack_1b8,pSVar7);
+            pcVar9 = pcVar10;
+            pcVar13 = pcVar18;
             do {
-              cVar9 = *pcVar10;
-              cVar1 = *pcVar8;
-              if (cVar9 == '\0') break;
-              pcVar10 = pcVar10 + 1;
-              pcVar8 = pcVar8 + 1;
-            } while (cVar9 == cVar1);
-            if ((cVar9 != cVar1) &&
-               (cVar9 = LiveStorage_PlayerDataGetArrayBoolByName
-                                  (auStack_1b0,0xffffffff82088a40,pcVar7), cVar9 == '\0'))
-            goto LAB_824ec0ec;
-            lVar14 = lVar14 + 1;
-          } while ((int)lVar14 < 3);
-          I_strncpyz(auStack_140,0xffffffff82087200,0x20);
-          lVar14 = 0;
+              cVar1 = *pcVar13;
+              cVar2 = *pcVar9;
+              if (cVar1 == '\0') break;
+              pcVar13 = pcVar13 + 1;
+              pcVar9 = pcVar9 + 1;
+            } while (cVar1 == cVar2);
+            if ((cVar1 != cVar2) &&
+               (bVar14 = LiveStorage_PlayerDataGetArrayBoolByName
+                                   ((StructuredDataBuffer *)(auStack_1b8 + 8),"killstreakUnlocked",
+                                    pcVar10), !bVar14)) goto LAB_824ec0ec;
+            iVar12 = iVar12 + 1;
+          } while (iVar12 < 3);
+          I_strncpyz(acStack_140,"defenseStreaks",0x20);
+          iVar12 = 0;
           do {
-            uVar2 = va(0xffffffff82013b64,lVar14);
-            I_strncpyz(auStack_120,uVar2,0x20);
-            pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_1a0,4,auStack_1b8,uVar3);
-            pcVar10 = pcVar13;
-            pcVar8 = pcVar7;
+            pcVar9 = va("%d");
+            I_strncpyz(acStack_120,pcVar9,0x20);
+            pcVar10 = LiveStorage_MatchDataGetString
+                                (&local_1a0,4,(StructuredDataBuffer *)auStack_1b8,pSVar7);
+            pcVar9 = pcVar10;
+            pcVar13 = pcVar18;
             do {
-              cVar9 = *pcVar10;
-              cVar1 = *pcVar8;
-              if (cVar9 == '\0') break;
-              pcVar10 = pcVar10 + 1;
-              pcVar8 = pcVar8 + 1;
-            } while (cVar9 == cVar1);
-            if ((cVar9 != cVar1) &&
-               (cVar9 = LiveStorage_PlayerDataGetArrayBoolByName
-                                  (auStack_1b0,0xffffffff82088a40,pcVar7), cVar9 == '\0'))
-            goto LAB_824ec0ec;
-            lVar14 = lVar14 + 1;
-          } while ((int)lVar14 < 3);
-          I_strncpyz(auStack_140,0xffffffff82087144,0x20);
-          lVar14 = 0;
+              cVar1 = *pcVar13;
+              cVar2 = *pcVar9;
+              if (cVar1 == '\0') break;
+              pcVar13 = pcVar13 + 1;
+              pcVar9 = pcVar9 + 1;
+            } while (cVar1 == cVar2);
+            if ((cVar1 != cVar2) &&
+               (bVar14 = LiveStorage_PlayerDataGetArrayBoolByName
+                                   ((StructuredDataBuffer *)(auStack_1b8 + 8),"killstreakUnlocked",
+                                    pcVar10), !bVar14)) goto LAB_824ec0ec;
+            iVar12 = iVar12 + 1;
+          } while (iVar12 < 3);
+          I_strncpyz(acStack_140,"specialistStreaks",0x20);
+          iVar12 = 0;
           do {
-            puVar11 = &uStack_d8;
-            lVar15 = 8;
+            puVar17 = &SStack_e0.offset;
+            lVar19 = 8;
             do {
-              puVar11 = puVar11 + 1;
-              *puVar11 = 0;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-            uVar2 = va(0xffffffff82013b64,lVar14);
-            I_strncpyz(auStack_120,uVar2,0x20);
-            pcVar7 = (char *)LiveStorage_MatchDataGetString(&local_1a0,4,auStack_1b8,uVar3);
-            pcVar10 = pcVar13;
-            pcVar8 = pcVar7;
+              puVar17 = puVar17 + 2;
+              *(undefined8 *)puVar17 = 0;
+              lVar19 = lVar19 + -1;
+            } while (lVar19 != 0);
+            pcVar9 = va("%d");
+            I_strncpyz(acStack_120,pcVar9,0x20);
+            pcVar10 = LiveStorage_MatchDataGetString
+                                (&local_1a0,4,(StructuredDataBuffer *)auStack_1b8,pSVar7);
+            pcVar9 = pcVar18;
+            pcVar13 = pcVar10;
             do {
-              cVar9 = *pcVar10;
-              cVar1 = *pcVar8;
-              if (cVar9 == '\0') break;
-              pcVar10 = pcVar10 + 1;
-              pcVar8 = pcVar8 + 1;
-            } while (cVar9 == cVar1);
-            if (cVar9 != cVar1) {
-              pcVar8 = strstr(pcVar7,"_ks");
-              pcVar10 = pcVar7;
-              if (pcVar8 == (char *)0x0) goto LAB_824ec104;
+              cVar1 = *pcVar9;
+              cVar2 = *pcVar13;
+              if (cVar1 == '\0') break;
+              pcVar9 = pcVar9 + 1;
+              pcVar13 = pcVar13 + 1;
+            } while (cVar1 == cVar2);
+            if (cVar1 != cVar2) {
+              pcVar13 = strstr(pcVar10,"_ks");
+              pcVar9 = pcVar10;
+              if (pcVar13 == (char *)0x0) goto LAB_824ec104;
               do {
-                cVar9 = *pcVar10;
-                pcVar10 = pcVar10 + 1;
-              } while (cVar9 != '\0');
-              strncpy(local_d0,pcVar7,(size_t)(pcVar10 + (-4 - (int)pcVar7)));
-              uVar2 = StringTable_LookupRowNumForValue(local_1c0[0],0,local_d0);
-              if (((int)uVar2 < 0) ||
-                 (cVar9 = LiveStorage_IsItemUnlockedFromTable(auStack_1b0,local_1c0[0],uVar2),
-                 cVar9 == '\0')) {
-                Com_Printf(0x10,0xffffffff82088a14,local_d0,lVar12);
-                __restgprlr_16(0);
-                return;
+                cVar1 = *pcVar9;
+                pcVar9 = pcVar9 + 1;
+              } while (cVar1 != '\0');
+              strncpy(local_d0,pcVar10,(uint)(pcVar9 + (-4 - (int)pcVar10)));
+              iVar11 = StringTable_LookupRowNumForValue(local_1c0[0],0,local_d0);
+              if ((iVar11 < 0) ||
+                 (bVar14 = LiveStorage_IsItemUnlockedFromTable
+                                     ((StructuredDataBuffer *)(auStack_1b8 + 8),local_1c0[0],iVar11)
+                 , !bVar14)) {
+                Com_Printf(0x10,"%s is not unlocked classIndex %d\n");
+                uVar15 = __restgprlr_16(0);
+                return (bool)uVar15;
               }
             }
-            lVar14 = lVar14 + 1;
-          } while ((int)lVar14 < 3);
-          cVar9 = LiveStorage_CheckECACClassSetup(uVar3,auStack_1b8,lVar12,0);
-          if (cVar9 == '\0') goto LAB_824ec104;
+            iVar12 = iVar12 + 1;
+          } while (iVar12 < 3);
+          bVar14 = LiveStorage_CheckECACClassSetup
+                             (pSVar7,(StructuredDataBuffer *)auStack_1b8,iVar8,false);
+          if (!bVar14) goto LAB_824ec104;
         }
-        lVar12 = lVar12 + 1;
-      } while ((int)lVar12 < iVar5);
+        iVar8 = iVar8 + 1;
+      } while (iVar8 < iVar3);
     }
-    lVar12 = 0;
-    while (cVar9 = LiveStorage_CheckECACClassSetup(uVar3,auStack_1b8,lVar12,1), cVar9 != '\0') {
-      lVar14 = 0;
+    iVar3 = 0;
+    while (bVar14 = LiveStorage_CheckECACClassSetup
+                              (pSVar7,(StructuredDataBuffer *)auStack_1b8,iVar3,true), bVar14) {
+      iVar8 = 0;
       do {
-        cVar9 = LiveStorage_CheckECACWeaponSetup(uVar3,auStack_1b8,auStack_1b0,lVar14,lVar12,1);
-        if (cVar9 == '\0') goto LAB_824ec104;
-        lVar14 = lVar14 + 1;
-      } while ((int)lVar14 < 2);
-      lVar12 = lVar12 + 1;
-      if (4 < (int)lVar12) {
-        __restgprlr_16(1);
-        return;
+        bVar14 = LiveStorage_CheckECACWeaponSetup
+                           (pSVar7,(StructuredDataBuffer *)auStack_1b8,
+                            (StructuredDataBuffer *)(auStack_1b8 + 8),iVar8,iVar3,true);
+        if (!bVar14) goto LAB_824ec104;
+        iVar8 = iVar8 + 1;
+      } while (iVar8 < 2);
+      iVar3 = iVar3 + 1;
+      if (4 < iVar3) {
+        uVar15 = __restgprlr_16(1);
+        return (bool)uVar15;
       }
     }
   }
 LAB_824ec104:
-  __restgprlr_16(0);
-  return;
+  uVar15 = __restgprlr_16(0);
+  return (bool)uVar15;
 }
 
 
 // 824E5FC8  LiveStorage_CheckForEliteClassFile  (qcommon/com_storage.cpp:7181)
 
-void LiveStorage_CheckForEliteClassFile(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void LiveStorage_CheckForEliteClassFile(int param_1)
 
 {
+  int iVar1;
+  bool bVar6;
+  char *pcVar2;
   int iVar3;
-  char cVar5;
-  ulonglong uVar1;
-  int iVar4;
-  longlong lVar2;
+  DWOnlineStatus DVar4;
+  overlappedTask *poVar5;
   
-  iVar3 = __savegprlr_27();
-  cVar5 = Live_IsInLiveGame();
-  if (cVar5 == '\0') {
-    uVar1 = UI_GetTopActiveMenuName(0);
-    if ((uVar1 & 0xffffffff) != 0) {
-      iVar4 = I_strcmp(uVar1,0xffffffff8207b5b4);
-      if ((iVar4 == 0) || (iVar4 = I_strcmp(uVar1,0xffffffff82057c48), iVar4 == 0)) {
-        if ((DAT_8365b6ec != '\0') || (DAT_8365b7d4 != '\0')) {
-          DAT_8365b6ec = '\0';
-          DAT_8365b7d4 = '\0';
+  iVar1 = __savegprlr_27(param_1);
+  bVar6 = Live_IsInLiveGame();
+  if (bVar6) {
+    if ((s_eliteCACData.checkingForECACFile != false) ||
+       (s_eliteCACData.disabledControllersForPopup != false)) {
+      s_eliteCACData.disabledControllersForPopup = false;
+      s_eliteCACData.checkingForECACFile = false;
+      __restgprlr_27();
+      return;
+    }
+  }
+  else {
+    pcVar2 = UI_GetTopActiveMenuName(LOCAL_CLIENT_0);
+    if (pcVar2 != (char *)0x0) {
+      iVar3 = I_strcmp(pcVar2,"main");
+      if ((iVar3 == 0) || (iVar3 = I_strcmp(pcVar2,"menu_splitscreensignin"), iVar3 == 0)) {
+        if ((s_eliteCACData.checkingForECACFile != false) ||
+           (s_eliteCACData.disabledControllersForPopup != false)) {
+          s_eliteCACData.checkingForECACFile = false;
+          s_eliteCACData.disabledControllersForPopup = false;
         }
       }
-      else if ((((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') &&
-                ((((*(char *)(DAT_82b3ecb8 + 0xc) == '\0' || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')
-                   ) && (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) &&
-                 ((cVar5 = Live_AreWeAcceptingInvite(), cVar5 == '\0' &&
-                  ((&DAT_8365b6e8)[iVar3] == '\0')))))) && (DAT_8365b6ec == '\0')) &&
-              (((cVar5 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,0x1f), cVar5 == '\0' &&
-                (cVar5 = Live_IsUserSignedInToLive(iVar3), cVar5 != '\0')) &&
-               ((iVar4 = dwGetLogOnStatus(iVar3), iVar4 == 2 &&
-                (cVar5 = LiveStorage_DoWeHaveStats(iVar3), cVar5 != '\0')))))) {
-        lVar2 = Sys_Milliseconds();
-        if ((int)(DAT_8365b1bc + 4000) < (int)(uint)lVar2) {
-          Com_PrintWarning(0x10,0xffffffff82087600,lVar2 - (ulonglong)DAT_8365b1bc);
-          DAT_8365b1bc = (uint)lVar2;
-          uVar1 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar3,0x1f);
-          if ((uVar1 & 0xffffffff) != 0) {
-            DAT_8365b710 = 0;
-            DAT_8365b6f0 = "eliteCreateAClassBlob";
-            iVar3 = dwFetchFileInfoPersonalStorage(uVar1,0xffffffff8365b6f0);
-            if (iVar3 != 0) {
-              DAT_8365b6ec = 1;
-              __restgprlr_27();
-              return;
-            }
-            TaskManager_ClearTask(uVar1);
+      else if (((((systemlink->current).enabled == false) &&
+                (((((splitscreen->current).enabled == false ||
+                   ((onlinegame->current).enabled != false)) &&
+                  ((onlinegame->current).enabled != false)) &&
+                 ((bVar6 = Live_AreWeAcceptingInvite(), !bVar6 &&
+                  (s_eliteCACData.checkedForECACFile[iVar1] == false)))))) &&
+               (s_eliteCACData.checkingForECACFile == false)) &&
+              (((bVar6 = TaskManager_TaskIsInProgress(&storageTasks,0x1f), !bVar6 &&
+                (bVar6 = Live_IsUserSignedInToLive(iVar1), bVar6)) &&
+               ((DVar4 = dwGetLogOnStatus(iVar1), DVar4 == DW_LIVE_CONNECTED &&
+                ((bVar6 = LiveStorage_DoWeHaveStats(iVar1), bVar6 &&
+                 (iVar3 = Sys_Milliseconds(), g_LastFetchECACCheckAttemptTime + 4000 < iVar3))))))))
+      {
+        Com_PrintWarning(0x10,"time since last download %d\n");
+        g_LastFetchECACCheckAttemptTime = iVar3;
+        poVar5 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar1,0x1f);
+        if (poVar5 != (overlappedTask *)0x0) {
+          s_eliteCACData.eliteCACFileTask.m_infoResult.m_fileID = 0;
+          s_eliteCACData.eliteCACFileTask.m_filename = "eliteCreateAClassBlob";
+          iVar1 = dwFetchFileInfoPersonalStorage(poVar5,&s_eliteCACData.eliteCACFileTask);
+          if (iVar1 != 0) {
+            s_eliteCACData.checkingForECACFile = true;
             __restgprlr_27();
             return;
           }
+          TaskManager_ClearTask(poVar5);
+          __restgprlr_27();
+          return;
         }
       }
     }
-  }
-  else if ((DAT_8365b6ec != '\0') || (DAT_8365b7d4 != '\0')) {
-    DAT_8365b7d4 = 0;
-    DAT_8365b6ec = 0;
-    __restgprlr_27();
-    return;
   }
   __restgprlr_27();
   return;
@@ -9259,19 +9964,19 @@ void LiveStorage_CheckForEliteClassFile(void)
 
 // 824E6210  LiveStorage_DeleteEliteClassFile_f  (qcommon/com_storage.cpp:7265)
 
-void LiveStorage_DeleteEliteClassFile_f(undefined8 param_1)
+void LiveStorage_DeleteEliteClassFile_f(int param_1)
 
 {
-  char cVar3;
-  int iVar2;
-  ulonglong uVar1;
+  bool bVar3;
+  DWOnlineStatus DVar1;
+  overlappedTask *poVar2;
   
-  cVar3 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,0x21);
-  if ((((cVar3 == '\0') && (cVar3 = Live_IsUserSignedInToLive(param_1), cVar3 != '\0')) &&
-      (iVar2 = dwGetLogOnStatus(param_1), iVar2 == 2)) &&
-     (uVar1 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,param_1,0x21),
-     (uVar1 & 0xffffffff) != 0)) {
-    dwDeleteFile(uVar1,0xffffffff820875e8);
+  bVar3 = TaskManager_TaskIsInProgress(&storageTasks,0x21);
+  if ((((!bVar3) && (bVar3 = Live_IsUserSignedInToLive(param_1), bVar3)) &&
+      (DVar1 = dwGetLogOnStatus(param_1), DVar1 == DW_LIVE_CONNECTED)) &&
+     (poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x21),
+     poVar2 != (overlappedTask *)0x0)) {
+    dwDeleteFile(poVar2,"eliteCreateAClassBlob");
   }
   return;
 }
@@ -9279,31 +9984,35 @@ void LiveStorage_DeleteEliteClassFile_f(undefined8 param_1)
 
 // 824E62A8  LiveStorage_DeleteEliteClassFile  (qcommon/com_storage.cpp:7286)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_DeleteEliteClassFile(void)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  char cVar3;
-  longlong lVar4;
+  LocalClientNum_t LVar1;
+  bool bVar2;
+  int iVar3;
   
-  LiveStorage_DeleteEliteClassFile_f(DAT_8365b7d0);
-  uVar1 = DAT_8365b7d0;
-  if (DAT_8365b7d4 != '\0') {
-    uVar2 = CL_LocalClientNumFromControllerIndex(DAT_8365b7d0);
-    Cmd_ExecuteSingleCommand(uVar2,uVar1,0xffffffff82087620);
-    if (DAT_82966e98 == 0) {
-      MyAssertHandler(0xffffffff820859c8,0x1c7e,0,0xffffffff82000f98,0xffffffff82085dd8);
+  LiveStorage_DeleteEliteClassFile_f(s_eliteCACData.activeControllerUI);
+  iVar3 = s_eliteCACData.activeControllerUI;
+  if (s_eliteCACData.disabledControllersForPopup != false) {
+    LVar1 = CL_LocalClientNumFromControllerIndex(s_eliteCACData.activeControllerUI);
+    Cmd_ExecuteSingleCommand
+              (LVar1,iVar3,"decnosplitscreencontrol LiveStorage_DeleteEliteClassFile\n");
+    if (cl_multi_gamepads_enabled == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x1c7e,0,"%s");
     }
-    lVar4 = 0;
+    iVar3 = 0;
     do {
-      cVar3 = CL_IsSplitscreenControllerActive(lVar4);
-      if (cVar3 != '\0') {
-        GamerProfile_ExecControllerBindings(lVar4);
+      bVar2 = CL_IsSplitscreenControllerActive(iVar3);
+      if (bVar2) {
+        GamerProfile_ExecControllerBindings(iVar3);
       }
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < 4);
-    DAT_8365b7d4 = '\0';
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 4);
+    s_eliteCACData.disabledControllersForPopup = false;
   }
   return;
 }
@@ -9311,316 +10020,329 @@ void LiveStorage_DeleteEliteClassFile(void)
 
 // 824E6378  LiveStorage_DeleteEliteClassFileComplete  (qcommon/com_storage.cpp:7307)
 
-void LiveStorage_DeleteEliteClassFileComplete(void)
+taskCompleteResults LiveStorage_DeleteEliteClassFileComplete(int param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
+  int iVar1;
+  bdLobbyService *pbVar2;
+  Status SVar3;
+  taskCompleteResults tVar4;
   
-  iVar2 = __savegprlr_27();
-  iVar3 = iVar2 * 0xa0;
-  if ((&DAT_8365bcd4)[iVar3] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x1c8e,0,0xffffffff82000f98,0xffffffff82087698);
+  iVar1 = __savegprlr_27(param_1);
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1c8e,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar2 * 0x28] != 0x21) {
-    MyAssertHandler(0xffffffff820859c8,0x1c8f,0,0xffffffff82000f98,0xffffffff8208765c);
+  if (storageTasks.tasks[iVar1].type != 0x21) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1c8f,0,"%s");
   }
-  iVar2 = dwGetLobbyService((&DAT_8365bcd5)[iVar3]);
-  if (iVar2 != 0) {
-    dwGetLobbyService((&DAT_8365bcd5)[iVar3]);
-    iVar2 = bdLobbyService__getStatus();
-    if (iVar2 != 2) goto LAB_824e6430;
+  pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+  if (pbVar2 != (bdLobbyService *)0x0) {
+    pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+    SVar3 = bdLobbyService::getStatus(pbVar2);
+    if (SVar3 != BD_CONNECTED) goto LAB_824e6430;
   }
-  uVar1 = dwDeleteFileComplete(&DAT_8365bc40 + iVar3);
-  if ((int)uVar1 != 0) {
-    TaskManager_ClearTask(&DAT_8365bc40 + iVar3);
-    DAT_8365b6ec = 0;
-    __restgprlr_27(uVar1);
-    return;
+  tVar4 = dwDeleteFileComplete(storageTasks.tasks + iVar1);
+  if (tVar4 != TASK_NOTCOMPLETE) {
+    TaskManager_ClearTask(storageTasks.tasks + iVar1);
+    s_eliteCACData.checkingForECACFile = false;
+    tVar4 = __restgprlr_27(tVar4);
+    return tVar4;
   }
 LAB_824e6430:
-  __restgprlr_27(0);
-  return;
+  tVar4 = __restgprlr_27(0);
+  return tVar4;
 }
 
 
 // 824EC138  LiveStorage_DownloadEliteCacFileComplete  (qcommon/com_storage.cpp:7330)
 
-void LiveStorage_DownloadEliteCacFileComplete(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults LiveStorage_DownloadEliteCacFileComplete(int param_1)
 
 {
   byte bVar1;
+  bdRemoteTask *this;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  undefined8 uVar2;
-  char cVar6;
-  uint uVar5;
-  undefined *puVar7;
-  int iVar8;
+  overlappedTask *poVar4;
+  bdLobbyService *pbVar5;
+  Status SVar6;
+  taskCompleteResults tVar7;
+  bool bVar11;
+  LocalClientNum_t LVar8;
+  uint uVar9;
+  bdLobbyErrorCode bVar10;
+  char *pcVar12;
   
-  iVar3 = __savegprlr_26();
-  iVar8 = iVar3 * 0xa0;
-  puVar7 = &DAT_8365bc40 + iVar8;
-  if ((&DAT_8365bcd4)[iVar8] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x1ca5,0,0xffffffff82000f98,0xffffffff82087698);
+  iVar3 = __savegprlr_26(param_1);
+  poVar4 = storageTasks.tasks + iVar3;
+  if (storageTasks.tasks[iVar3].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1ca5,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x20) {
-    MyAssertHandler(0xffffffff820859c8,0x1ca6,0,0xffffffff82000f98,0xffffffff82088c4c);
+  if (storageTasks.tasks[iVar3].type != 0x20) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1ca6,0,"%s");
   }
-  iVar4 = dwGetLobbyService((&DAT_8365bcd5)[iVar8]);
-  if (iVar4 != 0) {
-    dwGetLobbyService((&DAT_8365bcd5)[iVar8]);
-    iVar4 = bdLobbyService__getStatus();
-    if (iVar4 != 2) {
-      __restgprlr_26(0);
-      return;
+  pbVar5 = dwGetLobbyService((uint)storageTasks.tasks[iVar3].controllerIndex);
+  if (pbVar5 != (bdLobbyService *)0x0) {
+    pbVar5 = dwGetLobbyService((uint)storageTasks.tasks[iVar3].controllerIndex);
+    SVar6 = bdLobbyService::getStatus(pbVar5);
+    if (SVar6 != BD_CONNECTED) {
+      tVar7 = __restgprlr_26(0);
+      return tVar7;
     }
   }
-  uVar2 = dwFetchFileComplete(puVar7,0xffffffff8365b6f0);
-  if ((int)uVar2 == 1) {
-    cVar6 = LiveStorage_CheckECACAgainstUnlocks((&DAT_8365bcd5)[iVar8]);
-    iVar3 = DAT_82966e98;
-    if (cVar6 == '\0') {
-      Com_PrintWarning(0x10,0xffffffff82088c2c);
-      LiveStorage_DeleteEliteClassFile_f((&DAT_8365bcd5)[iVar8]);
-      (&DAT_8365b6e8)[(byte)(&DAT_8365bcd5)[iVar8]] = 1;
-      TaskManager_ClearTask(puVar7);
-      __restgprlr_26(1);
-      return;
+  tVar7 = dwFetchFileComplete(poVar4,&s_eliteCACData.eliteCACFileTask);
+  if (tVar7 == TASK_COMPLETE) {
+    bVar11 = LiveStorage_CheckECACAgainstUnlocks((uint)storageTasks.tasks[iVar3].controllerIndex);
+    iVar2 = cl_multi_gamepads_enabled;
+    if (!bVar11) {
+      Com_PrintWarning(0x10,"elite class file is invalid\n");
+      LiveStorage_DeleteEliteClassFile_f((uint)storageTasks.tasks[iVar3].controllerIndex);
+      s_eliteCACData.checkedForECACFile[storageTasks.tasks[iVar3].controllerIndex] = true;
+      TaskManager_ClearTask(poVar4);
+      tVar7 = __restgprlr_26(1);
+      return tVar7;
     }
-    bVar1 = (&DAT_8365bcd5)[iVar8];
-    (&DAT_8365b6e8)[bVar1] = 1;
-    DAT_8365b7d0 = (uint)bVar1;
-    if (iVar3 != 0) {
-      uVar2 = CL_LocalClientNumFromControllerIndex(bVar1);
-      Cmd_ExecuteSingleCommand(uVar2,bVar1,0xffffffff82088be8);
-      CL_SetControllerInUse((&DAT_8365bcd5)[iVar8]);
-      bVar1 = (&DAT_8365bcd5)[iVar8];
-      CL_LocalClientNumFromControllerIndex();
-      uVar5 = CL_ControllerIndexFromClientNum();
-      if (uVar5 != bVar1) {
-        CL_LocalClientNumFromControllerIndex(bVar1);
-        uVar2 = CL_ControllerIndexFromClientNum();
-        MyAssertHandler(0xffffffff820859c8,0x1cbf,0,0xffffffff82088b38,uVar2,bVar1);
+    bVar1 = storageTasks.tasks[iVar3].controllerIndex;
+    s_eliteCACData.checkedForECACFile[bVar1] = true;
+    s_eliteCACData.activeControllerUI = (int)bVar1;
+    if (iVar2 != 0) {
+      LVar8 = CL_LocalClientNumFromControllerIndex((uint)bVar1);
+      Cmd_ExecuteSingleCommand
+                (LVar8,(uint)bVar1,
+                 "incnosplitscreencontrol LiveStorage_DownloadEliteCacFileComplete\n");
+      CL_SetControllerInUse((uint)storageTasks.tasks[iVar3].controllerIndex);
+      bVar1 = storageTasks.tasks[iVar3].controllerIndex;
+      LVar8 = CL_LocalClientNumFromControllerIndex((uint)bVar1);
+      uVar9 = CL_ControllerIndexFromClientNum(LVar8);
+      if (uVar9 != bVar1) {
+        LVar8 = CL_LocalClientNumFromControllerIndex((uint)bVar1);
+        CL_ControllerIndexFromClientNum(LVar8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                        0x1cbf,0,
+                        "CL_ControllerIndexFromClientNum( CL_LocalClientNumFromControllerIndex( storageTasks.tasks[ slot ].controllerIndex ) ) == storageTasks.tasks[ slot ].controllerIndex\n\t%i, %i"
+                       );
       }
-      DAT_8365b7d4 = 1;
+      s_eliteCACData.disabledControllersForPopup = true;
     }
-    uVar2 = CL_LocalClientNumFromControllerIndex((&DAT_8365bcd5)[iVar8]);
-    UI_OpenMenu(uVar2,0xffffffff82086eb0);
-    TaskManager_ClearTask(puVar7);
-    __restgprlr_26(1);
-    return;
+    LVar8 = CL_LocalClientNumFromControllerIndex((uint)storageTasks.tasks[iVar3].controllerIndex);
+    UI_OpenMenu(LVar8,"cac_elite_popup");
+    TaskManager_ClearTask(poVar4);
+    tVar7 = __restgprlr_26(1);
+    return tVar7;
   }
-  if ((int)uVar2 == 2) {
-    if ((&DAT_8365bc48)[iVar3 * 0x28] == 0) {
-      uVar2 = 0xffffffff82088b14;
+  if (tVar7 == TASK_ERROR) {
+    this = storageTasks.tasks[iVar3].u.remoteTask.m_ptr;
+    if (this == (bdRemoteTask *)0x0) {
+      pcVar12 = "Demonware remote task is NULL\n";
     }
     else {
-      iVar3 = bdRemoteTask__getErrorCode();
-      if (iVar3 == 1000) {
-        Com_PrintWarning(0x10,0xffffffff82088ae4);
-        (&DAT_8365b6e8)[(byte)(&DAT_8365bcd5)[iVar8]] = 1;
-        DAT_8365b6ec = 0;
-        TaskManager_ClearTask(puVar7);
-        __restgprlr_26(1);
-        return;
+      bVar10 = bdRemoteTask::getErrorCode(this);
+      if (bVar10 == BD_NO_FILE) {
+        Com_PrintWarning(0x10,"there was no elite cac file in user storage\n");
+        s_eliteCACData.checkedForECACFile[storageTasks.tasks[iVar3].controllerIndex] = true;
+        s_eliteCACData.checkingForECACFile = false;
+        TaskManager_ClearTask(poVar4);
+        tVar7 = __restgprlr_26(1);
+        return tVar7;
       }
-      uVar2 = 0xffffffff82088ac0;
+      pcVar12 = "could not download elite cac file\n";
     }
-    Com_PrintWarning(0x10,uVar2);
-    DAT_8365b6ec = 0;
-    TaskManager_ClearTask(puVar7);
-    uVar2 = 2;
+    Com_PrintWarning(0x10,pcVar12);
+    s_eliteCACData.checkingForECACFile = false;
+    TaskManager_ClearTask(poVar4);
+    tVar7 = TASK_ERROR;
   }
-  __restgprlr_26(uVar2);
-  return;
+  tVar7 = __restgprlr_26(tVar7);
+  return tVar7;
 }
 
 
 // 824E6478  LiveStorage_CheckForEliteClassFileComplete  (qcommon/com_storage.cpp:7399)
 
-void LiveStorage_CheckForEliteClassFileComplete(void)
+taskCompleteResults LiveStorage_CheckForEliteClassFileComplete(int param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined *puVar4;
-  int iVar5;
+  int iVar1;
+  overlappedTask *poVar2;
+  bdLobbyService *pbVar3;
+  Status SVar4;
+  taskCompleteResults tVar5;
+  overlappedTask *poVar6;
   
-  iVar3 = __savegprlr_27();
-  iVar5 = iVar3 * 0xa0;
-  puVar4 = &DAT_8365bc40 + iVar5;
-  if ((&DAT_8365bcd4)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x1cea,0,0xffffffff82000f98,0xffffffff82087698);
+  iVar1 = __savegprlr_27(param_1);
+  poVar2 = storageTasks.tasks + iVar1;
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1cea,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x1f) {
-    MyAssertHandler(0xffffffff820859c8,0x1ceb,0,0xffffffff82000f98,0xffffffff82087754);
+  if (storageTasks.tasks[iVar1].type != 0x1f) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1ceb,0,"%s");
   }
-  iVar3 = dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
-  if (iVar3 != 0) {
-    dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
-    iVar3 = bdLobbyService__getStatus();
-    if (iVar3 != 2) {
-      __restgprlr_27(0);
-      return;
+  pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+  if (pbVar3 != (bdLobbyService *)0x0) {
+    pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+    SVar4 = bdLobbyService::getStatus(pbVar3);
+    if (SVar4 != BD_CONNECTED) {
+      tVar5 = __restgprlr_27(0);
+      return tVar5;
     }
   }
-  uVar1 = dwFetchFileInfoComplete(puVar4,0xffffffff8365b6f0);
-  if ((int)uVar1 != 1) {
-    if ((int)uVar1 == 2) {
-      Com_PrintWarning(0x10,0xffffffff820876bc);
-      (&DAT_8365b6e8)[(byte)(&DAT_8365bcd5)[iVar5]] = 1;
-      DAT_8365b6ec = 0;
-      TaskManager_ClearTask(puVar4);
-      uVar1 = 2;
+  tVar5 = dwFetchFileInfoComplete(poVar2,&s_eliteCACData.eliteCACFileTask);
+  if (tVar5 != TASK_COMPLETE) {
+    if (tVar5 == TASK_ERROR) {
+      Com_PrintWarning(0x10,"got error while checking for elite cac file in user storage\n");
+      s_eliteCACData.checkedForECACFile[storageTasks.tasks[iVar1].controllerIndex] = true;
+      s_eliteCACData.checkingForECACFile = false;
+      TaskManager_ClearTask(poVar2);
+      tVar5 = TASK_ERROR;
     }
-    __restgprlr_27(uVar1);
-    return;
+    tVar5 = __restgprlr_27(tVar5);
+    return tVar5;
   }
-  if (DAT_8365b710 == 0) {
-    (&DAT_8365b6e8)[(byte)(&DAT_8365bcd5)[iVar5]] = 1;
-    DAT_8365b6ec = 0;
-    TaskManager_ClearTask(puVar4);
-    __restgprlr_27(1);
-    return;
+  if (s_eliteCACData.eliteCACFileTask.m_infoResult.m_fileID == 0) {
+    s_eliteCACData.checkedForECACFile[storageTasks.tasks[iVar1].controllerIndex] = true;
+    s_eliteCACData.checkingForECACFile = false;
+    TaskManager_ClearTask(poVar2);
+    tVar5 = __restgprlr_27(1);
+    return tVar5;
   }
-  uVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,(&DAT_8365bcd5)[iVar5],0x20);
-  if ((uVar2 & 0xffffffff) == 0) {
-    Com_PrintWarning(0x10,0xffffffff820876fc);
+  poVar6 = TaskManager_GetOpenTaskSlot
+                     (&storageTasks,(uint)storageTasks.tasks[iVar1].controllerIndex,0x20);
+  if (poVar6 == (overlappedTask *)0x0) {
+    Com_PrintWarning(0x10,"Couldn\'t allocate task to download elite cac blob\n");
   }
   else {
-    memset(&DAT_8361cc60,0,0x3804);
-    DAT_8365b7c4 = 0x3804;
-    DAT_8365b6f0 = "eliteCreateAClassBlob";
-    DAT_8365b7c8 = &DAT_8361cc64;
-    iVar3 = dwFetchUserFile(uVar2,0xffffffff8365b6f0);
-    if (iVar3 != 0) goto LAB_824e6620;
-    Com_PrintWarning(0x10,0xffffffff82087730);
-    TaskManager_ClearTask(uVar2);
+    memset();
+    s_eliteCACData.eliteCACFileTask.m_bufferSize = 0x3804;
+    s_eliteCACData.eliteCACFileTask.m_filename = "eliteCreateAClassBlob";
+    s_eliteCACData.eliteCACFileTask.m_buffer = matchDataGlob.matchData;
+    iVar1 = dwFetchUserFile(poVar6,&s_eliteCACData.eliteCACFileTask);
+    if (iVar1 != 0) goto LAB_824e6620;
+    Com_PrintWarning(0x10,"Couldn\'t download elite cac blob\n");
+    TaskManager_ClearTask(poVar6);
   }
-  DAT_8365b6ec = 0;
+  s_eliteCACData.checkingForECACFile = false;
 LAB_824e6620:
-  TaskManager_ClearTask(puVar4);
-  __restgprlr_27(1);
-  return;
+  TaskManager_ClearTask(poVar2);
+  tVar5 = __restgprlr_27(1);
+  return tVar5;
 }
 
 
 // 824E6678  LiveStorage_IntegrateEliteClassFile  (qcommon/com_storage.cpp:7457)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void LiveStorage_IntegrateEliteClassFile(void)
 
 {
-  undefined4 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar4;
-  undefined4 *puVar7;
-  longlong lVar8;
-  undefined1 auStack_d0 [4];
-  undefined4 uStack_cc;
-  undefined1 *local_c8;
-  undefined1 *local_c4;
-  undefined1 auStack_c0 [8];
-  int local_b8;
-  undefined1 auStack_b0 [8];
-  int local_a8;
-  undefined1 auStack_a0 [32];
-  undefined1 auStack_80 [128];
+  char *pcVar1;
+  StructuredDataDef *pSVar2;
+  StructuredDataDef *pSVar3;
+  bool bVar6;
+  StatsSource SVar4;
+  LocalClientNum_t LVar5;
+  longlong lVar7;
+  int iVar8;
+  int aiStack_d0 [2];
+  char *local_c8;
+  char *local_c4;
+  StructuredDataLookup SStack_c0;
+  StructuredDataLookup SStack_b0;
+  char acStack_a0 [32];
+  char acStack_80 [128];
   
   __savegprlr_22();
-  local_c8 = auStack_a0;
-  local_c4 = auStack_80;
-  I_strncpyz(auStack_a0,0xffffffff82085ff0,0x20);
-  uVar2 = va(0xffffffff82013b64,0);
-  I_strncpyz(auStack_80,uVar2,0x20);
-  uVar2 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  uVar3 = StructuredDataDef_GetAsset(0xffffffff820877cc,0x3800);
-  StructuredData_InitializeLookup(uVar2,auStack_c0);
-  StructuredData_InitializeLookup(uVar3,auStack_b0);
-  cVar6 = StructuredData_NavigateByStrings(auStack_c0,&local_c8,2,auStack_d0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
-    lVar8 = 2;
-    puVar7 = &uStack_cc;
+  local_c8 = acStack_a0;
+  local_c4 = acStack_80;
+  I_strncpyz(acStack_a0,"customClasses",0x20);
+  pcVar1 = va("%d");
+  I_strncpyz(acStack_80,pcVar1,0x20);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  pSVar3 = StructuredDataDef_GetAsset("mp/eliteCreateAClass.def",0x3800);
+  StructuredData_InitializeLookup(pSVar2,&SStack_c0);
+  StructuredData_InitializeLookup(pSVar3,&SStack_b0);
+  bVar6 = StructuredData_NavigateByStrings(&SStack_c0,&local_c8,2,aiStack_d0);
+  if (!bVar6) {
+    Com_Printf(0x10,"Tried to get data: ");
+    lVar7 = 2;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"%s ");
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    Com_Printf(0x10,"\n");
   }
-  cVar6 = StructuredData_NavigateByStrings(auStack_b0,&local_c8,2,auStack_d0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
-    lVar8 = 2;
-    puVar7 = &uStack_cc;
+  bVar6 = StructuredData_NavigateByStrings(&SStack_b0,&local_c8,2,aiStack_d0);
+  if (!bVar6) {
+    Com_Printf(0x10,"Tried to get data: ");
+    lVar7 = 2;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"%s ");
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    Com_Printf(0x10,"\n");
   }
-  uVar1 = DAT_8365b7d0;
-  cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar6 == '\0') {
-    uVar4 = LiveStorage_GetActiveStatsSource(uVar1);
-    iVar5 = LiveStorage_GetPersistentDataBufferForSource(uVar1,uVar4);
+  iVar8 = s_eliteCACData.activeControllerUI;
+  bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar6) {
+    CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    iVar5 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar4 = LiveStorage_GetActiveStatsSource(iVar8);
+    LiveStorage_GetPersistentDataBufferForSource(iVar8,SVar4);
   }
-  memcpy((void *)(local_b8 + iVar5),&DAT_8361cc64 + local_a8,0x5be);
-  StructuredData_InitializeLookup(uVar2,auStack_c0);
-  StructuredData_InitializeLookup(uVar3,auStack_b0);
-  I_strncpyz(auStack_a0,0xffffffff82086010,0x20);
-  cVar6 = StructuredData_NavigateByStrings(auStack_c0,&local_c8,2,auStack_d0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
-    lVar8 = 2;
-    puVar7 = &uStack_cc;
+  memcpy();
+  StructuredData_InitializeLookup(pSVar2,&SStack_c0);
+  StructuredData_InitializeLookup(pSVar3,&SStack_b0);
+  I_strncpyz(acStack_a0,"privateMatchCustomClasses",0x20);
+  bVar6 = StructuredData_NavigateByStrings(&SStack_c0,&local_c8,2,aiStack_d0);
+  if (!bVar6) {
+    Com_Printf(0x10,"Tried to get data: ");
+    lVar7 = 2;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"%s ");
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    Com_Printf(0x10,"\n");
   }
-  cVar6 = StructuredData_NavigateByStrings(auStack_b0,&local_c8,2,auStack_d0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
-    lVar8 = 2;
-    puVar7 = &uStack_cc;
+  bVar6 = StructuredData_NavigateByStrings(&SStack_b0,&local_c8,2,aiStack_d0);
+  if (!bVar6) {
+    Com_Printf(0x10,"Tried to get data: ");
+    lVar7 = 2;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"%s ");
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    Com_Printf(0x10,"\n");
   }
-  memcpy((void *)(local_b8 + iVar5),&DAT_8361cc64 + local_a8,0x1ea);
-  LiveStorage_DeleteEliteClassFile_f(DAT_8365b7d0);
-  uVar1 = DAT_8365b7d0;
-  if (DAT_8365b7d4 != '\0') {
-    uVar2 = CL_LocalClientNumFromControllerIndex(DAT_8365b7d0);
-    Cmd_ExecuteSingleCommand(uVar2,uVar1,0xffffffff8208778c);
-    if (DAT_82966e98 == 0) {
-      MyAssertHandler(0xffffffff820859c8,0x1d53,0,0xffffffff82000f98,0xffffffff82085dd8);
+  memcpy();
+  LiveStorage_DeleteEliteClassFile_f(s_eliteCACData.activeControllerUI);
+  iVar8 = s_eliteCACData.activeControllerUI;
+  if (s_eliteCACData.disabledControllersForPopup != false) {
+    LVar5 = CL_LocalClientNumFromControllerIndex(s_eliteCACData.activeControllerUI);
+    Cmd_ExecuteSingleCommand
+              (LVar5,iVar8,"decnosplitscreencontrol LiveStorage_IntegrateEliteClassFile\n");
+    if (cl_multi_gamepads_enabled == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                      0x1d53,0,"%s");
     }
-    lVar8 = 0;
+    iVar8 = 0;
     do {
-      cVar6 = CL_IsSplitscreenControllerActive(lVar8);
-      if (cVar6 != '\0') {
-        GamerProfile_ExecControllerBindings(lVar8);
+      bVar6 = CL_IsSplitscreenControllerActive(iVar8);
+      if (bVar6) {
+        GamerProfile_ExecControllerBindings(iVar8);
       }
-      lVar8 = lVar8 + 1;
-    } while ((int)lVar8 < 4);
-    DAT_8365b7d4 = '\0';
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < 4);
+    s_eliteCACData.disabledControllersForPopup = false;
   }
   __restgprlr_22();
   return;
@@ -9629,7 +10351,7 @@ void LiveStorage_IntegrateEliteClassFile(void)
 
 // 824E69D8  LiveStorage_EliteCAC_HandlerInspect  (qcommon/com_storage.cpp:7521)
 
-undefined8 LiveStorage_EliteCAC_HandlerInspect(int param_1,char *param_2)
+dwMailHandlerReturnCode_t LiveStorage_EliteCAC_HandlerInspect(int param_1,char *param_2,int param_3)
 
 {
   char cVar1;
@@ -9645,151 +10367,141 @@ undefined8 LiveStorage_EliteCAC_HandlerInspect(int param_1,char *param_2)
     param_2 = param_2 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    return 0;
+    return DWMAILHANDLERRETURNCODE_NOT_FOR_US;
   }
-  (&DAT_8365b6e8)[param_1] = 0;
-  return 2;
+  s_eliteCACData.checkedForECACFile[param_1] = false;
+  return DWMAILHANDLERRETURNCODE_PROCESSING_DONE;
 }
 
 
 // 824E6A38  LiveStorage_CreateEliteClassFileFromMpData  (qcommon/com_storage.cpp:7533)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_CreateEliteClassFileFromMpData(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char cVar6;
-  int iVar4;
-  char *_Filename;
-  FILE *_File;
-  void *pvVar5;
-  undefined4 *puVar7;
+  StructuredDataDef *pSVar1;
+  uint uVar2;
+  StructuredDataDef *pSVar3;
+  bool bVar7;
+  StatsSource SVar4;
+  char *pcVar5;
+  _iobuf *p_Var6;
   longlong lVar8;
-  undefined1 auStack_e0 [4];
-  undefined4 uStack_dc;
-  undefined1 *local_d8;
-  undefined1 *local_d4;
-  void *local_d0 [4];
-  undefined1 auStack_c0 [8];
-  int local_b8;
-  undefined1 auStack_b0 [8];
-  int local_a8;
-  undefined1 auStack_a0 [32];
-  undefined1 auStack_80 [128];
+  int aiStack_e0 [2];
+  char *local_d8;
+  char *local_d4;
+  StructuredDataBuffer local_d0 [2];
+  StructuredDataLookup SStack_c0;
+  StructuredDataLookup SStack_b0;
+  char acStack_a0 [32];
+  char acStack_80 [128];
   
   __savegprlr_22();
-  local_d8 = auStack_a0;
-  local_d4 = auStack_80;
-  I_strncpyz(auStack_a0,0xffffffff82085ff0,0x20);
-  I_strncpyz(auStack_80,0xffffffff8203248c,0x20);
-  uVar1 = StructuredDataDef_GetAsset(0xffffffff8202639c,0x2ffc);
-  StructuredData_InitializeLookup(uVar1,auStack_c0);
-  memset(&DAT_8361cc60,0,0x3804);
-  uVar2 = StructuredDataDef_GetSize(0xffffffff820877cc);
-  StructuredData_MakeBuffer(local_d0,0xffffffff8361cc64,uVar2);
-  iVar3 = StructuredDataDef_GetAsset(0xffffffff820877cc,0x3800);
-  StructuredData_InitializeLookup(iVar3,auStack_b0);
-  cVar6 = StructuredData_NavigateByStrings(auStack_c0,&local_d8,2,auStack_e0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
+  local_d8 = acStack_a0;
+  local_d4 = acStack_80;
+  I_strncpyz(acStack_a0,"customClasses",0x20);
+  I_strncpyz(acStack_80,"0",0x20);
+  pSVar1 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar1,&SStack_c0);
+  memset();
+  uVar2 = StructuredDataDef_GetSize("mp/eliteCreateAClass.def");
+  StructuredData_MakeBuffer(local_d0,matchDataGlob.matchData,uVar2);
+  pSVar3 = StructuredDataDef_GetAsset("mp/eliteCreateAClass.def",0x3800);
+  StructuredData_InitializeLookup(pSVar3,&SStack_b0);
+  bVar7 = StructuredData_NavigateByStrings(&SStack_c0,&local_d8,2,aiStack_e0);
+  if (!bVar7) {
+    Com_Printf(0x10,"Tried to get data: ");
     lVar8 = 2;
-    puVar7 = &uStack_dc;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
+      Com_Printf(0x10,"%s ");
       lVar8 = lVar8 + -1;
     } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+    Com_Printf(0x10,"\n");
   }
-  cVar6 = StructuredData_NavigateByStrings(auStack_b0,&local_d8,2,auStack_e0);
-  if (cVar6 == '\0') {
-    Com_Printf(0x10,0xffffffff82086048);
+  bVar7 = StructuredData_NavigateByStrings(&SStack_b0,&local_d8,2,aiStack_e0);
+  if (!bVar7) {
+    Com_Printf(0x10,"Tried to get data: ");
     lVar8 = 2;
-    puVar7 = &uStack_dc;
     do {
-      puVar7 = puVar7 + 1;
-      Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
+      Com_Printf(0x10,"%s ");
       lVar8 = lVar8 + -1;
     } while (lVar8 != 0);
-    Com_Printf(0x10,0xffffffff820044d8);
+    Com_Printf(0x10,"\n");
   }
-  cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (cVar6 == '\0') {
-    uVar2 = LiveStorage_GetActiveStatsSource(0);
-    iVar4 = LiveStorage_GetPersistentDataBufferForSource(0,uVar2);
+  bVar7 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar7) {
+    CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    iVar4 = CL_Demo_GetPersistentDataBufferForDemo();
+    SVar4 = LiveStorage_GetActiveStatsSource(0);
+    LiveStorage_GetPersistentDataBufferForSource(0,SVar4);
   }
-  uVar2 = Sys_DefaultInstallPath();
-  _Filename = (char *)va(0xffffffff820877f0,uVar2,0xffffffff820875e8);
-  _File = fopen(_Filename,"w");
-  pvVar5 = (void *)0x0;
-  if (_File != (FILE *)0x0) {
-    memcpy((void *)(local_a8 + (int)local_d0[0]),(void *)(local_b8 + iVar4),0x5be);
-    I_strncpyz(auStack_a0,0xffffffff82086010,0x20);
-    StructuredData_InitializeLookup(iVar3,auStack_b0);
-    StructuredData_InitializeLookup(uVar1,auStack_c0);
-    cVar6 = StructuredData_NavigateByStrings(auStack_c0,&local_d8,2,auStack_e0);
-    if (cVar6 == '\0') {
-      Com_Printf(0x10,0xffffffff82086048);
+  Sys_DefaultInstallPath();
+  pcVar5 = va("%s\\%s.txt");
+  p_Var6 = fopen(pcVar5,"w");
+  if (p_Var6 != (_iobuf *)0x0) {
+    memcpy();
+    I_strncpyz(acStack_a0,"privateMatchCustomClasses",0x20);
+    StructuredData_InitializeLookup(pSVar3,&SStack_b0);
+    StructuredData_InitializeLookup(pSVar1,&SStack_c0);
+    bVar7 = StructuredData_NavigateByStrings(&SStack_c0,&local_d8,2,aiStack_e0);
+    if (!bVar7) {
+      Com_Printf(0x10,"Tried to get data: ");
       lVar8 = 2;
-      puVar7 = &uStack_dc;
       do {
-        puVar7 = puVar7 + 1;
-        Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
+        Com_Printf(0x10,"%s ");
         lVar8 = lVar8 + -1;
       } while (lVar8 != 0);
-      Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"\n");
     }
-    cVar6 = StructuredData_NavigateByStrings(auStack_b0,&local_d8,2,auStack_e0);
-    if (cVar6 == '\0') {
-      Com_Printf(0x10,0xffffffff82086048);
+    bVar7 = StructuredData_NavigateByStrings(&SStack_b0,&local_d8,2,aiStack_e0);
+    if (!bVar7) {
+      Com_Printf(0x10,"Tried to get data: ");
       lVar8 = 2;
-      puVar7 = &uStack_dc;
       do {
-        puVar7 = puVar7 + 1;
-        Com_Printf(0x10,0xffffffff82085fdc,*puVar7);
+        Com_Printf(0x10,"%s ");
         lVar8 = lVar8 + -1;
       } while (lVar8 != 0);
-      Com_Printf(0x10,0xffffffff820044d8);
+      Com_Printf(0x10,"\n");
     }
-    memcpy((void *)(local_a8 + (int)local_d0[0]),(void *)(local_b8 + iVar4),0x1ea);
-    StructuredData_PrintAllData(iVar3,local_d0);
-    fwrite(local_d0[0],1,*(size_t *)(iVar3 + 0x30),_File);
-    fclose(_File);
-    pvVar5 = memset(&DAT_8361cc60,0,0x3804);
+    memcpy();
+    StructuredData_PrintAllData(pSVar3,local_d0);
+    fwrite(local_d0[0].data,1,pSVar3->size,p_Var6);
+    fclose(p_Var6);
+    memset();
   }
-  __restgprlr_22(pvVar5);
+  __restgprlr_22();
   return;
 }
 
 
 // 8293D9E0  `dynamic_initializer_for_'s_playlistPopulationFileTask''  (qcommon/com_storage.cpp:7668)
 
-int _dynamic_initializer_for__s_playlistPopulationFileTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__s_playlistPopulationFileTask__(void)
 
 {
-  int iVar1;
-  
-  bdFileInfo__bdFileInfo(0xffffffff8365b298);
-  bdFileData__bdFileData(0xffffffff8365b348,0,0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__s_playlistPopulationFileTask__);
-  return iVar1;
+  bdFileInfo::bdFileInfo(&s_playlistPopulationFileTask.m_infoResult);
+  bdFileData::bdFileData(&s_playlistPopulationFileTask.m_dataResult,(void *)0x0,0);
+  atexit(_dynamic_atexit_destructor_for__s_playlistPopulationFileTask__);
+  return;
 }
 
 
 // 824E6D80  LiveStorage_AllocatePlaylistPopulation  (qcommon/com_storage.cpp:7675)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_AllocatePlaylistPopulation(void)
 
 {
-  if (DAT_8365b1d4 == 0) {
-    DAT_8365b1d4 = PMem_AllocFromSource_NoDebug(0x10000,0x10,4,1);
-    DAT_8365b1cc = 0;
-    DAT_8365b1cd = 0;
+  if (s_playlistPopulationBuffer == (uchar *)0x0) {
+    s_playlistPopulationBuffer = PMem_AllocFromSource_NoDebug(0x10000,0x10,4,PMEM_SOURCE_DATABASE);
+    s_completedPlaylistPopulation = false;
+    s_completedPlaylistPopulationImage = false;
   }
   return;
 }
@@ -9797,105 +10509,119 @@ void LiveStorage_AllocatePlaylistPopulation(void)
 
 // 824E6DE0  LiveStorage_FreePlaylistPopulation  (qcommon/com_storage.cpp:7685)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_FreePlaylistPopulation(void)
 
 {
-  DAT_8365b1cd = 0;
-  DAT_8365b1d4 = 0;
-  DAT_8365b1cc = 0;
+  s_completedPlaylistPopulationImage = false;
+  s_playlistPopulationBuffer = (uchar *)0x0;
+  s_completedPlaylistPopulation = false;
   return;
 }
 
 
 // 824EC3A8  LiveStorage_DoWeHavePlaylistPopulation  (qcommon/com_storage.cpp:7692)
 
-void LiveStorage_DoWeHavePlaylistPopulation(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_DoWeHavePlaylistPopulation(void)
 
 {
-  char cVar2;
-  ulonglong uVar1;
+  bool bVar2;
+  uint uVar1;
   
-  if (((DAT_8365b1cc == 0) && (0 < DAT_8365b1d0)) &&
-     (cVar2 = LiveStorage_UncompressPlaylistPopulation(), cVar2 != '\0')) {
-    DAT_8365b1cc = 1;
+  if (((!s_completedPlaylistPopulation) && (0 < s_playlistPopulationCompressedSize)) &&
+     (bVar2 = LiveStorage_UncompressPlaylistPopulation(), bVar2)) {
+    s_completedPlaylistPopulation = true;
   }
-  if ((DAT_8365b1cc != 0) && ((-((*(uint *)(DAT_84584ed8 + 0xc) & 0x10) == 0) & DAT_836368c4) != 0))
-  {
+  if ((s_completedPlaylistPopulation != false) &&
+     ((-(((live_test_onlinedataoff->current).unsignedInt & 0x10) == 0) & s_UTCSynced) != 0)) {
     uVar1 = LiveStorage_GetUTC();
-    DAT_8365b1cc = -(uVar1 <= (ulonglong)*(uint *)(DAT_83f71ea4 + 0xc) + (ulonglong)DAT_8365b1d8) &
-                   DAT_8365b1cc;
+    s_completedPlaylistPopulation =
+         (bool)(-((ulonglong)(longlong)(int)uVar1 <=
+                 (ulonglong)(ui_playlistPopulationRefreshTime->current).unsignedInt +
+                 (ulonglong)s_lastPlaylistPopulationFetch) & s_completedPlaylistPopulation);
   }
-  return;
+  return s_completedPlaylistPopulation;
 }
 
 
 // 824E6E08  LiveStorage_GeneratePlaylistPopulationImageDone  (qcommon/com_storage.cpp:7710)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void LiveStorage_GeneratePlaylistPopulationImageDone(void)
 
 {
-  DAT_8365b1cd = 1;
+  s_completedPlaylistPopulationImage = true;
   return;
 }
 
 
 // 824E6E18  LiveStorage_DoWeHavePlaylistPopulationImage  (qcommon/com_storage.cpp:7715)
 
-undefined1 LiveStorage_DoWeHavePlaylistPopulationImage(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_DoWeHavePlaylistPopulationImage(void)
 
 {
-  return DAT_8365b1cd;
+  return s_completedPlaylistPopulationImage;
 }
 
 
 // 824E6E28  LiveStorage_GetPlaylistPopulationBuffer  (qcommon/com_storage.cpp:7720)
 
-undefined4 LiveStorage_GetPlaylistPopulationBuffer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uchar * LiveStorage_GetPlaylistPopulationBuffer(void)
 
 {
-  return DAT_8365b1d4;
+  return s_playlistPopulationBuffer;
 }
 
 
 // 824EC478  LiveStorage_FetchPlaylistPopulation  (qcommon/com_storage.cpp:7725)
 
-void LiveStorage_FetchPlaylistPopulation(void)
+void LiveStorage_FetchPlaylistPopulation(int param_1)
 
 {
-  bool bVar1;
+  uint uVar1;
   int iVar2;
-  char cVar5;
+  bool bVar5;
   int iVar3;
-  int iVar4;
-  int iVar6;
+  bool bVar6;
+  overlappedTask *poVar4;
   
-  iVar2 = __savegprlr_24();
-  if (((DAT_8365b1d4 != 0) && (cVar5 = LiveStorage_DoWeHavePlaylistPopulation(), cVar5 == '\0')) &&
-     (DAT_8365b358 == (undefined *)0x0)) {
+  iVar2 = __savegprlr_24(param_1);
+  if (((s_playlistPopulationBuffer != (uchar *)0x0) &&
+      (bVar5 = LiveStorage_DoWeHavePlaylistPopulation(), !bVar5)) &&
+     (s_playlistPopulationFileTask.m_buffer == (void *)0x0)) {
     iVar3 = Sys_Milliseconds();
-    iVar6 = iVar2 * 4;
-    bVar1 = false;
-    iVar4 = (iVar3 - *(int *)(&DAT_83620878 + iVar6)) / 1000;
-    if ((*(int *)(&DAT_83620868 + iVar6) == 0) ||
-       ((0x1e < iVar4 &&
-        (cVar5 = Live_GetShouldDemonwareRetry(iVar4,*(int *)(&DAT_83620868 + iVar6),0x3c),
-        cVar5 != '\0')))) {
-      bVar1 = true;
+    bVar5 = false;
+    uVar1 = (iVar3 - g_LastFetchPlaylistPopulationCheckAttemptTime[iVar2]) / 1000;
+    if ((g_NumFetchPlaylistPopulationCheckAttempts[iVar2] == 0) ||
+       ((0x1e < (int)uVar1 &&
+        (bVar6 = Live_GetShouldDemonwareRetry
+                           (uVar1,g_NumFetchPlaylistPopulationCheckAttempts[iVar2],0x3c), bVar6))))
+    {
+      bVar5 = true;
     }
-    if (bVar1) {
-      *(int *)(&DAT_83620878 + iVar6) = iVar3;
-      *(int *)(&DAT_83620868 + iVar6) = *(int *)(&DAT_83620868 + iVar6) + 1;
-      iVar2 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,iVar2,0x22);
-      if (iVar2 != 0) {
-        DAT_8365b280 = "heatmap.raw";
-        DAT_8365b358 = &DAT_83620888;
-        DAT_8365b354 = 0x4000;
-        *(char ***)(iVar2 + 0x98) = &DAT_8365b280;
-        DAT_8365b1d0 = 0;
-        iVar4 = dwFetchPublisherFile(iVar2,0xffffffff8365b280);
-        if (iVar4 == 0) {
-          TaskManager_ClearTask(iVar2);
-          DAT_8365b358 = (undefined *)0x0;
+    if (bVar5) {
+      g_LastFetchPlaylistPopulationCheckAttemptTime[iVar2] = iVar3;
+      g_NumFetchPlaylistPopulationCheckAttempts[iVar2] =
+           g_NumFetchPlaylistPopulationCheckAttempts[iVar2] + 1;
+      poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x22);
+      if (poVar4 != (overlappedTask *)0x0) {
+        s_playlistPopulationFileTask.m_filename = "heatmap.raw";
+        s_playlistPopulationFileTask.m_buffer = s_playlistPopulationCompressedBuffer;
+        s_playlistPopulationFileTask.m_bufferSize = 0x4000;
+        poVar4->data = &s_playlistPopulationFileTask;
+        s_playlistPopulationCompressedSize = 0;
+        iVar2 = dwFetchPublisherFile(poVar4,&s_playlistPopulationFileTask);
+        if (iVar2 == 0) {
+          TaskManager_ClearTask(poVar4);
+          s_playlistPopulationFileTask.m_buffer = (void *)0x0;
         }
       }
     }
@@ -9907,154 +10633,172 @@ void LiveStorage_FetchPlaylistPopulation(void)
 
 // 824E6E38  LiveStorage_UncompressPlaylistPopulation  (qcommon/com_storage.cpp:7776)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool LiveStorage_UncompressPlaylistPopulation(void)
 
 {
   int iVar1;
   
-  iVar1 = DecompressIntoBuffer(DAT_8365b1d4,0x10000,0xffffffff83620888,DAT_8365b1d0);
+  iVar1 = DecompressIntoBuffer
+                    (s_playlistPopulationBuffer,0x10000,s_playlistPopulationCompressedBuffer,
+                     s_playlistPopulationCompressedSize);
   return iVar1 == 0x10000;
 }
 
 
 // 824EC5B0  LiveStorage_FetchPlaylistPopulationComplete  (qcommon/com_storage.cpp:7781)
 
-void LiveStorage_FetchPlaylistPopulationComplete(void)
+void LiveStorage_FetchPlaylistPopulationComplete(int param_1)
 
 {
   byte bVar1;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar2;
-  undefined8 uVar5;
+  bdRemoteTask *this;
+  int iVar2;
+  bdLobbyService *pbVar3;
+  Status SVar4;
+  taskCompleteResults tVar5;
   int iVar6;
+  bdLobbyErrorCode bVar7;
+  char *pcVar8;
   
-  iVar3 = __savegprlr_26();
-  iVar6 = iVar3 * 0xa0;
-  bVar1 = (&DAT_8365bcd5)[iVar6];
-  if ((&DAT_8365bcd4)[iVar6] == '\0') {
-    MyAssertHandler(0xffffffff820859c8,0x1e69,0,0xffffffff82000f98,0xffffffff82084c8c);
+  iVar2 = __savegprlr_26(param_1);
+  bVar1 = storageTasks.tasks[iVar2].controllerIndex;
+  if (storageTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1e69,0,"%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x22) {
-    MyAssertHandler(0xffffffff820859c8,0x1e6a,0,0xffffffff82000f98,0xffffffff82088d98);
+  if (storageTasks.tasks[iVar2].type != 0x22) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
+                    0x1e6a,0,"%s");
   }
-  iVar4 = dwGetLobbyService(bVar1);
-  if (iVar4 != 0) {
-    dwGetLobbyService(bVar1);
-    iVar4 = bdLobbyService__getStatus();
-    if (iVar4 != 2) goto LAB_824ec794;
+  pbVar3 = dwGetLobbyService((uint)bVar1);
+  if (pbVar3 != (bdLobbyService *)0x0) {
+    pbVar3 = dwGetLobbyService((uint)bVar1);
+    SVar4 = bdLobbyService::getStatus(pbVar3);
+    if (SVar4 != BD_CONNECTED) goto LAB_824ec794;
   }
-  iVar4 = dwFetchFileComplete(&DAT_8365bc40 + iVar6,0xffffffff8365b280);
-  if (iVar4 == 1) {
-    DAT_8365b1d0 = DAT_8365b290;
-    iVar3 = DecompressIntoBuffer(DAT_8365b1d4,0x10000,0xffffffff83620888);
-    if (iVar3 == 0x10000) {
-      DAT_8365b1cd = 0;
-      DAT_8365b1cc = 1;
-      if ((-((*(uint *)(DAT_84584ed8 + 0xc) & 0x10) == 0) & DAT_836368c4) != 0) {
-        DAT_8365b1d8 = LiveStorage_GetUTC();
+  tVar5 = dwFetchFileComplete(storageTasks.tasks + iVar2,&s_playlistPopulationFileTask);
+  if (tVar5 == TASK_COMPLETE) {
+    s_playlistPopulationCompressedSize = s_playlistPopulationFileTask.m_fileSize;
+    iVar6 = DecompressIntoBuffer
+                      (s_playlistPopulationBuffer,0x10000,s_playlistPopulationCompressedBuffer,
+                       s_playlistPopulationFileTask.m_fileSize);
+    if (iVar6 == 0x10000) {
+      s_completedPlaylistPopulationImage = false;
+      s_completedPlaylistPopulation = true;
+      if ((-(((live_test_onlinedataoff->current).unsignedInt & 0x10) == 0) & s_UTCSynced) != 0) {
+        s_lastPlaylistPopulationFetch = LiveStorage_GetUTC();
       }
     }
-    *(undefined4 *)(&DAT_83620878 + (uint)bVar1 * 4) = 0;
-    *(undefined4 *)(&DAT_83620868 + (uint)bVar1 * 4) = 0;
+    g_LastFetchPlaylistPopulationCheckAttemptTime[bVar1] = 0;
+    g_NumFetchPlaylistPopulationCheckAttempts[bVar1] = 0;
   }
   else {
-    if (iVar4 == 0) goto LAB_824ec794;
-    if (iVar4 == 2) {
-      if ((&DAT_8365bc48)[iVar3 * 0x28] == 0) {
-        uVar2 = 2;
-        uVar5 = 0xffffffff82088c98;
+    if (tVar5 == TASK_NOTCOMPLETE) goto LAB_824ec794;
+    if (tVar5 == TASK_ERROR) {
+      this = storageTasks.tasks[iVar2].u.remoteTask.m_ptr;
+      if (this == (bdRemoteTask *)0x0) {
+        pcVar8 = "Unable to retrieve playlist population result code [%d] retrying\n";
       }
       else {
-        uVar2 = bdRemoteTask__getErrorCode();
-        if ((int)uVar2 == 1000) {
-          Com_PrintError(0x10,0xffffffff82088ce0,uVar2);
+        bVar7 = bdRemoteTask::getErrorCode(this);
+        if (bVar7 == BD_NO_FILE) {
+          Com_PrintError(0x10,
+                         ">>>>>>> No playlist population file found to download! Please update the servers this is a bug! <<<<<<<<\n"
+                        );
           goto LAB_824ec784;
         }
-        uVar5 = 0xffffffff82088d50;
+        pcVar8 = "Unable to retrieve playlist population bdLobbyErrorCode [%d] retrying\n";
       }
-      Com_PrintError(0x10,uVar5,uVar2);
+      Com_PrintError(0x10,pcVar8);
     }
   }
 LAB_824ec784:
-  TaskManager_ClearTask(&DAT_8365bc40 + iVar6);
-  DAT_8365b358 = 0;
+  TaskManager_ClearTask(storageTasks.tasks + iVar2);
+  s_playlistPopulationFileTask.m_buffer = (void *)0x0;
 LAB_824ec794:
   __restgprlr_26();
   return;
 }
 
 
-// 824EEFC8  dwFileTask::operator=  (line unknown)
+// 824EEFC8  operator=  (line unknown)
 
-void dwFileTask__operator_(undefined4 *param_1,undefined4 *param_2)
+dwFileTask * __thiscall dwFileTask::operator=(dwFileTask *this,dwFileTask *param_1)
 
 {
   int iVar1;
   longlong lVar2;
   
   iVar1 = 0;
-  *param_1 = *param_2;
+  this->m_filename = param_1->m_filename;
   lVar2 = 0x80;
-  param_1[1] = param_2[1];
-  *(undefined8 *)(param_1 + 2) = *(undefined8 *)(param_2 + 2);
-  param_1[4] = param_2[4];
-  *(undefined8 *)(param_1 + 8) = *(undefined8 *)(param_2 + 8);
-  param_1[10] = param_2[10];
-  param_1[0xb] = param_2[0xb];
-  param_1[0xc] = param_2[0xc];
-  *(undefined8 *)(param_1 + 0xe) = *(undefined8 *)(param_2 + 0xe);
+  this->m_error = param_1->m_error;
+  this->m_fileID = param_1->m_fileID;
+  this->m_fileSize = param_1->m_fileSize;
+  (this->m_infoResult).m_fileID = (param_1->m_infoResult).m_fileID;
+  (this->m_infoResult).m_createTime = (param_1->m_infoResult).m_createTime;
+  (this->m_infoResult).m_modifedTime = (param_1->m_infoResult).m_modifedTime;
+  (this->m_infoResult).m_visibility = (param_1->m_infoResult).m_visibility;
+  (this->m_infoResult).m_ownerID = (param_1->m_infoResult).m_ownerID;
   do {
-    *(undefined1 *)((int)param_1 + iVar1 + 0x40) = *(undefined1 *)((int)param_2 + iVar1 + 0x40);
+    (this->m_infoResult).m_fileName[iVar1] = (param_1->m_infoResult).m_fileName[iVar1];
     iVar1 = iVar1 + 1;
     lVar2 = lVar2 + -1;
   } while (lVar2 != 0);
-  param_1[0x30] = param_2[0x30];
-  param_1[0x33] = param_2[0x33];
-  param_1[0x34] = param_2[0x34];
-  param_1[0x35] = param_2[0x35];
-  param_1[0x36] = param_2[0x36];
-  return;
+  (this->m_infoResult).m_fileSize = (param_1->m_infoResult).m_fileSize;
+  (this->m_dataResult).m_fileData = (param_1->m_dataResult).m_fileData;
+  (this->m_dataResult).m_fileSize = (param_1->m_dataResult).m_fileSize;
+  this->m_bufferSize = param_1->m_bufferSize;
+  this->m_buffer = param_1->m_buffer;
+  return this;
 }
 
 
 // 8293FD00  `dynamic_atexit_destructor_for_'g_fetchPlaylistsFileTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_fetchPlaylistsFileTask__(void)
 
 {
-  bdFileData___bdFileData(0xffffffff8365bc20);
-  bdFileInfo___bdFileInfo(0xffffffff8365bb70);
+  bdFileData::~bdFileData(&g_fetchPlaylistsFileTask.m_dataResult);
+  bdFileInfo::~bdFileInfo(&g_fetchPlaylistsFileTask.m_infoResult);
   return;
 }
 
 
 // 8293FD40  `dynamic_atexit_destructor_for_'s_fetchPlaylistsFileInfoTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_fetchPlaylistsFileInfoTask__(void)
 
 {
-  bdFileData___bdFileData(0xffffffff8365d7c8);
-  bdFileInfo___bdFileInfo(0xffffffff8365d718);
+  bdFileData::~bdFileData(&s_fetchPlaylistsFileInfoTask.m_dataResult);
+  bdFileInfo::~bdFileInfo(&s_fetchPlaylistsFileInfoTask.m_infoResult);
   return;
 }
 
 
 // 8293FD80  `dynamic_atexit_destructor_for_'s_metPlayerFileFileTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_metPlayerFileFileTasks__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdFileInfo *pbVar2;
   
   lVar1 = 3;
-  lVar2 = -0x7c9a2c28;
+  pbVar2 = (bdFileInfo *)&matchDataTags.recipieId.m_eventLogID;
   do {
-    bdFileData___bdFileData(lVar2 + -0x30);
-    bdFileInfo___bdFileInfo(lVar2 + -0xe0);
+    bdFileData::~bdFileData((bdFileData *)(pbVar2[-1].m_fileName + 0x58));
+    bdFileInfo::~bdFileInfo((bdFileInfo *)(pbVar2[-2].m_fileName + 0x58));
     lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + -0xe0;
+    pbVar2 = (bdFileInfo *)(pbVar2[-2].m_fileName + 0x58);
   } while (-1 < lVar1);
   return;
 }
@@ -10062,19 +10806,21 @@ void _dynamic_atexit_destructor_for__s_metPlayerFileFileTasks__(void)
 
 // 8293FDD8  `dynamic_atexit_destructor_for_'s_entitlementConfigFileTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_entitlementConfigFileTasks__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdFileInfo *pbVar2;
   
   lVar1 = 3;
-  lVar2 = -0x7c9a4490;
+  pbVar2 = &g_fetchPlaylistsFileTask.m_infoResult;
   do {
-    bdFileData___bdFileData(lVar2 + -0x30);
-    bdFileInfo___bdFileInfo(lVar2 + -0xe0);
+    bdFileData::~bdFileData((bdFileData *)(pbVar2[-1].m_fileName + 0x58));
+    bdFileInfo::~bdFileInfo((bdFileInfo *)(pbVar2[-2].m_fileName + 0x58));
     lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + -0xe0;
+    pbVar2 = (bdFileInfo *)(pbVar2[-2].m_fileName + 0x58);
   } while (-1 < lVar1);
   return;
 }
@@ -10082,19 +10828,21 @@ void _dynamic_atexit_destructor_for__s_entitlementConfigFileTasks__(void)
 
 // 8293FE30  `dynamic_atexit_destructor_for_'s_socialConfigFileTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_socialConfigFileTasks__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdFileInfo *pbVar2;
   
   lVar1 = 3;
-  lVar2 = -0x7c9a2488;
+  pbVar2 = (bdFileInfo *)&LiveStorage_CreateEliteClassFileFromMpData_VAR.name;
   do {
-    bdFileData___bdFileData(lVar2 + -0x30);
-    bdFileInfo___bdFileInfo(lVar2 + -0xe0);
+    bdFileData::~bdFileData((bdFileData *)(pbVar2[-1].m_fileName + 0x58));
+    bdFileInfo::~bdFileInfo((bdFileInfo *)(pbVar2[-2].m_fileName + 0x58));
     lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + -0xe0;
+    pbVar2 = (bdFileInfo *)(pbVar2[-2].m_fileName + 0x58);
   } while (-1 < lVar1);
   return;
 }
@@ -10102,19 +10850,21 @@ void _dynamic_atexit_destructor_for__s_socialConfigFileTasks__(void)
 
 // 8293FE88  `dynamic_atexit_destructor_for_'g_statsFileFileTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_statsFileFileTasks__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdFileInfo *pbVar2;
   
   lVar1 = 3;
-  lVar2 = -0x7c9a4900;
+  pbVar2 = (bdFileInfo *)&s_eliteCACData.eliteCACFileTask.m_fileSize;
   do {
-    bdFileData___bdFileData(lVar2 + -0x30);
-    bdFileInfo___bdFileInfo(lVar2 + -0xe0);
+    bdFileData::~bdFileData((bdFileData *)(pbVar2[-1].m_fileName + 0x58));
+    bdFileInfo::~bdFileInfo((bdFileInfo *)(pbVar2[-2].m_fileName + 0x58));
     lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + -0xe0;
+    pbVar2 = (bdFileInfo *)(pbVar2[-2].m_fileName + 0x58);
   } while (-1 < lVar1);
   return;
 }
@@ -10122,54 +10872,62 @@ void _dynamic_atexit_destructor_for__g_statsFileFileTasks__(void)
 
 // 8293FEE0  `dynamic_atexit_destructor_for_'s_playlistPopulationFileTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_playlistPopulationFileTask__(void)
 
 {
-  bdFileData___bdFileData(0xffffffff8365b348);
-  bdFileInfo___bdFileInfo(0xffffffff8365b298);
+  bdFileData::~bdFileData(&s_playlistPopulationFileTask.m_dataResult);
+  bdFileInfo::~bdFileInfo(&s_playlistPopulationFileTask.m_infoResult);
   return;
 }
 
 
 // 8293FF20  `dynamic_atexit_destructor_for_'bdServerTime''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__bdServerTime__(void)
 
 {
-  bdTaskResult___bdTaskResult(0xffffffff8365b360);
+  bdTaskResult::~bdTaskResult((bdTaskResult *)&bdServerTime);
   return;
 }
 
 
 // 8293FF30  `dynamic_atexit_destructor_for_'s_eliteCACData''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__s_eliteCACData__(void)
 
 {
-  bdFileData___bdFileData(0xffffffff8365b7b8);
-  bdFileInfo___bdFileInfo(0xffffffff8365b708);
+  bdFileData::~bdFileData(&s_eliteCACData.eliteCACFileTask.m_dataResult);
+  bdFileInfo::~bdFileInfo(&s_eliteCACData.eliteCACFileTask.m_infoResult);
   return;
 }
 
 
 // 8293FF70  `dynamic_atexit_destructor_for_'matchDataTags''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__matchDataTags__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdTag *this;
   
   __savegprlr_29();
   lVar1 = 0x20;
-  lVar2 = -0x7c9a2908;
+  this = (bdTag *)&matchDataTags.numTags;
   do {
-    lVar2 = lVar2 + -0x18;
-    bdTag___bdTag(lVar2);
+    this = this + -1;
+    bdTag::~bdTag(this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
-  bdEventLogID___bdEventLogID(0xffffffff8365d3d0);
-  bdEventLogID___bdEventLogID(0xffffffff8365d3c0);
+  bdEventLogID::~bdEventLogID(&matchDataTags.recipieId);
+  bdEventLogID::~bdEventLogID(&matchDataTags.matchId);
   __restgprlr_29();
   return;
 }
@@ -10177,20 +10935,24 @@ void _dynamic_atexit_destructor_for__matchDataTags__(void)
 
 // 8293FFB8  `dynamic_atexit_destructor_for_'g_fetchPlaylistsTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_fetchPlaylistsTask__(void)
 
 {
-  bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(0xffffffff8365b1e8);
+  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&g_fetchPlaylistsTask.u.remoteTask);
   return;
 }
 
 
 // 8293FFC8  `dynamic_atexit_destructor_for_'storageTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__storageTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff8365bc38);
+  OverlappedTaskSet::~OverlappedTaskSet(&storageTasks);
   return;
 }
 

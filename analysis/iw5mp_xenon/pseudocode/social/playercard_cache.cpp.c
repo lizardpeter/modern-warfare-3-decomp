@@ -2,54 +2,57 @@
 
 // 8293F158  `dynamic_initializer_for_'g_DWPlayercardCacheUploadTask''  (social/playercard_cache.cpp:60)
 
-int _dynamic_initializer_for__g_DWPlayercardCacheUploadTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_DWPlayercardCacheUploadTask__(void)
 
 {
-  int iVar1;
-  
-  DAT_8453b2e8 = 0;
-  DAT_8453b2ec = 0;
-  DAT_8453b2f0 = 0;
-  DAT_8453b2f4 = 0;
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWPlayercardCacheUploadTask__);
-  return iVar1;
+  g_DWPlayercardCacheUploadTask[0].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheUploadTask[1].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheUploadTask[2].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheUploadTask[3].m_ptr = (bdRemoteTask *)0x0;
+  atexit(_dynamic_atexit_destructor_for__g_DWPlayercardCacheUploadTask__);
+  return;
 }
 
 
 // 8293F190  `dynamic_initializer_for_'g_DWPlayercardCacheDownloadTask''  (social/playercard_cache.cpp:61)
 
-int _dynamic_initializer_for__g_DWPlayercardCacheDownloadTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_DWPlayercardCacheDownloadTask__(void)
 
 {
-  int iVar1;
-  
-  DAT_8453b2f8 = 0;
-  DAT_8453b2fc = 0;
-  DAT_8453b300 = 0;
-  DAT_8453b304 = 0;
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__);
-  return iVar1;
+  g_DWPlayercardCacheDownloadTask[0].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheDownloadTask[1].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheDownloadTask[2].m_ptr = (bdRemoteTask *)0x0;
+  g_DWPlayercardCacheDownloadTask[3].m_ptr = (bdRemoteTask *)0x0;
+  atexit(_dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__);
+  return;
 }
 
 
 // 8293F1C8  `dynamic_initializer_for_'g_PlayercardCacheStore''  (social/playercard_cache.cpp:66)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_initializer_for__g_PlayercardCacheStore__(void)
 
 {
   int iVar1;
   longlong lVar2;
-  undefined4 *puVar3;
+  bdProfileInfo *this;
   
   __savegprlr_29();
   lVar2 = 3;
-  puVar3 = &DAT_8453b318;
+  this = (bdProfileInfo *)&g_PlayercardCacheStore[0].publicProfile;
   do {
-    bdProfileInfo__bdProfileInfo(puVar3);
-    *puVar3 = &PTR_PublicProfileInfo___scalar_deleting_destructor__821b1018;
-    _vector_constructor_iterator_(puVar3 + 0x8ae,0x58,0x14,0xffffffff82701020);
+    bdProfileInfo::bdProfileInfo(this);
+    this->_padding_ = (int)&PublicProfileInfo::_vftable_;
+    _vector_constructor_iterator_
+              (&this[0x22b].m_entityID,0x58,0x14,PublicProfileInfo::PublicProfileInfo);
     lVar2 = lVar2 + -1;
-    puVar3 = puVar3 + 0xa94;
+    this = this + 0x2a5;
   } while (-1 < lVar2);
   iVar1 = atexit(_dynamic_atexit_destructor_for__g_PlayercardCacheStore__);
   __restgprlr_29(iVar1);
@@ -59,90 +62,90 @@ void _dynamic_initializer_for__g_PlayercardCacheStore__(void)
 
 // 826FF910  PlayercardCache_Init  (social/playercard_cache.cpp:88)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PlayercardCache_Init(void)
 
 {
-  undefined8 uVar1;
-  undefined4 *puVar2;
+  dvar_t *pdVar1;
+  bdReference<bdRemoteTask> *pbVar2;
   longlong lVar3;
   
   __savegprlr_29();
-  uVar1 = Dvar_RegisterBool(0xffffffff821b0dd0,0,0x2000,0xffffffff821b0df0);
+  pdVar1 = Dvar_RegisterBool("playercard_cache_show_cached",false,0x2000,
+                             "Shows whether a playercard is in the cache or not");
   DAT_8453af94 = 0;
-  DAT_8453b2d8 = 2;
-  DAT_8453afa4 = 2;
-  DAT_8453adc8 = 0;
+  g_DWPlayercardCacheDownloadTaskStage[0] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_DWPlayercardCacheUploadTaskStage[0] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  s_playerCardCacheDownloadRetryTime[0] = 0;
   DAT_8453af84 = 0;
-  DAT_8453ae70 = 0;
+  s_playerCardCacheUploadRetryTime[0] = 0;
   lVar3 = 4;
-  DAT_8453b2dc = 2;
-  DAT_8453afa8 = 2;
+  g_DWPlayercardCacheDownloadTaskStage[1] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_DWPlayercardCacheUploadTaskStage[1] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
   DAT_8453af98 = 0;
-  DAT_8453adcc = 0;
+  s_playerCardCacheDownloadRetryTime[1] = 0;
   DAT_8453af88 = 0;
-  DAT_8453ae74 = 0;
-  DAT_8453b2e0 = 2;
-  DAT_8453afac = 2;
+  s_playerCardCacheUploadRetryTime[1] = 0;
+  g_DWPlayercardCacheDownloadTaskStage[2] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_DWPlayercardCacheUploadTaskStage[2] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
   DAT_8453af9c = 0;
-  DAT_8453add0 = 0;
+  s_playerCardCacheDownloadRetryTime[2] = 0;
   DAT_8453af8c = 0;
-  DAT_8453ae78 = 0;
-  DAT_8453b2e4 = 2;
-  DAT_8453afb0 = 2;
+  s_playerCardCacheUploadRetryTime[2] = 0;
+  g_DWPlayercardCacheDownloadTaskStage[3] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_DWPlayercardCacheUploadTaskStage[3] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
   DAT_8453afa0 = 0;
-  puVar2 = &DAT_8453b304;
-  DAT_8453add4 = 0;
+  pbVar2 = g_DWPlayercardCacheDownloadTask + 3;
+  s_playerCardCacheDownloadRetryTime[3] = 0;
   DAT_8453af90 = 0;
-  DAT_8453ae7c = 0;
-  DAT_8453afb4 = (undefined4)uVar1;
+  s_playerCardCacheUploadRetryTime[3] = 0;
+  playercard_cache_show_cached = pdVar1;
   do {
-    puVar2[1] = 0;
-    puVar2[0xa93] = 0;
-    puVar2 = puVar2 + 0xa94;
-    *(undefined1 *)puVar2 = 1;
+    pbVar2[1].m_ptr = (bdRemoteTask *)0x0;
+    pbVar2[0xa93].m_ptr = (bdRemoteTask *)0x0;
+    pbVar2 = pbVar2 + 0xa94;
+    *(undefined1 *)&pbVar2->m_ptr = 1;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  __restgprlr_29(uVar1,0xffffffff8453b2d8,0xffffffff8453adc8);
+  __restgprlr_29(pdVar1,0xffffffff8453b2d8,0xffffffff8453adc8);
   return;
 }
 
 
 // 827010B0  PlayercardCache_UserSignedOut  (social/playercard_cache.cpp:112)
 
-void PlayercardCache_UserSignedOut(void)
+void PlayercardCache_UserSignedOut(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  void *pvVar4;
   
-  uVar3 = __savegprlr_23();
-  iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
-  if (*(int *)((int)&DAT_8453b2e8 + iVar1) != 0) {
-    bdRemoteTask__cancelTask();
+  iVar1 = __savegprlr_23(param_1);
+  if (g_DWPlayercardCacheUploadTask[iVar1].m_ptr != (bdRemoteTask *)0x0) {
+    bdRemoteTask::cancelTask(g_DWPlayercardCacheUploadTask[iVar1].m_ptr);
   }
-  if (*(int *)((int)&DAT_8453b2f8 + iVar1) != 0) {
-    bdRemoteTask__cancelTask();
+  if (g_DWPlayercardCacheDownloadTask[iVar1].m_ptr != (bdRemoteTask *)0x0) {
+    bdRemoteTask::cancelTask(g_DWPlayercardCacheDownloadTask[iVar1].m_ptr);
   }
-  iVar2 = (int)uVar3;
-  *(undefined4 *)((int)&DAT_8453afa4 + iVar1) = 2;
-  *(undefined4 *)((int)&DAT_8453b2d8 + iVar1) = 2;
-  (&DAT_8453b308)[iVar2 * 0xa94] = 0;
-  (&DAT_8453dd50)[iVar2 * 0xa94] = 0;
-  (&DAT_8453dd54)[iVar2 * 0x2a50] = 1;
-  *(undefined4 *)((int)&DAT_8453ae70 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_8453af84 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_8453adc8 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_8453af94 + iVar1) = 0;
-  memset(&DAT_8453ae80 + (int)((uVar3 & 0xffffffff) << 6) + iVar2,0,0x41);
-  pvVar4 = memset(&DAT_8453b370 + iVar2 * 0x2a50,0,0x2260);
-  __restgprlr_23(pvVar4);
+  g_DWPlayercardCacheUploadTaskStage[iVar1] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_DWPlayercardCacheDownloadTaskStage[iVar1] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+  g_PlayercardCacheStore[iVar1].screen = PLAYERCARD_CACHE_SCREEN_NONE;
+  g_PlayercardCacheStore[iVar1].downloading_count = 0;
+  g_PlayercardCacheStore[iVar1].do_initial_cache = true;
+  s_playerCardCacheUploadRetryTime[iVar1] = 0;
+  (&DAT_8453af84)[iVar1] = 0;
+  s_playerCardCacheDownloadRetryTime[iVar1] = 0;
+  (&DAT_8453af94)[iVar1] = 0;
+  memset();
+  memset();
+  __restgprlr_23();
   return;
 }
 
 
 // 82701198  PlayercardCache_Shutdown  (social/playercard_cache.cpp:138)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void PlayercardCache_Shutdown(void)
 
@@ -158,7 +161,7 @@ void PlayercardCache_Shutdown(void)
   __savegprlr_28();
   iVar5 = 0;
   do {
-    uVar1 = *(uint *)((int)&DAT_8453b2e8 + iVar5);
+    uVar1 = *(uint *)((int)&g_DWPlayercardCacheUploadTask[0].m_ptr + iVar5);
     if (uVar1 != 0) {
       if (uVar1 != 0) {
         do {
@@ -170,15 +173,15 @@ void PlayercardCache_Shutdown(void)
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = *(undefined4 **)((int)&DAT_8453b2e8 + iVar5);
+          puVar2 = *(undefined4 **)((int)&g_DWPlayercardCacheUploadTask[0].m_ptr + iVar5);
           if (puVar2 != (undefined4 *)0x0) {
             (**(code **)*puVar2)(puVar2,1);
           }
         }
       }
-      *(undefined4 *)((int)&DAT_8453b2e8 + iVar5) = 0;
+      *(undefined4 *)((int)&g_DWPlayercardCacheUploadTask[0].m_ptr + iVar5) = 0;
     }
-    uVar1 = *(uint *)((int)&DAT_8453b2f8 + iVar5);
+    uVar1 = *(uint *)((int)&g_DWPlayercardCacheDownloadTask[0].m_ptr + iVar5);
     if (uVar1 != 0) {
       if (uVar1 != 0) {
         do {
@@ -190,13 +193,13 @@ void PlayercardCache_Shutdown(void)
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (*(int *)(uVar1 + 4) == 0) {
-          puVar2 = *(undefined4 **)((int)&DAT_8453b2f8 + iVar5);
+          puVar2 = *(undefined4 **)((int)&g_DWPlayercardCacheDownloadTask[0].m_ptr + iVar5);
           if (puVar2 != (undefined4 *)0x0) {
             (**(code **)*puVar2)(puVar2,1);
           }
         }
       }
-      *(undefined4 *)((int)&DAT_8453b2f8 + iVar5) = 0;
+      *(undefined4 *)((int)&g_DWPlayercardCacheDownloadTask[0].m_ptr + iVar5) = 0;
     }
     iVar5 = iVar5 + 4;
   } while (iVar5 < 0x10);
@@ -207,56 +210,56 @@ void PlayercardCache_Shutdown(void)
 
 // 826FF9F8  Playercard_AddToCache  (social/playercard_cache.cpp:151)
 
-void Playercard_AddToCache(undefined8 param_1,longlong param_2,ulonglong param_3)
+void Playercard_AddToCache(int param_1,ulong64 param_2,uchar *param_3)
 
 {
   int iVar1;
   int iVar2;
-  undefined4 uVar3;
-  void *pvVar4;
-  ulonglong uVar5;
+  int iVar3;
+  ulonglong uVar4;
+  uint uVar5;
   int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  uint uVar7;
+  uint uVar8;
   
-  iVar2 = __savegprlr_27();
-  iVar6 = 0x7fffffff;
+  uVar4 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_27(param_1);
+  iVar3 = 0x7fffffff;
   uVar5 = 0;
-  iVar7 = 0;
-  uVar8 = 0xffffffffffffffff;
+  iVar6 = 0;
+  uVar7 = 0xffffffff;
   do {
-    iVar1 = iVar7 + iVar2 * 0x2a50;
-    uVar9 = uVar5;
-    if ((param_2 == *(longlong *)(&DAT_8453b378 + iVar1)) ||
-       ((iVar1 = *(int *)(&DAT_8453b3c4 + iVar1), uVar9 = uVar8, iVar1 <= iVar6 &&
-        (uVar9 = uVar5, iVar6 = iVar1, iVar1 == 0)))) break;
-    iVar7 = iVar7 + 0x58;
+    uVar8 = uVar5;
+    if ((param_2 ==
+         *(ulong64 *)(g_PlayercardCacheStore[iVar2].cached_playercards[0].card + iVar6 + -8)) ||
+       ((iVar1 = *(int *)(g_PlayercardCacheStore[iVar2].cached_playercards[0].card + iVar6 + 0x44),
+        uVar8 = uVar7, iVar1 <= iVar3 && (iVar3 = iVar1, uVar8 = uVar5, iVar1 == 0)))) break;
+    iVar6 = iVar6 + 0x58;
     uVar5 = uVar5 + 1;
-    uVar8 = uVar9;
-  } while (iVar7 < 0x2260);
-  if (99 < (uVar9 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b0e28,0xb0,0,0xffffffff821b0e70,uVar9,100);
+    uVar7 = uVar8;
+  } while (iVar6 < 0x2260);
+  if (99 < uVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0xb0,0,"index doesn\'t index MAX_CACHED_PLAYER_CARDS\n\t%i not in [0, %i)");
   }
-  iVar6 = (int)uVar9 * 0x58 + iVar2 * 0x2a50;
-  uVar3 = Sys_Milliseconds();
-  *(undefined4 *)(&DAT_8453b3c4 + iVar6) = uVar3;
-  *(longlong *)(&DAT_8453b378 + iVar6) = param_2;
-  if ((param_3 & 0xffffffff) == 0) {
-    (&DAT_8453b370)[iVar6] = 0;
+  iVar3 = Sys_Milliseconds();
+  g_PlayercardCacheStore[iVar2].cached_playercards[uVar8].time = iVar3;
+  g_PlayercardCacheStore[iVar2].cached_playercards[uVar8].userID = param_2;
+  if ((uVar4 & 0xffffffff) == 0) {
+    g_PlayercardCacheStore[iVar2].cached_playercards[uVar8].has_data = false;
     __restgprlr_27();
     return;
   }
-  (&DAT_8453b370)[iVar6] = 1;
-  pvVar4 = memcpy(&DAT_8453b380 + iVar6,(void *)param_3,0x41);
-  __restgprlr_27(pvVar4);
+  g_PlayercardCacheStore[iVar2].cached_playercards[uVar8].has_data = true;
+  memcpy();
+  __restgprlr_27();
   return;
 }
 
 
 // 826FFB08  PlayercardCache_IsCachedUserValid  (social/playercard_cache.cpp:194)
 
-void PlayercardCache_IsCachedUserValid(undefined8 param_1,longlong param_2)
+int PlayercardCache_IsCachedUserValid(int param_1,ulong64 param_2)
 
 {
   int iVar1;
@@ -264,64 +267,78 @@ void PlayercardCache_IsCachedUserValid(undefined8 param_1,longlong param_2)
   int iVar3;
   int iVar4;
   
-  iVar1 = __savegprlr_29();
-  iVar1 = iVar1 * 0x2a50;
+  iVar1 = __savegprlr_29(param_1);
   iVar3 = 0;
   iVar4 = 0;
-  iVar2 = iVar1;
+  iVar2 = iVar1 * 0x2a50;
   do {
-    if (*(longlong *)(&DAT_8453b378 + iVar2) == param_2) {
+    if (*(ulong64 *)(g_PlayercardCacheStore[0].cached_playercards[0].card + iVar2 + -8) == param_2)
+    {
       iVar2 = Sys_Milliseconds();
-      __restgprlr_29(iVar2 < *(int *)(&DAT_8453b3c4 + iVar4 * 0x58 + iVar1) +
-                             *(int *)(DAT_84545c7c + 0xc));
-      return;
+      iVar2 = __restgprlr_29(iVar2 < (int)((playercard_cache_validity_life->current).string +
+                                          g_PlayercardCacheStore[iVar1].cached_playercards[iVar4].
+                                          time));
+      return iVar2;
     }
     iVar3 = iVar3 + 0x58;
     iVar4 = iVar4 + 1;
-    iVar2 = iVar3 + iVar1;
+    iVar2 = iVar3 + iVar1 * 0x2a50;
   } while (iVar3 < 0x2260);
-  __restgprlr_29(0);
-  return;
+  iVar2 = __restgprlr_29(0);
+  return iVar2;
 }
 
 
 // 826FFB98  PlayercardCache_AddToDownload  (social/playercard_cache.cpp:212)
 
-void PlayercardCache_AddToDownload(undefined8 param_1,longlong param_2)
+void PlayercardCache_AddToDownload(int param_1,ulong64 param_2)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  int iVar3;
+  longlong lVar3;
   int iVar4;
-  int iVar5;
+  longlong lVar5;
+  longlong lVar6;
+  int iVar7;
+  longlong lVar8;
   
-  iVar1 = __savegprlr_26();
-  iVar5 = iVar1 * 0x2a50;
-  iVar2 = 0;
-  if (0 < (int)(&DAT_8453dd50)[iVar1 * 0xa94]) {
+  lVar3 = __savegprlr_26(param_1);
+  lVar8 = lVar3 * 0x2a50;
+  lVar5 = 0;
+  iVar2 = (int)lVar8;
+  if (0 < *(int *)((int)g_PlayercardCacheStore[0].downloading_users + iVar2 + 0xa0)) {
     do {
-      if (*(longlong *)(&DAT_8453dcb0 + (iVar1 * 0x54a + iVar2) * 8) == param_2) goto LAB_826ffc84;
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < (int)(&DAT_8453dd50)[iVar1 * 0xa94]);
+      if (*(ulong64 *)
+           ((int)g_PlayercardCacheStore[0].downloading_users +
+           (int)((lVar3 * 0x54a + lVar5 & 0xffffffffU) << 3)) == param_2) goto LAB_826ffc84;
+      lVar5 = lVar5 + 1;
+    } while ((int)lVar5 < *(int *)((int)g_PlayercardCacheStore[0].downloading_users + iVar2 + 0xa0))
+    ;
   }
-  iVar3 = 0;
-  iVar4 = 0;
-  iVar2 = iVar5;
+  lVar6 = 0;
+  iVar7 = 0;
+  lVar5 = lVar8;
   do {
-    if (*(longlong *)(&DAT_8453b378 + iVar2) == param_2) {
-      iVar2 = Sys_Milliseconds();
-      if (iVar2 < *(int *)(&DAT_8453b3c4 + iVar4 * 0x58 + iVar5) + *(int *)(DAT_84545c7c + 0xc))
-      goto LAB_826ffc84;
+    if (*(ulong64 *)(g_PlayercardCacheStore[0].cached_playercards[0].card + (int)lVar5 + -8) ==
+        param_2) {
+      iVar4 = Sys_Milliseconds();
+      if (iVar4 < (int)((playercard_cache_validity_life->current).string +
+                       *(int *)(g_PlayercardCacheStore[0].cached_playercards[iVar7].card +
+                               iVar2 + 0x44))) goto LAB_826ffc84;
       break;
     }
-    iVar3 = iVar3 + 0x58;
-    iVar4 = iVar4 + 1;
-    iVar2 = iVar3 + iVar5;
-  } while (iVar3 < 0x2260);
-  if ((&DAT_8453dd50)[iVar1 * 0xa94] != 0x14) {
-    *(longlong *)(&DAT_8453dcb0 + (iVar1 * 0x54a + (&DAT_8453dd50)[iVar1 * 0xa94]) * 8) = param_2;
-    (&DAT_8453dd50)[iVar1 * 0xa94] = (&DAT_8453dd50)[iVar1 * 0xa94] + 1;
+    lVar6 = lVar6 + 0x58;
+    iVar7 = iVar7 + 1;
+    lVar5 = lVar6 + lVar8;
+  } while ((int)lVar6 < 0x2260);
+  uVar1 = *(uint *)((int)g_PlayercardCacheStore[0].downloading_users + iVar2 + 0xa0);
+  if (uVar1 != 0x14) {
+    *(ulong64 *)
+     ((int)g_PlayercardCacheStore[0].downloading_users +
+     (int)((lVar3 * 0x54a + (ulonglong)uVar1 & 0xffffffff) << 3)) = param_2;
+    *(int *)((int)g_PlayercardCacheStore[0].downloading_users + iVar2 + 0xa0) =
+         *(int *)((int)g_PlayercardCacheStore[0].downloading_users + iVar2 + 0xa0) + 1;
   }
 LAB_826ffc84:
   __restgprlr_26();
@@ -331,89 +348,98 @@ LAB_826ffc84:
 
 // 826FFC90  PlayercardCache_IsPivotWithinThreshold  (social/playercard_cache.cpp:234)
 
-ulonglong PlayercardCache_IsPivotWithinThreshold(int param_1,longlong param_2,longlong param_3)
+bool PlayercardCache_IsPivotWithinThreshold(int param_1,int param_2,int param_3)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
   
-  uVar1 = (ulonglong)*(uint *)(&DAT_8453b30c + param_1 * 0x2a50) - param_2;
+  uVar1 = (ulonglong)(uint)g_PlayercardCacheStore[param_1].last_pivot - (longlong)param_2;
   if ((longlong)uVar1 < 0) {
-    uVar1 = uVar1 + param_3;
+    uVar1 = uVar1 + (longlong)param_3;
   }
-  uVar2 = param_2 - (ulonglong)*(uint *)(&DAT_8453b30c + param_1 * 0x2a50);
+  uVar2 = (longlong)param_2 - (ulonglong)(uint)g_PlayercardCacheStore[param_1].last_pivot;
   if ((longlong)uVar2 < 0) {
-    uVar2 = uVar2 + param_3;
+    uVar2 = uVar2 + (longlong)param_3;
   }
   if ((int)uVar1 <= (int)uVar2) {
     uVar2 = uVar1;
   }
-  return ((~uVar2 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar2) & 1;
+  return (bool)((char)((~uVar2 & 0xffffffff) >> 0x1f) + (5 < uVar2) & 1);
 }
 
 
 // 826FFCE8  PlayercardCache_GetPivotandSize  (social/playercard_cache.cpp:254)
 
 void PlayercardCache_GetPivotandSize
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+               (int param_1,PLAYERCARD_CACHE_SCREEN param_2,int *param_3,int *param_4)
 
 {
   bool bVar1;
   int iVar2;
-  undefined4 *puVar3;
-  uint *puVar4;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int *piVar5;
+  ulonglong uVar6;
+  uint *puVar7;
   
-  iVar2 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b0e28,0xff,0,0xffffffff82000f98,0xffffffff8212c340);
+  uVar6 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0xff,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b0e28,0x100,0,0xffffffff82000f98,0xffffffff82036204);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0x100,0,"%s");
   }
-  puVar3 = (undefined4 *)param_3;
-  *puVar3 = 0;
-  puVar4 = (uint *)param_4;
-  *puVar4 = 0;
-  if (5 < (param_2 & 0xffffffff)) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821b0e28,0x130,0,0xffffffff821b0eb0);
+  piVar5 = (int *)uVar4;
+  *piVar5 = 0;
+  puVar7 = (uint *)uVar6;
+  *puVar7 = 0;
+  if (5 < (uVar3 & 0xffffffff)) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                      ,0x130,0,"Invalid friends screen");
     }
     __restgprlr_26();
     return;
   }
-  bVar1 = (int)param_2 != 0;
-  if (param_2 == 1 && bVar1) {
-    *puVar3 = *(undefined4 *)(&DAT_84546e40 + iVar2 * 0x670);
-    *puVar4 = *(uint *)(&DAT_84546e60 + iVar2 * 0x670);
+  bVar1 = (int)uVar3 != 0;
+  if (uVar3 == 1 && bVar1) {
+    *piVar5 = g_friendListGlobal[iVar2].actualIndex;
+    *puVar7 = g_friendListGlobal[iVar2].count;
     __restgprlr_26();
     return;
   }
-  if (param_2 != 2 || !bVar1) {
-    if (param_2 == 3 && bVar1) {
-      *puVar3 = DAT_84257f00._4_4_;
-      *puVar4 = DAT_84256ff8;
+  if (uVar3 != 2 || !bVar1) {
+    if (uVar3 == 3 && bVar1) {
+      *piVar5 = s_partyGlobals.currentIndex;
+      *puVar7 = s_partyUserList.dwUserCount;
       __restgprlr_26();
       return;
     }
-    if (param_2 != 4 || !bVar1) {
+    if (uVar3 != 4 || !bVar1) {
       if (!bVar1) {
-        *puVar3 = 0;
-        *puVar4 = 0;
+        *piVar5 = 0;
+        *puVar7 = 0;
         __restgprlr_26();
         return;
       }
-      *puVar3 = *(undefined4 *)(&DAT_8450068c + iVar2 * 0x66b8);
-      *puVar4 = *(uint *)(&DAT_84500688 + iVar2 * 0x66b8);
+      *piVar5 = g_EliteClanStore[iVar2].feederIndex;
+      *puVar7 = g_EliteClanStore[iVar2].numMembers;
       __restgprlr_26();
       return;
     }
-    *puVar3 = *(undefined4 *)(&DAT_84525130 + iVar2 * 0x70a0);
-    *puVar4 = *(uint *)(&DAT_84525120 + iVar2 * 0x70a0);
+    *piVar5 = g_FacebookFriendStore[iVar2].facebookCurrentIndex;
+    *puVar7 = g_FacebookFriendStore[iVar2].facebookFriendCount;
     __restgprlr_26();
     return;
   }
-  *puVar3 = (&DAT_84553b20)[iVar2 * 6];
-  *puVar4 = (uint)(byte)(&DAT_84556758)[iVar2 * 0x2bd0];
+  *piVar5 = g_metPlayerGlob[iVar2].currentIndex;
+  *puVar7 = (uint)g_metPlayerInfo[iVar2].metPlayerCount;
   __restgprlr_26();
   return;
 }
@@ -421,21 +447,22 @@ void PlayercardCache_GetPivotandSize
 
 // 826FFEB0  PlayercardCache_UpdateCaching  (social/playercard_cache.cpp:311)
 
-void PlayercardCache_UpdateCaching(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayercardCache_UpdateCaching(int param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
+  ulong uVar3;
   ulonglong uVar4;
-  undefined8 uVar5;
-  char cVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  undefined8 *puVar9;
-  undefined8 *puVar11;
+  LocalClientNum_t LVar5;
+  bool bVar7;
+  ulonglong uVar8;
+  PLAYERCARD_CACHE_TASK_STAGE *pPVar9;
   longlong lVar10;
-  bool bVar12;
+  wchar_t *pwVar12;
+  longlong lVar11;
   ulonglong uVar13;
   longlong lVar14;
   ulonglong uVar15;
@@ -443,238 +470,246 @@ void PlayercardCache_UpdateCaching(void)
   ulonglong uVar17;
   uint local_a0;
   uint local_9c [39];
+  int iVar6;
   
-  uVar4 = __savegprlr_15();
-  uVar5 = CL_LocalClientNumFromControllerIndex();
+  uVar4 = __savegprlr_15(param_1);
+  iVar6 = (int)uVar4;
+  LVar5 = CL_LocalClientNumFromControllerIndex(iVar6);
   local_a0 = 0;
   uVar13 = 0;
   local_9c[0] = 0;
   uVar15 = 0;
-  cVar6 = Menu_IsMenuOpenAndVisible(uVar5,0xffffffff82168568);
-  iVar3 = (int)uVar4;
-  if (cVar6 == '\0') {
-    cVar6 = Menu_IsMenuOpenAndVisible(uVar5,0xffffffff8216855c);
-    if (cVar6 == '\0') {
-      cVar6 = Menu_IsMenuOpenAndVisible(uVar5,0xffffffff82168550);
-      uVar2 = DAT_84257f00._4_4_;
-      uVar1 = DAT_84256ff8;
-      if (cVar6 == '\0') {
-        cVar6 = Menu_IsMenuOpenAndVisible(uVar5,0xffffffff82168540);
-        if (cVar6 == '\0') {
-          cVar6 = Menu_IsMenuOpenAndVisible(uVar5,0xffffffff82168530);
-          if (cVar6 == '\0') {
-            iVar16 = iVar3 * 0x2a50;
-            (&DAT_8453b308)[iVar3 * 0xa94] = 0;
-            if ((&DAT_8453dd54)[iVar16] != '\0') {
-              uVar13 = (ulonglong)*(uint *)(&DAT_84546e40 + iVar3 * 0x670);
-              uVar1 = *(uint *)(&DAT_84546e60 + iVar3 * 0x670);
-              uVar15 = (ulonglong)uVar1;
-              if (0 < (int)uVar1) {
-                lVar8 = 0;
-                *(uint *)(&DAT_8453b30c + iVar16) = *(uint *)(&DAT_84546e40 + iVar3 * 0x670);
-                if (0 < (int)uVar1) {
-                  puVar11 = (undefined8 *)&DAT_8453afb0;
-                  uVar17 = uVar15;
-                  do {
-                    uVar7 = uVar4 * 0x19c + lVar8;
-                    lVar8 = lVar8 + 1;
-                    puVar11 = puVar11 + 1;
-                    *puVar11 = *(undefined8 *)
-                                (&DAT_84546e68 +
-                                (int)(((ulonglong)
-                                       *(uint *)(&DAT_84547318 + (int)((uVar7 & 0xffffffff) << 2)) +
-                                       uVar4 * 0xce & 0xffffffff) << 3));
-                    uVar17 = uVar17 - 1;
-                  } while (uVar17 != 0);
-                }
-              }
-              (&DAT_8453dd54)[iVar16] = 0;
-            }
-          }
-          else {
-            lVar8 = uVar4 * 0x66b8;
-            uVar1 = *(uint *)(&DAT_84500688 + (int)lVar8);
-            uVar15 = (ulonglong)uVar1;
-            uVar2 = *(uint *)(&DAT_8450068c + (int)lVar8);
-            uVar13 = (ulonglong)uVar2;
-            if (0 < (int)uVar1) {
-              lVar10 = 0;
-              puVar11 = (undefined8 *)&DAT_8453afb0;
-              lVar14 = lVar8;
-              uVar17 = uVar15;
-              do {
-                lVar10 = lVar10 + 0x60;
-                iVar16 = (int)lVar14;
-                lVar14 = lVar8 + lVar10;
-                puVar11 = puVar11 + 1;
-                *puVar11 = *(undefined8 *)(&DAT_844fa060 + iVar16);
-                uVar17 = uVar17 - 1;
-              } while (uVar17 != 0);
-            }
-            if ((&DAT_8453b308)[iVar3 * 0xa94] == 5) goto LAB_82700318;
-            (&DAT_8453b308)[iVar3 * 0xa94] = 5;
-            *(uint *)(&DAT_8453b30c + iVar3 * 0x2a50) = uVar2;
-            *(uint *)(&DAT_8453b310 + iVar3 * 0x2a50) = uVar1;
-          }
-        }
-        else {
-          lVar8 = uVar4 * 0x70a0;
-          uVar1 = *(uint *)(&DAT_84525120 + (int)lVar8);
-          uVar15 = (ulonglong)uVar1;
-          uVar2 = *(uint *)(&DAT_84525130 + (int)lVar8);
-          uVar13 = (ulonglong)uVar2;
-          if (0 < (int)uVar1) {
-            lVar10 = 0;
-            puVar11 = (undefined8 *)&DAT_8453afb0;
-            lVar14 = lVar8;
-            uVar17 = uVar15;
-            do {
-              lVar10 = lVar10 + 0x120;
-              iVar16 = (int)lVar14;
-              lVar14 = lVar8 + lVar10;
-              puVar11 = puVar11 + 1;
-              *puVar11 = *(undefined8 *)(&DAT_8451e130 + iVar16);
-              uVar17 = uVar17 - 1;
-            } while (uVar17 != 0);
-          }
-          if ((&DAT_8453b308)[iVar3 * 0xa94] == 4) {
-LAB_82700318:
-            cVar6 = PlayercardCache_IsPivotWithinThreshold(uVar4,uVar13,uVar15);
-            if ((cVar6 != '\0') && (*(int *)(&DAT_8453b310 + iVar3 * 0x2a50) == (int)uVar15))
-            goto LAB_82700548;
-          }
-          else {
-            (&DAT_8453b308)[iVar3 * 0xa94] = 4;
-            *(uint *)(&DAT_8453b30c + iVar3 * 0x2a50) = uVar2;
-            *(uint *)(&DAT_8453b310 + iVar3 * 0x2a50) = uVar1;
-          }
-        }
+  bVar7 = Menu_IsMenuOpenAndVisible(LVar5,"page_friends");
+  if (bVar7) {
+    lVar10 = 0;
+    uVar1 = g_friendListGlobal[iVar6].actualIndex;
+    uVar13 = (ulonglong)uVar1;
+    uVar2 = g_friendListGlobal[iVar6].count;
+    uVar15 = (ulonglong)uVar2;
+    if (0 < (int)uVar2) {
+      pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+      uVar17 = uVar15;
+      do {
+        uVar8 = uVar4 * 0x19c + lVar10;
+        lVar10 = lVar10 + 1;
+        pPVar9 = pPVar9 + 2;
+        *(undefined8 *)pPVar9 =
+             *(undefined8 *)
+              ((int)g_friendListGlobal[0].friends +
+              (int)(((ulonglong)
+                     *(uint *)((int)g_friendListGlobal[0].sortedFriends +
+                              (int)((uVar8 & 0xffffffff) << 2)) + uVar4 * 0xce & 0xffffffff) << 3));
+        uVar17 = uVar17 - 1;
+      } while (uVar17 != 0);
+    }
+    if (g_PlayercardCacheStore[iVar6].screen == PLAYERCARD_CACHE_SCREEN_FRIENDS) {
+      uVar17 = (uint)g_PlayercardCacheStore[iVar6].last_pivot - uVar13;
+      if ((longlong)uVar17 < 0) {
+        uVar17 = uVar17 + uVar15;
       }
-      else {
-        uVar15 = (ulonglong)DAT_84256ff8;
-        uVar13 = (ulonglong)DAT_84257f00._4_4_;
-        if (0 < (int)DAT_84256ff8) {
-          puVar9 = (undefined8 *)&DAT_8453afb0;
-          puVar11 = (undefined8 *)0x84256f88;
-          uVar17 = uVar15;
-          do {
-            puVar11 = puVar11 + 0xf;
-            puVar9 = puVar9 + 1;
-            *puVar9 = *puVar11;
-            uVar17 = uVar17 - 1;
-          } while (uVar17 != 0);
-        }
-        iVar16 = iVar3 * 0x2a50;
-        if ((&DAT_8453b308)[iVar3 * 0xa94] == 3) {
-          uVar17 = *(uint *)(&DAT_8453b30c + iVar16) - uVar13;
-          if ((longlong)uVar17 < 0) {
-            uVar17 = uVar17 + uVar15;
-          }
-          uVar7 = uVar13 - *(uint *)(&DAT_8453b30c + iVar16);
-          if ((longlong)uVar7 < 0) {
-            uVar7 = uVar7 + uVar15;
-          }
-          if ((int)uVar17 <= (int)uVar7) {
-            uVar7 = uVar17;
-          }
-          if (((((~uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar7) & 1) != 0) &&
-             (*(uint *)(&DAT_8453b310 + iVar16) == uVar1)) goto LAB_82700548;
-        }
-        else {
-          *(uint *)(&DAT_8453b30c + iVar16) = uVar2;
-          (&DAT_8453b308)[iVar3 * 0xa94] = 3;
-          *(uint *)(&DAT_8453b310 + iVar16) = uVar1;
-        }
+      uVar8 = uVar13 - (uint)g_PlayercardCacheStore[iVar6].last_pivot;
+      if ((longlong)uVar8 < 0) {
+        uVar8 = uVar8 + uVar15;
       }
+      if ((int)uVar17 <= (int)uVar8) {
+        uVar8 = uVar17;
+      }
+      if (((((~uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar8) & 1) != 0) &&
+         (g_PlayercardCacheStore[iVar6].last_size == uVar2)) goto LAB_82700548;
     }
     else {
-      PlayercardCache_GetPivotandSize(uVar4,2,&local_a0,local_9c);
+      g_PlayercardCacheStore[iVar6].do_initial_cache = false;
+      g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_FRIENDS;
+      g_PlayercardCacheStore[iVar6].last_pivot = uVar1;
+      g_PlayercardCacheStore[iVar6].last_size = uVar2;
+    }
+  }
+  else {
+    bVar7 = Menu_IsMenuOpenAndVisible(LVar5,"page_recent");
+    if (bVar7) {
+      PlayercardCache_GetPivotandSize
+                (iVar6,PLAYERCARD_CACHE_SCREEN_RECENT,(int *)&local_a0,(int *)local_9c);
       uVar15 = (ulonglong)local_9c[0];
       if (0 < (int)local_9c[0]) {
         lVar14 = 0;
-        puVar11 = (undefined8 *)&DAT_8453afb0;
-        lVar8 = uVar4 * 0x2bd0;
+        pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+        lVar10 = uVar4 * 0x2bd0;
         uVar13 = uVar15;
         do {
           lVar14 = lVar14 + 0xe0;
-          iVar16 = (int)lVar8;
-          lVar8 = uVar4 * 0x2bd0 + lVar14;
-          puVar11 = puVar11 + 1;
-          *puVar11 = *(undefined8 *)(&DAT_84553b98 + iVar16);
+          iVar16 = (int)lVar10;
+          lVar10 = uVar4 * 0x2bd0 + lVar14;
+          pPVar9 = pPVar9 + 2;
+          *(undefined8 *)pPVar9 =
+               *(undefined8 *)(g_metPlayerInfo[0].playersXuidInfo[0].gamertag + iVar16 + -8);
           uVar13 = uVar13 - 1;
         } while (uVar13 != 0);
       }
       uVar13 = (ulonglong)local_a0;
-      iVar16 = iVar3 * 0x2a50;
-      if ((&DAT_8453b308)[iVar3 * 0xa94] == 2) {
-        uVar17 = *(uint *)(&DAT_8453b30c + iVar16) - uVar13;
+      if (g_PlayercardCacheStore[iVar6].screen == PLAYERCARD_CACHE_SCREEN_RECENT) {
+        uVar17 = (uint)g_PlayercardCacheStore[iVar6].last_pivot - uVar13;
         if ((longlong)uVar17 < 0) {
           uVar17 = uVar17 + uVar15;
         }
-        uVar7 = uVar13 - *(uint *)(&DAT_8453b30c + iVar16);
-        if ((longlong)uVar7 < 0) {
-          uVar7 = uVar7 + uVar15;
+        uVar8 = uVar13 - (uint)g_PlayercardCacheStore[iVar6].last_pivot;
+        if ((longlong)uVar8 < 0) {
+          uVar8 = uVar8 + uVar15;
         }
-        if ((int)uVar17 <= (int)uVar7) {
-          uVar7 = uVar17;
+        if ((int)uVar17 <= (int)uVar8) {
+          uVar8 = uVar17;
         }
-        if (((((~uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar7) & 1) != 0) &&
-           (*(uint *)(&DAT_8453b310 + iVar16) == local_9c[0])) goto LAB_82700548;
+        if (((((~uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar8) & 1) != 0) &&
+           (g_PlayercardCacheStore[iVar6].last_size == local_9c[0])) goto LAB_82700548;
       }
       else {
-        *(uint *)(&DAT_8453b30c + iVar16) = local_a0;
-        (&DAT_8453b308)[iVar3 * 0xa94] = 2;
-        *(uint *)(&DAT_8453b310 + iVar16) = local_9c[0];
+        g_PlayercardCacheStore[iVar6].last_pivot = local_a0;
+        g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_RECENT;
+        g_PlayercardCacheStore[iVar6].last_size = local_9c[0];
       }
-    }
-  }
-  else {
-    lVar8 = 0;
-    uVar1 = *(uint *)(&DAT_84546e40 + iVar3 * 0x670);
-    uVar13 = (ulonglong)uVar1;
-    uVar2 = *(uint *)(&DAT_84546e60 + iVar3 * 0x670);
-    uVar15 = (ulonglong)uVar2;
-    if (0 < (int)uVar2) {
-      puVar11 = (undefined8 *)&DAT_8453afb0;
-      uVar17 = uVar15;
-      do {
-        uVar7 = uVar4 * 0x19c + lVar8;
-        lVar8 = lVar8 + 1;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined8 *)
-                    (&DAT_84546e68 +
-                    (int)(((ulonglong)*(uint *)(&DAT_84547318 + (int)((uVar7 & 0xffffffff) << 2)) +
-                           uVar4 * 0xce & 0xffffffff) << 3));
-        uVar17 = uVar17 - 1;
-      } while (uVar17 != 0);
-    }
-    iVar16 = iVar3 * 0x2a50;
-    if ((&DAT_8453b308)[iVar3 * 0xa94] == 1) {
-      uVar17 = *(uint *)(&DAT_8453b30c + iVar16) - uVar13;
-      if ((longlong)uVar17 < 0) {
-        uVar17 = uVar17 + uVar15;
-      }
-      uVar7 = uVar13 - *(uint *)(&DAT_8453b30c + iVar16);
-      if ((longlong)uVar7 < 0) {
-        uVar7 = uVar7 + uVar15;
-      }
-      if ((int)uVar17 <= (int)uVar7) {
-        uVar7 = uVar17;
-      }
-      if (((((~uVar7 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar7) & 1) != 0) &&
-         (*(uint *)(&DAT_8453b310 + iVar16) == uVar2)) goto LAB_82700548;
     }
     else {
-      (&DAT_8453dd54)[iVar16] = 0;
-      (&DAT_8453b308)[iVar3 * 0xa94] = 1;
-      *(uint *)(&DAT_8453b30c + iVar16) = uVar1;
-      *(uint *)(&DAT_8453b310 + iVar16) = uVar2;
+      bVar7 = Menu_IsMenuOpenAndVisible(LVar5,"page_party");
+      iVar16 = s_partyGlobals.currentIndex;
+      uVar3 = s_partyUserList.dwUserCount;
+      if (bVar7) {
+        uVar15 = (ulonglong)s_partyUserList.dwUserCount;
+        uVar13 = (ulonglong)(uint)s_partyGlobals.currentIndex;
+        if (0 < (int)s_partyUserList.dwUserCount) {
+          pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+          pwVar12 = s_partyPresence.presence[0x1f].wszRichPresence + 10;
+          uVar17 = uVar15;
+          do {
+            pwVar12 = pwVar12 + 0x3c;
+            pPVar9 = pPVar9 + 2;
+            *(undefined8 *)pPVar9 = *(undefined8 *)pwVar12;
+            uVar17 = uVar17 - 1;
+          } while (uVar17 != 0);
+        }
+        if (g_PlayercardCacheStore[iVar6].screen == PLAYERCARD_CACHE_SCREEN_PARTY) {
+          uVar17 = (uint)g_PlayercardCacheStore[iVar6].last_pivot - uVar13;
+          if ((longlong)uVar17 < 0) {
+            uVar17 = uVar17 + uVar15;
+          }
+          uVar8 = uVar13 - (uint)g_PlayercardCacheStore[iVar6].last_pivot;
+          if ((longlong)uVar8 < 0) {
+            uVar8 = uVar8 + uVar15;
+          }
+          if ((int)uVar17 <= (int)uVar8) {
+            uVar8 = uVar17;
+          }
+          if (((((~uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(5 < uVar8) & 1) != 0) &&
+             (g_PlayercardCacheStore[iVar6].last_size == uVar3)) goto LAB_82700548;
+        }
+        else {
+          g_PlayercardCacheStore[iVar6].last_pivot = iVar16;
+          g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_PARTY;
+          g_PlayercardCacheStore[iVar6].last_size = uVar3;
+        }
+      }
+      else {
+        bVar7 = Menu_IsMenuOpenAndVisible(LVar5,"page_facebook");
+        if (bVar7) {
+          lVar10 = uVar4 * 0x70a0;
+          uVar1 = *(uint *)((int)(g_FacebookFriendStore[0].facebookFriends + 100) + (int)lVar10);
+          uVar15 = (ulonglong)uVar1;
+          uVar2 = *(uint *)((int)(g_FacebookFriendStore[0].facebookFriends + 100) +
+                           (int)lVar10 + 0x10);
+          uVar13 = (ulonglong)uVar2;
+          if (0 < (int)uVar1) {
+            lVar11 = 0;
+            pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+            lVar14 = lVar10;
+            uVar17 = uVar15;
+            do {
+              lVar11 = lVar11 + 0x120;
+              iVar16 = (int)lVar14;
+              lVar14 = lVar10 + lVar11;
+              pPVar9 = pPVar9 + 2;
+              *(undefined8 *)pPVar9 =
+                   *(undefined8 *)
+                    (g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar16 + -8);
+              uVar17 = uVar17 - 1;
+            } while (uVar17 != 0);
+          }
+          if (g_PlayercardCacheStore[iVar6].screen == PLAYERCARD_CACHE_SCREEN_FACEBOOK) {
+LAB_82700318:
+            bVar7 = PlayercardCache_IsPivotWithinThreshold(iVar6,(int)uVar13,(int)uVar15);
+            if ((bVar7) && (g_PlayercardCacheStore[iVar6].last_size == (int)uVar15))
+            goto LAB_82700548;
+          }
+          else {
+            g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_FACEBOOK;
+            g_PlayercardCacheStore[iVar6].last_pivot = uVar2;
+            g_PlayercardCacheStore[iVar6].last_size = uVar1;
+          }
+        }
+        else {
+          bVar7 = Menu_IsMenuOpenAndVisible(LVar5,"page_elite_clan");
+          if (bVar7) {
+            lVar10 = uVar4 * 0x66b8;
+            uVar1 = *(uint *)((int)(&g_EliteClanStore[0].publicProfile + 1) + (int)lVar10);
+            uVar15 = (ulonglong)uVar1;
+            uVar2 = *(uint *)((int)(&g_EliteClanStore[0].publicProfile + 1) + (int)lVar10 + 4);
+            uVar13 = (ulonglong)uVar2;
+            if (0 < (int)uVar1) {
+              lVar11 = 0;
+              pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+              lVar14 = lVar10;
+              uVar17 = uVar15;
+              do {
+                lVar11 = lVar11 + 0x60;
+                iVar16 = (int)lVar14;
+                lVar14 = lVar10 + lVar11;
+                pPVar9 = pPVar9 + 2;
+                *(undefined8 *)pPVar9 =
+                     *(undefined8 *)(g_EliteClanStore[0].members[0].m_userName + iVar16 + -8);
+                uVar17 = uVar17 - 1;
+              } while (uVar17 != 0);
+            }
+            if (g_PlayercardCacheStore[iVar6].screen == PLAYERCARD_CACHE_SCREEN_ELITE_CLAN)
+            goto LAB_82700318;
+            g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_ELITE_CLAN;
+            g_PlayercardCacheStore[iVar6].last_pivot = uVar2;
+            g_PlayercardCacheStore[iVar6].last_size = uVar1;
+          }
+          else {
+            g_PlayercardCacheStore[iVar6].screen = PLAYERCARD_CACHE_SCREEN_NONE;
+            if (g_PlayercardCacheStore[iVar6].do_initial_cache != false) {
+              uVar13 = (ulonglong)(uint)g_friendListGlobal[iVar6].actualIndex;
+              uVar1 = g_friendListGlobal[iVar6].count;
+              uVar15 = (ulonglong)uVar1;
+              if (0 < (int)uVar1) {
+                lVar10 = 0;
+                g_PlayercardCacheStore[iVar6].last_pivot = g_friendListGlobal[iVar6].actualIndex;
+                if (0 < (int)uVar1) {
+                  pPVar9 = g_DWPlayercardCacheUploadTaskStage + 3;
+                  uVar17 = uVar15;
+                  do {
+                    uVar8 = uVar4 * 0x19c + lVar10;
+                    lVar10 = lVar10 + 1;
+                    pPVar9 = pPVar9 + 2;
+                    *(undefined8 *)pPVar9 =
+                         *(undefined8 *)
+                          ((int)g_friendListGlobal[0].friends +
+                          (int)(((ulonglong)
+                                 *(uint *)((int)g_friendListGlobal[0].sortedFriends +
+                                          (int)((uVar8 & 0xffffffff) << 2)) + uVar4 * 0xce &
+                                0xffffffff) << 3));
+                    uVar17 = uVar17 - 1;
+                  } while (uVar17 != 0);
+                }
+              }
+              g_PlayercardCacheStore[iVar6].do_initial_cache = false;
+            }
+          }
+        }
+      }
     }
   }
   iVar16 = (int)uVar15;
-  *(int *)(&DAT_8453b310 + iVar3 * 0x2a50) = iVar16;
+  g_PlayercardCacheStore[iVar6].last_size = iVar16;
   if (iVar16 != 0) {
-    bVar12 = false;
+    bVar7 = false;
     uVar17 = uVar15 - 1;
     if ((int)uVar13 < (int)(uVar15 - 1)) {
       uVar17 = uVar13;
@@ -684,20 +719,22 @@ LAB_82700318:
     if (iVar16 <= (int)uVar13) {
       uVar13 = uVar13 - uVar15;
     }
-    lVar8 = (uVar17 & 0x1fffffff) * 8 + -0x7bac5048;
+    lVar10 = (uVar17 & 0x1fffffff) * 8 + -0x7bac5048;
     lVar14 = (uVar13 & 0x1fffffff) * 8 + -0x7bac5048;
-    uVar7 = uVar17;
+    uVar8 = uVar17;
     do {
       if (uVar15 <= (uVar13 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b0e28,0x1e2,0,0xffffffff821b0ec8,uVar13,uVar15);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                        ,0x1e2,0,"fwd doesn\'t index size\n\t%i not in [0, %i)");
       }
-      if (uVar15 <= (uVar7 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821b0e28,0x1e3,0,0xffffffff821b0ef4,uVar7,uVar15);
+      if (uVar15 <= (uVar8 & 0xffffffff)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                        ,0x1e3,0,"back doesn\'t index size\n\t%i not in [0, %i)");
       }
-      PlayercardCache_AddToDownload(uVar4,*(undefined8 *)lVar14);
-      PlayercardCache_AddToDownload(uVar4,*(undefined8 *)lVar8);
-      if ((&DAT_8453dd50)[iVar3 * 0xa94] == 0x14) {
-        bVar12 = true;
+      PlayercardCache_AddToDownload(iVar6,*(ulong64 *)lVar14);
+      PlayercardCache_AddToDownload(iVar6,*(ulong64 *)lVar10);
+      if (g_PlayercardCacheStore[iVar6].downloading_count == 0x14) {
+        bVar7 = true;
       }
       uVar13 = uVar13 + 1;
       lVar14 = lVar14 + 8;
@@ -705,22 +742,23 @@ LAB_82700318:
         uVar13 = uVar13 - uVar15;
         lVar14 = lVar14 + (uVar15 & 0x1fffffff) * -8;
       }
-      if ((int)uVar7 == (int)uVar13) {
-        bVar12 = true;
+      if ((int)uVar8 == (int)uVar13) {
+        bVar7 = true;
       }
-      uVar7 = uVar7 - 1;
-      lVar8 = lVar8 + -8;
-      if ((longlong)uVar7 < 0) {
-        uVar7 = uVar7 + uVar15;
-        lVar8 = (uVar15 & 0x1fffffff) * 8 + lVar8;
+      uVar8 = uVar8 - 1;
+      lVar10 = lVar10 + -8;
+      if ((longlong)uVar8 < 0) {
+        uVar8 = uVar8 + uVar15;
+        lVar10 = (uVar15 & 0x1fffffff) * 8 + lVar10;
       }
-      if (((uVar15 & 1) == 0) && ((int)uVar7 == (int)uVar13)) {
-        bVar12 = true;
+      if (((uVar15 & 1) == 0) && ((int)uVar8 == (int)uVar13)) {
+        bVar7 = true;
       }
-    } while (!bVar12);
-    if ((&DAT_8453dd50)[iVar3 * 0xa94] != 0) {
-      *(undefined4 *)((int)&DAT_8453b2d8 + (int)((uVar4 & 0xffffffff) << 2)) = 0;
-      *(int *)(&DAT_8453b30c + iVar3 * 0x2a50) = (int)uVar17;
+    } while (!bVar7);
+    if (g_PlayercardCacheStore[iVar6].downloading_count != 0) {
+      *(undefined4 *)((int)g_DWPlayercardCacheDownloadTaskStage + (int)((uVar4 & 0xffffffff) << 2))
+           = 0;
+      g_PlayercardCacheStore[iVar6].last_pivot = (int)uVar17;
     }
   }
 LAB_82700548:
@@ -731,25 +769,26 @@ LAB_82700548:
 
 // 82700550  PlayercardCache_RetryUpload  (social/playercard_cache.cpp:516)
 
-void PlayercardCache_RetryUpload(void)
+void PlayercardCache_RetryUpload(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  dvar_t *pdVar1;
+  dvar_t *pdVar2;
   int iVar3;
   int iVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = DAT_84545cec;
-  iVar3 = DAT_84545c74;
-  iVar4 = (&DAT_8453af84)[iVar2];
-  (&DAT_8453af84)[iVar2] = iVar4 + 1U;
-  iVar4 = (1 << (iVar4 + 1U & 0x3f)) * *(int *)(iVar3 + 0xc);
-  if (*(int *)(iVar1 + 0xc) <= iVar4) {
-    iVar4 = *(int *)(iVar1 + 0xc);
+  iVar3 = __savegprlr_29(param_1);
+  pdVar2 = playercard_cache_upload_max_retry_time;
+  pdVar1 = playercard_cache_upload_retry_step;
+  iVar5 = (&DAT_8453af84)[iVar3];
+  (&DAT_8453af84)[iVar3] = iVar5 + 1U;
+  iVar5 = (1 << (iVar5 + 1U & 0x3f)) * (pdVar1->current).integer;
+  if ((pdVar2->current).integer <= iVar5) {
+    iVar5 = (pdVar2->current).integer;
   }
-  iVar3 = Sys_Milliseconds();
-  (&DAT_8453ae70)[iVar2] = iVar3 + iVar4;
+  iVar4 = Sys_Milliseconds();
+  s_playerCardCacheUploadRetryTime[iVar3] = iVar4 + iVar5;
   __restgprlr_29();
   return;
 }
@@ -757,25 +796,26 @@ void PlayercardCache_RetryUpload(void)
 
 // 827005C0  PlayercardCache_RetryDownload  (social/playercard_cache.cpp:523)
 
-void PlayercardCache_RetryDownload(void)
+void PlayercardCache_RetryDownload(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  dvar_t *pdVar1;
+  dvar_t *pdVar2;
   int iVar3;
   int iVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = DAT_84546d14;
-  iVar3 = DAT_84545cd4;
-  iVar4 = (&DAT_8453af94)[iVar2];
-  (&DAT_8453af94)[iVar2] = iVar4 + 1U;
-  iVar4 = (1 << (iVar4 + 1U & 0x3f)) * *(int *)(iVar3 + 0xc);
-  if (*(int *)(iVar1 + 0xc) <= iVar4) {
-    iVar4 = *(int *)(iVar1 + 0xc);
+  iVar3 = __savegprlr_29(param_1);
+  pdVar2 = playercard_cache_download_max_retry_time;
+  pdVar1 = playercard_cache_download_retry_step;
+  iVar5 = (&DAT_8453af94)[iVar3];
+  (&DAT_8453af94)[iVar3] = iVar5 + 1U;
+  iVar5 = (1 << (iVar5 + 1U & 0x3f)) * (pdVar1->current).integer;
+  if ((pdVar2->current).integer <= iVar5) {
+    iVar5 = (pdVar2->current).integer;
   }
-  iVar3 = Sys_Milliseconds();
-  (&DAT_8453adc8)[iVar2] = iVar3 + iVar4;
+  iVar4 = Sys_Milliseconds();
+  s_playerCardCacheDownloadRetryTime[iVar3] = iVar4 + iVar5;
   __restgprlr_29();
   return;
 }
@@ -783,133 +823,155 @@ void PlayercardCache_RetryDownload(void)
 
 // 827012A0  PlayercardCache_Update  (social/playercard_cache.cpp:530)
 
-void PlayercardCache_Update(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayercardCache_Update(int param_1)
 
 {
-  int *piVar1;
-  bool bVar2;
+  bdRemoteTask *pbVar1;
+  PLAYERCARD_CACHE_TASK_STAGE PVar2;
+  bool bVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  char cVar10;
+  bool bVar13;
+  bdLobbyService *this;
+  Status SVar6;
   int iVar7;
-  int iVar8;
-  uint uVar9;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  longlong *plVar11;
-  longlong lVar12;
-  int iVar13;
-  uint uVar14;
-  undefined4 local_90;
-  undefined1 auStack_8c [140];
+  bdLobbyErrorCode bVar8;
+  bdProfileInfo *pbVar9;
+  uint uVar10;
+  bdProfiles *pbVar11;
+  bdReference<bdRemoteTask> bVar12;
+  ulong64 uVar14;
+  int iVar15;
+  ulong64 *puVar16;
+  ulong64 uVar17;
+  int iVar18;
+  uint uVar19;
+  LocalClientNum_t local_90;
+  bdReference<bdRemoteTask> abStack_8c [35];
   
-  iVar5 = __savegprlr_17();
-  bVar2 = false;
-  iVar6 = Sys_Milliseconds();
-  cVar10 = SocialConfig_Ok();
-  if ((((cVar10 == '\0') || (cVar10 = Live_IsUserSignedInToLive(iVar5), cVar10 == '\0')) ||
-      (iVar7 = dwGetLobbyService(iVar5), iVar7 == 0)) ||
-     (iVar7 = bdLobbyService__getStatus(), iVar7 != 2)) goto LAB_827014c4;
-  if ((&DAT_8453afa4)[iVar5] == 0) {
-    cVar10 = CL_DoesControllerIndexHaveALocalClientNum(iVar5,&local_90);
-    if ((cVar10 != '\0') && (iVar7 = CL_IsCgameInitialized(local_90), iVar7 != 0)) {
-      bVar2 = true;
+  iVar4 = __savegprlr_17(param_1);
+  bVar3 = false;
+  iVar5 = Sys_Milliseconds();
+  bVar13 = SocialConfig_Ok();
+  if ((((!bVar13) || (bVar13 = Live_IsUserSignedInToLive(iVar4), !bVar13)) ||
+      (this = dwGetLobbyService(iVar4), this == (bdLobbyService *)0x0)) ||
+     (SVar6 = bdLobbyService::getStatus(this), SVar6 != BD_CONNECTED)) goto LAB_827014c4;
+  if (g_DWPlayercardCacheUploadTaskStage[iVar4] == PLAYERCARD_CACHE_TASK_STAGE_WAITING) {
+    bVar13 = CL_DoesControllerIndexHaveALocalClientNum(iVar4,&local_90);
+    if ((bVar13) && (iVar7 = CL_IsCgameInitialized(local_90), iVar7 != 0)) {
+      bVar3 = true;
     }
-    uVar3 = dwGetProfiles(iVar5);
-    if ((((uVar3 & 0xffffffff) != 0) && (!bVar2)) && ((int)(&DAT_8453ae70)[iVar5] < iVar6)) {
-      uVar4 = bdProfiles__setPublicInfo(auStack_8c,uVar3,&DAT_8453b318 + iVar5 * 0xa94);
-      bdReference<bdRemoteTask>__operator_(&DAT_8453b2e8 + iVar5,uVar4);
-      bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_8c);
-      piVar1 = (int *)(&DAT_8453b2e8)[iVar5];
-      if ((piVar1 == (int *)0x0) || (iVar7 = (**(code **)(*piVar1 + 4))(), iVar7 != 1)) {
+    pbVar9 = (bdProfileInfo *)dwGetProfiles(iVar4);
+    if (((pbVar9 != (bdProfileInfo *)0x0) && (!bVar3)) &&
+       (s_playerCardCacheUploadRetryTime[iVar4] < iVar5)) {
+      bVar12 = bdProfiles::setPublicInfo((bdProfiles *)abStack_8c,pbVar9);
+      bdReference<bdRemoteTask>::operator=
+                (g_DWPlayercardCacheUploadTask + iVar4,(bdReference<bdRemoteTask> *)bVar12.m_ptr);
+      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_8c);
+      pbVar1 = g_DWPlayercardCacheUploadTask[iVar4].m_ptr;
+      if ((pbVar1 == (bdRemoteTask *)0x0) ||
+         (iVar7 = (**(code **)(pbVar1->_padding_ + 4))(), iVar7 != 1)) {
 LAB_8270143c:
-        PlayercardCache_RetryUpload(iVar5);
+        PlayercardCache_RetryUpload(iVar4);
       }
       else {
-        (&DAT_8453afa4)[iVar5] = 1;
+        g_DWPlayercardCacheUploadTaskStage[iVar4] = PLAYERCARD_CACHE_TASK_STAGE_WORKING;
       }
     }
   }
-  else if (((&DAT_8453afa4)[iVar5] == 1) && ((int *)(&DAT_8453b2e8)[iVar5] != (int *)0x0)) {
-    iVar7 = (**(code **)(*(int *)(&DAT_8453b2e8)[iVar5] + 4))();
+  else if ((g_DWPlayercardCacheUploadTaskStage[iVar4] == PLAYERCARD_CACHE_TASK_STAGE_WORKING) &&
+          (g_DWPlayercardCacheUploadTask[iVar4].m_ptr != (bdRemoteTask *)0x0)) {
+    iVar7 = (**(code **)((g_DWPlayercardCacheUploadTask[iVar4].m_ptr)->_padding_ + 4))();
     if (iVar7 == 1) goto LAB_827014c4;
-    iVar8 = bdRemoteTask__getErrorCode((&DAT_8453b2e8)[iVar5]);
-    if ((iVar7 != 2) || (iVar8 != 0)) goto LAB_8270143c;
-    (&DAT_8453afa4)[iVar5] = 2;
+    bVar8 = bdRemoteTask::getErrorCode(g_DWPlayercardCacheUploadTask[iVar4].m_ptr);
+    if ((iVar7 != 2) || (bVar8 != BD_NO_ERROR)) goto LAB_8270143c;
+    g_DWPlayercardCacheUploadTaskStage[iVar4] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
   }
-  uVar14 = (&DAT_8453b2d8)[iVar5];
-  if (uVar14 == 0) {
-    uVar3 = dwGetProfiles(iVar5);
-    if (((uVar3 & 0xffffffff) == 0) || (iVar6 <= (int)(&DAT_8453adc8)[iVar5])) goto LAB_827014c4;
-    uVar4 = bdProfiles__getPublicInfos
-                      (auStack_8c,uVar3,&DAT_8453dcb0 + iVar5 * 0x2a50,
-                       &DAT_8453d5d0 + iVar5 * 0x2a50,(&DAT_8453dd50)[iVar5 * 0xa94]);
-    bdReference<bdRemoteTask>__operator_(&DAT_8453b2f8 + iVar5,uVar4);
-    bdReference<bdRemoteTask>___bdReference<bdRemoteTask>(auStack_8c);
-    piVar1 = (int *)(&DAT_8453b2f8)[iVar5];
-    if ((piVar1 != (int *)0x0) && (iVar6 = (**(code **)(*piVar1 + 4))(), iVar6 == 1)) {
-      (&DAT_8453b2d8)[iVar5] = 1;
+  PVar2 = g_DWPlayercardCacheDownloadTaskStage[iVar4];
+  if (PVar2 == PLAYERCARD_CACHE_TASK_STAGE_WAITING) {
+    pbVar11 = dwGetProfiles(iVar4);
+    if ((pbVar11 == (bdProfiles *)0x0) || (iVar5 <= s_playerCardCacheDownloadRetryTime[iVar4]))
+    goto LAB_827014c4;
+    bVar12 = bdProfiles::getPublicInfos
+                       ((bdProfiles *)abStack_8c,(ulong64 *)pbVar11,
+                        (bdProfileInfo *)g_PlayercardCacheStore[iVar4].downloading_users,
+                        iVar4 * 0x2a50 + 0x8453d5d0);
+    bdReference<bdRemoteTask>::operator=
+              (g_DWPlayercardCacheDownloadTask + iVar4,(bdReference<bdRemoteTask> *)bVar12.m_ptr);
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_8c);
+    pbVar1 = g_DWPlayercardCacheDownloadTask[iVar4].m_ptr;
+    if ((pbVar1 != (bdRemoteTask *)0x0) &&
+       (iVar5 = (**(code **)(pbVar1->_padding_ + 4))(), iVar5 == 1)) {
+      g_DWPlayercardCacheDownloadTaskStage[iVar4] = PLAYERCARD_CACHE_TASK_STAGE_WORKING;
       __restgprlr_17();
       return;
     }
   }
   else {
-    if (uVar14 != 1) {
-      if (uVar14 < 3) {
-        PlayercardCache_UpdateCaching(iVar5);
+    if (PVar2 != PLAYERCARD_CACHE_TASK_STAGE_WORKING) {
+      if (PVar2 < (PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE|PLAYERCARD_CACHE_TASK_STAGE_WORKING)) {
+        PlayercardCache_UpdateCaching(iVar4);
         __restgprlr_17();
         return;
       }
       goto LAB_827014c4;
     }
-    if (((int *)(&DAT_8453b2f8)[iVar5] == (int *)0x0) ||
-       (iVar6 = (**(code **)(*(int *)(&DAT_8453b2f8)[iVar5] + 4))(), iVar6 == 1)) goto LAB_827014c4;
-    iVar7 = bdRemoteTask__getErrorCode((&DAT_8453b2f8)[iVar5]);
-    if (iVar6 == 2) {
-      if (iVar7 == 0) {
+    if ((g_DWPlayercardCacheDownloadTask[iVar4].m_ptr == (bdRemoteTask *)0x0) ||
+       (iVar5 = (**(code **)((g_DWPlayercardCacheDownloadTask[iVar4].m_ptr)->_padding_ + 4))(),
+       iVar5 == 1)) goto LAB_827014c4;
+    bVar8 = bdRemoteTask::getErrorCode(g_DWPlayercardCacheDownloadTask[iVar4].m_ptr);
+    if (iVar5 == 2) {
+      if (bVar8 == BD_NO_ERROR) {
 LAB_827014dc:
-        iVar7 = iVar5 * 0x2a50;
-        iVar6 = 0;
-        if (0 < (int)(&DAT_8453dd50)[iVar5 * 0xa94]) {
-          plVar11 = (longlong *)(&DAT_8453dcb0 + iVar7);
+        iVar7 = iVar4 * 0x2a50;
+        iVar5 = 0;
+        if (0 < g_PlayercardCacheStore[iVar4].downloading_count) {
+          puVar16 = (ulong64 *)(iVar7 + -0x7bac2350);
           do {
-            bVar2 = false;
-            lVar12 = *plVar11;
-            uVar14 = 0;
-            iVar8 = bdRemoteTask__getNumResults((&DAT_8453b2f8)[iVar5]);
-            if (iVar8 != 0) {
-              iVar13 = 0;
-              iVar8 = iVar7;
+            bVar3 = false;
+            uVar17 = *puVar16;
+            uVar19 = 0;
+            uVar10 = bdRemoteTask::getNumResults(g_DWPlayercardCacheDownloadTask[iVar4].m_ptr);
+            if (uVar10 != 0) {
+              iVar18 = 0;
+              iVar15 = iVar7;
               do {
-                if (lVar12 == *(longlong *)(&DAT_8453d5d8 + iVar8)) {
-                  iVar8 = uVar14 * 0x58 + iVar7;
+                if (uVar17 == *(ulong64 *)
+                               (g_PlayercardCacheStore[0].downloading_buffer[0].m_memberplayer_card
+                               + iVar15 + -8)) {
+                  uVar14._0_4_ = g_PlayercardCacheStore[iVar4].downloading_buffer[uVar19]._padding_;
+                  uVar14._4_4_ = g_PlayercardCacheStore[iVar4].downloading_buffer[uVar19]._padding_;
                   Playercard_AddToCache
-                            (iVar5,*(undefined8 *)(&DAT_8453d5d8 + iVar8),&DAT_8453d5e0 + iVar8);
-                  bVar2 = true;
+                            (iVar4,uVar14,
+                             g_PlayercardCacheStore[iVar4].downloading_buffer[uVar19].
+                             m_memberplayer_card);
+                  bVar3 = true;
                   break;
                 }
-                uVar14 = uVar14 + 1;
-                iVar13 = iVar13 + 0x58;
-                uVar9 = bdRemoteTask__getNumResults((&DAT_8453b2f8)[iVar5]);
-                iVar8 = iVar13 + iVar7;
-              } while (uVar14 < uVar9);
+                uVar19 = uVar19 + 1;
+                iVar18 = iVar18 + 0x58;
+                uVar10 = bdRemoteTask::getNumResults(g_DWPlayercardCacheDownloadTask[iVar4].m_ptr);
+                iVar15 = iVar18 + iVar7;
+              } while (uVar19 < uVar10);
             }
-            if (!bVar2) {
-              Playercard_AddToCache(iVar5,lVar12,0);
+            if (!bVar3) {
+              Playercard_AddToCache(iVar4,uVar17,(uchar *)0x0);
             }
-            iVar6 = iVar6 + 1;
-            plVar11 = plVar11 + 1;
-          } while (iVar6 < (int)(&DAT_8453dd50)[iVar5 * 0xa94]);
+            iVar5 = iVar5 + 1;
+            puVar16 = puVar16 + 1;
+          } while (iVar5 < g_PlayercardCacheStore[iVar4].downloading_count);
         }
-        (&DAT_8453b2d8)[iVar5] = 2;
-        (&DAT_8453dd50)[iVar5 * 0xa94] = 0;
+        g_DWPlayercardCacheDownloadTaskStage[iVar4] = PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE;
+        g_PlayercardCacheStore[iVar4].downloading_count = 0;
         __restgprlr_17();
         return;
       }
     }
-    else if ((iVar6 == 3) && (iVar7 == 800)) goto LAB_827014dc;
+    else if ((iVar5 == 3) && (bVar8 == BD_NO_PROFILE_INFO_EXISTS)) goto LAB_827014dc;
   }
-  PlayercardCache_RetryDownload(iVar5);
+  PlayercardCache_RetryDownload(iVar4);
 LAB_827014c4:
   __restgprlr_17();
   return;
@@ -918,85 +980,94 @@ LAB_827014c4:
 
 // 82700630  PlayercardCache_CompressToBuffer  (social/playercard_cache.cpp:678)
 
-void PlayercardCache_CompressToBuffer(int param_1,undefined1 *param_2)
+void PlayercardCache_CompressToBuffer(PlayerCardData *param_1,uchar *param_2)
 
 {
   char *pcVar1;
-  int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  uchar *puVar2;
+  int iVar3;
+  uchar *puVar4;
+  longlong lVar5;
   
-  *param_2 = 2;
-  iVar2 = 0;
-  *(short *)(param_2 + 1) = (short)*(undefined4 *)(param_1 + 4);
-  lVar4 = 0x18;
-  *(short *)(param_2 + 3) = (short)*(undefined4 *)(param_1 + 8);
-  param_2[5] = (char)*(undefined4 *)(param_1 + 0xc);
-  param_2[6] = (char)*(undefined4 *)(param_1 + 0x10);
-  param_2[7] = (char)*(undefined4 *)(param_1 + 0x14);
-  param_2[8] = (char)*(undefined4 *)(param_1 + 0x18);
-  param_2[9] = (char)*(undefined4 *)(param_1 + 0x1c);
-  *(short *)(param_2 + 10) = (short)*(undefined4 *)(param_1 + 0x6c);
-  param_2[0xc] = *(undefined1 *)(param_1 + 0x44);
-  param_2[0xd] = *(undefined1 *)(param_1 + 0x45);
-  param_2[0xe] = *(undefined1 *)(param_1 + 0x46);
-  param_2[0xf] = *(undefined1 *)(param_1 + 0x47);
-  param_2[0x10] = *(undefined1 *)(param_1 + 0x48);
-  param_2[0x11] = *(undefined1 *)(param_1 + 0x70);
-  param_2[0x12] = *(undefined1 *)(param_1 + 0x71);
-  param_2[0x13] = *(undefined1 *)(param_1 + 0x72);
-  param_2[0x14] = *(undefined1 *)(param_1 + 0x73);
-  param_2[0x15] = *(undefined1 *)(param_1 + 0x74);
-  pcVar1 = param_2 + 0x16;
+  *param_2 = '\x02';
+  iVar3 = 0;
+  *(short *)(param_2 + 1) = (short)param_1->titleIndex;
+  lVar5 = 0x18;
+  *(short *)(param_2 + 3) = (short)param_1->iconIndex;
+  param_2[5] = (uchar)param_1->nameplateIndex;
+  param_2[6] = (uchar)param_1->rank_mp;
+  param_2[7] = (uchar)param_1->prestige_mp;
+  param_2[8] = (uchar)param_1->rank_so;
+  param_2[9] = (uchar)param_1->prestige_so;
+  *(short *)(param_2 + 10) = (short)param_1->elite_clan_title_bg;
+  param_2[0xc] = param_1->clanAbbrev[0];
+  param_2[0xd] = param_1->clanAbbrev[1];
+  param_2[0xe] = param_1->clanAbbrev[2];
+  param_2[0xf] = param_1->clanAbbrev[3];
+  param_2[0x10] = param_1->clanAbbrev[4];
+  param_2[0x11] = param_1->elite_clan_tag_text[0];
+  param_2[0x12] = param_1->elite_clan_tag_text[1];
+  param_2[0x13] = param_1->elite_clan_tag_text[2];
+  param_2[0x14] = param_1->elite_clan_tag_text[3];
+  param_2[0x15] = param_1->elite_clan_tag_text[4];
+  puVar2 = param_2 + 0x16;
   do {
-    pcVar3 = pcVar1;
-    pcVar1 = (char *)(param_1 + 0x52 + iVar2);
-    iVar2 = iVar2 + 1;
-    *pcVar3 = *pcVar1;
-    lVar4 = lVar4 + -1;
-    pcVar1 = pcVar3 + 1;
-  } while (lVar4 != 0);
-  pcVar3[1] = '\x01' - (*(char *)(param_1 + 0x50) == '\0');
-  pcVar3[2] = '\x01' - (*(char *)(param_1 + 0x51) == '\0');
-  pcVar3[3] = (char)*(undefined4 *)(param_1 + 0x78);
-  pcVar3[4] = (char)*(undefined4 *)(param_1 + 0x7c);
-  pcVar3[5] = (char)*(undefined4 *)(param_1 + 0x80);
-  pcVar3[6] = (char)*(undefined4 *)(param_1 + 0x84);
-  pcVar3[7] = (char)*(undefined4 *)(param_1 + 0x88);
-  pcVar3[8] = (char)*(undefined4 *)(param_1 + 0x8c);
-  pcVar3[9] = (char)*(undefined4 *)(param_1 + 0x90);
-  pcVar3[10] = (char)*(undefined4 *)(param_1 + 0x94);
+    puVar4 = puVar2;
+    pcVar1 = param_1->elite_clan_title_text + iVar3;
+    iVar3 = iVar3 + 1;
+    *puVar4 = *pcVar1;
+    lVar5 = lVar5 + -1;
+    puVar2 = puVar4 + 1;
+  } while (lVar5 != 0);
+  puVar4[1] = '\x01' - (param_1->use_elite_clan_tag == false);
+  puVar4[2] = '\x01' - (param_1->use_elite_clan_title == false);
+  puVar4[3] = (uchar)param_1->prestige_black_ops;
+  puVar4[4] = (uchar)param_1->rank_black_ops;
+  puVar4[5] = (uchar)param_1->prestige_mw2;
+  puVar4[6] = (uchar)param_1->rank_mw2;
+  puVar4[7] = (uchar)param_1->prestige_world_at_war;
+  puVar4[8] = (uchar)param_1->rank_world_at_war;
+  puVar4[9] = (uchar)param_1->prestige_mw;
+  puVar4[10] = (uchar)param_1->rank_mw;
   return;
 }
 
 
 // 82700758  PlayercardCache_GetTitleandIcon  (social/playercard_cache.cpp:763)
 
-void PlayercardCache_GetTitleandIcon
-               (undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4)
+void PlayercardCache_GetTitleandIcon(int param_1,ulong64 param_2,int *param_3,int *param_4)
 
 {
-  int iVar1;
+  ushort uVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  iVar2 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b0e28,0x2fc,0,0xffffffff82000f98,0xffffffff820268e0);
+  uVar4 = (ulonglong)(int)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  iVar2 = __savegprlr_26(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0x2fc,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821b0e28,0x2fd,0,0xffffffff82000f98,0xffffffff82026910);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0x2fd,0,"%s");
   }
-  *(uint *)param_3 = 0;
-  *(uint *)param_4 = 0;
-  iVar3 = 0;
+  *(uint *)uVar3 = 0;
+  *(uint *)uVar4 = 0;
+  iVar5 = 0;
   do {
-    iVar1 = iVar3 + iVar2 * 0x2a50;
-    if (*(longlong *)(&DAT_8453b378 + iVar1) == param_2) {
-      if (((&DAT_8453b370)[iVar1] != '\0') && ((&DAT_8453b380)[iVar1] == '\x02')) {
-        if (0x3ff < *(ushort *)(&DAT_8453b381 + iVar1)) {
-          if (DAT_84013128 == 0) {
-            MyAssertHandler(0xffffffff821b0e28,0x313,0,0xffffffff821b0f44);
+    if (*(ulong64 *)(g_PlayercardCacheStore[iVar2].cached_playercards[0].card + iVar5 + -8) ==
+        param_2) {
+      if ((g_PlayercardCacheStore[iVar2].cached_playercards[0].card[iVar5 + -0x10] != '\0') &&
+         (g_PlayercardCacheStore[iVar2].cached_playercards[0].card[iVar5] == '\x02')) {
+        uVar1 = *(ushort *)(g_PlayercardCacheStore[iVar2].cached_playercards[0].card + iVar5 + 1);
+        if (0x3ff < uVar1) {
+          if (alwaysfails == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                            ,0x313,0,"Invalid Title card in playercard cache");
             __restgprlr_26();
             return;
           }
@@ -1004,18 +1075,20 @@ LAB_827008ac:
           __restgprlr_26();
           return;
         }
-        *(uint *)param_3 = (uint)*(ushort *)(&DAT_8453b381 + iVar1);
-        if (0x3ff < *(ushort *)(&DAT_8453b383 + iVar1)) {
-          if (DAT_84013128 == 0) {
-            MyAssertHandler(0xffffffff821b0e28,0x31d,0,0xffffffff821b0f20);
+        *(uint *)uVar3 = (uint)uVar1;
+        uVar1 = *(ushort *)(g_PlayercardCacheStore[iVar2].cached_playercards[0].card + iVar5 + 3);
+        if (0x3ff < uVar1) {
+          if (alwaysfails == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                            ,0x31d,0,"Invalid Icon in playercard cache");
           }
           goto LAB_827008ac;
         }
-        *(uint *)param_4 = (uint)*(ushort *)(&DAT_8453b383 + iVar1);
+        *(uint *)uVar4 = (uint)uVar1;
       }
     }
-    iVar3 = iVar3 + 0x58;
-    if (0x225f < iVar3) {
+    iVar5 = iVar5 + 0x58;
+    if (0x225f < iVar5) {
       __restgprlr_26();
       return;
     }
@@ -1025,28 +1098,31 @@ LAB_827008ac:
 
 // 827008B8  PlayercardCache_TouchMaterial  (social/playercard_cache.cpp:809)
 
-void PlayercardCache_TouchMaterial(void)
+void PlayercardCache_TouchMaterial(int param_1,ulong64 param_2)
 
 {
   int iVar1;
+  Material *pMVar2;
   uint local_30;
-  uint local_2c;
+  uint local_2c [11];
   
-  __savegprlr_29();
-  PlayercardCache_GetTitleandIcon();
+  iVar1 = __savegprlr_29(param_1);
+  PlayercardCache_GetTitleandIcon(iVar1,param_2,(int *)&local_30,(int *)local_2c);
   if (0x3ff < local_30) {
-    MyAssertHandler(0xffffffff821b0e28,0x332,0,0xffffffff821b0fa8,local_30,0x400);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0x332,0,"title doesn\'t index PLAYERCARD_TITLES_MAX\n\t%i not in [0, %i)");
   }
-  if (0x3ff < local_2c) {
-    MyAssertHandler(0xffffffff821b0e28,0x333,0,0xffffffff821b0f6c,local_2c,0x400);
+  if (0x3ff < local_2c[0]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp",
+                    0x333,0,"icon doesn\'t index PLAYERCARD_ICONS_MAX\n\t%i not in [0, %i)");
   }
-  iVar1 = PlayerCards_GetTitleBackgroundByIndex(local_30);
-  if (iVar1 != 0) {
-    DB_TouchMaterial();
+  pMVar2 = PlayerCards_GetTitleBackgroundByIndex(local_30);
+  if (pMVar2 != (Material *)0x0) {
+    DB_TouchMaterial(pMVar2);
   }
-  iVar1 = PlayerCards_GetIconMaterialByIndex(local_2c);
-  if (iVar1 != 0) {
-    DB_TouchMaterial();
+  pMVar2 = PlayerCards_GetIconMaterialByIndex(local_2c[0]);
+  if (pMVar2 != (Material *)0x0) {
+    DB_TouchMaterial(pMVar2);
   }
   __restgprlr_29();
   return;
@@ -1055,64 +1131,70 @@ void PlayercardCache_TouchMaterial(void)
 
 // 82700960  PlayercardCache_TouchMaterials  (social/playercard_cache.cpp:833)
 
-void PlayercardCache_TouchMaterials(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayercardCache_TouchMaterials(LocalClientNum_t param_1)
 
 {
   bool bVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  longlong lVar5;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
   longlong lVar6;
-  ulonglong uVar7;
+  longlong lVar7;
   ulonglong uVar8;
+  ulonglong uVar9;
   uint local_80;
   uint local_7c [31];
   
-  __savegprlr_19();
-  uVar2 = CL_ControllerIndexFromClientNum();
-  if ((&DAT_8453b308)[(int)uVar2 * 0xa94] != 0) {
-    PlayercardCache_GetPivotandSize(uVar2,(&DAT_8453b308)[(int)uVar2 * 0xa94],local_7c,&local_80);
-    uVar8 = (ulonglong)local_80;
+  LVar2 = __savegprlr_19(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  if (g_PlayercardCacheStore[iVar3].screen != PLAYERCARD_CACHE_SCREEN_NONE) {
+    PlayercardCache_GetPivotandSize
+              (iVar3,g_PlayercardCacheStore[iVar3].screen,(int *)local_7c,(int *)&local_80);
+    uVar9 = (ulonglong)local_80;
     if (local_80 != 0) {
-      uVar3 = (ulonglong)local_7c[0];
+      uVar4 = (ulonglong)local_7c[0];
       bVar1 = false;
-      iVar4 = 0;
-      uVar7 = uVar3 + 1;
-      if ((int)local_80 <= (int)uVar7) {
-        uVar7 = uVar7 - uVar8;
+      iVar5 = 0;
+      uVar8 = uVar4 + 1;
+      if ((int)local_80 <= (int)uVar8) {
+        uVar8 = uVar8 - uVar9;
       }
-      lVar5 = ((ulonglong)local_7c[0] & 0x1fffffff) * 8 + -0x7bac5048;
-      lVar6 = (uVar7 & 0x1fffffff) * 8 + -0x7bac5048;
+      lVar6 = ((ulonglong)local_7c[0] & 0x1fffffff) * 8 + -0x7bac5048;
+      lVar7 = (uVar8 & 0x1fffffff) * 8 + -0x7bac5048;
       do {
-        if (uVar8 <= (uVar7 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821b0e28,0x35f,0,0xffffffff821b0ec8,uVar7,uVar8);
+        if (uVar9 <= (uVar8 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                          ,0x35f,0,"fwd doesn\'t index size\n\t%i not in [0, %i)");
         }
-        if ((ulonglong)local_80 <= (uVar3 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821b0e28,0x360,0,0xffffffff821b0ef4,uVar3,uVar8);
+        if ((ulonglong)local_80 <= (uVar4 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\playercard_cache.cpp"
+                          ,0x360,0,"back doesn\'t index size\n\t%i not in [0, %i)");
         }
-        PlayercardCache_TouchMaterial(uVar2,*(undefined8 *)lVar6);
-        PlayercardCache_TouchMaterial(uVar2,*(undefined8 *)lVar5);
-        iVar4 = iVar4 + 2;
-        if (iVar4 == 0x10) {
+        PlayercardCache_TouchMaterial(iVar3,*(ulong64 *)lVar7);
+        PlayercardCache_TouchMaterial(iVar3,*(ulong64 *)lVar6);
+        iVar5 = iVar5 + 2;
+        if (iVar5 == 0x10) {
           bVar1 = true;
         }
-        uVar7 = uVar7 + 1;
-        lVar6 = lVar6 + 8;
-        if ((int)local_80 <= (int)uVar7) {
-          uVar7 = uVar7 - uVar8;
-          lVar6 = lVar6 + ((ulonglong)local_80 & 0x1fffffff) * -8;
+        uVar8 = uVar8 + 1;
+        lVar7 = lVar7 + 8;
+        if ((int)local_80 <= (int)uVar8) {
+          uVar8 = uVar8 - uVar9;
+          lVar7 = lVar7 + ((ulonglong)local_80 & 0x1fffffff) * -8;
         }
-        if ((int)uVar3 == (int)uVar7) {
+        if ((int)uVar4 == (int)uVar8) {
           bVar1 = true;
         }
-        uVar3 = uVar3 - 1;
-        lVar5 = lVar5 + -8;
-        if ((longlong)uVar3 < 0) {
-          uVar3 = uVar3 + uVar8;
-          lVar5 = ((ulonglong)local_80 & 0x1fffffff) * 8 + lVar5;
+        uVar4 = uVar4 - 1;
+        lVar6 = lVar6 + -8;
+        if ((longlong)uVar4 < 0) {
+          uVar4 = uVar4 + uVar9;
+          lVar6 = ((ulonglong)local_80 & 0x1fffffff) * 8 + lVar6;
         }
-        if (((local_80 & 1) == 0) && ((int)uVar3 == (int)uVar7)) {
+        if (((local_80 & 1) == 0) && ((int)uVar4 == (int)uVar8)) {
           bVar1 = true;
         }
       } while (!bVar1);
@@ -1125,170 +1207,201 @@ void PlayercardCache_TouchMaterials(void)
 
 // 82700AD0  PlayercardCache_DefaultCard  (social/playercard_cache.cpp:894)
 
-undefined8 PlayercardCache_DefaultCard(undefined8 param_1)
+PlayerCardData * PlayercardCache_DefaultCard(char *param_1)
 
 {
-  memset(&DAT_8453add8,0,0x98);
-  I_strncpyz(0xffffffff8453adfc,param_1,0x20);
-  return 0xffffffff8453add8;
+  memset();
+  I_strncpyz(g_CachedPlayercard.name,param_1,0x20);
+  return &g_CachedPlayercard;
 }
 
 
 // 82700B30  PlayercardCache_GetPlayercard  (social/playercard_cache.cpp:903)
 
-void PlayercardCache_GetPlayercard(undefined8 param_1,longlong param_2,undefined8 param_3)
+PlayerCardData * PlayercardCache_GetPlayercard(int param_1,ulong64 param_2,char *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  undefined1 *puVar4;
-  undefined1 *puVar5;
+  byte bVar1;
+  ushort uVar2;
+  ushort uVar3;
+  int iVar4;
+  PlayerCardData *pPVar5;
   int iVar6;
-  longlong lVar7;
+  int iVar7;
+  char *pcVar8;
+  undefined1 *puVar9;
+  int iVar10;
+  char *pcVar11;
+  undefined1 *puVar12;
+  int iVar13;
+  longlong lVar14;
   
-  iVar1 = __savegprlr_28();
-  memset(&DAT_8453add8,0,0x98);
-  I_strncpyz(0xffffffff8453adfc,param_3,0x20);
-  iVar1 = iVar1 * 0x2a50;
-  iVar6 = 0;
-  iVar3 = 0;
-  iVar2 = iVar1;
+  iVar4 = __savegprlr_28(param_1);
+  memset();
+  I_strncpyz(g_CachedPlayercard.name,param_3,0x20);
+  iVar10 = iVar4 * 0x2a50;
+  iVar13 = 0;
+  iVar7 = 0;
+  iVar6 = iVar10;
   do {
-    if (*(longlong *)(&DAT_8453b378 + iVar2) == param_2) {
-      iVar1 = iVar3 * 0x58 + iVar1;
-      if ((&DAT_8453b370)[iVar1] == '\0') {
-        if (*(char *)(DAT_8453afb4 + 0xc) != '\0') {
-          I_strncpyz(0xffffffff8453ae2a,0xffffffff821b0fe8,0x10);
-          DAT_8453ae29 = 1;
+    if (*(ulong64 *)(g_PlayercardCacheStore[0].cached_playercards[0].card + iVar6 + -8) == param_2)
+    {
+      iVar10 = iVar7 * 0x58 + iVar10;
+      if (g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].has_data == false) {
+        if ((playercard_cache_show_cached->current).enabled != false) {
+          I_strncpyz(g_CachedPlayercard.elite_clan_title_text,"CACHED",0x10);
+          g_CachedPlayercard.use_elite_clan_title = true;
         }
       }
-      else if ((&DAT_8453b380)[iVar1] == '\x02') {
-        if (*(ushort *)(&DAT_8453b381 + iVar1) < 0x400) {
-          DAT_8453addc = (uint)*(ushort *)(&DAT_8453b381 + iVar1);
-          if (*(ushort *)(&DAT_8453b383 + iVar1) < 0x400) {
-            DAT_8453ade0 = (uint)*(ushort *)(&DAT_8453b383 + iVar1);
-            DAT_8453ade4 = (uint)*(byte *)(iVar1 + -0x7bac4c7b);
-            if (*(byte *)(iVar1 + -0x7bac4c7b) < 0x40) {
-              DAT_8453ade8 = (uint)*(byte *)(iVar1 + -0x7bac4c7a);
-              DAT_8453adec = (uint)*(byte *)(iVar1 + -0x7bac4c79);
-              DAT_8453adf0 = (uint)*(byte *)(iVar1 + -0x7bac4c78);
-              DAT_8453adf4 = (uint)*(byte *)(iVar1 + -0x7bac4c77);
-              if (*(ushort *)(iVar1 + -0x7bac4c76) < 0x400) {
-                DAT_8453ae44 = (uint)*(ushort *)(iVar1 + -0x7bac4c76);
-                puVar5 = (undefined1 *)0x8453ae1b;
-                puVar4 = (undefined1 *)(iVar1 + -0x7bac4c75);
-                lVar7 = 5;
+      else if (g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0] == '\x02') {
+        uVar2 = *(ushort *)(g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card + 1);
+        if (uVar2 < 0x400) {
+          uVar3 = *(ushort *)(g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card + 3);
+          g_CachedPlayercard.titleIndex = (uint)uVar2;
+          if (uVar3 < 0x400) {
+            bVar1 = g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[5];
+            g_CachedPlayercard.iconIndex = (uint)uVar3;
+            g_CachedPlayercard.nameplateIndex = (uint)bVar1;
+            if (bVar1 < 0x40) {
+              g_CachedPlayercard.rank_mp =
+                   (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[6];
+              g_CachedPlayercard.prestige_mp =
+                   (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[7];
+              g_CachedPlayercard.rank_so =
+                   (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[8];
+              uVar2 = *(ushort *)(g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card + 10)
+              ;
+              g_CachedPlayercard.prestige_so =
+                   (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[9];
+              if (uVar2 < 0x400) {
+                g_CachedPlayercard.elite_clan_title_bg = (int)uVar2;
+                pcVar11 = g_CachedPlayercard.name + 0x1f;
+                pcVar8 = (char *)(iVar10 + -0x7bac4c75);
+                lVar14 = 5;
                 do {
-                  puVar4 = puVar4 + 1;
-                  puVar5 = puVar5 + 1;
-                  *puVar5 = *puVar4;
-                  lVar7 = lVar7 + -1;
-                } while (lVar7 != 0);
-                puVar5 = (undefined1 *)((int)&DAT_8453ae44 + 3);
-                puVar4 = (undefined1 *)(iVar1 + -0x7bac4c70);
-                lVar7 = 5;
+                  pcVar8 = pcVar8 + 1;
+                  pcVar11 = pcVar11 + 1;
+                  *pcVar11 = *pcVar8;
+                  lVar14 = lVar14 + -1;
+                } while (lVar14 != 0);
+                puVar9 = (undefined1 *)((int)&g_CachedPlayercard.elite_clan_title_bg + 3);
+                puVar12 = (undefined1 *)(iVar10 + -0x7bac4c70);
+                lVar14 = 5;
                 do {
-                  puVar4 = puVar4 + 1;
-                  puVar5 = puVar5 + 1;
-                  *puVar5 = *puVar4;
-                  lVar7 = lVar7 + -1;
-                } while (lVar7 != 0);
-                blkmov(0xffffffff8453ae2a,iVar1 + -0x7bac4c6a,0x18);
-                DAT_8453ae28 = '\x01' - (*(char *)(iVar1 + -0x7bac4c52) == '\0');
-                DAT_8453ae29 = *(char *)(iVar1 + -0x7bac4c51) != '\0';
-                DAT_8453ae50 = (uint)*(byte *)(iVar1 + -0x7bac4c50);
-                DAT_8453ae54 = (uint)*(byte *)(iVar1 + -0x7bac4c4f);
-                DAT_8453ae58 = (uint)*(byte *)(iVar1 + -0x7bac4c4e);
-                DAT_8453ae5c = (uint)*(byte *)(iVar1 + -0x7bac4c4d);
-                DAT_8453ae60 = (uint)*(byte *)(iVar1 + -0x7bac4c4c);
-                DAT_8453ae64 = (uint)*(byte *)(iVar1 + -0x7bac4c4b);
-                DAT_8453ae68 = (uint)*(byte *)(iVar1 + -0x7bac4c4a);
-                DAT_8453ae6c = (uint)*(byte *)(iVar1 + -0x7bac4c49);
-                __restgprlr_28(0xffffffff8453add8);
-                return;
+                  puVar12 = puVar12 + 1;
+                  puVar9 = puVar9 + 1;
+                  *puVar9 = *puVar12;
+                  lVar14 = lVar14 + -1;
+                } while (lVar14 != 0);
+                _blkmov();
+                g_CachedPlayercard.use_elite_clan_tag =
+                     (bool)('\x01' - (g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card
+                                      [0x2e] == '\0'));
+                g_CachedPlayercard.use_elite_clan_title =
+                     g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x2f] != '\0';
+                g_CachedPlayercard.prestige_black_ops =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x30];
+                g_CachedPlayercard.rank_black_ops =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x31];
+                g_CachedPlayercard.prestige_mw2 =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x32];
+                g_CachedPlayercard.rank_mw2 =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x33];
+                g_CachedPlayercard.prestige_world_at_war =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x34];
+                g_CachedPlayercard.rank_world_at_war =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x35];
+                g_CachedPlayercard.prestige_mw =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x36];
+                g_CachedPlayercard.rank_mw =
+                     (int)g_PlayercardCacheStore[iVar4].cached_playercards[iVar7].card[0x37];
+                pPVar5 = (PlayerCardData *)__restgprlr_28(0xffffffff8453add8);
+                return pPVar5;
               }
             }
           }
         }
-        PlayercardCache_DefaultCard(param_3);
-        __restgprlr_28();
-        return;
+        pPVar5 = PlayercardCache_DefaultCard(param_3);
+        pPVar5 = (PlayerCardData *)__restgprlr_28(pPVar5);
+        return pPVar5;
       }
-      __restgprlr_28(0xffffffff8453add8);
-      return;
+      pPVar5 = (PlayerCardData *)__restgprlr_28(0xffffffff8453add8);
+      return pPVar5;
     }
-    iVar6 = iVar6 + 0x58;
-    iVar3 = iVar3 + 1;
-    iVar2 = iVar6 + iVar1;
-  } while (iVar6 < 0x2260);
-  __restgprlr_28(0xffffffff8453add8);
-  return;
+    iVar13 = iVar13 + 0x58;
+    iVar7 = iVar7 + 1;
+    iVar6 = iVar13 + iVar10;
+  } while (iVar13 < 0x2260);
+  pPVar5 = (PlayerCardData *)__restgprlr_28(0xffffffff8453add8);
+  return pPVar5;
 }
 
 
 // 82700D50  PlayercardCache_Upload  (social/playercard_cache.cpp:1026)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlayercardCache_Upload(void)
 
 {
   byte bVar1;
   byte bVar2;
-  byte *_Dst;
-  byte *pbVar4;
-  undefined8 uVar3;
-  byte *pbVar5;
-  byte *pbVar6;
-  longlong lVar7;
-  byte *_Src;
+  bool bVar5;
+  uint uVar3;
+  PlayerCardData *pPVar4;
+  uchar *puVar6;
+  uchar *puVar7;
+  LocalClientNum_t LVar8;
   
-  _Dst = (byte *)__savegprlr_24();
-  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-    lVar7 = 0;
+  __savegprlr_24();
+  if ((onlinegame->current).enabled == false) {
+    LVar8 = LOCAL_CLIENT_0;
     do {
-      _Dst = (byte *)CL_IsLocalClientActive(lVar7);
-      if (((uint)_Dst & 0xff) != 0) {
-        pbVar4 = (byte *)CL_ControllerIndexFromClientNum(lVar7);
-        _Dst = pbVar4;
-        if ((&DAT_8453afa4)[(int)pbVar4] == 2) {
-          uVar3 = PlayerCards_GetLiveProfileDataForController();
-          _Src = &DAT_8453b328 + (int)pbVar4 * 0x2a50;
-          PlayercardCache_CompressToBuffer(uVar3,_Src);
-          _Dst = &DAT_8453ae80 + (int)pbVar4 * 0x41;
-          pbVar6 = _Dst;
-          pbVar5 = _Src;
+      bVar5 = CL_IsLocalClientActive(LVar8);
+      if (bVar5) {
+        uVar3 = CL_ControllerIndexFromClientNum(LVar8);
+        if (g_DWPlayercardCacheUploadTaskStage[uVar3] == PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE) {
+          pPVar4 = PlayerCards_GetLiveProfileDataForController(uVar3);
+          puVar6 = g_PlayercardCacheStore[uVar3].publicProfile.m_memberplayer_card;
+          PlayercardCache_CompressToBuffer(pPVar4,puVar6);
+          puVar7 = g_UsersPlayercard[uVar3];
           do {
-            bVar1 = *pbVar6;
-            bVar2 = *pbVar5;
+            bVar1 = *puVar7;
+            bVar2 = *puVar6;
             if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-            pbVar6 = pbVar6 + 1;
-            pbVar5 = pbVar5 + 1;
-          } while (pbVar6 != (byte *)((int)pbVar4 * 0x41 + -0x7bac513f));
+            puVar7 = puVar7 + 1;
+            puVar6 = puVar6 + 1;
+          } while ((uchar (*) [65])puVar7 != g_UsersPlayercard + uVar3 + 1);
           if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-            _Dst = memcpy(_Dst,_Src,0x41);
-            (&DAT_8453afa4)[(int)pbVar4] = 0;
+            memcpy();
+            g_DWPlayercardCacheUploadTaskStage[uVar3] = PLAYERCARD_CACHE_TASK_STAGE_WAITING;
           }
         }
       }
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < 4);
+      LVar8 = LVar8 + LOCAL_CLIENT_1;
+    } while ((int)LVar8 < 4);
   }
-  __restgprlr_24(_Dst);
+  __restgprlr_24();
   return;
 }
 
 
 // 82700E40  PlayercardCache_Download  (social/playercard_cache.cpp:1069)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void PlayercardCache_Download(void)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
+  int iVar2;
   
-  Cmd_LocalClientNum();
-  iVar1 = CL_ControllerIndexFromClientNum();
-  if ((&DAT_8453b2d8)[iVar1] == 2) {
-    (&DAT_8453b2d8)[iVar1] = 0;
+  LVar1 = Cmd_LocalClientNum();
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  if (g_DWPlayercardCacheDownloadTaskStage[iVar2] == PLAYERCARD_CACHE_TASK_STAGE_ALL_DONE) {
+    g_DWPlayercardCacheDownloadTaskStage[iVar2] = PLAYERCARD_CACHE_TASK_STAGE_WAITING;
   }
   return;
 }
@@ -1296,80 +1409,57 @@ void PlayercardCache_Download(void)
 
 // 82700E88  PlayercardCache_AddFromParty  (social/playercard_cache.cpp:1081)
 
-void PlayercardCache_AddFromParty(undefined8 param_1,undefined8 param_2,longlong param_3)
+void PlayercardCache_AddFromParty
+               (int param_1,ulong64 param_2,ClientAuthoritativeMemberInfo *param_3)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 *puVar3;
-  longlong lVar4;
+  undefined8 *puVar2;
+  longlong lVar3;
   undefined8 uStack_118;
-  undefined1 local_110 [4];
-  undefined4 uStack_10c;
-  undefined4 local_108;
-  undefined4 local_104;
-  undefined4 local_100;
-  undefined4 local_fc;
-  undefined4 local_f8;
-  undefined4 local_f4;
-  undefined1 auStack_ec [32];
-  undefined1 auStack_cc [12];
-  undefined1 local_c0;
-  undefined1 local_bf;
-  undefined1 auStack_be [26];
-  undefined4 local_a4;
-  undefined1 auStack_a0 [8];
-  undefined4 local_98;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
-  undefined4 local_80;
-  undefined4 local_7c;
+  PlayerCardData local_110;
   undefined8 uStack_78;
-  undefined1 local_70 [112];
+  uchar local_70 [112];
   
-  uVar2 = __savegprlr_28();
-  puVar3 = &uStack_118;
-  lVar4 = 0x13;
+  iVar1 = __savegprlr_28(param_1);
+  puVar2 = &uStack_118;
+  lVar3 = 0x13;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  puVar3 = &uStack_78;
-  lVar4 = 8;
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  puVar2 = &uStack_78;
+  lVar3 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  iVar1 = (int)param_3;
-  local_108 = *(undefined4 *)(iVar1 + 0x1c);
-  uStack_10c = *(undefined4 *)(iVar1 + 0x20);
-  local_104 = *(undefined4 *)(iVar1 + 0x24);
-  local_100 = *(undefined4 *)(iVar1 + 8);
-  local_fc = *(undefined4 *)(iVar1 + 0xc);
-  local_f8 = *(undefined4 *)(iVar1 + 0x10);
-  local_f4 = *(undefined4 *)(iVar1 + 0x14);
-  I_strncpyz(auStack_ec,param_3 + 0x28,0x20);
-  I_strncpyz(auStack_cc,param_3 + 0x48,5);
-  local_c0 = *(undefined1 *)(iVar1 + 0x54);
-  local_bf = *(undefined1 *)(iVar1 + 0x55);
-  I_strncpyz(auStack_be,param_3 + 0x56,0x18);
-  local_a4 = *(undefined4 *)(iVar1 + 0x70);
-  I_strncpyz(auStack_a0,param_3 + 0x74,5);
-  local_98 = *(undefined4 *)(iVar1 + 0x7c);
-  local_94 = *(undefined4 *)(iVar1 + 0x80);
-  local_90 = *(undefined4 *)(iVar1 + 0x84);
-  local_8c = *(undefined4 *)(iVar1 + 0x88);
-  local_88 = *(undefined4 *)(iVar1 + 0x8c);
-  local_84 = *(undefined4 *)(iVar1 + 0x90);
-  local_80 = *(undefined4 *)(iVar1 + 0x94);
-  local_7c = *(undefined4 *)(iVar1 + 0x98);
-  PlayercardCache_CompressToBuffer(local_110,local_70);
-  Playercard_AddToCache(uVar2,param_2,local_70);
+    puVar2 = puVar2 + 1;
+    *puVar2 = 0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  local_110.iconIndex = param_3->playerCardIcon;
+  local_110.titleIndex = param_3->playerCardTitle;
+  local_110.nameplateIndex = param_3->playerCardNameplate;
+  local_110.rank_mp = param_3->rank_mp;
+  local_110.prestige_mp = param_3->prestige_mp;
+  local_110.rank_so = param_3->rank_so;
+  local_110.prestige_so = param_3->prestige_so;
+  I_strncpyz(local_110.name,param_3->gamertag,0x20);
+  I_strncpyz(local_110.clanAbbrev,param_3->clanAbbrev,5);
+  local_110.use_elite_clan_tag = param_3->use_elite_clan_tag;
+  local_110.use_elite_clan_title = param_3->use_elite_clan_title;
+  I_strncpyz(local_110.elite_clan_title_text,param_3->elite_clan_title_text,0x18);
+  local_110.elite_clan_title_bg = param_3->elite_clan_title_bg;
+  I_strncpyz(local_110.elite_clan_tag_text,param_3->elite_clan_tag_text,5);
+  local_110.prestige_black_ops = param_3->prestige_black_ops;
+  local_110.rank_black_ops = param_3->rank_black_ops;
+  local_110.prestige_mw2 = param_3->prestige_mw2;
+  local_110.rank_mw2 = param_3->rank_mw2;
+  local_110.prestige_world_at_war = param_3->prestige_world_at_war;
+  local_110.rank_world_at_war = param_3->rank_world_at_war;
+  local_110.prestige_mw = param_3->prestige_mw;
+  local_110.rank_mw = param_3->rank_mw;
+  PlayercardCache_CompressToBuffer(&local_110,local_70);
+  Playercard_AddToCache(iVar1,param_2,local_70);
   __restgprlr_28();
   return;
 }
@@ -1377,54 +1467,56 @@ void PlayercardCache_AddFromParty(undefined8 param_1,undefined8 param_2,longlong
 
 // 82700FC8  PlayercardCache_RegisterCommands  (social/playercard_cache.cpp:1122)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PlayercardCache_RegisterCommands(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff821b1004,0xffffffff82700d50,0xffffffff84545c5c);
-  Cmd_AddCommandInternal(0xffffffff821b0ff0,0xffffffff82700e40,0xffffffff84545c48);
+  Cmd_AddCommandInternal("upload_playercard",PlayercardCache_Upload,&PlayercardCache_Upload_VAR);
+  Cmd_AddCommandInternal
+            ("download_playercard",PlayercardCache_Download,&PlayercardCache_Download_VAR);
   return;
 }
 
 
-// 82701020  PublicProfileInfo::PublicProfileInfo  (social/playercard_cache.cpp:1132)
+// 82701020  PublicProfileInfo  (social/playercard_cache.cpp:1132)
 
-undefined4 * PublicProfileInfo__PublicProfileInfo(undefined4 *param_1)
+PublicProfileInfo * __thiscall PublicProfileInfo::PublicProfileInfo(PublicProfileInfo *this)
 
 {
-  bdProfileInfo__bdProfileInfo();
-  *param_1 = &PTR_PublicProfileInfo___scalar_deleting_destructor__821b1018;
-  return param_1;
+  bdProfileInfo::bdProfileInfo((bdProfileInfo *)this);
+  this->_padding_ = (int)&_vftable_;
+  return this;
 }
 
 
-// 82701060  PublicProfileInfo::serialize  (social/playercard_cache.cpp:1136)
+// 82701060  serialize  (social/playercard_cache.cpp:1136)
 
-void PublicProfileInfo__serialize(longlong param_1,undefined8 param_2)
+void __thiscall PublicProfileInfo::serialize(PublicProfileInfo *this,bdByteBuffer *param_1)
 
 {
-  bdProfileInfo__serialize();
-  bdByteBuffer__writeBlob(param_2,param_1 + 0x10,0x40);
+  bdProfileInfo::serialize((bdProfileInfo *)this,param_1);
+  bdByteBuffer::writeBlob(param_1,this->m_memberplayer_card,0x40);
   return;
 }
 
 
-// 82701650  PublicProfileInfo::deserialize  (social/playercard_cache.cpp:1142)
+// 82701650  deserialize  (social/playercard_cache.cpp:1142)
 
-/* WARNING: Type propagation algorithm not settling */
-
-undefined8 PublicProfileInfo__deserialize(longlong param_1,uint *param_2)
+bool __thiscall
+PublicProfileInfo::deserialize(PublicProfileInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
   uint uVar1;
-  char cVar2;
+  bool bVar2;
   longlong lVar3;
   uint *puVar4;
-  undefined8 uVar5;
+  bool bVar5;
   char in_RESERVE;
   byte in_cr0;
   uint local_20 [2];
   
-  local_20[0] = *param_2;
+  local_20[0] = (param_1.m_ptr)->_padding_;
   if ((ulonglong)local_20[0] != 0) {
     lVar3 = (ulonglong)local_20[0] + 4;
     do {
@@ -1436,90 +1528,107 @@ undefined8 PublicProfileInfo__deserialize(longlong param_1,uint *param_2)
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  cVar2 = bdProfileInfo__deserialize(param_1,local_20);
+  bVar2 = bdProfileInfo::deserialize((bdProfileInfo *)this,(bdByteBuffer *)local_20);
   local_20[1] = 0x40;
-  if (cVar2 != '\0') {
-    cVar2 = bdByteBuffer__readBlob(*param_2,param_1 + 0x10,local_20 + 1);
-    uVar5 = 1;
-    if (cVar2 != '\0') goto LAB_827016e4;
+  if (bVar2) {
+    bVar2 = bdByteBuffer::readBlob
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_memberplayer_card,
+                       local_20 + 1);
+    bVar5 = true;
+    if (bVar2) goto LAB_827016e4;
   }
-  uVar5 = 0;
+  bVar5 = false;
 LAB_827016e4:
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(param_2);
-  return uVar5;
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
+  return bVar5;
 }
 
 
-// 827010A8  PublicProfileInfo::sizeOf  (social/playercard_cache.cpp:1150)
+// 827010A8  sizeOf  (social/playercard_cache.cpp:1150)
 
-undefined8 PublicProfileInfo__sizeOf(void)
+uint __thiscall PublicProfileInfo::sizeOf(PublicProfileInfo *this)
 
 {
   return 0x58;
 }
 
 
-// 82701708  PublicProfileInfo::`scalar_deleting_destructor'  (line unknown)
+// 826FF908  ~PublicProfileInfo  (line unknown)
 
-undefined8 PublicProfileInfo___scalar_deleting_destructor_(undefined8 param_1,ulonglong param_2)
+void __thiscall PublicProfileInfo::~PublicProfileInfo(PublicProfileInfo *this)
 
 {
-  bdProfileInfo___bdProfileInfo();
-  if ((param_2 & 1) != 0) {
-    bdMemory__deallocate(param_1);
+  this->_padding_ = (int)&bdProfileInfo::_vftable_;
+  bdTaskResult::~bdTaskResult((bdTaskResult *)this);
+  return;
+}
+
+
+// 82701708  `scalar_deleting_destructor'  (line unknown)
+
+void * __thiscall
+PublicProfileInfo::_scalar_deleting_destructor_(PublicProfileInfo *this,uint param_1)
+
+{
+  bdProfileInfo::~bdProfileInfo((bdProfileInfo *)this);
+  if ((param_1 & 1) != 0) {
+    bdMemory::deallocate(this);
   }
-  return param_1;
+  return this;
 }
 
 
 // 82940B58  `dynamic_atexit_destructor_for_'g_DWPlayercardCacheUploadTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_DWPlayercardCacheUploadTask__(void)
 
 {
-  undefined4 *puVar1;
+  bdRemoteTask *pbVar1;
   uint uVar2;
-  uint uVar3;
-  longlong lVar4;
-  uint *puVar5;
-  longlong lVar6;
-  uint *puVar7;
+  longlong lVar3;
+  uint *puVar4;
+  longlong lVar5;
+  bdReference<bdRemoteTask> *pbVar6;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  lVar6 = 3;
-  puVar7 = &DAT_8453b2f8;
+  lVar5 = 3;
+  pbVar6 = g_DWPlayercardCacheDownloadTask;
   do {
-    puVar7 = puVar7 + -1;
-    uVar2 = *puVar7;
-    if ((ulonglong)uVar2 != 0) {
-      lVar4 = (ulonglong)uVar2 + 4;
+    pbVar6 = pbVar6 + -1;
+    pbVar1 = pbVar6->m_ptr;
+    if (ZEXT48(pbVar1) != 0) {
+      lVar3 = ZEXT48(pbVar1) + 4;
       do {
-        puVar5 = (uint *)lVar4;
+        puVar4 = (uint *)lVar3;
         if (in_RESERVE != '\0') {
-          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
-          *puVar5 = uVar3;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar3);
+          *puVar4 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*puVar7;
-        if (puVar1 != (undefined4 *)0x0) {
-          (**(code **)*puVar1)(puVar1,1);
+      if (*(int *)&pbVar1->field_0x4 == 0) {
+        pbVar1 = pbVar6->m_ptr;
+        if (pbVar1 != (bdRemoteTask *)0x0) {
+          (**(code **)pbVar1->_padding_)(pbVar1,1);
         }
-        *puVar7 = 0;
+        pbVar6->m_ptr = (bdRemoteTask *)0x0;
       }
     }
-    lVar6 = lVar6 + -1;
-    in_cr0 = (lVar6 == 0) << 1;
-  } while (-1 < lVar6);
+    lVar5 = lVar5 + -1;
+    in_cr0 = (lVar5 == 0) << 1;
+  } while (-1 < lVar5);
   __restgprlr_29();
   return;
 }
 
 
 // 82940BE8  `dynamic_atexit_destructor_for_'g_DWPlayercardCacheDownloadTask''  (line unknown)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__(void)
 
@@ -1530,16 +1639,16 @@ void _dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__(void)
   longlong lVar4;
   uint *puVar5;
   longlong lVar6;
-  uint *puVar7;
+  PlayercardCacheStore *pPVar7;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
   lVar6 = 3;
-  puVar7 = &DAT_8453b308;
+  pPVar7 = g_PlayercardCacheStore;
   do {
-    puVar7 = puVar7 + -1;
-    uVar2 = *puVar7;
+    pPVar7 = (PlayercardCacheStore *)&pPVar7[-1].do_initial_cache;
+    uVar2 = *(uint *)pPVar7;
     if ((ulonglong)uVar2 != 0) {
       lVar4 = (ulonglong)uVar2 + 4;
       do {
@@ -1551,11 +1660,11 @@ void _dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__(void)
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
       if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*puVar7;
+        puVar1 = *(undefined4 **)pPVar7;
         if (puVar1 != (undefined4 *)0x0) {
           (**(code **)*puVar1)(puVar1,1);
         }
-        *puVar7 = 0;
+        *(undefined4 *)pPVar7 = 0;
       }
     }
     lVar6 = lVar6 + -1;
@@ -1568,19 +1677,22 @@ void _dynamic_atexit_destructor_for__g_DWPlayercardCacheDownloadTask__(void)
 
 // 82940C78  `dynamic_atexit_destructor_for_'g_PlayercardCacheStore''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_PlayercardCacheStore__(void)
 
 {
   longlong lVar1;
-  longlong lVar2;
+  bdProfileInfo *pbVar2;
   
   lVar1 = 3;
-  lVar2 = -0x7baba3a8;
+  pbVar2 = (bdProfileInfo *)&PlayercardCache_Download_VAR.function;
   do {
-    _vector_destructor_iterator_(lVar2 + -0x798,0x58,0x14,0xffffffff826ff908);
-    bdProfileInfo___bdProfileInfo(lVar2 + -0x2a50);
+    _vector_destructor_iterator_
+              (&pbVar2[-0x7a].m_entityID,0x58,0x14,PublicProfileInfo::~PublicProfileInfo);
+    bdProfileInfo::~bdProfileInfo(pbVar2 + -0x2a5);
     lVar1 = lVar1 + -1;
-    lVar2 = lVar2 + -0x2a50;
+    pbVar2 = pbVar2 + -0x2a5;
   } while (-1 < lVar1);
   return;
 }

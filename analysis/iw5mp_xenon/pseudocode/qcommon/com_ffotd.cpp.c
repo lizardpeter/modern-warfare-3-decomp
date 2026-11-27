@@ -2,45 +2,50 @@
 
 // 8293D540  `dynamic_initializer_for_'g_fetchFFotDFileTask''  (qcommon/com_ffotd.cpp:33)
 
-int _dynamic_initializer_for__g_fetchFFotDFileTask__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_fetchFFotDFileTask__(void)
 
 {
-  int iVar1;
-  
-  bdFileInfo__bdFileInfo(0xffffffff83600658);
-  bdFileData__bdFileData(0xffffffff83600708,0,0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_fetchFFotDFileTask__);
-  return iVar1;
+  bdFileInfo::bdFileInfo(&g_fetchFFotDFileTask.m_infoResult);
+  bdFileData::bdFileData(&g_fetchFFotDFileTask.m_dataResult,(void *)0x0,0);
+  atexit(_dynamic_atexit_destructor_for__g_fetchFFotDFileTask__);
+  return;
 }
 
 
 // 824DA5F0  LiveStorage_DoWeHaveFFotD  (qcommon/com_ffotd.cpp:52)
 
-undefined8 LiveStorage_DoWeHaveFFotD(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool LiveStorage_DoWeHaveFFotD(void)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((*(uint *)(DAT_84584ed8 + 0xc) & 8) != 0) {
-    return 0;
+  if (((live_test_onlinedataoff->current).unsignedInt & 8) != 0) {
+    return false;
   }
-  if ((DAT_83600634 != '\0') || (uVar1 = 0, DAT_8296bc38 == '\0')) {
-    uVar1 = 1;
+  if ((g_ffotdFetched) || (bVar1 = false, !g_ffotdShouldDownload)) {
+    bVar1 = true;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 824DA640  LiveStorage_ShouldUseFFoTD  (qcommon/com_ffotd.cpp:63)
 
-undefined8 LiveStorage_ShouldUseFFoTD(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int LiveStorage_ShouldUseFFoTD(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Lobby_IsInLobby();
-  if (((cVar1 == '\0') && (DAT_82b5700c == 0)) &&
-     (cVar1 = Live_AreWeAcceptingInvite(), cVar1 == '\0')) {
+  bVar1 = Lobby_IsInLobby();
+  if (((!bVar1) && (g_partyData.inParty == 0)) && (bVar1 = Live_AreWeAcceptingInvite(), !bVar1)) {
     return 0;
   }
   return 1;
@@ -49,163 +54,202 @@ undefined8 LiveStorage_ShouldUseFFoTD(void)
 
 // 824DA698  LiveStorage_FetchFFotD  (qcommon/com_ffotd.cpp:79)
 
-void LiveStorage_FetchFFotD(void)
+void LiveStorage_FetchFFotD(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar4;
-  int iVar3;
+  uint uVar1;
+  longlong lVar2;
+  bool bVar8;
+  DWOnlineStatus DVar4;
+  int iVar5;
+  longlong lVar3;
+  bool bVar9;
+  overlappedTask *poVar6;
+  int iVar7;
   
-  uVar2 = __savegprlr_26();
-  if ((*(uint *)(DAT_84584ed8 + 0xc) & 8) == 0) {
-    if ((DAT_83600634 != '\0') || (bVar1 = false, DAT_8296bc38 == '\0')) {
-      bVar1 = true;
+  lVar2 = __savegprlr_26(param_1);
+  if (((live_test_onlinedataoff->current).unsignedInt & 8) == 0) {
+    if ((g_ffotdFetched != false) || (bVar8 = false, g_ffotdShouldDownload == false)) {
+      bVar8 = true;
     }
   }
   else {
-    bVar1 = false;
+    bVar8 = false;
   }
-  if ((((!bVar1) && (cVar4 = TaskManager_TaskIsInProgress(0xffffffff8365bc38,0x11), cVar4 == '\0'))
-      && (cVar4 = Live_IsUserSignedInToLive(uVar2), cVar4 != '\0')) &&
-     (iVar3 = dwGetLogOnStatus(uVar2), iVar3 == 2)) {
-    iVar3 = Sys_Milliseconds();
-    bVar1 = false;
-    if ((DAT_83600638 == 0) ||
-       (cVar4 = Live_GetShouldDemonwareRetry((iVar3 - DAT_8360063c) / 1000,DAT_83600638,0x3c),
-       cVar4 != '\0')) {
-      bVar1 = true;
-    }
-    if (bVar1) {
-      DAT_83600638 = DAT_83600638 + 1;
-      DAT_8360063c = iVar3;
-      iVar3 = TaskManager_GetOpenTaskSlot(0xffffffff8365bc38,uVar2,0x11);
-      if (iVar3 != 0) {
-        uVar2 = getBuildNumberAsInt();
-        Com_sprintf(0xffffffff83600720,0x40,0xffffffff82084cc4,0xffffffff8202e2c4,uVar2);
-        DAT_83600640 = &DAT_83600720;
-        memset(&DAT_835f1630,0,0xf000);
-        DAT_83600718 = &DAT_835f1630;
-        DAT_83600714 = 0xf000;
-        *(undefined ***)(iVar3 + 0x98) = &DAT_83600640;
-        dwFetchPublisherFile(iVar3,0xffffffff83600640);
-      }
+  lVar3 = lVar2;
+  if (bVar8) goto LAB_824da840;
+  bVar8 = TaskManager_TaskIsInProgress(&storageTasks,0x11);
+  lVar3 = (longlong)bVar8;
+  if (lVar3 != 0) goto LAB_824da840;
+  iVar7 = (int)lVar2;
+  bVar8 = Live_IsUserSignedInToLive(iVar7);
+  lVar3 = 0;
+  if (!bVar8) goto LAB_824da840;
+  DVar4 = dwGetLogOnStatus(iVar7);
+  lVar3 = (longlong)(int)DVar4;
+  if (DVar4 != DW_LIVE_CONNECTED) goto LAB_824da840;
+  iVar5 = Sys_Milliseconds();
+  bVar8 = false;
+  uVar1 = (iVar5 - g_LastFetchFFotDAttemptTime) / 1000;
+  lVar3 = (longlong)(int)uVar1;
+  if (g_NumFetchFFotDAttempts == 0) {
+LAB_824da78c:
+    bVar8 = true;
+  }
+  else {
+    bVar9 = Live_GetShouldDemonwareRetry(uVar1,g_NumFetchFFotDAttempts,0x3c);
+    lVar3 = (longlong)bVar9;
+    if (lVar3 != 0) goto LAB_824da78c;
+  }
+  if (bVar8) {
+    g_NumFetchFFotDAttempts = g_NumFetchFFotDAttempts + 1;
+    g_LastFetchFFotDAttemptTime = iVar5;
+    poVar6 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar7,0x11);
+    lVar3 = (longlong)(int)poVar6;
+    if (poVar6 != (overlappedTask *)0x0) {
+      getBuildNumberAsInt();
+      Com_sprintf(ffotdFilename,0x40,"ffotd-%s.%i.ff");
+      g_fetchFFotDFileTask.m_filename = ffotdFilename;
+      memset();
+      g_fetchFFotDFileTask.m_buffer = g_ffotdBuffer;
+      g_fetchFFotDFileTask.m_bufferSize = 0xf000;
+      poVar6->data = &g_fetchFFotDFileTask;
+      iVar7 = dwFetchPublisherFile(poVar6,&g_fetchFFotDFileTask);
+      lVar3 = (longlong)iVar7;
     }
   }
-  __restgprlr_26();
+LAB_824da840:
+  __restgprlr_26(lVar3);
   return;
 }
 
 
 // 824DABD0  LiveStorage_FFotDFetchComplete  (qcommon/com_ffotd.cpp:136)
 
-void LiveStorage_FFotDFetchComplete(void)
+taskCompleteResults LiveStorage_FFotDFetchComplete(int param_1)
 
 {
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined *puVar6;
+  bdRemoteTask *this;
+  int iVar1;
+  overlappedTask *poVar2;
+  bdLobbyService *pbVar3;
+  Status SVar4;
+  taskCompleteResults tVar5;
+  bdLobbyErrorCode bVar6;
   
-  iVar3 = __savegprlr_27();
-  iVar5 = iVar3 * 0xa0;
-  puVar6 = &DAT_8365bc40 + iVar5;
-  if ((&DAT_8365bcd4)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff82084cd8,0x8b,0,0xffffffff82000f98,0xffffffff82084c8c);
+  iVar1 = __savegprlr_27(param_1);
+  poVar2 = storageTasks.tasks + iVar1;
+  if (storageTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0x8b,0,
+                    "%s");
   }
-  if ((&DAT_8365bcd0)[iVar3 * 0x28] != 0x11) {
-    MyAssertHandler(0xffffffff82084cd8,0x8c,0,0xffffffff82000f98,0xffffffff82084d78);
+  if (storageTasks.tasks[iVar1].type != 0x11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0x8c,0,
+                    "%s");
   }
-  iVar4 = dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
-  if (iVar4 != 0) {
-    dwGetLobbyService((&DAT_8365bcd5)[iVar5]);
-    iVar5 = bdLobbyService__getStatus();
-    if (iVar5 != 2) {
-      __restgprlr_27(0);
-      return;
+  pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+  if (pbVar3 != (bdLobbyService *)0x0) {
+    pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
+    SVar4 = bdLobbyService::getStatus(pbVar3);
+    if (SVar4 != BD_CONNECTED) {
+      tVar5 = __restgprlr_27(0);
+      return tVar5;
     }
   }
-  uVar1 = dwFetchFileComplete(puVar6,0xffffffff83600640);
-  iVar5 = (int)uVar1;
-  if (iVar5 == 1) {
-    Com_Printf(0x10,0xffffffff82084d64,DAT_83600650);
-    if (0xf000 < DAT_83600650) {
-      Com_PrintError(0x10,0xffffffff82084d44);
-      DAT_8296bc38 = 0;
-      TaskManager_ClearTask(puVar6);
-      __restgprlr_27(uVar1);
-      return;
+  tVar5 = dwFetchFileComplete(poVar2,&g_fetchFFotDFileTask);
+  if (tVar5 == TASK_COMPLETE) {
+    Com_Printf(0x10,"FFotD was %i bytes\n");
+    if (0xf000 < g_fetchFFotDFileTask.m_fileSize) {
+      Com_PrintError(0x10,"Insufficient space for FFotD\n");
+      g_ffotdShouldDownload = false;
+      TaskManager_ClearTask(poVar2);
+      tVar5 = __restgprlr_27(1);
+      return tVar5;
     }
-    DAT_83600630 = DAT_83600650;
-    DAT_83600634 = 1;
-    TaskManager_ClearTask(puVar6);
-    __restgprlr_27(uVar1);
-    return;
+    g_ffotdSize = g_fetchFFotDFileTask.m_fileSize;
+    g_ffotdFetched = true;
+    TaskManager_ClearTask(poVar2);
+    tVar5 = __restgprlr_27(1);
+    return tVar5;
   }
-  if (iVar5 == 2) {
-    if ((&DAT_8365bc48)[iVar3 * 0x28] != 0) {
-      uVar2 = bdRemoteTask__getErrorCode();
-      if ((int)uVar2 == 1000) {
-        Com_Printf(0x10,0xffffffff82084d38);
-        DAT_8296bc38 = 0;
-        TaskManager_ClearTask(puVar6);
-        __restgprlr_27(uVar1);
-        return;
+  if (tVar5 == TASK_ERROR) {
+    this = storageTasks.tasks[iVar1].u.remoteTask.m_ptr;
+    if (this != (bdRemoteTask *)0x0) {
+      bVar6 = bdRemoteTask::getErrorCode(this);
+      if (bVar6 == BD_NO_FILE) {
+        Com_Printf(0x10,"No FFotD\n");
+        g_ffotdShouldDownload = false;
+        TaskManager_ClearTask(poVar2);
+        tVar5 = __restgprlr_27(2);
+        return tVar5;
       }
-      Com_PrintError(0x10,0xffffffff82084d18,uVar2);
-      TaskManager_ClearTask(puVar6);
-      __restgprlr_27(uVar1);
-      return;
+      Com_PrintError(0x10,"Unable to retrieve FFotD: %d\n");
+      TaskManager_ClearTask(poVar2);
+      tVar5 = __restgprlr_27(2);
+      return tVar5;
     }
   }
-  else if (iVar5 == 0) goto LAB_824dadb0;
-  TaskManager_ClearTask(puVar6);
+  else if (tVar5 == TASK_NOTCOMPLETE) goto LAB_824dadb0;
+  TaskManager_ClearTask(poVar2);
 LAB_824dadb0:
-  __restgprlr_27(uVar1);
-  return;
+  tVar5 = __restgprlr_27(tVar5);
+  return tVar5;
 }
 
 
 // 824DA848  LiveStorage_GetFFotDVersion  (qcommon/com_ffotd.cpp:186)
 
-ulonglong LiveStorage_GetFFotDVersion(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ushort LiveStorage_GetFFotDVersion(void)
 
 {
-  char cVar1;
+  bool bVar2;
+  ushort uVar1;
   
-  cVar1 = Lobby_IsInLobby();
-  if (((cVar1 == '\0') && (DAT_82b5700c == 0)) &&
-     (cVar1 = Live_AreWeAcceptingInvite(), cVar1 == '\0')) {
-    return 0xffffffffffffffff;
+  bVar2 = Lobby_IsInLobby();
+  if (((!bVar2) && (g_partyData.inParty == 0)) && (bVar2 = Live_AreWeAcceptingInvite(), !bVar2)) {
+    return 0xffff;
   }
-  if (DAT_83600634 == '\0') {
-    return 0xfffffffffffffffe;
+  if (g_ffotdFetched == false) {
+    return 0xfffe;
   }
-  return (ulonglong)DAT_835f1630;
+  uVar1._0_1_ = g_ffotdBuffer[0];
+  uVar1._1_1_ = g_ffotdBuffer[1];
+  return uVar1;
 }
 
 
 // 824DA8D8  LiveStorage_GetFFotDSaveVersion  (qcommon/com_ffotd.cpp:198)
 
-ulonglong LiveStorage_GetFFotDSaveVersion(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ushort LiveStorage_GetFFotDSaveVersion(void)
 
 {
-  char cVar1;
+  bool bVar2;
+  ushort uVar1;
   
-  cVar1 = Lobby_IsInLobby();
-  if ((((cVar1 != '\0') || (DAT_82b5700c != 0)) ||
-      (cVar1 = Live_AreWeAcceptingInvite(), cVar1 != '\0')) && (DAT_83600634 != '\0')) {
-    return (ulonglong)DAT_835f1630;
+  bVar2 = Lobby_IsInLobby();
+  if ((((bVar2) || (g_partyData.inParty != 0)) || (bVar2 = Live_AreWeAcceptingInvite(), bVar2)) &&
+     (g_ffotdFetched != false)) {
+    uVar1._0_1_ = g_ffotdBuffer[0];
+    uVar1._1_1_ = g_ffotdBuffer[1];
+    return uVar1;
   }
-  return 0xffffffffffffffff;
+  return 0xffff;
 }
 
 
 // 824DA958  LiveStorage_ShouldDrawFFotDVersion  (qcommon/com_ffotd.cpp:209)
 
-undefined8 LiveStorage_ShouldDrawFFotDVersion(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int LiveStorage_ShouldDrawFFotDVersion(void)
 
 {
   return 1;
@@ -214,98 +258,107 @@ undefined8 LiveStorage_ShouldDrawFFotDVersion(void)
 
 // 824DA960  LiveStorage_GetFFotDChecksum  (qcommon/com_ffotd.cpp:221)
 
-longlong LiveStorage_GetFFotDChecksum(longlong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+uint LiveStorage_GetFFotDChecksum(uint param_1)
 
 {
-  bool bVar1;
-  char cVar2;
+  bool bVar2;
+  uint uVar1;
   
-  cVar2 = Lobby_IsInLobby();
-  if (((cVar2 == '\0') && (DAT_82b5700c == 0)) &&
-     (cVar2 = Live_AreWeAcceptingInvite(), cVar2 == '\0')) {
-    param_1 = param_1 + 0x1337;
-  }
-  else {
-    if ((*(uint *)(DAT_84584ed8 + 0xc) & 8) == 0) {
-      if ((DAT_83600634 != '\0') || (bVar1 = false, DAT_8296bc38 == '\0')) {
-        bVar1 = true;
+  bVar2 = Lobby_IsInLobby();
+  if (((bVar2) || (g_partyData.inParty != 0)) || (bVar2 = Live_AreWeAcceptingInvite(), bVar2)) {
+    if (((live_test_onlinedataoff->current).unsignedInt & 8) == 0) {
+      if ((g_ffotdFetched != false) || (bVar2 = false, g_ffotdShouldDownload == false)) {
+        bVar2 = true;
       }
     }
     else {
-      bVar1 = false;
+      bVar2 = false;
     }
-    if (!bVar1) {
-      MyAssertHandler(0xffffffff82084cd8,0xe1,0,0xffffffff82000f98,0xffffffff8205c78c);
+    if (!bVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0xe1,
+                      0,"%s");
     }
-    if (DAT_83600634 == '\0') {
-      param_1 = param_1 + 0x2002;
+    if (g_ffotdFetched == false) {
+      uVar1 = param_1 + 0x2002;
     }
     else {
-      param_1 = Com_BlockChecksumKey32(0xffffffff835f1630,DAT_83600630,param_1);
+      uVar1 = Com_BlockChecksumKey32(g_ffotdBuffer,g_ffotdSize,param_1);
     }
   }
-  return param_1;
+  else {
+    uVar1 = param_1 + 0x1337;
+  }
+  return uVar1;
 }
 
 
 // 824DAA80  LiveStorage_GetFFotDBuffer  (qcommon/com_ffotd.cpp:235)
 
-void LiveStorage_GetFFotDBuffer(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+uchar * LiveStorage_GetFFotDBuffer(uint *param_1)
 
 {
-  bool bVar1;
-  uint *puVar2;
-  char cVar3;
+  uint *puVar1;
+  bool bVar3;
+  uchar *puVar2;
   
-  puVar2 = (uint *)__savegprlr_28();
-  if ((*(uint *)(DAT_84584ed8 + 0xc) & 8) == 0) {
-    if ((DAT_83600634 != '\0') || (bVar1 = false, DAT_8296bc38 == '\0')) {
-      bVar1 = true;
+  puVar1 = (uint *)__savegprlr_28(param_1);
+  if (((live_test_onlinedataoff->current).unsignedInt & 8) == 0) {
+    if ((g_ffotdFetched != false) || (bVar3 = false, g_ffotdShouldDownload == false)) {
+      bVar3 = true;
     }
   }
   else {
-    bVar1 = false;
+    bVar3 = false;
   }
-  if (!bVar1) {
-    MyAssertHandler(0xffffffff82084cd8,0xee,0,0xffffffff82000f98,0xffffffff8205c78c);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0xee,0,
+                    "%s");
   }
-  cVar3 = Lobby_IsInLobby();
-  if (((cVar3 == '\0') && (DAT_82b5700c == 0)) &&
-     (cVar3 = Live_AreWeAcceptingInvite(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff82084cd8,0xef,0,0xffffffff82000f98,0xffffffff8204c8ec);
+  bVar3 = Lobby_IsInLobby();
+  if (((!bVar3) && (g_partyData.inParty == 0)) && (bVar3 = Live_AreWeAcceptingInvite(), !bVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0xef,0,
+                    "%s");
   }
-  if (DAT_83600634 != '\0') {
-    if (puVar2 != (uint *)0x0) {
-      *puVar2 = 0xffffffffU - ((int)(DAT_83600630 - 2U) >> 0x1f) & DAT_83600630 - 2U;
+  if (g_ffotdFetched != false) {
+    if (puVar1 != (uint *)0x0) {
+      *puVar1 = 0xffffffffU - ((int)(g_ffotdSize - 2U) >> 0x1f) & g_ffotdSize - 2U;
     }
-    __restgprlr_28(0xffffffff835f1632);
-    return;
+    puVar2 = (uchar *)__restgprlr_28(0xffffffff835f1632);
+    return puVar2;
   }
-  if (puVar2 != (uint *)0x0) {
-    *puVar2 = 0;
+  if (puVar1 != (uint *)0x0) {
+    *puVar1 = 0;
   }
-  __restgprlr_28(0);
-  return;
+  puVar2 = (uchar *)__restgprlr_28(0);
+  return puVar2;
 }
 
 
 // 824DABC0  LiveStorage_SetShouldDownloadFFotD  (qcommon/com_ffotd.cpp:258)
 
-void LiveStorage_SetShouldDownloadFFotD(undefined1 param_1)
+void LiveStorage_SetShouldDownloadFFotD(bool param_1)
 
 {
-  DAT_8296bc38 = param_1;
+  g_ffotdShouldDownload = param_1;
   return;
 }
 
 
 // 8293FC20  `dynamic_atexit_destructor_for_'g_fetchFFotDFileTask''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_fetchFFotDFileTask__(void)
 
 {
-  bdFileData___bdFileData(0xffffffff83600708);
-  bdFileInfo___bdFileInfo(0xffffffff83600658);
+  bdFileData::~bdFileData(&g_fetchFFotDFileTask.m_dataResult);
+  bdFileInfo::~bdFileInfo(&g_fetchFFotDFileTask.m_infoResult);
   return;
 }
 

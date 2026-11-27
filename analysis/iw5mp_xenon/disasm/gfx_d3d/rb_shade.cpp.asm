@@ -974,7 +974,7 @@ LAB_827aad38:
   827AADD0  7D8803A6             mtspr LR,r12
   827AADD4  4E800020             blr
 
-; 827AA0B8  D3DDevice::PixBeginNamedEvent  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:4054)
+; 827AA0B8  PixBeginNamedEvent  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:4054)
   827AA0B8  7D8802A6             mfspr r12,LR
   827AA0BC  9181FFF8             stw r12,-0x8(r1)
   827AA0C0  F8C10028             std r6,0x28(r1)

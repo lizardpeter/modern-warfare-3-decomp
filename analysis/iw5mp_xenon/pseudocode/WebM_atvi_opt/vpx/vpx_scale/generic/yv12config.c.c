@@ -2,97 +2,101 @@
 
 // 82841638  vp8_yv12_de_alloc_frame_buffer  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12config.c:28)
 
-undefined8 vp8_yv12_de_alloc_frame_buffer(int param_1)
+int vp8_yv12_de_alloc_frame_buffer(YV12_BUFFER_CONFIG *param_1)
 
 {
-  if (param_1 != 0) {
-    if (*(int *)(param_1 + 0x24) != 0) {
-      vpx_free();
+  if (param_1 != (YV12_BUFFER_CONFIG *)0x0) {
+    if (param_1->buffer_alloc != (uchar *)0x0) {
+      vpx_free(param_1->buffer_alloc);
     }
-    *(undefined4 *)(param_1 + 0x24) = 0;
+    param_1->buffer_alloc = (uchar *)0x0;
     return 0;
   }
-  return 0xffffffffffffffff;
+  return -1;
 }
 
 
 // 828416A0  vp8_yv12_alloc_frame_buffer  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12config.c:51)
 
-void vp8_yv12_alloc_frame_buffer
-               (undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4)
+int vp8_yv12_alloc_frame_buffer(YV12_BUFFER_CONFIG *param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar6;
-  longlong lVar5;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
+  int iVar2;
+  YV12_BUFFER_CONFIG *pYVar3;
+  uchar *puVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  uint uVar11;
+  longlong lVar10;
+  int iVar12;
+  int iVar13;
+  longlong lVar14;
+  int iVar15;
   
-  piVar2 = (int *)__savegprlr_22();
-  uVar6 = (int)param_2 + 1;
-  lVar5 = (param_4 & 0x7fffffff) * 2;
-  iVar3 = ((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  iVar4 = (int)(param_3 + 1U);
-  iVar1 = (int)param_4;
-  iVar8 = iVar3 + iVar1;
-  iVar4 = (iVar4 >> 1) + (uint)(iVar4 < 0 && (param_3 + 1U & 1) != 0);
-  lVar9 = lVar5 + param_2;
-  iVar10 = (int)lVar9;
-  uVar11 = (longlong)((int)lVar5 + (int)param_3) * (longlong)iVar10;
-  uVar7 = (longlong)(iVar4 + iVar1) * (longlong)iVar8;
-  if (piVar2 == (int *)0x0) {
-    __restgprlr_22(0xfffffffffffffffe);
-    return;
+  uVar8 = (ulonglong)param_4;
+  lVar7 = (longlong)param_3;
+  lVar6 = (longlong)param_2;
+  pYVar3 = (YV12_BUFFER_CONFIG *)__savegprlr_22(param_1);
+  uVar11 = (int)lVar6 + 1;
+  lVar10 = (uVar8 & 0x7fffffff) * 2;
+  iVar5 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0);
+  iVar9 = (int)(lVar7 + 1U);
+  iVar1 = (int)uVar8;
+  iVar12 = iVar5 + iVar1;
+  iVar13 = (iVar9 >> 1) + (uint)(iVar9 < 0 && (lVar7 + 1U & 1) != 0);
+  lVar14 = lVar10 + lVar6;
+  iVar15 = (int)lVar14;
+  uVar11 = ((int)lVar10 + (int)lVar7) * iVar15;
+  iVar9 = (iVar13 + iVar1) * iVar12;
+  if (pYVar3 == (YV12_BUFFER_CONFIG *)0x0) {
+    iVar5 = __restgprlr_22(0xfffffffffffffffe);
+    return iVar5;
   }
-  vp8_yv12_de_alloc_frame_buffer();
-  *piVar2 = (int)param_2;
-  lVar5 = (uVar7 & 0x7fffffff) * 2 + uVar11;
-  piVar2[1] = (int)param_3;
-  piVar2[3] = iVar3;
-  piVar2[4] = iVar4;
-  piVar2[2] = iVar10;
-  piVar2[5] = iVar8;
-  piVar2[10] = iVar1;
-  piVar2[0xb] = (int)lVar5;
-  iVar3 = vpx_memalign(0x20,(lVar9 + 0x10U & 0x7fffffff) * 2 + lVar5);
-  piVar2[9] = iVar3;
-  if (iVar3 == 0) {
-    __restgprlr_22(0xffffffffffffffff);
-    return;
+  vp8_yv12_de_alloc_frame_buffer(pYVar3);
+  pYVar3->y_width = (int)lVar6;
+  iVar2 = iVar9 * 2 + uVar11;
+  pYVar3->y_height = (int)lVar7;
+  pYVar3->uv_width = iVar5;
+  pYVar3->uv_height = iVar13;
+  pYVar3->y_stride = iVar15;
+  pYVar3->uv_stride = iVar12;
+  pYVar3->border = iVar1;
+  pYVar3->frame_size = iVar2;
+  puVar4 = vpx_memalign(0x20,(int)((lVar14 + 0x10U & 0xffffffff) << 1) + iVar2);
+  pYVar3->buffer_alloc = puVar4;
+  if (puVar4 == (uchar *)0x0) {
+    iVar5 = __restgprlr_22(0xffffffffffffffff);
+    return iVar5;
   }
-  piVar2[6] = (piVar2[2] + 1) * iVar1 + iVar3;
-  if ((int)(uVar11 & 0xf) != 0) {
+  pYVar3->y_buffer = puVar4 + (pYVar3->y_stride + 1) * iVar1;
+  if ((uVar11 & 0xf) != 0) {
     uVar11 = (uVar11 - (uVar11 & 0xf)) + 0x10;
   }
-  iVar3 = (piVar2[5] + 1) * ((iVar1 >> 1) + (uint)(iVar1 < 0 && (param_4 & 1) != 0)) + iVar3;
-  piVar2[7] = iVar3 + (int)uVar11;
-  piVar2[8] = iVar3 + (int)uVar7 + (int)uVar11;
-  __restgprlr_22(0);
-  return;
+  iVar5 = (pYVar3->uv_stride + 1) * ((iVar1 >> 1) + (uint)(iVar1 < 0 && (uVar8 & 1) != 0));
+  pYVar3->u_buffer = puVar4 + uVar11 + iVar5;
+  pYVar3->v_buffer = puVar4 + uVar11 + iVar9 + iVar5;
+  iVar5 = __restgprlr_22(0);
+  return iVar5;
 }
 
 
 // 828417C0  vp8_yv12_black_frame_buffer  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12config.c:102)
 
-undefined8 vp8_yv12_black_frame_buffer(int param_1)
+int vp8_yv12_black_frame_buffer(YV12_BUFFER_CONFIG *param_1)
 
 {
-  if (param_1 != 0) {
-    if (*(int *)(param_1 + 0x24) != 0) {
-      vpx_memset(*(void **)(param_1 + 0x18),0,*(int *)(param_1 + 8) * *(int *)(param_1 + 4));
-      vpx_memset(*(void **)(param_1 + 0x1c),0x80,*(int *)(param_1 + 0x14) * *(int *)(param_1 + 0x10)
-                );
-      vpx_memset(*(void **)(param_1 + 0x20),0x80,*(int *)(param_1 + 0x14) * *(int *)(param_1 + 0x10)
-                );
+  if (param_1 != (YV12_BUFFER_CONFIG *)0x0) {
+    if (param_1->buffer_alloc != (uchar *)0x0) {
+      vpx_memset(param_1->y_buffer,0,param_1->y_stride * param_1->y_height);
+      vpx_memset(param_1->u_buffer,0x80,param_1->uv_stride * param_1->uv_height);
+      vpx_memset(param_1->v_buffer,0x80,param_1->uv_stride * param_1->uv_height);
     }
     return 0;
   }
-  return 0xffffffffffffffff;
+  return -1;
 }
 

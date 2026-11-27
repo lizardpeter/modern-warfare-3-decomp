@@ -2,43 +2,57 @@
 
 // 8232D400  CIN_PlayCinematic  (client/cl_cin.cpp:35)
 
-void CIN_PlayCinematic(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CIN_PlayCinematic(LocalClientNum_t param_1,char *param_2,int param_3,int param_4,int param_5,
+                      int param_6,int param_7)
 
 {
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202cb04,0x24,0,0xffffffff82000f98,0xffffffff82021a74);
+  if (param_2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0x24,0,"%s"
+                   );
   }
   R_Cinematic_StartPlayback(param_2,0,0);
-  if (DAT_82aa1c14 != 0) {
+  if (cls.uiStarted != 0) {
     UI_SetActiveMenu(param_1,0);
   }
   Con_Close(param_1);
-  CL_SetLocalClientConnectionState(param_1,1);
+  CL_SetLocalClientConnectionState(param_1,CA_CINEMATIC);
   return;
 }
 
 
 // 8232D4A8  CIN_PlayMenuVideo  (client/cl_cin.cpp:50)
 
-void CIN_PlayMenuVideo(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CIN_PlayMenuVideo(LocalClientNum_t param_1,char *param_2,int param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  uint uVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202cb04,0x33,0,0xffffffff82000f98,0xffffffff82021a74);
+  uVar3 = (ulonglong)param_4;
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0x33,0,"%s"
+                   );
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] == 0) {
-    uVar2 = 1;
-    if ((param_4 & 2) != 0) {
-      uVar2 = 3;
+  if (clientUIActives[uVar1].connectionState == CA_DISCONNECTED) {
+    uVar1 = 1;
+    if ((uVar3 & 2) != 0) {
+      uVar1 = 3;
     }
-    R_Cinematic_StartPlayback(param_2,uVar2,param_3);
+    R_Cinematic_StartPlayback((char *)uVar2,uVar1,param_3);
   }
   __restgprlr_28();
   return;
@@ -47,37 +61,50 @@ void CIN_PlayMenuVideo(undefined8 param_1,ulonglong param_2,undefined8 param_3,u
 
 // 8232D560  CL_PlayCinematic_f  (client/cl_cin.cpp:68)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_PlayCinematic_f(void)
 
 {
-  char *pcVar2;
-  undefined8 uVar1;
+  char *pcVar1;
+  LocalClientNum_t LVar2;
+  int in_r5;
+  int in_r6;
+  int in_r7;
+  int in_r8;
+  int in_r9;
   
-  DAT_829644b0 = 1;
-  pcVar2 = (char *)Cmd_Argv(1);
+  cin_skippable = true;
+  pcVar1 = Cmd_Argv(1);
   Cmd_Argv(2);
-  if ((pcVar2 != (char *)0x0) && (*pcVar2 == '\0')) {
-    Com_Printf(0,0xffffffff8202cb40);
+  if ((pcVar1 != (char *)0x0) && (*pcVar1 == '\0')) {
+    Com_Printf(0,"No cinematic file specified: cinematic filename [1/2/3]\n");
     return;
   }
-  uVar1 = Cmd_LocalClientNum();
-  CIN_PlayCinematic(uVar1,pcVar2);
+  LVar2 = Cmd_LocalClientNum();
+  CIN_PlayCinematic(LVar2,pcVar1,in_r5,in_r6,in_r7,in_r8,in_r9);
   return;
 }
 
 
 // 8232D5E8  CL_PlayAutoCinematic_f  (client/cl_cin.cpp:95)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_PlayAutoCinematic_f(void)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = Cmd_LocalClientNum();
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 10) {
+  if (clientUIActives[LVar1].connectionState != CA_ACTIVE) {
     CL_PlayCinematic_f();
   }
   return;
@@ -86,18 +113,23 @@ void CL_PlayAutoCinematic_f(void)
 
 // 8232DA88  CL_PlayUnskippableAutoCinematic_f  (client/cl_cin.cpp:103)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_PlayUnskippableAutoCinematic_f(void)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
   
-  uVar1 = Cmd_LocalClientNum();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  LVar1 = Cmd_LocalClientNum();
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b3e54c)[(int)uVar1 * 0x79] != 10) {
+  if (clientUIActives[LVar1].connectionState != CA_ACTIVE) {
     CL_PlayCinematic_f();
-    DAT_829644b0 = 0;
+    cin_skippable = false;
   }
   return;
 }
@@ -105,42 +137,47 @@ void CL_PlayUnskippableAutoCinematic_f(void)
 
 // 8232D660  CL_PlayUnskippableCinematic_f  (client/cl_cin.cpp:110)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_PlayUnskippableCinematic_f(void)
 
 {
   CL_PlayCinematic_f();
-  DAT_829644b0 = 0;
+  cin_skippable = false;
   return;
 }
 
 
 // 8232D690  CL_PlayMenuVideo_f  (client/cl_cin.cpp:117)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_PlayMenuVideo_f(void)
 
 {
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
+  LocalClientNum_t LVar3;
+  uint uVar4;
   
   uVar4 = 1;
-  pcVar2 = (char *)Cmd_Argv(1);
-  pcVar3 = (char *)Cmd_Argv(2);
-  if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-    Com_Printf(0,0xffffffff8202cb7c);
+  pcVar1 = Cmd_Argv(1);
+  pcVar2 = Cmd_Argv(2);
+  if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
+    Com_Printf(0,"No cinematic file specified: menuVideo filename [1/2]\n");
   }
   else {
-    if (pcVar3 != (char *)0x0) {
-      if (*pcVar3 == '1') {
+    if (pcVar2 != (char *)0x0) {
+      if (*pcVar2 == '1') {
         uVar4 = 5;
       }
-      if (*pcVar3 == '2') {
+      if (*pcVar2 == '2') {
         uVar4 = uVar4 | 2;
       }
     }
-    uVar1 = Cmd_LocalClientNum();
-    CIN_PlayMenuVideo(uVar1,pcVar2,3000,uVar4);
+    LVar3 = Cmd_LocalClientNum();
+    CIN_PlayMenuVideo(LVar3,pcVar1,3000,uVar4);
   }
   return;
 }
@@ -148,18 +185,20 @@ void CL_PlayMenuVideo_f(void)
 
 // 8232DB10  SCR_DrawCinematic  (client/cl_cin.cpp:143)
 
-void SCR_DrawCinematic(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SCR_DrawCinematic(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
   R_Cinematic_StartNextPlayback();
-  cVar1 = R_Cinematic_IsFinished();
-  if (cVar1 != '\0') {
+  bVar1 = R_Cinematic_IsFinished();
+  if (bVar1) {
     SCR_StopCinematic(param_1);
   }
-  cVar1 = R_Cinematic_IsStarted();
-  if (cVar1 != '\0') {
+  bVar1 = R_Cinematic_IsStarted();
+  if (bVar1) {
     R_Cinematic_DrawStretchPic_Letterboxed(param_1);
   }
   return;
@@ -168,32 +207,36 @@ void SCR_DrawCinematic(undefined8 param_1)
 
 // 8232D738  SCR_StopCinematic  (client/cl_cin.cpp:155)
 
-void SCR_StopCinematic(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SCR_StopCinematic(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
   R_Cinematic_StopPlayback();
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202cab8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((&DAT_82b3e54c)[(int)param_1 * 0x79] == 1) {
-    Key_RemoveCatcher(0,0xffffffffffffffef);
-    CL_SetLocalClientConnectionState(param_1,0);
+  if (clientUIActives[param_1].connectionState == CA_CINEMATIC) {
+    Key_RemoveCatcher(LOCAL_CLIENT_0,-0x11);
+    CL_SetLocalClientConnectionState(param_1,CA_DISCONNECTED);
     CL_ResetLastGamePadEventTime();
-    if (DAT_82a77240 == (int *)0x0) {
-      if (**(char **)(DAT_83666160 + 0xc) != '\0') {
-        uVar1 = va(0xffffffff82004d30);
-        Cbuf_AddText(0,uVar1);
-        Dvar_SetString(DAT_83666160,0xffffffff820068af);
+    if (g_movieList == (char **)0x0) {
+      if (*(nextmap->current).string != '\0') {
+        pcVar1 = va("%s\n");
+        Cbuf_AddText(LOCAL_CLIENT_0,pcVar1);
+        Dvar_SetString(nextmap,"");
       }
     }
     else {
-      uVar1 = va(0xffffffff8202cbb4,*DAT_82a77240);
-      Cbuf_AddText(0,uVar1);
-      DAT_82a77240 = DAT_82a77240 + 1;
-      if (*DAT_82a77240 == 0) {
-        DAT_82a77240 = (int *)0x0;
+      pcVar1 = va("autocinematic %s\n");
+      Cbuf_AddText(LOCAL_CLIENT_0,pcVar1);
+      g_movieList = g_movieList + 1;
+      if (*g_movieList == (char *)0x0) {
+        g_movieList = (char **)0x0;
         return;
       }
     }
@@ -204,12 +247,14 @@ void SCR_StopCinematic(ulonglong param_1)
 
 // 8232D868  SCR_StopCinematic_ByUserRequest  (client/cl_cin.cpp:185)
 
-void SCR_StopCinematic_ByUserRequest(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SCR_StopCinematic_ByUserRequest(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((DAT_829644b0 != '\0') || (cVar1 = R_Cinematic_IsFinished(), cVar1 != '\0')) {
+  if ((cin_skippable) || (bVar1 = R_Cinematic_IsFinished(), bVar1)) {
     SCR_StopCinematic(param_1);
   }
   return;
@@ -218,56 +263,61 @@ void SCR_StopCinematic_ByUserRequest(undefined8 param_1)
 
 // 8232D8B8  CIN_PlayAttractModeMovie  (client/cl_cin.cpp:197)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CIN_PlayAttractModeMovie(void)
 
 {
   char cVar1;
   int iVar2;
-  undefined8 uVar3;
+  char *pcVar3;
   int iVar4;
-  char *pcVar5;
-  longlong lVar6;
-  undefined1 *puVar7;
-  undefined1 local_140 [8];
-  undefined1 auStack_138 [8];
+  int iVar5;
+  undefined1 *puVar6;
+  char *local_140 [2];
+  LargeLocal LStack_138;
   undefined1 auStack_130 [304];
   
   __savegprlr_28();
-  LargeLocal__LargeLocal(&stack0x00000000 + -0x138,0x18000);
-  uVar3 = LargeLocal__GetBuf(&stack0x00000000 + -0x138);
-  iVar4 = DB_ReadRawFile(0xffffffff8202cc44,uVar3,0x18000);
-  if (iVar4 != 0) {
-    Com_BeginParseSession(0xffffffff8202cc44);
-    pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
-    iVar4 = atoi(pcVar5);
+  LargeLocal::LargeLocal(&LStack_138,0x18000);
+  pcVar3 = LargeLocal::GetBuf(&LStack_138);
+  pcVar3 = DB_ReadRawFile("video/cin_playlist.txt",pcVar3,0x18000);
+  if (pcVar3 != (char *)0x0) {
+    Com_BeginParseSession("video/cin_playlist.txt");
+    local_140[0] = pcVar3;
+    pcVar3 = Com_Parse(local_140);
+    iVar4 = atoi(pcVar3);
     if (7 < iVar4) {
-      MyAssertHandler(0xffffffff8202cb04,0xdd,0,0xffffffff8202cc10,0xffffffff8202cc2c,iVar4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0xdd,0,
+                      "%s\n\t(movieTotalCount) = %i");
     }
-    lVar6 = 0;
-    pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
-    if (*pcVar5 != '\0') {
-      puVar7 = &stack0x00000000 + -0x130;
+    iVar5 = 0;
+    pcVar3 = Com_Parse(local_140);
+    if (*pcVar3 != '\0') {
+      puVar6 = auStack_130;
       do {
-        iVar2 = (int)puVar7 - (int)pcVar5;
+        iVar2 = (int)puVar6 - (int)pcVar3;
         do {
-          cVar1 = *pcVar5;
-          pcVar5[iVar2] = cVar1;
-          pcVar5 = pcVar5 + 1;
+          cVar1 = *pcVar3;
+          pcVar3[iVar2] = cVar1;
+          pcVar3 = pcVar3 + 1;
         } while (cVar1 != '\0');
-        lVar6 = lVar6 + 1;
-        puVar7 = puVar7 + 0x20;
-        pcVar5 = (char *)Com_Parse(&stack0x00000000 + -0x140);
-      } while (*pcVar5 != '\0');
+        iVar5 = iVar5 + 1;
+        puVar6 = puVar6 + 0x20;
+        pcVar3 = Com_Parse(local_140);
+      } while (*pcVar3 != '\0');
     }
     Com_EndParseSession();
-    if (iVar4 != (int)lVar6) {
-      MyAssertHandler(0xffffffff8202cb04,0xed,0,0xffffffff8202cbd8,0xffffffff8202cbf0,lVar6);
+    if (iVar4 != iVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0xed,0,
+                      "%s\n\t(movieCount) = %i");
     }
-    iVar4 = irand(0,lVar6);
-    uVar3 = va(0xffffffff8202cbc8,&stack0x00000000 + iVar4 * 0x20 + -0x130);
-    Cbuf_AddText(0,uVar3);
+    irand(0,iVar5);
+    pcVar3 = va("cinematic %s\n");
+    Cbuf_AddText(LOCAL_CLIENT_0,pcVar3);
   }
-  LargeLocal___LargeLocal(&stack0x00000000 + -0x138);
+  LargeLocal::~LargeLocal(&LStack_138);
   __restgprlr_28();
   return;
 }
@@ -275,13 +325,14 @@ void CIN_PlayAttractModeMovie(void)
 
 // 8232DA20  CIN_SetMovieList  (client/cl_cin.cpp:245)
 
-void CIN_SetMovieList(undefined4 param_1)
+void CIN_SetMovieList(char **param_1)
 
 {
-  if (DAT_82a77240 != 0) {
-    MyAssertHandler(0xffffffff8202cb04,0xf6,0,0xffffffff82000f98,0xffffffff8202cc5c);
+  if (g_movieList != (char **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_cin.cpp",0xf6,0,"%s"
+                   );
   }
-  DAT_82a77240 = param_1;
+  g_movieList = param_1;
   return;
 }
 

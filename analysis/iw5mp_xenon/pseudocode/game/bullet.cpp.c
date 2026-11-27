@@ -2,31 +2,37 @@
 
 // 824512A8  Bullet_RandomDir  (game/bullet.cpp:38)
 
-void Bullet_RandomDir(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void Bullet_RandomDir(uint *param_1,float *param_2,float *param_3)
 
 {
-  undefined8 uVar1;
-  double dVar2;
-  double dVar3;
+  uint *puVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   double dVar4;
-  double _X;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float fVar8;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x29,0,0xffffffff82000f98,0xffffffff8200fdbc);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_27(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x29,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x2a,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x2a,0,"%s");
   }
-  dVar2 = (double)BG_random(uVar1);
-  dVar4 = (double)(float)(dVar2 * 360.0);
-  dVar2 = (double)BG_random(uVar1);
-  _X = (double)(float)(dVar4 * 0.01745329238474369);
-  dVar4 = sin(_X);
-  dVar3 = (double)(float)dVar4;
-  dVar4 = cos(_X);
-  *(float *)param_2 = (float)((double)(float)dVar4 * dVar2);
-  *(float *)param_3 = (float)(dVar3 * dVar2);
+  fVar8 = BG_random(puVar1);
+  dVar6 = (double)(fVar8 * 360.0);
+  fVar8 = BG_random(puVar1);
+  dVar4 = (double)fVar8;
+  dVar7 = (double)(float)(dVar6 * 0.01745329238474369);
+  dVar6 = sin(dVar7);
+  dVar5 = (double)(float)dVar6;
+  dVar6 = cos(dVar7);
+  *(float *)uVar2 = (float)((double)(float)dVar6 * dVar4);
+  *(float *)uVar3 = (float)(dVar5 * dVar4);
   __restgprlr_27();
   return;
 }
@@ -34,171 +40,144 @@ void Bullet_RandomDir(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82451390  Bullet_Endpos  (game/bullet.cpp:62)
 
-void Bullet_Endpos(undefined8 param_1,double param_2,undefined8 param_3,undefined8 param_4,
-                  ulonglong param_5,ulonglong param_6,ulonglong param_7)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Bullet_Endpos(uint *param_1,float param_2,float *param_3,float *param_4,weaponParms *param_5,
+                  float param_6)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  undefined8 uVar4;
-  float *pfVar5;
-  float *pfVar6;
+  float fVar3;
+  float *pfVar4;
+  float fVar5;
+  uint *puVar6;
+  ulonglong uVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  float *pfVar10;
+  ulonglong in_r7;
   double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   float local_70;
   float local_6c [27];
   
-  uVar4 = __savegprlr_24();
+  dVar12 = (double)param_6;
+  uVar9 = (ulonglong)(int)param_5;
+  uVar7 = (ulonglong)(int)param_4;
+  puVar6 = (uint *)__savegprlr_24((double)param_2,param_1,param_3);
   local_70 = (float)extraout_f1;
-  dVar7 = extraout_f1;
+  dVar11 = extraout_f1;
   if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8206b0e4,0x43,0,0xffffffff82000f98,0xffffffff8202ac68);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x43,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x47,0,0xffffffff82000f98,0xffffffff8202a874);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x47,0,"%s");
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x48,0,0xffffffff82000f98,0xffffffff8206b270);
+  if ((in_r7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x48,0,"%s");
   }
-  dVar7 = tan((double)(float)(dVar7 * 0.01745329238474369));
-  local_70 = (float)((double)(float)dVar7 * param_2);
-  dVar7 = (double)local_70;
+  dVar11 = tan((double)(float)(dVar11 * 0.01745329238474369));
+  local_70 = (float)((double)(float)dVar11 * dVar12);
+  dVar11 = (double)local_70;
   if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8206b0e4,0x4d,0,0xffffffff82000f98,0xffffffff8202ac54);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x4d,0,"%s");
   }
-  Bullet_RandomDir(uVar4,&local_70,local_6c);
-  local_70 = (float)((double)local_70 * dVar7);
-  dVar10 = (double)local_70;
-  dVar7 = (double)(float)((double)local_6c[0] * dVar7);
+  Bullet_RandomDir(puVar6,&local_70,local_6c);
+  local_70 = (float)((double)local_70 * dVar11);
+  dVar13 = (double)local_70;
+  dVar11 = (double)(float)((double)local_6c[0] * dVar11);
   if (((uint)local_70 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8206b0e4,0x57,0,0xffffffff82000f98,0xffffffff8202ac44);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x57,0,"%s");
   }
-  local_6c[0] = (float)dVar7;
+  local_6c[0] = (float)dVar11;
   if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8206b0e4,0x58,0,0xffffffff82000f98,0xffffffff8202ac38);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x58,0,"%s");
   }
-  pfVar3 = (float *)param_7;
-  local_6c[0] = pfVar3[9];
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_82451560:
-    MyAssertHandler(0xffffffff8206b0e4,0x59,0,0xffffffff82000f98,0xffffffff8206b210);
+  pfVar4 = (float *)in_r7;
+  local_6c[0] = pfVar4[9];
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = pfVar4[10], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = pfVar4[0xb], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x59,0,"%s");
   }
-  else {
-    local_6c[0] = pfVar3[10];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451560;
-    local_6c[0] = pfVar3[0xb];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451560;
+  local_6c[0] = *pfVar4;
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = pfVar4[1], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = pfVar4[2], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5a,0,"%s");
   }
-  local_6c[0] = *pfVar3;
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_824515c4:
-    MyAssertHandler(0xffffffff8206b0e4,0x5a,0,0xffffffff82000f98,0xffffffff8206b1b8);
+  local_6c[0] = pfVar4[3];
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = pfVar4[4], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = pfVar4[5], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5b,0,"%s");
   }
-  else {
-    local_6c[0] = pfVar3[1];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_824515c4;
-    local_6c[0] = pfVar3[2];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_824515c4;
+  local_6c[0] = pfVar4[6];
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = pfVar4[7], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = pfVar4[8], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5c,0,"%s");
   }
-  local_6c[0] = pfVar3[3];
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_82451628:
-    MyAssertHandler(0xffffffff8206b0e4,0x5b,0,0xffffffff82000f98,0xffffffff8206b168);
+  local_6c[0] = (float)((double)*pfVar4 * dVar12 + (double)pfVar4[9]);
+  pfVar8 = (float *)uVar7;
+  *pfVar8 = local_6c[0];
+  fVar1 = (float)((double)pfVar4[1] * dVar12 + (double)pfVar4[10]);
+  pfVar8[1] = fVar1;
+  fVar2 = (float)((double)pfVar4[2] * dVar12 + (double)pfVar4[0xb]);
+  pfVar8[2] = fVar2;
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",99,0,"%s");
   }
-  else {
-    local_6c[0] = pfVar3[4];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451628;
-    local_6c[0] = pfVar3[5];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_82451628;
+  fVar1 = (float)(dVar13 * (double)pfVar4[3] + (double)*pfVar8);
+  *pfVar8 = fVar1;
+  fVar2 = (float)((double)pfVar4[4] * dVar13 + (double)pfVar8[1]);
+  pfVar8[1] = fVar2;
+  fVar3 = (float)((double)pfVar4[5] * dVar13 + (double)pfVar8[2]);
+  pfVar8[2] = fVar3;
+  local_6c[0] = (float)((double)pfVar4[6] * dVar11 + (double)fVar1);
+  *pfVar8 = local_6c[0];
+  fVar1 = (float)((double)pfVar4[7] * dVar11 + (double)fVar2);
+  pfVar8[1] = fVar1;
+  fVar2 = (float)((double)pfVar4[8] * dVar11 + (double)fVar3);
+  pfVar8[2] = fVar2;
+  if (((((uint)local_6c[0] & 0x7f800000) == 0x7f800000) ||
+      (local_6c[0] = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
+     (local_6c[0] = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x68,0,"%s");
   }
-  local_6c[0] = pfVar3[6];
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_8245168c:
-    MyAssertHandler(0xffffffff8206b0e4,0x5c,0,0xffffffff82000f98,0xffffffff8206b120);
-  }
-  else {
-    local_6c[0] = pfVar3[7];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_8245168c;
-    local_6c[0] = pfVar3[8];
-    if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) goto LAB_8245168c;
-  }
-  local_6c[0] = (float)((double)*pfVar3 * param_2 + (double)pfVar3[9]);
-  pfVar5 = (float *)param_5;
-  *pfVar5 = local_6c[0];
-  fVar1 = (float)((double)pfVar3[1] * param_2 + (double)pfVar3[10]);
-  pfVar5[1] = fVar1;
-  fVar2 = (float)((double)pfVar3[2] * param_2 + (double)pfVar3[0xb]);
-  pfVar5[2] = fVar2;
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_82451724:
-    MyAssertHandler(0xffffffff8206b0e4,99,0,0xffffffff82000f98,0xffffffff8202abfc);
-  }
-  else {
-    local_6c[0] = fVar1;
-    if (((uint)fVar1 & 0x7f800000) == 0x7f800000) goto LAB_82451724;
-    local_6c[0] = fVar2;
-    if (((uint)fVar2 & 0x7f800000) == 0x7f800000) goto LAB_82451724;
-  }
-  fVar1 = (float)(dVar10 * (double)pfVar3[3] + (double)*pfVar5);
-  *pfVar5 = fVar1;
-  fVar2 = (float)((double)pfVar3[4] * dVar10 + (double)pfVar5[1]);
-  dVar9 = (double)fVar2;
-  pfVar5[1] = fVar2;
-  fVar2 = (float)((double)pfVar3[5] * dVar10 + (double)pfVar5[2]);
-  pfVar5[2] = fVar2;
-  local_6c[0] = (float)((double)pfVar3[6] * dVar7 + (double)fVar1);
-  *pfVar5 = local_6c[0];
-  fVar1 = (float)((double)pfVar3[7] * dVar7 + dVar9);
-  pfVar5[1] = fVar1;
-  fVar2 = (float)((double)pfVar3[8] * dVar7 + (double)fVar2);
-  pfVar5[2] = fVar2;
-  if (((uint)local_6c[0] & 0x7f800000) == 0x7f800000) {
-LAB_824517e0:
-    MyAssertHandler(dVar9,0xffffffff8206b0e4,0x68,0,0xffffffff82000f98,0xffffffff8202abfc);
-  }
-  else {
-    local_6c[0] = fVar1;
-    if (((uint)fVar1 & 0x7f800000) == 0x7f800000) goto LAB_824517e0;
-    local_6c[0] = fVar2;
-    if (((uint)fVar2 & 0x7f800000) == 0x7f800000) goto LAB_824517e0;
-  }
-  if ((param_6 & 0xffffffff) != 0) {
-    fVar1 = *pfVar5 - pfVar3[9];
-    dVar9 = (double)fVar1;
-    pfVar6 = (float *)param_6;
-    *pfVar6 = fVar1;
-    dVar10 = (double)(pfVar5[1] - pfVar3[10]);
-    pfVar6[1] = pfVar5[1] - pfVar3[10];
-    dVar7 = (double)(pfVar5[2] - pfVar3[0xb]);
-    pfVar6[2] = pfVar5[2] - pfVar3[0xb];
-    fVar2 = SQRT((float)(dVar7 * dVar7 +
-                        (double)(float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10))));
-    fVar1 = 1.0;
-    if (-fVar2 < 0.0) {
-      fVar1 = fVar2;
+  if ((uVar9 & 0xffffffff) != 0) {
+    fVar1 = *pfVar8 - pfVar4[9];
+    pfVar10 = (float *)uVar9;
+    *pfVar10 = fVar1;
+    fVar2 = pfVar8[1] - pfVar4[10];
+    pfVar10[1] = fVar2;
+    local_6c[0] = pfVar8[2] - pfVar4[0xb];
+    pfVar10[2] = local_6c[0];
+    fVar5 = SQRT(local_6c[0] * local_6c[0] + fVar1 * fVar1 + fVar2 * fVar2);
+    fVar3 = 1.0;
+    if (-fVar5 < 0.0) {
+      fVar3 = fVar5;
     }
-    dVar8 = (double)(1.0 / fVar1);
-    fVar1 = (float)(dVar9 * dVar8);
-    fVar2 = (float)(dVar10 * dVar8);
-    *pfVar6 = fVar1;
-    local_6c[0] = (float)(dVar7 * dVar8);
-    pfVar6[1] = fVar2;
-    pfVar6[2] = local_6c[0];
-    if (((uint)fVar1 & 0x7f800000) != 0x7f800000) {
-      fVar1 = fVar2;
-      if (((uint)fVar2 & 0x7f800000) != 0x7f800000) {
-        fVar1 = local_6c[0];
-        if (((uint)local_6c[0] & 0x7f800000) != 0x7f800000) goto LAB_824518d4;
-      }
+    fVar3 = 1.0 / fVar3;
+    fVar1 = fVar1 * fVar3;
+    fVar2 = fVar2 * fVar3;
+    *pfVar10 = fVar1;
+    local_6c[0] = local_6c[0] * fVar3;
+    pfVar10[1] = fVar2;
+    pfVar10[2] = local_6c[0];
+    if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) ||
+        (fVar1 = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
+       (fVar1 = local_6c[0], ((uint)local_6c[0] & 0x7f800000) == 0x7f800000)) {
+      local_6c[0] = fVar1;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x71,0,"%s"
+                     );
     }
-    local_6c[0] = fVar1;
-    MyAssertHandler(dVar7,0xffffffff8206b0e4,0x71,0,0xffffffff82000f98,0xffffffff8202854c);
   }
-LAB_824518d4:
   __restgprlr_24();
   return;
 }
@@ -206,131 +185,156 @@ LAB_824518d4:
 
 // 824518E8  Bullet_GetDamage  (game/bullet.cpp:123)
 
-void Bullet_GetDamage(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                     ulonglong param_5)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int Bullet_GetDamage(BulletFireParams *param_1,BulletTraceResults *param_2,Weapon param_3,
+                    bool param_4,gentity_s *param_5)
 
 {
   int iVar1;
-  float fVar2;
+  int iVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
+  float fVar5;
   int iVar6;
   int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  double dVar10;
-  double dVar11;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  int iVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
   float local_80 [2];
   longlong local_78 [15];
   
-  iVar5 = __savegprlr_23();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x85,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar10 = (ulonglong)(int)param_5;
+  uVar9 = (ulonglong)(int)param_2;
+  iVar6 = __savegprlr_23(param_1);
+  if (iVar6 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x85,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x86,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x86,0,"%s");
   }
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x1c) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x87,0,0xffffffff82000f98,0xffffffff8200e924);
+  iVar2 = (int)uVar9;
+  if (*(int *)(iVar2 + 0x1c) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x87,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x88,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x88,0,"%s");
   }
-  iVar6 = BG_GetDamage(param_3,param_4);
-  iVar7 = BG_GetMinDamage(param_3,param_4);
-  iVar9 = iVar6;
-  if (iVar6 != iVar7) {
-    uVar8 = (ulonglong)*(uint *)((int)param_5 + 0x158);
-    if (uVar8 == 0) {
-      BG_GetDamageRange(param_3,param_4,local_78,local_80);
+  iVar7 = BG_GetDamage(param_3,param_4);
+  iVar8 = BG_GetMinDamage(param_3,param_4);
+  iVar11 = iVar7;
+  if (iVar7 != iVar8) {
+    iVar1 = *(int *)((int)uVar10 + 0x158);
+    if (iVar1 == 0) {
+      BG_GetDamageRange(param_3,param_4,(float *)local_78,local_80);
     }
     else {
-      BG_GetPlayerDamageRange(uVar8 + 0x4ec,param_3,param_4,local_78,local_80);
+      BG_GetPlayerDamageRange((uint *)(iVar1 + 0x4ec),param_3,param_4,(float *)local_78,local_80);
     }
-    fVar2 = *(float *)(iVar1 + 0x40) - *(float *)(iVar5 + 0x1c);
-    fVar3 = *(float *)(iVar1 + 0x38) - *(float *)(iVar5 + 0x14);
-    fVar4 = *(float *)(iVar1 + 0x3c) - *(float *)(iVar5 + 0x18);
-    dVar10 = (double)local_80[0];
-    dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-    if ((dVar10 <= dVar11) && (iVar9 = iVar7, dVar11 < (double)local_78[0]._0_4_)) {
-      dVar14 = (double)(float)((double)local_78[0]._0_4_ - dVar10);
-      dVar13 = 0.0;
-      if (dVar14 == 0.0) {
-        MyAssertHandler(0xffffffff8206b0e4,0xb7,0,0xffffffff82000f98,0xffffffff8206b2bc);
-        dVar10 = (double)local_80[0];
+    fVar3 = *(float *)(iVar2 + 0x40) - *(float *)(iVar6 + 0x1c);
+    fVar4 = *(float *)(iVar2 + 0x38) - *(float *)(iVar6 + 0x14);
+    fVar5 = *(float *)(iVar2 + 0x3c) - *(float *)(iVar6 + 0x18);
+    dVar12 = (double)local_80[0];
+    dVar13 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
+    if ((dVar12 <= dVar13) && (iVar11 = iVar8, dVar13 < (double)local_78[0]._0_4_)) {
+      dVar16 = (double)(float)((double)local_78[0]._0_4_ - dVar12);
+      dVar15 = 0.0;
+      if (dVar16 == 0.0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0xb7,0,
+                        "%s");
+        dVar12 = (double)local_80[0];
       }
-      dVar12 = 1.0;
-      dVar10 = (double)(float)((double)(float)(dVar11 - dVar10) / dVar14);
-      if ((dVar10 < dVar13) || (1.0 < dVar10)) {
-        MyAssertHandler(dVar10,0xffffffff8206b0e4,0xb9,0,0xffffffff8206b274,0xffffffff8206b28c,
-                        dVar10);
+      dVar14 = 1.0;
+      dVar12 = (double)(float)((double)(float)(dVar13 - dVar12) / dVar16);
+      if ((dVar12 < dVar15) || (1.0 < dVar12)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0xb9,0,
+                        "%s\n\t(lerpAmount) = %g");
       }
-      iVar9 = (int)((float)(dVar12 - dVar10) * (float)(longlong)iVar6 +
-                   (float)((double)(longlong)iVar7 * dVar10));
+      iVar11 = (int)((float)(dVar14 - dVar12) * (float)(longlong)iVar7 +
+                    (float)((double)(longlong)iVar8 * dVar12));
     }
   }
-  iVar5 = (int)(*(float *)(iVar5 + 8) * (float)(longlong)iVar9);
-  local_78[0] = (longlong)iVar5;
-  __restgprlr_23(iVar5);
-  return;
+  iVar6 = (int)(*(float *)(iVar6 + 8) * (float)(longlong)iVar11);
+  local_78[0] = (longlong)iVar6;
+  iVar6 = __restgprlr_23(iVar6);
+  return iVar6;
 }
 
 
 // 82451B78  Bullet_GetMethodOfDeath  (game/bullet.cpp:247)
 
-void Bullet_GetMethodOfDeath(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+meansOfDeath_t Bullet_GetMethodOfDeath(gentity_s *param_1,weaponParms *param_2)
 
 {
   int iVar1;
-  undefined1 auStack_30 [48];
+  meansOfDeath_t mVar2;
+  ulonglong uVar3;
+  uint auStack_30 [12];
   
-  iVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0xfc,0,0xffffffff82000f98,0xffffffff8206b2cc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0xfc,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0xfd,0,0xffffffff82000f98,0xffffffff8206b270);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0xfd,0,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x158) == 0) {
+  if (*(int *)(iVar1 + 0x158) == 0) {
     BG_ClearPerks(auStack_30);
   }
   else {
-    BG_CopyPerks((ulonglong)*(uint *)(iVar1 + 0x158) + 0x4ec,auStack_30);
+    BG_CopyPerks((uint *)(*(int *)(iVar1 + 0x158) + 0x4ec),auStack_30);
   }
-  BG_WeaponBulletFire_GetMethodOfDeath
-            (auStack_30,*(undefined4 *)((int)param_2 + 0x3c),*(undefined1 *)((int)param_2 + 0x40));
-  __restgprlr_28();
-  return;
+  mVar2 = BG_WeaponBulletFire_GetMethodOfDeath
+                    (auStack_30,*(Weapon *)((int)uVar3 + 0x3c),*(bool *)((int)uVar3 + 0x40));
+  mVar2 = __restgprlr_28(mVar2);
+  return mVar2;
 }
 
 
 // 82451C20  Bullet_ImpactExplosion_ComputeImpactLocation  (game/bullet.cpp:272)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Bullet_ImpactExplosion_ComputeImpactLocation
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+               (BulletFireParams *param_1,BulletTraceResults *param_2,float *param_3)
 
 {
   float fVar1;
   int iVar2;
   int iVar3;
-  float *pfVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  float *pfVar6;
   
-  iVar3 = __savegprlr_27();
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_27(param_1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x114,0,0xffffffff82000f98,0xffffffff8200e950);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x114,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x115,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x115,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x116,0,0xffffffff82000f98,0xffffffff8206b2d8);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x116,0,"%s")
+    ;
   }
-  iVar2 = (int)param_2;
+  iVar2 = (int)uVar4;
   fVar1 = -(*(float *)(iVar2 + 0xc) * *(float *)(iVar3 + 0x40) +
            *(float *)(iVar2 + 8) * *(float *)(iVar3 + 0x3c) +
            *(float *)(iVar2 + 4) * *(float *)(iVar3 + 0x38));
@@ -341,10 +345,10 @@ void Bullet_ImpactExplosion_ComputeImpactLocation
     fVar1 = 2.0;
   }
   fVar1 = -fVar1;
-  pfVar4 = (float *)param_3;
-  *pfVar4 = *(float *)(iVar3 + 0x38) * fVar1 + *(float *)(iVar2 + 0x38);
-  pfVar4[1] = *(float *)(iVar3 + 0x3c) * fVar1 + *(float *)(iVar2 + 0x3c);
-  pfVar4[2] = *(float *)(iVar3 + 0x40) * fVar1 + *(float *)(iVar2 + 0x40);
+  pfVar6 = (float *)uVar5;
+  *pfVar6 = *(float *)(iVar3 + 0x38) * fVar1 + *(float *)(iVar2 + 0x38);
+  pfVar6[1] = *(float *)(iVar3 + 0x3c) * fVar1 + *(float *)(iVar2 + 0x3c);
+  pfVar6[2] = *(float *)(iVar3 + 0x40) * fVar1 + *(float *)(iVar2 + 0x40);
   __restgprlr_27();
   return;
 }
@@ -352,52 +356,103 @@ void Bullet_ImpactExplosion_ComputeImpactLocation
 
 // 82451D40  Bullet_ImpactExplosion  (game/bullet.cpp:291)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Bullet_ImpactExplosion
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               ulonglong param_5)
+               (BulletFireParams *param_1,BulletTraceResults *param_2,Weapon param_3,bool param_4,
+               gentity_s *param_5)
 
 {
   int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  undefined8 uVar5;
-  undefined1 auStack_70 [112];
+  BulletTraceResults *pBVar2;
+  BulletFireParams *pBVar3;
+  ulonglong uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  ulonglong uVar7;
+  gentity_s *pgVar8;
+  char *pcVar9;
+  gentity_s *pgVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
+  undefined1 *local_f0 [21];
+  gentity_s *local_9c;
+  meansOfDeath_t local_94;
+  undefined4 local_8c;
+  undefined1 local_81;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float afStack_70 [28];
   
-  iVar3 = __savegprlr_24();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x12d,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar7 = (ulonglong)(int)param_5;
+  pfVar5 = (float *)(int)param_4;
+  uVar4 = (ulonglong)(int)param_2;
+  pBVar3 = (BulletFireParams *)__savegprlr_24(param_1);
+  pgVar8 = (gentity_s *)uVar7;
+  pfVar6 = pfVar5;
+  local_f0[0] = (undefined1 *)register0x0000000c;
+  pcVar9 = (char *)pgVar8;
+  if (pBVar3 == (BulletFireParams *)0x0) {
+    pcVar9 = "bp";
+    pfVar6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x12d,0,"%s")
+    ;
   }
-  if (*(int *)(iVar3 + 0xc) != 3) {
-    MyAssertHandler(0xffffffff8206b0e4,0x12e,0,0xffffffff82000f98,0xffffffff8206b348);
+  if (pBVar3->methodOfDeath != MOD_EXPLOSIVE_BULLET) {
+    pcVar9 = "bp->methodOfDeath == MOD_EXPLOSIVE_BULLET";
+    pfVar6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x12e,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x12f,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    pcVar9 = "br";
+    pfVar6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x12f,0,"%s")
+    ;
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x130,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar7 & 0xffffffff) == 0) {
+    pcVar9 = "attacker";
+    pfVar6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x130,0,"%s")
+    ;
   }
-  iVar1 = (int)param_2;
-  iVar4 = *(int *)(iVar1 + 0x34);
-  if (((iVar4 != 0) && (*(int *)(iVar4 + 0x158) != 0)) &&
-     (iVar4 = *(int *)(iVar4 + 0x90), *(int *)(iVar1 + 0x4c) = iVar4, 0x11 < iVar4)) {
-    MyAssertHandler(0xffffffff8206b0e4,0x139,0,0xffffffff82000f98,0xffffffff8206b328);
+  pBVar2 = (BulletTraceResults *)uVar4;
+  pgVar10 = pBVar2->hitEnt;
+  if (((pgVar10 != (gentity_s *)0x0) && (pgVar10->client != (gclient_s *)0x0)) &&
+     (iVar1 = (pgVar10->s).clientNum, pBVar2->hitClientNum = iVar1, 0x11 < iVar1)) {
+    pcVar9 = "br->hitClientNum < MAX_CLIENTS";
+    pfVar6 = (float *)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x139,0,"%s")
+    ;
   }
-  iVar4 = *(int *)((int)param_5 + 4);
-  if ((iVar4 != 1) && (iVar4 != 0xc)) {
-    uVar2 = BG_GetEntityTypeName();
-    Com_Error(1,0xffffffff8206b2e8,uVar2);
+  iVar1 = (pgVar8->s).eType;
+  if ((iVar1 != 1) && (iVar1 != 0xc)) {
+    BG_GetEntityTypeName(iVar1);
+    Com_Error(ERR_DROP,"\x15Explosive bullets are not supported for entities of type \'%s\'.");
   }
-  uVar2 = BG_WeaponBulletFire_GetExplDmg(param_3,param_4);
-  uVar5 = BG_WeaponBulletFire_GetExplRadius(param_3,param_4);
-  iVar4 = *(int *)(iVar1 + 0x34);
-  if ((iVar4 == 0) || (*(char *)(iVar4 + 0x16b) == '\0')) {
-    iVar4 = 0;
+  local_80 = 0.0;
+  local_7c = 0.0;
+  local_78 = 0.0;
+  fVar13 = BG_WeaponBulletFire_GetExplDmg(param_3,SUB41(pfVar5,0));
+  dVar11 = (double)fVar13;
+  fVar13 = BG_WeaponBulletFire_GetExplRadius(param_3,SUB41(pfVar5,0));
+  dVar12 = (double)fVar13;
+  pgVar10 = pBVar2->hitEnt;
+  if ((pgVar10 == (gentity_s *)0x0) || (pgVar10->takedamage == '\0')) {
+    pgVar10 = (gentity_s *)0x0;
   }
-  Bullet_ImpactExplosion_ComputeImpactLocation(iVar3,param_2,auStack_70);
-  G_RadiusDamage(uVar2,0,uVar5,0xbff0000000000000,auStack_70,param_5,param_5);
-  if ((iVar4 != 0) && (*(int *)(iVar4 + 0x160) != 0)) {
-    Vehicle_Knockback(0x3ff0000000000000,*(int *)(iVar4 + 0x160),iVar3 + 0x38,3);
+  Bullet_ImpactExplosion_ComputeImpactLocation(pBVar3,pBVar2,afStack_70);
+  local_94 = pBVar3->methodOfDeath;
+  local_8c = 0;
+  local_81 = 0;
+  local_9c = pgVar10;
+  G_RadiusDamage(afStack_70,pgVar8,pgVar8,(float)dVar11,0.0,(float)dVar12,-1.0,pfVar6,
+                 (gentity_s *)pcVar9,local_94,(Weapon)0x82000000,(bool)((char)local_f0 + 'p'));
+  if ((pgVar10 != (gentity_s *)0x0) && (pgVar10->vehicle != (Vehicle *)0x0)) {
+    Vehicle_Knockback(pgVar10->vehicle,pBVar3->dir,MOD_EXPLOSIVE_BULLET,1.0,pfVar6);
   }
   __restgprlr_24();
   return;
@@ -406,27 +461,30 @@ void Bullet_ImpactExplosion
 
 // 82451F68  Bullet_ImpactEffect_SetAdditionalFlags  (game/bullet.cpp:346)
 
-void Bullet_ImpactEffect_SetAdditionalFlags(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Bullet_ImpactEffect_SetAdditionalFlags(gentity_s *param_1,int param_2)
 
 {
-  uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar1;
   
-  iVar3 = __savegprlr_28();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x15b,0,0xffffffff82000f98,0xffffffff8206b4cc);
+  iVar1 = __savegprlr_28(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x15b,0,"%s")
+    ;
   }
-  uVar1 = (uint)param_2;
-  if ((uVar1 & 0x1f) != uVar1) {
-    uVar2 = va(0xffffffff8206b488,param_2);
-    MyAssertHandler(0xffffffff8206b0e4,0x15c,0,0xffffffff820011f4,0xffffffff8206b438,uVar2);
+  if ((param_2 & 0x1fU) != param_2) {
+    va("Impact Effect %d passed which is greater than IMPACTEFFECT_LAST.");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x15c,0,
+                    "%s\n\t%s");
   }
-  if ((*(uint *)(iVar3 + 0xd8) & 0x1f) != *(uint *)(iVar3 + 0xd8)) {
-    uVar2 = va(0xffffffff8206b3e8);
-    MyAssertHandler(0xffffffff8206b0e4,0x15d,0,0xffffffff820011f4,0xffffffff8206b378,uVar2);
+  if ((*(uint *)(iVar1 + 0xd8) & 0x1f) != *(uint *)(iVar1 + 0xd8)) {
+    va("hitEffectEnt->s.un1.eventParm2 %d is already greater than IMPACTEFFECT_LAST.");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x15d,0,
+                    "%s\n\t%s");
   }
-  *(uint *)(iVar3 + 0xd8) = uVar1 & 0xff | *(uint *)(iVar3 + 0xd8);
+  *(uint *)(iVar1 + 0xd8) = param_2 & 0xffU | *(uint *)(iVar1 + 0xd8);
   __restgprlr_28();
   return;
 }
@@ -434,47 +492,59 @@ void Bullet_ImpactEffect_SetAdditionalFlags(undefined8 param_1,undefined8 param_
 
 // 82452048  SetTempEventEntNormal  (game/bullet.cpp:355)
 
-void SetTempEventEntNormal(int param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SetTempEventEntNormal(gentity_s *param_1,float *param_2)
 
 {
-  uint uVar1;
+  byte bVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x164,0,0xffffffff82000f98,0xffffffff82002614);
+  if (param_1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x164,0,"%s")
+    ;
   }
-  uVar1 = DirToByte(param_2);
-  *(uint *)(param_1 + 0xa0) = uVar1 & 0xff;
+  bVar1 = DirToByte(param_2);
+  (param_1->s).eventParm = (uint)bVar1;
   return;
 }
 
 
 // 824520B8  BroadcastShieldHitEvent  (game/bullet.cpp:368)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void BroadcastShieldHitEvent
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,uint param_4,uint param_5,
-               ulonglong param_6)
+               (float *param_1,float *param_2,float *param_3,Weapon param_4,bool param_5,int param_6
+               ,int param_7)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar1;
+  int iVar2;
+  float *pfVar3;
+  gentity_s *pgVar4;
+  byte bVar5;
+  uint uVar6;
+  ulonglong uVar7;
   
-  uVar2 = __savegprlr_26();
-  iVar3 = G_TempEntity(uVar2,0x3d);
-  *(undefined4 *)(iVar3 + 200) = param_3;
-  *(uint *)(iVar3 + 0xcc) = param_4 & 0xff;
-  *(undefined4 *)(iVar3 + 0xd8) = 0;
-  uVar4 = DirToByte(param_2);
-  *(uint *)(iVar3 + 0xa0) = uVar4 & 0xff;
-  if (((int)param_6 != 0x7ff) && ((int)param_6 != 0x7fe)) {
-    iVar1 = *(int *)((int)&DAT_833737d8 +
-                    (int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 7));
-    if (iVar1 != 0) {
-      uVar4 = *(uint *)(iVar1 + 0x150);
-      *(uint *)(iVar3 + 0x78) = param_5 & 0xffff;
-      *(uint *)(iVar3 + 0x80) = uVar4 & 0xffff;
-      *(uint *)(iVar3 + 0x88) = DAT_82968ef0 & 0xff;
+  uVar7 = (ulonglong)param_6;
+  uVar6 = (uint)param_5;
+  pfVar3 = (float *)__savegprlr_26(param_1);
+  pgVar4 = G_TempEntity(pfVar3,0x3d);
+  (pgVar4->s).weapon = (Weapon)param_3;
+  (pgVar4->s).inAltWeaponMode = param_4.data & 0xff;
+  (pgVar4->s).un1.eventParm2 = 0;
+  bVar5 = DirToByte(param_2);
+  (pgVar4->s).eventParm = (uint)bVar5;
+  if (((int)uVar7 != 0x7ff) && ((int)uVar7 != 0x7fe)) {
+    iVar2 = *(int *)((int)(&g_entities[0].r + 1) +
+                    (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 7));
+    if (iVar2 != 0) {
+      uVar1 = *(uint *)(iVar2 + 0x150);
+      (pgVar4->s).otherEntityNum = uVar6 & 0xffff;
+      (pgVar4->s).groundEntityNum = uVar1 & 0xffff;
+      (pgVar4->s).surfType = MY_SURFTYPEINDEX & 0xff;
     }
   }
   __restgprlr_26();
@@ -487,91 +557,102 @@ void BroadcastShieldHitEvent
 void Vec3NormalizeFast(float *param_1)
 
 {
-  double dVar1;
+  float fVar1;
   
-  dVar1 = (double)I_rsqrt((double)(param_1[2] * param_1[2] +
-                                  *param_1 * *param_1 + param_1[1] * param_1[1]));
-  *param_1 = (float)((double)*param_1 * dVar1);
-  param_1[1] = (float)(dVar1 * (double)param_1[1]);
-  param_1[2] = (float)(dVar1 * (double)param_1[2]);
+  fVar1 = I_rsqrt(param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1]);
+  *param_1 = *param_1 * fVar1;
+  param_1[1] = fVar1 * param_1[1];
+  param_1[2] = fVar1 * param_1[2];
   return;
 }
 
 
 // 82452168  EncodeShieldHitPos  (game/bullet.cpp:412)
 
-void EncodeShieldHitPos(undefined8 param_1,float *param_2,float *param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+uchar EncodeShieldHitPos(int param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
+  uchar uVar3;
   float local_c0;
   float local_bc;
   float local_b8;
   float local_b0 [4];
-  undefined1 auStack_a0 [16];
-  undefined1 auStack_90 [48];
-  undefined1 auStack_60 [36];
+  float afStack_a0 [4];
+  float afStack_90 [12];
+  float afStack_60 [9];
   float local_3c;
   float local_38;
   float local_34;
   
-  iVar1 = __savegprlr_27();
-  if ((&DAT_833737d8)[iVar1 * 0xa0] == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x1a5,0,0xffffffff82000f98,0xffffffff8206b510);
+  iVar1 = __savegprlr_27(param_1);
+  if (g_entities[iVar1].client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x1a5,0,"%s")
+    ;
   }
-  cVar2 = G_GetShieldTagMatrix(&DAT_83373680 + iVar1 * 0xa0,auStack_60);
-  if (cVar2 == '\0') {
-    Com_PrintWarning(0xf,0xffffffff8206b4dc,iVar1);
-    __restgprlr_27(0);
-    return;
+  bVar2 = G_GetShieldTagMatrix(g_entities + iVar1,(float (*) [3])afStack_60);
+  if (!bVar2) {
+    Com_PrintWarning(0xf,"Couldn\'t get tag matrix for entity #%i\'s shield.\n");
+    uVar3 = __restgprlr_27(0);
+    return uVar3;
   }
-  MatrixInverse(auStack_60,auStack_90);
+  MatrixInverse((float (*) [3])afStack_60,(float (*) [3])afStack_90);
   local_c0 = *param_2 - local_3c;
   local_bc = param_2[1] - local_38;
   local_b8 = param_2[2] - local_34;
-  MatrixTransformVector(&local_c0,auStack_90,auStack_a0);
+  MatrixTransformVector(&local_c0,(float (*) [3])afStack_90,afStack_a0);
   local_c0 = *param_3 - local_3c;
   local_bc = param_3[1] - local_38;
   local_b8 = param_3[2] - local_34;
-  MatrixTransformVector(&local_c0,auStack_90,local_b0);
-  BG_ShieldHitEncode(auStack_a0,0.0 < local_b0[0]);
-  __restgprlr_27();
-  return;
+  MatrixTransformVector(&local_c0,(float (*) [3])afStack_90,local_b0);
+  uVar3 = BG_ShieldHitEncode(afStack_a0,0.0 < local_b0[0]);
+  uVar3 = __restgprlr_27(uVar3);
+  return uVar3;
 }
 
 
 // 824522C0  BroadcastShieldHitEventToVictim  (game/bullet.cpp:443)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void BroadcastShieldHitEventToVictim
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,uint param_4,
-               undefined4 param_5,ulonglong param_6)
+               (uint *param_1,float *param_2,float *param_3,float *param_4,Weapon param_5,
+               bool param_6,int param_7,int param_8)
 
 {
   uint uVar1;
   int iVar2;
-  undefined8 uVar3;
-  int iVar4;
-  uint uVar5;
+  float *pfVar3;
+  gentity_s *pgVar4;
+  byte bVar5;
+  ulonglong uVar6;
+  int iVar7;
   
-  uVar3 = __savegprlr_23();
-  if (((int)param_6 != 0x7ff) && ((int)param_6 != 0x7fe)) {
-    iVar2 = *(int *)((int)&DAT_833737d8 +
-                    (int)((param_6 + (param_6 & 0x3fffffff) * 4 & 0xffffffff) << 7));
+  uVar6 = (ulonglong)param_6;
+  pfVar3 = (float *)__savegprlr_23(param_1);
+  iVar7 = (int)uVar6;
+  if ((iVar7 != 0x7ff) && (iVar7 != 0x7fe)) {
+    iVar2 = *(int *)((int)(&g_entities[0].r + 1) +
+                    (int)((uVar6 + (uVar6 & 0x3fffffff) * 4 & 0xffffffff) << 7));
     if (iVar2 != 0) {
       uVar1 = *(uint *)(iVar2 + 0x150);
-      iVar4 = G_TempEntity(uVar3,0x41);
-      *(undefined4 *)(iVar4 + 200) = param_3;
-      *(uint *)(iVar4 + 0xcc) = param_4 & 0xff;
-      *(undefined4 *)(iVar4 + 0xd8) = 0;
-      uVar5 = EncodeShieldHitPos(param_6,uVar3,param_2);
-      *(undefined4 *)(iVar4 + 0x78) = param_5;
-      *(uint *)(iVar4 + 0x90) = uVar1;
-      *(uint *)(iVar4 + 0xa0) = uVar5 & 0xff;
-      *(undefined4 *)(iVar4 + 0xfc) = 0xffffffff;
-      iVar2 = (((int)uVar1 >> 5) + 0x3f) * 4;
-      *(undefined4 *)(iVar4 + 0x88) = DAT_82968ef4;
-      *(uint *)(iVar2 + iVar4) = *(uint *)(iVar2 + iVar4) & ~(1 << (uVar1 & 0x1f));
+      pgVar4 = G_TempEntity(pfVar3,0x41);
+      (pgVar4->s).weapon = (Weapon)param_3;
+      (pgVar4->s).inAltWeaponMode = (uint)param_4 & 0xff;
+      (pgVar4->s).un1.eventParm2 = 0;
+      bVar5 = EncodeShieldHitPos(iVar7,pfVar3,param_2);
+      (pgVar4->s).otherEntityNum = (int)param_5;
+      (pgVar4->s).clientNum = uVar1;
+      (pgVar4->s).eventParm = (uint)bVar5;
+      (pgVar4->s).clientMask[0] = -1;
+      (pgVar4->s).surfType = MY_SURFTYPEINDEX;
+      (pgVar4->s).clientMask[(int)uVar1 >> 5] =
+           (pgVar4->s).clientMask[(int)uVar1 >> 5] & ~(1 << (uVar1 & 0x1f));
     }
   }
   __restgprlr_23();
@@ -581,36 +662,58 @@ void BroadcastShieldHitEventToVictim
 
 // 824523A0  Bullet_ImpactEffect  (game/bullet.cpp:618)
 
-void Bullet_ImpactEffect(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                        undefined8 param_5,ulonglong param_6,ulonglong param_7)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Bullet_ImpactEffect(uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,
+                        float *param_4,Weapon param_5,bool param_6,gentity_s *param_7,int param_8,
+                        gentity_s **param_9)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   int iVar2;
-  undefined4 *puVar3;
+  Weapon_s_0 *pWVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined4 *puVar7;
+  undefined4 *puVar8;
+  uint uVar9;
   
-  puVar3 = (undefined4 *)__savegprlr_23();
-  if (puVar3 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x272,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar6 = (ulonglong)(int)param_7;
+  uVar5 = (ulonglong)param_6;
+  uVar4 = (ulonglong)(int)param_2;
+  pWVar3 = (Weapon_s_0 *)__savegprlr_23(param_1);
+  puVar7 = (undefined4 *)uVar6;
+  puVar8 = puVar7;
+  if (pWVar3 == (Weapon_s_0 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x272,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x273,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x273,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x274,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x274,0,"%s")
+    ;
   }
-  if ((param_7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x275,0,0xffffffff82000f98,0xffffffff8206b52c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x275,0,"%s")
+    ;
   }
-  iVar2 = (int)param_2;
+  iVar2 = (int)uVar4;
   if ((((*(char *)(iVar2 + 0x44) == '\0') &&
-       (puVar1 = *(undefined4 **)(iVar2 + 0x34), puVar1 != (undefined4 *)0x0)) &&
-      (puVar1[0x56] != 0)) && (*(short *)(iVar2 + 0x2c) == 0x13)) {
-    BroadcastShieldHitEvent(param_2 + 0x38,param_3,param_4,param_5,*puVar3,*puVar1);
+       (piVar1 = *(int **)(iVar2 + 0x34), piVar1 != (int *)0x0)) && (piVar1[0x56] != 0)) &&
+     (uVar9 = (uint)*(ushort *)(iVar2 + 0x2c), *(ushort *)(iVar2 + 0x2c) == 0x13)) {
+    BroadcastShieldHitEvent
+              ((float *)(iVar2 + 0x38),(float *)param_3,param_4,param_5,(bool)(*pWVar3).weaponIdx,
+               *piVar1,(int)puVar8);
     BroadcastShieldHitEventToVictim
-              (param_2 + 0x38,puVar3 + 8,param_4,param_5,*puVar3,**(undefined4 **)(iVar2 + 0x34));
+              ((uint *)(iVar2 + 0x38),(float *)(pWVar3 + 8),param_4,(float *)param_5,(Weapon)*pWVar3
+               ,SUB41(**(undefined4 **)(iVar2 + 0x34),0),(int)puVar8,uVar9);
   }
-  *(undefined4 *)param_7 = 0;
+  *puVar7 = 0;
   __restgprlr_23();
   return;
 }
@@ -618,23 +721,26 @@ void Bullet_ImpactEffect(undefined8 param_1,ulonglong param_2,undefined8 param_3
 
 // 824524E8  Bullet_DamageGlass  (game/bullet.cpp:757)
 
-void Bullet_DamageGlass(undefined8 param_1,longlong param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Bullet_DamageGlass(BulletFireParams *param_1,BulletTraceResults *param_2,Weapon param_3,
+                       bool param_4,gentity_s *param_5)
 
 {
-  longlong lVar1;
-  short sVar4;
-  undefined8 uVar2;
-  ulonglong uVar3;
+  BulletFireParams *pBVar1;
+  ushort uVar3;
+  int iVar2;
   
-  lVar1 = __savegprlr_27();
-  sVar4 = Trace_GetGlassHitId(param_2);
-  if (sVar4 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x2f6,0,0xffffffff82000f98,0xffffffff8206b53c);
+  pBVar1 = (BulletFireParams *)__savegprlr_27(param_1);
+  uVar3 = Trace_GetGlassHitId(&param_2->trace);
+  if (uVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x2f6,0,"%s")
+    ;
   }
-  uVar2 = Bullet_GetDamage(lVar1,param_2,param_3,param_4,param_5);
-  uVar3 = Trace_GetGlassHitId(param_2);
-  G_Glass_DamagePiece((uVar3 & 0xffff) - 1,uVar2,param_2 + 0x38,lVar1 + 0x38);
+  iVar2 = Bullet_GetDamage(pBVar1,param_2,param_3,param_4,param_5);
+  uVar3 = Trace_GetGlassHitId(&param_2->trace);
+  G_Glass_DamagePiece(uVar3 - 1,iVar2,param_2->hitPos,pBVar1->dir);
   __restgprlr_27();
   return;
 }
@@ -642,156 +748,192 @@ void Bullet_DamageGlass(undefined8 param_1,longlong param_2,undefined8 param_3,u
 
 // 82452590  Bullet_IgnoreHitEntity  (game/bullet.cpp:767)
 
-void Bullet_IgnoreHitEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool Bullet_IgnoreHitEntity
+               (BulletFireParams *param_1,BulletTraceResults *param_2,gentity_s *param_3)
 
 {
   int iVar1;
   int iVar2;
   int iVar4;
+  undefined1 uVar5;
   undefined8 uVar3;
+  ulonglong uVar6;
+  ulonglong uVar7;
   
-  iVar4 = __savegprlr_28();
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar4 = __savegprlr_28(param_1);
   if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x300,0,0xffffffff82000f98,0xffffffff8200e950);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x300,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x301,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x301,0,"%s")
+    ;
   }
-  iVar4 = (int)param_2;
+  iVar4 = (int)uVar6;
   if (*(int *)(iVar4 + 0x34) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x302,0,0xffffffff82000f98,0xffffffff8206b564);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x302,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x303,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x303,0,"%s")
+    ;
   }
-  iVar2 = (int)param_3;
+  iVar2 = (int)uVar7;
   iVar1 = *(int *)(iVar2 + 0x158);
   if (iVar1 != 0) {
     if ((((*(uint *)(iVar1 + 0x14) & 4) == 0) && (*(int *)(iVar1 + 0xac) == 0x7ff)) &&
-       ((ulonglong)*(uint *)(iVar4 + 0x34) == (param_3 & 0xffffffff))) {
-      __restgprlr_28(1);
-      return;
+       ((ulonglong)*(uint *)(iVar4 + 0x34) == (uVar7 & 0xffffffff))) {
+      uVar5 = __restgprlr_28(1);
+      return (bool)uVar5;
     }
   }
   if (((*(int *)(iVar2 + 0x15c) == 0) || (*(int **)(iVar2 + 0x214) == (int *)0x0)) ||
      (uVar3 = 1, **(int **)(iVar2 + 0x214) != *(int *)(iVar4 + 0x34))) {
     uVar3 = 0;
   }
-  __restgprlr_28(uVar3);
-  return;
+  uVar5 = __restgprlr_28(uVar3);
+  return (bool)uVar5;
 }
 
 
 // 824526C0  Bullet_Trace  (game/bullet.cpp:833)
 
-void Bullet_Trace(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                 ulonglong param_5,ulonglong param_6)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool Bullet_Trace(BulletFireParams *param_1,Weapon param_2,bool param_3,gentity_s *param_4,
+                 BulletTraceResults *param_5,int param_6)
 
 {
   float fVar1;
-  int iVar2;
-  float *pfVar3;
+  float fVar2;
+  uint uVar3;
   uint uVar4;
-  int iVar5;
-  char cVar7;
-  uint uVar6;
-  undefined1 uVar8;
-  undefined8 uVar9;
-  float fVar10;
+  BulletFireParams *pBVar5;
+  bool bVar8;
+  BulletTraceResults *pBVar6;
+  ushort uVar7;
+  undefined1 uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  uchar *puVar13;
+  int iVar14;
   
-  iVar5 = __savegprlr_24();
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x344,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar12 = (ulonglong)param_6;
+  uVar11 = (ulonglong)(int)param_5;
+  uVar10 = (ulonglong)(int)param_4;
+  pBVar5 = (BulletFireParams *)__savegprlr_24(param_1);
+  if (pBVar5 == (BulletFireParams *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x344,0,"%s")
+    ;
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x345,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x345,0,"%s")
+    ;
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x346,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x346,0,"%s")
+    ;
   }
-  if (0x1e < (param_6 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8206b0e4,0x347,0,0xffffffff8202aa08,param_6,0x1f);
+  if (0x1e < (uVar12 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x347,0,
+                    "lastSurfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  cVar7 = BG_IsRifleBullet(param_2,param_3);
-  if (cVar7 == '\0') {
-    uVar9 = 0xffffffff82969400;
+  bVar8 = BG_IsRifleBullet(param_2,param_3);
+  if (bVar8) {
+    puVar13 = riflePriorityMap;
   }
   else {
-    uVar9 = 0xffffffff82969414;
+    puVar13 = &bulletPriorityMap;
   }
+  pBVar6 = (BulletTraceResults *)uVar11;
   G_LocationalTraceAllowChildren
-            (param_5,(float *)(iVar5 + 0x20),(float *)(iVar5 + 0x2c),*(undefined4 *)(iVar5 + 4),
-             0x2806831,uVar9);
-  uVar6 = Trace_GetEntityHitId(param_5);
-  uVar4 = uVar6 & 0xffff;
-  pfVar3 = (float *)param_5;
-  if ((uVar4 == 0x7ff) || (uVar4 == 0x7fe)) {
-    pfVar3[0xd] = 0.0;
+            (&pBVar6->trace,pBVar5->start,pBVar5->end,pBVar5->ignoreEntIndex,0x2806831,puVar13);
+  uVar7 = Trace_GetEntityHitId(&pBVar6->trace);
+  if ((uVar7 == 0x7ff) || (uVar7 == 0x7fe)) {
+    pBVar6->hitEnt = (gentity_s *)0x0;
   }
   else {
-    pfVar3[0xd] = (float)(&DAT_83373680 + (uVar4 + (uVar6 & 0xffff) * 4) * 0x20);
+    pBVar6->hitEnt = g_entities + uVar7;
   }
-  fVar10 = *(float *)(iVar5 + 0x20);
-  fVar1 = *pfVar3;
-  pfVar3[0xe] = (*(float *)(iVar5 + 0x2c) - fVar10) * fVar1 + fVar10;
-  pfVar3[0xf] = (*(float *)(iVar5 + 0x30) - *(float *)(iVar5 + 0x24)) * fVar1 +
-                *(float *)(iVar5 + 0x24);
-  pfVar3[0x10] = (*(float *)(iVar5 + 0x34) - *(float *)(iVar5 + 0x28)) * fVar1 +
-                 *(float *)(iVar5 + 0x28);
-  if (pfVar3[0xd] == 0.0) {
-    *(undefined1 *)(pfVar3 + 0x11) = 0;
+  fVar1 = pBVar5->start[0];
+  fVar2 = (pBVar6->trace).fraction;
+  pBVar6->hitPos[0] = (pBVar5->end[0] - fVar1) * fVar2 + fVar1;
+  pBVar6->hitPos[1] = (pBVar5->end[1] - pBVar5->start[1]) * fVar2 + pBVar5->start[1];
+  pBVar6->hitPos[2] = (pBVar5->end[2] - pBVar5->start[2]) * fVar2 + pBVar5->start[2];
+  if (pBVar6->hitEnt == (gentity_s *)0x0) {
+    pBVar6->ignoreHitEnt = false;
     goto LAB_824528c0;
   }
-  if (*(short *)(pfVar3 + 0xb) == 0x13) {
-    fVar10 = 7.6407133e-38;
+  if ((pBVar6->trace).partGroup == 0x13) {
+    iVar14 = 0x1d00000;
 LAB_824528a0:
-    pfVar3[4] = fVar10;
+    (pBVar6->trace).surfaceFlags = iVar14;
   }
   else {
-    iVar2 = *(int *)((int)pfVar3[0xd] + 4);
-    if (((iVar2 == 1) || (iVar2 == 2)) && (pfVar3[4] == 0.0)) {
-      fVar10 = 1.0285576e-38;
+    iVar14 = (pBVar6->hitEnt->s).eType;
+    if (((iVar14 == 1) || (iVar14 == 2)) && ((pBVar6->trace).surfaceFlags == 0)) {
+      iVar14 = 0x700000;
       goto LAB_824528a0;
     }
   }
-  uVar8 = Bullet_IgnoreHitEntity(iVar5,param_5,param_4);
-  *(undefined1 *)(pfVar3 + 0x11) = uVar8;
+  bVar8 = Bullet_IgnoreHitEntity(pBVar5,pBVar6,(gentity_s *)uVar10);
+  pBVar6->ignoreHitEnt = bVar8;
 LAB_824528c0:
-  fVar10 = (float)((int)pfVar3[4] >> 0x14 & 0x1f);
-  pfVar3[0x12] = fVar10;
-  if (((uint)pfVar3[4] & 0x100) == 0) {
-    if ((fVar10 == 0.0) && ((float)param_6 != 0.0)) {
-      pfVar3[0x12] = (float)param_6;
+  uVar3 = (pBVar6->trace).surfaceFlags;
+  uVar4 = (int)uVar3 >> 0x14 & 0x1f;
+  pBVar6->depthSurfaceType = uVar4;
+  if ((uVar3 & 0x100) == 0) {
+    if ((uVar4 == 0) && ((int)uVar12 != 0)) {
+      pBVar6->depthSurfaceType = (int)uVar12;
     }
   }
   else {
-    pfVar3[0x12] = 0.0;
+    pBVar6->depthSurfaceType = 0;
   }
-  if (0x1e < (uint)pfVar3[0x12]) {
-    MyAssertHandler(0xffffffff8206b0e4,0x378,1,0xffffffff8202a9c0,pfVar3[0x12],0x1f);
+  if (0x1e < (uint)pBVar6->depthSurfaceType) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x378,1,
+                    "br->depthSurfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  __restgprlr_24(pfVar3[7] != 0.0);
-  return;
+  uVar9 = __restgprlr_24((pBVar6->trace).hitType != TRACE_HITTYPE_NONE);
+  return (bool)uVar9;
 }
 
 
 // 82452938  Bullet_HitNothing  (game/bullet.cpp:896)
 
-void Bullet_HitNothing(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                      undefined8 param_5)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Bullet_HitNothing(uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,
+                      Weapon param_4,bool param_5,gentity_s *param_6)
 
 {
-  ulonglong uVar1;
-  undefined1 auStack_50 [80];
+  uint *puVar1;
+  ulonglong uVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  gentity_s **in_stack_ffffff68;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,899,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar2 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_25(param_1);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  if (puVar1 == (uint *)0x0) {
+    pIVar3 = &IMAGE_DOS_HEADER_82000000;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",899,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,900,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",900,0,"%s");
   }
-  Bullet_ImpactEffect(uVar1,param_2,param_2 + 4,param_3,param_4,param_5,auStack_50);
+  Bullet_ImpactEffect(puVar1,(BulletFireParams *)uVar2,
+                      (BulletTraceResults *)&((BulletFireParams *)uVar2)->ignoreEntIndex,
+                      (float *)param_3,param_4,param_5,(gentity_s *)&stack0xffffffb0,(int)pIVar3,
+                      in_stack_ffffff68);
   __restgprlr_25();
   return;
 }
@@ -799,21 +941,21 @@ void Bullet_HitNothing(undefined8 param_1,ulonglong param_2,undefined8 param_3,u
 
 // 824529D8  CalcRicochet  (game/bullet.cpp:913)
 
-void CalcRicochet(float *param_1,undefined4 *param_2,float *param_3)
+void CalcRicochet(float *param_1,float *param_2,float *param_3)
 
 {
-  double dVar1;
-  undefined4 local_40;
-  undefined4 local_3c;
+  float fVar1;
+  float local_40;
+  float local_3c;
   float local_38;
   float local_30;
   float local_2c;
   float local_28;
-  undefined1 auStack_20 [16];
+  float afStack_20 [4];
   
   local_30 = -*param_1;
   local_2c = -param_1[1];
-  local_38 = (float)param_2[2];
+  local_38 = param_2[2];
   local_28 = -param_1[2];
   local_40 = *param_2;
   local_3c = param_2[1];
@@ -824,108 +966,125 @@ void CalcRicochet(float *param_1,undefined4 *param_2,float *param_3)
     }
     Vec3NormalizeFast(&local_40);
   }
-  Vec3Cross(&local_40,&local_30,auStack_20);
-  Vec3Cross(&local_30,auStack_20,param_3);
-  dVar1 = (double)I_rsqrt((double)(param_3[2] * param_3[2] +
-                                  *param_3 * *param_3 + param_3[1] * param_3[1]));
-  *param_3 = (float)((double)*param_3 * dVar1);
-  param_3[1] = (float)((double)param_3[1] * dVar1);
-  param_3[2] = (float)((double)param_3[2] * dVar1);
+  Vec3Cross(&local_40,&local_30,afStack_20);
+  Vec3Cross(&local_30,afStack_20,param_3);
+  fVar1 = I_rsqrt(param_3[2] * param_3[2] + *param_3 * *param_3 + param_3[1] * param_3[1]);
+  *param_3 = *param_3 * fVar1;
+  param_3[1] = param_3[1] * fVar1;
+  param_3[2] = param_3[2] * fVar1;
   return;
 }
 
 
 // 82452AD8  BulletRicochet  (game/bullet.cpp:942)
 
-void BulletRicochet(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                   undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void BulletRicochet(uint *param_1,gentity_s *param_2,gentity_s *param_3,Weapon param_4,bool param_5,
+                   float *param_6,float *param_7,float *param_8,int param_9)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  float *pfVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
+  WeaponDef *pWVar1;
+  uint *puVar2;
+  Weapon WVar3;
+  weapType_t wVar4;
+  weapClass_t wVar5;
+  gentity_s *pgVar6;
+  ulonglong uVar7;
+  bool bVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  double dVar11;
+  float fVar12;
+  bool in_stack_00000057;
   float local_d0;
   float local_cc;
   float local_c8;
   float local_c0;
   float local_bc;
   float local_b8;
-  undefined4 local_b4;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  undefined4 local_a8;
-  undefined4 local_a4;
-  undefined4 local_a0;
+  trType_t local_b4;
+  int local_b0;
+  int local_ac;
+  float local_a8;
+  float local_a4;
+  float local_a0;
   float local_9c;
   float local_98;
   float local_94;
-  undefined4 local_84;
+  Weapon local_84;
   undefined1 local_80;
-  int local_7c;
-  undefined4 local_78;
+  WeaponDef *local_7c;
+  WeaponCompleteDef *local_78;
   
-  uVar1 = __savegprlr_21();
-  uVar2 = BG_GetAlternateWeapon(param_4,param_5);
-  iVar4 = (&DAT_829d84a0)[uVar2 & 0xff];
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3b9,0,0xffffffff82000f98,0xffffffff8206b570);
+  uVar10 = (uint)param_5;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_21(param_1);
+  bVar8 = SUB41(uVar10,0);
+  WVar3 = BG_GetAlternateWeapon(param_4,bVar8);
+  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3b9,0,"%s")
+    ;
   }
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3ba,0,0xffffffff82000f98,0xffffffff8200a88c);
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3ba,0,"%s")
+    ;
   }
-  iVar3 = BG_GetWeaponType(param_4,param_5);
-  if (iVar3 != 1) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3bb,0,0xffffffff82000f98,0xffffffff8200f520);
+  wVar4 = BG_GetWeaponType(param_4,bVar8);
+  if (wVar4 != WEAPTYPE_BULLET) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3bb,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    param_3 = param_2;
+  pgVar6 = (gentity_s *)uVar9;
+  if ((uVar9 & 0xffffffff) == 0) {
+    pgVar6 = (gentity_s *)uVar7;
   }
-  iVar3 = BG_GetWeaponType(param_4,param_5);
-  if (((iVar3 == 1) && (*(char *)(iVar4 + 0x778) == '\0')) &&
-     (iVar3 = BG_GetWeaponClass(param_4,param_5), iVar3 != 4)) {
-    dVar8 = (double)(*(float *)(iVar4 + 0x538) * *(float *)(DAT_829c7cc4 + 0xc));
-    dVar7 = (double)BG_random(uVar1);
-    if (dVar7 <= dVar8) {
-      pfVar5 = (float *)param_7;
-      pfVar6 = (float *)param_8;
-      if (pfVar5[2] * pfVar6[2] + pfVar5[1] * pfVar6[1] + *pfVar5 * *pfVar6 <= 0.0) {
-        local_80 = (undefined1)param_5;
-        local_84 = (int)param_4;
-        local_7c = iVar4;
-        uVar2 = BG_GetAlternateWeapon(param_4,param_5);
-        local_78 = (&DAT_829d80d8)[uVar2 & 0xff];
-        CalcRicochet(param_8,param_7,&local_c0);
-        pfVar5 = (float *)param_6;
-        local_9c = *pfVar5 + local_c0;
-        local_98 = pfVar5[1] + local_bc;
-        local_94 = pfVar5[2] + local_b8;
-        local_b4 = 0;
-        local_b0 = 0;
-        local_ac = 0;
-        local_a8 = 0;
-        local_a4 = 0;
-        local_a0 = 0;
-        if (DAT_8333cb38 != '\0') {
-          G_DebugStar(param_6,0xffffffff82181838);
-          local_d0 = local_c0 * 100.0 + local_9c;
-          local_cc = local_bc * 100.0 + local_98;
-          local_c8 = local_b8 * 100.0 + local_94;
-          G_DebugLineWithDuration(&local_9c,&local_d0,0xffffffff821818f8,1,100);
-          G_DebugStar(&local_d0,0xffffffff82181818);
-        }
-        Bullet_Fire_Internal(0,param_3);
-        iVar4 = G_TempEntity(&local_9c,0x20);
-        *(int *)(iVar4 + 200) = (int)param_4;
-        *(uint *)(iVar4 + 0xcc) = (uint)param_5 & 0xff;
-        *(undefined4 *)(iVar4 + 0xd8) = 0;
-        SetTempEventEntNormal(iVar4,&local_c0);
-        *(undefined4 *)(iVar4 + 0x78) = *(undefined4 *)param_2;
+  wVar4 = BG_GetWeaponType(param_4,bVar8);
+  if (((wVar4 == WEAPTYPE_BULLET) && (pWVar1->bBulletExplosiveDamage == false)) &&
+     (wVar5 = BG_GetWeaponClass(param_4,bVar8), wVar5 != WEAPCLASS_SPREAD)) {
+    dVar11 = (double)(pWVar1->ricochetChance * (bullet_ricochetBaseChance->current).value);
+    fVar12 = BG_random(puVar2);
+    if (((double)fVar12 <= dVar11) &&
+       (((weaponParms *)param_7)->forward[2] * param_8[2] +
+        ((weaponParms *)param_7)->forward[1] * param_8[1] +
+        ((weaponParms *)param_7)->forward[0] * *param_8 <= 0.0)) {
+      local_84 = param_4;
+      local_80 = bVar8;
+      local_7c = pWVar1;
+      WVar3 = BG_GetAlternateWeapon(param_4,bVar8);
+      local_78 = bg_weaponCompleteDefs[WVar3.data & 0xff];
+      CalcRicochet(param_8,param_7,&local_c0);
+      local_9c = *param_6 + local_c0;
+      local_98 = param_6[1] + local_bc;
+      local_94 = param_6[2] + local_b8;
+      local_b4 = TR_STATIONARY;
+      local_b0 = 0;
+      local_ac = 0;
+      local_a8 = 0.0;
+      local_a4 = 0.0;
+      local_a0 = 0.0;
+      if (MY_DRAWSTUFF != false) {
+        G_DebugStar(param_6,colorYellow);
+        local_d0 = local_c0 * 100.0 + local_9c;
+        local_cc = local_bc * 100.0 + local_98;
+        local_c8 = local_b8 * 100.0 + local_94;
+        G_DebugLineWithDuration(&local_9c,&local_d0,colorOrange,1,100);
+        param_7 = colorBlue;
+        G_DebugStar(&local_d0,colorBlue);
       }
+      Bullet_Fire_Internal
+                (pgVar6,0.0,(weaponParms *)param_7,(gentity_s *)&local_c0,(PlayerHandIndex)pgVar6,0,
+                 in_stack_00000057);
+      pgVar6 = G_TempEntity(&local_9c,0x20);
+      (pgVar6->s).weapon = param_4;
+      (pgVar6->s).inAltWeaponMode = uVar10 & 0xff;
+      (pgVar6->s).un1.eventParm2 = 0;
+      SetTempEventEntNormal(pgVar6,&local_c0);
+      (pgVar6->s).otherEntityNum = (((gentity_s *)uVar7)->s).number;
     }
   }
   __restgprlr_21();
@@ -935,218 +1094,289 @@ void BulletRicochet(undefined8 param_1,ulonglong param_2,ulonglong param_3,undef
 
 // 82452DB0  Bullet_ProcessShieldHit  (game/bullet.cpp:1015)
 
-void Bullet_ProcessShieldHit
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool Bullet_ProcessShieldHit
+               (uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,Weapon param_4,
+               bool param_5,gentity_s *param_6,int param_7)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined1 auStack_60 [96];
+  uint *puVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int in_stack_ffffff48;
+  float afStack_60 [24];
   
-  uVar2 = __savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3f8,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar6 = (ulonglong)(int)param_6;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  puVar2 = (uint *)__savegprlr_23(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3f8,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3f9,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3f9,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x3fa,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x3fa,0,"%s")
+    ;
   }
-  if ((*(char *)((int)param_2 + 0x10) == '\0') &&
-     (iVar1 = *(int *)((int)param_3 + 0x34), *(int *)(iVar1 + 4) == 1)) {
-    G_GetShieldTagNormal(iVar1,auStack_60);
-    BulletRicochet(uVar2,*(undefined4 *)((int)param_3 + 0x34),param_6,param_4,param_5,param_3 + 0x38
-                   ,auStack_60,param_2 + 0x38);
-    __restgprlr_23(0);
-    return;
+  if ((*(char *)((int)uVar4 + 0x10) == '\0') &&
+     (iVar1 = (int)uVar5, ((*(gentity_s **)(iVar1 + 0x34))->s).eType == 1)) {
+    G_GetShieldTagNormal(*(gentity_s **)(iVar1 + 0x34),afStack_60);
+    BulletRicochet(puVar2,*(gentity_s **)(iVar1 + 0x34),(gentity_s *)uVar6,param_4,param_5,
+                   (float *)(iVar1 + 0x38),afStack_60,(float *)((int)uVar4 + 0x38),in_stack_ffffff48
+                  );
+    uVar3 = __restgprlr_23(0);
+    return (bool)uVar3;
   }
-  __restgprlr_23(1);
-  return;
+  uVar3 = __restgprlr_23(1);
+  return (bool)uVar3;
 }
 
 
 // 82452EB8  Bullet_Process  (game/bullet.cpp:1050)
 
-void Bullet_Process(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                   undefined8 param_5,ulonglong param_6,ulonglong param_7,undefined8 param_8)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool Bullet_Process(uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,
+                   Weapon param_4,bool param_5,gentity_s *param_6,int param_7,int param_8,
+                   int *param_9,bool param_10)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar4;
+  ushort uVar1;
+  gclient_s *pgVar2;
+  BulletTraceResults *pBVar3;
+  gentity_s *pgVar4;
   int iVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  char cVar8;
+  undefined1 uVar7;
+  bool bVar8;
   ulonglong uVar9;
-  undefined8 uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  bool bVar11;
+  float *pfVar10;
+  Weapon WVar12;
+  ulonglong uVar13;
+  gentity_s *pgVar14;
+  ulonglong uVar15;
+  gentity_s *pgVar16;
   uint *in_stack_00000054;
-  char in_stack_0000005f;
-  int local_c0;
-  undefined1 auStack_bc [12];
-  undefined8 local_b0;
-  undefined8 local_a8;
-  undefined8 local_a0;
+  byte in_stack_0000005f;
+  Weapon in_stack_fffffec8;
+  undefined1 in_stack_fffffecf;
+  hitLocation_t in_stack_fffffed0;
+  uint in_stack_fffffed4;
+  uint in_stack_fffffed8;
+  int in_stack_fffffedc;
+  gentity_s *local_c0;
+  DynEntityDrawType aDStack_bc [3];
+  int local_b0 [2];
+  float local_a8 [42];
+  BulletFireParams *pBVar6;
   
-  uVar6 = __savegprlr();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x425,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar13 = (ulonglong)(int)param_6;
+  WVar12 = (Weapon)(int)param_5;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar15 = (ulonglong)(int)param_2;
+  __savegprlr();
+  pgVar14 = (gentity_s *)uVar13;
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x425,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x426,0,0xffffffff82000f98,0xffffffff8200e94c);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x426,0,"%s")
+    ;
   }
-  iVar3 = (int)param_3;
-  if (*(int *)(iVar3 + 0x1c) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x427,0,0xffffffff82000f98,0xffffffff8200e924);
+  pBVar3 = (BulletTraceResults *)uVar9;
+  if ((pBVar3->trace).hitType == TRACE_HITTYPE_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x427,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x428,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x428,0,"%s")
+    ;
   }
-  uVar10 = 1;
+  uVar7 = true;
   *in_stack_00000054 = 0;
-  iVar1 = *(int *)((int)param_6 + 0x158);
-  uVar11 = param_6;
-  if ((iVar1 != 0) && ((*(uint *)(iVar1 + 0xf8) & 0x2000) != 0)) {
-    if (0x7fd < *(uint *)(iVar1 + 0x1bc)) {
-      MyAssertHandler(0xffffffff8206b0e4,0x437,0,0xffffffff8206b590,*(uint *)(iVar1 + 0x1bc),0x7fe);
+  pgVar2 = pgVar14->client;
+  pgVar16 = pgVar14;
+  if ((pgVar2 != (gclient_s *)0x0) && (((pgVar2->ps).eFlags & 0x2000U) != 0)) {
+    if (0x7fd < (uint)(pgVar2->ps).viewlocked_entNum) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x437,0,
+                      "attacker->client->ps.viewlocked_entNum doesn\'t index ENTITYNUM_ORDINARY_END\n\t%i not in [0, %i)"
+                     );
     }
-    uVar2 = *(uint *)(*(int *)((int)param_6 + 0x158) + 0x1bc);
-    uVar11 = ((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) * 0x80 -
-             0x7cc8c980;
+    pgVar16 = g_entities + (pgVar14->client->ps).viewlocked_entNum;
   }
-  uVar7 = Bullet_GetDamage(param_2,param_3,param_4,param_5,param_6);
-  lVar12 = param_3 + 0x38;
-  iVar1 = (int)param_2;
+  pBVar6 = (BulletFireParams *)uVar15;
+  bVar11 = WVar12._3_1_;
+  iVar5 = Bullet_GetDamage(pBVar6,pBVar3,param_4,bVar11,pgVar14);
+  pfVar10 = pBVar3->hitPos;
   G_CheckHitTriggerDamage
-            (param_6,param_2 + 0x14,param_2 + 0x20,lVar12,uVar7,*(undefined4 *)(iVar1 + 0xc));
-  local_c0 = 0;
-  if (in_stack_0000005f != '\0') {
-    Bullet_ImpactEffect(param_2,param_3,param_3 + 4,param_4,param_5,param_6,&local_c0);
+            (pgVar14,pBVar6->origStart,pBVar6->start,pfVar10,iVar5,pBVar6->methodOfDeath);
+  local_c0 = (gentity_s *)0x0;
+  if (in_stack_0000005f != 0) {
+    Bullet_ImpactEffect((uint *)pBVar6,(BulletFireParams *)pBVar3,
+                        (BulletTraceResults *)(pBVar3->trace).normal,(float *)param_4,WVar12,
+                        SUB81(uVar13,0),(gentity_s *)&local_c0,(uint)in_stack_0000005f,
+                        (gentity_s **)in_stack_fffffec8);
   }
-  iVar5 = local_c0;
-  Trace_GetDynEntHitId(param_3,auStack_bc);
-  if (*(char *)(iVar3 + 0x44) == '\0') {
-    if (*(int *)(iVar3 + 0x34) != 0) {
-      if (*(short *)(iVar3 + 0x2c) == 0x13) {
-        uVar10 = Bullet_ProcessShieldHit(uVar6,param_2,param_3,param_4,param_5,param_6,param_8);
-        if (*(int *)(*(int *)(iVar3 + 0x34) + 0x158) != 0) {
+  pgVar4 = local_c0;
+  Trace_GetDynEntHitId(&pBVar3->trace,aDStack_bc);
+  if (pBVar3->ignoreHitEnt == false) {
+    if (pBVar3->hitEnt != (gentity_s *)0x0) {
+      if ((pBVar3->trace).partGroup == 0x13) {
+        uVar7 = Bullet_ProcessShieldHit(param_1,pBVar6,pBVar3,param_4,bVar11,pgVar14,param_8);
+        if (pBVar3->hitEnt->client != (gclient_s *)0x0) {
           G_ShieldNotifyAndDamage
-                    (*(int *)(iVar3 + 0x34),param_6,param_6,param_2 + 0x38,lVar12,uVar7,param_7,
-                     *(undefined4 *)(iVar1 + 0xc));
+                    (pBVar3->hitEnt,pgVar14,pgVar14,pBVar6->dir,pfVar10,iVar5,param_7,
+                     pBVar6->methodOfDeath,in_stack_fffffec8,(bool)in_stack_fffffecf,
+                     in_stack_fffffed0);
         }
       }
-      else if (*(char *)(*(int *)(iVar3 + 0x34) + 0x16b) != '\0') {
-        cVar8 = BG_IsArmorPiercing(param_4,param_5);
-        if (cVar8 != '\0') {
+      else if (pBVar3->hitEnt->takedamage != '\0') {
+        bVar8 = BG_IsArmorPiercing(param_4,bVar11);
+        if (bVar8) {
           param_7 = param_7 | 2;
         }
-        if (*(char *)(*(int *)(iVar3 + 0x34) + 0x103) == '\0') {
-          MyAssertHandler(0xffffffff8206b0e4,0x472,0,0xffffffff82000f98,0xffffffff8206b578);
+        if ((pBVar3->hitEnt->r).isInUse == '\0') {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x472,0
+                          ,"%s");
         }
-        uVar9 = (ulonglong)*(uint *)(*(int *)(iVar3 + 0x34) + 0x19c);
-        if ((*(short *)(iVar3 + 0x2c) == 2) || (*(short *)(iVar3 + 0x2c) == 1)) {
+        uVar1 = (pBVar3->trace).partGroup;
+        uVar15 = (ulonglong)(uint)pBVar3->hitEnt->health;
+        if ((uVar1 == 2) || (uVar1 == 1)) {
           *in_stack_00000054 = *in_stack_00000054 | 1;
         }
-        if (*(int *)(DAT_8353ff64 + 0xc) == **(int **)(iVar3 + 0x34)) {
-          CL_AddDebugStar(lVar12,0xffffffff821817e8,100,1);
+        if ((g_debugLocDamage->current).integer == (pBVar3->hitEnt->s).number) {
+          CL_AddDebugStar(pfVar10,colorRed,100,1);
         }
-        if (*(int *)(DAT_83373634 + 0xc) == **(int **)(iVar3 + 0x34)) {
-          local_b0 = 0xffffffffffffffff;
-          local_a8 = 0xffffffffffffffff;
-          local_a0 = 0xffffffffffffffff;
-          G_DObjCalcPose(*(int **)(iVar3 + 0x34),&local_b0);
-          SV_XModelDebugBoxes(*(undefined4 *)(iVar3 + 0x34),0xffffffff82181838,
-                              *(undefined4 *)(DAT_8353feb4 + 0xc));
-          CL_AddDebugLine(param_2 + 0x20,lVar12,0xffffffff821817f8,0,
-                          *(undefined4 *)(DAT_8353feb4 + 0xc),1);
-          CL_AddDebugStar(lVar12,0xffffffff821817e8,*(undefined4 *)(DAT_8353feb4 + 0xc),1);
+        if ((g_debugLocHit->current).integer == (pBVar3->hitEnt->s).number) {
+          local_b0[0] = -1;
+          local_b0[1] = -1;
+          local_a8[0] = -NAN;
+          local_a8[1] = -NAN;
+          local_a8[2] = -NAN;
+          local_a8[3] = -NAN;
+          G_DObjCalcPose(pBVar3->hitEnt,local_b0);
+          SV_XModelDebugBoxes(pBVar3->hitEnt,colorYellow,(g_debugLocHitTime->current).integer);
+          CL_AddDebugLine(pBVar6->start,pfVar10,colorGreen,0,(g_debugLocHitTime->current).integer,1)
+          ;
+          CL_AddDebugStar(pfVar10,colorRed,(g_debugLocHitTime->current).integer,1);
         }
-        G_Damage(*(undefined4 *)(iVar3 + 0x34),uVar11,param_6,param_2 + 0x38,lVar12,uVar7,param_7,
-                 *(undefined4 *)(iVar1 + 0xc));
-        if ((*(char *)(*(int *)(iVar3 + 0x34) + 0x103) == '\0') ||
-           (bVar4 = true, *(int *)(*(int *)(iVar3 + 0x34) + 0x19c) < 1)) {
-          bVar4 = false;
+        G_Damage(pBVar3->hitEnt,pgVar16,pgVar14,pBVar6->dir,pfVar10,iVar5,param_7,
+                 pBVar6->methodOfDeath,in_stack_fffffec8,(bool)in_stack_fffffecf,in_stack_fffffed0,
+                 in_stack_fffffed4,in_stack_fffffed8,in_stack_fffffedc);
+        if (((pBVar3->hitEnt->r).isInUse == '\0') || (bVar8 = true, pBVar3->hitEnt->health < 1)) {
+          bVar8 = false;
         }
-        if (((-uVar9 & ~uVar9 & 0xffffffff) >> 0x1f != 0) && (!bVar4)) {
+        if (((-uVar15 & ~uVar15 & 0xffffffff) >> 0x1f != 0) && (!bVar8)) {
           *in_stack_00000054 = *in_stack_00000054 | 2;
         }
       }
     }
-    if ((*(int *)(iVar1 + 0xc) == 3) && ((*(uint *)(iVar3 + 0x14) & 0x10) == 0)) {
-      Bullet_ImpactExplosion(param_2,param_3,param_4,param_5,param_6);
-      uVar10 = 0;
+    if ((pBVar6->methodOfDeath == MOD_EXPLOSIVE_BULLET) && (((pBVar3->trace).contents & 0x10U) == 0)
+       ) {
+      Bullet_ImpactExplosion(pBVar6,pBVar3,param_4,bVar11,pgVar14);
+      uVar7 = false;
     }
   }
-  if (iVar5 != 0) {
-    Bullet_ImpactEffect_SetAdditionalFlags(iVar5,*in_stack_00000054);
+  if (pgVar4 != (gentity_s *)0x0) {
+    Bullet_ImpactEffect_SetAdditionalFlags(pgVar4,*in_stack_00000054);
   }
-  __restgprlr(uVar10);
-  return;
+  __restgprlr();
+  return (bool)uVar7;
 }
 
 
 // 82453370  Bullet_FireExtended  (game/bullet.cpp:1195)
 
-void Bullet_FireExtended(undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-                        undefined8 param_5,ulonglong param_6,undefined8 param_7)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Bullet_FireExtended(uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,
+                        Weapon param_4,bool param_5,gentity_s *param_6,int param_7)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  short sVar3;
-  int iVar2;
-  int iVar5;
-  undefined8 uVar6;
-  double dVar7;
-  undefined8 uVar8;
+  uint *puVar1;
+  BulletFireParams *pBVar2;
+  ushort uVar4;
+  int iVar3;
+  ulonglong uVar6;
+  bool bVar7;
+  gentity_s *pgVar8;
+  Weapon WVar9;
+  ulonglong uVar10;
+  gentity_s *pgVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  int *in_stack_ffffff28;
+  undefined1 in_stack_ffffff2f;
+  bool bVar5;
   
-  uVar1 = __savegprlr_22();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x4af,0,0xffffffff82000f98,0xffffffff8200e950);
+  uVar10 = (ulonglong)(int)param_6;
+  WVar9 = (Weapon)(int)param_5;
+  uVar6 = (ulonglong)(int)param_2;
+  puVar1 = (uint *)__savegprlr_22(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x4af,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x4b0,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x4b0,0,"%s")
+    ;
   }
-  iVar5 = 0;
-  dVar7 = 0.5;
-  uVar8 = 0;
-  uVar6 = 0x3fc147ae20000000;
-  while (cVar4 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,0), cVar4 != '\0') {
-    cVar4 = Bullet_Process(uVar1,param_2,param_3,param_4,param_5,param_6,0,param_7);
-    if (cVar4 == '\0') goto LAB_824535a0;
-    iVar2 = (int)param_3;
-    if ((*(uint *)(iVar2 + 0x14) & 0x10) == 0) {
-      if ((*(int *)(iVar2 + 0x34) == 0) || (*(char *)(*(int *)(iVar2 + 0x34) + 0x16b) == '\0'))
+  iVar12 = 0;
+  dVar14 = 0.5;
+  dVar15 = 0.0;
+  dVar13 = 0.13500000536441803;
+  while( true ) {
+    pgVar11 = (gentity_s *)0x0;
+    pBVar2 = (BulletFireParams *)uVar6;
+    bVar7 = WVar9._3_1_;
+    pgVar8 = (gentity_s *)uVar10;
+    bVar5 = Bullet_Trace(pBVar2,param_4,bVar7,pgVar8,param_3,0);
+    if (!bVar5) break;
+    bVar5 = Bullet_Process(puVar1,pBVar2,param_3,param_4,bVar7,pgVar8,0,param_7,in_stack_ffffff28,
+                           (bool)in_stack_ffffff2f);
+    if (!bVar5) goto LAB_824535a0;
+    if (((param_3->trace).contents & 0x10U) == 0) {
+      if ((param_3->hitEnt == (gentity_s *)0x0) || (param_3->hitEnt->takedamage == '\0'))
       goto LAB_824535a0;
-      if (*(char *)(iVar2 + 0x44) == '\0') {
-        if ((((*(char *)(DAT_829c7df4 + 0xc) == '\0') ||
-             (cVar4 = BG_IsRifleBullet(param_4,param_5), cVar4 == '\0')) ||
-            (*(int *)(*(int *)(iVar2 + 0x34) + 0x158) == 0)) ||
-           (iVar2 = OnSameTeam(*(int *)(iVar2 + 0x34),param_6), iVar2 != 0)) goto LAB_824535a0;
-        *(float *)((int)param_2 + 8) = (float)((double)*(float *)((int)param_2 + 8) * dVar7);
+      if (param_3->ignoreHitEnt == false) {
+        if (((((bullet_penetration_enabled->current).enabled == false) ||
+             (bVar5 = BG_IsRifleBullet(param_4,bVar7), !bVar5)) ||
+            (param_3->hitEnt->client == (gclient_s *)0x0)) ||
+           (iVar3 = OnSameTeam(param_3->hitEnt,pgVar8), iVar3 != 0)) goto LAB_824535a0;
+        pBVar2->damageMultiplier = (float)((double)pBVar2->damageMultiplier * dVar14);
       }
-      BG_AdvanceTrace(uVar8,param_2,param_3);
+      bVar5 = BG_AdvanceTrace(pBVar2,param_3,(float)dVar15);
     }
     else {
-      sVar3 = Trace_GetGlassHitId(param_3);
-      if (sVar3 != 0) {
-        Bullet_DamageGlass(param_2,param_3,param_4,param_5,param_6);
+      uVar4 = Trace_GetGlassHitId(&param_3->trace);
+      if (uVar4 != 0) {
+        Bullet_DamageGlass(pBVar2,param_3,param_4,bVar7,pgVar8);
       }
-      cVar4 = BG_AdvanceTrace(uVar6,param_2,param_3);
-      if (cVar4 == '\0') goto LAB_824535a0;
+      bVar5 = BG_AdvanceTrace(pBVar2,param_3,(float)dVar13);
+      if (!bVar5) goto LAB_824535a0;
     }
-    iVar5 = iVar5 + 1;
-    if (0xb < iVar5) {
-      __restgprlr_22();
+    iVar12 = iVar12 + 1;
+    if (0xb < iVar12) {
+      __restgprlr_22(bVar5);
       return;
     }
   }
-  Bullet_HitNothing(param_2,param_3,param_4,param_5,param_6);
+  Bullet_HitNothing((uint *)pBVar2,(BulletFireParams *)param_3,(BulletTraceResults *)param_4,WVar9,
+                    SUB81(uVar10,0),pgVar11);
 LAB_824535a0:
   __restgprlr_22();
   return;
@@ -1155,189 +1385,203 @@ LAB_824535a0:
 
 // 824535B8  Bullet_FirePenetrate  (game/bullet.cpp:1259)
 
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void Bullet_FirePenetrate
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6,undefined8 param_7)
+               (uint *param_1,BulletFireParams *param_2,BulletTraceResults *param_3,Weapon param_4,
+               bool param_5,gentity_s *param_6,int param_7)
 
 {
-  int iVar1;
-  int iVar2;
-  float fVar3;
-  float fVar4;
-  bool bVar5;
-  float fVar6;
-  undefined8 uVar7;
-  char cVar9;
-  short sVar8;
-  char cVar10;
-  char cVar11;
-  ulonglong uVar12;
-  int iVar13;
-  uint *puVar14;
-  double dVar15;
-  undefined8 uVar16;
-  double dVar17;
-  double dVar18;
+  float fVar1;
+  float fVar2;
+  bool bVar3;
+  uint *puVar4;
+  BulletFireParams *pBVar5;
+  ushort uVar6;
+  bool bVar8;
+  bool bVar9;
+  ulonglong uVar10;
+  bool bVar11;
+  gentity_s *pgVar12;
+  Weapon WVar13;
+  ulonglong uVar14;
+  gentity_s *pgVar15;
+  uint uVar16;
+  int iVar17;
+  uint *puVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
-  undefined1 auStack_180 [4];
-  undefined4 local_17c;
-  float local_160;
-  float local_15c;
-  float local_158;
-  float local_154;
-  float local_150;
-  float local_14c;
-  float local_148;
-  float local_144;
-  float local_140;
-  undefined1 auStack_130 [4];
-  float local_12c;
-  float local_128;
-  float local_124;
-  int local_120;
-  char local_102;
-  char local_101;
-  float local_f8;
-  float local_f4;
-  float local_f0;
-  undefined4 local_e8;
-  undefined1 auStack_e0 [224];
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  float fVar27;
+  gentity_s **in_stack_fffffe18;
+  undefined1 in_stack_fffffe1f;
+  BulletFireParams BStack_180;
+  BulletTraceResults aBStack_130 [3];
+  bool bVar7;
   
+  uVar14 = (ulonglong)(int)param_6;
+  WVar13 = (Weapon)(int)param_5;
+  uVar10 = (ulonglong)(int)param_2;
   __savegprlr();
-  uVar7 = __savefpr_24();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x4f0,0,0xffffffff82000f98,0xffffffff8200e950);
+  puVar4 = (uint *)__savefpr_24();
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x4f0,0,"%s")
+    ;
   }
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x4f1,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x4f1,0,"%s")
+    ;
   }
-  cVar9 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,0);
-  if (cVar9 == '\0') {
-    Bullet_HitNothing(param_2,param_3,param_4,param_5,param_6);
+  pgVar15 = (gentity_s *)0x0;
+  pBVar5 = (BulletFireParams *)uVar10;
+  bVar11 = WVar13._3_1_;
+  pgVar12 = (gentity_s *)uVar14;
+  bVar7 = Bullet_Trace(pBVar5,param_4,bVar11,pgVar12,param_3,0);
+  if (!bVar7) {
+    Bullet_HitNothing((uint *)pBVar5,(BulletFireParams *)param_3,(BulletTraceResults *)param_4,
+                      WVar13,SUB81(uVar14,0),pgVar15);
     __restfpr_24();
     __restgprlr();
     return;
   }
-  cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,0,param_7);
-  if (cVar9 != '\0') {
-    dVar17 = 1.0;
-    dVar19 = 0.009999999776482582;
-    iVar13 = 0;
-    uVar16 = 0x3fc147ae20000000;
-    dVar18 = 0.0;
+  bVar7 = Bullet_Process(puVar4,pBVar5,param_3,param_4,bVar11,pgVar12,0,param_7,
+                         (int *)in_stack_fffffe18,(bool)in_stack_fffffe1f);
+  if (bVar7) {
+    dVar20 = 1.0;
+    dVar23 = 0.009999999776482582;
+    iVar17 = 0;
+    dVar19 = 0.13500000536441803;
+    dVar21 = 0.0;
+    bVar7 = true;
     while( true ) {
-      iVar2 = (int)param_3;
-      dVar15 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,*(undefined4 *)(iVar2 + 0x48));
-      iVar1 = *(int *)((int)param_6 + 0x158);
-      if (iVar1 != 0) {
-        puVar14 = (uint *)(iVar1 + 0x4ec);
-        if (puVar14 == (uint *)0x0) {
-          MyAssertHandler(0xffffffff82000fa8,0x4f,0,&DAT_82000f98,0xffffffff82000f9c);
+      fVar27 = BG_GetSurfacePenetrationDepth(param_4,bVar11,param_3->depthSurfaceType);
+      dVar22 = (double)fVar27;
+      if (pgVar12->client != (gclient_s *)0x0) {
+        puVar18 = (pgVar12->client->ps).perks;
+        if (puVar18 == (uint *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
+                          ,0x4f,0,"%s");
         }
-        if ((*puVar14 & 0x4000000) != 0) {
-          dVar15 = (double)(float)((double)*(float *)(DAT_829d7ec8 + 0xc) * dVar15);
+        if ((*puVar18 & 0x4000000) != 0) {
+          dVar22 = (double)(float)((double)(perk_bulletPenetrationMultiplier->current).value *
+                                  dVar22);
         }
       }
-      if (dVar15 <= dVar18) break;
-      dVar22 = (double)*(float *)(iVar2 + 0x38);
-      dVar21 = (double)*(float *)(iVar2 + 0x3c);
-      dVar20 = (double)*(float *)(iVar2 + 0x40);
-      sVar8 = Trace_GetGlassHitId(param_3);
-      if (sVar8 != 0) {
-        Bullet_DamageGlass(param_2,param_3,param_4,param_5,param_6);
+      if (dVar22 <= dVar21) break;
+      dVar26 = (double)param_3->hitPos[0];
+      dVar25 = (double)param_3->hitPos[1];
+      dVar24 = (double)param_3->hitPos[2];
+      uVar6 = Trace_GetGlassHitId(&param_3->trace);
+      if (uVar6 != 0) {
+        Bullet_DamageGlass(pBVar5,param_3,param_4,bVar11,pgVar12);
       }
-      cVar10 = BG_AdvanceTrace(uVar16,param_2,param_3);
-      if (cVar10 == '\0') break;
-      cVar10 = Bullet_Trace(param_2,param_4,param_5,param_6,param_3,*(undefined4 *)(iVar2 + 0x48));
-      Com_Memcpy(auStack_180,param_2,0x44);
-      iVar1 = (int)param_2;
-      local_160 = *(float *)(iVar1 + 0x2c);
-      local_15c = *(float *)(iVar1 + 0x30);
-      local_158 = *(float *)(iVar1 + 0x34);
-      local_148 = (float)-(double)*(float *)(iVar1 + 0x38);
-      local_144 = (float)-(double)*(float *)(iVar1 + 0x3c);
-      local_140 = (float)-(double)*(float *)(iVar1 + 0x40);
-      local_154 = (float)(-(double)*(float *)(iVar1 + 0x38) * dVar19 + dVar22);
-      local_150 = (float)(-(double)*(float *)(iVar1 + 0x3c) * dVar19 + dVar21);
-      local_14c = (float)(-(double)*(float *)(iVar1 + 0x40) * dVar19 + dVar20);
-      Com_Memcpy(auStack_130,param_3,0x50);
-      local_12c = -local_12c;
-      local_128 = -local_128;
-      local_124 = -local_124;
-      if (cVar10 == '\0') {
-        local_17c = 0x7ff;
+      bVar8 = BG_AdvanceTrace(pBVar5,param_3,(float)dVar19);
+      if (!bVar8) break;
+      bVar8 = Bullet_Trace(pBVar5,param_4,bVar11,pgVar12,param_3,param_3->depthSurfaceType);
+      Com_Memcpy(&BStack_180,pBVar5,0x44);
+      BStack_180.start[0] = pBVar5->end[0];
+      BStack_180.start[1] = pBVar5->end[1];
+      BStack_180.start[2] = pBVar5->end[2];
+      BStack_180.dir[0] = (float)-(double)pBVar5->dir[0];
+      BStack_180.dir[1] = (float)-(double)pBVar5->dir[1];
+      BStack_180.dir[2] = (float)-(double)pBVar5->dir[2];
+      BStack_180.end[0] = (float)(-(double)pBVar5->dir[0] * dVar23 + dVar26);
+      BStack_180.end[1] = (float)(-(double)pBVar5->dir[1] * dVar23 + dVar25);
+      BStack_180.end[2] = (float)(-(double)pBVar5->dir[2] * dVar23 + dVar24);
+      Com_Memcpy(aBStack_130,param_3,0x50);
+      aBStack_130[0].trace.normal[0] = -aBStack_130[0].trace.normal[0];
+      aBStack_130[0].trace.normal[1] = -aBStack_130[0].trace.normal[1];
+      aBStack_130[0].trace.normal[2] = -aBStack_130[0].trace.normal[2];
+      if (bVar8) {
+        BG_AdvanceTrace(&BStack_180,aBStack_130,(float)dVar23);
       }
       else {
-        BG_AdvanceTrace(dVar19,auStack_180,auStack_130);
+        BStack_180.ignoreEntIndex = 0x7ff;
       }
-      cVar11 = Bullet_Trace(auStack_180,param_4,param_5,param_6,auStack_130,local_e8);
-      if (((cVar11 == '\0') || (local_102 == '\0')) &&
-         ((*(char *)(iVar2 + 0x2f) == '\0' || (local_101 == '\0')))) {
-        bVar5 = false;
+      bVar9 = Bullet_Trace(&BStack_180,param_4,bVar11,pgVar12,aBStack_130,
+                           aBStack_130[0].depthSurfaceType);
+      if (((bVar9) && (aBStack_130[0].trace.allsolid != false)) ||
+         (((param_3->trace).startsolid != false && (aBStack_130[0].trace.startsolid != false)))) {
+        bVar3 = true;
       }
       else {
-        bVar5 = true;
+        bVar3 = false;
       }
-      if ((cVar11 != '\0') || (bVar5)) {
-        if (bVar5) {
-          fVar3 = (local_154 - local_160) * (local_154 - local_160) +
-                  (local_14c - local_158) * (local_14c - local_158) +
-                  (local_150 - local_15c) * (local_150 - local_15c);
+      if ((bVar9) || (bVar3)) {
+        if (bVar3) {
+          fVar27 = (BStack_180.end[0] - BStack_180.start[0]) *
+                   (BStack_180.end[0] - BStack_180.start[0]) +
+                   (BStack_180.end[2] - BStack_180.start[2]) *
+                   (BStack_180.end[2] - BStack_180.start[2]) +
+                   (BStack_180.end[1] - BStack_180.start[1]) *
+                   (BStack_180.end[1] - BStack_180.start[1]);
         }
         else {
-          fVar3 = (float)(dVar22 - (double)local_f8) * (float)(dVar22 - (double)local_f8) +
-                  (float)(dVar20 - (double)local_f0) * (float)(dVar20 - (double)local_f0) +
-                  (float)(dVar21 - (double)local_f4) * (float)(dVar21 - (double)local_f4);
+          fVar27 = (float)(dVar26 - (double)aBStack_130[0].hitPos[0]) *
+                   (float)(dVar26 - (double)aBStack_130[0].hitPos[0]) +
+                   (float)(dVar24 - (double)aBStack_130[0].hitPos[2]) *
+                   (float)(dVar24 - (double)aBStack_130[0].hitPos[2]) +
+                   (float)(dVar25 - (double)aBStack_130[0].hitPos[1]) *
+                   (float)(dVar25 - (double)aBStack_130[0].hitPos[1]);
         }
-        dVar20 = (double)SQRT(fVar3);
-        if ((double)SQRT(fVar3) < dVar17) {
-          dVar20 = dVar17;
+        dVar24 = (double)SQRT(fVar27);
+        if ((double)SQRT(fVar27) < dVar20) {
+          dVar24 = dVar20;
         }
-        if (cVar11 != '\0') {
-          uVar12 = (ulonglong)*(uint *)((int)param_6 + 0x158);
-          if ((uVar12 == 0) || (cVar11 = BG_HasPerk(uVar12 + 0x4ec,0x1a), cVar11 == '\0')) {
-            dVar21 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,local_e8);
-            if ((float)(dVar21 - dVar15) < 0.0) {
-              dVar15 = dVar21;
+        if (bVar9) {
+          if ((pgVar12->client == (gclient_s *)0x0) ||
+             (bVar9 = BG_HasPerk((pgVar12->client->ps).perks,0x1a), !bVar9)) {
+            fVar27 = BG_GetSurfacePenetrationDepth(param_4,bVar11,aBStack_130[0].depthSurfaceType);
+            if ((float)((double)fVar27 - dVar22) < 0.0) {
+              dVar22 = (double)fVar27;
             }
           }
           else {
-            dVar21 = (double)BG_GetSurfacePenetrationDepth(param_4,param_5,local_e8);
-            dVar21 = (double)(float)(dVar21 * (double)*(float *)(DAT_829d7ec8 + 0xc));
-            if ((float)(dVar21 - dVar15) < 0.0) {
-              dVar15 = dVar21;
+            fVar27 = BG_GetSurfacePenetrationDepth(param_4,bVar11,aBStack_130[0].depthSurfaceType);
+            dVar25 = (double)(fVar27 * (perk_bulletPenetrationMultiplier->current).value);
+            if ((float)(dVar25 - dVar22) < 0.0) {
+              dVar22 = dVar25;
             }
           }
-          if (dVar15 <= dVar18) break;
+          if (dVar22 <= dVar21) break;
         }
-        fVar3 = *(float *)(iVar1 + 8) - (float)(dVar20 / dVar15);
-        *(float *)(iVar1 + 8) = fVar3;
-        if ((double)fVar3 <= dVar18) break;
-        if (!bVar5) {
-          if (((local_120 >> 0x14 & 0x1fU) == 7) ||
-             (fVar6 = local_f4 - *(float *)(iVar2 + 0x3c),
-             fVar3 = local_f0 - *(float *)(iVar2 + 0x40),
-             fVar4 = local_f8 - *(float *)(iVar2 + 0x38), bVar5 = false,
-             *(float *)(DAT_829c5470 + 0xc) * *(float *)(DAT_829c5470 + 0xc) <
-             fVar4 * fVar4 + fVar3 * fVar3 + fVar6 * fVar6)) {
-            bVar5 = true;
+        fVar27 = pBVar5->damageMultiplier - (float)(dVar24 / dVar22);
+        pBVar5->damageMultiplier = fVar27;
+        if ((double)fVar27 <= dVar21) break;
+        if (!bVar3) {
+          uVar16 = aBStack_130[0].trace.surfaceFlags >> 0x14;
+          if (((uVar16 & 0x1f) == 7) ||
+             (fVar27 = aBStack_130[0].hitPos[1] - param_3->hitPos[1],
+             fVar1 = aBStack_130[0].hitPos[2] - param_3->hitPos[2],
+             fVar2 = aBStack_130[0].hitPos[0] - param_3->hitPos[0], bVar7 = false,
+             (bullet_penetrationMinFxDist->current).value *
+             (bullet_penetrationMinFxDist->current).value <
+             fVar2 * fVar2 + fVar1 * fVar1 + fVar27 * fVar27)) {
+            bVar7 = true;
           }
-          if ((bVar5) && ((cVar10 == '\0' || ((*(uint *)(iVar2 + 0x10) & 4) == 0)))) {
-            Bullet_ImpactEffect(auStack_180,auStack_130,param_2 + 0x38,param_4,param_5,param_6,
-                                auStack_e0);
+          if ((bVar7) && ((!bVar8 || (uVar16 = 0, ((param_3->trace).surfaceFlags & 4U) == 0)))) {
+            Bullet_ImpactEffect((uint *)&BStack_180,(BulletFireParams *)aBStack_130,
+                                (BulletTraceResults *)pBVar5->dir,(float *)param_4,WVar13,
+                                SUB81(uVar14,0),(gentity_s *)(aBStack_130 + 1),uVar16,
+                                in_stack_fffffe18);
           }
-          if (cVar10 == '\0') break;
-          cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,8,param_7);
+          if (!bVar8) break;
+          bVar7 = Bullet_Process(puVar4,pBVar5,param_3,param_4,bVar11,pgVar12,8,param_7,
+                                 (int *)in_stack_fffffe18,(bool)in_stack_fffffe1f);
         }
       }
       else {
-        if (cVar10 == '\0') break;
-        cVar9 = Bullet_Process(uVar7,param_2,param_3,param_4,param_5,param_6,8,param_7);
+        if (!bVar8) break;
+        bVar7 = Bullet_Process(puVar4,pBVar5,param_3,param_4,bVar11,pgVar12,8,param_7,
+                               (int *)in_stack_fffffe18,(bool)in_stack_fffffe1f);
       }
-      if (((cVar10 == '\0') || (cVar9 == '\0')) || (iVar13 = iVar13 + 1, 4 < iVar13)) break;
+      if (((!bVar8) || (bVar7 == false)) || (iVar17 = iVar17 + 1, 4 < iVar17)) break;
     }
   }
   __restfpr_24();
@@ -1348,332 +1592,411 @@ void Bullet_FirePenetrate
 
 // 82453BD8  Bullet_CheckSpreadFireAtPos  (game/bullet.cpp:1397)
 
-void Bullet_CheckSpreadFireAtPos
-               (undefined8 param_1,undefined8 param_2,longlong param_3,int param_4,
-               undefined4 *param_5)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int Bullet_CheckSpreadFireAtPos
+              (gentity_s *param_1,gentity_s *param_2,BulletFireParams *param_3,weaponParms *param_4,
+              gentity_s *param_5,hitLocation_t param_6)
 
 {
-  undefined8 uVar1;
+  gentity_s *pgVar1;
+  float *pfVar2;
   int iVar3;
-  undefined8 uVar2;
-  longlong lVar4;
-  longlong lVar5;
-  undefined1 auStack_a0 [28];
-  undefined4 local_84;
-  undefined4 *local_6c;
-  float local_68;
-  undefined4 local_64;
-  undefined4 local_60;
+  float *pfVar4;
+  Weapon in_stack_fffffee8;
+  undefined1 in_stack_fffffeef;
+  hitLocation_t in_stack_fffffef0;
+  uint in_stack_fffffef4;
+  uint in_stack_fffffef8;
+  int in_stack_fffffefc;
+  BulletTraceResults aBStack_a0 [2];
   
-  uVar1 = __savegprlr_23();
-  lVar5 = param_3 + 0x2c;
-  lVar4 = param_3 + 0x20;
-  iVar3 = SV_TracePassed(lVar4,lVar5,0xffffffff82174a3c,*(undefined4 *)param_2,*param_5,0x2806831,0,
-                         0);
+  pgVar1 = (gentity_s *)__savegprlr_23(param_1);
+  pfVar4 = param_3->end;
+  pfVar2 = param_3->start;
+  iVar3 = SV_TracePassed(pfVar2,pfVar4,&bounds_origin,(param_2->s).number,(param_5->s).number,
+                         0x2806831,0,(uchar *)0x0,in_stack_fffffee8.data);
   if (iVar3 != 0) {
-    local_68 = *(float *)lVar5;
-    local_84 = 1;
-    iVar3 = (int)param_3;
-    local_64 = *(undefined4 *)(iVar3 + 0x30);
-    local_60 = *(undefined4 *)(iVar3 + 0x34);
-    *(float *)(iVar3 + 0x38) = local_68 - *(float *)lVar4;
-    *(float *)(iVar3 + 0x3c) = *(float *)(iVar3 + 0x30) - *(float *)(iVar3 + 0x24);
-    *(float *)(iVar3 + 0x40) = *(float *)(iVar3 + 0x34) - *(float *)(iVar3 + 0x28);
-    local_6c = (undefined4 *)param_2;
-    uVar2 = Bullet_GetDamage(param_3,auStack_a0,*(undefined4 *)(param_4 + 0x3c),
-                             *(undefined1 *)(param_4 + 0x40),uVar1);
-    G_Damage(param_2,uVar1,uVar1,param_3 + 0x38,lVar5,uVar2,0,*(undefined4 *)(iVar3 + 0xc));
-    if ((*(int *)(DAT_83373654 + 0xc) == 1) || (*(int *)(DAT_83373654 + 0xc) == 2)) {
-      G_DebugLineWithDuration(lVar4,lVar5,0xffffffff821818f8,1,100);
+    aBStack_a0[0].hitPos[0] = *pfVar4;
+    aBStack_a0[0].trace.hitType = TRACE_HITTYPE_ENTITY;
+    aBStack_a0[0].hitPos[1] = param_3->end[1];
+    aBStack_a0[0].hitPos[2] = param_3->end[2];
+    param_3->dir[0] = aBStack_a0[0].hitPos[0] - *pfVar2;
+    param_3->dir[1] = param_3->end[1] - param_3->start[1];
+    param_3->dir[2] = param_3->end[2] - param_3->start[2];
+    aBStack_a0[0].hitEnt = param_2;
+    iVar3 = Bullet_GetDamage(param_3,aBStack_a0,param_4->weapon,param_4->isAlternate,pgVar1);
+    G_Damage(param_2,pgVar1,pgVar1,param_3->dir,pfVar4,iVar3,0,param_3->methodOfDeath,
+             in_stack_fffffee8,(bool)in_stack_fffffeef,in_stack_fffffef0,in_stack_fffffef4,
+             in_stack_fffffef8,in_stack_fffffefc);
+    if (((g_debugBullets->current).integer == 1) || ((g_debugBullets->current).integer == 2)) {
+      G_DebugLineWithDuration(pfVar2,pfVar4,colorOrange,1,100);
     }
-    __restgprlr_23(1);
-    return;
+    iVar3 = __restgprlr_23(1);
+    return iVar3;
   }
-  if ((*(int *)(DAT_83373654 + 0xc) == 1) || (*(int *)(DAT_83373654 + 0xc) == 2)) {
-    G_DebugLineWithDuration(lVar4,lVar5,0xffffffff821817e8,1,100);
+  if (((g_debugBullets->current).integer == 1) || ((g_debugBullets->current).integer == 2)) {
+    G_DebugLineWithDuration(pfVar2,pfVar4,colorRed,1,100);
   }
-  __restgprlr_23(0);
-  return;
+  iVar3 = __restgprlr_23(0);
+  return iVar3;
 }
 
 
 // 82453D78  Bullet_SpreadFire_NextTarget  (game/bullet.cpp:1465)
 
-void Bullet_SpreadFire_NextTarget(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * Bullet_SpreadFire_NextTarget(gentity_s *param_1,int *param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  int *piVar3;
-  int iVar4;
+  gentity_s *pgVar1;
+  gentity_s *pgVar2;
+  ulonglong uVar3;
+  clientSession_t *pcVar4;
+  int iVar5;
   
-  puVar1 = (undefined4 *)__savegprlr_28();
-  if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x5be,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  uVar3 = (ulonglong)(int)param_2;
+  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5be,0,"%s")
+    ;
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x5bf,0,0xffffffff82000f98,0xffffffff8206b5f0);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5bf,0,"%s")
+    ;
   }
-  iVar4 = *(int *)param_2;
-  if (iVar4 < DAT_83580fa4) {
-    puVar2 = &DAT_83373680 + iVar4 * 0xa0;
-    piVar3 = (int *)(iVar4 * 0x3980 + DAT_83580b00 + 0x3300);
+  iVar5 = *(int *)uVar3;
+  if (iVar5 < level.maxclients) {
+    pgVar2 = g_entities + iVar5;
+    pcVar4 = &level.clients[iVar5].sess;
     do {
-      if (((piVar3[0xb] == 2) && (*piVar3 == 0)) && (puVar2 != puVar1)) {
-        if (*(int *)(DAT_8353fedc + 0xc) != 0) {
+      if (((pcVar4->connected == CON_CONNECTED) && (pcVar4->sessionState == SESS_STATE_PLAYING)) &&
+         (pgVar2 != pgVar1)) {
+        if ((scr_team_fftype->current).integer != 0) {
 LAB_82453e98:
-          *(int *)param_2 = iVar4 + 1;
-          __restgprlr_28();
-          return;
+          *(int *)uVar3 = iVar5 + 1;
+          pgVar1 = (gentity_s *)__restgprlr_28();
+          return pgVar1;
         }
-        if (*(int *)(puVar2[0x56] + 0x33d4) != *(int *)(puVar1[0x56] + 0x33d4)) goto LAB_82453e98;
+        if ((pgVar2->client->sess).cs.team != (pgVar1->client->sess).cs.team) goto LAB_82453e98;
       }
-      iVar4 = iVar4 + 1;
-      piVar3 = piVar3 + 0xe60;
-      puVar2 = puVar2 + 0xa0;
-    } while (iVar4 < DAT_83580fa4);
+      iVar5 = iVar5 + 1;
+      pcVar4 = (clientSession_t *)((int)(pcVar4 + 0x13) + 0x118);
+      pgVar2 = pgVar2 + 1;
+    } while (iVar5 < level.maxclients);
   }
-  __restgprlr_28(0);
-  return;
+  pgVar1 = (gentity_s *)__restgprlr_28(0);
+  return pgVar1;
 }
 
 
 // 82453EA8  Bullet_SpreadFireTargets  (game/bullet.cpp:1499)
 
-void Bullet_SpreadFireTargets(undefined8 param_1,double param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Bullet_SpreadFireTargets
+               (gentity_s *param_1,int param_2,float param_3,float param_4,weaponParms *param_5,
+               gentity_s *param_6,int param_7)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char cVar4;
+  gentity_s *pgVar1;
+  gentity_s *pgVar2;
+  bool bVar4;
   int iVar3;
-  longlong in_r6;
-  float *pfVar5;
-  ulonglong in_r7;
+  longlong lVar5;
+  ulonglong uVar6;
+  gentity_s *pgVar7;
+  float *pfVar8;
   double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
   double dVar9;
-  uint local_d0 [2];
+  double dVar10;
+  double dVar11;
+  float fVar12;
+  int local_d0 [2];
   float local_c8;
   float local_c4;
   float local_c0;
   float local_bc;
   float local_b8;
-  undefined4 local_b0;
-  undefined4 local_ac;
+  int local_b0;
+  int local_ac;
   undefined4 local_a8;
-  int local_a4;
+  meansOfDeath_t local_a4;
   float local_9c;
   float local_98;
   float local_94;
   float local_90;
   float local_8c;
   float local_88;
-  undefined4 local_84;
-  undefined4 local_80;
+  float local_84;
+  float local_80;
   float local_7c;
   
-  uVar1 = __savegprlr_24();
-  dVar9 = extraout_f1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x5e4,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  dVar9 = (double)param_4;
+  uVar6 = (ulonglong)param_7;
+  lVar5 = (longlong)(int)param_5;
+  pgVar1 = (gentity_s *)__savegprlr_24((double)param_3,param_1,param_2);
+  dVar11 = extraout_f1;
+  if (pgVar1 == (gentity_s *)0x0) {
+    lVar5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5e4,0,"%s")
+    ;
   }
-  dVar8 = (double)(float)(dVar9 * dVar9);
-  dVar6 = cos((double)(float)(param_2 * 0.01745329238474369));
-  pfVar5 = (float *)in_r6;
-  local_c8 = *pfVar5;
-  local_c4 = pfVar5[1];
-  dVar6 = (double)(float)dVar6;
+  dVar10 = (double)(float)(dVar11 * dVar11);
+  dVar9 = cos((double)(float)(dVar9 * 0.01745329238474369));
+  local_c8 = (float)(param_6->s).number;
+  local_c4 = (float)(param_6->s).eType;
+  dVar9 = (double)(float)dVar9;
   Vec2Normalize(&local_c8);
   local_b0 = 0x7fe;
-  if ((in_r7 & 0xffffffff) != 0) {
-    local_b0 = *(undefined4 *)in_r7;
+  pgVar7 = (gentity_s *)uVar6;
+  if ((uVar6 & 0xffffffff) != 0) {
+    local_b0 = (pgVar7->s).number;
   }
   local_a8 = 0x3f800000;
   local_ac = local_b0;
-  local_a4 = Bullet_GetMethodOfDeath(uVar1,in_r6);
-  if (local_a4 == 3) {
-    MyAssertHandler(0xffffffff8206b0e4,0x5f2,1,0xffffffff82000f98,0xffffffff8206b5fc);
+  local_a4 = Bullet_GetMethodOfDeath(pgVar1,(weaponParms *)param_6);
+  if (local_a4 == MOD_EXPLOSIVE_BULLET) {
+    lVar5 = 1;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x5f2,1,"%s")
+    ;
   }
-  local_9c = pfVar5[9];
-  local_98 = pfVar5[10];
-  local_94 = pfVar5[0xb];
+  local_9c = (param_6->s).lerp.pos.trDelta[0];
+  local_98 = (param_6->s).lerp.pos.trDelta[1];
+  local_94 = (param_6->s).lerp.pos.trDelta[2];
   local_d0[0] = 0;
+  pfVar8 = (param_6->s).lerp.pos.trDelta;
   local_90 = local_9c;
   local_8c = local_98;
   local_88 = local_94;
-  iVar2 = Bullet_SpreadFire_NextTarget(uVar1,local_d0);
-  while (iVar2 != 0) {
-    local_c0 = *(float *)(iVar2 + 0x138) - *(float *)(in_r6 + 0x24);
-    local_bc = *(float *)(iVar2 + 0x13c) - pfVar5[10];
-    local_b8 = *(float *)(iVar2 + 0x140) - pfVar5[0xb];
-    if (((double)(local_c0 * local_c0 + local_b8 * local_b8 + local_bc * local_bc) <= dVar8) &&
-       (Vec2Normalize(&local_c0), dVar6 <= (double)(local_bc * local_c4 + local_c0 * local_c8))) {
-      local_84 = *(undefined4 *)(iVar2 + 0x138);
-      local_80 = *(undefined4 *)(iVar2 + 0x13c);
-      local_7c = *(float *)(iVar2 + 0x118) + *(float *)(iVar2 + 0x140);
-      if (((*(int *)(iVar2 + 0x158) == 0) ||
-          (((*(uint *)(*(int *)(iVar2 + 0x158) + 0x10) & 0x100) == 0 ||
-           (dVar7 = (double)G_GetShieldCosOfAngleToPoint(iVar2,in_r6 + 0x24),
-           dVar7 <= (double)DAT_82968ef8)))) &&
-         ((cVar4 = PointInsideCone(dVar6,dVar9,&local_90,in_r6), cVar4 == '\0' ||
-          (iVar3 = Bullet_CheckSpreadFireAtPos(uVar1,iVar2,&local_b0,in_r6,in_r7,5), iVar3 == 0))))
-      {
-        G_GetPlayerEyePosition
-                  ((ulonglong)local_d0[0] * 0x3980 + (ulonglong)DAT_83580b00 + -0x3980,&local_84);
-        cVar4 = PointInsideCone(dVar6,dVar9,&local_90,in_r6);
-        if (cVar4 != '\0') {
-          Bullet_CheckSpreadFireAtPos(uVar1,iVar2,&local_b0,in_r6,in_r7,2);
+  pgVar2 = Bullet_SpreadFire_NextTarget(pgVar1,local_d0);
+  do {
+    if (pgVar2 == (gentity_s *)0x0) {
+      __restgprlr_24();
+      return;
+    }
+    local_c0 = (pgVar2->r).currentOrigin[0] - *pfVar8;
+    local_bc = (pgVar2->r).currentOrigin[1] - (param_6->s).lerp.pos.trDelta[1];
+    local_b8 = (pgVar2->r).currentOrigin[2] - (param_6->s).lerp.pos.trDelta[2];
+    if (((double)(local_c0 * local_c0 + local_b8 * local_b8 + local_bc * local_bc) <= dVar10) &&
+       (Vec2Normalize(&local_c0), dVar9 <= (double)(local_bc * local_c4 + local_c0 * local_c8))) {
+      local_84 = (pgVar2->r).currentOrigin[0];
+      local_80 = (pgVar2->r).currentOrigin[1];
+      local_7c = (pgVar2->r).box.halfSize[2] + (pgVar2->r).currentOrigin[2];
+      if ((pgVar2->client == (gclient_s *)0x0) ||
+         ((((pgVar2->client->ps).otherFlags & 0x100U) == 0 ||
+          (fVar12 = G_GetShieldCosOfAngleToPoint(pgVar2,pfVar8), fVar12 <= MY_DOT_LIMIT)))) {
+        bVar4 = PointInsideCone(&local_90,(float *)param_6,(float)dVar9,(float)dVar11,(float *)lVar5
+                               );
+        if (bVar4) {
+          lVar5 = ZEXT48(&stack0x00000000) - 0xb0;
+          iVar3 = Bullet_CheckSpreadFireAtPos
+                            (pgVar1,pgVar2,(BulletFireParams *)lVar5,(weaponParms *)param_6,pgVar7,
+                             HITLOC_TORSO_LWR);
+          if (iVar3 != 0) goto LAB_8245414c;
+        }
+        G_GetPlayerEyePosition(&level.clients[local_d0[0] + -1].ps,&local_84);
+        bVar4 = PointInsideCone(&local_90,(float *)param_6,(float)dVar9,(float)dVar11,(float *)lVar5
+                               );
+        if (bVar4) {
+          lVar5 = ZEXT48(&stack0x00000000) - 0xb0;
+          Bullet_CheckSpreadFireAtPos
+                    (pgVar1,pgVar2,(BulletFireParams *)lVar5,(weaponParms *)param_6,pgVar7,
+                     HITLOC_HEAD);
         }
       }
     }
-    iVar2 = Bullet_SpreadFire_NextTarget(uVar1,local_d0);
-  }
-  __restgprlr_24();
-  return;
+LAB_8245414c:
+    pgVar2 = Bullet_SpreadFire_NextTarget(pgVar1,local_d0);
+  } while( true );
 }
 
 
 // 82454178  Bullet_Fire_Internal  (game/bullet.cpp:1590)
 
-void Bullet_Fire_Internal
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-               int param_5,undefined8 param_6,undefined1 param_7)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int Bullet_Fire_Internal
+              (gentity_s *param_1,float param_2,weaponParms *param_3,gentity_s *param_4,
+              PlayerHandIndex param_5,int param_6,bool param_7)
 
 {
-  int iVar1;
-  int iVar3;
-  int iVar4;
-  char cVar5;
-  longlong lVar2;
-  char cVar6;
-  undefined8 extraout_f1;
-  undefined8 uVar7;
-  double dVar8;
-  double dVar9;
-  int local_310;
-  float local_30c;
-  undefined1 auStack_308 [8];
-  undefined1 auStack_300 [16];
-  undefined4 local_2f0;
-  undefined4 local_2ec;
-  float local_2e8;
-  undefined4 local_2e4;
-  undefined1 local_2e0;
-  undefined4 local_2dc;
-  undefined4 local_2d8;
-  undefined4 local_2d4;
-  undefined4 local_2d0;
-  undefined4 local_2cc;
-  undefined4 local_2c8;
-  undefined1 auStack_2c4 [36];
-  undefined1 auStack_2a0 [76];
+  bool bVar1;
+  Weapon WVar2;
+  gentity_s *pgVar3;
+  weapType_t wVar4;
+  bool bVar6;
+  int iVar5;
+  bool bVar7;
+  gentity_s *pgVar8;
+  Weapon WVar9;
+  ulonglong uVar10;
+  gentity_s *pgVar11;
+  BulletTraceResults *pBVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  longlong lVar15;
+  double extraout_f1;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  uint local_310;
+  undefined1 local_30c [52];
+  gentity_s *local_2d8;
+  float local_2d4;
+  float local_2d0;
+  gentity_s *local_2cc;
+  float local_2c8;
+  float afStack_2c4 [3];
+  undefined1 auStack_2b8 [100];
   int local_254;
-  undefined1 auStack_250 [592];
+  AntilagClientStore AStack_250;
   
-  iVar3 = __savegprlr_19();
-  uVar7 = extraout_f1;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x644,0,0xffffffff82000f98,0xffffffff8206b2cc);
+  uVar14 = (uint)param_7;
+  uVar13 = (ulonglong)(int)param_5;
+  uVar10 = (ulonglong)(int)param_4;
+  pgVar3 = (gentity_s *)__savegprlr_19((double)param_2,param_1,param_3);
+  pgVar11 = (gentity_s *)uVar10;
+  dVar16 = extraout_f1;
+  if (pgVar3 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x644,0,"%s")
+    ;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x645,0,0xffffffff82000f98,0xffffffff8206b270);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x645,0,"%s")
+    ;
   }
-  iVar1 = (int)param_3;
-  if (*(int *)(iVar1 + 0x44) == 0) {
-    MyAssertHandler(0xffffffff8206b0e4,0x646,0,0xffffffff82000f98,0xffffffff8206b6a4);
+  if ((pgVar11->s).lerp.apos.trBase[2] == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x646,0,"%s")
+    ;
   }
-  iVar4 = BG_GetWeaponType(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
-  if (iVar4 != 1) {
-    MyAssertHandler(0xffffffff8206b0e4,0x647,0,0xffffffff82000f98,0xffffffff8206b660);
+  wVar4 = BG_GetWeaponType((Weapon)(pgVar11->s).lerp.apos.trBase[0],
+                           *(bool *)((pgVar11->s).lerp.apos.trBase + 1));
+  if (wVar4 != WEAPTYPE_BULLET) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x647,0,"%s")
+    ;
   }
-  G_AntiLagRewindClientPos(param_6,auStack_250);
-  if ((ulonglong)*(uint *)(iVar3 + 0x158) == 0) {
-    BG_ClearPerks(auStack_308);
+  G_AntiLagRewindClientPos(uVar14,&AStack_250);
+  if (pgVar3->client == (gclient_s *)0x0) {
+    BG_ClearPerks((uint *)(local_30c + 4));
   }
   else {
-    BG_CopyPerks((ulonglong)*(uint *)(iVar3 + 0x158) + 0x4ec,auStack_308);
+    BG_CopyPerks((pgVar3->client->ps).perks,(uint *)(local_30c + 4));
   }
-  cVar5 = BG_WeaponBulletFire_ShouldSpread
-                    (auStack_308,*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
-  if ((ulonglong)*(uint *)(iVar3 + 0x158) == 0) {
-    BG_GetDamageRange(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40),&local_30c,
-                      auStack_300);
+  bVar6 = BG_WeaponBulletFire_ShouldSpread
+                    ((uint *)(local_30c + 4),(Weapon)(pgVar11->s).lerp.apos.trBase[0],
+                     *(bool *)((pgVar11->s).lerp.apos.trBase + 1));
+  if (pgVar3->client == (gclient_s *)0x0) {
+    bVar1 = *(bool *)((pgVar11->s).lerp.apos.trBase + 1);
+    WVar9.data._0_3_ = 0;
+    WVar9._s_0.weaponIdx = bVar1;
+    pBVar12 = (BulletTraceResults *)local_30c;
+    BG_GetDamageRange((Weapon)(pgVar11->s).lerp.apos.trBase[0],bVar1,(float *)pBVar12,
+                      (float *)(local_30c + 0xc));
   }
   else {
+    bVar1 = *(bool *)((pgVar11->s).lerp.apos.trBase + 1);
+    pBVar12 = (BulletTraceResults *)(uint)bVar1;
+    WVar9 = (Weapon)(pgVar11->s).lerp.apos.trBase[0];
     BG_GetPlayerDamageRange
-              ((ulonglong)*(uint *)(iVar3 + 0x158) + 0x4ec,*(undefined4 *)(iVar1 + 0x3c),
-               *(undefined1 *)(iVar1 + 0x40),&local_30c,auStack_300);
+              ((pgVar3->client->ps).perks,WVar9,bVar1,(float *)local_30c,(float *)(local_30c + 0xc))
+    ;
   }
-  if (cVar5 == '\0') {
-    lVar2 = 1;
-    local_30c = 8192.0;
+  if (bVar6) {
+    bVar1 = *(bool *)((pgVar11->s).lerp.apos.trBase + 1);
+    WVar9.data._0_3_ = 0;
+    WVar9._s_0.weaponIdx = bVar1;
+    iVar5 = BG_ShotCount((Weapon)(pgVar11->s).lerp.apos.trBase[0],bVar1);
+    lVar15 = (longlong)iVar5 + -1;
   }
   else {
-    lVar2 = BG_ShotCount(*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
-    lVar2 = lVar2 + -1;
+    lVar15 = 1;
+    local_30c._0_4_ = 8192.0;
   }
-  dVar9 = (double)local_30c;
-  local_310 = (int)param_6;
-  if (param_5 != 0) {
-    local_310 = local_310 + 10;
+  dVar18 = (double)(float)local_30c._0_4_;
+  local_310 = uVar14;
+  if (param_6 != 0) {
+    local_310 = uVar14 + 10;
   }
   BG_srand(&local_310);
-  iVar4 = (int)lVar2;
+  iVar5 = (int)lVar15;
   local_254 = -1;
-  if (0 < iVar4) {
-    dVar8 = 1.0;
+  if (0 < iVar5) {
+    dVar17 = 1.0;
     do {
-      local_2f0 = 0x7fe;
-      if ((param_4 & 0xffffffff) != 0) {
-        local_2f0 = *(undefined4 *)param_4;
+      local_30c._28_4_ = 0x7fe;
+      if ((uVar13 & 0xffffffff) != 0) {
+        local_30c._28_4_ = *(TraceHitType *)uVar13;
       }
-      local_2e8 = (float)dVar8;
-      local_2ec = local_2f0;
-      local_2e4 = Bullet_GetMethodOfDeath(iVar3,param_3);
-      local_2dc = *(undefined4 *)(iVar1 + 0x24);
-      local_2d8 = *(undefined4 *)(iVar1 + 0x28);
-      local_2d4 = *(undefined4 *)(iVar1 + 0x2c);
-      local_2e0 = param_7;
-      local_2d0 = local_2dc;
+      local_30c._36_4_ = (undefined4)dVar17;
+      local_30c._32_4_ = local_30c._28_4_;
+      pgVar8 = pgVar11;
+      local_30c._40_4_ = Bullet_GetMethodOfDeath(pgVar3,(weaponParms *)pgVar11);
+      local_30c._48_4_ = (pgVar11->s).lerp.pos.trDelta[0];
+      local_2d8 = (gentity_s *)(pgVar11->s).lerp.pos.trDelta[1];
+      local_2d4 = (pgVar11->s).lerp.pos.trDelta[2];
+      local_2d0 = (float)local_30c._48_4_;
       local_2cc = local_2d8;
       local_2c8 = local_2d4;
-      Bullet_Endpos(uVar7,dVar9,&local_310);
-      if (*(int *)(DAT_83373654 + 0xc) == 1) {
-        G_DebugLineWithDuration(&local_2d0,auStack_2c4,0xffffffff821818b8,1,100);
+      Bullet_Endpos(&local_310,(float)dVar16,(float *)pgVar8,afStack_2c4,(weaponParms *)auStack_2b8,
+                    (float)dVar18);
+      if ((g_debugBullets->current).integer == 1) {
+        G_DebugLineWithDuration(&local_2d0,afStack_2c4,colorWhite,1,100);
       }
-      cVar6 = BG_WeaponBulletFire_ShouldPenetrate
-                        (auStack_308,*(undefined4 *)(iVar1 + 0x3c),*(undefined1 *)(iVar1 + 0x40));
-      if (cVar6 == '\0') {
-        Bullet_FireExtended(&local_310,&local_2f0,auStack_2a0,*(undefined4 *)(iVar1 + 0x3c),
-                            *(undefined1 *)(iVar1 + 0x40),iVar3,param_6);
+      bVar7 = BG_WeaponBulletFire_ShouldPenetrate
+                        ((uint *)(local_30c + 4),(Weapon)(pgVar11->s).lerp.apos.trBase[0],
+                         *(bool *)((pgVar11->s).lerp.apos.trBase + 1));
+      bVar1 = *(bool *)((pgVar11->s).lerp.apos.trBase + 1);
+      WVar2 = (Weapon)(pgVar11->s).lerp.apos.trBase[0];
+      pBVar12 = (BulletTraceResults *)(auStack_2b8 + 0x18);
+      WVar9.data = (int)local_30c + 0x1c;
+      if (bVar7) {
+        Bullet_FirePenetrate(&local_310,(BulletFireParams *)WVar9,pBVar12,WVar2,bVar1,pgVar3,uVar14)
+        ;
       }
       else {
-        Bullet_FirePenetrate();
+        Bullet_FireExtended(&local_310,(BulletFireParams *)WVar9,pBVar12,WVar2,bVar1,pgVar3,uVar14);
       }
-      lVar2 = lVar2 + -1;
-    } while (lVar2 != 0);
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
   }
-  if (cVar5 != '\0') {
-    Bullet_SpreadFireTargets(dVar9,uVar7,iVar3);
+  if (bVar6) {
+    Bullet_SpreadFireTargets
+              (pgVar3,WVar9.data,(float)dVar18,(float)dVar16,(weaponParms *)pBVar12,pgVar11,
+               (int)(TraceHitType *)uVar13);
   }
-  G_AntiLag_RestoreClientPos(auStack_250);
-  if ((local_254 != -1) && (iVar4 != 1)) {
-    MyAssertHandler(0xffffffff8206b0e4,0x6b7,0,0xffffffff82000f98,0xffffffff8206b628);
+  G_AntiLag_RestoreClientPos(&AStack_250);
+  if ((local_254 != -1) && (iVar5 != 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x6b7,0,"%s")
+    ;
   }
-  __restgprlr_19(local_254);
-  return;
+  iVar5 = __restgprlr_19(local_254);
+  return iVar5;
 }
 
 
 // 824544A8  Bullet_Fire  (game/bullet.cpp:1737)
 
-void Bullet_Fire(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int Bullet_Fire(gentity_s *param_1,float param_2,weaponParms *param_3,gentity_s *param_4,
+               PlayerHandIndex param_5,int param_6)
 
 {
-  Bullet_Fire_Internal();
-  return;
+  int iVar1;
+  bool in_r8;
+  
+  iVar1 = Bullet_Fire_Internal(param_1,param_2,param_3,param_4,param_5,param_6,in_r8);
+  return iVar1;
 }
 

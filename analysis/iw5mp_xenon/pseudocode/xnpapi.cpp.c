@@ -2,10 +2,12 @@
 
 // 828BC2A0  XnpLogonGetStatus  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnpapi.cpp:48)
 
-void XnpLogonGetStatus(undefined8 param_1,undefined8 param_2)
+ulong XnpLogonGetStatus(_SGADDR *param_1,ulong *param_2)
 
 {
-  NetDll_XnpLogonGetStatus(1,param_1,param_2);
-  return;
+  ulong uVar1;
+  
+  uVar1 = NetDll_XnpLogonGetStatus(1,param_1,param_2);
+  return uVar1;
 }
 

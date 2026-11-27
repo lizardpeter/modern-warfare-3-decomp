@@ -2,14 +2,15 @@
 
 // 822F1540  CG_UsedDObjCalcPose  (cgame/cg_pose_utils.cpp:14)
 
-void CG_UsedDObjCalcPose(int param_1)
+void CG_UsedDObjCalcPose(cpose_t *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82021670,0xf,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (param_1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_pose_utils.cpp",0xf,0
+                    ,"%s");
   }
-  if (*(char *)(param_1 + 3) == '\0') {
-    *(undefined1 *)(param_1 + 3) = 1;
+  if (param_1->cullIn == '\0') {
+    param_1->cullIn = '\x01';
   }
   return;
 }
@@ -17,15 +18,16 @@ void CG_UsedDObjCalcPose(int param_1)
 
 // 822F15A8  CG_CullIn  (cgame/cg_pose_utils.cpp:23)
 
-void CG_CullIn(int param_1)
+void CG_CullIn(cpose_t *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82021670,0x18,0,0xffffffff82000f98,0xffffffff82013bec);
+  if (param_1 == (cpose_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_pose_utils.cpp",0x18,
+                    0,"%s");
     uRam00000003 = 2;
     return;
   }
-  *(undefined1 *)(param_1 + 3) = 2;
+  param_1->cullIn = '\x02';
   return;
 }
 

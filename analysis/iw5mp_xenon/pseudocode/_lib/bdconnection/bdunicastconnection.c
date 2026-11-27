@@ -7,7 +7,7 @@ void __unwind_77295(void)
 {
   int in_r12;
   
-  bdReference<bdMessage>___bdReference<bdMessage>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdMessage>::~bdReference<bdMessage>(*(bdReference<bdMessage> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -17,9 +17,10 @@ void __unwind_77295(void)
 void __unwind_77297(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x50);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(in_r12 + -0x50));
   return;
 }
 
@@ -31,7 +32,7 @@ void __unwind_77298(void)
 {
   int in_r12;
   
-  bdDataChunk__operator_delete(*(undefined4 *)(in_r12 + -0x48));
+  bdMemory::__3bdDataChunk__SAXPAX_Z(*(void **)(in_r12 + -0x48));
   return;
 }
 
@@ -41,9 +42,9 @@ void __unwind_77298(void)
 void __unwind_77300(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0x48);
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0x48));
   return;
 }
 
@@ -55,7 +56,7 @@ void __unwind_77301(void)
 {
   int in_r12;
   
-  bdReliableSendWindow__operator_delete(*(undefined4 *)(in_r12 + -0x4c));
+  bdMemory::__3bdReliableSendWindow__SAXPAX_Z(*(void **)(in_r12 + -0x4c));
   return;
 }
 
@@ -65,9 +66,9 @@ void __unwind_77301(void)
 void __unwind_77454(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdMessage>___bdReference<bdMessage>(in_r12 + -0x40);
+  bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(in_r12 + -0x40));
   return;
 }
 
@@ -77,9 +78,9 @@ void __unwind_77454(void)
 void __unwind_77455(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0x3c);
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -89,9 +90,9 @@ void __unwind_77455(void)
 void __unwind_77456(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdMessage>___bdReference<bdMessage>(in_r12 + -0x34);
+  bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(in_r12 + -0x34));
   return;
 }
 
@@ -101,9 +102,9 @@ void __unwind_77456(void)
 void __unwind_77457(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0x38);
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0x38));
   return;
 }
 
@@ -113,9 +114,9 @@ void __unwind_77457(void)
 void __unwind_77458(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdMessage>___bdReference<bdMessage>(in_r12 + -0x34);
+  bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(in_r12 + -0x34));
   return;
 }
 
@@ -125,9 +126,9 @@ void __unwind_77458(void)
 void __unwind_77531(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdDataChunk>___bdReference<bdDataChunk>(in_r12 + -0x2c);
+  bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -139,7 +140,7 @@ void __unwind_77533(void)
 {
   int in_r12;
   
-  bdReliableReceiveWindow__operator_delete(*(undefined4 *)(in_r12 + -0x30));
+  bdMemory::__3bdReliableReceiveWindow__SAXPAX_Z(*(void **)(in_r12 + -0x30));
   return;
 }
 
@@ -149,9 +150,9 @@ void __unwind_77533(void)
 void __unwind_77795(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdSAckChunk>___bdReference<bdSAckChunk>(in_r12 + -0x38);
+  bdReference<bdSAckChunk>::~bdReference<bdSAckChunk>((bdReference<bdSAckChunk> *)(in_r12 + -0x38));
   return;
 }
 
@@ -163,7 +164,7 @@ void __unwind_78327(void)
 {
   int in_r12;
   
-  bdTrulyRandomImpl__operator_delete(*(undefined4 *)(in_r12 + -0x20));
+  bdMemory::__3bdTrulyRandomImpl__SAXPAX_Z(*(void **)(in_r12 + -0x20));
   return;
 }
 
@@ -175,7 +176,7 @@ void __unwind_78403(void)
 {
   int in_r12;
   
-  bdConnection___bdConnection(*(undefined4 *)(in_r12 + 0x14));
+  bdConnection::~bdConnection(*(bdConnection **)(in_r12 + 0x14));
   return;
 }
 
@@ -187,7 +188,8 @@ void __unwind_78404(void)
 {
   int in_r12;
   
-  bdUnreliableSendWindow___bdUnreliableSendWindow((ulonglong)*(uint *)(in_r12 + 0x14) + 0x6c);
+  bdUnreliableSendWindow::~bdUnreliableSendWindow
+            ((bdUnreliableSendWindow *)(*(int *)(in_r12 + 0x14) + 0x6c));
   return;
 }
 
@@ -199,7 +201,8 @@ void __unwind_78405(void)
 {
   int in_r12;
   
-  bdUnreliableReceiveWindow___bdUnreliableReceiveWindow((ulonglong)*(uint *)(in_r12 + 0x14) + 0x80);
+  bdUnreliableReceiveWindow::~bdUnreliableReceiveWindow
+            ((bdUnreliableReceiveWindow *)(*(int *)(in_r12 + 0x14) + 0x80));
   return;
 }
 
@@ -211,8 +214,10 @@ void __unwind_78406(void)
 {
   int in_r12;
   
-  bdQueue<bdUnicastConnection::bdControlChunkStore>___bdQueue<bdUnicastConnection::bdControlChunkStore>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x94);
+  bdLinkedList<bdUnicastConnection::bdControlChunkStore>::
+  __1__bdQueue_VbdControlChunkStore_bdUnicastConnection____QAA_XZ
+            ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)
+             (*(int *)(in_r12 + 0x14) + 0x94));
   return;
 }
 
@@ -224,8 +229,8 @@ void __unwind_78407(void)
 {
   int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0xf8);
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            ((bdReference<bdInitAckChunk> *)(*(int *)(in_r12 + 0x14) + 0xf8));
   return;
 }
 
@@ -237,7 +242,7 @@ void __unwind_78619(void)
 {
   int in_r12;
   
-  bdConnection___bdConnection(*(undefined4 *)(in_r12 + 0x14));
+  bdConnection::~bdConnection(*(bdConnection **)(in_r12 + 0x14));
   return;
 }
 
@@ -249,7 +254,8 @@ void __unwind_78620(void)
 {
   int in_r12;
   
-  bdUnreliableSendWindow___bdUnreliableSendWindow((ulonglong)*(uint *)(in_r12 + 0x14) + 0x6c);
+  bdUnreliableSendWindow::~bdUnreliableSendWindow
+            ((bdUnreliableSendWindow *)(*(int *)(in_r12 + 0x14) + 0x6c));
   return;
 }
 
@@ -261,7 +267,8 @@ void __unwind_78621(void)
 {
   int in_r12;
   
-  bdUnreliableReceiveWindow___bdUnreliableReceiveWindow((ulonglong)*(uint *)(in_r12 + 0x14) + 0x80);
+  bdUnreliableReceiveWindow::~bdUnreliableReceiveWindow
+            ((bdUnreliableReceiveWindow *)(*(int *)(in_r12 + 0x14) + 0x80));
   return;
 }
 
@@ -273,8 +280,10 @@ void __unwind_78622(void)
 {
   int in_r12;
   
-  bdQueue<bdUnicastConnection::bdControlChunkStore>___bdQueue<bdUnicastConnection::bdControlChunkStore>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0x94);
+  bdLinkedList<bdUnicastConnection::bdControlChunkStore>::
+  __1__bdQueue_VbdControlChunkStore_bdUnicastConnection____QAA_XZ
+            ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)
+             (*(int *)(in_r12 + 0x14) + 0x94));
   return;
 }
 
@@ -286,8 +295,8 @@ void __unwind_78623(void)
 {
   int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>
-            ((ulonglong)*(uint *)(in_r12 + 0x14) + 0xf8);
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            ((bdReference<bdInitAckChunk> *)(*(int *)(in_r12 + 0x14) + 0xf8));
   return;
 }
 
@@ -299,7 +308,7 @@ void __unwind_78681(void)
 {
   int in_r12;
   
-  bdInitChunk__operator_delete(*(undefined4 *)(in_r12 + -0x3c));
+  bdMemory::__3bdInitChunk__SAXPAX_Z(*(void **)(in_r12 + -0x3c));
   return;
 }
 
@@ -309,9 +318,9 @@ void __unwind_78681(void)
 void __unwind_78682(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdInitChunk>___bdReference<bdInitChunk>(in_r12 + -0x3c);
+  bdReference<bdInitChunk>::~bdReference<bdInitChunk>((bdReference<bdInitChunk> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -321,9 +330,10 @@ void __unwind_78682(void)
 void __unwind_78684(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x38);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x38));
   return;
 }
 
@@ -335,7 +345,8 @@ void __unwind_78780(void)
 {
   int in_r12;
   
-  bdReference<bdInitChunk>___bdReference<bdInitChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdInitChunk>::~bdReference<bdInitChunk>(*(bdReference<bdInitChunk> **)(in_r12 + 0x1c))
+  ;
   return;
 }
 
@@ -347,7 +358,7 @@ void __unwind_78781(void)
 {
   int in_r12;
   
-  bdCookie__operator_delete(*(undefined4 *)(in_r12 + -0x54));
+  bdMemory::__3bdCookie__SAXPAX_Z(*(void **)(in_r12 + -0x54));
   return;
 }
 
@@ -357,9 +368,9 @@ void __unwind_78781(void)
 void __unwind_78782(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCookie>___bdReference<bdCookie>(in_r12 + -0x54);
+  bdReference<bdCookie>::~bdReference<bdCookie>((bdReference<bdCookie> *)(in_r12 + -0x54));
   return;
 }
 
@@ -371,7 +382,7 @@ void __unwind_78783(void)
 {
   int in_r12;
   
-  bdInitAckChunk__operator_delete(*(undefined4 *)(in_r12 + -0x58));
+  bdMemory::__3bdInitAckChunk__SAXPAX_Z(*(void **)(in_r12 + -0x58));
   return;
 }
 
@@ -381,9 +392,10 @@ void __unwind_78783(void)
 void __unwind_78785(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>(in_r12 + -0x58);
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            ((bdReference<bdInitAckChunk> *)(in_r12 + -0x58));
   return;
 }
 
@@ -393,9 +405,10 @@ void __unwind_78785(void)
 void __unwind_78787(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x50);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x50));
   return;
 }
 
@@ -407,7 +420,8 @@ void __unwind_78940(void)
 {
   int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            (*(bdReference<bdInitAckChunk> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -417,9 +431,10 @@ void __unwind_78940(void)
 void __unwind_78941(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(in_r12 + -0x40);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(in_r12 + -0x40));
   return;
 }
 
@@ -431,7 +446,7 @@ void __unwind_78942(void)
 {
   int in_r12;
   
-  bdCookieEchoChunk__operator_delete(*(undefined4 *)(in_r12 + -0x34));
+  bdMemory::__3bdCookieEchoChunk__SAXPAX_Z(*(void **)(in_r12 + -0x34));
   return;
 }
 
@@ -441,9 +456,10 @@ void __unwind_78942(void)
 void __unwind_78944(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCookieEchoChunk>___bdReference<bdCookieEchoChunk>(in_r12 + -0x34);
+  bdReference<bdCookieEchoChunk>::~bdReference<bdCookieEchoChunk>
+            ((bdReference<bdCookieEchoChunk> *)(in_r12 + -0x34));
   return;
 }
 
@@ -453,9 +469,10 @@ void __unwind_78944(void)
 void __unwind_78946(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x30);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x30));
   return;
 }
 
@@ -467,7 +484,7 @@ void __unwind_79077(void)
 {
   int in_r12;
   
-  bdCookieAckChunk__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdCookieAckChunk__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -477,9 +494,10 @@ void __unwind_79077(void)
 void __unwind_79078(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCookieAckChunk>___bdReference<bdCookieAckChunk>(in_r12 + -0x2c);
+  bdReference<bdCookieAckChunk>::~bdReference<bdCookieAckChunk>
+            ((bdReference<bdCookieAckChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -489,9 +507,10 @@ void __unwind_79078(void)
 void __unwind_79080(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x28);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x28));
   return;
 }
 
@@ -503,7 +522,8 @@ void __unwind_79273(void)
 {
   int in_r12;
   
-  bdReference<bdInitChunk>___bdReference<bdInitChunk>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdInitChunk>::~bdReference<bdInitChunk>(*(bdReference<bdInitChunk> **)(in_r12 + 0x1c))
+  ;
   return;
 }
 
@@ -515,7 +535,7 @@ void __unwind_79274(void)
 {
   int in_r12;
   
-  bdHeartbeatAckChunk__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdHeartbeatAckChunk__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -525,9 +545,10 @@ void __unwind_79274(void)
 void __unwind_79275(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdHeartbeatAckChunk>___bdReference<bdHeartbeatAckChunk>(in_r12 + -0x2c);
+  bdReference<bdHeartbeatAckChunk>::~bdReference<bdHeartbeatAckChunk>
+            ((bdReference<bdHeartbeatAckChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -537,9 +558,10 @@ void __unwind_79275(void)
 void __unwind_79277(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x28);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x28));
   return;
 }
 
@@ -551,7 +573,7 @@ void __unwind_79384(void)
 {
   int in_r12;
   
-  bdShutdownChunk__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdShutdownChunk__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -561,9 +583,9 @@ void __unwind_79384(void)
 void __unwind_79385(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdChunk>___bdReference<bdChunk>(in_r12 + -0x2c);
+  bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -573,9 +595,10 @@ void __unwind_79385(void)
 void __unwind_79387(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x28);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x28));
   return;
 }
 
@@ -587,7 +610,7 @@ void __unwind_79476(void)
 {
   int in_r12;
   
-  bdShutdownAckChunk__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdShutdownAckChunk__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -597,9 +620,9 @@ void __unwind_79476(void)
 void __unwind_79477(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdChunk>___bdReference<bdChunk>(in_r12 + -0x2c);
+  bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -609,9 +632,10 @@ void __unwind_79477(void)
 void __unwind_79479(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x28);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x28));
   return;
 }
 
@@ -623,7 +647,7 @@ void __unwind_79569(void)
 {
   int in_r12;
   
-  bdShutdownCompleteChunk__operator_delete(*(undefined4 *)(in_r12 + -0x2c));
+  bdMemory::__3bdShutdownCompleteChunk__SAXPAX_Z(*(void **)(in_r12 + -0x2c));
   return;
 }
 
@@ -633,9 +657,9 @@ void __unwind_79569(void)
 void __unwind_79570(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdChunk>___bdReference<bdChunk>(in_r12 + -0x2c);
+  bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -645,9 +669,10 @@ void __unwind_79570(void)
 void __unwind_79572(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x28);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x28));
   return;
 }
 
@@ -657,9 +682,9 @@ void __unwind_79572(void)
 void __unwind_79680(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdPacket___bdPacket(in_r12 + -0x90);
+  bdPacket::~bdPacket((bdPacket *)(in_r12 + -0x90));
   return;
 }
 
@@ -669,9 +694,9 @@ void __unwind_79680(void)
 void __unwind_79682(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdChunk>___bdReference<bdChunk>(in_r12 + -0xa0);
+  bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)(in_r12 + -0xa0));
   return;
 }
 
@@ -681,9 +706,10 @@ void __unwind_79682(void)
 void __unwind_79684(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdUnicastConnection__bdControlChunkStore___bdControlChunkStore(in_r12 + -0x98);
+  bdReference<bdChunk>::__1bdControlChunkStore_bdUnicastConnection__QAA_XZ
+            ((bdReference<bdChunk> *)(in_r12 + -0x98));
   return;
 }
 
@@ -693,9 +719,10 @@ void __unwind_79684(void)
 void __unwind_79685(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>(in_r12 + -0x9c);
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            ((bdReference<bdInitAckChunk> *)(in_r12 + -0x9c));
   return;
 }
 
@@ -705,9 +732,9 @@ void __unwind_79685(void)
 void __unwind_79686(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdPacket___bdPacket(in_r12 + -0x70);
+  bdPacket::~bdPacket((bdPacket *)(in_r12 + -0x70));
   return;
 }
 
@@ -719,7 +746,7 @@ void __unwind_79689(void)
 {
   int in_r12;
   
-  bdHeartbeatChunk__operator_delete(*(undefined4 *)(in_r12 + -0x98));
+  bdMemory::__3bdHeartbeatChunk__SAXPAX_Z(*(void **)(in_r12 + -0x98));
   return;
 }
 
@@ -729,9 +756,10 @@ void __unwind_79689(void)
 void __unwind_79690(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdHeartbeatChunk>___bdReference<bdHeartbeatChunk>(in_r12 + -0x98);
+  bdReference<bdHeartbeatChunk>::~bdReference<bdHeartbeatChunk>
+            ((bdReference<bdHeartbeatChunk> *)(in_r12 + -0x98));
   return;
 }
 
@@ -741,9 +769,9 @@ void __unwind_79690(void)
 void __unwind_79942(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdInitChunk>___bdReference<bdInitChunk>(in_r12 + -0x3c);
+  bdReference<bdInitChunk>::~bdReference<bdInitChunk>((bdReference<bdInitChunk> *)(in_r12 + -0x3c));
   return;
 }
 
@@ -753,9 +781,10 @@ void __unwind_79942(void)
 void __unwind_80035(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdInitAckChunk>___bdReference<bdInitAckChunk>(in_r12 + -0x2c);
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
+            ((bdReference<bdInitAckChunk> *)(in_r12 + -0x2c));
   return;
 }
 
@@ -765,9 +794,10 @@ void __unwind_80035(void)
 void __unwind_80122(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCookieEchoChunk>___bdReference<bdCookieEchoChunk>(in_r12 + -0x5c);
+  bdReference<bdCookieEchoChunk>::~bdReference<bdCookieEchoChunk>
+            ((bdReference<bdCookieEchoChunk> *)(in_r12 + -0x5c));
   return;
 }
 
@@ -777,9 +807,9 @@ void __unwind_80122(void)
 void __unwind_80123(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdCookie>___bdReference<bdCookie>(in_r12 + -0x60);
+  bdReference<bdCookie>::~bdReference<bdCookie>((bdReference<bdCookie> *)(in_r12 + -0x60));
   return;
 }
 
@@ -789,9 +819,9 @@ void __unwind_80123(void)
 void __unwind_80266(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdPacket___bdPacket(in_r12 + -0x60);
+  bdPacket::~bdPacket((bdPacket *)(in_r12 + -0x60));
   return;
 }
 
@@ -801,9 +831,9 @@ void __unwind_80266(void)
 void __unwind_80267(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdReference<bdChunk>___bdReference<bdChunk>(in_r12 + -0x70);
+  bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)(in_r12 + -0x70));
   return;
 }
 

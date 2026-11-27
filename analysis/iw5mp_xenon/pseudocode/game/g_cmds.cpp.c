@@ -2,19 +2,24 @@
 
 // 82467E00  CheatsOk  (game/g_cmds.cpp:61)
 
-undefined8 CheatsOk(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int CheatsOk(gentity_s *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (*(char *)(DAT_8353fef0 + 0xc) == '\0') {
-    uVar1 = va(0xffffffff8206ed60,0x65);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar1);
+  if ((g_cheats->current).enabled == false) {
+    pcVar1 = va("%c \"GAME_CHEATSNOTENABLED\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar1);
     return 0;
   }
-  if (*(int *)(param_1 + 0x19c) < 1) {
-    uVar1 = va(0xffffffff8206ed40,0x65);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar1);
+  if (param_1->health < 1) {
+    pcVar1 = va("%c \"GAME_MUSTBEALIVECOMMAND\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar1);
     return 0;
   }
   return 1;
@@ -23,52 +28,50 @@ undefined8 CheatsOk(int param_1)
 
 // 82467EE0  ConcatArgs  (game/g_cmds.cpp:100)
 
-void ConcatArgs(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * ConcatArgs(int param_1)
 
 {
   char cVar1;
   int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  int iVar3;
+  char *pcVar4;
   char *pcVar5;
-  int iVar6;
-  char *pcVar7;
   char local_440 [1088];
   
-  lVar4 = __savegprlr_26();
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  iVar3 = __savegprlr_26(param_1);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  iVar2 = *(int *)(&DAT_835eeadc + DAT_835eea98 * 4);
-  iVar6 = (int)lVar4;
-  pcVar3 = (char *)0x0;
-  while (iVar6 < iVar2) {
-    SV_Cmd_ArgvBuffer(lVar4,local_440,0x400);
+  iVar2 = sv_cmd_args.argc[sv_cmd_args.nesting];
+  pcVar4 = (char *)0x0;
+  for (; iVar3 < iVar2; iVar3 = iVar3 + 1) {
+    SV_Cmd_ArgvBuffer(iVar3,local_440,0x400);
     pcVar5 = local_440;
     do {
       cVar1 = *pcVar5;
       pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    pcVar7 = pcVar5 + (-1 - (int)local_440) + (int)pcVar3;
-    if (0x3fe < (int)pcVar7) break;
-    memcpy(&DAT_83345c78 + (int)pcVar3,local_440,(size_t)(pcVar5 + (-1 - (int)local_440)));
-    if ((int)lVar4 != iVar2 + -1) {
-      (&DAT_83345c78)[(int)pcVar7] = 0x20;
-      pcVar7 = pcVar7 + 1;
+    pcVar5 = pcVar5 + (int)(pcVar4 + (-1 - (int)local_440));
+    if (0x3fe < (int)pcVar5) break;
+    memcpy();
+    if (iVar3 != iVar2 + -1) {
+      line[(int)pcVar5] = ' ';
+      pcVar5 = pcVar5 + 1;
     }
-    lVar4 = lVar4 + 1;
-    pcVar3 = pcVar7;
-    iVar6 = (int)lVar4;
+    pcVar4 = pcVar5;
   }
-  (&DAT_83345c78)[(int)pcVar3] = 0;
-  __restgprlr_26(0xffffffff83345c78);
-  return;
+  line[(int)pcVar4] = '\0';
+  pcVar4 = (char *)__restgprlr_26(0xffffffff83345c78);
+  return pcVar4;
 }
 
 
 // 82467FD0  SanitizeString  (game/g_cmds.cpp:139)
 
-void SanitizeString(char *param_1,undefined1 *param_2)
+void SanitizeString(char *param_1,char *param_2)
 
 {
   int iVar1;
@@ -90,171 +93,204 @@ void SanitizeString(char *param_1,undefined1 *param_2)
       iVar1 = (int)*param_1;
     } while (iVar1 != 0);
   }
-  *param_2 = 0;
+  *param_2 = '\0';
   return;
 }
 
 
 // 82468058  G_setfog  (game/g_cmds.cpp:165)
 
-void G_setfog(undefined8 param_1)
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void G_setfog(char *param_1,int param_2)
 
 {
-  SV_SetConfigstring(0xd,param_1);
-  DAT_83581ac8 = 0x7f7fffff;
-  DAT_83581acc = 0x7f7fffff;
+  SV_SetConfigstring(CS_FOGVARS,param_1);
+  level.fFogOpaqueDist = 3.4028235e+38;
+  level.fFogOpaqueDistSqrd = 3.4028235e+38;
   return;
 }
 
 
 // 82468098  Cmd_Fogswitch_f  (game/g_cmds.cpp:183)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Cmd_Fogswitch_f(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = ConcatArgs(1);
-  SV_SetConfigstring(0xd,uVar1);
-  DAT_83581ac8 = 0x7f7fffff;
-  DAT_83581acc = 0x7f7fffff;
+  pcVar1 = ConcatArgs(1);
+  SV_SetConfigstring(CS_FOGVARS,pcVar1);
+  level.fFogOpaqueDist = 3.4028235e+38;
+  level.fFogOpaqueDistSqrd = 3.4028235e+38;
   return;
 }
 
 
 // 824680E0  Cmd_Give_f  (game/g_cmds.cpp:190)
 
-void Cmd_Give_f(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Cmd_Give_f(gentity_s *param_1)
 
 {
-  bool bVar1;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
+  char cVar1;
+  uchar uVar2;
+  gclient_s *pgVar3;
+  OffhandClass OVar4;
+  bool bVar5;
+  gentity_s *pgVar7;
   int iVar8;
-  char cVar10;
-  ulonglong uVar2;
-  uint uVar9;
-  undefined8 uVar11;
-  undefined4 *puVar12;
+  char *pcVar9;
+  char *pcVar10;
+  int iVar11;
+  longlong lVar6;
+  uint uVar12;
+  Weapon WVar13;
+  Weapon WVar14;
+  gentity_s *pgVar15;
+  Weapon_s_0 *pWVar17;
+  uint uVar18;
+  bool bVar16;
   
-  iVar3 = __savegprlr_26();
-  iVar4 = CheatsOk();
-  if (iVar4 == 0) goto LAB_824684d4;
-  iVar4 = *(int *)(iVar3 + 0x158);
-  if ((iVar4 == 0) || (uVar11 = 1, (*(uint *)(iVar4 + 0x374) & 0x8000) == 0)) {
-    uVar11 = 0;
+  pgVar7 = (gentity_s *)__savegprlr_26(param_1);
+  iVar8 = CheatsOk(pgVar7);
+  if (iVar8 == 0) goto LAB_824684d4;
+  pgVar3 = pgVar7->client;
+  if ((pgVar3 == (gclient_s *)0x0) ||
+     (bVar16 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar16 = false;
   }
-  pcVar5 = (char *)ConcatArgs(2);
-  iVar6 = atoi(pcVar5);
-  pcVar7 = (char *)ConcatArgs(1);
-  pcVar5 = pcVar7;
-  if (pcVar7 == (char *)0x0) goto LAB_824684d4;
+  pcVar9 = ConcatArgs(2);
+  iVar8 = atoi(pcVar9);
+  pcVar10 = ConcatArgs(1);
+  pcVar9 = pcVar10;
+  if (pcVar10 == (char *)0x0) goto LAB_824684d4;
   do {
-    cVar10 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar10 != '\0');
-  if ((int)pcVar5 - (int)pcVar7 == 1) goto LAB_824684d4;
-  iVar8 = I_stricmp(pcVar7,0xffffffff82003500);
-  if (iVar8 == 0) {
-    Dvar_SetBool(DAT_8337367c,1);
-    bVar1 = true;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
+  } while (cVar1 != '\0');
+  if ((int)pcVar9 - (int)pcVar10 == 1) goto LAB_824684d4;
+  iVar11 = I_stricmp(pcVar10,"all");
+  if (iVar11 == 0) {
+    Dvar_SetBool(g_giveAll,true);
+    bVar5 = true;
 LAB_824681c4:
-    if (iVar6 == 0) {
-      *(undefined4 *)(iVar3 + 0x19c) = *(undefined4 *)(*(int *)(iVar3 + 0x158) + 0x1a4);
+    if (iVar8 == 0) {
+      pgVar7->health = (pgVar7->client->ps).stats[2];
     }
     else {
-      *(int *)(iVar3 + 0x19c) = *(int *)(iVar3 + 0x19c) + iVar6;
+      pgVar7->health = pgVar7->health + iVar8;
     }
-    if (!bVar1) goto LAB_824684d4;
+    if (!bVar5) goto LAB_824684d4;
 LAB_82468240:
-    if (iVar6 == 0) {
-      uVar9 = 0x274;
+    if (iVar8 == 0) {
+      uVar18 = 0x274;
       do {
-        puVar12 = (undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158));
-        if (*(char *)((int)puVar12 + 3) != '\0') {
-          Add_Ammo(iVar3,*puVar12,0,0x3e6,1);
-          cVar10 = BG_HasUnderbarrelAmmo(*(undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158)));
-          if (cVar10 != '\0') {
-            Add_Ammo(iVar3,*(undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158)),1,0x3e6,1);
+        pWVar17 = (Weapon_s_0 *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c));
+        if (pWVar17->weaponIdx != 0) {
+          Add_Ammo(pgVar7,(Weapon)*pWVar17,false,0x3e6,1);
+          bVar16 = BG_HasUnderbarrelAmmo
+                             (*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)));
+          if (bVar16) {
+            Add_Ammo(pgVar7,*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)),true,
+                     0x3e6,1);
           }
         }
-        uVar9 = uVar9 + 4;
-      } while (uVar9 < 0x2b0);
+        uVar18 = uVar18 + 4;
+      } while (uVar18 < 0x2b0);
     }
-    else if (*(char *)(iVar4 + 0x373) != '\0') {
-      Add_Ammo(iVar3,*(undefined4 *)(iVar4 + 0x370),uVar11,iVar6,1);
+    else if ((pgVar3->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
+      Add_Ammo(pgVar7,(pgVar3->ps).weapCommon.weapon,bVar16,iVar8,1);
     }
-    if (!bVar1) goto LAB_824684d4;
+    if (!bVar5) goto LAB_824684d4;
   }
   else {
-    bVar1 = false;
-    iVar8 = I_strnicmp(pcVar7,0xffffffff8206edfc,6);
-    if (iVar8 == 0) goto LAB_824681c4;
-    iVar8 = I_stricmp(pcVar7,0xffffffff8206edf4);
-    if (iVar8 == 0) {
-      Dvar_SetBool(DAT_8337367c,1);
+    bVar5 = false;
+    iVar11 = I_strnicmp(pcVar10,"health",6);
+    if (iVar11 == 0) goto LAB_824681c4;
+    iVar11 = I_stricmp(pcVar10,"weapons");
+    if (iVar11 == 0) {
+      Dvar_SetBool(g_giveAll,true);
       __restgprlr_26();
       return;
     }
-    iVar8 = I_strnicmp(pcVar7,0xffffffff8206edec,4);
-    if (iVar8 == 0) goto LAB_82468240;
+    iVar11 = I_strnicmp(pcVar10,"ammo",4);
+    if (iVar11 == 0) goto LAB_82468240;
   }
-  iVar4 = I_strnicmp(pcVar7,0xffffffff8206ede4,7);
-  if ((iVar4 == 0) && (iVar6 != 0)) {
-    uVar9 = 0x274;
+  iVar11 = I_strnicmp(pcVar10,"allammo",7);
+  if ((iVar11 == 0) && (iVar8 != 0)) {
+    uVar18 = 0x274;
+    lVar6 = 0;
     do {
-      puVar12 = (undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158));
-      if (*(char *)((int)puVar12 + 3) != '\0') {
-        Add_Ammo(iVar3,*puVar12,0,0x3e6,1);
-        cVar10 = BG_HasUnderbarrelAmmo(*(undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158)));
-        if (cVar10 != '\0') {
-          Add_Ammo(iVar3,*(undefined4 *)(uVar9 + *(int *)(iVar3 + 0x158)),1,0x3e6,1);
+      pWVar17 = (Weapon_s_0 *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c));
+      if (pWVar17->weaponIdx != 0) {
+        Add_Ammo(pgVar7,(Weapon)*pWVar17,false,0x3e6,1);
+        bVar16 = BG_HasUnderbarrelAmmo
+                           (*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)));
+        lVar6 = (longlong)bVar16;
+        if (lVar6 != 0) {
+          uVar12 = Add_Ammo(pgVar7,*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)),
+                            true,0x3e6,1);
+          lVar6 = (longlong)(int)uVar12;
         }
       }
-      uVar9 = uVar9 + 4;
-    } while (uVar9 < 0x2b0);
-    __restgprlr_26();
+      uVar18 = uVar18 + 4;
+    } while (uVar18 < 0x2b0);
+    __restgprlr_26(lVar6);
     return;
   }
-  if (!bVar1) {
-    DAT_83580b1c = 1;
-    uVar2 = G_GetWeaponForName(pcVar7);
-    if ((uVar2 & 0xff) != 0) {
-      uVar9 = BG_GetAlternateWeapon(uVar2,0);
-      if (*(int *)((&DAT_829d84a0)[uVar9 & 0xff] + 0x38) == 3) {
-        Com_PrintError(1,0xffffffff8206ed80,pcVar7);
-        DAT_83580b1c = 0;
+  if (!bVar5) {
+    level.initializing = 1;
+    WVar13 = G_GetWeaponForName(pcVar10);
+    if ((WVar13.data & 0xff) != 0) {
+      WVar14 = BG_GetAlternateWeapon(WVar13,false);
+      if (bg_weaponDefs[WVar14.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
+        Com_PrintError(1,
+                       "You can\'t directly spawn the altfire weapon \'%s\'.  Spawn a weapon that has this altmode instead.\n"
+                      );
+        level.initializing = 0;
         __restgprlr_26();
         return;
       }
-      iVar6 = G_Spawn();
-      *(undefined4 *)(iVar6 + 0x138) = *(undefined4 *)(iVar3 + 0x138);
-      *(undefined4 *)(iVar6 + 0x13c) = *(undefined4 *)(iVar3 + 0x13c);
-      *(undefined4 *)(iVar6 + 0x140) = *(undefined4 *)(iVar3 + 0x140);
-      G_GetItemClassname(uVar2,iVar6);
-      G_SpawnItem(iVar6,uVar2);
-      *(undefined1 *)(iVar6 + 0x16c) = 1;
-      uVar9 = BG_GetAlternateWeapon(*(undefined4 *)(iVar6 + 0x1b8),0);
-      iVar4 = *(int *)((&DAT_829d84a0)[uVar9 & 0xff] + 0x40);
-      if (((iVar4 != 0) && (iVar8 = *(int *)(iVar3 + 0x158), *(int *)(iVar8 + 0x368) != iVar4)) &&
-         (*(int *)(iVar8 + 0x36c) != iVar4)) {
-        if (((iVar4 == 1) || (iVar4 == 4)) || (iVar4 == 5)) {
-          *(int *)(iVar8 + 0x368) = iVar4;
+      pgVar15 = G_Spawn();
+      (pgVar15->r).currentOrigin[0] = (pgVar7->r).currentOrigin[0];
+      (pgVar15->r).currentOrigin[1] = (pgVar7->r).currentOrigin[1];
+      (pgVar15->r).currentOrigin[2] = (pgVar7->r).currentOrigin[2];
+      G_GetItemClassname(WVar13,pgVar15);
+      G_SpawnItem(pgVar15,WVar13);
+      WVar13 = (pgVar15->field31_0x1ac).item[0].weapon;
+      pgVar15->active = '\x01';
+      WVar13 = BG_GetAlternateWeapon(WVar13,false);
+      OVar4 = bg_weaponDefs[WVar13.data & 0xff]->offhandClass;
+      if (((OVar4 != OFFHAND_CLASS_NONE) &&
+          (pgVar3 = pgVar7->client, (pgVar3->ps).weapCommon.offhandPrimary != OVar4)) &&
+         ((pgVar3->ps).weapCommon.offhandSecondary != OVar4)) {
+        if (((OVar4 == OFFHAND_CLASS_FRAG_GRENADE) || (OVar4 == OFFHAND_CLASS_THROWINGKNIFE)) ||
+           (OVar4 == OFFHAND_CLASS_OTHER)) {
+          (pgVar3->ps).weapCommon.offhandPrimary = OVar4;
         }
         else {
-          *(int *)(iVar8 + 0x36c) = iVar4;
+          (pgVar3->ps).weapCommon.offhandSecondary = OVar4;
         }
       }
-      Touch_Item(iVar6,iVar3,0,0);
-      *(undefined1 *)(iVar6 + 0x16c) = 0;
-      if (*(char *)(iVar6 + 0x103) != '\0') {
-        G_FreeEntity(iVar6);
+      Touch_Item(pgVar15,pgVar7,0,0);
+      uVar2 = (pgVar15->r).isInUse;
+      pgVar15->active = '\0';
+      if (uVar2 != '\0') {
+        G_FreeEntity(pgVar15);
       }
     }
-    DAT_83580b1c = 0;
+    level.initializing = 0;
   }
 LAB_824684d4:
   __restgprlr_26();
@@ -264,82 +300,94 @@ LAB_824684d4:
 
 // 82467CE0  SV_Cmd_Argc  (qcommon/cmd.h:194)
 
-undefined4 SV_Cmd_Argc(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int SV_Cmd_Argc(void)
 
 {
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  return *(undefined4 *)(&DAT_835eeadc + DAT_835eea98 * 4);
+  return sv_cmd_args.argc[sv_cmd_args.nesting];
 }
 
 
 // 82467D48  SV_Cmd_Argv  (qcommon/cmd.h:210)
 
-void SV_Cmd_Argv(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+char * SV_Cmd_Argv(int param_1)
 
 {
   int iVar1;
+  char *pcVar2;
   
-  iVar1 = __savegprlr_29();
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xd3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  iVar1 = __savegprlr_29(param_1);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
   if (iVar1 < 0) {
-    MyAssertHandler(0xffffffff8206ecb0,0xd4,0,0xffffffff82012bbc,0xffffffff82012bd0,iVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd4,0,
+                    "%s\n\t(argIndex) = %i");
   }
-  if (iVar1 < *(int *)(&DAT_835eeadc + DAT_835eea98 * 4)) {
-    __restgprlr_29(*(undefined4 *)(*(int *)(&DAT_835eeafc + DAT_835eea98 * 4) + iVar1 * 4));
-    return;
+  if (iVar1 < sv_cmd_args.argc[sv_cmd_args.nesting]) {
+    pcVar2 = (char *)__restgprlr_29(sv_cmd_args.argv[sv_cmd_args.nesting][iVar1]);
+    return pcVar2;
   }
-  __restgprlr_29(0xffffffff820068af);
-  return;
+  pcVar2 = (char *)__restgprlr_29(0xffffffff820068af);
+  return pcVar2;
 }
 
 
 // 824684E0  TakeAwayAmmo  (game/g_cmds.cpp:335)
 
-void TakeAwayAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void TakeAwayAmmo(playerState_s *param_1,Weapon param_2,bool param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
+  playerState_s *ppVar1;
+  int iVar2;
+  int iVar3;
+  PlayerHandIndex PVar4;
   longlong lVar5;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x155,0,0xffffffff82000f98,0xffffffff82001fdc);
+  lVar5 = (longlong)param_4;
+  ppVar1 = (playerState_s *)__savegprlr_25(param_1);
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x155,0,"%s")
+    ;
   }
-  lVar2 = BG_GetAmmoNotInClip(uVar1,param_2,param_3);
-  uVar3 = BG_GetEquippedWeaponIndex(uVar1,param_2);
-  if ((-1 < (int)uVar3) &&
-     (((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + uVar1 + 0x2b0 & 0xffffffff) != 0)) {
-    if ((int)param_4 < (int)lVar2) {
-      BG_SetGlobalAmmo(uVar1,param_2,param_3,lVar2 - param_4);
+  iVar2 = BG_GetAmmoNotInClip(ppVar1,param_2,param_3);
+  iVar3 = BG_GetEquippedWeaponIndex(ppVar1,param_2);
+  if ((-1 < iVar3) && (ppVar1->origin + iVar3 * 3 + -7 != (float *)0xfffffd50)) {
+    if ((int)lVar5 < iVar2) {
+      BG_SetGlobalAmmo(ppVar1,param_2,param_3,iVar2 - (int)lVar5);
       __restgprlr_25();
       return;
     }
-    param_4 = param_4 - lVar2;
-    BG_SetGlobalAmmo(uVar1,param_2,param_3,0);
-    uVar4 = BG_ClipForWeapon(param_2,param_3);
-    lVar2 = 0;
+    lVar5 = lVar5 - iVar2;
+    BG_SetGlobalAmmo(ppVar1,param_2,param_3,0);
+    iVar2 = BG_ClipForWeapon(param_2,param_3);
+    PVar4 = WEAPON_HAND_DEFAULT;
     do {
-      lVar5 = BG_GetAmmoInClipForWeapon(uVar1,param_2,param_3,lVar2);
-      if ((int)param_4 < (int)lVar5) {
-        BG_AddClipAmmo();
+      iVar3 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,PVar4);
+      if ((int)lVar5 < iVar3) {
+        BG_AddClipAmmo(ppVar1,iVar2,PVar4,-(int)lVar5);
       }
       else {
-        param_4 = param_4 - lVar5;
-        BG_SetClipAmmo(uVar1,uVar4,lVar2,0);
+        lVar5 = lVar5 - iVar3;
+        BG_SetClipAmmo(ppVar1,iVar2,PVar4,0);
       }
-      lVar2 = lVar2 + 1;
-    } while ((int)lVar2 < 2);
+      PVar4 = PVar4 + WEAPON_HAND_LEFT;
+    } while ((int)PVar4 < 2);
     __restgprlr_25();
     return;
   }
-  MyAssertHandler(0xffffffff8206ee04,0x159,0,0xffffffff82000f98,0xffffffff8200d52c);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x159,0,"%s");
   __restgprlr_25();
   return;
 }
@@ -347,27 +395,30 @@ void TakeAwayAmmo(undefined8 param_1,undefined8 param_2,undefined8 param_3,longl
 
 // 82468638  ClearAmmo  (game/g_cmds.cpp:378)
 
-void ClearAmmo(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void ClearAmmo(playerState_s *param_1,Weapon param_2)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  char cVar3;
+  playerState_s *ppVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x17c,0,0xffffffff82000f98,0xffffffff82001fdc);
+  ppVar1 = (playerState_s *)__savegprlr_29(param_1);
+  if (ppVar1 == (playerState_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x17c,0,"%s")
+    ;
   }
-  uVar2 = BG_ClipForWeapon(param_2,0);
-  BG_SetGlobalAmmo(uVar1,param_2,0,0);
-  BG_SetClipAmmo(uVar1,uVar2,0,0);
-  BG_SetClipAmmo(uVar1,uVar2,1,0);
-  cVar3 = BG_HasUnderbarrelAmmo(param_2);
-  if (cVar3 != '\0') {
-    BG_SetGlobalAmmo(uVar1,param_2,1,0);
-    uVar2 = BG_ClipForWeapon(param_2,1);
-    BG_SetClipAmmo(uVar1,uVar2,0,0);
-    BG_SetClipAmmo(uVar1,uVar2,1,0);
+  iVar2 = BG_ClipForWeapon(param_2,false);
+  BG_SetGlobalAmmo(ppVar1,param_2,false,0);
+  BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_DEFAULT,0);
+  BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_LEFT,0);
+  bVar3 = BG_HasUnderbarrelAmmo(param_2);
+  if (bVar3) {
+    BG_SetGlobalAmmo(ppVar1,param_2,true,0);
+    iVar2 = BG_ClipForWeapon(param_2,true);
+    BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_DEFAULT,0);
+    BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_LEFT,0);
   }
   __restgprlr_29();
   return;
@@ -376,101 +427,106 @@ void ClearAmmo(undefined8 param_1,undefined8 param_2)
 
 // 82468730  Cmd_Take_f  (game/g_cmds.cpp:401)
 
-void Cmd_Take_f(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Cmd_Take_f(gentity_s *param_1)
 
 {
   char cVar1;
-  uint uVar2;
-  bool bVar3;
-  int iVar4;
-  int iVar5;
-  char *pcVar6;
-  char *pcVar7;
-  int iVar8;
-  int iVar9;
-  uint uVar10;
-  undefined8 uVar11;
-  undefined4 *puVar12;
+  gclient_s *pgVar2;
+  gclient_s *pgVar3;
+  Weapon WVar4;
+  bool bVar5;
+  gentity_s *pgVar6;
+  int iVar7;
+  char *pcVar8;
+  char *pcVar9;
+  int iVar10;
+  Weapon WVar11;
+  bool bVar13;
+  Weapon_s_0 *pWVar12;
   
-  iVar4 = __savegprlr_24();
-  iVar5 = CheatsOk();
-  if (iVar5 == 0) goto LAB_824689fc;
-  pcVar6 = (char *)ConcatArgs(2);
-  iVar5 = atoi(pcVar6);
-  pcVar7 = (char *)ConcatArgs(1);
-  pcVar6 = pcVar7;
-  if (pcVar7 == (char *)0x0) goto LAB_824689fc;
+  pgVar6 = (gentity_s *)__savegprlr_24(param_1);
+  iVar7 = CheatsOk(pgVar6);
+  if (iVar7 == 0) goto LAB_824689fc;
+  pcVar8 = ConcatArgs(2);
+  iVar7 = atoi(pcVar8);
+  pcVar9 = ConcatArgs(1);
+  pcVar8 = pcVar9;
+  if (pcVar9 == (char *)0x0) goto LAB_824689fc;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar6 - (int)pcVar7 == 1) goto LAB_824689fc;
-  iVar8 = I_stricmp(pcVar7,0xffffffff82003500);
-  if (iVar8 == 0) {
-    Dvar_SetBool(DAT_8337367c,0);
-    bVar3 = true;
+  if ((int)pcVar8 - (int)pcVar9 == 1) goto LAB_824689fc;
+  iVar10 = I_stricmp(pcVar9,"all");
+  if (iVar10 == 0) {
+    Dvar_SetBool(g_giveAll,false);
+    bVar5 = true;
 LAB_824687ec:
-    if ((iVar5 == 0) ||
-       (iVar8 = *(int *)(iVar4 + 0x19c) - iVar5, *(int *)(iVar4 + 0x19c) = iVar8, iVar8 < 1)) {
-      *(undefined4 *)(iVar4 + 0x19c) = 1;
+    if ((iVar7 == 0) || (iVar10 = pgVar6->health - iVar7, pgVar6->health = iVar10, iVar10 < 1)) {
+      pgVar6->health = 1;
     }
-    if (!bVar3) goto LAB_824689fc;
+    if (!bVar5) goto LAB_824689fc;
   }
   else {
-    bVar3 = false;
-    iVar8 = I_strnicmp(pcVar7,0xffffffff8206edfc,6);
-    if (iVar8 == 0) goto LAB_824687ec;
+    bVar5 = false;
+    iVar10 = I_strnicmp(pcVar9,"health",6);
+    if (iVar10 == 0) goto LAB_824687ec;
   }
-  iVar8 = *(int *)(iVar4 + 0x158);
-  if ((bVar3) || (iVar9 = I_strnicmp(pcVar7,0xffffffff8206edec,4), iVar9 == 0)) {
-    if (iVar5 == 0) {
-      iVar9 = 0x274;
+  pgVar2 = pgVar6->client;
+  if ((bVar5) || (iVar10 = I_strnicmp(pcVar9,"ammo",4), iVar10 == 0)) {
+    if (iVar7 == 0) {
+      iVar10 = 0x274;
       do {
-        puVar12 = (undefined4 *)(iVar9 + *(int *)(iVar4 + 0x158));
-        if (*(char *)((int)puVar12 + 3) != '\0') {
-          ClearAmmo(*(int *)(iVar4 + 0x158),*puVar12);
+        pWVar12 = (Weapon_s_0 *)((int)(pgVar6->client->ps).origin + iVar10 + -0x1c);
+        if (pWVar12->weaponIdx != 0) {
+          ClearAmmo(&pgVar6->client->ps,(Weapon)*pWVar12);
         }
-        iVar9 = iVar9 + 4;
-      } while (iVar9 < 0x2b0);
+        iVar10 = iVar10 + 4;
+      } while (iVar10 < 0x2b0);
     }
-    else if (*(char *)(iVar8 + 0x373) != '\0') {
-      iVar9 = *(int *)(iVar4 + 0x158);
-      if ((iVar9 == 0) || (uVar11 = 1, (*(uint *)(iVar9 + 0x374) & 0x8000) == 0)) {
-        uVar11 = 0;
+    else if ((pgVar2->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
+      pgVar3 = pgVar6->client;
+      if ((pgVar3 == (gclient_s *)0x0) ||
+         (bVar13 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
+        bVar13 = false;
       }
-      TakeAwayAmmo(iVar9,*(undefined4 *)(iVar8 + 0x370),uVar11,iVar5);
+      TakeAwayAmmo(&pgVar3->ps,(pgVar2->ps).weapCommon.weapon,bVar13,iVar7);
     }
-    if (!bVar3) goto LAB_824689fc;
+    if (!bVar5) goto LAB_824689fc;
   }
-  iVar9 = I_strnicmp(pcVar7,0xffffffff8206ede4,7);
-  if ((iVar9 == 0) && (iVar5 != 0)) {
-    iVar9 = 0x274;
+  iVar10 = I_strnicmp(pcVar9,"allammo",7);
+  if ((iVar10 == 0) && (iVar7 != 0)) {
+    iVar10 = 0x274;
     do {
-      puVar12 = (undefined4 *)(iVar9 + *(int *)(iVar4 + 0x158));
-      if (*(char *)((int)puVar12 + 3) != '\0') {
-        TakeAwayAmmo(*(int *)(iVar4 + 0x158),*puVar12,0,iVar5);
+      pWVar12 = (Weapon_s_0 *)((int)(pgVar6->client->ps).origin + iVar10 + -0x1c);
+      if (pWVar12->weaponIdx != 0) {
+        TakeAwayAmmo(&pgVar6->client->ps,(Weapon)*pWVar12,false,iVar7);
       }
-      iVar9 = iVar9 + 4;
-    } while (iVar9 < 0x2b0);
-    if (!bVar3) goto LAB_824689fc;
+      iVar10 = iVar10 + 4;
+    } while (iVar10 < 0x2b0);
+    if (!bVar5) goto LAB_824689fc;
   }
-  else if ((!bVar3) && (iVar5 = I_stricmp(pcVar7,0xffffffff8206edf4), iVar5 != 0))
-  goto LAB_824689fc;
-  iVar5 = 0x274;
+  else if ((!bVar5) && (iVar7 = I_stricmp(pcVar9,"weapons"), iVar7 != 0)) goto LAB_824689fc;
+  iVar7 = 0x274;
   do {
-    uVar2 = *(uint *)(iVar5 + *(int *)(iVar4 + 0x158));
-    if ((uVar2 & 0xff) != 0) {
-      uVar10 = BG_GetAlternateWeapon(uVar2,0);
-      if (*(int *)((&DAT_829d84a0)[uVar10 & 0xff] + 0x38) == 3) {
-        MyAssertHandler(0xffffffff8206ee04,0x1e8,0,0xffffffff82000f98,0xffffffff8200ec38);
+    WVar4 = *(Weapon *)((int)(pgVar6->client->ps).origin + iVar7 + -0x1c);
+    if ((WVar4.data & 0xff) != 0) {
+      WVar11 = BG_GetAlternateWeapon(WVar4,false);
+      if (bg_weaponDefs[WVar11.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x1e8,0,
+                        "%s");
       }
-      G_TakePlayerWeapon(*(undefined4 *)(iVar4 + 0x158),uVar2);
+      G_TakePlayerWeapon(&pgVar6->client->ps,WVar4);
     }
-    iVar5 = iVar5 + 4;
-  } while (iVar5 < 0x2b0);
-  if (*(char *)(iVar8 + 0x373) != '\0') {
-    *(undefined4 *)(iVar8 + 0x370) = 0;
-    G_SelectWeapon((iVar4 + 0x7cc8c980) / 0x280,0);
+    iVar7 = iVar7 + 4;
+  } while (iVar7 < 0x2b0);
+  if ((pgVar2->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
+    (pgVar2->ps).weapCommon.weapon.data = 0;
+    G_SelectWeapon((int)&pgVar6[0x31e9ea].s.groundEntityNum / 0x280,(Weapon)0x0);
   }
 LAB_824689fc:
   __restgprlr_24();
@@ -480,25 +536,21 @@ LAB_824689fc:
 
 // 82468A08  Cmd_God_f  (game/g_cmds.cpp:509)
 
-void Cmd_God_f(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_God_f(gentity_s *param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  char *pcVar2;
   
-  iVar1 = CheatsOk();
+  iVar1 = CheatsOk(param_1);
   if (iVar1 != 0) {
-    uVar3 = *(uint *)(param_1 + 0x184) ^ 1;
-    *(uint *)(param_1 + 0x184) = uVar3;
-    if ((uVar3 & 1) == 0) {
-      uVar2 = 0xffffffff8206ee40;
-    }
-    else {
-      uVar2 = 0xffffffff8206ee54;
-    }
-    uVar2 = va(0xffffffff8206ed38,0x65,uVar2);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar2);
+    param_1->flags = param_1->flags ^ 1;
+    pcVar2 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar2);
   }
   return;
 }
@@ -506,25 +558,21 @@ void Cmd_God_f(int param_1)
 
 // 82468A98  Cmd_DemiGod_f  (game/g_cmds.cpp:562)
 
-void Cmd_DemiGod_f(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_DemiGod_f(gentity_s *param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  char *pcVar2;
   
-  iVar1 = CheatsOk();
+  iVar1 = CheatsOk(param_1);
   if (iVar1 != 0) {
-    uVar3 = *(uint *)(param_1 + 0x184) ^ 2;
-    *(uint *)(param_1 + 0x184) = uVar3;
-    if ((uVar3 & 2) == 0) {
-      uVar2 = 0xffffffff8206ee64;
-    }
-    else {
-      uVar2 = 0xffffffff8206ee7c;
-    }
-    uVar2 = va(0xffffffff8206ed38,0x65,uVar2);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar2);
+    param_1->flags = param_1->flags ^ 2;
+    pcVar2 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar2);
   }
   return;
 }
@@ -532,25 +580,21 @@ void Cmd_DemiGod_f(int param_1)
 
 // 82468B28  Cmd_Notarget_f  (game/g_cmds.cpp:579)
 
-void Cmd_Notarget_f(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_Notarget_f(gentity_s *param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  char *pcVar2;
   
-  iVar1 = CheatsOk();
+  iVar1 = CheatsOk(param_1);
   if (iVar1 != 0) {
-    uVar3 = *(uint *)(param_1 + 0x184) ^ 4;
-    *(uint *)(param_1 + 0x184) = uVar3;
-    if ((uVar3 & 4) == 0) {
-      uVar2 = 0xffffffff8206eea4;
-    }
-    else {
-      uVar2 = 0xffffffff8206ee94;
-    }
-    uVar2 = va(0xffffffff8206ed38,0x65,uVar2);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar2);
+    param_1->flags = param_1->flags ^ 4;
+    pcVar2 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar2);
   }
   return;
 }
@@ -558,27 +602,30 @@ void Cmd_Notarget_f(int param_1)
 
 // 82468BB8  Cmd_Noclip_f  (game/g_cmds.cpp:600)
 
-void Cmd_Noclip_f(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_Noclip_f(gentity_s *param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  gclient_s *pgVar1;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
   
-  iVar1 = CheatsOk();
-  if (iVar1 != 0) {
-    iVar1 = *(int *)(param_1 + 0x158);
-    if ((*(uint *)(iVar1 + 0x35f8) & 1) == 0) {
-      uVar2 = 0xffffffff8206eeb8;
-      uVar3 = *(uint *)(iVar1 + 0x35f8) | 1;
+  iVar2 = CheatsOk(param_1);
+  if (iVar2 != 0) {
+    pgVar1 = param_1->client;
+    if ((pgVar1->flags & 1U) == 0) {
+      uVar4 = pgVar1->flags | 1;
     }
     else {
-      uVar2 = 0xffffffff8206eec8;
-      uVar3 = *(uint *)(iVar1 + 0x35f8) & 0xfffffffe;
+      uVar4 = pgVar1->flags & 0xfffffffe;
     }
-    *(uint *)(iVar1 + 0x35f8) = uVar3;
-    uVar2 = va(0xffffffff8206ed38,0x65,uVar2);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar2);
+    pgVar1->flags = uVar4;
+    pcVar3 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar3);
   }
   return;
 }
@@ -586,27 +633,30 @@ void Cmd_Noclip_f(int param_1)
 
 // 82468C58  Cmd_UFO_f  (game/g_cmds.cpp:630)
 
-void Cmd_UFO_f(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_UFO_f(gentity_s *param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  uint uVar3;
+  gclient_s *pgVar1;
+  int iVar2;
+  char *pcVar3;
+  uint uVar4;
   
-  iVar1 = CheatsOk();
-  if (iVar1 != 0) {
-    iVar1 = *(int *)(param_1 + 0x158);
-    if ((*(uint *)(iVar1 + 0x35f8) & 2) == 0) {
-      uVar2 = 0xffffffff8206eed8;
-      uVar3 = *(uint *)(iVar1 + 0x35f8) | 2;
+  iVar2 = CheatsOk(param_1);
+  if (iVar2 != 0) {
+    pgVar1 = param_1->client;
+    if ((pgVar1->flags & 2U) == 0) {
+      uVar4 = pgVar1->flags | 2;
     }
     else {
-      uVar2 = 0xffffffff8206eee4;
-      uVar3 = *(uint *)(iVar1 + 0x35f8) & 0xfffffffd;
+      uVar4 = pgVar1->flags & 0xfffffffd;
     }
-    *(uint *)(iVar1 + 0x35f8) = uVar3;
-    uVar2 = va(0xffffffff8206ed38,0x65,uVar2);
-    SV_GameSendServerCommand((param_1 + 0x7cc8c980) / 0x280,0,uVar2);
+    pgVar1->flags = uVar4;
+    pcVar3 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar3);
   }
   return;
 }
@@ -614,32 +664,44 @@ void Cmd_UFO_f(int param_1)
 
 // 82468CF8  Cmd_Kill_f  (game/g_cmds.cpp:660)
 
-void Cmd_Kill_f(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Cmd_Kill_f(gentity_s *param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   int iVar2;
   int *in_r13;
+  hitLocation_t in_stack_ffffff68;
+  int in_stack_ffffff6c;
   
-  iVar1 = __savegprlr_25();
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x2a1,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  pgVar1 = (gentity_s *)__savegprlr_25(param_1);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2a1,0,"%s")
+    ;
   }
-  if (*(int *)(*(int *)(iVar1 + 0x158) + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x2a2,0,0xffffffff82000f98,0xffffffff8206bc48);
+  if ((pgVar1->client->sess).connected == CON_DISCONNECTED) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2a2,0,"%s")
+    ;
   }
-  if ((*(int *)(*(int *)(iVar1 + 0x158) + 0x3300) == 0) && (iVar2 = CheatsOk(iVar1), iVar2 != 0)) {
+  if (((pgVar1->client->sess).sessionState == SESS_STATE_PLAYING) &&
+     (iVar2 = CheatsOk(pgVar1), iVar2 != 0)) {
     iVar2 = *in_r13;
     if (*(int *)(iVar2 + 8) != 0) {
-      MyAssertHandler(0xffffffff8206ee04,0x2aa,0,0xffffffff8201dfa4,0xffffffff8201df98);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2aa,0,
+                      "%s\n\t(bgs) = %p");
     }
-    *(undefined **)(iVar2 + 8) = &DAT_834b36a8;
-    *(uint *)(iVar1 + 0x184) = *(uint *)(iVar1 + 0x184) & 0xfffffffc;
-    *(undefined4 *)(iVar1 + 0x19c) = 0;
-    *(undefined4 *)(*(int *)(iVar1 + 0x158) + 0x19c) = 0;
-    player_die(iVar1,iVar1,iVar1,100000,0xc,0,0,0);
-    if (*(undefined **)(iVar2 + 8) != &DAT_834b36a8) {
-      MyAssertHandler(0xffffffff8206ee04,0x2b1,0,0xffffffff8201dfa4,0xffffffff8206bd34);
+    *(bgs_t **)(iVar2 + 8) = &level_bgs;
+    pgVar1->flags = pgVar1->flags & 0xfffffffc;
+    pgVar1->health = 0;
+    (pgVar1->client->ps).stats[0] = 0;
+    player_die(pgVar1,pgVar1,pgVar1,100000,0xc,(Weapon)0x0,false,(float *)0x0,in_stack_ffffff68,
+               in_stack_ffffff6c);
+    if (*(bgs_t **)(iVar2 + 8) != &level_bgs) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2b1,0,
+                      "%s\n\t(bgs) = %p");
     }
     *(undefined4 *)(iVar2 + 8) = 0;
   }
@@ -650,85 +712,89 @@ void Cmd_Kill_f(void)
 
 // 82468E50  Cmd_Where_f  (game/g_cmds.cpp:696)
 
-void Cmd_Where_f(longlong param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_Where_f(gentity_s *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = vtos(param_1 + 0x138);
-  uVar1 = va(0xffffffff8206ed38,0x65,uVar1);
-  SV_GameSendServerCommand(((int)param_1 + 0x7cc8c980) / 0x280,0,uVar1);
+  vtos((param_1->r).currentOrigin);
+  pcVar1 = va("%c \"%s\"");
+  SV_GameSendServerCommand
+            ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar1);
   return;
 }
 
 
 // 82468EB8  Cmd_SetViewpos_f  (game/g_cmds.cpp:702)
 
-void Cmd_SetViewpos_f(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Cmd_SetViewpos_f(gentity_s *param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   int iVar2;
-  undefined8 uVar3;
-  longlong lVar4;
-  float *pfVar5;
-  double dVar6;
+  char *pcVar3;
+  float *pfVar4;
+  double dVar5;
   float local_440;
   float local_43c;
   undefined4 local_438;
   float fStack_434;
-  undefined1 local_430 [8];
-  float local_428;
+  float local_430 [4];
   char acStack_420 [1056];
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x2c3,0,0xffffffff82000f98,0xffffffff82002614);
+  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2c3,0,"%s")
+    ;
   }
-  if (*(int *)(iVar1 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x2c4,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (pgVar1->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2c4,0,"%s")
+    ;
   }
-  iVar2 = CheatsOk(iVar1);
-  if ((iVar2 == 0) && (*(char *)(DAT_8353fef0 + 0xc) == '\0')) {
-    uVar3 = 0xffffffff8206ef28;
-LAB_82469084:
-    uVar3 = va(0xffffffff8206ed38,0x65,uVar3);
-    SV_GameSendServerCommand((iVar1 + 0x7cc8c980) / 0x280,0,uVar3);
+  iVar2 = CheatsOk(pgVar1);
+  if ((((iVar2 == 0) && ((g_cheats->current).enabled == false)) ||
+      (iVar2 = SV_Cmd_Argc(), iVar2 < 4)) || (iVar2 = SV_Cmd_Argc(), 6 < iVar2)) {
+    pcVar3 = va("%c \"%s\"");
+    SV_GameSendServerCommand
+              ((int)&pgVar1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar3);
     __restgprlr_29();
     return;
   }
-  iVar2 = SV_Cmd_Argc();
-  if ((iVar2 < 4) || (iVar2 = SV_Cmd_Argc(), 6 < iVar2)) {
-    uVar3 = 0xffffffff8206eef0;
-    goto LAB_82469084;
-  }
-  lVar4 = 0;
-  pfVar5 = &fStack_434;
+  iVar2 = 0;
+  pfVar4 = &fStack_434;
   do {
-    lVar4 = lVar4 + 1;
-    SV_Cmd_ArgvBuffer(lVar4,acStack_420,0x400);
-    dVar6 = atof(acStack_420);
-    pfVar5 = pfVar5 + 1;
-    *pfVar5 = (float)dVar6;
-  } while ((int)lVar4 < 3);
-  local_428 = local_428 - *(float *)(*(int *)(iVar1 + 0x158) + 0x168);
+    iVar2 = iVar2 + 1;
+    SV_Cmd_ArgvBuffer(iVar2,acStack_420,0x400);
+    dVar5 = atof(acStack_420);
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = (float)dVar5;
+  } while (iVar2 < 3);
+  local_430[2] = local_430[2] - (pgVar1->client->ps).viewHeightCurrent;
   local_440 = 0.0;
   local_43c = 0.0;
   local_438 = 0;
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + DAT_835eea98 * 4) != 5) {
-    if (*(int *)(&DAT_835eeadc + DAT_835eea98 * 4) != 6) goto LAB_82469064;
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] != 5) {
+    if (sv_cmd_args.argc[sv_cmd_args.nesting] != 6) goto LAB_82469064;
     SV_Cmd_ArgvBuffer(5,acStack_420,0x400);
-    dVar6 = atof(acStack_420);
-    local_440 = (float)dVar6;
+    dVar5 = atof(acStack_420);
+    local_440 = (float)dVar5;
   }
   SV_Cmd_ArgvBuffer(4,acStack_420,0x400);
-  dVar6 = atof(acStack_420);
-  local_43c = (float)dVar6;
+  dVar5 = atof(acStack_420);
+  local_43c = (float)dVar5;
 LAB_82469064:
-  TeleportPlayer(iVar1,local_430,&local_440);
+  TeleportPlayer(pgVar1,local_430,&local_440);
   __restgprlr_29();
   return;
 }
@@ -736,88 +802,115 @@ LAB_82469064:
 
 // 824690C0  Cmd_MenuResponse_f  (game/g_cmds.cpp:751)
 
-void Cmd_MenuResponse_f(undefined8 param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Cmd_MenuResponse_f(gentity_s *param_1)
 
 {
   int iVar1;
   char local_c20 [1024];
-  undefined4 local_820 [256];
+  char local_820 [256] [4];
   char acStack_420 [1032];
   
-  if (7 < DAT_835eea98) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,DAT_835eea98,8);
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + DAT_835eea98 * 4) == 4) {
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] == 4) {
     SV_Cmd_ArgvBuffer(1,acStack_420,0x400);
     iVar1 = atoi(acStack_420);
-    if (iVar1 != DAT_83ced688) {
+    if (iVar1 != sv_serverId_value) {
       return;
     }
     SV_Cmd_ArgvBuffer(2,local_c20,0x400);
     iVar1 = atoi(local_c20);
     if ((-1 < iVar1) && (iVar1 < 0x20)) {
-      if (0xeea < (int)((longlong)iVar1 + 0xbb4)) {
-        MyAssertHandler(0xffffffff8206c268,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+      if (0xeea < (int)(iVar1 + CS_SCRIPT_MENUS)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
+                        ,0x285,0,"%s");
       }
-      SV_GetConfigstring((longlong)iVar1 + 0xbb4,local_c20,0x400);
+      SV_GetConfigstring(iVar1 + CS_SCRIPT_MENUS,local_c20,0x400);
     }
-    SV_Cmd_ArgvBuffer(3,local_820,0x400);
+    SV_Cmd_ArgvBuffer(3,local_820[0],0x400);
   }
   else {
     local_c20[0] = '\0';
-    local_820[0] = 0x62616400;
+    builtin_strncpy(local_820[0],"bad",4);
   }
-  Scr_AddString(local_820);
+  Scr_AddString(local_820[0]);
   Scr_AddString(local_c20);
-  Scr_Notify(param_1,DAT_835a0d6a,2);
+  Scr_Notify(param_1,scr_const.menuresponse,2);
+  return;
+}
+
+
+// 82469220  Cmd_PrintEntities_f  (game/g_cmds.cpp:818)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* void __cdecl Cmd_PrintEntities_f(void) */
+
+void Cmd_PrintEntities_f(void)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  __savegprlr_27();
+  iVar1 = 0;
+  if (0 < level.num_entities) {
+    iVar2 = -0x7cc8cac0;
+    do {
+      if (*(ushort *)(iVar2 + 0x2b2) != 0) {
+        SL_ConvertToString((uint)*(ushort *)(iVar2 + 0x2b2));
+      }
+      iVar2 = iVar2 + 0x280;
+      Com_Printf(0xf,"%4i: \'%s\', origin: %f %f %f\n");
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < level.num_entities);
+  }
+  __restgprlr_27();
   return;
 }
 
 
 // 82469228  Cmd_VisionSetNaked_f  (game/g_cmds.cpp:826)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Cmd_VisionSetNaked_f(void)
 
 {
-  int iVar1;
-  char *_String;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  double dVar5;
+  char *pcVar1;
+  double dVar2;
   
   __savegprlr_28();
-  iVar4 = 1000;
-  uVar3 = (ulonglong)DAT_835eea98;
-  if (7 < uVar3) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,uVar3,8);
-    uVar3 = (ulonglong)DAT_835eea98;
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + (int)(uVar3 << 2)) != 2) {
-    if (*(int *)(&DAT_835eeadc + (int)(uVar3 << 2)) != 3) {
-      Com_Printf(0,0xffffffff8206ef4c);
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] != 2) {
+    if (sv_cmd_args.argc[sv_cmd_args.nesting] != 3) {
+      Com_Printf(0,"USAGE: visionSetNaked <name> <duration>\n");
       __restgprlr_28();
       return;
     }
-    _String = (char *)SV_Cmd_Argv(2);
-    dVar5 = atof(_String);
-    dVar5 = floor((double)((float)dVar5 * 1000.0 + 0.5));
-    uVar3 = (ulonglong)DAT_835eea98;
-    iVar4 = (int)dVar5;
+    pcVar1 = SV_Cmd_Argv(2);
+    dVar2 = atof(pcVar1);
+    floor((double)((float)dVar2 * 1000.0 + 0.5));
   }
-  if (7 < uVar3) {
-    MyAssertHandler(0xffffffff8206ecb0,0xd3,0,0xffffffff8206ecf0,uVar3,8);
-    uVar3 = (ulonglong)DAT_835eea98;
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)(uVar3 << 2);
-  if (*(int *)(&DAT_835eeadc + iVar1) < 2) {
-    uVar3 = 0xffffffff820068af;
-  }
-  else {
-    uVar3 = (ulonglong)*(uint *)(*(int *)(&DAT_835eeafc + iVar1) + 4);
-  }
-  uVar2 = va(0xffffffff8206ef44,uVar3,iVar4);
-  SV_SetConfigstring(0x3fc,uVar2);
+  pcVar1 = va("\"%s\" %i");
+  SV_SetConfigstring(CS_VISIONSET_NORMAL,pcVar1);
   __restgprlr_28();
   return;
 }
@@ -825,48 +918,37 @@ void Cmd_VisionSetNaked_f(void)
 
 // 82469360  Cmd_VisionSetNight_f  (game/g_cmds.cpp:850)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Cmd_VisionSetNight_f(void)
 
 {
-  int iVar1;
-  char *_String;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  double dVar5;
+  char *pcVar1;
+  double dVar2;
   
   __savegprlr_28();
-  iVar4 = 1000;
-  uVar3 = (ulonglong)DAT_835eea98;
-  if (7 < uVar3) {
-    MyAssertHandler(0xffffffff8206ecb0,0xc3,0,0xffffffff8206ecf0,uVar3,8);
-    uVar3 = (ulonglong)DAT_835eea98;
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (*(int *)(&DAT_835eeadc + (int)(uVar3 << 2)) != 2) {
-    if (*(int *)(&DAT_835eeadc + (int)(uVar3 << 2)) != 3) {
-      Com_Printf(0,0xffffffff8206ef78);
+  if (sv_cmd_args.argc[sv_cmd_args.nesting] != 2) {
+    if (sv_cmd_args.argc[sv_cmd_args.nesting] != 3) {
+      Com_Printf(0,"USAGE: visionSetNight <name> <duration>\n");
       __restgprlr_28();
       return;
     }
-    _String = (char *)SV_Cmd_Argv(2);
-    dVar5 = atof(_String);
-    dVar5 = floor((double)((float)dVar5 * 1000.0 + 0.5));
-    uVar3 = (ulonglong)DAT_835eea98;
-    iVar4 = (int)dVar5;
+    pcVar1 = SV_Cmd_Argv(2);
+    dVar2 = atof(pcVar1);
+    floor((double)((float)dVar2 * 1000.0 + 0.5));
   }
-  if (7 < uVar3) {
-    MyAssertHandler(0xffffffff8206ecb0,0xd3,0,0xffffffff8206ecf0,uVar3,8);
-    uVar3 = (ulonglong)DAT_835eea98;
+  if (7 < (uint)sv_cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd3,0,
+                    "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)(uVar3 << 2);
-  if (*(int *)(&DAT_835eeadc + iVar1) < 2) {
-    uVar3 = 0xffffffff820068af;
-  }
-  else {
-    uVar3 = (ulonglong)*(uint *)(*(int *)(&DAT_835eeafc + iVar1) + 4);
-  }
-  uVar2 = va(0xffffffff8206ef44,uVar3,iVar4);
-  SV_SetConfigstring(0x3fd,uVar2);
+  pcVar1 = va("\"%s\" %i");
+  SV_SetConfigstring(CS_VISIONSET_NIGHT,pcVar1);
   __restgprlr_28();
   return;
 }
@@ -874,21 +956,25 @@ void Cmd_VisionSetNight_f(void)
 
 // 82469498  Cmd_G_TestCmd_f  (game/g_cmds.cpp:874)
 
-void Cmd_G_TestCmd_f(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Cmd_G_TestCmd_f(gentity_s *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
   
-  iVar2 = __savegprlr_29();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x36b,0,0xffffffff82000f98,0xffffffff82002614);
+  iVar1 = __savegprlr_29(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x36b,0,"%s")
+    ;
   }
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff8206ee04,0x36c,0,0xffffffff82000f98,0xffffffff8206b9fc);
+  if (*(int *)(iVar1 + 0x158) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x36c,0,"%s")
+    ;
   }
-  uVar1 = BG_GetNumWeapons();
-  Com_Printf(0,0xffffffff8206efa4,uVar1);
+  BG_GetNumWeapons();
+  Com_Printf(0,"\n%i - Total Weapons\n");
   __restgprlr_29();
   return;
 }

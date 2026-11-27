@@ -2,41 +2,54 @@
 
 // 82576268  CL_Live_RequestClientDrop  (server_mp/sv_live_mp.cpp:21)
 
-void CL_Live_RequestClientDrop(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CL_Live_RequestClientDrop(int param_1,LiveClientDropType param_2,char *param_3)
 
 {
-  ulonglong uVar1;
-  char cVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int iVar5;
+  uint uVar1;
+  bool bVar3;
+  PartyData *pPVar2;
+  ulonglong uVar4;
+  client_t *pcVar5;
   
-  uVar1 = __savegprlr_27();
-  cVar3 = Lobby_AreWeHost();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x18,0,0xffffffff82000f98,0xffffffff8203b1ec);
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  bVar3 = Lobby_AreWeHost();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x18
+                    ,0,"%s");
   }
-  if (*(char *)(DAT_83666174 + 0xc) == '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x19,0,0xffffffff82000f98,0xffffffff8215b840);
+  if ((com_sv_running->current).enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x19
+                    ,0,"%s");
   }
-  if (0x11 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8215ee38,0x1a,0,0xffffffff82014c1c,uVar1,0x12);
+  if (0x11 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x1a
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8215ee38,0x1b,0,0xffffffff8215f1d8,param_2,4);
+  if (3 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x1b
+                    ,0,"dropType doesn\'t index SV_LIVE_DROP_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = (int)uVar1 * 0x68b00;
-  iVar5 = iVar4 + DAT_83f11414;
-  if ((*(int *)(iVar4 + DAT_83f11414) == 0) && (*(int *)(iVar5 + 0x2148c) == 0)) {
-    Com_PrintWarning(0x19,0xffffffff8215f168,uVar1);
-    uVar2 = Lobby_GetPartyData();
+  pcVar5 = svs.clients + uVar1;
+  if ((svs.clients[uVar1].header.state == 0) && (pcVar5->lastPacketTime == 0)) {
+    Com_PrintWarning(0x19,
+                     "Client %i is already CS_FREE and the server doesn\'t know about them. Removing them immediately from the lobby\n"
+                    );
+    pPVar2 = Lobby_GetPartyData();
     PartyHost_RemovePlayer
-              (uVar2,uVar1,(param_2 - 3) - ((param_2 - 4) + (ulonglong)(param_2 - 3 == 0)),param_3);
-    SV_Live_ClearDropFlagClient(iVar5);
+              (pPVar2,uVar1,
+               (int)(uVar4 - 3) -
+               (((LiveClientDropType)uVar4 - SV_LIVE_DROP_COUNT) + (uint)(uVar4 - 3 == 0)),param_3);
+    SV_Live_ClearDropFlagClient(pcVar5);
     __restgprlr_27();
     return;
   }
-  *(int *)(iVar5 + 0x214a8) = (int)param_2;
+  pcVar5->liveDropRequest = (LiveClientDropType)uVar4;
   __restgprlr_27();
   return;
 }
@@ -44,47 +57,63 @@ void CL_Live_RequestClientDrop(undefined8 param_1,ulonglong param_2,undefined8 p
 
 // 825757C0  SV_Live_ClearDropFlagClient  (server_mp/sv_live_mp.cpp:46)
 
-void SV_Live_ClearDropFlagClient(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_Live_ClearDropFlagClient(client_t *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x2f,0,0xffffffff82000f98,0xffffffff8202eea8);
+  if (param_1 == (client_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x2f
+                    ,0,"%s");
   }
-  *(undefined4 *)(param_1 + 0x214a8) = 0;
+  param_1->liveDropRequest = SV_LIVE_DROP_NONE;
   return;
 }
 
 
 // 82575828  SV_Live_GetClientDropRequest  (server_mp/sv_live_mp.cpp:54)
 
-undefined4 SV_Live_GetClientDropRequest(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+LiveClientDropType SV_Live_GetClientDropRequest(client_t *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x37,0,0xffffffff82000f98,0xffffffff8202eea8);
-    return uRam000214a8;
+  if (param_1 == (client_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x37
+                    ,0,"%s");
+    return LRam000214a8;
   }
-  return *(undefined4 *)(param_1 + 0x214a8);
+  return param_1->liveDropRequest;
 }
 
 
 // 825758A8  SV_Live_GetClientXuidString  (server_mp/sv_live_mp.cpp:61)
 
-void SV_Live_GetClientXuidString(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void SV_Live_GetClientXuidString(int param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 local_40 [8];
+  int iVar1;
+  ulonglong uVar2;
+  ulong64 local_40 [8];
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x3e,0,0xffffffff82000f98,0xffffffff8215ee7c);
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x3e
+                    ,0,"%s");
   }
-  if (DAT_844c7870 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x3f,0,0xffffffff82000f98,0xffffffff82022b74);
+  if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x3f
+                    ,0,"%s");
   }
-  local_40[0] = Session_GetXuid(0xffffffff844c7860,uVar1);
-  XUIDToString(local_40,param_2);
+  local_40[0] = Session_GetXuid(&g_serverSession,iVar1);
+  XUIDToString(local_40,(char *)uVar2);
   __restgprlr_27();
   return;
 }
@@ -92,38 +121,47 @@ void SV_Live_GetClientXuidString(undefined8 param_1,ulonglong param_2)
 
 // 82575948  SV_Live_GetClientXnAddr  (server_mp/sv_live_mp.cpp:71)
 
-void SV_Live_GetClientXnAddr(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SV_Live_GetClientXnAddr(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar4;
+  PartyData *pPVar2;
   int iVar3;
-  undefined1 auStack_50 [80];
+  ulonglong uVar5;
+  XNADDR aXStack_50 [2];
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x4a,0,0xffffffff82000f98,0xffffffff8215eeec);
+  uVar5 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1,uVar5,param_3);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4a
+                    ,0,"%s");
   }
-  cVar4 = Lobby_IsInLobby();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x4b,0,0xffffffff82000f98,0xffffffff82032564);
+  bVar4 = Lobby_IsInLobby();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4b
+                    ,0,"%s");
   }
-  uVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(uVar2,uVar1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x4c,0,0xffffffff82000f98,0xffffffff8215eea8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4c
+                    ,0,"%s");
   }
-  uVar2 = Lobby_GetPartyData();
-  iVar3 = Party_GetClientXNAddr(uVar2,uVar1,auStack_50);
+  pPVar2 = Lobby_GetPartyData();
+  iVar3 = Party_GetClientXNAddr(pPVar2,uVar1,aXStack_50);
   if (iVar3 != 0) {
-    XNAddrToString(auStack_50,param_2);
+    XNAddrToString(aXStack_50,(char *)uVar5);
     __restgprlr_28();
     return;
   }
-  *(undefined1 *)param_2 = 0;
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x55,0,0xffffffff8215ee88);
+  *(char *)uVar5 = '\0';
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x55
+                    ,0,"Could not get client\'s xnaddr");
   }
   __restgprlr_28();
   return;
@@ -132,52 +170,67 @@ void SV_Live_GetClientXnAddr(undefined8 param_1,ulonglong param_2)
 
 // 82575A50  SV_Live_GetClientNatType  (server_mp/sv_live_mp.cpp:91)
 
-void SV_Live_GetClientNatType(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void SV_Live_GetClientNatType(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x5c,0,0xffffffff82000f98,0xffffffff8215eefc);
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x5c
+                    ,0,"%s");
   }
-  if (DAT_844c7870 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x5d,0,0xffffffff82000f98,0xffffffff82022b74);
+  if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x5d
+                    ,0,"%s");
   }
-  uVar1 = Live_GetNatTypeForClientNum(0xffffffff844c7860,uVar1);
-  if (((int)uVar1 < 1) || (3 < (int)uVar1)) {
-    MyAssertHandler(0xffffffff8215ee38,0x60,0,0xffffffff8203d224,0xffffffff8203d1f4,uVar1);
+  iVar1 = Live_GetNatTypeForClientNum(&g_serverSession,iVar1);
+  if ((iVar1 < 1) || (3 < iVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x60
+                    ,0,"%s\n\t(natType) = %i");
   }
-  Com_sprintf(param_2,param_3,0xffffffff8200c28c,uVar1);
-  __restgprlr_26();
+  iVar1 = Com_sprintf((char *)uVar2,param_3,"%i");
+  __restgprlr_26(iVar1);
   return;
 }
 
 
 // 82575B30  SV_Live_GetClientNpId  (server_mp/sv_live_mp.cpp:103)
 
-void SV_Live_GetClientNpId(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SV_Live_GetClientNpId(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar4;
+  PartyData *pPVar2;
   int iVar3;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x68,0,0xffffffff82000f98,0xffffffff8215ef08);
+  uVar5 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x68
+                    ,0,"%s");
   }
-  cVar4 = Lobby_IsInLobby();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x6a,0,0xffffffff82000f98,0xffffffff82032564);
+  bVar4 = Lobby_IsInLobby();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x6a
+                    ,0,"%s");
   }
-  uVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(uVar2,uVar1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x6b,0,0xffffffff82000f98,0xffffffff8215eea8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x6b
+                    ,0,"%s");
   }
-  I_strncpyz(param_2,0xffffffff8203248c,param_3);
+  I_strncpyz((char *)uVar5,"0",param_3);
   __restgprlr_27();
   return;
 }
@@ -185,30 +238,39 @@ void SV_Live_GetClientNpId(undefined8 param_1,ulonglong param_2,undefined8 param
 
 // 82575BF8  SV_Live_GetClientPartyId  (server_mp/sv_live_mp.cpp:119)
 
-void SV_Live_GetClientPartyId(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SV_Live_GetClientPartyId(int param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar5;
+  PartyData *pPVar2;
   int iVar3;
+  XNKID *pXVar4;
+  ulonglong uVar6;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x7a,0,0xffffffff82000f98,0xffffffff8215ef14);
+  uVar6 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7a
+                    ,0,"%s");
   }
-  cVar4 = Lobby_IsInLobby();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x7b,0,0xffffffff82000f98,0xffffffff82032564);
+  bVar5 = Lobby_IsInLobby();
+  if (!bVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7b
+                    ,0,"%s");
   }
-  uVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(uVar2,uVar1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x7c,0,0xffffffff82000f98,0xffffffff8215eea8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7c
+                    ,0,"%s");
   }
-  uVar2 = Lobby_GetPartyData();
-  uVar1 = Party_GetClientPrivatePartyId(uVar2,uVar1);
-  XNKIDToString(uVar1,param_2,param_3);
+  pPVar2 = Lobby_GetPartyData();
+  pXVar4 = Party_GetClientPrivatePartyId(pPVar2,uVar1);
+  XNKIDToString(pXVar4,(char *)uVar6,param_3);
   __restgprlr_27();
   return;
 }
@@ -216,90 +278,118 @@ void SV_Live_GetClientPartyId(undefined8 param_1,ulonglong param_2,undefined8 pa
 
 // 82575CC0  SV_Live_GetClientLocalNetId  (server_mp/sv_live_mp.cpp:133)
 
-void SV_Live_GetClientLocalNetId(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+netsrc_t SV_Live_GetClientLocalNetId(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  undefined1 auStack_30 [48];
+  uint uVar1;
+  netadr_t *pnVar2;
+  netsrc_t nVar3;
+  netadr_t anStack_30 [3];
   
-  uVar1 = __savegprlr_29();
-  if (0x11 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8215ee38,0x86,0,0xffffffff82014c1c,uVar1,0x12);
+  uVar1 = __savegprlr_29(param_1);
+  if (0x11 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x86
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (DAT_844c7870 == 0) {
-    MyAssertHandler(0xffffffff8215ee38,0x87,0,0xffffffff82000f98,0xffffffff82022b74);
+  if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x87
+                    ,0,"%s");
   }
-  iVar2 = Session_GetPlayerAddr(auStack_30,0xffffffff844c7860,uVar1);
-  __restgprlr_29(*(undefined4 *)(iVar2 + 0xc));
-  return;
+  pnVar2 = Session_GetPlayerAddr(anStack_30,&g_serverSession,uVar1);
+  nVar3 = __restgprlr_29(pnVar2->localNetID);
+  return nVar3;
 }
 
 
 // 82575D78  SV_Live_AddConnectingClient  (server_mp/sv_live_mp.cpp:146)
 
-void SV_Live_AddConnectingClient(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+
+void SV_Live_AddConnectingClient(int param_1)
 
 {
-  ulonglong uVar1;
-  char cVar5;
-  undefined4 *puVar3;
-  undefined8 uVar2;
+  uint uVar1;
+  bool bVar6;
+  SessionData *pSVar2;
+  PartyData *pPVar3;
   int iVar4;
+  char *pcVar5;
+  uint uVar7;
   char local_d0 [2];
   char local_ce [14];
   char local_c0 [32];
   char local_a0 [32];
   char local_80 [128];
   
-  uVar1 = __savegprlr_28();
-  if (0x11 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8215ee38,0x9d,0,0xffffffff82014c1c,uVar1,0x12);
+  uVar1 = __savegprlr_28(param_1);
+  if (0x11 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x9d
+                    ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar5 = Lobby_IsInLobby();
-  if (cVar5 != '\0') {
-    Com_Printf(0xe,0xffffffff8215eff8,uVar1);
-    puVar3 = (undefined4 *)Live_GetCurrentSession();
-    if (puVar3 != &DAT_844c7860) {
-      MyAssertHandler(0xffffffff8215ee38,0xa5,0,0xffffffff82000f98,0xffffffff8215efc8);
+  bVar6 = Lobby_IsInLobby();
+  if (bVar6) {
+    uVar7 = uVar1;
+    Com_Printf(0xe,"SV - Client %i connected through lobby session. Setting up his CS_PLAYERINFOS\n"
+              );
+    pSVar2 = Live_GetCurrentSession();
+    if (pSVar2 != &g_serverSession) {
+      uVar7 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xa5,0,"%s");
     }
-    cVar5 = Session_IsUserRegistered(0xffffffff844c7860,uVar1);
-    if (cVar5 == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xa6,0,0xffffffff82000f98,0xffffffff8215ef90);
+    bVar6 = Session_IsUserRegistered(&g_serverSession,uVar1);
+    if (!bVar6) {
+      uVar7 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xa6,0,"%s");
     }
-    uVar2 = Lobby_GetPartyData();
-    iVar4 = Party_IsMemberIndexDataAvailable(uVar2,uVar1);
+    pPVar3 = Lobby_GetPartyData();
+    iVar4 = Party_IsMemberIndexDataAvailable(pPVar3,uVar1);
     if (iVar4 == 0) {
-      MyAssertHandler(0xffffffff8215ee38,0xa7,0,0xffffffff82000f98,0xffffffff8215eea8);
+      uVar7 = 0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xa7,0,"%s");
     }
     sync(1);
     SV_Live_GetClientXuidString(uVar1,local_a0);
-    SV_Live_GetClientXnAddr(uVar1,local_80);
+    SV_Live_GetClientXnAddr(uVar1,local_80,uVar7);
     SV_Live_GetClientNatType(uVar1,local_ce,2);
     SV_Live_GetClientNpId(uVar1,local_d0,2);
     SV_Live_GetClientPartyId(uVar1,local_c0,0x11);
-    uVar2 = SV_Live_GetClientLocalNetId(uVar1);
+    SV_Live_GetClientLocalNetId(uVar1);
     if (local_a0[0] == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xb5,0,0xffffffff82000f98,0xffffffff8215c198);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xb5,0,"%s");
     }
     if (local_80[0] == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xb6,0,0xffffffff82000f98,0xffffffff8215c188);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xb6,0,"%s");
     }
     if (local_ce[0] == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xb7,0,0xffffffff82000f98,0xffffffff8215c174);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xb7,0,"%s");
     }
     if (local_d0[0] == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xb8,0,0xffffffff82000f98,0xffffffff8215ef80);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xb8,0,"%s");
     }
     if (local_c0[0] == '\0') {
-      MyAssertHandler(0xffffffff8215ee38,0xb9,0,0xffffffff82000f98,0xffffffff8215c160);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                      0xb9,0,"%s");
     }
-    Com_Printf(0xf,0xffffffff8215ef28,local_a0,local_80,local_ce,local_d0,local_c0,uVar2);
-    if (0xeea < (int)(uVar1 + 0x1a3)) {
-      MyAssertHandler(0xffffffff82075d68,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+    Com_Printf(0xf,
+               "Setting XUID to %s. XNADDR to %s. NATTYPE to %s. NPID to %s. XNKID to %s. NETID to %i\n"
+              );
+    if (0xeea < (int)(uVar1 + CS_PLAYERINFOS)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
+                      ,0x285,0,"%s");
     }
-    uVar2 = va(0xffffffff8215c12c,local_a0,local_80,local_ce,local_d0,local_c0,uVar2);
-    SV_SetConfigstring(uVar1 + 0x1a3,uVar2);
+    pcVar5 = va("%s %s %s %s %s %i");
+    SV_SetConfigstring(uVar1 + CS_PLAYERINFOS,pcVar5);
   }
   __restgprlr_28();
   return;
@@ -308,61 +398,70 @@ void SV_Live_AddConnectingClient(void)
 
 // 82576028  SV_Live_RemoveClient  (server_mp/sv_live_mp.cpp:237)
 
-void SV_Live_RemoveClient(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "ConfigString": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SV_Live_RemoveClient(int param_1,char *param_2,int param_3,int param_4)
 
 {
-  undefined4 uVar1;
-  longlong lVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined4 *puVar4;
-  int *piVar6;
+  int iVar1;
+  bool bVar4;
+  SessionData *pSVar2;
+  PartyData *pPVar3;
+  longlong lVar5;
+  longlong lVar6;
   
-  lVar2 = __savegprlr_26();
-  uVar1 = DAT_844c7860;
-  uVar3 = Session_GetXuidEvenIfInactive(0xffffffff844c7860,lVar2);
-  Com_Printf(0xf,0xffffffff8215f130,uVar3,lVar2,uVar1);
-  cVar5 = Session_IsUserRegistered(0xffffffff844c7860,lVar2);
-  if ((cVar5 != '\0') &&
-     (cVar5 = Session_PlayerHasLoopbackAddr(0xffffffff844c7860,lVar2), cVar5 == '\0')) {
-    cVar5 = Lobby_IsInLobby();
-    if (cVar5 == '\0') {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        MyAssertHandler(0xffffffff8215ee38,0x10a,0,0xffffffff820011f4,0xffffffff8203030c,
-                        0xffffffff8215f078);
+  lVar6 = (longlong)param_3;
+  lVar5 = (longlong)(int)param_2;
+  iVar1 = __savegprlr_26(param_1,lVar5,lVar6,param_4);
+  Session_GetXuidEvenIfInactive(&g_serverSession,iVar1);
+  Com_Printf(0xf,"Removing xuid %llx (clientNum %i) from session %s\n");
+  bVar4 = Session_IsUserRegistered(&g_serverSession,iVar1);
+  if ((bVar4) && (bVar4 = Session_PlayerHasLoopbackAddr(&g_serverSession,iVar1), !bVar4)) {
+    bVar4 = Lobby_IsInLobby();
+    if (bVar4) {
+      bVar4 = Lobby_AreWeHost();
+      if (!bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                        0x102,0,"%s");
       }
-      Session_UnregisterRemotePlayer(0xffffffff844c7860,lVar2);
+      bVar4 = Lobby_IsInRunningLobby();
+      if (bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                        0x103,0,"%s\n\t%s");
+      }
+      pSVar2 = Lobby_GetSession();
+      if (pSVar2 != &g_serverSession) {
+        Lobby_GetSession();
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                        0x104,0,"session == Lobby_GetSession()\n\t0x%08x, 0x%08x");
+      }
+      pPVar3 = Lobby_GetPartyData();
+      PartyHost_RemovePlayer(pPVar3,iVar1,(int)lVar6,(char *)lVar5);
     }
     else {
-      cVar5 = Lobby_AreWeHost();
-      if (cVar5 == '\0') {
-        MyAssertHandler(0xffffffff8215ee38,0x102,0,0xffffffff82000f98,0xffffffff8203b1ec);
+      if ((onlinegame->current).enabled != false) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                        0x10a,0,"%s\n\t%s");
       }
-      cVar5 = Lobby_IsInRunningLobby();
-      if (cVar5 != '\0') {
-        MyAssertHandler(0xffffffff8215ee38,0x103,0,0xffffffff820011f4,0xffffffff82045f64,
-                        0xffffffff8215f0e8);
-      }
-      puVar4 = (undefined4 *)Lobby_GetSession();
-      if (puVar4 != &DAT_844c7860) {
-        uVar3 = Lobby_GetSession();
-        MyAssertHandler(0xffffffff8215ee38,0x104,0,0xffffffff8215f0b4,0xffffffff844c7860,uVar3);
-      }
-      uVar3 = Lobby_GetPartyData();
-      PartyHost_RemovePlayer(uVar3,lVar2,param_3,param_2);
+      Session_UnregisterRemotePlayer(&g_serverSession,iVar1);
     }
   }
-  piVar6 = (int *)((int)lVar2 * 0x68b00 + DAT_83f11414);
-  if (*piVar6 == 0) {
-    piVar6[0x8523] = 0;
+  if (svs.clients[iVar1].header.state == 0) {
+    svs.clients[iVar1].lastPacketTime = 0;
   }
-  if (0xeea < (int)(lVar2 + 0x1a3)) {
-    MyAssertHandler(0xffffffff82075d68,0x285,0,0xffffffff82000f98,0xffffffff82016960);
+  if (0xeea < (int)(iVar1 + CS_PLAYERINFOS)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
+                    ,0x285,0,"%s");
   }
-  SV_SetConfigstring(lVar2 + 0x1a3,0);
-  cVar5 = SV_Live_HasTeamRankStatsAvailable(lVar2);
-  if (cVar5 != '\0') {
-    MyAssertHandler(0xffffffff8215ee38,0x11f,0,0xffffffff82000f98,0xffffffff8215f048);
+  SV_SetConfigstring(iVar1 + CS_PLAYERINFOS,(char *)0x0);
+  bVar4 = SV_Live_HasTeamRankStatsAvailable(iVar1);
+  if (bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
+                    0x11f,0,"%s");
   }
   __restgprlr_26();
   return;

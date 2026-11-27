@@ -2,64 +2,128 @@
 
 // 82762508  R_InitDrawList  (gfx_d3d/r_pretess.cpp:590)
 
-void R_InitDrawList(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_InitDrawList(GfxDrawList *param_1,int param_2,char *param_3)
 
 {
-  void *_Dst;
-  char cVar2;
-  void *pvVar1;
+  int iVar1;
+  bool bVar2;
   
-  _Dst = (void *)__savegprlr_29();
-  cVar2 = Sys_IsMainThread2();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821ca858,0x251,0,0xffffffff82000f98,0xffffffff8205cec4);
+  iVar1 = __savegprlr_29(param_1,param_2,param_3);
+  bVar2 = Sys_IsMainThread2();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x251,0
+                    ,"%s");
   }
-  pvVar1 = memset(_Dst,0,0x1f8);
-  if (*(int *)((int)_Dst + 100) != 0) {
-    pvVar1 = (void *)MyAssertHandler(0xffffffff821ca858,0x256,0,0xffffffff82000f98,
-                                     0xffffffff821ca828);
+  memset();
+  if (*(int *)(iVar1 + 100) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x256,0
+                    ,"%s");
   }
-  __restgprlr_29(pvVar1);
+  __restgprlr_29();
   return;
 }
 
 
 // 82762598  R_EmitDrawSurfList  (gfx_d3d/r_pretess.cpp:686)
 
-void R_EmitDrawSurfList(undefined8 param_1,ulonglong param_2,int param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_EmitDrawSurfList(GfxDrawSurf *param_1,uint param_2,GfxDrawList *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
+  GfxBackEndData *pGVar1;
+  void *pvVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  uVar3 = __savegprlr_25();
+  uVar4 = (ulonglong)(int)param_2;
+  pvVar2 = (void *)__savegprlr_25(param_1);
   Profile_Begin(0x3c);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821ca858,0x2b3,0,0xffffffff82000f98,0xffffffff821ca8cc);
+  if (pvVar2 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x2b3,0
+                    ,"%s");
   }
-  iVar2 = DAT_84628b00;
-  iVar1 = *(int *)(DAT_84628b00 + 0x1544);
-  iVar4 = iVar1 + (int)param_2;
-  if (iVar4 < 0x4001) {
-    *(int *)(param_3 + 0x20) = (int)param_2;
-    *(int *)(param_3 + 0x1c) = (iVar1 + 0xd380) * 8 + iVar2;
-    Com_Memcpy((*(int *)(DAT_84628b00 + 0x1544) + 0xd380) * 8 + DAT_84628b00,uVar3,
-               (param_2 & 0x1fffffff) << 3);
-    *(int *)(DAT_84628b00 + 0x1544) = iVar4;
+  pGVar1 = frontEndDataOut;
+  iVar3 = frontEndDataOut->drawSurfCount;
+  iVar5 = iVar3 + (uint)uVar4;
+  if (iVar5 < 0x4001) {
+    (param_3->drawSurfList).count = (uint)uVar4;
+    (param_3->drawSurfList).array = pGVar1->drawSurfs + iVar3;
+    Com_Memcpy(frontEndDataOut->drawSurfs + frontEndDataOut->drawSurfCount,pvVar2,
+               (int)((uVar4 & 0xffffffff) << 3));
+    frontEndDataOut->drawSurfCount = iVar5;
   }
   else {
-    R_WarnOncePerFrame(0x14);
-    if (*(int *)(param_3 + 0x20) != 0) {
-      MyAssertHandler(0xffffffff821ca858,0x2b9,0,0xffffffff82000f98,0xffffffff821ca898);
-      Profile_EndInternal(0);
-      __restgprlr_25();
+    R_WarnOncePerFrame(R_WARN_MAX_DRAWSURFS);
+    if ((param_3->drawSurfList).count != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x2b9
+                      ,0,"%s");
+      iVar3 = Profile_EndInternal((double *)0x0);
+      __restgprlr_25(iVar3);
       return;
     }
   }
-  Profile_EndInternal(0);
-  __restgprlr_25();
+  iVar3 = Profile_EndInternal((double *)0x0);
+  __restgprlr_25(iVar3);
+  return;
+}
+
+
+// 827626A0  R_EmitDrawSurfListAndAddDrawCommands  (gfx_d3d/r_pretess.cpp:724)
+
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* void __cdecl R_EmitDrawSurfListAndAddDrawCommands(union GfxDrawSurf const * const,unsigned
+   int,struct GfxDrawList *,int) */
+
+void R_EmitDrawSurfListAndAddDrawCommands
+               (GfxDrawSurf *param_1,uint param_2,GfxDrawList *param_3,int param_4)
+
+{
+  int iVar1;
+  GfxBackEndData *pGVar2;
+  void *pvVar3;
+  int iVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  int iVar7;
+  
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pvVar3 = (void *)__savegprlr_25(param_1,uVar5,lVar6,param_4);
+  Profile_Begin(0x3c);
+  if (pvVar3 == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x2b3,0
+                    ,"%s");
+  }
+  pGVar2 = frontEndDataOut;
+  iVar4 = frontEndDataOut->drawSurfCount;
+  iVar7 = iVar4 + (int)uVar5;
+  iVar1 = (int)lVar6;
+  if (iVar7 < 0x4001) {
+    *(int *)(iVar1 + 0x20) = (int)uVar5;
+    *(GfxDrawSurf **)(iVar1 + 0x1c) = pGVar2->drawSurfs + iVar4;
+    Com_Memcpy(frontEndDataOut->drawSurfs + frontEndDataOut->drawSurfCount,pvVar3,
+               (int)((uVar5 & 0xffffffff) << 3));
+    frontEndDataOut->drawSurfCount = iVar7;
+  }
+  else {
+    R_WarnOncePerFrame(R_WARN_MAX_DRAWSURFS);
+    if (*(int *)(iVar1 + 0x20) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pretess.cpp",0x2b9
+                      ,0,"%s");
+      iVar4 = Profile_EndInternal((double *)0x0);
+      __restgprlr_25(iVar4);
+      return;
+    }
+  }
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_25(iVar4);
   return;
 }
 

@@ -2,27 +2,35 @@
 
 // 827A9F80  RB_ResampleScene  (gfx_d3d/rb_resample_scene.cpp:16)
 
-void RB_ResampleScene(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_ResampleScene(GfxViewInfo *param_1,bool param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_26();
-  if (DAT_8484dbcc == 0) {
-    MyAssertHandler(0xffffffff821d7a20,0x11,0,0xffffffff82000f98,0xffffffff821d79fc);
+  iVar1 = __savegprlr_26(param_1);
+  if (gfxCmdBufSourceState.input.data == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp"
+                    ,0x11,0,"%s");
   }
-  if (DAT_84834008 != 0) {
-    MyAssertHandler(0xffffffff821d7a20,0x12,0,0xffffffff821d54ec,0xffffffff821d5508);
+  if (tess.indexCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp"
+                    ,0x12,0,"%s\n\t(tess.indexCount) = %i");
   }
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  R_SetViewportStruct(0xffffffff8484c7e0,iVar1 + 0x160);
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetViewportStruct(&gfxCmdBufSourceState,(GfxViewport *)(iVar1 + 0x160));
   if (*(int *)(iVar1 + 0x950) == 0x10) {
-    MyAssertHandler(0xffffffff821d7a20,0x18,0,0xffffffff82000f98,0xffffffff821d6a5c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp"
+                    ,0x18,0,"%s");
   }
-  DAT_8484db20 = (&DAT_84762080)[*(int *)(iVar1 + 0x950) * 5];
-  DAT_8484db28 = DAT_8484db20;
-  RB_ViewportFilter(0,DAT_846165b4,iVar1 + 0x160,param_2,*(undefined1 *)(iVar1 + 0x92c));
+  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[*(int *)(iVar1 + 0x950)].image;
+  gfxCmdBufSourceState.input.codeImages[10] = gfxCmdBufSourceState.input.codeImages[8];
+  RB_ViewportFilter(rgp.postFxMaterial[0],(GfxViewport *)(iVar1 + 0x160),param_2,
+                    *(bool *)(iVar1 + 0x92c),0.0);
   __restgprlr_26();
   return;
 }

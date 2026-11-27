@@ -2,20 +2,24 @@
 
 // 8291ACC0  exit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:191)
 
-void exit(int _Code)
+void exit(int param_1)
 
 {
-  doexit(0,0);
+  int in_r5;
+  
+  doexit(0,0,in_r5);
   return;
 }
 
 
 // 8291ACD0  _exit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:199)
 
-void _exit(int _Code)
+void _exit(int param_1)
 
 {
-  doexit(1,0);
+  int in_r5;
+  
+  doexit(1,0,in_r5);
   return;
 }
 
@@ -27,7 +31,9 @@ void _exit(int _Code)
 void _cexit(void)
 
 {
-  doexit(0,1);
+  int in_r5;
+  
+  doexit(0,1,in_r5);
   return;
 }
 
@@ -39,9 +45,11 @@ void _cexit(void)
 void _amsg_exit(int param_1)
 
 {
+  int in_r5;
+  
   _FF_MSGBANNER();
   _NMSG_WRITE(param_1);
-  doexit(1,0);
+  doexit(1,0,in_r5);
                     /* WARNING: Bad instruction - Truncating control flow here */
   halt_baddata();
 }
@@ -49,52 +57,56 @@ void _amsg_exit(int param_1)
 
 // 8291AAF8  doexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:277)
 
-void doexit(undefined8 param_1,int param_2)
+void doexit(int param_1,int param_2,int param_3)
 
 {
-  code *pcVar1;
+  _func___cdecl_void *p_Var1;
   int iVar2;
-  int *piVar3;
-  int *piVar4;
-  int *piVar5;
-  int *piVar6;
+  longlong lVar3;
+  _func___cdecl_void **pp_Var4;
+  _func___cdecl_void **pp_Var5;
+  _func___cdecl_void **pp_Var6;
+  _func___cdecl_void **pp_Var7;
+  int iStack0000001c;
   
-  iVar2 = __savegprlr_24();
+  lVar3 = (longlong)param_2;
+  iVar2 = __savegprlr_24(param_1,lVar3,param_3);
+  iStack0000001c = (int)lVar3;
   _lock(8);
-  if (DAT_84895df4 != 1) {
-    if (DAT_84895df0 == 1) {
+  if (_C_Exit_Done != 1) {
+    if (_C_Termination_Done == 1) {
                     /* WARNING: Subroutine does not return */
       KeBugCheck(0);
     }
-    DAT_84895df0 = 1;
-    DAT_84895dec = (undefined1)param_2;
+    _C_Termination_Done = 1;
+    _exitflag = (char)lVar3;
     if (iVar2 == 0) {
-      piVar4 = DAT_84897ecc;
-      piVar5 = DAT_84897ecc;
-      piVar3 = DAT_84897ec8;
-      piVar6 = DAT_84897ec8;
-      if (DAT_84897ecc != (int *)0x0) {
-        while (piVar6 = piVar6 + -1, piVar4 <= piVar6) {
-          if (*piVar6 != 0) {
-            if (piVar6 < piVar4) break;
-            pcVar1 = (code *)*piVar6;
-            *piVar6 = 0;
-            (*pcVar1)();
-            if ((piVar5 != DAT_84897ecc) || (piVar3 != DAT_84897ec8)) {
-              piVar4 = DAT_84897ecc;
-              piVar5 = DAT_84897ecc;
-              piVar3 = DAT_84897ec8;
-              piVar6 = DAT_84897ec8;
+      pp_Var5 = __onexitbegin;
+      pp_Var6 = __onexitbegin;
+      pp_Var4 = __onexitend;
+      pp_Var7 = __onexitend;
+      if (__onexitbegin != (_func___cdecl_void **)0x0) {
+        while (pp_Var7 = pp_Var7 + -1, pp_Var5 <= pp_Var7) {
+          if (*pp_Var7 != (_func___cdecl_void *)0x0) {
+            if (pp_Var7 < pp_Var5) break;
+            p_Var1 = *pp_Var7;
+            *pp_Var7 = (_func___cdecl_void *)0x0;
+            (*p_Var1)();
+            if ((pp_Var6 != __onexitbegin) || (pp_Var4 != __onexitend)) {
+              pp_Var5 = __onexitbegin;
+              pp_Var6 = __onexitbegin;
+              pp_Var4 = __onexitend;
+              pp_Var7 = __onexitend;
             }
           }
         }
       }
-      initterm(0xffffffff8296032c,0xffffffff82960334);
+      _initterm(__xp_a,__xp_z);
     }
-    initterm(0xffffffff82960338,0xffffffff8296033c);
+    _initterm(__xt_a,__xt_z);
   }
   FUN_8291ac7c();
-  if (param_2 != 0) {
+  if (iStack0000001c != 0) {
     __restgprlr_24();
     return;
   }
@@ -144,25 +156,22 @@ void _unlockexit(void)
 void _init_pointers(void)
 
 {
-  initp_heap_handler(0);
-  initp_misc_invarg(0);
-  initp_misc_purevirt(0);
-  initp_eh_hooks(0);
+  _initp_heap_handler((void *)0x0);
+  _initp_misc_invarg((void *)0x0);
+  _initp_misc_purevirt((void *)0x0);
+  _initp_eh_hooks((void *)0x0);
   return;
 }
 
 
-// 8291AA98  initterm  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:620)
+// 8291AA98  _initterm  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:620)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* initterm */
-
-void __cdecl initterm(undefined4 *param_1,undefined4 *param_2)
+void _initterm(_func___cdecl_void **param_1,_func___cdecl_void **param_2)
 
 {
   for (; param_1 < param_2; param_1 = param_1 + 1) {
-    if ((code *)*param_1 != (code *)0x0) {
-      (*(code *)*param_1)();
+    if (*param_1 != (_func___cdecl_void *)0x0) {
+      (**param_1)();
     }
   }
   return;

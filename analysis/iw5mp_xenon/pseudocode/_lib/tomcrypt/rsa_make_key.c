@@ -10,80 +10,105 @@ void rsa_make_key(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglo
   undefined8 uVar2;
   undefined8 uVar3;
   int iVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
+  int iVar5;
+  ulong uVar6;
   undefined4 *puVar7;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
-  undefined4 local_80 [32];
+  longlong lVar8;
+  undefined4 *puVar9;
+  void *local_90;
+  void *local_8c;
+  void *local_88;
+  void *local_84;
+  void *local_80 [32];
   
   uVar2 = __savegprlr_19();
-  iVar4 = (int)param_3;
-  if ((iVar4 < 0x80) || (0x100 < iVar4)) {
+  iVar5 = (int)param_3;
+  if ((iVar5 < 0x80) || (0x100 < iVar5)) {
     uVar3 = 3;
 LAB_822558f0:
     __restgprlr_19(uVar3);
     return;
   }
-  if (((int)param_4 < 3) || ((param_4 & 1) == 0)) {
+  uVar6 = (ulong)param_4;
+  if (((int)uVar6 < 3) || ((param_4 & 1) == 0)) {
     __restgprlr_19(0x10);
     return;
   }
   if ((((int)param_2 < 0) || (0x1f < (int)param_2)) ||
-     (*(int *)(&DAT_84896e48 + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3)) == 0
-     )) {
+     (*(int *)(&prng_descriptor + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 3))
+      == 0)) {
     __restgprlr_19(0xc);
     return;
   }
   uVar3 = ltc_init_multi(&local_88,&local_84,&local_90,&local_8c,local_80,0);
   if ((int)uVar3 != 0) goto LAB_822558f0;
-  uVar3 = (*DAT_84897efc)(local_80[0],param_4);
+  iVar4 = (*ltc_mp.set_int)(local_80[0],uVar6);
   puVar1 = (undefined4 *)param_5;
-  if ((int)uVar3 == 0) {
-    lVar6 = (longlong)(iVar4 >> 1) + (ulonglong)(iVar4 < 0 && (param_3 & 1) != 0);
+  if (iVar4 == 0) {
+    lVar8 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
     do {
-      uVar3 = rand_prime(local_88,lVar6,uVar2,param_2);
-      if ((((int)uVar3 != 0) || (uVar3 = (*DAT_84897f40)(local_88,1,local_90), (int)uVar3 != 0)) ||
-         (uVar3 = (*DAT_84897f5c)(local_90,local_80[0],local_8c), (int)uVar3 != 0))
-      goto LAB_82255880;
-      iVar4 = (*DAT_84897f10)(local_8c,1);
-    } while (iVar4 != 0);
+      iVar4 = rand_prime(local_88,lVar8,uVar2,param_2);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar4 = (*ltc_mp.subi)(local_88,1,local_90);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar4 = (*ltc_mp.gcd)(local_90,local_80[0],local_8c);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar5 = (*ltc_mp.compare_d)(local_8c,1);
+    } while (iVar5 != 0);
     do {
-      uVar3 = rand_prime(local_84,lVar6,uVar2,param_2);
-      if ((((int)uVar3 != 0) || (uVar3 = (*DAT_84897f40)(local_84,1,local_90), (int)uVar3 != 0)) ||
-         (uVar3 = (*DAT_84897f5c)(local_90,local_80[0],local_8c), (int)uVar3 != 0))
-      goto LAB_82255880;
-      iVar4 = (*DAT_84897f10)(local_8c,1);
-    } while (iVar4 != 0);
-    uVar3 = (*DAT_84897f40)(local_88,1,local_8c);
-    if (((int)uVar3 == 0) && (uVar3 = (*DAT_84897f60)(local_90,local_8c), (int)uVar3 == 0)) {
-      uVar3 = ltc_init_multi(param_5 + 4,param_5 + 8,param_5 + 0xc,param_5 + 0x20,param_5 + 0x1c,
-                             param_5 + 0x18,param_5 + 0x10,param_5 + 0x14);
-      if ((int)uVar3 == 0) {
-        puVar7 = (undefined4 *)(param_5 + 4);
-        uVar3 = (*DAT_84897efc)(*puVar7,param_4);
-        if ((int)uVar3 == 0) {
-          puVar5 = (undefined4 *)(param_5 + 8);
-          uVar3 = (*DAT_84897f6c)(*puVar7,local_90,*puVar5);
-          if (((((((int)uVar3 == 0) &&
-                 (uVar3 = (*DAT_84897f44)(local_88,local_84,*(undefined4 *)(param_5 + 0xc)),
-                 (int)uVar3 == 0)) &&
-                (uVar3 = (*DAT_84897f40)(local_88,1,local_90), (int)uVar3 == 0)) &&
-               ((uVar3 = (*DAT_84897f40)(local_84,1,local_8c), (int)uVar3 == 0 &&
-                (uVar3 = (*DAT_84897f50)(*puVar5,local_90,0,*(undefined4 *)(param_5 + 0x1c)),
-                (int)uVar3 == 0)))) &&
-              ((uVar3 = (*DAT_84897f50)(*puVar5,local_8c,0,*(undefined4 *)(param_5 + 0x20)),
-               (int)uVar3 == 0 &&
-               ((uVar3 = (*DAT_84897f6c)(local_84,local_88,*(undefined4 *)(param_5 + 0x18)),
-                (int)uVar3 == 0 &&
-                (uVar3 = (*DAT_84897ef8)(local_88,*(undefined4 *)(param_5 + 0x10)), (int)uVar3 == 0)
-                ))))) &&
-             (uVar3 = (*DAT_84897ef8)(local_84,*(undefined4 *)(param_5 + 0x14)), (int)uVar3 == 0)) {
-            uVar3 = 0;
-            *puVar1 = 1;
-            goto LAB_822558b8;
+      iVar4 = rand_prime(local_84,lVar8,uVar2,param_2);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar4 = (*ltc_mp.subi)(local_84,1,local_90);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar4 = (*ltc_mp.gcd)(local_90,local_80[0],local_8c);
+      if (iVar4 != 0) goto LAB_82255880;
+      iVar5 = (*ltc_mp.compare_d)(local_8c,1);
+    } while (iVar5 != 0);
+    iVar4 = (*ltc_mp.subi)(local_88,1,local_8c);
+    if (iVar4 == 0) {
+      iVar4 = (*ltc_mp.lcm)(local_90,local_8c,local_90);
+      if (iVar4 == 0) {
+        iVar4 = ltc_init_multi(param_5 + 4,param_5 + 8,param_5 + 0xc,param_5 + 0x20,param_5 + 0x1c,
+                               param_5 + 0x18,param_5 + 0x10,param_5 + 0x14);
+        if (iVar4 == 0) {
+          puVar9 = (undefined4 *)(param_5 + 4);
+          iVar4 = (*ltc_mp.set_int)((void *)*puVar9,uVar6);
+          if (iVar4 == 0) {
+            puVar7 = (undefined4 *)(param_5 + 8);
+            iVar4 = (*ltc_mp.invmod)((void *)*puVar9,local_90,(void *)*puVar7);
+            if (iVar4 == 0) {
+              iVar4 = (*ltc_mp.mul)(local_88,local_84,(void *)*(undefined4 *)(param_5 + 0xc));
+              if (iVar4 == 0) {
+                iVar4 = (*ltc_mp.subi)(local_88,1,local_90);
+                if (iVar4 == 0) {
+                  iVar4 = (*ltc_mp.subi)(local_84,1,local_8c);
+                  if (iVar4 == 0) {
+                    iVar4 = (*ltc_mp.mpdiv)((void *)*puVar7,local_90,(void *)0x0,
+                                            (void *)*(undefined4 *)(param_5 + 0x1c));
+                    if (iVar4 == 0) {
+                      iVar4 = (*ltc_mp.mpdiv)((void *)*puVar7,local_8c,(void *)0x0,
+                                              (void *)*(undefined4 *)(param_5 + 0x20));
+                      if (iVar4 == 0) {
+                        iVar4 = (*ltc_mp.invmod)(local_84,local_88,
+                                                 (void *)*(undefined4 *)(param_5 + 0x18));
+                        if (iVar4 == 0) {
+                          iVar4 = (*ltc_mp.copy)(local_88,(void *)*(undefined4 *)(param_5 + 0x10));
+                          if (iVar4 == 0) {
+                            iVar4 = (*ltc_mp.copy)(local_84,(void *)*(undefined4 *)(param_5 + 0x14))
+                            ;
+                            if (iVar4 == 0) {
+                              iVar4 = 0;
+                              *puVar1 = 1;
+                              goto LAB_822558b8;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -93,7 +118,7 @@ LAB_82255880:
   ltc_deinit_multi(puVar1[2],puVar1[1],puVar1[3],puVar1[8],puVar1[7],puVar1[6],puVar1[4],puVar1[5]);
 LAB_822558b8:
   ltc_deinit_multi(local_80[0],local_8c,local_90,local_88,local_84,0);
-  __restgprlr_19(uVar3);
+  __restgprlr_19(iVar4);
   return;
 }
 

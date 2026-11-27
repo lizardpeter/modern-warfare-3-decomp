@@ -2,22 +2,24 @@
 
 // 8293E818  `dynamic_initializer_for_'g_sessionOverlappedTasks''  (sessions/sessions.cpp:151)
 
-int _dynamic_initializer_for__g_sessionOverlappedTasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__g_sessionOverlappedTasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  ushort *puVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x844c9c08;
+  lVar2 = 0x20;
+  puVar1 = sessionCalcSkillData.spec.rgwColumnIds + 0x1e;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__g_sessionOverlappedTasks__);
-  return iVar1;
+    puVar1 = puVar1 + 0x50;
+    puVar1[0] = 0;
+    puVar1[1] = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__g_sessionOverlappedTasks__);
+  return;
 }
 
 
@@ -49,107 +51,132 @@ void Session_FinishRemoteScreenUpdate(int param_1)
 
 // 826D7258  Session_SanityCheckSession  (sessions/sessions.cpp:387)
 
-void Session_SanityCheckSession(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_SanityCheckSession(SessionData *param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar3;
-  int iVar4;
-  undefined8 uVar2;
-  char cVar7;
+  SessionData *pSVar2;
+  _XUSER_SIGNIN_STATE _Var3;
+  ulong uVar4;
+  bool bVar8;
   int iVar5;
-  uint uVar6;
-  int iVar8;
-  undefined4 local_210 [4];
-  char local_200 [4];
-  undefined4 local_1fc;
-  undefined4 local_1f8;
-  undefined4 local_1f4;
-  undefined2 local_1f0;
-  undefined1 auStack_1e0 [16];
-  int local_1d0;
-  int local_1cc;
-  uint local_1c0;
-  uint local_1bc;
-  int local_1b8;
-  int local_164;
+  ulong64 uVar1;
+  int iVar6;
+  uint uVar7;
+  int iVar9;
+  ulong local_210 [4];
+  char local_200 [32];
+  _XSESSION_LOCAL_DETAILS a_Stack_1e0 [3];
   
-  puVar3 = (undefined4 *)__savegprlr_26();
-  if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') &&
-     (iVar4 = XUserGetSigninState(puVar3[0x13e]), iVar4 != 0)) {
+  pSVar2 = (SessionData *)__savegprlr_26(param_1);
+  if (((onlinegame->current).enabled != false) &&
+     (_Var3 = XUserGetSigninState((pSVar2->dyn).sessionCreateController),
+     _Var3 != eXUserSigninState_NotSignedIn)) {
     local_210[0] = 0x1a0;
-    if (puVar3[4] == 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x19a,0,0xffffffff82000f98,0xffffffff820583e8);
+    if ((pSVar2->dyn).sessionHandle == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x19a
+                      ,0,"%s");
     }
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821a4f40);
-    uVar2 = XSessionGetDetails(puVar3[4],local_210,auStack_1e0,0);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"XSessionGetDetails");
+    uVar4 = XSessionGetDetails((pSVar2->dyn).sessionHandle,local_210,a_Stack_1e0,(_XOVERLAPPED *)0x0
+                              );
     PIXEndNamedEvent();
-    if ((int)uVar2 == 0) {
-      if (local_1b8 != 4) {
-        if (local_1bc != local_1c0) {
-          uVar2 = va(0xffffffff821a4ea0);
-          MyAssertHandler(0xffffffff821a2fc8,0x1a9,0,0xffffffff820011f4,0xffffffff821a4e60,uVar2);
+    if (uVar4 == 0) {
+      if (a_Stack_1e0[0].eState != XSESSION_STATE_DELETED) {
+        if (a_Stack_1e0[0].dwReturnedMemberCount != a_Stack_1e0[0].dwActualMemberCount) {
+          va("expected %i members, but only %i fit in the buffer");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x1a9,0,"%s\n\t%s");
         }
-        if (local_1d0 != puVar3[0x19]) {
-          uVar2 = va(0xffffffff821a4e2c,*puVar3);
-          MyAssertHandler(0xffffffff821a2fc8,0x1ab,0,0xffffffff820011f4,0xffffffff821a4de0,uVar2);
+        if (a_Stack_1e0[0].dwMaxPublicSlots != (pSVar2->dyn).publicSlots) {
+          va("for session %s, our public slots are %i, MS has %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x1ab,0,"%s\n\t%s");
         }
-        if (local_1cc != puVar3[0x18]) {
-          uVar2 = va(0xffffffff821a4d88,*puVar3);
-          MyAssertHandler(0xffffffff821a2fc8,0x1ac,0,0xffffffff820011f4,0xffffffff821a4d38,uVar2);
+        if (a_Stack_1e0[0].dwMaxPrivateSlots != (pSVar2->dyn).privateSlots) {
+          va("for session %s, our session private slots: %i, MS says there are %i private slots");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x1ac,0,"%s\n\t%s");
         }
-        iVar4 = 0;
-        uVar6 = 0;
-        local_1fc = 0;
-        local_1f8 = 0;
-        local_1f4 = 0;
-        local_1f0 = 0;
-        if (local_1c0 != 0) {
-          iVar8 = 0;
+        iVar6 = 0;
+        uVar7 = 0;
+        local_200[0] = '\0';
+        local_200[1] = '\0';
+        local_200[2] = '\0';
+        local_200[3] = '\0';
+        local_200[4] = '\0';
+        local_200[5] = '\0';
+        local_200[6] = '\0';
+        local_200[7] = '\0';
+        local_200[8] = '\0';
+        local_200[9] = '\0';
+        local_200[10] = '\0';
+        local_200[0xb] = '\0';
+        local_200[0xc] = '\0';
+        local_200[0xd] = '\0';
+        local_200[0xe] = '\0';
+        local_200[0xf] = '\0';
+        local_200[0x10] = '\0';
+        local_200[0x11] = '\0';
+        if (a_Stack_1e0[0].dwActualMemberCount != 0) {
+          iVar9 = 0;
           do {
-            iVar5 = Session_FindRegisteredUserInternal(puVar3,*(undefined8 *)(iVar8 + local_164));
+            iVar5 = Session_FindRegisteredUserInternal
+                              (pSVar2,*(ulong64 *)
+                                       ((int)&(a_Stack_1e0[0].pSessionMembers)->xuidOnline + iVar9))
+            ;
             if (iVar5 < 0) {
-              Com_PrintWarning(0x19,0xffffffff821a4ce0,*(undefined8 *)(iVar8 + local_164),*puVar3);
+              Com_PrintWarning(0x19,
+                               "Session - Sanity Check - XUID %llx is in MS\'s session but not in ours for session %s\n"
+                              );
             }
             else {
               local_200[iVar5] = '\x01';
             }
-            uVar6 = uVar6 + 1;
-            iVar8 = iVar8 + 0x10;
-          } while (uVar6 < local_1c0);
+            uVar7 = uVar7 + 1;
+            iVar9 = iVar9 + 0x10;
+          } while (uVar7 < a_Stack_1e0[0].dwActualMemberCount);
         }
         do {
-          if (((local_200[iVar4] == '\0') &&
-              (cVar7 = Session_IsUserRegisteredInternal(puVar3,iVar4), cVar7 != '\0')) &&
-             (cVar7 = Session_IsUserRegistered(puVar3,iVar4), cVar7 != '\0')) {
-            uVar2 = Session_GetXuid(puVar3,iVar4);
-            cVar7 = Session_JoinInProgressForXUID(puVar3,uVar2);
-            if (cVar7 == '\0') {
-              uVar1 = *puVar3;
-              uVar2 = Session_GetXuid(puVar3,iVar4);
-              Com_PrintWarning(0x19,0xffffffff821a4c70,uVar2,iVar4,uVar1);
+          if (((local_200[iVar6] == '\0') &&
+              (bVar8 = Session_IsUserRegisteredInternal(pSVar2,iVar6), bVar8)) &&
+             (bVar8 = Session_IsUserRegistered(pSVar2,iVar6), bVar8)) {
+            uVar1 = Session_GetXuid(pSVar2,iVar6);
+            bVar8 = Session_JoinInProgressForXUID(pSVar2,uVar1);
+            if (!bVar8) {
+              Session_GetXuid(pSVar2,iVar6);
+              Com_PrintWarning(0x19,
+                               "Session - Sanity Check - XUID %llx is in our session at slot %i but isn\'t in MS\'s session for session %s\n"
+                              );
             }
           }
-          iVar4 = iVar4 + 1;
-        } while (iVar4 < 0x12);
-        iVar4 = Session_SpecificSessionTasksInProgress(puVar3,2);
-        uVar6 = Session_CountRegisteredUsersInternal(puVar3);
-        if (local_1c0 != uVar6) {
-          if (iVar4 == 0) {
-            Com_PrintWarning(0x19,0xffffffff821a4c20,*puVar3);
+          iVar6 = iVar6 + 1;
+        } while (iVar6 < 0x12);
+        iVar6 = Session_SpecificSessionTasksInProgress(pSVar2,2);
+        uVar7 = Session_CountRegisteredUsersInternal(pSVar2);
+        if (a_Stack_1e0[0].dwActualMemberCount != uVar7) {
+          if (iVar6 == 0) {
+            Com_PrintWarning(0x19,
+                             "Session - Sanity Check - For session %s, MS has %i players, we\'ve got %i\n"
+                            );
             __restgprlr_26();
             return;
           }
-          if (uVar6 - 1 != local_1c0) {
-            Com_PrintWarning(0x19,0xffffffff821a4bc0,*puVar3);
+          if (uVar7 - 1 != a_Stack_1e0[0].dwActualMemberCount) {
+            Com_PrintWarning(0x19,
+                             "Session - Sanity Check - For session %s, MS has %i players, we\'ve got %i +1 in progress\n"
+                            );
           }
         }
       }
     }
     else {
-      cVar7 = Live_IsUserSignedInToLive(puVar3[0x13e]);
-      if (cVar7 != '\0') {
-        Com_PrintError(0x10,0xffffffff821a4ed8,puVar3[4],uVar2);
+      bVar8 = Live_IsUserSignedInToLive((pSVar2->dyn).sessionCreateController);
+      if (bVar8) {
+        Com_PrintError(0x10,
+                       "Session - Sanity Check - Microsoft error: XSessionGetDetails( for sessionHandle %p ) returned error %i\n"
+                      );
         __restgprlr_26();
         return;
       }
@@ -162,26 +189,29 @@ void Session_SanityCheckSession(void)
 
 // 826D75A8  Session_PrintActiveSessions  (sessions/sessions.cpp:465)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_PrintActiveSessions(void)
 
 {
-  if (DAT_844c6c18 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844c6c08);
+  if (g_partySession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
-  if (DAT_844ac9c0 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844ac9b0);
+  if (g_partyPresenceSession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
-  if (DAT_844c7e98 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844c7e88);
+  if (g_searchSession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
-  if (DAT_844ac390 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844ac380);
+  if (g_partySearchSession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
-  if (DAT_844c7240 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844c7230);
+  if (g_partyJoinSession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
-  if (DAT_844c7870 != 0) {
-    Com_Printf(0x19,0xffffffff821a4f54,DAT_844c7860);
+  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Session - Active %s with %llx\n");
   }
   Session_PrintGraveyardStatus();
   return;
@@ -190,25 +220,28 @@ void Session_PrintActiveSessions(void)
 
 // 826D29D8  Session_QoSListenStart  (sessions/sessions.cpp:494)
 
-void Session_QoSListenStart(undefined4 *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_QoSListenStart(SessionData *param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  if (*(char *)(param_1 + 0x1b) != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x1f2,0,0xffffffff82000f98,0xffffffff821a3008);
+  if ((param_1->dyn).qosListenEnabled != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x1f2,0
+                    ,"%s");
   }
-  Com_Printf(0x10,0xffffffff821a2f94,*param_1);
-  uVar1 = XNetQosListen(param_1 + 5,0,0,0x1000,0xd);
-  if ((uVar1 & 0xffffffff) == 0) {
-    *(undefined1 *)(param_1 + 0x1b) = 1;
-    Dvar_SetInt(DAT_82b5909c,0x1000);
+  Com_Printf(0x10,"calling XNetQosListen( ENABLE ) for session \'%s\'\n");
+  iVar1 = XNetQosListen(&(param_1->dyn).sessionInfo.sessionID,(uchar *)0x0,0,0x1000,0xd);
+  if (iVar1 == 0) {
+    (param_1->dyn).qosListenEnabled = true;
+    Dvar_SetInt(party_CurrentQoSbitsPerSecDebug,0x1000);
   }
   else {
-    cVar2 = Live_IsUserSignedInToLive(param_1[0x13e]);
-    if (cVar2 != '\0') {
-      Com_PrintError(0x19,0xffffffff821a2f50,uVar1,*param_1);
+    bVar2 = Live_IsUserSignedInToLive((param_1->dyn).sessionCreateController);
+    if (bVar2) {
+      Com_PrintError(0x19,"Microsoft error %i when trying to listen for QoS queries for %s\n");
     }
   }
   return;
@@ -217,27 +250,31 @@ void Session_QoSListenStart(undefined4 *param_1)
 
 // 826D2AB8  Session_QoSAdjustBandwidth  (sessions/sessions.cpp:525)
 
-void Session_QoSAdjustBandwidth(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_QoSAdjustBandwidth(SessionData *param_1,int param_2)
 
 {
-  undefined4 *puVar2;
-  ulonglong uVar1;
+  int iVar1;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x210,0,0xffffffff82000f98,0xffffffff82036a08);
+  iVar1 = __savegprlr_29(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x210,0
+                    ,"%s");
   }
-  if (((int)param_2 < 0) || (100000000 < (int)param_2)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x211,0,0xffffffff821a305c,param_2,0);
+  if ((param_2 < 0) || (100000000 < param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x211,0
+                    ,"bitsPerSec not in [0, 100000000]\n\t%i not in [%i, %i]");
   }
-  if ((*(char *)(DAT_82b59050 + 0xc) != '\0') && (*(char *)(puVar2 + 0x1b) != '\0')) {
-    uVar1 = XNetQosListen(puVar2 + 5,0,0,param_2,8);
-    if ((uVar1 & 0xffffffff) != 0) {
-      Com_PrintError(0x19,0xffffffff821a3028,uVar1,*puVar2);
+  if (((partyTweak_AdjustableQoSbitsPerSec->current).enabled != false) &&
+     (*(char *)(iVar1 + 0x6c) != '\0')) {
+    iVar1 = XNetQosListen((XNKID *)(iVar1 + 0x14),(uchar *)0x0,0,param_2,8);
+    if (iVar1 != 0) {
+      Com_PrintError(0x19,"Microsoft error %i when adjusting QoS bandwidth %s\n");
       __restgprlr_29();
       return;
     }
-    Dvar_SetInt(DAT_82b5909c,param_2,uVar1);
+    Dvar_SetInt(party_CurrentQoSbitsPerSecDebug,param_2);
   }
   __restgprlr_29();
   return;
@@ -246,40 +283,50 @@ void Session_QoSAdjustBandwidth(undefined8 param_1,undefined8 param_2)
 
 // 826D76B0  Session_QoSAdjustGameBandwidth  (sessions/sessions.cpp:557)
 
-void Session_QoSAdjustGameBandwidth(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_QoSAdjustGameBandwidth(SessionData *param_1)
 
 {
   int iVar1;
   float fVar2;
+  SessionData *pSVar3;
   int iVar4;
-  longlong lVar3;
-  ulonglong uVar5;
-  int iVar6;
+  int iVar5;
+  longlong lVar6;
   
-  iVar4 = __savegprlr_25();
-  if ((*(char *)(DAT_82b59050 + 0xc) != '\0') && (*(char *)(iVar4 + 0x6c) != '\0')) {
-    uVar5 = (ulonglong)*(uint *)(DAT_82b590f0 + 0xc);
-    iVar1 = *(int *)(DAT_82b5905c + 0xc);
-    lVar3 = Session_CountRegisteredUsers();
-    lVar3 = ((ulonglong)*(uint *)(iVar4 + 100) + (ulonglong)*(uint *)(iVar4 + 0x60)) - lVar3;
-    if (lVar3 < 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x242,0,0xffffffff82000f98,0xffffffff821a4fec);
+  pSVar3 = (SessionData *)__savegprlr_25(param_1);
+  if (((partyTweak_AdjustableQoSbitsPerSec->current).enabled != false) &&
+     ((pSVar3->dyn).qosListenEnabled != false)) {
+    iVar5 = (partyTweak_GameQoSbitsPerSecMin->current).integer;
+    iVar1 = (partyTweak_GameQoSbitsMinOpenSlots->current).integer;
+    iVar4 = Session_CountRegisteredUsers(pSVar3);
+    lVar6 = ((ulonglong)(uint)(pSVar3->dyn).publicSlots +
+            (ulonglong)(uint)(pSVar3->dyn).privateSlots) - (longlong)iVar4;
+    if (lVar6 < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x242
+                      ,0,"%s");
     }
-    iVar6 = (int)lVar3;
-    if ((iVar1 < iVar6) && (iVar1 < 0x11)) {
-      if (0x11 < iVar6) {
-        MyAssertHandler(0xffffffff821a2fc8,0x246,0,0xffffffff82000f98,0xffffffff821a4fcc);
+    iVar4 = (int)lVar6;
+    if ((iVar1 < iVar4) && (iVar1 < 0x11)) {
+      if (0x11 < iVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x246,0,"%s");
       }
-      fVar2 = (float)(longlong)(*(int *)(DAT_82b59074 + 0xc) - *(int *)(DAT_82b590f0 + 0xc));
+      fVar2 = (float)(longlong)
+                     ((int)(partyTweak_GameQoSbitsPerSecMax->current).string -
+                     (partyTweak_GameQoSbitsPerSecMin->current).integer);
       if (fVar2 < 0.0) {
-        Com_Error(1,0xffffffff821a4f78);
+        Com_Error(ERR_DROP,
+                  "pt_GameQoSbitsPerSecMax must be greater than or equal to pt_GameQoSbitsPerSecMin"
+                 );
         __restgprlr_25();
         return;
       }
-      uVar5 = (uint)(int)(((float)(longlong)(iVar6 - iVar1) / (float)(longlong)(0x11 - iVar1)) *
-                         fVar2) + uVar5;
+      iVar5 = (int)(((float)(longlong)(iVar4 - iVar1) / (float)(longlong)(0x11 - iVar1)) * fVar2) +
+              iVar5;
     }
-    Session_QoSAdjustBandwidth(iVar4,uVar5);
+    Session_QoSAdjustBandwidth(pSVar3,iVar5);
   }
   __restgprlr_25();
   return;
@@ -288,24 +335,27 @@ void Session_QoSAdjustGameBandwidth(void)
 
 // 826D2BB0  Session_QoSListenStop  (sessions/sessions.cpp:602)
 
-void Session_QoSListenStop(undefined4 *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_QoSListenStop(SessionData *param_1)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  int iVar1;
+  bool bVar2;
   
-  if (*(char *)(param_1 + 0x1b) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x25d,0,0xffffffff82000f98,0xffffffff821a30f4);
+  if ((param_1->dyn).qosListenEnabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x25d,0
+                    ,"%s");
   }
-  Com_Printf(0x10,0xffffffff821a30c0,*param_1);
-  uVar1 = XNetQosListen(param_1 + 5,0,0,0,2);
-  if (((uVar1 & 0xffffffff) == 0) ||
-     (cVar2 = Live_IsUserSignedInToLive(param_1[0x13e]), cVar2 == '\0')) {
-    *(undefined1 *)(param_1 + 0x1b) = 0;
+  Com_Printf(0x10,"calling XNetQosListen( DISABLE ) for session \'%s\'\n");
+  iVar1 = XNetQosListen(&(param_1->dyn).sessionInfo.sessionID,(uchar *)0x0,0,0,2);
+  if ((iVar1 == 0) ||
+     (bVar2 = Live_IsUserSignedInToLive((param_1->dyn).sessionCreateController), !bVar2)) {
+    (param_1->dyn).qosListenEnabled = false;
   }
   else {
-    Com_PrintError(0x10,0xffffffff821a3094,uVar1);
-    *(undefined1 *)(param_1 + 0x1b) = 0;
+    Com_PrintError(0x10,"Microsoft error %x from XNetQosListen()\n");
+    (param_1->dyn).qosListenEnabled = false;
   }
   return;
 }
@@ -313,77 +363,82 @@ void Session_QoSListenStop(undefined4 *param_1)
 
 // 826D2C88  Session_FindRegisteredUser  (sessions/sessions.cpp:623)
 
-longlong Session_FindRegisteredUser(int param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_FindRegisteredUser(SessionData *param_1,ulong64 param_2)
 
 {
-  longlong lVar1;
-  longlong *plVar2;
+  int iVar1;
+  ulong64 *puVar2;
   
-  lVar1 = 0;
-  plVar2 = (longlong *)(param_1 + 0x78);
-  while ((*(char *)(plVar2 + -1) == '\0' || (*plVar2 != param_2))) {
-    lVar1 = lVar1 + 1;
-    plVar2 = plVar2 + 8;
-    if (0x11 < (int)lVar1) {
+  iVar1 = 0;
+  puVar2 = &(param_1->dyn).users[0].xuid;
+  while ((((ClientInfo *)(puVar2 + -1))->registered == false || (*puVar2 != param_2))) {
+    iVar1 = iVar1 + 1;
+    puVar2 = puVar2 + 8;
+    if (0x11 < iVar1) {
       return -1;
     }
   }
-  return lVar1;
+  return iVar1;
 }
 
 
 // 826D2CC8  Session_CountRegisteredUsers  (sessions/sessions.cpp:639)
 
-longlong Session_CountRegisteredUsers(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountRegisteredUsers(SessionData *param_1)
 
 {
-  char *pcVar1;
-  longlong lVar2;
+  ClientInfo *pCVar1;
+  int iVar2;
   longlong lVar3;
   
-  lVar2 = 0;
-  pcVar1 = (char *)(param_1 + 0xb0);
+  iVar2 = 0;
+  pCVar1 = (param_1->dyn).users + 1;
   lVar3 = 3;
   do {
-    if (pcVar1[-0x40] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1[-1].registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (*pcVar1 != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1->registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x40] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1[1].registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x80] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1[2].registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0xc0] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1[3].registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    if (pcVar1[0x100] != '\0') {
-      lVar2 = lVar2 + 1;
+    if (pCVar1[4].registered != false) {
+      iVar2 = iVar2 + 1;
     }
-    pcVar1 = pcVar1 + 0x180;
+    pCVar1 = pCVar1 + 6;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar2;
+  return iVar2;
 }
 
 
 // 826D2D48  Session_IsInfoValid  (sessions/sessions.cpp:656)
 
-bool Session_IsInfoValid(char *param_1)
+bool Session_IsInfoValid(_XSESSION_INFO *param_1)
 
 {
-  char cVar1;
-  char cVar2;
-  char *pcVar3;
-  char local_20 [16];
+  uchar uVar1;
+  uchar uVar2;
+  uchar *puVar3;
+  uchar local_20 [16];
   
-  if (param_1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x292,0,0xffffffff82000f98,0xffffffff8203c930);
+  if (param_1 == (_XSESSION_INFO *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x292,0
+                    ,"%s");
   }
-  pcVar3 = local_20;
+  puVar3 = local_20;
   local_20[0] = '\0';
   local_20[1] = '\0';
   local_20[2] = '\0';
@@ -393,26 +448,28 @@ bool Session_IsInfoValid(char *param_1)
   local_20[6] = '\0';
   local_20[7] = '\0';
   do {
-    cVar1 = *pcVar3;
-    cVar2 = *param_1;
-    if (cVar1 != cVar2) break;
-    pcVar3 = pcVar3 + 1;
-    param_1 = param_1 + 1;
-  } while (pcVar3 != local_20 + 8);
-  return cVar1 != cVar2;
+    uVar1 = *puVar3;
+    uVar2 = (param_1->sessionID).ab[0];
+    if (uVar1 != uVar2) break;
+    puVar3 = puVar3 + 1;
+    param_1 = (_XSESSION_INFO *)((param_1->sessionID).ab + 1);
+  } while (puVar3 != local_20 + 8);
+  return (bool)('\x01' - (uVar1 == uVar2));
 }
 
 
 // 826D2DE0  Session_IsValid  (sessions/sessions.cpp:665)
 
-bool Session_IsValid(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_IsValid(SessionData *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((param_1 != 0) && (*(int *)(param_1 + 0x10) != 0)) {
-    cVar1 = Session_IsInfoValid(param_1 + 0x14);
-    return cVar1 != '\0';
+  if ((param_1 != (SessionData *)0x0) && ((param_1->dyn).sessionHandle != (void *)0x0)) {
+    bVar1 = Session_IsInfoValid(&(param_1->dyn).sessionInfo);
+    return (bool)('\x01' - !bVar1);
   }
   return false;
 }
@@ -420,144 +477,178 @@ bool Session_IsValid(int param_1)
 
 // 826D2E38  Session_IsFull  (sessions/sessions.cpp:680)
 
-bool Session_IsFull(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_IsFull(SessionData *param_1)
 
 {
   int iVar1;
   
-  iVar1 = Session_CountRegisteredUsers();
-  return *(int *)(param_1 + 100) + *(int *)(param_1 + 0x60) == iVar1;
+  iVar1 = Session_CountRegisteredUsers(param_1);
+  return (param_1->dyn).publicSlots + (param_1->dyn).privateSlots == iVar1;
 }
 
 
 // 826D2E78  Session_CompareSessionInfo  (sessions/sessions.cpp:686)
 
-void Session_CompareSessionInfo(undefined8 param_1,ulonglong param_2)
+int Session_CompareSessionInfo(_XSESSION_INFO *param_1,_XSESSION_INFO *param_2)
 
 {
   char *pcVar1;
-  char *pcVar2;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   
-  pcVar1 = (char *)__savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
   if (pcVar1 == (char *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2af,0,0xffffffff82000f98,0xffffffff820cbb24);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2af,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2b0,0,0xffffffff82000f98,0xffffffff820cbb1c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2b0,0
+                    ,"%s");
   }
-  pcVar2 = pcVar1 + 8;
+  pcVar3 = pcVar1 + 8;
   do {
-    if (*pcVar1 != *(char *)param_2) break;
+    if (*pcVar1 != *(char *)uVar4) break;
     pcVar1 = pcVar1 + 1;
-    param_2 = param_2 + 1;
-  } while (pcVar1 != pcVar2);
-  __restgprlr_28();
-  return;
+    uVar4 = uVar4 + 1;
+  } while (pcVar1 != pcVar3);
+  iVar2 = __restgprlr_28();
+  return iVar2;
 }
 
 
 // 826D2F18  Session_CurrentFlags  (sessions/sessions.cpp:694)
 
-undefined4 Session_CurrentFlags(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CurrentFlags(SessionData *param_1)
 
 {
-  return *(undefined4 *)(param_1 + 0x68);
+  return (param_1->dyn).flags;
 }
 
 
 // 826D2F20  Session_PrivateSlots  (sessions/sessions.cpp:700)
 
-undefined4 Session_PrivateSlots(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_PrivateSlots(SessionData *param_1)
 
 {
-  return *(undefined4 *)(param_1 + 0x60);
+  return (param_1->dyn).privateSlots;
 }
 
 
 // 826D2F28  Session_PublicSlots  (sessions/sessions.cpp:706)
 
-undefined4 Session_PublicSlots(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_PublicSlots(SessionData *param_1)
 
 {
-  return *(undefined4 *)(param_1 + 100);
+  return (param_1->dyn).publicSlots;
 }
 
 
 // 826D2F30  Session_CountTotalSlots  (sessions/sessions.cpp:712)
 
-longlong Session_CountTotalSlots(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountTotalSlots(SessionData *param_1)
 
 {
-  return (ulonglong)*(uint *)(param_1 + 100) + (ulonglong)*(uint *)(param_1 + 0x60);
+  return (param_1->dyn).publicSlots + (param_1->dyn).privateSlots;
 }
 
 
 // 826D2F40  Session_IsUserRegistered  (sessions/sessions.cpp:718)
 
-void Session_IsUserRegistered(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_IsUserRegistered(SessionData *param_1,int param_2)
 
 {
   int iVar1;
   int iVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_28();
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2cf,0,0xffffffff82014c1c,param_2,0x12);
+  uVar4 = (ulonglong)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2cf,0
+                    ,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)param_2 * 0x40 + iVar2;
+  iVar1 = (int)uVar4 * 0x40 + iVar2;
   if (*(char *)(iVar1 + 0x70) != '\0') {
     if (*(longlong *)(iVar1 + 0x78) == 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x2d3,0,0xffffffff82000f98,0xffffffff821a3114);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2d3
+                      ,0,"%s");
     }
     if (*(int *)(iVar2 + 0x10) == 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x2d4,0,0xffffffff82000f98,0xffffffff820583e8);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2d4
+                      ,0,"%s");
     }
   }
-  __restgprlr_28(*(undefined1 *)(iVar1 + 0x70));
-  return;
+  uVar3 = __restgprlr_28(*(undefined1 *)(iVar1 + 0x70));
+  return (bool)uVar3;
 }
 
 
 // 826D3000  Session_GetXuid  (sessions/sessions.cpp:732)
 
-void Session_GetXuid(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+ulong64 Session_GetXuid(SessionData *param_1,int param_2)
 
 {
-  int iVar1;
+  int iVar2;
+  ulong64 uVar1;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_28();
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2dd,0,0xffffffff82014c1c,param_2,0x12);
+  uVar3 = (ulonglong)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2dd,0
+                    ,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (*(int *)(iVar1 + 0x10) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2de,0,0xffffffff82000f98,0xffffffff820583e8);
+  if (*(int *)(iVar2 + 0x10) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2de,0
+                    ,"%s");
   }
-  iVar1 = (int)param_2 * 0x40 + iVar1;
-  if (*(char *)(iVar1 + 0x70) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x2df,0,0xffffffff82000f98,0xffffffff82037a28);
+  iVar2 = (int)uVar3 * 0x40 + iVar2;
+  if (*(char *)(iVar2 + 0x70) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2df,0
+                    ,"%s");
   }
-  if (*(longlong *)(iVar1 + 0x78) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x2e0,0,0xffffffff82000f98,0xffffffff821a3114);
+  if (*(longlong *)(iVar2 + 0x78) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x2e0,0
+                    ,"%s");
   }
-  __restgprlr_28(*(undefined8 *)(iVar1 + 0x78));
-  return;
+  uVar1 = __restgprlr_28(*(undefined8 *)(iVar2 + 0x78));
+  return uVar1;
 }
 
 
 // 826D30D8  Session_GetXuidEvenIfInactive  (sessions/sessions.cpp:742)
 
-undefined8 Session_GetXuidEvenIfInactive(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+ulong64 Session_GetXuidEvenIfInactive(SessionData *param_1,int param_2)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar2;
+  ulong64 uVar1;
   
-  cVar2 = Session_IsUserRegistered();
-  if (cVar2 == '\0') {
-    uVar1 = 0;
+  bVar2 = Session_IsUserRegistered(param_1,param_2);
+  if (bVar2) {
+    uVar1 = Session_GetXuid(param_1,param_2);
   }
   else {
-    uVar1 = Session_GetXuid(param_1,param_2);
+    uVar1 = 0;
   }
   return uVar1;
 }
@@ -565,158 +656,213 @@ undefined8 Session_GetXuidEvenIfInactive(undefined8 param_1,undefined8 param_2)
 
 // 826D3130  Session_MoveSession  (sessions/sessions.cpp:751)
 
-void * Session_MoveSession(int param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_MoveSession(SessionData *param_1,SessionData *param_2)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memcpy((void *)(param_2 + 0x10),(void *)(param_1 + 0x10),0x618);
-  return pvVar1;
+  memcpy();
+  return;
 }
 
 
 // 826D3148  Session_ClearSession  (sessions/sessions.cpp:759)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
-void * Session_ClearSession(undefined4 *param_1)
+void Session_ClearSession(SessionData *param_1)
 
 {
-  void *pvVar1;
-  
-  if (param_1[4] != 0) {
-    Voice_ClearRemoteTalkers();
+  if ((param_1->dyn).sessionHandle != (void *)0x0) {
+    Voice_ClearRemoteTalkers(param_1);
   }
   Voice_DisableLocalMics(param_1);
-  pvVar1 = memset(param_1 + 4,0,0x618);
-  if (param_1 == &DAT_844ac9b0) {
-    _DAT_844c9c50 = 0xbff0000000000000;
-    _DAT_844c9c58 = 0xbff0000000000000;
+  memset();
+  if (param_1 == &g_partyPresenceSession) {
+    sessionCalcSkillData.mu = -1.0;
+    sessionCalcSkillData.sigma = -1.0;
   }
-  return pvVar1;
+  return;
 }
 
 
 // 826D31D0  Session_GetFreeSessionTaskData  (sessions/sessions.cpp:781)
 
-longlong Session_GetFreeSessionTaskData(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+SessionTaskData * Session_GetFreeSessionTaskData(void)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  SessionTaskData *pSVar2;
   
-  lVar1 = 0;
-  pcVar2 = &DAT_844c5908;
+  iVar1 = 0;
+  pSVar2 = sessionTaskData;
   do {
-    if (*pcVar2 == '\0') {
-      return lVar1 * 0x98 + -0x7bb3a6f8;
+    if (pSVar2->active == false) {
+      return sessionTaskData + iVar1;
     }
-    pcVar2 = pcVar2 + 0x98;
-    lVar1 = lVar1 + 1;
-  } while ((int)pcVar2 < -0x7bb393f8);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x317,0,0xffffffff821a3140);
+    pSVar2 = pSVar2 + 1;
+    iVar1 = iVar1 + 1;
+  } while ((int)pSVar2 < -0x7bb393f8);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x317,0
+                    ,"All session task slots are full");
   }
-  return 0;
+  return (SessionTaskData *)0x0;
 }
 
 
 // 826D3268  Session_GetActiveSessionTaskData  (sessions/sessions.cpp:797)
 
-void Session_GetActiveSessionTaskData(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+SessionTaskData * Session_GetActiveSessionTaskData(int param_1)
 
 {
+  int iVar1;
   uint uVar2;
   char *pcVar3;
-  undefined8 uVar1;
+  SessionTaskData *pSVar4;
   
-  uVar2 = __savegprlr_28();
+  uVar2 = __savegprlr_28(param_1);
   if (0x1f < uVar2) {
-    MyAssertHandler(0xffffffff821a2fc8,0x321,0,0xffffffff821a31d8,uVar2,0x20);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x321,0
+                    ,"tasknum doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
   }
-  if ((0 < (int)(&DAT_844c9d30)[uVar2 * 0x28]) && ((int)(&DAT_844c9d30)[uVar2 * 0x28] < 6)) {
-    pcVar3 = (char *)TaskManager_GetTaskData(&DAT_844c9ca0 + uVar2 * 0xa0);
+  iVar1 = g_sessionOverlappedTasks.tasks[uVar2].type;
+  if ((0 < iVar1) && (iVar1 < 6)) {
+    pcVar3 = TaskManager_GetTaskData(g_sessionOverlappedTasks.tasks + uVar2);
     if (*pcVar3 == '\0') {
-      uVar1 = va(0xffffffff821a31a0,(&DAT_844c9d30)[uVar2 * 0x28]);
-      MyAssertHandler(0xffffffff821a2fc8,0x32c,0,0xffffffff820011f4,0xffffffff821a318c,uVar1);
+      va("Overlapped task type %i has no active SessionTaskData");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x32c
+                      ,0,"%s\n\t%s");
     }
-    __restgprlr_28(pcVar3);
-    return;
+    pSVar4 = (SessionTaskData *)__restgprlr_28(pcVar3);
+    return pSVar4;
   }
-  if (DAT_84013128 == 0) {
-    uVar1 = va(0xffffffff821a3160);
-    MyAssertHandler(0xffffffff821a2fc8,0x32f,0,uVar1);
+  if (alwaysfails == 0) {
+    pcVar3 = va("wrong task type (%i) for session task data\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x32f,0
+                    ,pcVar3);
   }
-  __restgprlr_28(0);
-  return;
+  pSVar4 = (SessionTaskData *)__restgprlr_28(0);
+  return pSVar4;
 }
 
 
 // 826D3370  Session_FreeActiveSessionTaskData  (sessions/sessions.cpp:825)
 
-void Session_FreeActiveSessionTaskData(char *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_FreeActiveSessionTaskData(SessionTaskData *param_1)
 
 {
-  if (*param_1 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x33a,0,0xffffffff82000f98,0xffffffff821a318c);
-    *param_1 = '\0';
+  if (param_1->active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x33a,0
+                    ,"%s");
+    param_1->active = false;
     return;
   }
-  *param_1 = '\0';
+  param_1->active = false;
   return;
 }
 
 
 // 826D33F0  Session_GetOpenXOverlappedTaskSlot  (sessions/sessions.cpp:833)
 
-void Session_GetOpenXOverlappedTaskSlot(undefined8 param_1,undefined8 param_2)
+_XOVERLAPPED * Session_GetOpenXOverlappedTaskSlot(uint param_1,SessionTaskType param_2)
 
 {
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,param_1,param_2);
-  TaskManager_TaskToXOverlapped();
-  return;
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  
+  poVar1 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,param_1,param_2);
+  p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+  return p_Var2;
 }
 
 
 // 826D3428  Session_ClearXOverlappedTask  (sessions/sessions.cpp:843)
 
-void Session_ClearXOverlappedTask(ulonglong param_1)
+void Session_ClearXOverlappedTask(_XOVERLAPPED *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x34c,0,0xffffffff82000f98,0xffffffff8208b598);
+  overlappedTask *poVar1;
+  
+  if (param_1 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x34c,0
+                    ,"%s");
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,param_1);
-  TaskManager_ClearTask();
+  poVar1 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,param_1);
+  TaskManager_ClearTask(poVar1);
   return;
 }
 
 
 // 826D7820  Session_EndGameSession  (sessions/sessions.cpp:855)
 
-void Session_EndGameSession(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_EndGameSession(SessionData *param_1)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar2;
+  ulong uVar1;
   
-  if ((*(char *)(param_1 + 0x51) != '\0') &&
-     (*(undefined1 *)(param_1 + 0x51) = 0, *(int *)(param_1 + 0x10) != 0)) {
-    cVar2 = Sys_IsMainThread();
-    if ((cVar2 != '\0') && (cVar2 = CL_AllLocalClientsDisconnected(), cVar2 != '\0')) {
+  if (((param_1->dyn).sessionStartCalled != false) &&
+     ((param_1->dyn).sessionStartCalled = false, (param_1->dyn).sessionHandle != (void *)0x0)) {
+    bVar2 = Sys_IsMainThread();
+    if ((bVar2) && (bVar2 = CL_AllLocalClientsDisconnected(), bVar2)) {
       R_BeginRemoteScreenUpdate();
     }
-    Com_Printf(0x10,0xffffffff821a5030,*(undefined4 *)(param_1 + 0x10));
-    uVar1 = XSessionEnd(*(undefined4 *)(param_1 + 0x10),0);
-    if (((int)uVar1 != 0) &&
-       (cVar2 = Live_IsUserSignedInToLive(*(undefined4 *)(param_1 + 0x4f8)), cVar2 != '\0')) {
-      Com_PrintError(0x10,0xffffffff821a5000,uVar1);
+    Com_Printf(0x10,"Calling XSessionEnd() for session handle %p\n");
+    uVar1 = XSessionEnd((param_1->dyn).sessionHandle,(_XOVERLAPPED *)0x0);
+    if ((uVar1 != 0) &&
+       (bVar2 = Live_IsUserSignedInToLive((param_1->dyn).sessionCreateController), bVar2)) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XSessionEnd\n");
     }
-    LiveStorage_SaveStats(*(undefined4 *)(param_1 + 0x4f8));
+    LiveStorage_SaveStats((param_1->dyn).sessionCreateController);
     Session_NeedsSkillUpdate(param_1);
-    Session_SanityCheckSession();
-    cVar2 = Sys_IsMainThread();
-    if ((cVar2 != '\0') && (cVar2 = CL_AllLocalClientsDisconnected(), cVar2 != '\0')) {
+    Session_SanityCheckSession(param_1);
+    bVar2 = Sys_IsMainThread();
+    if ((bVar2) && (bVar2 = CL_AllLocalClientsDisconnected(), bVar2)) {
+      R_EndRemoteScreenUpdate();
+    }
+  }
+  return;
+}
+
+
+// 826D7920  Session_EndGameSessionWithTimeout  (sessions/sessions.cpp:911)
+
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* void __cdecl Session_EndGameSessionWithTimeout(struct SessionData *,int) */
+
+void Session_EndGameSessionWithTimeout(SessionData *param_1,int param_2)
+
+{
+  bool bVar2;
+  ulong uVar1;
+  
+  if (((param_1->dyn).sessionStartCalled != false) &&
+     ((param_1->dyn).sessionStartCalled = false, (param_1->dyn).sessionHandle != (void *)0x0)) {
+    bVar2 = Sys_IsMainThread();
+    if ((bVar2) && (bVar2 = CL_AllLocalClientsDisconnected(), bVar2)) {
+      R_BeginRemoteScreenUpdate();
+    }
+    Com_Printf(0x10,"Calling XSessionEnd() for session handle %p\n");
+    uVar1 = XSessionEnd((param_1->dyn).sessionHandle,(_XOVERLAPPED *)0x0);
+    if ((uVar1 != 0) &&
+       (bVar2 = Live_IsUserSignedInToLive((param_1->dyn).sessionCreateController), bVar2)) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XSessionEnd\n");
+    }
+    LiveStorage_SaveStats((param_1->dyn).sessionCreateController);
+    Session_NeedsSkillUpdate(param_1);
+    Session_SanityCheckSession(param_1);
+    bVar2 = Sys_IsMainThread();
+    if ((bVar2) && (bVar2 = CL_AllLocalClientsDisconnected(), bVar2)) {
       R_EndRemoteScreenUpdate();
     }
   }
@@ -726,36 +872,42 @@ void Session_EndGameSession(int param_1)
 
 // 826D3490  Session_StartDeleteHandle  (sessions/sessions.cpp:919)
 
-void Session_StartDeleteHandle(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_StartDeleteHandle(int param_1)
 
 {
-  int iVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar5;
-  undefined1 *puVar4;
+  int iVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
+  bool bVar6;
+  SessionTaskData *pSVar5;
   
-  iVar3 = __savegprlr_27();
-  if ((&DAT_844a9e78)[iVar3 * 0x18c] == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x39e,0,0xffffffff82000f98,0xffffffff820583e8);
+  iVar1 = __savegprlr_27(param_1);
+  if (sessionGraveYard[iVar1].sessionData.dyn.sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x39e,0
+                    ,"%s");
   }
-  Com_DPrintf(0x10,0xffffffff821a3268,(&DAT_844a9e68)[iVar3 * 0x18c],(&DAT_844a9e78)[iVar3 * 0x18c])
-  ;
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,(&DAT_844aa360)[iVar3 * 0x18c],5);
-  uVar1 = TaskManager_TaskToXOverlapped();
-  uVar2 = XSessionDelete((&DAT_844a9e78)[iVar3 * 0x18c],uVar1);
-  if (((int)uVar2 == 0) || ((int)uVar2 == 0x3e5)) {
-    puVar4 = (undefined1 *)Session_GetFreeSessionTaskData();
-    *(undefined4 **)(puVar4 + 4) = &DAT_844a9e68 + iVar3 * 0x18c;
-    *puVar4 = 1;
-    *(undefined4 *)(puVar4 + 8) = (&DAT_844a9e78)[iVar3 * 0x18c];
-    uVar1 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar1);
-    TaskManager_SetTaskData(uVar1,puVar4);
+  Com_DPrintf(0x10,"StartDeleteHandle - Calling XSessionDelete() (async) on %s [%llx]\n");
+  poVar2 = TaskManager_GetOpenTaskSlot
+                     (&g_sessionOverlappedTasks,
+                      sessionGraveYard[iVar1].sessionData.dyn.sessionCreateController,5);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  uVar4 = XSessionDelete(sessionGraveYard[iVar1].sessionData.dyn.sessionHandle,p_Var3);
+  if ((uVar4 == 0) || (uVar4 == 0x3e5)) {
+    pSVar5 = Session_GetFreeSessionTaskData();
+    pSVar5->session = &sessionGraveYard[iVar1].sessionData;
+    pSVar5->active = true;
+    (pSVar5->field2_0x8).joinData.privateSlot =
+         (int)sessionGraveYard[iVar1].sessionData.dyn.sessionHandle;
+    poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+    TaskManager_SetTaskData(poVar2,pSVar5);
   }
   else {
-    cVar5 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar3 * 0xa0]);
-    if (cVar5 != '\0') {
-      Com_PrintError(0x10,0xffffffff821a3220,uVar2);
+    bVar6 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar6) {
+      Com_PrintError(0x10,"StartDeleteHandle - Microsoft error %x when calling XSessionDelete\n");
       __restgprlr_27();
       return;
     }
@@ -767,90 +919,100 @@ void Session_StartDeleteHandle(void)
 
 // 826D35B8  Session_DeleteHandleComplete  (sessions/sessions.cpp:948)
 
-void Session_DeleteHandleComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_DeleteHandleComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char cVar4;
-  int iVar5;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  SessionTaskData *pSVar6;
+  bool bVar7;
   
-  iVar2 = __savegprlr_25();
-  iVar5 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar5);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x3ba,0,0xffffffff82000f98,0xffffffff8208b66c);
+  iVar1 = __savegprlr_25(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3ba,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x3bc,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3bc,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 5) {
-    MyAssertHandler(0xffffffff821a2fc8,0x3bd,0,0xffffffff82000f98,0xffffffff821a3340);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3bd,0
+                    ,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_25(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_25(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  iVar2 = TaskManager_GetTaskData();
-  if (*(int *)(iVar2 + 8) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x3c6,0,0xffffffff82000f98,0xffffffff821a3320);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pSVar6 = TaskManager_GetTaskData(poVar5);
+  if ((pSVar6->field2_0x8).joinData.privateSlot == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3c6,0
+                    ,"%s");
   }
-  Com_DPrintf(0x10,0xffffffff821a32e8,*(undefined4 *)(iVar2 + 8));
-  XCloseHandle(*(undefined4 *)(iVar2 + 8));
-  *(undefined4 *)(iVar2 + 8) = 0;
-  Session_FreeActiveSessionTaskData(iVar2);
-  Session_ClearXOverlappedTask(piVar3);
-  iVar2 = (int)uVar1;
-  if (((iVar2 != 0) && (iVar2 != -0x7feaadf2)) && (iVar2 != -0x7feaadfa)) {
-    cVar4 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar5]);
-    if (cVar4 != '\0') {
-      Com_PrintError(0x10,0xffffffff821a32ac,uVar1);
+  Com_DPrintf(0x10,"Session - DeleteHandleComplete (async) on handle %p\n");
+  XCloseHandle((void *)(pSVar6->field2_0x8).joinData.privateSlot);
+  (pSVar6->field2_0x8).joinData.privateSlot = 0;
+  Session_FreeActiveSessionTaskData(pSVar6);
+  Session_ClearXOverlappedTask(p_Var2);
+  if (((uVar4 != 0) && (uVar4 != 0x8015520e)) && (uVar4 != 0x80155206)) {
+    bVar7 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar7) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XSessionDelete (async) \n");
     }
-    __restgprlr_25(2);
-    return;
+    tVar3 = __restgprlr_25(2);
+    return tVar3;
   }
-  cVar4 = CL_AllLocalClientsInactive();
-  if ((cVar4 == '\0') && (cVar4 = CL_AllLocalClientsDisconnected(), cVar4 != '\0')) {
-    CL_GetFirstActiveControllerIndex();
-    LiveStorage_SaveStats();
+  bVar7 = CL_AllLocalClientsInactive();
+  if ((!bVar7) && (bVar7 = CL_AllLocalClientsDisconnected(), bVar7)) {
+    iVar1 = CL_GetFirstActiveControllerIndex();
+    LiveStorage_SaveStats(iVar1);
   }
-  __restgprlr_25(1);
-  return;
+  tVar3 = __restgprlr_25(1);
+  return tVar3;
 }
 
 
 // 826D37A0  Session_DeleteHandle  (sessions/sessions.cpp:993)
 
-void Session_DeleteHandle(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_DeleteHandle(SessionData *param_1)
 
 {
-  undefined4 *puVar2;
-  char cVar3;
-  undefined8 uVar1;
+  int iVar1;
+  bool bVar3;
+  ulong uVar2;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x3e4,0,0xffffffff82000f98,0xffffffff82036a08);
+  iVar1 = __savegprlr_29(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3e4,0
+                    ,"%s");
   }
-  Com_Printf(0x10,0xffffffff821a33e4,*puVar2,puVar2[4]);
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 != '\0') && (cVar3 = CL_AllLocalClientsDisconnected(), cVar3 != '\0')) {
+  Com_Printf(0x10,"Calling XSessionDelete on %s [%llx]\n");
+  bVar3 = Sys_IsMainThread();
+  if ((bVar3) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) {
     R_BeginRemoteScreenUpdate();
   }
-  uVar1 = XSessionDelete(puVar2[4],0);
-  if ((int)uVar1 != 0) {
-    Com_PrintError(0x10,0xffffffff821a33b4,uVar1);
+  uVar2 = XSessionDelete(*(void **)(iVar1 + 0x10),(_XOVERLAPPED *)0x0);
+  if (uVar2 != 0) {
+    Com_PrintError(0x10,"Microsoft error %x when calling XSessionDelete\n");
   }
-  if (puVar2[4] == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x3f0,0,0xffffffff82000f98,0xffffffff820583e8);
+  if (*(int *)(iVar1 + 0x10) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x3f0,0
+                    ,"%s");
   }
-  XCloseHandle(puVar2[4]);
-  puVar2[4] = 0;
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 != '\0') && (cVar3 = CL_AllLocalClientsDisconnected(), cVar3 != '\0')) {
+  XCloseHandle(*(void **)(iVar1 + 0x10));
+  *(undefined4 *)(iVar1 + 0x10) = 0;
+  bVar3 = Sys_IsMainThread();
+  if ((bVar3) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) {
     R_EndRemoteScreenUpdate();
   }
   __restgprlr_29();
@@ -860,26 +1022,28 @@ void Session_DeleteHandle(void)
 
 // 826D38B0  Session_UnregisterAllUsersFromVoice  (sessions/sessions.cpp:1024)
 
-void Session_UnregisterAllUsersFromVoice(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_UnregisterAllUsersFromVoice(SessionData *param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  longlong lVar3;
+  SessionData *pSVar1;
+  ClientInfo *pCVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_29();
-  if (*(char *)(iVar1 + 4) != '\0') {
-    Session_SetLocalVoiceConnectivity(iVar1,0);
-    lVar3 = 0;
-    pcVar2 = (char *)(iVar1 + 0x70);
+  pSVar1 = (SessionData *)__savegprlr_29(param_1);
+  if ((pSVar1->staticData).registerUsersWithVoice != false) {
+    Session_SetLocalVoiceConnectivity(pSVar1,0);
+    iVar3 = 0;
+    pCVar2 = (pSVar1->dyn).users;
     do {
-      if (*pcVar2 != '\0') {
-        Voice_UnregisterRemotePlayer(iVar1,lVar3);
+      if (pCVar2->registered != false) {
+        Voice_UnregisterRemotePlayer(pSVar1,iVar3);
       }
-      lVar3 = lVar3 + 1;
-      pcVar2 = pcVar2 + 0x40;
-    } while ((int)lVar3 < 0x12);
-    Voice_CheckXHVSync(iVar1);
+      iVar3 = iVar3 + 1;
+      pCVar2 = pCVar2 + 1;
+    } while (iVar3 < 0x12);
+    Voice_CheckXHVSync(pSVar1);
   }
   __restgprlr_29();
   return;
@@ -888,85 +1052,99 @@ void Session_UnregisterAllUsersFromVoice(void)
 
 // 826DA978  Session_GetFreeSessionGraveYardSlot  (sessions/sessions.cpp:1047)
 
-void Session_GetFreeSessionGraveYardSlot(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_GetFreeSessionGraveYardSlot(void)
 
 {
-  uint uVar1;
-  char cVar2;
+  ulonglong uVar1;
+  bool bVar4;
+  ulonglong uVar2;
   int iVar3;
-  int *piVar4;
-  uint uVar5;
-  uint uVar6;
+  int *piVar5;
+  ulonglong uVar6;
   
   __savegprlr_28();
   iVar3 = 0x7fffffff;
   uVar1 = 0;
-  piVar4 = &DAT_844aa364;
-  uVar5 = 0xffffffff;
+  piVar5 = &sessionGraveYard[0].sessionData.dyn.sessionDeleteTime;
+  uVar6 = 0xffffffffffffffff;
   do {
-    uVar6 = uVar1;
-    if (*(char *)(piVar4 + -0x141) == '\0') goto LAB_826daa80;
-    uVar6 = uVar5;
-    if (*piVar4 < iVar3) {
-      iVar3 = *piVar4;
-      uVar6 = uVar1;
+    uVar2 = uVar1;
+    if (*(char *)(piVar5 + -0x141) == '\0') goto LAB_826daa80;
+    uVar2 = uVar6;
+    if (*piVar5 < iVar3) {
+      uVar2 = uVar1;
+      iVar3 = *piVar5;
     }
-    piVar4 = piVar4 + 0x18c;
+    piVar5 = piVar5 + 0x18c;
     uVar1 = uVar1 + 1;
-    uVar5 = uVar6;
-  } while ((int)piVar4 < -0x7bb5377c);
-  if (5 < uVar6) {
-    MyAssertHandler(0xffffffff821a2fc8,0x42a,0,0xffffffff821a6220,uVar6,6);
+    uVar6 = uVar2;
+  } while ((int)piVar5 < -0x7bb5377c);
+  if (5 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x42a,0
+                    ,"earliestDeleteSlot doesn\'t index MAX_SESSION_GRAVEYARDS\n\t%i not in [0, %i)"
+                   );
   }
-  Com_PrintWarning(0x10,0xffffffff821a61c8,uVar6);
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xee2,0,0xffffffff82000f98,0xffffffff82010b48);
+  Com_PrintWarning(0x10,
+                   "Out of session grave yard slots; reusing slot %i which has the soonest delete time\n"
+                  );
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xee2,0
+                    ,"%s");
   }
-  Com_DPrintf(0xe,0xffffffff821a6198,uVar6,(&DAT_844a9e68)[uVar6 * 0x18c]);
-  Session_DeleteSessionImmediately(&DAT_844a9e68 + uVar6 * 0x18c);
-  (&DAT_844a9e60)[uVar6 * 0x630] = 0;
+  Com_DPrintf(0xe,"Deleting graveyard slot %i (%s) immediately\n");
+  Session_DeleteSessionImmediately(&sessionGraveYard[(int)uVar2].sessionData);
+  sessionGraveYard[(int)uVar2].active = false;
 LAB_826daa80:
-  __restgprlr_28(uVar6);
-  return;
+  iVar3 = __restgprlr_28(uVar2);
+  return iVar3;
 }
 
 
 // 826DA410  Session_DeleteSessionImmediately  (sessions/sessions.cpp:1075)
 
-void Session_DeleteSessionImmediately(void)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_DeleteSessionImmediately(SessionData *param_1)
 
 {
-  int iVar1;
+  SessionData *pSVar1;
   int iVar2;
-  undefined1 *puVar3;
+  uchar *puVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x436,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar1 = (SessionData *)__savegprlr_29(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x436,0
+                    ,"%s");
   }
-  iVar2 = Voice_GetRegisteredPlayerCount(iVar1);
+  iVar2 = Voice_GetRegisteredPlayerCount(pSVar1);
   if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x43a,0,0xffffffff82000f98,0xffffffff821a601c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x43a,0
+                    ,"%s");
   }
-  Session_CancelSpecificSessionTasks(iVar1,0x7ff);
-  Session_EndGameSession(iVar1);
-  Session_CompleteSpecificSessionTasks(iVar1,0x73f);
+  Session_CancelSpecificSessionTasks(pSVar1,0x7ff);
+  Session_EndGameSession(pSVar1);
+  Session_CompleteSpecificSessionTasks(pSVar1,0x73f);
   LB_EndOngoingTasks();
-  Session_EveryoneLeaveSessionAsync(*(undefined4 *)(iVar1 + 0x4f8),iVar1);
-  Session_CompleteSpecificSessionTasks(iVar1,0x73f);
+  Session_EveryoneLeaveSessionAsync((pSVar1->dyn).sessionCreateController,pSVar1);
+  Session_CompleteSpecificSessionTasks(pSVar1,0x73f);
   LB_EndOngoingTasks();
-  puVar3 = (undefined1 *)(iVar1 + 0x30);
+  puVar3 = (pSVar1->dyn).sessionInfo.hostAddress.abOnline + 4;
   lVar4 = 0x12;
   do {
     puVar3 = puVar3 + 0x40;
-    *puVar3 = 0;
+    *puVar3 = '\0';
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  Session_DeleteHandle(iVar1);
-  if (*(int *)(iVar1 + 0x10) != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x44c,0,0xffffffff82000f98,0xffffffff821a536c);
+  Session_DeleteHandle(pSVar1);
+  if ((pSVar1->dyn).sessionHandle != (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x44c,0
+                    ,"%s");
   }
   __restgprlr_29();
   return;
@@ -975,47 +1153,51 @@ void Session_DeleteSessionImmediately(void)
 
 // 826D3918  Session_CountLocalMembers  (sessions/sessions.cpp:1110)
 
-void Session_CountLocalMembers(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountLocalMembers(SessionData *param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   longlong lVar3;
   longlong lVar4;
-  undefined8 *puVar5;
+  ulong64 *puVar5;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x45a,0,0xffffffff82000f98,0xffffffff82036a08);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x45a,0
+                    ,"%s");
   }
   lVar3 = 0;
-  puVar5 = (undefined8 *)(iVar1 + 0x78);
+  puVar5 = (ulong64 *)(iVar1 + 0x78);
   lVar4 = 0x12;
   do {
-    if ((*(char *)(puVar5 + -1) != '\0') && (cVar2 = Live_XUIDIsLocalPlayer(*puVar5), cVar2 != '\0')
-       ) {
+    if ((*(char *)(puVar5 + -1) != '\0') && (bVar2 = Live_XUIDIsLocalPlayer(*puVar5), bVar2)) {
       lVar3 = lVar3 + 1;
     }
     lVar4 = lVar4 + -1;
     puVar5 = puVar5 + 8;
   } while (lVar4 != 0);
-  __restgprlr_29(lVar3);
-  return;
+  iVar1 = __restgprlr_29(lVar3);
+  return iVar1;
 }
 
 
 // 826D39A0  Session_SetGraveyardDeleteTime  (sessions/sessions.cpp:1134)
 
-void Session_SetGraveyardDeleteTime(undefined4 *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_SetGraveyardDeleteTime(SessionData *param_1)
 
 {
   int iVar1;
   int iVar2;
   
   iVar1 = Sys_Milliseconds();
-  param_1[0x13f] = iVar1 + 40000;
-  if (*(char *)(param_1 + 0x14) != '\0') {
-    if (*(char *)(DAT_844c785c + 0xc) == '\0') {
+  (param_1->dyn).sessionDeleteTime = iVar1 + 40000;
+  if ((param_1->dyn).keysGenerated != false) {
+    if ((session_immediateDeleteTinySessions->current).enabled == false) {
       return;
     }
     iVar1 = Session_CountLocalMembers(param_1);
@@ -1023,121 +1205,217 @@ void Session_SetGraveyardDeleteTime(undefined4 *param_1)
     if (iVar1 < iVar2) {
       return;
     }
-    if (param_1 == &DAT_844c7230) {
+    if (param_1 == &g_partyJoinSession) {
       return;
     }
   }
-  param_1[0x13f] = 0;
+  (param_1->dyn).sessionDeleteTime = 0;
   return;
 }
 
 
 // 826DAA88  Session_DeleteSession  (sessions/sessions.cpp:1168)
 
-void Session_DeleteSession(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_DeleteSession(SessionData *param_1)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
   undefined8 uVar2;
-  undefined4 *_Src;
-  char cVar6;
+  SessionData *pSVar3;
+  bool bVar5;
   int iVar4;
-  void *pvVar5;
-  undefined8 uVar3;
+  double extraout_f1;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  _Src = (undefined4 *)__savegprlr_27();
-  if (_Src == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x498,0,0xffffffff82000f98,0xffffffff82036a08);
+  pSVar3 = (SessionData *)__savegprlr_27(param_1);
+  dVar6 = extraout_f1;
+  if (pSVar3 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x498,0
+                    ,"%s");
   }
-  cVar6 = CL_AllLocalClientsInactive();
-  if (cVar6 == '\0') {
-    CL_GetFirstActiveControllerIndex();
-    LiveStorage_SaveStats();
+  bVar5 = CL_AllLocalClientsInactive();
+  if (!bVar5) {
+    iVar4 = CL_GetFirstActiveControllerIndex();
+    LiveStorage_SaveStats(iVar4);
   }
-  Com_Printf(0x19,0xffffffff821a63f4,*_Src);
-  uVar3 = TBLr;
-  Session_CancelSpecificSessionTasks(_Src,0x7ff);
-  iVar4 = Session_SpecificSessionTasksInProgress(_Src,0x7ff);
+  Com_Printf(0x19,"DeleteSession requested for session %s\n");
+  uVar2 = TBLr;
+  Session_CancelSpecificSessionTasks(pSVar3,0x7ff);
+  iVar4 = Session_SpecificSessionTasksInProgress(pSVar3,0x7ff);
   if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x4a5,0,0xffffffff82000f98,0xffffffff821a63c8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x4a5,0
+                    ,"%s");
   }
-  uVar1 = TBLr;
-  Session_CompleteSpecificSessionTasks(_Src,0x73f);
+  uVar2 = TBLr;
+  Session_CompleteSpecificSessionTasks(pSVar3,0x73f);
   LB_EndOngoingTasks();
   uVar2 = TBLr;
-  dVar7 = (double)__u64tod((int)uVar1 - (int)uVar3);
-  dVar7 = dVar7 * DAT_841db430;
-  dVar9 = DAT_841db430;
-  dVar8 = (double)__u64tod((int)uVar2 - (int)uVar1);
-  if (1.0 < dVar8 * dVar9 + dVar7) {
-    Com_Printf(dVar7,0x19,0xffffffff821a6380,dVar7,dVar8 * dVar9);
+  __u64tod();
+  dVar7 = dVar6 * msecPerRawTimerTick;
+  dVar8 = msecPerRawTimerTick;
+  __u64tod();
+  if (1.0 < dVar6 * dVar8 + dVar7) {
+    Com_Printf(0x19,"DeleteSession blocked for %f ms to cancel and %f ms to complete tasks\n");
   }
-  if (*(char *)(_Src + 0x1b) != '\0') {
-    Session_QoSListenStop(_Src);
+  if ((pSVar3->dyn).qosListenEnabled != false) {
+    Session_QoSListenStop(pSVar3);
   }
-  pvVar5 = (void *)Voice_DisableLocalMics(_Src);
-  if (_Src[4] != 0) {
-    Com_Printf(0x19,0xffffffff821a6358,*_Src);
-    Session_SanityCheckSession(_Src);
-    Session_UnregisterAllUsersFromVoice(_Src);
-    if (*(char *)(DAT_84253bc4 + 0xc) == '\0') {
-      Com_Printf(0x10,0xffffffff821a6310,*_Src);
-      iVar4 = _Src[4];
-      pvVar5 = (void *)Session_DeleteSessionImmediately(_Src);
-      if (DAT_844c7870 == iVar4) {
-        pvVar5 = (void *)MyAssertHandler(0xffffffff821a2fc8,0x4ed,0,0xffffffff82000f98,
-                                         0xffffffff821a62dc);
+  Voice_DisableLocalMics(pSVar3);
+  if ((pSVar3->dyn).sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Deleting session %s (handle %p)\n");
+    Session_SanityCheckSession(pSVar3);
+    Session_UnregisterAllUsersFromVoice(pSVar3);
+    if ((session_nonblocking->current).enabled == false) {
+      Com_Printf(0x10,"Deleting \'%s\' session\n");
+      pvVar1 = (pSVar3->dyn).sessionHandle;
+      Session_DeleteSessionImmediately(pSVar3);
+      if (g_serverSession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4ed,0,"%s");
       }
-      if (DAT_844c6c18 == iVar4) {
-        pvVar5 = (void *)MyAssertHandler(0xffffffff821a2fc8,0x4f0,0,0xffffffff82000f98,
-                                         0xffffffff821a62a8);
+      if (g_partySession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4f0,0,"%s");
       }
-      if (DAT_844ac9c0 == iVar4) {
-        pvVar5 = (void *)MyAssertHandler(0xffffffff821a2fc8,0x4f2,0,0xffffffff82000f98,
-                                         0xffffffff821a626c);
+      if (g_partyPresenceSession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4f2,0,"%s");
       }
     }
     else {
-      uVar3 = Session_GetFreeSessionGraveYardSlot();
-      (&DAT_844a9e60)[(int)uVar3 * 0x630] = 1;
-      Session_SetGraveyardDeleteTime(_Src);
-      memcpy(&DAT_844a9e68 + (int)uVar3 * 0x18c,_Src,0x628);
-      Com_Printf(0x19,0xffffffff821a6328,uVar3,_Src[0x13f]);
-      _Src[4] = 0;
-      memset(_Src + 0x142,0,0x120);
-      pvVar5 = memset(_Src + 0x1c,0,0x480);
+      iVar4 = Session_GetFreeSessionGraveYardSlot();
+      sessionGraveYard[iVar4].active = true;
+      Session_SetGraveyardDeleteTime(pSVar3);
+      memcpy();
+      Com_Printf(0x19,"Using graveyard slot %i, deleting at time %i\n");
+      (pSVar3->dyn).sessionHandle = (void *)0x0;
+      memset();
+      memset();
     }
   }
-  _Src[0x1a] = 0;
-  *(undefined1 *)(_Src + 0x14) = 0;
-  __restgprlr_27(pvVar5);
+  (pSVar3->dyn).flags = 0;
+  (pSVar3->dyn).keysGenerated = false;
+  __restgprlr_27();
+  return;
+}
+
+
+// 826DAD68  Session_DeleteSessionDelayed  (sessions/sessions.cpp:1279)
+
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* void __cdecl Session_DeleteSessionDelayed(struct SessionData *) */
+
+void Session_DeleteSessionDelayed(SessionData *param_1)
+
+{
+  void *pvVar1;
+  undefined8 uVar2;
+  SessionData *pSVar3;
+  bool bVar5;
+  int iVar4;
+  double extraout_f1;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  
+  pSVar3 = (SessionData *)__savegprlr_27(param_1);
+  dVar6 = extraout_f1;
+  if (pSVar3 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x498,0
+                    ,"%s");
+  }
+  bVar5 = CL_AllLocalClientsInactive();
+  if (!bVar5) {
+    iVar4 = CL_GetFirstActiveControllerIndex();
+    LiveStorage_SaveStats(iVar4);
+  }
+  Com_Printf(0x19,"DeleteSession requested for session %s\n");
+  uVar2 = TBLr;
+  Session_CancelSpecificSessionTasks(pSVar3,0x7ff);
+  iVar4 = Session_SpecificSessionTasksInProgress(pSVar3,0x7ff);
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x4a5,0
+                    ,"%s");
+  }
+  uVar2 = TBLr;
+  Session_CompleteSpecificSessionTasks(pSVar3,0x73f);
+  LB_EndOngoingTasks();
+  uVar2 = TBLr;
+  __u64tod();
+  dVar7 = dVar6 * msecPerRawTimerTick;
+  dVar8 = msecPerRawTimerTick;
+  __u64tod();
+  if (1.0 < dVar6 * dVar8 + dVar7) {
+    Com_Printf(0x19,"DeleteSession blocked for %f ms to cancel and %f ms to complete tasks\n");
+  }
+  if ((pSVar3->dyn).qosListenEnabled != false) {
+    Session_QoSListenStop(pSVar3);
+  }
+  Voice_DisableLocalMics(pSVar3);
+  if ((pSVar3->dyn).sessionHandle != (void *)0x0) {
+    Com_Printf(0x19,"Deleting session %s (handle %p)\n");
+    Session_SanityCheckSession(pSVar3);
+    Session_UnregisterAllUsersFromVoice(pSVar3);
+    if ((session_nonblocking->current).enabled == false) {
+      Com_Printf(0x10,"Deleting \'%s\' session\n");
+      pvVar1 = (pSVar3->dyn).sessionHandle;
+      Session_DeleteSessionImmediately(pSVar3);
+      if (g_serverSession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4ed,0,"%s");
+      }
+      if (g_partySession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4f0,0,"%s");
+      }
+      if (g_partyPresenceSession.dyn.sessionHandle == pvVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x4f2,0,"%s");
+      }
+    }
+    else {
+      iVar4 = Session_GetFreeSessionGraveYardSlot();
+      sessionGraveYard[iVar4].active = true;
+      Session_SetGraveyardDeleteTime(pSVar3);
+      memcpy();
+      Com_Printf(0x19,"Using graveyard slot %i, deleting at time %i\n");
+      (pSVar3->dyn).sessionHandle = (void *)0x0;
+      memset();
+      memset();
+    }
+  }
+  (pSVar3->dyn).flags = 0;
+  (pSVar3->dyn).keysGenerated = false;
+  __restgprlr_27();
   return;
 }
 
 
 // 826D3A30  Session_SetUpTrueskillData  (sessions/sessions.cpp:1286)
 
-void Session_SetUpTrueskillData(void)
+void Session_SetUpTrueskillData(int param_1)
 
 {
-  int iVar1;
-  undefined8 uVar2;
+  dvar_t *pdVar1;
+  int iVar2;
   
-  uVar2 = __savegprlr_29();
-  if (DAT_82aa1adc == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x50a,0,0xffffffff82000f98,0xffffffff8203373c);
+  iVar2 = __savegprlr_29(param_1);
+  if (playlist == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x50a,0
+                    ,"%s");
   }
-  iVar1 = DAT_82aa1adc;
-  memset(&DAT_844c8b28,0,0x1138);
-  uVar2 = Playlist_GetPlaylistIdForNum(uVar2,*(undefined4 *)(iVar1 + 0xc));
-  Com_Printf(0x10,0xffffffff821a340c,uVar2);
-  DAT_844c9bc4 = (int)uVar2 + -0x20000;
-  DAT_844c9bc8 = 2;
-  DAT_844c9bcc = 0x3f;
-  DAT_844c9bce = 0x40;
+  pdVar1 = playlist;
+  memset();
+  iVar2 = Playlist_GetPlaylistIdForNum(iVar2,(pdVar1->current).integer);
+  Com_Printf(0x10,"We\'re going to be updating trueskill #%i\n");
+  sessionCalcSkillData.spec.dwViewId = iVar2 - 0x20000;
+  sessionCalcSkillData.spec.dwNumColumnIds = 2;
+  sessionCalcSkillData.spec.rgwColumnIds[0] = 0x3f;
+  sessionCalcSkillData.spec.rgwColumnIds[1] = 0x40;
   __restgprlr_29();
   return;
 }
@@ -1145,257 +1423,305 @@ void Session_SetUpTrueskillData(void)
 
 // 826D7928  Session_StartHostComplete  (sessions/sessions.cpp:1307)
 
-void Session_StartHostComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_StartHostComplete(int param_1)
 
 {
   byte bVar1;
-  byte bVar2;
-  undefined1 uVar3;
-  undefined4 *puVar4;
-  int iVar6;
-  int *piVar7;
-  ulonglong uVar5;
-  void *pvVar8;
-  byte *pbVar9;
-  byte *pbVar10;
-  int iVar11;
-  uint uVar12;
-  byte local_60 [8];
-  byte abStack_58 [88];
+  SessionData *pSVar2;
+  int iVar3;
+  _XOVERLAPPED *p_Var4;
+  taskCompleteResults tVar5;
+  ulong uVar6;
+  overlappedTask *poVar7;
+  SessionTaskData *pSVar8;
+  XNADDR *pXVar9;
+  longlong lVar10;
+  _XSESSION_INFO *p_Var11;
+  byte *pbVar12;
+  uint uVar13;
+  _XSESSION_INFO *p_Var14;
+  byte local_60 [96];
   
-  iVar6 = __savegprlr_23();
-  iVar11 = iVar6 * 0xa0;
-  piVar7 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar11);
-  if (piVar7 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x525,0,0xffffffff82000f98,0xffffffff821a5228);
+  iVar3 = __savegprlr_23(param_1);
+  p_Var4 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar3);
+  if (p_Var4 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x525,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar11] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x527,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar3].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x527,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar6 * 0x28] != 2) {
-    MyAssertHandler(0xffffffff821a2fc8,0x528,0,0xffffffff82000f98,0xffffffff821a51e0);
+  if (g_sessionOverlappedTasks.tasks[iVar3].type != 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x528,0
+                    ,"%s");
   }
-  if (*piVar7 == 0x3e5) {
-    __restgprlr_23(0);
-    return;
+  if (p_Var4->InternalLow == 0x3e5) {
+    tVar5 = __restgprlr_23(0);
+    return tVar5;
   }
-  uVar5 = XGetOverlappedExtendedError(piVar7);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar7);
-  iVar6 = TaskManager_GetTaskData();
-  Session_FreeActiveSessionTaskData();
-  puVar4 = *(undefined4 **)(iVar6 + 4);
-  uVar3 = (&DAT_844c9d35)[iVar11];
-  Session_ClearXOverlappedTask(piVar7);
-  Com_Printf(0xe,0xffffffff821a51b4,*puVar4);
-  iVar6 = (int)uVar5;
-  if (iVar6 != 0) {
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,0);
+  uVar6 = XGetOverlappedExtendedError(p_Var4);
+  poVar7 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var4);
+  pSVar8 = TaskManager_GetTaskData(poVar7);
+  Session_FreeActiveSessionTaskData(pSVar8);
+  pSVar2 = pSVar8->session;
+  bVar1 = g_sessionOverlappedTasks.tasks[iVar3].controllerIndex;
+  Session_ClearXOverlappedTask(p_Var4);
+  Com_Printf(0xe,"Session - StartHostComplete on Session %s\n");
+  if (uVar6 != 0) {
+    if ((onlinegame->current).enabled != false) {
+      Dvar_SetBool(splitscreen,false);
     }
-    Dvar_SetBool(DAT_82aa1af8,0);
+    Dvar_SetBool(onlinegame,false);
   }
-  if (iVar6 == -0x7feaadf7) {
-    Live_ThrowError(1,0xffffffff8208bb60);
-    __restgprlr_23(2);
-    return;
+  if (uVar6 == 0x80155209) {
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
+    tVar5 = __restgprlr_23(2);
+    return tVar5;
   }
-  if (iVar6 == -0x7feaadff) {
-    Dvar_SetString(DAT_8366735c,0xffffffff82030868);
-    Live_ThrowError(1,0xffffffff82032064);
-    __restgprlr_23(2);
-    return;
+  if (uVar6 == 0x80155201) {
+    Dvar_SetString(com_errorResolveCommand,"xsigninlive;");
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_MPNOTALLOWED");
+    tVar5 = __restgprlr_23(2);
+    return tVar5;
   }
-  if (iVar6 == -0x7ff8ffc7) {
-    Live_ThrowError(1,0xffffffff8218e3b8);
-    __restgprlr_23(2);
-    return;
+  if (uVar6 == 0x80070039) {
+    Live_ThrowError(ERR_DROP,"EXE_LOSTCONNECTION");
+    tVar5 = __restgprlr_23(2);
+    return tVar5;
   }
-  if ((uVar5 & 0xffffffff) == 0x80072741) {
-    Com_PrintError(0x10,0xffffffff821a5060,0xffffffff80072741);
-    Live_ThrowError(1,0xffffffff8208bb60);
-    __restgprlr_23(2);
-    return;
+  if (uVar6 == 0x80072741) {
+    Com_PrintError(0x10,"Microsoft error %x when calling XSessionCreate(). Not logged on\n");
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
+    tVar5 = __restgprlr_23(2);
+    return tVar5;
   }
-  if ((uVar5 & 0xffffffff) == 0x8015520d) {
-    Com_PrintError(0x10,0xffffffff821a5168,0xffffffff8015520d);
+  if (uVar6 == 0x8015520d) {
+    Com_PrintError(0x10,
+                   "Microsoft error %x when calling XSessionCreate(). Too many sessions active\n");
     Session_PrintActiveSessions();
-    Live_ThrowError(1,0xffffffff82084b1c);
-    __restgprlr_23(2);
-    return;
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
+    tVar5 = __restgprlr_23(2);
+    return tVar5;
   }
-  if ((uVar5 & 0x80070000) == 0) {
-    if (iVar6 == 0) {
-      Com_Printf(0x10,0xffffffff821a50a8,*(undefined1 *)(puVar4 + 5),
-                 *(undefined1 *)((int)puVar4 + 0x15),*(undefined1 *)((int)puVar4 + 0x16),
-                 *(undefined1 *)((int)puVar4 + 0x17),*(undefined1 *)(puVar4 + 6),
-                 *(undefined1 *)((int)puVar4 + 0x19));
-      pbVar10 = local_60;
-      pbVar9 = (byte *)(puVar4 + 5);
+  if ((uVar6 & 0x80070000) == 0) {
+    if (uVar6 == 0) {
+      p_Var14 = &(pSVar2->dyn).sessionInfo;
+      Com_Printf(0x10,
+                 "Host called XSessionCreate and got sessionId %i.%i.%i.%i.%i.%i.%i.%i and sessionHandle %p\n"
+                );
+      pbVar12 = local_60;
+      local_60[0] = 0;
+      local_60[1] = 0;
+      local_60[2] = 0;
+      local_60[3] = 0;
+      local_60[4] = 0;
+      local_60[5] = 0;
+      local_60[6] = 0;
+      local_60[7] = 0;
+      p_Var11 = p_Var14;
       do {
-        bVar1 = *pbVar10;
-        bVar2 = *pbVar9;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar10 = pbVar10 + 1;
-        pbVar9 = pbVar9 + 1;
-      } while (pbVar10 != abStack_58);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-        iVar6 = Live_OnlinePlayEvenIfDown();
-        if (iVar6 == 0) {
-          if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-            Dvar_SetBool(DAT_82b3ecb8,0);
+        lVar10 = (ulonglong)*pbVar12 - (ulonglong)(p_Var11->sessionID).ab[0];
+        if (lVar10 != 0) break;
+        pbVar12 = pbVar12 + 1;
+        p_Var11 = (_XSESSION_INFO *)((p_Var11->sessionID).ab + 1);
+      } while (pbVar12 != local_60 + 8);
+      if ((int)lVar10 == 0) {
+        iVar3 = Live_OnlinePlayEvenIfDown();
+        if (iVar3 == 0) {
+          if ((onlinegame->current).enabled != false) {
+            Dvar_SetBool(splitscreen,false);
           }
-          Dvar_SetBool(DAT_82aa1af8,0);
-          Live_ThrowError(1,0xffffffff82084b1c);
-          __restgprlr_23(2);
-          return;
+          Dvar_SetBool(onlinegame,false);
+          Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
+          tVar5 = __restgprlr_23(2);
+          return tVar5;
         }
-        pvVar8 = (void *)Xenon_GetXNAddr();
-        G_srand(*(undefined4 *)((int)pvVar8 + 0xc));
-        pvVar8 = memcpy(puVar4 + 7,pvVar8,0x24);
-        uVar12 = 0;
+        pXVar9 = Xenon_GetXNAddr();
+        G_srand(*(uint *)(pXVar9->abEnet + 2));
+        memcpy();
+        uVar13 = 0;
         do {
-          pvVar8 = (void *)G_rand(pvVar8);
-          *(byte *)((int)(puVar4 + 5) + uVar12) = (byte)pvVar8;
-          uVar12 = uVar12 + 1;
-        } while (uVar12 < 8);
-        puVar4[4] = puVar4;
+          iVar3 = G_rand();
+          (p_Var14->sessionID).ab[uVar13] = (uchar)iVar3;
+          uVar13 = uVar13 + 1;
+        } while (uVar13 < 8);
+        (pSVar2->dyn).sessionHandle = pSVar2;
       }
-      *(undefined1 *)(puVar4 + 0x14) = 1;
-      LiveStorage_SaveStats(uVar3);
-      *(undefined1 *)((int)puVar4 + 0x51) = 0;
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        PartyHost_StartPartyComplete(uVar3,puVar4);
+      (pSVar2->dyn).keysGenerated = true;
+      LiveStorage_SaveStats((uint)bVar1);
+      (pSVar2->dyn).sessionStartCalled = false;
+      if ((onlinegame->current).enabled != false) {
+        PartyHost_StartPartyComplete((uint)bVar1,pSVar2);
       }
-      __restgprlr_23(1);
-      return;
+      tVar5 = __restgprlr_23(1);
+      return tVar5;
     }
-    if (iVar6 == -0x7feaadfb) {
-      MyAssertHandler(0xffffffff821a2fc8,0x56f,0,0xffffffff82000f98,0xffffffff821a5138);
+    if (uVar6 == 0x80155205) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x56f
+                      ,0,"%s");
     }
   }
-  Com_PrintError(0x10,0xffffffff821a5104,uVar5);
-  Live_ThrowError(1,0xffffffff82084b1c);
-  __restgprlr_23(2);
-  return;
+  Com_PrintError(0x10,"Microsoft error %x when calling XSessionCreate()\n");
+  Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
+  tVar5 = __restgprlr_23(2);
+  return tVar5;
 }
 
 
 // 826DAD70  Session_StartHost  (sessions/sessions.cpp:1481)
 
-void Session_StartHost(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                      ulonglong param_5,ulonglong param_6)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_StartHost(SessionData *param_1,int param_2,int param_3,int param_4,int param_5,
+                      bool param_6)
 
 {
-  int *piVar3;
+  uint uVar1;
+  SessionData *pSVar2;
+  ulong uVar3;
   int iVar4;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar6;
-  undefined1 *puVar5;
-  int iVar7;
+  overlappedTask *poVar5;
+  _XOVERLAPPED *p_Var6;
+  ulong uVar7;
+  bool bVar9;
+  SessionTaskData *pSVar8;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  int iVar15;
   
-  piVar3 = (int *)__savegprlr_16();
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x5d4,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar12 = (ulonglong)param_6;
+  uVar13 = (ulonglong)param_5;
+  uVar14 = (ulonglong)param_4;
+  uVar11 = (ulonglong)param_3;
+  uVar10 = (ulonglong)param_2;
+  pSVar2 = (SessionData *)__savegprlr_16(param_1);
+  if (pSVar2 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5d4,0
+                    ,"%s");
   }
-  if (*piVar3 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x5d5,0,0xffffffff82000f98,0xffffffff821a67d8);
+  if ((pSVar2->staticData).sessionName == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5d5,0
+                    ,"%s");
   }
-  if (piVar3[4] != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x5d6,0,0xffffffff82000f98,0xffffffff821a67bc);
+  if ((pSVar2->dyn).sessionHandle != (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5d6,0
+                    ,"%s");
   }
-  iVar7 = ((param_3 & 10) == 0 ^ 1) + 1;
-  if ((param_3 & 4) != 0) {
-    Session_SetUpTrueskillData(param_2);
+  uVar1 = (uint)uVar11;
+  iVar15 = ((uint)LZCOUNT(uVar1 & 10) >> 5 ^ 1) + 1;
+  uVar3 = (ulong)uVar10;
+  if ((uVar11 & 4) != 0) {
+    Session_SetUpTrueskillData(uVar3);
   }
-  if ((DAT_82966e98 == 0) && ((int)param_2 != DAT_82b5c820)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x5e3,0,0xffffffff821a6784,param_2);
+  if ((cl_multi_gamepads_enabled == 0) && (uVar3 != cl_controller_in_use)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5e3,0
+                    ,"localControllerIndex == cl_controller_in_use\n\t%i, %i");
   }
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x5e7,0,0xffffffff82057c60,param_2,4);
+  if (3 < (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5e7,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (DAT_8424a64c == 0) {
-    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
+                    ,0x1d3,0,"%s");
   }
-  if (*(char *)(DAT_8424a64c + 0xc) == '\0') {
-    iVar4 = CL_GetLocalClientSignInState(param_2);
-    if (iVar4 < iVar7) {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+  if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
+    iVar4 = CL_GetLocalClientSignInState(uVar3);
+    if (iVar4 < iVar15) {
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ThrowError(1,0xffffffff8208bb60);
+      Dvar_SetBool(onlinegame,false);
+      Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
     }
-    iVar4 = CL_GetLocalClientSignInState(param_2);
-    if (iVar4 < iVar7) {
-      MyAssertHandler(0xffffffff821a2fc8,0x5fa,0,0xffffffff820011f4,0xffffffff821a66d0,
-                      0xffffffff821a6720);
+    iVar4 = CL_GetLocalClientSignInState(uVar3);
+    if (iVar4 < iVar15) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x5fa
+                      ,0,"%s\n\t%s");
     }
   }
-  if ((param_3 & 2) != 0) {
-    Com_DPrintf(0xe,0xffffffff821a6678);
-    Session_DeleteSession(0xffffffff844ac9b0);
+  if ((uVar11 & 2) != 0) {
+    Com_DPrintf(0xe,
+                "Destroying party presence session since we need to start a new presence session\n")
+    ;
+    Session_DeleteSession(&g_partyPresenceSession);
   }
-  if (((int)param_4 != 0) && ((int)param_5 != 0)) {
-    uVar1 = va(0xffffffff821a6650,param_4,param_5);
-    MyAssertHandler(0xffffffff821a2fc8,0x606,0,0xffffffff820011f4,0xffffffff821a662c,uVar1);
+  if (((int)uVar14 != 0) && ((int)uVar13 != 0)) {
+    va("%i private slots, %i public slots");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x606,0
+                    ,"%s\n\t%s");
   }
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,param_2,2);
-  uVar1 = TaskManager_TaskToXOverlapped();
-  if (3 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x60c,0,0xffffffff82057c60,param_2,4);
+  poVar5 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,uVar3,2);
+  p_Var6 = TaskManager_TaskToXOverlapped(poVar5);
+  if (3 < (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x60c,0
+                    ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar7 = CL_GetLocalClientSignInState(param_2);
-  if (iVar7 < 1) {
-    uVar2 = CL_GetLocalClientSignInState(param_2);
-    MyAssertHandler(0xffffffff821a2fc8,0x60e,0,0xffffffff821a65b0,0xffffffff821a65f0,uVar2);
+  iVar15 = CL_GetLocalClientSignInState(uVar3);
+  if (iVar15 < 1) {
+    CL_GetLocalClientSignInState(uVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x60e,0
+                    ,"%s\n\t(CL_GetLocalClientSignInState( localControllerIndex )) = %i");
   }
-  Session_ClearSession(piVar3);
-  Session_SetLocalVoiceConnectivity(piVar3,0x3ffff);
-  if ((param_6 & 0xff) == 0) {
-    param_4 = param_4 + param_5;
-    param_5 = 0;
-    Com_Printf(0x10,0xffffffff821a6578);
+  Session_ClearSession(pSVar2);
+  Session_SetLocalVoiceConnectivity(pSVar2,0x3ffff);
+  if ((uVar12 & 0xff) == 0) {
+    uVar14 = uVar14 + uVar13;
+    uVar13 = 0;
+    Com_Printf(0x10,"Using 0 public slots because allowJoining is false\n");
   }
-  else if (0x12 < (param_5 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x621,0,0xffffffff821a6538,param_5,0x13);
+  else if (0x12 < (uVar13 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x621,0
+                    ,"numPublicSlots doesn\'t index MAX_CLIENTS + 1\n\t%i not in [0, %i)");
   }
-  if (0x12 < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x622,0,0xffffffff821a64f0,param_4,0x13);
+  if (0x12 < (uVar14 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x622,0
+                    ,"numPrivateSlots doesn\'t index MAX_CLIENTS + 1\n\t%i not in [0, %i)");
   }
-  if (((longlong)(param_4 + param_5) < 1) || (0x12 < (int)(param_4 + param_5))) {
-    MyAssertHandler(0xffffffff821a2fc8,0x623,0,0xffffffff82000f98,0xffffffff821a6498);
+  if (((longlong)(uVar14 + uVar13) < 1) || (0x12 < (int)(uVar14 + uVar13))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x623,0
+                    ,"%s");
   }
-  Com_Printf(0x10,0xffffffff821a6420,*piVar3,piVar3[4],param_2,param_3,param_3,param_5);
+  Com_Printf(0x10,
+             "Calling XSessionCreate (%s [%p]) with controller %i as the host (flags are %i [0x%x]), %i public and %i private slots\n"
+            );
   Session_PrintActiveSessions();
-  uVar2 = XSessionCreate(param_3,param_2,param_5,param_4,piVar3 + 0x16,piVar3 + 5,uVar1,piVar3 + 4);
-  *(char *)(piVar3 + 0x140) = (char)param_6;
-  piVar3[0x1a] = (int)param_3;
-  piVar3[0x19] = (int)param_5;
-  piVar3[0x18] = (int)param_4;
-  piVar3[0x13e] = (int)param_2;
-  if ((int)uVar2 != 0x3e5) {
-    cVar6 = Live_IsUserSignedInToLive(param_2);
-    if (cVar6 != '\0') {
-      Com_Printf(0x10,0xffffffff821a5104,uVar2);
+  uVar7 = XSessionCreate(uVar1,uVar3,(ulong)uVar13,(ulong)uVar14,&(pSVar2->dyn).sessionNonce,
+                         &(pSVar2->dyn).sessionInfo,p_Var6,&(pSVar2->dyn).sessionHandle);
+  (pSVar2->dyn).allowJoining = SUB81(uVar12,0);
+  (pSVar2->dyn).flags = uVar1;
+  (pSVar2->dyn).publicSlots = (ulong)uVar13;
+  (pSVar2->dyn).privateSlots = (ulong)uVar14;
+  (pSVar2->dyn).sessionCreateController = uVar3;
+  if (uVar7 != 0x3e5) {
+    bVar9 = Live_IsUserSignedInToLive(uVar3);
+    if (bVar9) {
+      Com_Printf(0x10,"Microsoft error %x when calling XSessionCreate()\n");
     }
-    if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,0);
+    if ((onlinegame->current).enabled != false) {
+      Dvar_SetBool(splitscreen,false);
     }
-    Dvar_SetBool(DAT_82aa1af8,0);
-    Session_ClearXOverlappedTask(uVar1);
-    Live_ThrowError(1,0xffffffff8208bb60);
+    Dvar_SetBool(onlinegame,false);
+    Session_ClearXOverlappedTask(p_Var6);
+    Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
   }
-  puVar5 = (undefined1 *)Session_GetFreeSessionTaskData();
-  if (puVar5 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x64d,0,0xffffffff82000f98,0xffffffff821a618c);
+  pSVar8 = Session_GetFreeSessionTaskData();
+  if (pSVar8 == (SessionTaskData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x64d,0
+                    ,"%s");
   }
-  *(int **)(puVar5 + 4) = piVar3;
-  *puVar5 = 1;
-  uVar1 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar1);
-  TaskManager_SetTaskData(uVar1,puVar5);
-  if (*(char *)(DAT_84253bc4 + 0xc) == '\0') {
-    Session_CompleteSpecificSessionTasks(piVar3,4);
+  pSVar8->session = pSVar2;
+  pSVar8->active = true;
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var6);
+  TaskManager_SetTaskData(poVar5,pSVar8);
+  if ((session_nonblocking->current).enabled == false) {
+    Session_CompleteSpecificSessionTasks(pSVar2,4);
   }
   __restgprlr_16();
   return;
@@ -1404,143 +1730,164 @@ void Session_StartHost(undefined8 param_1,ulonglong param_2,ulonglong param_3,ul
 
 // 826D7D68  Session_StartClientInternal  (sessions/sessions.cpp:1636)
 
-void Session_StartClientInternal
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-               undefined8 param_5,longlong param_6,undefined8 param_7)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_StartClientInternal
+               (SessionData *param_1,int param_2,int param_3,_XSESSION_INFO *param_4,ulong64 param_5
+               ,int param_6,int param_7)
 
 {
-  undefined4 *puVar3;
-  char cVar5;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar4;
+  int iVar1;
+  bool bVar3;
+  ulong uVar2;
+  undefined1 uVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  int iVar7;
-  undefined8 in_stack_00000030;
+  longlong lVar7;
+  ulong64 uStack00000030;
   
-  puVar3 = (undefined4 *)__savegprlr_23();
-  in_stack_00000030 = param_5;
-  cVar5 = IsServerRunning();
-  if (cVar5 != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x66d,0,0xffffffff82000f98,0xffffffff82022e08);
+  lVar7 = (longlong)param_6;
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)param_3;
+  iVar1 = __savegprlr_23(param_1);
+  uStack00000030 = param_5;
+  bVar3 = IsServerRunning();
+  if (bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x66d,0
+                    ,"%s");
   }
-  iVar4 = (int)param_6;
-  if (iVar4 < 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x66f,0,0xffffffff820510f4,0xffffffff821a53fc,param_6);
+  uVar2 = (ulong)lVar7;
+  if ((int)uVar2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x66f,0
+                    ,"%s\n\t(numPublicSlots) = %i");
   }
-  iVar7 = (int)param_7;
-  if (iVar7 < 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x670,0,0xffffffff820510c0,0xffffffff821a53e4,param_7);
+  if (param_7 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x670,0
+                    ,"%s\n\t(numPrivateSlots) = %i");
   }
-  if (0x12 < iVar4 + iVar7) {
-    uVar1 = va(0xffffffff821a53c0,param_6,param_7);
-    MyAssertHandler(0xffffffff821a2fc8,0x671,0,0xffffffff820011f4,0xffffffff821a5390,uVar1);
+  if (0x12 < (int)(uVar2 + param_7)) {
+    va("public slots %i, private slots %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x671,0
+                    ,"%s\n\t%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x673,0,0xffffffff82000f98,0xffffffff82034334);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x673,0
+                    ,"%s");
   }
-  if (puVar3[4] != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x675,0,0xffffffff82000f98,0xffffffff821a536c);
+  if (*(int *)(iVar1 + 0x10) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x675,0
+                    ,"%s");
   }
-  puVar3[0x1a] = (int)param_3;
-  puVar3[0x19] = iVar4;
-  *(undefined1 *)((int)puVar3 + 0x51) = 0;
-  puVar3[0x18] = iVar7;
-  puVar3[0x13e] = (int)param_2;
-  if ((param_3 & 4) != 0) {
+  *(ulong *)(iVar1 + 0x68) = (ulong)uVar5;
+  *(ulong *)(iVar1 + 100) = uVar2;
+  *(undefined1 *)(iVar1 + 0x51) = 0;
+  *(int *)(iVar1 + 0x60) = param_7;
+  *(int *)(iVar1 + 0x4f8) = param_2;
+  if ((uVar5 & 4) != 0) {
     Session_SetUpTrueskillData(param_2);
   }
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 != '\0') && (cVar5 = CL_AllLocalClientsDisconnected(), cVar5 != '\0')) {
+  bVar3 = Sys_IsMainThread();
+  if ((bVar3) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) {
     R_BeginRemoteScreenUpdate();
   }
-  Com_Printf(0x10,0xffffffff821a52f8,*puVar3,puVar3[4],param_2,param_3,param_6,param_7);
-  *(byte *)(puVar3 + 0x140) =
-       (byte)((byte)((ulonglong)-param_6 >> 0x18) & ~(byte)((ulonglong)param_6 >> 0x18)) >> 7;
-  uVar2 = XSessionCreate(param_3,param_2,param_6,param_7,&stack0x00000030,param_4,0,puVar3 + 4);
-  if ((int)uVar2 == 0) {
-    *(undefined1 *)(puVar3 + 0x14) = 1;
+  Com_Printf(0x10,
+             "Calling XSessionCreate() as a client (%s [%p]) on controller %i (flags are %i), %i public slots, %i private slots\n"
+            );
+  *(byte *)(iVar1 + 0x500) =
+       (byte)((byte)((ulonglong)-lVar7 >> 0x18) & ~(byte)((ulonglong)lVar7 >> 0x18)) >> 7;
+  uVar2 = XSessionCreate((ulong)uVar5,param_2,uVar2,param_7,&stack0x00000030,(_XSESSION_INFO *)uVar6
+                         ,(_XOVERLAPPED *)0x0,(void **)(iVar1 + 0x10));
+  if (uVar2 == 0) {
+    *(undefined1 *)(iVar1 + 0x50) = 1;
   }
   else {
-    *(undefined1 *)(puVar3 + 0x14) = 0;
-    iVar4 = Live_OnlinePlayEvenIfDown();
-    if (iVar4 == 0) {
+    *(undefined1 *)(iVar1 + 0x50) = 0;
+    iVar1 = Live_OnlinePlayEvenIfDown();
+    if (iVar1 == 0) {
       R_EndRemoteScreenUpdate();
-      uVar6 = uVar2;
-      if (0 < (int)uVar2) {
-        uVar6 = uVar2 & 0xffff | 0x80070000;
-      }
-      Com_PrintError(0xe,0xffffffff821a52c0,uVar2,uVar6);
+      Com_PrintError(0xe,"Microsoft error %x (%i) when calling XSessionCreate()");
       Session_PrintActiveSessions();
-      __restgprlr_23(0);
-      return;
+      uVar4 = __restgprlr_23(0);
+      return (bool)uVar4;
     }
   }
-  memcpy(puVar3 + 5,(void *)param_4,0x3c);
-  Com_Printf(0x10,0xffffffff821a5248);
+  memcpy();
+  Com_Printf(0x10,
+             "Client called XSessionCreate() for sessionId %i.%i.%i.%i.%i.%i.%i.%i and got session handle %p (0x%x%x%x%x%x%x%x%x)\n"
+            );
   Session_PrintActiveSessions();
   LiveStorage_SaveStats(param_2);
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 != '\0') && (cVar5 = CL_AllLocalClientsDisconnected(), cVar5 != '\0')) {
+  bVar3 = Sys_IsMainThread();
+  if ((bVar3) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) {
     R_EndRemoteScreenUpdate();
   }
-  __restgprlr_23(1);
-  return;
+  uVar4 = __restgprlr_23(1);
+  return (bool)uVar4;
 }
 
 
 // 826DB300  Session_StartClient  (sessions/sessions.cpp:1725)
 
-void Session_StartClient(undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4,
-                        undefined8 param_5,undefined8 param_6,undefined8 param_7)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_StartClient(SessionData *param_1,int param_2,int param_3,_XSESSION_INFO *param_4,
+                        ulong64 param_5,int param_6,int param_7)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  SessionData *pSVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_25();
-  Session_ClearSessionIDFromGraveyard(param_4);
-  if ((param_3 & 2) != 0) {
-    Com_DPrintf(0xe,0xffffffff821a6678);
-    Session_DeleteSession(0xffffffff844ac9b0);
+  uVar4 = (ulonglong)param_3;
+  pSVar1 = (SessionData *)__savegprlr_25(param_1);
+  Session_ClearSessionIDFromGraveyard(&param_4->sessionID);
+  if ((uVar4 & 2) != 0) {
+    Com_DPrintf(0xe,
+                "Destroying party presence session since we need to start a new presence session\n")
+    ;
+    Session_DeleteSession(&g_partyPresenceSession);
   }
-  Voice_ClearRemoteTalkers(uVar1);
-  Session_SetLocalVoiceConnectivity(uVar1,0);
-  if (((int)param_7 != 0) && ((int)param_6 != 0)) {
-    uVar2 = va(0xffffffff821a6650,param_7,param_6);
-    MyAssertHandler(0xffffffff821a2fc8,0x6d1,0,0xffffffff820011f4,0xffffffff821a662c,uVar2);
+  Voice_ClearRemoteTalkers(pSVar1);
+  Session_SetLocalVoiceConnectivity(pSVar1,0);
+  if ((param_7 != 0) && (param_6 != 0)) {
+    va("%i private slots, %i public slots");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x6d1,0
+                    ,"%s\n\t%s");
   }
-  memset((void *)((int)uVar1 + 0x70),0,0x480);
-  Session_StartClientInternal(uVar1,param_2,param_3,param_4,param_5,param_6,param_7);
-  __restgprlr_25();
-  return;
+  memset();
+  bVar2 = Session_StartClientInternal(pSVar1,param_2,(int)uVar4,param_4,param_5,param_6,param_7);
+  uVar3 = __restgprlr_25(bVar2);
+  return (bool)uVar3;
 }
 
 
 // 826DA510  Session_SyncParams  (sessions/sessions.cpp:1755)
 
-void Session_SyncParams(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       ulonglong param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_SyncParams(int param_1,SessionData *param_2,int param_3,int param_4,int param_5)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar1 = __savegprlr_26();
-  cVar2 = Session_NeedToSyncParams(param_2,param_3,param_4,param_5);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x6de,0,0xffffffff82000f98,0xffffffff821a60d8);
+  iVar2 = __savegprlr_26(param_1);
+  bVar3 = Session_NeedToSyncParams(param_2,param_3,param_4,param_5);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x6de,0
+                    ,"%s");
   }
-  uVar3 = param_5 & 0xf00 | (ulonglong)*(uint *)((int)param_2 + 0x68) & 0xfffffffffffff0ff;
-  cVar2 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,8);
-  if (cVar2 != '\0') {
-    Session_CompleteSpecificSessionTasks(0,0x100);
+  uVar1 = (param_2->dyn).flags;
+  bVar3 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,8);
+  if (bVar3) {
+    Session_CompleteSpecificSessionTasks((SessionData *)0x0,0x100);
   }
   Session_EveryoneLeaveSessionAsync(0,param_2);
   Session_CompleteSpecificSessionTasks(param_2,0x1df);
-  Com_Printf(0x10,0xffffffff821a6090,uVar3,param_3,param_4);
-  Session_Modify(uVar1,param_2,uVar3,param_3,param_4);
+  Com_Printf(0x10,"Modifying session to have flags %i, %i public, and %i private slots\n");
+  Session_Modify(iVar2,param_2,param_5 & 0xf00U | uVar1 & 0xfffff0ff,param_3,param_4);
   __restgprlr_26();
   return;
 }
@@ -1548,109 +1895,118 @@ void Session_SyncParams(undefined8 param_1,undefined8 param_2,undefined8 param_3
 
 // 826D9BA8  Session_Migrate  (sessions/sessions.cpp:1816)
 
-void Session_Migrate(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_Migrate(SessionData *param_1,_XSESSION_INFO *param_2,int param_3)
 
 {
-  undefined4 *puVar2;
-  void *pvVar3;
-  char cVar4;
-  ulonglong uVar1;
-  undefined8 uVar5;
-  undefined4 *_Dst;
+  SessionData *pSVar1;
+  undefined1 uVar3;
+  bool bVar4;
+  ulong uVar2;
+  ulonglong uVar5;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x71b,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar5 = (ulonglong)(int)param_2;
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x71b,0
+                    ,"%s");
   }
-  Session_CompleteSpecificSessionTasks(puVar2,0x1df);
-  _Dst = puVar2 + 5;
-  if ((param_2 & 0xffffffff) == 0) {
-    pvVar3 = memset(_Dst,0,0x3c);
+  Session_CompleteSpecificSessionTasks(pSVar1,0x1df);
+  if ((uVar5 & 0xffffffff) == 0) {
+    memset();
   }
   else {
-    pvVar3 = memcpy(_Dst,(void *)param_2,0x3c);
+    memcpy();
   }
-  if (puVar2[4] == 0) {
-    __restgprlr_28(1);
-    return;
+  if ((pSVar1->dyn).sessionHandle == (void *)0x0) {
+    uVar3 = __restgprlr_28(1);
+    return (bool)uVar3;
   }
-  cVar4 = Sys_IsMainThread(pvVar3);
-  if ((cVar4 != '\0') && (cVar4 = CL_AllLocalClientsDisconnected(), cVar4 != '\0')) {
+  bVar4 = Sys_IsMainThread();
+  if ((bVar4) && (bVar4 = CL_AllLocalClientsDisconnected(), bVar4)) {
     R_BeginRemoteScreenUpdate();
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    uVar5 = 0xffffffff820460e8;
+  Com_Printf(0x19,"Calling XSessionMigrateHost() as %s (flags are %i) for %s\n");
+  uVar2 = XSessionMigrateHost((pSVar1->dyn).sessionHandle,param_3,&(pSVar1->dyn).sessionInfo,
+                              (_XOVERLAPPED *)0x0);
+  if ((uVar2 != 0) && (bVar4 = Live_IsUserSignedInToLive(param_3), bVar4)) {
+    Com_PrintError(0x19,"XSessionMigrateHost() for %s returned Microsoft error %x\n");
   }
-  else {
-    uVar5 = 0xffffffff820386a4;
+  Session_SanityCheckSession(pSVar1);
+  if (((pSVar1->dyn).sessionCreateController != param_3) && (param_3 != 0xfe)) {
+    Com_PrintWarning(0x19,
+                     "When migrating session, session->dyn.sessionCreateController != localControllerIndex (%i vs %i)\n"
+                    );
   }
-  Com_Printf(0x19,0xffffffff821a5f48,uVar5,puVar2[0x1a],*puVar2);
-  uVar1 = XSessionMigrateHost(puVar2[4],param_3,_Dst,0);
-  if (((uVar1 & 0xffffffff) != 0) && (cVar4 = Live_IsUserSignedInToLive(param_3), cVar4 != '\0')) {
-    Com_PrintError(0x19,0xffffffff821a5f0c,*puVar2,uVar1);
-  }
-  Session_SanityCheckSession(puVar2);
-  if ((puVar2[0x13e] != (int)param_3) && ((int)param_3 != 0xfe)) {
-    Com_PrintWarning(0x19,0xffffffff821a5ea8,puVar2[0x13e],param_3);
-  }
-  cVar4 = Sys_IsMainThread();
-  if ((cVar4 != '\0') && (cVar4 = CL_AllLocalClientsDisconnected(), cVar4 != '\0')) {
+  bVar4 = Sys_IsMainThread();
+  if ((bVar4) && (bVar4 = CL_AllLocalClientsDisconnected(), bVar4)) {
     R_EndRemoteScreenUpdate();
   }
-  __restgprlr_28((int)uVar1 == 0);
-  return;
+  uVar3 = __restgprlr_28(uVar2 == 0);
+  return (bool)uVar3;
 }
 
 
 // 826D3AE0  Session_ModifyInProgress  (sessions/sessions.cpp:1865)
 
-void Session_ModifyInProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Session_ModifyInProgress(void)
 
 {
-  TaskManager_TaskIsInProgress(0xffffffff844c9c98,8);
-  return;
+  bool bVar1;
+  
+  bVar1 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,8);
+  return bVar1;
 }
 
 
 // 826D3AF0  Session_Modify  (sessions/sessions.cpp:1875)
 
-void Session_Modify(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                   undefined8 param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_Modify(int param_1,SessionData *param_2,int param_3,int param_4,int param_5)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar5;
-  char cVar6;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  int iVar4;
+  ulong uVar5;
+  bool bVar6;
+  longlong lVar7;
   
-  uVar2 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  if (*(int *)(iVar1 + 0x10) != 0) {
-    TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar2,8);
-    uVar3 = TaskManager_TaskToXOverlapped();
-    Com_Printf(0x10,0xffffffff821a34a0,param_4,param_5,param_3,*(undefined4 *)(iVar1 + 0x68));
-    uVar4 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar3);
-    TaskManager_SetTaskData(uVar4,param_2);
-    iVar5 = Session_CountRegisteredUsersInternal(param_2);
-    if (iVar5 != 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x764,0,0xffffffff82000f98,0xffffffff821a3468);
+  lVar7 = (longlong)param_4;
+  iVar1 = __savegprlr_25(param_1);
+  if ((param_2->dyn).sessionHandle != (void *)0x0) {
+    poVar2 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,iVar1,8);
+    p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+    Com_Printf(0x10,
+               "Modifying session to set publicSlots to %i and privateSlots to %i, flags to %i (flags were %i)\n"
+              );
+    poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+    TaskManager_SetTaskData(poVar2,param_2);
+    iVar4 = Session_CountRegisteredUsersInternal(param_2);
+    if (iVar4 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x764
+                      ,0,"%s");
     }
-    *(char *)(iVar1 + 0x500) = (char)((-param_4 & ~param_4 & 0xffffffff) >> 0x1f);
-    uVar4 = XSessionModify(*(undefined4 *)(iVar1 + 0x10),param_3,param_4,param_5,uVar3);
-    if (((int)uVar4 != 0) && ((int)uVar4 != 0x3e5)) {
-      cVar6 = Live_IsUserSignedInToLive(uVar2);
-      if (cVar6 != '\0') {
-        Com_Printf(0x10,0xffffffff821a3438,uVar4);
+    (param_2->dyn).allowJoining =
+         (bool)((byte)((byte)((ulonglong)-lVar7 >> 0x18) & ~(byte)((ulonglong)lVar7 >> 0x18)) >> 7);
+    uVar5 = XSessionModify((param_2->dyn).sessionHandle,param_3,(ulong)lVar7,param_5,p_Var3);
+    if ((uVar5 != 0) && (uVar5 != 0x3e5)) {
+      bVar6 = Live_IsUserSignedInToLive(iVar1);
+      if (bVar6) {
+        Com_Printf(0x10,"Microsoft error %x when calling XSessionModify\n");
       }
-      Session_ClearXOverlappedTask(uVar3);
+      Session_ClearXOverlappedTask(p_Var3);
       __restgprlr_25();
       return;
     }
-    *(int *)(iVar1 + 0x60) = (int)param_5;
-    *(int *)(iVar1 + 100) = (int)param_4;
-    *(int *)(iVar1 + 0x68) = (int)param_3;
+    (param_2->dyn).privateSlots = param_5;
+    (param_2->dyn).publicSlots = (ulong)lVar7;
+    (param_2->dyn).flags = param_3;
   }
   __restgprlr_25();
   return;
@@ -1659,357 +2015,400 @@ void Session_Modify(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulo
 
 // 826D8078  Session_ModifyComplete  (sessions/sessions.cpp:1923)
 
-void Session_ModifyComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Session_ModifyComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  int iVar4;
-  char cVar5;
-  int iVar6;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  SessionData *pSVar6;
+  int iVar7;
+  bool bVar9;
+  PartyData *pPVar8;
   
-  iVar2 = __savegprlr_27();
-  iVar6 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar6);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x789,0,0xffffffff82000f98,0xffffffff821a551c);
+  iVar1 = __savegprlr_27(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x789,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar6] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x78b,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x78b,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 8) {
-    MyAssertHandler(0xffffffff821a2fc8,0x78c,0,0xffffffff82000f98,0xffffffff821a54d8);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x78c,0
+                    ,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  Com_Printf(0x10,0xffffffff821a54b8);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  iVar2 = TaskManager_GetTaskData();
-  if (((int)uVar1 == 0) || (iVar4 = Live_OnlinePlayEvenIfDown(), iVar4 != 0)) {
-    Session_ClearXOverlappedTask(piVar3);
-    Session_SanityCheckSession(iVar2);
-    if ((*(char *)(DAT_82aa1af8 + 0xc) != '\0') &&
-       ((cVar5 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,8), cVar5 == '\0' &&
-        (cVar5 = Lobby_AreWeHost(), cVar5 != '\0')))) {
-      Com_Printf(0xf,0xffffffff821a5414);
-      Lobby_GetPartyData();
-      PartyHost_GamestateChanged();
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  Com_Printf(0x10,"Session modify complete\n");
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pSVar6 = TaskManager_GetTaskData(poVar5);
+  if ((uVar4 == 0) || (iVar7 = Live_OnlinePlayEvenIfDown(), iVar7 != 0)) {
+    Session_ClearXOverlappedTask(p_Var2);
+    Session_SanityCheckSession(pSVar6);
+    if (((onlinegame->current).enabled != false) &&
+       ((bVar9 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,8), !bVar9 &&
+        (bVar9 = Lobby_AreWeHost(), bVar9)))) {
+      Com_Printf(0xf,"Gamestate changing due to SessionModifyComplete finishing\n");
+      pPVar8 = Lobby_GetPartyData();
+      PartyHost_GamestateChanged(pPVar8);
     }
   }
   else {
-    Session_ClearXOverlappedTask(piVar3);
-    if (*(int *)(iVar2 + 0x10) == 0) {
-      Com_Printf(0x10,0xffffffff821a5450);
-      __restgprlr_27(1);
-      return;
+    Session_ClearXOverlappedTask(p_Var2);
+    if ((pSVar6->dyn).sessionHandle == (void *)0x0) {
+      Com_Printf(0x10,"Old Session Modify failed after we killed the session\n");
+      tVar3 = __restgprlr_27(1);
+      return tVar3;
     }
-    cVar5 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar6]);
-    if (cVar5 != '\0') {
-      Com_Printf(0x19,0xffffffff821a5488,uVar1);
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+    bVar9 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar9) {
+      Com_Printf(0x19,"Microsoft error modifying session - error %x\n");
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ThrowError(1,0xffffffff8218e3b8);
-      __restgprlr_27(1);
-      return;
+      Dvar_SetBool(onlinegame,false);
+      Live_ThrowError(ERR_DROP,"EXE_LOSTCONNECTION");
+      tVar3 = __restgprlr_27(1);
+      return tVar3;
     }
   }
-  __restgprlr_27(1);
-  return;
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 826D9D40  Session_FinishModify  (sessions/sessions.cpp:1999)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_FinishModify(void)
 
 {
-  Session_CompleteSpecificSessionTasks(0,0x100);
+  Session_CompleteSpecificSessionTasks((SessionData *)0x0,0x100);
   return;
 }
 
 
 // 826D3C30  Session_Started  (sessions/sessions.cpp:2009)
 
-undefined1 Session_Started(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_Started(SessionData *param_1)
 
 {
-  return *(undefined1 *)(param_1 + 0x51);
+  return (param_1->dyn).sessionStartCalled;
 }
 
 
 // 826DA5F8  Session_JoinSession_Platform  (sessions/sessions.cpp:2015)
 
-void Session_JoinSession_Platform
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,longlong param_4,
-               uint param_5)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_JoinSession_Platform
+              (int param_1,SessionData *param_2,int param_3,ulong64 param_4,bool param_5)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined1 *puVar5;
-  undefined8 uVar4;
-  char cVar6;
-  int *piVar7;
+  int iVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  SessionTaskData *pSVar4;
+  ulong uVar5;
+  bool bVar6;
+  uint uVar7;
+  SessionTaskData_u_8 *pSVar8;
   
-  uVar2 = __savegprlr_19();
-  puVar1 = (undefined4 *)param_2;
-  if (puVar1[4] == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x7e0,0,0xffffffff82000f98,0xffffffff820583e8);
+  uVar7 = (uint)param_5;
+  iVar1 = __savegprlr_19(param_1);
+  if ((param_2->dyn).sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x7e0,0
+                    ,"%s");
   }
   if (param_4 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x7e1,0,0xffffffff82000f98,0xffffffff8206bbec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x7e1,0
+                    ,"%s");
   }
   Session_CompleteSpecificSessionTasks(param_2,0x73f);
   LB_EndOngoingTasks();
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar2,1);
-  uVar3 = TaskManager_TaskToXOverlapped();
-  puVar5 = (undefined1 *)Session_GetFreeSessionTaskData();
-  if (puVar5 == (undefined1 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x7ed,0,0xffffffff82000f98,0xffffffff821a618c);
+  poVar2 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,iVar1,1);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  pSVar4 = Session_GetFreeSessionTaskData();
+  if (pSVar4 == (SessionTaskData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x7ed,0
+                    ,"%s");
   }
-  *(undefined4 **)(puVar5 + 4) = puVar1;
-  *(undefined4 *)(puVar5 + 0xc) = param_3;
-  *(longlong *)(puVar5 + 0x10) = param_4;
-  *(uint *)(puVar5 + 8) = param_5 & 0xff;
-  *puVar5 = 1;
-  piVar7 = (int *)(puVar5 + 8);
-  uVar4 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar3);
-  TaskManager_SetTaskData(uVar4,puVar5);
-  if (puVar1[0x19] == 0) {
-    *piVar7 = 1;
+  pSVar4->session = param_2;
+  (pSVar4->field2_0x8).joinData.slot = param_3;
+  (pSVar4->field2_0x8).joinData.player = param_4;
+  (pSVar4->field2_0x8).joinData.privateSlot = uVar7 & 0xff;
+  pSVar4->active = true;
+  pSVar8 = &pSVar4->field2_0x8;
+  poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+  TaskManager_SetTaskData(poVar2,pSVar4);
+  if ((param_2->dyn).publicSlots == 0) {
+    (pSVar8->joinData).privateSlot = 1;
   }
-  else if (puVar1[0x18] == 0) {
-    *piVar7 = 0;
+  else if ((param_2->dyn).privateSlots == 0) {
+    (pSVar8->joinData).privateSlot = 0;
   }
-  if ((*piVar7 == 0) && (*(char *)(puVar1 + 0x140) == '\0')) {
-    MyAssertHandler(0xffffffff821a2fc8,0x800,0,0xffffffff82000f98,0xffffffff821a6170);
+  if (((pSVar8->joinData).privateSlot == 0) && ((param_2->dyn).allowJoining == false)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x800,0
+                    ,"%s");
   }
-  if ((*(char *)(DAT_84253bc4 + 0xc) != '\0') && ((puVar1[0x1a] & 2) != 0)) {
-    Session_LeavePresenceSessionInGraveYard(uVar2);
+  if (((session_nonblocking->current).enabled != false) && (((param_2->dyn).flags & 2U) != 0)) {
+    Session_LeavePresenceSessionInGraveYard(iVar1);
   }
-  Com_Printf(0x10,0xffffffff821a6150,puVar1[4]);
-  uVar4 = XSessionJoinRemote(puVar1[4],1,puVar5 + 0x10,piVar7,uVar3);
-  if ((int)uVar4 == 0) {
-    Com_Printf(0x19,0xffffffff821a5538,*puVar1,param_4);
+  Com_Printf(0x10,"Calling XSessionJoinRemote %p\n");
+  uVar5 = XSessionJoinRemote((param_2->dyn).sessionHandle,1,&(pSVar4->field2_0x8).joinData.player,
+                             (int *)&pSVar8->deletaData,p_Var3);
+  if (uVar5 == 0) {
+    Com_Printf(0x19,"Session Join completed on session %s for xuid %llx\n");
   }
-  else if ((int)uVar4 != 0x3e5) {
-    cVar6 = Live_IsUserSignedInToLive(uVar2);
-    if (cVar6 != '\0') {
-      Com_PrintError(0x10,0xffffffff821a611c,uVar4);
+  else if (uVar5 != 0x3e5) {
+    bVar6 = Live_IsUserSignedInToLive(iVar1);
+    if (bVar6) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XSessionJoinByXuid\n");
     }
-    Session_ClearXOverlappedTask(uVar3);
-    __restgprlr_19(0);
-    return;
+    Session_ClearXOverlappedTask(p_Var3);
+    iVar1 = __restgprlr_19(0);
+    return iVar1;
   }
-  __restgprlr_19(1);
-  return;
+  iVar1 = __restgprlr_19(1);
+  return iVar1;
 }
 
 
 // 826D82A8  Session_JoinSessionComplete  (sessions/sessions.cpp:2082)
 
-void Session_JoinSessionComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_JoinSessionComplete(int param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar3;
-  int *piVar4;
-  undefined8 uVar2;
-  char cVar5;
-  int iVar6;
-  int iVar7;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  SessionTaskData *pSVar6;
+  char *pcVar7;
+  bool bVar9;
+  SessionData *pSVar8;
   
-  iVar3 = __savegprlr_26();
-  iVar6 = iVar3 * 0xa0;
-  piVar4 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar6);
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x829,0,0xffffffff82000f98,0xffffffff821a572c);
+  iVar1 = __savegprlr_26(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x829,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar6] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x82b,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x82b,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar3 * 0x28] != 1) {
-    MyAssertHandler(0xffffffff821a2fc8,0x82c,0,0xffffffff82000f98,0xffffffff821a56e8);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x82c,0
+                    ,"%s");
   }
-  if (*piVar4 == 0x3e5) {
-    __restgprlr_26(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_26(0);
+    return tVar3;
   }
-  uVar2 = XGetOverlappedExtendedError(piVar4);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar4);
-  iVar3 = TaskManager_GetTaskData();
-  puVar1 = *(undefined4 **)(iVar3 + 4);
-  Session_FreeActiveSessionTaskData();
-  iVar7 = (int)uVar2;
-  if (iVar7 == 0) {
-    Session_ClearXOverlappedTask(piVar4);
-    Session_NeedsSkillUpdate(puVar1);
-    Session_SanityCheckSession();
-    Com_Printf(0x19,0xffffffff821a5538,*puVar1,*(undefined8 *)(iVar3 + 0x10));
-    __restgprlr_26(1);
-    return;
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pSVar6 = TaskManager_GetTaskData(poVar5);
+  pSVar8 = pSVar6->session;
+  Session_FreeActiveSessionTaskData(pSVar6);
+  if (uVar4 == 0) {
+    Session_ClearXOverlappedTask(p_Var2);
+    Session_NeedsSkillUpdate(pSVar8);
+    Session_SanityCheckSession(pSVar8);
+    Com_Printf(0x19,"Session Join completed on session %s for xuid %llx\n");
+    tVar3 = __restgprlr_26(1);
+    return tVar3;
   }
-  Session_ClearXOverlappedTask(piVar4);
-  *(undefined1 *)(puVar1 + *(int *)(iVar3 + 0xc) * 4 + 0x142) = 0;
-  if (iVar7 == -0x7feaadf6) {
-    uVar2 = va(0xffffffff821a5690,*(undefined8 *)(iVar3 + 0x10));
-    Com_PrintError(0x19,uVar2);
-    __restgprlr_26(2);
-    return;
+  Session_ClearXOverlappedTask(p_Var2);
+  (pSVar8->dyn).internalRegisteredUsers[(pSVar6->field2_0x8).joinData.slot].active = false;
+  if (uVar4 == 0x8015520a) {
+    pcVar7 = va(
+               "Microsoft error SESSION_JOIN_ILLEGAL when calling XSessionJoinRemote() for XUID %llx\n"
+               );
+    Com_PrintError(0x19,pcVar7);
+    tVar3 = __restgprlr_26(2);
+    return tVar3;
   }
-  if (iVar7 == -0x7feaadfe) {
-    uVar2 = va(0xffffffff821a5620,*puVar1,*(undefined4 *)(iVar3 + 0xc),*(undefined8 *)(iVar3 + 0x10)
-              );
-    Com_PrintError(0x19,uVar2);
-    __restgprlr_26(2);
-    return;
+  if (uVar4 == 0x80155202) {
+    pcVar7 = va(
+               "Microsoft error SESSION_FULL when calling XSessionJoinRemote() for session %s for clientNum %i - xuid %llx\n"
+               );
+    Com_PrintError(0x19,pcVar7);
+    tVar3 = __restgprlr_26(2);
+    return tVar3;
   }
-  if (iVar7 == -0x7ff8ffc7) {
-    Com_PrintError(0x19,0xffffffff821a55f4);
-    __restgprlr_26(2);
-    return;
+  if (uVar4 == 0x80070039) {
+    Com_PrintError(0x19,"Microsoft error - EXE_LOSTCONNECTION");
+    tVar3 = __restgprlr_26(2);
+    return tVar3;
   }
-  if (iVar7 == -0x7feaadf7) {
-    Com_PrintError(0x19,0xffffffff821a55c8);
-    __restgprlr_26(2);
-    return;
+  if (uVar4 == 0x80155209) {
+    Com_PrintError(0x19,"Microsoft error - XBOXLIVE_SIGNEDOUTOFLIVE");
+    tVar3 = __restgprlr_26(2);
+    return tVar3;
   }
-  cVar5 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar6]);
-  if (cVar5 != '\0') {
-    uVar2 = va(0xffffffff821a5570,*puVar1,*(undefined4 *)(iVar3 + 0xc),*(undefined8 *)(iVar3 + 0x10)
-               ,uVar2);
-    Com_PrintError(0x19,uVar2);
+  bVar9 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+  if (bVar9) {
+    pcVar7 = va(
+               "Microsoft error joining session for session %s for clientNum %i - xuid %llx - error %x\n"
+               );
+    Com_PrintError(0x19,pcVar7);
   }
-  __restgprlr_26(2);
-  return;
+  tVar3 = __restgprlr_26(2);
+  return tVar3;
 }
 
 
 // 826D8518  Session_EveryoneLeaveSessionComplete  (sessions/sessions.cpp:2140)
 
-void Session_EveryoneLeaveSessionComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_EveryoneLeaveSessionComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char cVar4;
-  int iVar5;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  SessionTaskData *pSVar6;
+  bool bVar8;
+  char *pcVar7;
   
-  iVar2 = __savegprlr_27();
-  iVar5 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar5);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x862,0,0xffffffff82000f98,0xffffffff821a5814);
+  iVar1 = __savegprlr_27(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x862,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x864,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x864,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 4) {
-    MyAssertHandler(0xffffffff821a2fc8,0x865,0,0xffffffff82000f98,0xffffffff821a57d0);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x865,0
+                    ,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  iVar2 = TaskManager_GetTaskData();
-  Session_FreeActiveSessionTaskData();
-  Session_ClearXOverlappedTask(piVar3);
-  if ((int)uVar1 == -0x7feaadfa) {
-    Com_Printf(0x10,0xffffffff821a57a8);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pSVar6 = TaskManager_GetTaskData(poVar5);
+  Session_FreeActiveSessionTaskData(pSVar6);
+  Session_ClearXOverlappedTask(p_Var2);
+  if (uVar4 == 0x80155206) {
+    Com_Printf(0x10,"Got \'wrong state\' from XSessionLeave()\n");
   }
   else {
-    if ((int)uVar1 != 0) {
-      cVar4 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar5]);
-      if (cVar4 != '\0') {
-        uVar1 = va(0xffffffff821a5770,**(undefined4 **)(iVar2 + 4),(*(undefined4 **)(iVar2 + 4))[4],
-                   uVar1);
-        Com_PrintError(0x19,uVar1);
+    if (uVar4 != 0) {
+      bVar8 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex)
+      ;
+      if (bVar8) {
+        pcVar7 = va("Microsoft error leaving session \'%s\' [%llx] - error %x\n");
+        Com_PrintError(0x19,pcVar7);
       }
-      __restgprlr_27(2);
-      return;
+      tVar3 = __restgprlr_27(2);
+      return tVar3;
     }
-    Session_SanityCheckSession(*(undefined4 *)(iVar2 + 4));
+    Session_SanityCheckSession(pSVar6->session);
   }
-  Com_Printf(0x10,0xffffffff821a5744,**(undefined4 **)(iVar2 + 4),(*(undefined4 **)(iVar2 + 4))[4]);
-  __restgprlr_27(1);
-  return;
+  Com_Printf(0x10,"Async session \'%s\' [%llx] leave complete\n");
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 826D9D50  Session_EveryoneLeaveSessionAsync  (sessions/sessions.cpp:2188)
 
-void Session_EveryoneLeaveSessionAsync(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_EveryoneLeaveSessionAsync(int param_1,SessionData *param_2)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  undefined8 *puVar4;
-  undefined8 uVar3;
-  char cVar5;
-  undefined8 uVar6;
-  longlong lVar7;
-  undefined8 *puVar8;
-  longlong lVar9;
-  char *pcVar10;
+  SessionData *pSVar1;
+  int iVar2;
+  SessionTaskData *pSVar3;
+  overlappedTask *poVar4;
+  _XOVERLAPPED *p_Var5;
+  ulong uVar6;
+  bool bVar7;
+  SessionTaskData *pSVar8;
+  int iVar9;
+  longlong lVar10;
+  char *pcVar11;
   
-  uVar2 = __savegprlr_22();
-  puVar1 = (undefined4 *)param_2;
-  if (puVar1[4] != 0) {
-    Session_SanityCheckSession(param_2);
+  lVar10 = (longlong)(int)param_2;
+  iVar2 = __savegprlr_22(param_1);
+  pSVar1 = (SessionData *)lVar10;
+  if ((pSVar1->dyn).sessionHandle != (void *)0x0) {
+    Session_SanityCheckSession(pSVar1);
   }
-  Session_CompleteSpecificSessionTasks(param_2,0x1df);
-  puVar4 = (undefined8 *)Session_GetFreeSessionTaskData();
-  lVar7 = 0;
-  lVar9 = 0;
-  param_2 = param_2 + 0x508;
-  puVar8 = puVar4;
+  Session_CompleteSpecificSessionTasks(pSVar1,0x1df);
+  pSVar3 = Session_GetFreeSessionTaskData();
+  uVar6 = 0;
+  iVar9 = 0;
+  lVar10 = lVar10 + 0x508;
+  pSVar8 = pSVar3;
   do {
-    pcVar10 = (char *)param_2;
-    if (*pcVar10 != '\0') {
-      uVar6 = *(undefined8 *)(pcVar10 + 8);
-      lVar7 = lVar7 + 1;
-      puVar8 = puVar8 + 1;
-      *puVar8 = uVar6;
-      Com_DPrintf(0x10,0xffffffff821a5fd0,lVar9,uVar6,*puVar1,puVar1[4]);
-      *pcVar10 = '\0';
+    pcVar11 = (char *)lVar10;
+    if (*pcVar11 != '\0') {
+      uVar6 = uVar6 + 1;
+      pSVar8 = (SessionTaskData *)&pSVar8->field2_0x8;
+      ((SessionLeaveData *)pSVar8)->playerList[0] = *(ulong64 *)(pcVar11 + 8);
+      Com_DPrintf(0x10,
+                  "Calling mass XSessionLeaveRemote for slot %i [%llx] in session \'%s\' [%p]\n");
+      *pcVar11 = '\0';
     }
-    lVar9 = lVar9 + 1;
-    param_2 = param_2 + 0x10;
-  } while ((int)lVar9 < 0x12);
-  if (puVar1[4] == 0) {
-    if ((int)lVar7 == 0) goto LAB_826d9f00;
-    MyAssertHandler(0xffffffff821a2fc8,0x8b5,0,0xffffffff82000f98,0xffffffff821a5fc0);
+    iVar9 = iVar9 + 1;
+    lVar10 = lVar10 + 0x10;
+  } while (iVar9 < 0x12);
+  if ((pSVar1->dyn).sessionHandle == (void *)0x0) {
+    if (uVar6 == 0) goto LAB_826d9f00;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8b5,0
+                    ,"%s");
   }
-  if ((int)lVar7 != 0) {
-    if (puVar1[4] == 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x8ba,0,0xffffffff82000f98,0xffffffff820583e8);
+  if (uVar6 != 0) {
+    if ((pSVar1->dyn).sessionHandle == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8ba
+                      ,0,"%s");
     }
-    TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar2,4);
-    uVar6 = TaskManager_TaskToXOverlapped();
-    uVar3 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar6);
-    TaskManager_SetTaskData(uVar3,puVar4);
-    uVar3 = XSessionLeaveRemote(puVar1[4],lVar7,puVar4 + 1,uVar6);
-    if (((int)uVar3 != 0) && ((int)uVar3 != 0x3e5)) {
-      cVar5 = Live_IsUserSignedInToLive(uVar2);
-      if (cVar5 != '\0') {
-        Com_PrintError(0x10,0xffffffff821a5f84,uVar3);
+    poVar4 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,iVar2,4);
+    p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
+    poVar4 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var5);
+    TaskManager_SetTaskData(poVar4,pSVar3);
+    uVar6 = XSessionLeaveRemote((pSVar1->dyn).sessionHandle,uVar6,(ulong64 *)&pSVar3->field2_0x8,
+                                p_Var5);
+    if ((uVar6 != 0) && (uVar6 != 0x3e5)) {
+      bVar7 = Live_IsUserSignedInToLive(iVar2);
+      if (bVar7) {
+        Com_PrintError(0x10,"Microsoft error: Session_EveryoneLeaveSession() - error %i\n");
       }
-      Session_ClearXOverlappedTask(uVar6);
+      Session_ClearXOverlappedTask(p_Var5);
       __restgprlr_22();
       return;
     }
-    *(undefined4 **)((int)puVar4 + 4) = puVar1;
-    *(undefined1 *)puVar4 = 1;
+    pSVar3->session = pSVar1;
+    pSVar3->active = true;
   }
 LAB_826d9f00:
   __restgprlr_22();
@@ -2019,7 +2418,9 @@ LAB_826d9f00:
 
 // 826D9F08  Session_RemoveAllPlayersFromSession  (sessions/sessions.cpp:2256)
 
-void Session_RemoveAllPlayersFromSession(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_RemoveAllPlayersFromSession(SessionData *param_1)
 
 {
   Session_EveryoneLeaveSessionAsync(0,param_1);
@@ -2030,52 +2431,62 @@ void Session_RemoveAllPlayersFromSession(undefined8 param_1)
 
 // 826D86C0  Session_LeaveSession_Platform  (sessions/sessions.cpp:2266)
 
-void Session_LeaveSession_Platform(undefined8 param_1,ulonglong param_2)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_LeaveSession_Platform(SessionData *param_1,int param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 local_30 [6];
+  SessionData *pSVar1;
+  ulong uVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  ulong64 local_30 [6];
   
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x8db,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar4 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_28(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8db,0
+                    ,"%s");
   }
-  if (*(int *)(iVar2 + 0x10) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x8dc,0,0xffffffff82000f98,0xffffffff820583e8);
+  if ((pSVar1->dyn).sessionHandle == (void *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8dc,0
+                    ,"%s");
   }
-  if (*(char *)((int)((param_2 & 0xffffffff) << 4) + iVar2 + 0x508) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x8dd,0,0xffffffff82000f98,0xffffffff821a58e0);
+  if ((&(pSVar1->dyn).internalRegisteredUsers[0].active)[(int)((uVar4 & 0xffffffff) << 4)] == false)
+  {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8dd,0
+                    ,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x8de,0,0xffffffff821a58a0,param_2,0x12);
+  if (0x11 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x8de,0
+                    ,"registeredUserSlot doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  local_30[0] = *(undefined8 *)((int)((param_2 + 0x51 & 0xffffffff) << 4) + iVar2);
-  uVar1 = XSessionLeaveRemote(*(undefined4 *)(iVar2 + 0x10),1,local_30,0);
-  iVar3 = (int)uVar1;
-  if (iVar3 != 0) {
-    if (iVar3 != -0x7feaadfa) {
-      if (iVar3 == -0x7ff8ffc7) {
-        if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-          Dvar_SetBool(DAT_82b3ecb8,0);
+  local_30[0] = *(ulong64 *)
+                 ((pSVar1->dyn).sessionInfo.sessionID.ab +
+                 (int)((uVar4 + 0x51 & 0xffffffff) << 4) + -0x14);
+  uVar2 = XSessionLeaveRemote((pSVar1->dyn).sessionHandle,1,local_30,(_XOVERLAPPED *)0x0);
+  if (uVar2 != 0) {
+    if (uVar2 != 0x80155206) {
+      if (uVar2 == 0x80070039) {
+        if ((onlinegame->current).enabled != false) {
+          Dvar_SetBool(splitscreen,false);
         }
-        Dvar_SetBool(DAT_82aa1af8,0);
-        Live_ThrowError(1,0xffffffff8218e3b8);
+        Dvar_SetBool(onlinegame,false);
+        Live_ThrowError(ERR_DROP,"EXE_LOSTCONNECTION");
         __restgprlr_28();
         return;
       }
-      cVar4 = Live_IsUserSignedInToLive(*(undefined4 *)(iVar2 + 0x4f8));
-      if (cVar4 != '\0') {
-        Com_PrintError(0x10,0xffffffff821a5868,uVar1);
+      bVar3 = Live_IsUserSignedInToLive((pSVar1->dyn).sessionCreateController);
+      if (bVar3) {
+        Com_PrintError(0x10,"Microsoft error: XSessionLeaveRemote() - error %i\n");
       }
     }
-    Com_PrintError(0x10,0xffffffff821a5830,uVar1);
+    Com_PrintError(0x10,"Microsoft error %x when calling XSessionLeaveRemote\n");
     __restgprlr_28();
     return;
   }
-  Session_NeedsSkillUpdate(iVar2);
+  Session_NeedsSkillUpdate(pSVar1);
   __restgprlr_28();
   return;
 }
@@ -2083,112 +2494,128 @@ void Session_LeaveSession_Platform(undefined8 param_1,ulonglong param_2)
 
 // 826D3C38  Session_CountPrivateSlotsUsed  (sessions/sessions.cpp:2319)
 
-longlong Session_CountPrivateSlotsUsed(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountPrivateSlotsUsed(SessionData *param_1)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  bool *pbVar2;
   longlong lVar3;
   
-  lVar1 = 0;
-  pcVar2 = (char *)(param_1 + 0xea);
+  iVar1 = 0;
+  pbVar2 = &(param_1->dyn).users[1].privateSlot;
   lVar3 = 3;
   do {
-    if ((pcVar2[-0x7a] != '\0') && (pcVar2[-0x40] != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[-0x7a] != false) && (pbVar2[-0x40] != false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[-0x3a] != '\0') && (*pcVar2 != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((((ClientInfo *)(pbVar2 + -0x3a))->registered != false) && (*pbVar2 != false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[6] != '\0') && (pcVar2[0x40] != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[6] != false) && (pbVar2[0x40] != false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0x46] != '\0') && (pcVar2[0x80] != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0x46] != false) && (pbVar2[0x80] != false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0x86] != '\0') && (pcVar2[0xc0] != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0x86] != false) && (pbVar2[0xc0] != false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0xc6] != '\0') && (pcVar2[0x100] != '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0xc6] != false) && (pbVar2[0x100] != false)) {
+      iVar1 = iVar1 + 1;
     }
-    pcVar2 = pcVar2 + 0x180;
+    pbVar2 = pbVar2 + 0x180;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar1;
+  return iVar1;
 }
 
 
 // 826D3D00  Session_CountPublicSlotsUsed  (sessions/sessions.cpp:2337)
 
-longlong Session_CountPublicSlotsUsed(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CountPublicSlotsUsed(SessionData *param_1)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  bool *pbVar2;
   longlong lVar3;
   
-  lVar1 = 0;
-  pcVar2 = (char *)(param_1 + 0xea);
+  iVar1 = 0;
+  pbVar2 = &(param_1->dyn).users[1].privateSlot;
   lVar3 = 3;
   do {
-    if ((pcVar2[-0x7a] != '\0') && (pcVar2[-0x40] == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[-0x7a] != false) && (pbVar2[-0x40] == false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[-0x3a] != '\0') && (*pcVar2 == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((((ClientInfo *)(pbVar2 + -0x3a))->registered != false) && (*pbVar2 == false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[6] != '\0') && (pcVar2[0x40] == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[6] != false) && (pbVar2[0x40] == false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0x46] != '\0') && (pcVar2[0x80] == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0x46] != false) && (pbVar2[0x80] == false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0x86] != '\0') && (pcVar2[0xc0] == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0x86] != false) && (pbVar2[0xc0] == false)) {
+      iVar1 = iVar1 + 1;
     }
-    if ((pcVar2[0xc6] != '\0') && (pcVar2[0x100] == '\0')) {
-      lVar1 = lVar1 + 1;
+    if ((pbVar2[0xc6] != false) && (pbVar2[0x100] == false)) {
+      iVar1 = iVar1 + 1;
     }
-    pcVar2 = pcVar2 + 0x180;
+    pbVar2 = pbVar2 + 0x180;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar1;
+  return iVar1;
 }
 
 
 // 826D3DC8  Session_UpdatePlayerAddr  (sessions/sessions.cpp:2356)
 
-void Session_UpdatePlayerAddr
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_UpdatePlayerAddr(SessionData *param_1,int param_2,netadr_t param_3)
 
 {
   int iVar1;
-  int iVar2;
+  SessionData *pSVar2;
+  ulonglong uVar3;
+  int in_r6;
   int iStack0000002c;
+  netadr_t in_stack_ffffff78;
   
-  iVar2 = __savegprlr_26();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x935,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar3 = (ulonglong)param_2;
+  iStack0000002c = in_r6;
+  pSVar2 = (SessionData *)__savegprlr_26(param_1);
+  if (pSVar2 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x935,0
+                    ,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x936,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x936,0
+                    ,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)((param_2 & 0xffffffff) << 6) + iVar2;
-  if (*(char *)(iVar1 + 0x70) != '\0') {
-    iStack0000002c = (int)param_4;
-    if (iStack0000002c != *(int *)(iVar1 + 0x90)) {
-      MyAssertHandler(0xffffffff821a2fc8,0x93c,0,0xffffffff821a3598,param_4 & 0xffffffff);
+  iVar1 = (int)((uVar3 & 0xffffffff) << 6);
+  if ((pSVar2->dyn).users[0].addr.ip[iVar1 + -0x18] != '\0') {
+    if (iStack0000002c != *(int *)((pSVar2->dyn).users[0].addr.ip + iVar1 + 8)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x93c
+                      ,0,
+                      "addr.localNetID == session->dyn.users[clientNum].addr.localNetID\n\t%i, %i");
     }
     if (3 < iStack0000002c) {
-      MyAssertHandler(0xffffffff821a2fc8,0x93d,0,0xffffffff821a3558,0xffffffff821a3574,
-                      param_4 & 0xffffffff);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x93d
+                      ,0,"%s\n\t(addr.localNetID) = %i");
     }
-    Session_SetPlayerAddr(iVar2,param_2,param_3,param_4);
+    Session_SetPlayerAddr(pSVar2,(int)uVar3,in_stack_ffffff78);
     __restgprlr_26();
     return;
   }
-  Com_PrintWarning(0xe,0xffffffff821a3500,param_2,param_2);
+  Com_PrintWarning(0xe,
+                   "Attempted to update client %i\'s address, but client %i is not registered with voice\n"
+                  );
   __restgprlr_26();
   return;
 }
@@ -2196,159 +2623,173 @@ void Session_UpdatePlayerAddr
 
 // 826D94D8  Session_RegisterRemotePlayer  (sessions/sessions.cpp:2380)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_RegisterRemotePlayer
-               (undefined8 param_1,longlong param_2,longlong param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+               (int param_1,SessionData *param_2,ulong64 param_3,bool param_4,int param_5,
+               int param_6,XNADDR *param_7,netadr_t param_8)
 
 {
   byte bVar1;
   byte bVar2;
-  int iVar3;
-  int iVar4;
-  char cVar5;
+  SessionData *pSVar3;
+  ClientInfo *pCVar4;
+  int iVar5;
   char cVar6;
   char cVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  int iVar12;
-  undefined8 uVar11;
-  char cVar13;
-  undefined4 *puVar14;
-  int iVar15;
-  byte *pbVar16;
-  byte *pbVar18;
-  longlong lVar17;
-  longlong lVar19;
+  <unnamed_type_S_un> <Var8;
+  int iVar9;
+  int iVar10;
+  bool bVar11;
+  ulonglong in_r10;
+  byte *pbVar12;
+  byte *pbVar14;
+  longlong lVar13;
+  ulonglong uVar15;
   int iStack00000050;
-  char cStack00000054;
+  byte bStack00000054;
   char cStack00000055;
   char cStack00000056;
-  char cStack00000057;
-  undefined8 in_stack_00000058;
-  byte local_a0 [160];
+  netadr_t in_stack_ffffff08;
+  undefined4 local_a0 [40];
   
-  uVar9 = __savegprlr_15();
-  iVar15 = (int)param_6;
-  _iStack00000050 = param_8;
-  if (((iVar15 != 1) && (iVar15 != 2)) && (iVar15 != 3)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x953,0,0xffffffff8203d224,0xffffffff82048300);
+  lVar13 = (longlong)(int)param_2;
+  iVar9 = __savegprlr_15(param_1);
+  _iStack00000050 = in_r10;
+  if (((param_6 != 1) && (param_6 != 2)) && (param_6 != 3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x953,0
+                    ,"%s\n\t(natType) = %i");
   }
   if (param_3 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x954,0,0xffffffff82000f98,0xffffffff82032494);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x954,0
+                    ,"%s");
   }
-  iVar4 = iStack00000050;
-  puVar14 = (undefined4 *)param_2;
+  iVar5 = iStack00000050;
   if (iStack00000050 == 0) {
-    uVar10 = va(0xffffffff821a5d90,param_5,*puVar14);
-    MyAssertHandler(0xffffffff821a2fc8,0x955,0,0xffffffff820011f4,0xffffffff821a5de8,uVar10);
+    va("Trying to add a BOT address at slot %i in Session_RegisterRemotePlayer() for session %s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x955,0
+                    ,"%s\n\t%s");
   }
-  if (puVar14[4] == 0) {
-LAB_826d98cc:
-    __restgprlr_15();
-    return;
-  }
-  if ((*(char *)(DAT_82aa1ae4 + 0xc) == '\0') && (iVar4 == 4)) {
-    pbVar18 = (byte *)((int)&stack0x00000050 + 4);
-    pbVar16 = local_a0;
+  pSVar3 = (SessionData *)lVar13;
+  if ((pSVar3->dyn).sessionHandle == (void *)0x0) goto LAB_826d98cc;
+  local_a0[0] = 0;
+  if (((systemlink->current).enabled == false) && (iVar5 == 4)) {
+    pbVar14 = &stack0x00000054;
+    pbVar12 = (byte *)local_a0;
     do {
-      bVar1 = *pbVar18;
-      bVar2 = *pbVar16;
+      bVar1 = *pbVar14;
+      bVar2 = *pbVar12;
       if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-      pbVar18 = pbVar18 + 1;
-      pbVar16 = pbVar16 + 1;
-    } while (pbVar18 != (byte *)&stack0x00000058);
+      pbVar14 = pbVar14 + 1;
+      pbVar12 = pbVar12 + 1;
+    } while (pbVar14 != &stack0x00000058);
     if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-      Com_PrintError(0x10,0xffffffff821a5d48,param_3,param_5);
+      Com_PrintError(0x10,"Trying to register player with xuid %llx at slot %i with zero inaddr\n");
     }
   }
-  iVar3 = (int)param_5;
-  if (*(char *)(puVar14 + iVar3 * 0x10 + 0x1c) != '\0') {
-    if (*(longlong *)(puVar14 + iVar3 * 0x10 + 0x1e) == param_3) goto LAB_826d98cc;
-    Com_PrintWarning(0x10,0xffffffff821a5cf0,param_3,param_5);
-    Session_UnregisterRemotePlayer(param_2,param_5);
+  if ((pSVar3->dyn).users[param_5].registered != false) {
+    if ((pSVar3->dyn).users[param_5].xuid == param_3) goto LAB_826d98cc;
+    Com_PrintWarning(0x10,
+                     "Registering xuid %llx at slot %i, which means I\'m kicking %llx out of that slot\n"
+                    );
+    Session_UnregisterRemotePlayer(pSVar3,param_5);
   }
-  lVar19 = 0;
-  lVar17 = param_2 + 0x78;
-  while ((*(char *)((longlong *)lVar17 + -1) == '\0' || (*(longlong *)lVar17 != param_3))) {
-    lVar19 = lVar19 + 1;
-    lVar17 = lVar17 + 0x40;
-    if (0x11 < (int)lVar19) goto LAB_826d96fc;
-  }
-  iVar12 = (int)lVar19;
-  while (-1 < iVar12) {
-    Com_Printf(0xe,0xffffffff821a5cb0,param_3,lVar19,param_5);
-    Session_UnregisterRemotePlayer(param_2,lVar19);
-    lVar19 = Session_FindRegisteredUser(param_2,param_3);
-    iVar12 = (int)lVar19;
-  }
+  iVar10 = 0;
+  lVar13 = lVar13 + 0x78;
+  do {
+    if ((*(char *)((ulong64 *)lVar13 + -1) != '\0') && (*(ulong64 *)lVar13 == param_3))
+    goto joined_r0x826d96b4;
+    iVar10 = iVar10 + 1;
+    lVar13 = lVar13 + 0x40;
+  } while (iVar10 < 0x12);
 LAB_826d96fc:
-  param_4 = -(ulonglong)(puVar14[0x18] != 0) & param_4;
-  if ((param_4 & 0xff) == 0) {
-    uVar10 = 0xffffffff821a5ca8;
+  iVar10 = (pSVar3->dyn).privateSlots;
+  Session_CountPublicSlotsUsed(pSVar3);
+  Session_CountPrivateSlotsUsed(pSVar3);
+  NET_AdrToString(in_stack_ffffff08);
+  Com_Printf(0xe,
+             "Registering XUID %llx at slot %i in a %s slot of session %s with address %s - they have nat type %i.  That will give us %i private slots used and %i public slots used\n"
+            );
+  (pSVar3->dyn).users[param_5].privateSlot = (bool)(-(iVar10 != 0) & param_4);
+  (pSVar3->dyn).users[param_5].natType = param_6;
+  (pSVar3->dyn).users[param_5].xuid = param_3;
+  pCVar4 = (pSVar3->dyn).users + param_5;
+  pCVar4->nextConnectivityTestTime[0] = 0;
+  pCVar4->nextConnectivityTestTime[1] = 0;
+  pCVar4 = (pSVar3->dyn).users + param_5;
+  pCVar4->nextConnectivityTestTime[2] = 0;
+  pCVar4->nextConnectivityTestTime[3] = 0;
+  if (iVar5 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x991,0
+                    ,"%s");
   }
-  else {
-    uVar10 = 0xffffffff82084e68;
+  <Var8.S_addr = _bStack00000054;
+  uVar15 = _iStack00000050 & 0xff;
+  cVar7 = cStack00000056;
+  cVar6 = cStack00000055;
+  bVar1 = bStack00000054;
+  if (((((onlinegame->current).enabled != false) && (bStack00000054 == 0)) &&
+      (cStack00000055 == '\0')) && ((cStack00000056 == '\0' && (uVar15 == 0)))) {
+    _bStack00000054 = <Var8.S_addr;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x999,0
+                    ,"%s");
+    <Var8 = _bStack00000054;
   }
-  Session_CountPublicSlotsUsed(param_2);
-  Session_CountPrivateSlotsUsed(param_2);
-  uVar8 = in_stack_00000058;
-  uVar11 = NET_AdrToString(param_8,in_stack_00000058);
-  Com_Printf(0xe,0xffffffff821a5c00,param_3,param_5,uVar10,*puVar14,uVar11,param_6);
-  *(char *)((int)puVar14 + iVar3 * 0x40 + 0xaa) = (char)param_4;
-  puVar14[iVar3 * 0x10 + 0x20] = iVar15;
-  *(longlong *)(puVar14 + iVar3 * 0x10 + 0x1e) = param_3;
-  *(undefined8 *)(puVar14 + iVar3 * 0x10 + 0x26) = 0;
-  *(undefined8 *)(puVar14 + iVar3 * 0x10 + 0x28) = 0;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x991,0,0xffffffff82000f98,0xffffffff821a5de8);
+  _bStack00000054 = <Var8;
+  if ((((onlinegame->current).enabled != false) && (_bStack00000054 != 0)) &&
+     ((bVar1 != 0x7f || (((cVar6 != '\0' || (cVar7 != '\0')) || (uVar15 != 1)))))) {
+    XNetConnect((in_addr)_bStack00000054);
   }
-  cVar7 = cStack00000057;
-  cVar6 = cStack00000056;
-  cVar5 = cStack00000055;
-  cVar13 = cStack00000054;
-  if ((((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (cStack00000054 == '\0')) &&
-      (cStack00000055 == '\0')) && ((cStack00000056 == '\0' && (cStack00000057 == '\0')))) {
-    MyAssertHandler(0xffffffff821a2fc8,0x999,0,0xffffffff82000f98,0xffffffff821a5ba8);
-  }
-  if (((*(char *)(DAT_82aa1af8 + 0xc) != '\0') && (_cStack00000054 != 0)) &&
-     ((cVar13 != '\x7f' || (((cVar5 != '\0' || (cVar6 != '\0')) || (cVar7 != '\x01')))))) {
-    XNetConnect();
-  }
-  Session_SetPlayerAddr(param_2,param_5,param_8,uVar8);
+  Session_SetPlayerAddr(pSVar3,param_5,in_stack_ffffff08);
   sync(1);
-  *(undefined1 *)(puVar14 + iVar3 * 0x10 + 0x1c) = 1;
-  Voice_RegisterRemotePlayer(uVar9,param_2,param_5);
-  cVar13 = IsServerRunning();
-  if (cVar13 != '\0') {
-    Session_QoSAdjustGameBandwidth(0xffffffff844c7860);
+  (pSVar3->dyn).users[param_5].registered = true;
+  Voice_RegisterRemotePlayer(iVar9,pSVar3,param_5);
+  bVar11 = IsServerRunning();
+  if (bVar11) {
+    Session_QoSAdjustGameBandwidth(&g_serverSession);
   }
-  goto LAB_826d98cc;
+LAB_826d98cc:
+  __restgprlr_15();
+  return;
+joined_r0x826d96b4:
+  while (-1 < iVar10) {
+    Com_Printf(0xe,"removing xuid %llx from slot %i before we add them in slot %i");
+    Session_UnregisterRemotePlayer(pSVar3,iVar10);
+    iVar10 = Session_FindRegisteredUser(pSVar3,param_3);
+  }
+  goto LAB_826d96fc;
 }
 
 
 // 826D8878  Session_UnregisterRemotePlayer  (sessions/sessions.cpp:2487)
 
-void Session_UnregisterRemotePlayer(undefined8 param_1,ulonglong param_2)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_UnregisterRemotePlayer(SessionData *param_1,int param_2)
 
 {
-  int iVar1;
-  char cVar2;
+  SessionData *pSVar1;
+  bool bVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x9b8,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar3 = (ulonglong)param_2;
+  pSVar1 = (SessionData *)__savegprlr_29(param_1);
+  if (pSVar1 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x9b8,0
+                    ,"%s");
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x9b9,0,0xffffffff821a5920,param_2,0x12);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x9b9,0
+                    ,"slot doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (*(int *)(iVar1 + 0x10) != 0) {
-    *(undefined1 *)((int)((param_2 & 0xffffffff) << 6) + iVar1 + 0x70) = 0;
+  if ((pSVar1->dyn).sessionHandle != (void *)0x0) {
+    (pSVar1->dyn).users[0].addr.ip[(int)((uVar3 & 0xffffffff) << 6) + -0x18] = '\0';
     sync(1);
-    Voice_UnregisterRemotePlayer(iVar1,param_2);
-    cVar2 = IsServerRunning();
-    if (cVar2 != '\0') {
-      Session_QoSAdjustGameBandwidth(0xffffffff844c7860);
+    Voice_UnregisterRemotePlayer(pSVar1,(int)uVar3);
+    bVar2 = IsServerRunning();
+    if (bVar2) {
+      Session_QoSAdjustGameBandwidth(&g_serverSession);
     }
   }
   __restgprlr_29();
@@ -2358,305 +2799,355 @@ void Session_UnregisterRemotePlayer(undefined8 param_1,ulonglong param_2)
 
 // 826D3EE8  Session_GetNonce  (sessions/sessions.cpp:2517)
 
-undefined8 Session_GetNonce(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+ulong64 Session_GetNonce(SessionData *param_1)
 
 {
-  return *(undefined8 *)(param_1 + 0x58);
+  return (param_1->dyn).sessionNonce;
 }
 
 
 // 826D3EF0  Xenon_SetSessionNonce  (sessions/sessions.cpp:2528)
 
-void Xenon_SetSessionNonce(int param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Xenon_SetSessionNonce(SessionData *param_1,ulong64 param_2)
 
 {
-  *(undefined8 *)(param_1 + 0x58) = param_2;
+  (param_1->dyn).sessionNonce = param_2;
   return;
 }
 
 
 // 826D3EF8  Xenon_GetXNKey  (sessions/sessions.cpp:2534)
 
-int Xenon_GetXNKey(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+XNKEY * Xenon_GetXNKey(SessionData *param_1)
 
 {
-  if (*(char *)(param_1 + 0x50) == '\0') {
-    return 0;
+  if ((param_1->dyn).keysGenerated == false) {
+    return (XNKEY *)0x0;
   }
-  return param_1 + 0x40;
+  return &(param_1->dyn).sessionInfo.keyExchangeKey;
 }
 
 
 // 826D3F18  Xenon_GetXNKId  (sessions/sessions.cpp:2542)
 
-int Xenon_GetXNKId(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+XNKID * Xenon_GetXNKId(SessionData *param_1)
 
 {
-  if (*(int *)(param_1 + 0x10) == 0) {
-    return 0;
+  if ((param_1->dyn).sessionHandle == (void *)0x0) {
+    return (XNKID *)0x0;
   }
-  return param_1 + 0x14;
+  return &(param_1->dyn).sessionInfo.sessionID;
 }
 
 
 // 826D3F38  Session_SetDLCProperties  (sessions/sessions.cpp:2556)
 
-void Session_SetDLCProperties(undefined8 param_1,longlong param_2,ulonglong param_3)
+ushort Session_SetDLCProperties(int param_1,_XUSER_PROPERTY *param_2,int param_3)
 
 {
   ulonglong uVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  ushort uVar3;
   ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar8;
   
-  uVar1 = __savegprlr_26();
-  lVar6 = 0;
-  uVar4 = 1;
-  lVar5 = (param_3 + (param_3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + param_2 + -0x10;
+  uVar4 = (ulonglong)param_3;
+  lVar7 = (longlong)(int)param_2;
+  uVar1 = __savegprlr_26(param_1);
+  iVar8 = 0;
+  uVar6 = 1;
+  lVar7 = (uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar7 + -0x10;
   do {
-    uVar2 = GetDLCPropertyValue(lVar6);
-    uVar3 = uVar4 & uVar1;
-    lVar6 = lVar6 + 1;
-    *(undefined4 *)((int)lVar5 + 0x10) = uVar2;
-    uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
-    *(uint *)((int)lVar5 + 0x20) = (uint)(uVar3 != 0);
-    lVar5 = lVar5 + 0x18;
-    *(undefined1 *)lVar5 = 1;
-  } while ((int)lVar6 < 0x10);
-  __restgprlr_26(param_3 + 0x10 & 0xffff);
-  return;
+    uVar2 = GetDLCPropertyValue(iVar8);
+    uVar5 = uVar6 & uVar1;
+    iVar8 = iVar8 + 1;
+    *(uint *)((int)lVar7 + 0x10) = uVar2;
+    uVar6 = (uVar6 & 0x7fffffff) << 1 | uVar6 >> 0x1f;
+    *(uint *)((int)lVar7 + 0x20) = (uint)(uVar5 != 0);
+    lVar7 = lVar7 + 0x18;
+    *(undefined1 *)lVar7 = 1;
+  } while (iVar8 < 0x10);
+  uVar3 = __restgprlr_26(uVar4 + 0x10 & 0xffff);
+  return uVar3;
 }
 
 
 // 826D8938  Session_SearchForAllSessions  (sessions/sessions.cpp:2578)
 
-void Session_SearchForAllSessions(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Session_SearchForAllSessions(int param_1)
 
 {
-  float fVar1;
-  uint uVar2;
-  float *pfVar3;
+  float *pfVar1;
+  dvar_t *pdVar2;
+  ulong uVar3;
   int iVar4;
-  undefined8 uVar5;
+  bool bVar15;
+  PartyData *pPVar5;
+  uint uVar6;
+  overlappedTask *poVar7;
+  _XOVERLAPPED *p_Var8;
+  uint uVar9;
+  int iVar10;
+  ushort uVar14;
   int iVar11;
-  char cVar14;
-  undefined8 uVar6;
-  undefined8 uVar7;
-  ulonglong uVar8;
-  undefined4 uVar12;
-  int iVar13;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  ulonglong uVar15;
+  int iVar12;
+  char *pcVar13;
   uint uVar16;
-  float *pfVar17;
-  uint uVar18;
+  ulonglong uVar17;
+  longlong lVar18;
+  float *pfVar20;
   longlong lVar19;
-  double dVar20;
-  double dVar21;
+  longlong lVar21;
+  ulong uVar22;
+  double dVar23;
+  float fVar24;
+  ulong *in_stack_fffffed8;
+  _XSESSION_SEARCHRESULT_HEADER *in_stack_fffffedc;
+  ushort uVar25;
+  _XOVERLAPPED *in_stack_fffffee0;
+  _XUSER_CONTEXT *in_stack_fffffee4;
+  ulong *in_stack_fffffee8;
+  _XSESSION_SEARCHRESULT_HEADER *in_stack_fffffeec;
+  _XOVERLAPPED *in_stack_fffffef0;
   undefined8 local_a0;
   
-  uVar5 = __savegprlr_15();
-  iVar11 = Party_InParty(0xffffffff82b55118);
-  if (iVar11 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xa27,0,0xffffffff82000f98,0xffffffff82047978);
+  uVar3 = __savegprlr_15(param_1);
+  iVar4 = Party_InParty(&g_partyData);
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xa27,0
+                    ,"%s");
   }
-  iVar11 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
-  if (iVar11 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xa29,0,0xffffffff82000f98,0xffffffff82040f3c);
+  iVar4 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xa29,0
+                    ,"%s");
   }
-  cVar14 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,7);
-  if (cVar14 != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xa2e,0,0xffffffff82000f98,0xffffffff82047aec);
+  bVar15 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,7);
+  if (bVar15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xa2e,0
+                    ,"%s");
   }
-  if (*(char *)(DAT_84253bb8 + 0xc) != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xa30,0,0xffffffff82000f98,0xffffffff820269bc);
+  if ((xblive_privatematch->current).enabled != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xa30,0
+                    ,"%s");
   }
-  uVar6 = Playlist_GetPlaylistIdForNum(uVar5,DAT_82aa1af4);
-  iVar11 = Lobby_GetPartyData();
-  uVar2 = *(uint *)(iVar11 + 0x1ed4);
-  cVar14 = Lobby_IsInRunningLobby();
-  if (cVar14 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xa38,0,0xffffffff82000f98,0xffffffff820520fc);
+  iVar4 = Playlist_GetPlaylistIdForNum(uVar3,selectedPlaylist);
+  pPVar5 = Lobby_GetPartyData();
+  uVar16 = pPVar5->mapPackFlags;
+  bVar15 = Lobby_IsInRunningLobby();
+  if (!bVar15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xa38,0
+                    ,"%s");
   }
-  Lobby_GetPartyData();
-  uVar7 = PartyClient_CountMembersEvenIfInactive();
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar5,7);
-  uVar8 = TaskManager_TaskToXOverlapped();
-  if ((uVar8 & 0xffffffff) != 0) {
+  pPVar5 = Lobby_GetPartyData();
+  uVar6 = PartyClient_CountMembersEvenIfInactive(pPVar5);
+  poVar7 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,uVar3,7);
+  p_Var8 = TaskManager_TaskToXOverlapped(poVar7);
+  if (p_Var8 != (_XOVERLAPPED *)0x0) {
     DAT_844c9c78 = 0x800b;
-    DAT_844c9c64 = &DAT_844acfd8;
-    DAT_844c9c7c = Live_GetGameModeContextForPlaylist(uVar5,DAT_82aa1af4);
-    DAT_844c9c8c = (undefined4)uVar6;
+    randomSearchResults = (_XSESSION_SEARCHRESULT_HEADER *)randomSearchResultsBuffer;
+    DAT_844c9c7c = Live_GetGameModeContextForPlaylist(uVar3,selectedPlaylist);
     DAT_844c9c84 = 1;
     DAT_844c9c80 = 0x800a;
     DAT_844c9c88 = 6;
     DAT_844c56f8 = 0x10000014;
+    DAT_844c9c8c = iVar4;
     DAT_844c5708 = GetProtocolVersion();
     DAT_844c5700 = 1;
-    lVar19 = 1;
-    iVar11 = Lobby_GetPartyData();
-    if (*(int *)(iVar11 + 0x1ed8) != 0) {
+    iVar11 = 1;
+    pPVar5 = Lobby_GetPartyData();
+    if (pPVar5->searchPass != PASS_WEIGHTED_SEARCH) {
       DAT_844c5718 = 1;
-      lVar19 = 2;
+      iVar11 = 2;
       DAT_844c5710 = 0x10000015;
-      DAT_844c5720 = uVar2;
+      DAT_844c5720 = uVar16;
     }
-    iVar11 = (int)lVar19;
     (&DAT_844c56f8)[iVar11 * 6] = 0x10000017;
-    uVar12 = Playlist_GetVersionNumber();
-    iVar13 = iVar11 + 1;
-    (&DAT_844c5708)[iVar11 * 6] = uVar12;
+    uVar9 = Playlist_GetVersionNumber();
+    iVar10 = iVar11 + 1;
+    (&DAT_844c5708)[iVar11 * 6] = uVar9;
     (&DAT_844c5700)[iVar11 * 0x18] = 1;
-    uVar15 = lVar19 + 2;
-    (&DAT_844c5708)[iVar13 * 6] = (int)uVar7;
-    (&DAT_844c5700)[iVar13 * 0x18] = 1;
-    (&DAT_844c56f8)[iVar13 * 6] = 0x1000001a;
-    iVar13 = Party_InParty(0xffffffff82b55118);
-    if (iVar13 != 0) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821a2fc8,0xa6a,0,0xffffffff821a5b50);
+    uVar9 = iVar11 + 2;
+    (&DAT_844c5708)[iVar10 * 6] = uVar6;
+    (&DAT_844c5700)[iVar10 * 0x18] = 1;
+    (&DAT_844c56f8)[iVar10 * 6] = 0x1000001a;
+    iVar10 = Party_InParty(&g_partyData);
+    uVar6 = uVar9;
+    if (iVar10 != 0) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xa6a,0,
+                        "This should not happen at the time of writing, but too close to ship to remove it."
+                       );
       }
-      local_a0 = (double)CONCAT44(DAT_844c9c50,DAT_844c9c54);
-      dVar21 = local_a0;
+      local_a0 = (double)CONCAT44(sessionCalcSkillData.mu._0_4_,sessionCalcSkillData.mu._4_4_);
+      dVar23 = local_a0;
       if ((0.0 <= local_a0) &&
-         (local_a0 = (double)CONCAT44(DAT_844c9c58,DAT_844c9c5c), 0.0 <= local_a0)) {
-        iVar13 = (int)uVar15;
-        iVar11 = iVar11 + 3;
-        (&DAT_844c5700)[iVar13 * 0x18] = 3;
-        *(double *)(&DAT_844c5708 + iVar13 * 6) = dVar21;
-        uVar15 = lVar19 + 4;
-        (&DAT_844c56f8)[iVar13 * 6] = 0x30008105;
-        *(double *)(&DAT_844c5708 + iVar11 * 6) = local_a0;
-        (&DAT_844c56f8)[iVar11 * 6] = 0x30008106;
-        (&DAT_844c5700)[iVar11 * 0x18] = 3;
+         (local_a0 = (double)CONCAT44(sessionCalcSkillData.sigma._0_4_,
+                                      sessionCalcSkillData.sigma._4_4_), 0.0 <= local_a0)) {
+        iVar10 = iVar11 + 3;
+        (&DAT_844c5700)[uVar9 * 0x18] = 3;
+        *(double *)(&DAT_844c5708 + uVar9 * 6) = dVar23;
+        uVar6 = iVar11 + 4;
+        (&DAT_844c56f8)[uVar9 * 6] = 0x30008105;
+        *(double *)(&DAT_844c5708 + iVar10 * 6) = local_a0;
+        (&DAT_844c56f8)[iVar10 * 6] = 0x30008106;
+        (&DAT_844c5700)[iVar10 * 0x18] = 3;
       }
     }
-    uVar16 = 0;
-    iVar11 = Lobby_GetPartyData();
-    if (*(int *)(iVar11 + 0x1ed8) == 0) {
-      uVar15 = Session_SetDLCProperties(uVar2,0xffffffff844c56f8,uVar15);
+    uVar14 = (ushort)uVar6;
+    lVar21 = 0;
+    pPVar5 = Lobby_GetPartyData();
+    if (pPVar5->searchPass == PASS_WEIGHTED_SEARCH) {
+      uVar14 = Session_SetDLCProperties(uVar16,(_XUSER_PROPERTY *)&DAT_844c56f8,uVar6);
       iVar11 = 0;
-      for (uVar16 = uVar2; uVar16 != 0; uVar16 = uVar16 - 1 & uVar16) {
+      for (; uVar16 != 0; uVar16 = uVar16 - 1 & uVar16) {
         iVar11 = iVar11 + 1;
       }
       DAT_844c5678 = 0x50000056;
       DAT_844c5680 = 5;
-      uVar16 = 1;
+      lVar21 = 1;
       DAT_844c5688 = (float)(longlong)iVar11 * 0.0625;
-      DAT_844c5690 = *(float *)(DAT_844c9c70 + 0xc);
-      dVar21 = (double)DAT_844c5690;
-      iVar11 = LiveRegionInfo_GetCountryCodeAndRegion(0xffffffff844c56a8);
+      DAT_844c5690 = (search_weight_mappack_count->current).value;
+      dVar23 = (double)DAT_844c5690;
+      iVar11 = LiveRegionInfo_GetCountryCodeAndRegion((uint *)&DAT_844c56a8);
       if (iVar11 == 1) {
         DAT_844c56a0 = 1;
         DAT_844c5698 = 0x10000041;
-        uVar16 = 2;
-        DAT_844c56b0 = *(float *)(DAT_844c8b24 + 0xc);
-        dVar21 = (double)(float)((double)DAT_844c56b0 + dVar21);
+        lVar21 = 2;
+        DAT_844c56b0 = (search_weight_country_code_and_region->current).value;
+        dVar23 = (double)(float)((double)DAT_844c56b0 + dVar23);
       }
-      iVar13 = LiveRegionInfo_GetCountryCode(&DAT_844c5688 + uVar16 * 8);
-      uVar18 = uVar16;
-      if (iVar13 == 1) {
-        (&DAT_844c5678)[uVar16 * 8] = 0x10000042;
-        iVar4 = DAT_844c9c74;
-        uVar18 = uVar16 + 1;
-        (&DAT_844c5680)[uVar16 * 0x20] = 1;
-        dVar21 = (double)(float)((double)*(float *)(iVar4 + 0xc) + dVar21);
-        (&DAT_844c5690)[uVar16 * 8] = *(float *)(iVar4 + 0xc);
+      iVar10 = (int)(lVar21 << 5);
+      iVar12 = LiveRegionInfo_GetCountryCode((uint *)((int)&DAT_844c5688 + iVar10));
+      if (iVar12 == 1) {
+        *(undefined4 *)((int)&DAT_844c5678 + iVar10) = 0x10000042;
+        pdVar2 = search_weight_country_code;
+        lVar21 = lVar21 + 1;
+        (&DAT_844c5680)[iVar10] = 1;
+        dVar23 = (double)(float)((double)(pdVar2->current).value + dVar23);
+        *(float *)((int)&DAT_844c5690 + iVar10) = (pdVar2->current).value;
       }
-      uVar16 = uVar18;
-      if (iVar13 == 1 || iVar11 == 1) {
-        (&DAT_844c5680)[uVar18 * 0x20] = 5;
-        (&DAT_844c5678)[uVar18 * 8] = 0x50000055;
-        dVar20 = (double)LiveRegionInfo_GetHilbert();
-        iVar11 = DAT_844c7858;
-        uVar16 = uVar18 + 1;
-        (&DAT_844c5688)[uVar18 * 8] = (float)dVar20;
-        dVar21 = (double)(float)((double)*(float *)(iVar11 + 0xc) + dVar21);
-        (&DAT_844c5690)[uVar18 * 8] = *(float *)(iVar11 + 0xc);
+      if (iVar12 == 1 || iVar11 == 1) {
+        iVar11 = (int)(lVar21 << 5);
+        (&DAT_844c5680)[iVar11] = 5;
+        *(undefined4 *)((int)&DAT_844c5678 + iVar11) = 0x50000055;
+        fVar24 = LiveRegionInfo_GetHilbert();
+        pdVar2 = search_weight_hilbert_enum;
+        lVar21 = lVar21 + 1;
+        *(float *)((int)&DAT_844c5688 + iVar11) = fVar24;
+        dVar23 = (double)(float)((double)(pdVar2->current).value + dVar23);
+        *(float *)((int)&DAT_844c5690 + iVar11) = (pdVar2->current).value;
       }
-      iVar11 = 0;
+      uVar17 = 0;
+      uVar16 = (uint)lVar21;
       if (3 < uVar16) {
-        fVar1 = (float)(1.0 / dVar21);
-        pfVar17 = (float *)0x844c5670;
+        fVar24 = (float)(1.0 / dVar23);
+        pfVar20 = (float *)(randomSearchResultsBuffer + 0x18698);
         do {
-          iVar11 = iVar11 + 4;
-          pfVar3 = pfVar17 + 0x20;
-          pfVar17[8] = fVar1 * pfVar17[8];
-          pfVar17[0x10] = fVar1 * pfVar17[0x10];
-          pfVar17[0x18] = fVar1 * pfVar17[0x18];
-          pfVar17 = pfVar17 + 0x20;
-          *pfVar17 = fVar1 * *pfVar3;
-        } while (iVar11 < (int)(uVar16 - 3));
+          uVar17 = uVar17 + 4;
+          pfVar1 = pfVar20 + 0x20;
+          pfVar20[8] = fVar24 * pfVar20[8];
+          pfVar20[0x10] = fVar24 * pfVar20[0x10];
+          pfVar20[0x18] = fVar24 * pfVar20[0x18];
+          pfVar20 = pfVar20 + 0x20;
+          *pfVar20 = fVar24 * *pfVar1;
+        } while ((int)uVar17 < (int)(uVar16 - 3));
       }
-      if (iVar11 < (int)uVar16) {
-        iVar13 = uVar16 - iVar11;
-        pfVar17 = (float *)(iVar11 * 0x20 + -0x7bb3a990);
+      if ((int)uVar17 < (int)uVar16) {
+        lVar18 = lVar21 - uVar17;
+        lVar19 = (uVar17 & 0x7ffffff) * 0x20 + -0x7bb3a990;
         do {
-          pfVar3 = pfVar17 + 8;
-          pfVar17 = pfVar17 + 8;
-          *pfVar17 = (float)(1.0 / dVar21) * *pfVar3;
-          iVar13 = iVar13 + -1;
-        } while (iVar13 != 0);
+          iVar11 = (int)lVar19;
+          lVar19 = lVar19 + 0x20;
+          *(float *)lVar19 = (float)(1.0 / dVar23) * *(float *)(iVar11 + 0x20);
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
       }
     }
-    else if (0x16 < uVar15) {
-      MyAssertHandler(0xffffffff821a2fc8,0xabf,0,0xffffffff82000f98,0xffffffff821a5b20);
+    else if (0x16 < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xabf
+                      ,0,"%s");
     }
-    Live_SetControllerGameModeAndType(uVar5);
-    iVar11 = Lobby_GetPartyData();
-    if (*(int *)(iVar11 + 0x1ed8) == 0) {
-      cVar14 = '\v';
+    Live_SetControllerGameModeAndType(uVar3);
+    pPVar5 = Lobby_GetPartyData();
+    if (pPVar5->searchPass == PASS_WEIGHTED_SEARCH) {
+      uVar22 = 0xb;
     }
     else {
-      cVar14 = Playlist_PartyBasedTeams(uVar5,uVar6);
-      cVar14 = (cVar14 != '\0') + '\b';
+      bVar15 = Playlist_PartyBasedTeams(uVar3,iVar4);
+      uVar22 = (!bVar15 ^ 1) + 8;
     }
-    iVar11 = Lobby_GetPartyData();
-    if (*(int *)(iVar11 + 0x1ed8) == 0) {
-      uVar6 = 0xffffffff821a5b14;
-    }
-    else {
-      uVar6 = 0xffffffff821a5b08;
-    }
+    Lobby_GetPartyData();
     Sys_Milliseconds();
     GetProtocolVersion();
-    uVar9 = Playlist_GetVersionNumber();
-    uVar10 = Playlist_GetPlaylistIdForNum(uVar5,*(undefined4 *)(DAT_82aa1adc + 0xc));
-    Com_Printf(0x10,0xffffffff821a5a58,uVar6,cVar14,uVar7,uVar10,uVar2,uVar9);
-    iVar11 = Lobby_GetPartyData();
-    uVar12 = *(undefined4 *)(iVar11 + 0x1ed8);
-    uVar6 = Playlist_GetVersionNumber();
-    uVar9 = Playlist_GetPlaylistIdForNum(uVar5,*(undefined4 *)(DAT_82aa1adc + 0xc));
-    uVar10 = Sys_Milliseconds();
-    uVar6 = va(0xffffffff821a59e8,uVar10,cVar14,uVar7,uVar9,uVar2,uVar6,uVar12);
-    LSP_LogStringToDW(uVar5,uVar6,2);
-    DAT_844c9c6c = 100000;
-    iVar11 = Lobby_GetPartyData();
-    if (*(int *)(iVar11 + 0x1ed8) == 0) {
-      XSessionSearchWeighted(cVar14,uVar5,0x32,1,uVar16,0,0xffffffff844c5678,0);
-      if (100000 < DAT_844c9c6c) {
-        MyAssertHandler(0xffffffff821a2fc8,0xb13,0,0xffffffff821a5984,0xffffffff821a59a8);
+    Playlist_GetVersionNumber();
+    Playlist_GetPlaylistIdForNum(uVar3,(playlist->current).integer);
+    Com_Printf(0x10,
+               "Calling XSessionSearch (%s) query = %d. Looking for a lobby with %i free slots, with playlist %i, mapPack flags of %i, playlist version %i, protocol version 0x%x - at time %i\n"
+              );
+    Lobby_GetPartyData();
+    Playlist_GetVersionNumber();
+    Playlist_GetPlaylistIdForNum(uVar3,(playlist->current).integer);
+    Sys_Milliseconds();
+    pcVar13 = va(
+                "start_matchmaking time: %d query: %d free_slots: %d playlist: %d map_flags: %d playlist_ver: %d pass: %d"
+                );
+    LSP_LogStringToDW(uVar3,pcVar13,DW_STRING_EVENT_LSP_LOG_MATCHMAKING_DATA);
+    searchResultsBufferSize = 100000;
+    pPVar5 = Lobby_GetPartyData();
+    if (pPVar5->searchPass == PASS_WEIGHTED_SEARCH) {
+      XSessionSearchWeighted
+                (uVar22,uVar3,0x32,1,(ushort)lVar21,0,(_XUSER_WEIGHTED_PROPERTY *)&DAT_844c5678,
+                 (_XUSER_WEIGHTED_CONTEXT *)0x0,(ushort)in_stack_fffffed8,(ushort)in_stack_fffffedc,
+                 (_XUSER_PROPERTY *)in_stack_fffffee0,in_stack_fffffee4,in_stack_fffffee8,
+                 in_stack_fffffeec,in_stack_fffffef0);
+      uVar25 = (ushort)in_stack_fffffedc;
+      uVar14 = (ushort)in_stack_fffffed8;
+      if (100000 < searchResultsBufferSize) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xb13,0,"%s\n\t(searchResultsBufferSize) = %i");
       }
-      uVar5 = XSessionSearchWeighted(cVar14,uVar5,0x32,1,uVar16,0,0xffffffff844c5678,0);
+      uVar3 = XSessionSearchWeighted
+                        (uVar22,uVar3,0x32,1,(ushort)lVar21,0,
+                         (_XUSER_WEIGHTED_PROPERTY *)&DAT_844c5678,(_XUSER_WEIGHTED_CONTEXT *)0x0,
+                         uVar14,uVar25,(_XUSER_PROPERTY *)in_stack_fffffee0,in_stack_fffffee4,
+                         in_stack_fffffee8,in_stack_fffffeec,in_stack_fffffef0);
     }
     else {
-      XSessionSearchEx();
-      if (100000 < DAT_844c9c6c) {
-        MyAssertHandler(0xffffffff821a2fc8,0xafa,0,0xffffffff821a5984,0xffffffff821a59a8);
+      XSessionSearchEx(uVar22,uVar3,0x32,1,uVar14,3,(_XUSER_PROPERTY *)&DAT_844c56f8,
+                       (_XUSER_CONTEXT *)&DAT_844c9c78,in_stack_fffffed8,in_stack_fffffedc,
+                       in_stack_fffffee0);
+      if (100000 < searchResultsBufferSize) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xafa,0,"%s\n\t(searchResultsBufferSize) = %i");
       }
-      uVar5 = XSessionSearchEx(cVar14,uVar5,0x32,1,uVar15,3,0xffffffff844c56f8,0xffffffff844c9c78);
+      uVar3 = XSessionSearchEx(uVar22,uVar3,0x32,1,uVar14,3,(_XUSER_PROPERTY *)&DAT_844c56f8,
+                               (_XUSER_CONTEXT *)&DAT_844c9c78,in_stack_fffffed8,in_stack_fffffedc,
+                               in_stack_fffffee0);
     }
-    if (((int)uVar5 != 0) && ((int)uVar5 != 0x3e5)) {
-      Com_PrintError(0x10,0xffffffff821a5954,uVar5);
-      Session_ClearXOverlappedTask(uVar8);
+    if ((uVar3 != 0) && (uVar3 != 0x3e5)) {
+      Com_PrintError(0x10,"Microsoft error %x when calling XSessionSearch\n");
+      Session_ClearXOverlappedTask(p_Var8);
       __restgprlr_15();
       return;
     }
-    Lobby_GetPartyData();
-    PartyHost_IncrementSearchPass();
+    pPVar5 = Lobby_GetPartyData();
+    PartyHost_IncrementSearchPass(pPVar5);
   }
   __restgprlr_15();
   return;
@@ -2665,35 +3156,43 @@ void Session_SearchForAllSessions(void)
 
 // 826D9218  Session_SearchForSession  (sessions/sessions.cpp:2876)
 
-void Session_SearchForSession(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Session_SearchForSession(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  int iVar1;
+  PartyData *pPVar2;
+  int iVar3;
+  bool bVar4;
   
-  uVar1 = __savegprlr_29();
-  Lobby_GetPartyData();
-  iVar2 = Party_InParty();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xb3d,0,0xffffffff82000f98,0xffffffff82047a7c);
+  iVar1 = __savegprlr_29(param_1);
+  pPVar2 = Lobby_GetPartyData();
+  iVar3 = Party_InParty(pPVar2);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xb3d,0
+                    ,"%s");
   }
-  iVar2 = Party_InParty(0xffffffff82b55118);
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xb3e,0,0xffffffff82000f98,0xffffffff82047978);
+  iVar3 = Party_InParty(&g_partyData);
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xb3e,0
+                    ,"%s");
   }
-  cVar3 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,7);
-  if (cVar3 != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xb40,0,0xffffffff82000f98,0xffffffff82047aec);
+  bVar4 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,7);
+  if (bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xb40,0
+                    ,"%s");
   }
-  iVar2 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xb42,0,0xffffffff82000f98,0xffffffff82040f3c);
+  iVar3 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xb42,0
+                    ,"%s");
   }
-  Lobby_GetPartyData();
-  Party_ClearPartyList();
+  pPVar2 = Lobby_GetPartyData();
+  Party_ClearPartyList(pPVar2);
   Session_UpdateMinPing();
-  Session_SearchForAllSessions(uVar1);
+  Session_SearchForAllSessions(iVar1);
   __restgprlr_29();
   return;
 }
@@ -2701,419 +3200,415 @@ void Session_SearchForSession(void)
 
 // 826D3FA8  LookupCountryCode  (sessions/sessions.cpp:2901)
 
-undefined8 LookupCountryCode(undefined4 param_1)
+char * LookupCountryCode(int param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
   switch(param_1) {
   case 1:
-    return 0xffffffff821a3a2c;
+    return "UAE";
   case 2:
-    return 0xffffffff821a3a24;
+    return "Albania";
   case 3:
-    return 0xffffffff821a3a1c;
+    return "Armenia";
   case 4:
-    return 0xffffffff821a3a10;
+    return "Argentina";
   case 5:
-    return 0xffffffff821a3a08;
+    return "Austria";
   case 6:
-    return 0xffffffff821a39fc;
+    return "Australia";
   case 7:
-    return 0xffffffff821a39f0;
+    return "Azerbaijan";
   case 8:
-    return 0xffffffff821a39e8;
+    return "Belgium";
   case 9:
-    return 0xffffffff821a39dc;
+    return "Bulgaria";
   case 10:
-    return 0xffffffff821a39d4;
+    return "Bahrain";
   case 0xb:
-    return 0xffffffff821a39c0;
+    return "Brunei Darussalam";
   case 0xc:
-    return 0xffffffff821a39b8;
+    return "Bolivia";
   case 0xd:
-    return 0xffffffff821a39b0;
+    return "Brazil";
   case 0xe:
-    return 0xffffffff821a39a8;
+    return "Belarus";
   case 0xf:
-    return 0xffffffff821a39a0;
+    return "Belize";
   case 0x10:
-    return 0xffffffff821a3998;
+    return "Canada";
   default:
-    uVar1 = va(0xffffffff821a35e4,param_1);
-    return uVar1;
+    pcVar1 = va("Other (%i)");
+    return pcVar1;
   case 0x12:
-    return 0xffffffff821a398c;
+    return "Switzerland";
   case 0x13:
-    return 0xffffffff821a3984;
+    return "Chile";
   case 0x14:
-    return 0xffffffff821a397c;
+    return "China";
   case 0x15:
-    return 0xffffffff821a3970;
+    return "Colombia";
   case 0x16:
-    return 0xffffffff821a3964;
+    return "Costa Rica";
   case 0x17:
-    return 0xffffffff821a3954;
+    return "Czech Republic";
   case 0x18:
-    return 0xffffffff821a394c;
+    return "Germany";
   case 0x19:
-    return 0xffffffff821a3944;
+    return "Denmark";
   case 0x1a:
-    return 0xffffffff821a3930;
+    return "Dominican Republic";
   case 0x1b:
-    return 0xffffffff821a3928;
+    return "Algeria";
   case 0x1c:
-    return 0xffffffff821a3920;
+    return "Ecuador";
   case 0x1d:
-    return 0xffffffff821a3918;
+    return "Estonia";
   case 0x1e:
-    return 0xffffffff821a3910;
+    return "Egypt";
   case 0x1f:
-    return 0xffffffff821a3908;
+    return "Spain";
   case 0x20:
-    return 0xffffffff821a3900;
+    return "Finland";
   case 0x21:
-    return 0xffffffff821a38f0;
+    return "Faroe Islands";
   case 0x22:
-    return 0xffffffff821a38e8;
+    return "France";
   case 0x23:
-    return 0xffffffff821a38e4;
+    return "UK";
   case 0x24:
-    return 0xffffffff821a38dc;
+    return "Georgia";
   case 0x25:
-    return 0xffffffff821a38d4;
+    return "Greece";
   case 0x26:
-    return 0xffffffff821a38c8;
+    return "Guatemala";
   case 0x27:
-    return 0xffffffff821a38bc;
+    return "Hong Kong";
   case 0x28:
-    return 0xffffffff821a38b0;
+    return "Honduras";
   case 0x29:
-    return 0xffffffff821a38a8;
+    return "Croatia";
   case 0x2a:
-    return 0xffffffff821a38a0;
+    return "Hungary";
   case 0x2b:
-    return 0xffffffff821a3894;
+    return "Indonesia";
   case 0x2c:
-    return 0xffffffff821a388c;
+    return "Ireland";
   case 0x2d:
-    return 0xffffffff821a3884;
+    return "Israel";
   case 0x2e:
-    return 0xffffffff821a387c;
+    return "India";
   case 0x2f:
-    return 0xffffffff821a3874;
+    return "Iraq";
   case 0x30:
-    return 0xffffffff821a386c;
+    return "Iran";
   case 0x31:
-    return 0xffffffff821a3864;
+    return "Iceland";
   case 0x32:
-    return 0xffffffff821a385c;
+    return "Italy";
   case 0x33:
-    return 0xffffffff821a3854;
+    return "Jamaica";
   case 0x34:
-    return 0xffffffff821a384c;
+    return "Jordan";
   case 0x35:
-    return 0xffffffff821a3844;
+    return "Japan";
   case 0x36:
-    return 0xffffffff821a383c;
+    return "Kenya";
   case 0x37:
-    return 0xffffffff821a3830;
+    return "Kyrgyzstan";
   case 0x38:
-    return 0xffffffff821a3828;
+    return "Korea";
   case 0x39:
-    return 0xffffffff821a3820;
+    return "Kuwait";
   case 0x3a:
-    return 0xffffffff821a3814;
+    return "Kazakhstan";
   case 0x3b:
-    return 0xffffffff821a380c;
+    return "Lebanon";
   case 0x3c:
-    return 0xffffffff821a37fc;
+    return "Leichtenstein";
   case 0x3d:
-    return 0xffffffff821a37f0;
+    return "Lithuania";
   case 0x3e:
-    return 0xffffffff821a37e4;
+    return "Luxembourg";
   case 0x3f:
-    return 0xffffffff821a37dc;
+    return "Latvia";
   case 0x40:
-    return 0xffffffff821a37d4;
+    return "Libya";
   case 0x41:
-    return 0xffffffff821a37cc;
+    return "Morocco";
   case 0x42:
-    return 0xffffffff821a37c4;
+    return "Monaco";
   case 0x43:
-    return 0xffffffff821a37b8;
+    return "Macedonia";
   case 0x44:
-    return 0xffffffff821a37ac;
+    return "Mongolia";
   case 0x45:
-    return 0xffffffff821a37a4;
+    return "Macau";
   case 0x46:
-    return 0xffffffff821a3798;
+    return "Maldives";
   case 0x47:
-    return 0xffffffff821a3790;
+    return "Mexico";
   case 0x48:
-    return 0xffffffff821a3784;
+    return "Malaysia";
   case 0x49:
-    return 0xffffffff821a3778;
+    return "Nicaragua";
   case 0x4a:
-    return 0xffffffff821a376c;
+    return "Netherlands";
   case 0x4b:
-    return 0xffffffff821a3764;
+    return "Norway";
   case 0x4c:
-    return 0xffffffff821a3758;
+    return "New Zealand";
   case 0x4d:
-    return 0xffffffff821a3750;
+    return "Oman";
   case 0x4e:
-    return 0xffffffff821a3748;
+    return "Panama";
   case 0x4f:
-    return 0xffffffff821a3740;
+    return "Peru";
   case 0x50:
-    return 0xffffffff821a3730;
+    return "Phillippines";
   case 0x51:
-    return 0xffffffff821a3724;
+    return "Pakistan";
   case 0x52:
-    return 0xffffffff821a371c;
+    return "Poland";
   case 0x53:
-    return 0xffffffff821a3710;
+    return "Puerto Rico";
   case 0x54:
-    return 0xffffffff821a3704;
+    return "Portugal";
   case 0x55:
-    return 0xffffffff821a36f8;
+    return "Paraguay";
   case 0x56:
-    return 0xffffffff821a36f0;
+    return "Qatar";
   case 0x57:
-    return 0xffffffff821a36e8;
+    return "Romania";
   case 0x58:
-    return 0xffffffff821a36d4;
+    return "Russian Federation";
   case 0x59:
-    return 0xffffffff821a36c4;
+    return "Saudi Arabia";
   case 0x5a:
-    return 0xffffffff821a36bc;
+    return "Sweden";
   case 0x5b:
-    return 0xffffffff821a36b0;
+    return "Singapore";
   case 0x5c:
-    return 0xffffffff821a36a4;
+    return "Slovenia";
   case 0x5d:
-    return 0xffffffff821a3694;
+    return "Slovak Republic";
   case 0x5f:
-    return 0xffffffff821a3688;
+    return "El Salvador";
   case 0x60:
-    return 0xffffffff821a3680;
+    return "Syria";
   case 0x61:
-    return 0xffffffff821a3674;
+    return "Thailand";
   case 0x62:
-    return 0xffffffff821a366c;
+    return "Tunisia";
   case 99:
-    return 0xffffffff821a3664;
+    return "Turkey";
   case 100:
-    return 0xffffffff821a3650;
+    return "Trinidad and Tobago";
   case 0x65:
-    return 0xffffffff821a3648;
+    return "Taiwan";
   case 0x66:
-    return 0xffffffff821a3640;
+    return "Ukraine";
   case 0x67:
-    return 0xffffffff821a363c;
+    return "USA";
   case 0x68:
-    return 0xffffffff821a3634;
+    return "Uruguay";
   case 0x69:
-    return 0xffffffff821a3628;
+    return "Uzbekistan";
   case 0x6a:
-    return 0xffffffff821a361c;
+    return "Venezuela";
   case 0x6b:
-    return 0xffffffff821a3614;
+    return "Vietnam";
   case 0x6c:
-    return 0xffffffff821a360c;
+    return "Yemen";
   case 0x6d:
-    return 0xffffffff821a35fc;
+    return "South Africa";
   case 0x6e:
-    return 0xffffffff821a35f0;
+    return "Zimbabwe";
   }
 }
 
 
 // 826D46A8  XUSERDATA_PrintValue  (sessions/sessions.cpp:3019)
 
-undefined8 XUSERDATA_PrintValue(byte *param_1)
+char * XUSERDATA_PrintValue(_XUSER_DATA *param_1)
 
 {
   byte bVar1;
-  undefined8 uVar2;
-  CHAR aCStack_110 [272];
+  char *pcVar2;
+  char acStack_110 [272];
   
-  bVar1 = *param_1;
+  bVar1 = param_1->type;
   if (bVar1 != 0xff) {
     if (bVar1 < 8) {
       if (bVar1 == 0) {
-        return 0xffffffff821a3a84;
+        return "context value";
       }
       if (bVar1 == 1) {
-        uVar2 = va(0xffffffff8200c28c,*(undefined4 *)(param_1 + 8));
-        return uVar2;
+        pcVar2 = va("%i");
+        return pcVar2;
       }
       if (bVar1 == 2) {
-        uVar2 = va(0xffffffff821a3ab0,*(undefined8 *)(param_1 + 8));
-        return uVar2;
+        pcVar2 = va("%lli");
+        return pcVar2;
       }
       if (bVar1 == 3) {
-        uVar2 = va(0xffffffff820106dc,*(undefined8 *)(param_1 + 8));
-        return uVar2;
+        pcVar2 = va("%f");
+        return pcVar2;
       }
       if (bVar1 == 4) {
-        WideCharToMultiByte(0,0,*(LPCWSTR *)(param_1 + 0xc),-1,aCStack_110,0x100,(LPCSTR)0x0,
-                            (LPBOOL)0x0);
-        uVar2 = va(0xffffffff82000f98,aCStack_110);
-        return uVar2;
+        WideCharToMultiByte(0,0,(param_1->field1_0x8).string.pwszData,-1,acStack_110,0x100,
+                            (char *)0x0,(int *)0x0);
+        pcVar2 = va("%s");
+        return pcVar2;
       }
       if (bVar1 == 5) {
-        uVar2 = va(0xffffffff820106dc,(double)*(float *)(param_1 + 8));
-        return uVar2;
+        pcVar2 = va("%f");
+        return pcVar2;
       }
       if (bVar1 == 6) {
-        return 0xffffffff821a3aa4;
+        return "binary data";
       }
-      return 0xffffffff821a3a94;
+      return "filetime data";
     }
-    if (DAT_84013128 == 0) {
-      uVar2 = va(0xffffffff821a3a30);
-      MyAssertHandler(0xffffffff821a2fc8,0xbe4,0,uVar2);
+    if (alwaysfails == 0) {
+      pcVar2 = va(
+                 "Microsoft added a new datatype to the XUSER_DATA structure!  The new value is %i\n"
+                 );
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xbe4
+                      ,0,pcVar2);
     }
   }
-  return 0xffffffff820068af;
+  return "";
 }
 
 
 // 826D4860  Session_LogSearchResultInfo  (sessions/sessions.cpp:3054)
 
-void Session_LogSearchResultInfo(undefined8 param_1,undefined4 param_2)
+void Session_LogSearchResultInfo(_XSESSION_SEARCHRESULT *param_1,uint param_2)
 
 {
-  uint uVar1;
-  undefined8 *puVar3;
-  undefined8 uVar2;
-  int iVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  int iVar7;
-  undefined8 uVar8;
-  undefined8 uVar9;
-  undefined4 local_e0;
-  CHAR aCStack_d0 [208];
+  _XUSER_PROPERTY *p_Var1;
+  int iVar2;
+  char *pcVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  int iVar6;
+  uint uStack0000001c;
+  char acStack_d0 [208];
   
-  puVar3 = (undefined8 *)__savegprlr();
-  iVar7 = 0;
-  local_e0 = 0;
-  uVar6 = 0;
-  uVar8 = 0xbff0000000000000;
-  uVar9 = uVar8;
-  if (*(int *)((int)puVar3 + 0x4c) != 0) {
+  __savegprlr();
+  iVar6 = 0;
+  uVar5 = 0;
+  uStack0000001c = param_2;
+  if (param_1->cProperties != 0) {
     do {
-      iVar4 = iVar7 + *(int *)((int)puVar3 + 0x54);
-      uVar5 = (ulonglong)*(uint *)(iVar7 + *(int *)((int)puVar3 + 0x54));
-      if (uVar5 < 0x20008109) {
-        if (uVar5 == 0x20008108) {
-          if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-            uVar2 = 0xffffffff821a3bd4;
+      p_Var1 = param_1->pProperties;
+      uVar4 = (ulonglong)*(uint *)((int)&p_Var1->dwPropertyId + iVar6);
+      if (uVar4 < 0x20008109) {
+        if (uVar4 == 0x20008108) {
+          if ((matchmaking_debug->current).enabled != false) {
+            pcVar3 = "match affiliate score";
             goto LAB_826d4af4;
           }
         }
-        else if (uVar5 < 0x10008103) {
-          if (uVar5 == 0x10008102) {
-            if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-              uVar2 = LookupCountryCode(*(undefined4 *)(iVar4 + 0x10));
-              Com_Printf(0x10,0xffffffff821a3bb0,uVar2);
+        else if (uVar4 < 0x10008103) {
+          if (uVar4 == 0x10008102) {
+            if ((matchmaking_debug->current).enabled != false) {
+              LookupCountryCode(*(int *)((int)&(p_Var1->value).field1_0x8 + iVar6));
+              Com_Printf(0x10,"match country: (%s)");
             }
           }
-          else if (uVar5 - 0x1000001a == 0) {
-            if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-              Com_Printf(0x10,0xffffffff821a3b68);
+          else if (uVar4 - 0x1000001a == 0) {
+            if ((matchmaking_debug->current).enabled != false) {
+              Com_Printf(0x10,"most slots needed on a team");
             }
-            local_e0 = *(undefined4 *)(iVar7 + *(int *)((int)puVar3 + 0x54) + 0x10);
           }
           else {
-            if ((uVar5 - 0x1000001a & 0xffffffff) != 32999) goto LAB_826d4ac4;
-            uVar2 = 0xffffffff821a3ba4;
-            if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') goto LAB_826d4af4;
+            if ((uVar4 - 0x1000001a & 0xffffffff) != 32999) goto LAB_826d4ac4;
+            pcVar3 = "match zone";
+            if ((matchmaking_debug->current).enabled != false) goto LAB_826d4af4;
           }
         }
         else {
-          if (uVar5 != 0x10008103) goto LAB_826d4ac4;
-          if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-            uVar2 = 0xffffffff821a3bc4;
+          if (uVar4 != 0x10008103) goto LAB_826d4ac4;
+          if ((matchmaking_debug->current).enabled != false) {
+            pcVar3 = "match language";
             goto LAB_826d4af4;
           }
         }
       }
-      else if (uVar5 < 0x4000810a) {
-        if (uVar5 == 0x40008109) {
-          WideCharToMultiByte(0,0,*(LPCWSTR *)(iVar4 + 0x14),-1,aCStack_d0,0x21,(LPCSTR)0x0,
-                              (LPBOOL)0x0);
-          if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-            uVar2 = 0xffffffff821a3b84;
+      else if (uVar4 < 0x4000810a) {
+        if (uVar4 == 0x40008109) {
+          WideCharToMultiByte(0,0,*(wchar_t **)((int)&(p_Var1->value).field1_0x8 + iVar6 + 4),-1,
+                              acStack_d0,0x21,(char *)0x0,(int *)0x0);
+          if ((matchmaking_debug->current).enabled != false) {
+            pcVar3 = "match hostname";
 LAB_826d4af4:
-            Com_Printf(0x10,uVar2);
+            Com_Printf(0x10,pcVar3);
           }
         }
-        else if (uVar5 - 0x30008105 == 0) {
-          if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-            Com_Printf(0x10,0xffffffff821a3b50);
+        else if (uVar4 - 0x30008105 == 0) {
+          if ((matchmaking_debug->current).enabled != false) {
+            Com_Printf(0x10,"match mu");
           }
-          uVar9 = *(undefined8 *)(iVar7 + *(int *)((int)puVar3 + 0x54) + 0x10);
         }
         else {
-          if ((uVar5 - 0x30008105 & 0xffffffff) != 1) goto LAB_826d4ac4;
-          if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-            Com_Printf(0x10,0xffffffff821a3b5c);
+          if ((uVar4 - 0x30008105 & 0xffffffff) != 1) goto LAB_826d4ac4;
+          if ((matchmaking_debug->current).enabled != false) {
+            Com_Printf(0x10,"match sigma");
           }
-          uVar8 = *(undefined8 *)(iVar7 + *(int *)((int)puVar3 + 0x54) + 0x10);
         }
       }
-      else if (uVar5 == 0x50008104) {
-        if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-          uVar2 = 0xffffffff821a3b94;
+      else if (uVar4 == 0x50008104) {
+        if ((matchmaking_debug->current).enabled != false) {
+          pcVar3 = "match rating";
           goto LAB_826d4af4;
         }
       }
       else {
 LAB_826d4ac4:
-        uVar1 = *(uint *)(iVar7 + *(int *)((int)puVar3 + 0x54));
-        Com_Printf(0x10,0xffffffff821a3bec,uVar1,uVar1 & 0x7fff);
+        Com_Printf(0x10,"unknown property %x (%i)");
       }
-      uVar2 = XUSERDATA_PrintValue(iVar7 + *(int *)((int)puVar3 + 0x54) + 8);
-      Com_Printf(0x10,0xffffffff821a3c08,uVar2);
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x18;
-    } while (uVar6 < *(uint *)((int)puVar3 + 0x4c));
+      XUSERDATA_PrintValue((_XUSER_DATA *)(&(param_1->pProperties->value).type + iVar6));
+      Com_Printf(0x10,": %s\n");
+      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 0x18;
+    } while (uVar5 < param_1->cProperties);
   }
-  uVar6 = 0;
-  if (*(int *)(puVar3 + 10) != 0) {
-    iVar7 = 0;
+  uVar5 = 0;
+  if (param_1->cContexts != 0) {
+    iVar6 = 0;
     do {
-      iVar4 = *(int *)(iVar7 + *(int *)(puVar3 + 0xb));
-      if (iVar4 == 0x8001) {
-        if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-          uVar2 = 0xffffffff8218ae50;
+      iVar2 = *(int *)((int)&param_1->pContexts->dwContextId + iVar6);
+      if (iVar2 == 0x8001) {
+        if ((matchmaking_debug->current).enabled != false) {
+          pcVar3 = "presence";
 LAB_826d4be0:
-          Com_Printf(0x10,uVar2);
+          Com_Printf(0x10,pcVar3);
         }
       }
-      else if (iVar4 == 0x800a) {
-        if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-          uVar2 = 0xffffffff821a3b1c;
+      else if (iVar2 == 0x800a) {
+        if ((matchmaking_debug->current).enabled != false) {
+          pcVar3 = "game type";
           goto LAB_826d4be0;
         }
       }
-      else if (iVar4 == 0x800b) {
-        uVar2 = 0xffffffff821a3b28;
-        if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') goto LAB_826d4be0;
+      else if (iVar2 == 0x800b) {
+        pcVar3 = "game mode";
+        if ((matchmaking_debug->current).enabled != false) goto LAB_826d4be0;
       }
       else {
-        Com_Printf(0x10,0xffffffff821a3b34);
+        Com_Printf(0x10,"unknown context %i");
       }
-      Com_Printf(0x10,0xffffffff821a3b48,*(undefined4 *)(iVar7 + *(int *)(puVar3 + 0xb) + 4));
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 8;
-    } while (uVar6 < *(uint *)(puVar3 + 10));
+      Com_Printf(0x10,": %i\n");
+      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 8;
+    } while (uVar5 < param_1->cContexts);
   }
-  Com_Printf(uVar9,uVar8,0xe,0xffffffff821a3ab8,param_2,*puVar3,aCStack_d0,uVar9,uVar8,local_e0);
+  Com_Printf(0xe,
+             "match %i: sessionId %llx, hostname %s, mu: %.3f sigma: %.3f, smallest team needs %i slots to fill\n"
+            );
   __restgprlr();
   return;
 }
@@ -3121,410 +3616,436 @@ LAB_826d4be0:
 
 // 826D4C60  Session_ParseSearchResults  (sessions/sessions.cpp:3148)
 
-void Session_ParseSearchResults(undefined8 param_1,uint *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Session_ParseSearchResults(int param_1,_XSESSION_SEARCHRESULT_HEADER *param_2)
 
 {
-  byte bVar1;
-  byte bVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  uint uVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
+  ulong uVar1;
+  ulong uVar2;
+  ulong uVar3;
+  ulong uVar4;
+  int iVar5;
+  char *pcVar6;
+  SessionData *pSVar7;
+  PartyData *pPVar8;
   int iVar9;
-  byte *pbVar10;
-  byte *pbVar11;
-  longlong lVar12;
-  undefined4 *puVar13;
-  ulonglong uVar14;
-  int iVar15;
-  byte *pbVar16;
+  longlong lVar10;
+  _XSESSION_INFO *p_Var11;
+  _XSESSION_SEARCHRESULT *p_Var12;
+  longlong lVar13;
+  undefined4 *puVar14;
+  uint uVar15;
+  int iVar16;
+  _XSESSION_SEARCHRESULT *p_Var17;
   undefined4 uStack_134;
-  undefined1 local_130 [304];
+  _XSESSION_INFO *local_130 [76];
   
-  uVar7 = __savegprlr_21();
-  lVar12 = 0;
-  if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-    uVar8 = Sys_Milliseconds();
-    Com_Printf(0x10,0xffffffff821a3c40,*param_2,uVar8);
+  iVar5 = __savegprlr_21(param_1);
+  lVar13 = 0;
+  if ((matchmaking_debug->current).enabled != false) {
+    Sys_Milliseconds();
+    Com_Printf(0x10,"Matchmaking returned %i results at time %i\n");
   }
-  uVar3 = *param_2;
-  uVar8 = Sys_Milliseconds();
-  uVar8 = va(0xffffffff821a3c10,uVar8,uVar3);
-  LSP_LogStringToDW(uVar7,uVar8,2);
-  uVar14 = 0;
-  if (*param_2 != 0) {
-    iVar15 = 0;
-    puVar13 = &uStack_134;
+  Sys_Milliseconds();
+  pcVar6 = va("results_matchmaking time: %d num_results: %d");
+  LSP_LogStringToDW(iVar5,pcVar6,DW_STRING_EVENT_LSP_LOG_MATCHMAKING_DATA);
+  uVar15 = 0;
+  if (param_2->dwSearchResults != 0) {
+    iVar16 = 0;
+    puVar14 = &uStack_134;
     do {
-      pbVar16 = (byte *)(param_2[1] + iVar15);
-      uVar3 = *(uint *)(pbVar16 + 0x44);
-      uVar4 = *(uint *)(pbVar16 + 0x48);
-      uVar5 = *(uint *)(pbVar16 + 0x3c);
-      uVar6 = *(uint *)(pbVar16 + 0x40);
-      iVar9 = Lobby_GetSession();
-      pbVar10 = (byte *)(iVar9 + 0x14);
-      pbVar11 = pbVar16;
+      p_Var17 = (_XSESSION_SEARCHRESULT *)((param_2->pResults->info).sessionID.ab + iVar16);
+      uVar1 = p_Var17->dwFilledPublicSlots;
+      uVar2 = p_Var17->dwFilledPrivateSlots;
+      uVar3 = p_Var17->dwOpenPublicSlots;
+      uVar4 = p_Var17->dwOpenPrivateSlots;
+      pSVar7 = Lobby_GetSession();
+      p_Var11 = &(pSVar7->dyn).sessionInfo;
+      p_Var12 = p_Var17;
       do {
-        bVar1 = *pbVar11;
-        bVar2 = *pbVar10;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar11 = pbVar11 + 1;
-        pbVar10 = pbVar10 + 1;
-      } while (pbVar11 != pbVar16 + 8);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-        uVar8 = Lobby_GetPartyData();
+        lVar10 = (ulonglong)(p_Var12->info).sessionID.ab[0] - (ulonglong)(p_Var11->sessionID).ab[0];
+        if (lVar10 != 0) break;
+        p_Var12 = (_XSESSION_SEARCHRESULT *)((p_Var12->info).sessionID.ab + 1);
+        p_Var11 = (_XSESSION_INFO *)((p_Var11->sessionID).ab + 1);
+      } while (p_Var12 != (_XSESSION_SEARCHRESULT *)&(p_Var17->info).hostAddress);
+      if ((int)lVar10 != 0) {
+        pPVar8 = Lobby_GetPartyData();
         iVar9 = Party_AddPartyToList
-                          (uVar8,pbVar16,(ulonglong)uVar5 + (ulonglong)uVar3,
-                           (ulonglong)uVar6 + (ulonglong)uVar4,(ulonglong)uVar3,(ulonglong)uVar4);
+                          (pPVar8,(_XSESSION_INFO *)p_Var17,uVar3 + uVar1,uVar4 + uVar2,uVar1,uVar2)
+        ;
         if (iVar9 != 0) {
-          puVar13 = puVar13 + 1;
-          *puVar13 = pbVar16;
-          lVar12 = lVar12 + 1;
-          Session_LogSearchResultInfo(pbVar16,uVar14);
+          puVar14 = puVar14 + 1;
+          *puVar14 = p_Var17;
+          lVar13 = lVar13 + 1;
+          Session_LogSearchResultInfo(p_Var17,uVar15);
         }
       }
-      uVar14 = uVar14 + 1;
-      iVar15 = iVar15 + 0x5c;
-    } while ((uVar14 & 0xffffffff) < (ulonglong)*param_2);
+      uVar15 = uVar15 + 1;
+      iVar16 = iVar16 + 0x5c;
+    } while (uVar15 < param_2->dwSearchResults);
   }
-  uVar8 = Lobby_GetPartyData();
-  PartyHost_SearchComplete(uVar8,uVar7,lVar12,local_130);
-  __restgprlr_21(lVar12);
-  return;
+  pPVar8 = Lobby_GetPartyData();
+  PartyHost_SearchComplete(pPVar8,iVar5,(int)lVar13,local_130);
+  iVar5 = __restgprlr_21(lVar13);
+  return iVar5;
 }
 
 
 // 826D4DB8  Session_RandomSearchSessionsComplete  (sessions/sessions.cpp:3220)
 
-void Session_RandomSearchSessionsComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Session_RandomSearchSessionsComplete(int param_1)
 
 {
-  undefined1 uVar1;
-  int iVar3;
-  int *piVar4;
-  ulonglong uVar2;
-  uint uVar5;
-  undefined8 uVar6;
-  uint uVar7;
-  int iVar8;
+  byte bVar1;
+  int iVar2;
+  _XOVERLAPPED *p_Var3;
+  int iVar4;
+  taskCompleteResults tVar5;
+  ulong uVar6;
+  PartyData *pPVar7;
+  uint uVar8;
   
-  iVar3 = __savegprlr_27();
-  iVar8 = iVar3 * 0xa0;
-  piVar4 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar8);
-  if (piVar4 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xc9c,0,0xffffffff82000f98,0xffffffff821a3d44);
+  iVar2 = __savegprlr_27(param_1);
+  p_Var3 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar2);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xc9c,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar8] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xc9e,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xc9e,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar3 * 0x28] != 7) {
-    MyAssertHandler(0xffffffff821a2fc8,0xc9f,0,0xffffffff82000f98,0xffffffff821a3cf8);
+  if (g_sessionOverlappedTasks.tasks[iVar2].type != 7) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xc9f,0
+                    ,"%s");
   }
-  iVar3 = PartyAtomic_IsJoiningOnPresence(0xffffffff82b59110);
-  if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xca2,0,0xffffffff82000f98,0xffffffff82047b4c);
+  iVar4 = PartyAtomic_IsJoiningOnPresence(&g_partyJoinInfo);
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xca2,0
+                    ,"%s");
   }
-  if ((*piVar4 == 0x3e5) || (iVar3 = XGetOverlappedResult(piVar4,0,0), iVar3 == 0x3e4)) {
-    __restgprlr_27(0);
-    return;
+  if ((p_Var3->InternalLow == 0x3e5) ||
+     (uVar6 = XGetOverlappedResult(p_Var3,(ulong *)0x0,0), uVar6 == 0x3e4)) {
+    tVar5 = __restgprlr_27(0);
+    return tVar5;
   }
-  uVar1 = (&DAT_844c9d35)[iVar8];
-  iVar3 = Lobby_GetPartyData();
-  *(undefined4 *)(iVar3 + 0x1ef0) = 0;
-  uVar2 = XGetOverlappedExtendedError(piVar4);
-  uVar5 = (uint)uVar2;
-  if ((uVar5 == 0x3e4) || (uVar5 == 0x3e5)) {
-    Session_ClearXOverlappedTask(piVar4);
+  bVar1 = g_sessionOverlappedTasks.tasks[iVar2].controllerIndex;
+  pPVar7 = Lobby_GetPartyData();
+  pPVar7->searchingForGames = 0;
+  uVar6 = XGetOverlappedExtendedError(p_Var3);
+  if ((uVar6 == 0x3e4) || (uVar6 == 0x3e5)) {
+    Session_ClearXOverlappedTask(p_Var3);
   }
   else {
-    if (uVar5 == 0) {
-      Lobby_GetPartyData();
-      iVar3 = Party_IsRunning();
-      if (iVar3 != 0) {
-        Session_ParseSearchResults(uVar1,DAT_844c9c64);
+    if (uVar6 == 0) {
+      pPVar7 = Lobby_GetPartyData();
+      iVar2 = Party_IsRunning(pPVar7);
+      if (iVar2 != 0) {
+        Session_ParseSearchResults((uint)bVar1,randomSearchResults);
       }
-      Session_ClearXOverlappedTask(piVar4);
-      __restgprlr_27(1);
-      return;
+      Session_ClearXOverlappedTask(p_Var3);
+      tVar5 = __restgprlr_27(1);
+      return tVar5;
     }
-    iVar3 = Lobby_GetPartyData();
-    if (*(int *)(iVar3 + 0x1ed8) == 0) {
-      uVar6 = 0xffffffff821a3ce0;
-    }
-    else {
-      uVar6 = 0xffffffff821a3cc4;
-    }
-    Com_Printf(0x10,0xffffffff821a3c94,uVar6,uVar2);
-    Session_ClearXOverlappedTask(piVar4);
-    if (uVar5 == 0x80155209) {
+    Lobby_GetPartyData();
+    Com_Printf(0x10,"FAILED SEARCH. Current pass = %s Err = %08x\n");
+    Session_ClearXOverlappedTask(p_Var3);
+    if (uVar6 == 0x80155209) {
 LAB_826d5028:
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ThrowError(1,0xffffffff8208bb60);
-      __restgprlr_27(2);
-      return;
+      Dvar_SetBool(onlinegame,false);
+      Live_ThrowError(ERR_DROP,"XBOXLIVE_SIGNEDOUTOFLIVE");
+      tVar5 = __restgprlr_27(2);
+      return tVar5;
     }
-    if ((uVar2 & 0x80070000) != 0) {
-      uVar7 = uVar5;
-      if (0 < (int)uVar5) {
-        uVar7 = uVar5 & 0xffff | 0x80070000;
+    if ((uVar6 & 0x80070000) != 0) {
+      uVar8 = uVar6;
+      if (0 < (int)uVar6) {
+        uVar8 = uVar6 & 0xffff | 0x80070000;
       }
-      if (uVar7 == 0x490) goto LAB_826d5028;
+      if (uVar8 == 0x490) goto LAB_826d5028;
     }
-    if (uVar5 == 0x80070039) {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+    if (uVar6 == 0x80070039) {
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ThrowError(1,0xffffffff8218e3b8);
-      __restgprlr_27(2);
-      return;
+      Dvar_SetBool(onlinegame,false);
+      Live_ThrowError(ERR_DROP,"EXE_LOSTCONNECTION");
+      tVar5 = __restgprlr_27(2);
+      return tVar5;
     }
-    if (uVar5 != 0x80072741) {
-      Com_PrintError(0x10,0xffffffff821a3c6c,uVar2);
-      Live_ThrowError(1,0xffffffff82084b1c);
-      __restgprlr_27(2);
-      return;
+    if (uVar6 != 0x80072741) {
+      Com_PrintError(0x10,"Error searching for session - error %x\n");
+      Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
+      tVar5 = __restgprlr_27(2);
+      return tVar5;
     }
   }
-  __restgprlr_27(2);
-  return;
+  tVar5 = __restgprlr_27(2);
+  return tVar5;
 }
 
 
 // 826D50C0  Session_SearchSessionByID  (sessions/sessions.cpp:3464)
 
-void Session_SearchSessionByID(undefined8 param_1,undefined8 param_2)
+bool Session_SearchSessionByID(int param_1,XNKID param_2)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  int iVar3;
+  ulong uVar1;
+  bool bVar4;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  undefined1 uVar5;
   
-  uVar1 = __savegprlr_26();
-  cVar4 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,6);
-  if (cVar4 != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xd8c,0,0xffffffff82000f98,0xffffffff821a3e10);
+  uVar1 = __savegprlr_26(param_1);
+  bVar4 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,6);
+  if (bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xd8c,0
+                    ,"%s");
   }
-  DAT_844ac9ac = 0x5dc;
-  DAT_844c9c90 = (undefined *)0x0;
-  XSessionSearchByID(param_2,uVar1,0xffffffff844ac9ac,0,0);
-  if (0x5dc < DAT_844ac9ac) {
-    MyAssertHandler(0xffffffff821a2fc8,0xd93,0,0xffffffff821a3d98,0xffffffff821a3dc8);
+  s_searchByIdResultsBufferSize = 0x5dc;
+  s_searchByIdResults = (_XSESSION_SEARCHRESULT_HEADER *)0x0;
+  XSessionSearchByID(param_2,uVar1,&s_searchByIdResultsBufferSize,
+                     (_XSESSION_SEARCHRESULT_HEADER *)0x0,(_XOVERLAPPED *)0x0);
+  if (0x5dc < s_searchByIdResultsBufferSize) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xd93,0
+                    ,"%s\n\t(s_searchByIdResultsBufferSize) = %i");
   }
-  DAT_844c9c90 = &DAT_844c8548;
-  TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar1,6);
-  uVar2 = TaskManager_TaskToXOverlapped();
-  if ((uVar2 & 0xffffffff) != 0) {
-    iVar3 = XSessionSearchByID(param_2,uVar1,0xffffffff844ac9ac,DAT_844c9c90,uVar2);
-    if (iVar3 == 0x3e5) {
-      __restgprlr_26(1);
-      return;
+  s_searchByIdResults = (_XSESSION_SEARCHRESULT_HEADER *)s_searchByIdResultsBuffer;
+  poVar2 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,uVar1,6);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  if (p_Var3 != (_XOVERLAPPED *)0x0) {
+    uVar1 = XSessionSearchByID(param_2,uVar1,&s_searchByIdResultsBufferSize,s_searchByIdResults,
+                               p_Var3);
+    if (uVar1 == 0x3e5) {
+      uVar5 = __restgprlr_26(1);
+      return (bool)uVar5;
     }
-    Com_PrintError(0x10,0xffffffff821a3d60);
-    Session_ClearXOverlappedTask(uVar2);
+    Com_PrintError(0x10,"MS Error: XSessionSearchByID failed with error %llx\n");
+    Session_ClearXOverlappedTask(p_Var3);
   }
-  __restgprlr_26(0);
-  return;
+  uVar5 = __restgprlr_26(0);
+  return (bool)uVar5;
 }
 
 
 // 826D51F8  Session_SearchSessionsByIdComplete  (sessions/sessions.cpp:3497)
 
-void Session_SearchSessionsByIdComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+taskCompleteResults Session_SearchSessionsByIdComplete(int param_1)
 
 {
   byte bVar1;
-  byte bVar2;
-  undefined1 uVar3;
-  int iVar5;
-  int *piVar6;
-  ulonglong uVar4;
-  char cVar7;
-  byte *pbVar8;
-  byte *pbVar10;
-  byte *pbVar11;
-  ulonglong uVar9;
-  int iVar12;
-  byte local_40 [8];
-  byte abStack_38 [56];
+  int iVar2;
+  _XOVERLAPPED *p_Var3;
+  taskCompleteResults tVar4;
+  ulong uVar5;
+  InviteSessionState IVar6;
+  bool bVar8;
+  PartyData *pPVar7;
+  longlong lVar9;
+  _XSESSION_SEARCHRESULT *p_Var10;
+  _XSESSION_SEARCHRESULT *p_Var11;
+  byte *pbVar13;
+  _XSESSION_INFO *p_Var14;
+  ulonglong uVar12;
+  byte local_40 [64];
   
-  iVar5 = __savegprlr_27();
-  iVar12 = iVar5 * 0xa0;
-  piVar6 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar12);
-  if (piVar6 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xdb1,0,0xffffffff82000f98,0xffffffff821a3d44);
+  iVar2 = __savegprlr_27(param_1);
+  p_Var3 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar2);
+  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xdb1,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d34)[iVar12] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xdb2,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar2].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xdb2,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar5 * 0x28] != 6) {
-    MyAssertHandler(0xffffffff821a2fc8,0xdb3,0,0xffffffff82000f98,0xffffffff821a3fb0);
+  if (g_sessionOverlappedTasks.tasks[iVar2].type != 6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xdb3,0
+                    ,"%s");
   }
-  if ((*piVar6 == 0x3e5) || (iVar5 = XGetOverlappedResult(piVar6,0,0), iVar5 == 0x3e4)) {
-    __restgprlr_27(0);
-    return;
+  if ((p_Var3->InternalLow == 0x3e5) ||
+     (uVar5 = XGetOverlappedResult(p_Var3,(ulong *)0x0,0), uVar5 == 0x3e4)) {
+    tVar4 = __restgprlr_27(0);
+    return tVar4;
   }
-  uVar4 = XGetOverlappedExtendedError(piVar6);
-  uVar3 = (&DAT_844c9d35)[iVar12];
-  Session_ClearXOverlappedTask(piVar6);
-  iVar5 = (int)uVar4;
-  if (iVar5 < 1) {
-    if (iVar5 == 0) {
-      Com_Printf(0x10,0xffffffff821a3f5c,uVar3);
-      iVar5 = Session_GetInviteSessionState();
-      if (iVar5 != 2) {
-        Com_Printf(0x10,0xffffffff821a3e98);
-        __restgprlr_27(1);
-        return;
+  uVar5 = XGetOverlappedExtendedError(p_Var3);
+  uVar12 = (ulonglong)(int)uVar5;
+  bVar1 = g_sessionOverlappedTasks.tasks[iVar2].controllerIndex;
+  Session_ClearXOverlappedTask(p_Var3);
+  if ((int)uVar5 < 1) {
+    if (uVar5 == 0) {
+      Com_Printf(0x10,"Search session by ID completed on controller: %d\n");
+      IVar6 = Session_GetInviteSessionState();
+      if (IVar6 != SESSION_STATE_SEARCH) {
+        Com_Printf(0x10,
+                   "Ignoring search session by ID results, we are not waiting for the results of this search anymore\n"
+                  );
+        tVar4 = __restgprlr_27(1);
+        return tVar4;
       }
-      pbVar10 = local_40;
-      pbVar8 = *(byte **)(DAT_844c9c90 + 4);
-      pbVar11 = pbVar8;
+      pbVar13 = local_40;
+      local_40[0] = 0;
+      local_40[1] = 0;
+      local_40[2] = 0;
+      local_40[3] = 0;
+      local_40[4] = 0;
+      local_40[5] = 0;
+      local_40[6] = 0;
+      local_40[7] = 0;
+      p_Var11 = s_searchByIdResults->pResults;
+      p_Var10 = p_Var11;
       do {
-        bVar1 = *pbVar10;
-        bVar2 = *pbVar11;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar10 = pbVar10 + 1;
-        pbVar11 = pbVar11 + 1;
-      } while (pbVar10 != abStack_38);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-        Com_PrintError(0x10,0xffffffff821a3f10,uVar3);
-        Live_ConfirmAcceptInvitation_Error(0xffffffff821a3efc);
-        __restgprlr_27(2);
-        return;
+        lVar9 = (ulonglong)*pbVar13 - (ulonglong)(p_Var10->info).sessionID.ab[0];
+        if (lVar9 != 0) break;
+        pbVar13 = pbVar13 + 1;
+        p_Var10 = (_XSESSION_SEARCHRESULT *)((p_Var10->info).sessionID.ab + 1);
+      } while (pbVar13 != local_40 + 8);
+      if ((int)lVar9 == 0) {
+        Com_PrintError(0x10,
+                       "Search session by ID completed but session id is blank on controller: %d\n")
+        ;
+        Live_ConfirmAcceptInvitation_Error("@EXE_HOSTUNREACH");
+        tVar4 = __restgprlr_27(2);
+        return tVar4;
       }
-      if (DAT_844c7870 != 0) {
-        pbVar11 = &DAT_844c7874;
+      if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+        p_Var14 = &g_serverSession.dyn.sessionInfo;
         do {
-          bVar1 = *pbVar11;
-          bVar2 = *pbVar8;
-          if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-          pbVar11 = pbVar11 + 1;
-          pbVar8 = pbVar8 + 1;
-        } while (pbVar11 != &DAT_844c787c);
-        if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-          cVar7 = CL_AllLocalClientsDisconnected();
-          if (cVar7 != '\0') {
-            Lobby_GetPartyData();
-            iVar5 = Party_InParty();
-            if (iVar5 == 0) goto LAB_826d5454;
+          lVar9 = (ulonglong)(p_Var14->sessionID).ab[0] - (ulonglong)(p_Var11->info).sessionID.ab[0]
+          ;
+          if (lVar9 != 0) break;
+          p_Var14 = (_XSESSION_INFO *)((p_Var14->sessionID).ab + 1);
+          p_Var11 = (_XSESSION_SEARCHRESULT *)((p_Var11->info).sessionID.ab + 1);
+        } while (p_Var14 != (_XSESSION_INFO *)&g_serverSession.dyn.sessionInfo.hostAddress);
+        if ((int)lVar9 == 0) {
+          bVar8 = CL_AllLocalClientsDisconnected();
+          if (bVar8) {
+            pPVar7 = Lobby_GetPartyData();
+            iVar2 = Party_InParty(pPVar7);
+            if (iVar2 == 0) goto LAB_826d5454;
           }
-          Com_Printf(0x10,0xffffffff8218af48);
-          __restgprlr_27(2);
-          return;
+          Com_Printf(0x10,"Received invite to current session.  Not doing anything about it\n");
+          tVar4 = __restgprlr_27(2);
+          return tVar4;
         }
       }
 LAB_826d5454:
-      DAT_8425a058 = Live_GetXuid(uVar3);
-      memcpy(&DAT_8425a060,*(void **)(DAT_844c9c90 + 4),0x3c);
-      DAT_8425a09c = 0;
+      g_launchData.invitedXUID = Live_GetXuid((uint)bVar1);
+      memcpy();
+      g_launchData.fromGameInvite = false;
       XSetLaunchData(0xffffffff84259cc8,1000);
       Session_ClearInviteState();
-      __restgprlr_27(1);
-      return;
+      tVar4 = __restgprlr_27(1);
+      return tVar4;
     }
-    if (iVar5 == -0x7feaadf7) {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+    if (uVar5 == 0x80155209) {
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ConfirmAcceptInvitation_Error(0xffffffff821a3f90);
-      __restgprlr_27(2);
-      return;
+      Dvar_SetBool(onlinegame,false);
+      Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_SIGNEDOUTOFLIVE");
+      tVar4 = __restgprlr_27(2);
+      return tVar4;
     }
   }
-  else if ((0x3e3 < iVar5) && (iVar5 < 0x3e6)) goto LAB_826d54fc;
-  uVar9 = uVar4;
-  if (0 < iVar5) {
-    uVar9 = uVar4 & 0xffff | 0x80070000;
+  else if ((0x3e3 < (int)uVar5) && ((int)uVar5 < 0x3e6)) goto LAB_826d54fc;
+  if (0 < (int)uVar5) {
+    uVar12 = (ulonglong)uVar5 & 0xffff | 0x80070000;
   }
-  uVar9 = uVar9 + 0x7ff8ffc7;
-  if (uVar9 == 0) {
-    Live_ConfirmAcceptInvitation_Error(0xffffffff821a3e64);
-    __restgprlr_27(2);
-    return;
+  uVar12 = uVar12 + 0x7ff8ffc7;
+  if (uVar12 == 0) {
+    Live_ConfirmAcceptInvitation_Error("@EXE_LOSTCONNECTION");
+    tVar4 = __restgprlr_27(2);
+    return tVar4;
   }
-  if ((uVar9 & 0xffffffff) != 0x2708) {
-    if ((uVar9 & 0xffffffff) == 0x7ff90457) {
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+  if ((uVar12 & 0xffffffff) != 0x2708) {
+    if ((uVar12 & 0xffffffff) == 0x7ff90457) {
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ConfirmAcceptInvitation_Error(0xffffffff821a3f90);
-      __restgprlr_27(2);
-      return;
+      Dvar_SetBool(onlinegame,false);
+      Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_SIGNEDOUTOFLIVE");
+      tVar4 = __restgprlr_27(2);
+      return tVar4;
     }
-    Com_PrintError(0x10,0xffffffff821a3c6c,uVar4);
-    Live_ConfirmAcceptInvitation_Error(0xffffffff821a3e78);
-    __restgprlr_27(2);
-    return;
+    Com_PrintError(0x10,"Error searching for session - error %x\n");
+    Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_CANTJOINSESSION");
+    tVar4 = __restgprlr_27(2);
+    return tVar4;
   }
 LAB_826d54fc:
-  Live_ConfirmAcceptInvitation_Error(0xffffffff821a3e78);
-  __restgprlr_27(2);
-  return;
+  Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_CANTJOINSESSION");
+  tVar4 = __restgprlr_27(2);
+  return tVar4;
 }
 
 
 // 826D55E0  Session_CleanUpSearches  (sessions/sessions.cpp:3620)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_CleanUpSearches(void)
 
 {
   bool bVar1;
-  bool bVar2;
-  char cVar4;
-  int iVar3;
+  bool bVar3;
+  bool bVar4;
+  taskCompleteResults tVar2;
   int *piVar5;
-  longlong lVar6;
+  int iVar6;
   
   __savegprlr_27();
   bVar1 = false;
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 != '\0') {
-    cVar4 = CL_AllLocalClientsDisconnected();
-    bVar2 = true;
-    if (cVar4 != '\0') goto LAB_826d5618;
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
+    bVar4 = CL_AllLocalClientsDisconnected();
+    bVar3 = true;
+    if (bVar4) goto LAB_826d5618;
   }
-  bVar2 = false;
+  bVar3 = false;
 LAB_826d5618:
-  lVar6 = 0;
-  piVar5 = &DAT_844c9d30;
+  iVar6 = 0;
+  piVar5 = &g_sessionOverlappedTasks.tasks[0].type;
   do {
-    if (*(char *)(piVar5 + 1) != '\0') {
+    if (*(bool *)(piVar5 + 1) != false) {
       if (*piVar5 == 6) {
-        if ((!bVar1) && (bVar2)) {
+        if ((!bVar1) && (bVar3)) {
           R_BeginRemoteScreenUpdate();
           bVar1 = true;
         }
-        iVar3 = Session_SearchSessionsByIdComplete(lVar6);
-        while (iVar3 == 0) {
+        tVar2 = Session_SearchSessionsByIdComplete(iVar6);
+        while (tVar2 == TASK_NOTCOMPLETE) {
           Sys_Sleep(1);
           IWNet_Frame();
-          iVar3 = Session_SearchSessionsByIdComplete(lVar6);
+          tVar2 = Session_SearchSessionsByIdComplete(iVar6);
         }
       }
       else if (*piVar5 == 7) {
-        if ((!bVar1) && (bVar2)) {
+        if ((!bVar1) && (bVar3)) {
           R_BeginRemoteScreenUpdate();
           bVar1 = true;
         }
-        iVar3 = Session_RandomSearchSessionsComplete(lVar6);
-        while (iVar3 == 0) {
+        tVar2 = Session_RandomSearchSessionsComplete(iVar6);
+        while (tVar2 == TASK_NOTCOMPLETE) {
           Sys_Sleep(1);
           IWNet_Frame();
-          iVar3 = Session_RandomSearchSessionsComplete(lVar6);
+          tVar2 = Session_RandomSearchSessionsComplete(iVar6);
         }
       }
     }
     piVar5 = piVar5 + 0x28;
-    lVar6 = lVar6 + 1;
+    iVar6 = iVar6 + 1;
   } while ((int)piVar5 < -0x7bb34ed0);
   if (bVar1) {
     R_EndRemoteScreenUpdate();
@@ -3536,48 +4057,53 @@ LAB_826d5618:
 
 // 826D5700  Session_KillSearches  (sessions/sessions.cpp:3662)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Session_KillSearches(void)
 
 {
-  int iVar1;
+  PartyData *pPVar1;
   
-  TaskManager_CancelTasks(0xffffffff844c9c98,7);
-  iVar1 = Lobby_GetPartyData();
-  *(undefined4 *)(iVar1 + 0x1ef0) = 0;
+  TaskManager_CancelTasks(&g_sessionOverlappedTasks,7);
+  pPVar1 = Lobby_GetPartyData();
+  pPVar1->searchingForGames = 0;
   return;
 }
 
 
 // 826D5738  Session_SearchInProgress  (sessions/sessions.cpp:3677)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool Session_SearchInProgress(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,7);
-  return cVar1 != '\0';
+  bVar1 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,7);
+  return (bool)('\x01' - !bVar1);
 }
 
 
 // 826D5770  Session_PrintGraveyardStatus  (sessions/sessions.cpp:3689)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_PrintGraveyardStatus(void)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  SessionGraveYard *pSVar1;
   
   __savegprlr_28();
-  lVar1 = 0;
-  pcVar2 = &DAT_844a9e60;
+  pSVar1 = sessionGraveYard;
   do {
-    if (*pcVar2 == '\0') break;
-    Com_Printf(0x19,0xffffffff821a3ff8,lVar1,*(undefined4 *)(pcVar2 + 0x18),
-               *(undefined4 *)(pcVar2 + 8));
-    pcVar2 = pcVar2 + 0x630;
-    lVar1 = lVar1 + 1;
-  } while ((int)pcVar2 < -0x7bb53c80);
+    if (pSVar1->active == false) break;
+    Com_Printf(0x19,"Session - Graveyard Session %i - %llx (%s)\n");
+    pSVar1 = pSVar1 + 1;
+  } while ((int)pSVar1 < -0x7bb53c80);
   __restgprlr_28();
   return;
 }
@@ -3585,38 +4111,38 @@ void Session_PrintGraveyardStatus(void)
 
 // 826DB278  Session_ClearSessionIDFromGraveyard  (sessions/sessions.cpp:3709)
 
-void Session_ClearSessionIDFromGraveyard(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_ClearSessionIDFromGraveyard(XNKID *param_1)
 
 {
-  byte bVar1;
-  byte bVar2;
+  byte *pbVar1;
+  longlong lVar2;
   byte *pbVar3;
-  byte *pbVar4;
-  byte *pbVar5;
-  longlong lVar6;
-  byte *pbVar7;
+  _XSESSION_INFO *p_Var4;
+  int iVar5;
+  _XSESSION_INFO *p_Var6;
   
-  pbVar3 = (byte *)__savegprlr_28();
-  lVar6 = 0;
-  pbVar7 = &DAT_844a9e7c;
+  pbVar1 = (byte *)__savegprlr_28(param_1);
+  iVar5 = 0;
+  p_Var6 = &sessionGraveYard[0].sessionData.dyn.sessionInfo;
   do {
-    if (pbVar7[-0x1c] != 0) {
-      pbVar5 = pbVar7;
-      pbVar4 = pbVar3;
+    if (*(char *)((int)(p_Var6 + -1) + 0x20) != '\0') {
+      p_Var4 = p_Var6;
+      pbVar3 = pbVar1;
       do {
-        bVar1 = *pbVar5;
-        bVar2 = *pbVar4;
-        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-        pbVar5 = pbVar5 + 1;
-        pbVar4 = pbVar4 + 1;
-      } while (pbVar5 != pbVar7 + 8);
-      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-        Session_DeleteGraveyardSlotImmediately(lVar6);
+        lVar2 = (ulonglong)(p_Var4->sessionID).ab[0] - (ulonglong)*pbVar3;
+        if (lVar2 != 0) break;
+        p_Var4 = (_XSESSION_INFO *)((p_Var4->sessionID).ab + 1);
+        pbVar3 = pbVar3 + 1;
+      } while (p_Var4 != (_XSESSION_INFO *)&p_Var6->hostAddress);
+      if ((int)lVar2 == 0) {
+        Session_DeleteGraveyardSlotImmediately(iVar5);
       }
     }
-    pbVar7 = pbVar7 + 0x630;
-    lVar6 = lVar6 + 1;
-    if (-0x7bb53c65 < (int)pbVar7) {
+    p_Var6 = (_XSESSION_INFO *)((int)(p_Var6 + 0x1a) + 0x18);
+    iVar5 = iVar5 + 1;
+    if (-0x7bb53c65 < (int)p_Var6) {
       __restgprlr_28();
       return;
     }
@@ -3626,79 +4152,85 @@ void Session_ClearSessionIDFromGraveyard(void)
 
 // 826D9F48  Session_ManageGraveYard  (sessions/sessions.cpp:3727)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_ManageGraveYard(void)
 
 {
-  bool bVar1;
-  char cVar4;
-  ulonglong uVar2;
-  int iVar3;
+  bool bVar3;
+  int iVar1;
+  int iVar2;
+  bool bVar4;
   ulonglong uVar5;
-  uint *puVar6;
+  int *piVar6;
   int iVar7;
-  longlong lVar8;
-  undefined4 *puVar9;
+  int iVar8;
+  SessionData *pSVar9;
   
   __savegprlr_20();
-  if (DAT_844cb0a0 != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xe98,0,0xffffffff82000f98,0xffffffff821a6080);
+  if (recursiveCheck != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xe98,0
+                    ,"%s");
   }
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xe99,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xe99,0
+                    ,"%s");
   }
-  cVar4 = CL_AllLocalClientsInactive();
-  if (cVar4 == '\0') {
-    DAT_844cb0a0 = 1;
-    uVar2 = Sys_Milliseconds();
-    bVar1 = false;
+  bVar3 = CL_AllLocalClientsInactive();
+  if (!bVar3) {
+    recursiveCheck = true;
+    iVar1 = Sys_Milliseconds();
+    bVar3 = false;
     iVar7 = 0;
-    iVar3 = 0;
-    puVar6 = &DAT_844aa364;
-    uVar5 = uVar2;
+    iVar8 = 0;
+    piVar6 = &sessionGraveYard[0].sessionData.dyn.sessionDeleteTime;
+    uVar5 = (longlong)iVar1;
     do {
-      if (*(char *)(puVar6 + -0x141) == '\0') {
-        bVar1 = true;
+      if (*(char *)(piVar6 + -0x141) == '\0') {
+        bVar3 = true;
         break;
       }
-      if ((int)*puVar6 < (int)uVar5) {
-        uVar5 = (ulonglong)*puVar6;
-        iVar7 = iVar3;
+      if (*piVar6 < (int)uVar5) {
+        uVar5 = (ulonglong)(uint)*piVar6;
+        iVar7 = iVar8;
       }
-      puVar6 = puVar6 + 0x18c;
-      iVar3 = iVar3 + 1;
-    } while ((int)puVar6 < -0x7bb5377c);
-    lVar8 = 0;
-    puVar9 = &DAT_844a9e68;
+      piVar6 = piVar6 + 0x18c;
+      iVar8 = iVar8 + 1;
+    } while ((int)piVar6 < -0x7bb5377c);
+    iVar8 = 0;
+    pSVar9 = &sessionGraveYard[0].sessionData;
     do {
-      if (*(char *)(puVar9 + -2) != '\0') {
-        iVar3 = Voice_GetRegisteredPlayerCount(puVar9);
-        if (iVar3 != 0) {
-          MyAssertHandler(0xffffffff821a2fc8,0xebb,0,0xffffffff82000f98,0xffffffff821a601c);
+      if (*(char *)&pSVar9[-1].dyn.internalRegisteredUsers[0x11].xuid != '\0') {
+        iVar2 = Voice_GetRegisteredPlayerCount(pSVar9);
+        if (iVar2 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0xebb,0,"%s");
         }
-        cVar4 = Live_IsSignedIn(puVar9[0x13e]);
-        if ((cVar4 != '\0') &&
-           (iVar3 = Session_SpecificSessionTasksInProgress(puVar9,0x7ff), iVar3 == 0)) {
-          Session_EndGameSession(puVar9);
-          iVar3 = Session_SpecificSessionTasksInProgress(puVar9,0x7ff);
-          if (iVar3 == 0) {
-            Session_EveryoneLeaveSessionAsync(puVar9[0x13e],puVar9);
-            iVar3 = Session_SpecificSessionTasksInProgress(puVar9,0x7ff);
-            if ((iVar3 == 0) &&
-               (((!bVar1 && (iVar7 == (int)lVar8)) || (-1 < (longlong)(uVar2 - (uint)puVar9[0x13f]))
-                ))) {
-              Com_Printf(0x19,0xffffffff821a604c,lVar8,*puVar9);
-              Session_StartDeleteHandle(lVar8);
-              puVar9[4] = 0;
-              *(undefined1 *)(puVar9 + -2) = 0;
+        bVar4 = Live_IsSignedIn((pSVar9->dyn).sessionCreateController);
+        if ((bVar4) && (iVar2 = Session_SpecificSessionTasksInProgress(pSVar9,0x7ff), iVar2 == 0)) {
+          Session_EndGameSession(pSVar9);
+          iVar2 = Session_SpecificSessionTasksInProgress(pSVar9,0x7ff);
+          if (iVar2 == 0) {
+            Session_EveryoneLeaveSessionAsync((pSVar9->dyn).sessionCreateController,pSVar9);
+            iVar2 = Session_SpecificSessionTasksInProgress(pSVar9,0x7ff);
+            if ((iVar2 == 0) &&
+               (((!bVar3 && (iVar7 == iVar8)) ||
+                (-1 < (longlong)((longlong)iVar1 - (ulonglong)(uint)(pSVar9->dyn).sessionDeleteTime)
+                )))) {
+              Com_Printf(0x19,"Session - Removing slot %i from graveyard (%s).\n");
+              Session_StartDeleteHandle(iVar8);
+              (pSVar9->dyn).sessionHandle = (void *)0x0;
+              *(undefined1 *)&pSVar9[-1].dyn.internalRegisteredUsers[0x11].xuid = 0;
             }
           }
         }
       }
-      puVar9 = puVar9 + 0x18c;
-      lVar8 = lVar8 + 1;
-    } while ((int)puVar9 < -0x7bb53c78);
-    DAT_844cb0a0 = '\0';
+      pSVar9 = (SessionData *)&pSVar9[1].staticData.voiceEngine;
+      iVar8 = iVar8 + 1;
+    } while ((int)pSVar9 < -0x7bb53c78);
+    recursiveCheck = false;
   }
   __restgprlr_20();
   return;
@@ -3707,20 +4239,23 @@ void Session_ManageGraveYard(void)
 
 // 826DA830  Session_DeleteGraveyardSlotImmediately  (sessions/sessions.cpp:3807)
 
-void Session_DeleteGraveyardSlotImmediately(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_DeleteGraveyardSlotImmediately(int param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
-  iVar1 = __savegprlr_28();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xee2,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar1 = __savegprlr_28(param_1);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xee2,0
+                    ,"%s");
   }
-  Com_DPrintf(0xe,0xffffffff821a6198,iVar1,(&DAT_844a9e68)[iVar1 * 0x18c]);
-  Session_DeleteSessionImmediately(&DAT_844a9e68 + iVar1 * 0x18c);
-  (&DAT_844a9e60)[iVar1 * 0x630] = 0;
+  Com_DPrintf(0xe,"Deleting graveyard slot %i (%s) immediately\n");
+  Session_DeleteSessionImmediately(&sessionGraveYard[iVar1].sessionData);
+  sessionGraveYard[iVar1].active = false;
   __restgprlr_28();
   return;
 }
@@ -3728,89 +4263,96 @@ void Session_DeleteGraveyardSlotImmediately(void)
 
 // 826DA150  Session_LeavePresenceSessionInGraveYard  (sessions/sessions.cpp:3822)
 
-void Session_LeavePresenceSessionInGraveYard(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_LeavePresenceSessionInGraveYard(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 *puVar3;
-  ulonglong uVar2;
-  char cVar4;
-  undefined8 uVar5;
-  undefined4 *puVar6;
-  int *piVar7;
-  undefined8 *puVar8;
-  longlong lVar9;
-  longlong lVar10;
-  char *pcVar11;
+  SessionTaskData *pSVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
+  bool bVar5;
+  SessionData *pSVar6;
+  SessionDynamicData *pSVar7;
+  SessionTaskData *pSVar8;
+  int iVar9;
+  RegisteredUser *pRVar10;
   
-  uVar1 = __savegprlr();
-  puVar6 = &DAT_844a9e68;
+  __savegprlr();
+  pSVar6 = &sessionGraveYard[0].sessionData;
   do {
-    piVar7 = puVar6 + 4;
-    if ((*(char *)(puVar6 + -2) != '\0') && ((puVar6[0x1a] & 2) != 0)) {
-      Session_CancelSpecificSessionTasks(puVar6,0x7ff);
-      Session_CompleteSpecificSessionTasks(puVar6,0x73f);
+    pSVar7 = &pSVar6->dyn;
+    if ((*(char *)&pSVar6[-1].dyn.internalRegisteredUsers[0x11].xuid != '\0') &&
+       (((pSVar6->dyn).flags & 2U) != 0)) {
+      Session_CancelSpecificSessionTasks(pSVar6,0x7ff);
+      Session_CompleteSpecificSessionTasks(pSVar6,0x73f);
       LB_EndOngoingTasks();
-      if (*piVar7 != 0) {
-        Session_SanityCheckSession(puVar6);
+      if (pSVar7->sessionHandle != (void *)0x0) {
+        Session_SanityCheckSession(pSVar6);
       }
-      Session_CompleteSpecificSessionTasks(puVar6,0x1df);
-      puVar3 = (undefined8 *)Session_GetFreeSessionTaskData();
-      lVar10 = 0;
-      lVar9 = 0;
-      pcVar11 = (char *)(puVar6 + 0x142);
-      puVar8 = puVar3;
+      Session_CompleteSpecificSessionTasks(pSVar6,0x1df);
+      pSVar1 = Session_GetFreeSessionTaskData();
+      uVar4 = 0;
+      iVar9 = 0;
+      pRVar10 = (pSVar6->dyn).internalRegisteredUsers;
+      pSVar8 = pSVar1;
       do {
-        if (*pcVar11 != '\0') {
-          uVar5 = *(undefined8 *)(pcVar11 + 8);
-          lVar10 = lVar10 + 1;
-          puVar8 = puVar8 + 1;
-          *puVar8 = uVar5;
-          Com_DPrintf(0x10,0xffffffff821a5fd0,lVar9,uVar5,*puVar6,*piVar7);
-          *pcVar11 = '\0';
+        if (pRVar10->active != false) {
+          uVar4 = uVar4 + 1;
+          pSVar8 = (SessionTaskData *)&pSVar8->field2_0x8;
+          ((SessionLeaveData *)pSVar8)->playerList[0] = pRVar10->xuid;
+          Com_DPrintf(0x10,
+                      "Calling mass XSessionLeaveRemote for slot %i [%llx] in session \'%s\' [%p]\n"
+                     );
+          pRVar10->active = false;
         }
-        lVar9 = lVar9 + 1;
-        pcVar11 = pcVar11 + 0x10;
-      } while ((int)lVar9 < 0x12);
-      if (*piVar7 == 0) {
-        if ((int)lVar10 != 0) {
-          MyAssertHandler(0xffffffff821a2fc8,0x8b5,0,0xffffffff82000f98,0xffffffff821a5fc0);
+        iVar9 = iVar9 + 1;
+        pRVar10 = pRVar10 + 1;
+      } while (iVar9 < 0x12);
+      if (pSVar7->sessionHandle == (void *)0x0) {
+        if (uVar4 != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x8b5,0,"%s");
           goto LAB_826da29c;
         }
       }
       else {
 LAB_826da29c:
-        if ((int)lVar10 != 0) {
-          if (*piVar7 == 0) {
-            MyAssertHandler(0xffffffff821a2fc8,0x8ba,0,0xffffffff82000f98,0xffffffff820583e8);
+        if (uVar4 != 0) {
+          if (pSVar7->sessionHandle == (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp"
+                            ,0x8ba,0,"%s");
           }
-          TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar1,4);
-          uVar2 = TaskManager_TaskToXOverlapped();
-          uVar5 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar2);
-          TaskManager_SetTaskData(uVar5,puVar3);
-          uVar5 = XSessionLeaveRemote(*piVar7,lVar10,puVar3 + 1,uVar2);
-          if (((int)uVar5 == 0) || ((int)uVar5 == 0x3e5)) {
-            *(undefined4 **)((int)puVar3 + 4) = puVar6;
-            *(undefined1 *)puVar3 = 1;
+          poVar2 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,param_1,4);
+          p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+          poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+          TaskManager_SetTaskData(poVar2,pSVar1);
+          uVar4 = XSessionLeaveRemote(pSVar7->sessionHandle,uVar4,(ulong64 *)&pSVar1->field2_0x8,
+                                      p_Var3);
+          if ((uVar4 == 0) || (uVar4 == 0x3e5)) {
+            pSVar1->session = pSVar6;
+            pSVar1->active = true;
           }
           else {
-            cVar4 = Live_IsUserSignedInToLive(uVar1);
-            if (cVar4 != '\0') {
-              Com_PrintError(0x10,0xffffffff821a5f84,uVar5);
+            bVar5 = Live_IsUserSignedInToLive(param_1);
+            if (bVar5) {
+              Com_PrintError(0x10,"Microsoft error: Session_EveryoneLeaveSession() - error %i\n");
             }
-            if ((uVar2 & 0xffffffff) == 0) {
-              MyAssertHandler(0xffffffff821a2fc8,0x34c,0,0xffffffff82000f98,0xffffffff8208b598);
+            if (p_Var3 == (_XOVERLAPPED *)0x0) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp"
+                              ,0x34c,0,"%s");
             }
-            TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar2);
-            TaskManager_ClearTask();
+            poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+            TaskManager_ClearTask(poVar2);
           }
         }
       }
-      Session_CompleteSpecificSessionTasks(puVar6,0x73f);
+      Session_CompleteSpecificSessionTasks(pSVar6,0x73f);
       LB_EndOngoingTasks();
     }
-    puVar6 = puVar6 + 0x18c;
-    if (-0x7bb53c79 < (int)puVar6) {
+    pSVar6 = (SessionData *)&pSVar6[1].staticData.voiceEngine;
+    if (-0x7bb53c79 < (int)pSVar6) {
       __restgprlr();
       return;
     }
@@ -3820,31 +4362,32 @@ LAB_826da29c:
 
 // 826DA8B8  Session_EmptyGraveYard  (sessions/sessions.cpp:3847)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_EmptyGraveYard(void)
 
 {
-  char cVar1;
-  longlong lVar2;
-  undefined4 *puVar3;
+  bool bVar1;
+  SessionData *pSVar2;
   
   __savegprlr_24();
-  lVar2 = 0;
-  puVar3 = &DAT_844a9e68;
+  pSVar2 = &sessionGraveYard[0].sessionData;
   do {
-    if (*(char *)(puVar3 + -2) != '\0') {
-      Session_CompleteSpecificSessionTasks(puVar3,0x73f);
+    if (*(char *)&pSVar2[-1].dyn.internalRegisteredUsers[0x11].xuid != '\0') {
+      Session_CompleteSpecificSessionTasks(pSVar2,0x73f);
       LB_EndOngoingTasks();
-      cVar1 = Sys_IsMainThread();
-      if (cVar1 == '\0') {
-        MyAssertHandler(0xffffffff821a2fc8,0xee2,0,0xffffffff82000f98,0xffffffff82010b48);
+      bVar1 = Sys_IsMainThread();
+      if (!bVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xee2,0,"%s");
       }
-      Com_DPrintf(0xe,0xffffffff821a6198,lVar2,*puVar3);
-      Session_DeleteSessionImmediately(puVar3);
-      *(undefined1 *)(puVar3 + -2) = 0;
+      Com_DPrintf(0xe,"Deleting graveyard slot %i (%s) immediately\n");
+      Session_DeleteSessionImmediately(pSVar2);
+      *(undefined1 *)&pSVar2[-1].dyn.internalRegisteredUsers[0x11].xuid = 0;
     }
-    puVar3 = puVar3 + 0x18c;
-    lVar2 = lVar2 + 1;
-  } while ((int)puVar3 < -0x7bb53c78);
+    pSVar2 = (SessionData *)&pSVar2[1].staticData.voiceEngine;
+  } while ((int)pSVar2 < -0x7bb53c78);
   __restgprlr_24();
   return;
 }
@@ -3852,22 +4395,26 @@ void Session_EmptyGraveYard(void)
 
 // 826D57D8  Session_NeedsSkillUpdate  (sessions/sessions.cpp:3866)
 
-void Session_NeedsSkillUpdate(undefined4 *param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_NeedsSkillUpdate(SessionData *param_1)
 
 {
-  if (param_1 == &DAT_844c7860) {
-    if ((((DAT_844c7870 == 0) || ((DAT_844c78c8 & 1) == 0)) ||
-        (*(char *)(DAT_84253bb8 + 0xc) != '\0')) ||
-       (DAT_844c84b0 = 1, *(char *)(DAT_82aa1ae4 + 0xc) != '\0')) {
-      DAT_844c84b0 = 0;
+  if (param_1 == &g_serverSession) {
+    if ((((g_serverSession.dyn.sessionHandle == (void *)0x0) ||
+         ((g_serverSession.dyn.flags & 1U) == 0)) ||
+        ((xblive_privatematch->current).enabled != false)) ||
+       (sessionModSkillData.needsUpdate = true, (systemlink->current).enabled != false)) {
+      sessionModSkillData.needsUpdate = false;
     }
     return;
   }
-  if (param_1 != &DAT_844ac9b0) {
+  if (param_1 != &g_partyPresenceSession) {
     return;
   }
-  if ((DAT_844ac9c0 == 0) || (DAT_844c8b28 = 1, (uRam844aca18 & 1) == 0)) {
-    DAT_844c8b28 = 0;
+  if ((g_partyPresenceSession.dyn.sessionHandle == (void *)0x0) ||
+     (sessionCalcSkillData.needsUpdate = true, (g_partyPresenceSession.dyn.flags & 1U) == 0)) {
+    sessionCalcSkillData.needsUpdate = false;
   }
   return;
 }
@@ -3875,70 +4422,84 @@ void Session_NeedsSkillUpdate(undefined4 *param_1)
 
 // 826D5888  Session_CalcSkill  (sessions/sessions.cpp:3879)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_CalcSkill(void)
 
 {
-  char cVar3;
-  undefined8 uVar1;
-  ulonglong uVar2;
-  undefined8 *puVar4;
-  undefined8 *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar6;
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  char *pcVar4;
+  ulong uVar5;
+  ulong64 *puVar7;
+  uint uVar8;
+  SessionCalcSkillData *pSVar9;
   
   __savegprlr_26();
-  if (DAT_844ac9c0 != 0) {
-    puVar4 = (undefined8 *)&DAT_844c8b28;
-    if (((DAT_844c8b28 != '\0') && (DAT_844c8b29 == '\0')) &&
-       (cVar3 = LiveStorage_DoWeHavePlaylists(), cVar3 != '\0')) {
-      uVar7 = 0;
-      uVar6 = 0;
-      puVar5 = &DAT_844aca28;
+  if (g_partyPresenceSession.dyn.sessionHandle != (void *)0x0) {
+    pSVar9 = &sessionCalcSkillData;
+    if (((sessionCalcSkillData.needsUpdate != false) && (sessionCalcSkillData.active == false)) &&
+       (bVar6 = LiveStorage_DoWeHavePlaylists(), bVar6)) {
+      uVar5 = 0;
+      uVar8 = 0;
+      puVar7 = &g_partyPresenceSession.dyn.users[0].xuid;
       do {
-        cVar3 = Session_IsUserRegistered(0xffffffff844ac9b0,uVar6);
-        if (cVar3 != '\0') {
-          uVar7 = uVar7 + 1;
-          puVar4 = puVar4 + 1;
-          *puVar4 = *puVar5;
+        bVar6 = Session_IsUserRegistered(&g_partyPresenceSession,uVar8);
+        if (bVar6) {
+          uVar5 = uVar5 + 1;
+          pSVar9 = (SessionCalcSkillData *)pSVar9->playerList;
+          *(ulong64 *)pSVar9 = *puVar7;
         }
-        uVar6 = uVar6 + 1;
-        puVar5 = puVar5 + 8;
-      } while ((uVar6 & 0xffffffff) < 0x12);
-      if ((uVar7 & 0xffffffff) != 0) {
-        TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,0,10);
-        uVar6 = TaskManager_TaskToXOverlapped();
-        if ((uVar6 & 0xffffffff) != 0) {
-          uVar1 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar6);
-          TaskManager_SetTaskData(uVar1,0xffffffff844c8b28);
-          Session_SetUpTrueskillData(DAT_844acea8);
-          DAT_844c9bc0 = 0;
-          uVar2 = XUserReadStats(0x415608cb,uVar7,0xffffffff844c8b30,1,0xffffffff844c9bc4,
-                                 0xffffffff844c9bc0,0,0);
-          if ((uVar2 & 0xffffffff) != 0x7a) {
-            Session_ClearXOverlappedTask(uVar6);
-            Com_PrintError(0x10,0xffffffff821a4100,uVar2);
+        uVar8 = uVar8 + 1;
+        puVar7 = puVar7 + 8;
+      } while (uVar8 < 0x12);
+      if (uVar5 != 0) {
+        poVar1 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,0,10);
+        p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+        if (p_Var2 != (_XOVERLAPPED *)0x0) {
+          poVar1 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+          TaskManager_SetTaskData(poVar1,&sessionCalcSkillData);
+          Session_SetUpTrueskillData(g_partyPresenceSession.dyn.sessionCreateController);
+          sessionCalcSkillData.bufferSize = 0;
+          uVar3 = XUserReadStats(0x415608cb,uVar5,sessionCalcSkillData.playerList,1,
+                                 &sessionCalcSkillData.spec,&sessionCalcSkillData.bufferSize,
+                                 (_XUSER_STATS_READ_RESULTS *)0x0,(_XOVERLAPPED *)0x0);
+          if (uVar3 != 0x7a) {
+            Session_ClearXOverlappedTask(p_Var2);
+            Com_PrintError(0x10,
+                           "Microsoft error calculating skill - unable to determine buffer size, error code: %i\n"
+                          );
             __restgprlr_26();
             return;
           }
-          if (DAT_844c9bc0 < 0x1001) {
-            Com_Printf(0xe,0xffffffff821a406c,uVar7);
-            uVar7 = XUserReadStats(0x415608cb,uVar7,0xffffffff844c8b30,1,0xffffffff844c9bc4,
-                                   0xffffffff844c9bc0,0xffffffff844c8bc0,uVar6);
-            if (((uVar7 & 0xffffffff) != 0) && ((uVar7 & 0xffffffff) != 0x3e5)) {
-              Session_ClearXOverlappedTask(uVar6);
-              Com_PrintError(0x10,0xffffffff821a4028,uVar7);
+          if (sessionCalcSkillData.bufferSize < 0x1001) {
+            Com_Printf(0xe,"Calculating the skill for %i players\n");
+            uVar5 = XUserReadStats(0x415608cb,uVar5,sessionCalcSkillData.playerList,1,
+                                   &sessionCalcSkillData.spec,&sessionCalcSkillData.bufferSize,
+                                   (_XUSER_STATS_READ_RESULTS *)sessionCalcSkillData.skillBuffer,
+                                   p_Var2);
+            if ((uVar5 != 0) && (uVar5 != 0x3e5)) {
+              Session_ClearXOverlappedTask(p_Var2);
+              Com_PrintError(0x10,
+                             "Microsoft error - Unable to start async fetch of skill data: %i\n");
               __restgprlr_26();
               return;
             }
-            DAT_844c8b29 = '\x01';
-            DAT_844c8b28 = '\0';
+            sessionCalcSkillData.active = true;
+            sessionCalcSkillData.needsUpdate = false;
           }
           else {
-            Session_ClearXOverlappedTask(uVar6);
-            Com_PrintError(0x10,0xffffffff821a40b8,DAT_844c9bc0,0x1000);
-            if (DAT_84013128 == 0) {
-              uVar1 = va(0xffffffff821a4094,DAT_844c9bc0,0x1000);
-              MyAssertHandler(0xffffffff821a2fc8,0xf65,0,uVar1);
+            Session_ClearXOverlappedTask(p_Var2);
+            Com_PrintError(0x10,
+                           "Microsoft error calculating skill - not enough space for data: %i > %i\n"
+                          );
+            if (alwaysfails == 0) {
+              pcVar4 = va("Not enough space for data: %i > %i\n");
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp"
+                              ,0xf65,0,pcVar4);
               __restgprlr_26();
               return;
             }
@@ -3954,156 +4515,172 @@ void Session_CalcSkill(void)
 
 // 826D5AC8  Session_CalcSkillComplete  (sessions/sessions.cpp:3963)
 
-void Session_CalcSkillComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_CalcSkillComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char cVar5;
-  uint uVar4;
-  uint uVar6;
-  int iVar7;
-  undefined1 *puVar8;
-  uint *puVar9;
-  short *psVar10;
-  int iVar11;
-  undefined1 local_160 [144];
-  undefined1 auStack_d0 [208];
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  void *pvVar6;
+  bool bVar8;
+  uint uVar7;
+  uint uVar9;
+  int iVar10;
+  double *pdVar11;
+  uint *puVar12;
+  short *psVar13;
+  double local_160 [18];
+  double adStack_d0 [26];
   
-  iVar2 = __savegprlr_25();
-  iVar11 = iVar2 * 0xa0;
-  if ((&DAT_844c9d34)[iVar11] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0xf8b,0,0xffffffff82000f98,0xffffffff821a3388);
+  iVar1 = __savegprlr_25(param_1);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xf8b,0
+                    ,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 10) {
-    MyAssertHandler(0xffffffff821a2fc8,0xf8c,0,0xffffffff82000f98,0xffffffff821a4238);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 10) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xf8c,0
+                    ,"%s");
   }
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar11);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0xf8f,0,0xffffffff82000f98,0xffffffff8208b66c);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0xf8f,0
+                    ,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_25(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_25(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  iVar2 = TaskManager_GetTaskData();
-  *(undefined1 *)(iVar2 + 1) = 0;
-  Session_ClearXOverlappedTask(piVar3);
-  if ((int)uVar1 == 0) {
-    if (*(int *)(iVar2 + 0x98) != 0) {
-      if (**(int **)(iVar2 + 0x9c) != *(int *)(iVar2 + 0x109c)) {
-        MyAssertHandler(0xffffffff821a2fc8,0xfa9,0,0xffffffff82000f98,0xffffffff821a41b0);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pvVar6 = TaskManager_GetTaskData(poVar5);
+  *(undefined1 *)((int)pvVar6 + 1) = 0;
+  Session_ClearXOverlappedTask(p_Var2);
+  if (uVar4 == 0) {
+    if (*(int *)((int)pvVar6 + 0x98) != 0) {
+      if (**(int **)((int)pvVar6 + 0x9c) != *(int *)((int)pvVar6 + 0x109c)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xfa9,0,"%s");
       }
-      iVar11 = *(int *)(iVar2 + 0x9c);
-      if (0x12 < *(uint *)(iVar11 + 8)) {
-        MyAssertHandler(0xffffffff821a2fc8,0xfac,0,0xffffffff821a4174,*(uint *)(iVar11 + 8),0,0x12);
+      iVar1 = *(int *)((int)pvVar6 + 0x9c);
+      if (0x12 < *(uint *)(iVar1 + 8)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0xfac,0,"view->dwNumRows not in [0, MAX_CLIENTS]\n\t%i not in [%i, %i]");
       }
-      uVar6 = 0;
-      uVar4 = 0;
-      if (*(int *)(iVar11 + 8) != 0) {
-        puVar9 = (uint *)(*(int *)(iVar11 + 0xc) + 0x28);
-        iVar7 = 0;
+      uVar9 = 0;
+      uVar7 = 0;
+      if (*(int *)(iVar1 + 8) != 0) {
+        puVar12 = (uint *)(*(int *)(iVar1 + 0xc) + 0x28);
+        iVar10 = 0;
         do {
-          uVar4 = 0;
-          psVar10 = (short *)puVar9[1];
-          if (*puVar9 != 0) {
+          uVar7 = 0;
+          psVar13 = (short *)puVar12[1];
+          if (*puVar12 != 0) {
             do {
-              if (*psVar10 == 0x3f) {
-                puVar8 = auStack_d0;
+              if (*psVar13 == 0x3f) {
+                pdVar11 = adStack_d0;
 LAB_826d5cd8:
-                *(undefined8 *)(puVar8 + iVar7) = *(undefined8 *)(psVar10 + 8);
+                *(undefined8 *)((int)pdVar11 + iVar10) = *(undefined8 *)(psVar13 + 8);
               }
-              else if (*psVar10 == 0x40) {
-                puVar8 = local_160;
+              else if (*psVar13 == 0x40) {
+                pdVar11 = local_160;
                 goto LAB_826d5cd8;
               }
-              uVar4 = uVar4 + 1;
-              psVar10 = psVar10 + 0xc;
-            } while (uVar4 < *puVar9);
+              uVar7 = uVar7 + 1;
+              psVar13 = psVar13 + 0xc;
+            } while (uVar7 < *puVar12);
           }
-          uVar4 = *(uint *)(iVar11 + 8);
-          uVar6 = uVar6 + 1;
-          iVar7 = iVar7 + 8;
-          puVar9 = puVar9 + 0xc;
-        } while (uVar6 < uVar4);
+          uVar7 = *(uint *)(iVar1 + 8);
+          uVar9 = uVar9 + 1;
+          iVar10 = iVar10 + 8;
+          puVar12 = puVar12 + 0xc;
+        } while (uVar9 < uVar7);
       }
-      uVar1 = XSessionCalculateSkill
-                        (uVar4,auStack_d0,local_160,(undefined8 *)(iVar2 + 0x1128),
-                         (undefined8 *)(iVar2 + 0x1130));
-      if ((int)uVar1 != 0) {
-        Com_PrintError(0x10,0xffffffff821a41e8,0xfc0,DAT_844ac9b0);
-        __restgprlr_25(2);
-        return;
+      uVar4 = XSessionCalculateSkill
+                        (uVar7,adStack_d0,local_160,(double *)((int)pvVar6 + 0x1128),
+                         (double *)((int)pvVar6 + 0x1130));
+      if (uVar4 != 0) {
+        Com_PrintError(0x10,
+                       "[Line %d] Microsoft error calculating session skill for session %s - error %x\n"
+                      );
+        tVar3 = __restgprlr_25(2);
+        return tVar3;
       }
-      if (*(char *)(DAT_844ac9a8 + 0xc) != '\0') {
-        Com_Printf(0x10,0xffffffff821a4158,*(undefined8 *)(iVar2 + 0x1128),
-                   *(undefined8 *)(iVar2 + 0x1130),uVar1);
+      if ((matchmaking_debug->current).enabled != false) {
+        Com_Printf(0x10,"Party mu: %.3f, sigma %.3f\n");
       }
-      __restgprlr_25(1);
-      return;
+      tVar3 = __restgprlr_25(1);
+      return tVar3;
     }
   }
   else {
-    cVar5 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar11]);
-    if (cVar5 != '\0') {
-      Com_PrintError(0x10,0xffffffff821a41e8,4000,DAT_844ac9b0,uVar1);
+    bVar8 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar8) {
+      Com_PrintError(0x10,
+                     "[Line %d] Microsoft error calculating session skill for session %s - error %x\n"
+                    );
     }
   }
-  __restgprlr_25(2);
-  return;
+  tVar3 = __restgprlr_25(2);
+  return tVar3;
 }
 
 
 // 826D5DA8  Session_ModifySkill  (sessions/sessions.cpp:4045)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_ModifySkill(void)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  undefined8 *puVar3;
-  ulonglong uVar4;
-  undefined8 *puVar5;
-  ulonglong uVar6;
+  bool bVar4;
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  ulong64 *puVar5;
+  uint uVar6;
+  SessionModSkillData *pSVar7;
   
   __savegprlr_26();
-  if (DAT_844c7870 != 0) {
-    puVar3 = (undefined8 *)&DAT_844c84b0;
-    if ((DAT_844c84b0 != '\0') && (DAT_844c84b1 == '\0')) {
-      uVar4 = 0;
+  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+    pSVar7 = &sessionModSkillData;
+    if ((sessionModSkillData.needsUpdate != false) && (sessionModSkillData.active == false)) {
+      uVar3 = 0;
       uVar6 = 0;
-      puVar5 = &DAT_844c78d8;
+      puVar5 = &g_serverSession.dyn.users[0].xuid;
       do {
-        cVar2 = Session_IsUserRegistered(0xffffffff844c7860,uVar6);
-        if (cVar2 != '\0') {
-          uVar4 = uVar4 + 1;
-          puVar3 = puVar3 + 1;
-          *puVar3 = *puVar5;
+        bVar4 = Session_IsUserRegistered(&g_serverSession,uVar6);
+        if (bVar4) {
+          uVar3 = uVar3 + 1;
+          pSVar7 = (SessionModSkillData *)pSVar7->playerList;
+          *(ulong64 *)pSVar7 = *puVar5;
         }
         uVar6 = uVar6 + 1;
         puVar5 = puVar5 + 8;
-      } while ((uVar6 & 0xffffffff) < 0x12);
-      if ((uVar4 & 0xffffffff) != 0) {
-        TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,0,9);
-        uVar6 = TaskManager_TaskToXOverlapped();
-        if ((uVar6 & 0xffffffff) != 0) {
-          uVar1 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar6);
-          TaskManager_SetTaskData(uVar1,0xffffffff844c84b0);
-          uVar4 = XSessionModifySkill(DAT_844c7870,uVar4,0xffffffff844c84b8,uVar6);
-          if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 0x3e5)) {
-            cVar2 = Live_IsUserSignedInToLive(DAT_844c7d58);
-            if (cVar2 != '\0') {
-              Com_PrintError(0x10,0xffffffff821a427c,uVar4);
+      } while (uVar6 < 0x12);
+      if (uVar3 != 0) {
+        poVar1 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,0,9);
+        p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+        if (p_Var2 != (_XOVERLAPPED *)0x0) {
+          poVar1 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+          TaskManager_SetTaskData(poVar1,&sessionModSkillData);
+          uVar3 = XSessionModifySkill(g_serverSession.dyn.sessionHandle,uVar3,
+                                      sessionModSkillData.playerList,p_Var2);
+          if ((uVar3 != 0) && (uVar3 != 0x3e5)) {
+            bVar4 = Live_IsUserSignedInToLive(g_serverSession.dyn.sessionCreateController);
+            if (bVar4) {
+              Com_PrintError(0x10,"Microsoft error %x when calling Session_ModifySkill\n");
             }
-            Session_ClearXOverlappedTask(uVar6);
+            Session_ClearXOverlappedTask(p_Var2);
             __restgprlr_26();
             return;
           }
-          DAT_844c84b1 = '\x01';
-          DAT_844c84b0 = '\0';
+          sessionModSkillData.active = true;
+          sessionModSkillData.needsUpdate = false;
         }
       }
     }
@@ -4115,227 +4692,263 @@ void Session_ModifySkill(void)
 
 // 826D5EE8  Session_ModifySkillComplete  (sessions/sessions.cpp:4100)
 
-void Session_ModifySkillComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_ModifySkillComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char cVar4;
-  int iVar5;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  void *pvVar6;
+  bool bVar7;
   
-  iVar2 = __savegprlr_27();
-  iVar5 = iVar2 * 0xa0;
-  if ((&DAT_844c9d34)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x100a,0,0xffffffff82000f98,0xffffffff821a3388);
+  iVar1 = __savegprlr_27(param_1);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x100a,
+                    0,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 9) {
-    MyAssertHandler(0xffffffff821a2fc8,0x100b,0,0xffffffff82000f98,0xffffffff821a4300);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x100b,
+                    0,"%s");
   }
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar5);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x100e,0,0xffffffff82000f98,0xffffffff8208b66c);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x100e,
+                    0,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  iVar2 = TaskManager_GetTaskData();
-  *(undefined1 *)(iVar2 + 1) = 0;
-  Session_ClearXOverlappedTask(piVar3);
-  if ((int)uVar1 != 0) {
-    cVar4 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar5]);
-    if (cVar4 != '\0') {
-      Com_PrintError(0x10,0xffffffff821a42b8,DAT_844c7860,uVar1);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pvVar6 = TaskManager_GetTaskData(poVar5);
+  *(undefined1 *)((int)pvVar6 + 1) = 0;
+  Session_ClearXOverlappedTask(p_Var2);
+  if (uVar4 != 0) {
+    bVar7 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar7) {
+      Com_PrintError(0x10,"Microsoft error updating session skill for session %s - error %x\n");
     }
-    __restgprlr_27(2);
-    return;
+    tVar3 = __restgprlr_27(2);
+    return tVar3;
   }
-  __restgprlr_27(1);
-  return;
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 826D6040  Session_GetTaskName  (sessions/sessions.cpp:4140)
 
-undefined8 Session_GetTaskName(undefined4 param_1)
+char * Session_GetTaskName(int param_1)
 
 {
   switch(param_1) {
   case 1:
-    return 0xffffffff821a441c;
+    return "Adding player to session";
   case 2:
-    return 0xffffffff821a4438;
+    return "Creating session (host)";
   case 3:
-    return 0xffffffff821a440c;
+    return "SessionStart()";
   case 4:
-    return 0xffffffff821a43e8;
+    return "Removing a player from a session";
   case 5:
-    return 0xffffffff821a43d4;
+    return "Deleting session";
   case 6:
-    return 0xffffffff821a43c0;
+    return "Searching for game";
   case 7:
-    return 0xffffffff821a43ac;
+    return "Searching for games";
   case 8:
-    return 0xffffffff821a4398;
+    return "Modifying session";
   case 9:
-    return 0xffffffff821a437c;
+    return "Modifying session TrueSkill";
   case 10:
-    return 0xffffffff821a435c;
+    return "Calculating session TrueSkill";
   default:
-    return 0xffffffff821a4344;
+    return "Unknown session task";
   }
 }
 
 
 // 826D6110  SpecificSessionTaskInProgress  (sessions/sessions.cpp:4196)
 
-void SpecificSessionTaskInProgress(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool SpecificSessionTaskInProgress(SessionData *param_1,int param_2)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
-  longlong lVar4;
+  int iVar1;
+  SessionData *pSVar2;
+  SessionTaskData *pSVar3;
+  void *pvVar4;
+  char *pcVar5;
+  undefined1 uVar6;
+  ulonglong uVar7;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x106e,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar7 = (ulonglong)param_2;
+  pSVar2 = (SessionData *)__savegprlr_29(param_1);
+  if (pSVar2 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x106e,
+                    0,"%s");
   }
-  if (0x1f < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x106f,0,0xffffffff821a31d8,param_2,0x20);
+  if (0x1f < (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x106f,
+                    0,"tasknum doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
   }
-  lVar4 = (param_2 + (param_2 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20;
-  switch(*(undefined4 *)((int)&DAT_844c9d30 + (int)lVar4)) {
+  iVar1 = (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 5);
+  switch(*(undefined4 *)((int)(&g_sessionOverlappedTasks.tasks[0].u + 1) + iVar1)) {
   case 1:
   case 2:
   case 3:
   case 4:
   case 5:
-    iVar3 = Session_GetActiveSessionTaskData(param_2);
-    __restgprlr_29(puVar2 + 4 == (undefined4 *)(*(int *)(iVar3 + 4) + 0x10));
-    return;
+    pSVar3 = Session_GetActiveSessionTaskData((int)uVar7);
+    uVar6 = __restgprlr_29(&pSVar2->dyn == &pSVar3->session->dyn);
+    return (bool)uVar6;
   case 6:
   case 7:
   case 9:
-    __restgprlr_29(puVar2 == &DAT_844c7860);
-    return;
+    uVar6 = __restgprlr_29(pSVar2 == &g_serverSession);
+    return (bool)uVar6;
   case 8:
-    iVar3 = TaskManager_GetTaskData(lVar4 + -0x7bb36360);
-    __restgprlr_29((undefined4 *)(iVar3 + 0x10) == puVar2 + 4);
-    return;
+    pvVar4 = TaskManager_GetTaskData
+                       ((overlappedTask *)
+                        (g_sessionOverlappedTasks.tasks[0].u.storageRequest.filename + iVar1 + -0x28
+                        ));
+    uVar6 = __restgprlr_29((SessionDynamicData *)((int)pvVar4 + 0x10) == &pSVar2->dyn);
+    return (bool)uVar6;
   case 10:
-    __restgprlr_29(puVar2 == &DAT_844ac9b0);
-    return;
+    uVar6 = __restgprlr_29(pSVar2 == &g_partyPresenceSession);
+    return (bool)uVar6;
   }
-  if (DAT_84013128 == 0) {
-    uVar1 = va(0xffffffff8217b05c);
-    MyAssertHandler(0xffffffff821a2fc8,0x109a,0,uVar1);
+  if (alwaysfails == 0) {
+    pcVar5 = va("Unknown session task type %i\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x109a,
+                    0,pcVar5);
   }
-  __restgprlr_29(0);
-  return;
+  uVar6 = __restgprlr_29(0);
+  return (bool)uVar6;
 }
 
 
 // 826D62B8  Session_SpecificSessionTasksInProgress  (sessions/sessions.cpp:4259)
 
-void Session_SpecificSessionTasksInProgress(undefined8 param_1,uint param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_SpecificSessionTasksInProgress(SessionData *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  longlong lVar3;
-  uint *puVar4;
+  SessionData *pSVar1;
+  bool bVar3;
+  int iVar2;
+  int *piVar4;
   
-  uVar1 = __savegprlr_26();
-  lVar3 = 0;
-  puVar4 = &DAT_844c9d30;
-  do {
-    if (*(char *)(puVar4 + 1) != '\0') {
-      if (((1 << (*puVar4 & 0x3f) & param_2) != 0) &&
-         (((uVar1 & 0xffffffff) == 0 ||
-          (cVar2 = SpecificSessionTaskInProgress(uVar1,lVar3), cVar2 != '\0')))) {
-        __restgprlr_26(1);
-        return;
-      }
+  pSVar1 = (SessionData *)__savegprlr_26(param_1);
+  iVar2 = 0;
+  piVar4 = &g_sessionOverlappedTasks.tasks[0].type;
+  while (((*(bool *)(piVar4 + 1) == false || ((1 << (*piVar4 & 0x3fU) & param_2) == 0)) ||
+         ((pSVar1 != (SessionData *)0x0 &&
+          (bVar3 = SpecificSessionTaskInProgress(pSVar1,iVar2), !bVar3))))) {
+    piVar4 = piVar4 + 0x28;
+    iVar2 = iVar2 + 1;
+    if (-0x7bb34ed1 < (int)piVar4) {
+      iVar2 = __restgprlr_26(0);
+      return iVar2;
     }
-    puVar4 = puVar4 + 0x28;
-    lVar3 = lVar3 + 1;
-    if (-0x7bb34ed1 < (int)puVar4) {
-      __restgprlr_26(0);
-      return;
-    }
-  } while( true );
+  }
+  iVar2 = __restgprlr_26(1);
+  return iVar2;
 }
 
 
 // 826D6350  Session_SessionTasksInProgress  (sessions/sessions.cpp:4278)
 
-void Session_SessionTasksInProgress(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_SessionTasksInProgress(SessionData *param_1)
 
 {
-  Session_SpecificSessionTasksInProgress(param_1,0x7ff);
-  return;
+  int iVar1;
+  
+  iVar1 = Session_SpecificSessionTasksInProgress(param_1,0x7ff);
+  return iVar1;
 }
 
 
 // 826D6358  Session_AnyTasksInProgress  (sessions/sessions.cpp:4284)
 
-undefined1 Session_AnyTasksInProgress(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Session_AnyTasksInProgress(void)
 
 {
-  undefined1 uVar1;
+  bool bVar1;
   
-  uVar1 = TaskManager_AnyTaskInProgress(0xffffffff844c9c98);
-  return uVar1;
+  bVar1 = TaskManager_AnyTaskInProgress(&g_sessionOverlappedTasks);
+  return (uint)bVar1;
 }
 
 
 // 826D6388  Session_CreateInProgress  (sessions/sessions.cpp:4291)
 
-ulonglong Session_CreateInProgress(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Session_CreateInProgress(SessionData *param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
+  bool bVar2;
   
-  if ((param_1 & 0xffffffff) != 0) {
-    uVar1 = Session_SpecificSessionTasksInProgress(param_1,4);
-    return uVar1;
+  if (param_1 != (SessionData *)0x0) {
+    iVar1 = Session_SpecificSessionTasksInProgress(param_1,4);
+    return iVar1;
   }
-  uVar1 = TaskManager_TaskIsInProgress(0xffffffff844c9c98,2);
-  return uVar1 & 0xff;
+  bVar2 = TaskManager_TaskIsInProgress(&g_sessionOverlappedTasks,2);
+  return (uint)bVar2;
 }
 
 
 // 826D63D8  Session_CleanUpCancelledTask  (sessions/sessions.cpp:4307)
 
-void Session_CleanUpCancelledTask(undefined8 param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Session_CleanUpCancelledTask(int param_1,int param_2)
 
 {
   ulonglong uVar1;
-  int iVar3;
-  ulonglong uVar2;
+  PartyData *pPVar2;
+  _XOVERLAPPED *p_Var3;
+  overlappedTask *poVar4;
+  SessionTaskData *pSVar5;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (0 < param_2) {
     if (param_2 < 6) {
-      uVar2 = TaskManager_TaskToXOverlapped
-                        ((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20 + -0x7bb36360);
-      if ((uVar2 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff821a2fc8,0x10f0,0,0xffffffff82000f98,0xffffffff821a4450);
+      p_Var3 = TaskManager_TaskToXOverlapped
+                         ((overlappedTask *)
+                          (g_sessionOverlappedTasks.tasks[0].u.storageRequest.filename +
+                          (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x28));
+      if (p_Var3 == (_XOVERLAPPED *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x10f0,0,"%s");
       }
-      TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar2);
-      TaskManager_GetTaskData();
-      Session_FreeActiveSessionTaskData();
+      poVar4 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+      pSVar5 = TaskManager_GetTaskData(poVar4);
+      Session_FreeActiveSessionTaskData(pSVar5);
     }
     else if (param_2 == 7) {
-      iVar3 = Lobby_GetPartyData();
-      *(undefined4 *)(iVar3 + 0x1ef0) = 0;
+      pPVar2 = Lobby_GetPartyData();
+      pPVar2->searchingForGames = 0;
     }
   }
-  TaskManager_ClearTask((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20 + -0x7bb36360);
+  TaskManager_ClearTask
+            ((overlappedTask *)
+             (g_sessionOverlappedTasks.tasks[0].u.storageRequest.filename +
+             (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x28));
   __restgprlr_29();
   return;
 }
@@ -4343,50 +4956,49 @@ void Session_CleanUpCancelledTask(undefined8 param_1,int param_2)
 
 // 826D6498  Session_CancelSpecificSessionTasks  (sessions/sessions.cpp:4349)
 
-void Session_CancelSpecificSessionTasks(undefined8 param_1,uint param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_CancelSpecificSessionTasks(SessionData *param_1,int param_2)
 
 {
   uint uVar1;
   bool bVar2;
-  bool bVar3;
-  undefined4 *puVar4;
-  char cVar6;
-  int iVar5;
-  longlong lVar7;
-  uint *puVar8;
+  SessionData *pSVar3;
+  bool bVar5;
+  bool bVar6;
+  ulong uVar4;
+  int iVar7;
+  int *piVar8;
   
-  puVar4 = (undefined4 *)__savegprlr_22();
+  pSVar3 = (SessionData *)__savegprlr_22(param_1);
   bVar2 = false;
-  cVar6 = Sys_IsMainThread();
-  if (cVar6 != '\0') {
-    cVar6 = CL_AllLocalClientsDisconnected();
-    bVar3 = true;
-    if (cVar6 != '\0') goto LAB_826d64dc;
+  bVar5 = Sys_IsMainThread();
+  if (bVar5) {
+    bVar6 = CL_AllLocalClientsDisconnected();
+    bVar5 = true;
+    if (bVar6) goto LAB_826d64dc;
   }
-  bVar3 = false;
+  bVar5 = false;
 LAB_826d64dc:
-  lVar7 = 0;
-  puVar8 = &DAT_844c9d30;
+  iVar7 = 0;
+  piVar8 = &g_sessionOverlappedTasks.tasks[0].type;
   do {
-    if (*(char *)(puVar8 + 1) != '\0') {
-      uVar1 = *puVar8;
-      if (((1 << (uVar1 & 0x3f) & param_2) != 0) &&
-         ((puVar4 == (undefined4 *)0x0 ||
-          (cVar6 = SpecificSessionTaskInProgress(puVar4,lVar7), cVar6 != '\0')))) {
-        if ((!bVar2) && (bVar3)) {
-          R_BeginRemoteScreenUpdate();
-          bVar2 = true;
-        }
-        iVar5 = XCancelOverlapped(puVar8 + -0x21);
-        if (iVar5 == 0) {
-          Com_DPrintf(0xe,0xffffffff821a4468,uVar1,*puVar4,puVar4[4]);
-          Session_CleanUpCancelledTask(lVar7,uVar1);
-        }
+    if (((*(bool *)(piVar8 + 1) != false) && (uVar1 = *piVar8, (1 << (uVar1 & 0x3f) & param_2) != 0)
+        ) && ((pSVar3 == (SessionData *)0x0 ||
+              (bVar6 = SpecificSessionTaskInProgress(pSVar3,iVar7), bVar6)))) {
+      if ((!bVar2) && (bVar5)) {
+        R_BeginRemoteScreenUpdate();
+        bVar2 = true;
+      }
+      uVar4 = XCancelOverlapped((_XOVERLAPPED *)(piVar8 + -0x21));
+      if (uVar4 == 0) {
+        Com_DPrintf(0xe,"Successfully canceled session task type %i for session %s (%p)\n");
+        Session_CleanUpCancelledTask(iVar7,uVar1);
       }
     }
-    puVar8 = puVar8 + 0x28;
-    lVar7 = lVar7 + 1;
-  } while ((int)puVar8 < -0x7bb34ed0);
+    piVar8 = piVar8 + 0x28;
+    iVar7 = iVar7 + 1;
+  } while ((int)piVar8 < -0x7bb34ed0);
   if (bVar2) {
     R_EndRemoteScreenUpdate();
   }
@@ -4397,7 +5009,9 @@ LAB_826d64dc:
 
 // 826D65A8  Session_CancelAllSessionTasks  (sessions/sessions.cpp:4383)
 
-void Session_CancelAllSessionTasks(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_CancelAllSessionTasks(SessionData *param_1)
 
 {
   Session_CancelSpecificSessionTasks(param_1,0x7ff);
@@ -4407,59 +5021,60 @@ void Session_CancelAllSessionTasks(undefined8 param_1)
 
 // 826D98D8  Session_CompleteSpecificSessionTasks  (sessions/sessions.cpp:4450)
 
-void Session_CompleteSpecificSessionTasks(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_CompleteSpecificSessionTasks(SessionData *param_1,int param_2)
 
 {
   uint uVar1;
   bool bVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  char cVar9;
-  longlong lVar5;
-  int iVar8;
-  undefined8 uVar6;
-  longlong lVar7;
-  longlong lVar10;
-  uint *puVar11;
+  SessionData *pSVar3;
+  bool bVar8;
+  bool bVar9;
+  int iVar4;
+  int iVar5;
+  taskCompleteResults tVar6;
+  int iVar7;
+  int *piVar10;
   
-  uVar4 = __savegprlr_21();
+  pSVar3 = (SessionData *)__savegprlr_21(param_1);
   bVar2 = false;
-  cVar9 = Sys_IsMainThread();
-  if (cVar9 != '\0') {
-    cVar9 = CL_AllLocalClientsDisconnected();
-    bVar3 = true;
-    if (cVar9 != '\0') goto LAB_826d991c;
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    bVar9 = CL_AllLocalClientsDisconnected();
+    bVar8 = true;
+    if (bVar9) goto LAB_826d991c;
   }
-  bVar3 = false;
+  bVar8 = false;
 LAB_826d991c:
-  lVar5 = Sys_Milliseconds();
-  iVar8 = Session_SpecificSessionTasksInProgress(uVar4,param_2);
-  if (iVar8 != 0) {
+  iVar4 = Sys_Milliseconds();
+  iVar5 = Session_SpecificSessionTasksInProgress(pSVar3,param_2);
+  if (iVar5 != 0) {
     do {
-      lVar10 = 0;
-      puVar11 = &DAT_844c9d30;
+      iVar5 = 0;
+      piVar10 = &g_sessionOverlappedTasks.tasks[0].type;
       do {
-        if (((*(char *)(puVar11 + 1) != '\0') &&
-            (uVar1 = *puVar11, (1 << (uVar1 & 0x3f) & (uint)param_2) != 0)) &&
-           (((uVar4 & 0xffffffff) == 0 ||
-            (cVar9 = SpecificSessionTaskInProgress(uVar4,lVar10), cVar9 != '\0')))) {
-          if ((!bVar2) && (bVar3)) {
+        if (((*(bool *)(piVar10 + 1) != false) &&
+            (uVar1 = *piVar10, (1 << (uVar1 & 0x3f) & param_2) != 0)) &&
+           ((pSVar3 == (SessionData *)0x0 ||
+            (bVar9 = SpecificSessionTaskInProgress(pSVar3,iVar5), bVar9)))) {
+          if ((!bVar2) && (bVar8)) {
             R_BeginRemoteScreenUpdate();
             bVar2 = true;
           }
-          iVar8 = CheckOngoingSessionTask(lVar10);
-          if (((iVar8 == 1) || (iVar8 == 2)) &&
-             (iVar8 = Sys_Milliseconds(), 300 < iVar8 - (int)lVar5)) {
-            uVar6 = Session_GetTaskName(uVar1);
-            lVar7 = Sys_Milliseconds();
-            Com_PrintWarning(0x10,0xffffffff821a5dfc,lVar7 - lVar5,uVar6);
+          tVar6 = CheckOngoingSessionTask(iVar5);
+          if (((tVar6 == TASK_COMPLETE) || (tVar6 == TASK_ERROR)) &&
+             (iVar7 = Sys_Milliseconds(), 300 < iVar7 - iVar4)) {
+            Session_GetTaskName(uVar1);
+            Sys_Milliseconds();
+            Com_PrintWarning(0x10,"Blocked %ims waiting for session task %s to complete\n");
           }
         }
-        puVar11 = puVar11 + 0x28;
-        lVar10 = lVar10 + 1;
-      } while ((int)puVar11 < -0x7bb34ed0);
-      iVar8 = Session_SpecificSessionTasksInProgress(uVar4,param_2);
-    } while (iVar8 != 0);
+        piVar10 = piVar10 + 0x28;
+        iVar5 = iVar5 + 1;
+      } while ((int)piVar10 < -0x7bb34ed0);
+      iVar5 = Session_SpecificSessionTasksInProgress(pSVar3,param_2);
+    } while (iVar5 != 0);
     if (bVar2) {
       R_EndRemoteScreenUpdate();
     }
@@ -4471,7 +5086,9 @@ LAB_826d991c:
 
 // 826D9A30  Session_EndCreateSessionTasks  (sessions/sessions.cpp:4498)
 
-void Session_EndCreateSessionTasks(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_EndCreateSessionTasks(SessionData *param_1)
 
 {
   Session_CompleteSpecificSessionTasks(param_1,4);
@@ -4481,7 +5098,9 @@ void Session_EndCreateSessionTasks(undefined8 param_1)
 
 // 826D9A38  Session_EndNonSkillSessionTasks  (sessions/sessions.cpp:4506)
 
-void Session_EndNonSkillSessionTasks(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_EndNonSkillSessionTasks(SessionData *param_1)
 
 {
   Session_CompleteSpecificSessionTasks(param_1,0x1df);
@@ -4491,7 +5110,9 @@ void Session_EndNonSkillSessionTasks(undefined8 param_1)
 
 // 826D9A40  Session_CompleteOngoingSessionTasks  (sessions/sessions.cpp:4522)
 
-void Session_CompleteOngoingSessionTasks(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_CompleteOngoingSessionTasks(SessionData *param_1)
 
 {
   Session_CompleteSpecificSessionTasks(param_1,0x73f);
@@ -4502,47 +5123,53 @@ void Session_CompleteOngoingSessionTasks(undefined8 param_1)
 
 // 826D65B0  Session_JoinInProgressForXUID  (sessions/sessions.cpp:4544)
 
-void Session_JoinInProgressForXUID(undefined8 param_1,longlong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_JoinInProgressForXUID(SessionData *param_1,ulong64 param_2)
 
 {
-  int iVar2;
-  char *pcVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
+  int iVar1;
+  char *pcVar2;
+  undefined1 uVar3;
+  uint uVar4;
   int *piVar5;
   
-  iVar2 = __savegprlr_19();
+  iVar1 = __savegprlr_19(param_1);
   uVar4 = 0;
-  piVar5 = &DAT_844c9d30;
+  piVar5 = &g_sessionOverlappedTasks.tasks[0].type;
   do {
-    if ((*(char *)(piVar5 + 1) != '\0') && (*piVar5 == 1)) {
-      if (0x1f < (uVar4 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff821a2fc8,0x321,0,0xffffffff821a31d8,uVar4,0x20);
+    if ((*(bool *)(piVar5 + 1) != false) && (*piVar5 == 1)) {
+      if (0x1f < uVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                        0x321,0,
+                        "tasknum doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
       }
       if ((*piVar5 < 1) || (5 < *piVar5)) {
-        if (DAT_84013128 == 0) {
-          uVar1 = va(0xffffffff821a3160);
-          MyAssertHandler(0xffffffff821a2fc8,0x32f,0,uVar1);
+        if (alwaysfails == 0) {
+          pcVar2 = va("wrong task type (%i) for session task data\n");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x32f,0,pcVar2);
         }
-        pcVar3 = (char *)0x0;
+        pcVar2 = (char *)0x0;
       }
       else {
-        pcVar3 = (char *)TaskManager_GetTaskData(piVar5 + -0x24);
-        if (*pcVar3 == '\0') {
-          uVar1 = va(0xffffffff821a31a0,*piVar5);
-          MyAssertHandler(0xffffffff821a2fc8,0x32c,0,0xffffffff820011f4,0xffffffff821a318c,uVar1);
+        pcVar2 = TaskManager_GetTaskData((overlappedTask *)(piVar5 + -0x24));
+        if (*pcVar2 == '\0') {
+          va("Overlapped task type %i has no active SessionTaskData");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                          0x32c,0,"%s\n\t%s");
         }
       }
-      if ((*(longlong *)(pcVar3 + 0x10) == param_2) && (*(int *)(pcVar3 + 4) == iVar2)) {
-        __restgprlr_19(1);
-        return;
+      if ((*(ulong64 *)(pcVar2 + 0x10) == param_2) && (*(int *)(pcVar2 + 4) == iVar1)) {
+        uVar3 = __restgprlr_19(1);
+        return (bool)uVar3;
       }
     }
     piVar5 = piVar5 + 0x28;
     uVar4 = uVar4 + 1;
     if (-0x7bb34ed1 < (int)piVar5) {
-      __restgprlr_19(0);
-      return;
+      uVar3 = __restgprlr_19(0);
+      return (bool)uVar3;
     }
   } while( true );
 }
@@ -4550,48 +5177,49 @@ void Session_JoinInProgressForXUID(undefined8 param_1,longlong param_2)
 
 // 826D9A68  Session_StartGameSession  (sessions/sessions.cpp:4569)
 
-void Session_StartGameSession(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_StartGameSession(int param_1,SessionData *param_2)
 
 {
   int iVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  char cVar7;
-  undefined1 *puVar6;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
+  bool bVar6;
+  SessionTaskData *pSVar5;
   
-  uVar3 = __savegprlr_27();
-  iVar1 = (int)param_2;
-  if (*(char *)(iVar1 + 0x51) != '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x11df,0,0xffffffff82000f98,0xffffffff821a5e84);
+  iVar1 = __savegprlr_27(param_1);
+  if ((param_2->dyn).sessionStartCalled != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x11df,
+                    0,"%s");
   }
-  if (*(int *)(iVar1 + 0x10) != 0) {
-    TaskManager_GetOpenTaskSlot(0xffffffff844c9c98,uVar3,3);
-    uVar4 = TaskManager_TaskToXOverlapped();
-    if ((*(uint *)(iVar1 + 0x68) & 0x400) != 0) {
+  if ((param_2->dyn).sessionHandle != (void *)0x0) {
+    poVar2 = TaskManager_GetOpenTaskSlot(&g_sessionOverlappedTasks,iVar1,3);
+    p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+    if (((param_2->dyn).flags & 0x400U) != 0) {
       Session_CompleteSpecificSessionTasks(param_2,2);
     }
-    Com_Printf(0x10,0xffffffff821a5e68);
-    uVar5 = XSessionStart(*(undefined4 *)(iVar1 + 0x10),0,uVar4);
-    if (((int)uVar5 == 0) || (bVar2 = false, (int)uVar5 == 0x3e5)) {
-      bVar2 = true;
+    Com_Printf(0x10,"Calling XSessionStart()\n");
+    uVar4 = XSessionStart((param_2->dyn).sessionHandle,0,p_Var3);
+    if ((uVar4 == 0) || (bVar6 = false, uVar4 == 0x3e5)) {
+      bVar6 = true;
     }
-    *(bool *)(iVar1 + 0x51) = bVar2;
-    if (!bVar2) {
-      cVar7 = Live_IsUserSignedInToLive(uVar3);
-      if (cVar7 != '\0') {
-        Com_PrintError(0x10,0xffffffff821a5e34,uVar5);
+    (param_2->dyn).sessionStartCalled = bVar6;
+    if (!bVar6) {
+      bVar6 = Live_IsUserSignedInToLive(iVar1);
+      if (bVar6) {
+        Com_PrintError(0x10,"Microsoft error - XSessionStart failed: error %i\n");
       }
-      Session_ClearXOverlappedTask(uVar4);
+      Session_ClearXOverlappedTask(p_Var3);
       __restgprlr_27();
       return;
     }
-    puVar6 = (undefined1 *)Session_GetFreeSessionTaskData();
-    *(int *)(puVar6 + 4) = iVar1;
-    *puVar6 = 1;
-    uVar3 = TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,uVar4);
-    TaskManager_SetTaskData(uVar3,puVar6);
+    pSVar5 = Session_GetFreeSessionTaskData();
+    pSVar5->session = param_2;
+    pSVar5->active = true;
+    poVar2 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var3);
+    TaskManager_SetTaskData(poVar2,pSVar5);
   }
   __restgprlr_27();
   return;
@@ -4600,193 +5228,219 @@ void Session_StartGameSession(undefined8 param_1,undefined8 param_2)
 
 // 826D6718  Session_StartSessionComplete  (sessions/sessions.cpp:4613)
 
-void Session_StartSessionComplete(void)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+taskCompleteResults Session_StartSessionComplete(int param_1)
 
 {
-  int iVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char cVar4;
-  int iVar5;
+  int iVar1;
+  _XOVERLAPPED *p_Var2;
+  taskCompleteResults tVar3;
+  ulong uVar4;
+  overlappedTask *poVar5;
+  SessionTaskData *pSVar6;
+  bool bVar7;
   
-  iVar2 = __savegprlr_27();
-  iVar5 = iVar2 * 0xa0;
-  piVar3 = (int *)TaskManager_TaskToXOverlapped(&DAT_844c9ca0 + iVar5);
-  if (piVar3 == (int *)0x0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x120b,0,0xffffffff82000f98,0xffffffff821a4550);
+  iVar1 = __savegprlr_27(param_1);
+  p_Var2 = TaskManager_TaskToXOverlapped(g_sessionOverlappedTasks.tasks + iVar1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x120b,
+                    0,"%s");
   }
-  if ((&DAT_844c9d34)[iVar5] == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x120d,0,0xffffffff82000f98,0xffffffff821a3388);
+  if (g_sessionOverlappedTasks.tasks[iVar1].active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x120d,
+                    0,"%s");
   }
-  if ((&DAT_844c9d30)[iVar2 * 0x28] != 3) {
-    MyAssertHandler(0xffffffff821a2fc8,0x120e,0,0xffffffff82000f98,0xffffffff821a4508);
+  if (g_sessionOverlappedTasks.tasks[iVar1].type != 3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x120e,
+                    0,"%s");
   }
-  if (*piVar3 == 0x3e5) {
-    __restgprlr_27(0);
-    return;
+  if (p_Var2->InternalLow == 0x3e5) {
+    tVar3 = __restgprlr_27(0);
+    return tVar3;
   }
-  uVar1 = XGetOverlappedExtendedError(piVar3);
-  TaskManager_TaskFromXOverlapped(0xffffffff844c9c98,piVar3);
-  TaskManager_GetTaskData();
-  Session_FreeActiveSessionTaskData();
-  if ((int)uVar1 != 0) {
-    Session_ClearXOverlappedTask(piVar3);
-    cVar4 = Live_IsUserSignedInToLive((&DAT_844c9d35)[iVar5]);
-    if (cVar4 != '\0') {
-      if ((int)uVar1 == -0x7fffbffb) {
-        Com_PrintError(0x10,0xffffffff821a44d8);
+  uVar4 = XGetOverlappedExtendedError(p_Var2);
+  poVar5 = TaskManager_TaskFromXOverlapped(&g_sessionOverlappedTasks,p_Var2);
+  pSVar6 = TaskManager_GetTaskData(poVar5);
+  Session_FreeActiveSessionTaskData(pSVar6);
+  if (uVar4 != 0) {
+    Session_ClearXOverlappedTask(p_Var2);
+    bVar7 = Live_IsUserSignedInToLive((uint)g_sessionOverlappedTasks.tasks[iVar1].controllerIndex);
+    if (bVar7) {
+      if (uVar4 == 0x80004005) {
+        Com_PrintError(0x10,"Microsoft error starting session (E_FAIL)\n");
       }
       else {
-        Com_PrintError(0x10,0xffffffff821a44a8,uVar1);
+        Com_PrintError(0x10,"Microsoft error starting session - error %x\n");
       }
-      if (*(char *)(DAT_82aa1af8 + 0xc) != '\0') {
-        Dvar_SetBool(DAT_82b3ecb8,0);
+      if ((onlinegame->current).enabled != false) {
+        Dvar_SetBool(splitscreen,false);
       }
-      Dvar_SetBool(DAT_82aa1af8,0);
-      Live_ThrowError(1,0xffffffff82030bbc);
+      Dvar_SetBool(onlinegame,false);
+      Live_ThrowError(ERR_DROP,"PLATFORM_DISCONNECTED_FROM_SERVER");
     }
-    __restgprlr_27(2);
-    return;
+    tVar3 = __restgprlr_27(2);
+    return tVar3;
   }
-  Session_ClearXOverlappedTask(piVar3);
-  __restgprlr_27(1);
-  return;
+  Session_ClearXOverlappedTask(p_Var2);
+  tVar3 = __restgprlr_27(1);
+  return tVar3;
 }
 
 
 // 826D9328  CheckOngoingSessionTask  (sessions/sessions.cpp:4665)
 
-void CheckOngoingSessionTask(void)
+taskCompleteResults CheckOngoingSessionTask(int param_1)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  char *pcVar2;
+  taskCompleteResults tVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (0x1f < uVar1) {
-    MyAssertHandler(0xffffffff821a2fc8,0x123d,0,0xffffffff821a31d8,uVar1,0x20);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x123d,
+                    0,"tasknum doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)");
   }
-  uVar2 = 0;
-  switch((&DAT_844c9d30)[uVar1 * 0x28]) {
+  pcVar2 = (char *)0x0;
+  switch(g_sessionOverlappedTasks.tasks[uVar1].type) {
   case 1:
-    uVar3 = Session_JoinSessionComplete(uVar1);
+    tVar3 = Session_JoinSessionComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 2:
-    uVar3 = Session_StartHostComplete(uVar1);
+    tVar3 = Session_StartHostComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 3:
-    uVar3 = Session_StartSessionComplete(uVar1);
+    tVar3 = Session_StartSessionComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 4:
-    uVar3 = Session_EveryoneLeaveSessionComplete(uVar1);
+    tVar3 = Session_EveryoneLeaveSessionComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 5:
-    uVar3 = Session_DeleteHandleComplete(uVar1);
+    tVar3 = Session_DeleteHandleComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 6:
-    uVar3 = Session_SearchSessionsByIdComplete(uVar1);
+    tVar3 = Session_SearchSessionsByIdComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 7:
-    uVar3 = Session_RandomSearchSessionsComplete(uVar1);
+    tVar3 = Session_RandomSearchSessionsComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 8:
-    uVar3 = Session_ModifyComplete(uVar1);
+    tVar3 = Session_ModifyComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 9:
-    uVar3 = Session_ModifySkillComplete(uVar1);
+    tVar3 = Session_ModifySkillComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   case 10:
-    uVar3 = Session_CalcSkillComplete(uVar1);
+    tVar3 = Session_CalcSkillComplete(uVar1);
+    uVar4 = (ulonglong)(int)tVar3;
     break;
   default:
-    uVar3 = 2;
-    uVar2 = va(0xffffffff8217b05c);
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff821a2fc8,0x1283,0,uVar2);
+    uVar4 = 2;
+    pcVar2 = va("Unknown session task type %i\n");
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                      0x1283,0,pcVar2);
     }
   }
-  if ((1 < (uVar3 & 0xffffffff)) && ((uVar2 & 0xffffffff) != 0)) {
-    Com_PrintError(0x10,uVar2);
+  if ((1 < (uVar4 & 0xffffffff)) && (pcVar2 != (char *)0x0)) {
+    Com_PrintError(0x10,pcVar2);
   }
-  __restgprlr_29(uVar3);
-  return;
+  tVar3 = __restgprlr_29(uVar4);
+  return tVar3;
 }
 
 
 // 826D68C8  CheckSessionTaskDataLeaks  (sessions/sessions.cpp:4760)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CheckSessionTaskDataLeaks(void)
 
 {
   int iVar1;
   int iVar2;
-  char *pcVar3;
-  char *pcVar4;
+  SessionTaskData *pSVar3;
+  bool *pbVar4;
   longlong lVar5;
   
   lVar5 = 8;
   iVar2 = 0;
   iVar1 = 0;
-  pcVar3 = &DAT_844c59a0;
-  pcVar4 = &DAT_844c9dd4;
+  pSVar3 = sessionTaskData + 1;
+  pbVar4 = &g_sessionOverlappedTasks.tasks[1].active;
   do {
-    if (pcVar4[-0xa0] != '\0') {
+    if (pbVar4[-0xa0] != false) {
       iVar2 = iVar2 + 1;
     }
-    if (pcVar3[-0x98] != '\0') {
+    if (pSVar3[-1].active != false) {
       iVar1 = iVar1 + 1;
     }
-    if (*pcVar4 != '\0') {
+    if (*pbVar4 != false) {
       iVar2 = iVar2 + 1;
     }
-    if (*pcVar3 != '\0') {
+    if (pSVar3->active != false) {
       iVar1 = iVar1 + 1;
     }
-    if (pcVar4[0xa0] != '\0') {
+    if (pbVar4[0xa0] != false) {
       iVar2 = iVar2 + 1;
     }
-    if (pcVar3[0x98] != '\0') {
+    if (pSVar3[1].active != false) {
       iVar1 = iVar1 + 1;
     }
-    if (pcVar4[0x140] != '\0') {
+    if (pbVar4[0x140] != false) {
       iVar2 = iVar2 + 1;
     }
-    if (pcVar3[0x130] != '\0') {
+    if (pSVar3[2].active != false) {
       iVar1 = iVar1 + 1;
     }
-    pcVar4 = pcVar4 + 0x280;
-    pcVar3 = pcVar3 + 0x260;
+    pbVar4 = pbVar4 + 0x280;
+    pSVar3 = pSVar3 + 4;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   if (iVar1 <= iVar2) {
     return;
   }
-  Com_PrintError(0x10,0xffffffff821a4570);
+  Com_PrintError(0x10,
+                 "more data active (%i) than tasks active (%i), check for session task data leak.\n"
+                );
   return;
 }
 
 
 // 826DA3B0  Live_CheckOngoingSessionTasks  (sessions/sessions.cpp:4783)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_CheckOngoingSessionTasks(void)
 
 {
-  longlong lVar1;
-  char *pcVar2;
+  int iVar1;
+  bool *pbVar2;
   
   __savegprlr_29();
   Session_ModifySkill();
   Session_CalcSkill();
-  lVar1 = 0;
-  pcVar2 = &DAT_844c9d34;
+  iVar1 = 0;
+  pbVar2 = &g_sessionOverlappedTasks.tasks[0].active;
   do {
-    if (*pcVar2 != '\0') {
-      CheckOngoingSessionTask(lVar1);
+    if (*pbVar2 != false) {
+      CheckOngoingSessionTask(iVar1);
     }
-    pcVar2 = pcVar2 + 0xa0;
-    lVar1 = lVar1 + 1;
-  } while ((int)pcVar2 < -0x7bb34ecc);
+    pbVar2 = pbVar2 + 0xa0;
+    iVar1 = iVar1 + 1;
+  } while ((int)pbVar2 < -0x7bb34ecc);
   Session_ManageGraveYard();
   CheckSessionTaskDataLeaks();
   __restgprlr_29();
@@ -4796,92 +5450,117 @@ void Live_CheckOngoingSessionTasks(void)
 
 // 826D6998  Session_Init  (sessions/sessions.cpp:4810)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_Init(void)
 
 {
-  void *pvVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  ushort uVar1;
+  char *pcVar2;
+  double dVar3;
+  double dVar4;
   
   __savegprlr_29();
-  memset(&DAT_844c5908,0,0x1300);
-  TaskManager_ConstructTaskSet(0xffffffff844c9c98,0xffffffff821a4914);
-  DAT_844c7860 = "gameSession";
-  DAT_844c7864 = 1;
-  track_static_alloc_internal(0xffffffff844acfd8,100000,0xffffffff821a48f8,9);
-  DAT_844c6c08 = "partySession";
-  DAT_844ac9b0 = "party presence session";
-  DAT_844ac9b4 = 0;
-  DAT_844c7e88 = "searchSession";
-  DAT_844c6c0c = 1;
-  DAT_844c7234 = 0;
-  DAT_844ac380 = "partySearchSession";
-  DAT_844c7230 = "partyJoinSession";
-  DAT_844c7e8c = 0;
-  DAT_844ac384 = 0;
-  DAT_844ac9a8 = Dvar_RegisterBool(0xffffffff821a4858,1,0,0xffffffff821a486c);
-  DAT_844c9c68 = Dvar_RegisterInt(0xffffffff821a481c,5000,3000,0x7fffffff,0,0xffffffff821a4834);
-  DAT_844c9c60 = Dvar_RegisterInt(0xffffffff821a47c8,20000,3000,0x7fffffff,0,0xffffffff821a47e4);
-  DAT_844c785c = Dvar_RegisterBool(0xffffffff821a4770,1,0,0xffffffff821a4794);
-  uVar2 = 0x3ff0000000000000;
-  uVar3 = 0;
-  DAT_844c9c74 = Dvar_RegisterFloat(0x3fecccccc0000000,0,0x3ff0000000000000,0xffffffff821a4714);
-  DAT_844c8b24 = Dvar_RegisterFloat(uVar3,uVar3,uVar2,0xffffffff821a469c);
-  DAT_844c7858 = Dvar_RegisterFloat(0x3fb70a3d80000000,uVar3,uVar2,0xffffffff821a462c);
-  DAT_844c9c70 = Dvar_RegisterFloat(0x3f826e9780000000,uVar3,uVar2,0xffffffff821a45c4);
-  DAT_844c84b0 = 0;
-  DAT_844c84b1 = 0;
-  pvVar1 = memset(&DAT_844c84b8,0xcc,0x90);
-  __restgprlr_29(pvVar1);
+  memset();
+  TaskManager_ConstructTaskSet(&g_sessionOverlappedTasks,"Session_Init");
+  g_serverSession.staticData.sessionName = "gameSession";
+  g_serverSession.staticData.registerUsersWithVoice = true;
+  track_static_alloc_internal(randomSearchResultsBuffer,100000,"randomSearchResultsBuffer",9);
+  g_partySession.staticData.sessionName = "partySession";
+  g_partyPresenceSession.staticData.sessionName = "party presence session";
+  g_partyPresenceSession.staticData.registerUsersWithVoice = false;
+  g_searchSession.staticData.sessionName = "searchSession";
+  g_partySession.staticData.registerUsersWithVoice = true;
+  g_partyJoinSession.staticData.registerUsersWithVoice = false;
+  g_partySearchSession.staticData.sessionName = "partySearchSession";
+  g_partyJoinSession.staticData.sessionName = "partyJoinSession";
+  g_searchSession.staticData.registerUsersWithVoice = false;
+  g_partySearchSession.staticData.registerUsersWithVoice = false;
+  matchmaking_debug =
+       Dvar_RegisterBool("matchmaking_debug",true,0,"Enable matchmaking debugging information");
+  iwnet_sessionHeartbeat =
+       Dvar_RegisterInt("iwnet_sessionHeartbeat",5000,3000,0x7fffffff,0,
+                        "How often to send a heartbeat msg");
+  iwnet_sessionFullHeartbeat =
+       Dvar_RegisterInt("iwnet_sessionFullHeartbeat",20000,3000,0x7fffffff,0,
+                        "How often to send a heartbeat msg if the game is full");
+  session_immediateDeleteTinySessions =
+       Dvar_RegisterBool("session_immediateDeleteTinySessions",true,0,
+                         "Whether to immediately delete sessions with 1 user");
+  pcVar2 = "";
+  uVar1 = 0;
+  dVar3 = 1.0;
+  dVar4 = 0.0;
+  search_weight_country_code = Dvar_RegisterFloat("search_weight_country_code",0.9,0.0,1.0,0,"");
+  search_weight_country_code_and_region =
+       Dvar_RegisterFloat("search_weight_country_code_and_region",(float)dVar4,(float)dVar4,
+                          (float)dVar3,uVar1,pcVar2);
+  pcVar2 = "";
+  search_weight_hilbert_enum =
+       Dvar_RegisterFloat("search_weight_hilbert_enum",0.09,(float)dVar4,(float)dVar3,uVar1,"");
+  search_weight_mappack_count =
+       Dvar_RegisterFloat("search_weight_mappack_count",0.009,(float)dVar4,(float)dVar3,0,pcVar2);
+  sessionModSkillData.needsUpdate = false;
+  sessionModSkillData.active = false;
+  memset();
+  __restgprlr_29();
   return;
 }
 
 
 // 826D6C40  Session_Shutdown  (sessions/sessions.cpp:4874)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Session_Shutdown(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff844c9c98);
+  TaskManager_DestructTaskSet(&g_sessionOverlappedTasks);
   return;
 }
 
 
 // 826D6C50  Session_FrameForSession  (sessions/sessions.cpp:4930)
 
-void Session_FrameForSession(int param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Session_FrameForSession(SessionData *param_1)
 
 {
-  if (*(int *)(param_1 + 0x10) == 0) {
+  if ((param_1->dyn).sessionHandle == (void *)0x0) {
     return;
   }
-  Session_UpdateInternalUserRegistration();
+  Session_UpdateInternalUserRegistration(param_1);
   return;
 }
 
 
 // 826D6C68  Session_Frame  (sessions/sessions.cpp:4992)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
 void Session_Frame(void)
 
 {
-  if (DAT_844c7870 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_serverSession);
   }
-  if (DAT_844c6c18 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_partySession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_partySession);
   }
-  if (DAT_844ac9c0 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_partyPresenceSession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_partyPresenceSession);
   }
-  if (DAT_844c7e98 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_searchSession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_searchSession);
   }
-  if (DAT_844ac390 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_partySearchSession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_partySearchSession);
   }
-  if (DAT_844c7240 != 0) {
-    Session_UpdateInternalUserRegistration();
+  if (g_partyJoinSession.dyn.sessionHandle != (void *)0x0) {
+    Session_UpdateInternalUserRegistration(&g_partyJoinSession);
   }
   return;
 }
@@ -4889,88 +5568,91 @@ void Session_Frame(void)
 
 // 826D6D18  Live_GetPlayerInAddr  (sessions/sessions.cpp:5009)
 
-void Live_GetPlayerInAddr(undefined8 param_1,int param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+in_addr Live_GetPlayerInAddr(SessionData *param_1,int param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  <unnamed_type_S_un> <Var2;
   
-  iVar2 = __savegprlr_29();
-  iVar2 = param_2 * 0x40 + iVar2;
-  if (*(char *)(iVar2 + 0x70) == '\0') {
-    uVar1 = va(0xffffffff821a4aac);
-    MyAssertHandler(0xffffffff821a2fc8,0x1392,0,0xffffffff820011f4,0xffffffff82037a28,uVar1);
+  iVar1 = __savegprlr_29(param_1);
+  iVar1 = param_2 * 0x40 + iVar1;
+  if (*(char *)(iVar1 + 0x70) == '\0') {
+    va("Clientnum %i is not registered but their inaddr was requested\n");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x1392,
+                    0,"%s\n\t%s");
   }
-  if (*(int *)(iVar2 + 0x84) == 4) {
-    if ((((*(char *)(iVar2 + 0x88) == '\x7f') && (*(char *)(iVar2 + 0x89) == '\0')) &&
-        (*(char *)(iVar2 + 0x8a) == '\0')) && (*(char *)(iVar2 + 0x8b) == '\x01')) {
-      MyAssertHandler(0xffffffff821a2fc8,0x1396,0,0xffffffff82000f98,0xffffffff821a49e8);
+  if (*(int *)(iVar1 + 0x84) == 4) {
+    if ((((*(char *)(iVar1 + 0x88) == '\x7f') && (*(char *)(iVar1 + 0x89) == '\0')) &&
+        (*(char *)(iVar1 + 0x8a) == '\0')) && (*(char *)(iVar1 + 0x8b) == '\x01')) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                      0x1396,0,"%s");
     }
-    if (((*(char *)(iVar2 + 0x88) == '\0') && (*(char *)(iVar2 + 0x89) == '\0')) &&
-       ((*(char *)(iVar2 + 0x8a) == '\0' && (*(char *)(iVar2 + 0x8b) == '\0')))) {
-      MyAssertHandler(0xffffffff821a2fc8,0x1397,0,0xffffffff820011f4,0xffffffff821a4928,
-                      0xffffffff821a49d8);
+    if (((*(char *)(iVar1 + 0x88) == '\0') && (*(char *)(iVar1 + 0x89) == '\0')) &&
+       ((*(char *)(iVar1 + 0x8a) == '\0' && (*(char *)(iVar1 + 0x8b) == '\0')))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                      0x1397,0,"%s\n\t%s");
     }
   }
-  __restgprlr_29(*(undefined4 *)(iVar2 + 0x88));
-  return;
+  <Var2.S_addr = __restgprlr_29(*(undefined4 *)(iVar1 + 0x88));
+  return (<unnamed_type_S_un>)(<unnamed_type_S_un>)<Var2.S_un_b;
 }
 
 
 // 826D6E30  Live_UpdatePlayerInAddr  (sessions/sessions.cpp:5023)
 
-void Live_UpdatePlayerInAddr
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined2 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+void Live_UpdatePlayerInAddr(SessionData *param_1,int param_2,in_addr param_3,ushort param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  char cStack00000024;
-  char cStack00000025;
-  char cStack00000026;
-  char cStack00000027;
-  undefined4 local_40;
-  undefined4 uStack_3c;
-  undefined2 local_38;
-  undefined2 uStack_36;
-  undefined4 uStack_34;
+  uint uVar1;
+  SessionData *pSVar2;
+  ulonglong uVar3;
+  uchar auVar4 [4];
+  uchar uStack00000024;
+  uchar uStack00000025;
+  uchar uStack00000026;
+  uchar uStack00000027;
+  netadr_t in_stack_ffffff78;
+  netadr_t local_40 [4];
   
-  uVar2 = __savegprlr_27();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x13a2,0,0xffffffff82000f98,0xffffffff82036a08);
+  uVar3 = (ulonglong)(int)param_3.S_un;
+  pSVar2 = (SessionData *)__savegprlr_27(param_1);
+  auVar4 = SUB84(uVar3,0);
+  _uStack00000024 = auVar4;
+  if (pSVar2 == (SessionData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13a2,
+                    0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a2fc8,0x13a3,0,0xffffffff820011f4,0xffffffff8203c124,
-                    0xffffffff821a49d8);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13a3,
+                    0,"%s\n\t%s");
   }
-  lVar3 = (param_2 & 0x3ffffff) * 0x40 + uVar2;
-  iVar1 = (int)lVar3;
-  if (*(char *)(iVar1 + 0x70) == '\0') {
-    Com_PrintWarning(0xe,0xffffffff821a4af0,*(undefined4 *)uVar2,param_2,param_2);
+  if ((pSVar2->dyn).users[param_2].registered == false) {
+    Com_PrintWarning(0xe,
+                     "Session %s - Attempted to update client %i\'s address, but client %i is not registered with voice\n"
+                    );
     __restgprlr_27();
     return;
   }
-  local_40 = *(undefined4 *)(iVar1 + 0x84);
-  uStack_3c = *(undefined4 *)(iVar1 + 0x88);
-  uStack_34 = *(undefined4 *)(iVar1 + 0x90);
-  cStack00000024 = (char)(param_3 >> 0x18);
-  uStack_36 = (undefined2)*(undefined4 *)(iVar1 + 0x8c);
-  if ((((cStack00000024 == '\x7f') &&
-       (cStack00000025 = (char)(param_3 >> 0x10), cStack00000025 == '\0')) &&
-      (cStack00000026 = (char)(param_3 >> 8), cStack00000026 == '\0')) &&
-     (cStack00000027 = (char)param_3, cStack00000027 == '\x01')) {
-    local_38 = 0;
-    NetAdr_SetType(&local_40,2,0x7f,uStack_3c,lVar3 + 0x84);
+  local_40[0].type = (pSVar2->dyn).users[param_2].addr.type;
+  local_40[0].ip = *&(pSVar2->dyn).users[param_2].addr.ip;
+  uVar1 = *(uint *)&(pSVar2->dyn).users[param_2].addr.port;
+  local_40[0].localNetID = (pSVar2->dyn).users[param_2].addr.localNetID;
+  local_40[0]._10_2_ = (undefined2)uVar1;
+  if ((((uStack00000024 == '\x7f') && (uStack00000025 == '\0')) && (uStack00000026 == '\0')) &&
+     (uStack00000027 == '\x01')) {
+    local_40[0]._8_4_ = uVar1 & 0xffff;
+    NetAdr_SetType(local_40,NA_LOOPBACK);
   }
   else {
-    local_40 = 4;
-    local_38 = param_4;
+    local_40[0].port = param_4;
+    local_40[0].type = NA_IP;
   }
-  uStack_3c = (int)param_3;
-  Session_SetPlayerAddr
-            (uVar2,param_2,CONCAT44(local_40,(int)param_3),
-             CONCAT44(CONCAT22(local_38,uStack_36),uStack_34));
+  local_40[0].ip = auVar4;
+  Session_SetPlayerAddr(pSVar2,param_2,in_stack_ffffff78);
   __restgprlr_27();
   return;
 }
@@ -4978,88 +5660,114 @@ void Live_UpdatePlayerInAddr
 
 // 826D6F88  Session_GetPlayerAddr  (sessions/sessions.cpp:5055)
 
-void Session_GetPlayerAddr(undefined8 param_1,int param_2,ulonglong param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+netadr_t * Session_GetPlayerAddr(netadr_t *__return_storage_ptr__,SessionData *param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
+  netadrtype_t nVar1;
+  netadrtype_t nVar2;
+  netadrtype_t nVar3;
+  int iVar4;
+  netadrtype_t *pnVar5;
+  netadr_t *pnVar6;
+  ulonglong uVar7;
   
-  puVar4 = (undefined4 *)__savegprlr_28();
-  if (0x11 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x13c0,0,0xffffffff82014c1c,param_3,0x12);
+  uVar7 = (ulonglong)param_2;
+  pnVar5 = (netadrtype_t *)__savegprlr_28(__return_storage_ptr__);
+  if (0x11 < (uVar7 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13c0,
+                    0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  param_2 = (int)param_3 * 0x40 + param_2;
-  if (*(char *)(param_2 + 0x70) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x13c1,0,0xffffffff82000f98,0xffffffff82037a28);
+  iVar4 = (int)uVar7;
+  if ((param_1->dyn).users[iVar4].registered == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13c1,
+                    0,"%s");
   }
-  if (*(int *)(param_2 + 0x84) == 4) {
-    if ((((*(char *)(param_2 + 0x88) == '\x7f') && (*(char *)(param_2 + 0x89) == '\0')) &&
-        (*(char *)(param_2 + 0x8a) == '\0')) && (*(char *)(param_2 + 0x8b) == '\x01')) {
-      MyAssertHandler(0xffffffff821a2fc8,0x13c5,0,0xffffffff82000f98,0xffffffff821a49e8);
+  if ((param_1->dyn).users[iVar4].addr.type == NA_IP) {
+    if (((((param_1->dyn).users[iVar4].addr.ip[0] == '\x7f') &&
+         ((param_1->dyn).users[iVar4].addr.ip[1] == '\0')) &&
+        ((param_1->dyn).users[iVar4].addr.ip[2] == '\0')) &&
+       ((param_1->dyn).users[iVar4].addr.ip[3] == '\x01')) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                      0x13c5,0,"%s");
     }
-    if (((*(char *)(param_2 + 0x88) == '\0') && (*(char *)(param_2 + 0x89) == '\0')) &&
-       ((*(char *)(param_2 + 0x8a) == '\0' && (*(char *)(param_2 + 0x8b) == '\0')))) {
-      MyAssertHandler(0xffffffff821a2fc8,0x13c6,0,0xffffffff820011f4,0xffffffff821a4928,
-                      0xffffffff821a49d8);
+    if ((((param_1->dyn).users[iVar4].addr.ip[0] == '\0') &&
+        ((param_1->dyn).users[iVar4].addr.ip[1] == '\0')) &&
+       (((param_1->dyn).users[iVar4].addr.ip[2] == '\0' &&
+        ((param_1->dyn).users[iVar4].addr.ip[3] == '\0')))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",
+                      0x13c6,0,"%s\n\t%s");
     }
   }
-  uVar1 = *(undefined4 *)(param_2 + 0x88);
-  uVar2 = *(undefined4 *)(param_2 + 0x8c);
-  uVar3 = *(undefined4 *)(param_2 + 0x90);
-  *puVar4 = *(undefined4 *)(param_2 + 0x84);
-  puVar4[1] = uVar1;
-  puVar4[2] = uVar2;
-  puVar4[3] = uVar3;
-  __restgprlr_28(puVar4);
-  return;
+  nVar1 = *(netadrtype_t *)(param_1->dyn).users[iVar4].addr.ip;
+  nVar2 = *(netadrtype_t *)&(param_1->dyn).users[iVar4].addr.port;
+  nVar3 = (param_1->dyn).users[iVar4].addr.localNetID;
+  *pnVar5 = (param_1->dyn).users[iVar4].addr.type;
+  pnVar5[1] = nVar1;
+  pnVar5[2] = nVar2;
+  pnVar5[3] = nVar3;
+  pnVar6 = (netadr_t *)__restgprlr_28(pnVar5);
+  return pnVar6;
 }
 
 
 // 826D70E8  Session_PlayerHasLoopbackAddr  (sessions/sessions.cpp:5070)
 
-void Session_PlayerHasLoopbackAddr(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool Session_PlayerHasLoopbackAddr(SessionData *param_1,int param_2)
 
 {
   int iVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_29();
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a2fc8,0x13cf,0,0xffffffff82014c1c,param_2,0x12);
+  uVar3 = (ulonglong)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13cf,
+                    0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)param_2 * 0x40 + iVar1;
+  iVar1 = (int)uVar3 * 0x40 + iVar1;
   if (*(char *)(iVar1 + 0x70) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x13d0,0,0xffffffff82037188,0xffffffff821a4b54,param_2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13d0,
+                    0,"%s\n\t(clientNum) = %i");
   }
   if ((((*(int *)(iVar1 + 0x84) == 4) && (*(char *)(iVar1 + 0x88) == '\x7f')) &&
       (*(char *)(iVar1 + 0x89) == '\0')) &&
      ((*(char *)(iVar1 + 0x8a) == '\0' && (*(char *)(iVar1 + 0x8b) == '\x01')))) {
-    MyAssertHandler(0xffffffff821a2fc8,0x13d3,0,0xffffffff82000f98,0xffffffff821a49e8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13d3,
+                    0,"%s");
   }
-  __restgprlr_29(*(int *)(iVar1 + 0x84) == 2);
-  return;
+  uVar2 = __restgprlr_29(*(int *)(iVar1 + 0x84) == 2);
+  return (bool)uVar2;
 }
 
 
 // 826D71D8  Live_GetNatTypeForClientNum  (sessions/sessions.cpp:5082)
 
-undefined4 Live_GetNatTypeForClientNum(int param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Live_GetNatTypeForClientNum(SessionData *param_1,int param_2)
 
 {
-  if (*(char *)((int)((param_2 & 0xffffffff) << 6) + param_1 + 0x70) == '\0') {
-    MyAssertHandler(0xffffffff821a2fc8,0x13db,0,0xffffffff821a4b80,0xffffffff821a4b94,param_2);
+  if ((param_1->dyn).users[param_2].registered == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\sessions\\sessions.cpp",0x13db,
+                    0,"%s\n\t(player) = %i");
   }
-  return *(undefined4 *)((int)((param_2 + 2 & 0xffffffff) << 6) + param_1);
+  return (param_1->dyn).users[param_2].natType;
 }
 
 
 // 829402A0  `dynamic_atexit_destructor_for_'g_sessionOverlappedTasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__g_sessionOverlappedTasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff844c9c98);
+  OverlappedTaskSet::~OverlappedTaskSet(&g_sessionOverlappedTasks);
   return;
 }
 

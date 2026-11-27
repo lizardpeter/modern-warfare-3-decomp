@@ -2,35 +2,35 @@
 
 // 822A8410  Colorblind_MaterialAlternative  (cgame/cg_colorblind_media.cpp:12)
 
-uint Colorblind_MaterialAlternative(undefined8 param_1)
+char * Colorblind_MaterialAlternative(char *param_1)
 
 {
   char *pcVar1;
-  int local_20 [4];
+  StringTable *local_20 [4];
   
-  StringTable_GetAsset(0xffffffff82010db8,local_20);
-  if (local_20[0] == 0) {
-    return 0;
+  StringTable_GetAsset("mp/colorblindMaterials.csv",local_20);
+  if (local_20[0] == (StringTable *)0x0) {
+    return (char *)0x0;
   }
-  pcVar1 = (char *)StringTable_Lookup(local_20[0],1,param_1,2);
-  return -(uint)(*pcVar1 != '\0') & (uint)pcVar1;
+  pcVar1 = StringTable_Lookup(local_20[0],1,param_1,2);
+  return (char *)(-(uint)(*pcVar1 != '\0') & (uint)pcVar1);
 }
 
 
 // 822A8488  Colorblind_GetMaterialByStringTable  (cgame/cg_colorblind_media.cpp:27)
 
-void Colorblind_GetMaterialByStringTable(undefined8 param_1,ulonglong param_2)
+Material * Colorblind_GetMaterialByStringTable(int param_1,char *param_2)
 
 {
-  char cVar2;
-  ulonglong uVar1;
+  bool bVar3;
+  char *pcVar1;
+  Material *pMVar2;
   
-  cVar2 = GamerProfile_IsColorBlind();
-  if ((cVar2 == '\0') ||
-     (uVar1 = Colorblind_MaterialAlternative(param_2), (uVar1 & 0xffffffff) == 0)) {
-    uVar1 = param_2;
+  bVar3 = GamerProfile_IsColorBlind(param_1);
+  if ((!bVar3) || (pcVar1 = Colorblind_MaterialAlternative(param_2), pcVar1 == (char *)0x0)) {
+    pcVar1 = param_2;
   }
-  Material_RegisterHandle(uVar1,7);
-  return;
+  pMVar2 = Material_RegisterHandle(pcVar1,7);
+  return pMVar2;
 }
 

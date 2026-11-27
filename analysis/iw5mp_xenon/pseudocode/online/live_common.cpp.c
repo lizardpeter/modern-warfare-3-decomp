@@ -2,239 +2,288 @@
 
 // 82711960  Live_GetFailureReason  (online/live_common.cpp:276)
 
-undefined4 Live_GetFailureReason(uint param_1,int param_2)
+char * Live_GetFailureReason(OnlinePlayFailureReason param_1,int param_2)
 
 {
-  undefined *puVar1;
+  char **ppcVar1;
   
-  if (0x10 < param_1) {
-    MyAssertHandler(0xffffffff821b7898,0x115,0,0xffffffff820318cc,param_1,0x11);
+  if (OPFR_MISSING_VAULT_SOCIAL_CONFIG < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x115,
+                    0,"failureReason doesn\'t index OPFR_COUNT\n\t%i not in [0, %i)");
   }
   if (param_2 == 0) {
-    puVar1 = &DAT_82999a88;
+    ppcVar1 = g_onlinePlayFailureReasonMessages;
   }
   else {
-    puVar1 = &DAT_82999ad0;
+    ppcVar1 = g_vaultFailureReasonMessages;
   }
-  return *(undefined4 *)(puVar1 + param_1 * 4);
+  return ppcVar1[param_1];
 }
 
 
 // 827119E8  Live_RegisterCommonDvars  (online/live_common.cpp:287)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_RegisterCommonDvars(void)
 
 {
-  DAT_84584f00 = Dvar_RegisterInt(0xffffffff821b7be0,1,0,0x7fffffff,0,0xffffffff821b7bf8);
-  DAT_84584ee0 = Dvar_RegisterInt(0xffffffff821b7b80,0x19,0,100,0,0xffffffff821b7b98);
-  DAT_84584eec = Dvar_RegisterInt(0xffffffff821b7b38,1000,0,0x7fffffff,0,0xffffffff821b7b54);
-  DAT_84584f04 = Dvar_RegisterInt(0xffffffff821b7b20,0xfa,0,0x7fffffff,0,0xffffffff821b7af0);
-  DAT_84584ee8 = Dvar_RegisterInt(0xffffffff821b7a9c,8000,0x32,20000,0,0xffffffff821b7ab0);
-  DAT_84584ed8 = Dvar_RegisterInt(0xffffffff821b7a1c,0,0,0x7fffffff,0,0xffffffff821b7a38);
-  DAT_84584ef8 = Dvar_RegisterInt(0xffffffff821b7990,0,0,5,4,0xffffffff821b79a8);
-  DAT_84584f0c = Dvar_RegisterBool(0xffffffff821b7928,0,4,0xffffffff821b7948);
-  DAT_84584f14 = Dvar_RegisterInt(0xffffffff821b7910,600,0,600,4,0xffffffff821b78dc);
+  live_qosec_minprobes =
+       Dvar_RegisterInt("live_qosec_minprobes",1,0,0x7fffffff,0,
+                        "Minimum probe results required before early outing qos");
+  live_qosec_minpercent =
+       Dvar_RegisterInt("live_qosec_minpercent",0x19,0,100,0,
+                        "Minimum percentage of probe results required before early outing qos");
+  live_qosec_firstupdatems =
+       Dvar_RegisterInt("live_qosec_firstupdatems",1000,0,0x7fffffff,0,
+                        "MS to wait before deciding to early out qos");
+  live_qosec_lastupdatems =
+       Dvar_RegisterInt("live_qosec_lastupdatems",0xfa,0,0x7fffffff,0,
+                        "MS since last update required to early out qos");
+  live_qosec_maxtime =
+       Dvar_RegisterInt("live_qosec_maxtime",8000,0x32,20000,0,
+                        "Maximum time to allow before qos early out, even if no results");
+  live_test_onlinedataoff =
+       Dvar_RegisterInt("live_test_onlinedataoff",0,0,0x7fffffff,0,
+                        "Bit flags corresponding enum OnlineDataSyncFlags that indicate we do not have that piece of data"
+                       );
+  dw_test_disconnect =
+       Dvar_RegisterInt("dw_test_disconnect",0,0,5,4,
+                        "Simulate a demonware disconnect on the specified controller where 0 is off and the max value is all controllers."
+                       );
+  dw_test_retry_disconnect =
+       Dvar_RegisterBool("dw_test_retry_disconnect",false,4,
+                         "Simulate a demonware disconnect at the end of every connection retry");
+  dw_memory_display_time =
+       Dvar_RegisterInt("dw_memory_display_time",600,0,600,4,
+                        "Number of seconds between high watermark display.");
   return;
 }
 
 
 // 82711B98  Live_GetAcceptingInvitationDesiredDialog  (online/live_common.cpp:329)
 
-undefined8 Live_GetAcceptingInvitationDesiredDialog(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+UI_LiveDialogState Live_GetAcceptingInvitationDesiredDialog(void)
 
 {
-  char cVar2;
-  int iVar1;
+  bool bVar2;
+  uiMenuCommand_t uVar1;
   
-  cVar2 = Live_HasAcceptedInvitation();
-  if ((cVar2 != '\0') && (DAT_84584ed5 != '\0')) {
-    iVar1 = UI_GetActiveMenu(0);
-    if (iVar1 == 1) {
-      return 2;
+  bVar2 = Live_HasAcceptedInvitation();
+  if ((bVar2) && (s_acceptingInviteInitialized != false)) {
+    uVar1 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+    if (uVar1 == UIMENU_MAIN) {
+      return LIVE_DIALOG_GETTING_PLAYER_DATA;
     }
-    iVar1 = UI_GetActiveMenu(0);
-    if (iVar1 == 9) {
-      return 1;
+    uVar1 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+    if (uVar1 == UIMENU_PARTY) {
+      return LIVE_DIALOG_ACCEPTING_INVITE;
     }
   }
-  return 0;
+  return LIVE_DIALOG_NONE;
 }
 
 
 // 82711C10  Live_ExceededMaxLogon  (online/live_common.cpp:350)
 
-void Live_ExceededMaxLogon(undefined8 param_1,int param_2)
+int Live_ExceededMaxLogon(int param_1,int param_2)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   int iVar2;
+  DWOnlineStatus DVar3;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = Live_IsWaitingForOnlineServices();
+  iVar1 = __savegprlr_29(param_1);
+  iVar2 = Live_IsWaitingForOnlineServices(iVar1);
   if ((iVar2 != 0) && (60000 < param_2)) {
 LAB_82711c40:
-    __restgprlr_29(1);
-    return;
+    iVar1 = __restgprlr_29(1);
+    return iVar1;
   }
-  iVar2 = dwGetLogOnStatus(uVar1);
-  if (iVar2 == 0) {
-    iVar2 = dwGetNumLogonAttemps(uVar1);
+  DVar3 = dwGetLogOnStatus(iVar1);
+  if (DVar3 == DW_LIVE_DISCONNECTED) {
+    iVar2 = dwGetNumLogonAttemps(iVar1);
     if (2 < iVar2) goto LAB_82711c40;
     if (60000 < param_2) {
-      iVar2 = dwGetNumLogonAttemps(uVar1);
+      iVar2 = dwGetNumLogonAttemps(iVar1);
       if (0 < iVar2) goto LAB_82711c40;
-      if (((DAT_84584ef8 != 0) && (iVar2 = *(int *)(DAT_84584ef8 + 0xc), 0 < iVar2)) &&
-         ((iVar2 == 5 || (iVar2 == (int)uVar1 + 1)))) {
-        Com_PrintWarning(0x19,0xffffffff821b7c30);
+      if (((dw_test_disconnect != (dvar_t *)0x0) &&
+          (iVar2 = (dw_test_disconnect->current).integer, 0 < iVar2)) &&
+         ((iVar2 == 5 || (iVar2 == iVar1 + 1)))) {
+        Com_PrintWarning(0x19,
+                         "Use dvar dw_test_retry_disconnect to properly test connecting dialog up and MW3 servers not available rather than dw_test_disconnect.\n"
+                        );
       }
     }
   }
-  __restgprlr_29(0);
-  return;
+  iVar1 = __restgprlr_29(0);
+  return iVar1;
 }
 
 
 // 82713F10  Live_GetDesiredOnlineDialog  (online/live_common.cpp:395)
 
-void Live_GetDesiredOnlineDialog(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+UI_LiveDialogState Live_GetDesiredOnlineDialog(void)
 
 {
-  undefined4 uVar1;
-  char cVar4;
-  longlong lVar2;
+  int iVar1;
+  bool bVar5;
+  UI_LiveDialogState UVar2;
   int iVar3;
-  undefined8 uVar5;
+  int iVar4;
+  ulonglong uVar6;
+  undefined8 uVar7;
   
   __savegprlr_27();
-  cVar4 = CL_AllLocalClientsDisconnected();
-  if ((cVar4 == '\0') || (cVar4 = IsServerRunning(), uVar1 = DAT_82999a80, cVar4 != '\0')) {
-    __restgprlr_27(0);
-    return;
+  bVar5 = CL_AllLocalClientsDisconnected();
+  if ((!bVar5) || (bVar5 = IsServerRunning(), iVar1 = g_waitForConnectionDialogController, bVar5)) {
+    UVar2 = __restgprlr_27(0);
+    return UVar2;
   }
-  uVar5 = 0;
-  if (DAT_84584f38 != 0) {
-    if (DAT_84584f38 == 1) {
-      DAT_84584f38 = 2;
-      DAT_84584f08 = Sys_Milliseconds();
-      Dvar_SetString(DAT_8366735c,0xffffffff820068af);
-      DW_SetDisableLogonRetry(0);
-      dwResetLogonAttempts(uVar1);
+  uVar7 = 0;
+  if (g_waitForConnectionDialogState != OCDS_NONE) {
+    if (g_waitForConnectionDialogState == OCDS_REQUESTED) {
+      g_waitForConnectionDialogState = OCDS_ACTIVE;
+      g_waitForConnectionDialogRequestTime = Sys_Milliseconds();
+      Dvar_SetString(com_errorResolveCommand,"");
+      DW_SetDisableLogonRetry(false);
+      dwResetLogonAttempts(iVar1);
     }
-    else if (2 < DAT_84584f38) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821b7898,0x1c8,0,0xffffffff821b8320);
-        __restgprlr_27(0);
-        return;
+    else if (OCDS_ACTIVE < g_waitForConnectionDialogState) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x1c8,0,"unexpected g_waitForConnectionDialogState state");
+        UVar2 = __restgprlr_27(0);
+        return UVar2;
       }
       goto LAB_82714084;
     }
-    lVar2 = Sys_Milliseconds();
-    lVar2 = lVar2 - (ulonglong)DAT_84584f08;
-    if (lVar2 < 0) {
-      MyAssertHandler(0xffffffff821b7898,0x1a9,0,0xffffffff821b81fc,0xffffffff821b8218,lVar2);
+    iVar3 = Sys_Milliseconds();
+    uVar6 = (ulonglong)(uint)g_waitForConnectionDialogRequestTime;
+    if ((longlong)((longlong)iVar3 - uVar6) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x1a9,0,"%s\n\t(timeDisplayed) = %i");
     }
-    uVar5 = 3;
-    if (((int)lVar2 < 0x5dd) || (iVar3 = Live_IsWaitingForOnlineServices(uVar1), iVar3 != 0)) {
-      iVar3 = Live_ExceededMaxLogon(uVar1,lVar2);
+    uVar7 = 3;
+    iVar3 = (int)((longlong)iVar3 - uVar6);
+    if ((iVar3 < 0x5dd) || (iVar4 = Live_IsWaitingForOnlineServices(iVar1), iVar4 != 0)) {
+      iVar3 = Live_ExceededMaxLogon(iVar1,iVar3);
       if (iVar3 != 0) {
         UI_ClearCompletionResolve();
-        DW_SetDisableLogonRetry(1);
-        Live_DemonwareDisconnectCleanup(uVar1);
+        DW_SetDisableLogonRetry(true);
+        Live_DemonwareDisconnectCleanup(iVar1);
       }
     }
     else {
-      cVar4 = LiveStorage_CheckingRemoteConsoleChallenge();
-      if (cVar4 == '\0') {
-        DAT_84584f38 = 0;
-        DAT_82999a80 = 0xffffffff;
-        UI_RunResolveItemDefAction(0);
-        __restgprlr_27(0);
-        return;
+      bVar5 = LiveStorage_CheckingRemoteConsoleChallenge();
+      if (!bVar5) {
+        g_waitForConnectionDialogState = OCDS_NONE;
+        g_waitForConnectionDialogController = -1;
+        UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
+        UVar2 = __restgprlr_27(0);
+        return UVar2;
       }
     }
   }
 LAB_82714084:
-  __restgprlr_27(uVar5);
-  return;
+  UVar2 = __restgprlr_27(uVar7);
+  return UVar2;
 }
 
 
 // 82713628  Live_GetSocialConfigDialog  (online/live_common.cpp:465)
 
-void Live_GetSocialConfigDialog(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+UI_LiveDialogState Live_GetSocialConfigDialog(void)
 
 {
-  char cVar2;
-  longlong lVar1;
-  undefined8 uVar3;
+  bool bVar3;
+  UI_LiveDialogState UVar1;
+  int iVar2;
+  ulonglong uVar4;
+  undefined8 uVar5;
   
   __savegprlr_29();
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if ((cVar2 == '\0') || (cVar2 = IsServerRunning(), cVar2 != '\0')) {
-    __restgprlr_29(0);
-    return;
+  bVar3 = CL_AllLocalClientsDisconnected();
+  if ((!bVar3) || (bVar3 = IsServerRunning(), bVar3)) {
+    UVar1 = __restgprlr_29(0);
+    return UVar1;
   }
-  uVar3 = 0;
-  if (DAT_84584f3c != 0) {
-    if (DAT_84584f3c == 1) {
-      DAT_84584f3c = 2;
-      DAT_84584ee4 = Sys_Milliseconds();
+  uVar5 = 0;
+  if (g_waitForSocialConfigDialogState != OCDS_NONE) {
+    if (g_waitForSocialConfigDialogState == OCDS_REQUESTED) {
+      g_waitForSocialConfigDialogState = OCDS_ACTIVE;
+      g_waitForSocialConfigDialogRequestTime = Sys_Milliseconds();
     }
-    else if (2 < DAT_84584f3c) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff821b7898,0x202,0,0xffffffff821b8230);
-        __restgprlr_29(0);
-        return;
+    else if (OCDS_ACTIVE < g_waitForSocialConfigDialogState) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x202,0,"unexpected g_waitForSocialConfigDialogState state");
+        UVar1 = __restgprlr_29(0);
+        return UVar1;
       }
       goto LAB_82713768;
     }
-    lVar1 = Sys_Milliseconds();
-    lVar1 = lVar1 - (ulonglong)DAT_84584ee4;
-    if (lVar1 < 0) {
-      MyAssertHandler(0xffffffff821b7898,0x1e9,0,0xffffffff821b81fc,0xffffffff821b8218,lVar1);
+    iVar2 = Sys_Milliseconds();
+    uVar4 = (ulonglong)(uint)g_waitForSocialConfigDialogRequestTime;
+    if ((longlong)((longlong)iVar2 - uVar4) < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x1e9,0,"%s\n\t(timeDisplayed) = %i");
     }
-    uVar3 = 4;
-    if ((0x5dc < (int)lVar1) && (cVar2 = SocialConfig_Ok(), cVar2 != '\0')) {
-      DAT_84584f3c = 0;
-      UI_RunResolveItemDefAction(0);
-      __restgprlr_29(0);
-      return;
+    uVar5 = 4;
+    iVar2 = (int)((longlong)iVar2 - uVar4);
+    if ((0x5dc < iVar2) && (bVar3 = SocialConfig_Ok(), bVar3)) {
+      g_waitForSocialConfigDialogState = OCDS_NONE;
+      UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
+      UVar1 = __restgprlr_29(0);
+      return UVar1;
     }
-    if (60000 < (int)lVar1) {
+    if (60000 < iVar2) {
       UI_ClearCompletionResolve();
-      DAT_84584f3c = 0;
-      DAT_84584ee4 = 0xffffffff;
-      Com_Error(1,0xffffffff82030e48);
+      g_waitForSocialConfigDialogState = OCDS_NONE;
+      g_waitForSocialConfigDialogRequestTime = -1;
+      Com_Error(ERR_DROP,"EXE_DEMONWARE_DISCONNECT");
     }
   }
 LAB_82713768:
-  __restgprlr_29(uVar3);
-  return;
+  UVar1 = __restgprlr_29(uVar5);
+  return UVar1;
 }
 
 
 // 82711CD0  Live_OnDialogClosed  (online/live_common.cpp:523)
 
-void Live_OnDialogClosed(longlong param_1)
+void Live_OnDialogClosed(UI_LiveDialogState param_1)
 
 {
-  DAT_84584f10 = -(uint)(param_1 != 2) & DAT_84584f10;
+  s_gettingDataPopupOpenLastFrame =
+       -(uint)(param_1 != LIVE_DIALOG_GETTING_PLAYER_DATA) & s_gettingDataPopupOpenLastFrame;
   return;
 }
 
 
 // 827140A0  Live_UpdateDesiredDialog  (online/live_common.cpp:536)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_UpdateDesiredDialog(void)
 
 {
-  DAT_84584f18 = Live_GetDesiredOnlineDialog();
-  if (DAT_84584f18 == 0) {
-    DAT_84584f18 = Live_GetAcceptingInvitationDesiredDialog();
-    if (DAT_84584f18 == 0) {
-      DAT_84584f18 = PartyAtmoic_GetDesiredDialog();
-      if (DAT_84584f18 == 0) {
-        DAT_84584f18 = Live_GetSocialConfigDialog();
+  s_uiJoiningDialogState.desiredMenuState = Live_GetDesiredOnlineDialog();
+  if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+    s_uiJoiningDialogState.desiredMenuState = Live_GetAcceptingInvitationDesiredDialog();
+    if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+      s_uiJoiningDialogState.desiredMenuState = PartyAtmoic_GetDesiredDialog();
+      if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+        s_uiJoiningDialogState.desiredMenuState = Live_GetSocialConfigDialog();
       }
     }
   }
@@ -244,19 +293,25 @@ void Live_UpdateDesiredDialog(void)
 
 // 82711CF0  Live_TryCloseDialog  (online/live_common.cpp:566)
 
-void Live_TryCloseDialog(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_TryCloseDialog(LocalClientNum_t param_1,UI_LiveDialogState param_2)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
+  ulonglong uVar3;
   
-  __savegprlr_29();
-  if ((DAT_84584f18 != (int)param_2) && (DAT_84584f1c != (int)param_2)) {
-    iVar1 = (int)((param_2 & 0xffffffff) << 2);
-    cVar2 = Menu_IsMenuOpenAndVisible(0,*(undefined4 *)(&DAT_82999a2c + iVar1));
-    if (cVar2 != '\0') {
-      UI_CloseMenu(0,*(undefined4 *)(&DAT_82999a2c + iVar1));
-      DAT_84584f10 = -(uint)(param_2 != 2) & DAT_84584f10;
+  uVar3 = (ulonglong)(int)param_2;
+  __savegprlr_29(param_1);
+  if ((s_uiJoiningDialogState.desiredMenuState != (UI_LiveDialogState)uVar3) &&
+     (s_uiJoiningDialogState.activeMenuState != (UI_LiveDialogState)uVar3)) {
+    iVar1 = (int)((uVar3 & 0xffffffff) << 2);
+    bVar2 = Menu_IsMenuOpenAndVisible
+                      (LOCAL_CLIENT_0,*(char **)((int)s_uiJoiningDialogMenuName + iVar1));
+    if (bVar2) {
+      UI_CloseMenu(LOCAL_CLIENT_0,*(char **)((int)s_uiJoiningDialogMenuName + iVar1));
+      s_gettingDataPopupOpenLastFrame = -(uint)(uVar3 != 2) & s_gettingDataPopupOpenLastFrame;
     }
   }
   __restgprlr_29();
@@ -266,91 +321,106 @@ void Live_TryCloseDialog(undefined8 param_1,ulonglong param_2)
 
 // 82711D78  Live_IsOnlineDataRequired  (online/live_common.cpp:580)
 
-undefined8 Live_IsOnlineDataRequired(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_IsOnlineDataRequired(void)
 
 {
-  char cVar2;
-  undefined8 uVar1;
+  bool bVar2;
+  int iVar1;
   
-  cVar2 = Live_HasAcceptedInvitation();
-  if (((cVar2 != '\0') && (DAT_84584ed5 != '\0')) ||
-     (uVar1 = 0, *(char *)(DAT_82aa1af8 + 0xc) != '\0')) {
-    uVar1 = 1;
+  bVar2 = Live_HasAcceptedInvitation();
+  if (((bVar2) && (s_acceptingInviteInitialized != false)) ||
+     (iVar1 = 0, (onlinegame->current).enabled != false)) {
+    iVar1 = 1;
   }
-  return uVar1;
+  return iVar1;
 }
 
 
 // 82711DD0  Live_GetRequiredDataControllerIndex  (online/live_common.cpp:597)
 
-void Live_GetRequiredDataControllerIndex(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Live_GetRequiredDataControllerIndex(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar2;
-  undefined1 auStack_30 [48];
+  LocalClientNum_t LVar1;
+  bool bVar3;
+  int iVar2;
+  int aiStack_30 [12];
   
-  uVar1 = __savegprlr_29();
-  cVar2 = Live_HasAcceptedInvitation();
-  if (cVar2 != '\0') {
-    Live_GetControllerIndexForPendingInvitation();
-    __restgprlr_29();
-    return;
+  LVar1 = __savegprlr_29(param_1);
+  bVar3 = Live_HasAcceptedInvitation();
+  if (bVar3) {
+    iVar2 = Live_GetControllerIndexForPendingInvitation();
+    iVar2 = __restgprlr_29(iVar2);
+    return iVar2;
   }
-  if (*(char *)(DAT_82aa1af8 + 0xc) == '\0') {
-    MyAssertHandler(0xffffffff821b7898,0x266,0,0xffffffff82000f98,0xffffffff820304bc);
+  if ((onlinegame->current).enabled == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x266,
+                    0,"%s");
   }
-  cVar2 = CL_IsLocalClientActive(uVar1);
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff821b7898,0x26b,0,0xffffffff82000f98,0xffffffff821b7d28);
+  bVar3 = CL_IsLocalClientActive(LVar1);
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x26b,
+                    0,"%s");
   }
-  if ((DAT_82966e98 != 0) &&
-     (cVar2 = CL_SplitscreenControllerIndexFromClientNum(uVar1,auStack_30), cVar2 == '\0')) {
-    MyAssertHandler(0xffffffff821b7898,0x26c,0,0xffffffff82000f98,0xffffffff821b7cb8);
+  if ((cl_multi_gamepads_enabled != 0) &&
+     (bVar3 = CL_SplitscreenControllerIndexFromClientNum(LVar1,aiStack_30), !bVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x26c,
+                    0,"%s");
   }
-  CL_ControllerIndexFromClientNum(uVar1);
-  __restgprlr_29();
-  return;
+  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
+  iVar2 = __restgprlr_29(iVar2);
+  return iVar2;
 }
 
 
 // 82713780  ClosePopupGettingData  (online/live_common.cpp:634)
 
-void ClosePopupGettingData(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void ClosePopupGettingData(LocalClientNum_t param_1)
 
 {
   char cVar1;
-  undefined8 uVar2;
-  char cVar5;
-  uint uVar3;
-  uint uVar4;
-  char *pcVar6;
-  char *pcVar7;
+  char cVar2;
+  LocalClientNum_t LVar3;
+  bool bVar7;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  char *pcVar8;
+  char *pcVar9;
   
-  uVar2 = __savegprlr_29();
-  cVar5 = Live_HasAcceptedInvitation();
-  if ((((cVar5 != '\0') && (DAT_84584ed5 != '\0')) || (*(char *)(DAT_82aa1af8 + 0xc) != '\0')) &&
-     (uVar2 = Live_GetRequiredDataControllerIndex(uVar2), -1 < (int)uVar2)) {
-    uVar3 = Live_GetRequiredFlags();
-    uVar4 = Live_SyncOnlineDataFlags(uVar2);
-    if ((uVar4 & uVar3) != 0) goto LAB_827138ac;
+  LVar3 = __savegprlr_29(param_1);
+  bVar7 = Live_HasAcceptedInvitation();
+  if ((((bVar7) && (s_acceptingInviteInitialized != false)) ||
+      ((onlinegame->current).enabled != false)) &&
+     (iVar4 = Live_GetRequiredDataControllerIndex(LVar3), -1 < iVar4)) {
+    uVar5 = Live_GetRequiredFlags();
+    uVar6 = Live_SyncOnlineDataFlags(iVar4);
+    if ((uVar6 & uVar5) != 0) goto LAB_827138ac;
   }
-  pcVar7 = "popup_gettingdata";
-  pcVar6 = PTR_s_popup_gettingdata_82999a34;
+  pcVar9 = "popup_gettingdata";
+  pcVar8 = s_uiJoiningDialogMenuName[2];
   do {
-    cVar5 = *pcVar7;
-    cVar1 = *pcVar6;
-    if (cVar5 == '\0') break;
-    pcVar7 = pcVar7 + 1;
-    pcVar6 = pcVar6 + 1;
-  } while (cVar5 == cVar1);
-  if (cVar5 != cVar1) {
-    MyAssertHandler(0xffffffff821b7898,0x290,0,0xffffffff82000f98,0xffffffff821b8268);
+    cVar1 = *pcVar9;
+    cVar2 = *pcVar8;
+    if (cVar1 == '\0') break;
+    pcVar9 = pcVar9 + 1;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x290,
+                    0,"%s");
   }
-  if (((DAT_84584f18 != 2) && (DAT_84584f1c != 2)) &&
-     (cVar5 = Menu_IsMenuOpenAndVisible(0,PTR_s_popup_gettingdata_82999a34), cVar5 != '\0')) {
-    UI_CloseMenu(0,PTR_s_popup_gettingdata_82999a34);
-    DAT_84584f10 = 0;
+  if (((s_uiJoiningDialogState.desiredMenuState != LIVE_DIALOG_GETTING_PLAYER_DATA) &&
+      (s_uiJoiningDialogState.activeMenuState != LIVE_DIALOG_GETTING_PLAYER_DATA)) &&
+     (bVar7 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[2]), bVar7)) {
+    UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[2]);
+    s_gettingDataPopupOpenLastFrame = 0;
   }
 LAB_827138ac:
   __restgprlr_29();
@@ -360,30 +430,35 @@ LAB_827138ac:
 
 // 82711EC0  Live_OpenDialog  (online/live_common.cpp:662)
 
-void Live_OpenDialog(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_OpenDialog(UI_LiveDialogState param_1,uint param_2)
 
 {
   uint uVar1;
-  char cVar2;
-  int iVar3;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if (4 < uVar1) {
-    MyAssertHandler(0xffffffff821b7898,0x297,0,0xffffffff821b7d98,uVar1,5);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x297,
+                    0,"state doesn\'t index LIVE_DIALOG_STATE_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar1 * 4;
-  if ((*(int *)(&DAT_82999a2c + iVar3) != 0) &&
-     (cVar2 = Menu_IsMenuOpenAndVisible(0), cVar2 == '\0')) {
+  if ((s_uiJoiningDialogMenuName[uVar1] != (char *)0x0) &&
+     (bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]), !bVar3)) {
     if (uVar1 == 2) {
-      CL_GetFirstActiveControllerIndex();
-      ShowPopupGettingData();
+      iVar2 = CL_GetFirstActiveControllerIndex();
+      ShowPopupGettingData(iVar2);
     }
     else {
-      UI_OpenMenu(0,*(undefined4 *)(&DAT_82999a2c + iVar3));
+      UI_OpenMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
     }
-    cVar2 = Menu_IsMenuOpenAndVisible(0,*(undefined4 *)(&DAT_82999a2c + iVar3));
-    if ((cVar2 != '\0') && ((param_2 & 0xffffffff) != (ulonglong)DAT_84584f20)) {
-      Com_PrintWarning(0xd,0xffffffff821b7d58,*(undefined4 *)(&DAT_82999a2c + iVar3));
+    bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
+    if ((bVar3) && ((uVar4 & 0xffffffff) != (ulonglong)s_uiJoiningDialogState.lastStateTransition))
+    {
+      Com_PrintWarning(0xd,"Live_OpenDialog opened \'%s\' while not on state transition edge\n");
     }
   }
   __restgprlr_28();
@@ -393,25 +468,29 @@ void Live_OpenDialog(undefined8 param_1,ulonglong param_2)
 
 // 82711F98  Live_CloseDialog  (online/live_common.cpp:684)
 
-void Live_CloseDialog(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_CloseDialog(UI_LiveDialogState param_1,uint param_2)
 
 {
   uint uVar1;
-  char cVar2;
-  int iVar3;
+  bool bVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if (4 < uVar1) {
-    MyAssertHandler(0xffffffff821b7898,0x2ad,0,0xffffffff821b7d98,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x2ad,
+                    0,"state doesn\'t index LIVE_DIALOG_STATE_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar1 * 4;
-  if ((*(int *)(&DAT_82999a2c + iVar3) != 0) &&
-     (cVar2 = Menu_IsMenuOpenAndVisible(0), cVar2 != '\0')) {
-    UI_CloseMenu(0,*(undefined4 *)(&DAT_82999a2c + iVar3));
-    DAT_84584f10 = -(uint)(uVar1 != 2) & DAT_84584f10;
-    cVar2 = Menu_IsMenuOpenAndVisible(0,*(undefined4 *)(&DAT_82999a2c + iVar3));
-    if ((cVar2 == '\0') && ((param_2 & 0xffffffff) != (ulonglong)DAT_84584f20)) {
-      Com_PrintWarning(0xd,0xffffffff821b7dd8,*(undefined4 *)(&DAT_82999a2c + iVar3));
+  if ((s_uiJoiningDialogMenuName[uVar1] != (char *)0x0) &&
+     (bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]), bVar2)) {
+    UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
+    s_gettingDataPopupOpenLastFrame = -(uint)(uVar1 != 2) & s_gettingDataPopupOpenLastFrame;
+    bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
+    if ((!bVar2) && ((uVar3 & 0xffffffff) != (ulonglong)s_uiJoiningDialogState.lastStateTransition))
+    {
+      Com_PrintWarning(0xd,"Live_CloseDialog closed \'%s\' while not on state transition edge\n");
     }
   }
   __restgprlr_28();
@@ -421,358 +500,427 @@ void Live_CloseDialog(undefined8 param_1,ulonglong param_2)
 
 // 82714100  Live_DisplayActiveDialog  (online/live_common.cpp:704)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_DisplayActiveDialog(void)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  DAT_84584f18 = Live_GetDesiredOnlineDialog();
-  if (DAT_84584f18 == 0) {
-    DAT_84584f18 = Live_GetAcceptingInvitationDesiredDialog();
-    if (DAT_84584f18 == 0) {
-      DAT_84584f18 = PartyAtmoic_GetDesiredDialog();
-      if (DAT_84584f18 == 0) {
-        DAT_84584f18 = Live_GetSocialConfigDialog();
+  s_uiJoiningDialogState.desiredMenuState = Live_GetDesiredOnlineDialog();
+  if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+    s_uiJoiningDialogState.desiredMenuState = Live_GetAcceptingInvitationDesiredDialog();
+    if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+      s_uiJoiningDialogState.desiredMenuState = PartyAtmoic_GetDesiredDialog();
+      if (s_uiJoiningDialogState.desiredMenuState == LIVE_DIALOG_NONE) {
+        s_uiJoiningDialogState.desiredMenuState = Live_GetSocialConfigDialog();
       }
     }
   }
   uVar1 = Sys_Milliseconds();
-  if ((DAT_84584f1c != DAT_84584f18) &&
-     (((ulonglong)DAT_84584f20 + 500 & 0xffffffff) < (uVar1 & 0xffffffff))) {
-    DAT_84584f20 = (uint)uVar1;
-    Live_CloseDialog(DAT_84584f1c,uVar1);
-    Live_OpenDialog(DAT_84584f18,uVar1);
-    DAT_84584f1c = DAT_84584f18;
+  if ((s_uiJoiningDialogState.activeMenuState != s_uiJoiningDialogState.desiredMenuState) &&
+     (s_uiJoiningDialogState.lastStateTransition + 500 < uVar1)) {
+    s_uiJoiningDialogState.lastStateTransition = uVar1;
+    Live_CloseDialog(s_uiJoiningDialogState.activeMenuState,uVar1);
+    Live_OpenDialog(s_uiJoiningDialogState.desiredMenuState,uVar1);
+    s_uiJoiningDialogState.activeMenuState = s_uiJoiningDialogState.desiredMenuState;
   }
-  Live_OpenDialog(DAT_84584f1c,uVar1);
+  Live_OpenDialog(s_uiJoiningDialogState.activeMenuState,uVar1);
   return;
 }
 
 
 // 82712078  Live_HasWaitForConnectionDialogOpen  (online/live_common.cpp:743)
 
-bool Live_HasWaitForConnectionDialogOpen(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_HasWaitForConnectionDialogOpen(void)
 
 {
-  return DAT_84584f38 == 2;
+  return (uint)LZCOUNT(g_waitForConnectionDialogState - OCDS_ACTIVE) >> 5;
 }
 
 
 // 82712090  Live_IsWaitingForConnection  (online/live_common.cpp:749)
 
-bool Live_IsWaitingForConnection(void)
+int Live_IsWaitingForConnection(int param_1)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
-  iVar1 = Live_IsWaitingForOnlineServices();
-  if ((iVar1 == 0) && (DAT_84584f38 != 2)) {
-    cVar2 = LiveStorage_CheckingRemoteConsoleChallenge();
-    return cVar2 != '\0';
+  iVar1 = Live_IsWaitingForOnlineServices(param_1);
+  if ((iVar1 == 0) && (g_waitForConnectionDialogState != OCDS_ACTIVE)) {
+    bVar2 = LiveStorage_CheckingRemoteConsoleChallenge();
+    return (int)bVar2 + (-(uint)!bVar2 - (bVar2 + -1));
   }
-  return true;
+  return 1;
 }
 
 
 // 827120F0  Live_CheckWaitOnlineServicesController  (online/live_common.cpp:766)
 
-void Live_CheckWaitOnlineServicesController(void)
+void Live_CheckWaitOnlineServicesController(int param_1)
 
 {
-  if (DAT_82999a80 == -1) {
+  if (g_waitForConnectionDialogController == -1) {
     return;
   }
-  MyAssertHandler(0xffffffff821b7898,0x303,0,0xffffffff820011f4,0xffffffff821b7e1c,
-                  0xffffffff821b7e48);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x303,0,
+                  "%s\n\t%s");
   return;
 }
 
 
 // 82712130  Live_WaitForOnlineServicesDialog  (online/live_common.cpp:785)
 
-void Live_WaitForOnlineServicesDialog(void)
+int Live_WaitForOnlineServicesDialog(int param_1)
 
 {
-  undefined8 uVar1;
-  char *pcVar2;
-  int iVar3;
-  char cVar4;
-  char *pcVar5;
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  bool bVar5;
+  char *pcVar6;
   
-  uVar1 = __savegprlr_29();
-  pcVar2 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-  pcVar5 = pcVar2;
+  iVar2 = __savegprlr_29(param_1);
+  pcVar3 = Dvar_GetString("com_errorMessage");
+  pcVar6 = pcVar3;
   do {
-    cVar4 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
-  } while (cVar4 != '\0');
-  if (((((int)pcVar5 - (int)pcVar2 == 1) ||
-       (iVar3 = I_stricmp(pcVar2,0xffffffff82031834), iVar3 == 0)) &&
-      (cVar4 = Live_UserIsGuest(uVar1), cVar4 == '\0')) &&
-     ((iVar3 = Live_IsWaitingForOnlineServices(uVar1), iVar3 != 0 ||
-      (cVar4 = LiveStorage_CheckingRemoteConsoleChallenge(), cVar4 != '\0')))) {
-    if (DAT_84584f38 == 0) {
-      if (DAT_82999a80 != -1) {
-        MyAssertHandler(0xffffffff821b7898,0x303,0,0xffffffff820011f4,0xffffffff821b7e1c,
-                        0xffffffff821b7e48);
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
+  } while (cVar1 != '\0');
+  if (((((int)pcVar6 - (int)pcVar3 == 1) || (iVar4 = I_stricmp(pcVar3,";"), iVar4 == 0)) &&
+      (bVar5 = Live_UserIsGuest(iVar2), !bVar5)) &&
+     ((iVar4 = Live_IsWaitingForOnlineServices(iVar2), iVar4 != 0 ||
+      (bVar5 = LiveStorage_CheckingRemoteConsoleChallenge(), bVar5)))) {
+    if (g_waitForConnectionDialogState == OCDS_NONE) {
+      if (g_waitForConnectionDialogController != -1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x303,0,"%s\n\t%s");
       }
-      DAT_82999a80 = (int)uVar1;
-      DAT_84584f38 = 1;
+      g_waitForConnectionDialogState = OCDS_REQUESTED;
+      g_waitForConnectionDialogController = iVar2;
     }
-    __restgprlr_29(1);
-    return;
+    iVar2 = __restgprlr_29(1);
+    return iVar2;
   }
-  __restgprlr_29(0);
-  return;
+  iVar2 = __restgprlr_29(0);
+  return iVar2;
 }
 
 
 // 827138B8  Live_CancelConnectingDialog  (online/live_common.cpp:819)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Live_CancelConnectingDialog(void)
 
 {
-  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
   Live_DeclineInvitation();
   UI_ClearCompletionResolve();
-  DAT_84584f38 = 0;
-  DAT_82999a80 = 0xffffffff;
+  g_waitForConnectionDialogState = OCDS_NONE;
+  g_waitForConnectionDialogController = -1;
   return;
 }
 
 
 // 82712230  Live_CancelSocialConfigDialog  (online/live_common.cpp:859)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_CancelSocialConfigDialog(void)
 
 {
   UI_ClearCompletionResolve();
-  DAT_84584ee4 = 0xffffffff;
-  DAT_84584f3c = 0;
+  g_waitForSocialConfigDialogRequestTime = -1;
+  g_waitForSocialConfigDialogState = OCDS_NONE;
   return;
 }
 
 
 // 827141C8  Live_DisconnectOnSignInStatusChanged  (online/live_common.cpp:869)
 
-void Live_DisconnectOnSignInStatusChanged(ulonglong param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_DisconnectOnSignInStatusChanged(char *param_1)
 
 {
-  undefined8 uVar1;
+  PartyData *pPVar1;
+  errorParm_t eVar2;
   int *in_r13;
   
   *(undefined4 *)(*in_r13 + 0xf4) = 0xffffffff;
-  Dvar_SetBool(DAT_82b3ecb8,0);
-  Dvar_SetBool(DAT_82aa1af8,0);
-  Dvar_SetBool(DAT_82aa1ae4,0);
-  Dvar_SetBoolByName(0xffffffff821b8350,0);
-  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
-  Lobby_GetPartyData();
-  Party_StopParty();
-  Party_StopParty(0xffffffff82b55118);
-  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  Dvar_SetBool(splitscreen,false);
+  Dvar_SetBool(onlinegame,false);
+  Dvar_SetBool(systemlink,false);
+  Dvar_SetBoolByName("ui_skipMainLockout",false);
+  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
+  pPVar1 = Lobby_GetPartyData();
+  Party_StopParty(pPVar1);
+  Party_StopParty(&g_partyData);
+  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
   Live_DeclineInvitation();
   UI_ClearCompletionResolve();
-  DAT_84584f38 = 0;
-  DAT_82999a80 = 0xffffffff;
-  if ((param_1 & 0xffffffff) == 0) {
-    uVar1 = 3;
-    param_1 = 0xffffffff8202f014;
+  g_waitForConnectionDialogState = OCDS_NONE;
+  g_waitForConnectionDialogController = -1;
+  if (param_1 == (char *)0x0) {
+    eVar2 = ERR_DISCONNECT;
+    param_1 = "EXE_DISCONNECTED";
   }
   else {
-    uVar1 = 1;
+    eVar2 = ERR_DROP;
   }
-  Live_ThrowError_Helper(uVar1,param_1,1);
+  Live_ThrowError_Helper(eVar2,param_1,1);
   return;
 }
 
 
 // 82712268  Live_GetCheckInviteExeState  (online/live_common.cpp:914)
 
-undefined4 Live_GetCheckInviteExeState(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+InviteCheckExeState Live_GetCheckInviteExeState(void)
 
 {
-  return DAT_84584ef0;
+  return s_checkExeState;
 }
 
 
 // 82712278  Live_SetCheckInviteExeStateToSP  (online/live_common.cpp:920)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_SetCheckInviteExeStateToSP(void)
 
 {
-  if (DAT_84584ef0 != 1) {
-    MyAssertHandler(0xffffffff821b7898,0x399,0,0xffffffff82000f98,0xffffffff821b7e98);
+  if (s_checkExeState != CHECK_EXE_STATE_QUERY) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x399,
+                    0,"%s");
   }
-  DAT_84584ef0 = 2;
+  s_checkExeState = CHECK_EXE_STATE_SP;
   return;
 }
 
 
 // 827122D8  Live_SetCheckInviteExeStateToMP  (online/live_common.cpp:927)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_SetCheckInviteExeStateToMP(void)
 
 {
-  if (DAT_84584ef0 != 1) {
-    MyAssertHandler(0xffffffff821b7898,0x3a0,0,0xffffffff82000f98,0xffffffff821b7e98);
+  if (s_checkExeState != CHECK_EXE_STATE_QUERY) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x3a0,
+                    0,"%s");
   }
-  DAT_84584ef0 = 3;
+  s_checkExeState = CHECK_EXE_STATE_MP;
   return;
 }
 
 
 // 82712338  Live_ClearCheckInviteExeState  (online/live_common.cpp:934)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_ClearCheckInviteExeState(void)
 
 {
-  DAT_84584efc = 0;
-  DAT_84584ef0 = 0;
+  s_checkExeTime = 0;
+  s_checkExeState = CHECK_EXE_STATE_NONE;
+  return;
+}
+
+
+// 82712358  Live_ShutdownSessions  (online/live_common.cpp:941)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_ShutdownSessions(void)
+
+{
+  PartyData *pPVar1;
+  
+  pPVar1 = Lobby_GetPartyData();
+  Party_StopParty(pPVar1);
+  Party_StopParty(&g_partyData);
+  Session_DeleteSession(&g_serverSession);
+  Session_DeleteSession(&g_partySession);
+  Session_DeleteSession(&g_partyPresenceSession);
+  Session_DeleteSession(&g_searchSession);
+  Session_DeleteSession(&g_partyJoinSession);
+  Session_CleanUpSearches();
+  Session_EmptyGraveYard();
   return;
 }
 
 
 // 82712360  Live_ConnectToPotentialHost  (online/live_common.cpp:952)
 
-void Live_ConnectToPotentialHost(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+int Live_ConnectToPotentialHost(int param_1,_XSESSION_INFO *param_2)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  undefined8 uVar2;
-  int iVar3;
-  undefined2 local_50 [2];
-  undefined1 auStack_4c [12];
-  undefined8 local_40;
-  undefined8 local_38;
+  int iVar1;
+  bool bVar4;
+  int iVar2;
+  netsrc_t nVar3;
+  netadr_t in_stack_ffffff68;
+  ushort local_50 [2];
+  in_addr aiStack_4c [3];
+  netadr_t local_40 [4];
   
-  uVar1 = __savegprlr_27();
-  if (DAT_84584ef0 == 0) {
-    cVar4 = Live_AreWeAcceptingInvite();
-    if (cVar4 != '\0') {
-      MyAssertHandler(0xffffffff821b7898,0x3cb,0,0xffffffff82000f98,0xffffffff820523d0);
+  iVar1 = __savegprlr_27(param_1);
+  if (s_checkExeState == CHECK_EXE_STATE_NONE) {
+    bVar4 = Live_AreWeAcceptingInvite();
+    if (bVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x3cb,0,"%s");
     }
-    cVar4 = Live_HasAcceptedInvitation();
-    if (cVar4 == '\0') {
-      MyAssertHandler(0xffffffff821b7898,0x3cc,0,0xffffffff82000f98,0xffffffff820523b0);
+    bVar4 = Live_HasAcceptedInvitation();
+    if (!bVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x3cc,0,"%s");
     }
-    cVar4 = CL_AllLocalClientsDisconnected();
-    if (cVar4 == '\0') {
-      MyAssertHandler(0xffffffff821b7898,0x3cd,0,0xffffffff82000f98,0xffffffff82031c9c);
+    bVar4 = CL_AllLocalClientsDisconnected();
+    if (!bVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x3cd,0,"%s");
     }
-    uVar2 = Sys_Milliseconds();
-    Com_Printf(0xe,0xffffffff821b7ef0,uVar2);
-    CL_EnsureClientIsActive(uVar1);
+    Sys_Milliseconds();
+    Com_Printf(0xe,"Live_ConnectToPotentialHost - connecting to host from session info at time %i\n"
+              );
+    CL_EnsureClientIsActive(iVar1);
     Live_SetCurrentGametype();
     PartyAtomic_Shutdown();
-    iVar3 = Session_JoinPotentialHost(uVar1,param_2,0x2e,9,0,0xffffffff844c7230,auStack_4c,local_50)
-    ;
-    if (iVar3 == 0) {
-      __restgprlr_27();
-      return;
+    iVar2 = Session_JoinPotentialHost
+                      (iVar1,param_2,0x2e,9,0,&g_partyJoinSession,aiStack_4c,local_50);
+    if (iVar2 == 0) {
+      iVar1 = __restgprlr_27();
+      return iVar1;
     }
-    NET_ConvertInAddrToServerNetAddr(auStack_4c,local_50[0],&local_40);
-    uVar2 = NET_GetLocalNetIDFromControllerIndex(uVar1);
-    RMsg_AddPrint(&local_40,0xffffffff82033ac0,uVar2);
-    DAT_84584ef0 = 1;
-    DAT_84584efc = Sys_Milliseconds();
-    uVar1 = NET_GetLocalNetIDFromControllerIndex(uVar1);
-    uVar2 = NET_AdrToString(local_40,local_38);
-    Com_Printf(0xe,0xffffffff821b7ec4,DAT_84584efc,uVar2,uVar1);
+    NET_ConvertInAddrToServerNetAddr(aiStack_4c,local_50[0],local_40);
+    nVar3 = NET_GetLocalNetIDFromControllerIndex(iVar1);
+    RMsg_AddPrint(local_40,"exe_check",nVar3);
+    s_checkExeState = CHECK_EXE_STATE_QUERY;
+    s_checkExeTime = Sys_Milliseconds();
+    NET_GetLocalNetIDFromControllerIndex(iVar1);
+    NET_AdrToString(in_stack_ffffff68);
+    Com_Printf(0xe,"exe_check at %d to %s, local client = %d\n");
   }
-  __restgprlr_27(1);
-  return;
+  iVar1 = __restgprlr_27(1);
+  return iVar1;
 }
 
 
 // 82712500  Live_CheckInviteExecutable  (online/live_common.cpp:1014)
 
-bool Live_CheckInviteExecutable(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_CheckInviteExecutable(void)
 
 {
-  if (DAT_84584ef0 == 0) {
-    MyAssertHandler(0xffffffff821b7898,0x3f7,0,0xffffffff82000f98,0xffffffff821b7f40);
+  if (s_checkExeState == CHECK_EXE_STATE_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x3f7,
+                    0,"%s");
   }
-  return DAT_84584ef0 == 3;
+  return (uint)LZCOUNT(s_checkExeState - CHECK_EXE_STATE_MP) >> 5;
 }
 
 
 // 82712568  Live_CheckInviteExecutableShouldError  (online/live_common.cpp:1028)
 
-void Live_CheckInviteExecutableShouldError(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_CheckInviteExecutableShouldError(void)
 
 {
   int iVar1;
   
   __savegprlr_28();
-  if (DAT_84584ef0 == 0) {
-    MyAssertHandler(0xffffffff821b7898,0x405,0,0xffffffff82000f98,0xffffffff821b7f40);
-    if (DAT_84584ef0 == 0) {
-      MyAssertHandler(0xffffffff821b7898,0x3f7,0,0xffffffff82000f98,0xffffffff821b7f40);
+  if (s_checkExeState == CHECK_EXE_STATE_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x405,
+                    0,"%s");
+    if (s_checkExeState == CHECK_EXE_STATE_NONE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x3f7,0,"%s");
     }
   }
-  if (DAT_84584ef0 != 3) {
+  if (s_checkExeState != CHECK_EXE_STATE_MP) {
     iVar1 = Sys_Milliseconds();
-    if (20000 < iVar1 - DAT_84584efc) {
-      Com_Printf(0x10,0xffffffff821b7fb8);
-      __restgprlr_28(1);
-      return;
+    if (20000 < iVar1 - s_checkExeTime) {
+      Com_Printf(0x10,"Live_CheckInviteExecutableShouldError - timeout\n");
+      iVar1 = __restgprlr_28(1);
+      return iVar1;
     }
-    if (DAT_84584ef0 == 2) {
-      Com_Printf(0x10,0xffffffff821b7f68,0xffffffff821b7fa4);
-      __restgprlr_28(1);
-      return;
+    if (s_checkExeState == CHECK_EXE_STATE_SP) {
+      Com_Printf(0x10,"Live_CheckInviteExecutableShouldError - incorrect exe %s\n");
+      iVar1 = __restgprlr_28(1);
+      return iVar1;
     }
   }
-  __restgprlr_28(0);
-  return;
+  iVar1 = __restgprlr_28(0);
+  return iVar1;
 }
 
 
 // 82712658  IsServerRunning  (online/live_common.cpp:1061)
 
-undefined8 IsServerRunning(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool IsServerRunning(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  if (*(char *)(DAT_83666174 + 0xc) == '\0') {
+  if ((com_sv_running->current).enabled == false) {
     iVar1 = Lobby_IsLoadingServer();
     if (iVar1 != 0) {
-      return 1;
+      return true;
     }
   }
   else {
-    cVar2 = Com_IsRunningMenuLevel();
-    if (cVar2 == '\0') {
-      return 1;
+    bVar2 = Com_IsRunningMenuLevel();
+    if (!bVar2) {
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 82713900  Live_ThrowError_Helper  (online/live_common.cpp:1078)
 
-void Live_ThrowError_Helper(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_ThrowError_Helper(errorParm_t param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  errorParm_t eVar1;
+  bool bVar2;
   
-  uVar1 = __savegprlr_28();
-  if (DAT_8424a64c == 0) {
-    MyAssertHandler(0xffffffff82018f38,0x1d3,0,0xffffffff82000f98,0xffffffff82018f84);
+  eVar1 = __savegprlr_28(param_1);
+  if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
+                    ,0x1d3,0,"%s");
   }
-  if ((*(char *)(DAT_8424a64c + 0xc) == '\0') && (cVar2 = Com_ErrorEntered(), cVar2 == '\0')) {
-    PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  if (((debug_onlinePlayEvenIfDown->current).enabled == false) &&
+     (bVar2 = Com_ErrorEntered(), !bVar2)) {
+    PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
     if (param_3 != 0) {
       Live_DeclineInvitation();
     }
-    Com_Error(uVar1,param_2);
+    Com_Error(eVar1,param_2);
     __restgprlr_28();
     return;
   }
@@ -784,7 +932,7 @@ void Live_ThrowError_Helper(undefined8 param_1,undefined8 param_2,int param_3)
 
 // 827126C0  Live_GetShouldDemonwareRetry  (online/live_common.cpp:1113)
 
-longlong Live_GetShouldDemonwareRetry(ulonglong param_1,uint param_2,ulonglong param_3)
+bool Live_GetShouldDemonwareRetry(uint param_1,uint param_2,uint param_3)
 
 {
   ulonglong uVar1;
@@ -795,30 +943,32 @@ longlong Live_GetShouldDemonwareRetry(ulonglong param_1,uint param_2,ulonglong p
   else {
     uVar1 = 0x10000;
   }
-  if ((param_3 & 0xffffffff) <= uVar1) {
-    uVar1 = param_3;
+  if (param_3 <= uVar1) {
+    uVar1 = (longlong)(int)param_3;
   }
-  return -((ulonglong)(param_1 < uVar1) - 1);
+  return (bool)-(((ulonglong)(longlong)(int)param_1 < uVar1) + -1);
 }
 
 
 // 827126F8  Live_GenerateRandomTimeToRetryInSeconds  (online/live_common.cpp:1129)
 
-ulonglong Live_GenerateRandomTimeToRetryInSeconds(uint param_1,ulonglong param_2)
+uint Live_GenerateRandomTimeToRetryInSeconds(uint param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  double dVar2;
+  uint uVar1;
+  ulonglong uVar2;
+  float fVar3;
   
   if (param_1 < 0x10) {
-    uVar1 = (ulonglong)(uint)(1 << (param_1 & 0x3f));
+    uVar2 = (ulonglong)(uint)(1 << (param_1 & 0x3f));
   }
   else {
-    uVar1 = 0x10000;
+    uVar2 = 0x10000;
   }
-  dVar2 = (double)random();
-  uVar1 = ((longlong)(dVar2 * (double)uVar1) & 0xffffffffU) + uVar1;
-  if ((param_2 & 0xffffffff) <= (uVar1 & 0xffffffff)) {
+  fVar3 = random();
+  uVar2 = ((longlong)(fVar3 * (float)uVar2) & 0xffffffffU) + uVar2;
+  uVar1 = (uint)uVar2;
+  if ((ulonglong)param_2 <= (uVar2 & 0xffffffff)) {
     uVar1 = param_2;
   }
   return uVar1;
@@ -827,18 +977,18 @@ ulonglong Live_GenerateRandomTimeToRetryInSeconds(uint param_1,ulonglong param_2
 
 // 82712778  Live_GenerateTimeToRetryInSeconds  (online/live_common.cpp:1145)
 
-ulonglong Live_GenerateTimeToRetryInSeconds(uint param_1,ulonglong param_2)
+uint Live_GenerateTimeToRetryInSeconds(uint param_1,uint param_2)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
   if (param_1 < 0x10) {
-    uVar1 = (ulonglong)(uint)(1 << (param_1 & 0x3f));
+    uVar1 = 1 << (param_1 & 0x3f);
   }
   else {
     uVar1 = 0x10000;
   }
-  if (uVar1 < (param_2 & 0xffffffff)) {
+  if (uVar1 < param_2) {
     return uVar1;
   }
   return param_2;
@@ -847,7 +997,7 @@ ulonglong Live_GenerateTimeToRetryInSeconds(uint param_1,ulonglong param_2)
 
 // 827139B0  Live_ThrowError_DontDeclineInvite  (online/live_common.cpp:1164)
 
-void Live_ThrowError_DontDeclineInvite(undefined8 param_1,undefined8 param_2)
+void Live_ThrowError_DontDeclineInvite(errorParm_t param_1,char *param_2)
 
 {
   Live_ThrowError_Helper(param_1,param_2,0);
@@ -857,7 +1007,7 @@ void Live_ThrowError_DontDeclineInvite(undefined8 param_1,undefined8 param_2)
 
 // 827139B8  Live_ThrowError  (online/live_common.cpp:1171)
 
-void Live_ThrowError(undefined8 param_1,undefined8 param_2)
+void Live_ThrowError(errorParm_t param_1,char *param_2)
 
 {
   Live_ThrowError_Helper(param_1,param_2,1);
@@ -867,153 +1017,164 @@ void Live_ThrowError(undefined8 param_1,undefined8 param_2)
 
 // 827127A8  Live_SetInvitedStateToMP  (online/live_common.cpp:1177)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_SetInvitedStateToMP(void)
 
 {
-  DAT_8425a054 = 2;
+  g_launchData.inviteState = INVITE_MPACCEPTED;
   return;
 }
 
 
 // 827127C0  Live_SetInvitedStateToSP  (online/live_common.cpp:1183)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_SetInvitedStateToSP(void)
 
 {
-  DAT_8425a054 = 3;
+  g_launchData.inviteState = INVITE_SPACCEPTED;
   return;
 }
 
 
 // 827127D8  Live_SetInvitedState  (online/live_common.cpp:1189)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_SetInvitedState(void)
 
 {
-  DAT_8425a054 = 2;
+  g_launchData.inviteState = INVITE_MPACCEPTED;
   return;
 }
 
 
 // 827127F0  Live_ShouldShowGettingDataPopup  (online/live_common.cpp:1200)
 
-bool Live_ShouldShowGettingDataPopup(undefined8 param_1)
+int Live_ShouldShowGettingDataPopup(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = LiveStorage_DoWeHavePlaylists();
-  if ((((cVar1 != '\0') && (cVar1 = Playlist_IsOutOfDate(), cVar1 == '\0')) &&
-      (cVar1 = LiveStorage_IsWaitingOnStats(param_1), cVar1 == '\0')) &&
-     (((cVar1 = LiveStorage_DoWeHaveFFotD(), cVar1 != '\0' &&
-       (cVar1 = LiveStorage_IsTimeSynced(), cVar1 != '\0')) &&
-      (cVar1 = LiveStorage_ShouldReadPeriodicChallenges(param_1), cVar1 == '\0')))) {
-    cVar1 = SocialConfig_Ok();
-    return cVar1 == '\0';
+  bVar1 = LiveStorage_DoWeHavePlaylists();
+  if ((((bVar1) && (bVar1 = Playlist_IsOutOfDate(), !bVar1)) &&
+      (bVar1 = LiveStorage_IsWaitingOnStats(param_1), !bVar1)) &&
+     (((bVar1 = LiveStorage_DoWeHaveFFotD(), bVar1 && (bVar1 = LiveStorage_IsTimeSynced(), bVar1))
+      && (bVar1 = LiveStorage_ShouldReadPeriodicChallenges(param_1), !bVar1)))) {
+    bVar1 = SocialConfig_Ok();
+    return (uint)LZCOUNT((uint)bVar1) >> 5;
   }
-  return true;
+  return 1;
 }
 
 
 // 827128A8  Live_CheckPlaylistVersionUpdate  (online/live_common.cpp:1232)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Live_CheckPlaylistVersionUpdate(void)
 
 {
-  char cVar2;
-  char *pcVar1;
+  bool bVar3;
+  int iVar1;
+  char *pcVar2;
   
-  cVar2 = CL_AllLocalClientsDisconnected();
-  if (cVar2 == '\0') {
-    return;
-  }
-  cVar2 = IsServerRunning();
-  if (cVar2 != '\0') {
-    return;
-  }
-  cVar2 = LSP_IsNewPlaylistAvailable();
-  if (cVar2 == '\0') {
-    CL_ControllerIndexFromClientNum(0);
-    LiveStorage_UpdatePlaylistFileInfo();
-    return;
-  }
-  cVar2 = Playlist_IsOutOfDate();
-  if ((cVar2 == '\0') &&
-     (pcVar1 = strstr(*(char **)(DAT_836672fc + 0xc),"allmaps"), pcVar1 == (char *)0x0)) {
-    if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') ||
-       (cVar2 = Live_AreWeAcceptingInvite(), cVar2 != '\0')) {
-      Playlist_MarkAsOutOfDate();
+  bVar3 = CL_AllLocalClientsDisconnected();
+  if ((bVar3) && (bVar3 = IsServerRunning(), !bVar3)) {
+    bVar3 = LSP_IsNewPlaylistAvailable();
+    if (!bVar3) {
+      iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+      LiveStorage_UpdatePlaylistFileInfo(iVar1);
+      return;
     }
-    else {
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8088);
-      if (cVar2 != '\0') {
-        return;
+    bVar3 = Playlist_IsOutOfDate();
+    if ((!bVar3) &&
+       (pcVar2 = strstr((playlistFilename->current).string,"allmaps"), pcVar2 == (char *)0x0)) {
+      if (((onlinegame->current).enabled == false) || (bVar3 = Live_AreWeAcceptingInvite(), bVar3))
+      {
+        Playlist_MarkAsOutOfDate();
       }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff82088ea8);
-      if (cVar2 != '\0') {
-        return;
+      else {
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"menu_cac_assault");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"menu_resetstats_warning");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"downloadingplaylist");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_summary");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_summary");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_unlocks");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_unlocks_perks");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_unlocks_weapons");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_unlocks_titles");
+        if (bVar3) {
+          return;
+        }
+        bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"page_unlocks_emblems");
+        if (bVar3) {
+          return;
+        }
+        UI_OpenMenu(LOCAL_CLIENT_0,"downloadingplaylist");
       }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8074);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8064);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8054);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8044);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8030);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8018);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b8004);
-      if (cVar2 != '\0') {
-        return;
-      }
-      cVar2 = Menu_IsMenuOpenAndVisible(0,0xffffffff821b7fec);
-      if (cVar2 != '\0') {
-        return;
-      }
-      UI_OpenMenu(0,0xffffffff821b8074);
     }
+    LSP_ClearPlaylistAvailable();
   }
-  LSP_ClearPlaylistAvailable();
   return;
 }
 
 
 // 82712AA8  Live_ClearInvitationLaunchData  (online/live_common.cpp:1302)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_ClearInvitationLaunchData(void)
 
 {
-  undefined8 *puVar1;
-  undefined8 *puVar2;
-  longlong lVar3;
+  uchar *puVar1;
+  ulong64 *puVar2;
+  ulong64 *puVar3;
+  longlong lVar4;
   
-  lVar3 = 7;
-  DAT_84584ed4 = 0;
-  DAT_84584ed5 = 0;
-  DAT_8425a054 = 0;
-  puVar1 = &DAT_8425a058;
+  lVar4 = 7;
+  s_acceptingInviteOnline = false;
+  s_acceptingInviteInitialized = false;
+  g_launchData.inviteState = INVITE_NONE;
+  puVar2 = &g_launchData.invitedXUID;
   do {
-    puVar2 = puVar1;
-    puVar1 = puVar2 + 1;
-    *puVar1 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  *(undefined4 *)(puVar2 + 2) = 0;
+    puVar3 = puVar2;
+    puVar2 = puVar3 + 1;
+    *puVar2 = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  puVar1 = (uchar *)(puVar3 + 2);
+  puVar1[0] = '\0';
+  puVar1[1] = '\0';
+  puVar1[2] = '\0';
+  puVar1[3] = '\0';
   XSetLaunchData(0xffffffff84259cc8,1000);
   return;
 }
@@ -1021,35 +1182,45 @@ void Live_ClearInvitationLaunchData(void)
 
 // 82712AF0  Live_DeclineInvitation  (online/live_common.cpp:1321)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void Live_DeclineInvitation(void)
 
 {
-  undefined8 *puVar1;
-  int iVar2;
-  undefined8 *puVar3;
-  longlong lVar4;
+  uchar *puVar1;
+  ulong64 *puVar2;
+  int iVar3;
+  ulong64 *puVar4;
+  longlong lVar5;
   
   __savegprlr_29();
-  iVar2 = PartyAtomic_IsJoiningActive(0xffffffff82b59110);
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff821b7898,0x52b,0,0xffffffff82000f98,0xffffffff82040f3c);
+  iVar3 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x52b,
+                    0,"%s");
   }
-  DAT_84584ef0 = 0;
-  DAT_84584efc = 0;
+  s_checkExeState = CHECK_EXE_STATE_NONE;
+  s_checkExeTime = 0;
   Session_ClearInviteState();
-  Com_Printf(0x10,0xffffffff821b809c,DAT_8425a054);
-  DAT_84584ed5 = 0;
-  DAT_84584ed4 = 0;
-  lVar4 = 7;
-  DAT_8425a054 = 0;
-  puVar1 = &DAT_8425a058;
+  Com_Printf(0x10,"Declined invitation (%i)\n");
+  s_acceptingInviteInitialized = false;
+  s_acceptingInviteOnline = false;
+  lVar5 = 7;
+  g_launchData.inviteState = INVITE_NONE;
+  puVar2 = &g_launchData.invitedXUID;
   do {
-    puVar3 = puVar1;
-    puVar1 = puVar3 + 1;
-    *puVar1 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  *(undefined4 *)(puVar3 + 2) = 0;
+    puVar4 = puVar2;
+    puVar2 = puVar4 + 1;
+    *puVar2 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  puVar1 = (uchar *)(puVar4 + 2);
+  puVar1[0] = '\0';
+  puVar1[1] = '\0';
+  puVar1[2] = '\0';
+  puVar1[3] = '\0';
   XSetLaunchData(0xffffffff84259cc8,1000);
   __restgprlr_29();
   return;
@@ -1058,81 +1229,85 @@ void Live_DeclineInvitation(void)
 
 // 82712BB8  Live_SyncOnlineData  (online/live_common.cpp:1346)
 
-undefined8 Live_SyncOnlineData(undefined8 param_1)
+int Live_SyncOnlineData(int param_1)
 
 {
-  char cVar1;
-  undefined8 uVar2;
+  bool bVar1;
+  int iVar2;
   
-  uVar2 = 0;
+  iVar2 = 0;
   Live_CheckPlaylistVersionUpdate();
-  cVar1 = LiveStorage_DoWeHavePlaylists();
-  if ((cVar1 == '\0') || (cVar1 = Playlist_IsOutOfDate(), cVar1 != '\0')) {
-    uVar2 = 1;
+  bVar1 = LiveStorage_DoWeHavePlaylists();
+  if ((!bVar1) || (bVar1 = Playlist_IsOutOfDate(), bVar1)) {
+    iVar2 = 1;
   }
-  cVar1 = LiveStorage_DoWeHaveFFotD();
-  if (cVar1 == '\0') {
-    uVar2 = 1;
+  bVar1 = LiveStorage_DoWeHaveFFotD();
+  if (!bVar1) {
+    iVar2 = 1;
   }
-  cVar1 = LiveStorage_IsTimeSynced();
-  if (cVar1 == '\0') {
-    uVar2 = 1;
-    cVar1 = Live_IsUserSignedInToDemonware(param_1);
-    if (cVar1 != '\0') {
+  bVar1 = LiveStorage_IsTimeSynced();
+  if (!bVar1) {
+    iVar2 = 1;
+    bVar1 = Live_IsUserSignedInToDemonware(param_1);
+    if (bVar1) {
       LiveStorage_SyncTime(param_1);
     }
   }
-  cVar1 = SocialConfig_Ok();
-  if (cVar1 == '\0') {
-    uVar2 = 1;
+  bVar1 = SocialConfig_Ok();
+  if (!bVar1) {
+    iVar2 = 1;
     SocialConfig_Update(param_1);
   }
-  return uVar2;
+  return iVar2;
 }
 
 
 // 82712C78  Live_ConfirmAcceptInvitation_Error  (online/live_common.cpp:1415)
 
-void Live_ConfirmAcceptInvitation_Error(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_ConfirmAcceptInvitation_Error(char *param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   bool bVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  int iVar5;
+  char *pcVar3;
+  int iVar4;
+  uiMenuCommand_t uVar5;
+  int iVar6;
   
-  uVar3 = __savegprlr_27();
+  pcVar3 = (char *)__savegprlr_27(param_1);
   PartyAtomic_Shutdown();
   Live_DeclineInvitation();
-  uVar4 = Live_GetControllerIndexForPendingInvitation();
-  iVar5 = UI_GetActiveMenu(0);
-  if (iVar5 == 9) {
-    iVar5 = CL_ControllerIndexFromClientNum(0);
+  iVar4 = Live_GetControllerIndexForPendingInvitation();
+  uVar5 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+  if (uVar5 == UIMENU_PARTY) {
+    iVar6 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
     bVar2 = true;
-    if (iVar5 == (int)uVar4) goto LAB_82712cc0;
+    if (iVar6 == iVar4) goto LAB_82712cc0;
   }
   bVar2 = false;
 LAB_82712cc0:
-  cVar1 = *(char *)(DAT_82b3ecb8 + 0xc);
+  bVar1 = (splitscreen->current).enabled;
   UI_MuteMenusStart();
-  UI_SetActiveMenu(0,0);
-  UI_SetActiveMenu(0,1);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,0);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,1);
   if (bVar2) {
-    if (cVar1 != '\0') {
-      Dvar_SetBool(DAT_82b3ecb8,1);
+    if (bVar1 != false) {
+      Dvar_SetBool(splitscreen,true);
     }
-    UI_SetActiveMenu(0,9);
+    UI_SetActiveMenu(LOCAL_CLIENT_0,9);
   }
   UI_MuteMenusEnd();
-  Com_Printf(0x10,0xffffffff821b8100,uVar3);
-  Party_OpenPartyUIErrorBox(uVar3);
+  Com_Printf(0x10,"Live_ConfirmAcceptInvitation_Error - %s\n");
+  Party_OpenPartyUIErrorBox(pcVar3);
   if (bVar2) {
-    iVar5 = CL_ControllerIndexFromClientNum(0);
-    if (iVar5 != (int)uVar4) {
-      MyAssertHandler(0xffffffff821b7898,0x5b7,0,0xffffffff82000f98,0xffffffff821b80b8);
+    iVar6 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    if (iVar6 != iVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x5b7,0,"%s");
     }
-    Cbuf_ExecuteBuffer(0,uVar4,0xffffffff82032a94);
+    Cbuf_ExecuteBuffer(LOCAL_CLIENT_0,iVar4,"xstartprivateparty");
   }
   __restgprlr_27();
   return;
@@ -1141,26 +1316,30 @@ LAB_82712cc0:
 
 // 82712D90  Live_ConfirmAcceptInvitation_ReinitNeeded  (online/live_common.cpp:1473)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_ConfirmAcceptInvitation_ReinitNeeded(void)
 
 {
-  DAT_84584ed4 = 0;
-  DAT_84584ed5 = 0;
+  s_acceptingInviteOnline = false;
+  s_acceptingInviteInitialized = false;
   return;
 }
 
 
 // 827142C0  Live_StartConfirmAcceptInvitation  (online/live_common.cpp:1487)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_StartConfirmAcceptInvitation(void)
 
 {
-  DAT_84584ed4 = 0;
-  DAT_84584ed5 = 0;
+  s_acceptingInviteOnline = false;
+  s_acceptingInviteInitialized = false;
   OnlineVault_AbortOperationForAllControllers();
   UI_ClearCompletionResolve();
-  DAT_84584f3c = 0;
-  DAT_84584ee4 = 0xffffffff;
+  g_waitForSocialConfigDialogState = OCDS_NONE;
+  g_waitForSocialConfigDialogRequestTime = -1;
   Live_ConfirmAcceptInvitation();
   return;
 }
@@ -1168,145 +1347,154 @@ void Live_StartConfirmAcceptInvitation(void)
 
 // 827139C0  Live_ConfirmAcceptInvitation  (online/live_common.cpp:1523)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void Live_ConfirmAcceptInvitation(void)
 
 {
-  ulonglong uVar1;
-  char cVar3;
-  int iVar2;
-  undefined8 uVar4;
-  int *piVar6;
-  longlong lVar5;
-  ulonglong uVar7;
+  uint uVar1;
+  bool bVar7;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  uint uVar4;
+  InviteSessionState IVar5;
+  uiMenuCommand_t uVar6;
+  char *pcVar8;
+  connstate_t *pcVar9;
   
   __savegprlr_23();
   uVar1 = Live_GetControllerIndexForPendingInvitation();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821b7898,0x5f5,0,0xffffffff82031880,uVar1,4);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x5f5,
+                    0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if (DAT_844d823a == '\0') {
-    if (DAT_844d8238 != '\0') {
-      uVar4 = 0xffffffff8218dc74;
+  if (g_banned == false) {
+    if (g_oldBuild != false) {
+      pcVar8 = "MP_BUILDEXPIRED";
       goto LAB_82713a54;
     }
-    if (DAT_844d823b != '\0') {
-      uVar4 = 0xffffffff8218dc64;
+    if (g_betaOver != false) {
+      pcVar8 = "MP_BETACLOSED";
       goto LAB_82713a54;
     }
   }
   else {
-    uVar4 = 0xffffffff8218dc84;
+    pcVar8 = "MP_BANNED";
 LAB_82713a54:
-    Live_ThrowError_Helper(1,uVar4,1);
+    Live_ThrowError_Helper(ERR_DROP,pcVar8,1);
   }
-  DAT_8425a054 = 2;
-  cVar3 = Com_ErrorEntered();
-  if (cVar3 == '\0') {
-    if (((*(char *)(DAT_83666174 + 0xc) == '\0') || (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) ||
-       (*(char *)(DAT_84253bb8 + 0xc) != '\0')) {
-      uVar7 = 0;
-      piVar6 = &DAT_82b3e54c;
+  g_launchData.inviteState = INVITE_MPACCEPTED;
+  bVar7 = Com_ErrorEntered();
+  if (!bVar7) {
+    if ((((com_sv_running->current).enabled == false) || ((onlinegame->current).enabled == false))
+       || ((xblive_privatematch->current).enabled != false)) {
+      LVar2 = LOCAL_CLIENT_0;
+      pcVar9 = &clientUIActives[0].connectionState;
       do {
-        if (3 < (uVar7 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821b7848,0x4aa,0,0xffffffff820011a8,uVar7,4);
+        if (LOCAL_CLIENT_3 < LVar2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\../client_mp/client_mp.h"
+                          ,0x4aa,0,
+                          "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                         );
         }
-        if (*piVar6 != 0) {
-          CL_DisconnectLocalClient_DontDeclineInvite(uVar7);
+        if (*pcVar9 != CA_DISCONNECTED) {
+          CL_DisconnectLocalClient_DontDeclineInvite(LVar2);
         }
-        piVar6 = piVar6 + 0x79;
-        uVar7 = uVar7 + 1;
-      } while ((int)piVar6 < -0x7d4c1507);
-      iVar2 = Live_IsWaitingForOnlineServices(uVar1);
-      if (((iVar2 != 0) || (DAT_84584f38 == 2)) ||
-         (cVar3 = LiveStorage_CheckingRemoteConsoleChallenge(), cVar3 != '\0')) {
-        Live_WaitForOnlineServicesDialog(uVar1);
-        __restgprlr_23();
+        pcVar9 = pcVar9 + 0x79;
+        LVar2 = LVar2 + LOCAL_CLIENT_1;
+      } while ((int)pcVar9 < -0x7d4c1507);
+      iVar3 = Live_IsWaitingForOnlineServices(uVar1);
+      if (((iVar3 != 0) || (g_waitForConnectionDialogState == OCDS_ACTIVE)) ||
+         (bVar7 = LiveStorage_CheckingRemoteConsoleChallenge(), bVar7)) {
+        iVar3 = Live_WaitForOnlineServicesDialog(uVar1);
+        __restgprlr_23(iVar3);
         return;
       }
-      if ((*(char *)(DAT_8424a648 + 0xc) != '\0') &&
-         (cVar3 = Live_IsUserSignedInToLive(uVar1), cVar3 != '\0')) {
-        cVar3 = Menu_IsMenuOpenAndVisible(0,0xffffffff82088ea8);
-        if (cVar3 == '\0') {
-          cVar3 = Menu_IsMenuOpenAndVisible(0,0xffffffff82086eb0);
-          if (cVar3 == '\0') {
-            CL_SetControllerInUse(uVar1);
-            DAT_82b5c824 = (undefined4)uVar1;
-            PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
-            if (DAT_84584ed5 == '\0') {
-              lVar5 = 1;
-              DAT_84584ed4 = *(undefined1 *)(DAT_82aa1af8 + 0xc);
-              do {
-                if (DAT_82aa1c14 != 0) {
-                  UI_SetActiveMenu(lVar5,0);
-                }
-                lVar5 = lVar5 + 1;
-              } while ((int)lVar5 < 4);
-              UI_MuteMenusStart();
-              UI_CloseMenu(0,0xffffffff8218e804);
-              UI_SetActiveMenu(0,0);
-              UI_SetActiveMenu(0,1);
-              uVar4 = Live_ShouldShowGettingDataPopup(uVar1);
-              if ((int)uVar4 == 0) {
-                UI_SetActiveMenu(uVar4,9);
-              }
-              UI_MuteMenusEnd();
-              DAT_84584ed5 = '\x01';
-              uVar7 = Live_SyncOnlineDataFlags(uVar1);
-              if ((uVar7 & 0x13c) != 0) {
-                DAT_84584edc = Sys_Milliseconds();
-              }
+      if ((((xblive_loggedin->current).enabled != false) &&
+          (bVar7 = Live_IsUserSignedInToLive(uVar1), bVar7)) &&
+         ((bVar7 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"menu_resetstats_warning"), !bVar7 &&
+          (bVar7 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"cac_elite_popup"), !bVar7)))) {
+        CL_SetControllerInUse(uVar1);
+        cl_last_controller_input = uVar1;
+        PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
+        if (s_acceptingInviteInitialized == false) {
+          LVar2 = LOCAL_CLIENT_1;
+          s_acceptingInviteOnline = (onlinegame->current).enabled;
+          do {
+            if (cls.uiStarted != 0) {
+              UI_SetActiveMenu(LVar2,0);
             }
-            iVar2 = Live_SyncOnlineData(uVar1);
-            if (((iVar2 == 0) &&
-                (cVar3 = LiveStorage_HaveWeCheckedForARemoteConsoleChallenge(uVar1), cVar3 != '\0'))
-               && (((iVar2 = Session_GetInviteSessionState(), iVar2 != 1 ||
-                    (iVar2 = Session_JoinInProgress(uVar1), iVar2 != 0)) &&
-                   (iVar2 = Session_GetInviteSessionState(), iVar2 != 2)))) {
-              Session_ClearInviteState();
-              iVar2 = Live_ConnectToPotentialHost(uVar1,0xffffffff8425a060);
-              if (iVar2 == 0) {
+            LVar2 = LVar2 + LOCAL_CLIENT_1;
+          } while ((int)LVar2 < 4);
+          UI_MuteMenusStart();
+          UI_CloseMenu(LOCAL_CLIENT_0,"popup_friends");
+          UI_SetActiveMenu(LOCAL_CLIENT_0,0);
+          UI_SetActiveMenu(LOCAL_CLIENT_0,1);
+          iVar3 = Live_ShouldShowGettingDataPopup(uVar1);
+          if (iVar3 == 0) {
+            UI_SetActiveMenu(LOCAL_CLIENT_0,9);
+          }
+          UI_MuteMenusEnd();
+          s_acceptingInviteInitialized = true;
+          uVar4 = Live_SyncOnlineDataFlags(uVar1);
+          if ((uVar4 & 0x13c) != 0) {
+            s_gettingDataPopupStartTime = Sys_Milliseconds();
+          }
+        }
+        iVar3 = Live_SyncOnlineData(uVar1);
+        if (((iVar3 == 0) &&
+            (bVar7 = LiveStorage_HaveWeCheckedForARemoteConsoleChallenge(uVar1), bVar7)) &&
+           (((IVar5 = Session_GetInviteSessionState(), IVar5 != SESSION_STATE_PENDING ||
+             (iVar3 = Session_JoinInProgress(uVar1), iVar3 != 0)) &&
+            (IVar5 = Session_GetInviteSessionState(), IVar5 != SESSION_STATE_SEARCH)))) {
+          Session_ClearInviteState();
+          iVar3 = Live_ConnectToPotentialHost(uVar1,(_XSESSION_INFO *)g_launchData.inviteHostInfo);
+          if (iVar3 == 0) {
 LAB_82713d48:
-                Live_ConfirmAcceptInvitation_Error(0xffffffff821a3e78);
-                __restgprlr_23();
-                return;
+            Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_CANTJOINSESSION");
+            __restgprlr_23();
+            return;
+          }
+          iVar3 = Live_CheckInviteExecutable();
+          if (iVar3 == 0) {
+            iVar3 = Live_CheckInviteExecutableShouldError();
+            if (iVar3 != 0) goto LAB_82713d48;
+          }
+          else {
+            PartyAtomic_Shutdown();
+            s_checkExeState = CHECK_EXE_STATE_NONE;
+            s_checkExeTime = 0;
+            bVar7 = LiveStorage_IsWaitingOnStats(uVar1);
+            if ((!bVar7) && (bVar7 = Content_MountingContentPacksInProgress(), !bVar7)) {
+              bVar7 = LiveStorage_GettingStats(uVar1);
+              if (bVar7) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp"
+                                ,0x6a9,0,"%s\n\t(controllerIndex) = %i");
               }
-              iVar2 = Live_CheckInviteExecutable();
-              if (iVar2 == 0) {
-                iVar2 = Live_CheckInviteExecutableShouldError();
-                if (iVar2 != 0) goto LAB_82713d48;
+              uVar6 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+              if (uVar6 == UIMENU_MAIN) {
+                UI_MuteMenusStart();
+                UI_SetActiveMenu(LOCAL_CLIENT_0,9);
+                UI_MuteMenusEnd();
               }
-              else {
-                PartyAtomic_Shutdown();
-                DAT_84584ef0 = 0;
-                DAT_84584efc = 0;
-                cVar3 = LiveStorage_IsWaitingOnStats(uVar1);
-                if ((cVar3 == '\0') &&
-                   (cVar3 = Content_MountingContentPacksInProgress(), cVar3 == '\0')) {
-                  cVar3 = LiveStorage_GettingStats(uVar1);
-                  if (cVar3 != '\0') {
-                    MyAssertHandler(0xffffffff821b7898,0x6a9,0,0xffffffff82039774,0xffffffff821b82c8
-                                    ,uVar1);
-                  }
-                  iVar2 = UI_GetActiveMenu(0);
-                  if (iVar2 == 1) {
-                    UI_MuteMenusStart();
-                    UI_SetActiveMenu(0,9);
-                    UI_MuteMenusEnd();
-                  }
-                  PartyAtomic_AcceptInviteMP(uVar1,0xffffffff8425a060,DAT_8425a09c,DAT_84584ed4);
-                  Live_ClearInvitationLaunchData();
-                }
-              }
+              PartyAtomic_AcceptInviteMP
+                        (uVar1,(_XSESSION_INFO *)g_launchData.inviteHostInfo,
+                         (uint)g_launchData.fromGameInvite,(uint)s_acceptingInviteOnline);
+              Live_ClearInvitationLaunchData();
             }
           }
         }
       }
     }
     else {
-      cVar3 = SV_IsMigrating();
-      if (cVar3 == '\0') {
-        uVar4 = CL_LocalClientNumFromControllerIndex(uVar1);
-        Cbuf_AddText(uVar4,0xffffffff8218c390);
+      bVar7 = SV_IsMigrating();
+      if (!bVar7) {
+        LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
+        Cbuf_AddText(LVar2,"hostmigration_start\n");
         __restgprlr_23();
         return;
       }
@@ -1319,13 +1507,15 @@ LAB_82713d48:
 
 // 82712DB0  Live_ShouldKickIfNotOnline  (online/live_common.cpp:1761)
 
-undefined8 Live_ShouldKickIfNotOnline(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Live_ShouldKickIfNotOnline(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_83f71e80 + 0xc) == '\0')) &&
-     (cVar1 = CL_Demo_IsPlaybackMemoryAllocated(), cVar1 == '\0')) {
+  if ((((onlinegame->current).enabled == false) && ((ui_onlineRequired->current).enabled == false))
+     && (bVar1 = CL_Demo_IsPlaybackMemoryAllocated(), !bVar1)) {
     return 0;
   }
   return 1;
@@ -1334,44 +1524,50 @@ undefined8 Live_ShouldKickIfNotOnline(void)
 
 // 82714318  Live_CheckForFullDisconnect  (online/live_common.cpp:1788)
 
-void Live_CheckForFullDisconnect(void)
+void Live_CheckForFullDisconnect(int param_1)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  char cVar6;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
+  int iVar1;
+  bool bVar5;
+  int iVar2;
+  bool bVar6;
+  bdLobbyService *this;
+  Status SVar3;
+  char *pcVar4;
   
-  uVar2 = __savegprlr_29();
-  if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_83f71e80 + 0xc) == '\0')) {
-    cVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-    bVar1 = false;
-    if (cVar6 == '\0') goto LAB_82714368;
+  iVar1 = __savegprlr_29(param_1);
+  if (((onlinegame->current).enabled == false) && ((ui_onlineRequired->current).enabled == false)) {
+    bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+    bVar6 = false;
+    if (!bVar5) goto LAB_82714368;
   }
-  bVar1 = true;
+  bVar6 = true;
 LAB_82714368:
-  iVar3 = Sys_Milliseconds();
-  if ((((bVar1) && (cVar6 = Live_IsUserSignedInToLive(uVar2), cVar6 != '\0')) &&
-      (cVar6 = Live_UserIsGuest(uVar2), cVar6 == '\0')) &&
-     (iVar4 = dwGetLobbyService(uVar2), iVar4 != 0)) {
-    iVar4 = bdLobbyService__getStatus();
-    if (((iVar4 != DAT_84584f30) && (DAT_84584f28 = iVar3, iVar4 != 2)) && (DAT_84584f34 == '\0')) {
-      DAT_84584f34 = '\x01';
-      DAT_84584f2c = iVar3;
+  iVar2 = Sys_Milliseconds();
+  if ((((bVar6) && (bVar6 = Live_IsUserSignedInToLive(iVar1), bVar6)) &&
+      (bVar6 = Live_UserIsGuest(iVar1), !bVar6)) &&
+     (this = dwGetLobbyService(iVar1), this != (bdLobbyService *)0x0)) {
+    SVar3 = bdLobbyService::getStatus(this);
+    if (((SVar3 != last_dw_lobby_connect_status) &&
+        (last_dw_lobby_connect_status_change = iVar2, SVar3 != BD_CONNECTED)) &&
+       (dw_disconnect_detected == false)) {
+      dw_disconnect_detected = true;
+      dw_last_disconnect_time = iVar2;
     }
-    DAT_84584f30 = iVar4;
-    if ((iVar4 == 2) && (*(int *)(DAT_84584ef4 + 0xc) < iVar3 - DAT_84584f28)) {
-      DAT_84584f34 = 0;
+    last_dw_lobby_connect_status = SVar3;
+    if ((SVar3 == BD_CONNECTED) &&
+       ((demonwareConsideredConnectedTime->current).integer <
+        iVar2 - last_dw_lobby_connect_status_change)) {
+      dw_disconnect_detected = false;
       __restgprlr_29();
       return;
     }
-    if ((((DAT_84584f34 != '\0') && (iVar4 != 2)) && (30000 < iVar3 - DAT_84584f2c)) &&
-       (pcVar5 = (char *)Dvar_GetString(0xffffffff8202c6c8), *pcVar5 == '\0')) {
-      DAT_84584f34 = '\0';
-      DW_SetDisableLogonRetry(1);
-      Live_DemonwareDisconnectCleanup(uVar2);
+    if ((((dw_disconnect_detected != false) && (SVar3 != BD_CONNECTED)) &&
+        (30000 < iVar2 - dw_last_disconnect_time)) &&
+       (pcVar4 = Dvar_GetString("com_errorMessage"), *pcVar4 == '\0')) {
+      dw_disconnect_detected = false;
+      DW_SetDisableLogonRetry(true);
+      Live_DemonwareDisconnectCleanup(iVar1);
     }
   }
   __restgprlr_29();
@@ -1381,32 +1577,36 @@ LAB_82714368:
 
 // 82713E10  Live_DemonwareDisconnectCleanup  (online/live_common.cpp:1849)
 
-void Live_DemonwareDisconnectCleanup(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_DemonwareDisconnectCleanup(int param_1)
 
 {
   bool bVar1;
-  char cVar2;
+  bool bVar3;
+  PartyData *pPVar2;
   
-  Com_DPrintf(0x19,0xffffffff821b82f8,param_1);
-  if ((*(char *)(DAT_82aa1af8 + 0xc) == '\0') && (*(char *)(DAT_83f71e80 + 0xc) == '\0')) {
-    cVar2 = CL_Demo_IsPlaybackMemoryAllocated();
+  Com_DPrintf(0x19,"Live_DemonwareDisconnectCleanup( %d )\n");
+  if (((onlinegame->current).enabled == false) && ((ui_onlineRequired->current).enabled == false)) {
+    bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
     bVar1 = false;
-    if (cVar2 == '\0') goto LAB_82713e7c;
+    if (!bVar3) goto LAB_82713e7c;
   }
   bVar1 = true;
 LAB_82713e7c:
-  Dvar_SetBool(DAT_82aa1ae4,0);
-  Lobby_GetPartyData();
-  Party_StopParty();
-  Party_StopParty(0xffffffff82b55118);
+  Dvar_SetBool(systemlink,false);
+  pPVar2 = Lobby_GetPartyData();
+  Party_StopParty(pPVar2);
+  Party_StopParty(&g_partyData);
   Live_DisconnectFromWebServices(param_1);
-  if ((bVar1) || (DAT_84584f38 == 2)) {
-    PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  if ((bVar1) || (g_waitForConnectionDialogState == OCDS_ACTIVE)) {
+    PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
     Live_DeclineInvitation();
     UI_ClearCompletionResolve();
-    DAT_84584f38 = 0;
-    DAT_82999a80 = 0xffffffff;
-    Com_Error(1,0xffffffff82030e48);
+    g_waitForConnectionDialogState = OCDS_NONE;
+    g_waitForConnectionDialogController = -1;
+    Com_Error(ERR_DROP,"EXE_DEMONWARE_DISCONNECT");
   }
   return;
 }
@@ -1414,10 +1614,10 @@ LAB_82713e7c:
 
 // 82712E10  Live_CancelPotentiallyBlockingTasks  (online/live_common.cpp:1881)
 
-void Live_CancelPotentiallyBlockingTasks(undefined8 param_1)
+void Live_CancelPotentiallyBlockingTasks(int param_1)
 
 {
-  LSP_CancelTasks();
+  LSP_CancelTasks(param_1);
   dwLogon_CancelTasks(param_1);
   dwLogon_ClearOverlappedTasks(param_1);
   return;
@@ -1426,20 +1626,20 @@ void Live_CancelPotentiallyBlockingTasks(undefined8 param_1)
 
 // 82712E50  Live_DisconnectFromWebServices  (online/live_common.cpp:1892)
 
-void Live_DisconnectFromWebServices(undefined8 param_1)
+void Live_DisconnectFromWebServices(int param_1)
 
 {
-  ulonglong uVar1;
+  bdLobbyService *this;
   
-  uVar1 = dwGetLobbyService();
-  if ((uVar1 & 0xffffffff) != 0) {
+  this = dwGetLobbyService(param_1);
+  if (this != (bdLobbyService *)0x0) {
     LiveStorage_CS_ClearDWOverlappedTasks(param_1);
     LiveStorage_ClearDWOverlappedTasks(param_1);
     MeetPlayer_ClearDWOverlappedTasks(param_1);
     LB_ClearDWOverlappedTasks(param_1);
     LiveCounter_ClearDWOverlappedTasks(param_1);
     FacebookPosting_Reset(param_1);
-    bdLobbyService__disconnect(uVar1);
+    bdLobbyService::disconnect(this);
     dwLobbyServiceCleanup(param_1);
   }
   return;
@@ -1448,19 +1648,22 @@ void Live_DisconnectFromWebServices(undefined8 param_1)
 
 // 82712ED0  Test_ShutdownDemonware  (online/live_common.cpp:1934)
 
-void Test_ShutdownDemonware(undefined8 param_1)
+void Test_ShutdownDemonware(int param_1)
 
 {
-  char cVar2;
   int iVar1;
+  bool bVar2;
+  bdLobbyService *this;
   
-  cVar2 = Live_IsUserSignedInToDemonware();
-  if (((cVar2 != '\0') &&
-      ((((DAT_84584ef8 != 0 && (iVar1 = *(int *)(DAT_84584ef8 + 0xc), 0 < iVar1)) &&
-        ((iVar1 == 5 || (iVar1 == (int)param_1 + 1)))) ||
-       ((DAT_84584f0c != 0 && (*(char *)(DAT_84584f0c + 0xc) != '\0')))))) &&
-     (iVar1 = dwGetLobbyService(param_1), iVar1 != 0)) {
-    bdLobbyService__disconnect();
+  bVar2 = Live_IsUserSignedInToDemonware(param_1);
+  if (((bVar2) &&
+      ((((dw_test_disconnect != (dvar_t *)0x0 &&
+         (iVar1 = (dw_test_disconnect->current).integer, 0 < iVar1)) &&
+        ((iVar1 == 5 || (iVar1 == param_1 + 1)))) ||
+       ((dw_test_retry_disconnect != (dvar_t *)0x0 &&
+        ((dw_test_retry_disconnect->current).enabled != false)))))) &&
+     (this = dwGetLobbyService(param_1), this != (bdLobbyService *)0x0)) {
+    bdLobbyService::disconnect(this);
   }
   return;
 }
@@ -1468,119 +1671,126 @@ void Test_ShutdownDemonware(undefined8 param_1)
 
 // 82712F68  Live_SyncOnlineDataFlags  (online/live_common.cpp:1963)
 
-ulonglong Live_SyncOnlineDataFlags(undefined8 param_1)
+uint Live_SyncOnlineDataFlags(int param_1)
 
 {
-  char cVar3;
-  int iVar2;
-  ulonglong uVar1;
-  ulonglong uVar4;
+  bool bVar3;
+  int iVar1;
+  uint uVar2;
+  uint uVar4;
   
-  cVar3 = Live_IsUserSignedInToLive();
-  uVar4 = (ulonglong)(cVar3 == '\0');
-  iVar2 = Live_IsWaitingForOnlineServices(param_1);
-  if (iVar2 != 0) {
+  bVar3 = Live_IsUserSignedInToLive(param_1);
+  uVar4 = (uint)!bVar3;
+  iVar1 = Live_IsWaitingForOnlineServices(param_1);
+  if (iVar1 != 0) {
     uVar4 = uVar4 | 2;
   }
-  cVar3 = LiveStorage_DoWeHaveFFotD();
-  if (cVar3 == '\0') {
+  bVar3 = LiveStorage_DoWeHaveFFotD();
+  if (!bVar3) {
     uVar4 = uVar4 | 8;
   }
-  cVar3 = LiveStorage_IsTimeSynced();
-  if (cVar3 == '\0') {
+  bVar3 = LiveStorage_IsTimeSynced();
+  if (!bVar3) {
     uVar4 = uVar4 | 0x10;
   }
-  cVar3 = LiveStorage_DoWeHavePlaylists();
-  if (cVar3 == '\0') {
+  bVar3 = LiveStorage_DoWeHavePlaylists();
+  if (!bVar3) {
     uVar4 = uVar4 | 4;
   }
-  cVar3 = LiveStorage_IsWaitingOnStats(param_1);
-  if (cVar3 != '\0') {
+  bVar3 = LiveStorage_IsWaitingOnStats(param_1);
+  if (bVar3) {
     uVar4 = uVar4 | 0x20;
   }
-  cVar3 = LiveStorage_DoWeHaveMotd();
-  if (cVar3 == '\0') {
+  bVar3 = LiveStorage_DoWeHaveMotd();
+  if (!bVar3) {
     uVar4 = uVar4 | 0x40;
   }
-  cVar3 = LiveStorage_ShouldReadPeriodicChallenges(param_1);
-  if (cVar3 != '\0') {
+  bVar3 = LiveStorage_ShouldReadPeriodicChallenges(param_1);
+  if (bVar3) {
     uVar4 = uVar4 | 0x80;
   }
-  cVar3 = SocialConfig_Ok();
-  uVar1 = uVar4 | 0x100;
-  if (cVar3 != '\0') {
-    uVar1 = uVar4;
+  bVar3 = SocialConfig_Ok();
+  uVar2 = uVar4 | 0x100;
+  if (bVar3) {
+    uVar2 = uVar4;
   }
-  return uVar1;
+  return uVar2;
 }
 
 
 // 82713060  Live_SyncOnlineDataError  (online/live_common.cpp:2015)
 
-void Live_SyncOnlineDataError(undefined8 param_1)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_SyncOnlineDataError(int param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  PartyData *pPVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  Lobby_GetPartyData();
-  Party_StopParty();
-  Party_StopParty(0xffffffff82b55118);
-  PartyAtomic_AbortJoinAttempt(0xffffffff82b59110);
+  pPVar1 = Lobby_GetPartyData();
+  Party_StopParty(pPVar1);
+  Party_StopParty(&g_partyData);
+  PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
   Live_DeclineInvitation();
-  uVar1 = Live_SyncOnlineDataFlags(param_1);
-  uVar2 = UI_SafeTranslateString(0xffffffff821b812c);
-  uVar1 = UI_ReplaceConversionInt(uVar2,uVar1);
-  Com_Error(1,0xffffffff8200334c,uVar1);
+  uVar2 = Live_SyncOnlineDataFlags(param_1);
+  pcVar3 = UI_SafeTranslateString("EXE_ERR_ONLINE_DATA");
+  UI_ReplaceConversionInt(pcVar3,uVar2);
+  Com_Error(ERR_DROP,"\x15%s");
   return;
 }
 
 
 // 827130E0  Live_GetRequiredFlags  (online/live_common.cpp:2042)
 
-longlong Live_GetRequiredFlags(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+uint Live_GetRequiredFlags(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Live_HasAcceptedInvitation();
-  if ((cVar1 != '\0') && (DAT_84584ed5 != '\0')) {
+  bVar1 = Live_HasAcceptedInvitation();
+  if ((bVar1) && (s_acceptingInviteInitialized != false)) {
     return 0x13c;
   }
-  cVar1 = Menu_IsMenuOpenAndVisible(0,0xffffffff8216f1bc);
-  return (-(ulonglong)(cVar1 != '\0') & 4) + 0x138;
+  bVar1 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_findgame");
+  return (-(uint)bVar1 & 4) + 0x138;
 }
 
 
 // 82713158  Live_SyncOnlineDataPopupTimeout  (online/live_common.cpp:2065)
 
-void Live_SyncOnlineDataPopupTimeout(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_SyncOnlineDataPopupTimeout(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar5;
-  char cVar6;
-  longlong lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar7;
+  int iVar1;
+  bool bVar5;
+  bool bVar6;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
   
-  uVar1 = __savegprlr_28();
-  cVar5 = Menu_IsMenuOpenAndVisible(0,0xffffffff820861dc);
-  if (((cVar5 == '\0') && (cVar6 = Live_HasAcceptedInvitation(), cVar6 != '\0')) &&
-     (DAT_84584ed5 != '\0')) {
-    cVar5 = Menu_IsMenuOpenAndVisible(0,0xffffffff82056c00);
+  iVar1 = __savegprlr_28(param_1);
+  bVar5 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
+  if (((!bVar5) && (bVar6 = Live_HasAcceptedInvitation(), bVar6)) &&
+     (s_acceptingInviteInitialized != false)) {
+    bVar5 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_acceptinginvite");
   }
-  if (cVar5 != '\0') {
-    lVar2 = Sys_Milliseconds();
-    uVar7 = (ulonglong)DAT_84584edc;
-    if (60000 < (int)(lVar2 - uVar7)) {
-      uVar3 = Live_SyncOnlineDataFlags(uVar1);
-      uVar4 = Live_GetRequiredFlags();
-      if ((uVar4 & uVar3 & 0xffffffff) != 0) {
-        Com_PrintWarning(0xe,0xffffffff821b8140,lVar2 - uVar7,DAT_84584edc,uVar4,uVar3);
-        Live_SyncOnlineDataError(uVar1);
-      }
+  if ((bVar5 != false) && (iVar2 = Sys_Milliseconds(), 60000 < iVar2 - s_gettingDataPopupStartTime))
+  {
+    uVar3 = Live_SyncOnlineDataFlags(iVar1);
+    uVar4 = Live_GetRequiredFlags();
+    if ((uVar4 & uVar3) != 0) {
+      Com_PrintWarning(0xe,
+                       "Live - SyncOnlineDataPopupTimeout - Timed out after %i ms. Started at time %i. Required flags %i, sync flags %i.\n"
+                      );
+      Live_SyncOnlineDataError(iVar1);
     }
   }
   __restgprlr_28();
@@ -1590,61 +1800,66 @@ void Live_SyncOnlineDataPopupTimeout(void)
 
 // 82713238  Live_SyncOnlineDataPopupStarted  (online/live_common.cpp:2096)
 
-void Live_SyncOnlineDataPopupStarted(void)
+void Live_SyncOnlineDataPopupStarted(int param_1,uint param_2)
 
 {
-  DAT_84584edc = Sys_Milliseconds();
+  s_gettingDataPopupStartTime = Sys_Milliseconds();
   return;
 }
 
 
 // 82713260  Live_SyncOnlineDataFrame  (online/live_common.cpp:2102)
 
-void Live_SyncOnlineDataFrame(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_SyncOnlineDataFrame(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar7;
+  char cVar1;
   int iVar2;
-  uint uVar3;
+  bool bVar8;
+  int iVar3;
   uint uVar4;
-  char *pcVar5;
-  int iVar6;
-  byte bVar8;
+  uint uVar5;
+  char *pcVar6;
+  int iVar7;
   char *pcVar9;
   
-  uVar1 = __savegprlr_28();
-  cVar7 = CL_AllLocalClientsDisconnected();
-  if ((cVar7 == '\0') || (cVar7 = IsServerRunning(), cVar7 != '\0')) {
-    DAT_84584f10 = 0;
-  }
-  else {
-    iVar2 = Live_IsOnlineDataRequired();
-    uVar3 = Live_GetRequiredFlags();
-    uVar4 = Live_SyncOnlineDataFlags(uVar1);
-    if ((iVar2 != 0) && ((uVar4 & uVar3) != 0)) {
-      pcVar5 = (char *)Dvar_GetString(0xffffffff8202c6c8);
-      pcVar9 = pcVar5;
-      do {
-        cVar7 = *pcVar9;
-        pcVar9 = pcVar9 + 1;
-      } while (cVar7 != '\0');
-      if (((int)pcVar9 - (int)pcVar5 == 1) ||
-         (iVar6 = I_stricmp(pcVar5,0xffffffff82031834), iVar6 == 0)) {
-        LiveStorage_ShowPopupGettingDataIfNeeded(uVar1);
+  iVar2 = __savegprlr_28(param_1);
+  bVar8 = CL_AllLocalClientsDisconnected();
+  if (bVar8) {
+    bVar8 = IsServerRunning();
+    if (!bVar8) {
+      iVar3 = Live_IsOnlineDataRequired();
+      uVar4 = Live_GetRequiredFlags();
+      uVar5 = Live_SyncOnlineDataFlags(iVar2);
+      if ((iVar3 != 0) && ((uVar5 & uVar4) != 0)) {
+        pcVar6 = Dvar_GetString("com_errorMessage");
+        pcVar9 = pcVar6;
+        do {
+          cVar1 = *pcVar9;
+          pcVar9 = pcVar9 + 1;
+        } while (cVar1 != '\0');
+        if (((int)pcVar9 - (int)pcVar6 == 1) || (iVar7 = I_stricmp(pcVar6,";"), iVar7 == 0)) {
+          LiveStorage_ShowPopupGettingDataIfNeeded(iVar2);
+        }
       }
-    }
-    bVar8 = Menu_IsMenuOpenAndVisible(0,0xffffffff820861dc);
-    if ((DAT_84584f10 == 0) && (bVar8 != 0)) {
-      DAT_84584edc = Sys_Milliseconds();
-    }
-    DAT_84584f10 = (uint)bVar8;
-    if (iVar2 != 0) {
-      Live_SyncOnlineDataPopupTimeout(uVar1);
-      __restgprlr_28();
-      return;
+      bVar8 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
+      uVar4 = (uint)bVar8;
+      if ((s_gettingDataPopupOpenLastFrame == 0) && (uVar4 != 0)) {
+        s_gettingDataPopupStartTime = Sys_Milliseconds();
+      }
+      s_gettingDataPopupOpenLastFrame = uVar4;
+      if (iVar3 != 0) {
+        Live_SyncOnlineDataPopupTimeout(iVar2);
+        __restgprlr_28();
+        return;
+      }
+      goto LAB_82713370;
     }
   }
+  s_gettingDataPopupOpenLastFrame = 0;
+LAB_82713370:
   __restgprlr_28();
   return;
 }
@@ -1652,24 +1867,31 @@ void Live_SyncOnlineDataFrame(void)
 
 // 82713378  Live_HandleOnlineRequirementFailed  (online/live_common.cpp:2154)
 
-void Live_HandleOnlineRequirementFailed
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Live_HandleOnlineRequirementFailed(int param_1,int param_2,int param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
+  LocalClientNum_t LVar3;
+  ulonglong uVar4;
+  OnlinePlayFailureReason OVar5;
   
-  uVar1 = __savegprlr_27();
-  iVar2 = (int)param_2;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821b7898,0x86b,0,0xffffffff82000f98,0xffffffff82031908);
+  uVar4 = (ulonglong)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  OVar5 = (OnlinePlayFailureReason)uVar4;
+  if (OVar5 == OPFR_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x86b,
+                    0,"%s");
   }
   else {
-    if (0x10 < (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821b7898,0x86c,0,0xffffffff820318cc,param_2,0x11);
+    if (0x10 < (uVar4 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x86c,0,"failureReason doesn\'t index OPFR_COUNT\n\t%i not in [0, %i)");
     }
-    if (iVar2 == 9) {
-      Live_WaitForOnlineServicesDialog(uVar1);
+    if (OVar5 == OPFR_ONLINE_SERVICES) {
+      Live_WaitForOnlineServicesDialog(iVar1);
       if (param_3 != 0) {
         UI_SilentReturnToMainMenu();
         __restgprlr_27();
@@ -1677,31 +1899,33 @@ void Live_HandleOnlineRequirementFailed
       }
       goto LAB_827134cc;
     }
-    if (iVar2 == 0x10) {
-      if ((int)param_4 == 0) {
-        MyAssertHandler(0xffffffff821b7898,0x87a,0,0xffffffff82000f98,0xffffffff821b81f0);
+    if (OVar5 == OPFR_MISSING_VAULT_SOCIAL_CONFIG) {
+      if (param_4 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x87a,0,"%s");
       }
-      iVar2 = Live_IsWaitingForOnlineServices(uVar1);
-      if (iVar2 != 0) {
-        MyAssertHandler(0xffffffff821b7898,0x87b,0,0xffffffff82000f98,0xffffffff821b81b4);
+      iVar1 = Live_IsWaitingForOnlineServices(iVar1);
+      if (iVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x87b,0,"%s");
       }
-      if (DAT_84584f3c == 0) {
-        DAT_84584f3c = 1;
+      if (g_waitForSocialConfigDialogState == OCDS_NONE) {
+        g_waitForSocialConfigDialogState = OCDS_REQUESTED;
         __restgprlr_27();
         return;
       }
       goto LAB_827134cc;
     }
   }
-  Live_GetFailureReason(param_2,param_4);
+  pcVar2 = Live_GetFailureReason(OVar5,param_4);
   if (param_3 == 0) {
-    Com_SetErrorMessage();
-    uVar1 = CL_LocalClientNumFromControllerIndex(uVar1);
-    UI_OpenMenu(uVar1,0xffffffff8216c490);
+    Com_SetErrorMessage(pcVar2);
+    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
+    UI_OpenMenu(LVar3,"error_popmenu_submenu");
     __restgprlr_27();
     return;
   }
-  Live_CloseOnlineMenus();
+  Live_CloseOnlineMenus(pcVar2);
 LAB_827134cc:
   __restgprlr_27();
   return;
@@ -1710,7 +1934,7 @@ LAB_827134cc:
 
 // 827134D8  Live_RequiresSignInResolve  (online/live_common.cpp:2196)
 
-undefined8 Live_RequiresSignInResolve(int param_1)
+int Live_RequiresSignInResolve(int param_1)
 
 {
   if (((param_1 != 1) && (param_1 != 2)) && (param_1 != 8)) {
@@ -1722,74 +1946,76 @@ undefined8 Live_RequiresSignInResolve(int param_1)
 
 // 82713500  Live_WasForcedLiveSignInByUI  (online/live_common.cpp:2206)
 
-bool Live_WasForcedLiveSignInByUI(uint param_1)
+int Live_WasForcedLiveSignInByUI(int param_1)
 
 {
-  return (1 << (param_1 & 0x3f) & (uint)DAT_84584ed7) != 0;
+  return (uint)((1 << (param_1 & 0x3fU) & (uint)s_forcedLiveSigninController) != 0);
 }
 
 
 // 82713520  Live_SetForcedLiveSignInByUI  (online/live_common.cpp:2213)
 
-void Live_SetForcedLiveSignInByUI(uint param_1)
+void Live_SetForcedLiveSignInByUI(int param_1)
 
 {
-  DAT_84584ed7 = (byte)(1 << (param_1 & 0x3f)) | DAT_84584ed7;
+  s_forcedLiveSigninController = (byte)(1 << (param_1 & 0x3fU)) | s_forcedLiveSigninController;
   return;
 }
 
 
 // 82713540  Live_ClearForcedLiveSignInByUI  (online/live_common.cpp:2220)
 
-void Live_ClearForcedLiveSignInByUI(uint param_1)
+void Live_ClearForcedLiveSignInByUI(int param_1)
 
 {
-  DAT_84584ed7 = DAT_84584ed7 & ~(byte)(1 << (param_1 & 0x3f));
+  s_forcedLiveSigninController = s_forcedLiveSigninController & ~(byte)(1 << (param_1 & 0x3fU));
   return;
 }
 
 
 // 82713560  Live_WasForcedAnySignInByUI  (online/live_common.cpp:2227)
 
-bool Live_WasForcedAnySignInByUI(uint param_1)
+int Live_WasForcedAnySignInByUI(int param_1)
 
 {
-  return (1 << (param_1 & 0x3f) & (uint)DAT_84584ed6) != 0;
+  return (uint)((1 << (param_1 & 0x3fU) & (uint)s_forcedAnySigninController) != 0);
 }
 
 
 // 82713580  Live_SetForcedAnySignInByUI  (online/live_common.cpp:2234)
 
-void Live_SetForcedAnySignInByUI(uint param_1)
+void Live_SetForcedAnySignInByUI(int param_1)
 
 {
-  DAT_84584ed6 = (byte)(1 << (param_1 & 0x3f)) | DAT_84584ed6;
+  s_forcedAnySigninController = (byte)(1 << (param_1 & 0x3fU)) | s_forcedAnySigninController;
   return;
 }
 
 
 // 827135A0  Live_ClearForcedAnySignInByUI  (online/live_common.cpp:2241)
 
-void Live_ClearForcedAnySignInByUI(uint param_1)
+void Live_ClearForcedAnySignInByUI(int param_1)
 
 {
-  DAT_84584ed6 = DAT_84584ed6 & ~(byte)(1 << (param_1 & 0x3f));
+  s_forcedAnySigninController = s_forcedAnySigninController & ~(byte)(1 << (param_1 & 0x3fU));
   return;
 }
 
 
 // 827135C0  Live_ErrorCleanup  (online/live_common.cpp:2248)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Live_ErrorCleanup(void)
 
 {
-  DAT_84584f10 = 0;
+  s_gettingDataPopupOpenLastFrame = 0;
   UI_ClearCompletionResolve();
-  DAT_84584f38 = 0;
-  DAT_82999a80 = 0xffffffff;
+  g_waitForConnectionDialogState = OCDS_NONE;
+  g_waitForConnectionDialogController = -1;
   UI_ClearCompletionResolve();
-  DAT_84584f3c = 0;
-  DAT_84584ee4 = 0xffffffff;
+  g_waitForSocialConfigDialogState = OCDS_NONE;
+  g_waitForSocialConfigDialogRequestTime = -1;
   return;
 }
 

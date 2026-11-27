@@ -2,11 +2,13 @@
 
 // 82399198  ScrPlace_HiResGetScaleX  (client/screen_placement.cpp:55)
 
-double ScrPlace_HiResGetScaleX(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float ScrPlace_HiResGetScaleX(void)
 
 {
-  if (DAT_846180a8 != 0) {
-    return (double)DAT_846180ac;
+  if (rg.renderHiResShot != 0) {
+    return rg.hiResShotScaleX;
   }
   return 1.0;
 }
@@ -14,11 +16,13 @@ double ScrPlace_HiResGetScaleX(void)
 
 // 823991C0  ScrPlace_HiResGetScaleY  (client/screen_placement.cpp:66)
 
-double ScrPlace_HiResGetScaleY(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+float ScrPlace_HiResGetScaleY(void)
 
 {
-  if (DAT_846180a8 != 0) {
-    return (double)DAT_846180b0;
+  if (rg.renderHiResShot != 0) {
+    return rg.hiResShotScaleY;
   }
   return 1.0;
 }
@@ -26,18 +30,21 @@ double ScrPlace_HiResGetScaleY(void)
 
 // 823991E8  ScrPlace_HiResApplyRect  (client/screen_placement.cpp:77)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrPlace_HiResApplyRect(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  if (DAT_846180a8 == 0) {
+  if (rg.renderHiResShot == 0) {
     return;
   }
-  *param_1 = *param_1 * DAT_846180ac;
-  *param_2 = *param_2 * DAT_846180b0;
-  *param_3 = *param_3 * DAT_846180ac;
-  *param_4 = *param_4 * DAT_846180b0;
-  *param_1 = -((float)DAT_82aa2970 * DAT_846180b4 * DAT_846180ac - *param_1);
-  *param_2 = -((float)DAT_82aa2974 * DAT_846180b8 * DAT_846180b0 - *param_2);
+  *param_1 = *param_1 * rg.hiResShotScaleX;
+  *param_2 = *param_2 * rg.hiResShotScaleY;
+  *param_3 = *param_3 * rg.hiResShotScaleX;
+  *param_4 = *param_4 * rg.hiResShotScaleY;
+  *param_1 = -((float)cls.vidConfig.displayWidth * rg.hiResShotX * rg.hiResShotScaleX - *param_1);
+  *param_2 = -((float)cls.vidConfig.displayHeight * rg.hiResShotY * rg.hiResShotScaleY - *param_2);
   return;
 }
 
@@ -47,13 +54,13 @@ void ScrPlace_HiResApplyRect(float *param_1,float *param_2,float *param_3,float 
 void ScrPlace_HiResScaleRect(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  if (DAT_846180a8 == 0) {
+  if (rg.renderHiResShot == 0) {
     return;
   }
-  *param_1 = *param_1 * DAT_846180ac;
-  *param_2 = *param_2 * DAT_846180b0;
-  *param_3 = *param_3 * DAT_846180ac;
-  *param_4 = *param_4 * DAT_846180b0;
+  *param_1 = *param_1 * rg.hiResShotScaleX;
+  *param_2 = *param_2 * rg.hiResShotScaleY;
+  *param_3 = *param_3 * rg.hiResShotScaleX;
+  *param_4 = *param_4 * rg.hiResShotScaleY;
   return;
 }
 
@@ -61,8 +68,9 @@ void ScrPlace_HiResScaleRect(float *param_1,float *param_2,float *param_3,float 
 // 823992F8  ScrPlace_CalcSpecificSafeAreaOffsets  (client/screen_placement.cpp:105)
 
 void ScrPlace_CalcSpecificSafeAreaOffsets
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5,
-               double param_6,double param_7)
+               (float param_1,float param_2,float param_3,float param_4,float param_5,float param_6,
+               float param_7,float *param_8,float *param_9,float *param_10,float *param_11,
+               int param_12,int param_13)
 
 {
   float *in_r10;
@@ -71,95 +79,104 @@ void ScrPlace_CalcSpecificSafeAreaOffsets
   double dVar3;
   double dVar4;
   double dVar5;
-  undefined8 uVar6;
+  double dVar6;
   double dVar7;
-  undefined8 uVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
+  double dVar12;
+  double dVar13;
   float *in_stack_00000054;
   float *in_stack_0000005c;
   float *in_stack_00000064;
   int in_stack_0000006c;
   int in_stack_00000074;
   
-  __savegprlr_26();
+  dVar6 = (double)param_5;
+  dVar2 = (double)param_6;
+  dVar8 = (double)param_7;
+  dVar5 = (double)param_4;
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  __savegprlr_26((double)param_1,param_8,param_9,param_10,param_11,param_12,param_13);
   dVar1 = (double)__savefpr_19();
-  dVar10 = 0.0;
-  dVar3 = 1.0;
-  uVar6 = 0x3ff0000000000000;
-  uVar8 = 0;
-  if ((param_6 < 0.0) || (1.0 < param_6)) {
-    MyAssertHandler(param_6,0,0x3ff0000000000000,0xffffffff82056e88,0x70,0,0xffffffff82056e54,
-                    param_6,0,0x3ff0000000000000);
+  dVar12 = 0.0;
+  dVar7 = 1.0;
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x70,0,"safeAreaRatioHorz not in [0, 1]\n\t%g not in [%g, %g]");
   }
-  if ((param_7 < dVar10) || (dVar3 < param_7)) {
-    MyAssertHandler(param_7,uVar8,uVar6,0xffffffff82056e88,0x71,0,0xffffffff82056e20,param_7,uVar8,
-                    uVar6);
+  if ((dVar8 < dVar12) || (dVar7 < dVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x71,0,"safeAreaRatioVert not in [0, 1]\n\t%g not in [%g, %g]");
   }
   if (in_stack_0000006c < 1) {
-    MyAssertHandler(0xffffffff82056e88,0x72,0,0xffffffff82056de8,0xffffffff82056e08,
-                    in_stack_0000006c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x72,0,"%s\n\t(renderTargetWidth) = %i");
   }
   if (in_stack_00000074 < 1) {
-    MyAssertHandler(0xffffffff82056e88,0x73,0,0xffffffff82056dac,0xffffffff82056dcc,
-                    in_stack_00000074);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x73,0,"%s\n\t(renderTargetHeight) = %i");
   }
-  if (dVar1 < dVar10) {
-    MyAssertHandler(dVar1,0xffffffff82056e88,0x74,0,0xffffffff82056d80,0xffffffff82056d98,dVar1);
+  if (dVar1 < dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x74,0,"%s\n\t(viewportX) = %g");
   }
-  if (param_2 < dVar10) {
-    MyAssertHandler(param_2,0xffffffff82056e88,0x75,0,0xffffffff82056d54,0xffffffff82056d6c,param_2)
-    ;
+  if (dVar3 < dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x75,0,"%s\n\t(viewportY) = %g");
   }
-  if (param_3 <= dVar10) {
-    MyAssertHandler(param_3,0xffffffff82056e88,0x76,0,0xffffffff82056d24,0xffffffff82056d40,param_3)
-    ;
+  if (dVar4 <= dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x76,0,"%s\n\t(viewportWidth) = %g");
   }
-  if (param_4 <= dVar10) {
-    MyAssertHandler(param_4,0xffffffff82056e88,0x77,0,0xffffffff82056cf0,0xffffffff82056d0c,param_4)
-    ;
+  if (dVar5 <= dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x77,0,"%s\n\t(viewportHeight) = %g");
   }
-  dVar10 = (double)(float)(dVar1 + param_3);
-  dVar5 = (double)(longlong)in_stack_0000006c;
-  if (dVar5 < dVar10) {
-    uVar6 = va(dVar1,param_3,0xffffffff82056ce0,dVar1,param_3,in_stack_0000006c);
-    MyAssertHandler(0xffffffff82056e88,0x78,0,0xffffffff820011f4,0xffffffff82056cb0,uVar6);
+  dVar12 = (double)(float)(dVar1 + dVar4);
+  dVar9 = (double)(longlong)in_stack_0000006c;
+  if (dVar9 < dVar12) {
+    va("%g + %g > %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x78,0,"%s\n\t%s");
   }
-  dVar9 = (double)(float)(param_2 + param_4);
-  dVar7 = (double)(longlong)in_stack_00000074;
-  if (dVar7 < dVar9) {
-    uVar6 = va(param_2,param_4,0xffffffff82056ce0,param_2,param_4,in_stack_00000074);
-    MyAssertHandler(0xffffffff82056e88,0x79,0,0xffffffff820011f4,0xffffffff82056c7c,uVar6);
+  dVar11 = (double)(float)(dVar3 + dVar5);
+  dVar10 = (double)(longlong)in_stack_00000074;
+  if (dVar10 < dVar11) {
+    va("%g + %g > %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x79,0,"%s\n\t%s");
   }
-  dVar11 = 0.5;
-  dVar4 = (double)((float)((double)(float)(dVar3 - param_7) * dVar7) * 0.5);
-  dVar3 = floor((double)((float)((double)(float)(dVar3 - param_6) * dVar5) * 0.5 + 0.5));
-  dVar2 = (double)(float)dVar3;
-  dVar3 = floor((double)(float)(dVar4 + dVar11));
-  dVar4 = (double)(float)dVar3;
-  dVar3 = dVar1;
-  if ((float)(dVar1 - dVar2) < 0.0) {
-    dVar3 = dVar2;
+  dVar13 = 0.5;
+  dVar8 = (double)((float)((double)(float)(dVar7 - dVar8) * dVar10) * 0.5);
+  dVar2 = floor((double)((float)((double)(float)(dVar7 - dVar2) * dVar9) * 0.5 + 0.5));
+  dVar7 = (double)(float)dVar2;
+  dVar2 = floor((double)(float)(dVar8 + dVar13));
+  dVar8 = (double)(float)dVar2;
+  dVar2 = dVar1;
+  if ((float)(dVar1 - dVar7) < 0.0) {
+    dVar2 = dVar7;
   }
-  dVar11 = param_2;
-  if ((float)(param_2 - dVar4) < 0.0) {
-    dVar11 = dVar4;
+  dVar13 = dVar3;
+  if ((float)(dVar3 - dVar8) < 0.0) {
+    dVar13 = dVar8;
   }
-  if ((float)((double)(float)(dVar5 - dVar2) - dVar10) < 0.0) {
-    dVar10 = (double)(float)(dVar5 - dVar2);
+  if ((float)((double)(float)(dVar9 - dVar7) - dVar12) < 0.0) {
+    dVar12 = (double)(float)(dVar9 - dVar7);
   }
-  *in_r10 = (float)(dVar3 - dVar1);
-  if ((float)((double)(float)(dVar7 - dVar4) - dVar9) < 0.0) {
-    dVar9 = (double)(float)(dVar7 - dVar4);
+  *in_r10 = (float)(dVar2 - dVar1);
+  if ((float)((double)(float)(dVar10 - dVar8) - dVar11) < 0.0) {
+    dVar11 = (double)(float)(dVar10 - dVar8);
   }
-  in_r10[1] = (float)(dVar11 - param_2);
-  *in_stack_00000054 = (float)(dVar10 - dVar1);
-  in_stack_00000054[1] = (float)(dVar9 - param_2);
-  *in_stack_0000005c = (float)((double)(*in_r10 * (float)(640.0 / param_3)) * param_5);
-  in_stack_0000005c[1] = (float)(480.0 / param_4) * in_r10[1];
-  *in_stack_00000064 = (float)((double)(*in_stack_00000054 * (float)(640.0 / param_3)) * param_5);
-  in_stack_00000064[1] = in_stack_00000054[1] * (float)(480.0 / param_4);
+  in_r10[1] = (float)(dVar13 - dVar3);
+  *in_stack_00000054 = (float)(dVar12 - dVar1);
+  in_stack_00000054[1] = (float)(dVar11 - dVar3);
+  *in_stack_0000005c = (float)((double)(*in_r10 * (float)(640.0 / dVar4)) * dVar6);
+  in_stack_0000005c[1] = (float)(480.0 / dVar5) * in_r10[1];
+  *in_stack_00000064 = (float)((double)(*in_stack_00000054 * (float)(640.0 / dVar4)) * dVar6);
+  in_stack_00000064[1] = in_stack_00000054[1] * (float)(480.0 / dVar5);
   __restfpr_19();
   __restgprlr_26();
   return;
@@ -169,18 +186,37 @@ void ScrPlace_CalcSpecificSafeAreaOffsets
 // 823996E0  ScrPlace_CalcSafeAreaOffsets  (client/screen_placement.cpp:147)
 
 void ScrPlace_CalcSafeAreaOffsets
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+               float param_6,int param_7,int param_8)
 
 {
-  undefined8 uVar1;
+  float *pfVar1;
+  float *pfVar2;
+  double extraout_f1;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  __savegprlr_29();
-  uVar1 = __savefpr_27();
-  ScrPlace_CalcSpecificSafeAreaOffsets();
+  dVar6 = (double)param_6;
+  dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  __savegprlr_29((double)param_2,param_1);
+  pfVar1 = (float *)__savefpr_27();
+  pfVar2 = pfVar1 + 0x10;
+  dVar7 = extraout_f1;
   ScrPlace_CalcSpecificSafeAreaOffsets
-            (uVar1,param_2,param_3,param_4,param_5,(double)*(float *)(DAT_82b5c718 + 0xc),
-             (double)*(float *)(DAT_82b5c55c + 0xc));
+            ((float)extraout_f1,(float)dVar3,(float)dVar4,(float)dVar5,(float)dVar6,
+             (safeArea_horizontal->current).value,(safeArea_vertical->current).value,pfVar1,
+             (float *)param_7,(float *)param_8,pfVar2,(int)(pfVar1 + 10),(int)(pfVar1 + 0xc));
+  ScrPlace_CalcSpecificSafeAreaOffsets
+            ((float)dVar7,(float)dVar3,(float)dVar4,(float)dVar5,(float)dVar6,
+             (safeArea_adjusted_horizontal->current).value,
+             (safeArea_adjusted_vertical->current).value,pfVar1 + 0x14,
+             (float *)(db_zipMemory + 0x3280),(float *)(db_zipMemory + 0x3280),pfVar2,
+             (int)(pfVar1 + 0x18),(int)(pfVar1 + 0x12));
   __restfpr_27();
   __restgprlr_29();
   return;
@@ -189,68 +225,109 @@ void ScrPlace_CalcSafeAreaOffsets
 
 // 823997B8  ScrPlace_SetupFloatRenderTargetViewport  (client/screen_placement.cpp:171)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrPlace_SetupFloatRenderTargetViewport
-               (undefined8 param_1,double param_2,double param_3,double param_4)
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5,
+               int param_6,int param_7)
 
 {
-  float *_Dst;
+  ScreenPlacement *pSVar1;
+  int iVar2;
+  int iVar3;
   double extraout_f1;
-  double dVar1;
-  double dVar2;
-  double dVar3;
   double dVar4;
   double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  __savegprlr_25();
-  _Dst = (float *)__savefpr_25();
-  dVar1 = extraout_f1;
-  memset(_Dst,-0x4f4f4f50,0x6c);
-  _Dst[8] = (float)param_3;
-  _Dst[9] = (float)param_4;
-  _Dst[6] = (float)dVar1;
-  _Dst[7] = (float)param_2;
-  if (((uint)DAT_82aa2990 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82056e88,0xba,0,0xffffffff82000f98,0xffffffff82056fb8);
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  __savegprlr_25((double)param_2,param_1,param_6,param_7);
+  pSVar1 = (ScreenPlacement *)__savefpr_25();
+  iVar3 = 0x6c;
+  iVar2 = -0x4f4f4f50;
+  dVar7 = extraout_f1;
+  memset();
+  pSVar1->realViewportSize[0] = (float)dVar5;
+  pSVar1->realViewportSize[1] = (float)dVar6;
+  pSVar1->realViewportPosition[0] = (float)dVar7;
+  pSVar1->realViewportPosition[1] = (float)dVar4;
+  if (((uint)cls.vidConfig.aspectRatioDisplayPixel & 0x7f800000) == 0x7f800000) {
+    iVar3 = 0;
+    iVar2 = 0xba;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xba,0,"%s");
   }
-  dVar3 = 0.0;
-  if (DAT_82aa2990 == 0.0) {
-    MyAssertHandler(0xffffffff82056e88,0xbb,0,0xffffffff82000f98,0xffffffff82056f90);
-  }
-  if (((uint)(float)param_3 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82056e88,0xbd,0,0xffffffff82000f98,0xffffffff82056f78);
-  }
-  if (param_3 == dVar3) {
-    MyAssertHandler(0xffffffff82056e88,0xbe,0,0xffffffff82000f98,0xffffffff82056f68);
-  }
-  if (((uint)(float)param_4 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82056e88,0xc0,0,0xffffffff82000f98,0xffffffff82056f50);
-  }
-  if (param_4 == dVar3) {
-    MyAssertHandler(0xffffffff82056e88,0xc1,0,0xffffffff82000f98,0xffffffff82056f40);
-  }
-  dVar5 = (double)((float)(param_4 / (double)DAT_82aa2990) * 1.3333334);
-  if (param_3 < dVar5) {
-    dVar5 = param_3;
+  dVar9 = 0.0;
+  if (cls.vidConfig.aspectRatioDisplayPixel == 0.0) {
+    iVar3 = 0;
+    iVar2 = 0xbb;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xbb,0,"%s");
   }
   if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff82056e88,200,0,0xffffffff82000f98,0xffffffff82056f24);
+    iVar3 = 0;
+    iVar2 = 0xbd;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xbd,0,"%s");
   }
-  if (dVar5 == dVar3) {
-    MyAssertHandler(0xffffffff82056e88,0xc9,0,0xffffffff82000f98,0xffffffff82056f10);
+  if (dVar5 == dVar9) {
+    iVar3 = 0;
+    iVar2 = 0xbe;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xbe,0,"%s");
   }
-  dVar4 = (double)(float)(param_3 - dVar5);
-  dVar2 = (double)(float)(1.0 / dVar5);
-  ScrPlace_CalcSafeAreaOffsets(dVar1,param_2,param_3,param_4,(double)(float)(dVar2 * param_3),_Dst);
-  _Dst[1] = (float)(param_4 * 0.0020833334419876337);
-  *_Dst = (float)(dVar5 * 0.0015625000232830644);
-  _Dst[2] = (float)(param_3 * 0.0015625000232830644);
-  _Dst[3] = (float)(param_4 * 0.0020833334419876337);
-  _Dst[4] = (float)(dVar2 * 640.0);
-  _Dst[5] = (float)(480.0 / param_4);
-  if (dVar4 < dVar3) {
-    MyAssertHandler(dVar4,0xffffffff82056e88,0xd4,0,0xffffffff82056ed0,0xffffffff82056ef0,dVar4);
+  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
+    iVar3 = 0;
+    iVar2 = 0xc0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xc0,0,"%s");
   }
-  _Dst[0x1a] = (float)(dVar4 * 0.5);
+  if (dVar6 == dVar9) {
+    iVar3 = 0;
+    iVar2 = 0xc1;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xc1,0,"%s");
+  }
+  dVar11 = (double)((float)(dVar6 / (double)cls.vidConfig.aspectRatioDisplayPixel) * 1.3333334);
+  if (dVar5 < dVar11) {
+    dVar11 = dVar5;
+  }
+  if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
+    iVar3 = 0;
+    iVar2 = 200;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    200,0,"%s");
+  }
+  if (dVar11 == dVar9) {
+    iVar3 = 0;
+    iVar2 = 0xc9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xc9,0,"%s");
+  }
+  dVar10 = (double)(float)(dVar5 - dVar11);
+  dVar8 = (double)(float)(1.0 / dVar11);
+  ScrPlace_CalcSafeAreaOffsets
+            (pSVar1,(float)dVar7,(float)dVar4,(float)dVar5,(float)dVar6,(float)(dVar8 * dVar5),iVar2
+             ,iVar3);
+  pSVar1->scaleVirtualToReal[1] = (float)(dVar6 * 0.0020833334419876337);
+  pSVar1->scaleVirtualToReal[0] = (float)(dVar11 * 0.0015625000232830644);
+  pSVar1->scaleVirtualToFull[0] = (float)(dVar5 * 0.0015625000232830644);
+  pSVar1->scaleVirtualToFull[1] = (float)(dVar6 * 0.0020833334419876337);
+  pSVar1->scaleRealToVirtual[0] = (float)(dVar8 * 640.0);
+  pSVar1->scaleRealToVirtual[1] = (float)(480.0 / dVar6);
+  if (dVar10 < dVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0xd4,0,"%s\n\t(horzAspectPixelDiff) = %g");
+  }
+  pSVar1->subScreenLeft = (float)(dVar10 * 0.5);
   __restfpr_25();
   __restgprlr_25();
   return;
@@ -259,10 +336,17 @@ void ScrPlace_SetupFloatRenderTargetViewport
 
 // 82399A88  ScrPlace_SetupFloatViewport  (client/screen_placement.cpp:218)
 
-void ScrPlace_SetupFloatViewport(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ScrPlace_SetupFloatViewport
+               (ScreenPlacement *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  ScrPlace_SetupFloatRenderTargetViewport();
+  int in_r4;
+  int in_r5;
+  
+  ScrPlace_SetupFloatRenderTargetViewport(param_1,param_2,param_3,param_4,param_5,in_r4,in_r5);
   return;
 }
 
@@ -270,59 +354,67 @@ void ScrPlace_SetupFloatViewport(void)
 // 82399AA0  ScrPlace_SetupRenderTargetViewport  (client/screen_placement.cpp:224)
 
 void ScrPlace_SetupRenderTargetViewport
-               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5)
+               (ScreenPlacement *param_1,int param_2,int param_3,int param_4,int param_5,int param_6
+               ,int param_7)
 
 {
   ScrPlace_SetupFloatRenderTargetViewport
-            ((double)(longlong)param_2,(double)(longlong)param_3,(double)(longlong)param_4,
-             (double)(longlong)param_5);
+            (param_1,(float)(longlong)param_2,(float)(longlong)param_3,(float)(longlong)param_4,
+             (float)(longlong)param_5,param_2,param_5);
   return;
 }
 
 
 // 82399B10  ScrPlace_SetupViewport  (client/screen_placement.cpp:230)
 
-void ScrPlace_SetupViewport(undefined8 param_1,int param_2,int param_3,int param_4,int param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void ScrPlace_SetupViewport
+               (ScreenPlacement *param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
   ScrPlace_SetupFloatRenderTargetViewport
-            ((double)(longlong)param_2,(double)(longlong)param_3,(double)(longlong)param_4,
-             (double)(longlong)param_5);
+            (param_1,(float)(longlong)param_2,(float)(longlong)param_3,(float)(longlong)param_4,
+             (float)(longlong)param_5,param_2,param_3);
   return;
 }
 
 
 // 82399B90  ScrPlace_SetupUnsafeViewport  (client/screen_placement.cpp:236)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrPlace_SetupUnsafeViewport
-               (undefined8 param_1,int param_2,int param_3,int param_4,int param_5)
+               (ScreenPlacement *param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  undefined8 uVar1;
+  ScreenPlacement *pSVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  undefined8 uVar6;
+  double dVar6;
   
-  __savegprlr_23();
-  uVar1 = __savefpr_27();
-  uVar6 = 0x3ff0000000000000;
-  dVar4 = (double)*(float *)(DAT_82b5c78c + 0xc);
-  dVar5 = (double)*(float *)(DAT_82b5c710 + 0xc);
-  dVar3 = (double)*(float *)(DAT_82b5c718 + 0xc);
-  dVar2 = (double)*(float *)(DAT_82b5c55c + 0xc);
-  Dvar_SetFloat(0x3ff0000000000000);
-  Dvar_SetFloat(uVar6,DAT_82b5c710);
-  Dvar_SetFloat(uVar6,DAT_82b5c718);
-  Dvar_SetFloat(uVar6,DAT_82b5c55c);
+  __savegprlr_23(param_1);
+  pSVar1 = (ScreenPlacement *)__savefpr_27();
+  dVar6 = 1.0;
+  dVar4 = (double)(safeArea_horizontal->current).value;
+  dVar5 = (double)(safeArea_vertical->current).value;
+  dVar3 = (double)(safeArea_adjusted_horizontal->current).value;
+  dVar2 = (double)(safeArea_adjusted_vertical->current).value;
+  Dvar_SetFloat(safeArea_horizontal,1.0);
+  Dvar_SetFloat(safeArea_vertical,(float)dVar6);
+  Dvar_SetFloat(safeArea_adjusted_horizontal,(float)dVar6);
+  Dvar_SetFloat(safeArea_adjusted_vertical,(float)dVar6);
   ScrPlace_SetupFloatRenderTargetViewport
-            ((double)(longlong)param_2,(double)(longlong)param_3,(double)(longlong)param_4,
-             (double)(longlong)param_5,uVar1);
-  Dvar_SetFloat(dVar4,DAT_82b5c78c);
-  Dvar_SetFloat(dVar5,DAT_82b5c710);
-  Dvar_SetFloat(dVar3,DAT_82b5c718);
-  Dvar_SetFloat(dVar2,DAT_82b5c55c);
+            (pSVar1,(float)(longlong)param_2,(float)(longlong)param_3,(float)(longlong)param_4,
+             (float)(longlong)param_5,param_3,param_4);
+  Dvar_SetFloat(safeArea_horizontal,(float)dVar4);
+  Dvar_SetFloat(safeArea_vertical,(float)dVar5);
+  Dvar_SetFloat(safeArea_adjusted_horizontal,(float)dVar3);
+  Dvar_SetFloat(safeArea_adjusted_vertical,(float)dVar2);
   __restfpr_27();
   __restgprlr_23();
   return;
@@ -331,178 +423,200 @@ void ScrPlace_SetupUnsafeViewport
 
 // 82399CC8  ScrPlace_ApplyXWithoutSplitScreenScaling  (client/screen_placement.cpp:271)
 
-double ScrPlace_ApplyXWithoutSplitScreenScaling
-                 (double param_1,float *param_2,undefined8 param_3,int param_4)
+float ScrPlace_ApplyXWithoutSplitScreenScaling(ScreenPlacement *param_1,float param_2,int param_3)
 
 {
+  int in_r5;
   double dVar1;
+  double dVar2;
   
-  switch(param_4) {
+  dVar1 = (double)param_2;
+  switch(in_r5) {
   case 1:
-    dVar1 = (double)param_2[0xe];
+    dVar2 = (double)param_1->realViewableMin[0];
     goto LAB_82399e08;
   case 2:
-    param_1 = (double)(float)((double)*param_2 * param_1 + (double)(param_2[8] * 0.5));
+    dVar1 = (double)(float)((double)param_1->scaleVirtualToReal[0] * dVar1 +
+                           (double)(param_1->realViewportSize[0] * 0.5));
     break;
   case 3:
-    dVar1 = (double)param_2[0x10];
+    dVar2 = (double)param_1->realViewableMax[0];
     goto LAB_82399e08;
   case 4:
-    param_1 = (double)(float)((double)param_2[2] * param_1);
+    dVar1 = (double)(float)((double)param_1->scaleVirtualToFull[0] * dVar1);
     break;
   case 5:
     break;
   case 6:
-    param_1 = (double)(float)((double)param_2[4] * param_1);
+    dVar1 = (double)(float)((double)param_1->scaleRealToVirtual[0] * dVar1);
     break;
   case 7:
-    param_1 = (double)((param_2[0x10] + param_2[0xe]) * 0.5 + (float)((double)*param_2 * param_1));
+    dVar1 = (double)((param_1->realViewableMax[0] + param_1->realViewableMin[0]) * 0.5 +
+                    (float)((double)param_1->scaleVirtualToReal[0] * dVar1));
     break;
   case 8:
-    dVar1 = (double)param_2[0x16];
+    dVar2 = (double)param_1->realAdjustableMin[0];
     goto LAB_82399e08;
   case 9:
-    param_1 = (double)((param_2[0x18] + param_2[0x16]) * 0.5 + (float)((double)*param_2 * param_1));
+    dVar1 = (double)((param_1->realAdjustableMax[0] + param_1->realAdjustableMin[0]) * 0.5 +
+                    (float)((double)param_1->scaleVirtualToReal[0] * dVar1));
     break;
   case 10:
-    dVar1 = (double)param_2[0x18];
+    dVar2 = (double)param_1->realAdjustableMax[0];
     goto LAB_82399e08;
   default:
-    if (param_4 != 0) {
-      MyAssertHandler(0xffffffff82056e88,0x113,0,0xffffffff82056fe8,0xffffffff82057000);
+    if (in_r5 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp"
+                      ,0x113,0,"%s\n\t(horzAlign) = %i");
     }
-    dVar1 = (double)param_2[0x1a];
+    dVar2 = (double)param_1->subScreenLeft;
 LAB_82399e08:
-    param_1 = (double)(float)((double)*param_2 * param_1 + dVar1);
+    dVar1 = (double)(float)((double)param_1->scaleVirtualToReal[0] * dVar1 + dVar2);
   }
-  return param_1;
+  return (float)dVar1;
 }
 
 
 // 82399E28  ScrPlace_ApplyX  (client/screen_placement.cpp:312)
 
-double ScrPlace_ApplyX(double param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+float ScrPlace_ApplyX(ScreenPlacement *param_1,float param_2,int param_3)
 
 {
-  double dVar1;
+  float fVar1;
   
-  if (*(char *)(DAT_82b5c558 + 0xc) != '\0') {
-    param_1 = (double)(float)((double)DAT_82b5c7fc * param_1);
+  if ((cg_hudSplitscreenOffsetsUseScale->current).enabled != false) {
+    param_2 = cg_hudSplitscreenScale * param_2;
   }
-  dVar1 = (double)ScrPlace_ApplyXWithoutSplitScreenScaling(param_1);
-  if (DAT_846180a8 != 0) {
-    dVar1 = (double)(float)((double)DAT_846180ac * dVar1 -
-                           (double)(float)((double)((float)DAT_82aa2970 * DAT_846180b4) *
-                                          (double)DAT_846180ac));
+  fVar1 = ScrPlace_ApplyXWithoutSplitScreenScaling(param_1,param_2,param_3);
+  if (rg.renderHiResShot != 0) {
+    fVar1 = rg.hiResShotScaleX * fVar1 -
+            (float)cls.vidConfig.displayWidth * rg.hiResShotX * rg.hiResShotScaleX;
   }
-  return dVar1;
+  return fVar1;
 }
 
 
 // 82399EB0  ScrPlace_ApplyYWithoutSplitScreenScaling  (client/screen_placement.cpp:334)
 
-double ScrPlace_ApplyYWithoutSplitScreenScaling
-                 (double param_1,int param_2,undefined8 param_3,int param_4)
+float ScrPlace_ApplyYWithoutSplitScreenScaling(ScreenPlacement *param_1,float param_2,int param_3)
 
 {
+  int in_r5;
   double dVar1;
+  double dVar2;
   
-  switch(param_4) {
+  dVar2 = (double)param_2;
+  switch(in_r5) {
   case 1:
-    param_1 = (double)(float)((double)*(float *)(param_2 + 4) * param_1 +
-                             (double)*(float *)(param_2 + 0x3c));
+    dVar2 = (double)(float)((double)param_1->scaleVirtualToReal[1] * dVar2 +
+                           (double)param_1->realViewableMin[1]);
     break;
   case 2:
-    param_1 = (double)(float)((double)*(float *)(param_2 + 4) * param_1 +
-                             (double)(*(float *)(param_2 + 0x24) * 0.5));
+    dVar2 = (double)(float)((double)param_1->scaleVirtualToReal[1] * dVar2 +
+                           (double)(param_1->realViewportSize[1] * 0.5));
     break;
   case 3:
-    param_1 = (double)(float)((double)*(float *)(param_2 + 4) * param_1 +
-                             (double)*(float *)(param_2 + 0x44));
+    dVar2 = (double)(float)((double)param_1->scaleVirtualToReal[1] * dVar2 +
+                           (double)param_1->realViewableMax[1]);
     break;
   case 4:
-    dVar1 = (double)*(float *)(param_2 + 0xc);
+    dVar1 = (double)param_1->scaleVirtualToFull[1];
     goto LAB_8239a008;
   case 5:
     break;
   case 6:
-    dVar1 = (double)*(float *)(param_2 + 0x14);
+    dVar1 = (double)param_1->scaleRealToVirtual[1];
     goto LAB_8239a008;
   case 7:
-    param_1 = (double)((*(float *)(param_2 + 0x44) + *(float *)(param_2 + 0x3c)) * 0.5 +
-                      (float)((double)*(float *)(param_2 + 4) * param_1));
+    dVar2 = (double)((param_1->realViewableMax[1] + param_1->realViewableMin[1]) * 0.5 +
+                    (float)((double)param_1->scaleVirtualToReal[1] * dVar2));
     break;
   case 8:
-    param_1 = (double)(float)((double)*(float *)(param_2 + 4) * param_1 +
-                             (double)*(float *)(param_2 + 0x5c));
+    dVar2 = (double)(float)((double)param_1->scaleVirtualToReal[1] * dVar2 +
+                           (double)param_1->realAdjustableMin[1]);
     break;
   case 9:
-    param_1 = (double)((*(float *)(param_2 + 100) + *(float *)(param_2 + 0x5c)) * 0.5 +
-                      (float)((double)*(float *)(param_2 + 4) * param_1));
+    dVar2 = (double)((param_1->realAdjustableMax[1] + param_1->realAdjustableMin[1]) * 0.5 +
+                    (float)((double)param_1->scaleVirtualToReal[1] * dVar2));
     break;
   case 10:
-    param_1 = (double)(float)((double)*(float *)(param_2 + 4) * param_1 +
-                             (double)*(float *)(param_2 + 100));
+    dVar2 = (double)(float)((double)param_1->scaleVirtualToReal[1] * dVar2 +
+                           (double)param_1->realAdjustableMax[1]);
     break;
   default:
-    if (param_4 != 0) {
-      MyAssertHandler(0xffffffff82056e88,0x152,0,0xffffffff82057014,0xffffffff8205702c);
+    if (in_r5 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp"
+                      ,0x152,0,"%s\n\t(vertAlign) = %i");
     }
-    dVar1 = (double)*(float *)(param_2 + 4);
+    dVar1 = (double)param_1->scaleVirtualToReal[1];
 LAB_8239a008:
-    param_1 = (double)(float)(dVar1 * param_1);
+    dVar2 = (double)(float)(dVar1 * dVar2);
   }
-  return param_1;
+  return (float)dVar2;
 }
 
 
 // 8239A028  ScrPlace_ApplyY  (client/screen_placement.cpp:375)
 
-double ScrPlace_ApplyY(double param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+float ScrPlace_ApplyY(ScreenPlacement *param_1,float param_2,int param_3)
 
 {
-  double dVar1;
+  float fVar1;
   
-  if (*(char *)(DAT_82b5c558 + 0xc) != '\0') {
-    param_1 = (double)(float)((double)DAT_82b5c7fc * param_1);
+  if ((cg_hudSplitscreenOffsetsUseScale->current).enabled != false) {
+    param_2 = cg_hudSplitscreenScale * param_2;
   }
-  dVar1 = (double)ScrPlace_ApplyYWithoutSplitScreenScaling(param_1);
-  if (DAT_846180a8 != 0) {
-    dVar1 = (double)(float)((double)DAT_846180b0 * dVar1 -
-                           (double)(float)((double)((float)DAT_82aa2974 * DAT_846180b8) *
-                                          (double)DAT_846180b0));
+  fVar1 = ScrPlace_ApplyYWithoutSplitScreenScaling(param_1,param_2,param_3);
+  if (rg.renderHiResShot != 0) {
+    fVar1 = rg.hiResShotScaleY * fVar1 -
+            (float)cls.vidConfig.displayHeight * rg.hiResShotY * rg.hiResShotScaleY;
   }
-  return dVar1;
+  return fVar1;
 }
 
 
 // 8239A0B0  ApplySplitscreenScaling  (client/screen_placement.cpp:399)
 
-void ApplySplitscreenScaling
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void ApplySplitscreenScaling(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float *pfVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  pfVar1 = (float *)__savegprlr_26();
+  uVar4 = (ulonglong)(int)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  pfVar1 = (float *)__savegprlr_26(param_1);
   if (pfVar1 == (float *)0x0) {
-    MyAssertHandler(0xffffffff82056e88,400,0,0xffffffff82000f98,0xffffffff8200fdbc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    400,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x191,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x191,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x192,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x192,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x193,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x193,0,"%s");
   }
-  if (*(char *)(DAT_82b5c558 + 0xc) != '\0') {
-    *pfVar1 = *pfVar1 * DAT_82b5c7fc;
-    *(float *)param_2 = *(float *)param_2 * DAT_82b5c7fc;
+  if ((cg_hudSplitscreenOffsetsUseScale->current).enabled != false) {
+    *pfVar1 = *pfVar1 * cg_hudSplitscreenScale;
+    *(float *)uVar2 = *(float *)uVar2 * cg_hudSplitscreenScale;
   }
-  *(float *)param_3 = *(float *)param_3 * DAT_82b5c7fc;
-  *(float *)param_4 = *(float *)param_4 * DAT_82b5c7fc;
+  *(float *)uVar3 = *(float *)uVar3 * cg_hudSplitscreenScale;
+  *(float *)uVar4 = *(float *)uVar4 * cg_hudSplitscreenScale;
   __restgprlr_26();
   return;
 }
@@ -511,137 +625,154 @@ void ApplySplitscreenScaling
 // 8239A1D0  ScrPlace_ApplyRectWithoutSplitScreenScaling  (client/screen_placement.cpp:418)
 
 void ScrPlace_ApplyRectWithoutSplitScreenScaling
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5,undefined4 param_6,undefined4 param_7)
+               (ScreenPlacement *param_1,float *param_2,float *param_3,float *param_4,float *param_5
+               ,int param_6,int param_7)
 
 {
   float fVar1;
   float fVar2;
   float *pfVar3;
-  float *pfVar4;
+  ulonglong uVar4;
   float *pfVar5;
-  double dVar6;
+  ulonglong uVar6;
+  float *pfVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  ulonglong uVar10;
+  float *pfVar11;
+  double dVar12;
   
-  pfVar3 = (float *)__savegprlr_23();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x1a3,0,0xffffffff82000f98,0xffffffff8200fdbc);
+  uVar10 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pfVar3 = (float *)__savegprlr_23(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x1a3,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x1a4,0,0xffffffff82000f98,0xffffffff8200fdb8);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x1a4,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x1a5,0,0xffffffff82000f98,0xffffffff8200fdb4);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x1a5,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82056e88,0x1a6,0,0xffffffff82000f98,0xffffffff8200fdb0);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x1a6,0,"%s");
   }
-  dVar6 = 0.5;
-  pfVar4 = (float *)param_2;
-  pfVar5 = (float *)param_4;
+  dVar12 = 0.5;
+  pfVar5 = (float *)uVar4;
+  pfVar9 = (float *)uVar8;
   switch(param_6) {
   case 1:
     fVar1 = pfVar3[0xe];
     goto LAB_8239a418;
   case 2:
-    *pfVar4 = *pfVar3 * *pfVar4 + pfVar3[8] * 0.5;
-    *pfVar5 = *pfVar3 * *pfVar5;
+    *pfVar5 = *pfVar3 * *pfVar5 + pfVar3[8] * 0.5;
+    *pfVar9 = *pfVar3 * *pfVar9;
     break;
   case 3:
     fVar1 = pfVar3[0x10];
     goto LAB_8239a418;
   case 4:
-    *pfVar4 = *pfVar4 * pfVar3[2];
     *pfVar5 = *pfVar5 * pfVar3[2];
+    *pfVar9 = *pfVar9 * pfVar3[2];
     break;
   case 5:
     break;
   case 6:
-    *pfVar4 = *pfVar4 * pfVar3[4];
     *pfVar5 = *pfVar5 * pfVar3[4];
+    *pfVar9 = *pfVar9 * pfVar3[4];
     break;
   case 7:
-    *pfVar4 = (pfVar3[0x10] + pfVar3[0xe]) * 0.5 + *pfVar3 * *pfVar4;
-    *pfVar5 = *pfVar3 * *pfVar5;
+    *pfVar5 = (pfVar3[0x10] + pfVar3[0xe]) * 0.5 + *pfVar3 * *pfVar5;
+    *pfVar9 = *pfVar3 * *pfVar9;
     break;
   case 8:
     fVar1 = pfVar3[0x16];
     goto LAB_8239a418;
   case 9:
-    *pfVar4 = (pfVar3[0x18] + pfVar3[0x16]) * 0.5 + *pfVar3 * *pfVar4;
-    *pfVar5 = *pfVar3 * *pfVar5;
+    *pfVar5 = (pfVar3[0x18] + pfVar3[0x16]) * 0.5 + *pfVar3 * *pfVar5;
+    *pfVar9 = *pfVar3 * *pfVar9;
     break;
   case 10:
     fVar1 = pfVar3[0x18];
 LAB_8239a418:
-    *pfVar4 = *pfVar3 * *pfVar4 + fVar1;
-    *pfVar5 = *pfVar3 * *pfVar5;
+    *pfVar5 = *pfVar3 * *pfVar5 + fVar1;
+    *pfVar9 = *pfVar3 * *pfVar9;
     break;
   default:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82056e88,0x1ab,0,0xffffffff82057060);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp"
+                      ,0x1ab,0,"invalid horizontal alignment case");
     }
   case 0:
     fVar1 = pfVar3[0x1a];
     goto LAB_8239a418;
   }
-  pfVar4 = (float *)param_3;
-  pfVar5 = (float *)param_5;
+  pfVar7 = (float *)uVar6;
+  pfVar11 = (float *)uVar10;
   switch(param_7) {
   case 1:
-    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0xf];
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1] + pfVar3[0xf];
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 2:
-    *pfVar4 = *pfVar4 * pfVar3[1] + (float)((double)pfVar3[9] * dVar6);
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1] + (float)((double)pfVar3[9] * dVar12);
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 3:
-    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x11];
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1] + pfVar3[0x11];
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 4:
-    *pfVar4 = *pfVar4 * pfVar3[3];
-    fVar2 = *pfVar5;
+    *pfVar7 = *pfVar7 * pfVar3[3];
+    fVar2 = *pfVar11;
     fVar1 = pfVar3[3];
 LAB_8239a630:
     fVar1 = fVar1 * fVar2;
 LAB_8239a634:
-    *pfVar5 = fVar1;
+    *pfVar11 = fVar1;
     break;
   case 5:
     break;
   case 6:
-    *pfVar4 = pfVar3[5] * *pfVar4;
-    fVar1 = pfVar3[5] * *pfVar5;
+    *pfVar7 = pfVar3[5] * *pfVar7;
+    fVar1 = pfVar3[5] * *pfVar11;
     goto LAB_8239a634;
   case 7:
-    *pfVar4 = (float)((double)(pfVar3[0x11] + pfVar3[0xf]) * dVar6 + (double)(*pfVar4 * pfVar3[1]));
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = (float)((double)(pfVar3[0x11] + pfVar3[0xf]) * dVar12 + (double)(*pfVar7 * pfVar3[1]))
+    ;
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 8:
-    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x17];
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1] + pfVar3[0x17];
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 9:
-    *pfVar4 = (float)((double)(pfVar3[0x19] + pfVar3[0x17]) * dVar6 + (double)(*pfVar4 * pfVar3[1]))
-    ;
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = (float)((double)(pfVar3[0x19] + pfVar3[0x17]) * dVar12 + (double)(*pfVar7 * pfVar3[1])
+                     );
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   case 10:
-    *pfVar4 = *pfVar4 * pfVar3[1] + pfVar3[0x19];
-    *pfVar5 = *pfVar5 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1] + pfVar3[0x19];
+    *pfVar11 = *pfVar11 * pfVar3[1];
     break;
   default:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff82056e88,0x1db,0,0xffffffff82057040);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp"
+                      ,0x1db,0,"invalid vertical alignment case");
     }
   case 0:
-    *pfVar4 = *pfVar4 * pfVar3[1];
+    *pfVar7 = *pfVar7 * pfVar3[1];
     fVar2 = pfVar3[1];
-    fVar1 = *pfVar5;
+    fVar1 = *pfVar11;
     goto LAB_8239a630;
   }
-  ScrPlace_HiResApplyRect(param_2,param_3,param_4,param_5);
+  ScrPlace_HiResApplyRect(pfVar5,pfVar7,pfVar9,pfVar11);
   __restgprlr_23();
   return;
 }
@@ -649,41 +780,41 @@ LAB_8239a634:
 
 // 8239A658  IsFullscreenRect  (client/screen_placement.cpp:528)
 
-undefined8 IsFullscreenRect(double param_1,double param_2,double param_3,double param_4)
+bool IsFullscreenRect(float param_1,float param_2,float param_3,float param_4,int param_5,
+                     int param_6)
 
 {
   int in_r7;
   int in_r8;
-  undefined8 uVar1;
+  bool bVar1;
   
   if ((((param_1 != 0.0) || (param_2 != 0.0)) || (param_3 != 640.0)) ||
-     (((param_4 != 480.0 || (in_r7 != 4)) || (uVar1 = 1, in_r8 != 4)))) {
-    uVar1 = 0;
+     (((param_4 != 480.0 || (in_r7 != 4)) || (bVar1 = true, in_r8 != 4)))) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 8239A6B0  ScrPlace_ApplyRect  (client/screen_placement.cpp:535)
 
-void ScrPlace_ApplyRect(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-                       undefined8 param_5,undefined8 param_6,undefined8 param_7)
+void ScrPlace_ApplyRect(ScreenPlacement *param_1,float *param_2,float *param_3,float *param_4,
+                       float *param_5,int param_6,int param_7)
 
 {
   bool bVar1;
-  undefined8 uVar2;
+  ScreenPlacement *pSVar2;
   
-  uVar2 = __savegprlr_25();
-  if ((((*(float *)param_2 != 0.0) || (*(float *)param_3 != 0.0)) || (*(float *)param_4 != 640.0))
-     || (((*(float *)param_5 != 480.0 || ((int)param_6 != 4)) || (bVar1 = true, (int)param_7 != 4)))
-     ) {
+  pSVar2 = (ScreenPlacement *)__savegprlr_25(param_1);
+  if ((((*param_2 != 0.0) || (*param_3 != 0.0)) || (*param_4 != 640.0)) ||
+     (((*param_5 != 480.0 || (param_6 != 4)) || (bVar1 = true, param_7 != 4)))) {
     bVar1 = false;
   }
   if (!bVar1) {
     ApplySplitscreenScaling(param_2,param_3,param_4,param_5);
   }
-  ScrPlace_ApplyRectWithoutSplitScreenScaling(uVar2,param_2,param_3,param_4,param_5,param_6,param_7)
-  ;
+  ScrPlace_ApplyRectWithoutSplitScreenScaling
+            (pSVar2,param_2,param_3,param_4,param_5,param_6,param_7);
   __restgprlr_25();
   return;
 }
@@ -691,34 +822,39 @@ void ScrPlace_ApplyRect(undefined8 param_1,undefined8 param_2,undefined8 param_3
 
 // 8239A780  ClampDimension  (client/screen_placement.cpp:546)
 
-void ClampDimension(double param_1,double param_2,float *param_3,float *param_4)
+void ClampDimension(float *param_1,float *param_2,float param_3,float param_4)
 
 {
   float fVar1;
   float fVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
   
-  if (param_2 <= param_1) {
-    MyAssertHandler(0xffffffff82056e88,0x223,0,0xffffffff82000f98,0xffffffff82057084);
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  if (dVar5 <= dVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    0x223,0,"%s");
   }
-  dVar3 = (double)*param_3;
-  if (dVar3 <= param_2) {
-    if (dVar3 < param_1) {
-      fVar1 = *param_4 - (float)(param_1 - dVar3);
+  dVar3 = (double)*param_1;
+  if (dVar3 <= dVar5) {
+    if (dVar3 < dVar4) {
+      fVar1 = *param_2 - (float)(dVar4 - dVar3);
       fVar2 = 0.0;
       if (-fVar1 < 0.0) {
         fVar2 = fVar1;
       }
-      *param_4 = fVar2;
-      *param_3 = (float)param_1;
+      *param_2 = fVar2;
+      *param_1 = (float)dVar4;
     }
   }
   else {
-    *param_3 = (float)param_2;
-    *param_4 = 0.0;
+    *param_1 = (float)dVar5;
+    *param_2 = 0.0;
   }
-  if (param_2 < (double)(float)((double)*param_4 + (double)*param_3)) {
-    *param_4 = (float)(param_2 - (double)*param_3);
+  if (dVar5 < (double)(float)((double)*param_2 + (double)*param_1)) {
+    *param_2 = (float)(dVar5 - (double)*param_1);
   }
   return;
 }
@@ -727,16 +863,16 @@ void ClampDimension(double param_1,double param_2,float *param_3,float *param_4)
 // 8239A860  ScrPlace_ApplyRectClamped  (client/screen_placement.cpp:566)
 
 void ScrPlace_ApplyRectClamped
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5)
+               (ScreenPlacement *param_1,float *param_2,float *param_3,float *param_4,float *param_5
+               ,int param_6,int param_7)
 
 {
-  int iVar1;
+  ScreenPlacement *pSVar1;
   
-  iVar1 = __savegprlr_27();
-  ScrPlace_ApplyRect();
-  ClampDimension((double)*(float *)(iVar1 + 0x38),(double)*(float *)(iVar1 + 0x40),param_2,param_4);
-  ClampDimension((double)*(float *)(iVar1 + 0x3c),(double)*(float *)(iVar1 + 0x44),param_3,param_5);
+  pSVar1 = (ScreenPlacement *)__savegprlr_27(param_1);
+  ScrPlace_ApplyRect(pSVar1,param_2,param_3,param_4,param_5,param_6,param_7);
+  ClampDimension(param_2,param_4,pSVar1->realViewableMin[0],pSVar1->realViewableMax[0]);
+  ClampDimension(param_3,param_5,pSVar1->realViewableMin[1],pSVar1->realViewableMax[1]);
   __restgprlr_27();
   return;
 }
@@ -744,82 +880,115 @@ void ScrPlace_ApplyRectClamped
 
 // 8239A8B8  ScrPlace_SetLegacySplitscreenScaling  (client/screen_placement.cpp:578)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_SetLegacySplitscreenScaling(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = CL_IsRenderingSplitScreen();
-  if (cVar1 != '\0') {
-    DAT_82b5c7fc = *(undefined4 *)(DAT_82b5c71c + 0xc);
+  bVar1 = CL_IsRenderingSplitScreen();
+  if (bVar1) {
+    cg_hudSplitscreenScale = (cg_hudLegacySplitscreenScale->current).value;
     return;
   }
-  DAT_82b5c7fc = 0x3f800000;
+  cg_hudSplitscreenScale = 1.0;
   return;
 }
 
 
 // 8239A918  ScrPlace_SetNormalSplitscreenScaling  (client/screen_placement.cpp:587)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_SetNormalSplitscreenScaling(void)
 
 {
-  DAT_82b5c7fc = 0x3f800000;
+  cg_hudSplitscreenScale = 1.0;
   return;
 }
 
 
 // 8239A930  ScrPlace_Init  (client/screen_placement.cpp:594)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_Init(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  ushort in_r4;
+  ushort uVar1;
+  char *in_r5;
+  char *pcVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
   
-  dVar3 = 1.0;
-  uVar2 = 0;
-  uVar1 = 0x3feb333340000000;
-  DAT_82b5c78c = Dvar_RegisterFloat(0x3feb333340000000,0,0x3ff0000000000000,0xffffffff82057244);
-  DAT_82b5c710 = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff820571c0);
-  DAT_82b5c718 = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff8203a650);
-  DAT_82b5c55c = Dvar_RegisterFloat(uVar1,uVar2,dVar3,0xffffffff8203a634);
-  DAT_82b5c71c = Dvar_RegisterFloat(0x3ff8000000000000,dVar3,0x47efffffe0000000,0xffffffff82057110);
-  DAT_82b5c558 = Dvar_RegisterBool(0xffffffff820570bc,1,0,0xffffffff82057090);
-  DAT_82b5c714 = 2;
-  DAT_82b5c7fc = (float)dVar3;
+  dVar5 = 1.0;
+  dVar4 = 0.0;
+  dVar3 = 0.8500000238418579;
+  safeArea_horizontal = Dvar_RegisterFloat("safeArea_horizontal",0.85,0.0,1.0,in_r4,in_r5);
+  pcVar2 = "!= NA_BOT";
+  uVar1 = 0;
+  safeArea_vertical =
+       Dvar_RegisterFloat("safeArea_vertical",(float)dVar3,(float)dVar4,(float)dVar5,0,"!= NA_BOT");
+  safeArea_adjusted_horizontal =
+       Dvar_RegisterFloat("safeArea_adjusted_horizontal",(float)dVar3,(float)dVar4,(float)dVar5,
+                          uVar1,pcVar2);
+  pcVar2 = "s - not in that party\n";
+  safeArea_adjusted_vertical =
+       Dvar_RegisterFloat("safeArea_adjusted_vertical",(float)dVar3,(float)dVar4,(float)dVar5,uVar1,
+                          "s - not in that party\n");
+  cg_hudLegacySplitscreenScale =
+       Dvar_RegisterFloat("cg_hudLegacySplitscreenScale",1.5,(float)dVar5,3.4028235e+38,0,pcVar2);
+  cg_hudSplitscreenOffsetsUseScale =
+       Dvar_RegisterBool("cg_hudSplitscreenOffsetsUseScale",true,0,
+                         "Use splitscreen scaling for element offsets");
+  activeScreenPlacementMode = SCRMODE_INVALID;
+  cg_hudSplitscreenScale = (float)dVar5;
   return;
 }
 
 
 // 8239AAA8  ScrPlace_SetupFullscreenViewports  (client/screen_placement.cpp:614)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrPlace_SetupFullscreenViewports(void)
 
 {
-  ScrPlace_SetupUnsafeViewport(0xffffffff82b5c790,0,0,DAT_82aa2970,DAT_82aa2974);
-  ScrPlace_SetupViewport(0xffffffff82b5c720,0,0,DAT_82aa2970,DAT_82aa2974);
+  ScrPlace_SetupUnsafeViewport
+            (&scrPlaceFullUnsafe,0,0,cls.vidConfig.displayWidth,cls.vidConfig.displayHeight);
+  ScrPlace_SetupViewport(&scrPlaceFull,0,0,cls.vidConfig.displayWidth,cls.vidConfig.displayHeight);
   return;
 }
 
 
 // 8239AB10  ScrPlace_SetupClientViewports  (client/screen_placement.cpp:626)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void ScrPlace_SetupClientViewports(void)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
+  int in_r4;
+  int in_r5;
+  ScreenPlacement *pSVar1;
+  double dVar2;
   
   __savegprlr_29();
-  lVar1 = -0x7d4a3aa0;
-  uVar2 = 0;
+  pSVar1 = scrPlaceViewDisplay;
+  dVar2 = 0.0;
   do {
     ScrPlace_SetupFloatRenderTargetViewport
-              (uVar2,uVar2,(double)(longlong)DAT_82aa2970,(double)(longlong)DAT_82aa2974,lVar1);
-    lVar1 = lVar1 + 0x6c;
-  } while ((int)lVar1 < -0x7d4a38f0);
+              (pSVar1,(float)dVar2,(float)dVar2,(float)(longlong)(int)cls.vidConfig.displayWidth,
+               (float)(longlong)(int)cls.vidConfig.displayHeight,in_r4,in_r5);
+    pSVar1 = pSVar1 + 1;
+  } while ((int)pSVar1 < -0x7d4a38f0);
   __restgprlr_29();
   return;
 }
@@ -827,116 +996,137 @@ void ScrPlace_SetupClientViewports(void)
 
 // 8239AB98  ScrPlace_BeginDisplayView  (client/screen_placement.cpp:651)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_BeginDisplayView(void)
 
 {
-  DAT_82b5c714 = 1;
+  activeScreenPlacementMode = SCRMODE_DISPLAY;
   return;
 }
 
 
 // 8239ABA8  ScrPlace_BeginFullScreen  (client/screen_placement.cpp:657)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_BeginFullScreen(void)
 
 {
-  DAT_82b5c714 = 0;
+  activeScreenPlacementMode = SCRMODE_FULL;
   return;
 }
 
 
 // 8239ABB8  ScrPlace_EndFrame  (client/screen_placement.cpp:663)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ScrPlace_EndFrame(void)
 
 {
-  DAT_82b5c714 = 2;
+  activeScreenPlacementMode = SCRMODE_INVALID;
   return;
 }
 
 
 // 8239ABC8  ScrPlace_GetViewPlacement  (client/screen_placement.cpp:669)
 
-longlong ScrPlace_GetViewPlacement(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ScreenPlacement * ScrPlace_GetViewPlacement(LocalClientNum_t param_1)
 
 {
-  return param_1 * 0x6c + -0x7d4a3aa0;
+  return scrPlaceViewDisplay + param_1;
 }
 
 
 // 8239ABE0  ScrPlace_GetViewPlacementAddress  (client/screen_placement.cpp:675)
 
-longlong ScrPlace_GetViewPlacementAddress(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ScreenPlacement * ScrPlace_GetViewPlacementAddress(LocalClientNum_t param_1)
 
 {
-  return param_1 * 0x6c + -0x7d4a3aa0;
+  return scrPlaceViewDisplay + param_1;
 }
 
 
 // 8239ABF8  ScrPlace_GetFullPlacement  (client/screen_placement.cpp:681)
 
-undefined8 ScrPlace_GetFullPlacement(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ScreenPlacement * ScrPlace_GetFullPlacement(void)
 
 {
-  return 0xffffffff82b5c720;
+  return &scrPlaceFull;
 }
 
 
 // 8239AC08  ScrPlace_GetUnsafeFullPlacement  (client/screen_placement.cpp:687)
 
-undefined8 ScrPlace_GetUnsafeFullPlacement(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+ScreenPlacement * ScrPlace_GetUnsafeFullPlacement(void)
 
 {
-  return 0xffffffff82b5c790;
+  return &scrPlaceFullUnsafe;
 }
 
 
 // 8239AC18  ScrPlace_IsDisplayViewActive  (client/screen_placement.cpp:693)
 
-bool ScrPlace_IsDisplayViewActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ScrPlace_IsDisplayViewActive(void)
 
 {
-  return DAT_82b5c714 == 1;
+  return (uint)LZCOUNT(activeScreenPlacementMode - SCRMODE_DISPLAY) >> 5;
 }
 
 
 // 8239AC30  ScrPlace_IsFullScreenActive  (client/screen_placement.cpp:699)
 
-bool ScrPlace_IsFullScreenActive(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int ScrPlace_IsFullScreenActive(void)
 
 {
-  return DAT_82b5c714 == 0;
+  return (uint)LZCOUNT(activeScreenPlacementMode) >> 5;
 }
 
 
 // 8239AC48  ScrPlace_GetActivePlacement  (client/screen_placement.cpp:705)
 
-longlong ScrPlace_GetActivePlacement(longlong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+ScreenPlacement * ScrPlace_GetActivePlacement(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  char *pcVar2;
   
-  if (DAT_82b5c714 != 0) {
-    if (DAT_82b5c714 == 1) {
-      return param_1 * 0x6c + -0x7d4a3aa0;
+  if (activeScreenPlacementMode != SCRMODE_FULL) {
+    if (activeScreenPlacementMode == SCRMODE_DISPLAY) {
+      return scrPlaceViewDisplay + param_1;
     }
-    if (DAT_82b5c714 < 3) {
-      if (DAT_84013128 != 0) {
-        return -0x7d4a38e0;
+    if (activeScreenPlacementMode < SCRMODE_COUNT) {
+      if (alwaysfails != 0) {
+        return &scrPlaceFull;
       }
-      uVar2 = 0xffffffff82057258;
-      uVar1 = 0x2ce;
+      pcVar2 = "ScrPlace_GetActivePlacement() called when outside of a valid render loop.";
+      iVar1 = 0x2ce;
     }
     else {
-      if (DAT_84013128 != 0) {
-        return -0x7d4a38e0;
+      if (alwaysfails != 0) {
+        return &scrPlaceFull;
       }
-      uVar2 = 0xffffffff820572a4;
-      uVar1 = 0x2d1;
+      pcVar2 = "Unsupported activeScreenPlacementMode";
+      iVar1 = 0x2d1;
     }
-    MyAssertHandler(0xffffffff82056e88,uVar1,0,uVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\screen_placement.cpp",
+                    iVar1,0,pcVar2);
   }
-  return -0x7d4a38e0;
+  return &scrPlaceFull;
 }
 

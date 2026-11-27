@@ -7,7 +7,8 @@ void __unwind_71632(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -19,7 +20,8 @@ void __unwind_71693(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 

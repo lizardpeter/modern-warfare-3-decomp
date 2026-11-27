@@ -2,88 +2,104 @@
 
 // 828757B8  D3DDevice_PersistDisplay  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/persist.cpp:21)
 
-void D3DDevice_PersistDisplay(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+undefined4
+D3DDevice_PersistDisplay
+          (D3DDevice *param_1,D3DTexture *param_2,_D3DVIDEO_SCALER_PARAMETERS *param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  undefined8 *puVar3;
+  uint uVar1;
+  undefined8 *puVar2;
+  D3DDevice *pDVar5;
+  undefined8 uVar3;
   longlong lVar4;
-  undefined8 uVar5;
-  longlong lVar6;
-  void *_Dst;
-  undefined8 *puVar7;
-  int iVar8;
-  int iVar9;
-  undefined4 uVar10;
+  undefined4 uVar6;
+  ulonglong uVar7;
+  _D3DVIDEO_SCALER_PARAMETERS *p_Var8;
+  undefined8 *puVar9;
+  int iVar10;
+  uint uVar11;
+  uint uVar12;
+  _D3DFORMAT _Var13;
+  longlong lVar14;
+  ulong in_stack_fffffee8;
+  int in_stack_fffffeec;
+  uint in_stack_fffffef0;
+  D3DBaseTexture *in_stack_fffffef4;
+  ulong *in_stack_fffffef8;
+  ulong *in_stack_fffffefc;
   uint local_a0;
-  undefined1 auStack_9c [4];
-  undefined1 auStack_98 [8];
-  undefined1 auStack_90 [4];
-  void *local_8c;
-  void *local_88;
+  ulong uStack_9c;
+  ulong auStack_98 [2];
+  _D3DLOCKED_RECT _Stack_90;
+  uint local_88;
   undefined2 local_84;
   undefined2 local_82;
-  undefined4 local_80;
+  _D3DFORMAT local_80;
   undefined8 uStack_78;
-  undefined1 local_70 [32];
-  uint local_50;
+  D3DBaseTexture local_70 [2];
   
-  lVar4 = __savegprlr_26();
-  D3D__GetTextureSizes(param_2 + 0x1c,auStack_98,&local_a0,auStack_9c);
-  iVar1 = (int)param_2;
-  iVar8 = (*(uint *)(iVar1 + 0x28) >> 0x1e & 2) + 1;
-  iVar9 = (*(uint *)(iVar1 + 0x24) & 0x1fff) + iVar8;
-  iVar8 = (*(uint *)(iVar1 + 0x24) >> 0xd & 0x1fff) + iVar8;
+  uVar7 = (ulonglong)(int)param_3;
+  pDVar5 = (D3DDevice *)__savegprlr_26(param_1);
+  p_Var8 = (_D3DVIDEO_SCALER_PARAMETERS *)uVar7;
+  D3D__GetTextureSizes
+            ((GPUTEXTURE_FETCH_CONSTANT *)&param_2->field_0x1c,auStack_98,&local_a0,&uStack_9c);
+  iVar10 = (*(uint *)&param_2->field_0x28 >> 0x1e & 2) + 1;
+  uVar12 = (*(uint *)&param_2->field_0x24 & 0x1fff) + iVar10;
+  uVar11 = (*(uint *)&param_2->field_0x24 >> 0xd & 0x1fff) + iVar10;
   if (local_a0 < 0x398001) {
-    lVar6 = MmAllocatePhysicalMemoryEx(1,0x398000,0x404,0,0x7fffffff,0x1000);
-    if (lVar6 == 0) {
-      uVar5 = 0xffffffff8007000e;
+    lVar4 = MmAllocatePhysicalMemoryEx(1,0x398000,0x404,0,0x7fffffff,0x1000);
+    if (lVar4 == 0) {
+      uVar3 = 0xffffffff8007000e;
     }
     else {
-      D3DDevice_BlockUntilIdle(lVar4);
-      D3DTexture_LockRect(param_2,0,auStack_90,0,0x10);
-      _Dst = (void *)lVar6;
-      memcpy(_Dst,local_8c,local_a0);
+      D3DDevice_BlockUntilIdle(pDVar5);
+      D3DTexture_LockRect(param_2,0,&_Stack_90,(tagRECT *)0x0,0x10);
+      memcpy();
       D3DTexture_UnlockRect(param_2,0);
       sync(0);
-      uVar2 = *(uint *)(iVar1 + 0x20) & 0x3f;
-      if ((uVar2 == 6) || (uVar2 == 0x3e)) {
-        uVar10 = 0x28280106;
+      uVar1 = *(uint *)&param_2->field_0x20 & 0x3f;
+      if ((uVar1 == 6) || (uVar1 == 0x3e)) {
+        _Var13 = D3DFMT_LE_X8R8G8B8;
       }
       else {
-        uVar10 = 0x28280136;
+        _Var13 = D3DFMT_LE_X2R10G10B10;
       }
-      lVar6 = 6;
-      puVar3 = &uStack_78;
+      lVar14 = 6;
+      puVar2 = &uStack_78;
       do {
-        puVar7 = puVar3;
-        puVar3 = puVar7 + 1;
-        *puVar3 = 0;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      *(undefined4 *)(puVar7 + 2) = 0;
-      D3D__SetTextureHeader(3,iVar9,iVar8,1,1,0,uVar10,2);
-      local_50 = local_50 & 0xfff | (uint)_Dst & 0xfffff000;
-      if ((param_3 & 0xffffffff) == 0) {
-        param_3 = lVar4 + 0x3670;
+        puVar9 = puVar2;
+        puVar2 = puVar9 + 1;
+        *puVar2 = 0;
+        lVar14 = lVar14 + -1;
+      } while (lVar14 != 0);
+      *(undefined4 *)(puVar9 + 2) = 0;
+      D3D::SetTextureHeader
+                (D3DRTYPE_TEXTURE,uVar12,uVar11,1,1,0,_Var13,MIPPACKING_DEFAULT,in_stack_fffffee8,
+                 in_stack_fffffeec,in_stack_fffffef0,in_stack_fffffef4,in_stack_fffffef8,
+                 in_stack_fffffefc);
+      local_88 = (uint)lVar4;
+      local_70[0].Format._4_4_ = local_70[0].Format.dword[1] & 0xfff | local_88 & 0xfffff000;
+      if ((uVar7 & 0xffffffff) == 0) {
+        p_Var8 = (_D3DVIDEO_SCALER_PARAMETERS *)(pDVar5[1].m_Constants.field1_0x300.Alu + 0x3f);
       }
-      D3DDevice_SynchronizeToPresentationInterval(lVar4);
-      D3DDevice_Swap(lVar4,local_70,param_3);
-      D3DDevice_BlockUntilIdle(lVar4);
-      local_84 = (undefined2)iVar9;
-      local_82 = (undefined2)iVar8;
-      *(byte *)((int)lVar4 + 0x2b3d) = *(byte *)((int)lVar4 + 0x2b3d) | 8;
-      local_88 = _Dst;
-      local_80 = uVar10;
+      D3DDevice_SynchronizeToPresentationInterval(pDVar5);
+      D3DDevice_Swap(pDVar5,local_70,p_Var8);
+      D3DDevice_BlockUntilIdle(pDVar5);
+      local_84 = (undefined2)uVar12;
+      local_82 = (undefined2)uVar11;
+      *(byte *)((int)&pDVar5[1].m_ReferenceCount + 1) =
+           *(byte *)((int)&pDVar5[1].m_ReferenceCount + 1) | 8;
+      local_80 = _Var13;
       VdPersistDisplay(&local_88,0);
-      uVar5 = 0;
+      uVar3 = 0;
     }
   }
   else {
-    uVar5 = 0xffffffff80070057;
+    uVar3 = 0xffffffff80070057;
   }
-  __restgprlr_26(uVar5);
-  return;
+  uVar6 = __restgprlr_26(uVar3);
+  return uVar6;
 }
 

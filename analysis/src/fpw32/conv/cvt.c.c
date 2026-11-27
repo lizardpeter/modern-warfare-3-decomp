@@ -2,59 +2,59 @@
 
 // 8291E010  _forcdecpt  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:127)
 
-void _forcdecpt(char *_Buf)
+void _forcdecpt(char *param_1)
 
 {
-  _forcdecpt_l(_Buf,(_locale_t)0x0);
+  _forcdecpt_l(param_1,(localeinfo_struct *)0x0);
   return;
 }
 
 
 // 8291DE38  _forcdecpt_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:132)
 
-void _forcdecpt_l(char *_Buf,_locale_t _Locale)
+void _forcdecpt_l(char *param_1,localeinfo_struct *param_2)
 
 {
   byte bVar1;
   int iVar2;
   byte bVar3;
   
-  iVar2 = tolower((int)*_Buf);
+  iVar2 = tolower((int)*param_1);
   if (iVar2 != 0x65) {
     do {
-      _Buf = _Buf + 1;
-      iVar2 = isdigit((uint)(byte)*_Buf);
+      param_1 = param_1 + 1;
+      iVar2 = isdigit((uint)(byte)*param_1);
     } while (iVar2 != 0);
   }
-  iVar2 = tolower((int)*_Buf);
+  iVar2 = tolower((int)*param_1);
   if (iVar2 == 0x78) {
-    _Buf = _Buf + 2;
+    param_1 = param_1 + 2;
   }
-  bVar3 = *_Buf;
-  *_Buf = *(byte *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc);
+  bVar3 = *param_1;
+  *param_1 = *(__initiallocalestructinfo.locinfo)->lconv->decimal_point;
   do {
-    bVar1 = _Buf[1];
-    _Buf[1] = bVar3;
-    _Buf = _Buf + 1;
+    bVar1 = param_1[1];
+    param_1[1] = bVar3;
+    param_1 = param_1 + 1;
     bVar3 = bVar1;
-  } while (*_Buf != 0);
+  } while (*param_1 != 0);
   return;
 }
 
 
 // 8291E018  _cropzeros  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:193)
 
-void _cropzeros(char *_Buf)
+void _cropzeros(char *param_1)
 
 {
-  _cropzeros_l(_Buf,(_locale_t)0x0);
+  _cropzeros_l(param_1,(localeinfo_struct *)0x0);
   return;
 }
 
 
 // 8291DED8  _cropzeros_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:198)
 
-void _cropzeros_l(char *_Buf,_locale_t _Locale)
+void _cropzeros_l(char *param_1,localeinfo_struct *param_2)
 
 {
   char cVar1;
@@ -63,15 +63,15 @@ void _cropzeros_l(char *_Buf,_locale_t _Locale)
   char *pcVar4;
   char *pcVar5;
   
-  lVar2 = (longlong)*_Buf;
+  lVar2 = (longlong)*param_1;
   if (lVar2 != 0) {
     do {
-      if ((int)lVar2 == (int)*(char *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc)) break;
-      _Buf = _Buf + 1;
-      lVar2 = (longlong)*_Buf;
+      if ((int)lVar2 == (int)*(__initiallocalestructinfo.locinfo)->lconv->decimal_point) break;
+      param_1 = param_1 + 1;
+      lVar2 = (longlong)*param_1;
     } while (lVar2 != 0);
   }
-  pcVar3 = _Buf + 1;
+  pcVar3 = param_1 + 1;
   if ((int)lVar2 != 0) {
     cVar1 = *pcVar3;
     while (((pcVar5 = pcVar3, cVar1 != '\0' && (cVar1 != 'e')) && (cVar1 != 'E'))) {
@@ -82,7 +82,7 @@ void _cropzeros_l(char *_Buf,_locale_t _Locale)
       pcVar4 = pcVar5;
       pcVar5 = pcVar4 + -1;
     } while (*pcVar5 == '0');
-    if (*pcVar5 == *(char *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc)) {
+    if (*pcVar5 == *(__initiallocalestructinfo.locinfo)->lconv->decimal_point) {
       pcVar5 = pcVar4 + -2;
     }
     pcVar3 = pcVar3 + -1;
@@ -100,10 +100,10 @@ void _cropzeros_l(char *_Buf,_locale_t _Locale)
 
 // 8291DF88  _positive  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:223)
 
-int _positive(double *arg)
+int _positive(double *param_1)
 
 {
-  if (0.0 <= *arg) {
+  if (0.0 <= *param_1) {
     return 1;
   }
   return 0;
@@ -112,19 +112,19 @@ int _positive(double *arg)
 
 // 8291DFA8  _fassign_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:229)
 
-void _fassign_l(int flag,char *argument,char *number,_locale_t param_4)
+void _fassign_l(int param_1,char *param_2,char *param_3,localeinfo_struct *param_4)
 
 {
   _CRT_FLOAT local_20 [2];
   _CRT_DOUBLE local_18;
   
-  if (flag == 0) {
-    _atoflt_l(local_20,number,param_4);
-    *(float *)argument = local_20[0].f;
+  if (param_1 == 0) {
+    _atoflt_l(local_20,param_3,param_4);
+    *(float *)param_2 = local_20[0].f;
   }
   else {
-    _atodbl_l(&local_18,number,param_4);
-    *(double *)argument = local_18.x;
+    _atodbl_l(&local_18,param_3,param_4);
+    *(double *)param_2 = local_18.x;
   }
   return;
 }
@@ -132,615 +132,626 @@ void _fassign_l(int flag,char *argument,char *number,_locale_t param_4)
 
 // 8291E008  _fassign  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:268)
 
-void _fassign(int flag,char *argument,char *number)
+void _fassign(int param_1,char *param_2,char *param_3)
 
 {
-  _fassign_l(flag,argument,number,(_locale_t)0x0);
+  _fassign_l(param_1,param_2,param_3,(localeinfo_struct *)0x0);
   return;
 }
 
 
-// 8291E020  cftoe2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:300)
+// 8291E020  _cftoe2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:300)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftoe2_l */
-
-void __cdecl
-cftoe2_l(undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4,int *param_5,
-        char param_6)
+int _cftoe2_l(char *param_1,uint param_2,int param_3,int param_4,_strflt *param_5,char param_6,
+             localeinfo_struct *param_7)
 
 {
   char cVar1;
-  undefined1 *puVar2;
+  char *pcVar2;
   int *piVar3;
-  errno_t eVar4;
-  char *_Src;
-  undefined1 *puVar5;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   char *pcVar7;
-  undefined1 *puVar8;
-  longlong lVar6;
-  int iVar9;
+  char *pcVar9;
+  longlong lVar8;
   
-  puVar2 = (undefined1 *)__savegprlr_25();
-  if (puVar2 == (undefined1 *)0x0) {
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar2 = (char *)__savegprlr_25(param_1);
+  if (pcVar2 == (char *)0x0) {
     piVar3 = _errno();
     *piVar3 = 0x16;
     _invalid_parameter_noinfo();
-    iVar9 = 0x16;
+    iVar4 = 0x16;
   }
   else {
-    if ((param_2 & 0xffffffff) == 0) {
+    if ((uVar5 & 0xffffffff) == 0) {
       piVar3 = _errno();
-      iVar9 = 0x16;
+      iVar4 = 0x16;
     }
     else {
-      if ((((((param_3 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(param_3 == 0) & param_3) + 9 &
-          0xffffffff) < (param_2 & 0xffffffff)) {
-        iVar9 = (int)param_3;
+      if ((((((uVar6 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar6 == 0) & uVar6) + 9 & 0xffffffff
+          ) < (uVar5 & 0xffffffff)) {
+        iVar4 = (int)uVar6;
         if (param_6 != '\0') {
-          _Src = puVar2 + (*param_5 == 0x2d);
-          pcVar7 = _Src;
-          if (0 < iVar9) {
+          pcVar9 = pcVar2 + (param_5->sign == 0x2d);
+          if (0 < iVar4) {
             do {
-              cVar1 = *pcVar7;
-              pcVar7 = pcVar7 + 1;
+              cVar1 = *pcVar9;
+              pcVar9 = pcVar9 + 1;
             } while (cVar1 != '\0');
-            memmove(_Src + 1,_Src,(int)pcVar7 - (int)_Src);
+            memmove();
           }
         }
-        puVar8 = puVar2;
-        if (*param_5 == 0x2d) {
-          puVar8 = puVar2 + 1;
-          *puVar2 = 0x2d;
+        pcVar9 = pcVar2;
+        if (param_5->sign == 0x2d) {
+          pcVar9 = pcVar2 + 1;
+          *pcVar2 = '-';
         }
-        puVar5 = puVar8;
-        if (0 < iVar9) {
-          puVar5 = puVar8 + 1;
-          *puVar8 = puVar8[1];
-          *puVar5 = *(undefined1 *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc);
+        pcVar7 = pcVar9;
+        if (0 < iVar4) {
+          pcVar7 = pcVar9 + 1;
+          *pcVar9 = pcVar9[1];
+          *pcVar7 = *(__initiallocalestructinfo.locinfo)->lconv->decimal_point;
         }
-        pcVar7 = puVar5 + iVar9 + (uint)(param_6 == '\0');
-        if ((int)param_2 == -1) {
-          puVar2 = (undefined1 *)0xffffffff;
+        pcVar7 = pcVar7 + iVar4 + (uint)(param_6 == '\0');
+        if ((int)uVar5 == -1) {
+          pcVar2 = (char *)0xffffffff;
         }
         else {
-          puVar2 = puVar2 + ((int)param_2 - (int)pcVar7);
+          pcVar2 = pcVar2 + ((int)uVar5 - (int)pcVar7);
         }
-        eVar4 = strcpy_s(pcVar7,(rsize_t)puVar2,"e+000");
-        if (eVar4 != 0) {
+        iVar4 = strcpy_s(pcVar7,(uint)pcVar2,"e+000");
+        if (iVar4 != 0) {
                     /* WARNING: Subroutine does not return */
           _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
         }
         if (param_4 != 0) {
           *pcVar7 = 'E';
         }
-        if (*(char *)param_5[3] != '0') {
-          lVar6 = (ulonglong)(uint)param_5[1] - 1;
-          if (lVar6 < 0) {
-            lVar6 = -lVar6;
+        if (*param_5->mantissa != '0') {
+          lVar8 = (ulonglong)(uint)param_5->decpt - 1;
+          if (lVar8 < 0) {
+            lVar8 = -lVar8;
             pcVar7[1] = '-';
           }
-          iVar9 = (int)lVar6;
-          if (99 < iVar9) {
-            pcVar7[2] = (char)(iVar9 / 100) + pcVar7[2];
-            lVar6 = lVar6 + (longlong)(iVar9 / 100) * -100;
+          iVar4 = (int)lVar8;
+          if (99 < iVar4) {
+            pcVar7[2] = (char)(iVar4 / 100) + pcVar7[2];
+            lVar8 = lVar8 + (longlong)(iVar4 / 100) * -100;
           }
-          iVar9 = (int)lVar6;
-          if (9 < iVar9) {
-            pcVar7[3] = (char)(iVar9 / 10) + pcVar7[3];
-            lVar6 = lVar6 + (longlong)(iVar9 / 10) * -10;
+          iVar4 = (int)lVar8;
+          if (9 < iVar4) {
+            pcVar7[3] = (char)(iVar4 / 10) + pcVar7[3];
+            lVar8 = lVar8 + (longlong)(iVar4 / 10) * -10;
           }
-          pcVar7[4] = pcVar7[4] + (char)lVar6;
+          pcVar7[4] = pcVar7[4] + (char)lVar8;
         }
-        if (((DAT_84896078 & 1) != 0) && (pcVar7[2] == '0')) {
-          memmove(pcVar7 + 2,pcVar7 + 3,3);
+        if (((_outputformat & 1) != 0) && (pcVar7[2] == '0')) {
+          memmove();
         }
-        iVar9 = 0;
+        iVar4 = 0;
         goto LAB_8291e05c;
       }
       piVar3 = _errno();
-      iVar9 = 0x22;
+      iVar4 = 0x22;
     }
-    *piVar3 = iVar9;
+    *piVar3 = iVar4;
     _invalid_parameter_noinfo();
   }
 LAB_8291e05c:
-  __restgprlr_25(iVar9);
-  return;
+  iVar4 = __restgprlr_25(iVar4);
+  return iVar4;
 }
 
 
-// 8291E270  cftoe_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:412)
+// 8291E270  _cftoe_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:412)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftoe_l */
-
-void __cdecl
-cftoe_l(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,undefined8 param_5
-       )
+int _cftoe_l(double *param_1,char *param_2,uint param_3,int param_4,int param_5,
+            localeinfo_struct *param_6)
 
 {
-  uint uVar1;
+  char *pcVar1;
   double *pdVar2;
   int *piVar3;
-  errno_t eVar4;
-  size_t _SizeInBytes;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  localeinfo_struct *plVar8;
+  uint uVar9;
   _strflt local_50;
   char acStack_40 [64];
   
-  pdVar2 = (double *)__savegprlr_28();
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pdVar2 = (double *)__savegprlr_28(param_1);
   _fltout2((_CRT_DOUBLE)*pdVar2,&local_50,acStack_40,0x16);
-  if (((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) == 0)) {
+  if (((uVar5 & 0xffffffff) == 0) || ((uVar7 & 0xffffffff) == 0)) {
     piVar3 = _errno();
     *piVar3 = 0x16;
     _invalid_parameter_noinfo();
-    eVar4 = 0x16;
+    iVar4 = 0x16;
   }
   else {
-    uVar1 = (uint)param_4;
-    if ((int)param_3 == -1) {
-      _SizeInBytes = 0xffffffff;
+    uVar9 = (uint)uVar7;
+    if (uVar9 == 0xffffffff) {
+      uVar6 = 0xffffffff;
     }
     else {
-      _SizeInBytes = ((int)param_3 - ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5)) +
-                     ((int)(-uVar1 & ~uVar1) >> 0x1f);
+      uVar6 = (uVar9 - ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5)) +
+              ((-param_4 & ~param_4) >> 0x1f);
     }
-    eVar4 = _fptostr((undefined1 *)param_2 +
-                     (((uint)LZCOUNT(local_50.sign + -0x2d) >> 5) - ((int)(-uVar1 & ~uVar1) >> 0x1f)
-                     ),_SizeInBytes,uVar1 + 1,&local_50);
-    if (eVar4 == 0) {
-      eVar4 = cftoe2_l(param_2,param_3,param_4,param_5,&local_50,0);
+    plVar8 = (localeinfo_struct *)(-param_4 & ~param_4);
+    pcVar1 = (char *)uVar5;
+    iVar4 = _fptostr(pcVar1 + (((uint)LZCOUNT(local_50.sign + -0x2d) >> 5) - ((int)plVar8 >> 0x1f)),
+                     uVar6,param_4 + 1,&local_50);
+    if (iVar4 == 0) {
+      iVar4 = _cftoe2_l(pcVar1,uVar9,param_4,param_5,&local_50,'\0',plVar8);
     }
     else {
-      *(undefined1 *)param_2 = 0;
+      *pcVar1 = '\0';
     }
   }
-  __restgprlr_28(eVar4);
-  return;
+  iVar4 = __restgprlr_28(iVar4);
+  return iVar4;
 }
 
 
-// 8291E360  cftoa_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:473)
+// 8291E360  _cftoa_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:473)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftoa_l */
-
-void __cdecl
-cftoa_l(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,longlong param_5)
+int _cftoa_l(double *param_1,char *param_2,uint param_3,int param_4,int param_5,
+            localeinfo_struct *param_6)
 
 {
-  ulonglong *puVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  char *pcVar4;
-  undefined1 *puVar5;
-  short sVar6;
-  ulonglong uVar7;
-  char cVar9;
-  ulonglong uVar8;
-  ulonglong uVar10;
-  char *pcVar12;
-  longlong lVar11;
-  longlong lVar13;
-  ulonglong uVar14;
+  double *pdVar1;
+  int *piVar2;
+  int iVar3;
+  undefined1 *puVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  short sVar8;
+  ulonglong uVar9;
+  char cVar11;
+  char *pcVar10;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  char *pcVar15;
+  longlong lVar14;
+  longlong lVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
   
-  puVar2 = (ulonglong *)__savegprlr_26();
-  lVar13 = 0x3ff;
-  sVar6 = 0x30;
-  param_4 = ((param_4 & 0xffffffff) >> 0x1f) - 1 & param_4;
-  if ((param_2 & 0xffffffff) == 0) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  lVar7 = (longlong)param_5;
+  uVar6 = (ulonglong)param_4;
+  uVar18 = (ulonglong)(int)param_3;
+  uVar17 = (ulonglong)(int)param_2;
+  pdVar1 = (double *)__savegprlr_26(param_1);
+  lVar16 = 0x3ff;
+  sVar8 = 0x30;
+  uVar6 = ((uVar6 & 0xffffffff) >> 0x1f) - 1 & uVar6;
+  if ((uVar17 & 0xffffffff) == 0) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    uVar1 = 0x16;
+    iVar3 = 0x16;
     goto LAB_8291e768;
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    piVar3 = _errno();
-    uVar1 = 0x16;
+  if ((uVar18 & 0xffffffff) == 0) {
+    piVar2 = _errno();
+    iVar3 = 0x16;
   }
   else {
-    puVar5 = (undefined1 *)param_2;
-    *puVar5 = 0;
-    if ((param_4 + 0xb & 0xffffffff) < (param_3 & 0xffffffff)) {
-      if ((*puVar2 >> 0x34 & 0x7ff) == 0x7ff) {
-        if ((int)param_3 == -1) {
-          lVar13 = -1;
+    puVar4 = (undefined1 *)uVar17;
+    *puVar4 = 0;
+    if ((uVar6 + 0xb & 0xffffffff) < (uVar18 & 0xffffffff)) {
+      if (((ulonglong)*pdVar1 >> 0x34 & 0x7ff) == 0x7ff) {
+        if ((int)uVar18 == -1) {
+          uVar5 = 0xffffffff;
         }
         else {
-          lVar13 = param_3 - 2;
+          uVar5 = (int)uVar18 - 2;
         }
-        uVar1 = cftoe_l(puVar2,param_2 + 2,lVar13,param_4,0,0);
-        if ((int)uVar1 != 0) {
-          *puVar5 = 0;
+        iVar3 = _cftoe_l(pdVar1,puVar4 + 2,uVar5,(int)uVar6,0,(localeinfo_struct *)0x0);
+        if (iVar3 != 0) {
+          *puVar4 = 0;
           goto LAB_8291e768;
         }
-        if (*(char *)(param_2 + 2) == '-') {
-          *puVar5 = 0x2d;
-          param_2 = param_2 + 1;
+        if (puVar4[2] == '-') {
+          *puVar4 = 0x2d;
+          uVar17 = uVar17 + 1;
         }
-        puVar5 = (undefined1 *)param_2;
-        *puVar5 = 0x30;
-        puVar5[1] = (-(param_5 != 0) & 0xe0U) + 0x78;
-        pcVar4 = strrchr(puVar5 + 2,0x65);
-        if (pcVar4 != (char *)0x0) {
-          *pcVar4 = (-(param_5 != 0) & 0xe0U) + 0x70;
-          pcVar4[3] = '\0';
+        *(undefined1 *)uVar17 = 0x30;
+        ((undefined1 *)uVar17)[1] = (-(lVar7 != 0) & 0xe0U) + 0x78;
+        uVar17 = uVar17 + 2;
+        strrchr();
+        if ((uVar17 & 0xffffffff) != 0) {
+          *(char *)uVar17 = (-(lVar7 != 0) & 0xe0U) + 0x70;
+          ((char *)uVar17)[3] = '\0';
         }
       }
       else {
-        if ((*puVar2 & 0x8000000000000000) != 0) {
-          *puVar5 = 0x2d;
-          param_2 = param_2 + 1;
+        if (((ulonglong)*pdVar1 & 0x8000000000000000) != 0) {
+          *puVar4 = 0x2d;
+          uVar17 = uVar17 + 1;
         }
-        puVar5 = (undefined1 *)param_2;
-        *puVar5 = 0x30;
-        puVar5[1] = (-(param_5 != 0) & 0xe0U) + 0x78;
-        uVar14 = -(ulonglong)(param_5 != 0) & 0xffffffe0;
-        if ((*puVar2 & 0x7ff0000000000000) == 0) {
-          puVar5[2] = 0x30;
-          if ((*puVar2 & 0xfffffffffffff) == 0) {
-            lVar13 = 0;
+        puVar4 = (undefined1 *)uVar17;
+        *puVar4 = 0x30;
+        puVar4[1] = (-(lVar7 != 0) & 0xe0U) + 0x78;
+        uVar18 = -(ulonglong)(lVar7 != 0) & 0xffffffe0;
+        if (((ulonglong)*pdVar1 & 0x7ff0000000000000) == 0) {
+          puVar4[2] = 0x30;
+          if (((ulonglong)*pdVar1 & 0xfffffffffffff) == 0) {
+            lVar16 = 0;
           }
           else {
-            lVar13 = 0x3fe;
+            lVar16 = 0x3fe;
           }
         }
         else {
-          puVar5[2] = 0x31;
+          puVar4[2] = 0x31;
         }
-        uVar8 = param_2 + 3;
-        param_2 = param_2 + 4;
-        pcVar4 = (char *)uVar8;
-        if ((int)param_4 == 0) {
-          *pcVar4 = '\0';
+        uVar12 = uVar17 + 3;
+        uVar17 = uVar17 + 4;
+        pcVar10 = (char *)uVar12;
+        if ((int)uVar6 == 0) {
+          *pcVar10 = '\0';
         }
         else {
-          *pcVar4 = *(char *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc);
+          *pcVar10 = *(__initiallocalestructinfo.locinfo)->lconv->decimal_point;
         }
-        if ((*puVar2 & 0xfffffffffffff) != 0) {
-          uVar7 = 0xf000000000000;
+        if (((ulonglong)*pdVar1 & 0xfffffffffffff) != 0) {
+          uVar9 = 0xf000000000000;
           do {
-            if ((int)param_4 < 1) break;
-            uVar10 = ((*puVar2 & uVar7) >> ((longlong)sVar6 & 0x7fU) & 0xffff) + 0x30;
-            if (0x39 < (uVar10 & 0xffff)) {
-              uVar10 = (uVar14 + 0x27 & 0xffff) + (uVar10 & 0xffff) & 0xffff;
+            if ((int)uVar6 < 1) break;
+            uVar13 = (((ulonglong)*pdVar1 & uVar9) >> ((longlong)sVar8 & 0x7fU) & 0xffff) + 0x30;
+            if (0x39 < (uVar13 & 0xffff)) {
+              uVar13 = (uVar18 + 0x27 & 0xffff) + (uVar13 & 0xffff) & 0xffff;
             }
-            *(undefined1 *)param_2 = (char)uVar10;
-            param_2 = param_2 + 1;
-            sVar6 = sVar6 + -4;
-            uVar7 = uVar7 >> 4;
-            param_4 = param_4 - 1;
-          } while (-1 < sVar6);
-          if ((-1 < sVar6) &&
-             (uVar10 = param_2, 8 < ((*puVar2 & uVar7) >> ((longlong)sVar6 & 0x7fU) & 0xffff))) {
+            *(undefined1 *)uVar17 = (char)uVar13;
+            uVar17 = uVar17 + 1;
+            sVar8 = sVar8 + -4;
+            uVar9 = uVar9 >> 4;
+            uVar6 = uVar6 - 1;
+          } while (-1 < sVar8);
+          if ((-1 < sVar8) &&
+             (uVar13 = uVar17,
+             8 < (((ulonglong)*pdVar1 & uVar9) >> ((longlong)sVar8 & 0x7fU) & 0xffff))) {
             while( true ) {
-              uVar7 = uVar10 - 1;
-              pcVar12 = (char *)uVar7;
-              cVar9 = *pcVar12;
-              if ((cVar9 != 'f') && (cVar9 != 'F')) break;
-              *pcVar12 = '0';
-              uVar10 = uVar7;
+              uVar9 = uVar13 - 1;
+              pcVar15 = (char *)uVar9;
+              cVar11 = *pcVar15;
+              if ((cVar11 != 'f') && (cVar11 != 'F')) break;
+              *pcVar15 = '0';
+              uVar13 = uVar9;
             }
-            if ((uVar7 & 0xffffffff) == (uVar8 & 0xffffffff)) {
-              pcVar12 = (char *)((int)uVar10 + -2);
-              cVar9 = *pcVar12;
+            if ((uVar9 & 0xffffffff) == (uVar12 & 0xffffffff)) {
+              pcVar15 = (char *)((int)uVar13 + -2);
+              cVar11 = *pcVar15;
 LAB_8291e638:
-              cVar9 = cVar9 + '\x01';
+              cVar11 = cVar11 + '\x01';
             }
             else {
-              if (cVar9 != '9') goto LAB_8291e638;
-              cVar9 = (char)uVar14 + 'a';
+              if (cVar11 != '9') goto LAB_8291e638;
+              cVar11 = (char)uVar18 + 'a';
             }
-            *pcVar12 = cVar9;
+            *pcVar15 = cVar11;
           }
         }
-        if (0 < (int)param_4) {
-          lVar11 = param_2 - 1;
-          uVar14 = param_4;
-          uVar7 = param_4 & 0xffffffff;
-          while (uVar7 != 0) {
-            lVar11 = lVar11 + 1;
-            *(undefined1 *)lVar11 = 0x30;
-            uVar14 = uVar14 - 1;
-            uVar7 = uVar14;
+        if (0 < (int)uVar6) {
+          lVar14 = uVar17 - 1;
+          uVar18 = uVar6;
+          uVar9 = uVar6 & 0xffffffff;
+          while (uVar9 != 0) {
+            lVar14 = lVar14 + 1;
+            *(undefined1 *)lVar14 = 0x30;
+            uVar18 = uVar18 - 1;
+            uVar9 = uVar18;
           }
-          param_2 = param_2 + param_4;
+          uVar17 = uVar17 + uVar6;
         }
-        if (*pcVar4 == '\0') {
-          param_2 = uVar8;
+        if (*pcVar10 == '\0') {
+          uVar17 = uVar12;
         }
-        pcVar4 = (char *)param_2 + 1;
-        *(char *)param_2 = (-(param_5 != 0) & 0xe0U) + 0x70;
-        lVar13 = (*puVar2 >> 0x34 & 0x7ff) - lVar13;
-        if (lVar13 < 0) {
-          *pcVar4 = '-';
-          lVar13 = -lVar13;
+        pcVar10 = (char *)uVar17 + 1;
+        *(char *)uVar17 = (-(lVar7 != 0) & 0xe0U) + 0x70;
+        lVar16 = ((ulonglong)*pdVar1 >> 0x34 & 0x7ff) - lVar16;
+        if (lVar16 < 0) {
+          *pcVar10 = '-';
+          lVar16 = -lVar16;
         }
         else {
-          *pcVar4 = '+';
+          *pcVar10 = '+';
         }
-        uVar8 = param_2 + 2;
-        *(char *)uVar8 = '0';
-        uVar14 = uVar8;
-        if (lVar13 < 1000) {
+        uVar6 = uVar17 + 2;
+        *(char *)uVar6 = '0';
+        uVar18 = uVar6;
+        if (lVar16 < 1000) {
 LAB_8291e6f8:
-          if (99 < lVar13) goto LAB_8291e700;
+          if (99 < lVar16) goto LAB_8291e700;
         }
         else {
-          lVar11 = lVar13 / 1000;
-          lVar13 = lVar13 % 1000;
-          *(char *)uVar8 = (char)lVar11 + '0';
-          uVar14 = param_2 + 3;
-          if ((uVar14 & 0xffffffff) == (uVar8 & 0xffffffff)) goto LAB_8291e6f8;
+          lVar7 = lVar16 / 1000;
+          lVar16 = lVar16 % 1000;
+          *(char *)uVar6 = (char)lVar7 + '0';
+          uVar18 = uVar17 + 3;
+          if ((uVar18 & 0xffffffff) == (uVar6 & 0xffffffff)) goto LAB_8291e6f8;
 LAB_8291e700:
-          lVar11 = lVar13 / 100;
-          lVar13 = lVar13 % 100;
-          *(char *)uVar14 = (char)lVar11 + '0';
-          uVar14 = uVar14 + 1;
+          lVar7 = lVar16 / 100;
+          lVar16 = lVar16 % 100;
+          *(char *)uVar18 = (char)lVar7 + '0';
+          uVar18 = uVar18 + 1;
         }
-        pcVar4 = (char *)uVar14;
-        if (((uVar14 & 0xffffffff) != (uVar8 & 0xffffffff)) || (9 < lVar13)) {
-          lVar11 = lVar13 / 10;
-          lVar13 = lVar13 % 10;
-          *pcVar4 = (char)lVar11 + '0';
-          pcVar4 = pcVar4 + 1;
+        pcVar10 = (char *)uVar18;
+        if (((uVar18 & 0xffffffff) != (uVar6 & 0xffffffff)) || (9 < lVar16)) {
+          lVar7 = lVar16 / 10;
+          lVar16 = lVar16 % 10;
+          *pcVar10 = (char)lVar7 + '0';
+          pcVar10 = pcVar10 + 1;
         }
-        *pcVar4 = (char)lVar13 + '0';
-        pcVar4[1] = '\0';
+        *pcVar10 = (char)lVar16 + '0';
+        pcVar10[1] = '\0';
       }
-      uVar1 = 0;
+      iVar3 = 0;
       goto LAB_8291e768;
     }
-    piVar3 = _errno();
-    uVar1 = 0x22;
+    piVar2 = _errno();
+    iVar3 = 0x22;
   }
-  *piVar3 = (int)uVar1;
+  *piVar2 = iVar3;
   _invalid_parameter_noinfo();
 LAB_8291e768:
-  __restgprlr_26(uVar1);
-  return;
+  iVar3 = __restgprlr_26(iVar3);
+  return iVar3;
 }
 
 
-// 8291E770  cftof2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:696)
+// 8291E770  _cftof2_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:696)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftof2_l */
-
-void __cdecl cftof2_l(undefined8 param_1,ulonglong param_2,size_t param_3,int *param_4,char param_5)
+int _cftof2_l(char *param_1,uint param_2,int param_3,_strflt *param_4,char param_5,
+             localeinfo_struct *param_6)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar5;
-  int *piVar6;
-  undefined8 uVar4;
-  char *pcVar7;
-  char *_Dst;
+  char *pcVar4;
+  int *piVar5;
+  undefined8 uVar3;
+  int iVar6;
+  ulonglong uVar7;
+  char *pcVar8;
   
-  pcVar5 = (char *)__savegprlr_26();
-  iVar2 = param_4[1];
-  if ((pcVar5 == (char *)0x0) || ((param_2 & 0xffffffff) == 0)) {
-    piVar6 = _errno();
-    *piVar6 = 0x16;
+  uVar7 = (ulonglong)(int)param_2;
+  pcVar4 = (char *)__savegprlr_26(param_1);
+  iVar6 = param_4->decpt + -1;
+  if ((pcVar4 == (char *)0x0) || ((uVar7 & 0xffffffff) == 0)) {
+    piVar5 = _errno();
+    *piVar5 = 0x16;
     _invalid_parameter_noinfo();
-    uVar4 = 0x16;
+    uVar3 = 0x16;
   }
   else {
-    if ((param_5 != '\0') && (iVar2 - 1U == param_3)) {
-      iVar3 = *param_4;
-      pcVar5[(uint)(iVar3 == 0x2d) + (iVar2 - 1U)] = '0';
-      (pcVar5 + (uint)(iVar3 == 0x2d) + (iVar2 - 1U))[1] = '\0';
+    if ((param_5 != '\0') && (iVar6 == param_3)) {
+      iVar2 = param_4->sign;
+      pcVar4[(uint)(iVar2 == 0x2d) + iVar6] = '0';
+      (pcVar4 + (uint)(iVar2 == 0x2d) + iVar6)[1] = '\0';
     }
-    pcVar7 = pcVar5;
-    if (*param_4 == 0x2d) {
-      pcVar7 = pcVar5 + 1;
-      *pcVar5 = '-';
+    pcVar8 = pcVar4;
+    if (param_4->sign == 0x2d) {
+      pcVar8 = pcVar4 + 1;
+      *pcVar4 = '-';
     }
-    pcVar5 = pcVar7;
-    if (param_4[1] < 1) {
+    pcVar4 = pcVar8;
+    if (param_4->decpt < 1) {
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      _Dst = pcVar7 + 1;
-      memmove(_Dst,pcVar7,(int)pcVar5 - (int)pcVar7);
-      *pcVar7 = '0';
+      pcVar4 = pcVar8 + 1;
+      memmove();
+      *pcVar8 = '0';
     }
     else {
-      _Dst = pcVar7 + param_4[1];
+      pcVar4 = pcVar8 + param_4->decpt;
     }
-    pcVar5 = _Dst;
-    if (0 < (int)param_3) {
+    pcVar8 = pcVar4;
+    if (0 < param_3) {
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
       } while (cVar1 != '\0');
-      pcVar7 = _Dst + 1;
-      memmove(pcVar7,_Dst,(int)pcVar5 - (int)_Dst);
-      *_Dst = *(char *)**(undefined4 **)(PTR_DAT_829b07f8 + 0xbc);
-      iVar2 = param_4[1];
-      if (iVar2 < 0) {
+      memmove();
+      *pcVar4 = *(__initiallocalestructinfo.locinfo)->lconv->decimal_point;
+      iVar6 = param_4->decpt;
+      if (iVar6 < 0) {
         if (param_5 == '\0') {
-          if (-iVar2 <= (int)param_3) {
-            param_3 = -iVar2;
+          if (-iVar6 <= param_3) {
+            param_3 = -iVar6;
           }
         }
         else {
-          param_3 = -iVar2;
+          param_3 = -iVar6;
         }
-        pcVar5 = pcVar7;
         if (param_3 != 0) {
           do {
-            cVar1 = *pcVar5;
-            pcVar5 = pcVar5 + 1;
-          } while (cVar1 != '\0');
-          memmove(pcVar7 + param_3,pcVar7,(int)pcVar5 - (int)pcVar7);
+            pcVar4 = pcVar4 + 1;
+          } while (*pcVar4 != '\0');
+          memmove();
         }
-        memset(pcVar7,0x30,param_3);
+        memset();
       }
     }
-    uVar4 = 0;
+    uVar3 = 0;
   }
-  __restgprlr_26(uVar4);
-  return;
+  iVar6 = __restgprlr_26(uVar3);
+  return iVar6;
 }
 
 
-// 8291E928  cftof_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:798)
+// 8291E928  _cftof_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:798)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftof_l */
-
-void __cdecl cftof_l(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+int _cftof_l(double *param_1,char *param_2,uint param_3,int param_4,localeinfo_struct *param_5)
 
 {
-  double *pdVar1;
-  int *piVar2;
-  errno_t eVar3;
-  size_t _SizeInBytes;
+  char *pcVar1;
+  double *pdVar2;
+  int *piVar3;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  localeinfo_struct *in_r8;
+  uint uVar8;
   _strflt local_50;
   char acStack_40 [64];
   
-  pdVar1 = (double *)__savegprlr_29();
-  _fltout2((_CRT_DOUBLE)*pdVar1,&local_50,acStack_40,0x16);
-  if (((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) == 0)) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pdVar2 = (double *)__savegprlr_29(param_1);
+  _fltout2((_CRT_DOUBLE)*pdVar2,&local_50,acStack_40,0x16);
+  if (((uVar5 & 0xffffffff) == 0) || ((uVar7 & 0xffffffff) == 0)) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
     _invalid_parameter_noinfo();
-    eVar3 = 0x16;
+    iVar4 = 0x16;
   }
   else {
-    if ((int)param_3 == -1) {
-      _SizeInBytes = 0xffffffff;
+    uVar8 = (uint)uVar7;
+    if (uVar8 == 0xffffffff) {
+      uVar6 = 0xffffffff;
     }
     else {
-      _SizeInBytes = (int)param_3 - ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5);
+      uVar6 = uVar8 - ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5);
     }
-    eVar3 = _fptostr((undefined1 *)param_2 + ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5),
-                     _SizeInBytes,local_50.decpt + (int)param_4,&local_50);
-    if (eVar3 == 0) {
-      eVar3 = cftof2_l(param_2,param_3,param_4,&local_50,0);
+    pcVar1 = (char *)uVar5;
+    iVar4 = _fptostr(pcVar1 + ((uint)LZCOUNT(local_50.sign + -0x2d) >> 5),uVar6,
+                     local_50.decpt + param_4,&local_50);
+    if (iVar4 == 0) {
+      iVar4 = _cftof2_l(pcVar1,uVar8,param_4,&local_50,'\0',in_r8);
     }
     else {
-      *(undefined1 *)param_2 = 0;
+      *pcVar1 = '\0';
     }
   }
-  __restgprlr_29(eVar3);
-  return;
+  iVar4 = __restgprlr_29(iVar4);
+  return iVar4;
 }
 
 
-// 8291E9F8  cftog_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:861)
+// 8291E9F8  _cftog_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:861)
 
-/* WARNING: Unknown calling convention: __cdecl */
-/* cftog_l */
-
-void __cdecl
-cftog_l(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,undefined8 param_5
-       )
+int _cftog_l(double *param_1,char *param_2,uint param_3,int param_4,int param_5,
+            localeinfo_struct *param_6)
 
 {
   double *pdVar1;
   int *piVar2;
-  errno_t eVar3;
-  size_t _SizeInBytes;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  char *pcVar7;
+  int iVar3;
+  uint uVar4;
+  char *pcVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  char *pcVar10;
+  uint uVar11;
   _strflt local_60;
   char acStack_50 [80];
   
-  pdVar1 = (double *)__savegprlr_26();
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  pdVar1 = (double *)__savegprlr_26(param_1);
   _fltout2((_CRT_DOUBLE)*pdVar1,&local_60,acStack_50,0x16);
-  if (((param_2 & 0xffffffff) == 0) || ((param_3 & 0xffffffff) == 0)) {
+  if (((uVar6 & 0xffffffff) == 0) || ((uVar7 & 0xffffffff) == 0)) {
     piVar2 = _errno();
     *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    eVar3 = 0x16;
+    iVar3 = 0x16;
   }
   else {
-    uVar4 = (ulonglong)(uint)local_60.decpt;
-    _SizeInBytes = 0xffffffff;
-    lVar6 = (local_60.sign == 0x2d) + param_2;
-    if ((int)param_3 != -1) {
-      _SizeInBytes = (int)param_3 - (uint)(local_60.sign == 0x2d);
+    uVar11 = (uint)uVar7;
+    uVar7 = (ulonglong)(uint)local_60.decpt;
+    uVar4 = 0xffffffff;
+    lVar9 = (local_60.sign == 0x2d) + uVar6;
+    if (uVar11 != 0xffffffff) {
+      uVar4 = uVar11 - (local_60.sign == 0x2d);
     }
-    eVar3 = _fptostr((char *)lVar6,_SizeInBytes,(int)param_4,&local_60);
-    if (eVar3 == 0) {
-      uVar5 = (ulonglong)(uint)local_60.decpt - 1;
-      if (((int)uVar5 < -4) || ((int)param_4 <= (int)uVar5)) {
-        eVar3 = cftoe2_l(param_2,param_3,param_4,param_5,&local_60,1);
+    iVar3 = _fptostr((char *)lVar9,uVar4,param_4,&local_60);
+    pcVar5 = (char *)uVar6;
+    if (iVar3 == 0) {
+      uVar8 = (ulonglong)(uint)local_60.decpt - 1;
+      uVar6 = ~(uVar8 ^ uVar7 - 1);
+      if (((int)uVar8 < -4) || (param_4 <= (int)uVar8)) {
+        iVar3 = _cftoe2_l(pcVar5,uVar11,param_4,param_5,&local_60,'\x01',(localeinfo_struct *)uVar6)
+        ;
       }
       else {
-        if (((char)((~(uVar5 ^ uVar4 - 1) & 0xffffffff) >> 0x1f) + (uVar5 <= uVar4 - 1) & 1U) != 0)
-        {
+        if ((((uVar6 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar8 <= uVar7 - 1) & 1) != 0) {
           do {
-            pcVar7 = (char *)lVar6;
-            lVar6 = lVar6 + 1;
-          } while (*pcVar7 != '\0');
-          pcVar7[-1] = '\0';
+            pcVar10 = (char *)lVar9;
+            lVar9 = lVar9 + 1;
+          } while (*pcVar10 != '\0');
+          pcVar10[-1] = '\0';
         }
-        eVar3 = cftof2_l(param_2,param_3,param_4,&local_60,1);
+        iVar3 = _cftof2_l(pcVar5,uVar11,param_4,&local_60,'\x01',param_6);
       }
     }
     else {
-      *(undefined1 *)param_2 = 0;
+      *pcVar5 = '\0';
     }
   }
-  __restgprlr_26(eVar3);
-  return;
+  iVar3 = __restgprlr_26(iVar3);
+  return iVar3;
 }
 
 
 // 8291EB28  _cfltcvt_l  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:966)
 
-errno_t _cfltcvt_l(double *arg,char *buffer,size_t sizeInBytes,int format,int precision,int caps,
-                  _locale_t plocinfo)
+int _cfltcvt_l(double *param_1,char *param_2,uint param_3,int param_4,int param_5,int param_6,
+              localeinfo_struct *param_7)
 
 {
-  errno_t eVar1;
+  int iVar1;
   
-  if ((format == 0x65) || (format == 0x45)) {
-    eVar1 = cftoe_l(arg,buffer,sizeInBytes,precision,caps,plocinfo);
-    return eVar1;
+  if ((param_4 == 0x65) || (param_4 == 0x45)) {
+    iVar1 = _cftoe_l(param_1,param_2,param_3,param_5,param_6,param_7);
+    return iVar1;
   }
-  if (format == 0x66) {
-    eVar1 = cftof_l();
-    return eVar1;
+  if (param_4 == 0x66) {
+    iVar1 = _cftof_l(param_1,param_2,param_3,param_5,param_7);
+    return iVar1;
   }
-  if ((format != 0x61) && (format != 0x41)) {
-    eVar1 = cftog_l();
-    return eVar1;
+  if ((param_4 != 0x61) && (param_4 != 0x41)) {
+    iVar1 = _cftog_l(param_1,param_2,param_3,param_5,param_6,param_7);
+    return iVar1;
   }
-  eVar1 = cftoa_l();
-  return eVar1;
+  iVar1 = _cftoa_l(param_1,param_2,param_3,param_5,param_6,param_7);
+  return iVar1;
 }
 
 
 // 8291EB78  _cfltcvt  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cvt.c:982)
 
-errno_t _cfltcvt(double *arg,char *buffer,size_t sizeInBytes,int format,int precision,int caps)
+int _cfltcvt(double *param_1,char *param_2,uint param_3,int param_4,int param_5,int param_6)
 
 {
-  errno_t eVar1;
+  int iVar1;
   
-  if ((format == 0x65) || (format == 0x45)) {
-    eVar1 = cftoe_l(arg,buffer,sizeInBytes,precision,caps,0);
-    return eVar1;
+  if ((param_4 == 0x65) || (param_4 == 0x45)) {
+    iVar1 = _cftoe_l(param_1,param_2,param_3,param_5,param_6,(localeinfo_struct *)0x0);
+    return iVar1;
   }
-  if (format == 0x66) {
-    eVar1 = cftof_l();
-    return eVar1;
+  if (param_4 == 0x66) {
+    iVar1 = _cftof_l(param_1,param_2,param_3,param_5,(localeinfo_struct *)0x0);
+    return iVar1;
   }
-  if ((format != 0x61) && (format != 0x41)) {
-    eVar1 = cftog_l();
-    return eVar1;
+  if ((param_4 != 0x61) && (param_4 != 0x41)) {
+    iVar1 = _cftog_l(param_1,param_2,param_3,param_5,param_6,(localeinfo_struct *)0x0);
+    return iVar1;
   }
-  eVar1 = cftoa_l();
-  return eVar1;
+  iVar1 = _cftoa_l(param_1,param_2,param_3,param_5,param_6,(localeinfo_struct *)0x0);
+  return iVar1;
 }
 

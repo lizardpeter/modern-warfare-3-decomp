@@ -2,36 +2,42 @@
 
 // 823259E8  CG_GetEntityBModelContents  (cgame/cg_world.cpp:37)
 
-void CG_GetEntityBModelContents(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_GetEntityBModelContents(centity_s *param_1)
 
 {
   int iVar2;
   undefined8 uVar1;
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x28,0,0xffffffff82000f98,0xffffffff82002118);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x28,0,
+                    "%s");
   }
   if (*(int *)(iVar2 + 0x160) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x2b,0,0xffffffff82000f98,0xffffffff8202b964);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x2b,0,
+                    "%s");
   }
   if (*(int *)(iVar2 + 0x160) == 0xffffff) {
-    CM_ContentsOfBrushModel(*(undefined4 *)(iVar2 + 0x150));
-    __restgprlr_29();
-    return;
+    iVar2 = CM_ContentsOfBrushModel(*(uint *)(iVar2 + 0x150));
+    iVar2 = __restgprlr_29(iVar2);
+    return iVar2;
   }
   uVar1 = 1;
   if (*(int *)(iVar2 + 200) == 1) {
     uVar1 = 0x2000000;
   }
-  __restgprlr_29(uVar1);
-  return;
+  iVar2 = __restgprlr_29(uVar1);
+  return iVar2;
 }
 
 
 // 82325A98  CG_GetEntityBModelBounds  (cgame/cg_world.cpp:71)
 
-void CG_GetEntityBModelBounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_GetEntityBModelBounds(centity_s *param_1,Bounds *param_2,Bounds *param_3)
 
 {
   float fVar1;
@@ -41,65 +47,74 @@ void CG_GetEntityBModelBounds(undefined8 param_1,ulonglong param_2,ulonglong par
   float fVar5;
   float fVar6;
   uint uVar7;
-  float *pfVar8;
-  int iVar9;
-  undefined4 *puVar10;
+  int iVar8;
+  ulonglong uVar9;
+  Bounds *pBVar10;
+  ulonglong uVar11;
+  undefined4 *puVar12;
   
-  iVar9 = __savegprlr_26();
-  if (iVar9 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4e,0,0xffffffff82000f98,0xffffffff82002118);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  iVar8 = __savegprlr_26(param_1);
+  if (iVar8 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4e,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4f,0,0xffffffff82000f98,0xffffffff82002044);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x50,0,0xffffffff82000f98,0xffffffff8202b9b0);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x50,0,
+                    "%s");
   }
-  if (*(int *)(iVar9 + 0x160) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x53,0,0xffffffff82000f98,0xffffffff8202b964);
+  if (*(int *)(iVar8 + 0x160) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x53,0,
+                    "%s");
   }
-  pfVar8 = (float *)param_2;
-  if (*(int *)(iVar9 + 0x160) == 0xffffff) {
-    CM_BrushModelBounds(*(undefined4 *)(iVar9 + 0x150),param_2);
+  pBVar10 = (Bounds *)uVar9;
+  if (*(int *)(iVar8 + 0x160) == 0xffffff) {
+    CM_BrushModelBounds(*(uint *)(iVar8 + 0x150),pBVar10);
   }
-  else if ((*(int *)(iVar9 + 200) == 0xe) || (*(int *)(iVar9 + 200) == 0xc)) {
-    uVar7 = *(uint *)(iVar9 + 0x160);
+  else if ((*(int *)(iVar8 + 200) == 0xe) || (*(int *)(iVar8 + 200) == 0xc)) {
+    uVar7 = *(uint *)(iVar8 + 0x160);
     fVar1 = (float)(uVar7 & 0xff);
-    *pfVar8 = 0.0;
-    pfVar8[1] = 0.0;
-    pfVar8[2] = (float)(longlong)(int)(((int)uVar7 >> 8 & 0xffU) - 0x80);
-    pfVar8[3] = fVar1;
-    pfVar8[4] = fVar1;
-    pfVar8[5] = fVar1;
+    pBVar10->midPoint[0] = 0.0;
+    pBVar10->midPoint[1] = 0.0;
+    pBVar10->midPoint[2] = (float)(longlong)(int)(((int)uVar7 >> 8 & 0xffU) - 0x80);
+    pBVar10->halfSize[0] = fVar1;
+    pBVar10->halfSize[1] = fVar1;
+    pBVar10->halfSize[2] = fVar1;
   }
   else {
-    uVar7 = *(uint *)(iVar9 + 0x160);
-    *pfVar8 = 0.0;
+    uVar7 = *(uint *)(iVar8 + 0x160);
+    pBVar10->midPoint[0] = 0.0;
     fVar1 = (float)(uVar7 & 0xff) - 1.0;
-    pfVar8[1] = 0.0;
+    pBVar10->midPoint[1] = 0.0;
     fVar2 = (float)(longlong)(int)(((int)uVar7 >> 0x10 & 0xffU) - 0x20) - 1.0;
     fVar3 = 1.0 - (float)(longlong)(int)(((int)uVar7 >> 8 & 0xffU) - 1);
-    pfVar8[2] = (fVar3 + fVar2) * 0.5;
-    pfVar8[3] = fVar1;
-    pfVar8[4] = fVar1;
-    pfVar8[5] = (fVar2 - fVar3) * 0.5;
+    pBVar10->midPoint[2] = (fVar3 + fVar2) * 0.5;
+    pBVar10->halfSize[0] = fVar1;
+    pBVar10->halfSize[1] = fVar1;
+    pBVar10->halfSize[2] = (fVar2 - fVar3) * 0.5;
   }
-  fVar1 = pfVar8[1];
-  fVar2 = pfVar8[4];
-  fVar3 = pfVar8[2];
-  fVar4 = *pfVar8;
-  fVar5 = pfVar8[5];
-  fVar6 = pfVar8[3];
-  puVar10 = (undefined4 *)param_3;
-  *puVar10 = *(undefined4 *)(iVar9 + 0x14);
-  puVar10[1] = *(undefined4 *)(iVar9 + 0x18);
-  puVar10[2] = *(undefined4 *)(iVar9 + 0x1c);
-  fVar1 = SQRT((ABS(fVar4) + fVar6) * (ABS(fVar4) + fVar6) +
-               (ABS(fVar3) + fVar5) * (ABS(fVar3) + fVar5) +
-               (ABS(fVar1) + fVar2) * (ABS(fVar1) + fVar2));
-  puVar10[3] = fVar1;
-  puVar10[4] = fVar1;
-  puVar10[5] = fVar1;
+  fVar1 = pBVar10->midPoint[1];
+  fVar2 = pBVar10->halfSize[1];
+  fVar3 = pBVar10->midPoint[2];
+  fVar4 = pBVar10->midPoint[0];
+  fVar5 = pBVar10->halfSize[2];
+  fVar6 = pBVar10->halfSize[0];
+  puVar12 = (undefined4 *)uVar11;
+  *puVar12 = *(undefined4 *)(iVar8 + 0x14);
+  puVar12[1] = *(undefined4 *)(iVar8 + 0x18);
+  fVar2 = ABS(fVar1) + fVar2;
+  fVar5 = ABS(fVar3) + fVar5;
+  puVar12[2] = *(undefined4 *)(iVar8 + 0x1c);
+  fVar6 = ABS(fVar4) + fVar6;
+  fVar1 = SQRT(fVar6 * fVar6 + fVar5 * fVar5 + fVar2 * fVar2);
+  puVar12[3] = fVar1;
+  puVar12[4] = fVar1;
+  puVar12[5] = fVar1;
   __restgprlr_26();
   return;
 }
@@ -107,31 +122,40 @@ void CG_GetEntityBModelBounds(undefined8 param_1,ulonglong param_2,ulonglong par
 
 // 82325D00  CG_GetEntityDobjBounds  (cgame/cg_world.cpp:121)
 
-void CG_GetEntityDobjBounds(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_GetEntityDobjBounds(centity_s *param_1,DObj *param_2,Bounds *param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
-  double dVar3;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
+  float fVar5;
   
-  iVar1 = __savegprlr_27();
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x7c,0,0xffffffff82000f98,0xffffffff82002118);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x7c,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x7d,0,0xffffffff82000f98,0xffffffff8200260c);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x7d,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x7e,0,0xffffffff82000f98,0xffffffff8202b9b0);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x7e,0,
+                    "%s");
   }
-  dVar3 = (double)DObjGetRadius(param_2);
-  puVar2 = (undefined4 *)param_3;
-  *puVar2 = *(undefined4 *)(iVar1 + 0x14);
-  puVar2[1] = *(undefined4 *)(iVar1 + 0x18);
-  puVar2[2] = *(undefined4 *)(iVar1 + 0x1c);
-  puVar2[3] = (float)dVar3;
-  puVar2[4] = (float)dVar3;
-  puVar2[5] = (float)dVar3;
+  fVar5 = DObjGetRadius((DObj *)uVar2);
+  puVar4 = (undefined4 *)uVar3;
+  *puVar4 = *(undefined4 *)(iVar1 + 0x14);
+  puVar4[1] = *(undefined4 *)(iVar1 + 0x18);
+  puVar4[2] = *(undefined4 *)(iVar1 + 0x1c);
+  puVar4[3] = fVar5;
+  puVar4[4] = fVar5;
+  puVar4[5] = fVar5;
   __restgprlr_27();
   return;
 }
@@ -139,48 +163,58 @@ void CG_GetEntityDobjBounds(undefined8 param_1,ulonglong param_2,ulonglong param
 
 // 82325DC8  CG_LocationalTraceDObj  (cgame/cg_world.cpp:136)
 
-void CG_LocationalTraceDObj(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+DObj * CG_LocationalTraceDObj(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
+  LocalClientNum_t LVar2;
+  DObj *pDVar3;
   
-  uVar2 = __savegprlr_29();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x8c,0,0xffffffff8200d150,uVar2);
+  LVar2 = __savegprlr_29(param_1);
+  if ((uint)cl_maxLocalClients <= LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x8c,0,
+                    "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = *(int *)(param_2 + 200);
+  iVar1 = (param_2->nextState).eType;
   if ((((iVar1 != 0xe) && (iVar1 != 6)) && (iVar1 != 0xb)) && (iVar1 != 0xc)) {
-    __restgprlr_29(0);
-    return;
+    pDVar3 = (DObj *)__restgprlr_29(0);
+    return pDVar3;
   }
-  Com_GetClientDObj(param_3,uVar2);
-  __restgprlr_29();
-  return;
+  pDVar3 = Com_GetClientDObj(param_3,LVar2);
+  pDVar3 = (DObj *)__restgprlr_29(pDVar3);
+  return pDVar3;
 }
 
 
 // 82325E58  CG_LocationTraceDobjCalcPose  (cgame/cg_world.cpp:174)
 
-void CG_LocationTraceDobjCalcPose(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+void CG_LocationTraceDobjCalcPose(DObj *param_1,cpose_t *param_2,int *param_3)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
   int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0xaf,0,0xffffffff82000f98,0xffffffff8200260c);
+  uVar3 = (ulonglong)(int)param_2;
+  pDVar1 = (DObj *)__savegprlr_27(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0xaf,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0xb0,0,0xffffffff82000f98,0xffffffff82013bec);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0xb0,0,
+                    "%s");
   }
-  DObjLock(uVar1);
-  CG_DObjCalcPose(param_2,uVar1,param_3);
-  DObjUnlock(uVar1);
-  iVar2 = DObjSkelAreBonesUpToDate(uVar1,param_3);
+  DObjLock(pDVar1);
+  CG_DObjCalcPose((cpose_t *)uVar3,pDVar1,param_3);
+  DObjUnlock(pDVar1);
+  iVar2 = DObjSkelAreBonesUpToDate(pDVar1,param_3);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0xbc,0,0xffffffff82000f98,0xffffffff8202b9bc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0xbc,0,
+                    "%s");
   }
   __restgprlr_27();
   return;
@@ -189,67 +223,86 @@ void CG_LocationTraceDobjCalcPose(undefined8 param_1,ulonglong param_2,undefined
 
 // 82325F20  CG_IsEntityLinked  (cgame/cg_world.cpp:196)
 
-void CG_IsEntityLinked(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CG_IsEntityLinked(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  short *psVar2;
+  LocalClientNum_t LVar1;
+  CgEntCollNode *pCVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,199,0,0xffffffff8200d150,uVar1);
+  uVar4 = (ulonglong)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uint)cl_maxLocalClients <= LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",199,0,
+                    "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,200,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",200,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  psVar2 = (short *)CG_GetEntityCollNode(uVar1,param_2);
-  __restgprlr_29(*psVar2 != 0);
-  return;
+  pCVar2 = CG_GetEntityCollNode(LVar1,(int)uVar4);
+  uVar3 = __restgprlr_29(pCVar2->sector != 0);
+  return (bool)uVar3;
 }
 
 
 // 82325FB0  CG_EntityNeedsLinked  (cgame/cg_world.cpp:212)
 
-void CG_EntityNeedsLinked(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool CG_EntityNeedsLinked(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  longlong lVar2;
+  LocalClientNum_t LVar1;
+  centity_s *pcVar2;
+  undefined1 uVar4;
+  DObj *pDVar3;
+  ulonglong uVar5;
   
-  uVar1 = __savegprlr_29();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0xd8,0,0xffffffff8200d150,uVar1);
+  uVar5 = (ulonglong)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uint)cl_maxLocalClients <= LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0xd8,0,
+                    "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0xd9,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0xd9,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  iVar3 = CG_GetEntity(uVar1,param_2);
-  if (*(int *)(iVar3 + 0x160) != 0) {
-    __restgprlr_29(1);
-    return;
+  pcVar2 = CG_GetEntity(LVar1,(int)uVar5);
+  if ((pcVar2->nextState).solid != 0) {
+    uVar4 = __restgprlr_29(1);
+    return (bool)uVar4;
   }
-  lVar2 = CG_LocationalTraceDObj(uVar1,iVar3,param_2);
-  __restgprlr_29(lVar2 != 0);
-  return;
+  pDVar3 = CG_LocationalTraceDObj(LVar1,pcVar2,(int)uVar5);
+  uVar4 = __restgprlr_29(pDVar3 != (DObj *)0x0);
+  return (bool)uVar4;
 }
 
 
 // 82325958  Trace_SetHitId  (qcommon/cm_public.h:237)
 
-void Trace_SetHitId(undefined8 param_1,undefined4 param_2,ulonglong param_3)
+void Trace_SetHitId(trace_t *param_1,TraceHitType param_2,uint param_3)
 
 {
   undefined4 *puVar1;
+  ulonglong uVar2;
   
-  puVar1 = (undefined4 *)__savegprlr_27();
+  uVar2 = (ulonglong)(int)param_3;
+  puVar1 = (undefined4 *)__savegprlr_27(param_1);
   if (puVar1 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8202b918,0xee,0,0xffffffff82000f98,0xffffffff8202b910);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../qcommon/cm_public.h"
+                    ,0xee,0,"%s");
   }
   puVar1[7] = param_2;
-  *(short *)(puVar1 + 8) = (short)param_3;
-  if ((param_3 & 0xffff) != (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b918,0xf1,0,0xffffffff82000f98,0xffffffff8202b8f8);
+  *(short *)(puVar1 + 8) = (short)uVar2;
+  if ((uVar2 & 0xffff) != (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../qcommon/cm_public.h"
+                    ,0xf1,0,"%s");
   }
   puVar1[9] = *puVar1;
   __restgprlr_27();
@@ -259,207 +312,237 @@ void Trace_SetHitId(undefined8 param_1,undefined4 param_2,ulonglong param_3)
 
 // 82326068  CG_UnlinkEntity  (cgame/cg_world.cpp:241)
 
-void CG_UnlinkEntity(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_UnlinkEntity(LocalClientNum_t param_1,int param_2)
 
 {
   Profile_Begin(0x29);
   CG_UnlinkEntityColl(param_1,param_2);
-  Profile_EndInternal(0);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 823260B8  CG_LinkEntity  (cgame/cg_world.cpp:252)
 
-void CG_LinkEntity(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_LinkEntity(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  undefined1 auStack_60 [32];
-  undefined1 auStack_40 [64];
+  LocalClientNum_t LVar1;
+  centity_s *pcVar2;
+  DObj *pDVar3;
+  int iVar4;
+  ulonglong uVar5;
+  Bounds BStack_60;
+  Bounds aBStack_40 [2];
   
-  uVar1 = __savegprlr_29();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x103,0,0xffffffff8200d150,uVar1);
+  uVar5 = (ulonglong)param_2;
+  LVar1 = __savegprlr_29(param_1);
+  if ((uint)cl_maxLocalClients <= LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x103,0,
+                    "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x104,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x104,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
   Profile_Begin(0x2a);
-  iVar3 = CG_GetEntity(uVar1,param_2);
-  uVar2 = Com_GetClientDObj(param_2,uVar1);
-  if ((uVar2 & 0xffffffff) != 0) {
-    CG_GetEntityDobjBounds(iVar3,uVar2,auStack_60);
-    CG_LinkEntityColl(uVar1,param_2,auStack_60);
-    Profile_EndInternal(0);
-    __restgprlr_29();
+  iVar4 = (int)uVar5;
+  pcVar2 = CG_GetEntity(LVar1,iVar4);
+  pDVar3 = Com_GetClientDObj(iVar4,LVar1);
+  if (pDVar3 != (DObj *)0x0) {
+    CG_GetEntityDobjBounds(pcVar2,pDVar3,&BStack_60);
+    CG_LinkEntityColl(LVar1,iVar4,&BStack_60);
+    iVar4 = Profile_EndInternal((double *)0x0);
+    __restgprlr_29(iVar4);
     return;
   }
-  if (*(int *)(iVar3 + 0x160) != 0) {
-    CG_GetEntityBModelBounds(iVar3,auStack_40,auStack_60);
-    CG_LinkEntityColl(uVar1,param_2,auStack_60);
-    Profile_EndInternal(0);
-    __restgprlr_29();
+  if ((pcVar2->nextState).solid != 0) {
+    CG_GetEntityBModelBounds(pcVar2,aBStack_40,&BStack_60);
+    CG_LinkEntityColl(LVar1,iVar4,&BStack_60);
+    iVar4 = Profile_EndInternal((double *)0x0);
+    __restgprlr_29(iVar4);
     return;
   }
-  Profile_Begin(0x29,uVar2);
-  CG_UnlinkEntityColl(uVar1,param_2);
-  Profile_EndInternal(0);
-  Profile_EndInternal(0);
-  __restgprlr_29();
+  Profile_Begin(0x29);
+  CG_UnlinkEntityColl(LVar1,iVar4);
+  Profile_EndInternal((double *)0x0);
+  iVar4 = Profile_EndInternal((double *)0x0);
+  __restgprlr_29(iVar4);
   return;
 }
 
 
 // 823261F0  CG_CalcTraceEndIfNotCulled  (cgame/cg_world.cpp:300)
 
-void CG_CalcTraceEndIfNotCulled
-               (undefined8 param_1,undefined8 param_2,float *param_3,ulonglong param_4,
-               undefined8 param_5,float *param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_CalcTraceEndIfNotCulled
+              (LocalClientNum_t param_1,int param_2,float *param_3,int param_4,int param_5,
+              float *param_6)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  LocalClientNum_t LVar3;
+  centity_s *pcVar4;
+  DObj *pDVar5;
+  int iVar6;
+  DObjAnimMat *pDVar7;
+  ulonglong uVar8;
   byte local_50 [4];
   float local_4c;
   
-  uVar4 = __savegprlr_24();
-  if (3 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x139,0,0xffffffff820011a8,uVar4,4);
+  uVar8 = (ulonglong)param_4;
+  LVar3 = __savegprlr_24(param_1);
+  if (LOCAL_CLIENT_3 < LVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x139,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (param_4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x13a,0,0xffffffff82010c04,param_4,0x800);
+  if (0x7ff < (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x13a,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  iVar5 = CG_GetEntity(uVar4,param_4);
-  DAT_82a771fc = iVar5;
-  if (*(char *)(iVar5 + 3) != '\0') {
-    if ((int)param_5 == 0) {
-      *param_6 = *(float *)(iVar5 + 0x14);
-      fVar1 = *(float *)(iVar5 + 0x18);
+  pcVar4 = CG_GetEntity(LVar3,(int)uVar8);
+  g_cent = pcVar4;
+  if ((pcVar4->pose).cullIn != '\0') {
+    if (param_5 == 0) {
+      *param_6 = (pcVar4->pose).origin[0];
+      fVar1 = (pcVar4->pose).origin[1];
       param_6[1] = fVar1;
-      fVar2 = *(float *)(iVar5 + 0x1c);
+      fVar2 = (pcVar4->pose).origin[2];
       param_6[2] = fVar2;
       local_4c = *param_6;
       if (((((uint)*param_6 & 0x7f800000) == 0x7f800000) ||
           (local_4c = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
          (local_4c = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
-        MyAssertHandler(0xffffffff8202b970,0x19e,0,0xffffffff82000f98,0xffffffff8202abfc);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x19e,
+                        0,"%s");
       }
-      __restgprlr_24(1);
-      return;
+      iVar6 = __restgprlr_24(1);
+      return iVar6;
     }
-    DAT_82a771f4 = 0;
-    uVar4 = Com_GetClientDObj(param_4,uVar4);
-    if ((uVar4 & 0xffffffff) != 0) {
-      DAT_82a771f4 = (undefined4)uVar4;
-      DObjLock();
-      iVar5 = DObjSkelExistsConst(uVar4,param_2);
-      if (iVar5 != 0) {
+    g_dobj = (DObj *)0x0;
+    pDVar5 = Com_GetClientDObj((int)uVar8,LVar3);
+    if (pDVar5 != (DObj *)0x0) {
+      g_dobj = pDVar5;
+      DObjLock(pDVar5);
+      iVar6 = DObjSkelExistsConst(pDVar5,param_2);
+      if (iVar6 != 0) {
         local_50[0] = 0xfe;
-        DAT_82a771ec = 0xffffffff;
-        iVar5 = DObjGetBoneIndex(uVar4,param_5,local_50);
-        if (iVar5 != 0) {
-          DAT_82a771ec = (uint)local_50[0];
-          iVar5 = DObjSkelIsBoneUpToDate(uVar4);
-          if (iVar5 != 0) {
-            DAT_82a771f8 = 0;
-            iVar5 = DObjGetRotTransArray(uVar4);
-            if (iVar5 != 0) {
-              iVar3 = (uint)local_50[0] * 0x20 + iVar5;
-              local_4c = *(float *)(iVar3 + 0x10) + *param_3;
-              DAT_82a771f8 = iVar5;
+        g_boneIndex = -1;
+        iVar6 = DObjGetBoneIndex(pDVar5,param_5,local_50);
+        if (iVar6 != 0) {
+          g_boneIndex = (int)local_50[0];
+          iVar6 = DObjSkelIsBoneUpToDate(pDVar5,g_boneIndex);
+          if (iVar6 != 0) {
+            g_mat = (DObjAnimMat *)0x0;
+            pDVar7 = DObjGetRotTransArray(pDVar5);
+            if (pDVar7 != (DObjAnimMat *)0x0) {
+              local_4c = pDVar7[local_50[0]].trans[0] + *param_3;
+              g_mat = pDVar7;
               *param_6 = local_4c;
-              fVar1 = *(float *)(iVar3 + 0x14) + param_3[1];
+              fVar1 = pDVar7[local_50[0]].trans[1] + param_3[1];
               param_6[1] = fVar1;
-              fVar2 = *(float *)(iVar3 + 0x18) + param_3[2];
+              fVar2 = pDVar7[local_50[0]].trans[2] + param_3[2];
               param_6[2] = fVar2;
               if (((((uint)local_4c & 0x7f800000) == 0x7f800000) ||
                   (local_4c = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
                  (local_4c = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
-                MyAssertHandler(0xffffffff8202b970,0x191,0,0xffffffff82000f98,0xffffffff8202abfc);
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp"
+                                ,0x191,0,"%s");
               }
-              DObjUnlock(uVar4);
-              __restgprlr_24(1);
-              return;
+              DObjUnlock(pDVar5);
+              iVar6 = __restgprlr_24(1);
+              return iVar6;
             }
           }
         }
       }
-      DObjUnlock(uVar4);
+      DObjUnlock(pDVar5);
     }
   }
-  __restgprlr_24(0);
-  return;
+  iVar6 = __restgprlr_24(0);
+  return iVar6;
 }
 
 
 // 82326490  CG_ClipMoveToEntity  (cgame/cg_world.cpp:426)
 
-void CG_ClipMoveToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_ClipMoveToEntity(moveclip_t *param_1,int param_2,trace_t *param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  float *pfVar5;
-  double dVar6;
-  undefined1 auStack_80 [12];
-  float local_74;
-  float local_70;
-  float local_6c;
-  undefined1 auStack_60 [96];
+  Bounds *pBVar1;
+  LocalClientNum_t LVar2;
+  centity_s *pcVar3;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  trace_t *ptVar8;
+  double dVar9;
+  Bounds BStack_80;
+  Bounds aBStack_60 [4];
   
-  iVar2 = __savegprlr_25();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x1b5,0,0xffffffff82000f98,0xffffffff8202ba10);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)param_2;
+  pBVar1 = (Bounds *)__savegprlr_25(param_1);
+  if (pBVar1 == (Bounds *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x1b5,0,
+                    "%s");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x1b6,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar6 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x1b6,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x1b7,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x1b7,0,
+                    "%s");
   }
-  uVar1 = CG_GetCollWorldLocalClientNum();
-  iVar3 = CG_GetEntity(uVar1,param_2);
-  if ((int)param_2 == *(int *)(iVar2 + 0x90)) {
-    MyAssertHandler(0xffffffff8202b970,0x1c0,0,0xffffffff82000f98,0xffffffff8202b9e8);
+  LVar2 = CG_GetCollWorldLocalClientNum();
+  pcVar3 = CG_GetEntity(LVar2,(int)(float)uVar6);
+  if ((float)uVar6 == pBVar1[6].midPoint[0]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x1c0,0,
+                    "%s");
   }
-  if ((*(int *)(iVar3 + 0x160) != 0) &&
-     ((*(int *)(iVar3 + 0x160) != 0xffffff || ((*(uint *)(iVar3 + 0xcc) & 1) == 0)))) {
-    uVar1 = CG_GetEntityBModelContents(iVar3);
-    if ((*(uint *)(iVar2 + 0x98) & (uint)uVar1) != 0) {
-      CG_GetEntityBModelBounds(iVar3,auStack_60,auStack_80);
-      pfVar5 = (float *)param_3;
-      local_74 = *(float *)(iVar2 + 0xc) + local_74 + 1.0;
-      local_70 = *(float *)(iVar2 + 0x10) + local_70 + 1.0;
-      local_6c = *(float *)(iVar2 + 0x14) + local_6c + 1.0;
-      iVar4 = CM_TraceBox((double)*pfVar5,iVar2 + 0x30,auStack_80);
-      if (iVar4 == 0) {
-        dVar6 = (double)*pfVar5;
-        if (*(int *)(iVar3 + 0x160) == 0xffffff) {
-          CM_TransformedBrushModelTrace
-                    (param_3,iVar2 + 0x70,iVar2 + 0x80,iVar2,*(undefined4 *)(iVar3 + 0x150),
-                     *(undefined4 *)(iVar2 + 0x98),iVar3 + 0x14,iVar3 + 0x20);
-        }
-        else if ((*(uint *)(iVar2 + 0x98) & (uint)uVar1) != 0) {
-          CM_TransformedCapsuleTrace
-                    (param_3,iVar2 + 0x70,iVar2 + 0x80,iVar2,auStack_60,uVar1,iVar3 + 0x14,
-                     0xffffffff82179fd8);
-        }
-        if ((double)*pfVar5 < dVar6) {
-          *(undefined2 *)(pfVar5 + 10) = 0;
-          *(undefined2 *)((int)pfVar5 + 0x2a) = 0;
-          *(undefined2 *)(pfVar5 + 0xb) = 0;
-          Trace_SetHitId(param_3,1,*(undefined4 *)(iVar3 + 0xc4));
-          if ((*(uint *)(iVar3 + 0xcc) & 0x1000000) != 0) {
-            pfVar5[4] = (float)((uint)pfVar5[4] | 0x1000);
-          }
+  iVar5 = (pcVar3->nextState).solid;
+  if ((iVar5 != 0) &&
+     (((iVar5 != 0xffffff || (((pcVar3->nextState).lerp.eFlags & 1U) == 0)) &&
+      (uVar4 = CG_GetEntityBModelContents(pcVar3), ((uint)pBVar1[6].midPoint[2] & uVar4) != 0)))) {
+    CG_GetEntityBModelBounds(pcVar3,aBStack_60,&BStack_80);
+    ptVar8 = (trace_t *)uVar7;
+    BStack_80.halfSize[0] = pBVar1->halfSize[0] + BStack_80.halfSize[0] + 1.0;
+    BStack_80.halfSize[1] = pBVar1->halfSize[1] + BStack_80.halfSize[1] + 1.0;
+    BStack_80.halfSize[2] = pBVar1->halfSize[2] + BStack_80.halfSize[2] + 1.0;
+    iVar5 = CM_TraceBox((TraceExtents *)(pBVar1 + 2),&BStack_80,ptVar8->fraction);
+    if (iVar5 == 0) {
+      dVar9 = (double)ptVar8->fraction;
+      if ((pcVar3->nextState).solid == 0xffffff) {
+        CM_TransformedBrushModelTrace
+                  (ptVar8,pBVar1[4].halfSize + 1,pBVar1[5].midPoint + 2,pBVar1,
+                   (pcVar3->nextState).index.brushModel,(int)pBVar1[6].midPoint[2],
+                   (pcVar3->pose).origin,(pcVar3->pose).angles);
+      }
+      else if (((uint)pBVar1[6].midPoint[2] & uVar4) != 0) {
+        CM_TransformedCapsuleTrace
+                  (ptVar8,pBVar1[4].halfSize + 1,pBVar1[5].midPoint + 2,pBVar1,aBStack_60,uVar4,
+                   (pcVar3->pose).origin,vec3_origin);
+      }
+      if ((double)ptVar8->fraction < dVar9) {
+        ptVar8->modelIndex = 0;
+        ptVar8->partName = 0;
+        ptVar8->partGroup = 0;
+        Trace_SetHitId(ptVar8,TRACE_HITTYPE_ENTITY,(pcVar3->nextState).number);
+        if (((pcVar3->nextState).lerp.eFlags & 0x1000000U) != 0) {
+          ptVar8->surfaceFlags = ptVar8->surfaceFlags | 0x1000;
         }
       }
     }
@@ -471,155 +554,172 @@ void CG_ClipMoveToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 823266E0  CG_ClipMoveToEntities_r  (cgame/cg_world.cpp:495)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CG_ClipMoveToEntities_r
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5)
+               (moveclip_t *param_1,ushort param_2,float *param_3,float *param_4,trace_t *param_5)
 
 {
   float fVar1;
-  ushort uVar2;
-  float fVar3;
+  float fVar2;
+  ushort uVar3;
   float fVar4;
-  float *pfVar5;
-  float fVar6;
-  int iVar8;
-  undefined8 uVar7;
-  float *pfVar9;
+  float fVar5;
+  moveclip_t *pmVar6;
+  LocalClientNum_t LVar7;
+  CgEntCollSector *pCVar8;
+  CgEntCollNode *pCVar9;
   int iVar10;
-  float *pfVar11;
-  longlong lVar12;
+  ulonglong uVar11;
+  float *pfVar12;
   ulonglong uVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
+  ulonglong uVar14;
+  trace_t *ptVar15;
+  ulonglong uVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   float local_b0 [4];
   float local_a0;
   float local_9c;
   float local_98;
   float local_94;
   
-  __savegprlr_20();
-  iVar8 = __savefpr_28();
-  if (iVar8 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x204,0,0xffffffff82000f98,0xffffffff8202ba10);
+  uVar14 = (ulonglong)(int)param_5;
+  uVar13 = (ulonglong)(int)param_4;
+  uVar11 = (ulonglong)(int)param_3;
+  uVar16 = (ulonglong)(short)param_2;
+  __savegprlr_20(param_1);
+  pmVar6 = (moveclip_t *)__savefpr_28();
+  if (pmVar6 == (moveclip_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x204,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x205,0,0xffffffff82000f98,0xffffffff8202ba8c);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x205,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x206,0,0xffffffff82000f98,0xffffffff8202ba88);
+  if ((uVar13 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x206,0,
+                    "%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x207,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar14 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x207,0,
+                    "%s");
   }
-  pfVar11 = (float *)param_5;
-  dVar16 = 1.0;
-  if (1.0 < (double)*pfVar11) {
-    MyAssertHandler(0xffffffff8202b970,0x208,0,0xffffffff8202ba4c,0xffffffff8202ba6c,
-                    (double)*pfVar11);
+  ptVar15 = (trace_t *)uVar14;
+  dVar19 = 1.0;
+  if (1.0 < ptVar15->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x208,0,
+                    "%s\n\t(results->fraction) = %g");
   }
-  uVar7 = CG_GetCollWorldLocalClientNum();
-  pfVar9 = (float *)param_3;
-  local_b0[0] = *pfVar9;
-  local_b0[1] = pfVar9[1];
-  local_b0[2] = pfVar9[2];
-  local_b0[3] = pfVar9[3];
-  if ((param_2 & 0xffff) != 0) {
-    dVar17 = 0.0;
+  LVar7 = CG_GetCollWorldLocalClientNum();
+  pfVar12 = (float *)uVar11;
+  local_b0[0] = *pfVar12;
+  local_b0[1] = pfVar12[1];
+  local_b0[2] = pfVar12[2];
+  local_b0[3] = pfVar12[3];
+  if ((uVar16 & 0xffff) != 0) {
+    dVar20 = 0.0;
     do {
-      pfVar9 = (float *)CG_GetEntityCollSector(uVar7,param_2);
-      uVar2 = *(ushort *)(pfVar9 + 3);
-      while ((ulonglong)uVar2 != 0) {
-        lVar12 = (ulonglong)uVar2 - 1;
-        iVar10 = CG_GetEntityCollNode(uVar7,lVar12);
-        if ((int)lVar12 != *(int *)(iVar8 + 0x90)) {
+      pCVar8 = CG_GetEntityCollSector(LVar7,(ushort)uVar16);
+      uVar3 = pCVar8->entListHead;
+      while (uVar3 != 0) {
+        iVar10 = uVar3 - 1;
+        pCVar9 = CG_GetEntityCollNode(LVar7,iVar10);
+        if (iVar10 != pmVar6->passEntityNum) {
           Profile_Begin(0x30);
-          CG_ClipMoveToEntity(iVar8,lVar12,param_5);
-          Profile_EndInternal(0);
-          if ((*(char *)((int)pfVar11 + 0x2e) != '\0') || ((double)*pfVar11 == dVar17))
+          CG_ClipMoveToEntity(pmVar6,iVar10,ptVar15);
+          Profile_EndInternal((double *)0x0);
+          if ((ptVar15->allsolid != false) || ((double)ptVar15->fraction == dVar20))
           goto LAB_82326a9c;
         }
-        uVar2 = *(ushort *)(iVar10 + 2);
+        uVar3 = pCVar9->nextEntInSector;
       }
-      uVar2 = *(ushort *)(pfVar9 + 1);
-      pfVar5 = (float *)param_4;
-      fVar3 = local_b0[uVar2] - *pfVar9;
-      fVar4 = pfVar5[uVar2] - *pfVar9;
-      fVar1 = *(float *)((uVar2 + 6) * 4 + iVar8);
-      dVar15 = (double)(fVar4 - fVar3);
-      fVar6 = fVar3;
-      if (dVar15 < 0.0) {
-        fVar6 = fVar4;
+      uVar3 = (pCVar8->tree).axis;
+      fVar1 = (pCVar8->tree).dist;
+      pfVar12 = (float *)uVar13;
+      fVar4 = local_b0[uVar3] - fVar1;
+      fVar1 = pfVar12[uVar3] - fVar1;
+      fVar2 = pmVar6->outerSize[uVar3];
+      dVar18 = (double)(fVar1 - fVar4);
+      fVar5 = fVar4;
+      if (dVar18 < 0.0) {
+        fVar5 = fVar1;
       }
-      if (fVar6 < fVar1) {
-        fVar6 = fVar3;
-        if (fVar3 - fVar4 < 0.0) {
-          fVar6 = fVar4;
+      if (fVar5 < fVar2) {
+        fVar5 = fVar4;
+        if (fVar4 - fVar1 < 0.0) {
+          fVar5 = fVar1;
         }
-        if (-fVar1 < fVar6) {
-          dVar14 = (double)local_b0[3];
-          if ((double)*pfVar11 <= dVar14) break;
-          if (dVar15 == dVar17) {
-            uVar13 = 0;
-            dVar15 = dVar17;
-            dVar18 = dVar16;
+        if (-fVar2 < fVar5) {
+          dVar17 = (double)local_b0[3];
+          if ((double)ptVar15->fraction <= dVar17) break;
+          if (dVar18 == dVar20) {
+            uVar16 = 0;
+            dVar18 = dVar20;
+            dVar21 = dVar19;
           }
           else {
-            dVar18 = dVar16;
-            fVar4 = -fVar3;
-            if (dVar15 < 0.0) {
-              dVar18 = dVar17;
-              fVar4 = fVar3;
+            fVar1 = -fVar4;
+            dVar21 = dVar19;
+            if (dVar18 < 0.0) {
+              fVar1 = fVar4;
+              dVar21 = dVar20;
             }
-            uVar13 = (ulonglong)(uint)(int)dVar18;
-            dVar18 = (double)((fVar4 + fVar1) * (float)(dVar16 / ABS(dVar15)));
-            dVar15 = (double)((fVar4 - fVar1) * (float)(dVar16 / ABS(dVar15)));
-            if (dVar18 < dVar17) {
-              MyAssertHandler(0xffffffff8202b970,0x249,0,0xffffffff82000f98,0xffffffff8202ba18);
-              dVar14 = (double)local_b0[3];
+            uVar16 = (ulonglong)(uint)(int)dVar21;
+            dVar21 = (double)((fVar1 + fVar2) * (float)(dVar19 / ABS(dVar18)));
+            dVar18 = (double)((fVar1 - fVar2) * (float)(dVar19 / ABS(dVar18)));
+            if (dVar21 < dVar20) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                              0x249,0,"%s");
+              dVar17 = (double)local_b0[3];
             }
           }
-          if ((float)(dVar16 - dVar18) < 0.0) {
-            dVar18 = dVar16;
+          if ((float)(dVar19 - dVar21) < 0.0) {
+            dVar21 = dVar19;
           }
-          local_a0 = (float)((double)(float)((double)*pfVar5 - (double)local_b0[0]) * dVar18 +
+          local_a0 = (float)((double)(float)((double)*pfVar12 - (double)local_b0[0]) * dVar21 +
                             (double)local_b0[0]);
-          local_9c = (float)((double)(float)((double)pfVar5[1] - (double)local_b0[1]) * dVar18 +
+          local_9c = (float)((double)(float)((double)pfVar12[1] - (double)local_b0[1]) * dVar21 +
                             (double)local_b0[1]);
-          local_98 = (float)((double)(float)((double)pfVar5[2] - (double)local_b0[2]) * dVar18 +
+          local_98 = (float)((double)(float)((double)pfVar12[2] - (double)local_b0[2]) * dVar21 +
                             (double)local_b0[2]);
-          local_94 = (float)((double)(float)((double)pfVar5[3] - dVar14) * dVar18 + dVar14);
+          local_94 = (float)((double)(float)((double)pfVar12[3] - dVar17) * dVar21 + dVar17);
           CG_ClipMoveToEntities_r
-                    (iVar8,*(undefined2 *)((int)((uVar13 + 4 & 0xffffffff) << 1) + (int)pfVar9),
-                     local_b0,&local_a0,param_5);
-          if ((double)*pfVar11 == dVar17) break;
-          if (dVar16 < dVar15) {
-            MyAssertHandler(dVar15,0xffffffff8202b970,0x255,0,0xffffffff8202ba38,0xffffffff8202ba28,
-                            dVar15);
+                    (pmVar6,*(ushort *)
+                             ((int)(pCVar8->tree).child + (int)((uVar16 + 4 & 0xffffffff) << 1) + -8
+                             ),local_b0,&local_a0,ptVar15);
+          if ((double)ptVar15->fraction == dVar20) break;
+          if (dVar19 < dVar18) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                            0x255,0,"%s\n\t(frac2) = %g");
           }
-          if (dVar15 < 0.0) {
-            dVar15 = dVar17;
+          if (dVar18 < 0.0) {
+            dVar18 = dVar20;
           }
-          local_b0[1] = (float)((double)(float)((double)pfVar5[1] - (double)local_b0[1]) * dVar15 +
+          local_b0[1] = (float)((double)(float)((double)pfVar12[1] - (double)local_b0[1]) * dVar18 +
                                (double)local_b0[1]);
-          local_b0[2] = (float)((double)(float)((double)pfVar5[2] - (double)local_b0[2]) * dVar15 +
+          local_b0[2] = (float)((double)(float)((double)pfVar12[2] - (double)local_b0[2]) * dVar18 +
                                (double)local_b0[2]);
-          local_b0[3] = (float)((double)(float)((double)pfVar5[3] - (double)local_b0[3]) * dVar15 +
+          local_b0[3] = (float)((double)(float)((double)pfVar12[3] - (double)local_b0[3]) * dVar18 +
                                (double)local_b0[3]);
-          local_b0[0] = (float)((double)(float)((double)*pfVar5 - (double)local_b0[0]) * dVar15 +
+          local_b0[0] = (float)((double)(float)((double)*pfVar12 - (double)local_b0[0]) * dVar18 +
                                (double)local_b0[0]);
-          param_2 = (ulonglong)*(ushort *)((int)((5 - uVar13 & 0xffffffff) << 1) + (int)pfVar9);
+          uVar16 = (ulonglong)
+                   *(ushort *)
+                    ((int)(pCVar8->tree).child + (int)((5 - uVar16 & 0xffffffff) << 1) + -8);
         }
         else {
-          param_2 = (ulonglong)*(ushort *)((int)pfVar9 + 10);
+          uVar16 = (ulonglong)(pCVar8->tree).child[1];
         }
       }
       else {
-        param_2 = (ulonglong)*(ushort *)(pfVar9 + 2);
+        uVar16 = (ulonglong)(pCVar8->tree).child[0];
       }
-    } while (param_2 != 0);
+    } while (uVar16 != 0);
   }
 LAB_82326a9c:
   __restfpr_28();
@@ -630,221 +730,239 @@ LAB_82326a9c:
 
 // 82326AC0  CG_ClipMoveToEntities  (cgame/cg_world.cpp:614)
 
-void CG_ClipMoveToEntities(undefined8 param_1,ulonglong param_2)
+void CG_ClipMoveToEntities(moveclip_t *param_1,trace_t *param_2)
 
 {
-  int iVar1;
-  float *pfVar2;
-  double dVar3;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
+  moveclip_t *pmVar1;
+  int iVar2;
+  ulonglong uVar3;
+  trace_t *ptVar4;
+  double dVar5;
+  float local_50;
+  float local_4c;
+  float local_48;
   float local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_40;
+  float local_3c;
+  float local_38;
   float local_34;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x26d,0,0xffffffff82000f98,0xffffffff8202ba10);
+  uVar3 = (ulonglong)(int)param_2;
+  pmVar1 = (moveclip_t *)__savegprlr_28(param_1);
+  if (pmVar1 == (moveclip_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x26d,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x26e,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x26e,0,
+                    "%s");
   }
-  pfVar2 = (float *)param_2;
-  dVar3 = 0.0;
-  if ((double)*pfVar2 <= 0.0) {
-    MyAssertHandler(0xffffffff8202b970,0x26f,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar2
-                   );
+  ptVar4 = (trace_t *)uVar3;
+  dVar5 = 0.0;
+  if (ptVar4->fraction <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x26f,0,
+                    "%s\n\t(results->fraction) = %g");
   }
-  if (1.0 < (double)*pfVar2) {
-    MyAssertHandler(0xffffffff8202b970,0x270,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar2
-                   );
+  if (1.0 < ptVar4->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x270,0,
+                    "%s\n\t(results->fraction) = %g");
   }
   Profile_Begin(0x2f);
-  local_50 = *(undefined4 *)(iVar1 + 0x70);
-  local_4c = *(undefined4 *)(iVar1 + 0x74);
-  local_48 = *(undefined4 *)(iVar1 + 0x78);
-  local_40 = *(undefined4 *)(iVar1 + 0x80);
-  local_3c = *(undefined4 *)(iVar1 + 0x84);
-  local_38 = *(undefined4 *)(iVar1 + 0x88);
-  local_34 = *pfVar2;
-  local_44 = (float)dVar3;
-  CG_ClipMoveToEntities_r(iVar1,1,&local_50,&local_40,param_2);
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  local_50 = (pmVar1->extents).start[0];
+  local_4c = (pmVar1->extents).start[1];
+  local_48 = (pmVar1->extents).start[2];
+  local_40 = (pmVar1->extents).end[0];
+  local_3c = (pmVar1->extents).end[1];
+  local_38 = (pmVar1->extents).end[2];
+  local_34 = ptVar4->fraction;
+  local_44 = (float)dVar5;
+  CG_ClipMoveToEntities_r(pmVar1,1,&local_50,&local_40,ptVar4);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar2);
   return;
 }
 
 
 // 82326C18  CG_PointTraceToEntity  (cgame/cg_world.cpp:643)
 
-void CG_PointTraceToEntity(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CG_PointTraceToEntity(pointtrace_t *param_1,int param_2,trace_t *param_3)
 
 {
-  float *pfVar1;
-  int iVar6;
-  undefined8 uVar2;
+  trace_t *ptVar1;
+  TraceExtents *pTVar2;
+  LocalClientNum_t LVar3;
+  centity_s *pcVar4;
+  DObj *pDVar5;
+  uint uVar6;
   int iVar7;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  undefined8 uVar5;
-  int iVar8;
-  double dVar9;
+  cg_s *pcVar8;
+  XAnimTree *pXVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  float *pfVar12;
+  double dVar13;
   float local_110;
   float local_10c;
   float local_108;
   float local_100;
   float local_fc;
   float local_f8;
-  float local_f0;
-  float local_ec;
-  float local_e8;
-  float local_e4;
-  float local_e0;
-  undefined2 local_dc;
-  undefined2 local_da;
-  undefined2 local_d8;
-  undefined1 auStack_d0 [32];
-  undefined1 auStack_b0 [32];
-  undefined1 auStack_90 [36];
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
+  DObjTrace_s local_f0;
+  int aiStack_d0 [8];
+  Bounds BStack_b0;
+  float afStack_90 [9];
+  float local_6c;
+  float local_68;
+  float local_64;
   
-  iVar6 = __savegprlr_22();
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x295,0,0xffffffff82000f98,0xffffffff8202ba10);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)param_2;
+  pTVar2 = (TraceExtents *)__savegprlr_22(param_1);
+  if (pTVar2 == (TraceExtents *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x295,0,
+                    "%s");
   }
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x296,0,0xffffffff82010c04,param_2,0x800);
+  if (0x7ff < (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x296,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x297,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x297,0,
+                    "%s");
   }
-  uVar2 = CG_GetCollWorldLocalClientNum();
-  iVar7 = CG_GetEntity(uVar2,param_2);
-  if ((int)param_2 == **(int **)(iVar6 + 0x60)) {
-    uVar3 = va(0xffffffff8202bb10,param_2);
-    MyAssertHandler(0xffffffff8202b970,0x2a0,0,0xffffffff820011f4,0xffffffff8202bae0,uVar3);
+  LVar3 = CG_GetCollWorldLocalClientNum();
+  iVar7 = (int)uVar10;
+  pcVar4 = CG_GetEntity(LVar3,iVar7);
+  if (iVar7 == *(int *)pTVar2[1].midPoint[0]) {
+    va("entIndex=%d baseEntity=%d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x2a0,0,
+                    "%s\n\t%s");
   }
-  if (*(int *)(iVar6 + 0x68) == 0) {
-    uVar4 = 0;
+  if (pTVar2[1].midPoint[2] == 0.0) {
+    pDVar5 = (DObj *)0x0;
   }
   else {
-    uVar4 = CG_LocationalTraceDObj(uVar2,iVar7,param_2);
+    pDVar5 = CG_LocationalTraceDObj(LVar3,pcVar4,iVar7);
   }
-  pfVar1 = (float *)param_3;
-  if (*(int *)(iVar7 + 0x160) == 0) {
-    if ((uVar4 & 0xffffffff) == 0) goto LAB_823271bc;
+  iVar7 = (pcVar4->nextState).solid;
+  ptVar1 = (trace_t *)uVar11;
+  if (iVar7 == 0) {
+    if (pDVar5 == (DObj *)0x0) goto LAB_823271bc;
 LAB_82326d5c:
-    uVar3 = DObjGetContentsLocal(uVar4);
-    if ((*(uint *)(iVar6 + 100) & (uint)uVar3) == 0) goto LAB_823271bc;
-    if (*(int *)(iVar6 + 0x6c) == 0) {
-      uVar5 = CL_GetSkelTimeStamp();
-      iVar8 = DObjSkelExistsConst(uVar4,uVar5);
-      if (iVar8 == 0) goto LAB_823271bc;
+    uVar6 = DObjGetContentsLocal(pDVar5);
+    if (((uint)pTVar2[1].midPoint[1] & uVar6) == 0) goto LAB_823271bc;
+    if (pTVar2[1].midPointPad == 0.0) {
+      iVar7 = CL_GetSkelTimeStamp();
+      iVar7 = DObjSkelExistsConst(pDVar5,iVar7);
+      if (iVar7 == 0) goto LAB_823271bc;
     }
-    CG_GetEntityDobjBounds(iVar7,uVar4,auStack_b0);
-    iVar8 = CM_TraceBox((double)*pfVar1,iVar6,auStack_b0);
-    if (iVar8 != 0) goto LAB_823271bc;
-    local_f0 = *pfVar1;
-    if (*(int *)(iVar6 + 0x6c) == 0) {
-      DObjLock(uVar4);
-      iVar8 = DObjGetTree(uVar4);
-      if (iVar8 == 0) {
-        AnglesToAxis(iVar7 + 0x20,auStack_90);
-        local_6c = *(undefined4 *)(iVar7 + 0x14);
-        local_68 = *(undefined4 *)(iVar7 + 0x18);
-        local_64 = *(undefined4 *)(iVar7 + 0x1c);
-        MatrixTransposeTransformVector43(iVar6 + 0x40,auStack_90,&local_110);
-        MatrixTransposeTransformVector43(iVar6 + 0x50,auStack_90,&local_100);
+    CG_GetEntityDobjBounds(pcVar4,pDVar5,&BStack_b0);
+    iVar7 = CM_TraceBox(pTVar2,&BStack_b0,ptVar1->fraction);
+    if (iVar7 != 0) goto LAB_823271bc;
+    local_f0.fraction = ptVar1->fraction;
+    if (pTVar2[1].midPointPad == 0.0) {
+      DObjLock(pDVar5);
+      pXVar9 = DObjGetTree(pDVar5);
+      if (pXVar9 == (XAnimTree *)0x0) {
+        AnglesToAxis((pcVar4->pose).angles,(float (*) [3])afStack_90);
+        local_6c = (pcVar4->pose).origin[0];
+        local_68 = (pcVar4->pose).origin[1];
+        local_64 = (pcVar4->pose).origin[2];
+        MatrixTransposeTransformVector43(pTVar2->start,(float (*) [3])afStack_90,&local_110);
+        MatrixTransposeTransformVector43(pTVar2->end,(float (*) [3])afStack_90,&local_100);
         DObjGeomTracelineInBasePose
-                  (uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+                  (pDVar5,&local_110,&local_100,(int)pTVar2[1].midPoint[1],&local_f0);
       }
       else {
-        uVar5 = CL_GetSkelTimeStamp();
-        iVar8 = DObjSkelExistsConst(uVar4,uVar5);
-        if (iVar8 == 0) {
-          MyAssertHandler(0xffffffff8202b970,0x2ee,0,0xffffffff82000f98,0xffffffff8202baac);
+        iVar7 = CL_GetSkelTimeStamp();
+        iVar7 = DObjSkelExistsConst(pDVar5,iVar7);
+        if (iVar7 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x2ee,0,"%s");
         }
-        DObjGeomTracelinePartBits(uVar4,*(undefined4 *)(iVar6 + 100),auStack_d0);
-        iVar8 = DObjSkelAreBonesUpToDate(uVar4,auStack_d0);
-        if (iVar8 == 0) {
-          DObjUnlock(uVar4);
+        DObjGeomTracelinePartBits(pDVar5,(int)pTVar2[1].midPoint[1],aiStack_d0);
+        iVar7 = DObjSkelAreBonesUpToDate(pDVar5,aiStack_d0);
+        if (iVar7 == 0) {
+          DObjUnlock(pDVar5);
           __restgprlr_22();
           return;
         }
-        iVar8 = CG_GetLocalClientGlobals(uVar2);
-        local_110 = *(float *)(iVar6 + 0x40) - *(float *)(iVar8 + 0x6b9fc);
-        local_10c = *(float *)(iVar6 + 0x44) - *(float *)(iVar8 + 0x6ba00);
-        local_108 = *(float *)(iVar6 + 0x48) - *(float *)(iVar8 + 0x6ba04);
-        local_100 = *(float *)(iVar6 + 0x50) - *(float *)(iVar8 + 0x6b9fc);
-        local_fc = *(float *)(iVar6 + 0x54) - *(float *)(iVar8 + 0x6ba00);
-        local_f8 = *(float *)(iVar6 + 0x58) - *(float *)(iVar8 + 0x6ba04);
-        DObjGeomTraceline(uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+        pcVar8 = CG_GetLocalClientGlobals(LVar3);
+        pfVar12 = (pcVar8->refdef).viewOffset;
+        local_110 = pTVar2->start[0] - *pfVar12;
+        local_10c = pTVar2->start[1] - (pcVar8->refdef).viewOffset[1];
+        local_108 = pTVar2->start[2] - (pcVar8->refdef).viewOffset[2];
+        local_100 = pTVar2->end[0] - *pfVar12;
+        local_fc = pTVar2->end[1] - (pcVar8->refdef).viewOffset[1];
+        local_f8 = pTVar2->end[2] - (pcVar8->refdef).viewOffset[2];
+        DObjGeomTraceline(pDVar5,&local_110,&local_100,(int)pTVar2[1].midPoint[1],&local_f0);
       }
-      DObjUnlock(uVar4);
+      DObjUnlock(pDVar5);
     }
     else {
-      DObjGeomTracelinePartBits(uVar4,*(undefined4 *)(iVar6 + 100),auStack_d0);
-      CG_LocationTraceDobjCalcPose(uVar4,iVar7,auStack_d0);
-      iVar8 = DObjSkelAreBonesUpToDate(uVar4,auStack_d0);
-      if (iVar8 == 0) {
-        MyAssertHandler(0xffffffff8202b970,0x2da,0,0xffffffff82000f98,0xffffffff8202b9bc);
+      DObjGeomTracelinePartBits(pDVar5,(int)pTVar2[1].midPoint[1],aiStack_d0);
+      CG_LocationTraceDobjCalcPose(pDVar5,&pcVar4->pose,aiStack_d0);
+      iVar7 = DObjSkelAreBonesUpToDate(pDVar5,aiStack_d0);
+      if (iVar7 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x2da,
+                        0,"%s");
       }
-      iVar8 = CG_GetLocalClientGlobals(uVar2);
-      local_110 = *(float *)(iVar6 + 0x40) - *(float *)(iVar8 + 0x6b9fc);
-      local_10c = *(float *)(iVar6 + 0x44) - *(float *)(iVar8 + 0x6ba00);
-      local_108 = *(float *)(iVar6 + 0x48) - *(float *)(iVar8 + 0x6ba04);
-      local_100 = *(float *)(iVar6 + 0x50) - *(float *)(iVar8 + 0x6b9fc);
-      local_fc = *(float *)(iVar6 + 0x54) - *(float *)(iVar8 + 0x6ba00);
-      local_f8 = *(float *)(iVar6 + 0x58) - *(float *)(iVar8 + 0x6ba04);
-      DObjGeomTraceline(uVar4,&local_110,&local_100,*(undefined4 *)(iVar6 + 100),&local_f0);
+      pcVar8 = CG_GetLocalClientGlobals(LVar3);
+      pfVar12 = (pcVar8->refdef).viewOffset;
+      local_110 = pTVar2->start[0] - *pfVar12;
+      local_10c = pTVar2->start[1] - (pcVar8->refdef).viewOffset[1];
+      local_108 = pTVar2->start[2] - (pcVar8->refdef).viewOffset[2];
+      local_100 = pTVar2->end[0] - *pfVar12;
+      local_fc = pTVar2->end[1] - (pcVar8->refdef).viewOffset[1];
+      local_f8 = pTVar2->end[2] - (pcVar8->refdef).viewOffset[2];
+      DObjGeomTraceline(pDVar5,&local_110,&local_100,(int)pTVar2[1].midPoint[1],&local_f0);
     }
-    if (*pfVar1 <= local_f0) goto LAB_823271bc;
-    *pfVar1 = local_f0;
-    pfVar1[4] = local_ec;
-    *(undefined2 *)(pfVar1 + 10) = local_dc;
-    *(undefined2 *)((int)pfVar1 + 0x2a) = local_da;
-    *(undefined2 *)(pfVar1 + 0xb) = local_d8;
-    pfVar1[1] = local_e8;
-    pfVar1[2] = local_e4;
-    pfVar1[3] = local_e0;
-    *(bool *)(pfVar1 + 0xc) = (float)0x3f333333 <= local_e0;
+    if (ptVar1->fraction <= local_f0.fraction) goto LAB_823271bc;
+    ptVar1->fraction = local_f0.fraction;
+    ptVar1->surfaceFlags = local_f0.surfaceflags;
+    ptVar1->modelIndex = local_f0.modelIndex;
+    ptVar1->partName = local_f0.partName;
+    ptVar1->partGroup = local_f0.partGroup;
+    ptVar1->normal[0] = local_f0.normal[0];
+    ptVar1->normal[1] = local_f0.normal[1];
+    ptVar1->normal[2] = local_f0.normal[2];
+    ptVar1->walkable = (float)0x3f333333 <= local_f0.normal[2];
   }
   else {
-    if ((uVar4 & 0xffffffff) != 0) goto LAB_82326d5c;
-    if ((*(int *)(iVar7 + 0x160) == 0xffffff) && ((*(uint *)(iVar7 + 0xcc) & 1) != 0))
+    if (pDVar5 != (DObj *)0x0) goto LAB_82326d5c;
+    if (((iVar7 == 0xffffff) && (((pcVar4->nextState).lerp.eFlags & 1U) != 0)) ||
+       (uVar6 = CG_GetEntityBModelContents(pcVar4), ((uint)pTVar2[1].midPoint[1] & uVar6) == 0))
     goto LAB_823271bc;
-    uVar3 = CG_GetEntityBModelContents(iVar7);
-    if ((*(uint *)(iVar6 + 100) & (uint)uVar3) == 0) goto LAB_823271bc;
-    CG_GetEntityBModelBounds(iVar7,&local_f0,auStack_b0);
-    iVar8 = CM_TraceBox((double)*pfVar1,iVar6,auStack_b0);
-    if (iVar8 != 0) goto LAB_823271bc;
-    dVar9 = (double)*pfVar1;
-    if (*(int *)(iVar7 + 0x160) == 0xffffff) {
+    CG_GetEntityBModelBounds(pcVar4,(Bounds *)&local_f0,&BStack_b0);
+    iVar7 = CM_TraceBox(pTVar2,&BStack_b0,ptVar1->fraction);
+    if (iVar7 != 0) goto LAB_823271bc;
+    dVar13 = (double)ptVar1->fraction;
+    if ((pcVar4->nextState).solid == 0xffffff) {
       CM_TransformedBrushModelTrace
-                (param_3,iVar6 + 0x40,iVar6 + 0x50,0xffffffff82174a3c,*(undefined4 *)(iVar7 + 0x150)
-                 ,*(undefined4 *)(iVar6 + 100),iVar7 + 0x14,iVar7 + 0x20);
+                (ptVar1,pTVar2->start,pTVar2->end,&bounds_origin,
+                 (pcVar4->nextState).index.brushModel,(int)pTVar2[1].midPoint[1],
+                 (pcVar4->pose).origin,(pcVar4->pose).angles);
     }
-    else if ((*(uint *)(iVar6 + 100) & (uint)uVar3) != 0) {
+    else if (((uint)pTVar2[1].midPoint[1] & uVar6) != 0) {
       CM_TransformedCapsuleTrace
-                (param_3,iVar6 + 0x40,iVar6 + 0x50,0xffffffff82174a3c,&local_f0,uVar3,iVar7 + 0x14,
-                 0xffffffff82179fd8);
+                (ptVar1,pTVar2->start,pTVar2->end,&bounds_origin,(Bounds *)&local_f0,uVar6,
+                 (pcVar4->pose).origin,vec3_origin);
     }
-    if (dVar9 <= (double)*pfVar1) goto LAB_823271bc;
-    *(undefined2 *)(pfVar1 + 10) = 0;
-    *(undefined2 *)((int)pfVar1 + 0x2a) = 0;
-    *(undefined2 *)(pfVar1 + 0xb) = 0;
+    if (dVar13 <= (double)ptVar1->fraction) goto LAB_823271bc;
+    ptVar1->modelIndex = 0;
+    ptVar1->partName = 0;
+    ptVar1->partGroup = 0;
   }
-  Trace_SetHitId(param_3,1,*(undefined4 *)(iVar7 + 0xc4));
-  if ((*(uint *)(iVar7 + 0xcc) & 0x1000000) != 0) {
-    pfVar1[4] = (float)((uint)pfVar1[4] | 0x1000);
+  Trace_SetHitId(ptVar1,TRACE_HITTYPE_ENTITY,(pcVar4->nextState).number);
+  if (((pcVar4->nextState).lerp.eFlags & 0x1000000U) != 0) {
+    ptVar1->surfaceFlags = ptVar1->surfaceFlags | 0x1000;
   }
-  pfVar1[5] = (float)uVar3;
-  pfVar1[6] = 0.0;
+  ptVar1->contents = uVar6;
+  ptVar1->material = (char *)0x0;
 LAB_823271bc:
   __restgprlr_22();
   return;
@@ -853,120 +971,140 @@ LAB_823271bc:
 
 // 823271C8  CG_PointTraceToEntities_r  (cgame/cg_world.cpp:868)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CG_PointTraceToEntities_r
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5)
+               (pointtrace_t *param_1,ushort param_2,float *param_3,float *param_4,trace_t *param_5)
 
 {
-  ushort uVar1;
-  float *pfVar2;
-  int iVar4;
-  undefined8 uVar3;
-  float *pfVar5;
-  int iVar6;
-  float *pfVar7;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  float fVar1;
+  ushort uVar2;
+  pointtrace_t *ppVar3;
+  LocalClientNum_t LVar4;
+  CgEntCollSector *pCVar5;
+  CgEntCollNode *pCVar6;
+  int iVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  trace_t *ptVar12;
+  ulonglong uVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   float local_a0 [4];
   float local_90;
   float local_8c;
   float local_88;
   float local_84;
   
-  __savegprlr_21();
-  iVar4 = __savefpr_28();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x373,0,0xffffffff82000f98,0xffffffff8202ba10);
+  uVar11 = (ulonglong)(int)param_5;
+  uVar10 = (ulonglong)(int)param_4;
+  uVar8 = (ulonglong)(int)param_3;
+  uVar13 = (ulonglong)(short)param_2;
+  __savegprlr_21(param_1);
+  ppVar3 = (pointtrace_t *)__savefpr_28();
+  if (ppVar3 == (pointtrace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x373,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x374,0,0xffffffff82000f98,0xffffffff8202ba8c);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x374,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x375,0,0xffffffff82000f98,0xffffffff8202ba88);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x375,0,
+                    "%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x376,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar11 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x376,0,
+                    "%s");
   }
-  pfVar7 = (float *)param_5;
-  dVar11 = 1.0;
-  if (1.0 < (double)*pfVar7) {
-    MyAssertHandler(0xffffffff8202b970,0x377,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar7
-                   );
+  ptVar12 = (trace_t *)uVar11;
+  dVar16 = 1.0;
+  if (1.0 < ptVar12->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x377,0,
+                    "%s\n\t(results->fraction) = %g");
   }
-  uVar3 = CG_GetCollWorldLocalClientNum();
-  pfVar5 = (float *)param_3;
-  local_a0[0] = *pfVar5;
-  local_a0[1] = pfVar5[1];
-  local_a0[2] = pfVar5[2];
-  local_a0[3] = pfVar5[3];
-  if ((param_2 & 0xffff) != 0) {
-    dVar13 = 0.0;
+  LVar4 = CG_GetCollWorldLocalClientNum();
+  pfVar9 = (float *)uVar8;
+  local_a0[0] = *pfVar9;
+  local_a0[1] = pfVar9[1];
+  local_a0[2] = pfVar9[2];
+  local_a0[3] = pfVar9[3];
+  if ((uVar13 & 0xffff) != 0) {
+    dVar18 = 0.0;
     do {
-      pfVar5 = (float *)CG_GetEntityCollSector(uVar3,param_2);
-      uVar1 = *(ushort *)(pfVar5 + 3);
-      while ((ulonglong)uVar1 != 0) {
-        lVar8 = (ulonglong)uVar1 - 1;
-        iVar6 = CG_GetEntityCollNode(uVar3,lVar8);
-        if ((int)lVar8 != **(int **)(iVar4 + 0x60)) {
+      pCVar5 = CG_GetEntityCollSector(LVar4,(ushort)uVar13);
+      uVar2 = pCVar5->entListHead;
+      while (uVar2 != 0) {
+        iVar7 = uVar2 - 1;
+        pCVar6 = CG_GetEntityCollNode(LVar4,iVar7);
+        if (iVar7 != ppVar3->ignoreEntParams->baseEntity) {
           Profile_Begin(0x32);
-          CG_PointTraceToEntity(iVar4,lVar8,param_5);
-          Profile_EndInternal(0);
-          if ((double)*pfVar7 == dVar13) goto LAB_82327500;
+          CG_PointTraceToEntity(ppVar3,iVar7,ptVar12);
+          Profile_EndInternal((double *)0x0);
+          if ((double)ptVar12->fraction == dVar18) goto LAB_82327500;
         }
-        uVar1 = *(ushort *)(iVar6 + 2);
+        uVar2 = pCVar6->nextEntInSector;
       }
-      pfVar2 = (float *)param_4;
-      dVar9 = (double)(local_a0[*(ushort *)(pfVar5 + 1)] - *pfVar5);
-      dVar12 = (double)(pfVar2[*(ushort *)(pfVar5 + 1)] - *pfVar5);
-      if ((double)(float)(dVar12 * dVar9) < dVar13) {
-        if (*pfVar7 <= local_a0[3]) break;
-        dVar9 = (double)(float)(dVar9 / (double)(float)(dVar9 - dVar12));
-        if (dVar9 < dVar13) {
-          MyAssertHandler(0xffffffff8202b970,0x39f,0,0xffffffff82000f98,0xffffffff8202ba18);
+      uVar2 = (pCVar5->tree).axis;
+      fVar1 = (pCVar5->tree).dist;
+      pfVar9 = (float *)uVar10;
+      dVar14 = (double)(local_a0[uVar2] - fVar1);
+      dVar17 = (double)(pfVar9[uVar2] - fVar1);
+      if ((double)(float)(dVar17 * dVar14) < dVar18) {
+        if (ptVar12->fraction <= local_a0[3]) break;
+        dVar14 = (double)(float)(dVar14 / (double)(float)(dVar14 - dVar17));
+        if (dVar14 < dVar18) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x39f,0,"%s");
         }
-        if (dVar11 < dVar9) {
-          MyAssertHandler(0xffffffff8202b970,0x3a0,0,0xffffffff82000f98,0xffffffff8202bb2c);
+        if (dVar16 < dVar14) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x3a0,0,"%s");
         }
-        dVar10 = dVar11;
-        if (dVar12 < 0.0) {
-          dVar10 = dVar13;
+        dVar15 = dVar16;
+        if (dVar17 < 0.0) {
+          dVar15 = dVar18;
         }
-        local_90 = (float)((double)(float)((double)*pfVar2 - (double)local_a0[0]) * dVar9 +
+        local_90 = (float)((double)(float)((double)*pfVar9 - (double)local_a0[0]) * dVar14 +
                           (double)local_a0[0]);
-        local_8c = (float)((double)(float)((double)pfVar2[1] - (double)local_a0[1]) * dVar9 +
+        local_8c = (float)((double)(float)((double)pfVar9[1] - (double)local_a0[1]) * dVar14 +
                           (double)local_a0[1]);
-        local_88 = (float)((double)(float)((double)pfVar2[2] - (double)local_a0[2]) * dVar9 +
+        local_88 = (float)((double)(float)((double)pfVar9[2] - (double)local_a0[2]) * dVar14 +
                           (double)local_a0[2]);
-        local_84 = (float)((double)(float)((double)pfVar2[3] - (double)local_a0[3]) * dVar9 +
+        local_84 = (float)((double)(float)((double)pfVar9[3] - (double)local_a0[3]) * dVar14 +
                           (double)local_a0[3]);
         CG_PointTraceToEntities_r
-                  (iVar4,*(undefined2 *)
-                          ((int)(((ulonglong)(uint)(int)dVar10 + 4 & 0xffffffff) << 1) + (int)pfVar5
-                          ),local_a0,&local_90,param_5);
-        if ((double)*pfVar7 == dVar13) break;
-        uVar1 = *(ushort *)
-                 ((int)((5 - (ulonglong)(uint)(int)dVar10 & 0xffffffff) << 1) + (int)pfVar5);
+                  (ppVar3,*(ushort *)
+                           ((int)(pCVar5->tree).child +
+                           (int)(((ulonglong)(uint)(int)dVar15 + 4 & 0xffffffff) << 1) + -8),
+                   local_a0,&local_90,ptVar12);
+        if ((double)ptVar12->fraction == dVar18) break;
+        uVar2 = *(ushort *)
+                 ((int)(pCVar5->tree).child +
+                 (int)((5 - (ulonglong)(uint)(int)dVar15 & 0xffffffff) << 1) + -8);
         local_a0[0] = local_90;
         local_a0[1] = local_8c;
         local_a0[2] = local_88;
         local_a0[3] = local_84;
       }
       else {
-        if ((float)(dVar12 - dVar9) < 0.0) {
-          dVar9 = dVar12;
+        if ((float)(dVar17 - dVar14) < 0.0) {
+          dVar14 = dVar17;
         }
-        dVar12 = dVar11;
-        if (dVar9 < 0.0) {
-          dVar12 = dVar13;
+        dVar17 = dVar16;
+        if (dVar14 < 0.0) {
+          dVar17 = dVar18;
         }
-        uVar1 = *(ushort *)((5 - (int)dVar12) * 2 + (int)pfVar5);
+        uVar2 = *(ushort *)((5 - (int)dVar17) * 2 + (int)pCVar5);
       }
-      param_2 = (ulonglong)uVar1;
-    } while (param_2 != 0);
+      uVar13 = (ulonglong)uVar2;
+    } while (uVar13 != 0);
   }
 LAB_82327500:
   __restfpr_28();
@@ -977,317 +1115,354 @@ LAB_82327500:
 
 // 82327510  CG_PointTraceToEntities  (cgame/cg_world.cpp:951)
 
-void CG_PointTraceToEntities(undefined8 param_1,ulonglong param_2)
+void CG_PointTraceToEntities(pointtrace_t *param_1,trace_t *param_2)
 
 {
-  int iVar1;
-  float *pfVar2;
-  double dVar3;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
+  pointtrace_t *ppVar1;
+  int iVar2;
+  ulonglong uVar3;
+  trace_t *ptVar4;
+  double dVar5;
+  float local_50;
+  float local_4c;
+  float local_48;
   float local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_40;
+  float local_3c;
+  float local_38;
   float local_34;
   
-  iVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  ppVar1 = (pointtrace_t *)__savegprlr_28(param_1);
   Profile_Begin(0x31);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bb3c);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x3c1,0,0xffffffff82000f98,0xffffffff8202ba10);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"point trace ents");
+  if (ppVar1 == (pointtrace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x3c1,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x3c2,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x3c2,0,
+                    "%s");
   }
-  pfVar2 = (float *)param_2;
-  dVar3 = 0.0;
-  if ((double)*pfVar2 <= 0.0) {
-    MyAssertHandler(0xffffffff8202b970,0x3c3,0,0xffffffff8202ba4c,0xffffffff8202ba90,(double)*pfVar2
-                   );
+  ptVar4 = (trace_t *)uVar3;
+  dVar5 = 0.0;
+  if (ptVar4->fraction <= 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x3c3,0,
+                    "%s\n\t(results->fraction) = %g");
   }
-  if (1.0 < (double)*pfVar2) {
-    MyAssertHandler(0xffffffff8202b970,0x3c4,0,0xffffffff8202ba4c,0xffffffff8202ba6c,(double)*pfVar2
-                   );
+  if (1.0 < ptVar4->fraction) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x3c4,0,
+                    "%s\n\t(results->fraction) = %g");
   }
-  local_50 = *(undefined4 *)(iVar1 + 0x40);
-  local_4c = *(undefined4 *)(iVar1 + 0x44);
-  local_48 = *(undefined4 *)(iVar1 + 0x48);
-  local_40 = *(undefined4 *)(iVar1 + 0x50);
-  local_3c = *(undefined4 *)(iVar1 + 0x54);
-  local_38 = *(undefined4 *)(iVar1 + 0x58);
-  local_34 = *pfVar2;
-  local_44 = (float)dVar3;
-  CG_PointTraceToEntities_r(iVar1,1,&local_50,&local_40,param_2);
+  local_50 = (ppVar1->extents).start[0];
+  local_4c = (ppVar1->extents).start[1];
+  local_48 = (ppVar1->extents).start[2];
+  local_40 = (ppVar1->extents).end[0];
+  local_3c = (ppVar1->extents).end[1];
+  local_38 = (ppVar1->extents).end[2];
+  local_34 = ptVar4->fraction;
+  local_44 = (float)dVar5;
+  CG_PointTraceToEntities_r(ppVar1,1,&local_50,&local_40,ptVar4);
   PIXEndNamedEvent();
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar2);
   return;
 }
 
 
 // 82327680  CG_PointSightTraceToEntityBBox  (cgame/cg_world.cpp:979)
 
-void CG_PointSightTraceToEntityBBox(undefined8 param_1,undefined8 param_2,uint param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CG_PointSightTraceToEntityBBox(int param_1,TraceExtents *param_2,int param_3)
 
 {
   ulonglong uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar3;
-  undefined1 auStack_60 [32];
-  undefined1 auStack_40 [64];
+  LocalClientNum_t LVar3;
+  centity_s *pcVar4;
+  int iVar5;
+  uint uVar6;
+  ulonglong uVar2;
+  Bounds BStack_60;
+  Bounds aBStack_40 [2];
   
-  uVar1 = __savegprlr_28();
+  uVar1 = __savegprlr_28(param_1);
   if (0x7ff < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202b970,0x3db,0,0xffffffff82010c04,uVar1,0x800);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x3db,0,
+                    "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar2 = CG_GetCollWorldLocalClientNum();
-  iVar4 = CG_GetEntity(uVar2,uVar1);
-  if ((*(int *)(iVar4 + 0x160) != 0) &&
-     (((*(int *)(iVar4 + 0x160) != 0xffffff || ((*(uint *)(iVar4 + 0xcc) & 1) == 0)) &&
-      (uVar5 = CG_GetEntityBModelContents(iVar4), (uVar5 & param_3) != 0)))) {
-    CG_GetEntityBModelBounds(iVar4,auStack_40,auStack_60);
-    iVar4 = CM_TraceBox(0x3ff0000000000000,param_2,auStack_60);
-    uVar3 = 0xffffffffffffffff;
-    if (iVar4 == 0) {
-      uVar3 = uVar1;
+  LVar3 = CG_GetCollWorldLocalClientNum();
+  pcVar4 = CG_GetEntity(LVar3,(int)uVar1);
+  iVar5 = (pcVar4->nextState).solid;
+  if ((iVar5 != 0) &&
+     (((iVar5 != 0xffffff || (((pcVar4->nextState).lerp.eFlags & 1U) == 0)) &&
+      (uVar6 = CG_GetEntityBModelContents(pcVar4), (uVar6 & param_3) != 0)))) {
+    CG_GetEntityBModelBounds(pcVar4,aBStack_40,&BStack_60);
+    iVar5 = CM_TraceBox(param_2,&BStack_60,1.0);
+    uVar2 = 0xffffffffffffffff;
+    if (iVar5 == 0) {
+      uVar2 = uVar1;
     }
-    __restgprlr_28(uVar3);
-    return;
+    iVar5 = __restgprlr_28(uVar2);
+    return iVar5;
   }
-  __restgprlr_28(0xffffffffffffffff);
-  return;
+  iVar5 = __restgprlr_28(0xffffffffffffffff);
+  return iVar5;
 }
 
 
 // 82327760  CG_PointSightTraceToEntitiesBBox_r  (cgame/cg_world.cpp:1015)
 
-void CG_PointSightTraceToEntitiesBBox_r
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-               undefined8 param_5,undefined8 param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int CG_PointSightTraceToEntitiesBBox_r
+              (ushort param_1,float *param_2,float *param_3,TraceExtents *param_4,int param_5,
+              int param_6)
 
 {
-  ushort uVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  float *pfVar6;
-  int iVar7;
-  undefined8 uVar5;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
+  float fVar1;
+  ushort uVar5;
+  LocalClientNum_t LVar2;
+  CgEntCollSector *pCVar3;
+  CgEntCollNode *pCVar4;
+  ulonglong uVar6;
+  float *pfVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   double dVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
+  double dVar15;
   float local_b0 [4];
   float local_a0;
   float local_9c;
   float local_98;
   float local_94;
   
-  __savegprlr_20();
-  uVar3 = __savefpr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x404,0,0xffffffff82000f98,0xffffffff8202ba8c);
+  uVar10 = (ulonglong)(int)param_4;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_20(param_1);
+  uVar5 = __savefpr_28();
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x404,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x405,0,0xffffffff82000f98,0xffffffff8202ba88);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x405,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x406,0,0xffffffff82000f98,0xffffffff8202bb50);
+  if ((uVar10 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x406,0,
+                    "%s");
   }
-  uVar4 = CG_GetCollWorldLocalClientNum();
-  pfVar6 = (float *)param_2;
-  local_b0[0] = *pfVar6;
-  local_b0[1] = pfVar6[1];
-  local_b0[2] = pfVar6[2];
-  local_b0[3] = pfVar6[3];
-  if ((uVar3 & 0xffff) != 0) {
-    dVar11 = 1.0;
-    dVar12 = 0.0;
+  LVar2 = CG_GetCollWorldLocalClientNum();
+  pfVar7 = (float *)uVar6;
+  local_b0[0] = *pfVar7;
+  local_b0[1] = pfVar7[1];
+  local_b0[2] = pfVar7[2];
+  local_b0[3] = pfVar7[3];
+  if (uVar5 != 0) {
+    dVar13 = 1.0;
+    dVar14 = 0.0;
     do {
-      pfVar6 = (float *)CG_GetEntityCollSector(uVar4,uVar3);
-      uVar1 = *(ushort *)(pfVar6 + 3);
-      while ((ulonglong)uVar1 != 0) {
-        lVar8 = (ulonglong)uVar1 - 1;
-        iVar7 = CG_GetEntityCollNode(uVar4,lVar8);
-        if (((int)lVar8 != (int)param_5) &&
-           (uVar5 = CG_PointSightTraceToEntityBBox(lVar8,param_4,param_6), -1 < (int)uVar5))
-        goto LAB_82327a1c;
-        uVar1 = *(ushort *)(iVar7 + 2);
+      pCVar3 = CG_GetEntityCollSector(LVar2,uVar5);
+      uVar5 = pCVar3->entListHead;
+      while (uVar5 != 0) {
+        iVar8 = uVar5 - 1;
+        pCVar4 = CG_GetEntityCollNode(LVar2,iVar8);
+        if ((iVar8 != param_5) &&
+           (iVar8 = CG_PointSightTraceToEntityBBox(iVar8,(TraceExtents *)uVar10,param_6), -1 < iVar8
+           )) goto LAB_82327a1c;
+        uVar5 = pCVar4->nextEntInSector;
       }
-      pfVar2 = (float *)param_3;
-      dVar9 = (double)(local_b0[*(ushort *)(pfVar6 + 1)] - *pfVar6);
-      dVar13 = (double)(pfVar2[*(ushort *)(pfVar6 + 1)] - *pfVar6);
-      if ((double)(float)(dVar13 * dVar9) < dVar12) {
-        dVar9 = (double)(float)(dVar9 / (double)(float)(dVar9 - dVar13));
-        if (dVar9 < dVar12) {
-          MyAssertHandler(0xffffffff8202b970,0x426,0,0xffffffff82000f98,0xffffffff8202ba18);
+      uVar5 = (pCVar3->tree).axis;
+      fVar1 = (pCVar3->tree).dist;
+      pfVar7 = (float *)uVar9;
+      dVar11 = (double)(local_b0[uVar5] - fVar1);
+      dVar15 = (double)(pfVar7[uVar5] - fVar1);
+      if ((double)(float)(dVar15 * dVar11) < dVar14) {
+        dVar11 = (double)(float)(dVar11 / (double)(float)(dVar11 - dVar15));
+        if (dVar11 < dVar14) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x426,0,"%s");
         }
-        if (dVar11 < dVar9) {
-          MyAssertHandler(0xffffffff8202b970,0x427,0,0xffffffff82000f98,0xffffffff8202bb2c);
+        if (dVar13 < dVar11) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x427,0,"%s");
         }
-        dVar10 = dVar11;
-        if (dVar13 < 0.0) {
-          dVar10 = dVar12;
+        dVar12 = dVar13;
+        if (dVar15 < 0.0) {
+          dVar12 = dVar14;
         }
-        local_a0 = (float)((double)(float)((double)*pfVar2 - (double)local_b0[0]) * dVar9 +
+        local_a0 = (float)((double)(float)((double)*pfVar7 - (double)local_b0[0]) * dVar11 +
                           (double)local_b0[0]);
-        local_9c = (float)((double)(float)((double)pfVar2[1] - (double)local_b0[1]) * dVar9 +
+        local_9c = (float)((double)(float)((double)pfVar7[1] - (double)local_b0[1]) * dVar11 +
                           (double)local_b0[1]);
-        local_98 = (float)((double)(float)((double)pfVar2[2] - (double)local_b0[2]) * dVar9 +
+        local_98 = (float)((double)(float)((double)pfVar7[2] - (double)local_b0[2]) * dVar11 +
                           (double)local_b0[2]);
-        local_94 = (float)((double)(float)((double)pfVar2[3] - (double)local_b0[3]) * dVar9 +
+        local_94 = (float)((double)(float)((double)pfVar7[3] - (double)local_b0[3]) * dVar11 +
                           (double)local_b0[3]);
-        uVar5 = CG_PointSightTraceToEntitiesBBox_r
-                          (*(undefined2 *)
-                            ((int)(((ulonglong)(uint)(int)dVar10 + 4 & 0xffffffff) << 1) +
-                            (int)pfVar6),local_b0,&local_a0,param_4,param_5,param_6);
-        if (-1 < (int)uVar5) goto LAB_82327a1c;
-        uVar1 = *(ushort *)
-                 ((int)((5 - (ulonglong)(uint)(int)dVar10 & 0xffffffff) << 1) + (int)pfVar6);
+        iVar8 = CG_PointSightTraceToEntitiesBBox_r
+                          (*(ushort *)
+                            ((int)(pCVar3->tree).child +
+                            (int)(((ulonglong)(uint)(int)dVar12 + 4 & 0xffffffff) << 1) + -8),
+                           local_b0,&local_a0,(TraceExtents *)uVar10,param_5,param_6);
+        if (-1 < iVar8) goto LAB_82327a1c;
+        uVar5 = *(ushort *)
+                 ((int)(pCVar3->tree).child +
+                 (int)((5 - (ulonglong)(uint)(int)dVar12 & 0xffffffff) << 1) + -8);
         local_b0[0] = local_a0;
         local_b0[1] = local_9c;
         local_b0[2] = local_98;
         local_b0[3] = local_94;
       }
       else {
-        if ((float)(dVar13 - dVar9) < 0.0) {
-          dVar9 = dVar13;
+        if ((float)(dVar15 - dVar11) < 0.0) {
+          dVar11 = dVar15;
         }
-        dVar13 = dVar11;
-        if (dVar9 < 0.0) {
-          dVar13 = dVar12;
+        dVar15 = dVar13;
+        if (dVar11 < 0.0) {
+          dVar15 = dVar14;
         }
-        uVar1 = *(ushort *)((5 - (int)dVar13) * 2 + (int)pfVar6);
+        uVar5 = *(ushort *)((5 - (int)dVar15) * 2 + (int)pCVar3);
       }
-      uVar3 = (ulonglong)uVar1;
-    } while (uVar3 != 0);
+    } while (uVar5 != 0);
   }
-  uVar5 = 0xffffffffffffffff;
+  iVar8 = -1;
 LAB_82327a1c:
-  __restfpr_28(uVar5);
-  __restgprlr_20();
-  return;
+  __restfpr_28(iVar8);
+  iVar8 = __restgprlr_20();
+  return iVar8;
 }
 
 
 // 82327A30  CG_PointSightTraceToEntitiesBBox  (cgame/cg_world.cpp:1085)
 
-void CG_PointSightTraceToEntitiesBBox
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+int CG_PointSightTraceToEntitiesBBox(float *param_1,float *param_2,int param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  undefined1 auStack_90 [64];
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float *pfVar1;
+  int iVar2;
+  TraceExtents TStack_90;
   
-  puVar1 = (undefined4 *)__savegprlr_28();
-  local_50 = *puVar1;
-  puVar2 = (undefined4 *)param_2;
-  local_40 = *puVar2;
-  local_3c = puVar2[1];
-  local_38 = puVar2[2];
-  local_4c = puVar1[1];
-  local_48 = puVar1[2];
-  CM_CalcTraceExtents(auStack_90);
-  CG_PointSightTraceToEntitiesBBox_r(1,puVar1,param_2,auStack_90,param_3,param_4);
-  __restgprlr_28();
-  return;
+  pfVar1 = (float *)__savegprlr_28(param_1);
+  TStack_90.start[0] = *pfVar1;
+  TStack_90.end[0] = *param_2;
+  TStack_90.end[1] = param_2[1];
+  TStack_90.end[2] = param_2[2];
+  TStack_90.start[1] = pfVar1[1];
+  TStack_90.start[2] = pfVar1[2];
+  CM_CalcTraceExtents(&TStack_90);
+  iVar2 = CG_PointSightTraceToEntitiesBBox_r(1,pfVar1,param_2,&TStack_90,param_3,param_4);
+  iVar2 = __restgprlr_28(iVar2);
+  return iVar2;
 }
 
 
 // 82327AA8  CG_BrushModelSightTrace  (cgame/cg_world.cpp:1097)
 
-void CG_BrushModelSightTrace(void)
+int CG_BrushModelSightTrace
+              (int param_1,float *param_2,float *param_3,Bounds *param_4,uint param_5,int param_6)
 
 {
-  CM_BrushModelSightTrace();
-  return;
+  int iVar1;
+  CM_WorldTraceCallbacks local_10 [4];
+  
+  local_10[0].isGlassSolid = CG_Glass_IsPieceSolid;
+  iVar1 = CM_BrushModelSightTrace(param_1,param_2,param_3,param_4,param_5,param_6,local_10);
+  return iVar1;
 }
 
 
 // 82327AD8  CG_WorldTrace  (cgame/cg_world.cpp:1107)
 
-void CG_WorldTrace(void)
+void CG_WorldTrace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5)
 
 {
-  CM_WorldTrace();
+  CM_WorldTraceCallbacks local_10 [4];
+  
+  local_10[0].isGlassSolid = CM_IsGlassSolid;
+  CM_WorldTrace(param_1,param_2,param_3,param_4,param_5,local_10);
   return;
 }
 
 
 // 82327B08  CG_InitTraceCmd  (cgame/cg_world.cpp:1119)
 
-void CG_InitTraceCmd(void *param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void CG_InitTraceCmd(TraceWorkerCmd *param_1)
 
 {
-  void *pvVar1;
-  undefined4 uVar2;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
   int iVar3;
+  clipMap_t *pcVar4;
+  CG_GlassPiece *pCVar5;
   
-  pvVar1 = memset(param_1,0,0x140);
-  uVar2 = CG_GetCollWorldLocalClientNum(pvVar1);
-  iVar3 = CG_GetLocalClientGlobals();
-  *(undefined4 *)((int)param_1 + 0x48) = uVar2;
-  uVar2 = CL_GetSkelTimeStamp();
-  *(undefined4 *)((int)param_1 + 0x4c) = uVar2;
-  uVar2 = CM_GetClipMapPtr();
-  *(undefined4 *)((int)param_1 + 0x50) = uVar2;
-  uVar2 = CG_GlassPieceFromIndex(0);
-  *(undefined4 *)((int)param_1 + 0x54) = uVar2;
-  CG_GetCollWorld((int)param_1 + 0x58,(int)param_1 + 0x5c);
-  Com_GetClientDObjSPUGlob((int)param_1 + 0x6c,(int)param_1 + 0x74);
-  *(undefined4 *)((int)param_1 + 0x3c) = *(undefined4 *)(iVar3 + 0x6b9c8);
-  *(undefined4 *)((int)param_1 + 0x40) = *(undefined4 *)(iVar3 + 0x6b9cc);
-  *(undefined4 *)((int)param_1 + 0x44) = *(undefined4 *)(iVar3 + 0x6b9d0);
+  memset();
+  LVar1 = CG_GetCollWorldLocalClientNum();
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  param_1->localClientNum = LVar1;
+  iVar3 = CL_GetSkelTimeStamp();
+  param_1->skelTimeStamp = iVar3;
+  pcVar4 = CM_GetClipMapPtr();
+  param_1->cm = pcVar4;
+  pCVar5 = CG_GlassPieceFromIndex(0);
+  param_1->glassPieces = pCVar5;
+  CG_GetCollWorld(&param_1->cgEntCollWorld,&param_1->cgEntCollNodes);
+  Com_GetClientDObjSPUGlob(&param_1->clientObjMap,&param_1->objBuf);
+  param_1->viewOffset[0] = (pcVar2->refdef).view.org[0];
+  param_1->viewOffset[1] = (pcVar2->refdef).view.org[1];
+  param_1->viewOffset[2] = (pcVar2->refdef).view.org[2];
   return;
 }
 
 
 // 82327BB0  CG_WorkerTraceTimeout  (cgame/cg_world.cpp:1139)
 
-bool CG_WorkerTraceTimeout(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int CG_WorkerTraceTimeout(void)
 
 {
-  return *(int *)(DAT_82a771f0 + 0x34) == 2;
+  return (uint)LZCOUNT(g_mainThreadWaitTrace->state - 2) >> 5;
 }
 
 
 // 82327BD0  CG_WaitWorkerTrace  (cgame/cg_world.cpp:1145)
 
-void CG_WaitWorkerTrace(void)
+void CG_WaitWorkerTrace(workerTrace_t *param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  workerTrace_t *pwVar1;
+  bool bVar2;
   
-  iVar1 = __savegprlr_28();
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8202b970,0x47a,0,0xffffffff82000f98,0xffffffff82010b48);
+  pwVar1 = (workerTrace_t *)__savegprlr_28(param_1);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x47a,0,
+                    "%s");
   }
-  if ((*(int *)(iVar1 + 0x34) != 1) && (*(int *)(iVar1 + 0x34) != 2)) {
-    MyAssertHandler(0xffffffff8202b970,0x47c,0,0xffffffff82000f98,0xffffffff8202bb88);
+  if ((pwVar1->state != 1) && (pwVar1->state != 2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x47c,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0x34) != 2) {
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bb78);
-    if (DAT_82a771f0 != 0) {
-      MyAssertHandler(0xffffffff8202b970,0x482,0,0xffffffff82000f98,0xffffffff8202bb58);
+  if (pwVar1->state != 2) {
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait trace");
+    if (g_mainThreadWaitTrace != (workerTrace_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x482,0,
+                      "%s");
     }
-    DAT_82a771f0 = iVar1;
-    R_ProcessWorkerCmdsWithTimeout(0xffffffff82327bb0,1);
-    DAT_82a771f0 = 0;
+    g_mainThreadWaitTrace = pwVar1;
+    R_ProcessWorkerCmdsWithTimeout(CG_WorkerTraceTimeout,1);
+    g_mainThreadWaitTrace = (workerTrace_t *)0x0;
     PIXEndNamedEvent();
   }
   __restgprlr_28();
@@ -1297,93 +1472,78 @@ void CG_WaitWorkerTrace(void)
 
 // 82327CC0  CG_StartWorkerPointTraceInView  (cgame/cg_world.cpp:1172)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
 void CG_StartWorkerPointTraceInView
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,undefined4 param_4,
-               undefined4 param_5,uint param_6,ulonglong param_7)
+               (workerTrace_t *param_1,float *param_2,float *param_3,int param_4,int param_5,
+               bool param_6,bool param_7)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  char *pcVar3;
-  longlong lVar4;
-  uint local_180;
-  uint local_17c;
-  undefined4 local_178;
-  undefined4 local_174;
-  undefined4 local_170;
-  undefined4 local_16c;
-  undefined4 local_168;
-  undefined4 local_164 [7];
-  undefined4 local_148;
-  undefined1 auStack_100 [64];
-  undefined4 local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8;
-  undefined4 local_b0;
-  undefined4 local_ac;
-  undefined4 local_a8;
-  undefined4 *local_a0;
-  undefined4 local_9c;
-  uint local_98;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined1 local_58;
-  undefined1 local_57;
-  undefined1 local_56;
-  undefined1 local_55;
-  undefined4 local_54;
-  undefined4 local_50;
+  workerTrace_t *pwVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
+  char *pcVar5;
+  longlong lVar6;
+  undefined1 local_180 [288];
+  IgnoreEntParams local_60;
+  int local_54;
+  int local_50;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0x7f) != 0) {
-    MyAssertHandler(0xffffffff8202b970,0x497,0,0xffffffff82000f98,0xffffffff8202bbdc);
+  uVar3 = (ulonglong)param_7;
+  uVar2 = (uint)param_6;
+  pwVar1 = (workerTrace_t *)__savegprlr_25(param_1);
+  if (((uint)pwVar1 & 0x7f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x497,0,
+                    "%s");
   }
-  if (*(int *)(uVar1 + 0x34) == 1) {
-    CG_WaitWorkerTrace(uVar1);
+  if (pwVar1->state == 1) {
+    CG_WaitWorkerTrace(pwVar1);
   }
-  CG_InitTraceCmd(&local_180);
-  local_178 = *param_2;
-  local_174 = param_2[1];
-  local_17c = (uint)((param_7 & 0xffffffff) << 1) & 0x1fe | 0x21;
-  local_170 = param_2[2];
-  local_98 = param_6 & 0xff;
-  local_16c = *param_3;
-  local_a0 = &local_60;
-  local_168 = param_3[1];
-  local_164[0] = param_3[2];
-  local_57 = 0;
-  local_54 = 0xffffffff;
-  local_50 = 0xffffffff;
-  local_5c = 0xffffffff;
-  local_58 = 1;
-  local_55 = 0;
-  local_56 = 0;
-  local_94 = 0;
-  local_90 = 0;
-  local_148 = param_5;
-  local_c0 = local_178;
-  local_bc = local_174;
-  local_b8 = local_170;
-  local_b0 = local_16c;
-  local_ac = local_168;
-  local_a8 = local_164[0];
-  local_9c = param_5;
-  local_60 = param_4;
-  CM_CalcTraceExtents(auStack_100);
-  puVar2 = local_164;
-  pcVar3 = "ror";
-  lVar4 = 6;
+  CG_InitTraceCmd((TraceWorkerCmd *)local_180);
+  local_180._8_4_ = *param_2;
+  local_180._12_4_ = param_2[1];
+  local_180._4_4_ = (uint)((uVar3 & 0xffffffff) << 1) & 0x1fe | 0x21;
+  local_180._16_4_ = param_2[2];
+  local_180._232_4_ = uVar2 & 0xff;
+  local_180._20_4_ = *param_3;
+  local_180._224_4_ = &local_60;
+  local_180._24_4_ = param_3[1];
+  local_180._28_4_ = param_3[2];
+  local_60.ignoreParent = false;
+  local_54 = -1;
+  local_50 = -1;
+  local_60.parentEntity = -1;
+  local_60.ignoreSelf = true;
+  local_60.ignoreChildren = false;
+  local_60.ignoreSiblings = false;
+  local_180._236_4_ = 0.0;
+  local_180._240_4_ = 0.0;
+  local_180._56_4_ = param_5;
+  local_180._192_4_ = local_180._8_4_;
+  local_180._196_4_ = local_180._12_4_;
+  local_180._200_4_ = local_180._16_4_;
+  local_180._208_4_ = local_180._20_4_;
+  local_180._212_4_ = local_180._24_4_;
+  local_180._216_4_ = local_180._28_4_;
+  local_180._228_4_ = param_5;
+  local_60.baseEntity = param_4;
+  CM_CalcTraceExtents((TraceExtents *)(local_180 + 0x80));
+  puVar4 = (undefined4 *)(local_180 + 0x1c);
+  pcVar5 = "ror";
+  lVar6 = 6;
   do {
-    pcVar3 = pcVar3 + 4;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *(undefined4 *)pcVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  *(undefined4 *)(uVar1 + 0x34) = 1;
-  local_180 = uVar1;
-  R_AddWorkerCmd(7,&local_180);
+    pcVar5 = pcVar5 + 4;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *(undefined4 *)pcVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  pwVar1->state = 1;
+  local_180._0_4_ = pwVar1;
+  R_AddWorkerCmd(WRKCMD_TRACE,local_180);
   __restgprlr_25();
   return;
 }
@@ -1391,80 +1551,69 @@ void CG_StartWorkerPointTraceInView
 
 // 82327E20  CG_StartWorkerPointTraceToEntityInView  (cgame/cg_world.cpp:1219)
 
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
 void CG_StartWorkerPointTraceToEntityInView
-               (undefined8 param_1,undefined4 *param_2,undefined4 param_3,undefined4 param_4,
-               undefined4 param_5,undefined4 param_6,uint param_7,ulonglong param_8)
+               (workerTrace_t *param_1,float *param_2,int param_3,int param_4,int param_5,
+               int param_6,bool param_7,bool param_8)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  char *pcVar3;
-  longlong lVar4;
-  uint local_190;
-  uint local_18c;
-  undefined4 local_188;
-  undefined4 local_184;
-  undefined4 local_180;
-  undefined4 auStack_174 [7];
-  undefined4 local_158;
-  undefined4 local_d0;
-  undefined4 local_cc;
-  undefined4 local_c8;
-  undefined4 *local_b0;
-  undefined4 local_ac;
-  uint local_a8;
-  undefined4 local_a4;
-  undefined4 local_a0;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined1 local_68;
-  undefined1 local_67;
-  undefined1 local_66;
-  undefined1 local_65;
-  undefined4 local_64;
-  undefined4 local_60;
+  workerTrace_t *pwVar1;
+  Bounds *pBVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  float *pfVar5;
+  longlong lVar6;
+  TraceWorkerCmd local_190;
   
-  uVar1 = __savegprlr_24();
-  if ((uVar1 & 0x7f) != 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4c6,0,0xffffffff82000f98,0xffffffff8202bbdc);
+  uVar4 = (ulonglong)param_8;
+  uVar3 = (uint)param_7;
+  pwVar1 = (workerTrace_t *)__savegprlr_24(param_1);
+  if (((uint)pwVar1 & 0x7f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4c6,0,
+                    "%s");
   }
-  if (*(int *)(uVar1 + 0x34) == 1) {
-    CG_WaitWorkerTrace(uVar1);
+  if (pwVar1->state == 1) {
+    CG_WaitWorkerTrace(pwVar1);
   }
   CG_InitTraceCmd(&local_190);
-  local_188 = *param_2;
-  local_184 = param_2[1];
-  local_180 = param_2[2];
-  local_18c = (uint)((param_8 & 0xffffffff) << 1) & 0x1fe | 0x21;
-  lVar4 = 6;
-  local_a8 = param_7 & 0xff;
-  local_b0 = &local_70;
-  puVar2 = auStack_174;
-  pcVar3 = "ror";
-  local_68 = 1;
-  local_6c = 0xffffffff;
-  local_67 = 0;
-  local_65 = 0;
-  local_66 = 0;
-  local_a4 = 0;
-  local_a0 = 0;
+  local_190.start[0] = *param_2;
+  local_190.start[1] = param_2[1];
+  local_190.start[2] = param_2[2];
+  local_190.tracemask = (uint)((uVar4 & 0xffffffff) << 1) & 0x1fe | 0x21;
+  lVar6 = 6;
+  local_190.field24_0x80.pointTrace.bLocational = uVar3 & 0xff;
+  local_190.field24_0x80.pointTrace.ignoreEntParams = &local_190.ignoreEntParams;
+  pBVar2 = (Bounds *)(local_190.end + 2);
+  pfVar5 = (float *)0x82174a38;
+  local_190.ignoreEntParams.ignoreSelf = true;
+  local_190.ignoreEntParams.parentEntity = -1;
+  local_190.ignoreEntParams.ignoreParent = false;
+  local_190.ignoreEntParams.ignoreChildren = false;
+  local_190.ignoreEntParams.ignoreSiblings = false;
+  local_190.field24_0x80.moveClip.extents.invDeltaAbsPad = 0.0;
+  local_190.field24_0x80.moveClip.extents.start[0] = 0.0;
+  local_190.brushmask = param_6;
+  local_190.field24_0x80.moveClip.extents.halfDelta[0] = local_190.start[0];
+  local_190.field24_0x80.moveClip.extents.halfDelta[1] = local_190.start[1];
+  local_190.field24_0x80.moveClip.extents.halfDelta[2] = local_190.start[2];
+  local_190.field24_0x80.pointTrace.contentmask = param_6;
+  local_190.ignoreEntParams.baseEntity = param_5;
+  local_190.entIndex = param_3;
+  local_190.tagName = param_4;
   do {
-    pcVar3 = pcVar3 + 4;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *(undefined4 *)pcVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  *(undefined4 *)(uVar1 + 0x34) = 1;
-  local_190 = uVar1;
-  local_158 = param_6;
-  local_d0 = local_188;
-  local_cc = local_184;
-  local_c8 = local_180;
-  local_ac = param_6;
-  local_70 = param_5;
-  local_64 = param_3;
-  local_60 = param_4;
-  R_AddWorkerCmd(8,&local_190);
+    pfVar5 = pfVar5 + 1;
+    pBVar2 = (Bounds *)(pBVar2->midPoint + 1);
+    pBVar2->midPoint[0] = *pfVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  pwVar1->state = 1;
+  local_190.results = pwVar1;
+  R_AddWorkerCmd(WRKCMD_TRACE_TO_ENTITY,&local_190);
   __restgprlr_24();
   return;
 }
@@ -1472,222 +1621,232 @@ void CG_StartWorkerPointTraceToEntityInView
 
 // 82327F58  CG_Trace  (cgame/cg_world.cpp:1267)
 
-void CG_Trace(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-             undefined4 param_5,undefined8 param_6,ulonglong param_7,ulonglong param_8)
+void CG_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5,int param_6
+             ,bool param_7,bool param_8)
 
 {
-  float *pfVar1;
-  float *pfVar3;
-  char cVar4;
-  undefined8 uVar2;
-  float *pfVar5;
+  Bounds *pBVar1;
+  trace_t *ptVar2;
+  bool bVar4;
+  int iVar3;
+  ulonglong uVar5;
   float *pfVar6;
-  double dVar7;
-  double dVar8;
-  code *local_1d0 [2];
-  undefined4 local_1c8;
-  undefined4 local_1c4;
-  undefined1 local_1c0;
-  undefined1 local_1bf;
-  undefined1 local_1be;
-  undefined1 local_1bd;
-  float local_1b0;
-  float local_1ac;
-  float local_1a8;
-  float local_1a4;
-  float local_1a0;
-  float local_19c;
-  float local_198;
-  float local_194;
-  float local_190;
-  undefined1 auStack_180 [64];
-  float local_140;
-  float local_13c;
-  float local_138;
-  float local_130;
-  float local_12c;
-  float local_128;
-  undefined4 local_120;
-  undefined4 local_11c;
-  undefined4 local_118;
-  undefined1 auStack_110 [64];
-  float local_d0;
-  float local_cc;
-  float local_c8;
-  float local_c0;
-  float local_bc;
-  float local_b8;
-  undefined4 *local_b0;
-  undefined4 local_ac;
-  uint local_a8;
-  undefined4 local_a4;
-  undefined4 local_a0;
+  ulonglong uVar7;
+  float *pfVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  double dVar12;
+  double dVar13;
+  CM_WorldTraceCallbacks local_1d0 [2];
+  IgnoreEntParams local_1c8 [2];
+  moveclip_t local_1b0;
+  pointtrace_t apStack_110 [2];
   
-  pfVar3 = (float *)__savegprlr_18();
-  cVar4 = Sys_IsMainThread();
-  if (cVar4 == '\0') {
-    MyAssertHandler(0xffffffff8202b970,0x4f4,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar11 = (ulonglong)param_8;
+  uVar10 = (ulonglong)param_7;
+  uVar9 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  ptVar2 = (trace_t *)__savegprlr_18(param_1);
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f4,0,
+                    "%s");
   }
-  if (pfVar3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff8202b970,0x4f6,0,0xffffffff82000f98,0xffffffff8202ba08);
+  if (ptVar2 == (trace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f6,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4f7,0,0xffffffff82000f98,0xffffffff8202bebc);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f7,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4f8,0,0xffffffff82000f98,0xffffffff82002044);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f8,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x4f9,0,0xffffffff82000f98,0xffffffff8202a874);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4f9,0,
+                    "%s");
   }
-  pfVar1 = (float *)param_4;
-  dVar8 = 0.0;
-  if (pfVar1[3] < 0.0) {
-    MyAssertHandler(0xffffffff8202b970,0x4fb,0,0xffffffff82000f98,0xffffffff8200ca58);
+  pBVar1 = (Bounds *)uVar9;
+  dVar13 = 0.0;
+  if (pBVar1->halfSize[0] < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4fb,0,
+                    "%s");
   }
-  if ((double)pfVar1[4] < dVar8) {
-    MyAssertHandler(0xffffffff8202b970,0x4fc,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  if ((double)pBVar1->halfSize[1] < dVar13) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4fc,0,
+                    "%s");
   }
-  if ((double)pfVar1[5] < dVar8) {
-    MyAssertHandler(0xffffffff8202b970,0x4fd,0,0xffffffff82000f98,0xffffffff8200ca20);
+  if ((double)pBVar1->halfSize[2] < dVar13) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4fd,0,
+                    "%s");
   }
-  pfVar5 = (float *)param_2;
-  local_1d0[0] = (code *)*pfVar5;
-  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
-      (local_1d0[0] = (code *)pfVar5[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
-     (local_1d0[0] = (code *)pfVar5[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8202b970,0x4ff,0,0xffffffff82000f98,0xffffffff8202be78);
+  pfVar6 = (float *)uVar5;
+  local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar6;
+  if (((((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar6[1],
+      ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar6[2],
+     ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x4ff,0,
+                    "%s");
   }
-  pfVar6 = (float *)param_3;
-  local_1d0[0] = (code *)*pfVar6;
-  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
-      (local_1d0[0] = (code *)pfVar6[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
-     (local_1d0[0] = (code *)pfVar6[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8202b970,0x500,0,0xffffffff82000f98,0xffffffff8202abfc);
+  pfVar8 = (float *)uVar7;
+  local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar8;
+  if (((((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar8[1],
+      ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar8[2],
+     ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x500,0,
+                    "%s");
   }
-  local_1d0[0] = (code *)*pfVar1;
-  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
-      (local_1d0[0] = (code *)pfVar1[1], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
-     (local_1d0[0] = (code *)pfVar1[2], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8202b970,0x501,0,0xffffffff82000f98,0xffffffff8202be10);
+  local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->midPoint[0];
+  if (((((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->midPoint[1],
+      ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->midPoint[2],
+     ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x501,0,
+                    "%s");
   }
-  local_1d0[0] = (code *)pfVar1[3];
-  if (((((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) ||
-      (local_1d0[0] = (code *)pfVar1[4], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) ||
-     (local_1d0[0] = (code *)pfVar1[5], ((uint)local_1d0[0] & 0x7f800000) == 0x7f800000)) {
-    MyAssertHandler(0xffffffff8202b970,0x502,0,0xffffffff82000f98,0xffffffff8202bda8);
+  local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->halfSize[0];
+  if (((((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
+      (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->halfSize[1],
+      ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
+     (local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar1->halfSize[2],
+     ((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x502,0,
+                    "%s");
   }
   Profile_Begin(0x2d);
-  local_1d0[0] = CM_IsGlassSolid;
-  CM_WorldTrace(pfVar3,param_2,param_3,param_4,param_6,local_1d0);
-  local_1d0[0] = (code *)*pfVar3;
-  if (((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) {
-    MyAssertHandler(0xffffffff8202b970,0x508,0,0xffffffff82000f98,0xffffffff8202bd88);
+  local_1d0[0].isGlassSolid = CM_IsGlassSolid;
+  CM_WorldTrace(ptVar2,pfVar6,pfVar8,pBVar1,param_6,local_1d0);
+  local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)ptVar2->fraction;
+  if (((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x508,0,
+                    "%s");
   }
-  dVar7 = 1.0;
-  if ((pfVar3[7] == 0.0) != (*pfVar3 == 1.0)) {
-    MyAssertHandler(0xffffffff8202b970,0x50a,0,0xffffffff82000f98,0xffffffff8202bd40);
+  dVar12 = 1.0;
+  if ((uint)LZCOUNT(ptVar2->hitType) >> 5 != (uint)(ptVar2->fraction == 1.0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x50a,0,
+                    "%s");
   }
-  if ((double)*pfVar3 != dVar8) {
-    if ((double)(pfVar1[5] + pfVar1[4] + pfVar1[3]) == dVar8) {
-      if ((param_8 & 0xff) != 0) {
-        CM_PointTraceStaticModels(pfVar3,param_2,param_3,param_6);
-        local_1d0[0] = (code *)*pfVar3;
-        if (((uint)local_1d0[0] & 0x7f800000) == 0x7f800000) {
-          MyAssertHandler(0xffffffff8202b970,0x51b,0,0xffffffff82000f98,0xffffffff8202bd88);
+  if ((double)ptVar2->fraction != dVar13) {
+    if ((double)(pBVar1->halfSize[2] + pBVar1->halfSize[1] + pBVar1->halfSize[0]) == dVar13) {
+      if ((uVar11 & 0xff) != 0) {
+        CM_PointTraceStaticModels(ptVar2,pfVar6,pfVar8,param_6);
+        local_1d0[0].isGlassSolid = (_func___cdecl_bool_uint *)ptVar2->fraction;
+        if (((uint)local_1d0[0].isGlassSolid & 0x7f800000) == 0x7f800000) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",
+                          0x51b,0,"%s");
         }
-        if ((double)*pfVar3 == dVar8) goto LAB_82328640;
+        if ((double)ptVar2->fraction == dVar13) goto LAB_82328640;
       }
-      local_d0 = *pfVar5;
-      local_c0 = *pfVar6;
-      local_cc = pfVar5[1];
-      local_1c4 = 0xffffffff;
-      local_c8 = pfVar5[2];
-      local_1c0 = 1;
-      local_bc = pfVar6[1];
-      local_1bf = 0;
-      local_b8 = pfVar6[2];
-      local_1bd = 0;
-      local_1be = 0;
-      local_1c8 = param_5;
-      CM_CalcTraceExtents(auStack_110);
-      local_b0 = &local_1c8;
-      local_a8 = (uint)param_7 & 0xff;
-      local_a4 = 1;
-      local_a0 = 0;
-      local_ac = (int)param_6;
-      CG_PointTraceToEntities(auStack_110,pfVar3);
+      apStack_110[0].extents.start[0] = *pfVar6;
+      apStack_110[0].extents.end[0] = *pfVar8;
+      apStack_110[0].extents.start[1] = pfVar6[1];
+      local_1c8[0].parentEntity = -1;
+      apStack_110[0].extents.start[2] = pfVar6[2];
+      local_1c8[0].ignoreSelf = true;
+      apStack_110[0].extents.end[1] = pfVar8[1];
+      local_1c8[0].ignoreParent = false;
+      apStack_110[0].extents.end[2] = pfVar8[2];
+      local_1c8[0].ignoreChildren = false;
+      local_1c8[0].ignoreSiblings = false;
+      local_1c8[0].baseEntity = param_5;
+      CM_CalcTraceExtents(&apStack_110[0].extents);
+      apStack_110[0].ignoreEntParams = local_1c8;
+      apStack_110[0].bLocational = (uint)uVar10 & 0xff;
+      apStack_110[0].bCalcDObjPose = 1;
+      apStack_110[0].priorityMap = (uchar *)0x0;
+      apStack_110[0].contentmask = param_6;
+      CG_PointTraceToEntities(apStack_110,ptVar2);
     }
     else {
-      if ((param_8 & 0xff) != 0) {
-        MyAssertHandler(0xffffffff8202b970,0x53b,0,0xffffffff82000f98,0xffffffff8202bd30);
+      if ((uVar11 & 0xff) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x53b,
+                        0,"%s");
       }
-      if ((param_7 & 0xff) != 0) {
-        MyAssertHandler(0xffffffff8202b970,0x53c,0,0xffffffff82000f98,0xffffffff8202bd24);
+      if ((uVar10 & 0xff) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x53c,
+                        0,"%s");
       }
-      local_140 = *pfVar5 + *pfVar1;
-      local_13c = pfVar1[1] + pfVar5[1];
-      local_11c = 0xffffffff;
-      local_138 = pfVar5[2] + pfVar1[2];
-      local_130 = *pfVar6 + *pfVar1;
-      local_1a4 = pfVar1[3];
-      local_12c = pfVar1[1] + pfVar6[1];
-      local_1a0 = pfVar1[4];
-      local_198 = (float)((double)local_1a4 + dVar7);
-      local_19c = pfVar1[5];
-      local_194 = (float)((double)local_1a0 + dVar7);
-      local_190 = (float)((double)local_19c + dVar7);
-      local_128 = pfVar1[2] + pfVar6[2];
-      local_1b0 = (float)dVar8;
-      local_1ac = (float)dVar8;
-      local_1a8 = (float)dVar8;
-      local_120 = param_5;
-      local_118 = (int)param_6;
-      CM_CalcTraceExtents(auStack_180);
-      CG_ClipMoveToEntities(&local_1b0,pfVar3);
-      DynEntCl_ClipMoveTrace(&local_1b0,pfVar3);
+      local_1b0.extents.start[0] = *pfVar6 + pBVar1->midPoint[0];
+      local_1b0.extents.start[1] = pBVar1->midPoint[1] + pfVar6[1];
+      local_1b0.passOwnerNum = -1;
+      local_1b0.extents.start[2] = pfVar6[2] + pBVar1->midPoint[2];
+      local_1b0.extents.end[0] = *pfVar8 + pBVar1->midPoint[0];
+      local_1b0.bounds.halfSize[0] = pBVar1->halfSize[0];
+      local_1b0.extents.end[1] = pBVar1->midPoint[1] + pfVar8[1];
+      local_1b0.bounds.halfSize[1] = pBVar1->halfSize[1];
+      local_1b0.outerSize[0] = (float)((double)local_1b0.bounds.halfSize[0] + dVar12);
+      local_1b0.bounds.halfSize[2] = pBVar1->halfSize[2];
+      local_1b0.outerSize[1] = (float)((double)local_1b0.bounds.halfSize[1] + dVar12);
+      local_1b0.outerSize[2] = (float)((double)local_1b0.bounds.halfSize[2] + dVar12);
+      local_1b0.extents.end[2] = pBVar1->midPoint[2] + pfVar8[2];
+      local_1b0.bounds.midPoint[0] = (float)dVar13;
+      local_1b0.bounds.midPoint[1] = (float)dVar13;
+      local_1b0.bounds.midPoint[2] = (float)dVar13;
+      local_1b0.passEntityNum = param_5;
+      local_1b0.contentmask = param_6;
+      CM_CalcTraceExtents(&local_1b0.extents);
+      CG_ClipMoveToEntities(&local_1b0,ptVar2);
+      DynEntCl_ClipMoveTrace(&local_1b0,ptVar2);
     }
-    dVar8 = (double)*pfVar3;
-    if (((double)pfVar3[9] != dVar8) && (dVar8 != dVar7)) {
-      uVar2 = va(0xffffffff8202bc50,(double)pfVar3[9],dVar8,pfVar3[7],*(undefined2 *)(pfVar3 + 8),
-                 (double)*pfVar5,(double)pfVar5[1],(double)pfVar5[2]);
-      MyAssertHandler(0xffffffff8202b970,0x556,0,0xffffffff820011f4,0xffffffff8202bc00,uVar2);
+    if (((double)ptVar2->fractionForHitType != (double)ptVar2->fraction) &&
+       ((double)ptVar2->fraction != dVar12)) {
+      va(
+        "fractionForHitType = %f, fraction = %f, hitType = %i, hitId = %i, start = (%f,%f,%f), end = (%f,%f,%f), bounds = ((%f,%f,%f),(%f,%f,%f)), passEntityNum = %i, contentMask = %i, locational = %s, staticModels = %s"
+        );
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x556,0,
+                      "%s\n\t%s");
     }
   }
 LAB_82328640:
-  Profile_EndInternal(0);
-  __restgprlr_18();
+  iVar3 = Profile_EndInternal((double *)0x0);
+  __restgprlr_18(iVar3);
   return;
 }
 
 
 // 82328658  CG_LocationalTrace  (cgame/cg_world.cpp:1376)
 
-void CG_LocationalTrace(undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-                       undefined8 param_5)
+void CG_LocationalTrace(trace_t *param_1,float *param_2,float *param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  trace_t *ptVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_25();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x561,0,0xffffffff82000f98,0xffffffff8202ba08);
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  ptVar1 = (trace_t *)__savegprlr_25(param_1);
+  if (ptVar1 == (trace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x561,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x562,0,0xffffffff82000f98,0xffffffff8202bebc);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x562,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x563,0,0xffffffff82000f98,0xffffffff8202a874);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x563,0,
+                    "%s");
   }
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8202b970,0x564,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x564,0,
+                    "%s");
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bec4);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"loc trace");
   Profile_Begin(0x2b);
-  CG_Trace(uVar1,param_2,param_3,0xffffffff82174a3c,param_4,param_5,1,1);
-  Profile_EndInternal(0);
+  CG_Trace(ptVar1,(float *)uVar3,(float *)uVar4,&bounds_origin,param_4,param_5,true,true);
+  Profile_EndInternal((double *)0x0);
   PIXEndNamedEvent();
   __restgprlr_25();
   return;
@@ -1697,86 +1856,74 @@ void CG_LocationalTrace(undefined8 param_1,ulonglong param_2,ulonglong param_3,u
 // 82328778  CG_LocationalTraceEntitiesOnly  (cgame/cg_world.cpp:1393)
 
 void CG_LocationalTraceEntitiesOnly
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4,
-               undefined4 param_5)
+               (trace_t *param_1,float *param_2,float *param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  char cVar2;
-  uint *puVar3;
-  uint *puVar4;
-  undefined4 local_e8;
-  undefined4 local_e4;
-  undefined1 local_e0;
-  undefined1 local_df;
-  undefined1 local_de;
-  undefined1 local_dd;
-  undefined1 auStack_d0 [64];
-  uint local_90;
-  uint local_8c;
-  uint local_88;
-  uint local_80;
-  uint local_7c;
-  uint local_78;
-  undefined4 *local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
-  undefined4 local_60;
+  trace_t *ptVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  float *pfVar4;
+  ulonglong uVar5;
+  float *pfVar6;
+  IgnoreEntParams local_e8 [2];
+  pointtrace_t pStack_d0;
   
-  uVar1 = __savegprlr_24();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x576,0,0xffffffff82000f98,0xffffffff8202ba08);
+  uVar5 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  ptVar1 = (trace_t *)__savegprlr_24(param_1);
+  if (ptVar1 == (trace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x576,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x577,0,0xffffffff82000f98,0xffffffff8202bebc);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x577,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x578,0,0xffffffff82000f98,0xffffffff8202a874);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x578,0,
+                    "%s");
   }
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8202b970,0x579,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x579,0,
+                    "%s");
   }
-  puVar3 = (uint *)param_2;
-  if ((*puVar3 & 0x7f800000) == 0x7f800000) {
-LAB_8232888c:
-    MyAssertHandler(0xffffffff8202b970,0x57a,0,0xffffffff82000f98,0xffffffff8202be78);
+  pfVar4 = (float *)uVar3;
+  if (((((uint)*pfVar4 & 0x7f800000) == 0x7f800000) ||
+      (((uint)pfVar4[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar4[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x57a,0,
+                    "%s");
   }
-  else {
-    if ((puVar3[1] & 0x7f800000) == 0x7f800000) goto LAB_8232888c;
-    if ((puVar3[2] & 0x7f800000) == 0x7f800000) goto LAB_8232888c;
+  pfVar6 = (float *)uVar5;
+  if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
+      (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x57b,0,
+                    "%s");
   }
-  puVar4 = (uint *)param_3;
-  if ((*puVar4 & 0x7f800000) != 0x7f800000) {
-    if ((puVar4[1] & 0x7f800000) != 0x7f800000) {
-      if ((puVar4[2] & 0x7f800000) != 0x7f800000) goto LAB_8232890c;
-    }
-  }
-  MyAssertHandler(0xffffffff8202b970,0x57b,0,0xffffffff82000f98,0xffffffff8202abfc);
-LAB_8232890c:
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8202bed0);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"loc trace entities");
   Profile_Begin(0x2b);
-  local_90 = *puVar3;
-  local_8c = puVar3[1];
-  local_88 = puVar3[2];
-  local_80 = *puVar4;
-  local_df = 0;
-  local_7c = puVar4[1];
-  local_e0 = 1;
-  local_78 = puVar4[2];
-  local_e4 = 0xffffffff;
-  local_dd = 0;
-  local_de = 0;
-  local_e8 = param_4;
-  CM_CalcTraceExtents(auStack_d0);
-  local_70 = &local_e8;
-  local_68 = 1;
-  local_64 = 1;
-  local_60 = 0;
-  local_6c = param_5;
-  CG_PointTraceToEntities(auStack_d0,uVar1);
-  Profile_EndInternal(0);
+  pStack_d0.extents.start[0] = *pfVar4;
+  pStack_d0.extents.start[1] = pfVar4[1];
+  pStack_d0.extents.start[2] = pfVar4[2];
+  pStack_d0.extents.end[0] = *pfVar6;
+  local_e8[0].ignoreParent = false;
+  pStack_d0.extents.end[1] = pfVar6[1];
+  local_e8[0].ignoreSelf = true;
+  pStack_d0.extents.end[2] = pfVar6[2];
+  local_e8[0].parentEntity = -1;
+  local_e8[0].ignoreChildren = false;
+  local_e8[0].ignoreSiblings = false;
+  local_e8[0].baseEntity = param_4;
+  CM_CalcTraceExtents(&pStack_d0.extents);
+  pStack_d0.ignoreEntParams = local_e8;
+  pStack_d0.bLocational = 1;
+  pStack_d0.bCalcDObjPose = 1;
+  pStack_d0.priorityMap = (uchar *)0x0;
+  pStack_d0.contentmask = param_5;
+  CG_PointTraceToEntities(&pStack_d0,ptVar1);
+  Profile_EndInternal((double *)0x0);
   PIXEndNamedEvent();
   __restgprlr_24();
   return;
@@ -1785,34 +1932,46 @@ LAB_8232890c:
 
 // 823289B8  CG_TraceCapsule  (cgame/cg_world.cpp:1438)
 
-void CG_TraceCapsule(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4,
-                    undefined8 param_5,undefined8 param_6)
+void CG_TraceCapsule(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5,
+                    int param_6)
 
 {
-  ulonglong uVar1;
-  char cVar2;
+  trace_t *ptVar1;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   
-  uVar1 = __savegprlr_24();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x59f,0,0xffffffff82000f98,0xffffffff8202ba08);
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  ptVar1 = (trace_t *)__savegprlr_24(param_1);
+  if (ptVar1 == (trace_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x59f,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x5a0,0,0xffffffff82000f98,0xffffffff8202bebc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a0,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x5a1,0,0xffffffff82000f98,0xffffffff8202a874);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a1,0,
+                    "%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8202b970,0x5a2,0,0xffffffff82000f98,0xffffffff82002044);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a2,0,
+                    "%s");
   }
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8202b970,0x5a3,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_world.cpp",0x5a3,0,
+                    "%s");
   }
   Profile_Begin(0x2c);
-  CG_Trace(uVar1,param_2,param_3,param_4,param_5,param_6,0,0);
-  Profile_EndInternal(0);
-  __restgprlr_24();
+  CG_Trace(ptVar1,(float *)uVar4,(float *)uVar5,(Bounds *)uVar6,param_5,param_6,false,false);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_24(iVar2);
   return;
 }
 

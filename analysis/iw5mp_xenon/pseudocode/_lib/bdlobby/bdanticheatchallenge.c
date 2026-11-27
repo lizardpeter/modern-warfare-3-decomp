@@ -7,9 +7,9 @@ void __unwind_72303(void)
 {
   int in_r12;
   
-  bdAntiCheatChallengeParam__operator_delete
-            (*(undefined4 *)(in_r12 + -0x2c),
-             (ulonglong)*(uint *)(in_r12 + 0x1c) + (ulonglong)*(uint *)(in_r12 + -0x30) * 0xc);
+  bdAntiCheatChallengeParam::operator_delete
+            (*(void **)(in_r12 + -0x2c),
+             (void *)(*(int *)(in_r12 + 0x1c) + *(int *)(in_r12 + -0x30) * 0xc));
   return;
 }
 
@@ -21,8 +21,7 @@ void __unwind_72331(void)
 {
   int in_r12;
   
-  bdAntiCheatChallengeParam__operator_delete
-            (*(undefined4 *)(in_r12 + -0x20),*(undefined4 *)(in_r12 + 0x1c));
+  bdAntiCheatChallengeParam::operator_delete(*(void **)(in_r12 + -0x20),*(void **)(in_r12 + 0x1c));
   return;
 }
 
@@ -34,8 +33,7 @@ void __unwind_72356(void)
 {
   int in_r12;
   
-  bdAntiCheatChallengeParam__operator_delete
-            (*(undefined4 *)(in_r12 + -0x2c),*(undefined4 *)(in_r12 + -0x30));
+  bdAntiCheatChallengeParam::operator_delete(*(void **)(in_r12 + -0x2c),*(void **)(in_r12 + -0x30));
   return;
 }
 
@@ -47,7 +45,8 @@ void __unwind_72533(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 
@@ -57,9 +56,10 @@ void __unwind_72533(void)
 void __unwind_72534(void)
 
 {
-  longlong in_r12;
+  int in_r12;
   
-  bdAntiCheatChallengeParam___bdAntiCheatChallengeParam(in_r12 + -0x48);
+  bdAntiCheatChallengeParam::~bdAntiCheatChallengeParam
+            ((bdAntiCheatChallengeParam *)(in_r12 + -0x48));
   return;
 }
 

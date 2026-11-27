@@ -2,25 +2,26 @@
 
 // 827481F8  Image_GetSize  (gfx_d3d/r_image_load_obj.cpp:1902)
 
-void Image_GetSize(undefined8 param_1,uint *param_2,uint *param_3)
+bool Image_GetSize(GfxImage *param_1,int *param_2,int *param_3)
 
 {
   int iVar1;
+  undefined1 uVar2;
   
-  iVar1 = __savegprlr_27();
+  iVar1 = __savegprlr_27(param_1);
   if (*(char *)(iVar1 + 0x47) != '\0') {
     if (*(char *)(iVar1 + 0x39) != '\0') {
-      MyAssertHandler(0xffffffff821c5740,0x77f,0,0xffffffff8205cfc0,0xffffffff821c5720,
-                      *(undefined4 *)(iVar1 + 0x6c));
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_obj.cpp"
+                      ,0x77f,0,"%s\n\t(image->name) = %s");
     }
     if (*(char *)(iVar1 + 0x46) != '\x01') {
-      MyAssertHandler(0xffffffff821c5740,0x780,0,0xffffffff8205cfc0,0xffffffff821c5704,
-                      *(undefined4 *)(iVar1 + 0x6c));
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_obj.cpp"
+                      ,0x780,0,"%s\n\t(image->name) = %s");
     }
   }
   *param_2 = (uint)*(ushort *)(iVar1 + 0x40);
   *param_3 = (uint)*(ushort *)(iVar1 + 0x42);
-  __restgprlr_27(1);
-  return;
+  uVar2 = __restgprlr_27(1);
+  return (bool)uVar2;
 }
 

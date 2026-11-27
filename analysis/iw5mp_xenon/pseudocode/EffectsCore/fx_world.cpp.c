@@ -2,15 +2,22 @@
 
 // 82450DD8  FX_LoadWorld  (EffectsCore/fx_world.cpp:433)
 
-undefined8 FX_LoadWorld(undefined8 param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+FxWorld * FX_LoadWorld(char *param_1)
 
 {
-  undefined *puVar1;
+  XAssetHeader XVar1;
   
-  puVar1 = (undefined *)DB_FindXAssetHeader(0x12,param_1,1);
-  if (puVar1 != &DAT_8333cac0) {
-    MyAssertHandler(0xffffffff8206ae48,0x1bd,0,0xffffffff82000f98,0xffffffff8206ae8c);
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_FXWORLD,param_1,1);
+  if ((FxWorld *)XVar1.physPreset != &fxWorld) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_world.cpp",
+                    0x1bd,0,"%s");
   }
-  return 0xffffffff8333cac0;
+  return &fxWorld;
 }
 

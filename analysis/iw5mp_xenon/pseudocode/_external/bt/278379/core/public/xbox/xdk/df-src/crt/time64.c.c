@@ -2,7 +2,7 @@
 
 // 82918840  _time64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/time64.c:56)
 
-__time64_t _time64(__time64_t *_Time)
+long64 _time64(long64 *param_1)
 
 {
   ulonglong uVar1;
@@ -13,8 +13,8 @@ __time64_t _time64(__time64_t *_Time)
   if (0x793406fff < uVar1) {
     uVar1 = 0xffffffffffffffff;
   }
-  if (_Time != (__time64_t *)0x0) {
-    *_Time = uVar1;
+  if (param_1 != (long64 *)0x0) {
+    *param_1 = uVar1;
   }
   return uVar1;
 }

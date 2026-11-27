@@ -2,43 +2,55 @@
 
 // 82260D30  BG_HasPerk  (bgame/bg_perks.h:75)
 
-void BG_HasPerk(undefined8 param_1,ulonglong param_2)
+bool BG_HasPerk(uint *param_1,uint param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
   
-  iVar2 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_28(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  if (0x31 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82000fa8,0x50,0,0xffffffff82000f60,param_2,0x32);
+  if (0x31 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x50,0,"perkIndex doesn\'t index PERK_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (param_2 & 0xffffffff) >> 5;
+  uVar1 = (uVar4 & 0xffffffff) >> 5;
   if (1 < uVar1) {
-    MyAssertHandler(0xffffffff82000fa8,0x53,0,0xffffffff82000f20,uVar1,2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x53,0,"arrayIndex doesn\'t index PERK_ARRAY_COUNT\n\t%i not in [0, %i)");
   }
-  __restgprlr_28((1 << ((uint)param_2 & 0x1f) & *(uint *)((int)(uVar1 << 2) + iVar2)) != 0);
-  return;
+  uVar3 = __restgprlr_28((1 << ((uint)uVar4 & 0x1f) & *(uint *)((int)(uVar1 << 2) + iVar2)) != 0);
+  return (bool)uVar3;
 }
 
 
 // 82261238  MemFile_ArchiveData  (universal/memfile.h:212)
 
-void MemFile_ArchiveData(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void MemFile_ArchiveData(MemoryFile *param_1,int param_2,void *param_3)
 
 {
   int iVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  iVar1 = __savegprlr_27();
+  lVar3 = (longlong)(int)param_3;
+  lVar2 = (longlong)param_2;
+  iVar1 = __savegprlr_27(param_1,lVar2,lVar3);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001350,0xd5,0,0xffffffff82000f98,0xffffffff82001348);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../universal/memfile.h"
+                    ,0xd5,0,"%s");
   }
   if (*(int *)(iVar1 + 0x20) == 0) {
-    MyAssertHandler(0xffffffff82001350,0xd6,0,0xffffffff82000f98,0xffffffff82001330);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../universal/memfile.h"
+                    ,0xd6,0,"%s");
   }
-  (**(code **)(iVar1 + 0x20))(iVar1,param_2,param_3);
+  (**(code **)(iVar1 + 0x20))(iVar1,lVar2,lVar3);
   __restgprlr_27();
   return;
 }
@@ -46,39 +58,46 @@ void MemFile_ArchiveData(undefined8 param_1,undefined8 param_2,undefined8 param_
 
 // 82260DF0  Profile_Begin  (universal/profile.h:229)
 
-void Profile_Begin(void)
+void Profile_Begin(int param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  uint uVar1;
+  undefined8 uVar2;
   int iVar3;
-  ulonglong uVar4;
+  void *pvVar4;
   undefined4 *puVar5;
   uint *puVar6;
   
-  iVar2 = __savegprlr_27();
-  iVar3 = Sys_GetValue(0);
-  iVar2 = iVar2 * 0x28 + iVar3;
-  puVar6 = (uint *)(iVar2 + 0x42c);
-  if (2 < *(int *)(iVar2 + 0x42c) + 1U) {
-    MyAssertHandler(0xffffffff82001100,0xee,0,0xffffffff820010a8,(ulonglong)*puVar6 + 1,3);
+  iVar3 = __savegprlr_27(param_1);
+  pvVar4 = Sys_GetValue(0);
+  puVar6 = (uint *)((int)pvVar4 + iVar3 * 0x28 + 0x42c);
+  if (2 < *(int *)((int)pvVar4 + iVar3 * 0x28 + 0x42c) + 1U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0xee,0,
+                    "p->write.nesting + 1 doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
+                   );
   }
-  uVar4 = (ulonglong)*puVar6 + 1;
-  *puVar6 = (uint)uVar4;
-  if (2 < (uVar4 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001100,0xf0,0,0xffffffff82001058,uVar4,3);
+  uVar1 = *puVar6;
+  *puVar6 = uVar1 + 1;
+  if (2 < uVar1 + 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0xf0,0,
+                    "p->write.nesting doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
+                   );
   }
-  if (*(uint *)(iVar3 + 0x428) < iVar3 + 0x28U) {
-    MyAssertHandler(0xffffffff82001100,0xf2,0,0xffffffff82000f98,0xffffffff82001020);
+  if (*(uint *)((int)pvVar4 + 0x428) < (int)pvVar4 + 0x28U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0xf2,0,"%s");
   }
-  puVar5 = (undefined4 *)(*(int *)(iVar3 + 0x428) + 4);
-  *(undefined4 **)(iVar3 + 0x428) = puVar5;
+  puVar5 = (undefined4 *)(*(int *)((int)pvVar4 + 0x428) + 4);
+  *(undefined4 **)((int)pvVar4 + 0x428) = puVar5;
   *puVar5 = puVar6;
-  if (*(uint *)(iVar3 + 0x428) <= iVar3 + 0x28U) {
-    MyAssertHandler(0xffffffff82001100,0xf5,0,0xffffffff82000f98,0xffffffff82000fec);
+  if (*(uint *)((int)pvVar4 + 0x428) <= (int)pvVar4 + 0x28U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0xf5,0,"%s");
   }
-  uVar1 = TBLr;
-  puVar6[*puVar6 + 2] = (uint)uVar1;
+  uVar2 = TBLr;
+  puVar6[*puVar6 + 2] = (uint)uVar2;
   __restgprlr_27();
   return;
 }
@@ -86,199 +105,230 @@ void Profile_Begin(void)
 
 // 82260D08  BG_UsingAlternate  (bgame/bg_weapons_util.h:242)
 
-undefined8 BG_UsingAlternate(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool BG_UsingAlternate(playerState_s *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if ((param_1 == 0) || (uVar1 = 1, (*(uint *)(param_1 + 0x374) & 0x8000) == 0)) {
-    uVar1 = 0;
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar1 = true, ((param_1->weapCommon).weapFlags & 0x8000U) == 0)) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 82260F18  Profile_EndInternal  (universal/profile.h:254)
 
-void Profile_EndInternal(void)
+int Profile_EndInternal(double *param_1)
 
 {
   uint *puVar1;
   uint uVar2;
-  int iVar3;
-  uint uVar4;
-  double *pdVar5;
+  uint uVar3;
+  double *pdVar4;
+  void *pvVar5;
   int iVar6;
   ulonglong uVar7;
   int *piVar8;
   int iVar9;
   
-  pdVar5 = (double *)__savegprlr_25();
-  iVar6 = Sys_GetValue(0);
+  pdVar4 = (double *)__savegprlr_25(param_1);
+  pvVar5 = Sys_GetValue(0);
   uVar7 = TBLr;
-  if (*(uint *)(iVar6 + 0x428) <= iVar6 + 0x28U) {
-    MyAssertHandler(0xffffffff82001100,0x10a,0,0xffffffff82000f98,0xffffffff82000fec);
+  if (*(uint *)((int)pvVar5 + 0x428) <= (int)pvVar5 + 0x28U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0x10a,0,"%s");
   }
-  puVar1 = (uint *)**(int **)(iVar6 + 0x428);
+  puVar1 = (uint *)**(int **)((int)pvVar5 + 0x428);
   if (2 < *puVar1) {
-    MyAssertHandler(0xffffffff82001100,0x10c,0,0xffffffff82001058,*puVar1,3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0x10c,0,
+                    "p->write.nesting doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
+                   );
   }
-  uVar2 = *(uint *)(iVar6 + 0x49b4);
-  uVar4 = puVar1[*puVar1 + 2];
+  uVar2 = *(uint *)((int)pvVar5 + 0x49b4);
+  uVar3 = puVar1[*puVar1 + 2];
   *puVar1 = *puVar1 - 1;
   puVar1[1] = puVar1[1] + 1;
-  uVar7 = ((uVar7 & 0xffffffff) - (ulonglong)uVar4) - (ulonglong)uVar2;
+  uVar7 = ((uVar7 & 0xffffffff) - (ulonglong)uVar3) - (ulonglong)uVar2;
   uVar7 = -(ulonglong)(uVar7 < 0xffffffffffff0001) & uVar7;
   iVar9 = (int)uVar7;
   puVar1[5] = puVar1[5] + iVar9;
-  piVar8 = (int *)(*(int *)(iVar6 + 0x428) + -4);
-  *(int **)(iVar6 + 0x428) = piVar8;
-  iVar3 = *piVar8;
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82001100,0x120,0,0xffffffff82000f98,0xffffffff8200114c);
+  piVar8 = (int *)(*(int *)((int)pvVar5 + 0x428) + -4);
+  *(int **)((int)pvVar5 + 0x428) = piVar8;
+  iVar6 = *piVar8;
+  if (iVar6 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
+                    ,0x120,0,"%s");
   }
-  *(int *)(iVar3 + 0x18) = *(int *)(iVar3 + 0x18) + iVar9;
-  iVar9 = *(uint *)(iVar3 + 0x14) - *(uint *)(iVar6 + 0x49b8);
-  if (*(uint *)(iVar3 + 0x14) < *(uint *)(iVar6 + 0x49b8)) {
+  *(int *)(iVar6 + 0x18) = *(int *)(iVar6 + 0x18) + iVar9;
+  iVar9 = *(uint *)(iVar6 + 0x14) - *(uint *)((int)pvVar5 + 0x49b8);
+  if (*(uint *)(iVar6 + 0x14) < *(uint *)((int)pvVar5 + 0x49b8)) {
     iVar9 = 0;
   }
-  *(int *)(iVar3 + 0x14) = iVar9;
-  if (pdVar5 != (double *)0x0) {
-    *pdVar5 = (double)(uVar7 & 0xffffffff) * DAT_841db430;
+  *(int *)(iVar6 + 0x14) = iVar9;
+  if (pdVar4 != (double *)0x0) {
+    *pdVar4 = (double)(uVar7 & 0xffffffff) * msecPerRawTimerTick;
   }
-  __restgprlr_25(((int)puVar1 + (-0x42c - iVar6)) / 0x28);
-  return;
+  iVar6 = __restgprlr_25(((int)puVar1 + (-0x42c - (int)pvVar5)) / 0x28);
+  return iVar6;
 }
 
 
 // 822612D0  TRACK_aim_assist  (aim_assist/aim_assist.cpp:329)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void TRACK_aim_assist(void)
 
 {
-  track_static_alloc_internal(0xffffffff829b1310,0x3980,0xffffffff820013c8,10);
-  track_static_alloc_internal(0xffffffff829b4cb8,0x520,0xffffffff820013b8,10);
-  track_static_alloc_internal(0xffffffff829b1288,0x80,0xffffffff820013a8,10);
+  track_static_alloc_internal(aaGlobArray,0x3980,"aaGlobArray",10);
+  track_static_alloc_internal(&DAT_829b4cb8,0x520,"aaInputGraph",10);
+  track_static_alloc_internal(aaInputDevGraph,0x80,"aaInputDevGraph",10);
   return;
 }
 
 
 // 82261348  AimAssist_LerpConstDvars  (aim_assist/aim_assist.cpp:342)
 
-void AimAssist_LerpConstDvars(undefined8 param_1,ulonglong param_2)
+float AimAssist_LerpConstDvars
+                (dvar_t *param_1,float param_2,dvar_t *param_3,float param_4,float param_5)
 
 {
   int iVar1;
+  ulonglong uVar2;
   double extraout_f1;
-  double dVar2;
+  double dVar3;
   
-  iVar1 = __savegprlr_28();
-  dVar2 = extraout_f1;
+  uVar2 = (ulonglong)(int)param_3;
+  iVar1 = __savegprlr_28((double)param_2,(double)param_4,(double)param_5,param_1);
+  dVar3 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x158,0,0xffffffff82000f98,0xffffffff82001400);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x158,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x159,0,0xffffffff82000f98,0xffffffff820013fc);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x159,0,"%s");
   }
-  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
-    MyAssertHandler(0xffffffff82001408,0x15b,0,0xffffffff82000f98,0xffffffff820013d4);
+  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x15b,0,"%s");
   }
-  __restgprlr_28((double)(float)((double)(float)((double)*(float *)((int)param_2 + 0xc) -
-                                                (double)*(float *)(iVar1 + 0xc)) * dVar2 +
-                                (double)*(float *)(iVar1 + 0xc)));
-  return;
+  dVar3 = (double)__restgprlr_28((double)(float)((double)(float)((double)*(float *)((int)uVar2 + 0xc
+                                                                                   ) -
+                                                                (double)*(float *)(iVar1 + 0xc)) *
+                                                 dVar3 + (double)*(float *)(iVar1 + 0xc)));
+  return (float)dVar3;
 }
 
 
 // 82261418  AimAssist_GetClipWidthFromVirtualWidth  (aim_assist/aim_assist.cpp:443)
 
-void AimAssist_GetClipWidthFromVirtualWidth(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float AimAssist_GetClipWidthFromVirtualWidth
+                (LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  ulonglong uVar2;
   double extraout_f1;
-  double dVar2;
   double dVar3;
+  float fVar4;
   
-  uVar1 = __savegprlr_29();
-  dVar2 = extraout_f1;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x1bc,0,0xffffffff820011a8,uVar1,4);
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29((double)param_3,param_1);
+  dVar3 = extraout_f1;
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1bc,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x1bd,0,0xffffffff82000f98,0xffffffff8200144c);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1bd,0,"%s");
   }
-  dVar3 = (double)(float)((double)DAT_82b5c7fc * dVar2);
-  dVar2 = (double)ScrPlace_HiResGetScaleX();
-  __restgprlr_29((double)((*(float *)param_2 / *(float *)(&DAT_829b143c + (int)uVar1 * 0xe60)) *
-                         (float)(dVar2 * dVar3)));
-  return;
+  dVar3 = (double)(float)((double)cg_hudSplitscreenScale * dVar3);
+  fVar4 = ScrPlace_HiResGetScaleX();
+  dVar3 = (double)__restgprlr_29((double)((*(float *)uVar2 / aaGlobArray[uVar1].screenWidth) *
+                                         (float)((double)fVar4 * dVar3)));
+  return (float)dVar3;
 }
 
 
 // 822614D0  AimAssist_GetClipHeightFromVirtualHeight  (aim_assist/aim_assist.cpp:452)
 
-void AimAssist_GetClipHeightFromVirtualHeight(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float AimAssist_GetClipHeightFromVirtualHeight
+                (LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  ulonglong uVar2;
   double extraout_f1;
-  double dVar2;
   double dVar3;
+  float fVar4;
   
-  uVar1 = __savegprlr_29();
-  dVar2 = extraout_f1;
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x1c5,0,0xffffffff820011a8,uVar1,4);
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29((double)param_3,param_1);
+  dVar3 = extraout_f1;
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1c5,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x1c6,0,0xffffffff82000f98,0xffffffff8200144c);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1c6,0,"%s");
   }
-  dVar3 = (double)(float)((double)DAT_82b5c7fc * dVar2);
-  dVar2 = (double)ScrPlace_HiResGetScaleY();
-  __restgprlr_29((double)((*(float *)((int)param_2 + 4) /
-                          *(float *)(&DAT_829b1440 + (int)uVar1 * 0xe60)) * (float)(dVar2 * dVar3)))
-  ;
-  return;
+  dVar3 = (double)(float)((double)cg_hudSplitscreenScale * dVar3);
+  fVar4 = ScrPlace_HiResGetScaleY();
+  dVar3 = (double)__restgprlr_29((double)((*(float *)((int)uVar2 + 4) /
+                                          aaGlobArray[uVar1].screenHeight) *
+                                         (float)((double)fVar4 * dVar3)));
+  return (float)dVar3;
 }
 
 
 // 82261588  AimAssist_UpdateTweakables  (aim_assist/aim_assist.cpp:461)
 
-void AimAssist_UpdateTweakables(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_UpdateTweakables(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  double dVar5;
+  LocalClientNum_t LVar2;
+  ScreenPlacement *pSVar3;
+  float fVar4;
   
-  uVar3 = __savegprlr_27();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x1d2,0,0xffffffff820011a8,uVar3,4);
+  LVar2 = __savegprlr_27(param_1);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1d2,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)uVar3 * 0xe60;
-  uVar4 = ScrPlace_GetViewPlacement(uVar3);
-  dVar5 = (double)AimAssist_GetClipWidthFromVirtualWidth
-                            ((double)*(float *)(DAT_829b51d8 + 0xc),uVar3,uVar4);
-  *(float *)(&DAT_829b13c8 + iVar1) = (float)dVar5;
-  dVar5 = (double)AimAssist_GetClipHeightFromVirtualHeight
-                            ((double)*(float *)(DAT_829b51e0 + 0xc),uVar3,uVar4);
-  *(float *)(&DAT_829b13cc + iVar1) = (float)dVar5;
-  dVar5 = (double)AimAssist_GetClipWidthFromVirtualWidth
-                            ((double)*(float *)(DAT_829b4ca0 + 0xc),uVar3,uVar4);
-  iVar2 = DAT_829b51ec;
-  *(float *)(&DAT_829b13d0 + iVar1) = (float)(dVar5 * (double)*(float *)(&DAT_829b142c + iVar1));
-  dVar5 = (double)AimAssist_GetClipHeightFromVirtualHeight
-                            ((double)*(float *)(iVar2 + 0xc),uVar3,uVar4);
-  *(float *)(&DAT_829b13d4 + iVar1) = (float)(dVar5 * (double)*(float *)(&DAT_829b142c + iVar1));
-  dVar5 = (double)AimAssist_GetClipWidthFromVirtualWidth
-                            ((double)*(float *)(DAT_829b51f0 + 0xc),uVar3,uVar4);
-  *(float *)(&DAT_829b13d8 + iVar1) = (float)dVar5;
-  dVar5 = (double)AimAssist_GetClipHeightFromVirtualHeight
-                            ((double)*(float *)(DAT_829b4c94 + 0xc),uVar3,uVar4);
-  *(float *)(&DAT_829b13dc + iVar1) = (float)dVar5;
+  pSVar3 = ScrPlace_GetViewPlacement(LVar2);
+  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b51d8 + 0xc));
+  aaGlobArray[LVar2].tweakables.slowdownRegionWidth = fVar4;
+  fVar4 = AimAssist_GetClipHeightFromVirtualHeight(LVar2,pSVar3,*(float *)(DAT_829b51e0 + 0xc));
+  aaGlobArray[LVar2].tweakables.slowdownRegionHeight = fVar4;
+  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b4ca0 + 0xc));
+  iVar1 = DAT_829b51ec;
+  aaGlobArray[LVar2].tweakables.autoMeleeRegionWidth = fVar4 * aaGlobArray[LVar2].fovScaleInv;
+  fVar4 = AimAssist_GetClipHeightFromVirtualHeight(LVar2,pSVar3,*(float *)(iVar1 + 0xc));
+  aaGlobArray[LVar2].tweakables.autoMeleeRegionHeight = fVar4 * aaGlobArray[LVar2].fovScaleInv;
+  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b51f0 + 0xc));
+  aaGlobArray[LVar2].tweakables.lockOnRegionWidth = fVar4;
+  fVar4 = AimAssist_GetClipHeightFromVirtualHeight
+                    (LVar2,pSVar3,(aim_lockon_region_height->current).value);
+  aaGlobArray[LVar2].tweakables.lockOnRegionHeight = fVar4;
   __restgprlr_27();
   return;
 }
@@ -286,91 +336,149 @@ void AimAssist_UpdateTweakables(void)
 
 // 82261690  AimAssist_UpdateAdsLerp  (aim_assist/aim_assist.cpp:489)
 
-void AimAssist_UpdateAdsLerp(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_UpdateAdsLerp(AimInput *param_1)
 
 {
-  undefined4 uVar1;
-  char cVar2;
-  int iVar3;
+  float fVar1;
+  LocalClientNum_t LVar2;
+  uint uVar3;
+  bool bVar4;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x1ec,0,0xffffffff82000f98,0xffffffff820014a8);
+  if (param_1 == (AimInput *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1ec,0,"%s");
   }
-  if (3 < *(uint *)(param_1 + 0x2c)) {
-    MyAssertHandler(0xffffffff82001408,0x1ed,0,0xffffffff82001458,*(uint *)(param_1 + 0x2c),4);
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x1ed,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
   }
-  iVar3 = *(int *)(param_1 + 0x2c) * 0xe60;
-  cVar2 = CL_Demo_IsPlaying();
-  if (cVar2 == '\0') {
-    *(undefined4 *)(&DAT_829b1430 + iVar3) = *(undefined4 *)(&DAT_829b1330 + iVar3);
-    if ((((*(uint *)(&DAT_829b131c + iVar3) & 0x3800) == 0) ||
-        ((*(uint *)(param_1 + 0x28) & 0x800) == 0)) &&
-       (cVar2 = CG_PlayerUsingScopedTurret(*(undefined4 *)(param_1 + 0x2c)), cVar2 == '\0')) {
-      return;
-    }
-    uVar1 = 0x3f800000;
+  LVar2 = param_1->localClientNum;
+  bVar4 = CL_Demo_IsPlaying(LVar2);
+  if (bVar4) {
+    fVar1 = 0.0;
   }
   else {
-    uVar1 = 0;
+    uVar3 = aaGlobArray[LVar2].ps.eFlags;
+    aaGlobArray[LVar2].adsLerp = aaGlobArray[LVar2].ps.fWeaponPosFrac;
+    if ((((uVar3 & 0x3800) == 0) || ((param_1->buttons & 0x800U) == 0)) &&
+       (bVar4 = CG_PlayerUsingScopedTurret(param_1->localClientNum), !bVar4)) {
+      return;
+    }
+    fVar1 = 1.0;
   }
-  *(undefined4 *)(&DAT_829b1430 + iVar3) = uVar1;
+  aaGlobArray[LVar2].adsLerp = fVar1;
   return;
 }
 
 
 // 82261790  AimAssist_RegisterDvars  (aim_assist/aim_assist.cpp:513)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void AimAssist_RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  undefined8 uVar7;
+  ushort uVar1;
+  IMAGE_DOS_HEADER *pIVar2;
+  char *pcVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   
   __savefpr_25();
-  DAT_829b4cac = Dvar_RegisterBool(0xffffffff82001e5c,1,4,0xffffffff82001e74);
-  DAT_829b5218 = Dvar_RegisterBool(0xffffffff82001e28,0,4,0xffffffff82001e40);
-  DAT_829b4c98 = Dvar_RegisterInt(0xffffffff82001df4,3,0,3,4,0xffffffff82001e0c);
-  uVar4 = 0x4090e00000000000;
-  uVar7 = 0;
-  uVar6 = 0x4056800000000000;
-  DAT_829b51e8 = Dvar_RegisterFloat(0x4056800000000000,0,0x4090e00000000000,0xffffffff82001d98);
-  DAT_829b4ca8 = Dvar_RegisterFloat(0x404b800000000000,uVar7,uVar4,0xffffffff82001d38);
-  DAT_829b1308 = Dvar_RegisterFloat(0x4070400000000000,uVar7,uVar4,0xffffffff82001cdc);
-  DAT_829b51f8 = Dvar_RegisterFloat(uVar6,uVar7,uVar4,0xffffffff82001c80);
-  DAT_829b1284 = Dvar_RegisterBool(0xffffffff82001c34,1,4,0xffffffff82001c50);
-  DAT_829b51e4 = Dvar_RegisterBool(0xffffffff82001c18,0,4,0xffffffff82001bec);
-  DAT_829b5210 = Dvar_RegisterFloat(0x4092c00000000000,uVar7,0x40af400000000000,0xffffffff82001ba8);
-  DAT_829b4cb4 = Dvar_RegisterBool(0xffffffff82001b4c,1,4,0xffffffff82001b68);
-  DAT_829b5208 = Dvar_RegisterBool(0xffffffff82001b38,0,4,0xffffffff82001b10);
-  uVar3 = 0x4084000000000000;
-  DAT_829b51d8 = Dvar_RegisterFloat(uVar6,uVar7,0x4084000000000000,0xffffffff82001ac4);
-  uVar2 = 0x407e000000000000;
-  DAT_829b51e0 = Dvar_RegisterFloat(uVar6,uVar7,0x407e000000000000,0xffffffff82001aa4);
-  uVar5 = 0x3ff0000000000000;
-  uVar1 = 0x3fd99999a0000000;
-  DAT_829b5204 = Dvar_RegisterFloat(0x3fd99999a0000000,uVar7,0x3ff0000000000000,0xffffffff82001a1c);
-  uVar4 = 0x3fe0000000000000;
-  DAT_829b5214 = Dvar_RegisterFloat(0x3fe0000000000000,uVar7,uVar5,0xffffffff820019b4);
-  DAT_829b51fc = Dvar_RegisterFloat(uVar1,uVar7,uVar5,0xffffffff8200199c);
-  DAT_829b5200 = Dvar_RegisterFloat(uVar4,uVar7,uVar5,0xffffffff82001900);
-  DAT_829b4ca4 = Dvar_RegisterBool(0xffffffff820018d4,1,4,0xffffffff820018ec);
-  DAT_829b130c = Dvar_RegisterBool(0xffffffff820018a0,0,4,0xffffffff820018b4);
-  DAT_829b4cb0 = Dvar_RegisterFloat(0x4044000000000000,uVar7,0x4059000000000000,0xffffffff82001830);
-  DAT_829b4ca0 = Dvar_RegisterFloat(0x4074000000000000,uVar7,uVar3,0xffffffff820017c4);
-  DAT_829b51ec = Dvar_RegisterFloat(0x406e000000000000,uVar7,uVar2,0xffffffff820017a4);
-  DAT_829b4c90 = Dvar_RegisterFloat(0x4060000000000000,uVar7,0x406fe00000000000,0xffffffff8200171c);
-  DAT_829b51f4 = Dvar_RegisterBool(0xffffffff820016d8,1,4,0xffffffff820016ec);
-  DAT_829b1280 = Dvar_RegisterBool(0xffffffff8200169c,0,4,0xffffffff820016b0);
-  DAT_829b51dc = Dvar_RegisterFloat(0x3fa99999a0000000,uVar7,uVar5,0xffffffff82001644);
-  DAT_829b4c9c = Dvar_RegisterFloat(0x3fe3333340000000,uVar7,uVar5,0xffffffff820015f0);
-  DAT_829b51f0 = Dvar_RegisterFloat(uVar6,uVar7,uVar3,0xffffffff820015d8);
-  DAT_829b4c94 = Dvar_RegisterFloat(uVar6,uVar7,uVar2,0xffffffff82001528);
-  DAT_829b520c = Dvar_RegisterBool(0xffffffff820014b0,1,4,0xffffffff820014c8);
+  DAT_829b4cac = Dvar_RegisterBool("aim_input_graph_enabled",true,4,
+                                   "Use graph for adjusting view input");
+  DAT_829b5218 = Dvar_RegisterBool("aim_input_graph_debug",false,4,"Debug the view input graphs");
+  DAT_829b4c98 = Dvar_RegisterInt("aim_input_graph_index",3,0,3,4,"Which input graph to use");
+  uVar1 = 0;
+  dVar7 = 1080.0;
+  dVar10 = 0.0;
+  dVar9 = 90.0;
+  DAT_829b51e8 = Dvar_RegisterFloat("aim_turnrate_pitch",90.0,0.0,1080.0,0,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  DAT_829b4ca8 = Dvar_RegisterFloat("aim_turnrate_pitch_ads",55.0,(float)dVar10,(float)dVar7,uVar1,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  uVar1 = 0;
+  DAT_829b1308 = Dvar_RegisterFloat("aim_turnrate_yaw",260.0,(float)dVar10,(float)dVar7,0,
+                                    pIVar2->e_magic);
+  DAT_829b51f8 = Dvar_RegisterFloat("aim_turnrate_yaw_ads",(float)dVar9,(float)dVar10,(float)dVar7,
+                                    uVar1,pIVar2->e_magic);
+  DAT_829b1284 = Dvar_RegisterBool("aim_accel_turnrate_enabled",true,4,
+                                   "Enable/disable acceleration of the turnrates");
+  pcVar3 = &DAT_00000004;
+  aim_accel_turnrate_debug =
+       Dvar_RegisterBool("aim_accel_turnrate_debug",false,4,
+                         "Turn on debugging info for the acceleration");
+  DAT_829b5210 = Dvar_RegisterFloat("aim_accel_turnrate_lerp",1200.0,(float)dVar10,4000.0,0,pcVar3);
+  aim_slowdown_enabled =
+       Dvar_RegisterBool("aim_slowdown_enabled",true,4,
+                         "Slowdown the turn rate when the cross hair passes over a target");
+  pcVar3 = &DAT_00000004;
+  aim_slowdown_debug =
+       Dvar_RegisterBool("aim_slowdown_debug",false,4,"Turn on debugging info for aim slowdown");
+  uVar1 = 0;
+  dVar6 = 640.0;
+  DAT_829b51d8 = Dvar_RegisterFloat("aim_slowdown_region_width",(float)dVar9,(float)dVar10,640.0,0,
+                                    pcVar3);
+  dVar5 = 480.0;
+  DAT_829b51e0 = Dvar_RegisterFloat("aim_slowdown_region_height",(float)dVar9,(float)dVar10,480.0,
+                                    uVar1,pcVar3);
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  dVar8 = 1.0;
+  dVar4 = 0.4000000059604645;
+  DAT_829b5204 = Dvar_RegisterFloat("aim_slowdown_pitch_scale",0.4,(float)dVar10,1.0,0,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  dVar7 = 0.5;
+  DAT_829b5214 = Dvar_RegisterFloat("aim_slowdown_pitch_scale_ads",0.5,(float)dVar10,(float)dVar8,
+                                    uVar1,pIVar2->e_magic);
+  DAT_829b51fc = Dvar_RegisterFloat("aim_slowdown_yaw_scale",(float)dVar4,(float)dVar10,(float)dVar8
+                                    ,uVar1,pIVar2->e_magic);
+  DAT_829b5200 = Dvar_RegisterFloat("aim_slowdown_yaw_scale_ads",(float)dVar7,(float)dVar10,
+                                    (float)dVar8,uVar1,IMAGE_DOS_HEADER_82000000.e_magic);
+  DAT_829b4ca4 = Dvar_RegisterBool("aim_automelee_enabled",true,4,"Turn on auto melee");
+  uVar1 = 0;
+  DAT_829b130c = Dvar_RegisterBool("aim_automelee_debug",false,4,"Turn on auto melee debugging");
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  aim_automelee_lerp =
+       Dvar_RegisterFloat("aim_automelee_lerp",40.0,(float)dVar10,100.0,uVar1,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  uVar1 = 0;
+  DAT_829b4ca0 = Dvar_RegisterFloat("aim_automelee_region_width",320.0,(float)dVar10,(float)dVar6,0,
+                                    pIVar2->e_magic);
+  DAT_829b51ec = Dvar_RegisterFloat("aim_automelee_region_height",240.0,(float)dVar10,(float)dVar5,
+                                    uVar1,pIVar2->e_magic);
+  DAT_829b4c90 = Dvar_RegisterFloat("aim_automelee_range",128.0,(float)dVar10,255.0,0,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  DAT_829b51f4 = Dvar_RegisterBool("aim_lockon_enabled",true,4,
+                                   "Aim lock on helps the player to stay on target");
+  aim_lockon_debug =
+       Dvar_RegisterBool("aim_lockon_debug",false,4,"Turn on debugging info for aim lock on");
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
+  DAT_829b51dc = Dvar_RegisterFloat("aim_lockon_deflection",0.05,(float)dVar10,(float)dVar8,0,
+                                    IMAGE_DOS_HEADER_82000000.e_magic);
+  aim_lockon_strength =
+       Dvar_RegisterFloat("aim_lockon_strength",0.6,(float)dVar10,(float)dVar8,uVar1,pIVar2->e_magic
+                         );
+  DAT_829b51f0 = Dvar_RegisterFloat("aim_lockon_region_width",(float)dVar9,(float)dVar10,
+                                    (float)dVar6,uVar1,pIVar2->e_magic);
+  aim_lockon_region_height =
+       Dvar_RegisterFloat("aim_lockon_region_height",(float)dVar9,(float)dVar10,(float)dVar5,uVar1,
+                          IMAGE_DOS_HEADER_82000000.e_magic);
+  aim_scale_view_axis =
+       Dvar_RegisterBool("aim_scale_view_axis",true,4,
+                         "Scale the influence of each input axis so that the major axis has more influence on the control"
+                        );
   __restfpr_25();
   return;
 }
@@ -378,41 +486,40 @@ void AimAssist_RegisterDvars(void)
 
 // 82261CC8  AimAssist_Init  (aim_assist/aim_assist.cpp:606)
 
-void AimAssist_Init(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_Init(LocalClientNum_t param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined8 uVar5;
-  undefined1 auStack_c0 [192];
+  uint uVar1;
+  GraphFloat *pGVar2;
+  DevGraph *pDVar3;
+  double dVar4;
+  char acStack_c0 [192];
   
-  uVar1 = __savegprlr_27();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x262,0,0xffffffff820011a8,uVar1,4);
+  uVar1 = __savegprlr_27(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x262,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar4 = -0x7d64ed78;
-  memset(&DAT_829b1310 + (int)uVar1 * 0xe60,0,0xe60);
-  lVar3 = -0x7d64b348;
-  lVar2 = 0;
-  uVar5 = 0x3ff0000000000000;
+  pDVar3 = aaInputDevGraph;
+  memset();
+  pGVar2 = (GraphFloat *)&DAT_829b4cb8;
+  dVar4 = 1.0;
   do {
-    Com_sprintf(auStack_c0,0x80,0xffffffff82001ed4,lVar2);
-    GraphFloat_Load(uVar5,lVar3,auStack_c0);
-    lVar3 = lVar3 + 0x148;
-    lVar2 = lVar2 + 1;
-  } while ((int)lVar3 < -0x7d64ae28);
-  Cbuf_InsertText(0,0xffffffff82001ebc);
-  lVar2 = -0x7d64b348;
-  lVar3 = 0;
+    Com_sprintf(acStack_c0,0x80,"aim_assist/view_input_%d.graph");
+    GraphFloat_Load(pGVar2,acStack_c0,(float)dVar4);
+    pGVar2 = pGVar2 + 1;
+  } while ((int)pGVar2 < -0x7d64ae28);
+  Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_aimassist\n");
+  pGVar2 = (GraphFloat *)&DAT_829b4cb8;
   do {
-    Com_sprintf(auStack_c0,0x80,0xffffffff82001e98,lVar3);
-    GraphFloat_CreateDevGui(lVar2,lVar4,auStack_c0);
-    lVar4 = lVar4 + 0x20;
-    lVar3 = lVar3 + 1;
-    lVar2 = lVar2 + 0x148;
-  } while ((int)lVar4 < -0x7d64ecf8);
+    Com_sprintf(acStack_c0,0x80,"Aim Assist/Input Graph:1/Graph %d");
+    GraphFloat_CreateDevGui(pGVar2,pDVar3,acStack_c0);
+    pDVar3 = pDVar3 + 1;
+    pGVar2 = pGVar2 + 1;
+  } while ((int)pDVar3 < -0x7d64ecf8);
   __restgprlr_27();
   return;
 }
@@ -420,33 +527,39 @@ void AimAssist_Init(void)
 
 // 82264EE8  AimAssist_Setup  (aim_assist/aim_assist.cpp:632)
 
-void AimAssist_Setup(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_Setup(LocalClientNum_t param_1,playerState_s *param_2)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
+  float fVar1;
+  LocalClientNum_t LVar2;
+  ScreenPlacement *pSVar3;
+  ulonglong uVar4;
   
-  uVar3 = __savegprlr_29();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x27c,0,0xffffffff820011a8,uVar3,4);
+  uVar4 = (ulonglong)(int)param_2;
+  LVar2 = __savegprlr_29(param_1);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x27c,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x27d,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x27d,0,"%s");
   }
-  iVar2 = (int)uVar3 * 0xe60;
-  memset(&DAT_829b1310 + iVar2,0,0xe60);
-  iVar4 = ScrPlace_GetViewPlacement(uVar3);
-  (&DAT_829b13c0)[iVar2] = 1;
-  *(undefined4 *)(&DAT_829b1428 + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_829b142c + iVar2) = 0x3f800000;
-  *(undefined4 *)(&DAT_829b143c + iVar2) = *(undefined4 *)(iVar4 + 0x20);
-  uVar1 = *(undefined4 *)(iVar4 + 0x24);
-  *(undefined4 *)(&DAT_829b214c + iVar2) = 0x7ff;
-  *(undefined4 *)(&DAT_829b1440 + iVar2) = uVar1;
-  *(undefined4 *)(&DAT_829b2160 + iVar2) = 0x7ff;
-  AimAssist_BackupPlayerState(uVar3,param_2);
+  memset();
+  pSVar3 = ScrPlace_GetViewPlacement(LVar2);
+  aaGlobArray[LVar2].initialized = true;
+  aaGlobArray[LVar2].fovTurnRateScale = 1.0;
+  aaGlobArray[LVar2].fovScaleInv = 1.0;
+  aaGlobArray[LVar2].screenWidth = pSVar3->realViewportSize[0];
+  fVar1 = pSVar3->realViewportSize[1];
+  aaGlobArray[LVar2].autoMeleeTargetEnt = 0x7ff;
+  aaGlobArray[LVar2].screenHeight = fVar1;
+  aaGlobArray[LVar2].lockOnTargetEnt = 0x7ff;
+  AimAssist_BackupPlayerState(LVar2,(playerState_s *)uVar4);
   __restgprlr_29();
   return;
 }
@@ -454,77 +567,90 @@ void AimAssist_Setup(undefined8 param_1,ulonglong param_2)
 
 // 82261DE8  AimAssist_BackupPlayerState  (aim_assist/aim_assist.cpp:663)
 
-void AimAssist_BackupPlayerState(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void AimAssist_BackupPlayerState(LocalClientNum_t param_1,playerState_s *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar5;
-  undefined4 uVar6;
-  uint uVar7;
-  undefined8 uVar4;
-  undefined1 uVar8;
+  float fVar1;
+  playerState_s *ppVar2;
+  LocalClientNum_t LVar3;
+  centity_s *pcVar4;
+  Weapon WVar5;
+  uint uVar6;
+  int iVar7;
+  bool bVar8;
+  ulonglong uVar9;
   
-  uVar3 = __savegprlr_27();
-  if (3 < (uVar3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x29a,0,0xffffffff820011a8,uVar3,4);
+  uVar9 = (ulonglong)(int)param_2;
+  LVar3 = __savegprlr_27(param_1);
+  if (LOCAL_CLIENT_3 < LVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x29a,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x29b,0,0xffffffff82000f98,0xffffffff82001fdc);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x29b,0,"%s");
   }
-  iVar1 = (int)param_2;
-  iVar2 = (int)uVar3 * 0xe60;
-  if (*(int *)(iVar1 + 0xac) == 0x7ff) {
-    *(undefined4 *)(&DAT_829b1310 + iVar2) = *(undefined4 *)(iVar1 + 0x28);
-    *(undefined4 *)(&DAT_829b1314 + iVar2) = *(undefined4 *)(iVar1 + 0x2c);
-    uVar6 = *(undefined4 *)(iVar1 + 0x30);
-  }
-  else {
-    *(undefined4 *)(&DAT_829b1310 + iVar2) = *(undefined4 *)(iVar1 + 0xcc);
-    *(undefined4 *)(&DAT_829b1314 + iVar2) = *(undefined4 *)(iVar1 + 0xd0);
-    uVar6 = *(undefined4 *)(iVar1 + 0xd4);
-  }
-  *(undefined4 *)(&DAT_829b1318 + iVar2) = uVar6;
-  *(undefined4 *)(&DAT_829b131c + iVar2) = *(undefined4 *)(iVar1 + 0xf8);
-  *(undefined4 *)(&DAT_829b1320 + iVar2) = *(undefined4 *)(iVar1 + 0x14);
-  *(undefined4 *)(&DAT_829b1324 + iVar2) = *(undefined4 *)(iVar1 + 0xc);
-  *(undefined4 *)(&DAT_829b1328 + iVar2) = *(undefined4 *)(iVar1 + 0x374);
-  *(undefined4 *)(&DAT_829b132c + iVar2) = *(undefined4 *)(iVar1 + 0x24c);
-  *(undefined4 *)(&DAT_829b1330 + iVar2) = *(undefined4 *)(iVar1 + 0x378);
-  if ((*(uint *)(iVar1 + 0xf8) & 0x203800) == 0) {
-    uVar6 = BG_GetViewmodelWeapon(param_2);
-    *(undefined4 *)(&DAT_829b1334 + iVar2) = uVar6;
+  ppVar2 = (playerState_s *)uVar9;
+  if ((ppVar2->vehicleState).entity == 0x7ff) {
+    aaGlobArray[LVar3].ps.velocity[0] = ppVar2->velocity[0];
+    aaGlobArray[LVar3].ps.velocity[1] = ppVar2->velocity[1];
+    fVar1 = ppVar2->velocity[2];
   }
   else {
-    if (*(int *)(iVar1 + 0x1bc) == 0x7ff) {
-      MyAssertHandler(0xffffffff82001408,0x2b5,0,0xffffffff82000f98,0xffffffff82001fb4);
+    aaGlobArray[LVar3].ps.velocity[0] = (ppVar2->vehicleState).velocity[0];
+    aaGlobArray[LVar3].ps.velocity[1] = (ppVar2->vehicleState).velocity[1];
+    fVar1 = (ppVar2->vehicleState).velocity[2];
+  }
+  aaGlobArray[LVar3].ps.velocity[2] = fVar1;
+  aaGlobArray[LVar3].ps.eFlags = ppVar2->eFlags;
+  aaGlobArray[LVar3].ps.linkFlags = ppVar2->linkFlags;
+  aaGlobArray[LVar3].ps.pm_flags = ppVar2->pm_flags;
+  aaGlobArray[LVar3].ps.weapFlags = (ppVar2->weapCommon).weapFlags;
+  aaGlobArray[LVar3].ps.weaponState = ppVar2->weapState[0].weaponState;
+  aaGlobArray[LVar3].ps.fWeaponPosFrac = (ppVar2->weapCommon).fWeaponPosFrac;
+  if ((ppVar2->eFlags & 0x203800U) == 0) {
+    WVar5 = BG_GetViewmodelWeapon(ppVar2);
+    aaGlobArray[LVar3].ps.weapon = WVar5;
+  }
+  else {
+    if (ppVar2->viewlocked_entNum == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x2b5,0,"%s");
     }
-    if ((*(int *)(iVar1 + 0x1bc) < 0) || (0x7ff < *(int *)(iVar1 + 0x1bc))) {
-      MyAssertHandler(0xffffffff82001408,0x2b6,0,0xffffffff82001f48,0xffffffff82001f70);
+    if ((ppVar2->viewlocked_entNum < 0) || (0x7ff < ppVar2->viewlocked_entNum)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x2b6,0,"%s\n\t(ps->viewlocked_entNum) = %i");
     }
-    iVar5 = CG_GetEntity(uVar3,*(undefined4 *)(iVar1 + 0x1bc));
-    *(undefined4 *)(&DAT_829b1334 + iVar2) = *(undefined4 *)(iVar5 + 0x18c);
+    pcVar4 = CG_GetEntity(LVar3,ppVar2->viewlocked_entNum);
+    aaGlobArray[LVar3].ps.weapon = (pcVar4->nextState).weapon;
   }
-  uVar7 = BG_GetNumWeapons();
-  if (uVar7 <= (byte)(&DAT_829b1337)[iVar2]) {
-    uVar4 = BG_GetNumWeapons();
-    MyAssertHandler(0xffffffff82001408,0x2be,0,0xffffffff82001ef8,
-                    *(uint *)(&DAT_829b1334 + iVar2) & 0xff,uVar4);
+  uVar6 = BG_GetNumWeapons();
+  if (uVar6 <= aaGlobArray[LVar3].ps.weapon._s_0.weaponIdx) {
+    BG_GetNumWeapons();
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x2be,0,
+                    "aaGlob->ps.weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)"
+                   );
   }
-  iVar5 = BG_WeaponAmmo(param_2,*(undefined4 *)(&DAT_829b1334 + iVar2),
-                        *(uint *)(iVar1 + 0x374) >> 0xf & 1);
-  if ((0 < iVar5) || (uVar8 = 0, 0 < *(int *)(iVar1 + 0x3c))) {
-    uVar8 = 1;
+  iVar7 = BG_WeaponAmmo(ppVar2,aaGlobArray[LVar3].ps.weapon,
+                        (bool)((byte)((uint)(ppVar2->weapCommon).weapFlags >> 0xf) & 1));
+  if ((0 < iVar7) || (bVar8 = false, 0 < ppVar2->throwbackGrenadeTimeLeft)) {
+    bVar8 = true;
   }
-  (&DAT_829b1338)[iVar2] = uVar8;
-  (&DAT_829b1339)[iVar2] = *(int *)(iVar1 + 0x390) == 1;
-  uVar8 = BG_IsThirdPersonMode(param_2);
-  (&DAT_829b133a)[iVar2] = uVar8;
-  if (param_2 + 0x4ec == 0) {
-    MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  aaGlobArray[LVar3].ps.hasAmmo = bVar8;
+  *(bool *)(LVar3 * 0xe60 + -0x7d64ecc7) = (ppVar2->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT;
+  bVar8 = BG_IsThirdPersonMode(ppVar2);
+  *(bool *)(LVar3 * 0xe60 + -0x7d64ecc6) = bVar8;
+  if (uVar9 + 0x4ec == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                    0x4f,0,"%s");
   }
-  (&DAT_829b133b)[iVar2] = (byte)(*(uint *)(param_2 + 0x4ec) >> 0x12) & 1;
+  aaGlobArray[LVar3].ps.isExtendedMelee = (bool)((byte)(*(uint *)(uVar9 + 0x4ec) >> 0x12) & 1);
   __restgprlr_27();
   return;
 }
@@ -532,20 +658,26 @@ void AimAssist_BackupPlayerState(undefined8 param_1,ulonglong param_2)
 
 // 82262030  AimAssist_ArchiveState  (aim_assist/aim_assist.cpp:723)
 
-void AimAssist_ArchiveState(ulonglong param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_ArchiveState(LocalClientNum_t param_1,MemoryFile *param_2)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x2d6,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x2d6,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  MemFile_ArchiveData(param_2,4,param_1 * 0xe60 + -0x7d64ec3c);
+  MemFile_ArchiveData(param_2,4,&aaGlobArray[param_1].prevButtons);
   return;
 }
 
 
 // 822620B0  AimAssist_FovScale  (aim_assist/aim_assist.cpp:741)
 
-void AimAssist_FovScale(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_FovScale(LocalClientNum_t param_1,AimAssistGlobals *param_2,float param_3)
 
 {
   int iVar1;
@@ -557,21 +689,23 @@ void AimAssist_FovScale(void)
   double dVar6;
   double dVar7;
   
-  iVar1 = __savefpr_28();
+  iVar1 = __savefpr_28((double)param_3,param_1,param_2);
   dVar4 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x2e9,0,0xffffffff82000f98,0xffffffff82002024);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x2e9,0,"%s");
   }
   dVar6 = 0.01745329238474369;
   dVar5 = 0.5;
-  dVar3 = (double)*(float *)(DAT_82a3d668 + 0xc);
-  dVar2 = tan((double)(*(float *)(DAT_82a3ce38 + 0xc) * 65.0 * 0.017453292 * 0.5));
+  dVar3 = (double)(cg_fov->current).value;
+  dVar2 = tan((double)((cg_fovScale->current).value * 65.0 * 0.017453292 * 0.5));
   dVar7 = 0.75;
   *(float *)(iVar1 + 0x118) = (float)(dVar4 / (double)((float)dVar2 * 0.75));
   dVar2 = tan((double)(float)((double)(float)(dVar3 * dVar6) * dVar5));
   dVar2 = (double)(float)((double)(float)dVar2 * dVar7);
   if (dVar2 == 0.0) {
-    MyAssertHandler(dVar2,0xffffffff82001408,0x2f9,0,0xffffffff82001fe0,0xffffffff82001ffc,dVar2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x2f9,0,"%s\n\t(tanHalfBaseFovY) = %g");
   }
   *(float *)(iVar1 + 0x11c) = (float)(dVar2 / dVar4);
   __restfpr_28();
@@ -581,33 +715,1600 @@ void AimAssist_FovScale(void)
 
 // 822621D8  AimAssist_CreateScreenMatrix  (aim_assist/aim_assist.cpp:767)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void AimAssist_CreateScreenMatrix
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,int param_4)
+               (LocalClientNum_t param_1,AimAssistGlobals *param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  undefined1 auStack_f0 [64];
-  undefined1 auStack_b0 [64];
-  undefined1 auStack_70 [88];
+  ScreenPlacement *pSVar1;
+  float *pfVar2;
+  double dVar3;
+  double dVar4;
+  float afStack_f0 [16];
+  float afStack_b0 [16];
+  float afStack_70 [22];
   
-  if (param_4 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x305,0,0xffffffff82000f98,0xffffffff82002024);
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
+  if (param_2 == (AimAssistGlobals *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x305,0,"%s");
   }
-  iVar1 = ScrPlace_GetViewPlacement(param_3);
-  *(undefined4 *)(param_4 + 300) = *(undefined4 *)(iVar1 + 0x20);
-  *(undefined4 *)(param_4 + 0x130) = *(undefined4 *)(iVar1 + 0x24);
-  MatrixForViewer(param_4 + 0xdc,param_4 + 0xf4,auStack_f0);
-  InfinitePerspectiveMatrix(param_1,param_2,0x3ff0000000000000);
-  MatrixMultiply44(auStack_f0,auStack_b0,auStack_70);
-  MatrixTranspose44(auStack_70,param_4 + 0x30);
-  MatrixInverse44(param_4 + 0x30,param_4 + 0x70);
+  pSVar1 = ScrPlace_GetViewPlacement(param_1);
+  pfVar2 = param_2->viewOrigin;
+  param_2->screenWidth = pSVar1->realViewportSize[0];
+  param_2->screenHeight = pSVar1->realViewportSize[1];
+  MatrixForViewer(pfVar2,param_2->viewAxis,(float (*) [4])afStack_f0);
+  InfinitePerspectiveMatrix((float)dVar3,(float)dVar4,1.0,(float (*) [4])pfVar2);
+  MatrixMultiply44((float (*) [4])afStack_f0,(float (*) [4])afStack_b0,(float (*) [4])afStack_70);
+  MatrixTranspose44(afStack_70,param_2->screenMtx[0]);
+  MatrixInverse44(param_2->screenMtx[0],param_2->invScreenMtx[0]);
   return;
 }
 
 
 // 822622C0  AimAssist_XfmWorldPointToClipSpace  (aim_assist/aim_assist.cpp:788)
 
-void AimAssist_XfmWorldPointToClipSpace(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+bool AimAssist_XfmWorldPointToClipSpace(AimAssistGlobals *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  int iVar13;
+  undefined1 uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  float *pfVar17;
+  
+  uVar16 = (ulonglong)(int)param_3;
+  uVar15 = (ulonglong)(int)param_2;
+  iVar13 = __savegprlr_27(param_1);
+  if (iVar13 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x318,0,"%s");
+  }
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x319,0,"%s");
+  }
+  if ((uVar16 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x31a,0,"%s");
+  }
+  pfVar17 = (float *)uVar15;
+  fVar1 = pfVar17[1];
+  fVar2 = pfVar17[2];
+  fVar3 = *pfVar17;
+  fVar12 = *(float *)(iVar13 + 0x60) * fVar3 +
+           *(float *)(iVar13 + 0x68) * fVar2 + *(float *)(iVar13 + 100) * fVar1 +
+           *(float *)(iVar13 + 0x6c);
+  if (fVar12 <= 0.0) {
+    uVar14 = __restgprlr_27(0);
+    return (bool)uVar14;
+  }
+  fVar4 = *(float *)(iVar13 + 0x44);
+  fVar5 = *(float *)(iVar13 + 0x54);
+  fVar6 = *(float *)(iVar13 + 0x48);
+  fVar7 = *(float *)(iVar13 + 0x58);
+  fVar8 = *(float *)(iVar13 + 0x40);
+  fVar9 = *(float *)(iVar13 + 0x50);
+  fVar10 = *(float *)(iVar13 + 0x4c);
+  fVar11 = *(float *)(iVar13 + 0x5c);
+  fVar12 = 1.0 / fVar12;
+  pfVar17 = (float *)uVar16;
+  *pfVar17 = fVar12 * (*(float *)(iVar13 + 0x30) * fVar3 +
+                       *(float *)(iVar13 + 0x38) * fVar2 + *(float *)(iVar13 + 0x34) * fVar1 +
+                      *(float *)(iVar13 + 0x3c));
+  pfVar17[2] = fVar12 * (fVar3 * fVar9 + fVar7 * fVar2 + fVar5 * fVar1 + fVar11);
+  pfVar17[1] = fVar12 * (fVar8 * fVar3 + fVar6 * fVar2 + fVar4 * fVar1 + fVar10) * -1.0;
+  uVar14 = __restgprlr_27(1);
+  return (bool)uVar14;
+}
+
+
+// 82262438  AimAssist_ConvertToClipBounds  (aim_assist/aim_assist.cpp:816)
+
+bool AimAssist_ConvertToClipBounds
+               (AimAssistGlobals *param_1,Bounds *param_2,float (*param_3) [3],ExtentBounds *param_4
+               )
+
+{
+  float *pfVar1;
+  float fVar2;
+  AimAssistGlobals *pAVar3;
+  bool bVar4;
+  undefined1 uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  uint uVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  float local_90;
+  float local_8c;
+  float local_88;
+  float local_80;
+  float local_7c;
+  float local_78;
+  float afStack_70 [28];
+  
+  uVar8 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_26(param_1);
+  pAVar3 = (AimAssistGlobals *)__savefpr_27();
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x336,0,"%s");
+  }
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x337,0,"%s");
+  }
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x338,0,"%s");
+  }
+  uVar10 = 0;
+  pfVar9 = (float *)uVar8;
+  *pfVar9 = 131072.0;
+  pfVar9[1] = 131072.0;
+  pfVar9[2] = 131072.0;
+  dVar23 = -1.0;
+  dVar24 = 1.0;
+  pfVar9[3] = -131072.0;
+  pfVar9[4] = -131072.0;
+  pfVar9[5] = -131072.0;
+  do {
+    dVar16 = dVar23;
+    if ((uVar10 & 1) != 0) {
+      dVar16 = dVar24;
+    }
+    pfVar1 = (float *)uVar6;
+    local_90 = (float)((double)pfVar1[3] * dVar16 + (double)*pfVar1);
+    dVar16 = dVar23;
+    if ((uVar10 & 2) != 0) {
+      dVar16 = dVar24;
+    }
+    local_8c = (float)((double)pfVar1[4] * dVar16 + (double)pfVar1[1]);
+    dVar16 = dVar23;
+    if ((uVar10 & 4) != 0) {
+      dVar16 = dVar24;
+    }
+    local_88 = (float)(dVar16 * (double)pfVar1[5] + (double)pfVar1[2]);
+    MatrixTransformVector43(&local_90,(float (*) [3])uVar7,afStack_70);
+    bVar4 = AimAssist_XfmWorldPointToClipSpace(pAVar3,afStack_70,&local_80);
+    if (bVar4) {
+      fVar2 = *pfVar9;
+      if (local_80 - *pfVar9 < 0.0) {
+        fVar2 = local_80;
+      }
+      *pfVar9 = fVar2;
+      fVar2 = pfVar9[1];
+      if (local_7c - pfVar9[1] < 0.0) {
+        fVar2 = local_7c;
+      }
+      pfVar9[1] = fVar2;
+      fVar2 = pfVar9[2];
+      if (local_78 - pfVar9[2] < 0.0) {
+        fVar2 = local_78;
+      }
+      pfVar9[2] = fVar2;
+      fVar2 = pfVar9[3];
+      if (pfVar9[3] - local_80 < 0.0) {
+        fVar2 = local_80;
+      }
+      pfVar9[3] = fVar2;
+      fVar2 = pfVar9[4];
+      if (pfVar9[4] - local_7c < 0.0) {
+        fVar2 = local_7c;
+      }
+      pfVar9[4] = fVar2;
+      fVar2 = pfVar9[5];
+      if (pfVar9[5] - local_78 < 0.0) {
+        fVar2 = local_78;
+      }
+      pfVar9[5] = fVar2;
+    }
+    uVar10 = uVar10 + 1;
+  } while ((int)uVar10 < 8);
+  dVar17 = (double)*pfVar9;
+  dVar16 = (double)pfVar9[3];
+  if (dVar17 < dVar16) {
+    dVar20 = (double)pfVar9[1];
+    dVar19 = (double)pfVar9[4];
+    if (dVar20 < dVar19) {
+      dVar11 = (double)pfVar9[2];
+      dVar21 = (double)pfVar9[5];
+      if ((((dVar11 < dVar21) && (dVar17 <= dVar24)) && (dVar20 <= dVar24)) &&
+         (((dVar11 <= dVar24 && (dVar23 <= dVar16)) && ((dVar23 <= dVar19 && (0.0 <= dVar21)))))) {
+        dVar18 = dVar24;
+        if ((float)(dVar17 - dVar24) < 0.0) {
+          dVar18 = dVar17;
+        }
+        dVar15 = dVar24;
+        if ((float)(dVar20 - dVar24) < 0.0) {
+          dVar15 = dVar20;
+        }
+        dVar14 = dVar24;
+        if ((float)(dVar11 - dVar24) < 0.0) {
+          dVar14 = dVar11;
+        }
+        dVar13 = dVar24;
+        if ((float)(dVar16 - dVar24) < 0.0) {
+          dVar13 = dVar16;
+        }
+        dVar12 = dVar24;
+        if ((float)(dVar19 - dVar24) < 0.0) {
+          dVar12 = dVar19;
+        }
+        if ((float)(dVar21 - dVar24) < 0.0) {
+          dVar24 = dVar21;
+        }
+        dVar22 = dVar23;
+        if ((float)(dVar23 - dVar17) < 0.0) {
+          dVar22 = dVar18;
+        }
+        *pfVar9 = (float)dVar22;
+        dVar17 = dVar23;
+        if ((float)(dVar23 - dVar20) < 0.0) {
+          dVar17 = dVar15;
+        }
+        pfVar9[1] = (float)dVar17;
+        dVar17 = 0.0;
+        if (-dVar11 < 0.0) {
+          dVar17 = dVar14;
+        }
+        pfVar9[2] = (float)dVar17;
+        dVar17 = dVar23;
+        if ((float)(dVar23 - dVar16) < 0.0) {
+          dVar17 = dVar13;
+        }
+        pfVar9[3] = (float)dVar17;
+        if ((float)(dVar23 - dVar19) < 0.0) {
+          dVar23 = dVar12;
+        }
+        pfVar9[4] = (float)dVar23;
+        dVar23 = 0.0;
+        if (-dVar21 < 0.0) {
+          dVar23 = dVar24;
+        }
+        pfVar9[5] = (float)dVar23;
+        __restfpr_27(1);
+        uVar5 = __restgprlr_26();
+        return (bool)uVar5;
+      }
+    }
+  }
+  __restfpr_27(0);
+  uVar5 = __restgprlr_26();
+  return (bool)uVar5;
+}
+
+
+// 82262738  AimAssist_GetCrosshairDistSqr  (aim_assist/aim_assist.cpp:857)
+
+float AimAssist_GetCrosshairDistSqr(float *param_1,float *param_2)
+
+{
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
+  ulonglong uVar4;
+  double dVar5;
+  
+  uVar4 = (ulonglong)(int)param_2;
+  pfVar3 = (float *)__savegprlr_28(param_1);
+  if (pfVar3 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x35d,0,"%s");
+  }
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x35e,0,"%s");
+  }
+  fVar1 = (pfVar3[1] + ((float *)uVar4)[1]) * 0.5;
+  fVar2 = (*pfVar3 + *(float *)uVar4) * 0.5;
+  dVar5 = (double)__restgprlr_28((double)(fVar2 * fVar2 + fVar1 * fVar1));
+  return (float)dVar5;
+}
+
+
+// 822627E0  AimAssist_DoBoundsIntersectCenterBox  (aim_assist/aim_assist.cpp:872)
+
+bool AimAssist_DoBoundsIntersectCenterBox(float *param_1,float *param_2,float param_3,float param_4)
+
+{
+  bool bVar1;
+  float *pfVar2;
+  undefined1 uVar3;
+  ulonglong uVar4;
+  bool bVar6;
+  undefined8 uVar5;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  
+  dVar7 = (double)param_4;
+  uVar4 = (ulonglong)(int)param_2;
+  pfVar2 = (float *)__savegprlr_28((double)param_3,param_1);
+  dVar8 = extraout_f1;
+  if (pfVar2 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x36c,0,"%s");
+  }
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x36d,0,"%s");
+  }
+  if ((dVar8 < (double)*pfVar2) || (bVar6 = true, (double)*(float *)uVar4 < -dVar8)) {
+    bVar6 = false;
+  }
+  if ((dVar7 < (double)pfVar2[1]) || (bVar1 = true, (double)((float *)uVar4)[1] < -dVar7)) {
+    bVar1 = false;
+  }
+  if ((!bVar6) || (uVar5 = 1, !bVar1)) {
+    uVar5 = 0;
+  }
+  uVar3 = __restgprlr_28(uVar5);
+  return (bool)uVar3;
+}
+
+
+// 822628E0  AimAssist_GetAimAssistRange  (aim_assist/aim_assist.cpp:888)
+
+float AimAssist_GetAimAssistRange(Weapon param_1,bool param_2,float param_3)
+
+{
+  double dVar1;
+  double dVar2;
+  float local_30;
+  float local_2c [5];
+  
+  dVar1 = (double)param_3;
+  dVar2 = 1.0;
+  if ((dVar1 < 0.0) || (1.0 < dVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x37d,0,"adsLerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
+  }
+  BG_AimAssistRange(param_1,param_2,local_2c,&local_30);
+  return (float)(dVar2 - dVar1) * local_2c[0] + (float)((double)local_30 * dVar1);
+}
+
+
+// 822629B8  AimAssist_CompareTargets  (aim_assist/aim_assist.cpp:920)
+
+int AimAssist_CompareTargets(AimScreenTarget *param_1,AimScreenTarget *param_2)
+
+{
+  float fVar1;
+  int iVar3;
+  undefined8 uVar2;
+  ulonglong uVar4;
+  
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_28(param_1);
+  if (iVar3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x399,0,"%s");
+  }
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x39a,0,"%s");
+  }
+  fVar1 = *(float *)((int)uVar4 + 0x30);
+  if (*(float *)(iVar3 + 0x30) < fVar1) {
+    iVar3 = __restgprlr_28(1);
+    return iVar3;
+  }
+  uVar2 = 0xffffffffffffffff;
+  if (*(float *)(iVar3 + 0x30) <= fVar1) {
+    uVar2 = 0;
+  }
+  iVar3 = __restgprlr_28(uVar2);
+  return iVar3;
+}
+
+
+// 82262A58  AimAssist_AddToTargetList  (aim_assist/aim_assist.cpp:936)
+
+void AimAssist_AddToTargetList(AimAssistGlobals *param_1,AimScreenTarget *param_2)
+
+{
+  int iVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_22(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3ad,0,"%s");
+  }
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3ae,0,"%s");
+  }
+  iVar5 = *(int *)(iVar1 + 0xe34);
+  iVar6 = 0;
+  if (0 < iVar5) {
+    do {
+      uVar3 = iVar5 + iVar6;
+      iVar7 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+      iVar4 = iVar7 * 0x34 + iVar1;
+      if ((uVar2 & 0xffffffff) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
+                        ,0x399,0,"%s");
+      }
+      if (iVar4 == -0x134) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
+                        ,0x39a,0,"%s");
+      }
+      if (*(float *)(iVar4 + 0x164) <= *(float *)((int)uVar2 + 0x30)) {
+        iVar6 = iVar7 + 1;
+        iVar7 = iVar5;
+      }
+      iVar5 = iVar7;
+    } while (iVar6 < iVar7);
+    if (0x3f < iVar6) goto LAB_82262bbc;
+  }
+  if (*(int *)(iVar1 + 0xe34) == 0x40) {
+    *(undefined4 *)(iVar1 + 0xe34) = 0x3f;
+  }
+  memmove();
+  memcpy();
+  *(int *)(iVar1 + 0xe34) = *(int *)(iVar1 + 0xe34) + 1;
+LAB_82262bbc:
+  __restgprlr_22();
+  return;
+}
+
+
+// 82260CB0  AngleSubtract  (universal/com_math.h:938)
+
+float AngleSubtract(float param_1,float param_2)
+
+{
+  double dVar1;
+  double dVar2;
+  
+  dVar2 = (double)((param_1 - param_2) * 0.0027777778);
+  dVar1 = floor((double)(float)(dVar2 + 0.5));
+  return (float)(dVar2 - (double)(float)dVar1) * 360.0;
+}
+
+
+// 82262BC8  AimAssist_GetTagPos  (aim_assist/aim_assist.cpp:972)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int AimAssist_GetTagPos(LocalClientNum_t param_1,centity_s *param_2,uint param_3,float *param_4)
+
+{
+  LocalClientNum_t LVar1;
+  DObj *pDVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  
+  uVar5 = (ulonglong)(int)param_4;
+  uVar4 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_26(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3cf,0,"%s");
+  }
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3d0,0,"%s");
+  }
+  pDVar2 = Com_GetClientDObj(((cpose_t *)uVar4)[2].killcamRagdollHandle,LVar1);
+  if (pDVar2 == (DObj *)0x0) {
+    iVar3 = __restgprlr_26();
+    return iVar3;
+  }
+  iVar3 = CG_DObjGetWorldTagPos((cpose_t *)uVar4,pDVar2,param_3,(float *)uVar5);
+  if (iVar3 == 0) {
+    SL_ConvertToString(param_3);
+    Com_Error(ERR_DROP,"AimAssist_GetTagPos: Cannot find tag [%s] on entity %i.\n");
+  }
+  iVar3 = __restgprlr_26(1);
+  return iVar3;
+}
+
+
+// 82262CA8  AimAssist_CalcAimPos  (aim_assist/aim_assist.cpp:990)
+
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int AimAssist_CalcAimPos
+              (LocalClientNum_t param_1,centity_s *param_2,AimTarget *param_3,float *param_4)
+
+{
+  float fVar1;
+  float fVar2;
+  centity_s *pcVar3;
+  LocalClientNum_t LVar4;
+  int iVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  
+  uVar8 = (ulonglong)(int)param_4;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  LVar4 = __savegprlr_26(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3e1,0,"%s");
+  }
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x3e2,0,"%s");
+  }
+  pcVar3 = (centity_s *)uVar6;
+  pfVar9 = (float *)uVar8;
+  if ((pcVar3->nextState).eType == 1) {
+    iVar5 = AimAssist_GetTagPos(LVar4,pcVar3,(uint)scr_const.aim_bone,pfVar9);
+    iVar5 = __restgprlr_26(iVar5);
+    return iVar5;
+  }
+  if ((uVar7 & 0xffffffff) == 0) {
+    iVar5 = __restgprlr_26(0);
+    return iVar5;
+  }
+  iVar5 = (int)uVar7;
+  fVar1 = *(float *)(iVar5 + 0xc);
+  fVar2 = *(float *)(iVar5 + 0x10);
+  *pfVar9 = (pcVar3->pose).origin[0] + *(float *)(iVar5 + 8);
+  pfVar9[1] = (pcVar3->pose).origin[1] + fVar1;
+  pfVar9[2] = (pcVar3->pose).origin[2] + fVar2;
+  iVar5 = __restgprlr_26(1);
+  return iVar5;
+}
+
+
+// 82262DA0  AimAssist_UpdateScreenTargets  (aim_assist/aim_assist.cpp:1015)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void AimAssist_UpdateScreenTargets
+               (LocalClientNum_t param_1,float *param_2,float *param_3,float *param_4,float param_5,
+               float param_6)
+
+{
+  AimAssistGlobals *pAVar1;
+  LocalClientNum_t LVar2;
+  centity_s *pcVar3;
+  bool bVar6;
+  int iVar4;
+  int iVar5;
+  AimAssistGlobals *pAVar7;
+  int iVar8;
+  AimTarget *pAVar9;
+  double extraout_f1;
+  double dVar10;
+  double dVar11;
+  int local_f0;
+  AimTarget *local_ec [3];
+  AimScreenTarget local_e0;
+  ExtentBounds local_a0;
+  float afStack_80 [9];
+  float local_5c;
+  float local_58;
+  float local_54;
+  
+  dVar10 = (double)param_6;
+  LVar2 = __savegprlr_26((double)param_5,param_1);
+  dVar11 = extraout_f1;
+  Profile_Begin(0x39);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x403,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  pAVar1 = aaGlobArray + LVar2;
+  if (aaGlobArray[LVar2].initialized != false) {
+    pAVar7 = (AimAssistGlobals *)aaGlobArray[LVar2].viewAxis;
+    aaGlobArray[LVar2].eyeOrigin[0] = *param_2;
+    aaGlobArray[LVar2].eyeOrigin[1] = param_2[1];
+    aaGlobArray[LVar2].eyeOrigin[2] = param_2[2];
+    aaGlobArray[LVar2].viewOrigin[0] = *param_3;
+    aaGlobArray[LVar2].viewOrigin[1] = param_3[1];
+    aaGlobArray[LVar2].viewOrigin[2] = param_3[2];
+    aaGlobArray[LVar2].viewAngles[0] = *param_4;
+    aaGlobArray[LVar2].viewAngles[1] = param_4[1];
+    aaGlobArray[LVar2].viewAngles[2] = param_4[2];
+    AnglesToAxis(param_4,(float (*) [3])pAVar7);
+    AimAssist_FovScale((LocalClientNum_t)pAVar1,pAVar7,(float)dVar10);
+    AimAssist_CreateScreenMatrix(LVar2,pAVar1,(float)dVar11,(float)dVar10);
+    iVar5 = 0;
+    aaGlobArray[LVar2].screenTargetCount = 0;
+    AimTarget_GetClientTargetList(LVar2,local_ec,&local_f0);
+    if (0 < local_f0) {
+      iVar8 = 0;
+      do {
+        pAVar9 = (AimTarget *)((int)(local_ec[0]->box).midPoint + iVar8 + -8);
+        pcVar3 = CG_GetEntity(LVar2,*(int *)((int)(local_ec[0]->box).midPoint + iVar8 + -8));
+        if ((pcVar3->flags & 1U) != 0) {
+          AnglesToAxis((pcVar3->pose).angles,(float (*) [3])afStack_80);
+          local_5c = (pcVar3->pose).origin[0];
+          local_58 = (pcVar3->pose).origin[1];
+          local_54 = (pcVar3->pose).origin[2];
+          bVar6 = AimAssist_ConvertToClipBounds
+                            (pAVar1,&pAVar9->box,(float (*) [3])afStack_80,&local_a0);
+          if (bVar6) {
+            local_e0.entIndex = pAVar9->entIndex;
+            local_e0.clipMaxs[0] = local_a0.maxs[0];
+            local_e0.clipMins[1] = local_a0.mins[1];
+            local_e0.clipMins[0] = local_a0.mins[0];
+            local_e0.clipMaxs[1] = local_a0.maxs[1];
+            local_e0.velocity[0] = pAVar9->velocity[0];
+            local_e0.velocity[1] = pAVar9->velocity[1];
+            local_e0.velocity[2] = pAVar9->velocity[2];
+            iVar4 = AimAssist_CalcAimPos(LVar2,pcVar3,pAVar9,local_e0.aimPos);
+            if (iVar4 != 0) {
+              local_e0.distSqr = pAVar9->worldDistSqr;
+              local_e0.crosshairDistSqr =
+                   AimAssist_GetCrosshairDistSqr(local_e0.clipMins,local_e0.clipMaxs);
+              AimAssist_AddToTargetList(pAVar1,&local_e0);
+            }
+          }
+        }
+        iVar5 = iVar5 + 1;
+        iVar8 = iVar8 + 0x2c;
+      } while (iVar5 < local_f0);
+    }
+  }
+  iVar5 = Profile_EndInternal((double *)0x0);
+  __restgprlr_26(iVar5);
+  return;
+}
+
+
+// 82262FD0  AimAssist_GetScreenTargetCount  (aim_assist/aim_assist.cpp:1082)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int AimAssist_GetScreenTargetCount(LocalClientNum_t param_1)
+
+{
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x43d,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  return aaGlobArray[param_1].screenTargetCount;
+}
+
+
+// 82263038  AimAssist_GetScreenTargetEntity  (aim_assist/aim_assist.cpp:1093)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int AimAssist_GetScreenTargetEntity(LocalClientNum_t param_1,int param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x448,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  if ((ulonglong)(uint)aaGlobArray[uVar1].screenTargetCount <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    1099,0,
+                    "targetIndex doesn\'t index aaGlob->screenTargetCount\n\t%i not in [0, %i)");
+  }
+  iVar2 = __restgprlr_29(aaGlobArray[uVar1].screenTargets[(int)uVar3].entIndex);
+  return iVar2;
+}
+
+
+// 822630C8  AimAssist_ClearEntityReference  (aim_assist/aim_assist.cpp:1106)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_ClearEntityReference(LocalClientNum_t param_1,int param_2)
+
+{
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x455,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  if (aaGlobArray[param_1].autoMeleeTargetEnt == param_2) {
+    aaGlobArray[param_1].autoMeleeTargetEnt = 0x7ff;
+  }
+  if (aaGlobArray[param_1].lockOnTargetEnt == param_2) {
+    aaGlobArray[param_1].lockOnTargetEnt = 0x7ff;
+  }
+  return;
+}
+
+
+// 82263160  AimAssist_GetTargetFromEntity  (aim_assist/aim_assist.cpp:1126)
+
+AimScreenTarget * AimAssist_GetTargetFromEntity(AimAssistGlobals *param_1,int param_2)
+
+{
+  AimScreenTarget *pAVar1;
+  int iVar2;
+  
+  if (param_1 == (AimAssistGlobals *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x46a,0,"%s");
+  }
+  if (param_2 != 0x7ff) {
+    iVar2 = 0;
+    if (0 < param_1->screenTargetCount) {
+      pAVar1 = param_1->screenTargets;
+      do {
+        if (pAVar1->entIndex == param_2) {
+          return pAVar1;
+        }
+        iVar2 = iVar2 + 1;
+        pAVar1 = pAVar1 + 1;
+      } while (iVar2 < param_1->screenTargetCount);
+    }
+  }
+  return (AimScreenTarget *)0x0;
+}
+
+
+// 82263200  AimAssist_GetBestTarget  (aim_assist/aim_assist.cpp:1148)
+
+AimScreenTarget *
+AimAssist_GetBestTarget(AimAssistGlobals *param_1,float param_2,float param_3,float param_4)
+
+{
+  bool bVar1;
+  int iVar2;
+  AimScreenTarget *pAVar3;
+  bool bVar4;
+  int iVar5;
+  float *pfVar6;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  
+  dVar8 = (double)param_4;
+  dVar7 = (double)param_3;
+  iVar2 = __savegprlr_24((double)param_2,param_1);
+  dVar9 = extraout_f1;
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x480,0,"%s");
+  }
+  if (dVar9 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x481,0,"%s\n\t(range) = %g");
+  }
+  iVar5 = 0;
+  if (0 < *(int *)(iVar2 + 0xe34)) {
+    dVar9 = (double)(float)(dVar9 * dVar9);
+    pfVar6 = (float *)(iVar2 + 0x144);
+    do {
+      if ((double)pfVar6[7] <= dVar9) {
+        if (pfVar6 == (float *)0xc) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
+                          ,0x36c,0,"%s");
+        }
+        if (pfVar6 == (float *)0x4) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
+                          ,0x36d,0,"%s");
+        }
+        if ((dVar7 < (double)pfVar6[-3]) || (bVar4 = true, (double)pfVar6[-1] < -dVar7)) {
+          bVar4 = false;
+        }
+        if ((dVar8 < (double)pfVar6[-2]) || (bVar1 = true, (double)*pfVar6 < -dVar8)) {
+          bVar1 = false;
+        }
+        if ((!bVar4) || (bVar4 = true, !bVar1)) {
+          bVar4 = false;
+        }
+        if (bVar4) {
+          pAVar3 = (AimScreenTarget *)__restgprlr_24(pfVar6 + -4);
+          return pAVar3;
+        }
+      }
+      iVar5 = iVar5 + 1;
+      pfVar6 = pfVar6 + 0xd;
+    } while (iVar5 < *(int *)(iVar2 + 0xe34));
+  }
+  pAVar3 = (AimScreenTarget *)__restgprlr_24(0);
+  return pAVar3;
+}
+
+
+// 822633D0  AimAssist_GetPrevOrBestTarget  (aim_assist/aim_assist.cpp:1176)
+
+AimScreenTarget *
+AimAssist_GetPrevOrBestTarget
+          (AimAssistGlobals *param_1,float param_2,float param_3,float param_4,int param_5)
+
+{
+  AimAssistGlobals *pAVar1;
+  AimScreenTarget *pAVar2;
+  bool bVar3;
+  int in_r7;
+  double extraout_f1;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  pAVar1 = (AimAssistGlobals *)__savegprlr_29((double)param_2,param_1,param_5);
+  dVar6 = extraout_f1;
+  if (pAVar1 == (AimAssistGlobals *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x49b,0,"%s");
+  }
+  if (dVar6 < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x49c,0,"%s\n\t(range) = %g");
+  }
+  pAVar2 = AimAssist_GetTargetFromEntity(pAVar1,in_r7);
+  if (((pAVar2 != (AimScreenTarget *)0x0) && (pAVar2->distSqr < (float)(dVar6 * dVar6))) &&
+     (bVar3 = AimAssist_DoBoundsIntersectCenterBox
+                        (pAVar2->clipMins,pAVar2->clipMaxs,(float)dVar4,(float)dVar5), bVar3)) {
+    pAVar2 = (AimScreenTarget *)__restgprlr_29(pAVar2);
+    return pAVar2;
+  }
+  pAVar2 = AimAssist_GetBestTarget(pAVar1,(float)dVar6,(float)dVar4,(float)dVar5);
+  pAVar2 = (AimScreenTarget *)__restgprlr_29(pAVar2);
+  return pAVar2;
+}
+
+
+// 82261098  CL_GetLocalClientConnectionState  (client_mp/client_mp.h:1192)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+connstate_t CL_GetLocalClientConnectionState(LocalClientNum_t param_1)
+
+{
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
+                    ,0x4aa,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  return clientUIActives[param_1].connectionState;
+}
+
+
+// 822634F0  AimAssist_CalcAdjustedAxis  (aim_assist/aim_assist.cpp:1195)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_CalcAdjustedAxis(AimInput *param_1,float *param_2,float *param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  ulonglong uVar3;
+  float *pfVar4;
+  ulonglong uVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float fVar11;
+  
+  uVar5 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x4b1,0,"%s");
+  }
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x4b2,0,"%s");
+  }
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x4b3,0,"%s");
+  }
+  fVar11 = *(float *)(iVar2 + 0xc);
+  dVar10 = 1.0;
+  pfVar4 = (float *)uVar3;
+  pfVar6 = (float *)uVar5;
+  if (*(char *)(DAT_829b4cac + 0xc) == '\0') {
+    *pfVar4 = fVar11;
+    *pfVar6 = *(float *)(iVar2 + 0x18);
+  }
+  else {
+    dVar7 = (double)SQRT(*(float *)(iVar2 + 0x18) * *(float *)(iVar2 + 0x18) + fVar11 * fVar11);
+    dVar8 = dVar10;
+    if ((float)(dVar7 - 1.0) < 0.0) {
+      dVar8 = dVar7;
+    }
+    dVar9 = 0.0;
+    if (-dVar7 < 0.0) {
+      dVar9 = dVar8;
+    }
+    if (3 < *(uint *)(DAT_829b4c98 + 0xc)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x4bc,0,
+                      "ConstDvar_GetInt( aim_input_graph_index, AIM_INPUT_GRAPH_INDEX ) doesn\'t index AIM_INPUT_GRAPH_COUNT\n\t%i not in [0, %i)"
+                     );
+    }
+    fVar11 = GraphFloat_GetValue((GraphFloat *)
+                                 (&DAT_829b4cb8 + *(int *)(DAT_829b4c98 + 0xc) * 0x148),(float)dVar9
+                                );
+    iVar1 = DAT_829b5218;
+    *pfVar4 = fVar11 * *(float *)(iVar2 + 0xc);
+    *pfVar6 = *(float *)(iVar2 + 0x18) * fVar11;
+    if (*(char *)(iVar1 + 0xc) != '\0') {
+      Com_Printf(0x11,"Input Pit = %f, Output Pit = %f\n");
+      Com_Printf(0x11,"Input Yaw = %f, Output Yaw = %f\n");
+    }
+  }
+  if ((aim_scale_view_axis->current).enabled != false) {
+    dVar8 = ABS((double)*pfVar4);
+    dVar7 = ABS((double)*pfVar6);
+    if (dVar10 < dVar8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x4da,0,"%s");
+    }
+    if (dVar10 < dVar7) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x4db,0,"%s");
+    }
+    if (dVar7 < dVar8) {
+      *pfVar6 = (float)(dVar10 - (double)(float)(dVar8 - dVar7)) * *pfVar6;
+      __restgprlr_26();
+      return;
+    }
+    *pfVar4 = (float)(dVar10 - (double)(float)(dVar7 - dVar8)) * *pfVar4;
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 82263770  AimAssist_IsPlayerStunned  (aim_assist/aim_assist.cpp:1262)
+
+bool AimAssist_IsPlayerStunned(AimAssistPlayerState *param_1)
+
+{
+  bool bVar1;
+  
+  if (param_1 == (AimAssistPlayerState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x4ef,0,"%s");
+  }
+  if ((param_1->weaponState == 0x1a) || (bVar1 = false, param_1->weaponState == 0x1b)) {
+    bVar1 = true;
+  }
+  return bVar1;
+}
+
+
+// 822637E0  AimAssist_IsPlayerUsingOffhand  (aim_assist/aim_assist.cpp:1275)
+
+bool AimAssist_IsPlayerUsingOffhand(AimAssistPlayerState *param_1)
+
+{
+  weapClass_t wVar1;
+  
+  if (param_1 == (AimAssistPlayerState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x4fc,0,"%s");
+  }
+  if (((param_1->weapFlags & 2U) != 0) && ((param_1->weapon)._s_0.weaponIdx != 0)) {
+    wVar1 = BG_GetWeaponClass(param_1->weapon,false);
+    return (bool)((char)((longlong)(int)wVar1 + -9) -
+                 ((char)wVar1 + -10 + ((longlong)(int)wVar1 + -9 == 0)));
+  }
+  return false;
+}
+
+
+// 82263880  AimAssist_IsSlowdownActive  (aim_assist/aim_assist.cpp:1293)
+
+int AimAssist_IsSlowdownActive(AimAssistPlayerState *param_1)
+
+{
+  bool bVar1;
+  
+  if (param_1 == (AimAssistPlayerState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x50e,0,"%s");
+  }
+  if (((((aim_slowdown_enabled->current).enabled != false) && ((param_1->linkFlags & 4U) == 0)) &&
+      (bVar1 = AimAssist_IsPlayerStunned(param_1), !bVar1)) &&
+     ((param_1->weapon)._s_0.weaponIdx != 0)) {
+    if ((param_1->eFlags & 0x203800U) != 0) {
+      return 1;
+    }
+    bVar1 = param_1->hasAmmo;
+    return (uint)bVar1 + (-(uint)(bVar1 == false) - (bVar1 - 1));
+  }
+  return 0;
+}
+
+
+// 82263968  AimAssist_CalcSlowdown  (aim_assist/aim_assist.cpp:1326)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_CalcSlowdown(AimInput *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  AimScreenTarget *pAVar4;
+  bool bVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  ulonglong uVar8;
+  AimAssistGlobals *pAVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  float fVar15;
+  float fVar16;
+  
+  uVar8 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x534,0,"%s");
+  }
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x535,0,"%s");
+  }
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x536,0,"%s");
+  }
+  if (3 < *(uint *)(iVar2 + 0x2c)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x538,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
+  }
+  iVar2 = *(int *)(iVar2 + 0x2c);
+  dVar14 = 1.0;
+  pfVar7 = (float *)uVar6;
+  *pfVar7 = 1.0;
+  *(float *)uVar8 = 1.0;
+  pAVar9 = aaGlobArray + iVar2;
+  iVar3 = AimAssist_IsSlowdownActive(&pAVar9->ps);
+  if (iVar3 != 0) {
+    if (aaGlobArray[iVar2].ps.weapon._s_0.weaponIdx == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                      0x54b,0,"%s");
+    }
+    fVar15 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[iVar2].ps.weapon,
+                        (bool)((byte)((uint)aaGlobArray[iVar2].ps.weapFlags >> 0xf) & 1),
+                        aaGlobArray[iVar2].adsLerp);
+    fVar16 = aaGlobArray[iVar2].tweakables.slowdownRegionHeight;
+    fVar1 = aaGlobArray[iVar2].tweakables.slowdownRegionWidth;
+    dVar10 = (double)fVar1;
+    dVar12 = (double)fVar16;
+    pAVar4 = AimAssist_GetBestTarget(pAVar9,fVar15,fVar1,fVar16);
+    if (pAVar4 != (AimScreenTarget *)0x0) {
+      dVar11 = (double)(float)dVar10;
+      dVar13 = (double)(float)dVar12;
+      fVar16 = AimAssist_LerpConstDvars
+                         (DAT_829b5204,aaGlobArray[iVar2].adsLerp,DAT_829b5214,(float)dVar10,
+                          (float)dVar12);
+      *pfVar7 = fVar16;
+      fVar16 = AimAssist_LerpConstDvars
+                         (DAT_829b51fc,aaGlobArray[iVar2].adsLerp,DAT_829b5200,(float)dVar11,
+                          (float)dVar13);
+      *(float *)uVar8 = fVar16;
+    }
+    bVar5 = AimAssist_IsPlayerUsingOffhand(&pAVar9->ps);
+    if (bVar5) {
+      *pfVar7 = (float)dVar14;
+    }
+    if ((aim_slowdown_debug->current).enabled != false) {
+      Com_Printf(0x11,"Target slowdown pitch scale = %f\n");
+      Com_Printf(0x11,"Target slowdown yaw scale = %f\n");
+    }
+  }
+  __restgprlr_26();
+  return;
+}
+
+
+// 82263B48  AimAssist_ApplyTurnRates  (aim_assist/aim_assist.cpp:1381)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_ApplyTurnRates(AimInput *param_1,AimOutput *param_2)
+
+{
+  float fVar1;
+  LocalClientNum_t LVar2;
+  AimInput *pAVar3;
+  int iVar4;
+  GamerSettingState *pGVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  double dVar8;
+  double in_f2;
+  double in_f3;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float fVar18;
+  float local_70;
+  float local_6c;
+  float local_68;
+  float local_64 [25];
+  
+  uVar6 = (ulonglong)(int)param_2;
+  __savegprlr_28(param_1);
+  pAVar3 = (AimInput *)__savefpr_25();
+  if (pAVar3 == (AimInput *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x574,0,"%s");
+  }
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x575,0,"%s");
+  }
+  if (LOCAL_CLIENT_3 < pAVar3->localClientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x577,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
+  }
+  LVar2 = pAVar3->localClientNum;
+  iVar4 = CL_ControllerIndexFromClientNum(LVar2);
+  pGVar5 = GamerProfile_GetProfileSettings(iVar4);
+  dVar11 = (double)(pGVar5->commonConfig).viewSensitivity;
+  dVar14 = 1.0;
+  dVar17 = 0.0;
+  dVar16 = dVar17;
+  dVar12 = dVar14;
+  dVar10 = dVar14;
+  dVar13 = dVar17;
+  if (aaGlobArray[LVar2].autoMeleeState != AIM_MELEE_STATE_UPDATING) {
+    AimAssist_CalcAdjustedAxis(pAVar3,&local_70,&local_6c);
+    dVar12 = dVar14;
+    dVar13 = dVar17;
+    AimAssist_CalcSlowdown(pAVar3,&local_68,local_64);
+    dVar17 = (double)local_6c;
+    dVar14 = (double)local_64[0];
+    dVar16 = (double)local_70;
+    dVar10 = (double)local_68;
+  }
+  dVar8 = (double)(float)in_f2;
+  dVar9 = (double)(float)in_f3;
+  fVar18 = AimAssist_LerpConstDvars
+                     (DAT_829b51e8,aaGlobArray[LVar2].adsLerp,DAT_829b4ca8,(float)in_f2,(float)in_f3
+                     );
+  dVar15 = (double)((float)((double)(float)((double)fVar18 * dVar10) * dVar11) *
+                   aaGlobArray[LVar2].fovTurnRateScale);
+  fVar18 = AimAssist_LerpConstDvars
+                     (DAT_829b1308,aaGlobArray[LVar2].adsLerp,DAT_829b51f8,(float)dVar8,(float)dVar9
+                     );
+  dVar8 = (double)pAVar3->pitchMax;
+  dVar10 = (double)((float)((double)(float)((double)fVar18 * dVar14) * dVar11) *
+                   aaGlobArray[LVar2].fovTurnRateScale);
+  if ((dVar8 != dVar13) && (dVar8 < dVar15)) {
+    dVar15 = dVar8;
+  }
+  dVar14 = (double)pAVar3->yawMax;
+  if ((dVar14 != dVar13) && (dVar14 < dVar10)) {
+    dVar10 = dVar14;
+  }
+  dVar13 = dVar12;
+  if (dVar16 < 0.0) {
+    dVar13 = -1.0;
+  }
+  if (dVar17 < 0.0) {
+    dVar12 = -1.0;
+  }
+  fVar18 = (float)(ABS(dVar16) * dVar15);
+  dVar16 = (double)(float)(ABS(dVar17) * dVar10);
+  if (*(char *)(DAT_829b1284 + 0xc) == '\0') {
+    aaGlobArray[LVar2].pitchDelta = fVar18;
+    aaGlobArray[LVar2].yawDelta = (float)(ABS(dVar17) * dVar10);
+  }
+  else {
+    fVar1 = (float)((double)*(float *)(DAT_829b5210 + 0xc) * dVar11);
+    dVar10 = (double)fVar1;
+    if (fVar18 <= aaGlobArray[LVar2].pitchDelta) {
+      aaGlobArray[LVar2].pitchDelta = fVar18;
+    }
+    else {
+      fVar18 = LinearTrack(fVar18,aaGlobArray[LVar2].pitchDelta,fVar1,pAVar3->deltaTime);
+      aaGlobArray[LVar2].pitchDelta = fVar18;
+    }
+    if (dVar16 <= (double)aaGlobArray[LVar2].yawDelta) {
+      aaGlobArray[LVar2].yawDelta = (float)dVar16;
+    }
+    else {
+      fVar18 = LinearTrack((float)dVar16,aaGlobArray[LVar2].yawDelta,(float)dVar10,pAVar3->deltaTime
+                          );
+      aaGlobArray[LVar2].yawDelta = fVar18;
+    }
+    if ((aim_accel_turnrate_debug->current).enabled != false) {
+      Com_Printf(0x11,"Target Pit = %f, Current Pit = %f\n");
+      Com_Printf(0x11,"Target Yaw = %f, Current Yaw = %f\n");
+    }
+  }
+  pfVar7 = (float *)uVar6;
+  *pfVar7 = (float)((double)(aaGlobArray[LVar2].pitchDelta * pAVar3->deltaTime) * dVar13 +
+                   (double)*pfVar7);
+  pfVar7[1] = (float)((double)(aaGlobArray[LVar2].yawDelta * pAVar3->deltaTime) * dVar12 +
+                     (double)pfVar7[1]);
+  __restfpr_25();
+  __restgprlr_28();
+  return;
+}
+
+
+// 82263E18  AimAssist_ClearAutoMeleeTarget  (aim_assist/aim_assist.cpp:1622)
+
+void AimAssist_ClearAutoMeleeTarget(AimAssistGlobals *param_1)
+
+{
+  if (param_1 == (AimAssistGlobals *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x657,0,"%s");
+  }
+  param_1->autoMeleeState = AIM_MELEE_STATE_OFF;
+  param_1->autoMeleeTargetEnt = 0x7ff;
+  param_1->autoMeleePitch = 0.0;
+  param_1->autoMeleePitchTarget = 0.0;
+  param_1->autoMeleeYaw = 0.0;
+  param_1->autoMeleeYawTarget = 0.0;
+  return;
+}
+
+
+// 82263E98  AimAssist_SetAutoMeleeTarget  (aim_assist/aim_assist.cpp:1637)
+
+void AimAssist_SetAutoMeleeTarget(AimAssistGlobals *param_1,AimScreenTarget *param_2)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x666,0,"%s");
+  }
+  if (*(int *)(iVar2 + 0xe38) == 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x667,0,"%s");
+  }
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x668,0,"%s");
+  }
+  *(undefined4 *)(iVar2 + 0xe38) = 1;
+  uVar1 = *(undefined4 *)uVar3;
+  *(undefined4 *)(iVar2 + 0xe40) = *(undefined4 *)(iVar2 + 0xe8);
+  *(undefined4 *)(iVar2 + 0xe3c) = uVar1;
+  *(undefined4 *)(iVar2 + 0xe44) = 0;
+  *(undefined4 *)(iVar2 + 0xe48) = *(undefined4 *)(iVar2 + 0xec);
+  *(undefined4 *)(iVar2 + 0xe4c) = 0;
+  __restgprlr_28();
+  return;
+}
+
+
+// 82263F68  AimAssist_UpdateAutoMeleeTarget  (aim_assist/aim_assist.cpp:1654)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool AimAssist_UpdateAutoMeleeTarget(AimAssistGlobals *param_1,AimInput *param_2)
+
+{
+  bool bVar1;
+  AimAssistGlobals *pAVar2;
+  AimScreenTarget *pAVar3;
+  centity_s *pcVar4;
+  int iVar5;
+  undefined1 uVar6;
+  ulonglong uVar7;
+  float local_60;
+  float local_5c;
+  float local_58;
+  float local_50;
+  float local_4c;
+  float local_48;
+  float local_40;
+  float local_3c;
+  
+  uVar7 = (ulonglong)(int)param_2;
+  pAVar2 = (AimAssistGlobals *)__savegprlr_28(param_1);
+  if (pAVar2 == (AimAssistGlobals *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x67d,0,"%s");
+  }
+  if (pAVar2->autoMeleeState != AIM_MELEE_STATE_UPDATING) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x67e,0,"%s");
+  }
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x67f,0,"%s");
+  }
+  pAVar3 = AimAssist_GetTargetFromEntity(pAVar2,pAVar2->autoMeleeTargetEnt);
+  if (pAVar3 == (AimScreenTarget *)0x0) {
+    if (pAVar2->autoMeleeTargetEnt != 0x7ff) {
+      pcVar4 = CG_GetEntity(*(LocalClientNum_t *)((int)uVar7 + 0x2c),pAVar2->autoMeleeTargetEnt);
+      iVar5 = AimAssist_CalcAimPos
+                        (*(LocalClientNum_t *)((int)uVar7 + 0x2c),pcVar4,(AimTarget *)0x0,&local_60)
+      ;
+      if (iVar5 != 0) goto LAB_82264064;
+    }
+    uVar6 = __restgprlr_28(0);
+    return (bool)uVar6;
+  }
+  local_60 = pAVar3->aimPos[0];
+  local_5c = pAVar3->aimPos[1];
+  local_58 = pAVar3->aimPos[2];
+LAB_82264064:
+  local_50 = local_60 - pAVar2->eyeOrigin[0];
+  local_4c = local_5c - pAVar2->eyeOrigin[1];
+  local_48 = local_58 - pAVar2->eyeOrigin[2];
+  vectoangles(&local_50,&local_40);
+  bVar1 = (pAVar2->ps).isThirdPerson;
+  pAVar2->autoMeleePitchTarget = local_40;
+  pAVar2->autoMeleeYawTarget = local_3c;
+  if (bVar1 != false) {
+    pAVar2->autoMeleePitchTarget = local_40 - 15.0;
+  }
+  uVar6 = __restgprlr_28(1);
+  return (bool)uVar6;
+}
+
+
+// 82261100  CG_GetLocalClientGlobals  (cgame_mp/cg_local_mp.h:1665)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+cg_s * CG_GetLocalClientGlobals(LocalClientNum_t param_1)
+
+{
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  
+  LVar1 = __savegprlr_29(param_1);
+  if (cgArray == (cg_s *)0x0) {
+    CL_GetLocalClientConnectionState(LVar1);
+    va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
+                    ,0x682,0,"%s\n\t%s");
+  }
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
+                    ,0x684,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  pcVar2 = (cg_s *)__restgprlr_29((longlong)(int)LVar1 * 0x108600 + ZEXT48(cgArray));
+  return pcVar2;
+}
+
+
+// 822640D8  AimAssist_ApplyAutoMelee  (aim_assist/aim_assist.cpp:1702)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_ApplyAutoMelee(AimInput *param_1,AimOutput *param_2)
+
+{
+  LocalClientNum_t LVar1;
+  int iVar2;
+  float *pfVar3;
+  AimInput *pAVar4;
+  bool bVar6;
+  AimScreenTarget *pAVar5;
+  ulonglong uVar7;
+  undefined1 uVar8;
+  AimAssistGlobals *pAVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
+  float local_60;
+  float local_5c;
+  undefined8 local_58;
+  
+  uVar7 = (ulonglong)(int)param_2;
+  pAVar4 = (AimInput *)__savegprlr_27(param_1);
+  if (pAVar4 == (AimInput *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x6b7,0,"%s");
+  }
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x6b8,0,"%s");
+  }
+  if (LOCAL_CLIENT_3 < pAVar4->localClientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x6ba,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
+  }
+  LVar1 = pAVar4->localClientNum;
+  pfVar3 = (float *)uVar7;
+  *(undefined2 *)(pfVar3 + 3) = 0x7ff;
+  iVar2 = DAT_829b4ca4;
+  dVar12 = 0.0;
+  pfVar3[2] = 0.0;
+  *(undefined1 *)((int)pfVar3 + 0xe) = 0;
+  pAVar9 = aaGlobArray + LVar1;
+  if (((*(char *)(iVar2 + 0xc) != '\0') && (aaGlobArray[LVar1].ps.weapon._s_0.weaponIdx != 0)) &&
+     (bVar6 = AimAssist_IsPlayerStunned(&pAVar9->ps), !bVar6)) {
+    if (((aaGlobArray[LVar1].prevButtons & 4U) != 0) || (bVar6 = true, (pAVar4->buttons & 4U) == 0))
+    {
+      bVar6 = false;
+    }
+    if ((aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) && (bVar6)) {
+      fVar13 = *(float *)(DAT_829b4c90 + 0xc);
+      if (aaGlobArray[LVar1].ps.isExtendedMelee != false) {
+        fVar13 = (perk_extendedMeleeRange->current).value;
+      }
+      dVar11 = (double)fVar13;
+      pAVar5 = AimAssist_GetTargetFromEntity(pAVar9,aaGlobArray[LVar1].autoMeleeTargetEnt);
+      if ((pAVar5 == (AimScreenTarget *)0x0) &&
+         (pAVar5 = AimAssist_GetBestTarget
+                             (pAVar9,(float)dVar11,
+                              aaGlobArray[LVar1].tweakables.autoMeleeRegionWidth,
+                              aaGlobArray[LVar1].tweakables.autoMeleeRegionHeight),
+         pAVar5 == (AimScreenTarget *)0x0)) goto LAB_822643f8;
+      AimAssist_SetAutoMeleeTarget(pAVar9,pAVar5);
+      if (((aaGlobArray[LVar1].ps.pm_flags & 1U) == 0) && (dVar12 < (double)pAVar5->distSqr)) {
+        fVar13 = (float)SQRT((double)pAVar5->distSqr) - 30.0;
+        dVar11 = (double)fVar13;
+        if (dVar12 < dVar11) {
+          if (dVar11 <= 255.0) {
+            local_58 = (longlong)fVar13;
+            uVar8 = (undefined1)local_58;
+          }
+          else {
+            uVar8 = 0xff;
+          }
+          *(undefined1 *)((int)pfVar3 + 0xe) = uVar8;
+          local_60 = pAVar5->aimPos[0] - aaGlobArray[LVar1].eyeOrigin[0];
+          local_5c = pAVar5->aimPos[1] - aaGlobArray[LVar1].eyeOrigin[1];
+          fVar13 = vectoyaw(&local_60);
+          pfVar3[2] = fVar13;
+          *(short *)(pfVar3 + 3) = (short)aaGlobArray[LVar1].autoMeleeTargetEnt;
+        }
+      }
+    }
+    if ((aaGlobArray[LVar1].autoMeleeState == AIM_MELEE_STATE_TARGETED) &&
+       (aaGlobArray[LVar1].ps.weaponState == 0xd)) {
+      aaGlobArray[LVar1].autoMeleeState = AIM_MELEE_STATE_UPDATING;
+    }
+    if (aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) goto LAB_82264400;
+    iVar2 = aaGlobArray[LVar1].ps.weaponState;
+    if ((iVar2 != 0xe) && ((iVar2 == 0xd || (iVar2 == 0xf)))) {
+      bVar6 = AimAssist_UpdateAutoMeleeTarget(pAVar9,pAVar4);
+      if (bVar6) {
+        fVar13 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleePitchTarget,
+                                aaGlobArray[LVar1].autoMeleePitch,
+                                (aim_automelee_lerp->current).value,pAVar4->deltaTime);
+        dVar12 = (double)fVar13;
+        fVar13 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleeYawTarget,
+                                aaGlobArray[LVar1].autoMeleeYaw,(aim_automelee_lerp->current).value,
+                                pAVar4->deltaTime);
+        dVar11 = (double)fVar13;
+        fVar13 = AngleSubtract((float)dVar12,aaGlobArray[LVar1].autoMeleePitch);
+        dVar10 = (double)fVar13;
+        fVar13 = AngleSubtract((float)dVar11,aaGlobArray[LVar1].autoMeleeYaw);
+        aaGlobArray[LVar1].autoMeleePitch = (float)dVar12;
+        aaGlobArray[LVar1].autoMeleeYaw = (float)dVar11;
+        *pfVar3 = (float)((double)*pfVar3 + dVar10);
+        pfVar3[1] = pfVar3[1] + fVar13;
+        __restgprlr_27();
+        return;
+      }
+    }
+  }
+LAB_822643f8:
+  AimAssist_ClearAutoMeleeTarget(pAVar9);
+LAB_82264400:
+  __restgprlr_27();
+  return;
+}
+
+
+// 822611A8  CG_GetEntity  (cgame_mp/cg_local_mp.h:1714)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+centity_s * CG_GetEntity(LocalClientNum_t param_1,int param_2)
+
+{
+  ulonglong uVar1;
+  centity_s *pcVar2;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if (0x7ff < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
+                    ,0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
+  }
+  if ((ulonglong)(uint)cg_maxLocalClients <= (uVar1 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
+                    ,0x6b9,0,"localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)"
+                   );
+  }
+  pcVar2 = (centity_s *)
+           __restgprlr_29(((uVar1 & 0x1fffff) * 0x800 + uVar3) * 0x1ec + ZEXT48(cg_entitiesArray));
+  return pcVar2;
+}
+
+
+// 82264418  AimAssist_ApplyLockOn  (aim_assist/aim_assist.cpp:1850)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_ApplyLockOn(AimInput *param_1,AimOutput *param_2)
 
 {
   float fVar1;
@@ -624,1440 +2325,78 @@ void AimAssist_XfmWorldPointToClipSpace(undefined8 param_1,ulonglong param_2,ulo
   float fVar12;
   int iVar13;
   float *pfVar14;
-  
-  iVar13 = __savegprlr_27();
-  if (iVar13 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x318,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x319,0,0xffffffff82000f98,0xffffffff82002030);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x31a,0,0xffffffff82000f98,0xffffffff8200202c);
-  }
-  pfVar14 = (float *)param_2;
-  fVar1 = pfVar14[1];
-  fVar2 = pfVar14[2];
-  fVar3 = *pfVar14;
-  fVar12 = *(float *)(iVar13 + 0x60) * fVar3 +
-           *(float *)(iVar13 + 0x68) * fVar2 + *(float *)(iVar13 + 100) * fVar1 +
-           *(float *)(iVar13 + 0x6c);
-  if (fVar12 <= 0.0) {
-    __restgprlr_27(0);
-    return;
-  }
-  fVar4 = *(float *)(iVar13 + 0x44);
-  fVar5 = *(float *)(iVar13 + 0x54);
-  fVar6 = *(float *)(iVar13 + 0x48);
-  fVar7 = *(float *)(iVar13 + 0x58);
-  fVar8 = *(float *)(iVar13 + 0x40);
-  fVar9 = *(float *)(iVar13 + 0x50);
-  fVar10 = *(float *)(iVar13 + 0x4c);
-  fVar11 = *(float *)(iVar13 + 0x5c);
-  fVar12 = 1.0 / fVar12;
-  pfVar14 = (float *)param_3;
-  *pfVar14 = fVar12 * (*(float *)(iVar13 + 0x30) * fVar3 +
-                       *(float *)(iVar13 + 0x38) * fVar2 + *(float *)(iVar13 + 0x34) * fVar1 +
-                      *(float *)(iVar13 + 0x3c));
-  pfVar14[2] = fVar12 * (fVar3 * fVar9 + fVar7 * fVar2 + fVar5 * fVar1 + fVar11);
-  pfVar14[1] = fVar12 * (fVar8 * fVar3 + fVar6 * fVar2 + fVar4 * fVar1 + fVar10) * -1.0;
-  __restgprlr_27(1);
-  return;
-}
-
-
-// 82262438  AimAssist_ConvertToClipBounds  (aim_assist/aim_assist.cpp:816)
-
-void AimAssist_ConvertToClipBounds
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  float *pfVar1;
-  float fVar2;
-  undefined8 uVar3;
-  char cVar4;
-  float *pfVar5;
-  uint uVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  float local_90;
-  float local_8c;
-  float local_88;
-  float local_80;
-  float local_7c;
-  float local_78;
-  undefined1 auStack_70 [112];
-  
-  __savegprlr_26();
-  uVar3 = __savefpr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x336,0,0xffffffff82000f98,0xffffffff82002044);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x337,0,0xffffffff82000f98,0xffffffff82002040);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x338,0,0xffffffff82000f98,0xffffffff82002034);
-  }
-  uVar6 = 0;
-  pfVar5 = (float *)param_4;
-  *pfVar5 = 131072.0;
-  pfVar5[1] = 131072.0;
-  pfVar5[2] = 131072.0;
-  dVar19 = -1.0;
-  dVar20 = 1.0;
-  pfVar5[3] = -131072.0;
-  pfVar5[4] = -131072.0;
-  pfVar5[5] = -131072.0;
-  do {
-    dVar12 = dVar19;
-    if ((uVar6 & 1) != 0) {
-      dVar12 = dVar20;
-    }
-    pfVar1 = (float *)param_2;
-    local_90 = (float)((double)pfVar1[3] * dVar12 + (double)*pfVar1);
-    dVar12 = dVar19;
-    if ((uVar6 & 2) != 0) {
-      dVar12 = dVar20;
-    }
-    local_8c = (float)((double)pfVar1[4] * dVar12 + (double)pfVar1[1]);
-    dVar12 = dVar19;
-    if ((uVar6 & 4) != 0) {
-      dVar12 = dVar20;
-    }
-    local_88 = (float)(dVar12 * (double)pfVar1[5] + (double)pfVar1[2]);
-    MatrixTransformVector43(&local_90,param_3,auStack_70);
-    cVar4 = AimAssist_XfmWorldPointToClipSpace(uVar3,auStack_70,&local_80);
-    if (cVar4 != '\0') {
-      fVar2 = *pfVar5;
-      if (local_80 - *pfVar5 < 0.0) {
-        fVar2 = local_80;
-      }
-      *pfVar5 = fVar2;
-      fVar2 = pfVar5[1];
-      if (local_7c - pfVar5[1] < 0.0) {
-        fVar2 = local_7c;
-      }
-      pfVar5[1] = fVar2;
-      fVar2 = pfVar5[2];
-      if (local_78 - pfVar5[2] < 0.0) {
-        fVar2 = local_78;
-      }
-      pfVar5[2] = fVar2;
-      fVar2 = pfVar5[3];
-      if (pfVar5[3] - local_80 < 0.0) {
-        fVar2 = local_80;
-      }
-      pfVar5[3] = fVar2;
-      fVar2 = pfVar5[4];
-      if (pfVar5[4] - local_7c < 0.0) {
-        fVar2 = local_7c;
-      }
-      pfVar5[4] = fVar2;
-      fVar2 = pfVar5[5];
-      if (pfVar5[5] - local_78 < 0.0) {
-        fVar2 = local_78;
-      }
-      pfVar5[5] = fVar2;
-    }
-    uVar6 = uVar6 + 1;
-  } while ((int)uVar6 < 8);
-  dVar13 = (double)*pfVar5;
-  dVar12 = (double)pfVar5[3];
-  if (dVar13 < dVar12) {
-    dVar16 = (double)pfVar5[1];
-    dVar15 = (double)pfVar5[4];
-    if (dVar16 < dVar15) {
-      dVar7 = (double)pfVar5[2];
-      dVar17 = (double)pfVar5[5];
-      if ((((dVar7 < dVar17) && (dVar13 <= dVar20)) && (dVar16 <= dVar20)) &&
-         (((dVar7 <= dVar20 && (dVar19 <= dVar12)) && ((dVar19 <= dVar15 && (0.0 <= dVar17)))))) {
-        dVar14 = dVar20;
-        if ((float)(dVar13 - dVar20) < 0.0) {
-          dVar14 = dVar13;
-        }
-        dVar11 = dVar20;
-        if ((float)(dVar16 - dVar20) < 0.0) {
-          dVar11 = dVar16;
-        }
-        dVar10 = dVar20;
-        if ((float)(dVar7 - dVar20) < 0.0) {
-          dVar10 = dVar7;
-        }
-        dVar9 = dVar20;
-        if ((float)(dVar12 - dVar20) < 0.0) {
-          dVar9 = dVar12;
-        }
-        dVar8 = dVar20;
-        if ((float)(dVar15 - dVar20) < 0.0) {
-          dVar8 = dVar15;
-        }
-        if ((float)(dVar17 - dVar20) < 0.0) {
-          dVar20 = dVar17;
-        }
-        dVar18 = dVar19;
-        if ((float)(dVar19 - dVar13) < 0.0) {
-          dVar18 = dVar14;
-        }
-        *pfVar5 = (float)dVar18;
-        dVar13 = dVar19;
-        if ((float)(dVar19 - dVar16) < 0.0) {
-          dVar13 = dVar11;
-        }
-        pfVar5[1] = (float)dVar13;
-        dVar13 = 0.0;
-        if (-dVar7 < 0.0) {
-          dVar13 = dVar10;
-        }
-        pfVar5[2] = (float)dVar13;
-        dVar13 = dVar19;
-        if ((float)(dVar19 - dVar12) < 0.0) {
-          dVar13 = dVar9;
-        }
-        pfVar5[3] = (float)dVar13;
-        if ((float)(dVar19 - dVar15) < 0.0) {
-          dVar19 = dVar8;
-        }
-        pfVar5[4] = (float)dVar19;
-        dVar19 = 0.0;
-        if (-dVar17 < 0.0) {
-          dVar19 = dVar20;
-        }
-        pfVar5[5] = (float)dVar19;
-        __restfpr_27(1);
-        __restgprlr_26();
-        return;
-      }
-    }
-  }
-  __restfpr_27(0);
-  __restgprlr_26();
-  return;
-}
-
-
-// 82262738  AimAssist_GetCrosshairDistSqr  (aim_assist/aim_assist.cpp:857)
-
-void AimAssist_GetCrosshairDistSqr(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float *pfVar3;
-  
-  pfVar3 = (float *)__savegprlr_28();
-  if (pfVar3 == (float *)0x0) {
-    MyAssertHandler(0xffffffff82001408,0x35d,0,0xffffffff82000f98,0xffffffff82002058);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x35e,0,0xffffffff82000f98,0xffffffff8200204c);
-  }
-  fVar1 = (pfVar3[1] + ((float *)param_2)[1]) * 0.5;
-  fVar2 = (*pfVar3 + *(float *)param_2) * 0.5;
-  __restgprlr_28((double)(fVar2 * fVar2 + fVar1 * fVar1));
-  return;
-}
-
-
-// 822627E0  AimAssist_DoBoundsIntersectCenterBox  (aim_assist/aim_assist.cpp:872)
-
-void AimAssist_DoBoundsIntersectCenterBox
-               (undefined8 param_1,double param_2,undefined8 param_3,ulonglong param_4)
-
-{
-  bool bVar1;
-  float *pfVar2;
-  bool bVar4;
-  undefined8 uVar3;
-  double extraout_f1;
-  double dVar5;
-  
-  pfVar2 = (float *)__savegprlr_28();
-  dVar5 = extraout_f1;
-  if (pfVar2 == (float *)0x0) {
-    MyAssertHandler(0xffffffff82001408,0x36c,0,0xffffffff82000f98,0xffffffff82002058);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x36d,0,0xffffffff82000f98,0xffffffff8200204c);
-  }
-  if ((dVar5 < (double)*pfVar2) || (bVar4 = true, (double)*(float *)param_4 < -dVar5)) {
-    bVar4 = false;
-  }
-  if ((param_2 < (double)pfVar2[1]) || (bVar1 = true, (double)((float *)param_4)[1] < -param_2)) {
-    bVar1 = false;
-  }
-  if ((!bVar4) || (uVar3 = 1, !bVar1)) {
-    uVar3 = 0;
-  }
-  __restgprlr_28(uVar3);
-  return;
-}
-
-
-// 822628E0  AimAssist_GetAimAssistRange  (aim_assist/aim_assist.cpp:888)
-
-double AimAssist_GetAimAssistRange(double param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  double dVar1;
-  float local_30;
-  float local_2c [5];
-  
-  dVar1 = 1.0;
-  if ((param_1 < 0.0) || (1.0 < param_1)) {
-    MyAssertHandler(param_1,0xffffffff82001408,0x37d,0,0xffffffff82002064,param_1,0,
-                    0x3ff0000000000000);
-  }
-  BG_AimAssistRange(param_2,param_3,local_2c,&local_30);
-  return (double)((float)(dVar1 - param_1) * local_2c[0] + (float)((double)local_30 * param_1));
-}
-
-
-// 822629B8  AimAssist_CompareTargets  (aim_assist/aim_assist.cpp:920)
-
-void AimAssist_CompareTargets(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  int iVar3;
-  undefined8 uVar2;
-  
-  iVar3 = __savegprlr_28();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x399,0,0xffffffff82000f98,0xffffffff820020b8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x39a,0,0xffffffff82000f98,0xffffffff820020a8);
-  }
-  fVar1 = *(float *)((int)param_2 + 0x30);
-  if (*(float *)(iVar3 + 0x30) < fVar1) {
-    __restgprlr_28(1);
-    return;
-  }
-  uVar2 = 0xffffffffffffffff;
-  if (*(float *)(iVar3 + 0x30) <= fVar1) {
-    uVar2 = 0;
-  }
-  __restgprlr_28(uVar2);
-  return;
-}
-
-
-// 82262A58  AimAssist_AddToTargetList  (aim_assist/aim_assist.cpp:936)
-
-void AimAssist_AddToTargetList(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  void *pvVar2;
-  void *pvVar3;
-  uint uVar4;
-  void *pvVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  
-  pvVar2 = (void *)__savegprlr_22();
-  pvVar3 = pvVar2;
-  if (pvVar2 == (void *)0x0) {
-    pvVar3 = (void *)MyAssertHandler(0xffffffff82001408,0x3ad,0,0xffffffff82000f98,
-                                     0xffffffff82002024);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    pvVar3 = (void *)MyAssertHandler(0xffffffff82001408,0x3ae,0,0xffffffff82000f98,
-                                     0xffffffff820020c8);
-  }
-  iVar6 = *(int *)((int)pvVar2 + 0xe34);
-  iVar7 = 0;
-  iVar1 = 0;
-  if (0 < iVar6) {
-    do {
-      iVar7 = iVar1;
-      uVar4 = iVar6 + iVar7;
-      iVar8 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
-      pvVar5 = (void *)(iVar8 * 0x34 + (int)pvVar2);
-      if ((param_2 & 0xffffffff) == 0) {
-        pvVar3 = (void *)MyAssertHandler(0xffffffff82001408,0x399,0,0xffffffff82000f98,
-                                         0xffffffff820020b8);
-      }
-      if (pvVar5 == (void *)0xfffffecc) {
-        pvVar3 = (void *)MyAssertHandler(0xffffffff82001408,0x39a,0,0xffffffff82000f98,
-                                         0xffffffff820020a8);
-      }
-      if (*(float *)((int)pvVar5 + 0x164) <= *(float *)((int)(void *)param_2 + 0x30)) {
-        iVar7 = iVar8 + 1;
-        iVar8 = iVar6;
-      }
-      iVar6 = iVar8;
-      iVar1 = iVar7;
-    } while (iVar7 < iVar8);
-    if (0x3f < iVar7) goto LAB_82262bbc;
-  }
-  if (*(int *)((int)pvVar2 + 0xe34) == 0x40) {
-    *(undefined4 *)((int)pvVar2 + 0xe34) = 0x3f;
-  }
-  pvVar3 = (void *)((int)pvVar2 + iVar7 * 0x34 + 0x134);
-  memmove((void *)((int)pvVar2 + iVar7 * 0x34 + 0x168),pvVar3,
-          (*(int *)((int)pvVar2 + 0xe34) - iVar7) * 0x34);
-  pvVar3 = memcpy(pvVar3,(void *)param_2,0x34);
-  *(int *)((int)pvVar2 + 0xe34) = *(int *)((int)pvVar2 + 0xe34) + 1;
-LAB_82262bbc:
-  __restgprlr_22(pvVar3);
-  return;
-}
-
-
-// 82260CB0  AngleSubtract  (universal/com_math.h:938)
-
-double AngleSubtract(double param_1,double param_2)
-
-{
-  double dVar1;
-  double dVar2;
-  
-  dVar2 = (double)((float)(param_1 - param_2) * 0.0027777778);
-  dVar1 = floor((double)(float)(dVar2 + 0.5));
-  return (double)((float)(dVar2 - (double)(float)dVar1) * 360.0);
-}
-
-
-// 82262BC8  AimAssist_GetTagPos  (aim_assist/aim_assist.cpp:972)
-
-void AimAssist_GetTagPos(undefined8 param_1,ulonglong param_2,undefined8 param_3,ulonglong param_4)
-
-{
-  undefined4 uVar1;
-  undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  
-  uVar2 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x3cf,0,0xffffffff82000f98,0xffffffff82002118);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x3d0,0,0xffffffff82000f98,0xffffffff82002114);
-  }
-  uVar3 = Com_GetClientDObj(*(undefined4 *)((int)param_2 + 0xc4),uVar2);
-  if ((uVar3 & 0xffffffff) == 0) {
-    __restgprlr_26();
-    return;
-  }
-  iVar4 = CG_DObjGetWorldTagPos(param_2,uVar3,param_3,param_4);
-  if (iVar4 == 0) {
-    uVar1 = *(undefined4 *)((int)param_2 + 0xc4);
-    uVar2 = SL_ConvertToString(param_3);
-    Com_Error(1,0xffffffff820020d8,uVar2,uVar1);
-  }
-  __restgprlr_26(1);
-  return;
-}
-
-
-// 82262CA8  AimAssist_CalcAimPos  (aim_assist/aim_assist.cpp:990)
-
-void AimAssist_CalcAimPos(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
-
-{
-  float fVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  float *pfVar6;
-  
-  uVar5 = __savegprlr_26();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x3e1,0,0xffffffff82000f98,0xffffffff82002128);
-  }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x3e2,0,0xffffffff82000f98,0xffffffff82002120);
-  }
-  iVar3 = (int)param_2;
-  if (*(int *)(iVar3 + 200) == 1) {
-    AimAssist_GetTagPos(uVar5,param_2,DAT_835a0b84,param_4);
-    __restgprlr_26();
-    return;
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    __restgprlr_26(0);
-    return;
-  }
-  iVar4 = (int)param_3;
-  fVar1 = *(float *)(iVar4 + 0xc);
-  fVar2 = *(float *)(iVar4 + 0x10);
-  pfVar6 = (float *)param_4;
-  *pfVar6 = *(float *)(iVar3 + 0x14) + *(float *)(iVar4 + 8);
-  pfVar6[1] = *(float *)(iVar3 + 0x18) + fVar1;
-  pfVar6[2] = *(float *)(iVar3 + 0x1c) + fVar2;
-  __restgprlr_26(1);
-  return;
-}
-
-
-// 82262DA0  AimAssist_UpdateScreenTargets  (aim_assist/aim_assist.cpp:1015)
-
-void AimAssist_UpdateScreenTargets
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4,
-               undefined4 *param_5,undefined8 param_6)
-
-{
-  uint uVar1;
-  int iVar2;
-  char cVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  int iVar6;
-  undefined *puVar7;
-  undefined8 extraout_f1;
-  double dVar8;
-  undefined8 uVar9;
-  int local_f0;
-  int local_ec [3];
-  undefined4 local_e0;
-  undefined4 local_dc;
-  undefined4 local_d8;
-  undefined4 local_d4;
-  undefined4 local_d0;
-  undefined1 auStack_cc [12];
-  undefined4 local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8;
-  undefined4 local_b4;
-  float local_b0;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined1 auStack_80 [36];
-  undefined4 local_5c;
-  undefined4 local_58;
-  undefined4 local_54;
-  
-  uVar1 = __savegprlr_26();
-  uVar9 = extraout_f1;
-  Profile_Begin(0x39);
-  if (3 < uVar1) {
-    MyAssertHandler(0xffffffff82001408,0x403,0,0xffffffff820011a8,uVar1,4);
-  }
-  iVar6 = uVar1 * 0xe60;
-  puVar7 = &DAT_829b1310 + iVar6;
-  if ((&DAT_829b13c0)[iVar6] != '\0') {
-    *(undefined4 *)(&DAT_829b13e0 + iVar6) = *param_4;
-    *(undefined4 *)(&DAT_829b13e4 + iVar6) = param_4[1];
-    *(undefined4 *)(&DAT_829b13e8 + iVar6) = param_4[2];
-    *(undefined4 *)(&DAT_829b13ec + iVar6) = *param_5;
-    *(undefined4 *)(&DAT_829b13f0 + iVar6) = param_5[1];
-    *(undefined4 *)(&DAT_829b13f4 + iVar6) = param_5[2];
-    puVar4 = (undefined4 *)param_6;
-    *(undefined4 *)(&DAT_829b13f8 + iVar6) = *puVar4;
-    *(undefined4 *)(&DAT_829b13fc + iVar6) = puVar4[1];
-    *(undefined4 *)(&DAT_829b1400 + iVar6) = puVar4[2];
-    AnglesToAxis(param_6,iVar6 + -0x7d64ebfc);
-    AimAssist_FovScale(param_2,puVar7);
-    AimAssist_CreateScreenMatrix(uVar9,param_2,uVar1,puVar7);
-    iVar5 = 0;
-    *(undefined4 *)(&DAT_829b2144 + iVar6) = 0;
-    AimTarget_GetClientTargetList(uVar1,local_ec,&local_f0);
-    if (0 < local_f0) {
-      iVar6 = 0;
-      do {
-        puVar4 = (undefined4 *)(iVar6 + local_ec[0]);
-        iVar2 = CG_GetEntity(uVar1,*(undefined4 *)(iVar6 + local_ec[0]));
-        if ((*(uint *)(iVar2 + 0x1c4) & 1) != 0) {
-          AnglesToAxis(iVar2 + 0x20,auStack_80);
-          local_5c = *(undefined4 *)(iVar2 + 0x14);
-          local_58 = *(undefined4 *)(iVar2 + 0x18);
-          local_54 = *(undefined4 *)(iVar2 + 0x1c);
-          cVar3 = AimAssist_ConvertToClipBounds(puVar7,puVar4 + 2,auStack_80,&local_a0);
-          if (cVar3 != '\0') {
-            local_e0 = *puVar4;
-            local_d4 = local_94;
-            local_d8 = local_9c;
-            local_dc = local_a0;
-            local_d0 = local_90;
-            local_c0 = puVar4[8];
-            local_bc = puVar4[9];
-            local_b8 = puVar4[10];
-            iVar2 = AimAssist_CalcAimPos(uVar1,iVar2,puVar4,auStack_cc);
-            if (iVar2 != 0) {
-              local_b4 = puVar4[1];
-              dVar8 = (double)AimAssist_GetCrosshairDistSqr(&local_dc,&local_d4);
-              local_b0 = (float)dVar8;
-              AimAssist_AddToTargetList(puVar7,&local_e0);
-            }
-          }
-        }
-        iVar5 = iVar5 + 1;
-        iVar6 = iVar6 + 0x2c;
-      } while (iVar5 < local_f0);
-    }
-  }
-  Profile_EndInternal(0);
-  __restgprlr_26();
-  return;
-}
-
-
-// 82262FD0  AimAssist_GetScreenTargetCount  (aim_assist/aim_assist.cpp:1082)
-
-undefined4 AimAssist_GetScreenTargetCount(ulonglong param_1)
-
-{
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x43d,0,0xffffffff820011a8,param_1,4);
-  }
-  return *(undefined4 *)(&DAT_829b2144 + (int)param_1 * 0xe60);
-}
-
-
-// 82263038  AimAssist_GetScreenTargetEntity  (aim_assist/aim_assist.cpp:1093)
-
-void AimAssist_GetScreenTargetEntity(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = __savegprlr_29();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,0x448,0,0xffffffff820011a8,uVar2,4);
-  }
-  iVar1 = (int)uVar2 * 0xe60;
-  if ((ulonglong)*(uint *)(&DAT_829b2144 + iVar1) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001408,1099,0,0xffffffff82002138,param_2);
-  }
-  __restgprlr_29(*(undefined4 *)(&DAT_829b1444 + (int)param_2 * 0x34 + iVar1));
-  return;
-}
-
-
-// 822630C8  AimAssist_ClearEntityReference  (aim_assist/aim_assist.cpp:1106)
-
-void AimAssist_ClearEntityReference(uint param_1,int param_2)
-
-{
-  int iVar1;
-  
-  if (3 < param_1) {
-    MyAssertHandler(0xffffffff82001408,0x455,0,0xffffffff820011a8,param_1,4);
-  }
-  iVar1 = param_1 * 0xe60;
-  if (*(int *)(&DAT_829b214c + iVar1) == param_2) {
-    *(undefined4 *)(&DAT_829b214c + iVar1) = 0x7ff;
-  }
-  if (*(int *)(&DAT_829b2160 + iVar1) == param_2) {
-    *(undefined4 *)(&DAT_829b2160 + iVar1) = 0x7ff;
-  }
-  return;
-}
-
-
-// 82263160  AimAssist_GetTargetFromEntity  (aim_assist/aim_assist.cpp:1126)
-
-int * AimAssist_GetTargetFromEntity(int param_1,int param_2)
-
-{
-  int *piVar1;
-  int iVar2;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x46a,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if (param_2 != 0x7ff) {
-    iVar2 = 0;
-    if (0 < *(int *)(param_1 + 0xe34)) {
-      piVar1 = (int *)(param_1 + 0x134);
-      do {
-        if (*piVar1 == param_2) {
-          return piVar1;
-        }
-        iVar2 = iVar2 + 1;
-        piVar1 = piVar1 + 0xd;
-      } while (iVar2 < *(int *)(param_1 + 0xe34));
-    }
-  }
-  return (int *)0x0;
-}
-
-
-// 82263200  AimAssist_GetBestTarget  (aim_assist/aim_assist.cpp:1148)
-
-void AimAssist_GetBestTarget(undefined8 param_1,double param_2,double param_3)
-
-{
-  bool bVar1;
-  int iVar2;
-  bool bVar3;
-  int iVar4;
-  float *pfVar5;
-  double extraout_f1;
-  double dVar6;
-  
-  iVar2 = __savegprlr_24();
-  dVar6 = extraout_f1;
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x480,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if (dVar6 < 0.0) {
-    MyAssertHandler(dVar6,0xffffffff82001408,0x481,0,0xffffffff82002180,0xffffffff82002194,dVar6);
-  }
-  iVar4 = 0;
-  if (0 < *(int *)(iVar2 + 0xe34)) {
-    dVar6 = (double)(float)(dVar6 * dVar6);
-    pfVar5 = (float *)(iVar2 + 0x144);
-    do {
-      if ((double)pfVar5[7] <= dVar6) {
-        if (pfVar5 == (float *)0xc) {
-          MyAssertHandler(0xffffffff82001408,0x36c,0,0xffffffff82000f98,0xffffffff82002058);
-        }
-        if (pfVar5 == (float *)0x4) {
-          MyAssertHandler(0xffffffff82001408,0x36d,0,0xffffffff82000f98,0xffffffff8200204c);
-        }
-        if ((param_2 < (double)pfVar5[-3]) || (bVar3 = true, (double)pfVar5[-1] < -param_2)) {
-          bVar3 = false;
-        }
-        if ((param_3 < (double)pfVar5[-2]) || (bVar1 = true, (double)*pfVar5 < -param_3)) {
-          bVar1 = false;
-        }
-        if ((!bVar3) || (bVar3 = true, !bVar1)) {
-          bVar3 = false;
-        }
-        if (bVar3) {
-          __restgprlr_24(pfVar5 + -4);
-          return;
-        }
-      }
-      iVar4 = iVar4 + 1;
-      pfVar5 = pfVar5 + 0xd;
-    } while (iVar4 < *(int *)(iVar2 + 0xe34));
-  }
-  __restgprlr_24(0);
-  return;
-}
-
-
-// 822633D0  AimAssist_GetPrevOrBestTarget  (aim_assist/aim_assist.cpp:1176)
-
-void AimAssist_GetPrevOrBestTarget(undefined8 param_1,undefined8 param_2,undefined8 param_3)
-
-{
-  ulonglong uVar1;
-  int iVar2;
-  char cVar3;
-  undefined8 in_r7;
-  double extraout_f1;
-  double dVar4;
-  
-  uVar1 = __savegprlr_29();
-  dVar4 = extraout_f1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x49b,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if (dVar4 < 0.0) {
-    MyAssertHandler(dVar4,0xffffffff82001408,0x49c,0,0xffffffff82002180,0xffffffff82002194,dVar4);
-  }
-  iVar2 = AimAssist_GetTargetFromEntity(uVar1,in_r7);
-  if (((iVar2 != 0) && (*(float *)(iVar2 + 0x2c) < (float)(dVar4 * dVar4))) &&
-     (cVar3 = AimAssist_DoBoundsIntersectCenterBox(param_2,param_3,iVar2 + 4,iVar2 + 0xc),
-     cVar3 != '\0')) {
-    __restgprlr_29(iVar2);
-    return;
-  }
-  AimAssist_GetBestTarget(dVar4,param_2,param_3,uVar1);
-  __restgprlr_29();
-  return;
-}
-
-
-// 82261098  CL_GetLocalClientConnectionState  (client_mp/client_mp.h:1192)
-
-undefined4 CL_GetLocalClientConnectionState(ulonglong param_1)
-
-{
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001158,0x4aa,0,0xffffffff820011a8,param_1,4);
-  }
-  return (&DAT_82b3e54c)[(int)param_1 * 0x79];
-}
-
-
-// 822634F0  AimAssist_CalcAdjustedAxis  (aim_assist/aim_assist.cpp:1195)
-
-void AimAssist_CalcAdjustedAxis(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  float fVar1;
-  int iVar2;
-  int iVar3;
-  float *pfVar4;
-  float *pfVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  
-  iVar3 = __savegprlr_26();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x4b1,0,0xffffffff82000f98,0xffffffff820014a8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x4b2,0,0xffffffff82000f98,0xffffffff820022a0);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x4b3,0,0xffffffff82000f98,0xffffffff82002298);
-  }
-  fVar1 = *(float *)(iVar3 + 0xc);
-  dVar9 = 1.0;
-  pfVar4 = (float *)param_2;
-  pfVar5 = (float *)param_3;
-  if (*(char *)(DAT_829b4cac + 0xc) == '\0') {
-    *pfVar4 = fVar1;
-    *pfVar5 = *(float *)(iVar3 + 0x18);
-  }
-  else {
-    dVar7 = (double)SQRT(*(float *)(iVar3 + 0x18) * *(float *)(iVar3 + 0x18) + fVar1 * fVar1);
-    dVar6 = dVar9;
-    if ((float)(dVar7 - 1.0) < 0.0) {
-      dVar6 = dVar7;
-    }
-    dVar8 = 0.0;
-    if (-dVar7 < 0.0) {
-      dVar8 = dVar6;
-    }
-    if (3 < *(uint *)(DAT_829b4c98 + 0xc)) {
-      MyAssertHandler(0xffffffff82001408,0x4bc,0,0xffffffff82002220,*(uint *)(DAT_829b4c98 + 0xc),4)
-      ;
-    }
-    dVar6 = (double)GraphFloat_GetValue(dVar8,(ulonglong)*(uint *)(DAT_829b4c98 + 0xc) * 0x148 +
-                                              -0x7d64b348);
-    iVar2 = DAT_829b5218;
-    *pfVar4 = (float)(dVar6 * (double)*(float *)(iVar3 + 0xc));
-    *pfVar5 = (float)((double)*(float *)(iVar3 + 0x18) * dVar6);
-    if (*(char *)(iVar2 + 0xc) != '\0') {
-      Com_Printf(0x11,0xffffffff820021f8,(double)*(float *)(iVar3 + 0xc),(double)*pfVar4);
-      Com_Printf(0x11,0xffffffff820021d4,(double)*(float *)(iVar3 + 0x18),(double)*pfVar5);
-    }
-  }
-  if (*(char *)(DAT_829b520c + 0xc) != '\0') {
-    dVar6 = ABS((double)*pfVar4);
-    dVar7 = ABS((double)*pfVar5);
-    if (dVar9 < dVar6) {
-      MyAssertHandler(0xffffffff82001408,0x4da,0,0xffffffff82000f98,0xffffffff820021bc);
-    }
-    if (dVar9 < dVar7) {
-      MyAssertHandler(0xffffffff82001408,0x4db,0,0xffffffff82000f98,0xffffffff820021a8);
-    }
-    if (dVar7 < dVar6) {
-      *pfVar5 = (float)(dVar9 - (double)(float)(dVar6 - dVar7)) * *pfVar5;
-      __restgprlr_26();
-      return;
-    }
-    *pfVar4 = (float)(dVar9 - (double)(float)(dVar7 - dVar6)) * *pfVar4;
-  }
-  __restgprlr_26();
-  return;
-}
-
-
-// 82263770  AimAssist_IsPlayerStunned  (aim_assist/aim_assist.cpp:1262)
-
-undefined8 AimAssist_IsPlayerStunned(int param_1)
-
-{
-  undefined8 uVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x4ef,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  if ((*(int *)(param_1 + 0x1c) == 0x1a) || (uVar1 = 0, *(int *)(param_1 + 0x1c) == 0x1b)) {
-    uVar1 = 1;
-  }
-  return uVar1;
-}
-
-
-// 822637E0  AimAssist_IsPlayerUsingOffhand  (aim_assist/aim_assist.cpp:1275)
-
-longlong AimAssist_IsPlayerUsingOffhand(int param_1)
-
-{
-  longlong lVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x4fc,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  if (((*(uint *)(param_1 + 0x18) & 2) != 0) && (*(char *)(param_1 + 0x27) != '\0')) {
-    lVar1 = BG_GetWeaponClass(*(undefined4 *)(param_1 + 0x24),0);
-    return (lVar1 + -9) - (lVar1 + -10 + (ulonglong)(lVar1 + -9 == 0));
-  }
-  return 0;
-}
-
-
-// 82263880  AimAssist_IsSlowdownActive  (aim_assist/aim_assist.cpp:1293)
-
-bool AimAssist_IsSlowdownActive(int param_1)
-
-{
-  char cVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x50e,0,0xffffffff82000f98,0xffffffff82001fdc);
-  }
-  if ((((*(char *)(DAT_829b4cb4 + 0xc) != '\0') && ((*(uint *)(param_1 + 0x10) & 4) == 0)) &&
-      (cVar1 = AimAssist_IsPlayerStunned(param_1), cVar1 == '\0')) &&
-     (*(char *)(param_1 + 0x27) != '\0')) {
-    if ((*(uint *)(param_1 + 0xc) & 0x203800) != 0) {
-      return true;
-    }
-    return *(char *)(param_1 + 0x28) != '\0';
-  }
-  return false;
-}
-
-
-// 82263968  AimAssist_CalcSlowdown  (aim_assist/aim_assist.cpp:1326)
-
-void AimAssist_CalcSlowdown(undefined8 param_1,ulonglong param_2,ulonglong param_3)
-
-{
-  int iVar1;
-  char cVar2;
-  float *pfVar3;
-  float *pfVar4;
-  int iVar5;
-  undefined *puVar6;
-  undefined8 uVar7;
-  double dVar8;
-  double dVar9;
-  
-  iVar1 = __savegprlr_26();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x534,0,0xffffffff82000f98,0xffffffff820014a8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x535,0,0xffffffff82000f98,0xffffffff82002324);
-  }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x536,0,0xffffffff82000f98,0xffffffff82002318);
-  }
-  if (3 < *(uint *)(iVar1 + 0x2c)) {
-    MyAssertHandler(0xffffffff82001408,0x538,0,0xffffffff82001458,*(uint *)(iVar1 + 0x2c),4);
-  }
-  iVar5 = *(int *)(iVar1 + 0x2c) * 0xe60;
-  dVar9 = 1.0;
-  pfVar3 = (float *)param_2;
-  *pfVar3 = 1.0;
-  pfVar4 = (float *)param_3;
-  *pfVar4 = 1.0;
-  puVar6 = &DAT_829b1310 + iVar5;
-  iVar1 = AimAssist_IsSlowdownActive(puVar6);
-  if (iVar1 != 0) {
-    if ((&DAT_829b1337)[iVar5] == '\0') {
-      MyAssertHandler(0xffffffff82001408,0x54b,0,0xffffffff82000f98,0xffffffff820022f0);
-    }
-    uVar7 = AimAssist_GetAimAssistRange
-                      ((double)*(float *)(&DAT_829b1430 + iVar5),
-                       *(undefined4 *)(&DAT_829b1334 + iVar5),
-                       *(uint *)(&DAT_829b1328 + iVar5) >> 0xf & 1);
-    iVar1 = AimAssist_GetBestTarget
-                      (uVar7,(double)*(float *)(&DAT_829b13c8 + iVar5),
-                       (double)*(float *)(&DAT_829b13cc + iVar5),puVar6);
-    if (iVar1 != 0) {
-      dVar8 = (double)AimAssist_LerpConstDvars
-                                ((double)*(float *)(&DAT_829b1430 + iVar5),DAT_829b5204,DAT_829b5214
-                                );
-      *pfVar3 = (float)dVar8;
-      dVar8 = (double)AimAssist_LerpConstDvars
-                                ((double)*(float *)(&DAT_829b1430 + iVar5),DAT_829b51fc,DAT_829b5200
-                                );
-      *pfVar4 = (float)dVar8;
-    }
-    cVar2 = AimAssist_IsPlayerUsingOffhand(puVar6);
-    if (cVar2 != '\0') {
-      *pfVar3 = (float)dVar9;
-    }
-    if (*(char *)(DAT_829b5208 + 0xc) != '\0') {
-      Com_Printf(0x11,0xffffffff820022cc,(double)*pfVar3);
-      Com_Printf(0x11,0xffffffff820022ac,(double)*pfVar4);
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
-
-// 82263B48  AimAssist_ApplyTurnRates  (aim_assist/aim_assist.cpp:1381)
-
-void AimAssist_ApplyTurnRates(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  float *pfVar2;
-  int iVar3;
-  float *pfVar4;
-  int iVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  float local_70;
-  float local_6c;
-  float local_68;
-  float local_64 [25];
-  
-  __savegprlr_28();
-  pfVar2 = (float *)__savefpr_25();
-  if (pfVar2 == (float *)0x0) {
-    MyAssertHandler(0xffffffff82001408,0x574,0,0xffffffff82000f98,0xffffffff820014a8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x575,0,0xffffffff82000f98,0xffffffff82002378);
-  }
-  if (3 < (uint)pfVar2[0xb]) {
-    MyAssertHandler(0xffffffff82001408,0x577,0,0xffffffff82001458,pfVar2[0xb],4);
-  }
-  iVar5 = (int)pfVar2[0xb] * 0xe60;
-  CL_ControllerIndexFromClientNum();
-  iVar3 = GamerProfile_GetProfileSettings();
-  dVar9 = (double)*(float *)(iVar3 + 4);
-  dVar12 = 1.0;
-  dVar14 = 0.0;
-  dVar13 = dVar14;
-  dVar10 = dVar12;
-  dVar8 = dVar12;
-  dVar11 = dVar14;
-  if (*(int *)(&DAT_829b2148 + iVar5) != 2) {
-    AimAssist_CalcAdjustedAxis(pfVar2,&local_70,&local_6c);
-    dVar10 = dVar12;
-    dVar11 = dVar14;
-    AimAssist_CalcSlowdown(pfVar2,&local_68,local_64);
-    dVar14 = (double)local_6c;
-    dVar12 = (double)local_64[0];
-    dVar13 = (double)local_70;
-    dVar8 = (double)local_68;
-  }
-  dVar7 = (double)AimAssist_LerpConstDvars
-                            ((double)*(float *)(&DAT_829b1430 + iVar5),DAT_829b51e8,DAT_829b4ca8);
-  dVar7 = (double)((float)((double)(float)(dVar7 * dVar8) * dVar9) *
-                  *(float *)(&DAT_829b1428 + iVar5));
-  dVar8 = (double)AimAssist_LerpConstDvars
-                            ((double)*(float *)(&DAT_829b1430 + iVar5),DAT_829b1308,DAT_829b51f8);
-  dVar6 = (double)pfVar2[4];
-  dVar8 = (double)((float)((double)(float)(dVar8 * dVar12) * dVar9) *
-                  *(float *)(&DAT_829b1428 + iVar5));
-  if ((dVar6 != dVar11) && (dVar6 < dVar7)) {
-    dVar7 = dVar6;
-  }
-  dVar12 = (double)pfVar2[7];
-  if ((dVar12 != dVar11) && (dVar12 < dVar8)) {
-    dVar8 = dVar12;
-  }
-  dVar11 = dVar10;
-  if (dVar13 < 0.0) {
-    dVar11 = -1.0;
-  }
-  if (dVar14 < 0.0) {
-    dVar10 = -1.0;
-  }
-  fVar1 = (float)(ABS(dVar13) * dVar7);
-  dVar12 = (double)fVar1;
-  dVar13 = (double)(float)(ABS(dVar14) * dVar8);
-  if (*(char *)(DAT_829b1284 + 0xc) == '\0') {
-    *(float *)(&DAT_829b1434 + iVar5) = fVar1;
-    *(float *)(&DAT_829b1438 + iVar5) = (float)(ABS(dVar14) * dVar8);
-  }
-  else {
-    dVar8 = (double)(float)((double)*(float *)(DAT_829b5210 + 0xc) * dVar9);
-    if (dVar12 <= (double)*(float *)(&DAT_829b1434 + iVar5)) {
-      *(float *)(&DAT_829b1434 + iVar5) = fVar1;
-    }
-    else {
-      dVar9 = (double)LinearTrack(dVar12,(double)*(float *)(&DAT_829b1434 + iVar5),dVar8,
-                                  (double)*pfVar2);
-      *(float *)(&DAT_829b1434 + iVar5) = (float)dVar9;
-    }
-    if (dVar13 <= (double)*(float *)(&DAT_829b1438 + iVar5)) {
-      *(float *)(&DAT_829b1438 + iVar5) = (float)dVar13;
-    }
-    else {
-      dVar8 = (double)LinearTrack(dVar13,(double)*(float *)(&DAT_829b1438 + iVar5),dVar8,
-                                  (double)*pfVar2);
-      *(float *)(&DAT_829b1438 + iVar5) = (float)dVar8;
-    }
-    if (*(char *)(DAT_829b51e4 + 0xc) != '\0') {
-      Com_Printf(dVar12,0x11,0xffffffff82002354,dVar12,(double)*(float *)(&DAT_829b1434 + iVar5));
-      Com_Printf(dVar13,0x11,0xffffffff82002330,dVar13,(double)*(float *)(&DAT_829b1438 + iVar5));
-    }
-  }
-  pfVar4 = (float *)param_2;
-  *pfVar4 = (float)((double)(*(float *)(&DAT_829b1434 + iVar5) * *pfVar2) * dVar11 + (double)*pfVar4
-                   );
-  pfVar4[1] = (float)((double)(*(float *)(&DAT_829b1438 + iVar5) * *pfVar2) * dVar10 +
-                     (double)pfVar4[1]);
-  __restfpr_25();
-  __restgprlr_28();
-  return;
-}
-
-
-// 82263E18  AimAssist_ClearAutoMeleeTarget  (aim_assist/aim_assist.cpp:1622)
-
-void AimAssist_ClearAutoMeleeTarget(int param_1)
-
-{
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x657,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  *(undefined4 *)(param_1 + 0xe38) = 0;
-  *(undefined4 *)(param_1 + 0xe3c) = 0x7ff;
-  *(undefined4 *)(param_1 + 0xe40) = 0;
-  *(undefined4 *)(param_1 + 0xe44) = 0;
-  *(undefined4 *)(param_1 + 0xe48) = 0;
-  *(undefined4 *)(param_1 + 0xe4c) = 0;
-  return;
-}
-
-
-// 82263E98  AimAssist_SetAutoMeleeTarget  (aim_assist/aim_assist.cpp:1637)
-
-void AimAssist_SetAutoMeleeTarget(undefined8 param_1,ulonglong param_2)
-
-{
-  undefined4 uVar1;
-  int iVar2;
-  
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x666,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if (*(int *)(iVar2 + 0xe38) == 2) {
-    MyAssertHandler(0xffffffff82001408,0x667,0,0xffffffff82000f98,0xffffffff82002380);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x668,0,0xffffffff82000f98,0xffffffff820020c8);
-  }
-  *(undefined4 *)(iVar2 + 0xe38) = 1;
-  uVar1 = *(undefined4 *)param_2;
-  *(undefined4 *)(iVar2 + 0xe40) = *(undefined4 *)(iVar2 + 0xe8);
-  *(undefined4 *)(iVar2 + 0xe3c) = uVar1;
-  *(undefined4 *)(iVar2 + 0xe44) = 0;
-  *(undefined4 *)(iVar2 + 0xe48) = *(undefined4 *)(iVar2 + 0xec);
-  *(undefined4 *)(iVar2 + 0xe4c) = 0;
-  __restgprlr_28();
-  return;
-}
-
-
-// 82263F68  AimAssist_UpdateAutoMeleeTarget  (aim_assist/aim_assist.cpp:1654)
-
-void AimAssist_UpdateAutoMeleeTarget(undefined8 param_1,ulonglong param_2)
-
-{
-  int iVar2;
-  int iVar3;
-  undefined8 uVar1;
-  float local_60;
-  float local_5c;
-  float local_58;
-  float local_50;
-  float local_4c;
-  float local_48;
-  float local_40;
-  undefined4 local_3c;
-  
-  iVar2 = __savegprlr_28();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x67d,0,0xffffffff82000f98,0xffffffff82002024);
-  }
-  if (*(int *)(iVar2 + 0xe38) != 2) {
-    MyAssertHandler(0xffffffff82001408,0x67e,0,0xffffffff82000f98,0xffffffff820023b8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x67f,0,0xffffffff82000f98,0xffffffff820014a8);
-  }
-  iVar3 = AimAssist_GetTargetFromEntity(iVar2,*(undefined4 *)(iVar2 + 0xe3c));
-  if (iVar3 == 0) {
-    if (*(int *)(iVar2 + 0xe3c) != 0x7ff) {
-      uVar1 = CG_GetEntity(*(undefined4 *)((int)param_2 + 0x2c));
-      iVar3 = AimAssist_CalcAimPos(*(undefined4 *)((int)param_2 + 0x2c),uVar1,0,&local_60);
-      if (iVar3 != 0) goto LAB_82264064;
-    }
-    __restgprlr_28(0);
-    return;
-  }
-  local_60 = *(float *)(iVar3 + 0x14);
-  local_5c = *(float *)(iVar3 + 0x18);
-  local_58 = *(float *)(iVar3 + 0x1c);
-LAB_82264064:
-  local_50 = local_60 - *(float *)(iVar2 + 0xd0);
-  local_4c = local_5c - *(float *)(iVar2 + 0xd4);
-  local_48 = local_58 - *(float *)(iVar2 + 0xd8);
-  vectoangles(&local_50,&local_40);
-  *(float *)(iVar2 + 0xe44) = local_40;
-  *(undefined4 *)(iVar2 + 0xe4c) = local_3c;
-  if (*(char *)(iVar2 + 0x2a) != '\0') {
-    *(float *)(iVar2 + 0xe44) = local_40 - 15.0;
-  }
-  __restgprlr_28(1);
-  return;
-}
-
-
-// 82261100  CG_GetLocalClientGlobals  (cgame_mp/cg_local_mp.h:1665)
-
-void CG_GetLocalClientGlobals(void)
-
-{
-  ulonglong uVar1;
-  undefined8 uVar2;
-  
-  uVar1 = __savegprlr_29();
-  if (DAT_82a383cc == 0) {
-    uVar2 = CL_GetLocalClientConnectionState();
-    uVar2 = va(0xffffffff82001208,uVar2,uVar1);
-    MyAssertHandler(0xffffffff82001260,0x682,0,0xffffffff820011f4,0xffffffff820011fc,uVar2);
-  }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001260,0x684,0,0xffffffff820011a8,uVar1,4);
-  }
-  __restgprlr_29((longlong)(int)uVar1 * 0x108600 + (ulonglong)DAT_82a383cc);
-  return;
-}
-
-
-// 822640D8  AimAssist_ApplyAutoMelee  (aim_assist/aim_assist.cpp:1702)
-
-void AimAssist_ApplyAutoMelee(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  float *pfVar2;
-  bool bVar3;
-  float *pfVar4;
-  char cVar6;
-  int iVar5;
-  int iVar7;
-  undefined1 uVar8;
-  undefined *puVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float local_60;
-  float local_5c;
-  undefined8 local_58;
-  
-  pfVar4 = (float *)__savegprlr_27();
-  if (pfVar4 == (float *)0x0) {
-    MyAssertHandler(0xffffffff82001408,0x6b7,0,0xffffffff82000f98,0xffffffff820014a8);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x6b8,0,0xffffffff82000f98,0xffffffff82002378);
-  }
-  if (3 < (uint)pfVar4[0xb]) {
-    MyAssertHandler(0xffffffff82001408,0x6ba,0,0xffffffff82001458,pfVar4[0xb],4);
-  }
-  fVar1 = pfVar4[0xb];
-  pfVar2 = (float *)param_2;
-  *(undefined2 *)(pfVar2 + 3) = 0x7ff;
-  iVar5 = DAT_829b4ca4;
-  dVar13 = 0.0;
-  iVar7 = (int)fVar1 * 0xe60;
-  pfVar2[2] = 0.0;
-  *(undefined1 *)((int)pfVar2 + 0xe) = 0;
-  puVar9 = &DAT_829b1310 + iVar7;
-  if (((*(char *)(iVar5 + 0xc) != '\0') && ((&DAT_829b1337)[iVar7] != '\0')) &&
-     (cVar6 = AimAssist_IsPlayerStunned(puVar9), cVar6 == '\0')) {
-    if (((*(uint *)(&DAT_829b13c4 + iVar7) & 4) != 0) || (bVar3 = true, ((uint)pfVar4[10] & 4) == 0)
-       ) {
-      bVar3 = false;
-    }
-    if ((*(int *)(&DAT_829b2148 + iVar7) != 2) && (bVar3)) {
-      fVar1 = *(float *)(DAT_829b4c90 + 0xc);
-      if ((&DAT_829b133b)[iVar7] != '\0') {
-        fVar1 = *(float *)(DAT_829d7ec0 + 0xc);
-      }
-      dVar12 = (double)fVar1;
-      iVar5 = AimAssist_GetTargetFromEntity(puVar9,*(undefined4 *)(&DAT_829b214c + iVar7));
-      if ((iVar5 == 0) &&
-         (iVar5 = AimAssist_GetBestTarget
-                            (dVar12,(double)*(float *)(&DAT_829b13d0 + iVar7),
-                             (double)*(float *)(&DAT_829b13d4 + iVar7),puVar9), iVar5 == 0))
-      goto LAB_822643f8;
-      AimAssist_SetAutoMeleeTarget(puVar9,iVar5);
-      if (((*(uint *)(&DAT_829b1324 + iVar7) & 1) == 0) &&
-         (dVar13 < (double)*(float *)(iVar5 + 0x2c))) {
-        fVar1 = (float)SQRT((double)*(float *)(iVar5 + 0x2c)) - 30.0;
-        dVar12 = (double)fVar1;
-        if (dVar13 < dVar12) {
-          if (dVar12 <= 255.0) {
-            local_58 = (longlong)fVar1;
-            uVar8 = (undefined1)local_58;
-          }
-          else {
-            uVar8 = 0xff;
-          }
-          *(undefined1 *)((int)pfVar2 + 0xe) = uVar8;
-          local_60 = *(float *)(iVar5 + 0x14) - *(float *)(&DAT_829b13e0 + iVar7);
-          local_5c = *(float *)(iVar5 + 0x18) - *(float *)(&DAT_829b13e4 + iVar7);
-          dVar13 = (double)vectoyaw(&local_60);
-          pfVar2[2] = (float)dVar13;
-          *(short *)(pfVar2 + 3) = (short)*(undefined4 *)(&DAT_829b214c + iVar7);
-        }
-      }
-    }
-    if ((*(int *)(&DAT_829b2148 + iVar7) == 1) && (*(int *)(&DAT_829b132c + iVar7) == 0xd)) {
-      *(undefined4 *)(&DAT_829b2148 + iVar7) = 2;
-    }
-    if (*(int *)(&DAT_829b2148 + iVar7) != 2) goto LAB_82264400;
-    iVar5 = *(int *)(&DAT_829b132c + iVar7);
-    if ((iVar5 != 0xe) &&
-       (((iVar5 == 0xd || (iVar5 == 0xf)) &&
-        (cVar6 = AimAssist_UpdateAutoMeleeTarget(puVar9,pfVar4), cVar6 != '\0')))) {
-      dVar13 = (double)DiffTrackAngle((double)*(float *)(&DAT_829b2154 + iVar7),
-                                      (double)*(float *)(&DAT_829b2150 + iVar7),
-                                      (double)*(float *)(DAT_829b4cb0 + 0xc),(double)*pfVar4);
-      dVar12 = (double)DiffTrackAngle((double)*(float *)(&DAT_829b215c + iVar7),
-                                      (double)*(float *)(&DAT_829b2158 + iVar7),
-                                      (double)*(float *)(DAT_829b4cb0 + 0xc),(double)*pfVar4);
-      dVar10 = (double)AngleSubtract(dVar13,(double)*(float *)(&DAT_829b2150 + iVar7));
-      dVar11 = (double)AngleSubtract(dVar12,(double)*(float *)(&DAT_829b2158 + iVar7));
-      *(float *)(&DAT_829b2150 + iVar7) = (float)dVar13;
-      *(float *)(&DAT_829b2158 + iVar7) = (float)dVar12;
-      *pfVar2 = (float)((double)*pfVar2 + dVar10);
-      pfVar2[1] = (float)((double)pfVar2[1] + dVar11);
-      __restgprlr_27();
-      return;
-    }
-  }
-LAB_822643f8:
-  AimAssist_ClearAutoMeleeTarget(puVar9);
-LAB_82264400:
-  __restgprlr_27();
-  return;
-}
-
-
-// 822611A8  CG_GetEntity  (cgame_mp/cg_local_mp.h:1714)
-
-void CG_GetEntity(undefined8 param_1,ulonglong param_2)
-
-{
-  ulonglong uVar1;
-  
-  uVar1 = __savegprlr_29();
-  if (0x7ff < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001260,0x6b4,0,0xffffffff820012f4,param_2,0x800);
-  }
-  if ((ulonglong)DAT_82a38328 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff82001260,0x6b9,0,0xffffffff820012b0,uVar1);
-  }
-  __restgprlr_29(((uVar1 & 0x1fffff) * 0x800 + param_2) * 0x1ec + (ulonglong)DAT_82a3ce28);
-  return;
-}
-
-
-// 82264418  AimAssist_ApplyLockOn  (aim_assist/aim_assist.cpp:1850)
-
-void AimAssist_ApplyLockOn(undefined8 param_1,ulonglong param_2)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  int iVar11;
-  int iVar12;
-  char cVar14;
-  undefined4 *puVar13;
   int iVar15;
-  float *pfVar16;
-  undefined8 uVar17;
-  double dVar18;
+  int iVar16;
+  bool bVar18;
+  AimScreenTarget *pAVar17;
+  ulonglong uVar19;
+  uint uVar20;
+  AimAssistGlobals *pAVar21;
+  double dVar22;
+  float fVar23;
   
-  __savegprlr_25();
-  iVar12 = __savefpr_28();
-  if (iVar12 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x748,0,0xffffffff82000f98,0xffffffff820014a8);
+  uVar19 = (ulonglong)(int)param_2;
+  __savegprlr_25(param_1);
+  iVar16 = __savefpr_28();
+  if (iVar16 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x748,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x749,0,0xffffffff82000f98,0xffffffff82002378);
+  if ((uVar19 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x749,0,"%s");
   }
-  if (3 < *(uint *)(iVar12 + 0x2c)) {
-    MyAssertHandler(0xffffffff82001408,0x74a,0,0xffffffff82001458,*(uint *)(iVar12 + 0x2c),4);
+  if (3 < *(uint *)(iVar16 + 0x2c)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x74a,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
   }
-  iVar11 = DAT_829b51f4;
-  iVar15 = *(int *)(iVar12 + 0x2c) * 0xe60;
-  pfVar16 = (float *)(&DAT_829b1310 + iVar15);
-  *(undefined4 *)(&DAT_829b2160 + iVar15) = 0x7ff;
-  if ((((*(char *)(iVar11 + 0xc) != '\0') &&
-       (cVar14 = AimAssist_IsPlayerUsingOffhand(pfVar16), cVar14 == '\0')) &&
-      ((*(uint *)(&DAT_829b1320 + iVar15) & 4) == 0)) && (*(int *)(&DAT_829b2148 + iVar15) != 2)) {
-    fVar1 = *(float *)(DAT_829b51dc + 0xc);
-    if ((((fVar1 <= ABS(*(float *)(iVar12 + 0xc))) || (fVar1 <= ABS(*(float *)(iVar12 + 0x18)))) ||
-        (fVar1 <= ABS(*(float *)(iVar12 + 0x24)))) && ((&DAT_829b1337)[iVar15] != '\0')) {
-      uVar17 = AimAssist_GetAimAssistRange
-                         ((double)*(float *)(&DAT_829b1430 + iVar15),
-                          *(undefined4 *)(&DAT_829b1334 + iVar15),
-                          *(uint *)(&DAT_829b1328 + iVar15) >> 0xf & 1);
-      puVar13 = (undefined4 *)
-                AimAssist_GetPrevOrBestTarget
-                          (uVar17,(double)*(float *)(&DAT_829b13d8 + iVar15),
-                           (double)*(float *)(&DAT_829b13dc + iVar15),pfVar16);
-      if ((puVar13 != (undefined4 *)0x0) && (0.0 < (float)puVar13[0xb])) {
-        *(undefined4 *)(&DAT_829b2160 + iVar15) = *puVar13;
-        dVar18 = (double)(SQRT((float)puVar13[0xb]) * 3.1415927);
-        if (dVar18 <= 0.0) {
-          MyAssertHandler(0xffffffff82001408,0x77d,0,0xffffffff82000f98,0xffffffff820023f4);
-        }
-        fVar1 = *(float *)(&DAT_829b1314 + iVar15);
-        fVar2 = (float)puVar13[8];
-        fVar3 = *(float *)(&DAT_829b1420 + iVar15);
-        fVar4 = *(float *)(&DAT_829b141c + iVar15);
-        fVar5 = *pfVar16;
-        fVar6 = (float)puVar13[9];
-        fVar7 = *(float *)(&DAT_829b1318 + iVar15);
-        fVar8 = (float)puVar13[10];
-        fVar9 = *(float *)(&DAT_829b1424 + iVar15);
-        pfVar16 = (float *)param_2;
-        fVar10 = *(float *)(DAT_829b4c9c + 0xc);
-        pfVar16[1] = ((*(float *)(&DAT_829b1418 + iVar15) * fVar8 +
-                      *(float *)(&DAT_829b1414 + iVar15) * fVar6 +
-                      *(float *)(&DAT_829b1410 + iVar15) * fVar2) -
-                     (*(float *)(&DAT_829b1418 + iVar15) * fVar7 +
-                     *(float *)(&DAT_829b1410 + iVar15) * fVar5 +
-                     *(float *)(&DAT_829b1414 + iVar15) * fVar1)) * (float)(1.0 / dVar18) * 180.0 *
-                     fVar10 * *(float *)(iVar12 + 4) + pfVar16[1];
-        *pfVar16 = -(*(float *)(iVar12 + 4) *
-                     ((fVar9 * fVar8 + fVar3 * fVar6 + fVar4 * fVar2) -
-                     (fVar9 * fVar7 + fVar4 * fVar5 + fVar3 * fVar1)) * (float)(1.0 / dVar18) *
-                     180.0 * fVar10 - *pfVar16);
+  iVar15 = DAT_829b51f4;
+  iVar13 = *(int *)(iVar16 + 0x2c);
+  pAVar21 = aaGlobArray + iVar13;
+  aaGlobArray[iVar13].lockOnTargetEnt = 0x7ff;
+  if (((((*(char *)(iVar15 + 0xc) != '\0') &&
+        (bVar18 = AimAssist_IsPlayerUsingOffhand(&pAVar21->ps), !bVar18)) &&
+       ((aaGlobArray[iVar13].ps.linkFlags & 4U) == 0)) &&
+      (aaGlobArray[iVar13].autoMeleeState != AIM_MELEE_STATE_UPDATING)) &&
+     ((((fVar23 = *(float *)(DAT_829b51dc + 0xc), fVar23 <= ABS(*(float *)(iVar16 + 0xc)) ||
+        (fVar23 <= ABS(*(float *)(iVar16 + 0x18)))) || (fVar23 <= ABS(*(float *)(iVar16 + 0x24))))
+      && (aaGlobArray[iVar13].ps.weapon._s_0.weaponIdx != 0)))) {
+    uVar20 = (uint)aaGlobArray[iVar13].ps.weapFlags >> 0xf & 1;
+    fVar23 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[iVar13].ps.weapon,SUB41(uVar20,0),aaGlobArray[iVar13].adsLerp);
+    pAVar17 = AimAssist_GetPrevOrBestTarget
+                        (pAVar21,fVar23,aaGlobArray[iVar13].tweakables.lockOnRegionWidth,
+                         aaGlobArray[iVar13].tweakables.lockOnRegionHeight,uVar20);
+    if ((pAVar17 != (AimScreenTarget *)0x0) && (0.0 < pAVar17->distSqr)) {
+      aaGlobArray[iVar13].lockOnTargetEnt = pAVar17->entIndex;
+      dVar22 = (double)(SQRT(pAVar17->distSqr) * 3.1415927);
+      if (dVar22 <= 0.0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
+                        ,0x77d,0,"%s");
       }
+      fVar23 = aaGlobArray[iVar13].ps.velocity[1];
+      fVar1 = aaGlobArray[iVar13].viewAxis[1][1];
+      fVar2 = pAVar17->velocity[0];
+      fVar3 = aaGlobArray[iVar13].viewAxis[1][0];
+      fVar4 = aaGlobArray[iVar13].viewAxis[2][1];
+      fVar5 = aaGlobArray[iVar13].viewAxis[2][0];
+      fVar6 = (pAVar21->ps).velocity[0];
+      fVar7 = pAVar17->velocity[1];
+      fVar8 = aaGlobArray[iVar13].ps.velocity[2];
+      fVar9 = aaGlobArray[iVar13].viewAxis[1][2];
+      fVar10 = pAVar17->velocity[2];
+      fVar11 = aaGlobArray[iVar13].viewAxis[2][2];
+      pfVar14 = (float *)uVar19;
+      fVar12 = (aim_lockon_strength->current).value;
+      pfVar14[1] = ((fVar9 * fVar10 + fVar1 * fVar7 + fVar3 * fVar2) -
+                   (fVar9 * fVar8 + fVar3 * fVar6 + fVar1 * fVar23)) * (float)(1.0 / dVar22) * 180.0
+                   * fVar12 * *(float *)(iVar16 + 4) + pfVar14[1];
+      *pfVar14 = -(*(float *)(iVar16 + 4) *
+                   ((fVar11 * fVar10 + fVar4 * fVar7 + fVar5 * fVar2) -
+                   (fVar11 * fVar8 + fVar5 * fVar6 + fVar4 * fVar23)) * (float)(1.0 / dVar22) *
+                   180.0 * fVar12 - *pfVar14);
     }
   }
   __restfpr_28();
@@ -2068,67 +2407,91 @@ void AimAssist_ApplyLockOn(undefined8 param_1,ulonglong param_2)
 
 // 822646C0  AimAssist_UpdateGamePadInput  (aim_assist/aim_assist.cpp:1937)
 
-void AimAssist_UpdateGamePadInput(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_UpdateGamePadInput(AimInput *param_1,AimOutput *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  LocalClientNum_t LVar1;
+  AimInput *pAVar2;
+  int iVar3;
+  ulonglong uVar4;
+  AimOutput *pAVar5;
   
-  iVar1 = __savegprlr_28();
+  uVar4 = (ulonglong)(int)param_2;
+  pAVar2 = (AimInput *)__savegprlr_28(param_1);
   Profile_Begin(0x37);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x796,0,0xffffffff82000f98,0xffffffff820014a8);
+  if (pAVar2 == (AimInput *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x796,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x797,0,0xffffffff82000f98,0xffffffff82002378);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x797,0,"%s");
   }
-  if (3 < *(uint *)(iVar1 + 0x2c)) {
-    MyAssertHandler(0xffffffff82001408,0x798,0,0xffffffff82001458,*(uint *)(iVar1 + 0x2c),4);
+  if (LOCAL_CLIENT_3 < pAVar2->localClientNum) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x798,0,
+                    "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                   );
   }
-  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 8);
-  ((undefined4 *)param_2)[1] = *(undefined4 *)(iVar1 + 0x14);
-  iVar2 = *(int *)(iVar1 + 0x2c) * 0xe60;
-  if ((&DAT_829b13c0)[iVar2] != '\0') {
-    AimAssist_UpdateTweakables();
-    AimAssist_UpdateAdsLerp(iVar1);
-    AimAssist_ApplyTurnRates(iVar1,param_2);
-    AimAssist_ApplyAutoMelee(iVar1,param_2);
-    AimAssist_ApplyLockOn(iVar1,param_2);
-    *(undefined4 *)(&DAT_829b13c4 + iVar2) = *(undefined4 *)(iVar1 + 0x28);
+  pAVar5 = (AimOutput *)uVar4;
+  pAVar5->pitch = pAVar2->pitch;
+  pAVar5->yaw = pAVar2->yaw;
+  LVar1 = pAVar2->localClientNum;
+  if (aaGlobArray[LVar1].initialized != false) {
+    AimAssist_UpdateTweakables(LVar1);
+    AimAssist_UpdateAdsLerp(pAVar2);
+    AimAssist_ApplyTurnRates(pAVar2,pAVar5);
+    AimAssist_ApplyAutoMelee(pAVar2,pAVar5);
+    AimAssist_ApplyLockOn(pAVar2,pAVar5);
+    aaGlobArray[LVar1].prevButtons = pAVar2->buttons;
   }
-  Profile_EndInternal(0);
-  __restgprlr_28();
+  iVar3 = Profile_EndInternal((double *)0x0);
+  __restgprlr_28(iVar3);
   return;
 }
 
 
 // 822647D8  AimAssist_DrawCenterBox  (aim_assist/aim_assist.cpp:2036)
 
-void AimAssist_DrawCenterBox(undefined8 param_1,double param_2,double param_3)
+void AimAssist_DrawCenterBox
+               (AimAssistGlobals *param_1,float param_2,float param_3,float param_4,float *param_5)
 
 {
-  int iVar1;
+  float fVar1;
+  float *pfVar2;
+  float *pfVar3;
   ulonglong in_r7;
   double extraout_f1;
-  double dVar2;
-  double dVar3;
   double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  iVar1 = __savegprlr_28();
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82001408,0x7fa,0,0xffffffff82000f98,0xffffffff82002024);
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  pfVar2 = (float *)__savegprlr_28((double)param_2,param_1);
+  dVar7 = extraout_f1;
+  pfVar3 = pfVar2;
+  if (pfVar2 == (float *)0x0) {
+    param_5 = (float *)0x7fa;
+    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x7fa,0,"%s");
   }
   if ((in_r7 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x7fb,0,0xffffffff82000f98,0xffffffff8200240c);
+    param_5 = (float *)0x7fb;
+    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x7fb,0,"%s");
   }
-  dVar3 = (double)*(float *)(iVar1 + 0x130);
-  dVar2 = (double)(float)((double)*(float *)(iVar1 + 300) * param_2);
+  dVar6 = (double)pfVar2[0x4c];
+  fVar1 = (float)((double)pfVar2[0x4b] * dVar4);
   CL_DrawStretchPicPhysical
-            ((double)((float)((double)*(float *)(iVar1 + 300) - dVar2) * 0.5),
-             (double)((float)(dVar3 - (double)(float)(dVar3 * param_3)) * 0.5 -
-                     (float)(dVar3 * dVar4) * 0.5),dVar2,(double)(float)(dVar3 * param_3),0,0,
-             0x3ff0000000000000);
+            ((float)((double)pfVar2[0x4b] - (double)fVar1) * 0.5,
+             (float)(dVar6 - (double)(float)(dVar6 * dVar5)) * 0.5 - (float)(dVar6 * dVar7) * 0.5,
+             fVar1,(float)(dVar6 * dVar5),0.0,0.0,1.0,1.0,pfVar3,(Material *)param_5);
   __restgprlr_28();
   return;
 }
@@ -2136,98 +2499,125 @@ void AimAssist_DrawCenterBox(undefined8 param_1,double param_2,double param_3)
 
 // 822648D0  AimAssist_DrawTargets  (aim_assist/aim_assist.cpp:2057)
 
-void AimAssist_DrawTargets(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void AimAssist_DrawTargets(LocalClientNum_t param_1,playerState_s *param_2,float *param_3)
 
 {
-  uint uVar3;
-  undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  longlong lVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  float fVar1;
+  LocalClientNum_t LVar2;
+  ScreenPlacement *pSVar3;
+  char *pcVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  Material *pMVar7;
+  ulonglong uVar8;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  int iVar11;
+  int iVar12;
   double dVar13;
-  undefined8 uVar14;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  float fVar23;
   
+  uVar8 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
   __savegprlr();
-  uVar3 = __savefpr_20();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x81a,0,0xffffffff82000f98,0xffffffff82001fdc);
+  LVar2 = __savefpr_20();
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x81a,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82001408,0x81b,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar8 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x81b,0,"%s");
   }
-  if (3 < uVar3) {
-    MyAssertHandler(0xffffffff82001408,0x81c,0,0xffffffff820011a8,uVar3,4);
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x81c,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar4 = uVar3 * 0xe60;
-  if ((&DAT_829b1337)[iVar4] != '\0') {
-    dVar7 = (double)AimAssist_GetAimAssistRange
-                              ((double)*(float *)(&DAT_829b1430 + iVar4),
-                               *(undefined4 *)(&DAT_829b1334 + iVar4),
-                               *(uint *)(&DAT_829b1328 + iVar4) >> 0xf & 1);
-    dVar10 = (double)*(float *)(DAT_829b4c90 + 0xc);
-    if (param_2 + 0x4ec == 0) {
-      MyAssertHandler(0xffffffff82000fa8,0x4f,0,0xffffffff82000f98,0xffffffff82000f9c);
+  if (aaGlobArray[LVar2].ps.weapon._s_0.weaponIdx != 0) {
+    fVar23 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[LVar2].ps.weapon,
+                        (bool)((byte)((uint)aaGlobArray[LVar2].ps.weapFlags >> 0xf) & 1),
+                        aaGlobArray[LVar2].adsLerp);
+    dVar13 = (double)fVar23;
+    dVar14 = (double)*(float *)(DAT_829b4c90 + 0xc);
+    if (uVar5 + 0x4ec == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
+                      0x4f,0,"%s");
     }
-    if ((*(uint *)(param_2 + 0x4ec) & 0x40000) != 0) {
-      dVar10 = (double)*(float *)(DAT_829d7ec0 + 0xc);
+    if ((*(uint *)(uVar5 + 0x4ec) & 0x40000) != 0) {
+      dVar14 = (double)(perk_extendedMeleeRange->current).value;
     }
-    uVar1 = ScrPlace_GetActivePlacement(uVar3);
-    lVar5 = 0;
-    if (0 < *(int *)(&DAT_829b2144 + iVar4)) {
-      dVar15 = 10.0;
-      uVar14 = 0;
-      dVar18 = 1.0;
-      dVar11 = 0.5;
-      pfVar6 = (float *)(&DAT_829b1468 + iVar4);
+    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
+    iVar11 = 0;
+    if (0 < aaGlobArray[LVar2].screenTargetCount) {
+      dVar19 = 10.0;
+      dVar18 = 0.0;
+      dVar22 = 1.0;
+      dVar15 = 0.5;
+      uVar10 = 0xffffffff82000000;
+      uVar9 = 0xffffffff82000000;
+      lVar6 = -0x7d5c0000;
+      iVar12 = LVar2 * 0xe60 + -0x7d64eb98;
       do {
-        if ((((*(char *)(DAT_829b130c + 0xc) == '\0') || (pfVar6[2] <= (float)(dVar10 * dVar10))) &&
-            ((*(char *)(DAT_829b5208 + 0xc) == '\0' || (pfVar6[2] <= (float)(dVar7 * dVar7))))) &&
-           ((*(char *)(DAT_829b1280 + 0xc) == '\0' || (pfVar6[2] <= (float)(dVar7 * dVar7))))) {
-          dVar17 = (double)((float)((double)pfVar6[-8] + dVar18) *
-                           (float)((double)*(float *)(&DAT_829b143c + iVar4) * dVar11));
-          dVar16 = (double)((float)((double)pfVar6[-7] + dVar18) *
-                           (float)((double)*(float *)(&DAT_829b1440 + iVar4) * dVar11));
-          dVar9 = (double)((float)((double)pfVar6[-6] + dVar18) *
-                          (float)((double)*(float *)(&DAT_829b143c + iVar4) * dVar11));
-          dVar8 = (double)((float)((double)pfVar6[-5] + dVar18) *
-                          (float)((double)*(float *)(&DAT_829b1440 + iVar4) * dVar11));
-          dVar13 = (double)(float)(dVar9 - dVar17);
-          dVar12 = (double)(float)(dVar8 - dVar16);
-          dVar8 = (double)CG_GetCrosshairVerticalOffset(dVar8,dVar9,param_2);
-          dVar8 = -(double)(float)((double)(float)(dVar8 * (double)*(float *)(&DAT_829b1440 + iVar4)
-                                                  ) * dVar11 - dVar16);
-          CL_DrawStretchPicPhysical(dVar17,dVar8,dVar13,dVar12,uVar14,uVar14,dVar18,dVar18);
-          uVar2 = va(0xffffffff82002414,lVar5);
-          CL_DrawText(dVar17,dVar8,dVar18,dVar18,uVar1,uVar2,0x7fffffff,DAT_82a39350);
-          dVar8 = (double)(float)(dVar8 - dVar15);
-          uVar2 = va(0xffffffff8200241c,pfVar6[-9]);
-          CL_DrawText(dVar17,dVar8,dVar18,dVar18,uVar1,uVar2,0x7fffffff,DAT_82a39350);
-          dVar8 = (double)(float)(dVar8 - dVar15);
-          uVar2 = va(0xffffffff82002424,(double)SQRT(pfVar6[2]));
-          CL_DrawText(dVar17,dVar8,dVar18,dVar18,uVar1,uVar2,0x7fffffff,DAT_82a39350);
-          dVar8 = (double)(float)(dVar8 - dVar15);
-          uVar2 = va(0xffffffff82002430,
-                     (double)SQRT(*pfVar6 * *pfVar6 +
-                                  pfVar6[-1] * pfVar6[-1] + pfVar6[1] * pfVar6[1]));
-          CL_DrawText(dVar17,dVar8,dVar18,dVar18,uVar1,uVar2,0x7fffffff,DAT_82a39350);
-          uVar2 = va(0xffffffff8200243c,(double)SQRT(pfVar6[3]));
-          CL_DrawText(dVar17,(double)(float)(dVar8 - dVar15),dVar18,dVar18,uVar1,uVar2,0x7fffffff,
-                      DAT_82a39350);
+        pMVar7 = (Material *)lVar6;
+        if ((((*(char *)(DAT_829b130c + 0xc) == '\0') ||
+             (*(float *)(iVar12 + 8) <= (float)(dVar14 * dVar14))) &&
+            (((aim_slowdown_debug->current).enabled == false ||
+             (*(float *)(iVar12 + 8) <= (float)(dVar13 * dVar13))))) &&
+           (((aim_lockon_debug->current).enabled == false ||
+            (*(float *)(iVar12 + 8) <= (float)(dVar13 * dVar13))))) {
+          fVar23 = (float)((double)aaGlobArray[LVar2].screenWidth * dVar15);
+          fVar1 = (float)((double)aaGlobArray[LVar2].screenHeight * dVar15);
+          dVar21 = (double)((float)((double)*(float *)(iVar12 + -0x20) + dVar22) * fVar23);
+          dVar20 = (double)((float)((double)*(float *)(iVar12 + -0x1c) + dVar22) * fVar1);
+          dVar17 = (double)(float)((double)((float)((double)*(float *)(iVar12 + -0x18) + dVar22) *
+                                           fVar23) - dVar21);
+          dVar16 = (double)(float)((double)((float)((double)*(float *)(iVar12 + -0x14) + dVar22) *
+                                           fVar1) - dVar20);
+          uVar8 = uVar5;
+          fVar23 = CG_GetCrosshairVerticalOffset((playerState_s *)uVar5);
+          dVar20 = -(double)(float)((double)(fVar23 * aaGlobArray[LVar2].screenHeight) * dVar15 -
+                                   dVar20);
+          CL_DrawStretchPicPhysical
+                    ((float)dVar21,(float)dVar20,(float)dVar17,(float)dVar16,(float)dVar18,
+                     (float)dVar18,(float)dVar22,(float)dVar22,(float *)uVar8,pMVar7);
+          pcVar4 = va("Pri: %i");
+          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar20,
+                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
+          dVar16 = (double)(float)(dVar20 - dVar19);
+          pcVar4 = va("Ent: %i");
+          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
+                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
+          dVar16 = (double)(float)(dVar16 - dVar19);
+          pcVar4 = va("Dist: %.2f");
+          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
+                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
+          dVar16 = (double)(float)(dVar16 - dVar19);
+          pcVar4 = va("Speed: %.2f");
+          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
+                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
+          pcVar4 = va("XHairDist: %.4f");
+          lVar6 = (longlong)(int)pcVar4;
+          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,
+                      (float)(dVar16 - dVar19),(int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,
+                      (float *)0x5,5);
         }
-        lVar5 = lVar5 + 1;
-        pfVar6 = pfVar6 + 0xd;
-      } while ((int)lVar5 < *(int *)(&DAT_829b2144 + iVar4));
+        iVar11 = iVar11 + 1;
+        iVar12 = iVar12 + 0x34;
+      } while (iVar11 < aaGlobArray[LVar2].screenTargetCount);
     }
   }
   __restfpr_20();
@@ -2238,57 +2628,59 @@ void AimAssist_DrawTargets(undefined8 param_1,ulonglong param_2,ulonglong param_
 
 // 82264D88  AimAssist_DrawDebugOverlay  (aim_assist/aim_assist.cpp:2159)
 
-void AimAssist_DrawDebugOverlay(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void AimAssist_DrawDebugOverlay(LocalClientNum_t param_1)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  undefined *puVar4;
-  undefined8 uVar5;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  AimAssistGlobals *pAVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  cg_s *pcVar4;
+  double dVar5;
+  float fVar6;
+  float local_50 [20];
   
-  uVar2 = __savegprlr_28();
-  local_50 = 0x3f800000;
-  local_4c = 0;
-  local_48 = 0;
-  local_44 = 0x3e800000;
-  local_40 = 0;
-  local_3c = 0x3f800000;
-  local_38 = 0;
-  local_34 = 0x3e800000;
-  if (3 < uVar2) {
-    MyAssertHandler(0xffffffff82001408,0x877,0,0xffffffff820011a8,uVar2,4);
+  LVar2 = __savegprlr_28(param_1);
+  local_50[0] = 1.0;
+  local_50[1] = 0.0;
+  local_50[2] = 0.0;
+  local_50[3] = 0.25;
+  local_50[4] = 0.0;
+  local_50[5] = 1.0;
+  local_50[6] = 0.0;
+  local_50[7] = 0.25;
+  if (LOCAL_CLIENT_3 < LVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
+                    0x877,0,
+                    "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = uVar2 * 0xe60;
-  puVar4 = &DAT_829b1310 + iVar3;
-  if ((&DAT_829b13c0)[iVar3] != '\0') {
-    uVar1 = CG_GetLocalClientGlobals(uVar2);
-    uVar5 = CG_GetCrosshairVerticalOffset();
-    if (*(char *)(DAT_829b5208 + 0xc) != '\0') {
-      AimAssist_DrawTargets(uVar2,uVar1,&local_50);
+  pAVar1 = aaGlobArray + LVar2;
+  if (aaGlobArray[LVar2].initialized != false) {
+    pcVar3 = CG_GetLocalClientGlobals(LVar2);
+    fVar6 = CG_GetCrosshairVerticalOffset(&pcVar3->predictedPlayerState);
+    dVar5 = (double)fVar6;
+    if ((aim_slowdown_debug->current).enabled != false) {
+      pcVar4 = pcVar3;
+      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (uVar5,(double)*(float *)(&DAT_829b13c8 + iVar3),
-                 (double)*(float *)(&DAT_829b13cc + iVar3),puVar4);
+                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.slowdownRegionWidth,
+                 aaGlobArray[LVar2].tweakables.slowdownRegionHeight,(float *)pcVar4);
     }
     if (*(char *)(DAT_829b130c + 0xc) != '\0') {
-      AimAssist_DrawTargets(uVar2,uVar1,&local_50);
+      pcVar4 = pcVar3;
+      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (uVar5,(double)*(float *)(&DAT_829b13d0 + iVar3),
-                 (double)*(float *)(&DAT_829b13d4 + iVar3),puVar4);
+                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.autoMeleeRegionWidth,
+                 aaGlobArray[LVar2].tweakables.autoMeleeRegionHeight,(float *)pcVar4);
     }
-    if (*(char *)(DAT_829b1280 + 0xc) != '\0') {
-      AimAssist_DrawTargets(uVar2,uVar1,&local_50);
+    if ((aim_lockon_debug->current).enabled != false) {
+      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (uVar5,(double)*(float *)(&DAT_829b13d8 + iVar3),
-                 (double)*(float *)(&DAT_829b13dc + iVar3),puVar4);
+                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.lockOnRegionWidth,
+                 aaGlobArray[LVar2].tweakables.lockOnRegionHeight,(float *)pcVar3);
     }
   }
   __restgprlr_28();

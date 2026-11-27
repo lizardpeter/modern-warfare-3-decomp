@@ -2,16 +2,16 @@
 
 // 824B9FA8  SaveMemory_ComputeAdlerChecksum  (game/savedevice.cpp:43)
 
-void SaveMemory_ComputeAdlerChecksum(undefined8 param_1,ulonglong param_2)
+uint SaveMemory_ComputeAdlerChecksum(uchar *param_1,uint param_2)
 
 {
   longlong lVar1;
   byte *pbVar2;
-  longlong lVar3;
+  uint uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
   longlong lVar8;
   longlong lVar9;
   longlong lVar10;
@@ -137,254 +137,263 @@ void SaveMemory_ComputeAdlerChecksum(undefined8 param_1,ulonglong param_2)
   longlong lVar130;
   longlong lVar131;
   longlong lVar132;
+  longlong lVar133;
+  longlong lVar134;
   
-  lVar1 = __savegprlr_16();
-  uVar5 = 1;
-  uVar4 = 0;
-  lVar3 = 0;
-  lVar132 = 8;
+  uVar4 = (ulonglong)(int)param_2;
+  lVar1 = __savegprlr_16(param_1);
+  uVar7 = 1;
+  uVar6 = 0;
+  lVar5 = 0;
+  lVar134 = 8;
   do {
-    dataCacheBlockTouch(lVar3 + lVar1);
-    lVar3 = lVar3 + 0x80;
-    lVar132 = lVar132 + -1;
-  } while (lVar132 != 0);
-  while ((param_2 & 0xffffffff) != 0) {
-    if ((param_2 & 0xffffffff) < 0x1581) {
+    dataCacheBlockTouch(lVar5 + lVar1);
+    lVar5 = lVar5 + 0x80;
+    lVar134 = lVar134 + -1;
+  } while (lVar134 != 0);
+  while ((uVar4 & 0xffffffff) != 0) {
+    if ((uVar4 & 0xffffffff) < 0x1581) {
       do {
         pbVar2 = (byte *)lVar1;
-        param_2 = param_2 - 1;
+        uVar4 = uVar4 - 1;
         lVar1 = lVar1 + 1;
-        uVar5 = *pbVar2 + uVar5;
-        uVar4 = uVar4 + uVar5;
-      } while (param_2 != 0);
+        uVar7 = *pbVar2 + uVar7;
+        uVar6 = uVar6 + uVar7;
+      } while (uVar4 != 0);
     }
     else {
-      param_2 = param_2 - 0x1580;
-      lVar3 = 0x2b;
+      uVar4 = uVar4 - 0x1580;
+      lVar5 = 0x2b;
       do {
         dataCacheBlockTouch(lVar1 + 0x400);
         pbVar2 = (byte *)lVar1;
-        lVar132 = *pbVar2 + uVar5;
-        lVar6 = (ulonglong)pbVar2[1] + lVar132;
-        lVar7 = (ulonglong)pbVar2[2] + lVar6;
-        lVar8 = (ulonglong)pbVar2[3] + lVar7;
-        lVar9 = (ulonglong)pbVar2[4] + lVar8;
-        lVar10 = (ulonglong)pbVar2[5] + lVar9;
-        lVar11 = (ulonglong)pbVar2[6] + lVar10;
-        lVar12 = (ulonglong)pbVar2[7] + lVar11;
-        lVar13 = (ulonglong)pbVar2[8] + lVar12;
-        lVar14 = (ulonglong)pbVar2[9] + lVar13;
-        lVar15 = (ulonglong)pbVar2[10] + lVar14;
-        lVar16 = (ulonglong)pbVar2[0xb] + lVar15;
-        lVar17 = (ulonglong)pbVar2[0xc] + lVar16;
-        lVar18 = (ulonglong)pbVar2[0xd] + lVar17;
-        lVar19 = (ulonglong)pbVar2[0xe] + lVar18;
-        lVar20 = (ulonglong)pbVar2[0xf] + lVar19;
-        lVar21 = (ulonglong)pbVar2[0x10] + lVar20;
-        lVar22 = (ulonglong)pbVar2[0x11] + lVar21;
-        lVar23 = (ulonglong)pbVar2[0x12] + lVar22;
-        lVar24 = (ulonglong)pbVar2[0x13] + lVar23;
-        lVar25 = (ulonglong)pbVar2[0x14] + lVar24;
-        lVar26 = (ulonglong)pbVar2[0x15] + lVar25;
-        lVar27 = (ulonglong)pbVar2[0x16] + lVar26;
-        lVar28 = (ulonglong)pbVar2[0x17] + lVar27;
-        lVar29 = (ulonglong)pbVar2[0x18] + lVar28;
-        lVar30 = (ulonglong)pbVar2[0x19] + lVar29;
-        lVar31 = (ulonglong)pbVar2[0x1a] + lVar30;
-        lVar32 = (ulonglong)pbVar2[0x1b] + lVar31;
-        lVar33 = (ulonglong)pbVar2[0x1c] + lVar32;
-        lVar34 = (ulonglong)pbVar2[0x1d] + lVar33;
-        lVar35 = (ulonglong)pbVar2[0x1e] + lVar34;
-        lVar36 = (ulonglong)pbVar2[0x1f] + lVar35;
-        lVar37 = (ulonglong)pbVar2[0x20] + lVar36;
-        lVar38 = (ulonglong)pbVar2[0x21] + lVar37;
-        lVar39 = (ulonglong)pbVar2[0x22] + lVar38;
-        lVar40 = (ulonglong)pbVar2[0x23] + lVar39;
-        lVar41 = (ulonglong)pbVar2[0x24] + lVar40;
-        lVar42 = (ulonglong)pbVar2[0x25] + lVar41;
-        lVar43 = (ulonglong)pbVar2[0x26] + lVar42;
-        lVar44 = (ulonglong)pbVar2[0x27] + lVar43;
-        lVar45 = (ulonglong)pbVar2[0x28] + lVar44;
-        lVar46 = (ulonglong)pbVar2[0x29] + lVar45;
-        lVar47 = (ulonglong)pbVar2[0x2a] + lVar46;
-        lVar48 = (ulonglong)pbVar2[0x2b] + lVar47;
-        lVar49 = (ulonglong)pbVar2[0x2c] + lVar48;
-        lVar50 = (ulonglong)pbVar2[0x2d] + lVar49;
-        lVar51 = (ulonglong)pbVar2[0x2e] + lVar50;
-        lVar52 = (ulonglong)pbVar2[0x2f] + lVar51;
-        lVar53 = (ulonglong)pbVar2[0x30] + lVar52;
-        lVar54 = (ulonglong)pbVar2[0x31] + lVar53;
-        lVar55 = (ulonglong)pbVar2[0x32] + lVar54;
-        lVar56 = (ulonglong)pbVar2[0x33] + lVar55;
-        lVar57 = (ulonglong)pbVar2[0x34] + lVar56;
-        lVar58 = (ulonglong)pbVar2[0x35] + lVar57;
-        lVar59 = (ulonglong)pbVar2[0x36] + lVar58;
-        lVar60 = (ulonglong)pbVar2[0x37] + lVar59;
-        lVar61 = (ulonglong)pbVar2[0x38] + lVar60;
-        lVar62 = (ulonglong)pbVar2[0x39] + lVar61;
-        lVar63 = (ulonglong)pbVar2[0x3a] + lVar62;
-        lVar64 = (ulonglong)pbVar2[0x3b] + lVar63;
-        lVar65 = (ulonglong)pbVar2[0x3c] + lVar64;
-        lVar66 = (ulonglong)pbVar2[0x3d] + lVar65;
-        lVar67 = (ulonglong)pbVar2[0x3e] + lVar66;
-        lVar68 = (ulonglong)pbVar2[0x3f] + lVar67;
-        lVar69 = (ulonglong)pbVar2[0x40] + lVar68;
-        lVar70 = (ulonglong)pbVar2[0x41] + lVar69;
-        lVar71 = (ulonglong)pbVar2[0x42] + lVar70;
-        lVar72 = (ulonglong)pbVar2[0x43] + lVar71;
-        lVar73 = (ulonglong)pbVar2[0x44] + lVar72;
-        lVar74 = (ulonglong)pbVar2[0x45] + lVar73;
-        lVar75 = (ulonglong)pbVar2[0x46] + lVar74;
-        lVar76 = (ulonglong)pbVar2[0x47] + lVar75;
-        lVar77 = (ulonglong)pbVar2[0x48] + lVar76;
-        lVar78 = (ulonglong)pbVar2[0x49] + lVar77;
-        lVar79 = (ulonglong)pbVar2[0x4a] + lVar78;
-        lVar80 = (ulonglong)pbVar2[0x4b] + lVar79;
-        lVar81 = (ulonglong)pbVar2[0x4c] + lVar80;
-        lVar82 = (ulonglong)pbVar2[0x4d] + lVar81;
-        lVar83 = (ulonglong)pbVar2[0x4e] + lVar82;
-        lVar84 = (ulonglong)pbVar2[0x4f] + lVar83;
-        lVar85 = (ulonglong)pbVar2[0x50] + lVar84;
-        lVar86 = (ulonglong)pbVar2[0x51] + lVar85;
-        lVar87 = (ulonglong)pbVar2[0x52] + lVar86;
-        lVar88 = (ulonglong)pbVar2[0x53] + lVar87;
-        lVar89 = (ulonglong)pbVar2[0x54] + lVar88;
-        lVar90 = (ulonglong)pbVar2[0x55] + lVar89;
-        lVar91 = (ulonglong)pbVar2[0x56] + lVar90;
-        lVar92 = (ulonglong)pbVar2[0x57] + lVar91;
-        lVar93 = (ulonglong)pbVar2[0x58] + lVar92;
-        lVar94 = (ulonglong)pbVar2[0x59] + lVar93;
-        lVar95 = (ulonglong)pbVar2[0x5a] + lVar94;
-        lVar96 = (ulonglong)pbVar2[0x5b] + lVar95;
-        lVar97 = (ulonglong)pbVar2[0x5c] + lVar96;
-        lVar98 = (ulonglong)pbVar2[0x5d] + lVar97;
-        lVar99 = (ulonglong)pbVar2[0x5e] + lVar98;
-        lVar100 = (ulonglong)pbVar2[0x5f] + lVar99;
-        lVar101 = (ulonglong)pbVar2[0x60] + lVar100;
-        lVar102 = (ulonglong)pbVar2[0x61] + lVar101;
-        lVar103 = (ulonglong)pbVar2[0x62] + lVar102;
-        lVar104 = (ulonglong)pbVar2[99] + lVar103;
-        lVar105 = (ulonglong)pbVar2[100] + lVar104;
-        lVar106 = (ulonglong)pbVar2[0x65] + lVar105;
-        lVar107 = (ulonglong)pbVar2[0x66] + lVar106;
-        lVar108 = (ulonglong)pbVar2[0x67] + lVar107;
-        lVar109 = (ulonglong)pbVar2[0x68] + lVar108;
-        lVar110 = (ulonglong)pbVar2[0x69] + lVar109;
-        lVar111 = (ulonglong)pbVar2[0x6a] + lVar110;
-        lVar112 = (ulonglong)pbVar2[0x6b] + lVar111;
-        lVar113 = (ulonglong)pbVar2[0x6c] + lVar112;
-        lVar114 = (ulonglong)pbVar2[0x6d] + lVar113;
-        lVar115 = (ulonglong)pbVar2[0x6e] + lVar114;
-        lVar116 = (ulonglong)pbVar2[0x6f] + lVar115;
-        lVar117 = (ulonglong)pbVar2[0x70] + lVar116;
-        lVar118 = (ulonglong)pbVar2[0x71] + lVar117;
+        lVar134 = *pbVar2 + uVar7;
+        lVar8 = (ulonglong)pbVar2[1] + lVar134;
+        lVar9 = (ulonglong)pbVar2[2] + lVar8;
+        lVar10 = (ulonglong)pbVar2[3] + lVar9;
+        lVar11 = (ulonglong)pbVar2[4] + lVar10;
+        lVar12 = (ulonglong)pbVar2[5] + lVar11;
+        lVar13 = (ulonglong)pbVar2[6] + lVar12;
+        lVar14 = (ulonglong)pbVar2[7] + lVar13;
+        lVar15 = (ulonglong)pbVar2[8] + lVar14;
+        lVar16 = (ulonglong)pbVar2[9] + lVar15;
+        lVar17 = (ulonglong)pbVar2[10] + lVar16;
+        lVar18 = (ulonglong)pbVar2[0xb] + lVar17;
+        lVar19 = (ulonglong)pbVar2[0xc] + lVar18;
+        lVar20 = (ulonglong)pbVar2[0xd] + lVar19;
+        lVar21 = (ulonglong)pbVar2[0xe] + lVar20;
+        lVar22 = (ulonglong)pbVar2[0xf] + lVar21;
+        lVar23 = (ulonglong)pbVar2[0x10] + lVar22;
+        lVar24 = (ulonglong)pbVar2[0x11] + lVar23;
+        lVar25 = (ulonglong)pbVar2[0x12] + lVar24;
+        lVar26 = (ulonglong)pbVar2[0x13] + lVar25;
+        lVar27 = (ulonglong)pbVar2[0x14] + lVar26;
+        lVar28 = (ulonglong)pbVar2[0x15] + lVar27;
+        lVar29 = (ulonglong)pbVar2[0x16] + lVar28;
+        lVar30 = (ulonglong)pbVar2[0x17] + lVar29;
+        lVar31 = (ulonglong)pbVar2[0x18] + lVar30;
+        lVar32 = (ulonglong)pbVar2[0x19] + lVar31;
+        lVar33 = (ulonglong)pbVar2[0x1a] + lVar32;
+        lVar34 = (ulonglong)pbVar2[0x1b] + lVar33;
+        lVar35 = (ulonglong)pbVar2[0x1c] + lVar34;
+        lVar36 = (ulonglong)pbVar2[0x1d] + lVar35;
+        lVar37 = (ulonglong)pbVar2[0x1e] + lVar36;
+        lVar38 = (ulonglong)pbVar2[0x1f] + lVar37;
+        lVar39 = (ulonglong)pbVar2[0x20] + lVar38;
+        lVar40 = (ulonglong)pbVar2[0x21] + lVar39;
+        lVar41 = (ulonglong)pbVar2[0x22] + lVar40;
+        lVar42 = (ulonglong)pbVar2[0x23] + lVar41;
+        lVar43 = (ulonglong)pbVar2[0x24] + lVar42;
+        lVar44 = (ulonglong)pbVar2[0x25] + lVar43;
+        lVar45 = (ulonglong)pbVar2[0x26] + lVar44;
+        lVar46 = (ulonglong)pbVar2[0x27] + lVar45;
+        lVar47 = (ulonglong)pbVar2[0x28] + lVar46;
+        lVar48 = (ulonglong)pbVar2[0x29] + lVar47;
+        lVar49 = (ulonglong)pbVar2[0x2a] + lVar48;
+        lVar50 = (ulonglong)pbVar2[0x2b] + lVar49;
+        lVar51 = (ulonglong)pbVar2[0x2c] + lVar50;
+        lVar52 = (ulonglong)pbVar2[0x2d] + lVar51;
+        lVar53 = (ulonglong)pbVar2[0x2e] + lVar52;
+        lVar54 = (ulonglong)pbVar2[0x2f] + lVar53;
+        lVar55 = (ulonglong)pbVar2[0x30] + lVar54;
+        lVar56 = (ulonglong)pbVar2[0x31] + lVar55;
+        lVar57 = (ulonglong)pbVar2[0x32] + lVar56;
+        lVar58 = (ulonglong)pbVar2[0x33] + lVar57;
+        lVar59 = (ulonglong)pbVar2[0x34] + lVar58;
+        lVar60 = (ulonglong)pbVar2[0x35] + lVar59;
+        lVar61 = (ulonglong)pbVar2[0x36] + lVar60;
+        lVar62 = (ulonglong)pbVar2[0x37] + lVar61;
+        lVar63 = (ulonglong)pbVar2[0x38] + lVar62;
+        lVar64 = (ulonglong)pbVar2[0x39] + lVar63;
+        lVar65 = (ulonglong)pbVar2[0x3a] + lVar64;
+        lVar66 = (ulonglong)pbVar2[0x3b] + lVar65;
+        lVar67 = (ulonglong)pbVar2[0x3c] + lVar66;
+        lVar68 = (ulonglong)pbVar2[0x3d] + lVar67;
+        lVar69 = (ulonglong)pbVar2[0x3e] + lVar68;
+        lVar70 = (ulonglong)pbVar2[0x3f] + lVar69;
+        lVar71 = (ulonglong)pbVar2[0x40] + lVar70;
+        lVar72 = (ulonglong)pbVar2[0x41] + lVar71;
+        lVar73 = (ulonglong)pbVar2[0x42] + lVar72;
+        lVar74 = (ulonglong)pbVar2[0x43] + lVar73;
+        lVar75 = (ulonglong)pbVar2[0x44] + lVar74;
+        lVar76 = (ulonglong)pbVar2[0x45] + lVar75;
+        lVar77 = (ulonglong)pbVar2[0x46] + lVar76;
+        lVar78 = (ulonglong)pbVar2[0x47] + lVar77;
+        lVar79 = (ulonglong)pbVar2[0x48] + lVar78;
+        lVar80 = (ulonglong)pbVar2[0x49] + lVar79;
+        lVar81 = (ulonglong)pbVar2[0x4a] + lVar80;
+        lVar82 = (ulonglong)pbVar2[0x4b] + lVar81;
+        lVar83 = (ulonglong)pbVar2[0x4c] + lVar82;
+        lVar84 = (ulonglong)pbVar2[0x4d] + lVar83;
+        lVar85 = (ulonglong)pbVar2[0x4e] + lVar84;
+        lVar86 = (ulonglong)pbVar2[0x4f] + lVar85;
+        lVar87 = (ulonglong)pbVar2[0x50] + lVar86;
+        lVar88 = (ulonglong)pbVar2[0x51] + lVar87;
+        lVar89 = (ulonglong)pbVar2[0x52] + lVar88;
+        lVar90 = (ulonglong)pbVar2[0x53] + lVar89;
+        lVar91 = (ulonglong)pbVar2[0x54] + lVar90;
+        lVar92 = (ulonglong)pbVar2[0x55] + lVar91;
+        lVar93 = (ulonglong)pbVar2[0x56] + lVar92;
+        lVar94 = (ulonglong)pbVar2[0x57] + lVar93;
+        lVar95 = (ulonglong)pbVar2[0x58] + lVar94;
+        lVar96 = (ulonglong)pbVar2[0x59] + lVar95;
+        lVar97 = (ulonglong)pbVar2[0x5a] + lVar96;
+        lVar98 = (ulonglong)pbVar2[0x5b] + lVar97;
+        lVar99 = (ulonglong)pbVar2[0x5c] + lVar98;
+        lVar100 = (ulonglong)pbVar2[0x5d] + lVar99;
+        lVar101 = (ulonglong)pbVar2[0x5e] + lVar100;
+        lVar102 = (ulonglong)pbVar2[0x5f] + lVar101;
+        lVar103 = (ulonglong)pbVar2[0x60] + lVar102;
+        lVar104 = (ulonglong)pbVar2[0x61] + lVar103;
+        lVar105 = (ulonglong)pbVar2[0x62] + lVar104;
+        lVar106 = (ulonglong)pbVar2[99] + lVar105;
+        lVar107 = (ulonglong)pbVar2[100] + lVar106;
+        lVar108 = (ulonglong)pbVar2[0x65] + lVar107;
+        lVar109 = (ulonglong)pbVar2[0x66] + lVar108;
+        lVar110 = (ulonglong)pbVar2[0x67] + lVar109;
+        lVar111 = (ulonglong)pbVar2[0x68] + lVar110;
+        lVar112 = (ulonglong)pbVar2[0x69] + lVar111;
+        lVar113 = (ulonglong)pbVar2[0x6a] + lVar112;
+        lVar114 = (ulonglong)pbVar2[0x6b] + lVar113;
+        lVar115 = (ulonglong)pbVar2[0x6c] + lVar114;
+        lVar116 = (ulonglong)pbVar2[0x6d] + lVar115;
+        lVar117 = (ulonglong)pbVar2[0x6e] + lVar116;
+        lVar118 = (ulonglong)pbVar2[0x6f] + lVar117;
+        lVar119 = (ulonglong)pbVar2[0x70] + lVar118;
+        lVar120 = (ulonglong)pbVar2[0x71] + lVar119;
         lVar1 = lVar1 + 0x80;
-        lVar119 = (ulonglong)pbVar2[0x72] + lVar118;
-        lVar120 = (ulonglong)pbVar2[0x73] + lVar119;
-        lVar121 = (ulonglong)pbVar2[0x74] + lVar120;
-        lVar122 = (ulonglong)pbVar2[0x75] + lVar121;
-        lVar123 = (ulonglong)pbVar2[0x76] + lVar122;
-        lVar124 = (ulonglong)pbVar2[0x77] + lVar123;
-        lVar125 = (ulonglong)pbVar2[0x78] + lVar124;
-        lVar126 = (ulonglong)pbVar2[0x79] + lVar125;
-        lVar127 = (ulonglong)pbVar2[0x7a] + lVar126;
-        lVar128 = (ulonglong)pbVar2[0x7b] + lVar127;
-        lVar129 = (ulonglong)pbVar2[0x7c] + lVar128;
-        lVar130 = (ulonglong)pbVar2[0x7d] + lVar129;
-        lVar131 = (ulonglong)pbVar2[0x7e] + lVar130;
-        uVar5 = (ulonglong)pbVar2[0x7f] + lVar131;
-        uVar4 = uVar4 + lVar132 + lVar6 + lVar7 + lVar8 + lVar9 + lVar10 + lVar11 + lVar12 + lVar13
-                + lVar14 + lVar15 + lVar16 + lVar17 + lVar18 + lVar19 + lVar20 + lVar21 + lVar22 +
-                lVar23 + lVar24 + lVar25 + lVar26 + lVar27 + lVar28 + lVar29 + lVar30 + lVar31 +
-                lVar32 + lVar33 + lVar34 + lVar35 + lVar36 + lVar37 + lVar38 + lVar39 + lVar40 +
-                lVar41 + lVar42 + lVar43 + lVar44 + lVar45 + lVar46 + lVar47 + lVar48 + lVar49 +
-                lVar50 + lVar51 + lVar52 + lVar53 + lVar54 + lVar55 + lVar56 + lVar57 + lVar58 +
-                lVar59 + lVar60 + lVar61 + lVar62 + lVar63 + lVar64 + lVar65 + lVar66 + lVar67 +
-                lVar68 + lVar69 + lVar70 + lVar71 + lVar72 + lVar73 + lVar74 + lVar75 + lVar76 +
-                lVar77 + lVar78 + lVar79 + lVar80 + lVar81 + lVar82 + lVar83 + lVar84 + lVar85 +
-                lVar86 + lVar87 + lVar88 + lVar89 + lVar90 + lVar91 + lVar92 + lVar93 + lVar94 +
-                lVar95 + lVar96 + lVar97 + lVar98 + lVar99 + lVar100 + lVar101 + lVar102 + lVar103 +
-                lVar104 + lVar105 + lVar106 + lVar107 + lVar108 + lVar109 + lVar110 + lVar111 +
-                lVar112 + lVar113 + lVar114 + lVar115 + lVar116 + lVar117 + lVar118 + lVar119 +
-                lVar120 + lVar121 + lVar122 + lVar123 + lVar124 + lVar125 + lVar126 + lVar127 +
-                lVar128 + lVar129 + lVar130 + lVar131 + uVar5;
-        lVar3 = lVar3 + -1;
-      } while (lVar3 != 0);
+        lVar121 = (ulonglong)pbVar2[0x72] + lVar120;
+        lVar122 = (ulonglong)pbVar2[0x73] + lVar121;
+        lVar123 = (ulonglong)pbVar2[0x74] + lVar122;
+        lVar124 = (ulonglong)pbVar2[0x75] + lVar123;
+        lVar125 = (ulonglong)pbVar2[0x76] + lVar124;
+        lVar126 = (ulonglong)pbVar2[0x77] + lVar125;
+        lVar127 = (ulonglong)pbVar2[0x78] + lVar126;
+        lVar128 = (ulonglong)pbVar2[0x79] + lVar127;
+        lVar129 = (ulonglong)pbVar2[0x7a] + lVar128;
+        lVar130 = (ulonglong)pbVar2[0x7b] + lVar129;
+        lVar131 = (ulonglong)pbVar2[0x7c] + lVar130;
+        lVar132 = (ulonglong)pbVar2[0x7d] + lVar131;
+        lVar133 = (ulonglong)pbVar2[0x7e] + lVar132;
+        uVar7 = (ulonglong)pbVar2[0x7f] + lVar133;
+        uVar6 = uVar6 + lVar134 + lVar8 + lVar9 + lVar10 + lVar11 + lVar12 + lVar13 + lVar14 +
+                lVar15 + lVar16 + lVar17 + lVar18 + lVar19 + lVar20 + lVar21 + lVar22 + lVar23 +
+                lVar24 + lVar25 + lVar26 + lVar27 + lVar28 + lVar29 + lVar30 + lVar31 + lVar32 +
+                lVar33 + lVar34 + lVar35 + lVar36 + lVar37 + lVar38 + lVar39 + lVar40 + lVar41 +
+                lVar42 + lVar43 + lVar44 + lVar45 + lVar46 + lVar47 + lVar48 + lVar49 + lVar50 +
+                lVar51 + lVar52 + lVar53 + lVar54 + lVar55 + lVar56 + lVar57 + lVar58 + lVar59 +
+                lVar60 + lVar61 + lVar62 + lVar63 + lVar64 + lVar65 + lVar66 + lVar67 + lVar68 +
+                lVar69 + lVar70 + lVar71 + lVar72 + lVar73 + lVar74 + lVar75 + lVar76 + lVar77 +
+                lVar78 + lVar79 + lVar80 + lVar81 + lVar82 + lVar83 + lVar84 + lVar85 + lVar86 +
+                lVar87 + lVar88 + lVar89 + lVar90 + lVar91 + lVar92 + lVar93 + lVar94 + lVar95 +
+                lVar96 + lVar97 + lVar98 + lVar99 + lVar100 + lVar101 + lVar102 + lVar103 + lVar104
+                + lVar105 + lVar106 + lVar107 + lVar108 + lVar109 + lVar110 + lVar111 + lVar112 +
+                lVar113 + lVar114 + lVar115 + lVar116 + lVar117 + lVar118 + lVar119 + lVar120 +
+                lVar121 + lVar122 + lVar123 + lVar124 + lVar125 + lVar126 + lVar127 + lVar128 +
+                lVar129 + lVar130 + lVar131 + lVar132 + lVar133 + uVar7;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
     }
-    uVar5 = uVar5 + (longlong)(int)((uVar5 & 0xffffffff) / 0xfff1) * -0xfff1;
-    uVar4 = uVar4 + (longlong)(int)((uVar4 & 0xffffffff) / 0xfff1) * -0xfff1;
+    uVar7 = uVar7 + (longlong)(int)((uVar7 & 0xffffffff) / 0xfff1) * -0xfff1;
+    uVar6 = uVar6 + (longlong)(int)((uVar6 & 0xffffffff) / 0xfff1) * -0xfff1;
   }
-  __restgprlr_16((uVar4 & 0xffff) << 0x10 | uVar5);
-  return;
+  uVar3 = __restgprlr_16((uVar6 & 0xffff) << 0x10 | uVar7);
+  return uVar3;
 }
 
 
 // 824BA660  SaveMemory_CreateHeaderInternal  (game/savedevice.cpp:360)
 
 void SaveMemory_CreateHeaderInternal
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined4 param_4,
-               undefined8 param_5,undefined8 param_6,undefined4 param_7,undefined4 param_8)
+               (char *param_1,char *param_2,char *param_3,int param_4,bool param_5,bool param_6,
+               SaveType param_7,int param_8,SaveHeader *param_9,MemoryFile *param_10)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
+  char *pcVar1;
+  char *pcVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  undefined8 *puVar7;
+  longlong lVar8;
   undefined4 *in_stack_00000054;
-  undefined4 *in_stack_0000005c;
+  MemoryFile *in_stack_0000005c;
   
-  uVar1 = __savegprlr_22();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8207fefc,0x16e,0,0xffffffff82000f98,0xffffffff8207feec);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_22(param_1);
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x16e,0,
+                    "%s");
   }
-  puVar5 = (undefined8 *)(in_stack_00000054 + -2);
-  lVar6 = 0x90;
+  puVar7 = (undefined8 *)(in_stack_00000054 + -2);
+  lVar8 = 0x90;
   do {
-    puVar5 = puVar5 + 1;
-    *puVar5 = 0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
+    puVar7 = puVar7 + 1;
+    *puVar7 = 0;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
   in_stack_00000054[0x10d] = param_7;
   in_stack_00000054[3] = param_8;
   *in_stack_00000054 = 0x3fc;
-  I_strncpyz(in_stack_00000054 + 8,*(undefined4 *)(DAT_83f1e098 + 0xc),0x100);
-  uVar2 = getBuildNumber();
-  I_strncpyz(in_stack_00000054 + 0x48,uVar2,0x80);
+  I_strncpyz((char *)(in_stack_00000054 + 8),(sv_mapname->current).string,0x100);
+  pcVar2 = getBuildNumber();
+  I_strncpyz((char *)(in_stack_00000054 + 0x48),pcVar2,0x80);
   in_stack_00000054[1] = param_4;
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xff,0xffffffff8207fed8);
-  uVar3 = SaveMemory_ComputeAdlerChecksum(*in_stack_0000005c,in_stack_0000005c[1]);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xff,"SaveMemory_Adler");
+  uVar3 = SaveMemory_ComputeAdlerChecksum(in_stack_0000005c->buffer,in_stack_0000005c->bufferSize);
   in_stack_00000054[2] = uVar3;
   PIXEndNamedEvent();
   Scr_GetChecksum(in_stack_00000054 + 5);
-  I_strncpyz(in_stack_00000054 + 0x68,*(undefined4 *)(DAT_83f1e094 + 0xc),0x100);
-  I_strncpyz(in_stack_00000054 + 0xa8,0xffffffff8207fed0,0x10);
+  I_strncpyz((char *)(in_stack_00000054 + 0x68),(sv_gametype->current).string,0x100);
+  I_strncpyz((char *)(in_stack_00000054 + 0xa8),"_DEV",0x10);
   uVar3 = Sys_GetSaveProtocolVersion();
   in_stack_00000054[0xac] = uVar3;
-  if ((param_3 & 0xffffffff) == 0) {
+  if ((uVar6 & 0xffffffff) == 0) {
     *(undefined1 *)(in_stack_00000054 + 0xad) = 0;
   }
   else {
-    I_strncpyz(in_stack_00000054 + 0xad,param_3,0x40);
+    I_strncpyz((char *)(in_stack_00000054 + 0xad),(char *)uVar6,0x40);
   }
-  I_strncpyz(in_stack_00000054 + 0xfd,uVar1,0x40);
-  if ((param_2 & 0xffffffff) == 0) {
+  I_strncpyz((char *)(in_stack_00000054 + 0xfd),pcVar1,0x40);
+  if ((uVar5 & 0xffffffff) == 0) {
     *(undefined1 *)(in_stack_00000054 + 0xbd) = 0;
   }
   else {
-    I_strncpyz(in_stack_00000054 + 0xbd,param_2,0x100);
+    I_strncpyz((char *)(in_stack_00000054 + 0xbd),(char *)uVar5,0x100);
   }
-  Com_RealTime(0,in_stack_00000054 + 0x10e);
-  iVar4 = MemFile_CopySegments(in_stack_0000005c,0,0);
+  Com_RealTime(0,(qtime_s *)(in_stack_00000054 + 0x10e));
+  iVar4 = MemFile_CopySegments(in_stack_0000005c,0,(void *)0x0);
   in_stack_00000054[0x117] = iVar4;
-  if (iVar4 != in_stack_0000005c[1]) {
-    MyAssertHandler(0xffffffff8207fefc,0x1b6,0,0xffffffff82000f98,0xffffffff8207fea8);
-    *(undefined1 *)((int)in_stack_00000054 + 0x11) = *(undefined1 *)(DAT_82b3ecb8 + 0xc);
+  if (iVar4 != in_stack_0000005c->bufferSize) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x1b6,0,
+                    "%s");
+    *(bool *)((int)in_stack_00000054 + 0x11) = (splitscreen->current).enabled;
     __restgprlr_22();
     return;
   }
-  *(undefined1 *)((int)in_stack_00000054 + 0x11) = *(undefined1 *)(DAT_82b3ecb8 + 0xc);
+  *(bool *)((int)in_stack_00000054 + 0x11) = (splitscreen->current).enabled;
   __restgprlr_22();
   return;
 }
@@ -392,72 +401,64 @@ void SaveMemory_CreateHeaderInternal
 
 // 824BA848  G_SaveError  (game/savedevice.cpp:559)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-void G_SaveError(undefined8 param_1,char *param_2,undefined8 param_3,undefined8 param_4,
-                undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+void G_SaveError(SaveErrorType param_1,char *param_2)
 
 {
+  char *pcVar1;
   char *pcStack0000001c;
-  undefined8 uStack00000020;
-  undefined8 uStack00000028;
-  undefined8 uStack00000030;
-  undefined8 uStack00000038;
-  undefined8 uStack00000040;
-  undefined8 uStack00000048;
   char acStack_210 [511];
   undefined1 local_11;
   
-  uStack00000020 = param_3;
-  uStack00000028 = param_4;
-  uStack00000030 = param_5;
-  uStack00000038 = param_6;
-  uStack00000040 = param_7;
-  uStack00000048 = param_8;
   pcStack0000001c = param_2;
-  _vsnprintf(acStack_210,0x200,param_2,(va_list)&stack0x00000020);
+  _vsnprintf(acStack_210,0x200,param_2,&stack0x00000020);
   local_11 = 0;
   Com_PrintError(10,acStack_210);
-  if ((int)param_1 == 1) {
-    SEH_SafeTranslateString(0xffffffff8207ffa4);
-    Sys_Error();
+  if (param_1 == SAVE_ERROR_CORRUPT_SAVE) {
+    pcVar1 = SEH_SafeTranslateString("PLATFORM_ERR_SAVEGAME_BAD");
+                    /* WARNING: Subroutine does not return */
+    Sys_Error(pcVar1);
   }
-  else if ((int)param_1 == 0) goto LAB_824ba8f8;
-  MyAssertHandler(0xffffffff8207fefc,0x249,0,0xffffffff8207ff60,0xffffffff8207ff78,param_1);
-LAB_824ba8f8:
-  Com_Error(1,0xffffffff8207ff3c);
+  if (param_1 != SAVE_ERROR_MISSING_DEVICE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x249,0,
+                    "%s\n\t(errorType) = %i");
+  }
+  Com_Error(ERR_DROP,"PLATFORM_UNABLE_TO_READ_FROM_DEVICE");
   return;
 }
 
 
 // 824BA920  SaveMemory_CalculateChecksum  (game/savedevice.cpp:656)
 
-void SaveMemory_CalculateChecksum(void)
+int SaveMemory_CalculateChecksum(SaveGame *param_1)
 
 {
   int iVar1;
+  uint uVar2;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8207fefc,0x291,0,0xffffffff82000f98,0xffffffff82075e4c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x291,0,
+                    "%s");
   }
   if (*(int *)(iVar1 + 0x480) == 0) {
-    MyAssertHandler(0xffffffff8207fefc,0x292,0,0xffffffff82000f98,0xffffffff8207ffc0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x292,0,
+                    "%s");
   }
-  SaveMemory_ComputeAdlerChecksum(*(undefined4 *)(iVar1 + 0x480),*(undefined4 *)(iVar1 + 0x45c));
-  __restgprlr_29();
-  return;
+  uVar2 = SaveMemory_ComputeAdlerChecksum(*(uchar **)(iVar1 + 0x480),*(uint *)(iVar1 + 0x45c));
+  iVar1 = __restgprlr_29(uVar2);
+  return iVar1;
 }
 
 
 // 824BA9A0  SaveMemory_GetMemoryFile  (game/savedevice.cpp:681)
 
-longlong SaveMemory_GetMemoryFile(ulonglong param_1)
+MemoryFile * SaveMemory_GetMemoryFile(SaveGame *param_1)
 
 {
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8207fefc,0x2aa,0,0xffffffff82000f98,0xffffffff82075e4c);
+  if (param_1 == (SaveGame *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\savedevice.cpp",0x2aa,0,
+                    "%s");
   }
-  return param_1 + 0x480;
+  return &param_1->memFile;
 }
 

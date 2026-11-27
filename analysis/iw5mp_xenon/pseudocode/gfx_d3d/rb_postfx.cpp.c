@@ -2,88 +2,108 @@
 
 // 827A6F08  R_UsingGlow  (gfx_d3d/rb_postfx.cpp:23)
 
-undefined8 R_UsingGlow(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool R_UsingGlow(GfxViewInfo *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x18,0,0xffffffff82000f98,0xffffffff821c680c);
+  if (param_1 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x18,0,
+                    "%s");
   }
-  if ((((*(char *)(param_1 + 600) == '\0') || (*(char *)(DAT_845aa714 + 0xc) != '\0')) ||
-      (*(char *)(DAT_845aa784 + 0xc) == '\0')) ||
-     ((*(float *)(param_1 + 0x264) == 0.0 || (uVar1 = 1, *(float *)(param_1 + 0x268) == 0.0)))) {
-    uVar1 = 0;
+  if (((((param_1->glow).enabled == false) || ((r_fullbright->current).enabled != false)) ||
+      ((r_glow->current).enabled == false)) ||
+     (((param_1->glow).bloomIntensity == 0.0 || (bVar1 = true, (param_1->glow).radius == 0.0)))) {
+    bVar1 = false;
   }
-  return uVar1;
+  return bVar1;
 }
 
 
 // 827A6FC0  R_UsingDepthOfField  (gfx_d3d/rb_postfx.cpp:39)
 
-undefined8 R_UsingDepthOfField(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool R_UsingDepthOfField(GfxViewInfo *param_1)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x28,0,0xffffffff82000f98,0xffffffff821c680c);
+  if (param_1 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x28,0,
+                    "%s");
   }
-  if ((*(float *)(param_1 + 0x1fc) <= *(float *)(param_1 + 0x1f8) + 1.0) &&
-     (*(float *)(param_1 + 0x204) <= *(float *)(param_1 + 0x200) + 1.0)) {
-    if ((*(float *)(param_1 + 0x20c) <= *(float *)(param_1 + 0x208) + 1.0) ||
-       (uVar1 = 1, *(float *)(param_1 + 0x214) <= 0.0)) {
-      uVar1 = 0;
+  if (((param_1->dof).viewModelEnd <= (param_1->dof).viewModelStart + 1.0) &&
+     ((param_1->dof).nearEnd <= (param_1->dof).nearStart + 1.0)) {
+    if (((param_1->dof).farEnd <= (param_1->dof).farStart + 1.0) ||
+       (bVar1 = true, (param_1->dof).farBlur <= 0.0)) {
+      bVar1 = false;
     }
-    return uVar1;
+    return bVar1;
   }
-  return 1;
+  return true;
 }
 
 
 // 827A7090  R_UsingWaterSheetingFX  (gfx_d3d/rb_postfx.cpp:56)
 
-bool R_UsingWaterSheetingFX(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool R_UsingWaterSheetingFX(GfxViewInfo *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x39,0,0xffffffff82000f98,0xffffffff821c680c);
+  if (param_1 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x39,0,
+                    "%s");
   }
-  return *(char *)(param_1 + 0x318) != '\0';
+  return (bool)('\x01' - ((param_1->waterSheetingFx).enabled == false));
 }
 
 
 // 827A70F0  RB_UsingBlur  (gfx_d3d/rb_postfx.cpp:77)
 
-bool RB_UsingBlur(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool RB_UsingBlur(GfxViewInfo *param_1)
 
 {
-  if (*(int *)(&DAT_8461659c + (uint)(*(char *)(param_1 + 0x1af) != '\0') * 4) == 0) {
-    Com_PrintWarning(8,0xffffffff821d7288);
+  if (rgp.blurApplyFilmMaterial[param_1->filmAltShader != false] == (Material *)0x0) {
+    Com_PrintWarning(8,"blur_apply_film* material missing\n");
     return false;
   }
-  if (0.0 < *(float *)(DAT_845aa830 + 0xc)) {
+  if (0.0 < (r_blur->current).value) {
     return true;
   }
-  return 0.0 < *(float *)(param_1 + 0x1b4);
+  return 0.0 < param_1->blurRadius;
 }
 
 
 // 827A71A0  RB_CalcGlowEffect  (gfx_d3d/rb_postfx.cpp:111)
 
-void RB_CalcGlowEffect(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_CalcGlowEffect(GfxViewInfo *param_1)
 
 {
-  int iVar1;
+  GfxViewInfo *pGVar1;
   
-  iVar1 = __savegprlr_29();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x70,0,0xffffffff82000f98,0xffffffff821c680c);
+  pGVar1 = (GfxViewInfo *)__savegprlr_29(param_1);
+  if (pGVar1 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x70,0,
+                    "%s");
   }
-  if (*(float *)(iVar1 + 0x264) == 0.0) {
-    MyAssertHandler(0xffffffff821d7248,0x71,0,0xffffffff82000f98,0xffffffff821d72ac);
+  if ((pGVar1->glow).bloomIntensity == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x71,0,
+                    "%s");
   }
-  RB_GlowFilterImage(iVar1);
+  RB_GlowFilterImage(pGVar1);
   __restgprlr_29();
   return;
 }
@@ -91,20 +111,26 @@ void RB_CalcGlowEffect(void)
 
 // 827A7228  RB_ApplyGlowEffectPass  (gfx_d3d/rb_postfx.cpp:120)
 
-void RB_ApplyGlowEffectPass(undefined8 param_1,undefined4 param_2,undefined8 param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_ApplyGlowEffectPass(GfxViewInfo *param_1,GfxImage *param_2,bool param_3)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_26();
+  iVar1 = __savegprlr_26(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x79,0,0xffffffff82000f98,0xffffffff821c680c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x79,0,
+                    "%s");
   }
-  if (DAT_8461658c == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x7a,0,0xffffffff82000f98,0xffffffff821b9c84);
+  if (rgp.world == (GfxWorld *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x7a,0,
+                    "%s");
   }
-  DAT_8484db20 = param_2;
-  RB_ViewportFilter(0,DAT_8461662c,iVar1 + 0x160,param_3,*(undefined1 *)(iVar1 + 0x92c));
+  gfxCmdBufSourceState.input.codeImages[8] = param_2;
+  RB_ViewportFilter(rgp.glowApplyBloomMaterial,(GfxViewport *)(iVar1 + 0x160),param_3,
+                    *(bool *)(iVar1 + 0x92c),0.0);
   __restgprlr_26();
   return;
 }
@@ -112,22 +138,29 @@ void RB_ApplyGlowEffectPass(undefined8 param_1,undefined4 param_2,undefined8 par
 
 // 827A72D8  RB_ApplyGlowEffect  (gfx_d3d/rb_postfx.cpp:135)
 
-void RB_ApplyGlowEffect(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_ApplyGlowEffect(GfxViewInfo *param_1,bool param_2)
 
 {
-  undefined8 uVar1;
+  GfxViewInfo *pGVar1;
   
-  uVar1 = __savegprlr_27();
-  if ((&DAT_84762084)[DAT_8484eaa8 * 5] != DAT_84762098) {
-    MyAssertHandler(0xffffffff821d7248,0x89,0,0xffffffff82000f98,0xffffffff821d72e8);
+  pGVar1 = (GfxViewInfo *)__savegprlr_27(param_1);
+  if (gfxRenderTargets[gfxCmdBufState.renderTargetId].surface.color !=
+      gfxRenderTargets[1].surface.color) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x89,0,
+                    "%s");
   }
-  if (0 < DAT_84821008) {
-    if (DAT_84821008 != 1) {
-      MyAssertHandler(0xffffffff821d7248,0x8e,0,0xffffffff82000f98,0xffffffff821d72cc);
+  if (0 < backEnd.glowCount) {
+    if (backEnd.glowCount != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x8e,
+                      0,"%s");
     }
-    RB_ApplyGlowEffectPass(uVar1,DAT_8482100c,param_2);
+    RB_ApplyGlowEffectPass(pGVar1,backEnd.glowImage,param_2);
   }
-  DAT_84821008 = 0;
+  backEnd.glowCount = 0;
   __restgprlr_27();
   return;
 }
@@ -135,22 +168,23 @@ void RB_ApplyGlowEffect(undefined8 param_1,undefined8 param_2)
 
 // 827A73A8  RB_GetNearDepthOfFieldEquation  (gfx_d3d/rb_postfx.cpp:153)
 
-void RB_GetNearDepthOfFieldEquation(double param_1,double param_2,double param_3,double param_4)
+void RB_GetNearDepthOfFieldEquation
+               (float param_1,float param_2,float param_3,float param_4,float *param_5)
 
 {
+  float fVar1;
   float *in_r7;
-  double dVar1;
   
-  dVar1 = param_1;
-  if ((float)(param_1 - param_3) < 0.0) {
-    dVar1 = param_3;
+  fVar1 = param_1;
+  if (param_1 - param_3 < 0.0) {
+    fVar1 = param_3;
   }
-  if (param_2 <= dVar1) {
+  if (param_2 <= fVar1) {
     param_1 = 0.0;
-    param_2 = (double)(float)(param_3 * 0.5);
+    param_2 = param_3 * 0.5;
   }
-  *in_r7 = (float)(param_4 / (double)(float)(param_1 - param_2));
-  in_r7[2] = (float)(param_2 / (double)(float)(param_2 - param_1));
+  *in_r7 = param_4 / (param_1 - param_2);
+  in_r7[2] = param_2 / (param_2 - param_1);
   return;
 }
 
@@ -158,40 +192,50 @@ void RB_GetNearDepthOfFieldEquation(double param_1,double param_2,double param_3
 // 827A73E8  RB_GetSceneDepthOfFieldEquation  (gfx_d3d/rb_postfx.cpp:167)
 
 void RB_GetSceneDepthOfFieldEquation
-               (undefined8 param_1,double param_2,double param_3,double param_4,double param_5)
+               (float param_1,float param_2,float param_3,float param_4,float *param_5,float param_6
+               )
 
 {
   float *in_r7;
   double dVar1;
   double dVar2;
   double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  dVar1 = (double)__savefpr_26();
-  dVar3 = 0.0;
-  if (param_5 == 0.0) {
-    MyAssertHandler(0xffffffff821d7248,0xaa,0,0xffffffff82000f98,0xffffffff8201f7e8);
+  dVar5 = (double)param_6;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  dVar1 = (double)param_2;
+  dVar2 = (double)__savefpr_26((double)param_1,param_5);
+  dVar7 = 0.0;
+  if (dVar5 == 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0xaa,0,
+                    "%s");
   }
-  dVar2 = dVar1;
-  if ((float)(dVar1 - param_5) < 0.0) {
-    dVar2 = param_5;
+  dVar6 = dVar2;
+  if ((float)(dVar2 - dVar5) < 0.0) {
+    dVar6 = dVar5;
   }
-  if (param_2 <= dVar2) {
-    param_2 = (double)(float)(param_5 * 0.5);
-    dVar1 = dVar3;
+  if (dVar1 <= dVar6) {
+    dVar1 = (double)(float)(dVar5 * 0.5);
+    dVar2 = dVar7;
   }
-  dVar2 = param_5;
-  if ((float)(param_5 - param_3) < 0.0) {
-    dVar2 = param_3;
+  dVar6 = dVar5;
+  if ((float)(dVar5 - dVar3) < 0.0) {
+    dVar6 = dVar3;
   }
-  *in_r7 = (float)(param_5 * 0.984375) / (float)(dVar1 - param_2);
-  in_r7[2] = (float)(param_2 / (double)(float)(param_2 - dVar1));
-  if (dVar2 < param_4) {
-    in_r7[1] = (float)(param_5 * 0.984375) / (float)(param_4 - param_3);
-    in_r7[3] = (float)(param_3 / (double)(float)(param_3 - param_4));
+  *in_r7 = (float)(dVar5 * 0.984375) / (float)(dVar2 - dVar1);
+  in_r7[2] = (float)(dVar1 / (double)(float)(dVar1 - dVar2));
+  if (dVar6 < dVar4) {
+    in_r7[1] = (float)(dVar5 * 0.984375) / (float)(dVar4 - dVar3);
+    in_r7[3] = (float)(dVar3 / (double)(float)(dVar3 - dVar4));
   }
   else {
-    in_r7[1] = (float)dVar3;
-    in_r7[3] = (float)dVar3;
+    in_r7[1] = (float)dVar7;
+    in_r7[3] = (float)dVar7;
   }
   __restfpr_26();
   return;
@@ -200,65 +244,78 @@ void RB_GetSceneDepthOfFieldEquation
 
 // 827A74E8  RB_GetViewModelDepthOfFieldEquation  (gfx_d3d/rb_postfx.cpp:195)
 
-void RB_GetViewModelDepthOfFieldEquation
-               (double param_1,double param_2,undefined8 param_3,undefined8 param_4,float *param_5)
+void RB_GetViewModelDepthOfFieldEquation(float param_1,float param_2,float *param_3)
 
 {
-  double dVar1;
-  double dVar2;
+  float fVar1;
+  float fVar2;
+  float *in_r5;
   
-  dVar1 = (double)*(float *)(DAT_845aa67c + 0xc);
-  param_5[1] = 0.984375;
-  dVar2 = param_1;
-  if ((float)(param_1 - dVar1) < 0.0) {
-    dVar2 = dVar1;
+  fVar1 = (r_znear_depthhack->current).value;
+  in_r5[1] = 0.984375;
+  fVar2 = param_1;
+  if (param_1 - fVar1 < 0.0) {
+    fVar2 = fVar1;
   }
-  if (param_2 <= dVar2) {
+  if (param_2 <= fVar2) {
     param_1 = 0.0;
-    param_2 = (double)(float)(dVar1 * 0.5);
+    param_2 = fVar1 * 0.5;
   }
-  *param_5 = (float)(dVar1 * 0.015625) / (float)(param_1 - param_2);
-  param_5[2] = (float)(param_2 / (double)(float)(param_2 - param_1));
+  *in_r5 = (fVar1 * 0.015625) / (param_1 - param_2);
+  in_r5[2] = param_2 / (param_2 - param_1);
   return;
 }
 
 
 // 827A7558  RB_GetBasicColorMaterialIndex  (gfx_d3d/rb_postfx.cpp:218)
 
-char RB_GetBasicColorMaterialIndex(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int RB_GetBasicColorMaterialIndex(GfxViewInfo *param_1)
 
 {
-  return (*(char *)(param_1 + 0x1af) != '\0') + '\x01';
+  return ((uint)LZCOUNT((uint)param_1->filmAltShader) >> 5 ^ 1) + 1;
 }
 
 
 // 827A7570  RB_GetDepthOfFieldInputImages  (gfx_d3d/rb_postfx.cpp:235)
 
-void RB_GetDepthOfFieldInputImages(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_GetDepthOfFieldInputImages(GfxCmdBufContext param_1,GfxViewInfo *param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000010;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufContext GVar2;
+  GfxRenderTargetId GVar3;
+  GfxCmdBufSourceState *pGStack00000010;
   
-  uVar1 = __savegprlr_26();
-  uStack00000010 = (undefined4)((ulonglong)uVar1 >> 0x20);
-  R_SetRenderTargetSize(uStack00000010,9);
-  R_SetRenderTarget(uVar1,9);
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d737c);
-  RB_Filter(DAT_846165a8,param_2);
+  GVar2 = (GfxCmdBufContext)__savegprlr_26();
+  pGStack00000010 = GVar2.source;
+  pGVar1 = pGStack00000010;
+  _pGStack00000010 = GVar2;
+  R_SetRenderTargetSize(pGVar1,R_RENDERTARGET_POST_EFFECT_1);
+  R_SetRenderTarget(GVar2,R_RENDERTARGET_POST_EFFECT_1);
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Depth of Field Downsample");
+  RB_Filter(rgp.dofDownsampleMaterial,param_2);
   PIXEndNamedEvent();
-  R_Resolve(uVar1,DAT_84762134);
-  uVar2 = PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d7368);
-  RB_GaussianFilterImage((double)(*(float *)((int)param_2 + 0x210) * 0.25),uVar2,9,8,param_2);
+  R_Resolve(GVar2,gfxRenderTargets[9].image);
+  GVar3 = ~R_RENDERTARGET_SAVED_SCREEN;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Depth of Field Blur");
+  RB_GaussianFilterImage
+            ((param_2->dof).nearBlur * 0.25,GVar3,R_RENDERTARGET_POST_EFFECT_1,
+             (GfxViewInfo *)&DAT_00000008);
   PIXEndNamedEvent();
-  R_SetRenderTargetSize(uStack00000010,9);
-  R_SetRenderTarget(uVar1,9);
-  RB_Filter(DAT_846165ac,param_2);
-  R_Resolve(uVar1,DAT_84762134);
-  DAT_8484db20 = DAT_84762134;
-  RB_Filter(DAT_846165b0,param_2);
-  R_Resolve(uVar1,DAT_84762134);
+  R_SetRenderTargetSize(pGVar1,R_RENDERTARGET_POST_EFFECT_1);
+  R_SetRenderTarget(GVar2,R_RENDERTARGET_POST_EFFECT_1);
+  RB_Filter(rgp.dofNearCocMaterial,param_2);
+  R_Resolve(GVar2,gfxRenderTargets[9].image);
+  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[9].image;
+  RB_Filter(rgp.smallBlurMaterial,param_2);
+  R_Resolve(GVar2,gfxRenderTargets[9].image);
   __restgprlr_26();
   return;
 }
@@ -266,147 +323,158 @@ void RB_GetDepthOfFieldInputImages(undefined8 param_1,undefined8 param_2)
 
 // 827A7678  RB_ApplyDepthOfFieldGamma  (gfx_d3d/rb_postfx.cpp:294)
 
-double RB_ApplyDepthOfFieldGamma(double param_1)
+float RB_ApplyDepthOfFieldGamma(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = pow(param_1,(double)*(float *)(DAT_845aa820 + 0xc));
-  return (double)(float)dVar1;
+  dVar1 = pow((double)param_1,(double)(r_dof_bias->current).value);
+  return (float)dVar1;
 }
 
 
 // 827A76A8  RB_GetDepthOfFieldBlurFraction  (gfx_d3d/rb_postfx.cpp:302)
 
-double RB_GetDepthOfFieldBlurFraction(double param_1,int param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+float RB_GetDepthOfFieldBlurFraction(GfxViewInfo *param_1,float param_2)
 
 {
   double dVar1;
   
-  if ((double)*(float *)(param_2 + 0x210) < 4.0) {
-    MyAssertHandler(0xffffffff821d7248,0x132,0,0xffffffff821d7398,0xffffffff821d73bc,
-                    (double)*(float *)(param_2 + 0x210));
+  dVar1 = (double)param_2;
+  if ((param_1->dof).nearBlur < 4.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x132,0
+                    ,"%s\n\t(viewInfo->dof.nearBlur) = %g");
   }
-  dVar1 = pow((double)(((float)(param_1 * 480.0) / (float)DAT_84613724) /
-                      *(float *)(param_2 + 0x210)),(double)*(float *)(DAT_845aa820 + 0xc));
-  return (double)(float)dVar1;
+  dVar1 = pow((double)(((float)(dVar1 * 480.0) / (float)vidConfig.sceneHeight) /
+                      (param_1->dof).nearBlur),(double)(r_dof_bias->current).value);
+  return (float)dVar1;
 }
 
 
 // 827A7768  R_SetupDepthOfFieldPostEffects  (gfx_d3d/rb_postfx.cpp:317)
 
-void R_SetupDepthOfFieldPostEffects(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_SetupDepthOfFieldPostEffects(GfxCmdBufContext param_1,GfxViewInfo *param_2)
 
 {
-  int iVar1;
-  float fVar2;
-  undefined8 uVar3;
-  char cVar5;
-  undefined8 uVar4;
-  ulonglong uVar6;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufContext GVar2;
+  float *pfVar3;
+  ulonglong uVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  int iStack00000010;
+  float fVar11;
+  GfxCmdBufSourceState *pGStack00000010;
   float local_70;
   float fStack_6c;
   float local_68;
   float local_64;
+  bool bVar4;
   
   __savegprlr_27();
-  uVar3 = __savefpr_27();
-  cVar5 = R_UsingDepthOfField(param_2);
-  if (cVar5 == '\0') {
-    MyAssertHandler(0xffffffff821d7248,0x142,0,0xffffffff82000f98,0xffffffff821d7434);
+  GVar2 = (GfxCmdBufContext)__savefpr_27();
+  _pGStack00000010 = GVar2;
+  bVar4 = R_UsingDepthOfField(param_2);
+  pfVar3 = (float *)(int)bVar4;
+  if (!bVar4) {
+    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x142,0
+                    ,"%s");
   }
-  iVar1 = (int)param_2;
   RB_GetSceneDepthOfFieldEquation
-            ((double)*(float *)(iVar1 + 0x200),(double)*(float *)(iVar1 + 0x204),
-             (double)*(float *)(iVar1 + 0x208),(double)*(float *)(iVar1 + 0x20c),
-             (double)*(float *)(iVar1 + 0x148));
-  iStack00000010 = (int)((ulonglong)uVar3 >> 0x20);
-  if ((((*(float *)(iStack00000010 + 0xfc0) != local_70) ||
-       (*(float *)(iStack00000010 + 0xfc4) != fStack_6c)) ||
-      (*(float *)(iStack00000010 + 0xfc8) != local_68)) ||
-     (*(float *)(iStack00000010 + 0xfcc) != local_64)) {
-    *(float *)(iStack00000010 + 0xfc0) = local_70;
-    *(float *)(iStack00000010 + 0xfc4) = fStack_6c;
-    *(float *)(iStack00000010 + 0xfc8) = local_68;
-    *(float *)(iStack00000010 + 0xfcc) = local_64;
-    R_DirtyCodeConstant(iStack00000010,0x1c);
+            ((param_2->dof).nearStart,(param_2->dof).nearEnd,(param_2->dof).farStart,
+             (param_2->dof).farEnd,pfVar3,(param_2->viewParms).camera.zNear);
+  pGVar1 = pGStack00000010;
+  if (((((pGStack00000010->input).consts[0x1c][0] != local_70) ||
+       ((pGStack00000010->input).consts[0x1c][1] != fStack_6c)) ||
+      ((pGStack00000010->input).consts[0x1c][2] != local_68)) ||
+     ((pGStack00000010->input).consts[0x1c][3] != local_64)) {
+    (pGStack00000010->input).consts[0x1c][0] = local_70;
+    (pGStack00000010->input).consts[0x1c][1] = fStack_6c;
+    (pGStack00000010->input).consts[0x1c][2] = local_68;
+    (pGStack00000010->input).consts[0x1c][3] = local_64;
+    R_DirtyCodeConstant(pGStack00000010,0x1c);
   }
-  dVar10 = (double)*(float *)(iVar1 + 0x1f8);
-  dVar7 = (double)*(float *)(iVar1 + 0x1fc);
-  dVar11 = 0.0;
-  dVar9 = (double)*(float *)(DAT_845aa67c + 0xc);
-  dVar8 = dVar10;
-  if ((float)(dVar10 - dVar9) < 0.0) {
-    dVar8 = dVar9;
+  dVar9 = (double)(param_2->dof).viewModelStart;
+  dVar6 = (double)(param_2->dof).viewModelEnd;
+  dVar10 = 0.0;
+  dVar8 = (double)(r_znear_depthhack->current).value;
+  dVar7 = dVar9;
+  if ((float)(dVar9 - dVar8) < 0.0) {
+    dVar7 = dVar8;
   }
-  if (dVar7 <= dVar8) {
-    dVar7 = (double)(float)(dVar9 * 0.5);
-    dVar10 = dVar11;
+  if (dVar6 <= dVar7) {
+    dVar6 = (double)(float)(dVar8 * 0.5);
+    dVar9 = dVar10;
   }
-  dVar9 = (double)((float)(dVar9 * 0.015625) / (float)(dVar10 - dVar7));
-  dVar10 = (double)(float)(dVar7 / (double)(float)(dVar7 - dVar10));
-  dVar8 = pow((double)(*(float *)(iVar1 + 0x214) / *(float *)(iVar1 + 0x210)),
-              (double)*(float *)(DAT_845aa820 + 0xc));
-  if ((((double)*(float *)(iStack00000010 + 0xfb0) != dVar9) ||
-      (*(float *)(iStack00000010 + 0xfb4) != 0.984375)) ||
-     (((double)*(float *)(iStack00000010 + 0xfb8) != dVar10 ||
-      (*(float *)(iStack00000010 + 0xfbc) != (float)dVar8)))) {
-    *(float *)(iStack00000010 + 0xfb0) = (float)dVar9;
-    *(undefined4 *)(iStack00000010 + 0xfb4) = 0x3f7c0000;
-    *(float *)(iStack00000010 + 0xfb8) = (float)dVar10;
-    *(float *)(iStack00000010 + 0xfbc) = (float)dVar8;
-    R_DirtyCodeConstant(iStack00000010,0x1b);
+  dVar8 = (double)((float)(dVar8 * 0.015625) / (float)(dVar9 - dVar6));
+  dVar9 = (double)(float)(dVar6 / (double)(float)(dVar6 - dVar9));
+  dVar7 = pow((double)((param_2->dof).farBlur / (param_2->dof).nearBlur),
+              (double)(r_dof_bias->current).value);
+  if ((((double)(pGVar1->input).consts[0x1b][0] != dVar8) ||
+      ((pGVar1->input).consts[0x1b][1] != 0.984375)) ||
+     (((double)(pGVar1->input).consts[0x1b][2] != dVar9 ||
+      ((pGVar1->input).consts[0x1b][3] != (float)dVar7)))) {
+    (pGVar1->input).consts[0x1b][0] = (float)dVar8;
+    (pGVar1->input).consts[0x1b][1] = 0.984375;
+    (pGVar1->input).consts[0x1b][2] = (float)dVar9;
+    (pGVar1->input).consts[0x1b][3] = (float)dVar7;
+    R_DirtyCodeConstant(pGVar1,0x1b);
   }
-  dVar8 = 1.0;
-  uVar6 = (ulonglong)DAT_84613724;
-  if ((((double)*(float *)(iStack00000010 + 0xff0) != dVar11) ||
-      (*(float *)(iStack00000010 + 0xff4) != (float)(1.0 / (double)uVar6))) ||
-     (((double)*(float *)(iStack00000010 + 0xff8) != dVar11 ||
-      ((double)*(float *)(iStack00000010 + 0xffc) != dVar11)))) {
-    *(float *)(iStack00000010 + 0xff0) = (float)dVar11;
-    *(float *)(iStack00000010 + 0xff4) = (float)(1.0 / (double)uVar6);
-    *(float *)(iStack00000010 + 0xff8) = (float)dVar11;
-    *(float *)(iStack00000010 + 0xffc) = (float)dVar11;
-    R_DirtyCodeConstant(iStack00000010,0x1f);
+  dVar7 = 1.0;
+  uVar5 = (ulonglong)vidConfig.sceneHeight;
+  if ((((double)(pGVar1->input).consts[0x1f][0] != dVar10) ||
+      ((pGVar1->input).consts[0x1f][1] != (float)(1.0 / (double)uVar5))) ||
+     (((double)(pGVar1->input).consts[0x1f][2] != dVar10 ||
+      ((double)(pGVar1->input).consts[0x1f][3] != dVar10)))) {
+    (pGVar1->input).consts[0x1f][0] = (float)dVar10;
+    (pGVar1->input).consts[0x1f][1] = (float)(1.0 / (double)uVar5);
+    (pGVar1->input).consts[0x1f][2] = (float)dVar10;
+    (pGVar1->input).consts[0x1f][3] = (float)dVar10;
+    R_DirtyCodeConstant(pGVar1,0x1f);
   }
-  dVar10 = (double)RB_GetDepthOfFieldBlurFraction(0x3ff6666660000000,param_2);
-  dVar7 = (double)RB_GetDepthOfFieldBlurFraction(0x400cccccc0000000,param_2);
-  if (((dVar10 <= dVar11) || (dVar7 <= dVar10)) || (dVar8 <= dVar7)) {
-    uVar4 = va(dVar10,dVar7,0xffffffff821d7420,dVar10,dVar7,(double)*(float *)(iVar1 + 0x210),
-               DAT_84613724);
-    MyAssertHandler(0xffffffff821d7248,0x158,0,0xffffffff820011f4,0xffffffff821d73e0,uVar4);
+  fVar11 = RB_GetDepthOfFieldBlurFraction(param_2,1.4);
+  dVar9 = (double)fVar11;
+  fVar11 = RB_GetDepthOfFieldBlurFraction(param_2,(float)0x40666666);
+  dVar6 = (double)fVar11;
+  if (((dVar9 <= dVar10) || (dVar6 <= dVar9)) || (dVar7 <= dVar6)) {
+    va("%g, %g, %g, %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x158,0
+                    ,"%s\n\t%s");
   }
-  dVar11 = (double)(float)(dVar8 - dVar7);
-  dVar9 = (double)(float)(dVar7 - dVar10);
-  fVar2 = (float)(dVar8 / dVar11) * -1.0;
-  if (((*(float *)(iStack00000010 + 0xfd0) != (float)(-1.0 / dVar10)) ||
-      (*(float *)(iStack00000010 + 0xfd4) != (float)(-1.0 / dVar9))) ||
-     ((*(float *)(iStack00000010 + 0xfd8) != fVar2 ||
-      (*(float *)(iStack00000010 + 0xfdc) != (float)(dVar8 / dVar11))))) {
-    *(float *)(iStack00000010 + 0xfd0) = (float)(-1.0 / dVar10);
-    *(float *)(iStack00000010 + 0xfd4) = (float)(-1.0 / dVar9);
-    *(float *)(iStack00000010 + 0xfd8) = fVar2;
-    *(float *)(iStack00000010 + 0xfdc) = (float)(dVar8 / dVar11);
-    R_DirtyCodeConstant(iStack00000010,0x1d);
+  dVar10 = (double)(float)(dVar7 - dVar6);
+  dVar8 = (double)(float)(dVar6 - dVar9);
+  fVar11 = (float)(dVar7 / dVar10) * -1.0;
+  if ((((pGVar1->input).consts[0x1d][0] != (float)(-1.0 / dVar9)) ||
+      ((pGVar1->input).consts[0x1d][1] != (float)(-1.0 / dVar8))) ||
+     (((pGVar1->input).consts[0x1d][2] != fVar11 ||
+      ((pGVar1->input).consts[0x1d][3] != (float)(dVar7 / dVar10))))) {
+    (pGVar1->input).consts[0x1d][0] = (float)(-1.0 / dVar9);
+    (pGVar1->input).consts[0x1d][1] = (float)(-1.0 / dVar8);
+    (pGVar1->input).consts[0x1d][2] = fVar11;
+    (pGVar1->input).consts[0x1d][3] = (float)(dVar7 / dVar10);
+    R_DirtyCodeConstant(pGVar1,0x1d);
   }
-  fVar2 = -(float)((double)(float)(dVar8 / dVar11) * dVar7);
-  if ((((double)*(float *)(iStack00000010 + 0xfe0) != dVar8) ||
-      (*(float *)(iStack00000010 + 0xfe4) != (float)(dVar7 / dVar9))) ||
-     ((*(float *)(iStack00000010 + 0xfe8) != (float)(dVar8 / dVar11) ||
-      (*(float *)(iStack00000010 + 0xfec) != fVar2)))) {
-    *(float *)(iStack00000010 + 0xfe0) = (float)dVar8;
-    *(float *)(iStack00000010 + 0xfe4) = (float)(dVar7 / dVar9);
-    *(float *)(iStack00000010 + 0xfe8) = (float)(dVar8 / dVar11);
-    *(float *)(iStack00000010 + 0xfec) = fVar2;
-    R_DirtyCodeConstant(iStack00000010,0x1e);
+  fVar11 = -(float)((double)(float)(dVar7 / dVar10) * dVar6);
+  if ((((double)(pGVar1->input).consts[0x1e][0] != dVar7) ||
+      ((pGVar1->input).consts[0x1e][1] != (float)(dVar6 / dVar8))) ||
+     (((pGVar1->input).consts[0x1e][2] != (float)(dVar7 / dVar10) ||
+      ((pGVar1->input).consts[0x1e][3] != fVar11)))) {
+    (pGVar1->input).consts[0x1e][0] = (float)dVar7;
+    (pGVar1->input).consts[0x1e][1] = (float)(dVar6 / dVar8);
+    (pGVar1->input).consts[0x1e][2] = (float)(dVar7 / dVar10);
+    (pGVar1->input).consts[0x1e][3] = fVar11;
+    R_DirtyCodeConstant(pGVar1,0x1e);
   }
-  RB_GetDepthOfFieldInputImages(uVar3,param_2);
+  RB_GetDepthOfFieldInputImages(GVar2,param_2);
   __restfpr_27();
   __restgprlr_27();
   return;
@@ -415,28 +483,32 @@ void R_SetupDepthOfFieldPostEffects(undefined8 param_1,undefined8 param_2)
 
 // 827A7B08  RB_ApplyMergedPostEffects  (gfx_d3d/rb_postfx.cpp:386)
 
-void RB_ApplyMergedPostEffects(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_ApplyMergedPostEffects(GfxViewInfo *param_1,bool param_2)
 
 {
-  int iVar1;
-  char cVar2;
+  GfxViewInfo *pGVar1;
+  bool bVar2;
   uint uVar3;
   
-  iVar1 = __savegprlr_28();
-  uVar3 = (*(char *)(iVar1 + 0x1af) == '\0' ^ 1) + 1;
-  cVar2 = R_UsingDepthOfField();
-  if (cVar2 != '\0') {
-    R_SetupDepthOfFieldPostEffects(0x8484c7e08484df40,iVar1);
-    R_SetRenderTargetSize(&DAT_8484c7e0,1);
-    R_SetRenderTarget(0x8484c7e08484df40,1);
+  pGVar1 = (GfxViewInfo *)__savegprlr_28(param_1);
+  uVar3 = (pGVar1->filmAltShader == false ^ 1) + 1;
+  bVar2 = R_UsingDepthOfField(pGVar1);
+  if (bVar2) {
+    R_SetupDepthOfFieldPostEffects((GfxCmdBufContext)0x8484c7e08484df40,pGVar1);
+    R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+    R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
     uVar3 = uVar3 | 4;
   }
-  if ((&DAT_846165b4)[uVar3] == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x1b6,0,0xffffffff82000f98,0xffffffff821d7470);
+  if (rgp.postFxMaterial[uVar3] == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1b6,0
+                    ,"%s");
   }
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff821d7454);
-  RB_ViewportFilter(0x4018000000000000,(&DAT_846165b4)[uVar3],iVar1 + 0x160,param_2,
-                    *(undefined1 *)(iVar1 + 0x92c));
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Apply Merged Post Effects");
+  RB_ViewportFilter(rgp.postFxMaterial[uVar3],&pGVar1->displayViewport,param_2,pGVar1->isPIPScene,
+                    6.0);
   PIXEndNamedEvent();
   __restgprlr_28();
   return;
@@ -445,56 +517,71 @@ void RB_ApplyMergedPostEffects(undefined8 param_1,undefined8 param_2)
 
 // 827A7BE8  RB_GetBlurRadius  (gfx_d3d/rb_postfx.cpp:451)
 
-double RB_GetBlurRadius(double param_1)
+float RB_GetBlurRadius(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = (double)SQRT(*(float *)(DAT_845aa830 + 0xc) * *(float *)(DAT_845aa830 + 0xc) +
-                       (float)(param_1 * param_1));
+  dVar1 = (double)SQRT((r_blur->current).value * (r_blur->current).value + param_1 * param_1);
   if (dVar1 < 0.0) {
-    MyAssertHandler(dVar1,0xffffffff821d7248,0x1cc,1,0xffffffff821d7498,0xffffffff821d74b4,dVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1cc,1
+                    ,"%s\n\t(blurRadiusFinal) = %g");
   }
-  return dVar1;
+  return (float)dVar1;
 }
 
 
 // 827A7C68  RB_BlurScreen  (gfx_d3d/rb_postfx.cpp:467)
 
-void RB_BlurScreen(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_BlurScreen(GfxViewInfo *param_1,bool param_2)
 
 {
-  int iVar1;
-  double dVar2;
+  char *pcVar1;
+  char *pcVar2;
   double dVar3;
-  undefined4 local_50;
+  double dVar4;
+  float fVar5;
+  ulong local_50;
   
-  iVar1 = __savegprlr_27();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x1d8,0,0xffffffff82000f98,0xffffffff821c680c);
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  pcVar2 = pcVar1;
+  if (pcVar1 == (char *)0x0) {
+    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1d8,0
+                    ,"%s");
   }
-  dVar2 = (double)RB_GetBlurRadius((double)*(float *)(iVar1 + 0x1b4));
-  if (dVar2 <= 0.0) {
-    MyAssertHandler(0xffffffff821d7248,0x1db,1,0xffffffff821d74d4,0xffffffff821d74ec,dVar2);
+  fVar5 = RB_GetBlurRadius(*(float *)(pcVar1 + 0x1b4));
+  dVar3 = (double)fVar5;
+  if (dVar3 <= 0.0) {
+    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1db,1
+                    ,"%s\n\t(blurRadius) = %g");
   }
   local_50 = 0xffffffff;
-  dVar3 = (double)(1440.0 / (float)(longlong)DAT_8484df14);
-  if (dVar2 < dVar3) {
-    dVar2 = floor((double)((float)(dVar2 / dVar3) * 255.0 + 0.5));
-    local_50 = CONCAT13((char)(int)dVar2,0xffffff);
-    dVar2 = dVar3;
+  dVar4 = (double)(1440.0 / (float)(longlong)gfxCmdBufSourceState.sceneViewport.height);
+  if (dVar3 < dVar4) {
+    dVar3 = floor((double)((float)(dVar3 / dVar4) * 255.0 + 0.5));
+    local_50 = CONCAT13((char)(int)dVar3,0xffffff);
+    dVar3 = dVar4;
   }
-  if (*(int *)(iVar1 + 0x950) == 0x10) {
-    MyAssertHandler(0xffffffff821d7248,0x1e5,0,0xffffffff82000f98,0xffffffff821d6a5c);
+  if (*(int *)(pcVar1 + 0x950) == 0x10) {
+    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1e5,0
+                    ,"%s");
   }
-  RB_GaussianFilterImage(dVar2);
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  DAT_8484db20 = DAT_84762120;
+  RB_GaussianFilterImage
+            ((float)dVar3,(GfxRenderTargetId)pcVar2,*(GfxRenderTargetId *)(pcVar1 + 0x950),
+             (GfxViewInfo *)&DAT_00000008);
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[8].image;
   RB_ViewportColoredFilter
-            (0x4018000000000000,
-             *(undefined4 *)(&DAT_8461659c + (uint)(*(char *)(iVar1 + 0x1af) != '\0') * 4),local_50,
-             iVar1 + 0x160,param_2,*(undefined1 *)(iVar1 + 0x92c));
+            (rgp.blurApplyFilmMaterial[pcVar1[0x1af] != '\0'],local_50,
+             (GfxViewport *)(pcVar1 + 0x160),param_2,(bool)pcVar1[0x92c],6.0);
   __restgprlr_27();
   return;
 }
@@ -502,69 +589,83 @@ void RB_BlurScreen(undefined8 param_1,undefined8 param_2)
 
 // 827A7E20  RB_ApplyWaterSheetingFX  (gfx_d3d/rb_postfx.cpp:503)
 
-void RB_ApplyWaterSheetingFX(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_ApplyWaterSheetingFX(GfxViewInfo *param_1)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float fVar5;
-  int iVar6;
+  float fVar4;
+  int iVar5;
+  GfxViewInfo *pGVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   
-  iVar6 = __savegprlr_28();
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x1fa,0,0xffffffff82000f98,0xffffffff821c680c);
+  pGVar6 = (GfxViewInfo *)__savegprlr_28(param_1);
+  if (pGVar6 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1fa,0
+                    ,"%s");
   }
-  fVar1 = *(float *)(iVar6 + 0x2ec);
-  fVar2 = *(float *)(iVar6 + 0x2fc);
+  fVar1 = (pGVar6->waterSheetingFx).distortionScale[1];
+  fVar2 = (pGVar6->waterSheetingFx).distortionScale[0];
+  fVar3 = (pGVar6->waterSheetingFx).distortionMagnitude;
   dVar9 = 0.0;
   dVar8 = 1.0;
-  if (*(float *)(iVar6 + 0x2f0) <= 0.0) {
-    if ((((DAT_8484d980 == fVar1) && (DAT_8484d984 == *(float *)(iVar6 + 0x2f4))) &&
-        (DAT_8484d988 == 0.0)) && (DAT_8484d98c == fVar2)) goto LAB_827a7f2c;
-    DAT_8484d988 = 0.0;
-    fVar3 = *(float *)(iVar6 + 0x2f4);
-    fVar5 = DAT_8484d988;
+  if (fVar1 <= 0.0) {
+    fVar4 = (pGVar6->waterSheetingFx).distortionScale[2];
+    if ((((gfxCmdBufSourceState.input.consts[0x3a][0] == fVar2) &&
+         (gfxCmdBufSourceState.input.consts[0x3a][1] == fVar4)) &&
+        (gfxCmdBufSourceState.input.consts[0x3a][2] == 0.0)) &&
+       (gfxCmdBufSourceState.input.consts[0x3a][3] == fVar3)) goto LAB_827a7f2c;
+    gfxCmdBufSourceState.input.consts[0x3a][2] = 0.0;
+    fVar1 = gfxCmdBufSourceState.input.consts[0x3a][2];
   }
   else {
-    fVar5 = 1.0 / *(float *)(iVar6 + 0x2f0);
-    fVar3 = *(float *)(iVar6 + 0x2f4);
-    if (((DAT_8484d980 == fVar1) && (DAT_8484d984 == fVar3)) &&
-       ((DAT_8484d988 == fVar5 && (DAT_8484d98c == fVar2)))) goto LAB_827a7f2c;
+    fVar1 = 1.0 / fVar1;
+    fVar4 = (pGVar6->waterSheetingFx).distortionScale[2];
+    if (((gfxCmdBufSourceState.input.consts[0x3a][0] == fVar2) &&
+        (gfxCmdBufSourceState.input.consts[0x3a][1] == fVar4)) &&
+       ((gfxCmdBufSourceState.input.consts[0x3a][2] == fVar1 &&
+        (gfxCmdBufSourceState.input.consts[0x3a][3] == fVar3)))) goto LAB_827a7f2c;
   }
-  DAT_8484d988 = fVar5;
-  DAT_8484d984 = fVar3;
-  DAT_8484d980 = fVar1;
-  DAT_8484d98c = fVar2;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x3a);
+  gfxCmdBufSourceState.input.consts[0x3a][2] = fVar1;
+  gfxCmdBufSourceState.input.consts[0x3a][1] = fVar4;
+  gfxCmdBufSourceState.input.consts[0x3a][0] = fVar2;
+  gfxCmdBufSourceState.input.consts[0x3a][3] = fVar3;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x3a);
 LAB_827a7f2c:
-  if (*(int *)(iVar6 + 0x950) == 0x10) {
-    MyAssertHandler(0xffffffff821d7248,0x201,0,0xffffffff82000f98,0xffffffff821d6a5c);
+  if (pGVar6->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x201,0
+                    ,"%s");
   }
-  DAT_8484db20 = (&DAT_84762080)[*(int *)(iVar6 + 0x950) * 5];
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  iVar4 = *(int *)(iVar6 + 0x314);
+  gfxCmdBufSourceState.input.codeImages[8] =
+       gfxRenderTargets[pGVar6->sceneResolveRenderTargetId].image;
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  iVar5 = (pGVar6->waterSheetingFx).duration;
   dVar7 = dVar9;
-  if (iVar4 != 0) {
+  if (iVar5 != 0) {
     dVar7 = (double)(float)(dVar8 - (double)((float)(longlong)
-                                                    ((*(int *)(iVar6 + 0x30c) -
-                                                     *(int *)(iVar6 + 0x310)) + iVar4) /
-                                            (float)(longlong)iVar4));
+                                                    (((pGVar6->waterSheetingFx).startMSec -
+                                                     (pGVar6->waterSheetingFx).currentTime) + iVar5)
+                                            / (float)(longlong)iVar5));
   }
-  if ((((double)DAT_8484d990 != dVar9) || ((double)DAT_8484d994 != dVar8)) ||
-     (((double)DAT_8484d998 != dVar9 || ((double)DAT_8484d99c != dVar7)))) {
-    DAT_8484d990 = (float)dVar9;
-    DAT_8484d994 = (float)dVar8;
-    DAT_8484d998 = (float)dVar9;
-    DAT_8484d99c = (float)dVar7;
-    R_DirtyCodeConstant(0xffffffff8484c7e0,0x3b);
+  if ((((double)gfxCmdBufSourceState.input.consts[0x3b][0] != dVar9) ||
+      ((double)gfxCmdBufSourceState.input.consts[0x3b][1] != dVar8)) ||
+     (((double)gfxCmdBufSourceState.input.consts[0x3b][2] != dVar9 ||
+      ((double)gfxCmdBufSourceState.input.consts[0x3b][3] != dVar7)))) {
+    gfxCmdBufSourceState.input.consts[0x3b][0] = (float)dVar9;
+    gfxCmdBufSourceState.input.consts[0x3b][1] = (float)dVar8;
+    gfxCmdBufSourceState.input.consts[0x3b][2] = (float)dVar9;
+    gfxCmdBufSourceState.input.consts[0x3b][3] = (float)dVar7;
+    R_DirtyCodeConstant(&gfxCmdBufSourceState,0x3b);
   }
-  RB_Filter(DAT_84616634,iVar6);
+  RB_Filter(rgp.waterSheetingFXMaterial,pGVar6);
   __restgprlr_28();
   return;
 }
@@ -572,17 +673,20 @@ LAB_827a7f2c:
 
 // 827A8058  RB_DoEndSceneResample  (gfx_d3d/rb_postfx.cpp:592)
 
-void RB_DoEndSceneResample(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_DoEndSceneResample(GfxViewInfo *param_1,bool param_2)
 
 {
-  longlong lVar1;
+  GfxViewInfo *pGVar1;
   
-  lVar1 = __savegprlr_28();
-  R_InitCmdBufSourceState(0xffffffff8484c7e0,lVar1 + 0x330,0);
-  DAT_8484dbcc = DAT_84821000;
-  R_InitCmdBufState(0xffffffff8484df40);
-  RB_ResampleScene(lVar1,param_2);
-  R_ShutdownCmdBufState(0xffffffff8484df40);
+  pGVar1 = (GfxViewInfo *)__savegprlr_28(param_1);
+  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&pGVar1->input,0);
+  gfxCmdBufSourceState.input.data = backEndData;
+  R_InitCmdBufState(&gfxCmdBufState);
+  RB_ResampleScene(pGVar1,param_2);
+  R_ShutdownCmdBufState(&gfxCmdBufState);
   __restgprlr_28();
   return;
 }
@@ -590,29 +694,49 @@ void RB_DoEndSceneResample(undefined8 param_1,undefined8 param_2)
 
 // 827A80C0  RB_ShowFbColorDebug_Screen  (gfx_d3d/rb_postfx.cpp:614)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
+
 void RB_ShowFbColorDebug_Screen(void)
 
 {
-  double dVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  undefined8 uVar5;
-  undefined8 uVar6;
+  float fVar1;
+  float fVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  IMAGE_DOS_HEADER *pIVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   
   __savefpr_26();
   RB_EndSurfaceIfNeeded();
-  R_Set2D(0xffffffff8484c7e0);
-  uVar6 = 0x3ff0000000000000;
-  uVar5 = 0;
-  dVar3 = (double)(float)((double)(longlong)DAT_8484df24 * 0.5);
-  dVar4 = (double)(float)((double)(longlong)DAT_8484df20 * 0.5);
-  dVar1 = (double)(float)(dVar3 * 0.5);
-  dVar2 = (double)(float)(dVar4 * 0.5);
-  RB_DrawStretchPic(dVar2,dVar1,dVar2,dVar1,0,0,0x3ff0000000000000,0x3ff0000000000000,DAT_84616584);
-  RB_DrawStretchPic(dVar4,dVar1,dVar2,dVar1,uVar5,uVar5,uVar6,uVar6,DAT_84616584);
-  RB_DrawStretchPic(dVar2,dVar3,dVar2,dVar1,uVar5,uVar5,uVar6,uVar6,DAT_84616584);
-  RB_DrawStretchPic(dVar4,dVar3,dVar2,dVar1,uVar5,uVar5,uVar6,uVar6,DAT_84616588);
+  R_Set2D(&gfxCmdBufSourceState);
+  pIVar4 = &IMAGE_DOS_HEADER_82000000;
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  dVar10 = 1.0;
+  dVar9 = 0.0;
+  dVar7 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetHeight * 0.5);
+  dVar8 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetWidth * 0.5);
+  fVar1 = (float)(dVar7 * 0.5);
+  dVar5 = (double)fVar1;
+  fVar2 = (float)(dVar8 * 0.5);
+  dVar6 = (double)fVar2;
+  RB_DrawStretchPic(rgp.frameColorDebugMaterial,fVar2,fVar1,fVar2,fVar1,0.0,0.0,1.0,1.0,0x82000000,
+                    0x82000000);
+  RB_DrawStretchPic(rgp.frameColorDebugMaterial,(float)dVar8,(float)dVar5,(float)dVar6,(float)dVar5,
+                    (float)dVar9,(float)dVar9,(float)dVar10,(float)dVar10,(ulong)pIVar3,
+                    (GfxPrimStatsTarget)pIVar4);
+  RB_DrawStretchPic(rgp.frameColorDebugMaterial,(float)dVar6,(float)dVar7,(float)dVar6,(float)dVar5,
+                    (float)dVar9,(float)dVar9,(float)dVar10,(float)dVar10,(ulong)pIVar3,
+                    (GfxPrimStatsTarget)pIVar4);
+  RB_DrawStretchPic(rgp.frameAlphaDebugMaterial,(float)dVar8,(float)dVar7,(float)dVar6,(float)dVar5,
+                    (float)dVar9,(float)dVar9,(float)dVar10,(float)dVar10,(ulong)pIVar3,
+                    (GfxPrimStatsTarget)pIVar4);
   RB_EndTessSurface();
   __restfpr_26();
   return;
@@ -621,107 +745,129 @@ void RB_ShowFbColorDebug_Screen(void)
 
 // 827A8250  RB_ShowFbColorDebug_Feedback  (gfx_d3d/rb_postfx.cpp:646)
 
-void RB_ShowFbColorDebug_Feedback(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void RB_ShowFbColorDebug_Feedback(GfxViewInfo *param_1)
 
 {
   int iVar1;
-  double dVar2;
-  double dVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
+  ulong uVar2;
+  char *pcVar3;
+  double dVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined8 uVar9;
+  double dVar9;
   double dVar10;
+  double dVar11;
+  double dVar12;
   
-  __savegprlr_28();
+  __savegprlr_28(param_1);
   iVar1 = __savefpr_23();
   RB_EndSurfaceIfNeeded();
-  uVar9 = 0x3fe0000000000000;
-  dVar3 = (double)(float)((double)(longlong)DAT_8484df20 * 0.5);
-  dVar2 = (double)(float)((double)(longlong)DAT_8484df24 * 0.5);
-  dVar7 = (double)(float)(dVar3 * 0.5);
-  dVar6 = (double)(float)(dVar2 * 0.5);
+  dVar11 = 0.5;
+  dVar5 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetWidth * 0.5);
+  dVar4 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetHeight * 0.5);
+  dVar9 = (double)(float)(dVar5 * 0.5);
+  dVar8 = (double)(float)(dVar4 * 0.5);
   if (*(int *)(iVar1 + 0x950) == 0x10) {
-    MyAssertHandler(0xffffffff821d7248,0x293,0,0xffffffff82000f98,0xffffffff821d6a5c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x293,0
+                    ,"%s");
   }
-  DAT_8484db20 = (&DAT_84762080)[*(int *)(iVar1 + 0x950) * 5];
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  R_Set2D(0xffffffff8484c7e0);
-  dVar8 = 1.0;
-  dVar10 = 0.0;
-  DAT_8484d740 = 1.0;
-  DAT_8484d744 = 0.0;
-  DAT_8484d748 = 0.0;
-  DAT_8484d74c = 0.0;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x16);
-  DAT_8484d750 = (float)dVar10;
-  DAT_8484d754 = (float)dVar10;
-  DAT_8484d758 = (float)dVar10;
-  DAT_8484d75c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x17);
-  DAT_8484d760 = (float)dVar10;
-  DAT_8484d764 = (float)dVar10;
-  DAT_8484d768 = (float)dVar10;
-  DAT_8484d76c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x18);
-  uVar5 = 0x3fd0000000000000;
-  RB_DrawStretchPic(dVar7,dVar6,dVar7,dVar6,0x3fd0000000000000,0x3fd0000000000000,uVar9,uVar9,
-                    DAT_84616580);
+  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[*(int *)(iVar1 + 0x950)].image;
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  pcVar3 = 
+  "_8) << 0 | (GPUENDIAN_8IN32) << 6 | (1) << 8 | ((GPUSIGN_UNSIGNED | GPUSIGN_UNSIGNED<<2 | GPUSIGN_UNSIGNED<<4 | GPUSIGN_UNSIGNED<<6)) << 9 | (GPUNUMFORMAT_FRACTION) << 17 | ((GPUSWIZZLE_W | GPUSWIZZLE_Z<<3 | GPUSWIZZLE_Y<<6 | GPUSWIZZLE_X<<9)) << 18), D3DMULTISAMPLE_NONE, 0, 0,surf, params) failed: %s\n"
+  ;
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  R_Set2D(&gfxCmdBufSourceState);
+  dVar10 = 1.0;
+  dVar12 = 0.0;
+  gfxCmdBufSourceState.input.consts[0x16][0] = 1.0;
+  gfxCmdBufSourceState.input.consts[0x16][1] = 0.0;
+  gfxCmdBufSourceState.input.consts[0x16][2] = 0.0;
+  gfxCmdBufSourceState.input.consts[0x16][3] = 0.0;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
+  uVar2 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
+  dVar7 = 0.25;
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar9,(float)dVar8,(float)dVar9,
+                    (float)dVar8,0.25,0.25,(float)dVar11,(float)dVar11,uVar2,
+                    (GfxPrimStatsTarget)pcVar3);
   RB_EndTessSurface();
-  DAT_8484d740 = (float)dVar10;
-  DAT_8484d744 = (float)dVar10;
-  DAT_8484d748 = (float)dVar10;
-  DAT_8484d74c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x16);
-  DAT_8484d750 = (float)dVar10;
-  DAT_8484d754 = (float)dVar8;
-  DAT_8484d758 = (float)dVar10;
-  DAT_8484d75c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x17);
-  DAT_8484d760 = (float)dVar10;
-  DAT_8484d764 = (float)dVar10;
-  DAT_8484d768 = (float)dVar10;
-  DAT_8484d76c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x18);
-  uVar4 = 0x3fe8000000000000;
-  RB_DrawStretchPic(dVar3,dVar6,dVar7,dVar6,uVar9,uVar5,0x3fe8000000000000,uVar9,DAT_84616580);
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar10;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
+  uVar2 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
+  dVar6 = 0.75;
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar5,(float)dVar8,(float)dVar9,
+                    (float)dVar8,(float)dVar11,(float)dVar7,0.75,(float)dVar11,uVar2,
+                    (GfxPrimStatsTarget)pcVar3);
   RB_EndTessSurface();
-  DAT_8484d740 = (float)dVar10;
-  DAT_8484d744 = (float)dVar10;
-  DAT_8484d748 = (float)dVar10;
-  DAT_8484d74c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x16);
-  DAT_8484d750 = (float)dVar10;
-  DAT_8484d754 = (float)dVar10;
-  DAT_8484d758 = (float)dVar10;
-  DAT_8484d75c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x17);
-  DAT_8484d760 = (float)dVar10;
-  DAT_8484d764 = (float)dVar10;
-  DAT_8484d768 = (float)dVar8;
-  DAT_8484d76c = (float)dVar10;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x18);
-  RB_DrawStretchPic(dVar7,dVar2,dVar7,dVar6,uVar5,uVar9,uVar9,uVar4,DAT_84616580);
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar10;
+  uVar2 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar9,(float)dVar4,(float)dVar9,
+                    (float)dVar8,(float)dVar7,(float)dVar11,(float)dVar11,(float)dVar6,uVar2,
+                    (GfxPrimStatsTarget)pcVar3);
   RB_EndTessSurface();
-  DAT_8484d740 = (float)dVar10;
-  DAT_8484d744 = (float)dVar10;
-  DAT_8484d748 = (float)dVar10;
-  DAT_8484d74c = (float)dVar8;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x16);
-  DAT_8484d750 = (float)dVar10;
-  DAT_8484d754 = (float)dVar10;
-  DAT_8484d758 = (float)dVar10;
-  DAT_8484d75c = (float)dVar8;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x17);
-  DAT_8484d760 = (float)dVar10;
-  DAT_8484d764 = (float)dVar10;
-  DAT_8484d768 = (float)dVar10;
-  DAT_8484d76c = (float)dVar8;
-  R_DirtyCodeConstant(0xffffffff8484c7e0,0x18);
-  RB_DrawStretchPic(dVar3,dVar2,dVar7,dVar6,uVar9,uVar9,uVar4,uVar4,DAT_84616580);
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar10;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar10;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
+  uVar2 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar10;
+  R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar5,(float)dVar4,(float)dVar9,
+                    (float)dVar8,(float)dVar11,(float)dVar11,(float)dVar6,(float)dVar6,uVar2,
+                    (GfxPrimStatsTarget)pcVar3);
   RB_EndTessSurface();
   __restfpr_23();
   __restgprlr_28();
@@ -730,6 +876,11 @@ void RB_ShowFbColorDebug_Feedback(void)
 
 
 // 827A8590  RB_ShowFloatZDebug  (gfx_d3d/rb_postfx.cpp:694)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 void RB_ShowFloatZDebug(void)
 
@@ -743,9 +894,10 @@ void RB_ShowFloatZDebug(void)
   double dVar7;
   
   __savefpr_28();
-  iVar3 = *(int *)(DAT_845aa854 + 0xc);
+  iVar3 = (r_showFloatZDebug->current).integer;
   if ((iVar3 != 1) && (iVar3 != 2)) {
-    MyAssertHandler(0xffffffff821d7248,0x2bd,0,0xffffffff821d7500,0xffffffff821d7518,iVar3);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x2bd,0
+                    ,"%s\n\t(dvarValue) = %i");
   }
   RB_EndSurfaceIfNeeded();
   if (iVar3 == 1) {
@@ -758,13 +910,13 @@ void RB_ShowFloatZDebug(void)
   }
   dVar7 = (double)fVar1;
   dVar6 = (double)fVar2;
-  dVar4 = (double)(longlong)DAT_8484df24;
-  dVar5 = (double)(longlong)DAT_8484df20;
-  R_Set2D();
-  RB_DrawStretchPic((double)(float)(dVar5 * dVar7),(double)(float)(dVar4 * dVar7),
-                    (double)(float)((double)(float)(dVar6 - dVar7) * dVar5),
-                    (double)(float)((double)(float)(dVar6 - dVar7) * dVar4),dVar7,dVar7,dVar6,dVar6,
-                    DAT_8461657c);
+  dVar4 = (double)(longlong)gfxCmdBufSourceState.renderTargetHeight;
+  dVar5 = (double)(longlong)gfxCmdBufSourceState.renderTargetWidth;
+  R_Set2D(&gfxCmdBufSourceState);
+  RB_DrawStretchPic(rgp.floatZDisplayMaterial,(float)(dVar5 * dVar7),(float)(dVar4 * dVar7),
+                    (float)((double)(float)(dVar6 - dVar7) * dVar5),
+                    (float)((double)(float)(dVar6 - dVar7) * dVar4),(float)dVar7,(float)dVar7,
+                    (float)dVar6,(float)dVar6,0xffffffff,0x84613780);
   RB_EndTessSurface();
   __restfpr_28();
   return;
@@ -773,29 +925,34 @@ void RB_ShowFloatZDebug(void)
 
 // 827A86C0  RB_DrawDebugPostEffects  (gfx_d3d/rb_postfx.cpp:774)
 
-void RB_DrawDebugPostEffects(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_DrawDebugPostEffects(GfxViewInfo *param_1)
 
 {
-  undefined8 uVar1;
+  GfxViewInfo *pGVar1;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_845aa7d0 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x307,0,0xffffffff82000f98,0xffffffff821c142c);
+  pGVar1 = (GfxViewInfo *)__savegprlr_27(param_1);
+  if (r_showFbColorDebug == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x307,0
+                    ,"%s");
   }
-  if (DAT_845aa854 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x308,0,0xffffffff82000f98,0xffffffff821c139c);
+  if (r_showFloatZDebug == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x308,0
+                    ,"%s");
   }
-  if (*(int *)(DAT_845aa7d0 + 0xc) == 1) {
+  if ((r_showFbColorDebug->current).integer == 1) {
     RB_ShowFbColorDebug_Screen();
     __restgprlr_27();
     return;
   }
-  if (*(int *)(DAT_845aa7d0 + 0xc) == 2) {
-    RB_ShowFbColorDebug_Feedback(uVar1);
+  if ((r_showFbColorDebug->current).integer == 2) {
+    RB_ShowFbColorDebug_Feedback(pGVar1);
     __restgprlr_27();
     return;
   }
-  if (*(int *)(DAT_845aa854 + 0xc) != 0) {
+  if ((r_showFloatZDebug->current).integer != 0) {
     RB_ShowFloatZDebug();
   }
   __restgprlr_27();
@@ -806,133 +963,153 @@ void RB_DrawDebugPostEffects(void)
 // 827A8788  RB_DoResampleAndPostEffects  (gfx_d3d/rb_postfx.cpp:862)
 
 /* WARNING: Removing unreachable block (ram,0x827a8884) */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-void RB_DoResampleAndPostEffects(undefined8 param_1,undefined8 param_2)
+void RB_DoResampleAndPostEffects(GfxViewInfo *param_1,bool param_2)
 
 {
-  int iVar1;
-  char cVar2;
+  GfxViewInfo *pGVar1;
+  bool bVar3;
+  int iVar2;
   
-  iVar1 = __savegprlr_25();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821d7248,0x35f,0,0xffffffff82000f98,0xffffffff821c680c);
+  pGVar1 = (GfxViewInfo *)__savegprlr_25(param_1);
+  if (pGVar1 == (GfxViewInfo *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x35f,0
+                    ,"%s");
   }
   Profile_Begin(0x6f);
-  R_InitCmdBufSourceState(0xffffffff8484c7e0,iVar1 + 0x330,0);
-  R_InitCmdBufState(0xffffffff8484df40);
-  R_SetRenderTargetSize(&DAT_8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  R_BeginView(0xffffffff8484c7e0,iVar1 + 0x180,iVar1);
-  R_SetViewportStruct(0xffffffff8484c7e0,iVar1 + 0x160);
-  if (*(int *)(iVar1 + 0x950) == 0x10) {
-    MyAssertHandler(0xffffffff821d7248,0x381,0,0xffffffff82000f98,0xffffffff821d6a5c);
+  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&pGVar1->input,0);
+  R_InitCmdBufState(&gfxCmdBufState);
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  R_BeginView(&gfxCmdBufSourceState,&pGVar1->sceneDef,(GfxViewParms *)pGVar1);
+  R_SetViewportStruct(&gfxCmdBufSourceState,&pGVar1->displayViewport);
+  if (pGVar1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x381,0
+                    ,"%s");
   }
-  DAT_8484db28 = (&DAT_84762080)[*(int *)(iVar1 + 0x950) * 5];
-  if (*(char *)(iVar1 + 0x318) == '\0') {
-    RB_ApplyMergedPostEffects(iVar1,param_2);
+  gfxCmdBufSourceState.input.codeImages[10] =
+       gfxRenderTargets[pGVar1->sceneResolveRenderTargetId].image;
+  if ((pGVar1->waterSheetingFx).enabled == false) {
+    RB_ApplyMergedPostEffects(pGVar1,param_2);
   }
   else {
-    RB_ApplyWaterSheetingFX();
+    RB_ApplyWaterSheetingFX(pGVar1);
   }
-  cVar2 = R_UsingGlow(iVar1);
-  if (cVar2 != '\0') {
-    RB_CalcGlowEffect(iVar1);
-    R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-    R_SetRenderTarget(0x8484c7e08484df40,1);
-    RB_ApplyGlowEffect(iVar1,param_2);
+  bVar3 = R_UsingGlow(pGVar1);
+  if (bVar3) {
+    RB_CalcGlowEffect(pGVar1);
+    R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+    R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+    RB_ApplyGlowEffect(pGVar1,param_2);
   }
-  cVar2 = RB_UsingBlur(iVar1);
-  if (cVar2 != '\0') {
-    RB_BlurScreen(iVar1,param_2);
+  bVar3 = RB_UsingBlur(pGVar1);
+  if (bVar3) {
+    RB_BlurScreen(pGVar1,param_2);
   }
-  R_SetRenderTargetSize(0xffffffff8484c7e0,1);
-  R_SetRenderTarget(0x8484c7e08484df40,1);
-  RB_DrawDebugPostEffects(iVar1);
-  Profile_EndInternal(0);
-  __restgprlr_25();
+  R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
+  R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
+  RB_DrawDebugPostEffects(pGVar1);
+  iVar2 = Profile_EndInternal((double *)0x0);
+  __restgprlr_25(iVar2);
   return;
 }
 
 
 // 827A8968  RB_DoResampleAndPostEffectsWithCutBox  (gfx_d3d/rb_postfx.cpp:959)
 
-void RB_DoResampleAndPostEffectsWithCutBox(undefined8 param_1,ulonglong param_2,longlong param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void RB_DoResampleAndPostEffectsWithCutBox(GfxViewInfo *param_1,GfxViewport **param_2,int param_3)
 
 {
   uint *puVar1;
   uint uVar2;
   uint uVar3;
   uint uVar4;
-  undefined4 uVar5;
-  undefined4 uVar6;
-  undefined4 uVar7;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   int iVar8;
-  longlong lVar9;
-  longlong lVar10;
+  GfxViewInfo *pGVar9;
   int iVar11;
-  longlong lVar12;
-  longlong lVar13;
-  int iVar14;
-  longlong lVar15;
-  int local_80;
+  longlong lVar10;
+  int *piVar13;
+  ulonglong uVar12;
+  longlong lVar14;
+  int iVar15;
+  longlong lVar16;
+  longlong lVar17;
+  int iVar18;
+  longlong lVar19;
+  GfxViewport *pGVar20;
   
-  iVar8 = __savegprlr_19();
+  lVar10 = (longlong)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  pGVar9 = (GfxViewInfo *)__savegprlr_19(param_1);
   while( true ) {
-    if (iVar8 == 0) {
-      MyAssertHandler(0xffffffff821d7248,0x3c8,0,0xffffffff82000f98,0xffffffff821c680c);
+    if (pGVar9 == (GfxViewInfo *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x3c8
+                      ,0,"%s");
     }
-    if (((param_2 & 0xffffffff) == 0) || ((int)param_3 == 0)) break;
-    puVar1 = (uint *)*(int *)param_2;
+    if (((uVar12 & 0xffffffff) == 0) || (iVar11 = (int)lVar10, iVar11 == 0)) break;
+    piVar13 = (int *)uVar12;
+    puVar1 = (uint *)*piVar13;
     if ((0 < (int)puVar1[2]) && (0 < (int)puVar1[3])) {
-      uVar2 = *(uint *)(iVar8 + 0x160);
-      lVar10 = (ulonglong)*puVar1 + (ulonglong)puVar1[2];
+      pGVar20 = &pGVar9->displayViewport;
+      uVar2 = (pGVar9->displayViewport).x;
+      lVar14 = (ulonglong)*puVar1 + (ulonglong)puVar1[2];
       uVar3 = puVar1[1];
-      lVar15 = (ulonglong)*(uint *)(iVar8 + 0x168) + (ulonglong)uVar2;
-      uVar4 = *(uint *)(iVar8 + 0x164);
-      lVar13 = (ulonglong)uVar3 + (ulonglong)puVar1[3];
-      lVar12 = (ulonglong)*(uint *)(iVar8 + 0x16c) + (ulonglong)uVar4;
-      if (((int)*puVar1 < (int)lVar15) &&
-         ((((int)uVar3 < (int)lVar12 && (iVar11 = (int)lVar10, (int)uVar2 < iVar11)) &&
-          (iVar14 = (int)lVar13, (int)uVar4 < iVar14)))) {
-        uVar5 = *(undefined4 *)(iVar8 + 0x164);
-        lVar9 = (ulonglong)uVar3 - (ulonglong)uVar4;
-        uVar6 = *(undefined4 *)(iVar8 + 0x168);
-        uVar7 = *(undefined4 *)(iVar8 + 0x16c);
-        *(int *)(iVar8 + 0x16c) = (int)lVar9;
-        if (0 < lVar9) {
-          RB_DoResampleAndPostEffectsWithCutBox(iVar8,param_2 + 4,param_3 + -1);
+      lVar19 = (ulonglong)(uint)(pGVar9->displayViewport).width + (ulonglong)uVar2;
+      uVar4 = (pGVar9->displayViewport).y;
+      lVar17 = (ulonglong)uVar3 + (ulonglong)puVar1[3];
+      lVar16 = (ulonglong)(uint)(pGVar9->displayViewport).height + (ulonglong)uVar4;
+      if (((int)*puVar1 < (int)lVar19) &&
+         ((((int)uVar3 < (int)lVar16 && (iVar15 = (int)lVar14, (int)uVar2 < iVar15)) &&
+          (iVar18 = (int)lVar17, (int)uVar4 < iVar18)))) {
+        iVar5 = pGVar20->x;
+        iVar6 = (pGVar9->displayViewport).y;
+        lVar10 = (ulonglong)uVar3 - (ulonglong)uVar4;
+        iVar7 = (pGVar9->displayViewport).width;
+        iVar8 = (pGVar9->displayViewport).height;
+        (pGVar9->displayViewport).height = (int)lVar10;
+        if (0 < lVar10) {
+          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
         }
-        lVar12 = lVar12 - lVar13;
-        *(int *)(iVar8 + 0x16c) = (int)lVar12;
-        if (0 < lVar12) {
-          *(int *)(iVar8 + 0x164) = iVar14;
-          RB_DoResampleAndPostEffectsWithCutBox(iVar8,param_2 + 4,param_3 + -1);
+        lVar16 = lVar16 - lVar17;
+        (pGVar9->displayViewport).height = (int)lVar16;
+        if (0 < lVar16) {
+          (pGVar9->displayViewport).y = iVar18;
+          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
         }
-        *(uint *)(iVar8 + 0x164) = puVar1[1];
-        *(uint *)(iVar8 + 0x16c) = puVar1[3];
-        lVar12 = (ulonglong)*puVar1 - (ulonglong)uVar2;
-        *(int *)(iVar8 + 0x168) = (int)lVar12;
-        if (0 < lVar12) {
-          RB_DoResampleAndPostEffectsWithCutBox(iVar8,param_2 + 4,param_3 + -1);
+        (pGVar9->displayViewport).y = puVar1[1];
+        (pGVar9->displayViewport).height = puVar1[3];
+        lVar10 = (ulonglong)*puVar1 - (ulonglong)uVar2;
+        (pGVar9->displayViewport).width = (int)lVar10;
+        if (0 < lVar10) {
+          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
         }
-        lVar15 = lVar15 - lVar10;
-        *(int *)(iVar8 + 0x168) = (int)lVar15;
-        if (0 < lVar15) {
-          *(int *)(iVar8 + 0x160) = iVar11;
-          RB_DoResampleAndPostEffectsWithCutBox(iVar8,param_2 + 4,param_3 + -1);
+        lVar19 = lVar19 - lVar14;
+        (pGVar9->displayViewport).width = (int)lVar19;
+        if (0 < lVar19) {
+          pGVar20->x = iVar15;
+          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
         }
-        *(int *)(iVar8 + 0x160) = local_80;
-        *(undefined4 *)(iVar8 + 0x164) = uVar5;
-        *(undefined4 *)(iVar8 + 0x168) = uVar6;
-        *(undefined4 *)(iVar8 + 0x16c) = uVar7;
+        pGVar20->x = iVar5;
+        (pGVar9->displayViewport).y = iVar6;
+        (pGVar9->displayViewport).width = iVar7;
+        (pGVar9->displayViewport).height = iVar8;
         __restgprlr_19();
         return;
       }
     }
-    param_3 = param_3 + -1;
-    param_2 = param_2 + 4;
+    lVar10 = lVar10 + -1;
+    uVar12 = uVar12 + 4;
   }
-  RB_DoResampleAndPostEffects(iVar8,0);
+  RB_DoResampleAndPostEffects(pGVar9,false);
   __restgprlr_19();
   return;
 }

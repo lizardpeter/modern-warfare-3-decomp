@@ -2,7 +2,8 @@
 
 // 827C6DF8  jpeg_idct_float  (jpeg-6/jidctflt.c:71)
 
-void jpeg_idct_float(undefined8 param_1,int param_2,longlong param_3,longlong param_4,int param_5)
+void jpeg_idct_float(jpeg_decompress_struct *param_1,jpeg_component_info *param_2,short *param_3,
+                    uchar **param_4,uint param_5)
 
 {
   float fVar1;
@@ -23,10 +24,12 @@ void jpeg_idct_float(undefined8 param_1,int param_2,longlong param_3,longlong pa
   float *pfVar16;
   float *pfVar17;
   int iVar18;
-  int iVar19;
-  undefined1 *puVar20;
-  float *pfVar21;
-  longlong lVar22;
+  longlong lVar19;
+  int iVar20;
+  longlong lVar21;
+  undefined1 *puVar22;
+  float *pfVar23;
+  longlong lVar24;
   undefined8 local_180;
   longlong local_178;
   longlong local_170;
@@ -39,29 +42,31 @@ void jpeg_idct_float(undefined8 param_1,int param_2,longlong param_3,longlong pa
   float local_a0 [8];
   float local_80 [32];
   
-  __savegprlr_28();
+  lVar19 = (longlong)(int)param_4;
+  lVar21 = (longlong)(int)param_3;
+  __savegprlr_28(param_1);
   iVar18 = __savefpr_26();
-  param_3 = param_3 + 0x6e;
-  lVar22 = 8;
-  iVar19 = *(int *)(iVar18 + 0x128) + 0x80;
-  iVar18 = *(int *)(param_2 + 0x50) + 0xdc;
-  puVar20 = auStack_104;
+  lVar21 = lVar21 + 0x6e;
+  lVar24 = 8;
+  iVar20 = *(int *)(iVar18 + 0x128) + 0x80;
+  iVar18 = (int)param_2->dct_table + 0xdc;
+  puVar22 = auStack_104;
   do {
-    iVar4 = (int)param_3;
+    iVar4 = (int)lVar21;
     if ((((*(short *)(iVar4 + -0x5e) == 0) && (*(short *)(iVar4 + -0x4e) == 0)) &&
         (*(short *)(iVar4 + -0x3e) == 0)) &&
        (((*(short *)(iVar4 + -0x2e) == 0 && (*(short *)(iVar4 + -0x1e) == 0)) &&
         ((*(short *)(iVar4 + -0xe) == 0 && (*(short *)(iVar4 + 2) == 0)))))) {
       local_170 = (longlong)(int)*(short *)(iVar4 + -0x6e);
       fVar1 = (float)local_170 * *(float *)(iVar18 + -0xdc);
-      *(float *)(puVar20 + -0x5c) = fVar1;
-      *(float *)(puVar20 + -0x3c) = fVar1;
-      *(float *)(puVar20 + -0x1c) = fVar1;
-      *(float *)(puVar20 + 4) = fVar1;
-      *(float *)(puVar20 + 0x24) = fVar1;
-      *(float *)(puVar20 + 0x44) = fVar1;
-      *(float *)(puVar20 + 100) = fVar1;
-      *(float *)(puVar20 + 0x84) = fVar1;
+      *(float *)(puVar22 + -0x5c) = fVar1;
+      *(float *)(puVar22 + -0x3c) = fVar1;
+      *(float *)(puVar22 + -0x1c) = fVar1;
+      *(float *)(puVar22 + 4) = fVar1;
+      *(float *)(puVar22 + 0x24) = fVar1;
+      *(float *)(puVar22 + 0x44) = fVar1;
+      *(float *)(puVar22 + 100) = fVar1;
+      *(float *)(puVar22 + 0x84) = fVar1;
     }
     else {
       local_180 = (longlong)*(short *)(iVar4 + -0x3e);
@@ -88,42 +93,42 @@ void jpeg_idct_float(undefined8 param_1,int param_2,longlong param_3,longlong pa
       fVar10 = fVar10 + fVar7;
       fVar7 = fVar10 + fVar12;
       fVar11 = (fVar6 + fVar9) * 1.847759;
-      *(float *)(puVar20 + -0x5c) = fVar7 + fVar2;
-      *(float *)(puVar20 + 0x84) = fVar2 - fVar7;
+      *(float *)(puVar22 + -0x5c) = fVar7 + fVar2;
+      *(float *)(puVar22 + 0x84) = fVar2 - fVar7;
       fVar7 = -(fVar9 * 2.613126 - fVar11) - fVar7;
       fVar1 = (fVar10 - fVar12) * 1.4142135 - fVar7;
-      *(float *)(puVar20 + -0x3c) = fVar7 + fVar8;
-      *(float *)(puVar20 + 100) = fVar8 - fVar7;
+      *(float *)(puVar22 + -0x3c) = fVar7 + fVar8;
+      *(float *)(puVar22 + 100) = fVar8 - fVar7;
       fVar2 = (fVar6 * 1.0823922 - fVar11) + fVar1;
-      *(float *)(puVar20 + -0x1c) = fVar1 + fVar5;
-      *(float *)(puVar20 + 0x44) = fVar5 - fVar1;
-      *(float *)(puVar20 + 0x24) = fVar2 + fVar3;
-      *(float *)(puVar20 + 4) = fVar3 - fVar2;
+      *(float *)(puVar22 + -0x1c) = fVar1 + fVar5;
+      *(float *)(puVar22 + 0x44) = fVar5 - fVar1;
+      *(float *)(puVar22 + 0x24) = fVar2 + fVar3;
+      *(float *)(puVar22 + 4) = fVar3 - fVar2;
     }
-    puVar20 = puVar20 + 4;
+    puVar22 = puVar22 + 4;
     iVar18 = iVar18 + 4;
-    param_3 = param_3 + 2;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
-  pfVar21 = (float *)((int)&local_180 + 4);
-  param_4 = param_4 + -4;
-  lVar22 = 8;
+    lVar21 = lVar21 + 2;
+    lVar24 = lVar24 + -1;
+  } while (lVar24 != 0);
+  pfVar23 = (float *)((int)&local_180 + 4);
+  lVar19 = lVar19 + -4;
+  lVar21 = 8;
   do {
-    param_4 = param_4 + 4;
-    fVar5 = pfVar21[7] - pfVar21[0xb];
-    pfVar13 = pfVar21 + 0xd;
-    fVar3 = pfVar21[7] + pfVar21[0xb];
-    pfVar14 = pfVar21 + 9;
-    pfVar15 = pfVar21 + 0xc;
+    lVar19 = lVar19 + 4;
+    fVar5 = pfVar23[7] - pfVar23[0xb];
+    pfVar13 = pfVar23 + 0xd;
+    fVar3 = pfVar23[7] + pfVar23[0xb];
+    pfVar14 = pfVar23 + 9;
+    pfVar15 = pfVar23 + 0xc;
     fVar6 = *pfVar13 + *pfVar14;
-    pfVar16 = pfVar21 + 10;
-    pfVar17 = pfVar21 + 0xe;
+    pfVar16 = pfVar23 + 10;
+    pfVar17 = pfVar23 + 0xe;
     fVar7 = *pfVar16 + *pfVar15;
-    pfVar21 = pfVar21 + 8;
+    pfVar23 = pfVar23 + 8;
     fVar8 = *pfVar15 - *pfVar16;
-    fVar9 = *pfVar17 + *pfVar21;
-    iVar18 = *(int *)param_4 + param_5;
-    fVar10 = *pfVar21 - *pfVar17;
+    fVar9 = *pfVar17 + *pfVar23;
+    iVar18 = *(int *)lVar19 + param_5;
+    fVar10 = *pfVar23 - *pfVar17;
     fVar2 = fVar6 + fVar3;
     fVar1 = (*pfVar14 - *pfVar13) * 1.4142135 - fVar6;
     fVar3 = fVar3 - fVar6;
@@ -132,26 +137,26 @@ void jpeg_idct_float(undefined8 param_1,int param_2,longlong param_3,longlong pa
     fVar5 = fVar5 - fVar1;
     fVar12 = (fVar10 + fVar8) * 1.847759;
     fVar8 = -(fVar8 * 2.613126 - fVar12) - fVar11;
-    *(undefined1 *)(*(int *)param_4 + param_5) =
-         *(undefined1 *)(((int)(fVar11 + fVar2) + 4 >> 3 & 0x3ffU) + iVar19);
+    *(undefined1 *)(*(int *)lVar19 + param_5) =
+         *(undefined1 *)(((int)(fVar11 + fVar2) + 4 >> 3 & 0x3ffU) + iVar20);
     fVar1 = (fVar9 - fVar7) * 1.4142135 - fVar8;
     *(undefined1 *)(iVar18 + 7) =
-         *(undefined1 *)(((int)(fVar2 - fVar11) + 4 >> 3 & 0x3ffU) + iVar19);
+         *(undefined1 *)(((int)(fVar2 - fVar11) + 4 >> 3 & 0x3ffU) + iVar20);
     fVar2 = (fVar10 * 1.0823922 - fVar12) + fVar1;
-    *(undefined1 *)(iVar18 + 1) = *(undefined1 *)(((int)(fVar8 + fVar6) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 1) = *(undefined1 *)(((int)(fVar8 + fVar6) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    *(undefined1 *)(iVar18 + 6) = *(undefined1 *)(((int)(fVar6 - fVar8) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 6) = *(undefined1 *)(((int)(fVar6 - fVar8) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    *(undefined1 *)(iVar18 + 2) = *(undefined1 *)(((int)(fVar1 + fVar5) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 2) = *(undefined1 *)(((int)(fVar1 + fVar5) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    *(undefined1 *)(iVar18 + 5) = *(undefined1 *)(((int)(fVar5 - fVar1) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 5) = *(undefined1 *)(((int)(fVar5 - fVar1) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    *(undefined1 *)(iVar18 + 4) = *(undefined1 *)(((int)(fVar2 + fVar3) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 4) = *(undefined1 *)(((int)(fVar2 + fVar3) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    *(undefined1 *)(iVar18 + 3) = *(undefined1 *)(((int)(fVar3 - fVar2) + 4 >> 3 & 0x3ffU) + iVar19)
+    *(undefined1 *)(iVar18 + 3) = *(undefined1 *)(((int)(fVar3 - fVar2) + 4 >> 3 & 0x3ffU) + iVar20)
     ;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
+    lVar21 = lVar21 + -1;
+  } while (lVar21 != 0);
   __restfpr_26();
   __restgprlr_28();
   return;

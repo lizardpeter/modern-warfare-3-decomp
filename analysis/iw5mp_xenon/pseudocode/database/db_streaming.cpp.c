@@ -2,34 +2,42 @@
 
 // 823FF1C0  DynEnt_GetEntityDef  (DynEntity/dynentity_load_obj.h:60)
 
-void DynEnt_GetEntityDef(undefined8 param_1,ulonglong param_2)
+DynEntityDef * DynEnt_GetEntityDef(uint param_1,DynEntityDrawType param_2)
 
 {
   ulonglong uVar1;
+  DynEntityDef *pDVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29();
-  if ((ulonglong)*(ushort *)((int)&DAT_835a2944 + (int)((param_2 & 0xffffffff) << 1)) <=
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  if ((ulonglong)*(ushort *)((int)cm.dynEntCount + (int)((uVar3 & 0xffffffff) << 1)) <=
       (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205cc50,0x3d,0,0xffffffff8205cca8,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\../DynEntity/DynEntity_load_obj.h"
+                    ,0x3d,0,
+                    "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_29((ulonglong)*(uint *)((int)&DAT_835a2948 + (int)((param_2 & 0xffffffff) << 2)) +
-                 (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20);
-  return;
+  pDVar2 = (DynEntityDef *)
+           __restgprlr_29((ulonglong)
+                          *(uint *)((int)cm.dynEntDefList + (int)((uVar3 & 0xffffffff) << 2)) +
+                          (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x7ffffff) * 0x20);
+  return pDVar2;
 }
 
 
 // 823F6E38  __lvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:98)
 
-void __lvx(void)
+__vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 {
-  return;
+  return __return_storage_ptr__;
 }
 
 
 // 823F6E40  __stvx  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/vectorintrinsics.h:104)
 
-void __stvx(int param_1,int param_2)
+void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 {
   undefined4 *puVar1;
@@ -38,7 +46,7 @@ void __stvx(int param_1,int param_2)
   undefined4 in_vr1_32_2;
   undefined4 in_vr1_32_3;
   
-  puVar1 = (undefined4 *)(param_1 + param_2 & 0xfffffff0);
+  puVar1 = (undefined4 *)((int)param_2 + param_3 & 0xfffffff0);
   *puVar1 = in_vr1_32_0;
   puVar1[1] = in_vr1_32_1;
   puVar1[2] = in_vr1_32_2;
@@ -49,92 +57,53 @@ void __stvx(int param_1,int param_2)
 
 // 823FD528  DB_DisplayStreamMemory  (database/db_streaming.cpp:168)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_DisplayStreamMemory(void)
 
 {
   ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  undefined *puVar5;
-  uint uVar6;
-  char *pcVar7;
-  uint uVar8;
-  bool bVar9;
-  double dVar10;
-  double dVar11;
+  int iVar2;
+  uint uVar3;
   ushort *local_f0;
-  uint local_ec;
-  uint local_e8;
-  int local_e4;
   uint local_e0;
-  undefined *local_dc;
   
   __savegprlr();
-  iVar3 = DB_EnterStreaming();
-  local_ec = 0;
-  local_e4 = 0;
-  local_e8 = 0;
-  Com_Printf(0,0xffffffff8205de40);
+  iVar2 = DB_EnterStreaming();
+  Com_Printf(0,"============================================================\n");
   local_e0 = 0;
-  if (DAT_84613600 != 0) {
-    local_f0 = &DAT_84609000;
-    dVar11 = 0.006103515625;
-    dVar10 = 100.0999984741211;
-    local_dc = &DAT_8205de34;
+  if (g_stream2.sortCount != 0) {
+    local_f0 = g_stream2.sort;
     do {
       uVar1 = *local_f0;
-      uVar6 = (uint)uVar1;
-      uVar2 = uVar1 >> 3 & 0x1ffffffc;
-      if ((*(uint *)((int)&DAT_83299e80 + uVar2) & (&DAT_82992400)[uVar6 & 0x1f]) != 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xc1,0,0xffffffff82000f98,0xffffffff8205d7d0);
+      uVar3 = (uint)uVar1;
+      if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar1 >> 3 & 0x1ffffffc)) &
+          *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4)) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xc1,0,"%s");
       }
-      if (0x3fff < (int)(&DAT_845f4400)[uVar1]) break;
-      if (0x52ff < uVar6) {
-        MyAssertHandler(0xffffffff8205cd18,199,0,0xffffffff82000f98,0xffffffff8205cd5c);
+      if (0x3fff < g_stream2.priority[uVar1]) break;
+      if (0x52ff < uVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,199,0,"%s");
       }
-      uVar8 = uVar6 / 0x14c0;
-      iVar4 = DB_GetGfxImageAtIndex(uVar6 % 0x14c0);
-      if (uVar8 == 0) {
-        puVar5 = &DAT_8205de28;
+      uVar3 = uVar3 / 0x14c0;
+      DB_GetGfxImageAtIndex((uint)uVar1 + uVar3 * -0x14c0);
+      if ((((uVar3 != 0) && (uVar3 != 1)) && (2 < uVar3)) && (uVar3 != 3)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xdd,0,"%s\n\t(imagePartIndex) = %i");
       }
-      else if (uVar8 == 1) {
-        puVar5 = &DAT_8201e32c;
-      }
-      else if (uVar8 < 3) {
-        puVar5 = &DAT_8205de30;
-      }
-      else {
-        puVar5 = local_dc;
-        if (uVar8 != 3) {
-          MyAssertHandler(0xffffffff8205cd18,0xdd,0,0xffffffff8205d5e0,0xffffffff8205de00,uVar8);
-        }
-      }
-      bVar9 = (*(uint *)((int)&DAT_845f3980 + uVar2) & (&DAT_82992400)[uVar6 & 0x1f]) == 0;
-      local_ec = (&DAT_832f1098)[uVar1] + local_ec;
-      pcVar7 = "";
-      if (bVar9) {
-        pcVar7 = "NOT LOADED";
-      }
-      Com_Printf(0,0xffffffff8205dde0,(uint)(&DAT_832f1098)[uVar1] >> 10,
-                 *(undefined4 *)(iVar4 + 0x6c),puVar5,
-                 (int)-(float)((double)(longlong)(int)(&DAT_845f4400)[uVar1] * dVar11 - dVar10),
-                 (&DAT_845f4400)[uVar1],pcVar7);
-      if (bVar9) {
-        local_e4 = local_e4 + 1;
-        local_e8 = local_e8 + (&DAT_832f1098)[uVar1];
-      }
+      Com_Printf(0,"%5d KB: %s (%s, %d%%, %d) %s\n");
       local_e0 = local_e0 + 1;
       local_f0 = local_f0 + 1;
-    } while (local_e0 < DAT_84613600);
+    } while (local_e0 < g_stream2.sortCount);
   }
-  dVar10 = 9.5367431640625e-07;
-  Com_Printf(0,0xffffffff8205ddbc,(double)(float)((double)local_ec * 9.5367431640625e-07));
-  Com_Printf(0,0xffffffff8205dda4,(double)(float)((double)DAT_83231ef4 * dVar10));
-  Com_Printf(0,0xffffffff8205dd88,local_e4,(double)(float)((double)local_e8 * dVar10));
+  Com_Printf(0,"TOTAL:       %.1f MB\n");
+  Com_Printf(0,"ALWAYS USED: %.1f MB\n");
+  Com_Printf(0,"NOT LOADED:  %d, %.1f MB\n");
   Com_Printf(0,"============================================================\n");
   DB_LeaveStreaming();
-  if (iVar3 != 0) {
+  if (iVar2 != 0) {
     R_AcquireDeviceOwnership();
   }
   __restgprlr();
@@ -144,13 +113,13 @@ void DB_DisplayStreamMemory(void)
 
 // 823F6E48  DB_GetStreamMemoryStats  (database/db_streaming.cpp:258)
 
-void DB_GetStreamMemoryStats(undefined4 *param_1,undefined4 *param_2)
+void DB_GetStreamMemoryStats(uint *param_1,uint *param_2)
 
 {
-  undefined4 uVar1;
+  uint uVar1;
   
-  uVar1 = DAT_832ee354;
-  *param_1 = DAT_83231ef0;
+  uVar1 = g_renderedLoadedSize;
+  *param_1 = g_renderedRequestedSize;
   *param_2 = uVar1;
   return;
 }
@@ -158,59 +127,62 @@ void DB_GetStreamMemoryStats(undefined4 *param_1,undefined4 *param_2)
 
 // 823F6E68  DB_SetRemainingStreamMemorySize  (database/db_streaming.cpp:266)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_SetRemainingStreamMemorySize(void)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint *puVar4;
-  longlong lVar5;
-  uint uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  double dVar9;
+  int *piVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  StreamGlob2 *pSVar5;
+  longlong lVar6;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  double dVar10;
+  float fVar11;
   
   __savegprlr_16();
-  dVar9 = (double)DB_GetLoadedFraction();
-  if (dVar9 != 1.0) {
-    puVar4 = &DAT_845f3980;
-    dVar9 = 0.5;
-    lVar7 = 0;
-    lVar5 = 0;
-    lVar3 = 0x298;
+  fVar11 = DB_GetLoadedFraction();
+  if (fVar11 != 1.0) {
+    pSVar5 = &g_stream2;
+    dVar10 = 0.5;
+    iVar8 = 0;
+    lVar6 = 0;
+    lVar4 = 0x298;
     do {
-      uVar6 = ~*puVar4;
-      while (uVar8 = LZCOUNT(uVar6), uVar8 < 0x20) {
-        if (0x20 < uVar8) {
-          MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar8,0x21);
+      uVar7 = ~pSVar5->inuse[0];
+      while (uVar9 = LZCOUNT(uVar7), uVar9 < 0x20) {
+        if (0x20 < uVar9) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
         }
-        uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar8 << 2));
-        if ((uVar1 & uVar6) == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x127,0,0xffffffff82000f98,0xffffffff8205cd08);
+        uVar1 = *(uint *)(&g_bitShift + (int)(uVar9 << 2));
+        if ((uVar1 & uVar7) == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x127,0,"%s");
         }
-        uVar8 = lVar5 + uVar8;
-        uVar6 = uVar6 & ~uVar1;
-        if ((double)*(float *)((int)&DAT_83232f00 + (int)((uVar8 & 0xffffffff) << 2)) < dVar9) {
-          if (0x52ff < (uVar8 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff8205cd18,0x130,0,0xffffffff82000f98,0xffffffff8205cd5c);
+        uVar9 = lVar6 + uVar9;
+        uVar7 = uVar7 & ~uVar1;
+        if ((double)*(float *)((int)g_stream.priority2 + (int)((uVar9 & 0xffffffff) << 2)) < dVar10)
+        {
+          if (0x52ff < (uVar9 & 0xffffffff)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x130,0,"%s");
           }
-          uVar2 = (uVar8 & 0xffffffff) / 0x14c0;
-          lVar7 = ((ulonglong)
-                   *(uint *)((int)(&DAT_8329a900 +
-                                  (int)uVar2 * 0xc +
-                                  (int)((uVar8 + uVar2 * -0x14c0 & 0xffffffff) << 6)) + 4) -
-                  (ulonglong)
-                  *(uint *)(&DAT_8329a900 +
-                           (int)uVar2 * 0xc + (int)((uVar8 + uVar2 * -0x14c0 & 0xffffffff) << 6))) +
-                  lVar7;
+          uVar3 = (uVar9 & 0xffffffff) / 0x14c0;
+          piVar2 = (int *)((int)uVar3 * 0xc +
+                          (int)((uVar9 + uVar3 * -0x14c0 & 0xffffffff) << 6) + -0x7cd65700);
+          iVar8 = (piVar2[1] - *piVar2) + iVar8;
         }
       }
-      lVar3 = lVar3 + -1;
-      puVar4 = puVar4 + 1;
-      lVar5 = lVar5 + 0x20;
-    } while (lVar3 != 0);
-    DB_SetRemainingLoadAmount(lVar7);
+      lVar4 = lVar4 + -1;
+      pSVar5 = (StreamGlob2 *)(pSVar5->inuse + 1);
+      lVar6 = lVar6 + 0x20;
+    } while (lVar4 != 0);
+    DB_SetRemainingLoadAmount(iVar8);
   }
   __restgprlr_16();
   return;
@@ -219,156 +191,164 @@ void DB_SetRemainingStreamMemorySize(void)
 
 // 823FF148  DB_StreamInit  (database/db_streaming.cpp:319)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_StreamInit(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff8205e210,0xffffffff823fd528,0xffffffff83306d74);
-  Cmd_AddCommandInternal(0xffffffff8205e200,0xffffffff823fe6a8,0xffffffff83306d60);
-  DAT_832ee010 = 0xffe00000;
-  DB_StreamClearPriority(0xffffffff83232f00);
+  Cmd_AddCommandInternal("stream_memory",DB_DisplayStreamMemory,&DB_DisplayStreamMemory_VAR);
+  Cmd_AddCommandInternal("image_memory",DB_ReportImageMemory,&DB_ReportImageMemory_VAR);
+  g_stream.abortPriority = -0x200000;
+  DB_StreamClearPriority(g_stream.priority2);
   return;
 }
 
 
 // 823FD8B0  DB_CreateGfxImageStream  (database/db_streaming.cpp:334)
 
-void DB_CreateGfxImageStream(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_CreateGfxImageStream(XAssetHeader param_1,int param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  int *piVar4;
-  int iVar8;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint *puVar9;
-  undefined4 uVar10;
-  ulonglong uVar7;
-  uint uVar11;
-  longlong lVar12;
-  int iVar13;
-  int iVar15;
-  longlong lVar14;
-  uint *puVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  uint uVar4;
+  XAssetStreamFile *pXVar5;
+  DBFile *pDVar6;
+  Sys_File SVar7;
+  uint uVar8;
+  longlong lVar9;
+  longlong lVar10;
+  DBFile **ppDVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   ulonglong local_c8;
+  GfxImage *pGVar3;
   
-  iVar8 = __savegprlr();
-  uVar5 = DB_GetGfxImageIndex();
-  lVar12 = (uVar5 & 0x3ffffff) * 0x40;
-  iVar15 = (int)lVar12;
-  *(undefined4 *)(&DAT_8329a93c + iVar15) = 0;
-  *(undefined2 *)(&DAT_8329a930 + iVar15) = 0;
-  if (*(char *)(iVar8 + 0x47) != '\0') {
-    uVar2 = (uint)((uVar5 & 0xffffffff) >> 3) & 0x1ffffffc;
-    uVar1 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar5 & 0xffffffff) << 2) & 0x7c));
-    uVar11 = uVar1 | *(uint *)(&DAT_832edd00 + uVar2);
-    if ((*(byte *)(iVar8 + 0x3b) & 0x10) == 0) {
-      uVar11 = *(uint *)(&DAT_832edd00 + uVar2) & ~uVar1;
+  lVar10 = (longlong)(int)param_1;
+  __savegprlr();
+  pGVar3 = (GfxImage *)lVar10;
+  uVar2 = DB_GetGfxImageIndex(pGVar3);
+  g_stream.imageStream[uVar2].basePixels = (uchar *)0x0;
+  g_stream.imageStream[uVar2].sizeReduction4096 = 0;
+  if (pGVar3->cached != '\0') {
+    uVar1 = uVar2 >> 3 & 0x1ffffffc;
+    uVar4 = *(uint *)((int)g_stream.heatMapImage + uVar1);
+    uVar8 = *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) | uVar4;
+    if ((pGVar3->flags & 0x10) == 0) {
+      uVar8 = uVar4 & ~*(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4);
     }
-    *(uint *)(&DAT_832edd00 + uVar2) = uVar11;
-    uVar6 = DB_ImageEndSizeReduction(iVar8);
-    if ((uVar6 & 0xfff) != 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x175,0,0xffffffff82000f98,0xffffffff8205d1f4);
+    *(uint *)((int)g_stream.heatMapImage + uVar1) = uVar8;
+    uVar4 = DB_ImageEndSizeReduction(pGVar3);
+    if ((uVar4 & 0xfff) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x175,0,"%s");
     }
-    *(short *)(&DAT_8329a930 + iVar15) = (short)((uVar6 & 0xffffffff) >> 0xc);
+    g_stream.imageStream[uVar2].sizeReduction4096 = (ushort)(uVar4 >> 0xc);
     local_c8 = 0x400000000;
-    puVar16 = (uint *)(iVar8 + 0x50);
-    lVar12 = lVar12 + -0x7cd656f8;
-    uVar7 = uVar5;
+    lVar10 = lVar10 + 0x50;
+    ppDVar11 = &g_stream.imageStream[uVar2].part[0].file;
     do {
-      if ((uVar6 & 0xffffffff) != 0) {
-        uVar1 = *puVar16;
+      if (uVar4 != 0) {
+        uVar1 = *(uint *)lVar10;
         if (uVar1 != 0) {
-          if (((ulonglong)uVar1 & 0x3ffffff) <= (uVar6 & 0xffffffff)) {
-            MyAssertHandler(0xffffffff8205cd18,0x182,0,0xffffffff82000f98,0xffffffff8205de98);
+          if ((uVar1 & 0x3ffffff) <= uVar4) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x182,0,"%s");
           }
-          *puVar16 = (int)((ulonglong)uVar1 & 0x3ffffff) - (int)uVar6 | uVar1 & 0xfc000000;
+          *(uint *)lVar10 = (uVar1 & 0x3ffffff) - uVar4 | uVar1 & 0xfc000000;
         }
       }
-      puVar9 = (uint *)DB_GetNextImageStreamFile();
-      puVar3 = (undefined4 *)lVar12;
-      puVar3[-2] = puVar9[1];
-      puVar3[-1] = puVar9[2];
-      if (puVar9[2] == 0) {
-        if (*puVar9 != 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x1b3,0,0xffffffff82000f98,0xffffffff8205df4c);
+      pXVar5 = DB_GetNextImageStreamFile();
+      ((GfxSubImageStream *)(ppDVar11 + -2))->fileOffset = pXVar5->offset;
+      ppDVar11[-1] = (DBFile *)pXVar5->offsetEnd;
+      if (pXVar5->offsetEnd == 0) {
+        if (pXVar5->fileIndex != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x1b3,0,"%s");
         }
-        if (puVar3[-2] != 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x1b4,0,0xffffffff82000f98,0xffffffff8205df68);
+        if (((GfxSubImageStream *)(ppDVar11 + -2))->fileOffset != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x1b4,0,"%s");
         }
-        *puVar3 = 0;
+        *ppDVar11 = (DBFile *)0x0;
+      }
+      else if (pXVar5->fileIndex == 0) {
+        pDVar6 = DB_GetFile();
+        *ppDVar11 = pDVar6;
       }
       else {
-        uVar1 = *puVar9;
-        if (uVar1 == 0) {
-          uVar10 = DB_GetFile();
-          *puVar3 = uVar10;
+        if (0x14 < pXVar5->fileIndex) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x199,0,
+                          "imageStreamFile->fileIndex doesn\'t index ARRAY_COUNT( g_imageFile )\n\t%i not in [0, %i)"
+                         );
         }
-        else {
-          if (0x14 < uVar1) {
-            MyAssertHandler(0xffffffff8205cd18,0x199,0,0xffffffff8205deb0,uVar1,0x15);
-          }
-          iVar15 = *puVar9 * 0x4c;
-          piVar4 = (int *)(&DAT_83305c98 + iVar15);
-          if (*(int *)(&DAT_83305ca0 + iVar15) != 0) {
-            MyAssertHandler(0xffffffff8205cd18,0x19c,0,0xffffffff82000f98,0xffffffff8205df08);
-          }
-          if (*piVar4 == 0) {
-            Com_sprintf(iVar15 + -0x7ccfa35c,0x40,0xffffffff8205df1c,*puVar9);
-            uVar7 = PakFile_Open(0xffffffff83231e88,1,*puVar9);
-            *piVar4 = (int)uVar7;
-            if ((uVar7 & 0xffffffff) == 0) {
-              Com_Printf(uVar7,0xffffffff8205df28,iVar15 + -0x7ccfa35c);
-              DB_DirtyDiscError();
-            }
-            uVar7 = uVar5 & 0xffffffff;
-          }
-          *puVar3 = piVar4;
+        uVar1 = pXVar5->fileIndex;
+        pDVar6 = g_imageFile + uVar1;
+        if (g_imageFile[uVar1].memoryBuffer != (uchar *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x19c,0,"%s");
         }
+        if ((pDVar6->handle).handle == (void *)0x0) {
+          Com_sprintf(g_imageFile[uVar1].name,0x40,"imagefile%d");
+          SVar7 = PakFile_Open(g_imageHandle,PACKFILE_USER_IMAGE,pXVar5->fileIndex);
+          (pDVar6->handle).handle = SVar7.handle;
+          if (SVar7.handle == (void *)0x0) {
+            Com_Printf(0,"ERROR: Could not find file \'%s\'\n");
+            DB_DirtyDiscError();
+          }
+        }
+        *ppDVar11 = pDVar6;
       }
-      puVar16 = puVar16 + 2;
-      lVar12 = lVar12 + 0xc;
-      lVar14 = (local_c8 >> 0x20) - 1;
-      local_c8 = lVar14 << 0x20;
-    } while (lVar14 != 0);
-    dVar17 = 0.0;
-    dVar19 = (double)*(ushort *)(iVar8 + 0x4e);
-    dVar18 = (double)*(ushort *)(iVar8 + 0x4c);
-    if (dVar18 == 0.0) {
-      MyAssertHandler(0xffffffff8205cd18,0x1bb,0,0xffffffff82000f98,0xffffffff8205de8c);
+      lVar10 = lVar10 + 8;
+      ppDVar11 = ppDVar11 + 3;
+      lVar9 = (local_c8 >> 0x20) - 1;
+      local_c8 = lVar9 << 0x20;
+    } while (lVar9 != 0);
+    dVar12 = 0.0;
+    dVar14 = (double)pGVar3->streams[0].height;
+    dVar13 = (double)pGVar3->streams[0].width;
+    if (dVar13 == 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x1bb,0,"%s");
     }
-    if (dVar19 == dVar17) {
-      MyAssertHandler(0xffffffff8205cd18,0x1bc,0,0xffffffff82000f98,0xffffffff8205de80);
+    if (dVar14 == dVar12) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x1bc,0,"%s");
     }
-    iVar15 = (int)((uVar7 & 0x3fffffff) << 2);
-    *(float *)(&DAT_83283780 + iVar15) =
-         SQRT((float)(dVar19 * dVar19 + (double)(float)(dVar18 * dVar18)));
-    *(uint *)((int)&DAT_832f1098 + iVar15) = *(uint *)(iVar8 + 0x50) & 0x3ffffff;
-    if ((*(uint *)(iVar8 + 0x58) & 0x3ffffff) == 0) {
-      iVar13 = 0;
-    }
-    else {
-      iVar13 = (*(uint *)(iVar8 + 0x58) & 0x3ffffff) - (*(uint *)(iVar8 + 0x50) & 0x3ffffff);
-    }
-    *(int *)((int)&DAT_832f6398 + iVar15) = iVar13;
-    if ((*(uint *)(iVar8 + 0x60) & 0x3ffffff) == 0) {
-      iVar13 = 0;
+    g_stream.imageTexLength[uVar2] =
+         SQRT((float)(dVar14 * dVar14 + (double)(float)(dVar13 * dVar13)));
+    g_imageStreamSize[uVar2] = pGVar3->streams[0].pixelSize & 0x3ffffff;
+    uVar4 = pGVar3->streams[1].pixelSize;
+    if ((uVar4 & 0x3ffffff) == 0) {
+      uVar4 = 0;
     }
     else {
-      iVar13 = (*(uint *)(iVar8 + 0x60) & 0x3ffffff) - (*(uint *)(iVar8 + 0x58) & 0x3ffffff);
+      uVar4 = (uVar4 & 0x3ffffff) - (pGVar3->streams[0].pixelSize & 0x3ffffff);
     }
-    *(int *)((int)&DAT_832fb698 + iVar15) = iVar13;
-    if ((*(uint *)(iVar8 + 0x68) & 0x3ffffff) == 0) {
-      iVar8 = 0;
+    g_imageStreamSize[uVar2 + 0x14c0] = uVar4;
+    uVar4 = pGVar3->streams[2].pixelSize;
+    if ((uVar4 & 0x3ffffff) == 0) {
+      uVar4 = 0;
     }
     else {
-      iVar8 = (*(uint *)(iVar8 + 0x68) & 0x3ffffff) - (*(uint *)(iVar8 + 0x60) & 0x3ffffff);
+      uVar4 = (uVar4 & 0x3ffffff) - (pGVar3->streams[1].pixelSize & 0x3ffffff);
     }
-    *(int *)((int)&DAT_83300998 + iVar15) = iVar8;
+    g_imageStreamSize[uVar2 + 0x2980] = uVar4;
+    uVar4 = pGVar3->streams[3].pixelSize;
+    if ((uVar4 & 0x3ffffff) == 0) {
+      uVar4 = 0;
+    }
+    else {
+      uVar4 = (uVar4 & 0x3ffffff) - (pGVar3->streams[2].pixelSize & 0x3ffffff);
+    }
+    g_imageStreamSize[uVar2 + 0x3e40] = uVar4;
   }
   __restgprlr();
   return;
@@ -377,27 +357,33 @@ void DB_CreateGfxImageStream(void)
 
 // 823F6FF8  DB_ReleaseGfxImageStream  (database/db_streaming.cpp:458)
 
-void DB_ReleaseGfxImageStream(int param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ReleaseGfxImageStream(XAssetHeader param_1)
 
 {
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  ulonglong uVar4;
+  longlong lVar4;
   uint uVar5;
   
-  uVar4 = DB_GetGfxImageIndex();
-  uVar1 = (uint)((uVar4 & 0xffffffff) >> 3) & 0x1ffffffc;
-  uVar2 = (uint)((uVar4 + 0x14c0 & 0xffffffff) >> 3) & 0x1ffffffc;
-  uVar3 = (uint)((uVar4 + 0x2980 & 0xffffffff) >> 3) & 0x1ffffffc;
-  uVar5 = ~*(uint *)((int)&DAT_82992400 + ((uint)((uVar4 & 0xffffffff) << 2) & 0x7c));
-  *(uint *)((int)&DAT_845f3980 + uVar1) = uVar5 & *(uint *)((int)&DAT_845f3980 + uVar1);
-  uVar1 = (uint)((uVar4 + 0x3e40 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)((int)&DAT_845f3980 + uVar2) = *(uint *)((int)&DAT_845f3980 + uVar2) & uVar5;
-  *(uint *)((int)&DAT_845f3980 + uVar3) = *(uint *)((int)&DAT_845f3980 + uVar3) & uVar5;
-  *(uint *)((int)&DAT_845f3980 + uVar1) = uVar5 & *(uint *)((int)&DAT_845f3980 + uVar1);
-  if (*(char *)(param_1 + 0x47) != '\0') {
-    ImageCache_ReleaseImage(param_1);
+  uVar5 = DB_GetGfxImageIndex(param_1.image);
+  lVar4 = (longlong)(int)uVar5;
+  uVar3 = uVar5 >> 3 & 0x1ffffffc;
+  uVar1 = (uint)((lVar4 + 0x14c0U & 0xffffffff) >> 3) & 0x1ffffffc;
+  uVar2 = (uint)((lVar4 + 0x2980U & 0xffffffff) >> 3) & 0x1ffffffc;
+  uVar5 = ~*(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4);
+  *(uint *)((int)g_stream2.inuse + uVar3) = uVar5 & *(uint *)((int)g_stream2.inuse + uVar3);
+  uVar3 = (uint)((lVar4 + 0x3e40U & 0xffffffff) >> 3) & 0x1ffffffc;
+  *(uint *)((int)g_stream2.inuse + uVar1) = *(uint *)((int)g_stream2.inuse + uVar1) & uVar5;
+  *(uint *)((int)g_stream2.inuse + uVar2) = *(uint *)((int)g_stream2.inuse + uVar2) & uVar5;
+  *(uint *)((int)g_stream2.inuse + uVar3) = uVar5 & *(uint *)((int)g_stream2.inuse + uVar3);
+  if ((param_1.image)->cached != '\0') {
+    ImageCache_ReleaseImage(param_1.image);
   }
   return;
 }
@@ -405,146 +391,150 @@ void DB_ReleaseGfxImageStream(int param_1)
 
 // 823F70A0  DB_CloneGfxImageStream  (database/db_streaming.cpp:482)
 
-void DB_CloneGfxImageStream(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int DB_CloneGfxImageStream(XAssetHeader param_1,XAssetHeader param_2,DB_CloneType param_3)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
+  float fVar1;
+  float fVar2;
   uint uVar3;
-  undefined4 uVar4;
-  undefined4 uVar5;
+  uint uVar4;
+  uint uVar5;
   uint uVar6;
-  int iVar7;
+  GfxImage *pGVar7;
+  uint uVar8;
+  uint uVar9;
   int iVar10;
-  ulonglong uVar8;
-  ulonglong uVar9;
   uint uVar11;
   longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  uint uVar15;
-  longlong lVar16;
-  uint uVar17;
-  undefined1 auStack_80 [128];
+  GfxImageStream *pGVar13;
+  uint uVar14;
+  GfxImageStream *pGVar15;
   
-  iVar10 = __savegprlr_26();
-  uVar8 = DB_GetGfxImageIndex();
-  uVar9 = DB_GetGfxImageIndex(param_2);
-  if (*(char *)(iVar10 + 0x47) != '\0') {
-    if (*(int *)(iVar10 + 0x48) != 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x1f2,0,0xffffffff82000f98,0xffffffff8205cd80);
+  pGVar7 = (GfxImage *)__savegprlr_26(param_1.physPreset);
+  uVar8 = DB_GetGfxImageIndex(pGVar7);
+  uVar9 = DB_GetGfxImageIndex(param_2.image);
+  if (pGVar7->cached != '\0') {
+    if (pGVar7->pixels != (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x1f2,0,"%s");
     }
-    if ((*(char *)((int)param_2 + 0x47) != '\0') && ((param_3 == 1 || (param_3 == 3)))) {
-      lVar13 = (uVar9 & 0x3ffffff) * 0x40;
-      lVar16 = lVar13 + -0x7cd65700;
-      lVar14 = (uVar8 & 0x3ffffff) * 0x40 + -0x7cd65700;
+    if (((param_2.image)->cached != '\0') &&
+       ((param_3 == DB_CLONE_NORMAL || (param_3 == DB_CLONE_NORMAL_FROM_DEFAULT)))) {
+      pGVar15 = g_stream.imageStream + uVar9;
+      pGVar13 = g_stream.imageStream + uVar8;
       do {
-        lVar12 = (ulonglong)*(byte *)lVar16 - (ulonglong)*(byte *)lVar14;
+        lVar12 = (ulonglong)*(byte *)&pGVar15->part[0].fileOffset -
+                 (ulonglong)*(byte *)&pGVar13->part[0].fileOffset;
         if (lVar12 != 0) break;
-        lVar16 = lVar16 + 1;
-        lVar14 = lVar14 + 1;
-      } while ((int)lVar16 != (int)lVar13 + -0x7cd656c0);
+        pGVar15 = (GfxImageStream *)((int)&pGVar15->part[0].fileOffset + 1);
+        pGVar13 = (GfxImageStream *)((int)&pGVar13->part[0].fileOffset + 1);
+      } while (pGVar15 != g_stream.imageStream + uVar9 + 1);
       if ((int)lVar12 == 0) {
-        *(undefined4 *)((int)param_2 + 0x6c) = *(undefined4 *)(iVar10 + 0x6c);
-        __restgprlr_26(0);
-        return;
+        *(char **)&(param_2.model)->lodInfo[1].numsurfs = pGVar7->name;
+        iVar10 = __restgprlr_26(0);
+        return iVar10;
       }
     }
   }
-  if (param_3 != 0) {
+  if (param_3 != DB_CLONE_DEFAULT) {
     DB_ReleaseGfxImageStream(param_2);
   }
-  if (param_3 == 2) {
-    uVar6 = (uint)((uVar8 & 0xffffffff) >> 3) & 0x1ffffffc;
-    uVar15 = (uint)((uVar9 & 0xffffffff) >> 3) & 0x1ffffffc;
-    uVar2 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar8 & 0xffffffff) << 2) & 0x7c));
-    uVar3 = *(uint *)(&DAT_832edd00 + uVar15);
-    uVar11 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar9 & 0xffffffff) << 2) & 0x7c));
-    if ((uVar2 & *(uint *)(&DAT_832edd00 + uVar6)) == 0) {
-      uVar17 = uVar3 & ~uVar11;
+  if (param_3 == DB_CLONE_SWAP) {
+    uVar6 = uVar8 >> 3 & 0x1ffffffc;
+    uVar5 = uVar9 >> 3 & 0x1ffffffc;
+    uVar3 = *(uint *)(&g_bitShift + (uVar8 & 0x1f) * 4);
+    uVar4 = *(uint *)((int)g_stream.heatMapImage + uVar5);
+    uVar11 = *(uint *)(&g_bitShift + (uVar9 & 0x1f) * 4);
+    if ((uVar3 & *(uint *)((int)g_stream.heatMapImage + uVar6)) == 0) {
+      uVar14 = uVar4 & ~uVar11;
     }
     else {
-      uVar17 = uVar11 | uVar3;
+      uVar14 = uVar11 | uVar4;
     }
-    *(uint *)(&DAT_832edd00 + uVar15) = uVar17;
-    uVar15 = uVar2 | *(uint *)(&DAT_832edd00 + uVar6);
-    if ((uVar11 & uVar3) == 0) {
-      uVar15 = *(uint *)(&DAT_832edd00 + uVar6) & ~uVar2;
+    *(uint *)((int)g_stream.heatMapImage + uVar5) = uVar14;
+    uVar5 = *(uint *)((int)g_stream.heatMapImage + uVar6);
+    uVar14 = uVar3 | uVar5;
+    if ((uVar11 & uVar4) == 0) {
+      uVar14 = uVar5 & ~uVar3;
     }
-    *(uint *)(&DAT_832edd00 + uVar6) = uVar15;
-    memcpy(auStack_80,&DAT_8329a900 + (int)((uVar9 & 0xffffffff) << 6),0x40);
-    memcpy(&DAT_8329a900 + (int)((uVar9 & 0xffffffff) << 6),
-           &DAT_8329a900 + (int)((uVar8 & 0xffffffff) << 6),0x40);
-    memcpy(&DAT_8329a900 + (int)((uVar8 & 0xffffffff) << 6),auStack_80,0x40);
-    iVar10 = (int)((uVar8 & 0x3fffffff) << 2);
-    iVar7 = (int)((uVar9 & 0x3fffffff) << 2);
-    uVar4 = *(undefined4 *)((int)&DAT_832f1098 + iVar7);
-    *(undefined4 *)((int)&DAT_832f1098 + iVar7) = *(undefined4 *)((int)&DAT_832f1098 + iVar10);
-    *(undefined4 *)((int)&DAT_832f1098 + iVar10) = uVar4;
-    uVar4 = *(undefined4 *)((int)&DAT_832f6398 + iVar7);
-    *(undefined4 *)((int)&DAT_832f6398 + iVar7) = *(undefined4 *)((int)&DAT_832f6398 + iVar10);
-    *(undefined4 *)((int)&DAT_832f6398 + iVar10) = uVar4;
-    uVar4 = *(undefined4 *)(&DAT_83283780 + iVar7);
-    uVar5 = *(undefined4 *)((int)&DAT_832fb698 + iVar7);
-    uVar1 = *(undefined4 *)(&DAT_83283780 + iVar10);
-    *(undefined4 *)((int)&DAT_832fb698 + iVar7) = *(undefined4 *)((int)&DAT_832fb698 + iVar10);
-    *(undefined4 *)(&DAT_83283780 + iVar7) = uVar1;
-    *(undefined4 *)((int)&DAT_832fb698 + iVar10) = uVar5;
-    uVar1 = *(undefined4 *)((int)&DAT_83300998 + iVar7);
-    *(undefined4 *)(&DAT_83283780 + iVar10) = uVar4;
-    *(undefined4 *)((int)&DAT_83300998 + iVar7) = *(undefined4 *)((int)&DAT_83300998 + iVar10);
-    *(undefined4 *)((int)&DAT_83300998 + iVar10) = uVar1;
-    __restgprlr_26(1);
-    return;
+    *(uint *)((int)g_stream.heatMapImage + uVar6) = uVar14;
+    memcpy();
+    memcpy();
+    memcpy();
+    uVar3 = g_imageStreamSize[uVar9];
+    g_imageStreamSize[uVar9] = g_imageStreamSize[uVar8];
+    g_imageStreamSize[uVar8] = uVar3;
+    uVar3 = g_imageStreamSize[uVar9 + 0x14c0];
+    g_imageStreamSize[uVar9 + 0x14c0] = g_imageStreamSize[uVar8 + 0x14c0];
+    g_imageStreamSize[uVar8 + 0x14c0] = uVar3;
+    fVar1 = g_stream.imageTexLength[uVar9];
+    uVar3 = g_imageStreamSize[uVar9 + 0x2980];
+    fVar2 = g_stream.imageTexLength[uVar8];
+    g_imageStreamSize[uVar9 + 0x2980] = g_imageStreamSize[uVar8 + 0x2980];
+    g_stream.imageTexLength[uVar9] = fVar2;
+    g_imageStreamSize[uVar8 + 0x2980] = uVar3;
+    uVar3 = g_imageStreamSize[uVar9 + 0x3e40];
+    g_stream.imageTexLength[uVar8] = fVar1;
+    g_imageStreamSize[uVar9 + 0x3e40] = g_imageStreamSize[uVar8 + 0x3e40];
+    g_imageStreamSize[uVar8 + 0x3e40] = uVar3;
+    iVar10 = __restgprlr_26(1);
+    return iVar10;
   }
-  uVar3 = (uint)((uVar9 & 0xffffffff) >> 3) & 0x1ffffffc;
-  uVar2 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar9 & 0xffffffff) << 2) & 0x7c));
-  uVar11 = uVar2 | *(uint *)(&DAT_832edd00 + uVar3);
-  if ((*(uint *)(&DAT_832edd00 + ((uint)uVar8 >> 3 & 0x1ffffffc)) &
-      *(uint *)((int)&DAT_82992400 + ((uint)((uVar8 & 0xffffffff) << 2) & 0x7c))) == 0) {
-    uVar11 = *(uint *)(&DAT_832edd00 + uVar3) & ~uVar2;
+  uVar4 = uVar9 >> 3 & 0x1ffffffc;
+  uVar3 = *(uint *)((int)g_stream.heatMapImage + uVar4);
+  uVar11 = *(uint *)(&g_bitShift + (uVar9 & 0x1f) * 4) | uVar3;
+  if ((*(uint *)((int)g_stream.heatMapImage + (uVar8 >> 3 & 0x1ffffffc)) &
+      *(uint *)(&g_bitShift + (uVar8 & 0x1f) * 4)) == 0) {
+    uVar11 = uVar3 & ~*(uint *)(&g_bitShift + (uVar9 & 0x1f) * 4);
   }
-  *(uint *)(&DAT_832edd00 + uVar3) = uVar11;
-  memcpy(&DAT_8329a900 + (int)((uVar9 & 0xffffffff) << 6),
-         &DAT_8329a900 + (int)((uVar8 & 0xffffffff) << 6),0x40);
-  iVar10 = (int)((uVar8 & 0x3fffffff) << 2);
-  iVar7 = (int)((uVar9 & 0x3fffffff) << 2);
-  *(undefined4 *)((int)&DAT_832f1098 + iVar7) = *(undefined4 *)((int)&DAT_832f1098 + iVar10);
-  *(undefined4 *)((int)&DAT_832f6398 + iVar7) = *(undefined4 *)((int)&DAT_832f6398 + iVar10);
-  *(undefined4 *)((int)&DAT_832fb698 + iVar7) = *(undefined4 *)((int)&DAT_832fb698 + iVar10);
-  uVar4 = *(undefined4 *)(&DAT_83283780 + iVar10);
-  *(undefined4 *)((int)&DAT_83300998 + iVar7) = *(undefined4 *)((int)&DAT_83300998 + iVar10);
-  *(undefined4 *)(&DAT_83283780 + iVar7) = uVar4;
-  __restgprlr_26(1);
-  return;
+  *(uint *)((int)g_stream.heatMapImage + uVar4) = uVar11;
+  memcpy();
+  g_imageStreamSize[uVar9] = g_imageStreamSize[uVar8];
+  g_imageStreamSize[uVar9 + 0x14c0] = g_imageStreamSize[uVar8 + 0x14c0];
+  g_imageStreamSize[uVar9 + 0x2980] = g_imageStreamSize[uVar8 + 0x2980];
+  fVar1 = g_stream.imageTexLength[uVar8];
+  g_imageStreamSize[uVar9 + 0x3e40] = g_imageStreamSize[uVar8 + 0x3e40];
+  g_stream.imageTexLength[uVar9] = fVar1;
+  iVar10 = __restgprlr_26(1);
+  return iVar10;
 }
 
 
 // 823F7400  DB_FreeGfxImageStream  (database/db_streaming.cpp:570)
 
-void * DB_FreeGfxImageStream(int param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeGfxImageStream(GfxImage *param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  void *pvVar3;
+  uint uVar1;
   
-  DB_ReleaseGfxImageStream();
-  if ((*(char *)(param_1 + 0x47) != '\0') && (*(int *)(param_1 + 0x48) != 0)) {
-    MyAssertHandler(0xffffffff8205cd18,0x242,0,0xffffffff82000f98,0xffffffff8205cd94);
+  DB_ReleaseGfxImageStream((XAssetHeader)param_1);
+  if ((param_1->cached != '\0') && (param_1->pixels != (uchar *)0x0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x242,0,"%s");
   }
-  uVar2 = DB_GetGfxImageIndex(param_1);
-  pvVar3 = memset(&DAT_8329a900 + (int)((uVar2 & 0xffffffff) << 6),0,0x40);
-  iVar1 = (int)((uVar2 & 0x3fffffff) << 2);
-  *(undefined4 *)((int)&DAT_832f1098 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_832f6398 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_832fb698 + iVar1) = 0;
-  *(undefined4 *)((int)&DAT_83300998 + iVar1) = 0;
-  return pvVar3;
+  uVar1 = DB_GetGfxImageIndex(param_1);
+  memset();
+  g_imageStreamSize[uVar1] = 0;
+  g_imageStreamSize[uVar1 + 0x14c0] = 0;
+  g_imageStreamSize[uVar1 + 0x2980] = 0;
+  g_imageStreamSize[uVar1 + 0x3e40] = 0;
+  return;
 }
 
 
 // 823FDCE0  DB_StreamTabulationFinish  (database/db_streaming.cpp:646)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_StreamTabulationFinish(void)
 
@@ -552,24 +542,26 @@ void DB_StreamTabulationFinish(void)
   float fVar1;
   ulonglong uVar2;
   float *pfVar3;
-  undefined4 *puVar4;
+  uint *puVar4;
   longlong lVar5;
   double dVar6;
   
   __savegprlr_24();
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x28d,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x28d,0,"%s");
   }
   DB_StreamKickoff();
   dVar6 = 1000000.0;
-  if ((DAT_8333cb29 != '\0') && (DAT_832ee020 != 0)) {
-    if (DAT_832ee024 != 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x293,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if ((fxWorld.glassSys.initCount != '\0') && (g_stream.glassDistUpdated != 0)) {
+    if (g_stream.updateLocked != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x293,0,"%s");
     }
-    uVar2 = (ulonglong)DAT_8333cacc;
-    DAT_832ee020 = 0;
+    uVar2 = (ulonglong)fxWorld.glassSys.defCount;
+    g_stream.glassDistUpdated = 0;
     if (uVar2 != 0) {
-      pfVar3 = (float *)0x8328207c;
+      pfVar3 = g_stream.cachedModelDist + 0x89f;
       do {
         pfVar3[0x101] = pfVar3[1];
         pfVar3 = pfVar3 + 1;
@@ -578,7 +570,7 @@ void DB_StreamTabulationFinish(void)
       } while (uVar2 != 0);
     }
   }
-  pfVar3 = (float *)0x8327fdfc;
+  pfVar3 = g_stream.modelDist + 0x89f;
   lVar5 = 0x8a0;
   do {
     fVar1 = pfVar3[-0x89f];
@@ -590,7 +582,7 @@ void DB_StreamTabulationFinish(void)
     *pfVar3 = (float)dVar6;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  pfVar3 = (float *)0x8327bb7c;
+  pfVar3 = g_stream.bmodelDist + 0x7ff;
   lVar5 = 0x800;
   do {
     fVar1 = pfVar3[-0x7ff];
@@ -602,7 +594,7 @@ void DB_StreamTabulationFinish(void)
     *pfVar3 = (float)dVar6;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  puVar4 = (undefined4 *)0x83299cfc;
+  puVar4 = g_stream.modelBaseTouch + 0x5f;
   lVar5 = 0x45;
   do {
     puVar4[-0x5f] = puVar4[1] | puVar4[-0x5f];
@@ -617,20 +609,24 @@ void DB_StreamTabulationFinish(void)
 
 // 823F74D0  DB_StreamKickoff  (database/db_streaming.cpp:694)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_StreamKickoff(void)
 
 {
   char in_RESERVE;
   byte in_cr0;
   
-  if ((int)DAT_832ee350 < 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x2b7,0,0xffffffff8205cdc0,0xffffffff8205cde0,DAT_832ee350);
+  if (g_streamTabulation < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x2b7,0,"%s\n\t(g_streamTabulation) = %i");
   }
-  if ((int)DAT_832ee350 < 2) {
+  if (g_streamTabulation < 2) {
     do {
       if (in_RESERVE != '\0') {
-        DAT_832ee350 = storeWordConditionalIndexed((ulonglong)DAT_832ee350 + 2,0,0xffffffff832ee350)
-        ;
+        g_streamTabulation =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_streamTabulation + 2,0,0xffffffff832ee350);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -642,11 +638,13 @@ void DB_StreamKickoff(void)
 
 // 823F7560  DB_EnterStreamingTabulate  (database/db_streaming.cpp:704)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_EnterStreamingTabulate(void)
 
 {
   int iVar1;
-  uint uVar2;
+  int iVar2;
   int *in_r13;
   char in_RESERVE;
   byte in_cr0;
@@ -655,34 +653,37 @@ void DB_EnterStreamingTabulate(void)
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x10) == 0) {
     do {
-      uVar2 = DAT_83231e80;
-      if (DAT_83231e80 != 0) {
+      iVar2 = g_streamTabulateLock;
+      if (g_streamTabulateLock != 0) {
         if (in_RESERVE != '\0') {
-          DAT_83231e80 = storeWordConditionalIndexed((ulonglong)DAT_83231e80,0,0xffffffff83231e80);
+          g_streamTabulateLock =
+               storeWordConditionalIndexed
+                         ((ulonglong)(uint)g_streamTabulateLock,0,0xffffffff83231e80);
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        DAT_83231e80 = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
+        g_streamTabulateLock = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
 joined_r0x823f75c8:
-    if (uVar2 != 0) {
+    if (iVar2 != 0) {
       Sys_Sleep(1);
       do {
-        uVar2 = DAT_83231e80;
-        if (DAT_83231e80 != 0) {
+        iVar2 = g_streamTabulateLock;
+        if (g_streamTabulateLock != 0) {
           if (in_RESERVE != '\0') {
-            DAT_83231e80 = storeWordConditionalIndexed((ulonglong)DAT_83231e80,0,0xffffffff83231e80)
-            ;
+            g_streamTabulateLock =
+                 storeWordConditionalIndexed
+                           ((ulonglong)(uint)g_streamTabulateLock,0,0xffffffff83231e80);
             in_cr0 = 2;
           }
           break;
         }
         if (in_RESERVE != '\0') {
-          DAT_83231e80 = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
+          g_streamTabulateLock = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
@@ -690,8 +691,9 @@ joined_r0x823f75c8:
     }
     sync(1);
   }
-  if (DAT_83231e80 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x2cf,0,0xffffffff82000f98,0xffffffff8205cdfc);
+  if (g_streamTabulateLock == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x2cf,0,"%s");
   }
   *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + 1;
   __restgprlr_27();
@@ -701,6 +703,8 @@ joined_r0x823f75c8:
 
 // 823F7658  DB_LeaveStreamingTabulate  (database/db_streaming.cpp:725)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_LeaveStreamingTabulate(void)
 
 {
@@ -709,18 +713,20 @@ void DB_LeaveStreamingTabulate(void)
   int *in_r13;
   
   __savegprlr_27();
-  if (DAT_83231e80 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x2d6,0,0xffffffff82000f98,0xffffffff8205cdfc);
+  if (g_streamTabulateLock == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x2d6,0,"%s");
   }
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0x10) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x2d7,0,0xffffffff82000f98,0xffffffff8205ce14);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x2d7,0,"%s");
   }
   lVar2 = (ulonglong)*(uint *)(iVar1 + 0x10) - 1;
   *(int *)(iVar1 + 0x10) = (int)lVar2;
   if (lVar2 == 0) {
     sync(1);
-    DAT_83231e80 = 0;
+    g_streamTabulateLock = 0;
   }
   __restgprlr_27();
   return;
@@ -729,30 +735,42 @@ void DB_LeaveStreamingTabulate(void)
 
 // 823F76F8  DB_StreamHighPriorityTabulation  (database/db_streaming.cpp:739)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_StreamHighPriorityTabulation(void)
 
 {
   ushort uVar1;
-  int iVar2;
-  uint uVar3;
+  ushort uVar2;
+  XModel *pXVar3;
   ulonglong uVar4;
   int iVar5;
-  int iVar6;
-  float fVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  int iVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  float fVar6;
+  ulonglong uVar7;
+  XAssetHeader XVar8;
+  uint uVar9;
+  uint uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  uchar *puVar13;
   ulonglong uVar14;
-  int *piVar15;
-  undefined4 *puVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  int local_c0 [2];
+  ulonglong uVar15;
+  Material **ppMVar16;
+  int iVar17;
+  XModel *pXVar18;
+  char ***pppcVar19;
+  uint uVar20;
+  undefined4 *puVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  XAssetHeader local_c0 [2];
   ulonglong local_b8;
   ulonglong local_b0;
   ulonglong local_a8;
@@ -760,148 +778,160 @@ void DB_StreamHighPriorityTabulation(void)
   ulonglong local_98;
   
   __savegprlr_18();
-  uVar9 = DB_GetAllXAssetOfType(0x13,local_c0,1);
-  if (1 < (uVar9 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205cd18,0x304,0,0xffffffff8205ce98,0xffffffff8205ce84,uVar9);
+  uVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_GFXWORLD,local_c0,1);
+  if (1 < uVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x304,0,"%s\n\t(assetCount) = %i");
   }
-  iVar11 = local_c0[0];
-  dVar18 = 4096.0;
-  if ((uVar9 & 0xffffffff) != 0) {
-    iVar10 = 0;
-    uVar9 = (ulonglong)*(uint *)(local_c0[0] + 0x22c);
-    if (uVar9 != 0) {
-      piVar15 = (int *)(*(int *)(local_c0[0] + 0x284) + 0x1c);
+  XVar8 = local_c0[0];
+  dVar23 = 4096.0;
+  if (uVar9 != 0) {
+    pXVar18 = (XModel *)0x0;
+    uVar14 = (ulonglong)((local_c0[0].gfxWorld)->dpvs).smodelCount;
+    if (uVar14 != 0) {
+      pppcVar19 = &(local_c0[0].vehDef)->turretWeapon->szXAnims;
       do {
-        iVar2 = *piVar15;
-        if (iVar2 != iVar10) {
-          iVar10 = DB_GetXModelIndex();
-          *(float *)(&DAT_8459e580 + iVar10 * 4) = (float)dVar18;
-          iVar10 = iVar2;
+        pXVar3 = (XModel *)*pppcVar19;
+        if (pXVar3 != pXVar18) {
+          uVar9 = DB_GetXModelIndex(pXVar3);
+          g_staticModelStreamDist[uVar9] = (float)dVar23;
+          pXVar18 = pXVar3;
         }
-        uVar9 = uVar9 - 1;
-        piVar15 = piVar15 + 0xb;
-      } while (uVar9 != 0);
+        uVar14 = uVar14 - 1;
+        pppcVar19 = pppcVar19 + 0xb;
+      } while (uVar14 != 0);
     }
-    uVar9 = (ulonglong)*(uint *)(iVar11 + 0x10);
-    if (uVar9 != 0) {
-      iVar10 = *(int *)(iVar11 + 0x280) + 0x1b;
-      piVar15 = (int *)(*(int *)(iVar11 + 0x27c) + 0x10);
+    uVar14 = (ulonglong)(XVar8.model)->noScalePartBits[1];
+    if (uVar14 != 0) {
+      puVar13 = (((XVar8.gfxWorld)->dpvs).surfacesBounds)->invHighMipRadius + 1;
+      ppMVar16 = &(((XVar8.gfxWorld)->dpvs).surfaces)->material;
       do {
-        uVar14 = 0;
-        uVar4 = *(ulonglong *)(*piVar15 + 8) >> 0x1d;
-        uVar8 = uVar4 & 0xfff;
-        uVar1 = (&DAT_8458d880)[((int)uVar8 + ((uint)uVar4 & 0xfff) * 2) * 2];
+        uVar15 = 0;
+        uVar4 = ((*ppMVar16)->info).drawSurf.packed >> 0x1d;
+        uVar7 = uVar4 & 0xfff;
+        uVar1 = g_materialStreamInfo.layer[0].material[((int)uVar7 + ((uint)uVar4 & 0xfff) * 2) * 2]
+        ;
         if (3 < uVar1) {
           do {
-            iVar5 = (int)uVar14;
-            local_b8 = (ulonglong)*(byte *)(iVar10 + -1 + iVar5);
-            iVar6 = (int)(((uVar8 + (uVar4 & 0xfff) * 2) * 2 + uVar14 & 0x7fffffff) << 1);
-            iVar2 = (uint)*(ushort *)((int)&DAT_8458d882 + iVar6) * 4;
-            fVar7 = *(float *)(&DAT_84587f00 + iVar2);
-            if ((float)local_b8 * 0.25 - *(float *)(&DAT_84587f00 + iVar2) < 0.0) {
-              fVar7 = (float)local_b8 * 0.25;
+            iVar17 = (int)uVar15;
+            local_b8 = (ulonglong)puVar13[iVar17 + -1];
+            iVar5 = (int)(((uVar7 + (uVar4 & 0xfff) * 2) * 2 + uVar15 & 0x7fffffff) << 1);
+            uVar2 = *(ushort *)((int)g_materialStreamInfo.layer[0].material + iVar5 + 2);
+            fVar6 = g_materialStreamInfo.worldPriority[uVar2];
+            if ((float)local_b8 * 0.25 - g_materialStreamInfo.worldPriority[uVar2] < 0.0) {
+              fVar6 = (float)local_b8 * 0.25;
             }
-            *(float *)(&DAT_84587f00 + iVar2) = fVar7;
-            local_b0 = (ulonglong)*(byte *)(iVar10 + iVar5);
-            fVar7 = *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d884 + iVar6) * 4);
-            if ((float)local_b0 * 0.25 -
-                *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d884 + iVar6) * 4) < 0.0) {
-              fVar7 = (float)local_b0 * 0.25;
+            g_materialStreamInfo.worldPriority[uVar2] = fVar6;
+            uVar2 = *(ushort *)((int)g_materialStreamInfo.layer[0].material + iVar5 + 4);
+            local_b0 = (ulonglong)puVar13[iVar17];
+            fVar6 = g_materialStreamInfo.worldPriority[uVar2];
+            if ((float)local_b0 * 0.25 - g_materialStreamInfo.worldPriority[uVar2] < 0.0) {
+              fVar6 = (float)local_b0 * 0.25;
             }
-            *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d884 + iVar6) * 4) = fVar7;
-            local_a8 = (ulonglong)*(byte *)(iVar10 + 1 + iVar5);
-            fVar7 = *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d886 + iVar6) * 4);
-            if ((float)local_a8 * 0.25 -
-                *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d886 + iVar6) * 4) < 0.0) {
-              fVar7 = (float)local_a8 * 0.25;
+            g_materialStreamInfo.worldPriority[uVar2] = fVar6;
+            uVar2 = *(ushort *)((int)g_materialStreamInfo.layer[0].material + iVar5 + 6);
+            local_a8 = (ulonglong)puVar13[iVar17 + 1];
+            fVar6 = g_materialStreamInfo.worldPriority[uVar2];
+            if ((float)local_a8 * 0.25 - g_materialStreamInfo.worldPriority[uVar2] < 0.0) {
+              fVar6 = (float)local_a8 * 0.25;
             }
-            *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d886 + iVar6) * 4) = fVar7;
-            local_a0 = (ulonglong)*(byte *)(iVar10 + 2 + iVar5);
-            uVar14 = uVar14 + 4;
-            fVar7 = *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d888 + iVar6) * 4);
-            if ((float)local_a0 * 0.25 -
-                *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d888 + iVar6) * 4) < 0.0) {
-              fVar7 = (float)local_a0 * 0.25;
+            g_materialStreamInfo.worldPriority[uVar2] = fVar6;
+            uVar2 = *(ushort *)((int)g_materialStreamInfo.layer[0].material + iVar5 + 8);
+            local_a0 = (ulonglong)puVar13[iVar17 + 2];
+            uVar15 = uVar15 + 4;
+            fVar6 = g_materialStreamInfo.worldPriority[uVar2];
+            if ((float)local_a0 * 0.25 - g_materialStreamInfo.worldPriority[uVar2] < 0.0) {
+              fVar6 = (float)local_a0 * 0.25;
             }
-            *(float *)(&DAT_84587f00 + (uint)*(ushort *)(&DAT_8458d888 + iVar6) * 4) = fVar7;
-          } while ((uVar14 & 0xffffffff) < ((ulonglong)uVar1 - 3 & 0xffffffff));
+            g_materialStreamInfo.worldPriority[uVar2] = fVar6;
+          } while ((uVar15 & 0xffffffff) < ((ulonglong)uVar1 - 3 & 0xffffffff));
         }
-        if ((uVar14 & 0xffffffff) < (ulonglong)(uint)uVar1) {
-          lVar12 = uVar1 - uVar14;
+        if ((uVar15 & 0xffffffff) < (ulonglong)(uint)uVar1) {
+          lVar11 = uVar1 - uVar15;
           do {
-            local_98 = (ulonglong)*(byte *)(iVar10 + -1 + (int)uVar14);
-            uVar13 = (uVar8 + (uVar4 & 0xfff) * 2) * 2 + uVar14;
-            uVar14 = uVar14 + 1;
-            iVar2 = (uint)*(ushort *)((int)&DAT_8458d882 + (int)((uVar13 & 0xffffffff) << 1)) * 4;
-            fVar7 = *(float *)(&DAT_84587f00 + iVar2);
-            if ((float)local_98 * 0.25 - *(float *)(&DAT_84587f00 + iVar2) < 0.0) {
-              fVar7 = (float)local_98 * 0.25;
+            local_98 = (ulonglong)puVar13[(int)uVar15 + -1];
+            uVar12 = (uVar7 + (uVar4 & 0xfff) * 2) * 2 + uVar15;
+            uVar15 = uVar15 + 1;
+            uVar1 = *(ushort *)
+                     ((int)g_materialStreamInfo.layer[0].material +
+                     (int)((uVar12 & 0xffffffff) << 1) + 2);
+            fVar6 = g_materialStreamInfo.worldPriority[uVar1];
+            if ((float)local_98 * 0.25 - g_materialStreamInfo.worldPriority[uVar1] < 0.0) {
+              fVar6 = (float)local_98 * 0.25;
             }
-            *(float *)(&DAT_84587f00 + iVar2) = fVar7;
-            lVar12 = lVar12 + -1;
-          } while (lVar12 != 0);
+            g_materialStreamInfo.worldPriority[uVar1] = fVar6;
+            lVar11 = lVar11 + -1;
+          } while (lVar11 != 0);
         }
-        uVar9 = uVar9 - 1;
-        piVar15 = piVar15 + 6;
-        iVar10 = iVar10 + 0x20;
-      } while (uVar9 != 0);
+        uVar14 = uVar14 - 1;
+        ppMVar16 = ppMVar16 + 6;
+        puVar13 = puVar13 + 0x20;
+      } while (uVar14 != 0);
     }
-    uVar3 = *(uint *)(iVar11 + 0x29c);
-    uVar9 = 0;
-    if (uVar3 != 0) {
-      iVar11 = 0;
-      do {
-        if ((ulonglong)DAT_835a2944 <= (uVar9 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8205cc50,0x3d,0,0xffffffff8205cca8,uVar9);
-        }
-        iVar10 = *(int *)(iVar11 + DAT_835a2948 + 0x20);
-        if (iVar10 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x32f,0,0xffffffff82000f98,0xffffffff8205ce78);
-        }
-        iVar10 = DB_GetXModelIndex(iVar10);
-        uVar9 = uVar9 + 1;
-        iVar11 = iVar11 + 0x60;
-        (&DAT_8327db80)[iVar10] = (float)dVar18;
-      } while ((uVar9 & 0xffffffff) < (ulonglong)uVar3);
-    }
-  }
-  uVar9 = DB_GetAllXAssetOfType(0x12,local_c0,1);
-  if (1 < (uVar9 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205cd18,0x338,0,0xffffffff8205ce98,0xffffffff8205ce84,uVar9);
-  }
-  if ((uVar9 & 0xffffffff) != 0) {
-    iVar11 = *(int *)(local_c0[0] + 0x34);
-    uVar9 = (ulonglong)*(uint *)(local_c0[0] + 0xc);
-    if (DAT_8332cbd8 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x33f,0,0xffffffff82000f98,0xffffffff8205ce60);
-    }
+    uVar9 = ((XVar8.gfxWorld)->dpvsDyn).dynEntClientCount[0];
+    uVar20 = 0;
     if (uVar9 != 0) {
-      puVar16 = (undefined4 *)(iVar11 + -0x10);
-      dVar19 = (double)(1.0 / *(float *)(DAT_8332cbd8 + 0xc));
+      iVar17 = 0;
       do {
-        dVar20 = (double)(float)((double)(float)puVar16[0xd] * dVar18);
-        if (puVar16[10] == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x348,0,0xffffffff82000f98,0xffffffff8205ce4c);
+        if (cm.dynEntCount[0] <= uVar20) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\../DynEntity/DynEntity_load_obj.h"
+                          ,0x3d,0,
+                          "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                         );
         }
-        iVar11 = DB_GetMaterialIndex(puVar16[10]);
-        dVar17 = (double)*(float *)(&DAT_84587f00 + iVar11 * 4);
-        if ((float)(dVar20 - (double)*(float *)(&DAT_84587f00 + iVar11 * 4)) < 0.0) {
-          dVar17 = dVar20;
+        pXVar18 = *(XModel **)((int)(cm.dynEntDefList[0]->mass).centerOfMass + iVar17 + -0x18);
+        if (pXVar18 == (XModel *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x32f,0,"%s");
         }
-        *(float *)(&DAT_84587f00 + iVar11 * 4) = (float)dVar17;
-        dVar20 = (double)(float)((double)(float)(dVar19 * (double)(float)puVar16[0xe]) * dVar18);
-        if (puVar16[0xb] == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x34e,0,0xffffffff82000f98,0xffffffff8205ce30);
+        uVar10 = DB_GetXModelIndex(pXVar18);
+        uVar20 = uVar20 + 1;
+        iVar17 = iVar17 + 0x60;
+        g_stream.modelDist[uVar10] = (float)dVar23;
+      } while (uVar20 < uVar9);
+    }
+  }
+  uVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_FXWORLD,local_c0,1);
+  if (1 < uVar9) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x338,0,"%s\n\t(assetCount) = %i");
+  }
+  if (uVar9 != 0) {
+    iVar17 = (local_c0[0].image)->format;
+    uVar14 = (ulonglong)(local_c0[0].model)->noScalePartBits[0];
+    if (glass_shattered_scale == (dvar_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x33f,0,"%s");
+    }
+    if (uVar14 != 0) {
+      puVar21 = (undefined4 *)(iVar17 + -0x10);
+      dVar24 = (double)(1.0 / (glass_shattered_scale->current).value);
+      do {
+        dVar25 = (double)(float)((double)(float)puVar21[0xd] * dVar23);
+        if (puVar21[10] == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x348,0,"%s");
         }
-        puVar16 = puVar16 + 0xb;
-        iVar11 = DB_GetMaterialIndex(*puVar16);
-        uVar9 = uVar9 - 1;
-        dVar17 = (double)*(float *)(&DAT_84587f00 + iVar11 * 4);
-        if ((float)(dVar20 - (double)*(float *)(&DAT_84587f00 + iVar11 * 4)) < 0.0) {
-          dVar17 = dVar20;
+        uVar9 = DB_GetMaterialIndex((Material *)puVar21[10]);
+        dVar22 = (double)g_materialStreamInfo.worldPriority[uVar9];
+        if ((float)(dVar25 - (double)g_materialStreamInfo.worldPriority[uVar9]) < 0.0) {
+          dVar22 = dVar25;
         }
-        *(float *)(&DAT_84587f00 + iVar11 * 4) = (float)dVar17;
-      } while (uVar9 != 0);
+        g_materialStreamInfo.worldPriority[uVar9] = (float)dVar22;
+        dVar25 = (double)(float)((double)(float)(dVar24 * (double)(float)puVar21[0xe]) * dVar23);
+        if (puVar21[0xb] == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x34e,0,"%s");
+        }
+        puVar21 = puVar21 + 0xb;
+        uVar9 = DB_GetMaterialIndex((Material *)*puVar21);
+        uVar14 = uVar14 - 1;
+        dVar22 = (double)g_materialStreamInfo.worldPriority[uVar9];
+        if ((float)(dVar25 - (double)g_materialStreamInfo.worldPriority[uVar9]) < 0.0) {
+          dVar22 = dVar25;
+        }
+        g_materialStreamInfo.worldPriority[uVar9] = (float)dVar22;
+      } while (uVar14 != 0);
     }
   }
   __restgprlr_18();
@@ -910,6 +940,8 @@ void DB_StreamHighPriorityTabulation(void)
 
 
 // 823FDE50  DB_StreamTabulationInternal  (database/db_streaming.cpp:855)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_StreamTabulationInternal(void)
 
@@ -920,14 +952,17 @@ void DB_StreamTabulationInternal(void)
   undefined8 uStack_88;
   int local_80;
   int iStack_7c;
+  undefined4 auStack_78 [17];
   int local_34;
   
   __savegprlr_29();
-  if (DAT_83231e80 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x35a,0,0xffffffff82000f98,0xffffffff8205cdfc);
+  if (g_streamTabulateLock == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x35a,0,"%s");
   }
-  DAT_832ee014 = 1;
-  if ((DAT_832ee348 != 0) && (DAT_832ee348 = 0, DAT_832ee018 != 0)) {
+  g_stream.checkPriority = 1;
+  if ((g_streamHighPriorityAssets != 0) &&
+     (g_streamHighPriorityAssets = 0, g_stream.cumulativeTabulation != 0)) {
     DB_StreamHighPriorityTabulation();
   }
   DB_StreamTabulationTouchWeaponModels();
@@ -941,15 +976,17 @@ void DB_StreamTabulationInternal(void)
   } while (lVar3 != 0);
   *(undefined4 *)(puVar2 + 2) = 0;
   if (local_80 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x368,0,0xffffffff82000f98,0xffffffff8205df98);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x368,0,"%s");
   }
   if (iStack_7c != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x369,0,0xffffffff82000f98,0xffffffff8205df88);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x369,0,"%s");
   }
-  local_34 = DAT_832ee018;
+  local_34 = g_stream.cumulativeTabulation;
   DB_StreamTabulationCmd(&local_80);
-  DAT_832ee014 = 0;
-  DAT_832ee01c = 0;
+  g_stream.checkPriority = 0;
+  g_stream.streamHeatMap = 0;
   DB_StreamTabulationFinish();
   __restgprlr_29();
   return;
@@ -958,13 +995,15 @@ void DB_StreamTabulationInternal(void)
 
 // 823FDF98  DB_StreamTabulation  (database/db_streaming.cpp:886)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_StreamTabulation(void)
 
 {
   int iVar1;
   
   iVar1 = Sys_IsDatabaseReady();
-  if ((iVar1 != 0) && (DAT_84616500 == 0)) {
+  if ((iVar1 != 0) && (rgp.needSortMaterials == 0)) {
     DB_StreamTabulationInternal();
   }
   return;
@@ -973,25 +1012,30 @@ void DB_StreamTabulation(void)
 
 // 823F7BB0  DB_StreamTabulationCumulative  (database/db_streaming.cpp:893)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_StreamTabulationCumulative(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x37e,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x37e,0,"%s");
   }
   DB_EnterStreamingTabulate();
-  DB_StreamClearPriority(0xffffffff83232f00);
-  DAT_832ee084 = 0;
-  DAT_832ee018 = 1;
+  DB_StreamClearPriority(g_stream.priority2);
+  g_streamFailHalfUnitLoad = 0;
+  g_stream.cumulativeTabulation = 1;
   DB_LeaveStreamingTabulate();
   return;
 }
 
 
 // 823FDFD8  DB_StreamTabulationBlocking  (database/db_streaming.cpp:907)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_StreamTabulationBlocking(void)
 
@@ -1001,7 +1045,7 @@ void DB_StreamTabulationBlocking(void)
   while( true ) {
     DB_EnterStreamingTabulate();
     iVar1 = Sys_IsDatabaseReady();
-    if ((iVar1 != 0) && (DAT_84616500 == 0)) break;
+    if ((iVar1 != 0) && (rgp.needSortMaterials == 0)) break;
     DB_LeaveStreamingTabulate();
     R_BeginRemoteScreenUpdate();
     Sys_Sleep(1);
@@ -1016,90 +1060,96 @@ void DB_StreamTabulationBlocking(void)
 
 // 823F7C40  DB_StreamTabulationSetMsec  (database/db_streaming.cpp:934)
 
-void DB_StreamTabulationSetMsec(undefined4 param_1)
+void DB_StreamTabulationSetMsec(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x3a7,0,0xffffffff82000f98,0xffffffff82010b48);
-    DAT_83231ee0 = param_1;
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x3a7,0,"%s");
+    g_streamMsec = param_1;
     return;
   }
-  DAT_83231ee0 = param_1;
+  g_streamMsec = param_1;
   return;
 }
 
 
 // 823F7CC0  DB_StreamTabulationBegin  (database/db_streaming.cpp:942)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
 void DB_StreamTabulationBegin(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
-  undefined4 local_80;
-  undefined4 *local_7c;
-  undefined4 *local_78;
-  undefined4 *local_74;
-  int local_70;
-  undefined *local_6c;
-  undefined *local_68;
-  undefined *local_64;
-  undefined4 local_60;
-  undefined4 local_5c;
-  undefined1 *local_58;
-  undefined4 local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  char local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
-  undefined4 local_30;
+  int local_80;
+  int *local_7c;
+  StreamGlob *local_78;
+  StreamGlob2 *local_74;
+  GfxWorld *local_70;
+  FxWorld *local_6c;
+  MaterialStreamInfo *local_68;
+  float *local_64;
+  float local_60;
+  uint local_5c;
+  ClientStream *local_58;
+  GfxBrushModel *local_54;
+  int local_50;
+  uint local_4c;
+  GfxCellTree *local_48;
+  uchar local_44;
+  uint local_40;
+  FxGlassDef *local_3c;
+  int local_38;
+  int local_34;
+  int local_30;
   
   __savegprlr_28();
-  cVar2 = Sys_IsMainThread2();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x3b1,0,0xffffffff82000f98,0xffffffff8205cec4);
+  bVar2 = Sys_IsMainThread2();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x3b1,0,"%s");
   }
-  if (DAT_83231eec != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x3b2,0,0xffffffff82000f98,0xffffffff8205ceb0);
+  if (g_streamProcessing != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x3b2,0,"%s");
   }
   iVar1 = Sys_IsDatabaseReady();
-  if ((iVar1 != 0) && (DAT_84616500 == 0)) {
-    local_7c = &DAT_83231e80;
-    local_70 = DAT_8461658c;
-    local_80 = DAT_83231ee0;
-    local_78 = &DAT_83232f00;
-    local_30 = DAT_832ee01c;
-    local_5c = DAT_832ee008;
-    local_34 = DAT_832ee018;
-    local_60 = DAT_84618174;
-    local_74 = &DAT_845f3980;
-    local_6c = &DAT_8333cac0;
-    local_68 = &DAT_84587f00;
-    local_64 = &DAT_8459e580;
-    local_58 = &DAT_832ee088;
-    DAT_832ee01c = 0;
-    if (DAT_8461658c != 0) {
-      local_54 = *(undefined4 *)(DAT_8461658c + 0x138);
-      local_50 = *(undefined4 *)(DAT_8461658c + 0x134);
-      local_4c = *(undefined4 *)(DAT_8461658c + 0x10);
-      local_48 = *(undefined4 *)(DAT_8461658c + 0x48);
+  if ((iVar1 != 0) && (rgp.needSortMaterials == 0)) {
+    local_7c = &g_streamTabulateLock;
+    local_70 = rgp.world;
+    local_80 = g_streamMsec;
+    local_78 = &g_stream;
+    local_30 = g_stream.streamHeatMap;
+    local_5c = g_stream.materialInuseCount;
+    local_34 = g_stream.cumulativeTabulation;
+    local_60 = rg.invViewScale;
+    local_74 = &g_stream2;
+    local_6c = &fxWorld;
+    local_68 = &g_materialStreamInfo;
+    local_64 = g_staticModelStreamDist;
+    local_58 = &g_clientStream;
+    g_stream.streamHeatMap = 0;
+    if (rgp.world != (GfxWorld *)0x0) {
+      local_54 = (rgp.world)->models;
+      local_50 = (rgp.world)->modelCount;
+      local_4c = (rgp.world)->surfaceCount;
+      local_48 = (rgp.world)->aabbTrees;
     }
-    local_44 = DAT_8333cb29;
-    if (DAT_8333cb29 != '\0') {
-      local_40 = DAT_8333cacc;
-      local_3c = DAT_8333caf4;
+    local_44 = fxWorld.glassSys.initCount;
+    if (fxWorld.glassSys.initCount != '\0') {
+      local_40 = fxWorld.glassSys.defCount;
+      local_3c = fxWorld.glassSys.defs;
     }
-    local_38 = *(undefined4 *)(DAT_8332cbd8 + 0xc);
+    local_38 = (glass_shattered_scale->current).integer;
     DB_StreamTabulationTouchWeaponModels();
-    R_AddWorkerCmd(0x1f,&local_80);
-    DAT_83231eec = 1;
+    R_AddWorkerCmd(WRKCMD_STREAM_TABULATION,&local_80);
+    g_streamProcessing = 1;
   }
   __restgprlr_28();
   return;
@@ -1108,26 +1158,29 @@ void DB_StreamTabulationBegin(void)
 
 // 823FE048  DB_StreamTabulationEnd  (database/db_streaming.cpp:991)
 
+/* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
+
 void DB_StreamTabulationEnd(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x3e0,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x3e0,0,"%s");
   }
-  if (DAT_83231eec == 0) {
+  if (g_streamProcessing == 0) {
     if (param_1 != 0) {
       DB_StreamKickoff();
       return;
     }
-    DAT_832ee018 = 0;
+    g_stream.cumulativeTabulation = 0;
     return;
   }
-  DAT_83231eec = 0;
-  DAT_832ee018 = 0;
-  R_WaitWorkerCmdsOfType(0x1f);
+  g_streamProcessing = 0;
+  g_stream.cumulativeTabulation = 0;
+  R_WaitWorkerCmdsOfType(WRKCMD_STREAM_TABULATION);
   DB_StreamTabulationFinish();
   return;
 }
@@ -1135,14 +1188,16 @@ void DB_StreamTabulationEnd(int param_1)
 
 // 823F7E80  DB_UpdateUsage  (database/db_streaming.cpp:1011)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_UpdateUsage(void)
 
 {
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  uint uVar5;
   uint uVar6;
   uint uVar7;
   uint uVar8;
@@ -1150,50 +1205,57 @@ void DB_UpdateUsage(void)
   ushort *puVar10;
   
   __savegprlr();
-  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205cf34);
-  uVar7 = 0;
-  iVar5 = 0;
+  PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream usage");
+  uVar6 = 0;
+  iVar4 = 0;
   do {
-    uVar6 = 0;
-    uVar8 = *(uint *)((int)&DAT_83283480 + iVar5) & ~*(uint *)((int)&DAT_83282880 + iVar5);
+    uVar5 = 0;
+    uVar7 = *(uint *)((int)g_stream.materialInuse + iVar4) &
+            ~*(uint *)((int)g_stream.materialAlwaysLoaded[0] + iVar4);
 joined_r0x823f7f28:
-    uVar4 = LZCOUNT(uVar8);
-    if (uVar4 < 0x20) {
-      if (0x20 < uVar4) {
-        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar4,0x21);
+    uVar3 = LZCOUNT(uVar7);
+    if (uVar3 < 0x20) {
+      if (0x20 < uVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar4 << 2));
-      if ((uVar2 & uVar8) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x40f,0,0xffffffff82000f98,"bits & bit");
+      uVar1 = *(uint *)(&g_bitShift + (int)(uVar3 << 2));
+      if ((uVar1 & uVar7) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x40f,0,"%s");
       }
-      iVar3 = (uVar7 + (int)uVar4) * 0x1c;
-      uVar8 = uVar8 & ~uVar2;
-      puVar10 = *(ushort **)(&DAT_83247b14 + iVar3);
+      iVar2 = uVar6 + (int)uVar3;
+      uVar7 = uVar7 & ~uVar1;
+      puVar10 = g_stream.material[iVar2].totalImages;
       if (puVar10 == (ushort *)0x0) {
-        MyAssertHandler(0xffffffff8205cd18,0x415,0,0xffffffff82000f98,0xffffffff8205ced8);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x415,0,"%s");
       }
-      uVar1 = *(ushort *)(&DAT_83247b08 + iVar3);
+      uVar8 = (uint)g_stream.material[iVar2].totalImageCount;
       uVar9 = 0;
-      if (uVar1 != 0) {
+      if (uVar8 != 0) {
         do {
           if (0x14bf < *puVar10) {
-            MyAssertHandler(0xffffffff8205cd18,0x41b,0,0xffffffff8205cee8,*puVar10,0x14c0);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x41b,0,
+                            "totalImages[imageIndex] doesn\'t index IMAGE_POOL_SIZE\n\t%i not in [0, %i)"
+                           );
           }
-          if ((*(uint *)((int)&DAT_845f3980 + (*puVar10 >> 3 & 0x1ffffffc)) &
-              (&DAT_82992400)[*puVar10 & 0x1f]) == 0) {
-            uVar6 = uVar2 | uVar6;
+          if ((*(uint *)((int)g_stream2.inuse + (*puVar10 >> 3 & 0x1ffffffc)) &
+              *(uint *)(&g_bitShift + (*puVar10 & 0x1f) * 4)) == 0) {
+            uVar5 = uVar1 | uVar5;
             break;
           }
           uVar9 = uVar9 + 1;
           puVar10 = puVar10 + 1;
-        } while (uVar9 < uVar1);
+        } while (uVar9 < uVar8);
       }
       goto joined_r0x823f7f28;
     }
-    uVar7 = uVar7 + 0x20;
-    *(uint *)((int)&DAT_84834080 + iVar5) = uVar6;
-    iVar5 = iVar5 + 4;
-    if (0x165f < uVar7) {
+    uVar6 = uVar6 + 0x20;
+    *(uint *)((int)g_materialStreamFailed + iVar4) = uVar5;
+    iVar4 = iVar4 + 4;
+    if (0x165f < uVar6) {
       PIXEndNamedEvent();
       __restgprlr();
       return;
@@ -1204,131 +1266,135 @@ joined_r0x823f7f28:
 
 // 823F8058  DB_MaterialStreamingFail  (database/db_streaming.cpp:1070)
 
-bool DB_MaterialStreamingFail(ulonglong param_1)
+int DB_MaterialStreamingFail(Material *param_1)
 
 {
   uint uVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x431,0,0xffffffff82000f98,0xffffffff82020dcc);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x431,0,"%s");
   }
   uVar1 = DB_GetMaterialIndex(param_1);
-  return (*(uint *)((int)&DAT_84834080 + (uVar1 >> 3 & 0x1ffffffc)) & (&DAT_82992400)[uVar1 & 0x1f])
-         != 0;
+  return (uint)((*(uint *)((int)g_materialStreamFailed + (uVar1 >> 3 & 0x1ffffffc)) &
+                *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) != 0);
 }
 
 
 // 823F80E0  DB_PrefetchStreamFile  (database/db_streaming.cpp:1081)
 
-void DB_PrefetchStreamFile(void)
+int DB_PrefetchStreamFile(uint param_1)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
   
-  uVar2 = __savegprlr_27();
-  if (DAT_83231e84 - DAT_832ee358 != 0x100) {
+  uVar2 = __savegprlr_27(param_1);
+  if (g_streamPrefetchEnd2 - g_streamPrefetchRead != 0x100) {
     if (0x52ff < uVar2) {
-      MyAssertHandler(0xffffffff8205cd18,0x444,0,0xffffffff82000f98,0xffffffff8205cd5c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x444,0,"%s");
     }
     iVar3 = uVar2 * 0x40 + (uVar2 / 0x14c0) * -0x52ff4;
-    iVar3 = DB_PrefetchXFile(*(undefined4 *)(&DAT_8329a900 + iVar3),
-                             *(undefined4 *)(&DAT_8329a904 + iVar3));
+    iVar3 = DB_PrefetchXFile(*(uint *)((int)&g_stream + iVar3 + 0x67a00),
+                             *(uint *)((int)&g_stream + iVar3 + 0x67a04));
     if (iVar3 == 0) {
-      if (0xff < DAT_83231e84 - DAT_832ee358) {
-        MyAssertHandler(0xffffffff8205cd18,0x453,0,0xffffffff82000f98,0xffffffff8205cf48);
+      if (0xff < g_streamPrefetchEnd2 - g_streamPrefetchRead) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x453,0,"%s");
       }
-      uVar1 = DAT_83231e84 & 0xff;
-      DAT_83231e84 = DAT_83231e84 + 1;
-      *(uint *)(&DAT_832ee498 + uVar1 * 0x2c) = uVar2;
-      __restgprlr_27(0);
-      return;
+      uVar1 = g_streamPrefetchEnd2 & 0xff;
+      g_streamPrefetchEnd2 = g_streamPrefetchEnd2 + 1;
+      g_streamPrefetch[uVar1].index = uVar2;
+      iVar3 = __restgprlr_27(0);
+      return iVar3;
     }
   }
-  __restgprlr_27(1);
-  return;
+  iVar3 = __restgprlr_27(1);
+  return iVar3;
 }
 
 
 // 823F81E8  DB_ImageEndSizeReduction  (database/db_streaming.cpp:1116)
 
-void DB_ImageEndSizeReduction(void)
+uint DB_ImageEndSizeReduction(GfxImage *param_1)
 
 {
   ushort uVar1;
   ushort uVar2;
   ulonglong uVar3;
   uint uVar4;
-  uint uVar5;
-  int iVar6;
+  int iVar5;
+  uint uVar6;
   ulonglong uVar7;
   uint uVar8;
   ulonglong uVar9;
   
-  iVar6 = __savegprlr_25();
-  if (*(char *)(iVar6 + 0x47) == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x463,0,0xffffffff82000f98,0xffffffff8205cfd8);
+  iVar5 = __savegprlr_25(param_1);
+  if (*(char *)(iVar5 + 0x47) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x463,0,"%s");
   }
-  if ((*(uint *)(iVar6 + 0x34) & 0x100) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x464,0,0xffffffff8205cfc0,0xffffffff8205cfa0,
-                    *(undefined4 *)(iVar6 + 0x6c));
+  if ((*(uint *)(iVar5 + 0x34) & 0x100) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x464,0,"%s\n\t(image->name) = %s");
   }
-  uVar1 = *(ushort *)(iVar6 + 0x4c);
+  uVar1 = *(ushort *)(iVar5 + 0x4c);
   uVar9 = (ulonglong)uVar1;
-  uVar2 = *(ushort *)(iVar6 + 0x4e);
+  uVar2 = *(ushort *)(iVar5 + 0x4e);
   uVar7 = (longlong)(int)(uint)uVar2 * (longlong)(int)(uint)uVar1;
-  uVar3 = (ulonglong)*(uint *)(iVar6 + 0x50) & 0x3ffffff;
-  uVar4 = *(uint *)(iVar6 + 0x50) >> 0x1a;
-  uVar5 = *(uint *)(iVar6 + 0x34) & 0x3f;
+  uVar3 = (ulonglong)*(uint *)(iVar5 + 0x50) & 0x3ffffff;
+  uVar6 = *(uint *)(iVar5 + 0x50) >> 0x1a;
+  uVar4 = *(uint *)(iVar5 + 0x34) & 0x3f;
   if ((uVar7 - 1 & uVar7) != 0) {
-    if (((0x12 < uVar5) && (((uVar5 < 0x15 || (uVar5 == 0x31)) && (uVar4 == 1)))) &&
+    if (((0x12 < uVar4) && (((uVar4 < 0x15 || (uVar4 == 0x31)) && (uVar6 == 1)))) &&
        ((uVar9 == 0xf0 && (uVar2 == 0x30)))) {
-      __restgprlr_25(0x1000);
-      return;
+      uVar6 = __restgprlr_25(0x1000);
+      return uVar6;
     }
     goto LAB_823f83c4;
   }
   uVar8 = (uint)uVar2;
-  if (uVar5 < 0x32) {
-    if (uVar5 != 0x31) {
-      if (uVar5 == 0x12) goto LAB_823f8380;
-      if ((uVar5 < 0x13) || (0x14 < uVar5)) goto LAB_823f83c4;
+  if (uVar4 < 0x32) {
+    if (uVar4 != 0x31) {
+      if (uVar4 == 0x12) goto LAB_823f8380;
+      if ((uVar4 < 0x13) || (0x14 < uVar4)) goto LAB_823f83c4;
     }
     if (uVar3 < 0x4000) {
-      MyAssertHandler(0xffffffff8205cd18,0x495,0,0xffffffff8205cfc0,0xffffffff8205cf8c,
-                      *(undefined4 *)(iVar6 + 0x6c));
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x495,0,"%s\n\t(image->name) = %s");
     }
-    if (uVar4 == 1) {
+    if (uVar6 == 1) {
       if ((uVar1 < 0x11) && (uVar8 < 0x11)) {
 LAB_823f83ac:
-        __restgprlr_25(uVar3 - 0x1000);
-        return;
+        uVar6 = __restgprlr_25(uVar3 - 0x1000);
+        return uVar6;
       }
       if (uVar8 < 0x21) {
-        __restgprlr_25(0x2000);
-        return;
+        uVar6 = __restgprlr_25(0x2000);
+        return uVar6;
       }
     }
     else {
       if ((uint)uVar1 == (uint)uVar2) {
-        __restgprlr_25(0x3000);
-        return;
+        uVar6 = __restgprlr_25(0x3000);
+        return uVar6;
       }
       if ((ulonglong)uVar8 <= uVar9 << 1) {
-        __restgprlr_25(0x2000);
-        return;
+        uVar6 = __restgprlr_25(0x2000);
+        return uVar6;
       }
     }
   }
   else {
-    if ((uVar5 < 0x3a) || (0x3b < uVar5)) goto LAB_823f83c4;
+    if ((uVar4 < 0x3a) || (0x3b < uVar4)) goto LAB_823f83c4;
 LAB_823f8380:
-    if (uVar4 == 1) {
+    if (uVar6 == 1) {
       if (uVar8 < 0x21) {
 LAB_823f8390:
-        __restgprlr_25(0x1000);
-        return;
+        uVar6 = __restgprlr_25(0x1000);
+        return uVar6;
       }
     }
     else {
@@ -1337,27 +1403,27 @@ LAB_823f8390:
     }
   }
 LAB_823f83c4:
-  __restgprlr_25(0);
-  return;
+  uVar6 = __restgprlr_25(0);
+  return uVar6;
 }
 
 
 // 823F83D0  DB_ImageBaseSizeReduction  (database/db_streaming.cpp:1199)
 
-undefined8 DB_ImageBaseSizeReduction(int param_1)
+uint DB_ImageBaseSizeReduction(GfxImage *param_1)
 
 {
   uint uVar1;
-  undefined8 uVar2;
   
-  if (*(char *)(param_1 + 0x47) == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x4b0,0,0xffffffff82000f98,0xffffffff8205cfd8);
+  if (param_1->cached == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x4b0,0,"%s");
   }
-  if ((*(uint *)(param_1 + 0x34) & 0x100) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x4b1,0,0xffffffff8205cfc0,0xffffffff8205cfa0,
-                    *(undefined4 *)(param_1 + 0x6c));
+  if ((param_1->format & 0x100U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x4b1,0,"%s\n\t(image->name) = %s");
   }
-  uVar1 = *(uint *)(param_1 + 0x34) & 0x3f;
+  uVar1 = param_1->format & 0x3f;
   if (uVar1 < 0x32) {
     if (uVar1 != 0x31) {
       if (uVar1 == 0x12) goto LAB_823f8490;
@@ -1368,22 +1434,22 @@ undefined8 DB_ImageBaseSizeReduction(int param_1)
         return 0;
       }
     }
-    uVar2 = 0x2000;
+    uVar1 = 0x2000;
   }
   else {
     if ((uVar1 < 0x3a) || (0x3b < uVar1)) {
       return 0;
     }
 LAB_823f8490:
-    uVar2 = 0x1000;
+    uVar1 = 0x1000;
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 823F84B8  DB_GetImageAllocInfo  (database/db_streaming.cpp:1223)
 
-void DB_GetImageAllocInfo(undefined8 param_1,int *param_2)
+void DB_GetImageAllocInfo(GfxImage *param_1,ImageAllocInfo *param_2)
 
 {
   ushort uVar1;
@@ -1393,21 +1459,24 @@ void DB_GetImageAllocInfo(undefined8 param_1,int *param_2)
   uint uVar5;
   uint uVar6;
   
-  iVar4 = __savegprlr_25();
+  iVar4 = __savegprlr_25(param_1);
   if (*(char *)(iVar4 + 0x47) == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x4ce,0,0xffffffff82000f98,0xffffffff8205cfd8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x4ce,0,"%s");
   }
-  if (*param_2 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x4cf,0,0xffffffff82000f98,0xffffffff8205d000);
+  if (param_2->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x4cf,0,"%s");
   }
-  param_2[2] = 0;
-  param_2[1] = *param_2;
+  param_2->secondOffset = 0;
+  param_2->firstSize = param_2->size;
   if ((*(uint *)(iVar4 + 0x34) & 0x100) == 0) goto LAB_823f8664;
   uVar1 = *(ushort *)(iVar4 + 0x4c);
   uVar3 = *(uint *)(iVar4 + 0x50) >> 0x1a;
   uVar2 = *(ushort *)(iVar4 + 0x4e);
   if (uVar3 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x4dd,0,0xffffffff82000f98,0xffffffff8205cff4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x4dd,0,"%s");
   }
   uVar5 = (uint)uVar2;
   uVar6 = (uint)uVar1;
@@ -1421,15 +1490,15 @@ void DB_GetImageAllocInfo(undefined8 param_1,int *param_2)
     }
     if (uVar6 == uVar5) {
       if (0x3fff < (*(uint *)(iVar4 + 0x50) & 0x3ffffff)) {
-        param_2[1] = *param_2 + -0x3000;
-        param_2[2] = *param_2 + -0x1000;
+        param_2->firstSize = param_2->size - 0x3000;
+        param_2->secondOffset = param_2->size - 0x1000;
         __restgprlr_25();
         return;
       }
     }
     else if ((uVar5 < uVar6) && (0x4fff < (*(uint *)(iVar4 + 0x50) & 0x3ffffff))) {
-      param_2[1] = *param_2 + -0x4000;
-      param_2[2] = *param_2 + -0x2000;
+      param_2->firstSize = param_2->size - 0x4000;
+      param_2->secondOffset = param_2->size - 0x2000;
       __restgprlr_25();
       return;
     }
@@ -1438,8 +1507,8 @@ void DB_GetImageAllocInfo(undefined8 param_1,int *param_2)
     if ((uVar3 < 0x3a) || (0x3b < uVar3)) goto LAB_823f8664;
 LAB_823f8638:
     if ((uVar2 <= uVar1) && (0x2fff < (*(uint *)(iVar4 + 0x50) & 0x3ffffff))) {
-      param_2[1] = *param_2 + -0x2000;
-      param_2[2] = *param_2 + -0x1000;
+      param_2->firstSize = param_2->size - 0x2000;
+      param_2->secondOffset = param_2->size - 0x1000;
     }
   }
 LAB_823f8664:
@@ -1450,24 +1519,27 @@ LAB_823f8664:
 
 // 823F8670  DB_SetImageAllocInfoCached  (database/db_streaming.cpp:1302)
 
-void DB_SetImageAllocInfoCached(undefined8 param_1,uint *param_2)
+void DB_SetImageAllocInfoCached(GfxImageStream *param_1,ImageAllocInfo *param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
-  if ((*param_2 & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x517,0,0xffffffff82000f98,0xffffffff8205d054);
+  iVar1 = __savegprlr_28(param_1);
+  if ((param_2->size & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x517,0,"%s");
   }
-  *(short *)(iVar1 + 0x32) = (short)(*param_2 >> 0xc);
-  if ((param_2[1] & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x51b,0,0xffffffff82000f98,0xffffffff8205d034);
+  *(short *)(iVar1 + 0x32) = (short)(param_2->size >> 0xc);
+  if ((param_2->firstSize & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x51b,0,"%s");
   }
-  *(short *)(iVar1 + 0x34) = (short)(param_2[1] >> 0xc);
-  if ((param_2[2] & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x51e,0,0xffffffff82000f98,0xffffffff8205d010);
+  *(short *)(iVar1 + 0x34) = (short)(param_2->firstSize >> 0xc);
+  if ((param_2->secondOffset & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x51e,0,"%s");
   }
-  *(short *)(iVar1 + 0x36) = (short)(param_2[2] >> 0xc);
+  *(short *)(iVar1 + 0x36) = (short)(param_2->secondOffset >> 0xc);
   __restgprlr_28();
   return;
 }
@@ -1475,86 +1547,99 @@ void DB_SetImageAllocInfoCached(undefined8 param_1,uint *param_2)
 
 // 823F8748  DB_GetImageAllocInfoCached  (database/db_streaming.cpp:1317)
 
-void DB_GetImageAllocInfoCached(int param_1,int *param_2)
+void DB_GetImageAllocInfoCached(GfxImageStream *param_1,ImageAllocInfo *param_2)
 
 {
-  *param_2 = (uint)*(ushort *)(param_1 + 0x32) << 0xc;
-  param_2[1] = (uint)*(ushort *)(param_1 + 0x34) << 0xc;
-  param_2[2] = (uint)*(ushort *)(param_1 + 0x36) << 0xc;
+  param_2->size = (uint)param_1->size4096 << 0xc;
+  param_2->firstSize = (uint)param_1->firstSize4096 << 0xc;
+  param_2->secondOffset = (uint)param_1->secondOffset4096 << 0xc;
   return;
 }
 
 
 // 823F8770  DB_GetImageBaseInfo  (database/db_streaming.cpp:1329)
 
-void DB_GetImageBaseInfo(undefined8 param_1,int param_2,uint *param_3,uint *param_4)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void DB_GetImageBaseInfo(GfxImage *param_1,uint param_2,ImageAllocInfo *param_3,
+                        ImageBaseInfo *param_4)
 
 {
   ushort uVar1;
   ushort uVar2;
-  undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  ulonglong uVar8;
+  _D3DFORMAT _Var3;
+  GfxImage *pGVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  uint in_stack_ffffff38;
+  D3DTexture *in_stack_ffffff3c;
+  uint *in_stack_ffffff40;
+  uint *in_stack_ffffff44;
   
-  iVar4 = __savegprlr_22();
-  if (*param_3 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x539,0,0xffffffff82000f98,0xffffffff8205d000);
+  pGVar4 = (GfxImage *)__savegprlr_22(param_1);
+  if (param_3->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x539,0,"%s");
   }
-  iVar5 = param_2 * 8 + iVar4;
-  uVar1 = *(ushort *)(iVar5 + 0x4c);
-  uVar7 = *(uint *)(iVar5 + 0x50) >> 0x1a;
-  uVar2 = *(ushort *)(iVar5 + 0x4e);
-  if (uVar7 != 1) {
-    uVar8 = (longlong)(int)(uint)uVar2 * (longlong)(int)(uint)uVar1;
-    if ((((uVar8 - 1 & uVar8) == 0) && (0x10 < uVar1)) && (0x10 < uVar2)) {
-      uVar3 = *(undefined4 *)(iVar4 + 0x34);
-      if (*(char *)(iVar4 + 0x38) != '\x03') {
-        MyAssertHandler(0xffffffff8205cd18,0x54c,0,0xffffffff8205d150,0xffffffff8205d16c);
+  uVar1 = pGVar4->streams[param_2].width;
+  uVar5 = pGVar4->streams[param_2].pixelSize >> 0x1a;
+  uVar2 = pGVar4->streams[param_2].height;
+  if (uVar5 != 1) {
+    uVar7 = (longlong)(int)(uint)uVar2 * (longlong)(int)(uint)uVar1;
+    if ((((uVar7 - 1 & uVar7) == 0) && (0x10 < uVar1)) && (0x10 < uVar2)) {
+      _Var3 = pGVar4->format;
+      if (pGVar4->mapType != '\x03') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x54c,0,"%s\n\t(image->mapType) = %i");
       }
-      iVar5 = XGSetTextureHeader(uVar1,uVar2,uVar7,0,uVar3,0,0,0xffffffffffffffff);
-      if (*param_4 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x54f,0,0xffffffff82000f98,0xffffffff8205d140);
+      uVar5 = XGSetTextureHeader((uint)uVar1,(uint)uVar2,uVar5,0,_Var3,0,0,0xffffffff,
+                                 in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,
+                                 in_stack_ffffff44);
+      if (param_4->size == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x54f,0,"%s");
       }
-      iVar6 = DB_GetGfxImageIndex(iVar4);
-      if (iVar5 != (uint)*(ushort *)(&DAT_8329a930 + iVar6 * 0x40) * 0x1000 + *param_3) {
-        MyAssertHandler(0xffffffff8205cd18,0x551,0,0xffffffff82000f98,0xffffffff8205d0c0);
+      uVar6 = DB_GetGfxImageIndex(pGVar4);
+      if (uVar5 != (uint)g_stream.imageStream[uVar6].sizeReduction4096 * 0x1000 + param_3->size) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x551,0,"%s");
       }
-      if (*param_3 <= *param_4) {
-        MyAssertHandler(0xffffffff8205cd18,0x555,0,0xffffffff82000f98,0xffffffff8205d09c);
+      if (param_3->size <= param_4->size) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x555,0,"%s");
       }
-      *param_3 = *param_3 - *param_4;
-      uVar7 = *param_4;
-      if (uVar7 < param_3[1]) {
-        param_3[1] = param_3[1] - uVar7;
-        if (param_3[2] != 0) {
-          param_3[2] = param_3[2] - *param_4;
+      param_3->size = param_3->size - param_4->size;
+      uVar5 = param_4->size;
+      if (uVar5 < param_3->firstSize) {
+        param_3->firstSize = param_3->firstSize - uVar5;
+        if (param_3->secondOffset != 0) {
+          param_3->secondOffset = param_3->secondOffset - param_4->size;
         }
       }
       else {
-        if (uVar7 != param_3[2]) {
-          MyAssertHandler(0xffffffff8205cd18,0x55c,0,0xffffffff82000f98,0xffffffff8205d070);
+        if (uVar5 != param_3->secondOffset) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x55c,0,"%s");
         }
-        param_3[2] = 0;
-        param_3[1] = *param_3;
+        param_3->secondOffset = 0;
+        param_3->firstSize = param_3->size;
       }
       if (uVar2 == 0x20) {
-        uVar7 = DB_ImageBaseSizeReduction(iVar4);
-        param_4[1] = uVar7;
-        *param_4 = *param_4 - uVar7;
+        uVar5 = DB_ImageBaseSizeReduction(pGVar4);
+        param_4->sizeReduction = uVar5;
+        param_4->size = param_4->size - uVar5;
         __restgprlr_22();
         return;
       }
-      param_4[1] = 0;
-      *param_4 = *param_4;
+      param_4->sizeReduction = 0;
+      param_4->size = param_4->size;
       __restgprlr_22(0);
       return;
     }
   }
-  *param_4 = 0;
-  param_4[1] = 0;
+  param_4->size = 0;
+  param_4->sizeReduction = 0;
   __restgprlr_22();
   return;
 }
@@ -1562,20 +1647,22 @@ void DB_GetImageBaseInfo(undefined8 param_1,int param_2,uint *param_3,uint *para
 
 // 823F89F0  DB_SetImageBaseInfoCached  (database/db_streaming.cpp:1394)
 
-void DB_SetImageBaseInfoCached(undefined8 param_1,uint *param_2)
+void DB_SetImageBaseInfoCached(GfxImageStream *param_1,ImageBaseInfo *param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
-  if ((*param_2 & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x573,0,0xffffffff82000f98,0xffffffff8205d1b0);
+  iVar1 = __savegprlr_28(param_1);
+  if ((param_2->size & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x573,0,"%s");
   }
-  *(short *)(iVar1 + 0x38) = (short)(*param_2 >> 0xc);
-  if ((param_2[1] & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x576,0,0xffffffff82000f98,0xffffffff8205d18c);
+  *(short *)(iVar1 + 0x38) = (short)(param_2->size >> 0xc);
+  if ((param_2->sizeReduction & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x576,0,"%s");
   }
-  *(short *)(iVar1 + 0x3a) = (short)(param_2[1] >> 0xc);
+  *(short *)(iVar1 + 0x3a) = (short)(param_2->sizeReduction >> 0xc);
   __restgprlr_28();
   return;
 }
@@ -1583,16 +1670,18 @@ void DB_SetImageBaseInfoCached(undefined8 param_1,uint *param_2)
 
 // 823F8A90  DB_GetImageBaseInfoCached  (database/db_streaming.cpp:1404)
 
-void DB_GetImageBaseInfoCached(int param_1,int *param_2)
+void DB_GetImageBaseInfoCached(GfxImageStream *param_1,ImageBaseInfo *param_2)
 
 {
-  *param_2 = (uint)*(ushort *)(param_1 + 0x38) << 0xc;
-  param_2[1] = (uint)*(ushort *)(param_1 + 0x3a) << 0xc;
+  param_2->size = (uint)param_1->baseSize4096 << 0xc;
+  param_2->sizeReduction = (uint)param_1->baseSizeReduction4096 << 0xc;
   return;
 }
 
 
 // 823F8AB0  DB_CheckYield  (database/db_streaming.cpp:1413)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_CheckYield(void)
 
@@ -1600,9 +1689,9 @@ void DB_CheckYield(void)
   int iVar1;
   
   iVar1 = Sys_Milliseconds();
-  if (2 < (uint)(iVar1 - DAT_83231ee8)) {
+  if (2 < iVar1 - g_streamYieldTime) {
     Sys_YieldWorkerCmd();
-    DAT_83231ee8 = Sys_Milliseconds();
+    g_streamYieldTime = Sys_Milliseconds();
   }
   return;
 }
@@ -1610,20 +1699,20 @@ void DB_CheckYield(void)
 
 // 823F8AF8  DB_ReadXFilePart  (database/db_streaming.cpp:1423)
 
-void DB_ReadXFilePart(undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4)
+void DB_ReadXFilePart(uchar *param_1,uint param_2,uint param_3,uint param_4,GfxImage *param_5)
 
 {
-  undefined4 *puVar1;
+  uchar *puVar1;
   undefined4 *puVar2;
   uint uVar3;
   int iVar4;
-  undefined4 *puVar6;
+  uchar *puVar6;
   ulonglong uVar5;
-  int *piVar7;
-  longlong lVar8;
-  longlong lVar9;
-  undefined4 uVar10;
-  undefined4 uVar11;
+  ulonglong uVar7;
+  int *piVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  longlong lVar11;
   undefined4 uVar12;
   undefined4 uVar13;
   undefined4 uVar14;
@@ -1685,202 +1774,214 @@ void DB_ReadXFilePart(undefined8 param_1,ulonglong param_2,ulonglong param_3,int
   undefined4 uVar70;
   undefined4 uVar71;
   undefined4 uVar72;
-  int *local_b0;
+  undefined4 uVar73;
+  undefined4 uVar74;
+  uint uStack00000024;
+  uint uStack0000002c;
+  uchar *local_b0;
   uint local_ac;
   
-  uVar3 = __savegprlr();
-  if ((uVar3 & 0xf) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x5a4,0,0xffffffff82000f98,0xffffffff8205d21c);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar9 = (ulonglong)(int)param_1;
+  __savegprlr();
+  uStack00000024 = (uint)uVar7;
+  uStack0000002c = param_4;
+  if ((uVar9 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x5a4,0,"%s");
   }
-  if ((param_2 & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x5a5,0,0xffffffff82000f98,0xffffffff8205d20c);
+  if ((uVar5 & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x5a5,0,"%s");
   }
-  if ((param_3 & 0xfff) != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x5a6,0,0xffffffff82000f98,0xffffffff8205d1f4);
+  if ((uVar7 & 0xfff) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x5a6,0,"%s");
   }
-  local_b0 = &DAT_83231f00;
-  if ((param_2 & 0xffffffff) != 0) {
-    local_ac = (int)((param_2 - 1 & 0xffffffff) >> 0xc) + 1;
+  local_b0 = g_streamBuffer;
+  if ((uVar5 & 0xffffffff) != 0) {
+    local_ac = ((int)uVar5 - 1U >> 0xc) + 1;
     do {
-      DB_ReadXFile(&DAT_83231f00,0x1000,1);
+      DB_ReadXFile(g_streamBuffer,0x1000,1);
       iVar4 = Sys_Milliseconds();
-      if (2 < (uint)(iVar4 - DAT_83231ee8)) {
+      if (2 < iVar4 - g_streamYieldTime) {
         Sys_YieldWorkerCmd();
-        DAT_83231ee8 = Sys_Milliseconds();
+        g_streamYieldTime = Sys_Milliseconds();
       }
-      lVar9 = 0x10;
-      puVar6 = (undefined4 *)&DAT_83231f20;
+      lVar11 = 0x10;
+      puVar6 = g_streamBuffer + 0x20;
       do {
-        uVar69 = puVar6[-4];
-        uVar70 = puVar6[-3];
-        uVar71 = puVar6[-2];
-        uVar72 = puVar6[-1];
-        uVar65 = *puVar6;
-        uVar66 = puVar6[1];
-        uVar67 = puVar6[2];
-        uVar68 = puVar6[3];
-        uVar61 = puVar6[4];
-        uVar62 = puVar6[5];
-        uVar63 = puVar6[6];
-        uVar64 = puVar6[7];
-        uVar57 = puVar6[8];
-        uVar58 = puVar6[9];
-        uVar59 = puVar6[10];
-        uVar60 = puVar6[0xb];
-        uVar53 = puVar6[0xc];
-        uVar54 = puVar6[0xd];
-        uVar55 = puVar6[0xe];
-        uVar56 = puVar6[0xf];
-        uVar49 = puVar6[0x10];
-        uVar50 = puVar6[0x11];
-        uVar51 = puVar6[0x12];
-        uVar52 = puVar6[0x13];
-        uVar45 = puVar6[0x14];
-        uVar46 = puVar6[0x15];
-        uVar47 = puVar6[0x16];
-        uVar48 = puVar6[0x17];
-        uVar41 = puVar6[0x18];
-        uVar42 = puVar6[0x19];
-        uVar43 = puVar6[0x1a];
-        uVar44 = puVar6[0x1b];
-        uVar37 = puVar6[0x1c];
-        uVar38 = puVar6[0x1d];
-        uVar39 = puVar6[0x1e];
-        uVar40 = puVar6[0x1f];
-        uVar33 = puVar6[0x20];
-        uVar34 = puVar6[0x21];
-        uVar35 = puVar6[0x22];
-        uVar36 = puVar6[0x23];
-        uVar29 = puVar6[0x24];
-        uVar30 = puVar6[0x25];
-        uVar31 = puVar6[0x26];
-        uVar32 = puVar6[0x27];
-        uVar25 = puVar6[0x28];
-        uVar26 = puVar6[0x29];
-        uVar27 = puVar6[0x2a];
-        uVar28 = puVar6[0x2b];
-        uVar21 = puVar6[0x2c];
-        uVar22 = puVar6[0x2d];
-        uVar23 = puVar6[0x2e];
-        uVar24 = puVar6[0x2f];
-        uVar17 = puVar6[0x30];
-        uVar18 = puVar6[0x31];
-        uVar19 = puVar6[0x32];
-        uVar20 = puVar6[0x33];
-        uVar13 = puVar6[0x34];
-        uVar14 = puVar6[0x35];
-        uVar15 = puVar6[0x36];
-        uVar16 = puVar6[0x37];
-        puVar2 = puVar6 + -8;
-        uVar10 = puVar6[-7];
-        uVar11 = puVar6[-6];
-        uVar12 = puVar6[-5];
-        puVar6 = puVar6 + 0x40;
-        puVar1 = (undefined4 *)(uVar3 & 0xfffffff0);
-        *puVar1 = *puVar2;
-        puVar1[1] = uVar10;
-        puVar1[2] = uVar11;
-        puVar1[3] = uVar12;
+        uVar71 = *(undefined4 *)(puVar6 + -0x10);
+        uVar72 = *(undefined4 *)(puVar6 + -0xc);
+        uVar73 = *(undefined4 *)(puVar6 + -8);
+        uVar74 = *(undefined4 *)(puVar6 + -4);
+        uVar67 = *(undefined4 *)puVar6;
+        uVar68 = *(undefined4 *)(puVar6 + 4);
+        uVar69 = *(undefined4 *)(puVar6 + 8);
+        uVar70 = *(undefined4 *)(puVar6 + 0xc);
+        uVar63 = *(undefined4 *)(puVar6 + 0x10);
+        uVar64 = *(undefined4 *)(puVar6 + 0x14);
+        uVar65 = *(undefined4 *)(puVar6 + 0x18);
+        uVar66 = *(undefined4 *)(puVar6 + 0x1c);
+        uVar59 = *(undefined4 *)(puVar6 + 0x20);
+        uVar60 = *(undefined4 *)(puVar6 + 0x24);
+        uVar61 = *(undefined4 *)(puVar6 + 0x28);
+        uVar62 = *(undefined4 *)(puVar6 + 0x2c);
+        uVar55 = *(undefined4 *)(puVar6 + 0x30);
+        uVar56 = *(undefined4 *)(puVar6 + 0x34);
+        uVar57 = *(undefined4 *)(puVar6 + 0x38);
+        uVar58 = *(undefined4 *)(puVar6 + 0x3c);
+        uVar51 = *(undefined4 *)(puVar6 + 0x40);
+        uVar52 = *(undefined4 *)(puVar6 + 0x44);
+        uVar53 = *(undefined4 *)(puVar6 + 0x48);
+        uVar54 = *(undefined4 *)(puVar6 + 0x4c);
+        uVar47 = *(undefined4 *)(puVar6 + 0x50);
+        uVar48 = *(undefined4 *)(puVar6 + 0x54);
+        uVar49 = *(undefined4 *)(puVar6 + 0x58);
+        uVar50 = *(undefined4 *)(puVar6 + 0x5c);
+        uVar43 = *(undefined4 *)(puVar6 + 0x60);
+        uVar44 = *(undefined4 *)(puVar6 + 100);
+        uVar45 = *(undefined4 *)(puVar6 + 0x68);
+        uVar46 = *(undefined4 *)(puVar6 + 0x6c);
+        uVar39 = *(undefined4 *)(puVar6 + 0x70);
+        uVar40 = *(undefined4 *)(puVar6 + 0x74);
+        uVar41 = *(undefined4 *)(puVar6 + 0x78);
+        uVar42 = *(undefined4 *)(puVar6 + 0x7c);
+        uVar35 = *(undefined4 *)(puVar6 + 0x80);
+        uVar36 = *(undefined4 *)(puVar6 + 0x84);
+        uVar37 = *(undefined4 *)(puVar6 + 0x88);
+        uVar38 = *(undefined4 *)(puVar6 + 0x8c);
+        uVar31 = *(undefined4 *)(puVar6 + 0x90);
+        uVar32 = *(undefined4 *)(puVar6 + 0x94);
+        uVar33 = *(undefined4 *)(puVar6 + 0x98);
+        uVar34 = *(undefined4 *)(puVar6 + 0x9c);
+        uVar27 = *(undefined4 *)(puVar6 + 0xa0);
+        uVar28 = *(undefined4 *)(puVar6 + 0xa4);
+        uVar29 = *(undefined4 *)(puVar6 + 0xa8);
+        uVar30 = *(undefined4 *)(puVar6 + 0xac);
+        uVar23 = *(undefined4 *)(puVar6 + 0xb0);
+        uVar24 = *(undefined4 *)(puVar6 + 0xb4);
+        uVar25 = *(undefined4 *)(puVar6 + 0xb8);
+        uVar26 = *(undefined4 *)(puVar6 + 0xbc);
+        uVar19 = *(undefined4 *)(puVar6 + 0xc0);
+        uVar20 = *(undefined4 *)(puVar6 + 0xc4);
+        uVar21 = *(undefined4 *)(puVar6 + 200);
+        uVar22 = *(undefined4 *)(puVar6 + 0xcc);
+        uVar15 = *(undefined4 *)(puVar6 + 0xd0);
+        uVar16 = *(undefined4 *)(puVar6 + 0xd4);
+        uVar17 = *(undefined4 *)(puVar6 + 0xd8);
+        uVar18 = *(undefined4 *)(puVar6 + 0xdc);
+        puVar1 = puVar6 + -0x20;
+        uVar12 = *(undefined4 *)(puVar6 + -0x1c);
+        uVar13 = *(undefined4 *)(puVar6 + -0x18);
+        uVar14 = *(undefined4 *)(puVar6 + -0x14);
+        puVar6 = puVar6 + 0x100;
+        uVar3 = (uint)uVar9;
+        puVar2 = (undefined4 *)(uVar3 & 0xfffffff0);
+        *puVar2 = *(undefined4 *)puVar1;
+        puVar2[1] = uVar12;
+        puVar2[2] = uVar13;
+        puVar2[3] = uVar14;
         puVar2 = (undefined4 *)(uVar3 + 0x10 & 0xfffffff0);
-        *puVar2 = uVar69;
-        puVar2[1] = uVar70;
-        puVar2[2] = uVar71;
-        puVar2[3] = uVar72;
+        *puVar2 = uVar71;
+        puVar2[1] = uVar72;
+        puVar2[2] = uVar73;
+        puVar2[3] = uVar74;
         puVar2 = (undefined4 *)(uVar3 + 0x20 & 0xfffffff0);
-        *puVar2 = uVar65;
-        puVar2[1] = uVar66;
-        puVar2[2] = uVar67;
-        puVar2[3] = uVar68;
+        *puVar2 = uVar67;
+        puVar2[1] = uVar68;
+        puVar2[2] = uVar69;
+        puVar2[3] = uVar70;
         puVar2 = (undefined4 *)(uVar3 + 0x30 & 0xfffffff0);
-        *puVar2 = uVar61;
-        puVar2[1] = uVar62;
-        puVar2[2] = uVar63;
-        puVar2[3] = uVar64;
+        *puVar2 = uVar63;
+        puVar2[1] = uVar64;
+        puVar2[2] = uVar65;
+        puVar2[3] = uVar66;
         puVar2 = (undefined4 *)(uVar3 + 0x40 & 0xfffffff0);
-        *puVar2 = uVar57;
-        puVar2[1] = uVar58;
-        puVar2[2] = uVar59;
-        puVar2[3] = uVar60;
+        *puVar2 = uVar59;
+        puVar2[1] = uVar60;
+        puVar2[2] = uVar61;
+        puVar2[3] = uVar62;
         puVar2 = (undefined4 *)(uVar3 + 0x50 & 0xfffffff0);
-        *puVar2 = uVar53;
-        puVar2[1] = uVar54;
-        puVar2[2] = uVar55;
-        puVar2[3] = uVar56;
+        *puVar2 = uVar55;
+        puVar2[1] = uVar56;
+        puVar2[2] = uVar57;
+        puVar2[3] = uVar58;
         puVar2 = (undefined4 *)(uVar3 + 0x60 & 0xfffffff0);
-        *puVar2 = uVar49;
-        puVar2[1] = uVar50;
-        puVar2[2] = uVar51;
-        puVar2[3] = uVar52;
+        *puVar2 = uVar51;
+        puVar2[1] = uVar52;
+        puVar2[2] = uVar53;
+        puVar2[3] = uVar54;
         puVar2 = (undefined4 *)(uVar3 + 0x70 & 0xfffffff0);
-        *puVar2 = uVar45;
-        puVar2[1] = uVar46;
-        puVar2[2] = uVar47;
-        puVar2[3] = uVar48;
+        *puVar2 = uVar47;
+        puVar2[1] = uVar48;
+        puVar2[2] = uVar49;
+        puVar2[3] = uVar50;
         puVar2 = (undefined4 *)(uVar3 + 0x80 & 0xfffffff0);
-        *puVar2 = uVar41;
-        puVar2[1] = uVar42;
-        puVar2[2] = uVar43;
-        puVar2[3] = uVar44;
+        *puVar2 = uVar43;
+        puVar2[1] = uVar44;
+        puVar2[2] = uVar45;
+        puVar2[3] = uVar46;
         puVar2 = (undefined4 *)(uVar3 + 0x90 & 0xfffffff0);
-        *puVar2 = uVar37;
-        puVar2[1] = uVar38;
-        puVar2[2] = uVar39;
-        puVar2[3] = uVar40;
+        *puVar2 = uVar39;
+        puVar2[1] = uVar40;
+        puVar2[2] = uVar41;
+        puVar2[3] = uVar42;
         puVar2 = (undefined4 *)(uVar3 + 0xa0 & 0xfffffff0);
-        *puVar2 = uVar33;
-        puVar2[1] = uVar34;
-        puVar2[2] = uVar35;
-        puVar2[3] = uVar36;
+        *puVar2 = uVar35;
+        puVar2[1] = uVar36;
+        puVar2[2] = uVar37;
+        puVar2[3] = uVar38;
         puVar2 = (undefined4 *)(uVar3 + 0xb0 & 0xfffffff0);
-        *puVar2 = uVar29;
-        puVar2[1] = uVar30;
-        puVar2[2] = uVar31;
-        puVar2[3] = uVar32;
+        *puVar2 = uVar31;
+        puVar2[1] = uVar32;
+        puVar2[2] = uVar33;
+        puVar2[3] = uVar34;
         puVar2 = (undefined4 *)(uVar3 + 0xc0 & 0xfffffff0);
-        *puVar2 = uVar25;
-        puVar2[1] = uVar26;
-        puVar2[2] = uVar27;
-        puVar2[3] = uVar28;
+        *puVar2 = uVar27;
+        puVar2[1] = uVar28;
+        puVar2[2] = uVar29;
+        puVar2[3] = uVar30;
         puVar2 = (undefined4 *)(uVar3 + 0xd0 & 0xfffffff0);
-        *puVar2 = uVar21;
-        puVar2[1] = uVar22;
-        puVar2[2] = uVar23;
-        puVar2[3] = uVar24;
+        *puVar2 = uVar23;
+        puVar2[1] = uVar24;
+        puVar2[2] = uVar25;
+        puVar2[3] = uVar26;
         puVar2 = (undefined4 *)(uVar3 + 0xe0 & 0xfffffff0);
-        *puVar2 = uVar17;
-        puVar2[1] = uVar18;
-        puVar2[2] = uVar19;
-        puVar2[3] = uVar20;
+        *puVar2 = uVar19;
+        puVar2[1] = uVar20;
+        puVar2[2] = uVar21;
+        puVar2[3] = uVar22;
         puVar2 = (undefined4 *)(uVar3 + 0xf0 & 0xfffffff0);
-        *puVar2 = uVar13;
-        puVar2[1] = uVar14;
-        puVar2[2] = uVar15;
-        puVar2[3] = uVar16;
-        uVar3 = uVar3 + 0x100;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
+        *puVar2 = uVar15;
+        puVar2[1] = uVar16;
+        puVar2[2] = uVar17;
+        puVar2[3] = uVar18;
+        uVar9 = uVar9 + 0x100;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
       uVar5 = (ulonglong)local_ac;
       local_ac = (uint)(uVar5 - 1);
     } while (uVar5 - 1 != 0);
-    param_3 = param_3 & 0xffffffff;
+    uVar7 = (ulonglong)uStack00000024;
   }
-  if ((param_3 & 0xffffffff) != 0) {
-    lVar9 = ((param_3 - 1 & 0xffffffff) >> 0xc) + 1;
+  if ((uVar7 & 0xffffffff) != 0) {
+    lVar11 = ((uVar7 - 1 & 0xffffffff) >> 0xc) + 1;
     do {
-      DB_ReadXFile(&DAT_83231f00,0x1000,1);
-      lVar8 = 0x400;
-      piVar7 = local_b0;
+      DB_ReadXFile(g_streamBuffer,0x1000,1);
+      lVar10 = 0x400;
+      piVar8 = (int *)local_b0;
       do {
-        if (*piVar7 != 0) {
+        if (*piVar8 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
-                          ,0x5de,0,0xffffffff8205cfc0,0xffffffff8205d1cc,
-                          *(undefined4 *)(param_4 + 0x6c));
+                          ,0x5de,0,"%s\n\t(image->name) = %s");
         }
-        lVar8 = lVar8 + -1;
-        piVar7 = piVar7 + 1;
-      } while (lVar8 != 0);
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+        lVar10 = lVar10 + -1;
+        piVar8 = piVar8 + 1;
+      } while (lVar10 != 0);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
   }
   __restgprlr();
   return;
@@ -1889,35 +1990,36 @@ void DB_ReadXFilePart(undefined8 param_1,ulonglong param_2,ulonglong param_3,int
 
 // 823F8D88  DB_ReadStreamFile  (database/db_streaming.cpp:1512)
 
-void DB_ReadStreamFile(undefined8 param_1,int param_2)
+int DB_ReadStreamFile(int param_1,int param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  undefined8 uVar6;
-  int iVar12;
-  longlong lVar7;
-  ulonglong uVar13;
-  longlong lVar14;
+  ushort uVar1;
+  uint uVar2;
+  longlong lVar3;
+  GfxImageStream *pGVar4;
+  uchar *puVar5;
+  uchar *puVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  GfxImage *pGVar11;
+  uint uVar12;
+  uint uVar13;
+  GfxImage *pGVar14;
   ulonglong uVar15;
-  ulonglong uVar16;
   uint uVar17;
-  uint uVar19;
+  longlong lVar16;
   ulonglong uVar18;
-  uint uVar20;
-  uint *puVar21;
-  int *piVar22;
-  uint uVar24;
-  ulonglong uVar23;
+  uint uVar19;
+  GfxSubImageStream *pGVar20;
+  int iVar21;
+  uint uVar23;
+  ulonglong uVar22;
+  int iStack00000014;
   int iStack0000001c;
-  undefined8 local_188;
+  ImageAllocInfo in_stack_fffffe28;
+  ImageBaseInfo local_188;
   char *local_180;
   int local_17c;
   char *local_178;
@@ -1925,52 +2027,49 @@ void DB_ReadStreamFile(undefined8 param_1,int param_2)
   int local_170;
   char *local_16c;
   char *local_168;
-  uint local_160;
-  uint uStack_15c;
-  uint local_158;
+  ImageAllocInfo local_160;
   char *local_154;
   char *local_150;
-  uint local_148;
-  uint local_144;
+  ImageBaseInfo local_148;
   uint local_140;
   uint uStack_13c;
-  uint local_130;
-  int iStack_12c;
-  int local_128;
-  char *local_124;
-  char *local_120;
+  ImageAllocInfo local_130;
+  GfxImage *local_124;
+  GfxImage *local_120;
   char *local_11c;
   char *local_118;
   char *local_114;
   char *local_110;
   char *local_10c;
   char *local_108;
-  char *local_104;
+  GfxImage *local_104;
   char *local_100;
-  char *local_fc;
+  GfxImage *local_fc;
   char *local_f8;
-  char *local_f4;
+  GfxImage *local_f4;
   char *local_f0;
-  char *local_ec;
+  GfxImage *local_ec;
   char *local_e8;
   char *local_e4;
   char *local_e0;
   char *local_dc;
-  undefined4 *local_d8;
+  uint_0_ *local_d8;
   char *local_d4;
   char *local_d0;
-  char *local_cc;
+  GfxImage *local_cc;
   char *local_c8;
   char *local_c4;
   char *local_c0;
   char *local_bc;
-  char *local_b8;
+  GfxImage *local_b8;
   char *local_b4;
   char *local_b0;
   char *local_ac;
-  undefined8 local_a8;
+  DB_Pixels local_a8;
   
-  iVar8 = __savegprlr();
+  __savegprlr();
+  iStack00000014 = param_1;
+  iStack0000001c = param_2;
   DB_ReadXFileStageStreaming();
   local_17c = 1;
   local_e0 = "!image->pixels";
@@ -1985,27 +2084,25 @@ void DB_ReadStreamFile(undefined8 param_1,int param_2)
   "(uint)image->cardMemory.platform[PICMIP_PLATFORM_USED] == (image->streams[imagePartIndex - 1].pixelSize & PIXELSIZE_MASK)"
   ;
   local_108 = "(size < 32)";
-  local_d8 = &DAT_82992400;
+  local_d8 = &g_bitShift;
   local_110 = "(static_cast< int >( size ) >= 0)";
   local_ac = "%s\n\t(g_stream2.priority[index]) = %i";
   local_b4 = "(g_stream2.priority[index] > -((int)(128.0f * (1 << 14))))";
   local_118 = "(static_cast< int >( size ) == 0)";
-  local_120 = "size > allocInfo.secondOffset";
+  local_120 = (GfxImage *)0x8205d5fc;
   local_e4 = "%s\n\t(imagePartIndex) = %i";
-  local_b8 = "(imagePartIndex == IMAGE_STREAM_BASE)";
-  local_ec = "size <= allocInfo.size";
-  local_cc = "(!size || (imagePartIndex == IMAGE_STREAM_BASE))";
-  local_f4 = "size >= baseInfo.size + baseInfo.sizeReduction";
+  local_b8 = (GfxImage *)0x8205d5b8;
+  local_ec = (GfxImage *)0x8205d5a0;
+  local_cc = (GfxImage *)0x8205d56c;
+  local_f4 = (GfxImage *)0x8205d53c;
   local_bc = "stream read: %d KB";
-  local_fc = "!DB_GetLoadTotalIn()";
+  local_fc = (GfxImage *)0x8205d510;
   local_114 = "(int)(g_streamPrefetchEnd - g_streamPrefetchAlloc) >= 0";
   local_150 = "%s\n\t(size) = %i";
   local_11c = "alloc mem2";
-  local_124 = "size < FILE_DUMMY_READ_SIZE + FILE_BLOCK_SIZE * 2";
+  local_124 = (GfxImage *)0x8205d4dc;
   local_178 = "%s\n\t%s";
-  local_104 = 
-  "(subImageStream->fileOffset & ~(FILE_BLOCK_SIZE - 1)) - ((g_streamFileOffset + (FILE_BLOCK_SIZE - 1)) & ~(FILE_BLOCK_SIZE - 1)) + FILE_BLOCK_SIZE <= FILE_DUMMY_READ_SIZE + FILE_BLOCK_SIZE"
-  ;
+  local_104 = (GfxImage *)0x8205d420;
   local_c4 = "allowAbort";
   local_b0 = "alloc mem1";
   local_180 = "%s\n\t(image->name) = %s";
@@ -2018,131 +2115,134 @@ void DB_ReadStreamFile(undefined8 param_1,int param_2)
   local_168 = "tempIndex < DB_STREAM_IMAGE_COUNT";
   local_d0 = "g_streamPrefetchEnd - g_streamPrefetchAlloc > 0";
   local_d4 = "g_streamFileOffset == DB_GetLoadOffset() - DB_GetLoadAvailIn()";
-  iStack0000001c = param_2;
   do {
-    if (DAT_832ee358 == DAT_83231edc) {
-      iVar9 = DB_CheckAvailIn();
-      if (iVar9 != 0) {
+    if (g_streamPrefetchRead == DAT_83231edc) {
+      iVar7 = DB_CheckAvailIn();
+      if (iVar7 != 0) {
         DAT_83231ef8 = DB_GetLoadOffset();
       }
-      iVar9 = DB_GetLoadOffset();
-      iVar10 = DB_GetLoadAvailIn();
-      if (DAT_83231ef8 != iVar9 - iVar10) {
-        MyAssertHandler(0xffffffff8205cd18,0x616,0,0xffffffff82000f98,local_d4);
+      uVar8 = DB_GetLoadOffset();
+      uVar9 = DB_GetLoadAvailIn();
+      if (DAT_83231ef8 != uVar8 - uVar9) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x616,0,"%s");
       }
-      DAT_83231edc = DAT_83231e84;
-      if (DAT_832ee358 == DAT_83231e84) {
+      DAT_83231edc = g_streamPrefetchEnd2;
+      if (g_streamPrefetchRead == g_streamPrefetchEnd2) {
         if ((local_17c != 0) && (iStack0000001c == 0)) {
-          MyAssertHandler(0xffffffff8205cd18,0x61d,0,0xffffffff82000f98,0xffffffff8205d248);
-          __restgprlr(local_17c);
-          return;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x61d,0,"%s");
+          __restgprlr();
+          return local_17c;
         }
 LAB_823f9b28:
-        __restgprlr(local_17c);
-        return;
+        __restgprlr();
+        return local_17c;
       }
     }
-    if (iVar8 != 0) {
-      if (DAT_832ee080 != 0) goto LAB_823f93c4;
-      if (DAT_832ee00c != 0) goto LAB_823f93c4;
+    iVar7 = iStack00000014;
+    if (iStack00000014 != 0) {
+      if (g_streamAbort != 0) goto LAB_823f93c4;
+      if (g_stream.abort2 != 0) goto LAB_823f93c4;
     }
-    uVar15 = (ulonglong)DAT_83231ee4;
+    uVar15 = (ulonglong)g_streamPrefetchAlloc;
     while ((uVar15 & 0xffffffff) != (ulonglong)DAT_83231edc) {
       if (DAT_83231edc == uVar15) {
-        MyAssertHandler(0xffffffff8205cd18,0x632,0,0xffffffff82000f98,local_d0);
-        uVar15 = (ulonglong)DAT_83231ee4;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x632,0,"%s");
+        uVar15 = (ulonglong)g_streamPrefetchAlloc;
       }
-      lVar14 = (uVar15 & 0xff) * 0x2c;
-      iVar9 = (int)lVar14;
-      uVar1 = *(uint *)(&DAT_832ee498 + iVar9);
-      if (0x52ff < uVar1) {
-        MyAssertHandler(0xffffffff8205cd18,0x638,0,0xffffffff82000f98,local_168);
-        uVar15 = (ulonglong)DAT_83231ee4;
+      uVar9 = (uint)uVar15 & 0xff;
+      uVar8 = g_streamPrefetch[uVar9].index;
+      if (0x52ff < uVar8) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x638,0,"%s");
+        uVar15 = (ulonglong)g_streamPrefetchAlloc;
       }
-      uVar24 = uVar1 / 0x14c0;
-      if (((ulonglong)DAT_832ee358 != (uVar15 & 0xffffffff)) &&
-         (iVar10 = DB_GetLoadOffset(),
-         iVar10 + 0x40000U <= *(uint *)(&DAT_8329a900 + (uVar1 % 0x14c0) * 0x40 + uVar24 * 0xc))) {
-        uVar15 = (ulonglong)DAT_83231ee4;
+      uVar23 = uVar8 / 0x14c0;
+      if (((ulonglong)g_streamPrefetchRead != (uVar15 & 0xffffffff)) &&
+         (uVar10 = DB_GetLoadOffset(),
+         uVar10 + 0x40000 <= g_stream.imageStream[uVar8 % 0x14c0].part[uVar23].fileOffset)) {
+        uVar15 = (ulonglong)g_streamPrefetchAlloc;
         break;
       }
-      iVar10 = DB_GetGfxImageAtIndex(uVar1 % 0x14c0);
-      if (*(char *)(iVar10 + 0x47) == '\0') {
-        MyAssertHandler(0xffffffff8205cd18,0x646,0,0xffffffff82000f98,local_154);
+      pGVar11 = DB_GetGfxImageAtIndex(uVar8 % 0x14c0);
+      if (pGVar11->cached == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x646,0,"%s");
       }
-      local_160 = *(uint *)((uVar24 + 10) * 8 + iVar10) & 0x3ffffff;
-      if (local_160 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x649,0,local_180,local_c8,*(undefined4 *)(iVar10 + 0x6c)
-                       );
+      local_160.size = pGVar11->streams[uVar23].pixelSize & 0x3ffffff;
+      if (local_160.size == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x649,0,local_180);
       }
-      DB_GetImageAllocInfo(iVar10,&local_160);
-      DB_GetImageBaseInfo(iVar10,uVar24,&local_160,&local_188);
-      uVar19 = local_158;
-      uVar20 = uStack_15c;
-      uVar17 = local_160;
-      *(uint *)(&DAT_832ee4b0 + iVar9) = local_160;
-      *(uint *)(&DAT_832ee4b4 + iVar9) = uStack_15c;
-      *(uint *)(&DAT_832ee4b8 + iVar9) = local_158;
-      if ((local_188._0_4_ != 0) && (uVar24 != 0)) {
-        local_130 = *(uint *)((uVar24 + 9) * 8 + iVar10) & 0x3ffffff;
-        DB_GetImageAllocInfo(iVar10,&local_130);
-        DB_GetImageBaseInfo(iVar10,uVar24 - 1,&local_130,&local_148);
-        if (local_148 == 0) {
-          uVar17 = 0;
-          local_160 = 0;
-          uVar20 = 0;
-          uStack_15c = 0;
+      DB_GetImageAllocInfo(pGVar11,&local_160);
+      DB_GetImageBaseInfo(pGVar11,uVar23,&local_160,&local_188);
+      uVar13 = local_160.secondOffset;
+      uVar19 = local_160.firstSize;
+      uVar10 = local_160.size;
+      g_streamPrefetch[uVar9].imageAllocInfo.size = local_160.size;
+      g_streamPrefetch[uVar9].imageAllocInfo.firstSize = local_160.firstSize;
+      g_streamPrefetch[uVar9].imageAllocInfo.secondOffset = local_160.secondOffset;
+      if ((local_188.size != 0) && (uVar23 != 0)) {
+        local_130.size = pGVar11->streams[uVar23 - 1].pixelSize & 0x3ffffff;
+        DB_GetImageAllocInfo(pGVar11,&local_130);
+        DB_GetImageBaseInfo(pGVar11,uVar23 - 1,&local_130,&local_148);
+        if (local_148.size == 0) {
+          uVar10 = 0;
+          local_160.size = 0;
           uVar19 = 0;
-          local_158 = 0;
+          local_160.firstSize = 0;
+          uVar13 = 0;
+          local_160.secondOffset = 0;
         }
       }
-      uVar15 = 0xffffffffffe00000;
-      if ((int)(&DAT_845f4400)[uVar1] < -0x1fffff) {
-        MyAssertHandler(0xffffffff8205cd18,0x66e,0,local_ac,local_b4);
+      iVar21 = -0x200000;
+      if (g_stream2.priority[uVar8] < -0x1fffff) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x66e,0,local_ac);
       }
-      if (iVar8 != 0) {
-        uVar15 = (ulonglong)(uint)(&DAT_845f4400)[uVar1];
+      uVar23 = local_160.firstSize;
+      if (iVar7 != 0) {
+        iVar21 = g_stream2.priority[uVar8];
       }
-      *(uint *)(&DAT_832ee4a8 + iVar9) = uVar20;
-      uVar6 = CONCAT44(local_160,uStack_15c);
-      *(uint *)(&DAT_832ee4a4 + iVar9) = uVar17;
-      *(uint *)(&DAT_832ee4ac + iVar9) = uVar19;
-      *(ulonglong *)(&DAT_832ee4bc + iVar9) = local_188;
-      *(undefined4 *)(&DAT_832ee49c + iVar9) = 0;
-      *(undefined4 *)(&DAT_832ee4a0 + iVar9) = 0;
-      piVar22 = (int *)(ZEXT48(&DAT_832ee49c) + lVar14);
-      if (uVar17 == 0) {
+      g_streamPrefetch[uVar9].allocInfo.firstSize = uVar19;
+      g_streamPrefetch[uVar9].allocInfo.size = uVar10;
+      g_streamPrefetch[uVar9].allocInfo.secondOffset = uVar13;
+      g_streamPrefetch[uVar9].baseInfo = local_188;
+      g_streamPrefetch[uVar9].pixels.mip = (uchar *)0x0;
+      g_streamPrefetch[uVar9].pixels.base = (uchar *)0x0;
+      if (uVar10 == 0) {
 LAB_823f930c:
-        if (local_188._0_4_ != 0) {
-          local_140 = local_188._0_4_;
-          uStack_13c = local_188._0_4_;
-          PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,local_11c);
-          ImageCache_AllocMemory2
-                    (CONCAT44(local_140,uStack_13c),0,uVar15,ZEXT48(&DAT_832ee4a0) + lVar14);
+        if (local_188.size != 0) {
+          local_140 = local_188.size;
+          uStack_13c = local_188.size;
+          PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,local_11c);
+          ImageCache_AllocMemory2(in_stack_fffffe28,uStack_13c,(uchar **)0x0);
           PIXEndNamedEvent();
-          if (*(int *)(ZEXT48(&DAT_832ee4a0) + lVar14) == 0) {
-            if (uVar17 != 0) {
-              ImageCache_GiveMemoryAllocInfo(*piVar22,uVar6,(ulonglong)uVar19 << 0x20);
+          if (g_streamPrefetch[uVar9].pixels.base == (uchar *)0x0) {
+            if (uVar10 != 0) {
+              ImageCache_GiveMemoryAllocInfo(g_streamPrefetch[uVar9].pixels.mip,in_stack_fffffe28);
             }
             goto LAB_823f9368;
           }
         }
         local_170 = 1;
-        uVar15 = (ulonglong)DAT_83231ee4 + 1;
-        DAT_83231ee4 = (uint)uVar15;
+        uVar15 = (ulonglong)g_streamPrefetchAlloc + 1;
+        g_streamPrefetchAlloc = (uint)uVar15;
       }
       else {
-        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,local_b0);
-        ImageCache_AllocMemory2
-                  (uVar6,(ulonglong)uVar19 << 0x20,uVar15,ZEXT48(&DAT_832ee49c) + lVar14);
+        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,local_b0);
+        ImageCache_AllocMemory2(in_stack_fffffe28,uVar23,(uchar **)0x0);
         PIXEndNamedEvent();
-        if (*piVar22 != 0) goto LAB_823f930c;
+        if (g_streamPrefetch[uVar9].pixels.mip != (uchar *)0x0) goto LAB_823f930c;
 LAB_823f9368:
-        if ((int)uVar15 < 0x2001) {
-          DAT_832ee084 = 1;
+        if (iVar21 < 0x2001) {
+          g_streamFailHalfUnitLoad = 1;
         }
-        if (iVar8 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x68c,0,0xffffffff82000f98,local_c4);
+        if (iVar7 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x68c,0,"%s");
         }
         if (local_170 == 0) {
           ImageCache_UpdateGPU();
@@ -2150,239 +2250,261 @@ LAB_823f9368:
           Sys_YieldWorkerCmd();
         }
 LAB_823f93c4:
-        DAT_83231e84 = DAT_83231ee4;
-        uVar15 = (ulonglong)DAT_83231ee4;
-        DAT_83231edc = DAT_83231ee4;
-        if (DAT_832ee358 == uVar15) {
-          __restgprlr(0);
-          return;
+        g_streamPrefetchEnd2 = g_streamPrefetchAlloc;
+        uVar15 = (ulonglong)g_streamPrefetchAlloc;
+        DAT_83231edc = g_streamPrefetchAlloc;
+        if (g_streamPrefetchRead == uVar15) {
+          iVar7 = 0;
+          __restgprlr();
+          return iVar7;
         }
         local_17c = 0;
         iStack0000001c = 1;
-        DAT_83231edc = DAT_83231e84;
+        DAT_83231edc = g_streamPrefetchEnd2;
       }
     }
     if (local_174 == 0) {
       local_174 = 1;
       DB_ReadXFileStageStreaming2();
-      uVar15 = (ulonglong)DAT_83231ee4;
+      uVar15 = (ulonglong)g_streamPrefetchAlloc;
     }
-    iVar9 = local_170;
+    iVar7 = local_170;
     if (local_170 != 0) {
       ImageCache_UpdateGPU();
-      uVar15 = (ulonglong)DAT_83231ee4;
+      uVar15 = (ulonglong)g_streamPrefetchAlloc;
     }
     if ((longlong)(DAT_83231edc - uVar15) < 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x6bf,0,0xffffffff82000f98,local_114);
-      uVar15 = (ulonglong)DAT_83231ee4;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6bf,0,"%s");
+      uVar15 = (ulonglong)g_streamPrefetchAlloc;
     }
-    if ((longlong)(uVar15 - DAT_832ee358) < 1) {
-      MyAssertHandler(0xffffffff8205cd18,0x6c0,0,0xffffffff82000f98,local_dc);
+    if ((longlong)(uVar15 - g_streamPrefetchRead) < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6c0,0,"%s");
     }
-    iVar10 = (DAT_832ee358 & 0xff) * 0x2c;
-    uVar1 = *(uint *)(&DAT_832ee498 + iVar10);
-    uVar15 = (ulonglong)uVar1;
-    DAT_832ee358 = DAT_832ee358 + 1;
+    uVar9 = g_streamPrefetchRead & 0xff;
+    uVar8 = g_streamPrefetch[uVar9].index;
+    uVar15 = (ulonglong)uVar8;
+    g_streamPrefetchRead = g_streamPrefetchRead + 1;
     if (0x52ff < uVar15) {
-      MyAssertHandler(0xffffffff8205cd18,0x6c7,0,0xffffffff82000f98,local_168);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6c7,0,"%s");
     }
     uVar18 = uVar15 / 0x14c0;
-    iVar4 = (int)uVar18;
-    lVar14 = (uVar15 % 0x14c0) * 0x40 + -0x7cd65700;
-    iVar3 = (int)lVar14;
-    puVar21 = (uint *)(iVar4 * 0xc + iVar3);
-    iVar11 = DB_GetGfxImageAtIndex();
-    if (*(char *)(iVar11 + 0x47) == '\0') {
-      MyAssertHandler(0xffffffff8205cd18,0x6cf,0,0xffffffff82000f98,local_154);
+    uVar10 = uVar8 % 0x14c0;
+    uVar23 = (uint)uVar18;
+    pGVar4 = g_stream.imageStream + uVar10;
+    pGVar20 = pGVar4->part + uVar23;
+    pGVar11 = DB_GetGfxImageAtIndex(uVar10);
+    if (pGVar11->cached == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6cf,0,"%s");
     }
-    PIXSetMarker(0xffffffffffffffff,local_10c,*(undefined4 *)(iVar11 + 0x6c));
+    PIXSetMarker(0xffffffff,local_10c);
     DB_InflateInitForceNoSecure();
-    uVar13 = (ulonglong)DAT_83231ef8;
-    if (*puVar21 < uVar13) {
-      MyAssertHandler(0xffffffff8205cd18,0x6e5,0,0xffffffff82000f98,local_c0);
-      uVar13 = (ulonglong)DAT_83231ef8;
+    if (pGVar20->fileOffset < DAT_83231ef8) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6e5,0,"%s");
     }
-    uVar23 = *puVar21 - uVar13;
-    if (0x88000 < ((((ulonglong)*puVar21 & 0xffff8000) - (uVar13 + 0x7fff & 0xffff8000)) + 0x8000 &
-                  0xffffffff)) {
-      uVar6 = va(local_16c);
-      MyAssertHandler(0xffffffff8205cd18,0x6e8,0,local_178,local_104,uVar6);
-      uVar13 = (ulonglong)DAT_83231ef8;
+    pGVar14 = (GfxImage *)0x88000;
+    uVar19 = pGVar20->fileOffset - DAT_83231ef8;
+    if (0x88000 < ((pGVar20->fileOffset & 0xffff8000) - (DAT_83231ef8 + 0x7fff & 0xffff8000)) +
+                  0x8000) {
+      va(local_16c);
+      pGVar14 = local_104;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6e8,0,local_178);
     }
-    if (0x8ffff < (uVar23 & 0xffffffff)) {
-      uVar6 = va(local_16c,*puVar21,uVar13);
-      MyAssertHandler(0xffffffff8205cd18,0x6e9,0,local_178,local_124,uVar6);
+    if (0x8ffff < uVar19) {
+      va(local_16c);
+      pGVar14 = local_124;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x6e9,0,local_178);
     }
-    if ((uVar23 & 0xffffffff) != 0) {
-      DB_ReadXFileUncompressed(0,uVar23);
+    if (uVar19 != 0) {
+      DB_ReadXFileUncompressed((uchar *)0x0,uVar19);
     }
-    local_a8 = *(ulonglong *)(&DAT_832ee49c + iVar10);
-    local_188 = *(ulonglong *)(&DAT_832ee4bc + iVar10);
-    iVar2 = (iVar4 + 10) * 8;
-    uVar24 = *(uint *)(&DAT_832ee4a4 + iVar10);
-    uVar17 = *(uint *)(&DAT_832ee4a8 + iVar10);
-    uVar20 = *(uint *)(&DAT_832ee4ac + iVar10);
-    uVar23 = (ulonglong)uVar20;
-    uVar13 = (ulonglong)*(uint *)(iVar2 + iVar11) & 0x3ffffff;
+    local_a8 = g_streamPrefetch[uVar9].pixels;
+    local_188 = g_streamPrefetch[uVar9].baseInfo;
+    uVar19 = g_streamPrefetch[uVar9].allocInfo.size;
+    uVar13 = g_streamPrefetch[uVar9].allocInfo.firstSize;
+    uVar2 = g_streamPrefetch[uVar9].allocInfo.secondOffset;
+    uVar22 = (ulonglong)pGVar11->streams[uVar23].pixelSize & 0x3ffffff;
     if (uVar18 != 0) {
-      uVar13 = uVar13 - ((ulonglong)*(uint *)((iVar4 + 9) * 8 + iVar11) & 0x3ffffff);
+      uVar22 = uVar22 - ((ulonglong)pGVar11->streams[uVar23 - 1].pixelSize & 0x3ffffff);
     }
-    local_160 = uVar24;
-    uStack_15c = uVar17;
-    local_158 = uVar20;
-    iVar12 = DB_GetLoadTotalIn();
-    if (iVar12 != 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x701,0,0xffffffff82000f98,local_fc);
+    local_160.size = uVar19;
+    local_160.firstSize = uVar13;
+    local_160.secondOffset = uVar2;
+    uVar12 = DB_GetLoadTotalIn();
+    if (uVar12 != 0) {
+      pGVar14 = local_fc;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x701,0,"%s");
     }
-    if (iVar9 != 0) {
+    if (iVar7 != 0) {
       local_170 = 0;
-      iVar9 = ImageCache_WaitFence();
-      if (iVar9 != 0) {
+      iVar7 = ImageCache_WaitFence();
+      if (iVar7 != 0) {
         Sys_YieldWorkerCmd();
       }
     }
-    PIXBeginNamedEvent_Copy_Int(0xffffffffffffffff,local_bc,(uVar13 & 0xffffffff) >> 10);
-    iVar9 = local_a8._4_4_;
-    uVar5 = local_a8 >> 0x20;
-    if (local_a8._4_4_ == 0) {
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,local_bc,(uint)uVar22 >> 10);
+    puVar6 = local_a8.base;
+    puVar5 = local_a8.mip;
+    if (local_a8.base == (uchar *)0x0) {
 LAB_823f9720:
-      if ((uVar13 & 0xffffffff) != 0) {
-        if ((ulonglong)uVar24 < (uVar13 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8205cd18,0x72d,0,0xffffffff82000f98,local_ec);
+      uVar12 = (uint)uVar22;
+      if ((uVar22 & 0xffffffff) != 0) {
+        if ((ulonglong)uVar19 < (uVar22 & 0xffffffff)) {
+          pGVar14 = local_ec;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x72d,0,"%s");
         }
-        uVar16 = 0;
-        if ((ulonglong)uVar17 < (uVar13 & 0xffffffff)) {
+        uVar17 = 0;
+        if ((ulonglong)uVar13 < (uVar22 & 0xffffffff)) {
           if (uVar18 != 0) {
-            MyAssertHandler(0xffffffff8205cd18,0x734,0,local_e4,local_b8,uVar18);
+            pGVar14 = local_b8;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x734,0,local_e4);
           }
-          if ((uVar13 & 0xffffffff) <= (ulonglong)uVar20) {
-            MyAssertHandler(0xffffffff8205cd18,0x735,0,0xffffffff82000f98,local_120);
+          if ((uVar22 & 0xffffffff) <= (ulonglong)uVar2) {
+            pGVar14 = local_120;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x735,0,"%s");
           }
-          DB_ReadXFilePart(uVar5,(ulonglong)uVar17,uVar23 - uVar17,iVar11);
-          uVar13 = uVar13 - uVar23;
-          uVar16 = uVar23;
+          DB_ReadXFilePart(puVar5,uVar13,uVar2 - uVar13,(uint)pGVar11,pGVar14);
+          uVar12 = uVar12 - uVar2;
+          uVar17 = uVar2;
         }
         if (uVar18 == 0) {
-          lVar7 = (ulonglong)*(ushort *)(iVar3 + 0x30) << 0xc;
+          uVar13 = (uint)g_stream.imageStream[uVar10].sizeReduction4096 << 0xc;
         }
         else {
-          lVar7 = 0;
+          uVar13 = 0;
         }
-        DB_ReadXFilePart(uVar5 + uVar16,uVar13,lVar7,iVar11);
+        DB_ReadXFilePart(puVar5 + uVar17,uVar12,uVar13,(uint)pGVar11,pGVar14);
       }
     }
     else {
-      if ((uVar13 & 0xffffffff) < ((local_188 & 0xffffffff) + (local_188 >> 0x20) & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8205cd18,0x71c,0,0xffffffff82000f98,local_f4);
+      if ((uVar22 & 0xffffffff) < (ulonglong)(local_188.sizeReduction + local_188.size)) {
+        pGVar14 = local_f4;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x71c,0,"%s");
       }
-      DB_ReadXFilePart(iVar9,local_188._0_4_,local_188._4_4_,iVar11);
-      uVar13 = (uVar13 - (local_188 & 0xffffffff)) - (local_188 >> 0x20);
-      if (uVar13 != 0) {
+      DB_ReadXFilePart(puVar6,local_188.size,local_188.sizeReduction,(uint)pGVar11,pGVar14);
+      uVar22 = (uVar22 - ((ulonglong)local_188 & 0xffffffff)) - ((ulonglong)local_188 >> 0x20);
+      if (uVar22 != 0) {
         if (uVar18 != 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x727,0,local_180,local_cc,
-                          *(undefined4 *)(iVar11 + 0x6c));
+          pGVar14 = local_cc;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x727,0,local_180);
         }
         goto LAB_823f9720;
       }
     }
     PIXEndNamedEvent();
-    lVar7 = DB_GetLoadTotalIn();
-    uVar13 = ((ulonglong)puVar21[1] - (ulonglong)*puVar21) - lVar7;
-    if (DAT_82967310 == 0) {
+    uVar13 = DB_GetLoadTotalIn();
+    uVar13 = (pGVar20->fileOffsetEnd - pGVar20->fileOffset) - uVar13;
+    if (g_compressor == DB_COMPRESSOR_ZLIB) {
       if ((int)uVar13 < 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x765,0,local_150,local_110,uVar13);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x765,0,local_150);
       }
-      if (0x1f < (uVar13 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8205cd18,0x766,0,local_150,local_108,uVar13);
+      if (0x1f < uVar13) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x766,0,local_150);
         DB_DirtyDiscError();
       }
-      if ((uVar13 & 0xffffffff) != 0) {
-        DB_ReadXFileUncompressed(0,uVar13);
+      if (uVar13 != 0) {
+        DB_ReadXFileUncompressed((uchar *)0x0,uVar13);
       }
     }
-    else if ((DAT_82967310 == 1) && ((int)uVar13 != 0)) {
-      MyAssertHandler(0xffffffff8205cd18,0x75e,0,local_150,local_118,uVar13);
+    else if ((g_compressor == DB_COMPRESSOR_LZX) && (uVar13 != 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x75e,0,local_150);
       DB_DirtyDiscError();
     }
-    DAT_83231ef8 = puVar21[1];
+    DAT_83231ef8 = pGVar20->fileOffsetEnd;
     DB_InflateShutdown();
     if (uVar18 == 0) {
-      if (*(int *)(iVar11 + 0x48) != 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x7cc,0,0xffffffff82000f98,local_e0);
+      if (pGVar11->pixels != (uchar *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x7cc,0,"%s");
       }
 LAB_823f9a70:
-      DB_SetImageAllocInfoCached(lVar14,&DAT_832ee4b0 + iVar10);
-      DB_SetImageBaseInfoCached(lVar14,&local_188);
-      ImageCache_InitImage(iVar11,uVar18);
-      if (uVar5 != 0) {
-        ImageCache_SetImageMemory
-                  (iVar11,iVar11,uVar5,CONCAT44(local_160,uStack_15c),(ulonglong)uVar20 << 0x20);
+      DB_SetImageAllocInfoCached(pGVar4,&g_streamPrefetch[uVar9].imageAllocInfo);
+      DB_SetImageBaseInfoCached(pGVar4,&local_188);
+      ImageCache_InitImage(pGVar11,uVar23);
+      if (puVar5 != (uchar *)0x0) {
+        ImageCache_SetImageMemory(pGVar11,pGVar11,puVar5,in_stack_fffffe28);
       }
-      if (iVar9 != 0) {
-        ImageCache_SetImageMemoryBase(iVar11,iVar9,local_188._0_4_);
+      if (puVar6 != (uchar *)0x0) {
+        ImageCache_SetImageMemoryBase(pGVar11,puVar6,local_188.size);
       }
-      lVar14 = uVar18 + 1;
-      uVar18 = CONCAT44(uVar1,uVar1);
+      lVar16 = uVar18 + 1;
+      uVar18 = CONCAT44(uVar8,uVar8);
       do {
-        lVar7 = uVar18 << 2;
-        uVar1 = (uint)((uVar15 & 0xffffffff) >> 3) & 0x1ffffffc;
+        lVar3 = uVar18 << 2;
+        uVar8 = (uint)((uVar15 & 0xffffffff) >> 3) & 0x1ffffffc;
         uVar15 = uVar15 - 0x14c0;
         uVar18 = uVar15 & 0xffffffff;
-        *(uint *)((int)&DAT_845f3980 + uVar1) =
-             *(uint *)(((uint)lVar7 & 0x7c) + (int)local_d8) | *(uint *)((int)&DAT_845f3980 + uVar1)
-        ;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
+        *(uint *)((int)g_stream2.inuse + uVar8) =
+             *(uint *)(local_d8 + ((uint)lVar3 & 0x7c)) | *(uint *)((int)g_stream2.inuse + uVar8);
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
     }
     else {
-      uVar17 = *(uint *)((iVar4 + 9) * 8 + iVar11);
-      if ((uint)*(byte *)(iVar11 + 0x46) == uVar17 >> 0x1a) {
-        if (*(uint *)(iVar11 + 0x3c) != (uVar17 & 0x3ffffff)) {
-          MyAssertHandler(0xffffffff8205cd18,0x79a,0,0xffffffff82000f98,local_100);
+      uVar13 = pGVar11->streams[uVar23 - 1].pixelSize;
+      if ((uint)pGVar11->levelCount == uVar13 >> 0x1a) {
+        if ((pGVar11->cardMemory).platform[0] != (uVar13 & 0x3ffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x79a,0,"%s");
         }
-        if ((*(uint *)(iVar2 + iVar11) & 0x3ffffff) <= *(uint *)(iVar11 + 0x3c)) {
-          MyAssertHandler(0xffffffff8205cd18,0x79b,0,0xffffffff82000f98,local_f8);
+        if ((pGVar11->streams[uVar23].pixelSize & 0x3ffffff) <=
+            (uint)(pGVar11->cardMemory).platform[0]) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x79b,0,"%s");
         }
-        if (*(int *)(iVar11 + 0x48) == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x79c,0,0xffffffff82000f98,local_f0);
+        if (pGVar11->pixels == (uchar *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x79c,0,"%s");
         }
-        if (uVar5 != 0) {
-          local_148 = (uint)*(ushort *)(iVar3 + 0x38) << 0xc;
-          local_144 = (uint)*(ushort *)(iVar3 + 0x3a) << 0xc;
-          local_130 = (uint)*(ushort *)(iVar3 + 0x32) << 0xc;
-          local_128 = (uint)*(ushort *)(iVar3 + 0x36) << 0xc;
-          uVar13 = (ulonglong)uVar24 + (ulonglong)*(ushort *)(iVar3 + 0x32) * -0x1000;
-          iStack_12c = (uint)*(ushort *)(iVar3 + 0x34) << 0xc;
-          ImageCache_DmaCopyDelayed
-                    (uVar5 + uVar13,*(undefined4 *)(iVar11 + 0x48),CONCAT44(local_130,iStack_12c),
-                     (ulonglong)*(ushort *)(iVar3 + 0x36) << 0x2c);
-          ImageCache_ReleaseImageMemory(iVar11);
-          if (*(int *)(iVar3 + 0x3c) != 0) {
-            if ((uVar13 & 0xffffffff) != ((ulonglong)local_144 + (ulonglong)local_148 & 0xffffffff))
-            {
-              MyAssertHandler(0xffffffff8205cd18,0x7b8,0,0xffffffff82000f98,local_e8);
+        if (puVar5 != (uchar *)0x0) {
+          local_148.size = (uint)g_stream.imageStream[uVar10].baseSize4096 << 0xc;
+          uVar1 = g_stream.imageStream[uVar10].size4096;
+          local_148.sizeReduction = (uint)g_stream.imageStream[uVar10].baseSizeReduction4096 << 0xc;
+          local_130.size = (uint)uVar1 << 0xc;
+          local_130.secondOffset = (uint)g_stream.imageStream[uVar10].secondOffset4096 << 0xc;
+          iVar7 = uVar19 + (uint)uVar1 * -0x1000;
+          local_130.firstSize = (uint)g_stream.imageStream[uVar10].firstSize4096 << 0xc;
+          ImageCache_DmaCopyDelayed(puVar5 + iVar7,pGVar11->pixels,in_stack_fffffe28);
+          ImageCache_ReleaseImageMemory(pGVar11);
+          if (g_stream.imageStream[uVar10].basePixels != (uchar *)0x0) {
+            if (iVar7 != local_148.sizeReduction + local_148.size) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                              ,0x7b8,0,"%s");
             }
-            uStack_13c = local_148;
-            local_140 = local_148;
+            uStack_13c = local_148.size;
+            local_140 = local_148.size;
             ImageCache_DmaCopyDelayed
-                      (uVar5,*(undefined4 *)(iVar3 + 0x3c),CONCAT44(local_148,local_148),0);
-            ImageCache_ReleaseImageMemoryBase(iVar11);
+                      (puVar5,g_stream.imageStream[uVar10].basePixels,in_stack_fffffe28);
+            ImageCache_ReleaseImageMemoryBase(pGVar11);
           }
         }
         goto LAB_823f9a70;
       }
-      if (iVar9 != 0) {
-        local_140 = local_188._0_4_;
-        uStack_13c = local_188._0_4_;
-        ImageCache_GiveMemoryAllocInfo(iVar9,CONCAT44(local_188._0_4_,local_188._0_4_),0);
+      if (puVar6 != (uchar *)0x0) {
+        local_140 = local_188.size;
+        uStack_13c = local_188.size;
+        ImageCache_GiveMemoryAllocInfo(puVar6,in_stack_fffffe28);
       }
-      if (uVar5 != 0) {
-        ImageCache_GiveMemoryAllocInfo
-                  (uVar5,CONCAT44(local_160,uStack_15c),(ulonglong)uVar20 << 0x20);
+      if (puVar5 != (uchar *)0x0) {
+        ImageCache_GiveMemoryAllocInfo(puVar5,in_stack_fffffe28);
       }
     }
-    iVar9 = DB_IsOutstandingRead();
-    if ((iVar9 == 0) && ((iStack0000001c == 0 || (DAT_832ee358 == DAT_83231e84))))
+    iVar7 = DB_IsOutstandingRead();
+    if ((iVar7 == 0) && ((iStack0000001c == 0 || (g_streamPrefetchRead == g_streamPrefetchEnd2))))
     goto LAB_823f9b28;
   } while( true );
 }
@@ -2390,56 +2512,62 @@ LAB_823f9a70:
 
 // 823F9B80  DB_ReadStreamFileBlock  (database/db_streaming.cpp:2044)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ReadStreamFileBlock(void)
 
 {
-  undefined2 uVar1;
+  ushort uVar1;
   uint uVar2;
-  int iVar3;
-  uint uVar4;
-  undefined2 *puVar5;
+  DBFile *pDVar3;
+  int iVar4;
+  uint uVar5;
+  ushort *puVar6;
   
   __savegprlr_24();
-  iVar3 = R_HasDeviceOwnership();
-  if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x802,0,0xffffffff82000f98,0xffffffff82059658);
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x802,0,"%s");
   }
-  iVar3 = DAT_832ee004;
-  uVar2 = DAT_832ee000;
-  if (DAT_832ee004 == 0) {
+  pDVar3 = g_stream.bestFile;
+  uVar2 = g_stream.sortedImagesCount;
+  if (g_stream.bestFile == (DBFile *)0x0) {
     ImageCache_UpdateGPU();
     Sys_Sleep(0x32);
     Sys_YieldWorkerCmd();
     __restgprlr_24();
     return;
   }
-  if (DAT_832ee000 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x811,0,0xffffffff82000f98,0xffffffff8205d7c0);
+  if (g_stream.sortedImagesCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x811,0,"%s");
   }
-  DB_InitLoadXFileStreaming(iVar3);
-  uVar4 = 0;
+  DB_InitLoadXFileStreaming(pDVar3);
+  uVar5 = 0;
   if (uVar2 != 0) {
-    puVar5 = &DAT_832ed900;
+    puVar6 = g_stream.sortedImages;
     do {
-      uVar1 = *puVar5;
-      iVar3 = DB_PrefetchStreamFile(uVar1);
-      while (iVar3 != 0) {
-        iVar3 = DB_ReadStreamFile(1,0);
-        if (iVar3 == 0) goto LAB_823f9c9c;
-        iVar3 = DB_PrefetchStreamFile(uVar1);
+      uVar1 = *puVar6;
+      iVar4 = DB_PrefetchStreamFile((uint)uVar1);
+      while (iVar4 != 0) {
+        iVar4 = DB_ReadStreamFile(1,0);
+        if (iVar4 == 0) goto LAB_823f9c9c;
+        iVar4 = DB_PrefetchStreamFile((uint)uVar1);
       }
-      uVar4 = uVar4 + 1;
-      puVar5 = puVar5 + 1;
-    } while (uVar4 < uVar2);
+      uVar5 = uVar5 + 1;
+      puVar6 = puVar6 + 1;
+    } while (uVar5 < uVar2);
   }
   DB_ReadStreamFile(1,1);
 LAB_823f9c9c:
   DB_FinishLoadXFileStreaming();
-  iVar3 = R_HasDeviceOwnership();
-  if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x828,0,0xffffffff82000f98,0xffffffff82059658);
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x828,0,"%s");
   }
-  DAT_832ee010 = 0xffe00000;
+  g_stream.abortPriority = -0x200000;
   __restgprlr_24();
   return;
 }
@@ -2447,23 +2575,27 @@ LAB_823f9c9c:
 
 // 823F9CE0  DB_AllowStream  (database/db_streaming.cpp:2095)
 
-undefined8 DB_AllowStream(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_AllowStream(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsDatabaseThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x830,0,0xffffffff82000f98,0xffffffff82059784);
+  bVar1 = Sys_IsDatabaseThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x830,0,"%s");
   }
-  if (DAT_832ee350 < 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x831,0,0xffffffff8205cdc0,0xffffffff8205cde0,DAT_832ee350);
+  if (g_streamTabulation < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x831,0,"%s\n\t(g_streamTabulation) = %i");
   }
-  if (DAT_832ee350 != 0) {
-    if (DAT_832ee080 == 0) {
+  if (g_streamTabulation != 0) {
+    if (g_streamAbort == 0) {
       return 1;
     }
-    DAT_832ee350 = 0;
+    g_streamTabulation = 0;
   }
   return 0;
 }
@@ -2471,30 +2603,29 @@ undefined8 DB_AllowStream(void)
 
 // 823F9DA8  DB_Stream  (database/db_streaming.cpp:2109)
 
-/* WARNING: Heritage AFTER dead removal. Example location: r0x832ee350 : 0x823fa4f8 */
 /* WARNING: Restarted to delay deadcode elimination for space: ram */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_Stream(void)
 
 {
   ushort uVar1;
-  char cVar3;
   int iVar2;
-  undefined8 uVar4;
+  bool bVar4;
+  int iVar3;
   uint uVar5;
   int *in_r13;
-  undefined1 (*pauVar6) [16];
-  int *piVar7;
-  undefined1 (*pauVar8) [16];
+  StreamGlob *pSVar6;
+  StreamGlob *pSVar7;
+  int *piVar8;
   uint uVar9;
-  ulonglong uVar10;
-  ushort *puVar11;
-  undefined8 in_MSR;
+  uint uVar10;
+  int *piVar11;
+  ushort *puVar12;
   char in_RESERVE;
   byte in_cr0;
-  byte bVar12;
-  longlong lVar13;
-  double dVar14;
+  byte bVar13;
+  longlong lVar14;
   double dVar15;
   double dVar16;
   double dVar17;
@@ -2506,223 +2637,249 @@ void DB_Stream(void)
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
   undefined1 auVar25 [16];
-  undefined4 *local_d0;
-  undefined4 *local_cc;
-  undefined4 local_c8;
-  undefined4 local_c4;
-  undefined4 local_c0;
+  StreamGlob *local_d0;
+  StreamGlob2 *local_cc;
+  int local_c8;
+  DBFile *local_c4;
+  uint local_c0;
   
   __savegprlr();
-  cVar3 = Sys_IsDatabaseThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0x84b,0,0xffffffff82000f98,0xffffffff82059784);
+  bVar4 = Sys_IsDatabaseThread();
+  if (!bVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x84b,0,"%s");
   }
-  iVar2 = DB_AllowStream();
-  if (iVar2 == 0) goto LAB_823fa5b8;
-  iVar2 = R_HasDeviceOwnership();
-  if (iVar2 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x850,0,0xffffffff82000f98);
+  iVar3 = DB_AllowStream();
+  if (iVar3 == 0) goto LAB_823fa5b8;
+  iVar3 = R_HasDeviceOwnership();
+  if (iVar3 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x850,0,"%s");
   }
-  Sys_EnterCriticalSection(0x23);
-  if (DAT_832ee358 != DAT_83231ee4) {
-    MyAssertHandler(0xffffffff8205cd18,0x853,0,0xffffffff8205d9c8,DAT_832ee358,DAT_83231ee4);
+  Sys_EnterCriticalSection(CRITSECT_STREAMING);
+  if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x853,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
   }
-  if (DAT_83231ee4 != DAT_83231edc) {
-    MyAssertHandler(0xffffffff8205cd18,0x854,0,0xffffffff8205d990,DAT_83231ee4,DAT_83231edc);
+  if (g_streamPrefetchAlloc != DAT_83231edc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x854,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
   }
-  if (DAT_83231edc != DAT_83231e84) {
-    MyAssertHandler(0xffffffff8205cd18,0x855,0,0xffffffff8205d95c);
+  if (DAT_83231edc != g_streamPrefetchEnd2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x855,0,"g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
   }
-  iVar2 = DB_AllowStream();
-  if (iVar2 == 0) {
-    if (DAT_832ee358 != DAT_83231ee4) {
-      MyAssertHandler(0xffffffff8205cd18,0x863,0,0xffffffff8205d9c8,DAT_832ee358,DAT_83231ee4);
+  iVar3 = DB_AllowStream();
+  if (iVar3 == 0) {
+    if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x863,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
     }
-    if (DAT_83231ee4 != DAT_83231edc) {
-      MyAssertHandler(0xffffffff8205cd18,0x864,0,0xffffffff8205d990,DAT_83231ee4,DAT_83231edc);
+    if (g_streamPrefetchAlloc != DAT_83231edc) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x864,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
     }
-    if (DAT_83231edc != DAT_83231e84) {
-      uVar4 = 0x865;
+    if (DAT_83231edc != g_streamPrefetchEnd2) {
+      iVar3 = 0x865;
 LAB_823fa5a4:
-      MyAssertHandler(0xffffffff8205cd18,uVar4,0,
-                      "g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      iVar3,0,"g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
     }
   }
   else {
-    iVar2 = *in_r13;
-    if (*(int *)(iVar2 + 0x10) == 0) {
+    iVar3 = *in_r13;
+    if (*(int *)(iVar3 + 0x10) == 0) {
       do {
-        uVar9 = DAT_83231e80;
-        if (DAT_83231e80 != 0) {
+        iVar2 = g_streamTabulateLock;
+        if (g_streamTabulateLock != 0) {
           if (in_RESERVE != '\0') {
-            DAT_83231e80 = storeWordConditionalIndexed((ulonglong)DAT_83231e80,0,0xffffffff83231e80)
-            ;
+            g_streamTabulateLock =
+                 storeWordConditionalIndexed
+                           ((ulonglong)(uint)g_streamTabulateLock,0,0xffffffff83231e80);
             in_cr0 = 2;
           }
           break;
         }
         if (in_RESERVE != '\0') {
-          DAT_83231e80 = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
+          g_streamTabulateLock = storeWordConditionalIndexed(1,0,0xffffffff83231e80);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (uVar9 != 0) {
-        if (DAT_832ee358 != DAT_83231ee4) {
-          MyAssertHandler(0xffffffff8205cd18,0x874,0,0xffffffff8205d9c8,DAT_832ee358,DAT_83231ee4,
-                          in_MSR);
+      if (iVar2 != 0) {
+        if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x874,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
         }
-        if (DAT_83231ee4 != DAT_83231edc) {
-          MyAssertHandler(0xffffffff8205cd18,0x875,0,0xffffffff8205d990,DAT_83231ee4,DAT_83231edc);
+        if (g_streamPrefetchAlloc != DAT_83231edc) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x875,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
         }
-        if (DAT_83231edc != DAT_83231e84) {
-          MyAssertHandler(0xffffffff8205cd18,0x876,0,0xffffffff8205d95c);
+        if (DAT_83231edc != g_streamPrefetchEnd2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x876,0,"g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
         }
-        Sys_LeaveCriticalSection(0x23);
+        Sys_LeaveCriticalSection(CRITSECT_STREAMING);
         Sys_Sleep(1);
         __restgprlr();
         return;
       }
     }
     sync(1);
-    if (DAT_83231e80 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x880,0,0xffffffff82000f98,0xffffffff8205cdfc);
+    if (g_streamTabulateLock == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x880,0,"%s");
     }
-    *(int *)(iVar2 + 0x10) = *(int *)(iVar2 + 0x10) + 1;
+    *(int *)(iVar3 + 0x10) = *(int *)(iVar3 + 0x10) + 1;
     Profile_Begin(0x1ba);
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205d948);
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205d938);
-    cVar3 = Sys_IsDatabaseThread();
-    if (cVar3 == '\0') {
-      MyAssertHandler(0xffffffff8205cd18,0x888,0,0xffffffff82000f98,0xffffffff82059784);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream tabulation2");
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream transfer");
+    bVar4 = Sys_IsDatabaseThread();
+    if (!bVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x888,0,"%s");
     }
     do {
       if (in_RESERVE != '\0') {
-        DAT_832ee350 = storeWordConditionalIndexed((ulonglong)DAT_832ee350 - 1,0,0xffffffff832ee350)
-        ;
+        g_streamTabulation =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_streamTabulation - 1,0,0xffffffff832ee350);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((int)DAT_832ee350 < 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x88a,0,0xffffffff8205cdc0,0xffffffff8205cde0,DAT_832ee350)
-      ;
+    if (g_streamTabulation < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x88a,0,"%s\n\t(g_streamTabulation) = %i");
     }
-    pauVar8 = (undefined1 (*) [16])&DAT_83232f00;
+    pSVar6 = &g_stream;
     dVar16 = 2147483648.0;
     dVar17 = 16384.0;
     dVar15 = -128.0;
-    uVar10 = 0;
-    pauVar6 = pauVar8;
+    uVar9 = 0;
+    pSVar7 = pSVar6;
     do {
-      dVar14 = (double)*(float *)*pauVar6;
-      if ((dVar14 <= dVar15) || (dVar16 <= (double)(float)(dVar14 * dVar17))) {
-        uVar4 = va(0xffffffff8205d8c0,dVar14,uVar10);
-        MyAssertHandler(0xffffffff8205cd18,0x892,0,0xffffffff820011f4,0xffffffff8205d8d8,uVar4);
+      if (((double)pSVar7->priority2[0] <= dVar15) ||
+         (dVar16 <= (double)(float)((double)pSVar7->priority2[0] * dVar17))) {
+        va("value: %g, index: %d");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x892,0,"%s\n\t%s");
       }
-      uVar10 = uVar10 + 1;
-      pauVar6 = (undefined1 (*) [16])((int)*pauVar6 + 4);
-    } while ((uVar10 & 0xffffffff) < 0x5300);
-    lVar13 = 0x298;
-    pauVar6 = (undefined1 (*) [16])&DAT_845f4400;
+      uVar9 = uVar9 + 1;
+      pSVar7 = (StreamGlob *)(pSVar7->priority2 + 1);
+    } while (uVar9 < 0x5300);
+    lVar14 = 0x298;
+    piVar11 = g_stream2.priority;
     do {
-      auVar25 = vectorConvertToSignedFixedPointWordSaturate128(*pauVar8,0xe);
-      auVar24 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14f],0xe);
-      auVar21 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14c],0xe);
-      auVar23 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14e],0xe);
-      auVar22 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14d],0xe);
-      auVar20 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14b],0xe);
-      auVar19 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c14a],0xe);
-      auVar18 = vectorConvertToSignedFixedPointWordSaturate128(pauVar6[-0x13c149],0xe);
-      pauVar8 = pauVar8 + 8;
-      *pauVar6 = auVar25;
-      pauVar6[1] = auVar24;
-      pauVar6[4] = auVar21;
-      pauVar6[2] = auVar23;
-      pauVar6[3] = auVar22;
-      pauVar6[5] = auVar20;
-      pauVar6[6] = auVar19;
-      pauVar6[7] = auVar18;
-      pauVar6 = pauVar6 + 8;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    lVar13 = 0x5300;
-    piVar7 = &DAT_845f4400;
+      auVar25 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])pSVar6->priority2,0xe);
+      auVar24 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f053c),0xe);
+      auVar21 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f0530),0xe);
+      auVar23 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f0538),0xe);
+      auVar22 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f0534),0xe);
+      auVar20 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f052c),0xe);
+      auVar19 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f0528),0xe);
+      auVar18 = vectorConvertToSignedFixedPointWordSaturate128
+                          (*(undefined1 (*) [16])(piVar11 + -0x4f0524),0xe);
+      pSVar6 = (StreamGlob *)(pSVar6->priority2 + 0x20);
+      *(undefined1 (*) [16])piVar11 = auVar25;
+      *(undefined1 (*) [16])(piVar11 + 4) = auVar24;
+      *(undefined1 (*) [16])(piVar11 + 0x10) = auVar21;
+      *(undefined1 (*) [16])(piVar11 + 8) = auVar23;
+      *(undefined1 (*) [16])(piVar11 + 0xc) = auVar22;
+      *(undefined1 (*) [16])(piVar11 + 0x14) = auVar20;
+      *(undefined1 (*) [16])(piVar11 + 0x18) = auVar19;
+      *(undefined1 (*) [16])(piVar11 + 0x1c) = auVar18;
+      piVar11 = piVar11 + 0x20;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
+    lVar14 = 0x5300;
+    piVar8 = g_stream2.priority;
     do {
-      if (*piVar7 < -0x1fffff) {
-        MyAssertHandler(0xffffffff8205cd18,0x8be,0,0xffffffff8205d31c,0xffffffff8205d2e0);
+      if (*piVar8 < -0x1fffff) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x8be,0,"%s\n\t(g_stream2.priority[index]) = %i");
       }
-      lVar13 = lVar13 + -1;
-      bVar12 = (lVar13 == 0) << 1;
-      piVar7 = piVar7 + 1;
-    } while (lVar13 != 0);
+      lVar14 = lVar14 + -1;
+      bVar13 = (lVar14 == 0) << 1;
+      piVar8 = piVar8 + 1;
+    } while (lVar14 != 0);
     DB_LeaveStreamingTabulate();
-    if (pauVar8 != (undefined1 (*) [16])&DAT_83247b00) {
-      MyAssertHandler(0xffffffff8205cd18,0x8c3,0,&DAT_82000f98,0xffffffff8205d870);
+    if (pSVar6 != (StreamGlob *)g_stream.material) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x8c3,0,"%s");
     }
-    if (pauVar6 != (undefined1 (*) [16])&DAT_84609000) {
-      MyAssertHandler(0xffffffff8205cd18,0x8c4,0,&DAT_82000f98,0xffffffff8205d820);
+    if ((ushort *)piVar11 != g_stream2.sort) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x8c4,0,"%s");
     }
     PIXEndNamedEvent();
-    Profile_EndInternal(0);
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x8c9,0,&DAT_82000f98,"!R_HasDeviceOwnership()");
+    Profile_EndInternal((double *)0x0);
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x8c9,0,"%s");
     }
-    local_d0 = &DAT_83232f00;
-    local_cc = &DAT_845f3980;
-    local_c4 = DAT_82c45b80;
-    local_c0 = DAT_82c45b98;
-    local_c8 = DAT_832ee018;
+    local_d0 = &g_stream;
+    local_cc = &g_stream2;
+    local_c4 = g_recentReadFile;
+    local_c0 = g_recentReadOffset;
+    local_c8 = g_stream.cumulativeTabulation;
     DB_ChooseStreamFile(&local_d0);
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8205d810);
-    iVar2 = 0;
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream size");
     uVar9 = 0;
-    if (DAT_84613600 != 0) {
-      puVar11 = &DAT_84609000;
-      uVar5 = DAT_84613600;
+    uVar10 = 0;
+    if (g_stream2.sortCount != 0) {
+      puVar12 = g_stream2.sort;
+      uVar5 = g_stream2.sortCount;
       do {
-        uVar1 = *puVar11;
-        if ((*(uint *)((int)&DAT_83299e80 + (uVar1 >> 3 & 0x1ffffffc)) &
-            (&DAT_82992400)[uVar1 & 0x1f]) != 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x8e5,0,&DAT_82000f98,0xffffffff8205d7d0);
-          uVar5 = DAT_84613600;
+        uVar1 = *puVar12;
+        if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar1 >> 3 & 0x1ffffffc)) &
+            *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x8e5,0,"%s");
+          uVar5 = g_stream2.sortCount;
         }
-        if (0x3fff < (int)(&DAT_845f4400)[uVar1]) break;
-        uVar9 = uVar9 + 1;
-        puVar11 = puVar11 + 1;
-        iVar2 = (&DAT_832f1098)[uVar1] + iVar2;
-      } while (uVar9 < uVar5);
+        if (0x3fff < g_stream2.priority[uVar1]) break;
+        uVar10 = uVar10 + 1;
+        puVar12 = puVar12 + 1;
+        uVar9 = g_imageStreamSize[uVar1] + uVar9;
+      } while (uVar10 < uVar5);
     }
-    DAT_83231efc = iVar2;
+    g_streamUsedMemory = uVar9;
     PIXEndNamedEvent();
     DB_ReadStreamFileBlock();
     sync(1);
     do {
       if (in_RESERVE != '\0') {
-        DAT_832ee350 = storeWordConditionalIndexed((ulonglong)DAT_832ee350 - 1,0,0x832ee350);
-        bVar12 = 2;
+        g_streamTabulation =
+             storeWordConditionalIndexed((ulonglong)(uint)g_streamTabulation - 1,0,0x832ee350);
+        bVar13 = 2;
       }
-    } while (!(bool)(bVar12 >> 1 & 1));
-    if ((int)DAT_832ee350 < 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x8f6,0,"%s\n\t(g_streamTabulation) = %i",
-                      "(g_streamTabulation >= 0)",DAT_832ee350,in_MSR);
+    } while (!(bool)(bVar13 >> 1 & 1));
+    if (g_streamTabulation < 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x8f6,0,"%s\n\t(g_streamTabulation) = %i");
     }
     PIXEndNamedEvent();
-    if (DAT_832ee358 != DAT_83231ee4) {
-      MyAssertHandler(0xffffffff8205cd18,0x8ff,0,
-                      "g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i",DAT_832ee358,
-                      DAT_83231ee4);
+    if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x8ff,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
     }
-    if (DAT_83231ee4 != DAT_83231edc) {
-      MyAssertHandler(0xffffffff8205cd18,0x900,0,
-                      "g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i",DAT_83231ee4,
-                      DAT_83231edc);
+    if (g_streamPrefetchAlloc != DAT_83231edc) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0x900,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
     }
-    if (DAT_83231edc != DAT_83231e84) {
-      uVar4 = 0x901;
+    if (DAT_83231edc != g_streamPrefetchEnd2) {
+      iVar3 = 0x901;
       goto LAB_823fa5a4;
     }
   }
-  Sys_LeaveCriticalSection(0x23);
+  Sys_LeaveCriticalSection(CRITSECT_STREAMING);
 LAB_823fa5b8:
   __restgprlr();
   return;
@@ -2731,36 +2888,41 @@ LAB_823fa5b8:
 
 // 823FF238  DB_FileCompare  (database/db_streaming.cpp:2312)
 
-void DB_FileCompare(undefined8 param_1,undefined8 param_2)
+int DB_FileCompare(uint param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  uint *puVar2;
-  uint *puVar3;
-  undefined1 auStack_30 [4];
-  undefined1 auStack_2c [44];
+  uint uVar1;
+  GfxSubImageStream *pGVar2;
+  GfxSubImageStream *pGVar3;
+  int iVar4;
+  ulonglong uVar5;
+  uint uStack_30;
+  uint auStack_2c [11];
   
-  uVar1 = __savegprlr_28();
-  puVar2 = (uint *)DB_GetSubImageStream(uVar1,auStack_30);
-  if (puVar2[2] == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x910,0,0xffffffff82000f98,0xffffffff8205da18);
+  uVar1 = __savegprlr_28(param_1);
+  pGVar2 = DB_GetSubImageStream(uVar1,&uStack_30);
+  if (pGVar2->file == (DBFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x910,0,"%s");
   }
-  puVar3 = (uint *)DB_GetSubImageStream(param_2,auStack_2c);
-  if (puVar3[2] == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x913,0,0xffffffff82000f98,0xffffffff8205da00);
+  pGVar3 = DB_GetSubImageStream(param_2,auStack_2c);
+  if (pGVar3->file == (DBFile *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x913,0,"%s");
   }
-  if ((ulonglong)puVar2[2] - (ulonglong)puVar3[2] != 0) {
-    __restgprlr_28(((ulonglong)puVar2[2] - (ulonglong)puVar3[2] & 0xffffffff) >> 0x1f);
-    return;
+  uVar5 = ZEXT48(pGVar2->file) - ZEXT48(pGVar3->file);
+  if (uVar5 != 0) {
+    iVar4 = __restgprlr_28((uVar5 & 0xffffffff) >> 0x1f);
+    return iVar4;
   }
-  __restgprlr_28(-(*puVar2 < *puVar3) & 1);
-  return;
+  iVar4 = __restgprlr_28(-(pGVar2->fileOffset < pGVar3->fileOffset) & 1);
+  return iVar4;
 }
 
 
 // 823FA5D0  DB_SetAlwaysLoadedStream  (database/db_streaming.cpp:2334)
 
-void DB_SetAlwaysLoadedStream(int param_1,int param_2)
+void DB_SetAlwaysLoadedStream(uint param_1,uint param_2)
 
 {
   uint uVar1;
@@ -2768,98 +2930,102 @@ void DB_SetAlwaysLoadedStream(int param_1,int param_2)
   
   uVar2 = param_1 * 0x14c0 + param_2;
   uVar1 = uVar2 >> 3 & 0x1ffffffc;
-  *(uint *)((int)&DAT_83299e80 + uVar1) =
-       *(uint *)((int)&DAT_82992400 + (uVar2 * 4 & 0x7c)) | *(uint *)((int)&DAT_83299e80 + uVar1);
+  *(uint *)((int)g_stream.alwaysLoaded + uVar1) =
+       *(uint *)(&g_bitShift + (uVar2 * 4 & 0x7c)) | *(uint *)((int)g_stream.alwaysLoaded + uVar1);
   return;
 }
 
 
 // 823FA610  DB_SetAlwaysLoadedMaterialBase  (database/db_streaming.cpp:2343)
 
-void DB_SetAlwaysLoadedMaterialBase(ulonglong param_1)
+void DB_SetAlwaysLoadedMaterialBase(Material *param_1)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x92a,0,0xffffffff82000f98,0xffffffff82020dcc);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x92a,0,"%s");
   }
   uVar2 = DB_GetMaterialIndex(param_1);
-  uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)((int)&DAT_83282880 + uVar1) =
-       *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-       *(uint *)((int)&DAT_83282880 + uVar1);
+  uVar1 = uVar2 >> 3 & 0x1ffffffc;
+  *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar1) =
+       *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) |
+       *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar1);
   return;
 }
 
 
 // 823FA6A0  DB_SetAlwaysLoadedMaterialLow  (database/db_streaming.cpp:2354)
 
-void DB_SetAlwaysLoadedMaterialLow(ulonglong param_1)
+void DB_SetAlwaysLoadedMaterialLow(Material *param_1)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x935,0,0xffffffff82000f98,0xffffffff82020dcc);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x935,0,"%s");
   }
   uVar2 = DB_GetMaterialIndex(param_1);
-  uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)((int)&DAT_83282b80 + uVar1) =
-       *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-       *(uint *)((int)&DAT_83282b80 + uVar1);
+  uVar1 = uVar2 >> 3 & 0x1ffffffc;
+  *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar1) =
+       *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) |
+       *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar1);
   return;
 }
 
 
 // 823FA730  DB_SetAlwaysLoadedMaterialMiddle  (database/db_streaming.cpp:2365)
 
-void DB_SetAlwaysLoadedMaterialMiddle(ulonglong param_1)
+void DB_SetAlwaysLoadedMaterialMiddle(Material *param_1)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x940,0,0xffffffff82000f98,0xffffffff82020dcc);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x940,0,"%s");
   }
   uVar2 = DB_GetMaterialIndex(param_1);
-  uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)(&DAT_83282e80 + uVar1) =
-       *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-       *(uint *)(&DAT_83282e80 + uVar1);
+  uVar1 = uVar2 >> 3 & 0x1ffffffc;
+  *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar1) =
+       *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) |
+       *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar1);
   return;
 }
 
 
 // 823FA7C0  DB_SetAlwaysLoadedMaterialHigh  (database/db_streaming.cpp:2376)
 
-void DB_SetAlwaysLoadedMaterialHigh(ulonglong param_1)
+void DB_SetAlwaysLoadedMaterialHigh(Material *param_1)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  uint uVar2;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0x94b,0,0xffffffff82000f98,0xffffffff82020dcc);
+  if (param_1 == (Material *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0x94b,0,"%s");
   }
   uVar2 = DB_GetMaterialIndex(param_1);
-  uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-  *(uint *)(&DAT_83283180 + uVar1) =
-       *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-       *(uint *)(&DAT_83283180 + uVar1);
+  uVar1 = uVar2 >> 3 & 0x1ffffffc;
+  *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar1) =
+       *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) |
+       *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar1);
   return;
 }
 
 
 // 823FA850  DB_SetAlwaysLoadedMaterialAll  (database/db_streaming.cpp:2387)
 
-void DB_SetAlwaysLoadedMaterialAll(undefined8 param_1)
+void DB_SetAlwaysLoadedMaterialAll(Material *param_1)
 
 {
-  DB_SetAlwaysLoadedMaterialBase();
+  DB_SetAlwaysLoadedMaterialBase(param_1);
   DB_SetAlwaysLoadedMaterialLow(param_1);
   DB_SetAlwaysLoadedMaterialMiddle(param_1);
   DB_SetAlwaysLoadedMaterialHigh(param_1);
@@ -2869,47 +3035,48 @@ void DB_SetAlwaysLoadedMaterialAll(undefined8 param_1)
 
 // 823FA898  DB_SetAlwaysLoadedDecal  (database/db_streaming.cpp:2396)
 
-void DB_SetAlwaysLoadedDecal(void)
+void DB_SetAlwaysLoadedDecal(FxElemDef *param_1)
 
 {
-  uint uVar1;
+  Material *pMVar1;
+  uint uVar2;
   int iVar3;
-  ulonglong uVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  int *piVar6;
+  uint uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  undefined4 *puVar7;
   
-  iVar3 = __savegprlr_26();
-  piVar6 = *(int **)(iVar3 + 0xbc);
-  for (uVar4 = (ulonglong)*(byte *)(iVar3 + 0xb1); uVar4 != 0; uVar4 = uVar4 - 1) {
-    lVar5 = 2;
+  iVar3 = __savegprlr_26(param_1);
+  puVar7 = *(undefined4 **)(iVar3 + 0xbc);
+  for (uVar5 = (ulonglong)*(byte *)(iVar3 + 0xb1); uVar5 != 0; uVar5 = uVar5 - 1) {
+    lVar6 = 2;
     do {
-      iVar3 = *piVar6;
-      if (iVar3 != 0) {
-        uVar2 = DB_GetMaterialIndex(iVar3);
-        uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282880 + uVar1) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar1);
-        uVar2 = DB_GetMaterialIndex(iVar3);
-        uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282b80 + uVar1) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282b80 + uVar1);
-        uVar2 = DB_GetMaterialIndex(iVar3);
-        uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83282e80 + uVar1) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83282e80 + uVar1);
-        uVar2 = DB_GetMaterialIndex(iVar3);
-        uVar1 = (uint)((uVar2 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83283180 + uVar1) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar2 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83283180 + uVar1);
+      pMVar1 = (Material *)*puVar7;
+      if (pMVar1 != (Material *)0x0) {
+        uVar4 = DB_GetMaterialIndex(pMVar1);
+        uVar2 = uVar4 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar2) =
+             *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar2);
+        uVar4 = DB_GetMaterialIndex(pMVar1);
+        uVar2 = uVar4 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar2) =
+             *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar2);
+        uVar4 = DB_GetMaterialIndex(pMVar1);
+        uVar2 = uVar4 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar2) =
+             *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar2);
+        uVar4 = DB_GetMaterialIndex(pMVar1);
+        uVar2 = uVar4 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar2) =
+             *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar2);
       }
-      lVar5 = lVar5 + -1;
-      piVar6 = piVar6 + 1;
-    } while (lVar5 != 0);
+      lVar6 = lVar6 + -1;
+      puVar7 = puVar7 + 1;
+    } while (lVar6 != 0);
   }
   __restgprlr_26();
   return;
@@ -2918,17 +3085,17 @@ void DB_SetAlwaysLoadedDecal(void)
 
 // 823FA9A0  DB_SetAlwaysLoadedFxElemVisuals  (database/db_streaming.cpp:2424)
 
-void DB_SetAlwaysLoadedFxElemVisuals(byte param_1,undefined4 *param_2)
+void DB_SetAlwaysLoadedFxElemVisuals(uchar param_1,FxElemVisuals *param_2)
 
 {
-  undefined4 uVar1;
+  Material *pMVar1;
   
   if (param_1 < 7) {
-    uVar1 = *param_2;
-    DB_SetAlwaysLoadedMaterialBase(uVar1);
-    DB_SetAlwaysLoadedMaterialLow(uVar1);
-    DB_SetAlwaysLoadedMaterialMiddle(uVar1);
-    DB_SetAlwaysLoadedMaterialHigh(uVar1);
+    pMVar1 = param_2->material;
+    DB_SetAlwaysLoadedMaterialBase(pMVar1);
+    DB_SetAlwaysLoadedMaterialLow(pMVar1);
+    DB_SetAlwaysLoadedMaterialMiddle(pMVar1);
+    DB_SetAlwaysLoadedMaterialHigh(pMVar1);
   }
   return;
 }
@@ -2936,49 +3103,50 @@ void DB_SetAlwaysLoadedFxElemVisuals(byte param_1,undefined4 *param_2)
 
 // 823FA9F8  DB_SetAlwaysLoadedFX  (database/db_streaming.cpp:2441)
 
-void DB_SetAlwaysLoadedFX(void)
+void DB_SetAlwaysLoadedFX(FxEffectDef *param_1)
 
 {
-  undefined4 uVar1;
+  Material *pMVar1;
   int iVar2;
   longlong lVar3;
   byte *pbVar4;
   ulonglong uVar5;
   
-  iVar2 = __savegprlr_23();
+  iVar2 = __savegprlr_23(param_1);
   lVar3 = (ulonglong)*(uint *)(iVar2 + 0x18) + (ulonglong)*(uint *)(iVar2 + 0x14) +
           (ulonglong)*(uint *)(iVar2 + 0x10);
   if (lVar3 != 0) {
     pbVar4 = (byte *)(*(int *)(iVar2 + 0x30) + 0xb0);
     do {
       if (*pbVar4 == 0xb) {
-        DB_SetAlwaysLoadedDecal(pbVar4 + -0xb0);
+        DB_SetAlwaysLoadedDecal((FxElemDef *)(pbVar4 + -0xb0));
       }
       else {
         uVar5 = (ulonglong)pbVar4[1];
         if (uVar5 < 2) {
           if (uVar5 == 0) {
             if (*(int *)(pbVar4 + 0xc) != 0) {
-              MyAssertHandler(0xffffffff8205cd18,0x9a4,0,0xffffffff82000f98,0xffffffff8205da30);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                              ,0x9a4,0,"%s");
             }
           }
           else if (*pbVar4 < 7) {
-            uVar1 = *(undefined4 *)(pbVar4 + 0xc);
-            DB_SetAlwaysLoadedMaterialBase(uVar1);
-            DB_SetAlwaysLoadedMaterialLow(uVar1);
-            DB_SetAlwaysLoadedMaterialMiddle(uVar1);
-            DB_SetAlwaysLoadedMaterialHigh(uVar1);
+            pMVar1 = *(Material **)(pbVar4 + 0xc);
+            DB_SetAlwaysLoadedMaterialBase(pMVar1);
+            DB_SetAlwaysLoadedMaterialLow(pMVar1);
+            DB_SetAlwaysLoadedMaterialMiddle(pMVar1);
+            DB_SetAlwaysLoadedMaterialHigh(pMVar1);
           }
         }
         else if (uVar5 != 0) {
           iVar2 = 0;
           do {
             if (*pbVar4 < 7) {
-              uVar1 = *(undefined4 *)(*(int *)(pbVar4 + 0xc) + iVar2);
-              DB_SetAlwaysLoadedMaterialBase(uVar1);
-              DB_SetAlwaysLoadedMaterialLow(uVar1);
-              DB_SetAlwaysLoadedMaterialMiddle(uVar1);
-              DB_SetAlwaysLoadedMaterialHigh(uVar1);
+              pMVar1 = *(Material **)(*(int *)(pbVar4 + 0xc) + iVar2);
+              DB_SetAlwaysLoadedMaterialBase(pMVar1);
+              DB_SetAlwaysLoadedMaterialLow(pMVar1);
+              DB_SetAlwaysLoadedMaterialMiddle(pMVar1);
+              DB_SetAlwaysLoadedMaterialHigh(pMVar1);
             }
             uVar5 = uVar5 - 1;
             iVar2 = iVar2 + 4;
@@ -2994,10 +3162,13 @@ void DB_SetAlwaysLoadedFX(void)
 }
 
 
-// 823FF3A0  std::_Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 823FF3A0  _Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined2 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,int param_2,int param_3,ushort *param_4,
+               _func___cdecl_int_uint_uint *param_5)
 
 {
   int iVar1;
@@ -3005,57 +3176,69 @@ void std___Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned
   ulonglong uVar3;
   int iVar4;
   int iVar5;
-  uint uVar6;
+  ulonglong uVar6;
+  uint uVar7;
   
-  iVar4 = __savegprlr_25();
-  iVar5 = (int)param_2;
-  uVar6 = iVar5 - 1;
-  uVar3 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+  uVar6 = (ulonglong)param_2;
+  iVar4 = __savegprlr_25(param_1);
+  iVar5 = (int)uVar6;
+  uVar7 = iVar5 - 1;
+  uVar3 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
   while (uVar2 = uVar3, param_3 < iVar5) {
     iVar1 = (int)((uVar2 & 0xffffffff) << 1);
-    iVar5 = (*param_5)(*(undefined2 *)(iVar1 + iVar4),*param_4);
+    iVar5 = (*param_5)((uint)*(undefined2 *)(iVar1 + iVar4),(uint)*param_4);
     if (iVar5 == 0) break;
     iVar5 = (int)uVar2;
-    uVar6 = iVar5 - 1;
-    *(undefined2 *)((int)((param_2 & 0xffffffff) << 1) + iVar4) = *(undefined2 *)(iVar1 + iVar4);
-    uVar3 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    param_2 = uVar2;
+    uVar7 = iVar5 - 1;
+    *(undefined2 *)((int)((uVar6 & 0xffffffff) << 1) + iVar4) = *(undefined2 *)(iVar1 + iVar4);
+    uVar3 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar6 = uVar2;
   }
-  *(undefined2 *)((int)((param_2 & 0xffffffff) << 1) + iVar4) = *param_4;
+  *(ushort *)((int)((uVar6 & 0xffffffff) << 1) + iVar4) = *param_4;
   __restgprlr_25();
   return;
 }
 
 
-// 823FF428  std::_Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 823FF428  _Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined8 param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::
+     _Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,int param_2,int param_3,XAssetHeader *param_4,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_5)
 
 {
   int iVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  char cVar5;
-  uint uVar6;
-  longlong lVar7;
+  XAssetHeader *pXVar3;
+  ulonglong uVar4;
+  int iVar5;
+  bool bVar6;
+  ulonglong uVar7;
+  uint uVar8;
   
-  lVar4 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  uVar6 = iVar1 - 1;
-  uVar3 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar2 = uVar3, param_3 < iVar1) {
-    lVar7 = (uVar2 & 0x3fffffff) * 4 + lVar4;
-    cVar5 = (*param_5)(lVar7,param_4);
-    if (cVar5 == '\0') break;
+  uVar7 = (ulonglong)param_2;
+  iVar5 = __savegprlr_25(param_1);
+  iVar1 = (int)uVar7;
+  uVar8 = iVar1 - 1;
+  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+  while (uVar2 = uVar4, param_3 < iVar1) {
     iVar1 = (int)uVar2;
-    uVar6 = iVar1 - 1;
-    *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + (int)lVar4) = *(undefined4 *)lVar7;
-    uVar3 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    param_2 = uVar2;
+    pXVar3 = (XAssetHeader *)(iVar1 * 4 + iVar5);
+    bVar6 = (*param_5)(pXVar3,param_4);
+    if (!bVar6) break;
+    uVar8 = iVar1 - 1;
+    *(XAssetHeader *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *pXVar3;
+    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+    uVar7 = uVar2;
   }
-  *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + (int)lVar4) = *(undefined4 *)param_4;
+  *(XAssetHeader *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *param_4;
   __restgprlr_25();
   return;
 }
@@ -3063,23 +3246,23 @@ void std___Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeade
 
 // 823FAB28  DB_SetAlwaysLoadedTracer  (database/db_streaming.cpp:2483)
 
-void DB_SetAlwaysLoadedTracer(int param_1)
+void DB_SetAlwaysLoadedTracer(TracerDef *param_1)
 
 {
-  undefined4 uVar1;
+  Material *pMVar1;
   
-  uVar1 = *(undefined4 *)(param_1 + 4);
-  DB_SetAlwaysLoadedMaterialBase(uVar1);
-  DB_SetAlwaysLoadedMaterialLow(uVar1);
-  DB_SetAlwaysLoadedMaterialMiddle(uVar1);
-  DB_SetAlwaysLoadedMaterialHigh(uVar1);
+  pMVar1 = param_1->material;
+  DB_SetAlwaysLoadedMaterialBase(pMVar1);
+  DB_SetAlwaysLoadedMaterialLow(pMVar1);
+  DB_SetAlwaysLoadedMaterialMiddle(pMVar1);
+  DB_SetAlwaysLoadedMaterialHigh(pMVar1);
   return;
 }
 
 
 // 823FAB70  DB_SetAlwaysLoadedMaterials  (database/db_streaming.cpp:2495)
 
-void DB_SetAlwaysLoadedMaterials(undefined8 param_1,int param_2)
+void DB_SetAlwaysLoadedMaterials(uint *param_1,uint *param_2)
 
 {
   ushort uVar1;
@@ -3091,36 +3274,42 @@ void DB_SetAlwaysLoadedMaterials(undefined8 param_1,int param_2)
   ushort *puVar7;
   ulonglong uVar8;
   
-  puVar4 = (uint *)__savegprlr_15();
+  puVar4 = (uint *)__savegprlr_15(param_1);
   uVar5 = 0;
   do {
     uVar6 = *puVar4;
     while (uVar8 = LZCOUNT(uVar6), uVar8 < 0x20) {
       if (0x20 < uVar8) {
-        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar8,0x21);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar8 << 2));
+      uVar2 = *(uint *)(&g_bitShift + (int)(uVar8 << 2));
       if ((uVar2 & uVar6) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x9d6,0,0xffffffff82000f98,0xffffffff8205cd08);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x9d6,0,"%s");
       }
       uVar6 = uVar6 & ~uVar2;
       iVar3 = (int)((uVar5 + uVar8 + (uVar5 + uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-      uVar8 = (ulonglong)*(uint *)(&DAT_8326ed80 + iVar3);
+      uVar8 = (ulonglong)*(uint *)((int)&g_stream.model[0].materialCount + iVar3);
       if (uVar8 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0x9dc,0,0xffffffff82000f98,0xffffffff8205da58);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x9dc,0,"%s");
       }
-      puVar7 = *(ushort **)(&DAT_8326ed84 + iVar3);
+      puVar7 = *(ushort **)((int)&g_stream.model[0].materials + iVar3);
       if (puVar7 == (ushort *)0x0) {
-        MyAssertHandler(0xffffffff8205cd18,0x9df,0,0xffffffff82000f98,0xffffffff8205da68);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x9df,0,"%s");
       }
       for (; uVar8 != 0; uVar8 = uVar8 - 1) {
         uVar1 = *puVar7;
         if (0x165f < uVar1) {
-          MyAssertHandler(0xffffffff8205cd18,0x9e4,0,0xffffffff8205da74,uVar1,0x1660);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x9e4,0,"index doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)");
         }
         uVar2 = uVar1 >> 3 & 0x1ffffffc;
         puVar7 = puVar7 + 2;
-        *(uint *)(uVar2 + param_2) = (&DAT_82992400)[uVar1 & 0x1f] | *(uint *)(uVar2 + param_2);
+        *(uint *)(uVar2 + (int)param_2) =
+             *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4) | *(uint *)(uVar2 + (int)param_2);
       }
     }
     uVar5 = uVar5 + 0x20;
@@ -3133,171 +3322,198 @@ void DB_SetAlwaysLoadedMaterials(undefined8 param_1,int param_2)
 
 // 823FAD18  DB_SetAlwaysLoadedImagesForMaterial  (database/db_streaming.cpp:2542)
 
-void DB_SetAlwaysLoadedImagesForMaterial(undefined8 param_1,longlong param_2)
+void DB_SetAlwaysLoadedImagesForMaterial(uint *param_1,uint param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  uint *puVar3;
-  uint uVar4;
-  uint uVar5;
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  uint *puVar4;
+  longlong lVar5;
   ulonglong uVar6;
-  ushort *puVar7;
-  ulonglong uVar8;
+  uint uVar7;
+  uint uVar8;
+  ushort *puVar9;
+  ulonglong uVar10;
   
-  puVar3 = (uint *)__savegprlr_15();
-  uVar4 = 0;
+  lVar5 = (longlong)(int)param_2;
+  puVar4 = (uint *)__savegprlr_15(param_1);
+  uVar7 = 0;
   do {
-    uVar5 = *puVar3;
-    while (uVar8 = LZCOUNT(uVar5), uVar8 < 0x20) {
-      if (0x20 < uVar8) {
-        MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar8,0x21);
+    uVar8 = *puVar4;
+    while (uVar10 = LZCOUNT(uVar8), uVar10 < 0x20) {
+      iVar3 = uVar7 + (int)uVar10;
+      if (0x20 < uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar1 = *(uint *)((int)&DAT_82992400 + (int)(uVar8 << 2));
-      if ((uVar1 & uVar5) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xa09,0,0xffffffff82000f98,0xffffffff8205cd08);
+      uVar2 = *(uint *)(&g_bitShift + (int)(uVar10 << 2));
+      if ((uVar2 & uVar8) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xa09,0,"%s");
       }
-      iVar2 = (uVar4 + (int)uVar8) * 0x1c;
-      uVar5 = uVar5 & ~uVar1;
-      uVar8 = (ulonglong)*(ushort *)(&DAT_83247b08 + iVar2);
-      if (uVar8 != 0) {
-        puVar7 = *(ushort **)(&DAT_83247b14 + iVar2);
-        if (puVar7 == (ushort *)0x0) {
-          MyAssertHandler(0xffffffff8205cd18,0xa12,0,0xffffffff82000f98,0xffffffff8205dab0);
+      uVar8 = uVar8 & ~uVar2;
+      uVar10 = (ulonglong)g_stream.material[iVar3].totalImageCount;
+      if (uVar10 != 0) {
+        puVar9 = g_stream.material[iVar3].totalImages;
+        if (puVar9 == (ushort *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xa12,0,"%s");
         }
-        if (uVar8 != 0) {
+        if (uVar10 != 0) {
           do {
-            uVar6 = (ulonglong)*puVar7;
-            if (0x14bf < uVar6) {
-              MyAssertHandler(0xffffffff8205cd18,0xa17,0,0xffffffff8205dab8,uVar6,0x14c0);
+            uVar1 = *puVar9;
+            if (0x14bf < (ulonglong)uVar1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                              ,0xa17,0,"index doesn\'t index IMAGE_POOL_SIZE\n\t%i not in [0, %i)");
             }
-            uVar6 = param_2 * 0x14c0 + uVar6;
-            uVar1 = (uint)((uVar6 & 0xffffffff) >> 3) & 0x1ffffffc;
-            uVar8 = uVar8 - 1;
-            puVar7 = puVar7 + 1;
-            *(uint *)((int)&DAT_83299e80 + uVar1) =
-                 *(uint *)((int)&DAT_82992400 + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c)) |
-                 *(uint *)((int)&DAT_83299e80 + uVar1);
-          } while (uVar8 != 0);
+            uVar6 = lVar5 * 0x14c0 + (ulonglong)uVar1;
+            uVar2 = (uint)((uVar6 & 0xffffffff) >> 3) & 0x1ffffffc;
+            uVar10 = uVar10 - 1;
+            puVar9 = puVar9 + 1;
+            *(uint *)((int)g_stream.alwaysLoaded + uVar2) =
+                 *(uint *)(&g_bitShift + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c)) |
+                 *(uint *)((int)g_stream.alwaysLoaded + uVar2);
+          } while (uVar10 != 0);
         }
       }
     }
-    uVar4 = uVar4 + 0x20;
-    puVar3 = puVar3 + 1;
-  } while (uVar4 < 0x1660);
+    uVar7 = uVar7 + 0x20;
+    puVar4 = puVar4 + 1;
+  } while (uVar7 < 0x1660);
   __restgprlr_15();
   return;
 }
 
 
-// 823FF4B8  std::_Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 823FF4B8  _Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,uint param_3,undefined2 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,int param_2,int param_3,ushort *param_4,
+               _func___cdecl_int_uint_uint *param_5)
 
 {
   undefined2 *puVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  uint uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  uint uVar8;
   ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  iVar3 = __savegprlr_25();
-  uVar8 = (param_2 + 1 & 0x7fffffff) << 1;
-  uVar6 = (uint)uVar8;
-  uVar7 = param_2;
-  while (uVar9 = uVar8, (int)uVar6 < (int)param_3) {
-    puVar1 = (undefined2 *)((int)((uVar9 & 0xffffffff) << 1) + iVar3);
-    iVar4 = (*param_5)(*puVar1,puVar1[-1]);
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  uVar10 = (uVar5 + 1 & 0x7fffffff) << 1;
+  iVar4 = (int)uVar10;
+  uVar9 = uVar5;
+  while (uVar11 = uVar10, iVar4 < (int)uVar6) {
+    puVar1 = (undefined2 *)((int)((uVar11 & 0xffffffff) << 1) + iVar3);
+    iVar4 = (*param_5)((uint)*puVar1,(uint)puVar1[-1]);
     if (iVar4 != 0) {
-      uVar9 = uVar9 - 1;
+      uVar11 = uVar11 - 1;
     }
-    lVar5 = (uVar9 & 0x7fffffff) * 2;
-    uVar8 = lVar5 + 2;
-    *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + iVar3) = *(undefined2 *)((int)lVar5 + iVar3);
-    uVar6 = (uint)uVar8;
-    uVar7 = uVar9;
+    lVar7 = (uVar11 & 0x7fffffff) * 2;
+    uVar10 = lVar7 + 2;
+    *(undefined2 *)((int)((uVar9 & 0xffffffff) << 1) + iVar3) = *(undefined2 *)((int)lVar7 + iVar3);
+    iVar4 = (int)uVar10;
+    uVar9 = uVar11;
   }
-  if (uVar6 == param_3) {
-    uVar8 = uVar7 & 0xffffffff;
-    uVar7 = (ulonglong)param_3 - 1;
-    *(undefined2 *)((int)(uVar8 << 1) + iVar3) = *(undefined2 *)(param_3 * 2 + iVar3 + -2);
+  if (iVar4 == (int)uVar6) {
+    uVar10 = uVar9 & 0xffffffff;
+    uVar9 = uVar6 - 1;
+    *(undefined2 *)((int)(uVar10 << 1) + iVar3) =
+         *(undefined2 *)((int)((uVar6 & 0xffffffff) << 1) + iVar3 + -2);
   }
-  iVar4 = (int)uVar7;
-  uVar6 = iVar4 - 1;
-  uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar9 = uVar8, (int)param_2 < iVar4) {
-    iVar2 = (int)((uVar9 & 0xffffffff) << 1);
-    iVar4 = (*param_5)(*(undefined2 *)(iVar2 + iVar3),*param_4);
+  iVar4 = (int)uVar9;
+  uVar8 = iVar4 - 1;
+  uVar10 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+  while (uVar6 = uVar10, (int)uVar5 < iVar4) {
+    iVar2 = (int)((uVar6 & 0xffffffff) << 1);
+    iVar4 = (*param_5)((uint)*(undefined2 *)(iVar2 + iVar3),(uint)*param_4);
     if (iVar4 == 0) break;
-    iVar4 = (int)uVar9;
-    uVar6 = iVar4 - 1;
-    *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + iVar3) = *(undefined2 *)(iVar2 + iVar3);
-    uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar9;
+    iVar4 = (int)uVar6;
+    uVar8 = iVar4 - 1;
+    *(undefined2 *)((int)((uVar9 & 0xffffffff) << 1) + iVar3) = *(undefined2 *)(iVar2 + iVar3);
+    uVar10 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+    uVar9 = uVar6;
   }
-  *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + iVar3) = *param_4;
+  *(ushort *)((int)((uVar9 & 0xffffffff) << 1) + iVar3) = *param_4;
   __restgprlr_25();
   return;
 }
 
 
-// 823FF5C0  std::_Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 823FF5C0  _Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,ulonglong param_2,uint param_3,undefined8 param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::
+     _Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,int param_2,int param_3,XAssetHeader *param_4,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_5)
 
 {
-  int iVar1;
+  XAssetHeader *pXVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  char cVar5;
+  bool bVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   uint uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
+  int iVar10;
   ulonglong uVar9;
   
-  lVar3 = __savegprlr_25();
-  uVar8 = (param_2 + 1 & 0x7fffffff) << 1;
-  iVar1 = (int)lVar3;
-  uVar6 = (uint)uVar8;
-  uVar7 = param_2;
-  while (uVar9 = uVar8, (int)uVar6 < (int)param_3) {
-    lVar4 = (uVar9 & 0x3fffffff) * 4 + lVar3;
-    cVar5 = (*param_5)(lVar4,lVar4 + -4);
-    if (cVar5 != '\0') {
+  uVar5 = (ulonglong)param_3;
+  uVar4 = (ulonglong)param_2;
+  iVar2 = __savegprlr_25(param_1);
+  uVar8 = (uVar4 + 1 & 0x7fffffff) << 1;
+  iVar10 = (int)uVar8;
+  uVar7 = uVar4;
+  while (uVar9 = uVar8, iVar10 < (int)uVar5) {
+    pXVar1 = (XAssetHeader *)((int)uVar9 * 4 + iVar2);
+    bVar3 = (*param_5)(pXVar1,pXVar1 + -1);
+    if (bVar3) {
       uVar9 = uVar9 - 1;
     }
     uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar1) =
-         *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + iVar1);
-    uVar6 = (uint)uVar8;
+    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar2) =
+         *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + iVar2);
+    iVar10 = (int)uVar8;
     uVar7 = uVar9;
   }
-  if (uVar6 == param_3) {
+  if (iVar10 == (int)uVar5) {
     uVar8 = uVar7 & 0xffffffff;
-    uVar7 = (ulonglong)param_3 - 1;
-    *(undefined4 *)((int)(uVar8 << 2) + iVar1) = *(undefined4 *)(param_3 * 4 + iVar1 + -4);
+    uVar7 = uVar5 - 1;
+    *(undefined4 *)((int)(uVar8 << 2) + iVar2) =
+         *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + iVar2 + -4);
   }
-  iVar2 = (int)uVar7;
-  uVar6 = iVar2 - 1;
+  iVar10 = (int)uVar7;
+  uVar6 = iVar10 - 1;
   uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar9 = uVar8, (int)param_2 < iVar2) {
-    lVar4 = (uVar9 & 0x3fffffff) * 4 + lVar3;
-    cVar5 = (*param_5)(lVar4,param_4);
-    if (cVar5 == '\0') break;
-    iVar2 = (int)uVar9;
-    uVar6 = iVar2 - 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar1) = *(undefined4 *)lVar4;
+  while (uVar5 = uVar8, (int)uVar4 < iVar10) {
+    iVar10 = (int)uVar5;
+    pXVar1 = (XAssetHeader *)(iVar10 * 4 + iVar2);
+    bVar3 = (*param_5)(pXVar1,param_4);
+    if (!bVar3) break;
+    uVar6 = iVar10 - 1;
+    *(XAssetHeader *)((int)((uVar7 & 0xffffffff) << 2) + iVar2) = *pXVar1;
     uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar9;
+    uVar7 = uVar5;
   }
-  *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar1) = *(undefined4 *)param_4;
+  *(XAssetHeader *)((int)((uVar7 & 0xffffffff) << 2) + iVar2) = *param_4;
   __restgprlr_25();
   return;
 }
@@ -3305,205 +3521,237 @@ void std___Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHea
 
 // 823FAEA8  DB_InitAlwaysLoadedAssets  (database/db_streaming.cpp:2593)
 
-void * DB_InitAlwaysLoadedAssets(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void DB_InitAlwaysLoadedAssets(void)
 
 {
-  void *pvVar1;
-  
-  memset(&DAT_83299e80,0,0xa60);
-  memset(&DAT_83282880,0,0xc00);
-  memset(&DAT_832ee380,0,0x114);
-  memset(&DAT_83283480,0,0x300);
-  pvVar1 = memset(&DAT_83306300,0,0xa60);
-  return pvVar1;
+  memset();
+  memset();
+  memset();
+  memset();
+  memset();
+  return;
 }
 
 
 // 823FAF38  DB_SetAlwaysLoadedImagesGlobal  (database/db_streaming.cpp:2603)
 
-void DB_SetAlwaysLoadedImagesGlobal(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_SetAlwaysLoadedImagesGlobal(XAssetHeader *param_1)
 
 {
   ushort uVar1;
-  undefined4 *puVar2;
+  Material *pMVar2;
   uint uVar3;
-  int *piVar5;
-  ulonglong uVar4;
-  int iVar6;
+  byte bVar4;
+  XAssetHeader *pXVar6;
   int iVar7;
-  ulonglong uVar8;
-  byte bVar9;
-  ushort *puVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  uint uVar8;
+  ulonglong uVar5;
+  GfxImage *pGVar9;
+  longlong lVar10;
+  byte bVar11;
+  ushort *puVar12;
+  ulonglong uVar13;
+  longlong lVar14;
   
-  piVar5 = (int *)__savegprlr_17();
-  uVar4 = DB_GetAllXAssetOfType(5,piVar5,0x1a60);
-  uVar12 = uVar4 & 0xffffffff;
-  do {
-    if (uVar12 == 0) {
-      __restgprlr_17();
-      return;
-    }
-    puVar2 = (undefined4 *)*piVar5;
-    iVar6 = DB_GetMaterialIndex(puVar2);
-    uVar12 = (ulonglong)*(ushort *)(&DAT_83247b08 + iVar6 * 0x1c);
-    if (uVar12 != 0) {
-      bVar9 = *(byte *)(puVar2 + 0x10) >> 4 & 1;
-      if ((*(byte *)(puVar2 + 0x10) >> 4 & 1) != 0) {
-        iVar7 = strncmp((char *)*puVar2,"headicon",8);
-        bVar9 = -(iVar7 != 0) & bVar9;
-      }
-      puVar10 = *(ushort **)(&DAT_83247b14 + iVar6 * 0x1c);
-      if (puVar10 == (ushort *)0x0) {
-        MyAssertHandler(0xffffffff8205cd18,0xa4c,0,0xffffffff82000f98,0xffffffff8205dab0);
-      }
-      for (; uVar12 != 0; uVar12 = uVar12 - 1) {
-        lVar13 = 0;
-        uVar11 = 0;
-        do {
-          uVar1 = *puVar10;
-          iVar6 = DB_GetGfxImageAtIndex((ulonglong)uVar1);
-          if (*(char *)(iVar6 + 0x47) == '\0') {
-            uVar3 = uVar1 >> 3 & 0x1ffffffc;
-            *(uint *)((int)&DAT_845f3980 + uVar3) =
-                 (&DAT_82992400)[uVar1 & 0x1f] | *(uint *)((int)&DAT_845f3980 + uVar3);
+  pXVar6 = (XAssetHeader *)__savegprlr_17(param_1);
+  iVar7 = DB_GetAllXAssetOfType(ASSET_TYPE_MATERIAL,pXVar6,0x1a60);
+  lVar10 = (longlong)iVar7;
+  if (iVar7 != 0) {
+    do {
+      pMVar2 = pXVar6->material;
+      uVar8 = DB_GetMaterialIndex(pMVar2);
+      uVar13 = (ulonglong)g_stream.material[uVar8].totalImageCount;
+      if (uVar13 != 0) {
+        bVar4 = pMVar2->stateFlags >> 4;
+        bVar11 = bVar4 & 1;
+        if ((bVar4 & 1) != 0) {
+          uVar5 = ZEXT48((pMVar2->info).name);
+          strncmp();
+          bVar11 = -(uVar5 != 0) & bVar11;
+        }
+        puVar12 = g_stream.material[uVar8].totalImages;
+        if (puVar12 == (ushort *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xa4c,0,"%s");
+        }
+        for (; uVar13 != 0; uVar13 = uVar13 - 1) {
+          lVar14 = 0;
+          uVar8 = 0;
+          do {
+            uVar1 = *puVar12;
+            pGVar9 = DB_GetGfxImageAtIndex((uint)uVar1);
+            if (pGVar9->cached == '\0') {
+              uVar3 = uVar1 >> 3 & 0x1ffffffc;
+              *(uint *)((int)g_stream2.inuse + uVar3) =
+                   *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4) |
+                   *(uint *)((int)g_stream2.inuse + uVar3);
 LAB_823fb098:
-            uVar8 = lVar13 + (ulonglong)uVar1;
-            uVar3 = (uint)((uVar8 & 0xffffffff) >> 3) & 0x1ffffffc;
-            *(uint *)((int)&DAT_83299e80 + uVar3) =
-                 *(uint *)((int)&DAT_82992400 + ((uint)((uVar8 & 0xffffffff) << 2) & 0x7c)) |
-                 *(uint *)((int)&DAT_83299e80 + uVar3);
-          }
-          else if ((((bVar9 == 0) || (*(char *)(iVar6 + 0x39) == '\0')) &&
-                   (*(char *)(iVar6 + 0x47) != '\x02')) ||
-                  (*(int *)(&DAT_8329a908 + (uint)uVar1 * 0x40 + uVar11) == 0)) goto LAB_823fb098;
-          uVar11 = uVar11 + 0xc;
-          lVar13 = lVar13 + 0x14c0;
-        } while (uVar11 < 0x30);
-        puVar10 = puVar10 + 1;
+              uVar3 = (uint)((lVar14 + (ulonglong)uVar1 & 0xffffffff) >> 3) & 0x1ffffffc;
+              *(uint *)((int)g_stream.alwaysLoaded + uVar3) =
+                   *(uint *)(&g_bitShift +
+                            ((uint)((lVar14 + (ulonglong)uVar1 & 0xffffffff) << 2) & 0x7c)) |
+                   *(uint *)((int)g_stream.alwaysLoaded + uVar3);
+            }
+            else if ((((bVar11 == 0) || (pGVar9->semantic == '\0')) && (pGVar9->cached != '\x02'))
+                    || (*(int *)((int)&g_stream.imageStream[uVar1].part[0].file + uVar8) == 0))
+            goto LAB_823fb098;
+            uVar8 = uVar8 + 0xc;
+            lVar14 = lVar14 + 0x14c0;
+          } while (uVar8 < 0x30);
+          puVar12 = puVar12 + 1;
+        }
       }
-    }
-    uVar4 = uVar4 - 1;
-    piVar5 = piVar5 + 1;
-    uVar12 = uVar4;
-  } while( true );
+      lVar10 = lVar10 + -1;
+      pXVar6 = pXVar6 + 1;
+    } while (lVar10 != 0);
+  }
+  __restgprlr_17();
+  return;
 }
 
 
-// 823FF6D0  std::_Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 823FF6D0  _Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,ushort *param_2,_func___cdecl_int_uint_uint *param_3,int *param_4,
+               ushort *param_5)
 
 {
   uint uVar1;
   undefined2 *puVar2;
-  int iVar3;
-  int iVar4;
+  ulonglong uVar3;
+  ushort *puVar4;
   longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar7;
+  longlong lVar6;
   ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
-  undefined2 local_50 [40];
+  ulonglong uVar11;
+  uint uVar12;
+  ushort local_50 [40];
   
-  iVar3 = __savegprlr_24();
-  uVar1 = param_2 - iVar3 >> 1;
-  uVar7 = (longlong)(param_2 - iVar3 >> 2) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar7) {
-    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+  lVar5 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  puVar4 = (ushort *)__savegprlr_24(param_1,lVar6,lVar5,param_4,param_5);
+  iVar7 = (int)lVar6 - (int)puVar4;
+  uVar1 = iVar7 >> 1;
+  uVar9 = (longlong)(iVar7 >> 2) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar9) {
+    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
     do {
-      uVar6 = uVar6 - 2;
-      uVar7 = uVar7 - 1;
-      iVar4 = (int)uVar6;
-      local_50[0] = *(undefined2 *)(iVar3 + -2 + iVar4);
-      uVar10 = uVar6;
-      uVar8 = uVar7;
-      while (uVar9 = uVar10, iVar4 < (int)uVar1) {
-        puVar2 = (undefined2 *)((int)((uVar9 & 0xffffffff) << 1) + iVar3);
-        iVar4 = (*(code *)param_3)(*puVar2,puVar2[-1]);
-        if (iVar4 != 0) {
-          uVar9 = uVar9 - 1;
+      uVar8 = uVar8 - 2;
+      uVar9 = uVar9 - 1;
+      uVar12 = (uint)uVar8;
+      local_50[0] = *(ushort *)((int)puVar4 + (uVar12 - 2));
+      uVar11 = uVar8;
+      uVar3 = uVar9;
+      while (uVar10 = uVar11, (int)uVar12 < (int)uVar1) {
+        puVar2 = (undefined2 *)((int)((uVar10 & 0xffffffff) << 1) + (int)puVar4);
+        iVar7 = (*(_func___cdecl_int_uint_uint *)lVar5)((uint)*puVar2,(uint)puVar2[-1]);
+        if (iVar7 != 0) {
+          uVar10 = uVar10 - 1;
         }
-        lVar5 = (uVar9 & 0x7fffffff) * 2;
-        uVar10 = lVar5 + 2;
-        *(undefined2 *)((int)((uVar8 & 0xffffffff) << 1) + iVar3) =
-             *(undefined2 *)((int)lVar5 + iVar3);
-        iVar4 = (int)uVar10;
-        uVar8 = uVar9;
+        lVar6 = (uVar10 & 0x7fffffff) * 2;
+        uVar11 = lVar6 + 2;
+        *(undefined2 *)((int)((uVar3 & 0xffffffff) << 1) + (int)puVar4) =
+             *(undefined2 *)((int)lVar6 + (int)puVar4);
+        uVar12 = (uint)uVar11;
+        uVar3 = uVar10;
       }
-      if ((uint)uVar9 == uVar1) {
-        uVar10 = uVar8 & 0xffffffff;
-        uVar8 = (longlong)(int)uVar1 - 1;
-        *(undefined2 *)((int)(uVar10 << 1) + iVar3) = *(undefined2 *)(uVar1 * 2 + iVar3 + -2);
+      iVar7 = (int)uVar3;
+      if (uVar12 == uVar1) {
+        iVar7 = uVar1 - 1;
+        *(ushort *)((int)((uVar3 & 0xffffffff) << 1) + (int)puVar4) = puVar4[uVar1 - 1];
       }
-      std___Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                (iVar3,uVar8,uVar7,local_50,param_3);
-    } while (0 < (int)uVar7);
+      _Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar4,iVar7,(int)uVar9,local_50,(_func___cdecl_int_uint_uint *)lVar5);
+    } while (0 < (int)uVar9);
   }
   __restgprlr_24();
   return;
 }
 
 
-// 823FF888  std::_Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 823FF888  _Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::
+     _Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,XAssetHeader *param_2,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_3,int *param_4,
+               XAssetHeader *param_5)
 
 {
   uint uVar1;
-  int iVar2;
-  longlong lVar3;
+  XAssetHeader *pXVar2;
+  ulonglong uVar3;
   longlong lVar4;
-  char cVar5;
+  bool bVar5;
   longlong lVar6;
-  ulonglong uVar7;
+  longlong lVar7;
   int iVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  undefined4 local_50 [20];
+  uint uVar13;
+  XAssetHeader local_50 [20];
   
-  lVar3 = __savegprlr_24();
-  iVar2 = (int)lVar3;
-  uVar1 = param_2 - iVar2 >> 2;
-  uVar9 = (longlong)(param_2 - iVar2 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar9) {
-    uVar7 = (uVar9 + 1 & 0x7fffffff) << 1;
-    lVar6 = (uVar9 & 0x3fffffff) * 4 + lVar3;
+  lVar7 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  lVar4 = __savegprlr_24(param_1,lVar6,lVar7,param_4,param_5);
+  pXVar2 = (XAssetHeader *)lVar4;
+  iVar8 = (int)lVar6 - (int)pXVar2;
+  uVar1 = iVar8 >> 2;
+  uVar10 = (longlong)(iVar8 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar10) {
+    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
+    lVar4 = (uVar10 & 0x3fffffff) * 4 + lVar4;
     do {
-      lVar6 = lVar6 + -4;
-      local_50[0] = *(undefined4 *)lVar6;
-      uVar7 = uVar7 - 2;
-      uVar9 = uVar9 - 1;
-      iVar8 = (int)uVar7;
-      uVar12 = uVar7;
-      uVar10 = uVar9;
-      while (uVar11 = uVar12, iVar8 < (int)uVar1) {
-        lVar4 = (uVar11 & 0x3fffffff) * 4 + lVar3;
-        cVar5 = (*(code *)param_3)(lVar4,lVar4 + -4);
-        if (cVar5 != '\0') {
+      lVar4 = lVar4 + -4;
+      local_50[0] = *(XAssetHeader *)lVar4;
+      uVar9 = uVar9 - 2;
+      uVar10 = uVar10 - 1;
+      uVar13 = (uint)uVar9;
+      uVar12 = uVar9;
+      uVar3 = uVar10;
+      while (uVar11 = uVar12, (int)uVar13 < (int)uVar1) {
+        bVar5 = (*(_func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *)lVar7)
+                          (pXVar2 + (int)uVar11,pXVar2 + (int)uVar11 + -1);
+        if (bVar5) {
           uVar11 = uVar11 - 1;
         }
         uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar2) =
-             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
-        iVar8 = (int)uVar12;
-        uVar10 = uVar11;
+        *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)pXVar2) =
+             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + (int)pXVar2);
+        uVar13 = (uint)uVar12;
+        uVar3 = uVar11;
       }
-      if ((uint)uVar11 == uVar1) {
-        uVar12 = uVar10 & 0xffffffff;
-        uVar10 = (longlong)(int)uVar1 - 1;
-        *(undefined4 *)((int)(uVar12 << 2) + iVar2) = *(undefined4 *)(uVar1 * 4 + iVar2 + -4);
+      iVar8 = (int)uVar3;
+      if (uVar13 == uVar1) {
+        iVar8 = uVar1 - 1;
+        *(XAssetHeader *)((int)((uVar3 & 0xffffffff) << 2) + (int)pXVar2) = pXVar2[uVar1 - 1];
       }
-      std___Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                (lVar3,uVar10,uVar9,local_50,param_3);
-    } while (0 < (int)uVar9);
+      _Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                (pXVar2,iVar8,(int)uVar10,local_50,
+                 (_func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *)lVar7);
+    } while (0 < (int)uVar10);
   }
   __restgprlr_24();
   return;
@@ -3512,17 +3760,18 @@ void std___Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeade
 
 // 823FB0F0  DB_SetAlwaysLoadedXModelBase  (database/db_streaming.cpp:2666)
 
-void DB_SetAlwaysLoadedXModelBase(int param_1)
+void DB_SetAlwaysLoadedXModelBase(XModel *param_1)
 
 {
   uint uVar1;
   uint uVar2;
   
-  if (param_1 != 0) {
-    uVar2 = DB_GetXModelIndex();
+  if (param_1 != (XModel *)0x0) {
+    uVar2 = DB_GetXModelIndex(param_1);
     uVar1 = uVar2 >> 3 & 0x1ffffffc;
-    *(uint *)(&DAT_832ee380 + uVar1) =
-         (&DAT_82992400)[uVar2 & 0x1f] | *(uint *)(&DAT_832ee380 + uVar1);
+    *(uint *)((int)g_modelBaseAlwaysLoaded + uVar1) =
+         *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) |
+         *(uint *)((int)g_modelBaseAlwaysLoaded + uVar1);
   }
   return;
 }
@@ -3530,430 +3779,483 @@ void DB_SetAlwaysLoadedXModelBase(int param_1)
 
 // 823FB140  DB_SetAlwaysLoadedAssets3D  (database/db_streaming.cpp:2679)
 
-void DB_SetAlwaysLoadedAssets3D(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_SetAlwaysLoadedAssets3D(XAssetHeader *param_1)
 
 {
-  uint uVar1;
-  int *piVar4;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar5;
-  int iVar6;
-  float *pfVar7;
-  int *piVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  int *piVar11;
-  double dVar12;
+  GfxWorld *pGVar1;
+  Material *pMVar2;
+  MaterialTechnique *pMVar3;
+  XModel *pXVar4;
+  float fVar5;
+  WeaponDef *pWVar6;
+  XModel *pXVar7;
+  XAssetHeader *pXVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  uint uVar12;
+  float *pfVar13;
+  longlong lVar14;
+  XAssetHeader *pXVar15;
+  Material **ppMVar16;
+  ulonglong uVar17;
+  MaterialVertexShader **ppMVar18;
+  double dVar19;
   
-  piVar4 = (int *)__savegprlr_20();
-  uVar2 = DB_GetAllXAssetOfType(0x13,piVar4,0x1a60);
-  dVar12 = 1000000.0;
-  piVar11 = piVar4;
-  uVar10 = uVar2 & 0xffffffff;
-  while (uVar10 != 0) {
-    iVar5 = *piVar11;
-    uVar10 = (ulonglong)*(uint *)(iVar5 + 0x10);
-    if (uVar10 != 0) {
-      piVar8 = (int *)(*(int *)(iVar5 + 0x27c) + 0x10);
-      do {
-        iVar6 = *piVar8;
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x92a,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar3 = DB_GetMaterialIndex(iVar6);
-        uVar9 = (uint)((uVar3 & 0xffffffff) >> 3) & 0x1ffffffc;
-        uVar10 = uVar10 - 1;
-        piVar8 = piVar8 + 6;
-        *(uint *)((int)&DAT_83282880 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar9);
-      } while (uVar10 != 0);
-    }
-    uVar10 = (ulonglong)*(uint *)(iVar5 + 0x134);
-    if (uVar10 != 0) {
-      pfVar7 = (float *)0x8327bb7c;
-      do {
-        pfVar7[-0x7ff] = (float)dVar12;
-        pfVar7 = pfVar7 + 1;
-        *pfVar7 = (float)dVar12;
-        uVar10 = uVar10 - 1;
-      } while (uVar10 != 0);
-    }
-    if (*(char *)(iVar5 + 0x160) != '\0') {
-      iVar6 = *(int *)(iVar5 + 0x164);
-      if (iVar6 != 0) {
-        uVar10 = DB_GetMaterialIndex(iVar6);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282880 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar9);
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x935,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar6);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282b80 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282b80 + uVar9);
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x940,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar6);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83282e80 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83282e80 + uVar9);
-        if (iVar6 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x94b,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar6);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83283180 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83283180 + uVar9);
-      }
-      iVar5 = *(int *)(iVar5 + 0x168);
-      if (iVar5 != 0) {
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282880 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar9);
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x935,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282b80 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282b80 + uVar9);
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x940,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83282e80 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83282e80 + uVar9);
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x94b,0,0xffffffff82000f98,0xffffffff82020dcc);
-        }
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_83283180 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_83283180 + uVar9);
-      }
-    }
-    piVar11 = piVar11 + 1;
-    uVar2 = uVar2 - 1;
-    uVar10 = uVar2;
-  }
-  uVar2 = DB_GetAllXAssetOfType(0x1d,piVar4,0x1a60);
-  if ((uVar2 & 0xffffffff) != 0) {
-    piVar11 = piVar4 + -1;
+  pXVar8 = (XAssetHeader *)__savegprlr_20(param_1);
+  iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_GFXWORLD,pXVar8,0x1a60);
+  lVar14 = (longlong)iVar9;
+  dVar19 = 1000000.0;
+  pXVar15 = pXVar8;
+  if (iVar9 != 0) {
     do {
-      piVar11 = piVar11 + 1;
-      DB_SetAlwaysLoadedFX(*piVar11);
-      uVar2 = uVar2 - 1;
-    } while (uVar2 != 0);
+      pGVar1 = pXVar15->gfxWorld;
+      uVar17 = (ulonglong)pGVar1->surfaceCount;
+      if (uVar17 != 0) {
+        ppMVar16 = &((pGVar1->dpvs).surfaces)->material;
+        do {
+          pMVar2 = *ppMVar16;
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x92a,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          uVar17 = uVar17 - 1;
+          ppMVar16 = ppMVar16 + 6;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+        } while (uVar17 != 0);
+      }
+      uVar17 = (ulonglong)(uint)pGVar1->modelCount;
+      if (uVar17 != 0) {
+        pfVar13 = g_stream.bmodelDist + 0x7ff;
+        do {
+          pfVar13[-0x7ff] = (float)dVar19;
+          pfVar13 = pfVar13 + 1;
+          *pfVar13 = (float)dVar19;
+          uVar17 = uVar17 - 1;
+        } while (uVar17 != 0);
+      }
+      if ((pGVar1->sun).hasValidData != false) {
+        pMVar2 = (pGVar1->sun).spriteMaterial;
+        if (pMVar2 != (Material *)0x0) {
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x935,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x940,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x94b,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11);
+        }
+        pMVar2 = (pGVar1->sun).flareMaterial;
+        if (pMVar2 != (Material *)0x0) {
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x935,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x940,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11);
+          if (pMVar2 == (Material *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0x94b,0,"%s");
+          }
+          uVar10 = DB_GetMaterialIndex(pMVar2);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11);
+        }
+      }
+      lVar14 = lVar14 + -1;
+      pXVar15 = pXVar15 + 1;
+    } while (lVar14 != 0);
   }
-  uVar2 = DB_GetAllXAssetOfType(0x29,piVar4,0x1a60);
-  piVar11 = piVar4;
-  uVar10 = uVar2 & 0xffffffff;
-  while (uVar10 != 0) {
-    iVar5 = *(int *)(*piVar11 + 4);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x92a,0,0xffffffff82000f98,0xffffffff82020dcc);
-    }
-    uVar10 = DB_GetMaterialIndex(iVar5);
-    uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)((int)&DAT_83282880 + uVar9) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)((int)&DAT_83282880 + uVar9);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x935,0,0xffffffff82000f98,0xffffffff82020dcc);
-    }
-    uVar10 = DB_GetMaterialIndex(iVar5);
-    uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)((int)&DAT_83282b80 + uVar9) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)((int)&DAT_83282b80 + uVar9);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x940,0,0xffffffff82000f98,0xffffffff82020dcc);
-    }
-    uVar10 = DB_GetMaterialIndex(iVar5);
-    uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)(&DAT_83282e80 + uVar9) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)(&DAT_83282e80 + uVar9);
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0x94b,0,0xffffffff82000f98,0xffffffff82020dcc);
-    }
-    uVar10 = DB_GetMaterialIndex(iVar5);
-    uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-    piVar11 = piVar11 + 1;
-    *(uint *)(&DAT_83283180 + uVar9) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)(&DAT_83283180 + uVar9);
-    uVar2 = uVar2 - 1;
-    uVar10 = uVar2;
+  iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_FX,pXVar8,0x1a60);
+  lVar14 = (longlong)iVar9;
+  if (iVar9 != 0) {
+    pXVar15 = pXVar8 + -1;
+    do {
+      pXVar15 = pXVar15 + 1;
+      DB_SetAlwaysLoadedFX(pXVar15->fx);
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
   }
-  uVar2 = DB_GetAllXAssetOfType(0x12,piVar4,0x1a60);
-  if (1 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205cd18,0xab6,0,0xffffffff8205ce98,0xffffffff8205ce84,uVar2);
+  iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_TRACER,pXVar8,0x1a60);
+  lVar14 = (longlong)iVar9;
+  pXVar15 = pXVar8;
+  if (iVar9 != 0) {
+    do {
+      pMVar2 = pXVar15->tracerDef->material;
+      if (pMVar2 == (Material *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x92a,0,"%s");
+      }
+      uVar10 = DB_GetMaterialIndex(pMVar2);
+      uVar11 = uVar10 >> 3 & 0x1ffffffc;
+      *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+           *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+           *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+      if (pMVar2 == (Material *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x935,0,"%s");
+      }
+      uVar10 = DB_GetMaterialIndex(pMVar2);
+      uVar11 = uVar10 >> 3 & 0x1ffffffc;
+      *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11) =
+           *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+           *(uint *)((int)g_stream.materialAlwaysLoaded[1] + uVar11);
+      if (pMVar2 == (Material *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x940,0,"%s");
+      }
+      uVar10 = DB_GetMaterialIndex(pMVar2);
+      uVar11 = uVar10 >> 3 & 0x1ffffffc;
+      *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11) =
+           *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+           *(uint *)((int)g_stream.materialAlwaysLoaded[2] + uVar11);
+      if (pMVar2 == (Material *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0x94b,0,"%s");
+      }
+      uVar10 = DB_GetMaterialIndex(pMVar2);
+      uVar11 = uVar10 >> 3 & 0x1ffffffc;
+      lVar14 = lVar14 + -1;
+      *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11) =
+           *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+           *(uint *)((int)g_stream.materialAlwaysLoaded[3] + uVar11);
+      pXVar15 = pXVar15 + 1;
+    } while (lVar14 != 0);
   }
-  if ((uVar2 & 0xffffffff) != 0) {
-    uVar2 = (ulonglong)*(uint *)(*piVar4 + 0xc);
-    iVar5 = *(int *)(*piVar4 + 0x34);
-    if (0x100 < uVar2) {
-      MyAssertHandler(0xffffffff8205cd18,0xabc,0,0xffffffff8205dafc,0xffffffff8205db18,uVar2);
+  uVar11 = DB_GetAllXAssetOfType(ASSET_TYPE_FXWORLD,pXVar8,0x1a60);
+  if (1 < uVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xab6,0,"%s\n\t(assetCount) = %i");
+  }
+  if (uVar11 != 0) {
+    uVar17 = ZEXT48(pXVar8->techniqueSet->techniques[0]);
+    pMVar3 = pXVar8->techniqueSet->techniques[10];
+    if (0x100 < uVar17) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0xabc,0,"%s\n\t(glassDefCount) = %i");
     }
-    if (uVar2 != 0) {
-      piVar11 = (int *)(iVar5 + 0x1c);
-      pfVar7 = (float *)0x8328247c;
+    if (uVar17 != 0) {
+      ppMVar18 = pMVar3->passArray[0].vertexShaderArray + 4;
+      pfVar13 = g_stream.glassDist + 0xff;
       do {
-        iVar5 = piVar11[-1];
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x92a,0,0xffffffff82000f98,0xffffffff82020dcc);
+        pMVar2 = (Material *)ppMVar18[-1];
+        if (pMVar2 == (Material *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x92a,0,"%s");
         }
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)((int)&DAT_83282880 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar9);
-        iVar5 = *piVar11;
-        if (iVar5 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0x92a,0,0xffffffff82000f98,0xffffffff82020dcc);
+        uVar10 = DB_GetMaterialIndex(pMVar2);
+        uVar11 = uVar10 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+             *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+        pMVar2 = (Material *)*ppMVar18;
+        if (pMVar2 == (Material *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0x92a,0,"%s");
         }
-        uVar10 = DB_GetMaterialIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        uVar2 = uVar2 - 1;
-        piVar11 = piVar11 + 0xb;
-        *(uint *)((int)&DAT_83282880 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)((int)&DAT_83282880 + uVar9);
-        pfVar7[-0xff] = (float)dVar12;
-        pfVar7 = pfVar7 + 1;
-        *pfVar7 = (float)dVar12;
-      } while (uVar2 != 0);
+        uVar10 = DB_GetMaterialIndex(pMVar2);
+        uVar11 = uVar10 >> 3 & 0x1ffffffc;
+        uVar17 = uVar17 - 1;
+        ppMVar18 = ppMVar18 + 0xb;
+        *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11) =
+             *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+             *(uint *)((int)g_stream.materialAlwaysLoaded[0] + uVar11);
+        pfVar13[-0xff] = (float)dVar19;
+        pfVar13 = pfVar13 + 1;
+        *pfVar13 = (float)dVar19;
+      } while (uVar17 != 0);
     }
   }
-  uVar2 = DB_GetAllXAssetOfType(4,piVar4,0x1a60);
-  piVar11 = piVar4;
-  uVar10 = uVar2 & 0xffffffff;
-  while (uVar10 != 0) {
-    iVar5 = *piVar11;
-    if (iVar5 == 0) {
-      MyAssertHandler(0xffffffff8205cd18,0xacc,0,0xffffffff82000f98,0xffffffff8205ce78);
-    }
-    uVar10 = DB_GetXModelIndex(iVar5);
-    if (*(int *)(&DAT_8326ed88 + (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 2)) == 0
-       ) {
-      uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-      *(uint *)(&DAT_832ee380 + uVar9) =
-           *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-           *(uint *)(&DAT_832ee380 + uVar9);
-    }
-    piVar11 = piVar11 + 1;
-    uVar2 = uVar2 - 1;
-    uVar10 = uVar2;
+  iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_XMODEL,pXVar8,0x1a60);
+  lVar14 = (longlong)iVar9;
+  pXVar15 = pXVar8;
+  if (iVar9 != 0) {
+    do {
+      pXVar4 = pXVar15->model;
+      if (pXVar4 == (XModel *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xacc,0,"%s");
+      }
+      uVar11 = DB_GetXModelIndex(pXVar4);
+      if (g_stream.model[uVar11].field2_0x8.invLodOutDistAsInt == 0) {
+        uVar10 = uVar11 >> 3 & 0x1ffffffc;
+        *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+             *(uint *)(&g_bitShift + (uVar11 & 0x1f) * 4) |
+             *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+      }
+      lVar14 = lVar14 + -1;
+      pXVar15 = pXVar15 + 1;
+    } while (lVar14 != 0);
   }
-  iVar5 = PMem_UsingFullMemory();
-  if (iVar5 != 0) {
-    uVar2 = DB_GetAllXAssetOfType(0x1a,piVar4,0x1a60);
-    piVar11 = piVar4;
-    uVar10 = uVar2 & 0xffffffff;
-    while (uVar10 != 0) {
-      iVar5 = *piVar11;
-      uVar9 = 0;
+  iVar9 = PMem_UsingFullMemory();
+  if (iVar9 != 0) {
+    iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_ATTACHMENT,pXVar8,0x1a60);
+    lVar14 = (longlong)iVar9;
+    pXVar15 = pXVar8;
+    if (iVar9 != 0) {
       do {
-        iVar6 = *(int *)(*(int *)(iVar5 + 0x14) + uVar9);
-        if ((iVar6 != 0) && (iVar6 != 0)) {
-          uVar10 = DB_GetXModelIndex();
-          uVar1 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-          *(uint *)(&DAT_832ee380 + uVar1) =
-               *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-               *(uint *)(&DAT_832ee380 + uVar1);
+        pXVar4 = pXVar15->model;
+        uVar11 = 0;
+        do {
+          pXVar7 = *(XModel **)(pXVar4->noScalePartBits[2] + uVar11);
+          if ((pXVar7 != (XModel *)0x0) && (pXVar7 != (XModel *)0x0)) {
+            uVar12 = DB_GetXModelIndex(pXVar7);
+            uVar10 = uVar12 >> 3 & 0x1ffffffc;
+            *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+                 *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4) |
+                 *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+          }
+          pXVar7 = *(XModel **)(pXVar4->noScalePartBits[3] + uVar11);
+          if ((pXVar7 != (XModel *)0x0) && (pXVar7 != (XModel *)0x0)) {
+            uVar12 = DB_GetXModelIndex(pXVar7);
+            uVar10 = uVar12 >> 3 & 0x1ffffffc;
+            *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+                 *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4) |
+                 *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+          }
+          uVar11 = uVar11 + 4;
+        } while (uVar11 < 0x40);
+        uVar11 = 0;
+        do {
+          if (((pXVar4->noScalePartBits[4] != 0) &&
+              (pXVar7 = *(XModel **)(pXVar4->noScalePartBits[4] + uVar11), pXVar7 != (XModel *)0x0))
+             && (pXVar7 != (XModel *)0x0)) {
+            uVar12 = DB_GetXModelIndex(pXVar7);
+            uVar10 = uVar12 >> 3 & 0x1ffffffc;
+            *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+                 *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4) |
+                 *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+          }
+          uVar11 = uVar11 + 4;
+        } while (uVar11 < 0x20);
+        fVar5 = pXVar4->lodInfo[1].dist;
+        if ((fVar5 != 0.0) && (pXVar4 = *(XModel **)((int)fVar5 + 0x20), pXVar4 != (XModel *)0x0)) {
+          uVar10 = DB_GetXModelIndex(pXVar4);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
         }
-        iVar6 = *(int *)(*(int *)(iVar5 + 0x18) + uVar9);
-        if ((iVar6 != 0) && (iVar6 != 0)) {
-          uVar10 = DB_GetXModelIndex();
-          uVar1 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-          *(uint *)(&DAT_832ee380 + uVar1) =
-               *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-               *(uint *)(&DAT_832ee380 + uVar1);
-        }
-        uVar9 = uVar9 + 4;
-      } while (uVar9 < 0x40);
-      uVar9 = 0;
-      do {
-        if (((*(int *)(iVar5 + 0x1c) != 0) &&
-            (iVar6 = *(int *)(*(int *)(iVar5 + 0x1c) + uVar9), iVar6 != 0)) && (iVar6 != 0)) {
-          uVar10 = DB_GetXModelIndex();
-          uVar1 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-          *(uint *)(&DAT_832ee380 + uVar1) =
-               *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-               *(uint *)(&DAT_832ee380 + uVar1);
-        }
-        uVar9 = uVar9 + 4;
-      } while (uVar9 < 0x20);
-      if ((*(int *)(iVar5 + 0x68) != 0) && (*(int *)(*(int *)(iVar5 + 0x68) + 0x20) != 0)) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      piVar11 = piVar11 + 1;
-      uVar2 = uVar2 - 1;
-      uVar10 = uVar2;
+        lVar14 = lVar14 + -1;
+        pXVar15 = pXVar15 + 1;
+      } while (lVar14 != 0);
     }
-    uVar2 = DB_GetAllXAssetOfType(0x1b,piVar4,0x1a60);
-    piVar11 = piVar4;
-    uVar10 = uVar2 & 0xffffffff;
-    while (uVar10 != 0) {
-      iVar5 = *(int *)(*piVar11 + 4);
-      if (iVar5 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xafa,0,0xffffffff82000f98,0xffffffff8200a88c);
-      }
-      uVar9 = 0;
+    iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_WEAPON,pXVar8,0x1a60);
+    lVar14 = (longlong)iVar9;
+    pXVar15 = pXVar8;
+    if (iVar9 != 0) {
       do {
-        if (*(int *)(*(int *)(iVar5 + 4) + uVar9) != 0) {
-          uVar10 = DB_GetXModelIndex();
-          uVar1 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-          *(uint *)(&DAT_832ee380 + uVar1) =
-               *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-               *(uint *)(&DAT_832ee380 + uVar1);
+        pWVar6 = pXVar15->weapon->weapDef;
+        if (pWVar6 == (WeaponDef *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xafa,0,"%s");
         }
-        if (*(int *)(*(int *)(iVar5 + 0x1e0) + uVar9) != 0) {
-          uVar10 = DB_GetXModelIndex();
-          uVar1 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-          *(uint *)(&DAT_832ee380 + uVar1) =
-               *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-               *(uint *)(&DAT_832ee380 + uVar1);
+        uVar11 = 0;
+        do {
+          pXVar4 = *(XModel **)((int)pWVar6->gunXModel + uVar11);
+          if (pXVar4 != (XModel *)0x0) {
+            uVar12 = DB_GetXModelIndex(pXVar4);
+            uVar10 = uVar12 >> 3 & 0x1ffffffc;
+            *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+                 *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4) |
+                 *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+          }
+          pXVar4 = *(XModel **)((int)pWVar6->worldModel + uVar11);
+          if (pXVar4 != (XModel *)0x0) {
+            uVar12 = DB_GetXModelIndex(pXVar4);
+            uVar10 = uVar12 >> 3 & 0x1ffffffc;
+            *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10) =
+                 *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4) |
+                 *(uint *)((int)g_modelBaseAlwaysLoaded + uVar10);
+          }
+          uVar11 = uVar11 + 4;
+        } while (uVar11 < 0x40);
+        if (pWVar6->handXModel != (XModel *)0x0) {
+          uVar10 = DB_GetXModelIndex(pWVar6->handXModel);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
         }
-        uVar9 = uVar9 + 4;
-      } while (uVar9 < 0x40);
-      if (*(int *)(iVar5 + 8) != 0) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      if (*(int *)(iVar5 + 0x1e8) != 0) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      if (*(int *)(iVar5 + 0x1ec) != 0) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      if (*(int *)(iVar5 + 0x1f0) != 0) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      if (*(int *)(iVar5 + 0x518) != 0) {
-        uVar10 = DB_GetXModelIndex();
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      piVar11 = piVar11 + 1;
-      uVar2 = uVar2 - 1;
-      uVar10 = uVar2;
+        if (pWVar6->rocketModel != (XModel *)0x0) {
+          uVar10 = DB_GetXModelIndex(pWVar6->rocketModel);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
+        }
+        if (pWVar6->knifeModel != (XModel *)0x0) {
+          uVar10 = DB_GetXModelIndex(pWVar6->knifeModel);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
+        }
+        if (pWVar6->worldKnifeModel != (XModel *)0x0) {
+          uVar10 = DB_GetXModelIndex(pWVar6->worldKnifeModel);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
+        }
+        if (pWVar6->projectileModel != (XModel *)0x0) {
+          uVar10 = DB_GetXModelIndex(pWVar6->projectileModel);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
+        }
+        lVar14 = lVar14 + -1;
+        pXVar15 = pXVar15 + 1;
+      } while (lVar14 != 0);
     }
-    uVar2 = DB_GetAllXAssetOfType(4,piVar4,0x1a60);
-    uVar10 = uVar2 & 0xffffffff;
-    while (uVar10 != 0) {
-      iVar5 = *piVar4;
-      iVar6 = XModelNumBones(iVar5);
-      if ((1 < iVar6) && (iVar5 != 0)) {
-        uVar10 = DB_GetXModelIndex(iVar5);
-        uVar9 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-        *(uint *)(&DAT_832ee380 + uVar9) =
-             *(uint *)((int)&DAT_82992400 + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c)) |
-             *(uint *)(&DAT_832ee380 + uVar9);
-      }
-      piVar4 = piVar4 + 1;
-      uVar2 = uVar2 - 1;
-      uVar10 = uVar2;
+    iVar9 = DB_GetAllXAssetOfType(ASSET_TYPE_XMODEL,pXVar8,0x1a60);
+    lVar14 = (longlong)iVar9;
+    if (iVar9 != 0) {
+      do {
+        pXVar4 = pXVar8->model;
+        iVar9 = XModelNumBones(pXVar4);
+        if ((1 < iVar9) && (pXVar4 != (XModel *)0x0)) {
+          uVar10 = DB_GetXModelIndex(pXVar4);
+          uVar11 = uVar10 >> 3 & 0x1ffffffc;
+          *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11) =
+               *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+               *(uint *)((int)g_modelBaseAlwaysLoaded + uVar11);
+        }
+        lVar14 = lVar14 + -1;
+        pXVar8 = pXVar8 + 1;
+      } while (lVar14 != 0);
     }
   }
-  DB_SetAlwaysLoadedMaterials(0xffffffff832ee380,0xffffffff83282880);
-  DB_SetAlwaysLoadedImagesForMaterial(0xffffffff83282880,0);
-  DB_SetAlwaysLoadedImagesForMaterial(0xffffffff83282b80,1);
-  DB_SetAlwaysLoadedImagesForMaterial(0xffffffff83282e80,2);
-  DB_SetAlwaysLoadedImagesForMaterial(0xffffffff83283180,3);
+  DB_SetAlwaysLoadedMaterials(g_modelBaseAlwaysLoaded,g_stream.materialAlwaysLoaded[0]);
+  DB_SetAlwaysLoadedImagesForMaterial(g_stream.materialAlwaysLoaded[0],0);
+  DB_SetAlwaysLoadedImagesForMaterial(g_stream.materialAlwaysLoaded[1],1);
+  DB_SetAlwaysLoadedImagesForMaterial(g_stream.materialAlwaysLoaded[2],2);
+  DB_SetAlwaysLoadedImagesForMaterial(g_stream.materialAlwaysLoaded[3],3);
   __restgprlr_20();
   return;
 }
 
 
-// 824001C0  std::_Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 824001C0  _Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,ushort *param_2,_func___cdecl_int_uint_uint *param_3)
 
 {
   int iVar1;
-  undefined2 *puVar2;
+  ushort *puVar2;
   longlong lVar3;
-  undefined2 local_30 [24];
+  longlong lVar4;
+  ushort local_30 [24];
   
-  lVar3 = __savegprlr_28();
-  param_2 = param_2 - lVar3;
-  if (2 < (int)((uint)param_2 & 0xfffffffe)) {
-    puVar2 = (undefined2 *)lVar3;
+  lVar4 = (longlong)(int)param_2;
+  lVar3 = __savegprlr_28(param_1);
+  lVar4 = lVar4 - lVar3;
+  if (2 < (int)((uint)lVar4 & 0xfffffffe)) {
+    puVar2 = (ushort *)lVar3;
     do {
-      iVar1 = (int)param_2;
-      local_30[0] = *(undefined2 *)((int)puVar2 + iVar1 + -2);
-      param_2 = param_2 + -2;
-      *(undefined2 *)((int)puVar2 + iVar1 + -2) = *puVar2;
-      std___Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                (lVar3,0,(int)(uint)param_2 >> 1,local_30,param_3);
-    } while (2 < (int)((uint)param_2 & 0xfffffffe));
+      iVar1 = (int)lVar4;
+      local_30[0] = *(ushort *)((int)puVar2 + iVar1 + -2);
+      lVar4 = lVar4 + -2;
+      *(ushort *)((int)puVar2 + iVar1 + -2) = *puVar2;
+      _Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar2,0,(int)(uint)lVar4 >> 1,local_30,param_3);
+    } while (2 < (int)((uint)lVar4 & 0xfffffffe));
   }
   __restgprlr_28();
   return;
 }
 
 
-// 82400230  std::_Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 82400230  _Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::_Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,XAssetHeader *param_2,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  XAssetHeader *pXVar2;
   longlong lVar3;
-  undefined4 local_30 [12];
+  longlong lVar4;
+  XAssetHeader local_30 [12];
   
-  lVar3 = __savegprlr_28();
-  param_2 = param_2 - lVar3;
-  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
-    puVar2 = (undefined4 *)lVar3;
+  lVar4 = (longlong)(int)param_2;
+  lVar3 = __savegprlr_28(param_1);
+  lVar4 = lVar4 - lVar3;
+  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
+    pXVar2 = (XAssetHeader *)lVar3;
     do {
-      iVar1 = (int)param_2;
-      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
-      param_2 = param_2 + -4;
-      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
-      std___Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+      iVar1 = (int)lVar4;
+      local_30[0] = *(XAssetHeader *)((int)pXVar2 + iVar1 + -4);
+      lVar4 = lVar4 + -4;
+      *(XAssetHeader *)((int)pXVar2 + iVar1 + -4) = *pXVar2;
+      _Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                (pXVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
   }
   __restgprlr_28();
   return;
@@ -3962,369 +4264,372 @@ void std___Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetH
 
 // 823FBB60  DB_ImageOrder  (database/db_streaming.cpp:2864)
 
-undefined1 DB_ImageOrder(uint param_1)
+int DB_ImageOrder(uint param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (uint)((*(uint *)((int)&DAT_83299e80 + (param_1 >> 3 & 0x1ffffffc)) &
-                 (&DAT_82992400)[param_1 & 0x1f]) != 0);
-  if ((*(uint *)((int)&DAT_83299e80 + (param_1 + 0x14c0 >> 3 & 0x1ffffffc)) &
-      *(uint *)((int)&DAT_82992400 + ((param_1 + 0x14c0) * 4 & 0x7c))) != 0) {
+  uVar1 = (uint)((*(uint *)((int)g_stream.alwaysLoaded + (param_1 >> 3 & 0x1ffffffc)) &
+                 *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4)) != 0);
+  if ((*(uint *)((int)g_stream.alwaysLoaded + (param_1 + 0x14c0 >> 3 & 0x1ffffffc)) &
+      *(uint *)(&g_bitShift + ((param_1 + 0x14c0) * 4 & 0x7c))) != 0) {
     uVar1 = uVar1 | 2;
   }
-  return *(undefined1 *)(uVar1 + 0x82967d40);
+  return (int)db_imageOrder[uVar1];
 }
 
 
 // 823FBBD8  DB_HimipImageOrder  (database/db_streaming.cpp:2885)
 
-undefined1 DB_HimipImageOrder(int param_1)
+int DB_HimipImageOrder(uint param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (uint)((*(uint *)((int)&DAT_83299e80 + (param_1 + 0x2980U >> 3 & 0x1ffffffc)) &
-                 *(uint *)((int)&DAT_82992400 + ((param_1 + 0x2980U) * 4 & 0x7c))) != 0);
-  if ((*(uint *)((int)&DAT_83299e80 + (param_1 + 0x3e40U >> 3 & 0x1ffffffc)) &
-      *(uint *)((int)&DAT_82992400 + ((param_1 + 0x3e40U) * 4 & 0x7c))) != 0) {
+  uVar1 = (uint)((*(uint *)((int)g_stream.alwaysLoaded + (param_1 + 0x2980 >> 3 & 0x1ffffffc)) &
+                 *(uint *)(&g_bitShift + ((param_1 + 0x2980) * 4 & 0x7c))) != 0);
+  if ((*(uint *)((int)g_stream.alwaysLoaded + (param_1 + 0x3e40 >> 3 & 0x1ffffffc)) &
+      *(uint *)(&g_bitShift + ((param_1 + 0x3e40) * 4 & 0x7c))) != 0) {
     uVar1 = uVar1 | 2;
   }
-  return *(undefined1 *)(uVar1 + 0x82967d40);
+  return (int)db_imageOrder[uVar1];
 }
 
 
 // 823FF300  DB_ImageCompare  (database/db_streaming.cpp:2906)
 
-void DB_ImageCompare(undefined8 param_1,ulonglong param_2)
+int DB_ImageCompare(uint param_1,uint param_2)
 
 {
   ulonglong uVar1;
-  longlong lVar2;
-  longlong lVar3;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
-  lVar2 = DB_ImageOrder();
-  lVar3 = DB_ImageOrder(param_2);
-  if (lVar2 - lVar3 != 0) {
-    __restgprlr_29((lVar2 - lVar3 & 0xffffffffU) >> 0x1f);
-    return;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  iVar2 = DB_ImageOrder((uint)uVar1);
+  iVar3 = DB_ImageOrder((uint)uVar4);
+  if ((longlong)iVar2 - (longlong)iVar3 != 0) {
+    iVar2 = __restgprlr_29(((longlong)iVar2 - (longlong)iVar3 & 0xffffffffU) >> 0x1f);
+    return iVar2;
   }
-  __restgprlr_29(-(uVar1 < param_2) & 1);
-  return;
+  iVar2 = __restgprlr_29(-(uVar1 < uVar4) & 1);
+  return iVar2;
 }
 
 
 // 823FF350  DB_HimipImageCompare  (database/db_streaming.cpp:2918)
 
-void DB_HimipImageCompare(undefined8 param_1,ulonglong param_2)
+int DB_HimipImageCompare(uint param_1,uint param_2)
 
 {
   ulonglong uVar1;
-  longlong lVar2;
-  longlong lVar3;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_29();
-  lVar2 = DB_HimipImageOrder();
-  lVar3 = DB_HimipImageOrder(param_2);
-  if (lVar2 - lVar3 != 0) {
-    __restgprlr_29((lVar2 - lVar3 & 0xffffffffU) >> 0x1f);
-    return;
+  uVar4 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
+  iVar2 = DB_HimipImageOrder((uint)uVar1);
+  iVar3 = DB_HimipImageOrder((uint)uVar4);
+  if ((longlong)iVar2 - (longlong)iVar3 != 0) {
+    iVar2 = __restgprlr_29(((longlong)iVar2 - (longlong)iVar3 & 0xffffffffU) >> 0x1f);
+    return iVar2;
   }
-  __restgprlr_29(-(uVar1 < param_2) & 1);
-  return;
+  iVar2 = __restgprlr_29(-(uVar1 < uVar4) & 1);
+  return iVar2;
 }
 
 
 // 823FE130  DB_SetMaterialsInuse  (database/db_streaming.cpp:2930)
 
-void DB_SetMaterialsInuse(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_SetMaterialsInuse(XAssetHeader *param_1)
 
 {
   ushort uVar1;
   bool bVar2;
-  ulonglong uVar3;
-  int iVar4;
-  ushort *puVar5;
-  uint uVar6;
-  ushort *_Dst;
-  longlong lVar7;
+  uint uVar3;
+  GfxImage *pGVar4;
+  int iVar5;
+  ushort *puVar6;
+  uint uVar7;
   uint uVar8;
-  longlong lVar9;
-  uint uVar10;
-  short *psVar11;
-  ulonglong uVar12;
+  ulonglong uVar9;
+  ushort *puVar10;
+  uint uVar11;
+  int iVar12;
   uint uVar13;
-  int iVar14;
+  MaterialStream *pMVar14;
   ushort *puVar15;
-  double dVar16;
+  uint uVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
-  undefined4 *local_f0;
+  double dVar22;
+  XAssetHeader *local_f0;
   uint local_e8;
   
   __savegprlr();
-  local_f0 = (undefined4 *)__savefpr_26();
-  local_e8 = DB_GetAllXAssetOfType(5,local_f0,0x1a60);
+  local_f0 = (XAssetHeader *)__savefpr_26();
+  local_e8 = DB_GetAllXAssetOfType(ASSET_TYPE_MATERIAL,local_f0,0x1a60);
   if (local_e8 == 0) {
 LAB_823fe4c8:
     __restfpr_26();
     __restgprlr();
     return;
   }
-  dVar16 = 1.0;
-  dVar18 = 0.0;
-  dVar17 = 3.4028234663852886e+38;
+  dVar17 = 1.0;
+  dVar19 = 0.0;
+  dVar18 = 3.4028234663852886e+38;
 LAB_823fe1e0:
-  uVar3 = DB_GetMaterialIndex(*local_f0);
-  lVar7 = uVar3 * 0x1c + -0x7cdb8500;
-  iVar14 = (int)lVar7;
-  uVar1 = *(ushort *)(iVar14 + 8);
-  uVar8 = (uint)uVar1;
-  if (uVar8 != 0) {
-    puVar5 = *(ushort **)(iVar14 + 0x14);
-    if (puVar5 == (ushort *)0x0) {
-      MyAssertHandler(0xffffffff8205cd18,0xb91,0,0xffffffff82000f98,"images");
+  uVar3 = DB_GetMaterialIndex(local_f0->material);
+  pMVar14 = g_stream.material + uVar3;
+  uVar1 = g_stream.material[uVar3].totalImageCount;
+  uVar11 = (uint)uVar1;
+  if (uVar11 != 0) {
+    puVar15 = g_stream.material[uVar3].totalImages;
+    if (puVar15 == (ushort *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0xb91,0,"%s");
     }
-    _Dst = puVar5 + uVar8;
-    memcpy(_Dst,puVar5,uVar8 * 2);
-    std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (puVar5,_Dst,(int)_Dst - (int)puVar5 >> 1,0xffffffff823ff300);
-    std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (_Dst,puVar5 + uVar8 * 2,(int)(puVar5 + uVar8 * 2) - (int)_Dst >> 1,0xffffffff823ff350
-              );
-    dVar19 = dVar17;
-    uVar13 = uVar8;
-    puVar15 = puVar5;
-    if (uVar8 != 0) {
+    puVar10 = puVar15 + uVar11;
+    memcpy();
+    std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              (puVar15,puVar10,(int)puVar10 - (int)puVar15 >> 1,DB_ImageCompare);
+    std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              (puVar10,puVar15 + (uint)uVar1 * 2,
+               (int)(puVar15 + (uint)uVar1 * 2) - (int)puVar10 >> 1,DB_HimipImageCompare);
+    dVar20 = dVar18;
+    uVar16 = uVar11;
+    puVar6 = puVar15;
+    if (uVar11 != 0) {
       do {
-        iVar4 = DB_GetGfxImageAtIndex(*puVar15);
-        if (*(char *)(iVar4 + 0x47) != '\0') {
-          dVar20 = (double)*(ushort *)(iVar4 + 0x4c);
-          dVar21 = (double)*(ushort *)(iVar4 + 0x4e);
-          if (dVar20 == dVar18) {
-            MyAssertHandler(0xffffffff8205cd18,0xba2,0,0xffffffff82000f98,"texSize[0]");
+        pGVar4 = DB_GetGfxImageAtIndex((uint)*puVar6);
+        if (pGVar4->cached != '\0') {
+          dVar21 = (double)pGVar4->streams[0].width;
+          dVar22 = (double)pGVar4->streams[0].height;
+          if (dVar21 == dVar19) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xba2,0,"%s");
           }
-          if (dVar21 == dVar18) {
-            MyAssertHandler(0xffffffff8205cd18,0xba3,0,0xffffffff82000f98,"texSize[1]");
+          if (dVar22 == dVar19) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xba3,0,"%s");
           }
-          dVar20 = (double)SQRT((float)(dVar21 * dVar21 + (double)(float)(dVar20 * dVar20)));
-          if ((float)(dVar20 - dVar19) < 0.0) {
-            dVar19 = dVar20;
+          dVar21 = (double)SQRT((float)(dVar22 * dVar22 + (double)(float)(dVar21 * dVar21)));
+          if ((float)(dVar21 - dVar20) < 0.0) {
+            dVar20 = dVar21;
           }
         }
-        uVar13 = uVar13 - 1;
-        puVar15 = puVar15 + 1;
-      } while (uVar13 != 0);
-      if (dVar19 != dVar17) {
-        *(float *)(iVar14 + 0x18) = (float)(dVar16 / dVar19);
+        uVar16 = uVar16 - 1;
+        puVar6 = puVar6 + 1;
+      } while (uVar16 != 0);
+      if (dVar20 != dVar18) {
+        g_stream.material[uVar3].invMinTexLength = (float)(dVar17 / dVar20);
         bVar2 = false;
-        lVar9 = 0;
-        uVar12 = 0;
+        iVar12 = 0;
+        uVar16 = 0;
 LAB_823fe360:
-        uVar13 = 0;
-        puVar15 = puVar5;
+        uVar7 = 0;
+        puVar6 = puVar15;
         do {
-          psVar11 = (short *)lVar7;
-          if ((*(uint *)((int)&DAT_83299e80 + ((uint)(*puVar15 + uVar12) >> 3 & 0x1ffffffc)) &
-              *(uint *)((int)&DAT_82992400 + ((uint)((*puVar15 + uVar12 & 0xffffffff) << 2) & 0x7c))
-              ) == 0) {
-            if (uVar13 < uVar8) {
-              puVar15 = puVar5 + uVar13;
-              uVar6 = uVar13;
-              uVar10 = 0;
+          if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+              *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) == 0) {
+            if (uVar7 < uVar11) {
+              puVar6 = puVar15 + uVar7;
+              uVar8 = uVar7;
+              uVar13 = 0;
               goto LAB_823fe4ec;
             }
             break;
           }
-          uVar13 = uVar13 + 1;
-          puVar15 = puVar15 + 1;
-        } while (uVar13 < uVar8);
+          uVar7 = uVar7 + 1;
+          puVar6 = puVar6 + 1;
+        } while (uVar7 < uVar11);
         goto LAB_823fe3a8;
       }
     }
-    *(float *)(iVar14 + 0x18) = (float)dVar18;
+    g_stream.material[uVar3].invMinTexLength = (float)dVar19;
   }
   goto LAB_823fe4ac;
   while( true ) {
-    uVar6 = uVar6 + 1;
-    puVar15 = puVar15 + 1;
-    uVar10 = uVar6;
-    if (uVar8 <= uVar6) break;
+    uVar8 = uVar8 + 1;
+    puVar6 = puVar6 + 1;
+    uVar13 = uVar8;
+    if (uVar11 <= uVar8) break;
 LAB_823fe4ec:
-    if ((*(uint *)((int)&DAT_83299e80 + ((uint)(*puVar15 + uVar12) >> 3 & 0x1ffffffc)) &
-        *(uint *)((int)&DAT_82992400 + ((uint)((*puVar15 + uVar12 & 0xffffffff) << 2) & 0x7c))) != 0
-       ) {
-      if (uVar6 < uVar8) {
-        iVar14 = uVar8 - uVar6;
-        puVar15 = puVar5 + uVar6;
+    if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+        *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) != 0) {
+      if (uVar8 < uVar11) {
+        iVar5 = uVar11 - uVar8;
+        puVar6 = puVar15 + uVar8;
         do {
-          if ((*(uint *)((int)&DAT_83299e80 +
-                        ((uint)((*puVar15 + uVar12 & 0xffffffff) >> 3) & 0x1ffffffc)) &
-              *(uint *)((int)&DAT_82992400 + ((uint)((*puVar15 + uVar12 & 0xffffffff) << 2) & 0x7c))
-              ) == 0) {
-            MyAssertHandler(0xffffffff8205cd18,0xbce,0,0xffffffff82000f98,
-                            "g_stream.alwaysLoaded[index >> 5] & BitShiftMasked( index )");
+          if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+              *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xbce,0,"%s");
           }
-          iVar14 = iVar14 + -1;
-          puVar15 = puVar15 + 1;
-        } while (iVar14 != 0);
+          iVar5 = iVar5 + -1;
+          puVar6 = puVar6 + 1;
+        } while (iVar5 != 0);
       }
       break;
     }
   }
-  if (uVar13 < uVar10) {
-    psVar11[5] = (short)uVar13;
+  if (uVar7 < uVar13) {
+    pMVar14->images[0] = (ushort)uVar7;
     bVar2 = true;
-    *psVar11 = (short)uVar10 - (short)uVar13;
+    pMVar14->imageCount[0] = (short)uVar13 - (ushort)uVar7;
   }
   else {
 LAB_823fe3a8:
-    *psVar11 = 0;
-    psVar11[5] = 0;
-    iVar14 = (int)((((uVar3 & 0xffffffff) >> 5) + lVar9 & 0xffffffff) << 2);
-    *(uint *)((int)&DAT_83282880 + iVar14) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)((int)&DAT_83282880 + iVar14);
+    pMVar14->imageCount[0] = 0;
+    pMVar14->images[0] = 0;
+    iVar5 = (uVar3 >> 5) + iVar12;
+    g_stream.materialAlwaysLoaded[0][iVar5] =
+         *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4) | g_stream.materialAlwaysLoaded[0][iVar5];
   }
-  uVar12 = uVar12 + 0x14c0;
-  lVar7 = lVar7 + 2;
-  lVar9 = lVar9 + 0xc0;
-  if (0x14c0 < (uVar12 & 0xffffffff)) goto code_r0x823fe3ec;
+  uVar16 = uVar16 + 0x14c0;
+  pMVar14 = (MaterialStream *)(pMVar14->imageCount + 1);
+  iVar12 = iVar12 + 0xc0;
+  if (0x14c0 < uVar16) goto code_r0x823fe3ec;
   goto LAB_823fe360;
 code_r0x823fe3ec:
-  lVar7 = 0x180;
-  uVar12 = 0x2980;
-  lVar9 = uVar3 * 0x1c + -0x7cdb84fc;
+  iVar12 = 0x180;
+  uVar16 = 0x2980;
+  puVar15 = g_stream.material[uVar3].imageCount + 2;
 LAB_823fe3f8:
-  uVar13 = 0;
-  puVar5 = _Dst;
+  uVar7 = 0;
+  puVar6 = puVar10;
   do {
-    psVar11 = (short *)lVar9;
-    if ((*(uint *)((int)&DAT_83299e80 + ((uint)(*puVar5 + uVar12) >> 3 & 0x1ffffffc)) &
-        *(uint *)((int)&DAT_82992400 + ((uint)((*puVar5 + uVar12 & 0xffffffff) << 2) & 0x7c))) == 0)
-    {
-      if (uVar13 < uVar8) {
-        puVar5 = _Dst + uVar13;
-        uVar6 = uVar13;
-        uVar10 = 0;
+    if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+        *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) == 0) {
+      if (uVar7 < uVar11) {
+        puVar6 = puVar10 + uVar7;
+        uVar8 = uVar7;
+        uVar13 = 0;
         goto LAB_823fe5d0;
       }
       break;
     }
-    uVar13 = uVar13 + 1;
-    puVar5 = puVar5 + 1;
-  } while (uVar13 < uVar8);
+    uVar7 = uVar7 + 1;
+    puVar6 = puVar6 + 1;
+  } while (uVar7 < uVar11);
   goto LAB_823fe440;
   while( true ) {
-    uVar6 = uVar6 + 1;
-    puVar5 = puVar5 + 1;
-    uVar10 = uVar6;
-    if (uVar8 <= uVar6) break;
+    uVar8 = uVar8 + 1;
+    puVar6 = puVar6 + 1;
+    uVar13 = uVar8;
+    if (uVar11 <= uVar8) break;
 LAB_823fe5d0:
-    if ((*(uint *)((int)&DAT_83299e80 + ((uint)(*puVar5 + uVar12) >> 3 & 0x1ffffffc)) &
-        *(uint *)((int)&DAT_82992400 + ((uint)((*puVar5 + uVar12 & 0xffffffff) << 2) & 0x7c))) != 0)
-    {
-      if (uVar6 < uVar8) {
-        iVar14 = uVar8 - uVar6;
-        puVar5 = _Dst + uVar6;
+    if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+        *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) != 0) {
+      if (uVar8 < uVar11) {
+        iVar5 = uVar11 - uVar8;
+        puVar6 = puVar10 + uVar8;
         do {
-          if ((*(uint *)((int)&DAT_83299e80 +
-                        ((uint)((*puVar5 + uVar12 & 0xffffffff) >> 3) & 0x1ffffffc)) &
-              *(uint *)((int)&DAT_82992400 + ((uint)((*puVar5 + uVar12 & 0xffffffff) << 2) & 0x7c)))
-              == 0) {
-            MyAssertHandler(0xffffffff8205cd18,0xbff,0,0xffffffff82000f98,
-                            "g_stream.alwaysLoaded[index >> 5] & BitShiftMasked( index )");
+          if ((*(uint *)((int)g_stream.alwaysLoaded + (*puVar6 + uVar16 >> 3 & 0x1ffffffc)) &
+              *(uint *)(&g_bitShift + ((*puVar6 + uVar16) * 4 & 0x7c))) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xbff,0,"%s");
           }
-          iVar14 = iVar14 + -1;
-          puVar5 = puVar5 + 1;
-        } while (iVar14 != 0);
+          iVar5 = iVar5 + -1;
+          puVar6 = puVar6 + 1;
+        } while (iVar5 != 0);
       }
       break;
     }
   }
-  if (uVar13 < uVar10) {
-    *psVar11 = (short)uVar10 - (short)uVar13;
+  if (uVar7 < uVar13) {
+    *puVar15 = (short)uVar13 - (short)uVar7;
     bVar2 = true;
-    psVar11[5] = (short)uVar13 + uVar1;
+    puVar15[5] = (short)uVar7 + uVar1;
   }
   else {
 LAB_823fe440:
-    *psVar11 = 0;
-    psVar11[5] = 0;
-    iVar14 = (int)((((uVar3 & 0xffffffff) >> 5) + lVar7 & 0xffffffff) << 2);
-    *(uint *)((int)&DAT_83282880 + iVar14) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)((int)&DAT_83282880 + iVar14);
+    *puVar15 = 0;
+    puVar15[5] = 0;
+    iVar5 = (uVar3 >> 5) + iVar12;
+    g_stream.materialAlwaysLoaded[0][iVar5] =
+         *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4) | g_stream.materialAlwaysLoaded[0][iVar5];
   }
-  uVar12 = uVar12 + 0x14c0;
-  lVar9 = lVar9 + 2;
-  lVar7 = lVar7 + 0xc0;
-  if (0x3e40 < (uVar12 & 0xffffffff)) goto code_r0x823fe484;
+  uVar16 = uVar16 + 0x14c0;
+  puVar15 = puVar15 + 1;
+  iVar12 = iVar12 + 0xc0;
+  if (0x3e40 < uVar16) goto code_r0x823fe484;
   goto LAB_823fe3f8;
 code_r0x823fe484:
   if (bVar2) {
-    uVar8 = (uint)((uVar3 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)((int)&DAT_83283480 + uVar8) =
-         *(uint *)((int)&DAT_82992400 + ((uint)((uVar3 & 0xffffffff) << 2) & 0x7c)) |
-         *(uint *)((int)&DAT_83283480 + uVar8);
+    uVar11 = uVar3 >> 3 & 0x1ffffffc;
+    *(uint *)((int)g_stream.materialInuse + uVar11) =
+         *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4) |
+         *(uint *)((int)g_stream.materialInuse + uVar11);
   }
 LAB_823fe4ac:
-  uVar3 = (ulonglong)local_e8;
+  uVar9 = (ulonglong)local_e8;
   local_f0 = local_f0 + 1;
-  local_e8 = (uint)(uVar3 - 1);
-  if (uVar3 - 1 == 0) goto LAB_823fe4c8;
+  local_e8 = (uint)(uVar9 - 1);
+  if (uVar9 - 1 == 0) goto LAB_823fe4c8;
   goto LAB_823fe1e0;
 }
 
 
 // 823FBC58  DB_CullStreamSort  (database/db_streaming.cpp:3099)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_CullStreamSort(void)
 
 {
   ushort uVar1;
   uint uVar2;
-  int iVar3;
-  uint uVar4;
-  ushort *puVar5;
-  int iVar6;
-  uint uVar7;
-  ushort *puVar8;
+  uint uVar3;
+  ushort *puVar4;
+  uint uVar5;
+  uint uVar6;
+  ushort *puVar7;
   
   __savegprlr_28();
-  iVar6 = 0;
-  uVar4 = 0;
-  iVar3 = 0;
-  if (DAT_84613600 != 0) {
-    puVar5 = (ushort *)&DAT_84608ffe;
-    puVar8 = &DAT_84609000;
-    uVar7 = DAT_84613600;
+  uVar5 = 0;
+  uVar3 = 0;
+  uVar2 = 0;
+  if (g_stream2.sortCount != 0) {
+    puVar4 = (ushort *)((int)g_stream2.priority + 0x14bfe);
+    puVar7 = g_stream2.sort;
+    uVar6 = g_stream2.sortCount;
     do {
-      uVar1 = *puVar8;
+      uVar1 = *puVar7;
       uVar2 = uVar1 >> 3 & 0x1ffffffc;
-      if (((*(uint *)((int)&DAT_83299e80 + uVar2) | ~*(uint *)((int)&DAT_845f3980 + uVar2)) &
-          (&DAT_82992400)[uVar1 & 0x1f]) == 0) {
-        puVar5 = puVar5 + 1;
-        *puVar5 = uVar1;
-        iVar6 = iVar6 + 1;
-        uVar7 = DAT_84613600;
+      if (((*(uint *)((int)g_stream.alwaysLoaded + uVar2) | ~*(uint *)((int)g_stream2.inuse + uVar2)
+           ) & *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4)) == 0) {
+        puVar4 = puVar4 + 1;
+        *puVar4 = uVar1;
+        uVar5 = uVar5 + 1;
+        uVar6 = g_stream2.sortCount;
       }
-      uVar4 = uVar4 + 1;
-      puVar8 = puVar8 + 1;
-      iVar3 = iVar6;
-    } while (uVar4 < uVar7);
+      uVar3 = uVar3 + 1;
+      puVar7 = puVar7 + 1;
+      uVar2 = uVar5;
+    } while (uVar3 < uVar6);
   }
-  DAT_84613600 = iVar3;
+  g_stream2.sortCount = uVar2;
   __restgprlr_28();
   return;
 }
 
 
 // 823FBD10  DB_InitStreamSort  (database/db_streaming.cpp:3121)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_InitStreamSort(void)
 
@@ -4335,74 +4640,85 @@ void DB_InitStreamSort(void)
   uint uVar4;
   ushort *puVar5;
   uint uVar6;
-  uint *puVar7;
+  uint (*pauVar7) [192];
   uint uVar8;
   longlong lVar9;
   ulonglong uVar10;
   uint uVar11;
-  uint *local_c0;
+  uint (*local_c0) [192];
   uint local_bc;
   uint local_b8;
   
   __savegprlr();
   local_bc = 0;
-  DAT_84613600 = 0;
+  g_stream2.sortCount = 0;
   local_b8 = 0xb3;
-  local_c0 = &DAT_83282880;
+  local_c0 = g_stream.materialAlwaysLoaded;
   do {
-    uVar6 = local_c0[0x300];
+    uVar6 = local_c0[4][0];
     while (uVar10 = LZCOUNT(uVar6), uVar10 < 0x20) {
       if (0x20 < uVar10) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
-                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)",uVar10,0x21);
+                        0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar10 << 2));
+      uVar2 = *(uint *)(&g_bitShift + (int)(uVar10 << 2));
       if ((uVar2 & uVar6) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xc4d,0,0xffffffff82000f98,"bits & bit");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xc4d,0,"%s");
       }
       uVar6 = uVar6 & ~uVar2;
       lVar9 = (local_bc + uVar10) * 0x1c + -0x7cdb8500;
       iVar1 = *(int *)((int)lVar9 + 0x14);
       if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xc53,0,0xffffffff82000f98,"totalImages");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xc53,0,"%s");
       }
       uVar8 = 0;
-      puVar7 = local_c0;
+      pauVar7 = local_c0;
       do {
-        if ((*puVar7 & uVar2) == 0) {
+        if (((*pauVar7)[0] & uVar2) == 0) {
           uVar10 = (ulonglong)*(ushort *)lVar9;
           if (uVar10 == 0) {
-            MyAssertHandler(0xffffffff8205cd18,0xc5b,0,0xffffffff82000f98,"imageCount");
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xc5b,0,"%s");
           }
           puVar5 = (ushort *)((uint)((ushort *)lVar9)[5] * 2 + iVar1);
           for (; uVar10 != 0; uVar10 = uVar10 - 1) {
             if (0x14bf < *puVar5) {
-              MyAssertHandler(0xffffffff8205cd18,0xc61,0,0xffffffff8205db30,*puVar5,0x14c0);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                              ,0xc61,0,
+                              "images[imageIndex] doesn\'t index IMAGE_POOL_SIZE\n\t%i not in [0, %i)"
+                             );
             }
             uVar11 = *puVar5 + uVar8;
             uVar4 = uVar11 >> 3 & 0x1ffffffc;
-            uVar3 = *(uint *)((int)&DAT_82992400 + (uVar11 * 4 & 0x7c));
-            if ((uVar3 & *(uint *)(&DAT_83306300 + uVar4)) == 0) {
-              *(uint *)(&DAT_83306300 + uVar4) = uVar3 | *(uint *)(&DAT_83306300 + uVar4);
-              if ((*(uint *)((int)&DAT_83299e80 + uVar4) & uVar3) != 0) {
-                MyAssertHandler(0xffffffff8205cd18,0xc68,0,0xffffffff82000f98,0xffffffff8205d7d0);
+            uVar3 = *(uint *)(&g_bitShift + (uVar11 * 4 & 0x7c));
+            if ((uVar3 & *(uint *)((int)g_streamPriorityInuse + uVar4)) == 0) {
+              *(uint *)((int)g_streamPriorityInuse + uVar4) =
+                   uVar3 | *(uint *)((int)g_streamPriorityInuse + uVar4);
+              if ((*(uint *)((int)g_stream.alwaysLoaded + uVar4) & uVar3) != 0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                                ,0xc68,0,"%s");
               }
-              if (0x52ff < DAT_84613600) {
-                MyAssertHandler(0xffffffff8205cd18,0xc69,0,0xffffffff8205db78,DAT_84613600,0x5300);
+              if (0x52ff < g_stream2.sortCount) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                                ,0xc69,0,
+                                "g_stream2.sortCount doesn\'t index ARRAY_COUNT( g_stream2.sort )\n\t%i not in [0, %i)"
+                               );
               }
-              (&DAT_84609000)[DAT_84613600] = (short)uVar11;
-              DAT_84613600 = DAT_84613600 + 1;
+              g_stream2.sort[g_stream2.sortCount] = (ushort)uVar11;
+              g_stream2.sortCount = g_stream2.sortCount + 1;
             }
             puVar5 = puVar5 + 1;
           }
         }
         uVar8 = uVar8 + 0x14c0;
-        puVar7 = puVar7 + 0xc0;
+        pauVar7 = pauVar7 + 1;
         lVar9 = lVar9 + 2;
       } while (uVar8 < 0x5300);
     }
     uVar10 = (ulonglong)local_b8;
-    local_c0 = local_c0 + 1;
+    local_c0 = (uint (*) [192])(*local_c0 + 1);
     local_bc = local_bc + 0x20;
     local_b8 = (uint)(uVar10 - 1);
   } while (uVar10 - 1 != 0);
@@ -4413,180 +4729,210 @@ void DB_InitStreamSort(void)
 
 // 823FC010  DB_GetGPUImageFormatStr  (database/db_streaming.cpp:3236)
 
-undefined8 DB_GetGPUImageFormatStr(uint param_1)
+char * DB_GetGPUImageFormatStr(ulong param_1)
 
 {
-  undefined8 uVar1;
+  uint uVar1;
+  char *pcVar2;
   
-  param_1 = param_1 & 0x3f;
-  if (param_1 < 0x15) {
-    if (param_1 == 0x14) {
-      return 0xffffffff8205dc08;
+  uVar1 = param_1 & 0x3f;
+  if (uVar1 < 0x15) {
+    if (uVar1 == 0x14) {
+      return "DXT4_5";
     }
-    switch(param_1) {
+    switch(uVar1) {
     case 2:
-      return 0xffffffff8205dc2c;
+      return "L8";
     case 6:
-      return 0xffffffff8205dc24;
+      return "8_8_8_8";
     case 10:
-      return 0xffffffff8205dc20;
+      return "8_8";
     case 0x12:
-      return 0xffffffff8205dc18;
+      return "DXT1";
     case 0x13:
-      return 0xffffffff8205dc10;
+      return "DXT2_3";
     }
   }
-  else if (param_1 < 0x3b) {
-    if (param_1 == 0x3a) {
-      return 0xffffffff8205dbf8;
+  else if (uVar1 < 0x3b) {
+    if (uVar1 == 0x3a) {
+      return "DXT3A";
     }
-    if (param_1 == 0x18) {
-      return 0xffffffff8205dc00;
+    if (uVar1 == 0x18) {
+      return "L16";
     }
-    if (param_1 == 0x31) {
-      return 0xffffffff8205dc04;
+    if (uVar1 == 0x31) {
+      return "DXN";
     }
   }
-  else if (param_1 == 0x3b) {
-    return 0xffffffff8205dbd8;
+  else if (uVar1 == 0x3b) {
+    return "DXT5A";
   }
-  uVar1 = va(0xffffffff8205dbe0);
-  return uVar1;
+  pcVar2 = va("GPUTEXTUREFORMAT_#%d");
+  return pcVar2;
 }
 
 
 // 823FC138  DB_ComputeTextureSize  (database/db_streaming.cpp:3257)
 
-void DB_ComputeTextureSize
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,ulonglong param_4,
-               ulonglong param_5,ulonglong param_6)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+uint DB_ComputeTextureSize
+               (uchar param_1,int param_2,ushort param_3,ushort param_4,ushort param_5,
+               ushort param_6)
 
 {
   bool bVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  uint *in_stack_ffffff78;
+  D3DTexture *in_stack_ffffff7c;
+  uint *in_stack_ffffff80;
+  uint *in_stack_ffffff84;
   
-  uVar2 = __savegprlr_29();
+  uVar6 = (uint)(short)param_6;
+  uVar5 = (uint)(short)param_5;
+  uVar4 = (uint)(short)param_4;
+  uVar3 = (uint)(short)param_3;
+  uVar2 = __savegprlr_29(param_1);
   uVar2 = uVar2 & 0xff;
-  uVar3 = uVar2 - 2;
-  if (3 < (uVar3 & 0xffffffff)) {
+  uVar7 = uVar2 - 2;
+  if (3 < (uVar7 & 0xffffffff)) {
     if ((uVar2 < 2) || (5 < uVar2)) {
-      MyAssertHandler(0xffffffff8205cd18,0xcce,0,0xffffffff82000f98,0xffffffff8205dc30);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                      0xcce,0,"%s");
     }
-    __restgprlr_29(0);
-    return;
+    uVar3 = __restgprlr_29(0);
+    return uVar3;
   }
-  bVar1 = (int)uVar3 != 0;
+  bVar1 = (int)uVar7 != 0;
   if (uVar2 == 3 && bVar1) {
-    XGSetTextureHeader(param_3 & 0xffff,param_4 & 0xffff,param_6 & 0xffff,0,param_2,0,0,
-                       0xffffffffffffffff);
-    __restgprlr_29();
-    return;
+    uVar3 = XGSetTextureHeader(uVar3 & 0xffff,uVar4 & 0xffff,uVar6 & 0xffff,0,param_2,0,0,0xffffffff
+                               ,(uint)in_stack_ffffff78,in_stack_ffffff7c,in_stack_ffffff80,
+                               in_stack_ffffff84);
+    uVar3 = __restgprlr_29(uVar3);
+    return uVar3;
   }
-  if (uVar3 == 2 && bVar1) {
-    XGSetVolumeTextureHeader
-              (param_3 & 0xffff,param_4 & 0xffff,param_5 & 0xffff,param_6 & 0xffff,0,param_2,0,0);
-    __restgprlr_29();
-    return;
+  if (uVar7 == 2 && bVar1) {
+    uVar3 = XGSetVolumeTextureHeader
+                      (uVar3 & 0xffff,uVar4 & 0xffff,uVar5 & 0xffff,uVar6 & 0xffff,0,param_2,0,0,
+                       (uint)in_stack_ffffff78,(D3DVolumeTexture *)in_stack_ffffff7c,
+                       in_stack_ffffff80,in_stack_ffffff84);
+    uVar3 = __restgprlr_29(uVar3);
+    return uVar3;
   }
   if (!bVar1) {
-    XGSetLineTextureHeader(param_3 & 0xffff,param_6 & 0xffff,0,param_2,0,0,0xffffffffffffffff,0);
-    __restgprlr_29();
-    return;
+    uVar3 = XGSetLineTextureHeader
+                      (uVar3 & 0xffff,uVar6 & 0xffff,0,param_2,0,0,0xffffffff,(D3DLineTexture *)0x0,
+                       in_stack_ffffff78,(uint *)in_stack_ffffff7c);
+    uVar3 = __restgprlr_29(uVar3);
+    return uVar3;
   }
-  XGSetCubeTextureHeader(param_3 & 0xffff,param_6 & 0xffff,0,param_2,0,0,0xffffffffffffffff,0);
-  __restgprlr_29();
-  return;
+  uVar3 = XGSetCubeTextureHeader
+                    (uVar3 & 0xffff,uVar6 & 0xffff,0,param_2,0,0,0xffffffff,(D3DCubeTexture *)0x0,
+                     in_stack_ffffff78,(uint *)in_stack_ffffff7c);
+  uVar3 = __restgprlr_29(uVar3);
+  return uVar3;
 }
 
 
 // 823FC2B0  DB_IsLevelImage  (database/db_streaming.cpp:3288)
 
-undefined8 DB_IsLevelImage(int param_1)
+bool DB_IsLevelImage(GfxImage *param_1)
 
 {
   char *pcVar1;
   
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xcd9,0,0xffffffff82000f98,0xffffffff82058d58);
+  if (param_1 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xcd9,0,"%s");
   }
-  pcVar1 = strstr(*(char **)(param_1 + 0x6c),"*reflection_probe");
-  if ((pcVar1 == (char *)0x0) &&
-     (pcVar1 = strstr(*(char **)(param_1 + 0x6c),"*lightmap"), pcVar1 == (char *)0x0)) {
-    return 0;
+  pcVar1 = strstr(param_1->name,"*reflection_probe");
+  if ((pcVar1 == (char *)0x0) && (pcVar1 = strstr(param_1->name,"*lightmap"), pcVar1 == (char *)0x0)
+     ) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 823FC340  DB_ComputeUncachedImageSize  (database/db_streaming.cpp:3295)
 
-void DB_ComputeUncachedImageSize(int param_1)
+uint DB_ComputeUncachedImageSize(GfxImage *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xce0,0,0xffffffff82000f98,0xffffffff82058d58);
+  uint uVar1;
+  
+  if (param_1 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xce0,0,"%s");
   }
-  DB_ComputeTextureSize
-            (*(undefined1 *)(param_1 + 0x38),*(undefined4 *)(param_1 + 0x34),
-             *(undefined2 *)(param_1 + 0x40),*(undefined2 *)(param_1 + 0x42),
-             *(undefined2 *)(param_1 + 0x44),*(undefined1 *)(param_1 + 0x46));
-  return;
+  uVar1 = DB_ComputeTextureSize
+                    (param_1->mapType,param_1->format,param_1->width,param_1->height,param_1->depth,
+                     (ushort)param_1->levelCount);
+  return uVar1;
 }
 
 
 // 823FC3B0  DB_ComputeCachedImageSize  (database/db_streaming.cpp:3302)
 
-void DB_ComputeCachedImageSize(undefined8 param_1,int *param_2)
+void DB_ComputeCachedImageSize(GfxImage *param_1,ImageSizeData *param_2)
 
 {
-  uint uVar1;
+  ushort uVar1;
   uint uVar2;
+  uint uVar3;
   int iVar4;
-  longlong lVar3;
-  int iVar5;
+  GfxImage *pGVar5;
   uint uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar7;
+  ushort uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   
-  iVar4 = __savegprlr_25();
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xcea,0,0xffffffff82000f98,0xffffffff82058d58);
+  pGVar5 = (GfxImage *)__savegprlr_25(param_1);
+  if (pGVar5 == (GfxImage *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xcea,0,"%s");
   }
-  lVar3 = DB_GetGfxImageIndex(iVar4);
-  uVar8 = 0;
+  uVar6 = DB_GetGfxImageIndex(pGVar5);
+  uVar10 = 0;
   do {
-    iVar5 = (int)uVar8 * 8 + iVar4;
-    if (*(short *)(iVar5 + 0x4c) != 0) {
-      if ((uVar8 & 0xffffffff) == 0) {
-        uVar6 = *(uint *)(iVar5 + 0x50) >> 0x1a;
+    iVar4 = (int)uVar10;
+    uVar1 = pGVar5->streams[iVar4].width;
+    if (uVar1 != 0) {
+      if ((uVar10 & 0xffffffff) == 0) {
+        uVar8 = (ushort)(pGVar5->streams[iVar4].pixelSize >> 0x1a);
       }
       else {
-        uVar6 = 1;
+        uVar8 = 1;
       }
-      iVar5 = DB_ComputeTextureSize
-                        (*(undefined1 *)(iVar4 + 0x38),*(undefined4 *)(iVar4 + 0x34),
-                         *(short *)(iVar5 + 0x4c),*(undefined2 *)(iVar5 + 0x4e),
-                         *(undefined2 *)(iVar4 + 0x44),uVar6);
-      uVar7 = uVar8 * 0x14c0 + lVar3;
-      uVar1 = (uint)((uVar7 & 0xffffffff) >> 3) & 0x1ffffffc;
-      uVar6 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c));
-      uVar2 = *(uint *)((int)&DAT_845f3980 + uVar1) & uVar6;
-      if ((*(uint *)((int)&DAT_83299e80 + uVar1) & uVar6) == 0) {
-        if (uVar2 != 0) {
-          param_2[2] = param_2[2] + iVar5;
+      uVar7 = DB_ComputeTextureSize
+                        (pGVar5->mapType,pGVar5->format,uVar1,pGVar5->streams[iVar4].height,
+                         pGVar5->depth,uVar8);
+      uVar9 = uVar10 * 0x14c0 + (longlong)(int)uVar6;
+      uVar2 = (uint)((uVar9 & 0xffffffff) >> 3) & 0x1ffffffc;
+      uVar3 = *(uint *)((int)g_stream2.inuse + uVar2) &
+              *(uint *)(&g_bitShift + ((uint)((uVar9 & 0xffffffff) << 2) & 0x7c));
+      if ((*(uint *)((int)g_stream.alwaysLoaded + uVar2) &
+          *(uint *)(&g_bitShift + ((uint)((uVar9 & 0xffffffff) << 2) & 0x7c))) == 0) {
+        if (uVar3 != 0) {
+          param_2->streamed = param_2->streamed + uVar7;
         }
-        param_2[3] = param_2[3] + iVar5;
+        param_2->streamed_total = param_2->streamed_total + uVar7;
       }
       else {
-        if (uVar2 != 0) {
-          *param_2 = *param_2 + iVar5;
+        if (uVar3 != 0) {
+          param_2->fixed = param_2->fixed + uVar7;
         }
-        param_2[1] = param_2[1] + iVar5;
+        param_2->fixed_total = param_2->fixed_total + uVar7;
       }
     }
-    uVar8 = uVar8 + 1;
-  } while ((uVar8 & 0xffffffff) < 4);
+    uVar10 = uVar10 + 1;
+  } while ((uVar10 & 0xffffffff) < 4);
   __restgprlr_25();
   return;
 }
@@ -4594,124 +4940,134 @@ void DB_ComputeCachedImageSize(undefined8 param_1,int *param_2)
 
 // 823FC4E8  DB_CompareImageAssetsByKindAndMemory  (database/db_streaming.cpp:3342)
 
-void DB_CompareImageAssetsByKindAndMemory(undefined8 param_1,uint *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool DB_CompareImageAssetsByKindAndMemory(XAssetHeader *param_1,XAssetHeader *param_2)
 
 {
   byte bVar1;
   byte bVar2;
-  uint uVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  uint *puVar7;
-  ulonglong uVar6;
-  ulonglong uVar8;
-  int iVar10;
-  ulonglong uVar9;
-  uint local_50;
-  uint local_4c;
-  uint local_48;
-  uint local_44;
-  uint local_40;
-  uint local_3c;
-  uint local_38;
-  uint local_34;
+  GfxImage *pGVar3;
+  GfxImage *pGVar4;
+  bool bVar5;
+  undefined4 *puVar6;
+  undefined1 uVar9;
+  bool bVar10;
+  bool bVar11;
+  uint uVar7;
+  uint uVar8;
+  ulonglong uVar12;
+  int iVar14;
+  ulonglong uVar13;
+  ImageSizeData local_50;
+  ImageSizeData local_40 [4];
   
-  puVar7 = (uint *)__savegprlr_28();
-  uVar3 = *puVar7;
-  uVar4 = *param_2;
-  bVar1 = *(byte *)(uVar3 + 0x47);
-  bVar2 = *(byte *)(uVar4 + 0x47);
-  uVar5 = -(ulonglong)(uVar3 < uVar4) & 1;
-  iVar10 = (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
-  if (iVar10 != (uint)bVar2 + (-(uint)(bVar2 == 0) - (bVar2 - 1))) {
-    __restgprlr_28(iVar10 == 1);
-    return;
+  puVar6 = (undefined4 *)__savegprlr_28(param_1);
+  pGVar3 = (GfxImage *)*puVar6;
+  pGVar4 = param_2->image;
+  bVar1 = pGVar3->cached;
+  bVar2 = pGVar4->cached;
+  bVar5 = (bool)(-(pGVar3 < pGVar4) & 1);
+  iVar14 = (uint)bVar1 + (-(uint)(bVar1 == 0) - (bVar1 - 1));
+  if (iVar14 != (uint)bVar2 + (-(uint)(bVar2 == 0) - (bVar2 - 1))) {
+    uVar9 = __restgprlr_28(iVar14 == 1);
+    return (bool)uVar9;
   }
-  if (iVar10 != 0) {
-    local_50 = 0;
-    local_4c = 0;
-    local_48 = 0;
-    local_44 = 0;
-    local_40 = 0;
-    local_3c = 0;
-    local_38 = 0;
-    local_34 = 0;
-    DB_ComputeCachedImageSize(uVar3,&local_50);
-    DB_ComputeCachedImageSize(uVar4,&local_40);
-    uVar9 = (ulonglong)local_48 + (ulonglong)local_50;
-    uVar8 = (ulonglong)local_38 + (ulonglong)local_40;
-    if ((uVar9 & 0xffffffff) == (uVar8 & 0xffffffff)) {
-      uVar9 = (ulonglong)local_44 + (ulonglong)local_4c;
-      uVar8 = (ulonglong)local_34 + (ulonglong)local_3c;
-      uVar6 = uVar5;
-      if ((uVar9 & 0xffffffff) == (uVar8 & 0xffffffff)) goto LAB_823fc628;
+  if (iVar14 != 0) {
+    local_50.fixed = 0;
+    local_50.fixed_total = 0;
+    local_50.streamed = 0;
+    local_50.streamed_total = 0;
+    local_40[0].fixed = 0;
+    local_40[0].fixed_total = 0;
+    local_40[0].streamed = 0;
+    local_40[0].streamed_total = 0;
+    DB_ComputeCachedImageSize(pGVar3,&local_50);
+    DB_ComputeCachedImageSize(pGVar4,local_40);
+    uVar13 = (ulonglong)local_50.streamed + (ulonglong)local_50.fixed;
+    uVar12 = (ulonglong)local_40[0].streamed + (ulonglong)local_40[0].fixed;
+    if ((uVar13 & 0xffffffff) == (uVar12 & 0xffffffff)) {
+      uVar13 = (ulonglong)local_50.streamed_total + (ulonglong)local_50.fixed_total;
+      uVar12 = (ulonglong)local_40[0].streamed_total + (ulonglong)local_40[0].fixed_total;
+      bVar11 = bVar5;
+      if ((uVar13 & 0xffffffff) == (uVar12 & 0xffffffff)) goto LAB_823fc628;
     }
-    __restgprlr_28(-(uVar8 < uVar9) & 1);
-    return;
+    uVar9 = __restgprlr_28(-(uVar12 < uVar13) & 1);
+    return (bool)uVar9;
   }
-  uVar8 = DB_IsLevelImage(uVar3);
-  uVar6 = DB_IsLevelImage(uVar4);
-  if ((uVar8 & 0xff) == (uVar6 & 0xff)) {
-    uVar8 = DB_ComputeUncachedImageSize(uVar3);
-    uVar9 = DB_ComputeUncachedImageSize(uVar4);
-    uVar6 = uVar5;
-    if ((uVar8 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-      __restgprlr_28(-(uVar9 < uVar8) & 1);
-      return;
+  bVar10 = DB_IsLevelImage(pGVar3);
+  bVar11 = DB_IsLevelImage(pGVar4);
+  if (bVar10 == bVar11) {
+    uVar7 = DB_ComputeUncachedImageSize(pGVar3);
+    uVar8 = DB_ComputeUncachedImageSize(pGVar4);
+    bVar11 = bVar5;
+    if (uVar7 != uVar8) {
+      uVar9 = __restgprlr_28(-(uVar8 < uVar7) & 1);
+      return (bool)uVar9;
     }
   }
 LAB_823fc628:
-  __restgprlr_28(uVar6);
-  return;
+  uVar9 = __restgprlr_28(bVar11);
+  return (bool)uVar9;
 }
 
 
 // 823FC630  DB_GetImageStreamPolicy  (database/db_streaming.cpp:3416)
 
-byte DB_GetImageStreamPolicy(uint param_1)
+ImageStreamPolicy DB_GetImageStreamPolicy(uint param_1)
 
 {
-  byte bVar1;
+  ImageStreamPolicy IVar1;
   uint uVar2;
   
-  bVar1 = 0;
-  if ((&DAT_832f1098)[param_1] != 0) {
-    bVar1 = ((*(uint *)((int)&DAT_83299e80 + (param_1 >> 3 & 0x1ffffffc)) &
-             (&DAT_82992400)[param_1 & 0x1f]) == 0) + 1;
+  IVar1 = ISP_NONE;
+  if (g_imageStreamSize[param_1] != 0) {
+    IVar1 = ((*(uint *)((int)g_stream.alwaysLoaded + (param_1 >> 3 & 0x1ffffffc)) &
+             *(uint *)(&g_bitShift + (param_1 & 0x1f) * 4)) == 0) + ISP_ALWAYS_LOADED;
   }
   uVar2 = param_1 + 0x14c0;
-  if ((&DAT_832f1098)[uVar2] != 0) {
-    if ((*(uint *)((int)&DAT_83299e80 + (uVar2 >> 3 & 0x1ffffffc)) &
-        *(uint *)((int)&DAT_82992400 + (uVar2 * 4 & 0x7c))) == 0) {
-      bVar1 = bVar1 | 2;
+  if (g_imageStreamSize[uVar2] != 0) {
+    if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar2 >> 3 & 0x1ffffffc)) &
+        *(uint *)(&g_bitShift + (uVar2 * 4 & 0x7c))) == 0) {
+      IVar1 = IVar1 | ISP_STREAMED;
     }
     else {
-      bVar1 = bVar1 | 1;
+      IVar1 = IVar1 | ISP_ALWAYS_LOADED;
     }
   }
   uVar2 = param_1 + 0x2980;
-  if ((&DAT_832f1098)[uVar2] != 0) {
-    if ((*(uint *)((int)&DAT_83299e80 + (uVar2 >> 3 & 0x1ffffffc)) &
-        *(uint *)((int)&DAT_82992400 + (uVar2 * 4 & 0x7c))) == 0) {
-      bVar1 = bVar1 | 2;
+  if (g_imageStreamSize[uVar2] != 0) {
+    if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar2 >> 3 & 0x1ffffffc)) &
+        *(uint *)(&g_bitShift + (uVar2 * 4 & 0x7c))) == 0) {
+      IVar1 = IVar1 | ISP_STREAMED;
     }
     else {
-      bVar1 = bVar1 | 1;
+      IVar1 = IVar1 | ISP_ALWAYS_LOADED;
     }
   }
-  param_1 = param_1 + 0x3e40;
-  if ((&DAT_832f1098)[param_1] == 0) {
-    return bVar1;
+  uVar2 = param_1 + 0x3e40;
+  if (g_imageStreamSize[uVar2] == 0) {
+    return IVar1;
   }
-  if ((*(uint *)((int)&DAT_83299e80 + (param_1 >> 3 & 0x1ffffffc)) &
-      *(uint *)((int)&DAT_82992400 + (param_1 * 4 & 0x7c))) != 0) {
-    return bVar1 | 1;
+  if ((*(uint *)((int)g_stream.alwaysLoaded + (uVar2 >> 3 & 0x1ffffffc)) &
+      *(uint *)(&g_bitShift + (uVar2 * 4 & 0x7c))) != 0) {
+    return IVar1 | ISP_ALWAYS_LOADED;
   }
-  return bVar1 | 2;
+  return IVar1 | ISP_STREAMED;
 }
 
 
 // 823FE6A8  DB_ReportImageMemory  (database/db_streaming.cpp:3441)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void DB_ReportImageMemory(void)
 
@@ -4719,258 +5075,213 @@ void DB_ReportImageMemory(void)
   byte bVar1;
   ushort uVar2;
   ushort uVar3;
-  undefined2 uVar4;
-  uint uVar5;
-  uint uVar6;
-  uint uVar7;
+  GfxImage *pGVar4;
+  int iVar5;
+  XAssetHeader *pXVar6;
+  int iVar7;
+  bool bVar12;
   uint uVar8;
-  undefined *puVar9;
-  uint uVar10;
-  undefined4 uVar11;
-  int iVar12;
-  uint uVar13;
-  ulonglong uVar14;
-  char cVar21;
-  int iVar18;
-  undefined4 uVar19;
-  int iVar20;
-  undefined8 uVar15;
-  undefined8 uVar16;
-  undefined8 uVar17;
-  uint uVar22;
-  longlong lVar23;
-  ulonglong uVar24;
-  ulonglong uVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
-  ulonglong uVar28;
-  ulonglong uVar29;
-  longlong lVar30;
-  longlong lVar31;
-  undefined **ppuVar32;
-  ulonglong uVar33;
-  longlong lVar34;
-  ushort *puVar35;
+  char *pcVar9;
+  int iVar10;
+  int iVar11;
+  int iVar13;
+  int iVar14;
+  longlong lVar15;
+  int iVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  uint *puVar20;
+  longlong lVar21;
+  longlong lVar22;
+  ulonglong uVar23;
+  ushort *puVar24;
   
   __savegprlr();
-  lVar23 = -0x6ef0;
+  lVar15 = -0x6ef0;
   _RtlCheckStack12();
-  lVar23 = ZEXT48(&stack0x00000000) + lVar23;
-  iVar12 = (int)lVar23;
-  *(BADSPACEBASE **)iVar12 = register0x0000000c;
-  *(undefined4 *)(iVar12 + 0x74) = 0;
-  *(undefined4 *)(iVar12 + 0x7c) = 0;
-  uVar29 = 0;
-  *(undefined4 *)(iVar12 + 0x70) = 0;
-  uVar24 = 0;
-  *(undefined4 *)(iVar12 + 0x78) = 0;
-  uVar28 = 0;
-  *(undefined4 *)(iVar12 + 0x98) = 0;
-  uVar27 = 0;
-  *(undefined4 *)(iVar12 + 0x94) = 0;
-  uVar26 = 0;
-  *(undefined4 *)(iVar12 + 0x8c) = 0;
-  uVar25 = 0;
-  *(undefined4 *)(iVar12 + 0x80) = 0;
-  *(undefined4 *)(iVar12 + 0x88) = 0;
-  uVar14 = DB_GetAllXAssetOfType(8,lVar23 + 0x4d0,0x1a60);
-  if (0 < (int)uVar14) {
-    lVar34 = lVar23 + 0x4d0;
-    uVar33 = uVar14;
+  lVar15 = ZEXT48(&stack0x00000000) + lVar15;
+  iVar5 = (int)lVar15;
+  *(BADSPACEBASE **)iVar5 = register0x0000000c;
+  *(undefined4 *)(iVar5 + 0x74) = 0;
+  *(undefined4 *)(iVar5 + 0x7c) = 0;
+  iVar14 = 0;
+  *(undefined4 *)(iVar5 + 0x70) = 0;
+  iVar13 = 0;
+  *(undefined4 *)(iVar5 + 0x78) = 0;
+  uVar19 = 0;
+  *(undefined4 *)(iVar5 + 0x98) = 0;
+  uVar18 = 0;
+  *(undefined4 *)(iVar5 + 0x94) = 0;
+  uVar17 = 0;
+  *(undefined4 *)(iVar5 + 0x8c) = 0;
+  iVar16 = 0;
+  *(undefined4 *)(iVar5 + 0x80) = 0;
+  *(undefined4 *)(iVar5 + 0x88) = 0;
+  iVar7 = DB_GetAllXAssetOfType(ASSET_TYPE_IMAGE,(XAssetHeader *)(iVar5 + 0x4d0),0x1a60);
+  lVar21 = (longlong)iVar7;
+  if (0 < iVar7) {
+    lVar22 = lVar15 + 0x4d0;
     do {
-      if (*(char *)(*(int *)lVar34 + 0x47) == '\0') {
-        cVar21 = DB_IsLevelImage();
-        if (cVar21 == '\0') {
-          *(int *)(iVar12 + 0x94) = (int)(uVar27 + 1);
-          uVar27 = uVar27 + 1 & 0xffffffff;
+      if (((GfxImage *)*(undefined4 *)lVar22)->cached == '\0') {
+        bVar12 = DB_IsLevelImage((GfxImage *)*(undefined4 *)lVar22);
+        if (bVar12) {
+          *(int *)(iVar5 + 0x8c) = (int)(uVar17 + 1);
+          uVar17 = uVar17 + 1 & 0xffffffff;
         }
         else {
-          *(int *)(iVar12 + 0x8c) = (int)(uVar26 + 1);
-          uVar26 = uVar26 + 1 & 0xffffffff;
+          *(int *)(iVar5 + 0x94) = (int)(uVar18 + 1);
+          uVar18 = uVar18 + 1 & 0xffffffff;
         }
       }
       else {
-        *(int *)(iVar12 + 0x98) = (int)(uVar28 + 1);
-        uVar28 = uVar28 + 1 & 0xffffffff;
+        *(int *)(iVar5 + 0x98) = (int)(uVar19 + 1);
+        uVar19 = uVar19 + 1 & 0xffffffff;
       }
-      uVar33 = uVar33 - 1;
-      lVar34 = lVar34 + 4;
-    } while (uVar33 != 0);
+      lVar21 = lVar21 + -1;
+      lVar22 = lVar22 + 4;
+    } while (lVar21 != 0);
   }
-  lVar34 = (uVar14 & 0x3fffffff) * 4 + lVar23 + 0x4d0;
-  std___Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-            (lVar23 + 0x4d0,lVar34,(int)lVar34 - (iVar12 + 0x4d0) >> 2,0xffffffff823fc4e8);
-  uVar14 = 0;
-  ppuVar32 = &PTR_DAT_82967d68;
-  iVar20 = (int)uVar28;
-  *(undefined ***)(iVar12 + 0x90) = &PTR_DAT_82967d68;
-  if ((0 < iVar20) && (Com_Printf(8,0xffffffff8205e180,uVar28), 0 < iVar20)) {
-    *(int *)(iVar12 + 0x9c) = iVar20;
-    *(int *)(iVar12 + 0x84) = iVar20;
-    *(undefined **)(iVar12 + 0xbc) = &DAT_82004d30;
-    *(char **)(iVar12 + 0xc0) = "NotInUse";
-    *(char **)(iVar12 + 0xb8) = "InUse";
-    lVar34 = lVar23 + 0x4d0;
-    *(char **)(iVar12 + 0xb4) = "*Always";
-    *(char **)(iVar12 + 0xb0) = "Always";
-    while( true ) {
-      iVar20 = *(int *)lVar34;
-      *(undefined4 *)(iVar12 + 0xa0) = 0;
-      *(undefined4 *)(iVar12 + 0xa4) = 0;
-      *(undefined4 *)(iVar12 + 0xa8) = 0;
-      *(undefined4 *)(iVar12 + 0xac) = 0;
-      uVar28 = DB_GetGfxImageIndex(iVar20);
-      DB_ComputeCachedImageSize(iVar20,lVar23 + 0xa0);
-      iVar18 = DB_GetImageStreamPolicy(uVar28);
-      uVar19 = DB_GetGPUImageFormatStr(*(undefined4 *)(iVar20 + 0x34));
-      uVar5 = *(uint *)(iVar12 + 0xac);
-      uVar6 = *(uint *)(iVar12 + 0xa4);
-      uVar7 = *(uint *)(iVar12 + 0xa8);
-      uVar8 = *(uint *)(iVar12 + 0xa0);
-      *(undefined4 *)(iVar12 + 0x54) = uVar19;
-      iVar18 = _snprintf((char *)(iVar12 + 0xd0),0x400,"%4d : %8d/%8d bytes : %s : %s : %s",uVar28,
-                         (ulonglong)uVar7 + (ulonglong)uVar8,(ulonglong)uVar5 + (ulonglong)uVar6,
-                         ZEXT48(ppuVar32[iVar18 + -9]),(ulonglong)*(uint *)(iVar20 + 0x6c));
-      ppuVar32 = ppuVar32 + -4;
-      puVar35 = (ushort *)(iVar20 + 0x4e);
-      lVar30 = (uVar28 & 0x3fffffff) * 4 + -0x7cd0ef68;
-      lVar31 = 4;
+  pXVar6 = (XAssetHeader *)(iVar7 * 4 + iVar5 + 0x4d0);
+  std::_Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+            ((XAssetHeader *)(iVar5 + 0x4d0),pXVar6,(int)pXVar6 - (iVar5 + 0x4d0) >> 2,
+             DB_CompareImageAssetsByKindAndMemory);
+  uVar23 = 0;
+  iVar7 = (int)uVar19;
+  *(char ***)(iVar5 + 0x90) = s_imageMapTypeNames;
+  if ((0 < iVar7) && (Com_Printf(8,"Cached Images: %d\n"), 0 < iVar7)) {
+    *(int *)(iVar5 + 0x9c) = iVar7;
+    *(int *)(iVar5 + 0x84) = iVar7;
+    *(char **)(iVar5 + 0xbc) = "%s\n";
+    *(char **)(iVar5 + 0xc0) = "NotInUse";
+    *(char **)(iVar5 + 0xb8) = "InUse";
+    lVar21 = lVar15 + 0x4d0;
+    *(char **)(iVar5 + 0xb4) = "*Always";
+    *(char **)(iVar5 + 0xb0) = "Always";
+    do {
+      pGVar4 = (GfxImage *)*(undefined4 *)lVar21;
+      *(undefined4 *)(iVar5 + 0xa0) = 0;
+      *(undefined4 *)(iVar5 + 0xa4) = 0;
+      *(undefined4 *)(iVar5 + 0xa8) = 0;
+      *(undefined4 *)(iVar5 + 0xac) = 0;
+      uVar8 = DB_GetGfxImageIndex(pGVar4);
+      DB_ComputeCachedImageSize(pGVar4,(ImageSizeData *)(iVar5 + 0xa0));
+      DB_GetImageStreamPolicy(uVar8);
+      pcVar9 = DB_GetGPUImageFormatStr(pGVar4->format);
+      iVar16 = *(int *)(iVar5 + 0xac);
+      iVar7 = *(int *)(iVar5 + 0xa4);
+      iVar13 = *(int *)(iVar5 + 0xa8);
+      iVar14 = *(int *)(iVar5 + 0xa0);
+      *(char **)(iVar5 + 0x54) = pcVar9;
+      iVar10 = _snprintf((char *)(iVar5 + 0xd0),0x400,"%4d : %8d/%8d bytes : %s : %s : %s");
+      puVar24 = &pGVar4->streams[0].height;
+      puVar20 = g_imageStreamSize + uVar8;
+      lVar22 = 4;
       do {
-        if (*(int *)lVar30 != 0) {
-          uVar13 = (uint)((uVar28 & 0xffffffff) >> 3) & 0x1ffffffc;
-          uVar10 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar28 & 0xffffffff) << 2) & 0x7c));
-          uVar22 = *(uint *)((int)&DAT_845f3980 + uVar13) & uVar10;
-          if ((*(uint *)((int)&DAT_83299e80 + uVar13) & uVar10) == 0) {
-            uVar26 = (ulonglong)*(uint *)(iVar12 + 0xb8);
-            if (uVar22 == 0) {
-              uVar26 = (ulonglong)*(uint *)(iVar12 + 0xc0);
-            }
-          }
-          else if (uVar22 == 0) {
-            uVar26 = (ulonglong)*(uint *)(iVar12 + 0xb4);
-          }
-          else {
-            uVar26 = (ulonglong)*(uint *)(iVar12 + 0xb0);
-          }
-          uVar2 = *puVar35;
-          uVar3 = puVar35[-1];
-          puVar9 = *ppuVar32;
-          *(uint *)(iVar12 + 0x54) = *(uint *)(puVar35 + 1) >> 0x1a;
-          iVar20 = _snprintf((char *)(iVar18 + iVar12 + 0xd0),0x400 - iVar18," : %s %s %dx%d %d %d",
-                             uVar26,ZEXT48(puVar9),(ulonglong)uVar3,(ulonglong)uVar2);
-          iVar18 = iVar20 + iVar18;
+        if (*puVar20 != 0) {
+          *(uint *)(iVar5 + 0x54) = *(uint *)(puVar24 + 1) >> 0x1a;
+          iVar11 = _snprintf((char *)(iVar10 + iVar5 + 0xd0),0x400 - iVar10," : %s %s %dx%d %d %d");
+          iVar10 = iVar11 + iVar10;
         }
-        lVar31 = lVar31 + -1;
-        uVar28 = uVar28 + 0x14c0;
-        lVar30 = lVar30 + 0x5300;
-        puVar35 = puVar35 + 4;
-        ppuVar32 = ppuVar32 + 1;
-      } while (lVar31 != 0);
-      Com_Printf(8,*(undefined4 *)(iVar12 + 0xbc),lVar23 + 0xd0);
-      lVar34 = lVar34 + 4;
-      lVar30 = (ulonglong)*(uint *)(iVar12 + 0x9c) - 1;
-      uVar29 = (ulonglong)*(uint *)(iVar12 + 0x70) + (ulonglong)uVar8;
-      uVar24 = (ulonglong)*(uint *)(iVar12 + 0x78) + (ulonglong)uVar7;
-      *(int *)(iVar12 + 0x9c) = (int)lVar30;
-      *(int *)(iVar12 + 0x70) = (int)uVar29;
-      *(uint *)(iVar12 + 0x74) = *(int *)(iVar12 + 0x74) + uVar6;
-      *(int *)(iVar12 + 0x78) = (int)uVar24;
-      *(uint *)(iVar12 + 0x7c) = *(int *)(iVar12 + 0x7c) + uVar5;
-      if (lVar30 == 0) break;
-      ppuVar32 = *(undefined ***)(iVar12 + 0x90);
-    }
-    uVar28 = (ulonglong)*(uint *)(iVar12 + 0x98);
-    uVar29 = uVar29 & 0xffffffff;
-    uVar27 = (ulonglong)*(uint *)(iVar12 + 0x94);
-    uVar24 = uVar24 & 0xffffffff;
-    uVar26 = (ulonglong)*(uint *)(iVar12 + 0x8c);
-    uVar25 = (ulonglong)*(uint *)(iVar12 + 0x80);
-    uVar14 = (ulonglong)*(uint *)(iVar12 + 0x84);
+        lVar22 = lVar22 + -1;
+        puVar20 = puVar20 + 0x14c0;
+        puVar24 = puVar24 + 4;
+      } while (lVar22 != 0);
+      Com_Printf(8,*(char **)(iVar5 + 0xbc));
+      lVar21 = lVar21 + 4;
+      lVar22 = (ulonglong)*(uint *)(iVar5 + 0x9c) - 1;
+      iVar14 = *(int *)(iVar5 + 0x70) + iVar14;
+      iVar13 = *(int *)(iVar5 + 0x78) + iVar13;
+      *(int *)(iVar5 + 0x9c) = (int)lVar22;
+      *(int *)(iVar5 + 0x70) = iVar14;
+      *(int *)(iVar5 + 0x74) = *(int *)(iVar5 + 0x74) + iVar7;
+      *(int *)(iVar5 + 0x78) = iVar13;
+      *(int *)(iVar5 + 0x7c) = *(int *)(iVar5 + 0x7c) + iVar16;
+    } while (lVar22 != 0);
+    uVar19 = (ulonglong)*(uint *)(iVar5 + 0x98);
+    uVar18 = (ulonglong)*(uint *)(iVar5 + 0x94);
+    uVar17 = (ulonglong)*(uint *)(iVar5 + 0x8c);
+    iVar16 = *(int *)(iVar5 + 0x80);
+    uVar23 = (ulonglong)*(uint *)(iVar5 + 0x84);
   }
-  if (0 < (int)uVar27) {
-    Com_Printf(8,0xffffffff8205e108,uVar27);
-    if ((int)uVar14 < (int)(uVar27 + uVar28)) {
-      lVar30 = (uVar27 + uVar28) - uVar14;
-      *(int *)(iVar12 + 0x84) = (int)lVar30 + (int)uVar14;
-      lVar34 = (uVar14 & 0x3fffffff) * 4 + lVar23 + 0x4d0;
+  if (0 < (int)uVar18) {
+    Com_Printf(8,"\nUncached Images: %d\n");
+    if ((int)uVar23 < (int)(uVar18 + uVar19)) {
+      lVar22 = (uVar18 + uVar19) - uVar23;
+      *(int *)(iVar5 + 0x84) = (int)lVar22 + (int)uVar23;
+      lVar21 = (uVar23 & 0x3fffffff) * 4 + lVar15 + 0x4d0;
       do {
-        iVar20 = *(int *)lVar34;
-        uVar15 = DB_GetGfxImageIndex(iVar20);
-        if (iVar20 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0xce0,0,0xffffffff82000f98,0xffffffff82058d58);
+        pGVar4 = (GfxImage *)*(undefined4 *)lVar21;
+        DB_GetGfxImageIndex(pGVar4);
+        if (pGVar4 == (GfxImage *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xce0,0,"%s");
         }
-        lVar31 = DB_ComputeTextureSize
-                           (*(undefined1 *)(iVar20 + 0x38),*(undefined4 *)(iVar20 + 0x34),
-                            *(undefined2 *)(iVar20 + 0x40),*(undefined2 *)(iVar20 + 0x42),
-                            *(undefined2 *)(iVar20 + 0x44),*(undefined1 *)(iVar20 + 0x46));
-        bVar1 = *(byte *)(iVar20 + 0x46);
-        uVar2 = *(ushort *)(iVar20 + 0x44);
-        uVar3 = *(ushort *)(iVar20 + 0x42);
-        uVar4 = *(undefined2 *)(iVar20 + 0x40);
-        uVar11 = *(undefined4 *)((uint)*(byte *)(iVar20 + 0x38) * 4 + *(int *)(iVar12 + 0x90));
-        uVar16 = DB_GetGPUImageFormatStr(*(undefined4 *)(iVar20 + 0x34));
-        uVar19 = *(undefined4 *)(iVar20 + 0x6c);
-        *(uint *)(iVar12 + 0x54) = (uint)uVar3;
-        *(uint *)(iVar12 + 0x5c) = (uint)uVar2;
-        *(uint *)(iVar12 + 100) = (uint)bVar1;
-        Com_Printf(8,0xffffffff8205e0d4,uVar15,lVar31,uVar19,uVar16,uVar11,uVar4);
-        lVar30 = lVar30 + -1;
-        lVar34 = lVar34 + 4;
-        *(int *)(iVar12 + 0x80) = (int)(lVar31 + uVar25);
-        uVar25 = lVar31 + uVar25 & 0xffffffff;
-      } while (lVar30 != 0);
-      uVar14 = (ulonglong)*(uint *)(iVar12 + 0x84);
-      uVar24 = (ulonglong)*(uint *)(iVar12 + 0x78);
-      uVar29 = (ulonglong)*(uint *)(iVar12 + 0x70);
+        uVar8 = DB_ComputeTextureSize
+                          (pGVar4->mapType,pGVar4->format,pGVar4->width,pGVar4->height,pGVar4->depth
+                           ,(ushort)pGVar4->levelCount);
+        bVar1 = pGVar4->levelCount;
+        uVar2 = pGVar4->depth;
+        uVar3 = pGVar4->height;
+        DB_GetGPUImageFormatStr(pGVar4->format);
+        *(uint *)(iVar5 + 0x54) = (uint)uVar3;
+        *(uint *)(iVar5 + 0x5c) = (uint)uVar2;
+        *(uint *)(iVar5 + 100) = (uint)bVar1;
+        Com_Printf(8,"%4d : %7d bytes : %s : %s : %s %dx%dx%d : %d mips\n");
+        iVar16 = uVar8 + iVar16;
+        lVar22 = lVar22 + -1;
+        lVar21 = lVar21 + 4;
+        *(int *)(iVar5 + 0x80) = iVar16;
+      } while (lVar22 != 0);
+      uVar23 = (ulonglong)*(uint *)(iVar5 + 0x84);
+      iVar13 = *(int *)(iVar5 + 0x78);
+      iVar14 = *(int *)(iVar5 + 0x70);
     }
   }
-  if (0 < (int)uVar26) {
-    Com_Printf(8,0xffffffff8205e0c0,uVar26);
-    lVar34 = uVar26 + uVar27 + uVar28;
-    if ((int)uVar14 < (int)lVar34) {
-      lVar34 = lVar34 - uVar14;
-      lVar23 = (uVar14 & 0x3fffffff) * 4 + lVar23 + 0x4d0;
+  if (0 < (int)uVar17) {
+    Com_Printf(8,"\nLevel Images: %d\n");
+    lVar21 = uVar17 + uVar18 + uVar19;
+    if ((int)uVar23 < (int)lVar21) {
+      lVar21 = lVar21 - uVar23;
+      lVar15 = (uVar23 & 0x3fffffff) * 4 + lVar15 + 0x4d0;
       do {
-        iVar20 = *(int *)lVar23;
-        DB_GetGfxImageIndex(iVar20);
-        if (iVar20 == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0xce0,0,0xffffffff82000f98,0xffffffff82058d58);
+        pGVar4 = (GfxImage *)*(undefined4 *)lVar15;
+        DB_GetGfxImageIndex(pGVar4);
+        if (pGVar4 == (GfxImage *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xce0,0,"%s");
         }
-        uVar15 = DB_ComputeTextureSize
-                           (*(undefined1 *)(iVar20 + 0x38),*(undefined4 *)(iVar20 + 0x34),
-                            *(undefined2 *)(iVar20 + 0x40),*(undefined2 *)(iVar20 + 0x42),
-                            *(undefined2 *)(iVar20 + 0x44),*(undefined1 *)(iVar20 + 0x46));
-        bVar1 = *(byte *)(iVar20 + 0x46);
-        uVar2 = *(ushort *)(iVar20 + 0x44);
-        uVar3 = *(ushort *)(iVar20 + 0x42);
-        uVar4 = *(undefined2 *)(iVar20 + 0x40);
-        uVar11 = *(undefined4 *)((uint)*(byte *)(iVar20 + 0x38) * 4 + *(int *)(iVar12 + 0x90));
-        uVar16 = DB_GetGPUImageFormatStr(*(undefined4 *)(iVar20 + 0x34));
-        uVar19 = *(undefined4 *)(iVar20 + 0x6c);
-        uVar17 = DB_GetGfxImageIndex(iVar20);
-        *(uint *)(iVar12 + 0x54) = (uint)uVar3;
-        *(uint *)(iVar12 + 0x5c) = (uint)uVar2;
-        *(uint *)(iVar12 + 100) = (uint)bVar1;
-        Com_Printf(8,0xffffffff8205e08c,uVar17,uVar15,uVar19,uVar16,uVar11,uVar4);
-        lVar34 = lVar34 + -1;
-        lVar23 = lVar23 + 4;
-        *(int *)(iVar12 + 0x88) = (int)uVar15 + *(int *)(iVar12 + 0x88);
-      } while (lVar34 != 0);
+        uVar8 = DB_ComputeTextureSize
+                          (pGVar4->mapType,pGVar4->format,pGVar4->width,pGVar4->height,pGVar4->depth
+                           ,(ushort)pGVar4->levelCount);
+        bVar1 = pGVar4->levelCount;
+        uVar2 = pGVar4->depth;
+        uVar3 = pGVar4->height;
+        DB_GetGPUImageFormatStr(pGVar4->format);
+        DB_GetGfxImageIndex(pGVar4);
+        *(uint *)(iVar5 + 0x54) = (uint)uVar3;
+        *(uint *)(iVar5 + 0x5c) = (uint)uVar2;
+        *(uint *)(iVar5 + 100) = (uint)bVar1;
+        Com_Printf(8,"%4d : %8d bytes : %s : %s : %s %dx%dx%d : %d mips\n");
+        lVar21 = lVar21 + -1;
+        lVar15 = lVar15 + 4;
+        *(uint *)(iVar5 + 0x88) = uVar8 + *(int *)(iVar5 + 0x88);
+      } while (lVar21 != 0);
     }
   }
-  uVar28 = (ulonglong)*(uint *)(iVar12 + 0x88);
-  Com_Printf(8,0xffffffff8205e06c,uVar24 + uVar29 + uVar28 + uVar25);
-  if (uVar25 != 0) {
-    Com_Printf(8,0xffffffff8205e04c,uVar25);
+  iVar7 = *(int *)(iVar5 + 0x88);
+  Com_Printf(8,"\nImage Total      : %9d bytes\n");
+  if (iVar16 != 0) {
+    Com_Printf(8,"    Uncached     : %9d bytes\n");
   }
-  if (uVar28 != 0) {
-    Com_Printf(8,0xffffffff8205e02c,uVar28);
+  if (iVar7 != 0) {
+    Com_Printf(8,"    Level        : %9d bytes\n");
   }
-  if ((uVar29 != 0) || (*(int *)(iVar12 + 0x74) != 0)) {
-    Com_Printf(8,0xffffffff8205e008,uVar29,*(undefined4 *)(iVar12 + 0x74));
+  if ((iVar14 != 0) || (*(int *)(iVar5 + 0x74) != 0)) {
+    Com_Printf(8,"    Always Loaded: %9d / %9d bytes\n");
   }
-  if ((uVar24 != 0) || (*(int *)(iVar12 + 0x7c) != 0)) {
-    Com_Printf(8,0xffffffff8205dfe4,uVar24,*(undefined4 *)(iVar12 + 0x7c));
+  if ((iVar13 != 0) || (*(int *)(iVar5 + 0x7c) != 0)) {
+    Com_Printf(8,"    Streamed     : %9d / %9d bytes\n");
   }
   __restgprlr();
   return;
@@ -4979,117 +5290,126 @@ void DB_ReportImageMemory(void)
 
 // 823FED00  DB_ReadAlwaysLoadedAssets  (database/db_streaming.cpp:3601)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ReadAlwaysLoadedAssets(void)
 
 {
   ushort uVar1;
   uint uVar2;
-  int iVar3;
+  GfxSubImageStream *pGVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  uint uVar8;
+  uint uVar5;
+  uint uVar6;
+  longlong lVar7;
+  uint *puVar8;
   longlong lVar9;
-  uint *puVar10;
-  uint uVar11;
-  longlong lVar12;
-  ushort *puVar13;
-  undefined2 *puVar14;
-  ulonglong uVar15;
-  undefined1 auStack_a0 [160];
+  ushort *puVar10;
+  DBFile *pDVar11;
+  uint uVar12;
+  ulonglong uVar13;
+  uint auStack_a0 [40];
   
   __savegprlr();
-  iVar6 = 0;
+  uVar5 = 0;
   DB_CullStreamSort();
-  puVar10 = &DAT_83299e80;
-  lVar12 = 0;
-  lVar9 = 0x298;
-  uVar8 = DAT_84613600;
+  puVar8 = g_stream.alwaysLoaded;
+  lVar9 = 0;
+  lVar7 = 0x298;
+  uVar6 = g_stream2.sortCount;
   do {
-    uVar11 = *puVar10;
-    uVar15 = LZCOUNT(uVar11);
-    if (uVar15 < 0x20) {
-      puVar14 = (undefined2 *)(&DAT_84608ffe + uVar8 * 2);
+    uVar12 = *puVar8;
+    uVar13 = LZCOUNT(uVar12);
+    if (uVar13 < 0x20) {
+      puVar10 = g_stream2.sort + (uVar6 - 1);
       do {
-        if (0x20 < uVar15) {
-          MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar15,0x21);
+        if (0x20 < uVar13) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                          0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
         }
-        uVar2 = *(uint *)((int)&DAT_82992400 + (int)(uVar15 << 2));
-        if ((uVar2 & uVar11) == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0xe36,0,0xffffffff82000f98,0xffffffff8205cd08);
+        uVar2 = *(uint *)(&g_bitShift + (int)(uVar13 << 2));
+        if ((uVar2 & uVar12) == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xe36,0,"%s");
         }
-        uVar11 = uVar11 & ~uVar2;
-        iVar3 = DB_GetSubImageStream(lVar12 + uVar15,auStack_a0);
-        if (*(int *)(iVar3 + 8) != 0) {
-          if (0x52ff < uVar8) {
-            MyAssertHandler(0xffffffff8205cd18,0xe3d,0,0xffffffff8205e1b0,uVar8,0x5300);
+        uVar12 = uVar12 & ~uVar2;
+        pGVar3 = DB_GetSubImageStream((uint)(lVar9 + uVar13),auStack_a0);
+        if (pGVar3->file != (DBFile *)0x0) {
+          if (0x52ff < uVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xe3d,0,
+                            "streamSortCount doesn\'t index ARRAY_COUNT( g_stream2.sort )\n\t%i not in [0, %i)"
+                           );
           }
-          uVar8 = uVar8 + 1;
-          puVar14 = puVar14 + 1;
-          *puVar14 = (short)(lVar12 + uVar15);
+          uVar6 = uVar6 + 1;
+          puVar10 = puVar10 + 1;
+          *puVar10 = (ushort)(lVar9 + uVar13);
         }
-        uVar15 = LZCOUNT(uVar11);
-      } while (uVar15 < 0x20);
+        uVar13 = LZCOUNT(uVar12);
+      } while (uVar13 < 0x20);
     }
-    lVar9 = lVar9 + -1;
-    puVar10 = puVar10 + 1;
-    lVar12 = lVar12 + 0x20;
-  } while (lVar9 != 0);
-  lVar9 = ((ulonglong)DAT_84613600 & 0x7fffffff) * 2 + -0x7b9f7000;
-  std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-            (lVar9,&DAT_84609000 + uVar8,(int)(&DAT_84609000 + uVar8) - (int)lVar9 >> 1,
-             0xffffffff823ff238);
-  iVar3 = R_HasDeviceOwnership();
-  if (iVar3 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xe47,0,0xffffffff82000f98,0xffffffff82059658);
+    lVar7 = lVar7 + -1;
+    puVar8 = puVar8 + 1;
+    lVar9 = lVar9 + 0x20;
+  } while (lVar7 != 0);
+  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+            (g_stream2.sort + g_stream2.sortCount,g_stream2.sort + uVar6,
+             (int)(g_stream2.sort + uVar6) - (int)(g_stream2.sort + g_stream2.sortCount) >> 1,
+             DB_FileCompare);
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xe47,0,"%s");
   }
-  iVar3 = 0;
-  if (DAT_84613600 < uVar8) {
-    puVar13 = &DAT_84609000 + DAT_84613600;
-    uVar11 = DAT_84613600;
+  pDVar11 = (DBFile *)0x0;
+  if (g_stream2.sortCount < uVar6) {
+    puVar10 = g_stream2.sort + g_stream2.sortCount;
+    uVar12 = g_stream2.sortCount;
     do {
-      if (DAT_82d14a94 != 0) break;
-      uVar1 = *puVar13;
-      uVar7 = (uint)uVar1;
+      if (g_skipReadAlwaysLoadedAssets != 0) break;
+      uVar1 = *puVar10;
+      iVar4 = (uVar1 & 0x1f) * 4;
       uVar2 = uVar1 >> 3 & 0x1ffffffc;
-      if ((*(uint *)((int)&DAT_83299e80 + uVar2) & (&DAT_82992400)[uVar7 & 0x1f]) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xe51,0,0xffffffff82000f98,0xffffffff8205dfa8);
+      if ((*(uint *)((int)g_stream.alwaysLoaded + uVar2) & *(uint *)(&g_bitShift + iVar4)) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xe51,0,"%s");
       }
-      iVar6 = (&DAT_832f1098)[uVar1] + iVar6;
-      if ((*(uint *)((int)&DAT_845f3980 + uVar2) & (&DAT_82992400)[uVar7 & 0x1f]) == 0) {
-        iVar4 = DB_GetSubImageStream(uVar7,auStack_a0);
-        if (*(int *)(iVar4 + 8) == 0) {
-          MyAssertHandler(0xffffffff8205cd18,0xe5b,0,0xffffffff82000f98,0xffffffff8205e194);
+      uVar5 = g_imageStreamSize[uVar1] + uVar5;
+      if ((*(uint *)((int)g_stream2.inuse + uVar2) & *(uint *)(&g_bitShift + iVar4)) == 0) {
+        pGVar3 = DB_GetSubImageStream((uint)uVar1,auStack_a0);
+        if (pGVar3->file == (DBFile *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                          ,0xe5b,0,"%s");
         }
         while( true ) {
-          uVar2 = (uint)LZCOUNT(iVar3 - *(int *)(iVar4 + 8)) >> 5;
-          if ((uVar2 != 0) && (iVar5 = DB_PrefetchStreamFile(uVar7), iVar5 == 0)) break;
-          if (iVar3 != 0) {
-            DB_ReadStreamFile(0,uVar2 == 0);
+          uVar2 = (uint)LZCOUNT((int)pDVar11 - (int)pGVar3->file) >> 5;
+          if ((uVar2 != 0) && (iVar4 = DB_PrefetchStreamFile((uint)uVar1), iVar4 == 0)) break;
+          if (pDVar11 != (DBFile *)0x0) {
+            DB_ReadStreamFile(0,(uint)LZCOUNT(uVar2) >> 5);
           }
           if (uVar2 == 0) {
-            if (iVar3 != 0) {
+            if (pDVar11 != (DBFile *)0x0) {
               DB_FinishLoadXFileStreaming();
             }
-            iVar3 = *(int *)(iVar4 + 8);
-            DB_InitLoadXFileStreaming(iVar3);
+            pDVar11 = pGVar3->file;
+            DB_InitLoadXFileStreaming(pDVar11);
           }
         }
       }
-      uVar11 = uVar11 + 1;
-      puVar13 = puVar13 + 1;
-    } while (uVar11 < uVar8);
-    if (iVar3 != 0) {
+      uVar12 = uVar12 + 1;
+      puVar10 = puVar10 + 1;
+    } while (uVar12 < uVar6);
+    if (pDVar11 != (DBFile *)0x0) {
       DB_ReadStreamFile(0,1);
       DB_FinishLoadXFileStreaming();
     }
   }
-  DAT_83231ef4 = iVar6;
+  g_streamAlwaysUsedMemory = uVar5;
   ImageCache_UpdateGPU();
-  iVar6 = R_HasDeviceOwnership();
-  if (iVar6 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xe80,0,0xffffffff82000f98,0xffffffff82059658);
+  iVar4 = R_HasDeviceOwnership();
+  if (iVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xe80,0,"%s");
   }
   DB_InitStreamSort();
   __restgprlr();
@@ -5097,64 +5417,75 @@ void DB_ReadAlwaysLoadedAssets(void)
 }
 
 
-// 823FF7B0  std::_Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 823FF7B0  _Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::
+     _Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>
+               (ushort *param_1,ushort *param_2,_func___cdecl_int_uint_uint *param_3,ushort *param_4
+               )
 
 {
   undefined2 uVar1;
-  undefined2 *_Src;
   ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   int iVar6;
-  void *pvVar7;
-  ulonglong uVar8;
-  undefined2 *puVar9;
+  ulonglong uVar7;
+  longlong lVar8;
+  code *pcVar9;
+  ulonglong uVar10;
+  undefined2 *puVar11;
   
-  uVar5 = __savegprlr_23();
-  if (((uVar5 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar8 = uVar5 + 2, (uVar8 & 0xffffffff) != (param_2 & 0xffffffff))) {
-    _Src = (undefined2 *)uVar5;
+  lVar8 = (longlong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_23(param_1,uVar7,lVar8,param_4);
+  if (((uVar5 & 0xffffffff) != (uVar7 & 0xffffffff)) &&
+     (uVar10 = uVar5 + 2, (uVar10 & 0xffffffff) != (uVar7 & 0xffffffff))) {
     do {
-      puVar9 = (undefined2 *)uVar8;
-      uVar1 = *puVar9;
-      iVar6 = (*param_3)(uVar1,*_Src);
+      puVar11 = (undefined2 *)uVar10;
+      uVar1 = *puVar11;
+      pcVar9 = (code *)lVar8;
+      iVar6 = (*pcVar9)(uVar1,*(undefined2 *)uVar5);
       if (iVar6 == 0) {
-        uVar5 = (*param_3)(uVar1,puVar9[-1]);
-        iVar6 = (int)uVar5;
-        uVar4 = uVar8 - 2;
-        uVar3 = uVar8;
+        iVar6 = (*pcVar9)(uVar1,puVar11[-1]);
+        uVar4 = uVar10 - 2;
+        uVar3 = uVar10;
         while (uVar2 = uVar4, iVar6 != 0) {
-          puVar9 = (undefined2 *)uVar2;
-          *(undefined2 *)uVar3 = *puVar9;
-          uVar5 = (*param_3)(uVar1,*(undefined2 *)(uVar2 - 2));
+          puVar11 = (undefined2 *)uVar2;
+          *(undefined2 *)uVar3 = *puVar11;
+          iVar6 = (*pcVar9)(uVar1,*(undefined2 *)(uVar2 - 2));
           uVar4 = uVar2 - 2;
           uVar3 = uVar2;
-          iVar6 = (int)uVar5;
         }
-        *puVar9 = uVar1;
+        *puVar11 = uVar1;
       }
       else {
-        iVar6 = (int)puVar9 - (int)_Src >> 1;
-        pvVar7 = memmove(puVar9 + (1 - iVar6),_Src,iVar6 * 2);
-        uVar5 = (ulonglong)(int)pvVar7;
-        *_Src = uVar1;
+        memmove();
+        *(undefined2 *)uVar5 = uVar1;
       }
-      uVar8 = uVar8 + 2;
-    } while ((uVar8 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar10 = uVar10 + 2;
+    } while ((uVar10 & 0xffffffff) != (uVar7 & 0xffffffff));
   }
-  __restgprlr_23(uVar5);
+  __restgprlr_23();
   return;
 }
 
 
-// 823FFC08  std::_Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 823FFC08  _Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::
+     _Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>
+               (XAssetHeader *param_1,XAssetHeader *param_2,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_3,XAssetHeader *param_4)
 
 {
   ulonglong uVar1;
@@ -5162,71 +5493,80 @@ void std___Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,X
   ulonglong uVar3;
   char cVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  longlong lVar6;
+  code *pcVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   undefined4 local_50 [20];
   
-  uVar3 = __savegprlr_25();
-  if (((uVar3 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar7 = uVar3 + 4, uVar6 = uVar3, (uVar7 & 0xffffffff) != (param_2 & 0xffffffff))) {
+  lVar6 = (longlong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  uVar3 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
+  if (((uVar3 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
+     (uVar10 = uVar3 + 4, uVar9 = uVar3, (uVar10 & 0xffffffff) != (uVar5 & 0xffffffff))) {
     do {
-      local_50[0] = *(undefined4 *)uVar7;
-      cVar4 = (*param_3)(local_50,uVar3);
+      local_50[0] = *(undefined4 *)uVar10;
+      pcVar7 = (code *)lVar6;
+      cVar4 = (*pcVar7)(local_50,uVar3);
       if (cVar4 == '\0') {
-        cVar4 = (*param_3)(local_50,uVar6);
-        uVar2 = uVar6;
-        uVar5 = uVar7;
+        cVar4 = (*pcVar7)(local_50,uVar9);
+        uVar2 = uVar9;
+        uVar8 = uVar10;
         while (uVar1 = uVar2, cVar4 != '\0') {
-          *(undefined4 *)uVar5 = *(undefined4 *)uVar1;
-          cVar4 = (*param_3)(local_50,uVar1 - 4);
+          *(undefined4 *)uVar8 = *(undefined4 *)uVar1;
+          cVar4 = (*pcVar7)(local_50,uVar1 - 4);
           uVar2 = uVar1 - 4;
-          uVar5 = uVar1;
+          uVar8 = uVar1;
         }
-        *(undefined4 *)uVar5 = local_50[0];
+        *(undefined4 *)uVar8 = local_50[0];
       }
       else {
-        uVar5 = uVar7;
-        if ((uVar3 & 0xffffffff) != (uVar7 & 0xffffffff)) {
+        uVar8 = uVar10;
+        if ((uVar3 & 0xffffffff) != (uVar10 & 0xffffffff)) {
           do {
-            uVar5 = uVar5 - 4;
-            ((undefined4 *)uVar5)[1] = *(undefined4 *)uVar5;
-          } while ((uVar5 & 0xffffffff) != (uVar3 & 0xffffffff));
+            uVar8 = uVar8 - 4;
+            ((undefined4 *)uVar8)[1] = *(undefined4 *)uVar8;
+          } while ((uVar8 & 0xffffffff) != (uVar3 & 0xffffffff));
         }
         *(undefined4 *)uVar3 = local_50[0];
       }
-      uVar7 = uVar7 + 4;
-      uVar6 = uVar6 + 4;
-    } while ((uVar7 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar10 = uVar10 + 4;
+      uVar9 = uVar9 + 4;
+    } while ((uVar10 & 0xffffffff) != (uVar5 & 0xffffffff));
   }
   __restgprlr_25();
   return;
 }
 
 
-// 823FF970  std::_Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 823FF970  _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,undefined2 *param_2,undefined2 *param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,ushort *param_2,ushort *param_3,_func___cdecl_int_uint_uint *param_4
+               )
 
 {
-  undefined2 uVar1;
-  undefined2 *puVar2;
+  ushort uVar1;
+  ushort *puVar2;
   int iVar3;
   
-  puVar2 = (undefined2 *)__savegprlr_28();
-  iVar3 = (*param_4)(*param_2,*puVar2);
+  puVar2 = (ushort *)__savegprlr_28(param_1);
+  iVar3 = (*param_4)((uint)*param_2,(uint)*puVar2);
   if (iVar3 != 0) {
     uVar1 = *param_2;
     *param_2 = *puVar2;
     *puVar2 = uVar1;
   }
-  iVar3 = (*param_4)(*param_3,*param_2);
+  iVar3 = (*param_4)((uint)*param_3,(uint)*param_2);
   if (iVar3 != 0) {
     uVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = uVar1;
   }
-  iVar3 = (*param_4)(*param_2,*puVar2);
+  iVar3 = (*param_4)((uint)*param_2,(uint)*puVar2);
   if (iVar3 != 0) {
     uVar1 = *param_2;
     *param_2 = *puVar2;
@@ -5237,383 +5577,426 @@ void std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
 }
 
 
-// 823FFA10  std::_Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 823FFA10  _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::_Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,XAssetHeader *param_2,XAssetHeader *param_3,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_4)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  char cVar3;
-  undefined4 *puVar4;
+  XAssetHeader XVar1;
+  XAssetHeader *pXVar2;
+  bool bVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  cVar3 = (*param_4)(param_2,puVar2);
-  puVar4 = (undefined4 *)param_2;
-  if (cVar3 != '\0') {
-    uVar1 = *puVar4;
-    *puVar4 = *puVar2;
-    *puVar2 = uVar1;
+  pXVar2 = (XAssetHeader *)__savegprlr_28(param_1);
+  bVar3 = (*param_4)(param_2,pXVar2);
+  if (bVar3) {
+    XVar1 = *param_2;
+    *param_2 = *pXVar2;
+    *pXVar2 = XVar1;
   }
-  cVar3 = (*param_4)(param_3,param_2);
-  if (cVar3 != '\0') {
-    uVar1 = *(undefined4 *)param_3;
-    *(undefined4 *)param_3 = *puVar4;
-    *puVar4 = uVar1;
+  bVar3 = (*param_4)(param_3,param_2);
+  if (bVar3) {
+    XVar1 = *param_3;
+    *param_3 = *param_2;
+    *param_2 = XVar1;
   }
-  cVar3 = (*param_4)(param_2,puVar2);
-  if (cVar3 != '\0') {
-    uVar1 = *puVar4;
-    *puVar4 = *puVar2;
-    *puVar2 = uVar1;
+  bVar3 = (*param_4)(param_2,pXVar2);
+  if (bVar3) {
+    XVar1 = *param_2;
+    *param_2 = *pXVar2;
+    *pXVar2 = XVar1;
   }
   __restgprlr_28();
   return;
 }
 
 
-// 823FFAB8  std::_Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 823FFAB8  _Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,ushort *param_2,ushort *param_3,_func___cdecl_int_uint_uint *param_4
+               )
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  ushort *puVar3;
   uint uVar5;
   ulonglong uVar4;
-  longlong lVar6;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 1;
+  puVar3 = (ushort *)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)puVar3 >> 1;
   if (0x28 < iVar1) {
     uVar5 = iVar1 + 1;
     uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0x7fffffff;
-    uVar4 = uVar4 & 0x3fffffff;
-    lVar6 = uVar2 * 2 + lVar3;
-    std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (lVar3,lVar6,uVar4 * 4 + lVar3);
-    std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (param_2 + uVar2 * -2,param_2,uVar2 * 2 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -2;
-    std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (param_3 + uVar4 * -4,lVar3,param_3,param_4);
-    std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (lVar6,param_2,lVar3,param_4);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 2);
+    iVar1 = (int)((uVar4 & 0x7fffffff) << 1);
+    _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              (puVar3,(ushort *)(iVar1 + (int)puVar3),(ushort *)(iVar2 + (int)puVar3),param_4);
+    _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((ushort *)((int)param_2 - iVar1),param_2,(ushort *)(iVar1 + (int)param_2),param_4);
+    _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((ushort *)((int)param_3 - iVar2),(ushort *)((int)param_3 - iVar1),param_3,param_4);
+    _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((ushort *)(iVar1 + (int)puVar3),param_2,(ushort *)((int)param_3 - iVar1),param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>(lVar3,param_2,param_3);
+  _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>(puVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
 
 
-// 823FFB60  std::_Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 823FFB60  _Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::_Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,XAssetHeader *param_2,XAssetHeader *param_3,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  XAssetHeader *pXVar3;
   uint uVar5;
   ulonglong uVar4;
-  longlong lVar6;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  pXVar3 = (XAssetHeader *)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)pXVar3 >> 2;
   if (0x28 < iVar1) {
     uVar5 = iVar1 + 1;
     uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0x3fffffff;
-    uVar4 = uVar4 & 0x1fffffff;
-    lVar6 = uVar2 * 4 + lVar3;
-    std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-              (lVar3,lVar6,uVar4 * 8 + lVar3);
-    std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -4;
-    std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-              (param_3 + uVar4 * -8,lVar3,param_3,param_4);
-    std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-              (lVar6,param_2,lVar3,param_4);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+              (pXVar3,(XAssetHeader *)(iVar1 + (int)pXVar3),(XAssetHeader *)(iVar2 + (int)pXVar3),
+               param_4);
+    _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+              ((XAssetHeader *)((int)param_2 - iVar1),param_2,(XAssetHeader *)(iVar1 + (int)param_2)
+               ,param_4);
+    _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+              ((XAssetHeader *)((int)param_3 - iVar2),(XAssetHeader *)((int)param_3 - iVar1),param_3
+               ,param_4);
+    _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+              ((XAssetHeader *)(iVar1 + (int)pXVar3),param_2,(XAssetHeader *)((int)param_3 - iVar1),
+               param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-            (lVar3,param_2,param_3);
+  _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+            (pXVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
 
 
-// 823FFCF8  std::_Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 823FFCF8  _Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+pair<unsigned_short_*,unsigned_short_*>
+std::_Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+          (ushort *param_1,ushort *param_2,_func___cdecl_int_uint_uint *param_3)
 
 {
   bool bVar1;
   undefined2 uVar2;
   uint uVar3;
-  undefined4 *puVar4;
-  int iVar5;
+  undefined4 *puVar5;
+  pair<unsigned_short_*,unsigned_short_*> pVar4;
   ulonglong uVar6;
-  undefined2 *puVar7;
-  ulonglong uVar8;
+  ulonglong uVar7;
+  _func___cdecl_int_uint_uint *in_r6;
+  int iVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
+  undefined2 *puVar10;
   ulonglong uVar11;
-  undefined2 *puVar12;
-  undefined2 *puVar13;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  undefined2 *puVar15;
+  undefined2 *puVar16;
   
-  puVar4 = (undefined4 *)__savegprlr_23();
-  iVar5 = (int)param_3 - (int)param_2;
-  uVar3 = iVar5 >> 1;
-  uVar11 = ((longlong)(iVar5 >> 2) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x7fffffff) *
-           2 + param_2;
-  std___Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-            (param_2,uVar11,param_3 - 2);
-  uVar6 = uVar11 + 2;
-  if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  puVar5 = (undefined4 *)__savegprlr_23(param_1);
+  iVar8 = (int)uVar7 - (int)(ushort *)uVar6;
+  uVar3 = iVar8 >> 1;
+  uVar14 = ((longlong)(iVar8 >> 2) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x7fffffff) *
+           2 + uVar6;
+  _Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+            ((ushort *)uVar6,(ushort *)uVar14,(ushort *)((int)uVar7 + -2),in_r6);
+  uVar9 = uVar14 + 2;
+  if ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff)) {
     do {
-      puVar12 = (undefined2 *)uVar11;
-      uVar9 = uVar11 - 2;
-      iVar5 = (*param_4)(puVar12[-1],*puVar12);
-      if ((iVar5 != 0) || (iVar5 = (*param_4)(*puVar12,*(undefined2 *)uVar9), iVar5 != 0)) break;
-      uVar11 = uVar9;
-    } while ((param_2 & 0xffffffff) < (uVar9 & 0xffffffff));
+      puVar15 = (undefined2 *)uVar14;
+      uVar12 = uVar14 - 2;
+      iVar8 = (*in_r6)((uint)puVar15[-1],(uint)*puVar15);
+      if ((iVar8 != 0) || (iVar8 = (*in_r6)((uint)*puVar15,(uint)*(undefined2 *)uVar12), iVar8 != 0)
+         ) break;
+      uVar14 = uVar12;
+    } while ((uVar6 & 0xffffffff) < (uVar12 & 0xffffffff));
   }
-  uVar8 = uVar6;
-  uVar9 = uVar11;
-  if ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar11 = uVar9;
+  uVar12 = uVar14;
+  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
     do {
-      iVar5 = (*param_4)(*(undefined2 *)uVar6,*(undefined2 *)uVar11);
-      uVar8 = uVar6;
-      if ((iVar5 != 0) ||
-         (iVar5 = (*param_4)(*(undefined2 *)uVar11,*(undefined2 *)uVar6), iVar5 != 0)) break;
-      uVar6 = uVar6 + 2;
-      uVar8 = uVar6;
-    } while ((uVar6 & 0xffffffff) < (param_3 & 0xffffffff));
+      iVar8 = (*in_r6)((uint)*(undefined2 *)uVar9,(uint)*(undefined2 *)uVar14);
+      uVar11 = uVar9;
+      if ((iVar8 != 0) ||
+         (iVar8 = (*in_r6)((uint)*(undefined2 *)uVar14,(uint)*(undefined2 *)uVar9), iVar8 != 0))
+      break;
+      uVar9 = uVar9 + 2;
+      uVar11 = uVar9;
+    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
   do {
-    uVar10 = uVar6;
-    if ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar13 = uVar9;
+    if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
       do {
-        puVar12 = (undefined2 *)uVar8;
-        iVar5 = (*param_4)(*(undefined2 *)uVar9,*puVar12);
-        uVar6 = uVar10;
-        if (iVar5 == 0) {
-          iVar5 = (*param_4)(*puVar12,*(undefined2 *)uVar9);
-          if (iVar5 != 0) break;
-          uVar6 = uVar10 + 2;
-          uVar2 = *(undefined2 *)uVar10;
-          *(undefined2 *)uVar10 = *puVar12;
-          *puVar12 = uVar2;
+        puVar15 = (undefined2 *)uVar11;
+        iVar8 = (*in_r6)((uint)*(undefined2 *)uVar12,(uint)*puVar15);
+        uVar9 = uVar13;
+        if (iVar8 == 0) {
+          iVar8 = (*in_r6)((uint)*puVar15,(uint)*(undefined2 *)uVar12);
+          if (iVar8 != 0) break;
+          uVar9 = uVar13 + 2;
+          uVar2 = *(undefined2 *)uVar13;
+          *(undefined2 *)uVar13 = *puVar15;
+          *puVar15 = uVar2;
         }
-        uVar8 = uVar8 + 2;
-        uVar10 = uVar6;
-      } while ((uVar8 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar11 = uVar11 + 2;
+        uVar13 = uVar9;
+      } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
     }
-    bVar1 = (uVar11 & 0xffffffff) == (param_2 & 0xffffffff);
-    if ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+    bVar1 = (uVar14 & 0xffffffff) == (uVar6 & 0xffffffff);
+    if ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff)) {
       do {
-        uVar10 = uVar11 - 2;
-        iVar5 = (*param_4)(*(undefined2 *)((int)uVar11 + -2),*(undefined2 *)uVar9);
-        puVar12 = (undefined2 *)uVar10;
-        if (iVar5 == 0) {
-          iVar5 = (*param_4)(*(undefined2 *)uVar9,*puVar12);
-          if (iVar5 != 0) break;
-          uVar9 = uVar9 - 2;
-          uVar2 = *(undefined2 *)uVar9;
-          *(undefined2 *)uVar9 = *puVar12;
-          *puVar12 = uVar2;
+        uVar13 = uVar14 - 2;
+        iVar8 = (*in_r6)((uint)*(undefined2 *)((int)uVar14 + -2),(uint)*(undefined2 *)uVar12);
+        puVar15 = (undefined2 *)uVar13;
+        if (iVar8 == 0) {
+          iVar8 = (*in_r6)((uint)*(undefined2 *)uVar12,(uint)*puVar15);
+          if (iVar8 != 0) break;
+          uVar12 = uVar12 - 2;
+          uVar2 = *(undefined2 *)uVar12;
+          *(undefined2 *)uVar12 = *puVar15;
+          *puVar15 = uVar2;
         }
-        uVar11 = uVar10;
-      } while ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff));
-      bVar1 = (uVar11 & 0xffffffff) == (param_2 & 0xffffffff);
+        uVar14 = uVar13;
+      } while ((uVar6 & 0xffffffff) < (uVar13 & 0xffffffff));
+      bVar1 = (uVar14 & 0xffffffff) == (uVar6 & 0xffffffff);
     }
-    puVar12 = (undefined2 *)uVar8;
+    puVar15 = (undefined2 *)uVar11;
     if (bVar1) {
-      puVar7 = (undefined2 *)uVar6;
-      puVar13 = (undefined2 *)uVar9;
-      if ((uVar8 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar4 = puVar13;
-        puVar4[1] = puVar7;
-        __restgprlr_23(puVar4);
-        return;
+      puVar10 = (undefined2 *)uVar9;
+      puVar16 = (undefined2 *)uVar12;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        *puVar5 = puVar16;
+        puVar5[1] = puVar10;
+        pVar4 = (pair<unsigned_short_*,unsigned_short_*>)__restgprlr_23(puVar5);
+        return pVar4;
       }
-      if ((uVar6 & 0xffffffff) != (uVar8 & 0xffffffff)) {
-        uVar2 = *puVar13;
-        *puVar13 = *puVar7;
-        *puVar7 = uVar2;
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar2 = *puVar16;
+        *puVar16 = *puVar10;
+        *puVar10 = uVar2;
       }
-      uVar6 = uVar6 + 2;
-      uVar2 = *puVar13;
-      *puVar13 = *puVar12;
-      *puVar12 = uVar2;
-      uVar8 = uVar8 + 2;
       uVar9 = uVar9 + 2;
+      uVar2 = *puVar16;
+      *puVar16 = *puVar15;
+      *puVar15 = uVar2;
+      uVar11 = uVar11 + 2;
+      uVar12 = uVar12 + 2;
     }
     else {
-      uVar11 = uVar11 - 2;
-      puVar7 = (undefined2 *)uVar11;
-      if ((uVar8 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar9 = uVar9 - 2;
-        puVar12 = (undefined2 *)uVar9;
-        if ((uVar11 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-          uVar2 = *puVar7;
-          *puVar7 = *puVar12;
-          *puVar12 = uVar2;
+      uVar14 = uVar14 - 2;
+      puVar10 = (undefined2 *)uVar14;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        uVar12 = uVar12 - 2;
+        puVar15 = (undefined2 *)uVar12;
+        if ((uVar14 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+          uVar2 = *puVar10;
+          *puVar10 = *puVar15;
+          *puVar15 = uVar2;
         }
-        uVar6 = uVar6 - 2;
-        uVar2 = *puVar12;
-        *puVar12 = *(undefined2 *)uVar6;
-        *(undefined2 *)uVar6 = uVar2;
+        uVar9 = uVar9 - 2;
+        uVar2 = *puVar15;
+        *puVar15 = *(undefined2 *)uVar9;
+        *(undefined2 *)uVar9 = uVar2;
       }
       else {
-        uVar2 = *puVar12;
-        *puVar12 = *puVar7;
-        *puVar7 = uVar2;
-        uVar8 = uVar8 + 2;
+        uVar2 = *puVar15;
+        *puVar15 = *puVar10;
+        *puVar10 = uVar2;
+        uVar11 = uVar11 + 2;
       }
     }
   } while( true );
 }
 
 
-// 823FFF48  std::_Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 823FFF48  _Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+pair<XAssetHeader_*,XAssetHeader_*>
+std::_Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+          (XAssetHeader *param_1,XAssetHeader *param_2,
+          _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_3)
 
 {
-  bool bVar1;
+  XAssetHeader XVar1;
   undefined4 uVar2;
   uint uVar3;
-  undefined4 *puVar4;
-  char cVar5;
-  int iVar6;
-  ulonglong uVar7;
-  undefined4 *puVar8;
+  XAssetHeader *pXVar4;
+  undefined4 *puVar6;
+  bool bVar7;
+  pair<XAssetHeader_*,XAssetHeader_*> pVar5;
+  ulonglong uVar8;
   ulonglong uVar9;
-  undefined4 *puVar10;
+  _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *in_r6;
+  int iVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  undefined4 *puVar14;
+  undefined4 *puVar13;
+  ulonglong uVar14;
+  undefined4 *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  undefined4 *puVar18;
   
-  puVar4 = (undefined4 *)__savegprlr_23();
-  iVar6 = (int)param_3 - (int)param_2;
-  uVar3 = iVar6 >> 2;
-  uVar13 = ((longlong)(iVar6 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff) *
-           4 + param_2;
-  std___Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-            (param_2,uVar13,param_3 - 4);
-  uVar7 = uVar13 + 4;
-  if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  puVar6 = (undefined4 *)__savegprlr_23(param_1);
+  iVar10 = (int)uVar9 - (int)(XAssetHeader *)uVar8;
+  uVar3 = iVar10 >> 2;
+  uVar17 = ((longlong)(iVar10 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff)
+           * 4 + uVar8;
+  _Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+            ((XAssetHeader *)uVar8,(XAssetHeader *)uVar17,(XAssetHeader *)((int)uVar9 + -4),in_r6);
+  uVar11 = uVar17 + 4;
+  if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
     do {
-      uVar11 = uVar13 - 4;
-      cVar5 = (*param_4)(uVar11,uVar13);
-      if ((cVar5 != '\0') || (cVar5 = (*param_4)(uVar13,uVar11), cVar5 != '\0')) break;
-      uVar13 = uVar11;
-    } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
+      uVar16 = uVar17 - 4;
+      bVar7 = (*in_r6)((XAssetHeader *)uVar16,(XAssetHeader *)uVar17);
+      if ((bVar7) || (bVar7 = (*in_r6)((XAssetHeader *)uVar17,(XAssetHeader *)uVar16), bVar7))
+      break;
+      uVar17 = uVar16;
+    } while ((uVar8 & 0xffffffff) < (uVar16 & 0xffffffff));
   }
-  uVar9 = uVar7;
-  uVar11 = uVar13;
-  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar14 = uVar11;
+  uVar16 = uVar17;
+  if ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff)) {
     do {
-      cVar5 = (*param_4)(uVar7,uVar13);
-      uVar9 = uVar7;
-      if ((cVar5 != '\0') || (cVar5 = (*param_4)(uVar13,uVar7), cVar5 != '\0')) break;
-      uVar7 = uVar7 + 4;
-      uVar9 = uVar7;
-    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar7 = (*in_r6)((XAssetHeader *)uVar11,(XAssetHeader *)uVar17);
+      uVar14 = uVar11;
+      if ((bVar7) || (bVar7 = (*in_r6)((XAssetHeader *)uVar17,(XAssetHeader *)uVar11), bVar7))
+      break;
+      uVar11 = uVar11 + 4;
+      uVar14 = uVar11;
+    } while ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff));
   }
   do {
-    uVar12 = uVar7;
-    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar12 = uVar11;
+    if ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff)) {
       do {
-        cVar5 = (*param_4)(uVar11,uVar9);
-        uVar7 = uVar12;
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(uVar9,uVar11);
-          if (cVar5 != '\0') break;
-          uVar7 = uVar12 + 4;
-          uVar2 = *(undefined4 *)uVar12;
-          *(undefined4 *)uVar12 = *(undefined4 *)uVar9;
-          *(undefined4 *)uVar9 = uVar2;
+        pXVar4 = (XAssetHeader *)uVar14;
+        bVar7 = (*in_r6)((XAssetHeader *)uVar16,pXVar4);
+        uVar11 = uVar12;
+        if (!bVar7) {
+          bVar7 = (*in_r6)(pXVar4,(XAssetHeader *)uVar16);
+          if (bVar7) break;
+          uVar11 = uVar12 + 4;
+          XVar1 = *(XAssetHeader *)uVar12;
+          *(XAssetHeader *)uVar12 = *pXVar4;
+          *pXVar4 = XVar1;
         }
-        uVar9 = uVar9 + 4;
-        uVar12 = uVar7;
-      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar14 = uVar14 + 4;
+        uVar12 = uVar11;
+      } while ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff));
     }
-    bVar1 = (uVar13 & 0xffffffff) == (param_2 & 0xffffffff);
-    uVar12 = uVar13;
-    if ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff)) {
+    bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
+    uVar12 = uVar17;
+    if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
       do {
+        pXVar4 = (XAssetHeader *)(uVar12 - 4);
+        bVar7 = (*in_r6)(pXVar4,(XAssetHeader *)uVar16);
+        if (!bVar7) {
+          bVar7 = (*in_r6)((XAssetHeader *)uVar16,pXVar4);
+          if (bVar7) break;
+          uVar16 = uVar16 - 4;
+          XVar1 = *(XAssetHeader *)uVar16;
+          *(XAssetHeader *)uVar16 = *pXVar4;
+          *pXVar4 = XVar1;
+        }
+        uVar17 = uVar17 - 4;
         uVar12 = uVar12 - 4;
-        cVar5 = (*param_4)(uVar12,uVar11);
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(uVar11,uVar12);
-          if (cVar5 != '\0') break;
-          uVar11 = uVar11 - 4;
-          uVar2 = *(undefined4 *)uVar11;
-          *(undefined4 *)uVar11 = *(undefined4 *)uVar12;
-          *(undefined4 *)uVar12 = uVar2;
-        }
-        uVar13 = uVar13 - 4;
-      } while ((param_2 & 0xffffffff) < (uVar13 & 0xffffffff));
-      bVar1 = (uVar13 & 0xffffffff) == (param_2 & 0xffffffff);
+      } while ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff));
+      bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
     }
-    puVar10 = (undefined4 *)uVar9;
-    if (bVar1) {
-      puVar8 = (undefined4 *)uVar7;
-      puVar14 = (undefined4 *)uVar11;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar4 = puVar14;
-        puVar4[1] = puVar8;
-        __restgprlr_23(puVar4);
-        return;
+    puVar15 = (undefined4 *)uVar14;
+    if (bVar7) {
+      puVar13 = (undefined4 *)uVar11;
+      puVar18 = (undefined4 *)uVar16;
+      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
+        *puVar6 = puVar18;
+        puVar6[1] = puVar13;
+        pVar5 = (pair<XAssetHeader_*,XAssetHeader_*>)__restgprlr_23(puVar6);
+        return pVar5;
       }
-      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-        uVar2 = *puVar14;
-        *puVar14 = *puVar8;
-        *puVar8 = uVar2;
+      if ((uVar11 & 0xffffffff) != (uVar14 & 0xffffffff)) {
+        uVar2 = *puVar18;
+        *puVar18 = *puVar13;
+        *puVar13 = uVar2;
       }
-      uVar7 = uVar7 + 4;
-      uVar2 = *puVar14;
-      *puVar14 = *puVar10;
-      *puVar10 = uVar2;
-      uVar9 = uVar9 + 4;
       uVar11 = uVar11 + 4;
+      uVar2 = *puVar18;
+      *puVar18 = *puVar15;
+      *puVar15 = uVar2;
+      uVar14 = uVar14 + 4;
+      uVar16 = uVar16 + 4;
     }
     else {
-      uVar13 = uVar13 - 4;
-      puVar8 = (undefined4 *)uVar13;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar11 = uVar11 - 4;
-        puVar10 = (undefined4 *)uVar11;
-        if ((uVar13 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-          uVar2 = *puVar8;
-          *puVar8 = *puVar10;
-          *puVar10 = uVar2;
+      uVar17 = uVar17 - 4;
+      puVar13 = (undefined4 *)uVar17;
+      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
+        uVar16 = uVar16 - 4;
+        puVar15 = (undefined4 *)uVar16;
+        if ((uVar17 & 0xffffffff) != (uVar16 & 0xffffffff)) {
+          uVar2 = *puVar13;
+          *puVar13 = *puVar15;
+          *puVar15 = uVar2;
         }
-        uVar7 = uVar7 - 4;
-        uVar2 = *puVar10;
-        *puVar10 = *(undefined4 *)uVar7;
-        *(undefined4 *)uVar7 = uVar2;
+        uVar11 = uVar11 - 4;
+        uVar2 = *puVar15;
+        *puVar15 = *(undefined4 *)uVar11;
+        *(undefined4 *)uVar11 = uVar2;
       }
       else {
-        uVar2 = *puVar10;
-        *puVar10 = *puVar8;
-        *puVar8 = uVar2;
-        uVar9 = uVar9 + 4;
+        uVar2 = *puVar15;
+        *puVar15 = *puVar13;
+        *puVar13 = uVar2;
+        uVar14 = uVar14 + 4;
       }
     }
   } while( true );
@@ -5622,39 +6005,48 @@ void std___Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const
 
 // 823FC758  DB_SetHighPriorityAssets  (database/db_streaming.cpp:3720)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_SetHighPriorityAssets(void)
 
 {
-  if (DAT_832ee018 == 0) {
+  if (g_stream.cumulativeTabulation == 0) {
     return;
   }
-  DAT_832ee348 = 1;
+  g_streamHighPriorityAssets = 1;
   return;
 }
 
 
 // 823FF078  DB_LoadAlwaysLoadedAssets  (database/db_streaming.cpp:3727)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_LoadAlwaysLoadedAssets(void)
 
 {
-  longlong lVar1;
+  undefined1 *puVar1;
+  int iVar2;
   
-  lVar1 = -0x69f0;
+  iVar2 = -0x69f0;
   _RtlCheckStack12();
-  lVar1 = ZEXT48(&stack0x00000000) + lVar1;
-  *(BADSPACEBASE **)(int)lVar1 = register0x0000000c;
+  puVar1 = &stack0x00000000 + iVar2;
+  *(BADSPACEBASE **)puVar1 = register0x0000000c;
   DB_EnterStreamingTabulate();
-  memset(&DAT_83299e80,0,0xa60);
-  memset(&DAT_83282880,0,0xc00);
-  memset(&DAT_832ee380,0,0x114);
-  memset(&DAT_83283480,0,0x300);
-  memset(&DAT_83306300,0,0xa60);
-  DB_SetAlwaysLoadedImagesGlobal(lVar1 + 0x50);
-  DB_SetAlwaysLoadedAssets3D(lVar1 + 0x50);
-  DB_SetMaterialsInuse(lVar1 + 0x50);
+  memset();
+  memset();
+  memset();
+  memset();
+  memset();
+  DB_SetAlwaysLoadedImagesGlobal((XAssetHeader *)(puVar1 + 0x50));
+  DB_SetAlwaysLoadedAssets3D((XAssetHeader *)(puVar1 + 0x50));
+  DB_SetMaterialsInuse((XAssetHeader *)(puVar1 + 0x50));
   DB_UpdateUsage();
-  DAT_832ee350 = 0;
+  g_streamTabulation = 0;
   DB_LeaveStreamingTabulate();
   return;
 }
@@ -5662,342 +6054,398 @@ void DB_LoadAlwaysLoadedAssets(void)
 
 // 823FC788  DB_EnterStreaming  (database/db_streaming.cpp:3745)
 
-void DB_EnterStreaming(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_EnterStreaming(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_29();
-  uVar1 = R_ReleaseDeviceOwnershipForStreaming();
+  iVar1 = R_ReleaseDeviceOwnershipForStreaming();
   do {
     if (in_RESERVE != '\0') {
-      DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 + 1,0,0xffffffff832ee080);
+      g_streamAbort =
+           storeWordConditionalIndexed((ulonglong)(uint)g_streamAbort + 1,0,0xffffffff832ee080);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  Sys_EnterCriticalSection(0x23);
+  Sys_EnterCriticalSection(CRITSECT_STREAMING);
   do {
     if (in_RESERVE != '\0') {
-      DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 - 1,0,0xffffffff832ee080);
+      g_streamAbort =
+           storeWordConditionalIndexed((ulonglong)(uint)g_streamAbort - 1,0,0xffffffff832ee080);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (DAT_832ee358 != DAT_83231ee4) {
-    MyAssertHandler(0xffffffff8205cd18,0xeaa,0,0xffffffff8205d9c8,DAT_832ee358,DAT_83231ee4);
+  if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xeaa,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
   }
-  if (DAT_83231ee4 != DAT_83231edc) {
-    MyAssertHandler(0xffffffff8205cd18,0xeab,0,0xffffffff8205d990,DAT_83231ee4,DAT_83231edc);
+  if (g_streamPrefetchAlloc != DAT_83231edc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xeab,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
   }
-  if (DAT_83231edc != DAT_83231e84) {
-    MyAssertHandler(0xffffffff8205cd18,0xeac,0,0xffffffff8205d95c);
+  if (DAT_83231edc != g_streamPrefetchEnd2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xeac,0,"g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
   }
-  __restgprlr_29(uVar1);
-  return;
+  iVar1 = __restgprlr_29(iVar1);
+  return iVar1;
 }
 
 
 // 823FC890  DB_LeaveStreaming  (database/db_streaming.cpp:3771)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_LeaveStreaming(void)
 
 {
-  if (DAT_832ee358 != DAT_83231ee4) {
-    MyAssertHandler(0xffffffff8205cd18,0xec4,0,0xffffffff8205d9c8,DAT_832ee358,DAT_83231ee4);
+  if (g_streamPrefetchRead != g_streamPrefetchAlloc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xec4,0,"g_streamPrefetchRead == g_streamPrefetchAlloc\n\t%i, %i");
   }
-  if (DAT_83231ee4 != DAT_83231edc) {
-    MyAssertHandler(0xffffffff8205cd18,0xec5,0,0xffffffff8205d990,DAT_83231ee4,DAT_83231edc);
+  if (g_streamPrefetchAlloc != DAT_83231edc) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xec5,0,"g_streamPrefetchAlloc == g_streamPrefetchEnd\n\t%i, %i");
   }
-  if (DAT_83231edc != DAT_83231e84) {
-    MyAssertHandler(0xffffffff8205cd18,0xec6,0,0xffffffff8205d95c);
+  if (DAT_83231edc != g_streamPrefetchEnd2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xec6,0,"g_streamPrefetchEnd == g_streamPrefetchEnd2\n\t%i, %i");
   }
-  Sys_LeaveCriticalSection(0x23);
+  Sys_LeaveCriticalSection(CRITSECT_STREAMING);
   return;
 }
 
 
-// 824002A0  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 824002A0  _Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+               (ushort *param_1,ushort *param_2,int param_3,_func___cdecl_int_uint_uint *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  ushort *puVar1;
+  ushort *puVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int iVar7;
+  _func___cdecl_int_uint_uint *p_Var8;
+  ushort *local_40;
+  ushort *local_3c;
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  puVar2 = (ushort *)__savegprlr_26(param_1);
+  p_Var8 = (_func___cdecl_int_uint_uint *)uVar3;
+  iVar5 = (int)p_Var8 - (int)puVar2;
   do {
-    iVar2 = iVar2 >> 1;
-    if (iVar2 < 0x21) {
+    iVar5 = iVar5 >> 1;
+    if (iVar5 < 0x21) {
 LAB_82400358:
-      if (1 < iVar2) {
-        std___Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar5) {
+        _Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>
+                  (puVar2,(ushort *)p_Var8,param_4,(ushort *)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                    (uVar1,param_2,param_4,0,0);
+    p_Var8 = (_func___cdecl_int_uint_uint *)uVar3;
+    iVar7 = (int)uVar4;
+    if (iVar7 < 1) {
+      if (0x20 < iVar5) {
+        if (1 < iVar5) {
+          _Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                    (puVar2,(ushort *)p_Var8,param_4,(int *)0x0,(ushort *)0x0);
         }
-        std___Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                  (puVar2,(ushort *)p_Var8,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_82400358;
     }
-    std___Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffffe) < (int)((int)param_2 - local_3c & 0xfffffffe)) {
-      std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>
+              ((ushort *)&local_40,puVar2,p_Var8);
+    puVar1 = local_3c;
+    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
+    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
+    uVar6 = ZEXT48(local_40);
+    if ((int)((int)local_40 - (int)puVar2 & 0xfffffffeU) <
+        (int)((int)p_Var8 - (int)local_3c & 0xfffffffeU)) {
+      _Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                (puVar2,local_40,(int)uVar4,param_4);
+      uVar6 = uVar3;
+      puVar2 = puVar1;
     }
     else {
-      std___Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>
+                (local_3c,(ushort *)p_Var8,(int)uVar4,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    p_Var8 = (_func___cdecl_int_uint_uint *)uVar6;
+    iVar5 = (int)p_Var8 - (int)puVar2;
+    uVar3 = uVar6;
   } while( true );
 }
 
 
-// 824003C0  std::_Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 824003C0  _Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void std::_Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+               (XAssetHeader *param_1,XAssetHeader *param_2,int param_3,
+               _func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  XAssetHeader *pXVar1;
+  XAssetHeader *pXVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int iVar7;
+  XAssetHeader *pXVar8;
+  XAssetHeader local_40;
+  XAssetHeader *local_3c;
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  pXVar2 = (XAssetHeader *)__savegprlr_26(param_1);
+  pXVar8 = (XAssetHeader *)uVar3;
+  iVar5 = (int)pXVar8 - (int)pXVar2;
   do {
-    iVar2 = iVar2 >> 2;
-    if (iVar2 < 0x21) {
+    iVar5 = iVar5 >> 2;
+    if (iVar5 < 0x21) {
 LAB_82400478:
-      if (1 < iVar2) {
-        std___Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar5) {
+        _Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>
+                  (pXVar2,pXVar8,param_4,(XAssetHeader *)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                    (uVar1,param_2,param_4,0,0);
+    pXVar8 = (XAssetHeader *)uVar3;
+    iVar7 = (int)uVar4;
+    if (iVar7 < 1) {
+      if (0x20 < iVar5) {
+        if (1 < iVar5) {
+          _Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                    (pXVar2,pXVar8,param_4,(int *)0x0,(XAssetHeader *)0x0);
         }
-        std___Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                  (pXVar2,pXVar8,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_82400478;
     }
-    std___Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
-      std___Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+              (&local_40,pXVar2,(_func___cdecl_bool_XAssetHeader_ptr_XAssetHeader_ptr *)pXVar8);
+    pXVar1 = local_3c;
+    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
+    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
+    uVar6 = (ulonglong)(uint)local_40;
+    if ((int)((int)local_40.physPreset - (int)pXVar2 & 0xfffffffcU) <
+        (int)((int)pXVar8 - (int)local_3c & 0xfffffffcU)) {
+      _Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                (pXVar2,(XAssetHeader *)local_40.physPreset,(int)uVar4,param_4);
+      uVar6 = uVar3;
+      pXVar2 = pXVar1;
     }
     else {
-      std___Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>
+                (local_3c,pXVar8,(int)uVar4,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    pXVar8 = (XAssetHeader *)uVar6;
+    iVar5 = (int)pXVar8 - (int)pXVar2;
+    uVar3 = uVar6;
   } while( true );
 }
 
 
 // 823FC960  DB_StreamUsedMemory  (database/db_streaming.cpp:3815)
 
-longlong DB_StreamUsedMemory(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint DB_StreamUsedMemory(void)
 
 {
-  return (ulonglong)DAT_83231efc + (ulonglong)DAT_83231ef4;
+  return g_streamUsedMemory + g_streamAlwaysUsedMemory;
 }
 
 
 // 823FC978  DB_StreamTabulateAtOrigin  (database/db_streaming.cpp:3825)
 
-void DB_StreamTabulateAtOrigin(void)
+/* WARNING: Enum "DynEntityCollType": Some values do not have unique names */
+
+void DB_StreamTabulateAtOrigin(float *param_1,float param_2)
 
 {
   float fVar1;
-  byte bVar2;
-  ushort uVar3;
+  ushort uVar2;
+  XModel *pXVar3;
   uint uVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  uint uVar8;
+  FxGlassPiecePlace *pFVar7;
+  FxGlassPieceState *pFVar8;
+  DynEntityDef *pDVar9;
   float *pfVar10;
-  char cVar13;
-  ulonglong uVar9;
-  int iVar11;
-  int iVar12;
-  uint *puVar14;
-  uint uVar15;
-  int iVar16;
-  float *pfVar17;
-  uint uVar18;
+  bool bVar15;
+  uint uVar11;
+  DynEntityPose *pDVar12;
+  uint uVar13;
+  GfxBrushModel *pGVar14;
+  uint *puVar16;
+  int iVar17;
+  float *pfVar18;
+  uint uVar20;
   ulonglong uVar19;
   double extraout_f1;
-  double dVar20;
   double dVar21;
   double dVar22;
+  double dVar23;
   
-  pfVar10 = (float *)__savegprlr_15();
-  dVar21 = extraout_f1;
-  cVar13 = Sys_IsMainThread();
-  if (cVar13 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0xf09,0,0xffffffff82000f98,0xffffffff82010b48);
+  pfVar10 = (float *)__savegprlr_15((double)param_2,param_1);
+  dVar22 = extraout_f1;
+  bVar15 = Sys_IsMainThread();
+  if (!bVar15) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xf09,0,"%s");
   }
-  if (DAT_832ee024 != 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xf0a,0,0xffffffff82000f98,0xffffffff8205dcb0);
+  if (g_stream.updateLocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xf0a,0,"%s");
   }
-  uVar9 = DynEnt_GetEntityCount(0);
-  iVar11 = DynEnt_GetPoseList(0);
-  uVar19 = 0;
-  dVar22 = 256.0;
-  if ((uVar9 & 0xffffffff) != 0) {
-    iVar16 = 0;
-    pfVar17 = (float *)(iVar11 + 0x18);
+  uVar11 = DynEnt_GetEntityCount(DYNENT_COLL_CLIENT_FIRST);
+  pDVar12 = DynEnt_GetPoseList(DYNENT_COLL_CLIENT_FIRST);
+  uVar20 = 0;
+  dVar23 = 256.0;
+  if (uVar11 != 0) {
+    iVar17 = 0;
+    pfVar18 = (pDVar12->pose).origin + 2;
     do {
-      if ((ulonglong)DAT_835a2944 <= (uVar19 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8205cc50,0x3d,0,0xffffffff8205cca8,uVar19);
+      if (cm.dynEntCount[0] <= uVar20) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\../DynEntity/DynEntity_load_obj.h"
+                        ,0x3d,0,
+                        "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                       );
       }
-      iVar11 = *(int *)(iVar16 + DAT_835a2948 + 0x20);
-      dVar20 = (double)SQRT((*pfVar10 - pfVar17[-2]) * (*pfVar10 - pfVar17[-2]) +
-                            (pfVar10[2] - *pfVar17) * (pfVar10[2] - *pfVar17) +
-                            (pfVar10[1] - pfVar17[-1]) * (pfVar10[1] - pfVar17[-1]));
-      if (iVar11 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf16,0,0xffffffff82000f98,0xffffffff8205ce78);
+      pXVar3 = *(XModel **)((int)(cm.dynEntDefList[0]->mass).centerOfMass + iVar17 + -0x18);
+      dVar21 = (double)SQRT((*pfVar10 - pfVar18[-2]) * (*pfVar10 - pfVar18[-2]) +
+                            (pfVar10[2] - *pfVar18) * (pfVar10[2] - *pfVar18) +
+                            (pfVar10[1] - pfVar18[-1]) * (pfVar10[1] - pfVar18[-1]));
+      if (pXVar3 == (XModel *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf16,0,"%s");
       }
-      iVar12 = DB_GetXModelIndex(iVar11);
-      uVar19 = uVar19 + 1;
-      iVar16 = iVar16 + 0x60;
-      pfVar17 = pfVar17 + 8;
-      fVar1 = (float)((double)(float)((double)(float)(dVar20 - (double)*(float *)(iVar11 + 0xf4)) +
-                                     dVar22) * dVar21);
-      fVar5 = (float)(&DAT_8327db80)[iVar12];
-      if (fVar1 - (float)(&DAT_8327db80)[iVar12] < 0.0) {
+      uVar13 = DB_GetXModelIndex(pXVar3);
+      uVar20 = uVar20 + 1;
+      iVar17 = iVar17 + 0x60;
+      pfVar18 = pfVar18 + 8;
+      fVar1 = (float)((double)(float)((double)(float)(dVar21 - (double)pXVar3->radius) + dVar23) *
+                     dVar22);
+      fVar5 = g_stream.modelDist[uVar13];
+      if (fVar1 - g_stream.modelDist[uVar13] < 0.0) {
         fVar5 = fVar1;
       }
-      (&DAT_8327db80)[iVar12] = fVar5;
-    } while ((uVar19 & 0xffffffff) < (uVar9 & 0xffffffff));
+      g_stream.modelDist[uVar13] = fVar5;
+    } while (uVar20 < uVar11);
   }
-  uVar9 = DynEnt_GetEntityCount(1);
-  iVar11 = DynEnt_GetPoseList(1);
-  uVar19 = 0;
-  if ((uVar9 & 0xffffffff) != 0) {
-    iVar16 = 0;
-    pfVar17 = (float *)(iVar11 + 0x18);
+  uVar11 = DynEnt_GetEntityCount(DYNENT_COLL_CLIENT_BRUSH);
+  pDVar12 = DynEnt_GetPoseList(DYNENT_COLL_CLIENT_BRUSH);
+  uVar20 = 0;
+  if (uVar11 != 0) {
+    iVar17 = 0;
+    pfVar18 = (pDVar12->pose).origin + 2;
     do {
-      if ((ulonglong)DAT_835a2946 <= (uVar19 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8205cc50,0x3d,0,0xffffffff8205cca8,uVar19);
+      if (cm.dynEntCount[1] <= uVar20) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\../DynEntity/DynEntity_load_obj.h"
+                        ,0x3d,0,
+                        "dynEntId doesn\'t index cm.dynEntCount[DynEntGetClientCollType( drawType )]\n\t%i not in [0, %i)"
+                       );
       }
-      iVar11 = iVar16 + DAT_835a294c;
-      if (*(int *)(iVar11 + 0x20) != 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf22,0,0xffffffff82000f98,0xffffffff8205dc90);
+      pDVar9 = cm.dynEntDefList[1];
+      if (*(int *)((int)(cm.dynEntDefList[1]->mass).centerOfMass + iVar17 + -0x18) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf22,0,"%s");
       }
-      uVar3 = *(ushort *)(iVar11 + 0x24);
-      if (uVar3 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf25,0,0xffffffff82000f98,0xffffffff8205dca4);
+      uVar2 = *(ushort *)((int)(pDVar9->mass).centerOfMass + iVar17 + -0x14);
+      uVar13 = (uint)uVar2;
+      if (uVar13 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf25,0,"%s");
       }
-      iVar11 = R_GetBrushModel(uVar3);
-      if (*(short *)(iVar11 + 0x34) != 0) {
-        fVar1 = (float)((double)(float)((double)(SQRT((*pfVar10 - pfVar17[-2]) *
-                                                      (*pfVar10 - pfVar17[-2]) +
-                                                      (pfVar10[2] - *pfVar17) *
-                                                      (pfVar10[2] - *pfVar17) +
-                                                      (pfVar10[1] - pfVar17[-1]) *
-                                                      (pfVar10[1] - pfVar17[-1])) -
-                                                *(float *)(iVar11 + 0x30)) + dVar22) * dVar21);
-        fVar5 = (float)(&DAT_83279b80)[uVar3];
-        if (fVar1 - (float)(&DAT_83279b80)[uVar3] < 0.0) {
+      pGVar14 = R_GetBrushModel((uint)uVar2);
+      if (pGVar14->surfaceCount != 0) {
+        fVar1 = (float)((double)(float)((double)(SQRT((*pfVar10 - pfVar18[-2]) *
+                                                      (*pfVar10 - pfVar18[-2]) +
+                                                      (pfVar10[2] - *pfVar18) *
+                                                      (pfVar10[2] - *pfVar18) +
+                                                      (pfVar10[1] - pfVar18[-1]) *
+                                                      (pfVar10[1] - pfVar18[-1])) - pGVar14->radius)
+                                       + dVar23) * dVar22);
+        fVar5 = g_stream.bmodelDist[uVar13];
+        if (fVar1 - g_stream.bmodelDist[uVar13] < 0.0) {
           fVar5 = fVar1;
         }
-        (&DAT_83279b80)[uVar3] = fVar5;
+        g_stream.bmodelDist[uVar13] = fVar5;
       }
-      uVar19 = uVar19 + 1;
-      iVar16 = iVar16 + 0x60;
-      pfVar17 = pfVar17 + 8;
-    } while ((uVar19 & 0xffffffff) < (uVar9 & 0xffffffff));
+      uVar20 = uVar20 + 1;
+      iVar17 = iVar17 + 0x60;
+      pfVar18 = pfVar18 + 8;
+    } while (uVar20 < uVar11);
   }
-  iVar16 = DAT_8333cafc;
-  iVar11 = DAT_8333caf8;
-  uVar8 = DAT_8333cad4;
-  if ((DAT_8333cb29 != '\0') && (uVar15 = 0, puVar14 = DAT_8333cb08, DAT_8333cad4 != 0)) {
+  pFVar8 = fxWorld.glassSys.pieceStates;
+  pFVar7 = fxWorld.glassSys.piecePlaces;
+  uVar11 = fxWorld.glassSys.pieceWordCount;
+  if ((fxWorld.glassSys.initCount != '\0') &&
+     (uVar20 = 0, puVar16 = fxWorld.glassSys.isInUse, fxWorld.glassSys.pieceWordCount != 0)) {
     do {
-      uVar18 = *puVar14;
-      uVar9 = LZCOUNT(uVar18);
-      if (uVar9 < 0x20) {
+      uVar13 = *puVar16;
+      uVar19 = LZCOUNT(uVar13);
+      if (uVar19 < 0x20) {
         do {
-          if (0x20 < uVar9) {
-            MyAssertHandler(0xffffffff82003018,0x475,0,0xffffffff8205cbd0,uVar9,0x21);
+          if (0x20 < uVar19) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
+                            0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar4 = *(uint *)((int)&DAT_82992400 + (int)(uVar9 << 2));
-          if ((uVar4 & uVar18) == 0) {
-            MyAssertHandler(0xffffffff8205cd18,0xf42,0,0xffffffff82000f98,0xffffffff8205cd08);
+          uVar4 = *(uint *)(&g_bitShift + (int)(uVar19 << 2));
+          if ((uVar4 & uVar13) == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                            ,0xf42,0,"%s");
           }
-          iVar7 = (uVar15 * 0x20 + (int)uVar9) * 0x20;
-          iVar12 = iVar7 + iVar11;
-          uVar18 = uVar18 & ~uVar4;
-          uVar9 = LZCOUNT(uVar18);
-          fVar1 = pfVar10[1] - *(float *)(iVar12 + 0x14);
-          fVar5 = pfVar10[2] - *(float *)(iVar12 + 0x18);
-          fVar6 = *pfVar10 - *(float *)(iVar12 + 0x10);
-          bVar2 = *(byte *)(iVar7 + iVar16 + 0x10);
+          iVar17 = uVar20 * 0x20 + (int)uVar19;
+          uVar13 = uVar13 & ~uVar4;
+          uVar19 = LZCOUNT(uVar13);
+          fVar1 = pfVar10[1] - (&pFVar7->_s_0)[iVar17].frame.origin[1];
+          fVar5 = pfVar10[2] - (&pFVar7->_s_0)[iVar17].frame.origin[2];
+          fVar6 = *pfVar10 - (&pFVar7->_s_0)[iVar17].frame.origin[0];
           fVar1 = (float)((double)(float)((double)(SQRT(fVar6 * fVar6 +
                                                         fVar5 * fVar5 + fVar1 * fVar1) -
-                                                  *(float *)(iVar12 + 0x1c)) + dVar22) * dVar21);
-          fVar5 = (float)(&DAT_83282480)[bVar2];
-          if (fVar1 - (float)(&DAT_83282480)[bVar2] < 0.0) {
+                                                  (&pFVar7->_s_0)[iVar17].radius) + dVar23) * dVar22
+                         );
+          fVar5 = g_stream.bufferedGlassDist[pFVar8[iVar17].defIndex];
+          if (fVar1 - g_stream.bufferedGlassDist[pFVar8[iVar17].defIndex] < 0.0) {
             fVar5 = fVar1;
           }
-          (&DAT_83282480)[bVar2] = fVar5;
-        } while (uVar9 < 0x20);
+          g_stream.bufferedGlassDist[pFVar8[iVar17].defIndex] = fVar5;
+        } while (uVar19 < 0x20);
       }
-      uVar15 = uVar15 + 1;
-      puVar14 = puVar14 + 1;
-    } while (uVar15 < uVar8);
+      uVar20 = uVar20 + 1;
+      puVar16 = puVar16 + 1;
+    } while (uVar20 < uVar11);
   }
   __restgprlr_15();
   return;
@@ -6006,33 +6454,35 @@ void DB_StreamTabulateAtOrigin(void)
 
 // 823FCDC0  DB_StreamViewmodelDObj  (database/db_streaming.cpp:3923)
 
-void DB_StreamViewmodelDObj(void)
+int DB_StreamViewmodelDObj(DObj *param_1)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint uVar3;
-  uint uVar4;
+  longlong lVar3;
+  DObj *pDVar4;
+  bool bVar11;
   uint uVar5;
-  uint uVar6;
-  longlong lVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  char cVar16;
+  XModel *pXVar6;
+  Material **ppMVar7;
+  uint uVar8;
+  int iVar9;
+  uint uVar10;
   uint uVar12;
-  ulonglong uVar10;
-  undefined4 *puVar13;
-  int iVar14;
-  int iVar15;
-  ulonglong uVar11;
-  int iVar17;
-  ulonglong uVar18;
-  uint uVar19;
-  int iVar20;
-  undefined *puVar21;
-  uint uVar22;
-  double dVar23;
-  int local_130;
+  uint uVar13;
+  uint uVar14;
+  uint uVar15;
+  uint uVar16;
+  uint uVar17;
+  uint uVar18;
+  longlong lVar19;
+  ulonglong uVar20;
+  char *pcVar21;
+  int iVar22;
+  uint uVar23;
+  double dVar24;
+  DObj *pDStack00000014;
+  XSurface *local_130;
   uint local_12c;
   char *local_128;
   char *local_124;
@@ -6041,7 +6491,7 @@ void DB_StreamViewmodelDObj(void)
   char *local_118;
   uint local_114;
   uint local_110;
-  undefined *local_10c;
+  char *local_10c;
   uint local_108;
   longlong local_100;
   uint local_f0;
@@ -6057,199 +6507,213 @@ void DB_StreamViewmodelDObj(void)
   undefined4 local_c0;
   uint local_bc [47];
   
-  uVar9 = __savegprlr();
-  puVar21 = &DAT_82000f98;
-  local_10c = &DAT_82000f98;
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205cd18,0xf69,0,0xffffffff82000f98,0xffffffff820040b4);
+  uVar20 = (ulonglong)(int)param_1;
+  __savegprlr();
+  pDVar4 = (DObj *)uVar20;
+  pcVar21 = "%s";
+  local_10c = "%s";
+  pDStack00000014 = pDVar4;
+  if ((uVar20 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xf69,0,"%s");
   }
-  cVar16 = Sys_IsMainThread();
-  if (cVar16 == '\0') {
-    MyAssertHandler(0xffffffff8205cd18,0xf6a,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar11 = Sys_IsMainThread();
+  if (!bVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xf6a,0,"%s");
   }
-  bVar8 = false;
-  uVar19 = 0;
-  uVar12 = DObjGetNumModels(uVar9);
-  local_108 = uVar12;
-  if (0x20 < uVar12) {
-    MyAssertHandler(0xffffffff8205cd18,0xf6f,1,0xffffffff82000f98,0xffffffff8205dd64);
+  uVar18 = 0;
+  uVar17 = 0;
+  uVar5 = DObjGetNumModels(pDVar4);
+  local_108 = uVar5;
+  if (0x20 < uVar5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp",
+                    0xf6f,1,"%s");
   }
   local_d0 = 0;
   local_cc = 0;
-  uVar18 = 0;
   local_c8 = 0;
   local_c4 = 0;
   local_c0 = 0;
   local_12c = 0;
-  if (uVar12 != 0) {
-    dVar23 = 0.0;
+  if (uVar5 != 0) {
+    dVar24 = 0.0;
     local_118 = "%s\n\t(surfaceCount) = %i";
     local_11c = "(surfaceCount <= DOBJ_MAX_SURFS)";
     local_120 = "surfaceCount";
     local_124 = "surfaces";
     local_128 = "model";
-    uVar11 = uVar9;
-    bVar8 = false;
+    uVar18 = 0;
     do {
-      uVar10 = DObjGetModel(uVar11,uVar18);
-      if ((uVar10 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf7c,0,puVar21,local_128);
+      uVar5 = local_12c;
+      pXVar6 = DObjGetModel((DObj *)uVar20,local_12c);
+      if (pXVar6 == (XModel *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf7c,0,pcVar21);
       }
-      puVar13 = (undefined4 *)XModelGetSkins(uVar10,0);
-      iVar14 = DB_GetXModelIndex(uVar10);
-      iVar15 = XModelNumBones(uVar10);
-      uVar10 = XModelGetSurfaces(uVar10,&local_130,0);
-      if (local_130 == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf85,0,puVar21,local_124);
+      ppMVar7 = XModelGetSkins(pXVar6,0);
+      uVar8 = DB_GetXModelIndex(pXVar6);
+      iVar9 = XModelNumBones(pXVar6);
+      uVar10 = XModelGetSurfaces(pXVar6,&local_130,0);
+      lVar19 = (longlong)(int)uVar10;
+      if (local_130 == (XSurface *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf85,0,pcVar21);
       }
-      if ((uVar10 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff8205cd18,0xf86,0,puVar21,local_120);
+      if (uVar10 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf86,0,pcVar21);
       }
-      uVar12 = uVar19 & 0x1f;
-      uVar22 = 0x20 - uVar12;
-      DObjGetHidePartBits(uVar11,&local_f0);
-      if (0x40 < (uVar10 & 0xffffffff)) {
-        MyAssertHandler(0xffffffff8205cd18,0xf8e,0,local_118,local_11c,uVar10);
+      uVar2 = uVar17 & 0x1f;
+      uVar23 = 0x20 - uVar2;
+      DObjGetHidePartBits((DObj *)uVar20,&local_f0);
+      if (0x40 < uVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                        ,0xf8e,0,local_118);
       }
-      if ((uVar10 & 0xffffffff) != 0) {
-        lVar7 = (ulonglong)(uVar19 >> 5) << 2;
-        iVar20 = 0;
+      if (uVar10 != 0) {
+        lVar3 = (ulonglong)(uVar17 >> 5) << 2;
+        iVar22 = 0;
         do {
-          iVar17 = iVar20 + local_130;
-          local_bc[0] = *(uint *)(iVar17 + 0x68);
-          local_bc[1] = *(undefined4 *)(iVar17 + 0x6c);
-          local_bc[2] = *(undefined4 *)(iVar17 + 0x70);
-          local_bc[3] = *(undefined4 *)(iVar17 + 0x74);
-          local_bc[4] = *(undefined4 *)(iVar17 + 0x78);
-          local_bc[5] = *(undefined4 *)(iVar17 + 0x7c);
-          iVar17 = (int)lVar7;
-          if ((uVar19 & 0x1f) == 0) {
-            iVar17 = -iVar17;
-            uVar2 = *(uint *)((int)local_bc + iVar17);
-            uVar6 = *(uint *)((int)local_bc + iVar17 + 4);
-            uVar4 = *(uint *)((int)local_bc + iVar17 + 8);
-            uVar1 = *(uint *)((int)local_bc + iVar17 + 0xc);
-            uVar5 = *(uint *)((int)local_bc + iVar17 + 0x10);
-            uVar3 = *(uint *)((int)local_bc + iVar17 + 0x14);
+          local_bc[0] = *(uint *)((int)local_130->partBits + iVar22);
+          local_bc[1] = *(undefined4 *)((int)local_130->partBits + iVar22 + 4);
+          local_bc[2] = *(undefined4 *)((int)local_130->partBits + iVar22 + 8);
+          local_bc[3] = *(undefined4 *)((int)local_130->partBits + iVar22 + 0xc);
+          local_bc[4] = *(undefined4 *)((int)local_130->partBits + iVar22 + 0x10);
+          local_bc[5] = *(undefined4 *)((int)local_130->partBits + iVar22 + 0x14);
+          iVar1 = (int)lVar3;
+          if ((uVar17 & 0x1f) == 0) {
+            iVar1 = -iVar1;
+            uVar10 = *(uint *)((int)local_bc + iVar1);
+            uVar16 = *(uint *)((int)local_bc + iVar1 + 4);
+            uVar15 = *(uint *)((int)local_bc + iVar1 + 8);
+            uVar14 = *(uint *)((int)local_bc + iVar1 + 0xc);
+            uVar13 = *(uint *)((int)local_bc + iVar1 + 0x10);
+            uVar12 = *(uint *)((int)local_bc + iVar1 + 0x14);
           }
           else {
-            iVar17 = -iVar17;
-            uVar18 = (ulonglong)local_12c;
-            uVar1 = *(uint *)((int)local_bc + iVar17 + 8);
-            uVar2 = *(uint *)((int)local_bc + iVar17 + 4);
-            local_110 = *(uint *)((int)local_bc + iVar17 + 0xc);
-            uVar3 = *(uint *)((int)local_bc + iVar17 + 0x10);
-            local_114 = local_110 >> uVar12;
-            uVar6 = uVar2 >> uVar12 | *(uint *)((int)local_bc + iVar17) << (uVar22 & 0x3f);
-            local_110 = local_110 << (uVar22 & 0x3f);
-            uVar4 = uVar1 >> uVar12 | uVar2 << (uVar22 & 0x3f);
-            uVar2 = *(uint *)((int)local_bc + iVar17) >> uVar12;
-            uVar5 = uVar3 >> uVar12 | local_110;
-            uVar1 = local_114 | uVar1 << (uVar22 & 0x3f);
-            uVar3 = *(uint *)((int)local_bc + iVar17 + 0x14) >> uVar12 | uVar3 << (uVar22 & 0x3f);
-            local_100 = lVar7;
+            iVar1 = -iVar1;
+            uVar5 = *(uint *)((int)local_bc + iVar1 + 8);
+            uVar10 = *(uint *)((int)local_bc + iVar1 + 4);
+            local_110 = *(uint *)((int)local_bc + iVar1 + 0xc);
+            uVar12 = *(uint *)((int)local_bc + iVar1 + 0x10);
+            local_114 = local_110 >> uVar2;
+            uVar16 = uVar10 >> uVar2 | *(uint *)((int)local_bc + iVar1) << (uVar23 & 0x3f);
+            local_110 = local_110 << (uVar23 & 0x3f);
+            uVar15 = uVar5 >> uVar2 | uVar10 << (uVar23 & 0x3f);
+            uVar10 = *(uint *)((int)local_bc + iVar1) >> uVar2;
+            uVar13 = uVar12 >> uVar2 | local_110;
+            uVar14 = local_114 | uVar5 << (uVar23 & 0x3f);
+            uVar12 = *(uint *)((int)local_bc + iVar1 + 0x14) >> uVar2 | uVar12 << (uVar23 & 0x3f);
+            uVar5 = local_12c;
+            local_100 = lVar3;
           }
-          if ((((((local_dc & uVar3) == 0 && (local_e0 & uVar5) == 0) && (local_e4 & uVar1) == 0) &&
-               (local_e8 & uVar4) == 0) && (local_ec & uVar6) == 0) && (local_f0 & uVar2) == 0) {
-            uVar11 = DB_GetMaterialIndex(*puVar13);
-            if (0x165f < (uVar11 & 0xffffffff)) {
-              MyAssertHandler(0xffffffff8205cd18,0xfad,0,0xffffffff8205dcc8,uVar11,0x1660);
+          if ((((((local_dc & uVar12) == 0 && (local_e0 & uVar13) == 0) && (local_e4 & uVar14) == 0)
+               && (local_e8 & uVar15) == 0) && (local_ec & uVar16) == 0) && (local_f0 & uVar10) == 0
+             ) {
+            uVar10 = DB_GetMaterialIndex(*ppMVar7);
+            if (0x165f < uVar10) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming.cpp"
+                              ,0xfad,0,
+                              "materialIndex doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)"
+                             );
             }
-            if (*(int *)(&DAT_8326ed88 + iVar14 * 0xc) != 0) {
-              uVar2 = (uint)((uVar11 & 0xffffffff) >> 3) & 0x1ffffffc;
-              *(uint *)(&DAT_83288a80 + uVar2) =
-                   *(uint *)((int)&DAT_82992400 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c)) |
-                   *(uint *)(&DAT_83288a80 + uVar2);
-              *(float *)(&DAT_83288d80 + (int)((uVar11 & 0xffffffff) << 2)) = (float)dVar23;
+            if (g_stream.model[uVar8].field2_0x8.invLodOutDistAsInt != 0) {
+              uVar16 = uVar10 >> 3 & 0x1ffffffc;
+              *(uint *)((int)g_stream.materialTouch + uVar16) =
+                   *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4) |
+                   *(uint *)((int)g_stream.materialTouch + uVar16);
+              g_stream.baseMaterialPriority[uVar10] = (float)dVar24;
             }
-            uVar2 = *(uint *)((int)&DAT_84834080 + ((uint)uVar11 >> 3 & 0x1ffffffc));
-            uVar6 = *(uint *)((int)&DAT_82992400 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c));
-            *(float *)(&DAT_84587f00 + (int)((uVar11 & 0xffffffff) << 2)) = (float)dVar23;
-            bVar8 = (bool)((uVar2 & uVar6) != 0 | bVar8);
+            uVar16 = *(uint *)((int)g_materialStreamFailed + (uVar10 >> 3 & 0x1ffffffc));
+            uVar15 = *(uint *)(&g_bitShift + (uVar10 & 0x1f) * 4);
+            g_materialStreamInfo.worldPriority[uVar10] = (float)dVar24;
+            uVar18 = (uVar16 & uVar15) != 0 | uVar18;
           }
-          uVar10 = uVar10 - 1;
-          iVar20 = iVar20 + 0x80;
-          puVar13 = puVar13 + 1;
-        } while (uVar10 != 0);
-        uVar11 = uVar9 & 0xffffffff;
-        puVar21 = local_10c;
+          lVar19 = lVar19 + -1;
+          iVar22 = iVar22 + 0x80;
+          ppMVar7 = ppMVar7 + 1;
+        } while (lVar19 != 0);
+        uVar20 = ZEXT48(pDStack00000014);
+        pcVar21 = local_10c;
       }
-      uVar18 = uVar18 + 1;
-      uVar19 = iVar15 + uVar19;
-      local_12c = (uint)uVar18;
-    } while ((uVar18 & 0xffffffff) < (ulonglong)local_108);
+      local_12c = uVar5 + 1;
+      uVar17 = iVar9 + uVar17;
+    } while (local_12c < local_108);
   }
-  __restgprlr(!bVar8);
-  return;
+  uVar18 = (uint)LZCOUNT(uVar18) >> 5;
+  __restgprlr();
+  return uVar18;
 }
 
 
 // 823FD250  ShouldOverrideStreamingImage  (database/db_streaming.cpp:4033)
 
-undefined8 ShouldOverrideStreamingImage(uint param_1)
+bool ShouldOverrideStreamingImage(GfxImage *param_1,uint param_2)
 
 {
   int *piVar1;
   uint uVar2;
   
   uVar2 = 0;
-  piVar1 = &DAT_845f4400 + param_1;
+  piVar1 = g_stream2.priority + (int)param_1;
   while ((0x3fff < *piVar1 ||
-         ((*(uint *)((int)&DAT_845f3980 + (param_1 >> 3 & 0x1ffffffc)) &
-          (&DAT_82992400)[param_1 & 0x1f]) != 0))) {
+         ((*(uint *)((int)g_stream2.inuse + ((uint)param_1 >> 3 & 0x1ffffffc)) &
+          *(uint *)(&g_bitShift + ((uint)param_1 & 0x1f) * 4)) != 0))) {
     uVar2 = uVar2 + 1;
-    param_1 = param_1 + 0x14c0;
+    param_1 = (GfxImage *)((int)&param_1[0x2f].texture + 0x30);
     piVar1 = piVar1 + 0x14c0;
     if (3 < uVar2) {
-      return 0;
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 823FD2C0  DB_ShouldOverrideStreamingImage  (database/db_streaming.cpp:4049)
 
-undefined8 DB_ShouldOverrideStreamingImage(int param_1)
+bool DB_ShouldOverrideStreamingImage(GfxImage *param_1)
 
 {
-  char cVar2;
-  undefined8 uVar1;
-  undefined4 local_10 [4];
+  bool bVar1;
+  GfxImage **ppGVar2;
+  GfxImage *local_10 [4];
   
-  if (*(byte *)(param_1 + 0x3a) < 5) {
-    cVar2 = DB_GetGfxImageIndex_IfInPool(param_1,local_10);
-    if (cVar2 != '\0') {
-      uVar1 = ShouldOverrideStreamingImage(local_10[0]);
-      return uVar1;
+  if (param_1->category < 5) {
+    ppGVar2 = local_10;
+    bVar1 = DB_GetGfxImageIndex_IfInPool(param_1,(uint *)ppGVar2);
+    if (bVar1) {
+      bVar1 = ShouldOverrideStreamingImage(local_10[0],(uint)ppGVar2);
+      return bVar1;
     }
   }
-  return 0;
+  return false;
 }
 
 
 // 823FD318  DB_MarkImageRendered  (database/db_streaming.cpp:4060)
 
-void DB_MarkImageRendered(int param_1,longlong param_2)
+void DB_MarkImageRendered(GfxImage *param_1,uint *param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  char cVar3;
-  uint *puVar4;
+  bool bVar3;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
   uint local_20 [4];
   
-  if ((*(byte *)(param_1 + 0x3a) < 5) &&
-     (cVar3 = DB_GetGfxImageIndex_IfInPool(param_1,local_20), cVar3 != '\0')) {
-    param_2 = ((ulonglong)(local_20[0] >> 3) & 0x1ffffffc) + param_2;
-    uVar1 = (&DAT_82992400)[local_20[0] & 0x1f];
+  if ((param_1->category < 5) && (bVar3 = DB_GetGfxImageIndex_IfInPool(param_1,local_20), bVar3)) {
+    lVar4 = ((ulonglong)(local_20[0] >> 3) & 0x1ffffffc) + (longlong)(int)param_2;
+    uVar1 = *(uint *)(&g_bitShift + (local_20[0] & 0x1f) * 4);
     do {
-      puVar4 = (uint *)param_2;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)(uVar1 | *puVar4),0,param_2);
-        *puVar4 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)(uVar1 | *puVar5),0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -6260,60 +6724,65 @@ void DB_MarkImageRendered(int param_1,longlong param_2)
 
 // 823FD398  DB_UpdateImageDeltaStats  (database/db_streaming.cpp:4069)
 
-void DB_UpdateImageDeltaStats(void)
+void DB_UpdateImageDeltaStats(uint *param_1)
 
 {
-  uint uVar1;
-  void *pvVar2;
-  uint uVar3;
-  int iVar4;
-  uint uVar5;
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
   
-  pvVar2 = (void *)__savegprlr_28();
-  iVar4 = 0;
-  uVar1 = 0;
-  DAT_83231ef0 = DAT_83231ef4;
-  DAT_832ee354 = DAT_83231ef4;
-  uVar5 = 0x2980;
+  iVar3 = __savegprlr_28(param_1);
+  iVar5 = 0;
+  uVar2 = 0;
+  g_renderedRequestedSize = g_streamAlwaysUsedMemory;
+  g_renderedLoadedSize = g_streamAlwaysUsedMemory;
+  uVar6 = 0x2980;
   do {
-    uVar1 = *(uint *)((int)&DAT_82992400 + (uVar1 & 0x7c));
-    uVar3 = uVar5 - 0x2980 >> 3 & 0x1ffffffc;
-    if ((*(uint *)(uVar3 + (int)pvVar2) & uVar1) != 0) {
-      if (*(int *)((int)&DAT_845f4400 + iVar4) < 0x4000) {
-        DAT_83231ef0 = *(int *)((int)&DAT_832f1098 + iVar4) + DAT_83231ef0;
-        if ((*(uint *)((int)&DAT_845f3980 + uVar3) & uVar1) != 0) {
-          DAT_832ee354 = *(int *)((int)&DAT_832f1098 + iVar4) + DAT_832ee354;
+    uVar4 = uVar6 - 0x2980 >> 3 & 0x1ffffffc;
+    if ((*(uint *)(uVar4 + iVar3) & *(uint *)(&g_bitShift + (uVar2 & 0x7c))) != 0) {
+      if (*(int *)((int)g_stream2.priority + iVar5) < 0x4000) {
+        g_renderedRequestedSize = *(int *)((int)g_imageStreamSize + iVar5) + g_renderedRequestedSize
+        ;
+        if ((*(uint *)((int)g_stream2.inuse + uVar4) & *(uint *)(&g_bitShift + (uVar2 & 0x7c))) != 0
+           ) {
+          g_renderedLoadedSize = *(int *)((int)g_imageStreamSize + iVar5) + g_renderedLoadedSize;
         }
       }
-      if (*(int *)((int)&DAT_845f9700 + iVar4) < 0x4000) {
-        DAT_83231ef0 = *(int *)((int)&DAT_832f6398 + iVar4) + DAT_83231ef0;
-        if ((*(uint *)((int)&DAT_845f3980 + (uVar5 - 0x14c0 >> 3 & 0x1ffffffc)) &
-            (&DAT_82992400)[uVar5 & 0x1f]) != 0) {
-          DAT_832ee354 = *(int *)((int)&DAT_832f6398 + iVar4) + DAT_832ee354;
+      if (*(int *)((int)g_stream2.priority + iVar5 + 0x5300) < 0x4000) {
+        iVar1 = *(int *)((int)g_imageStreamSize + iVar5 + 0x5300);
+        g_renderedRequestedSize = iVar1 + g_renderedRequestedSize;
+        if ((*(uint *)((int)g_stream2.inuse + (uVar6 - 0x14c0 >> 3 & 0x1ffffffc)) &
+            *(uint *)(&g_bitShift + (uVar6 & 0x1f) * 4)) != 0) {
+          g_renderedLoadedSize = iVar1 + g_renderedLoadedSize;
         }
       }
-      if (*(int *)((int)&DAT_845fea00 + iVar4) < 0x4000) {
-        DAT_83231ef0 = *(int *)((int)&DAT_832fb698 + iVar4) + DAT_83231ef0;
-        if ((*(uint *)((int)&DAT_845f3980 + (uVar5 >> 3 & 0x1ffffffc)) &
-            (&DAT_82992400)[uVar5 & 0x1f]) != 0) {
-          DAT_832ee354 = *(int *)((int)&DAT_832fb698 + iVar4) + DAT_832ee354;
+      if (*(int *)((int)g_stream2.priority + iVar5 + 0xa600) < 0x4000) {
+        iVar1 = *(int *)((int)g_imageStreamSize + iVar5 + 0xa600);
+        g_renderedRequestedSize = iVar1 + g_renderedRequestedSize;
+        if ((*(uint *)((int)g_stream2.inuse + (uVar6 >> 3 & 0x1ffffffc)) &
+            *(uint *)(&g_bitShift + (uVar6 & 0x1f) * 4)) != 0) {
+          g_renderedLoadedSize = iVar1 + g_renderedLoadedSize;
         }
       }
-      if (*(int *)((int)&DAT_84603d00 + iVar4) < 0x4000) {
-        DAT_83231ef0 = *(int *)((int)&DAT_83300998 + iVar4) + DAT_83231ef0;
-        if ((*(uint *)((int)&DAT_845f3980 + (uVar5 + 0x14c0 >> 3 & 0x1ffffffc)) &
-            *(uint *)((int)&DAT_82992400 + ((uVar5 + 0x14c0) * 4 & 0x7c))) != 0) {
-          DAT_832ee354 = *(int *)((int)&DAT_83300998 + iVar4) + DAT_832ee354;
+      if (*(int *)((int)g_stream2.priority + iVar5 + 0xf900) < 0x4000) {
+        iVar1 = *(int *)((int)g_imageStreamSize + iVar5 + 0xf900);
+        g_renderedRequestedSize = iVar1 + g_renderedRequestedSize;
+        if ((*(uint *)((int)g_stream2.inuse + (uVar6 + 0x14c0 >> 3 & 0x1ffffffc)) &
+            *(uint *)(&g_bitShift + ((uVar6 + 0x14c0) * 4 & 0x7c))) != 0) {
+          g_renderedLoadedSize = iVar1 + g_renderedLoadedSize;
         }
       }
     }
-    iVar4 = iVar4 + 4;
-    uVar3 = uVar5 - 0x297f;
-    uVar1 = (uVar5 + 1) * 4;
-    uVar5 = uVar5 + 1;
-  } while (uVar3 < 0x14c0);
-  pvVar2 = memset(pvVar2,0,0x298);
-  __restgprlr_28(pvVar2);
+    iVar5 = iVar5 + 4;
+    uVar4 = uVar6 - 0x297f;
+    uVar2 = (uVar6 + 1) * 4;
+    uVar6 = uVar6 + 1;
+  } while (uVar4 < 0x14c0);
+  memset();
+  __restgprlr_28();
   return;
 }
 

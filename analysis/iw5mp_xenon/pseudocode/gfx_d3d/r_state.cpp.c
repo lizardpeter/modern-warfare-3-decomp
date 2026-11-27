@@ -2,11 +2,14 @@
 
 // 8277CC60  R_SetTexFilter  (gfx_d3d/r_state.cpp:152)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
 void R_SetTexFilter(void)
 
 {
   uint uVar1;
-  uint *puVar2;
+  int *piVar2;
   uint uVar3;
   uint uVar4;
   uint uVar5;
@@ -19,21 +22,21 @@ void R_SetTexFilter(void)
   longlong lVar12;
   
   __savegprlr_24();
-  uVar11 = *(uint *)(DAT_845aa6f8 + 0xc);
-  if ((int)DAT_84617940 < (int)*(uint *)(DAT_845aa6f8 + 0xc)) {
-    uVar11 = DAT_84617940;
+  uVar11 = (r_texFilterAnisoMax->current).integer;
+  if (gfxMetrics.maxAnisotropy < (r_texFilterAnisoMax->current).integer) {
+    uVar11 = gfxMetrics.maxAnisotropy;
   }
   if ((int)uVar11 < 2) {
     uVar11 = 1;
     uVar7 = 0x1100;
   }
   else {
-    uVar7 = (-(uint)(DAT_8461793d != '\0') & 0x3000) + 0x1000 |
-            (-(uint)(DAT_8461793c != '\0') & 0x300) + 0x100;
+    uVar7 = (-(uint)(gfxMetrics.hasAnisotropicMagFilter != false) & 0x3000) + 0x1000 |
+            (-(uint)(gfxMetrics.hasAnisotropicMinFilter != false) & 0x300) + 0x100;
   }
   uVar8 = uVar11;
-  if ((int)*(uint *)(DAT_845aa734 + 0xc) <= (int)uVar11) {
-    uVar8 = *(uint *)(DAT_845aa734 + 0xc);
+  if ((r_texFilterAnisoMin->current).integer <= (int)uVar11) {
+    uVar8 = (r_texFilterAnisoMin->current).integer;
   }
   uVar4 = uVar11;
   if (0 < (int)uVar11) {
@@ -45,7 +48,8 @@ void R_SetTexFilter(void)
       uVar4 = 1;
     }
     if (uVar4 != uVar8) {
-      MyAssertHandler(0xffffffff821cff90,0xbb,0,0xffffffff82000f98,0xffffffff821cff60);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0xbb,0,
+                      "%s");
     }
   }
   if (uVar8 == 1) {
@@ -54,7 +58,8 @@ void R_SetTexFilter(void)
   else {
     uVar4 = uVar7;
     if ((int)uVar8 < 2) {
-      MyAssertHandler(0xffffffff821cff90,0xc4,0,0xffffffff82000f98,0xffffffff821cff44);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0xc4,0,
+                      "%s");
     }
   }
   uVar5 = uVar11;
@@ -73,11 +78,12 @@ void R_SetTexFilter(void)
   if (((int)uVar8 <= (int)uVar5) && (uVar10 = uVar11, 3 < (int)uVar11)) {
     uVar10 = 4;
   }
-  if (*(char *)(DAT_845aa89c + 0xc) == '\0') {
+  if ((r_texFilterDisable->current).enabled == false) {
     uVar5 = 0x1100;
-    uVar11 = *(uint *)(DAT_845aa7a4 + 0xc);
+    uVar11 = (r_texFilterMipMode->current).unsignedInt;
     if (3 < uVar11) {
-      MyAssertHandler(0xffffffff821cff90,0xdc,0,0xffffffff821cff00,uVar11,4);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0xdc,0,
+                      "mipFilterMode doesn\'t index R_MIP_FILTER_COUNT\n\t%i not in [0, %i)");
     }
   }
   else {
@@ -89,12 +95,12 @@ void R_SetTexFilter(void)
     uVar5 = 0;
     uVar11 = 3;
   }
-  puVar2 = (uint *)0x847eeb6c;
+  piVar2 = &marker_cg_stages;
   lVar12 = 0x18;
   uVar3 = 0;
   do {
     uVar1 = uVar3 & 7;
-    uVar6 = *(int *)(&DAT_821cfd70 + (((int)uVar3 >> 3 & 3U) + uVar11 * 3) * 4) << 0x10;
+    uVar6 = s_mipFilterTable[uVar11][(int)uVar3 >> 3 & 3] << 0x10;
     if (uVar1 == 2) {
       if (uVar6 == 0x20000) {
         uVar6 = uVar5 | 0x20001;
@@ -112,12 +118,12 @@ void R_SetTexFilter(void)
     else {
       uVar6 = uVar6 | 1;
     }
-    puVar2 = puVar2 + 1;
-    *puVar2 = uVar6;
+    piVar2 = piVar2 + 1;
+    *piVar2 = uVar6;
     uVar3 = uVar3 + 1;
     lVar12 = lVar12 + -1;
   } while (lVar12 != 0);
-  DAT_84617854 = *(undefined4 *)(DAT_845aa7b4 + 0xc);
+  dx.mipBias = (r_texFilterMipBias->current).unsignedInt;
   __restgprlr_24();
   return;
 }
@@ -125,19 +131,25 @@ void R_SetTexFilter(void)
 
 // 82780CC0  R_HW_SetVertexSamplerTexture  (gfx_d3d/r_setstate_d3d.h:152)
 
-void R_HW_SetVertexSamplerTexture(undefined8 param_1,longlong param_2,ulonglong param_3)
+void R_HW_SetVertexSamplerTexture(D3DDevice *param_1,uint param_2,GfxTexture *param_3)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bd9a8,0x9b);
+  uVar3 = (ulonglong)(int)param_3;
+  lVar2 = (longlong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_27(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",0x9b
+                    ,(int)(D3DBaseTexture *)uVar3,"%s");
   }
   do {
     D3DDevice_SetTexture
-              (uVar1,param_2 + 0x10,param_3,0x8000000000000000 >> (param_2 + 0x30U & 0x7f));
-  } while (DAT_84013128 != 0);
+              (pDVar1,(int)lVar2 + 0x10,(D3DBaseTexture *)uVar3,
+               0x8000000000000000 >> (lVar2 + 0x30U & 0x7f));
+  } while (alwaysfails != 0);
   __restgprlr_27();
   return;
 }
@@ -145,15 +157,19 @@ void R_HW_SetVertexSamplerTexture(undefined8 param_1,longlong param_2,ulonglong 
 
 // 82780D48  R_HW_DisableVertexSampler  (gfx_d3d/r_setstate_d3d.h:178)
 
-void R_HW_DisableVertexSampler(undefined8 param_1,longlong param_2)
+void R_HW_DisableVertexSampler(D3DDevice *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  longlong lVar2;
   
-  uVar1 = __savegprlr_28();
+  lVar2 = (longlong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_28(param_1);
   do {
-    D3DDevice_SetTexture(uVar1,param_2 + 0x10,0,0x8000000000000000 >> (param_2 + 0x30U & 0x7f));
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetTexture
+              (pDVar1,(int)lVar2 + 0x10,(D3DBaseTexture *)0x0,
+               0x8000000000000000 >> (lVar2 + 0x30U & 0x7f));
+  } while (alwaysfails != 0);
   __restgprlr_28();
   return;
 }
@@ -161,15 +177,19 @@ void R_HW_DisableVertexSampler(undefined8 param_1,longlong param_2)
 
 // 82780DA0  R_HW_DisablePixelSampler  (gfx_d3d/r_setstate_d3d.h:189)
 
-void R_HW_DisablePixelSampler(undefined8 param_1,longlong param_2)
+void R_HW_DisablePixelSampler(D3DDevice *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  longlong lVar2;
   
-  uVar1 = __savegprlr_28();
+  lVar2 = (longlong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_28(param_1);
   do {
-    D3DDevice_SetTexture(uVar1,param_2,0,0x8000000000000000 >> (param_2 + 0x20U & 0x7f));
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetTexture
+              (pDVar1,(ulong)lVar2,(D3DBaseTexture *)0x0,
+               0x8000000000000000 >> (lVar2 + 0x20U & 0x7f));
+  } while (alwaysfails != 0);
   __restgprlr_28();
   return;
 }
@@ -177,139 +197,156 @@ void R_HW_DisablePixelSampler(undefined8 param_1,longlong param_2)
 
 // 82780DF8  R_HW_SetSamplerState  (gfx_d3d/r_setstate_d3d.h:198)
 
-void R_HW_SetSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+uint R_HW_SetSamplerState(D3DDevice *param_1,uint param_2,uint param_3,uint param_4)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
+  D3DDevice *pDVar2;
+  uint uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  ulong uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   
-  iVar3 = __savegprlr_24();
-  uVar5 = param_3 ^ param_4;
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821bd9a8,0xd1,0,0xffffffff82000f98,0xffffffff821cfda0);
+  uVar7 = (ulonglong)(int)param_4;
+  uVar6 = (ulonglong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  pDVar2 = (D3DDevice *)__savegprlr_24(param_1);
+  uVar9 = uVar6 ^ uVar7;
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",0xd1
+                    ,0,"%s");
   }
-  if ((uVar5 & 0xf00) != 0) {
+  uVar5 = (ulong)uVar4;
+  uVar3 = (uint)uVar6;
+  if ((uVar9 & 0xf00) != 0) {
     do {
-      D3DDevice_SetSamplerState_MinFilter(iVar3,param_2,(param_3 & 0xffffffff) >> 8 & 0xf);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetSamplerState_MinFilter(pDVar2,uVar5,uVar3 >> 8 & 0xf);
+    } while (alwaysfails != 0);
   }
-  if ((uVar5 & 0xf000) != 0) {
+  if ((uVar9 & 0xf000) != 0) {
     do {
-      D3DDevice_SetSamplerState_MagFilter(iVar3,param_2,(param_3 & 0xffffffff) >> 0xc & 0xf);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetSamplerState_MagFilter(pDVar2,uVar5,uVar3 >> 0xc & 0xf);
+    } while (alwaysfails != 0);
   }
-  uVar4 = param_3;
-  if ((uVar5 & 0xff) != 0) {
-    if ((uint)(param_3 & 0xff) < 2) {
-      uVar4 = param_4 & 0xff | param_3 & 0xffffffffffffff00;
+  uVar8 = uVar6;
+  if ((uVar9 & 0xff) != 0) {
+    if ((uVar3 & 0xff) < 2) {
+      uVar8 = uVar7 & 0xff | uVar6 & 0xffffffffffffff00;
     }
     else {
       do {
-        D3DDevice_SetSamplerState_MaxAnisotropy(iVar3,param_2,param_3 & 0xff);
-      } while (DAT_84013128 != 0);
+        D3DDevice_SetSamplerState_MaxAnisotropy(pDVar2,uVar5,uVar3 & 0xff);
+      } while (alwaysfails != 0);
     }
   }
-  if ((uVar5 & 0xf0000) != 0) {
-    iVar1 = (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + iVar3;
+  if ((uVar9 & 0xf0000) != 0) {
+    iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 3);
     do {
-      *(uint *)(iVar1 + 0x48c) =
-           *(uint *)(iVar1 + 0x48c) & 0xfe7fffff | (uint)((param_3 & 0xffffffff) << 7) & 0x1800000;
-      *(ulonglong *)(iVar3 + 0x18) =
-           0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | *(ulonglong *)(iVar3 + 0x18);
-    } while (DAT_84013128 != 0);
+      *(uint *)((int)&(pDVar2->m_Constants).field0_0x0 + iVar1 + 0xc) =
+           *(uint *)((int)&(pDVar2->m_Constants).field0_0x0 + iVar1 + 0xc) & 0xfe7fffff |
+           (uint)((uVar6 & 0xffffffff) << 7) & 0x1800000;
+      (pDVar2->m_Pending).m_Mask[3] =
+           0x8000000000000000U >> (uVar4 + 0x20 & 0x7f) | (pDVar2->m_Pending).m_Mask[3];
+    } while (alwaysfails != 0);
   }
-  if ((uVar5 & 0x3f00000) != 0) {
-    uVar2 = (uint)param_3;
-    if ((uVar5 & 0x300000) != 0) {
-      iVar1 = (int)((param_2 + 0x30 + (param_2 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+  if ((uVar9 & 0x3f00000) != 0) {
+    if ((uVar9 & 0x300000) != 0) {
+      iVar1 = (int)((uVar4 + 0x30 + (uVar4 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
       do {
-        *(uint *)(iVar1 + iVar3) = *(uint *)(iVar1 + iVar3) & 0xffffe3ff | uVar2 >> 10 & 0xc00;
-        *(ulonglong *)(iVar3 + 0x18) =
-             0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | *(ulonglong *)(iVar3 + 0x18);
-      } while (DAT_84013128 != 0);
+        *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) =
+             *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) & 0xffffe3ff | uVar3 >> 10 & 0xc00;
+        (pDVar2->m_Pending).m_Mask[3] =
+             0x8000000000000000U >> (uVar4 + 0x20 & 0x7f) | (pDVar2->m_Pending).m_Mask[3];
+      } while (alwaysfails != 0);
     }
-    if ((uVar5 & 0xc00000) != 0) {
-      iVar1 = (int)((param_2 + 0x30 + (param_2 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+    if ((uVar9 & 0xc00000) != 0) {
+      iVar1 = (int)((uVar4 + 0x30 + (uVar4 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
       do {
-        *(uint *)(iVar1 + iVar3) = *(uint *)(iVar1 + iVar3) & 0xffff1fff | uVar2 >> 9 & 0x6000;
-        *(ulonglong *)(iVar3 + 0x18) =
-             0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | *(ulonglong *)(iVar3 + 0x18);
-      } while (DAT_84013128 != 0);
+        *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) =
+             *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) & 0xffff1fff | uVar3 >> 9 & 0x6000;
+        (pDVar2->m_Pending).m_Mask[3] =
+             0x8000000000000000U >> (uVar4 + 0x20 & 0x7f) | (pDVar2->m_Pending).m_Mask[3];
+      } while (alwaysfails != 0);
     }
-    if ((uVar5 & 0x3000000) != 0) {
-      iVar1 = (int)((param_2 + 0x30 + (param_2 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+    if ((uVar9 & 0x3000000) != 0) {
+      iVar1 = (int)((uVar4 + 0x30 + (uVar4 + 0x30 & 0x7fffffff) * 2 & 0xffffffff) << 3);
       do {
-        *(uint *)(iVar1 + iVar3) = *(uint *)(iVar1 + iVar3) & 0xfff8ffff | uVar2 >> 8 & 0x30000;
-        *(ulonglong *)(iVar3 + 0x18) =
-             0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | *(ulonglong *)(iVar3 + 0x18);
-      } while (DAT_84013128 != 0);
+        *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) =
+             *(uint *)((int)(pDVar2->m_Pending).m_Mask + iVar1) & 0xfff8ffff | uVar3 >> 8 & 0x30000;
+        (pDVar2->m_Pending).m_Mask[3] =
+             0x8000000000000000U >> (uVar4 + 0x20 & 0x7f) | (pDVar2->m_Pending).m_Mask[3];
+      } while (alwaysfails != 0);
     }
   }
-  __restgprlr_24(uVar4);
-  return;
+  uVar3 = __restgprlr_24(uVar8);
+  return uVar3;
 }
 
 
 // 8277CF10  R_SetInitialContextState  (gfx_d3d/r_state.cpp:261)
 
-void R_SetInitialContextState(undefined8 param_1)
+void R_SetInitialContextState(D3DDevice *param_1)
 
 {
   do {
     D3DDevice_SetRenderState_SeparateAlphaBlendEnable(param_1,1);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_TwoSidedStencilMode(param_1,1);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_ZFunc(param_1,6);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_ZEnable(param_1,0);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_HalfPixelOffset(param_1,1);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   return;
 }
 
 
 // 8277FDF8  R_ShutdownCmdBufState  (gfx_d3d/r_state.cpp:279)
 
-void R_ShutdownCmdBufState(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ShutdownCmdBufState(GfxCmdBufState *param_1)
 
 {
-  undefined4 uVar1;
+  D3DDevice *pDVar1;
   int iVar2;
+  GfxCmdBufPrimState *pGVar3;
   undefined8 in_r13;
-  undefined4 *puVar3;
   undefined4 *puVar4;
   ulonglong uVar5;
   
-  iVar2 = __savegprlr_24();
-  puVar4 = (undefined4 *)(iVar2 + 0xc0);
+  iVar2 = __savegprlr_24(param_1);
+  pGVar3 = (GfxCmdBufPrimState *)(iVar2 + 0xc0);
   if (*(int *)(iVar2 + 0xc4) != 0) {
-    R_ChangeIndices(puVar4,0);
+    R_ChangeIndices(pGVar3,(D3DIndexBuffer *)0x0);
   }
-  R_SetDoubleStreamSource(puVar4,0,0,0,0,0,0);
-  puVar3 = (undefined4 *)(iVar2 + 0x6c);
+  R_SetDoubleStreamSource(pGVar3,(D3DVertexBuffer *)0x0,0,0,(D3DVertexBuffer *)0x0,0,0);
+  puVar4 = (undefined4 *)(iVar2 + 0x6c);
   uVar5 = 0;
   do {
     if ((uVar5 & 0xffffffff) < 0x10) {
-      R_HW_DisablePixelSampler(*puVar4,uVar5);
+      R_HW_DisablePixelSampler(pGVar3->device,(ulong)uVar5);
     }
     else {
-      uVar1 = *puVar4;
+      pDVar1 = pGVar3->device;
       do {
-        D3DDevice_SetTexture(uVar1,uVar5,0,0x8000000000000000 >> (uVar5 + 0x20 & 0x7f));
-      } while (DAT_84013128 != 0);
+        D3DDevice_SetTexture
+                  (pDVar1,(ulong)uVar5,(D3DBaseTexture *)0x0,
+                   0x8000000000000000 >> (uVar5 + 0x20 & 0x7f));
+      } while (alwaysfails != 0);
     }
     uVar5 = uVar5 + 1;
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
   } while ((uVar5 & 0xffffffff) < 0x14);
   iVar2 = *(int *)in_r13;
   if (*(char *)(iVar2 + 0x110) != '\0') {
@@ -323,33 +360,51 @@ void R_ShutdownCmdBufState(void)
 
 // 8277CFC0  R_DepthHackNearClipChanged  (gfx_d3d/r_state.cpp:307)
 
-void R_DepthHackNearClipChanged(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DepthHackNearClipChanged(GfxCmdBufSourceState *param_1)
 
 {
-  *(short *)(param_1 + 0x16a6) = *(short *)(param_1 + 0x16a6) + 1;
-  *(short *)(param_1 + 0x16a8) = *(short *)(param_1 + 0x16a8) + 1;
-  *(short *)(param_1 + 0x16b2) = *(short *)(param_1 + 0x16b2) + 1;
-  *(short *)(param_1 + 0x16b8) = *(short *)(param_1 + 0x16b8) + 1;
-  *(short *)(param_1 + 0x16be) = *(short *)(param_1 + 0x16be) + 1;
+  param_1->matrixVersions[1] = param_1->matrixVersions[1] + 1;
+  param_1->matrixVersions[2] = param_1->matrixVersions[2] + 1;
+  param_1->matrixVersions[7] = param_1->matrixVersions[7] + 1;
+  param_1->matrixVersions[10] = param_1->matrixVersions[10] + 1;
+  param_1->matrixVersions[0xd] = param_1->matrixVersions[0xd] + 1;
   return;
 }
 
 
 // 8277D000  R_ChangeDepthHackNearClip  (gfx_d3d/r_state.cpp:324)
 
-void R_ChangeDepthHackNearClip(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeDepthHackNearClip(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x145,0,0xffffffff82000f98,0xffffffff82165ff0);
+  ushort uVar1;
+  ushort uVar2;
+  ushort uVar3;
+  ushort uVar4;
+  ushort uVar5;
+  
+  if (param_1 == (GfxCmdBufSourceState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x145,0,
+                    "%s");
   }
-  if (param_2 != *(int *)(param_1 + 0x16d4)) {
-    *(int *)(param_1 + 0x16d4) = param_2;
-    *(short *)(param_1 + 0x16a6) = *(short *)(param_1 + 0x16a6) + 1;
-    *(short *)(param_1 + 0x16a8) = *(short *)(param_1 + 0x16a8) + 1;
-    *(short *)(param_1 + 0x16b2) = *(short *)(param_1 + 0x16b2) + 1;
-    *(short *)(param_1 + 0x16b8) = *(short *)(param_1 + 0x16b8) + 1;
-    *(short *)(param_1 + 0x16be) = *(short *)(param_1 + 0x16be) + 1;
+  if (param_2 != param_1->depthHackFlags) {
+    uVar1 = param_1->matrixVersions[1];
+    uVar2 = param_1->matrixVersions[2];
+    uVar3 = param_1->matrixVersions[7];
+    uVar4 = param_1->matrixVersions[10];
+    uVar5 = param_1->matrixVersions[0xd];
+    param_1->depthHackFlags = param_2;
+    param_1->matrixVersions[1] = uVar1 + 1;
+    param_1->matrixVersions[2] = uVar2 + 1;
+    param_1->matrixVersions[7] = uVar3 + 1;
+    param_1->matrixVersions[10] = uVar4 + 1;
+    param_1->matrixVersions[0xd] = uVar5 + 1;
   }
   return;
 }
@@ -357,22 +412,22 @@ void R_ChangeDepthHackNearClip(int param_1,int param_2)
 
 // 8277D0B0  R_ChangeObjectPlacement_Core  (gfx_d3d/r_state.cpp:336)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_ChangeObjectPlacement_Core
-               (undefined8 param_1,ulonglong param_2,undefined8 param_3,undefined8 param_4)
+               (GfxCmdBufSourceState *param_1,GfxPlacement *param_2,float param_3,int param_4)
 
 {
-  float fVar1;
-  int iVar2;
-  int iVar4;
-  undefined8 uVar3;
-  undefined8 extraout_f1;
+  GfxCmdBufSourceState *pGVar1;
+  float *pfVar2;
+  GfxMatrix *pGVar3;
+  ulonglong uVar4;
+  uint in_r6;
+  double extraout_f1;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  undefined8 uVar9;
-  double dVar10;
-  double dVar11;
   float local_90;
   float local_8c;
   float local_88;
@@ -386,46 +441,39 @@ void R_ChangeObjectPlacement_Core
   float local_64;
   float local_60;
   
-  iVar4 = __savegprlr_26();
-  uVar9 = extraout_f1;
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x155,0,0xffffffff82000f98,0xffffffff8202a89c);
+  uVar4 = (ulonglong)(int)param_2;
+  pGVar1 = (GfxCmdBufSourceState *)__savegprlr_26((double)param_3,param_1,uVar4,param_4);
+  dVar5 = extraout_f1;
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x155,0,
+                    "%s");
   }
-  UnitQuatToAxis(param_2,&local_80);
-  dVar6 = (double)local_7c;
-  dVar5 = (double)local_80;
-  dVar7 = (double)local_78;
-  dVar11 = 1.0;
-  dVar10 = 0.0020000000949949026;
-  fVar1 = (float)(dVar7 * dVar7 + (double)(float)(dVar5 * dVar5 + (double)(float)(dVar6 * dVar6)));
-  if (0.002 <= ABS(fVar1 - 1.0)) {
-    uVar3 = va(0xffffffff82015f2c,dVar5,dVar6,dVar7,(double)SQRT(fVar1));
-    MyAssertHandler(0xffffffff821cff90,0x158,0,0xffffffff820011f4,0xffffffff821cffec,uVar3);
+  pfVar2 = (float *)uVar4;
+  UnitQuatToAxis(pfVar2,(float (*) [3])&local_80);
+  dVar7 = 1.0;
+  dVar6 = 0.0020000000949949026;
+  if (0.002 <= ABS((local_78 * local_78 + local_80 * local_80 + local_7c * local_7c) - 1.0)) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x158,0,
+                    "%s\n\t%s");
   }
-  dVar7 = (double)local_70;
-  dVar6 = (double)local_74;
-  dVar8 = (double)local_6c;
-  dVar5 = (double)(float)(dVar8 * dVar8 +
-                         (double)(float)(dVar6 * dVar6 + (double)(float)(dVar7 * dVar7)));
-  if (dVar10 <= ABS((double)(float)(dVar5 - dVar11))) {
-    uVar3 = va(0xffffffff82015f2c,dVar6,dVar7,dVar8,(double)(float)SQRT(dVar5));
-    MyAssertHandler(0xffffffff821cff90,0x159,0,0xffffffff820011f4,0xffffffff821cffd0,uVar3);
+  if (dVar6 <= ABS((double)(float)((double)(local_6c * local_6c +
+                                           local_74 * local_74 + local_70 * local_70) - dVar7))) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x159,0,
+                    "%s\n\t%s");
   }
-  dVar7 = (double)local_64;
-  dVar6 = (double)local_68;
-  dVar8 = (double)local_60;
-  dVar5 = (double)(float)(dVar8 * dVar8 +
-                         (double)(float)(dVar6 * dVar6 + (double)(float)(dVar7 * dVar7)));
-  if (dVar10 <= ABS((double)(float)(dVar5 - dVar11))) {
-    uVar3 = va(0xffffffff82015f2c,dVar6,dVar7,dVar8,(double)(float)SQRT(dVar5));
-    MyAssertHandler(0xffffffff821cff90,0x15a,0,0xffffffff820011f4,0xffffffff82028444,uVar3);
+  if (dVar6 <= ABS((double)(float)((double)(local_60 * local_60 +
+                                           local_68 * local_68 + local_64 * local_64) - dVar7))) {
+    va("(%g %g %g) len %g");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x15a,0,
+                    "%s\n\t%s");
   }
-  uVar3 = R_GetActiveWorldMatrixAlternate(iVar4,param_4);
-  iVar2 = (int)param_2;
-  local_90 = *(float *)(iVar2 + 0x10) - *(float *)(iVar4 + 0x1540);
-  local_8c = *(float *)(iVar2 + 0x14) - *(float *)(iVar4 + 0x1544);
-  local_88 = *(float *)(iVar2 + 0x18) - *(float *)(iVar4 + 0x1548);
-  MatrixSet44(uVar9,uVar3,&local_90,&local_80);
+  pGVar3 = R_GetActiveWorldMatrixAlternate(pGVar1,in_r6);
+  local_90 = pfVar2[4] - pGVar1->eyeOffset[0];
+  local_8c = pfVar2[5] - pGVar1->eyeOffset[1];
+  local_88 = pfVar2[6] - pGVar1->eyeOffset[2];
+  MatrixSet44((float (*) [4])pGVar3,&local_90,(float (*) [3])&local_80,(float)dVar5);
   __restgprlr_26();
   return;
 }
@@ -433,45 +481,44 @@ void R_ChangeObjectPlacement_Core
 
 // 82781058  R_HW_SetViewport  (gfx_d3d/r_setstate_d3d.h:344)
 
-void R_HW_SetViewport(undefined8 param_1,double param_2,undefined8 param_3,undefined4 *param_4,
-                     undefined8 param_5,undefined8 param_6,int param_7,int param_8,int param_9,
-                     int param_10)
+void R_HW_SetViewport(D3DDevice *param_1,GfxViewport *param_2,float param_3,float param_4,
+                     int param_5,int param_6,int param_7,int param_8)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  longlong lVar2;
+  ulong *puVar3;
+  int in_r9;
+  int in_r10;
   double extraout_f1;
-  int local_60;
-  int local_5c;
-  int local_58;
-  int local_54;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
-  float local_40;
-  float local_3c;
+  double dVar4;
+  tagRECT local_60;
+  _D3DVIEWPORT9 local_50 [3];
   
-  uVar1 = __savegprlr_26();
-  local_50 = *param_4;
-  local_4c = param_4[1];
-  local_48 = param_4[2];
-  local_40 = (float)param_2;
-  local_44 = param_4[3];
-  local_3c = (float)extraout_f1;
-  if (extraout_f1 <= param_2) {
-    MyAssertHandler(param_2,extraout_f1,0xffffffff821bd9a8,0x16b,0,0xffffffff821cfdb4,param_2,
-                    extraout_f1);
+  dVar4 = (double)param_4;
+  lVar2 = (longlong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_26((double)param_3,param_1,lVar2,param_5,param_6);
+  puVar3 = (ulong *)lVar2;
+  local_50[0].X = *puVar3;
+  local_50[0].Y = puVar3[1];
+  local_50[0].Width = puVar3[2];
+  local_50[0].MinZ = (float)dVar4;
+  local_50[0].Height = puVar3[3];
+  local_50[0].MaxZ = (float)extraout_f1;
+  if (extraout_f1 <= dVar4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",
+                    0x16b,0,"d3dViewport.MinZ < d3dViewport.MaxZ\n\t%g, %g");
   }
   do {
-    D3DDevice_SetViewport(uVar1,&local_50);
-  } while (DAT_84013128 != 0);
-  local_58 = param_7 + param_9;
-  local_54 = param_8 + param_10;
-  local_60 = param_7;
-  local_5c = param_8;
+    D3DDevice_SetViewport(pDVar1,local_50);
+  } while (alwaysfails != 0);
+  local_60.right = param_7 + in_r9;
+  local_60.bottom = param_8 + in_r10;
+  local_60.left = param_7;
+  local_60.top = param_8;
   do {
-    D3DDevice_SetScissorRect(uVar1,&local_60);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetScissorRect(pDVar1,&local_60);
+  } while (alwaysfails != 0);
   __restgprlr_26();
   return;
 }
@@ -479,46 +526,67 @@ void R_HW_SetViewport(undefined8 param_1,double param_2,undefined8 param_3,undef
 
 // 8277D2F0  R_ChangeObjectScaledPlacement  (gfx_d3d/r_state.cpp:355)
 
-void R_ChangeObjectScaledPlacement(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeObjectScaledPlacement(GfxCmdBufSourceState *param_1,GfxScaledPlacement *param_2)
 
 {
-  R_ChangeObjectPlacement_Core((double)*(float *)(param_2 + 0x1c));
+  int in_r5;
+  
+  R_ChangeObjectPlacement_Core(param_1,&param_2->base,param_2->scale,in_r5);
   return;
 }
 
 
 // 8277D300  R_ChangeObjectScaledPlacementRemote  (gfx_d3d/r_state.cpp:361)
 
-void R_ChangeObjectScaledPlacementRemote(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeObjectScaledPlacementRemote(GfxCmdBufSourceState *param_1,GfxScaledPlacement *param_2)
 
 {
-  R_ChangeObjectPlacement_Core((double)*(float *)(param_2 + 0x1c));
+  int in_r5;
+  
+  R_ChangeObjectPlacement_Core(param_1,&param_2->base,param_2->scale,in_r5);
   return;
 }
 
 
 // 8277D310  R_ChangeObjectPlacementRemote  (gfx_d3d/r_state.cpp:372)
 
-void R_ChangeObjectPlacementRemote(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeObjectPlacementRemote(GfxCmdBufSourceState *param_1,GfxPlacement *param_2)
 
 {
-  R_ChangeObjectPlacement_Core(0x3ff0000000000000);
+  int in_r5;
+  
+  R_ChangeObjectPlacement_Core(param_1,param_2,1.0,in_r5);
   return;
 }
 
 
 // 8277D320  R_ChangeObjectPlacementAlternate  (gfx_d3d/r_state.cpp:383)
 
-void R_ChangeObjectPlacementAlternate(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeObjectPlacementAlternate
+               (GfxCmdBufSourceState *param_1,GfxScaledPlacement *param_2,int param_3)
 
 {
-  undefined8 uVar1;
+  GfxCmdBufSourceState *pGVar1;
   
-  uVar1 = __savegprlr_29();
-  if (((int)param_3 < 0) || (2 < (int)param_3)) {
-    MyAssertHandler(0xffffffff821cff90,0x180,0,0xffffffff821d0008,0xffffffff821d0030,param_3);
+  pGVar1 = (GfxCmdBufSourceState *)__savegprlr_29(param_1);
+  if ((param_3 < 0) || (2 < param_3)) {
+    param_3 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x180,0,
+                    "%s\n\t(worldMatrixAlternateIndex) = %i");
   }
-  R_ChangeObjectPlacement_Core((double)*(float *)((int)param_2 + 0x1c),uVar1,param_2);
+  R_ChangeObjectPlacement_Core(pGVar1,&param_2->base,param_2->scale,param_3);
   __restgprlr_29();
   return;
 }
@@ -526,75 +594,90 @@ void R_ChangeObjectPlacementAlternate(undefined8 param_1,undefined8 param_2,unde
 
 // 8277D390  R_GetMatrixConstantVersion  (gfx_d3d/r_state.cpp:390)
 
-undefined2 R_GetMatrixConstantVersion(int param_1,longlong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+uint R_GetMatrixConstantVersion(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  return *(undefined2 *)(((int)((param_2 - 0x52U & 0xffffffff) >> 2) + 0xb52) * 2 + param_1);
+  return (uint)param_1->matrixVersions[(int)(((longlong)(int)param_2 - 0x52U & 0xffffffff) >> 2)];
 }
 
 
 // 8277D3A8  R_IsMatrixConstantUpToDate  (gfx_d3d/r_state.cpp:396)
 
-bool R_IsMatrixConstantUpToDate(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+bool R_IsMatrixConstantUpToDate(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  return *(short *)(((param_2 - 0x52U >> 2) + 0xb52) * 2 + param_1) ==
-         *(short *)((param_2 + 0xac8) * 2 + param_1);
+  return param_1->matrixVersions[param_2 - 0x52 >> 2] == param_1->constVersions[param_2];
 }
 
 
 // 8277D3D8  R_FlagMatrixConstantAsUpToDate  (gfx_d3d/r_state.cpp:402)
 
-void R_FlagMatrixConstantAsUpToDate(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_FlagMatrixConstantAsUpToDate(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  *(undefined2 *)((param_2 + 0xac8) * 2 + param_1) =
-       *(undefined2 *)(((param_2 - 0x52U >> 2) + 0xb52) * 2 + param_1);
+  param_1->constVersions[param_2] = param_1->matrixVersions[param_2 - 0x52 >> 2];
   return;
 }
 
 
 // 8277D400  R_DeriveViewMatrix  (gfx_d3d/r_state.cpp:408)
 
-void R_DeriveViewMatrix(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveViewMatrix(GfxCmdBufSourceState *param_1)
 
 {
   undefined8 *puVar1;
-  undefined8 *puVar2;
+  bool *pbVar2;
   longlong lVar3;
   
-  puVar1 = (undefined8 *)(param_1 + -8);
-  puVar2 = (undefined8 *)(param_1 + 0x13e8);
+  puVar1 = (undefined8 *)&param_1[-1].field_0x1758;
+  pbVar2 = &(param_1->input).noLitPrepass;
   lVar3 = 8;
   do {
-    puVar2 = puVar2 + 1;
+    pbVar2 = pbVar2 + 8;
     puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    *puVar1 = *(undefined8 *)pbVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  *(undefined2 *)(param_1 + 0x1634) = *(undefined2 *)(param_1 + 0x16a4);
+  param_1->constVersions[0x52] = param_1->matrixVersions[0];
   return;
 }
 
 
 // 8277D430  R_DeriveWorldViewMatrix  (gfx_d3d/r_state.cpp:424)
 
-void R_DeriveWorldViewMatrix(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveWorldViewMatrix(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
   int iVar1;
-  longlong lVar2;
+  ulonglong uVar2;
   longlong lVar3;
   
-  lVar2 = __savegprlr_29();
-  lVar3 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-  iVar1 = (int)lVar2;
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_29(param_1);
+  lVar3 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
   if (*(short *)((int)((lVar3 + 0xb2eU & 0xffffffff) << 1) + iVar1) !=
       *(short *)(((int)((lVar3 + 0x14U & 0xffffffff) >> 2) + 0xb52) * 2 + iVar1)) {
-    MyAssertHandler(0xffffffff821cff90,0x1b3,0,0xffffffff82000f98,0xffffffff821d0078);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x1b3,0,
+                    "%s");
   }
-  MatrixMultiply44((lVar3 + 0x14U & 0x3ffffff) * 0x40 + lVar2,lVar2 + 0x13f0,
-                   (lVar3 + 0x18U & 0x3ffffff) * 0x40 + lVar2);
+  MatrixMultiply44((float (*) [4])((int)((lVar3 + 0x14U & 0xffffffff) << 6) + iVar1),
+                   (float (*) [4])(iVar1 + 0x13f0),
+                   (float (*) [4])((int)((lVar3 + 0x18U & 0xffffffff) << 6) + iVar1));
   *(undefined2 *)((int)((lVar3 + 0xb32U & 0xffffffff) << 1) + iVar1) =
        *(undefined2 *)(((int)((lVar3 + 0x18U & 0xffffffff) >> 2) + 0xb52) * 2 + iVar1);
   __restgprlr_29();
@@ -604,17 +687,18 @@ void R_DeriveWorldViewMatrix(undefined8 param_1,ulonglong param_2)
 
 // 82781138  R_HW_SetColorMask  (gfx_d3d/r_setstate_d3d.h:424)
 
-void R_HW_SetColorMask(undefined8 param_1,ulonglong param_2)
+void R_HW_SetColorMask(D3DDevice *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
+  uVar2 = (ulonglong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
   do {
     D3DDevice_SetRenderState_ColorWriteEnable
-              (uVar1,-(ulonglong)((param_2 & 0x8000000) != 0) & 7 |
-                     (param_2 & 0xffffffff) >> 0x19 & 8);
-  } while (DAT_84013128 != 0);
+              (pDVar1,-(uint)((uVar2 & 0x8000000) != 0) & 7 | (uint)uVar2 >> 0x19 & 8);
+  } while (alwaysfails != 0);
   __restgprlr_29();
   return;
 }
@@ -622,21 +706,24 @@ void R_HW_SetColorMask(undefined8 param_1,ulonglong param_2)
 
 // 82781188  R_HW_SetCullFace  (gfx_d3d/r_setstate_d3d.h:434)
 
-void R_HW_SetCullFace(undefined8 param_1,ulonglong param_2)
+void R_HW_SetCullFace(D3DDevice *param_1,uint param_2)
 
 {
   ulonglong uVar1;
-  undefined8 uVar2;
+  D3DDevice *pDVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_28();
-  uVar1 = param_2 & 0xc000;
+  uVar3 = (ulonglong)(int)param_2;
+  pDVar2 = (D3DDevice *)__savegprlr_28(param_1);
+  uVar1 = uVar3 & 0xc000;
   if (((uVar1 != 0x4000) && (uVar1 != 0xc000)) && (uVar1 != 0x8000)) {
-    MyAssertHandler(0xffffffff821bd9a8,0x1b3,0,0xffffffff82000f98,0xffffffff821cfde0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",
+                    0x1b3,0,"%s");
   }
   do {
     D3DDevice_SetRenderState_CullMode
-              (uVar2,*(undefined4 *)(&DAT_821cfc80 + ((uint)param_2 >> 0xc & 0xc)));
-  } while (DAT_84013128 != 0);
+              (pDVar2,*(ulong *)((int)s_cullTable + ((uint)uVar3 >> 0xc & 0xc)));
+  } while (alwaysfails != 0);
   __restgprlr_28();
   return;
 }
@@ -644,103 +731,120 @@ void R_HW_SetCullFace(undefined8 param_1,ulonglong param_2)
 
 // 8277D4F0  R_DeriveProjectionMatrix  (gfx_d3d/r_state.cpp:447)
 
-void R_DeriveProjectionMatrix(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveProjectionMatrix(GfxCmdBufSourceState *param_1)
 
 {
-  undefined8 *puVar1;
-  undefined8 *puVar2;
+  float *pfVar1;
+  float *pfVar2;
   longlong lVar3;
   
-  puVar2 = (undefined8 *)(param_1 + 0x1428);
-  puVar1 = (undefined8 *)(param_1 + 0xf8);
+  pfVar2 = (param_1->viewParms).viewMatrix.m[3] + 2;
+  pfVar1 = (param_1->matrices).matrix[3].m[3] + 2;
   lVar3 = 8;
   do {
-    puVar2 = puVar2 + 1;
-    puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
+    pfVar2 = pfVar2 + 2;
+    pfVar1 = pfVar1 + 2;
+    *(undefined8 *)pfVar1 = *(undefined8 *)pfVar2;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  if (*(int *)(param_1 + 0x16d4) == 2) {
-    *(undefined4 *)(param_1 + 0x138) = *(undefined4 *)(param_1 + 0x153c);
+  if (param_1->depthHackFlags == 2) {
+    (param_1->matrices).matrix[4].m[3][2] = (param_1->viewParms).camera.depthHackNearClip;
   }
-  *(undefined2 *)(param_1 + 0x163c) = *(undefined2 *)(param_1 + 0x16a6);
+  param_1->constVersions[0x56] = param_1->matrixVersions[1];
   return;
 }
 
 
 // 8277D538  R_DeriveViewProjectionMatrix  (gfx_d3d/r_state.cpp:466)
 
-void R_DeriveViewProjectionMatrix(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveViewProjectionMatrix(GfxCmdBufSourceState *param_1)
 
 {
-  undefined8 *puVar1;
-  undefined8 *puVar2;
+  float *pfVar1;
+  float *pfVar2;
   longlong lVar3;
   
-  if (*(int *)(param_1 + 0x16d4) == 2) {
-    if (*(short *)(param_1 + 0x163c) != *(short *)(param_1 + 0x16a6)) {
-      puVar2 = (undefined8 *)(param_1 + 0x1428);
-      puVar1 = (undefined8 *)(param_1 + 0xf8);
+  if (param_1->depthHackFlags == 2) {
+    if (param_1->constVersions[0x56] != param_1->matrixVersions[1]) {
+      pfVar2 = (param_1->viewParms).viewMatrix.m[3] + 2;
+      pfVar1 = (param_1->matrices).matrix[3].m[3] + 2;
       lVar3 = 8;
       do {
-        puVar2 = puVar2 + 1;
-        puVar1 = puVar1 + 1;
-        *puVar1 = *puVar2;
+        pfVar2 = pfVar2 + 2;
+        pfVar1 = pfVar1 + 2;
+        *(undefined8 *)pfVar1 = *(undefined8 *)pfVar2;
         lVar3 = lVar3 + -1;
       } while (lVar3 != 0);
-      if (*(int *)(param_1 + 0x16d4) == 2) {
-        *(undefined4 *)(param_1 + 0x138) = *(undefined4 *)(param_1 + 0x153c);
+      if (param_1->depthHackFlags == 2) {
+        (param_1->matrices).matrix[4].m[3][2] = (param_1->viewParms).camera.depthHackNearClip;
       }
-      *(undefined2 *)(param_1 + 0x163c) = *(undefined2 *)(param_1 + 0x16a6);
+      param_1->constVersions[0x56] = param_1->matrixVersions[1];
     }
-    MatrixMultiply44(param_1 + 0x13f0,param_1 + 0x100);
+    MatrixMultiply44((float (*) [4])&param_1->viewParms,
+                     (float (*) [4])((param_1->matrices).matrix + 4),
+                     (float (*) [4])((param_1->matrices).matrix + 8));
   }
   else {
-    puVar2 = (undefined8 *)(param_1 + 0x1468);
-    puVar1 = (undefined8 *)(param_1 + 0x1f8);
+    pfVar2 = (param_1->viewParms).projectionMatrix.m[3] + 2;
+    pfVar1 = (param_1->matrices).matrix[7].m[3] + 2;
     lVar3 = 8;
     do {
-      puVar2 = puVar2 + 1;
-      puVar1 = puVar1 + 1;
-      *puVar1 = *puVar2;
+      pfVar2 = pfVar2 + 2;
+      pfVar1 = pfVar1 + 2;
+      *(undefined8 *)pfVar1 = *(undefined8 *)pfVar2;
       lVar3 = lVar3 + -1;
     } while (lVar3 != 0);
   }
-  *(undefined2 *)(param_1 + 0x1644) = *(undefined2 *)(param_1 + 0x16a8);
+  param_1->constVersions[0x5a] = param_1->matrixVersions[2];
   return;
 }
 
 
 // 8277D5F0  R_DeriveWorldViewProjectionMatrix  (gfx_d3d/r_state.cpp:494)
 
-void R_DeriveWorldViewProjectionMatrix(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveWorldViewProjectionMatrix(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
+  GfxCmdBufSourceState *pGVar1;
+  ulonglong uVar2;
+  GfxMatrix *pGVar3;
   longlong lVar4;
   
-  lVar2 = __savegprlr_27();
-  lVar4 = (param_2 + (param_2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-  iVar1 = (int)lVar2;
-  if (*(short *)((int)((lVar4 + 0xb2eU & 0xffffffff) << 1) + iVar1) !=
-      *(short *)(((int)((lVar4 + 0x14U & 0xffffffff) >> 2) + 0xb52) * 2 + iVar1)) {
-    MyAssertHandler(0xffffffff821cff90,0x1fa,0,0xffffffff82000f98,0xffffffff821d0078);
+  uVar2 = (ulonglong)(int)param_2;
+  pGVar1 = (GfxCmdBufSourceState *)__savegprlr_27(param_1);
+  lVar4 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  if (*(ushort *)
+       ((int)(pGVar1->matrices).matrix[0].m[0] + (int)((lVar4 + 0xb2eU & 0xffffffff) << 1)) !=
+      pGVar1->matrixVersions[(int)((lVar4 + 0x14U & 0xffffffff) >> 2)]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x1fa,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0x16d4) == 2) {
-    if (*(short *)(iVar1 + 0x1644) != *(short *)(iVar1 + 0x16a8)) {
-      R_DeriveViewProjectionMatrix(lVar2);
+  if (pGVar1->depthHackFlags == 2) {
+    if (pGVar1->constVersions[0x5a] != pGVar1->matrixVersions[2]) {
+      R_DeriveViewProjectionMatrix(pGVar1);
     }
-    lVar3 = lVar2 + 0x200;
+    pGVar3 = (pGVar1->matrices).matrix + 8;
   }
   else {
-    lVar3 = lVar2 + 0x1470;
+    pGVar3 = &(pGVar1->viewParms).viewProjectionMatrix;
   }
-  MatrixMultiply44((lVar4 + 0x14U & 0x3ffffff) * 0x40 + lVar2,lVar3,
-                   (lVar4 + 0x1cU & 0x3ffffff) * 0x40 + lVar2);
-  *(undefined2 *)((int)((lVar4 + 0xb36U & 0xffffffff) << 1) + iVar1) =
-       *(undefined2 *)(((int)((lVar4 + 0x1cU & 0xffffffff) >> 2) + 0xb52) * 2 + iVar1);
+  MatrixMultiply44((float (*) [4])
+                   ((int)(pGVar1->matrices).matrix[0].m[0] +
+                   (int)((lVar4 + 0x14U & 0xffffffff) << 6)),(float (*) [4])pGVar3,
+                   (float (*) [4])
+                   ((int)(pGVar1->matrices).matrix[0].m[0] +
+                   (int)((lVar4 + 0x1cU & 0xffffffff) << 6)));
+  *(ushort *)((int)(pGVar1->matrices).matrix[0].m[0] + (int)((lVar4 + 0xb36U & 0xffffffff) << 1)) =
+       pGVar1->matrixVersions[(int)((lVar4 + 0x1cU & 0xffffffff) >> 2)];
   __restgprlr_27();
   return;
 }
@@ -748,7 +852,7 @@ void R_DeriveWorldViewProjectionMatrix(undefined8 param_1,ulonglong param_2)
 
 // 82781210  R_HW_SetBlend  (gfx_d3d/r_setstate_d3d.h:500)
 
-void R_HW_SetBlend(void)
+void R_HW_SetBlend(D3DDevice *param_1,bool param_2,uint param_3,uint param_4)
 
 {
   byte bVar1;
@@ -757,22 +861,24 @@ void R_HW_SetBlend(void)
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  undefined8 uVar7;
-  ulonglong in_r6;
+  D3DDevice *pDVar7;
+  ulonglong uVar8;
   
-  uVar7 = __savegprlr_29();
-  uVar5 = (uint)in_r6;
-  uVar2 = *(uint *)(&DAT_821cfcbc + (uVar5 >> 0x16 & 0x1c));
-  uVar3 = *(uint *)(&DAT_821cfc90 + (uVar5 >> 0x12 & 0x3c));
-  uVar4 = *(uint *)(&DAT_821cfc90 + (uVar5 >> 0xe & 0x3c));
-  bVar1 = (&DAT_821cfc93)[uVar5 >> 2 & 0x3c];
-  uVar5 = *(uint *)(&DAT_821cfcbc + (uVar5 >> 6 & 0x1c));
-  uVar6 = *(uint *)(&DAT_821cfc90 + ((uint)((in_r6 & 0xffffffff) << 2) & 0x3c));
+  uVar8 = (ulonglong)(int)param_4;
+  pDVar7 = (D3DDevice *)__savegprlr_29(param_1,param_2,param_3);
+  uVar5 = (uint)uVar8;
+  uVar2 = *(uint *)((int)s_blendOpTable + (uVar5 >> 0x16 & 0x1c));
+  uVar3 = *(uint *)((int)s_blendTable + (uVar5 >> 0x12 & 0x3c));
+  uVar4 = *(uint *)((int)s_blendTable + (uVar5 >> 0xe & 0x3c));
+  bVar1 = *(byte *)((int)s_blendTable + (uVar5 >> 2 & 0x3c) + 3);
+  uVar5 = *(uint *)((int)s_blendOpTable + (uVar5 >> 6 & 0x1c));
+  uVar6 = *(uint *)((int)s_blendTable + ((uint)((uVar8 & 0xffffffff) << 2) & 0x3c));
   do {
     D3DDevice_SetBlendState
-              (uVar7,0,(((((uVar3 & 0xff) << 3 | uVar2 & 7) << 5 | uVar4 & 0x1f) << 8 | (uint)bVar1)
-                        << 3 | uVar5 & 7) << 5 | uVar6 & 0x1f);
-  } while (DAT_84013128 != 0);
+              (pDVar7,0,(_D3DBLENDSTATE)
+                        ((((((uVar3 & 0x1fff) << 3 | uVar2 & 7) << 5 | uVar4 & 0x1f) << 8 |
+                          (uint)bVar1) << 3 | uVar5 & 7) << 5 | uVar6 & 0x1f));
+  } while (alwaysfails != 0);
   __restgprlr_29();
   return;
 }
@@ -780,88 +886,118 @@ void R_HW_SetBlend(void)
 
 // 8277D6E0  R_DeriveShadowLookupMatrix  (gfx_d3d/r_state.cpp:528)
 
-void R_DeriveShadowLookupMatrix(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveShadowLookupMatrix(GfxCmdBufSourceState *param_1)
 
 {
-  undefined8 *puVar1;
-  undefined8 *puVar2;
-  longlong lVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float *pfVar13;
+  GfxMatrix *pGVar14;
+  longlong lVar15;
   
-  puVar2 = (undefined8 *)(param_1 + 0x1548);
-  puVar1 = (undefined8 *)(param_1 + 0x2f8);
-  lVar3 = 8;
+  pGVar14 = (GfxMatrix *)(param_1->eyeOffset + 2);
+  pfVar13 = (param_1->matrices).matrix[0xb].m[3] + 2;
+  lVar15 = 8;
   do {
-    puVar2 = puVar2 + 1;
-    puVar1 = puVar1 + 1;
-    *puVar1 = *puVar2;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  *(float *)(param_1 + 0x330) =
-       *(float *)(param_1 + 0x1540) * *(float *)(param_1 + 0x300) +
-       *(float *)(param_1 + 0x310) * *(float *)(param_1 + 0x1544) +
-       *(float *)(param_1 + 800) * *(float *)(param_1 + 0x1548) + *(float *)(param_1 + 0x330);
-  *(float *)(param_1 + 0x334) =
-       *(float *)(param_1 + 0x324) * *(float *)(param_1 + 0x1548) +
-       *(float *)(param_1 + 0x314) * *(float *)(param_1 + 0x1544) +
-       *(float *)(param_1 + 0x304) * *(float *)(param_1 + 0x1540) + *(float *)(param_1 + 0x334);
-  *(float *)(param_1 + 0x338) =
-       *(float *)(param_1 + 0x328) * *(float *)(param_1 + 0x1548) +
-       *(float *)(param_1 + 0x318) * *(float *)(param_1 + 0x1544) +
-       *(float *)(param_1 + 0x308) * *(float *)(param_1 + 0x1540) + *(float *)(param_1 + 0x338);
-  *(float *)(param_1 + 0x33c) =
-       *(float *)(param_1 + 0x32c) * *(float *)(param_1 + 0x1548) +
-       *(float *)(param_1 + 0x31c) * *(float *)(param_1 + 0x1544) +
-       *(float *)(param_1 + 0x30c) * *(float *)(param_1 + 0x1540) + *(float *)(param_1 + 0x33c);
-  *(undefined2 *)(param_1 + 0x164c) = *(undefined2 *)(param_1 + 0x16aa);
+    pGVar14 = (GfxMatrix *)(pGVar14->m[0] + 2);
+    pfVar13 = pfVar13 + 2;
+    *(undefined8 *)pfVar13 = *(undefined8 *)pGVar14->m[0];
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
+  fVar1 = (param_1->matrices).matrix[0xc].m[0][1];
+  fVar2 = (param_1->matrices).matrix[0xc].m[1][1];
+  fVar3 = (param_1->matrices).matrix[0xc].m[2][1];
+  fVar4 = (param_1->matrices).matrix[0xc].m[3][1];
+  fVar5 = (param_1->matrices).matrix[0xc].m[0][2];
+  fVar6 = (param_1->matrices).matrix[0xc].m[1][2];
+  fVar7 = (param_1->matrices).matrix[0xc].m[2][2];
+  fVar8 = (param_1->matrices).matrix[0xc].m[3][2];
+  fVar9 = (param_1->matrices).matrix[0xc].m[0][3];
+  fVar10 = (param_1->matrices).matrix[0xc].m[1][3];
+  fVar11 = (param_1->matrices).matrix[0xc].m[2][3];
+  fVar12 = (param_1->matrices).matrix[0xc].m[3][3];
+  (param_1->matrices).matrix[0xc].m[3][0] =
+       param_1->eyeOffset[0] * (param_1->matrices).matrix[0xc].m[0][0] +
+       (param_1->matrices).matrix[0xc].m[1][0] * param_1->eyeOffset[1] +
+       (param_1->matrices).matrix[0xc].m[2][0] * param_1->eyeOffset[2] +
+       (param_1->matrices).matrix[0xc].m[3][0];
+  (param_1->matrices).matrix[0xc].m[3][1] =
+       fVar3 * param_1->eyeOffset[2] + fVar2 * param_1->eyeOffset[1] + fVar1 * param_1->eyeOffset[0]
+       + fVar4;
+  (param_1->matrices).matrix[0xc].m[3][2] =
+       fVar7 * param_1->eyeOffset[2] + fVar6 * param_1->eyeOffset[1] + fVar5 * param_1->eyeOffset[0]
+       + fVar8;
+  (param_1->matrices).matrix[0xc].m[3][3] =
+       fVar11 * param_1->eyeOffset[2] +
+       fVar10 * param_1->eyeOffset[1] + fVar9 * param_1->eyeOffset[0] + fVar12;
+  param_1->constVersions[0x5e] = param_1->matrixVersions[3];
   return;
 }
 
 
 // 827812B0  R_HW_EnableStencil  (gfx_d3d/r_setstate_d3d.h:534)
 
-void R_HW_EnableStencil(undefined8 param_1)
+void R_HW_EnableStencil(D3DDevice *param_1)
 
 {
   do {
     D3DDevice_SetRenderState_StencilEnable(param_1,1);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   return;
 }
 
 
 // 82781300  R_HW_DisableStencil  (gfx_d3d/r_setstate_d3d.h:540)
 
-void R_HW_DisableStencil(undefined8 param_1)
+void R_HW_DisableStencil(D3DDevice *param_1)
 
 {
   do {
     D3DDevice_SetRenderState_StencilEnable(param_1,0);
-  } while (DAT_84013128 != 0);
+  } while (alwaysfails != 0);
   return;
 }
 
 
 // 82781350  R_HW_SetFrontStencilOp  (gfx_d3d/r_setstate_d3d.h:546)
 
-void R_HW_SetFrontStencilOp
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void R_HW_SetFrontStencilOp(D3DDevice *param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_26();
+  uVar4 = (ulonglong)(int)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_26(param_1);
   do {
     D3DDevice_SetRenderState_StencilPass
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_2 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar2 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_StencilFail
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_3 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar3 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_StencilZFail
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_4 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar4 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   __restgprlr_26();
   return;
 }
@@ -869,60 +1005,59 @@ void R_HW_SetFrontStencilOp
 
 // 8277D7E0  R_GenerateWorldOutdoorLookupMatrix  (gfx_d3d/r_state.cpp:552)
 
-void R_GenerateWorldOutdoorLookupMatrix(undefined8 param_1,undefined8 param_2)
+/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_GenerateWorldOutdoorLookupMatrix(GfxCmdBufSourceState *param_1,float (*param_2) [4])
 
 {
-  int iVar1;
-  int iVar3;
-  undefined8 uVar2;
-  undefined8 *puVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
-  undefined4 local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
-  float local_80;
+  GfxCmdBufSourceState *pGVar1;
+  float (*pafVar2) [4];
+  undefined8 *puVar3;
+  float *pfVar4;
+  longlong lVar5;
+  float local_90 [5];
   float local_7c;
   float local_78;
   float local_74;
-  undefined1 auStack_70 [8];
+  float afStack_70 [2];
   undefined8 uStack_68;
-  undefined1 local_60 [48];
+  float local_60 [12];
   float local_30;
   float local_2c;
   float local_28;
   
-  iVar3 = __savegprlr_29();
-  uVar2 = R_GetCodeMatrix(iVar3,0x53,0);
-  local_90 = 0;
-  local_8c = 0;
-  local_88 = 0xc2000000;
-  local_84 = 0;
-  MatrixTransformVector44(&local_90,uVar2,auStack_70);
-  MatrixTransformVector44(auStack_70,0xffffffff84821080,&local_80);
-  if (*(short *)(iVar3 + 0x165c) != *(short *)(iVar3 + 0x16ae)) {
-    MyAssertHandler(0xffffffff821cff90,0x24f,0,0xffffffff82000f98,0xffffffff821d00d8);
+  pGVar1 = (GfxCmdBufSourceState *)__savegprlr_29(param_1);
+  pafVar2 = (float (*) [4])R_GetCodeMatrix(pGVar1,0x53,0);
+  local_90[0] = 0.0;
+  local_90[1] = 0.0;
+  local_90[2] = -32.0;
+  local_90[3] = 0.0;
+  MatrixTransformVector44(local_90,pafVar2,afStack_70);
+  MatrixTransformVector44(afStack_70,(float (*) [4])&g_drawConsts,local_90 + 4);
+  if (pGVar1->constVersions[0x66] != pGVar1->matrixVersions[5]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x24f,0,
+                    "%s");
   }
-  puVar4 = &uStack_68;
-  puVar5 = (undefined8 *)(iVar3 + 0x4f8);
-  lVar6 = 8;
+  puVar3 = &uStack_68;
+  pfVar4 = (pGVar1->matrices).matrix[0x13].m[3] + 2;
+  lVar5 = 8;
   do {
-    puVar5 = puVar5 + 1;
-    puVar4 = puVar4 + 1;
-    *puVar4 = *puVar5;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  local_30 = *(float *)(iVar3 + 0x1540) + local_30;
-  local_2c = *(float *)(iVar3 + 0x1544) + local_2c;
-  local_28 = *(float *)(iVar3 + 0x1548) + local_28;
-  MatrixMultiply44(local_60,0xffffffff84821080,param_2);
-  iVar1 = (int)param_2;
-  *(float *)(iVar1 + 0x30) = local_80 + *(float *)(iVar1 + 0x30);
-  *(float *)(iVar1 + 0x34) = local_7c + *(float *)(iVar1 + 0x34);
-  *(float *)(iVar1 + 0x38) = local_78 + *(float *)(iVar1 + 0x38);
-  *(float *)(iVar1 + 0x3c) = local_74 + *(float *)(iVar1 + 0x3c);
-  *(undefined2 *)(iVar3 + 0x1654) = *(undefined2 *)(iVar3 + 0x16ac);
+    pfVar4 = pfVar4 + 2;
+    puVar3 = puVar3 + 1;
+    *puVar3 = *(undefined8 *)pfVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  local_30 = pGVar1->eyeOffset[0] + local_30;
+  local_2c = pGVar1->eyeOffset[1] + local_2c;
+  local_28 = pGVar1->eyeOffset[2] + local_28;
+  MatrixMultiply44((float (*) [4])local_60,(float (*) [4])&g_drawConsts,param_2);
+  param_2[3][0] = local_90[4] + param_2[3][0];
+  param_2[3][1] = local_7c + param_2[3][1];
+  param_2[3][2] = local_78 + param_2[3][2];
+  param_2[3][3] = local_74 + param_2[3][3];
+  pGVar1->constVersions[0x62] = pGVar1->matrixVersions[4];
   __restgprlr_29();
   return;
 }
@@ -930,24 +1065,30 @@ void R_GenerateWorldOutdoorLookupMatrix(undefined8 param_1,undefined8 param_2)
 
 // 827813D0  R_HW_SetBackStencilOp  (gfx_d3d/r_setstate_d3d.h:554)
 
-void R_HW_SetBackStencilOp(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+void R_HW_SetBackStencilOp(D3DDevice *param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar1 = __savegprlr_26();
+  uVar4 = (ulonglong)(int)param_4;
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_26(param_1);
   do {
     D3DDevice_SetRenderState_CCWStencilPass
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_2 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar2 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_CCWStencilFail
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_3 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar3 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_CCWStencilZFail
-              (uVar1,*(undefined4 *)(&DAT_821cfce4 + (int)((param_4 & 0xffffffff) << 2)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilOpTable + (int)((uVar4 & 0xffffffff) << 2)));
+  } while (alwaysfails != 0);
   __restgprlr_26();
   return;
 }
@@ -955,26 +1096,35 @@ void R_HW_SetBackStencilOp(undefined8 param_1,ulonglong param_2,ulonglong param_
 
 // 82781450  R_HW_SetPolygonOffset  (gfx_d3d/r_setstate_d3d.h:588)
 
-void R_HW_SetPolygonOffset(undefined8 param_1,double param_2)
+void R_HW_SetPolygonOffset(D3DDevice *param_1,float param_2,float param_3)
 
 {
-  undefined8 uVar1;
+  float fVar1;
+  float fVar2;
+  D3DDevice *pDVar3;
   double extraout_f1;
+  double dVar4;
+  float fStack0000001c;
   float fStack00000024;
   
-  uVar1 = __savegprlr_29();
-  if (DAT_84617949 == '\0') {
-    param_2 = param_2 * 2.0;
+  dVar4 = (double)param_3;
+  pDVar3 = (D3DDevice *)__savegprlr_29((double)param_2,param_1);
+  fVar1 = (float)extraout_f1;
+  fStack00000024 = (float)dVar4;
+  fStack0000001c = fVar1;
+  if (gfxMetrics.slopeScaleDepthBias == false) {
+    fStack00000024 = (float)(dVar4 * 2.0);
+    fVar2 = fStack00000024;
   }
   else {
     do {
-      D3DDevice_SetRenderState_SlopeScaleDepthBias(uVar1,(float)extraout_f1);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetRenderState_SlopeScaleDepthBias(pDVar3,(ulong)fVar1);
+      fVar2 = fStack00000024;
+    } while (alwaysfails != 0);
   }
-  fStack00000024 = (float)param_2;
   do {
-    D3DDevice_SetRenderState_DepthBias(uVar1,fStack00000024);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetRenderState_DepthBias(pDVar3,(ulong)fVar2);
+  } while (alwaysfails != 0);
   __restgprlr_29();
   return;
 }
@@ -982,13 +1132,18 @@ void R_HW_SetPolygonOffset(undefined8 param_1,double param_2)
 
 // 8277D930  R_DeriveCodeMatrix  (gfx_d3d/r_state.cpp:604)
 
-void R_DeriveCodeMatrix(int param_1,longlong param_2,uint param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DeriveCodeMatrix(GfxCmdBufSourceState *param_1,GfxCodeMatrices *param_2,uint param_3)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   undefined8 *puVar2;
-  undefined8 *puVar3;
-  longlong lVar4;
+  float *pfVar3;
+  bool *pbVar4;
+  float *pfVar5;
+  longlong lVar6;
   
   if (param_3 < 0x19) {
     if (param_3 == 0x18) {
@@ -997,40 +1152,40 @@ void R_DeriveCodeMatrix(int param_1,longlong param_2,uint param_3)
     }
     switch(param_3) {
     case 0:
-      puVar2 = (undefined8 *)(param_1 + -8);
-      puVar3 = (undefined8 *)(param_1 + 0x13e8);
-      lVar4 = 8;
+      puVar2 = (undefined8 *)&param_1[-1].field_0x1758;
+      pbVar4 = &(param_1->input).noLitPrepass;
+      lVar6 = 8;
       do {
-        puVar3 = puVar3 + 1;
+        pbVar4 = pbVar4 + 8;
         puVar2 = puVar2 + 1;
-        *puVar2 = *puVar3;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
-      *(undefined2 *)(param_1 + 0x1634) = *(undefined2 *)(param_1 + 0x16a4);
+        *puVar2 = *(undefined8 *)pbVar4;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      param_1->constVersions[0x52] = param_1->matrixVersions[0];
       return;
     case 4:
-      puVar3 = (undefined8 *)(param_1 + 0x1428);
-      puVar2 = (undefined8 *)(param_1 + 0xf8);
-      lVar4 = 8;
+      pfVar5 = (param_1->viewParms).viewMatrix.m[3] + 2;
+      pfVar3 = (param_1->matrices).matrix[3].m[3] + 2;
+      lVar6 = 8;
       do {
-        puVar3 = puVar3 + 1;
-        puVar2 = puVar2 + 1;
-        *puVar2 = *puVar3;
-        lVar4 = lVar4 + -1;
-      } while (lVar4 != 0);
-      if (*(int *)(param_1 + 0x16d4) == 2) {
-        *(undefined4 *)(param_1 + 0x138) = *(undefined4 *)(param_1 + 0x153c);
+        pfVar5 = pfVar5 + 2;
+        pfVar3 = pfVar3 + 2;
+        *(undefined8 *)pfVar3 = *(undefined8 *)pfVar5;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      if (param_1->depthHackFlags == 2) {
+        (param_1->matrices).matrix[4].m[3][2] = (param_1->viewParms).camera.depthHackNearClip;
       }
-      *(undefined2 *)(param_1 + 0x163c) = *(undefined2 *)(param_1 + 0x16a6);
+      param_1->constVersions[0x56] = param_1->matrixVersions[1];
       return;
     case 8:
-      R_DeriveViewProjectionMatrix();
+      R_DeriveViewProjectionMatrix(param_1);
       return;
     case 0xc:
-      R_DeriveShadowLookupMatrix();
+      R_DeriveShadowLookupMatrix(param_1);
       return;
     case 0x10:
-      R_GenerateWorldOutdoorLookupMatrix(param_1,param_2 + 0x400);
+      R_GenerateWorldOutdoorLookupMatrix(param_1,(float (*) [4])(param_2->matrix + 0x10));
       return;
     }
   }
@@ -1058,221 +1213,277 @@ void R_DeriveCodeMatrix(int param_1,longlong param_2,uint param_3)
       return;
     }
   }
-  if (DAT_84013128 != 0) {
+  if (alwaysfails != 0) {
     return;
   }
-  uVar1 = va(0xffffffff8208da88,param_3);
-  MyAssertHandler(0xffffffff821cff90,0x28c,1,uVar1);
+  pcVar1 = va("unhandled case %i");
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x28c,1,
+                  pcVar1);
   return;
 }
 
 
 // 8277C8C8  D3DTag_Index  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:615)
 
-int D3DTag_Index(int param_1)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong D3DTag_Index(_D3DTAG param_1)
 
 {
-  return param_1 >> 0x10;
+  return (int)param_1 >> 0x10;
 }
 
 
 // 8277C8D0  D3DTag_SubsetMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:623)
 
-ulonglong D3DTag_SubsetMask(ulonglong param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "_D3DTAG": Some values do not have unique names */
+
+ulong64 D3DTag_SubsetMask(_D3DTAG param_1,ulong param_2,ulong param_3)
 
 {
-  return (ulonglong)(-0x8000000000000000 >> (param_3 - param_2 & 0x7fU)) >>
-         ((param_1 & 0xff) + param_2 & 0x7f);
+  return (ulonglong)
+         (-0x8000000000000000 >> ((longlong)(int)param_3 - (longlong)(int)param_2 & 0x7fU)) >>
+         (((ulonglong)param_1 & 0xff) + (longlong)(int)param_2 & 0x7f);
 }
 
 
 // 8277C8F8  D3DTag_SamplerMask  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:636)
 
-ulonglong D3DTag_SamplerMask(longlong param_1)
+ulong64 D3DTag_SamplerMask(ulong param_1)
 
 {
-  return 0x8000000000000000 >> (param_1 + 0x20U & 0x7f);
+  return 0x8000000000000000 >> ((longlong)(int)param_1 + 0x20U & 0x7f);
 }
 
 
 // 8277C910  D3DTagCollection_Set  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:648)
 
-void D3DTagCollection_Set(int param_1,int param_2,ulonglong param_3)
+void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param_3)
 
 {
-  *(ulonglong *)(param_2 * 8 + param_1) = *(ulonglong *)(param_2 * 8 + param_1) | param_3;
+  param_1->m_Mask[param_2] = param_1->m_Mask[param_2] | param_3;
   return;
 }
 
 
 // 8277DB78  R_GetCodeMatrix  (gfx_d3d/r_state.cpp:659)
 
-void R_GetCodeMatrix(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+float * R_GetCodeMatrix(GfxCmdBufSourceState *param_1,uint param_2,uint param_3)
 
 {
-  short sVar1;
-  int iVar2;
-  ulonglong uVar3;
+  ushort uVar1;
+  GfxCmdBufSourceState *pGVar2;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
+  ulonglong uVar5;
   longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  float *pfVar7;
+  longlong lVar8;
   ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
   
-  lVar5 = __savegprlr_22();
-  uVar9 = param_2 - 0x52;
-  iVar4 = ((int)((uVar9 & 0xffffffff) >> 2) + 0xb52) * 2;
-  iVar2 = (int)lVar5;
-  if (*(short *)(iVar4 + iVar2) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x29c,0,0xffffffff821d02b0,0xffffffff821d0260,param_2);
+  uVar9 = (ulonglong)(int)param_3;
+  lVar8 = (longlong)(int)param_2;
+  lVar6 = __savegprlr_22(param_1);
+  uVar12 = lVar8 - 0x52;
+  iVar3 = (int)((uVar12 & 0xffffffff) >> 2);
+  pGVar2 = (GfxCmdBufSourceState *)lVar6;
+  if (pGVar2->matrixVersions[iVar3] == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x29c,0,
+                    "%s\n\t(sourceIndex) = %i");
   }
-  if (3 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cff90,0x29d,0,0xffffffff821d0234,param_3,3);
+  if (3 < (uVar9 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x29d,0,
+                    "firstRow not in [0, 3]\n\t%i not in [0, %i]");
   }
-  sVar1 = *(short *)(iVar4 + iVar2);
-  iVar4 = (int)((param_2 + 0xac8U & 0x7fffffff) << 1);
-  if (*(short *)(iVar4 + iVar2) != sVar1) {
-    uVar3 = uVar9 & 0xfffffffc;
-    if (*(short *)((int)((uVar3 + 0xb1a & 0xffffffff) << 1) + iVar2) != sVar1) {
-      R_DeriveCodeMatrix(lVar5,lVar5,uVar3);
-      if ((uVar9 & 0xffffffff) == uVar3) goto LAB_8277dd88;
-      if (*(short *)(iVar4 + iVar2) == sVar1) {
-        MyAssertHandler(0xffffffff821cff90,0x2ab,0,0xffffffff821d02b0,0xffffffff821d01fc,param_2);
+  uVar1 = pGVar2->matrixVersions[iVar3];
+  iVar3 = (int)((lVar8 + 0xac8U & 0x7fffffff) << 1);
+  if (*(ushort *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar3) != uVar1) {
+    uVar5 = uVar12 & 0xfffffffc;
+    if (*(ushort *)
+         ((int)(pGVar2->matrices).matrix[0].m[0] + (int)((uVar5 + 0xb1a & 0xffffffff) << 1)) !=
+        uVar1) {
+      R_DeriveCodeMatrix(pGVar2,&pGVar2->matrices,(uint)uVar5);
+      if ((uVar12 & 0xffffffff) == uVar5) goto LAB_8277dd88;
+      if (*(ushort *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar3) == uVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2ab
+                        ,0,"%s\n\t(sourceIndex) = %i");
       }
     }
-    uVar7 = uVar9 ^ 2;
-    *(short *)(iVar4 + iVar2) = sVar1;
-    if (*(short *)((int)((uVar7 + 0xb1a & 0xffffffff) << 1) + iVar2) == sVar1) {
-      MatrixTranspose44((uVar7 & 0x3ffffff) * 0x40 + lVar5,(uVar9 & 0x3ffffff) * 0x40 + lVar5);
+    uVar10 = uVar12 ^ 2;
+    *(ushort *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar3) = uVar1;
+    if (*(ushort *)
+         ((int)(pGVar2->matrices).matrix[0].m[0] + (int)((uVar10 + 0xb1a & 0xffffffff) << 1)) ==
+        uVar1) {
+      MatrixTranspose44((float *)((int)(pGVar2->matrices).matrix[0].m[0] +
+                                 (int)((uVar10 & 0xffffffff) << 6)),
+                        (float *)((int)(pGVar2->matrices).matrix[0].m[0] +
+                                 (int)((uVar12 & 0xffffffff) << 6)));
     }
     else {
-      uVar8 = uVar9 ^ 1;
-      iVar4 = (int)((uVar8 + 0xb1a & 0xffffffff) << 1);
-      if (*(short *)(iVar4 + iVar2) == sVar1) {
-        lVar6 = (uVar8 & 0x3ffffff) * 0x40 + lVar5;
+      uVar11 = uVar12 ^ 1;
+      iVar3 = (int)((uVar11 + 0xb1a & 0xffffffff) << 1);
+      if (*(ushort *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar3) == uVar1) {
+        iVar4 = (int)((uVar12 & 0xffffffff) << 6);
+        pfVar7 = (float *)((int)(pGVar2->matrices).matrix[0].m[0] +
+                          (int)((uVar11 & 0xffffffff) << 6));
       }
       else {
-        if ((uVar9 & 0xffffffff) != (uVar3 | 3)) {
-          MyAssertHandler(0xffffffff821cff90,0x2be,0,0xffffffff82000f98,0xffffffff821d01a0);
+        if ((uVar12 & 0xffffffff) != (uVar5 | 3)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",
+                          0x2be,0,"%s");
         }
-        if ((uVar7 & 0xffffffff) != (uVar3 | 1)) {
-          MyAssertHandler(0xffffffff821cff90,0x2bf,0,0xffffffff82000f98,0xffffffff821d0160);
+        if ((uVar10 & 0xffffffff) != (uVar5 | 1)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",
+                          0x2bf,0,"%s");
         }
-        if ((uVar8 & 0xffffffff) != (uVar3 | 2)) {
-          MyAssertHandler(0xffffffff821cff90,0x2c0,0,0xffffffff82000f98,0xffffffff821d0120);
+        if ((uVar11 & 0xffffffff) != (uVar5 | 2)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",
+                          0x2c0,0,"%s");
         }
-        lVar6 = (uVar8 & 0x3ffffff) * 0x40 + lVar5;
-        MatrixTranspose44((uVar9 & 0x3fffffc) * 0x40 + lVar5,lVar6);
-        *(short *)(iVar4 + iVar2) = sVar1;
+        pfVar7 = (float *)((int)(pGVar2->matrices).matrix[0].m[0] +
+                          (int)((uVar11 & 0xffffffff) << 6));
+        MatrixTranspose44((float *)((int)(pGVar2->matrices).matrix[0].m[0] + (int)(uVar5 << 6)),
+                          pfVar7);
+        iVar4 = (int)((uVar12 & 0xffffffff) << 6);
+        *(ushort *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar3) = uVar1;
       }
-      MatrixInverse44(lVar6,(uVar9 & 0x3ffffff) * 0x40 + lVar5);
+      MatrixInverse44(pfVar7,(float *)((int)(pGVar2->matrices).matrix[0].m[0] + iVar4));
     }
   }
 LAB_8277dd88:
-  __restgprlr_22(((uVar9 & 0x3fffffff) * 4 + param_3 & 0xfffffff) * 0x10 + lVar5);
-  return;
+  pfVar7 = (float *)__restgprlr_22(((uVar12 & 0x3fffffff) * 4 + uVar9 & 0xfffffff) * 0x10 + lVar6);
+  return pfVar7;
 }
 
 
 // 8277DDA0  R_GetTextureFromCode  (gfx_d3d/r_state.cpp:715)
 
-void R_GetTextureFromCode(undefined8 param_1,ulonglong param_2,byte *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+GfxImage * R_GetTextureFromCode(GfxCmdBufSourceState *param_1,uint param_2,uchar *param_3)
 
 {
   byte bVar1;
-  int iVar3;
-  undefined8 uVar2;
+  int iVar2;
+  GfxImage *pGVar3;
+  ulonglong uVar4;
   
-  iVar3 = __savegprlr_28();
-  if (0x1d < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cff90,0x2cc,0,0xffffffff821be600,param_2,0x1e);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_28(param_1);
+  if (0x1d < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2cc,0,
+                    "codeTexture doesn\'t index TEXTURE_SRC_CODE_COUNT\n\t%i not in [0, %i)");
   }
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x2cd,0,0xffffffff82000f98,0xffffffff82165ff0);
+  if (iVar2 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2cd,0,
+                    "%s");
   }
-  bVar1 = *(byte *)(iVar3 + (int)param_2 + 0x1398);
+  bVar1 = *(byte *)(iVar2 + (int)uVar4 + 0x1398);
   *param_3 = bVar1;
-  if ((*(char *)(DAT_845aa770 + 0xc) != '\0') &&
-     (((param_2 & 0xffffffff) == 7 || ((param_2 & 0xffffffff) == 6)))) {
+  if (((sm_forceLinear->current).enabled != false) &&
+     (((uVar4 & 0xffffffff) == 7 || ((uVar4 & 0xffffffff) == 6)))) {
     *param_3 = bVar1 & 0xf8 | 2;
   }
   if ((*param_3 & 7) == 0) {
-    uVar2 = va(0xffffffff821d02ec,param_2);
-    MyAssertHandler(0xffffffff821cff90,0x2d7,0,0xffffffff820011f4,0xffffffff821d02c8,uVar2);
+    va("R_GetTextureFromCode %d, %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2d7,0,
+                    "%s\n\t%s");
   }
-  __restgprlr_28(*(undefined4 *)((int)((param_2 + 0x4c8 & 0xffffffff) << 2) + iVar3));
-  return;
+  pGVar3 = (GfxImage *)
+           __restgprlr_28(*(undefined4 *)((int)((uVar4 + 0x4c8 & 0xffffffff) << 2) + iVar2));
+  return pGVar3;
 }
 
 
 // 8277DEA8  R_TextureFromCodeError  (gfx_d3d/r_state.cpp:735)
 
-void R_TextureFromCodeError(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_TextureFromCodeError(GfxCmdBufSourceState *param_1,uint param_2)
 
 {
-  if ((&DAT_846180cc)[param_2] == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x2e0,0,0xffffffff821d0330,0xffffffff821d0348,param_2);
+  if (rg.codeImageNames[param_2] == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2e0,0,
+                    "%s\n\t(codeTexture) = %i");
   }
-  Com_Error(1,0xffffffff821d0308,(&DAT_846180cc)[param_2]);
+  Com_Error(ERR_DROP,"Tried to use \'%s\' when it isn\'t valid\n");
   return;
 }
 
 
 // 8277DF30  R_OverrideGrayscaleImage  (gfx_d3d/r_state.cpp:742)
 
-undefined4 R_OverrideGrayscaleImage(int param_1,undefined4 *param_2)
+GfxImage * R_OverrideGrayscaleImage(int param_1,dvar_t *param_2)
 
 {
-  undefined8 uVar1;
-  
   if (param_1 == 2) {
-    return DAT_84616508;
+    return rgp.whiteImage;
   }
   if (param_1 == 0) {
-    return DAT_8461650c;
+    return rgp.blackImage;
   }
   if (param_1 != 3) {
-    uVar1 = va(0xffffffff821d0390,*param_2);
-    MyAssertHandler(0xffffffff821cff90,0x2ed,0,0xffffffff820011f4,0xffffffff821d036c,uVar1);
+    va("%s = %i");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2ed,0,
+                    "%s\n\t%s");
   }
-  return DAT_84616510;
+  return rgp.grayImage;
 }
 
 
 // 8277FED8  R_SetLightmap  (gfx_d3d/r_state.cpp:757)
 
-void R_SetLightmap(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetLightmap(GfxCmdBufContext param_1,uint param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  MaterialPass *pMVar1;
+  GfxCmdBufContext GVar2;
+  ulonglong uVar3;
+  GfxImage *pGVar4;
+  GfxCmdBufContext GStack00000010;
   
-  iVar1 = __savegprlr_26();
-  if (DAT_84613714 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x2f9,0,0xffffffff82000f98,0xffffffff821a7440);
+  uVar3 = (ulonglong)(int)param_2;
+  GVar2 = (GfxCmdBufContext)__savegprlr_26();
+  GStack00000010 = GVar2;
+  if (g_worldDraw == (GfxWorldDraw *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x2f9,0,
+                    "%s");
   }
-  iVar3 = *(int *)(iVar1 + 0xf8);
-  if ((*(byte *)(iVar3 + 99) & 4) != 0) {
-    if ((ulonglong)*(uint *)(DAT_84613714 + 0x1c) <= (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821cff90,0x301,0,0xffffffff821a73f8,param_2);
+  pMVar1 = (GStack00000010.state)->pass;
+  if ((pMVar1->customSamplerFlags & 4) != 0) {
+    if ((ulonglong)(uint)g_worldDraw->lightmapCount <= (uVar3 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x301,0
+                      ,"lmapIndex doesn\'t index g_worldDraw->lightmapCount\n\t%i not in [0, %i)");
     }
-    iVar2 = *(int *)(DAT_84613714 + 0x30);
-    if (iVar2 == 0) {
-      iVar2 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)((param_2 & 0xffffffff) << 3) + 4);
+    pGVar4 = g_worldDraw->lightmapOverrideSecondary;
+    if (pGVar4 == (GfxImage *)0x0) {
+      pGVar4 = *(GfxImage **)
+                ((int)&g_worldDraw->lightmaps->secondary + (int)((uVar3 & 0xffffffff) << 3));
     }
-    R_SetSampler(iVar1,3,0x62,iVar2);
+    R_SetSampler(GVar2,3,'b',pGVar4);
   }
-  if ((*(byte *)(iVar3 + 99) & 2) != 0) {
-    if ((ulonglong)*(uint *)(DAT_84613714 + 0x1c) <= (param_2 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff821cff90,0x30f,0,0xffffffff821a73f8,param_2);
+  if ((pMVar1->customSamplerFlags & 2) != 0) {
+    if ((ulonglong)(uint)g_worldDraw->lightmapCount <= (uVar3 & 0xffffffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x30f,0
+                      ,"lmapIndex doesn\'t index g_worldDraw->lightmapCount\n\t%i not in [0, %i)");
     }
-    iVar3 = *(int *)(DAT_84613714 + 0x2c);
-    if (iVar3 == 0) {
-      iVar3 = *(int *)(*(int *)(DAT_84613714 + 0x20) + (int)((param_2 & 0xffffffff) << 3));
+    pGVar4 = g_worldDraw->lightmapOverridePrimary;
+    if (pGVar4 == (GfxImage *)0x0) {
+      pGVar4 = *(GfxImage **)
+                ((int)&g_worldDraw->lightmaps->primary + (int)((uVar3 & 0xffffffff) << 3));
     }
-    R_SetSampler(iVar1,2,0x62,iVar3);
+    R_SetSampler(GVar2,2,'b',pGVar4);
   }
   __restgprlr_26();
   return;
@@ -1281,28 +1492,40 @@ void R_SetLightmap(undefined8 param_1,ulonglong param_2)
 
 // 82780010  R_SetReflectionProbe  (gfx_d3d/r_state.cpp:798)
 
-void R_SetReflectionProbe(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetReflectionProbe(GfxCmdBufContext param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
+  GfxCmdBufContext GVar2;
+  ulonglong uVar3;
+  GfxCmdBufContext GStack00000010;
   
-  iVar2 = __savegprlr_27();
-  if (DAT_84613714 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821cff90,799,0,0xffffffff82000f98,0xffffffff821a7440);
+  uVar3 = (ulonglong)(int)param_2;
+  GVar2 = (GfxCmdBufContext)__savegprlr_27();
+  GStack00000010 = GVar2;
+  if (g_worldDraw == (GfxWorldDraw *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",799,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0xff) {
-    MyAssertHandler(0xffffffff821cff90,800,0,0xffffffff82000f98,0xffffffff82066058);
+  if ((uVar3 & 0xffffffff) == 0xff) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",800,0,
+                    "%s");
   }
-  if ((ulonglong)*DAT_84613714 <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821cff90,0x322,0,0xffffffff821bf240,param_2);
+  if ((ulonglong)g_worldDraw->reflectionProbeCount <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x322,0,
+                    "reflectionProbeIndex doesn\'t index g_worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
+                   );
   }
-  iVar1 = (int)((param_2 & 0xffffffff) << 2);
-  if (*(int *)(DAT_84613714[1] + iVar1) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x324,0,0xffffffff82000f98,0xffffffff821d0b0c);
+  iVar1 = (int)((uVar3 & 0xffffffff) << 2);
+  if (*(int *)((int)g_worldDraw->reflectionProbes + iVar1) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x324,0,
+                    "%s");
   }
-  if ((*(byte *)(*(int *)(iVar2 + 0xf8) + 99) & 1) != 0) {
-    R_SetSampler(iVar2,1,0x72,*(undefined4 *)(DAT_84613714[1] + iVar1));
+  if (((GStack00000010.state)->pass->customSamplerFlags & 1) != 0) {
+    R_SetSampler(GVar2,1,'r',*(GfxImage **)((int)g_worldDraw->reflectionProbes + iVar1));
   }
   __restgprlr_27();
   return;
@@ -1311,60 +1534,70 @@ void R_SetReflectionProbe(undefined8 param_1,ulonglong param_2)
 
 // 8277DFE8  R_GetClipDepthNear  (gfx_d3d/r_state.cpp:818)
 
-undefined8 R_GetClipDepthNear(int param_1)
+float R_GetClipDepthNear(GfxDepthRangeType param_1)
 
 {
-  if (param_1 == 0) {
-    return 0x3fef800000000000;
+  if (param_1 == GFX_DEPTH_RANGE_SCENE) {
+    return 0.984375;
   }
-  return 0x3ff0000000000000;
+  return 1.0;
 }
 
 
 // 8277E008  R_GetClipDepthFar  (gfx_d3d/r_state.cpp:824)
 
-undefined8 R_GetClipDepthFar(int param_1)
+float R_GetClipDepthFar(GfxDepthRangeType param_1)
 
 {
-  if (param_1 == 0) {
-    return 0;
+  if (param_1 == GFX_DEPTH_RANGE_SCENE) {
+    return 0.0;
   }
-  return 0x3fef800000000000;
+  return 0.984375;
 }
 
 
 // 8277E028  R_ChangeDepthRange  (gfx_d3d/r_state.cpp:830)
 
-void R_ChangeDepthRange(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ChangeDepthRange(GfxCmdBufState *param_1,GfxDepthRangeType param_2)
 
 {
   undefined4 uVar1;
-  undefined4 uVar2;
-  int iVar3;
+  D3DDevice *pDVar2;
+  undefined4 uVar3;
   int iVar4;
+  int in_r5;
+  char *in_r6;
   
-  iVar3 = __savegprlr_29();
-  iVar4 = (int)param_2;
-  if (*(int *)(iVar3 + 0x100) == iVar4) {
-    MyAssertHandler(0xffffffff821cff90,0x341,1,0xffffffff821d0398,*(int *)(iVar3 + 0x100),param_2);
+  iVar4 = __savegprlr_29(param_1);
+  if (*(GfxDepthRangeType *)(iVar4 + 0x100) == param_2) {
+    in_r6 = "state->depthRangeType != depthRangeType\n\t%i, %i";
+    in_r5 = 1;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x341,1,
+                    "state->depthRangeType != depthRangeType\n\t%i, %i");
   }
-  *(int *)(iVar3 + 0x100) = iVar4;
+  *(GfxDepthRangeType *)(iVar4 + 0x100) = param_2;
   uVar1 = 0x3f7c0000;
-  uVar2 = uVar1;
-  if (iVar4 != 0) {
-    uVar2 = 0x3f800000;
+  uVar3 = uVar1;
+  if (param_2 != GFX_DEPTH_RANGE_SCENE) {
+    uVar3 = 0x3f800000;
   }
-  *(undefined4 *)(iVar3 + 0x104) = uVar2;
-  if (iVar4 == 0) {
+  *(undefined4 *)(iVar4 + 0x104) = uVar3;
+  if (param_2 == GFX_DEPTH_RANGE_SCENE) {
     uVar1 = 0;
   }
-  iVar4 = *(int *)(iVar3 + 0xc0);
-  *(undefined4 *)(iVar3 + 0x108) = uVar1;
-  if (iVar4 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x347,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  pDVar2 = *(D3DDevice **)(iVar4 + 0xc0);
+  *(undefined4 *)(iVar4 + 0x108) = uVar1;
+  if (pDVar2 == (D3DDevice *)0x0) {
+    in_r6 = "%s";
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x347,0,
+                    "%s");
   }
-  R_HW_SetViewport((double)*(float *)(iVar3 + 0x104),(double)*(float *)(iVar3 + 0x108),iVar4,
-                   iVar3 + 0xb58);
+  R_HW_SetViewport(pDVar2,(GfxViewport *)(iVar4 + 0xb58),*(float *)(iVar4 + 0x104),
+                   *(float *)(iVar4 + 0x108),in_r5,(int)in_r6,*(int *)(iVar4 + 0xb34),
+                   *(int *)(iVar4 + 0xb38));
   __restgprlr_29();
   return;
 }
@@ -1372,73 +1605,88 @@ void R_ChangeDepthRange(undefined8 param_1,undefined8 param_2)
 
 // 8277E100  R_BeginMaterial  (gfx_d3d/r_state.cpp:845)
 
-void R_BeginMaterial(undefined8 param_1,ulonglong param_2,longlong param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+int R_BeginMaterial(GfxCmdBufState *param_1,Material *param_2,MaterialTechniqueType param_3)
 
 {
   int iVar1;
   int iVar2;
+  MaterialTechniqueSet *pMVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   
-  iVar1 = __savegprlr_27();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x350,0,0xffffffff82000f98,0xffffffff82020dcc);
+  lVar5 = (longlong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_27(param_1);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x350,0,
+                    "%s");
   }
-  iVar2 = Material_GetTechniqueSet(param_2);
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821b93c0,0x76,0,0xffffffff82000f98,0xffffffff821bb4c4);
+  pMVar3 = Material_GetTechniqueSet((Material *)uVar4);
+  if (pMVar3 == (MaterialTechniqueSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_inline.h",
+                    0x76,0,"%s");
   }
-  iVar2 = *(int *)((int)((param_3 + 3U & 0xffffffff) << 2) + iVar2);
-  if (iVar2 == 0) {
-    __restgprlr_27(0);
-    return;
+  iVar1 = *(int *)(pMVar3->unused + (int)((lVar5 + 3U & 0xffffffff) << 2) + -5);
+  if (iVar1 == 0) {
+    iVar2 = __restgprlr_27(0);
+    return iVar2;
   }
-  *(int *)(iVar1 + 0xec) = (int)param_2;
-  *(int *)(iVar1 + 0xf0) = (int)param_3;
-  *(int *)(iVar1 + 0xf4) = iVar2;
-  __restgprlr_27(1);
-  return;
+  *(Material **)(iVar2 + 0xec) = (Material *)uVar4;
+  *(int *)(iVar2 + 0xf0) = (int)lVar5;
+  *(int *)(iVar2 + 0xf4) = iVar1;
+  iVar2 = __restgprlr_27(1);
+  return iVar2;
 }
 
 
 // 827814D8  R_SetAlphaTestFunction  (gfx_d3d/r_state.h:853)
 
-void R_SetAlphaTestFunction(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetAlphaTestFunction(GfxCmdBufState *param_1,uint param_2)
 
 {
-  int iVar1;
+  D3DDevice *pDVar1;
   int iVar2;
-  char cVar3;
-  undefined8 uVar4;
+  ulonglong uVar3;
+  ulong uVar4;
+  ulong uVar5;
   
-  iVar2 = __savegprlr_26();
-  param_2 = param_2 & 0x3000;
-  if (param_2 == 0x1000) {
-    uVar4 = 4;
-    cVar3 = '\0';
+  uVar3 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_26(param_1);
+  uVar3 = uVar3 & 0x3000;
+  if (uVar3 == 0x1000) {
+    uVar5 = 4;
+    uVar4 = 0;
   }
   else {
-    if (param_2 == 0x2000) {
-      uVar4 = 1;
+    if (uVar3 == 0x2000) {
+      uVar5 = 1;
     }
     else {
-      if (param_2 != 0x3000) {
-        MyAssertHandler(0xffffffff821bda94,0x366,1,0xffffffff82000f98,0xffffffff821cfe80);
+      if (uVar3 != 0x3000) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x366,1
+                        ,"%s");
       }
-      uVar4 = 6;
+      uVar5 = 6;
     }
-    cVar3 = -0x80;
+    uVar4 = 0x80;
   }
-  iVar1 = *(int *)(iVar2 + 0xc0);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bda94,0x36c,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x36c,0,
+                    "%s");
   }
   do {
-    D3DDevice_SetRenderState_AlphaFunc(iVar1,uVar4);
-  } while (DAT_84013128 != 0);
-  if (*(char *)(iVar2 + 0xb10) != cVar3) {
+    D3DDevice_SetRenderState_AlphaFunc(pDVar1,uVar5);
+  } while (alwaysfails != 0);
+  if (*(byte *)(iVar2 + 0xb10) != uVar4) {
     do {
-      D3DDevice_SetRenderState_AlphaRef(iVar1,cVar3);
-    } while (DAT_84013128 != 0);
-    *(char *)(iVar2 + 0xb10) = cVar3;
+      D3DDevice_SetRenderState_AlphaRef(pDVar1,uVar4);
+    } while (alwaysfails != 0);
+    *(char *)(iVar2 + 0xb10) = (char)uVar4;
   }
   __restgprlr_26();
   return;
@@ -1447,37 +1695,37 @@ void R_SetAlphaTestFunction(undefined8 param_1,ulonglong param_2)
 
 // 8277E1B8  R_ClearAllStreamSources  (gfx_d3d/r_state.cpp:866)
 
-void R_ClearAllStreamSources(undefined8 param_1)
+void R_ClearAllStreamSources(GfxCmdBufPrimState *param_1)
 
 {
-  R_SetDoubleStreamSource(param_1,0,0,0,0,0,0);
+  R_SetDoubleStreamSource(param_1,(D3DVertexBuffer *)0x0,0,0,(D3DVertexBuffer *)0x0,0,0);
   return;
 }
 
 
 // 8277E1D8  R_DrawIndexedPrimitive  (gfx_d3d/r_state.cpp:875)
 
-void R_DrawIndexedPrimitive(undefined8 param_1,int param_2)
+void R_DrawIndexedPrimitive(GfxCmdBufPrimState *param_1,GfxDrawPrimArgs *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int *piVar3;
+  D3DDevice *pDVar1;
+  int iVar2;
+  undefined4 *puVar3;
   
-  piVar3 = (int *)__savegprlr_26();
-  iVar1 = *piVar3;
-  uVar2 = *(uint *)(param_2 + 4);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cff90,900,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  puVar3 = (undefined4 *)__savegprlr_26(param_1);
+  pDVar1 = (D3DDevice *)*puVar3;
+  iVar2 = param_2->triCount;
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",900,0,
+                    "%s");
   }
-  if (piVar3[3] != 4) {
-    MyAssertHandler(0xffffffff821cff90,0x397,0,0xffffffff82000f98,0xffffffff821d03c8);
+  if (puVar3[3] != 4) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x397,0,
+                    "%s");
   }
   do {
-    D3DDevice_DrawIndexedVertices
-              (iVar1,4,0,*(undefined4 *)(param_2 + 8),
-               (ulonglong)uVar2 + ((ulonglong)uVar2 & 0x7fffffff) * 2);
-  } while (DAT_84013128 != 0);
+    D3DDevice_DrawIndexedVertices(pDVar1,D3DPT_TRIANGLELIST,0,param_2->baseIndex,iVar2 * 3);
+  } while (alwaysfails != 0);
   __restgprlr_26();
   return;
 }
@@ -1485,35 +1733,40 @@ void R_DrawIndexedPrimitive(undefined8 param_1,int param_2)
 
 // 8277E288  R_DrawIndexedPrimitiveUP  (gfx_d3d/r_state.cpp:997)
 
-void R_DrawIndexedPrimitiveUP(undefined8 param_1,int *param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_DrawIndexedPrimitiveUP(GfxCmdBufState *param_1,GfxDrawPrimArgs *param_2)
 
 {
-  int iVar1;
+  D3DDevice *pDVar1;
   int iVar2;
+  uint in_stack_ffffff78;
   
-  iVar2 = __savegprlr_27();
-  iVar1 = *(int *)(iVar2 + 0xc0);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x3f0,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  iVar2 = __savegprlr_27(param_1);
+  pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x3f0,0,
+                    "%s");
   }
   if (*(int *)(iVar2 + 0xcc) != 8) {
     if (*(int *)(iVar2 + 0xcc) != 4) {
-      MyAssertHandler(0xffffffff821cff90,0x401,0,0xffffffff82000f98,0xffffffff821d03f0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x401,0
+                      ,"%s");
     }
     do {
       D3DDevice_DrawIndexedVerticesUP
-                (iVar1,4,0,*param_2,
-                 (ulonglong)(uint)param_2[1] + ((ulonglong)(uint)param_2[1] & 0x7fffffff) * 2,
-                 *(undefined4 *)(iVar2 + 0xb14),1,*(undefined4 *)(iVar2 + 0xb18));
-    } while (DAT_84013128 != 0);
+                (pDVar1,D3DPT_TRIANGLELIST,0,param_2->vertexCount,param_2->triCount * 3,
+                 *(void **)(iVar2 + 0xb14),D3DFMT_INDEX16,*(void **)(iVar2 + 0xb18),
+                 in_stack_ffffff78);
+    } while (alwaysfails != 0);
     __restgprlr_27();
     return;
   }
   do {
     D3DDevice_DrawVerticesUP
-              (iVar1,8,(longlong)(*param_2 / 3) + ((ulonglong)(uint)(*param_2 / 3) & 0x7fffffff) * 2
-               ,*(undefined4 *)(iVar2 + 0xb18),0x20);
-  } while (DAT_84013128 != 0);
+              (pDVar1,D3DPT_RECTLIST,(param_2->vertexCount / 3) * 3,*(void **)(iVar2 + 0xb18),0x20);
+  } while (alwaysfails != 0);
   __restgprlr_27();
   return;
 }
@@ -1521,48 +1774,59 @@ void R_DrawIndexedPrimitiveUP(undefined8 param_1,int *param_2)
 
 // 82781640  R_HW_SetRenderTarget  (gfx_d3d/r_state.h:1012)
 
-void R_HW_SetRenderTarget(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_HW_SetRenderTarget(GfxCmdBufState *param_1,GfxRenderTargetId param_2)
 
 {
-  int iVar1;
+  D3DDevice *pDVar1;
   int iVar2;
   int iVar3;
-  uint uVar4;
+  ulonglong uVar4;
   uint uVar5;
+  uint uVar6;
   
-  iVar3 = __savegprlr_26();
-  R_PixStartNamedRenderTarget(param_2);
-  iVar1 = *(int *)(iVar3 + 0xc0);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821bda94,0x3fc,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_26(param_1);
+  R_PixStartNamedRenderTarget((GfxRenderTargetId)uVar4);
+  pDVar1 = *(D3DDevice **)(iVar3 + 0xc0);
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x3fc,0,
+                    "%s");
   }
-  iVar2 = (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-  if ((&DAT_84762084)[*(int *)(iVar3 + 0xb68) * 5] != *(int *)((int)&DAT_84762084 + iVar2)) {
+  iVar2 = (int)((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+  if (gfxRenderTargets[*(int *)(iVar3 + 0xb68)].surface.color !=
+      *(D3DSurface **)((int)&gfxRenderTargets[0].surface.color + iVar2)) {
     do {
-      D3DDevice_SetRenderTarget_External(iVar1,0,*(undefined4 *)((int)&DAT_84762084 + iVar2));
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetRenderTarget_External
+                (pDVar1,0,*(D3DSurface **)((int)&gfxRenderTargets[0].surface.color + iVar2));
+    } while (alwaysfails != 0);
     *(undefined4 *)(iVar3 + 0xb58) = 0;
     *(undefined4 *)(iVar3 + 0xb5c) = 0;
-    *(undefined4 *)(iVar3 + 0xb60) = *(undefined4 *)(&DAT_8476208c + iVar2);
-    *(undefined4 *)(iVar3 + 0xb64) = *(undefined4 *)(&DAT_84762090 + iVar2);
+    *(undefined4 *)(iVar3 + 0xb60) = *(undefined4 *)((int)&gfxRenderTargets[0].width + iVar2);
+    *(undefined4 *)(iVar3 + 0xb64) = *(undefined4 *)((int)&gfxRenderTargets[0].height + iVar2);
     *(undefined4 *)(iVar3 + 0x104) = 0x3f800000;
     *(undefined4 *)(iVar3 + 0x100) = 0xffffffff;
     *(undefined4 *)(iVar3 + 0x108) = 0;
-    if ((*(ushort *)(*(int *)((int)&DAT_84762084 + iVar2) + 0x1c) & 0xf) == 1) {
-      uVar5 = *(uint *)(iVar3 + 0xb24) | 0x40000000;
-      uVar4 = *(uint *)(iVar3 + 0xb1c) | 0x40000000;
+    if ((*(ushort *)(*(int *)((int)&gfxRenderTargets[0].surface.color + iVar2) + 0x1c) & 0xf) == 1)
+    {
+      uVar6 = *(uint *)(iVar3 + 0xb24) | 0x40000000;
+      uVar5 = *(uint *)(iVar3 + 0xb1c) | 0x40000000;
     }
     else {
-      uVar5 = *(uint *)(iVar3 + 0xb24) & 0xbfffffff;
-      uVar4 = *(uint *)(iVar3 + 0xb1c) & 0xbfffffff;
+      uVar6 = *(uint *)(iVar3 + 0xb24) & 0xbfffffff;
+      uVar5 = *(uint *)(iVar3 + 0xb1c) & 0xbfffffff;
     }
-    *(uint *)(iVar3 + 0xb1c) = uVar4;
-    *(uint *)(iVar3 + 0xb24) = uVar5;
+    *(uint *)(iVar3 + 0xb1c) = uVar5;
+    *(uint *)(iVar3 + 0xb24) = uVar6;
   }
-  if ((&DAT_84762088)[*(int *)(iVar3 + 0xb68) * 5] != *(int *)((int)&DAT_84762088 + iVar2)) {
+  if (gfxRenderTargets[*(int *)(iVar3 + 0xb68)].surface.depthStencil !=
+      *(D3DSurface **)((int)&gfxRenderTargets[0].surface.depthStencil + iVar2)) {
     do {
-      D3DDevice_SetDepthStencilSurface(iVar1,*(undefined4 *)((int)&DAT_84762088 + iVar2));
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetDepthStencilSurface
+                (pDVar1,*(D3DSurface **)((int)&gfxRenderTargets[0].surface.depthStencil + iVar2));
+    } while (alwaysfails != 0);
   }
   __restgprlr_26();
   return;
@@ -1571,139 +1835,161 @@ void R_HW_SetRenderTarget(undefined8 param_1,ulonglong param_2)
 
 // 82780628  R_ChangeState_0  (gfx_d3d/r_state.cpp:1055)
 
-void R_ChangeState_0(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_ChangeState_0(GfxCmdBufState *param_1,uint param_2)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  D3DDevice *pDVar1;
+  D3DDevice *pDVar2;
+  GfxRenderTargetId GVar3;
+  int iVar4;
+  bool bVar5;
+  GfxCmdBufState *pGVar6;
+  uint uVar7;
   uint uVar8;
   ulonglong uVar9;
-  bool bVar10;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar12;
   
-  iVar5 = __savegprlr_20();
-  uVar9 = param_2 ^ *(uint *)(iVar5 + 0xb24);
-  if (((uVar9 & 0xffffffff) == 0) && (((*(uint *)(iVar5 + 0xb1c) ^ param_2) & 0x7000700) == 0))
+  uVar11 = (ulonglong)(int)param_2;
+  pGVar6 = (GfxCmdBufState *)__savegprlr_20(param_1);
+  uVar9 = uVar11 ^ pGVar6->activeStateBits[0];
+  if (((uVar9 & 0xffffffff) == 0) && (((pGVar6->refStateBits[0] ^ uVar11) & 0x7000700) == 0))
   goto LAB_82780a9c;
-  if ((DAT_84616684 == 0) || (DAT_84616688 == 0)) {
-    MyAssertHandler(0xffffffff821cff90,0x432,0,0xffffffff82000f98,0xffffffff821c6050);
+  if ((dx.d3d9 == (Direct3D *)0x0) || (dx.device == (D3DDevice *)0x0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x432,0,
+                    "%s");
   }
-  iVar1 = *(int *)(iVar5 + 0xc0);
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x435,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  pDVar1 = (pGVar6->prim).device;
+  if (pDVar1 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x435,0,
+                    "%s");
   }
   if ((uVar9 & 0x18000000) != 0) {
-    R_HW_SetColorMask(iVar1,param_2);
+    R_HW_SetColorMask(pDVar1,(uint)uVar11);
   }
   if ((uVar9 & 0x800) != 0) {
-    uVar2 = *(undefined4 *)(iVar5 + 0xc0);
+    pDVar2 = (pGVar6->prim).device;
     do {
-      D3DDevice_SetRenderState_AlphaTestEnable(uVar2,(~param_2 & 0xffffffff) >> 0xb & 1);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetRenderState_AlphaTestEnable(pDVar2,~(uint)uVar11 >> 0xb & 1);
+    } while (alwaysfails != 0);
   }
-  uVar6 = uVar9;
-  if ((param_2 & 0x800) != 0) {
-    if ((param_2 & 0x3000) != 0) {
-      MyAssertHandler(0xffffffff821cff90,0x43f,0,0xffffffff82000f98,0xffffffff821d0ddc);
+  uVar10 = uVar9;
+  if ((uVar11 & 0x800) != 0) {
+    if ((uVar11 & 0x3000) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x43f,0
+                      ,"%s");
     }
-    uVar6 = uVar9 << 0x20 | uVar9 & 0xffffcfff;
-    param_2 = (ulonglong)*(uint *)(iVar5 + 0xb24) & 0x3000 | param_2;
-    if (((*(uint *)(iVar5 + 0xb24) ^ param_2) & 0xffffffff) != (uVar9 & 0xffffcfff)) {
-      MyAssertHandler(0xffffffff821cff90,0x442,0,0xffffffff82000f98,0xffffffff821d0e04);
+    uVar10 = uVar9 & 0xffffcfff;
+    uVar11 = (ulonglong)pGVar6->activeStateBits[0] & 0x3000 | uVar11;
+    if (((pGVar6->activeStateBits[0] ^ uVar11) & 0xffffffff) != (uVar9 & 0xffffcfff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x442,0
+                      ,"%s");
     }
   }
-  if ((uVar6 & 0x3000) != 0) {
-    R_SetAlphaTestFunction(iVar5,param_2);
+  uVar7 = (uint)uVar10;
+  uVar12 = (uint)uVar11;
+  if ((uVar10 & 0x3000) != 0) {
+    R_SetAlphaTestFunction(pGVar6,uVar12);
   }
-  if ((uVar6 & 0xc000) != 0) {
-    R_HW_SetCullFace(iVar1,param_2);
+  if ((uVar10 & 0xc000) != 0) {
+    R_HW_SetCullFace(pDVar1,uVar12);
   }
-  if ((uVar6 & 0x80000000) != 0) {
+  if ((uVar10 & 0x80000000) != 0) {
     do {
-      D3DDevice_SetRenderState_FillMode(iVar1,-((param_2 & 0x80000000) != 0) & 0x25);
-    } while (DAT_84013128 != 0);
+      D3DDevice_SetRenderState_FillMode(pDVar1,-(uint)((uVar11 & 0x80000000) != 0) & 0x25);
+    } while (alwaysfails != 0);
   }
-  if ((uVar6 & 0x40000000) != 0) {
-    uVar8 = *(uint *)(iVar5 + 0xb68);
-    uVar9 = (ulonglong)uVar8;
-    if ((*(uint *)(iVar5 + 0xb24) & 0x40000000) == 0) {
-      if (uVar8 != 2) {
-        if (iVar1 != DAT_84616688) {
-          MyAssertHandler(0xffffffff821cff90,0x468,0,0xffffffff82000f98,0xffffffff821befd8);
+  if ((uVar10 & 0x40000000) != 0) {
+    GVar3 = pGVar6->renderTargetId;
+    uVar9 = (ulonglong)GVar3;
+    if ((pGVar6->activeStateBits[0] & 0x40000000) == 0) {
+      if (GVar3 != R_RENDERTARGET_SCENE) {
+        if (pDVar1 != dx.device) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",
+                          0x468,0,"%s");
         }
-        iVar3 = (int)((uVar9 + ((ulonglong)uVar8 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-        if ((*(ushort *)(*(int *)((int)&DAT_84762084 + iVar3) + 0x1c) & 0xf) != 0) {
-          MyAssertHandler(0xffffffff821cff90,0x469,0,0xffffffff82000f98,0xffffffff821d0d78);
+        iVar4 = (int)((uVar9 + ((ulonglong)GVar3 & 0x3fffffff) * 4 & 0xffffffff) << 2);
+        if ((*(ushort *)(*(int *)((int)&gfxRenderTargets[0].surface.color + iVar4) + 0x1c) & 0xf) !=
+            0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",
+                          0x469,0,"%s");
         }
-        iVar3 = *(int *)((int)&DAT_84762084 + iVar3);
-        uVar8 = *(uint *)(iVar3 + 0x1c) & 0xfff0ffff | 0x10000;
+        iVar4 = *(int *)((int)&gfxRenderTargets[0].surface.color + iVar4);
+        uVar8 = *(uint *)(iVar4 + 0x1c) & 0xfff0ffff | 0x10000;
         goto LAB_82780934;
       }
       uVar9 = 3;
     }
-    else if (uVar8 == 3) {
+    else if (GVar3 == R_RENDERTARGET_SCENE_GAMMA) {
       uVar9 = 2;
     }
     else {
-      if (iVar1 != DAT_84616688) {
-        MyAssertHandler(0xffffffff821cff90,0x45b,0,0xffffffff82000f98,0xffffffff821befd8);
+      if (pDVar1 != dx.device) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x45b
+                        ,0,"%s");
       }
-      iVar3 = (int)((uVar9 + ((ulonglong)uVar8 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-      if ((*(ushort *)(*(int *)((int)&DAT_84762084 + iVar3) + 0x1c) & 0xf) != 1) {
-        MyAssertHandler(0xffffffff821cff90,0x45c,0,0xffffffff82000f98,0xffffffff821d0c00);
+      iVar4 = (int)((uVar9 + ((ulonglong)GVar3 & 0x3fffffff) * 4 & 0xffffffff) << 2);
+      if ((*(ushort *)(*(int *)((int)&gfxRenderTargets[0].surface.color + iVar4) + 0x1c) & 0xf) != 1
+         ) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x45c
+                        ,0,"%s");
       }
-      iVar3 = *(int *)((int)&DAT_84762084 + iVar3);
-      uVar8 = *(uint *)(iVar3 + 0x1c) & 0xfff0ffff;
+      iVar4 = *(int *)((int)&gfxRenderTargets[0].surface.color + iVar4);
+      uVar8 = *(uint *)(iVar4 + 0x1c) & 0xfff0ffff;
 LAB_82780934:
-      *(uint *)(iVar3 + 0x1c) = uVar8;
+      *(uint *)(iVar4 + 0x1c) = uVar8;
     }
-    R_PixStartNamedRenderTarget(uVar9);
+    R_PixStartNamedRenderTarget((GfxRenderTargetId)uVar9);
     do {
       D3DDevice_SetRenderTarget_External
-                (iVar1,0,*(undefined4 *)
-                          ((int)&DAT_84762084 +
-                          (int)((uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xffffffff) << 2)));
-    } while (DAT_84013128 != 0);
-    *(int *)(iVar5 + 0xb68) = (int)uVar9;
-    R_ForceSetViewport(iVar5,iVar5 + 0xb58);
+                (pDVar1,0,*(D3DSurface **)
+                           ((int)&gfxRenderTargets[0].surface.color +
+                           (int)((uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xffffffff) << 2)));
+    } while (alwaysfails != 0);
+    pGVar6->renderTargetId = (GfxRenderTargetId)uVar9;
+    R_ForceSetViewport(pGVar6,&pGVar6->viewport);
   }
-  bVar10 = (*(uint *)(iVar5 + 0xb1c) & 0x700) != 0;
-  if ((param_2 & 0x700) == 0) {
-    if ((param_2 & 0x7000000) != 0) {
-      MyAssertHandler(0xffffffff821cff90,0x481,0,0xffffffff82000f98,0xffffffff821d0d18);
+  bVar5 = (pGVar6->refStateBits[0] & 0x700) != 0;
+  if ((uVar11 & 0x700) == 0) {
+    if ((uVar11 & 0x7000000) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x481,0
+                      ,"%s");
     }
-    param_2 = param_2 & 0xf800 |
-              param_2 & 0xf8000000 | (ulonglong)*(uint *)(iVar5 + 0xb24) & 0xffffffff07ff07ff;
-    if ((*(uint *)(iVar5 + 0xb24) ^ param_2) != (uVar6 & 0xf800f800)) {
-      MyAssertHandler(0xffffffff821cff90,0x485,0,0xffffffff82000f98,0xffffffff821d0e04);
+    uVar11 = uVar11 & 0xf800 |
+             uVar11 & 0xf8000000 | (ulonglong)pGVar6->activeStateBits[0] & 0xffffffff07ff07ff;
+    uVar12 = (uint)uVar11;
+    if ((pGVar6->activeStateBits[0] ^ uVar11) != (uVar10 & 0xf800f800)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x485,0
+                      ,"%s");
     }
-    if (bVar10) {
+    if (bVar5) {
       do {
-        D3DDevice_SetBlendState(iVar1,0,0x10001);
-      } while (DAT_84013128 != 0);
-      *(int *)(iVar5 + 0xb24) = (int)param_2;
+        D3DDevice_SetBlendState(pDVar1,0,(_D3DBLENDSTATE)0x10001);
+      } while (alwaysfails != 0);
+      pGVar6->activeStateBits[0] = uVar12;
       __restgprlr_20();
       return;
     }
   }
   else {
-    if ((param_2 & 0x7000000) == 0) {
-      param_2 = (param_2 & 0x7ff) << 0x10 | param_2 << 0x20 | param_2 & 0xf800ffff;
-      uVar7 = param_2 ^ *(uint *)(iVar5 + 0xb24);
-      uVar4 = uVar6 & 0xf800ffff;
-      uVar9 = uVar7 & 0x7ff0000;
-      uVar6 = uVar6 << 0x20 | uVar4 | uVar9;
-      if ((uVar7 & 0xffffffff) != (uVar4 | uVar9)) {
-        MyAssertHandler(0xffffffff821cff90,0x498,0,0xffffffff82000f98,0xffffffff821d0e04);
+    if ((uVar11 & 0x7000000) == 0) {
+      uVar9 = (uVar11 & 0x7ff) << 0x10 | uVar11 & 0xf800ffff;
+      uVar12 = (uint)uVar9;
+      uVar9 = uVar9 ^ pGVar6->activeStateBits[0];
+      uVar11 = uVar9 & 0x7ff0000;
+      uVar7 = (uint)(uVar10 & 0xf800ffff) | (uint)uVar11;
+      if (uVar9 != (uVar10 & 0xf800ffff | uVar11)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x498
+                        ,0,"%s");
       }
     }
-    R_HW_SetBlend(iVar1,bVar10,uVar6,param_2);
+    R_HW_SetBlend(pDVar1,bVar5,uVar7,uVar12);
   }
-  *(int *)(iVar5 + 0xb24) = (int)param_2;
+  pGVar6->activeStateBits[0] = uVar12;
 LAB_82780a9c:
   __restgprlr_20();
   return;
@@ -1712,113 +1998,123 @@ LAB_82780a9c:
 
 // 827815C8  R_DecodeSamplerState  (gfx_d3d/r_state.h:1073)
 
-void R_DecodeSamplerState(void)
+uint R_DecodeSamplerState(uchar param_1)
 
 {
   ulonglong uVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if (0x847eeb6f < (uVar1 & 0x1f)) {
-    MyAssertHandler(0xffffffff821bda94,0x437,0,0xffffffff821cfeb8,uVar1 & 0x1f,0xffffffff847eeb70);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x437,0,
+                    "tableIndex doesn\'t index s_decodeSamplerFilterState\n\t%i not in [0, %i)");
   }
-  __restgprlr_29((((uVar1 & 0x80) << 1 | uVar1 & 0x40) << 1 | uVar1 & 0x20) << 0x10 |
-                 (ulonglong)*(uint *)((int)&DAT_847eeb70 + (int)((uVar1 & 0x1f) << 2)));
-  return;
+  uVar2 = __restgprlr_29((((uVar1 & 0x80) << 1 | uVar1 & 0x40) << 1 | uVar1 & 0x20) << 0x10 |
+                         (ulonglong)
+                         *(uint *)((int)s_decodeSamplerFilterState + (int)((uVar1 & 0x1f) << 2)));
+  return uVar2;
 }
 
 
 // 82780128  R_ChangeState_1  (gfx_d3d/r_state.cpp:1195)
 
-void R_ChangeState_1(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_ChangeState_1(GfxCmdBufState *param_1,uint param_2)
 
 {
-  int iVar1;
+  D3DDevice *pDVar1;
   int iVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  uint uVar5;
+  uint uVar6;
+  ulonglong uVar5;
   
-  iVar2 = __savegprlr_24();
-  uVar3 = param_2 ^ *(uint *)(iVar2 + 0xb28);
+  uVar4 = (ulonglong)(int)param_2;
+  iVar2 = __savegprlr_24(param_1);
+  uVar3 = uVar4 ^ *(uint *)(iVar2 + 0xb28);
   if ((uVar3 & 0xffffffff) != 0) {
-    if (((~param_2 & 0xffffffff) >> 7 & 1) == 0 && (param_2 & 0x40) == 0) {
-      MyAssertHandler(0xffffffff821cff90,0x4b7,0,0xffffffff82000f98,0xffffffff821d0ba8);
+    if (((~uVar4 & 0xffffffff) >> 7 & 1) == 0 && (uVar4 & 0x40) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x4b7,0
+                      ,"%s");
     }
-    if ((DAT_84616684 == 0) || (DAT_84616688 == 0)) {
-      MyAssertHandler(0xffffffff821cff90,0x4bb,0,0xffffffff82000f98,0xffffffff821c6050);
+    if ((dx.d3d9 == (Direct3D *)0x0) || (dx.device == (D3DDevice *)0x0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x4bb,0
+                      ,"%s");
     }
-    iVar1 = *(int *)(iVar2 + 0xc0);
-    if (iVar1 == 0) {
-      MyAssertHandler(0xffffffff821cff90,0x4be,0,0xffffffff82000f98,0xffffffff821bd9f4);
+    pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
+    if (pDVar1 == (D3DDevice *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x4be,0
+                      ,"%s");
     }
     if ((uVar3 & 1) != 0) {
       do {
-        D3DDevice_SetRenderState_ZWriteEnable(iVar1,param_2 & 1);
-      } while (DAT_84013128 != 0);
+        D3DDevice_SetRenderState_ZWriteEnable(pDVar1,(uint)uVar4 & 1);
+      } while (alwaysfails != 0);
     }
     if ((uVar3 & 2) != 0) {
       do {
-        D3DDevice_SetRenderState_ZEnable(iVar1,(~param_2 & 0xffffffff) >> 1 & 1);
-      } while (DAT_84013128 != 0);
+        D3DDevice_SetRenderState_ZEnable(pDVar1,~(uint)uVar4 >> 1 & 1);
+      } while (alwaysfails != 0);
     }
-    uVar4 = uVar3;
-    if ((param_2 & 2) != 0) {
-      if ((param_2 & 0xc) != 0) {
-        MyAssertHandler(0xffffffff821cff90,0x4c6,0,0xffffffff82000f98,0xffffffff821d0b78);
+    uVar5 = uVar3;
+    if ((uVar4 & 2) != 0) {
+      if ((uVar4 & 0xc) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x4c6
+                        ,0,"%s");
       }
-      uVar4 = uVar3 & 0xfffffff3;
-      param_2 = (ulonglong)*(uint *)(iVar2 + 0xb28) & 0xc | param_2;
-      if (((*(uint *)(iVar2 + 0xb28) ^ param_2) & 0xffffffff) != (uVar3 & 0xfffffff3)) {
-        MyAssertHandler(0xffffffff821cff90,0x4c9,0,0xffffffff82000f98,0xffffffff821d0b40);
+      uVar5 = uVar3 & 0xfffffff3;
+      uVar4 = (ulonglong)*(uint *)(iVar2 + 0xb28) & 0xc | uVar4;
+      if (((*(uint *)(iVar2 + 0xb28) ^ uVar4) & 0xffffffff) != (uVar3 & 0xfffffff3)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x4c9
+                        ,0,"%s");
       }
     }
-    if ((uVar4 & 0xc) != 0) {
+    if ((uVar5 & 0xc) != 0) {
       do {
-        D3DDevice_SetRenderState_ZFunc(iVar1,*(undefined4 *)(&DAT_821cfcd4 + ((uint)param_2 & 0xc)))
-        ;
-      } while (DAT_84013128 != 0);
+        D3DDevice_SetRenderState_ZFunc
+                  (pDVar1,*(ulong *)((int)s_depthTestTable + ((uint)uVar4 & 0xc)));
+      } while (alwaysfails != 0);
     }
-    if ((uVar4 & 0x30) != 0) {
-      R_ForceSetPolygonOffset(iVar1,param_2);
+    if ((uVar5 & 0x30) != 0) {
+      R_ForceSetPolygonOffset(pDVar1,(uint)uVar4);
     }
-    if ((param_2 & 0x40) == 0) {
-      if ((uVar4 & 0x40) != 0) {
-        R_HW_DisableStencil(iVar1);
+    if ((uVar4 & 0x40) == 0) {
+      if ((uVar5 & 0x40) != 0) {
+        R_HW_DisableStencil(pDVar1);
       }
-      uVar4 = 0;
-      param_2 = (ulonglong)*(uint *)(iVar2 + 0xb28) & 0xffffff80 | param_2 & 0xffffffff0000007f;
+      uVar5 = 0;
+      uVar4 = (ulonglong)*(uint *)(iVar2 + 0xb28) & 0xffffff80 | uVar4 & 0xffffffff0000007f;
     }
-    else if ((uVar4 & 0x40) != 0) {
-      R_HW_EnableStencil(iVar1);
+    else if ((uVar5 & 0x40) != 0) {
+      R_HW_EnableStencil(pDVar1);
     }
-    if ((param_2 & 0x80) == 0) {
-      param_2 = (param_2 & 0xfff00) << 0xc | param_2 & 0xfffff;
-      uVar4 = param_2 ^ *(uint *)(iVar2 + 0xb28);
+    uVar6 = (uint)uVar4;
+    if ((uVar4 & 0x80) == 0) {
+      uVar5 = (uVar4 & 0xfff00) << 0xc | uVar4 & 0xfffff;
+      uVar6 = (uint)uVar5;
+      uVar5 = uVar5 ^ *(uint *)(iVar2 + 0xb28);
     }
-    if ((uVar4 & 0x1ff00) != 0) {
-      R_HW_SetFrontStencilOp
-                (iVar1,(param_2 & 0xffffffff) >> 8 & 7,(param_2 & 0xffffffff) >> 0xb & 7,
-                 (param_2 & 0xffffffff) >> 0xe & 7);
+    if ((uVar5 & 0x1ff00) != 0) {
+      R_HW_SetFrontStencilOp(pDVar1,uVar6 >> 8 & 7,uVar6 >> 0xb & 7,uVar6 >> 0xe & 7);
     }
-    if ((uVar4 & 0x1ff00000) != 0) {
-      R_HW_SetBackStencilOp
-                (iVar1,(param_2 & 0xffffffff) >> 0x14 & 7,(param_2 & 0xffffffff) >> 0x17 & 7,
-                 (param_2 & 0xffffffff) >> 0x1a & 7);
+    if ((uVar5 & 0x1ff00000) != 0) {
+      R_HW_SetBackStencilOp(pDVar1,uVar6 >> 0x14 & 7,uVar6 >> 0x17 & 7,uVar6 >> 0x1a & 7);
     }
-    uVar5 = (uint)param_2;
-    if ((uVar4 & 0xe0000) != 0) {
+    if ((uVar5 & 0xe0000) != 0) {
       do {
         D3DDevice_SetRenderState_StencilFunc
-                  (iVar1,*(undefined4 *)(&DAT_821cfd04 + (uVar5 >> 0xf & 0x1c)));
-      } while (DAT_84013128 != 0);
+                  (pDVar1,*(ulong *)((int)s_stencilFuncTable + (uVar6 >> 0xf & 0x1c)));
+      } while (alwaysfails != 0);
     }
-    if ((uVar4 & 0xe0000000) != 0) {
+    if ((uVar5 & 0xe0000000) != 0) {
       do {
         D3DDevice_SetRenderState_CCWStencilFunc
-                  (iVar1,*(undefined4 *)(&DAT_821cfd04 + (uVar5 >> 0x1b & 0x1c)));
-      } while (DAT_84013128 != 0);
+                  (pDVar1,*(ulong *)((int)s_stencilFuncTable + (uVar6 >> 0x1b & 0x1c)));
+      } while (alwaysfails != 0);
     }
-    *(uint *)(iVar2 + 0xb28) = uVar5;
+    *(uint *)(iVar2 + 0xb28) = uVar6;
   }
   __restgprlr_24();
   return;
@@ -1827,49 +2123,57 @@ void R_ChangeState_1(undefined8 param_1,ulonglong param_2)
 
 // 82780408  R_HW_ForceDisableGammaWrites  (gfx_d3d/r_state.cpp:1298)
 
-void R_HW_ForceDisableGammaWrites(void)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_HW_ForceDisableGammaWrites(GfxCmdBufState *param_1)
 
 {
-  uint uVar1;
+  GfxRenderTargetId GVar1;
   int iVar2;
-  int iVar3;
+  GfxCmdBufState *pGVar3;
   ulonglong uVar4;
   
-  iVar3 = __savegprlr_25();
-  if ((*(uint *)(iVar3 + 0xb24) & 0x40000000) != 0) {
-    uVar1 = *(uint *)(iVar3 + 0xb68);
-    uVar4 = (ulonglong)uVar1;
-    *(uint *)(iVar3 + 0xb24) = *(uint *)(iVar3 + 0xb24) & 0xbfffffff;
-    *(uint *)(iVar3 + 0xb1c) = *(uint *)(iVar3 + 0xb1c) & 0xbfffffff;
-    if (uVar1 == 3) {
+  pGVar3 = (GfxCmdBufState *)__savegprlr_25(param_1);
+  if ((pGVar3->activeStateBits[0] & 0x40000000) != 0) {
+    GVar1 = pGVar3->renderTargetId;
+    uVar4 = (ulonglong)GVar1;
+    pGVar3->activeStateBits[0] = pGVar3->activeStateBits[0] & 0xbfffffff;
+    pGVar3->refStateBits[0] = pGVar3->refStateBits[0] & 0xbfffffff;
+    if (GVar1 == R_RENDERTARGET_SCENE_GAMMA) {
       uVar4 = 2;
     }
     else {
-      if (*(int *)(iVar3 + 0xc0) != DAT_84616688) {
-        MyAssertHandler(0xffffffff821cff90,0x52a,0,0xffffffff82000f98,0xffffffff821d0cec);
+      if ((pGVar3->prim).device != dx.device) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x52a
+                        ,0,"%s");
       }
-      if (0xe < uVar1) {
-        MyAssertHandler(0xffffffff821cff90,0x52b,0,0xffffffff821d0ca8,uVar4,0xf);
+      if (R_RENDERTARGET_HALF_RESAMPLED_SCENE < GVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x52b
+                        ,0,"newTargetId doesn\'t index R_RENDERTARGET_COUNT\n\t%i not in [0, %i)");
       }
-      if (uVar1 == 2) {
-        MyAssertHandler(0xffffffff821cff90,0x52c,0,0xffffffff821d0c68,0xffffffff821d0c80,2);
+      if (GVar1 == R_RENDERTARGET_SCENE) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x52c
+                        ,0,"%s\n\t(newTargetId) = %i");
       }
-      iVar2 = (int)((uVar4 + ((ulonglong)uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-      if ((*(ushort *)(*(int *)((int)&DAT_84762084 + iVar2) + 0x1c) & 0xf) != 1) {
-        MyAssertHandler(0xffffffff821cff90,0x52d,0,0xffffffff82000f98,0xffffffff821d0c00);
+      iVar2 = (int)((uVar4 + ((ulonglong)GVar1 & 0x3fffffff) * 4 & 0xffffffff) << 2);
+      if ((*(ushort *)(*(int *)((int)&gfxRenderTargets[0].surface.color + iVar2) + 0x1c) & 0xf) != 1
+         ) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x52d
+                        ,0,"%s");
       }
-      iVar2 = *(int *)((int)&DAT_84762084 + iVar2);
+      iVar2 = *(int *)((int)&gfxRenderTargets[0].surface.color + iVar2);
       *(uint *)(iVar2 + 0x1c) = *(uint *)(iVar2 + 0x1c) & 0xfff0ffff;
     }
     do {
       D3DDevice_SetRenderTarget_External
-                (*(undefined4 *)(iVar3 + 0xc0),0,
-                 *(undefined4 *)
-                  ((int)&DAT_84762084 + (int)((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0xffffffff) << 2))
-                );
-    } while (DAT_84013128 != 0);
-    *(int *)(iVar3 + 0xb68) = (int)uVar4;
-    R_ForceSetViewport(iVar3,iVar3 + 0xb58);
+                ((pGVar3->prim).device,0,
+                 *(D3DSurface **)
+                  ((int)&gfxRenderTargets[0].surface.color +
+                  (int)((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0xffffffff) << 2)));
+    } while (alwaysfails != 0);
+    pGVar3->renderTargetId = (GfxRenderTargetId)uVar4;
+    R_ForceSetViewport(pGVar3,&pGVar3->viewport);
   }
   __restgprlr_25();
   return;
@@ -1878,93 +2182,119 @@ void R_HW_ForceDisableGammaWrites(void)
 
 // 8277E390  R_SetSampler  (gfx_d3d/r_state.cpp:1341)
 
-void R_SetSampler(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglong param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetSampler(GfxCmdBufContext param_1,uint param_2,uchar param_3,GfxImage *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar7;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  undefined4 uVar8;
+  uint uVar1;
+  ulonglong uVar2;
+  GfxTexture *pGVar3;
+  int iVar4;
+  long lVar5;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
   ulonglong uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  ulonglong uVar13;
   char in_RESERVE;
   byte in_cr0;
+  undefined8 uStack00000010;
   
-  iVar7 = __savegprlr_24();
-  uVar1 = (param_2 & 0xffffffff) >> 0x1f;
-  param_2 = param_2 & 0x7fffffff;
-  if (uVar1 == 0) {
-    uVar9 = param_2;
-    if (0xf < param_2) {
-      MyAssertHandler(0xffffffff821cff90,0x557,0,0xffffffff821d0558,param_2,0x10);
+  uVar12 = (ulonglong)(int)param_4;
+  uVar11 = (ulonglong)(char)param_3;
+  uVar9 = (ulonglong)(int)param_2;
+  uStack00000010 = __savegprlr_24();
+  uVar2 = (uVar9 & 0xffffffff) >> 0x1f;
+  uVar9 = uVar9 & 0x7fffffff;
+  if (uVar2 == 0) {
+    uVar13 = uVar9;
+    if (0xf < uVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x557,0
+                      ,"samplerIndex doesn\'t index MAX_PIXEL_TEXTURE_SAMPLERS\n\t%i not in [0, %i)"
+                     );
     }
   }
   else {
-    if (3 < param_2) {
-      MyAssertHandler(0xffffffff821cff90,0x551,0,0xffffffff821d05a8,param_2,4);
+    if (3 < uVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x551,0
+                      ,
+                      "samplerIndex doesn\'t index MAX_VERTEX_TEXTURE_SAMPLERS\n\t%i not in [0, %i)"
+                     );
     }
-    uVar9 = param_2 + 0x10;
+    uVar13 = uVar9 + 0x10;
   }
-  if (0x13 < uVar9) {
-    MyAssertHandler(0xffffffff821cff90,0x55b,0,0xffffffff821d0510,uVar9,0x14);
+  if (0x13 < uVar13) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x55b,0,
+                    "samplerArrIndex doesn\'t index MAX_TEXTURE_SAMPLERS\n\t%i not in [0, %i)");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x55c,0,0xffffffff82000f98,0xffffffff82058d58);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x55c,0,
+                    "%s");
   }
-  iVar2 = (int)param_4;
-  if (DAT_8461788c != 0) {
-    uVar5 = va(0xffffffff821d04f4,*(undefined4 *)(iVar2 + 0x6c),*(char *)(iVar2 + 0x47) != '\0');
-    MyAssertHandler(0xffffffff821cff90,0x55f,0,0xffffffff820011f4,0xffffffff821cd6d4,uVar5);
+  if (r_glob.stopUpdatingSamplers != 0) {
+    va("name: \'%s\', cached: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x55f,0,
+                    "%s\n\t%s");
   }
   do {
-    uVar4 = DAT_845b910c;
-    if (DAT_845b910c != 1) {
+    lVar5 = g_imageCacheUpdatingImages;
+    if (g_imageCacheUpdatingImages != 1) {
       if (in_RESERVE != '\0') {
-        DAT_845b910c = storeWordConditionalIndexed((ulonglong)DAT_845b910c,0,0xffffffff845b910c);
+        g_imageCacheUpdatingImages =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_imageCacheUpdatingImages,0,0xffffffff845b910c);
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      DAT_845b910c = storeWordConditionalIndexed(2,0,0xffffffff845b910c);
+      g_imageCacheUpdatingImages = storeWordConditionalIndexed(2,0,0xffffffff845b910c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (uVar4 != 0) {
-    uVar5 = va(0xffffffff821d04f4,*(undefined4 *)(iVar2 + 0x6c),*(char *)(iVar2 + 0x47) != '\0');
-    MyAssertHandler(0xffffffff821cff90,0x560,0,0xffffffff820011f4,0xffffffff821d04a8,uVar5);
+  if (lVar5 != 0) {
+    va("name: \'%s\', cached: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x560,0,
+                    "%s\n\t%s");
   }
-  if ((*(uint *)(iVar2 + 0x20) & 0xfffff000) == 0) {
-    uVar5 = va(0xffffffff821d04f4,*(undefined4 *)(iVar2 + 0x6c),*(char *)(iVar2 + 0x47) != '\0');
-    MyAssertHandler(0xffffffff821cff90,0x561,0,0xffffffff820011f4,0xffffffff821d047c,uVar5);
+  pGVar3 = (GfxTexture *)uVar12;
+  if (((pGVar3->basemap).Format.dword[1] & 0xfffff000) == 0) {
+    va("name: \'%s\', cached: %d");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x561,0,
+                    "%s\n\t%s");
   }
-  iVar3 = (int)((uVar9 + 0x1c & 0xffffffff) << 2);
-  if ((ulonglong)*(uint *)(iVar3 + iVar7) != (param_4 & 0xffffffff)) {
-    *(int *)(iVar3 + iVar7) = iVar2;
-    if (uVar1 == 0) {
-      R_HW_SetPixelSamplerTexture(*(undefined4 *)(iVar7 + 0xc0),param_2,param_4);
+  iVar6 = uStack00000010._4_4_;
+  iVar4 = (int)((uVar13 + 0x1c & 0xffffffff) << 2);
+  uVar8 = (uint)uVar9;
+  if ((ulonglong)*(uint *)(iVar4 + uStack00000010._4_4_) != (uVar12 & 0xffffffff)) {
+    *(GfxTexture **)(iVar4 + uStack00000010._4_4_) = pGVar3;
+    if (uVar2 == 0) {
+      R_HW_SetPixelSamplerTexture(*(D3DDevice **)(uStack00000010._4_4_ + 0xc0),uVar8,pGVar3);
     }
     else {
-      R_HW_SetVertexSamplerTexture();
+      R_HW_SetVertexSamplerTexture(*(D3DDevice **)(uStack00000010._4_4_ + 0xc0),uVar8,pGVar3);
     }
   }
-  if ((param_3 & 0x1f) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x583,0,0xffffffff821d041c,0xffffffff821d0438,param_3 & 0xff)
-    ;
+  if ((uVar11 & 0x1f) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x583,0,
+                    "%s\n\t(samplerState) = %i");
   }
-  if ((ulonglong)*(byte *)(iVar7 + (int)uVar9) != (param_3 & 0xff)) {
-    *(char *)(iVar7 + (int)uVar9) = (char)param_3;
-    uVar6 = R_DecodeSamplerState(param_3);
-    iVar2 = (int)((uVar9 + 8 & 0xffffffff) << 2);
-    if ((ulonglong)*(uint *)(iVar2 + iVar7) != (uVar6 & 0xffffffff)) {
-      uVar9 = param_2 + 0x10;
-      if (uVar1 == 0) {
-        uVar9 = param_2;
+  if ((ulonglong)*(byte *)(iVar6 + (int)uVar13) != (uVar11 & 0xff)) {
+    *(uchar *)(iVar6 + (int)uVar13) = (uchar)uVar11;
+    uVar7 = R_DecodeSamplerState((uchar)uVar11);
+    iVar4 = (int)((uVar13 + 8 & 0xffffffff) << 2);
+    uVar1 = *(uint *)(iVar4 + iVar6);
+    if (uVar1 != uVar7) {
+      uVar10 = uVar8 + 0x10;
+      if (uVar2 == 0) {
+        uVar10 = uVar8;
       }
-      uVar8 = R_HW_SetSamplerState(*(undefined4 *)(iVar7 + 0xc0),uVar9,uVar6);
-      *(undefined4 *)(iVar2 + iVar7) = uVar8;
+      uVar8 = R_HW_SetSamplerState(*(D3DDevice **)(iVar6 + 0xc0),uVar10,uVar7,uVar1);
+      *(uint *)(iVar4 + iVar6) = uVar8;
     }
   }
   __restgprlr_24();
@@ -1974,47 +2304,60 @@ void R_SetSampler(undefined8 param_1,ulonglong param_2,ulonglong param_3,ulonglo
 
 // 8277E658  R_SetSamplerState  (gfx_d3d/r_state.cpp:1507)
 
-void R_SetSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetSamplerState(GfxCmdBufState *param_1,uint param_2,uchar param_3)
 
 {
   ulonglong uVar1;
   int iVar2;
-  int iVar4;
-  ulonglong uVar3;
-  undefined4 uVar5;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
   ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   
-  iVar4 = __savegprlr_25();
-  uVar1 = (param_2 & 0xffffffff) >> 0x1f;
-  param_2 = param_2 & 0x7fffffff;
+  uVar8 = (ulonglong)(char)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  uVar1 = (uVar6 & 0xffffffff) >> 0x1f;
+  uVar6 = uVar6 & 0x7fffffff;
   if (uVar1 == 0) {
-    uVar6 = param_2;
-    if (0xf < param_2) {
-      MyAssertHandler(0xffffffff821cff90,0x5f7,0,0xffffffff821d0558,param_2,0x10);
+    uVar9 = uVar6;
+    if (0xf < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x5f7,0
+                      ,"samplerIndex doesn\'t index MAX_PIXEL_TEXTURE_SAMPLERS\n\t%i not in [0, %i)"
+                     );
     }
   }
   else {
-    if (3 < param_2) {
-      MyAssertHandler(0xffffffff821cff90,0x5f1,0,0xffffffff821d05a8,param_2,4);
+    if (3 < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x5f1,0
+                      ,
+                      "samplerIndex doesn\'t index MAX_VERTEX_TEXTURE_SAMPLERS\n\t%i not in [0, %i)"
+                     );
     }
-    uVar6 = param_2 + 0x10;
+    uVar9 = uVar6 + 0x10;
   }
-  *(undefined4 *)((int)((uVar6 + 0x1c & 0xffffffff) << 2) + iVar4) = 0;
-  if ((param_3 & 0x1f) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x5fd,0,0xffffffff821d041c,0xffffffff821d0438,param_3 & 0xff)
-    ;
+  *(undefined4 *)((int)((uVar9 + 0x1c & 0xffffffff) << 2) + iVar3) = 0;
+  if ((uVar8 & 0x1f) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x5fd,0,
+                    "%s\n\t(samplerState) = %i");
   }
-  if ((ulonglong)*(byte *)((int)uVar6 + iVar4) != (param_3 & 0xff)) {
-    *(char *)((int)uVar6 + iVar4) = (char)param_3;
-    uVar3 = R_DecodeSamplerState(param_3);
-    iVar2 = (int)((uVar6 + 8 & 0xffffffff) << 2);
-    if ((ulonglong)*(uint *)(iVar2 + iVar4) != (uVar3 & 0xffffffff)) {
-      uVar6 = param_2 + 0x10;
+  if ((ulonglong)*(byte *)((int)uVar9 + iVar3) != (uVar8 & 0xff)) {
+    *(uchar *)((int)uVar9 + iVar3) = (uchar)uVar8;
+    uVar4 = R_DecodeSamplerState((uchar)uVar8);
+    iVar2 = (int)((uVar9 + 8 & 0xffffffff) << 2);
+    uVar5 = *(uint *)(iVar2 + iVar3);
+    if (uVar5 != uVar4) {
+      uVar7 = (uint)uVar6 + 0x10;
       if (uVar1 == 0) {
-        uVar6 = param_2;
+        uVar7 = (uint)uVar6;
       }
-      uVar5 = R_HW_SetSamplerState(*(undefined4 *)(iVar4 + 0xc0),uVar6,uVar3);
-      *(undefined4 *)(iVar2 + iVar4) = uVar5;
+      uVar5 = R_HW_SetSamplerState(*(D3DDevice **)(iVar3 + 0xc0),uVar7,uVar4,uVar5);
+      *(uint *)(iVar2 + iVar3) = uVar5;
     }
   }
   __restgprlr_25();
@@ -2024,20 +2367,22 @@ void R_SetSamplerState(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 8277E780  R_ForceSetBlendState  (gfx_d3d/r_state.cpp:1557)
 
-void R_ForceSetBlendState(undefined8 param_1,ulonglong param_2)
+void R_ForceSetBlendState(D3DDevice *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
-  if ((param_2 & 0x700) != 0) {
-    R_HW_SetBlend(uVar1,0,0xffffffffffffffff,param_2);
+  uVar2 = (ulonglong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
+  if ((uVar2 & 0x700) != 0) {
+    R_HW_SetBlend(pDVar1,false,0xffffffff,(uint)uVar2);
     __restgprlr_29();
     return;
   }
   do {
-    D3DDevice_SetBlendState(uVar1,0,0x10001);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetBlendState(pDVar1,0,(_D3DBLENDSTATE)0x10001);
+  } while (alwaysfails != 0);
   __restgprlr_29();
   return;
 }
@@ -2045,35 +2390,35 @@ void R_ForceSetBlendState(undefined8 param_1,ulonglong param_2)
 
 // 8277E7E8  R_ForceSetStencilState  (gfx_d3d/r_state.cpp:1566)
 
-void R_ForceSetStencilState(undefined8 param_1,ulonglong param_2)
+void R_ForceSetStencilState(D3DDevice *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
+  uint uVar3;
   
-  uVar1 = __savegprlr_27();
-  if ((param_2 & 0x40) == 0) {
-    R_HW_DisableStencil();
+  uVar2 = (ulonglong)(int)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_27(param_1);
+  uVar3 = (uint)uVar2;
+  if ((uVar2 & 0x40) == 0) {
+    R_HW_DisableStencil(pDVar1);
   }
   else {
-    R_HW_EnableStencil();
+    R_HW_EnableStencil(pDVar1);
   }
-  if ((param_2 & 0x80) == 0) {
-    param_2 = (param_2 & 0xfff00) << 0xc | param_2 & 0xfffff;
+  if ((uVar2 & 0x80) == 0) {
+    uVar3 = (uint)((uVar2 & 0xfff00) << 0xc) | uVar3 & 0xfffff;
   }
-  R_HW_SetFrontStencilOp
-            (uVar1,(param_2 & 0xffffffff) >> 8 & 7,(param_2 & 0xffffffff) >> 0xb & 7,
-             (param_2 & 0xffffffff) >> 0xe & 7);
-  R_HW_SetBackStencilOp
-            (uVar1,(param_2 & 0xffffffff) >> 0x14 & 7,(param_2 & 0xffffffff) >> 0x17 & 7,
-             (param_2 & 0xffffffff) >> 0x1a & 7);
+  R_HW_SetFrontStencilOp(pDVar1,uVar3 >> 8 & 7,uVar3 >> 0xb & 7,uVar3 >> 0xe & 7);
+  R_HW_SetBackStencilOp(pDVar1,uVar3 >> 0x14 & 7,uVar3 >> 0x17 & 7,uVar3 >> 0x1a & 7);
   do {
     D3DDevice_SetRenderState_StencilFunc
-              (uVar1,*(undefined4 *)(&DAT_821cfd04 + ((uint)param_2 >> 0xf & 0x1c)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilFuncTable + (uVar3 >> 0xf & 0x1c)));
+  } while (alwaysfails != 0);
   do {
     D3DDevice_SetRenderState_CCWStencilFunc
-              (uVar1,*(undefined4 *)(&DAT_821cfd04 + ((uint)param_2 >> 0x1b & 0x1c)));
-  } while (DAT_84013128 != 0);
+              (pDVar1,*(ulong *)((int)s_stencilFuncTable + (uVar3 >> 0x1b & 0x1c)));
+  } while (alwaysfails != 0);
   __restgprlr_27();
   return;
 }
@@ -2081,30 +2426,29 @@ void R_ForceSetStencilState(undefined8 param_1,ulonglong param_2)
 
 // 82780588  R_PixStartNamedRenderTarget  (gfx_d3d/r_state.cpp:1613)
 
-void R_PixStartNamedRenderTarget(void)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_PixStartNamedRenderTarget(GfxRenderTargetId param_1)
 
 {
   int iVar1;
-  int iVar3;
-  undefined8 uVar2;
+  GfxRenderTargetId GVar2;
   int *in_r13;
   
-  iVar3 = __savegprlr_29();
+  GVar2 = __savegprlr_29(param_1);
   iVar1 = *in_r13;
   if (*(char *)(iVar1 + 0x110) != '\0') {
     PIXEndNamedEvent();
   }
   *(undefined1 *)(iVar1 + 0x110) = 0;
-  if ((&DAT_84762080)[iVar3 * 5] != 0) {
-    PIXBeginNamedEvent_Copy_VarArgs
-              (0xffffffffffffffff,0xffffffff821d0d0c,
-               *(undefined4 *)((&DAT_84762080)[iVar3 * 5] + 0x6c));
+  if (gfxRenderTargets[GVar2].image != (GfxImage *)0x0) {
+    PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"Trgt: %s");
     *(undefined1 *)(iVar1 + 0x110) = 1;
     __restgprlr_29();
     return;
   }
-  uVar2 = R_RenderTargetName(iVar3);
-  PIXBeginNamedEvent_Copy_VarArgs(0xffffffffffffffff,0xffffffff821d0d0c,uVar2);
+  R_RenderTargetName(GVar2);
+  PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"Trgt: %s");
   *(undefined1 *)(iVar1 + 0x110) = 1;
   __restgprlr_29();
   return;
@@ -2112,6 +2456,8 @@ void R_PixStartNamedRenderTarget(void)
 
 
 // 8277E8A0  R_PixEndNamedRenderTarget  (gfx_d3d/r_state.cpp:1626)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_PixEndNamedRenderTarget(void)
 
@@ -2130,61 +2476,75 @@ void R_PixEndNamedRenderTarget(void)
 
 // 8277E8F0  R_GetViewport  (gfx_d3d/r_state.cpp:1637)
 
-void R_GetViewport(undefined8 param_1,int *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_GetViewport(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_29();
+  iVar2 = __savegprlr_29(param_1);
   if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x666,0,0xffffffff82000f98,0xffffffff82165ff0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x666,0,
+                    "%s");
   }
   if (*(int *)(iVar2 + 0x173c) == 1) {
     if (*(int *)(iVar2 + 0x1740) < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x66a,0,0xffffffff821d0750,0xffffffff821d0778);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x66a,0
+                      ,"%s\n\t(source->renderTargetWidth) = %i");
     }
     if (*(int *)(iVar2 + 0x1744) < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x66b,0,0xffffffff821d0704,0xffffffff821d072c);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x66b,0
+                      ,"%s\n\t(source->renderTargetHeight) = %i");
     }
-    *param_2 = 0;
-    param_2[1] = 0;
-    param_2[2] = *(int *)(iVar2 + 0x1740);
-    param_2[3] = *(int *)(iVar2 + 0x1744);
+    param_2->x = 0;
+    param_2->y = 0;
+    param_2->width = *(int *)(iVar2 + 0x1740);
+    param_2->height = *(int *)(iVar2 + 0x1744);
   }
   else {
     if (*(int *)(iVar2 + 0x1730) < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x674,0,0xffffffff821d06b8,0xffffffff821d06e0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x674,0
+                      ,"%s\n\t(source->sceneViewport.width) = %i");
     }
     if (*(int *)(iVar2 + 0x1734) < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x675,0,0xffffffff821d066c,0xffffffff821d0694);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x675,0
+                      ,"%s\n\t(source->sceneViewport.height) = %i");
     }
-    *param_2 = *(int *)(iVar2 + 0x1728);
-    param_2[1] = *(int *)(iVar2 + 0x172c);
+    param_2->x = *(int *)(iVar2 + 0x1728);
+    param_2->y = *(int *)(iVar2 + 0x172c);
     iVar1 = *(int *)(iVar2 + 0x1730);
-    param_2[2] = iVar1;
-    param_2[3] = *(int *)(iVar2 + 0x1734);
+    param_2->width = iVar1;
+    param_2->height = *(int *)(iVar2 + 0x1734);
     if (iVar1 < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x678,0,0xffffffff821d0630,0xffffffff821d0650);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x678,0
+                      ,"%s\n\t(outViewport->width) = %i");
     }
-    if (param_2[3] < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x679,0,0xffffffff821d05f4,0xffffffff821d0614);
+    if (param_2->height < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x679,0
+                      ,"%s\n\t(outViewport->height) = %i");
     }
   }
   if (*(int *)(iVar2 + 0x16fc) != 2) {
-    if (DAT_848210e0 != 1.0) {
-      *param_2 = *param_2 - (int)((1.0 - DAT_848210e0) * (float)(longlong)param_2[2] * -0.5);
-      param_2[1] = param_2[1] - (int)((1.0 - DAT_848210e0) * (float)(longlong)param_2[3] * -0.5);
-      iVar2 = (int)((float)(longlong)param_2[2] * DAT_848210e0);
+    if (g_drawConsts.scaleViewport != 1.0) {
+      param_2->x = param_2->x -
+                   (int)((1.0 - g_drawConsts.scaleViewport) * (float)(longlong)param_2->width * -0.5
+                        );
+      param_2->y = param_2->y -
+                   (int)((1.0 - g_drawConsts.scaleViewport) * (float)(longlong)param_2->height *
+                        -0.5);
+      iVar2 = (int)((float)(longlong)param_2->width * g_drawConsts.scaleViewport);
       if (iVar2 < 2) {
         iVar2 = 1;
       }
-      param_2[2] = iVar2;
-      iVar2 = (int)((float)(longlong)param_2[3] * DAT_848210e0);
+      param_2->width = iVar2;
+      iVar2 = (int)((float)(longlong)param_2->height * g_drawConsts.scaleViewport);
       if (iVar2 < 2) {
         iVar2 = 1;
       }
-      param_2[3] = iVar2;
+      param_2->height = iVar2;
     }
   }
   __restgprlr_29();
@@ -2194,38 +2554,41 @@ void R_GetViewport(undefined8 param_1,int *param_2)
 
 // 8277EB88  R_ForceSetViewport  (gfx_d3d/r_state.cpp:1671)
 
-void R_ForceSetViewport(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_ForceSetViewport(GfxCmdBufState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int *piVar4;
   
-  iVar3 = __savegprlr_29();
-  piVar4 = (int *)param_2;
-  if (*piVar4 < 0) {
-    MyAssertHandler(0xffffffff821cff90,0x689,0,0xffffffff821d082c,0xffffffff821d0844);
+  iVar3 = __savegprlr_29(param_1);
+  if (param_2->x < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x689,0,
+                    "%s\n\t(viewport->x) = %i");
   }
-  if (piVar4[1] < 0) {
-    MyAssertHandler(0xffffffff821cff90,0x68a,0,0xffffffff821d0800,0xffffffff821d0818);
+  if (param_2->y < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x68a,0,
+                    "%s\n\t(viewport->y) = %i");
   }
-  if (piVar4[2] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x68b,0,0xffffffff821d07cc,0xffffffff821d07e8);
+  if (param_2->width < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x68b,0,
+                    "%s\n\t(viewport->width) = %i");
   }
-  if (piVar4[3] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x68c,0,0xffffffff821d0798,0xffffffff821d07b4);
+  if (param_2->height < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x68c,0,
+                    "%s\n\t(viewport->height) = %i");
   }
-  *(int *)(iVar3 + 0xb58) = *piVar4;
-  iVar1 = piVar4[1];
+  *(int *)(iVar3 + 0xb58) = param_2->x;
+  iVar1 = param_2->y;
   *(int *)(iVar3 + 0xb5c) = iVar1;
-  iVar2 = piVar4[2];
+  iVar2 = param_2->width;
   *(int *)(iVar3 + 0xb60) = iVar2;
-  *(int *)(iVar3 + 0xb64) = piVar4[3];
-  R_HW_SetViewport((double)*(float *)(iVar3 + 0x104),(double)*(float *)(iVar3 + 0x108),
-                   *(undefined4 *)(iVar3 + 0xc0),param_2,iVar2,iVar1,*(undefined4 *)(iVar3 + 0xb34),
-                   *(undefined4 *)(iVar3 + 0xb38),*(undefined4 *)(iVar3 + 0xb3c),
-                   *(undefined4 *)(iVar3 + 0xb40));
+  *(int *)(iVar3 + 0xb64) = param_2->height;
+  R_HW_SetViewport(*(D3DDevice **)(iVar3 + 0xc0),param_2,*(float *)(iVar3 + 0x104),
+                   *(float *)(iVar3 + 0x108),iVar2,iVar1,*(int *)(iVar3 + 0xb34),
+                   *(int *)(iVar3 + 0xb38));
   __restgprlr_29();
   return;
 }
@@ -2233,40 +2596,44 @@ void R_ForceSetViewport(undefined8 param_1,undefined8 param_2)
 
 // 8277ECA8  R_SetViewport  (gfx_d3d/r_state.cpp:1684)
 
-void R_SetViewport(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetViewport(GfxCmdBufState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int *piVar4;
   
-  iVar3 = __savegprlr_29();
-  piVar4 = (int *)param_2;
-  if (*piVar4 < 0) {
-    MyAssertHandler(0xffffffff821cff90,0x696,0,0xffffffff821d082c,0xffffffff821d0844);
+  iVar3 = __savegprlr_29(param_1);
+  if (param_2->x < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x696,0,
+                    "%s\n\t(viewport->x) = %i");
   }
-  if (piVar4[1] < 0) {
-    MyAssertHandler(0xffffffff821cff90,0x697,0,0xffffffff821d0800,0xffffffff821d0818);
+  if (param_2->y < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x697,0,
+                    "%s\n\t(viewport->y) = %i");
   }
-  if (piVar4[2] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x698,0,0xffffffff821d07cc,0xffffffff821d07e8);
+  if (param_2->width < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x698,0,
+                    "%s\n\t(viewport->width) = %i");
   }
-  if (piVar4[3] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x699,0,0xffffffff821d0798,0xffffffff821d07b4);
+  if (param_2->height < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x699,0,
+                    "%s\n\t(viewport->height) = %i");
   }
-  if ((((*piVar4 != *(int *)(iVar3 + 0xb58)) || (piVar4[1] != *(int *)(iVar3 + 0xb5c))) ||
-      (piVar4[2] != *(int *)(iVar3 + 0xb60))) || (piVar4[3] != *(int *)(iVar3 + 0xb64))) {
-    *(int *)(iVar3 + 0xb58) = *piVar4;
-    iVar1 = piVar4[1];
+  if ((((param_2->x != *(int *)(iVar3 + 0xb58)) || (param_2->y != *(int *)(iVar3 + 0xb5c))) ||
+      (param_2->width != *(int *)(iVar3 + 0xb60))) || (param_2->height != *(int *)(iVar3 + 0xb64)))
+  {
+    *(int *)(iVar3 + 0xb58) = param_2->x;
+    iVar1 = param_2->y;
     *(int *)(iVar3 + 0xb5c) = iVar1;
-    *(int *)(iVar3 + 0xb60) = piVar4[2];
-    iVar2 = piVar4[3];
+    *(int *)(iVar3 + 0xb60) = param_2->width;
+    iVar2 = param_2->height;
     *(int *)(iVar3 + 0xb64) = iVar2;
-    R_HW_SetViewport((double)*(float *)(iVar3 + 0x104),(double)*(float *)(iVar3 + 0x108),
-                     *(undefined4 *)(iVar3 + 0xc0),param_2,iVar1,iVar2,
-                     *(undefined4 *)(iVar3 + 0xb34),*(undefined4 *)(iVar3 + 0xb38),
-                     *(undefined4 *)(iVar3 + 0xb3c),*(undefined4 *)(iVar3 + 0xb40));
+    R_HW_SetViewport(*(D3DDevice **)(iVar3 + 0xc0),param_2,*(float *)(iVar3 + 0x104),
+                     *(float *)(iVar3 + 0x108),iVar1,iVar2,*(int *)(iVar3 + 0xb34),
+                     *(int *)(iVar3 + 0xb38));
   }
   __restgprlr_29();
   return;
@@ -2275,25 +2642,31 @@ void R_SetViewport(undefined8 param_1,undefined8 param_2)
 
 // 8277EE08  R_SetViewportStruct  (gfx_d3d/r_state.cpp:1699)
 
-void R_SetViewportStruct(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetViewportStruct(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29();
-  if ((int)param_2[2] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x6a4,0,0xffffffff821d07cc,0xffffffff821d07e8);
+  iVar1 = __savegprlr_29(param_1);
+  if (param_2->width < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6a4,0,
+                    "%s\n\t(viewport->width) = %i");
   }
-  if ((int)param_2[3] < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x6a5,0,0xffffffff821d0798,0xffffffff821d07b4);
+  if (param_2->height < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6a5,0,
+                    "%s\n\t(viewport->height) = %i");
   }
   if (*(int *)(iVar1 + 0x173c) != 0) {
-    MyAssertHandler(0xffffffff821cff90,0x6a7,0,0xffffffff821d0858,0xffffffff821d087c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6a7,0,
+                    "%s\n\t(source->viewportBehavior) = %i");
   }
-  *(undefined4 *)(iVar1 + 0x1728) = *param_2;
-  *(undefined4 *)(iVar1 + 0x172c) = param_2[1];
-  *(undefined4 *)(iVar1 + 0x1730) = param_2[2];
-  *(undefined4 *)(iVar1 + 0x1734) = param_2[3];
+  *(int *)(iVar1 + 0x1728) = param_2->x;
+  *(int *)(iVar1 + 0x172c) = param_2->y;
+  *(int *)(iVar1 + 0x1730) = param_2->width;
+  *(int *)(iVar1 + 0x1734) = param_2->height;
   *(undefined4 *)(iVar1 + 0x16fc) = 0;
   *(undefined1 *)(iVar1 + 0x1750) = 1;
   __restgprlr_29();
@@ -2303,46 +2676,49 @@ void R_SetViewportStruct(undefined8 param_1,undefined4 *param_2)
 
 // 8277EEE8  R_SetViewportValues  (gfx_d3d/r_state.cpp:1713)
 
-void R_SetViewportValues(undefined8 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4
-                        ,undefined4 param_5)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetViewportValues(GfxCmdBufSourceState *param_1,int param_2,int param_3,int param_4,
+                        int param_5)
 
 {
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
+  GfxViewport local_20 [2];
   
-  local_20 = param_2;
-  local_1c = param_3;
-  local_18 = param_4;
-  local_14 = param_5;
-  R_SetViewportStruct(param_1,&local_20);
+  local_20[0].x = param_2;
+  local_20[0].y = param_3;
+  local_20[0].width = param_4;
+  local_20[0].height = param_5;
+  R_SetViewportStruct(param_1,local_20);
   return;
 }
 
 
 // 8277EF20  R_SetFullViewport  (gfx_d3d/r_state.cpp:1725)
 
-void R_SetFullViewport(int param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetFullViewport(GfxCmdBufSourceState *param_1)
 
 {
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
-  undefined4 local_14;
+  GfxViewport local_20 [2];
   
-  local_18 = *(undefined4 *)(param_1 + 0x1740);
-  local_14 = *(undefined4 *)(param_1 + 0x1744);
-  local_20 = 0;
-  local_1c = 0;
-  R_SetViewportStruct(param_1,&local_20);
+  local_20[0].width = param_1->renderTargetWidth;
+  local_20[0].height = param_1->renderTargetHeight;
+  local_20[0].x = 0;
+  local_20[0].y = 0;
+  R_SetViewportStruct(param_1,local_20);
   return;
 }
 
 
 // 8277EF60  R_UpdateViewport  (gfx_d3d/r_state.cpp:1731)
 
-void R_UpdateViewport(undefined8 param_1,int *param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_UpdateViewport(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
 
 {
   float fVar1;
@@ -2352,54 +2728,62 @@ void R_UpdateViewport(undefined8 param_1,int *param_2)
   int iVar5;
   int iVar6;
   int iVar7;
-  double dVar8;
-  double dVar9;
+  int iVar8;
+  GfxCmdBufSourceState *pGVar9;
   double dVar10;
   double dVar11;
   double dVar12;
+  double dVar13;
+  double dVar14;
   
-  __savegprlr_28();
-  iVar7 = __savefpr_27();
-  if (iVar7 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x6cb,0,0xffffffff82000f98,0xffffffff82165ff0);
+  __savegprlr_28(param_1);
+  pGVar9 = (GfxCmdBufSourceState *)__savefpr_27();
+  if (pGVar9 == (GfxCmdBufSourceState *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6cb,0,
+                    "%s");
   }
-  if (*(int *)(iVar7 + 0x16fc) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x6cc,0,0xffffffff82000f98,0xffffffff821d08b4);
+  if (pGVar9->viewMode == VIEW_MODE_NONE) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6cc,0,
+                    "%s");
   }
-  *(undefined1 *)(iVar7 + 0x1750) = 0;
-  if (*(int *)(iVar7 + 0x1740) < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x6cf,0,0xffffffff821d0750,0xffffffff821d0778);
+  pGVar9->viewportIsDirty = false;
+  if (pGVar9->renderTargetWidth < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6cf,0,
+                    "%s\n\t(source->renderTargetWidth) = %i");
   }
-  if (*(int *)(iVar7 + 0x1744) < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x6d0,0,0xffffffff821d0704,0xffffffff821d072c);
+  if (pGVar9->renderTargetHeight < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6d0,0,
+                    "%s\n\t(source->renderTargetHeight) = %i");
   }
-  iVar3 = param_2[2];
-  iVar4 = param_2[3];
-  iVar5 = *param_2;
-  iVar6 = param_2[1];
-  dVar12 = 1.0;
-  *(float *)(iVar7 + 0xf94) = (float)(longlong)*(int *)(iVar7 + 0x1744);
-  *(float *)(iVar7 + 0xf90) = (float)(longlong)*(int *)(iVar7 + 0x1740);
-  fVar1 = (float)(1.0 / (double)(longlong)*(int *)(iVar7 + 0x1744));
-  *(float *)(iVar7 + 0xf9c) = fVar1;
-  fVar2 = (float)(1.0 / (double)(longlong)*(int *)(iVar7 + 0x1740));
-  *(float *)(iVar7 + 0xf98) = fVar2;
-  dVar10 = (double)((float)(longlong)iVar4 * fVar1 * 0.5);
-  dVar11 = (double)((float)(longlong)iVar3 * fVar2 * 0.5);
-  dVar8 = (double)(float)(dVar10 + (double)((float)(longlong)iVar6 * fVar1));
-  dVar9 = (double)(float)(dVar11 + (double)((float)(longlong)iVar5 * fVar2));
-  R_DirtyCodeConstant(iVar7,0x19);
-  *(float *)(iVar7 + 0x125c) = (float)dVar12;
-  *(float *)(iVar7 + 0x1250) = (float)dVar11;
-  *(float *)(iVar7 + 0x1254) = (float)-dVar10;
-  dVar10 = 0.0;
-  *(undefined4 *)(iVar7 + 0x1258) = 0;
-  R_DirtyCodeConstant(iVar7,0x45);
-  *(float *)(iVar7 + 0x1260) = (float)dVar9;
-  *(float *)(iVar7 + 0x1264) = (float)dVar8;
-  *(float *)(iVar7 + 0x1268) = (float)dVar10;
-  *(float *)(iVar7 + 0x126c) = (float)dVar10;
-  R_DirtyCodeConstant(iVar7,0x46);
+  iVar3 = pGVar9->renderTargetHeight;
+  iVar4 = param_2->width;
+  iVar5 = param_2->height;
+  iVar6 = param_2->x;
+  iVar7 = param_2->y;
+  iVar8 = pGVar9->renderTargetWidth;
+  dVar14 = 1.0;
+  (pGVar9->input).consts[0x19][1] = (float)(longlong)iVar3;
+  (pGVar9->input).consts[0x19][0] = (float)(longlong)iVar8;
+  fVar1 = (float)(1.0 / (double)(longlong)iVar3);
+  (pGVar9->input).consts[0x19][3] = fVar1;
+  fVar2 = (float)(1.0 / (double)(longlong)iVar8);
+  (pGVar9->input).consts[0x19][2] = fVar2;
+  dVar12 = (double)((float)(longlong)iVar5 * fVar1 * 0.5);
+  dVar13 = (double)((float)(longlong)iVar4 * fVar2 * 0.5);
+  dVar10 = (double)(float)(dVar12 + (double)((float)(longlong)iVar7 * fVar1));
+  dVar11 = (double)(float)(dVar13 + (double)((float)(longlong)iVar6 * fVar2));
+  R_DirtyCodeConstant(pGVar9,0x19);
+  (pGVar9->input).consts[0x45][3] = (float)dVar14;
+  (pGVar9->input).consts[0x45][0] = (float)dVar13;
+  (pGVar9->input).consts[0x45][1] = (float)-dVar12;
+  dVar12 = 0.0;
+  (pGVar9->input).consts[0x45][2] = 0.0;
+  R_DirtyCodeConstant(pGVar9,0x45);
+  (pGVar9->input).consts[0x46][0] = (float)dVar11;
+  (pGVar9->input).consts[0x46][1] = (float)dVar10;
+  (pGVar9->input).consts[0x46][2] = (float)dVar12;
+  (pGVar9->input).consts[0x46][3] = (float)dVar12;
+  R_DirtyCodeConstant(pGVar9,0x46);
   __restfpr_27();
   __restgprlr_28();
   return;
@@ -2408,22 +2792,25 @@ void R_UpdateViewport(undefined8 param_1,int *param_2)
 
 // 8277F170  R_DrawSurfs_Viewport  (gfx_d3d/r_state.cpp:1770)
 
-void R_DrawSurfs_Viewport(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawSurfs_Viewport(GfxCmdBufContext param_1)
 
 {
-  int iVar1;
-  int iStack00000010;
-  undefined4 uStack00000014;
-  undefined1 auStack_20 [16];
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
+  GfxViewport GStack_20;
   
-  iStack00000010 = (int)((ulonglong)param_1 >> 0x20);
-  iVar1 = iStack00000010;
-  _iStack00000010 = param_1;
-  R_Set3D(iVar1);
-  if (*(char *)(iVar1 + 0x1750) != '\0') {
-    R_GetViewport(iVar1,auStack_20);
-    R_SetViewport(uStack00000014,auStack_20);
-    R_UpdateViewport(iVar1,auStack_20);
+  pGStack00000010 = param_1.source;
+  pGVar1 = pGStack00000010;
+  _pGStack00000010 = param_1;
+  R_Set3D(pGVar1);
+  if (pGVar1->viewportIsDirty != false) {
+    R_GetViewport(pGVar1,&GStack_20);
+    R_SetViewport(pGStack00000014,&GStack_20);
+    R_UpdateViewport(pGVar1,&GStack_20);
   }
   return;
 }
@@ -2431,57 +2818,67 @@ void R_DrawSurfs_Viewport(undefined8 param_1)
 
 // 8277F1D8  R_ViewportBehaviorForRenderTarget  (gfx_d3d/r_state.cpp:1789)
 
-undefined4 R_ViewportBehaviorForRenderTarget(int param_1)
+GfxViewportBehavior R_ViewportBehaviorForRenderTarget(GfxRenderTargetId param_1)
 
 {
-  if ((param_1 < 0) || (0xe < param_1)) {
-    MyAssertHandler(0xffffffff821cff90,0x6fe,0,0xffffffff821d08d8,param_1,0,0xe);
+  if (((int)param_1 < 0) || (0xe < (int)param_1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x6fe,0,
+                    "renderTargetId not in [0, R_RENDERTARGET_COUNT - 1]\n\t%i not in [%i, %i]");
   }
-  return *(undefined4 *)(&DAT_821cfd34 + param_1 * 4);
+  return s_viewportBehaviorForRenderTarget[param_1];
 }
 
 
 // 8277F248  R_DisableSampler  (gfx_d3d/r_state.cpp:1801)
 
-void R_DisableSampler(int param_1,uint param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DisableSampler(GfxCmdBufState *param_1,uint param_2)
 
 {
+  D3DDevice *pDVar1;
+  
+  pDVar1 = (param_1->prim).device;
   if (param_2 < 0x10) {
-    R_HW_DisablePixelSampler(*(undefined4 *)(param_1 + 0xc0),param_2);
+    R_HW_DisablePixelSampler(pDVar1,param_2);
   }
   else {
-    R_HW_DisableVertexSampler(*(undefined4 *)(param_1 + 0xc0),param_2 - 0x10);
+    R_HW_DisableVertexSampler(pDVar1,param_2 - 0x10);
   }
-  *(undefined4 *)((param_2 + 0x1c) * 4 + param_1) = 0;
+  param_1->samplerTexture[param_2] = (GfxTexture *)0x0;
   return;
 }
 
 
 // 8277F2B0  R_UnbindImage  (gfx_d3d/r_state.cpp:1819)
 
-void R_UnbindImage(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_UnbindImage(GfxCmdBufState *param_1,GfxImage *param_2)
 
 {
   int iVar1;
-  uint *puVar2;
-  ulonglong uVar3;
+  ulonglong uVar2;
+  uint *puVar3;
+  uint uVar4;
   
-  iVar1 = __savegprlr_27();
-  puVar2 = (uint *)(iVar1 + 0x70);
-  uVar3 = 0;
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
+  puVar3 = (uint *)(iVar1 + 0x70);
+  uVar4 = 0;
   do {
-    if ((ulonglong)*puVar2 == (param_2 & 0xffffffff)) {
-      if ((uVar3 & 0xffffffff) < 0x10) {
-        R_HW_DisablePixelSampler(*(undefined4 *)(iVar1 + 0xc0),uVar3);
+    if ((ulonglong)*puVar3 == (uVar2 & 0xffffffff)) {
+      if (uVar4 < 0x10) {
+        R_HW_DisablePixelSampler(*(D3DDevice **)(iVar1 + 0xc0),uVar4);
       }
       else {
-        R_HW_DisableVertexSampler(*(undefined4 *)(iVar1 + 0xc0),uVar3 - 0x10);
+        R_HW_DisableVertexSampler(*(D3DDevice **)(iVar1 + 0xc0),uVar4 - 0x10);
       }
-      *puVar2 = 0;
+      *puVar3 = 0;
     }
-    uVar3 = uVar3 + 1;
-    puVar2 = puVar2 + 1;
-  } while ((uVar3 & 0xffffffff) < 0x14);
+    uVar4 = uVar4 + 1;
+    puVar3 = puVar3 + 1;
+  } while (uVar4 < 0x14);
   __restgprlr_27();
   return;
 }
@@ -2489,32 +2886,44 @@ void R_UnbindImage(undefined8 param_1,ulonglong param_2)
 
 // 8277F318  R_SetRenderTargetSize  (gfx_d3d/r_state.cpp:1831)
 
-void R_SetRenderTargetSize(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_SetRenderTargetSize(GfxCmdBufSourceState *param_1,GfxRenderTargetId param_2)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  undefined4 uVar4;
+  GfxViewportBehavior GVar4;
+  ulonglong uVar5;
+  GfxRenderTargetId GVar6;
   
-  iVar3 = __savegprlr_29();
+  uVar5 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_29(param_1);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x728,0,0xffffffff82000f98,0xffffffff82165ff0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x728,0,
+                    "%s");
   }
-  if (((int)param_2 < 0) || (0xe < (int)param_2)) {
-    MyAssertHandler(0xffffffff821cff90,0x736,0,0xffffffff821d0920,param_2,0,0xe);
+  GVar6 = (GfxRenderTargetId)uVar5;
+  if (((int)GVar6 < 0) || (0xe < (int)GVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x736,0,
+                    "newTargetId not in [0, R_RENDERTARGET_COUNT - 1]\n\t%i not in [%i, %i]");
   }
-  uVar4 = R_ViewportBehaviorForRenderTarget(param_2);
-  *(undefined4 *)(iVar3 + 0x173c) = uVar4;
-  iVar2 = (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  iVar1 = *(int *)(&DAT_8476208c + iVar2);
+  GVar4 = R_ViewportBehaviorForRenderTarget(GVar6);
+  *(GfxViewportBehavior *)(iVar3 + 0x173c) = GVar4;
+  iVar2 = (int)((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0xffffffff) << 2);
+  iVar1 = *(int *)((int)&gfxRenderTargets[0].width + iVar2);
   *(int *)(iVar3 + 0x1740) = iVar1;
-  *(undefined4 *)(iVar3 + 0x1744) = *(undefined4 *)(&DAT_84762090 + iVar2);
+  *(undefined4 *)(iVar3 + 0x1744) = *(undefined4 *)((int)&gfxRenderTargets[0].height + iVar2);
   if (iVar1 < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x742,0,0xffffffff821d0750,0xffffffff821d0778);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x742,0,
+                    "%s\n\t(source->renderTargetWidth) = %i");
   }
   if (*(int *)(iVar3 + 0x1744) < 1) {
-    MyAssertHandler(0xffffffff821cff90,0x743,0,0xffffffff821d0704,0xffffffff821d072c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x743,0,
+                    "%s\n\t(source->renderTargetHeight) = %i");
   }
   __restgprlr_29();
   return;
@@ -2523,23 +2932,32 @@ void R_SetRenderTargetSize(undefined8 param_1,ulonglong param_2)
 
 // 8277F428  R_GetRenderTargetSize  (gfx_d3d/r_state.cpp:1864)
 
-void R_GetRenderTargetSize(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_GetRenderTargetSize(GfxRenderTargetId param_1,uint *param_2,uint *param_3)
 
 {
   int iVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_27();
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(int)param_2;
+  iVar1 = __savegprlr_27(param_1);
   if ((iVar1 < 0) || (0xe < iVar1)) {
-    MyAssertHandler(0xffffffff821cff90,0x749,0,0xffffffff821d0968,iVar1,0,0xe);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x749,0,
+                    "targetId not in [0, R_RENDERTARGET_COUNT - 1]\n\t%i not in [%i, %i]");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x74a,0,0xffffffff82000f98,0xffffffff8202c288);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x74a,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x74b,0,0xffffffff82000f98,0xffffffff8202c280);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x74b,0,
+                    "%s");
   }
-  *(undefined4 *)param_2 = *(undefined4 *)(&DAT_8476208c + iVar1 * 0x14);
-  *(undefined4 *)param_3 = *(undefined4 *)(&DAT_84762090 + iVar1 * 0x14);
+  *(uint *)uVar2 = gfxRenderTargets[iVar1].width;
+  *(uint *)uVar3 = gfxRenderTargets[iVar1].height;
   __restgprlr_27();
   return;
 }
@@ -2547,39 +2965,59 @@ void R_GetRenderTargetSize(undefined8 param_1,ulonglong param_2,ulonglong param_
 
 // 82780AA8  R_SetRenderTarget  (gfx_d3d/r_state.cpp:1875)
 
-void R_SetRenderTarget(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_SetRenderTarget(GfxCmdBufContext param_1,GfxRenderTargetId param_2)
 
 {
-  int iVar1;
+  GfxImage *pGVar1;
   int iVar2;
   int iVar3;
+  GfxCmdBufState *pGVar4;
+  GfxViewportBehavior GVar5;
+  ulonglong uVar6;
+  GfxRenderTargetId GVar7;
+  int iStack00000010;
+  GfxCmdBufState *pGStack00000014;
   
-  iVar2 = __savegprlr_25();
-  if ((int)param_2 != *(int *)(iVar2 + 0xb68)) {
-    R_HW_ForceDisableGammaWrites(iVar2);
-    iVar1 = (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-    if (*(int *)((int)&DAT_84762080 + iVar1) != 0) {
-      R_UnbindImage(iVar2);
+  uVar6 = (ulonglong)(int)param_2;
+  _iStack00000010 = __savegprlr_25();
+  pGVar4 = pGStack00000014;
+  GVar7 = (GfxRenderTargetId)uVar6;
+  if (GVar7 != pGStack00000014->renderTargetId) {
+    R_HW_ForceDisableGammaWrites(pGStack00000014);
+    iVar2 = (int)((uVar6 + (uVar6 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
+    pGVar1 = *(GfxImage **)((int)&gfxRenderTargets[0].image + iVar2);
+    if (pGVar1 != (GfxImage *)0x0) {
+      R_UnbindImage(pGVar4,pGVar1);
     }
-    iVar3 = R_ViewportBehaviorForRenderTarget(param_2);
-    if (iRam0000173c != iVar3) {
-      MyAssertHandler(0xffffffff821cff90,0x765,0,0xffffffff82000f98,0xffffffff821d0f98);
+    GVar5 = R_ViewportBehaviorForRenderTarget(GVar7);
+    iVar3 = iStack00000010;
+    if (*(GfxViewportBehavior *)(iStack00000010 + 0x173c) != GVar5) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x765,0
+                      ,"%s");
     }
-    if (iRam00001744 != *(int *)(&DAT_84762090 + iVar1)) {
-      MyAssertHandler(0xffffffff821cff90,0x766,0,0xffffffff82000f98,0xffffffff821d0f48);
+    if (*(int *)(iVar3 + 0x1744) != *(int *)((int)&gfxRenderTargets[0].height + iVar2)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x766,0
+                      ,"%s");
     }
-    if (iRam00001740 < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x767,0,0xffffffff821d0eec,0xffffffff821d0f1c);
+    if (*(int *)(iVar3 + 0x1740) < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x767,0
+                      ,"%s\n\t(context.source->renderTargetWidth) = %i");
     }
-    if (iRam00001744 < 1) {
-      MyAssertHandler(0xffffffff821cff90,0x768,0,0xffffffff821d0e90,0xffffffff821d0ec0);
+    if (*(int *)(iVar3 + 0x1744) < 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x768,0
+                      ,"%s\n\t(context.source->renderTargetHeight) = %i");
     }
-    R_HW_SetRenderTarget(iVar2,param_2);
-    *(int *)(iVar2 + 0xb68) = (int)param_2;
-    uRam000016fc = 0;
-    uRam00001750 = 1;
-    if (iRam00001740 != *(int *)(&DAT_8476208c + iVar1)) {
-      MyAssertHandler(0xffffffff821cff90,0x781,0,0xffffffff82000f98,0xffffffff821d0e40);
+    R_HW_SetRenderTarget(pGVar4,GVar7);
+    pGVar4->renderTargetId = GVar7;
+    *(undefined4 *)(iVar3 + 0x16fc) = 0;
+    *(undefined1 *)(iVar3 + 0x1750) = 1;
+    if (*(int *)(iVar3 + 0x1740) != *(int *)((int)&gfxRenderTargets[0].width + iVar2)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x781,0
+                      ,"%s");
     }
   }
   __restgprlr_25();
@@ -2589,21 +3027,26 @@ void R_SetRenderTarget(undefined8 param_1,ulonglong param_2)
 
 // 8277F500  R_SetRenderSourceSize  (gfx_d3d/r_state.cpp:1927)
 
-void R_SetRenderSourceSize(int param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_SetRenderSourceSize(GfxCmdBufSourceState *param_1,GfxRenderTarget *param_2)
 
 {
   uint uVar1;
   uint uVar2;
   
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x78d,0,0xffffffff82000f98,0xffffffff821d09ac);
+  if (param_2 == (GfxRenderTarget *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x78d,0,
+                    "%s");
   }
-  uVar1 = *(uint *)(param_2 + 0x10);
-  uVar2 = *(uint *)(param_2 + 0xc);
-  *(float *)(param_1 + 4000) = (float)uVar2;
-  *(float *)(param_1 + 0xfa4) = (float)uVar1;
-  *(float *)(param_1 + 0xfa8) = 1.0 / (float)uVar2;
-  *(float *)(param_1 + 0xfac) = 1.0 / (float)uVar1;
+  uVar1 = param_2->height;
+  uVar2 = param_2->width;
+  (param_1->input).consts[0x1a][0] = (float)uVar2;
+  (param_1->input).consts[0x1a][1] = (float)uVar1;
+  (param_1->input).consts[0x1a][2] = 1.0 / (float)uVar2;
+  (param_1->input).consts[0x1a][3] = 1.0 / (float)uVar1;
   R_DirtyCodeConstant(param_1,0x1a);
   return;
 }
@@ -2612,59 +3055,72 @@ void R_SetRenderSourceSize(int param_1,int param_2)
 // 8277F5B8  R_ClearScreenInternal  (gfx_d3d/r_state.cpp:1944)
 
 void R_ClearScreenInternal
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4,
-               undefined8 param_5,ulonglong param_6)
+               (D3DDevice *param_1,uchar param_2,float *param_3,float param_4,uchar param_5,
+               GfxViewport *param_6)
 
 {
-  ulonglong uVar1;
-  undefined4 *puVar2;
-  int *piVar3;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
+  ulong uVar3;
+  ulonglong uVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  ulonglong in_r8;
+  int *piVar8;
   double extraout_f1;
-  double dVar4;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
-  int local_60;
-  int local_5c;
-  int local_58;
-  int local_54;
+  double dVar9;
+  __vector4_u_0 local_70;
+  _D3DRECT local_60 [6];
   
-  uVar1 = __savegprlr_25();
-  dVar4 = extraout_f1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7a2,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  dVar6 = (double)(longlong)(int)param_6;
+  uVar4 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(char)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_25((double)param_4,param_1,uVar2,uVar4,param_5);
+  dVar7 = extraout_f1;
+  if (pDVar1 == (D3DDevice *)0x0) {
+    dVar6 = -NAN;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7a2,0,
+                    "%s");
   }
-  param_2 = param_2 & 0xff;
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7b9,0,0xffffffff82000f98,0xffffffff821cbcf0);
+  if ((uVar2 & 0xff) == 0) {
+    dVar6 = -NAN;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7b9,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7ba,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar4 & 0xffffffff) == 0) {
+    dVar6 = -NAN;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7ba,0,
+                    "%s");
   }
-  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
-    MyAssertHandler(dVar4,0xffffffff821cff90,0x7bb,0,0xffffffff821d09bc,dVar4,0,0x3ff0000000000000);
+  dVar9 = dVar7;
+  if ((dVar7 < 0.0) || (1.0 < dVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7bb,0,
+                    "depth not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
+    dVar6 = dVar7;
   }
-  puVar2 = (undefined4 *)param_3;
-  local_70 = *puVar2;
-  local_6c = puVar2[1];
-  local_68 = puVar2[2];
-  local_64 = puVar2[3];
-  if ((param_6 & 0xffffffff) == 0) {
+  pfVar5 = (float *)uVar4;
+  local_70.vector4_f32[0] = *pfVar5;
+  local_70.vector4_f32[1] = pfVar5[1];
+  local_70.vector4_f32[2] = pfVar5[2];
+  local_70.vector4_f32[3] = pfVar5[3];
+  uVar3 = (ulong)(uVar2 & 0xff);
+  if ((in_r8 & 0xffffffff) == 0) {
     do {
-      D3DDevice_ClearF(dVar4,uVar1,param_2,0,&local_70);
-    } while (DAT_84013128 != 0);
+      D3DDevice_ClearF(pDVar1,uVar3,(_D3DRECT *)0x0,(__vector4 *)&local_70._s_2,(float)dVar9,
+                       SUB84(dVar6,0));
+    } while (alwaysfails != 0);
     __restgprlr_25();
     return;
   }
-  piVar3 = (int *)param_6;
-  local_60 = *piVar3;
-  local_5c = piVar3[1];
-  local_58 = piVar3[2] + local_60;
-  local_54 = piVar3[3] + local_5c;
+  piVar8 = (int *)in_r8;
+  local_60[0].x1 = *piVar8;
+  local_60[0].y1 = piVar8[1];
+  local_60[0].x2 = piVar8[2] + local_60[0].x1;
+  local_60[0].y2 = piVar8[3] + local_60[0].y1;
   do {
-    D3DDevice_ClearF(dVar4,uVar1,param_2,&local_60,&local_70);
-  } while (DAT_84013128 != 0);
+    D3DDevice_ClearF(pDVar1,uVar3,local_60,(__vector4 *)&local_70._s_2,(float)dVar9,SUB84(dVar6,0));
+  } while (alwaysfails != 0);
   __restgprlr_25();
   return;
 }
@@ -2672,29 +3128,41 @@ void R_ClearScreenInternal
 
 // 8277F790  R_ClearScreen  (gfx_d3d/r_state.cpp:2040)
 
-void R_ClearScreen(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void R_ClearScreen(D3DDevice *param_1,uchar param_2,float *param_3,float param_4,uchar param_5,
+                  GfxViewport *param_6)
 
 {
-  undefined8 uVar1;
+  D3DDevice *pDVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   double extraout_f1;
-  double dVar2;
+  double dVar4;
   
-  uVar1 = __savegprlr_24();
-  dVar2 = extraout_f1;
-  if ((param_2 & 0xff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7f9,0,0xffffffff82000f98,0xffffffff821cbcf0);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar2 = (ulonglong)(char)param_2;
+  pDVar1 = (D3DDevice *)__savegprlr_24((double)param_4,param_1);
+  dVar4 = extraout_f1;
+  if ((uVar2 & 0xff) == 0) {
+    param_5 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7f9,0,
+                    "%s");
   }
-  if ((param_2 & 0x40) != 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7fa,0,0xffffffff821cbc54,0xffffffff821cbc70,param_2 & 0xff)
-    ;
+  if ((uVar2 & 0x40) != 0) {
+    param_5 = 'T';
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7fa,0,
+                    "%s\n\t(whichToClear) = %i");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x7fb,0,0xffffffff82000f98,0xffffffff8200240c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    param_5 = 0x98;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7fb,0,
+                    "%s");
   }
-  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
-    MyAssertHandler(dVar2,0xffffffff821cff90,0x7fc,0,0xffffffff821cbc1c,0xffffffff821cbc30,dVar2);
+  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
+    param_5 = '\x1c';
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x7fc,0,
+                    "%s\n\t(depth) = %g");
   }
-  R_ClearScreenInternal(dVar2,uVar1,param_2,param_3);
+  R_ClearScreenInternal(pDVar1,(uchar)uVar2,(float *)uVar3,(float)dVar4,param_5,param_6);
   __restgprlr_24();
   return;
 }
@@ -2702,80 +3170,83 @@ void R_ClearScreen(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 8277F8C0  R_ForceSetPolygonOffset  (gfx_d3d/r_state.cpp:2065)
 
-void R_ForceSetPolygonOffset(undefined8 param_1,ulonglong param_2)
+void R_ForceSetPolygonOffset(D3DDevice *param_1,uint param_2)
 
 {
   float fVar1;
   float fVar2;
   
-  if ((param_2 & 0x30) == 0x30) {
-    fVar1 = *(float *)(DAT_845aa8d8 + 0xc);
-    fVar2 = *(float *)(DAT_845aa660 + 0xc);
+  if (((ulonglong)param_2 & 0x30) == 0x30) {
+    fVar1 = (sm_polygonOffsetBias->current).value;
+    fVar2 = (sm_polygonOffsetScale->current).value;
   }
   else {
-    fVar1 = (float)((param_2 & 0x30) >> 4);
-    fVar2 = *(float *)(DAT_845aa678 + 0xc) * fVar1;
-    fVar1 = *(float *)(DAT_845aa720 + 0xc) * *(float *)(DAT_845aa6a4 + 0xc) * fVar1;
+    fVar1 = (float)(((ulonglong)param_2 & 0x30) >> 4);
+    fVar2 = (r_polygonOffsetScale->current).value * fVar1;
+    fVar1 = (r_polygonOffsetBiasMult->current).value * (r_polygonOffsetBias->current).value * fVar1;
   }
-  R_HW_SetPolygonOffset(-(double)fVar2,-(double)(fVar1 * 1.5258789e-05));
+  R_HW_SetPolygonOffset(param_1,-fVar2,-(fVar1 * 1.5258789e-05));
   return;
 }
 
 
 // 8277F970  R_SetMeshStream  (gfx_d3d/r_state.cpp:2108)
 
-void R_SetMeshStream(int param_1,int param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_SetMeshStream(GfxCmdBufState *param_1,GfxMeshData *param_2)
 
 {
-  if (*(int *)(param_1 + 0xc4) != param_2 + 8) {
-    R_ChangeIndices(param_1 + 0xc0);
+  if ((param_1->prim).indexBuffer != &param_2->ib) {
+    R_ChangeIndices(&param_1->prim,&param_2->ib);
   }
-  R_SetStreamSource(param_1 + 0xc0,param_2 + 0x34,0,*(undefined4 *)(param_2 + 0x58));
+  R_SetStreamSource(&param_1->prim,&(param_2->vb).buffer,0,param_2->vertSize);
   return;
 }
 
 
 // 8277F9D0  R_SetCompleteState  (gfx_d3d/r_state.cpp:2117)
 
-void R_SetCompleteState(undefined8 param_1,uint *param_2)
+void R_SetCompleteState(D3DDevice *param_1,uint *param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  D3DDevice *pDVar2;
   
-  uVar2 = __savegprlr_27();
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821cff90,0x846,0,0xffffffff82000f98,0xffffffff821bd9f4);
+  pDVar2 = (D3DDevice *)__savegprlr_27(param_1);
+  if (pDVar2 == (D3DDevice *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x846,0,
+                    "%s");
   }
   uVar1 = *param_2;
   do {
     D3DDevice_SetRenderState_ColorWriteEnable
-              (uVar2,-(uint)((uVar1 & 0x8000000) != 0) & 7 | uVar1 >> 0x19 & 8);
-  } while (DAT_84013128 != 0);
+              (pDVar2,-(uint)((uVar1 & 0x8000000) != 0) & 7 | uVar1 >> 0x19 & 8);
+  } while (alwaysfails != 0);
   uVar1 = *param_2;
   do {
-    D3DDevice_SetRenderState_AlphaTestEnable(uVar2,(~(ulonglong)uVar1 & 0xffffffff) >> 0xb & 1);
-  } while (DAT_84013128 != 0);
-  R_HW_SetCullFace(uVar2,*param_2);
+    D3DDevice_SetRenderState_AlphaTestEnable(pDVar2,~uVar1 >> 0xb & 1);
+  } while (alwaysfails != 0);
+  R_HW_SetCullFace(pDVar2,*param_2);
   uVar1 = *param_2;
   do {
-    D3DDevice_SetRenderState_FillMode(uVar2,-((uVar1 & 0x80000000) != 0) & 0x25);
-  } while (DAT_84013128 != 0);
-  R_ForceSetBlendState(uVar2,*param_2);
+    D3DDevice_SetRenderState_FillMode(pDVar2,-(uint)((uVar1 & 0x80000000) != 0) & 0x25);
+  } while (alwaysfails != 0);
+  R_ForceSetBlendState(pDVar2,*param_2);
   uVar1 = param_2[1];
   do {
-    D3DDevice_SetRenderState_ZWriteEnable(uVar2,uVar1 & 1);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetRenderState_ZWriteEnable(pDVar2,uVar1 & 1);
+  } while (alwaysfails != 0);
   uVar1 = param_2[1];
   do {
-    D3DDevice_SetRenderState_ZEnable(uVar2,(~(ulonglong)uVar1 & 0xffffffff) >> 1 & 1);
-  } while (DAT_84013128 != 0);
+    D3DDevice_SetRenderState_ZEnable(pDVar2,~uVar1 >> 1 & 1);
+  } while (alwaysfails != 0);
   uVar1 = param_2[1];
   do {
-    D3DDevice_SetRenderState_ZFunc(uVar2,*(undefined4 *)(&DAT_821cfcd4 + (uVar1 & 0xc)));
-  } while (DAT_84013128 != 0);
-  R_ForceSetPolygonOffset(uVar2,param_2[1]);
-  R_ForceSetStencilState(uVar2,param_2[1]);
+    D3DDevice_SetRenderState_ZFunc(pDVar2,*(ulong *)((int)s_depthTestTable + (uVar1 & 0xc)));
+  } while (alwaysfails != 0);
+  R_ForceSetPolygonOffset(pDVar2,param_2[1]);
+  R_ForceSetStencilState(pDVar2,param_2[1]);
   __restgprlr_27();
   return;
 }
@@ -2783,26 +3254,32 @@ void R_SetCompleteState(undefined8 param_1,uint *param_2)
 
 // 82780C20  R_DrawCall  (gfx_d3d/r_state.cpp:2142)
 
-void R_DrawCall(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,int *param_6)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_DrawCall(_func___cdecl_void_void_ptr_GfxCmdBufContext *param_1,void *param_2,
+               GfxCmdBufSourceState *param_3,GfxSceneDef *param_4,GfxViewParms *param_5,
+               GfxDrawCallOutput *param_6)
 
 {
   code *pcVar1;
-  DWORD DVar2;
-  undefined1 auStack_bb0 [192];
-  int local_af0;
+  ulong uVar2;
+  longlong lVar3;
+  GfxCmdBufState GStack_bb0;
   
-  pcVar1 = (code *)__savegprlr_25();
-  DVar2 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(*(undefined4 *)(&DAT_846177e4 + DVar2 * 4));
+  lVar3 = (longlong)(int)param_2;
+  pcVar1 = (code *)__savegprlr_25(param_1,lVar3);
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
   R_BeginView(param_3,param_4,param_5);
-  local_af0 = *param_6;
-  if (local_af0 != DAT_84616688) {
-    D3DDevice_FlushHiZStencil(local_af0,1);
+  GStack_bb0.prim.device = (param_6->cmdBuf).device;
+  if (GStack_bb0.prim.device != dx.device) {
+    D3DDevice_FlushHiZStencil(GStack_bb0.prim.device,D3DFHZS_SYNCHRONOUS);
   }
-  R_InitCmdBufState(auStack_bb0);
-  (*pcVar1)(param_2,CONCAT44((int)param_3,auStack_bb0));
-  R_ShutdownCmdBufState(auStack_bb0);
+  R_InitCmdBufState(&GStack_bb0);
+  (*pcVar1)(lVar3,CONCAT44(param_3,&GStack_bb0));
+  R_ShutdownCmdBufState(&GStack_bb0);
   __restgprlr_25();
   return;
 }
@@ -2810,37 +3287,40 @@ void R_DrawCall(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefin
 
 // 8277FB48  R_HW_SetScissor  (gfx_d3d/r_state.cpp:2390)
 
-void R_HW_SetScissor(undefined8 param_1,int *param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_HW_SetScissor(GfxCmdBufState *param_1,GfxViewport *param_2)
 
 {
   int iVar1;
-  int local_40;
-  int local_3c;
-  int local_38;
-  int local_34;
+  tagRECT local_40 [4];
   
-  iVar1 = __savegprlr_28();
-  if (*param_2 < *(int *)(iVar1 + 0xb58)) {
-    MyAssertHandler(0xffffffff821cff90,0x959,0,0xffffffff821d0adc);
+  iVar1 = __savegprlr_28(param_1);
+  if (param_2->x < *(int *)(iVar1 + 0xb58)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x959,0,
+                    "scissorViewport->x >= state->viewport.x\n\t%i, %i");
   }
-  if (param_2[1] < *(int *)(iVar1 + 0xb5c)) {
-    MyAssertHandler(0xffffffff821cff90,0x95a,0,0xffffffff821d0aac);
+  if (param_2->y < *(int *)(iVar1 + 0xb5c)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x95a,0,
+                    "scissorViewport->y >= state->viewport.y\n\t%i, %i");
   }
-  if (*(int *)(iVar1 + 0xb60) + *(int *)(iVar1 + 0xb58) < param_2[2] + *param_2) {
-    MyAssertHandler(0xffffffff821cff90,0x95b,0,0xffffffff82000f98,0xffffffff821d0a50);
+  if (*(int *)(iVar1 + 0xb60) + *(int *)(iVar1 + 0xb58) < param_2->width + param_2->x) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x95b,0,
+                    "%s");
   }
-  if (*(int *)(iVar1 + 0xb64) + *(int *)(iVar1 + 0xb5c) < param_2[1] + param_2[3]) {
-    MyAssertHandler(0xffffffff821cff90,0x95c,0,0xffffffff82000f98,0xffffffff821d09f0);
+  if (*(int *)(iVar1 + 0xb64) + *(int *)(iVar1 + 0xb5c) < param_2->y + param_2->height) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.cpp",0x95c,0,
+                    "%s");
   }
-  local_40 = *param_2;
-  local_3c = param_2[1];
-  local_38 = param_2[2] + local_40;
-  local_34 = param_2[3] + local_3c;
-  D3DDevice_SetScissorRect(*(undefined4 *)(iVar1 + 0xc0),&local_40);
-  *(int *)(iVar1 + 0xb34) = *param_2;
-  *(int *)(iVar1 + 0xb38) = param_2[1];
-  *(int *)(iVar1 + 0xb3c) = param_2[2];
-  *(int *)(iVar1 + 0xb40) = param_2[3];
+  local_40[0].left = param_2->x;
+  local_40[0].top = param_2->y;
+  local_40[0].right = param_2->width + local_40[0].left;
+  local_40[0].bottom = param_2->height + local_40[0].top;
+  D3DDevice_SetScissorRect(*(D3DDevice **)(iVar1 + 0xc0),local_40);
+  *(int *)(iVar1 + 0xb34) = param_2->x;
+  *(int *)(iVar1 + 0xb38) = param_2->y;
+  *(int *)(iVar1 + 0xb3c) = param_2->width;
+  *(int *)(iVar1 + 0xb40) = param_2->height;
   __restgprlr_28();
   return;
 }
@@ -2848,21 +3328,32 @@ void R_HW_SetScissor(undefined8 param_1,int *param_2)
 
 // 8277FC90  R_HW_EnableScissor  (gfx_d3d/r_state.cpp:2416)
 
-void R_HW_EnableScissor(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_HW_EnableScissor(GfxCmdBufContext param_1,GfxViewport *param_2)
 
 {
-  int iVar1;
-  undefined1 auStack_30 [48];
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufState *pGVar2;
+  undefined8 uVar3;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
+  GfxViewport aGStack_30 [3];
   
-  iVar1 = __savegprlr_29();
-  R_Set3D(0);
-  if (cRam00001750 != '\0') {
-    R_GetViewport(0,auStack_30);
-    R_SetViewport(iVar1,auStack_30);
-    R_UpdateViewport(0,auStack_30);
+  uVar3 = __savegprlr_29();
+  pGStack00000010 = (GfxCmdBufSourceState *)((ulonglong)uVar3 >> 0x20);
+  pGVar1 = pGStack00000010;
+  _pGStack00000010 = uVar3;
+  R_Set3D(pGVar1);
+  pGVar2 = pGStack00000014;
+  if (pGVar1->viewportIsDirty != false) {
+    R_GetViewport(pGVar1,aGStack_30);
+    R_SetViewport(pGVar2,aGStack_30);
+    R_UpdateViewport(pGVar1,aGStack_30);
   }
-  D3DDevice_SetRenderState_ScissorTestEnable(*(undefined4 *)(iVar1 + 0xc0),1);
-  R_HW_SetScissor(iVar1,param_2);
+  D3DDevice_SetRenderState_ScissorTestEnable((pGVar2->prim).device,1);
+  R_HW_SetScissor(pGVar2,param_2);
   __restgprlr_29();
   return;
 }
@@ -2870,24 +3361,28 @@ void R_HW_EnableScissor(undefined8 param_1,undefined8 param_2)
 
 // 8277FD08  R_HW_DisableScissor  (gfx_d3d/r_state.cpp:2441)
 
-void R_HW_DisableScissor(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_HW_DisableScissor(GfxCmdBufState *param_1)
 
 {
-  D3DDevice_SetRenderState_ScissorTestEnable(*(undefined4 *)(param_1 + 0xc0),0);
-  *(undefined4 *)(param_1 + 0xb34) = 0;
-  *(undefined4 *)(param_1 + 0xb38) = 0;
-  *(undefined4 *)(param_1 + 0xb3c) = 0x1000;
-  *(undefined4 *)(param_1 + 0xb40) = 0x1000;
+  D3DDevice_SetRenderState_ScissorTestEnable((param_1->prim).device,0);
+  param_1->scissorX = 0;
+  param_1->scissorY = 0;
+  param_1->scissorW = 0x1000;
+  param_1->scissorH = 0x1000;
   return;
 }
 
 
 // 8277FD58  R_HW_EnableScissor2D  (gfx_d3d/r_state.cpp:2462)
 
-void R_HW_EnableScissor2D(int param_1,undefined8 param_2)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_HW_EnableScissor2D(GfxCmdBufState *param_1,GfxViewport *param_2)
 
 {
-  D3DDevice_SetRenderState_ScissorTestEnable(*(undefined4 *)(param_1 + 0xc0),1);
+  D3DDevice_SetRenderState_ScissorTestEnable((param_1->prim).device,1);
   R_HW_SetScissor(param_1,param_2);
   return;
 }
@@ -2895,208 +3390,215 @@ void R_HW_EnableScissor2D(int param_1,undefined8 param_2)
 
 // 8277FDA8  R_HW_DisableScissor2D  (gfx_d3d/r_state.cpp:2469)
 
-void R_HW_DisableScissor2D(int param_1)
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_HW_DisableScissor2D(GfxCmdBufState *param_1)
 
 {
-  D3DDevice_SetRenderState_ScissorTestEnable(*(undefined4 *)(param_1 + 0xc0),0);
-  *(undefined4 *)(param_1 + 0xb34) = 0;
-  *(undefined4 *)(param_1 + 0xb38) = 0;
-  *(undefined4 *)(param_1 + 0xb3c) = 0x1000;
-  *(undefined4 *)(param_1 + 0xb40) = 0x1000;
+  D3DDevice_SetRenderState_ScissorTestEnable((param_1->prim).device,0);
+  param_1->scissorX = 0;
+  param_1->scissorY = 0;
+  param_1->scissorW = 0x1000;
+  param_1->scissorH = 0x1000;
   return;
 }
 
 
 // 8277C928  D3DDevice_SetSamplerState_AddressU_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2708)
 
-void D3DDevice_SetSamplerState_AddressU_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressU_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 10 | *(uint *)(iVar1 + param_1) & 0xffffe3ff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 10 | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffffe3ff)
+  ;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277C968  D3DDevice_SetSamplerState_AddressV_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2715)
 
-void D3DDevice_SetSamplerState_AddressV_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressV_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 0xd | *(uint *)(iVar1 + param_1) & 0xffff1fff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0xd | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffff1fff
+       );
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277C9A8  D3DDevice_SetSamplerState_AddressW_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2722)
 
-void D3DDevice_SetSamplerState_AddressW_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_AddressW_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = (param_2 + 0x30) * 0x18;
-  *(uint *)(iVar1 + param_1) = (param_3 & 7) << 0x10 | *(uint *)(iVar1 + param_1) & 0xfff8ffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0x10 |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xfff8ffff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277C9E8  D3DDevice_SetSamplerState_MipFilter_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2729)
 
-void D3DDevice_SetSamplerState_MipFilter_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_MipFilter_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x48c) = (param_3 & 3) << 0x17 | *(uint *)(iVar1 + 0x48c) & 0xfe7fffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) =
+       (param_3 & 3) << 0x17 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) & 0xfe7fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CA30  D3DDevice_SetSamplerState_BorderColor_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2736)
 
-void D3DDevice_SetSamplerState_BorderColor_Inline(int param_1,int param_2,longlong param_3)
+void D3DDevice_SetSamplerState_BorderColor_Inline(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = *(uint *)(iVar1 + 0x494) & 0xfffffffc | (uint)(param_3 != 0);
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffc |
+       (uint)(param_3 != 0);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CA80  D3DDevice_SetSamplerState_TrilinearThreshold_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2743)
 
-void D3DDevice_SetSamplerState_TrilinearThreshold_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_TrilinearThreshold_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = (param_3 & 3) << 3 | *(uint *)(iVar1 + 0x494) & 0xffffffe7;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 3) << 3 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xffffffe7;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CAC8  D3DDevice_SetSamplerState_HGradientExpBias_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2750)
 
-void D3DDevice_SetSamplerState_HGradientExpBias_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_HGradientExpBias_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x490) = (param_3 & 0x1f) << 0x16 | *(uint *)(iVar1 + 0x490) & 0xf83fffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       (param_3 & 0x1f) << 0x16 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xf83fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CB10  D3DDevice_SetSamplerState_VGradientExpBias_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2757)
 
-void D3DDevice_SetSamplerState_VGradientExpBias_Inline(int param_1,int param_2,int param_3)
+void D3DDevice_SetSamplerState_VGradientExpBias_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x490) = param_3 << 0x1b | *(uint *)(iVar1 + 0x490) & 0x7ffffff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       param_3 << 0x1b |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0x7ffffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CB58  D3DDevice_SetSamplerState_WhiteBorderColorW_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2764)
 
-void D3DDevice_SetSamplerState_WhiteBorderColorW_Inline(int param_1,int param_2,uint param_3)
+void D3DDevice_SetSamplerState_WhiteBorderColorW_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x494) = (param_3 & 1) << 2 | *(uint *)(iVar1 + 0x494) & 0xfffffffb;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 1) << 2 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffb;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CBA0  D3DDevice_SetSamplerState_PointBorderEnable_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2771)
 
-void D3DDevice_SetSamplerState_PointBorderEnable_Inline(int param_1,int param_2,int param_3)
+void D3DDevice_SetSamplerState_PointBorderEnable_Inline
+               (D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = param_2 * 0x18 + param_1;
-  *(uint *)(iVar1 + 0x484) = (uint)(param_3 == 0) << 0xb | *(uint *)(iVar1 + 0x484) & 0xfffff7ff;
-  *(ulonglong *)(param_1 + 0x18) =
-       0x8000000000000000U >> (param_2 + 0x20U & 0x7f) | *(ulonglong *)(param_1 + 0x18);
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((uint)(param_3 == 0) << 0xb |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] & 0xfffff7ff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
 
 // 8277CBF0  D3DDevice_SetStreamSource_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2778)
 
-void D3DDevice_SetStreamSource_Inline(void)
+void D3DDevice_SetStreamSource_Inline
+               (D3DDevice *param_1,uint param_2,D3DVertexBuffer *param_3,uint param_4,uint param_5)
 
 {
-  D3DDevice_SetStreamSource();
+  D3DDevice_SetStreamSource
+            (param_1,param_2,param_3,param_4,param_5,
+             0x8000000000000000 >>
+             ((((0x5f - (longlong)(int)param_2) * 0x5556 & 0xffffffffU) >> 0x10) + 0x20 & 0x7f));
   return;
 }
 
 
 // 8277CC18  D3DDevice_SetTexture_Inline  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2799)
 
-void D3DDevice_SetTexture_Inline(void)
+void D3DDevice_SetTexture_Inline(D3DDevice *param_1,ulong param_2,D3DBaseTexture *param_3)
 
 {
-  D3DDevice_SetTexture();
+  D3DDevice_SetTexture
+            (param_1,param_2,param_3,0x8000000000000000 >> ((longlong)(int)param_2 + 0x20U & 0x7f));
   return;
 }
 
 
 // 8277CC30  D3DDevice_SetRenderState  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:2818)
 
-void D3DDevice_SetRenderState(int param_1,int param_2,undefined8 param_3)
+void D3DDevice_SetRenderState(D3DDevice *param_1,_D3DRENDERSTATETYPE param_2,ulong param_3)
 
 {
                     /* WARNING: Could not recover jumptable at 0x8277cc40. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(param_1 + param_2 + 0x40))(param_1,param_3);
+  (**(code **)((int)param_1->m_SetRenderStateCall + param_2))(param_1,param_3);
   return;
 }
 
 
 // 8277CC48  D3DDevice_SetSamplerState  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/d3d9.h:3069)
 
-void D3DDevice_SetSamplerState(int param_1,undefined8 param_2,int param_3,undefined8 param_4)
+void D3DDevice_SetSamplerState
+               (D3DDevice *param_1,ulong param_2,_D3DSAMPLERSTATETYPE param_3,ulong param_4)
 
 {
                     /* WARNING: Could not recover jumptable at 0x8277cc58. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(param_1 + param_3 + 0x1d4))(param_1,param_2,param_4);
+  (**(code **)((int)param_1->m_SetSamplerStateCall + param_3))(param_1,param_2,param_4);
   return;
 }
 

@@ -2,26 +2,26 @@
 
 // 823EC958  Sys_LockRead  (qcommon/threads_interlock.h:68)
 
-void Sys_LockRead(undefined8 param_1)
+void Sys_LockRead(FastCriticalSection *param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
+  int iVar1;
+  long lVar2;
   char in_RESERVE;
   byte in_cr0;
   
   do {
-    puVar2 = (uint *)param_1;
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar2 + 1,0,param_1);
-      *puVar2 = uVar1;
+      lVar2 = storeWordConditionalIndexed
+                        ((ulonglong)(uint)param_1->readCount + 1,0,(longlong)(int)param_1);
+      param_1->readCount = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar1 = puVar2[1];
-  while (uVar1 != 0) {
+  iVar1 = param_1->writeCount;
+  while (iVar1 != 0) {
     Sys_Sleep(0);
-    uVar1 = puVar2[1];
+    iVar1 = param_1->writeCount;
   }
   sync(1);
   return;
@@ -30,21 +30,21 @@ void Sys_LockRead(undefined8 param_1)
 
 // 823EC9C0  Sys_UnlockRead  (qcommon/threads_interlock.h:80)
 
-void Sys_UnlockRead(undefined8 param_1)
+void Sys_UnlockRead(FastCriticalSection *param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
+  long lVar1;
   char in_RESERVE;
   byte in_cr0;
   
-  puVar2 = (uint *)param_1;
-  if ((int)*puVar2 < 1) {
-    MyAssertHandler(0xffffffff8205b190,0x52,0,0xffffffff82000f98,0xffffffff8205b1e4);
+  if (param_1->readCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../qcommon/threads_interlock.h"
+                    ,0x52,0,"%s");
     do {
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar2 - 1,0,param_1);
-        *puVar2 = uVar1;
+        lVar1 = storeWordConditionalIndexed
+                          ((ulonglong)(uint)param_1->readCount - 1,0,(longlong)(int)param_1);
+        param_1->readCount = lVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -52,8 +52,9 @@ void Sys_UnlockRead(undefined8 param_1)
   }
   do {
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar2 - 1,0,param_1);
-      *puVar2 = uVar1;
+      lVar1 = storeWordConditionalIndexed
+                        ((ulonglong)(uint)param_1->readCount - 1,0,(longlong)(int)param_1);
+      param_1->readCount = lVar1;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -63,7 +64,7 @@ void Sys_UnlockRead(undefined8 param_1)
 
 // 823ECA68  Sys_LockWrite  (qcommon/threads_interlock.h:89)
 
-void Sys_LockWrite(longlong param_1)
+void Sys_LockWrite(FastCriticalSection *param_1)
 
 {
   uint uVar1;
@@ -74,8 +75,8 @@ void Sys_LockWrite(longlong param_1)
   byte in_cr0;
   
   do {
-    if (*(int *)param_1 == 0) {
-      lVar3 = param_1 + 4;
+    if (param_1->readCount == 0) {
+      lVar3 = (longlong)(int)param_1 + 4;
       do {
         puVar4 = (uint *)lVar3;
         uVar1 = *puVar4;
@@ -85,7 +86,7 @@ void Sys_LockWrite(longlong param_1)
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (((int)((ulonglong)uVar1 + 1) == 1) && (sync(1), *(int *)param_1 == 0)) {
+      if (((int)((ulonglong)uVar1 + 1) == 1) && (sync(1), param_1->readCount == 0)) {
         return;
       }
       do {
@@ -103,7 +104,7 @@ void Sys_LockWrite(longlong param_1)
 
 // 823ECB00  Sys_UnlockWrite  (qcommon/threads_interlock.h:122)
 
-void Sys_UnlockWrite(longlong param_1)
+void Sys_UnlockWrite(FastCriticalSection *param_1)
 
 {
   uint uVar1;
@@ -112,10 +113,11 @@ void Sys_UnlockWrite(longlong param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  lVar2 = param_1 + 4;
+  lVar2 = (longlong)(int)param_1 + 4;
   puVar3 = (uint *)lVar2;
-  if (*(int *)((int)param_1 + 4) < 1) {
-    MyAssertHandler(0xffffffff8205b190,0x7c,0,0xffffffff82000f98,0xffffffff8205b1fc);
+  if (param_1->writeCount < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../qcommon/threads_interlock.h"
+                    ,0x7c,0,"%s");
     sync(1);
     do {
       if (in_RESERVE != '\0') {
@@ -140,41 +142,48 @@ void Sys_UnlockWrite(longlong param_1)
 
 // 823ECBB0  Profile_Guard  (universal/profile.h:348)
 
-void Profile_Guard(void)
+void Profile_Guard(int param_1)
 
 {
   int iVar1;
-  int iVar2;
+  void *pvVar2;
   int iVar3;
   int *piVar4;
   
-  iVar1 = __savegprlr_25();
-  iVar2 = Sys_GetValue(0);
-  if (*(int *)(iVar2 + 0x4abc) != 0) {
-    if (*(uint *)(iVar2 + 0x428) < *(uint *)((*(int *)(iVar2 + 0x4abc) + 0x937) * 8 + iVar2)) {
-      MyAssertHandler(0xffffffff8205b330,0x161,0,0xffffffff82000f98,0xffffffff8205b2a8);
-    }
+  iVar1 = __savegprlr_25(param_1);
+  pvVar2 = Sys_GetValue(0);
+  if ((*(int *)((int)pvVar2 + 0x4abc) != 0) &&
+     (*(uint *)((int)pvVar2 + 0x428) <
+      *(uint *)((*(int *)((int)pvVar2 + 0x4abc) + 0x937) * 8 + (int)pvVar2))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../universal/profile.h"
+                    ,0x161,0,"%s");
   }
-  if (0x1f < *(uint *)(iVar2 + 0x4abc)) {
-    MyAssertHandler(0xffffffff8205b330,0x162,0,0xffffffff8205b240,*(uint *)(iVar2 + 0x4abc),0x20);
+  if (0x1f < *(uint *)((int)pvVar2 + 0x4abc)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../universal/profile.h"
+                    ,0x162,0,
+                    "prof_stack->prof_guardpos doesn\'t index ARRAY_COUNT( prof_stack->prof_guardstack )\n\t%i not in [0, %i)"
+                   );
   }
   iVar3 = 0;
-  if (0 < *(int *)(iVar2 + 0x4abc)) {
-    piVar4 = (int *)(iVar2 + 0x49bc);
+  if (0 < *(int *)((int)pvVar2 + 0x4abc)) {
+    piVar4 = (int *)((int)pvVar2 + 0x49bc);
     do {
       if (*piVar4 == iVar1) {
-        MyAssertHandler(0xffffffff8205b330,0x169,0,0xffffffff82000f98,0xffffffff8205b218);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../universal/profile.h"
+                        ,0x169,0,"%s");
       }
       iVar3 = iVar3 + 1;
       piVar4 = piVar4 + 2;
-    } while (iVar3 < *(int *)(iVar2 + 0x4abc));
+    } while (iVar3 < *(int *)((int)pvVar2 + 0x4abc));
   }
-  if (*(uint *)(iVar2 + 0x428) < iVar2 + 0x28U) {
-    MyAssertHandler(0xffffffff8205b330,0x16d,0,0xffffffff82000f98,0xffffffff82001020);
+  if (*(uint *)((int)pvVar2 + 0x428) < (int)pvVar2 + 0x28U) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../universal/profile.h"
+                    ,0x16d,0,"%s");
   }
-  *(int *)(*(int *)(iVar2 + 0x4abc) * 8 + iVar2 + 0x49bc) = iVar1;
-  *(undefined4 *)((*(int *)(iVar2 + 0x4abc) + 0x938) * 8 + iVar2) = *(undefined4 *)(iVar2 + 0x428);
-  *(int *)(iVar2 + 0x4abc) = *(int *)(iVar2 + 0x4abc) + 1;
+  *(int *)((int)pvVar2 + *(int *)((int)pvVar2 + 0x4abc) * 8 + 0x49bc) = iVar1;
+  *(undefined4 *)((*(int *)((int)pvVar2 + 0x4abc) + 0x938) * 8 + (int)pvVar2) =
+       *(undefined4 *)((int)pvVar2 + 0x428);
+  *(int *)((int)pvVar2 + 0x4abc) = *(int *)((int)pvVar2 + 0x4abc) + 1;
   __restgprlr_25();
   return;
 }
@@ -182,48 +191,101 @@ void Profile_Guard(void)
 
 // 823ECD00  TRACK_db_registry  (database/db_registry.cpp:674)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void TRACK_db_registry(void)
 
 {
   __savegprlr_27();
-  track_static_alloc_internal(0xffffffff82d15b58,100000,0xffffffff8205b600,10);
-  track_static_alloc_internal(0xffffffff82fcc430,0x2000,0xffffffff8205b5f4,10);
-  track_static_alloc_internal(0xffffffff83149fe0,0x120c,0xffffffff8205b5ec,10);
-  track_static_alloc_internal(0xffffffff8320105c,0x20,0xffffffff8205b5dc,10);
-  track_static_alloc_internal(0xffffffff82cc7380,0x110c,0xffffffff8205b5c8,10);
-  track_static_alloc_internal(0xffffffff830daa48,0x1200c,0xffffffff8205b5b4,10);
-  track_static_alloc_internal(0xffffffff82daf088,0x6f60c,0xffffffff8205b5a0,10);
-  track_static_alloc_internal(0xffffffff82cf9a88,0x1b00c,0xffffffff8205b58c,10);
-  track_static_alloc_internal(0xffffffff82e1e698,0x9d68c,0xffffffff8205b57c,10);
-  track_static_alloc_internal(0xffffffff8305f868,0x7b110,0xffffffff8205b56c,10);
-  track_static_alloc_internal(0xffffffff82ebbd30,0x1c00c,0xffffffff8205b550,10);
-  track_static_alloc_internal(0xffffffff8320ae58,0x1e00c,0xffffffff8205b534,10);
-  track_static_alloc_internal(0xffffffff82fce430,0x9140c,0xffffffff8205b524,10);
-  track_static_alloc_internal(0xffffffff830f9aa0,0x2ee0c,0xffffffff8205b518,10);
-  track_static_alloc_internal(0xffffffff83208c48,0x220c,0xffffffff8205b508,10);
-  track_static_alloc_internal(0xffffffff82d2e1f8,0x80e8c,0xffffffff8205b4f4,10);
-  track_static_alloc_internal(0xffffffff830da978,0xcc,0xffffffff8205b4e4,10);
-  track_static_alloc_internal(0xffffffff82ed7d48,0x30c,0xffffffff8205b4d0,10);
-  track_static_alloc_internal(0xffffffff82fcc2a0,0x18c,0xffffffff8205b4c4,10);
-  track_static_alloc_internal(0xffffffff82cc6d70,0x60c,0xffffffff8205b4b4,10);
-  track_static_alloc_internal(0xffffffff82cc9720,0x30324,0xffffffff8205b4a8,10);
-  track_static_alloc_internal(0xffffffff831ed7d0,0x1388c,0xffffffff8205b494,10);
-  track_static_alloc_internal(0xffffffff83201080,0x7b0c,0xffffffff8205b47c,10);
-  track_static_alloc_internal(0xffffffff8314b1f0,0xa25dc,0xffffffff8205b46c,10);
-  track_static_alloc_internal(0xffffffff831288ac,0x14,0xffffffff8205b454,10);
-  track_static_alloc_internal(0xffffffff830eca90,0xd00c,0xffffffff8205b440,10);
-  track_static_alloc_internal(0xffffffff8305f83c,0x2c,0xffffffff8205b42c,10);
-  track_static_alloc_internal(0xffffffff830eca54,0x3c,0xffffffff8205b414,10);
-  track_static_alloc_internal(0xffffffff8322da80,0x400c,0xffffffff8205b404,10);
-  track_static_alloc_internal(0xffffffff83229270,0x480c,0xffffffff8205b3f0,10);
-  track_static_alloc_internal(0xffffffff831486d0,0x190c,0xffffffff8205b3dc,10);
-  track_static_alloc_internal(0xffffffff82d14b48,0x100c,0xffffffff8205b3c8,10);
-  track_static_alloc_internal(0xffffffff83231a90,300,0xffffffff8205b3b0,10);
-  track_static_alloc_internal(0xffffffff82cc8490,0xe0c,0xffffffff8205b3a0,10);
-  track_static_alloc_internal(0xffffffff831288c0,0x1fe0c,0xffffffff8205b390,10);
-  track_static_alloc_internal(0xffffffff831288c0,0x1fe0c,0xffffffff8205b390,10);
-  track_static_alloc_internal(0xffffffff82ed8058,1000000,0xffffffff8205b37c,10);
+  track_static_alloc_internal(db_hashTable,100000,"db_hashTable",10);
+  track_static_alloc_internal(g_copyInfo,0x2000,"g_copyInfo",10);
+  track_static_alloc_internal(g_zones,0x120c,"g_zones",10);
+  track_static_alloc_internal(g_zoneHandles,0x20,"g_zoneHandles",10);
+  track_static_alloc_internal(&g_PhysPresetPool,0x110c,"g_PhysPresetPool",10);
+  track_static_alloc_internal(&g_PhysCollmapPool,0x1200c,"g_PhysCollmapPool",10);
+  track_static_alloc_internal(&g_XAnimPartsPool,0x6f60c,"g_XAnimPartsPool",10);
+  track_static_alloc_internal(&g_XModelSurfsPool,0x1b00c,"g_XModelSurfsPool",10);
+  track_static_alloc_internal(&g_XModelPool,0x9d68c,"g_XModelPool",10);
+  track_static_alloc_internal(&g_MaterialPool,0x7b110,"g_MaterialPool",10);
+  track_static_alloc_internal(&g_MaterialPixelShaderPool,0x1c00c,"g_MaterialPixelShaderPool",10);
+  track_static_alloc_internal(&g_MaterialTechniqueSetPool,0x1e00c,"g_MaterialTechniqueSetPool",10);
+  track_static_alloc_internal(&g_GfxImagePool,0x9140c,"g_GfxImagePool",10);
+  track_static_alloc_internal(&g_SoundPool,0x2ee0c,"g_SoundPool",10);
+  track_static_alloc_internal(&g_SndCurvePool,0x220c,"g_SndCurvePool",10);
+  track_static_alloc_internal(&g_LoadedSoundPool,0x80e8c,"g_LoadedSoundPool",10);
+  track_static_alloc_internal(&g_MapEntsPool,0xcc,"g_MapEntsPool",10);
+  track_static_alloc_internal(&g_GfxLightDefPool,0x30c,"g_GfxLightDefPool",10);
+  track_static_alloc_internal(&g_FontPool,0x18c,"g_FontPool",10);
+  track_static_alloc_internal(&g_MenuListPool,0x60c,"g_MenuListPool",10);
+  track_static_alloc_internal(&g_MenuPool,0x30324,"g_MenuPool",10);
+  track_static_alloc_internal(&g_LocalizeEntryPool,0x1388c,"g_LocalizeEntryPool",10);
+  track_static_alloc_internal(&g_WeaponAttachmentPool,0x7b0c,"g_WeaponAttachmentPool",10);
+  track_static_alloc_internal(&g_WeaponDefPool,0xa25dc,"g_WeaponDefPool",10);
+  track_static_alloc_internal(&g_SndDriverGlobalsPool,0x14,"g_SndDriverGlobalsPool",10);
+  track_static_alloc_internal(&g_FxEffectDefPool,0xd00c,"g_FxEffectDefPool",10);
+  track_static_alloc_internal(&g_FxImpactTablePool,0x2c,"g_FxImpactTablePool",10);
+  track_static_alloc_internal(&g_SurfaceFxTablePool,0x3c,"g_SurfaceFxTablePool",10);
+  track_static_alloc_internal(&g_RawFilePool,0x400c,"g_RawFilePool",10);
+  track_static_alloc_internal(&g_ScriptFilePool,0x480c,"g_ScriptFilePool",10);
+  track_static_alloc_internal(&g_StringTablePool,0x190c,"g_StringTablePool",10);
+  track_static_alloc_internal(&g_LeaderboardPool,0x100c,"g_LeaderboardPool",10);
+  track_static_alloc_internal(&g_StructuredDataDefPool,300,"g_StructuredDataDefPool",10);
+  track_static_alloc_internal(&g_TracerPool,0xe0c,"g_TracerPool",10);
+  track_static_alloc_internal(&g_VehiclePool,0x1fe0c,"g_VehiclePool",10);
+  track_static_alloc_internal(&g_VehiclePool,0x1fe0c,"g_VehiclePool",10);
+  track_static_alloc_internal(g_assetEntryPool,1000000,"g_assetEntryPool",10);
   __restgprlr_27();
+  return;
+}
+
+
+// 823ED168  DB_AllocContentServerMemory  (database/db_registry.cpp:763)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void __cdecl DB_AllocContentServerMemory(void) */
+
+void DB_AllocContentServerMemory(void)
+
+{
+  bool bVar1;
+  
+  if ((s_ContentServerMemoryState & 0x100000U) == 0) {
+    LiveStorage_CS_AllocPrivateDataMemory();
+    LiveStorage_CS_AllocTaskArrays();
+    if (((s_ContentServerMemoryState & 0x10000U) == 0) && (bVar1 = DCache_Init(), bVar1)) {
+      s_ContentServerMemoryState = s_ContentServerMemoryState | 0x10000;
+    }
+    LiveStorage_CS_AllocCacheMemory();
+    bVar1 = LiveStorage_CS_AllocatedAllMemory();
+    if (bVar1) {
+      s_ContentServerMemoryState = s_ContentServerMemoryState | 0x100000;
+    }
+  }
+  return;
+}
+
+
+// 823ED170  DB_ShutdownContentServer  (database/db_registry.cpp:774)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void __cdecl DB_ShutdownContentServer(void) */
+
+void DB_ShutdownContentServer(void)
+
+{
+  int iVar1;
+  
+  iVar1 = 0;
+  do {
+    LiveStorage_CS_Shutdown(iVar1);
+    iVar1 = iVar1 + 1;
+  } while (iVar1 < 4);
+  LiveStorage_CS_ClearMemory();
   return;
 }
 
@@ -239,10 +301,10 @@ bool DB_IsStubAsset(char *param_1)
 
 // 823ED190  DB_GetPoolSize  (database/db_registry.cpp:786)
 
-undefined4 DB_GetPoolSize(int param_1)
+int DB_GetPoolSize(int param_1)
 
 {
-  return (&DAT_82967530)[param_1];
+  return g_poolSize[param_1];
 }
 
 
@@ -251,38 +313,49 @@ undefined4 DB_GetPoolSize(int param_1)
 int DB_GetShipPoolSize(int param_1)
 
 {
-  if ((&DAT_829675e0)[param_1] != 0) {
-    return (&DAT_829675e0)[param_1];
+  if (g_shipPoolSize[param_1] != 0) {
+    return g_shipPoolSize[param_1];
   }
-  return (&DAT_82967530)[param_1];
+  return g_poolSize[param_1];
 }
 
 
 // 823ED1D0  DB_InitSingleton  (database/db_registry.cpp:807)
 
-void DB_InitSingleton(undefined8 param_1,undefined8 param_2)
+void DB_InitSingleton(void *param_1,int param_2)
 
 {
-  if ((int)param_2 == 1) {
+  if (param_2 == 1) {
     return;
   }
-  MyAssertHandler(0xffffffff8205b610,0x328,0,0xffffffff8203b444,0xffffffff8205b654,param_2);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",0x328,
+                  0,"%s\n\t(size) = %i");
   return;
 }
 
 
 // 823ED208  DB_AllocXAssetSingleton  (database/db_registry.cpp:813)
 
-void DB_AllocXAssetSingleton(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAssetSingleton(void *param_1)
 
 {
-  return;
+  return (XAssetHeader)param_1.physPreset;
 }
 
 
 // 823ED210  DB_FreeXAssetSingleton  (database/db_registry.cpp:822)
 
-void DB_FreeXAssetSingleton(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetSingleton(void *param_1,XAssetHeader param_2)
 
 {
   return;
@@ -291,2135 +364,2489 @@ void DB_FreeXAssetSingleton(void)
 
 // 823F1838  DB_InitPool<PhysPreset>  (database/db_registry.cpp:831)
 
-void DB_InitPool<PhysPreset>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<PhysPreset>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x11;
+      *piVar1 = (int)(piVar1 + 0x11);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x11;
+      piVar1 = piVar1 + 0x11;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x11 + -0xe] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x44 + -0x38) = 0;
   return;
 }
 
 
 // 823F1878  DB_InitPool<PhysCollmap>  (database/db_registry.cpp:831)
 
-void DB_InitPool<PhysCollmap>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<PhysCollmap>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x12;
+      *piVar1 = (int)(piVar1 + 0x12);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x12;
+      piVar1 = piVar1 + 0x12;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 3) + -0x3c) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x1fffffff) * 8 & 0xffffffff) << 3) +
+   -0x3c) = 0;
   return;
 }
 
 
 // 823F18C0  DB_InitPool<XAnimParts>  (database/db_registry.cpp:831)
 
-void DB_InitPool<XAnimParts>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<XAnimParts>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x16;
+      *piVar1 = (int)(piVar1 + 0x16);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x16;
+      piVar1 = piVar1 + 0x16;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x16 + -0x13] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x58 + -0x4c) = 0;
   return;
 }
 
 
 // 823F1900  DB_InitPool<XModelSurfs>  (database/db_registry.cpp:831)
 
-void DB_InitPool<XModelSurfs>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<XModelSurfs>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 9;
+      *piVar1 = (int)(piVar1 + 9);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 9;
+      piVar1 = piVar1 + 9;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2) + -0x18) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x1fffffff) * 8 & 0xffffffff) << 2) +
+   -0x18) = 0;
   return;
 }
 
 
 // 823F1948  DB_InitPool<XModel>  (database/db_registry.cpp:831)
 
-void DB_InitPool<XModel>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<XModel>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x49;
+      *piVar1 = (int)(piVar1 + 0x49);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x49;
+      piVar1 = piVar1 + 0x49;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x49 + -0x46] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x124 + -0x118) = 0;
   return;
 }
 
 
 // 823F1988  DB_InitPool<Material>  (database/db_registry.cpp:831)
 
-void DB_InitPool<Material>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<Material>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 4;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0x10);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x16;
+      *piVar1 = (int)(piVar1 + 0x16);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x16;
+      piVar1 = piVar1 + 0x16;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x16 + -0x12] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x58 + -0x48) = 0;
   return;
 }
 
 
 // 823F19C8  DB_InitPool<MaterialPixelShader>  (database/db_registry.cpp:831)
 
-void DB_InitPool<MaterialPixelShader>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<MaterialPixelShader>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 4;
+      *piVar1 = (int)(piVar1 + 4);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 4;
+      piVar1 = piVar1 + 4;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x10 + -4) = 0;
   return;
 }
 
 
 // 823F1A08  DB_InitPool<MaterialTechniqueSet>  (database/db_registry.cpp:831)
 
-void DB_InitPool<MaterialTechniqueSet>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<MaterialTechniqueSet>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x28;
+      *piVar1 = (int)(piVar1 + 0x28);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x28;
+      piVar1 = piVar1 + 0x28;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x94) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) +
+   -0x94) = 0;
   return;
 }
 
 
 // 823F1A50  DB_InitPool<GfxImage>  (database/db_registry.cpp:831)
 
-void DB_InitPool<GfxImage>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<GfxImage>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x1c;
+      *piVar1 = (int)(piVar1 + 0x1c);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x1c;
+      piVar1 = piVar1 + 0x1c;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x1c + -0x19] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x70 + -100) = 0;
   return;
 }
 
 
 // 823F1A90  DB_InitPool<snd_alias_list_t>  (database/db_registry.cpp:831)
 
-void DB_InitPool<snd_alias_list_t>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<snd_alias_list_t>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 3;
+      *piVar1 = (int)(piVar1 + 3);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 3;
+      piVar1 = piVar1 + 3;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)param_1) =
-       0;
+  *(undefined4 *)
+   ((int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
+   (int)param_1) = 0;
   return;
 }
 
 
 // 823F1AD8  DB_InitPool<SndCurve>  (database/db_registry.cpp:831)
 
-void DB_InitPool<SndCurve>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<SndCurve>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x22;
+      *piVar1 = (int)(piVar1 + 0x22);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x22;
+      piVar1 = piVar1 + 0x22;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x22 + -0x1f] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x88 + -0x7c) = 0;
   return;
 }
 
 
 // 823F1B18  DB_InitPool<LoadedSound>  (database/db_registry.cpp:831)
 
-void DB_InitPool<LoadedSound>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<LoadedSound>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x28;
+      *piVar1 = (int)(piVar1 + 0x28);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x28;
+      piVar1 = piVar1 + 0x28;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) + -0x94) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 & 0xffffffff) << 5) +
+   -0x94) = 0;
   return;
 }
 
 
 // 823F1B60  DB_InitPool<MapEnts>  (database/db_registry.cpp:831)
 
-void DB_InitPool<MapEnts>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<MapEnts>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x18;
+      *piVar1 = (int)(piVar1 + 0x18);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x18;
+      piVar1 = piVar1 + 0x18;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 5) + -0x54) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 5) +
+   -0x54) = 0;
   return;
 }
 
 
 // 823F1BA8  DB_InitPool<GfxLightDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<GfxLightDef>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<GfxLightDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 6;
+      *piVar1 = (int)(piVar1 + 6);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 6;
+      piVar1 = piVar1 + 6;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc
+   ) = 0;
   return;
 }
 
 
 // 823F1BF0  DB_InitPool<Font_s>  (database/db_registry.cpp:831)
 
-void DB_InitPool<Font_s>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<Font_s>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 6;
+      *piVar1 = (int)(piVar1 + 6);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 6;
+      piVar1 = piVar1 + 6;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc
+   ) = 0;
   return;
 }
 
 
 // 823F1C38  DB_InitPool<MenuList>  (database/db_registry.cpp:831)
 
-void DB_InitPool<MenuList>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<MenuList>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 3;
+      *piVar1 = (int)(piVar1 + 3);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 3;
+      piVar1 = piVar1 + 3;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)param_1) =
-       0;
+  *(undefined4 *)
+   ((int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
+   (int)param_1) = 0;
   return;
 }
 
 
 // 823F1C80  DB_InitPool<menuDef_t>  (database/db_registry.cpp:831)
 
-void DB_InitPool<menuDef_t>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<menuDef_t>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x2f;
+      *piVar1 = (int)(piVar1 + 0x2f);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x2f;
+      piVar1 = piVar1 + 0x2f;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x2f + -0x2c] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0xbc + -0xb0) = 0;
   return;
 }
 
 
 // 823F1CC0  DB_InitPool<LocalizeEntry>  (database/db_registry.cpp:831)
 
-void DB_InitPool<LocalizeEntry>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<LocalizeEntry>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 2;
+      *piVar1 = (int)(piVar1 + 2);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 2;
+      piVar1 = piVar1 + 2;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + 4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 8 + 4) = 0;
   return;
 }
 
 
 // 823F1D00  DB_InitPool<WeaponAttachment>  (database/db_registry.cpp:831)
 
-void DB_InitPool<WeaponAttachment>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<WeaponAttachment>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x29;
+      *piVar1 = (int)(piVar1 + 0x29);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x29;
+      piVar1 = piVar1 + 0x29;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x29 + -0x26] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0xa4 + -0x98) = 0;
   return;
 }
 
 
 // 823F1D40  DB_InitPool<WeaponDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<WeaponDef>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<WeaponDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x1e9;
+      *piVar1 = (int)(piVar1 + 0x1e9);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x1e9;
+      piVar1 = piVar1 + 0x1e9;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x1e9 + -0x1e6] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x7a4 + -0x798) = 0;
   return;
 }
 
 
 // 823F1D80  DB_InitPool<SndDriverGlobals>  (database/db_registry.cpp:831)
 
-void DB_InitPool<SndDriverGlobals>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<SndDriverGlobals>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 2;
+      *piVar1 = (int)(piVar1 + 2);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 2;
+      piVar1 = piVar1 + 2;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + 4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 8 + 4) = 0;
   return;
 }
 
 
 // 823F1DC0  DB_InitPool<FxEffectDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<FxEffectDef>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<FxEffectDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0xd;
+      *piVar1 = (int)(piVar1 + 0xd);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0xd;
+      piVar1 = piVar1 + 0xd;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0xd + -10] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x34 + -0x28) = 0;
   return;
 }
 
 
 // 823F1E00  DB_InitPool<FxImpactTable>  (database/db_registry.cpp:831)
 
-void DB_InitPool<FxImpactTable>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<FxImpactTable>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 2;
+      *piVar1 = (int)(piVar1 + 2);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 2;
+      piVar1 = piVar1 + 2;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + 4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 8 + 4) = 0;
   return;
 }
 
 
 // 823F1E40  DB_InitPool<SurfaceFxTable>  (database/db_registry.cpp:831)
 
-void DB_InitPool<SurfaceFxTable>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<SurfaceFxTable>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 2;
+      *piVar1 = (int)(piVar1 + 2);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 2;
+      piVar1 = piVar1 + 2;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 3) + 4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 8 + 4) = 0;
   return;
 }
 
 
 // 823F1E80  DB_InitPool<RawFile>  (database/db_registry.cpp:831)
 
-void DB_InitPool<RawFile>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<RawFile>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 4;
+      *piVar1 = (int)(piVar1 + 4);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 4;
+      piVar1 = piVar1 + 4;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x10 + -4) = 0;
   return;
 }
 
 
 // 823F1EC0  DB_InitPool<ScriptFile>  (database/db_registry.cpp:831)
 
-void DB_InitPool<ScriptFile>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<ScriptFile>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 6;
+      *piVar1 = (int)(piVar1 + 6);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 6;
+      piVar1 = piVar1 + 6;
     } while (lVar2 != 0);
   }
   *(undefined4 *)
-   ((int)param_1 + (int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc) = 0;
+   ((int)param_1 +
+   (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0xc
+   ) = 0;
   return;
 }
 
 
 // 823F1F08  DB_InitPool<StringTable>  (database/db_registry.cpp:831)
 
-void DB_InitPool<StringTable>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<StringTable>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 4;
+      *piVar1 = (int)(piVar1 + 4);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 4;
+      piVar1 = piVar1 + 4;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 4) + -4) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x10 + -4) = 0;
   return;
 }
 
 
 // 823F1F48  DB_InitPool<LeaderboardDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<LeaderboardDef>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<LeaderboardDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 8;
+      *piVar1 = (int)(piVar1 + 8);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 8;
+      piVar1 = piVar1 + 8;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)param_1 + (int)((param_2 & 0xffffffff) << 5) + -0x14) = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x20 + -0x14) = 0;
   return;
 }
 
 
 // 823F1F88  DB_InitPool<StructuredDataDefSet>  (database/db_registry.cpp:831)
 
-void DB_InitPool<StructuredDataDefSet>(undefined4 *param_1,ulonglong param_2)
+void DB_InitPool<StructuredDataDefSet>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 - 1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 3;
+      *piVar1 = (int)(piVar1 + 3);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 3;
+      piVar1 = piVar1 + 3;
     } while (lVar2 != 0);
   }
-  *(undefined4 *)((int)((param_2 + (param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)param_1) =
-       0;
+  *(undefined4 *)
+   ((int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
+   (int)param_1) = 0;
   return;
 }
 
 
 // 823F1FD0  DB_InitPool<TracerDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<TracerDef>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<TracerDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0x1c;
+      *piVar1 = (int)(piVar1 + 0x1c);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0x1c;
+      piVar1 = piVar1 + 0x1c;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0x1c + -0x19] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x70 + -100) = 0;
   return;
 }
 
 
 // 823F2010  DB_InitPool<VehicleDef>  (database/db_registry.cpp:831)
 
-void DB_InitPool<VehicleDef>(undefined4 *param_1,longlong param_2)
+void DB_InitPool<VehicleDef>(void *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
+  int *piVar1;
   longlong lVar2;
   
-  puVar1 = param_1 + 3;
-  lVar2 = param_2 + -1;
-  *param_1 = 0;
-  param_1[1] = 0;
-  param_1[2] = puVar1;
+  piVar1 = (int *)((int)param_1 + 0xc);
+  lVar2 = (longlong)param_2 + -1;
+  *(undefined4 *)param_1 = 0;
+  *(undefined4 *)((int)param_1 + 4) = 0;
+  *(int **)((int)param_1 + 8) = piVar1;
   if (0 < lVar2) {
     do {
-      *puVar1 = puVar1 + 0xff;
+      *piVar1 = (int)(piVar1 + 0xff);
       lVar2 = lVar2 + -1;
-      puVar1 = puVar1 + 0xff;
+      piVar1 = piVar1 + 0xff;
     } while (lVar2 != 0);
   }
-  param_1[(int)param_2 * 0xff + -0xfc] = 0;
+  *(undefined4 *)((int)param_1 + param_2 * 0x3fc + -0x3f0) = 0;
   return;
 }
 
 
 // 823F2410  DB_AllocXAsset<Material>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<Material>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<Material>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2458  DB_AllocXAsset<PhysPreset>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<PhysPreset>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<PhysPreset>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F24A0  DB_AllocXAsset<PhysCollmap>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<PhysCollmap>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<PhysCollmap>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F24E8  DB_AllocXAsset<XAnimParts>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<XAnimParts>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<XAnimParts>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2530  DB_AllocXAsset<XModelSurfs>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<XModelSurfs>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<XModelSurfs>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2578  DB_AllocXAsset<XModel>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<XModel>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<XModel>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F25C0  DB_AllocXAsset<MaterialPixelShader>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<MaterialPixelShader>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<MaterialPixelShader>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2608  DB_AllocXAsset<MaterialTechniqueSet>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<MaterialTechniqueSet>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<MaterialTechniqueSet>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2650  DB_AllocXAsset<GfxImage>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<GfxImage>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<GfxImage>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2698  DB_AllocXAsset<snd_alias_list_t>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<snd_alias_list_t>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<snd_alias_list_t>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F26E0  DB_AllocXAsset<SndCurve>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<SndCurve>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<SndCurve>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2728  DB_AllocXAsset<LoadedSound>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<LoadedSound>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<LoadedSound>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2770  DB_AllocXAsset<MapEnts>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<MapEnts>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<MapEnts>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F27B8  DB_AllocXAsset<GfxLightDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<GfxLightDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<GfxLightDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2800  DB_AllocXAsset<Font_s>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<Font_s>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<Font_s>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2848  DB_AllocXAsset<MenuList>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<MenuList>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<MenuList>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2890  DB_AllocXAsset<menuDef_t>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<menuDef_t>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<menuDef_t>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F28D8  DB_AllocXAsset<LocalizeEntry>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<LocalizeEntry>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<LocalizeEntry>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2920  DB_AllocXAsset<WeaponAttachment>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<WeaponAttachment>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<WeaponAttachment>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2968  DB_AllocXAsset<WeaponDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<WeaponDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<WeaponDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F29B0  DB_AllocXAsset<SndDriverGlobals>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<SndDriverGlobals>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<SndDriverGlobals>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F29F8  DB_AllocXAsset<FxEffectDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<FxEffectDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<FxEffectDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2A40  DB_AllocXAsset<FxImpactTable>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<FxImpactTable>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<FxImpactTable>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2A88  DB_AllocXAsset<SurfaceFxTable>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<SurfaceFxTable>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<SurfaceFxTable>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2AD0  DB_AllocXAsset<RawFile>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<RawFile>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<RawFile>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2B18  DB_AllocXAsset<ScriptFile>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<ScriptFile>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<ScriptFile>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2B60  DB_AllocXAsset<StringTable>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<StringTable>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<StringTable>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2BA8  DB_AllocXAsset<LeaderboardDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<LeaderboardDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<LeaderboardDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2BF0  DB_AllocXAsset<StructuredDataDefSet>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<StructuredDataDefSet>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<StructuredDataDefSet>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2C38  DB_AllocXAsset<TracerDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<TracerDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<TracerDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F2C80  DB_AllocXAsset<VehicleDef>  (database/db_registry.cpp:850)
 
-int * DB_AllocXAsset<VehicleDef>(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAsset<VehicleDef>(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F16B8  DB_FreeXAssetHeader<XModel>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<XModel>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<XModel>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F1738  DB_FreeXAssetHeader<Material>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<Material>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<Material>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F17B8  DB_FreeXAssetHeader<GfxImage>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<GfxImage>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<GfxImage>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2CC8  DB_FreeXAssetHeader<PhysPreset>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<PhysPreset>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<PhysPreset>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2D48  DB_FreeXAssetHeader<PhysCollmap>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<PhysCollmap>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<PhysCollmap>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2DC8  DB_FreeXAssetHeader<XAnimParts>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<XAnimParts>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<XAnimParts>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2E48  DB_FreeXAssetHeader<XModelSurfs>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<XModelSurfs>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<XModelSurfs>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2EC8  DB_FreeXAssetHeader<MaterialPixelShader>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<MaterialPixelShader>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<MaterialPixelShader>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2F48  DB_FreeXAssetHeader<MaterialTechniqueSet>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<MaterialTechniqueSet>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<MaterialTechniqueSet>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2FC8  DB_FreeXAssetHeader<snd_alias_list_t>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<snd_alias_list_t>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<snd_alias_list_t>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3048  DB_FreeXAssetHeader<SndCurve>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<SndCurve>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<SndCurve>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F30C8  DB_FreeXAssetHeader<LoadedSound>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<LoadedSound>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<LoadedSound>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3148  DB_FreeXAssetHeader<MapEnts>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<MapEnts>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<MapEnts>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F31C8  DB_FreeXAssetHeader<GfxLightDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<GfxLightDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<GfxLightDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3248  DB_FreeXAssetHeader<Font_s>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<Font_s>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<Font_s>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F32C8  DB_FreeXAssetHeader<MenuList>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<MenuList>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<MenuList>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3348  DB_FreeXAssetHeader<menuDef_t>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<menuDef_t>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<menuDef_t>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F33C8  DB_FreeXAssetHeader<LocalizeEntry>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<LocalizeEntry>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<LocalizeEntry>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3448  DB_FreeXAssetHeader<WeaponAttachment>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<WeaponAttachment>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<WeaponAttachment>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F34C8  DB_FreeXAssetHeader<WeaponDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<WeaponDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<WeaponDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3548  DB_FreeXAssetHeader<SndDriverGlobals>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<SndDriverGlobals>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<SndDriverGlobals>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F35C8  DB_FreeXAssetHeader<FxEffectDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<FxEffectDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<FxEffectDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3648  DB_FreeXAssetHeader<FxImpactTable>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<FxImpactTable>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<FxImpactTable>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F36C8  DB_FreeXAssetHeader<SurfaceFxTable>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<SurfaceFxTable>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<SurfaceFxTable>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3748  DB_FreeXAssetHeader<RawFile>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<RawFile>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<RawFile>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F37C8  DB_FreeXAssetHeader<ScriptFile>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<ScriptFile>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<ScriptFile>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3848  DB_FreeXAssetHeader<StringTable>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<StringTable>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<StringTable>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F38C8  DB_FreeXAssetHeader<LeaderboardDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<LeaderboardDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<LeaderboardDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3948  DB_FreeXAssetHeader<StructuredDataDefSet>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<StructuredDataDefSet>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<StructuredDataDefSet>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F39C8  DB_FreeXAssetHeader<TracerDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<TracerDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<TracerDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F3A48  DB_FreeXAssetHeader<VehicleDef>  (database/db_registry.cpp:876)
 
-void DB_FreeXAssetHeader<VehicleDef>(int *param_1,int *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader<VehicleDef>(void *param_1,XAssetHeader param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  if (*param_1 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x373,0,0xffffffff82000f98,0xffffffff8205c214);
+  if (*(int *)param_1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x373,0,"%s");
   }
-  iVar1 = param_1[2];
-  param_1[2] = (int)param_2;
-  *param_1 = *param_1 + -1;
-  *param_2 = iVar1;
+  pcVar1 = *(char **)((int)param_1 + 8);
+  *(XAssetHeader *)((int)param_1 + 8) = param_2;
+  *(int *)param_1 = *(int *)param_1 + -1;
+  (param_2.physPreset)->name = pcVar1;
   return;
 }
 
 
 // 823F2050  DB_GetPoolUtilization<PhysPreset>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<PhysPreset>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<PhysPreset>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x44;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2070  DB_GetPoolUtilization<PhysCollmap>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<PhysCollmap>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<PhysCollmap>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x48;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2090  DB_GetPoolUtilization<XAnimParts>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<XAnimParts>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<XAnimParts>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x58;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F20B0  DB_GetPoolUtilization<XModelSurfs>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<XModelSurfs>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<XModelSurfs>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x24;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F20D0  DB_GetPoolUtilization<XModel>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<XModel>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<XModel>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x124;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F20F0  DB_GetPoolUtilization<Material>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<Material>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<Material>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x58;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2427,12 +2854,12 @@ void DB_GetPoolUtilization<Material>
 // 823F2110  DB_GetPoolUtilization<MaterialPixelShader>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<MaterialPixelShader>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x10;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2440,25 +2867,24 @@ void DB_GetPoolUtilization<MaterialPixelShader>
 // 823F2130  DB_GetPoolUtilization<MaterialTechniqueSet>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<MaterialTechniqueSet>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xa0;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2150  DB_GetPoolUtilization<GfxImage>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<GfxImage>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<GfxImage>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x70;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2466,116 +2892,108 @@ void DB_GetPoolUtilization<GfxImage>
 // 823F2170  DB_GetPoolUtilization<snd_alias_list_t>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<snd_alias_list_t>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xc;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2190  DB_GetPoolUtilization<SndCurve>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<SndCurve>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<SndCurve>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x88;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F21B0  DB_GetPoolUtilization<LoadedSound>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<LoadedSound>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<LoadedSound>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xa0;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F21D0  DB_GetPoolUtilization<MapEnts>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<MapEnts>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<MapEnts>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x60;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F21F0  DB_GetPoolUtilization<GfxLightDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<GfxLightDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<GfxLightDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x18;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2210  DB_GetPoolUtilization<Font_s>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<Font_s>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<Font_s>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x18;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2230  DB_GetPoolUtilization<MenuList>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<MenuList>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<MenuList>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xc;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2250  DB_GetPoolUtilization<menuDef_t>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<menuDef_t>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<menuDef_t>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xbc;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2270  DB_GetPoolUtilization<LocalizeEntry>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<LocalizeEntry>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<LocalizeEntry>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 8;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2583,25 +3001,24 @@ void DB_GetPoolUtilization<LocalizeEntry>
 // 823F2290  DB_GetPoolUtilization<WeaponAttachment>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<WeaponAttachment>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xa4;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F22B0  DB_GetPoolUtilization<WeaponDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<WeaponDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<WeaponDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x7a4;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2609,90 +3026,84 @@ void DB_GetPoolUtilization<WeaponDef>
 // 823F22D0  DB_GetPoolUtilization<SndDriverGlobals>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<SndDriverGlobals>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 8;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F22F0  DB_GetPoolUtilization<FxEffectDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<FxEffectDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<FxEffectDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x34;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2310  DB_GetPoolUtilization<FxImpactTable>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<FxImpactTable>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<FxImpactTable>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 8;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2330  DB_GetPoolUtilization<RawFile>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<RawFile>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<RawFile>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x10;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2350  DB_GetPoolUtilization<ScriptFile>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<ScriptFile>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<ScriptFile>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x18;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2370  DB_GetPoolUtilization<StringTable>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<StringTable>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<StringTable>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x10;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F2390  DB_GetPoolUtilization<LeaderboardDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<LeaderboardDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<LeaderboardDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x20;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
@@ -2700,169 +3111,224 @@ void DB_GetPoolUtilization<LeaderboardDef>
 // 823F23B0  DB_GetPoolUtilization<StructuredDataDefSet>  (database/db_registry.cpp:897)
 
 void DB_GetPoolUtilization<StructuredDataDefSet>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+               (void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0xc;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F23D0  DB_GetPoolUtilization<TracerDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<TracerDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<TracerDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x70;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F23F0  DB_GetPoolUtilization<VehicleDef>  (database/db_registry.cpp:897)
 
-void DB_GetPoolUtilization<VehicleDef>
-               (undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+void DB_GetPoolUtilization<VehicleDef>(void *param_1,uint *param_2,uint *param_3,uint *param_4)
 
 {
   *param_2 = 0x3fc;
-  *param_3 = *param_1;
-  *param_4 = param_1[1];
+  *param_3 = *(uint *)param_1;
+  *param_4 = *(uint *)((int)param_1 + 4);
   return;
 }
 
 
 // 823F3AC8  Load_PhysPresetAsset  (database/db_registry.cpp:911)
 
-void Load_PhysPresetAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_PhysPresetAsset(PhysPreset **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].physPreset = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_PHYSPRESET,local_20);
+  *param_1 = (PhysPreset *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3B18  Mark_PhysPresetAsset  (database/db_registry.cpp:921)
 
-void Mark_PhysPresetAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_PhysPresetAsset(PhysPreset *param_1,int param_2)
 
 {
-  DB_GetXAsset(0,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_PHYSPRESET,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3B28  Load_PhysCollmapAsset  (database/db_registry.cpp:933)
 
-void Load_PhysCollmapAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_PhysCollmapAsset(PhysCollmap **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(1,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].physCollmap = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_PHYSCOLLMAP,local_20);
+  *param_1 = (PhysCollmap *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3B78  Mark_PhysCollmapAsset  (database/db_registry.cpp:943)
 
-void Mark_PhysCollmapAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_PhysCollmapAsset(PhysCollmap *param_1,int param_2)
 
 {
-  DB_GetXAsset(1,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_PHYSCOLLMAP,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3B88  Load_XAnimPartsAsset  (database/db_registry.cpp:955)
 
-void Load_XAnimPartsAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_XAnimPartsAsset(XAnimParts **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(2,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].parts = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_XANIMPARTS,local_20);
+  *param_1 = (XAnimParts *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3BD8  Mark_XAnimPartsAsset  (database/db_registry.cpp:965)
 
-void Mark_XAnimPartsAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_XAnimPartsAsset(XAnimParts *param_1,int param_2)
 
 {
-  DB_GetXAsset(2,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_XANIMPARTS,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3BE8  Load_XModelSurfsAsset  (database/db_registry.cpp:977)
 
-void Load_XModelSurfsAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_XModelSurfsAsset(XModelSurfs **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(3,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].modelSurfs = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_XMODEL_SURFS,local_20);
+  *param_1 = (XModelSurfs *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3C38  Mark_XModelSurfsAsset  (database/db_registry.cpp:987)
 
-void Mark_XModelSurfsAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_XModelSurfsAsset(XModelSurfs *param_1,int param_2)
 
 {
-  DB_GetXAsset(3,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_XMODEL_SURFS,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823ED218  Load_XModelSurfsFixup  (database/db_registry.cpp:996)
 
-void Load_XModelSurfsFixup(int *param_1,int param_2)
+void Load_XModelSurfsFixup(XModelSurfs **param_1,XModelLodInfo *param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
+  XModelSurfs **ppXVar1;
+  ushort *puVar2;
   longlong lVar3;
   
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8205b610,0x3e5,0,0xffffffff82000f98,0xffffffff8205b660);
+  if (param_1 == (XModelSurfs **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x3e5,0,"%s");
   }
-  if (*param_1 != 0) {
-    puVar2 = (undefined4 *)(*param_1 + 8);
-    puVar1 = (undefined4 *)(param_2 + 8);
+  if (*param_1 != (XModelSurfs *)0x0) {
+    puVar2 = &(*param_1)->numsurfs;
+    ppXVar1 = &param_2->modelSurfs;
     lVar3 = 6;
     do {
-      puVar2 = puVar2 + 1;
-      puVar1 = puVar1 + 1;
-      *puVar1 = *puVar2;
+      puVar2 = puVar2 + 2;
+      ppXVar1 = ppXVar1 + 1;
+      *ppXVar1 = *(XModelSurfs **)puVar2;
       lVar3 = lVar3 + -1;
     } while (lVar3 != 0);
-    *(undefined4 *)(param_2 + 0x24) = *(undefined4 *)(*param_1 + 4);
+    param_2->surfs = (*param_1)->surfs;
   }
   return;
 }
@@ -2870,7 +3336,12 @@ void Load_XModelSurfsFixup(int *param_1,int param_2)
 
 // 823ED2B0  DB_XModelSurfsFixup  (database/db_registry.cpp:1008)
 
-void DB_XModelSurfsFixup(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_XModelSurfsFixup(XAssetHeader param_1,void *param_2)
 
 {
   int iVar1;
@@ -2882,7 +3353,7 @@ void DB_XModelSurfsFixup(void)
   int iVar7;
   longlong lVar8;
   
-  iVar2 = __savegprlr_24();
+  iVar2 = __savegprlr_24(param_1.physPreset,param_2);
   sVar6 = 0;
   iVar5 = 0;
   if ('\0' < *(char *)(iVar2 + 0xe1)) {
@@ -2890,7 +3361,8 @@ void DB_XModelSurfsFixup(void)
     do {
       iVar1 = *(int *)(iVar7 + -4);
       if (iVar1 == 0) {
-        MyAssertHandler(0xffffffff8205b610,0x3fe,0,0xffffffff82000f98,0xffffffff8205b660);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x3fe,0,"%s");
       }
       puVar4 = (undefined4 *)(iVar1 + 8);
       puVar3 = (undefined4 *)(iVar7 + -4);
@@ -2917,39 +3389,58 @@ void DB_XModelSurfsFixup(void)
 
 // 823F3C48  Load_XModelAsset  (database/db_registry.cpp:1040)
 
-void Load_XModelAsset(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_XModelAsset(XModel **param_1)
 
 {
-  int iVar1;
-  int local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  iVar1 = DB_AddXAsset(4,local_20);
-  *param_1 = iVar1;
-  if (local_20[0] != 0) {
-    DB_XModelSurfsFixup(local_20[0],0);
+  local_20[0].model = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_XMODEL,local_20);
+  *param_1 = (XModel *)XVar1;
+  if (local_20[0].physPreset != (PhysPreset *)0x0) {
+    DB_XModelSurfsFixup(local_20[0],(void *)0x0);
   }
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3CB0  Mark_XModelAsset  (database/db_registry.cpp:1054)
 
-void Mark_XModelAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_XModelAsset(XModel *param_1,int param_2)
 
 {
-  DB_GetXAsset(4,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_XMODEL,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3CC0  DB_FreeXModel  (database/db_registry.cpp:1063)
 
-void DB_FreeXModel(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXModel(void *param_1,XAssetHeader param_2)
 
 {
-  DB_FreeXModelStream(param_2);
+  DB_FreeXModelStream(param_2.model);
   DB_FreeXAssetHeader<XModel>(param_1,param_2);
   return;
 }
@@ -2957,37 +3448,56 @@ void DB_FreeXModel(undefined8 param_1,undefined8 param_2)
 
 // 823F3D08  Load_MaterialAsset  (database/db_registry.cpp:1075)
 
-void Load_MaterialAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MaterialAsset(Material **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(5,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].material = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_MATERIAL,local_20);
+  *param_1 = (Material *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3D58  Mark_MaterialAsset  (database/db_registry.cpp:1091)
 
-void Mark_MaterialAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MaterialAsset(Material *param_1,int param_2)
 
 {
-  DB_GetXAsset(5,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_MATERIAL,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3D68  DB_FreeMaterial  (database/db_registry.cpp:1100)
 
-void DB_FreeMaterial(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeMaterial(void *param_1,XAssetHeader param_2)
 
 {
   Material_DirtySort();
-  DB_FreeMaterialStream(param_2);
+  DB_FreeMaterialStream(param_2.material);
   DB_FreeXAssetHeader<Material>(param_1,param_2);
   return;
 }
@@ -2995,79 +3505,110 @@ void DB_FreeMaterial(undefined8 param_1,undefined8 param_2)
 
 // 823F3DB8  Load_MaterialPixelShaderAsset  (database/db_registry.cpp:1115)
 
-void Load_MaterialPixelShaderAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MaterialPixelShaderAsset(MaterialPixelShader **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(6,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].pixelShader = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_PIXELSHADER,local_20);
+  *param_1 = (MaterialPixelShader *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3E08  Mark_MaterialPixelShaderAsset  (database/db_registry.cpp:1125)
 
-void Mark_MaterialPixelShaderAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MaterialPixelShaderAsset(MaterialPixelShader *param_1,int param_2)
 
 {
-  DB_GetXAsset(6,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_PIXELSHADER,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3E18  Load_MaterialTechniqueSetAsset  (database/db_registry.cpp:1191)
 
-void Load_MaterialTechniqueSetAsset(uint *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MaterialTechniqueSetAsset(MaterialTechniqueSet **param_1)
 
 {
-  uint uVar1;
-  uint local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(7,local_20);
-  *param_1 = uVar1;
-  if (uVar1 == local_20[0]) {
-    Material_OriginalRemapTechniqueSet();
+  local_20[0].techniqueSet = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_TECHNIQUE_SET,local_20);
+  *param_1 = (MaterialTechniqueSet *)XVar1;
+  if (XVar1.physPreset == local_20[0].physPreset) {
+    Material_OriginalRemapTechniqueSet(XVar1.techniqueSet);
   }
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3E78  Mark_MaterialTechniqueSetAsset  (database/db_registry.cpp:1211)
 
-void Mark_MaterialTechniqueSetAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MaterialTechniqueSetAsset(MaterialTechniqueSet *param_1,int param_2)
 
 {
-  DB_GetXAsset(7,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_TECHNIQUE_SET,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823ED378  Load_ImageStream  (database/db_registry.cpp:1247)
 
-void Load_ImageStream(int param_1)
+void Load_ImageStream(GfxImage *param_1)
 
 {
-  longlong lVar1;
+  int iVar1;
   longlong lVar2;
+  longlong lVar3;
   
-  if ((*(uint *)(param_1 + 0x48) & 0x7f) != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x4e3,0,0xffffffff82000f98,0xffffffff8205b66c);
+  if (((uint)param_1->pixels & 0x7f) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x4e3,0,"%s");
   }
-  if (*(char *)(param_1 + 0x39) != '\v') {
-    lVar1 = 0;
-    if (0 < *(int *)(param_1 + 0x3c)) {
-      lVar2 = (ulonglong)(*(int *)(param_1 + 0x3c) - 1U >> 7) + 1;
+  if (param_1->semantic != '\v') {
+    iVar1 = (param_1->cardMemory).platform[0];
+    lVar2 = 0;
+    if (0 < iVar1) {
+      lVar3 = (ulonglong)(iVar1 - 1U >> 7) + 1;
       do {
-        dataCacheBlockFlush(lVar1 + (ulonglong)*(uint *)(param_1 + 0x48));
-        lVar1 = lVar1 + 0x80;
-        lVar2 = lVar2 + -1;
-      } while (lVar2 != 0);
+        dataCacheBlockFlush(lVar2 + ZEXT48(param_1->pixels));
+        lVar2 = lVar2 + 0x80;
+        lVar3 = lVar3 + -1;
+      } while (lVar3 != 0);
     }
   }
   return;
@@ -3076,39 +3617,58 @@ void Load_ImageStream(int param_1)
 
 // 823F3E88  Load_GfxImageAsset  (database/db_registry.cpp:1263)
 
-void Load_GfxImageAsset(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_GfxImageAsset(GfxImage **param_1)
 
 {
-  int iVar1;
-  int local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  iVar1 = DB_AddXAsset(8,local_20);
-  *param_1 = iVar1;
-  if (local_20[0] != 0) {
-    Load_Texture(local_20[0]);
+  local_20[0].image = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_IMAGE,local_20);
+  *param_1 = (GfxImage *)XVar1;
+  if ((GfxImage *)local_20[0].physPreset != (GfxImage *)0x0) {
+    Load_Texture(local_20[0].image);
   }
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3EE8  Mark_GfxImageAsset  (database/db_registry.cpp:1291)
 
-void Mark_GfxImageAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_GfxImageAsset(GfxImage *param_1,int param_2)
 
 {
-  DB_GetXAsset(8,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_IMAGE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3EF8  DB_FreeGfxImage  (database/db_registry.cpp:1300)
 
-void DB_FreeGfxImage(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeGfxImage(void *param_1,XAssetHeader param_2)
 
 {
-  DB_FreeGfxImageStream(param_2);
+  DB_FreeGfxImageStream(param_2.image);
   DB_FreeXAssetHeader<GfxImage>(param_1,param_2);
   return;
 }
@@ -3116,101 +3676,146 @@ void DB_FreeGfxImage(undefined8 param_1,undefined8 param_2)
 
 // 823F3F40  Load_snd_alias_list_Asset  (database/db_registry.cpp:1320)
 
-void Load_snd_alias_list_Asset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_snd_alias_list_Asset(snd_alias_list_t **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(9,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].sound = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_SOUND,local_20);
+  *param_1 = (snd_alias_list_t *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3F90  Mark_snd_alias_list_Asset  (database/db_registry.cpp:1330)
 
-void Mark_snd_alias_list_Asset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_snd_alias_list_Asset(snd_alias_list_t *param_1,int param_2)
 
 {
-  DB_GetXAsset(9,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_SOUND,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F3FA0  Load_SndCurveAsset  (database/db_registry.cpp:1342)
 
-void Load_SndCurveAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_SndCurveAsset(SndCurve **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(10,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].sndCurve = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_SOUND_CURVE,local_20);
+  *param_1 = (SndCurve *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F3FF0  Mark_SndCurveAsset  (database/db_registry.cpp:1352)
 
-void Mark_SndCurveAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_SndCurveAsset(SndCurve *param_1,int param_2)
 
 {
-  DB_GetXAsset(10,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_SOUND_CURVE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4000  Load_LoadedSoundAsset  (database/db_registry.cpp:1364)
 
-void Load_LoadedSoundAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_LoadedSoundAsset(LoadedSound **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0xb,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].loadSnd = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_LOADED_SOUND,local_20);
+  *param_1 = (LoadedSound *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4050  Mark_LoadedSoundAsset  (database/db_registry.cpp:1374)
 
-void Mark_LoadedSoundAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_LoadedSoundAsset(LoadedSound *param_1,int param_2)
 
 {
-  DB_GetXAsset(0xb,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_LOADED_SOUND,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823ED410  Load_snd_alias_list_soundFile  (database/db_registry.cpp:1393)
 
-void Load_snd_alias_list_soundFile(void)
+void Load_snd_alias_list_soundFile(SoundFile **param_1)
 
 {
   int *piVar1;
   undefined4 *puVar2;
   int iVar3;
   
-  piVar1 = (int *)__savegprlr_29();
-  if (DAT_8296752c <= DAT_82fcc42c) {
-    MyAssertHandler(0xffffffff8205b610,0x574,0,0xffffffff8205b6e0);
+  piVar1 = (int *)__savegprlr_29(param_1);
+  if (db_soundFileCount <= db_soundLanguage) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x574,0,"db_soundLanguage doesn\'t index db_soundFileCount\n\t%i not in [0, %i)"
+                   );
   }
-  if (*(char *)*piVar1 != ((char *)*piVar1)[DAT_82fcc42c * 0x10]) {
-    MyAssertHandler(0xffffffff8205b610,0x575,0,0xffffffff82000f98,0xffffffff8205b6a0);
+  if (*(char *)*piVar1 != ((char *)*piVar1)[db_soundLanguage * 0x10]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x575,0,"%s");
   }
-  puVar2 = (undefined4 *)DB_Alloc(0x10,4);
-  iVar3 = DAT_82fcc42c * 0x10 + *piVar1;
-  *puVar2 = *(undefined4 *)(DAT_82fcc42c * 0x10 + *piVar1);
+  puVar2 = DB_Alloc(0x10,4);
+  iVar3 = db_soundLanguage * 0x10 + *piVar1;
+  *puVar2 = *(undefined4 *)(db_soundLanguage * 0x10 + *piVar1);
   puVar2[1] = *(undefined4 *)(iVar3 + 4);
   puVar2[2] = *(undefined4 *)(iVar3 + 8);
   puVar2[3] = *(undefined4 *)(iVar3 + 0xc);
@@ -3222,7 +3827,9 @@ void Load_snd_alias_list_soundFile(void)
 
 // 823ED4E0  DB_GetSoundFileCount  (database/db_registry.cpp:1406)
 
-undefined4 DB_GetSoundFileCount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+uint DB_GetSoundFileCount(void)
 
 {
   int *in_r13;
@@ -3230,384 +3837,612 @@ undefined4 DB_GetSoundFileCount(void)
   if (*(int *)(*in_r13 + 0xc) != 0) {
     return 1;
   }
-  return DAT_8296752c;
+  return db_soundFileCount;
 }
 
 
 // 823F4060  Load_ClipMapAsset  (database/db_registry.cpp:1417)
 
-void Load_ClipMapAsset(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_ClipMapAsset(clipMap_t **param_1)
 
 {
-  int iVar1;
-  int local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  *(undefined4 *)(*param_1 + 4) = 1;
-  local_20[0] = *param_1;
-  iVar1 = DB_AddXAsset(0xc,local_20);
-  *param_1 = iVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  (*param_1)->isInUse = 1;
+  local_20[0].clipMap = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_CLIPMAP,local_20);
+  *param_1 = (clipMap_t *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F40B8  Mark_ClipMapAsset  (database/db_registry.cpp:1429)
 
-void Mark_ClipMapAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_ClipMapAsset(clipMap_t *param_1,int param_2)
 
 {
-  DB_GetXAsset(0xc,param_1,param_2);
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_CLIPMAP,(XAssetHeader)param_1,param_2);
+  return iVar1;
+}
+
+
+// 823ED508  DB_RemoveClipMap  (database/db_registry.cpp:1438)
+
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* void __cdecl DB_RemoveClipMap(union XAssetHeader) */
+
+void DB_RemoveClipMap(XAssetHeader param_1)
+
+{
+  undefined4 uVar1;
+  undefined4 *puVar2;
+  
+  puVar2 = (undefined4 *)__savegprlr_28(param_1.physPreset);
+  if (puVar2[1] == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x10e,0,
+                    "%s");
+  }
+  uVar1 = *puVar2;
+  Com_Memset(&cm,0,0x100);
+  *puVar2 = uVar1;
+  if (puVar2[1] != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x113,0,
+                    "%s");
+  }
+  __restgprlr_28();
   return;
 }
 
 
 // 823F40C8  Load_ComWorldAsset  (database/db_registry.cpp:1447)
 
-void Load_ComWorldAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_ComWorldAsset(ComWorld **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0xd,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].comWorld = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_COMWORLD,local_20);
+  *param_1 = (ComWorld *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4118  Mark_ComWorldAsset  (database/db_registry.cpp:1457)
 
-void Mark_ComWorldAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_ComWorldAsset(ComWorld *param_1,int param_2)
 
 {
-  DB_GetXAsset(0xd,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_COMWORLD,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4128  Load_GlassWorldAsset  (database/db_registry.cpp:1475)
 
-void Load_GlassWorldAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_GlassWorldAsset(GlassWorld **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0xe,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].glassWorld = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_GLASSWORLD,local_20);
+  *param_1 = (GlassWorld *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4178  Mark_GlassWorldAsset  (database/db_registry.cpp:1485)
 
-void Mark_GlassWorldAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_GlassWorldAsset(GlassWorld *param_1,int param_2)
 
 {
-  DB_GetXAsset(0xe,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_GLASSWORLD,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4188  Load_PathDataAsset  (database/db_registry.cpp:1497)
 
-void Load_PathDataAsset(undefined4 *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_PathDataAsset(PathData **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0xf,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].pathData = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_PATHDATA,local_20);
+  *param_1 = (PathData *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F41D8  Mark_PathDataAsset  (database/db_registry.cpp:1507)
 
-void Mark_PathDataAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_PathDataAsset(PathData *param_1,int param_2)
 
 {
-  DB_GetXAsset(0xf,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_PATHDATA,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F41E8  Load_VehicleTrackAsset  (database/db_registry.cpp:1519)
 
-void Load_VehicleTrackAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_VehicleTrackAsset(VehicleTrack **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x10,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].vehicleTrack = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_VEHICLE_TRACK,local_20);
+  *param_1 = (VehicleTrack *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4238  Mark_VehicleTrackAsset  (database/db_registry.cpp:1529)
 
-void Mark_VehicleTrackAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_VehicleTrackAsset(VehicleTrack *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x10,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_VEHICLE_TRACK,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4248  Load_MapEntsAsset  (database/db_registry.cpp:1541)
 
-void Load_MapEntsAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MapEntsAsset(MapEnts **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  if (DAT_82d14adc != 0) {
+  if (db_assetCount[0x11] != 0) {
     CM_LoadedMapEnts();
   }
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x11,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].mapEnts = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_MAP_ENTS,local_20);
+  *param_1 = (MapEnts *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F42B0  Mark_MapEntsAsset  (database/db_registry.cpp:1560)
 
-void Mark_MapEntsAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MapEntsAsset(MapEnts *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x11,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_MAP_ENTS,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F42C0  Load_FxWorldAsset  (database/db_registry.cpp:1572)
 
-void Load_FxWorldAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_FxWorldAsset(FxWorld **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x12,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].fxWorld = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_FXWORLD,local_20);
+  *param_1 = (FxWorld *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4310  Mark_FxWorldAsset  (database/db_registry.cpp:1582)
 
-void Mark_FxWorldAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_FxWorldAsset(FxWorld *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x12,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_FXWORLD,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4320  Load_GfxWorldAsset  (database/db_registry.cpp:1594)
 
-void Load_GfxWorldAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_GfxWorldAsset(GfxWorld **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x13,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].gfxWorld = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_GFXWORLD,local_20);
+  *param_1 = (GfxWorld *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4370  Mark_GfxWorldAsset  (database/db_registry.cpp:1604)
 
-void Mark_GfxWorldAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_GfxWorldAsset(GfxWorld *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x13,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_GFXWORLD,(XAssetHeader)param_1,param_2);
+  return iVar1;
+}
+
+
+// 823ED518  DB_RemoveGfxWorld  (database/db_registry.cpp:1613)
+
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* void __cdecl DB_RemoveGfxWorld(union XAssetHeader) */
+
+void DB_RemoveGfxWorld(XAssetHeader param_1)
+
+{
+  if (rgp.world == (GfxWorld *)0x0) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Cannot unload bsp while it is in use");
 }
 
 
 // 823F4380  Load_LightDefAsset  (database/db_registry.cpp:1622)
 
-void Load_LightDefAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_LightDefAsset(GfxLightDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x14,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].lightDef = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_LIGHT_DEF,local_20);
+  *param_1 = (GfxLightDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F43D0  Mark_LightDefAsset  (database/db_registry.cpp:1632)
 
-void Mark_LightDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_LightDefAsset(GfxLightDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x14,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_LIGHT_DEF,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F43E0  Load_FontAsset  (database/db_registry.cpp:1644)
 
-void Load_FontAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_FontAsset(Font_s **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x16,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].font = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_FONT,local_20);
+  *param_1 = (Font_s *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4430  Mark_FontAsset  (database/db_registry.cpp:1654)
 
-void Mark_FontAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_FontAsset(Font_s *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x16,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_FONT,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4440  Load_MenuListAsset  (database/db_registry.cpp:1666)
 
-void Load_MenuListAsset(undefined4 *param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MenuListAsset(MenuList **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x17,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].menuList = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_MENULIST,local_20);
+  *param_1 = (MenuList *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4490  Mark_MenuListAsset  (database/db_registry.cpp:1676)
 
-void Mark_MenuListAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MenuListAsset(MenuList *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x17,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_MENULIST,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F44A0  Load_MenuAsset  (database/db_registry.cpp:1688)
 
-void Load_MenuAsset(int *param_1)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_MenuAsset(menuDef_t **param_1)
 
 {
   int *piVar1;
-  int iVar2;
-  int iVar3;
+  XAssetHeader XVar2;
+  XAssetHeader XVar3;
   int iVar4;
-  int local_20 [2];
+  int iVar5;
+  XAssetHeader local_20 [2];
   
-  local_20[0] = *param_1;
-  iVar3 = DB_AddXAsset(0x18,local_20);
-  iVar2 = local_20[0];
-  *param_1 = iVar3;
-  if (local_20[0] != 0) {
-    if ((*(int *)(local_20[0] + 0xb4) != 0) && (*(int *)(local_20[0] + 0xb8) == 0)) {
-      MyAssertHandler(0xffffffff8205b610,0x6a1,0,0xffffffff82000f98,0xffffffff8205c228);
+  local_20[0].menu = *param_1;
+  XVar3 = DB_AddXAsset(ASSET_TYPE_MENU,local_20);
+  XVar2 = local_20[0];
+  *param_1 = (menuDef_t *)XVar3;
+  if ((menuDef_t *)local_20[0].physPreset != (menuDef_t *)0x0) {
+    if ((((local_20[0].clipMap)->stageTrigger).slabCount != 0) &&
+       (((local_20[0].clipMap)->stageTrigger).slabs == (TriggerSlab *)0x0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x6a1,0,"%s");
     }
-    iVar3 = 0;
-    if (0 < *(int *)(iVar2 + 0xb4)) {
-      iVar4 = 0;
+    iVar4 = 0;
+    if (0 < (XVar2.menu)->itemCount) {
+      iVar5 = 0;
       do {
-        iVar3 = iVar3 + 1;
-        piVar1 = (int *)(*(int *)(iVar2 + 0xb8) + iVar4);
-        iVar4 = iVar4 + 4;
-        *(int *)(*piVar1 + 0x134) = *param_1;
-      } while (iVar3 < *(int *)(iVar2 + 0xb4));
+        iVar4 = iVar4 + 1;
+        piVar1 = (int *)((int)(XVar2.menu)->items + iVar5);
+        iVar5 = iVar5 + 4;
+        *(menuDef_t **)(*piVar1 + 0x134) = *param_1;
+      } while (iVar4 < (XVar2.menu)->itemCount);
     }
   }
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4578  Mark_MenuAsset  (database/db_registry.cpp:1707)
 
-void Mark_MenuAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_MenuAsset(menuDef_t *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x18,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_MENU,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823ED520  DB_DynamicCloneMenu  (database/db_registry.cpp:1716)
 
-undefined8 DB_DynamicCloneMenu(int *param_1,int *param_2,int param_3)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int DB_DynamicCloneMenu(XAssetHeader param_1,XAssetHeader param_2,DB_CloneType param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
+  menuData_t *pmVar1;
+  menuData_t *pmVar2;
+  uint uVar3;
   int iVar4;
-  ulonglong uVar5;
+  int iVar5;
+  int iVar6;
+  ulonglong uVar7;
   
-  if ((param_3 != 0) && (param_3 != 3)) {
-    iVar4 = *param_2;
-    iVar1 = *param_1;
-    *(undefined4 *)(iVar1 + 0x68) = *(undefined4 *)(iVar4 + 0x68);
-    *(undefined4 *)(iVar1 + 0x6c) = *(undefined4 *)(iVar4 + 0x6c);
-    *(undefined4 *)(iVar1 + 0x70) = *(undefined4 *)(iVar4 + 0x70);
-    *(undefined4 *)(iVar1 + 0x74) = *(undefined4 *)(iVar4 + 0x74);
-    param_1[0x13] = param_2[0x13];
-    param_1[0x14] = param_2[0x14];
-    param_1[0x15] = param_2[0x15];
-    param_1[0x16] = param_2[0x16];
-    uVar2 = param_2[0x2d];
-    if (param_1[0x2d] <= param_2[0x2d]) {
-      uVar2 = param_1[0x2d];
+  if ((param_3 != DB_CLONE_DEFAULT) && (param_3 != DB_CLONE_NORMAL_FROM_DEFAULT)) {
+    pmVar1 = (param_2.menu)->data;
+    pmVar2 = (param_1.menu)->data;
+    pmVar2->cursorItem[0] = pmVar1->cursorItem[0];
+    pmVar2->cursorItem[1] = pmVar1->cursorItem[1];
+    pmVar2->cursorItem[2] = pmVar1->cursorItem[2];
+    pmVar2->cursorItem[3] = pmVar1->cursorItem[3];
+    (param_1.parts)->indices = (param_2.parts)->indices;
+    (param_1.parts)->notify = (param_2.parts)->notify;
+    (param_1.parts)->deltaPart = (param_2.parts)->deltaPart;
+    (param_1.model)->lodInfo[0].partBits[3] = (param_2.model)->lodInfo[0].partBits[3];
+    uVar3 = (param_2.menu)->itemCount;
+    if ((param_1.menu)->itemCount <= (param_2.menu)->itemCount) {
+      uVar3 = (param_1.menu)->itemCount;
     }
-    uVar5 = (ulonglong)uVar2;
-    if (0 < (int)uVar2) {
-      iVar4 = 0;
+    uVar7 = (ulonglong)uVar3;
+    if (0 < (int)uVar3) {
+      iVar6 = 0;
       do {
-        uVar5 = uVar5 - 1;
-        iVar1 = *(int *)(iVar4 + param_2[0x2e]);
-        iVar3 = *(int *)(iVar4 + param_1[0x2e]);
-        iVar4 = iVar4 + 4;
-        *(undefined4 *)(iVar3 + 0x48) = *(undefined4 *)(iVar1 + 0x48);
-        *(undefined4 *)(iVar3 + 0x4c) = *(undefined4 *)(iVar1 + 0x4c);
-        *(undefined4 *)(iVar3 + 0x50) = *(undefined4 *)(iVar1 + 0x50);
-        *(undefined4 *)(iVar3 + 0x54) = *(undefined4 *)(iVar1 + 0x54);
-      } while (uVar5 != 0);
+        uVar7 = uVar7 - 1;
+        iVar4 = *(int *)(iVar6 + (int)(param_2.menu)->items);
+        iVar5 = *(int *)(iVar6 + (int)(param_1.menu)->items);
+        iVar6 = iVar6 + 4;
+        *(undefined4 *)(iVar5 + 0x48) = *(undefined4 *)(iVar4 + 0x48);
+        *(undefined4 *)(iVar5 + 0x4c) = *(undefined4 *)(iVar4 + 0x4c);
+        *(undefined4 *)(iVar5 + 0x50) = *(undefined4 *)(iVar4 + 0x50);
+        *(undefined4 *)(iVar5 + 0x54) = *(undefined4 *)(iVar4 + 0x54);
+      } while (uVar7 != 0);
     }
   }
   return 1;
@@ -3616,85 +4451,132 @@ undefined8 DB_DynamicCloneMenu(int *param_1,int *param_2,int param_3)
 
 // 823F4588  Load_LocalizeEntryAsset  (database/db_registry.cpp:1751)
 
-void Load_LocalizeEntryAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_LocalizeEntryAsset(LocalizeEntry **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x19,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].localize = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_LOCALIZE_ENTRY,local_20);
+  *param_1 = (LocalizeEntry *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F45D8  Mark_LocalizeEntryAsset  (database/db_registry.cpp:1761)
 
-void Mark_LocalizeEntryAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_LocalizeEntryAsset(LocalizeEntry *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x19,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_LOCALIZE_ENTRY,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F45E8  Load_WeaponAttachmentAsset  (database/db_registry.cpp:1773)
 
-void Load_WeaponAttachmentAsset(undefined4 *param_1)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void Load_WeaponAttachmentAsset(WeaponAttachment **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1a,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].attachment = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_ATTACHMENT,local_20);
+  *param_1 = (WeaponAttachment *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4638  Mark_WeaponAttachmentAsset  (database/db_registry.cpp:1783)
 
-void Mark_WeaponAttachmentAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_WeaponAttachmentAsset(WeaponAttachment *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1a,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_ATTACHMENT,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4648  Load_WeaponCompleteDefAsset  (database/db_registry.cpp:1795)
 
-void Load_WeaponCompleteDefAsset(undefined4 *param_1)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void Load_WeaponCompleteDefAsset(WeaponCompleteDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1b,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].weapon = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_WEAPON,local_20);
+  *param_1 = (WeaponCompleteDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4698  Mark_WeaponCompleteDefAsset  (database/db_registry.cpp:1805)
 
-void Mark_WeaponCompleteDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_WeaponCompleteDefAsset(WeaponCompleteDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1b,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_WEAPON,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823ED5F8  DB_DynamicCloneWeaponDef  (database/db_registry.cpp:1814)
 
-undefined8 DB_DynamicCloneWeaponDef(void)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int DB_DynamicCloneWeaponDef(XAssetHeader param_1,XAssetHeader param_2,DB_CloneType param_3)
 
 {
   return 1;
@@ -3703,66 +4585,100 @@ undefined8 DB_DynamicCloneWeaponDef(void)
 
 // 823F46A8  Load_SndDriverGlobalsAsset  (database/db_registry.cpp:1830)
 
-void Load_SndDriverGlobalsAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_SndDriverGlobalsAsset(SndDriverGlobals **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1c,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].sndDriverGlobals = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_SNDDRIVER_GLOBALS,local_20);
+  *param_1 = (SndDriverGlobals *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F46F8  Mark_SndDriverGlobalsAsset  (database/db_registry.cpp:1844)
 
-void Mark_SndDriverGlobalsAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_SndDriverGlobalsAsset(SndDriverGlobals *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1c,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_SNDDRIVER_GLOBALS,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4708  Load_FxEffectDefAsset  (database/db_registry.cpp:1861)
 
-void Load_FxEffectDefAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_FxEffectDefAsset(FxEffectDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1d,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].fx = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_FX,local_20);
+  *param_1 = (FxEffectDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4758  Mark_FxEffectDefAsset  (database/db_registry.cpp:1871)
 
-void Mark_FxEffectDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_FxEffectDefAsset(FxEffectDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1d,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_FX,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4768  Load_FxEffectDefFromName  (database/db_registry.cpp:1880)
 
-void Load_FxEffectDefFromName(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_FxEffectDefFromName(char **param_1)
 
 {
-  int iVar1;
+  XAssetHeader XVar1;
   
-  if (*param_1 != 0) {
-    iVar1 = DB_FindXAssetHeader(0x1d,*param_1,1);
-    *param_1 = iVar1;
+  if (*param_1 != (char *)0x0) {
+    XVar1 = DB_FindXAssetHeader(ASSET_TYPE_FX,*param_1,1);
+    *param_1 = (char *)XVar1;
   }
   return;
 }
@@ -3770,341 +4686,473 @@ void Load_FxEffectDefFromName(int *param_1)
 
 // 823F47B0  Load_FxImpactTableAsset  (database/db_registry.cpp:1896)
 
-void Load_FxImpactTableAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_FxImpactTableAsset(FxImpactTable **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1e,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].impactFx = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_IMPACT_FX,local_20);
+  *param_1 = (FxImpactTable *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4800  Mark_FxImpactTableAsset  (database/db_registry.cpp:1906)
 
-void Mark_FxImpactTableAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_FxImpactTableAsset(FxImpactTable *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1e,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_IMPACT_FX,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4810  Load_SurfaceFxTableAsset  (database/db_registry.cpp:1918)
 
-void Load_SurfaceFxTableAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_SurfaceFxTableAsset(SurfaceFxTable **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x1f,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].surfaceFx = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_SURFACE_FX,local_20);
+  *param_1 = (SurfaceFxTable *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4860  Mark_SurfaceFxTableAsset  (database/db_registry.cpp:1928)
 
-void Mark_SurfaceFxTableAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_SurfaceFxTableAsset(SurfaceFxTable *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x1f,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_SURFACE_FX,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4870  Load_RawFileAsset  (database/db_registry.cpp:1969)
 
-void Load_RawFileAsset(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_RawFileAsset(RawFile **param_1)
 
 {
-  int iVar1;
-  int local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  iVar1 = DB_AddXAsset(0x24,local_20);
-  *param_1 = iVar1;
-  if ((local_20[0] != 0) && (*(int *)(local_20[0] + 4) == 0)) {
-    MyAssertHandler(0xffffffff8205b610,0x7b9,0,0xffffffff82000f98,0xffffffff8205c258);
+  local_20[0].rawfile = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_RAWFILE,local_20);
+  *param_1 = (RawFile *)XVar1;
+  if ((local_20[0].physPreset != (PhysPreset *)0x0) && ((local_20[0].physPreset)->type == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x7b9,0,"%s");
   }
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F48F8  Mark_RawFileAsset  (database/db_registry.cpp:1984)
 
-void Mark_RawFileAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_RawFileAsset(RawFile *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x24,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_RAWFILE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4908  Load_ScriptFileAsset  (database/db_registry.cpp:2037)
 
-void Load_ScriptFileAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_ScriptFileAsset(ScriptFile **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x25,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].scriptfile = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_SCRIPTFILE,local_20);
+  *param_1 = (ScriptFile *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4958  Mark_ScriptFileAsset  (database/db_registry.cpp:2047)
 
-void Mark_ScriptFileAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_ScriptFileAsset(ScriptFile *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x25,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_SCRIPTFILE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4968  Load_StringTableAsset  (database/db_registry.cpp:2059)
 
-void Load_StringTableAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_StringTableAsset(StringTable **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x26,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].stringTable = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_STRINGTABLE,local_20);
+  *param_1 = (StringTable *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F49B8  Mark_StringTableAsset  (database/db_registry.cpp:2069)
 
-void Mark_StringTableAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_StringTableAsset(StringTable *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x26,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_STRINGTABLE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F49C8  Load_LeaderboardDefAsset  (database/db_registry.cpp:2081)
 
-void Load_LeaderboardDefAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_LeaderboardDefAsset(LeaderboardDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x27,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].leaderboardDef = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_LEADERBOARD,local_20);
+  *param_1 = (LeaderboardDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4A18  Mark_LeaderboardDefAsset  (database/db_registry.cpp:2091)
 
-void Mark_LeaderboardDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_LeaderboardDefAsset(LeaderboardDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x27,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_LEADERBOARD,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4A28  Load_StructuredDataDefAsset  (database/db_registry.cpp:2104)
 
-void Load_StructuredDataDefAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_StructuredDataDefAsset(StructuredDataDefSet **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x28,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].structuredDataDefSet = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_STRUCTURED_DATA_DEF,local_20);
+  *param_1 = (StructuredDataDefSet *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4A78  Mark_StructuredDataDefAsset  (database/db_registry.cpp:2114)
 
-void Mark_StructuredDataDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_StructuredDataDefAsset(StructuredDataDefSet *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x28,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_STRUCTURED_DATA_DEF,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4A88  Load_TracerDefAsset  (database/db_registry.cpp:2126)
 
-void Load_TracerDefAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_TracerDefAsset(TracerDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x29,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].tracerDef = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_TRACER,local_20);
+  *param_1 = (TracerDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4AD8  Mark_TracerDefAsset  (database/db_registry.cpp:2136)
 
-void Mark_TracerDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_TracerDefAsset(TracerDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x29,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_TRACER,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4AE8  Load_VehicleDefAsset  (database/db_registry.cpp:2147)
 
-void Load_VehicleDefAsset(undefined4 *param_1)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void Load_VehicleDefAsset(VehicleDef **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x2a,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].vehDef = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_VEHICLE,local_20);
+  *param_1 = (VehicleDef *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4B38  Mark_VehicleDefAsset  (database/db_registry.cpp:2157)
 
-void Mark_VehicleDefAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_VehicleDefAsset(VehicleDef *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x2a,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_VEHICLE,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4B48  Load_AddonMapEntsAsset  (database/db_registry.cpp:2167)
 
-void Load_AddonMapEntsAsset(undefined4 *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void Load_AddonMapEntsAsset(AddonMapEnts **param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 local_20 [4];
+  XAssetHeader XVar1;
+  XAssetHeader local_20 [4];
   
-  local_20[0] = *param_1;
-  uVar1 = DB_AddXAsset(0x2b,local_20);
-  *param_1 = uVar1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  local_20[0].addonMapEnts = *param_1;
+  XVar1 = DB_AddXAsset(ASSET_TYPE_ADDON_MAP_ENTS,local_20);
+  *param_1 = (AddonMapEnts *)XVar1;
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F4B98  Mark_AddonMapEntsAsset  (database/db_registry.cpp:2177)
 
-void Mark_AddonMapEntsAsset(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int Mark_AddonMapEntsAsset(AddonMapEnts *param_1,int param_2)
 
 {
-  DB_GetXAsset(0x2b,param_1,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = DB_GetXAsset(ASSET_TYPE_ADDON_MAP_ENTS,(XAssetHeader)param_1,param_2);
+  return iVar1;
 }
 
 
 // 823F4BA8  DB_AllocMaterial  (database/db_registry.cpp:2316)
 
-int * DB_AllocMaterial(int *param_1)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocMaterial(void *param_1)
 
 {
-  int *piVar1;
+  PhysPreset *pPVar1;
   int iVar2;
   
   Material_DirtySort();
-  piVar1 = (int *)param_1[2];
-  if (piVar1 != (int *)0x0) {
-    iVar2 = *param_1 + 1;
-    *param_1 = iVar2;
-    if (iVar2 <= param_1[1]) {
-      iVar2 = param_1[1];
+  pPVar1 = *(PhysPreset **)((int)param_1 + 8);
+  if (pPVar1 != (PhysPreset *)0x0) {
+    iVar2 = *(int *)param_1 + 1;
+    *(int *)param_1 = iVar2;
+    if (iVar2 <= *(int *)((int)param_1 + 4)) {
+      iVar2 = *(int *)((int)param_1 + 4);
     }
-    param_1[1] = iVar2;
-    param_1[2] = *piVar1;
-    return piVar1;
+    *(int *)((int)param_1 + 4) = iVar2;
+    *(char **)((int)param_1 + 8) = pPVar1->name;
+    return (XAssetHeader)pPVar1;
   }
-  return (int *)0x0;
+  return (XAssetHeader)(PhysPreset *)0x0;
 }
 
 
 // 823F4C20  DB_ReportPoolInfo_f  (database/db_registry.cpp:3222)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_ReportPoolInfo_f(void)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int local_90;
-  int local_8c;
-  int local_88 [34];
+  undefined1 local_90 [4];
+  undefined1 local_8c [4];
+  undefined1 local_88 [136];
   
   __savegprlr_18();
-  lVar8 = 0;
-  lVar7 = 0;
-  lVar10 = 0;
-  Com_Printf(0x10,0xffffffff8205c3a8);
-  if (DAT_82cf9a48 != '\0') {
-    Com_Printf(0x10,0xffffffff8205c348);
+  Com_Printf(0x10,"XAsset memory pools: \n");
+  if (g_debugZoneName[0] != '\0') {
+    Com_Printf(0x10,
+               "Note: MyChanges is active, this data will not be an accurate picture of the actual pool sizes.\n"
+              );
   }
-  lVar9 = 0;
-  iVar6 = 0;
+  iVar2 = 0;
+  iVar1 = 0;
   do {
-    if (*(code **)((int)&PTR_DB_GetPoolUtilization<PhysPreset>_82967740 + iVar6) != (code *)0x0) {
-      (**(code **)((int)&PTR_DB_GetPoolUtilization<PhysPreset>_82967740 + iVar6))
-                (*(undefined4 *)((int)&PTR_DAT_82967950 + iVar6),&local_90,&local_8c,local_88);
-      iVar4 = local_88[0];
-      iVar3 = local_8c;
-      iVar2 = local_90;
-      iVar1 = *(int *)((int)&DAT_829675e0 + iVar6);
-      if (iVar1 == 0) {
-        iVar1 = *(int *)((int)&DAT_82967530 + iVar6);
-      }
-      uVar5 = DB_GetXAssetTypeName(lVar9);
-      Com_Printf(0x10,0xffffffff8205c2e8,lVar9,uVar5,iVar2,iVar3,iVar4,iVar1);
-      lVar10 = (longlong)iVar1 * (longlong)local_90 + lVar10;
-      lVar8 = (longlong)local_90 * (longlong)local_8c + lVar8;
-      lVar7 = (longlong)local_90 * (longlong)local_88[0] + lVar7;
+    if (*(code **)((int)DB_GetUtilizationHandler + iVar1) != (code *)0x0) {
+      (**(code **)((int)DB_GetUtilizationHandler + iVar1))
+                (*(undefined4 *)((int)DB_XAssetPool + iVar1),local_90,local_8c,local_88);
+      DB_GetXAssetTypeName(iVar2);
+      Com_Printf(0x10,
+                 "\t%3d : %s : %6d bytes/elem : [%d,%d]/%d ([%d,%d]/%d bytes) [inUse,maxInUse]/capacity(ship)\n"
+                );
     }
-    iVar6 = iVar6 + 4;
-    lVar9 = lVar9 + 1;
-  } while (iVar6 < 0xb0);
-  Com_Printf(0x10,0xffffffff8205c290,lVar8,lVar7,lVar10,lVar10 - lVar8,lVar10 - lVar7,DAT_82ed7d40);
+    iVar1 = iVar1 + 4;
+    iVar2 = iVar2 + 1;
+  } while (iVar1 < 0xb0);
+  Com_Printf(0x10,
+             "[%d,%d]/%d total bytes in use. [%d,%d] bytes free. [%d,%d]/%d total entries in use.");
   __restgprlr_18();
   return;
 }
@@ -4112,97 +5160,107 @@ void DB_ReportPoolInfo_f(void)
 
 // 823ED600  DB_InitPoolHeader  (database/db_registry.cpp:3271)
 
-void DB_InitPoolHeader(int param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_InitPoolHeader(XAssetType param_1)
 
 {
-  if ((&PTR_DAT_82967950)[param_1] == (undefined *)0x0) {
+  if (DB_XAssetPool[param_1] == (void *)0x0) {
     return;
   }
                     /* WARNING: Could not recover jumptable at 0x823ed62c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (*(code *)(&PTR_DB_InitPool<PhysPreset>_82967690)[param_1])
-            ((&PTR_DAT_82967950)[param_1],(&DAT_82967530)[param_1]);
+  (*DB_InitPoolHeaderHandler[param_1])(DB_XAssetPool[param_1],g_poolSize[param_1]);
   return;
 }
 
 
 // 823ED638  DB_PrintAssetName  (database/db_registry.cpp:3280)
 
-void DB_PrintAssetName(undefined4 param_1,undefined4 *param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_PrintAssetName(XAssetHeader param_1,void *param_2)
 
 {
-  undefined8 uVar1;
-  undefined4 uStack00000014;
+  XAssetHeader XStack00000014;
   
-  uStack00000014 = param_1;
-  uVar1 = DB_GetXAssetHeaderName(*param_2,&stack0x00000014);
-  Com_Printf(0,0xffffffff82004d30,uVar1);
+  XStack00000014 = param_1;
+  DB_GetXAssetHeaderName(*(int *)param_2,&stack0x00000014);
+  Com_Printf(0,"%s\n");
   return;
 }
 
 
 // 823ED678  DB_AssetLimitExceeded  (database/db_registry.cpp:3291)
 
-void DB_AssetLimitExceeded(int param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_AssetLimitExceeded(XAssetType param_1)
 
 {
-  int iVar1;
-  int iStack00000014;
+  XAssetType XStack00000014;
   
-  iStack00000014 = param_1;
-  Sys_UnlockWrite(0xffffffff83208b8c);
-  iVar1 = (&DAT_829675e0)[iStack00000014];
-  if (iVar1 == 0) {
-    iVar1 = (&DAT_82967530)[iStack00000014];
-  }
-  Com_PrintError(1,0xffffffff8205b748,iVar1,(&PTR_s_physpreset_82967050)[iStack00000014]);
-  DB_EnumXAssets(iStack00000014,0xffffffff823ed638,&stack0x00000014,1);
-  iVar1 = (&DAT_829675e0)[iStack00000014];
-  if (iVar1 == 0) {
-    iVar1 = (&DAT_82967530)[iStack00000014];
-  }
-  Sys_Error(0xffffffff8205b724,iVar1,(&PTR_s_physpreset_82967050)[iStack00000014]);
-  return;
+  XStack00000014 = param_1;
+  Sys_UnlockWrite(&db_hashCritSect);
+  Com_PrintError(1,"Exceeded limit of %d \'%s\' assets.\n");
+  DB_EnumXAssets(XStack00000014,DB_PrintAssetName,&stack0x00000014,true);
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("\x15Exceeded limit of %d \'%s\' assets.\n");
 }
 
 
 // 823ED740  DB_IsDevZone  (database/db_registry.cpp:3303)
 
-uint DB_IsDevZone(ulonglong param_1)
+bool DB_IsDevZone(int param_1)
 
 {
-  if (0x20 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0xce8,0,0xffffffff8205b770,param_1,0x21);
+  if (0x20 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xce8,0,"zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
   }
-  return (uint)(&DAT_8314a02c)[(int)param_1 * 0x23] >> 4 & 1;
+  return (bool)((byte)((uint)g_zones[param_1].flags >> 4) & 1);
 }
 
 
 // 823ED7B0  DB_IncShipAssetCount  (database/db_registry.cpp:3310)
 
-void DB_IncShipAssetCount(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_IncShipAssetCount(XAssetType param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar3;
+  XAssetType XVar2;
+  ulonglong uVar3;
+  int iVar4;
   
-  uVar3 = __savegprlr_29();
-  if (0x2b < uVar3) {
-    MyAssertHandler(0xffffffff8205b610,0xcef,0,0xffffffff8205b7b8,uVar3,0x2c);
+  uVar3 = (ulonglong)(int)param_2;
+  XVar2 = __savegprlr_29(param_1);
+  if (ASSET_TYPE_ADDON_MAP_ENTS < XVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xcef,0,
+                    "type doesn\'t index ARRAY_COUNT( g_shipAssetCount )\n\t%i not in [0, %i)");
   }
-  if (0x20 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0xce8,0,0xffffffff8205b770,param_2,0x21);
+  if (0x20 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xce8,0,"zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
   }
-  if (((uint)(&DAT_8314a02c)[(int)param_2 * 0x23] >> 4 & 1) == 0) {
-    iVar1 = *(int *)(&DAT_83208b98 + uVar3 * 4);
-    iVar2 = (&DAT_829675e0)[uVar3];
-    *(int *)(&DAT_83208b98 + uVar3 * 4) = iVar1 + 1;
-    if (iVar2 == 0) {
-      iVar2 = (&DAT_82967530)[uVar3];
+  if (((uint)g_zones[(int)uVar3].flags >> 4 & 1) == 0) {
+    iVar1 = g_shipAssetCount[XVar2];
+    iVar4 = g_shipPoolSize[XVar2];
+    g_shipAssetCount[XVar2] = iVar1 + 1;
+    if (iVar4 == 0) {
+      iVar4 = g_poolSize[XVar2];
     }
-    if (iVar2 < iVar1 + 1) {
-      DB_AssetLimitExceeded(uVar3);
+    if (iVar4 < iVar1 + 1) {
+      DB_AssetLimitExceeded(XVar2);
     }
   }
   __restgprlr_29();
@@ -4212,25 +5270,31 @@ void DB_IncShipAssetCount(undefined8 param_1,ulonglong param_2)
 
 // 823ED888  DB_DecShipAssetCount  (database/db_registry.cpp:3326)
 
-void DB_DecShipAssetCount(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_DecShipAssetCount(XAssetType param_1,uint param_2)
 
 {
   uint uVar1;
-  int iVar2;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
+  uVar2 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_29(param_1);
   if (0x2b < uVar1) {
-    MyAssertHandler(0xffffffff8205b610,0xcff,0,0xffffffff8205b7b8,uVar1,0x2c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xcff,0,
+                    "type doesn\'t index ARRAY_COUNT( g_shipAssetCount )\n\t%i not in [0, %i)");
   }
-  if (0x20 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0xce8,0,0xffffffff8205b770,param_2,0x21);
+  if (0x20 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xce8,0,"zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
   }
-  if (((uint)(&DAT_8314a02c)[(int)param_2 * 0x23] >> 4 & 1) == 0) {
-    iVar2 = uVar1 * 4;
-    if (*(int *)(&DAT_83208b98 + iVar2) == 0) {
-      MyAssertHandler(0xffffffff8205b610,0xd04,0,0xffffffff82000f98,0xffffffff8205b800);
+  if (((uint)g_zones[(int)uVar2].flags >> 4 & 1) == 0) {
+    if (g_shipAssetCount[uVar1] == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0xd04,0,"%s");
     }
-    *(int *)(&DAT_83208b98 + iVar2) = *(int *)(&DAT_83208b98 + iVar2) + -1;
+    g_shipAssetCount[uVar1] = g_shipAssetCount[uVar1] + -1;
   }
   __restgprlr_29();
   return;
@@ -4239,58 +5303,73 @@ void DB_DecShipAssetCount(undefined8 param_1,ulonglong param_2)
 
 // 823ED960  DB_AllocXAssetHeader  (database/db_registry.cpp:3342)
 
-void DB_AllocXAssetHeader(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AllocXAssetHeader(XAssetType param_1)
 
 {
-  uint uVar2;
-  ulonglong uVar1;
+  XAssetType XVar1;
+  XAssetHeader XVar2;
+  PhysPreset *pPVar3;
   
-  uVar2 = __savegprlr_29();
-  if (0x2b < uVar2) {
-    MyAssertHandler(0xffffffff8205b610,0xd11,0,0xffffffff8205b818,uVar2,0x2c);
+  XVar1 = __savegprlr_29(param_1);
+  if (ASSET_TYPE_ADDON_MAP_ENTS < XVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xd11,0,"type doesn\'t index ASSET_TYPE_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (*(code *)(&PTR_DB_AllocXAsset<PhysPreset>_829677f0)[uVar2])((&PTR_DAT_82967950)[uVar2]);
-  if ((uVar1 & 0xffffffff) == 0) {
-    DB_AssetLimitExceeded(uVar2);
+  XVar2 = (*DB_AllocXAssetHeaderHandler[XVar1])(DB_XAssetPool[XVar1]);
+  if (XVar2.physPreset == (PhysPreset *)0x0) {
+    DB_AssetLimitExceeded(XVar1);
   }
-  *(int *)(&DAT_82d14a98 + uVar2 * 4) = *(int *)(&DAT_82d14a98 + uVar2 * 4) + 1;
-  __restgprlr_29(uVar1);
-  return;
+  db_assetCount[XVar1] = db_assetCount[XVar1] + 1;
+  pPVar3 = (PhysPreset *)__restgprlr_29(XVar2.physPreset);
+  return (XAssetHeader)pPVar3;
 }
 
 
 // 823ED9F0  DB_FreeXAssetHeader  (database/db_registry.cpp:3359)
 
-void DB_FreeXAssetHeader(uint param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetHeader(XAssetType param_1,XAssetHeader param_2)
 
 {
-  undefined *puVar1;
-  
-  if (0x2b < param_1) {
-    MyAssertHandler(0xffffffff8205b610,0xd20,0,0xffffffff8205b818,param_1,0x2c);
+  if (ASSET_TYPE_ADDON_MAP_ENTS < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xd20,0,"type doesn\'t index ASSET_TYPE_COUNT\n\t%i not in [0, %i)");
   }
-  puVar1 = (&PTR_DAT_82967950)[param_1];
-  *(int *)(&DAT_82d14a98 + param_1 * 4) = *(int *)(&DAT_82d14a98 + param_1 * 4) + -1;
-  (*(code *)(&PTR_DB_FreeXAssetHeader<PhysPreset>_829678a0)[param_1])(puVar1,param_2);
+  db_assetCount[param_1] = db_assetCount[param_1] + -1;
+  (*DB_FreeXAssetHeaderHandler[param_1])(DB_XAssetPool[param_1],(XAssetHeader)param_2.physPreset);
   return;
 }
 
 
 // 823EDA88  DB_AssetCount  (database/db_registry.cpp:3372)
 
-undefined4 DB_AssetCount(uint param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int DB_AssetCount(XAssetType param_1)
 
 {
-  if (0x2b < param_1) {
-    MyAssertHandler(0xffffffff8205b610,0xd2d,0,0xffffffff8205b818,param_1,0x2c);
+  if (ASSET_TYPE_ADDON_MAP_ENTS < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xd2d,0,"type doesn\'t index ASSET_TYPE_COUNT\n\t%i not in [0, %i)");
   }
-  return *(undefined4 *)(&DAT_82d14a98 + param_1 * 4);
+  return db_assetCount[param_1];
 }
 
 
 // 823EDAF0  DB_Sleep  (database/db_registry.cpp:3382)
 
-void DB_Sleep(undefined8 param_1)
+void DB_Sleep(int param_1)
 
 {
   int iVar1;
@@ -4311,108 +5390,133 @@ void DB_Sleep(undefined8 param_1)
 
 // 823EDB50  DB_Init  (database/db_registry.cpp:3411)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_Init(void)
 
 {
-  short *psVar1;
-  short sVar2;
+  ushort *puVar1;
+  ushort uVar2;
   int iVar3;
   longlong lVar4;
   
   iVar3 = 0;
   do {
-    if (*(int *)((int)&PTR_DAT_82967950 + iVar3) != 0) {
-      (**(code **)((int)&PTR_DB_InitPool<PhysPreset>_82967690 + iVar3))
-                (*(int *)((int)&PTR_DAT_82967950 + iVar3),
-                 *(undefined4 *)((int)&DAT_82967530 + iVar3));
+    if (*(int *)((int)DB_XAssetPool + iVar3) != 0) {
+      (**(code **)((int)DB_InitPoolHeaderHandler + iVar3))
+                (*(int *)((int)DB_XAssetPool + iVar3),*(undefined4 *)((int)g_poolSize + iVar3));
     }
     iVar3 = iVar3 + 4;
   } while (iVar3 < 0xb0);
   lVar4 = 0xc34e;
-  DAT_82ed7d40 = 0;
-  sVar2 = 1;
-  DAT_831486cc = 0;
-  psVar1 = (short *)0x82ed8066;
-  DAT_82cc848c = &DAT_82ed806c;
+  g_assetEntryUsedCount = 0;
+  uVar2 = 1;
+  g_assetEntryMaxUsedCount = 0;
+  puVar1 = &g_assetEntryPool[0].nextPoolEntry;
+  g_freeAssetEntryHead = g_assetEntryPool + 1;
   do {
-    sVar2 = sVar2 + 1;
-    psVar1 = psVar1 + 10;
-    *psVar1 = sVar2;
+    uVar2 = uVar2 + 1;
+    puVar1 = puVar1 + 10;
+    *puVar1 = uVar2;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  DAT_82fcc292 = 0;
+  g_assetEntryPool[49999].nextPoolEntry = 0;
   return;
 }
 
 
 // 823EDC18  DB_AllocXAssetEntry  (database/db_registry.cpp:3437)
 
-void DB_AllocXAssetEntry(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetEntry * DB_AllocXAssetEntry(XAssetType param_1,uint param_2)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  undefined4 uVar3;
+  XAssetType XVar1;
+  XAssetHeader XVar2;
+  XAssetEntry *pXVar3;
+  ulonglong uVar4;
   
-  uVar2 = __savegprlr_26();
-  puVar1 = DAT_82cc848c;
-  if (DAT_82cc848c == (undefined4 *)0x0) {
-    Sys_UnlockWrite(0xffffffff83208b8c);
-    Sys_Error(0xffffffff8205b894);
+  uVar4 = (ulonglong)(int)param_2;
+  XVar1 = __savegprlr_26(param_1);
+  pXVar3 = g_freeAssetEntryHead;
+  if (g_freeAssetEntryHead == (XAssetEntry *)0x0) {
+    Sys_UnlockWrite(&db_hashCritSect);
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("\x15Could not allocate asset - increase XASSET_ENTRY_POOL_SIZE");
   }
-  if (0x20 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0xce8,0,0xffffffff8205b770,param_2,0x21);
+  if (0x20 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xce8,0,"zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
   }
-  if (((uint)(&DAT_8314a02c)[(int)param_2 * 0x23] >> 4 & 1) == 0) {
-    DAT_82ed7d40 = DAT_82ed7d40 + 1;
-    if ((int)DAT_831486cc < (int)DAT_82ed7d40) {
-      DAT_831486cc = DAT_82ed7d40;
+  if (((uint)g_zones[(uint)uVar4].flags >> 4 & 1) == 0) {
+    g_assetEntryUsedCount = g_assetEntryUsedCount + 1;
+    if ((int)g_assetEntryMaxUsedCount < (int)g_assetEntryUsedCount) {
+      g_assetEntryMaxUsedCount = g_assetEntryUsedCount;
     }
-    if (40000 < DAT_82ed7d40) {
-      Sys_UnlockWrite(0xffffffff83208b8c);
-      Sys_Error(0xffffffff8205b850);
+    if (40000 < g_assetEntryUsedCount) {
+      Sys_UnlockWrite(&db_hashCritSect);
+                    /* WARNING: Subroutine does not return */
+      Sys_Error("\x15Could not allocate asset - increase XASSET_ENTRY_POOL_SIZE_SHIP");
     }
   }
-  DAT_82cc848c = (undefined4 *)(&DAT_82ed8058 + (uint)*(ushort *)((int)puVar1 + 0xe) * 0x14);
-  uVar3 = DB_AllocXAssetHeader(uVar2);
-  puVar1[1] = uVar3;
-  DB_IncShipAssetCount(uVar2,param_2);
-  *puVar1 = (int)uVar2;
-  *(undefined1 *)((int)puVar1 + 9) = 0;
-  *(char *)(puVar1 + 2) = (char)param_2;
-  *(undefined2 *)((int)puVar1 + 10) = 0;
-  *(undefined2 *)(puVar1 + 3) = 0;
-  *(undefined1 *)(puVar1 + 4) = 0;
-  __restgprlr_26(puVar1);
-  return;
+  g_freeAssetEntryHead = g_assetEntryPool + pXVar3->nextPoolEntry;
+  XVar2 = DB_AllocXAssetHeader(XVar1);
+  (pXVar3->asset).header = XVar2;
+  DB_IncShipAssetCount(XVar1,(uint)uVar4);
+  (pXVar3->asset).type = XVar1;
+  pXVar3->inuseMask = '\0';
+  pXVar3->zoneIndex = (uchar)uVar4;
+  pXVar3->nextHash = 0;
+  pXVar3->nextOverride = 0;
+  pXVar3->printedMissingAsset = false;
+  pXVar3 = (XAssetEntry *)__restgprlr_26(pXVar3);
+  return pXVar3;
 }
 
 
 // 823EDD40  DB_FreeXAssetEntry  (database/db_registry.cpp:3488)
 
-void DB_FreeXAssetEntry(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_FreeXAssetEntry(XAssetEntry *param_1)
 
 {
   byte bVar1;
-  undefined4 *puVar2;
-  int iVar3;
+  XAssetEntry *pXVar2;
+  XAssetEntry *pXVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  DB_FreeXAssetHeader(*puVar2,puVar2[1]);
-  bVar1 = *(byte *)(puVar2 + 2);
+  pXVar3 = (XAssetEntry *)__savegprlr_29(param_1);
+  DB_FreeXAssetHeader((pXVar3->asset).type,(pXVar3->asset).header);
+  bVar1 = pXVar3->zoneIndex;
   if (0x20 < bVar1) {
-    MyAssertHandler(0xffffffff8205b610,0xce8,0,0xffffffff8205b770,bVar1,0x21);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xce8,0,"zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
   }
-  if (((uint)(&DAT_8314a02c)[(uint)bVar1 * 0x23] >> 4 & 1) == 0) {
-    if (DAT_82ed7d40 == 0) {
-      MyAssertHandler(0xffffffff8205b610,0xdab,0,0xffffffff82000f98,0xffffffff8205b8d0);
+  if (((uint)g_zones[bVar1].flags >> 4 & 1) == 0) {
+    if (g_assetEntryUsedCount == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0xdab,0,"%s");
     }
-    DAT_82ed7d40 = DAT_82ed7d40 + -1;
+    g_assetEntryUsedCount = g_assetEntryUsedCount - 1;
   }
-  DB_DecShipAssetCount(*puVar2,*(undefined1 *)(puVar2 + 2));
-  iVar3 = (int)DAT_82cc848c + 0x7d127fa8;
-  DAT_82cc848c = puVar2;
-  *(short *)((int)puVar2 + 0xe) = (short)(iVar3 / 0x14);
+  DB_DecShipAssetCount((pXVar3->asset).type,(uint)pXVar3->zoneIndex);
+  pXVar2 = g_freeAssetEntryHead + 0x640ecc8;
+  g_freeAssetEntryHead = pXVar3;
+  pXVar3->nextPoolEntry = (ushort)((int)&pXVar2->zoneIndex / 0x14);
   __restgprlr_29();
   return;
 }
@@ -4420,77 +5524,80 @@ void DB_FreeXAssetEntry(void)
 
 // 823EDE20  DB_HashForName  (database/db_registry.cpp:3516)
 
-longlong DB_HashForName(char *param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int DB_HashForName(char *param_1,XAssetType param_2)
 
 {
   ulonglong uVar1;
   int iVar2;
+  ulonglong uVar3;
   
+  uVar3 = (ulonglong)(int)param_2;
   while( true ) {
     while( true ) {
       iVar2 = tolower((int)*param_1);
       if (iVar2 != 0x5c) break;
       param_1 = param_1 + 1;
-      param_2 = ((param_2 & 0x7ffffff) * 0x20 - param_2) + 0x2f;
+      uVar3 = ((uVar3 & 0x7ffffff) * 0x20 - uVar3) + 0x2f;
     }
     if (iVar2 == 0) break;
     param_1 = param_1 + 1;
-    param_2 = ((param_2 & 0x7ffffff) * 0x20 - param_2) + (longlong)iVar2;
+    uVar3 = ((uVar3 & 0x7ffffff) * 0x20 - uVar3) + (longlong)iVar2;
   }
-  uVar1 = (param_2 & 0xffffffff) * 0x4f8b588f;
-  return param_2 + (longlong)
-                   (int)((uint)((int)((param_2 - (uVar1 >> 0x20) & 0xffffffff) >> 1) +
-                               (int)(uVar1 >> 0x20)) >> 0xf) * -50000;
+  uVar1 = (uVar3 & 0xffffffff) * 0x4f8b588f;
+  return (int)uVar3 +
+         ((uint)((int)((uVar3 - (uVar1 >> 0x20) & 0xffffffff) >> 1) + (int)(uVar1 >> 0x20)) >> 0xf)
+         * -50000;
 }
 
 
 // 823EDEC8  DB_LogMissingAsset  (database/db_registry.cpp:3605)
 
-void DB_LogMissingAsset(int param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void DB_LogMissingAsset(XAssetType param_1,char *param_2)
 
 {
   char cVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  char *pcVar4;
+  char *pcVar2;
   char local_410 [1024];
   
   switch(param_1) {
-  case 9:
-  case 0x18:
-  case 0x19:
-  case 0x1c:
+  case ASSET_TYPE_SOUND:
+  case ASSET_TYPE_MENU:
+  case ASSET_TYPE_LOCALIZE_ENTRY:
+  case ASSET_TYPE_SNDDRIVER_GLOBALS:
     goto switchD_823edefc_caseD_9;
   default:
-    uVar3 = 0xffffffff8205b910;
+    pcVar2 = "%s,%s\n";
     break;
-  case 0x1b:
-    uVar3 = 0xffffffff8205b918;
+  case ASSET_TYPE_WEAPON:
+    pcVar2 = "%s,mp/%s\n";
   }
-  Com_sprintf(local_410,0x400,uVar3,(&PTR_s_physpreset_82967050)[param_1],param_2);
-  Com_Printf(0,0xffffffff8205b8fc,local_410);
-  if (*(int *)(DAT_8365e118 + 0xc) != 0) {
-    Sys_EnterCriticalSection(0x14);
-    if (DAT_83149fdc == 0) {
-      uVar2 = FS_FOpenTextFileWrite();
+  Com_sprintf(local_410,0x400,pcVar2);
+  Com_Printf(0,"Missing asset: %s\n");
+  if ((com_developer->current).integer != 0) {
+    Sys_EnterCriticalSection(CRITSECT_MISSING_ASSET);
+    if (g_missingAssetFile == (void *)0x0) {
+      g_missingAssetFile = FS_FOpenTextFileWrite("missingasset.csv");
     }
     else {
-      uVar2 = FS_FOpenFileAppend(0xffffffff8205b8e8);
+      g_missingAssetFile = FS_FOpenFileAppend("missingasset.csv");
     }
-    DAT_83149fdc = (int)uVar2;
-    if ((uVar2 & 0xffffffff) == 0) {
-      DAT_836673bc = 1;
+    if (g_missingAssetFile == (void *)0x0) {
+      com_missingAssetOpenFailed = 1;
     }
     else {
-      pcVar4 = local_410;
+      pcVar2 = local_410;
       do {
-        cVar1 = *pcVar4;
-        pcVar4 = pcVar4 + 1;
+        cVar1 = *pcVar2;
+        pcVar2 = pcVar2 + 1;
       } while (cVar1 != '\0');
-      FS_Write(local_410,pcVar4 + (-1 - (int)local_410),uVar2);
-      FS_FCloseFile(DAT_83149fdc);
+      FS_Write(local_410,(int)(pcVar2 + (-1 - (int)local_410)),g_missingAssetFile);
+      FS_FCloseFile(g_missingAssetFile);
     }
-    Sys_LeaveCriticalSection(0x14);
+    Sys_LeaveCriticalSection(CRITSECT_MISSING_ASSET);
   }
 switchD_823edefc_caseD_9:
   return;
@@ -4499,37 +5606,51 @@ switchD_823edefc_caseD_9:
 
 // 823EE048  DB_EnumXAssets_Internal  (database/db_registry.cpp:3669)
 
-void DB_EnumXAssets_Internal(undefined8 param_1,code *param_2,undefined8 param_3,ulonglong param_4)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_EnumXAssets_Internal
+               (XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr *param_2,void *param_3,
+               bool param_4)
 
 {
   ushort uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  uint uVar2;
+  uint uVar3;
+  XAssetType XVar4;
   longlong lVar5;
-  ushort *puVar6;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  ushort *puVar9;
   
-  iVar4 = __savegprlr_23();
-  puVar6 = &DAT_82d15b58;
-  lVar5 = 50000;
+  uVar7 = (ulonglong)param_4;
+  lVar6 = (longlong)(int)param_3;
+  lVar5 = (longlong)(int)param_2;
+  XVar4 = __savegprlr_23(param_1,lVar5,lVar6);
+  puVar9 = db_hashTable;
+  lVar8 = 50000;
   do {
-    uVar1 = *puVar6;
-    while (uVar1 != 0) {
-      iVar2 = (uint)uVar1 * 0x14;
-      if ((*(int *)(&DAT_82ed8058 + iVar2) == iVar4) &&
-         ((*param_2)(*(undefined4 *)(&DAT_82ed805c + iVar2),param_3), (param_4 & 0xff) != 0)) {
-        uVar1 = *(ushort *)(&DAT_82ed8064 + iVar2);
-        while (uVar1 != 0) {
-          iVar3 = (uint)uVar1 * 0x14;
-          (*param_2)(*(undefined4 *)(&DAT_82ed805c + iVar3),param_3);
-          uVar1 = *(ushort *)(&DAT_82ed8064 + iVar3);
+    uVar1 = *puVar9;
+    while (uVar2 = (uint)uVar1, uVar2 != 0) {
+      if (g_assetEntryPool[uVar2].asset.type == XVar4) {
+        (*(code *)lVar5)(g_assetEntryPool[uVar2].asset.header.physPreset,lVar6);
+        if ((uVar7 & 0xff) != 0) {
+          uVar1 = g_assetEntryPool[uVar2].nextOverride;
+          while (uVar3 = (uint)uVar1, uVar3 != 0) {
+            (*(code *)lVar5)(g_assetEntryPool[uVar3].asset.header.physPreset,lVar6);
+            uVar1 = g_assetEntryPool[uVar3].nextOverride;
+          }
         }
       }
-      uVar1 = *(ushort *)(&DAT_82ed8062 + iVar2);
+      uVar1 = g_assetEntryPool[uVar2].nextHash;
     }
-    lVar5 = lVar5 + -1;
-    puVar6 = puVar6 + 1;
-  } while (lVar5 != 0);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 1;
+  } while (lVar8 != 0);
   __restgprlr_23();
   return;
 }
@@ -4537,16 +5658,23 @@ void DB_EnumXAssets_Internal(undefined8 param_1,code *param_2,undefined8 param_3
 
 // 823EE118  DB_EnumXAssets_FastFile  (database/db_registry.cpp:3700)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_EnumXAssets_FastFile
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+               (XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr *param_2,void *param_3,
+               bool param_4)
 
 {
-  undefined8 uVar1;
+  XAssetType XVar1;
   
-  uVar1 = __savegprlr_27();
-  Sys_LockRead(0xffffffff83208b8c);
-  DB_EnumXAssets_Internal(uVar1,param_2,param_3,param_4);
-  Sys_UnlockRead(0xffffffff83208b8c);
+  XVar1 = __savegprlr_27(param_1);
+  Sys_LockRead(&db_hashCritSect);
+  DB_EnumXAssets_Internal(XVar1,param_2,param_3,param_4);
+  Sys_UnlockRead(&db_hashCritSect);
   __restgprlr_27();
   return;
 }
@@ -4554,77 +5682,97 @@ void DB_EnumXAssets_FastFile
 
 // 823EE168  DB_ReleaseXAsset  (database/db_registry.cpp:3764)
 
-void DB_ReleaseXAsset(int *param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ReleaseXAsset(XAsset *param_1)
 
 {
-  if (*(code **)(&DAT_82967c10 + *param_1 * 4) == (code *)0x0) {
+  if (DB_ReleaseXAssetHandler[param_1->type] == (_func___cdecl_void_XAssetHeader *)0x0) {
     return;
   }
                     /* WARNING: Could not recover jumptable at 0x823ee18c. Too many branches */
                     /* WARNING: Treating indirect jump as call */
-  (**(code **)(&DAT_82967c10 + *param_1 * 4))(param_1[1]);
+  (*DB_ReleaseXAssetHandler[param_1->type])((XAssetHeader)(param_1->header).physPreset);
   return;
 }
 
 
 // 823EE198  DB_CloneXAssetInternal  (database/db_registry.cpp:3771)
 
-void DB_CloneXAssetInternal(undefined8 param_1,int *param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_CloneXAssetInternal(XAsset *param_1,XAsset *param_2)
 
 {
-  int *piVar1;
-  size_t _Size;
-  void *pvVar2;
+  XAssetType *pXVar1;
+  uint uVar2;
   
-  piVar1 = (int *)__savegprlr_27();
-  if (*piVar1 != *param_2) {
-    MyAssertHandler(0xffffffff8205b610,0xebe,0,0xffffffff82000f98,0xffffffff8205b944);
+  pXVar1 = (XAssetType *)__savegprlr_27(param_1);
+  if (*pXVar1 != param_2->type) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xebe,0,"%s");
   }
-  _Size = DB_GetXAssetTypeSize(*piVar1);
-  if (0x800 < _Size) {
-    MyAssertHandler(0xffffffff8205b610,0xec1,0,0xffffffff82000f98,0xffffffff8205b924);
+  uVar2 = DB_GetXAssetTypeSize(*pXVar1);
+  if (0x800 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xec1,0,"%s");
   }
-  pvVar2 = memcpy((void *)param_2[1],(void *)piVar1[1],_Size);
-  __restgprlr_27(pvVar2);
+  memcpy();
+  __restgprlr_27();
   return;
 }
 
 
 // 823EE230  DB_CloneXAsset  (database/db_registry.cpp:3783)
 
-void DB_CloneXAsset(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_CloneXAsset(XAsset *param_1,XAsset *param_2,DB_CloneType param_3)
 
 {
-  int *piVar1;
+  XAsset *pXVar1;
   int iVar2;
-  int *piVar3;
-  int iVar4;
   
-  piVar1 = (int *)__savegprlr_28();
-  piVar3 = (int *)param_2;
-  if (*piVar1 != *piVar3) {
-    MyAssertHandler(0xffffffff8205b610,0xec8,0,0xffffffff82000f98,0xffffffff8205b944);
+  pXVar1 = (XAsset *)__savegprlr_28(param_1);
+  if (pXVar1->type != param_2->type) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xec8,0,"%s");
   }
-  iVar4 = (int)param_3;
-  if (*(code **)(&DAT_82967ab0 + *piVar1 * 4) == (code *)0x0) {
-    if (iVar4 == 1) {
-      if (*(code **)(&DAT_82967c10 + *piVar3 * 4) != (code *)0x0) {
-        (**(code **)(&DAT_82967c10 + *piVar3 * 4))(piVar3[1]);
+  if (DB_DynamicCloneXAssetHandler[pXVar1->type] ==
+      (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) {
+    if (param_3 == DB_CLONE_NORMAL) {
+      if (DB_ReleaseXAssetHandler[param_2->type] != (_func___cdecl_void_XAssetHeader *)0x0) {
+        (*DB_ReleaseXAssetHandler[param_2->type])((XAssetHeader)(param_2->header).physPreset);
       }
     }
   }
   else {
-    iVar2 = (**(code **)(&DAT_82967ab0 + *piVar1 * 4))(piVar1[1],piVar3[1],param_3);
+    iVar2 = (*DB_DynamicCloneXAssetHandler[pXVar1->type])
+                      ((XAssetHeader)(pXVar1->header).physPreset,
+                       (XAssetHeader)(param_2->header).physPreset,param_3);
     if (iVar2 == 0) {
-      if ((iVar4 != 1) && (iVar4 != 3)) {
-        MyAssertHandler(0xffffffff8205b610,0xece,0,0xffffffff8205b95c,0xffffffff8205b978,param_3);
+      if ((param_3 != DB_CLONE_NORMAL) && (param_3 != DB_CLONE_NORMAL_FROM_DEFAULT)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0xece,0,"%s\n\t(cloneType) = %i");
         __restgprlr_28();
         return;
       }
       goto LAB_823ee32c;
     }
   }
-  DB_CloneXAssetInternal(piVar1,param_2);
+  DB_CloneXAssetInternal(pXVar1,param_2);
 LAB_823ee32c:
   __restgprlr_28();
   return;
@@ -4633,58 +5781,73 @@ LAB_823ee32c:
 
 // 823EE338  DB_SwapXAsset  (database/db_registry.cpp:3805)
 
-void DB_SwapXAsset(int *param_1,int *param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_SwapXAsset(XAsset *param_1,XAsset *param_2)
 
 {
-  int local_830;
-  undefined1 *local_82c;
+  XAsset local_830 [2];
   undefined1 auStack_820 [2056];
   
-  if (*param_1 != *param_2) {
-    MyAssertHandler(0xffffffff8205b610,0xee1,0,0xffffffff82000f98,0xffffffff8205b944);
+  if (param_1->type != param_2->type) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xee1,0,"%s");
   }
-  if (*(code **)(&DAT_82967ab0 + *param_1 * 4) != (code *)0x0) {
-    (**(code **)(&DAT_82967ab0 + *param_1 * 4))(param_1[1],param_2[1],2);
+  if (DB_DynamicCloneXAssetHandler[param_1->type] !=
+      (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) {
+    (*DB_DynamicCloneXAssetHandler[param_1->type])
+              ((XAssetHeader)(param_1->header).physPreset,(XAssetHeader)(param_2->header).physPreset
+               ,DB_CLONE_SWAP);
   }
-  local_830 = *param_1;
-  local_82c = auStack_820;
-  DB_CloneXAssetInternal(param_2,&local_830);
+  local_830[0].type = param_1->type;
+  local_830[0].header.physPreset = (PhysPreset *)auStack_820;
+  DB_CloneXAssetInternal(param_2,local_830);
   DB_CloneXAssetInternal(param_1,param_2);
-  DB_CloneXAssetInternal(&local_830,param_1);
+  DB_CloneXAssetInternal(local_830,param_1);
   return;
 }
 
 
 // 823EE408  DB_DelayedCloneXAsset  (database/db_registry.cpp:3824)
 
-void DB_DelayedCloneXAsset(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_DelayedCloneXAsset(XAssetEntry *param_1)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
-  longlong lVar5;
-  undefined4 *puVar6;
+  int *piVar1;
+  XAssetCopyInfo *pXVar2;
+  XAssetEntry *pXVar3;
+  longlong lVar4;
+  uint *puVar5;
   
-  uVar4 = __savegprlr_24();
-  if (0x7ff < DAT_82daf084) {
-    Com_Printf(0,0xffffffff8205b9e0);
-    lVar5 = 0x800;
-    puVar6 = &DAT_82fcc42c;
+  pXVar3 = (XAssetEntry *)__savegprlr_24(param_1);
+  if (0x7ff < g_copyInfoCount) {
+    Com_Printf(0,"g_copyInfo exceeded\n");
+    lVar4 = 0x800;
+    puVar5 = &db_soundLanguage;
     do {
-      puVar1 = (undefined4 *)puVar6[1];
-      puVar6 = puVar6 + 1;
-      uVar2 = DB_GetXAssetName(*puVar6);
-      uVar3 = DB_GetXAssetTypeName(*puVar1);
-      Com_Printf(0,0xffffffff8205b9d8,uVar3,uVar2);
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    Sys_Error(0xffffffff8205b9c4);
+      piVar1 = (int *)puVar5[1];
+      puVar5 = puVar5 + 1;
+      DB_GetXAssetName((XAsset *)*puVar5);
+      DB_GetXAssetTypeName(*piVar1);
+      Com_Printf(0,"%s: %s\n");
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("g_copyInfo exceeded");
   }
-  puVar6 = &DAT_82fcc430 + DAT_82daf084;
-  DAT_82daf084 = DAT_82daf084 + 1;
-  *puVar6 = uVar4;
+  pXVar2 = g_copyInfo + g_copyInfoCount;
+  g_copyInfoCount = g_copyInfoCount + 1;
+  pXVar2->entry = pXVar3;
   __restgprlr_24();
   return;
 }
@@ -4692,174 +5855,200 @@ void DB_DelayedCloneXAsset(void)
 
 // 823EE4B0  DB_FindXAssetEntry  (database/db_registry.cpp:3840)
 
-void DB_FindXAssetEntry(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetEntry * DB_FindXAssetEntry(XAssetType param_1,char *param_2)
 
 {
   ushort uVar1;
-  undefined8 uVar2;
+  uint uVar2;
+  XAssetType XVar3;
   int iVar4;
-  undefined8 uVar3;
-  int iVar5;
+  char *pcVar5;
+  XAssetEntry *pXVar6;
   
-  uVar2 = __savegprlr_28();
-  iVar4 = DB_HashForName(param_2,uVar2);
-  uVar1 = (&DAT_82d15b58)[iVar4];
+  XVar3 = __savegprlr_28(param_1);
+  iVar4 = DB_HashForName(param_2,XVar3);
+  uVar1 = db_hashTable[iVar4];
   do {
-    if (uVar1 == 0) {
-      __restgprlr_28(0);
-      return;
+    uVar2 = (uint)uVar1;
+    if (uVar2 == 0) {
+      pXVar6 = (XAssetEntry *)__restgprlr_28(0);
+      return pXVar6;
     }
-    iVar4 = (uint)uVar1 * 0x14;
-    if (*(int *)(&DAT_82ed8058 + iVar4) == (int)uVar2) {
-      uVar3 = DB_GetXAssetName(&DAT_82ed8058 + iVar4);
-      iVar5 = I_stricmp(uVar3,param_2);
-      if (iVar5 == 0) {
-        __restgprlr_28(&DAT_82ed8058 + iVar4);
-        return;
+    if (g_assetEntryPool[uVar2].asset.type == XVar3) {
+      pcVar5 = DB_GetXAssetName(&g_assetEntryPool[uVar2].asset);
+      iVar4 = I_stricmp(pcVar5,param_2);
+      if (iVar4 == 0) {
+        pXVar6 = (XAssetEntry *)__restgprlr_28(g_assetEntryPool + uVar2);
+        return pXVar6;
       }
     }
-    uVar1 = *(ushort *)(&DAT_82ed8062 + iVar4);
+    uVar1 = g_assetEntryPool[uVar2].nextHash;
   } while( true );
 }
 
 
 // 823EE548  DB_FindXAssetDefaultHeaderInternal  (database/db_registry.cpp:3868)
 
-void DB_FindXAssetDefaultHeaderInternal(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_FindXAssetDefaultHeaderInternal(XAssetType param_1)
 
 {
   ushort uVar1;
-  undefined *puVar2;
-  int iVar4;
+  char *pcVar2;
+  uint uVar3;
+  XAssetType XVar4;
   int iVar5;
-  undefined8 uVar3;
-  int iVar6;
-  undefined *puVar7;
+  char *pcVar6;
+  PhysPreset *pPVar7;
+  XAssetEntry *pXVar8;
   
-  iVar4 = __savegprlr_28();
-  puVar2 = (&PTR_s_default_82967a00)[iVar4];
-  iVar5 = DB_HashForName(puVar2,iVar4);
-  uVar1 = (&DAT_82d15b58)[iVar5];
+  XVar4 = __savegprlr_28(param_1);
+  pcVar2 = g_defaultAssetName[XVar4];
+  iVar5 = DB_HashForName(pcVar2,XVar4);
+  uVar1 = db_hashTable[iVar5];
   do {
-    if (uVar1 == 0) {
-      __restgprlr_28(0);
-      return;
+    uVar3 = (uint)uVar1;
+    if (uVar3 == 0) {
+      pPVar7 = (PhysPreset *)__restgprlr_28(0);
+      return (XAssetHeader)pPVar7;
     }
-    iVar5 = (uint)uVar1 * 0x14;
-    puVar7 = &DAT_82ed8058 + iVar5;
-    if (*(int *)(&DAT_82ed8058 + iVar5) == iVar4) {
-      uVar3 = DB_GetXAssetName(puVar7);
-      iVar6 = I_stricmp(uVar3,puVar2);
-      if (iVar6 == 0) {
-        uVar1 = *(ushort *)(&DAT_82ed8064 + iVar5);
-        while (uVar1 != 0) {
-          iVar4 = (uint)uVar1 * 0x14;
-          puVar7 = &DAT_82ed8058 + iVar4;
-          uVar1 = *(ushort *)(&DAT_82ed8064 + iVar4);
+    pXVar8 = g_assetEntryPool + uVar3;
+    if (g_assetEntryPool[uVar3].asset.type == XVar4) {
+      pcVar6 = DB_GetXAssetName(&pXVar8->asset);
+      iVar5 = I_stricmp(pcVar6,pcVar2);
+      if (iVar5 == 0) {
+        uVar1 = g_assetEntryPool[uVar3].nextOverride;
+        while (uVar3 = (uint)uVar1, uVar3 != 0) {
+          pXVar8 = g_assetEntryPool + uVar3;
+          uVar1 = g_assetEntryPool[uVar3].nextOverride;
         }
-        __restgprlr_28(*(undefined4 *)(puVar7 + 4));
-        return;
+        pPVar7 = (PhysPreset *)__restgprlr_28((pXVar8->asset).header.physPreset);
+        return (XAssetHeader)pPVar7;
       }
     }
-    uVar1 = *(ushort *)(&DAT_82ed8062 + iVar5);
+    uVar1 = g_assetEntryPool[uVar3].nextHash;
   } while( true );
 }
 
 
 // 823EE618  DB_CreateDefaultEntry  (database/db_registry.cpp:3897)
 
-void DB_CreateDefaultEntry(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetEntry * DB_CreateDefaultEntry(XAssetType param_1,char *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined8 uVar3;
+  XAssetType XVar1;
+  XAssetHeader XVar2;
+  XAssetEntry *pXVar3;
   int iVar4;
-  int *piVar5;
-  int iVar6;
-  int local_60;
-  int local_5c;
+  uint uVar5;
+  char *pcVar6;
+  XAsset local_60 [12];
   
-  uVar2 = __savegprlr_22();
-  if (DAT_82ed8056 != '\0') {
-    uVar3 = DB_GetXAssetTypeName();
-    Com_Printf(0x10,0xffffffff8205badc,uVar3,param_2);
+  XVar1 = __savegprlr_22(param_1);
+  if (g_loadingDebugZone != false) {
+    DB_GetXAssetTypeName(XVar1);
+    Com_Printf(0x10,"mychanges load default asset: %s,%s\n");
   }
-  iVar4 = DB_FindXAssetDefaultHeaderInternal(uVar2);
-  iVar6 = (int)uVar2;
-  local_5c = iVar4;
-  if (iVar4 == 0) {
-    Sys_UnlockWrite(0xffffffff83208b8c);
-    if (iVar6 == 0xc) {
-      Sys_Error(0xffffffff8205ba78,param_2);
+  XVar2 = DB_FindXAssetDefaultHeaderInternal(XVar1);
+  local_60[0].header = XVar2;
+  if (XVar2.physPreset == (PhysPreset *)0x0) {
+    Sys_UnlockWrite(&db_hashCritSect);
+    if (XVar1 == ASSET_TYPE_CLIPMAP) {
+                    /* WARNING: Subroutine does not return */
+      Sys_Error(
+               "Couldn\'t find the bsp for this map.  Please build the fast file associated with %s and try again."
+               );
     }
-    else {
-      iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-      Sys_Error(0xffffffff8205ba20,*(undefined4 *)((int)&PTR_s_default_82967a00 + iVar1),
-                *(undefined4 *)((int)&PTR_s_physpreset_82967050 + iVar1),param_2);
-    }
+                    /* WARNING: Subroutine does not return */
+    Sys_Error(
+             "Could not load default asset \'%s\' for asset type \'%s\'.\nTried to load asset \'%s\'."
+             );
   }
-  DAT_83231bc4 = DAT_83231bc4 + 1;
-  local_60 = iVar6;
-  piVar5 = (int *)DB_AllocXAssetEntry(uVar2,0);
-  iVar1 = (int)((uVar2 & 0x3fffffff) << 2);
-  *(int *)(&DAT_83208b98 + iVar1) = *(int *)(&DAT_83208b98 + iVar1) + -1;
-  if ((iVar6 == 8) && (*(char *)(iVar4 + 0x47) != '\0')) {
-    MyAssertHandler(0xffffffff8205b610,0xf56,0,0xffffffff82000f98,0xffffffff8205b9f8);
+  g_defaultAssetCount = g_defaultAssetCount + 1;
+  local_60[0].type = XVar1;
+  pXVar3 = DB_AllocXAssetEntry(XVar1,0);
+  g_shipAssetCount[XVar1] = g_shipAssetCount[XVar1] + -1;
+  if ((XVar1 == ASSET_TYPE_IMAGE) && ((XVar2.image)->cached != '\0')) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xf56,0,"%s");
   }
-  if (iVar6 != *piVar5) {
-    MyAssertHandler(0xffffffff8205b610,0xec8,0,0xffffffff82000f98,0xffffffff8205b944);
+  if (XVar1 != (pXVar3->asset).type) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xec8,0,"%s");
   }
-  if ((*(code **)(&DAT_82967ab0 + iVar1) == (code *)0x0) ||
-     (iVar4 = (**(code **)(&DAT_82967ab0 + iVar1))(iVar4,piVar5[1],0), iVar4 != 0)) {
-    DB_CloneXAssetInternal(&local_60,piVar5);
+  if ((DB_DynamicCloneXAssetHandler[XVar1] ==
+       (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) ||
+     (iVar4 = (*DB_DynamicCloneXAssetHandler[XVar1])
+                        ((XAssetHeader)XVar2.physPreset,
+                         (XAssetHeader)(pXVar3->asset).header.physPreset,DB_CLONE_DEFAULT),
+     iVar4 != 0)) {
+    DB_CloneXAssetInternal(local_60,&pXVar3->asset);
   }
   else {
-    MyAssertHandler(0xffffffff8205b610,0xece,0,0xffffffff8205b95c,0xffffffff8205b978,0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xece,0,"%s\n\t(cloneType) = %i");
   }
-  iVar4 = DB_HashForName(param_2,uVar2);
-  *(undefined2 *)((int)piVar5 + 10) = (&DAT_82d15b58)[iVar4];
-  (&DAT_82d15b58)[iVar4] = (short)((int)(piVar5 + 0x1f449fea) / 0x14);
-  SL_GetString(param_2,4);
-  uVar3 = SL_ConvertToString();
-  DB_SetXAssetName(piVar5,uVar3);
-  __restgprlr_22(piVar5);
-  return;
+  iVar4 = DB_HashForName(param_2,XVar1);
+  pXVar3->nextHash = db_hashTable[iVar4];
+  db_hashTable[iVar4] = (ushort)((int)&pXVar3[0x640ecc8].zoneIndex / 0x14);
+  uVar5 = SL_GetString(param_2,4);
+  pcVar6 = SL_ConvertToString(uVar5);
+  DB_SetXAssetName(&pXVar3->asset,pcVar6);
+  pXVar3 = (XAssetEntry *)__restgprlr_22(pXVar3);
+  return pXVar3;
 }
 
 
 // 823EE828  PrintWaitedError  (database/db_registry.cpp:3951)
 
-void PrintWaitedError(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+void PrintWaitedError(XAssetType param_1,char *param_2,int param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
   
-  iVar2 = __savegprlr_29();
-  if (100 < (int)param_3) {
-    if (iVar2 == 9) {
-      uVar1 = DB_GetXAssetTypeName();
-      Com_Printf(10,0xffffffff8205bb20,param_3,param_2,uVar1);
+  iVar1 = __savegprlr_29(param_1,param_2);
+  if (100 < param_3) {
+    if (iVar1 == 9) {
+      DB_GetXAssetTypeName(9);
+      Com_Printf(10,"Waited %i msec for missing asset \"%s\", of type \"%s\".\n");
       __restgprlr_29();
       return;
     }
-    uVar1 = DB_GetXAssetTypeName(iVar2);
-    Com_PrintError(1,0xffffffff8205bb20,param_3,param_2,uVar1);
+    DB_GetXAssetTypeName(iVar1);
+    Com_PrintError(1,"Waited %i msec for missing asset \"%s\", of type \"%s\".\n");
   }
-  if (iVar2 != 9) {
-    if (iVar2 != 0x19) {
-      Com_PrintError(1,0xffffffff8205bb04,(&PTR_s_physpreset_82967050)[iVar2],param_2);
+  if (iVar1 != 9) {
+    if (iVar1 != 0x19) {
+      Com_PrintError(1,"Could not load %s \"%s\".\n");
       __restgprlr_29();
       return;
     }
-    if (*(char *)(DAT_83f5de0c + 0xc) != '\0') {
-      if (*(char *)(DAT_83f5de04 + 0xc) != '\0') {
-        Com_PrintError(1);
+    if ((loc_warnings->current).enabled != false) {
+      if ((loc_warningsAsErrors->current).enabled != false) {
+        Com_PrintError(1,"Could not load %s \"%s\".\n");
         __restgprlr_29();
         return;
       }
-      Com_PrintWarning(10,0xffffffff8205bb04,PTR_s_localize_829670b4,param_2);
+      Com_PrintWarning(10,"Could not load %s \"%s\".\n");
     }
   }
   __restgprlr_29();
@@ -4869,10 +6058,12 @@ void PrintWaitedError(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 // 823EE938  DB_OverrideAssetInternal  (database/db_registry.cpp:3991)
 
-undefined8 DB_OverrideAssetInternal(int param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int DB_OverrideAssetInternal(XAssetType param_1)
 
 {
-  if ((param_1 != 0x14) && (param_1 != 0x1e)) {
+  if ((param_1 != ASSET_TYPE_LIGHT_DEF) && (param_1 != ASSET_TYPE_IMPACT_FX)) {
     return 0;
   }
   return 1;
@@ -4881,143 +6072,163 @@ undefined8 DB_OverrideAssetInternal(int param_1)
 
 // 823EE958  DB_FindXAssetHeader  (database/db_registry.cpp:4004)
 
-void DB_FindXAssetHeader(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+XAssetHeader DB_FindXAssetHeader(XAssetType param_1,char *param_2,int param_3)
 
 {
-  undefined *puVar1;
+  bool bVar7;
+  int iVar1;
+  XAssetEntry *pXVar2;
   int iVar3;
-  char cVar7;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar2;
+  PhysPreset *pPVar5;
+  XAssetHeader XVar6;
   undefined8 in_r13;
-  longlong lVar8;
   char in_RESERVE;
   byte in_cr0;
+  int iStack00000024;
   
-  iVar3 = __savegprlr();
-  cVar7 = Sys_IsMainThread();
-  if (((cVar7 != '\0') && (iVar4 = Sys_IsDatabaseReady2(), iVar4 == 0)) && (DAT_84617894 != 0)) {
-    MyAssertHandler(0xffffffff8205b610,0xfae,0,0xffffffff82000f98,0xffffffff8205bbe0);
+  __savegprlr();
+  iStack00000024 = param_3;
+  bVar7 = Sys_IsMainThread();
+  if (((bVar7) && (iVar1 = Sys_IsDatabaseReady2(), iVar1 == 0)) && (r_glob.allowAddDrawCall != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0xfae,0,"%s");
   }
-  lVar8 = 0;
+  iVar1 = 0;
 LAB_823eea08:
   do {
     do {
       if (in_RESERVE != '\0') {
-        DAT_83208b8c = storeWordConditionalIndexed((ulonglong)DAT_83208b8c + 1,0,0xffffffff83208b8c)
-        ;
+        db_hashCritSect.readCount =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)db_hashCritSect.readCount + 1,0,0xffffffff83208b8c);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    while (DAT_83208b90 != 0) {
+    while (db_hashCritSect.writeCount != 0) {
       Sys_Sleep(0);
     }
     sync(1);
-    iVar4 = DB_FindXAssetEntry(iVar3,param_2);
-    Sys_UnlockRead(0xffffffff83208b8c);
-    if (iVar4 != 0) goto LAB_823eead4;
-    if (iVar3 == 0x2b) {
-      if (param_3 != 0) {
-        MyAssertHandler(0xffffffff8205b610,0x1004,0,0xffffffff82000f98,0xffffffff8205bb88);
+    pXVar2 = DB_FindXAssetEntry(param_1,param_2);
+    Sys_UnlockRead(&db_hashCritSect);
+    if (pXVar2 != (XAssetEntry *)0x0) goto LAB_823eead4;
+    if (param_1 == ASSET_TYPE_ADDON_MAP_ENTS) {
+      if (iStack00000024 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x1004,0,"%s");
       }
-      __restgprlr(0);
-      return;
+      pPVar5 = (PhysPreset *)0x0;
+      __restgprlr();
+      return (XAssetHeader)pPVar5;
     }
-    cVar7 = Sys_IsDatabaseThread();
-    if (cVar7 == '\0') goto LAB_823eebbc;
+    bVar7 = Sys_IsDatabaseThread();
+    if (!bVar7) goto LAB_823eebbc;
     do {
-      if (iVar4 == 0) {
-        Sys_LockWrite(0xffffffff83208b8c);
-        iVar4 = DB_FindXAssetEntry(iVar3,param_2);
-        if (iVar4 == 0) {
-          cVar7 = Sys_IsDatabaseThread();
-          if (cVar7 == '\0') {
-            DB_LogMissingAsset(iVar3,param_2);
+      if (pXVar2 == (XAssetEntry *)0x0) {
+        Sys_LockWrite(&db_hashCritSect);
+        pXVar2 = DB_FindXAssetEntry(param_1,param_2);
+        if (pXVar2 == (XAssetEntry *)0x0) {
+          bVar7 = Sys_IsDatabaseThread();
+          if (!bVar7) {
+            DB_LogMissingAsset(param_1,param_2);
           }
-          if ((int)lVar8 != 0) {
-            lVar2 = Sys_Milliseconds();
-            PrintWaitedError(iVar3,param_2,lVar2 - lVar8);
+          if (iVar1 != 0) {
+            iVar4 = Sys_Milliseconds();
+            PrintWaitedError(param_1,param_2,iVar4 - iVar1);
           }
-          if (param_3 == 0) {
-            Sys_UnlockWrite(0xffffffff83208b8c);
-            __restgprlr(0);
-            return;
+          if (iStack00000024 == 0) {
+            Sys_UnlockWrite(&db_hashCritSect);
+            pPVar5 = (PhysPreset *)0x0;
+            __restgprlr();
+            return (XAssetHeader)pPVar5;
           }
-          iVar3 = DB_CreateDefaultEntry(iVar3,param_2);
-          cVar7 = Sys_IsDatabaseThread();
-          if (cVar7 == '\0') {
-            *(byte *)(iVar3 + 9) = *(byte *)(iVar3 + 9) | 1;
+          pXVar2 = DB_CreateDefaultEntry(param_1,param_2);
+          bVar7 = Sys_IsDatabaseThread();
+          if (!bVar7) {
+            pXVar2->inuseMask = pXVar2->inuseMask | 1;
           }
-          *(undefined1 *)(iVar3 + 0x10) = 1;
-          Sys_UnlockWrite(0xffffffff83208b8c);
-          __restgprlr(*(undefined4 *)(iVar3 + 4));
-          return;
+          pXVar2->printedMissingAsset = true;
+          Sys_UnlockWrite(&db_hashCritSect);
+          XVar6 = (pXVar2->asset).header;
+          __restgprlr();
+          return (XAssetHeader)XVar6.physPreset;
         }
-        if (*(int *)(iVar4 + 4) == 0) {
-          MyAssertHandler(0xffffffff8205b610,0x102c,0,0xffffffff82000f98,0xffffffff8205bb9c);
+        if ((pXVar2->asset).header.physPreset == (PhysPreset *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x102c,0,"%s");
         }
-        Sys_UnlockWrite(0xffffffff83208b8c);
+        Sys_UnlockWrite(&db_hashCritSect);
       }
 LAB_823eead4:
-      if (*(int *)(iVar4 + 4) == 0) {
-        MyAssertHandler(0xffffffff8205b610,0xfc2,0,0xffffffff82000f98,0xffffffff8205bb9c);
+      if ((pXVar2->asset).header.physPreset == (PhysPreset *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0xfc2,0,"%s");
       }
-      cVar7 = Sys_IsDatabaseThread();
-      if (cVar7 != '\0') goto LAB_823eece8;
-      if ((*(byte *)(iVar4 + 9) & 5) != 0) {
+      bVar7 = Sys_IsDatabaseThread();
+      if (bVar7) goto LAB_823eece8;
+      if ((pXVar2->inuseMask & 5) != 0) {
 LAB_823eec60:
-        if (*(char *)(iVar4 + 8) == '\0') {
-          if (*(char *)(iVar4 + 0x10) == '\0') {
-            *(undefined1 *)(iVar4 + 0x10) = 1;
-            DB_LogMissingAsset(iVar3,param_2);
+        if (pXVar2->zoneIndex == '\0') {
+          if (pXVar2->printedMissingAsset == false) {
+            pXVar2->printedMissingAsset = true;
+            DB_LogMissingAsset(param_1,param_2);
           }
-          if ((int)lVar8 != 0) {
-            lVar2 = Sys_Milliseconds();
-            PrintWaitedError(iVar3,param_2,lVar2 - lVar8);
-            __restgprlr(*(undefined4 *)(iVar4 + 4));
-            return;
+          if (iVar1 != 0) {
+            iVar4 = Sys_Milliseconds();
+            PrintWaitedError(param_1,param_2,iVar4 - iVar1);
+            XVar6 = (pXVar2->asset).header;
+            __restgprlr();
+            return (XAssetHeader)XVar6.physPreset;
           }
         }
-        else if ((int)lVar8 != 0) {
-          puVar1 = (&PTR_s_physpreset_82967050)[iVar3];
-          lVar2 = Sys_Milliseconds();
-          Com_Printf(10,0xffffffff8205bb58,lVar2 - lVar8,param_2,puVar1);
+        else if (iVar1 != 0) {
+          Sys_Milliseconds();
+          Com_Printf(10,"Waited %i msec for asset \'%s\' of type \'%s\'.\n");
         }
 LAB_823eece8:
-        __restgprlr(*(undefined4 *)(iVar4 + 4));
-        return;
+        XVar6 = (pXVar2->asset).header;
+        __restgprlr();
+        return (XAssetHeader)XVar6.physPreset;
       }
-      iVar5 = Sys_IsDatabaseReady();
-      Sys_LockWrite(0xffffffff83208b8c);
-      iVar6 = *(int *)in_r13;
-      DAT_831ed7cc = 1;
-      DAT_82cc61c8 = iVar4;
-      DAT_82ed7d3c = iVar5;
-      if (*(int *)(iVar6 + 0xc) != 0) {
-        MyAssertHandler(0xffffffff8205b610,0xfd2,0,0xffffffff82000f98,0xffffffff8205bbbc);
+      iVar3 = Sys_IsDatabaseReady();
+      Sys_LockWrite(&db_hashCritSect);
+      iVar4 = *(int *)in_r13;
+      g_inuseMask = '\x01';
+      marXAsset = &pXVar2->asset;
+      g_databaseReady = iVar3;
+      if (*(int *)(iVar4 + 0xc) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0xfd2,0,"%s");
       }
-      *(undefined4 *)(iVar6 + 0xc) = 1;
+      *(undefined4 *)(iVar4 + 0xc) = 1;
       Mark_XAsset();
-      if (*(int *)(iVar6 + 0xc) == 0) {
-        MyAssertHandler(0xffffffff8205b610,0xfd7,0,0xffffffff82000f98,0xffffffff8205bbcc);
+      if (*(int *)(iVar4 + 0xc) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0xfd7,0,"%s");
       }
-      *(undefined4 *)(iVar6 + 0xc) = 0;
-      Sys_UnlockWrite(0xffffffff83208b8c);
-      if ((iVar5 != 0) || ((*(byte *)(iVar4 + 9) & 5) != 0)) goto LAB_823eec60;
+      *(undefined4 *)(iVar4 + 0xc) = 0;
+      Sys_UnlockWrite(&db_hashCritSect);
+      if ((iVar3 != 0) || ((pXVar2->inuseMask & 5) != 0)) goto LAB_823eec60;
 LAB_823eebbc:
-      if ((int)lVar8 == 0) {
-        lVar8 = Sys_Milliseconds();
-        iVar6 = Sys_IsDatabaseReady();
-        if (iVar6 != 0) goto LAB_823eea08;
-        cVar7 = Sys_IsMainThread();
-        if (cVar7 != '\0') {
+      if (iVar1 == 0) {
+        iVar1 = Sys_Milliseconds();
+        iVar4 = Sys_IsDatabaseReady();
+        if (iVar4 != 0) goto LAB_823eea08;
+        bVar7 = Sys_IsMainThread();
+        if (bVar7) {
           R_ReleaseThreadOwnership();
         }
       }
-      iVar6 = Sys_IsDatabaseReady();
-    } while (iVar6 != 0);
+      iVar4 = Sys_IsDatabaseReady();
+    } while (iVar4 != 0);
     R_BeginRemoteScreenUpdate();
     iVar4 = R_HasDeviceOwnership();
     if (iVar4 != 0) {
@@ -5034,21 +6245,26 @@ LAB_823eebbc:
 
 // 823F62C0  DB_Update  (database/db_registry.cpp:4175)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_Update(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1050,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1050,0,"%s");
   }
-  if (DAT_82fcc29c != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1051,0,0xffffffff82000f98,0xffffffff8205c418);
+  if (g_mainThreadBlocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1051,0,"%s");
   }
-  if (DAT_82ed7d44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1052,0,0xffffffff82000f98,0xffffffff8205c0ac);
+  if (db_inPostLoadXZone != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1052,0,"%s");
   }
   iVar1 = Sys_IsDatabaseReady2();
   if ((iVar1 == 0) && (iVar1 = Sys_IsDatabaseReady(), iVar1 != 0)) {
@@ -5060,99 +6276,117 @@ void DB_Update(void)
 
 // 823EED90  DB_IsXAssetDefault  (database/db_registry.cpp:4188)
 
-void DB_IsXAssetDefault(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int DB_IsXAssetDefault(XAssetType param_1,char *param_2)
 
 {
-  char cVar1;
+  uchar uVar1;
   ushort uVar2;
-  undefined8 uVar3;
+  uint uVar3;
+  XAssetType XVar4;
   int iVar5;
-  undefined8 uVar4;
-  int iVar6;
+  char *pcVar6;
   
-  uVar3 = __savegprlr_27();
-  iVar5 = DB_HashForName(param_2,uVar3);
-  Sys_LockRead(0xffffffff83208b8c);
-  uVar2 = (&DAT_82d15b58)[iVar5];
+  XVar4 = __savegprlr_27(param_1);
+  iVar5 = DB_HashForName(param_2,XVar4);
+  Sys_LockRead(&db_hashCritSect);
+  uVar2 = db_hashTable[iVar5];
   do {
-    if (uVar2 == 0) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff8205b610,0x1073,0,0xffffffff8202882c);
+    uVar3 = (uint)uVar2;
+    if (uVar3 == 0) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x1073,0,"unreachable");
       }
-      __restgprlr_27(1);
-      return;
+      iVar5 = __restgprlr_27(1);
+      return iVar5;
     }
-    iVar5 = (uint)uVar2 * 0x14;
-    if (*(int *)(&DAT_82ed8058 + iVar5) == (int)uVar3) {
-      uVar4 = DB_GetXAssetName(&DAT_82ed8058 + iVar5);
-      iVar6 = I_stricmp(uVar4,param_2);
-      if (iVar6 == 0) {
-        cVar1 = (&DAT_82ed8060)[iVar5];
-        Sys_UnlockRead(0xffffffff83208b8c);
-        __restgprlr_27(cVar1 == '\0');
-        return;
+    if (g_assetEntryPool[uVar3].asset.type == XVar4) {
+      pcVar6 = DB_GetXAssetName(&g_assetEntryPool[uVar3].asset);
+      iVar5 = I_stricmp(pcVar6,param_2);
+      if (iVar5 == 0) {
+        uVar1 = g_assetEntryPool[uVar3].zoneIndex;
+        Sys_UnlockRead(&db_hashCritSect);
+        iVar5 = __restgprlr_27(uVar1 == '\0');
+        return iVar5;
       }
     }
-    uVar2 = *(ushort *)(&DAT_82ed8062 + iVar5);
+    uVar2 = g_assetEntryPool[uVar3].nextHash;
   } while( true );
 }
 
 
 // 823EEE80  DB_GetAllXAssetOfType_FastFile  (database/db_registry.cpp:4220)
 
-void DB_GetAllXAssetOfType_FastFile(undefined8 param_1,ulonglong param_2,int param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+int DB_GetAllXAssetOfType_FastFile(XAssetType param_1,XAssetHeader *param_2,int param_3)
 
 {
-  int iVar1;
+  XAssetType XVar1;
   int iVar2;
-  uint uVar3;
-  longlong lVar4;
-  ushort *puVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  ulonglong uVar3;
+  uint uVar4;
+  longlong lVar5;
+  ushort *puVar6;
+  ulonglong uVar7;
+  longlong lVar8;
   
-  iVar2 = __savegprlr_19();
-  uVar6 = 0;
-  Sys_LockRead(0xffffffff83208b8c);
-  puVar5 = &DAT_82d15b58;
-  lVar4 = 50000;
+  uVar3 = (ulonglong)(int)param_2;
+  XVar1 = __savegprlr_19(param_1);
+  uVar7 = 0;
+  Sys_LockRead(&db_hashCritSect);
+  puVar6 = db_hashTable;
+  lVar5 = 50000;
   do {
-    uVar3 = (uint)*puVar5;
-    if (uVar3 != 0) {
-      lVar7 = (uVar6 & 0x3fffffff) * 4 + param_2;
+    uVar4 = (uint)*puVar6;
+    if (uVar4 != 0) {
+      lVar8 = (uVar7 & 0x3fffffff) * 4 + uVar3;
       do {
-        iVar1 = uVar3 * 0x14;
-        if (*(int *)(&DAT_82ed8058 + iVar1) == iVar2) {
-          if ((param_2 & 0xffffffff) != 0) {
-            if (param_3 <= (int)uVar6) {
-              MyAssertHandler(0xffffffff8205b610,0x108f,0,0xffffffff82000f98,0xffffffff8205bc2c);
+        if (g_assetEntryPool[uVar4].asset.type == XVar1) {
+          if ((uVar3 & 0xffffffff) != 0) {
+            if (param_3 <= (int)uVar7) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                              ,0x108f,0,"%s");
             }
-            *(undefined4 *)lVar7 = *(undefined4 *)(&DAT_82ed805c + iVar1);
+            *(XAssetHeader *)lVar8 = g_assetEntryPool[uVar4].asset.header;
           }
-          uVar6 = uVar6 + 1;
-          lVar7 = lVar7 + 4;
+          uVar7 = uVar7 + 1;
+          lVar8 = lVar8 + 4;
         }
-        uVar3 = (uint)*(ushort *)(&DAT_82ed8062 + iVar1);
-      } while (uVar3 != 0);
+        uVar4 = (uint)g_assetEntryPool[uVar4].nextHash;
+      } while (uVar4 != 0);
     }
-    lVar4 = lVar4 + -1;
-    puVar5 = puVar5 + 1;
-  } while (lVar4 != 0);
-  Sys_UnlockRead(0xffffffff83208b8c);
-  __restgprlr_19(uVar6);
-  return;
+    lVar5 = lVar5 + -1;
+    puVar6 = puVar6 + 1;
+  } while (lVar5 != 0);
+  Sys_UnlockRead(&db_hashCritSect);
+  iVar2 = __restgprlr_19(uVar7);
+  return iVar2;
 }
 
 
 // 823EEF70  DB_OverrideAsset  (database/db_registry.cpp:4316)
 
-longlong DB_OverrideAsset(longlong param_1)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int DB_OverrideAsset(XAssetType param_1,char *param_2)
 
 {
-  if (DAT_82fcc298 != 0) {
-    return (param_1 + -7) - (param_1 + -8 + (ulonglong)(param_1 + -7 == 0));
+  if (db_syncMode != 0) {
+    return (int)((longlong)(int)param_1 + -7) -
+           ((param_1 - ASSET_TYPE_IMAGE) + (uint)((longlong)(int)param_1 + -7 == 0));
   }
-  if (((int)param_1 != 0x14) && ((int)param_1 != 0x1e)) {
+  if ((param_1 != ASSET_TYPE_LIGHT_DEF) && (param_1 != ASSET_TYPE_IMPACT_FX)) {
     return 0;
   }
   return 1;
@@ -5161,20 +6395,20 @@ longlong DB_OverrideAsset(longlong param_1)
 
 // 823EEFB0  DB_CanOverrideAsset  (database/db_registry.cpp:4353)
 
-ulonglong DB_CanOverrideAsset(int param_1)
+int DB_CanOverrideAsset(int param_1)
 
 {
-  return ((~(ulonglong)(uint)(&DAT_82967530)[param_1] & 0xffffffff) >> 0x1f) +
-         (ulonglong)((ulonglong)(uint)(&DAT_82967530)[param_1] < 2) & 1;
+  return (int)((~(ulonglong)(uint)g_poolSize[param_1] & 0xffffffff) >> 0x1f) +
+         (uint)((ulonglong)(uint)g_poolSize[param_1] < 2) & 1;
 }
 
 
 // 823EEFE0  DB_ShouldLoadDefaultAsset  (database/db_registry.cpp:4360)
 
-undefined8 DB_ShouldLoadDefaultAsset(int param_1)
+int DB_ShouldLoadDefaultAsset(int param_1)
 
 {
-  if ((1 < (int)(&DAT_82967530)[param_1]) && (param_1 != 0x11)) {
+  if ((1 < g_poolSize[param_1]) && (param_1 != 0x11)) {
     return 1;
   }
   return 0;
@@ -5183,134 +6417,156 @@ undefined8 DB_ShouldLoadDefaultAsset(int param_1)
 
 // 823EF010  DB_LinkXAssetEntry0  (database/db_registry.cpp:4366)
 
-void DB_LinkXAssetEntry0(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LinkXAssetEntry0(XAssetEntry *param_1)
 
 {
   byte bVar1;
   ushort uVar2;
-  int iVar3;
-  uint uVar4;
-  int *piVar6;
+  XAssetType XVar3;
+  int iVar4;
+  uint uVar5;
+  XAssetEntry *pXVar6;
   char *pcVar7;
   int iVar8;
-  undefined8 uVar5;
-  int iVar9;
+  char *pcVar9;
   undefined8 in_r13;
   int *piVar10;
-  int *piVar11;
+  XAssetEntry *pXVar11;
   
-  piVar6 = (int *)__savegprlr_21();
-  pcVar7 = (char *)DB_GetXAssetName();
+  pXVar6 = (XAssetEntry *)__savegprlr_21(param_1);
+  pcVar7 = DB_GetXAssetName((XAsset *)pXVar6);
   if (*pcVar7 == ',') {
-    MyAssertHandler(0xffffffff8205b610,0x1118,0,0xffffffff82000f98,0xffffffff8205bd7c);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1118,0,"%s");
   }
-  iVar3 = *piVar6;
-  iVar8 = DB_HashForName(pcVar7,iVar3);
+  XVar3 = (pXVar6->asset).type;
+  iVar8 = DB_HashForName(pcVar7,XVar3);
   piVar10 = (int *)in_r13;
-  piVar11 = (int *)0x0;
-  uVar2 = (&DAT_82d15b58)[iVar8];
-  while (uVar4 = (uint)uVar2, uVar4 != 0) {
-    iVar8 = uVar4 * 0x14;
-    piVar11 = (int *)(&DAT_82ed8058 + iVar8);
-    if (*(int *)(&DAT_82ed8058 + iVar8) == iVar3) {
-      uVar5 = DB_GetXAssetName(piVar11);
-      iVar9 = I_stricmp(uVar5,pcVar7);
+  pXVar11 = (XAssetEntry *)0x0;
+  uVar2 = db_hashTable[iVar8];
+  while (uVar5 = (uint)uVar2, uVar5 != 0) {
+    pXVar11 = g_assetEntryPool + uVar5;
+    if (g_assetEntryPool[uVar5].asset.type == XVar3) {
+      pcVar9 = DB_GetXAssetName(&pXVar11->asset);
+      iVar8 = I_stricmp(pcVar9,pcVar7);
       piVar10 = (int *)in_r13;
-      if (iVar9 == 0) {
-        if (uVar4 != 0) goto LAB_823ef100;
+      if (iVar8 == 0) {
+        if (uVar5 != 0) goto LAB_823ef100;
         break;
       }
     }
     piVar10 = (int *)in_r13;
-    uVar2 = *(ushort *)(&DAT_82ed8062 + iVar8);
+    uVar2 = g_assetEntryPool[uVar5].nextHash;
   }
-  MyAssertHandler(0xffffffff8205b610,0x1128,0,0xffffffff82000f98,0xffffffff8205bd68);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",0x1128
+                  ,0,"%s");
 LAB_823ef100:
-  if (piVar11 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8205b610,0x1129,0,0xffffffff82000f98,0xffffffff8205bd58);
+  if (pXVar11 == (XAssetEntry *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1129,0,"%s");
   }
-  if (*(char *)(piVar11 + 2) == '\0') {
-    if (*(&PTR_s_default_82967a00)[iVar3] == '\0') {
-      MyAssertHandler(0xffffffff8205b610,0x1139,0,0xffffffff82000f98,0xffffffff8205bc78);
+  if (pXVar11->zoneIndex == '\0') {
+    if (*g_defaultAssetName[XVar3] == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1139,0,"%s");
     }
-    if (*(short *)(piVar11 + 3) != 0) {
-      MyAssertHandler(0xffffffff8205b610,0x113a,0,0xffffffff82000f98,0xffffffff8205bc58);
+    if (pXVar11->nextOverride != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x113a,0,"%s");
     }
-    if (DAT_83231bc4 == 0) {
-      MyAssertHandler(0xffffffff8205b610,0x113b,0,0xffffffff82000f98,0xffffffff8205bc44);
+    if (g_defaultAssetCount == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x113b,0,"%s");
     }
-    DAT_83231bc4 = DAT_83231bc4 + -1;
-    *(int *)(&DAT_83208b98 + iVar3 * 4) = *(int *)(&DAT_83208b98 + iVar3 * 4) + 1;
-    *(undefined1 *)(piVar11 + 2) = *(undefined1 *)(piVar6 + 2);
-    *(undefined1 *)(piVar6 + 2) = 0;
-    if (*piVar6 != *piVar11) {
-      MyAssertHandler(0xffffffff8205b610,0xec8,0,0xffffffff82000f98,0xffffffff8205b944);
+    g_defaultAssetCount = g_defaultAssetCount + -1;
+    g_shipAssetCount[XVar3] = g_shipAssetCount[XVar3] + 1;
+    pXVar11->zoneIndex = pXVar6->zoneIndex;
+    pXVar6->zoneIndex = '\0';
+    if ((pXVar6->asset).type != (pXVar11->asset).type) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0xec8,0,"%s");
     }
-    if ((*(code **)(&DAT_82967ab0 + *piVar6 * 4) == (code *)0x0) ||
-       (iVar8 = (**(code **)(&DAT_82967ab0 + *piVar6 * 4))(piVar6[1],piVar11[1],3), iVar8 != 0)) {
-      DB_CloneXAssetInternal(piVar6,piVar11);
+    if ((DB_DynamicCloneXAssetHandler[(pXVar6->asset).type] ==
+         (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) ||
+       (iVar8 = (*DB_DynamicCloneXAssetHandler[(pXVar6->asset).type])
+                          ((XAssetHeader)(pXVar6->asset).header.physPreset,
+                           (XAssetHeader)(pXVar11->asset).header.physPreset,
+                           DB_CLONE_NORMAL_FROM_DEFAULT), iVar8 != 0)) {
+      DB_CloneXAssetInternal((XAsset *)pXVar6,&pXVar11->asset);
     }
   }
   else {
-    if (*(char *)(piVar11 + 2) == *(char *)(piVar6 + 2)) {
-      MyAssertHandler(0xffffffff8205b610,0x112d,0,0xffffffff82000f98,0xffffffff8205bd28);
+    if (pXVar11->zoneIndex == pXVar6->zoneIndex) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x112d,0,"%s");
     }
-    if ((int)(&DAT_82967530)[iVar3] < 2) {
-      Sys_UnlockWrite(0xffffffff83208b8c);
-      Sys_Error(0xffffffff8205bce8,pcVar7,(ulonglong)*(byte *)(piVar11 + 2) * 0x8c + -0x7ceb6014,
-                (ulonglong)*(byte *)(piVar6 + 2) * 0x8c + -0x7ceb6014);
+    if (g_poolSize[XVar3] < 2) {
+      Sys_UnlockWrite(&db_hashCritSect);
+                    /* WARNING: Subroutine does not return */
+      Sys_Error("Attempting to override asset \'%s\' from zone \'%s\' with zone \'%s\'");
     }
-    if (DAT_82fcc298 == 0) {
-      if ((iVar3 != 0x14) && (iVar3 != 0x1e)) {
+    if (db_syncMode == 0) {
+      if ((XVar3 != ASSET_TYPE_LIGHT_DEF) && (XVar3 != ASSET_TYPE_IMPACT_FX)) {
 LAB_823ef1f0:
-        MyAssertHandler(0xffffffff8205b610,0x1135,0,0xffffffff82000f98,0xffffffff8205bcc4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x1135,0,"%s");
       }
     }
-    else if (iVar3 == 7) goto LAB_823ef1f0;
-    if (*(char *)(piVar11 + 2) == '\0') {
-      MyAssertHandler(0xffffffff8205b610,0x1149,0,0xffffffff82000f98,0xffffffff8205bca8);
+    else if (XVar3 == ASSET_TYPE_TECHNIQUE_SET) goto LAB_823ef1f0;
+    if (pXVar11->zoneIndex == '\0') {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1149,0,"%s");
     }
-    DB_SwapXAsset(piVar6,piVar11);
-    bVar1 = *(byte *)(piVar11 + 2);
-    *(undefined1 *)(piVar11 + 2) = *(undefined1 *)(piVar6 + 2);
-    *(byte *)(piVar6 + 2) = bVar1;
-    if ((&DAT_8314a02c)[(uint)*(byte *)(piVar11 + 2) * 0x23] != (&DAT_8314a02c)[(uint)bVar1 * 0x23])
-    {
-      *(undefined2 *)(piVar6 + 3) = *(undefined2 *)(piVar11 + 3);
-      *(short *)(piVar11 + 3) = (short)((int)(piVar6 + 0x1f449fea) / 0x14);
+    DB_SwapXAsset((XAsset *)pXVar6,&pXVar11->asset);
+    bVar1 = pXVar11->zoneIndex;
+    pXVar11->zoneIndex = pXVar6->zoneIndex;
+    pXVar6->zoneIndex = bVar1;
+    if (g_zones[pXVar11->zoneIndex].flags != g_zones[bVar1].flags) {
+      pXVar6->nextOverride = pXVar11->nextOverride;
+      pXVar11->nextOverride = (ushort)((int)&pXVar6[0x640ecc8].zoneIndex / 0x14);
       goto LAB_823ef410;
     }
-    if (DAT_82ed8056 != '\0') {
-      MyAssertHandler(0xffffffff8205b610,0x1154,0,0xffffffff82000f98,0xffffffff8205bc94);
+    if (g_loadingDebugZone != false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1154,0,"%s");
     }
-    if (*(code **)(&DAT_82967c10 + *piVar6 * 4) != (code *)0x0) {
-      (**(code **)(&DAT_82967c10 + *piVar6 * 4))(piVar6[1]);
+    if (DB_ReleaseXAssetHandler[(pXVar6->asset).type] != (_func___cdecl_void_XAssetHeader *)0x0) {
+      (*DB_ReleaseXAssetHandler[(pXVar6->asset).type])
+                ((XAssetHeader)(pXVar6->asset).header.physPreset);
     }
   }
-  DB_FreeXAssetEntry(piVar6);
+  DB_FreeXAssetEntry(pXVar6);
 LAB_823ef410:
-  if (iVar3 == 3) {
-    DB_EnumXAssets_Internal(4,0xffffffff823ed2b0,0,1);
+  if (XVar3 == ASSET_TYPE_XMODEL_SURFS) {
+    DB_EnumXAssets_Internal(ASSET_TYPE_XMODEL,DB_XModelSurfsFixup,(void *)0x0,true);
   }
-  if ((*(byte *)((int)piVar11 + 9) & 1) != 0) {
-    iVar3 = *piVar10;
-    *(byte *)((int)piVar11 + 9) = *(byte *)((int)piVar11 + 9) | 4;
-    iVar8 = *(int *)(iVar3 + 0xc);
-    DAT_82ed7d3c = 1;
-    DAT_831ed7cc = 1;
-    DAT_82cc61c8 = piVar11;
-    *(byte *)((int)piVar11 + 9) = *(byte *)((int)piVar11 + 9) & 0xfe;
-    if (iVar8 != 0) {
-      MyAssertHandler(0xffffffff8205b610,0x116d,0,0xffffffff82000f98,0xffffffff8205bbbc);
+  if ((pXVar11->inuseMask & 1) != 0) {
+    iVar8 = *piVar10;
+    pXVar11->inuseMask = pXVar11->inuseMask | 4;
+    iVar4 = *(int *)(iVar8 + 0xc);
+    g_databaseReady = 1;
+    g_inuseMask = '\x01';
+    marXAsset = &pXVar11->asset;
+    pXVar11->inuseMask = pXVar11->inuseMask & 0xfe;
+    if (iVar4 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x116d,0,"%s");
     }
-    *(undefined4 *)(iVar3 + 0xc) = 1;
+    *(undefined4 *)(iVar8 + 0xc) = 1;
     Mark_XAsset();
-    if (*(int *)(iVar3 + 0xc) == 0) {
-      MyAssertHandler(0xffffffff8205b610,0x1172,0,0xffffffff82000f98,0xffffffff8205bbcc);
+    if (*(int *)(iVar8 + 0xc) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1172,0,"%s");
     }
-    bVar1 = *(byte *)((int)piVar11 + 9);
-    *(undefined4 *)(iVar3 + 0xc) = 0;
-    *(byte *)((int)piVar11 + 9) = bVar1 & 0xfb;
+    bVar1 = pXVar11->inuseMask;
+    *(undefined4 *)(iVar8 + 0xc) = 0;
+    pXVar11->inuseMask = bVar1 & 0xfb;
   }
   __restgprlr_21();
   return;
@@ -5319,247 +6575,280 @@ LAB_823ef410:
 
 // 823EF4F8  DB_LinkXAssetEntry1  (database/db_registry.cpp:4476)
 
-void DB_LinkXAssetEntry1(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+XAssetEntry * DB_LinkXAssetEntry1(XAssetType param_1,XAssetHeader *param_2)
 
 {
   ushort uVar1;
-  int iVar2;
-  bool bVar3;
+  code *pcVar2;
+  uint uVar3;
   ulonglong uVar4;
-  char cVar11;
-  byte *pbVar6;
-  undefined8 uVar5;
-  int iVar7;
+  bool bVar11;
+  byte *pbVar5;
+  int iVar6;
+  char *pcVar7;
   int iVar8;
-  undefined *puVar9;
-  int *piVar10;
-  int *piVar12;
-  uint uVar13;
+  XAssetEntry *pXVar9;
+  XAssetEntry *pXVar10;
+  ulonglong uVar12;
+  XAssetHeader *pXVar13;
   uint uVar14;
-  int iVar15;
-  int local_a0;
-  int local_9c;
+  XAssetType XVar15;
+  XAsset local_a0 [20];
   
-  uVar4 = __savegprlr();
-  cVar11 = Sys_IsDatabaseThread();
-  if (cVar11 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1187,0,0xffffffff82000f98,0xffffffff82059784);
+  uVar12 = (ulonglong)(int)param_2;
+  uVar4 = (ulonglong)(int)param_1;
+  __savegprlr();
+  bVar11 = Sys_IsDatabaseThread();
+  if (!bVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1187,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1188,0,0xffffffff82000f98,0xffffffff82058e00);
+  if ((uVar12 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1188,0,"%s");
   }
-  piVar12 = (int *)param_2;
-  local_9c = *piVar12;
-  iVar15 = (int)uVar4;
-  local_a0 = iVar15;
-  pbVar6 = (byte *)DB_GetXAssetName(&local_a0);
-  uVar14 = (uint)LZCOUNT(*pbVar6 - 0x2c) >> 5;
+  pXVar13 = (XAssetHeader *)uVar12;
+  local_a0[0].header = *pXVar13;
+  XVar15 = (XAssetType)uVar4;
+  local_a0[0].type = XVar15;
+  pbVar5 = (byte *)DB_GetXAssetName(local_a0);
+  uVar14 = (uint)LZCOUNT(*pbVar5 - 0x2c) >> 5;
   if (uVar14 != 0) {
-    pbVar6 = pbVar6 + 1;
+    pbVar5 = pbVar5 + 1;
   }
-  if (DAT_82ed8056 != '\0') {
-    uVar5 = DB_GetXAssetTypeName(uVar4);
-    Com_Printf(0x10,0xffffffff8205be48,uVar5,pbVar6);
+  if (g_loadingDebugZone != false) {
+    DB_GetXAssetTypeName(XVar15);
+    Com_Printf(0x10,"mychanges load asset: %s,%s\n");
   }
-  iVar7 = DB_HashForName(pbVar6,uVar4);
-  puVar9 = (undefined *)0x0;
-  uVar1 = (&DAT_82d15b58)[iVar7];
-  while (uVar13 = (uint)uVar1, uVar13 != 0) {
-    iVar2 = uVar13 * 0x14;
-    puVar9 = &DAT_82ed8058 + iVar2;
-    if (*(int *)(&DAT_82ed8058 + iVar2) == iVar15) {
-      uVar5 = DB_GetXAssetName(puVar9);
-      iVar8 = I_stricmp(uVar5,pbVar6);
+  iVar6 = DB_HashForName((char *)pbVar5,XVar15);
+  pXVar9 = (XAssetEntry *)0x0;
+  uVar1 = db_hashTable[iVar6];
+  while (uVar3 = (uint)uVar1, uVar3 != 0) {
+    pXVar9 = g_assetEntryPool + uVar3;
+    if (g_assetEntryPool[uVar3].asset.type == XVar15) {
+      pcVar7 = DB_GetXAssetName(&pXVar9->asset);
+      iVar8 = I_stricmp(pcVar7,(char *)pbVar5);
       if (iVar8 == 0) break;
     }
-    uVar1 = *(ushort *)(&DAT_82ed8062 + iVar2);
+    uVar1 = g_assetEntryPool[uVar3].nextHash;
   }
   if (uVar14 == 0) {
-    bVar3 = uVar1 == 0;
-    uVar14 = (uint)LZCOUNT(DAT_82fcc298 + -1) >> 5;
-    if (!bVar3) {
-      if (puVar9 == (undefined *)0x0) {
-        MyAssertHandler(0xffffffff8205b610,0x11bd,0,0xffffffff82000f98,0xffffffff8205bd58);
+    bVar11 = uVar3 == 0;
+    uVar14 = (uint)LZCOUNT(db_syncMode - 1) >> 5;
+    if (!bVar11) {
+      if (pXVar9 == (XAssetEntry *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x11bd,0,"%s");
       }
-      if ((byte)puVar9[8] == 0) {
-        if ((puVar9[9] & 1) == 0) {
+      if (pXVar9->zoneIndex == 0) {
+        if ((pXVar9->inuseMask & 1) == 0) {
           uVar14 = 1;
         }
-        else if (iVar15 == 9) {
+        else if (XVar15 == ASSET_TYPE_SOUND) {
           uVar14 = 1;
         }
       }
       else {
-        if ((byte)puVar9[8] == DAT_82ebbd2c) {
-          MyAssertHandler(0xffffffff8205b610,0x11d2,0,0xffffffff82000f98,0xffffffff8205be20);
+        if (pXVar9->zoneIndex == g_zoneIndex) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x11d2,0,"%s");
         }
-        if (*(int *)((int)&DAT_82967530 + (int)((uVar4 & 0xffffffff) << 2)) < 2) {
-          Sys_UnlockWrite(0xffffffff83208b8c);
-          Sys_Error(0xffffffff8205bce8,pbVar6,(ulonglong)(byte)puVar9[8] * 0x8c + -0x7ceb6014,
-                    (ulonglong)DAT_82ebbd2c * 0x8c + -0x7ceb6014);
+        if (*(int *)((int)g_poolSize + (int)((uVar4 & 0xffffffff) << 2)) < 2) {
+          Sys_UnlockWrite(&db_hashCritSect);
+                    /* WARNING: Subroutine does not return */
+          Sys_Error("Attempting to override asset \'%s\' from zone \'%s\' with zone \'%s\'");
         }
       }
     }
-    piVar10 = (int *)DB_AllocXAssetEntry(uVar4,DAT_82ebbd2c);
-    if (iVar15 != *piVar10) {
-      MyAssertHandler(0xffffffff8205b610,0x11de,0,0xffffffff82000f98,0xffffffff8205be00);
+    pXVar10 = DB_AllocXAssetEntry(XVar15,g_zoneIndex);
+    if (XVar15 != (pXVar10->asset).type) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x11de,0,"%s");
     }
-    DB_CloneXAssetInternal(&local_a0,piVar10);
-    if (*(code **)(&DAT_82967b60 + (int)((uVar4 & 0xffffffff) << 2)) != (code *)0x0) {
-      (**(code **)(&DAT_82967b60 + (int)((uVar4 & 0xffffffff) << 2)))(piVar10[1],bVar3);
+    DB_CloneXAssetInternal(local_a0,&pXVar10->asset);
+    pcVar2 = *(code **)((int)DB_CreateXAssetHandler + (int)((uVar4 & 0xffffffff) << 2));
+    if (pcVar2 != (code *)0x0) {
+      (*pcVar2)((pXVar10->asset).header.physPreset,bVar11);
     }
-    if (bVar3) {
-      *(undefined2 *)((int)piVar10 + 10) = (&DAT_82d15b58)[iVar7];
-      (&DAT_82d15b58)[iVar7] = (short)((int)(piVar10 + 0x1f449fea) / 0x14);
-      *piVar12 = piVar10[1];
-      __restgprlr(piVar10);
-      return;
+    if (bVar11) {
+      pXVar10->nextHash = db_hashTable[iVar6];
+      db_hashTable[iVar6] = (ushort)((int)&pXVar10[0x640ecc8].zoneIndex / 0x14);
+      *pXVar13 = (pXVar10->asset).header;
+      __restgprlr();
+      return pXVar10;
     }
-    if (puVar9 == (undefined *)0x0) {
-      MyAssertHandler(0xffffffff8205b610,0x11f0,0,0xffffffff82000f98,0xffffffff8205bd58);
+    if (pXVar9 == (XAssetEntry *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x11f0,0,"%s");
     }
-    uVar13 = (uint)(byte)puVar9[8];
-    if (uVar13 != 0) {
-      if (DAT_82fcc298 == 0) {
-        if ((iVar15 != 0x14) && (iVar15 != 0x1e)) {
+    if (pXVar9->zoneIndex != 0) {
+      if (db_syncMode == 0) {
+        if ((XVar15 != ASSET_TYPE_LIGHT_DEF) && (XVar15 != ASSET_TYPE_IMPACT_FX)) {
 LAB_823ef8bc:
-          iVar7 = DAT_82ebbd2c * 0x8c;
-          if ((((&DAT_8314a02c)[DAT_82ebbd2c * 0x23] | (&DAT_8314a02c)[uVar13 * 0x23]) != 3) &&
-             (((iVar15 < 6 || (7 < iVar15)) || (((&DAT_8314a02c)[uVar13 * 0x23] & 0xfffffffe) == 0))
-             )) {
-            uVar5 = DB_GetXAssetTypeName(uVar4);
-            Com_Printf(0x10,0xffffffff8205bdc0,pbVar6,uVar5,&DAT_83149fec + uVar13 * 0x8c,
-                       &DAT_83149fec + iVar7);
+          if (((g_zones[g_zoneIndex].flags | g_zones[pXVar9->zoneIndex].flags) != 3) &&
+             ((((int)XVar15 < 6 || (7 < (int)XVar15)) ||
+              ((g_zones[pXVar9->zoneIndex].flags & 0xfffffffeU) == 0)))) {
+            DB_GetXAssetTypeName(XVar15);
+            Com_Printf(0x10,"^3Ignoring asset \'%s\' of type %s, between fastfiles %s and %s\n");
           }
-          if ((&DAT_8314a02c)[(uint)(byte)puVar9[8] * 0x23] != (&DAT_8314a02c)[DAT_82ebbd2c * 0x23])
-          {
-            *(undefined2 *)(piVar10 + 3) = *(undefined2 *)(puVar9 + 0xc);
-            *(short *)(puVar9 + 0xc) = (short)((int)(piVar10 + 0x1f449fea) / 0x14);
-            *piVar12 = piVar10[1];
-            __restgprlr(puVar9);
-            return;
+          if (g_zones[pXVar9->zoneIndex].flags != g_zones[g_zoneIndex].flags) {
+            pXVar10->nextOverride = pXVar9->nextOverride;
+            pXVar9->nextOverride = (ushort)((int)&pXVar10[0x640ecc8].zoneIndex / 0x14);
+            *pXVar13 = (pXVar10->asset).header;
+            __restgprlr();
+            return pXVar9;
           }
-          if (DAT_82ed8056 != '\0') {
-            MyAssertHandler(0xffffffff8205b610,0x1212,0,0xffffffff82000f98,0xffffffff8205bc94);
+          if (g_loadingDebugZone != false) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x1212,0,"%s");
           }
-          if (*(byte *)(piVar10 + 2) != DAT_82ebbd2c) {
-            MyAssertHandler(0xffffffff8205b610,0x1214,0,0xffffffff8205bd94);
+          if (pXVar10->zoneIndex != g_zoneIndex) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x1214,0,"newEntry->zoneIndex == g_zoneIndex\n\t%i, %i");
           }
-          if (*(code **)(&DAT_82967c10 + *piVar10 * 4) != (code *)0x0) {
-            (**(code **)(&DAT_82967c10 + *piVar10 * 4))(piVar10[1]);
+          if (DB_ReleaseXAssetHandler[(pXVar10->asset).type] !=
+              (_func___cdecl_void_XAssetHeader *)0x0) {
+            (*DB_ReleaseXAssetHandler[(pXVar10->asset).type])
+                      ((XAssetHeader)(pXVar10->asset).header.physPreset);
           }
-          DB_FreeXAssetEntry(piVar10);
-          *piVar12 = 0;
-          __restgprlr(puVar9);
-          return;
+          DB_FreeXAssetEntry(pXVar10);
+          pXVar13->physPreset = (PhysPreset *)0x0;
+          __restgprlr();
+          return pXVar9;
         }
       }
-      else if (iVar15 == 7) goto LAB_823ef8bc;
+      else if (XVar15 == ASSET_TYPE_TECHNIQUE_SET) goto LAB_823ef8bc;
     }
     if (uVar14 != 0) {
-      DB_LinkXAssetEntry0();
-      *piVar12 = *(int *)(puVar9 + 4);
-      __restgprlr(puVar9);
-      return;
+      DB_LinkXAssetEntry0(pXVar10);
+      *pXVar13 = (pXVar9->asset).header;
+      __restgprlr();
+      return pXVar9;
     }
-    DB_DelayedCloneXAsset(piVar10);
-    *piVar12 = piVar10[1];
+    DB_DelayedCloneXAsset(pXVar10);
+    *pXVar13 = (pXVar10->asset).header;
   }
   else {
-    if (uVar13 == 0) {
-      puVar9 = (undefined *)DB_CreateDefaultEntry(uVar4,pbVar6);
-      *piVar12 = *(int *)(puVar9 + 4);
+    if (uVar3 == 0) {
+      pXVar9 = DB_CreateDefaultEntry(XVar15,(char *)pbVar5);
+      *pXVar13 = (pXVar9->asset).header;
     }
     else {
-      *piVar12 = 0;
+      pXVar13->physPreset = (PhysPreset *)0x0;
     }
-    if (puVar9 == (undefined *)0x0) {
-      MyAssertHandler(0xffffffff8205b610,0x11b2,0,0xffffffff82000f98,0xffffffff8205bd58);
-      __restgprlr(0);
-      return;
+    if (pXVar9 == (XAssetEntry *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x11b2,0,"%s");
+      __restgprlr();
+      return pXVar9;
     }
   }
-  __restgprlr(puVar9);
-  return;
+  __restgprlr();
+  return pXVar9;
 }
 
 
 // 823EFA28  DB_AddXAsset  (database/db_registry.cpp:4663)
 
-undefined4 DB_AddXAsset(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+XAssetHeader DB_AddXAsset(XAssetType param_1,XAssetHeader *param_2)
 
 {
-  int iVar1;
+  XAssetEntry *pXVar1;
   
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1238,0,0xffffffff82000f98,0xffffffff82058e00);
+  if (param_2 == (XAssetHeader *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1238,0,"%s");
   }
-  Sys_LockWrite(0xffffffff83208b8c);
-  iVar1 = DB_LinkXAssetEntry1(param_1,param_2);
-  return *(undefined4 *)(iVar1 + 4);
+  Sys_LockWrite(&db_hashCritSect);
+  pXVar1 = DB_LinkXAssetEntry1(param_1,param_2);
+  return (XAssetHeader)(pXVar1->asset).header.physPreset;
 }
 
 
 // 823EFAA8  DB_PostAddXAsset  (database/db_registry.cpp:4673)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_PostAddXAsset(void)
 
 {
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823EFAB8  DB_GetXAsset  (database/db_registry.cpp:4683)
 
-void DB_GetXAsset(undefined8 param_1,ulonglong param_2,int param_3)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+
+int DB_GetXAsset(XAssetType param_1,XAssetHeader param_2,int param_3)
 
 {
   ushort uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
-  int local_30;
-  undefined4 local_2c;
+  uint uVar2;
+  XAssetType XVar3;
+  char *pcVar4;
+  int iVar5;
+  ulonglong uVar6;
+  XAsset local_30 [6];
   
-  iVar3 = __savegprlr_28();
-  local_2c = (undefined4)param_2;
-  local_30 = iVar3;
-  uVar2 = DB_GetXAssetName(&local_30);
-  iVar4 = DB_HashForName(uVar2,iVar3);
-  uVar1 = (&DAT_82d15b58)[iVar4];
+  uVar6 = (ulonglong)(int)param_2;
+  XVar3 = __savegprlr_28(param_1);
+  local_30[0].header = SUB84(uVar6,0);
+  local_30[0].type = XVar3;
+  pcVar4 = DB_GetXAssetName(local_30);
+  iVar5 = DB_HashForName(pcVar4,XVar3);
+  uVar1 = db_hashTable[iVar5];
   do {
-    if (uVar1 == 0) {
-      if (DAT_84013128 == 0) {
-        uVar2 = va(0xffffffff8205be68,(&PTR_s_physpreset_82967050)[iVar3],uVar2);
-        MyAssertHandler(0xffffffff8205b610,0x126d,0,uVar2);
+    uVar2 = (uint)uVar1;
+    if (uVar2 == 0) {
+      if (alwaysfails == 0) {
+        pcVar4 = va("Could not find asset. type: %s, name: \'%s\'");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x126d,0,pcVar4);
       }
 LAB_823efb88:
-      __restgprlr_28(0);
-      return;
+      iVar5 = __restgprlr_28(0);
+      return iVar5;
     }
-    iVar4 = (uint)uVar1 * 0x14;
-    if ((*(int *)(&DAT_82ed8058 + iVar4) == iVar3) &&
-       ((ulonglong)*(uint *)(&DAT_82ed805c + iVar4) == (param_2 & 0xffffffff))) {
-      if (((&DAT_82ed8061)[iVar4] & DAT_831ed7cc) != 0) {
-        __restgprlr_28(1);
-        return;
+    if ((g_assetEntryPool[uVar2].asset.type == XVar3) &&
+       ((ulonglong)(uint)g_assetEntryPool[uVar2].asset.header == (uVar6 & 0xffffffff))) {
+      if ((g_assetEntryPool[uVar2].inuseMask & g_inuseMask) != 0) {
+        iVar5 = __restgprlr_28(1);
+        return iVar5;
       }
-      if ((param_3 != 0) && (((&DAT_82ed8060)[iVar4] != '\0' || (DAT_82ed7d3c != 0)))) {
-        (&DAT_82ed8061)[iVar4] = (&DAT_82ed8061)[iVar4] | DAT_831ed7cc;
-        __restgprlr_28(1);
-        return;
+      if ((param_3 != 0) && ((g_assetEntryPool[uVar2].zoneIndex != '\0' || (g_databaseReady != 0))))
+      {
+        g_assetEntryPool[uVar2].inuseMask = g_assetEntryPool[uVar2].inuseMask | g_inuseMask;
+        iVar5 = __restgprlr_28(1);
+        return iVar5;
       }
       goto LAB_823efb88;
     }
-    uVar1 = *(ushort *)(&DAT_82ed8062 + iVar4);
+    uVar1 = g_assetEntryPool[uVar2].nextHash;
   } while( true );
 }
 
 
 // 823EFBF8  DB_GetZoneAllocType  (database/db_registry.cpp:4772)
 
-undefined8 DB_GetZoneAllocType(int param_1)
+int DB_GetZoneAllocType(int param_1)
 
 {
   if (((param_1 != 1) && (param_1 != 8)) && (param_1 != 0x10)) {
@@ -5571,185 +6860,209 @@ undefined8 DB_GetZoneAllocType(int param_1)
 
 // 823EFC20  DB_LoadXZone  (database/db_registry.cpp:4787)
 
-void DB_LoadXZone(undefined8 param_1,ulonglong param_2,int param_3)
+void DB_LoadXZone(XZoneInfo *param_1,uint param_2,int param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  uint uVar3;
+  char *pcVar1;
+  ulonglong uVar2;
+  longlong lVar3;
   uint uVar4;
   uint uVar5;
-  uint *puVar6;
-  uint *puVar7;
-  longlong lVar8;
+  uint uVar6;
+  int *piVar7;
+  uint *puVar8;
+  XZoneInfoInternal *pXVar9;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar10;
+  int iStack00000024;
   
-  piVar2 = (int *)__savegprlr();
-  if (DAT_82ebbd24 == 0x20) {
-    Sys_Error(0xffffffff8205bf10);
-  }
-  if (DAT_830daa44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x12bd,0,0xffffffff82000f98,0xffffffff8205befc);
-  }
-  uVar4 = 0;
-  if ((param_2 & 0xffffffff) != 0) {
-    puVar6 = &DAT_82cc929c;
-    puVar7 = (uint *)0x82cc9298;
-    lVar8 = -0x7d336d60;
-    do {
-      iVar1 = *piVar2;
-      if (iVar1 != 0) {
-        uVar5 = piVar2[1];
-        uVar3 = uVar5 >> 6 & 1;
-        if (uVar3 != 0) {
-          uVar5 = uVar5 & 0xffffffbf;
-        }
-        if ((uVar5 - 1 & uVar5) != 0) {
-          MyAssertHandler(0xffffffff8205b610,0x12cb,0,0xffffffff82000f98,0xffffffff8205be94);
-        }
-        if (0xf < uVar4) {
-          MyAssertHandler(0xffffffff8205b610,0x12ce,0,0xffffffff82000f98,0xffffffff8205beb0);
-        }
-        Com_sprintf(lVar8,0x40,0xffffffff8205bedc,iVar1);
-        Com_Printf(0x10,0xffffffff8205bee4,lVar8);
-        puVar7[0x12] = uVar5;
-        puVar6[0x12] = 0;
-        if (0xf < uVar4 + 1) {
-          MyAssertHandler(0xffffffff8205b610,0x12d6,0,0xffffffff82000f98,0xffffffff8205beb0);
-        }
-        I_strncpyz(lVar8 + 0x48,iVar1,0x40);
-        Com_Printf(0x10,0xffffffff8205bee4,lVar8 + 0x48);
-        puVar7 = puVar7 + 0x24;
-        *puVar7 = uVar5;
-        uVar4 = uVar4 + 2;
-        DAT_82cc737c = DAT_82cc737c | uVar5;
-        puVar6 = puVar6 + 0x24;
-        *puVar6 = uVar3;
-        lVar8 = lVar8 + 0x90;
-      }
-      param_2 = param_2 - 1;
-      bVar9 = (param_2 == 0) << 1;
-      piVar2 = piVar2 + 3;
-    } while (param_2 != 0);
-    if (uVar4 != 0) {
-      DAT_82d14a94 = 0;
-      Sys_WakeDatabase2();
-      Sys_WakeDatabase();
+  uVar2 = (ulonglong)(int)param_2;
+  lVar3 = (longlong)(int)param_1;
+  __savegprlr();
+  iStack00000024 = param_3;
+  if (g_zoneCount != 0x20) {
+    if (g_zoneInfoCount != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x12bd,0,"%s");
+    }
+    uVar5 = 0;
+    if ((uVar2 & 0xffffffff) != 0) {
+      piVar7 = &db_MovieMemoryInuse;
+      puVar8 = (uint *)((int)g_TracerPool.entries + 0xdfc);
+      pXVar9 = g_zoneInfo;
       do {
-        if (in_RESERVE != '\0') {
-          DAT_832ee080 = storeWordConditionalIndexed
-                                   ((ulonglong)DAT_832ee080 + 1,0,0xffffffff832ee080);
-          bVar9 = 2;
+        pcVar1 = (char *)*(undefined4 *)lVar3;
+        if (pcVar1 != (char *)0x0) {
+          uVar6 = ((undefined4 *)lVar3)[1];
+          uVar4 = uVar6 >> 6 & 1;
+          if (uVar4 != 0) {
+            uVar6 = uVar6 & 0xffffffbf;
+          }
+          if ((uVar6 - 1 & uVar6) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x12cb,0,"%s");
+          }
+          if (0xf < uVar5) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x12ce,0,"%s");
+          }
+          Com_sprintf(pXVar9->name,0x40,"dev_%s");
+          Com_Printf(0x10,"Loading fastfile %s\n");
+          puVar8[0x12] = uVar6;
+          piVar7[0x12] = 0;
+          if (0xf < uVar5 + 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x12d6,0,"%s");
+          }
+          I_strncpyz(pXVar9[1].name,pcVar1,0x40);
+          Com_Printf(0x10,"Loading fastfile %s\n");
+          puVar8 = puVar8 + 0x24;
+          *puVar8 = uVar6;
+          uVar5 = uVar5 + 2;
+          db_loadedFlags = db_loadedFlags | uVar6;
+          piVar7 = piVar7 + 0x24;
+          *piVar7 = uVar4;
+          pXVar9 = pXVar9 + 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
-      DAT_82cf9a44 = 0;
-      sync(1);
-      DAT_830daa44 = uVar4;
-      Sys_NotifyDatabase();
-      if (param_3 != 0) {
-        R_BeginRemoteScreenUpdate();
-        while (DAT_82cf9a44 == 0) {
-          Sys_Sleep(1);
-        }
+        uVar2 = uVar2 - 1;
+        bVar10 = (uVar2 == 0) << 1;
+        lVar3 = lVar3 + 0xc;
+      } while (uVar2 != 0);
+      if (uVar5 != 0) {
+        g_skipReadAlwaysLoadedAssets = 0;
+        Sys_WakeDatabase2();
+        Sys_WakeDatabase();
+        do {
+          if (in_RESERVE != '\0') {
+            g_streamAbort =
+                 storeWordConditionalIndexed
+                           ((ulonglong)(uint)g_streamAbort + 1,0,0xffffffff832ee080);
+            bVar10 = 2;
+          }
+        } while (!(bool)(bVar10 >> 1 & 1));
+        g_zoneAllocDone = 0;
         sync(1);
-        R_EndRemoteScreenUpdate();
+        g_zoneInfoCount = uVar5;
+        Sys_NotifyDatabase();
+        if (iStack00000024 != 0) {
+          R_BeginRemoteScreenUpdate();
+          while (g_zoneAllocDone == 0) {
+            Sys_Sleep(1);
+          }
+          sync(1);
+          R_EndRemoteScreenUpdate();
+        }
       }
     }
+    __restgprlr();
+    return;
   }
-  __restgprlr();
-  return;
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("Max zone count exceeded");
 }
 
 
 // 823F4DA0  DB_PostLoadXZone  (database/db_registry.cpp:4872)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_PostLoadXZone(void)
 
 {
-  int *piVar1;
-  char cVar3;
-  int iVar2;
-  undefined8 uVar4;
-  undefined4 *puVar5;
+  XAssetEntry *pXVar1;
+  XAssetType XVar2;
+  bool bVar4;
+  int iVar3;
+  XAssetCopyInfo *pXVar5;
   uint uVar6;
   
   __savegprlr_21();
-  cVar3 = Sys_IsMainThread();
-  if ((cVar3 == '\0') && (cVar3 = Sys_IsRenderThread(), cVar3 == '\0')) {
-    MyAssertHandler(0xffffffff8205b610,0x130f,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x130f,0,"%s");
   }
-  if (DAT_82ed8055 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1310,0,0xffffffff82000f98,0xffffffff8205c408);
+  if (g_loadingZone != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1310,0,"%s");
   }
-  if (DAT_830daa44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1311,0,0xffffffff82000f98,0xffffffff8205befc);
+  if (g_zoneInfoCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1311,0,"%s");
   }
-  if (DAT_82ed7d44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1312,0,0xffffffff82000f98,0xffffffff8205c0ac);
+  if (db_inPostLoadXZone != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1312,0,"%s");
   }
-  iVar2 = Sys_IsDatabaseReady2();
-  if (iVar2 != 0) goto LAB_823f5020;
-  if (DAT_82daf084 == 0) {
-    DAT_82ed7d44 = 1;
+  iVar3 = Sys_IsDatabaseReady2();
+  if (iVar3 != 0) goto LAB_823f5020;
+  if (g_copyInfoCount == 0) {
+    db_inPostLoadXZone = 1;
     Material_DirtyTechniqueSetOverrides();
     BG_FillInAllWeaponItems();
-    DAT_82fcc298 = 0;
+    db_syncMode = 0;
     Sys_DatabaseCompleted2();
-    if (DAT_82ed7d44 == 0) {
-      uVar4 = 0x1323;
+    if (db_inPostLoadXZone == 0) {
+      iVar3 = 0x1323;
 LAB_823f5000:
-      MyAssertHandler(0xffffffff8205b610,uVar4,0,0xffffffff82000f98,0xffffffff8205c3c0);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      iVar3,0,"%s");
     }
   }
   else {
-    uVar4 = 0;
-    cVar3 = Sys_IsMainThread();
-    if (cVar3 != '\0') {
-      DAT_82fcc29c = DAT_82fcc29c + 1;
-      uVar4 = R_PopRemoteScreenUpdate();
-      DAT_82fcc29c = DAT_82fcc29c + -1;
+    iVar3 = 0;
+    bVar4 = Sys_IsMainThread();
+    if (bVar4) {
+      g_mainThreadBlocked = g_mainThreadBlocked + 1;
+      iVar3 = R_PopRemoteScreenUpdate();
+      g_mainThreadBlocked = g_mainThreadBlocked - 1;
       sync(1);
-      if (DAT_82daf084 == 0) {
-        R_PushRemoteScreenUpdate();
+      if (g_copyInfoCount == 0) {
+        R_PushRemoteScreenUpdate(iVar3);
         __restgprlr_21();
         return;
       }
     }
-    DAT_82ed7d44 = 1;
+    db_inPostLoadXZone = 1;
     DB_ArchiveAssets();
-    Sys_LockWrite(0xffffffff83208b8c);
+    Sys_LockWrite(&db_hashCritSect);
     uVar6 = 0;
-    puVar5 = &DAT_82fcc430;
-    if (DAT_82daf084 != 0) {
+    pXVar5 = g_copyInfo;
+    if (g_copyInfoCount != 0) {
       do {
-        piVar1 = (int *)*puVar5;
-        iVar2 = *piVar1;
-        if ((iVar2 != 0x14) && (iVar2 != 0x1e)) {
-          MyAssertHandler(0xffffffff8205b610,0x1344,0,0xffffffff82000f98,0xffffffff8205c3d4);
+        pXVar1 = pXVar5->entry;
+        XVar2 = (pXVar1->asset).type;
+        if ((XVar2 != ASSET_TYPE_LIGHT_DEF) && (XVar2 != ASSET_TYPE_IMPACT_FX)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x1344,0,"%s");
         }
-        DB_LinkXAssetEntry0(piVar1);
+        DB_LinkXAssetEntry0(pXVar1);
         uVar6 = uVar6 + 1;
-        puVar5 = puVar5 + 1;
-      } while (uVar6 < DAT_82daf084);
+        pXVar5 = pXVar5 + 1;
+      } while (uVar6 < g_copyInfoCount);
     }
-    DAT_82daf084 = 0;
-    Sys_UnlockWrite(0xffffffff83208b8c);
+    g_copyInfoCount = 0;
+    Sys_UnlockWrite(&db_hashCritSect);
     Material_DirtyTechniqueSetOverrides();
     Material_OverrideTechniqueSets();
     DB_UnarchiveAssets();
-    cVar3 = Sys_IsMainThread();
-    if (cVar3 != '\0') {
-      R_PushRemoteScreenUpdate(uVar4);
+    bVar4 = Sys_IsMainThread();
+    if (bVar4) {
+      R_PushRemoteScreenUpdate(iVar3);
     }
-    DAT_82fcc298 = 0;
+    db_syncMode = 0;
     Sys_DatabaseCompleted2();
-    if (DAT_82ed7d44 == 0) {
-      uVar4 = 0x135c;
+    if (db_inPostLoadXZone == 0) {
+      iVar3 = 0x135c;
       goto LAB_823f5000;
     }
   }
-  DAT_82ed7d44 = 0;
+  db_inPostLoadXZone = 0;
 LAB_823f5020:
   __restgprlr_21();
   return;
@@ -5758,33 +7071,35 @@ LAB_823f5020:
 
 // 823F63A0  DB_UpdateDebugZone  (database/db_registry.cpp:4964)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_UpdateDebugZone(void)
 
 {
-  char cVar1;
-  undefined8 local_40;
-  undefined8 local_38;
+  bool bVar1;
+  undefined1 local_40 [16];
   undefined8 local_30;
   
   __savegprlr_29();
-  if (DAT_82cf9a48 != '\0') {
+  if (g_debugZoneName[0] != '\0') {
     R_SyncRenderThread();
     R_Cinematic_StopPlayback();
     RB_Cinematic_UpdateFrame(1);
     UI_MyChangesSaveDynamicFlags();
     Com_SyncThreads();
     DB_SyncXAssets();
-    local_40 = 0;
-    DAT_8400c594 = 1;
-    DAT_82ed8056 = 1;
-    local_38 = 0x1082cf9a48;
+    local_40._0_4_ = (char *)0x0;
+    local_40._4_4_ = 0;
+    g_usedDebugZone = 1;
+    g_loadingDebugZone = true;
+    local_40._8_8_ = 0x1082cf9a48;
     local_30 = 0x1000000010;
-    DB_LoadXAssets(&local_40,2,1);
-    DAT_82ed8056 = 0;
+    DB_LoadXAssets((XZoneInfo *)local_40,2,1);
+    g_loadingDebugZone = false;
     CG_VisionSetMyChanges();
     UI_MyChangesRestoreDynamicFlags();
-    cVar1 = SV_Loaded();
-    if (cVar1 != '\0') {
+    bVar1 = SV_Loaded();
+    if (bVar1) {
       Vehicle_MyChanges();
     }
   }
@@ -5795,13 +7110,15 @@ void DB_UpdateDebugZone(void)
 
 // 823F6458  DB_LoadZone_f  (database/db_registry.cpp:5015)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_LoadZone_f(void)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  uVar1 = Cmd_Argv(1);
-  I_strncpyz(0xffffffff82cf9a48,uVar1,0x40);
+  pcVar1 = Cmd_Argv(1);
+  I_strncpyz(g_debugZoneName,pcVar1,0x40);
   DB_UpdateDebugZone();
   return;
 }
@@ -5809,30 +7126,37 @@ void DB_LoadZone_f(void)
 
 // 823EFE80  DB_IsDebugZoneActive  (database/db_registry.cpp:5022)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool DB_IsDebugZoneActive(void)
 
 {
-  return DAT_82cf9a48 != '\0';
+  return (bool)('\x01' - (g_debugZoneName[0] == '\0'));
 }
 
 
 // 823F5028  DB_SyncXAssets  (database/db_registry.cpp:5029)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_SyncXAssets(void)
 
 {
-  char cVar2;
+  bool bVar2;
   int iVar1;
   
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x13a6,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13a6,0,"%s");
   }
-  if (DAT_82fcc29c != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x13a7,0,0xffffffff82000f98,0xffffffff8205c418);
+  if (g_mainThreadBlocked != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13a7,0,"%s");
   }
-  if (DAT_82ed7d44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x13a8,0,0xffffffff82000f98,0xffffffff8205c0ac);
+  if (db_inPostLoadXZone != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13a8,0,"%s");
   }
   iVar1 = Sys_IsDatabaseReady2();
   if (iVar1 == 0) {
@@ -5847,151 +7171,169 @@ void DB_SyncXAssets(void)
 
 // 823F5108  DB_LoadXAssets  (database/db_registry.cpp:5050)
 
-void DB_LoadXAssets(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_LoadXAssets(XZoneInfo *param_1,uint param_2,uint param_3)
 
 {
   byte bVar1;
   uint uVar2;
   uint uVar3;
   uint uVar4;
+  bool bVar6;
   int iVar5;
-  char cVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  uint *puVar9;
-  uint *puVar10;
+  ulonglong uVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
   longlong lVar11;
   longlong lVar12;
+  longlong lVar13;
+  XZoneInfo *pXStack00000014;
   
-  iVar5 = __savegprlr();
-  cVar6 = Sys_IsMainThread();
-  if (cVar6 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x13c7,0,0xffffffff82000f98,0xffffffff82010b48);
+  uVar7 = (ulonglong)(int)param_2;
+  lVar11 = (longlong)(int)param_1;
+  __savegprlr();
+  pXStack00000014 = (XZoneInfo *)lVar11;
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13c7,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x13c8,0,0xffffffff82000f98,0xffffffff8205c4b8);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13c8,0,"%s");
   }
-  uVar3 = (uint)LZCOUNT((int)param_3 + -3) >> 5;
-  uVar4 = (uint)LZCOUNT((int)param_3 + -2) >> 5;
+  uVar3 = (uint)LZCOUNT(param_3 - 3) >> 5;
+  uVar4 = (uint)LZCOUNT(param_3 - 2) >> 5;
   if ((uVar3 != 0) || (uVar4 != 0)) {
     param_3 = 0;
   }
   Com_SyncThreads();
-  DAT_82d14a94 = 1;
+  g_skipReadAlwaysLoadedAssets = 1;
   DB_SyncXAssets();
-  if (DAT_82fcc298 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x13d7,0,0xffffffff8205c480,0xffffffff8205c498);
+  if (db_syncMode != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13d7,0,"%s\n\t(db_syncMode) = %i");
   }
-  if (DAT_82ed8057 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x13dd,0,0xffffffff82000f98,0xffffffff8205c0c0);
+  if (g_archiveBuf != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x13dd,0,"%s");
   }
-  uVar7 = 0;
-  if ((param_2 & 0xffffffff) == 0) {
+  uVar8 = 0;
+  if ((uVar7 & 0xffffffff) == 0) {
 LAB_823f5484:
     if (uVar3 == 0) goto LAB_823f54a0;
   }
   else {
-    puVar10 = (uint *)(iVar5 + 8);
-    uVar8 = param_2;
-    puVar9 = puVar10;
+    lVar11 = lVar11 + 8;
+    uVar9 = uVar7;
+    lVar10 = lVar11;
     do {
-      uVar2 = *puVar9;
-      lVar11 = (ulonglong)DAT_82ebbd24 - 1;
-      if (-1 < lVar11) {
-        lVar12 = (ulonglong)DAT_82ebbd24 - 0x7cdfefa5;
+      uVar2 = *(uint *)lVar10;
+      lVar12 = (ulonglong)(uint)g_zoneCount - 1;
+      if (-1 < lVar12) {
+        lVar13 = (ulonglong)(uint)g_zoneCount - 0x7cdfefa5;
         do {
-          bVar1 = *(byte *)lVar12;
-          if (((&DAT_8314a02c)[(uint)bVar1 * 0x23] - 1 & (&DAT_8314a02c)[(uint)bVar1 * 0x23]) != 0)
-          {
-            MyAssertHandler(0xffffffff8205b610,0x13e9,0,0xffffffff82000f98,0xffffffff8205c464);
+          bVar1 = *(byte *)lVar13;
+          if ((g_zones[bVar1].flags - 1U & g_zones[bVar1].flags) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x13e9,0,"%s");
           }
-          lVar11 = lVar11 + -1;
           lVar12 = lVar12 + -1;
-          uVar7 = uVar2 & (&DAT_8314a02c)[(uint)bVar1 * 0x23] | uVar7;
-        } while (-1 < lVar11);
+          lVar13 = lVar13 + -1;
+          uVar8 = uVar2 & g_zones[bVar1].flags | uVar8;
+        } while (-1 < lVar12);
       }
-      uVar8 = uVar8 - 1;
-      puVar9 = puVar9 + 3;
-    } while (uVar8 != 0);
-    if (uVar7 == 0) goto LAB_823f5484;
-    if ((uVar7 & 8) == 0) {
+      uVar9 = uVar9 - 1;
+      lVar10 = lVar10 + 0xc;
+    } while (uVar9 != 0);
+    if (uVar8 == 0) goto LAB_823f5484;
+    uVar3 = uVar8 & 8;
+    if (uVar3 == 0) {
       R_BeginRemoteScreenUpdate();
     }
-    if ((uVar7 & 1) != 0) {
-      MyAssertHandler(0xffffffff8205b610,0x13f5,0,0xffffffff82000f98,0xffffffff8205c444);
+    if ((uVar8 & 1) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x13f5,0,"%s");
     }
-    if ((uVar7 & 2) != 0) {
-      if ((DAT_82ebbd28 != 0) && (DAT_82cc929c != 0)) {
-        MyAssertHandler(0xffffffff8205b610,0x13fa,0,0xffffffff82000f98,0xffffffff8205bf28);
+    if ((uVar8 & 2) != 0) {
+      if ((db_MovieMemory != (uchar *)0x0) && (db_MovieMemoryInuse != 0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x13fa,0,"%s");
       }
-      DAT_82ebbd28 = 0;
-      if ((uVar7 & 2) != 0) {
-        DAT_83620464 = 0;
-        DAT_82b5b390 = 0;
-        DAT_82b5b394 = 0;
+      db_MovieMemory = (uchar *)0x0;
+      if ((uVar8 & 2) != 0) {
+        s_playlistBuffer = (uchar *)0x0;
+        g_matchRulesSnapshots = (MatchRulesSnapshot *)0x0;
+        g_matchRulesSnapshotsDelta = (MatchRulesSnapshotDelta *)0x0;
         UI_ScreenshotClearMemory();
         LiveStorage_CS_ShutdownAll();
-        WebmTranscode__FreeMemory(0xffffffff848764a8);
+        WebmTranscode::FreeMemory(&webmTranscode);
         LiveStorage_FreePlaylistPopulation();
       }
     }
-    if (((uVar7 & 4) != 0) && (DAT_830f9a9c != 0)) {
-      DAT_830f9a9c = 0;
+    if (((uVar8 & 4) != 0) && (db_perLocalClientMemoryInuse != 0)) {
+      db_perLocalClientMemoryInuse = 0;
       CL_FreePerLocalClientMemory2();
     }
-    if ((uVar7 & 8) == 0) {
+    if (uVar3 == 0) {
       R_EndRemoteScreenUpdate();
     }
-    DAT_8314b1ec = 0;
+    g_unloadedModelSurfs = 0;
     DB_ArchiveAssets();
-    Sys_LockWrite(0xffffffff83208b8c);
-    uVar8 = param_2;
+    Sys_LockWrite(&db_hashCritSect);
+    uVar9 = uVar7;
     do {
-      uVar3 = *puVar10;
-      lVar11 = (ulonglong)DAT_82ebbd24 - 1;
-      if (-1 < lVar11) {
-        lVar12 = (ulonglong)DAT_82ebbd24 - 0x7cdfefa5;
+      uVar2 = *(uint *)lVar11;
+      lVar10 = (ulonglong)(uint)g_zoneCount - 1;
+      if (-1 < lVar10) {
+        lVar12 = (ulonglong)(uint)g_zoneCount - 0x7cdfefa5;
         do {
-          if (((&DAT_8314a02c)[(uint)*(byte *)lVar12 * 0x23] & uVar3) != 0) {
-            DB_UnloadXZone(*(byte *)lVar12,1);
+          if ((g_zones[*(byte *)lVar12].flags & uVar2) != 0) {
+            DB_UnloadXZone((uint)*(byte *)lVar12,true);
           }
-          lVar11 = lVar11 + -1;
+          lVar10 = lVar10 + -1;
           lVar12 = lVar12 + -1;
-        } while (-1 < lVar11);
+        } while (-1 < lVar10);
       }
-      uVar8 = uVar8 - 1;
-      puVar10 = puVar10 + 3;
-    } while (uVar8 != 0);
-    if (DAT_8314b1ec != 0) {
-      DB_EnumXAssets_Internal(4,0xffffffff823ed2b0,0,1);
+      uVar9 = uVar9 - 1;
+      lVar11 = lVar11 + 0xc;
+    } while (uVar9 != 0);
+    if (g_unloadedModelSurfs != 0) {
+      DB_EnumXAssets_Internal(ASSET_TYPE_XMODEL,DB_XModelSurfsFixup,(void *)0x0,true);
     }
-    Sys_UnlockWrite(0xffffffff83208b8c);
+    Sys_UnlockWrite(&db_hashCritSect);
     DB_UnarchiveAssets();
-    if ((uVar7 & 8) == 0) {
+    if (uVar3 == 0) {
       R_BeginRemoteScreenUpdate();
     }
   }
-  Sys_LockWrite(0xffffffff83208b8c);
+  Sys_LockWrite(&db_hashCritSect);
   DB_FreeUnusedResources();
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
 LAB_823f54a0:
-  if (uVar7 != 0) {
-    DB_UnloadXAssetsMemoryForZone(uVar7,0x20);
-    DB_UnloadXAssetsMemoryForZone(uVar7,0x10);
-    DB_UnloadXAssetsMemoryForZone(uVar7,4);
-    DB_UnloadXAssetsMemoryForZone(uVar7,8);
-    DB_UnloadXAssetsMemoryForZone(uVar7,2);
-    if ((uVar7 & 8) == 0) {
+  if (uVar8 != 0) {
+    DB_UnloadXAssetsMemoryForZone(uVar8,0x20);
+    DB_UnloadXAssetsMemoryForZone(uVar8,0x10);
+    DB_UnloadXAssetsMemoryForZone(uVar8,4);
+    DB_UnloadXAssetsMemoryForZone(uVar8,8);
+    DB_UnloadXAssetsMemoryForZone(uVar8,2);
+    if ((uVar8 & 8) == 0) {
       R_EndRemoteScreenUpdate();
     }
   }
-  DAT_82fcc298 = (int)param_3;
-  DAT_82cc737c = DAT_82cc737c & ~uVar7;
-  if ((param_3 & 0xffffffff) == 1) {
+  db_loadedFlags = db_loadedFlags & ~uVar8;
+  db_syncMode = param_3;
+  if (param_3 == 1) {
     DB_ArchiveAssets();
   }
-  DB_LoadXZone(iVar5,param_2,uVar4);
-  if ((param_3 & 0xffffffff) == 1) {
+  DB_LoadXZone(pXStack00000014,(uint)uVar7,uVar4);
+  if (param_3 == 1) {
     iVar5 = Sys_CheckDatabase();
     while (iVar5 == 0) {
       iVar5 = R_HasDeviceOwnership();
@@ -6004,8 +7346,9 @@ LAB_823f54a0:
       }
       iVar5 = Sys_CheckDatabase();
     }
-    if (DAT_82daf084 != 0) {
-      MyAssertHandler(0xffffffff8205b610,0x148e,0,0xffffffff82000f98,0xffffffff8205c430);
+    if (g_copyInfoCount != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x148e,0,"%s");
     }
     DB_UnarchiveAssets();
     DB_SyncXAssets();
@@ -6016,6 +7359,8 @@ LAB_823f54a0:
 
 
 // 823EFE98  DB_StopMovie  (database/db_registry.cpp:5272)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_StopMovie(void)
 
@@ -6029,24 +7374,29 @@ void DB_StopMovie(void)
 
 // 823EFEC8  DB_ClearMovieMemory  (database/db_registry.cpp:5280)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ClearMovieMemory(void)
 
 {
-  if ((DAT_82ebbd28 != 0) && (DAT_82cc929c != 0)) {
-    MyAssertHandler(0xffffffff8205b610,0x14a1,0,0xffffffff82000f98,0xffffffff8205bf28);
+  if ((db_MovieMemory != (uchar *)0x0) && (db_MovieMemoryInuse != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x14a1,0,"%s");
   }
-  DAT_82ebbd28 = 0;
+  db_MovieMemory = (uchar *)0x0;
   return;
 }
 
 
 // 823EFF38  DB_AllocPlaylistDecompressionMemory  (database/db_registry.cpp:5291)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_AllocPlaylistDecompressionMemory(void)
 
 {
-  if (DAT_83620464 == 0) {
-    DAT_83620464 = PMem_AllocFromSource_NoDebug(0x3c000,0x80,4,1);
+  if (s_playlistBuffer == (uchar *)0x0) {
+    s_playlistBuffer = PMem_AllocFromSource_NoDebug(0x3c000,0x80,4,PMEM_SOURCE_DATABASE);
   }
   return;
 }
@@ -6054,58 +7404,64 @@ void DB_AllocPlaylistDecompressionMemory(void)
 
 // 823EFF88  DB_ClearPlaylistDecompressionMemory  (database/db_registry.cpp:5301)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ClearPlaylistDecompressionMemory(void)
 
 {
-  DAT_83620464 = 0;
+  s_playlistBuffer = (uchar *)0x0;
   return;
 }
 
 
 // 823EFF98  DB_AllocMatchRulesNetworkingMemory  (database/db_registry.cpp:5311)
 
-void * DB_AllocMatchRulesNetworkingMemory(void *param_1)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void DB_AllocMatchRulesNetworkingMemory(void)
 
 {
-  if ((DAT_82b5b390 == (void *)0x0) && (DAT_82b5b394 == (void *)0x0)) {
-    DAT_82b5b390 = (void *)PMem_AllocFromSource_NoDebug(0xcc44,4,4,1);
-    memset(DAT_82b5b390,0,0xcc44);
-    DAT_82b5b394 = (void *)PMem_AllocFromSource_NoDebug(0xf74c,4,4,1);
-    param_1 = memset(DAT_82b5b394,0,0xf74c);
+  if ((g_matchRulesSnapshots == (MatchRulesSnapshot *)0x0) &&
+     (g_matchRulesSnapshotsDelta == (MatchRulesSnapshotDelta *)0x0)) {
+    g_matchRulesSnapshots = PMem_AllocFromSource_NoDebug(0xcc44,4,4,PMEM_SOURCE_DATABASE);
+    memset();
+    g_matchRulesSnapshotsDelta = PMem_AllocFromSource_NoDebug(0xf74c,4,4,PMEM_SOURCE_DATABASE);
+    memset();
   }
-  return param_1;
+  return;
 }
 
 
 // 823F0040  DB_ClearMatchRulesNetworkingMemory  (database/db_registry.cpp:5328)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ClearMatchRulesNetworkingMemory(void)
 
 {
-  DAT_82b5b390 = 0;
-  DAT_82b5b394 = 0;
+  g_matchRulesSnapshots = (MatchRulesSnapshot *)0x0;
+  g_matchRulesSnapshotsDelta = (MatchRulesSnapshotDelta *)0x0;
   return;
 }
 
 
 // 823F6498  DB_FreeLevelXAssetsForMap  (database/db_registry.cpp:5337)
 
-void DB_FreeLevelXAssetsForMap(undefined8 param_1)
+void DB_FreeLevelXAssetsForMap(char *param_1)
 
 {
-  char cVar1;
-  undefined4 local_20;
-  undefined4 local_1c;
-  undefined4 local_18;
+  bool bVar1;
+  XZoneInfo local_20;
   
-  if (DAT_82ebbd28 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x14dd,0,0xffffffff82000f98,0xffffffff8205c770);
+  if (db_MovieMemory != (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x14dd,0,"%s");
   }
-  cVar1 = DB_IsFileLoaded(param_1);
-  if (cVar1 == '\0') {
-    local_20 = 0;
-    local_1c = 0;
-    local_18 = 4;
+  bVar1 = DB_IsFileLoaded(param_1);
+  if (!bVar1) {
+    local_20.name = (char *)0x0;
+    local_20.allocFlags = 0;
+    local_20.freeFlags = 4;
     DB_LoadXAssets(&local_20,1,0);
   }
   return;
@@ -6114,55 +7470,55 @@ void DB_FreeLevelXAssetsForMap(undefined8 param_1)
 
 // 823F6528  DB_LoadLevelXAssets  (database/db_registry.cpp:5384)
 
-void DB_LoadLevelXAssets(void)
+void DB_LoadLevelXAssets(char *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
-  char cVar3;
+  char *pcVar1;
+  bool bVar3;
   int iVar2;
-  int local_b0 [4];
-  undefined1 *local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
+  uint local_b0 [4];
+  XZoneInfo local_a0;
+  char *local_94;
   undefined4 local_90;
   undefined4 local_8c;
-  undefined1 auStack_70 [112];
+  char acStack_70 [112];
   
-  uVar1 = __savegprlr_27();
-  if (DAT_82ebbd28 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1518,0,0xffffffff82000f98,0xffffffff8205c770);
+  pcVar1 = (char *)__savegprlr_27(param_1,param_2);
+  if (db_MovieMemory != (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1518,0,"%s");
   }
   DB_StreamTabulationCumulative();
-  cVar3 = DB_IsFileLoaded(uVar1);
-  if (cVar3 == '\0') {
-    local_a0 = (undefined1 *)0x0;
-    local_9c = 0;
-    local_98 = 6;
+  bVar3 = DB_IsFileLoaded(pcVar1);
+  if (!bVar3) {
+    local_a0.name = (char *)0x0;
+    local_a0.allocFlags = 0;
+    local_a0.freeFlags = 6;
     DB_LoadXAssets(&local_a0,1,3);
     R_UpdateDynamicMemory(0);
     iVar2 = LiveStorage_ShouldUseFFoTD();
     if (iVar2 != 0) {
-      cVar3 = LiveStorage_DoWeHaveFFotD();
-      if (cVar3 == '\0') {
-        MyAssertHandler(0xffffffff8205b610,0x1550,0,0xffffffff82000f98,0xffffffff8205c78c);
+      bVar3 = LiveStorage_DoWeHaveFFotD();
+      if (!bVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x1550,0,"%s");
       }
       LiveStorage_GetFFotDBuffer(local_b0);
       if (local_b0[0] != 0) {
-        local_9c = 4;
-        local_98 = 0;
-        local_a0 = &DAT_8205c5d8;
+        local_a0.allocFlags = 4;
+        local_a0.freeFlags = 0;
+        local_a0.name = "ffotd_mp";
         DB_ResetZoneSize(0,1);
         DB_LoadXAssets(&local_a0,1,1);
       }
     }
-    Com_sprintf(auStack_70,0x40,0xffffffff8205c780,uVar1);
-    local_a0 = auStack_70;
-    local_94 = (undefined4)uVar1;
-    local_9c = 4;
-    local_98 = 0;
+    Com_sprintf(acStack_70,0x40,"patch_%s");
+    local_a0.name = acStack_70;
+    local_a0.allocFlags = 4;
+    local_a0.freeFlags = 0;
     local_90 = 0x44;
     local_8c = 0;
+    local_94 = pcVar1;
     DB_ResetZoneSize(1,1);
     DB_LoadXAssets(&local_a0,2,2);
     Live_DCacheFlush();
@@ -6178,413 +7534,448 @@ void DB_LoadLevelXAssets(void)
 
 // 823F0060  DB_CloseFileHandle  (database/db_registry.cpp:5618)
 
-int * DB_CloseFileHandle(int *param_1)
+void DB_CloseFileHandle(XZone *param_1)
 
 {
-  int *piVar1;
-  
-  piVar1 = param_1;
-  if (*param_1 != 0) {
-    if (param_1[2] != 0) {
-      MyAssertHandler(0xffffffff8205b610,0x15f7,0,0xffffffff82000f98,0xffffffff8205bf50);
+  if ((param_1->file).handle.handle != (void *)0x0) {
+    if ((param_1->file).memoryBuffer != (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x15f7,0,"%s");
     }
-    piVar1 = (int *)CloseHandle((HANDLE)*param_1);
-    *param_1 = 0;
+    CloseHandle((param_1->file).handle.handle);
+    (param_1->file).handle.handle = (void *)0x0;
   }
-  return piVar1;
+  return;
 }
 
 
 // 823F00D8  DB_BeginAlloc  (database/db_registry.cpp:5645)
 
-void DB_BeginAlloc(undefined8 param_1,int param_2)
+void DB_BeginAlloc(char *param_1,int param_2)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsDatabaseThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x160e,0,0xffffffff82000f98,0xffffffff82059784);
+  bVar1 = Sys_IsDatabaseThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x160e,0,"%s");
   }
-  if (((param_2 == 1) || (param_2 == 8)) || (DAT_82e1e694 = 1, param_2 == 0x10)) {
-    DAT_82e1e694 = 0;
+  if (((param_2 == 1) || (param_2 == 8)) || (g_zoneAllocType = 1, param_2 == 0x10)) {
+    g_zoneAllocType = 0;
   }
-  PMem_BeginAlloc(param_1,DAT_82e1e694);
-  DAT_82ed8054 = 1;
+  PMem_BeginAlloc(param_1,g_zoneAllocType);
+  g_zoneAllocTypeValid = true;
   return;
 }
 
 
 // 823F55A8  DB_TryLoadXFileInternal  (database/db_registry.cpp:5659)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
-
-void DB_TryLoadXFileInternal(undefined8 param_1,ulonglong param_2)
+int DB_TryLoadXFileInternal(char *param_1,int param_2,int param_3)
 
 {
   char cVar1;
-  int iVar2;
-  char *_Str;
-  char cVar10;
-  int iVar6;
-  undefined8 uVar3;
+  char cVar2;
+  char *pcVar3;
+  bool bVar8;
+  uchar *puVar4;
+  char *pcVar5;
+  Sys_File SVar6;
   int iVar7;
-  int iVar8;
-  char *pcVar9;
-  longlong lVar4;
-  longlong lVar5;
-  char *pcVar11;
-  ulonglong uVar12;
-  int *_Dst;
+  ulonglong uVar9;
+  char *pcVar10;
+  ulonglong uVar11;
+  XZone *pXVar12;
   uint uVar13;
-  undefined1 *puVar14;
-  int local_180 [4];
-  undefined1 auStack_170 [368];
+  uint local_180;
+  void *local_17c;
+  char acStack_170 [368];
   
-  _Str = (char *)__savegprlr_20();
-  if (DAT_830daa44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x162b,0,0xffffffff82000f98,0xffffffff8205befc);
+  uVar9 = (ulonglong)param_2;
+  pcVar3 = (char *)__savegprlr_20(param_1,uVar9,param_3);
+  if (g_zoneInfoCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x162b,0,"%s");
   }
-  cVar10 = Sys_IsDatabaseThread();
-  if (cVar10 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x162c,0,0xffffffff82000f98,0xffffffff82059784);
+  bVar8 = Sys_IsDatabaseThread();
+  if (!bVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x162c,0,"%s");
   }
-  pcVar11 = "ffotd_mp";
-  pcVar9 = _Str;
+  pcVar10 = "ffotd_mp";
+  pcVar5 = pcVar3;
   do {
-    cVar10 = *pcVar9;
-    cVar1 = *pcVar11;
-    if (cVar10 == '\0') break;
-    pcVar9 = pcVar9 + 1;
-    pcVar11 = pcVar11 + 1;
-  } while (cVar10 == cVar1);
-  if (cVar10 == cVar1) {
-    iVar6 = LiveStorage_GetFFotDBuffer(local_180);
-    if (local_180[0] == 0) {
-      MyAssertHandler(0xffffffff8205b610,0x1633,0,0xffffffff82000f98,0xffffffff8205c5c4);
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar10;
+    if (cVar1 == '\0') break;
+    pcVar5 = pcVar5 + 1;
+    pcVar10 = pcVar10 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 == cVar2) {
+    local_17c = (void *)0x0;
+    puVar4 = LiveStorage_GetFFotDBuffer(&local_180);
+    if (local_180 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1633,0,"%s");
     }
-    if (iVar6 == 0) {
-      MyAssertHandler(0xffffffff8205b610,0x1634,0,0xffffffff82000f98,0xffffffff8205c5b4);
+    SVar6.handle = local_17c;
+    if (puVar4 == (uchar *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                      0x1634,0,"%s");
+      SVar6.handle = local_17c;
     }
-    iVar7 = 0;
   }
   else {
-    local_180[0] = 0;
-    iVar6 = 0;
-    Com_sprintf(auStack_170,0x100,0xffffffff8205c5ac,_Str);
-    uVar3 = Sys_GetMapZoneDir(_Str);
-    iVar7 = Sys_CreateFile(uVar3,auStack_170);
-    if (iVar7 == -1) {
-      iVar8 = I_strncmp(_Str,0xffffffff8205c5a4,5);
-      if ((((iVar8 != 0) && (iVar8 = I_strncmp(_Str,0xffffffff8205c5a0,3), iVar8 != 0)) &&
-          (iVar8 = I_strncmp(_Str,0xffffffff8205c59c,3), iVar8 != 0)) &&
-         (iVar8 = I_strncmp(_Str,0xffffffff820599d0,4), iVar8 != 0)) {
-        pcVar9 = strstr(_Str,"_load");
-        if (pcVar9 == (char *)0x0) {
-          Sys_Error(0xffffffff8205c54c,auStack_170);
-          goto LAB_823f56c4;
+    local_180 = 0;
+    puVar4 = (uchar *)0x0;
+    Com_sprintf(acStack_170,0x100,"%s.ff");
+    pcVar5 = Sys_GetMapZoneDir(pcVar3);
+    SVar6 = Sys_CreateFile(pcVar5,acStack_170);
+    if (SVar6.handle == (void *)0xffffffff) {
+      iVar7 = I_strncmp(pcVar3,"patch",5);
+      if ((((iVar7 != 0) && (iVar7 = I_strncmp(pcVar3,"ez_",3), iVar7 != 0)) &&
+          (iVar7 = I_strncmp(pcVar3,"dlc",3), iVar7 != 0)) &&
+         (iVar7 = I_strncmp(pcVar3,"dev_",4), iVar7 != 0)) {
+        pcVar3 = strstr(pcVar3,"_load");
+        if (pcVar3 == (char *)0x0) {
+                    /* WARNING: Subroutine does not return */
+          Sys_Error("ERROR: Could not find zone \'%s\'\n");
         }
-        Com_PrintWarning(10,0xffffffff8205c570,_Str);
+        Com_PrintWarning(10,"WARNING: Could not find zone \'%s\'\n");
       }
-      __restgprlr_20(0);
-      return;
+      iVar7 = __restgprlr_20(0);
+      return iVar7;
     }
   }
-LAB_823f56c4:
-  pcVar9 = &DAT_8314a078;
-  DAT_82ebbd2c = 0;
+  pcVar5 = g_zones[1].file.name;
+  g_zoneIndex = 0;
   uVar13 = 1;
-  uVar12 = 0x8c;
+  uVar11 = 0x8c;
   do {
-    if (*pcVar9 == '\0') {
-      DAT_82ebbd2c = uVar13;
+    if (*pcVar5 == '\0') {
+      g_zoneIndex = uVar13;
       if (uVar13 != 0) goto LAB_823f5834;
       break;
     }
-    uVar12 = uVar12 + 0x8c;
+    uVar11 = uVar11 + 0x8c;
     uVar13 = uVar13 + 1;
-    pcVar9 = pcVar9 + 0x8c;
-  } while ((uVar12 & 0xffffffff) < 0x120c);
-  MyAssertHandler(0xffffffff8205b610,0x1679,0,0xffffffff82000f98,0xffffffff8205c528);
+    pcVar5 = pcVar5 + 0x8c;
+  } while ((uVar11 & 0xffffffff) < 0x120c);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",0x1679
+                  ,0,"%s");
 LAB_823f5834:
-  if (*_Str == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x167a,0,0xffffffff82000f98,0xffffffff8205c51c);
+  if (*pcVar3 == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x167a,0,"%s");
   }
-  uVar13 = DAT_82ebbd2c;
-  iVar8 = DAT_82ebbd2c * 0x8c;
-  _Dst = &DAT_83149fe0 + DAT_82ebbd2c * 0x23;
-  memset(_Dst,0,0x8c);
+  uVar13 = g_zoneIndex;
+  pXVar12 = g_zones + g_zoneIndex;
+  memset();
   if (uVar13 != (uVar13 & 0xff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar13,uVar13 & 0xff);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  iVar2 = DAT_82ebbd24;
-  puVar14 = &DAT_83149fec + iVar8;
-  cVar10 = (&DAT_83149fec)[iVar8];
-  *_Dst = iVar7;
-  (&DAT_83149fe8)[uVar13 * 0x23] = iVar6;
-  (&DAT_83149fe4)[uVar13 * 0x23] = local_180[0];
-  (&DAT_8320105c)[iVar2] = (char)uVar13;
-  if (cVar10 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1686,0,0xffffffff82000f98,0xffffffff8205c508);
+  iVar7 = g_zoneCount;
+  pcVar5 = g_zones[uVar13].file.name;
+  cVar1 = g_zones[uVar13].file.name[0];
+  (pXVar12->file).handle.handle = SVar6.handle;
+  g_zones[uVar13].file.memoryBuffer = puVar4;
+  g_zones[uVar13].file.memoryBufferSize = local_180;
+  g_zoneHandles[iVar7] = (uchar)uVar13;
+  if (cVar1 != '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1686,0,"%s");
   }
-  I_strncpyz(puVar14,_Str,0x40);
-  (&DAT_8314a02c)[uVar13 * 0x23] = (int)param_2;
-  if (DAT_82ed8055 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1698,0,0xffffffff82000f98,0xffffffff8205c408);
+  I_strncpyz(pcVar5,pcVar3,0x40);
+  g_zones[uVar13].flags = (int)uVar9;
+  if (g_loadingZone != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1698,0,"%s");
   }
-  DAT_82ed8055 = '\x01';
-  DAT_82ebbd24 = DAT_82ebbd24 + 1;
-  lVar4 = Sys_Milliseconds();
-  DB_BeginAlloc(puVar14,param_2);
-  if ((param_2 & 2) != 0) {
-    if (DAT_82ebbd28 == 0) {
-      if (DAT_82cc929c != 0) {
-        MyAssertHandler(0xffffffff8205b610,0x16b2,0,0xffffffff82000f98,0xffffffff8205c4f0);
+  g_loadingZone = true;
+  g_zoneCount = g_zoneCount + 1;
+  Sys_Milliseconds();
+  DB_BeginAlloc(pcVar5,(int)uVar9);
+  if ((uVar9 & 2) != 0) {
+    if (db_MovieMemory == (uchar *)0x0) {
+      if (db_MovieMemoryInuse != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x16b2,0,"%s");
       }
-      DAT_82ebbd28 = PMem_AllocFromSource_NoDebug(0xa00000,0x1000,4,1);
+      db_MovieMemory = PMem_AllocFromSource_NoDebug(0xa00000,0x1000,4,PMEM_SOURCE_DATABASE);
     }
-    if ((param_2 & 2) != 0) {
-      if (DAT_83620464 == 0) {
-        DAT_83620464 = PMem_AllocFromSource_NoDebug(0x3c000,0x80,4,1);
+    if ((uVar9 & 2) != 0) {
+      if (s_playlistBuffer == (uchar *)0x0) {
+        s_playlistBuffer = PMem_AllocFromSource_NoDebug(0x3c000,0x80,4,PMEM_SOURCE_DATABASE);
       }
       DB_AllocMatchRulesNetworkingMemory();
       UI_ScreenshotAllocMemory();
       LiveStorage_CS_AllocMemory();
-      WebmTranscode__AllocateMemory(0xffffffff848764a8);
+      WebmTranscode::AllocateMemory(&webmTranscode);
       LiveStorage_AllocatePlaylistPopulation();
     }
   }
-  if (((param_2 & 4) != 0) && (DAT_830f9a9c == 0)) {
+  if (((uVar9 & 4) != 0) && (db_perLocalClientMemoryInuse == 0)) {
     CL_AllocatePerLocalClientMemory2();
     sync(1);
-    DAT_830f9a9c = 1;
+    db_perLocalClientMemoryInuse = 1;
   }
   sync(1);
-  DAT_82cf9a44 = 1;
-  (&DAT_8314a030)[uVar13 * 0x23] = DAT_82e1e694;
-  if ((param_2 & 4) == 0) {
+  g_zoneAllocDone = 1;
+  g_zones[uVar13].allocType = g_zoneAllocType;
+  if ((uVar9 & 4) == 0) {
     DB_ResetZoneSize(0,1);
   }
-  DB_LoadXFile(&DAT_8314a034 + iVar8,_Dst);
-  DAT_82ed8054 = 0;
-  PMem_EndAlloc(puVar14,DAT_82e1e694);
-  lVar5 = Sys_Milliseconds();
-  Com_Printf(10,0xffffffff8205c4d4,puVar14,lVar5 - lVar4);
-  if (DAT_82ed8055 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1706,0,0xffffffff82000f98,0xffffffff8205c4c4);
+  DB_LoadXFile(&g_zones[uVar13].mem,&pXVar12->file);
+  g_zoneAllocTypeValid = false;
+  PMem_EndAlloc(pcVar5,g_zoneAllocType);
+  Sys_Milliseconds();
+  Com_Printf(10,"Loaded zone \'%s\' in %ims\n");
+  if (g_loadingZone == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1706,0,"%s");
   }
-  DAT_82ed8055 = '\0';
-  __restgprlr_20(1);
-  return;
+  g_loadingZone = false;
+  iVar7 = __restgprlr_20(1);
+  return iVar7;
 }
 
 
 // 823F0180  DB_AbortFileHandles  (database/db_registry.cpp:5906)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_AbortFileHandles(void)
 
 {
-  BOOL BVar1;
+  byte bVar1;
   int iVar2;
-  uint uVar3;
+  int iVar3;
   int iVar4;
   
-  BVar1 = __savegprlr_23();
+  iVar2 = __savegprlr_23();
   iVar4 = 0;
-  iVar2 = DAT_82ebbd24;
-  if (0 < DAT_82ebbd24) {
+  iVar3 = g_zoneCount;
+  if (0 < g_zoneCount) {
     do {
-      uVar3 = (uint)(byte)(&DAT_8320105c)[iVar4];
-      if ((&DAT_83149fe0)[uVar3 * 0x23] != 0) {
-        if ((&DAT_83149fe8)[uVar3 * 0x23] != 0) {
-          MyAssertHandler(0xffffffff8205b610,0x15f7,0,0xffffffff82000f98,0xffffffff8205bf50);
+      bVar1 = g_zoneHandles[iVar4];
+      if (g_zones[bVar1].file.handle.handle != (void *)0x0) {
+        if (g_zones[bVar1].file.memoryBuffer != (uchar *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x15f7,0,"%s");
         }
-        BVar1 = CloseHandle((HANDLE)(&DAT_83149fe0)[uVar3 * 0x23]);
-        iVar2 = DAT_82ebbd24;
-        (&DAT_83149fe0)[uVar3 * 0x23] = 0;
+        iVar2 = CloseHandle(g_zones[bVar1].file.handle.handle);
+        iVar3 = g_zoneCount;
+        g_zones[bVar1].file.handle.handle = (void *)0x0;
       }
       iVar4 = iVar4 + 1;
-    } while (iVar4 < iVar2);
+    } while (iVar4 < iVar3);
   }
-  __restgprlr_23(BVar1);
+  __restgprlr_23(iVar2);
   return;
 }
 
 
 // 823F0230  DB_IsAlloc  (database/db_registry.cpp:5915)
 
-undefined8 DB_IsAlloc(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool DB_IsAlloc(void)
 
 {
-  undefined8 uVar1;
+  bool bVar1;
   
-  if (DAT_83231bc0 == '\0') {
-    return 0;
+  if (!g_zoneInited) {
+    return false;
   }
-  uVar1 = Sys_IsDatabaseThread();
-  return uVar1;
+  bVar1 = Sys_IsDatabaseThread();
+  return bVar1;
 }
 
 
 // 823F0250  DB_IsDebugAlloc  (database/db_registry.cpp:5924)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool DB_IsDebugAlloc(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (DAT_83231bc0 == '\0') {
+  if (!g_zoneInited) {
     return false;
   }
-  cVar1 = Sys_IsDatabaseThread();
-  return cVar1 == '\0';
+  bVar1 = Sys_IsDatabaseThread();
+  return !bVar1;
 }
 
 
 // 823F02A0  DB_GetAllocType  (database/db_registry.cpp:5933)
 
-undefined4 DB_GetAllocType(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_GetAllocType(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Sys_IsDatabaseThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x172e,0,0xffffffff82000f98,0xffffffff82059784);
+  bVar1 = Sys_IsDatabaseThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x172e,0,"%s");
   }
-  if (DAT_82ed8054 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x172f,0,0xffffffff82000f98,0xffffffff8205bf6c);
+  if (g_zoneAllocTypeValid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x172f,0,"%s");
   }
-  return DAT_82e1e694;
+  return g_zoneAllocType;
 }
 
 
 // 823F0348  DB_GetLoadedFlags  (database/db_registry.cpp:5942)
 
-undefined4 DB_GetLoadedFlags(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int DB_GetLoadedFlags(void)
 
 {
-  return DAT_82cc737c;
+  return db_loadedFlags;
 }
 
 
 // 823F0358  DB_DoingWork  (database/db_registry.cpp:5948)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 bool DB_DoingWork(void)
 
 {
-  return DAT_82ed7d3c == 0;
+  return g_databaseReady == 0;
 }
 
 
 // 823F0370  DB_DLC1UIFastFileName  (database/db_registry.cpp:5954)
 
-undefined8 DB_DLC1UIFastFileName(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * DB_DLC1UIFastFileName(void)
 
 {
-  return 0xffffffff8205bf84;
+  return "dlc1_ui_mp";
 }
 
 
 // 823F0380  DB_DLC2UIFastFileName  (database/db_registry.cpp:5964)
 
-undefined8 DB_DLC2UIFastFileName(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * DB_DLC2UIFastFileName(void)
 
 {
-  return 0xffffffff8205bf90;
+  return "dlc2_ui_mp";
 }
 
 
 // 823F5AD8  DB_IsFileLoaded  (database/db_registry.cpp:5974)
 
-void DB_IsFileLoaded(void)
+bool DB_IsFileLoaded(char *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   int iVar2;
-  int iVar3;
+  undefined1 uVar3;
+  int iVar4;
   
-  uVar1 = __savegprlr_27();
-  if (DAT_83231bc0 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1759,0,0xffffffff82000f98,0xffffffff8205c5e4);
+  pcVar1 = (char *)__savegprlr_27(param_1);
+  if (g_zoneInited == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1759,0,"%s");
   }
   DB_SyncXAssets();
-  iVar3 = 0;
-  if (0 < DAT_82ebbd24) {
+  iVar4 = 0;
+  if (0 < g_zoneCount) {
     do {
-      iVar2 = I_stricmp((ulonglong)(byte)(&DAT_8320105c)[iVar3] * 0x8c + -0x7ceb6014,uVar1);
+      iVar2 = I_stricmp(g_zones[g_zoneHandles[iVar4]].file.name,pcVar1);
       if (iVar2 == 0) {
-        __restgprlr_27(1);
-        return;
+        uVar3 = __restgprlr_27(1);
+        return (bool)uVar3;
       }
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < DAT_82ebbd24);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < g_zoneCount);
   }
-  __restgprlr_27(0);
-  return;
+  uVar3 = __restgprlr_27(0);
+  return (bool)uVar3;
 }
 
 
 // 823F5B90  DB_TryLoadXFile  (database/db_registry.cpp:5991)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_TryLoadXFile(void)
 
 {
   bool bVar1;
-  longlong lVar2;
-  int iVar4;
-  longlong lVar3;
-  ulonglong uVar5;
-  undefined *puVar6;
+  int iVar2;
+  undefined8 in_r5;
+  ulonglong uVar3;
+  XZoneInfoInternal *pXVar4;
   char in_RESERVE;
   byte in_cr0;
   
   __savegprlr_24();
-  uVar5 = (ulonglong)DAT_830daa44;
-  if (uVar5 == 0) goto LAB_823f5cf8;
+  uVar3 = (ulonglong)g_zoneInfoCount;
+  if (uVar3 == 0) goto LAB_823f5cf8;
   sync(1);
-  lVar2 = Sys_Milliseconds();
+  Sys_Milliseconds();
   bVar1 = false;
-  DAT_830daa44 = 0;
-  if (DAT_82ed8055 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x177d,0,0xffffffff82000f98,0xffffffff8205c408);
+  g_zoneInfoCount = 0;
+  if (g_loadingZone != false) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x177d,0,"%s");
   }
-  iVar4 = DB_EnterStreaming();
-  if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1784,0,0xffffffff82000f98,0xffffffff8205c610);
+  iVar2 = DB_EnterStreaming();
+  if (iVar2 != 0) {
+    in_r5 = 0;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1784,0,"%s");
   }
   do {
     if (in_RESERVE != '\0') {
-      DAT_832ee080 = storeWordConditionalIndexed((ulonglong)DAT_832ee080 - 1,0,0xffffffff832ee080);
+      g_streamAbort =
+           storeWordConditionalIndexed((ulonglong)(uint)g_streamAbort - 1,0,0xffffffff832ee080);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   ImageCache_UpdateGPU();
-  if (uVar5 == 0) {
+  if (uVar3 == 0) {
 LAB_823f5c8c:
     sync(1);
-    DAT_82cf9a44 = 1;
+    g_zoneAllocDone = 1;
   }
   else {
-    puVar6 = &DAT_82cc92a0;
+    pXVar4 = g_zoneInfo;
     do {
-      iVar4 = DB_TryLoadXFileInternal(puVar6,*(undefined4 *)(puVar6 + 0x40));
-      if (iVar4 != 0) {
+      iVar2 = DB_TryLoadXFileInternal(pXVar4->name,pXVar4->flags,(int)in_r5);
+      if (iVar2 != 0) {
         bVar1 = true;
       }
-      uVar5 = uVar5 - 1;
-      puVar6 = puVar6 + 0x48;
-    } while (uVar5 != 0);
+      uVar3 = uVar3 - 1;
+      pXVar4 = pXVar4 + 1;
+    } while (uVar3 != 0);
     if (!bVar1) goto LAB_823f5c8c;
   }
-  if (DAT_82ed8055 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1796,0,0xffffffff82000f98,0xffffffff8205c408);
+  if (g_loadingZone != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1796,0,"%s");
   }
   DB_LoadAlwaysLoadedAssets();
   DB_ReadAlwaysLoadedAssets();
   DB_LeaveStreaming();
-  lVar3 = Sys_Milliseconds();
-  Com_Printf(10,0xffffffff8205c5f4,lVar3 - lVar2);
+  Sys_Milliseconds();
+  Com_Printf(10,"Loaded fastfiles in %ims\n");
   DB_EnterStreamingTabulate();
   Sys_DatabaseCompleted();
   DB_SetHighPriorityAssets();
@@ -6598,21 +7989,23 @@ LAB_823f5cf8:
 
 // 823F5D00  DB_Thread  (database/db_registry.cpp:6075)
 
-void DB_Thread(ulonglong param_1)
+void DB_Thread(uint param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
+  int iVar2;
   
-  if ((param_1 & 0xffffffff) != 8) {
-    MyAssertHandler(0xffffffff8205b610,0x17bf,0,0xffffffff8205c620,param_1,8);
+  if (param_1 != 8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x17bf,0,"threadContext == THREAD_CONTEXT_DATABASE\n\t%i, %i");
   }
-  Sys_GetValue(2);
-  iVar1 = setjmp();
-  while (iVar1 != 0) {
+  pvVar1 = Sys_GetValue(2);
+  setjmp();
+  while (pvVar1 != (void *)0x0) {
     Profile_Recover(1);
     Com_ErrorAbort();
-    Sys_GetValue(2);
-    iVar1 = setjmp();
+    pvVar1 = Sys_GetValue(2);
+    setjmp();
   }
   Profile_Guard(1);
   do {
@@ -6623,31 +8016,35 @@ void DB_Thread(ulonglong param_1)
       DB_Stream();
       Sys_StartDatabase();
       DB_TryLoadXFile();
-      iVar1 = DB_AllowStream();
-    } while (iVar1 != 0);
+      iVar2 = DB_AllowStream();
+    } while (iVar2 != 0);
   } while( true );
 }
 
 
 // 823F66A8  DB_InitThread  (database/db_registry.cpp:6131)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_InitThread(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (DAT_83231bc0 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x17f4,0,0xffffffff82000f98,0xffffffff8205c7e8);
+  if (g_zoneInited) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x17f4,0,"%s");
   }
-  DAT_83231bc0 = 1;
+  g_zoneInited = true;
   DB_Init();
   DB_AuthInitLZX();
   DB_StreamInit();
-  Cmd_AddCommandInternal(0xffffffff8205c7dc,0xffffffff823f6458,0xffffffff83231bdc);
-  Cmd_AddCommandInternal(0xffffffff8205c7cc,0xffffffff823f4c20,0xffffffff83231bc8);
-  cVar1 = Sys_SpawnDatabaseThread(0xffffffff823f5d00);
-  if (cVar1 == '\0') {
-    Sys_Error(0xffffffff8205c7a8);
+  Cmd_AddCommandInternal("loadzone",DB_LoadZone_f,&DB_LoadZone_f_VAR);
+  Cmd_AddCommandInternal("db_pool_info",DB_ReportPoolInfo_f,&DB_ReportPoolInfo_f_VAR);
+  bVar1 = Sys_SpawnDatabaseThread(DB_Thread);
+  if (!bVar1) {
+                    /* WARNING: Subroutine does not return */
+    Sys_Error("Failed to create database thread");
   }
   return;
 }
@@ -6655,196 +8052,222 @@ void DB_InitThread(void)
 
 // 823F0390  DB_UnloadXZone  (database/db_registry.cpp:6159)
 
-void DB_UnloadXZone(undefined8 param_1,char param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_UnloadXZone(uint param_1,bool param_2)
 
 {
   byte bVar1;
   ushort uVar2;
-  int iVar3;
+  ushort uVar3;
   int iVar4;
-  uint uVar7;
-  undefined8 uVar5;
-  undefined8 uVar6;
-  int iVar8;
-  size_t sVar9;
-  int iVar10;
-  ulonglong uVar11;
+  XAssetType XVar5;
+  ulonglong uVar6;
+  XAssetHeader XVar7;
+  char *pcVar8;
+  int iVar9;
+  uint uVar11;
+  ulonglong uVar10;
   int *in_r13;
   ushort *puVar12;
-  int *piVar13;
-  int *piVar14;
+  XAssetEntry *pXVar13;
+  XAssetEntry *pXVar14;
+  char cStack0000001f;
   ushort *local_e0;
   uint local_d4;
-  int local_a8;
-  int local_a4;
+  XAsset local_a8 [21];
   
-  uVar7 = __savegprlr();
-  if (uVar7 == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x181a,0,0xffffffff82000f98,0xffffffff8205c02c);
+  uVar6 = (ulonglong)(int)param_1;
+  __savegprlr();
+  cStack0000001f = param_2;
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x181a,0,"%s");
   }
-  iVar3 = *in_r13;
-  if (*(int *)(iVar3 + 0xc) != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x181d,0,0xffffffff82000f98,0xffffffff8205bbbc);
+  iVar4 = *in_r13;
+  if (*(int *)(iVar4 + 0xc) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x181d,0,"%s");
   }
-  local_e0 = &DAT_82d15b58;
+  local_e0 = db_hashTable;
   local_d4 = 50000;
-  *(undefined4 *)(iVar3 + 0xc) = 1;
+  *(undefined4 *)(iVar4 + 0xc) = 1;
   do {
     uVar2 = *local_e0;
     puVar12 = local_e0;
     while (uVar2 != 0) {
-      iVar4 = (uint)*puVar12 * 0x14;
-      piVar14 = (int *)(&DAT_82ed8058 + iVar4);
-      if ((byte)(&DAT_82ed8060)[iVar4] == uVar7) {
-        if (DAT_82ed8056 != '\0') {
-          uVar5 = DB_GetXAssetName(piVar14);
-          uVar6 = DB_GetXAssetTypeName(*piVar14);
-          Com_Printf(0x10,"mychanges unload asset: %s,%s\n",uVar6,uVar5);
+      uVar2 = *puVar12;
+      pXVar14 = g_assetEntryPool + uVar2;
+      if ((ulonglong)g_assetEntryPool[uVar2].zoneIndex == (uVar6 & 0xffffffff)) {
+        if (g_loadingDebugZone != false) {
+          DB_GetXAssetName(&pXVar14->asset);
+          DB_GetXAssetTypeName((pXVar14->asset).type);
+          Com_Printf(0x10,"mychanges unload asset: %s,%s\n");
         }
-        if (*(ushort *)(&DAT_82ed8064 + iVar4) != 0) {
-          iVar10 = (uint)*(ushort *)(&DAT_82ed8064 + iVar4) * 0x14;
-          piVar13 = (int *)(&DAT_82ed8058 + iVar10);
-          (&DAT_82ed8060)[iVar4] = (&DAT_82ed8060)[iVar10];
-          *(undefined2 *)(&DAT_82ed8064 + iVar4) = *(undefined2 *)(&DAT_82ed8064 + iVar10);
-          (&DAT_82ed8060)[iVar10] = (char)uVar7;
-          if (*(int *)(&DAT_82ed8058 + iVar10) != *piVar14) {
-            MyAssertHandler(0xffffffff8205b610,0xec8,0,0xffffffff82000f98,0xffffffff8205b944);
+        uVar11 = (uint)g_assetEntryPool[uVar2].nextOverride;
+        if (uVar11 != 0) {
+          pXVar13 = g_assetEntryPool + uVar11;
+          g_assetEntryPool[uVar2].zoneIndex = g_assetEntryPool[uVar11].zoneIndex;
+          g_assetEntryPool[uVar2].nextOverride = g_assetEntryPool[uVar11].nextOverride;
+          g_assetEntryPool[uVar11].zoneIndex = (uchar)uVar6;
+          if (g_assetEntryPool[uVar11].asset.type != (pXVar14->asset).type) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0xec8,0,"%s");
           }
-          if (*(code **)(&DAT_82967ab0 + *piVar13 * 4) == (code *)0x0) {
-            if (*(code **)(&DAT_82967c10 + *piVar14 * 4) != (code *)0x0) {
-              (**(code **)(&DAT_82967c10 + *piVar14 * 4))(*(undefined4 *)(&DAT_82ed805c + iVar4));
+          if (DB_DynamicCloneXAssetHandler[(pXVar13->asset).type] ==
+              (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) {
+            if (DB_ReleaseXAssetHandler[(pXVar14->asset).type] !=
+                (_func___cdecl_void_XAssetHeader *)0x0) {
+              (*DB_ReleaseXAssetHandler[(pXVar14->asset).type])
+                        ((XAssetHeader)g_assetEntryPool[uVar2].asset.header.physPreset);
             }
 LAB_823f0860:
-            if (*piVar13 != *piVar14) {
-              MyAssertHandler(0xffffffff8205b610,0xebe,0,0xffffffff82000f98,0xffffffff8205b944);
+            if ((pXVar13->asset).type != (pXVar14->asset).type) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                              ,0xebe,0,"%s");
             }
-            sVar9 = DB_GetXAssetTypeSize(*piVar13);
-            if (0x800 < sVar9) {
-              MyAssertHandler(0xffffffff8205b610,0xec1,0,0xffffffff82000f98,
-                              "size <= sizeof( XAssetSize )");
+            uVar11 = DB_GetXAssetTypeSize((pXVar13->asset).type);
+            if (0x800 < uVar11) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                              ,0xec1,0,"%s");
             }
-            memcpy(*(void **)(&DAT_82ed805c + iVar4),*(void **)(&DAT_82ed805c + iVar10),sVar9);
+            memcpy();
           }
           else {
-            iVar8 = (**(code **)(&DAT_82967ab0 + *piVar13 * 4))
-                              (*(undefined4 *)(&DAT_82ed805c + iVar10),
-                               *(undefined4 *)(&DAT_82ed805c + iVar4),1);
-            if (iVar8 != 0) goto LAB_823f0860;
+            iVar9 = (*DB_DynamicCloneXAssetHandler[(pXVar13->asset).type])
+                              ((XAssetHeader)g_assetEntryPool[uVar11].asset.header.physPreset,
+                               (XAssetHeader)g_assetEntryPool[uVar2].asset.header.physPreset,
+                               DB_CLONE_NORMAL);
+            if (iVar9 != 0) goto LAB_823f0860;
           }
-          DB_FreeXAssetEntry(piVar13);
-          if (*piVar14 == 3) {
-            DAT_8314b1ec = 1;
+          DB_FreeXAssetEntry(pXVar13);
+          if ((pXVar14->asset).type == ASSET_TYPE_XMODEL_SURFS) {
+            g_unloadedModelSurfs = 1;
           }
-          if (((&DAT_82ed8061)[iVar4] & 1) != 0) {
-            DAT_82ed7d3c = 1;
-            DAT_831ed7cc = 1;
-            DAT_82cc61c8 = piVar14;
-            (&DAT_82ed8061)[iVar4] = (&DAT_82ed8061)[iVar4] | 4;
-            (&DAT_82ed8061)[iVar4] = (&DAT_82ed8061)[iVar4] & 0xfe;
+          if ((g_assetEntryPool[uVar2].inuseMask & 1) != 0) {
+            g_databaseReady = 1;
+            g_inuseMask = '\x01';
+            marXAsset = &pXVar14->asset;
+            g_assetEntryPool[uVar2].inuseMask = g_assetEntryPool[uVar2].inuseMask | 4;
+            g_assetEntryPool[uVar2].inuseMask = g_assetEntryPool[uVar2].inuseMask & 0xfe;
             Mark_XAsset();
-            (&DAT_82ed8061)[iVar4] = (&DAT_82ed8061)[iVar4] & 0xfb;
+            g_assetEntryPool[uVar2].inuseMask = g_assetEntryPool[uVar2].inuseMask & 0xfb;
           }
           goto LAB_823f0934;
         }
-        if (*(code **)(&DAT_82967c10 + *piVar14 * 4) != (code *)0x0) {
-          (**(code **)(&DAT_82967c10 + *piVar14 * 4))(*(undefined4 *)(&DAT_82ed805c + iVar4));
+        if (DB_ReleaseXAssetHandler[(pXVar14->asset).type] != (_func___cdecl_void_XAssetHeader *)0x0
+           ) {
+          (*DB_ReleaseXAssetHandler[(pXVar14->asset).type])
+                    ((XAssetHeader)g_assetEntryPool[uVar2].asset.header.physPreset);
         }
-        if (param_2 != '\0') {
-          bVar1 = (&DAT_82ed8060)[iVar4];
+        if (cStack0000001f != '\0') {
+          bVar1 = g_assetEntryPool[uVar2].zoneIndex;
           if (0x20 < bVar1) {
-            MyAssertHandler(0xffffffff8205b610,0xce8,0,
-                            "zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)",
-                            bVar1,0x21);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0xce8,0,
+                            "zoneIndex doesn\'t index ARRAY_COUNT( g_zones )\n\t%i not in [0, %i)");
           }
-          if (((uint)(&DAT_8314a02c)[(uint)bVar1 * 0x23] >> 4 & 1) != 0) {
-            DAT_82ed7d40 = DAT_82ed7d40 + 1;
+          if (((uint)g_zones[bVar1].flags >> 4 & 1) != 0) {
+            g_assetEntryUsedCount = g_assetEntryUsedCount + 1;
           }
-          DB_DecShipAssetCount(*piVar14,(&DAT_82ed8060)[iVar4]);
-          (&DAT_82ed8060)[iVar4] = 0;
-          DAT_83231bc4 = DAT_83231bc4 + 1;
-          iVar10 = *piVar14;
-          local_a8 = iVar10;
-          iVar8 = DB_FindXAssetDefaultHeaderInternal(iVar10);
-          local_a4 = iVar8;
-          if ((iVar10 == 8) && (*(char *)(iVar8 + 0x47) != '\0')) {
-            MyAssertHandler(0xffffffff8205b610,0x184c,0,0xffffffff82000f98,
-                            "!R_IsCachedImage( asset.header.image )");
+          DB_DecShipAssetCount((pXVar14->asset).type,(uint)g_assetEntryPool[uVar2].zoneIndex);
+          g_assetEntryPool[uVar2].zoneIndex = '\0';
+          g_defaultAssetCount = g_defaultAssetCount + 1;
+          XVar5 = (pXVar14->asset).type;
+          local_a8[0].type = XVar5;
+          XVar7 = DB_FindXAssetDefaultHeaderInternal(XVar5);
+          local_a8[0].header = XVar7;
+          if ((XVar5 == ASSET_TYPE_IMAGE) && ((XVar7.image)->cached != '\0')) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x184c,0,"%s");
           }
-          uVar5 = DB_GetXAssetName(piVar14);
-          if (iVar8 == 0) {
-            if ((1 < (int)(&DAT_82967530)[iVar10]) && (iVar10 != 0x11)) {
-              if (*(int *)(iVar3 + 0xc) == 0) {
-                MyAssertHandler(0xffffffff8205b610,0x1856,0,0xffffffff82000f98,"db_markAsset");
+          pcVar8 = DB_GetXAssetName(&pXVar14->asset);
+          if (XVar7.physPreset == (PhysPreset *)0x0) {
+            if ((1 < g_poolSize[XVar5]) && (XVar5 != ASSET_TYPE_MAP_ENTS)) {
+              if (*(int *)(iVar4 + 0xc) == 0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                                ,0x1856,0,"%s");
               }
-              *(undefined4 *)(iVar3 + 0xc) = 0;
-              Sys_UnlockWrite(0xffffffff83208b8c);
-              Sys_Error(0xffffffff8205bf9c,(&PTR_s_physpreset_82967050)[iVar10]);
+              *(undefined4 *)(iVar4 + 0xc) = 0;
+              Sys_UnlockWrite(&db_hashCritSect);
+                    /* WARNING: Subroutine does not return */
+              Sys_Error("Could not load default asset for asset type \'%s\'");
             }
-            sVar9 = DB_GetXAssetTypeSize(iVar10);
-            memset(*(void **)(&DAT_82ed805c + iVar4),0,sVar9);
+            DB_GetXAssetTypeSize(XVar5);
+            memset();
           }
           else {
-            if (iVar10 != *piVar14) {
-              MyAssertHandler(0xffffffff8205b610,0xec8,0,0xffffffff82000f98,0xffffffff8205b944);
+            if (XVar5 != (pXVar14->asset).type) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                              ,0xec8,0,"%s");
             }
-            if ((*(code **)(&DAT_82967ab0 + iVar10 * 4) == (code *)0x0) ||
-               (iVar10 = (**(code **)(&DAT_82967ab0 + iVar10 * 4))
-                                   (iVar8,*(undefined4 *)(&DAT_82ed805c + iVar4),0), iVar10 != 0)) {
-              DB_CloneXAssetInternal(&local_a8,piVar14);
+            if ((DB_DynamicCloneXAssetHandler[XVar5] ==
+                 (_func___cdecl_int_XAssetHeader_XAssetHeader_DB_CloneType *)0x0) ||
+               (iVar9 = (*DB_DynamicCloneXAssetHandler[XVar5])
+                                  ((XAssetHeader)XVar7.physPreset,
+                                   (XAssetHeader)g_assetEntryPool[uVar2].asset.header.physPreset,
+                                   DB_CLONE_DEFAULT), iVar9 != 0)) {
+              DB_CloneXAssetInternal(local_a8,&pXVar14->asset);
             }
             else {
-              MyAssertHandler(0xffffffff8205b610,0xece,0,"%s\n\t(cloneType) = %i",
-                              "(cloneType == DB_CLONE_NORMAL || cloneType == DB_CLONE_NORMAL_FROM_DEFAULT)"
-                              ,0);
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                              ,0xece,0,"%s\n\t(cloneType) = %i");
             }
           }
-          DB_SetXAssetName(piVar14,uVar5);
-          DB_IncShipAssetCount(*piVar14,(&DAT_82ed8060)[iVar4]);
-          *(int *)(&DAT_83208b98 + *piVar14 * 4) = *(int *)(&DAT_83208b98 + *piVar14 * 4) + -1;
+          DB_SetXAssetName(&pXVar14->asset,pcVar8);
+          DB_IncShipAssetCount((pXVar14->asset).type,(uint)g_assetEntryPool[uVar2].zoneIndex);
+          XVar5 = (pXVar14->asset).type;
+          g_shipAssetCount[XVar5] = g_shipAssetCount[XVar5] + -1;
           goto LAB_823f0934;
         }
-        if (*(short *)(&DAT_82ed8064 + iVar4) != 0) {
-          MyAssertHandler(0xffffffff8205b610,0x1836,0,0xffffffff82000f98,"!assetEntry->nextOverride"
-                         );
+        if (g_assetEntryPool[uVar2].nextOverride != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x1836,0,"%s");
         }
-        *puVar12 = *(ushort *)(&DAT_82ed8062 + iVar4);
-        DB_FreeXAssetEntry(piVar14);
+        *puVar12 = g_assetEntryPool[uVar2].nextHash;
+        DB_FreeXAssetEntry(pXVar14);
       }
       else {
 LAB_823f0934:
-        puVar12 = (ushort *)(&DAT_82ed8064 + iVar4);
-        uVar2 = *(ushort *)(&DAT_82ed8064 + iVar4);
-        while (uVar2 != 0) {
-          iVar10 = (uint)*puVar12 * 0x14;
-          if ((&DAT_82ed8061)[iVar10] != '\0') {
-            MyAssertHandler(0xffffffff8205b610,0x188d,0,0xffffffff82000f98,
-                            "!overrideAssetEntry->inuseMask");
+        puVar12 = &g_assetEntryPool[uVar2].nextOverride;
+        uVar3 = g_assetEntryPool[uVar2].nextOverride;
+        while (uVar3 != 0) {
+          uVar3 = *puVar12;
+          if (g_assetEntryPool[uVar3].inuseMask != '\0') {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x188d,0,"%s");
           }
-          if ((byte)(&DAT_82ed8060)[iVar10] == uVar7) {
-            if (*(code **)(&DAT_82967c10 + *(int *)(&DAT_82ed8058 + iVar10) * 4) != (code *)0x0) {
-              (**(code **)(&DAT_82967c10 + *(int *)(&DAT_82ed8058 + iVar10) * 4))
-                        (*(undefined4 *)(&DAT_82ed805c + iVar10));
+          if ((ulonglong)g_assetEntryPool[uVar3].zoneIndex == (uVar6 & 0xffffffff)) {
+            if (DB_ReleaseXAssetHandler[g_assetEntryPool[uVar3].asset.type] !=
+                (_func___cdecl_void_XAssetHeader *)0x0) {
+              (*DB_ReleaseXAssetHandler[g_assetEntryPool[uVar3].asset.type])
+                        ((XAssetHeader)g_assetEntryPool[uVar3].asset.header.physPreset);
             }
-            *puVar12 = *(ushort *)(&DAT_82ed8064 + iVar10);
-            DB_FreeXAssetEntry(&DAT_82ed8058 + iVar10);
+            *puVar12 = g_assetEntryPool[uVar3].nextOverride;
+            DB_FreeXAssetEntry(g_assetEntryPool + uVar3);
           }
           else {
-            puVar12 = (ushort *)(&DAT_82ed8064 + iVar10);
+            puVar12 = &g_assetEntryPool[uVar3].nextOverride;
           }
-          uVar2 = *puVar12;
+          uVar3 = *puVar12;
         }
-        puVar12 = (ushort *)(&DAT_82ed8062 + iVar4);
+        puVar12 = &g_assetEntryPool[uVar2].nextHash;
       }
       uVar2 = *puVar12;
     }
-    uVar11 = (ulonglong)local_d4;
+    uVar10 = (ulonglong)local_d4;
     local_e0 = local_e0 + 1;
-    local_d4 = (uint)(uVar11 - 1);
-    if (uVar11 - 1 == 0) {
-      if (*(int *)(iVar3 + 0xc) == 0) {
-        MyAssertHandler(0xffffffff8205b610,0x18a0,0,0xffffffff82000f98,"db_markAsset");
+    local_d4 = (uint)(uVar10 - 1);
+    if (uVar10 - 1 == 0) {
+      if (*(int *)(iVar4 + 0xc) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x18a0,0,"%s");
       }
-      *(undefined4 *)(iVar3 + 0xc) = 0;
+      *(undefined4 *)(iVar4 + 0xc) = 0;
       __restgprlr();
       return;
     }
@@ -6854,66 +8277,78 @@ LAB_823f0934:
 
 // 823F0A38  DB_UnloadXZoneMemory  (database/db_registry.cpp:6311)
 
-void DB_UnloadXZoneMemory(int param_1)
+void DB_UnloadXZoneMemory(XZone *param_1)
 
 {
-  int iVar1;
+  XZone *pXVar1;
   
-  iVar1 = DB_GetFile();
-  if (param_1 == iVar1) {
-    MyAssertHandler(0xffffffff8205b610,0x18a9,0,0xffffffff82000f98,0xffffffff8205c050);
+  pXVar1 = (XZone *)DB_GetFile();
+  if (param_1 == pXVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x18a9,0,"%s");
   }
   DB_CloseFileHandle(param_1);
-  DB_FreeXZoneMemory(param_1 + 0x54);
-  Com_Printf(0x10,0xffffffff8205c038,param_1 + 0xc);
-  PMem_Free(param_1 + 0xc,*(undefined4 *)(param_1 + 0x50));
-  *(undefined1 *)(param_1 + 0xc) = 0;
+  DB_FreeXZoneMemory(&param_1->mem);
+  Com_Printf(0x10,"Unloaded fastfile %s\n");
+  PMem_Free((param_1->file).name,param_1->allocType);
+  (param_1->file).name[0] = '\0';
   return;
 }
 
 
 // 823F0AD8  DB_FreeDefaultEntries  (database/db_registry.cpp:6325)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_FreeDefaultEntries(void)
 
 {
   ushort uVar1;
-  int iVar2;
-  int iVar3;
+  XAssetType XVar2;
+  uint uVar3;
   longlong lVar4;
   undefined2 *puVar5;
   
   __savegprlr_19();
-  if (DAT_82ed8056 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x18bc,0,0xffffffff82000f98,0xffffffff8205bc94);
+  if (g_loadingDebugZone != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x18bc,0,"%s");
   }
-  puVar5 = (undefined2 *)0x82d15b56;
+  puVar5 = (undefined2 *)((int)&marker_db_registry + 2);
   lVar4 = 50000;
   do {
     uVar1 = puVar5[1];
-    while (uVar1 != 0) {
-      iVar2 = (uint)uVar1 * 0x14;
-      uVar1 = *(ushort *)(&DAT_82ed8062 + iVar2);
-      if ((&DAT_82ed8060)[iVar2] != '\0') {
-        MyAssertHandler(0xffffffff8205b610,0x18c5,0,0xffffffff82000f98,0xffffffff8205c084);
+    while (uVar3 = (uint)uVar1, uVar3 != 0) {
+      uVar1 = g_assetEntryPool[uVar3].nextHash;
+      if (g_assetEntryPool[uVar3].zoneIndex != '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x18c5,0,"%s");
       }
-      if (*(short *)(&DAT_82ed8064 + iVar2) != 0) {
-        MyAssertHandler(0xffffffff8205b610,0x18c6,0,0xffffffff82000f98,0xffffffff8205bff0);
+      if (g_assetEntryPool[uVar3].nextOverride != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x18c6,0,"%s");
       }
-      if (DAT_83231bc4 == 0) {
-        MyAssertHandler(0xffffffff8205b610,0x18c7,0,0xffffffff82000f98,0xffffffff8205bc44);
+      if (g_defaultAssetCount == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x18c7,0,"%s");
       }
-      DAT_83231bc4 = DAT_83231bc4 + -1;
-      iVar3 = *(int *)(&DAT_82ed8058 + iVar2) * 4;
-      *(int *)(&DAT_83208b98 + iVar3) = *(int *)(&DAT_83208b98 + iVar3) + 1;
-      DB_FreeXAssetEntry(&DAT_82ed8058 + iVar2);
+      XVar2 = g_assetEntryPool[uVar3].asset.type;
+      g_defaultAssetCount = g_defaultAssetCount + -1;
+      g_shipAssetCount[XVar2] = g_shipAssetCount[XVar2] + 1;
+      DB_FreeXAssetEntry(g_assetEntryPool + uVar3);
     }
     lVar4 = lVar4 + -1;
     puVar5 = puVar5 + 1;
     *puVar5 = 0;
   } while (lVar4 != 0);
-  if (DAT_83231bc4 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x18d1,0,0xffffffff82000f98,0xffffffff8205c06c);
+  if (g_defaultAssetCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x18d1,0,"%s");
   }
   __restgprlr_19();
   return;
@@ -6922,97 +8357,107 @@ void DB_FreeDefaultEntries(void)
 
 // 823F0C60  DB_ReleaseXAssets  (database/db_registry.cpp:6358)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_ReleaseXAssets(void)
 
 {
   ushort uVar1;
-  int iVar2;
-  char cVar3;
+  uint uVar2;
+  bool bVar3;
   ushort *puVar4;
   longlong lVar5;
   
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x18db,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x18db,0,"%s");
   }
   Sys_SyncDatabase();
-  Sys_LockWrite(0xffffffff83208b8c);
-  puVar4 = &DAT_82d15b58;
+  Sys_LockWrite(&db_hashCritSect);
+  puVar4 = db_hashTable;
   lVar5 = 50000;
   do {
     uVar1 = *puVar4;
-    while (uVar1 != 0) {
-      iVar2 = (uint)uVar1 * 0x14;
-      uVar1 = *(ushort *)(&DAT_82ed8062 + iVar2);
-      (&DAT_82ed8061)[iVar2] = 0;
+    while (uVar2 = (uint)uVar1, uVar2 != 0) {
+      uVar1 = g_assetEntryPool[uVar2].nextHash;
+      g_assetEntryPool[uVar2].inuseMask = '\0';
     }
     puVar4 = puVar4 + 1;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  Sys_UnlockWrite(&db_hashCritSect);
   return;
 }
 
 
 // 823F5DA0  DB_ShutdownXAssets  (database/db_registry.cpp:6383)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ShutdownXAssets(void)
 
 {
-  int *piVar1;
-  uint uVar2;
-  int iVar3;
+  byte bVar1;
+  XZone *pXVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  int *piVar6;
+  XZone *pXVar5;
   
   __savegprlr_19();
-  DAT_82d14a94 = 1;
+  g_skipReadAlwaysLoadedAssets = 1;
   DB_SyncXAssets();
   DB_ArchiveAssets();
-  if (DAT_83208b90 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x18f8,0,0xffffffff82000f98,0xffffffff8205c654);
+  if (db_hashCritSect.writeCount != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x18f8,0,"%s");
   }
-  Sys_LockWrite(0xffffffff83208b8c);
-  lVar5 = (ulonglong)DAT_82ebbd24 - 1;
-  if (-1 < lVar5) {
-    lVar4 = (ulonglong)DAT_82ebbd24 - 0x7cdfefa4;
+  Sys_LockWrite(&db_hashCritSect);
+  lVar4 = (ulonglong)(uint)g_zoneCount - 1;
+  if (-1 < lVar4) {
+    lVar3 = (ulonglong)(uint)g_zoneCount - 0x7cdfefa4;
     do {
+      lVar3 = lVar3 + -1;
+      DB_UnloadXZone((uint)*(byte *)lVar3,false);
       lVar4 = lVar4 + -1;
-      DB_UnloadXZone(*(undefined1 *)lVar4,0);
-      lVar5 = lVar5 + -1;
-    } while (-1 < lVar5);
+    } while (-1 < lVar4);
   }
   DB_FreeDefaultEntries();
   DB_FreeUnusedResources();
-  lVar5 = (ulonglong)DAT_82ebbd24 - 1;
-  if (-1 < lVar5) {
-    lVar4 = (ulonglong)DAT_82ebbd24 - 0x7cdfefa5;
+  lVar4 = (ulonglong)(uint)g_zoneCount - 1;
+  if (-1 < lVar4) {
+    lVar3 = (ulonglong)(uint)g_zoneCount - 0x7cdfefa5;
     do {
-      uVar2 = (uint)*(byte *)lVar4;
-      iVar3 = uVar2 * 0x8c;
-      piVar6 = &DAT_83149fe0 + uVar2 * 0x23;
-      piVar1 = (int *)DB_GetFile();
-      if (piVar6 == piVar1) {
-        MyAssertHandler(0xffffffff8205b610,0x18a9,0,0xffffffff82000f98,0xffffffff8205c050);
+      bVar1 = *(byte *)lVar3;
+      pXVar5 = g_zones + bVar1;
+      pXVar2 = (XZone *)DB_GetFile();
+      if (pXVar5 == pXVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                        0x18a9,0,"%s");
       }
-      if (*piVar6 != 0) {
-        if ((&DAT_83149fe8)[uVar2 * 0x23] != 0) {
-          MyAssertHandler(0xffffffff8205b610,0x15f7,0,0xffffffff82000f98,0xffffffff8205bf50);
+      if ((pXVar5->file).handle.handle != (void *)0x0) {
+        if (g_zones[bVar1].file.memoryBuffer != (uchar *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                          ,0x15f7,0,"%s");
         }
-        CloseHandle((HANDLE)*piVar6);
-        *piVar6 = 0;
+        CloseHandle((pXVar5->file).handle.handle);
+        (pXVar5->file).handle.handle = (void *)0x0;
       }
-      DB_FreeXZoneMemory(&DAT_8314a034 + iVar3);
-      Com_Printf(0x10,0xffffffff8205c038,&DAT_83149fec + iVar3);
-      PMem_Free(&DAT_83149fec + iVar3,(&DAT_8314a030)[uVar2 * 0x23]);
-      lVar5 = lVar5 + -1;
-      (&DAT_83149fec)[iVar3] = 0;
+      DB_FreeXZoneMemory(&g_zones[bVar1].mem);
+      Com_Printf(0x10,"Unloaded fastfile %s\n");
+      PMem_Free(g_zones[bVar1].file.name,g_zones[bVar1].allocType);
       lVar4 = lVar4 + -1;
-    } while (-1 < lVar5);
+      g_zones[bVar1].file.name[0] = '\0';
+      lVar3 = lVar3 + -1;
+    } while (-1 < lVar4);
   }
-  DAT_82ebbd24 = 0;
-  Sys_UnlockWrite(0xffffffff83208b8c);
+  g_zoneCount = 0;
+  Sys_UnlockWrite(&db_hashCritSect);
   DB_UnarchiveAssets();
   ImageCache_Shutdown();
   __restgprlr_19();
@@ -7022,16 +8467,13 @@ void DB_ShutdownXAssets(void)
 
 // 823F0D28  DB_UnloadXAssetsMemory  (database/db_registry.cpp:6418)
 
-void DB_UnloadXAssetsMemory(undefined8 param_1,longlong param_2)
+void DB_UnloadXAssetsMemory(XZone *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  
-  DB_UnloadXZoneMemory();
-  uVar1 = (ulonglong)DAT_82ebbd24;
-  DAT_82ebbd24 = (uint)(uVar1 - 1);
-  if ((int)param_2 < (int)DAT_82ebbd24) {
-    blkmov(param_2 + -0x7cdfefa4,param_2 + -0x7cdfefa3,(uVar1 - 1) - param_2);
+  DB_UnloadXZoneMemory(param_1);
+  g_zoneCount = g_zoneCount + -1;
+  if (param_2 < g_zoneCount) {
+    _blkmov();
   }
   return;
 }
@@ -7039,31 +8481,29 @@ void DB_UnloadXAssetsMemory(undefined8 param_1,longlong param_2)
 
 // 823F0D88  DB_UnloadXAssetsMemoryForZone  (database/db_registry.cpp:6430)
 
-void DB_UnloadXAssetsMemoryForZone(undefined8 param_1,uint param_2)
+void DB_UnloadXAssetsMemoryForZone(int param_1,int param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  longlong lVar2;
   longlong lVar3;
-  longlong lVar4;
   
-  uVar1 = __savegprlr_27();
+  uVar1 = __savegprlr_27(param_1);
   if ((uVar1 & param_2) != 0) {
-    lVar4 = (ulonglong)DAT_82ebbd24 - 1;
-    if (-1 < lVar4) {
-      lVar3 = (ulonglong)DAT_82ebbd24 - 0x7cdfefa5;
+    lVar3 = (ulonglong)(uint)g_zoneCount - 1;
+    if (-1 < lVar3) {
+      lVar2 = (ulonglong)(uint)g_zoneCount - 0x7cdfefa5;
       do {
-        if (((&DAT_8314a02c)[(uint)*(byte *)lVar3 * 0x23] & param_2) != 0) {
-          DB_UnloadXZoneMemory();
-          uVar2 = (ulonglong)DAT_82ebbd24;
-          DAT_82ebbd24 = (uint)(uVar2 - 1);
-          if ((int)lVar4 < (int)DAT_82ebbd24) {
-            blkmov(lVar3,lVar3 + 1,(uVar2 - 1) - lVar4);
+        if ((g_zones[*(byte *)lVar2].flags & param_2) != 0) {
+          DB_UnloadXZoneMemory(g_zones + *(byte *)lVar2);
+          g_zoneCount = g_zoneCount + -1;
+          if ((int)lVar3 < g_zoneCount) {
+            _blkmov();
           }
         }
-        lVar4 = lVar4 + -1;
         lVar3 = lVar3 + -1;
-      } while (-1 < lVar4);
+        lVar2 = lVar2 + -1;
+      } while (-1 < lVar3);
     }
   }
   __restgprlr_27();
@@ -7073,23 +8513,27 @@ void DB_UnloadXAssetsMemoryForZone(undefined8 param_1,uint param_2)
 
 // 823F0E20  DB_ReplaceModel  (database/db_registry.cpp:6451)
 
-void DB_ReplaceModel(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void DB_ReplaceModel(char *param_1,char *param_2)
 
 {
-  undefined8 uVar1;
-  undefined4 local_30;
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined4 local_24;
+  char *pcVar1;
+  XAsset local_30;
+  XAsset local_28 [5];
   
-  uVar1 = __savegprlr_29();
-  local_30 = 4;
-  local_2c = DB_FindXAssetHeader(4,uVar1,1);
-  uVar1 = DB_GetXAssetName(&local_30);
-  local_28 = 4;
-  local_24 = DB_FindXAssetHeader(4,param_2,1);
-  DB_CloneXAsset(&local_28,&local_30,1);
-  DB_SetXAssetName(&local_30,uVar1);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  local_30.type = ASSET_TYPE_XMODEL;
+  local_30.header = DB_FindXAssetHeader(ASSET_TYPE_XMODEL,pcVar1,1);
+  pcVar1 = DB_GetXAssetName(&local_30);
+  local_28[0].type = ASSET_TYPE_XMODEL;
+  local_28[0].header = DB_FindXAssetHeader(ASSET_TYPE_XMODEL,param_2,1);
+  DB_CloneXAsset(local_28,&local_30,DB_CLONE_NORMAL);
+  DB_SetXAssetName(&local_30,pcVar1);
   __restgprlr_29();
   return;
 }
@@ -7097,15 +8541,17 @@ void DB_ReplaceModel(undefined8 param_1,undefined8 param_2)
 
 // 823F0E98  DB_ArchiveAssets  (database/db_registry.cpp:6473)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_ArchiveAssets(void)
 
 {
   int iVar1;
   
-  if (DAT_82ed8057 == '\0') {
-    DAT_82ed8057 = '\x01';
+  if (!g_archiveBuf) {
+    g_archiveBuf = true;
     Phys_EndFrame();
-    if (DAT_82fcc298 != 1) {
+    if (db_syncMode != 1) {
       iVar1 = DB_EnterStreaming();
       ImageCache_UpdateGPU();
       DB_FlushOutstandingRead(1);
@@ -7130,107 +8576,118 @@ void DB_ArchiveAssets(void)
 
 // 823F0F30  DB_FreeUnusedResources  (database/db_registry.cpp:6528)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void DB_FreeUnusedResources(void)
 
 {
   bool bVar1;
   ushort uVar2;
   int iVar3;
-  int iVar4;
-  undefined *puVar5;
-  undefined8 uVar6;
+  XAssetType XVar4;
+  XAsset *pXVar5;
+  char *pcVar6;
+  uint uVar7;
   int *in_r13;
-  longlong lVar7;
-  ushort *puVar8;
+  longlong lVar8;
   ushort *puVar9;
-  int *piVar10;
-  longlong lVar11;
+  ushort *puVar10;
+  XAssetEntry *pXVar11;
+  longlong lVar12;
   
   __savegprlr_19();
   SL_TransferSystem(4,8);
-  lVar7 = 50000;
-  puVar8 = &DAT_82d15b58;
-  lVar11 = 50000;
-  puVar9 = puVar8;
+  lVar8 = 50000;
+  puVar9 = db_hashTable;
+  lVar12 = 50000;
+  puVar10 = puVar9;
   do {
-    uVar2 = *puVar9;
-    while (uVar2 != 0) {
-      iVar3 = (uint)uVar2 * 0x14;
-      uVar2 = *(ushort *)(&DAT_82ed8062 + iVar3);
-      (&DAT_82ed8061)[iVar3] = (&DAT_82ed8061)[iVar3] & 0xfd;
+    uVar2 = *puVar10;
+    while (uVar7 = (uint)uVar2, uVar7 != 0) {
+      uVar2 = g_assetEntryPool[uVar7].nextHash;
+      g_assetEntryPool[uVar7].inuseMask = g_assetEntryPool[uVar7].inuseMask & 0xfd;
     }
-    puVar9 = puVar9 + 1;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
+    puVar10 = puVar10 + 1;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
   iVar3 = *in_r13;
   if (*(int *)(iVar3 + 0xc) != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1994,0,0xffffffff82000f98,0xffffffff8205bbbc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1994,0,"%s");
   }
   *(undefined4 *)(iVar3 + 0xc) = 1;
-  lVar11 = 50000;
-  puVar9 = puVar8;
+  lVar12 = 50000;
+  puVar10 = puVar9;
   do {
-    uVar2 = *puVar9;
-    puVar5 = DAT_82cc61c8;
-    while (uVar2 != 0) {
-      iVar4 = (uint)uVar2 * 0x14;
-      DAT_82cc61c8 = &DAT_82ed8058 + iVar4;
-      if ((&DAT_82ed8060)[iVar4] != '\0') {
-        DAT_82ed7d3c = 1;
-        DAT_831ed7cc = 2;
+    uVar2 = *puVar10;
+    pXVar5 = marXAsset;
+    while (uVar7 = (uint)uVar2, uVar7 != 0) {
+      marXAsset = &g_assetEntryPool[uVar7].asset;
+      if (g_assetEntryPool[uVar7].zoneIndex != '\0') {
+        g_databaseReady = 1;
+        g_inuseMask = '\x02';
         Mark_XAsset();
-        puVar5 = DAT_82cc61c8;
+        pXVar5 = marXAsset;
       }
-      DAT_82cc61c8 = puVar5;
-      puVar5 = DAT_82cc61c8;
-      uVar2 = *(ushort *)(&DAT_82ed8062 + iVar4);
+      marXAsset = pXVar5;
+      pXVar5 = marXAsset;
+      uVar2 = g_assetEntryPool[uVar7].nextHash;
     }
-    lVar11 = lVar11 + -1;
-    puVar9 = puVar9 + 1;
-    DAT_82cc61c8 = puVar5;
-  } while (lVar11 != 0);
+    lVar12 = lVar12 + -1;
+    puVar10 = puVar10 + 1;
+    marXAsset = pXVar5;
+  } while (lVar12 != 0);
   if (*(int *)(iVar3 + 0xc) == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x19a8,0,0xffffffff82000f98,0xffffffff8205bbcc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x19a8,0,"%s");
   }
   *(undefined4 *)(iVar3 + 0xc) = 0;
   do {
-    uVar2 = *puVar8;
-    puVar9 = puVar8;
+    uVar2 = *puVar9;
+    puVar10 = puVar9;
     while (uVar2 != 0) {
-      iVar3 = (uint)*puVar9 * 0x14;
-      piVar10 = (int *)(&DAT_82ed8058 + iVar3);
-      if ((&DAT_82ed8060)[iVar3] == '\0') {
-        if (((&DAT_82ed8061)[iVar3] & 3) == 0) {
-          if (*(short *)(&DAT_82ed8064 + iVar3) != 0) {
-            MyAssertHandler(0xffffffff8205b610,0x19c4,0,0xffffffff82000f98,0xffffffff8205bff0);
+      uVar2 = *puVar10;
+      pXVar11 = g_assetEntryPool + uVar2;
+      if (g_assetEntryPool[uVar2].zoneIndex == '\0') {
+        if ((g_assetEntryPool[uVar2].inuseMask & 3) == 0) {
+          if (g_assetEntryPool[uVar2].nextOverride != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x19c4,0,"%s");
           }
-          iVar4 = DAT_83231bc4;
-          bVar1 = DAT_83231bc4 == 0;
-          *puVar9 = *(ushort *)(&DAT_82ed8062 + iVar3);
+          iVar3 = g_defaultAssetCount;
+          bVar1 = g_defaultAssetCount == 0;
+          *puVar10 = g_assetEntryPool[uVar2].nextHash;
           if (bVar1) {
-            MyAssertHandler(0xffffffff8205b610,0x19c6,0,0xffffffff82000f98,0xffffffff8205bc44);
-            iVar4 = DAT_83231bc4;
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
+                            ,0x19c6,0,"%s");
+            iVar3 = g_defaultAssetCount;
           }
-          DAT_83231bc4 = iVar4 + -1;
-          *(int *)(&DAT_83208b98 + *piVar10 * 4) = *(int *)(&DAT_83208b98 + *piVar10 * 4) + 1;
-          DB_FreeXAssetEntry(piVar10);
+          XVar4 = (pXVar11->asset).type;
+          g_defaultAssetCount = iVar3 + -1;
+          g_shipAssetCount[XVar4] = g_shipAssetCount[XVar4] + 1;
+          DB_FreeXAssetEntry(pXVar11);
         }
         else {
-          uVar6 = DB_GetXAssetName(piVar10);
-          SL_GetString(uVar6,4);
-          uVar6 = SL_ConvertToString();
-          DB_SetXAssetName(piVar10,uVar6);
-          puVar9 = (ushort *)(&DAT_82ed8062 + iVar3);
+          pcVar6 = DB_GetXAssetName(&pXVar11->asset);
+          uVar7 = SL_GetString(pcVar6,4);
+          pcVar6 = SL_ConvertToString(uVar7);
+          DB_SetXAssetName(&pXVar11->asset,pcVar6);
+          puVar10 = &g_assetEntryPool[uVar2].nextHash;
         }
       }
       else {
-        puVar9 = (ushort *)(&DAT_82ed8062 + iVar3);
+        puVar10 = &g_assetEntryPool[uVar2].nextHash;
       }
-      uVar2 = *puVar9;
+      uVar2 = *puVar10;
     }
-    lVar7 = lVar7 + -1;
-    puVar8 = puVar8 + 1;
-  } while (lVar7 != 0);
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 1;
+  } while (lVar8 != 0);
   SL_ShutdownSystem(8);
   __restgprlr_19();
   return;
@@ -7238,6 +8695,8 @@ void DB_FreeUnusedResources(void)
 
 
 // 823F11C0  DB_ExternalInitAssets  (database/db_registry.cpp:6612)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_ExternalInitAssets(void)
 
@@ -7250,18 +8709,21 @@ void DB_ExternalInitAssets(void)
 
 // 823F11E8  DB_UnarchiveAssets  (database/db_registry.cpp:6622)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_UnarchiveAssets(void)
 
 {
   int iVar1;
-  char cVar2;
+  bool bVar2;
   
   __savegprlr_29();
-  if (DAT_82ed8057 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x19e3,0,0xffffffff82000f98,0xffffffff8205c09c);
+  if (g_archiveBuf == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x19e3,0,"%s");
   }
-  DAT_82ed8057 = 0;
-  if (DAT_82ebbd24 != 0) {
+  g_archiveBuf = false;
+  if (g_zoneCount != 0) {
     DB_LoadSounds();
     DB_LoadDObjs();
     DB_RestartEffects_Finish();
@@ -7271,7 +8733,7 @@ void DB_UnarchiveAssets(void)
     Scr_ParseGameTypeList();
     UI_LoadArenas();
   }
-  if (DAT_82fcc298 != 1) {
+  if (db_syncMode != 1) {
     iVar1 = R_ReleaseDeviceOwnershipForStreaming();
     DB_LoadAlwaysLoadedAssets();
     DB_ReadAlwaysLoadedAssets();
@@ -7280,12 +8742,13 @@ void DB_UnarchiveAssets(void)
       R_AcquireDeviceOwnership();
     }
   }
-  cVar2 = Sys_IsMainThread();
-  if ((cVar2 == '\0') && (cVar2 = Sys_IsRenderThread(), cVar2 == '\0')) {
-    MyAssertHandler(0xffffffff8205b610,0x1a07,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar2 = Sys_IsMainThread();
+  if ((!bVar2) && (bVar2 = Sys_IsRenderThread(), !bVar2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a07,0,"%s");
   }
-  cVar2 = Sys_IsMainThread();
-  if (cVar2 != '\0') {
+  bVar2 = Sys_IsMainThread();
+  if (bVar2) {
     R_ReleaseThreadOwnership();
   }
   __restgprlr_29();
@@ -7295,24 +8758,29 @@ void DB_UnarchiveAssets(void)
 
 // 823F12F0  DB_Cleanup  (database/db_registry.cpp:6671)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void DB_Cleanup(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
   __savegprlr_29();
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1a10,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a10,0,"%s");
   }
-  DAT_82d14a94 = 1;
-  DAT_82ed8056 = 0;
+  g_skipReadAlwaysLoadedAssets = 1;
+  g_loadingDebugZone = false;
   Sys_SyncDatabase();
-  if (DAT_82ed8057 != '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1a1b,0,0xffffffff82000f98,0xffffffff8205c0c0);
+  if (g_archiveBuf != false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a1b,0,"%s");
   }
-  if (DAT_82ed7d44 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a1c,0,0xffffffff82000f98,0xffffffff8205c0ac);
+  if (db_inPostLoadXZone != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a1c,0,"%s");
   }
   __restgprlr_29();
   return;
@@ -7321,94 +8789,100 @@ void DB_Cleanup(void)
 
 // 823F5F38  Load_GetCurrentZoneHandle  (database/db_registry.cpp:6689)
 
-void Load_GetCurrentZoneHandle(undefined1 *param_1)
+void Load_GetCurrentZoneHandle(uchar *param_1)
 
 {
   uint uVar1;
   
-  if (DAT_82ed8055 == '\0') {
-    MyAssertHandler(0xffffffff8205b610,0x1a22,0,0xffffffff82000f98,0xffffffff8205c4c4);
+  if (!g_loadingZone) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a22,0,"%s");
   }
-  uVar1 = DAT_82ebbd2c;
-  if (DAT_82ebbd2c != (DAT_82ebbd2c & 0xff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,DAT_82ebbd2c,DAT_82ebbd2c & 0xff);
+  uVar1 = g_zoneIndex;
+  if (g_zoneIndex != (g_zoneIndex & 0xff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  *param_1 = (char)uVar1;
+  *param_1 = (uchar)uVar1;
   return;
 }
 
 
 // 823F5FD8  DB_GetRawBuffer  (database/db_registry.cpp:6696)
 
-void DB_GetRawBuffer(undefined8 param_1,int param_2,int param_3)
+void DB_GetRawBuffer(RawFile *param_1,char *param_2,int param_3)
 
 {
   uint uVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
+  int iVar2;
+  void *pvVar3;
   int iVar4;
   undefined8 *puVar5;
-  int iVar6;
-  longlong lVar7;
-  undefined1 auStack_80 [8];
+  longlong lVar6;
+  LargeLocal LStack_80;
   undefined8 uStack_78;
-  int local_70;
-  int iStack_6c;
-  int local_64;
-  uint local_60;
+  db_z_stream_s local_70 [2];
   
-  puVar3 = (undefined4 *)__savegprlr_25();
-  LargeLocal__LargeLocal(auStack_80,0x10000);
-  uVar2 = LargeLocal__GetBuf(auStack_80);
-  uVar1 = puVar3[2];
-  if (param_3 < (int)((ulonglong)uVar1 + 1)) {
-    Com_Error(1,0xffffffff8205c744,*puVar3,(ulonglong)uVar1 + 1);
+  iVar2 = __savegprlr_25(param_1);
+  LargeLocal::LargeLocal(&LStack_80,0x10000);
+  pvVar3 = LargeLocal::GetBuf(&LStack_80);
+  uVar1 = *(uint *)(iVar2 + 8);
+  if (param_3 < (int)(uVar1 + 1)) {
+    Com_Error(ERR_DROP,"rawfile \'%s\' exceeded max size for len %d");
   }
-  if (puVar3[1] == 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a35,0,0xffffffff82000f98,0xffffffff8205c72c);
+  if (*(int *)(iVar2 + 4) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a35,0,"%s");
   }
   puVar5 = &uStack_78;
-  lVar7 = 6;
+  lVar6 = 6;
   do {
     puVar5 = puVar5 + 1;
     *puVar5 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  iStack_6c = puVar3[1];
-  local_70 = puVar3[3];
-  memset((void *)uVar2,0,0x10000);
-  DB_Zip_InitThreadMemory(&local_70,uVar2,0x10000);
-  iVar4 = db_inflateInit_(&local_70,0xffffffff820593e8,0x30);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  local_70[0].avail_in = *(uint *)(iVar2 + 4);
+  local_70[0].next_in = *(uchar **)(iVar2 + 0xc);
+  memset();
+  DB_Zip_InitThreadMemory(local_70,pvVar3,0x10000);
+  iVar4 = db_inflateInit_(local_70,"1.1.4",0x30);
   if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a45,0,0xffffffff82000f98,0xffffffff82059ad0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a45,0,"%s");
   }
-  local_64 = param_2;
-  local_60 = uVar1;
-  uVar2 = db_inflate(&local_70,2);
-  if ((int)uVar2 != 1) {
-    MyAssertHandler(0xffffffff8205b610,0x1a4e,0,0xffffffff8205c70c,0xffffffff8205c71c,uVar2);
+  local_70[0].next_out = (uchar *)param_2;
+  local_70[0].avail_out = uVar1;
+  iVar4 = db_inflate(local_70,2);
+  if (iVar4 != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a4e,0,"%s\n\t(err) = %i");
   }
-  if (local_70 - puVar3[3] != puVar3[1]) {
-    MyAssertHandler(0xffffffff8205b610,0x1a50,0,0xffffffff82000f98,0xffffffff8205c6c8);
+  if ((int)local_70[0].next_in - *(int *)(iVar2 + 0xc) != *(int *)(iVar2 + 4)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a50,0,"%s");
   }
-  if (local_64 - param_2 != puVar3[2]) {
-    MyAssertHandler(0xffffffff8205b610,0x1a51,0,0xffffffff82000f98,0xffffffff8205c698);
+  if ((int)local_70[0].next_out - (int)param_2 != *(int *)(iVar2 + 8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a51,0,"%s");
   }
-  if (iStack_6c != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a52,0,0xffffffff82000f98,0xffffffff8205c684);
+  if (local_70[0].avail_in != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a52,0,"%s");
   }
-  if (local_60 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a53,0,0xffffffff82000f98,0xffffffff8205c670);
+  if (local_70[0].avail_out != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a53,0,"%s");
   }
-  iVar6 = local_60 + iStack_6c;
-  DAT_8296cc48 = DAT_8296cc48 + iVar6;
-  iVar4 = db_inflateEnd(&local_70);
-  if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff8205b610,0x1a60,0,0xffffffff82000f98,0xffffffff82059ad0);
+  iVar4 = local_70[0].avail_out + local_70[0].avail_in;
+  msg_hData[6] = msg_hData[6] + iVar4;
+  iVar2 = db_inflateEnd(local_70);
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1a60,0,"%s");
   }
-  DB_Zip_ShutdownThreadMemory(&local_70);
-  *(undefined1 *)((iVar6 == 0) * uVar1 + param_2) = 0;
-  LargeLocal___LargeLocal(auStack_80);
+  DB_Zip_ShutdownThreadMemory(local_70);
+  param_2[((uint)LZCOUNT(iVar4) >> 5) * uVar1] = '\0';
+  LargeLocal::~LargeLocal(&LStack_80);
   __restgprlr_25();
   return;
 }
@@ -7416,45 +8890,56 @@ void DB_GetRawBuffer(undefined8 param_1,int param_2,int param_3)
 
 // 823F13B0  DB_GetRawFileLen  (database/db_registry.cpp:6761)
 
-longlong DB_GetRawFileLen(int param_1)
+int DB_GetRawFileLen(RawFile *param_1)
 
 {
-  return (ulonglong)*(uint *)(param_1 + 8) + 1;
+  return param_1->len + 1;
 }
 
 
 // 823F6258  DB_ReadRawFile  (database/db_registry.cpp:6767)
 
-void DB_ReadRawFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+char * DB_ReadRawFile(char *param_1,char *param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  XAssetHeader XVar2;
   int iVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = DB_FindXAssetHeader(0x24,uVar1,1);
-  iVar3 = DB_IsXAssetDefault(0x24,uVar1);
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_28(param_1);
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
+  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
   if (iVar3 != 0) {
-    __restgprlr_28(0);
-    return;
+    pcVar1 = (char *)__restgprlr_28(0);
+    return pcVar1;
   }
-  DB_GetRawBuffer(uVar2,param_2,param_3);
-  __restgprlr_28(param_2);
-  return;
+  DB_GetRawBuffer(XVar2.rawfile,(char *)lVar4,param_3);
+  pcVar1 = (char *)__restgprlr_28(lVar4);
+  return pcVar1;
 }
 
 
 // 823F13C0  DB_GetMaterialIndex  (database/db_registry.cpp:6840)
 
-uint DB_GetMaterialIndex(int param_1)
+uint DB_GetMaterialIndex(Material *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (param_1 + 0x7cfa0788) / 0x58;
+  uVar1 = (int)param_1[0x16b918a].stateBitsEntry / 0x58;
   if (0x165f < uVar1) {
-    MyAssertHandler(0xffffffff8205b610,0x1abf,0,0xffffffff8205c0d0,uVar1,0x1660);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1abf,0,
+                    "index doesn\'t index ARRAY_COUNT( g_MaterialPool.entries )\n\t%i not in [0, %i)"
+                   );
   }
   return uVar1;
 }
@@ -7462,44 +8947,54 @@ uint DB_GetMaterialIndex(int param_1)
 
 // 823F1430  DB_GetMaterialAtIndex  (database/db_registry.cpp:6853)
 
-longlong DB_GetMaterialAtIndex(ulonglong param_1)
+Material * DB_GetMaterialAtIndex(uint param_1)
 
 {
-  if (0x165f < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0x1ac6,0,0xffffffff8205c0d0,param_1,0x1660);
+  if (0x165f < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1ac6,0,
+                    "index doesn\'t index ARRAY_COUNT( g_MaterialPool.entries )\n\t%i not in [0, %i)"
+                   );
   }
-  return param_1 * 0x58 + -0x7cfa0788;
+  return (Material *)(g_MaterialPool.entries + param_1);
 }
 
 
 // 823F1498  DB_GetMaterialPoolEntries  (database/db_registry.cpp:6861)
 
-undefined8 DB_GetMaterialPoolEntries(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * DB_GetMaterialPoolEntries(void)
 
 {
-  return 0xffffffff8305f878;
+  return g_MaterialPool.entries;
 }
 
 
 // 823F14A8  DB_GetGfxImagePoolEntries  (database/db_registry.cpp:6867)
 
-undefined8 DB_GetGfxImagePoolEntries(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * DB_GetGfxImagePoolEntries(void)
 
 {
-  return 0xffffffff82fce43c;
+  return g_GfxImagePool.entries;
 }
 
 
 // 823F14B8  DB_GetPixelShaderIndex  (database/db_registry.cpp:6875)
 
-uint DB_GetPixelShaderIndex(int param_1)
+uint DB_GetPixelShaderIndex(MaterialPixelShader *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = param_1 + 0x7d1442c4 >> 4;
+  uVar1 = (int)&param_1[0x7d1442c].prog >> 4;
   if (0x1bff < uVar1) {
-    MyAssertHandler(0xffffffff8205b610,0x1ae2,0,0xffffffff8205c120,uVar1,0x1c00);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1ae2,0,
+                    "index doesn\'t index ARRAY_COUNT( g_MaterialPixelShaderPool.entries )\n\t%i not in [0, %i)"
+                   );
   }
   return uVar1;
 }
@@ -7507,32 +9002,39 @@ uint DB_GetPixelShaderIndex(int param_1)
 
 // 823F1520  DB_GetPixelShaderPoolEntries  (database/db_registry.cpp:6888)
 
-undefined8 DB_GetPixelShaderPoolEntries(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * DB_GetPixelShaderPoolEntries(void)
 
 {
-  return 0xffffffff82ebbd3c;
+  return g_MaterialPixelShaderPool.entries;
 }
 
 
 // 823F1530  DB_GetXModelPoolEntries  (database/db_registry.cpp:6896)
 
-undefined8 DB_GetXModelPoolEntries(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void * DB_GetXModelPoolEntries(void)
 
 {
-  return 0xffffffff82e1e6a4;
+  return g_XModelPool.entries;
 }
 
 
 // 823F1540  DB_GetGfxImageIndex  (database/db_registry.cpp:6902)
 
-uint DB_GetGfxImageIndex(int param_1)
+uint DB_GetGfxImageIndex(GfxImage *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (param_1 + 0x7d031bc4) / 0x70;
+  uVar1 = (int)((int)&param_1[0x11dbdf6].texture + 0x24) / 0x70;
   if (0x14bf < uVar1) {
-    MyAssertHandler(0xffffffff8205b610,0x1afd,0,0xffffffff8205c178,uVar1,0x14c0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1afd,0,
+                    "index doesn\'t index ARRAY_COUNT( g_GfxImagePool.entries )\n\t%i not in [0, %i)"
+                   );
   }
   return uVar1;
 }
@@ -7540,39 +9042,45 @@ uint DB_GetGfxImageIndex(int param_1)
 
 // 823F15B0  DB_GetGfxImageIndex_IfInPool  (database/db_registry.cpp:6916)
 
-byte DB_GetGfxImageIndex_IfInPool(int param_1,uint *param_2)
+bool DB_GetGfxImageIndex_IfInPool(GfxImage *param_1,uint *param_2)
 
 {
   uint uVar1;
   
-  uVar1 = (param_1 + 0x7d031bc4) / 0x70;
+  uVar1 = (int)((int)&param_1[0x11dbdf6].texture + 0x24) / 0x70;
   *param_2 = uVar1;
-  return -(uVar1 < 0x14c0) & 1;
+  return (bool)(-(uVar1 < 0x14c0) & 1);
 }
 
 
 // 823F15E0  DB_GetGfxImageAtIndex  (database/db_registry.cpp:6928)
 
-longlong DB_GetGfxImageAtIndex(ulonglong param_1)
+GfxImage * DB_GetGfxImageAtIndex(uint param_1)
 
 {
-  if (0x14bf < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8205b610,0x1b11,0,0xffffffff8205c178,param_1,0x14c0);
+  if (0x14bf < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1b11,0,
+                    "index doesn\'t index ARRAY_COUNT( g_GfxImagePool.entries )\n\t%i not in [0, %i)"
+                   );
   }
-  return param_1 * 0x70 + -0x7d031bc4;
+  return (GfxImage *)(g_GfxImagePool.entries + param_1);
 }
 
 
 // 823F1648  DB_GetXModelIndex  (database/db_registry.cpp:6936)
 
-uint DB_GetXModelIndex(int param_1)
+uint DB_GetXModelIndex(XModel *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = (param_1 + 0x7d1e195c) / 0x124;
+  uVar1 = (int)&param_1[0x6db12e].collSurfs / 0x124;
   if (0x89f < uVar1) {
-    MyAssertHandler(0xffffffff8205b610,0x1b1f,0,0xffffffff8205c1c8,uVar1,0x8a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp",
+                    0x1b1f,0,
+                    "index doesn\'t index ARRAY_COUNT( g_XModelPool.entries )\n\t%i not in [0, %i)")
+    ;
   }
   return uVar1;
 }

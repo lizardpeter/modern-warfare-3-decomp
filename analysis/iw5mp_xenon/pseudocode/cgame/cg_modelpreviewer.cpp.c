@@ -2,60 +2,72 @@
 
 // 822DC730  Cmd_LocalControllerIndex  (qcommon/cmd.h:245)
 
-undefined4 Cmd_LocalControllerIndex(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int Cmd_LocalControllerIndex(void)
 
 {
-  char cVar1;
-  ulonglong uVar2;
+  bool bVar1;
   
-  cVar1 = Sys_IsMainThread();
-  if (cVar1 == '\0') {
-    MyAssertHandler(0xffffffff8201eb60,0xf6,0,0xffffffff82000f98,0xffffffff82010b48);
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/cmd.h",0xf6,0
+                    ,"%s");
   }
-  uVar2 = (ulonglong)DAT_835ab9d8;
-  if (7 < uVar2) {
-    MyAssertHandler(0xffffffff8201eb60,0xf9,0,0xffffffff82012b30,uVar2,8);
-    uVar2 = (ulonglong)DAT_835ab9d8;
+  if (7 < (uint)cmd_args.nesting) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/cmd.h",0xf9,0
+                    ,"cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (3 < *(uint *)(&DAT_835ab9fc + (int)(uVar2 << 2))) {
-    MyAssertHandler(0xffffffff8201eb60,0xfb,0,0xffffffff8201eb10,
-                    *(uint *)(&DAT_835ab9fc + (int)(uVar2 << 2)),4);
-    uVar2 = (ulonglong)DAT_835ab9d8;
+  if (3 < (uint)cmd_args.controllerIndex[cmd_args.nesting]) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/cmd.h",0xfb,0
+                    ,
+                    "cmd_args.controllerIndex[cmd_args.nesting] doesn\'t index 4\n\t%i not in [0, %i)"
+                   );
   }
-  return *(undefined4 *)(&DAT_835ab9fc + (int)(uVar2 << 2));
+  return cmd_args.controllerIndex[cmd_args.nesting];
 }
 
 
 // 822DC810  UpdateMru  (cgame/cg_modelpreviewer.cpp:389)
 
-void UpdateMru(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void UpdateMru(dvar_t **param_1,char **param_2,dvar_t *param_3)
 
 {
-  int iVar1;
+  char **ppcVar1;
   int *piVar2;
-  int iVar3;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int *piVar6;
   
-  piVar2 = (int *)__savegprlr_24();
+  uVar4 = (ulonglong)(int)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  piVar2 = (int *)__savegprlr_24(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x188,0,0xffffffff82000f98,0xffffffff8201ebb8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x188,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x189,0,"%s");
   }
-  iVar3 = 0;
-  iVar1 = (int)param_2 - (int)piVar2;
+  iVar5 = 0;
+  ppcVar1 = (char **)uVar3;
+  piVar6 = piVar2;
   do {
-    if (*piVar2 == 0) {
-      MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
+    if (*piVar6 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x18d,0,"%s");
     }
-    if ((iVar3 != 0) && (**(char **)(*piVar2 + 0xc) == '\0')) break;
-    iVar3 = iVar3 + 1;
-    *(undefined4 *)(iVar1 + (int)piVar2) = *(undefined4 *)(*piVar2 + 0xc);
-    piVar2 = piVar2 + 1;
-  } while (iVar3 < 4);
-  *(undefined4 *)(iVar3 * 4 + (int)param_2) = 0;
-  if ((param_3 & 0xffffffff) != 0) {
-    Dvar_UpdateEnumDomain(param_3,param_2);
+    if ((iVar5 != 0) && (**(char **)(*piVar6 + 0xc) == '\0')) break;
+    iVar5 = iVar5 + 1;
+    *(undefined4 *)((int)ppcVar1 + ((int)piVar6 - (int)piVar2)) = *(undefined4 *)(*piVar6 + 0xc);
+    piVar6 = piVar6 + 1;
+  } while (iVar5 < 4);
+  ppcVar1[iVar5] = (char *)0x0;
+  if ((uVar4 & 0xffffffff) != 0) {
+    Dvar_UpdateEnumDomain((dvar_t *)uVar4,ppcVar1);
   }
   __restgprlr_24();
   return;
@@ -64,70 +76,81 @@ void UpdateMru(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 822DC918  PushMruEntry  (cgame/cg_modelpreviewer.cpp:409)
 
-void PushMruEntry(undefined8 param_1,longlong param_2,ulonglong param_3,ulonglong param_4)
+void PushMruEntry(char *param_1,dvar_t **param_2,char **param_3,dvar_t *param_4)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  char *pcVar4;
-  longlong lVar5;
+  char **ppcVar2;
+  char *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  undefined4 *puVar7;
-  int *piVar8;
+  char *pcVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
+  int *piVar12;
+  longlong lVar11;
   char acStack_150 [336];
   
-  pcVar2 = (char *)__savegprlr_24();
-  pcVar4 = pcVar2;
+  uVar6 = (ulonglong)(int)param_4;
+  uVar5 = (ulonglong)(int)param_3;
+  lVar11 = (longlong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_24(param_1);
+  pcVar7 = pcVar3;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  if (0xff < (int)(pcVar4 + (-1 - (int)pcVar2))) {
-    MyAssertHandler(0xffffffff8201ebc8,0x1a0,0,0xffffffff8201ec10,0xffffffff8201ec24,pcVar2);
+  if (0xff < (int)(pcVar7 + (-1 - (int)pcVar3))) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x1a0,0,"%s\n\t(entry) = %s");
   }
-  iVar3 = -(int)pcVar2;
+  iVar4 = -(int)pcVar3;
   do {
-    cVar1 = *pcVar2;
-    acStack_150[(int)(pcVar2 + iVar3)] = cVar1;
-    pcVar2 = pcVar2 + 1;
+    cVar1 = *pcVar3;
+    acStack_150[(int)(pcVar3 + iVar4)] = cVar1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  uVar6 = 0;
-  lVar5 = param_2;
+  uVar9 = 0;
+  lVar8 = lVar11;
   do {
-    iVar3 = I_stricmp(acStack_150,*(undefined4 *)(*(int *)lVar5 + 0xc));
-    if (iVar3 == 0) break;
-    uVar6 = uVar6 + 1;
-    lVar5 = lVar5 + 4;
-  } while ((int)uVar6 < 3);
-  if ((int)uVar6 != 0) {
-    lVar5 = (uVar6 & 0x3fffffff) * 4 + param_2;
+    iVar4 = I_stricmp(acStack_150,*(char **)(*(int *)lVar8 + 0xc));
+    if (iVar4 == 0) break;
+    uVar9 = uVar9 + 1;
+    lVar8 = lVar8 + 4;
+  } while ((int)uVar9 < 3);
+  if ((int)uVar9 != 0) {
+    lVar8 = (uVar9 & 0x3fffffff) * 4 + lVar11;
     do {
-      puVar7 = (undefined4 *)lVar5;
-      lVar5 = lVar5 + -4;
-      Dvar_SetString(*puVar7,*(undefined4 *)(*(int *)lVar5 + 0xc));
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+      puVar10 = (undefined4 *)lVar8;
+      lVar8 = lVar8 + -4;
+      Dvar_SetString((dvar_t *)*puVar10,*(char **)(*(int *)lVar8 + 0xc));
+      uVar9 = uVar9 - 1;
+    } while (uVar9 != 0);
   }
-  puVar7 = (undefined4 *)param_2;
-  Dvar_SetString(*puVar7,acStack_150);
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
+  puVar10 = (undefined4 *)lVar11;
+  Dvar_SetString((dvar_t *)*puVar10,acStack_150);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x189,0,"%s");
   }
-  iVar3 = 0;
+  iVar4 = 0;
+  ppcVar2 = (char **)uVar5;
   do {
-    piVar8 = (int *)param_2;
-    if (*piVar8 == 0) {
-      MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
+    piVar12 = (int *)lVar11;
+    if (*piVar12 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x18d,0,"%s");
     }
-    if ((iVar3 != 0) && (**(char **)(*piVar8 + 0xc) == '\0')) break;
-    iVar3 = iVar3 + 1;
-    *(undefined4 *)(((int)param_3 - (int)puVar7) + (int)piVar8) = *(undefined4 *)(*piVar8 + 0xc);
-    param_2 = param_2 + 4;
-  } while (iVar3 < 4);
-  *(undefined4 *)(iVar3 * 4 + (int)param_3) = 0;
-  if ((param_4 & 0xffffffff) != 0) {
-    Dvar_UpdateEnumDomain(param_4,param_3);
+    if ((iVar4 != 0) && (**(char **)(*piVar12 + 0xc) == '\0')) break;
+    iVar4 = iVar4 + 1;
+    *(undefined4 *)(((int)ppcVar2 - (int)puVar10) + (int)piVar12) = *(undefined4 *)(*piVar12 + 0xc);
+    lVar11 = lVar11 + 4;
+  } while (iVar4 < 4);
+  ppcVar2[iVar4] = (char *)0x0;
+  if ((uVar6 & 0xffffffff) != 0) {
+    Dvar_UpdateEnumDomain((dvar_t *)uVar6,ppcVar2);
   }
   __restgprlr_24();
   return;
@@ -136,53 +159,65 @@ void PushMruEntry(undefined8 param_1,longlong param_2,ulonglong param_3,ulonglon
 
 // 822DCAD8  RemoveMruEntry  (cgame/cg_modelpreviewer.cpp:435)
 
-void RemoveMruEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void RemoveMruEntry(dvar_t **param_1,char **param_2,dvar_t *param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  int *piVar3;
-  int iVar4;
+  uint uVar1;
+  dvar_t *pdVar2;
+  char **ppcVar3;
+  int *piVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int *piVar7;
+  int iVar8;
   
-  piVar2 = (int *)__savegprlr_24();
-  if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x1b5,0,0xffffffff82000f98,0xffffffff8201ebb8);
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  piVar4 = (int *)__savegprlr_24(param_1);
+  if (piVar4 == (int *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x1b5,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x1b6,0,0xffffffff82000f98,0xffffffff8200afa8);
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x1b6,0,"%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x1b7,0,0xffffffff82000f98,0xffffffff8201ec3c);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x1b7,0,"%s");
   }
-  iVar1 = *(int *)((int)param_3 + 0xc);
-  iVar4 = iVar1 + 1;
-  if (iVar4 < 4) {
-    iVar4 = 4 - iVar4;
-    piVar3 = piVar2 + iVar1;
+  uVar1 = (((dvar_t *)uVar6)->current).unsignedInt;
+  iVar8 = uVar1 + 1;
+  if (iVar8 < 4) {
+    iVar8 = 4 - iVar8;
+    piVar7 = piVar4 + uVar1;
     do {
-      iVar1 = *piVar3;
-      piVar3 = piVar3 + 1;
-      Dvar_SetString(iVar1,*(undefined4 *)(*piVar3 + 0xc));
-      iVar4 = iVar4 + -1;
-    } while (iVar4 != 0);
+      pdVar2 = (dvar_t *)*piVar7;
+      piVar7 = piVar7 + 1;
+      Dvar_SetString(pdVar2,*(char **)(*piVar7 + 0xc));
+      iVar8 = iVar8 + -1;
+    } while (iVar8 != 0);
   }
-  Dvar_SetString(piVar2[3],0xffffffff820068af);
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x189,0,0xffffffff82000f98,0xffffffff8200afa8);
+  Dvar_SetString((dvar_t *)piVar4[3],"");
+  if ((uVar5 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x189,0,"%s");
   }
-  iVar4 = 0;
-  iVar1 = (int)param_2 - (int)piVar2;
+  iVar8 = 0;
+  ppcVar3 = (char **)uVar5;
+  piVar7 = piVar4;
   do {
-    if (*piVar2 == 0) {
-      MyAssertHandler(0xffffffff8201ebc8,0x18d,0,0xffffffff82000f98,0xffffffff8201eba4);
+    if (*piVar7 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x18d,0,"%s");
     }
-    if ((iVar4 != 0) && (**(char **)(*piVar2 + 0xc) == '\0')) break;
-    iVar4 = iVar4 + 1;
-    *(undefined4 *)(iVar1 + (int)piVar2) = *(undefined4 *)(*piVar2 + 0xc);
-    piVar2 = piVar2 + 1;
-  } while (iVar4 < 4);
-  *(undefined4 *)(iVar4 * 4 + (int)param_2) = 0;
-  Dvar_UpdateEnumDomain(param_3,param_2);
+    if ((iVar8 != 0) && (**(char **)(*piVar7 + 0xc) == '\0')) break;
+    iVar8 = iVar8 + 1;
+    *(undefined4 *)((int)ppcVar3 + ((int)piVar7 - (int)piVar4)) = *(undefined4 *)(*piVar7 + 0xc);
+    piVar7 = piVar7 + 1;
+  } while (iVar8 < 4);
+  ppcVar3[iVar8] = (char *)0x0;
+  Dvar_UpdateEnumDomain((dvar_t *)uVar6,ppcVar3);
   __restgprlr_24();
   return;
 }
@@ -190,72 +225,127 @@ void RemoveMruEntry(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 822DCC68  RegisterDvars  (cgame/cg_modelpreviewer.cpp:449)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RegisterDvars(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  ushort uVar1;
+  IMAGE_DOS_HEADER *pIVar2;
+  char *pcVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
   __savegprlr_25();
-  DAT_82a3d90c = Dvar_RegisterString(0xffffffff8201f418,0xffffffff820068af,0,0xffffffff8201f42c);
-  DAT_82a3d910 = Dvar_RegisterString(0xffffffff8201f404,0xffffffff820068af,0,0xffffffff8201f3d4);
-  DAT_82a3d914 = Dvar_RegisterString(0xffffffff8201f390,0xffffffff820068af,0,0xffffffff8201f3a4);
-  DAT_82a3d918 = Dvar_RegisterString(0xffffffff8201f34c,0xffffffff820068af,0,0xffffffff8201f360);
-  UpdateMru(0xffffffff82a3d90c,0xffffffff82a3d91c,0);
-  DAT_82a4c0b0 = Dvar_RegisterEnum(0xffffffff8201f33c,0xffffffff82a3d91c,0,0x2020,0xffffffff8201f310
-                                  );
-  uVar1 = Dvar_RegisterEnum(0xffffffff8201f2e0,DAT_82a3d6dc,0,0x20,0xffffffff8201f2f0);
-  DAT_82a4c098 = (undefined4)uVar1;
-  Dvar_UpdateEnumDomain(uVar1,DAT_82a3d6dc);
-  uVar2 = 0x408f400000000000;
-  uVar1 = 0xc08f400000000000;
-  uVar3 = 0;
-  DAT_82a4c088 = Dvar_RegisterVec3(0,0,0,0xc08f400000000000,0x408f400000000000,0xffffffff8201f2b8);
-  DAT_82a4c0ac = Dvar_RegisterVec3(uVar3,uVar3,uVar3,0xc066800000000000,0x4066800000000000,
-                                   0xffffffff8201f2a0);
-  DAT_82a3d6c8 = Dvar_RegisterVec3(uVar3,uVar3,uVar3,uVar1,uVar2,0xffffffff8201f24c);
-  DAT_82a3d6c4 = Dvar_RegisterEnum(0xffffffff8201f220,0xffffffff82962ee0,0,0,0xffffffff8201f22c);
-  DAT_82a4c0a4 = Dvar_RegisterBool(0xffffffff8201f1f0,0,0,0xffffffff8201f200);
-  DAT_82a4c0b4 = Dvar_RegisterEnum(0xffffffff8201f1dc,0xffffffff82a3d930,0,0,0xffffffff8201f1b4);
-  DAT_82a4bf0c = Dvar_RegisterString(0xffffffff8201f170,0xffffffff820068af,0,0xffffffff8201f184);
-  DAT_82a4bf10 = Dvar_RegisterString(0xffffffff8201f12c,0xffffffff820068af,0,0xffffffff8201f140);
-  DAT_82a4bf14 = Dvar_RegisterString(0xffffffff8201f0e8,0xffffffff820068af,0,0xffffffff8201f0fc);
-  DAT_82a4bf18 = Dvar_RegisterString(0xffffffff8201f0a4,0xffffffff820068af,0,0xffffffff8201f0b8);
-  UpdateMru(0xffffffff82a4bf0c,0xffffffff82a4bf1c,0);
-  uVar1 = Dvar_RegisterEnum(0xffffffff8201f090,0xffffffff82a4bf1c,0,0x2020,0xffffffff8201f05c);
-  DAT_82a4c08c = (undefined4)uVar1;
-  Dvar_UpdateEnumDomain(uVar1,0xffffffff82a4bf1c);
-  uVar1 = Dvar_RegisterEnum(0xffffffff8201f018,0xffffffff82a4bf1c,0,0x2020,0xffffffff8201f028);
-  DAT_82a3d6bc = (undefined4)uVar1;
-  Dvar_UpdateEnumDomain(uVar1,0xffffffff82a4bf1c);
-  uVar1 = Dvar_RegisterEnum(0xffffffff8201efdc,DAT_82a3d6e4,0,0x20,0xffffffff8201eff0);
-  DAT_82a4c0c0 = (undefined4)uVar1;
-  Dvar_UpdateEnumDomain(uVar1,DAT_82a3d6e4);
-  uVar1 = Dvar_RegisterEnum(0xffffffff8201efa0,DAT_82a3d6e4,0,0x20,0xffffffff8201efb4);
-  DAT_82a3d6b8 = (undefined4)uVar1;
-  Dvar_UpdateEnumDomain(uVar1,DAT_82a3d6e4);
-  DAT_82a4c0cc = Dvar_RegisterBool(0xffffffff8201ef60,0,0,0xffffffff8201ef74);
-  uVar1 = 0x3fb99999a0000000;
-  uVar2 = 0x3ff0000000000000;
-  DAT_82a4c0b8 = Dvar_RegisterFloat(0x3ff0000000000000,0x3fb99999a0000000,0x4000000000000000,
-                                    0xffffffff8201ef2c);
-  DAT_82a4c070 = Dvar_RegisterEnum(0xffffffff8201eef0,0xffffffff82962ef4,0,0,0xffffffff8201ef04);
-  DAT_82a3d6c0 = Dvar_RegisterFloat(0x3fefae1480000000,uVar3,uVar2,0xffffffff8201eea4);
-  DAT_82a4c07c = Dvar_RegisterFloat(uVar3,uVar3,0x4014000000000000,0xffffffff8201ee54);
-  DAT_82a4c0a8 = Dvar_RegisterFloat(0x3fe0000000000000,uVar3,uVar2,0xffffffff8201ee3c);
-  DAT_82a4c078 = Dvar_RegisterBool(0xffffffff8201edfc,1,0,0xffffffff8201edd4);
-  DAT_82a4bf54 = "<None>";
-  DAT_82a4bf58 = 0;
-  DAT_82a4c094 = Dvar_RegisterEnum(0xffffffff8201edbc,0xffffffff82a4bf54,0,0x2020,0xffffffff8201ed9c
-                                  );
-  DAT_82a4c0c8 = Dvar_RegisterEnum(0xffffffff8201ed64,0xffffffff82a4bf54,0,0x2020,0xffffffff8201ed78
-                                  );
-  DAT_82a4c06c = Dvar_RegisterBool(0xffffffff8201ed30,1,0,0xffffffff8201ed44);
-  DAT_82a4c0a0 = Dvar_RegisterFloat(uVar2,uVar1,0x4024000000000000,0xffffffff8201ed14);
-  DAT_82a4c0c4 = Dvar_RegisterFloat(uVar2,uVar3,uVar2,0xffffffff8201ecac);
-  DAT_82a4c0bc = Dvar_RegisterBool(0xffffffff8201ec84,0,4,0xffffffff8201ec94);
-  DAT_82a4c090 = Dvar_RegisterBool(0xffffffff8201ec44,1,4,0xffffffff8201ec60);
+  g_mdlprv.model.mruNames[0] =
+       Dvar_RegisterString("modPrvModelMruName0","",0,
+                           "Model previewer most recently used model name 0");
+  g_mdlprv.model.mruNames[1] =
+       Dvar_RegisterString("modPrvModelMruName1","",0,
+                           "Model previewer most recently used model name 1");
+  g_mdlprv.model.mruNames[2] =
+       Dvar_RegisterString("modPrvModelMruName2","",0,
+                           "Model previewer most recently used model name 2");
+  g_mdlprv.model.mruNames[3] =
+       Dvar_RegisterString("modPrvModelMruName3","",0,
+                           "Model previewer most recently used model name 3");
+  UpdateMru(g_mdlprv.model.mruNames,g_mdlprv.model.mruNameTable,(dvar_t *)0x0);
+  modPrvModelMru =
+       Dvar_RegisterEnum("modPrvModelMru",g_mdlprv.model.mruNameTable,0,0x2020,
+                         "Model previewer most recently used model");
+  modPrvLoadModel =
+       Dvar_RegisterEnum("modPrvLoadModel",g_mdlprv.system.modelNames,0,0x20,
+                         "Model previewer loaded model");
+  uVar1 = (ushort)g_mdlprv.system.modelNames;
+  Dvar_UpdateEnumDomain(modPrvLoadModel,g_mdlprv.system.modelNames);
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  dVar5 = 1000.0;
+  dVar4 = -1000.0;
+  dVar6 = 0.0;
+  modPrvOrigin = Dvar_RegisterVec3("modPrvOrigin",0.0,0.0,0.0,-1000.0,1000.0,uVar1,
+                                   IMAGE_DOS_HEADER_82000000.e_magic);
+  uVar1 = 0;
+  modPrvRotationAngles =
+       Dvar_RegisterVec3("modPrvRotationAngles",(float)dVar6,(float)dVar6,(float)dVar6,-180.0,180.0,
+                         0,pIVar2->e_magic);
+  modPrvCenterOffset =
+       Dvar_RegisterVec3("modPrvCenterOffset",(float)dVar6,(float)dVar6,(float)dVar6,(float)dVar4,
+                         (float)dVar5,uVar1,pIVar2->e_magic);
+  uVar1 = 0x2ef4;
+  modPrvLod = Dvar_RegisterEnum("modPrvLod",modPrvLodNames,0,0,"Model previewer level of detail");
+  modPrvDrawAxis = Dvar_RegisterBool("modPrvDrawAxis",false,0,"Draw the model previewer axes");
+  modPrvDrawBoneInfo =
+       Dvar_RegisterEnum("modPrvDrawBoneInfo",g_mdlprv.model.boneNameTable,0,0,
+                         "Draw model previewer bone information");
+  g_mdlprv.anim.mruNames[0] =
+       Dvar_RegisterString("modPrvAnimMruName0","",0,
+                           "Model previewer most recently used anim name 0");
+  g_mdlprv.anim.mruNames[1] =
+       Dvar_RegisterString("modPrvAnimMruName1","",0,
+                           "Model previewer most recently used anim name 1");
+  g_mdlprv.anim.mruNames[2] =
+       Dvar_RegisterString("modPrvAnimMruName2","",0,
+                           "Model previewer most recently used anim name 2");
+  g_mdlprv.anim.mruNames[3] =
+       Dvar_RegisterString("modPrvAnimMruName3","",0,
+                           "Model previewer most recently used anim name 3");
+  UpdateMru(g_mdlprv.anim.mruNames,g_mdlprv.anim.mruNameTable,(dvar_t *)0x0);
+  modPrvFromAnimMru =
+       Dvar_RegisterEnum("modPrvFromAnimMru",g_mdlprv.anim.mruNameTable,0,0x2020,
+                         "Model previewer most recently used \'from\' animation");
+  Dvar_UpdateEnumDomain(modPrvFromAnimMru,g_mdlprv.anim.mruNameTable);
+  modPrvToAnimMru =
+       Dvar_RegisterEnum("modPrvToAnimMru",g_mdlprv.anim.mruNameTable,0,0x2020,
+                         "Model previewer most recently used \'to\' animation");
+  Dvar_UpdateEnumDomain(modPrvToAnimMru,g_mdlprv.anim.mruNameTable);
+  modPrvLoadFromAnim =
+       Dvar_RegisterEnum("modPrvLoadFromAnim",g_mdlprv.system.animNames,0,0x20,
+                         "Model previewer loaded \'from\' animation");
+  Dvar_UpdateEnumDomain(modPrvLoadFromAnim,g_mdlprv.system.animNames);
+  modPrvLoadToAnim =
+       Dvar_RegisterEnum("modPrvLoadToAnim",g_mdlprv.system.animNames,0,0x20,
+                         "Model previewer loaded \'to\' animation");
+  Dvar_UpdateEnumDomain(modPrvLoadToAnim,g_mdlprv.system.animNames);
+  DAT_82a4c0cc = Dvar_RegisterBool("modPrvAnimForceLoop",false,0,
+                                   "Model Previewer - Force an animation loop");
+  dVar4 = 0.10000000149011612;
+  dVar5 = 1.0;
+  DAT_82a4c0b8 = Dvar_RegisterFloat("modPrvAnimRate",1.0,0.1,2.0,0,IMAGE_DOS_HEADER_82000000.e_magic
+                                   );
+  DAT_82a4c070 = Dvar_RegisterEnum("modPrvAnimBlendMode",modPrvAnimBlendModeNames,0,0,
+                                   "Model previewer animation blending mode");
+  pcVar3 = "the motion tracker after being detected";
+  modPrvAnimCrossBlendTime =
+       Dvar_RegisterFloat("modPrvAnimCrossBlendTime",0.99,(float)dVar6,(float)dVar5,uVar1,
+                          "the motion tracker after being detected");
+  uVar1 = 0;
+  modPrvAnimCrossBlendDuration =
+       Dvar_RegisterFloat("modPrvAnimCrossBlendDuration",(float)dVar6,(float)dVar6,5.0,0,pcVar3);
+  modPrvAnimBlendWeight =
+       Dvar_RegisterFloat("modPrvAnimBlendWeight",0.5,(float)dVar6,(float)dVar5,uVar1,pcVar3);
+  DAT_82a4c078 = Dvar_RegisterBool("modPrvAnimApplyDelta",true,0,
+                                   "Model previewer animation apply delta");
+  g_mdlprv.mat.nameTable[0] = "<None>";
+  g_mdlprv.mat.nameTable[1] = (char *)0x0;
+  modPrvMatSelect =
+       Dvar_RegisterEnum("modPrvMatSelect",g_mdlprv.mat.nameTable,0,0x2020,
+                         "Model previewer material select");
+  modPrvMatReplace =
+       Dvar_RegisterEnum("modPrvMatReplace",g_mdlprv.mat.nameTable,0,0x2020,
+                         "Model previewer material replace");
+  pcVar3 = (char *)0x0;
+  uVar1 = 1;
+  modPrvDisplayToggle =
+       Dvar_RegisterBool("modPrvDisplayToggle",true,0,"Show model previewer overlay");
+  DAT_82a4c0a0 = Dvar_RegisterFloat("modPrvGamepadControlSpeed",(float)dVar5,(float)dVar4,10.0,uVar1
+                                    ,pcVar3);
+  modPrvRStickDeflectMax =
+       Dvar_RegisterFloat("gpad_button_rstick_deflect_max",(float)dVar5,(float)dVar6,(float)dVar5,
+                          uVar1,"the motion tracker after being detected");
+  DAT_82a4c0bc = Dvar_RegisterBool("modPrvHideModel",false,4,"Skip drawing the model.");
+  modPrvDrawDistanceToModel =
+       Dvar_RegisterBool("modPrvDrawDistanceToModel",true,4,"Print viewer\'s distance to model.");
   __restgprlr_25();
   return;
 }
@@ -263,67 +353,68 @@ void RegisterDvars(void)
 
 // 822DD278  SetEntityAxis  (cgame/cg_modelpreviewer.cpp:510)
 
-void SetEntityAxis(undefined4 *param_1)
+void SetEntityAxis(float *param_1,float *param_2)
 
 {
-  undefined4 local_20;
+  float local_20;
   float local_1c;
-  undefined4 local_18;
+  float local_18;
   
   local_20 = *param_1;
   local_18 = param_1[2];
-  local_1c = DAT_82a4bf44 + (float)param_1[1] + 180.0;
-  AnglesToQuat(&local_20);
+  local_1c = g_mdlprv.anim.deltaYaw + param_1[1] + 180.0;
+  AnglesToQuat(&local_20,param_2);
   return;
 }
 
 
 // 822DD2D8  MdlPrvGetBounds  (cgame/cg_modelpreviewer.cpp:521)
 
-void MdlPrvGetBounds(undefined4 *param_1,undefined4 *param_2)
+void MdlPrvGetBounds(Bounds *param_1,float *param_2)
 
 {
-  undefined4 uVar1;
-  int iVar2;
+  float fVar1;
+  XModel *pXVar2;
   
-  iVar2 = DObjGetModel(DAT_82a3d844,0);
-  param_1[3] = *(undefined4 *)(iVar2 + 0x104);
-  param_1[4] = *(undefined4 *)(iVar2 + 0x108);
-  param_1[5] = *(undefined4 *)(iVar2 + 0x10c);
-  uVar1 = *(undefined4 *)(iVar2 + 0xf8);
-  *param_1 = uVar1;
-  param_1[1] = *(undefined4 *)(iVar2 + 0xfc);
-  param_1[2] = *(undefined4 *)(iVar2 + 0x100);
-  *param_2 = uVar1;
-  param_2[1] = param_1[1];
-  param_2[2] = param_1[2];
+  pXVar2 = DObjGetModel(g_mdlprv.model.currentObj,0);
+  param_1->halfSize[0] = (pXVar2->bounds).halfSize[0];
+  param_1->halfSize[1] = (pXVar2->bounds).halfSize[1];
+  param_1->halfSize[2] = (pXVar2->bounds).halfSize[2];
+  fVar1 = (pXVar2->bounds).midPoint[0];
+  param_1->midPoint[0] = fVar1;
+  param_1->midPoint[1] = (pXVar2->bounds).midPoint[1];
+  param_1->midPoint[2] = (pXVar2->bounds).midPoint[2];
+  *param_2 = fVar1;
+  param_2[1] = param_1->midPoint[1];
+  param_2[2] = param_1->midPoint[2];
   return;
 }
 
 
 // 822DD368  FrameModel  (cgame/cg_modelpreviewer.cpp:531)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void FrameModel(void)
 
 {
   float fVar1;
   double dVar2;
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [12];
-  float local_24;
-  float local_20;
-  float local_1c;
+  float afStack_40 [4];
+  Bounds aBStack_30 [2];
   
-  MdlPrvGetBounds(auStack_30,auStack_40);
-  dVar2 = (double)local_1c;
-  Dvar_SetVec3(0,0,dVar2,DAT_82a3d6c8);
-  DAT_82a3d748 = DAT_82a3d740;
-  fVar1 = SQRT((float)(dVar2 * dVar2 + (double)(local_24 * local_24 + local_20 * local_20)));
+  MdlPrvGetBounds(aBStack_30,afStack_40);
+  dVar2 = (double)aBStack_30[0].halfSize[2];
+  Dvar_SetVec3(modPrvCenterOffset,0.0,0.0,aBStack_30[0].halfSize[2]);
+  g_mdlprv.viewer.zNearChangeLimit = g_mdlprv.viewer.centerRadius;
+  fVar1 = SQRT((float)(dVar2 * dVar2 +
+                      (double)(aBStack_30[0].halfSize[0] * aBStack_30[0].halfSize[0] +
+                              aBStack_30[0].halfSize[1] * aBStack_30[0].halfSize[1])));
   if (fVar1 < 10.0) {
     fVar1 = 10.0;
   }
-  if (DAT_82a3d740 < fVar1) {
-    DAT_82a3d740 = fVar1;
+  if (g_mdlprv.viewer.centerRadius < fVar1) {
+    g_mdlprv.viewer.centerRadius = fVar1;
   }
   return;
 }
@@ -331,29 +422,31 @@ void FrameModel(void)
 
 // 822DD400  ResetOrientation_f  (cgame/cg_modelpreviewer.cpp:553)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void ResetOrientation_f(void)
 
 {
-  undefined8 uVar1;
-  undefined4 local_30;
+  double dVar1;
+  float local_30;
   float local_2c;
-  undefined4 local_28;
+  float local_28;
   
-  uVar1 = 0;
-  DAT_82a3d73c = 0;
-  DAT_82a3d738 = 0xc1a00000;
-  DAT_82a3d740 = 0x42c80000;
-  Dvar_SetVec3(0,0,0,DAT_82a3d6c8);
-  DAT_82a3d78c = DAT_82a3d8e4;
-  DAT_82a3d790 = DAT_82a3d8e8;
-  DAT_82a3d794 = DAT_82a3d8ec;
-  Dvar_SetVec3(uVar1,uVar1,uVar1,DAT_82a4c088);
-  Dvar_SetVec3(uVar1,(double)DAT_82a3d8f0,uVar1,DAT_82a4c0ac);
-  local_30 = *(undefined4 *)(DAT_82a4c0ac + 0xc);
-  local_2c = DAT_82a4bf44 + *(float *)(DAT_82a4c0ac + 0x10) + 180.0;
-  local_28 = *(undefined4 *)(DAT_82a4c0ac + 0x14);
-  AnglesToQuat(&local_30,0xffffffff82a3d77c);
-  if (-1 < DAT_82a3d76c) {
+  dVar1 = 0.0;
+  g_mdlprv.viewer.horizontal = 0.0;
+  g_mdlprv.viewer.vertical = -20.0;
+  g_mdlprv.viewer.centerRadius = 100.0;
+  Dvar_SetVec3(modPrvCenterOffset,0.0,0.0,0.0);
+  g_mdlprv.model.currentEntity.placement.origin[0] = g_mdlprv.model.initialOrigin[0];
+  g_mdlprv.model.currentEntity.placement.origin[1] = g_mdlprv.model.initialOrigin[1];
+  g_mdlprv.model.currentEntity.placement.origin[2] = g_mdlprv.model.initialOrigin[2];
+  Dvar_SetVec3(modPrvOrigin,(float)dVar1,(float)dVar1,(float)dVar1);
+  Dvar_SetVec3(modPrvRotationAngles,(float)dVar1,g_mdlprv.model.initialYaw,(float)dVar1);
+  local_30 = (float)(modPrvRotationAngles->current).integer;
+  local_2c = g_mdlprv.anim.deltaYaw + (modPrvRotationAngles->current).vector[1] + 180.0;
+  local_28 = (modPrvRotationAngles->current).vector[2];
+  AnglesToQuat(&local_30,g_mdlprv.model.currentEntity.placement.quat);
+  if (-1 < g_mdlprv.model.currentIndex) {
     FrameModel();
   }
   return;
@@ -362,34 +455,40 @@ void ResetOrientation_f(void)
 
 // 822DD518  SetViewerActive  (cgame/cg_modelpreviewer.cpp:572)
 
-void SetViewerActive(undefined8 param_1,char param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void SetViewerActive(LocalClientNum_t param_1,bool param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if (param_2 == '\0') {
-    uVar1 = 0xffffffff82012d94;
+  if (param_2) {
+    pcVar1 = "mpon";
   }
   else {
-    uVar1 = 0xffffffff82012d9c;
+    pcVar1 = "mpoff";
   }
-  CL_AddReliableCommand(param_1,uVar1);
+  CL_AddReliableCommand(param_1,pcVar1);
   return;
 }
 
 
 // 822E1FD8  ModPrvExit_f  (cgame/cg_modelpreviewer.cpp:586)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void ModPrvExit_f(void)
 
 {
-  undefined8 uVar1;
+  int iVar1;
+  LocalClientNum_t LVar2;
   
   MdlPrvCloneClearAll();
-  Cmd_LocalControllerIndex();
-  uVar1 = CL_LocalClientNumFromControllerIndex();
-  CL_AddReliableCommand(uVar1,0xffffffff82012d94);
-  DAT_82a3d734 = 0;
+  iVar1 = Cmd_LocalControllerIndex();
+  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
+  CL_AddReliableCommand(LVar2,"mpoff");
+  g_mdlprv.system.walkaboutActive = false;
   CG_ModPrvUnloadModel();
   DevGui_Toggle();
   DevGui_Reset();
@@ -399,114 +498,121 @@ void ModPrvExit_f(void)
 
 // 822E2028  RegisterCmds  (cgame/cg_modelpreviewer.cpp:605)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RegisterCmds(void)
 
 {
-  Cmd_AddCommandInternal(0xffffffff8201f468,0xffffffff822dd400,0xffffffff82a4c0e8);
-  Cmd_AddCommandInternal(0xffffffff8201f45c,0xffffffff822e1fd8,0xffffffff82a4c0d4);
+  Cmd_AddCommandInternal("modPrvResetOrientation",ResetOrientation_f,&ResetOrientation_f_VAR);
+  Cmd_AddCommandInternal("modPrvExit",ModPrvExit_f,&ModPrvExit_f_VAR);
   return;
 }
 
 
 // 822DD540  UnregisterCmds  (cgame/cg_modelpreviewer.cpp:612)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void UnregisterCmds(void)
 
 {
-  Cmd_RemoveCommand(0xffffffff8201f468);
-  Cmd_RemoveCommand(0xffffffff8201f45c);
+  Cmd_RemoveCommand("modPrvResetOrientation");
+  Cmd_RemoveCommand("modPrvExit");
   return;
 }
 
 
 // 822DD578  ModPrvAlloc  (cgame/cg_modelpreviewer.cpp:619)
 
-void ModPrvAlloc(undefined8 param_1)
+void * ModPrvAlloc(int param_1)
 
 {
-  if (DAT_82a3d6cc == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x26c,0,0xffffffff82000f98,0xffffffff8201f480);
+  void *pvVar1;
+  
+  if (g_modPrvHunkUser == (HunkUser *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x26c,0,"%s");
   }
-  Hunk_UserAlloc(DAT_82a3d6cc,param_1,4);
-  return;
+  pvVar1 = Hunk_UserAlloc(g_modPrvHunkUser,param_1,4);
+  return pvVar1;
 }
 
 
 // 822DD5F0  CG_ModPrvResetGlobals  (cgame/cg_modelpreviewer.cpp:626)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvResetGlobals(void)
 
 {
   double dVar1;
-  double dVar2;
   
   __savegprlr_27();
-  DAT_82a3d718 = 0;
-  DAT_82a3d6f8 = 0;
-  DAT_82a3d720 = 0;
-  DAT_82a3d8f4 = 10;
-  DAT_82a3d714 = 0;
-  DAT_82a3d844 = 0;
-  DAT_82a3d8fc = 0x1e;
-  DAT_82a4bef4 = 0;
-  DAT_82a3d710 = 0;
-  DAT_82a3d6e8 = 0;
-  DAT_82a3d700 = 0;
-  DAT_82a3d71c = 0;
-  DAT_82a3d724 = 0;
-  DAT_82a3d70c = 0;
-  DAT_82a3d734 = 0;
-  dVar2 = 0.0;
-  DAT_82a3de30 = 0;
-  DAT_82a3d76c = 0xffffffff;
-  DAT_82a3d8f8 = 0x14;
-  DAT_82a3d900 = 0x28;
-  DAT_82a3d740 = 0x42c80000;
-  DAT_82a3d73c = 0;
-  DAT_82a3d738 = 0xc1a00000;
-  DAT_82a3dfa4 = 0;
-  DAT_82a3d704 = 0;
-  DAT_82a3e28c = 0;
-  DAT_82a3d708 = 0;
-  DAT_82a3d728 = 0;
-  DAT_82a3d72c = 0;
-  DAT_82a3dcbc = 0;
-  DAT_82a3e400 = 0;
-  DAT_82a3e118 = 0;
-  DAT_82a3e574 = 0;
-  DAT_82a3e6e8 = 0;
-  DAT_82a3e85c = 0;
-  DAT_82a3e9d0 = 0;
-  DAT_82a4bef8 = 0;
-  dVar1 = (double)Dvar_GetFloat(0xffffffff8201f494);
-  DAT_82a3d744 = (float)dVar1;
-  DAT_82a3d758 = (float)dVar2;
-  DAT_82a3d754 = (float)dVar2;
-  DAT_82a3d750 = (float)dVar2;
-  DAT_82a3d764 = (float)dVar2;
-  DAT_82a3d760 = (float)dVar2;
-  DAT_82a3d74c = 0;
-  DAT_82a3d75c = (float)dVar2;
-  DAT_82a4bf00 = 0xffffffff;
-  DAT_82a4bf04 = 0xffffffff;
-  Dvar_Reset(DAT_82a4c08c,0);
-  Dvar_Reset(DAT_82a3d6bc,0);
-  Dvar_Reset(DAT_82a4c0c0,0);
-  Dvar_Reset(DAT_82a3d6b8,0);
-  Dvar_Reset(DAT_82a4c0b8,0);
-  Dvar_Reset(DAT_82a4c0a8,0);
-  Dvar_Reset(DAT_82a4c070,0);
-  Dvar_Reset(DAT_82a4c07c,0);
-  Dvar_Reset(DAT_82a3d6c0,0);
-  Dvar_Reset(DAT_82a4c078,0);
-  DAT_82a4bf48 = 0xffffffff;
-  DAT_82a4bf50 = 0;
-  DAT_82a4bf4c = 0;
-  Dvar_Reset(DAT_82a4c094,0);
-  DAT_82a4c05c = 0xffffffff;
-  DAT_82a4c060 = 0;
-  DAT_82a4c064 = 0;
-  DAT_82a4c068 = 0;
+  g_mdlprv.system.buttonTimes.camDown = 0;
+  g_mdlprv.system.uiModePC = SELECTION_MODE;
+  g_mdlprv.system.buttonTimes.clone = 0;
+  g_mdlprv.model.lodDist[0] = 10;
+  g_mdlprv.system.buttonTimes.camUp = 0;
+  g_mdlprv.model.currentObj = (DObj *)0x0;
+  g_mdlprv.model.lodDist[2] = 0x1e;
+  g_mdlprv.model.cloneNextIdx = 0;
+  g_mdlprv.system.buttonTimes.mdlRotMode = 0;
+  g_mdlprv.system.cachedAllModels = false;
+  g_mdlprv.system.uiModeGPad = MDLPRVMODE_FOCUSED;
+  g_mdlprv.system.buttonTimes.dropToFloor = 0;
+  g_mdlprv.system.buttonTimes.clearClones = 0;
+  g_mdlprv.system.buttonTimes.mode = 0;
+  g_mdlprv.system.walkaboutActive = false;
+  dVar1 = 0.0;
+  g_mdlprv.model.clones[1].obj = (DObj *)0x0;
+  g_mdlprv.model.currentIndex = -1;
+  g_mdlprv.model.lodDist[1] = 0x14;
+  g_mdlprv.model.lodDist[3] = 0x28;
+  g_mdlprv.viewer.centerRadius = 100.0;
+  g_mdlprv.viewer.horizontal = 0.0;
+  g_mdlprv.viewer.vertical = -20.0;
+  g_mdlprv.model.clones[2].obj = (DObj *)0x0;
+  g_mdlprv.system.focusedMode = FOCUSEDMODE_CAMERA;
+  g_mdlprv.model.clones[4].obj = (DObj *)0x0;
+  g_mdlprv.system.modelRotCamMode = MROTCAMMODE_STATIC;
+  g_mdlprv.system.buttonTimes.walkabout = 0;
+  g_mdlprv.system.buttonTimes.freeSpeed = 0;
+  g_mdlprv.model.clones[0].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[5].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[3].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[6].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[7].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[8].obj = (DObj *)0x0;
+  g_mdlprv.model.clones[9].obj = (DObj *)0x0;
+  g_mdlprv.model.ragdoll = 0;
+  g_mdlprv.viewer.zNear = Dvar_GetFloat("r_znear");
+  g_mdlprv.viewer.freeModeOrigin[2] = (float)dVar1;
+  g_mdlprv.viewer.freeModeOrigin[1] = (float)dVar1;
+  g_mdlprv.viewer.freeModeOrigin[0] = (float)dVar1;
+  g_mdlprv.viewer.freeModeAngles[2] = (float)dVar1;
+  g_mdlprv.viewer.freeModeAngles[1] = (float)dVar1;
+  g_mdlprv.viewer.freeModeSpeed = FREESPEED_NORMAL;
+  g_mdlprv.viewer.freeModeAngles[0] = (float)dVar1;
+  g_mdlprv.anim.fromCurrentIndex = -1;
+  g_mdlprv.anim.toCurrentIndex = -1;
+  Dvar_Reset(modPrvFromAnimMru,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvToAnimMru,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvLoadFromAnim,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvLoadToAnim,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_82a4c0b8,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimBlendWeight,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_82a4c070,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimCrossBlendDuration,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimCrossBlendTime,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_82a4c078,DVAR_SOURCE_INTERNAL);
+  g_mdlprv.mat.handleCount = -1;
+  g_mdlprv.mat.surfMatHandles = (Material **)0x0;
+  g_mdlprv.mat.handleArray = (Material **)0x0;
+  Dvar_Reset(modPrvMatSelect,DVAR_SOURCE_INTERNAL);
+  g_mdlprv.mat.replaceIndex = -1;
+  g_mdlprv.mat.prevReplaced = (Material *)0x0;
+  g_mdlprv.mat.selectSliderIndex = 0;
+  g_mdlprv.mat.replaceSliderIndex = 0;
   __restgprlr_27();
   return;
 }
@@ -514,40 +620,47 @@ void CG_ModPrvResetGlobals(void)
 
 // 822DD870  CG_ModPrvCompareString  (cgame/cg_modelpreviewer.cpp:701)
 
-ulonglong CG_ModPrvCompareString(void)
+bool CG_ModPrvCompareString(char *param_1,char *param_2)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = I_stricmp();
-  return (uVar1 & 0xffffffff) >> 0x1f;
+  iVar1 = I_stricmp(param_1,param_2);
+  return SUB41((uint)iVar1 >> 0x1f,0);
 }
 
 
 // 822DD898  CG_ModPrvGetAssetName  (cgame/cg_modelpreviewer.cpp:707)
 
-void CG_ModPrvGetAssetName(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_ModPrvGetAssetName(XAssetHeader param_1,void *param_2)
 
 {
   int *piVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
-  undefined4 uVar4;
+  XModel *pXVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   
-  puVar3 = (undefined4 *)__savegprlr_29();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x2c6,0,0xffffffff82000f98,0xffffffff8201f49c);
+  uVar4 = (ulonglong)(int)param_2;
+  pXVar2 = (XModel *)__savegprlr_29(param_1.physPreset);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x2c6,0,"%s");
   }
-  piVar1 = (int *)param_2;
+  piVar1 = (int *)uVar4;
   if (piVar1[1] == 4) {
-    uVar2 = XModelGetName(puVar3);
-    uVar4 = Hunk_CopyString(*(undefined4 *)(DAT_82a3d6dc + -4),uVar2);
-    *(undefined4 *)(*piVar1 * 4 + DAT_82a3d6dc) = uVar4;
+    pcVar3 = XModelGetName(pXVar2);
+    pcVar3 = Hunk_CopyString((HunkUser *)g_mdlprv.system.modelNames[-1],pcVar3);
+    g_mdlprv.system.modelNames[*piVar1] = pcVar3;
     *piVar1 = *piVar1 + 1;
   }
   if (piVar1[1] == 2) {
-    uVar4 = Hunk_CopyString(*(undefined4 *)(DAT_82a3d6e4 + -4),*puVar3);
-    *(undefined4 *)(*piVar1 * 4 + DAT_82a3d6e4) = uVar4;
+    pcVar3 = Hunk_CopyString((HunkUser *)g_mdlprv.system.animNames[-1],pXVar2->name);
+    g_mdlprv.system.animNames[*piVar1] = pcVar3;
     *piVar1 = *piVar1 + 1;
   }
   __restgprlr_29();
@@ -557,34 +670,42 @@ void CG_ModPrvGetAssetName(undefined8 param_1,ulonglong param_2)
 
 // 822E2BF0  CG_ModPrvEnumerateModels_FastFile  (cgame/cg_modelpreviewer.cpp:1263)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_ModPrvEnumerateModels_FastFile(void)
 
 {
-  undefined8 uVar1;
+  HunkUser *pHVar1;
   undefined4 local_30;
   undefined4 local_2c;
   char *local_28;
   
   __savegprlr_29();
-  if (DAT_82a3d6dc != (undefined4 *)0x0) {
-    Dvar_UpdateEnumDomain(DAT_82a4c098,0xffffffff82a4c0d0);
-    FS_FreeFileList(DAT_82a3d6dc,0);
-    DAT_82a3d6dc = (undefined4 *)0x0;
+  if (g_mdlprv.system.modelNames != (char **)0x0) {
+    Dvar_UpdateEnumDomain(modPrvLoadModel,g_emptyEnumList);
+    FS_FreeFileList(g_mdlprv.system.modelNames,0);
+    g_mdlprv.system.modelNames = (char **)0x0;
   }
-  DAT_82a3d6d8 = DB_GetAllXAssetOfType(4,0,0x7fffffff);
-  if (DAT_82a3d6d8 != 0) {
-    uVar1 = Hunk_UserCreate(0x20000,0xffffffff8201fb48,0,0);
-    DAT_82a3d6dc = (undefined4 *)
-                   Hunk_UserAlloc(uVar1,((ulonglong)DAT_82a3d6d8 + 2 & 0x3fffffff) << 2,4);
-    *DAT_82a3d6dc = (int)uVar1;
-    DAT_82a3d6dc = DAT_82a3d6dc + 1;
+  g_mdlprv.system.modelCount =
+       DB_GetAllXAssetOfType(ASSET_TYPE_XMODEL,(XAssetHeader *)0x0,0x7fffffff);
+  if (g_mdlprv.system.modelCount != 0) {
+    pHVar1 = Hunk_UserCreate(0x20000,"CG_ModPrvEnumerateModels",false,0);
+    g_mdlprv.system.modelNames = Hunk_UserAlloc(pHVar1,(g_mdlprv.system.modelCount + 2) * 4,4);
+    *g_mdlprv.system.modelNames = (char *)pHVar1;
+    g_mdlprv.system.modelNames = g_mdlprv.system.modelNames + 1;
     local_2c = 4;
     local_30 = 0;
     local_28 = "CG_ModPrvEnumerateModels";
-    DB_EnumXAssets(4,0xffffffff822dd898,&local_30,0);
-    std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (DAT_82a3d6dc,DAT_82a3d6dc + DAT_82a3d6d8,
-               (int)(DAT_82a3d6dc + DAT_82a3d6d8) - (int)DAT_82a3d6dc >> 2,0xffffffff822dd870);
+    DB_EnumXAssets(ASSET_TYPE_XMODEL,CG_ModPrvGetAssetName,&local_30,false);
+    std::_Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (g_mdlprv.system.modelNames,g_mdlprv.system.modelNames + g_mdlprv.system.modelCount,
+               (int)(g_mdlprv.system.modelNames + g_mdlprv.system.modelCount) -
+               (int)g_mdlprv.system.modelNames >> 2,CG_ModPrvCompareString);
   }
   __restgprlr_29();
   return;
@@ -593,35 +714,43 @@ void CG_ModPrvEnumerateModels_FastFile(void)
 
 // 822E2D00  CG_ModPrvEnumerateAnimations_FastFile  (cgame/cg_modelpreviewer.cpp:1322)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_ModPrvEnumerateAnimations_FastFile(void)
 
 {
-  undefined8 uVar1;
+  HunkUser *pHVar1;
   undefined4 local_30;
   undefined4 local_2c;
   char *local_28;
   
   __savegprlr_29();
-  if (DAT_82a3d6e4 != (undefined4 *)0x0) {
-    Dvar_UpdateEnumDomain(DAT_82a4c0c0,0xffffffff82a4c0d0);
-    Dvar_UpdateEnumDomain(DAT_82a3d6b8,0xffffffff82a4c0d0);
-    FS_FreeFileList(DAT_82a3d6e4,0);
-    DAT_82a3d6e4 = (undefined4 *)0x0;
+  if (g_mdlprv.system.animNames != (char **)0x0) {
+    Dvar_UpdateEnumDomain(modPrvLoadFromAnim,g_emptyEnumList);
+    Dvar_UpdateEnumDomain(modPrvLoadToAnim,g_emptyEnumList);
+    FS_FreeFileList(g_mdlprv.system.animNames,0);
+    g_mdlprv.system.animNames = (char **)0x0;
   }
-  DAT_82a3d6e0 = DB_GetAllXAssetOfType(2,0,0x7fffffff);
-  if (DAT_82a3d6e0 != 0) {
-    uVar1 = Hunk_UserCreate(0x20000,0xffffffff8201fb64,0,0);
-    DAT_82a3d6e4 = (undefined4 *)
-                   Hunk_UserAlloc(uVar1,((ulonglong)DAT_82a3d6e0 + 2 & 0x3fffffff) << 2,4);
-    *DAT_82a3d6e4 = (int)uVar1;
-    DAT_82a3d6e4 = DAT_82a3d6e4 + 1;
+  g_mdlprv.system.animCount =
+       DB_GetAllXAssetOfType(ASSET_TYPE_XANIMPARTS,(XAssetHeader *)0x0,0x7fffffff);
+  if (g_mdlprv.system.animCount != 0) {
+    pHVar1 = Hunk_UserCreate(0x20000,"CG_ModPrvEnumerateAnimations",false,0);
+    g_mdlprv.system.animNames = Hunk_UserAlloc(pHVar1,(g_mdlprv.system.animCount + 2) * 4,4);
+    *g_mdlprv.system.animNames = (char *)pHVar1;
+    g_mdlprv.system.animNames = g_mdlprv.system.animNames + 1;
     local_2c = 2;
     local_30 = 0;
     local_28 = "CG_ModPrvEnumerateAnimations";
-    DB_EnumXAssets(2,0xffffffff822dd898,&local_30,0);
-    std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (DAT_82a3d6e4,DAT_82a3d6e4 + DAT_82a3d6e0,
-               (int)(DAT_82a3d6e4 + DAT_82a3d6e0) - (int)DAT_82a3d6e4 >> 2,0xffffffff822dd870);
+    DB_EnumXAssets(ASSET_TYPE_XANIMPARTS,CG_ModPrvGetAssetName,&local_30,false);
+    std::_Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (g_mdlprv.system.animNames,g_mdlprv.system.animNames + g_mdlprv.system.animCount,
+               (int)(g_mdlprv.system.animNames + g_mdlprv.system.animCount) -
+               (int)g_mdlprv.system.animNames >> 2,CG_ModPrvCompareString);
   }
   __restgprlr_29();
   return;
@@ -630,15 +759,17 @@ void CG_ModPrvEnumerateAnimations_FastFile(void)
 
 // 822E2E20  CG_ModelPreviewerEnumerateAssets  (cgame/cg_modelpreviewer.cpp:1382)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModelPreviewerEnumerateAssets(void)
 
 {
-  if (DAT_82a3d6d0 != '\0') {
+  if (g_mdlprv.inited) {
     CG_ModPrvEnumerateModels_FastFile();
-    Dvar_UpdateEnumDomain(DAT_82a4c098,DAT_82a3d6dc);
+    Dvar_UpdateEnumDomain(modPrvLoadModel,g_mdlprv.system.modelNames);
     CG_ModPrvEnumerateAnimations_FastFile();
-    Dvar_UpdateEnumDomain(DAT_82a4c0c0,DAT_82a3d6e4);
-    Dvar_UpdateEnumDomain(DAT_82a3d6b8,DAT_82a3d6e4);
+    Dvar_UpdateEnumDomain(modPrvLoadFromAnim,g_mdlprv.system.animNames);
+    Dvar_UpdateEnumDomain(modPrvLoadToAnim,g_mdlprv.system.animNames);
   }
   return;
 }
@@ -646,60 +777,66 @@ void CG_ModelPreviewerEnumerateAssets(void)
 
 // 822E2E98  CG_ModPrvStartup  (cgame/cg_modelpreviewer.cpp:1396)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvStartup(void)
 
 {
   CG_ModPrvEnumerateModels_FastFile();
   CG_ModPrvEnumerateAnimations_FastFile();
   RegisterDvars();
-  Cmd_AddCommandInternal(0xffffffff8201f468,0xffffffff822dd400,0xffffffff82a4c0e8);
-  Cmd_AddCommandInternal(0xffffffff8201f45c,0xffffffff822e1fd8,0xffffffff82a4c0d4);
-  DAT_82a3d6d0 = 1;
+  Cmd_AddCommandInternal("modPrvResetOrientation",ResetOrientation_f,&ResetOrientation_f_VAR);
+  Cmd_AddCommandInternal("modPrvExit",ModPrvExit_f,&ModPrvExit_f_VAR);
+  g_mdlprv.inited = true;
   return;
 }
 
 
 // 822DD960  CG_ModPrvUnloadModel  (cgame/cg_modelpreviewer.cpp:1416)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvUnloadModel(void)
 
 {
-  ulonglong uVar1;
+  XAnimTree *pXVar1;
+  dvar_t *pdVar2;
   
-  if (DAT_82a4bef8 != 0) {
-    Ragdoll_Remove();
-    DAT_82a4bef8 = 0;
+  if (g_mdlprv.model.ragdoll != 0) {
+    Ragdoll_Remove(g_mdlprv.model.ragdoll);
+    g_mdlprv.model.ragdoll = 0;
   }
-  if (DAT_82a3d844 != 0) {
-    uVar1 = DObjGetTree();
-    DObjFree(DAT_82a3d844);
-    DAT_82a3d844 = 0;
-    DAT_82a3d76c = 0xffffffff;
-    if ((uVar1 & 0xffffffff) != 0) {
-      XAnimGetAnims(uVar1);
-      XAnimFreeTree(uVar1,0);
-      if (DAT_82a3d6cc == 0) {
-        MyAssertHandler(0xffffffff8201ebc8,0x5a1,0,0xffffffff82000f98,0xffffffff8201f480);
+  if (g_mdlprv.model.currentObj != (DObj *)0x0) {
+    pXVar1 = DObjGetTree(g_mdlprv.model.currentObj);
+    DObjFree(g_mdlprv.model.currentObj);
+    g_mdlprv.model.currentObj = (DObj *)0x0;
+    g_mdlprv.model.currentIndex = -1;
+    if (pXVar1 != (XAnimTree *)0x0) {
+      XAnimGetAnims(pXVar1);
+      XAnimFreeTree(pXVar1,(_func___cdecl_void_void_ptr_int *)0x0);
+      if (g_modPrvHunkUser == (HunkUser *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                        ,0x5a1,0,"%s");
       }
-      Hunk_UserDestroy(DAT_82a3d6cc);
-      DAT_82a3d6cc = 0;
+      Hunk_UserDestroy(g_modPrvHunkUser);
+      g_modPrvHunkUser = (HunkUser *)0x0;
     }
   }
-  if (DAT_82a4bf4c != 0) {
-    Z_VirtualFree(DAT_82a4bf4c,0);
-    DAT_82a4bf4c = 0;
-    DAT_82a4bf48 = 0xffffffff;
+  if (g_mdlprv.mat.handleArray != (Material **)0x0) {
+    Z_VirtualFree(g_mdlprv.mat.handleArray,0);
+    g_mdlprv.mat.handleArray = (Material **)0x0;
+    g_mdlprv.mat.handleCount = -1;
   }
-  if (DAT_82a4bf50 != 0) {
-    Z_VirtualFree(DAT_82a4bf50,0);
-    DAT_82a4bf50 = 0;
+  if (g_mdlprv.mat.surfMatHandles != (Material **)0x0) {
+    Z_VirtualFree(g_mdlprv.mat.surfMatHandles,0);
+    g_mdlprv.mat.surfMatHandles = (Material **)0x0;
   }
-  uVar1 = Dvar_FindVar(0xffffffff8201f4a4);
-  if ((uVar1 & 0xffffffff) != 0) {
-    Dvar_Reset(uVar1,0);
+  pdVar2 = Dvar_FindVar("r_forceLod");
+  if (pdVar2 != (dvar_t *)0x0) {
+    Dvar_Reset(pdVar2,DVAR_SOURCE_INTERNAL);
   }
-  if (DAT_82a4c0c4 != 0) {
-    Dvar_SetFloat((double)DAT_82a3d6fc);
+  if (modPrvRStickDeflectMax != (dvar_t *)0x0) {
+    Dvar_SetFloat(modPrvRStickDeflectMax,g_mdlprv.system.gamePadRStickDeflect);
   }
   return;
 }
@@ -707,28 +844,30 @@ void CG_ModPrvUnloadModel(void)
 
 // 822E2080  CG_ModPrvShutdown  (cgame/cg_modelpreviewer.cpp:1470)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvShutdown(void)
 
 {
-  if (DAT_82a3d6d0 != '\0') {
-    DAT_82a3d6d0 = '\0';
-    if (DAT_82a3d6dc != 0) {
-      Dvar_UpdateEnumDomain(DAT_82a4c098,0xffffffff82a4c0d0);
-      FS_FreeFileList(DAT_82a3d6dc,0);
-      DAT_82a3d6dc = 0;
+  if (g_mdlprv.inited) {
+    g_mdlprv.inited = false;
+    if (g_mdlprv.system.modelNames != (char **)0x0) {
+      Dvar_UpdateEnumDomain(modPrvLoadModel,g_emptyEnumList);
+      FS_FreeFileList(g_mdlprv.system.modelNames,0);
+      g_mdlprv.system.modelNames = (char **)0x0;
     }
-    DAT_82a3d6d8 = 0;
-    if (DAT_82a3d6e4 != 0) {
-      Dvar_UpdateEnumDomain(DAT_82a4c0c0,0xffffffff82a4c0d0);
-      Dvar_UpdateEnumDomain(DAT_82a3d6b8,0xffffffff82a4c0d0);
-      FS_FreeFileList(DAT_82a3d6e4,0);
-      DAT_82a3d6e4 = 0;
+    g_mdlprv.system.modelCount = 0;
+    if (g_mdlprv.system.animNames != (char **)0x0) {
+      Dvar_UpdateEnumDomain(modPrvLoadFromAnim,g_emptyEnumList);
+      Dvar_UpdateEnumDomain(modPrvLoadToAnim,g_emptyEnumList);
+      FS_FreeFileList(g_mdlprv.system.animNames,0);
+      g_mdlprv.system.animNames = (char **)0x0;
     }
     MdlPrvCloneClearAll();
     CG_ModPrvUnloadModel();
-    if (DAT_82a3d6d4 != 0) {
-      Hunk_UserDestroy();
-      DAT_82a3d6d4 = 0;
+    if (g_mdlprv.user != (HunkUser *)0x0) {
+      Hunk_UserDestroy(g_mdlprv.user);
+      g_mdlprv.user = (HunkUser *)0x0;
     }
   }
   return;
@@ -737,36 +876,40 @@ void CG_ModPrvShutdown(void)
 
 // 822DDAE8  CG_ModPrvDrawViewAxis  (cgame/cg_modelpreviewer.cpp:1515)
 
-void CG_ModPrvDrawViewAxis(void)
+void CG_ModPrvDrawViewAxis(float *param_1)
 
 {
-  float *pfVar1;
-  int iVar2;
-  double dVar3;
+  float fVar1;
+  float *pfVar2;
+  int iVar3;
   double dVar4;
   double dVar5;
+  double dVar6;
   float local_60 [4];
   float local_50 [20];
   
-  pfVar1 = (float *)__savegprlr_29();
-  dVar3 = 0.10000000149011612;
-  iVar2 = 0;
-  dVar4 = 1.0;
-  dVar5 = 0.0;
+  pfVar2 = (float *)__savegprlr_29(param_1);
+  dVar4 = 0.10000000149011612;
+  iVar3 = 0;
+  dVar5 = 1.0;
+  dVar6 = 0.0;
   do {
-    local_60[0] = *pfVar1;
-    *(float *)((int)local_60 + iVar2) = (float)((double)DAT_82a3d740 * dVar3);
-    local_60[1] = pfVar1[1] + (float)dVar5;
-    local_50[0] = (float)dVar5;
-    local_60[0] = local_60[0] + (float)dVar5;
-    local_50[1] = (float)dVar5;
-    local_60[2] = pfVar1[2] + (float)dVar5;
-    local_50[2] = (float)dVar5;
-    local_50[3] = (float)dVar5;
-    *(float *)((int)local_50 + iVar2) = (float)dVar4;
-    CG_DebugLine(pfVar1,local_60,local_50,1,0);
-    iVar2 = iVar2 + 4;
-  } while (iVar2 < 0xc);
+    local_60[0] = (float)dVar6;
+    local_60[1] = (float)dVar6;
+    local_60[2] = (float)dVar6;
+    fVar1 = *pfVar2;
+    *(float *)((int)local_60 + iVar3) = (float)((double)g_mdlprv.viewer.centerRadius * dVar4);
+    local_60[1] = pfVar2[1] + local_60[1];
+    local_50[0] = (float)dVar6;
+    local_60[0] = fVar1 + local_60[0];
+    local_50[1] = (float)dVar6;
+    local_60[2] = pfVar2[2] + local_60[2];
+    local_50[2] = (float)dVar6;
+    local_50[3] = (float)dVar6;
+    *(float *)((int)local_50 + iVar3) = (float)dVar5;
+    CG_DebugLine(pfVar2,local_60,local_50,1,0);
+    iVar3 = iVar3 + 4;
+  } while (iVar3 < 0xc);
   __restgprlr_29();
   return;
 }
@@ -774,55 +917,61 @@ void CG_ModPrvDrawViewAxis(void)
 
 // 822E2160  CG_ModPrvModelGetBoneNameList  (cgame/cg_modelpreviewer.cpp:1537)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvModelGetBoneNameList(void)
 
 {
   int iVar1;
-  int iVar2;
-  undefined4 uVar3;
-  longlong lVar4;
-  uint uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  XModel *pXVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  uint uVar6;
+  char **ppcVar7;
+  int iVar8;
   
   __savegprlr_22();
-  if (DAT_82a3d844 == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x60a,0,0xffffffff82000f98,0xffffffff8201f56c);
+  if (g_mdlprv.model.currentObj == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x60a,0,"%s");
   }
-  CG_ModPrvGetNumTotalBones(DAT_82a3d844);
-  uVar5 = 4;
-  DAT_82a3d930 = PTR_s_Draw_None_82962ed0;
-  DAT_82a3d934 = PTR_s_Draw_All_Tags_82962ed4;
-  DAT_82a3d938 = PTR_s_Draw_All_Bones_82962ed8;
-  DAT_82a3d93c = PTR_s_Draw_All_82962edc;
-  iVar1 = DObjGetNumModels(DAT_82a3d844);
-  lVar4 = 0;
+  CG_ModPrvGetNumTotalBones(g_mdlprv.model.currentObj);
+  uVar6 = 4;
+  g_mdlprv.model.boneNameTable[0] = mpDefaultDrawBoneOptions[0];
+  g_mdlprv.model.boneNameTable[1] = mpDefaultDrawBoneOptions[1];
+  g_mdlprv.model.boneNameTable[2] = mpDefaultDrawBoneOptions[2];
+  g_mdlprv.model.boneNameTable[3] = mpDefaultDrawBoneOptions[3];
+  iVar1 = DObjGetNumModels(g_mdlprv.model.currentObj);
+  iVar5 = 0;
   if (0 < iVar1) {
     do {
-      DObjGetModel(DAT_82a3d844,lVar4);
-      iVar2 = XModelNumBones();
-      lVar7 = 0;
-      if (0 < iVar2) {
-        puVar6 = (undefined4 *)(uVar5 * 4 + -0x7d5c26d4);
+      pXVar2 = DObjGetModel(g_mdlprv.model.currentObj,iVar5);
+      iVar3 = XModelNumBones(pXVar2);
+      iVar8 = 0;
+      if (0 < iVar3) {
+        ppcVar7 = g_mdlprv.model.mruNameTable + uVar6 + 4;
         do {
-          if (0xc4 < uVar5) {
-            MyAssertHandler(0xffffffff8201ebc8,0x617,0,0xffffffff82000f98,0xffffffff8201fa40);
+          if (0xc4 < uVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                            ,0x617,0,"%s");
           }
-          uVar3 = CG_ModPrvModelGetBoneName(DAT_82a3d844,lVar4,lVar7);
-          lVar7 = lVar7 + 1;
-          puVar6 = puVar6 + 1;
-          *puVar6 = uVar3;
-          uVar5 = uVar5 + 1;
-        } while ((int)lVar7 < iVar2);
+          pcVar4 = CG_ModPrvModelGetBoneName(g_mdlprv.model.currentObj,iVar5,iVar8);
+          iVar8 = iVar8 + 1;
+          ppcVar7 = ppcVar7 + 1;
+          *ppcVar7 = pcVar4;
+          uVar6 = uVar6 + 1;
+        } while (iVar8 < iVar3);
       }
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < iVar1);
-    if (0xc4 < uVar5) {
-      MyAssertHandler(0xffffffff8201ebc8,0x61c,0,0xffffffff82000f98,0xffffffff8201fa40);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < iVar1);
+    if (0xc4 < uVar6) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x61c,0,"%s");
     }
   }
-  (&DAT_82a3d930)[uVar5] = (undefined *)0x0;
-  Dvar_UpdateEnumDomain(DAT_82a4c0b4,0xffffffff82a3d930);
+  g_mdlprv.model.boneNameTable[uVar6] = (char *)0x0;
+  Dvar_UpdateEnumDomain(modPrvDrawBoneInfo,g_mdlprv.model.boneNameTable);
   __restgprlr_22();
   return;
 }
@@ -830,191 +979,206 @@ void CG_ModPrvModelGetBoneNameList(void)
 
 // 822E22C8  CG_ModPrvLoadModel  (cgame/cg_modelpreviewer.cpp:1644)
 
-void CG_ModPrvLoadModel(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModPrvLoadModel(cg_s *param_1,char *param_2)
 
 {
   float fVar1;
-  int iVar2;
+  Material *pMVar2;
   int iVar3;
-  int iVar5;
+  bool bVar4;
+  dvar_t *pdVar5;
   int iVar6;
-  ulonglong uVar4;
-  undefined4 uVar7;
-  bool bVar8;
-  longlong lVar9;
-  int iVar10;
-  longlong lVar11;
+  XModel *pXVar7;
+  char *pcVar8;
+  int iVar9;
+  longlong lVar10;
+  int iVar11;
   int iVar12;
-  int iVar13;
-  uint uVar14;
-  double dVar15;
-  double dVar16;
+  longlong lVar13;
+  int iVar14;
+  int iVar15;
+  uint uVar16;
   double dVar17;
-  undefined8 uVar18;
+  double dVar18;
+  double dVar19;
   
-  __savegprlr_18();
-  lVar11 = -0x8110;
-  iVar5 = _RtlCheckStack12();
-  lVar11 = ZEXT48(&stack0x00000000) + lVar11;
-  iVar3 = (int)lVar11;
+  __savegprlr_18(param_1);
+  lVar13 = -0x8110;
+  iVar6 = _RtlCheckStack12();
+  lVar13 = ZEXT48(&stack0x00000000) + lVar13;
+  iVar3 = (int)lVar13;
   *(BADSPACEBASE **)iVar3 = register0x0000000c;
-  if (DAT_82a3d844 == (undefined *)0x0) {
-    dVar17 = (double)*(float *)(iVar5 + 0x24);
-    dVar16 = (double)(*(float *)(iVar5 + 0x6b9d4) * DAT_82a3d740 + *(float *)(iVar5 + 0x6b9c8));
-    dVar15 = (double)(*(float *)(iVar5 + 0x6b9d8) * DAT_82a3d740 + *(float *)(iVar5 + 0x6b9cc));
-    CL_AddReliableCommand(*(undefined4 *)(iVar5 + 0x3338),0xffffffff82012d9c);
+  if (g_mdlprv.model.currentObj == (DObj *)0x0) {
+    dVar19 = (double)*(float *)(iVar6 + 0x24);
+    dVar18 = (double)(*(float *)(iVar6 + 0x6b9d4) * g_mdlprv.viewer.centerRadius +
+                     *(float *)(iVar6 + 0x6b9c8));
+    dVar17 = (double)(*(float *)(iVar6 + 0x6b9d8) * g_mdlprv.viewer.centerRadius +
+                     *(float *)(iVar6 + 0x6b9cc));
+    CL_AddReliableCommand(*(LocalClientNum_t *)(iVar6 + 0x3338),"mpon");
   }
   else {
-    dVar16 = (double)DAT_82a3d8e4;
-    dVar15 = (double)DAT_82a3d8e8;
-    dVar17 = (double)DAT_82a3d8ec;
+    dVar18 = (double)g_mdlprv.model.initialOrigin[0];
+    dVar17 = (double)g_mdlprv.model.initialOrigin[1];
+    dVar19 = (double)g_mdlprv.model.initialOrigin[2];
   }
   CG_ModPrvUnloadModel();
-  DAT_82a3d6fc = *(undefined4 *)(DAT_82a4c0c4 + 0xc);
-  Dvar_SetFloat(0x3ff0000000000000);
+  g_mdlprv.system.gamePadRStickDeflect = (modPrvRStickDeflectMax->current).value;
+  Dvar_SetFloat(modPrvRStickDeflectMax,1.0);
   R_SetIgnorePrecacheErrors(1);
   R_RegisterModel(param_2);
   R_SetIgnorePrecacheErrors(0);
   *(undefined2 *)(iVar3 + 100) = 0;
-  iVar6 = R_RegisterModel(param_2);
+  pXVar7 = R_RegisterModel(param_2);
   *(undefined1 *)(iVar3 + 0x66) = 0;
-  *(int *)(iVar3 + 0x60) = iVar6;
-  if (iVar6 == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x6e3,0,0xffffffff82000f98,0xffffffff8201fb28);
+  *(XModel **)(iVar3 + 0x60) = pXVar7;
+  if (pXVar7 == (XModel *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x6e3,0,"%s");
   }
-  DObjCreate(lVar11 + 0x60,1,0,0xffffffff82a3d848,0);
-  DAT_82a3d7d8 = 0;
-  DAT_82a3d768 = 0;
-  DAT_82a3d844 = &DAT_82a3d848;
+  DObjCreate((DObjModel_s *)(iVar3 + 0x60),1,(XAnimTree *)0x0,g_mdlprv.model.objBuf,0);
+  g_mdlprv.model.currentEntity._104_4_ = 0;
+  g_mdlprv.model.inited = false;
+  g_mdlprv.model.currentObj = (DObj *)g_mdlprv.model.objBuf;
   CG_ModPrvModelGetBoneNameList();
-  DAT_82a3d8ec = (float)dVar17;
-  DAT_82a3d794 = (float)dVar17;
-  DAT_82a3d8e4 = (float)dVar16;
-  DAT_82a3d8e8 = (float)dVar15;
-  DAT_82a3d78c = (float)dVar16;
-  DAT_82a3d790 = (float)dVar15;
-  uVar18 = 0;
-  Dvar_SetVec3(0,0,0,DAT_82a4c088);
-  dVar16 = (double)(*(float *)(iVar5 + 460000) * 0.0027777778);
-  dVar15 = floor((double)(float)(dVar16 + 0.5));
-  DAT_82a3d8f0 = (float)(dVar16 - (double)(float)dVar15) * 360.0;
-  Dvar_SetVec3(uVar18,uVar18,uVar18,DAT_82a3d6c8);
-  Dvar_SetVec3(uVar18,(double)DAT_82a3d8f0,uVar18,DAT_82a4c0ac);
-  iVar5 = DAT_82a4c0ac;
-  *(undefined4 *)(iVar3 + 0x50) = *(undefined4 *)(DAT_82a4c0ac + 0xc);
-  fVar1 = *(float *)(iVar5 + 0x10);
+  g_mdlprv.model.initialOrigin[2] = (float)dVar19;
+  g_mdlprv.model.currentEntity.placement.origin[2] = (float)dVar19;
+  g_mdlprv.model.initialOrigin[0] = (float)dVar18;
+  g_mdlprv.model.initialOrigin[1] = (float)dVar17;
+  g_mdlprv.model.currentEntity.placement.origin[0] = (float)dVar18;
+  g_mdlprv.model.currentEntity.placement.origin[1] = (float)dVar17;
+  dVar19 = 0.0;
+  Dvar_SetVec3(modPrvOrigin,0.0,0.0,0.0);
+  dVar18 = (double)(*(float *)(iVar6 + 460000) * 0.0027777778);
+  dVar17 = floor((double)(float)(dVar18 + 0.5));
+  g_mdlprv.model.initialYaw = (float)(dVar18 - (double)(float)dVar17) * 360.0;
+  Dvar_SetVec3(modPrvCenterOffset,(float)dVar19,(float)dVar19,(float)dVar19);
+  Dvar_SetVec3(modPrvRotationAngles,(float)dVar19,g_mdlprv.model.initialYaw,(float)dVar19);
+  pdVar5 = modPrvRotationAngles;
+  *(int *)(iVar3 + 0x50) = (modPrvRotationAngles->current).integer;
+  fVar1 = (pdVar5->current).vector[1];
   *(float *)(iVar3 + 0x54) = fVar1;
-  *(undefined4 *)(iVar3 + 0x58) = *(undefined4 *)(iVar5 + 0x14);
-  *(float *)(iVar3 + 0x54) = DAT_82a4bf44 + fVar1 + 180.0;
-  AnglesToQuat(lVar11 + 0x50,0xffffffff82a3d77c);
-  Dvar_Reset(DAT_82a3d6c4,0);
-  PushMruEntry(param_2,0xffffffff82a3d90c,0xffffffff82a3d91c,DAT_82a4c0b0);
-  DAT_82a4bf00 = 0xffffffff;
-  DAT_82a4bf04 = 0xffffffff;
-  Dvar_Reset(DAT_82a4c0b8,0);
-  Dvar_Reset(DAT_82a4c0a8,0);
-  Dvar_Reset(DAT_82a4c070,0);
-  Dvar_Reset(DAT_82a4c07c,0);
-  Dvar_Reset(DAT_82a3d6c0,0);
-  Dvar_Reset(DAT_82a4c0cc,0);
-  uVar4 = CG_ModPrvGetNumSurfaces(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc));
-  DAT_82a3d904 = (int)uVar4;
-  if (0 < DAT_82a3d904) {
-    DAT_82a4bf50 = Z_VirtualAlloc((uVar4 & 0x3fffffff) << 2,0xffffffff8201fb10,0);
-    R_DObjGetSurfMaterials(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc));
-    uVar14 = 0;
-    iVar5 = 0;
-    DAT_82a4bf54 = "<None>";
-    if (0 < DAT_82a3d904) {
-      iVar12 = 0;
-      iVar13 = 0;
-      iVar6 = DAT_82a3d904;
+  *(float *)(iVar3 + 0x58) = (pdVar5->current).vector[2];
+  *(float *)(iVar3 + 0x54) = g_mdlprv.anim.deltaYaw + fVar1 + 180.0;
+  AnglesToQuat((float *)(iVar3 + 0x50),g_mdlprv.model.currentEntity.placement.quat);
+  Dvar_Reset(modPrvLod,DVAR_SOURCE_INTERNAL);
+  PushMruEntry(param_2,g_mdlprv.model.mruNames,g_mdlprv.model.mruNameTable,modPrvModelMru);
+  g_mdlprv.anim.fromCurrentIndex = -1;
+  g_mdlprv.anim.toCurrentIndex = -1;
+  Dvar_Reset(DAT_82a4c0b8,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimBlendWeight,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_82a4c070,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimCrossBlendDuration,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(modPrvAnimCrossBlendTime,DVAR_SOURCE_INTERNAL);
+  Dvar_Reset(DAT_82a4c0cc,DVAR_SOURCE_INTERNAL);
+  g_mdlprv.model.surfaceCount =
+       CG_ModPrvGetNumSurfaces(g_mdlprv.model.currentObj,(modPrvLod->current).integer);
+  if (0 < g_mdlprv.model.surfaceCount) {
+    g_mdlprv.mat.surfMatHandles =
+         Z_VirtualAlloc(g_mdlprv.model.surfaceCount << 2,"MODPRV_MaterialHandles",0);
+    R_DObjGetSurfMaterials
+              (g_mdlprv.model.currentObj,(modPrvLod->current).integer,g_mdlprv.mat.surfMatHandles);
+    uVar16 = 0;
+    iVar6 = 0;
+    g_mdlprv.mat.nameTable[0] = "<None>";
+    if (0 < g_mdlprv.model.surfaceCount) {
+      iVar14 = 0;
+      iVar15 = 0;
+      iVar9 = g_mdlprv.model.surfaceCount;
       do {
-        iVar2 = *(int *)(iVar12 + DAT_82a4bf50);
-        if (iVar2 != 0) {
-          bVar8 = false;
-          iVar10 = 0;
-          if (0 < (int)uVar14) {
-            lVar9 = lVar11 + 0x80;
+        pMVar2 = *(Material **)(iVar14 + (int)g_mdlprv.mat.surfMatHandles);
+        if (pMVar2 != (Material *)0x0) {
+          bVar4 = false;
+          iVar11 = 0;
+          if (0 < (int)uVar16) {
+            lVar10 = lVar13 + 0x80;
             do {
-              if (*(int *)lVar9 == iVar2) {
-                bVar8 = true;
+              if ((Material *)*(int *)lVar10 == pMVar2) {
+                bVar4 = true;
                 break;
               }
-              iVar10 = iVar10 + 1;
-              lVar9 = lVar9 + 4;
-            } while (iVar10 < (int)uVar14);
+              iVar11 = iVar11 + 1;
+              lVar10 = lVar10 + 4;
+            } while (iVar11 < (int)uVar16);
           }
-          if (!bVar8) {
-            if (0x41 < uVar14 + 1) {
-              MyAssertHandler(0xffffffff8201ebc8,0x72c,0,0xffffffff82000f98,0xffffffff8201faa8);
+          if (!bVar4) {
+            if (0x41 < uVar16 + 1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                              ,0x72c,0,"%s");
             }
-            uVar7 = Material_GetName(iVar2);
-            *(undefined4 *)((int)&DAT_82a4bf58 + iVar13) = uVar7;
-            if (0x1fff < uVar14) {
-              MyAssertHandler(0xffffffff8201ebc8,0x72f,0,0xffffffff82000f98,0xffffffff8201fae4);
+            pcVar8 = Material_GetName(pMVar2);
+            *(char **)((int)((Material *)(&g_mdlprv.anim + 1))->nameTable + iVar15 + 4) = pcVar8;
+            if (0x1fff < uVar16) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                              ,0x72f,0,"%s");
             }
-            iVar6 = DAT_82a3d904;
-            *(int *)(iVar13 + iVar3 + 0x80) = iVar2;
-            iVar13 = iVar13 + 4;
-            uVar14 = uVar14 + 1;
+            iVar9 = g_mdlprv.model.surfaceCount;
+            *(Material **)(iVar15 + iVar3 + 0x80) = pMVar2;
+            iVar15 = iVar15 + 4;
+            uVar16 = uVar16 + 1;
           }
         }
-        iVar5 = iVar5 + 1;
-        iVar12 = iVar12 + 4;
-      } while (iVar5 < iVar6);
+        iVar6 = iVar6 + 1;
+        iVar14 = iVar14 + 4;
+      } while (iVar6 < iVar9);
     }
-    uVar7 = DAT_82a4c094;
-    (&DAT_82a4bf58)[uVar14] = 0;
-    Dvar_UpdateEnumDomain(uVar7,0xffffffff82a4bf54);
-    Dvar_UpdateEnumDomain(DAT_82a4c0c8,0xffffffff82a4bf54);
-    DAT_82a4bf48 = uVar14;
-    DAT_82a4bf4c = Z_VirtualAlloc(uVar14 * 4,0xffffffff8201fb10,0);
-    uVar14 = 0;
-    iVar5 = 0;
-    if (0 < DAT_82a3d904) {
-      iVar13 = 0;
-      iVar12 = 0;
-      iVar6 = DAT_82a3d904;
+    pdVar5 = modPrvMatSelect;
+    ((Material *)(&g_mdlprv.anim + 1))->nameTable[uVar16 + 1] = (char *)0x0;
+    Dvar_UpdateEnumDomain(pdVar5,g_mdlprv.mat.nameTable);
+    Dvar_UpdateEnumDomain(modPrvMatReplace,g_mdlprv.mat.nameTable);
+    g_mdlprv.mat.handleCount = uVar16;
+    g_mdlprv.mat.handleArray = Z_VirtualAlloc(uVar16 * 4,"MODPRV_MaterialHandles",0);
+    uVar16 = 0;
+    iVar6 = 0;
+    if (0 < g_mdlprv.model.surfaceCount) {
+      iVar15 = 0;
+      iVar14 = 0;
+      iVar9 = g_mdlprv.model.surfaceCount;
       do {
-        iVar2 = *(int *)(iVar12 + DAT_82a4bf50);
-        if (iVar2 != 0) {
-          bVar8 = false;
-          iVar10 = 0;
-          if (0 < (int)uVar14) {
-            lVar9 = lVar11 + 0x80;
+        iVar11 = *(int *)(iVar14 + (int)g_mdlprv.mat.surfMatHandles);
+        if (iVar11 != 0) {
+          bVar4 = false;
+          iVar12 = 0;
+          if (0 < (int)uVar16) {
+            lVar10 = lVar13 + 0x80;
             do {
-              if (*(int *)lVar9 == iVar2) {
-                bVar8 = true;
+              if (*(int *)lVar10 == iVar11) {
+                bVar4 = true;
                 break;
               }
-              iVar10 = iVar10 + 1;
-              lVar9 = lVar9 + 4;
-            } while (iVar10 < (int)uVar14);
+              iVar12 = iVar12 + 1;
+              lVar10 = lVar10 + 4;
+            } while (iVar12 < (int)uVar16);
           }
-          if (!bVar8) {
-            if ((int)DAT_82a4bf48 <= (int)uVar14) {
-              MyAssertHandler(0xffffffff8201ebc8,0x74f,0,0xffffffff82000f98,0xffffffff8201fa7c);
+          if (!bVar4) {
+            if (g_mdlprv.mat.handleCount <= (int)uVar16) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                              ,0x74f,0,"%s");
             }
-            *(undefined4 *)(iVar13 + DAT_82a4bf4c) = *(undefined4 *)(iVar12 + DAT_82a4bf50);
-            if (0x1fff < uVar14) {
-              MyAssertHandler(0xffffffff8201ebc8,0x752,0,0xffffffff82000f98,0xffffffff8201fae4);
+            *(undefined4 *)(iVar15 + (int)g_mdlprv.mat.handleArray) =
+                 *(undefined4 *)(iVar14 + (int)g_mdlprv.mat.surfMatHandles);
+            if (0x1fff < uVar16) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                              ,0x752,0,"%s");
             }
-            iVar6 = DAT_82a3d904;
-            uVar14 = uVar14 + 1;
-            *(int *)(iVar13 + iVar3 + 0x80) = iVar2;
-            iVar13 = iVar13 + 4;
+            iVar9 = g_mdlprv.model.surfaceCount;
+            uVar16 = uVar16 + 1;
+            *(int *)(iVar15 + iVar3 + 0x80) = iVar11;
+            iVar15 = iVar15 + 4;
           }
         }
-        iVar5 = iVar5 + 1;
-        iVar12 = iVar12 + 4;
-      } while (iVar5 < iVar6);
+        iVar6 = iVar6 + 1;
+        iVar14 = iVar14 + 4;
+      } while (iVar6 < iVar9);
     }
   }
-  Dvar_Reset(DAT_82a4c094,0);
-  DAT_82a4c064 = 0;
-  DAT_82a4c05c = 0xffffffff;
-  DAT_82a4c068 = 0;
+  Dvar_Reset(modPrvMatSelect,DVAR_SOURCE_INTERNAL);
+  g_mdlprv.mat.selectSliderIndex = 0;
+  g_mdlprv.mat.replaceIndex = -1;
+  g_mdlprv.mat.replaceSliderIndex = 0;
   __restgprlr_18();
   return;
 }
@@ -1022,35 +1186,39 @@ void CG_ModPrvLoadModel(undefined8 param_1,undefined8 param_2)
 
 // 822E28B0  CG_ModPrvModelRecentAccepted  (cgame/cg_modelpreviewer.cpp:1888)
 
-void CG_ModPrvModelRecentAccepted(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModPrvModelRecentAccepted(cg_s *param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  cg_s *pcVar1;
+  char *pcVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   
-  uVar1 = __savegprlr_26();
-  Dvar_ClearModified(DAT_82a4c0b0);
-  uVar2 = Dvar_EnumToString(DAT_82a4c0b0);
+  pcVar1 = (cg_s *)__savegprlr_26(param_1);
+  Dvar_ClearModified(modPrvModelMru);
+  pcVar2 = Dvar_EnumToString(modPrvModelMru);
   iVar5 = 0;
-  if (0 < DAT_82a3d6d8) {
+  if (0 < g_mdlprv.system.modelCount) {
     iVar4 = 0;
     do {
-      iVar3 = I_stricmp(uVar2,*(undefined4 *)(iVar4 + DAT_82a3d6dc));
+      iVar3 = I_stricmp(pcVar2,*(char **)(iVar4 + (int)g_mdlprv.system.modelNames));
       if (iVar3 == 0) {
-        CG_ModPrvLoadModel(uVar1,uVar2);
-        DAT_82a3d76c = iVar5;
+        CG_ModPrvLoadModel(pcVar1,pcVar2);
+        g_mdlprv.model.currentIndex = iVar5;
         __restgprlr_26();
         return;
       }
       iVar5 = iVar5 + 1;
       iVar4 = iVar4 + 4;
-    } while (iVar5 < DAT_82a3d6d8);
+    } while (iVar5 < g_mdlprv.system.modelCount);
   }
-  Com_Printf(0xe,0xffffffff8201f5d0,uVar2);
-  RemoveMruEntry(0xffffffff82a3d90c,0xffffffff82a3d91c,DAT_82a4c0b0);
+  Com_Printf(0xe,"Model previewer could not load <%s> because it does not exist.\n ");
+  RemoveMruEntry(g_mdlprv.model.mruNames,g_mdlprv.model.mruNameTable,modPrvModelMru);
   __restgprlr_26();
   return;
 }
@@ -1058,24 +1226,33 @@ void CG_ModPrvModelRecentAccepted(void)
 
 // 822E2968  CG_ModPrvModelLoadAccepted  (cgame/cg_modelpreviewer.cpp:2181)
 
-void CG_ModPrvModelLoadAccepted(undefined8 param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModPrvModelLoadAccepted(cg_s *param_1)
 
 {
-  Dvar_ClearModified(DAT_82a4c098);
-  CG_ModPrvLoadModel(param_1,*(undefined4 *)(*(int *)(DAT_82a4c098 + 0xc) * 4 + DAT_82a3d6dc));
-  DAT_82a3d76c = *(undefined4 *)(DAT_82a4c098 + 0xc);
+  Dvar_ClearModified(modPrvLoadModel);
+  CG_ModPrvLoadModel(param_1,g_mdlprv.system.modelNames[(modPrvLoadModel->current).integer]);
+  g_mdlprv.model.currentIndex = (modPrvLoadModel->current).integer;
   return;
 }
 
 
 // 822E29D8  CG_ModPrvModelLoadUpdate  (cgame/cg_modelpreviewer.cpp:2194)
 
-void CG_ModPrvModelLoadUpdate(undefined8 param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModPrvModelLoadUpdate(cg_s *param_1)
 
 {
-  if ((DAT_82a3d6e8 != '\0') && (*(int *)(DAT_82a4c098 + 0x1c) != DAT_82a3d6f0)) {
-    CG_ModPrvLoadModel(param_1,*(undefined4 *)(*(int *)(DAT_82a4c098 + 0x1c) * 4 + DAT_82a3d6dc));
-    DAT_82a3d6f0 = *(int *)(DAT_82a4c098 + 0x1c);
+  if ((g_mdlprv.system.cachedAllModels) &&
+     ((modPrvLoadModel->latched).integer != g_mdlprv.system.lastLoadModel)) {
+    CG_ModPrvLoadModel(param_1,g_mdlprv.system.modelNames[(modPrvLoadModel->latched).integer]);
+    g_mdlprv.system.lastLoadModel = (modPrvLoadModel->latched).integer;
   }
   return;
 }
@@ -1083,174 +1260,202 @@ void CG_ModPrvModelLoadUpdate(undefined8 param_1)
 
 // 822DDBC8  CG_ModPrvOriginUpdate  (cgame/cg_modelpreviewer.cpp:2204)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvOriginUpdate(void)
 
 {
-  Dvar_ClearModified(DAT_82a4c088);
-  DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
-  DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
-  DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+  Dvar_ClearModified(modPrvOrigin);
+  g_mdlprv.model.currentEntity.placement.origin[0] =
+       (modPrvOrigin->current).value + g_mdlprv.model.initialOrigin[0];
+  g_mdlprv.model.currentEntity.placement.origin[1] =
+       (modPrvOrigin->current).vector[1] + g_mdlprv.model.initialOrigin[1];
+  g_mdlprv.model.currentEntity.placement.origin[2] =
+       (modPrvOrigin->current).vector[2] + g_mdlprv.model.initialOrigin[2];
   return;
 }
 
 
 // 822DDC38  CG_ModPrvRotateUpdate  (cgame/cg_modelpreviewer.cpp:2211)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvRotateUpdate(void)
 
 {
-  undefined4 local_20;
+  float local_20;
   float local_1c;
-  undefined4 local_18;
+  float local_18;
   
-  Dvar_ClearModified(DAT_82a4c0ac);
-  local_20 = *(undefined4 *)(DAT_82a4c0ac + 0xc);
-  local_1c = DAT_82a4bf44 + *(float *)(DAT_82a4c0ac + 0x10) + 180.0;
-  local_18 = *(undefined4 *)(DAT_82a4c0ac + 0x14);
-  AnglesToQuat(&local_20,0xffffffff82a3d77c);
+  Dvar_ClearModified(modPrvRotationAngles);
+  local_20 = (float)(modPrvRotationAngles->current).integer;
+  local_1c = g_mdlprv.anim.deltaYaw + (modPrvRotationAngles->current).vector[1] + 180.0;
+  local_18 = (modPrvRotationAngles->current).vector[2];
+  AnglesToQuat(&local_20,g_mdlprv.model.currentEntity.placement.quat);
   return;
 }
 
 
 // 822DDCB8  CG_ModPrvModelResetRotation  (cgame/cg_modelpreviewer.cpp:2218)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvModelResetRotation(void)
 
 {
-  undefined4 local_30;
+  float local_30;
   float local_2c;
-  undefined4 local_28;
+  float local_28;
   
-  Dvar_SetVec3(0,(double)DAT_82a3d8f0,DAT_82a4c0ac);
-  local_30 = *(undefined4 *)(DAT_82a4c0ac + 0xc);
-  local_2c = DAT_82a4bf44 + *(float *)(DAT_82a4c0ac + 0x10) + 180.0;
-  local_28 = *(undefined4 *)(DAT_82a4c0ac + 0x14);
-  AnglesToQuat(&local_30,0xffffffff82a3d77c);
+  Dvar_SetVec3(modPrvRotationAngles,0.0,g_mdlprv.model.initialYaw,0.0);
+  local_30 = (float)(modPrvRotationAngles->current).integer;
+  local_2c = g_mdlprv.anim.deltaYaw + (modPrvRotationAngles->current).vector[1] + 180.0;
+  local_28 = (modPrvRotationAngles->current).vector[2];
+  AnglesToQuat(&local_30,g_mdlprv.model.currentEntity.placement.quat);
   return;
 }
 
 
 // 822DDD50  CG_ModPrvModelResetRotationXY  (cgame/cg_modelpreviewer.cpp:2225)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvModelResetRotationXY(void)
 
 {
-  undefined4 local_20;
+  float local_20;
   float local_1c;
-  undefined4 local_18;
+  float local_18;
   
-  Dvar_SetVec3(0,(double)*(float *)(DAT_82a4c0ac + 0x10));
-  local_20 = *(undefined4 *)(DAT_82a4c0ac + 0xc);
-  local_1c = DAT_82a4bf44 + *(float *)(DAT_82a4c0ac + 0x10) + 180.0;
-  local_18 = *(undefined4 *)(DAT_82a4c0ac + 0x14);
-  AnglesToQuat(&local_20,0xffffffff82a3d77c);
+  Dvar_SetVec3(modPrvRotationAngles,0.0,(modPrvRotationAngles->current).vector[1],0.0);
+  local_20 = (float)(modPrvRotationAngles->current).integer;
+  local_1c = g_mdlprv.anim.deltaYaw + (modPrvRotationAngles->current).vector[1] + 180.0;
+  local_18 = (modPrvRotationAngles->current).vector[2];
+  AnglesToQuat(&local_20,g_mdlprv.model.currentEntity.placement.quat);
   return;
 }
 
 
 // 822DDDE0  CG_ModPrvGetNumTotalBones  (cgame/cg_modelpreviewer.cpp:2232)
 
-void CG_ModPrvGetNumTotalBones(void)
+int CG_ModPrvGetNumTotalBones(DObj *param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  longlong lVar2;
-  longlong lVar4;
+  DObj *pDVar1;
+  int iVar2;
+  XModel *pXVar3;
+  int iVar4;
   longlong lVar5;
+  int iVar6;
   
-  uVar1 = __savegprlr_28();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8bb,0,0xffffffff82000f98,0xffffffff8200260c);
+  pDVar1 = (DObj *)__savegprlr_28(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8bb,0,"%s");
   }
-  lVar4 = 0;
-  iVar3 = DObjGetNumModels(uVar1);
   lVar5 = 0;
-  if (0 < iVar3) {
+  iVar2 = DObjGetNumModels(pDVar1);
+  iVar6 = 0;
+  if (0 < iVar2) {
     do {
-      DObjGetModel(uVar1,lVar5);
-      lVar2 = XModelNumBones();
-      lVar5 = lVar5 + 1;
-      lVar4 = lVar2 + lVar4;
-    } while ((int)lVar5 < iVar3);
+      pXVar3 = DObjGetModel(pDVar1,iVar6);
+      iVar4 = XModelNumBones(pXVar3);
+      iVar6 = iVar6 + 1;
+      lVar5 = iVar4 + lVar5;
+    } while (iVar6 < iVar2);
   }
-  __restgprlr_28(lVar4);
-  return;
+  iVar2 = __restgprlr_28(lVar5);
+  return iVar2;
 }
 
 
 // 822DDE68  CG_ModPrvGetNumSurfaces  (cgame/cg_modelpreviewer.cpp:2251)
 
-void CG_ModPrvGetNumSurfaces(undefined8 param_1,int param_2)
+int CG_ModPrvGetNumSurfaces(DObj *param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  DObj *pDVar1;
+  uint uVar2;
   int iVar3;
-  undefined1 local_50 [80];
+  longlong lVar4;
+  char local_50 [80];
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8d0,0,0xffffffff82000f98,0xffffffff820040b4);
+  pDVar1 = (DObj *)__savegprlr_27(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8d0,0,"%s");
   }
   if (param_2 < 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8d1,0,0xffffffff82000f98,0xffffffff8201f4d4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8d1,0,"%s");
   }
-  uVar2 = DObjGetNumModels(uVar1);
-  if (0x20 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8d4,1,0xffffffff82000f98,0xffffffff8201f4b0);
+  uVar2 = DObjGetNumModels(pDVar1);
+  lVar4 = (longlong)(int)uVar2;
+  if (0x20 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8d4,1,"%s");
   }
   iVar3 = 0;
   if (0 < (int)uVar2) {
     do {
       local_50[iVar3] = (char)param_2;
       iVar3 = iVar3 + 1;
-      uVar2 = uVar2 - 1;
-    } while (uVar2 != 0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
-  DObjGetNumSurfaces(uVar1,local_50);
-  __restgprlr_27();
-  return;
+  iVar3 = DObjGetNumSurfaces(pDVar1,local_50);
+  iVar3 = __restgprlr_27(iVar3);
+  return iVar3;
 }
 
 
 // 822DDF40  CG_ModPrvModelGetBoneName  (cgame/cg_modelpreviewer.cpp:2270)
 
-void CG_ModPrvModelGetBoneName(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+char * CG_ModPrvModelGetBoneName(DObj *param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  DObj *pDVar1;
   int iVar2;
-  int iVar3;
+  XModel *pXVar3;
+  ushort *puVar4;
+  char *pcVar5;
+  ulonglong uVar6;
   
-  uVar1 = __savegprlr_27();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8df,0,0xffffffff82000f98,0xffffffff8200260c);
+  uVar6 = (ulonglong)param_3;
+  pDVar1 = (DObj *)__savegprlr_27(param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8df,0,"%s");
   }
-  iVar3 = (int)param_2;
-  if (iVar3 < 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8e0,0,0xffffffff82000f98,0xffffffff8201f55c);
+  if (param_2 < 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8e0,0,"%s");
   }
-  if (((int)param_3 < 0) || (iVar2 = DObjNumBones(uVar1), iVar2 <= (int)param_3)) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8e2,0,0xffffffff82000f98,0xffffffff8201f528);
+  if (((int)uVar6 < 0) || (iVar2 = DObjNumBones(pDVar1), iVar2 <= (int)uVar6)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8e2,0,"%s");
   }
-  if ((iVar3 < 0) || (iVar2 = DObjGetNumModels(uVar1), iVar2 <= iVar3)) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8e3,0,0xffffffff82000f98,0xffffffff8201f4ec);
+  if ((param_2 < 0) || (iVar2 = DObjGetNumModels(pDVar1), iVar2 <= param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8e3,0,"%s");
   }
-  DObjGetModel(uVar1,param_2);
-  iVar3 = XModelBoneNames();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x8ea,0,0xffffffff82000f98,0xffffffff8201f4e0);
+  pXVar3 = DObjGetModel(pDVar1,param_2);
+  puVar4 = XModelBoneNames(pXVar3);
+  if (puVar4 == (ushort *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x8ea,0,"%s");
   }
-  SL_ConvertToString(*(undefined2 *)((int)((param_3 & 0xffffffff) << 1) + iVar3));
-  __restgprlr_27();
-  return;
+  pcVar5 = SL_ConvertToString((uint)*(ushort *)((int)((uVar6 & 0xffffffff) << 1) + (int)puVar4));
+  pcVar5 = (char *)__restgprlr_27(pcVar5);
+  return pcVar5;
 }
 
 
 // 822DE068  CG_ModPrvDrawBones  (cgame/cg_modelpreviewer.cpp:2291)
 
-void CG_ModPrvDrawBones(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModPrvDrawBones(LocalClientNum_t param_1)
 
 {
   float fVar1;
@@ -1260,24 +1465,26 @@ void CG_ModPrvDrawBones(void)
   bool bVar5;
   bool bVar6;
   bool bVar7;
-  undefined8 uVar8;
-  int iVar11;
-  undefined8 uVar9;
+  LocalClientNum_t LVar8;
+  int iVar9;
+  char *pcVar10;
+  XModel *pXVar11;
   int iVar12;
-  int iVar13;
-  undefined8 uVar10;
+  char *pcVar13;
   int iVar14;
-  longlong lVar15;
+  char *pcVar15;
   longlong lVar16;
-  ulonglong uVar17;
-  longlong lVar18;
+  float (*pafVar17) [3];
+  int iVar18;
   ulonglong uVar19;
-  uint uVar20;
-  double dVar21;
-  double dVar22;
+  int iVar20;
+  ulonglong uVar21;
+  uint uVar22;
   double dVar23;
   double dVar24;
   double dVar25;
+  double dVar26;
+  double dVar27;
   float local_140;
   float local_13c;
   float local_138;
@@ -1287,102 +1494,109 @@ void CG_ModPrvDrawBones(void)
   float local_120;
   float local_11c;
   float local_118;
-  undefined1 auStack_110 [16];
-  undefined1 auStack_100 [48];
-  undefined1 auStack_d0 [208];
+  float afStack_110 [4];
+  float afStack_100 [12];
+  float afStack_d0 [52];
   
-  uVar8 = __savegprlr_15();
-  if (DAT_82a3d844 == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x90d,0,0xffffffff82000f98,0xffffffff8201f56c);
+  LVar8 = __savegprlr_15(param_1);
+  if (g_mdlprv.model.currentObj == (DObj *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x90d,0,"%s");
   }
-  iVar11 = *(int *)(DAT_82a4c0b4 + 0xc);
-  if (iVar11 != 0) {
-    if ((iVar11 == 2) || (bVar6 = false, iVar11 == 3)) {
+  iVar9 = (modPrvDrawBoneInfo->current).integer;
+  if (iVar9 != 0) {
+    if ((iVar9 == 2) || (bVar6 = false, iVar9 == 3)) {
       bVar6 = true;
     }
-    if ((iVar11 == 1) || (bVar7 = false, iVar11 == 3)) {
+    if ((iVar9 == 1) || (bVar7 = false, iVar9 == 3)) {
       bVar7 = true;
     }
-    iVar11 = DObjGetNumModels(DAT_82a3d844);
-    if (10.0 <= DAT_82a3d740) {
-      fVar2 = DAT_82a3d740 * 0.00175;
+    iVar9 = DObjGetNumModels(g_mdlprv.model.currentObj);
+    if (10.0 <= g_mdlprv.viewer.centerRadius) {
+      fVar2 = g_mdlprv.viewer.centerRadius * 0.00175;
     }
     else {
       fVar2 = 0.05;
     }
-    dVar23 = (double)fVar2;
-    if (*(uint *)(DAT_82a4c0b4 + 0xc) < 4) {
-      uVar9 = 0;
+    dVar25 = (double)fVar2;
+    if ((modPrvDrawBoneInfo->current).unsignedInt < 4) {
+      pcVar10 = (char *)0x0;
     }
     else {
-      uVar9 = Dvar_EnumToString();
+      pcVar10 = Dvar_EnumToString(modPrvDrawBoneInfo);
     }
-    uVar17 = 0;
-    lVar16 = 0;
-    lVar18 = 0;
-    dVar25 = 0.8191519975662231;
-    if (0 < iVar11) {
-      dVar24 = 1.0;
+    uVar19 = 0;
+    pcVar13 = (char *)0x0;
+    iVar18 = 0;
+    iVar20 = 0;
+    dVar27 = 0.8191519975662231;
+    if (0 < iVar9) {
+      dVar26 = 1.0;
       do {
-        iVar12 = DObjGetModel(DAT_82a3d844,lVar18);
-        iVar13 = XModelNumBones();
-        uVar19 = (ulonglong)*(byte *)(iVar12 + 5);
-        uVar20 = (uint)*(byte *)(iVar12 + 5);
-        while ((int)uVar20 < iVar13) {
-          uVar10 = CG_ModPrvModelGetBoneName(DAT_82a3d844,lVar18,uVar19);
-          CG_DObjGetWorldBoneMatrix(DAT_82a3d7e0,DAT_82a3d844,uVar19,auStack_100,&local_140);
-          lVar15 = uVar19 - *(byte *)((*(int *)(iVar12 + 0x28) - (uint)*(byte *)(iVar12 + 5)) +
-                                     (int)uVar19);
-          if ((-1 < lVar15) && ((int)lVar15 < (int)(uint)*(byte *)(iVar12 + 4))) {
-            CG_DObjGetWorldBoneMatrix(DAT_82a3d7e0,DAT_82a3d844,lVar15,auStack_d0,auStack_110);
-            CL_AddDebugLine(&local_140,auStack_110,0xffffffff821818b8,0,0,0);
+        pXVar11 = DObjGetModel(g_mdlprv.model.currentObj,iVar20);
+        iVar12 = XModelNumBones(pXVar11);
+        uVar21 = (ulonglong)pXVar11->numRootBones;
+        uVar22 = (uint)pXVar11->numRootBones;
+        while ((int)uVar22 < iVar12) {
+          iVar14 = (int)uVar21;
+          pcVar13 = CG_ModPrvModelGetBoneName(g_mdlprv.model.currentObj,iVar20,iVar14);
+          pafVar17 = (float (*) [3])afStack_100;
+          CG_DObjGetWorldBoneMatrix
+                    (g_mdlprv.model.currentEntity.info.pose,g_mdlprv.model.currentObj,iVar14,
+                     pafVar17,&local_140);
+          lVar16 = uVar21 - pXVar11->parentList[iVar14 - (uint)pXVar11->numRootBones];
+          if ((-1 < lVar16) && (iVar14 = (int)lVar16, iVar14 < (int)(uint)pXVar11->numBones)) {
+            CG_DObjGetWorldBoneMatrix
+                      (g_mdlprv.model.currentEntity.info.pose,g_mdlprv.model.currentObj,iVar14,
+                       (float (*) [3])afStack_d0,afStack_110);
+            pafVar17 = (float (*) [3])0x0;
+            CL_AddDebugLine(&local_140,afStack_110,colorWhite,0,0,0);
           }
-          if (*(uint *)(DAT_82a4c0b4 + 0xc) < 4) {
+          if ((modPrvDrawBoneInfo->current).unsignedInt < 4) {
 LAB_822de264:
             bVar5 = false;
           }
           else {
-            iVar14 = I_stricmp(uVar9,uVar10);
+            iVar14 = I_stricmp(pcVar10,pcVar13);
             bVar5 = true;
             if (iVar14 != 0) goto LAB_822de264;
           }
-          if (bVar5) {
-LAB_822de2b4:
-            CL_AddOrientedDebugStar(dVar23,&local_140,auStack_100,0xffffffff821817f8);
-            CL_GetViewForward(uVar8,&local_120);
-            CL_GetViewPos(uVar8,&local_130);
+          if (((bVar5) || ((pcVar15 = pcVar13, strncmp(), pcVar15 != (char *)0x0 && (bVar6)))) ||
+             ((strncmp(), pcVar13 == (char *)0x0 && (bVar7)))) {
+            CL_AddOrientedDebugStar
+                      (&local_140,(float (*) [3])afStack_100,colorGreen,(float)dVar25,(int)pafVar17,
+                       0);
+            CL_GetViewForward(LVar8,&local_120);
+            CL_GetViewPos(LVar8,&local_130);
             fVar2 = local_13c - local_12c;
             fVar3 = local_138 - local_128;
             fVar4 = local_140 - local_130;
-            dVar22 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-            dVar21 = dVar24;
-            if (-dVar22 < 0.0) {
-              dVar21 = dVar22;
+            dVar24 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+            dVar23 = dVar26;
+            if (-dVar24 < 0.0) {
+              dVar23 = dVar24;
             }
-            fVar1 = (float)(dVar24 / dVar21);
-            dVar21 = (double)(local_118 * fVar3 * fVar1 +
+            fVar1 = (float)(dVar26 / dVar23);
+            dVar23 = (double)(local_118 * fVar3 * fVar1 +
                              local_11c * fVar2 * fVar1 + local_120 * fVar1 * fVar4);
-            if (dVar25 < dVar21) {
-              lVar16 = lVar18;
-              uVar17 = uVar19;
-              dVar25 = dVar21;
+            if (dVar27 < dVar23) {
+              uVar19 = uVar21;
+              dVar27 = dVar23;
+              iVar18 = iVar20;
             }
           }
-          else {
-            iVar14 = strncmp((char *)uVar10,"tag_",4);
-            if (((iVar14 != 0) && (bVar6)) ||
-               ((iVar14 = strncmp((char *)uVar10,"tag_",4), iVar14 == 0 && (bVar7))))
-            goto LAB_822de2b4;
-          }
-          uVar19 = uVar19 + 1;
-          uVar20 = (uint)uVar19;
+          uVar21 = uVar21 + 1;
+          uVar22 = (uint)uVar21;
         }
-        lVar18 = lVar18 + 1;
-      } while ((int)lVar18 < iVar11);
+        pcVar13 = (char *)uVar19;
+        iVar20 = iVar20 + 1;
+      } while (iVar20 < iVar9);
     }
-    CG_ModPrvModelGetBoneName(DAT_82a3d844,lVar16,uVar17);
-    CG_DObjGetWorldBoneMatrix(DAT_82a3d7e0,DAT_82a3d844,uVar17,auStack_100,&local_140);
-    CL_AddDebugString(dVar23,&local_140,0xffffffff821817f8);
+    pcVar10 = CG_ModPrvModelGetBoneName(g_mdlprv.model.currentObj,iVar18,(int)pcVar13);
+    CG_DObjGetWorldBoneMatrix
+              (g_mdlprv.model.currentEntity.info.pose,g_mdlprv.model.currentObj,(int)pcVar13,
+               (float (*) [3])afStack_100,&local_140);
+    CL_AddDebugString(&local_140,colorGreen,(float)dVar25,pcVar13,(int)pcVar10,0);
   }
   __restgprlr_15();
   return;
@@ -1391,92 +1605,114 @@ LAB_822de2b4:
 
 // 822DE3D8  CG_ModPrvLoadAnimations  (cgame/cg_modelpreviewer.cpp:2394)
 
-void CG_ModPrvLoadAnimations(void)
+void CG_ModPrvLoadAnimations(char *param_1)
 
 {
   float fVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar5;
-  undefined8 uVar6;
+  char *pcVar2;
+  XAnimTree *pXVar3;
+  XAnim_s *pXVar4;
+  bool bVar5;
+  char *pcVar6;
+  char *pcVar7;
+  double dVar8;
   
-  uVar2 = __savegprlr_25();
-  if (DAT_82a3d844 != 0) {
-    uVar3 = DObjGetTree();
-    if ((uVar3 & 0xffffffff) == 0) {
-      if (DAT_82a3d6cc != 0) {
-        MyAssertHandler(0xffffffff8201ebc8,0x971,0,0xffffffff82000f98,0xffffffff8201f5b8);
+  pcVar2 = (char *)__savegprlr_25(param_1);
+  if (g_mdlprv.model.currentObj != (DObj *)0x0) {
+    pXVar3 = DObjGetTree(g_mdlprv.model.currentObj);
+    if (pXVar3 == (XAnimTree *)0x0) {
+      if (g_modPrvHunkUser != (HunkUser *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                        ,0x971,0,"%s");
       }
     }
     else {
-      XAnimGetAnims();
-      XAnimFreeTree(uVar3,0);
-      DObjSetTree(DAT_82a3d844,0);
-      if (DAT_82a3d6cc == 0) {
-        MyAssertHandler(0xffffffff8201ebc8,0x96c,0,0xffffffff82000f98,0xffffffff8201f480);
+      XAnimGetAnims(pXVar3);
+      XAnimFreeTree(pXVar3,(_func___cdecl_void_void_ptr_int *)0x0);
+      DObjSetTree(g_mdlprv.model.currentObj,(XAnimTree *)0x0);
+      if (g_modPrvHunkUser == (HunkUser *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                        ,0x96c,0,"%s");
       }
-      Hunk_UserDestroy(DAT_82a3d6cc);
-      DAT_82a3d6cc = 0;
+      Hunk_UserDestroy(g_modPrvHunkUser);
+      g_modPrvHunkUser = (HunkUser *)0x0;
     }
-    DAT_82a3d6cc = Hunk_UserCreate(0x10000,0xffffffff8201f5a0,0,0);
-    uVar3 = XAnimCreateAnims(0xffffffff8201f590,3,0xffffffff822dd578);
-    if ((uVar3 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8201ebc8,0x976,0,0xffffffff82000f98,0xffffffff8201f588);
+    g_modPrvHunkUser = Hunk_UserCreate(0x10000,"CG_ModPrvLoadAnimations",false,0);
+    pXVar4 = XAnimCreateAnims("ModelPreviewer",3,ModPrvAlloc);
+    if (pXVar4 == (XAnim_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x976,0,"%s");
     }
-    XAnimBlend(uVar3,0,0xffffffff82004220,1,2,0,1);
-    if (-1 < DAT_82a4bf00) {
-      BG_CreateXAnim(uVar3,1,*(undefined4 *)(DAT_82a4bf00 * 4 + DAT_82a3d6e4),1);
+    pcVar7 = (char *)0x2;
+    pcVar6 = (char *)0x1;
+    XAnimBlend(pXVar4,0,"root",1,2,0,true);
+    if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+      pcVar6 = (char *)0x1;
+      BG_CreateXAnim(pXVar4,1,g_mdlprv.system.animNames[g_mdlprv.anim.fromCurrentIndex],true);
     }
-    if (-1 < DAT_82a4bf04) {
-      BG_CreateXAnim(uVar3,2,*(undefined4 *)(DAT_82a4bf04 * 4 + DAT_82a3d6e4),1);
+    if (-1 < g_mdlprv.anim.toCurrentIndex) {
+      pcVar6 = (char *)0x1;
+      BG_CreateXAnim(pXVar4,2,g_mdlprv.system.animNames[g_mdlprv.anim.toCurrentIndex],true);
     }
-    uVar4 = XAnimCreateTree(uVar3,0xffffffff822dd578);
-    if ((uVar4 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8201ebc8,0x982,0,0xffffffff82000f98,0xffffffff820100a4);
+    pXVar3 = XAnimCreateTree(pXVar4,ModPrvAlloc);
+    if (pXVar3 == (XAnimTree *)0x0) {
+      pcVar7 = "animTree";
+      pcVar6 = "%s";
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp"
+                      ,0x982,0,"%s");
     }
-    DObjSetTree(DAT_82a3d844,uVar4);
-    uVar6 = 0x3ff0000000000000;
-    if (-1 < DAT_82a4bf00) {
-      if ((DAT_82a4bf04 < 0) || (*(int *)(DAT_82a4c070 + 0xc) != 1)) {
-        fVar1 = 1.0 - *(float *)(DAT_82a4c0a8 + 0xc);
+    DObjSetTree(g_mdlprv.model.currentObj,pXVar3);
+    dVar8 = 1.0;
+    if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+      if ((g_mdlprv.anim.toCurrentIndex < 0) || (*(int *)(DAT_82a4c070 + 0xc) != 1)) {
+        fVar1 = 1.0 - (modPrvAnimBlendWeight->current).value;
       }
       else {
-        fVar1 = *(float *)(DAT_82a4c0a8 + 0xc);
+        fVar1 = (modPrvAnimBlendWeight->current).value;
       }
       XAnimSetGoalWeightKnobAll
-                ((double)fVar1,0x3ff0000000000000,0x3ff0000000000000,DAT_82a3d844,1,0);
-      cVar5 = XAnimIsLooped(uVar3,1);
-      DAT_82a4bf38 = '\x01' - (cVar5 == '\0');
+                (g_mdlprv.model.currentObj,1,0,fVar1,1.0,1.0,(uint)pcVar6,(int)pcVar7);
+      bVar5 = XAnimIsLooped(pXVar4,1);
+      pcVar7 = (char *)0xe868;
+      pcVar6 = (char *)0xe830;
+      g_mdlprv.anim.isFromLooped = (bool)('\x01' - !bVar5);
     }
-    if (-1 < DAT_82a4bf04) {
-      if ((-1 < DAT_82a4bf00) && (*(int *)(DAT_82a4c070 + 0xc) == 1)) {
-        XAnimSetGoalWeightKnobAll(uVar6,uVar6,uVar6,DAT_82a3d844,2,0);
+    if (-1 < g_mdlprv.anim.toCurrentIndex) {
+      if ((-1 < g_mdlprv.anim.fromCurrentIndex) && (*(int *)(DAT_82a4c070 + 0xc) == 1)) {
+        XAnimSetGoalWeightKnobAll
+                  (g_mdlprv.model.currentObj,2,0,(float)dVar8,(float)dVar8,(float)dVar8,(uint)pcVar6
+                   ,(int)pcVar7);
       }
-      cVar5 = XAnimIsLooped(uVar3,2);
-      DAT_82a4bf39 = '\x01' - (cVar5 == '\0');
+      bVar5 = XAnimIsLooped(pXVar4,2);
+      g_mdlprv.anim.isToLooped = (bool)('\x01' - !bVar5);
     }
-    if ((uVar2 & 0xffffffff) != 0) {
-      PushMruEntry(uVar2,0xffffffff82a4bf0c,0xffffffff82a4bf1c,DAT_82a4c08c);
-      Dvar_UpdateEnumDomain(DAT_82a3d6bc,0xffffffff82a4bf1c);
+    if (pcVar2 != (char *)0x0) {
+      PushMruEntry(pcVar2,g_mdlprv.anim.mruNames,g_mdlprv.anim.mruNameTable,modPrvFromAnimMru);
+      Dvar_UpdateEnumDomain(modPrvToAnimMru,g_mdlprv.anim.mruNameTable);
     }
-    DAT_82a4bf30 = 0;
-    DAT_82a4bf34 = 0x7f7fffff;
-    DAT_82a4bf08 = 1;
-    DAT_82a4bf44 = 0;
-    DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
-    DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
-    DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+    g_mdlprv.anim.isToAnimPlaying = false;
+    g_mdlprv.anim.stepCounter = 3.4028235e+38;
+    g_mdlprv.anim.isAnimPlaying = true;
+    g_mdlprv.anim.deltaYaw = 0.0;
+    g_mdlprv.model.currentEntity.placement.origin[0] =
+         (modPrvOrigin->current).value + g_mdlprv.model.initialOrigin[0];
+    g_mdlprv.model.currentEntity.placement.origin[1] =
+         (modPrvOrigin->current).vector[1] + g_mdlprv.model.initialOrigin[1];
+    g_mdlprv.model.currentEntity.placement.origin[2] =
+         (modPrvOrigin->current).vector[2] + g_mdlprv.model.initialOrigin[2];
   }
   __restgprlr_25();
   return;
 }
 
 
-// 822E2F98  std::_Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+// 822E2F98  _Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
-void std___Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,ulonglong param_2,int param_3,undefined4 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,int param_2,int param_3,char **param_4,
+               _func___cdecl_bool_char_ptr_char_ptr *param_5)
 
 {
   int iVar1;
@@ -1484,24 +1720,26 @@ void std___Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_
   ulonglong uVar3;
   ulonglong uVar4;
   int iVar5;
-  char cVar6;
-  uint uVar7;
+  bool bVar6;
+  ulonglong uVar7;
+  uint uVar8;
   
-  iVar5 = __savegprlr_25();
-  iVar1 = (int)param_2;
-  uVar7 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  uVar7 = (ulonglong)param_2;
+  iVar5 = __savegprlr_25(param_1);
+  iVar1 = (int)uVar7;
+  uVar8 = iVar1 - 1;
+  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
   while (uVar3 = uVar4, param_3 < iVar1) {
     iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-    cVar6 = (*param_5)(*(undefined4 *)(iVar2 + iVar5),*param_4);
-    if (cVar6 == '\0') break;
+    bVar6 = (*param_5)(*(char **)(iVar2 + iVar5),*param_4);
+    if (!bVar6) break;
     iVar1 = (int)uVar3;
-    uVar7 = iVar1 - 1;
-    *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + iVar5) = *(undefined4 *)(iVar2 + iVar5);
-    uVar4 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    param_2 = uVar3;
+    uVar8 = iVar1 - 1;
+    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *(undefined4 *)(iVar2 + iVar5);
+    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+    uVar7 = uVar3;
   }
-  *(undefined4 *)((int)((param_2 & 0xffffffff) << 2) + iVar5) = *param_4;
+  *(char **)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *param_4;
   __restgprlr_25();
   return;
 }
@@ -1509,22 +1747,29 @@ void std___Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_
 
 // 822DE7C0  CG_ModPrvApplyAnimationBlend  (cgame/cg_modelpreviewer.cpp:2480)
 
-void CG_ModPrvApplyAnimationBlend(void)
+void CG_ModPrvApplyAnimationBlend(float param_1)
 
 {
-  ulonglong uVar1;
+  XAnimTree *pXVar1;
+  uint in_r6;
+  int in_r7;
   double dVar2;
+  float fVar3;
   
   dVar2 = 0.0;
-  if ((DAT_82a3d844 != 0) && (uVar1 = DObjGetTree(), (uVar1 & 0xffffffff) != 0)) {
-    if (-1 < DAT_82a4bf00) {
-      dVar2 = (double)XAnimGetTime(uVar1,1);
+  if ((g_mdlprv.model.currentObj != (DObj *)0x0) &&
+     (pXVar1 = DObjGetTree(g_mdlprv.model.currentObj), pXVar1 != (XAnimTree *)0x0)) {
+    if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+      fVar3 = XAnimGetTime(pXVar1,1);
+      dVar2 = (double)fVar3;
     }
-    if (((-1 < DAT_82a4bf04) && ((double)*(float *)(DAT_82a3d6c0 + 0xc) <= dVar2)) &&
-       (DAT_82a4bf30 == '\0')) {
+    if (((-1 < g_mdlprv.anim.toCurrentIndex) &&
+        ((double)(modPrvAnimCrossBlendTime->current).value <= dVar2)) &&
+       (g_mdlprv.anim.isToAnimPlaying == false)) {
       XAnimSetGoalWeightKnobAll
-                (0x3ff0000000000000,(double)*(float *)(DAT_82a4c07c + 0xc),DAT_82a3d844,2,0);
-      DAT_82a4bf30 = '\x01';
+                (g_mdlprv.model.currentObj,2,0,1.0,(modPrvAnimCrossBlendDuration->current).value,1.0
+                 ,in_r6,in_r7);
+      g_mdlprv.anim.isToAnimPlaying = true;
     }
   }
   return;
@@ -1533,11 +1778,10 @@ void CG_ModPrvApplyAnimationBlend(void)
 
 // 822DE8B0  CG_ModPrvApplyDelta  (cgame/cg_modelpreviewer.cpp:2508)
 
-void CG_ModPrvApplyDelta(void)
+void CG_ModPrvApplyDelta(float param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  XAnimTree *pXVar1;
   float local_50;
   float local_4c;
   float local_48;
@@ -1549,34 +1793,36 @@ void CG_ModPrvApplyDelta(void)
   float local_2c;
   float local_28;
   
-  if (DAT_82a3d844 != 0) {
-    iVar1 = DObjGetTree();
-    if (((iVar1 != 0) && (*(char *)(DAT_82a4c078 + 0xc) != '\0')) && (DAT_82a4bf08 != '\0')) {
-      local_48 = 0.0;
-      local_44 = 0.0;
-      local_40 = 0.0;
-      local_50 = 0.0;
-      local_3c = 0.0;
-      local_4c = 0.0;
-      local_38 = 0.0;
-      local_30 = 0.0;
-      local_2c = 0.0;
-      local_28 = 0.0;
-      if (-1 < DAT_82a4bf00) {
-        XAnimCalcDelta(DAT_82a3d844,1,&local_48,&local_40,1);
-      }
-      if (-1 < DAT_82a4bf04) {
-        XAnimCalcDelta(DAT_82a3d844,2,&local_50,&local_30,1);
-      }
-      local_50 = local_50 + local_48;
-      local_4c = local_4c + local_44;
-      dVar2 = (double)RotationToYaw(&local_50);
-      DAT_82a4bf44 = (float)dVar2;
-      SetEntityAxis((ulonglong)DAT_82a4c0ac + 0xc,0xffffffff82a3d77c);
-      DAT_82a3d78c = DAT_82a3d78c + (local_30 + local_40) * -1.0;
-      DAT_82a3d790 = DAT_82a3d790 + (local_2c + local_3c) * -1.0;
-      DAT_82a3d794 = DAT_82a3d794 + (local_28 + local_38) * -1.0;
+  if ((((g_mdlprv.model.currentObj != (DObj *)0x0) &&
+       (pXVar1 = DObjGetTree(g_mdlprv.model.currentObj), pXVar1 != (XAnimTree *)0x0)) &&
+      (*(char *)(DAT_82a4c078 + 0xc) != '\0')) && (g_mdlprv.anim.isAnimPlaying != false)) {
+    local_48 = 0.0;
+    local_44 = 0.0;
+    local_40 = 0.0;
+    local_50 = 0.0;
+    local_3c = 0.0;
+    local_4c = 0.0;
+    local_38 = 0.0;
+    local_30 = 0.0;
+    local_2c = 0.0;
+    local_28 = 0.0;
+    if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+      XAnimCalcDelta(g_mdlprv.model.currentObj,1,&local_48,&local_40,true);
     }
+    if (-1 < g_mdlprv.anim.toCurrentIndex) {
+      XAnimCalcDelta(g_mdlprv.model.currentObj,2,&local_50,&local_30,true);
+    }
+    local_50 = local_50 + local_48;
+    local_4c = local_4c + local_44;
+    g_mdlprv.anim.deltaYaw = RotationToYaw(&local_50);
+    SetEntityAxis(&(modPrvRotationAngles->current).value,g_mdlprv.model.currentEntity.placement.quat
+                 );
+    g_mdlprv.model.currentEntity.placement.origin[0] =
+         g_mdlprv.model.currentEntity.placement.origin[0] + (local_30 + local_40) * -1.0;
+    g_mdlprv.model.currentEntity.placement.origin[1] =
+         g_mdlprv.model.currentEntity.placement.origin[1] + (local_2c + local_3c) * -1.0;
+    g_mdlprv.model.currentEntity.placement.origin[2] =
+         g_mdlprv.model.currentEntity.placement.origin[2] + (local_28 + local_38) * -1.0;
   }
   return;
 }
@@ -1584,137 +1830,162 @@ void CG_ModPrvApplyDelta(void)
 
 // 822DEA50  CG_ModPrvLoopAnimation  (cgame/cg_modelpreviewer.cpp:2551)
 
-void CG_ModPrvLoopAnimation(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool CG_ModPrvLoopAnimation(void)
 
 {
-  float fVar1;
-  ulonglong uVar2;
-  int iVar3;
+  XAnimTree *pXVar1;
+  XAnim_s *pXVar2;
+  undefined1 uVar3;
+  uint in_r6;
+  int in_r7;
   double dVar4;
   double dVar5;
   double dVar6;
-  undefined8 uVar7;
+  double dVar7;
+  float fVar8;
   
   __savegprlr_29();
   __savefpr_28();
   dVar5 = 0.0;
-  if (((DAT_82a3d844 == 0) ||
-      (dVar6 = dVar5, dVar4 = dVar5, uVar2 = DObjGetTree(), (uVar2 & 0xffffffff) == 0)) ||
-     (iVar3 = XAnimGetAnims(), iVar3 == 0)) goto LAB_822ded44;
-  if (-1 < DAT_82a4bf00) {
-    dVar5 = (double)XAnimGetTime(uVar2,1);
+  if (((g_mdlprv.model.currentObj == (DObj *)0x0) ||
+      (dVar6 = dVar5, dVar4 = dVar5, pXVar1 = DObjGetTree(g_mdlprv.model.currentObj),
+      pXVar1 == (XAnimTree *)0x0)) || (pXVar2 = XAnimGetAnims(pXVar1), pXVar2 == (XAnim_s *)0x0))
+  goto LAB_822ded44;
+  if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+    fVar8 = XAnimGetTime(pXVar1,1);
+    dVar5 = (double)fVar8;
   }
-  if (-1 < DAT_82a4bf04) {
-    dVar4 = (double)XAnimGetTime(uVar2,2);
+  if (-1 < g_mdlprv.anim.toCurrentIndex) {
+    fVar8 = XAnimGetTime(pXVar1,2);
+    dVar4 = (double)fVar8;
   }
-  uVar7 = 0x3ff0000000000000;
-  if (DAT_82a4bf00 < 0) {
+  dVar7 = 1.0;
+  if (g_mdlprv.anim.fromCurrentIndex < 0) {
 LAB_822debc0:
-    if (DAT_82a4bf04 < 0) goto LAB_822ded44;
+    if (g_mdlprv.anim.toCurrentIndex < 0) goto LAB_822ded44;
   }
-  else if (DAT_82a4bf04 < 0) {
+  else if (g_mdlprv.anim.toCurrentIndex < 0) {
     if (1.0 <= dVar5) {
-      if (DAT_82a4bf38 == '\0') {
-        XAnimSetGoalWeightKnobAll
-                  (0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,DAT_82a3d844,1,0);
-        DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
-        DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
-        DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+      if (g_mdlprv.anim.isFromLooped == false) {
+        XAnimSetGoalWeightKnobAll(g_mdlprv.model.currentObj,1,0,1.0,1.0,1.0,in_r6,in_r7);
+        g_mdlprv.model.currentEntity.placement.origin[0] =
+             (modPrvOrigin->current).value + g_mdlprv.model.initialOrigin[0];
+        g_mdlprv.model.currentEntity.placement.origin[1] =
+             (modPrvOrigin->current).vector[1] + g_mdlprv.model.initialOrigin[1];
+        g_mdlprv.model.currentEntity.placement.origin[2] =
+             (modPrvOrigin->current).vector[2] + g_mdlprv.model.initialOrigin[2];
       }
       __restfpr_28(1);
-      __restgprlr_29();
-      return;
+      uVar3 = __restgprlr_29();
+      return (bool)uVar3;
     }
     goto LAB_822debc0;
   }
-  if ((DAT_82a4bf00 < 0) && (1.0 <= dVar4)) {
-    if (DAT_82a4bf39 == '\0') {
-      XAnimSetGoalWeightKnobAll
-                (0x3ff0000000000000,0x3ff0000000000000,0x3ff0000000000000,DAT_82a3d844,2,0);
-      DAT_82a3d78c = DAT_82a3d8e4 + *(float *)(DAT_82a4c088 + 0xc);
-      DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
-      DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+  if ((g_mdlprv.anim.fromCurrentIndex < 0) && (1.0 <= dVar4)) {
+    if (g_mdlprv.anim.isToLooped == false) {
+      XAnimSetGoalWeightKnobAll(g_mdlprv.model.currentObj,2,0,1.0,1.0,1.0,in_r6,in_r7);
+      g_mdlprv.model.currentEntity.placement.origin[0] =
+           g_mdlprv.model.initialOrigin[0] + (modPrvOrigin->current).value;
+      g_mdlprv.model.currentEntity.placement.origin[1] =
+           (modPrvOrigin->current).vector[1] + g_mdlprv.model.initialOrigin[1];
+      g_mdlprv.model.currentEntity.placement.origin[2] =
+           (modPrvOrigin->current).vector[2] + g_mdlprv.model.initialOrigin[2];
     }
     __restfpr_28(1);
-    __restgprlr_29();
-    return;
+    uVar3 = __restgprlr_29();
+    return (bool)uVar3;
   }
-  if ((-1 < DAT_82a4bf04) && ((-1 < DAT_82a4bf00 && (1.0 <= dVar4)))) {
+  if ((-1 < g_mdlprv.anim.toCurrentIndex) &&
+     ((-1 < g_mdlprv.anim.fromCurrentIndex && (1.0 <= dVar4)))) {
     if (*(int *)(DAT_82a4c070 + 0xc) == 1) {
-      fVar1 = *(float *)(DAT_82a4c0a8 + 0xc);
+      fVar8 = (modPrvAnimBlendWeight->current).value;
     }
     else {
-      fVar1 = 1.0 - *(float *)(DAT_82a4c0a8 + 0xc);
+      fVar8 = 1.0 - (modPrvAnimBlendWeight->current).value;
     }
-    dVar5 = (double)fVar1;
-    XAnimClearTreeGoalWeights(dVar6,uVar2,2);
-    XAnimSetGoalWeightKnobAll(dVar5,uVar7,uVar7,DAT_82a3d844,1,0);
-    DAT_82a4bf30 = 0;
-    DAT_82a3d78c = *(float *)(DAT_82a4c088 + 0xc) + DAT_82a3d8e4;
-    DAT_82a3d790 = *(float *)(DAT_82a4c088 + 0x10) + DAT_82a3d8e8;
-    DAT_82a3d794 = *(float *)(DAT_82a4c088 + 0x14) + DAT_82a3d8ec;
+    dVar5 = (double)fVar8;
+    XAnimClearTreeGoalWeights(pXVar1,2,(float)dVar6);
+    XAnimSetGoalWeightKnobAll
+              (g_mdlprv.model.currentObj,1,0,(float)dVar5,(float)dVar7,(float)dVar7,in_r6,in_r7);
+    g_mdlprv.anim.isToAnimPlaying = false;
+    g_mdlprv.model.currentEntity.placement.origin[0] =
+         (modPrvOrigin->current).value + g_mdlprv.model.initialOrigin[0];
+    g_mdlprv.model.currentEntity.placement.origin[1] =
+         (modPrvOrigin->current).vector[1] + g_mdlprv.model.initialOrigin[1];
+    g_mdlprv.model.currentEntity.placement.origin[2] =
+         (modPrvOrigin->current).vector[2] + g_mdlprv.model.initialOrigin[2];
     __restfpr_28(1);
-    __restgprlr_29();
-    return;
+    uVar3 = __restgprlr_29();
+    return (bool)uVar3;
   }
 LAB_822ded44:
   __restfpr_28(0);
-  __restgprlr_29();
-  return;
+  uVar3 = __restgprlr_29();
+  return (bool)uVar3;
 }
 
 
-// 822E3028  std::_Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+// 822E3028  _Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
-void std___Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,ulonglong param_2,uint param_3,undefined4 *param_4,code *param_5)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,int param_2,int param_3,char **param_4,
+               _func___cdecl_bool_char_ptr_char_ptr *param_5)
 
 {
   undefined4 *puVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  char cVar5;
-  uint uVar6;
-  ulonglong uVar7;
+  bool bVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
   ulonglong uVar8;
   ulonglong uVar9;
+  int iVar11;
+  ulonglong uVar10;
   
-  iVar4 = __savegprlr_25();
-  uVar8 = (param_2 + 1 & 0x7fffffff) << 1;
-  uVar6 = (uint)uVar8;
-  uVar7 = param_2;
-  while (uVar9 = uVar8, (int)uVar6 < (int)param_3) {
-    puVar1 = (undefined4 *)((int)(uVar9 << 2) + iVar4);
-    cVar5 = (*param_5)(*puVar1,puVar1[-1]);
-    if (cVar5 != '\0') {
-      uVar9 = uVar9 - 1;
+  uVar6 = (ulonglong)param_3;
+  uVar5 = (ulonglong)param_2;
+  iVar3 = __savegprlr_25(param_1);
+  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
+  iVar11 = (int)uVar9;
+  uVar8 = uVar5;
+  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
+    puVar1 = (undefined4 *)((int)(uVar10 << 2) + iVar3);
+    bVar4 = (*param_5)((char *)*puVar1,(char *)puVar1[-1]);
+    if (bVar4) {
+      uVar10 = uVar10 - 1;
     }
-    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) =
-         *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + iVar4);
-    uVar6 = (uint)uVar8;
-    uVar7 = uVar9;
+    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) =
+         *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar3);
+    iVar11 = (int)uVar9;
+    uVar8 = uVar10;
   }
-  if (uVar6 == param_3) {
-    uVar8 = uVar7 & 0xffffffff;
-    uVar7 = (ulonglong)param_3 - 1;
-    *(undefined4 *)((int)(uVar8 << 2) + iVar4) = *(undefined4 *)(param_3 * 4 + iVar4 + -4);
+  if (iVar11 == (int)uVar6) {
+    uVar9 = uVar8 & 0xffffffff;
+    uVar8 = uVar6 - 1;
+    *(undefined4 *)((int)(uVar9 << 2) + iVar3) =
+         *(undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + iVar3 + -4);
   }
-  iVar2 = (int)uVar7;
-  uVar6 = iVar2 - 1;
-  uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar9 = uVar8, (int)param_2 < iVar2) {
-    iVar3 = (int)((uVar9 & 0xffffffff) << 2);
-    cVar5 = (*param_5)(*(undefined4 *)(iVar3 + iVar4),*param_4);
-    if (cVar5 == '\0') break;
-    iVar2 = (int)uVar9;
-    uVar6 = iVar2 - 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) = *(undefined4 *)(iVar3 + iVar4);
-    uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar9;
+  iVar11 = (int)uVar8;
+  uVar7 = iVar11 - 1;
+  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
+    iVar2 = (int)((uVar6 & 0xffffffff) << 2);
+    bVar4 = (*param_5)(*(char **)(iVar2 + iVar3),*param_4);
+    if (!bVar4) break;
+    iVar11 = (int)uVar6;
+    uVar7 = iVar11 - 1;
+    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *(undefined4 *)(iVar2 + iVar3);
+    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar8 = uVar6;
   }
-  *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar4) = *param_4;
+  *(char **)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *param_4;
   __restgprlr_25();
   return;
 }
@@ -1722,45 +1993,50 @@ void std___Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_cons
 
 // 822DED58  CG_ModPrvAnimRecentAccept  (cgame/cg_modelpreviewer.cpp:2628)
 
-void CG_ModPrvAnimRecentAccept(undefined8 param_1,ulonglong param_2)
+void CG_ModPrvAnimRecentAccept(dvar_t *param_1,int *param_2)
 
 {
-  undefined4 *puVar2;
-  undefined8 uVar1;
+  dvar_t *pdVar1;
+  char *pcVar2;
   int iVar3;
-  int iVar4;
+  ulonglong uVar4;
   int iVar5;
+  int iVar6;
   
-  puVar2 = (undefined4 *)__savegprlr_25();
-  if (puVar2 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8201ebc8,0xa48,0,0xffffffff82000f98,0xffffffff8201ec3c);
+  uVar4 = (ulonglong)(int)param_2;
+  pdVar1 = (dvar_t *)__savegprlr_25(param_1);
+  if (pdVar1 == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xa48,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0xa49,0,0xffffffff82000f98,0xffffffff8201f668);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xa49,0,"%s");
   }
-  Dvar_ClearModified(puVar2);
-  uVar1 = Dvar_EnumToString(puVar2);
-  iVar4 = 0;
-  if (0 < DAT_82a3d6e0) {
-    iVar5 = 0;
+  Dvar_ClearModified(pdVar1);
+  pcVar2 = Dvar_EnumToString(pdVar1);
+  iVar5 = 0;
+  if (0 < g_mdlprv.system.animCount) {
+    iVar6 = 0;
     do {
-      iVar3 = I_stricmp(uVar1,*(undefined4 *)(iVar5 + DAT_82a3d6e4));
+      iVar3 = I_stricmp(pcVar2,*(char **)(iVar6 + (int)g_mdlprv.system.animNames));
       if (iVar3 == 0) {
-        *(int *)param_2 = iVar4;
-        CG_ModPrvLoadAnimations(uVar1);
+        *(int *)uVar4 = iVar5;
+        CG_ModPrvLoadAnimations(pcVar2);
         __restgprlr_25();
         return;
       }
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 4;
-    } while (iVar4 < DAT_82a3d6e0);
+      iVar5 = iVar5 + 1;
+      iVar6 = iVar6 + 4;
+    } while (iVar5 < g_mdlprv.system.animCount);
   }
-  if (puVar2 != DAT_82a4c08c) {
-    MyAssertHandler(0xffffffff8201ebc8,0xa5a,1,0xffffffff8201f614,0xffffffff8201f62c,*puVar2);
+  if (pdVar1 != modPrvFromAnimMru) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xa5a,1,"%s\n\t(dvar->name) = %s");
   }
-  Com_Printf(0xe,0xffffffff8201f5d0,uVar1);
-  RemoveMruEntry(0xffffffff82a4bf0c,0xffffffff82a4bf1c,DAT_82a4c08c);
-  Dvar_UpdateEnumDomain(DAT_82a3d6bc,0xffffffff82a4bf1c);
+  Com_Printf(0xe,"Model previewer could not load <%s> because it does not exist.\n ");
+  RemoveMruEntry(g_mdlprv.anim.mruNames,g_mdlprv.anim.mruNameTable,modPrvFromAnimMru);
+  Dvar_UpdateEnumDomain(modPrvToAnimMru,g_mdlprv.anim.mruNameTable);
   __restgprlr_25();
   return;
 }
@@ -1768,81 +2044,94 @@ void CG_ModPrvAnimRecentAccept(undefined8 param_1,ulonglong param_2)
 
 // 822DEEB0  CG_ModPrvLoadAnimAccept  (cgame/cg_modelpreviewer.cpp:2658)
 
-void CG_ModPrvLoadAnimAccept(undefined8 param_1,ulonglong param_2)
+void CG_ModPrvLoadAnimAccept(dvar_t *param_1,int *param_2)
 
 {
-  int iVar1;
+  dvar_t *pdVar1;
+  ulonglong uVar2;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0xa63,0,0xffffffff82000f98,0xffffffff8201ec3c);
+  uVar2 = (ulonglong)(int)param_2;
+  pdVar1 = (dvar_t *)__savegprlr_28(param_1);
+  if (pdVar1 == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xa63,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0xa64,0,0xffffffff82000f98,0xffffffff8201f668);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xa64,0,"%s");
   }
-  Dvar_ClearModified(iVar1);
-  *(undefined4 *)param_2 = *(undefined4 *)(iVar1 + 0xc);
-  CG_ModPrvLoadAnimations(*(undefined4 *)(*(int *)(iVar1 + 0xc) * 4 + DAT_82a3d6e4));
+  Dvar_ClearModified(pdVar1);
+  *(int *)uVar2 = (pdVar1->current).integer;
+  CG_ModPrvLoadAnimations(g_mdlprv.system.animNames[(pdVar1->current).integer]);
   __restgprlr_28();
   return;
 }
 
 
-// 822E3138  std::_Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+// 822E3138  _Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
-void std___Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,char **param_2,_func___cdecl_bool_char_ptr_char_ptr *param_3,
+               int *param_4,char **param_5)
 
 {
   uint uVar1;
-  int iVar2;
+  char **ppcVar2;
   undefined4 *puVar3;
-  longlong lVar4;
-  char cVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  ulonglong uVar4;
+  longlong lVar5;
+  bool bVar6;
+  longlong lVar7;
+  longlong lVar8;
+  int iVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  undefined4 local_50 [20];
+  ulonglong uVar13;
+  uint uVar14;
+  char *local_50 [20];
   
-  lVar4 = __savegprlr_24();
-  iVar2 = (int)lVar4;
-  uVar1 = param_2 - iVar2 >> 2;
-  uVar9 = (longlong)(param_2 - iVar2 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar9) {
-    uVar7 = (uVar9 + 1 & 0x7fffffff) << 1;
-    lVar6 = (uVar9 & 0x3fffffff) * 4 + lVar4;
+  lVar8 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_2;
+  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
+  ppcVar2 = (char **)lVar5;
+  iVar9 = (int)lVar7 - (int)ppcVar2;
+  uVar1 = iVar9 >> 2;
+  uVar11 = (longlong)(iVar9 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar11) {
+    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar11 & 0x3fffffff) * 4 + lVar5;
     do {
-      lVar6 = lVar6 + -4;
-      local_50[0] = *(undefined4 *)lVar6;
-      uVar7 = uVar7 - 2;
-      uVar9 = uVar9 - 1;
-      iVar8 = (int)uVar7;
-      uVar12 = uVar7;
-      uVar10 = uVar9;
-      while (uVar11 = uVar12, iVar8 < (int)uVar1) {
-        puVar3 = (undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
-        cVar5 = (*(code *)param_3)(*puVar3,puVar3[-1]);
-        if (cVar5 != '\0') {
-          uVar11 = uVar11 - 1;
+      lVar5 = lVar5 + -4;
+      local_50[0] = (char *)*(undefined4 *)lVar5;
+      uVar10 = uVar10 - 2;
+      uVar11 = uVar11 - 1;
+      uVar14 = (uint)uVar10;
+      uVar13 = uVar10;
+      uVar4 = uVar11;
+      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
+        puVar3 = (undefined4 *)((int)((uVar12 & 0xffffffff) << 2) + (int)ppcVar2);
+        bVar6 = (*(_func___cdecl_bool_char_ptr_char_ptr *)lVar8)((char *)*puVar3,(char *)puVar3[-1])
+        ;
+        if (bVar6) {
+          uVar12 = uVar12 - 1;
         }
-        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar2) =
-             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + iVar2);
-        iVar8 = (int)uVar12;
-        uVar10 = uVar11;
+        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar4 & 0xffffffff) << 2) + (int)ppcVar2) =
+             *(undefined4 *)((int)((uVar12 & 0xffffffff) << 2) + (int)ppcVar2);
+        uVar14 = (uint)uVar13;
+        uVar4 = uVar12;
       }
-      if ((uint)uVar11 == uVar1) {
-        uVar12 = uVar10 & 0xffffffff;
-        uVar10 = (longlong)(int)uVar1 - 1;
-        *(undefined4 *)((int)(uVar12 << 2) + iVar2) = *(undefined4 *)(uVar1 * 4 + iVar2 + -4);
+      iVar9 = (int)uVar4;
+      if (uVar14 == uVar1) {
+        iVar9 = uVar1 - 1;
+        *(char **)((int)((uVar4 & 0xffffffff) << 2) + (int)ppcVar2) = ppcVar2[uVar1 - 1];
       }
-      std___Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-                (lVar4,uVar10,uVar9,local_50,param_3);
-    } while (0 < (int)uVar9);
+      _Push_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (ppcVar2,iVar9,(int)uVar11,local_50,(_func___cdecl_bool_char_ptr_char_ptr *)lVar8);
+    } while (0 < (int)uVar11);
   }
   __restgprlr_24();
   return;
@@ -1851,65 +2140,81 @@ void std___Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_
 
 // 822DEF50  CG_ModPrvAnimBlendWeightUpdate  (cgame/cg_modelpreviewer.cpp:2670)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvAnimBlendWeightUpdate(void)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  XAnimTree *pXVar1;
+  XAnimTree *pXVar2;
+  uint in_r5;
+  uint in_r6;
+  int in_r7;
   double dVar3;
   double dVar4;
+  double dVar5;
   
   __savegprlr_29();
-  Dvar_ClearModified(DAT_82a4c0a8);
-  if (DAT_82a3d844 != 0) {
-    uVar1 = DObjGetTree();
-    uVar2 = 0;
-    dVar4 = 1.0;
-    if (-1 < DAT_82a4bf00) {
-      dVar3 = dVar4;
-      if (-1 < DAT_82a4bf04) {
-        dVar3 = (double)(1.0 - *(float *)(DAT_82a4c0a8 + 0xc));
+  Dvar_ClearModified(modPrvAnimBlendWeight);
+  pXVar2 = (XAnimTree *)0x0;
+  if (g_mdlprv.model.currentObj != (DObj *)0x0) {
+    pXVar1 = DObjGetTree(g_mdlprv.model.currentObj);
+    dVar3 = 0.0;
+    dVar5 = 1.0;
+    pXVar2 = pXVar1;
+    if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+      dVar4 = dVar5;
+      if (-1 < g_mdlprv.anim.toCurrentIndex) {
+        dVar4 = (double)(1.0 - (modPrvAnimBlendWeight->current).value);
       }
-      XAnimClearTreeGoalWeights(0,uVar1,1);
-      XAnimSetGoalWeight(dVar3,dVar4,dVar4,DAT_82a3d844,1);
+      XAnimClearTreeGoalWeights(pXVar1,1,0.0);
+      pXVar2 = (XAnimTree *)
+               XAnimSetGoalWeight(g_mdlprv.model.currentObj,1,(float)dVar4,(float)dVar5,(float)dVar5
+                                  ,in_r5,in_r6,in_r7);
     }
-    if (-1 < DAT_82a4bf04) {
-      dVar3 = dVar4;
-      if (-1 < DAT_82a4bf00) {
-        dVar3 = (double)*(float *)(DAT_82a4c0a8 + 0xc);
+    if (-1 < g_mdlprv.anim.toCurrentIndex) {
+      dVar4 = dVar5;
+      if (-1 < g_mdlprv.anim.fromCurrentIndex) {
+        dVar4 = (double)(modPrvAnimBlendWeight->current).value;
       }
-      XAnimClearTreeGoalWeights(uVar2,uVar1,2);
-      XAnimSetGoalWeight(dVar3,dVar4,dVar4,DAT_82a3d844,2);
+      XAnimClearTreeGoalWeights(pXVar1,2,(float)dVar3);
+      pXVar2 = (XAnimTree *)
+               XAnimSetGoalWeight(g_mdlprv.model.currentObj,2,(float)dVar4,(float)dVar5,(float)dVar5
+                                  ,in_r5,in_r6,in_r7);
     }
   }
-  __restgprlr_29();
+  __restgprlr_29(pXVar2);
   return;
 }
 
 
-// 822E36C8  std::_Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+// 822E36C8  _Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
-void std___Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,char **param_2,_func___cdecl_bool_char_ptr_char_ptr *param_3)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  char **ppcVar2;
   longlong lVar3;
-  undefined4 local_30 [12];
+  longlong lVar4;
+  char *local_30 [12];
   
-  lVar3 = __savegprlr_28();
-  param_2 = param_2 - lVar3;
-  if (4 < (int)((uint)param_2 & 0xfffffffc)) {
-    puVar2 = (undefined4 *)lVar3;
+  lVar4 = (longlong)(int)param_2;
+  lVar3 = __savegprlr_28(param_1);
+  lVar4 = lVar4 - lVar3;
+  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
+    ppcVar2 = (char **)lVar3;
     do {
-      iVar1 = (int)param_2;
-      local_30[0] = *(undefined4 *)((int)puVar2 + iVar1 + -4);
-      param_2 = param_2 + -4;
-      *(undefined4 *)((int)puVar2 + iVar1 + -4) = *puVar2;
-      std___Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-                (lVar3,0,(int)(uint)param_2 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)param_2 & 0xfffffffc));
+      iVar1 = (int)lVar4;
+      local_30[0] = *(char **)((int)ppcVar2 + iVar1 + -4);
+      lVar4 = lVar4 + -4;
+      *(char **)((int)ppcVar2 + iVar1 + -4) = *ppcVar2;
+      _Adjust_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (ppcVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
+    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
   }
   __restgprlr_28();
   return;
@@ -1918,29 +2223,31 @@ void std___Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
 
 // 822DF090  CG_ModPrvMatReplaceAccepted  (cgame/cg_modelpreviewer.cpp:2705)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvMatReplaceAccepted(void)
 
 {
   int iVar1;
-  longlong lVar2;
+  int iVar2;
   
   __savegprlr_28();
-  Dvar_ClearModified(DAT_82a4c0c8);
-  if (*(int *)(DAT_82a4c094 + 0xc) == 0) {
-    DAT_82a4c05c = 0xffffffff;
+  Dvar_ClearModified(modPrvMatReplace);
+  if ((modPrvMatSelect->current).integer == 0) {
+    g_mdlprv.mat.replaceIndex = -1;
   }
-  lVar2 = 0;
-  if (0 < DAT_82a3d904) {
+  iVar2 = 0;
+  if (0 < g_mdlprv.model.surfaceCount) {
     iVar1 = 0;
     do {
       R_DObjReplaceMaterial
-                (DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar2,
-                 *(undefined4 *)(iVar1 + DAT_82a4bf50));
-      lVar2 = lVar2 + 1;
+                (g_mdlprv.model.currentObj,(modPrvLod->current).integer,iVar2,
+                 *(Material **)(iVar1 + (int)g_mdlprv.mat.surfMatHandles));
+      iVar2 = iVar2 + 1;
       iVar1 = iVar1 + 4;
-    } while ((int)lVar2 < DAT_82a3d904);
+    } while (iVar2 < g_mdlprv.model.surfaceCount);
   }
-  DAT_82a4c060 = 0;
+  g_mdlprv.mat.prevReplaced = (Material *)0x0;
   __restgprlr_28();
   return;
 }
@@ -1948,55 +2255,59 @@ void CG_ModPrvMatReplaceAccepted(void)
 
 // 822DF140  CG_ModPrvMatReplaceUpdate  (cgame/cg_modelpreviewer.cpp:2723)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvMatReplaceUpdate(void)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  Material *pMVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
+  Material **ppMVar4;
+  int iVar5;
+  int iVar6;
   
   __savegprlr_27();
-  iVar3 = *(int *)(DAT_82a4c0c8 + 0x1c);
-  if (((iVar3 != DAT_82a3d6f4) && (DAT_82a3d6f4 = iVar3, *(int *)(DAT_82a4c094 + 0xc) != 0)) &&
-     (*(uint *)(DAT_82a4c0c8 + 0x1c) != 0)) {
-    uVar2 = (ulonglong)*(uint *)(DAT_82a4c0c8 + 0x1c) - 1;
-    DAT_82a4c05c = (uint)uVar2;
-    iVar3 = DAT_82a3d904;
-    if ((DAT_82a4c060 != 0) && (lVar5 = 0, 0 < DAT_82a3d904)) {
-      iVar4 = 0;
-      iVar1 = DAT_82a4c060;
+  iVar3 = (modPrvMatReplace->latched).integer;
+  if (((iVar3 != g_mdlprv.system.lastMatReplace) &&
+      (g_mdlprv.system.lastMatReplace = iVar3, (modPrvMatSelect->current).integer != 0)) &&
+     ((modPrvMatReplace->latched).integer != 0)) {
+    g_mdlprv.mat.replaceIndex = (modPrvMatReplace->latched).integer + -1;
+    iVar3 = g_mdlprv.model.surfaceCount;
+    if ((g_mdlprv.mat.prevReplaced != (Material *)0x0) &&
+       (iVar2 = 0, 0 < g_mdlprv.model.surfaceCount)) {
+      iVar6 = 0;
+      pMVar1 = g_mdlprv.mat.prevReplaced;
       do {
-        if (*(int *)(iVar4 + DAT_82a4bf50) == iVar1) {
-          R_DObjReplaceMaterial(DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar5);
-          iVar3 = DAT_82a3d904;
-          iVar1 = DAT_82a4c060;
+        if (*(Material **)(iVar6 + (int)g_mdlprv.mat.surfMatHandles) == pMVar1) {
+          R_DObjReplaceMaterial(g_mdlprv.model.currentObj,(modPrvLod->current).integer,iVar2,pMVar1)
+          ;
+          iVar3 = g_mdlprv.model.surfaceCount;
+          pMVar1 = g_mdlprv.mat.prevReplaced;
         }
-        lVar5 = lVar5 + 1;
-        iVar4 = iVar4 + 4;
-      } while ((int)lVar5 < iVar3);
-      uVar2 = (ulonglong)DAT_82a4c05c;
+        iVar2 = iVar2 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar2 < iVar3);
     }
-    lVar5 = 0;
-    iVar1 = DAT_82a4bf4c;
+    iVar6 = 0;
+    iVar2 = g_mdlprv.mat.replaceIndex;
+    ppMVar4 = g_mdlprv.mat.handleArray;
     if (0 < iVar3) {
-      iVar4 = 0;
+      iVar5 = 0;
       do {
-        if (*(int *)(iVar4 + DAT_82a4bf50) ==
-            *(int *)(*(int *)(DAT_82a4c094 + 0xc) * 4 + iVar1 + -4)) {
+        if (*(Material **)(iVar5 + (int)g_mdlprv.mat.surfMatHandles) ==
+            ppMVar4[(modPrvMatSelect->current).integer + -1]) {
           R_DObjReplaceMaterial
-                    (DAT_82a3d844,*(undefined4 *)(DAT_82a3d6c4 + 0xc),lVar5,
-                     *(undefined4 *)((int)((uVar2 & 0xffffffff) << 2) + iVar1));
-          uVar2 = (ulonglong)DAT_82a4c05c;
-          iVar3 = DAT_82a3d904;
-          iVar1 = DAT_82a4bf4c;
+                    (g_mdlprv.model.currentObj,(modPrvLod->current).integer,iVar6,ppMVar4[iVar2]);
+          iVar2 = g_mdlprv.mat.replaceIndex;
+          iVar3 = g_mdlprv.model.surfaceCount;
+          ppMVar4 = g_mdlprv.mat.handleArray;
         }
-        lVar5 = lVar5 + 1;
-        iVar4 = iVar4 + 4;
-      } while ((int)lVar5 < iVar3);
+        iVar6 = iVar6 + 1;
+        iVar5 = iVar5 + 4;
+      } while (iVar6 < iVar3);
     }
-    DAT_82a4c060 = *(int *)((int)((uVar2 & 0xffffffff) << 2) + iVar1);
+    g_mdlprv.mat.prevReplaced = ppMVar4[iVar2];
   }
   __restgprlr_27();
   return;
@@ -2005,111 +2316,126 @@ void CG_ModPrvMatReplaceUpdate(void)
 
 // 822DF2E0  TRACK_cg_modelpreviewer  (cgame/cg_modelpreviewer.cpp:2760)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cg_modelpreviewer(void)
 
 {
-  track_static_alloc_internal(0xffffffff82a3d6d0,0xe99c,0xffffffff8201f6b0,0);
-  track_static_alloc_internal(0xffffffff82962ed0,0x10,0xffffffff8201f694,0);
-  track_static_alloc_internal(0xffffffff82962ef4,0xc,0xffffffff8201f678,0);
+  track_static_alloc_internal(&g_mdlprv,0xe99c,"g_mdlprv",0);
+  track_static_alloc_internal(mpDefaultDrawBoneOptions,0x10,"mpDefaultDrawBoneOptions",0);
+  track_static_alloc_internal(modPrvAnimBlendModeNames,0xc,"modPrvAnimBlendModeNames",0);
   return;
 }
 
 
 // 822DF360  CG_ModelPreviewerPauseAnim  (cgame/cg_modelpreviewer.cpp:2769)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModelPreviewerPauseAnim(void)
 
 {
-  if (DAT_82a3d844 == 0) {
+  if (g_mdlprv.model.currentObj == (DObj *)0x0) {
     return;
   }
-  if ((DAT_82a4bf00 < 0) && (DAT_82a4bf04 < 0)) {
+  if ((g_mdlprv.anim.fromCurrentIndex < 0) && (g_mdlprv.anim.toCurrentIndex < 0)) {
     return;
   }
-  DAT_82a4bf34 = 0x7f7fffff;
-  DAT_82a4bf08 = DAT_82a4bf08 == '\0';
+  g_mdlprv.anim.stepCounter = 3.4028235e+38;
+  g_mdlprv.anim.isAnimPlaying = !g_mdlprv.anim.isAnimPlaying;
   return;
 }
 
 
 // 822DF3D8  CG_ModelPreviewerStepAnim  (cgame/cg_modelpreviewer.cpp:2782)
 
-void CG_ModelPreviewerStepAnim(double param_1)
+void CG_ModelPreviewerStepAnim(float param_1)
 
 {
-  if (DAT_82a3d844 == 0) {
+  if (g_mdlprv.model.currentObj == (DObj *)0x0) {
     return;
   }
-  if ((DAT_82a4bf00 < 0) && (DAT_82a4bf04 < 0)) {
+  if ((g_mdlprv.anim.fromCurrentIndex < 0) && (g_mdlprv.anim.toCurrentIndex < 0)) {
     return;
   }
   if (param_1 < 0.0) {
-    param_1 = 0.03333333507180214;
+    param_1 = 0.033333335;
   }
-  DAT_82a4bf08 = 1;
-  DAT_82a4bf34 = (float)param_1;
+  g_mdlprv.anim.isAnimPlaying = true;
+  g_mdlprv.anim.stepCounter = param_1;
   return;
 }
 
 
 // 822DF440  MdlPrvPrint  (cgame/cg_modelpreviewer.cpp:2805)
 
-void MdlPrvPrint(undefined8 param_1,undefined8 param_2)
+int MdlPrvPrint(ScreenPlacement *param_1,float param_2,float param_3,char *param_4)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3fe99999a0000000);
-  return;
+  int iVar1;
+  float *in_r5;
+  int in_r6;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,0.8,0.8,param_4,in_r5,in_r6,(Font_s *)&cgMedia);
+  return iVar1;
 }
 
 
 // 822DF490  MdlPrvPrintColor  (cgame/cg_modelpreviewer.cpp:2811)
 
-void MdlPrvPrintColor(undefined8 param_1,undefined8 param_2)
+int MdlPrvPrintColor(ScreenPlacement *param_1,float param_2,float param_3,char *param_4,
+                    float *param_5)
 
 {
-  CG_DrawDevString(param_1,param_2,0x3fe99999a0000000);
-  return;
+  int iVar1;
+  int in_r6;
+  Font_s *in_r7;
+  
+  iVar1 = CG_DrawDevString(param_1,param_2,param_3,0.8,0.8,param_4,(float *)&cgMedia,in_r6,in_r7);
+  return iVar1;
 }
 
 
 // 822DF4D8  MdlPrvPrintHelpLine  (cgame/cg_modelpreviewer.cpp:2980)
 
-void MdlPrvPrintHelpLine(void)
+int MdlPrvPrintHelpLine(ScreenPlacement *param_1,ButtonNames param_2,float param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 extraout_f1;
-  undefined8 uVar2;
+  ScreenPlacement *pSVar1;
+  int iVar2;
+  float *in_r5;
+  int in_r6;
+  Font_s *pFVar3;
+  double extraout_f1;
+  double dVar4;
   
-  uVar1 = __savegprlr_27();
-  uVar2 = extraout_f1;
-  CG_DrawDevString(0,extraout_f1,0x3fe99999a0000000);
-  CG_DrawDevString(0x4049000000000000,uVar2,0x3fe99999a0000000,uVar1);
-  __restgprlr_27();
-  return;
+  pSVar1 = (ScreenPlacement *)__savegprlr_27((double)param_3,param_1);
+  pFVar3 = (Font_s *)&g_buttons[0].nameColor;
+  dVar4 = extraout_f1;
+  CG_DrawDevString(pSVar1,0.0,(float)extraout_f1,0.8,0.8,(char *)param_2,in_r5,in_r6,
+                   (Font_s *)&g_buttons[0].nameColor);
+  iVar2 = CG_DrawDevString(pSVar1,50.0,(float)dVar4,0.8,0.8,(char *)param_2,(float *)0x82180000,
+                           -0x7dfe0000,pFVar3);
+  iVar2 = __restgprlr_27(iVar2);
+  return iVar2;
 }
 
 
 // 822DF590  DrawDistFromModel  (cgame/cg_modelpreviewer.cpp:2993)
 
-void DrawDistFromModel(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void DrawDistFromModel(LocalClientNum_t param_1,ScreenPlacement *param_2)
 
 {
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int iVar5;
-  undefined8 uVar4;
+  char *pcVar1;
   
-  if (*(char *)(DAT_82a4c090 + 0xc) != '\0') {
-    iVar5 = CG_GetLocalClientGlobals();
-    fVar1 = *(float *)(iVar5 + 0x6b9d0) - DAT_82a3d794;
-    fVar2 = *(float *)(iVar5 + 0x6b9c8) - DAT_82a3d78c;
-    fVar3 = *(float *)(iVar5 + 0x6b9cc) - DAT_82a3d790;
-    uVar4 = va(0xffffffff8201f6c8,(double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1));
-    CG_DrawSmallDevStringColor
-              (0x407f400000000000,0x4079000000000000,param_2,0xffffffff82180000,0xffffffff82020000,
-               uVar4,0xffffffff82181918,7);
+  if ((modPrvDrawDistanceToModel->current).enabled != false) {
+    CG_GetLocalClientGlobals(param_1);
+    pcVar1 = va("Distance to Model: %.0f");
+    CG_DrawSmallDevStringColor(param_2,500.0,400.0,"etected",(float *)0x82020000,(int)pcVar1);
   }
   return;
 }
@@ -2117,112 +2443,154 @@ void DrawDistFromModel(undefined8 param_1,undefined8 param_2)
 
 // 822DF650  MdlPrvDrawOverlayGamepad  (cgame/cg_modelpreviewer.cpp:3069)
 
-void MdlPrvDrawOverlayGamepad(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvDrawOverlayGamepad(LocalClientNum_t param_1,ScreenPlacement *param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  double dVar3;
-  double dVar4;
+  float fVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  ScreenPlacement *pSVar4;
+  ButtonNames BVar5;
+  char *pcVar6;
+  float *in_r5;
+  char *pcVar7;
+  double dVar8;
+  double dVar9;
   
-  __savegprlr_27();
-  if ((-1 < DAT_82a3d76c) && (*(char *)(DAT_82a4c06c + 0xc) != '\0')) {
-    DrawDistFromModel();
-    if (DAT_82a3d734 == '\0') {
-      if (DAT_82a3d700 == 1) {
-        iVar1 = CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
-      }
-      else {
-        iVar1 = CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
-      }
-      dVar3 = (double)((float)(longlong)iVar1 * 0.75);
-      iVar1 = MdlPrvPrintHelpLine(0x4034000000000000,param_2,0);
-      dVar4 = (double)((float)(longlong)iVar1 * 0.75 + 20.0);
-      iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,1);
-      dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-      iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,2);
-      dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-      if (DAT_82a3d700 == 1) {
-        if ((DAT_82a3d74c == 1) || (DAT_82a3d74c == 2)) {
-          CG_DrawSmallDevStringColor(0x4073b00000000000,dVar3,param_2);
-        }
-        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,4);
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,5);
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,6);
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,7);
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,9);
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,8);
-        uVar2 = 10;
-        dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-      }
-      else {
-        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xb);
-        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xc);
-        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-        iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xd);
-        dVar4 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-        if (DAT_82a3d704 == 2) {
-          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
-          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x12);
-          uVar2 = 0x13;
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-        }
-        else if (DAT_82a3d704 == 1) {
-          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
-          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x14);
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-          if (DAT_82a3d708 == 0) {
-            iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x15);
-            dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-          }
-          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x16);
-          uVar2 = 0x17;
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        }
-        else if (DAT_82a3d704 == 0) {
-          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0xe);
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0xf);
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x10);
-          uVar2 = 0x11;
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        }
-        else {
-          CG_DrawSmallDevStringColor(0x4072c00000000000,dVar3,param_2);
-          iVar1 = MdlPrvPrintHelpLine(dVar4,param_2,0x18);
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar4);
-          iVar1 = MdlPrvPrintHelpLine(dVar3,param_2,0x19);
-          uVar2 = 0x1a;
-          dVar3 = (double)(float)((double)(longlong)iVar1 * 0.75 + dVar3);
-        }
-      }
+  LVar2 = __savegprlr_27(param_1);
+  if ((g_mdlprv.model.currentIndex < 0) || ((modPrvDisplayToggle->current).enabled == false))
+  goto LAB_822dfc14;
+  pSVar4 = param_2;
+  DrawDistFromModel(LVar2,param_2);
+  if (g_mdlprv.system.walkaboutActive == false) {
+    if (g_mdlprv.system.uiModeGPad == MDLPRVMODE_FREE) {
+      iVar3 = CG_DrawSmallDevStringColor(param_2,300.0,0.0,(char *)pSVar4,in_r5,-0x7dfe08b0);
     }
     else {
-      CG_DrawSmallDevStringColor(0x4072c00000000000,0,param_2);
-      uVar2 = 3;
-      dVar3 = 20.0;
+      iVar3 = CG_DrawSmallDevStringColor(param_2,300.0,0.0,(char *)pSVar4,in_r5,-0x7dfe08c0);
     }
-    MdlPrvPrintHelpLine(dVar3,param_2,uVar2);
+    dVar8 = (double)((float)(longlong)iVar3 * 0.75);
+    iVar3 = MdlPrvPrintHelpLine(param_2,BTN_MODESWITCH,20.0);
+    fVar1 = (float)(longlong)iVar3 * 0.75 + 20.0;
+    dVar9 = (double)fVar1;
+    iVar3 = MdlPrvPrintHelpLine(param_2,BTN_DROPMDL,fVar1);
+    pcVar6 = (char *)0x2;
+    fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+    dVar9 = (double)fVar1;
+    iVar3 = MdlPrvPrintHelpLine(param_2,BTN_WALKABOUT_ENTER,fVar1);
+    fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+    dVar9 = (double)fVar1;
+    if (g_mdlprv.system.uiModeGPad == MDLPRVMODE_FREE) {
+      if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_SLOW) {
+        pcVar7 = "Move Slow";
+LAB_822df810:
+        CG_DrawSmallDevStringColor(param_2,315.0,(float)dVar8,pcVar6,in_r5,(int)pcVar7);
+      }
+      else if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_FAST) {
+        pcVar7 = "Move Fast";
+        goto LAB_822df810;
+      }
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_DROPFRONT,(float)dVar9);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+      dVar8 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_DROPPOS,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      dVar8 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_TOGGLEMOVESPEED,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      dVar8 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_TOGGLERAGDOLL,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      dVar8 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_UP,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      dVar8 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FREE_DOWN,fVar1);
+      BVar5 = BTN_FREE_UPDOWN;
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+    }
+    else {
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_TOGGLEMOV,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+      dVar9 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_TOGGLEROT,fVar1);
+      pcVar6 = (char *)0xd;
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+      dVar9 = (double)fVar1;
+      iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_TOGGLEFOCALMOVE,fVar1);
+      fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+      dVar9 = (double)fVar1;
+      if (g_mdlprv.system.focusedMode == FOCUSEDMODE_MODELMOVE) {
+        CG_DrawSmallDevStringColor(param_2,300.0,(float)dVar8,pcVar6,in_r5,-0x7dfe08e8);
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_MMOV_2D,(float)dVar9);
+        BVar5 = BTN_FOCUS_MMOV_UPDOWN;
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+      }
+      else if (g_mdlprv.system.focusedMode == FOCUSEDMODE_MODELROTATE) {
+        if (g_mdlprv.system.modelRotCamMode == MROTCAMMODE_STATIC) {
+          pcVar7 = "Model Rotate";
+        }
+        else {
+          pcVar7 = "Model Rotate (with camera)";
+        }
+        CG_DrawSmallDevStringColor(param_2,300.0,(float)dVar8,pcVar6,in_r5,(int)pcVar7);
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_MROT_TOGGLECAM,(float)dVar9);
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+        dVar8 = (double)fVar1;
+        if (g_mdlprv.system.modelRotCamMode == MROTCAMMODE_STATIC) {
+          iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_MROT_PITCHROLL,fVar1);
+          dVar8 = (double)(float)((double)(longlong)iVar3 * 0.75 + dVar8);
+        }
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_MROT_YAW,(float)dVar8);
+        BVar5 = BTN_FOCUS_MROT_RESET;
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      }
+      else if (g_mdlprv.system.focusedMode == FOCUSEDMODE_CAMERA) {
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_DEFAULT_CLONEMODEL,fVar1);
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+        dVar8 = (double)fVar1;
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_DEFAULT_CLEARCLONES,fVar1);
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+        dVar8 = (double)fVar1;
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_DEFAULT_ZOOM,fVar1);
+        BVar5 = BTN_FOCUS_DEFAULT_ORBIT;
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      }
+      else {
+        CG_DrawSmallDevStringColor(param_2,300.0,(float)dVar8,pcVar6,in_r5,-0x7dfe0920);
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_FOCALMOVE_2D,(float)dVar9);
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar9);
+        dVar8 = (double)fVar1;
+        iVar3 = MdlPrvPrintHelpLine(param_2,BTN_FOCUS_FOCALMOVE_UPDOWN,fVar1);
+        BVar5 = BTN_FOCUS_FOCALMOVE_RESET;
+        fVar1 = (float)((double)(longlong)iVar3 * 0.75 + dVar8);
+      }
+    }
   }
-  __restgprlr_27();
+  else {
+    CG_DrawSmallDevStringColor(param_2,300.0,0.0,(char *)pSVar4,in_r5,-0x7dfe089c);
+    BVar5 = BTN_WALKABOUT_EXIT;
+    fVar1 = 20.0;
+  }
+  LVar2 = MdlPrvPrintHelpLine(param_2,BVar5,fVar1);
+LAB_822dfc14:
+  __restgprlr_27(LVar2);
   return;
 }
 
 
 // 822DFC28  CG_ModelPreviewerDrawInfo  (cgame/cg_modelpreviewer.cpp:3349)
 
-void CG_ModelPreviewerDrawInfo(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModelPreviewerDrawInfo(LocalClientNum_t param_1,ScreenPlacement *param_2)
 
 {
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0xd16,0,0xffffffff82000f98,0xffffffff8200144c);
+  if (param_2 == (ScreenPlacement *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xd16,0,"%s");
   }
   MdlPrvDrawOverlayGamepad(param_1,param_2);
   return;
@@ -2231,78 +2599,79 @@ void CG_ModelPreviewerDrawInfo(undefined8 param_1,ulonglong param_2)
 
 // 822DFC98  CG_ModelPreviewerRotateCamera  (cgame/cg_modelpreviewer.cpp:3362)
 
-void CG_ModelPreviewerRotateCamera(double param_1,double param_2)
+void CG_ModelPreviewerRotateCamera(float param_1,float param_2)
 
 {
-  DAT_82a3d738 = (float)((double)DAT_82a3d738 - param_2);
-  DAT_82a3d73c = (float)((double)DAT_82a3d73c - param_1);
+  g_mdlprv.viewer.vertical = g_mdlprv.viewer.vertical - param_2;
+  g_mdlprv.viewer.horizontal = g_mdlprv.viewer.horizontal - param_1;
   return;
 }
 
 
 // 822DFCC0  CG_ModelPreviewerZoomCamera  (cgame/cg_modelpreviewer.cpp:3369)
 
-void CG_ModelPreviewerZoomCamera(double param_1,double param_2)
+void CG_ModelPreviewerZoomCamera(float param_1,float param_2)
 
 {
   float fVar1;
-  double dVar2;
   
   if (ABS(param_1) < ABS(param_2)) {
     param_1 = param_2;
   }
-  fVar1 = DAT_82a3d740 * 0.004;
-  if (5.0 < DAT_82a3d740 * 0.004) {
+  fVar1 = g_mdlprv.viewer.centerRadius * 0.004;
+  if (5.0 < g_mdlprv.viewer.centerRadius * 0.004) {
     fVar1 = 5.0;
   }
-  DAT_82a3d740 = fVar1 * (float)(param_1 * -0.30000001192092896) + DAT_82a3d740;
-  if (DAT_82a3d740 < 1.0) {
-    DAT_82a3d740 = 1.0;
+  g_mdlprv.viewer.centerRadius = fVar1 * param_1 * -0.3 + g_mdlprv.viewer.centerRadius;
+  if (g_mdlprv.viewer.centerRadius < 1.0) {
+    g_mdlprv.viewer.centerRadius = 1.0;
   }
-  if (DAT_82a3d748 <= DAT_82a3d740) {
-    dVar2 = (double)Dvar_GetFloat(0xffffffff8201f494);
-    DAT_82a3d744 = (float)dVar2;
+  if (g_mdlprv.viewer.zNearChangeLimit <= g_mdlprv.viewer.centerRadius) {
+    g_mdlprv.viewer.zNear = Dvar_GetFloat("r_znear");
     return;
   }
-  DAT_82a3d744 = 0.01;
+  g_mdlprv.viewer.zNear = 0.01;
   return;
 }
 
 
 // 822DFD90  MdlPrvModelOriginSet  (cgame/cg_modelpreviewer.cpp:3538)
 
-void MdlPrvModelOriginSet(undefined4 *param_1)
+void MdlPrvModelOriginSet(float *param_1)
 
 {
-  Dvar_SetVec3(0,0,DAT_82a4c088);
-  DAT_82a3d8e4 = *param_1;
-  DAT_82a3d8e8 = param_1[1];
-  DAT_82a3d8ec = param_1[2];
-  DAT_82a3d78c = *param_1;
-  DAT_82a3d790 = param_1[1];
-  DAT_82a3d794 = param_1[2];
+  Dvar_SetVec3(modPrvOrigin,0.0,0.0,0.0);
+  g_mdlprv.model.initialOrigin[0] = *param_1;
+  g_mdlprv.model.initialOrigin[1] = param_1[1];
+  g_mdlprv.model.initialOrigin[2] = param_1[2];
+  g_mdlprv.model.currentEntity.placement.origin[0] = *param_1;
+  g_mdlprv.model.currentEntity.placement.origin[1] = param_1[1];
+  g_mdlprv.model.currentEntity.placement.origin[2] = param_1[2];
   return;
 }
 
 
 // 822DFE10  MdlPrvModelOriginOffset  (cgame/cg_modelpreviewer.cpp:3546)
 
-void MdlPrvModelOriginOffset(double param_1,double param_2,double param_3)
+void MdlPrvModelOriginOffset(float param_1,float param_2,float param_3)
 
 {
-  DAT_82a3d8e4 = (float)((double)DAT_82a3d8e4 + param_1);
-  DAT_82a3d8e8 = (float)((double)DAT_82a3d8e8 + param_2);
-  DAT_82a3d8ec = (float)((double)DAT_82a3d8ec + param_3);
-  DAT_82a3d78c = (float)((double)DAT_82a3d78c + param_1);
-  DAT_82a3d790 = (float)((double)DAT_82a3d790 + param_2);
-  DAT_82a3d794 = (float)((double)DAT_82a3d794 + param_3);
+  g_mdlprv.model.initialOrigin[0] = g_mdlprv.model.initialOrigin[0] + param_1;
+  g_mdlprv.model.initialOrigin[1] = g_mdlprv.model.initialOrigin[1] + param_2;
+  g_mdlprv.model.initialOrigin[2] = g_mdlprv.model.initialOrigin[2] + param_3;
+  g_mdlprv.model.currentEntity.placement.origin[0] =
+       g_mdlprv.model.currentEntity.placement.origin[0] + param_1;
+  g_mdlprv.model.currentEntity.placement.origin[1] =
+       g_mdlprv.model.currentEntity.placement.origin[1] + param_2;
+  g_mdlprv.model.currentEntity.placement.origin[2] =
+       g_mdlprv.model.currentEntity.placement.origin[2] + param_3;
   return;
 }
 
 
 // 822DFE68  MdlPrvSpin_  (cgame/cg_modelpreviewer.cpp:3557)
 
-void MdlPrvSpin_(void)
+void MdlPrvSpin_(uint param_1,float param_2)
 
 {
   int iVar1;
@@ -2314,21 +2683,21 @@ void MdlPrvSpin_(void)
   double dVar6;
   double dVar7;
   float local_d0 [4];
-  undefined1 auStack_c0 [48];
-  undefined1 auStack_90 [48];
-  undefined1 auStack_60 [80];
+  float afStack_c0 [12];
+  float afStack_90 [12];
+  float afStack_60 [20];
   
-  iVar1 = __savefpr_27();
+  iVar1 = __savefpr_27((double)param_2,param_1);
   local_d0[0] = 0.0;
   local_d0[1] = 0.0;
   local_d0[2] = 0.0;
   local_d0[iVar1] = (float)extraout_f1;
-  AnglesToAxis(local_d0,auStack_90);
-  UnitQuatToAxis(0xffffffff82a3d77c,auStack_c0);
-  MatrixMultiply(auStack_90,auStack_c0,auStack_60);
-  AxisCopy(auStack_60,auStack_c0);
-  AxisToQuat(auStack_c0,0xffffffff82a3d77c);
-  AxisToAngles(auStack_c0,local_d0);
+  AnglesToAxis(local_d0,(float (*) [3])afStack_90);
+  UnitQuatToAxis(g_mdlprv.model.currentEntity.placement.quat,(float (*) [3])afStack_c0);
+  MatrixMultiply((float (*) [3])afStack_90,(float (*) [3])afStack_c0,(float (*) [3])afStack_60);
+  AxisCopy((float (*) [3])afStack_60,(float (*) [3])afStack_c0);
+  AxisToQuat((float (*) [3])afStack_c0,g_mdlprv.model.currentEntity.placement.quat);
+  AxisToAngles((float (*) [3])afStack_c0,local_d0);
   dVar7 = 0.0027777778450399637;
   dVar6 = 0.5;
   dVar4 = (double)((local_d0[1] + 180.0) * 0.0027777778);
@@ -2341,7 +2710,7 @@ void MdlPrvSpin_(void)
   local_d0[0] = (float)((double)(float)(dVar3 - (double)(float)dVar2) * dVar5);
   dVar2 = floor((double)(float)(dVar4 + dVar6));
   local_d0[2] = (float)((double)(float)(dVar4 - (double)(float)dVar2) * dVar5);
-  Dvar_SetVec3((double)local_d0[0],(double)local_d0[1],DAT_82a4c0ac);
+  Dvar_SetVec3(modPrvRotationAngles,local_d0[0],local_d0[1],local_d0[2]);
   __restfpr_27();
   return;
 }
@@ -2349,37 +2718,37 @@ void MdlPrvSpin_(void)
 
 // 822DFFA8  MdlPrvSpinYaw  (cgame/cg_modelpreviewer.cpp:3579)
 
-void MdlPrvSpinYaw(void)
+void MdlPrvSpinYaw(float param_1)
 
 {
-  MdlPrvSpin_(1);
+  MdlPrvSpin_(1,param_1);
   return;
 }
 
 
 // 822DFFB0  MdlPrvSpinPitch  (cgame/cg_modelpreviewer.cpp:3583)
 
-void MdlPrvSpinPitch(void)
+void MdlPrvSpinPitch(float param_1)
 
 {
-  MdlPrvSpin_(0);
+  MdlPrvSpin_(0,param_1);
   return;
 }
 
 
 // 822DFFB8  MdlPrvSpinRoll  (cgame/cg_modelpreviewer.cpp:3587)
 
-void MdlPrvSpinRoll(void)
+void MdlPrvSpinRoll(float param_1)
 
 {
-  MdlPrvSpin_(2);
+  MdlPrvSpin_(2,param_1);
   return;
 }
 
 
 // 822DFFC0  MdlPrvSpinYawOffset  (cgame/cg_modelpreviewer.cpp:3592)
 
-void MdlPrvSpinYawOffset(void)
+void MdlPrvSpinYawOffset(float param_1)
 
 {
   float fVar1;
@@ -2388,7 +2757,7 @@ void MdlPrvSpinYawOffset(void)
   double dVar4;
   double dVar5;
   double dVar6;
-  undefined4 local_a0;
+  float local_a0;
   float local_9c;
   undefined4 local_98;
   float local_90;
@@ -2400,21 +2769,21 @@ void MdlPrvSpinYawOffset(void)
   float local_70;
   float local_6c;
   float local_68;
-  undefined1 auStack_60 [80];
+  float afStack_60 [20];
   
-  dVar2 = (double)__savefpr_28();
-  local_a0 = 0;
+  dVar2 = (double)__savefpr_28((double)param_1);
+  local_a0 = 0.0;
   local_9c = 0.0;
   local_98 = 0;
-  MdlPrvSpin_(1);
+  MdlPrvSpin_(1,(float)dVar2);
   local_9c = (float)-dVar2;
-  AnglesToAxis(&local_a0,auStack_60);
-  local_90 = *(float *)(DAT_82a3d6c8 + 0xc);
-  local_88 = *(float *)(DAT_82a3d6c8 + 0x14);
-  local_8c = *(float *)(DAT_82a3d6c8 + 0x10);
-  dVar6 = (double)(DAT_82a3d78c + local_90);
-  dVar5 = (double)(DAT_82a3d790 + local_8c);
-  dVar4 = (double)(DAT_82a3d794 + local_88);
+  AnglesToAxis(&local_a0,(float (*) [3])afStack_60);
+  local_90 = (modPrvCenterOffset->current).value;
+  local_88 = (modPrvCenterOffset->current).vector[2];
+  local_8c = (modPrvCenterOffset->current).vector[1];
+  dVar6 = (double)(g_mdlprv.model.currentEntity.placement.origin[0] + local_90);
+  dVar5 = (double)(g_mdlprv.model.currentEntity.placement.origin[1] + local_8c);
+  dVar4 = (double)(g_mdlprv.model.currentEntity.placement.origin[2] + local_88);
   dVar3 = (double)SQRT(local_8c * local_8c + local_88 * local_88 + local_90 * local_90);
   dVar2 = 1.0;
   if (-dVar3 < 0.0) {
@@ -2424,7 +2793,7 @@ void MdlPrvSpinYawOffset(void)
   local_90 = fVar1 * local_90;
   local_8c = fVar1 * local_8c;
   local_88 = local_88 * fVar1;
-  Vec3Rotate(&local_90,auStack_60,&local_80);
+  Vec3Rotate(&local_90,(float (*) [3])afStack_60,&local_80);
   dVar3 = -dVar3;
   local_70 = (float)((double)local_80 * dVar3 + dVar6);
   local_6c = (float)((double)local_7c * dVar3 + dVar5);
@@ -2433,7 +2802,7 @@ void MdlPrvSpinYawOffset(void)
   dVar3 = (double)(float)(dVar5 - (double)local_6c);
   dVar2 = (double)(float)(dVar4 - (double)local_68);
   MdlPrvModelOriginSet(&local_70);
-  Dvar_SetVec3(dVar6,dVar3,dVar2,DAT_82a3d6c8);
+  Dvar_SetVec3(modPrvCenterOffset,(float)dVar6,(float)dVar3,(float)dVar2);
   __restfpr_28();
   return;
 }
@@ -2441,47 +2810,59 @@ void MdlPrvSpinYawOffset(void)
 
 // 822E00F8  MdlPrvSpinClearPitchRoll  (cgame/cg_modelpreviewer.cpp:3629)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvSpinClearPitchRoll(void)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_50 [4];
+  float (*pafVar1) [3];
+  float fStack_50;
   float local_4c;
-  undefined1 auStack_40 [48];
+  float afStack_40 [12];
   
-  UnitQuatToAxis(0xffffffff82a3d77c,auStack_40);
-  uVar1 = AxisToAngles(auStack_40,auStack_50);
-  YawToAxis((double)local_4c,uVar1,auStack_40);
-  AxisToQuat(auStack_40,0xffffffff82a3d77c);
+  UnitQuatToAxis(g_mdlprv.model.currentEntity.placement.quat,(float (*) [3])afStack_40);
+  pafVar1 = (float (*) [3])afStack_40;
+  AxisToAngles(pafVar1,&fStack_50);
+  YawToAxis(local_4c,pafVar1);
+  AxisToQuat((float (*) [3])afStack_40,g_mdlprv.model.currentEntity.placement.quat);
   return;
 }
 
 
 // 822E0158  MdlPrvMoveModelUpDown  (cgame/cg_modelpreviewer.cpp:3641)
 
-void MdlPrvMoveModelUpDown(double param_1)
+void MdlPrvMoveModelUpDown(float param_1)
 
 {
-  DAT_82a3d8ec = (float)((double)DAT_82a3d8ec + param_1);
-  DAT_82a3d794 = (float)((double)DAT_82a3d794 + param_1);
+  g_mdlprv.model.initialOrigin[2] = g_mdlprv.model.initialOrigin[2] + param_1;
+  g_mdlprv.model.currentEntity.placement.origin[2] =
+       g_mdlprv.model.currentEntity.placement.origin[2] + param_1;
   return;
 }
 
 
 // 822E0180  MdlPrvMoveModel2D  (cgame/cg_modelpreviewer.cpp:3647)
 
-void MdlPrvMoveModel2D(double param_1,double param_2,int param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvMoveModel2D(cg_s *param_1,float param_2,float param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
+  double dVar4;
+  double dVar5;
   float local_40;
   float local_3c;
   float local_30;
   float local_2c;
   
-  YawVectors((double)*(float *)(param_3 + 460000),param_3,&local_40,&local_30);
+  dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
+  YawVectors(param_1->refdefViewAngles[1],(float *)param_1,&local_40);
   fVar1 = SQRT(local_40 * local_40 + local_3c * local_3c);
   fVar3 = SQRT(local_30 * local_30 + local_2c * local_2c);
   fVar2 = 1.0;
@@ -2492,90 +2873,102 @@ void MdlPrvMoveModel2D(double param_1,double param_2,int param_3)
   if (-fVar3 < 0.0) {
     fVar1 = fVar3;
   }
-  fVar3 = (float)((double)((1.0 / fVar1) * local_30) * param_2) +
-          (float)((double)((1.0 / fVar2) * local_40) * param_1);
-  fVar2 = (float)((double)((1.0 / fVar1) * local_2c) * param_2) +
-          (float)((double)((1.0 / fVar2) * local_3c) * param_1);
-  DAT_82a3d8e4 = DAT_82a3d8e4 + fVar3;
-  DAT_82a3d8e8 = DAT_82a3d8e8 + fVar2;
-  DAT_82a3d78c = DAT_82a3d78c + fVar3;
-  DAT_82a3d790 = DAT_82a3d790 + fVar2;
+  fVar3 = (float)((double)((1.0 / fVar1) * local_30) * dVar5) +
+          (float)((double)((1.0 / fVar2) * local_40) * dVar4);
+  fVar2 = (float)((double)((1.0 / fVar1) * local_2c) * dVar5) +
+          (float)((double)((1.0 / fVar2) * local_3c) * dVar4);
+  g_mdlprv.model.initialOrigin[0] = g_mdlprv.model.initialOrigin[0] + fVar3;
+  g_mdlprv.model.initialOrigin[1] = g_mdlprv.model.initialOrigin[1] + fVar2;
+  g_mdlprv.model.currentEntity.placement.origin[0] =
+       g_mdlprv.model.currentEntity.placement.origin[0] + fVar3;
+  g_mdlprv.model.currentEntity.placement.origin[1] =
+       g_mdlprv.model.currentEntity.placement.origin[1] + fVar2;
   return;
 }
 
 
-// 822E3228  std::_Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+// 822E3228  _Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
-void std___Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
-               (undefined8 param_1,ulonglong param_2,code *param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
+               (char **param_1,char **param_2,_func___cdecl_bool_char_ptr_char_ptr *param_3,
+               char **param_4)
 
 {
   undefined4 uVar1;
-  int iVar2;
-  undefined4 *_Src;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  char cVar8;
-  void *pvVar7;
-  ulonglong uVar9;
-  undefined4 *puVar10;
+  char cVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  code *pcVar9;
+  ulonglong uVar10;
+  undefined4 *puVar11;
   
-  uVar6 = __savegprlr_24();
-  if (((uVar6 & 0xffffffff) != (param_2 & 0xffffffff)) &&
-     (uVar9 = uVar6 + 4, (uVar9 & 0xffffffff) != (param_2 & 0xffffffff))) {
-    _Src = (undefined4 *)uVar6;
+  lVar8 = (longlong)(int)param_3;
+  uVar7 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_24(param_1,uVar7,lVar8,param_4);
+  if (((uVar5 & 0xffffffff) != (uVar7 & 0xffffffff)) &&
+     (uVar10 = uVar5 + 4, (uVar10 & 0xffffffff) != (uVar7 & 0xffffffff))) {
     do {
-      puVar10 = (undefined4 *)uVar9;
-      uVar1 = *puVar10;
-      cVar8 = (*param_3)(uVar1,*_Src);
-      if (cVar8 == '\0') {
-        uVar6 = (*param_3)(uVar1,puVar10[-1]);
-        uVar5 = uVar9 - 4;
-        uVar4 = uVar9;
-        while (uVar3 = uVar5, (uVar6 & 0xff) != 0) {
-          puVar10 = (undefined4 *)uVar3;
-          *(undefined4 *)uVar4 = *puVar10;
-          uVar6 = (*param_3)(uVar1,*(undefined4 *)(uVar3 - 4));
-          uVar5 = uVar3 - 4;
-          uVar4 = uVar3;
+      puVar11 = (undefined4 *)uVar10;
+      uVar1 = *puVar11;
+      pcVar9 = (code *)lVar8;
+      cVar6 = (*pcVar9)(uVar1,*(undefined4 *)uVar5);
+      if (cVar6 == '\0') {
+        cVar6 = (*pcVar9)(uVar1,puVar11[-1]);
+        uVar4 = uVar10 - 4;
+        uVar3 = uVar10;
+        while (uVar2 = uVar4, cVar6 != '\0') {
+          puVar11 = (undefined4 *)uVar2;
+          *(undefined4 *)uVar3 = *puVar11;
+          cVar6 = (*pcVar9)(uVar1,*(undefined4 *)(uVar2 - 4));
+          uVar4 = uVar2 - 4;
+          uVar3 = uVar2;
         }
-        *puVar10 = uVar1;
+        *puVar11 = uVar1;
       }
       else {
-        iVar2 = (int)puVar10 - (int)_Src >> 2;
-        pvVar7 = memmove(puVar10 + (1 - iVar2),_Src,iVar2 * 4);
-        uVar6 = (ulonglong)(int)pvVar7;
-        *_Src = uVar1;
+        memmove();
+        *(undefined4 *)uVar5 = uVar1;
       }
-      uVar9 = uVar9 + 4;
-    } while ((uVar9 & 0xffffffff) != (param_2 & 0xffffffff));
+      uVar10 = uVar10 + 4;
+    } while ((uVar10 & 0xffffffff) != (uVar7 & 0xffffffff));
   }
-  __restgprlr_24(uVar6);
+  __restgprlr_24();
   return;
 }
 
 
 // 822E0278  MdlPrvMoveFocusUpDown  (cgame/cg_modelpreviewer.cpp:3666)
 
-void MdlPrvMoveFocusUpDown(double param_1)
+void MdlPrvMoveFocusUpDown(float param_1)
 
 {
-  Dvar_SetVec3((double)*(float *)(DAT_82a3d6c8 + 0xc),(double)*(float *)(DAT_82a3d6c8 + 0x10),
-               (double)(float)((double)*(float *)(DAT_82a3d6c8 + 0x14) + param_1));
+  Dvar_SetVec3(modPrvCenterOffset,(modPrvCenterOffset->current).value,
+               (modPrvCenterOffset->current).vector[1],
+               (modPrvCenterOffset->current).vector[2] + param_1);
   return;
 }
 
 
 // 822E0298  MdlPrvMoveFocus2D  (cgame/cg_modelpreviewer.cpp:3675)
 
-void MdlPrvMoveFocus2D(double param_1,double param_2,int param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvMoveFocus2D(cg_s *param_1,float param_2,float param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
+  double dVar4;
+  double dVar5;
   float local_40;
   float local_3c;
   float local_38;
@@ -2583,7 +2976,9 @@ void MdlPrvMoveFocus2D(double param_1,double param_2,int param_3)
   float local_2c;
   float local_28;
   
-  YawVectors((double)*(float *)(param_3 + 460000),param_3,&local_40,&local_30);
+  dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
+  YawVectors(param_1->refdefViewAngles[1],(float *)param_1,&local_40);
   fVar2 = SQRT(local_2c * local_2c + local_30 * local_30);
   fVar3 = SQRT(local_3c * local_3c + local_40 * local_40);
   fVar1 = 1.0;
@@ -2596,87 +2991,90 @@ void MdlPrvMoveFocus2D(double param_1,double param_2,int param_3)
   }
   fVar1 = 1.0 / fVar1;
   fVar2 = 1.0 / fVar2;
-  local_2c = (float)((double)(fVar1 * local_2c) * param_2);
-  local_38 = (float)((double)(fVar2 * 0.0) * param_1);
-  local_40 = (float)((double)(fVar2 * local_40) * param_1);
-  local_3c = (float)((double)(fVar2 * local_3c) * param_1);
-  local_30 = (float)((double)(fVar1 * local_30) * param_2);
-  local_28 = (float)((double)(fVar1 * 0.0) * param_2);
-  Dvar_SetVec3((double)(*(float *)(DAT_82a3d6c8 + 0xc) + local_30 + local_40),
-               (double)(*(float *)(DAT_82a3d6c8 + 0x10) + local_2c + local_3c),
-               (double)*(float *)(DAT_82a3d6c8 + 0x14));
+  local_2c = (float)((double)(fVar1 * local_2c) * dVar5);
+  local_38 = (float)((double)(fVar2 * 0.0) * dVar4);
+  local_40 = (float)((double)(fVar2 * local_40) * dVar4);
+  local_3c = (float)((double)(fVar2 * local_3c) * dVar4);
+  local_30 = (float)((double)(fVar1 * local_30) * dVar5);
+  local_28 = (float)((double)(fVar1 * 0.0) * dVar5);
+  Dvar_SetVec3(modPrvCenterOffset,(modPrvCenterOffset->current).value + local_30 + local_40,
+               (modPrvCenterOffset->current).vector[1] + local_2c + local_3c,
+               (modPrvCenterOffset->current).vector[2]);
   return;
 }
 
 
-// 822E3308  std::_Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+// 822E3308  _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
-void std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,undefined4 *param_2,undefined4 *param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,char **param_2,char **param_3,
+               _func___cdecl_bool_char_ptr_char_ptr *param_4)
 
 {
-  undefined4 uVar1;
+  char *pcVar1;
   undefined4 *puVar2;
-  char cVar3;
+  bool bVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28();
-  cVar3 = (*param_4)(*param_2,*puVar2);
-  if (cVar3 != '\0') {
-    uVar1 = *param_2;
-    *param_2 = *puVar2;
-    *puVar2 = uVar1;
+  puVar2 = (undefined4 *)__savegprlr_28(param_1);
+  bVar3 = (*param_4)(*param_2,(char *)*puVar2);
+  if (bVar3) {
+    pcVar1 = *param_2;
+    *param_2 = (char *)*puVar2;
+    *puVar2 = pcVar1;
   }
-  cVar3 = (*param_4)(*param_3,*param_2);
-  if (cVar3 != '\0') {
-    uVar1 = *param_3;
+  bVar3 = (*param_4)(*param_3,*param_2);
+  if (bVar3) {
+    pcVar1 = *param_3;
     *param_3 = *param_2;
-    *param_2 = uVar1;
+    *param_2 = pcVar1;
   }
-  cVar3 = (*param_4)(*param_2,*puVar2);
-  if (cVar3 != '\0') {
-    uVar1 = *param_2;
-    *param_2 = *puVar2;
-    *puVar2 = uVar1;
+  bVar3 = (*param_4)(*param_2,(char *)*puVar2);
+  if (bVar3) {
+    pcVar1 = *param_2;
+    *param_2 = (char *)*puVar2;
+    *puVar2 = pcVar1;
   }
   __restgprlr_28();
   return;
 }
 
 
-// 822E33B0  std::_Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+// 822E33B0  _Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
-void std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,longlong param_2,longlong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,char **param_2,char **param_3,
+               _func___cdecl_bool_char_ptr_char_ptr *param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
+  int iVar2;
+  char **ppcVar3;
   uint uVar5;
   ulonglong uVar4;
-  longlong lVar6;
   
-  lVar3 = __savegprlr_26();
-  iVar1 = (int)param_3 - (int)lVar3 >> 2;
+  ppcVar3 = (char **)__savegprlr_26(param_1);
+  iVar1 = (int)param_3 - (int)ppcVar3 >> 2;
   if (0x28 < iVar1) {
     uVar5 = iVar1 + 1;
     uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    uVar2 = uVar4 & 0x3fffffff;
-    uVar4 = uVar4 & 0x1fffffff;
-    lVar6 = uVar2 * 4 + lVar3;
-    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (lVar3,lVar6,uVar4 * 8 + lVar3);
-    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (param_2 + uVar2 * -4,param_2,uVar2 * 4 + param_2,param_4);
-    lVar3 = param_3 + uVar2 * -4;
-    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (param_3 + uVar4 * -8,lVar3,param_3,param_4);
-    std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (lVar6,param_2,lVar3,param_4);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              (ppcVar3,(char **)(iVar1 + (int)ppcVar3),(char **)(iVar2 + (int)ppcVar3),param_4);
+    _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              ((char **)((int)param_2 - iVar1),param_2,(char **)(iVar1 + (int)param_2),param_4);
+    _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              ((char **)((int)param_3 - iVar2),(char **)((int)param_3 - iVar1),param_3,param_4);
+    _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              ((char **)(iVar1 + (int)ppcVar3),param_2,(char **)((int)param_3 - iVar1),param_4);
     __restgprlr_26();
     return;
   }
-  std___Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(lVar3,param_2,param_3);
+  _Med3<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>(ppcVar3,param_2,param_3,param_4);
   __restgprlr_26();
   return;
 }
@@ -2684,16 +3082,17 @@ void std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
 
 // 822E03A8  MdlPrvMoveFocusReset  (cgame/cg_modelpreviewer.cpp:3699)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvMoveFocusReset(void)
 
 {
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [20];
-  float local_c;
+  float afStack_30 [4];
+  Bounds BStack_20;
   
-  if (-1 < DAT_82a3d76c) {
-    MdlPrvGetBounds(auStack_20,auStack_30);
-    Dvar_SetVec3(0,0,(double)local_c,DAT_82a3d6c8);
+  if (-1 < g_mdlprv.model.currentIndex) {
+    MdlPrvGetBounds(&BStack_20,afStack_30);
+    Dvar_SetVec3(modPrvCenterOffset,0.0,0.0,BStack_20.halfSize[2]);
   }
   return;
 }
@@ -2701,159 +3100,179 @@ void MdlPrvMoveFocusReset(void)
 
 // 822E0400  MdlPrvFreeMove  (cgame/cg_modelpreviewer.cpp:3712)
 
-void MdlPrvFreeMove(double param_1,double param_2,longlong param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvFreeMove(cg_s *param_1,float param_2,float param_3)
 
 {
+  double dVar1;
+  double dVar2;
   float local_50;
   float local_4c;
   float local_48;
   float local_40;
   float local_3c;
   float local_38;
-  undefined1 auStack_30 [48];
+  float afStack_30 [12];
   
-  AngleVectors(param_3 + 0x704dc,&local_40,&local_50,auStack_30);
-  DAT_82a3d750 = DAT_82a3d750 + (float)((double)local_50 * param_2) +
-                 (float)((double)local_40 * param_1);
-  DAT_82a3d754 = DAT_82a3d754 + (float)((double)local_4c * param_2) +
-                 (float)((double)local_3c * param_1);
-  DAT_82a3d758 = DAT_82a3d758 + (float)((double)local_48 * param_2) +
-                 (float)((double)local_38 * param_1);
+  dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
+  AngleVectors(param_1->refdefViewAngles,&local_40,&local_50,afStack_30);
+  g_mdlprv.viewer.freeModeOrigin[0] =
+       g_mdlprv.viewer.freeModeOrigin[0] + (float)((double)local_50 * dVar2) +
+       (float)((double)local_40 * dVar1);
+  g_mdlprv.viewer.freeModeOrigin[1] =
+       g_mdlprv.viewer.freeModeOrigin[1] + (float)((double)local_4c * dVar2) +
+       (float)((double)local_3c * dVar1);
+  g_mdlprv.viewer.freeModeOrigin[2] =
+       g_mdlprv.viewer.freeModeOrigin[2] + (float)((double)local_48 * dVar2) +
+       (float)((double)local_38 * dVar1);
   return;
 }
 
 
-// 822E3458  std::_Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+// 822E3458  _Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
-void std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,code *param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+pair<char_const_*_*,char_const_*_*>
+std::_Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+          (char **param_1,char **param_2,_func___cdecl_bool_char_ptr_char_ptr *param_3)
 
 {
-  bool bVar1;
-  undefined4 uVar2;
-  uint uVar3;
+  undefined4 uVar1;
+  uint uVar2;
   undefined4 *puVar4;
-  char cVar5;
-  int iVar6;
+  bool bVar5;
+  pair<char_const_*_*,char_const_*_*> pVar3;
+  ulonglong uVar6;
   ulonglong uVar7;
-  undefined4 *puVar8;
+  _func___cdecl_bool_char_ptr_char_ptr *in_r6;
+  int iVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
+  undefined4 *puVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  undefined4 *puVar13;
-  undefined4 *puVar14;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  undefined4 *puVar15;
+  undefined4 *puVar16;
   
-  puVar4 = (undefined4 *)__savegprlr_23();
-  iVar6 = (int)param_3 - (int)param_2;
-  uVar3 = iVar6 >> 2;
-  uVar12 = ((longlong)(iVar6 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff) *
-           4 + param_2;
-  std___Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-            (param_2,uVar12,param_3 - 4);
-  uVar7 = uVar12 + 4;
-  if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  puVar4 = (undefined4 *)__savegprlr_23(param_1);
+  iVar8 = (int)uVar7 - (int)(char **)uVar6;
+  uVar2 = iVar8 >> 2;
+  uVar14 = ((longlong)(iVar8 >> 3) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x3fffffff) *
+           4 + uVar6;
+  _Median<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+            ((char **)uVar6,(char **)uVar14,(char **)((int)uVar7 + -4),in_r6);
+  uVar9 = uVar14 + 4;
+  if ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff)) {
     do {
-      puVar13 = (undefined4 *)uVar12;
-      uVar10 = uVar12 - 4;
-      cVar5 = (*param_4)(puVar13[-1],*puVar13);
-      if ((cVar5 != '\0') || (cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10), cVar5 != '\0'))
+      puVar15 = (undefined4 *)uVar14;
+      uVar12 = uVar14 - 4;
+      bVar5 = (*in_r6)((char *)puVar15[-1],(char *)*puVar15);
+      if ((bVar5) || (bVar5 = (*in_r6)((char *)*puVar15,(char *)*(undefined4 *)uVar12), bVar5))
       break;
-      uVar12 = uVar10;
-    } while ((param_2 & 0xffffffff) < (uVar10 & 0xffffffff));
+      uVar14 = uVar12;
+    } while ((uVar6 & 0xffffffff) < (uVar12 & 0xffffffff));
   }
-  uVar9 = uVar7;
-  uVar10 = uVar12;
-  if ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff)) {
+  uVar11 = uVar9;
+  uVar12 = uVar14;
+  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
     do {
-      cVar5 = (*param_4)(*(undefined4 *)uVar7,*(undefined4 *)uVar12);
-      uVar9 = uVar7;
-      if ((cVar5 != '\0') ||
-         (cVar5 = (*param_4)(*(undefined4 *)uVar12,*(undefined4 *)uVar7), cVar5 != '\0')) break;
-      uVar7 = uVar7 + 4;
-      uVar9 = uVar7;
-    } while ((uVar7 & 0xffffffff) < (param_3 & 0xffffffff));
+      bVar5 = (*in_r6)((char *)*(undefined4 *)uVar9,(char *)*(undefined4 *)uVar14);
+      uVar11 = uVar9;
+      if ((bVar5) ||
+         (bVar5 = (*in_r6)((char *)*(undefined4 *)uVar14,(char *)*(undefined4 *)uVar9), bVar5))
+      break;
+      uVar9 = uVar9 + 4;
+      uVar11 = uVar9;
+    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
   }
   do {
-    uVar11 = uVar7;
-    if ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff)) {
+    uVar13 = uVar9;
+    if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
       do {
-        puVar13 = (undefined4 *)uVar9;
-        cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
-        uVar7 = uVar11;
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(*puVar13,*(undefined4 *)uVar10);
-          if (cVar5 != '\0') break;
-          uVar7 = uVar11 + 4;
-          uVar2 = *(undefined4 *)uVar11;
-          *(undefined4 *)uVar11 = *puVar13;
-          *puVar13 = uVar2;
+        puVar15 = (undefined4 *)uVar11;
+        bVar5 = (*in_r6)((char *)*(undefined4 *)uVar12,(char *)*puVar15);
+        uVar9 = uVar13;
+        if (!bVar5) {
+          bVar5 = (*in_r6)((char *)*puVar15,(char *)*(undefined4 *)uVar12);
+          if (bVar5) break;
+          uVar9 = uVar13 + 4;
+          uVar1 = *(undefined4 *)uVar13;
+          *(undefined4 *)uVar13 = *puVar15;
+          *puVar15 = uVar1;
         }
-        uVar9 = uVar9 + 4;
-        uVar11 = uVar7;
-      } while ((uVar9 & 0xffffffff) < (param_3 & 0xffffffff));
+        uVar11 = uVar11 + 4;
+        uVar13 = uVar9;
+      } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
     }
-    bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
-    if ((param_2 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+    bVar5 = (uVar14 & 0xffffffff) == (uVar6 & 0xffffffff);
+    if ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff)) {
       do {
-        uVar11 = uVar12 - 4;
-        cVar5 = (*param_4)(*(undefined4 *)((int)uVar12 + -4),*(undefined4 *)uVar10);
-        puVar13 = (undefined4 *)uVar11;
-        if (cVar5 == '\0') {
-          cVar5 = (*param_4)(*(undefined4 *)uVar10,*puVar13);
-          if (cVar5 != '\0') break;
-          uVar10 = uVar10 - 4;
-          uVar2 = *(undefined4 *)uVar10;
-          *(undefined4 *)uVar10 = *puVar13;
-          *puVar13 = uVar2;
+        uVar13 = uVar14 - 4;
+        bVar5 = (*in_r6)(*(char **)((int)uVar14 + -4),(char *)*(undefined4 *)uVar12);
+        puVar15 = (undefined4 *)uVar13;
+        if (!bVar5) {
+          bVar5 = (*in_r6)((char *)*(undefined4 *)uVar12,(char *)*puVar15);
+          if (bVar5) break;
+          uVar12 = uVar12 - 4;
+          uVar1 = *(undefined4 *)uVar12;
+          *(undefined4 *)uVar12 = *puVar15;
+          *puVar15 = uVar1;
         }
-        uVar12 = uVar11;
-      } while ((param_2 & 0xffffffff) < (uVar11 & 0xffffffff));
-      bVar1 = (uVar12 & 0xffffffff) == (param_2 & 0xffffffff);
+        uVar14 = uVar13;
+      } while ((uVar6 & 0xffffffff) < (uVar13 & 0xffffffff));
+      bVar5 = (uVar14 & 0xffffffff) == (uVar6 & 0xffffffff);
     }
-    puVar13 = (undefined4 *)uVar9;
-    if (bVar1) {
-      puVar8 = (undefined4 *)uVar7;
-      puVar14 = (undefined4 *)uVar10;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        *puVar4 = puVar14;
-        puVar4[1] = puVar8;
-        __restgprlr_23(puVar4);
-        return;
+    puVar15 = (undefined4 *)uVar11;
+    if (bVar5) {
+      puVar10 = (undefined4 *)uVar9;
+      puVar16 = (undefined4 *)uVar12;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        *puVar4 = puVar16;
+        puVar4[1] = puVar10;
+        pVar3 = (pair<char_const_*_*,char_const_*_*>)__restgprlr_23(puVar4);
+        return pVar3;
       }
-      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
-        uVar2 = *puVar14;
-        *puVar14 = *puVar8;
-        *puVar8 = uVar2;
+      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+        uVar1 = *puVar16;
+        *puVar16 = *puVar10;
+        *puVar10 = uVar1;
       }
-      uVar7 = uVar7 + 4;
-      uVar2 = *puVar14;
-      *puVar14 = *puVar13;
-      *puVar13 = uVar2;
       uVar9 = uVar9 + 4;
-      uVar10 = uVar10 + 4;
+      uVar1 = *puVar16;
+      *puVar16 = *puVar15;
+      *puVar15 = uVar1;
+      uVar11 = uVar11 + 4;
+      uVar12 = uVar12 + 4;
     }
     else {
-      uVar12 = uVar12 - 4;
-      puVar8 = (undefined4 *)uVar12;
-      if ((uVar9 & 0xffffffff) == (param_3 & 0xffffffff)) {
-        uVar10 = uVar10 - 4;
-        puVar13 = (undefined4 *)uVar10;
-        if ((uVar12 & 0xffffffff) != (uVar10 & 0xffffffff)) {
-          uVar2 = *puVar8;
-          *puVar8 = *puVar13;
-          *puVar13 = uVar2;
+      uVar14 = uVar14 - 4;
+      puVar10 = (undefined4 *)uVar14;
+      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+        uVar12 = uVar12 - 4;
+        puVar15 = (undefined4 *)uVar12;
+        if ((uVar14 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+          uVar1 = *puVar10;
+          *puVar10 = *puVar15;
+          *puVar15 = uVar1;
         }
-        uVar7 = uVar7 - 4;
-        uVar2 = *puVar13;
-        *puVar13 = *(undefined4 *)uVar7;
-        *(undefined4 *)uVar7 = uVar2;
+        uVar9 = uVar9 - 4;
+        uVar1 = *puVar15;
+        *puVar15 = *(undefined4 *)uVar9;
+        *(undefined4 *)uVar9 = uVar1;
       }
       else {
-        uVar2 = *puVar13;
-        *puVar13 = *puVar8;
-        *puVar8 = uVar2;
-        uVar9 = uVar9 + 4;
+        uVar1 = *puVar15;
+        *puVar15 = *puVar10;
+        *puVar10 = uVar1;
+        uVar11 = uVar11 + 4;
       }
     }
   } while( true );
@@ -2862,26 +3281,35 @@ void std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_
 
 // 822E04B8  MdlPrvFreeMoveVertical  (cgame/cg_modelpreviewer.cpp:3729)
 
-void MdlPrvFreeMoveVertical(double param_1,longlong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvFreeMoveVertical(cg_s *param_1,float param_2)
 
 {
+  double dVar1;
   float local_40;
   float local_3c;
   float local_38;
-  undefined1 auStack_30 [16];
-  undefined1 auStack_20 [32];
+  float afStack_30 [4];
+  float afStack_20 [8];
   
-  AngleVectors(param_2 + 0x704dc,auStack_20,auStack_30,&local_40);
-  DAT_82a3d750 = (float)((double)local_40 * param_1 + (double)DAT_82a3d750);
-  DAT_82a3d754 = (float)((double)local_3c * param_1 + (double)DAT_82a3d754);
-  DAT_82a3d758 = (float)((double)local_38 * param_1 + (double)DAT_82a3d758);
+  dVar1 = (double)param_2;
+  AngleVectors(param_1->refdefViewAngles,afStack_20,afStack_30,&local_40);
+  g_mdlprv.viewer.freeModeOrigin[0] =
+       (float)((double)local_40 * dVar1 + (double)g_mdlprv.viewer.freeModeOrigin[0]);
+  g_mdlprv.viewer.freeModeOrigin[1] =
+       (float)((double)local_3c * dVar1 + (double)g_mdlprv.viewer.freeModeOrigin[1]);
+  g_mdlprv.viewer.freeModeOrigin[2] =
+       (float)((double)local_38 * dVar1 + (double)g_mdlprv.viewer.freeModeOrigin[2]);
   return;
 }
 
 
 // 822E0530  MdlPrvFreeRot  (cgame/cg_modelpreviewer.cpp:3740)
 
-void MdlPrvFreeRot(undefined8 param_1,double param_2)
+void MdlPrvFreeRot(float param_1,float param_2)
 
 {
   double dVar1;
@@ -2890,18 +3318,20 @@ void MdlPrvFreeRot(undefined8 param_1,double param_2)
   double dVar4;
   double dVar5;
   
-  dVar1 = (double)__savefpr_28();
-  dVar4 = 0.0027777778450399637;
-  DAT_82a3d760 = (float)((double)DAT_82a3d760 + dVar1);
-  DAT_82a3d75c = (float)((double)DAT_82a3d75c + param_2);
-  dVar3 = 0.5;
-  dVar2 = (double)(DAT_82a3d760 * 0.0027777778);
-  dVar1 = floor((double)(float)(dVar2 + 0.5));
-  dVar4 = (double)(float)((double)DAT_82a3d75c * dVar4);
+  dVar2 = (double)param_2;
+  dVar1 = (double)__savefpr_28((double)param_1);
+  dVar5 = 0.0027777778450399637;
+  g_mdlprv.viewer.freeModeAngles[1] = (float)((double)g_mdlprv.viewer.freeModeAngles[1] + dVar1);
+  g_mdlprv.viewer.freeModeAngles[0] = (float)((double)g_mdlprv.viewer.freeModeAngles[0] + dVar2);
+  dVar4 = 0.5;
+  dVar3 = (double)(g_mdlprv.viewer.freeModeAngles[1] * 0.0027777778);
+  dVar1 = floor((double)(float)(dVar3 + 0.5));
+  dVar2 = (double)(float)((double)g_mdlprv.viewer.freeModeAngles[0] * dVar5);
   dVar5 = 360.0;
-  DAT_82a3d760 = (float)(dVar2 - (double)(float)dVar1) * 360.0;
-  dVar1 = floor((double)(float)(dVar4 + dVar3));
-  DAT_82a3d75c = (float)((double)(float)(dVar4 - (double)(float)dVar1) * dVar5);
+  g_mdlprv.viewer.freeModeAngles[1] = (float)(dVar3 - (double)(float)dVar1) * 360.0;
+  dVar1 = floor((double)(float)(dVar2 + dVar4));
+  g_mdlprv.viewer.freeModeAngles[0] = (float)((double)(float)(dVar2 - (double)(float)dVar1) * dVar5)
+  ;
   __restfpr_28();
   return;
 }
@@ -2909,7 +3339,11 @@ void MdlPrvFreeRot(undefined8 param_1,double param_2)
 
 // 822E05E0  MdlPrvFreePlaceModelInFrontCamera  (cgame/cg_modelpreviewer.cpp:3756)
 
-void MdlPrvFreePlaceModelInFrontCamera(int param_1)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvFreePlaceModelInFrontCamera(cg_s *param_1)
 
 {
   float local_60;
@@ -2918,157 +3352,174 @@ void MdlPrvFreePlaceModelInFrontCamera(int param_1)
   float local_50;
   float local_4c;
   float local_48;
-  undefined1 auStack_40 [16];
-  undefined1 auStack_30 [24];
+  float afStack_40 [4];
+  float afStack_30 [6];
   
-  AngleVectors((float *)(param_1 + 0x704dc),&local_60,auStack_30,auStack_40);
-  local_60 = DAT_82a3d740 * local_60;
-  local_5c = DAT_82a3d740 * local_5c;
-  local_58 = DAT_82a3d740 * local_58;
-  DAT_82a3d73c = *(undefined4 *)(param_1 + 460000);
-  local_50 = (DAT_82a3d750 + local_60) - *(float *)(DAT_82a3d6c8 + 0xc);
-  local_48 = (DAT_82a3d758 + local_58) - *(float *)(DAT_82a3d6c8 + 0x14);
-  DAT_82a3d738 = -*(float *)(param_1 + 0x704dc);
-  local_4c = (DAT_82a3d754 + local_5c) - *(float *)(DAT_82a3d6c8 + 0x10);
+  AngleVectors(param_1->refdefViewAngles,&local_60,afStack_30,afStack_40);
+  local_60 = g_mdlprv.viewer.centerRadius * local_60;
+  local_5c = g_mdlprv.viewer.centerRadius * local_5c;
+  local_58 = g_mdlprv.viewer.centerRadius * local_58;
+  g_mdlprv.viewer.horizontal = param_1->refdefViewAngles[1];
+  local_50 = (g_mdlprv.viewer.freeModeOrigin[0] + local_60) - (modPrvCenterOffset->current).value;
+  local_48 = (g_mdlprv.viewer.freeModeOrigin[2] + local_58) -
+             (modPrvCenterOffset->current).vector[2];
+  g_mdlprv.viewer.vertical = -param_1->refdefViewAngles[0];
+  local_4c = (g_mdlprv.viewer.freeModeOrigin[1] + local_5c) -
+             (modPrvCenterOffset->current).vector[1];
   MdlPrvModelOriginSet(&local_50);
   return;
 }
 
 
-// 822E3738  std::_Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+// 822E3738  _Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
-void std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,undefined8 param_4)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void std::_Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+               (char **param_1,char **param_2,int param_3,
+               _func___cdecl_bool_char_ptr_char_ptr *param_4)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  char **ppcVar1;
+  char **ppcVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   int iVar5;
-  uint local_40;
-  uint local_3c;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  int iVar7;
+  char **ppcVar8;
+  char **local_40;
+  char **local_3c;
   
-  uVar1 = __savegprlr_26();
-  iVar2 = (int)param_2 - (int)uVar1;
+  uVar4 = (ulonglong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  ppcVar2 = (char **)__savegprlr_26(param_1);
+  ppcVar8 = (char **)uVar3;
+  iVar5 = (int)ppcVar8 - (int)ppcVar2;
   do {
-    iVar2 = iVar2 >> 2;
-    if (iVar2 < 0x21) {
+    iVar5 = iVar5 >> 2;
+    if (iVar5 < 0x21) {
 LAB_822e37f0:
-      if (1 < iVar2) {
-        std___Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
-                  (uVar1,param_2,param_4,0);
+      if (1 < iVar5) {
+        _Insertion_sort1<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*),char_const_*>
+                  (ppcVar2,ppcVar8,param_4,(char **)0x0);
       }
       __restgprlr_26();
       return;
     }
-    iVar5 = (int)param_3;
-    if (iVar5 < 1) {
-      if (0x20 < iVar2) {
-        if (1 < iVar2) {
-          std___Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-                    (uVar1,param_2,param_4,0,0);
+    ppcVar8 = (char **)uVar3;
+    iVar7 = (int)uVar4;
+    if (iVar7 < 1) {
+      if (0x20 < iVar5) {
+        if (1 < iVar5) {
+          _Make_heap<char_const_*_*,int,char_const_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                    (ppcVar2,ppcVar8,param_4,(int *)0x0,(char **)0x0);
         }
-        std___Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-                  (uVar1,param_2,param_4);
+        _Sort_heap<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+                  (ppcVar2,ppcVar8,param_4);
         __restgprlr_26();
         return;
       }
       goto LAB_822e37f0;
     }
-    std___Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
-              (&local_40,uVar1,param_2,param_4);
-    param_3 = (longlong)(iVar5 >> 1) + (ulonglong)(iVar5 < 0 && (param_3 & 1) != 0);
-    param_3 = (longlong)((int)param_3 >> 1) + (ulonglong)((int)param_3 < 0 && (param_3 & 1) != 0) +
-              param_3;
-    uVar4 = (ulonglong)local_3c;
-    uVar3 = (ulonglong)local_40;
-    if ((int)(local_40 - (int)uVar1 & 0xfffffffc) < (int)((int)param_2 - local_3c & 0xfffffffc)) {
-      std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
-                (uVar1,uVar3,param_3,param_4);
-      uVar1 = uVar4;
-      uVar3 = param_2;
+    _Unguarded_partition<char_const_*_*,bool_(__cdecl*)(char_const_*,char_const_*)>
+              ((char **)&local_40,ppcVar2,(_func___cdecl_bool_char_ptr_char_ptr *)ppcVar8);
+    ppcVar1 = local_3c;
+    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
+    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
+    uVar6 = ZEXT48(local_40);
+    if ((int)((int)local_40 - (int)ppcVar2 & 0xfffffffcU) <
+        (int)((int)ppcVar8 - (int)local_3c & 0xfffffffcU)) {
+      _Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (ppcVar2,local_40,(int)uVar4,param_4);
+      uVar6 = uVar3;
+      ppcVar2 = ppcVar1;
     }
     else {
-      std___Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
-                (uVar4,param_2,param_3,param_4);
+      _Sort<char_const_*_*,int,bool_(__cdecl*)(char_const_*,char_const_*)>
+                (local_3c,ppcVar8,(int)uVar4,param_4);
     }
-    iVar2 = (int)uVar3 - (int)uVar1;
-    param_2 = uVar3;
+    ppcVar8 = (char **)uVar6;
+    iVar5 = (int)ppcVar8 - (int)ppcVar2;
+    uVar3 = uVar6;
   } while( true );
 }
 
 
 // 822E06C8  MdlPrvModeToggle  (cgame/cg_modelpreviewer.cpp:3779)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvModeToggle(void)
 
 {
-  DAT_82a3d700 = (int)((ulonglong)DAT_82a3d700 - 1) -
-                 ((DAT_82a3d700 - 2) + (uint)((ulonglong)DAT_82a3d700 - 1 == 0));
+  g_mdlprv.system.uiModeGPad =
+       (int)((ulonglong)g_mdlprv.system.uiModeGPad - 1) -
+       ((g_mdlprv.system.uiModeGPad - MDLPRVMODE_WALKABOUT) +
+       (uint)((ulonglong)g_mdlprv.system.uiModeGPad - 1 == 0));
   return;
 }
 
 
 // 822E06E8  MdlPrvRotModeToggle  (cgame/cg_modelpreviewer.cpp:3788)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvRotModeToggle(void)
 
 {
-  undefined8 uVar1;
-  undefined1 auStack_50 [4];
+  float (*pafVar1) [3];
+  float fStack_50;
   float local_4c;
-  undefined1 auStack_40 [48];
+  float afStack_40 [12];
   
-  DAT_82a3d708 = (uint)LZCOUNT(DAT_82a3d708) >> 5;
-  UnitQuatToAxis(0xffffffff82a3d77c,auStack_40);
-  uVar1 = AxisToAngles(auStack_40,auStack_50);
-  YawToAxis((double)local_4c,uVar1,auStack_40);
-  AxisToQuat(auStack_40,0xffffffff82a3d77c);
+  g_mdlprv.system.modelRotCamMode = (uint)LZCOUNT(g_mdlprv.system.modelRotCamMode) >> 5;
+  UnitQuatToAxis(g_mdlprv.model.currentEntity.placement.quat,(float (*) [3])afStack_40);
+  pafVar1 = (float (*) [3])afStack_40;
+  AxisToAngles(pafVar1,&fStack_50);
+  YawToAxis(local_4c,pafVar1);
+  AxisToQuat((float (*) [3])afStack_40,g_mdlprv.model.currentEntity.placement.quat);
   return;
 }
 
 
 // 822E0758  MdlPrvDropToFloor  (cgame/cg_modelpreviewer.cpp:3799)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvDropToFloor(void)
 
 {
   float fVar1;
-  undefined4 local_a0;
-  undefined4 local_9c;
+  float local_a0;
+  float local_9c;
   float local_98;
-  undefined4 local_90;
-  undefined4 local_8c;
+  float local_90;
+  float local_8c;
   float local_88;
-  undefined1 auStack_80 [16];
-  undefined4 local_70;
-  undefined4 local_6c;
-  float local_68;
-  undefined4 local_64;
-  undefined4 local_60;
-  float local_5c;
-  float local_50 [11];
-  char local_22;
+  float afStack_80 [4];
+  Bounds local_70;
+  trace_t local_50;
   
-  MdlPrvGetBounds(&local_70,auStack_80);
-  fVar1 = local_68 - local_5c;
-  local_64 = 0x40a00000;
-  local_98 = DAT_82a3d794 - 3000.0;
-  local_60 = 0x40a00000;
-  local_70 = 0;
-  local_6c = 0;
-  local_90 = DAT_82a3d78c;
-  local_a0 = DAT_82a3d78c;
-  local_68 = 0.0;
-  local_5c = 5.0;
-  local_8c = DAT_82a3d790;
-  local_88 = DAT_82a3d794 - (fVar1 - 5.0);
-  local_9c = DAT_82a3d790;
-  CG_TraceCapsule(local_50,&local_90,&local_a0,&local_70,0xffffffffffffffff,1);
-  if ((local_22 == '\0') && (local_50[0] != 1.0)) {
-    DAT_82a3d8ec = DAT_82a3d8ec + local_50[0] * -3000.0;
-    DAT_82a3d794 = DAT_82a3d794 + local_50[0] * -3000.0;
+  MdlPrvGetBounds(&local_70,afStack_80);
+  fVar1 = local_70.midPoint[2] - local_70.halfSize[2];
+  local_70.halfSize[0] = 5.0;
+  local_98 = g_mdlprv.model.currentEntity.placement.origin[2] - 3000.0;
+  local_70.halfSize[1] = 5.0;
+  local_70.midPoint[0] = 0.0;
+  local_70.midPoint[1] = 0.0;
+  local_90 = g_mdlprv.model.currentEntity.placement.origin[0];
+  local_a0 = g_mdlprv.model.currentEntity.placement.origin[0];
+  local_70.midPoint[2] = 0.0;
+  local_70.halfSize[2] = 5.0;
+  local_8c = g_mdlprv.model.currentEntity.placement.origin[1];
+  local_88 = g_mdlprv.model.currentEntity.placement.origin[2] - (fVar1 - 5.0);
+  local_9c = g_mdlprv.model.currentEntity.placement.origin[1];
+  CG_TraceCapsule(&local_50,&local_90,&local_a0,&local_70,-1,1);
+  if ((local_50.allsolid == false) && (local_50.fraction != 1.0)) {
+    g_mdlprv.model.initialOrigin[2] = g_mdlprv.model.initialOrigin[2] + local_50.fraction * -3000.0;
+    g_mdlprv.model.currentEntity.placement.origin[2] =
+         g_mdlprv.model.currentEntity.placement.origin[2] + local_50.fraction * -3000.0;
   }
   return;
 }
@@ -3076,12 +3527,12 @@ void MdlPrvDropToFloor(void)
 
 // 822E0860  MdlPrvCloneClear  (cgame/cg_modelpreviewer.cpp:3831)
 
-void MdlPrvCloneClear(int param_1)
+void MdlPrvCloneClear(MdlPrvClone *param_1)
 
 {
-  if (*(int *)(param_1 + 0x78) != 0) {
-    DObjFree();
-    *(undefined4 *)(param_1 + 0x78) = 0;
+  if (param_1->obj != (DObj *)0x0) {
+    DObjFree(param_1->obj);
+    param_1->obj = (DObj *)0x0;
   }
   return;
 }
@@ -3089,22 +3540,24 @@ void MdlPrvCloneClear(int param_1)
 
 // 822E08A0  MdlPrvCloneClearAll  (cgame/cg_modelpreviewer.cpp:3840)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvCloneClearAll(void)
 
 {
   longlong lVar1;
-  int *piVar2;
+  DObj **ppDVar2;
   
   __savegprlr_29();
   lVar1 = 10;
-  piVar2 = &DAT_82a3dcbc;
+  ppDVar2 = &g_mdlprv.model.clones[0].obj;
   do {
-    if (*piVar2 != 0) {
-      DObjFree();
-      *piVar2 = 0;
+    if (*ppDVar2 != (DObj *)0x0) {
+      DObjFree(*ppDVar2);
+      *ppDVar2 = (DObj *)0x0;
     }
     lVar1 = lVar1 + -1;
-    piVar2 = piVar2 + 0x5d;
+    ppDVar2 = ppDVar2 + 0x5d;
   } while (lVar1 != 0);
   __restgprlr_29();
   return;
@@ -3113,42 +3566,49 @@ void MdlPrvCloneClearAll(void)
 
 // 822E08E8  MdlPrvCloneModel  (cgame/cg_modelpreviewer.cpp:3848)
 
-void MdlPrvCloneModel(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void MdlPrvCloneModel(cg_s *param_1)
 
 {
-  uint uVar1;
-  longlong lVar2;
+  DObj *pDVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  char *pcVar4;
   float local_60;
   float local_5c;
-  undefined1 auStack_50 [16];
-  undefined1 auStack_40 [64];
+  float afStack_50 [4];
+  float afStack_40 [16];
   
-  lVar2 = __savegprlr_28();
-  if (9 < DAT_82a4bef4) {
-    MyAssertHandler(0xffffffff8201ebc8,0xf10,0,0xffffffff82000f98,0xffffffff8201f78c);
+  iVar3 = __savegprlr_28(param_1);
+  if (9 < (uint)g_mdlprv.model.cloneNextIdx) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0xf10,0,"%s");
   }
-  uVar1 = DAT_82a4bef4;
-  iVar3 = DAT_82a4bef4 * 0x174;
-  if ((&DAT_82a3dcbc)[DAT_82a4bef4 * 0x5d] != 0) {
-    DObjFree();
-    (&DAT_82a3dcbc)[uVar1 * 0x5d] = 0;
+  iVar2 = g_mdlprv.model.cloneNextIdx;
+  pDVar1 = g_mdlprv.model.clones[g_mdlprv.model.cloneNextIdx].obj;
+  if (pDVar1 != (DObj *)0x0) {
+    DObjFree(pDVar1);
+    g_mdlprv.model.clones[iVar2].obj = (DObj *)0x0;
   }
-  DObjGetTree(DAT_82a3d844);
-  iVar4 = iVar3 + -0x7d5c22e4;
-  DObjClone(DAT_82a3d844,iVar4);
-  (&DAT_82a3dcbc)[uVar1 * 0x5d] = iVar4;
-  DObjSetTree(iVar4,0);
-  memcpy((void *)(iVar3 + -0x7d5c23bc),&DAT_82a3d770,0x78);
-  AngleVectors(lVar2 + 0x704dc,auStack_40,&local_60,auStack_50);
-  DAT_82a3d8e8 = DAT_82a3d8e8 + local_5c * 16.0;
-  DAT_82a3d8e4 = DAT_82a3d8e4 + local_60 * 16.0;
-  DAT_82a4bef4 = DAT_82a4bef4 + 1;
-  DAT_82a3d78c = DAT_82a3d78c + local_60 * 16.0;
-  DAT_82a3d790 = DAT_82a3d790 + local_5c * 16.0;
-  if (9 < DAT_82a4bef4) {
-    DAT_82a4bef4 = 0;
+  DObjGetTree(g_mdlprv.model.currentObj);
+  pcVar4 = g_mdlprv.model.clones[iVar2].objBuf;
+  DObjClone(g_mdlprv.model.currentObj,pcVar4);
+  g_mdlprv.model.clones[iVar2].obj = (DObj *)pcVar4;
+  DObjSetTree((DObj *)pcVar4,(XAnimTree *)0x0);
+  memcpy();
+  AngleVectors((float *)(iVar3 + 0x704dc),afStack_40,&local_60,afStack_50);
+  g_mdlprv.model.initialOrigin[1] = g_mdlprv.model.initialOrigin[1] + local_5c * 16.0;
+  g_mdlprv.model.initialOrigin[0] = g_mdlprv.model.initialOrigin[0] + local_60 * 16.0;
+  g_mdlprv.model.cloneNextIdx = g_mdlprv.model.cloneNextIdx + 1;
+  g_mdlprv.model.currentEntity.placement.origin[0] =
+       g_mdlprv.model.currentEntity.placement.origin[0] + local_60 * 16.0;
+  g_mdlprv.model.currentEntity.placement.origin[1] =
+       g_mdlprv.model.currentEntity.placement.origin[1] + local_5c * 16.0;
+  if (9 < (uint)g_mdlprv.model.cloneNextIdx) {
+    g_mdlprv.model.cloneNextIdx = 0;
   }
   __restgprlr_28();
   return;
@@ -3157,179 +3617,196 @@ void MdlPrvCloneModel(void)
 
 // 822E0A40  MdlPrvFreeSpeedToggle  (cgame/cg_modelpreviewer.cpp:3877)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void MdlPrvFreeSpeedToggle(void)
 
 {
-  if (DAT_82a3d74c == 0) {
-    DAT_82a3d74c = 2;
+  if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_NORMAL) {
+    g_mdlprv.viewer.freeModeSpeed = FREESPEED_FAST;
     return;
   }
-  if (DAT_82a3d74c != 1) {
-    if (2 < DAT_82a3d74c) {
+  if (g_mdlprv.viewer.freeModeSpeed != FREESPEED_SLOW) {
+    if (FREESPEED_FAST < g_mdlprv.viewer.freeModeSpeed) {
       return;
     }
-    DAT_82a3d74c = 1;
+    g_mdlprv.viewer.freeModeSpeed = FREESPEED_SLOW;
     return;
   }
-  DAT_82a3d74c = 0;
+  g_mdlprv.viewer.freeModeSpeed = FREESPEED_NORMAL;
   return;
 }
 
 
 // 822E0A88  MdlPrvRagdollToggle  (cgame/cg_modelpreviewer.cpp:3895)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void MdlPrvRagdollToggle(void)
 
 {
-  bool bVar1;
-  
-  if (DAT_82a4bef8 == 0) {
-    bVar1 = DAT_82a4befc == 0;
-    DAT_82a4befc = (uint)bVar1;
-    DAT_82a4bef8 = Ragdoll_CreateRagdollForDObjRaw(0,bVar1,DAT_82a3d7e0,DAT_82a3d844);
+  if (g_mdlprv.model.ragdoll == 0) {
+    g_mdlprv.model.ragdollDef = (uint)LZCOUNT(g_mdlprv.model.ragdollDef) >> 5;
+    g_mdlprv.model.ragdoll =
+         Ragdoll_CreateRagdollForDObjRaw
+                   (LOCAL_CLIENT_0,g_mdlprv.model.ragdollDef,g_mdlprv.model.currentEntity.info.pose,
+                    g_mdlprv.model.currentObj);
     return;
   }
-  Ragdoll_Remove();
-  DAT_82a4bef8 = 0;
+  Ragdoll_Remove(g_mdlprv.model.ragdoll);
+  g_mdlprv.model.ragdoll = 0;
   return;
 }
 
 
 // 822E0B28  MdlPrvControlsGamepad  (cgame/cg_modelpreviewer.cpp:3915)
 
-void MdlPrvControlsGamepad(undefined8 param_1,double param_2,double param_3,double param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void MdlPrvControlsGamepad
+               (LocalClientNum_t param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
   float fVar1;
-  undefined8 uVar2;
-  char cVar6;
-  int iVar3;
+  LocalClientNum_t LVar2;
+  bool bVar6;
+  cg_s *pcVar3;
   int iVar4;
   int iVar5;
   double extraout_f1;
-  undefined8 uVar7;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  undefined1 auStack_160 [352];
+  double dVar11;
+  double dVar12;
+  char acStack_160 [352];
   
-  __savegprlr_28();
-  uVar2 = __savefpr_26();
-  dVar9 = extraout_f1;
-  cVar6 = DevGui_IsActive();
-  if (cVar6 != '\0') goto LAB_822e1210;
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_3;
+  dVar11 = (double)param_4;
+  __savegprlr_28((double)param_2,param_1);
+  LVar2 = __savefpr_26();
+  dVar10 = extraout_f1;
+  bVar6 = DevGui_IsActive();
+  if (bVar6) goto LAB_822e1210;
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
   iVar4 = Sys_Milliseconds();
-  uVar7 = 0;
-  dVar10 = (double)((float)(longlong)*(int *)(iVar3 + 0x6b988) * 0.001);
-  if (dVar10 == 0.0) {
-    dVar10 = 0.014999999664723873;
+  dVar9 = 0.0;
+  dVar12 = (double)((float)(longlong)pcVar3->frametime * 0.001);
+  if (dVar12 == 0.0) {
+    dVar12 = 0.014999999664723873;
   }
-  if (*(int *)(iVar3 + 4) != 4) {
-    if (((DAT_82a3d734 != '\0') && (iVar5 = Key_IsDown(uVar2,0x10), iVar5 != 0)) &&
-       (0xfa < iVar4 - DAT_82a3d728)) {
-      DAT_82a3d750 = *(undefined4 *)(iVar3 + 0x6b9c8);
-      DAT_82a3d754 = *(undefined4 *)(iVar3 + 0x6b9cc);
-      DAT_82a3d758 = *(undefined4 *)(iVar3 + 0x6b9d0);
-      DAT_82a3d75c = *(undefined4 *)(iVar3 + 0x704dc);
-      DAT_82a3d760 = *(undefined4 *)(iVar3 + 460000);
-      DAT_82a3d764 = *(undefined4 *)(iVar3 + 0x704e4);
-      DAT_82a3d734 = 0;
-      DAT_82a3d728 = iVar4;
-      CL_AddReliableCommand(uVar2,0xffffffff82012d9c);
+  if ((pcVar3->predictedPlayerState).pm_type != 4) {
+    if (((g_mdlprv.system.walkaboutActive != false) && (iVar5 = Key_IsDown(LVar2,0x10), iVar5 != 0))
+       && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.walkabout)) {
+      g_mdlprv.viewer.freeModeOrigin[0] = (pcVar3->refdef).view.org[0];
+      g_mdlprv.viewer.freeModeOrigin[1] = (pcVar3->refdef).view.org[1];
+      g_mdlprv.viewer.freeModeOrigin[2] = (pcVar3->refdef).view.org[2];
+      g_mdlprv.viewer.freeModeAngles[0] = pcVar3->refdefViewAngles[0];
+      g_mdlprv.viewer.freeModeAngles[1] = pcVar3->refdefViewAngles[1];
+      g_mdlprv.viewer.freeModeAngles[2] = pcVar3->refdefViewAngles[2];
+      g_mdlprv.system.walkaboutActive = false;
+      g_mdlprv.system.buttonTimes.walkabout = iVar4;
+      CL_AddReliableCommand(LVar2,"mpon");
       __restfpr_26();
       __restgprlr_28();
       return;
     }
     goto LAB_822e1210;
   }
-  iVar5 = Key_IsDown(uVar2,4);
-  if ((iVar5 != 0) && (500 < iVar4 - DAT_82a3d70c)) {
-    DAT_82a3d700 = (int)((ulonglong)DAT_82a3d700 - 1) -
-                   ((DAT_82a3d700 - 2) + (uint)((ulonglong)DAT_82a3d700 - 1 == 0));
-    DAT_82a3d70c = iVar4;
+  iVar5 = Key_IsDown(LVar2,4);
+  if ((iVar5 != 0) && (500 < iVar4 - g_mdlprv.system.buttonTimes.mode)) {
+    g_mdlprv.system.uiModeGPad =
+         (int)((ulonglong)g_mdlprv.system.uiModeGPad - 1) -
+         ((g_mdlprv.system.uiModeGPad - MDLPRVMODE_WALKABOUT) +
+         (uint)((ulonglong)g_mdlprv.system.uiModeGPad - 1 == 0));
+    g_mdlprv.system.buttonTimes.mode = iVar4;
     __restfpr_26();
     __restgprlr_28();
     return;
   }
-  iVar5 = Key_IsDown(uVar2,3);
-  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d71c)) {
-    DAT_82a3d71c = iVar4;
+  iVar5 = Key_IsDown(LVar2,3);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.dropToFloor)) {
+    g_mdlprv.system.buttonTimes.dropToFloor = iVar4;
     MdlPrvDropToFloor();
     __restfpr_26();
     __restgprlr_28();
     return;
   }
-  iVar5 = Key_IsDown(uVar2,0x10);
-  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d728)) {
-    DAT_82a3d734 = 1;
-    DAT_82a3d728 = iVar4;
-    CL_AddReliableCommand(uVar2,0xffffffff82012d94);
-    Com_sprintf(auStack_160,0x100,0xffffffff8201f7cc,(double)*(float *)(iVar3 + 0x6b9c8),
-                (double)*(float *)(iVar3 + 0x6b9cc),(double)*(float *)(iVar3 + 0x6b9d0),
-                (double)*(float *)(iVar3 + 460000));
-    Cbuf_InsertText(uVar2,auStack_160);
+  iVar5 = Key_IsDown(LVar2,0x10);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.walkabout)) {
+    g_mdlprv.system.walkaboutActive = true;
+    g_mdlprv.system.buttonTimes.walkabout = iVar4;
+    CL_AddReliableCommand(LVar2,"mpoff");
+    Com_sprintf(acStack_160,0x100,"setviewpos %f %f %f %f\n");
+    Cbuf_InsertText(LVar2,acStack_160);
     __restfpr_26();
     __restgprlr_28();
     return;
   }
-  if (DAT_82a3d700 != 1) {
-    iVar5 = Key_IsDown(uVar2,0x12);
-    if ((iVar5 == 0) || (iVar5 = Key_IsDown(uVar2,0x13), iVar5 == 0)) {
-      iVar5 = Key_IsDown(uVar2,0x12);
+  if (g_mdlprv.system.uiModeGPad != MDLPRVMODE_FREE) {
+    iVar5 = Key_IsDown(LVar2,0x12);
+    if ((iVar5 == 0) || (iVar5 = Key_IsDown(LVar2,0x13), iVar5 == 0)) {
+      iVar5 = Key_IsDown(LVar2,0x12);
       if (iVar5 != 0) {
-        DAT_82a3d704 = 2;
-        fVar1 = (float)(dVar10 * param_3) * -100.0;
-        DAT_82a3d8ec = fVar1 + DAT_82a3d8ec;
-        DAT_82a3d794 = fVar1 + DAT_82a3d794;
-        MdlPrvMoveModel2D((double)((float)(dVar10 * dVar9) * 200.0),
-                          (double)((float)(dVar10 * param_2) * 200.0),iVar3);
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_MODELMOVE;
+        fVar1 = (float)(dVar12 * dVar11) * -100.0;
+        g_mdlprv.model.initialOrigin[2] = fVar1 + g_mdlprv.model.initialOrigin[2];
+        g_mdlprv.model.currentEntity.placement.origin[2] =
+             fVar1 + g_mdlprv.model.currentEntity.placement.origin[2];
+        MdlPrvMoveModel2D(pcVar3,(float)(dVar12 * dVar10) * 200.0,(float)(dVar12 * dVar7) * 200.0);
         __restfpr_26();
         __restgprlr_28();
         return;
       }
-      iVar5 = Key_IsDown(uVar2,0x13);
+      iVar5 = Key_IsDown(LVar2,0x13);
       if (iVar5 == 0) {
-        DAT_82a3d704 = 0;
-        iVar5 = Key_IsDown(uVar2,1);
-        if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d720)) {
-          DAT_82a3d720 = iVar4;
-          MdlPrvCloneModel(iVar3);
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_CAMERA;
+        iVar5 = Key_IsDown(LVar2,1);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.clone)) {
+          g_mdlprv.system.buttonTimes.clone = iVar4;
+          MdlPrvCloneModel(pcVar3);
           __restfpr_26();
           __restgprlr_28();
           return;
         }
-        iVar3 = Key_IsDown(uVar2,2);
-        if ((iVar3 != 0) && (0xfa < iVar4 - DAT_82a3d724)) {
-          DAT_82a3d724 = iVar4;
+        iVar5 = Key_IsDown(LVar2,2);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.clearClones)) {
+          g_mdlprv.system.buttonTimes.clearClones = iVar4;
           MdlPrvCloneClearAll();
           __restfpr_26();
           __restgprlr_28();
           return;
         }
-        DAT_82a3d73c = -((float)(dVar10 * param_4) * 180.0 - DAT_82a3d73c);
-        DAT_82a3d738 = DAT_82a3d738 - (float)(dVar10 * param_3) * -100.0;
-        CG_ModelPreviewerZoomCamera((double)((float)(dVar10 * dVar9) * 1800.0),uVar7);
+        g_mdlprv.viewer.horizontal = -((float)(dVar12 * dVar8) * 180.0 - g_mdlprv.viewer.horizontal)
+        ;
+        g_mdlprv.viewer.vertical = g_mdlprv.viewer.vertical - (float)(dVar12 * dVar11) * -100.0;
+        CG_ModelPreviewerZoomCamera((float)(dVar12 * dVar10) * 1800.0,(float)dVar9);
       }
       else {
-        DAT_82a3d704 = 1;
-        if (DAT_82a3d708 == 1) {
-          DAT_82a3d73c = -((float)(dVar10 * param_4) * 360.0 - DAT_82a3d73c);
-          MdlPrvSpinYawOffset((double)((float)(dVar10 * param_4) * -360.0));
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_MODELROTATE;
+        if (g_mdlprv.system.modelRotCamMode == MROTCAMMODE_TRAVEL) {
+          g_mdlprv.viewer.horizontal =
+               -((float)(dVar12 * dVar8) * 360.0 - g_mdlprv.viewer.horizontal);
+          MdlPrvSpinYawOffset((float)(dVar12 * dVar8) * -360.0);
         }
         else {
-          MdlPrvSpin_((double)((float)(dVar10 * param_4) * -360.0),1);
-          dVar8 = -180.0;
-          MdlPrvSpin_((double)((float)(dVar10 * dVar9) * -180.0),0);
-          MdlPrvSpin_((double)(float)((double)(float)(dVar10 * param_2) * dVar8),2);
+          MdlPrvSpin_(1,(float)(dVar12 * dVar8) * -360.0);
+          dVar11 = -180.0;
+          MdlPrvSpin_(0,(float)(dVar12 * dVar10) * -180.0);
+          MdlPrvSpin_(2,(float)((double)(float)(dVar12 * dVar7) * dVar11));
         }
-        iVar3 = Key_IsDown(uVar2,5);
-        if (iVar3 != 0) {
+        iVar5 = Key_IsDown(LVar2,5);
+        if (iVar5 != 0) {
           CG_ModPrvModelResetRotation();
         }
-        iVar3 = Key_IsDown(uVar2,2);
-        if ((iVar3 != 0) && (0xfa < iVar4 - DAT_82a3d710)) {
-          DAT_82a3d710 = iVar4;
+        iVar5 = Key_IsDown(LVar2,2);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.mdlRotMode)) {
+          g_mdlprv.system.buttonTimes.mdlRotMode = iVar4;
           MdlPrvRotModeToggle();
           __restfpr_26();
           __restgprlr_28();
@@ -3338,13 +3815,13 @@ void MdlPrvControlsGamepad(undefined8 param_1,double param_2,double param_3,doub
       }
     }
     else {
-      DAT_82a3d704 = 3;
-      Dvar_SetVec3((double)*(float *)(DAT_82a3d6c8 + 0xc),(double)*(float *)(DAT_82a3d6c8 + 0x10),
-                   -(double)((float)(dVar10 * param_3) * 100.0 - *(float *)(DAT_82a3d6c8 + 0x14)));
-      MdlPrvMoveFocus2D((double)((float)(dVar10 * dVar9) * 200.0),
-                        (double)((float)(dVar10 * param_2) * 200.0),iVar3);
-      iVar3 = Key_IsDown(uVar2,1);
-      if (iVar3 != 0) {
+      g_mdlprv.system.focusedMode = FOCUSEDMODE_FOCALMOVE;
+      Dvar_SetVec3(modPrvCenterOffset,(modPrvCenterOffset->current).value,
+                   (modPrvCenterOffset->current).vector[1],
+                   -((float)(dVar12 * dVar11) * 100.0 - (modPrvCenterOffset->current).vector[2]));
+      MdlPrvMoveFocus2D(pcVar3,(float)(dVar12 * dVar10) * 200.0,(float)(dVar12 * dVar7) * 200.0);
+      iVar4 = Key_IsDown(LVar2,1);
+      if (iVar4 != 0) {
         MdlPrvMoveFocusReset();
         __restfpr_26();
         __restgprlr_28();
@@ -3353,52 +3830,279 @@ void MdlPrvControlsGamepad(undefined8 param_1,double param_2,double param_3,doub
     }
     goto LAB_822e1210;
   }
-  iVar5 = Key_IsDown(uVar2,5);
-  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d730)) {
-    DAT_82a3d730 = iVar4;
+  iVar5 = Key_IsDown(LVar2,5);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.ragdollSpeed)) {
+    g_mdlprv.system.buttonTimes.ragdollSpeed = iVar4;
     MdlPrvRagdollToggle();
   }
-  iVar5 = Key_IsDown(uVar2,6);
-  if ((iVar5 != 0) && (0xfa < iVar4 - DAT_82a3d72c)) {
-    DAT_82a3d72c = iVar4;
+  iVar5 = Key_IsDown(LVar2,6);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.freeSpeed)) {
+    g_mdlprv.system.buttonTimes.freeSpeed = iVar4;
     MdlPrvFreeSpeedToggle();
   }
-  if (DAT_82a3d74c == 1) {
-    dVar8 = 20.0;
+  if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_SLOW) {
+    dVar9 = 20.0;
   }
-  else if (DAT_82a3d74c == 2) {
-    dVar8 = 1000.0;
+  else if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_FAST) {
+    dVar9 = 1000.0;
   }
   else {
-    dVar8 = 300.0;
+    dVar9 = 300.0;
   }
-  iVar4 = Key_IsDown(uVar2,0x14);
-  if ((iVar4 == 0) && (iVar4 = Key_IsDown(uVar2,0x13), iVar4 == 0)) {
-    iVar4 = Key_IsDown(uVar2,0x15);
-    if ((iVar4 != 0) || (iVar4 = Key_IsDown(uVar2,0x12), iVar4 != 0)) {
-      fVar1 = (float)(dVar8 * dVar10) * -1.0;
+  iVar4 = Key_IsDown(LVar2,0x14);
+  if ((iVar4 == 0) && (iVar4 = Key_IsDown(LVar2,0x13), iVar4 == 0)) {
+    iVar4 = Key_IsDown(LVar2,0x15);
+    if ((iVar4 != 0) || (iVar4 = Key_IsDown(LVar2,0x12), iVar4 != 0)) {
+      fVar1 = (float)(dVar9 * dVar12) * -1.0;
       goto LAB_822e0eb8;
     }
   }
   else {
-    fVar1 = (float)(dVar8 * dVar10);
+    fVar1 = (float)(dVar9 * dVar12);
 LAB_822e0eb8:
-    MdlPrvFreeMoveVertical((double)fVar1,iVar3);
+    MdlPrvFreeMoveVertical(pcVar3,fVar1);
   }
-  MdlPrvFreeMove((double)(float)((double)(float)(dVar8 * dVar10) * dVar9),
-                 (double)(float)((double)(float)(dVar8 * dVar10) * param_2),iVar3);
-  MdlPrvFreeRot((double)((float)(dVar10 * param_4) * 90.0),
-                (double)((float)(dVar10 * param_3) * 90.0));
-  iVar4 = Key_IsDown(uVar2,2);
+  MdlPrvFreeMove(pcVar3,(float)((double)(float)(dVar9 * dVar12) * dVar10),
+                 (float)((double)(float)(dVar9 * dVar12) * dVar7));
+  MdlPrvFreeRot((float)(dVar12 * dVar8) * 90.0,(float)(dVar12 * dVar11) * 90.0);
+  iVar4 = Key_IsDown(LVar2,2);
   if (iVar4 != 0) {
-    MdlPrvModelOriginSet(0xffffffff82a3d750);
+    MdlPrvModelOriginSet(g_mdlprv.viewer.freeModeOrigin);
     __restfpr_26();
     __restgprlr_28();
     return;
   }
-  iVar4 = Key_IsDown(uVar2,1);
+  iVar4 = Key_IsDown(LVar2,1);
   if (iVar4 != 0) {
-    MdlPrvFreePlaceModelInFrontCamera(iVar3);
+    MdlPrvFreePlaceModelInFrontCamera(pcVar3);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+LAB_822e1210:
+  __restfpr_26();
+  __restgprlr_28();
+  return;
+}
+
+
+// 822E1220  CG_ModelPreviewerHandleGamepadEvents  (cgame/cg_modelpreviewer.cpp:4171)
+
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* void __cdecl CG_ModelPreviewerHandleGamepadEvents(enum LocalClientNum_t,float,float,float,float)
+    */
+
+void CG_ModelPreviewerHandleGamepadEvents
+               (LocalClientNum_t param_1,float param_2,float param_3,float param_4,float param_5)
+
+{
+  float fVar1;
+  LocalClientNum_t LVar2;
+  bool bVar6;
+  cg_s *pcVar3;
+  int iVar4;
+  int iVar5;
+  double extraout_f1;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  char acStack_160 [352];
+  
+  dVar8 = (double)param_5;
+  dVar11 = (double)param_4;
+  dVar7 = (double)param_3;
+  __savegprlr_28((double)param_2,param_1);
+  LVar2 = __savefpr_26();
+  dVar10 = extraout_f1;
+  bVar6 = DevGui_IsActive();
+  if (bVar6) goto LAB_822e1210;
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  iVar4 = Sys_Milliseconds();
+  dVar9 = 0.0;
+  dVar12 = (double)((float)(longlong)pcVar3->frametime * 0.001);
+  if (dVar12 == 0.0) {
+    dVar12 = 0.014999999664723873;
+  }
+  if ((pcVar3->predictedPlayerState).pm_type != 4) {
+    if (((g_mdlprv.system.walkaboutActive != false) && (iVar5 = Key_IsDown(LVar2,0x10), iVar5 != 0))
+       && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.walkabout)) {
+      g_mdlprv.viewer.freeModeOrigin[0] = (pcVar3->refdef).view.org[0];
+      g_mdlprv.viewer.freeModeOrigin[1] = (pcVar3->refdef).view.org[1];
+      g_mdlprv.viewer.freeModeOrigin[2] = (pcVar3->refdef).view.org[2];
+      g_mdlprv.viewer.freeModeAngles[0] = pcVar3->refdefViewAngles[0];
+      g_mdlprv.viewer.freeModeAngles[1] = pcVar3->refdefViewAngles[1];
+      g_mdlprv.viewer.freeModeAngles[2] = pcVar3->refdefViewAngles[2];
+      g_mdlprv.system.walkaboutActive = false;
+      g_mdlprv.system.buttonTimes.walkabout = iVar4;
+      CL_AddReliableCommand(LVar2,"mpon");
+      __restfpr_26();
+      __restgprlr_28();
+      return;
+    }
+    goto LAB_822e1210;
+  }
+  iVar5 = Key_IsDown(LVar2,4);
+  if ((iVar5 != 0) && (500 < iVar4 - g_mdlprv.system.buttonTimes.mode)) {
+    g_mdlprv.system.uiModeGPad =
+         (int)((ulonglong)g_mdlprv.system.uiModeGPad - 1) -
+         ((g_mdlprv.system.uiModeGPad - MDLPRVMODE_WALKABOUT) +
+         (uint)((ulonglong)g_mdlprv.system.uiModeGPad - 1 == 0));
+    g_mdlprv.system.buttonTimes.mode = iVar4;
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = Key_IsDown(LVar2,3);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.dropToFloor)) {
+    g_mdlprv.system.buttonTimes.dropToFloor = iVar4;
+    MdlPrvDropToFloor();
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar5 = Key_IsDown(LVar2,0x10);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.walkabout)) {
+    g_mdlprv.system.walkaboutActive = true;
+    g_mdlprv.system.buttonTimes.walkabout = iVar4;
+    CL_AddReliableCommand(LVar2,"mpoff");
+    Com_sprintf(acStack_160,0x100,"setviewpos %f %f %f %f\n");
+    Cbuf_InsertText(LVar2,acStack_160);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  if (g_mdlprv.system.uiModeGPad != MDLPRVMODE_FREE) {
+    iVar5 = Key_IsDown(LVar2,0x12);
+    if ((iVar5 == 0) || (iVar5 = Key_IsDown(LVar2,0x13), iVar5 == 0)) {
+      iVar5 = Key_IsDown(LVar2,0x12);
+      if (iVar5 != 0) {
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_MODELMOVE;
+        fVar1 = (float)(dVar12 * dVar11) * -100.0;
+        g_mdlprv.model.initialOrigin[2] = fVar1 + g_mdlprv.model.initialOrigin[2];
+        g_mdlprv.model.currentEntity.placement.origin[2] =
+             fVar1 + g_mdlprv.model.currentEntity.placement.origin[2];
+        MdlPrvMoveModel2D(pcVar3,(float)(dVar12 * dVar10) * 200.0,(float)(dVar12 * dVar7) * 200.0);
+        __restfpr_26();
+        __restgprlr_28();
+        return;
+      }
+      iVar5 = Key_IsDown(LVar2,0x13);
+      if (iVar5 == 0) {
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_CAMERA;
+        iVar5 = Key_IsDown(LVar2,1);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.clone)) {
+          g_mdlprv.system.buttonTimes.clone = iVar4;
+          MdlPrvCloneModel(pcVar3);
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+        iVar5 = Key_IsDown(LVar2,2);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.clearClones)) {
+          g_mdlprv.system.buttonTimes.clearClones = iVar4;
+          MdlPrvCloneClearAll();
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+        g_mdlprv.viewer.horizontal = -((float)(dVar12 * dVar8) * 180.0 - g_mdlprv.viewer.horizontal)
+        ;
+        g_mdlprv.viewer.vertical = g_mdlprv.viewer.vertical - (float)(dVar12 * dVar11) * -100.0;
+        CG_ModelPreviewerZoomCamera((float)(dVar12 * dVar10) * 1800.0,(float)dVar9);
+      }
+      else {
+        g_mdlprv.system.focusedMode = FOCUSEDMODE_MODELROTATE;
+        if (g_mdlprv.system.modelRotCamMode == MROTCAMMODE_TRAVEL) {
+          g_mdlprv.viewer.horizontal =
+               -((float)(dVar12 * dVar8) * 360.0 - g_mdlprv.viewer.horizontal);
+          MdlPrvSpinYawOffset((float)(dVar12 * dVar8) * -360.0);
+        }
+        else {
+          MdlPrvSpin_(1,(float)(dVar12 * dVar8) * -360.0);
+          dVar11 = -180.0;
+          MdlPrvSpin_(0,(float)(dVar12 * dVar10) * -180.0);
+          MdlPrvSpin_(2,(float)((double)(float)(dVar12 * dVar7) * dVar11));
+        }
+        iVar5 = Key_IsDown(LVar2,5);
+        if (iVar5 != 0) {
+          CG_ModPrvModelResetRotation();
+        }
+        iVar5 = Key_IsDown(LVar2,2);
+        if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.mdlRotMode)) {
+          g_mdlprv.system.buttonTimes.mdlRotMode = iVar4;
+          MdlPrvRotModeToggle();
+          __restfpr_26();
+          __restgprlr_28();
+          return;
+        }
+      }
+    }
+    else {
+      g_mdlprv.system.focusedMode = FOCUSEDMODE_FOCALMOVE;
+      Dvar_SetVec3(modPrvCenterOffset,(modPrvCenterOffset->current).value,
+                   (modPrvCenterOffset->current).vector[1],
+                   -((float)(dVar12 * dVar11) * 100.0 - (modPrvCenterOffset->current).vector[2]));
+      MdlPrvMoveFocus2D(pcVar3,(float)(dVar12 * dVar10) * 200.0,(float)(dVar12 * dVar7) * 200.0);
+      iVar4 = Key_IsDown(LVar2,1);
+      if (iVar4 != 0) {
+        MdlPrvMoveFocusReset();
+        __restfpr_26();
+        __restgprlr_28();
+        return;
+      }
+    }
+    goto LAB_822e1210;
+  }
+  iVar5 = Key_IsDown(LVar2,5);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.ragdollSpeed)) {
+    g_mdlprv.system.buttonTimes.ragdollSpeed = iVar4;
+    MdlPrvRagdollToggle();
+  }
+  iVar5 = Key_IsDown(LVar2,6);
+  if ((iVar5 != 0) && (0xfa < iVar4 - g_mdlprv.system.buttonTimes.freeSpeed)) {
+    g_mdlprv.system.buttonTimes.freeSpeed = iVar4;
+    MdlPrvFreeSpeedToggle();
+  }
+  if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_SLOW) {
+    dVar9 = 20.0;
+  }
+  else if (g_mdlprv.viewer.freeModeSpeed == FREESPEED_FAST) {
+    dVar9 = 1000.0;
+  }
+  else {
+    dVar9 = 300.0;
+  }
+  iVar4 = Key_IsDown(LVar2,0x14);
+  if ((iVar4 == 0) && (iVar4 = Key_IsDown(LVar2,0x13), iVar4 == 0)) {
+    iVar4 = Key_IsDown(LVar2,0x15);
+    if ((iVar4 != 0) || (iVar4 = Key_IsDown(LVar2,0x12), iVar4 != 0)) {
+      fVar1 = (float)(dVar9 * dVar12) * -1.0;
+      goto LAB_822e0eb8;
+    }
+  }
+  else {
+    fVar1 = (float)(dVar9 * dVar12);
+LAB_822e0eb8:
+    MdlPrvFreeMoveVertical(pcVar3,fVar1);
+  }
+  MdlPrvFreeMove(pcVar3,(float)((double)(float)(dVar9 * dVar12) * dVar10),
+                 (float)((double)(float)(dVar9 * dVar12) * dVar7));
+  MdlPrvFreeRot((float)(dVar12 * dVar8) * 90.0,(float)(dVar12 * dVar11) * 90.0);
+  iVar4 = Key_IsDown(LVar2,2);
+  if (iVar4 != 0) {
+    MdlPrvModelOriginSet(g_mdlprv.viewer.freeModeOrigin);
+    __restfpr_26();
+    __restgprlr_28();
+    return;
+  }
+  iVar4 = Key_IsDown(LVar2,1);
+  if (iVar4 != 0) {
+    MdlPrvFreePlaceModelInFrontCamera(pcVar3);
     __restfpr_26();
     __restgprlr_28();
     return;
@@ -3412,24 +4116,28 @@ LAB_822e1210:
 
 // 822E1228  CG_ModelPreviewerHandleKeyEvents  (cgame/cg_modelpreviewer.cpp:4183)
 
-void CG_ModelPreviewerHandleKeyEvents(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_ModelPreviewerHandleKeyEvents(LocalClientNum_t param_1,int param_2,int param_3,uint param_4)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  if (*(int *)(iVar1 + 4) == 4) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar1->predictedPlayerState).pm_type == 4) {
     if (param_2 < 0x78) {
       if (param_2 == 0x77) {
-        DAT_82a3d6f8 = 1;
+        g_mdlprv.system.uiModePC = MOVE_MODE;
         return;
       }
       if (param_2 == 0x65) {
-        DAT_82a3d6f8 = 2;
+        g_mdlprv.system.uiModePC = ROTATE_MODE;
         return;
       }
       if (param_2 == 0x71) {
-        DAT_82a3d6f8 = 0;
+        g_mdlprv.system.uiModePC = SELECTION_MODE;
         return;
       }
     }
@@ -3447,86 +4155,87 @@ void CG_ModelPreviewerHandleKeyEvents(undefined8 param_1,int param_2)
 
 // 822E1318  MdlPrvUpdateViewFocused  (cgame/cg_modelpreviewer.cpp:4212)
 
-void MdlPrvUpdateViewFocused
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+void MdlPrvUpdateViewFocused(float *param_1,float (*param_2) [3],float *param_3,float *param_4)
 
 {
   float *pfVar1;
-  undefined4 *puVar2;
+  ulonglong uVar2;
   float local_210;
   float local_20c;
   float local_208;
-  undefined4 local_200;
-  undefined4 local_1fc;
-  undefined4 local_1f8;
+  float local_200;
+  float local_1fc;
+  float local_1f8;
   undefined4 local_1f4;
   undefined4 local_1f0;
   undefined4 local_1ec;
   undefined4 local_1e8;
   undefined4 local_1e4;
   undefined4 local_1e0;
-  undefined4 local_1d0;
-  undefined4 local_1cc;
-  undefined4 local_1c8;
+  float local_1d0;
+  float local_1cc;
+  float local_1c8;
   undefined4 local_1c4;
   undefined4 local_1c0;
   undefined4 local_1bc;
   undefined4 local_1b8;
   undefined4 local_1b4;
   undefined4 local_1b0;
-  undefined4 local_1a0;
-  undefined4 local_19c;
-  undefined4 local_198;
-  undefined4 local_190;
-  undefined4 local_18c;
-  undefined4 local_188;
-  undefined4 local_180;
-  undefined4 local_17c;
-  undefined4 local_178;
+  float local_1a0;
+  float local_19c;
+  float local_198;
+  float local_190;
+  float local_18c;
+  float local_188;
+  float local_180;
+  float local_17c;
+  float local_178;
   float local_170;
   float local_16c;
   float local_168;
-  undefined4 local_160;
-  undefined4 local_15c;
-  undefined4 local_158;
+  float local_160;
+  float local_15c;
+  float local_158;
   undefined4 local_150;
   undefined4 local_14c;
   undefined4 local_148;
   undefined4 local_140;
   undefined4 local_13c;
   undefined4 local_138;
-  undefined4 local_120;
-  undefined4 local_11c;
-  undefined4 local_118;
+  float local_120;
+  float local_11c;
+  float local_118;
   undefined4 local_110;
   undefined4 local_10c;
   undefined4 local_108;
   undefined4 local_100;
   undefined4 local_fc;
   undefined4 local_f8;
-  undefined1 auStack_e0 [48];
+  float afStack_e0 [12];
   float local_b0;
   undefined4 local_ac;
   undefined4 local_a8;
-  undefined1 auStack_a0 [160];
+  float afStack_a0 [40];
   
-  __savegprlr_26();
+  uVar2 = (ulonglong)(int)param_4;
+  __savegprlr_26(param_1);
   pfVar1 = (float *)__savefpr_27();
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8201ebc8,0x107b,0,0xffffffff82000f98,0xffffffff8201f7e8);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_modelpreviewer.cpp",
+                    0x107b,0,"%s");
   }
-  MatrixIdentity44(auStack_e0);
-  MatrixIdentity44(&local_120);
-  MatrixIdentity44(&local_160);
-  MatrixRotationY((double)DAT_82a3d738,&local_200);
-  MatrixRotationZ(-(double)DAT_82a3d73c,&local_1d0);
+  MatrixIdentity44((float (*) [4])afStack_e0);
+  MatrixIdentity44((float (*) [4])&local_120);
+  MatrixIdentity44((float (*) [4])&local_160);
+  MatrixRotationY((float (*) [3])&local_200,g_mdlprv.viewer.vertical);
+  MatrixRotationZ((float (*) [3])&local_1d0,-g_mdlprv.viewer.horizontal);
   local_ac = 0;
   local_a8 = 0;
   local_120 = local_200;
   local_11c = local_1fc;
   local_118 = local_1f8;
   local_160 = local_1d0;
-  local_b0 = -DAT_82a3d740;
+  local_b0 = -g_mdlprv.viewer.centerRadius;
   local_15c = local_1cc;
   local_158 = local_1c8;
   local_110 = local_1f4;
@@ -3541,37 +4250,37 @@ void MdlPrvUpdateViewFocused
   local_140 = local_1b8;
   local_13c = local_1b4;
   local_138 = local_1b0;
-  MatrixMultiply44(auStack_e0,&local_120,auStack_a0);
-  MatrixMultiply44(auStack_a0,&local_160,&local_1a0);
-  local_210 = DAT_82a3d78c;
-  local_20c = DAT_82a3d790;
-  local_208 = DAT_82a3d794;
-  if ((*(char *)(DAT_82a4c078 + 0xc) != '\0') && (DAT_82a4bf08 != '\0')) {
-    local_210 = DAT_82a3d8e4;
-    local_20c = DAT_82a3d8e8;
-    local_208 = DAT_82a3d8ec;
+  MatrixMultiply44((float (*) [4])afStack_e0,(float (*) [4])&local_120,(float (*) [4])afStack_a0);
+  MatrixMultiply44((float (*) [4])afStack_a0,(float (*) [4])&local_160,(float (*) [4])&local_1a0);
+  local_210 = g_mdlprv.model.currentEntity.placement.origin[0];
+  local_20c = g_mdlprv.model.currentEntity.placement.origin[1];
+  local_208 = g_mdlprv.model.currentEntity.placement.origin[2];
+  if ((*(char *)(DAT_82a4c078 + 0xc) != '\0') && (g_mdlprv.anim.isAnimPlaying != false)) {
+    local_210 = g_mdlprv.model.initialOrigin[0];
+    local_20c = g_mdlprv.model.initialOrigin[1];
+    local_208 = g_mdlprv.model.initialOrigin[2];
   }
-  local_210 = *(float *)(DAT_82a3d6c8 + 0xc) + local_210;
-  local_20c = *(float *)(DAT_82a3d6c8 + 0x10) + local_20c;
-  local_208 = *(float *)(DAT_82a3d6c8 + 0x14) + local_208;
+  local_210 = (modPrvCenterOffset->current).value + local_210;
+  local_20c = (modPrvCenterOffset->current).vector[1] + local_20c;
+  local_208 = (modPrvCenterOffset->current).vector[2] + local_208;
   *pfVar1 = local_170 + local_210;
   pfVar1[1] = local_16c + local_20c;
   pfVar1[2] = local_168 + local_208;
-  puVar2 = (undefined4 *)param_2;
-  *puVar2 = local_1a0;
-  puVar2[3] = local_190;
-  puVar2[1] = local_19c;
-  puVar2[2] = local_198;
-  puVar2[4] = local_18c;
-  puVar2[5] = local_188;
-  puVar2[6] = local_180;
-  puVar2[7] = local_17c;
-  puVar2[8] = local_178;
+  (*param_2)[0] = local_1a0;
+  param_2[1][0] = local_190;
+  (*param_2)[1] = local_19c;
+  (*param_2)[2] = local_198;
+  param_2[1][1] = local_18c;
+  param_2[1][2] = local_188;
+  param_2[2][0] = local_180;
+  param_2[2][1] = local_17c;
+  param_2[2][2] = local_178;
   AxisToAngles(param_2,param_3);
-  if ((*(char *)(DAT_82a4c0a4 + 0xc) != '\0') || (DAT_82a3d704 == 3)) {
+  if (((modPrvDrawAxis->current).enabled != false) ||
+     (g_mdlprv.system.focusedMode == FOCUSEDMODE_FOCALMOVE)) {
     CG_ModPrvDrawViewAxis(&local_210);
   }
-  *(undefined4 *)param_4 = DAT_82a3d744;
+  *(float *)uVar2 = g_mdlprv.viewer.zNear;
   __restfpr_27();
   __restgprlr_26();
   return;
@@ -3580,48 +4289,46 @@ void MdlPrvUpdateViewFocused
 
 // 822E1598  MdlPrvUpdateViewFree  (cgame/cg_modelpreviewer.cpp:4268)
 
-void MdlPrvUpdateViewFree(undefined4 *param_1,undefined8 param_2,undefined4 *param_3)
+void MdlPrvUpdateViewFree(float *param_1,float (*param_2) [3],float *param_3,float *param_4)
 
 {
-  *param_1 = DAT_82a3d750;
-  param_1[1] = DAT_82a3d754;
-  param_1[2] = DAT_82a3d758;
-  *param_3 = DAT_82a3d75c;
-  param_3[1] = DAT_82a3d760;
-  param_3[2] = DAT_82a3d764;
-  AnglesToAxis(param_3);
+  *param_1 = g_mdlprv.viewer.freeModeOrigin[0];
+  param_1[1] = g_mdlprv.viewer.freeModeOrigin[1];
+  param_1[2] = g_mdlprv.viewer.freeModeOrigin[2];
+  *param_3 = g_mdlprv.viewer.freeModeAngles[0];
+  param_3[1] = g_mdlprv.viewer.freeModeAngles[1];
+  param_3[2] = g_mdlprv.viewer.freeModeAngles[2];
+  AnglesToAxis(param_3,param_2);
   return;
 }
 
 
 // 822E15D8  CG_ModelPreviewerUpdateView  (cgame/cg_modelpreviewer.cpp:4276)
 
-void CG_ModelPreviewerUpdateView(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+void CG_ModelPreviewerUpdateView(float *param_1,float (*param_2) [3],float *param_3,float *param_4)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
+  float *pfVar1;
   
-  puVar2 = (undefined4 *)__savegprlr_29();
-  puVar1 = (undefined4 *)param_3;
-  if (DAT_82a3d700 == 0) {
-    MdlPrvUpdateViewFocused();
-    DAT_82a3d750 = *puVar2;
-    DAT_82a3d754 = puVar2[1];
-    DAT_82a3d758 = puVar2[2];
-    DAT_82a3d75c = *puVar1;
-    DAT_82a3d760 = puVar1[1];
-    DAT_82a3d764 = puVar1[2];
+  pfVar1 = (float *)__savegprlr_29(param_1);
+  if (g_mdlprv.system.uiModeGPad == MDLPRVMODE_FOCUSED) {
+    MdlPrvUpdateViewFocused(pfVar1,param_2,param_3,param_4);
+    g_mdlprv.viewer.freeModeOrigin[0] = *pfVar1;
+    g_mdlprv.viewer.freeModeOrigin[1] = pfVar1[1];
+    g_mdlprv.viewer.freeModeOrigin[2] = pfVar1[2];
+    g_mdlprv.viewer.freeModeAngles[0] = *param_3;
+    g_mdlprv.viewer.freeModeAngles[1] = param_3[1];
+    g_mdlprv.viewer.freeModeAngles[2] = param_3[2];
     __restgprlr_29();
     return;
   }
-  *puVar2 = DAT_82a3d750;
-  puVar2[1] = DAT_82a3d754;
-  puVar2[2] = DAT_82a3d758;
-  *puVar1 = DAT_82a3d75c;
-  puVar1[1] = DAT_82a3d760;
-  puVar1[2] = DAT_82a3d764;
-  AnglesToAxis(param_3);
+  *pfVar1 = g_mdlprv.viewer.freeModeOrigin[0];
+  pfVar1[1] = g_mdlprv.viewer.freeModeOrigin[1];
+  pfVar1[2] = g_mdlprv.viewer.freeModeOrigin[2];
+  *param_3 = g_mdlprv.viewer.freeModeAngles[0];
+  param_3[1] = g_mdlprv.viewer.freeModeAngles[1];
+  param_3[2] = g_mdlprv.viewer.freeModeAngles[2];
+  AnglesToAxis(param_3,param_2);
   __restgprlr_29();
   return;
 }
@@ -3629,99 +4336,120 @@ void CG_ModelPreviewerUpdateView(undefined8 param_1,undefined8 param_2,undefined
 
 // 822E1680  CG_ModelPreviewerNeedsVieworgInterpSkipped  (cgame/cg_modelpreviewer.cpp:4291)
 
-bool CG_ModelPreviewerNeedsVieworgInterpSkipped(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+bool CG_ModelPreviewerNeedsVieworgInterpSkipped(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  cg_s *pcVar1;
   
-  iVar1 = CG_GetLocalClientGlobals();
-  return *(int *)(iVar1 + 4) == 4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  return (pcVar1->predictedPlayerState).pm_type == 4;
 }
 
 
 // 822E16B0  CG_AddModelPreviewerModel  (cgame/cg_modelpreviewer.cpp:4303)
 
-void CG_AddModelPreviewerModel(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_AddModelPreviewerModel(LocalClientNum_t param_1,int param_2)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
-  double dVar5;
+  cpose_t *pcVar1;
+  LocalClientNum_t LVar2;
+  undefined1 uVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double extraout_f1;
   double dVar6;
   double dVar7;
+  double dVar8;
+  double dVar9;
   longlong local_70;
   float local_68;
-  undefined1 auStack_60 [96];
+  float afStack_60 [24];
   
-  uVar2 = __savegprlr_28();
-  if ((DAT_82a3d844 != 0) && (*(char *)(DAT_82a4c0bc + 0xc) == '\0')) {
-    local_70 = (longlong)param_2;
-    dVar6 = 0.0;
-    DAT_82a4bf34 = -((float)local_70 * 0.001 - DAT_82a4bf34);
-    if (DAT_82a4bf34 < 0.0) {
-      DAT_82a4bf08 = '\0';
+  lVar4 = (longlong)param_2;
+  LVar2 = __savegprlr_28(param_1);
+  if ((g_mdlprv.model.currentObj != (DObj *)0x0) && (*(char *)(DAT_82a4c0bc + 0xc) == '\0')) {
+    local_70 = (longlong)(int)lVar4;
+    dVar8 = 0.0;
+    g_mdlprv.anim.stepCounter = -((float)local_70 * 0.001 - g_mdlprv.anim.stepCounter);
+    if (g_mdlprv.anim.stepCounter < 0.0) {
+      g_mdlprv.anim.isAnimPlaying = false;
     }
-    dVar7 = dVar6;
-    if (DAT_82a4bf08 != '\0') {
-      dVar7 = (double)(*(float *)(DAT_82a4c0b8 + 0xc) * (float)local_70 * 0.001);
+    dVar9 = dVar8;
+    if (g_mdlprv.anim.isAnimPlaying != false) {
+      dVar9 = (double)(*(float *)(DAT_82a4c0b8 + 0xc) * (float)local_70 * 0.001);
     }
+    dVar6 = extraout_f1;
     if (*(char *)(DAT_82a4c0cc + 0xc) != '\0') {
       CG_ModPrvLoopAnimation();
     }
-    CG_ModPrvApplyAnimationBlend();
-    CG_ModPrvApplyDelta();
-    DObjUpdateClientInfo(dVar7,DAT_82a3d844);
-    memset(&DAT_82a3d7e8,0,0x5c);
-    DAT_82a3d7ea = 0x12;
-    DAT_82a3d7e0 = &DAT_82a3d7e8;
-    DAT_82a3d7ec = '\x01' - (DAT_82a4bef8 == 0);
-    DAT_82a3d7f0 = DAT_82a4bef8;
-    CG_GetLocalClientGlobals(uVar2);
-    UnitQuatToAxis(0xffffffff82a3d77c,auStack_60);
-    AxisToAngles(auStack_60,0xffffffff82a3d808);
-    DAT_82a3d7fc = DAT_82a3d78c;
-    DAT_82a3d800 = DAT_82a3d790;
-    DAT_82a3d804 = DAT_82a3d794;
-    if (0 < *(int *)(DAT_82a4c0b4 + 0xc)) {
-      CG_ModPrvDrawBones(uVar2);
+    uVar3 = (undefined1)lVar4;
+    dVar7 = (double)(float)dVar6;
+    CG_ModPrvApplyAnimationBlend((float)dVar6);
+    CG_ModPrvApplyDelta((float)dVar7);
+    DObjUpdateClientInfo(g_mdlprv.model.currentObj,(float)dVar9,(bool)uVar3);
+    memset();
+    g_mdlprv.model.pose.eType = '\x12';
+    g_mdlprv.model.currentEntity.info.pose = &g_mdlprv.model.pose;
+    g_mdlprv.model.pose.isRagdoll = '\x01' - (g_mdlprv.model.ragdoll == 0);
+    g_mdlprv.model.pose.ragdollHandle = g_mdlprv.model.ragdoll;
+    CG_GetLocalClientGlobals(LVar2);
+    UnitQuatToAxis(g_mdlprv.model.currentEntity.placement.quat,(float (*) [3])afStack_60);
+    AxisToAngles((float (*) [3])afStack_60,g_mdlprv.model.pose.angles);
+    g_mdlprv.model.pose.origin[0] = g_mdlprv.model.currentEntity.placement.origin[0];
+    g_mdlprv.model.pose.origin[1] = g_mdlprv.model.currentEntity.placement.origin[1];
+    g_mdlprv.model.pose.origin[2] = g_mdlprv.model.currentEntity.placement.origin[2];
+    if (0 < (modPrvDrawBoneInfo->current).integer) {
+      CG_ModPrvDrawBones(LVar2);
     }
-    local_70 = *(longlong *)(DAT_82a3d7e0 + 0x14);
-    dVar7 = 4.0;
-    local_68 = *(float *)(DAT_82a3d7e0 + 0x1c) + 4.0;
-    R_AddDObjToScene(dVar6,DAT_82a3d844,DAT_82a3d7e0,0x7fe,0,&local_70);
-    if (DAT_82a3d768 == '\0') {
-      DAT_82a3d768 = '\x01';
-      dVar5 = (double)DObjGetRadius(DAT_82a3d844);
-      DAT_82a3d79c = *(undefined4 *)(DAT_82a3d7e0 + 0x14);
-      DAT_82a3d7a0 = *(undefined4 *)(DAT_82a3d7e0 + 0x18);
-      DAT_82a3d7a4 = *(undefined4 *)(DAT_82a3d7e0 + 0x1c);
-      DAT_82a3d7a8 = (float)dVar5;
-      DAT_82a3d7ac = (float)dVar5;
-      DAT_82a3d7b0 = (float)dVar5;
+    local_70 = *(longlong *)(g_mdlprv.model.currentEntity.info.pose)->origin;
+    dVar9 = 4.0;
+    local_68 = (g_mdlprv.model.currentEntity.info.pose)->origin[2] + 4.0;
+    R_AddDObjToScene(g_mdlprv.model.currentObj,g_mdlprv.model.currentEntity.info.pose,0x7fe,0,
+                     (float *)&local_70,(float)dVar8);
+    if (g_mdlprv.model.inited == false) {
+      g_mdlprv.model.inited = true;
+      g_mdlprv.model.currentEntity.cull.bounds.halfSize[0] =
+           DObjGetRadius(g_mdlprv.model.currentObj);
+      g_mdlprv.model.currentEntity.cull.bounds.midPoint[0] =
+           (g_mdlprv.model.currentEntity.info.pose)->origin[0];
+      g_mdlprv.model.currentEntity.cull.bounds.midPoint[1] =
+           (g_mdlprv.model.currentEntity.info.pose)->origin[1];
+      g_mdlprv.model.currentEntity.cull.bounds.midPoint[2] =
+           (g_mdlprv.model.currentEntity.info.pose)->origin[2];
+      g_mdlprv.model.currentEntity.cull.bounds.halfSize[1] =
+           g_mdlprv.model.currentEntity.cull.bounds.halfSize[0];
+      g_mdlprv.model.currentEntity.cull.bounds.halfSize[2] =
+           g_mdlprv.model.currentEntity.cull.bounds.halfSize[0];
       FrameModel();
     }
-    lVar3 = 10;
-    puVar4 = &DAT_82a3dcd8;
+    lVar4 = 10;
+    pfVar5 = g_mdlprv.model.clones[0].pose.origin + 1;
     do {
-      if (puVar4[-7] != 0) {
-        memset(puVar4 + -6,0,0x5c);
-        puVar4[-9] = puVar4 + -6;
-        *(undefined1 *)((int)puVar4 + -0x16) = 0x12;
-        UnitQuatToAxis(puVar4 + -0x22,auStack_60);
-        AxisToAngles(auStack_60,puVar4 + 2);
-        puVar4[-1] = puVar4[-0x1e];
-        *puVar4 = puVar4[-0x1d];
-        puVar4[1] = puVar4[-0x1c];
-        iVar1 = puVar4[-9];
-        local_70 = *(longlong *)(iVar1 + 0x14);
-        local_68 = (float)((double)*(float *)(iVar1 + 0x1c) + dVar7);
-        R_AddDObjToScene(dVar6,puVar4[-7],iVar1,0x7fe,0,&local_70);
+      if (pfVar5[-7] != 0.0) {
+        memset();
+        pfVar5[-9] = (float)(pfVar5 + -6);
+        *(uchar *)((int)pfVar5 + -0x16) = '\x12';
+        UnitQuatToAxis(pfVar5 + -0x22,(float (*) [3])afStack_60);
+        AxisToAngles((float (*) [3])afStack_60,pfVar5 + 2);
+        pfVar5[-1] = pfVar5[-0x1e];
+        *pfVar5 = pfVar5[-0x1d];
+        pfVar5[1] = pfVar5[-0x1c];
+        pcVar1 = (cpose_t *)pfVar5[-9];
+        local_70 = *(longlong *)pcVar1->origin;
+        local_68 = (float)((double)pcVar1->origin[2] + dVar9);
+        R_AddDObjToScene((DObj *)pfVar5[-7],pcVar1,0x7fe,0,(float *)&local_70,(float)dVar8);
       }
-      lVar3 = lVar3 + -1;
-      puVar4 = puVar4 + 0x5d;
-    } while (lVar3 != 0);
+      lVar4 = lVar4 + -1;
+      pfVar5 = pfVar5 + 0x5d;
+    } while (lVar4 != 0);
   }
   __restgprlr_28();
   return;
@@ -3730,15 +4458,17 @@ void CG_AddModelPreviewerModel(undefined8 param_1,int param_2)
 
 // 822E2F08  CG_ModelPreviewerCreateDevGui  (cgame/cg_modelpreviewer.cpp:4399)
 
-void CG_ModelPreviewerCreateDevGui(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModelPreviewerCreateDevGui(LocalClientNum_t param_1)
 
 {
-  if (DAT_82a3d6d0 == '\0') {
-    memset(&DAT_82a3d6d0,0,0xe99c);
-    DAT_82a3d6d4 = Hunk_UserCreate(0x20000,0xffffffff8201fba0,0,0);
+  if (!g_mdlprv.inited) {
+    memset();
+    g_mdlprv.user = Hunk_UserCreate(0x20000,"CG_ModPrvEnumerateCharacters",false,0);
     CG_ModPrvStartup();
     CG_ModPrvResetGlobals();
-    Cbuf_InsertText(param_1,0xffffffff8201fb84);
+    Cbuf_InsertText(param_1,"exec devgui_modelpreviewer\n");
   }
   return;
 }
@@ -3746,11 +4476,13 @@ void CG_ModelPreviewerCreateDevGui(undefined8 param_1)
 
 // 822E2A50  CG_ModelPreviewerDestroyDevGui  (cgame/cg_modelpreviewer.cpp:4415)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModelPreviewerDestroyDevGui(void)
 
 {
-  Cmd_RemoveCommand(0xffffffff8201f468);
-  Cmd_RemoveCommand(0xffffffff8201f45c);
+  Cmd_RemoveCommand("modPrvResetOrientation");
+  Cmd_RemoveCommand("modPrvExit");
   CG_ModPrvShutdown();
   return;
 }
@@ -3758,48 +4490,53 @@ void CG_ModelPreviewerDestroyDevGui(void)
 
 // 822E2A88  CG_ModelPreviewerFrame  (cgame/cg_modelpreviewer.cpp:4422)
 
-void CG_ModelPreviewerFrame(void)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_ModelPreviewerFrame(cg_s *param_1)
 
 {
-  undefined8 uVar1;
+  cg_s *pcVar1;
   
-  uVar1 = __savegprlr_29();
-  if (*(char *)(DAT_82a4c098 + 0xb) == '\0') {
-    CG_ModPrvModelLoadUpdate();
+  pcVar1 = (cg_s *)__savegprlr_29(param_1);
+  if (modPrvLoadModel->modified == false) {
+    CG_ModPrvModelLoadUpdate(pcVar1);
   }
   else {
-    CG_ModPrvModelLoadAccepted();
+    CG_ModPrvModelLoadAccepted(pcVar1);
   }
-  if (*(char *)(DAT_82a4c0b0 + 0xb) != '\0') {
-    CG_ModPrvModelRecentAccepted(uVar1);
+  if (modPrvModelMru->modified != false) {
+    CG_ModPrvModelRecentAccepted(pcVar1);
   }
-  if (*(char *)(DAT_82a4c088 + 0xb) != '\0') {
+  if (modPrvOrigin->modified != false) {
     CG_ModPrvOriginUpdate();
   }
-  if (*(char *)(DAT_82a4c0ac + 0xb) != '\0') {
+  if (modPrvRotationAngles->modified != false) {
     CG_ModPrvRotateUpdate();
   }
-  if (*(char *)(DAT_82a4c08c + 0xb) != '\0') {
-    CG_ModPrvAnimRecentAccept(DAT_82a4c08c,0xffffffff82a4bf00);
+  if (modPrvFromAnimMru->modified != false) {
+    CG_ModPrvAnimRecentAccept(modPrvFromAnimMru,&g_mdlprv.anim.fromCurrentIndex);
   }
-  if (*(char *)(DAT_82a3d6bc + 0xb) != '\0') {
-    CG_ModPrvAnimRecentAccept(DAT_82a3d6bc,0xffffffff82a4bf04);
+  if (modPrvToAnimMru->modified != false) {
+    CG_ModPrvAnimRecentAccept(modPrvToAnimMru,&g_mdlprv.anim.toCurrentIndex);
   }
-  if (*(char *)(DAT_82a4c0c0 + 0xb) != '\0') {
-    CG_ModPrvLoadAnimAccept(DAT_82a4c0c0,0xffffffff82a4bf00);
+  if (modPrvLoadFromAnim->modified != false) {
+    CG_ModPrvLoadAnimAccept(modPrvLoadFromAnim,&g_mdlprv.anim.fromCurrentIndex);
   }
-  if (*(char *)(DAT_82a3d6b8 + 0xb) != '\0') {
-    CG_ModPrvLoadAnimAccept(DAT_82a3d6b8,0xffffffff82a4bf04);
+  if (modPrvLoadToAnim->modified != false) {
+    CG_ModPrvLoadAnimAccept(modPrvLoadToAnim,&g_mdlprv.anim.toCurrentIndex);
   }
-  if ((*(char *)(DAT_82a3d6c0 + 0xb) != '\0') || (*(char *)(DAT_82a4c07c + 0xb) != '\0')) {
-    Dvar_ClearModified();
-    Dvar_ClearModified(DAT_82a4c07c);
-    CG_ModPrvLoadAnimations(0);
+  if ((modPrvAnimCrossBlendTime->modified != false) ||
+     (modPrvAnimCrossBlendDuration->modified != false)) {
+    Dvar_ClearModified(modPrvAnimCrossBlendTime);
+    Dvar_ClearModified(modPrvAnimCrossBlendDuration);
+    CG_ModPrvLoadAnimations((char *)0x0);
   }
-  if (*(char *)(DAT_82a4c0a8 + 0xb) != '\0') {
+  if (modPrvAnimBlendWeight->modified != false) {
     CG_ModPrvAnimBlendWeightUpdate();
   }
-  if (*(char *)(DAT_82a4c0c8 + 0xb) != '\0') {
+  if (modPrvMatReplace->modified != false) {
     CG_ModPrvMatReplaceAccepted();
     __restgprlr_29();
     return;
@@ -3812,93 +4549,90 @@ void CG_ModelPreviewerFrame(void)
 
 // 822E1978  CG_ModelPreviewerBuildInfoStr  (cgame/cg_modelpreviewer.cpp:4466)
 
-void CG_ModelPreviewerBuildInfoStr(undefined8 param_1,undefined8 param_2)
+void CG_ModelPreviewerBuildInfoStr(char *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  dvar_t *pdVar2;
   int iVar3;
-  undefined8 uVar2;
   ulonglong uVar4;
-  undefined1 auStack_140 [320];
+  char acStack_140 [320];
   
-  uVar1 = __savegprlr_26();
-  I_strncat();
-  uVar4 = (ulonglong)DAT_82a3d6d8;
-  if (0 < (int)DAT_82a3d6d8) {
+  pcVar1 = (char *)__savegprlr_26(param_1);
+  I_strncat(pcVar1,param_2,"#MODELS,");
+  uVar4 = (ulonglong)(uint)g_mdlprv.system.modelCount;
+  if (0 < g_mdlprv.system.modelCount) {
     iVar3 = 0;
     do {
-      I_strncat(uVar1,param_2,*(undefined4 *)(iVar3 + DAT_82a3d6dc));
-      I_strncat(uVar1,param_2,0xffffffff82003480);
+      I_strncat(pcVar1,param_2,*(char **)(iVar3 + (int)g_mdlprv.system.modelNames));
+      I_strncat(pcVar1,param_2,",");
       uVar4 = uVar4 - 1;
       iVar3 = iVar3 + 4;
     } while (uVar4 != 0);
   }
-  I_strncat(uVar1,param_2,0xffffffff8201f998);
-  uVar4 = (ulonglong)DAT_82a3d6e0;
-  if (0 < (int)DAT_82a3d6e0) {
+  I_strncat(pcVar1,param_2,"#ANIMS,");
+  uVar4 = (ulonglong)(uint)g_mdlprv.system.animCount;
+  if (0 < g_mdlprv.system.animCount) {
     iVar3 = 0;
     do {
-      I_strncat(uVar1,param_2,*(undefined4 *)(iVar3 + DAT_82a3d6e4));
-      I_strncat(uVar1,param_2,0xffffffff82003480);
+      I_strncat(pcVar1,param_2,*(char **)(iVar3 + (int)g_mdlprv.system.animNames));
+      I_strncat(pcVar1,param_2,",");
       uVar4 = uVar4 - 1;
       iVar3 = iVar3 + 4;
     } while (uVar4 != 0);
   }
-  iVar3 = Dvar_FindVar(0xffffffff8201f2e0);
-  if (iVar3 != 0) {
-    I_strncat(uVar1,param_2,0xffffffff8201f990);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f97c,
-                *(undefined4 *)(*(int *)(DAT_82a4c098 + 0xc) * 4 + DAT_82a3d6dc));
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f964,
-                *(undefined4 *)(*(int *)(DAT_82a4c0c0 + 0xc) * 4 + DAT_82a3d6e4));
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f94c,
-                *(undefined4 *)(*(int *)(DAT_82a3d6b8 + 0xc) * 4 + DAT_82a3d6e4));
-    I_strncat(uVar1,param_2,auStack_140);
-    uVar2 = Dvar_EnumToString(DAT_82a4c0b4);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f934,uVar2);
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f920,*(char *)(DAT_82a4c0a4 + 0xc) != '\0');
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f900,(double)*(float *)(DAT_82a3d6c0 + 0xc));
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f8dc,(double)*(float *)(DAT_82a4c07c + 0xc));
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f8c4,(double)*(float *)(DAT_82a4c0b8 + 0xc));
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f8a8,*(char *)(DAT_82a4c078 + 0xc) != '\0');
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f890,*(char *)(DAT_82a4c0cc + 0xc) != '\0');
-    I_strncat(uVar1,param_2,auStack_140);
-    uVar2 = Dvar_EnumToString(DAT_82a4c070);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f878,uVar2);
-    I_strncat(uVar1,param_2,auStack_140);
-    Com_sprintf(auStack_140,0x100,0xffffffff8201f85c,(double)*(float *)(DAT_82a4c0a8 + 0xc));
-    I_strncat(uVar1,param_2,auStack_140);
-    iVar3 = Dvar_FindVar(0xffffffff8201f4a4);
-    if (iVar3 != 0) {
-      uVar2 = Dvar_EnumToString();
-      Com_sprintf(auStack_140,0x100,0xffffffff8201f84c,uVar2);
-      I_strncat(uVar1,param_2,auStack_140);
+  pdVar2 = Dvar_FindVar("modPrvLoadModel");
+  if (pdVar2 != (dvar_t *)0x0) {
+    I_strncat(pcVar1,param_2,"#DVARS,");
+    Com_sprintf(acStack_140,0x100,"modPrvLoadModel %s,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvLoadFromAnim %s,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvLoadToAnim %s,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Dvar_EnumToString(modPrvDrawBoneInfo);
+    Com_sprintf(acStack_140,0x100,"modPrvDrawBoneInfo %s,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvDrawAxis %i,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimCrossBlendTime %.2f,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimCrossBlendDuration %.2f,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimRate %.2f,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimApplyDelta %i,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimForceLoop %i,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Dvar_EnumToString(DAT_82a4c070);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimBlendMode %s,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    Com_sprintf(acStack_140,0x100,"modPrvAnimBlendWeight %.2f,");
+    I_strncat(pcVar1,param_2,acStack_140);
+    pdVar2 = Dvar_FindVar("r_forceLod");
+    if (pdVar2 != (dvar_t *)0x0) {
+      Dvar_EnumToString(pdVar2);
+      Com_sprintf(acStack_140,0x100,"r_forceLod %s,");
+      I_strncat(pcVar1,param_2,acStack_140);
     }
-    iVar3 = Dvar_FindVar(0xffffffff8201f840);
-    if (iVar3 != 0) {
-      uVar2 = Dvar_EnumToString();
-      Com_sprintf(auStack_140,0x100,0xffffffff8201f830,uVar2);
-      I_strncat(uVar1,param_2,auStack_140);
+    pdVar2 = Dvar_FindVar("r_colorMap");
+    if (pdVar2 != (dvar_t *)0x0) {
+      Dvar_EnumToString(pdVar2);
+      Com_sprintf(acStack_140,0x100,"r_colorMap %s,");
+      I_strncat(pcVar1,param_2,acStack_140);
     }
-    iVar3 = Dvar_FindVar(0xffffffff8201f820);
-    if (iVar3 != 0) {
-      uVar2 = Dvar_EnumToString();
-      Com_sprintf(auStack_140,0x100,0xffffffff8201f80c,uVar2);
-      I_strncat(uVar1,param_2,auStack_140);
+    pdVar2 = Dvar_FindVar("r_specularMap");
+    if (pdVar2 != (dvar_t *)0x0) {
+      Dvar_EnumToString(pdVar2);
+      Com_sprintf(acStack_140,0x100,"r_specularMap %s,");
+      I_strncat(pcVar1,param_2,acStack_140);
     }
-    iVar3 = Dvar_FindVar(0xffffffff8201f800);
-    if (iVar3 != 0) {
-      uVar2 = Dvar_EnumToString();
-      Com_sprintf(auStack_140,0x100,0xffffffff8201f7f0,uVar2);
-      I_strncat(uVar1,param_2,auStack_140);
+    pdVar2 = Dvar_FindVar("r_normalMap");
+    if (pdVar2 != (dvar_t *)0x0) {
+      Dvar_EnumToString(pdVar2);
+      Com_sprintf(acStack_140,0x100,"r_normalMap %s,");
+      I_strncat(pcVar1,param_2,acStack_140);
     }
   }
   __restgprlr_26();
@@ -3908,31 +4642,29 @@ void CG_ModelPreviewerBuildInfoStr(undefined8 param_1,undefined8 param_2)
 
 // 822E1DF0  CG_ModelPreviewerBuildViewPosStr  (cgame/cg_modelpreviewer.cpp:4554)
 
-void CG_ModelPreviewerBuildViewPosStr(undefined8 param_1,undefined8 param_2)
+void CG_ModelPreviewerBuildViewPosStr(char *param_1,uint param_2)
 
 {
-  if (DAT_82a3d6c8 == 0) {
-    Com_sprintf(param_1,param_2,0xffffffff8201f9cc);
+  if (modPrvCenterOffset == (dvar_t *)0x0) {
+    Com_sprintf(param_1,param_2,"#ERROR-NotInGame");
     return;
   }
-  Com_sprintf(param_1,param_2,0xffffffff8201f9ac,
-              (double)(DAT_82a3d78c + *(float *)(DAT_82a3d6c8 + 0xc)),
-              (double)(*(float *)(DAT_82a3d6c8 + 0x10) + DAT_82a3d790),
-              (double)(*(float *)(DAT_82a3d6c8 + 0x14) + DAT_82a3d794),(double)DAT_82a3d740,
-              (double)DAT_82a3d738);
+  Com_sprintf(param_1,param_2,"%.2f %.2f %.2f %.2f %.2f %.2f");
   return;
 }
 
 
 // 822E1EB8  CG_ModelPreviewerRegisterDvars  (cgame/cg_modelpreviewer.cpp:4569)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModelPreviewerRegisterDvars(void)
 
 {
   __savegprlr_29();
-  DAT_82a4c09c = Dvar_RegisterBool(0xffffffff8201fa08,1,0,0xffffffff8201fa1c);
-  DAT_82a4c080 = Dvar_RegisterString(0xffffffff8201f9f4,0xffffffff820068af,0,0xffffffff820068af);
-  DAT_82a4c074 = Dvar_RegisterString(0xffffffff8201f9e0,0xffffffff820068af,0,0xffffffff820068af);
+  DAT_82a4c09c = Dvar_RegisterBool("cg_modPrvDrawAxis",true,0,"Draw Axes in the model previewer");
+  DAT_82a4c080 = Dvar_RegisterString("cg_modPrvMruModels","",0,"");
+  cg_modPrvMruAnims = Dvar_RegisterString("cg_modPrvMruAnims","",0,"");
   __restgprlr_29();
   return;
 }
@@ -3940,24 +4672,26 @@ void CG_ModelPreviewerRegisterDvars(void)
 
 // 822E1F38  CG_ModPrvSaveDObjs  (cgame/cg_modelpreviewer.cpp:4579)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvSaveDObjs(void)
 
 {
   longlong lVar1;
-  int *piVar2;
+  DObj **ppDVar2;
   
   __savegprlr_29();
   lVar1 = 10;
-  piVar2 = &DAT_82a3dcbc;
+  ppDVar2 = &g_mdlprv.model.clones[0].obj;
   do {
-    if (*piVar2 != 0) {
-      DObjArchive();
+    if (*ppDVar2 != (DObj *)0x0) {
+      DObjArchive(*ppDVar2);
     }
     lVar1 = lVar1 + -1;
-    piVar2 = piVar2 + 0x5d;
+    ppDVar2 = ppDVar2 + 0x5d;
   } while (lVar1 != 0);
-  if (DAT_82a3d844 != 0) {
-    DObjArchive();
+  if (g_mdlprv.model.currentObj != (DObj *)0x0) {
+    DObjArchive(g_mdlprv.model.currentObj);
   }
   __restgprlr_29();
   return;
@@ -3966,24 +4700,26 @@ void CG_ModPrvSaveDObjs(void)
 
 // 822E1F88  CG_ModPrvLoadDObjs  (cgame/cg_modelpreviewer.cpp:4597)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CG_ModPrvLoadDObjs(void)
 
 {
   longlong lVar1;
-  int *piVar2;
+  DObj **ppDVar2;
   
   __savegprlr_29();
   lVar1 = 10;
-  piVar2 = &DAT_82a3dcbc;
+  ppDVar2 = &g_mdlprv.model.clones[0].obj;
   do {
-    if (*piVar2 != 0) {
-      DObjUnarchive();
+    if (*ppDVar2 != (DObj *)0x0) {
+      DObjUnarchive(*ppDVar2);
     }
     lVar1 = lVar1 + -1;
-    piVar2 = piVar2 + 0x5d;
+    ppDVar2 = ppDVar2 + 0x5d;
   } while (lVar1 != 0);
-  if (DAT_82a3d844 != 0) {
-    DObjUnarchive();
+  if (g_mdlprv.model.currentObj != (DObj *)0x0) {
+    DObjUnarchive(g_mdlprv.model.currentObj);
   }
   __restgprlr_29();
   return;

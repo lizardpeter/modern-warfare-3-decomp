@@ -2,18 +2,18 @@
 
 // 82928378  _isleadbyte_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_wctype.c:55)
 
-int _isleadbyte_l(int _C,_locale_t _Locale)
+int _isleadbyte_l(int param_1,localeinfo_struct *param_2)
 
 {
-  return *(ushort *)((_C & 0xffU) * 2 + *(int *)(PTR_DAT_829b07f8 + 200)) & 0xffff8000;
+  return (__initiallocalestructinfo.locinfo)->pctype[param_1 & 0xff] & 0xffff8000;
 }
 
 
 // 82928398  isleadbyte  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_wctype.c:63)
 
-int isleadbyte(int _C)
+int isleadbyte(int param_1)
 
 {
-  return *(ushort *)((_C & 0xffU) * 2 + *(int *)(PTR_DAT_829b07f8 + 200)) & 0xffff8000;
+  return (__initiallocalestructinfo.locinfo)->pctype[param_1 & 0xff] & 0xffff8000;
 }
 

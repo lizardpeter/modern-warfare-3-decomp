@@ -19,10 +19,10 @@ void BinkFileReadHeader(undefined8 param_1,ulonglong param_2,longlong param_3,ul
   }
   iVar6 = (int)param_2;
   if ((iVar6 != -1) && ((ulonglong)*(uint *)(iVar3 + 0x58) != (param_2 & 0xffffffff))) {
-    SetFilePointer(*(HANDLE *)(iVar3 + 0x54),*(int *)(iVar3 + 0x7c) + iVar6,(PLONG)0x0,0);
+    SetFilePointer(*(void **)(iVar3 + 0x54),*(int *)(iVar3 + 0x7c) + iVar6,(long *)0x0,0);
     *(int *)(iVar3 + 0x58) = iVar6;
   }
-  ReadFile(*(HANDLE *)(iVar3 + 0x54),(LPVOID)param_3,(DWORD)param_4,local_30,(LPOVERLAPPED)0x0);
+  ReadFile(*(void **)(iVar3 + 0x54),(void *)param_3,(ulong)param_4,local_30,(_OVERLAPPED *)0x0);
   uVar2 = (ulonglong)local_30[0];
   if (uVar2 != (param_4 & 0xffffffff)) {
     *(undefined4 *)(iVar3 + 0x20) = 1;
@@ -94,44 +94,41 @@ void BinkFileReadFrame(undefined8 param_1,undefined8 param_2,ulonglong param_3,l
   int iVar2;
   bool bVar3;
   longlong lVar4;
-  void *pvVar6;
-  void *pvVar7;
+  int iVar6;
   undefined8 uVar5;
-  BOOL BVar8;
-  int iVar9;
-  uint *puVar10;
-  uint uVar11;
-  longlong lVar12;
+  int iVar7;
+  uint *puVar8;
+  uint uVar9;
+  longlong lVar10;
+  longlong lVar11;
+  uint *puVar12;
   longlong lVar13;
-  uint *puVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
+  ulonglong uVar14;
+  ulonglong uVar15;
   char in_RESERVE;
   byte in_cr0;
   uint local_60 [24];
   
   lVar4 = __savegprlr_22();
-  lVar12 = 0;
+  lVar10 = 0;
   iVar2 = (int)lVar4;
   bVar3 = false;
   if (*(int *)(iVar2 + 0x20) != 0) {
     __restgprlr_22(0);
     return;
   }
-  pvVar6 = (void *)RADTimerRead();
-  iVar9 = (int)param_3;
-  pvVar7 = pvVar6;
-  if ((iVar9 != -1) && ((ulonglong)*(uint *)(iVar2 + 0x5c) != (param_3 & 0xffffffff))) {
+  iVar6 = RADTimerRead();
+  iVar7 = (int)param_3;
+  if ((iVar7 != -1) && ((ulonglong)*(uint *)(iVar2 + 0x5c) != (param_3 & 0xffffffff))) {
     bVar3 = true;
     if (*(code **)(iVar2 + 0xf4) != (code *)0x0) {
-      pvVar7 = (void *)(**(code **)(iVar2 + 0xf4))(lVar4);
+      (**(code **)(iVar2 + 0xf4))(lVar4);
     }
     if (((ulonglong)*(uint *)(iVar2 + 0x5c) < (param_3 & 0xffffffff)) &&
        ((param_3 & 0xffffffff) <= (ulonglong)*(uint *)(iVar2 + 0x58))) {
       iVar1 = *(int *)(iVar2 + 0x5c);
-      *(int *)(iVar2 + 0x5c) = iVar9;
-      local_60[0] = iVar9 - iVar1;
+      *(int *)(iVar2 + 0x5c) = iVar7;
+      local_60[0] = iVar7 - iVar1;
       *(uint *)(iVar2 + 100) = *(int *)(iVar2 + 100) + local_60[0];
       *(uint *)(iVar2 + 0x4c) = *(int *)(iVar2 + 0x4c) - local_60[0];
       *(uint *)(iVar2 + 0x60) = *(int *)(iVar2 + 0x60) + local_60[0];
@@ -140,122 +137,121 @@ void BinkFileReadFrame(undefined8 param_1,undefined8 param_2,ulonglong param_3,l
       }
     }
     else {
-      pvVar7 = (void *)SetFilePointer(*(HANDLE *)(iVar2 + 0x54),*(int *)(iVar2 + 0x7c) + iVar9,
-                                      (PLONG)0x0,0);
-      *(int *)(iVar2 + 0x58) = iVar9;
-      *(int *)(iVar2 + 0x5c) = iVar9;
+      SetFilePointer(*(void **)(iVar2 + 0x54),*(int *)(iVar2 + 0x7c) + iVar7,(long *)0x0,0);
+      *(int *)(iVar2 + 0x58) = iVar7;
+      *(int *)(iVar2 + 0x5c) = iVar7;
       *(undefined4 *)(iVar2 + 100) = *(undefined4 *)(iVar2 + 0x40);
       *(undefined4 *)(iVar2 + 0x4c) = 0;
       *(undefined4 *)(iVar2 + 0x60) = *(undefined4 *)(iVar2 + 0x6c);
       *(undefined4 *)(iVar2 + 0x74) = *(undefined4 *)(iVar2 + 0x6c);
     }
   }
-  lVar13 = lVar4 + 0x4c;
-  lVar15 = param_4;
+  lVar11 = lVar4 + 0x4c;
+  lVar13 = param_4;
   do {
-    puVar14 = (uint *)lVar13;
-    uVar17 = (ulonglong)*puVar14;
-    if (uVar17 != 0) {
-      if ((param_5 & 0xffffffff) < uVar17) {
-        uVar17 = param_5;
+    puVar12 = (uint *)lVar11;
+    uVar15 = (ulonglong)*puVar12;
+    if (uVar15 != 0) {
+      if ((param_5 & 0xffffffff) < uVar15) {
+        uVar15 = param_5;
       }
-      param_5 = param_5 - uVar17;
-      lVar12 = uVar17 + lVar12;
-      *(int *)(iVar2 + 0x5c) = *(int *)(iVar2 + 0x5c) + (int)uVar17;
-      uVar16 = (ulonglong)*(uint *)(iVar2 + 0x70) - (ulonglong)*(uint *)(iVar2 + 0x60);
-      if ((uVar16 & 0xffffffff) <= (uVar17 & 0xffffffff)) {
-        pvVar7 = memcpy((void *)lVar15,*(void **)(iVar2 + 0x60),(size_t)uVar16);
-        lVar15 = uVar16 + lVar15;
-        uVar17 = uVar17 - uVar16;
+      param_5 = param_5 - uVar15;
+      lVar10 = uVar15 + lVar10;
+      *(int *)(iVar2 + 0x5c) = *(int *)(iVar2 + 0x5c) + (int)uVar15;
+      uVar14 = (ulonglong)*(uint *)(iVar2 + 0x70) - (ulonglong)*(uint *)(iVar2 + 0x60);
+      if ((uVar14 & 0xffffffff) <= (uVar15 & 0xffffffff)) {
+        memcpy();
+        lVar13 = uVar14 + lVar13;
+        uVar15 = uVar15 - uVar14;
         *(undefined4 *)(iVar2 + 0x60) = *(undefined4 *)(iVar2 + 0x6c);
         do {
           if (in_RESERVE != '\0') {
-            uVar11 = storeWordConditionalIndexed(*puVar14 - uVar16,0,lVar13);
-            *puVar14 = uVar11;
+            uVar9 = storeWordConditionalIndexed(*puVar12 - uVar14,0,lVar11);
+            *puVar12 = uVar9;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         do {
-          puVar10 = (uint *)(lVar4 + 100);
+          puVar8 = (uint *)(lVar4 + 100);
           if (in_RESERVE != '\0') {
-            uVar11 = storeWordConditionalIndexed(uVar16 + *puVar10,0,lVar4 + 100);
-            *puVar10 = uVar11;
+            uVar9 = storeWordConditionalIndexed(uVar14 + *puVar8,0,lVar4 + 100);
+            *puVar8 = uVar9;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if ((uVar17 & 0xffffffff) == 0) goto LAB_8294c060;
+        if ((uVar15 & 0xffffffff) == 0) goto LAB_8294c060;
       }
-      pvVar7 = memcpy((void *)lVar15,*(void **)(iVar2 + 0x60),(size_t)uVar17);
-      lVar15 = uVar17 + lVar15;
-      *(size_t *)(iVar2 + 0x60) = *(int *)(iVar2 + 0x60) + (size_t)uVar17;
+      memcpy();
+      lVar13 = uVar15 + lVar13;
+      *(int *)(iVar2 + 0x60) = *(int *)(iVar2 + 0x60) + (int)uVar15;
       do {
         if (in_RESERVE != '\0') {
-          uVar11 = storeWordConditionalIndexed(*puVar14 - uVar17,0,lVar13);
-          *puVar14 = uVar11;
+          uVar9 = storeWordConditionalIndexed(*puVar12 - uVar15,0,lVar11);
+          *puVar12 = uVar9;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
       do {
-        puVar10 = (uint *)(lVar4 + 100);
+        puVar8 = (uint *)(lVar4 + 100);
         if (in_RESERVE != '\0') {
-          uVar11 = storeWordConditionalIndexed(uVar17 + *puVar10,0,lVar4 + 100);
-          *puVar10 = uVar11;
+          uVar9 = storeWordConditionalIndexed(uVar15 + *puVar8,0,lVar4 + 100);
+          *puVar8 = uVar9;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
 LAB_8294c060:
     if ((param_5 & 0xffffffff) == 0) {
-      iVar9 = RADTimerRead(pvVar7);
+      iVar7 = RADTimerRead();
       goto LAB_8294c120;
     }
     if (bVar3) {
-      uVar5 = RADTimerRead(pvVar7);
-      BVar8 = ReadFile(*(HANDLE *)(iVar2 + 0x54),(LPVOID)lVar15,(DWORD)param_5,local_60,
-                       (LPOVERLAPPED)0x0);
-      uVar17 = (ulonglong)local_60[0];
-      if (uVar17 < (param_5 & 0xffffffff)) {
+      uVar5 = RADTimerRead();
+      iVar7 = ReadFile(*(void **)(iVar2 + 0x54),(void *)lVar13,(ulong)param_5,local_60,
+                       (_OVERLAPPED *)0x0);
+      uVar15 = (ulonglong)local_60[0];
+      if (uVar15 < (param_5 & 0xffffffff)) {
         *(undefined4 *)(iVar2 + 0x20) = 1;
       }
-      lVar12 = uVar17 + lVar12;
+      lVar10 = uVar15 + lVar10;
       *(uint *)(iVar2 + 0x58) = *(int *)(iVar2 + 0x58) + local_60[0];
       *(uint *)(iVar2 + 0x5c) = *(int *)(iVar2 + 0x5c) + local_60[0];
       *(uint *)(iVar2 + 0x28) = *(int *)(iVar2 + 0x28) + local_60[0];
       if (*(int *)(iVar2 + 0x84) != 0) {
-        BVar8 = dosimulate(lVar4,uVar17,uVar5);
+        iVar7 = dosimulate(lVar4,uVar15,uVar5);
       }
-      iVar9 = RADTimerRead(BVar8);
-      *(int *)(iVar2 + 0x30) = (iVar9 - (int)uVar5) + *(int *)(iVar2 + 0x30);
+      iVar7 = RADTimerRead(iVar7);
+      *(int *)(iVar2 + 0x30) = (iVar7 - (int)uVar5) + *(int *)(iVar2 + 0x30);
 LAB_8294c120:
-      *(int *)(iVar2 + 0x34) = (iVar9 - (int)pvVar6) + *(int *)(iVar2 + 0x34);
+      *(int *)(iVar2 + 0x34) = (iVar7 - iVar6) + *(int *)(iVar2 + 0x34);
       local_60[0] = *(int *)(iVar2 + 0x80) - *(int *)(iVar2 + 0x5c);
-      uVar11 = local_60[0];
+      uVar9 = local_60[0];
       if (*(uint *)(iVar2 + 0x40) <= local_60[0]) {
-        uVar11 = *(uint *)(iVar2 + 0x40);
+        uVar9 = *(uint *)(iVar2 + 0x40);
       }
-      *(uint *)(iVar2 + 0x48) = uVar11;
-      if (*(uint *)(iVar2 + 0x48) < *puVar14 + 0x20000) {
-        *(uint *)(iVar2 + 0x48) = *puVar14;
+      *(uint *)(iVar2 + 0x48) = uVar9;
+      if (*(uint *)(iVar2 + 0x48) < *puVar12 + 0x20000) {
+        *(uint *)(iVar2 + 0x48) = *puVar12;
       }
       if ((bVar3) && (*(code **)(iVar2 + 0xfc) != (code *)0x0)) {
         (**(code **)(iVar2 + 0xfc))(lVar4);
       }
-      uVar16 = (lVar12 + 3U & 0xffffffff) >> 2;
-      uVar17 = uVar16;
-      while (uVar17 != 0) {
-        puVar14 = (uint *)param_4;
-        uVar16 = uVar16 - 1;
-        *puVar14 = (uint)(byte)*puVar14 << 0x18 | (uint)*(byte *)((int)puVar14 + 2) << 0x10 |
-                   (uint)*(byte *)((int)puVar14 + 1) << 8 | (uint)*(byte *)puVar14;
+      uVar14 = (lVar10 + 3U & 0xffffffff) >> 2;
+      uVar15 = uVar14;
+      while (uVar15 != 0) {
+        puVar12 = (uint *)param_4;
+        uVar14 = uVar14 - 1;
+        *puVar12 = (uint)(byte)*puVar12 << 0x18 | (uint)*(byte *)((int)puVar12 + 2) << 0x10 |
+                   (uint)*(byte *)((int)puVar12 + 1) << 8 | (uint)*(byte *)puVar12;
         param_4 = param_4 + 4;
-        uVar17 = uVar16 & 0xffffffff;
+        uVar15 = uVar14 & 0xffffffff;
       }
-      __restgprlr_22(lVar12);
+      __restgprlr_22(lVar10);
       return;
     }
     bVar3 = true;
     if (*(code **)(iVar2 + 0xf4) != (code *)0x0) {
-      pvVar7 = (void *)(**(code **)(iVar2 + 0xf4))(lVar4);
+      (**(code **)(iVar2 + 0xf4))(lVar4);
     }
   } while( true );
 }
@@ -320,7 +316,7 @@ int BinkFileClose(int param_1)
     iVar1 = (**(code **)(param_1 + 0xf4))();
   }
   if (*(int *)(param_1 + 0x78) == 0) {
-    iVar1 = CloseHandle(*(HANDLE *)(param_1 + 0x54));
+    iVar1 = CloseHandle(*(void **)(param_1 + 0x54));
   }
   if (*(code **)(param_1 + 0xfc) != (code *)0x0) {
     iVar1 = (**(code **)(param_1 + 0xfc))(param_1);
@@ -347,7 +343,7 @@ void BinkFileIdle(void)
   ulonglong uVar11;
   char in_RESERVE;
   byte in_cr0;
-  DWORD local_50 [20];
+  ulong local_50 [20];
   
   lVar4 = __savegprlr_24();
   iVar3 = (int)lVar4;
@@ -385,8 +381,8 @@ LAB_8294c504:
       *(int *)(iVar3 + 0x60) = *(int *)(iVar3 + 0x60) + (int)uVar8;
     }
     *(undefined4 *)(iVar3 + 0x24) = 1;
-    ReadFile(*(HANDLE *)(iVar3 + 0x54),(LPVOID)(*(int *)(iVar3 + 0x74) + (int)uVar8),
-             (DWORD)(uVar11 - uVar8),local_50,(LPOVERLAPPED)0x0);
+    ReadFile(*(void **)(iVar3 + 0x54),(void *)(*(int *)(iVar3 + 0x74) + (int)uVar8),
+             (ulong)(uVar11 - uVar8),local_50,(_OVERLAPPED *)0x0);
     uVar6 = (ulonglong)local_50[0];
     *(undefined4 *)(iVar3 + 0x24) = 0;
     if (uVar6 != (uVar11 - uVar8 & 0xffffffff)) {
@@ -394,8 +390,8 @@ LAB_8294c504:
     }
     uVar10 = 0;
     if (uVar6 != 0) {
-      *(DWORD *)(iVar3 + 0x28) = *(int *)(iVar3 + 0x28) + local_50[0];
-      *(DWORD *)(iVar3 + 0x58) = *(int *)(iVar3 + 0x58) + local_50[0];
+      *(ulong *)(iVar3 + 0x28) = *(int *)(iVar3 + 0x28) + local_50[0];
+      *(ulong *)(iVar3 + 0x58) = *(int *)(iVar3 + 0x58) + local_50[0];
       *(int *)(iVar3 + 0x74) = *(int *)(iVar3 + 0x74) + 0x20000;
       if (*(uint *)(iVar3 + 0x70) <= *(uint *)(iVar3 + 0x74)) {
         *(undefined4 *)(iVar3 + 0x74) = *(undefined4 *)(iVar3 + 0x6c);
@@ -480,36 +476,36 @@ undefined4 BinkFileBGControl(int param_1,ulonglong param_2)
 
 // 8294C610  BinkFileOpen  (line unknown)
 
-void BinkFileOpen(undefined8 param_1,LPCSTR param_2,ulonglong param_3)
+void BinkFileOpen(undefined8 param_1,char *param_2,ulonglong param_3)
 
 {
-  undefined4 *_Dst;
-  DWORD DVar1;
-  HANDLE pvVar2;
+  undefined4 *puVar1;
+  ulong uVar2;
+  void *pvVar3;
   
-  _Dst = (undefined4 *)__savegprlr_29();
-  memset(_Dst,0,0x144);
+  puVar1 = (undefined4 *)__savegprlr_29();
+  memset();
   if ((param_3 & 0x800000) == 0) {
-    pvVar2 = CreateFileA(param_2,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x8000080,(HANDLE)0x0);
-    _Dst[0x15] = pvVar2;
-    if (_Dst[0x15] == -1) {
+    pvVar3 = CreateFileA(param_2,0x80000000,1,(void *)0x0,3,0x8000080,(void *)0x0);
+    puVar1[0x15] = pvVar3;
+    if (puVar1[0x15] == -1) {
       __restgprlr_29(0);
       return;
     }
   }
   else {
-    _Dst[0x15] = param_2;
-    _Dst[0x1e] = 1;
-    DVar1 = SetFilePointer(param_2,0,(PLONG)0x0,1);
-    _Dst[0x1f] = DVar1;
+    puVar1[0x15] = param_2;
+    puVar1[0x1e] = 1;
+    uVar2 = SetFilePointer(param_2,0,(long *)0x0,1);
+    puVar1[0x1f] = uVar2;
   }
-  *_Dst = BinkFileReadHeader;
-  _Dst[1] = BinkFileReadFrame;
-  _Dst[2] = BinkFileGetBufferSize;
-  _Dst[3] = BinkFileSetInfo;
-  _Dst[4] = BinkFileIdle;
-  _Dst[5] = BinkFileClose;
-  _Dst[6] = BinkFileBGControl;
+  *puVar1 = BinkFileReadHeader;
+  puVar1[1] = BinkFileReadFrame;
+  puVar1[2] = BinkFileGetBufferSize;
+  puVar1[3] = BinkFileSetInfo;
+  puVar1[4] = BinkFileIdle;
+  puVar1[5] = BinkFileClose;
+  puVar1[6] = BinkFileBGControl;
   __restgprlr_29(1);
   return;
 }

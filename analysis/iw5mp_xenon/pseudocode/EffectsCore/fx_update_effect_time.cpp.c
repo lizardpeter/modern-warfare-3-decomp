@@ -2,150 +2,160 @@
 
 // 8244BD60  FXIW_LimitStabilizeTimeForEffectDef_Recurse  (EffectsCore/fx_update_effect_time.cpp:16)
 
-void FXIW_LimitStabilizeTimeForEffectDef_Recurse(undefined8 param_1,undefined8 param_2)
+int FXIW_LimitStabilizeTimeForEffectDef_Recurse(FxEffectDef *param_1,int param_2)
 
 {
+  int iVar1;
   int iVar2;
-  undefined8 uVar1;
   longlong lVar3;
-  int iVar4;
-  longlong lVar5;
-  undefined8 uVar6;
+  longlong lVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   
-  iVar2 = __savegprlr_26();
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8206a0a8,0x1b,0,0xffffffff82000f98,0xffffffff8206a094);
-    MyAssertHandler(0xffffffff8206a0a8,0x2a,0,0xffffffff82000f98,0xffffffff82060980);
+  lVar3 = (longlong)param_2;
+  iVar1 = __savegprlr_26(param_1);
+  if (iVar1 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
+                    ,0x1b,0,"%s");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
+                    ,0x2a,0,"%s");
   }
-  uVar6 = 0;
-  iVar4 = 0;
-  lVar3 = (ulonglong)*(uint *)(iVar2 + 0x18) + (ulonglong)*(uint *)(iVar2 + 0x14) +
-          (ulonglong)*(uint *)(iVar2 + 0x10);
-  if (lVar3 != 0) {
-    lVar5 = 0;
+  iVar7 = 0;
+  iVar5 = 0;
+  lVar4 = (ulonglong)*(uint *)(iVar1 + 0x18) + (ulonglong)*(uint *)(iVar1 + 0x14) +
+          (ulonglong)*(uint *)(iVar1 + 0x10);
+  if (lVar4 != 0) {
+    iVar6 = 0;
     do {
-      uVar1 = FXIW_LimitStabilizeTimeForElemDef_Recurse
-                        ((ulonglong)*(uint *)(iVar2 + 0x30) + lVar5,1,param_2);
-      if ((int)uVar6 < (int)uVar1) {
-        uVar6 = uVar1;
+      iVar2 = FXIW_LimitStabilizeTimeForElemDef_Recurse
+                        ((FxElemDef *)(*(int *)(iVar1 + 0x30) + iVar6),true,(int)lVar3);
+      if (iVar7 < iVar2) {
+        iVar7 = iVar2;
       }
-      if ((int)param_2 <= (int)uVar6) {
-        __restgprlr_26(param_2);
-        return;
+      if ((int)lVar3 <= iVar7) {
+        iVar1 = __restgprlr_26(lVar3);
+        return iVar1;
       }
-      iVar4 = iVar4 + 1;
-      lVar5 = lVar5 + 0x100;
-    } while (iVar4 != (int)lVar3);
+      iVar5 = iVar5 + 1;
+      iVar6 = iVar6 + 0x100;
+    } while (iVar5 != (int)lVar4);
   }
-  __restgprlr_26(uVar6);
-  return;
+  iVar1 = __restgprlr_26(iVar7);
+  return iVar1;
 }
 
 
 // 8244BE38  FXIW_LimitStabilizeTimeForElemDef_SelfOnly  (EffectsCore/fx_update_effect_time.cpp:79)
 
-longlong FXIW_LimitStabilizeTimeForElemDef_SelfOnly(int param_1,char param_2)
+int FXIW_LimitStabilizeTimeForElemDef_SelfOnly(FxElemDef *param_1,bool param_2)
 
 {
   int iVar1;
-  longlong lVar2;
+  int iVar2;
   
-  if (*(char *)(param_1 + 0xb0) == '\x03') {
+  if (param_1->elemType == '\x03') {
     return 0x7fffffff;
   }
-  lVar2 = (ulonglong)*(uint *)(param_1 + 0x34) + (ulonglong)*(uint *)(param_1 + 0x30) +
-          (ulonglong)*(uint *)(param_1 + 0x2c) + (ulonglong)*(uint *)(param_1 + 0x28);
-  if ((param_2 != '\0') && (iVar1 = *(int *)(param_1 + 8), 0 < iVar1)) {
+  iVar2 = (param_1->lifeSpanMsec).amplitude + (param_1->lifeSpanMsec).base +
+          (param_1->spawnDelayMsec).amplitude + (param_1->spawnDelayMsec).base;
+  if ((param_2) && (iVar1 = (param_1->spawn).looping.count, 0 < iVar1)) {
     if (iVar1 == 0x7fffffff) {
       return 0x7fffffff;
     }
-    lVar2 = (longlong)(iVar1 + -1) * (longlong)*(int *)(param_1 + 4) + lVar2;
+    iVar2 = (iVar1 + -1) * (param_1->spawn).looping.intervalMsec + iVar2;
   }
-  return lVar2;
+  return iVar2;
 }
 
 
 // 8244BEB0  FXIW_LimitStabilizeTimeForElemDef_Recurse  (EffectsCore/fx_update_effect_time.cpp:105)
 
-void FXIW_LimitStabilizeTimeForElemDef_Recurse
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int FXIW_LimitStabilizeTimeForElemDef_Recurse(FxElemDef *param_1,bool param_2,int param_3)
 
 {
-  int iVar3;
+  FxElemDef *pFVar2;
   longlong lVar1;
-  longlong lVar2;
   int iVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  longlong lVar7;
+  longlong lVar5;
+  Material **ppMVar6;
+  int iVar7;
+  longlong lVar8;
+  int iVar3;
   
-  iVar3 = __savegprlr_26();
-  if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff8206a0a8,0x73,0,0xffffffff82000f98,0xffffffff82061c6c);
+  lVar5 = (longlong)param_3;
+  pFVar2 = (FxElemDef *)__savegprlr_26(param_1);
+  if (pFVar2 == (FxElemDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
+                    ,0x73,0,"%s");
   }
-  lVar1 = FXIW_LimitStabilizeTimeForElemDef_SelfOnly(iVar3,param_2);
-  iVar6 = (int)param_3;
-  if ((int)lVar1 < iVar6) {
-    lVar7 = lVar1;
-    if (*(char *)(iVar3 + 0xb0) == '\f') {
-      if (*(char *)(iVar3 + 0xb1) == '\x01') {
-        lVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse(*(undefined4 *)(iVar3 + 0xbc),param_3);
-        if ((int)lVar1 < (int)lVar2) {
-          lVar7 = lVar2;
+  iVar3 = FXIW_LimitStabilizeTimeForElemDef_SelfOnly(pFVar2,param_2);
+  lVar1 = (longlong)iVar3;
+  iVar7 = (int)lVar5;
+  if (iVar3 < iVar7) {
+    lVar8 = lVar1;
+    if (pFVar2->elemType == '\f') {
+      if (pFVar2->visualCount == '\x01') {
+        iVar4 = FXIW_LimitStabilizeTimeForEffectDef_Recurse
+                          ((FxEffectDef *)(pFVar2->visuals).markArray,iVar7);
+        if (iVar3 < iVar4) {
+          lVar8 = (longlong)iVar4;
         }
-        if (iVar6 <= (int)lVar7) goto LAB_8244bf48;
+        if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
       }
       else {
-        puVar5 = *(undefined4 **)(iVar3 + 0xbc);
-        iVar4 = 0;
-        if (*(char *)(iVar3 + 0xb1) != '\0') {
+        ppMVar6 = ((pFVar2->visuals).markArray)->materials;
+        iVar3 = 0;
+        if (pFVar2->visualCount != '\0') {
           do {
-            lVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse(*puVar5,param_3);
-            if ((int)lVar7 < (int)lVar2) {
-              lVar7 = lVar2;
+            iVar4 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((FxEffectDef *)*ppMVar6,iVar7);
+            if ((int)lVar8 < iVar4) {
+              lVar8 = (longlong)iVar4;
             }
-            if (iVar6 <= (int)lVar7) goto LAB_8244bf48;
-            iVar4 = iVar4 + 1;
-            puVar5 = puVar5 + 1;
-          } while (iVar4 < (int)(uint)*(byte *)(iVar3 + 0xb1));
+            if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
+            iVar3 = iVar3 + 1;
+            ppMVar6 = ppMVar6 + 1;
+          } while (iVar3 < (int)(uint)pFVar2->visualCount);
         }
       }
     }
-    if (*(int *)(iVar3 + 0xdc) != 0) {
-      lVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse(*(int *)(iVar3 + 0xdc),param_3);
-      if ((int)lVar7 < (int)(lVar2 + lVar1)) {
-        lVar7 = lVar2 + lVar1;
+    if ((pFVar2->effectOnDeath).handle != (FxEffectDef *)0x0) {
+      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectOnDeath).handle,iVar7);
+      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
+        lVar8 = iVar3 + lVar1;
       }
-      if (iVar6 <= (int)lVar7) goto LAB_8244bf48;
+      if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
     }
-    if (*(int *)(iVar3 + 0xd8) != 0) {
-      lVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse(*(int *)(iVar3 + 0xd8),param_3);
-      if ((int)lVar7 < (int)(lVar2 + lVar1)) {
-        lVar7 = lVar2 + lVar1;
+    if ((pFVar2->effectOnImpact).handle != (FxEffectDef *)0x0) {
+      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectOnImpact).handle,iVar7);
+      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
+        lVar8 = iVar3 + lVar1;
       }
-      if (iVar6 <= (int)lVar7) goto LAB_8244bf48;
+      if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
     }
-    if (*(int *)(iVar3 + 0xe0) != 0) {
-      lVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse(*(int *)(iVar3 + 0xe0),param_3);
-      if ((int)lVar7 < (int)(lVar2 + lVar1)) {
-        lVar7 = lVar2 + lVar1;
+    if ((pFVar2->effectEmitted).handle != (FxEffectDef *)0x0) {
+      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectEmitted).handle,iVar7);
+      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
+        lVar8 = iVar3 + lVar1;
       }
     }
-    __restgprlr_26(lVar7);
-    return;
+    iVar3 = __restgprlr_26(lVar8);
+    return iVar3;
   }
 LAB_8244bf48:
-  __restgprlr_26(param_3);
-  return;
+  iVar3 = __restgprlr_26(lVar5);
+  return iVar3;
 }
 
 
 // 8244C020  FXW_LimitStabilizeTimeForElemDef  (EffectsCore/fx_update_effect_time.cpp:189)
 
-void FXW_LimitStabilizeTimeForElemDef(undefined8 param_1,undefined8 param_2)
+int FXW_LimitStabilizeTimeForElemDef(FxElemDef *param_1,int param_2)
 
 {
-  FXIW_LimitStabilizeTimeForElemDef_Recurse(param_1,0,param_2);
-  return;
+  int iVar1;
+  
+  iVar1 = FXIW_LimitStabilizeTimeForElemDef_Recurse(param_1,false,param_2);
+  return iVar1;
 }
 

@@ -2,21 +2,23 @@
 
 // 8281009C  FUN_8281009c  (line unknown)
 
+/* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
+
 void FUN_8281009c(int param_1)
 
 {
   undefined8 unaff_r28;
-  void *unaff_r29;
   int unaff_r30;
-  undefined8 *unaff_r31;
+  undefined1 in_stack_00000008 [124];
+  undefined1 in_stack_00000084 [44];
   
   if (param_1 == 0) {
-    memcpy((void *)(unaff_r30 + 200),unaff_r31,0x7c);
-    memcpy(&stack0x000000a0,unaff_r29,0x2c);
-    memcpy(&stack0x00000058,unaff_r31 + 7,0x44);
-    set_vp8e_config(unaff_r30 + 0x170,*unaff_r31,unaff_r31[1],unaff_r31[2],unaff_r31[3],unaff_r31[4]
-                    ,unaff_r31[5],unaff_r31[6]);
-    vp8_change_config(*(undefined4 *)(unaff_r30 + 0x228),unaff_r30 + 0x170);
+    memcpy();
+    memcpy();
+    memcpy();
+    set_vp8e_config((VP8_CONFIG *)(unaff_r30 + 0x170),(vpx_codec_enc_cfg)in_stack_00000008,
+                    (vp8_extracfg)in_stack_00000084);
+    vp8_change_config(*(int **)(unaff_r30 + 0x228),(VP8_CONFIG *)(unaff_r30 + 0x170));
   }
   __restgprlr_28(unaff_r28);
   return;

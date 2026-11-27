@@ -599,11 +599,9 @@ LAB_824ba82c:
   824BA8B8  386BFFA4             subi r3,r11,0x5c
   824BA8BC  480D0AC5             bl 0x8258b380
   824BA8C0  48193B11             bl 0x8264e3d0
-  824BA8C4  4800000C             b 0x824ba8d0
 LAB_824ba8c8:
   824BA8C8  2F1F0000             cmpwi cr6,r31,0x0
   824BA8CC  419A002C             beq cr6,0x824ba8f8
-LAB_824ba8d0:
   824BA8D0  3D608208             lis r11,-0x7df8
   824BA8D4  3D408208             lis r10,-0x7df8
   824BA8D8  3D208208             lis r9,-0x7df8

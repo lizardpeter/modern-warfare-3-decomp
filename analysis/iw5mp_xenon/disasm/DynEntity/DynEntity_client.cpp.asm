@@ -4784,7 +4784,7 @@ LAB_82410040:
   82410074  C00A13F8             lfs f0,0x13f8(r10)
   82410078  C3EB000C             lfs f31,0xc(r11)
 
-; 824102C8  std::_Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 824102C8  _Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   824102C8  7D8802A6             mfspr r12,LR
   824102CC  485063E1             bl 0x829166ac
   824102D0  9421FF70             stwu r1,-0x90(r1)
@@ -4830,7 +4830,7 @@ LAB_82410350:
   82410368  38210090             addi r1,r1,0x90
   8241036C  48506390             b 0x829166fc
 
-; 82410370  std::_Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 82410370  _Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   82410370  7D8802A6             mfspr r12,LR
   82410374  48506339             bl 0x829166ac
   82410378  9421FF70             stwu r1,-0x90(r1)
@@ -4919,7 +4919,7 @@ LAB_82410494:
   824104AC  38210090             addi r1,r1,0x90
   824104B0  4850624C             b 0x829166fc
 
-; 824104B8  std::_Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 824104B8  _Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   824104B8  7D8802A6             mfspr r12,LR
   824104BC  485061ED             bl 0x829166a8
   824104C0  9421FF60             stwu r1,-0xa0(r1)
@@ -4992,7 +4992,7 @@ LAB_824105b4:
   824105B4  382100A0             addi r1,r1,0xa0
   824105B8  48506140             b 0x829166f8
 
-; 82410AD8  std::_Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82410AD8  _Sort_heap<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82410AD8  7D8802A6             mfspr r12,LR
   82410ADC  48505BE1             bl 0x829166bc
   82410AE0  9421FF80             stwu r1,-0x80(r1)
@@ -5027,7 +5027,7 @@ LAB_82410b4c:
   82410B4C  38210080             addi r1,r1,0x80
   82410B50  48505BBC             b 0x8291670c
 
-; 82410728  std::_Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 82410728  _Insertion_sort1<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&),DynEntSortStruct>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   82410728  7D8802A6             mfspr r12,LR
   8241072C  48505F81             bl 0x829166ac
   82410730  9421FF60             stwu r1,-0xa0(r1)
@@ -5101,7 +5101,7 @@ LAB_82410820:
   82410820  382100A0             addi r1,r1,0xa0
   82410824  48505ED8             b 0x829166fc
 
-; 824105C0  std::_Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 824105C0  _Med3<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   824105C0  7D8802A6             mfspr r12,LR
   824105C4  485060F5             bl 0x829166b8
   824105C8  9421FF80             stwu r1,-0x80(r1)
@@ -5154,7 +5154,7 @@ LAB_82410678:
   82410678  38210080             addi r1,r1,0x80
   8241067C  4850608C             b 0x82916708
 
-; 82410680  std::_Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 82410680  _Median<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   82410680  7D8802A6             mfspr r12,LR
   82410684  4850602D             bl 0x829166b0
   82410688  9421FF70             stwu r1,-0x90(r1)
@@ -5199,7 +5199,7 @@ LAB_82410714:
   82410720  38210090             addi r1,r1,0x90
   82410724  48505FDC             b 0x82916700
 
-; 82410828  std::_Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 82410828  _Unguarded_partition<DynEntSortStruct_*,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   82410828  7D8802A6             mfspr r12,LR
   8241082C  48505E79             bl 0x829166a4
   82410830  9421FF60             stwu r1,-0xa0(r1)
@@ -5389,7 +5389,7 @@ LAB_82410ac0:
   82410ACC  382100A0             addi r1,r1,0xa0
   82410AD0  48505C24             b 0x829166f4
 
-; 82410B58  std::_Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 82410B58  _Sort<DynEntSortStruct_*,int,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   82410B58  7D8802A6             mfspr r12,LR
   82410B5C  48505B55             bl 0x829166b0
   82410B60  9421FF70             stwu r1,-0x90(r1)

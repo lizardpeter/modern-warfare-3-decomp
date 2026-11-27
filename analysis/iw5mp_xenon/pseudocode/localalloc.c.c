@@ -2,14 +2,13 @@
 
 // 828B59F0  LocalAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/localalloc.c:40)
 
-HLOCAL LocalAlloc(UINT uFlags,SIZE_T uBytes)
+void * LocalAlloc(uint param_1,ulong param_2)
 
 {
-  HANDLE pvVar1;
-  HLOCAL pvVar2;
+  void *pvVar1;
   
   pvVar1 = GetProcessHeap();
-  pvVar2 = (HLOCAL)RtlAllocateHeap(pvVar1,uFlags >> 3 & 8,uBytes);
-  return pvVar2;
+  pvVar1 = RtlAllocateHeap(pvVar1,param_1 >> 3 & 8,param_2);
+  return pvVar1;
 }
 

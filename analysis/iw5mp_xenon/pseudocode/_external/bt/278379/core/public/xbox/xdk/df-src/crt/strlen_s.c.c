@@ -2,21 +2,21 @@
 
 // 8291C820  strnlen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/strlen_s.c:38)
 
-size_t strnlen(char *_Str,size_t _MaxCount)
+uint strnlen(char *param_1,uint param_2)
 
 {
-  size_t sVar1;
+  uint uVar1;
   
-  sVar1 = 0;
-  if (_MaxCount != 0) {
+  uVar1 = 0;
+  if (param_2 != 0) {
     do {
-      if (*_Str == '\0') {
-        return sVar1;
+      if (*param_1 == '\0') {
+        return uVar1;
       }
-      sVar1 = sVar1 + 1;
-      _Str = _Str + 1;
-    } while (sVar1 < _MaxCount);
+      uVar1 = uVar1 + 1;
+      param_1 = param_1 + 1;
+    } while (uVar1 < param_2);
   }
-  return sVar1;
+  return uVar1;
 }
 

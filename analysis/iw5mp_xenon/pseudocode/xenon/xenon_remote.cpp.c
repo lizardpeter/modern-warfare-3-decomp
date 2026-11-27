@@ -2,46 +2,48 @@
 
 // 82654A58  TRACK_xenon_remote  (xenon/xenon_remote.cpp:123)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_xenon_remote(void)
 
 {
-  track_static_alloc_internal(0xffffffff84277350,0x2000,0xffffffff82190710,0);
-  track_static_alloc_internal(0xffffffff84279380,0x2000,0xffffffff82190700,0);
-  track_static_alloc_internal(0xffffffff8425f334,0x18004,0xffffffff821906ec,0);
+  track_static_alloc_internal(g_debugPacket,0x2000,"g_debugPacket",0);
+  track_static_alloc_internal(g_stringNodes,0x2000,"g_stringNodes",0);
+  track_static_alloc_internal(&g_rcons.sendBuffer,0x18004,"g_rcons.sendBuffer",0);
   return;
 }
 
 
 // 82654AD8  NET_DebugConsoleBinarySendHandler  (xenon/xenon_remote.cpp:138)
 
-undefined8 NET_DebugConsoleBinarySendHandler(int param_1)
+undefined4 NET_DebugConsoleBinarySendHandler(_DM_CMDCONT *param_1,char *param_2,ulong param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  ulong uVar1;
+  undefined4 uVar2;
+  ulong uVar3;
   
-  iVar1 = *(int *)(param_1 + 0x14);
-  if (iVar1 == 0) {
-    *(undefined4 *)(param_1 + 8) = 0;
-    *(undefined4 *)(param_1 + 4) = 0;
-    RtlEnterCriticalSection(0xffffffff84279350);
+  uVar1 = param_1->BytesRemaining;
+  if (uVar1 == 0) {
+    param_1->Buffer = (void *)0x0;
+    param_1->DataSize = 0;
+    RtlEnterCriticalSection(0xffffffff84279350,param_2,param_3);
     DAT_8427b380 = 0;
-    DAT_8425f310 = 0;
+    g_debugPacketPos = 0;
     RtlLeaveCriticalSection(0xffffffff84279350);
     SetEvent(DAT_8427937c);
     SetEvent(DAT_8427734c);
-    uVar2 = 0xffffffff82da0104;
+    uVar2 = 0x82da0104;
   }
   else {
-    iVar3 = iVar1;
-    if (0x2000 < iVar1) {
-      iVar3 = 0x2000;
+    uVar3 = uVar1;
+    if (0x2000 < (int)uVar1) {
+      uVar3 = 0x2000;
     }
-    *(int *)(param_1 + 4) = iVar3;
-    *(int *)(param_1 + 0x14) = iVar1 - iVar3;
+    param_1->DataSize = uVar3;
+    param_1->BytesRemaining = uVar1 - uVar3;
     uVar2 = 0x2da0000;
-    *(int *)(param_1 + 8) = (int)&DAT_84277350 + (*(int *)(param_1 + 0xc) - iVar1);
+    param_1->Buffer = g_debugPacket + (param_1->BufferSize - uVar1);
   }
   return uVar2;
 }
@@ -49,98 +51,109 @@ undefined8 NET_DebugConsoleBinarySendHandler(int param_1)
 
 // 82654BA0  NET_AllocNode  (xenon/xenon_remote.cpp:168)
 
-undefined4 * NET_AllocNode(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+StringNode * NET_AllocNode(void)
 
 {
-  undefined4 *puVar1;
+  StringNode *pSVar1;
   
-  Sys_EnterCriticalSection(0x13);
-  puVar1 = DAT_8425f314;
-  if (DAT_8425f314 == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff82190720,0xae,0,0xffffffff82000f98,0xffffffff8206f7e8);
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+  pSVar1 = g_freeStringNodeHead;
+  if (g_freeStringNodeHead == (StringNode *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0xae,0
+                    ,"%s");
   }
-  DAT_8425f314 = (undefined4 *)*DAT_8425f314;
-  Sys_LeaveCriticalSection(0x13);
-  *puVar1 = 0;
-  puVar1[1] = 0;
-  return puVar1;
+  g_freeStringNodeHead = g_freeStringNodeHead->next;
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+  pSVar1->next = (StringNode *)0x0;
+  pSVar1->str = (char *)0x0;
+  return pSVar1;
 }
 
 
 // 82654C30  NET_FreeNode  (xenon/xenon_remote.cpp:185)
 
-void NET_FreeNode(undefined4 *param_1)
+void NET_FreeNode(StringNode *param_1)
 
 {
-  undefined4 *puVar1;
+  StringNode *pSVar1;
   
-  Sys_EnterCriticalSection(0x13);
-  puVar1 = param_1;
-  *param_1 = DAT_8425f314;
-  DAT_8425f314 = puVar1;
-  Sys_LeaveCriticalSection(0x13);
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+  pSVar1 = param_1;
+  param_1->next = g_freeStringNodeHead;
+  g_freeStringNodeHead = pSVar1;
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
   return;
 }
 
 
 // 82654C78  NET_InitStringNodes  (xenon/xenon_remote.cpp:196)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void NET_InitStringNodes(void)
 
 {
-  undefined4 *puVar1;
+  StringNode *pSVar1;
   longlong lVar2;
   
   lVar2 = 0x3ff;
-  DAT_8425f314 = &DAT_84279380;
-  puVar1 = &DAT_84279380;
+  g_freeStringNodeHead = g_stringNodes;
+  pSVar1 = g_stringNodes;
   do {
-    *puVar1 = puVar1 + 2;
+    pSVar1->next = pSVar1 + 1;
     lVar2 = lVar2 + -1;
-    puVar1 = puVar1 + 2;
+    pSVar1 = pSVar1 + 1;
   } while (lVar2 != 0);
-  if (DAT_8427b378 == 0) {
+  if (g_stringNodes[0x3ff].next == (StringNode *)0x0) {
     return;
   }
-  MyAssertHandler(0xffffffff82190720,0xcc,0,0xffffffff82000f98,0xffffffff82190764);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0xcc,0,
+                  "%s");
   return;
 }
 
 
 // 82654CD8  RConsCmdListBuildCallback  (xenon/xenon_remote.cpp:211)
 
-void RConsCmdListBuildCallback(void)
+void RConsCmdListBuildCallback(char *param_1)
 
 {
   char cVar1;
-  char *pcVar2;
+  int iVar2;
   char *pcVar3;
   char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
   
-  pcVar2 = (char *)__savegprlr_28();
-  pcVar3 = pcVar2;
-  if (pcVar2 == (char *)0x0) {
-    MyAssertHandler(0xffffffff82190720,0xd6,0,0xffffffff82000f98,0xffffffff8200b0fc);
+  pcVar3 = (char *)__savegprlr_28(param_1);
+  pcVar4 = pcVar3;
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0xd6,0
+                    ,"%s");
   }
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
-  } while (cVar1 != '\0');
-  pcVar3 = pcVar3 + (-1 - (int)pcVar2);
-  if (DAT_84277344 <= (int)(pcVar3 + (int)DAT_84277348 + 1)) {
-    MyAssertHandler(0xffffffff82190720,0xd9,0,0xffffffff82151828,0xffffffff821907a0,pcVar3);
-  }
-  pcVar2 = pcVar2 + -1;
-  pcVar4 = (char *)(DAT_84277340 + (int)DAT_84277348 + -1);
-  do {
-    pcVar2 = pcVar2 + 1;
-    cVar1 = *pcVar2;
+    cVar1 = *pcVar4;
     pcVar4 = pcVar4 + 1;
-    *pcVar4 = cVar1;
   } while (cVar1 != '\0');
-  DAT_84277348 = pcVar3 + (int)DAT_84277348 + 1;
-  DAT_84277348[DAT_84277340 + -1] = ',';
-  DAT_84277348[DAT_84277340] = '\0';
+  if (g_rcons.cmdListBuilderStrLimit <=
+      (int)(pcVar4 + g_rcons.cmdListBuilderStrPos + (-1 - (int)pcVar3) + 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0xd9,0
+                    ,"%s\n\t(len) = %i");
+  }
+  pcVar5 = pcVar3 + -1;
+  pcVar6 = g_rcons.cmdListBuilderStr + g_rcons.cmdListBuilderStrPos + -1;
+  do {
+    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar5;
+    pcVar6 = pcVar6 + 1;
+    *pcVar6 = cVar1;
+  } while (cVar1 != '\0');
+  iVar2 = g_rcons.cmdListBuilderStrPos + (-1 - (int)pcVar3);
+  g_rcons.cmdListBuilderStrPos = (int)(pcVar4 + iVar2 + 1);
+  g_rcons.cmdListBuilderStr[(int)(pcVar4 + iVar2)] = ',';
+  g_rcons.cmdListBuilderStr[g_rcons.cmdListBuilderStrPos] = '\0';
   __restgprlr_28();
   return;
 }
@@ -148,29 +161,33 @@ void RConsCmdListBuildCallback(void)
 
 // 82654E28  RConsCmdListBuild  (xenon/xenon_remote.cpp:227)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RConsCmdListBuild(void)
 
 {
   char *pcVar1;
   char *pcVar2;
   
-  DAT_8425f338 = 0;
-  DAT_84277340 = &DAT_8425f338;
-  DAT_84277344 = 0x18000;
-  DAT_84277348 = 0;
-  Cmd_ForEach(0xffffffff82654cd8);
-  Dvar_ForEachName(0xffffffff82654cd8);
-  pcVar1 = &DAT_8425f338;
+  g_rcons.sendBuffer.data[0] = '\0';
+  g_rcons.cmdListBuilderStr = g_rcons.sendBuffer.data;
+  g_rcons.cmdListBuilderStrLimit = 0x18000;
+  g_rcons.cmdListBuilderStrPos = 0;
+  Cmd_ForEach(RConsCmdListBuildCallback);
+  Dvar_ForEachName(RConsCmdListBuildCallback);
+  pcVar1 = g_rcons.sendBuffer.data;
   do {
     pcVar2 = pcVar1;
     pcVar1 = pcVar2 + 1;
   } while (*pcVar2 != '\0');
-  DAT_8425f334 = pcVar2 + 0x7bda0cc8;
+  g_rcons.sendBuffer.length = (int)(pcVar2 + 0x7bda0cc8);
   return;
 }
 
 
 // 82654EC8  RConsMdlInfoBuild  (xenon/xenon_remote.cpp:241)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RConsMdlInfoBuild(void)
 
@@ -178,19 +195,21 @@ void RConsMdlInfoBuild(void)
   char *pcVar1;
   char *pcVar2;
   
-  DAT_8425f338 = 0;
-  CG_ModelPreviewerBuildInfoStr(0xffffffff8425f338,0x18000);
-  pcVar1 = &DAT_8425f338;
+  g_rcons.sendBuffer.data[0] = '\0';
+  CG_ModelPreviewerBuildInfoStr(g_rcons.sendBuffer.data,0x18000);
+  pcVar1 = g_rcons.sendBuffer.data;
   do {
     pcVar2 = pcVar1;
     pcVar1 = pcVar2 + 1;
   } while (*pcVar2 != '\0');
-  DAT_8425f334 = pcVar2 + 0x7bda0cc8;
+  g_rcons.sendBuffer.length = (int)(pcVar2 + 0x7bda0cc8);
   return;
 }
 
 
 // 82654F30  RConsMdlPrvViewPos  (xenon/xenon_remote.cpp:251)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RConsMdlPrvViewPos(void)
 
@@ -198,166 +217,143 @@ void RConsMdlPrvViewPos(void)
   char *pcVar1;
   char *pcVar2;
   
-  DAT_8425f338 = 0;
-  CG_ModelPreviewerBuildViewPosStr(0xffffffff8425f338,0x18000);
-  pcVar1 = &DAT_8425f338;
+  g_rcons.sendBuffer.data[0] = '\0';
+  CG_ModelPreviewerBuildViewPosStr(g_rcons.sendBuffer.data,0x18000);
+  pcVar1 = g_rcons.sendBuffer.data;
   do {
     pcVar2 = pcVar1;
     pcVar1 = pcVar2 + 1;
   } while (*pcVar2 != '\0');
-  DAT_8425f334 = pcVar2 + 0x7bda0cc8;
+  g_rcons.sendBuffer.length = (int)(pcVar2 + 0x7bda0cc8);
   return;
 }
 
 
 // 82654F98  RConsViewPosBuild  (xenon/xenon_remote.cpp:261)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void RConsViewPosBuild(void)
 
 {
   char *pcVar1;
   char *pcVar2;
-  float local_20;
-  float local_1c;
-  float local_18;
+  float local_20 [4];
   
-  CL_GetDebugViewPos(&local_20);
-  Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff821907f0,(double)local_20,(double)local_1c,
-              (double)local_18);
-  pcVar1 = &DAT_8425f338;
+  CL_GetDebugViewPos(local_20);
+  Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%.2f %.2f %.2f");
+  pcVar1 = g_rcons.sendBuffer.data;
   do {
     pcVar2 = pcVar1;
     pcVar1 = pcVar2 + 1;
   } while (*pcVar2 != '\0');
-  DAT_8425f334 = pcVar2 + 0x7bda0cc8;
+  g_rcons.sendBuffer.length = (int)(pcVar2 + 0x7bda0cc8);
   return;
 }
 
 
 // 82655030  RConsGetDVar  (xenon/xenon_remote.cpp:276)
 
-void RConsGetDVar(void)
+void RConsGetDVar(char *param_1)
 
 {
   char cVar1;
-  uint uVar2;
-  float fVar3;
-  int iVar4;
-  byte bVar5;
-  undefined4 *puVar6;
-  undefined8 uVar7;
-  undefined4 *puVar8;
-  char *pcVar9;
-  undefined1 *puVar10;
-  char *pcVar11;
-  undefined *puVar12;
-  longlong lVar13;
+  int iVar2;
+  char *pcVar3;
+  dvar_t *pdVar4;
+  char *pcVar5;
+  undefined1 *puVar6;
+  undefined *puVar7;
+  longlong lVar8;
   char *local_30;
-  float fStack_2c;
   
-  __savegprlr_29();
-  puVar6 = (undefined4 *)Dvar_FindVar();
-  if (puVar6 != (undefined4 *)0x0) {
-    uVar2 = puVar6[3];
-    lVar13 = *(longlong *)(puVar6 + 3);
-    puVar8 = puVar6 + 3;
-    fVar3 = (float)puVar6[5];
-    local_30._0_1_ = (byte)((ulonglong)lVar13 >> 0x38);
-    bVar5 = local_30._0_1_;
-    fStack_2c = (float)lVar13;
-    local_30 = (char *)((ulonglong)lVar13 >> 0x20);
-    switch(*(undefined1 *)((int)puVar6 + 10)) {
-    case 0:
-      if (bVar5 == 0) {
-        uVar7 = 0xffffffff8203248c;
-      }
-      else {
-        uVar7 = 0xffffffff82032490;
-      }
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff82000f98,uVar7,puVar8);
-      break;
-    case 1:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff820181dc,(double)(float)local_30,puVar8);
-      break;
-    case 2:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8217b3ec,(double)(float)local_30,
-                  (double)fStack_2c);
-      break;
-    case 3:
-    case 9:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff82023670,(double)(float)local_30,
-                  (double)fStack_2c,(double)fVar3);
-      break;
-    case 4:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c4fc,(double)(float)local_30,
-                  (double)fStack_2c,(double)fVar3,(double)(float)puVar6[6]);
-      break;
-    case 5:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c28c,local_30,puVar8);
-      break;
-    case 6:
-      if ((lVar13 < 0) || (((int)puVar6[0xf] <= (int)local_30 && (local_30 != (char *)0x0)))) {
-        MyAssertHandler(0xffffffff82190720,0x13a,0,0xffffffff8217b36c,0xffffffff8217b388,local_30);
-      }
-      if (puVar6[0xf] == 0) {
-        DAT_8425f338 = 0;
-      }
-      else {
-        pcVar9 = (char *)((int)&DAT_8425f334 + 3);
-        pcVar11 = (char *)(*(int *)(puVar6[0x10] + (int)local_30 * 4) + -1);
-        do {
-          pcVar11 = pcVar11 + 1;
-          cVar1 = *pcVar11;
-          pcVar9 = pcVar9 + 1;
-          *pcVar9 = cVar1;
-        } while (cVar1 != '\0');
-      }
-      break;
-    case 7:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff820068af,fVar3,puVar8);
-      if (local_30 == (char *)0x0) {
-        MyAssertHandler(0xffffffff82190720,0x142,0,0xffffffff8201f614,0xffffffff8217b35c,*puVar6);
-      }
-      iVar4 = (int)&DAT_8425f338 - (int)local_30;
-      do {
-        cVar1 = *local_30;
-        local_30[iVar4] = cVar1;
-        local_30 = local_30 + 1;
-      } while (cVar1 != '\0');
-      break;
-    case 8:
-      Com_sprintf(0xffffffff8425f338,0x18000,0xffffffff8200c4fc,(double)((float)bVar5 * 0.003921569)
-                  ,(double)((float)(uVar2 >> 0x10 & 0xff) * 0.003921569),
-                  (double)((float)(uVar2 >> 8 & 0xff) * 0.003921569),
-                  (double)((float)(uVar2 & 0xff) * 0.003921569));
-      break;
-    default:
-      puVar10 = (undefined1 *)((int)&DAT_8425f334 + 3);
-      puVar12 = &UNK_821907ff;
-      lVar13 = 0x13;
-      do {
-        puVar12 = puVar12 + 1;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *puVar12;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-    }
-    pcVar11 = &DAT_8425f338;
+  pcVar3 = (char *)__savegprlr_29(param_1);
+  pdVar4 = Dvar_FindVar(pcVar3);
+  if (pdVar4 == (dvar_t *)0x0) {
+    g_rcons.sendBuffer.data[0] = '\0';
+    pcVar3 = g_rcons.sendBuffer.data;
     do {
-      pcVar9 = pcVar11;
-      pcVar11 = pcVar9 + 1;
-    } while (*pcVar9 != '\0');
-    DAT_8425f334 = pcVar9 + 0x7bda0cc8;
+      pcVar5 = pcVar3;
+      pcVar3 = pcVar5 + 1;
+    } while (*pcVar5 != '\0');
+    g_rcons.sendBuffer.length = (int)(pcVar5 + 0x7bda0cc8);
     __restgprlr_29();
     return;
   }
-  DAT_8425f338 = 0;
-  pcVar11 = &DAT_8425f338;
+  local_30 = (char *)((ulonglong)*(longlong *)&pdVar4->current >> 0x20);
+  switch(pdVar4->type) {
+  case '\0':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%s");
+    break;
+  case '\x01':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%g");
+    break;
+  case '\x02':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%g %g");
+    break;
+  case '\x03':
+  case '\t':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%g %g %g");
+    break;
+  case '\x04':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%g %g %g %g");
+    break;
+  case '\x05':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%i");
+    break;
+  case '\x06':
+    if ((*(longlong *)&pdVar4->current < 0) ||
+       (((pdVar4->domain).enumeration.stringCount <= (int)local_30 && (local_30 != (char *)0x0)))) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                      0x13a,0,"%s\n\t(value.integer) = %i");
+    }
+    if ((pdVar4->domain).enumeration.stringCount == 0) {
+      g_rcons.sendBuffer.data[0] = '\0';
+    }
+    else {
+      pcVar5 = (char *)((int)&g_rcons.sendBuffer.length + 3);
+      pcVar3 = (pdVar4->domain).enumeration.strings[(int)local_30] + -1;
+      do {
+        pcVar3 = pcVar3 + 1;
+        cVar1 = *pcVar3;
+        pcVar5 = pcVar5 + 1;
+        *pcVar5 = cVar1;
+      } while (cVar1 != '\0');
+    }
+    break;
+  case '\a':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"");
+    if (local_30 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                      0x142,0,"%s\n\t(dvar->name) = %s");
+    }
+    iVar2 = -0x7bda0cc8 - (int)local_30;
+    do {
+      cVar1 = *local_30;
+      local_30[iVar2] = cVar1;
+      local_30 = local_30 + 1;
+    } while (cVar1 != '\0');
+    break;
+  case '\b':
+    Com_sprintf(g_rcons.sendBuffer.data,0x18000,"%g %g %g %g");
+    break;
+  default:
+    puVar6 = (undefined1 *)((int)&g_rcons.sendBuffer.length + 3);
+    puVar7 = &UNK_821907ff;
+    lVar8 = 0x13;
+    do {
+      puVar7 = puVar7 + 1;
+      puVar6 = puVar6 + 1;
+      *puVar6 = *puVar7;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  pcVar3 = g_rcons.sendBuffer.data;
   do {
-    pcVar9 = pcVar11;
-    pcVar11 = pcVar9 + 1;
-  } while (*pcVar9 != '\0');
-  DAT_8425f334 = pcVar9 + 0x7bda0cc8;
+    pcVar5 = pcVar3;
+    pcVar3 = pcVar5 + 1;
+  } while (*pcVar5 != '\0');
+  g_rcons.sendBuffer.length = (int)(pcVar5 + 0x7bda0cc8);
   __restgprlr_29();
   return;
 }
@@ -365,36 +361,37 @@ void RConsGetDVar(void)
 
 // 82655490  RConsSendHandler  (xenon/xenon_remote.cpp:362)
 
-undefined8 RConsSendHandler(int param_1,int param_2)
+undefined4 RConsSendHandler(_DM_CMDCONT *param_1,char *param_2,ulong param_3)
 
 {
-  int iVar1;
-  undefined8 uVar2;
-  int iVar3;
+  ulong uVar1;
+  undefined4 uVar2;
+  ulong uVar3;
   
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff82190720,0x16d,0,0xffffffff82000f98,0xffffffff82190814);
+  if (param_2 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0x16d,
+                    0,"%s");
   }
   RtlEnterCriticalSection(0xffffffff8425f318);
-  iVar1 = *(int *)(param_1 + 0x14);
-  if (iVar1 == 0) {
-    *(undefined4 *)(param_1 + 8) = 0;
-    *(undefined4 *)(param_1 + 4) = 0;
-    DAT_8425f338 = 0;
-    DAT_8425f334 = 0;
-    DAT_84277338 = 0;
+  uVar1 = param_1->BytesRemaining;
+  if (uVar1 == 0) {
+    param_1->Buffer = (void *)0x0;
+    param_1->DataSize = 0;
+    g_rcons.sendBuffer.data[0] = '\0';
+    g_rcons.sendBuffer.length = 0;
+    g_rcons.bufferSendingToClient = false;
     RtlLeaveCriticalSection(0xffffffff8425f318);
-    SetEvent(DAT_8427733c);
-    uVar2 = 0xffffffff82da0104;
+    SetEvent(g_rcons.eventSentRConsBuffer);
+    uVar2 = 0x82da0104;
   }
   else {
-    iVar3 = 0x18000;
-    if (iVar1 < 0x18001) {
-      iVar3 = iVar1;
+    uVar3 = 0x18000;
+    if ((int)uVar1 < 0x18001) {
+      uVar3 = uVar1;
     }
-    *(int *)(param_1 + 4) = iVar3;
-    *(int *)(param_1 + 0x14) = iVar1 - iVar3;
-    *(int *)(param_1 + 8) = (int)&DAT_8425f334 + (*(int *)(param_1 + 0xc) - iVar1);
+    param_1->DataSize = uVar3;
+    param_1->BytesRemaining = uVar1 - uVar3;
+    param_1->Buffer = (void *)((int)&g_rcons + (param_1->BufferSize - uVar1) + 0x1c);
     RtlLeaveCriticalSection(0xffffffff8425f318);
     uVar2 = 0x2da0000;
   }
@@ -404,26 +401,27 @@ undefined8 RConsSendHandler(int param_1,int param_2)
 
 // 82655590  RConsBeginBufferSend  (xenon/xenon_remote.cpp:394)
 
-undefined8 RConsBeginBufferSend(undefined4 *param_1)
+undefined4 RConsBeginBufferSend(_DM_CMDCONT *param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
+  undefined4 uVar1;
+  ulong uVar2;
   
-  if (DAT_84277338 != '\0') {
-    MyAssertHandler(0xffffffff82190720,0x18b,0,0xffffffff82000f98,0xffffffff82190820);
+  if (g_rcons.bufferSendingToClient) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0x18b,
+                    0,"%s");
   }
-  if (DAT_8425f334 == 0) {
+  if (g_rcons.sendBuffer.length == 0) {
     uVar1 = 0x2da0000;
   }
   else {
-    DAT_84277338 = '\x01';
-    *param_1 = RConsSendHandler;
-    param_1[2] = &DAT_8425f334;
-    iVar2 = DAT_8425f334 + 4;
-    param_1[3] = iVar2;
-    param_1[5] = iVar2;
-    ResetEvent(DAT_8427733c);
+    g_rcons.bufferSendingToClient = true;
+    param_1->HandlingFunction = RConsSendHandler;
+    param_1->Buffer = &g_rcons.sendBuffer;
+    uVar2 = g_rcons.sendBuffer.length + 4;
+    param_1->BufferSize = uVar2;
+    param_1->BytesRemaining = uVar2;
+    ResetEvent(g_rcons.eventSentRConsBuffer);
     uVar1 = 0x2da0003;
   }
   return uVar1;
@@ -432,7 +430,7 @@ undefined8 RConsBeginBufferSend(undefined4 *param_1)
 
 // 82655660  RConsWriteTextToRemote  (xenon/xenon_remote.cpp:412)
 
-void RConsWriteTextToRemote(void)
+void RConsWriteTextToRemote(char *param_1)
 
 {
   return;
@@ -441,139 +439,150 @@ void RConsWriteTextToRemote(void)
 
 // 82655668  RConsBlockUntilBinSent  (xenon/xenon_remote.cpp:450)
 
-void RConsBlockUntilBinSent(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool RConsBlockUntilBinSent(void)
 
 {
-  DWORD DVar1;
+  ulong uVar1;
+  undefined1 uVar2;
   
   __savegprlr_29();
-  if (DAT_84277338 != '\0') {
+  if (g_rcons.bufferSendingToClient != false) {
     RtlLeaveCriticalSection(0xffffffff8425f318);
-    DVar1 = WaitForSingleObject(DAT_8427733c,6000);
+    uVar1 = WaitForSingleObject(g_rcons.eventSentRConsBuffer,6000);
     RtlEnterCriticalSection(0xffffffff8425f318);
-    __restgprlr_29(-(DVar1 != 0x102) & 1);
-    return;
+    uVar2 = __restgprlr_29(-(uVar1 != 0x102) & 1);
+    return (bool)uVar2;
   }
-  __restgprlr_29(1);
-  return;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 826556E0  RConsBinarySendJob  (xenon/xenon_remote.cpp:469)
 
-void RConsBinarySendJob(undefined8 param_1,undefined8 param_2)
+undefined4 RConsBinarySendJob(_func___cdecl_void *param_1,_DM_CMDCONT *param_2)
 
 {
-  code *pcVar2;
-  char cVar3;
-  undefined8 uVar1;
+  code *pcVar1;
+  bool bVar4;
+  undefined4 uVar2;
+  T_HRESULT TVar3;
   
-  pcVar2 = (code *)__savegprlr_29();
+  pcVar1 = (code *)__savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff8425f318);
-  cVar3 = RConsBlockUntilBinSent();
-  if (cVar3 == '\0') {
+  bVar4 = RConsBlockUntilBinSent();
+  if (!bVar4) {
     RtlLeaveCriticalSection(0xffffffff8425f318);
-    __restgprlr_29(0x2da0000);
-    return;
+    uVar2 = __restgprlr_29(0x2da0000);
+    return uVar2;
   }
-  (*pcVar2)();
-  uVar1 = RConsBeginBufferSend(param_2);
+  (*pcVar1)();
+  TVar3 = RConsBeginBufferSend(param_2);
   RtlLeaveCriticalSection(0xffffffff8425f318);
-  __restgprlr_29(uVar1);
-  return;
+  uVar2 = __restgprlr_29(TVar3);
+  return uVar2;
 }
 
 
 // 82655750  RConsBinarySendJobArg  (xenon/xenon_remote.cpp:488)
 
-void RConsBinarySendJobArg(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+undefined4
+RConsBinarySendJobArg(_func___cdecl_void_char_ptr *param_1,char *param_2,_DM_CMDCONT *param_3)
 
 {
-  code *pcVar2;
-  char cVar3;
-  undefined8 uVar1;
+  code *pcVar1;
+  bool bVar4;
+  undefined4 uVar2;
+  T_HRESULT TVar3;
+  longlong lVar5;
   
-  pcVar2 = (code *)__savegprlr_28();
+  lVar5 = (longlong)(int)param_2;
+  pcVar1 = (code *)__savegprlr_28(param_1,lVar5);
   RtlEnterCriticalSection(0xffffffff8425f318);
-  cVar3 = RConsBlockUntilBinSent();
-  if (cVar3 == '\0') {
+  bVar4 = RConsBlockUntilBinSent();
+  if (!bVar4) {
     RtlLeaveCriticalSection(0xffffffff8425f318);
-    __restgprlr_28(0x2da0000);
-    return;
+    uVar2 = __restgprlr_28(0x2da0000);
+    return uVar2;
   }
-  (*pcVar2)(param_2);
-  uVar1 = RConsBeginBufferSend(param_3);
+  (*pcVar1)(lVar5);
+  TVar3 = RConsBeginBufferSend(param_3);
   RtlLeaveCriticalSection(0xffffffff8425f318);
-  __restgprlr_28(uVar1);
-  return;
+  uVar2 = __restgprlr_28(TVar3);
+  return uVar2;
 }
 
 
 // 826557C8  NET_CmdProcessorRemoteConsole  (xenon/xenon_remote.cpp:507)
 
-undefined8
-NET_CmdProcessorRemoteConsole(int param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+undefined4
+NET_CmdProcessorRemoteConsole(char *param_1,char *param_2,ulong param_3,_DM_CMDCONT *param_4)
 
 {
-  char *pcVar1;
-  undefined8 uVar2;
+  undefined4 uVar1;
+  T_HRESULT TVar2;
   
-  switch(*(undefined1 *)(param_1 + 5)) {
-  case 100:
-    if (*(char *)(param_1 + 6) == '.') {
-      Com_Printf(0x10,0xffffffff82190840,param_1 + 7);
-      uVar2 = RConsBinarySendJobArg(0xffffffff82655030,param_1 + 7,param_4);
-      return uVar2;
+  switch(param_1[5]) {
+  case 'd':
+    if (param_1[6] == '.') {
+      Com_Printf(0x10,"Remote request for dvar \"%s\"\n");
+      TVar2 = RConsBinarySendJobArg(RConsGetDVar,param_1 + 7,param_4);
+      return TVar2;
     }
   default:
-    uVar2 = 0xffffffff82da0000;
+    uVar1 = 0x82da0000;
     break;
-  case 0x6d:
-    uVar2 = RConsBinarySendJob(0xffffffff82654ec8,param_4);
+  case 'm':
+    uVar1 = RConsBinarySendJob(RConsMdlInfoBuild,param_4);
     break;
-  case 0x6e:
-    uVar2 = RConsBinarySendJob(0xffffffff82654f30,param_4);
+  case 'n':
+    uVar1 = RConsBinarySendJob(RConsMdlPrvViewPos,param_4);
     break;
-  case 0x73:
-    uVar2 = RConsBinarySendJob(0xffffffff82654e28,param_4);
+  case 's':
+    uVar1 = RConsBinarySendJob(RConsCmdListBuild,param_4);
     break;
-  case 0x76:
-    uVar2 = RConsBinarySendJob(0xffffffff82654f98,param_4);
+  case 'v':
+    uVar1 = RConsBinarySendJob(RConsViewPosBuild,param_4);
     break;
-  case 0x79:
-    pcVar1 = (char *)(param_1 + 6);
-    if (*pcVar1 == '^') {
-      Cbuf_AddText(0,param_1 + 7);
-      uVar2 = 0x2da0000;
+  case 'y':
+    if (param_1[6] == '^') {
+      Cbuf_AddText(LOCAL_CLIENT_0,param_1 + 7);
+      uVar1 = 0x2da0000;
     }
     else {
-      Com_Printf(0x10,0xffffffff82004d30,pcVar1);
-      Cbuf_AddText(0,pcVar1);
-      uVar2 = 0x2da0000;
+      Com_Printf(0x10,"%s\n");
+      Cbuf_AddText(LOCAL_CLIENT_0,param_1 + 6);
+      uVar1 = 0x2da0000;
     }
   }
-  return uVar2;
+  return uVar1;
 }
 
 
 // 82655958  RConsInit  (xenon/xenon_remote.cpp:547)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RConsInit(void)
 
 {
   int iVar1;
   
-  if (DAT_8427b382 == '\0') {
-    DAT_8425f338 = 0;
-    DAT_8425f334 = 0;
-    DAT_84277338 = 0;
-    DAT_8427b382 = '\x01';
-    DAT_8427733c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
-    SetEvent(DAT_8427733c);
+  if (!g_rconsInit) {
+    g_rcons.sendBuffer.data[0] = '\0';
+    g_rcons.sendBuffer.length = 0;
+    g_rcons.bufferSendingToClient = false;
+    g_rconsInit = true;
+    g_rcons.eventSentRConsBuffer = CreateEventA((void *)0x0,1,0,(char *)0x0);
+    SetEvent(g_rcons.eventSentRConsBuffer);
     RtlInitializeCriticalSection(0xffffffff8425f318);
     iVar1 = DmRegisterCommandProcessor(0xffffffff821906e4,0xffffffff826557c8);
     if (iVar1 < 0) {
-      Com_Printf(0x10,0xffffffff82190860);
+      Com_Printf(0x10,"DmRegisterCommandProcessor failed for NET_CmdProcessorRemoteConsole()\n");
     }
   }
   return;
@@ -582,202 +591,221 @@ void RConsInit(void)
 
 // 82655A18  NET_DebugConsoleCmdProcessor  (xenon/xenon_remote.cpp:577)
 
-void NET_DebugConsoleCmdProcessor(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+undefined4
+NET_DebugConsoleCmdProcessor(char *param_1,char *param_2,ulong param_3,_DM_CMDCONT *param_4)
 
 {
   byte bVar1;
-  HANDLE pvVar2;
+  void *pvVar2;
   int iVar3;
-  undefined *puVar4;
-  undefined4 *in_r6;
+  undefined4 uVar4;
+  StringNode *pSVar5;
+  char *pcVar6;
+  ulong uVar7;
   
-  iVar3 = __savegprlr_29();
+  iVar3 = __savegprlr_29(param_1,param_2,param_3);
   bVar1 = *(byte *)(iVar3 + 2);
   if (bVar1 < 100) {
     if (bVar1 == 99) {
-      if (DAT_84279378 != 0) {
-        puVar4 = (undefined *)NET_AllocNode();
-        iVar3 = CopyString(iVar3 + 3,0xffffffff821908c0,0);
-        *(int *)(puVar4 + 4) = iVar3;
-        if (iVar3 == 0) {
-          MyAssertHandler(0xffffffff82190720,0x277,0,0xffffffff82000f98,0xffffffff821908b4);
+      if (g_debugServer != 0) {
+        pSVar5 = NET_AllocNode();
+        pcVar6 = CopyString((char *)(iVar3 + 3),"NET_DebugConsoleCmdProcessor",0);
+        pSVar5->str = pcVar6;
+        if (pcVar6 == (char *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                          0x277,0,"%s");
         }
         RtlEnterCriticalSection(0xffffffff84279350);
-        pvVar2 = DAT_84279374;
-        *(undefined **)PTR_DAT_82995ae8 = puVar4;
-        PTR_DAT_82995ae8 = puVar4;
+        pvVar2 = g_commandThreadEvent;
+        *g_tail = pSVar5;
+        g_tail = &pSVar5->next;
         SetEvent(pvVar2);
 LAB_82655bdc:
         RtlLeaveCriticalSection(0xffffffff84279350);
-        __restgprlr_29(0x2da0000);
-        return;
+        uVar4 = __restgprlr_29(0x2da0000);
+        return uVar4;
       }
     }
     else if (bVar1 == 0x61) {
-      DAT_84279370 = 1;
+      g_debugStartServer = 1;
       Sys_TitleServerThreadData();
       NET_InitStringNodes();
-      if (DAT_84279378 == 0) goto LAB_82655c1c;
+      if (g_debugServer == 0) goto LAB_82655c1c;
     }
     else if (bVar1 == 0x62) {
       RtlEnterCriticalSection(0xffffffff84279350);
       if (DAT_8427b380 != '\0') {
-        MyAssertHandler(0xffffffff82190720,0x254,0,0xffffffff82000f98,0xffffffff821908e0);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                        0x254,0,"%s");
       }
       pvVar2 = DAT_8427734c;
-      if (DAT_8425f310 != 0) {
-        iVar3 = DAT_8425f310 + 4;
-        DAT_84277350 = DAT_8425f310 << 0x18 |
-                       (DAT_8425f310 & 0xff00) << 8 |
-                       DAT_8425f310 >> 8 & 0xff00 | DAT_8425f310 >> 0x18;
-        in_r6[2] = &DAT_84277350;
-        *in_r6 = NET_DebugConsoleBinarySendHandler;
+      if (g_debugPacketPos != 0) {
+        uVar7 = g_debugPacketPos + 4;
+        g_debugPacket._0_4_ =
+             g_debugPacketPos << 0x18 |
+             (g_debugPacketPos & 0xff00U) << 8 |
+             (uint)g_debugPacketPos >> 8 & 0xff00 | (uint)g_debugPacketPos >> 0x18;
+        param_4->Buffer = g_debugPacket;
+        param_4->HandlingFunction = NET_DebugConsoleBinarySendHandler;
         DAT_8427b380 = 1;
-        in_r6[3] = iVar3;
-        in_r6[5] = iVar3;
-        in_r6[4] = 0;
+        param_4->BufferSize = uVar7;
+        param_4->BytesRemaining = uVar7;
+        param_4->CustomData = (void *)0x0;
         ResetEvent(pvVar2);
         RtlLeaveCriticalSection(0xffffffff84279350);
-        __restgprlr_29(0x2da0003);
-        return;
+        uVar4 = __restgprlr_29(0x2da0003);
+        return uVar4;
       }
-      if ((DAT_84279370 == 0) && (DAT_84279378 == 0)) {
+      if ((g_debugStartServer == 0) && (g_debugServer == 0)) {
         RtlLeaveCriticalSection(0xffffffff84279350);
-        __restgprlr_29(0xffffffff82da0000);
-        return;
+        uVar4 = __restgprlr_29(0xffffffff82da0000);
+        return uVar4;
       }
       goto LAB_82655bdc;
     }
   }
   else if (bVar1 == 0x7a) {
-    Com_Printf(0x10,0xffffffff821908a8,iVar3 + 3);
-    Cbuf_AddText(0,iVar3 + 3);
+    Com_Printf(0x10,"REMOTE: %s\n");
+    Cbuf_AddText(LOCAL_CLIENT_0,(char *)(iVar3 + 3));
 LAB_82655c1c:
-    __restgprlr_29(0x2da0000);
-    return;
+    uVar4 = __restgprlr_29(0x2da0000);
+    return uVar4;
   }
-  __restgprlr_29(0xffffffff82da0000);
-  return;
+  uVar4 = __restgprlr_29(0xffffffff82da0000);
+  return uVar4;
 }
 
 
 // 82655C28  NET_InitDebug  (xenon/xenon_remote.cpp:656)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void NET_InitDebug(void)
 
 {
   int iVar1;
-  BOOL BVar2;
   
-  DAT_8427936c = 0;
-  if (DAT_8427b381 == '\0') {
-    DAT_84279378 = 0;
-    DAT_8427b381 = '\x01';
-    DAT_84279370 = 0;
+  sys_debugMessageType = 0;
+  if (!g_debugInited) {
+    g_debugServer = 0;
+    g_debugInited = true;
+    g_debugStartServer = 0;
     RtlInitializeCriticalSection(0xffffffff84279350);
-    DAT_8427937c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,0,0,(LPCSTR)0x0);
-    DAT_8427734c = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
-    DAT_84279374 = CreateEventA((LPSECURITY_ATTRIBUTES)0x0,1,0,(LPCSTR)0x0);
+    DAT_8427937c = CreateEventA((void *)0x0,0,0,(char *)0x0);
+    DAT_8427734c = CreateEventA((void *)0x0,1,0,(char *)0x0);
+    g_commandThreadEvent = CreateEventA((void *)0x0,1,0,(char *)0x0);
     iVar1 = DmRegisterCommandProcessor(0xffffffff8209980c,0xffffffff82655a18);
     if (iVar1 < 0) {
-      Com_Printf(0x10,0xffffffff821908ec);
+      Com_Printf(0x10,"DmRegisterCommandProcessor failed\n");
       return;
     }
   }
   RtlEnterCriticalSection(0xffffffff84279350);
-  DAT_8425f310 = 0;
+  g_debugPacketPos = 0;
   DAT_8427b380 = 0;
-  DAT_8427b384 = 0;
-  PTR_DAT_82995ae8 = (undefined *)&DAT_8427b384;
-  ResetEvent(DAT_84279374);
+  g_head = (StringNode *)0x0;
+  g_tail = &g_head;
+  ResetEvent(g_commandThreadEvent);
   RtlLeaveCriticalSection(0xffffffff84279350);
   ResetEvent(DAT_8427937c);
-  BVar2 = SetEvent(DAT_8427734c);
-  RConsInit(BVar2);
+  SetEvent(DAT_8427734c);
+  RConsInit();
   return;
 }
 
 
 // 82655D60  Sys_IsRemoteDebugServer  (xenon/xenon_remote.cpp:702)
 
-undefined4 Sys_IsRemoteDebugServer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Sys_IsRemoteDebugServer(void)
 
 {
-  return DAT_84279378;
+  return g_debugServer;
 }
 
 
 // 82655E58  Sys_DebugSocketError  (xenon/xenon_remote.cpp:708)
 
-void Sys_DebugSocketError(undefined8 param_1)
+void Sys_DebugSocketError(char *param_1)
 
 {
   NET_ShutdownDebug();
   NET_InitDebug();
-  DAT_84279370 = 0;
-  DAT_84279378 = 0;
-  Com_Printf(0x10,0xffffffff82004d30,param_1);
+  g_debugStartServer = 0;
+  g_debugServer = 0;
+  Com_Printf(0x10,"%s\n");
   return;
 }
 
 
 // 82655EB8  Sys_StartRemoteDebugServer  (xenon/xenon_remote.cpp:717)
 
-undefined8 Sys_StartRemoteDebugServer(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Sys_StartRemoteDebugServer(void)
 
 {
-  if (DAT_84279370 != 0) {
-    DAT_84279370 = 0;
-    if (DAT_84279378 == 0) {
-      DAT_84279378 = 1;
-      return 1;
+  if (g_debugStartServer != 0) {
+    g_debugStartServer = 0;
+    if (g_debugServer == 0) {
+      g_debugServer = 1;
+      return true;
     }
-    Sys_DebugSocketError(0xffffffff82190910);
+    Sys_DebugSocketError("Sys_StartRemoteDebugServer: reconnect failed");
   }
-  return 0;
+  return false;
 }
 
 
 // 82655D70  Sys_EndWriteDebugSocket  (xenon/xenon_remote.cpp:732)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Sys_EndWriteDebugSocket(void)
 
 {
-  Sys_LeaveCriticalSection(1);
+  Sys_LeaveCriticalSection(CRITSECT_DEBUG_SOCKET);
   return;
 }
 
 
 // 82655F28  Sys_BlockUntilSend  (xenon/xenon_remote.cpp:740)
 
-undefined8 Sys_BlockUntilSend(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool Sys_BlockUntilSend(void)
 
 {
-  DWORD DVar1;
+  ulong uVar1;
   
-  DVar1 = WaitForSingleObject(DAT_8427937c,15000);
-  if (DVar1 != 0x102) {
-    return 1;
+  uVar1 = WaitForSingleObject(DAT_8427937c,15000);
+  if (uVar1 != 0x102) {
+    return true;
   }
   NET_ShutdownDebug();
   NET_InitDebug();
-  DAT_84279378 = 0;
-  DAT_84279370 = 0;
-  Com_Printf(0x10,0xffffffff82004d30,0xffffffff82190940);
-  return 0;
+  g_debugServer = 0;
+  g_debugStartServer = 0;
+  Com_Printf(0x10,"%s\n");
+  return false;
 }
 
 
 // 82655FB8  Sys_FlushDebugSocketData  (xenon/xenon_remote.cpp:749)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_FlushDebugSocketData(void)
 
 {
   int iVar1;
   
-  if (DAT_84279378 != 0) {
+  if (g_debugServer != 0) {
     RtlEnterCriticalSection(0xffffffff84279350);
-    iVar1 = DAT_8425f310;
+    iVar1 = g_debugPacketPos;
     RtlLeaveCriticalSection(0xffffffff84279350);
     if (iVar1 != 0) {
       Sys_BlockUntilSend();
@@ -789,77 +817,82 @@ void Sys_FlushDebugSocketData(void)
 
 // 82655D78  Sys_DebugSocketReady  (xenon/xenon_remote.cpp:766)
 
-undefined4 Sys_DebugSocketReady(void)
+int Sys_DebugSocketReady(int param_1)
 
 {
-  return DAT_84279378;
+  return g_debugServer;
 }
 
 
 // 826563A8  Sys_ReadDebugSocketInt  (xenon/xenon_remote.cpp:772)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 int Sys_ReadDebugSocketInt(void)
 
 {
-  ulonglong uVar1;
+  char *pcVar1;
   int iVar2;
   
-  uVar1 = Sys_ReadDebugSocketString();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82190720,0x309,0,0xffffffff82000f98,0xffffffff8202e030);
+  pcVar1 = Sys_ReadDebugSocketString();
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",0x309,
+                    0,"%s");
   }
-  iVar2 = atoi((char *)uVar1);
-  FreeString(uVar1,0);
+  iVar2 = atoi(pcVar1);
+  FreeString(pcVar1,0);
   return iVar2;
 }
 
 
 // 82656018  Sys_WriteDebugSocketData  (xenon/xenon_remote.cpp:785)
 
-void Sys_WriteDebugSocketData(undefined8 param_1,longlong param_2)
+void Sys_WriteDebugSocketData(void *param_1,int param_2)
 
 {
-  longlong lVar1;
-  char cVar3;
-  DWORD DVar2;
+  bool bVar2;
+  ulong uVar1;
+  longlong lVar3;
   ulonglong uVar4;
-  uint uVar5;
+  int iVar5;
   longlong lVar6;
   
-  lVar1 = __savegprlr_22();
-  cVar3 = Com_ErrorEntered();
-  if (((cVar3 == '\0') && (DAT_84279378 != 0)) && ((int)param_2 != 0)) {
+  lVar3 = (longlong)param_2;
+  __savegprlr_22(param_1);
+  bVar2 = Com_ErrorEntered();
+  if (((!bVar2) && (g_debugServer != 0)) && ((int)lVar3 != 0)) {
     do {
       RtlEnterCriticalSection(0xffffffff84279350);
       if (DAT_8427b380 != '\0') {
         RtlLeaveCriticalSection(0xffffffff84279350);
-        DVar2 = WaitForSingleObject(DAT_8427734c,15000);
-        if (DVar2 == 0x102) {
-          Sys_DebugSocketError(0xffffffff8219096c);
+        uVar1 = WaitForSingleObject(DAT_8427734c,15000);
+        if (uVar1 == 0x102) {
+          Sys_DebugSocketError("Sys_WriteDebugSocketData: connection timed out");
           break;
         }
         RtlEnterCriticalSection(0xffffffff84279350);
       }
-      uVar5 = DAT_8425f310;
-      uVar4 = (ulonglong)DAT_8425f310;
-      if ((int)param_2 < 1) {
-        MyAssertHandler(0xffffffff82190720,0x32f,0,0xffffffff82000f98,0xffffffff82034a78);
+      iVar5 = g_debugPacketPos;
+      uVar4 = (ulonglong)(uint)g_debugPacketPos;
+      if ((int)lVar3 < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                        0x32f,0,"%s");
       }
-      lVar6 = param_2;
-      if ((int)(0x1ffc - uVar4) < (int)param_2) {
+      lVar6 = lVar3;
+      if ((int)(0x1ffc - uVar4) < (int)lVar3) {
         lVar6 = 0x1ffc - uVar4;
       }
-      memcpy((void *)(uVar5 + 0x84277354),(void *)lVar1,(size_t)lVar6);
-      uVar5 = (size_t)lVar6 + uVar5;
-      lVar1 = lVar6 + lVar1;
-      param_2 = param_2 - lVar6;
-      DAT_8425f310 = uVar5;
+      memcpy();
+      iVar5 = (int)lVar6 + iVar5;
+      lVar3 = lVar3 - lVar6;
+      g_debugPacketPos = iVar5;
       RtlLeaveCriticalSection(0xffffffff84279350);
-      if (0x1ffc < (int)uVar5) {
-        MyAssertHandler(0xffffffff82190720,0x33d,0,0xffffffff82000f98,0xffffffff8219099c);
+      if (0x1ffc < iVar5) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                        0x33d,0,"%s");
       }
-      if ((uVar5 == 0x1ffc) && (cVar3 = Sys_BlockUntilSend(), cVar3 == '\0')) break;
-      if ((int)param_2 == 0) {
+      if ((iVar5 == 0x1ffc) && (bVar2 = Sys_BlockUntilSend(), !bVar2)) break;
+      if ((int)lVar3 == 0) {
         __restgprlr_22();
         return;
       }
@@ -872,13 +905,13 @@ void Sys_WriteDebugSocketData(undefined8 param_1,longlong param_2)
 
 // 82656178  Sys_WriteDebugSocketMessageType  (xenon/xenon_remote.cpp:841)
 
-void Sys_WriteDebugSocketMessageType(undefined1 param_1)
+void Sys_WriteDebugSocketMessageType(uchar param_1)
 
 {
-  undefined1 uStack00000017;
+  uchar uStack00000017;
   
   uStack00000017 = param_1;
-  Sys_EnterCriticalSection(1);
+  Sys_EnterCriticalSection(CRITSECT_DEBUG_SOCKET);
   Sys_WriteDebugSocketData(&stack0x00000017,1);
   return;
 }
@@ -886,39 +919,42 @@ void Sys_WriteDebugSocketMessageType(undefined1 param_1)
 
 // 826561B0  Sys_WriteDebugSocketString  (xenon/xenon_remote.cpp:851)
 
-void Sys_WriteDebugSocketString(longlong param_1)
+void Sys_WriteDebugSocketString(void *param_1)
 
 {
   ulonglong uVar1;
-  char *pcVar3;
-  longlong lVar2;
+  uint uVar2;
+  char *pcVar5;
+  longlong lVar3;
+  ulonglong uVar4;
   uint local_20 [2];
   
-  lVar2 = param_1;
+  lVar3 = (longlong)(int)param_1;
   do {
-    pcVar3 = (char *)lVar2;
-    lVar2 = lVar2 + 1;
-  } while (*pcVar3 != '\0');
-  uVar1 = (lVar2 - param_1) - 1U & 0xffffffff;
+    pcVar5 = (char *)lVar3;
+    lVar3 = lVar3 + 1;
+  } while (*pcVar5 != '\0');
+  uVar4 = (lVar3 - (int)param_1) - 1;
+  uVar1 = uVar4 & 0xffffffff;
+  uVar2 = (uint)uVar4;
   local_20[0] = (uint)(uVar1 << 0x18) |
-                (uint)(uVar1 << 8) & 0xff0000 | (uint)(uVar1 >> 8) & 0xff00 | (uint)(uVar1 >> 0x18);
+                (uint)(uVar1 << 8) & 0xff0000 | uVar2 >> 8 & 0xff00 | (uint)(byte)(uVar1 >> 0x18);
   Sys_WriteDebugSocketData(local_20,4);
-  Sys_WriteDebugSocketData(param_1,uVar1);
+  Sys_WriteDebugSocketData(param_1,uVar2);
   return;
 }
 
 
 // 82656230  Sys_WriteDebugSocketInt  (xenon/xenon_remote.cpp:863)
 
-void Sys_WriteDebugSocketInt(ulonglong param_1)
+void Sys_WriteDebugSocketInt(int param_1)
 
 {
   uint uStack00000014;
   
   uStack00000014 =
-       (uint)((param_1 & 0xffffffff) << 0x18) |
-       (uint)((param_1 & 0xffffffff) << 8) & 0xff0000 |
-       (uint)(param_1 >> 8) & 0xff00 | (uint)(param_1 >> 0x18) & 0xff;
+       param_1 << 0x18 |
+       (param_1 & 0xff00U) << 8 | (uint)param_1 >> 8 & 0xff00 | (uint)param_1 >> 0x18;
   Sys_WriteDebugSocketData(&stack0x00000014,4);
   return;
 }
@@ -926,75 +962,80 @@ void Sys_WriteDebugSocketInt(ulonglong param_1)
 
 // 82655D88  Sys_AckDebugSocket  (xenon/xenon_remote.cpp:870)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Sys_AckDebugSocket(void)
 
 {
-  DAT_8427936c = 0;
+  sys_debugMessageType = 0;
   return;
 }
 
 
 // 82656428  Sys_ReadDebugSocketMessageType  (xenon/xenon_remote.cpp:876)
 
-undefined8 Sys_ReadDebugSocketMessageType(undefined1 *param_1,int param_2)
+int Sys_ReadDebugSocketMessageType(uchar *param_1,int param_2)
 
 {
-  undefined1 uVar1;
+  int iVar1;
   
   if (param_2 == 0) {
     RtlEnterCriticalSection(0xffffffff84279350);
-    if (DAT_8427b384 == 0) {
+    if (g_head == (StringNode *)0x0) {
       RtlLeaveCriticalSection(0xffffffff84279350);
       return 0;
     }
     RtlLeaveCriticalSection(0xffffffff84279350);
   }
-  uVar1 = Sys_ReadDebugSocketInt();
-  *param_1 = uVar1;
+  iVar1 = Sys_ReadDebugSocketInt();
+  *param_1 = (uchar)iVar1;
   return 1;
 }
 
 
 // 826564A0  Sys_UpdateDebugSocket  (xenon/xenon_remote.cpp:894)
 
-uint Sys_UpdateDebugSocket(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int Sys_UpdateDebugSocket(void)
 
 {
   uint uVar1;
   
-  uVar1 = DAT_8427936c;
-  if (DAT_8427936c == 0) {
+  uVar1 = sys_debugMessageType;
+  if (sys_debugMessageType == 0) {
     RtlEnterCriticalSection(0xffffffff84279350);
-    if (DAT_8427b384 == 0) {
+    if (g_head == (StringNode *)0x0) {
       RtlLeaveCriticalSection(0xffffffff84279350);
-      uVar1 = DAT_8427936c;
+      uVar1 = sys_debugMessageType;
     }
     else {
       RtlLeaveCriticalSection(0xffffffff84279350);
       uVar1 = Sys_ReadDebugSocketInt();
       uVar1 = uVar1 & 0xff;
       if (0x2e < uVar1) {
-        MyAssertHandler(0xffffffff82190720,0x386,0,0xffffffff82000f98,0xffffffff82190a10);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                        0x386,0,"%s");
       }
     }
   }
-  DAT_8427936c = uVar1;
-  return uVar1;
+  sys_debugMessageType = uVar1;
+  return sys_debugMessageType;
 }
 
 
 // 82656548  Sys_ReadDebugSocketStringBuffer  (xenon/xenon_remote.cpp:911)
 
-void Sys_ReadDebugSocketStringBuffer(undefined8 param_1,undefined8 param_2)
+void Sys_ReadDebugSocketStringBuffer(void *param_1,int param_2)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
+  char *pcVar1;
+  char *pcVar2;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = Sys_ReadDebugSocketString();
-  I_strncpyz(uVar1,uVar2,param_2);
-  FreeString(uVar2,0);
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  pcVar2 = Sys_ReadDebugSocketString();
+  I_strncpyz(pcVar1,pcVar2,param_2);
+  FreeString(pcVar2,0);
   __restgprlr_29();
   return;
 }
@@ -1002,77 +1043,82 @@ void Sys_ReadDebugSocketStringBuffer(undefined8 param_1,undefined8 param_2)
 
 // 82656270  Sys_ReadDebugSocketString  (xenon/xenon_remote.cpp:921)
 
-void Sys_ReadDebugSocketString(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+char * Sys_ReadDebugSocketString(void)
 
 {
-  int iVar1;
-  DWORD DVar2;
-  int *piVar3;
+  char *pcVar1;
+  ulong uVar2;
+  StringNode *pSVar3;
   
   __savegprlr_29();
-  if (DAT_84279378 == 0) {
-    CopyString(0xffffffff820068af,0xffffffff821909f4,0);
-    __restgprlr_29();
-    return;
+  if (g_debugServer == 0) {
+    pcVar1 = CopyString("","Sys_ReadDebugSocketString",0);
+    pcVar1 = (char *)__restgprlr_29(pcVar1);
+    return pcVar1;
   }
   RtlEnterCriticalSection(0xffffffff84279350);
-  piVar3 = DAT_8427b384;
-  if (DAT_8427b384 == (int *)0x0) {
+  pSVar3 = g_head;
+  if (g_head == (StringNode *)0x0) {
     RtlLeaveCriticalSection(0xffffffff84279350);
-    DVar2 = WaitForSingleObject(DAT_84279374,15000);
-    if (DVar2 == 0x102) {
-      Sys_DebugSocketError(0xffffffff821909c4);
-      CopyString(0xffffffff820068af,0xffffffff821909f4,0);
-      __restgprlr_29();
-      return;
+    uVar2 = WaitForSingleObject(g_commandThreadEvent,15000);
+    if (uVar2 == 0x102) {
+      Sys_DebugSocketError("Sys_ReadDebugSocketString: connection timed out");
+      pcVar1 = CopyString("","Sys_ReadDebugSocketString",0);
+      pcVar1 = (char *)__restgprlr_29(pcVar1);
+      return pcVar1;
     }
     RtlEnterCriticalSection(0xffffffff84279350);
-    piVar3 = DAT_8427b384;
-    if (DAT_8427b384 == (int *)0x0) {
-      MyAssertHandler(0xffffffff82190720,0x3ad,0,0xffffffff82000f98,0xffffffff821909bc);
-      piVar3 = DAT_8427b384;
+    pSVar3 = g_head;
+    if (g_head == (StringNode *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_remote.cpp",
+                      0x3ad,0,"%s");
+      pSVar3 = g_head;
     }
   }
-  iVar1 = piVar3[1];
-  DAT_8427b384 = (int *)*piVar3;
-  if (DAT_8427b384 == (int *)0x0) {
-    PTR_DAT_82995ae8 = (undefined *)&DAT_8427b384;
-    ResetEvent(DAT_84279374);
+  pcVar1 = pSVar3->str;
+  g_head = pSVar3->next;
+  if (g_head == (StringNode *)0x0) {
+    g_tail = &g_head;
+    ResetEvent(g_commandThreadEvent);
   }
   RtlLeaveCriticalSection(0xffffffff84279350);
-  Sys_EnterCriticalSection(0x13);
-  *piVar3 = (int)DAT_8425f314;
-  DAT_8425f314 = piVar3;
-  Sys_LeaveCriticalSection(0x13);
-  __restgprlr_29(iVar1);
-  return;
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+  pSVar3->next = g_freeStringNodeHead;
+  g_freeStringNodeHead = pSVar3;
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+  pcVar1 = (char *)__restgprlr_29(pcVar1);
+  return pcVar1;
 }
 
 
 // 82655D98  NET_ShutdownDebug  (xenon/xenon_remote.cpp:959)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void NET_ShutdownDebug(void)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  char *pcVar1;
+  StringNode *pSVar2;
   
   __savegprlr_28();
   RtlEnterCriticalSection(0xffffffff84279350);
-  puVar2 = DAT_8427b384;
-  while (puVar2 != (undefined4 *)0x0) {
-    uVar1 = puVar2[1];
-    DAT_8427b384 = (undefined4 *)*puVar2;
-    Sys_EnterCriticalSection(0x13);
-    *puVar2 = DAT_8425f314;
-    DAT_8425f314 = puVar2;
-    Sys_LeaveCriticalSection(0x13);
-    FreeString(uVar1,0);
-    puVar2 = DAT_8427b384;
+  pSVar2 = g_head;
+  while (pSVar2 != (StringNode *)0x0) {
+    pcVar1 = pSVar2->str;
+    g_head = pSVar2->next;
+    Sys_EnterCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+    pSVar2->next = g_freeStringNodeHead;
+    g_freeStringNodeHead = pSVar2;
+    Sys_LeaveCriticalSection(CRITSECT_SCRIPT_DEBUGGER_ALLOC);
+    FreeString(pcVar1,0);
+    pSVar2 = g_head;
   }
-  PTR_DAT_82995ae8 = (undefined *)&DAT_8427b384;
-  DAT_8427b384 = puVar2;
-  ResetEvent(DAT_84279374);
+  g_tail = &g_head;
+  g_head = pSVar2;
+  ResetEvent(g_commandThreadEvent);
   RtlLeaveCriticalSection(0xffffffff84279350);
   __restgprlr_28();
   return;
@@ -1080,6 +1126,8 @@ void NET_ShutdownDebug(void)
 
 
 // 82655E30  NET_RestartDebug  (xenon/xenon_remote.cpp:983)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void NET_RestartDebug(void)
 

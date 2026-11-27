@@ -2,39 +2,39 @@
 
 // 82927CB0  _fptostr  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_fptostr.c:50)
 
-errno_t _fptostr(char *_Buf,size_t _SizeInBytes,int _Digits,STRFLT _PtFlt)
+int _fptostr(char *param_1,uint param_2,int param_3,_strflt *param_4)
 
 {
   int *piVar1;
-  char *_Src;
   char *pcVar2;
   char cVar3;
   char *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
+  char *pcVar5;
+  int iVar6;
+  ulonglong uVar7;
   
-  uVar6 = (ulonglong)_Digits;
-  pcVar2 = _PtFlt->mantissa;
-  if (_Buf == (char *)0x0) {
+  uVar7 = (ulonglong)param_3;
+  pcVar2 = param_4->mantissa;
+  if (param_1 == (char *)0x0) {
     piVar1 = _errno();
     *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    iVar5 = 0x16;
+    iVar6 = 0x16;
   }
   else {
-    if (_SizeInBytes == 0) {
+    if (param_2 == 0) {
       piVar1 = _errno();
-      iVar5 = 0x16;
+      iVar6 = 0x16;
     }
     else {
-      *_Buf = '\0';
-      if (((((ulonglong)((uint)_Digits >> 0x1f) - 1) + (ulonglong)(uVar6 == 0) & uVar6) + 1 &
-          0xffffffff) < (ulonglong)_SizeInBytes) {
-        _Src = _Buf + 1;
-        *_Buf = '0';
-        pcVar4 = _Src;
-        if (0 < _Digits) {
-          _Digits = 0;
+      *param_1 = '\0';
+      if (((((ulonglong)((uint)param_3 >> 0x1f) - 1) + (ulonglong)(uVar7 == 0) & uVar7) + 1 &
+          0xffffffff) < (ulonglong)param_2) {
+        pcVar5 = param_1 + 1;
+        *param_1 = '0';
+        pcVar4 = pcVar5;
+        if (0 < param_3) {
+          param_3 = 0;
           do {
             cVar3 = *pcVar2;
             if (cVar3 == '\0') {
@@ -45,35 +45,34 @@ errno_t _fptostr(char *_Buf,size_t _SizeInBytes,int _Digits,STRFLT _PtFlt)
             }
             *pcVar4 = cVar3;
             pcVar4 = pcVar4 + 1;
-            uVar6 = uVar6 - 1;
-          } while (uVar6 != 0);
+            uVar7 = uVar7 - 1;
+          } while (uVar7 != 0);
         }
         *pcVar4 = '\0';
-        if ((-1 < _Digits) && ('4' < *pcVar2)) {
+        if ((-1 < param_3) && ('4' < *pcVar2)) {
           while (pcVar4 = pcVar4 + -1, *pcVar4 == '9') {
             *pcVar4 = '0';
           }
           *pcVar4 = *pcVar4 + '\x01';
         }
-        pcVar2 = _Src;
-        if (*_Buf == '1') {
-          _PtFlt->decpt = _PtFlt->decpt + 1;
+        if (*param_1 == '1') {
+          param_4->decpt = param_4->decpt + 1;
         }
         else {
           do {
-            cVar3 = *pcVar2;
-            pcVar2 = pcVar2 + 1;
+            cVar3 = *pcVar5;
+            pcVar5 = pcVar5 + 1;
           } while (cVar3 != '\0');
-          memmove(_Buf,_Src,(int)pcVar2 - (int)_Src);
+          memmove();
         }
         return 0;
       }
       piVar1 = _errno();
-      iVar5 = 0x22;
+      iVar6 = 0x22;
     }
-    *piVar1 = iVar5;
+    *piVar1 = iVar6;
     _invalid_parameter_noinfo();
   }
-  return iVar5;
+  return iVar6;
 }
 

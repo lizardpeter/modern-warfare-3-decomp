@@ -2,24 +2,28 @@
 
 // 822C0320  CG_CalcCrosshairPosition  (cgame/cg_draw_reticles.cpp:21)
 
-void CG_CalcCrosshairPosition(undefined8 param_1,float *param_2,float *param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_CalcCrosshairPosition(cg_s *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
   int iVar3;
-  undefined4 local_40;
+  float local_40;
   undefined4 local_3c;
   undefined4 local_38;
   float local_30;
   float local_2c;
   float local_28;
   
-  iVar3 = __savegprlr_29();
-  local_40 = *(undefined4 *)(iVar3 + 0x797a0);
+  iVar3 = __savegprlr_29(param_1);
+  local_40 = *(float *)(iVar3 + 0x797a0);
   local_3c = *(undefined4 *)(iVar3 + 0x797a4);
   local_38 = *(undefined4 *)(iVar3 + 0x704e4);
-  AngleVectors(&local_40,&local_30,0,0);
+  AngleVectors(&local_40,&local_30,(float *)0x0,(float *)0x0);
   fVar2 = *(float *)(iVar3 + 0x6b9dc) * local_28 +
           *(float *)(iVar3 + 0x6b9d8) * local_2c + *(float *)(iVar3 + 0x6b9d4) * local_30;
   if (0.0 < fVar2) {
@@ -44,87 +48,112 @@ void CG_CalcCrosshairPosition(undefined8 param_1,float *param_2,float *param_3)
 
 // 822C0468  CG_GetWeapReticleZoom  (cgame/cg_draw_reticles.cpp:43)
 
-void CG_GetWeapReticleZoom(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+bool CG_GetWeapReticleZoom(cg_s *param_1,float *param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar4;
-  undefined8 uVar3;
-  uint uVar5;
-  int *piVar6;
-  int iVar7;
-  undefined8 uVar8;
-  double dVar9;
+  WeaponDef *pWVar1;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  Weapon WVar4;
+  ADSOverlay *pAVar5;
+  weapClass_t wVar6;
+  undefined1 uVar7;
+  ulonglong uVar8;
+  bool bVar9;
+  float fVar10;
   
-  iVar4 = __savegprlr_26();
-  uVar3 = BG_GetViewmodelWeapon();
-  if ((iVar4 == 0) || (uVar8 = 1, (*(uint *)(iVar4 + 0x374) & 0x8000) == 0)) {
-    uVar8 = 0;
+  uVar8 = (ulonglong)(int)param_2;
+  pcVar2 = (cg_s *)__savegprlr_26(param_1);
+  WVar3 = BG_GetViewmodelWeapon((playerState_s *)pcVar2);
+  if ((pcVar2 == (cg_s *)0x0) ||
+     (bVar9 = true, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar9 = false;
   }
-  uVar5 = BG_GetAlternateWeapon(uVar3,uVar8);
-  iVar1 = (&DAT_829d84a0)[uVar5 & 0xff];
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x36,0,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar4 = BG_GetAlternateWeapon(WVar3,bVar9);
+  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x36,0,"%s");
   }
-  piVar6 = (int *)BG_GetOverlay(uVar3,uVar8);
-  iVar7 = BG_GetWeaponClass(uVar3,uVar8);
-  if ((iVar7 != 8) || (bVar2 = true, *(int *)(iVar1 + 0x41c) != 2)) {
-    bVar2 = false;
+  pAVar5 = BG_GetOverlay(WVar3,bVar9);
+  wVar6 = BG_GetWeaponClass(WVar3,bVar9);
+  if ((wVar6 != WEAPCLASS_TURRET) ||
+     (bVar9 = true, pWVar1->overlayInterface != WEAPOVERLAYINTERFACE_TURRETSCOPE)) {
+    bVar9 = false;
   }
-  if (((!bVar2) && (*piVar6 == 0)) && (piVar6[4] == 0)) {
-    if ((param_2 & 0xffffffff) != 0) {
-      *(float *)param_2 = 0.0;
+  if (((!bVar9) && (pAVar5->shader == (Material *)0x0)) &&
+     (pAVar5->reticle == WEAPOVERLAYRETICLE_NONE)) {
+    if ((uVar8 & 0xffffffff) != 0) {
+      *(float *)uVar8 = 0.0;
     }
-    __restgprlr_26(0);
-    return;
+    uVar7 = __restgprlr_26(0);
+    return (bool)uVar7;
   }
-  dVar9 = (double)CG_GetWeaponZoom(iVar4,uVar3);
-  if ((param_2 & 0xffffffff) != 0) {
-    *(float *)param_2 = (float)dVar9;
+  fVar10 = CG_GetWeaponZoom(pcVar2,WVar3);
+  if ((uVar8 & 0xffffffff) != 0) {
+    *(float *)uVar8 = fVar10;
   }
-  __restgprlr_26(0.009999999776482582 < dVar9);
-  return;
+  uVar7 = __restgprlr_26(0.01 < fVar10);
+  return (bool)uVar7;
 }
 
 
 // 822C05A8  CG_DrawFrameOverlay  (cgame/cg_draw_reticles.cpp:81)
 
-void CG_DrawFrameOverlay(undefined8 param_1,double param_2,double param_3,double param_4)
+void CG_DrawFrameOverlay(float param_1,float param_2,float param_3,float param_4,float *param_5,
+                        Material *param_6)
 
 {
-  double dVar1;
-  double dVar2;
+  float *pfVar1;
+  Material *pMVar2;
   double dVar3;
-  undefined8 uVar4;
+  double dVar4;
   double dVar5;
-  int local_70;
-  int local_6c;
-  undefined1 auStack_68 [8];
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  undefined1 local_70 [4];
+  float local_6c;
+  float afStack_68 [2];
   longlong local_60;
   
-  dVar1 = (double)__savefpr_24();
-  CL_GetScreenDimensions(&local_6c,&local_70,auStack_68);
-  local_60 = (longlong)local_6c;
-  dVar5 = 0.0;
-  uVar4 = 0x3ff0000000000000;
-  dVar3 = (double)(longlong)local_70;
-  dVar2 = (double)local_60;
-  if (0.0 < dVar1) {
-    CL_DrawStretchPicPhysical(0,0,dVar1,dVar3,0,0,0,0x3ff0000000000000);
-  }
-  if (param_2 < dVar2) {
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  dVar4 = (double)param_2;
+  dVar3 = (double)__savefpr_24((double)param_1,param_5,param_6);
+  pMVar2 = (Material *)local_70;
+  pfVar1 = &local_6c;
+  CL_GetScreenDimensions((int *)pfVar1,(int *)pMVar2,afStack_68);
+  local_60 = (longlong)(int)local_6c;
+  dVar10 = 0.0;
+  dVar9 = 1.0;
+  dVar8 = (double)(longlong)(int)local_70;
+  dVar7 = (double)local_60;
+  if (0.0 < dVar3) {
     CL_DrawStretchPicPhysical
-              (param_2,dVar5,(double)(float)(dVar2 - param_2),dVar3,dVar5,dVar5,dVar5,uVar4);
+              (0.0,0.0,(float)dVar3,(float)(longlong)(int)local_70,0.0,0.0,0.0,1.0,pfVar1,pMVar2);
   }
-  if (dVar5 < param_3) {
+  if (dVar4 < dVar7) {
     CL_DrawStretchPicPhysical
-              (dVar1,dVar5,(double)(float)(param_2 - dVar1),param_3,dVar5,dVar5,uVar4,dVar5);
+              ((float)dVar4,(float)dVar10,(float)(dVar7 - dVar4),(float)dVar8,(float)dVar10,
+               (float)dVar10,(float)dVar10,(float)dVar9,pfVar1,pMVar2);
   }
-  if (param_4 < dVar3) {
+  if (dVar10 < dVar5) {
     CL_DrawStretchPicPhysical
-              (dVar1,param_4,(double)(float)(param_2 - dVar1),(double)(float)(dVar3 - param_4),dVar5
-               ,dVar5,uVar4,dVar5);
+              ((float)dVar3,(float)dVar10,(float)(dVar4 - dVar3),(float)dVar5,(float)dVar10,
+               (float)dVar10,(float)dVar9,(float)dVar10,pfVar1,pMVar2);
+  }
+  if (dVar6 < dVar8) {
+    CL_DrawStretchPicPhysical
+              ((float)dVar3,(float)dVar6,(float)(dVar4 - dVar3),(float)(dVar8 - dVar6),(float)dVar10
+               ,(float)dVar10,(float)dVar9,(float)dVar10,pfVar1,pMVar2);
   }
   __restfpr_24();
   return;
@@ -133,19 +162,27 @@ void CG_DrawFrameOverlay(undefined8 param_1,double param_2,double param_3,double
 
 // 822C0720  CG_DrawNightVisionOverlay  (cgame/cg_draw_reticles.cpp:111)
 
-void CG_DrawNightVisionOverlay(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawNightVisionOverlay(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar2;
+  ScreenPlacement *pSVar1;
+  int in_r4;
+  int in_r5;
   
-  cVar1 = CG_LookingThroughNightVisionGoggles();
-  if (cVar1 != '\0') {
-    if (DAT_82a3c9f0 == 0) {
-      Com_PrintWarning(0xe,0xffffffff820152a0);
+  bVar2 = CG_LookingThroughNightVisionGoggles(param_1);
+  if (bVar2) {
+    if (cgMedia.nightVisionOverlay == (Material *)0x0) {
+      Com_PrintWarning(0xe,
+                       "CG_DrawNightVisionOverlay(): Nightvision Assets not Precached (nightVisionOverlay).\n"
+                      );
     }
     else {
-      ScrPlace_GetActivePlacement(param_1);
-      CL_DrawStretchPic(0,0,0x4084000000000000,0x407e000000000000,0,0,0x3ff0000000000000);
+      pSVar1 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar1,0.0,0.0,640.0,480.0,in_r4,in_r5,0.0,0.0,1.0,1.0,colorWhite,
+                        (Material *)0x82180000);
     }
   }
   return;
@@ -154,19 +191,22 @@ void CG_DrawNightVisionOverlay(undefined8 param_1)
 
 // 822C07E0  UsingLowResViewPort  (cgame/cg_draw_reticles.cpp:146)
 
-bool UsingLowResViewPort(int param_1)
+bool UsingLowResViewPort(ScreenPlacement *param_1)
 
 {
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x93,0,0xffffffff82000f98,0xffffffff8200144c);
+  if (param_1 == (ScreenPlacement *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x93,0,"%s");
   }
-  return *(float *)(param_1 + 0x24) <= 480.0;
+  return param_1->realViewportSize[1] <= 480.0;
 }
 
 
 // 822C0858  CG_UpdateScissorViewport  (cgame/cg_draw_reticles.cpp:153)
 
-void CG_UpdateScissorViewport(undefined8 param_1,float *param_2,float *param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_UpdateScissorViewport(refdef_t *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
@@ -178,12 +218,14 @@ void CG_UpdateScissorViewport(undefined8 param_1,float *param_2,float *param_3)
   int iVar7;
   int iVar8;
   
-  piVar2 = (int *)__savegprlr_27();
+  piVar2 = (int *)__savegprlr_27(param_1);
   if (piVar2 == (int *)0x0) {
-    MyAssertHandler(0xffffffff82015258,0x9e,0,0xffffffff82000f98,0xffffffff82015314);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x9e,0,"%s");
   }
   if (*(char *)(piVar2 + 0x12c8) != '\0') {
-    MyAssertHandler(0xffffffff82015258,0x9f,0,0xffffffff82000f98,0xffffffff820152f8);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x9f,0,"%s");
   }
   *(undefined1 *)(piVar2 + 0x12c8) = 1;
   piVar2[0x12c4] = (int)*param_2 + *piVar2;
@@ -237,111 +279,131 @@ void CG_UpdateScissorViewport(undefined8 param_1,float *param_2,float *param_3)
 
 // 822C0A00  CG_GetWeapOverlayMaterial  (cgame/cg_draw_reticles.cpp:183)
 
-void CG_GetWeapOverlayMaterial
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+Material *
+CG_GetWeapOverlayMaterial
+          (LocalClientNum_t param_1,Weapon param_2,bool param_3,ScreenPlacement *param_4)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  char cVar5;
-  int *piVar2;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  bool bVar4;
+  bool bVar5;
+  ADSOverlay *pAVar2;
+  Material *pMVar3;
   
-  uVar1 = __savegprlr_27();
-  cVar4 = UsingLowResViewPort(param_4);
-  cVar5 = CG_IsEMPJammed(uVar1);
-  piVar2 = (int *)BG_GetOverlay(param_2,param_3);
-  if (((cVar4 != '\0') && (*(char *)(DAT_82b3ecb8 + 0xc) != '\0')) &&
-     (480.0 <= *(float *)((int)param_4 + 0x24) * 0.0020833334 * (float)piVar2[8])) {
-    cVar4 = '\0';
+  LVar1 = __savegprlr_27(param_1);
+  bVar4 = UsingLowResViewPort(param_4);
+  bVar5 = CG_IsEMPJammed(LVar1);
+  pAVar2 = BG_GetOverlay(param_2,param_3);
+  if (((bVar4) && ((splitscreen->current).enabled != false)) &&
+     (480.0 <= param_4->realViewportSize[1] * 0.0020833334 * pAVar2->heightSplitscreen)) {
+    bVar4 = false;
   }
-  if ((cVar5 == '\0') || (iVar3 = piVar2[2], iVar3 == 0)) {
-    if ((cVar4 == '\0') || (iVar3 = piVar2[1], iVar3 == 0)) {
-      iVar3 = *piVar2;
+  if ((bVar5) && (pMVar3 = pAVar2->shaderEMP, pMVar3 != (Material *)0x0)) {
+    if ((bVar4 != false) && (pAVar2->shaderEMPLowRes != (Material *)0x0)) {
+      pMVar3 = (Material *)__restgprlr_27(pAVar2->shaderEMPLowRes);
+      return pMVar3;
     }
   }
-  else if ((cVar4 != '\0') && (piVar2[3] != 0)) {
-    __restgprlr_27(piVar2[3]);
-    return;
+  else if ((bVar4 == false) || (pMVar3 = pAVar2->shaderLowRes, pMVar3 == (Material *)0x0)) {
+    pMVar3 = pAVar2->shader;
   }
-  __restgprlr_27(iVar3);
-  return;
+  pMVar3 = (Material *)__restgprlr_27(pMVar3);
+  return pMVar3;
 }
 
 
 // 822C0AF0  CG_DrawAdsOverlay  (cgame/cg_draw_reticles.cpp:221)
 
-void CG_DrawAdsOverlay(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_DrawAdsOverlay(LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4,
                       float *param_5)
 
 {
-  double dVar1;
-  double dVar2;
-  undefined8 uVar3;
-  int iVar5;
-  undefined8 uVar4;
-  int iVar6;
-  double dVar7;
-  double dVar8;
-  undefined8 uVar9;
-  float local_60;
+  float fVar1;
+  float fVar2;
+  LocalClientNum_t LVar3;
+  ADSOverlay *pAVar4;
+  ScreenPlacement *pSVar5;
+  Material *pMVar6;
+  int iVar7;
+  ScreenPlacement *pSVar8;
+  Material *pMVar9;
+  double dVar10;
+  double dVar11;
+  undefined1 local_60 [4];
   float local_5c;
-  float local_58;
-  float local_54 [21];
+  undefined8 local_58;
   
-  uVar3 = __savegprlr_25();
-  iVar5 = BG_GetOverlay(param_2,param_3);
-  uVar4 = ScrPlace_GetActivePlacement(uVar3);
-  iVar6 = CG_GetWeapOverlayMaterial(uVar3,param_2,param_3,uVar4);
-  if (iVar6 != 0) {
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      local_58 = *(float *)(iVar5 + 0x14);
-      local_54[0] = *(float *)(iVar5 + 0x18);
+  iVar7 = (int)param_3;
+  LVar3 = __savegprlr_25(param_1);
+  pMVar9 = (Material *)param_5;
+  pAVar4 = BG_GetOverlay(param_2,SUB41(iVar7,0));
+  pSVar5 = ScrPlace_GetActivePlacement(LVar3);
+  pSVar8 = pSVar5;
+  pMVar6 = CG_GetWeapOverlayMaterial(LVar3,param_2,SUB41(iVar7,0),pSVar5);
+  if (pMVar6 != (Material *)0x0) {
+    if ((splitscreen->current).enabled == false) {
+      local_58._0_4_ = pAVar4->width;
+      local_58._4_4_ = pAVar4->height;
     }
     else {
-      local_58 = *(float *)(iVar5 + 0x1c);
-      local_54[0] = *(float *)(iVar5 + 0x20);
+      local_58._0_4_ = pAVar4->widthSplitscreen;
+      local_58._4_4_ = pAVar4->heightSplitscreen;
     }
-    if ((320.0 < local_58) || (240.0 < local_54[0])) {
-      local_60 = -(local_58 * 0.5 - *param_5);
-      local_5c = -(local_54[0] * 0.5 - param_5[1]);
-      if (*(char *)(DAT_82a3d5a8 + 0xc) == '\0') {
-        CL_DrawStretchPic(uVar4);
+    if ((320.0 < (float)local_58._0_4_) || (240.0 < (float)local_58._4_4_)) {
+      local_60 = (undefined1  [4])
+                 -((float)local_58._0_4_ * 0.5 - (float)(((Material *)param_5)->info).name);
+      local_5c = -((float)local_58._4_4_ * 0.5 - *(float *)&(((Material *)param_5)->info).gameFlags)
+      ;
+      if ((cg_debug_overlay_viewport->current).enabled == false) {
+        CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,
+                          (float)local_58._4_4_,param_2.data,iVar7,0.0,0.0,1.0,1.0,
+                          pSVar8->scaleVirtualToReal,pMVar9);
       }
-      ScrPlace_ApplyRect(uVar4,&local_60,&local_5c,&local_58,local_54,2,2);
-      if (*(char *)(DAT_82a3d5a8 + 0xc) != '\0') goto LAB_822c0de8;
-      dVar8 = (double)local_5c;
-      dVar7 = (double)local_60;
-      dVar2 = dVar8 + (double)local_54[0];
-      dVar1 = dVar7 + (double)local_58;
+      pMVar9 = (Material *)local_60;
+      ScrPlace_ApplyRect(pSVar5,(float *)pMVar9,&local_5c,(float *)&local_58,
+                         (float *)((int)&local_58 + 4),2,2);
+      if ((cg_debug_overlay_viewport->current).enabled != false) goto LAB_822c0de8;
+      fVar2 = local_5c + (float)local_58._4_4_;
+      fVar1 = (float)local_60 + (float)local_58._0_4_;
     }
     else {
-      local_60 = *param_5 - local_58;
-      local_5c = param_5[1] - local_54[0];
-      uVar9 = 0x3ff0000000000000;
-      uVar3 = 0;
-      CL_DrawStretchPic(uVar4);
-      local_60 = *param_5;
-      local_5c = (float)((double)param_5[1] - (double)local_54[0]);
-      CL_DrawStretchPic((double)local_60,(double)local_5c,(double)local_58,(double)local_54[0],uVar9
-                        ,uVar3,uVar3,uVar9,uVar4);
-      local_5c = param_5[1];
-      local_60 = (float)((double)*param_5 - (double)local_58);
-      CL_DrawStretchPic((double)local_60,(double)local_5c,(double)local_58,(double)local_54[0],uVar3
-                        ,uVar9,uVar9,uVar3,uVar4);
-      local_60 = *param_5;
-      local_5c = param_5[1];
-      CL_DrawStretchPic((double)local_60,(double)local_5c,(double)local_58,(double)local_54[0],uVar9
-                        ,uVar9,uVar3,uVar3,uVar4);
-      local_60 = *param_5 - local_58;
-      local_5c = param_5[1] - local_54[0];
-      ScrPlace_ApplyRect(uVar4,&local_60,&local_5c,&local_58,local_54,2,2);
-      dVar7 = (double)local_60;
-      dVar8 = (double)local_5c;
-      dVar1 = (double)local_58 * 2.0 + dVar7;
-      dVar2 = (double)local_54[0] * 2.0 + dVar8;
+      local_60 = (undefined1  [4])
+                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
+      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
+      dVar11 = 1.0;
+      dVar10 = 0.0;
+      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar7,0.0,0.0,1.0,1.0,pSVar8->scaleVirtualToReal,pMVar9);
+      local_60 = (undefined1  [4])(((Material *)param_5)->info).name;
+      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
+      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar7,(float)dVar11,(float)dVar10,(float)dVar10,(float)dVar11,
+                        pSVar8->scaleVirtualToReal,pMVar9);
+      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags;
+      local_60 = (undefined1  [4])
+                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
+      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar7,(float)dVar10,(float)dVar11,(float)dVar11,(float)dVar10,
+                        pSVar8->scaleVirtualToReal,pMVar9);
+      local_60 = (undefined1  [4])(((Material *)param_5)->info).name;
+      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags;
+      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar7,(float)dVar11,(float)dVar11,(float)dVar10,(float)dVar10,
+                        pSVar8->scaleVirtualToReal,pMVar9);
+      pMVar9 = (Material *)local_60;
+      local_60 = (undefined1  [4])
+                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
+      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
+      ScrPlace_ApplyRect(pSVar5,(float *)pMVar9,&local_5c,(float *)&local_58,
+                         (float *)((int)&local_58 + 4),2,2);
+      fVar1 = (float)local_58._0_4_ * 2.0 + (float)local_60;
+      fVar2 = (float)local_58._4_4_ * 2.0 + local_5c;
     }
-    CG_DrawFrameOverlay(dVar7,(double)(float)dVar1,dVar8,(double)(float)dVar2);
+    CG_DrawFrameOverlay((float)local_60,fVar1,local_5c,fVar2,pSVar5->scaleVirtualToReal,pMVar9);
   }
 LAB_822c0de8:
   __restgprlr_25();
@@ -351,116 +413,131 @@ LAB_822c0de8:
 
 // 822C0DF8  CG_DrawWeapReticle  (cgame/cg_draw_reticles.cpp:302)
 
-void CG_DrawWeapReticle(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+float CG_DrawWeapReticle(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar2;
-  undefined8 uVar5;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  bool bVar4;
+  Weapon WVar3;
+  bool bVar5;
   double dVar6;
   double dVar7;
   float local_60;
-  undefined1 auStack_5c [12];
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  float local_44;
+  float afStack_5c [3];
+  float local_50 [20];
   
-  uVar1 = __savegprlr_28();
-  iVar3 = CG_GetLocalClientGlobals();
-  if ((iVar3 == 0) || (uVar5 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
-    uVar5 = 0;
+  LVar1 = __savegprlr_28(param_1);
+  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  if ((pcVar2 == (cg_s *)0x0) ||
+     (bVar5 = true, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar5 = false;
   }
-  cVar4 = CG_GetWeapReticleZoom(iVar3,&local_60);
-  if (cVar4 == '\0') {
-    __restgprlr_28(0x3ff0000000000000);
-    return;
+  bVar4 = CG_GetWeapReticleZoom(pcVar2,&local_60);
+  if (!bVar4) {
+    dVar6 = (double)__restgprlr_28(0x3ff0000000000000);
+    return (float)dVar6;
   }
-  uVar2 = BG_GetViewmodelWeapon(iVar3);
+  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
   dVar6 = (double)local_60;
-  local_44 = local_60;
+  local_50[3] = local_60;
   dVar7 = 1.0;
-  local_50 = 0x3f800000;
-  local_4c = 0x3f800000;
-  local_48 = 0x3f800000;
-  CG_CalcCrosshairPosition(iVar3,&local_60,auStack_5c);
-  CG_DrawAdsOverlay(uVar1,uVar2,uVar5,&local_50,&local_60);
+  local_50[0] = 1.0;
+  local_50[1] = 1.0;
+  local_50[2] = 1.0;
+  CG_CalcCrosshairPosition(pcVar2,&local_60,afStack_5c);
+  CG_DrawAdsOverlay(LVar1,WVar3,bVar5,local_50,&local_60);
   dVar6 = (double)(float)(dVar7 - dVar6);
   if ((dVar6 < 0.0) || (dVar7 < dVar6)) {
-    MyAssertHandler(dVar6,0xffffffff82015258,0x14d,1,0xffffffff82015320,0xffffffff8201533c,dVar6);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x14d,1,"%s\n\t(crossHairAlpha) = %g");
   }
-  __restgprlr_28(dVar6);
-  return;
+  dVar6 = (double)__restgprlr_28(dVar6);
+  return (float)dVar6;
 }
 
 
 // 822C0F18  CG_CalcCrosshairColor  (cgame/cg_draw_reticles.cpp:339)
 
-void CG_CalcCrosshairColor(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+void CG_CalcCrosshairColor(LocalClientNum_t param_1,float param_2,float *param_3)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  int iVar3;
-  uint uVar4;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar7;
+  uint uVar1;
+  WeaponDef *pWVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  Weapon WVar5;
+  int iVar6;
+  bool bVar8;
+  cgs_t *pcVar7;
+  float *in_r5;
   double extraout_f1;
-  double dVar8;
+  double dVar9;
   
-  uVar2 = __savegprlr_24();
-  dVar8 = extraout_f1;
-  if (DAT_82a38340 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x15d,0,0xffffffff82000f98,0xffffffff82015418);
+  LVar3 = __savegprlr_24((double)param_2,param_1,param_3);
+  dVar9 = extraout_f1;
+  if (cg_crosshairAlpha == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x15d,0,"%s");
   }
-  if (DAT_82a3d44c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x15e,0,0xffffffff82000f98,0xffffffff82015400);
+  if (cg_crosshairEnemyColor == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x15e,0,"%s");
   }
-  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
-    MyAssertHandler(dVar8,0xffffffff82015258,0x15f,0,0xffffffff820153c8,0xffffffff820153dc,dVar8);
+  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x15f,0,"%s\n\t(alpha) = %g");
   }
-  iVar3 = CG_GetLocalClientGlobals(uVar2);
-  if ((iVar3 == 0) || (uVar7 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
-    uVar7 = 0;
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  if ((pcVar4 == (cg_s *)0x0) ||
+     (bVar8 = true, ((pcVar4->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar8 = false;
   }
-  uVar4 = BG_GetAlternateWeapon(*(undefined4 *)(iVar3 + 0x370),uVar7);
-  iVar5 = (&DAT_829d84a0)[uVar4 & 0xff];
-  if (iVar5 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x166,0,0xffffffff82000f98,0xffffffff8200a88c);
+  WVar5 = BG_GetAlternateWeapon((pcVar4->predictedPlayerState).weapCommon.weapon,bVar8);
+  pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+  if (pWVar2 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x166,0,"%s");
   }
-  puVar1 = (undefined4 *)param_3;
-  if (*(char *)(iVar5 + 0x770) != '\0') {
-    CL_ControllerIndexFromClientNum(uVar2);
-    cVar6 = GamerProfile_IsColorBlind();
-    iVar5 = CG_GetLocalClientStaticGlobals(uVar2);
-    if ((*(uint *)(iVar3 + 0x374) & 8) != 0) {
-      if (cVar6 == '\0') {
-        Dvar_GetUnpackedColorByName(0xffffffff8201539c,param_3);
+  if (pWVar2->crosshairColorChange != false) {
+    iVar6 = CL_ControllerIndexFromClientNum(LVar3);
+    bVar8 = GamerProfile_IsColorBlind(iVar6);
+    pcVar7 = CG_GetLocalClientStaticGlobals(LVar3);
+    uVar1 = (pcVar4->predictedPlayerState).weapCommon.weapFlags;
+    if ((uVar1 & 8) != 0) {
+      if (bVar8) {
+        Dvar_GetUnpackedColorByName("cg_ColorBlind_MyTeam",in_r5);
       }
       else {
-        Dvar_GetUnpackedColorByName(0xffffffff820153b0,param_3);
+        Dvar_GetUnpackedColorByName("cg_TeamColor_MyTeam",in_r5);
       }
       goto LAB_822c1130;
     }
-    if ((((*(uint *)(iVar3 + 0x374) & 0x10) != 0) && (*(int *)(iVar5 + 0x194) != 0)) &&
-       (*(char *)(DAT_82a3d44c + 0xc) != '\0')) {
-      if (cVar6 == '\0') {
-        Dvar_GetUnpackedColorByName(0xffffffff8201536c,param_3);
+    if ((((uVar1 & 0x10) != 0) && (pcVar7->redCrosshair != 0)) &&
+       ((cg_crosshairEnemyColor->current).enabled != false)) {
+      if (bVar8) {
+        Dvar_GetUnpackedColorByName("cg_ColorBlind_EnemyTeam",in_r5);
       }
       else {
-        Dvar_GetUnpackedColorByName(0xffffffff82015384,param_3);
+        Dvar_GetUnpackedColorByName("cg_TeamColor_EnemyTeam",in_r5);
       }
       goto LAB_822c1130;
     }
   }
-  *puVar1 = 0x3f800000;
-  puVar1[1] = 0x3f800000;
-  puVar1[2] = 0x3f800000;
+  *in_r5 = 1.0;
+  in_r5[1] = 1.0;
+  in_r5[2] = 1.0;
 LAB_822c1130:
-  puVar1[3] = (float)((double)*(float *)(DAT_82a38340 + 0xc) * dVar8);
+  in_r5[3] = (float)((double)(cg_crosshairAlpha->current).value * dVar9);
   __restgprlr_24();
   return;
 }
@@ -468,64 +545,86 @@ LAB_822c1130:
 
 // 822C1150  CG_DrawTurretCrossHair  (cgame/cg_draw_reticles.cpp:422)
 
-void CG_DrawTurretCrossHair(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawTurretCrossHair(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  char cVar4;
-  undefined8 uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  int local_80;
+  Weapon WVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
+  bool bVar6;
+  ScreenPlacement *pSVar5;
+  float *pfVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
+  Material *local_80;
   int local_7c;
   longlong local_78;
+  float afStack_70 [28];
   
-  __savegprlr_25();
-  uVar1 = __savefpr_28();
-  if (DAT_82a382d4 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1b5,0,0xffffffff82000f98,0xffffffff82015484);
+  __savegprlr_25(param_1);
+  LVar2 = __savefpr_28();
+  if (cg_drawTurretCrosshair == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1b5,0,"%s");
   }
-  if (DAT_82a3d69c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1b6,0,0xffffffff82000f98,0xffffffff82015478);
+  if (cg_paused == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1b6,0,"%s");
   }
-  if (DAT_82a3d61c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1b7,0,0xffffffff82000f98,0xffffffff82015468);
+  if (cg_drawpaused == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1b7,0,"%s");
   }
-  if (DAT_82a38340 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1b8,0,0xffffffff82000f98,0xffffffff82015418);
+  if (cg_crosshairAlpha == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1b8,0,"%s");
   }
-  if ((*(char *)(DAT_82a382d4 + 0xc) != '\0') &&
-     ((*(int *)(DAT_82a3d69c + 0xc) == 0 || (*(char *)(DAT_82a3d61c + 0xc) == '\0')))) {
-    iVar2 = CG_GetLocalClientGlobals(uVar1);
-    if ((iVar2 == 0) || (uVar5 = 1, (*(uint *)(iVar2 + 0x374) & 0x8000) == 0)) {
-      uVar5 = 0;
+  if (((cg_drawTurretCrosshair->current).enabled != false) &&
+     (((cg_paused->current).integer == 0 || ((cg_drawpaused->current).enabled == false)))) {
+    pcVar3 = CG_GetLocalClientGlobals(LVar2);
+    if ((pcVar3 == (cg_s *)0x0) ||
+       (pfVar7 = (float *)0x1, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)
+       ) {
+      pfVar7 = (float *)0x0;
     }
-    if (*(int *)(iVar2 + 0x1bc) == 0x7ff) {
-      MyAssertHandler(0xffffffff82015258,0x1c0,0,0xffffffff82000f98,0xffffffff8201542c);
+    if ((pcVar3->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                      0x1c0,0,"%s");
     }
-    iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x1bc));
-    if (*(int *)(iVar3 + 200) != 0xb) {
-      MyAssertHandler(0xffffffff82015258,0x1c2,0,0xffffffff82000f98,0xffffffff82012a64);
+    pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).viewlocked_entNum);
+    if ((pcVar4->nextState).eType != 0xb) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                      0x1c2,0,"%s");
     }
-    if ((((*(uint *)(iVar3 + 0x18c) & 0xff) != 0) &&
-        (BG_GetCenterReticle(*(uint *)(iVar3 + 0x18c),uVar5,&local_80,&local_7c), local_80 != 0)) &&
-       (0.01 <= *(float *)(DAT_82a38340 + 0xc))) {
-      uVar5 = 0x3ff0000000000000;
-      CG_CalcCrosshairColor(0x3ff0000000000000,uVar1);
+    WVar1 = (pcVar4->nextState).weapon;
+    if ((((WVar1.data & 0xff) != 0) &&
+        (BG_GetCenterReticle(WVar1,SUB41(pfVar7,0),&local_80,&local_7c), local_80 != (Material *)0x0
+        )) && (0.01 <= (cg_crosshairAlpha->current).value)) {
+      pfVar8 = afStack_70;
+      dVar11 = 1.0;
+      CG_CalcCrosshairColor(LVar2,1.0,pfVar7);
       local_78 = (longlong)local_7c;
-      dVar8 = (double)local_78;
-      cVar4 = CL_IsRenderingSplitScreen();
-      if (cVar4 != '\0') {
-        dVar8 = (double)(float)(dVar8 * 2.0);
+      dVar12 = (double)local_78;
+      bVar6 = CL_IsRenderingSplitScreen();
+      if (bVar6) {
+        dVar12 = (double)(float)(dVar12 * 2.0);
       }
-      dVar7 = (double)(float)(dVar8 * -0.5);
-      dVar6 = (double)CG_GetCrosshairVerticalOffset(iVar2);
-      dVar6 = -(double)(float)(dVar6 * 240.0 - dVar7);
-      ScrPlace_GetActivePlacement(uVar1);
-      CL_DrawStretchPic(dVar7,dVar6,dVar8,dVar8,0,0,uVar5,uVar5);
+      dVar10 = (double)(float)(dVar12 * -0.5);
+      fVar13 = CG_GetCrosshairVerticalOffset(&pcVar3->predictedPlayerState);
+      dVar9 = -(double)(float)((double)fVar13 * 240.0 - dVar10);
+      pSVar5 = ScrPlace_GetActivePlacement(LVar2);
+      CL_DrawStretchPic(pSVar5,(float)dVar10,(float)dVar9,(float)dVar12,(float)dVar12,(int)pfVar7,
+                        (int)pfVar8,0.0,0.0,(float)dVar11,(float)dVar11,afStack_70,
+                        (Material *)&IMAGE_DOS_HEADER_82000000);
     }
   }
   __restfpr_28();
@@ -536,42 +635,58 @@ void CG_DrawTurretCrossHair(void)
 
 // 822C13F0  CG_DrawVehicleCrossHair  (cgame/cg_draw_reticles.cpp:485)
 
-void CG_DrawVehicleCrossHair(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawVehicleCrossHair(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  int iVar3;
-  double dVar4;
-  double dVar5;
-  undefined8 uVar6;
-  int local_70;
+  int iVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
+  ScreenPlacement *pSVar5;
+  float *pfVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  Material *local_70;
   int local_6c;
   longlong local_68;
+  float afStack_60 [24];
   
-  uVar1 = __savegprlr_26();
-  iVar2 = CG_GetLocalClientGlobals();
-  if (DAT_82a38340 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1f5,0,0xffffffff82000f98,0xffffffff82015418);
+  LVar2 = __savegprlr_26(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (cg_crosshairAlpha == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1f5,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
-    MyAssertHandler(0xffffffff82015258,0x1f6,0,0xffffffff82000f98,0xffffffff820154f8);
+  if (((pcVar3->predictedPlayerState).eFlags & 0x200000U) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1f6,0,"%s");
   }
-  iVar3 = CG_GetEntity(uVar1,*(undefined4 *)(iVar2 + 0x1bc));
-  if ((*(int *)(iVar3 + 200) != 0xe) && (*(int *)(iVar3 + 200) != 0xc)) {
-    MyAssertHandler(0xffffffff82015258,0x1fd,0,0xffffffff82000f98,0xffffffff820154a0);
+  pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).viewlocked_entNum);
+  iVar1 = (pcVar4->nextState).eType;
+  if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x1fd,0,"%s");
   }
-  if (*(char *)(iVar3 + 399) != '\0') {
-    BG_GetCenterReticle(*(undefined4 *)(iVar3 + 0x18c),*(uint *)(iVar2 + 0x374) >> 0xf & 1,&local_70
-                        ,&local_6c);
-    if ((local_70 != 0) && (0.01 <= *(float *)(DAT_82a38340 + 0xc))) {
-      uVar6 = 0x3ff0000000000000;
-      CG_CalcCrosshairColor(0x3ff0000000000000,uVar1);
+  if ((pcVar4->nextState).weapon._s_0.weaponIdx != 0) {
+    pfVar6 = (float *)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1);
+    BG_GetCenterReticle((pcVar4->nextState).weapon,SUB41(pfVar6,0),&local_70,&local_6c);
+    if ((local_70 != (Material *)0x0) && (0.01 <= (cg_crosshairAlpha->current).value)) {
+      pfVar7 = afStack_60;
+      dVar10 = 1.0;
+      CG_CalcCrosshairColor(LVar2,1.0,pfVar6);
       local_68 = (longlong)local_6c;
-      dVar5 = (double)local_68;
-      dVar4 = (double)(float)(dVar5 * -0.5);
-      ScrPlace_GetActivePlacement(uVar1);
-      CL_DrawStretchPic(dVar4,dVar4,dVar5,dVar5,0,0,uVar6,uVar6);
+      dVar9 = (double)local_68;
+      dVar8 = (double)(float)(dVar9 * -0.5);
+      pSVar5 = ScrPlace_GetActivePlacement(LVar2);
+      CL_DrawStretchPic(pSVar5,(float)dVar8,(float)dVar8,(float)dVar9,(float)dVar9,(int)pfVar6,
+                        (int)pfVar7,0.0,0.0,(float)dVar10,(float)dVar10,afStack_60,
+                        (Material *)&IMAGE_DOS_HEADER_82000000);
     }
   }
   __restgprlr_26();
@@ -581,98 +696,119 @@ void CG_DrawVehicleCrossHair(void)
 
 // 822C15A0  CG_IsReticleTurnedOff  (cgame/cg_draw_reticles.cpp:542)
 
-undefined8 CG_IsReticleTurnedOff(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+bool CG_IsReticleTurnedOff(LocalClientNum_t param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if ((*(char *)(DAT_82a3827c + 0xc) != '\0') && (cVar1 = UI_ShouldDrawCrosshair(), cVar1 != '\0'))
-  {
-    return 0;
+  if (((cg_drawCrosshair->current).enabled != false) && (bVar1 = UI_ShouldDrawCrosshair(), bVar1)) {
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 822C15F0  AllowedToDrawCrosshair  (cgame/cg_draw_reticles.cpp:552)
 
-void AllowedToDrawCrosshair(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+bool AllowedToDrawCrosshair(LocalClientNum_t param_1,playerState_s *param_2)
 
 {
   int iVar1;
   bool bVar2;
   int iVar3;
-  char cVar4;
+  bool bVar4;
+  undefined1 uVar5;
   
-  iVar3 = __savegprlr_28();
+  iVar3 = __savegprlr_28(param_1,param_2);
   if (iVar3 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x229,0,0xffffffff82000f98,0xffffffff82015534);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x229,0,"%s");
   }
-  if (DAT_82a3d69c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x22a,0,0xffffffff82000f98,0xffffffff82015478);
+  if (cg_paused == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x22a,0,"%s");
   }
-  if ((*(int *)(DAT_82a3d69c + 0xc) != 0) && (*(char *)(DAT_82a3d61c + 0xc) != '\0'))
+  if (((cg_paused->current).integer != 0) && ((cg_drawpaused->current).enabled != false))
   goto LAB_822c16f8;
-  if (*(char *)(DAT_82a3827c + 0xc) == '\0') {
+  if ((cg_drawCrosshair->current).enabled == false) {
 LAB_822c16ac:
     bVar2 = true;
   }
   else {
-    cVar4 = UI_ShouldDrawCrosshair();
+    bVar4 = UI_ShouldDrawCrosshair();
     bVar2 = false;
-    if (cVar4 == '\0') goto LAB_822c16ac;
+    if (!bVar4) goto LAB_822c16ac;
   }
   if ((((!bVar2) && (iVar1 = *(int *)(iVar3 + 0x24c), iVar1 != 0xd)) && (iVar1 != 0xe)) &&
      (iVar1 != 0xf)) {
     if (iVar1 == 8) {
       if ((*(int *)(iVar3 + 0x390) == 1) && (*(int *)(iVar3 + 0x268) != 8)) {
 LAB_822c172c:
-        __restgprlr_28(1);
-        return;
+        uVar5 = __restgprlr_28(1);
+        return (bool)uVar5;
       }
     }
     else if (((iVar1 != 1) && (iVar1 != 2)) && ((iVar1 != 3 && ((iVar1 != 4 && (iVar1 != 5))))))
     goto LAB_822c172c;
   }
 LAB_822c16f8:
-  __restgprlr_28(0);
-  return;
+  uVar5 = __restgprlr_28(0);
+  return (bool)uVar5;
 }
 
 
 // 822C1738  CG_DrawAdsAimIndicator  (cgame/cg_draw_reticles.cpp:589)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CG_DrawAdsAimIndicator
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+               (LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4,float param_5,
+               float param_6,float param_7)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  Material **ppMVar4;
+  longlong lVar5;
   double extraout_f1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  double dVar5;
-  undefined8 uVar6;
-  int local_70;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  Material *local_70;
   int local_6c;
   longlong local_68;
   
-  __savegprlr_27();
-  uVar1 = __savefpr_27();
-  dVar4 = extraout_f1;
-  if (DAT_82a3836c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x255,0,0xffffffff82000f98,0xffffffff8201554c);
+  dVar6 = (double)param_7;
+  dVar7 = (double)param_6;
+  iVar3 = (int)param_3;
+  __savegprlr_27((double)param_5,param_1);
+  LVar1 = __savefpr_27();
+  dVar8 = extraout_f1;
+  if (cg_drawGun == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x255,0,"%s");
   }
-  if ((*(char *)(DAT_82a3836c + 0xc) == '\0') && (uVar6 = 0x3ff0000000000000, param_3 < 1.0)) {
-    BG_GetCenterReticle(param_5,param_6,&local_70,&local_6c);
-    if (local_70 != 0) {
-      local_68 = (longlong)local_6c;
-      dVar5 = (double)((float)(1.5 - param_3) * (float)local_68);
-      dVar2 = (double)(float)(dVar5 * 0.5);
-      dVar3 = (double)(float)(param_2 - dVar2);
-      ScrPlace_GetActivePlacement(uVar1);
-      CL_DrawStretchPic((double)(float)(dVar4 - dVar2),dVar3,dVar5,dVar5,0,0,uVar6,uVar6);
+  if (((cg_drawGun->current).enabled == false) && (dVar10 = 1.0, dVar6 < 1.0)) {
+    ppMVar4 = &local_70;
+    BG_GetCenterReticle(param_2,SUB41(iVar3,0),ppMVar4,&local_6c);
+    if (local_70 != (Material *)0x0) {
+      lVar5 = (longlong)local_6c;
+      dVar9 = (double)((float)(1.5 - dVar6) * (float)lVar5);
+      dVar6 = (double)(float)(dVar9 * 0.5);
+      dVar7 = (double)(float)(dVar7 - dVar6);
+      local_68 = lVar5;
+      pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+      CL_DrawStretchPic(pSVar2,(float)(dVar8 - dVar6),(float)dVar7,(float)dVar9,(float)dVar9,iVar3,
+                        (int)ppMVar4,0.0,0.0,(float)dVar10,(float)dVar10,
+                        (float *)&IMAGE_DOS_HEADER_82000000,(Material *)lVar5);
     }
   }
   __restfpr_27();
@@ -683,64 +819,78 @@ void CG_DrawAdsAimIndicator
 
 // 822C1868  CG_TransitionToAds  (cgame/cg_draw_reticles.cpp:628)
 
-void CG_TransitionToAds(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4,
-                       ulonglong param_5)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CG_TransitionToAds(cg_s *param_1,Weapon param_2,float param_3,float *param_4,float *param_5)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong in_r7;
+  bool bVar4;
   double extraout_f1;
-  double dVar3;
-  double dVar4;
   double dVar5;
   double dVar6;
+  double dVar7;
+  double dVar8;
+  float fVar9;
   float local_60;
   float local_5c [23];
   
-  iVar1 = __savegprlr_26();
-  dVar5 = extraout_f1;
+  uVar3 = (ulonglong)(int)param_5;
+  lVar2 = (longlong)(int)param_2.data;
+  iVar1 = __savegprlr_26((double)param_3,param_1,lVar2,param_4);
+  dVar7 = extraout_f1;
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x279,0,0xffffffff82000f98,0xffffffff82002798);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x279,0,"%s");
   }
-  if ((param_4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015258,0x27a,0,0xffffffff82000f98,0xffffffff82015644);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x27a,0,"%s");
   }
-  if ((param_5 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff82015258,0x27b,0,0xffffffff82000f98,0xffffffff82015638);
+  if ((in_r7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x27b,0,"%s");
   }
-  if ((iVar1 == 0) || (uVar2 = 1, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    uVar2 = 0;
+  if ((iVar1 == 0) || (bVar4 = true, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
+    bVar4 = false;
   }
-  BG_GetADSCrosshairFracs(param_2,uVar2,&local_60,local_5c);
-  dVar6 = 0.0;
-  dVar4 = 1.0;
+  BG_GetADSCrosshairFracs((Weapon)(uint)lVar2,bVar4,&local_60,local_5c);
+  dVar8 = 0.0;
+  dVar6 = 1.0;
   if (*(int *)(iVar1 + 0x3304) == 0) {
-    dVar3 = (double)local_5c[0];
-    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
-    if (dVar5 <= 0.0) goto LAB_822c1a8c;
-    if (dVar3 == 0.0) {
-      MyAssertHandler(0xffffffff82015258,0x290,0,0xffffffff820155b8,0xffffffff820155d8,dVar3);
-      dVar3 = (double)local_5c[0];
+    dVar5 = (double)local_5c[0];
+    dVar7 = (double)(float)(dVar7 - (double)(float)(1.0 - dVar5));
+    if (dVar7 <= 0.0) goto LAB_822c1a8c;
+    if (dVar5 == 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                      0x290,0,"%s\n\t(adsCrosshairOutFrac) = %g");
+      dVar5 = (double)local_5c[0];
     }
   }
   else {
-    dVar3 = (double)local_60;
-    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
-    if (dVar5 <= 0.0) goto LAB_822c1a8c;
-    if (dVar3 == 0.0) {
-      MyAssertHandler(0xffffffff82015258,0x287,0,0xffffffff820155f8,0xffffffff82015618,dVar3);
-      dVar3 = (double)local_60;
+    dVar5 = (double)local_60;
+    dVar7 = (double)(float)(dVar7 - (double)(float)(1.0 - dVar5));
+    if (dVar7 <= 0.0) goto LAB_822c1a8c;
+    if (dVar5 == 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                      0x287,0,"%s\n\t(adsCrosshairInFrac) = %g");
+      dVar5 = (double)local_60;
     }
   }
-  dVar3 = (double)(float)(dVar5 / dVar3);
-  dVar5 = (double)*(float *)(iVar1 + 0x6b9c4);
-  if (dVar5 == dVar6) {
-    MyAssertHandler(0xffffffff82015258,0x294,0,0xffffffff82015558,0xffffffff82015588,dVar5);
+  dVar7 = (double)(float)(dVar7 / dVar5);
+  if ((double)*(float *)(iVar1 + 0x6b9c4) == dVar8) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x294,0,"%s\n\t(cgameGlob->refdef.view.tanHalfFovY) = %g");
   }
-  *(float *)param_4 = -(float)(dVar3 * 0.5 - dVar4);
-  dVar5 = (double)BG_ADSAimPitch(param_2,*(uint *)(iVar1 + 0x374) >> 0xf & 1);
-  dVar5 = tan((double)(float)(dVar5 * 0.01745329238474369));
-  *(float *)param_5 = (float)((double)((float)dVar5 / *(float *)(iVar1 + 0x6b9c4)) * dVar3) * 240.0;
+  *(float *)uVar3 = -(float)(dVar7 * 0.5 - dVar6);
+  fVar9 = BG_ADSAimPitch((Weapon)(uint)lVar2,(bool)((byte)(*(uint *)(iVar1 + 0x374) >> 0xf) & 1));
+  dVar6 = tan((double)(fVar9 * 0.017453292));
+  *(float *)in_r7 = (float)((double)((float)dVar6 / *(float *)(iVar1 + 0x6b9c4)) * dVar7) * 240.0;
 LAB_822c1a8c:
   __restgprlr_26();
   return;
@@ -749,51 +899,75 @@ LAB_822c1a8c:
 
 // 822C1AA0  CG_DrawReticleCenter  (cgame/cg_draw_reticles.cpp:669)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_DrawReticleCenter
-               (undefined8 param_1,double param_2,double param_3,undefined8 param_4,
-               undefined8 param_5,undefined8 param_6)
+               (LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4,float param_5,
+               float param_6,float param_7)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  char cVar5;
+  int iVar1;
+  WeaponDef *pWVar2;
+  LocalClientNum_t LVar3;
+  Weapon WVar4;
+  weapType_t wVar5;
+  cg_s *pcVar6;
+  bool bVar8;
+  ScreenPlacement *pSVar7;
+  int iVar9;
+  Material **ppMVar10;
+  float *pfVar11;
   double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  int local_60;
-  int local_5c;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  Material *local_60;
+  float local_5c;
   longlong local_58;
   
-  __savegprlr_27();
-  uVar1 = __savefpr_28();
-  dVar7 = extraout_f1;
-  uVar2 = BG_GetAlternateWeapon(param_5,param_6);
-  iVar4 = (&DAT_829d84a0)[uVar2 & 0xff];
-  BG_GetCenterReticle(param_5,param_6,&local_60,&local_5c);
-  if (local_60 != 0) {
-    local_58 = (longlong)local_5c;
-    dVar9 = (double)local_58;
-    iVar3 = BG_GetWeaponType(param_5,param_6);
-    if ((iVar3 == 2) && (*(char *)(iVar4 + 0x779) != '\0')) {
-      iVar4 = CG_GetLocalClientGlobals(uVar1);
-      if (*(int *)(iVar4 + 0x34) != 0) {
-        local_58 = (longlong)(*(int *)(iVar4 + 0x34) % 1000);
-        dVar9 = (double)(float)((double)local_58 * 0.009999999776482582 + dVar9);
+  dVar15 = (double)param_7;
+  dVar12 = (double)param_6;
+  iVar9 = (int)param_3;
+  __savegprlr_27((double)param_5,param_1);
+  LVar3 = __savefpr_28();
+  bVar8 = SUB41(iVar9,0);
+  dVar13 = extraout_f1;
+  WVar4 = BG_GetAlternateWeapon(param_2,bVar8);
+  pfVar11 = &local_5c;
+  ppMVar10 = &local_60;
+  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
+  BG_GetCenterReticle(param_2,bVar8,ppMVar10,(int *)pfVar11);
+  if (local_60 != (Material *)0x0) {
+    local_58 = (longlong)(int)local_5c;
+    dVar14 = (double)local_58;
+    wVar5 = BG_GetWeaponType(param_2,bVar8);
+    if ((wVar5 == WEAPTYPE_GRENADE) && (pWVar2->bCookOffHold != false)) {
+      pcVar6 = CG_GetLocalClientGlobals(LVar3);
+      iVar1 = (pcVar6->predictedPlayerState).grenadeTimeLeft;
+      if (iVar1 != 0) {
+        iVar9 = iVar1 / 1000 + (iVar1 >> 0x1f);
+        pfVar11 = (float *)(iVar9 - (iVar9 >> 0x1f));
+        ppMVar10 = (Material **)((int)pfVar11 * 1000);
+        iVar9 = iVar1 + (int)pfVar11 * -1000;
+        local_58 = (longlong)iVar9;
+        dVar14 = (double)(float)((double)local_58 * 0.009999999776482582 + dVar14);
       }
     }
-    dVar9 = (double)(float)(dVar9 * param_3);
-    cVar5 = CL_IsRenderingSplitScreen();
-    if (cVar5 != '\0') {
-      dVar9 = (double)(float)(dVar9 * 2.0);
+    dVar15 = (double)(float)(dVar14 * dVar15);
+    bVar8 = CL_IsRenderingSplitScreen();
+    if (bVar8) {
+      dVar15 = (double)(float)(dVar15 * 2.0);
     }
-    dVar8 = (double)(float)(dVar9 * 0.5);
-    dVar6 = (double)(float)(param_2 - dVar8);
-    ScrPlace_GetActivePlacement(uVar1);
-    CL_DrawStretchPic((double)(float)(dVar7 - dVar8),dVar6,dVar9,dVar9,0,0,0x3ff0000000000000);
+    dVar14 = (double)(float)(dVar15 * 0.5);
+    dVar12 = (double)(float)(dVar12 - dVar14);
+    pSVar7 = ScrPlace_GetActivePlacement(LVar3);
+    CL_DrawStretchPic(pSVar7,(float)(dVar13 - dVar14),(float)dVar12,(float)dVar15,(float)dVar15,
+                      iVar9,(int)ppMVar10,0.0,0.0,1.0,1.0,pfVar11,
+                      (Material *)&IMAGE_DOS_HEADER_82000000);
   }
   __restfpr_28();
   __restgprlr_27();
@@ -803,48 +977,52 @@ void CG_DrawReticleCenter
 
 // 822C1C20  CG_CalcReticleSpread  (cgame/cg_draw_reticles.cpp:711)
 
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
 void CG_CalcReticleSpread
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4,
-               undefined8 param_5,float *param_6)
+               (cg_s *param_1,Weapon param_2,bool param_3,float *param_4,float param_5,
+               float *param_6)
 
 {
-  int iVar1;
-  float fVar2;
-  int iVar3;
-  uint uVar4;
-  char cVar6;
-  int iVar5;
-  undefined8 uVar7;
+  WeaponDef *pWVar1;
+  playerState_s *ppVar2;
+  Weapon WVar3;
+  bool bVar5;
+  weapClass_t wVar4;
+  float *in_r8;
   double extraout_f1;
-  double dVar8;
-  double dVar9;
+  double dVar6;
+  float fVar7;
   float local_50;
   float local_4c;
   longlong local_48;
   
-  iVar3 = __savegprlr_26();
-  dVar9 = extraout_f1;
-  uVar4 = BG_GetAlternateWeapon(param_2,param_3);
-  iVar1 = (&DAT_829d84a0)[uVar4 & 0xff];
-  BG_GetSpreadForWeapon(iVar3,param_2,&local_50,&local_4c);
-  cVar6 = BG_IsThirdPersonMode(iVar3);
-  if ((cVar6 != '\0') && (iVar5 = BG_GetWeaponClass(param_2,param_3), iVar5 == 1)) {
-    if ((iVar3 == 0) || (uVar7 = 1, (*(uint *)(iVar3 + 0x374) & 0x8000) == 0)) {
-      uVar7 = 0;
+  ppVar2 = (playerState_s *)__savegprlr_26((double)param_5,param_1);
+  dVar6 = extraout_f1;
+  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
+  BG_GetSpreadForWeapon(ppVar2,param_2,&local_50,&local_4c);
+  bVar5 = BG_IsThirdPersonMode(ppVar2);
+  if ((bVar5) && (wVar4 = BG_GetWeaponClass(param_2,param_3), wVar4 == WEAPCLASS_SNIPER)) {
+    if ((ppVar2 == (playerState_s *)0x0) ||
+       (bVar5 = true, ((ppVar2->weapCommon).weapFlags & 0x8000U) == 0)) {
+      bVar5 = false;
     }
-    dVar8 = (double)BG_ADSSpread(param_2,uVar7);
-    local_50 = (float)((double)(float)(dVar8 - (double)local_50) * (double)*(float *)(iVar3 + 0x378)
-                      + (double)local_50);
+    fVar7 = BG_ADSSpread(param_2,bVar5);
+    local_50 = (fVar7 - local_50) * (ppVar2->weapCommon).fWeaponPosFrac + local_50;
   }
-  dVar9 = tan((double)((float)((double)(*(float *)(iVar3 + 0x37c) * 0.003921569 *
-                                        (local_4c - local_50) + local_50) * dVar9) * 0.017453292));
-  local_48 = (longlong)*(int *)(iVar1 + 0x138);
-  fVar2 = ((float)dVar9 / *(float *)(iVar3 + 0x6b9c4)) * 240.0;
-  if (fVar2 < (float)local_48) {
-    fVar2 = (float)local_48;
+  dVar6 = tan((double)((float)((double)((ppVar2->weapCommon).aimSpreadScale * 0.003921569 *
+                                        (local_4c - local_50) + local_50) * dVar6) * 0.017453292));
+  local_48 = (longlong)pWVar1->iReticleMinOfs;
+  fVar7 = ((float)dVar6 / (float)ppVar2[0x21].hud.archival[0xc].time) * 240.0;
+  if (fVar7 < (float)local_48) {
+    fVar7 = (float)local_48;
   }
-  *param_6 = -(*(float *)(iVar1 + 0x458) * *param_4 - fVar2);
-  param_6[1] = -(param_4[1] * *(float *)(iVar1 + 0x458) - fVar2);
+  *in_r8 = -(pWVar1->fHipReticleSidePos * *param_4 - fVar7);
+  in_r8[1] = -(param_4[1] * pWVar1->fHipReticleSidePos - fVar7);
   __restgprlr_26();
   return;
 }
@@ -852,47 +1030,52 @@ void CG_CalcReticleSpread
 
 // 822C1D88  CG_CalcReticleColor  (cgame/cg_draw_reticles.cpp:737)
 
-void CG_CalcReticleColor(undefined8 param_1,double param_2)
+void CG_CalcReticleColor(float *param_1,float param_2,float param_3,float *param_4)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
+  dvar_t *pdVar2;
+  dvar_t *pdVar3;
   undefined4 *puVar4;
   undefined4 *in_r6;
   double extraout_f1;
   double dVar5;
   double dVar6;
   double dVar7;
+  double dVar8;
   
-  __savegprlr_26();
+  dVar5 = (double)param_3;
+  __savegprlr_26((double)param_2,param_1,param_4);
   puVar4 = (undefined4 *)__savefpr_28();
-  dVar5 = extraout_f1;
-  if (DAT_82a38340 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x2e2,0,0xffffffff82000f98,0xffffffff82015418);
+  dVar8 = extraout_f1;
+  if (cg_crosshairAlpha == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x2e2,0,"%s");
   }
-  if (DAT_82a3ce20 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x2e3,0,0xffffffff82000f98,0xffffffff820156c0);
+  if (cg_crosshairAlphaMin == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x2e3,0,"%s");
   }
   dVar6 = 0.0;
   dVar7 = 1.0;
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
-    MyAssertHandler(dVar5,0xffffffff82015258,0x2e4,0,0xffffffff820153c8,0xffffffff820156a0,dVar5);
+  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x2e4,0,"%s\n\t(alpha) = %g");
   }
   *in_r6 = *puVar4;
-  iVar3 = DAT_82a3ce20;
-  iVar2 = DAT_82a38340;
+  pdVar3 = cg_crosshairAlphaMin;
+  pdVar2 = cg_crosshairAlpha;
   in_r6[1] = puVar4[1];
   in_r6[2] = puVar4[2];
-  fVar1 = (float)((double)(-(float)(param_2 * 0.003921568859368563 - dVar7) *
-                          *(float *)(iVar2 + 0xc)) * dVar5);
+  fVar1 = (float)((double)(-(float)(dVar5 * 0.003921568859368563 - dVar7) * (pdVar2->current).value)
+                 * dVar8);
   in_r6[3] = fVar1;
-  if (fVar1 < *(float *)(iVar3 + 0xc)) {
-    in_r6[3] = *(float *)(iVar3 + 0xc);
+  if (fVar1 < (pdVar3->current).value) {
+    in_r6[3] = (pdVar3->current).value;
   }
-  dVar5 = (double)(float)in_r6[3];
-  if ((dVar5 < dVar6) || (dVar7 < dVar5)) {
-    MyAssertHandler(0xffffffff82015258,0x2eb,1,0xffffffff82015650,0xffffffff8201566c,dVar5);
+  if (((double)(float)in_r6[3] < dVar6) || (dVar7 < (double)(float)in_r6[3])) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x2eb,1,"%s\n\t(reticleColor[3]) = %g");
   }
   __restfpr_28();
   __restgprlr_26();
@@ -913,65 +1096,92 @@ void CG_CalcReticleImageOffset(float *param_1,float *param_2)
 
 // 822C1F20  CG_DrawReticleSides  (cgame/cg_draw_reticles.cpp:759)
 
-void CG_DrawReticleSides(undefined8 param_1,double param_2,undefined8 param_3,double param_4,
-                        undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawReticleSides(LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4,
+                        float param_5,float param_6,float param_7,float param_8)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  char cVar3;
+  LocalClientNum_t LVar1;
+  cg_s *pcVar2;
+  bool bVar4;
+  ScreenPlacement *pSVar3;
+  float *pfVar5;
+  IMAGE_DOS_HEADER *pIVar6;
+  IMAGE_DOS_HEADER *pIVar7;
+  float *in_r7;
+  Material *pMVar8;
   double extraout_f1;
-  undefined8 uVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  int local_b0;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float fVar18;
+  Material *local_b0;
   int local_ac;
   float local_a8;
   float local_a4;
   undefined8 local_a0;
+  float afStack_90 [3];
   float local_84;
   
-  __savegprlr_27();
-  uVar1 = __savefpr_23();
-  dVar9 = extraout_f1;
-  BG_GetSideReticle(param_6,param_7,&local_b0,&local_ac);
-  if (local_b0 != 0) {
-    iVar2 = CG_GetLocalClientGlobals(uVar1);
-    uVar4 = CG_DrawWeapReticle(uVar1);
-    CG_CalcReticleColor(uVar4,(double)*(float *)(iVar2 + 0x37c),param_8);
+  dVar17 = (double)param_8;
+  dVar10 = (double)param_7;
+  dVar9 = (double)param_6;
+  pfVar5 = (float *)(int)param_3;
+  __savegprlr_27((double)param_5,param_1);
+  LVar1 = __savefpr_23();
+  bVar4 = SUB41(pfVar5,0);
+  dVar14 = extraout_f1;
+  BG_GetSideReticle(param_2,bVar4,&local_b0,&local_ac);
+  if (local_b0 != (Material *)0x0) {
+    pcVar2 = CG_GetLocalClientGlobals(LVar1);
+    fVar18 = CG_DrawWeapReticle(LVar1);
+    CG_CalcReticleColor(param_4,fVar18,(pcVar2->predictedPlayerState).weapCommon.aimSpreadScale,
+                        pfVar5);
     if (0.01 <= local_84) {
       local_a0 = (longlong)local_ac;
-      local_a8 = (float)((double)local_a0 * param_4);
-      dVar12 = (double)local_a8;
+      local_a8 = (float)((double)local_a0 * dVar17);
+      dVar17 = (double)local_a8;
       local_a4 = local_a8;
-      CG_CalcReticleSpread(param_3,iVar2,param_6,param_7,&local_a8);
-      cVar3 = CL_IsRenderingSplitScreen();
-      if (cVar3 != '\0') {
-        dVar12 = (double)(float)(dVar12 * 2.0);
+      CG_CalcReticleSpread(pcVar2,param_2,bVar4,&local_a8,(float)dVar10,in_r7);
+      bVar4 = CL_IsRenderingSplitScreen();
+      if (bVar4) {
+        dVar17 = (double)(float)(dVar17 * 2.0);
       }
-      uVar1 = ScrPlace_GetActivePlacement(uVar1);
-      dVar8 = (double)local_a0._4_4_;
-      dVar10 = 0.5;
-      dVar7 = (double)(float)(dVar12 * 0.125);
-      dVar6 = -(double)(float)(dVar12 * 0.5 - dVar9);
-      dVar5 = (double)(float)(dVar12 * 0.125);
-      CG_DrawRotatedPic(dVar6,(double)(float)((double)(float)((double)(float)(param_2 - dVar12) -
-                                                             dVar8) - dVar7),dVar12,dVar12,0);
-      dVar11 = -(double)(float)(dVar12 * dVar10 - param_2);
-      dVar10 = (double)local_a0._0_4_;
-      CG_DrawRotatedPic((double)(float)(dVar10 + dVar9),dVar11,dVar12,dVar12,0x4056800000000000,
-                        uVar1);
-      CG_DrawRotatedPic((double)(float)(dVar6 - dVar5),(double)(float)(dVar8 + param_2),dVar12,
-                        dVar12,0x4066800000000000,uVar1);
-      CG_DrawRotatedPic((double)(float)((double)(float)((double)(float)(dVar9 - dVar12) - dVar10) -
-                                       dVar5),(double)(float)(dVar11 - dVar7),dVar12,dVar12,
-                        0x4070e00000000000,uVar1);
+      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+      dVar13 = (double)local_a0._4_4_;
+      pIVar7 = &IMAGE_DOS_HEADER_82000000;
+      pfVar5 = afStack_90;
+      dVar15 = 0.5;
+      dVar12 = (double)(float)(dVar17 * 0.125);
+      dVar11 = -(double)(float)(dVar17 * 0.5 - dVar14);
+      dVar10 = (double)(float)(dVar17 * 0.125);
+      pMVar8 = local_b0;
+      CG_DrawRotatedPic(pSVar3,(float)dVar11,
+                        (float)((double)(float)((double)(float)(dVar9 - dVar17) - dVar13) - dVar12),
+                        (float)dVar17,(float)dVar17,param_2.data,(int)pfVar5,0.0,
+                        (float *)&IMAGE_DOS_HEADER_82000000,local_b0);
+      dVar16 = -(double)(float)(dVar17 * dVar15 - dVar9);
+      pIVar6 = &IMAGE_DOS_HEADER_82000000;
+      dVar15 = (double)local_a0._0_4_;
+      CG_DrawRotatedPic(pSVar3,(float)(dVar15 + dVar14),(float)dVar16,(float)dVar17,(float)dVar17,
+                        -0x7e000000,(int)pfVar5,90.0,(float *)pIVar7,pMVar8);
+      pIVar7 = &IMAGE_DOS_HEADER_82000000;
+      pfVar5 = afStack_90;
+      CG_DrawRotatedPic(pSVar3,(float)(dVar11 - dVar10),(float)(dVar13 + dVar9),(float)dVar17,
+                        (float)dVar17,(int)pIVar6,(int)local_b0,180.0,pfVar5,
+                        (Material *)&IMAGE_DOS_HEADER_82000000);
+      CG_DrawRotatedPic(pSVar3,(float)((double)(float)((double)(float)(dVar14 - dVar17) - dVar15) -
+                                      dVar10),(float)(dVar16 - dVar12),(float)dVar17,(float)dVar17,
+                        -0x7dff0000,(int)local_b0,270.0,pfVar5,(Material *)pIVar7);
     }
   }
   __restfpr_23();
@@ -982,38 +1192,44 @@ void CG_DrawReticleSides(undefined8 param_1,double param_2,undefined8 param_3,do
 
 // 822C2138  CG_UpdateScissorForWeaponDef  (cgame/cg_draw_reticles.cpp:827)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void CG_UpdateScissorForWeaponDef
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,float *param_4)
+               (LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  int iVar4;
+  LocalClientNum_t LVar1;
+  ADSOverlay *pAVar2;
+  ScreenPlacement *pSVar3;
+  Material *pMVar4;
+  cg_s *pcVar5;
   float local_50;
   float local_4c;
   float local_48;
   float local_44 [17];
   
-  uVar1 = __savegprlr_26();
-  iVar3 = BG_GetOverlay(param_2,param_3);
-  uVar2 = ScrPlace_GetActivePlacement(uVar1);
-  iVar4 = CG_GetWeapOverlayMaterial(uVar1,param_2,param_3,uVar2);
-  if ((iVar4 != 0) && (iVar4 = CG_GetLocalClientGlobals(uVar1), *(int *)(iVar4 + 0x79838) == 0)) {
-    *(undefined4 *)(iVar4 + 0x79840) = 1;
-    if (*(char *)(DAT_82b3ecb8 + 0xc) == '\0') {
-      local_50 = *(float *)(iVar3 + 0x14);
-      local_4c = *(float *)(iVar3 + 0x18);
+  LVar1 = __savegprlr_26(param_1);
+  pAVar2 = BG_GetOverlay(param_2,param_3);
+  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+  pMVar4 = CG_GetWeapOverlayMaterial(LVar1,param_2,param_3,pSVar3);
+  if ((pMVar4 != (Material *)0x0) &&
+     (pcVar5 = CG_GetLocalClientGlobals(LVar1), (pcVar5->shellshock).wantSavedScreen == 0)) {
+    (pcVar5->shellshock).hasScissor = 1;
+    if ((splitscreen->current).enabled == false) {
+      local_50 = pAVar2->width;
+      local_4c = pAVar2->height;
     }
     else {
-      local_50 = *(float *)(iVar3 + 0x1c);
-      local_4c = *(float *)(iVar3 + 0x20);
+      local_50 = pAVar2->widthSplitscreen;
+      local_4c = pAVar2->heightSplitscreen;
     }
     if ((320.0 < local_50) || (240.0 < local_4c)) {
       local_48 = -(local_50 * 0.5 - *param_4);
       local_44[0] = -(local_4c * 0.5 - param_4[1]);
-      ScrPlace_ApplyRect(uVar2,&local_48,local_44,&local_50,&local_4c,2,2);
-      CG_UpdateScissorViewport(iVar4 + 0x6b9b0,&local_48,&local_50);
+      ScrPlace_ApplyRect(pSVar3,&local_48,local_44,&local_50,&local_4c,2,2);
+      CG_UpdateScissorViewport(&pcVar5->refdef,&local_48,&local_50);
     }
   }
   __restgprlr_26();
@@ -1023,40 +1239,51 @@ void CG_UpdateScissorForWeaponDef
 
 // 822C2270  CG_UpdateWeapReticleScissor  (cgame/cg_draw_reticles.cpp:878)
 
-void CG_UpdateWeapReticleScissor(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_UpdateWeapReticleScissor(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  char cVar4;
-  float *pfVar5;
+  uint uVar1;
+  LocalClientNum_t LVar2;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  bool bVar5;
+  float *pfVar6;
   float local_30;
-  undefined1 auStack_2c [44];
+  float afStack_2c [11];
   
-  uVar1 = __savegprlr_28();
-  iVar3 = CG_GetLocalClientGlobals();
-  if (DAT_82a3836c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x378,0,0xffffffff82000f98,0xffffffff8201554c);
+  LVar2 = __savegprlr_28(param_1);
+  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if (cg_drawGun == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x378,0,"%s");
   }
-  if (DAT_82a3d4a8 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x379,0,0xffffffff82000f98,0xffffffff820156dc);
+  if (cg_crosshairDynamic == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x379,0,"%s");
   }
-  if (*(int *)(iVar3 + 0x6b9a0) == 0) {
-    if ((*(uint *)(iVar3 + 0xf8) & 0x3800) == 0) {
-      if (((((*(uint *)(iVar3 + 0xf8) & 0x200000) != 0) ||
-           (uVar2 = BG_GetViewmodelWeapon(iVar3), (uVar2 & 0xff) == 0)) ||
-          (cVar4 = CG_GetWeapReticleZoom(iVar3,&local_30), cVar4 == '\0')) || (local_30 < 0.99))
+  if (pcVar3->renderingThirdPerson == 0) {
+    uVar1 = (pcVar3->predictedPlayerState).eFlags;
+    if ((uVar1 & 0x3800) == 0) {
+      if (((((uVar1 & 0x200000) != 0) ||
+           (WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState), (WVar4.data & 0xff) == 0))
+          || (bVar5 = CG_GetWeapReticleZoom(pcVar3,&local_30), !bVar5)) || (local_30 < 0.99))
       goto LAB_822c23b4;
-      CG_CalcCrosshairPosition(iVar3,&local_30,auStack_2c);
-      pfVar5 = &local_30;
+      CG_CalcCrosshairPosition(pcVar3,&local_30,afStack_2c);
+      pfVar6 = &local_30;
     }
     else {
-      uVar2 = CG_PlayerTurretWeapon(iVar3,uVar1);
-      if ((uVar2 & 0xff) == 0) goto LAB_822c23b4;
-      pfVar5 = (float *)&DAT_82179fd0;
+      WVar4 = CG_PlayerTurretWeapon(&pcVar3->predictedPlayerState,LVar2);
+      if ((WVar4.data & 0xff) == 0) goto LAB_822c23b4;
+      pfVar6 = vec2_origin;
     }
-    CG_UpdateScissorForWeaponDef(uVar1,uVar2,*(uint *)(iVar3 + 0x374) >> 0xf & 1,pfVar5);
+    CG_UpdateScissorForWeaponDef
+              (LVar2,WVar4,
+               (bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1),
+               pfVar6);
   }
 LAB_822c23b4:
   __restgprlr_28();
@@ -1066,108 +1293,127 @@ LAB_822c23b4:
 
 // 822C23C0  CG_DrawCrosshair  (cgame/cg_draw_reticles.cpp:933)
 
-void CG_DrawCrosshair(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawCrosshair(LocalClientNum_t param_1)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  int iVar4;
-  char cVar7;
-  char cVar8;
-  byte bVar9;
-  ulonglong uVar3;
-  int *piVar5;
-  int iVar6;
-  undefined8 uVar10;
-  double dVar11;
+  bool bVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  bool bVar8;
+  bool bVar9;
+  bool bVar10;
+  Weapon WVar5;
+  ADSOverlay *pAVar6;
+  int iVar7;
+  playerState_s *in_r4;
+  float *pfVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
+  double dVar17;
+  float fVar18;
+  float local_a0;
   float local_9c;
   float local_98 [2];
-  undefined1 auStack_90 [12];
+  float afStack_90 [3];
   float local_84;
   
-  __savegprlr_24();
-  uVar2 = __savefpr_26();
-  iVar4 = CG_GetLocalClientGlobals();
-  if (DAT_82a3836c == 0) {
-    MyAssertHandler(0xffffffff82015258,0x3b8,0,0xffffffff82000f98);
+  __savegprlr_24(param_1);
+  LVar3 = __savefpr_26();
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  if (cg_drawGun == (dvar_t *)0x0) {
+    in_r4 = (playerState_s *)0x3b8;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x3b8,0,"%s");
   }
-  if (DAT_82a3d4a8 == 0) {
-    MyAssertHandler(0xffffffff82015258,0x3b9,0,0xffffffff82000f98);
+  if (cg_crosshairDynamic == (dvar_t *)0x0) {
+    in_r4 = (playerState_s *)0x3b9;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
+                    0x3b9,0,"%s");
   }
-  cVar7 = CG_IsEMPJammed(uVar2);
-  if (*(int *)(iVar4 + 0x6b9a0) == 0) {
-    cVar8 = BG_IsThirdPersonMode(iVar4);
-    bVar9 = CG_ShouldDrawHud(uVar2);
-    dVar14 = (double)*(float *)(iVar4 + 0x378);
-    dVar12 = 1.0;
-    dVar11 = 0.0;
-    bVar9 = -(cVar7 == '\0') & bVar9;
+  bVar8 = CG_IsEMPJammed(LVar3);
+  if (pcVar4->renderingThirdPerson == 0) {
+    bVar9 = BG_IsThirdPersonMode(&pcVar4->predictedPlayerState);
+    bVar10 = CG_ShouldDrawHud(LVar3);
+    uVar1 = (pcVar4->predictedPlayerState).eFlags;
+    dVar15 = (double)(pcVar4->predictedPlayerState).weapCommon.fWeaponPosFrac;
+    dVar13 = 1.0;
+    dVar12 = 0.0;
+    local_a0 = 1.0;
     local_98[0] = 0.0;
-    if ((*(uint *)(iVar4 + 0xf8) & 0x3800) == 0) {
-      if ((*(uint *)(iVar4 + 0xf8) & 0x200000) != 0) {
-        CG_DrawVehicleCrossHair(uVar2);
+    if ((uVar1 & 0x3800) == 0) {
+      if ((uVar1 & 0x200000) != 0) {
+        CG_DrawVehicleCrossHair(LVar3);
         __restfpr_26();
         __restgprlr_24();
         return;
       }
-      dVar13 = dVar12;
-      uVar3 = BG_GetViewmodelWeapon(iVar4);
-      if ((uVar3 & 0xff) != 0) {
-        uVar1 = *(uint *)(iVar4 + 0x374) >> 0xf & 1;
-        uVar10 = CG_DrawWeapReticle(uVar2);
-        iVar6 = CG_GetFlashbangedRemainingTime(uVar2);
-        if ((iVar6 == 0) && (bVar9 != 0)) {
-          CG_CalcCrosshairColor(uVar10,uVar2);
-          if ((0.01 <= local_84) &&
-             ((((dVar14 != dVar12 || (*(char *)(DAT_82a3836c + 0xc) == '\0')) || (cVar8 != '\0')) &&
-              (cVar7 = AllowedToDrawCrosshair(iVar4), cVar7 != '\0')))) {
-            CG_CalcCrosshairPosition(iVar4,local_98,&local_9c);
-            dVar15 = (double)local_9c;
-            dVar16 = (double)local_98[0];
-            if (dVar14 != dVar11) {
-              CG_TransitionToAds(dVar14,iVar4,uVar3);
-              dVar13 = 1.0;
-              CG_DrawAdsAimIndicator(dVar16,dVar15,0x3ff0000000000000,uVar2,uVar3,uVar1,auStack_90);
+      dVar14 = dVar13;
+      WVar5 = BG_GetViewmodelWeapon(&pcVar4->predictedPlayerState);
+      if ((WVar5.data & 0xff) != 0) {
+        bVar2 = (bool)((byte)((uint)(pcVar4->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1)
+        ;
+        fVar18 = CG_DrawWeapReticle(LVar3);
+        dVar17 = (double)fVar18;
+        iVar7 = CG_GetFlashbangedRemainingTime(LVar3);
+        if (((((iVar7 == 0) && ((-!bVar8 & bVar10) != 0)) &&
+             (CG_CalcCrosshairColor(LVar3,(float)dVar17,(float *)in_r4), 0.01 <= local_84)) &&
+            (((dVar15 != dVar13 || ((cg_drawGun->current).enabled == false)) || (bVar9)))) &&
+           (bVar8 = AllowedToDrawCrosshair((LocalClientNum_t)pcVar4,in_r4), bVar8)) {
+          pfVar11 = &local_9c;
+          CG_CalcCrosshairPosition(pcVar4,local_98,pfVar11);
+          dVar16 = (double)local_9c;
+          dVar17 = (double)local_98[0];
+          if (dVar15 != dVar12) {
+            CG_TransitionToAds(pcVar4,WVar5,(float)dVar15,pfVar11,&local_a0);
+            dVar14 = (double)local_a0;
+            CG_DrawAdsAimIndicator
+                      (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,local_a0);
+          }
+          if (((dVar15 != dVar13) || ((cg_drawGun->current).enabled != false)) || (bVar9)) {
+            if ((cg_crosshairDynamic->current).enabled == false) {
+              fVar18 = CG_GetCrosshairVerticalOffset(&pcVar4->predictedPlayerState);
+              dVar16 = (double)(fVar18 * -240.0);
+              dVar17 = dVar12;
             }
-            if (((dVar14 != dVar12) || (*(char *)(DAT_82a3836c + 0xc) != '\0')) || (cVar8 != '\0'))
-            {
-              if (*(char *)(DAT_82a3d4a8 + 0xc) == '\0') {
-                dVar14 = (double)CG_GetCrosshairVerticalOffset(iVar4);
-                dVar15 = (double)(float)(dVar14 * -240.0);
-                dVar16 = dVar11;
-              }
-              if (cVar8 == '\0') {
-                dVar12 = dVar13;
-                CG_DrawReticleCenter(dVar16,dVar15,dVar13,uVar2,uVar3,uVar1,auStack_90);
-                dVar13 = dVar12;
-              }
-              else {
-                CG_DrawReticleCenter(dVar16,dVar15,dVar12,uVar2,uVar3,uVar1,auStack_90);
-              }
-              CG_DrawReticleSides(dVar16,dVar15,dVar13,dVar12,uVar2,uVar3,uVar1,auStack_90);
+            if (bVar9) {
+              CG_DrawReticleCenter
+                        (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,(float)dVar13);
             }
+            else {
+              dVar13 = dVar14;
+              CG_DrawReticleCenter
+                        (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,(float)dVar14);
+              dVar14 = dVar13;
+            }
+            CG_DrawReticleSides(LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,
+                                (float)dVar14,(float)dVar13);
           }
         }
       }
     }
     else {
-      uVar3 = CG_PlayerTurretWeapon(iVar4,uVar2);
-      if (((uVar3 & 0xff) != 0) &&
-         ((piVar5 = (int *)BG_GetOverlay(uVar3,0), *piVar5 != 0 ||
-          ((cVar7 != '\0' && (piVar5[2] != 0)))))) {
-        CG_DrawAdsOverlay(uVar2,uVar3,0,0xffffffff821818b8,0xffffffff82179fd0);
+      WVar5 = CG_PlayerTurretWeapon(&pcVar4->predictedPlayerState,LVar3);
+      if (((WVar5.data & 0xff) != 0) &&
+         ((pAVar6 = BG_GetOverlay(WVar5,false), pAVar6->shader != (Material *)0x0 ||
+          ((bVar8 && (pAVar6->shaderEMP != (Material *)0x0)))))) {
+        CG_DrawAdsOverlay(LVar3,WVar5,false,colorWhite,vec2_origin);
         __restfpr_26();
         __restgprlr_24();
         return;
       }
-      iVar6 = CG_GetFlashbangedRemainingTime(uVar2);
-      if ((iVar6 == 0) && ((bVar9 != 0 && (*(int *)(iVar4 + 0x1bc) != 0x7ff)))) {
-        CG_DrawTurretCrossHair(uVar2);
+      iVar7 = CG_GetFlashbangedRemainingTime(LVar3);
+      if ((iVar7 == 0) &&
+         (((-!bVar8 & bVar10) != 0 && ((pcVar4->predictedPlayerState).viewlocked_entNum != 0x7ff))))
+      {
+        CG_DrawTurretCrossHair(LVar3);
         __restfpr_26();
         __restgprlr_24();
         return;

@@ -2,62 +2,66 @@
 
 // 8293E490  `dynamic_initializer_for_'tasks''  (xenon/xenon_friends.cpp:55)
 
-int _dynamic_initializer_for__tasks__(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void _dynamic_initializer_for__tasks__(void)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
+  ulong *puVar1;
+  longlong lVar2;
   
-  lVar3 = 0x20;
-  puVar2 = (undefined4 *)0x84248d70;
+  lVar2 = 0x20;
+  puVar1 = &friendLists[3][1].friends[99].cchRichPresence;
   do {
-    puVar2 = puVar2 + 0x28;
-    *puVar2 = 0;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  iVar1 = atexit(_dynamic_atexit_destructor_for__tasks__);
-  return iVar1;
+    puVar1 = puVar1 + 0x28;
+    *puVar1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  atexit(_dynamic_atexit_destructor_for__tasks__);
+  return;
 }
 
 
 // 82640DA0  TRACK_xenon_friends  (xenon/xenon_friends.cpp:65)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_xenon_friends(void)
 
 {
-  track_static_alloc_internal(0xffffffff84222958,0x264a0,0xffffffff8218abec,10);
+  track_static_alloc_internal(friendLists,0x264a0,"friendLists",10);
   return;
 }
 
 
 // 82640DC0  GetFriendList  (xenon/xenon_friends.cpp:72)
 
-longlong GetFriendList(ulonglong param_1)
+friendList_t * GetFriendList(int param_1)
 
 {
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  return (longlong)(int)param_1 * 0x9928 + -0x7bddd6a8;
+  return friendLists[param_1];
 }
 
 
 // 82640E30  XFriendPresence  (xenon/xenon_friends.cpp:79)
 
-uint XFriendPresence(int param_1)
+int XFriendPresence(_XONLINE_FRIEND *param_1)
 
 {
   uint uVar1;
   
-  uVar1 = *(uint *)(param_1 + 0x18);
+  uVar1 = param_1->dwFriendState;
   if ((uVar1 & 0x40000000) != 0) {
     return 0;
   }
   if ((uVar1 & 0x80000000) != 0) {
     return 1;
   }
-  if (*(int *)(param_1 + 0x24) == 0x415608cb) {
+  if (param_1->dwTitleID == 0x415608cb) {
     return 6;
   }
   if ((uVar1 & 0x10000) != 0) {
@@ -72,83 +76,85 @@ uint XFriendPresence(int param_1)
 
 // 82640EB0  Friends_XFriendPresenceCompare  (xenon/xenon_friends.cpp:108)
 
-longlong Friends_XFriendPresenceCompare(uint *param_1,uint *param_2)
+int Friends_XFriendPresenceCompare(void *param_1,void *param_2)
 
 {
-  longlong lVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  char *pcVar3;
+  _XONLINE_FRIEND *p_Var4;
+  _XONLINE_FRIEND *p_Var5;
   
-  lVar4 = (ulonglong)*param_1 * 0xc4 + (ulonglong)DAT_84248df8;
-  lVar3 = (ulonglong)*param_2 * 0xc4 + (ulonglong)DAT_84248df8;
-  lVar1 = XFriendPresence(lVar4);
-  iVar2 = (int)lVar4;
-  lVar4 = XFriendPresence(lVar3);
-  if ((int)lVar4 != (int)lVar1) {
-    return lVar4 - lVar1;
+  p_Var5 = s_sortFriendList->friends + *(int *)param_1;
+  p_Var4 = s_sortFriendList->friends + *(int *)param_2;
+  iVar1 = XFriendPresence(p_Var5);
+  iVar2 = XFriendPresence(p_Var4);
+  if (iVar2 != iVar1) {
+    return iVar2 - iVar1;
   }
-  iVar2 = _stricmp((char *)(iVar2 + 8),(char *)((int)lVar3 + 8));
-  return (longlong)iVar2;
+  pcVar3 = p_Var5->szGamertag;
+  _stricmp();
+  return (int)pcVar3;
 }
 
 
 // 82640F28  EnumerateFriends  (xenon/xenon_friends.cpp:131)
 
-void EnumerateFriends(void)
+void EnumerateFriends(int param_1)
 
 {
-  undefined8 uVar1;
-  char cVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  int iVar5;
-  int *piVar6;
-  int iVar7;
+  ulong uVar1;
+  bool bVar5;
+  ulong uVar2;
+  overlappedTask *poVar3;
+  _XOVERLAPPED *p_Var4;
+  void **ppvVar6;
   uint local_40 [16];
   
-  uVar1 = __savegprlr_27();
-  cVar4 = Live_UserIsGuest();
-  if (cVar4 == '\0') {
-    iVar7 = (int)uVar1;
-    iVar5 = iVar7 * 0x9928;
-    piVar6 = (int *)(&DAT_8422c27c + iVar5);
-    if (*(int *)(&DAT_8422c27c + iVar5) == 0) {
-      uVar2 = XFriendsCreateEnumerator(uVar1,0,100,local_40,piVar6);
-      if ((uVar2 & 0xffffffff) == 0) {
+  uVar1 = __savegprlr_27(param_1);
+  bVar5 = Live_UserIsGuest(uVar1);
+  if (!bVar5) {
+    ppvVar6 = &friendLists[uVar1][1].hEnum;
+    if (friendLists[uVar1][1].hEnum == (void *)0x0) {
+      uVar2 = XFriendsCreateEnumerator(uVar1,0,100,local_40,ppvVar6);
+      if (uVar2 == 0) {
         if (0x4c90 < local_40[0]) {
-          uVar3 = va(0xffffffff8218ac68,local_40[0],0x4c90);
-          MyAssertHandler(0xffffffff8218abf8,0x9a,0,0xffffffff820011f4,0xffffffff8218ac48,uVar3);
+          va("friendList_t.friends is not large enough: %i > %i\n");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp"
+                          ,0x9a,0,"%s\n\t%s");
         }
-        if (*piVar6 == 0) {
-          MyAssertHandler(0xffffffff8218abf8,0x9b,0,0xffffffff82000f98,0xffffffff8218ac3c);
+        if (*ppvVar6 == (void *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp"
+                          ,0x9b,0,"%s");
         }
-        TaskManager_GetOpenTaskSlot(0xffffffff84248e00,uVar1,0);
-        uVar3 = TaskManager_TaskToXOverlapped();
-        uVar2 = XEnumerate(*piVar6,&DAT_842275ec + iVar5,local_40[0],0,uVar3);
-        if ((uVar2 & 0xffffffff) == 0x12) {
-          (&DAT_845474a8)[iVar7 * 0x670] = 0;
-          TaskManager_TaskFromXOverlapped(0xffffffff84248e00,uVar3);
-          TaskManager_ClearTask();
+        poVar3 = TaskManager_GetOpenTaskSlot(&tasks,uVar1,0);
+        p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
+        uVar2 = XEnumerate(*ppvVar6,friendLists[uVar1] + 1,local_40[0],(ulong *)0x0,p_Var4);
+        if (uVar2 == 0x12) {
+          g_friendListGlobal[uVar1].dirty = false;
+          poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
+          TaskManager_ClearTask(poVar3);
           __restgprlr_27();
           return;
         }
-        if ((uVar2 & 0xffffffff) != 0x3e5) {
-          cVar4 = Live_IsUserSignedInToLive(uVar1);
-          if (cVar4 != '\0') {
-            Com_PrintError(1,0xffffffff820920c4,uVar2);
+        if (uVar2 != 0x3e5) {
+          bVar5 = Live_IsUserSignedInToLive(uVar1);
+          if (bVar5) {
+            Com_PrintError(1,"Microsoft error: enumeration failed with error %llx\n");
           }
-          TaskManager_TaskFromXOverlapped(0xffffffff84248e00,uVar3);
-          TaskManager_ClearTask();
+          poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
+          TaskManager_ClearTask(poVar3);
           __restgprlr_27();
           return;
         }
-        (&DAT_845474a8)[iVar7 * 0x670] = 0;
+        g_friendListGlobal[uVar1].dirty = false;
       }
       else {
-        cVar4 = Live_IsUserSignedInToLive(uVar1);
-        if (cVar4 != '\0') {
-          Com_PrintWarning(1,0xffffffff8218aca0,uVar1,uVar2);
+        bVar5 = Live_IsUserSignedInToLive(uVar1);
+        if (bVar5) {
+          Com_PrintWarning(1,
+                           "Microsoft XFriendsCreateEnumerator failed: Unable to get friend enumerator for local controller %i: %llx\n"
+                          );
           __restgprlr_27();
           return;
         }
@@ -162,139 +168,150 @@ void EnumerateFriends(void)
 
 // 82641120  EnumerateFriendsComplete  (xenon/xenon_friends.cpp:181)
 
-void EnumerateFriendsComplete(void)
+taskCompleteResults EnumerateFriendsComplete(overlappedTask *param_1)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  ulonglong uVar2;
-  char cVar4;
-  uint *puVar5;
-  undefined8 *puVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  uint *puVar10;
-  uint uVar11;
-  undefined8 uVar12;
-  size_t local_50 [20];
+  byte bVar1;
+  byte bVar2;
+  overlappedTask *poVar3;
+  _XOVERLAPPED *p_Var4;
+  ulong uVar5;
+  bool bVar7;
+  taskCompleteResults tVar6;
+  FriendStatus *pFVar8;
+  ulong64 *puVar9;
+  FriendStatus FVar10;
+  ulong *puVar11;
+  FriendStatus FVar12;
+  undefined8 uVar13;
+  uint local_50 [20];
   
-  iVar3 = __savegprlr_24();
-  if (*(int *)(iVar3 + 0x90) != 0) {
-    MyAssertHandler(0xffffffff8218abf8,0xc0,0,0xffffffff82000f98,0xffffffff8218ad7c);
+  poVar3 = (overlappedTask *)__savegprlr_24(param_1);
+  if (poVar3->type != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc0,
+                    0,"%s");
   }
-  if (*(char *)(iVar3 + 0x94) == '\0') {
-    MyAssertHandler(0xffffffff8218abf8,0xc1,0,0xffffffff82000f98,0xffffffff820851b0);
+  if (poVar3->active == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc1,
+                    0,"%s");
   }
-  if (3 < *(byte *)(iVar3 + 0x95)) {
-    MyAssertHandler(0xffffffff8218abf8,0xc2,0,0xffffffff82085148,*(byte *)(iVar3 + 0x95),4);
+  if (3 < poVar3->controllerIndex) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xc2,
+                    0,"task->controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar8 = (uint)*(byte *)(iVar3 + 0x95) * 0x9928;
-  CloseHandle(*(HANDLE *)(&DAT_8422c27c + iVar8));
-  *(undefined4 *)(&DAT_8422c27c + iVar8) = 0;
-  iVar9 = (uint)*(byte *)(iVar3 + 0x95) * 0x670;
-  uVar1 = TaskManager_TaskToXOverlapped(iVar3);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218abf8,0xcc,0,0xffffffff82000f98,0xffffffff82092610);
+  bVar1 = poVar3->controllerIndex;
+  CloseHandle(friendLists[bVar1][1].hEnum);
+  friendLists[bVar1][1].hEnum = (void *)0x0;
+  bVar2 = poVar3->controllerIndex;
+  p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
+  if (p_Var4 == (_XOVERLAPPED *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0xcc,
+                    0,"%s");
   }
-  XGetOverlappedResult(uVar1,local_50,0);
-  *(size_t *)(&DAT_84546e60 + iVar9) = local_50[0];
-  uVar2 = XGetOverlappedExtendedError(uVar1);
-  if (((uVar2 & 0xffffffff) == 0) || ((uVar2 & 0xffffffff) == 0x80070012)) {
-    uVar12 = 1;
-    memcpy(&DAT_84222958 + iVar8,&DAT_842275ec + iVar8,0x4c94);
-    uVar7 = 0;
-    if (*(int *)(&DAT_84546e60 + iVar9) != 0) {
-      puVar5 = (uint *)(iVar9 + -0x7bab8cec);
-      puVar10 = (uint *)(&DAT_84222970 + iVar8);
-      puVar6 = (undefined8 *)(&DAT_84546e68 + iVar9);
+  XGetOverlappedResult(p_Var4,local_50,0);
+  g_friendListGlobal[bVar2].count = local_50[0];
+  uVar5 = XGetOverlappedExtendedError(p_Var4);
+  if ((uVar5 == 0) || (uVar5 == 0x80070012)) {
+    uVar13 = 1;
+    memcpy();
+    FVar10 = FRIEND_STATUS_REQUEST_PENDING;
+    if (g_friendListGlobal[bVar2].count != 0) {
+      pFVar8 = g_friendListGlobal[bVar2].status + 99;
+      puVar11 = &friendLists[bVar1][0].friends[0].dwFriendState;
+      puVar9 = g_friendListGlobal[bVar2].friends;
       do {
-        uVar11 = *puVar10;
-        *puVar6 = *(undefined8 *)(puVar10 + -6);
-        if ((uVar11 & 0x40000000) == 0) {
-          if ((uVar11 & 0x80000000) == 0) {
-            if (puVar10[3] == 0x415608cb) {
-              uVar11 = 6;
+        FVar12 = *puVar11;
+        *puVar9 = ((_XONLINE_FRIEND *)(puVar11 + -6))->xuid;
+        if ((FVar12 & 0x40000000) == FRIEND_STATUS_REQUEST_PENDING) {
+          if ((FVar12 & 0x80000000) == FRIEND_STATUS_REQUEST_PENDING) {
+            if (puVar11[3] == 0x415608cb) {
+              FVar12 = FRIEND_STATUS_PRESENT;
             }
-            else if ((uVar11 & 0x10000) == 0) {
-              if ((uVar11 & 0x20000) == 0) {
-                uVar11 = uVar11 & 1 | 2;
+            else if ((FVar12 & 0x10000) == FRIEND_STATUS_REQUEST_PENDING) {
+              if ((FVar12 & 0x20000) == FRIEND_STATUS_REQUEST_PENDING) {
+                FVar12 = FVar12 & FRIEND_STATUS_REQUEST_RECEIVED | FRIEND_STATUS_OFFLINE;
               }
               else {
-                uVar11 = 5;
+                FVar12 = FRIEND_STATUS_BUSY;
               }
             }
             else {
-              uVar11 = 4;
+              FVar12 = FRIEND_STATUS_AWAY;
             }
           }
           else {
-            uVar11 = 1;
+            FVar12 = FRIEND_STATUS_REQUEST_RECEIVED;
           }
         }
         else {
-          uVar11 = 0;
+          FVar12 = FRIEND_STATUS_REQUEST_PENDING;
         }
-        puVar5[-99] = uVar11;
-        puVar6 = puVar6 + 1;
-        puVar5 = puVar5 + 1;
-        *puVar5 = uVar7;
-        uVar7 = uVar7 + 1;
-        puVar10 = puVar10 + 0x31;
-      } while (uVar7 < *(uint *)(&DAT_84546e60 + iVar9));
+        pFVar8[-99] = FVar12;
+        puVar9 = puVar9 + 1;
+        pFVar8 = pFVar8 + 1;
+        *pFVar8 = FVar10;
+        FVar10 = FVar10 + FRIEND_STATUS_REQUEST_RECEIVED;
+        puVar11 = puVar11 + 0x31;
+      } while (FVar10 < g_friendListGlobal[bVar2].count);
     }
-    DAT_84248df8 = &DAT_84222958 + iVar8;
-    qsort(&DAT_84547318 + iVar9,local_50[0],4,Friends_XFriendPresenceCompare);
-    MeetPlayer_RemoveFriends(*(undefined1 *)(iVar3 + 0x95));
+    s_sortFriendList = friendLists[bVar1];
+    qsort(g_friendListGlobal[bVar2].sortedFriends,local_50[0],4,Friends_XFriendPresenceCompare);
+    MeetPlayer_RemoveFriends((uint)poVar3->controllerIndex);
   }
   else {
-    cVar4 = Live_IsUserSignedInToLive(*(undefined1 *)(iVar3 + 0x95));
-    if (cVar4 != '\0') {
-      Com_PrintError(1,0xffffffff8218ad10,uVar2);
+    bVar7 = Live_IsUserSignedInToLive((uint)poVar3->controllerIndex);
+    if (bVar7) {
+      Com_PrintError(1,
+                     "Microsoft error - Async fetch of friends list failed with error code %llx in EnumerateFriendsComplete()\n"
+                    );
     }
-    *(undefined4 *)(&DAT_84546e60 + iVar9) = 0;
-    uVar12 = 2;
-    (&DAT_845474a8)[iVar9] = 1;
+    g_friendListGlobal[bVar2].count = 0;
+    uVar13 = 2;
+    g_friendListGlobal[bVar2].dirty = true;
   }
-  TaskManager_TaskFromXOverlapped(0xffffffff84248e00,uVar1);
-  TaskManager_ClearTask();
-  __restgprlr_24(uVar12);
-  return;
+  poVar3 = TaskManager_TaskFromXOverlapped(&tasks,p_Var4);
+  TaskManager_ClearTask(poVar3);
+  tVar6 = __restgprlr_24(uVar13);
+  return tVar6;
 }
 
 
 // 826413C0  Friends_CheckOngoingTasks  (xenon/xenon_friends.cpp:249)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Friends_CheckOngoingTasks(void)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  uint uVar3;
+  _XOVERLAPPED *p_Var1;
+  char *pcVar2;
+  taskCompleteResults tVar3;
   int *piVar4;
   
   __savegprlr_22();
-  piVar4 = &DAT_84248e98;
+  piVar4 = &tasks.tasks[0].type;
   do {
-    if (*(char *)(piVar4 + 1) != '\0') {
-      piVar2 = (int *)TaskManager_TaskToXOverlapped(piVar4 + -0x24);
-      if (piVar2 == (int *)0x0) {
-        MyAssertHandler(0xffffffff8218abf8,0x105,0,0xffffffff82000f98,0xffffffff8208b66c);
+    if (*(bool *)(piVar4 + 1) != false) {
+      p_Var1 = TaskManager_TaskToXOverlapped((overlappedTask *)(piVar4 + -0x24));
+      if (p_Var1 == (_XOVERLAPPED *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",
+                        0x105,0,"%s");
       }
-      if (*piVar2 == 0x3e5) break;
+      if (p_Var1->InternalLow == 0x3e5) break;
       if (*piVar4 == 0) {
-        uVar3 = EnumerateFriendsComplete(piVar4 + -0x24);
-        uVar1 = 0xffffffff8218ad9c;
+        tVar3 = EnumerateFriendsComplete((overlappedTask *)(piVar4 + -0x24));
+        pcVar2 = "Error enumerating friends\n";
       }
       else {
-        uVar3 = 2;
-        uVar1 = va(0xffffffff8217b05c);
-        if (DAT_84013128 == 0) {
-          MyAssertHandler(0xffffffff8218abf8,0x114,0,uVar1);
+        tVar3 = TASK_ERROR;
+        pcVar2 = va("Unknown session task type %i\n");
+        if (alwaysfails == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp"
+                          ,0x114,0,pcVar2);
         }
       }
-      if (1 < uVar3) {
-        Com_PrintError(0x10,uVar1);
+      if (TASK_COMPLETE < tVar3) {
+        Com_PrintError(0x10,pcVar2);
       }
     }
     piVar4 = piVar4 + 0x28;
@@ -306,80 +323,84 @@ void Friends_CheckOngoingTasks(void)
 
 // 826414C8  Friends_Init_Platform  (xenon/xenon_friends.cpp:296)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Friends_Init_Platform(void)
 
 {
-  memset(&DAT_84222958,0,0x264a0);
-  TaskManager_ConstructTaskSet(0xffffffff84248e00,0xffffffff8218adb8);
+  memset();
+  TaskManager_ConstructTaskSet(&tasks,"Friends_Init");
   return;
 }
 
 
 // 82641510  Friends_Shutdown_Platform  (xenon/xenon_friends.cpp:304)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void Friends_Shutdown_Platform(void)
 
 {
-  TaskManager_DestructTaskSet(0xffffffff84248e00);
+  TaskManager_DestructTaskSet(&tasks);
   return;
 }
 
 
 // 82641520  Friends_Reset_Platform  (xenon/xenon_friends.cpp:310)
 
-void * Friends_Reset_Platform(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void Friends_Reset_Platform(void)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = memset(&DAT_84222958,0,0x264a0);
-  return pvVar1;
+  memset();
+  return;
 }
 
 
 // 82641538  Friends_ResetUser_Platform  (xenon/xenon_friends.cpp:316)
 
-void * Friends_ResetUser_Platform(ulonglong param_1)
+void Friends_ResetUser_Platform(int param_1)
 
 {
-  void *pvVar1;
-  
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x13d,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x13d
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  memset(&DAT_84546e40 + (int)param_1 * 0x670,0,0x670);
-  pvVar1 = memset(&DAT_84222958 + (int)param_1 * 0x9928,0,0x9928);
-  return pvVar1;
+  memset();
+  memset();
+  return;
 }
 
 
 // 826415C8  Friends_UpdateNeeded  (xenon/xenon_friends.cpp:325)
 
-bool Friends_UpdateNeeded(ulonglong param_1)
+bool Friends_UpdateNeeded(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x146,0,0xffffffff82057c60,param_1,4);
+  if (3 < (uint)param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x146
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((&DAT_845474a8)[(int)param_1 * 0x670] == '\0') {
+  if (g_friendListGlobal[param_1].dirty == false) {
     return false;
   }
-  cVar1 = Live_IsSystemUiActive();
-  return cVar1 == '\0';
+  bVar1 = Live_IsSystemUiActive();
+  return !bVar1;
 }
 
 
 // 82641660  Friends_Update_Platform  (xenon/xenon_friends.cpp:339)
 
-void Friends_Update_Platform(undefined8 param_1)
+void Friends_Update_Platform(int param_1)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Friends_UpdateNeeded();
-  if (cVar1 != '\0') {
+  bVar1 = Friends_UpdateNeeded(param_1);
+  if (bVar1) {
     EnumerateFriends(param_1);
   }
   return;
@@ -388,141 +409,177 @@ void Friends_Update_Platform(undefined8 param_1)
 
 // 826416A0  Friends_GetPresence_Platform  (xenon/xenon_friends.cpp:346)
 
-void Friends_GetPresence_Platform
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
+void Friends_GetPresence_Platform(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  uint uVar3;
   int iVar4;
-  undefined8 uVar3;
-  char cVar5;
+  char *pcVar5;
+  longlong lVar2;
+  ulonglong uVar7;
+  char *pcVar8;
+  bool bVar6;
   
-  uVar2 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218abf8,0x15e,0,0xffffffff82000f98,0xffffffff8218ae50);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar3 = __savegprlr_26(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15e
+                    ,0,"%s");
   }
-  if ((int)param_4 < 1) {
-    MyAssertHandler(0xffffffff8218abf8,0x15f,0,0xffffffff82000f98,0xffffffff820589cc);
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x15f
+                    ,0,"%s");
   }
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar2,4);
+  if (3 < uVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = Friends_FindIndex(uVar2,param_2);
+  iVar4 = Friends_FindIndex(uVar3,param_2);
+  pcVar8 = (char *)uVar7;
   if (iVar4 == -1) {
-    *(undefined1 *)param_3 = 0;
+    *pcVar8 = '\0';
     __restgprlr_26();
     return;
   }
-  iVar4 = iVar4 * 0xc4 + (int)uVar2 * 0x9928;
-  uVar1 = *(uint *)(&DAT_84222958 + iVar4 + 0x18);
+  uVar1 = friendLists[uVar3][0].friends[iVar4].dwFriendState;
   if ((uVar1 & 0x40000000) == 0) {
     if ((uVar1 & 0x80000000) == 0) {
-      if (*(int *)(&DAT_84222958 + iVar4 + 0x24) == 0x415608cb) {
-        if ((*(int *)(&DAT_84222958 + iVar4 + 0x40) != 0) &&
-           (cVar5 = MakeWideCharNameSafeForAllLanguages
-                              (param_3,&DAT_84222958 + iVar4 + 0x44,param_4), cVar5 != '\0'))
-        goto LAB_82641870;
+      if (friendLists[uVar3][0].friends[iVar4].dwTitleID == 0x415608cb) {
+        if (friendLists[uVar3][0].friends[iVar4].cchRichPresence != 0) {
+          bVar6 = MakeWideCharNameSafeForAllLanguages
+                            (pcVar8,friendLists[uVar3][0].friends[iVar4].wszRichPresence,param_4);
+          lVar2 = (longlong)bVar6;
+          if (lVar2 != 0) goto LAB_82641870;
+        }
 LAB_826417f0:
-        uVar3 = 0xffffffff8218adfc;
+        pcVar5 = "XBOXLIVE_ONLINE";
       }
       else {
         if ((uVar1 & 1) != 0) {
           if ((uVar1 & 0xf0000) == 0x10000) {
-            uVar3 = 0xffffffff8218adec;
+            pcVar5 = "XBOXLIVE_AWAY";
             goto LAB_82641858;
           }
           if ((uVar1 & 1) != 0) {
             if ((uVar1 & 0xf0000) == 0x20000) {
-              uVar3 = 0xffffffff8218addc;
+              pcVar5 = "XBOXLIVE_BUSY";
               goto LAB_82641858;
             }
             if ((uVar1 & 1) != 0) goto LAB_826417f0;
           }
         }
-        uVar3 = 0xffffffff8218adc8;
+        pcVar5 = "XBOXLIVE_OFFLINE";
       }
     }
     else {
-      uVar3 = 0xffffffff8218ae0c;
+      pcVar5 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
     }
   }
   else {
-    uVar3 = 0xffffffff8218ae30;
+    pcVar5 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
   }
 LAB_82641858:
-  uVar3 = SEH_SafeTranslateString(uVar3);
-  Com_sprintf(param_3,param_4,0xffffffff82000f98,uVar3);
+  SEH_SafeTranslateString(pcVar5);
+  iVar4 = Com_sprintf(pcVar8,param_4,"%s");
+  lVar2 = (longlong)iVar4;
 LAB_82641870:
-  __restgprlr_26();
+  __restgprlr_26(lVar2);
   return;
 }
 
 
 // 82641878  Friends_Gamertag_Platform  (xenon/xenon_friends.cpp:379)
 
-void Friends_Gamertag_Platform
-               (undefined8 param_1,undefined8 param_2,ulonglong param_3,undefined8 param_4)
+void Friends_Gamertag_Platform(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
+  uint uVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_26();
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8218abf8,0x17f,0,0xffffffff82000f98,0xffffffff8218ae5c);
+  uVar3 = (ulonglong)(int)param_3;
+  uVar1 = __savegprlr_26(param_1);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x17f
+                    ,0,"%s");
   }
-  if ((int)param_4 < 1) {
-    MyAssertHandler(0xffffffff8218abf8,0x180,0,0xffffffff82000f98,0xffffffff820589cc);
+  if (param_4 < 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x180
+                    ,0,"%s");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar1,4);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  lVar2 = Friends_FindIndex(uVar1,param_2);
-  if ((int)lVar2 < 0) {
-    *(undefined1 *)param_3 = 0;
+  iVar2 = Friends_FindIndex(uVar1,param_2);
+  if (iVar2 < 0) {
+    *(char *)uVar3 = '\0';
     __restgprlr_26();
     return;
   }
-  I_strncpyz(param_3,(longlong)(int)uVar1 * 0x9928 + lVar2 * 0xc4 + -0x7bddd6a0,param_4);
+  I_strncpyz((char *)uVar3,friendLists[uVar1][0].friends[iVar2].szGamertag,param_4);
   __restgprlr_26();
   return;
 }
 
 
-// 82641978  Friends_GetSessionInfo_Platform  (xenon/xenon_friends.cpp:406)
+// 82641970  Friends_IsConnected_Platform  (xenon/xenon_friends.cpp:400)
 
-void Friends_GetSessionInfo_Platform(undefined8 param_1,ulonglong param_2)
+/* bool __cdecl Friends_IsConnected_Platform(int) */
+
+bool Friends_IsConnected_Platform(int param_1)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x199,0,0xffffffff82057c60,uVar1,4);
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar1,4);
+  iVar1 = CL_GetLocalClientSignInState(param_1);
+  return iVar1 == 2;
+}
+
+
+// 82641978  Friends_GetSessionInfo_Platform  (xenon/xenon_friends.cpp:406)
+
+XNKID Friends_GetSessionInfo_Platform(int param_1,int param_2)
+
+{
+  uint uVar2;
+  XNKID XVar1;
+  ulonglong uVar3;
+  
+  uVar3 = (ulonglong)param_2;
+  uVar2 = __savegprlr_28(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x199
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + (int)uVar1 * 0x670) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x19d,0,0xffffffff8218ae68,param_2);
+  if ((ulonglong)g_friendListGlobal[uVar2].count <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x19d
+                    ,0,
+                    "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_28(*(undefined8 *)((int)param_2 * 0xc4 + (int)uVar1 * 0x9928 + -0x7bddd68c));
-  return;
+  XVar1.ab = (uchar  [8])
+             __restgprlr_28(*(undefined8 *)friendLists[uVar2][0].friends[(int)uVar3].sessionID.ab);
+  return (XNKID)XVar1.ab;
 }
 
 
 // 82641A40  Friends_IsSessionInfoValid_Platform  (xenon/xenon_friends.cpp:420)
 
-bool Friends_IsSessionInfoValid_Platform(undefined8 param_1)
+bool Friends_IsSessionInfoValid_Platform(XNKID param_1)
 
 {
   char cVar1;
   char cVar2;
   char *pcVar3;
   char *pcVar4;
-  undefined8 uStack00000010;
+  XNKID XStack00000010;
   char local_10 [16];
   
-  uStack00000010 = param_1;
+  XStack00000010.ab = param_1.ab;
   Com_Memset(local_10,0,8);
   pcVar4 = (char *)&stack0x00000010;
   pcVar3 = local_10;
@@ -533,131 +590,147 @@ bool Friends_IsSessionInfoValid_Platform(undefined8 param_1)
     pcVar4 = pcVar4 + 1;
     pcVar3 = pcVar3 + 1;
   } while (pcVar4 != &stack0x00000018);
-  return cVar1 != cVar2;
+  return (bool)('\x01' - (cVar1 == cVar2));
 }
 
 
 // 82641AA8  Friends_CompareSessionInfo_Platform  (xenon/xenon_friends.cpp:430)
 
-void Friends_CompareSessionInfo_Platform(undefined8 param_1,undefined8 param_2)
+int Friends_CompareSessionInfo_Platform(XNKID param_1,XNKID param_2)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  undefined8 uStack00000010;
-  undefined8 uStack00000018;
+  byte *pbVar1;
+  byte *pbVar2;
+  uchar auStack00000010 [8];
+  uchar auStack00000018 [8];
   
-  pcVar2 = (char *)&stack0x00000010;
-  uStack00000010 = param_1;
-  uStack00000018 = param_2;
-  pcVar1 = (char *)&stack0x00000018;
+  pbVar2 = &stack0x00000010;
+  auStack00000010 = param_1.ab;
+  auStack00000018 = param_2.ab;
+  pbVar1 = &stack0x00000018;
   do {
-    if (*pcVar2 != *pcVar1) {
-      return;
+    if ((ulonglong)*pbVar2 - (ulonglong)*pbVar1 != 0) {
+      return (int)((ulonglong)*pbVar2 - (ulonglong)*pbVar1);
     }
-    pcVar2 = pcVar2 + 1;
-    pcVar1 = pcVar1 + 1;
-  } while (pcVar2 != (char *)&stack0x00000018);
-  return;
+    pbVar2 = pbVar2 + 1;
+    pbVar1 = pbVar1 + 1;
+  } while (pbVar2 != &stack0x00000018);
+  return 0;
 }
 
 
 // 82641AE0  Friends_SendInviteMessage_Platform  (xenon/xenon_friends.cpp:436)
 
-undefined8 Friends_SendInviteMessage_Platform(void)
+int Friends_SendInviteMessage_Platform(int param_1,ulong64 param_2)
 
 {
-  Live_SendInvite();
+  Live_SendInvite(param_1,param_2);
   return 0;
 }
 
 
 // 82641B08  Friends_ShowPlayerCard_Platform  (xenon/xenon_friends.cpp:444)
 
-void Friends_ShowPlayerCard_Platform(undefined8 param_1,undefined8 param_2)
+int Friends_ShowPlayerCard_Platform(int param_1,ulong64 param_2)
 
 {
-  ulonglong uVar1;
+  ulong uVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x1c0,0,0xffffffff82057c60,uVar1,4);
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar1,4);
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x1c0
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   uVar1 = XShowGamerCardUI(uVar1,param_2);
-  if ((uVar1 & 0xffffffff) != 0) {
-    Com_PrintError(0x10,0xffffffff8218aec8,uVar1);
+  if (uVar1 != 0) {
+    Com_PrintError(0x10,"Microsoft error %i from XShowGamerCardUI()\n");
   }
-  __restgprlr_28(uVar1);
-  return;
+  iVar2 = __restgprlr_28(uVar1);
+  return iVar2;
 }
 
 
 // 82641BA8  Friends_StartJoiningFriend_Platform  (xenon/xenon_friends.cpp:461)
 
-void Friends_StartJoiningFriend_Platform
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined1 param_4)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void Friends_StartJoiningFriend_Platform(int param_1,ulong64 param_2,XNKID param_3,bool param_4)
 
 {
   byte bVar1;
   byte bVar2;
-  char cVar4;
-  int iVar3;
-  byte *pbVar5;
-  byte *pbVar6;
-  undefined8 uStack00000020;
+  bool bVar5;
+  PartyData *pPVar3;
+  int iVar4;
+  longlong lVar6;
+  byte *pbVar7;
+  byte *pbVar8;
+  _XSESSION_INFO *p_Var9;
+  uchar auStack00000020 [8];
   byte local_20 [8];
   
-  pbVar6 = local_20;
-  pbVar5 = (byte *)&stack0x00000020;
+  auStack00000020 = param_3.ab;
+  pbVar8 = local_20;
+  pbVar7 = &stack0x00000020;
+  local_20[0] = 0;
+  local_20[1] = 0;
+  local_20[2] = 0;
+  local_20[3] = 0;
+  local_20[4] = 0;
+  local_20[5] = 0;
+  local_20[6] = 0;
+  local_20[7] = 0;
   do {
-    bVar1 = *pbVar6;
-    bVar2 = *pbVar5;
+    bVar1 = *pbVar8;
+    bVar2 = *pbVar7;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    pbVar5 = pbVar5 + 1;
-  } while (pbVar6 != &stack0xffffffe8);
-  uStack00000020 = param_3;
+    pbVar8 = pbVar8 + 1;
+    pbVar7 = pbVar7 + 1;
+  } while (pbVar8 != &stack0xffffffe8);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-    Com_PrintError(0x10,0xffffffff8218aef8);
-    Live_ThrowError(1,0xffffffff8203252c);
+    Com_PrintError(0x10,
+                   "Friends_StartJoiningFriend_Platform found session but session id is blank\n");
+    Live_ThrowError(ERR_DROP,"EXE_HOSTUNREACH");
     return;
   }
-  DAT_8425a060 = param_3;
-  DAT_8425a058 = Live_GetXuid();
-  DAT_8425a054 = 0;
-  DAT_8425a09c = param_4;
+  g_launchData.inviteHostInfo._0_8_ = param_3.ab;
+  g_launchData.invitedXUID = Live_GetXuid(param_1);
+  g_launchData.inviteState = INVITE_NONE;
+  g_launchData.fromGameInvite = param_4;
   XSetLaunchData(0xffffffff84259cc8,1000);
   Session_SetInviteSessionPending();
-  if (DAT_844c7870 != 0) {
-    pbVar6 = &DAT_844c7874;
-    pbVar5 = (byte *)&stack0x00000020;
+  if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
+    p_Var9 = &g_serverSession.dyn.sessionInfo;
+    pbVar7 = &stack0x00000020;
     do {
-      bVar1 = *pbVar6;
-      bVar2 = *pbVar5;
-      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-      pbVar6 = pbVar6 + 1;
-      pbVar5 = pbVar5 + 1;
-    } while (pbVar6 != &DAT_844c787c);
-    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
-      cVar4 = CL_AllLocalClientsDisconnected();
-      if (cVar4 != '\0') {
-        Lobby_GetPartyData();
-        iVar3 = Party_InParty();
-        if (iVar3 == 0) goto LAB_82641cb0;
+      lVar6 = (ulonglong)(p_Var9->sessionID).ab[0] - (ulonglong)*pbVar7;
+      if (lVar6 != 0) break;
+      p_Var9 = (_XSESSION_INFO *)((p_Var9->sessionID).ab + 1);
+      pbVar7 = pbVar7 + 1;
+    } while (p_Var9 != (_XSESSION_INFO *)&g_serverSession.dyn.sessionInfo.hostAddress);
+    if ((int)lVar6 == 0) {
+      bVar5 = CL_AllLocalClientsDisconnected();
+      if (bVar5) {
+        pPVar3 = Lobby_GetPartyData();
+        iVar4 = Party_InParty(pPVar3);
+        if (iVar4 == 0) goto LAB_82641cb0;
       }
-      Com_Printf(0x10,0xffffffff8218af48);
+      Com_Printf(0x10,"Received invite to current session.  Not doing anything about it\n");
       return;
     }
   }
 LAB_82641cb0:
-  cVar4 = CL_AllLocalClientsDisconnected();
-  if (((cVar4 == '\0') || (iVar3 = Party_InParty(0xffffffff82b55118), iVar3 == 0)) ||
-     (cVar4 = PartyUI_ShouldShowInviteWarning(0xffffffff82b55118), cVar4 == '\0')) {
-    Live_StartConfirmAcceptInvitation();
+  bVar5 = CL_AllLocalClientsDisconnected();
+  if (((bVar5) && (iVar4 = Party_InParty(&g_partyData), iVar4 != 0)) &&
+     (bVar5 = PartyUI_ShouldShowInviteWarning(&g_partyData), bVar5)) {
+    UI_ShowAcceptInviteWarning(LOCAL_CLIENT_0);
   }
   else {
-    UI_ShowAcceptInviteWarning(0);
+    Live_StartConfirmAcceptInvitation();
   }
   return;
 }
@@ -665,96 +738,114 @@ LAB_82641cb0:
 
 // 82641D38  FriendsMenu_IsAllowedToInvite_Platform  (xenon/xenon_friends.cpp:500)
 
-undefined8 FriendsMenu_IsAllowedToInvite_Platform(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+bool FriendsMenu_IsAllowedToInvite_Platform(int param_1,char **param_2)
 
 {
-  int iVar2;
-  char cVar3;
-  undefined8 uVar1;
+  SessionData *pSVar1;
+  bool bVar2;
   
-  iVar2 = Live_GetCurrentPresenceSession();
-  cVar3 = Session_IsValid();
-  if ((cVar3 == '\0') || ((*(uint *)(iVar2 + 0x68) & 2) == 0)) {
-    uVar1 = 0;
-    *param_2 = "MENU_INVITE_SESSION_INVALID";
+  pSVar1 = Live_GetCurrentPresenceSession();
+  bVar2 = Session_IsValid(pSVar1);
+  if ((bVar2) && (((pSVar1->dyn).flags & 2U) != 0)) {
+    bVar2 = true;
   }
   else {
-    uVar1 = 1;
+    bVar2 = false;
+    *param_2 = "MENU_INVITE_SESSION_INVALID";
   }
-  return uVar1;
+  return bVar2;
 }
 
 
 // 82641DA8  FriendsMenu_IsAllowedToJoin_Platform  (xenon/xenon_friends.cpp:518)
 
-undefined8 FriendsMenu_IsAllowedToJoin_Platform(undefined8 param_1,undefined4 *param_2)
+bool FriendsMenu_IsAllowedToJoin_Platform(int param_1,char **param_2)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  cVar1 = Live_IsUserSignedInToLive();
-  if (cVar1 == '\0') {
+  bVar1 = Live_IsUserSignedInToLive(param_1);
+  if (!bVar1) {
     *param_2 = "PLATFORM_INVITE_NOT_CONNECTED";
-    return 0;
+    return false;
   }
-  return 1;
+  return true;
 }
 
 
 // 82641E08  FriendsMenu_GetIsSessionValid_Platform  (xenon/xenon_friends.cpp:530)
 
-void FriendsMenu_GetIsSessionValid_Platform(undefined8 param_1,ulonglong param_2)
+bool FriendsMenu_GetIsSessionValid_Platform(int param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  uint uVar1;
+  undefined1 uVar2;
+  bool bVar3;
+  ulonglong uVar4;
   
-  uVar2 = __savegprlr_28();
-  if (3 < (uVar2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x216,0,0xffffffff82057c60,uVar2,4);
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar2,4);
+  uVar4 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x216
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + (int)uVar2 * 0x670) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x21a,0,0xffffffff8218ae68,param_2);
+  if ((ulonglong)g_friendListGlobal[uVar1].count <= (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x21a
+                    ,0,
+                    "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
+                   );
   }
-  iVar1 = (int)param_2 * 0xc4 + (int)uVar2 * 0x9928;
-  if (*(int *)(&DAT_84222958 + iVar1 + 0x24) != 0x415608cb) {
-    __restgprlr_28(0);
-    return;
+  if (friendLists[uVar1][0].friends[(int)uVar4].dwTitleID != 0x415608cb) {
+    uVar2 = __restgprlr_28(0);
+    return (bool)uVar2;
   }
-  Friends_IsSessionInfoValid_Platform(*(undefined8 *)(&DAT_84222958 + iVar1 + 0x1c));
-  __restgprlr_28();
-  return;
+  bVar3 = Friends_IsSessionInfoValid_Platform
+                    ((XNKID)*&friendLists[uVar1][0].friends[(int)uVar4].sessionID.ab);
+  uVar2 = __restgprlr_28(bVar3);
+  return (bool)uVar2;
 }
 
 
 // 82641EF8  FriendsMenu_GetIsSessionFull_Platform  (xenon/xenon_friends.cpp:550)
 
-void FriendsMenu_GetIsSessionFull_Platform(undefined8 param_1,ulonglong param_2)
+bool FriendsMenu_GetIsSessionFull_Platform(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  undefined1 uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x22b,0,0xffffffff82057c60,uVar1,4);
-    MyAssertHandler(0xffffffff8218abf8,0x49,0,0xffffffff82057c60,uVar1,4);
+  uVar3 = (ulonglong)param_2;
+  uVar1 = __savegprlr_28(param_1);
+  if (3 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x22b
+                    ,0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x49,
+                    0,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)*(uint *)(&DAT_84546e60 + (int)uVar1 * 0x670) <= (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8218abf8,0x22f,0,0xffffffff8218ae68,param_2);
+  if ((ulonglong)g_friendListGlobal[uVar1].count <= (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_friends.cpp",0x22f
+                    ,0,
+                    "friendIndex doesn\'t index g_friendListGlobal[ localControllerIndex ].count\n\t%i not in [0, %i)"
+                   );
   }
-  __restgprlr_28((*(uint *)(&DAT_84222970 + (int)param_2 * 0xc4 + (int)uVar1 * 0x9928) & 0x110) == 0
-                );
-  return;
+  uVar2 = __restgprlr_28((friendLists[uVar1][0].friends[(int)uVar3].dwFriendState & 0x110) == 0);
+  return (bool)uVar2;
 }
 
 
 // 829400E8  `dynamic_atexit_destructor_for_'tasks''  (line unknown)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void _dynamic_atexit_destructor_for__tasks__(void)
 
 {
-  OverlappedTaskSet___OverlappedTaskSet(0xffffffff84248e00);
+  OverlappedTaskSet::~OverlappedTaskSet(&tasks);
   return;
 }
 

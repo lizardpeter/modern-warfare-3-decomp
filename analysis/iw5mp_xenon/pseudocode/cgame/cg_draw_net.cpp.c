@@ -2,43 +2,51 @@
 
 // 822BDE20  CG_DrawDisconnect  (cgame/cg_draw_net.cpp:95)
 
-void CG_DrawDisconnect(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawDisconnect(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  char cVar7;
-  int iVar5;
-  int *piVar6;
-  longlong lVar2;
-  undefined8 uVar3;
-  undefined8 uVar4;
-  uint uVar8;
-  undefined8 uVar9;
-  int local_60 [24];
+  LocalClientNum_t LVar1;
+  bool bVar8;
+  clientMigState_t cVar2;
+  cg_s *pcVar3;
+  int iVar4;
+  ScreenPlacement *pSVar5;
+  char *pcVar6;
+  Font_s *pFVar7;
+  int iVar9;
+  uint uVar10;
+  double dVar11;
+  usercmd_s local_60 [2];
   
-  uVar1 = __savegprlr_28();
-  cVar7 = CL_IsServerRestarting();
-  if (((cVar7 == '\0') && (cVar7 = CL_Demo_IsPlaying(uVar1), cVar7 == '\0')) &&
-     (iVar5 = CL_GetLocalClientMigrationState(uVar1), iVar5 == 0)) {
-    piVar6 = (int *)CG_GetLocalClientGlobals(uVar1);
-    lVar2 = CL_GetCurrentCmdNumber(uVar1);
-    CL_GetUserCmd(uVar1,lVar2 + -0x7f,local_60);
-    if (*piVar6 < local_60[0]) {
-      if (local_60[0] <= piVar6[0x1ae63]) {
-        uVar1 = ScrPlace_GetActivePlacement(uVar1);
-        uVar3 = UI_SafeTranslateString(0xffffffff82014e40);
-        uVar9 = 0x3fe2aaaaa0000000;
-        uVar4 = UI_GetFontHandle(0x3fe2aaaaa0000000,uVar1,0);
-        iVar5 = UI_TextWidth(uVar9,uVar3,0,uVar4);
-        uVar8 = 0x280 - iVar5;
-        UI_DrawText((double)(longlong)
-                            (int)(((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0)),
-                    0x4059000000000000,uVar9,uVar1,uVar3,0x7fffffff,uVar4,(int)uVar8 >> 1,
-                    0xffffffff82000000,0,0);
-        if ((piVar6[0x1ae63] & 0x200U) == 0) {
-          Material_RegisterHandle(0xffffffff82014e30,7);
-          UI_DrawHandlePic(0x4072800000000000,0x4074000000000000,0x4048000000000000,uVar1);
-        }
+  LVar1 = __savegprlr_28(param_1);
+  bVar8 = CL_IsServerRestarting(LVar1);
+  if (((!bVar8) && (bVar8 = CL_Demo_IsPlaying(LVar1), !bVar8)) &&
+     (cVar2 = CL_GetLocalClientMigrationState(LVar1), cVar2 == CMSTATE_INACTIVE)) {
+    pcVar3 = CG_GetLocalClientGlobals(LVar1);
+    iVar4 = CL_GetCurrentCmdNumber(LVar1);
+    CL_GetUserCmd(LVar1,iVar4 + -0x7f,local_60);
+    if (((pcVar3->predictedPlayerState).commandTime < local_60[0].serverTime) &&
+       (local_60[0].serverTime <= pcVar3->time)) {
+      pSVar5 = ScrPlace_GetActivePlacement(LVar1);
+      pcVar6 = UI_SafeTranslateString("CGAME_CONNECTIONINTERUPTED");
+      dVar11 = 0.5833333134651184;
+      pFVar7 = UI_GetFontHandle(pSVar5,0,0.5833333);
+      iVar4 = UI_TextWidth(pcVar6,0,pFVar7,(float)dVar11);
+      uVar10 = 0x280 - iVar4;
+      iVar4 = 0x7fffffff;
+      UI_DrawText(pSVar5,pcVar6,0x7fffffff,pFVar7,
+                  (float)(longlong)
+                         (int)(((int)uVar10 >> 1) + (uint)((int)uVar10 < 0 && (uVar10 & 1) != 0)),
+                  100.0,(int)uVar10 >> 1,-0x7e000000,(float)dVar11,(float *)0x0,0);
+      if ((pcVar3->time & 0x200U) == 0) {
+        iVar9 = 7;
+        Material_RegisterHandle("net_disconnect",7);
+        UI_DrawHandlePic(pSVar5,296.0,320.0,48.0,48.0,iVar9,iVar4,(float *)0x82010000,
+                         (Material *)0x82010000);
       }
     }
   }

@@ -5181,7 +5181,7 @@ LAB_823fab20:
   823FAB20  382100A0             addi r1,r1,0xa0
   823FAB24  4851BBD0             b 0x829166f4
 
-; 823FF3A0  std::_Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 823FF3A0  _Push_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   823FF3A0  7D8802A6             mfspr r12,LR
   823FF3A4  48517309             bl 0x829166ac
   823FF3A8  9421FF70             stwu r1,-0x90(r1)
@@ -5219,7 +5219,7 @@ LAB_823ff414:
   823FF420  38210090             addi r1,r1,0x90
   823FF424  485172D8             b 0x829166fc
 
-; 823FF428  std::_Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
+; 823FF428  _Push_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
   823FF428  7D8802A6             mfspr r12,LR
   823FF42C  48517281             bl 0x829166ac
   823FF430  9421FF70             stwu r1,-0x90(r1)
@@ -5508,7 +5508,7 @@ LAB_823fae90:
   823FAEA0  382100E0             addi r1,r1,0xe0
   823FAEA4  4851B830             b 0x829166d4
 
-; 823FF4B8  std::_Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 823FF4B8  _Adjust_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   823FF4B8  7D8802A6             mfspr r12,LR
   823FF4BC  485171F1             bl 0x829166ac
   823FF4C0  9421FF70             stwu r1,-0x90(r1)
@@ -5581,7 +5581,7 @@ LAB_823ff5a8:
   823FF5B4  38210090             addi r1,r1,0x90
   823FF5B8  48517144             b 0x829166fc
 
-; 823FF5C0  std::_Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
+; 823FF5C0  _Adjust_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
   823FF5C0  7D8802A6             mfspr r12,LR
   823FF5C4  485170E9             bl 0x829166ac
   823FF5C8  9421FF70             stwu r1,-0x90(r1)
@@ -5818,7 +5818,7 @@ LAB_823fb0e4:
   823FB0E4  382100D0             addi r1,r1,0xd0
   823FB0E8  4851B5F4             b 0x829166dc
 
-; 823FF6D0  std::_Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 823FF6D0  _Make_heap<unsigned_short_*,int,unsigned_short,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   823FF6D0  7D8802A6             mfspr r12,LR
   823FF6D4  48516FD5             bl 0x829166a8
   823FF6D8  9421FF60             stwu r1,-0xa0(r1)
@@ -5882,7 +5882,7 @@ LAB_823ff7a8:
   823FF7A8  382100A0             addi r1,r1,0xa0
   823FF7AC  48516F4C             b 0x829166f8
 
-; 823FF888  std::_Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
+; 823FF888  _Make_heap<XAssetHeader_*,int,XAssetHeader,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
   823FF888  7D8802A6             mfspr r12,LR
   823FF88C  48516E1D             bl 0x829166a8
   823FF890  9421FF60             stwu r1,-0xa0(r1)
@@ -6675,7 +6675,7 @@ LAB_823fbb00:
   823FBB54  CBE1FF90             lfd f31,-0x70(r1)
   823FBB58  4851AB90             b 0x829166e8
 
-; 824001C0  std::_Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 824001C0  _Sort_heap<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   824001C0  7D8802A6             mfspr r12,LR
   824001C4  485164F5             bl 0x829166b8
   824001C8  9421FF80             stwu r1,-0x80(r1)
@@ -6706,7 +6706,7 @@ LAB_82400224:
   82400224  38210080             addi r1,r1,0x80
   82400228  485164E0             b 0x82916708
 
-; 82400230  std::_Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
+; 82400230  _Sort_heap<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
   82400230  7D8802A6             mfspr r12,LR
   82400234  48516485             bl 0x829166b8
   82400238  9421FF80             stwu r1,-0x80(r1)
@@ -8665,7 +8665,7 @@ LAB_823ff068:
   823FF06C  382100F0             addi r1,r1,0xf0
   823FF070  48517660             b 0x829166d0
 
-; 823FF7B0  std::_Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 823FF7B0  _Insertion_sort1<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   823FF7B0  7D8802A6             mfspr r12,LR
   823FF7B4  48516EF1             bl 0x829166a4
   823FF7B8  9421FF60             stwu r1,-0xa0(r1)
@@ -8726,7 +8726,7 @@ LAB_823ff87c:
   823FF87C  382100A0             addi r1,r1,0xa0
   823FF880  48516E74             b 0x829166f4
 
-; 823FFC08  std::_Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
+; 823FFC08  _Insertion_sort1<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&),XAssetHeader>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
   823FFC08  7D8802A6             mfspr r12,LR
   823FFC0C  48516AA1             bl 0x829166ac
   823FFC10  9421FF60             stwu r1,-0xa0(r1)
@@ -8795,7 +8795,7 @@ LAB_823ffcec:
   823FFCEC  382100A0             addi r1,r1,0xa0
   823FFCF0  48516A0C             b 0x829166fc
 
-; 823FF970  std::_Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 823FF970  _Med3<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   823FF970  7D8802A6             mfspr r12,LR
   823FF974  48516D45             bl 0x829166b8
   823FF978  9421FF80             stwu r1,-0x80(r1)
@@ -8839,7 +8839,7 @@ LAB_823ffa04:
   823FFA04  38210080             addi r1,r1,0x80
   823FFA08  48516D00             b 0x82916708
 
-; 823FFA10  std::_Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
+; 823FFA10  _Med3<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
   823FFA10  7D8802A6             mfspr r12,LR
   823FFA14  48516CA5             bl 0x829166b8
   823FFA18  9421FF80             stwu r1,-0x80(r1)
@@ -8886,7 +8886,7 @@ LAB_823ffab0:
   823FFAB0  38210080             addi r1,r1,0x80
   823FFAB4  48516C54             b 0x82916708
 
-; 823FFAB8  std::_Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 823FFAB8  _Median<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   823FFAB8  7D8802A6             mfspr r12,LR
   823FFABC  48516BF5             bl 0x829166b0
   823FFAC0  9421FF70             stwu r1,-0x90(r1)
@@ -8931,7 +8931,7 @@ LAB_823ffb4c:
   823FFB58  38210090             addi r1,r1,0x90
   823FFB5C  48516BA4             b 0x82916700
 
-; 823FFB60  std::_Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
+; 823FFB60  _Median<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
   823FFB60  7D8802A6             mfspr r12,LR
   823FFB64  48516B4D             bl 0x829166b0
   823FFB68  9421FF70             stwu r1,-0x90(r1)
@@ -8976,7 +8976,7 @@ LAB_823ffbf4:
   823FFC00  38210090             addi r1,r1,0x90
   823FFC04  48516AFC             b 0x82916700
 
-; 823FFCF8  std::_Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 823FFCF8  _Unguarded_partition<unsigned_short_*,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   823FFCF8  7D8802A6             mfspr r12,LR
   823FFCFC  485169A9             bl 0x829166a4
   823FFD00  9421FF60             stwu r1,-0xa0(r1)
@@ -9142,7 +9142,7 @@ LAB_823fff30:
   823FFF3C  382100A0             addi r1,r1,0xa0
   823FFF40  485167B4             b 0x829166f4
 
-; 823FFF48  std::_Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
+; 823FFF48  _Unguarded_partition<XAssetHeader_*,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
   823FFF48  7D8802A6             mfspr r12,LR
   823FFF4C  48516759             bl 0x829166a4
   823FFF50  9421FF60             stwu r1,-0xa0(r1)
@@ -9513,7 +9513,7 @@ LAB_823fc93c:
   823FC954  EBE1FFF0             ld r31,-0x10(r1)
   823FC958  4E800020             blr
 
-; 824002A0  std::_Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824002A0  _Sort<unsigned_short_*,int,int_(__cdecl*)(unsigned_int,unsigned_int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824002A0  7D8802A6             mfspr r12,LR
   824002A4  4851640D             bl 0x829166b0
   824002A8  9421FF70             stwu r1,-0x90(r1)
@@ -9593,7 +9593,7 @@ LAB_824003a4:
   824003B4  38210090             addi r1,r1,0x90
   824003B8  48516348             b 0x82916700
 
-; 824003C0  std::_Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
+; 824003C0  _Sort<XAssetHeader_*,int,bool_(__cdecl*)(XAssetHeader_const_&,XAssetHeader_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
   824003C0  7D8802A6             mfspr r12,LR
   824003C4  485162ED             bl 0x829166b0
   824003C8  9421FF70             stwu r1,-0x90(r1)

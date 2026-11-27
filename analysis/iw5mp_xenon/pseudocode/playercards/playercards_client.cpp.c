@@ -2,131 +2,146 @@
 
 // 826E56B8  PlayerCard_InitGame  (playercards/playercards_client.cpp:102)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PlayerCard_InitGame(void)
 
 {
-  void *pvVar1;
-  uint uVar2;
-  int iVar3;
-  longlong lVar4;
+  ulonglong uVar1;
+  longlong lVar2;
   
   __savegprlr_27();
-  uVar2 = 0;
+  uVar1 = 0;
   do {
-    iVar3 = 0;
-    lVar4 = 0x12;
+    lVar2 = 0x12;
     do {
-      pvVar1 = memcpy(&DAT_844ed538 + (uVar2 + iVar3) * 0x98,&DAT_821a9688,0x98);
-      lVar4 = lVar4 + -1;
-      iVar3 = iVar3 + 1;
-    } while (lVar4 != 0);
-    uVar2 = uVar2 + 0x12;
-  } while (uVar2 < 0x48);
-  __restgprlr_27(pvVar1);
+      memcpy();
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
+    uVar1 = uVar1 + 0x12;
+  } while ((uVar1 & 0xffffffff) < 0x48);
+  __restgprlr_27();
   return;
 }
 
 
 // 826E5718  PlayerCardData_GetCurTime  (playercards/playercards_client.cpp:120)
 
-ulonglong PlayerCardData_GetCurTime(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int PlayerCardData_GetCurTime(LocalClientNum_t param_1)
 
 {
-  int iVar2;
-  ulonglong uVar1;
+  int iVar1;
+  cg_s *pcVar2;
   
-  iVar2 = CL_IsLocalClientInGame();
-  if (iVar2 != 0) {
-    iVar2 = CG_GetLocalClientGlobals(param_1);
-    return (ulonglong)*(uint *)(iVar2 + 0x6b98c);
+  iVar1 = CL_IsLocalClientInGame(param_1);
+  if (iVar1 != 0) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    return pcVar2->time;
   }
-  uVar1 = Sys_Milliseconds();
-  return uVar1;
+  iVar1 = Sys_Milliseconds();
+  return iVar1;
 }
 
 
 // 826E5778  PlayerCards_GetActivePartyData  (playercards/playercards_client.cpp:137)
 
-ulonglong PlayerCards_GetActivePartyData(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+PartyData * PlayerCards_GetActivePartyData(void)
 
 {
-  char cVar2;
-  ulonglong uVar1;
+  bool bVar2;
+  PartyData *pPVar1;
   
-  cVar2 = Lobby_IsInLobby();
-  if (cVar2 != '\0') {
-    uVar1 = Lobby_GetPartyData();
-    return uVar1;
+  bVar2 = Lobby_IsInLobby();
+  if (bVar2) {
+    pPVar1 = Lobby_GetPartyData();
+    return pPVar1;
   }
-  return -(ulonglong)(DAT_82b5700c != 0) & 0xffffffff82b55118;
+  return (PartyData *)(-(uint)(g_partyData.inParty != 0) & 0x82b55118);
 }
 
 
 // 826E57D0  PlayerCards_BuildPlayerCardDataForUnknownPartyMember  (playercards/playercards_client.cpp:148)
 
-void PlayerCards_BuildPlayerCardDataForUnknownPartyMember(ulonglong param_1)
+void PlayerCards_BuildPlayerCardDataForUnknownPartyMember(PlayerCardData *param_1)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x95,0,0xffffffff82000f98,0xffffffff82012420);
+  if (param_1 == (PlayerCardData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x95,0,"%s");
   }
-  memcpy((void *)param_1,&DAT_821a9688,0x98);
-  uVar1 = UI_SafeTranslateString(0xffffffff82056aec);
-  I_strncpyz(param_1 + 0x24,uVar1,0x20);
+  memcpy();
+  pcVar1 = UI_SafeTranslateString("MP_MATCHEDPLAYER");
+  I_strncpyz(param_1->name,pcVar1,0x20);
   return;
 }
 
 
 // 826E5858  PlayerCards_BuildPlayerCardDataFromPartyMember  (playercards/playercards_client.cpp:157)
 
-void PlayerCards_BuildPlayerCardDataFromPartyMember(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayerCards_BuildPlayerCardDataFromPartyMember
+               (PlayerCardData *param_1,LocalClientNum_t param_2,PartyMember *param_3)
 
 {
-  int iVar1;
+  PlayerCardData *pPVar1;
   int iVar2;
-  undefined4 uVar3;
+  ulonglong uVar4;
+  PartyMember *pPVar3;
   
-  iVar1 = __savegprlr_28();
-  if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x9e,0,0xffffffff82000f98,0xffffffff82012420);
+  uVar4 = (ulonglong)(int)param_2;
+  pPVar1 = (PlayerCardData *)__savegprlr_28(param_1,uVar4,param_3);
+  if (pPVar1 == (PlayerCardData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x9e,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x9f,0,0xffffffff82000f98,0xffffffff821a9770);
+  if ((uVar4 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x9f,0,"%s");
   }
-  iVar2 = Party_IsMemberDataAvailable(param_2);
+  pPVar3 = (PartyMember *)uVar4;
+  iVar2 = Party_IsMemberDataAvailable(pPVar3);
   if (iVar2 == 0) {
-    PlayerCards_BuildPlayerCardDataForUnknownPartyMember(iVar1);
+    PlayerCards_BuildPlayerCardDataForUnknownPartyMember(pPVar1);
     __restgprlr_28();
     return;
   }
-  iVar2 = (int)param_2;
-  *(undefined4 *)(iVar1 + 8) = *(undefined4 *)(iVar2 + 0x20);
-  *(undefined4 *)(iVar1 + 4) = *(undefined4 *)(iVar2 + 0x24);
-  *(undefined4 *)(iVar1 + 0xc) = *(undefined4 *)(iVar2 + 0x28);
-  *(undefined4 *)(iVar1 + 0x10) = *(undefined4 *)(iVar2 + 0xc);
-  *(undefined4 *)(iVar1 + 0x14) = *(undefined4 *)(iVar2 + 0x10);
-  *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)(iVar2 + 0x14);
-  *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(iVar2 + 0x18);
-  *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(iVar2 + 0x110);
-  I_strncpyz(iVar1 + 0x24,param_2 + 0x2c,0x20);
-  I_strncpyz(iVar1 + 0x44,param_2 + 0x4c,5);
-  uVar3 = Party_IsPlayerInPrivateParty(*(undefined8 *)(iVar2 + 0x128));
-  *(undefined4 *)(iVar1 + 0x4c) = uVar3;
-  *(undefined1 *)(iVar1 + 0x50) = *(undefined1 *)(iVar2 + 0x58);
-  *(undefined1 *)(iVar1 + 0x51) = *(undefined1 *)(iVar2 + 0x59);
-  I_strncpyz(iVar1 + 0x52,param_2 + 0x5a,0x18);
-  *(undefined4 *)(iVar1 + 0x6c) = *(undefined4 *)(iVar2 + 0x74);
-  I_strncpyz(iVar1 + 0x70,param_2 + 0x78,5);
-  *(undefined4 *)(iVar1 + 0x78) = *(undefined4 *)(iVar2 + 0x80);
-  *(undefined4 *)(iVar1 + 0x7c) = *(undefined4 *)(iVar2 + 0x84);
-  *(undefined4 *)(iVar1 + 0x80) = *(undefined4 *)(iVar2 + 0x88);
-  *(undefined4 *)(iVar1 + 0x84) = *(undefined4 *)(iVar2 + 0x8c);
-  *(undefined4 *)(iVar1 + 0x88) = *(undefined4 *)(iVar2 + 0x90);
-  *(undefined4 *)(iVar1 + 0x8c) = *(undefined4 *)(iVar2 + 0x94);
-  *(undefined4 *)(iVar1 + 0x90) = *(undefined4 *)(iVar2 + 0x98);
-  *(undefined4 *)(iVar1 + 0x94) = *(undefined4 *)(iVar2 + 0x9c);
+  pPVar1->iconIndex = (pPVar3->info).playerCardIcon;
+  pPVar1->titleIndex = (pPVar3->info).playerCardTitle;
+  pPVar1->nameplateIndex = (pPVar3->info).playerCardNameplate;
+  pPVar1->rank_mp = (pPVar3->info).rank_mp;
+  pPVar1->prestige_mp = (pPVar3->info).prestige_mp;
+  pPVar1->rank_so = (pPVar3->info).rank_so;
+  pPVar1->prestige_so = (pPVar3->info).prestige_so;
+  pPVar1->team = pPVar3->team;
+  I_strncpyz(pPVar1->name,(pPVar3->info).gamertag,0x20);
+  I_strncpyz(pPVar1->clanAbbrev,(pPVar3->info).clanAbbrev,5);
+  iVar2 = Party_IsPlayerInPrivateParty(pPVar3->player);
+  pPVar1->myParty = iVar2;
+  pPVar1->use_elite_clan_tag = (pPVar3->info).use_elite_clan_tag;
+  pPVar1->use_elite_clan_title = (pPVar3->info).use_elite_clan_title;
+  I_strncpyz(pPVar1->elite_clan_title_text,(pPVar3->info).elite_clan_title_text,0x18);
+  pPVar1->elite_clan_title_bg = (pPVar3->info).elite_clan_title_bg;
+  I_strncpyz(pPVar1->elite_clan_tag_text,(pPVar3->info).elite_clan_tag_text,5);
+  pPVar1->prestige_black_ops = (pPVar3->info).prestige_black_ops;
+  pPVar1->rank_black_ops = (pPVar3->info).rank_black_ops;
+  pPVar1->prestige_mw2 = (pPVar3->info).prestige_mw2;
+  pPVar1->rank_mw2 = (pPVar3->info).rank_mw2;
+  pPVar1->prestige_world_at_war = (pPVar3->info).prestige_world_at_war;
+  pPVar1->rank_world_at_war = (pPVar3->info).rank_world_at_war;
+  pPVar1->prestige_mw = (pPVar3->info).prestige_mw;
+  pPVar1->rank_mw = (pPVar3->info).rank_mw;
   __restgprlr_28();
   return;
 }
@@ -134,343 +149,391 @@ void PlayerCards_BuildPlayerCardDataFromPartyMember(undefined8 param_1,ulonglong
 
 // 826E59D0  PlayerCards_GetPartyMemberData  (playercards/playercards_client.cpp:201)
 
-void PlayerCards_GetPartyMemberData(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+
+PlayerCardData *
+PlayerCards_GetPartyMemberData
+          (LocalClientNum_t param_1,PlayerCardClientLookupType param_2,uint param_3)
 
 {
-  undefined8 uVar1;
+  LocalClientNum_t LVar1;
+  PlayerCardData *pPVar2;
+  int iVar3;
+  PartyData *pPVar4;
   int iVar5;
-  ulonglong uVar2;
-  int iVar6;
-  undefined8 uVar3;
-  ulonglong uVar4;
-  char cVar7;
+  PartyMember *pPVar6;
+  PartyMember *pPVar7;
+  uint uVar8;
+  bool bVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  uVar1 = __savegprlr_28();
-  if (9 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0xd0,0,0xffffffff821a9880,param_2,10);
+  uVar11 = (ulonglong)(int)param_3;
+  uVar10 = (ulonglong)(int)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  pPVar6 = (PartyMember *)uVar11;
+  if (9 < (uVar10 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0xd0,0,"lookupType doesn\'t index PLAYERCARD_LOOKUP_COUNT\n\t%i not in [0, %i)"
+                   );
   }
-  if (0x11 < (param_3 & 0xffffffff)) {
-    Com_PrintError(0xd,0xffffffff821a9828,param_3,0x12);
-    __restgprlr_28(0xffffffff821a9688);
-    return;
+  if (0x11 < (uVar11 & 0xffffffff)) {
+    Com_PrintError(0xd,
+                   "PlayerCards_GetPartyMemberData: Invalid lookup index \'%i\'. Must be smaller than %i.\n"
+                  );
+    pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
+    return pPVar2;
   }
-  iVar5 = CL_IsLocalClientInGame(uVar1);
-  if (iVar5 != 0) {
-    Com_PrintError(0xd,0xffffffff821a97d0);
-    __restgprlr_28(0xffffffff821a9688);
-    return;
+  iVar3 = CL_IsLocalClientInGame(LVar1);
+  if (iVar3 != 0) {
+    Com_PrintError(0xd,
+                   "PlayerCards_GetPartyMemberData: Called when in-game! Party state is no longer valid.\n"
+                  );
+    pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
+    return pPVar2;
   }
-  uVar2 = PlayerCards_GetActivePartyData();
-  if ((uVar2 & 0xffffffff) != 0) {
-    uVar1 = CL_ControllerIndexFromClientNum(uVar1);
-    iVar6 = (int)param_2;
-    iVar5 = (int)param_3;
-    if (iVar6 == 3) {
-      uVar4 = Party_CountUIVisibleMembers(uVar2);
-      if ((uVar4 & 0xffffffff) == 0) {
-        cVar7 = Party_IsGameLobby(uVar2);
-        if ((cVar7 == '\0') || (DAT_82b5700c == 0)) goto LAB_826e5a84;
-        uVar2 = 0xffffffff82b55118;
-        uVar4 = Party_CountUIVisibleMembers();
+  pPVar4 = PlayerCards_GetActivePartyData();
+  if (pPVar4 != (PartyData *)0x0) {
+    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
+    iVar5 = (int)uVar10;
+    if (iVar5 == 3) {
+      uVar8 = Party_CountUIVisibleMembers(pPVar4);
+      if (uVar8 == 0) {
+        bVar9 = Party_IsGameLobby(pPVar4);
+        if ((!bVar9) || (g_partyData.inParty == 0)) goto LAB_826e5a84;
+        pPVar4 = &g_partyData;
+        uVar8 = Party_CountUIVisibleMembers(&g_partyData);
       }
-      if ((param_3 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-        iVar5 = PartyUI_ShowTruePlayerInfo(uVar2,uVar1,param_3);
-        if (iVar5 != 0) {
-          uVar1 = PartyUI_GetMember(uVar2,param_3);
-          PlayerCards_BuildPlayerCardDataFromPartyMember(0xffffffff844efff8,uVar1);
-          DAT_844efff8 = PartyUI_GetSelectedPlayerListChangedTime();
-          __restgprlr_28(0xffffffff844efff8);
-          return;
+      if ((uVar11 & 0xffffffff) < (ulonglong)uVar8) {
+        pPVar7 = pPVar6;
+        iVar3 = PartyUI_ShowTruePlayerInfo(pPVar4,iVar3,(int)pPVar6);
+        if (iVar3 != 0) {
+          pPVar6 = PartyUI_GetMember(pPVar4,(int)pPVar6);
+          PlayerCards_BuildPlayerCardDataFromPartyMember
+                    (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+          staticResult.lastUpdateTime = PartyUI_GetSelectedPlayerListChangedTime();
+          pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
+          return pPVar2;
         }
-        PlayerCards_BuildPlayerCardDataForUnknownPartyMember(0xffffffff844efff8);
-        DAT_844efff8 = PartyUI_GetSelectedPlayerListChangedTime();
-        __restgprlr_28(0xffffffff844efff8);
-        return;
+        PlayerCards_BuildPlayerCardDataForUnknownPartyMember(&staticResult);
+        staticResult.lastUpdateTime = PartyUI_GetSelectedPlayerListChangedTime();
+        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
+        return pPVar2;
       }
     }
-    else if (iVar6 == 4) {
-      uVar3 = PartyUI_GetTeam(uVar2,uVar1);
-      if (((0 < (int)uVar3) && ((int)uVar3 < 3)) &&
-         (iVar6 = Party_CountTeamMembers(uVar2,uVar3), iVar5 < iVar6)) {
-        uVar1 = PartyUI_GetTeamMember(uVar2,uVar1,uVar3,param_3);
-        PlayerCards_BuildPlayerCardDataFromPartyMember(0xffffffff844efff8,uVar1);
-        DAT_844efff8 = Sys_Milliseconds();
-        __restgprlr_28(0xffffffff844efff8);
-        return;
+    else if (iVar5 == 4) {
+      pPVar7 = (PartyMember *)PartyUI_GetTeam(pPVar4,iVar3);
+      if (((0 < (int)pPVar7) && ((int)pPVar7 < 3)) &&
+         (iVar5 = Party_CountTeamMembers(pPVar4,(int)pPVar7), (int)pPVar6 < iVar5)) {
+        pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,(int)pPVar7,(int)pPVar6);
+        PlayerCards_BuildPlayerCardDataFromPartyMember
+                  (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+        staticResult.lastUpdateTime = Sys_Milliseconds();
+        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
+        return pPVar2;
       }
     }
     else {
-      if (iVar6 != 5) {
-        Com_PrintError(0xd,0xffffffff821a9780,param_2);
-        __restgprlr_28(0xffffffff821a9688);
-        return;
+      if (iVar5 != 5) {
+        Com_PrintError(0xd,
+                       "PlayerCards_GetPartyMemberData: Invalid lookup type for party data (%i).\n")
+        ;
+        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
+        return pPVar2;
       }
-      iVar6 = PartyUI_GetTeam(uVar2,uVar1);
-      if (iVar6 == 1) {
-        iVar6 = Party_CountTeamMembers(uVar2,2);
-        if (iVar5 < iVar6) {
-          uVar1 = PartyUI_GetTeamMember(uVar2,uVar1,2,param_3);
-          PlayerCards_BuildPlayerCardDataFromPartyMember(0xffffffff844efff8,uVar1);
-          DAT_844efff8 = Sys_Milliseconds();
-          __restgprlr_28(0xffffffff844efff8);
-          return;
+      iVar5 = PartyUI_GetTeam(pPVar4,iVar3);
+      if (iVar5 == 1) {
+        iVar5 = Party_CountTeamMembers(pPVar4,2);
+        if ((int)pPVar6 < iVar5) {
+          pPVar7 = (PartyMember *)0x2;
+          pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,2,(int)pPVar6);
+          PlayerCards_BuildPlayerCardDataFromPartyMember
+                    (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+          staticResult.lastUpdateTime = Sys_Milliseconds();
+          pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
+          return pPVar2;
         }
       }
-      else if ((iVar6 == 2) && (iVar6 = Party_CountTeamMembers(uVar2,1), iVar5 < iVar6)) {
-        uVar1 = PartyUI_GetTeamMember(uVar2,uVar1,1,param_3);
-        PlayerCards_BuildPlayerCardDataFromPartyMember(0xffffffff844efff8,uVar1);
-        DAT_844efff8 = Sys_Milliseconds();
-        __restgprlr_28(0xffffffff844efff8);
-        return;
+      else if ((iVar5 == 2) && (iVar5 = Party_CountTeamMembers(pPVar4,1), (int)pPVar6 < iVar5)) {
+        pPVar7 = (PartyMember *)0x1;
+        pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,1,(int)pPVar6);
+        PlayerCards_BuildPlayerCardDataFromPartyMember
+                  (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+        staticResult.lastUpdateTime = Sys_Milliseconds();
+        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
+        return pPVar2;
       }
     }
   }
 LAB_826e5a84:
-  __restgprlr_28(0xffffffff821a9688);
-  return;
+  pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
+  return pPVar2;
 }
 
 
 // 826E5CC0  PlayerCards_GetLiveProfileDataForController  (playercards/playercards_client.cpp:347)
 
-undefined8 PlayerCards_GetLiveProfileDataForController(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+PlayerCardData * PlayerCards_GetLiveProfileDataForController(uint param_1)
 
 {
-  bool bVar1;
-  char cVar4;
-  undefined8 uVar2;
-  undefined8 uVar3;
+  bool bVar4;
+  LocalClientNum_t LVar1;
   bool bVar5;
+  bool bVar6;
+  PlayerCardData *pPVar2;
+  char *pcVar3;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    Com_PrintError(0xd,0xffffffff821a98c8,param_1,4);
-    return 0xffffffff821a9688;
+  if (3 < param_1) {
+    Com_PrintError(0xd,
+                   "PlayerCards_GetLiveProfileDataForController: Invalid controller index \'%i\'. Must be smaller than %i.\n"
+                  );
+    return &g_DefaultPlayerData;
   }
-  cVar4 = CL_IsControllerActive(param_1);
-  if (cVar4 == '\0') {
+  bVar4 = CL_IsControllerActive(param_1);
+  if (bVar4) {
+    LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+    bVar5 = CL_IsLocalClientActive(LVar1);
+    bVar4 = false;
+    if (!bVar5) goto LAB_826e5d34;
+  }
+  else {
 LAB_826e5d34:
+    bVar4 = true;
+  }
+  if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled == false)) {
+    bVar6 = CL_IsSplitscreenControllerActive(param_1);
     bVar5 = true;
+    if (bVar6) goto LAB_826e5d7c;
   }
-  else {
-    CL_LocalClientNumFromControllerIndex(param_1);
-    cVar4 = CL_IsLocalClientActive();
-    bVar5 = false;
-    if (cVar4 == '\0') goto LAB_826e5d34;
-  }
-  if ((*(char *)(DAT_82b3ecb8 + 0xc) != '\0') && (*(char *)(DAT_82aa1af8 + 0xc) == '\0')) {
-    cVar4 = CL_IsSplitscreenControllerActive(param_1);
-    bVar1 = true;
-    if (cVar4 != '\0') goto LAB_826e5d7c;
-  }
-  bVar1 = false;
+  bVar5 = false;
 LAB_826e5d7c:
-  if ((!bVar5) || (bVar1)) {
-    DAT_844f0090 = Sys_Milliseconds();
-    uVar2 = 0xffffffff844f0090;
-    Live_GetPlayerCardIconHandle(param_1);
-    DAT_844f0098 = PlayerCards_GetIconIndexFromHandle();
-    Live_GetPlayerCardTitleHandle(param_1);
-    DAT_844f0094 = PlayerCards_GetTitleIndexFromHandle();
-    Live_GetPlayerCardNameplateHandle(param_1);
-    DAT_844f009c = PlayerCards_GetNameplateIndexFromHandle();
-    DAT_844f00a0 = Live_GetRankMP(param_1);
-    DAT_844f00a4 = Live_GetPrestigeMP(param_1);
-    DAT_844f00a8 = Live_GetRankSO(param_1);
-    DAT_844f00ac = Live_GetPrestigeSO(param_1);
-    DAT_844f00b0 = 0;
-    DAT_844f00dc = 1;
-    uVar3 = CL_GetUsernameForLocalClient(param_1);
-    I_strncpyz(0xffffffff844f00b4,uVar3,0x20);
-    uVar3 = GamerProfile_GetClanName(param_1);
-    I_strncpyz(0xffffffff844f00d4,uVar3,5);
-    DAT_844f00e0 = GamerProfile_GetUsingEliteClanTag(param_1);
-    DAT_844f00e1 = GamerProfile_GetUsingEliteClanTitle(param_1);
-    uVar3 = GamerProfile_GetEliteClanTitleText(param_1);
-    I_strncpyz(0xffffffff844f00e2,uVar3,0x18);
-    DAT_844f00fc = GamerProfile_GetEliteClanTitleBgIndex(param_1);
-    uVar3 = GamerProfile_GetEliteClanClanTagText(param_1);
-    I_strncpyz(0xffffffff844f0100,uVar3,5);
-    DAT_844f0108 = GetPastTitlePrestigeLevel(0x1442,param_1);
-    DAT_844f010c = GetPastTitleRank(0x1442,param_1);
-    DAT_844f0110 = GetPastTitlePrestigeLevel(0x41560817,param_1);
-    DAT_844f0114 = GetPastTitleRank(0x41560817,param_1);
-    DAT_844f0118 = GetPastTitlePrestigeLevel(0x4156081c,param_1);
-    DAT_844f011c = GetPastTitleRank(0x4156081c,param_1);
-    DAT_844f0120 = GetPastTitlePrestigeLevel(0x415607e6,param_1);
-    DAT_844f0124 = GetPastTitleRank(0x415607e6,param_1);
+  if ((!bVar4) || (bVar5)) {
+    staticResult.lastUpdateTime = Sys_Milliseconds();
+    pPVar2 = &staticResult;
+    pcVar3 = Live_GetPlayerCardIconHandle(param_1);
+    staticResult.iconIndex = PlayerCards_GetIconIndexFromHandle(pcVar3);
+    pcVar3 = Live_GetPlayerCardTitleHandle(param_1);
+    staticResult.titleIndex = PlayerCards_GetTitleIndexFromHandle(pcVar3);
+    pcVar3 = Live_GetPlayerCardNameplateHandle(param_1);
+    staticResult.nameplateIndex = PlayerCards_GetNameplateIndexFromHandle(pcVar3);
+    staticResult.rank_mp = Live_GetRankMP(param_1);
+    staticResult.prestige_mp = Live_GetPrestigeMP(param_1);
+    staticResult.rank_so = Live_GetRankSO(param_1);
+    staticResult.prestige_so = Live_GetPrestigeSO(param_1);
+    staticResult.team = TEAM_FREE;
+    staticResult.myParty = 1;
+    pcVar3 = CL_GetUsernameForLocalClient(param_1);
+    I_strncpyz(staticResult.name,pcVar3,0x20);
+    pcVar3 = GamerProfile_GetClanName(param_1);
+    I_strncpyz(staticResult.clanAbbrev,pcVar3,5);
+    staticResult.use_elite_clan_tag = GamerProfile_GetUsingEliteClanTag(param_1);
+    staticResult.use_elite_clan_title = GamerProfile_GetUsingEliteClanTitle(param_1);
+    pcVar3 = GamerProfile_GetEliteClanTitleText(param_1);
+    I_strncpyz(staticResult.elite_clan_title_text,pcVar3,0x18);
+    staticResult.elite_clan_title_bg = GamerProfile_GetEliteClanTitleBgIndex(param_1);
+    pcVar3 = GamerProfile_GetEliteClanClanTagText(param_1);
+    I_strncpyz(staticResult.elite_clan_tag_text,pcVar3,5);
+    staticResult.prestige_black_ops = GetPastTitlePrestigeLevel(0x1442,param_1);
+    staticResult.rank_black_ops = GetPastTitleRank(0x1442,param_1);
+    staticResult.prestige_mw2 = GetPastTitlePrestigeLevel(0x41560817,param_1);
+    staticResult.rank_mw2 = GetPastTitleRank(0x41560817,param_1);
+    staticResult.prestige_world_at_war = GetPastTitlePrestigeLevel(0x4156081c,param_1);
+    staticResult.rank_world_at_war = GetPastTitleRank(0x4156081c,param_1);
+    staticResult.prestige_mw = GetPastTitlePrestigeLevel(0x415607e6,param_1);
+    staticResult.rank_mw = GetPastTitleRank(0x415607e6,param_1);
   }
   else {
-    uVar2 = 0xffffffff821a9688;
+    pPVar2 = &g_DefaultPlayerData;
   }
-  return uVar2;
+  return pPVar2;
 }
 
 
 // 826E5F90  PlayerCards_GetLiveProfileDataForClient  (playercards/playercards_client.cpp:418)
 
-undefined8 PlayerCards_GetLiveProfileDataForClient(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+PlayerCardData * PlayerCards_GetLiveProfileDataForClient(LocalClientNum_t param_1)
 
 {
-  int iVar3;
-  ulonglong uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  uint uVar2;
+  PlayerCardData *pPVar3;
   
   if (3 < (int)param_1) {
-    Com_PrintError(0xd,0xffffffff821a9930,param_1,4);
-    return 0xffffffff821a9688;
+    Com_PrintError(0xd,
+                   "PlayerCards_GetLiveProfileData: Invalid client index \'%i\'. Must be smaller than %i.\n"
+                  );
+    return &g_DefaultPlayerData;
   }
-  iVar3 = CL_GetLocalClientActiveCount();
-  if (iVar3 <= (int)param_1) {
-    return 0xffffffff821a9688;
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 <= (int)param_1) {
+    return &g_DefaultPlayerData;
   }
-  uVar1 = CL_ControllerIndexFromClientNum(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x1b7,0,0xffffffff82031880,uVar1,4);
+  uVar2 = CL_ControllerIndexFromClientNum(param_1);
+  if (3 < uVar2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x1b7,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = PlayerCards_GetLiveProfileDataForController(uVar1);
-  return uVar2;
+  pPVar3 = PlayerCards_GetLiveProfileDataForController(uVar2);
+  return pPVar3;
 }
 
 
 // 826E6060  PlayerCards_GetFriendCache  (playercards/playercards_client.cpp:446)
 
-void PlayerCards_GetFriendCache(void)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+PlayerCardData * PlayerCards_GetFriendCache(LocalClientNum_t param_1)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  char cVar4;
-  undefined8 uVar3;
+  LocalClientNum_t LVar2;
+  int iVar3;
+  bool bVar6;
+  ulong64 uVar1;
+  char *pcVar4;
+  PlayerCardData *pPVar5;
   
-  uVar1 = __savegprlr_29();
-  uVar2 = CL_ControllerIndexFromClientNum();
-  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168568);
-  if (cVar4 != '\0') {
-    uVar1 = FriendsMenu_GetCurrentIndexXUID(uVar2);
-    uVar3 = FriendsMenu_GetCurrentIndexName(uVar2);
-    PlayercardCache_GetPlayercard(uVar2,uVar1,uVar3);
-    __restgprlr_29();
-    return;
+  LVar2 = __savegprlr_29(param_1);
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_friends");
+  if (bVar6) {
+    uVar1 = FriendsMenu_GetCurrentIndexXUID(iVar3);
+    pcVar4 = FriendsMenu_GetCurrentIndexName(iVar3);
+    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
+    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
+    return pPVar5;
   }
-  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff8216855c);
-  if (cVar4 != '\0') {
-    uVar1 = MeetPlayer_GetCurrentIndexXUID(uVar2);
-    uVar3 = MeetPlayer_GetCurrentIndexName(uVar2);
-    PlayercardCache_GetPlayercard(uVar2,uVar1,uVar3);
-    __restgprlr_29();
-    return;
+  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_recent");
+  if (bVar6) {
+    uVar1 = MeetPlayer_GetCurrentIndexXUID(iVar3);
+    pcVar4 = MeetPlayer_GetCurrentIndexName(iVar3);
+    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
+    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
+    return pPVar5;
   }
-  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168550);
-  if (cVar4 != '\0') {
-    uVar1 = LiveParty_GetCurrentIndexXUID(uVar2);
-    uVar3 = LiveParty_GetCurrentIndexName(uVar2);
-    PlayercardCache_GetPlayercard(uVar2,uVar1,uVar3);
-    __restgprlr_29();
-    return;
+  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_party");
+  if (bVar6) {
+    uVar1 = LiveParty_GetCurrentIndexXUID(iVar3);
+    pcVar4 = LiveParty_GetCurrentIndexName(iVar3);
+    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
+    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
+    return pPVar5;
   }
-  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168540);
-  if (cVar4 != '\0') {
-    uVar1 = FacebookFriends_GetCurrentIndexXUID(uVar2);
-    uVar3 = FacebookFriends_GetCurrentIndexName(uVar2);
-    PlayercardCache_GetPlayercard(uVar2,uVar1,uVar3);
-    __restgprlr_29();
-    return;
+  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_facebook");
+  if (bVar6) {
+    uVar1 = FacebookFriends_GetCurrentIndexXUID(iVar3);
+    pcVar4 = FacebookFriends_GetCurrentIndexName(iVar3);
+    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
+    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
+    return pPVar5;
   }
-  cVar4 = Menu_IsMenuOpenAndVisible(uVar1,0xffffffff82168530);
-  if (cVar4 != '\0') {
-    uVar1 = EliteClan_GetCurrentIndexXUID(uVar2);
-    uVar3 = EliteClan_GetCurrentIndexName(uVar2);
-    PlayercardCache_GetPlayercard(uVar2,uVar1,uVar3);
-    __restgprlr_29();
-    return;
+  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_elite_clan");
+  if (bVar6) {
+    uVar1 = EliteClan_GetCurrentIndexXUID(iVar3);
+    pcVar4 = EliteClan_GetCurrentIndexName(iVar3);
+    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
+    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
+    return pPVar5;
   }
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x1ec,0,0xffffffff821a9988);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x1ec,0,
+                    "ERROR: Trying to show a friend players card and we\'re not in the friends menu "
+                   );
   }
-  __restgprlr_29(0xffffffff821a9688);
-  return;
+  pPVar5 = (PlayerCardData *)__restgprlr_29(0xffffffff821a9688);
+  return pPVar5;
 }
 
 
 // 826E6220  PlayerCards_GetCachedPlayerData  (playercards/playercards_client.cpp:500)
 
-longlong PlayerCards_GetCachedPlayerData(ulonglong param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+PlayerCardData * PlayerCards_GetCachedPlayerData(LocalClientNum_t param_1,uint param_2)
 
 {
-  longlong lVar1;
+  PlayerCardData *pPVar1;
   
-  if ((ulonglong)DAT_82aa1ae8 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x1f5,0,0xffffffff8200d150,param_1);
-  }
-  if ((param_2 & 0xffffffff) < 0x12) {
-    lVar1 = ((param_1 + (param_1 & 0x1fffffff) * 8 & 0x7fffffff) * 2 + param_2) * 0x98 + -0x7bb12ac8
+  if ((uint)cl_maxLocalClients <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x1f5,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  else {
-    Com_PrintError(0xd,0xffffffff821a99d8,param_2,0x12);
-    lVar1 = -0x7de56978;
+  if (param_2 < 0x12) {
+    pPVar1 = g_PlayerCardCache[param_1] + param_2;
   }
-  return lVar1;
+  else {
+    Com_PrintError(0xd,
+                   "PlayerCards_SetCachedPlayerData: Invalid card slot index \'%i\'. Must be smaller than %i.\n"
+                  );
+    pPVar1 = &g_DefaultPlayerData;
+  }
+  return pPVar1;
 }
 
 
 // 826E62D0  PlayerCards_PopulatePlayerDataForClient  (playercards/playercards_client.cpp:514)
 
-void PlayerCards_PopulatePlayerDataForClient(undefined8 param_1,longlong param_2,longlong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void PlayerCards_PopulatePlayerDataForClient
+               (LocalClientNum_t param_1,int param_2,PlayerCardData *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  undefined4 uVar6;
-  undefined4 *puVar7;
+  team_t tVar1;
+  bool bVar2;
+  LocalClientNum_t LVar3;
+  cg_s *pcVar4;
+  int iVar5;
   
-  uVar4 = __savegprlr_27();
-  lVar5 = CG_GetLocalClientGlobals();
-  iVar1 = (int)lVar5;
-  lVar5 = param_2 * 0x590 + lVar5;
-  puVar7 = (undefined4 *)param_3;
-  *puVar7 = *(undefined4 *)(iVar1 + 0x6b98c);
-  iVar2 = (int)lVar5;
-  if (*(int *)(iVar2 + 0x100b88) == 0) goto LAB_826e6454;
-  puVar7[2] = *(undefined4 *)(iVar2 + 0x1010c4);
-  puVar7[1] = *(undefined4 *)(iVar2 + 0x1010c8);
-  puVar7[3] = *(undefined4 *)(iVar2 + 0x1010cc);
-  puVar7[4] = *(undefined4 *)(iVar2 + 0x100bbc);
-  puVar7[5] = *(undefined4 *)(iVar2 + 0x100bc0);
-  puVar7[6] = *(undefined4 *)(iVar2 + 0x100bc4);
-  puVar7[7] = *(undefined4 *)(iVar2 + 0x100bc8);
-  puVar7[8] = *(undefined4 *)(iVar2 + 0x100bb4);
-  I_strncpyz(param_3 + 0x24,lVar5 + 0x100b94,0x20);
-  if ((int)param_2 == *(int *)(iVar1 + 0x3334)) {
+  LVar3 = __savegprlr_27(param_1);
+  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  param_3->lastUpdateTime = pcVar4->time;
+  if ((pcVar4->bgs).clientinfo[param_2].infoValid == 0) goto LAB_826e6454;
+  param_3->iconIndex = (pcVar4->bgs).clientinfo[param_2].playerCardIcon;
+  param_3->titleIndex = (pcVar4->bgs).clientinfo[param_2].playerCardTitle;
+  param_3->nameplateIndex = (pcVar4->bgs).clientinfo[param_2].playerCardNameplate;
+  param_3->rank_mp = (pcVar4->bgs).clientinfo[param_2].rank_mp;
+  param_3->prestige_mp = (pcVar4->bgs).clientinfo[param_2].prestige_mp;
+  param_3->rank_so = (pcVar4->bgs).clientinfo[param_2].rank_so;
+  param_3->prestige_so = (pcVar4->bgs).clientinfo[param_2].prestige_so;
+  param_3->team = (pcVar4->bgs).clientinfo[param_2].team;
+  I_strncpyz(param_3->name,(pcVar4->bgs).clientinfo[param_2].name,0x20);
+  if (param_2 == pcVar4->clientNum) {
 LAB_826e63bc:
-    uVar6 = CL_ClientIsInMyParty(uVar4,*(undefined4 *)(iVar2 + 0x100b90));
-    puVar7[0x13] = uVar6;
+    iVar5 = CL_ClientIsInMyParty(LVar3,(pcVar4->bgs).clientinfo[param_2].clientNum);
+    param_3->myParty = iVar5;
   }
   else {
-    iVar1 = *(int *)(*(int *)(iVar1 + 0x3334) * 0x590 + iVar1 + 0x100bb4);
-    if ((iVar1 == 0) || (bVar3 = true, iVar1 != *(int *)(iVar2 + 0x100bb4))) {
-      bVar3 = false;
+    tVar1 = (pcVar4->bgs).clientinfo[pcVar4->clientNum].team;
+    if ((tVar1 == TEAM_FREE) || (bVar2 = true, tVar1 != (pcVar4->bgs).clientinfo[param_2].team)) {
+      bVar2 = false;
     }
-    if (bVar3) goto LAB_826e63bc;
-    puVar7[0x13] = 0;
+    if (bVar2) goto LAB_826e63bc;
+    param_3->myParty = 0;
   }
-  I_strncpyz(param_3 + 0x44,lVar5 + 0x100bd4,5);
-  *(undefined1 *)(puVar7 + 0x14) = *(undefined1 *)(iVar2 + 0x1010d0);
-  *(undefined1 *)((int)puVar7 + 0x51) = *(undefined1 *)(iVar2 + 0x1010d1);
-  I_strncpyz(param_3 + 0x52,lVar5 + 0x1010d2,0x18);
-  puVar7[0x1b] = *(undefined4 *)(iVar2 + 0x1010ec);
-  I_strncpyz(param_3 + 0x70,lVar5 + 0x1010f0,5);
-  puVar7[0x1e] = *(undefined4 *)(iVar2 + 0x1010f8);
-  puVar7[0x1f] = *(undefined4 *)(iVar2 + 0x1010fc);
-  puVar7[0x20] = *(undefined4 *)(iVar2 + 0x101100);
-  puVar7[0x21] = *(undefined4 *)(iVar2 + 0x101104);
-  puVar7[0x22] = *(undefined4 *)(iVar2 + 0x101108);
-  puVar7[0x23] = *(undefined4 *)(iVar2 + 0x10110c);
-  puVar7[0x24] = *(undefined4 *)(iVar2 + 0x101110);
-  puVar7[0x25] = *(undefined4 *)(iVar2 + 0x101114);
+  I_strncpyz(param_3->clanAbbrev,(pcVar4->bgs).clientinfo[param_2].clanAbbrev,5);
+  param_3->use_elite_clan_tag = (pcVar4->bgs).clientinfo[param_2].use_elite_clan_tag;
+  param_3->use_elite_clan_title = (pcVar4->bgs).clientinfo[param_2].use_elite_clan_title;
+  I_strncpyz(param_3->elite_clan_title_text,(pcVar4->bgs).clientinfo[param_2].elite_clan_title_text,
+             0x18);
+  param_3->elite_clan_title_bg = (pcVar4->bgs).clientinfo[param_2].elite_clan_title_bg;
+  I_strncpyz(param_3->elite_clan_tag_text,(pcVar4->bgs).clientinfo[param_2].elite_clan_tag_text,5);
+  param_3->prestige_black_ops = (pcVar4->bgs).clientinfo[param_2].prestige_black_ops;
+  param_3->rank_black_ops = (pcVar4->bgs).clientinfo[param_2].rank_black_ops;
+  param_3->prestige_mw2 = (pcVar4->bgs).clientinfo[param_2].prestige_mw2;
+  param_3->rank_mw2 = (pcVar4->bgs).clientinfo[param_2].rank_mw2;
+  param_3->prestige_world_at_war = (pcVar4->bgs).clientinfo[param_2].prestige_world_at_war;
+  param_3->rank_world_at_war = (pcVar4->bgs).clientinfo[param_2].rank_world_at_war;
+  param_3->prestige_mw = (pcVar4->bgs).clientinfo[param_2].prestige_mw;
+  param_3->rank_mw = (pcVar4->bgs).clientinfo[param_2].rank_mw;
 LAB_826e6454:
   __restgprlr_27();
   return;
@@ -479,234 +542,264 @@ LAB_826e6454:
 
 // 826E6460  PlayerCards_GetTheaterPlayerData  (playercards/playercards_client.cpp:572)
 
-undefined8 PlayerCards_GetTheaterPlayerData(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+PlayerCardData * PlayerCards_GetTheaterPlayerData(LocalClientNum_t param_1)
 
 {
-  undefined4 uVar1;
+  cg_s *pcVar1;
+  bool bVar2;
   int iVar3;
-  char cVar4;
-  undefined8 uVar2;
+  PlayerCardData *pPVar4;
   
-  if ((ulonglong)DAT_82aa1ae8 <= (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x241,0,0xffffffff8200d150,param_1);
+  if ((uint)cl_maxLocalClients <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x241,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  iVar3 = CG_GetLocalClientGlobals(param_1);
-  cVar4 = CL_Demo_IsFreeCamera(param_1);
-  if (cVar4 == '\0') {
-    cVar4 = CL_Demo_IsFollowCamera(param_1);
-    uVar2 = 0xffffffff844f0128;
-    if (cVar4 == '\0') {
-      uVar1 = *(undefined4 *)(*(int *)(iVar3 + 0x335c) + 0x150);
-    }
-    else {
-      uVar1 = *(undefined4 *)(DAT_8484f0b4 + 0xc);
-    }
-    PlayerCards_PopulatePlayerDataForClient(param_1,uVar1,0xffffffff844f0128);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  bVar2 = CL_Demo_IsFreeCamera(param_1);
+  if (bVar2) {
+    pPVar4 = &g_DefaultPlayerData;
   }
   else {
-    uVar2 = 0xffffffff821a9688;
+    bVar2 = CL_Demo_IsFollowCamera(param_1);
+    pPVar4 = &theaterPlayerCard;
+    if (bVar2) {
+      iVar3 = (cl_demo_client->current).integer;
+    }
+    else {
+      iVar3 = (pcVar1->nextSnap->ps).clientNum;
+    }
+    PlayerCards_PopulatePlayerDataForClient(param_1,iVar3,&theaterPlayerCard);
   }
-  return uVar2;
+  return pPVar4;
 }
 
 
 // 826E6530  PlayerCardData_GetMultInternalVal  (playercards/playercards_client.cpp:595)
 
-void PlayerCardData_GetMultInternalVal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+int PlayerCardData_GetMultInternalVal
+              (StructuredDataBuffer *param_1,char *param_2,char *param_3,char *param_4)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  char cVar4;
-  undefined1 *local_c0;
-  undefined1 *local_bc;
-  undefined1 auStack_b0 [64];
-  undefined1 auStack_70 [112];
+  StructuredDataBuffer *pSVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
+  char *local_c0;
+  char *local_bc;
+  char acStack_b0 [64];
+  char acStack_70 [112];
   
-  uVar1 = __savegprlr_27();
-  local_c0 = auStack_b0;
-  local_bc = auStack_70;
-  I_strncpyz(auStack_b0);
-  if ((param_4 & 0xffffffff) != 0) {
-    I_strncpyz(auStack_70,param_4,0x40);
+  uVar5 = (ulonglong)(int)param_4;
+  pSVar1 = (StructuredDataBuffer *)__savegprlr_27(param_1);
+  local_c0 = acStack_b0;
+  local_bc = acStack_70;
+  I_strncpyz(acStack_b0,param_2,0x40);
+  pcVar3 = (char *)uVar5;
+  if ((uVar5 & 0xffffffff) != 0) {
+    I_strncpyz(acStack_70,pcVar3,0x40);
   }
-  cVar4 = ((int)param_4 != 0) + '\x01';
-  lVar2 = LiveStorage_DataGetInternalInt(&local_c0,cVar4,uVar1);
-  I_strncpyz(auStack_b0,param_3,0x40);
-  if ((param_4 & 0xffffffff) != 0) {
-    I_strncpyz(auStack_70,param_4,0x40);
+  iVar4 = ((uint)LZCOUNT(pcVar3) >> 5 ^ 1) + 1;
+  iVar2 = LiveStorage_DataGetInternalInt(&local_c0,iVar4,pSVar1);
+  I_strncpyz(acStack_b0,param_3,0x40);
+  if ((uVar5 & 0xffffffff) != 0) {
+    I_strncpyz(acStack_70,pcVar3,0x40);
   }
-  lVar3 = LiveStorage_DataGetInternalInt(&local_c0,cVar4,uVar1);
-  __restgprlr_27(lVar2 - lVar3);
-  return;
+  iVar4 = LiveStorage_DataGetInternalInt(&local_c0,iVar4,pSVar1);
+  iVar2 = __restgprlr_27((longlong)iVar2 - (longlong)iVar4);
+  return iVar2;
 }
 
 
 // 826E65E8  PlayerCardData_GetXPMult  (playercards/playercards_client.cpp:623)
 
-void PlayerCardData_GetXPMult(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int PlayerCardData_GetXPMult(LocalClientNum_t param_1,PlayerCardData *param_2)
 
 {
   char cVar1;
-  char cVar4;
+  char cVar2;
+  bool bVar6;
   char *pcVar3;
-  longlong lVar2;
-  longlong lVar5;
-  longlong lVar6;
-  int _Value;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar7;
+  longlong lVar8;
   char acStack_d0 [8];
-  uint local_c8 [2];
-  undefined1 *local_c0;
+  StructuredDataBuffer local_c8;
+  char *local_c0;
   undefined1 *local_bc;
-  undefined1 auStack_b0 [64];
+  char acStack_b0 [64];
   undefined1 auStack_70 [112];
   
-  __savegprlr_28();
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x279,0,0xffffffff82000f98,0xffffffff82167f04);
+  uVar7 = (ulonglong)(int)param_2;
+  __savegprlr_28(param_1);
+  if ((uVar7 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x279,0,"%s");
   }
-  lVar6 = 0;
+  iVar4 = 0;
   do {
-    cVar4 = Live_UserIsGuest(lVar6);
-    if (cVar4 == '\0') {
-      pcVar3 = (char *)CL_GetUsernameForLocalClient(lVar6);
-      lVar5 = param_2 + 0x24;
+    bVar6 = Live_UserIsGuest(iVar4);
+    if (!bVar6) {
+      pcVar3 = CL_GetUsernameForLocalClient(iVar4);
+      lVar8 = uVar7 + 0x24;
       do {
-        cVar4 = *(char *)lVar5;
-        cVar1 = *pcVar3;
-        if (cVar4 == '\0') break;
-        lVar5 = lVar5 + 1;
+        cVar1 = *(char *)lVar8;
+        cVar2 = *pcVar3;
+        if (cVar1 == '\0') break;
+        lVar8 = lVar8 + 1;
         pcVar3 = pcVar3 + 1;
-      } while (cVar4 == cVar1);
-      if (cVar4 == cVar1) break;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) break;
     }
-    lVar6 = lVar6 + 1;
-  } while ((int)lVar6 < 4);
-  if (((int)lVar6 != 4) &&
-     (local_c8[0] = LiveStorage_GetPersistentDataBuffer(lVar6), local_c8[0] != 0)) {
-    local_c8[1] = 0x2ffc;
-    lVar6 = 0;
-    _Value = 0;
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 4);
+  if ((iVar4 != 4) &&
+     (local_c8.data = LiveStorage_GetPersistentDataBuffer(iVar4), local_c8.data != (uchar *)0x0)) {
+    local_c8.size = 0x2ffc;
+    lVar8 = 0;
+    iVar4 = 0;
     do {
-      _itoa(_Value,acStack_d0,10);
-      lVar5 = PlayerCardData_GetMultInternalVal
-                        (local_c8,0xffffffff821a9ab4,0xffffffff821a9ad0,acStack_d0);
-      if (0 < (int)lVar5) {
-        lVar6 = lVar5 + lVar6;
+      _itoa(iVar4,acStack_d0,10);
+      iVar5 = PlayerCardData_GetMultInternalVal
+                        (&local_c8,"xpMaxMultiplierTimePlayed","xpMultiplierTimePlayed",acStack_d0);
+      if (0 < iVar5) {
+        lVar8 = iVar5 + lVar8;
       }
-      _Value = _Value + 1;
-    } while (_Value < 3);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < 3);
     _itoa(0,acStack_d0,10);
-    lVar5 = PlayerCardData_GetMultInternalVal
-                      (local_c8,0xffffffff821a9a70,0xffffffff821a9a94,acStack_d0);
-    if (0 < (int)lVar5) {
-      lVar6 = lVar5 + lVar6;
+    iVar4 = PlayerCardData_GetMultInternalVal
+                      (&local_c8,"challengeXPMaxMultiplierTimePlayed",
+                       "challengeXPMultiplierTimePlayed",acStack_d0);
+    if (0 < iVar4) {
+      lVar8 = iVar4 + lVar8;
     }
-    local_c0 = auStack_b0;
+    local_c0 = acStack_b0;
     local_bc = auStack_70;
-    I_strncpyz(auStack_b0,0xffffffff821a9a50,0x40);
-    lVar5 = LiveStorage_DataGetInternalInt(&local_c0,1,local_c8);
-    I_strncpyz(auStack_b0,0xffffffff821a9a34,0x40);
-    lVar2 = LiveStorage_DataGetInternalInt(&local_c0,1,local_c8);
-    if (0 < lVar5 - lVar2) {
-      lVar6 = (lVar5 - lVar2) + lVar6;
+    I_strncpyz(acStack_b0,"prestigeDoubleXpMaxTimePlayed",0x40);
+    iVar4 = LiveStorage_DataGetInternalInt(&local_c0,1,&local_c8);
+    I_strncpyz(acStack_b0,"prestigeDoubleXpTimePlayed",0x40);
+    iVar5 = LiveStorage_DataGetInternalInt(&local_c0,1,&local_c8);
+    if (0 < (longlong)iVar4 - (longlong)iVar5) {
+      lVar8 = ((longlong)iVar4 - (longlong)iVar5) + lVar8;
     }
-    __restgprlr_28(lVar6);
-    return;
+    iVar4 = __restgprlr_28(lVar8);
+    return iVar4;
   }
-  __restgprlr_28(0);
-  return;
+  iVar4 = __restgprlr_28(0);
+  return iVar4;
 }
 
 
 // 826E67B0  PlayerCardData_GetWeaponXPMult  (playercards/playercards_client.cpp:684)
 
-longlong PlayerCardData_GetWeaponXPMult(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+int PlayerCardData_GetWeaponXPMult(LocalClientNum_t param_1,PlayerCardData *param_2)
 
 {
   char cVar1;
-  char cVar5;
-  char *pcVar4;
-  longlong lVar2;
-  longlong lVar3;
-  char *pcVar6;
-  longlong lVar7;
+  char cVar2;
+  bool bVar6;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar7;
+  int iVar8;
   char acStack_c0 [8];
-  uint local_b8 [2];
-  undefined1 *local_b0;
+  StructuredDataBuffer local_b8;
+  char *local_b0;
   undefined1 *local_ac;
-  undefined1 auStack_a0 [64];
+  char acStack_a0 [64];
   undefined1 auStack_60 [72];
   
-  if (param_2 == 0) {
-    MyAssertHandler(0xffffffff821a9720,0x2b6,0,0xffffffff82000f98,0xffffffff82167f04);
+  if (param_2 == (PlayerCardData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x2b6,0,"%s");
   }
-  lVar7 = 0;
+  iVar8 = 0;
   do {
-    cVar5 = Live_UserIsGuest(lVar7);
-    if (cVar5 == '\0') {
-      pcVar4 = (char *)CL_GetUsernameForLocalClient(lVar7);
-      pcVar6 = (char *)(param_2 + 0x24);
+    bVar6 = Live_UserIsGuest(iVar8);
+    if (!bVar6) {
+      pcVar3 = CL_GetUsernameForLocalClient(iVar8);
+      pcVar7 = param_2->name;
       do {
-        cVar5 = *pcVar6;
-        cVar1 = *pcVar4;
-        if (cVar5 == '\0') break;
-        pcVar6 = pcVar6 + 1;
-        pcVar4 = pcVar4 + 1;
-      } while (cVar5 == cVar1);
-      if (cVar5 == cVar1) break;
+        cVar1 = *pcVar7;
+        cVar2 = *pcVar3;
+        if (cVar1 == '\0') break;
+        pcVar7 = pcVar7 + 1;
+        pcVar3 = pcVar3 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) break;
     }
-    lVar7 = lVar7 + 1;
-  } while ((int)lVar7 < 4);
-  if (((int)lVar7 == 4) ||
-     (local_b8[0] = LiveStorage_GetPersistentDataBuffer(lVar7), local_b8[0] == 0)) {
-    lVar7 = 0;
+    iVar8 = iVar8 + 1;
+  } while (iVar8 < 4);
+  if ((iVar8 == 4) ||
+     (local_b8.data = LiveStorage_GetPersistentDataBuffer(iVar8), local_b8.data == (uchar *)0x0)) {
+    iVar8 = 0;
   }
   else {
-    local_b8[1] = 0x2ffc;
+    local_b8.size = 0x2ffc;
     _itoa(0,acStack_c0,10);
-    lVar2 = PlayerCardData_GetMultInternalVal
-                      (local_b8,0xffffffff821a9b30,0xffffffff821a9b50,acStack_c0);
-    lVar7 = 0;
-    if (0 < (int)lVar2) {
-      lVar7 = lVar2;
+    iVar4 = PlayerCardData_GetMultInternalVal
+                      (&local_b8,"weaponXPMaxMultiplierTimePlayed","weaponXPMultiplierTimePlayed",
+                       acStack_c0);
+    iVar8 = 0;
+    if (0 < iVar4) {
+      iVar8 = iVar4;
     }
-    local_b0 = auStack_a0;
+    local_b0 = acStack_a0;
     local_ac = auStack_60;
-    I_strncpyz(auStack_a0,0xffffffff821a9b0c,0x40);
-    lVar2 = LiveStorage_DataGetInternalInt(&local_b0,1,local_b8);
-    I_strncpyz(auStack_a0,0xffffffff821a9ae8,0x40);
-    lVar3 = LiveStorage_DataGetInternalInt(&local_b0,1,local_b8);
-    if (0 < lVar2 - lVar3) {
-      lVar7 = (lVar2 - lVar3) + lVar7;
+    I_strncpyz(acStack_a0,"prestigeDoubleWeaponXpMaxTimePlayed",0x40);
+    iVar4 = LiveStorage_DataGetInternalInt(&local_b0,1,&local_b8);
+    I_strncpyz(acStack_a0,"prestigeDoubleWeaponXpTimePlayed",0x40);
+    iVar5 = LiveStorage_DataGetInternalInt(&local_b0,1,&local_b8);
+    if (0 < (longlong)iVar4 - (longlong)iVar5) {
+      iVar8 = (int)((longlong)iVar4 - (longlong)iVar5) + iVar8;
     }
   }
-  return lVar7;
+  return iVar8;
 }
 
 
 // 826E6940  PlayerCards_SetCachedPlayerData  (playercards/playercards_client.cpp:735)
 
-void PlayerCards_SetCachedPlayerData(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void PlayerCards_SetCachedPlayerData(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
+  LocalClientNum_t LVar1;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_28();
-  if ((ulonglong)DAT_82aa1ae8 <= (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x2e1,0,0xffffffff8200d150,uVar1);
+  uVar3 = (ulonglong)param_3;
+  uVar2 = (ulonglong)param_2;
+  LVar1 = __savegprlr_28(param_1);
+  if ((uint)cl_maxLocalClients <= LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x2e1,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+    ;
   }
-  if (0x11 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x2e2,0,0xffffffff82014c1c,param_2,0x12);
+  if (0x11 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x2e2,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x11 < (param_3 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821a9720,0x2e3,0,0xffffffff821a9b70,param_3,0x12);
+  if (0x11 < (uVar3 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
+                    ,0x2e3,0,
+                    "cardSlot doesn\'t index PLAYERCARD_NUM_SCRIPT_CARD_SLOTS\n\t%i not in [0, %i)")
+    ;
   }
-  PlayerCards_PopulatePlayerDataForClient
-            (uVar1,param_2,
-             ((uVar1 + (uVar1 & 0x1fffffff) * 8 & 0x7fffffff) * 2 + param_3) * 0x98 + -0x7bb12ac8);
+  PlayerCards_PopulatePlayerDataForClient(LVar1,(int)uVar2,g_PlayerCardCache[LVar1] + (int)uVar3);
   __restgprlr_28();
   return;
 }

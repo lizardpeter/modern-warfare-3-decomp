@@ -2,14 +2,14 @@
 
 // 828AC398  RtlpFormatTimeOut  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:51)
 
-longlong * RtlpFormatTimeOut(longlong *param_1,uint param_2)
+_LARGE_INTEGER * RtlpFormatTimeOut(_LARGE_INTEGER *param_1,long param_2)
 
 {
-  if (param_2 == 0xffffffff) {
-    param_1 = (longlong *)0x0;
+  if (param_2 == -1) {
+    param_1 = (_LARGE_INTEGER *)0x0;
   }
   else {
-    *param_1 = (ulonglong)param_2 * -10000;
+    param_1->QuadPart = (ulonglong)(uint)param_2 * -10000;
   }
   return param_1;
 }
@@ -17,113 +17,130 @@ longlong * RtlpFormatTimeOut(longlong *param_1,uint param_2)
 
 // 828AC3F8  RtlFindFirstFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:107)
 
-void RtlFindFirstFile(undefined8 param_1,undefined8 param_2,undefined8 param_3,ulonglong param_4)
+long RtlFindFirstFile(_OBJECT_ATTRIBUTES *param_1,_FILE_DIRECTORY_INFORMATION *param_2,ulong param_3
+                     ,void **param_4)
 
 {
   undefined4 *puVar2;
   ulonglong uVar1;
-  uint uVar3;
-  uint uVar4;
-  undefined4 local_60 [2];
+  long lVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint uVar6;
+  ulong in_stack_ffffff48;
+  void *local_60 [2];
   ushort local_58;
   undefined2 uStack_56;
   int iStack_54;
-  ushort local_50;
-  ushort local_4e;
-  char *local_4c;
-  uint local_48 [2];
+  _STRING local_50;
+  _IO_STATUS_BLOCK_u_0 local_48 [2];
   undefined4 local_40;
   ushort *local_3c;
   undefined4 local_38;
   
-  puVar2 = (undefined4 *)__savegprlr_27();
+  uVar4 = (ulonglong)(int)param_4;
+  puVar2 = (undefined4 *)__savegprlr_27(param_1);
   local_40 = *puVar2;
   local_3c = &local_58;
   local_38 = puVar2[2];
-  local_60[0] = 0;
+  local_60[0] = (void *)0x0;
   local_58 = (ushort)((ulonglong)*(undefined8 *)puVar2[1] >> 0x30);
-  uVar3 = (uint)local_58;
+  uVar5 = (uint)local_58;
   iStack_54 = (int)*(undefined8 *)puVar2[1];
-  uVar4 = uVar3;
-  if (uVar3 != 0) {
+  uVar6 = uVar5;
+  if (uVar5 != 0) {
     do {
-      if (*(char *)(iStack_54 + -1 + uVar4) == '\\') break;
-      uVar4 = uVar4 - 1;
-    } while (uVar4 != 0);
+      if (*(char *)(iStack_54 + -1 + uVar6) == '\\') break;
+      uVar6 = uVar6 - 1;
+    } while (uVar6 != 0);
   }
-  local_4e = (ushort)(uVar3 - uVar4);
-  uVar3 = uVar3 - uVar4 & 0xffff;
-  local_4c = (char *)(iStack_54 + uVar4);
-  _local_58 = CONCAT26((short)uVar4,CONCAT24((short)uVar4,iStack_54));
-  local_50 = local_4e;
-  if (((uVar4 & 0xffff) == 0) || (uVar3 == 0)) {
+  local_50.MaximumLength = (ushort)(uVar5 - uVar6);
+  uVar5 = uVar5 - uVar6 & 0xffff;
+  local_50.Buffer = (uchar *)(iStack_54 + uVar6);
+  _local_58 = CONCAT26((short)uVar6,CONCAT24((short)uVar6,iStack_54));
+  local_50.Length = local_50.MaximumLength;
+  if (((uVar6 & 0xffff) == 0) || (uVar5 == 0)) {
     uVar1 = 0xffffffffc000000d;
   }
   else {
-    if (((uVar3 == 3) && (*local_4c == '*')) && (local_4c[1] == '.')) {
-      local_50 = -(ushort)(local_4c[2] != '*') & local_4e;
+    if (((uVar5 == 3) && (*local_50.Buffer == '*')) && (local_50.Buffer[1] == '.')) {
+      local_50.Length = -(ushort)(local_50.Buffer[2] != '*') & local_50.MaximumLength;
     }
     uVar1 = NtOpenFile(local_60,0x100001,&local_40,local_48,3,0x4021);
     if (-1 < (longlong)uVar1) {
-      uVar1 = (**(code **)(PTR_DAT_829a8580 + 0x18))
-                        (local_60[0],0,0,0,local_48,param_2,param_3,&local_50);
+      lVar3 = (*_fileIoHooks->NtQueryDirectoryFile)
+                        (local_60[0],(void *)0x0,
+                         (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,(void *)0x0,
+                         (_IO_STATUS_BLOCK *)local_48,param_2,param_3,&local_50,in_stack_ffffff48);
+      uVar1 = (ulonglong)lVar3;
       if ((longlong)uVar1 < 0) {
         NtClose(local_60[0]);
       }
       else {
-        if ((param_4 & 0xffffffff) == 0) {
+        if ((uVar4 & 0xffffffff) == 0) {
           NtClose(local_60[0]);
         }
         else {
-          *(undefined4 *)param_4 = local_60[0];
+          *(undefined4 *)uVar4 = local_60[0];
         }
-        uVar1 = (ulonglong)local_48[0];
+        uVar1 = (ulonglong)(uint)local_48[0].Status;
       }
     }
   }
-  __restgprlr_27(uVar1);
-  return;
+  lVar3 = __restgprlr_27(uVar1);
+  return lVar3;
 }
 
 
 // 828AC598  RtlFindNextFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:270)
 
-void RtlFindNextFile(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+long RtlFindNextFile(void *param_1,_FILE_DIRECTORY_INFORMATION *param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  uint local_30 [12];
+  void *pvVar2;
+  long lVar3;
+  ulonglong uVar1;
+  ulong in_stack_ffffff78;
+  _IO_STATUS_BLOCK_u_0 local_30 [12];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = (**(code **)(PTR_DAT_829a8580 + 0x18))(uVar1,0,0,0,local_30,param_2,param_3,0);
-  if (-1 < (longlong)uVar2) {
-    uVar2 = (ulonglong)local_30[0];
+  pvVar2 = (void *)__savegprlr_29(param_1);
+  lVar3 = (*_fileIoHooks->NtQueryDirectoryFile)
+                    (pvVar2,(void *)0x0,
+                     (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,(void *)0x0,
+                     (_IO_STATUS_BLOCK *)local_30,param_2,param_3,(_STRING *)0x0,in_stack_ffffff78);
+  uVar1 = (ulonglong)lVar3;
+  if (-1 < (longlong)uVar1) {
+    uVar1 = (ulonglong)(uint)local_30[0].Status;
   }
-  __restgprlr_29(uVar2);
-  return;
+  lVar3 = __restgprlr_29(uVar1);
+  return lVar3;
 }
 
 
 // 828AC618  RtlSleep  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:457)
 
-void RtlSleep(undefined8 param_1,ulonglong param_2)
+long RtlSleep(ulong param_1,uchar param_2)
 
 {
-  undefined8 uVar1;
-  longlong lVar2;
-  longlong lVar3;
+  long lVar2;
+  _LARGE_INTEGER *p_Var3;
+  longlong lVar1;
+  ulonglong uVar4;
+  _LARGE_INTEGER local_30 [6];
   
-  uVar1 = __savegprlr_29();
-  lVar2 = RtlpFormatTimeOut(ZEXT48(&stack0x00000000) - 0x30,uVar1);
-  if (lVar2 == 0) {
-    lVar2 = ZEXT48(&stack0x00000000) - 0x30;
+  uVar4 = (ulonglong)(char)param_2;
+  lVar2 = __savegprlr_29(param_1);
+  p_Var3 = RtlpFormatTimeOut(local_30,lVar2);
+  if (p_Var3 == (_LARGE_INTEGER *)0x0) {
+    local_30[0]._s_0.LowPart = 0;
+    p_Var3 = local_30;
+    local_30[0]._s_0.HighPart = -0x80000000;
   }
   do {
-    lVar3 = KeDelayExecutionThread(1,param_2,lVar2);
-    if ((param_2 & 0xff) == 0) break;
-  } while ((int)lVar3 == 0x101);
-  __restgprlr_29(-(lVar3 == 0xc0) & 0xc0);
-  return;
+    lVar1 = KeDelayExecutionThread(1,uVar4,p_Var3);
+    if ((uVar4 & 0xff) == 0) break;
+  } while ((int)lVar1 == 0x101);
+  lVar2 = __restgprlr_29(-(lVar1 == 0xc0) & 0xc0);
+  return lVar2;
 }
 

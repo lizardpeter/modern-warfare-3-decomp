@@ -2,20 +2,24 @@
 
 // 824F4B58  TaskManager_AssertTaskSetIsRegistered  (qcommon/com_tasks.cpp:70)
 
-void TaskManager_AssertTaskSetIsRegistered(void)
+void TaskManager_AssertTaskSetIsRegistered(OverlappedTaskSet *param_1)
 
 {
-  int *piVar1;
+  OverlappedTaskSet *pOVar1;
   
-  piVar1 = (int *)__savegprlr_28();
-  if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x47,0,0xffffffff82000f98,0xffffffff8208b538);
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_28(param_1);
+  if (pOVar1->registeredIndex == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x47,0,
+                    "%s");
   }
-  if ((int *)(&DAT_8365e010)[*piVar1] != piVar1) {
-    MyAssertHandler(0xffffffff8208b558,0x48,0,0xffffffff82000f98,0xffffffff8208b4e8);
+  if (taskManagerGlob.constructedTaskSets[pOVar1->registeredIndex - 1] != pOVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x48,0,
+                    "%s");
   }
-  if (*(int *)(&DAT_8365e090 + *piVar1 * 4) == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x49,0,0xffffffff82000f98,0xffffffff8208b4a0);
+  if (taskManagerGlob.constructedTaskSets[pOVar1->registeredIndex + 0x1f] ==
+      (OverlappedTaskSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x49,0,
+                    "%s");
   }
   __restgprlr_28();
   return;
@@ -24,156 +28,160 @@ void TaskManager_AssertTaskSetIsRegistered(void)
 
 // 824F4C18  TaskManager_GetTaskSetListFromSet  (qcommon/com_tasks.cpp:78)
 
-longlong TaskManager_GetTaskSetListFromSet(longlong param_1)
+overlappedTask * TaskManager_GetTaskSetListFromSet(OverlappedTaskSet *param_1)
 
 {
-  TaskManager_AssertTaskSetIsRegistered();
-  return param_1 + 8;
+  TaskManager_AssertTaskSetIsRegistered(param_1);
+  return param_1->tasks;
 }
 
 
 // 824F4C48  TaskManager_GetTaskSetName  (qcommon/com_tasks.cpp:85)
 
-undefined4 TaskManager_GetTaskSetName(int *param_1)
+char * TaskManager_GetTaskSetName(OverlappedTaskSet *param_1)
 
 {
-  TaskManager_AssertTaskSetIsRegistered();
-  return *(undefined4 *)(&DAT_8365e090 + *param_1 * 4);
+  TaskManager_AssertTaskSetIsRegistered(param_1);
+  return (char *)taskManagerGlob.constructedTaskSets[param_1->registeredIndex + 0x1f];
 }
 
 
 // 824F4C90  TaskManager_ClearTask_Core  (qcommon/com_tasks.cpp:92)
 
-void * TaskManager_ClearTask_Core(int param_1)
+void TaskManager_ClearTask_Core(overlappedTask *param_1)
 
 {
-  void *pvVar1;
-  
-  if (param_1 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x5d,0,0xffffffff82000f98,0xffffffff8208b598);
+  if (param_1 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x5d,0,
+                    "%s");
   }
-  *(undefined1 *)(param_1 + 0x94) = 0;
-  *(undefined4 *)(param_1 + 0x98) = 0;
-  pvVar1 = memset((void *)(param_1 + 8),0,0x88);
-  return pvVar1;
+  param_1->active = false;
+  param_1->data = (void *)0x0;
+  memset();
+  return;
 }
 
 
 // 824F5548  TaskManager_ClearOverlappedTasks  (qcommon/com_tasks.cpp:106)
 
-void TaskManager_ClearOverlappedTasks(void)
+void TaskManager_ClearOverlappedTasks(OverlappedTaskSet *param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
-  longlong lVar3;
-  int *piVar4;
+  OverlappedTaskSet *pOVar1;
+  longlong lVar2;
+  overlappedTask *poVar3;
   
-  iVar1 = __savegprlr_26();
-  TaskManager_AssertTaskSetIsRegistered();
-  piVar4 = (int *)(iVar1 + 8);
-  lVar3 = 0x20;
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_26(param_1);
+  TaskManager_AssertTaskSetIsRegistered(pOVar1);
+  poVar3 = pOVar1->tasks;
+  lVar2 = 0x20;
   do {
-    if (piVar4 == (int *)0x0) {
-      MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
+    if (poVar3 == (overlappedTask *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x1c6
+                      ,0,"%s");
     }
-    TaskManager_CheckTaskIsInRegisteredTaskSet(piVar4);
-    if ((*piVar4 == 2) || (dwClearTask(piVar4), *piVar4 == 2)) {
-      IWNet_Storage_Clear(piVar4 + 10);
+    TaskManager_CheckTaskIsInRegisteredTaskSet(poVar3);
+    if ((poVar3->subsystem == TASKSUBSYSTEM_IWNET_STORAGE) ||
+       (dwClearTask(poVar3), poVar3->subsystem == TASKSUBSYSTEM_IWNET_STORAGE)) {
+      IWNet_Storage_Clear(&(poVar3->u).storageRequest);
     }
-    *(undefined1 *)(piVar4 + 0x25) = 0;
-    piVar4[0x26] = 0;
-    pvVar2 = memset(piVar4 + 2,0,0x88);
-    lVar3 = lVar3 + -1;
-    piVar4 = piVar4 + 0x28;
-  } while (lVar3 != 0);
-  __restgprlr_26(pvVar2);
+    poVar3->active = false;
+    poVar3->data = (void *)0x0;
+    memset();
+    lVar2 = lVar2 + -1;
+    poVar3 = poVar3 + 1;
+  } while (lVar2 != 0);
+  __restgprlr_26();
   return;
 }
 
 
 // 824F5600  TaskManager_ClearOverlappedTasksForController  (qcommon/com_tasks.cpp:117)
 
-void TaskManager_ClearOverlappedTasksForController(undefined8 param_1,uint param_2)
+void TaskManager_ClearOverlappedTasksForController(overlappedTask *param_1,int param_2)
 
 {
-  int *piVar1;
-  int *piVar2;
-  longlong lVar3;
+  overlappedTask *poVar1;
+  longlong lVar2;
   
-  piVar1 = (int *)__savegprlr_24();
-  lVar3 = 0x20;
-  piVar2 = piVar1;
+  poVar1 = (overlappedTask *)__savegprlr_24(param_1);
+  lVar2 = 0x20;
   do {
-    if (*(byte *)((int)piVar1 + 0x95) == param_2) {
-      if (piVar1 == (int *)0x0) {
-        MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
+    if ((uint)poVar1->controllerIndex == param_2) {
+      if (poVar1 == (overlappedTask *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                        0x1c6,0,"%s");
       }
-      TaskManager_CheckTaskIsInRegisteredTaskSet(piVar1);
-      if ((*piVar1 == 2) || (dwClearTask(piVar1), *piVar1 == 2)) {
-        IWNet_Storage_Clear(piVar1 + 10);
+      TaskManager_CheckTaskIsInRegisteredTaskSet(poVar1);
+      if ((poVar1->subsystem == TASKSUBSYSTEM_IWNET_STORAGE) ||
+         (dwClearTask(poVar1), poVar1->subsystem == TASKSUBSYSTEM_IWNET_STORAGE)) {
+        IWNet_Storage_Clear(&(poVar1->u).storageRequest);
       }
-      *(undefined1 *)(piVar1 + 0x25) = 0;
-      piVar1[0x26] = 0;
-      piVar2 = memset(piVar1 + 2,0,0x88);
+      poVar1->active = false;
+      poVar1->data = (void *)0x0;
+      memset();
     }
-    lVar3 = lVar3 + -1;
-    piVar1 = piVar1 + 0x28;
-  } while (lVar3 != 0);
-  __restgprlr_24(piVar2);
+    lVar2 = lVar2 + -1;
+    poVar1 = poVar1 + 1;
+  } while (lVar2 != 0);
+  __restgprlr_24();
   return;
 }
 
 
 // 824F56C0  TaskManager_ConstructTaskSet  (qcommon/com_tasks.cpp:129)
 
-void TaskManager_ConstructTaskSet(undefined8 param_1,undefined4 param_2)
+void TaskManager_ConstructTaskSet(OverlappedTaskSet *param_1,char *param_2)
 
 {
   uint uVar1;
-  uint *puVar2;
+  OverlappedTaskSet *pOVar2;
   int iVar3;
-  int *piVar4;
+  TaskManagerGlob *pTVar4;
   longlong lVar5;
-  undefined1 *puVar6;
+  uchar *puVar6;
   
-  puVar2 = (uint *)__savegprlr_23();
-  if (*puVar2 != 0) {
-    MyAssertHandler(0xffffffff8208b558,0x83,0,0xffffffff8208b7e8,0xffffffff8208b7c8);
+  pOVar2 = (OverlappedTaskSet *)__savegprlr_23(param_1);
+  if (pOVar2->registeredIndex != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x83,0,
+                    "%s\n\t(taskSet->registeredIndex) = %i");
   }
   iVar3 = 0;
-  piVar4 = &DAT_8365e010;
+  pTVar4 = &taskManagerGlob;
   do {
-    piVar4 = piVar4 + 1;
-    if (*piVar4 == 0) {
-      puVar6 = (undefined1 *)((int)puVar2 + 0x9e);
-      *puVar2 = iVar3 + 1;
-      (&DAT_8365e014)[iVar3] = puVar2;
-      *(undefined4 *)(&DAT_8365e094 + iVar3 * 4) = param_2;
+    pTVar4 = (TaskManagerGlob *)pTVar4->constructedTaskSets;
+    if (*(OverlappedTaskSet **)pTVar4 == (OverlappedTaskSet *)0x0) {
+      puVar6 = &pOVar2->tasks[0].taskSetIndex;
+      pOVar2->registeredIndex = iVar3 + 1;
+      taskManagerGlob.constructedTaskSets[iVar3] = pOVar2;
+      taskManagerGlob.constructedTaskSetNames[iVar3] = param_2;
       lVar5 = 0x20;
       do {
-        if (*puVar2 == 0) {
-          MyAssertHandler(0xffffffff8208b558,0x92,0,0xffffffff82000f98,0xffffffff8208b730);
+        if (pOVar2->registeredIndex == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                          0x92,0,"%s");
         }
-        uVar1 = *puVar2;
-        *puVar6 = (char)uVar1;
-        if ((uVar1 & 0xff) != *puVar2) {
-          MyAssertHandler(0xffffffff8208b558,0x94,0,0xffffffff8208b7e8,0xffffffff8208b750);
+        uVar1 = pOVar2->registeredIndex;
+        *puVar6 = (uchar)uVar1;
+        if ((uVar1 & 0xff) != pOVar2->registeredIndex) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                          0x94,0,"%s\n\t(taskSet->registeredIndex) = %i");
         }
         lVar5 = lVar5 + -1;
         puVar6 = puVar6 + 0xa0;
       } while (lVar5 != 0);
-      TaskManager_ClearOverlappedTasks(puVar2);
-      DAT_8365e010 = DAT_8365e010 + 1;
+      TaskManager_ClearOverlappedTasks(pOVar2);
+      taskManagerGlob.constructedTaskSetCount = taskManagerGlob.constructedTaskSetCount + 1;
       __restgprlr_23();
       return;
     }
     iVar3 = iVar3 + 1;
   } while (iVar3 != 0x20);
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0xa0,0,0xffffffff8208b790);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0xa0,0,
+                    "TaskManager_ConstructTaskSet: MAX_TASK_SETS exceeded.");
   }
-  Com_Error(0,0xffffffff8208b790);
+  Com_Error(ERR_FATAL,"TaskManager_ConstructTaskSet: MAX_TASK_SETS exceeded.");
   __restgprlr_23();
   return;
 }
@@ -181,132 +189,152 @@ void TaskManager_ConstructTaskSet(undefined8 param_1,undefined4 param_2)
 
 // 824F5830  TaskManager_CancelTask  (qcommon/com_tasks.cpp:166)
 
-void TaskManager_CancelTask(void)
+bool TaskManager_CancelTask(overlappedTask *param_1)
 
 {
-  int *piVar2;
-  int iVar3;
-  undefined8 uVar1;
+  overlappedTask *poVar1;
+  undefined1 uVar5;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  char *pcVar4;
   
-  piVar2 = (int *)__savegprlr_29();
-  if (*piVar2 != 1) {
-    if (*piVar2 == 2) {
-      IWNet_CancelStorageTask(piVar2 + 10);
-      __restgprlr_29(1);
-      return;
+  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
+  if (poVar1->subsystem != TASKSUBSYSTEM_NATIVE) {
+    if (poVar1->subsystem == TASKSUBSYSTEM_IWNET_STORAGE) {
+      IWNet_CancelStorageTask(&(poVar1->u).storageRequest);
+      uVar5 = __restgprlr_29(1);
+      return (bool)uVar5;
     }
-    if (DAT_84013128 == 0) {
-      uVar1 = va(0xffffffff8208b80c);
-      MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar1);
+    if (alwaysfails == 0) {
+      pcVar4 = va("Unknown task subsystem type %i");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0xe4,
+                      0,pcVar4);
     }
-    __restgprlr_29(1);
-    return;
+    uVar5 = __restgprlr_29(1);
+    return (bool)uVar5;
   }
-  if (piVar2[2] != 0) {
-    if (piVar2[6] != 0) {
-      MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+  if ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) {
+    if ((poVar1->u).overlappedIO.hEvent != (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0xb9,
+                      0,"%s");
     }
-    if (*(int *)(piVar2[2] + 4) == 0) {
-      MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+    if (*(int *)&((poVar1->u).remoteTask.m_ptr)->field_0x4 == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0xba,
+                      0,"%s");
     }
-    bdRemoteTask__cancelTask(piVar2[2]);
-    TaskManager_ClearTask(piVar2);
-    __restgprlr_29(1);
-    return;
+    bdRemoteTask::cancelTask((poVar1->u).remoteTask.m_ptr);
+    TaskManager_ClearTask(poVar1);
+    uVar5 = __restgprlr_29(1);
+    return (bool)uVar5;
   }
-  iVar3 = XGetOverlappedResult(piVar2 + 3,0,0);
-  if (iVar3 == 0x3e4) {
-    iVar3 = XCancelOverlapped(piVar2 + 3);
-    if (iVar3 != 0) {
-      Com_PrintError(0x10,0xffffffff8208b888);
-      __restgprlr_29(0);
-      return;
+  p_Var2 = &(poVar1->u).overlappedIO;
+  uVar3 = XGetOverlappedResult(p_Var2,(ulong *)0x0,0);
+  if (uVar3 == 0x3e4) {
+    uVar3 = XCancelOverlapped(p_Var2);
+    if (uVar3 != 0) {
+      Com_PrintError(0x10,
+                     "TaskManager_CancelTasks_Core: XCancelOverlapped returned errorcode %u(0x%08x)\n"
+                    );
+      uVar5 = __restgprlr_29(0);
+      return (bool)uVar5;
     }
   }
-  else if (iVar3 != 0) {
-    Com_PrintError(0x10,0xffffffff8208b830);
-    __restgprlr_29(0);
-    return;
+  else if (uVar3 != 0) {
+    Com_PrintError(0x10,
+                   "TaskManager_CancelTasks_Core: XGetOverlappedResult returned errorcode %u(0x%08x)\n"
+                  );
+    uVar5 = __restgprlr_29(0);
+    return (bool)uVar5;
   }
-  TaskManager_ClearTask_Core(piVar2);
-  __restgprlr_29(1);
-  return;
+  TaskManager_ClearTask_Core(poVar1);
+  uVar5 = __restgprlr_29(1);
+  return (bool)uVar5;
 }
 
 
 // 824F59C0  TaskManager_CancelTasks_Core  (qcommon/com_tasks.cpp:236)
 
-void TaskManager_CancelTasks_Core(undefined8 param_1,ulonglong param_2,int param_3)
+bool TaskManager_CancelTasks_Core(OverlappedTaskSet *param_1,bool param_2,int param_3)
 
 {
   bool bVar1;
-  int iVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  uint uVar5;
-  int *piVar6;
-  int *piVar7;
+  overlappedTask *poVar2;
+  OverlappedTaskSet *pOVar3;
+  ulong uVar4;
+  char *pcVar5;
+  undefined1 uVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  taskShim *ptVar9;
   
-  iVar4 = __savegprlr_18();
-  TaskManager_AssertTaskSetIsRegistered();
-  piVar6 = (int *)(iVar4 + 0x10);
-  uVar5 = 0;
+  uVar7 = (ulonglong)param_2;
+  pOVar3 = (OverlappedTaskSet *)__savegprlr_18(param_1);
+  TaskManager_AssertTaskSetIsRegistered(pOVar3);
+  ptVar9 = &pOVar3->tasks[0].u;
+  uVar8 = 0;
   do {
-    if ((*(char *)(piVar6 + 0x23) != '\0') && (((param_2 & 0xff) != 0 || (piVar6[0x22] == param_3)))
-       ) {
-      piVar7 = piVar6 + -2;
-      if (piVar6[-2] == 1) {
-        if (*piVar6 != 0) {
-          if (piVar6[4] != 0) {
-            MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+    if ((*(bool *)((int)(ptVar9 + 1) + 4) != false) &&
+       (((uVar7 & 0xff) != 0 || (*(int *)(ptVar9 + 1) == param_3)))) {
+      poVar2 = (overlappedTask *)((int)(ptVar9 + -1) + 0x80);
+      if (*(int *)((int)(ptVar9 + -1) + 0x80) == 1) {
+        if ((ptVar9->remoteTask).m_ptr != (bdRemoteTask *)0x0) {
+          if ((ptVar9->overlappedIO).hEvent != (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp"
+                            ,0xb9,0,"%s");
           }
-          if (*(int *)(*piVar6 + 4) == 0) {
-            MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+          if (*(int *)&((ptVar9->remoteTask).m_ptr)->field_0x4 == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp"
+                            ,0xba,0,"%s");
           }
-          bdRemoteTask__cancelTask(*piVar6);
-          TaskManager_ClearTask(piVar7);
+          bdRemoteTask::cancelTask((ptVar9->remoteTask).m_ptr);
+          TaskManager_ClearTask(poVar2);
           goto LAB_824f5b7c;
         }
-        iVar4 = XGetOverlappedResult(piVar6 + 1,0,0);
-        if (iVar4 == 0x3e4) {
-          uVar2 = XCancelOverlapped(piVar6 + 1);
-          if ((uVar2 & 0xffffffff) == 0) {
-            TaskManager_ClearTask_Core(piVar7);
+        uVar4 = XGetOverlappedResult(&ptVar9->overlappedIO,(ulong *)0x0,0);
+        if (uVar4 == 0x3e4) {
+          uVar4 = XCancelOverlapped(&ptVar9->overlappedIO);
+          if (uVar4 == 0) {
+            TaskManager_ClearTask_Core(poVar2);
             goto LAB_824f5b7c;
           }
-          Com_PrintError(0x10,0xffffffff8208b888,uVar2);
+          Com_PrintError(0x10,
+                         "TaskManager_CancelTasks_Core: XCancelOverlapped returned errorcode %u(0x%08x)\n"
+                        );
           bVar1 = false;
         }
         else {
-          if (iVar4 == 0) {
-            TaskManager_ClearTask_Core(piVar7);
+          if (uVar4 == 0) {
+            TaskManager_ClearTask_Core(poVar2);
             goto LAB_824f5b7c;
           }
-          Com_PrintError(0x10,0xffffffff8208b830);
+          Com_PrintError(0x10,
+                         "TaskManager_CancelTasks_Core: XGetOverlappedResult returned errorcode %u(0x%08x)\n"
+                        );
           bVar1 = false;
         }
       }
       else {
-        if (piVar6[-2] == 2) {
-          IWNet_CancelStorageTask(piVar6 + 8);
+        if (*(int *)((int)(ptVar9 + -1) + 0x80) == 2) {
+          IWNet_CancelStorageTask(&ptVar9->storageRequest);
         }
-        else if (DAT_84013128 == 0) {
-          uVar3 = va(0xffffffff8208b80c);
-          MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar3);
+        else if (alwaysfails == 0) {
+          pcVar5 = va("Unknown task subsystem type %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                          0xe4,0,pcVar5);
         }
 LAB_824f5b7c:
         bVar1 = true;
       }
       if (!bVar1) {
-        __restgprlr_18(0);
-        return;
+        uVar6 = __restgprlr_18(0);
+        return (bool)uVar6;
       }
     }
-    uVar5 = uVar5 + 1;
-    piVar6 = piVar6 + 0x28;
-    if (0x1f < uVar5) {
-      __restgprlr_18(1);
-      return;
+    uVar8 = uVar8 + 1;
+    ptVar9 = (taskShim *)((int)(ptVar9 + 1) + 0x18);
+    if (0x1f < uVar8) {
+      uVar6 = __restgprlr_18(1);
+      return (bool)uVar6;
     }
   } while( true );
 }
@@ -314,79 +342,89 @@ LAB_824f5b7c:
 
 // 824F5BB8  TaskManager_CancelTasksForController_Core  (qcommon/com_tasks.cpp:258)
 
-void TaskManager_CancelTasksForController_Core
-               (undefined8 param_1,ulonglong param_2,int param_3,uint param_4)
+bool TaskManager_CancelTasksForController_Core
+               (OverlappedTaskSet *param_1,bool param_2,int param_3,int param_4)
 
 {
   bool bVar1;
-  int iVar4;
-  ulonglong uVar2;
-  undefined8 uVar3;
-  uint uVar5;
-  int *piVar6;
-  int *piVar7;
+  OverlappedTaskSet *pOVar2;
+  overlappedTask *poVar3;
+  ulong uVar4;
+  char *pcVar5;
+  undefined1 uVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  int *piVar9;
   
-  iVar4 = __savegprlr_17();
-  TaskManager_AssertTaskSetIsRegistered();
-  piVar6 = (int *)(iVar4 + 0x98);
-  uVar5 = 0;
+  uVar7 = (ulonglong)param_2;
+  pOVar2 = (OverlappedTaskSet *)__savegprlr_17(param_1);
+  TaskManager_AssertTaskSetIsRegistered(pOVar2);
+  piVar9 = &pOVar2->tasks[0].type;
+  uVar8 = 0;
   do {
-    if ((*(char *)(piVar6 + 1) != '\0') &&
-       (((param_2 & 0xff) != 0 || ((*piVar6 == param_3 && (*(byte *)((int)piVar6 + 5) == param_4))))
-       )) {
-      piVar7 = piVar6 + -0x24;
-      if (piVar6[-0x24] == 1) {
-        if (piVar6[-0x22] != 0) {
-          if (piVar6[-0x1e] != 0) {
-            MyAssertHandler(0xffffffff8208b558,0xb9,0,0xffffffff82000f98,0xffffffff8208b900);
+    if ((*(bool *)(piVar9 + 1) != false) &&
+       (((uVar7 & 0xff) != 0 ||
+        ((*piVar9 == param_3 && ((uint)*(uchar *)((int)piVar9 + 5) == param_4)))))) {
+      poVar3 = (overlappedTask *)(piVar9 + -0x24);
+      if (((overlappedTask *)(piVar9 + -0x24))->subsystem == TASKSUBSYSTEM_NATIVE) {
+        if ((((taskShim *)(piVar9 + -0x22))->remoteTask).m_ptr != (bdRemoteTask *)0x0) {
+          if ((void *)piVar9[-0x1e] != (void *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp"
+                            ,0xb9,0,"%s");
           }
-          if (*(int *)(piVar6[-0x22] + 4) == 0) {
-            MyAssertHandler(0xffffffff8208b558,0xba,0,0xffffffff82000f98,0xffffffff8208b8d8);
+          if (*(int *)&((((taskShim *)(piVar9 + -0x22))->remoteTask).m_ptr)->field_0x4 == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp"
+                            ,0xba,0,"%s");
           }
-          bdRemoteTask__cancelTask(piVar6[-0x22]);
-          TaskManager_ClearTask(piVar7);
+          bdRemoteTask::cancelTask((((taskShim *)(piVar9 + -0x22))->remoteTask).m_ptr);
+          TaskManager_ClearTask(poVar3);
           goto LAB_824f5d84;
         }
-        iVar4 = XGetOverlappedResult(piVar6 + -0x21,0,0);
-        if (iVar4 == 0x3e4) {
-          uVar2 = XCancelOverlapped(piVar6 + -0x21);
-          if ((uVar2 & 0xffffffff) == 0) {
-            TaskManager_ClearTask_Core(piVar7);
+        uVar4 = XGetOverlappedResult((_XOVERLAPPED *)(piVar9 + -0x21),(ulong *)0x0,0);
+        if (uVar4 == 0x3e4) {
+          uVar4 = XCancelOverlapped((_XOVERLAPPED *)(piVar9 + -0x21));
+          if (uVar4 == 0) {
+            TaskManager_ClearTask_Core(poVar3);
             goto LAB_824f5d84;
           }
-          Com_PrintError(0x10,0xffffffff8208b888,uVar2);
+          Com_PrintError(0x10,
+                         "TaskManager_CancelTasks_Core: XCancelOverlapped returned errorcode %u(0x%08x)\n"
+                        );
           bVar1 = false;
         }
         else {
-          if (iVar4 == 0) {
-            TaskManager_ClearTask_Core(piVar7);
+          if (uVar4 == 0) {
+            TaskManager_ClearTask_Core(poVar3);
             goto LAB_824f5d84;
           }
-          Com_PrintError(0x10,0xffffffff8208b830);
+          Com_PrintError(0x10,
+                         "TaskManager_CancelTasks_Core: XGetOverlappedResult returned errorcode %u(0x%08x)\n"
+                        );
           bVar1 = false;
         }
       }
       else {
-        if (piVar6[-0x24] == 2) {
-          IWNet_CancelStorageTask(piVar6 + -0x1a);
+        if (((overlappedTask *)(piVar9 + -0x24))->subsystem == TASKSUBSYSTEM_IWNET_STORAGE) {
+          IWNet_CancelStorageTask((IWNetStorageTaskState *)(piVar9 + -0x1a));
         }
-        else if (DAT_84013128 == 0) {
-          uVar3 = va(0xffffffff8208b80c);
-          MyAssertHandler(0xffffffff8208b558,0xe4,0,uVar3);
+        else if (alwaysfails == 0) {
+          pcVar5 = va("Unknown task subsystem type %i");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                          0xe4,0,pcVar5);
         }
 LAB_824f5d84:
         bVar1 = true;
       }
       if (!bVar1) {
-        __restgprlr_17(0);
-        return;
+        uVar6 = __restgprlr_17(0);
+        return (bool)uVar6;
       }
     }
-    uVar5 = uVar5 + 1;
-    piVar6 = piVar6 + 0x28;
-    if (0x1f < uVar5) {
-      __restgprlr_17(1);
-      return;
+    uVar8 = uVar8 + 1;
+    piVar9 = piVar9 + 0x28;
+    if (0x1f < uVar8) {
+      uVar6 = __restgprlr_17(1);
+      return (bool)uVar6;
     }
   } while( true );
 }
@@ -394,46 +432,49 @@ LAB_824f5d84:
 
 // 824F5DC0  TaskManager_DestructTaskSet_CanFail  (qcommon/com_tasks.cpp:281)
 
-undefined8 TaskManager_DestructTaskSet_CanFail(int *param_1)
+bool TaskManager_DestructTaskSet_CanFail(OverlappedTaskSet *param_1)
 
 {
-  int iVar1;
-  char cVar2;
+  uint uVar1;
+  bool bVar2;
   
-  TaskManager_AssertTaskSetIsRegistered();
-  cVar2 = TaskManager_CancelTasks_Core(param_1,1,0);
-  if (cVar2 == '\0') {
-    return 0;
+  TaskManager_AssertTaskSetIsRegistered(param_1);
+  bVar2 = TaskManager_CancelTasks_Core(param_1,true,0);
+  if (!bVar2) {
+    return false;
   }
   TaskManager_ClearOverlappedTasks(param_1);
-  iVar1 = *param_1;
-  *param_1 = 0;
-  (&DAT_8365e010)[iVar1] = 0;
-  *(undefined4 *)(&DAT_8365e090 + iVar1 * 4) = 0;
-  DAT_8365e010 = DAT_8365e010 + -1;
-  return 1;
+  uVar1 = param_1->registeredIndex;
+  param_1->registeredIndex = 0;
+  taskManagerGlob.constructedTaskSets[uVar1 - 1] = (OverlappedTaskSet *)0x0;
+  taskManagerGlob.constructedTaskSets[uVar1 + 0x1f] = (OverlappedTaskSet *)0x0;
+  taskManagerGlob.constructedTaskSetCount = taskManagerGlob.constructedTaskSetCount - 1;
+  return true;
 }
 
 
 // 824F5E60  TaskManager_DestructTaskSet  (qcommon/com_tasks.cpp:299)
 
-void TaskManager_DestructTaskSet(void)
+void TaskManager_DestructTaskSet(OverlappedTaskSet *param_1)
 
 {
-  int *piVar2;
-  char cVar3;
-  undefined8 uVar1;
+  OverlappedTaskSet *pOVar1;
+  bool bVar3;
+  char *pcVar2;
   
-  piVar2 = (int *)__savegprlr_27();
-  cVar3 = TaskManager_DestructTaskSet_CanFail();
-  while (cVar3 == '\0') {
-    if (DAT_84013128 == 0) {
-      TaskManager_AssertTaskSetIsRegistered(piVar2);
-      uVar1 = va(0xffffffff8208b928,*(undefined4 *)(&DAT_8365e090 + *piVar2 * 4));
-      MyAssertHandler(0xffffffff8208b558,0x12e,0,uVar1);
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_27(param_1);
+  bVar3 = TaskManager_DestructTaskSet_CanFail(pOVar1);
+  while (!bVar3) {
+    if (alwaysfails == 0) {
+      TaskManager_AssertTaskSetIsRegistered(pOVar1);
+      pcVar2 = va(
+                 "TaskManager_DestructTaskSet: TaskManager_DestructTaskSet_CanFail failed on taskSet \'%s\'."
+                 );
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x12e
+                      ,0,pcVar2);
     }
     Sys_Sleep(100);
-    cVar3 = TaskManager_DestructTaskSet_CanFail(piVar2);
+    bVar3 = TaskManager_DestructTaskSet_CanFail(pOVar1);
   }
   __restgprlr_27();
   return;
@@ -442,126 +483,139 @@ void TaskManager_DestructTaskSet(void)
 
 // 824F5F00  TaskManager_CancelTasks  (qcommon/com_tasks.cpp:310)
 
-undefined1 TaskManager_CancelTasks(ulonglong param_1,undefined8 param_2)
+int TaskManager_CancelTasks(OverlappedTaskSet *param_1,int param_2)
 
 {
-  undefined1 uVar1;
+  bool bVar1;
   
-  if ((param_1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x137,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  if (param_1 == (OverlappedTaskSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x137,0
+                    ,"%s");
   }
-  uVar1 = TaskManager_CancelTasks_Core(param_1,0,param_2);
-  return uVar1;
+  bVar1 = TaskManager_CancelTasks_Core(param_1,false,param_2);
+  return (uint)bVar1;
 }
 
 
 // 824F5F78  TaskManager_CancelTasksForController  (qcommon/com_tasks.cpp:318)
 
-void TaskManager_CancelTasksForController(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+int TaskManager_CancelTasksForController(OverlappedTaskSet *param_1,int param_2,int param_3)
 
 {
-  ulonglong uVar1;
-  undefined1 uVar2;
+  OverlappedTaskSet *pOVar1;
+  bool bVar3;
+  int iVar2;
   
-  uVar1 = __savegprlr_29();
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x13f,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_29(param_1);
+  if (pOVar1 == (OverlappedTaskSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x13f,0
+                    ,"%s");
   }
-  uVar2 = TaskManager_CancelTasksForController_Core(uVar1,0,param_2,param_3);
-  __restgprlr_29(uVar2);
-  return;
+  bVar3 = TaskManager_CancelTasksForController_Core(pOVar1,false,param_2,param_3);
+  iVar2 = __restgprlr_29(bVar3);
+  return iVar2;
 }
 
 
 // 824F5FE0  TaskManager_DestructAllTaskSets_CanFail  (qcommon/com_tasks.cpp:327)
 
-void TaskManager_DestructAllTaskSets_CanFail(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+bool TaskManager_DestructAllTaskSets_CanFail(void)
 
 {
-  int *piVar1;
-  char cVar2;
-  int iVar3;
-  byte bVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
+  OverlappedTaskSet *pOVar1;
+  bool bVar2;
+  undefined1 uVar3;
+  uint uVar4;
+  byte bVar5;
+  longlong lVar6;
+  TaskManagerGlob *pTVar7;
   
   __savegprlr_26();
-  bVar4 = 1;
-  puVar6 = &DAT_8365e010;
-  lVar5 = 0x20;
-  iVar3 = DAT_8365e010;
+  bVar5 = 1;
+  pTVar7 = &taskManagerGlob;
+  lVar6 = 0x20;
+  uVar4 = taskManagerGlob.constructedTaskSetCount;
   do {
-    puVar6 = puVar6 + 1;
-    piVar1 = (int *)*puVar6;
-    if (piVar1 != (int *)0x0) {
-      TaskManager_AssertTaskSetIsRegistered(piVar1);
-      cVar2 = TaskManager_CancelTasks_Core(piVar1,1,0);
-      if (cVar2 != '\0') {
-        TaskManager_ClearOverlappedTasks(piVar1);
-        iVar3 = *piVar1;
-        *piVar1 = 0;
-        (&DAT_8365e010)[iVar3] = 0;
-        *(undefined4 *)(&DAT_8365e090 + iVar3 * 4) = 0;
-        DAT_8365e010 = DAT_8365e010 + -1;
+    pTVar7 = (TaskManagerGlob *)pTVar7->constructedTaskSets;
+    pOVar1 = *(OverlappedTaskSet **)pTVar7;
+    if (pOVar1 != (OverlappedTaskSet *)0x0) {
+      TaskManager_AssertTaskSetIsRegistered(pOVar1);
+      bVar2 = TaskManager_CancelTasks_Core(pOVar1,true,0);
+      if (bVar2) {
+        TaskManager_ClearOverlappedTasks(pOVar1);
+        uVar4 = pOVar1->registeredIndex;
+        pOVar1->registeredIndex = 0;
+        taskManagerGlob.constructedTaskSets[uVar4 - 1] = (OverlappedTaskSet *)0x0;
+        taskManagerGlob.constructedTaskSets[uVar4 + 0x1f] = (OverlappedTaskSet *)0x0;
+        taskManagerGlob.constructedTaskSetCount = taskManagerGlob.constructedTaskSetCount - 1;
       }
-      bVar4 = -(cVar2 != '\0') & bVar4;
-      iVar3 = DAT_8365e010;
+      bVar5 = -bVar2 & bVar5;
+      uVar4 = taskManagerGlob.constructedTaskSetCount;
     }
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  if ((bVar4 != 0) && (iVar3 != 0)) {
-    MyAssertHandler(0xffffffff8208b558,0x158,0,0xffffffff8208b984,0xffffffff8208b9b8);
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  if ((bVar5 != 0) && (uVar4 != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x158,0
+                    ,"%s\n\t(taskManagerGlob.constructedTaskSetCount) = %i");
   }
-  __restgprlr_26(bVar4);
-  return;
+  uVar3 = __restgprlr_26(bVar5);
+  return (bool)uVar3;
 }
 
 
 // 824F60D8  TaskManager_DestructAllTaskSets  (qcommon/com_tasks.cpp:353)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TaskManager_DestructAllTaskSets(void)
 
 {
-  int *piVar1;
+  OverlappedTaskSet *pOVar1;
   bool bVar2;
-  char cVar3;
-  int iVar4;
+  bool bVar3;
+  uint uVar4;
   longlong lVar5;
-  undefined4 *puVar6;
+  TaskManagerGlob *pTVar6;
   
   __savegprlr_21();
   while( true ) {
     bVar2 = true;
     lVar5 = 0x20;
-    puVar6 = &DAT_8365e010;
-    iVar4 = DAT_8365e010;
+    uVar4 = taskManagerGlob.constructedTaskSetCount;
+    pTVar6 = &taskManagerGlob;
     do {
-      puVar6 = puVar6 + 1;
-      piVar1 = (int *)*puVar6;
-      if (piVar1 != (int *)0x0) {
-        TaskManager_AssertTaskSetIsRegistered(piVar1);
-        cVar3 = TaskManager_CancelTasks_Core(piVar1,1,0);
-        if (cVar3 != '\0') {
-          TaskManager_ClearOverlappedTasks(piVar1);
-          iVar4 = *piVar1;
-          *piVar1 = 0;
-          (&DAT_8365e010)[iVar4] = 0;
-          *(undefined4 *)(&DAT_8365e090 + iVar4 * 4) = 0;
-          DAT_8365e010 = DAT_8365e010 + -1;
+      pTVar6 = (TaskManagerGlob *)pTVar6->constructedTaskSets;
+      pOVar1 = *(OverlappedTaskSet **)pTVar6;
+      if (pOVar1 != (OverlappedTaskSet *)0x0) {
+        TaskManager_AssertTaskSetIsRegistered(pOVar1);
+        bVar3 = TaskManager_CancelTasks_Core(pOVar1,true,0);
+        if (bVar3) {
+          TaskManager_ClearOverlappedTasks(pOVar1);
+          uVar4 = pOVar1->registeredIndex;
+          pOVar1->registeredIndex = 0;
+          taskManagerGlob.constructedTaskSets[uVar4 - 1] = (OverlappedTaskSet *)0x0;
+          taskManagerGlob.constructedTaskSets[uVar4 + 0x1f] = (OverlappedTaskSet *)0x0;
+          taskManagerGlob.constructedTaskSetCount = taskManagerGlob.constructedTaskSetCount - 1;
         }
-        bVar2 = (bool)(cVar3 != '\0' & bVar2);
-        iVar4 = DAT_8365e010;
+        bVar2 = (bool)(bVar3 & bVar2);
+        uVar4 = taskManagerGlob.constructedTaskSetCount;
       }
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
     if (bVar2) break;
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8208b558,0x164,0,0xffffffff8208b9f0);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x164
+                      ,0,
+                      "TaskManager_DestructAllTaskSets: TaskManager_DestructAllTaskSets_CanFail failed."
+                     );
     }
     Sys_Sleep(100);
   }
-  if (iVar4 != 0) {
-    MyAssertHandler(0xffffffff8208b558,0x158,0,0xffffffff8208b984,0xffffffff8208b9b8);
+  if (uVar4 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x158,0
+                    ,"%s\n\t(taskManagerGlob.constructedTaskSetCount) = %i");
   }
   __restgprlr_21();
   return;
@@ -570,105 +624,119 @@ void TaskManager_DestructAllTaskSets(void)
 
 // 824F4D00  TaskManager_GetOpenTaskSlot_Try  (qcommon/com_tasks.cpp:367)
 
-void TaskManager_GetOpenTaskSlot_Try
-               (undefined8 param_1,undefined8 param_2,undefined4 param_3,undefined4 param_4)
+overlappedTask *
+TaskManager_GetOpenTaskSlot_Try
+          (OverlappedTaskSet *param_1,int param_2,int param_3,TaskSubsystem param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  OverlappedTaskSet *pOVar1;
+  overlappedTask *poVar2;
+  bool *pbVar3;
+  int iVar4;
   
-  iVar1 = __savegprlr_28();
-  TaskManager_AssertTaskSetIsRegistered();
-  iVar3 = 0;
-  pcVar2 = (char *)(iVar1 + 0x9c);
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_28(param_1);
+  TaskManager_AssertTaskSetIsRegistered(pOVar1);
+  iVar4 = 0;
+  pbVar3 = &pOVar1->tasks[0].active;
   do {
-    if (*pcVar2 == '\0') {
-      puVar4 = (undefined4 *)(iVar3 * 0xa0 + iVar1 + 8);
-      memset(puVar4 + 2,0,0x88);
-      puVar4[0x24] = param_3;
-      if (((int)param_2 < 0) || (3 < (int)param_2)) {
-        MyAssertHandler(0xffffffff8208b558,0x17e,0,0xffffffff82039774,0xffffffff82057314,param_2);
+    if (*pbVar3 == false) {
+      poVar2 = pOVar1->tasks + iVar4;
+      memset();
+      poVar2->type = param_3;
+      if ((param_2 < 0) || (3 < param_2)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                        0x17e,0,"%s\n\t(controllerIndex) = %i");
       }
-      *puVar4 = param_4;
-      *(char *)((int)puVar4 + 0x95) = (char)param_2;
-      *(undefined1 *)(puVar4 + 0x25) = 1;
-      __restgprlr_28(puVar4);
-      return;
+      poVar2->subsystem = param_4;
+      poVar2->controllerIndex = (uchar)param_2;
+      poVar2->active = true;
+      poVar2 = (overlappedTask *)__restgprlr_28(poVar2);
+      return poVar2;
     }
-    iVar3 = iVar3 + 1;
-    pcVar2 = pcVar2 + 0xa0;
-  } while (iVar3 < 0x20);
-  __restgprlr_28(0);
-  return;
+    iVar4 = iVar4 + 1;
+    pbVar3 = pbVar3 + 0xa0;
+  } while (iVar4 < 0x20);
+  poVar2 = (overlappedTask *)__restgprlr_28(0);
+  return poVar2;
 }
 
 
 // 824F4DD0  TaskManager_GetOpenTaskSlot_Internal  (qcommon/com_tasks.cpp:396)
 
-void TaskManager_GetOpenTaskSlot_Internal
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+overlappedTask *
+TaskManager_GetOpenTaskSlot_Internal
+          (OverlappedTaskSet *param_1,int param_2,int param_3,TaskSubsystem param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
+  OverlappedTaskSet *pOVar1;
+  overlappedTask *poVar2;
   
-  uVar1 = __savegprlr_28();
-  uVar2 = TaskManager_GetOpenTaskSlot_Try();
-  if ((uVar2 & 0xffffffff) == 0) {
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_28(param_1);
+  poVar2 = TaskManager_GetOpenTaskSlot_Try(pOVar1,param_2,param_3,param_4);
+  if (poVar2 == (overlappedTask *)0x0) {
     Session_EmptyGraveYard();
-    uVar2 = TaskManager_GetOpenTaskSlot_Try(uVar1,param_2,param_3,param_4);
-    if ((uVar2 & 0xffffffff) == 0) {
-      MyAssertHandler(0xffffffff8208b558,0x19b,0,0xffffffff820011f4,0xffffffff82012420,
-                      0xffffffff8208b5a0);
+    poVar2 = TaskManager_GetOpenTaskSlot_Try(pOVar1,param_2,param_3,param_4);
+    if (poVar2 == (overlappedTask *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x19b
+                      ,0,"%s\n\t%s");
     }
   }
-  __restgprlr_28(uVar2);
-  return;
+  poVar2 = (overlappedTask *)__restgprlr_28(poVar2);
+  return poVar2;
 }
 
 
 // 824F4E58  TaskManager_GetOpenTaskSlotForIwNetStorage  (qcommon/com_tasks.cpp:419)
 
-void TaskManager_GetOpenTaskSlotForIwNetStorage(void)
+overlappedTask *
+TaskManager_GetOpenTaskSlotForIwNetStorage(OverlappedTaskSet *param_1,int param_2,int param_3)
 
 {
-  TaskManager_GetOpenTaskSlot_Internal();
-  return;
+  overlappedTask *poVar1;
+  
+  poVar1 = TaskManager_GetOpenTaskSlot_Internal(param_1,param_2,param_3,TASKSUBSYSTEM_IWNET_STORAGE)
+  ;
+  return poVar1;
 }
 
 
 // 824F4E60  TaskManager_GetOpenTaskSlot  (qcommon/com_tasks.cpp:426)
 
-void TaskManager_GetOpenTaskSlot(void)
+overlappedTask * TaskManager_GetOpenTaskSlot(OverlappedTaskSet *param_1,int param_2,int param_3)
 
 {
-  TaskManager_GetOpenTaskSlot_Internal();
-  return;
+  overlappedTask *poVar1;
+  
+  poVar1 = TaskManager_GetOpenTaskSlot_Internal(param_1,param_2,param_3,TASKSUBSYSTEM_NATIVE);
+  return poVar1;
 }
 
 
 // 824F4E68  TaskManager_CheckTaskIsInRegisteredTaskSet  (qcommon/com_tasks.cpp:433)
 
-void TaskManager_CheckTaskIsInRegisteredTaskSet(void)
+/* WARNING: Type propagation algorithm not settling */
+
+void TaskManager_CheckTaskIsInRegisteredTaskSet(overlappedTask *param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  uint uVar3;
+  OverlappedTaskSet *pOVar2;
+  OverlappedTaskSet *pOVar3;
   
-  uVar3 = __savegprlr_28();
-  bVar1 = *(byte *)(uVar3 + 0x96);
+  pOVar3 = (OverlappedTaskSet *)__savegprlr_28(param_1);
+  bVar1 = pOVar3->tasks[0].u.storageRequest.field_0x66;
   if (bVar1 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x1b9,0,0xffffffff82000f98,0xffffffff8208b5ec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x1b9,0
+                    ,"%s");
   }
-  iVar2 = (&DAT_8365e010)[bVar1];
-  if (iVar2 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x1bb,0,0xffffffff82000f98,0xffffffff8208b5e4);
+  pOVar2 = taskManagerGlob.constructedTaskSets[bVar1 - 1];
+  if (pOVar2 == (OverlappedTaskSet *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x1bb,0
+                    ,"%s");
   }
-  if ((uVar3 < iVar2 + 8U) || (iVar2 + 0x1408U <= uVar3)) {
-    MyAssertHandler(0xffffffff8208b558,0x1be,0,0xffffffff82000f98,0xffffffff8208b5b8);
+  if ((pOVar3 < pOVar2->tasks) || (pOVar2 + 1 <= pOVar3)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x1be,0
+                    ,"%s");
   }
   __restgprlr_28();
   return;
@@ -677,15 +745,17 @@ void TaskManager_CheckTaskIsInRegisteredTaskSet(void)
 
 // 824F4F20  TaskManager_ClearTask  (qcommon/com_tasks.cpp:453)
 
-void TaskManager_ClearTask(int *param_1)
+void TaskManager_ClearTask(overlappedTask *param_1)
 
 {
-  if (param_1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8208b558,0x1c6,0,0xffffffff82000f98,0xffffffff8208b598);
+  if (param_1 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x1c6,0
+                    ,"%s");
   }
   TaskManager_CheckTaskIsInRegisteredTaskSet(param_1);
-  if ((*param_1 == 2) || (dwClearTask(param_1), *param_1 == 2)) {
-    IWNet_Storage_Clear(param_1 + 10);
+  if ((param_1->subsystem == TASKSUBSYSTEM_IWNET_STORAGE) ||
+     (dwClearTask(param_1), param_1->subsystem == TASKSUBSYSTEM_IWNET_STORAGE)) {
+    IWNet_Storage_Clear(&(param_1->u).storageRequest);
   }
   TaskManager_ClearTask_Core(param_1);
   return;
@@ -694,204 +764,223 @@ void TaskManager_ClearTask(int *param_1)
 
 // 824F4FB0  TaskManager_AnyTaskInProgress  (qcommon/com_tasks.cpp:479)
 
-undefined8 TaskManager_AnyTaskInProgress(int param_1)
+bool TaskManager_AnyTaskInProgress(OverlappedTaskSet *param_1)
 
 {
-  char *pcVar1;
+  bool *pbVar1;
   int iVar2;
   
-  TaskManager_AssertTaskSetIsRegistered();
+  TaskManager_AssertTaskSetIsRegistered(param_1);
   iVar2 = 0;
-  pcVar1 = (char *)(param_1 + 0x9c);
+  pbVar1 = &param_1->tasks[0].active;
   do {
-    if (*pcVar1 != '\0') {
-      return 1;
+    if (*pbVar1 != false) {
+      return true;
     }
     iVar2 = iVar2 + 1;
-    pcVar1 = pcVar1 + 0xa0;
+    pbVar1 = pbVar1 + 0xa0;
   } while (iVar2 < 0x20);
-  return 0;
+  return false;
 }
 
 
 // 824F5020  TaskManager_TaskIsInProgress  (qcommon/com_tasks.cpp:494)
 
-undefined8 TaskManager_TaskIsInProgress(int param_1,int param_2)
+bool TaskManager_TaskIsInProgress(OverlappedTaskSet *param_1,int param_2)
 
 {
   int iVar1;
   int *piVar2;
   
-  TaskManager_AssertTaskSetIsRegistered();
+  TaskManager_AssertTaskSetIsRegistered(param_1);
   iVar1 = 0;
-  piVar2 = (int *)(param_1 + 0x98);
-  while ((*(char *)(piVar2 + 1) == '\0' || (*piVar2 != param_2))) {
+  piVar2 = &param_1->tasks[0].type;
+  while ((*(bool *)(piVar2 + 1) == false || (*piVar2 != param_2))) {
     iVar1 = iVar1 + 1;
     piVar2 = piVar2 + 0x28;
     if (0x1f < iVar1) {
-      return 0;
+      return false;
     }
   }
-  return 1;
+  return true;
 }
 
 
 // 824F5098  TaskManager_TaskIsInProgressForController  (qcommon/com_tasks.cpp:514)
 
-void TaskManager_TaskIsInProgressForController(undefined8 param_1,int param_2,uint param_3)
+bool TaskManager_TaskIsInProgressForController(OverlappedTaskSet *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
+  OverlappedTaskSet *pOVar1;
+  undefined1 uVar2;
+  int iVar3;
+  int *piVar4;
   
-  iVar1 = __savegprlr_29();
-  TaskManager_AssertTaskSetIsRegistered();
-  iVar2 = 0;
-  piVar3 = (int *)(iVar1 + 0x98);
-  while (((*(char *)(piVar3 + 1) == '\0' || (*piVar3 != param_2)) ||
-         (*(byte *)((int)piVar3 + 5) != param_3))) {
-    iVar2 = iVar2 + 1;
-    piVar3 = piVar3 + 0x28;
-    if (0x1f < iVar2) {
-      __restgprlr_29(0);
-      return;
+  pOVar1 = (OverlappedTaskSet *)__savegprlr_29(param_1);
+  TaskManager_AssertTaskSetIsRegistered(pOVar1);
+  iVar3 = 0;
+  piVar4 = &pOVar1->tasks[0].type;
+  while (((*(bool *)(piVar4 + 1) == false || (*piVar4 != param_2)) ||
+         ((uint)*(uchar *)((int)piVar4 + 5) != param_3))) {
+    iVar3 = iVar3 + 1;
+    piVar4 = piVar4 + 0x28;
+    if (0x1f < iVar3) {
+      uVar2 = __restgprlr_29(0);
+      return (bool)uVar2;
     }
   }
-  __restgprlr_29(1);
-  return;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 824F5110  TaskManager_CountTasksInProgress  (qcommon/com_tasks.cpp:534)
 
-longlong TaskManager_CountTasksInProgress(int param_1,int param_2)
+int TaskManager_CountTasksInProgress(OverlappedTaskSet *param_1,int param_2)
 
 {
-  longlong lVar1;
+  int iVar1;
   int *piVar2;
   longlong lVar3;
   
-  TaskManager_AssertTaskSetIsRegistered();
-  lVar1 = 0;
-  piVar2 = (int *)(param_1 + 0x98);
+  TaskManager_AssertTaskSetIsRegistered(param_1);
+  iVar1 = 0;
+  piVar2 = &param_1->tasks[0].type;
   lVar3 = 8;
   do {
-    if ((*(char *)(piVar2 + 1) != '\0') && (*piVar2 == param_2)) {
-      lVar1 = lVar1 + 1;
+    if ((*(bool *)(piVar2 + 1) != false) && (*piVar2 == param_2)) {
+      iVar1 = iVar1 + 1;
     }
     if ((*(char *)(piVar2 + 0x29) != '\0') && (piVar2[0x28] == param_2)) {
-      lVar1 = lVar1 + 1;
+      iVar1 = iVar1 + 1;
     }
     if ((*(char *)(piVar2 + 0x51) != '\0') && (piVar2[0x50] == param_2)) {
-      lVar1 = lVar1 + 1;
+      iVar1 = iVar1 + 1;
     }
     if ((*(char *)(piVar2 + 0x79) != '\0') && (piVar2[0x78] == param_2)) {
-      lVar1 = lVar1 + 1;
+      iVar1 = iVar1 + 1;
     }
     piVar2 = piVar2 + 0xa0;
     lVar3 = lVar3 + -1;
   } while (lVar3 != 0);
-  return lVar1;
+  return iVar1;
 }
 
 
 // 824F51D8  TaskManager_TaskFromXOverlapped  (qcommon/com_tasks.cpp:557)
 
-void TaskManager_TaskFromXOverlapped(undefined8 param_1,ulonglong param_2)
+overlappedTask * TaskManager_TaskFromXOverlapped(OverlappedTaskSet *param_1,_XOVERLAPPED *param_2)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
+  overlappedTask *poVar2;
   ulonglong uVar3;
-  longlong lVar4;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar1 = __savegprlr_28();
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_28(param_1);
   if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x231,0,0xffffffff82000f98,0xffffffff8208b5e4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x231,0
+                    ,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x232,0,0xffffffff82000f98,0xffffffff8208b66c);
+  if ((uVar3 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x232,0
+                    ,"%s");
   }
-  TaskManager_AssertTaskSetIsRegistered(uVar1);
-  uVar3 = 0;
-  uVar2 = uVar1 + 0x14;
-  while (((*(char *)((int)uVar2 + 0x88) == '\0' || (*(int *)((int)uVar2 + -0xc) != 1)) ||
-         ((uVar2 & 0xffffffff) != (param_2 & 0xffffffff)))) {
-    uVar3 = uVar3 + 1;
-    uVar2 = uVar2 + 0xa0;
-    if (0x1f < (int)uVar3) {
-      if (DAT_84013128 == 0) {
-        MyAssertHandler(0xffffffff8208b558,0x245,0,0xffffffff8208b65c);
+  TaskManager_AssertTaskSetIsRegistered((OverlappedTaskSet *)uVar1);
+  uVar5 = 0;
+  uVar4 = uVar1 + 0x14;
+  while (((*(char *)((int)uVar4 + 0x88) == '\0' || (*(int *)((int)uVar4 + -0xc) != 1)) ||
+         ((uVar4 & 0xffffffff) != (uVar3 & 0xffffffff)))) {
+    uVar5 = uVar5 + 1;
+    uVar4 = uVar4 + 0xa0;
+    if (0x1f < (int)uVar5) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",
+                        0x245,0,"Task not found");
       }
-      __restgprlr_28(0);
-      return;
+      poVar2 = (overlappedTask *)__restgprlr_28(0);
+      return poVar2;
     }
   }
-  lVar4 = (uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20;
-  if (*(int *)((int)lVar4 + (int)(uVar1 + 8)) != 1) {
-    MyAssertHandler(0xffffffff8208b558,0x240,0,0xffffffff8208b5fc,0xffffffff8208b624);
+  lVar6 = (uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7ffffff) * 0x20;
+  if (*(int *)((int)lVar6 + (int)(uVar1 + 8)) != 1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x240,0
+                    ,"%s\n\t(overlappedTasks[i].subsystem) = %i");
   }
-  __restgprlr_28(lVar4 + uVar1 + 8);
-  return;
+  poVar2 = (overlappedTask *)__restgprlr_28(lVar6 + uVar1 + 8);
+  return poVar2;
 }
 
 
 // 824F5308  TaskManager_TaskToXOverlapped  (qcommon/com_tasks.cpp:589)
 
-int * TaskManager_TaskToXOverlapped(int *param_1)
+_XOVERLAPPED * TaskManager_TaskToXOverlapped(overlappedTask *param_1)
 
 {
-  if (param_1 != (int *)0x0) {
-    if (*(char *)(param_1 + 0x25) == '\0') {
-      MyAssertHandler(0xffffffff8208b558,0x251,0,0xffffffff82000f98,0xffffffff8208b6cc);
+  _XOVERLAPPED *p_Var1;
+  
+  p_Var1 = (_XOVERLAPPED *)0x0;
+  if (param_1 != (overlappedTask *)0x0) {
+    if (param_1->active == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x251
+                      ,0,"%s");
     }
-    if (*param_1 != 1) {
-      MyAssertHandler(0xffffffff8208b558,0x252,0,0xffffffff8208b670,0xffffffff8208b698);
+    if (param_1->subsystem != TASKSUBSYSTEM_NATIVE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x252
+                      ,0,"%s\n\t(overlappedTask->subsystem) = %i");
     }
-    param_1 = param_1 + 3;
+    p_Var1 = &(param_1->u).overlappedIO;
   }
-  return param_1;
+  return p_Var1;
 }
 
 
 // 824F53A8  TaskManager_TaskToIWNetStorageTaskState  (qcommon/com_tasks.cpp:602)
 
-void TaskManager_TaskToIWNetStorageTaskState(void)
+IWNetStorageTaskState * TaskManager_TaskToIWNetStorageTaskState(overlappedTask *param_1)
 
 {
   int *piVar1;
+  IWNetStorageTaskState *pIVar2;
   
-  piVar1 = (int *)__savegprlr_29();
+  piVar1 = (int *)__savegprlr_29(param_1);
   if (piVar1 == (int *)0x0) {
-    MyAssertHandler(0xffffffff8208b558,0x25b,0,0xffffffff82000f98,0xffffffff8208b720);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x25b,0
+                    ,"%s");
   }
   if (*(char *)(piVar1 + 0x25) == '\0') {
-    MyAssertHandler(0xffffffff8208b558,0x25c,0,0xffffffff82000f98,0xffffffff8208b6cc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x25c,0
+                    ,"%s");
   }
   if (*piVar1 != 2) {
-    MyAssertHandler(0xffffffff8208b558,0x25d,0,0xffffffff8208b670,0xffffffff8208b6e4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x25d,0
+                    ,"%s\n\t(overlappedTask->subsystem) = %i");
   }
-  __restgprlr_29(piVar1 + 10);
-  return;
+  pIVar2 = (IWNetStorageTaskState *)__restgprlr_29(piVar1 + 10);
+  return pIVar2;
 }
 
 
 // 824F5450  TaskManager_SetTaskData  (qcommon/com_tasks.cpp:623)
 
-void TaskManager_SetTaskData(undefined8 param_1,undefined4 param_2)
+void TaskManager_SetTaskData(overlappedTask *param_1,void *param_2)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x270,0,0xffffffff82000f98,0xffffffff8208b720);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x270,0
+                    ,"%s");
   }
   if (*(char *)(iVar1 + 0x94) == '\0') {
-    MyAssertHandler(0xffffffff8208b558,0x271,0,0xffffffff82000f98,0xffffffff8208b6cc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x271,0
+                    ,"%s");
   }
-  *(undefined4 *)(iVar1 + 0x98) = param_2;
+  *(void **)(iVar1 + 0x98) = param_2;
   __restgprlr_28();
   return;
 }
@@ -899,19 +988,22 @@ void TaskManager_SetTaskData(undefined8 param_1,undefined4 param_2)
 
 // 824F54D0  TaskManager_GetTaskData  (qcommon/com_tasks.cpp:631)
 
-void TaskManager_GetTaskData(void)
+void * TaskManager_GetTaskData(overlappedTask *param_1)
 
 {
   int iVar1;
+  void *pvVar2;
   
-  iVar1 = __savegprlr_29();
+  iVar1 = __savegprlr_29(param_1);
   if (iVar1 == 0) {
-    MyAssertHandler(0xffffffff8208b558,0x278,0,0xffffffff82000f98,0xffffffff8208b720);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x278,0
+                    ,"%s");
   }
   if (*(char *)(iVar1 + 0x94) == '\0') {
-    MyAssertHandler(0xffffffff8208b558,0x279,0,0xffffffff82000f98,0xffffffff8208b6cc);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_tasks.cpp",0x279,0
+                    ,"%s");
   }
-  __restgprlr_29(*(undefined4 *)(iVar1 + 0x98));
-  return;
+  pvVar2 = (void *)__restgprlr_29(*(undefined4 *)(iVar1 + 0x98));
+  return pvVar2;
 }
 

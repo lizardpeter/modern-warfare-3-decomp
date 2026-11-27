@@ -7,7 +7,7 @@ void __unwind_71414(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,8 @@ void __unwind_71415(void)
 {
   int in_r12;
   
-  bdReference<bdBitBuffer>___bdReference<bdBitBuffer>((ulonglong)*(uint *)(in_r12 + 0x14) + 0xc);
+  bdReference<bdBitBuffer>::~bdReference<bdBitBuffer>
+            ((bdReference<bdBitBuffer> *)(*(int *)(in_r12 + 0x14) + 0xc));
   return;
 }
 
@@ -31,7 +32,8 @@ void __unwind_71416(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>((ulonglong)*(uint *)(in_r12 + 0x14) + 0x14);
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            ((bdReference<bdByteBuffer> *)(*(int *)(in_r12 + 0x14) + 0x14));
   return;
 }
 
@@ -43,7 +45,7 @@ void __unwind_71417(void)
 {
   int in_r12;
   
-  bdBitBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x60));
+  bdBitBuffer::operator_delete(*(void **)(in_r12 + -0x60));
   return;
 }
 
@@ -55,7 +57,7 @@ void __unwind_71418(void)
 {
   int in_r12;
   
-  bdByteBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x60));
+  bdByteBuffer::operator_delete(*(void **)(in_r12 + -0x60));
   return;
 }
 
@@ -67,7 +69,7 @@ void __unwind_71482(void)
 {
   int in_r12;
   
-  bdReferencable___bdReferencable(*(undefined4 *)(in_r12 + 0x14));
+  bdReferencable::~bdReferencable(*(bdReferencable **)(in_r12 + 0x14));
   return;
 }
 
@@ -79,7 +81,8 @@ void __unwind_71483(void)
 {
   int in_r12;
   
-  bdReference<bdBitBuffer>___bdReference<bdBitBuffer>((ulonglong)*(uint *)(in_r12 + 0x14) + 0xc);
+  bdReference<bdBitBuffer>::~bdReference<bdBitBuffer>
+            ((bdReference<bdBitBuffer> *)(*(int *)(in_r12 + 0x14) + 0xc));
   return;
 }
 
@@ -91,7 +94,7 @@ void __unwind_71510(void)
 {
   int in_r12;
   
-  bdBitBuffer__operator_delete(*(undefined4 *)(in_r12 + -0x30));
+  bdBitBuffer::operator_delete(*(void **)(in_r12 + -0x30));
   return;
 }
 

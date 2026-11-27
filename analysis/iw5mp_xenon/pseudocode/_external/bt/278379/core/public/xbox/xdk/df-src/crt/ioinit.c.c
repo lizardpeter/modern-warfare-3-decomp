@@ -2,6 +2,7 @@
 
 // 82924A30  _ioinit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/ioinit.c:112)
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int _ioinit(void)
@@ -20,8 +21,8 @@ int _ioinit(void)
   }
   else {
     iVar2 = 0;
-    DAT_84897db0 = 0x20;
-    DAT_84897dc0 = pvVar1;
+    _nhandle = 0x20;
+    ___pioinfo = pvVar1;
     if (pvVar1 < (void *)((int)pvVar1 + 0x900U)) {
       puVar4 = (undefined1 *)((int)pvVar1 + 5);
       do {
@@ -36,11 +37,11 @@ int _ioinit(void)
         puVar4[0x37] = 0;
         puVar3 = puVar4 + 0x43;
         puVar4 = puVar4 + 0x48;
-      } while (puVar3 < (undefined1 *)((int)DAT_84897dc0 + 0x900));
+      } while (puVar3 < (undefined1 *)((int)___pioinfo + 0x900));
     }
     lVar6 = 3;
     do {
-      puVar5 = (undefined4 *)(iVar2 + (int)DAT_84897dc0);
+      puVar5 = (undefined4 *)(iVar2 + (int)___pioinfo);
       iVar2 = iVar2 + 0x48;
       *(undefined1 *)(puVar5 + 1) = 0xc1;
       *puVar5 = 0xfffffffe;
@@ -59,25 +60,25 @@ int _ioinit(void)
 void _ioterm(void)
 
 {
-  void *_Memory;
   void *pvVar1;
-  undefined4 *puVar2;
+  void *pvVar2;
+  undefined4 *puVar3;
   
-  puVar2 = &DAT_84897dc0;
+  puVar3 = (undefined4 *)&__pioinfo;
   do {
-    _Memory = (void *)*puVar2;
-    if (_Memory != (void *)0x0) {
-      pvVar1 = _Memory;
-      if (_Memory < (void *)((int)_Memory + 0x900)) {
+    pvVar1 = (void *)*puVar3;
+    if (pvVar1 != (void *)0x0) {
+      pvVar2 = pvVar1;
+      if (pvVar1 < (void *)((int)pvVar1 + 0x900)) {
         do {
-          pvVar1 = (void *)((int)pvVar1 + 0x48);
-        } while (pvVar1 < (void *)((int)_Memory + 0x900U));
+          pvVar2 = (void *)((int)pvVar2 + 0x48);
+        } while (pvVar2 < (void *)((int)pvVar1 + 0x900U));
       }
-      free(_Memory);
-      *puVar2 = 0;
+      free(pvVar1);
+      *puVar3 = 0;
     }
-    puVar2 = puVar2 + 1;
-  } while ((int)puVar2 < -0x7b768140);
+    puVar3 = puVar3 + 1;
+  } while ((int)puVar3 < -0x7b768140);
   return;
 }
 

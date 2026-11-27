@@ -2,71 +2,81 @@
 
 // 8247D2C8  SP_info_notnull  (game_mp/g_misc_mp.cpp:13)
 
-void SP_info_notnull(longlong param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SP_info_notnull(gentity_s *param_1)
 
 {
-  G_SetOrigin(param_1,param_1 + 0x138);
+  G_SetOrigin(param_1,(param_1->r).currentOrigin);
   return;
 }
 
 
 // 8247D2D0  SP_light  (game_mp/g_misc_mp.cpp:19)
 
-void SP_light(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void SP_light(gentity_s *param_1)
 
 {
-  undefined4 uVar1;
+  gentity_s *pgVar1;
   int iVar2;
-  int iVar3;
-  double dVar4;
+  ComPrimaryLight *pCVar3;
+  float fVar4;
   uint local_60 [2];
   float local_58;
   float local_54;
   float local_50;
-  undefined1 auStack_48 [16];
-  undefined1 auStack_38 [56];
+  float afStack_48 [4];
+  float afStack_38 [14];
   
-  iVar2 = __savegprlr_28();
-  if (DAT_83581038 == '\0') {
-    MyAssertHandler(0xffffffff82073d48,0x1a,0,0xffffffff82000f98,0xffffffff82073d24);
+  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
+  if (level.spawnVar.spawnVarsValid == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x1a,0,
+                    "%s");
   }
-  iVar3 = G_SpawnInt(1,0xffffffff8203248c,local_60);
-  if (iVar3 == 0) {
-    G_FreeEntity(iVar2);
+  iVar2 = G_SpawnInt(1,"0",(int *)local_60);
+  if (iVar2 == 0) {
+    G_FreeEntity(pgVar1);
     __restgprlr_28();
     return;
   }
-  iVar3 = Com_GetPrimaryLight(local_60[0]);
-  *(uint *)(iVar2 + 0x8c) = local_60[0] & 0xffff;
+  pCVar3 = Com_GetPrimaryLight(local_60[0]);
+  (pgVar1->s).index.brushModel = local_60[0] & 0xffff;
   if ((local_60[0] & 0xffff) != local_60[0]) {
-    MyAssertHandler(0xffffffff82073d48,0x24,1,0xffffffff82073cec);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x24,1,
+                    "self->s.index.primaryLight == primaryLightIndex\n\t%i, %i");
   }
-  dVar4 = (double)ColorNormalize(iVar3 + 4,auStack_48);
-  *(float *)(iVar2 + 0x58) = (float)dVar4;
-  Byte4PackRgba(auStack_48,iVar2 + 0x54);
-  *(undefined1 *)(iVar2 + 0x57) = *(undefined1 *)(iVar3 + 2);
-  *(undefined4 *)(iVar2 + 0x5c) = *(undefined4 *)(iVar3 + 0x34);
-  *(undefined4 *)(iVar2 + 0x60) = *(undefined4 *)(iVar3 + 0x38);
-  *(undefined4 *)(iVar2 + 100) = *(undefined4 *)(iVar3 + 0x3c);
-  local_58 = -*(float *)(iVar3 + 0x10);
-  local_54 = -*(float *)(iVar3 + 0x14);
-  local_50 = -*(float *)(iVar3 + 0x18);
-  vectoangles(&local_58,auStack_38);
-  G_SetAngle(iVar2,auStack_38);
-  G_SetOrigin(iVar2,iVar3 + 0x28);
-  uVar1 = *(undefined4 *)(iVar3 + 0x34);
-  *(undefined4 *)(iVar2 + 0x104) = 0;
-  *(undefined4 *)(iVar2 + 0x108) = 0;
-  *(undefined4 *)(iVar2 + 0x10c) = 0;
-  *(undefined4 *)(iVar2 + 0x110) = uVar1;
-  *(undefined4 *)(iVar2 + 0x114) = uVar1;
-  *(undefined4 *)(iVar2 + 0x118) = uVar1;
-  *(undefined4 *)(iVar2 + 4) = 10;
-  if (*(int *)(iVar2 + 0x11c) != 0) {
-    MyAssertHandler(0xffffffff82073d48,0x36,1,0xffffffff82000f98,0xffffffff82073cd4);
+  fVar4 = ColorNormalize(pCVar3->color,afStack_48);
+  (pgVar1->s).lerp.u.turret.gunAngles[1] = fVar4;
+  Byte4PackRgba(afStack_48,(uchar *)&(pgVar1->s).lerp.u);
+  (pgVar1->s).lerp.u.primaryLight.colorAndExp[3] = pCVar3->exponent;
+  (pgVar1->s).lerp.u.turret.gunAngles[2] = pCVar3->radius;
+  (pgVar1->s).lerp.u.turret.lastBarrelRotChangeTime = (int)pCVar3->cosHalfFovOuter;
+  (pgVar1->s).lerp.u.primaryLight.cosHalfFovInner = pCVar3->cosHalfFovInner;
+  local_58 = -pCVar3->dir[0];
+  local_54 = -pCVar3->dir[1];
+  local_50 = -pCVar3->dir[2];
+  vectoangles(&local_58,afStack_38);
+  G_SetAngle(pgVar1,afStack_38);
+  G_SetOrigin(pgVar1,pCVar3->origin);
+  fVar4 = pCVar3->radius;
+  (pgVar1->r).box.midPoint[0] = 0.0;
+  (pgVar1->r).box.midPoint[1] = 0.0;
+  (pgVar1->r).box.midPoint[2] = 0.0;
+  (pgVar1->r).box.halfSize[0] = fVar4;
+  (pgVar1->r).box.halfSize[1] = fVar4;
+  (pgVar1->r).box.halfSize[2] = fVar4;
+  iVar2 = (pgVar1->r).contents;
+  (pgVar1->s).eType = 10;
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x36,1,
+                    "%s");
   }
-  *(undefined1 *)(iVar2 + 0x16d) = 0x13;
-  SV_LinkEntity(iVar2);
+  pgVar1->handler = '\x13';
+  SV_LinkEntity(pgVar1);
   __restgprlr_28();
   return;
 }
@@ -74,36 +84,41 @@ void SP_light(void)
 
 // 8247D478  TeleportPlayer  (game_mp/g_misc_mp.cpp:68)
 
-void TeleportPlayer(undefined8 param_1,undefined4 *param_2,undefined8 param_3)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void TeleportPlayer(gentity_s *param_1,float *param_2,float *param_3)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  gentity_s *pgVar2;
   
-  iVar2 = __savegprlr_27();
-  if (*(int *)(iVar2 + 0x158) == 0) {
-    MyAssertHandler(0xffffffff82073d48,0x45,0,0xffffffff82000f98,0xffffffff8206bbdc);
+  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
+  if (pgVar2->client == (gclient_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x45,0,
+                    "%s");
   }
-  if (*(int *)(*(int *)(iVar2 + 0x158) + 0x332c) == 0) {
-    MyAssertHandler(0xffffffff82073d48,0x46,0,0xffffffff82000f98,0xffffffff82073d88);
+  if ((pgVar2->client->sess).connected == CON_DISCONNECTED) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x46,0,
+                    "%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x158);
-  *(undefined4 *)(iVar1 + 0x1c) = *param_2;
-  *(undefined4 *)(iVar1 + 0x20) = param_2[1];
-  *(undefined4 *)(iVar1 + 0x24) = param_2[2];
-  *(float *)(*(int *)(iVar2 + 0x158) + 0x24) = *(float *)(*(int *)(iVar2 + 0x158) + 0x24) + 1.0;
-  *(uint *)(*(int *)(iVar2 + 0x158) + 0xf8) = *(uint *)(*(int *)(iVar2 + 0x158) + 0xf8) ^ 2;
-  SetClientViewAngle(iVar2,param_3);
-  if (*(int *)(iVar2 + 0x214) == 0) {
-    *(undefined4 *)(iVar2 + 0x144) = 0;
+  pgVar1 = pgVar2->client;
+  (pgVar1->ps).origin[0] = *param_2;
+  (pgVar1->ps).origin[1] = param_2[1];
+  (pgVar1->ps).origin[2] = param_2[2];
+  (pgVar2->client->ps).origin[2] = (pgVar2->client->ps).origin[2] + 1.0;
+  (pgVar2->client->ps).eFlags = (pgVar2->client->ps).eFlags ^ 2;
+  SetClientViewAngle(pgVar2,param_3);
+  if (pgVar2->tagInfo == (tagInfo_s *)0x0) {
+    (pgVar2->r).currentAngles[0] = 0.0;
   }
-  BG_PlayerStateToEntityState(*(undefined4 *)(iVar2 + 0x158),iVar2,1);
-  iVar1 = *(int *)(iVar2 + 0x158);
-  *(undefined4 *)(iVar2 + 0x138) = *(undefined4 *)(iVar1 + 0x1c);
-  *(undefined4 *)(iVar2 + 0x13c) = *(undefined4 *)(iVar1 + 0x20);
-  *(undefined4 *)(iVar2 + 0x140) = *(undefined4 *)(iVar1 + 0x24);
-  if (*(char *)(iVar2 + 0x100) != '\0') {
-    SV_LinkEntity(iVar2);
+  BG_PlayerStateToEntityState(&pgVar2->client->ps,(entityState_s *)pgVar2,1);
+  pgVar1 = pgVar2->client;
+  (pgVar2->r).currentOrigin[0] = (pgVar1->ps).origin[0];
+  (pgVar2->r).currentOrigin[1] = (pgVar1->ps).origin[1];
+  (pgVar2->r).currentOrigin[2] = (pgVar1->ps).origin[2];
+  if ((pgVar2->r).isLinked != '\0') {
+    SV_LinkEntity(pgVar2);
   }
   __restgprlr_27();
   return;

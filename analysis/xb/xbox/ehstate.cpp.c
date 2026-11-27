@@ -2,7 +2,7 @@
 
 // 82926960  __StateFromControlPc  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:17)
 
-void __StateFromControlPc(undefined8 param_1,ulonglong param_2)
+int __StateFromControlPc(_s_FuncInfo *param_1,ulong param_2)
 
 {
   uint uVar1;
@@ -12,27 +12,31 @@ void __StateFromControlPc(undefined8 param_1,ulonglong param_2)
   int iVar5;
   int iVar6;
   
-  iVar3 = __savegprlr_29();
+  uVar2 = (ulonglong)(int)param_2;
+  iVar3 = __savegprlr_29(param_1);
   if (iVar3 == 0) {
-    inconsistency();
+                    /* WARNING: Subroutine does not return */
+    _inconsistency();
   }
   uVar1 = *(uint *)(iVar3 + 0x14);
   if (uVar1 == 0) {
-    inconsistency();
+                    /* WARNING: Subroutine does not return */
+    _inconsistency();
   }
   if (*(int *)(iVar3 + 0x18) == 0) {
-    inconsistency();
+                    /* WARNING: Subroutine does not return */
+    _inconsistency();
   }
   uVar4 = 0;
   if (uVar1 != 0) {
     iVar6 = *(int *)(iVar3 + 0x18);
     iVar5 = 0;
     do {
-      if ((param_2 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + iVar6)) {
+      if ((uVar2 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + iVar6)) {
         uVar2 = (ulonglong)*(uint *)(uVar4 * 8 + iVar6 + 4);
         goto LAB_829269e4;
       }
-      if ((param_2 & 0xffffffff) < (ulonglong)*(uint *)(iVar5 + iVar6)) {
+      if ((uVar2 & 0xffffffff) < (ulonglong)*(uint *)(iVar5 + iVar6)) {
         if (uVar4 == 0) {
           uVar2 = 0xffffffffffffffff;
           goto LAB_829269e4;
@@ -48,40 +52,41 @@ void __StateFromControlPc(undefined8 param_1,ulonglong param_2)
 LAB_829269e0:
   uVar2 = (ulonglong)*(uint *)(iVar6 + -4);
 LAB_829269e4:
-  __restgprlr_29(uVar2);
-  return;
+  iVar3 = __restgprlr_29(uVar2);
+  return iVar3;
 }
 
 
 // 82926A18  GetCurrentState  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:53)
 
-ulonglong GetCurrentState(undefined8 param_1,undefined4 *param_2,int param_3)
+int GetCurrentState(ulong *param_1,_xDISPATCHER_CONTEXT *param_2,_s_FuncInfo *param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
+  int *piVar1;
+  int iVar2;
   
-  if (((*(int *)(param_3 + 0xc) != 0) && (*(uint **)(param_2[2] + 4) != (uint *)0x0)) &&
-     (uVar1 = **(uint **)(param_2[2] + 4), uVar1 != 0xfffffffe)) {
-    return (ulonglong)uVar1;
+  if (((param_3->nTryBlocks != 0) &&
+      (piVar1 = *(int **)(param_2->EstablisherFrame + 4), piVar1 != (int *)0x0)) &&
+     (iVar2 = *piVar1, iVar2 != -2)) {
+    return iVar2;
   }
-  uVar2 = __StateFromControlPc(param_3,*param_2);
-  return uVar2;
+  iVar2 = __StateFromControlPc(param_3,param_2->ControlPc);
+  return iVar2;
 }
 
 
 // 82926A58  SetState  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:69)
 
-void SetState(int param_1,undefined8 param_2,int param_3,undefined4 param_4)
+void SetState(ulong *param_1,_xDISPATCHER_CONTEXT *param_2,_s_FuncInfo *param_3,int param_4)
 
 {
-  if (*(int *)(param_3 + 0xc) == 0) {
+  if (param_3->nTryBlocks == 0) {
     return;
   }
-  if (*(undefined4 **)(param_1 + 4) == (undefined4 *)0x0) {
+  if ((int *)param_1[1] == (int *)0x0) {
     return;
   }
-  **(undefined4 **)(param_1 + 4) = param_4;
+  *(int *)param_1[1] = param_4;
   return;
 }
 

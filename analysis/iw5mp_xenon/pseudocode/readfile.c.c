@@ -2,81 +2,84 @@
 
 // 828A3118  ReadFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/readfile.c:83)
 
-BOOL ReadFile(HANDLE hFile,LPVOID lpBuffer,DWORD nNumberOfBytesToRead,LPDWORD lpNumberOfBytesRead,
-             LPOVERLAPPED lpOverlapped)
+int ReadFile(void *param_1,void *param_2,ulong param_3,ulong *param_4,_OVERLAPPED *param_5)
 
 {
-  undefined4 *puVar1;
+  _IO_STATUS_BLOCK *p_Var1;
   undefined8 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  BOOL BVar5;
+  _IO_STATUS_BLOCK_u_0 _Var3;
+  _IO_STATUS_BLOCK_u_0 _Var4;
+  int iVar5;
   longlong lVar6;
   longlong lVar7;
   ulonglong uVar8;
-  undefined4 *puVar9;
-  uint local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
+  ulong *puVar9;
+  ulonglong uVar10;
+  _IO_STATUS_BLOCK_u_0 local_50;
+  ulong local_4c;
+  _LARGE_INTEGER local_48 [9];
   
-  uVar3 = (ulonglong)(int)lpOverlapped;
-  uVar8 = (ulonglong)(int)lpNumberOfBytesRead;
-  lVar7 = (longlong)(int)nNumberOfBytesToRead;
-  lVar6 = (longlong)(int)lpBuffer;
-  uVar2 = __savegprlr_26(hFile,lVar6,lVar7);
-  puVar9 = (undefined4 *)uVar8;
+  uVar10 = (ulonglong)(int)param_5;
+  uVar8 = (ulonglong)(int)param_4;
+  lVar7 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  uVar2 = __savegprlr_26(param_1,lVar6,lVar7);
+  puVar9 = (ulong *)uVar8;
   if ((uVar8 & 0xffffffff) != 0) {
     *puVar9 = 0;
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar3 = (**(code **)(PTR_DAT_829a8580 + 0x10))(uVar2,0,0,0,&local_50,lVar6,lVar7,0);
-    if ((int)uVar3 == 0x103) {
-      uVar3 = NtWaitForSingleObjectEx(uVar2,1,0,0);
-      if (-1 < (int)uVar3) {
-        uVar3 = (ulonglong)local_50;
-        goto LAB_828a324c;
+  if ((uVar10 & 0xffffffff) == 0) {
+    _Var4.Status = (*_fileIoHooks->NtReadFile)
+                             ((void *)uVar2,(void *)0x0,
+                              (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
+                              (void *)0x0,(_IO_STATUS_BLOCK *)&local_50,(void *)lVar6,(ulong)lVar7,
+                              (_LARGE_INTEGER *)0x0);
+    if (((_Var4.Status == 0x103) &&
+        (_Var3.Status = NtWaitForSingleObjectEx(uVar2,1,0,0), _Var4 = local_50, _Var3.Status < 0))
+       || (_Var3 = _Var4, _Var4.Status < 0)) {
+      if (_Var3.Status == 0xc0000011) {
+        *puVar9 = 0;
+        goto LAB_828a31cc;
       }
-    }
-    else {
-LAB_828a324c:
-      if (-1 < (int)uVar3) goto LAB_828a31c8;
-    }
-    if ((int)uVar3 != -0x3fffffef) {
-      if ((uVar3 & 0xc0000000) == 0x80000000) {
+      if ((_Var3.Status & 0xc0000000U) == 0x80000000) {
         *puVar9 = local_4c;
       }
       goto LAB_828a328c;
     }
-    *puVar9 = 0;
+LAB_828a31c8:
+    *puVar9 = local_4c;
   }
   else {
-    puVar1 = (undefined4 *)uVar3;
-    local_44 = puVar1[2];
-    local_48 = puVar1[3];
-    *puVar1 = 0x103;
-    uVar3 = (**(code **)(PTR_DAT_829a8580 + 0x10))
-                      (uVar2,puVar1[4],0,-(ulonglong)((puVar1[4] & 1) == 0) & uVar3,uVar3,lVar6,
-                       lVar7,&local_48);
-    iVar4 = (int)uVar3;
-    if ((iVar4 < 0) || (iVar4 == 0x103)) {
-      if ((iVar4 == -0x3fffffef) && (uVar3 = 0xffffffffc0000011, (uVar8 & 0xffffffff) != 0)) {
-        *puVar9 = 0;
+    p_Var1 = (_IO_STATUS_BLOCK *)uVar10;
+    local_48[0]._4_4_ = p_Var1[1].field0_0x0;
+    local_48[0]._0_4_ = p_Var1[1].Information;
+    (p_Var1->field0_0x0).Status = 0x103;
+    _Var3.Status = (*_fileIoHooks->NtReadFile)
+                             ((void *)uVar2,p_Var1[2].field0_0x0.Pointer,
+                              (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
+                              (void *)(-(uint)(((uint)p_Var1[2].field0_0x0.Pointer & 1) == 0) &
+                                      (uint)p_Var1),p_Var1,(void *)lVar6,(ulong)lVar7,local_48);
+    if ((_Var3.Status < 0) || (_Var3.Status == 0x103)) {
+      if (_Var3.Status == 0xc0000011) {
+        if ((uVar8 & 0xffffffff) != 0) {
+          *puVar9 = 0;
+        }
+        _Var3.Pointer = (void *)0xc0000011;
       }
 LAB_828a328c:
-      RtlSetLastNTError(uVar3);
+      RtlSetLastNTError(_Var3.Status);
       uVar2 = 0;
       goto LAB_828a3298;
     }
     if ((uVar8 & 0xffffffff) != 0) {
-      local_4c = puVar1[1];
-LAB_828a31c8:
-      *puVar9 = local_4c;
+      local_4c = p_Var1->Information;
+      goto LAB_828a31c8;
     }
   }
+LAB_828a31cc:
   uVar2 = 1;
 LAB_828a3298:
-  BVar5 = __restgprlr_26(uVar2);
-  return BVar5;
+  iVar5 = __restgprlr_26(uVar2);
+  return iVar5;
 }
 

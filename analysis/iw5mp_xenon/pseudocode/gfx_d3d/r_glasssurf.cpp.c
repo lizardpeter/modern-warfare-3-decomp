@@ -2,8 +2,8 @@
 
 // 82740348  R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>  (gfx_d3d/r_sortsurfs.h:17)
 
-void R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3)
+uint R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
+               (GfxGlassSurf *param_1,uint param_2,GfxGlassSurf *param_3)
 
 {
   ushort uVar1;
@@ -14,208 +14,230 @@ void R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
   uint *puVar6;
   uint uVar7;
   ulonglong uVar8;
-  longlong lVar9;
-  ushort *puVar10;
-  uint uVar11;
-  ushort *puVar12;
-  uint *puVar13;
-  ulonglong uVar14;
-  uint uVar15;
+  ulonglong uVar9;
+  uint uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
+  ushort *puVar13;
+  uint uVar14;
+  ushort *puVar15;
   uint *puVar16;
   ulonglong uVar17;
-  ulonglong uVar18;
+  uint *puVar18;
+  ulonglong uVar19;
+  ulonglong uVar20;
   ushort local_470 [2];
   uint auStack_46c [283];
   
-  puVar6 = (uint *)__savegprlr_19();
+  uVar9 = (ulonglong)(int)param_3;
+  uVar8 = (ulonglong)(int)param_2;
+  puVar6 = (uint *)__savegprlr_19(param_1);
   if (puVar6 == (uint *)0x0) {
-    MyAssertHandler(0xffffffff821c3660,0x1e,0,0xffffffff82000f98,0xffffffff82181e84);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sortsurfs.h",0x1e,0,
+                    "%s");
   }
-  if ((param_3 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c3660,0x1f,0,0xffffffff82000f98,0xffffffff82012428);
+  if ((uVar9 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sortsurfs.h",0x1f,0,
+                    "%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    __restgprlr_19(0);
-    return;
+  if ((uVar8 & 0xffffffff) == 0) {
+    uVar7 = __restgprlr_19(0);
+    return uVar7;
   }
-  uVar15 = 0x1660;
+  uVar7 = 0x1660;
+  uVar19 = 0;
   uVar17 = 0;
-  uVar14 = 0;
-  uVar7 = 0;
-  if ((param_2 & 0xffffffff) != 0) {
-    puVar10 = local_470;
-    puVar16 = puVar6;
+  uVar10 = 0;
+  if ((uVar8 & 0xffffffff) != 0) {
+    puVar13 = local_470;
+    puVar18 = puVar6;
     do {
-      uVar2 = *puVar16;
+      uVar2 = *puVar18;
       uVar3 = uVar2 >> 0x12;
-      if (uVar3 != uVar15) {
-        uVar8 = 0;
-        uVar18 = uVar17;
-        uVar15 = uVar3;
-        if ((uVar17 & 0xffffffff) != 0) {
+      if (uVar3 != uVar7) {
+        uVar11 = 0;
+        uVar20 = uVar19;
+        uVar7 = uVar3;
+        if ((uVar19 & 0xffffffff) != 0) {
           do {
-            uVar14 = (uVar18 + uVar8 & 0xffffffff) >> 1;
-            uVar11 = (uint)*(ushort *)((int)local_470 + (int)(uVar14 << 3));
-            if (uVar11 < uVar3) {
-              uVar8 = uVar14 + 1;
-              uVar14 = uVar18;
+            uVar17 = (uVar20 + uVar11 & 0xffffffff) >> 1;
+            uVar14 = (uint)*(ushort *)((int)local_470 + (int)(uVar17 << 3));
+            if (uVar14 < uVar3) {
+              uVar11 = uVar17 + 1;
+              uVar17 = uVar20;
             }
-            else if (uVar11 <= uVar3) goto LAB_827404b4;
-            uVar18 = uVar14;
-          } while (uVar8 != (uVar14 & 0xffffffff));
+            else if (uVar14 <= uVar3) goto LAB_827404b4;
+            uVar20 = uVar17;
+          } while (uVar11 != (uVar17 & 0xffffffff));
         }
-        if (0x5f < (uVar17 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff821c3660,0x35,0,0xffffffff82000f98,0xffffffff821c3630);
+        if (0x5f < (uVar19 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sortsurfs.h",
+                          0x35,0,"%s");
         }
-        uVar14 = uVar17;
-        if ((uVar18 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          lVar9 = uVar17 - uVar18;
-          puVar12 = puVar10 + 4;
+        uVar17 = uVar19;
+        if ((uVar20 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+          lVar12 = uVar19 - uVar20;
+          puVar15 = puVar13 + 4;
           do {
-            puVar4 = puVar12 + -8;
-            uVar14 = uVar14 - 1;
-            puVar12 = puVar12 + -4;
-            *(undefined8 *)puVar12 = *(undefined8 *)puVar4;
-            lVar9 = lVar9 + -1;
-          } while (lVar9 != 0);
+            puVar4 = puVar15 + -8;
+            uVar17 = uVar17 - 1;
+            puVar15 = puVar15 + -4;
+            *(undefined8 *)puVar15 = *(undefined8 *)puVar4;
+            lVar12 = lVar12 + -1;
+          } while (lVar12 != 0);
         }
-        iVar5 = (int)((uVar14 & 0xffffffff) << 3);
-        uVar17 = uVar17 + 1;
-        puVar10 = puVar10 + 4;
+        iVar5 = (int)((uVar17 & 0xffffffff) << 3);
+        uVar19 = uVar19 + 1;
+        puVar13 = puVar13 + 4;
         *(ushort *)((int)local_470 + iVar5) = (ushort)(uVar2 >> 0x12);
-        *(short *)((int)local_470 + iVar5 + 2) = (short)uVar7;
+        *(short *)((int)auStack_46c + iVar5 + -2) = (short)uVar10;
       }
 LAB_827404b4:
-      puVar16 = puVar16 + 4;
-      *(uint *)((int)local_470 + (int)((uVar14 & 0xffffffff) << 3) + 4) = uVar7;
-      uVar7 = uVar7 + 1;
-    } while ((ulonglong)uVar7 < (param_2 & 0xffffffff));
-    if ((uVar17 & 0xffffffff) != 0) goto LAB_827404f4;
+      puVar18 = puVar18 + 4;
+      *(uint *)((int)auStack_46c + (int)((uVar17 & 0xffffffff) << 3)) = uVar10;
+      uVar10 = uVar10 + 1;
+    } while ((ulonglong)uVar10 < (uVar8 & 0xffffffff));
+    if ((uVar19 & 0xffffffff) != 0) goto LAB_827404f4;
   }
-  MyAssertHandler(0xffffffff821c3660,0x4a,0,0xffffffff82000f98,0xffffffff821c3624);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sortsurfs.h",0x4a,0,
+                  "%s");
 LAB_827404f4:
-  uVar14 = 0;
-  uVar18 = 0;
-  puVar10 = local_470;
+  uVar17 = 0;
+  uVar20 = 0;
+  puVar13 = local_470;
   do {
-    uVar7 = (uint)puVar10[1];
-    uVar1 = *puVar10;
-    uVar15 = *(uint *)(puVar10 + 2);
-    lVar9 = (uVar18 & 0xfffffff) * 0x10 + param_3;
-    puVar16 = puVar6 + uVar7 * 4;
+    uVar10 = (uint)puVar13[1];
+    uVar1 = *puVar13;
+    uVar7 = *(uint *)(puVar13 + 2);
+    lVar12 = (uVar20 & 0xfffffff) * 0x10 + uVar9;
+    puVar18 = puVar6 + uVar10 * 4;
     do {
-      if ((uint)uVar1 == *puVar16 >> 0x12) {
-        uVar2 = puVar16[1];
-        uVar3 = puVar16[2];
-        uVar18 = uVar18 + 1;
-        uVar11 = puVar16[3];
-        puVar13 = (uint *)lVar9;
-        *puVar13 = *puVar16;
-        puVar13[1] = uVar2;
-        puVar13[2] = uVar3;
-        puVar13[3] = uVar11;
-        lVar9 = lVar9 + 0x10;
+      if ((uint)uVar1 == *puVar18 >> 0x12) {
+        uVar2 = puVar18[1];
+        uVar3 = puVar18[2];
+        uVar20 = uVar20 + 1;
+        uVar14 = puVar18[3];
+        puVar16 = (uint *)lVar12;
+        *puVar16 = *puVar18;
+        puVar16[1] = uVar2;
+        puVar16[2] = uVar3;
+        puVar16[3] = uVar14;
+        lVar12 = lVar12 + 0x10;
       }
-      uVar7 = uVar7 + 1;
-      puVar16 = puVar16 + 4;
-    } while (uVar7 <= uVar15);
-    uVar14 = uVar14 + 1;
-    puVar10 = puVar10 + 4;
-  } while ((uVar14 & 0xffffffff) != (uVar17 & 0xffffffff));
-  if ((uVar18 & 0xffffffff) != (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c3660,0x5e,0,0xffffffff82000f98,0xffffffff821c3610);
+      uVar10 = uVar10 + 1;
+      puVar18 = puVar18 + 4;
+    } while (uVar10 <= uVar7);
+    uVar17 = uVar17 + 1;
+    puVar13 = puVar13 + 4;
+  } while ((uVar17 & 0xffffffff) != (uVar19 & 0xffffffff));
+  if ((uVar20 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sortsurfs.h",0x5e,0,
+                    "%s");
   }
-  __restgprlr_19(uVar18);
-  return;
+  uVar7 = __restgprlr_19(uVar20);
+  return uVar7;
 }
 
 
 // 8273FC58  R_BeginGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:44)
 
-undefined8 R_BeginGlassMeshVerts(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+bool R_BeginGlassMeshVerts(void)
 
 {
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821c34e0,0x33,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x33,
+                    0,"%s");
   }
-  DAT_845aa904 = 1;
-  DAT_845aa8f0 = DAT_847b9690;
-  DAT_845aa8f8 = *(undefined4 *)(DAT_84628b00 + 0x13f8);
-  DAT_845aa8fc = *(undefined4 *)(DAT_84628b00 + 0x144c);
-  DAT_845aa8f4 = *(uint *)(DAT_84628b00 + 0x1424) >> 5;
-  DAT_845aa900 = *(undefined4 *)(DAT_84628b00 + 0x1420);
-  return 1;
+  g_glassVertGlob.allowProcess = true;
+  g_glassVertGlob.surfCount = scene.glassSurfCount;
+  g_glassVertGlob.indexCount = frontEndDataOut->mesh[2].indexCount;
+  g_glassVertGlob.verts = (GfxPackedVertex *)frontEndDataOut->mesh[2].vb.verts;
+  g_glassVertGlob.vertCount = (uint)frontEndDataOut->mesh[2].vb.used >> 5;
+  g_glassVertGlob.indices = frontEndDataOut->mesh[2].indices;
+  return true;
 }
 
 
 // 8273FD08  R_EndGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:82)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
 void R_EndGlassMeshVerts(void)
 
 {
-  undefined4 uVar1;
+  uint uVar1;
   
-  if (DAT_84628b00 == 0) {
-    MyAssertHandler(0xffffffff821c34e0,0x57,0,0xffffffff82000f98,0xffffffff821bb4cc);
+  if (frontEndDataOut == (GfxBackEndData *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x57,
+                    0,"%s");
   }
-  uVar1 = DAT_845aa8f8;
-  DAT_845aa904 = 0;
-  DAT_847b9690 = DAT_845aa8f0;
-  *(int *)(DAT_84628b00 + 0x1424) = DAT_845aa8f4 << 5;
-  *(undefined4 *)(DAT_84628b00 + 0x13f8) = uVar1;
+  uVar1 = g_glassVertGlob.indexCount;
+  g_glassVertGlob.allowProcess = false;
+  scene.glassSurfCount = g_glassVertGlob.surfCount;
+  frontEndDataOut->mesh[2].vb.used = g_glassVertGlob.vertCount << 5;
+  frontEndDataOut->mesh[2].indexCount = uVar1;
   return;
 }
 
 
 // 8273FDA8  R_ReserveGlassMeshIndices  (gfx_d3d/r_glasssurf.cpp:110)
 
-void R_ReserveGlassMeshIndices(undefined8 param_1,int *param_2)
+bool R_ReserveGlassMeshIndices(int param_1,r_double_index_t **param_2)
 
 {
   int iVar1;
-  int iVar2;
+  undefined1 uVar2;
+  r_double_index_t *prVar3;
   
-  iVar2 = __savegprlr_29();
-  if (DAT_845aa904 == '\0') {
-    MyAssertHandler(0xffffffff821c34e0,0x6f,0,0xffffffff82000f98,0xffffffff821c3524);
+  iVar1 = __savegprlr_29(param_1);
+  if (g_glassVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x6f,
+                    0,"%s");
   }
-  if (0x4800 < DAT_845aa8f8 + iVar2) {
-    R_WarnOncePerFrame(0x2a);
-    __restgprlr_29(0);
-    return;
+  if (0x4800 < g_glassVertGlob.indexCount + iVar1) {
+    R_WarnOncePerFrame(R_WARN_MAX_GLASS_INDS);
+    uVar2 = __restgprlr_29(0);
+    return (bool)uVar2;
   }
-  iVar1 = DAT_845aa8f8 * 2;
-  DAT_845aa8f8 = DAT_845aa8f8 + iVar2;
-  *param_2 = iVar1 + DAT_845aa900;
-  __restgprlr_29(1);
-  return;
+  prVar3 = (r_double_index_t *)(g_glassVertGlob.indices + g_glassVertGlob.indexCount);
+  g_glassVertGlob.indexCount = g_glassVertGlob.indexCount + iVar1;
+  *param_2 = prVar3;
+  uVar2 = __restgprlr_29(1);
+  return (bool)uVar2;
 }
 
 
 // 8273FE38  R_GlassMeshVertIter_Begin  (gfx_d3d/r_glasssurf.cpp:126)
 
-longlong R_GlassMeshVertIter_Begin(ulonglong param_1)
+GfxPackedVertex * R_GlassMeshVertIter_Begin(ushort param_1)
 
 {
-  if (DAT_845aa904 == '\0') {
-    MyAssertHandler(0xffffffff821c34e0,0x81,0,0xffffffff82000f98,0xffffffff821c3524);
+  if (!g_glassVertGlob.allowProcess) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x81,
+                    0,"%s");
   }
-  return (param_1 & 0xffff) * 0x20 + (ulonglong)DAT_845aa8fc;
+  return g_glassVertGlob.verts + param_1;
 }
 
 
 // 8273FEB0  R_GlassMeshVertIter_Next  (gfx_d3d/r_glasssurf.cpp:137)
 
-longlong R_GlassMeshVertIter_Next(longlong param_1)
+GfxPackedVertex * R_GlassMeshVertIter_Next(GfxPackedVertex *param_1)
 
 {
-  return param_1 + 0x20;
+  return param_1 + 1;
 }
 
 
 // 8273FEB8  R_GlassMeshVertIter_End  (gfx_d3d/r_glasssurf.cpp:146)
 
-void R_GlassMeshVertIter_End(void)
+void R_GlassMeshVertIter_End(GfxPackedVertex *param_1)
 
 {
   return;
@@ -224,51 +246,56 @@ void R_GlassMeshVertIter_End(void)
 
 // 82740010  R_ReserveGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:155)
 
-void R_ReserveGlassMeshVerts(undefined8 param_1,undefined2 *param_2)
+bool R_ReserveGlassMeshVerts(int param_1,ushort *param_2)
 
 {
   uint uVar1;
   int iVar2;
+  undefined1 uVar3;
   
-  iVar2 = __savegprlr_28();
-  if (DAT_845aa904 == '\0') {
-    MyAssertHandler(0xffffffff821c34e0,0x9c,0,0xffffffff82000f98,0xffffffff821c3524);
+  iVar2 = __savegprlr_28(param_1);
+  if (g_glassVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x9c,
+                    0,"%s");
   }
-  uVar1 = DAT_845aa8f4;
-  if (0x2100 < DAT_845aa8f4 + iVar2) {
-    R_WarnOncePerFrame(0x2b);
-    __restgprlr_28(0);
-    return;
+  uVar1 = g_glassVertGlob.vertCount;
+  if (0x2100 < g_glassVertGlob.vertCount + iVar2) {
+    R_WarnOncePerFrame(R_WARN_MAX_GLASS_VERTS);
+    uVar3 = __restgprlr_28(0);
+    return (bool)uVar3;
   }
-  if (DAT_845aa8f4 != (DAT_845aa8f4 & 0xffff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,DAT_845aa8f4,DAT_845aa8f4 & 0xffff
-                   );
+  if (g_glassVertGlob.vertCount != (g_glassVertGlob.vertCount & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  DAT_845aa8f4 = DAT_845aa8f4 + iVar2;
-  *param_2 = (short)uVar1;
-  __restgprlr_28(1);
-  return;
+  g_glassVertGlob.vertCount = g_glassVertGlob.vertCount + iVar2;
+  *param_2 = (ushort)uVar1;
+  uVar3 = __restgprlr_28(1);
+  return (bool)uVar3;
 }
 
 
 // 8273FEC0  R_ReturnGlassMeshIndices  (gfx_d3d/r_glasssurf.cpp:172)
 
-void R_ReturnGlassMeshIndices(void)
+void R_ReturnGlassMeshIndices(int param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if ((int)uVar1 < 0) {
-    MyAssertHandler(0xffffffff821c34e0,0xad,0,0xffffffff821c359c,0xffffffff821c3588,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xad,
+                    0,"%s\n\t(indexCount) = %i");
   }
   if ((uVar1 & 1) != 0) {
-    MyAssertHandler(0xffffffff821c34e0,0xae,0,0xffffffff821c359c,0xffffffff821c3574,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xae,
+                    0,"%s\n\t(indexCount) = %i");
   }
-  if ((ulonglong)DAT_845aa8f8 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c34e0,0xaf,0,0xffffffff82000f98,0xffffffff821c3544);
+  if (g_glassVertGlob.indexCount < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xaf,
+                    0,"%s");
   }
-  DAT_845aa8f8 = DAT_845aa8f8 - (int)uVar1;
+  g_glassVertGlob.indexCount = g_glassVertGlob.indexCount - uVar1;
   __restgprlr_29();
   return;
 }
@@ -276,19 +303,21 @@ void R_ReturnGlassMeshIndices(void)
 
 // 8273FF80  R_ReturnGlassMeshVerts  (gfx_d3d/r_glasssurf.cpp:182)
 
-void R_ReturnGlassMeshVerts(void)
+void R_ReturnGlassMeshVerts(int param_1)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   
-  uVar1 = __savegprlr_29();
+  uVar1 = __savegprlr_29(param_1);
   if ((int)uVar1 < 0) {
-    MyAssertHandler(0xffffffff821c34e0,0xb7,0,0xffffffff821c35e4,0xffffffff821c35fc,uVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xb7,
+                    0,"%s\n\t(vertCount) = %i");
   }
-  if ((ulonglong)DAT_845aa8f4 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff821c34e0,0xb8,0,0xffffffff82000f98,0xffffffff821c35b4);
+  if (g_glassVertGlob.vertCount < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xb8,
+                    0,"%s");
   }
-  DAT_845aa8f4 = DAT_845aa8f4 - (int)uVar1;
+  g_glassVertGlob.vertCount = g_glassVertGlob.vertCount - uVar1;
   __restgprlr_29();
   return;
 }
@@ -296,51 +325,68 @@ void R_ReturnGlassMeshVerts(void)
 
 // 827400C8  R_AddGlassSurf  (gfx_d3d/r_glasssurf.cpp:191)
 
-void R_AddGlassSurf(undefined8 param_1,undefined1 param_2,undefined1 param_3,undefined2 param_4,
-                   undefined4 param_5,ulonglong param_6,ulonglong param_7,ulonglong param_8)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_AddGlassSurf(Material *param_1,uchar param_2,uchar param_3,ushort param_4,
+                   r_double_index_t *param_5,uint param_6,uint param_7,bool param_8)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  uint *puVar4;
+  uint uVar1;
+  uint uVar2;
+  Material *pMVar3;
+  Material *pMVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  GfxGlassSurf *pGVar9;
   undefined4 local_70;
   
-  iVar1 = __savegprlr_21();
-  if ((param_6 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff821c34e0,0xc4,0,0xffffffff82000f98,0xffffffff821bb904);
+  uVar8 = (ulonglong)param_8;
+  uVar7 = (ulonglong)(int)param_7;
+  uVar6 = (ulonglong)(int)param_6;
+  pMVar3 = (Material *)__savegprlr_21(param_1);
+  if ((uVar6 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xc4,
+                    0,"%s");
   }
-  if (DAT_845aa904 == '\0') {
-    MyAssertHandler(0xffffffff821c34e0,0xc5,0,0xffffffff82000f98,0xffffffff821c3524);
+  if (g_glassVertGlob.allowProcess == false) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0xc5,
+                    0,"%s");
   }
-  iVar2 = R_GetSortedMaterial(*(ulonglong *)(iVar1 + 8) >> 0x1d & 0xfff);
-  if (iVar2 != iVar1) {
-    MyAssertHandler(0xffffffff821c34e0,200,0,0xffffffff82000f98,0xffffffff821bb8a8);
+  pMVar4 = R_GetSortedMaterial((uint)((pMVar3->info).drawSurf.packed >> 0x1d) & 0xfff);
+  if (pMVar4 != pMVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",200,0
+                    ,"%s");
   }
-  if (0x2ff < DAT_845aa8f0) {
-    R_WarnOncePerFrame(0x17);
+  uVar2 = g_glassVertGlob.surfCount;
+  if (0x2ff < g_glassVertGlob.surfCount) {
+    R_WarnOncePerFrame(R_WARN_GFX_GLASS_SURF_LIMIT);
     __restgprlr_21();
     return;
   }
-  iVar2 = DAT_845aa8f0 * 0x10;
-  puVar4 = (uint *)(&DAT_84772a00 + iVar2);
-  DAT_845aa8f0 = DAT_845aa8f0 + 1;
-  iVar1 = Material_GetSortedIndex(iVar1);
-  (&DAT_84772a05)[iVar2] = param_3;
-  *puVar4 = iVar1 << 0x12 | *puVar4 & 0x3ffff;
-  (&DAT_84772a02)[iVar2] = param_2;
-  uVar3 = (param_6 & 0xffffffff) / 3;
-  (&DAT_84772a04)[iVar2] = 0;
-  *puVar4 = *puVar4 & 0xfffcff00 | 0x10;
-  if ((int)uVar3 != (int)(uVar3 & 0xffff)) {
-    MyAssertHandler(0xffffffff82016410,0x1ce,0,0xffffffff8201645c,uVar3,uVar3 & 0xffff);
+  pGVar9 = scene.glassSurfs + g_glassVertGlob.surfCount;
+  g_glassVertGlob.surfCount = g_glassVertGlob.surfCount + 1;
+  uVar5 = Material_GetSortedIndex(pMVar3);
+  uVar1 = (pGVar9->drawGroup).packed;
+  scene.glassSurfs[uVar2].reflectionProbeIndex = param_3;
+  (pGVar9->drawGroup).packed = uVar5 << 0x12 | uVar1 & 0x3ffff;
+  scene.glassSurfs[uVar2].drawGroup.fields.sceneLightIndex = param_2;
+  uVar6 = (uVar6 & 0xffffffff) / 3;
+  uVar1 = (pGVar9->drawGroup).packed;
+  uVar5 = (uint)uVar6;
+  scene.glassSurfs[uVar2].pad = '\0';
+  (pGVar9->drawGroup).packed = uVar1 & 0xfffcff00 | 0x10;
+  if (uVar5 != (uVar5 & 0xffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                    ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  *(short *)(&DAT_84772a06 + iVar2) = (short)uVar3;
-  *(undefined4 *)(&DAT_84772a08 + iVar2) = param_5;
-  *(undefined2 *)(&DAT_84772a0c + iVar2) = param_4;
-  if ((param_8 & 0xff) != 0) {
+  scene.glassSurfs[uVar2].triCount = (ushort)uVar6;
+  scene.glassSurfs[uVar2].indices = param_5->value;
+  scene.glassSurfs[uVar2].lightingHandle = param_4;
+  if ((uVar8 & 0xff) != 0) {
     local_70 = CONCAT13(1,CONCAT12(param_3,param_4));
-    *(undefined4 *)(&DAT_847ed8dc + (int)((param_7 & 0xffffffff) << 2)) = local_70;
+    *(undefined4 *)((int)scene.sceneGlass + (int)((uVar7 & 0xffffffff) << 2)) = local_70;
   }
   __restgprlr_21();
   return;
@@ -349,28 +395,31 @@ void R_AddGlassSurf(undefined8 param_1,undefined1 param_2,undefined1 param_3,und
 
 // 82740280  R_EmitGlassSurfs  (gfx_d3d/r_glasssurf.cpp:254)
 
-void R_EmitGlassSurfs(undefined8 param_1,ulonglong param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void R_EmitGlassSurfs(GfxGlassSurfList *param_1,int param_2)
 
 {
   int *piVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
   
-  piVar1 = (int *)__savegprlr_28();
+  piVar1 = (int *)__savegprlr_28(param_1);
   if (piVar1[1] != 0) {
-    MyAssertHandler(0xffffffff821c34e0,0x101,0,0xffffffff82000f98,0xffffffff821c36c0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x101
+                    ,0,"%s");
   }
   if (*piVar1 == 0) {
-    MyAssertHandler(0xffffffff821c34e0,0x102,0,0xffffffff82000f98,0xffffffff821c36a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_glasssurf.cpp",0x102
+                    ,0,"%s");
   }
-  uVar3 = (ulonglong)DAT_847b9690;
-  if ((int)param_2 < (int)DAT_847b9690) {
-    uVar3 = param_2;
+  uVar2 = scene.glassSurfCount;
+  if (param_2 < (int)scene.glassSurfCount) {
+    uVar2 = param_2;
   }
-  iVar2 = R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
-                    (0xffffffff84772a00,uVar3,*piVar1);
-  piVar1[1] = iVar2;
-  DAT_847b9690 = 0;
+  uVar2 = R_StableSortSurfs_All<GfxSortGlassSurfsInterface,GfxGlassSurf>
+                    (scene.glassSurfs,uVar2,(GfxGlassSurf *)*piVar1);
+  piVar1[1] = uVar2;
+  scene.glassSurfCount = 0;
   __restgprlr_28();
   return;
 }

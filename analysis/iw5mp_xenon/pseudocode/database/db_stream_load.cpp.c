@@ -2,43 +2,50 @@
 
 // 823F6B20  Load_Stream  (database/db_stream_load.cpp:17)
 
-void Load_Stream(undefined8 param_1,ulonglong param_2,longlong param_3)
+void Load_Stream(bool param_1,void *param_2,int param_3)
 
 {
-  char cVar2;
-  void *pvVar1;
-  longlong lVar3;
-  undefined1 auStack_b0 [176];
+  uint uVar1;
+  uchar *puVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  int iVar6;
+  longlong lVar5;
+  uchar auStack_b0 [176];
   
-  cVar2 = __savegprlr_27();
-  pvVar1 = (void *)DB_GetStreamPos();
-  if ((bool)cVar2 != (pvVar1 == (void *)param_2)) {
-    MyAssertHandler(0xffffffff8205c9d0,0x17,0,0xffffffff82000f98,0xffffffff8205c9a4);
+  lVar5 = (longlong)param_3;
+  uVar3 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_27(param_1);
+  puVar2 = DB_GetStreamPos();
+  if ((uVar1 & 0xff) != (uint)LZCOUNT((int)puVar2 - (int)(uchar *)uVar3) >> 5) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
+                    0x17,0,"%s");
   }
-  if ((cVar2 != '\0') && ((size_t)param_3 != 0)) {
-    if (DAT_83231c1c == 2) {
-      memset((void *)param_2,0,(size_t)param_3);
-      DB_IncStreamPos(param_3);
+  if (((uVar1 & 0xff) != 0) && (iVar6 = (int)lVar5, iVar6 != 0)) {
+    if (g_streamPosIndex == 2) {
+      memset();
+      DB_IncStreamPos(iVar6);
       __restgprlr_27();
       return;
     }
-    if (DAT_83231c1c == 6) {
-      if ((param_2 & 0xffffffff) != 0) {
-        MyAssertHandler(0xffffffff8205c9d0,0x27,0,0xffffffff82000f98,0xffffffff8205c99c);
+    if (g_streamPosIndex == 6) {
+      if ((uVar3 & 0xffffffff) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp"
+                        ,0x27,0,"%s");
       }
       do {
-        lVar3 = param_3;
-        if (0x80 < (int)param_3) {
-          lVar3 = 0x80;
+        lVar4 = lVar5;
+        if (0x80 < (int)lVar5) {
+          lVar4 = 0x80;
         }
-        DB_ReadXFile(auStack_b0,lVar3,0);
-        param_3 = param_3 - lVar3;
-      } while (param_3 != 0);
+        DB_ReadXFile(auStack_b0,(int)lVar4,0);
+        lVar5 = lVar5 - lVar4;
+      } while (lVar5 != 0);
       __restgprlr_27();
       return;
     }
-    DB_ReadXFile(param_2,param_3,0);
-    DB_IncStreamPos(param_3);
+    DB_ReadXFile((uchar *)uVar3,iVar6,0);
+    DB_IncStreamPos(iVar6);
   }
   __restgprlr_27();
   return;
@@ -47,23 +54,27 @@ void Load_Stream(undefined8 param_1,ulonglong param_2,longlong param_3)
 
 // 823F6C38  DB_ConvertOffsetToAlias  (database/db_stream_load.cpp:60)
 
-void DB_ConvertOffsetToAlias(void)
+void DB_ConvertOffsetToAlias(void *param_1)
 
 {
   int iVar1;
   uint uVar2;
   int *piVar3;
   
-  piVar3 = (int *)__savegprlr_28();
+  piVar3 = (int *)__savegprlr_28(param_1);
   iVar1 = *piVar3;
   if (((iVar1 == 0) || (iVar1 == -1)) || (iVar1 == -2)) {
-    MyAssertHandler(0xffffffff8205c9d0,0x41,0,0xffffffff8205ca6c,0xffffffff8205ca80,iVar1);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
+                    0x41,0,"%s\n\t(offset) = %i");
   }
   uVar2 = iVar1 - 1U >> 0x1c;
   if (6 < uVar2) {
-    MyAssertHandler(0xffffffff8205c9d0,0x45,0,0xffffffff8205ca18,uVar2,7);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
+                    0x45,0,
+                    "streamIndex doesn\'t index ARRAY_COUNT( g_streamZoneMem->blocks )\n\t%i not in [0, %i)"
+                   );
   }
-  *piVar3 = *(int *)(*(int *)(uVar2 * 8 + DAT_83231bf4) + (iVar1 - 1U & 0xfffffff));
+  *piVar3 = *(int *)(g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff));
   __restgprlr_28();
   return;
 }
@@ -71,20 +82,23 @@ void DB_ConvertOffsetToAlias(void)
 
 // 823F6CE8  DB_ConvertOffsetToPointer  (database/db_stream_load.cpp:75)
 
-void DB_ConvertOffsetToPointer(void)
+void DB_ConvertOffsetToPointer(void *param_1)
 
 {
   int iVar1;
   uint uVar2;
   int *piVar3;
   
-  piVar3 = (int *)__savegprlr_29();
+  piVar3 = (int *)__savegprlr_29(param_1);
   iVar1 = *piVar3;
   uVar2 = iVar1 - 1U >> 0x1c;
   if (6 < uVar2) {
-    MyAssertHandler(0xffffffff8205c9d0,0x52,0,0xffffffff8205ca18,uVar2,7);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
+                    0x52,0,
+                    "streamIndex doesn\'t index ARRAY_COUNT( g_streamZoneMem->blocks )\n\t%i not in [0, %i)"
+                   );
   }
-  *piVar3 = *(int *)(uVar2 * 8 + DAT_83231bf4) + (iVar1 - 1U & 0xfffffff);
+  *piVar3 = (int)(g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff));
   __restgprlr_29();
   return;
 }
@@ -92,41 +106,41 @@ void DB_ConvertOffsetToPointer(void)
 
 // 823F6D58  Load_XStringCustom  (database/db_stream_load.cpp:88)
 
-void Load_XStringCustom(undefined4 *param_1)
+void Load_XStringCustom(char **param_1)
 
 {
-  char cVar1;
-  char *pcVar2;
-  char *pcVar3;
+  uchar uVar1;
+  uchar *puVar2;
+  uchar *puVar3;
   
-  pcVar2 = (char *)*param_1;
-  DB_ReadXFile(pcVar2,1,0);
-  cVar1 = *pcVar2;
-  pcVar3 = pcVar2;
-  while (cVar1 != '\0') {
-    pcVar3 = pcVar3 + 1;
-    DB_ReadXFile(pcVar3,1,0);
-    cVar1 = *pcVar3;
+  puVar2 = (uchar *)*param_1;
+  DB_ReadXFile(puVar2,1,0);
+  uVar1 = *puVar2;
+  puVar3 = puVar2;
+  while (uVar1 != '\0') {
+    puVar3 = puVar3 + 1;
+    DB_ReadXFile(puVar3,1,0);
+    uVar1 = *puVar3;
   }
-  DB_IncStreamPos(pcVar3 + (1 - (int)pcVar2));
+  DB_IncStreamPos((int)(puVar3 + (1 - (int)puVar2)));
   return;
 }
 
 
 // 823F6DD8  Load_TempStringCustom  (database/db_stream_load.cpp:109)
 
-void Load_TempStringCustom(int *param_1)
+void Load_TempStringCustom(char **param_1)
 
 {
-  int iVar1;
+  char *pcVar1;
   
-  Load_XStringCustom();
-  if (*param_1 != 0) {
-    iVar1 = SL_GetString(*param_1,4);
-    *param_1 = iVar1;
+  Load_XStringCustom(param_1);
+  if (*param_1 != (char *)0x0) {
+    pcVar1 = (char *)SL_GetString(*param_1,4);
+    *param_1 = pcVar1;
     return;
   }
-  *param_1 = 0;
+  *param_1 = (char *)0x0;
   return;
 }
 

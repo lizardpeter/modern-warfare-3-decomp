@@ -2,6 +2,8 @@
 
 // 82605700  PMem_EnableSoundAlloc  (universal/physicalmemory.cpp:251)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_EnableSoundAlloc(void)
 
 {
@@ -13,6 +15,8 @@ void PMem_EnableSoundAlloc(void)
 
 
 // 82605718  PMem_DisableSoundAlloc  (universal/physicalmemory.cpp:257)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void PMem_DisableSoundAlloc(void)
 
@@ -26,119 +30,126 @@ void PMem_DisableSoundAlloc(void)
 
 // 82605730  Sound_PhysicalAlloc  (universal/physicalmemory.cpp:263)
 
-void Sound_PhysicalAlloc(void)
+void * Sound_PhysicalAlloc(uint param_1)
 
 {
-  undefined4 uVar1;
-  ulonglong uVar2;
+  uint uVar1;
+  void *pvVar2;
   
-  uVar2 = __savegprlr_29();
-  Sys_EnterCriticalSection(4);
-  if (((uVar2 & 0xffffffff) < 0x2080) || (0x2100 < (uVar2 & 0xffffffff))) {
-    MyAssertHandler(0xffffffff8217ce88,0x10c,0,0xffffffff8217cdf8,uVar2,0x2080,0x2100);
+  uVar1 = __savegprlr_29(param_1);
+  Sys_EnterCriticalSection(CRITSECT_SOUND_ALLOC);
+  if ((uVar1 < 0x2080) || (0x2100 < uVar1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x10c,0,
+                    "size not in [SOUND_PHYSICAL_ALIGNMENT * (SOUND_PHYSICAL_BLOCKS - 1), SOUND_PHYSICAL_ALIGNMENT * SOUND_PHYSICAL_BLOCKS]\n\t%i not in [%i, %i]"
+                   );
   }
   if (DAT_84123254 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x10d,0,0xffffffff8217cdac,0xffffffff8217cdd4);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x10d,0,"%s\n\t(g_soundPhysicalMemoryCount) = %i");
   }
-  if (0x2100 < (uVar2 & 0xffffffff)) {
-    Sys_LeaveCriticalSection(4);
-    __restgprlr_29(0);
-    return;
+  if (0x2100 < uVar1) {
+    Sys_LeaveCriticalSection(CRITSECT_SOUND_ALLOC);
+    pvVar2 = (void *)__restgprlr_29(0);
+    return pvVar2;
   }
   DAT_84123254 = DAT_84123254 + -1;
-  uVar1 = (&DAT_84123558)[DAT_84123254];
-  Sys_LeaveCriticalSection(4);
-  __restgprlr_29(uVar1);
-  return;
+  pvVar2 = g_soundPhysicalMemory[DAT_84123254];
+  Sys_LeaveCriticalSection(CRITSECT_SOUND_ALLOC);
+  pvVar2 = (void *)__restgprlr_29(pvVar2);
+  return pvVar2;
 }
 
 
 // 82605800  Sound_PhysicalFree  (universal/physicalmemory.cpp:288)
 
-void Sound_PhysicalFree(undefined4 param_1)
+void Sound_PhysicalFree(void *param_1)
 
 {
-  uint uVar1;
+  void **ppvVar1;
   
-  Sys_EnterCriticalSection(4);
-  uVar1 = DAT_84123254;
+  Sys_EnterCriticalSection(CRITSECT_SOUND_ALLOC);
   if (0x35 < DAT_84123254) {
-    MyAssertHandler(0xffffffff8217ce88,0x123,0,0xffffffff8217cdac,0xffffffff8217ced0);
-    uVar1 = DAT_84123254;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x123,0,"%s\n\t(g_soundPhysicalMemoryCount) = %i");
   }
-  DAT_84123254 = uVar1 + 1;
-  (&DAT_84123558)[uVar1] = param_1;
-  Sys_LeaveCriticalSection(4);
+  ppvVar1 = g_soundPhysicalMemory + DAT_84123254;
+  DAT_84123254 = DAT_84123254 + 1;
+  *ppvVar1 = param_1;
+  Sys_LeaveCriticalSection(CRITSECT_SOUND_ALLOC);
   return;
 }
 
 
 // 82605890  Sound_Alloc  (universal/physicalmemory.cpp:301)
 
-void Sound_Alloc(void)
+void * Sound_Alloc(uint param_1)
 
 {
-  void *_Dst;
-  ulonglong uVar1;
+  uint uVar1;
+  void *pvVar2;
   
-  uVar1 = __savegprlr_29();
-  Sys_EnterCriticalSection(4);
-  if (0x960 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217ce88,0x132,0,0xffffffff8203b444,0xffffffff8217cfc8,uVar1);
+  uVar1 = __savegprlr_29(param_1);
+  Sys_EnterCriticalSection(CRITSECT_SOUND_ALLOC);
+  if (0x960 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x132,0,"%s\n\t(size) = %i");
   }
-  if (DAT_84123634 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x133,0,0xffffffff8217cf8c,0xffffffff8217cfac);
+  if (g_soundMemoryCount == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x133,0,"%s\n\t(g_soundMemoryCount) = %i");
   }
-  DAT_84123634 = DAT_84123634 + -1;
-  _Dst = (void *)(&DAT_84123258)[DAT_84123634];
-  memset(_Dst,0,(size_t)uVar1);
-  Sys_LeaveCriticalSection(4);
-  __restgprlr_29(_Dst);
-  return;
+  g_soundMemoryCount = g_soundMemoryCount - 1;
+  pvVar2 = g_soundMemory[g_soundMemoryCount];
+  memset();
+  Sys_LeaveCriticalSection(CRITSECT_SOUND_ALLOC);
+  pvVar2 = (void *)__restgprlr_29(pvVar2);
+  return pvVar2;
 }
 
 
 // 82605948  Sound_Free  (universal/physicalmemory.cpp:320)
 
-void Sound_Free(undefined4 param_1)
+void Sound_Free(void *param_1)
 
 {
-  uint uVar1;
+  void **ppvVar1;
   
-  Sys_EnterCriticalSection(4);
-  uVar1 = DAT_84123634;
-  if (0x35 < DAT_84123634) {
-    MyAssertHandler(0xffffffff8217ce88,0x143,0,0xffffffff8217cf8c,0xffffffff8217cfd8);
-    uVar1 = DAT_84123634;
+  Sys_EnterCriticalSection(CRITSECT_SOUND_ALLOC);
+  if (0x35 < g_soundMemoryCount) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x143,0,"%s\n\t(g_soundMemoryCount) = %i");
   }
-  DAT_84123634 = uVar1 + 1;
-  (&DAT_84123258)[uVar1] = param_1;
-  Sys_LeaveCriticalSection(4);
+  ppvVar1 = g_soundMemory + g_soundMemoryCount;
+  g_soundMemoryCount = g_soundMemoryCount + 1;
+  *ppvVar1 = param_1;
+  Sys_LeaveCriticalSection(CRITSECT_SOUND_ALLOC);
   return;
 }
 
 
 // 82607650  PMem_SoundInitMemory  (universal/physicalmemory.cpp:333)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_SoundInitMemory(void)
 
 {
-  ulonglong uVar1;
-  void *_Dst;
+  SoundMemory *pSVar1;
   
   __savegprlr_27();
-  if (DAT_84123334 != (void *)0x0) {
-    MyAssertHandler(0xffffffff8217ce88,0x150,0,0xffffffff82000f98,0xffffffff8217d6b0);
+  if (g_soundMemorySlot != (SoundMemory *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x150,0,"%s");
   }
-  uVar1 = PMem_AllocFromSource_NoDebug(0x6f600,0x80,4,0);
-  _Dst = (void *)uVar1;
-  memset(_Dst,0x99,0x6f600);
-  DAT_84123334 = _Dst;
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x153,0,0xffffffff82000f98,0xffffffff8217d06c);
-    uVar1 = ZEXT48(DAT_84123334);
+  pSVar1 = PMem_AllocFromSource_NoDebug(0x6f600,0x80,4,PMEM_SOURCE_EXTERNAL);
+  memset();
+  g_soundMemorySlot = pSVar1;
+  if (pSVar1 == (SoundMemory *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x153,0,"%s");
   }
-  track_static_alloc_internal(uVar1,0x6f600,0xffffffff8217d6a0,0xe);
+  track_static_alloc_internal(g_soundMemorySlot,0x6f600,"PMem_SoundInit",0xe);
   __restgprlr_27();
   return;
 }
@@ -146,45 +157,50 @@ void PMem_SoundInitMemory(void)
 
 // 826059D8  PMem_SoundInit  (universal/physicalmemory.cpp:347)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_SoundInit(void)
 
 {
-  int *piVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  undefined *puVar4;
+  void **ppvVar1;
+  int *piVar2;
+  SoundMemory *pSVar3;
+  uchar (*pauVar4) [2400];
   longlong lVar5;
   
-  puVar4 = &DAT_84123860;
-  if (DAT_84123334 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x15e,0,0xffffffff82000f98,0xffffffff8217d06c);
+  pauVar4 = g_soundMemoryBuf;
+  if (g_soundMemorySlot == (SoundMemory *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x15e,0,"%s");
   }
-  piVar1 = &DAT_84123554;
+  ppvVar1 = &g_xmemHeap;
   lVar5 = 0x36;
-  iVar3 = DAT_84123334;
+  pSVar3 = g_soundMemorySlot;
   do {
-    piVar1 = piVar1 + 1;
-    *piVar1 = iVar3;
-    iVar3 = iVar3 + 0x2100;
+    ppvVar1 = ppvVar1 + 1;
+    *ppvVar1 = pSVar3;
+    pSVar3 = pSVar3 + 1;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   DAT_84123254 = 0x36;
-  puVar2 = &DAT_84123254;
+  piVar2 = &DAT_84123254;
   lVar5 = 0x36;
   do {
-    puVar2 = puVar2 + 1;
-    *puVar2 = puVar4;
-    puVar4 = puVar4 + 0x960;
+    piVar2 = piVar2 + 1;
+    *piVar2 = (int)pauVar4;
+    pauVar4 = pauVar4 + 1;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  DAT_84123634 = 0x36;
+  g_soundMemoryCount = 0x36;
   return;
 }
 
 
 // 82605A88  PMem_UsingFullMemory  (universal/physicalmemory.cpp:365)
 
-undefined8 PMem_UsingFullMemory(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PMem_UsingFullMemory(void)
 
 {
   return 0;
@@ -193,7 +209,9 @@ undefined8 PMem_UsingFullMemory(void)
 
 // 82605A90  PMem_GetPhysicalMemorySize  (universal/physicalmemory.cpp:373)
 
-undefined8 PMem_GetPhysicalMemorySize(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PMem_GetPhysicalMemorySize(void)
 
 {
   return 0x19e00000;
@@ -202,46 +220,53 @@ undefined8 PMem_GetPhysicalMemorySize(void)
 
 // 82605A98  PMem_InitPhysicalMemory  (universal/physicalmemory.cpp:379)
 
-void PMem_InitPhysicalMemory(undefined8 param_1,ulonglong param_2,undefined4 param_3)
+void PMem_InitPhysicalMemory(PhysicalMemory *param_1,void *param_2,uint param_3)
 
 {
-  undefined4 *_Dst;
-  void *pvVar1;
+  undefined4 *puVar1;
+  ulonglong uVar2;
   
-  _Dst = (undefined4 *)__savegprlr_27();
-  if (_Dst == (undefined4 *)0x0) {
-    MyAssertHandler(0xffffffff8217ce88,0x17c,0,0xffffffff82000f98,0xffffffff8217d088);
+  uVar2 = (ulonglong)(int)param_2;
+  puVar1 = (undefined4 *)__savegprlr_27(param_1);
+  if (puVar1 == (undefined4 *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x17c,0,"%s");
   }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x17d,0,0xffffffff82000f98,0xffffffff8217d080);
+  if ((uVar2 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x17d,0,"%s");
   }
-  pvVar1 = memset(_Dst,0,0x21c);
-  *_Dst = (int)param_2;
-  _Dst[0x46] = param_3;
-  __restgprlr_27(pvVar1);
+  memset();
+  *puVar1 = (int)uVar2;
+  puVar1[0x46] = param_3;
+  __restgprlr_27();
   return;
 }
 
 
 // 82605B28  PMem_Init  (universal/physicalmemory.cpp:390)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_Init(void)
 
 {
-  ulonglong uVar1;
+  uchar *puVar1;
   
   __savegprlr_25();
-  uVar1 = XPhysicalAlloc(0x19e00000,0xffffffffffffffff,0,0x20000404);
-  if ((uVar1 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x1ed,0,0xffffffff82000f98,0xffffffff8217d080);
+  puVar1 = XPhysicalAlloc(0x19e00000,0xffffffff,0,0x20000404);
+  if (puVar1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x1ed,0,"%s");
   }
-  PMem_InitPhysicalMemory(0xffffffff84123638,uVar1,0x19e00000);
-  PMem_InitPhysicalMemory(0xffffffff84123338,uVar1 + 0x19e00000,0);
-  ImageCache_GiveMemory(uVar1,uVar1 + 0x19e00000);
-  DAT_84123854 = XPhysicalAlloc(0x1000,0xffffffffffffffff,0,0x204);
-  DAT_84123858 = XPhysicalAlloc(0x1000,0xffffffffffffffff,0,4);
-  if (DAT_84123858 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x1fa,0,0xffffffff82000f98,0xffffffff8217d090);
+  PMem_InitPhysicalMemory(&g_mem,puVar1,0x19e00000);
+  PMem_InitPhysicalMemory(&g_scriptmem,puVar1 + 0x19e00000,0);
+  ImageCache_GiveMemory(puVar1,puVar1 + 0x19e00000);
+  DAT_84123854 = XPhysicalAlloc(0x1000,0xffffffff,0,0x204);
+  g_debugMemory = XPhysicalAlloc(0x1000,0xffffffff,0,4);
+  if (g_debugMemory == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x1fa,0,"%s");
   }
   __restgprlr_25();
   return;
@@ -250,27 +275,29 @@ void PMem_Init(void)
 
 // 82605C20  PMem_GiveMemory  (universal/physicalmemory.cpp:679)
 
-void PMem_GiveMemory(void)
+void PMem_GiveMemory(uint param_1)
 
 {
-  int iVar2;
-  char cVar3;
-  ulonglong uVar1;
+  int iVar1;
+  bool bVar3;
+  uchar *puVar2;
   longlong lVar4;
   
-  iVar2 = __savegprlr_25();
-  cVar3 = Sys_IsMainThread();
-  if (cVar3 == '\0') {
-    MyAssertHandler(0xffffffff8217ce88,0x2ab,0,0xffffffff82000f98,0xffffffff82010b48);
+  iVar1 = __savegprlr_25(param_1);
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x2ab,0,"%s");
   }
-  if (iVar2 != 0) {
-    lVar4 = (ulonglong)(iVar2 - 1U >> 0x10) + 1;
+  if (iVar1 != 0) {
+    lVar4 = (ulonglong)(iVar1 - 1U >> 0x10) + 1;
     do {
-      uVar1 = XPhysicalAlloc(0x10000,0xffffffffffffffff,0,0x20000404);
-      if ((uVar1 & 0xffffffff) == 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x2b0,0,0xffffffff82000f98,0xffffffff8217d080);
+      puVar2 = XPhysicalAlloc(0x10000,0xffffffff,0,0x20000404);
+      if (puVar2 == (uchar *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x2b0,0,"%s");
       }
-      ImageCache_GiveMemory(uVar1,uVar1 + 0x10000);
+      ImageCache_GiveMemory(puVar2,puVar2 + 0x10000);
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
@@ -282,6 +309,8 @@ void PMem_GiveMemory(void)
 
 // 82605CF0  PMem_FillInMemoryHoles  (universal/physicalmemory.cpp:701)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_FillInMemoryHoles(void)
 
 {
@@ -292,23 +321,25 @@ void PMem_FillInMemoryHoles(void)
 
 // 82605CF8  PMem_BeginAllocInPrim  (universal/physicalmemory.cpp:709)
 
-void PMem_BeginAllocInPrim(undefined8 param_1,int param_2)
+void PMem_BeginAllocInPrim(PhysicalMemoryPrim *param_1,char *param_2)
 
 {
   int iVar1;
   int *piVar2;
   
-  piVar2 = (int *)__savegprlr_28();
+  piVar2 = (int *)__savegprlr_28(param_1);
   if (*piVar2 != 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x2c8,0,0xffffffff82000f98,0xffffffff8217d0d0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x2c8,0,"%s");
   }
   if (0x1f < (uint)piVar2[1]) {
-    MyAssertHandler(0xffffffff8217ce88,0x2c9,0,0xffffffff82000f98,0xffffffff8217d0a0);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x2c9,0,"%s");
   }
   iVar1 = piVar2[1];
-  *piVar2 = param_2;
+  *piVar2 = (int)param_2;
   piVar2[1] = iVar1 + 1;
-  piVar2[iVar1 * 2 + 3] = param_2;
+  piVar2[iVar1 * 2 + 3] = (int)param_2;
   piVar2[iVar1 * 2 + 4] = piVar2[2];
   __restgprlr_28();
   return;
@@ -317,24 +348,29 @@ void PMem_BeginAllocInPrim(undefined8 param_1,int param_2)
 
 // 82605DA0  PMem_BeginAlloc  (universal/physicalmemory.cpp:726)
 
-void PMem_BeginAlloc(undefined8 param_1,ulonglong param_2)
+void PMem_BeginAlloc(char *param_1,uint param_2)
 
 {
   int iVar1;
   int iVar2;
-  undefined8 uVar3;
+  char *pcVar3;
+  ulonglong uVar4;
   int *in_r13;
   
-  uVar3 = __savegprlr_27();
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217ce88,0x2d7,0,0xffffffff8217d11c,param_2,2);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_27(param_1);
+  if (1 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x2d7,0,"allocType doesn\'t index PHYS_ALLOC_COUNT\n\t%i not in [0, %i)");
   }
-  PMem_BeginAllocInPrim(param_2 * 0x10c + -0x7bedc9c4,uVar3);
-  PMem_BeginAllocInPrim(param_2 * 0x10c + -0x7bedccc4,uVar3);
+  iVar2 = (int)uVar4;
+  PMem_BeginAllocInPrim(g_mem.prim + iVar2,pcVar3);
+  PMem_BeginAllocInPrim(g_scriptmem.prim + iVar2,pcVar3);
   iVar1 = *in_r13;
-  iVar2 = (int)param_2 + 0xf8;
+  iVar2 = iVar2 + 0xf8;
   if (*(char *)(iVar2 + iVar1) != '\0') {
-    MyAssertHandler(0xffffffff8217ce88,0x2df,0,0xffffffff8217d0e4,0xffffffff8217d0fc,param_2);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x2df,0,"%s\n\t(allocType) = %i");
     *(undefined1 *)(iVar2 + iVar1) = 1;
     __restgprlr_27();
     return;
@@ -347,49 +383,53 @@ void PMem_BeginAlloc(undefined8 param_1,ulonglong param_2)
 
 // 82605E70  PMem_EndAllocInPrim  (universal/physicalmemory.cpp:742)
 
-void PMem_EndAllocInPrim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void PMem_EndAllocInPrim(PhysicalMemory *param_1,char *param_2,uint param_3)
 
 {
-  int iVar1;
-  uint *puVar3;
-  longlong lVar2;
-  longlong lVar4;
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  uchar *puVar4;
   ulonglong uVar5;
-  uint *puVar6;
+  uchar *puVar6;
   ulonglong uVar7;
+  uint *puVar8;
+  uint uVar9;
   
-  puVar3 = (uint *)__savegprlr_28();
-  iVar1 = (int)param_3;
-  puVar6 = puVar3 + iVar1 * 0x43 + 1;
-  uVar5 = (ulonglong)puVar3[iVar1 * 0x43 + 3];
-  if ((param_3 & 0xffffffff) == 0) {
-    uVar7 = uVar5 + 0xffff & 0xffff0000;
-    if (uVar7 == uVar5) goto LAB_82605ed8;
-    lVar4 = *puVar3 + uVar7;
-    lVar2 = *puVar3 + uVar5;
+  uVar7 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  piVar3 = (int *)__savegprlr_28(param_1);
+  iVar2 = (int)uVar7;
+  puVar8 = (uint *)(piVar3 + iVar2 * 0x43 + 1);
+  uVar1 = piVar3[iVar2 * 0x43 + 3];
+  if ((uVar7 & 0xffffffff) == 0) {
+    uVar9 = uVar1 + 0xffff & 0xffff0000;
+    if (uVar9 == uVar1) goto LAB_82605ed8;
+    puVar6 = (uchar *)(*piVar3 + uVar9);
+    puVar4 = (uchar *)(*piVar3 + uVar1);
   }
   else {
-    uVar7 = (ulonglong)puVar3[iVar1 * 0x43 + 3] & 0xffff0000;
-    if (uVar7 == uVar5) goto LAB_82605ed8;
-    lVar4 = *puVar3 + uVar5;
-    lVar2 = *puVar3 + uVar7;
+    uVar9 = uVar1 & 0xffff0000;
+    if (uVar9 == uVar1) goto LAB_82605ed8;
+    puVar6 = (uchar *)(*piVar3 + uVar1);
+    puVar4 = (uchar *)(*piVar3 + uVar9);
   }
-  ImageCache_FreeMemory(lVar2,lVar4);
+  ImageCache_FreeMemory(puVar4,puVar6);
 LAB_82605ed8:
-  puVar3[iVar1 * 0x43 + 3] = (uint)uVar7;
-  if ((ulonglong)*puVar6 != (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217ce88,0x301,0,0xffffffff82000f98,0xffffffff8217d174);
+  piVar3[iVar2 * 0x43 + 3] = uVar9;
+  if ((ulonglong)*puVar8 != (uVar5 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x301,0,"%s");
   }
-  *puVar6 = 0;
-  if (puVar3[iVar1 * 0x43 + 2] == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x305,0,0xffffffff82000f98,0xffffffff8217d158);
+  *puVar8 = 0;
+  if (piVar3[iVar2 * 0x43 + 2] == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x305,0,"%s");
   }
-  uVar5 = (ulonglong)
-          ((int)((ulonglong)puVar3[iVar1 * 0x43 + 3] -
-                (ulonglong)puVar6[(puVar3[iVar1 * 0x43 + 2] + 1) * 2]) >> 0x1f);
+  uVar1 = (int)(piVar3[iVar2 * 0x43 + 3] - puVar8[(piVar3[iVar2 * 0x43 + 2] + 1) * 2]) >> 0x1f;
   track_physical_alloc
-            (((ulonglong)puVar3[iVar1 * 0x43 + 3] -
-              (ulonglong)puVar6[(puVar3[iVar1 * 0x43 + 2] + 1) * 2] ^ uVar5) - uVar5,param_2,10);
+            ((piVar3[iVar2 * 0x43 + 3] - puVar8[(piVar3[iVar2 * 0x43 + 2] + 1) * 2] ^ uVar1) - uVar1
+             ,(char *)uVar5,10);
   __restgprlr_28();
   return;
 }
@@ -397,26 +437,30 @@ LAB_82605ed8:
 
 // 82605F80  PMem_EndAlloc  (universal/physicalmemory.cpp:782)
 
-void PMem_EndAlloc(undefined8 param_1,ulonglong param_2)
+void PMem_EndAlloc(char *param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
-  undefined8 uVar3;
+  uint uVar2;
+  char *pcVar3;
+  ulonglong uVar4;
   int *in_r13;
   
-  uVar3 = __savegprlr_27();
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217ce88,0x30f,0,0xffffffff8217d11c,param_2,2);
+  uVar4 = (ulonglong)(int)param_2;
+  pcVar3 = (char *)__savegprlr_27(param_1);
+  if (1 < (uVar4 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x30f,0,"allocType doesn\'t index PHYS_ALLOC_COUNT\n\t%i not in [0, %i)");
   }
   iVar1 = *in_r13;
-  iVar2 = (int)param_2 + 0xf8;
-  if (*(char *)(iVar2 + iVar1) == '\0') {
-    MyAssertHandler(0xffffffff8217ce88,0x312,0,0xffffffff8217d0e4,0xffffffff8217d18c,param_2);
+  uVar2 = (uint)uVar4;
+  if (*(char *)(uVar2 + 0xf8 + iVar1) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x312,0,"%s\n\t(allocType) = %i");
   }
-  *(undefined1 *)(iVar2 + iVar1) = 0;
-  PMem_EndAllocInPrim(0xffffffff84123638,uVar3,param_2);
-  PMem_EndAllocInPrim(0xffffffff84123338,uVar3,param_2);
+  *(undefined1 *)(uVar2 + 0xf8 + iVar1) = 0;
+  PMem_EndAllocInPrim(&g_mem,pcVar3,uVar2);
+  PMem_EndAllocInPrim(&g_scriptmem,pcVar3,uVar2);
   __restgprlr_27();
   return;
 }
@@ -424,64 +468,74 @@ void PMem_EndAlloc(undefined8 param_1,ulonglong param_2)
 
 // 82606038  PMem_FreeIndex  (universal/physicalmemory.cpp:799)
 
-void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void PMem_FreeIndex(PhysicalMemory *param_1,uint param_2,uint param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  uint *puVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  char *pcVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int *piVar5;
   ulonglong uVar6;
-  uint *puVar7;
+  ulonglong uVar7;
+  int iVar8;
+  int *piVar9;
   
-  puVar3 = (uint *)__savegprlr_24();
-  iVar2 = (int)param_3;
-  puVar7 = puVar3 + iVar2 * 0x43 + 1;
-  if (*puVar7 != 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x32a,0,0xffffffff82000f98,0xffffffff8217d0d0);
+  uVar7 = (ulonglong)(int)param_3;
+  uVar6 = (ulonglong)(int)param_2;
+  piVar5 = (int *)__savegprlr_24(param_1);
+  iVar4 = (int)uVar7;
+  piVar9 = piVar5 + iVar4 * 0x43 + 1;
+  if (*piVar9 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x32a,0,"%s");
   }
-  iVar1 = (int)param_2;
-  uVar5 = puVar7[iVar1 * 2 + 3];
-  if (uVar5 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x330,0,0xffffffff82000f98,0xffffffff82021a74);
+  iVar8 = (int)uVar6;
+  pcVar1 = (char *)piVar9[iVar8 * 2 + 3];
+  if (pcVar1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x330,0,"%s");
   }
-  puVar7[iVar1 * 2 + 3] = 0;
-  if ((param_2 & 0xffffffff) != (ulonglong)(puVar3[iVar2 * 0x43 + 2] - 1)) {
-    MyAssertHandler(0xffffffff8217ce88,0x336,0,0xffffffff82065348,0xffffffff8217d258,uVar5);
+  piVar9[iVar8 * 2 + 3] = 0;
+  if ((uVar6 & 0xffffffff) != (ulonglong)(piVar5[iVar4 * 0x43 + 2] - 1)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x336,0,"%s\n\t(name) = %s");
   }
-  uVar4 = (ulonglong)
-          ((int)((ulonglong)puVar3[iVar2 * 0x43 + 3] - (ulonglong)puVar7[iVar1 * 2 + 4]) >> 0x1f);
+  uVar3 = piVar5[iVar4 * 0x43 + 3] - piVar9[iVar8 * 2 + 4] >> 0x1f;
   track_physical_alloc
-            (-(((ulonglong)puVar3[iVar2 * 0x43 + 3] - (ulonglong)puVar7[iVar1 * 2 + 4] ^ uVar4) -
-              uVar4),uVar5,10);
-  uVar4 = (ulonglong)puVar3[iVar2 * 0x43 + 3];
-  uVar6 = (ulonglong)puVar7[iVar1 * 2 + 4];
-  if (uVar4 != uVar6) {
-    if ((param_3 & 0xffffffff) != 0) {
-      if ((param_3 & 0xffffffff) != 1) {
-        MyAssertHandler(0xffffffff8217ce88,0x343,0,0xffffffff82000f98,0xffffffff8217d238);
+            (-((piVar5[iVar4 * 0x43 + 3] - piVar9[iVar8 * 2 + 4] ^ uVar3) - uVar3),pcVar1,10);
+  uVar3 = piVar5[iVar4 * 0x43 + 3];
+  uVar2 = piVar9[iVar8 * 2 + 4];
+  if (uVar3 != uVar2) {
+    if ((uVar7 & 0xffffffff) != 0) {
+      if ((uVar7 & 0xffffffff) != 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x343,0,"%s");
       }
-      uVar6 = (ulonglong)puVar3[iVar2 * 0x43 + 3];
-      uVar4 = (ulonglong)puVar7[iVar1 * 2 + 4];
+      uVar2 = piVar5[iVar4 * 0x43 + 3];
+      uVar3 = piVar9[iVar8 * 2 + 4];
     }
-    if ((uVar6 & 0xffff) != 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x349,0,0xffffffff82000f98,0xffffffff8217d214);
+    if ((uVar2 & 0xffff) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x349,0,"%s");
     }
-    if ((uVar4 & 0xffff) != 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x34a,0,0xffffffff82000f98,0xffffffff8217d1f4);
+    if ((uVar3 & 0xffff) != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x34a,0,"%s");
     }
-    XPhysicalProtect(*puVar3 + uVar6,uVar4 - uVar6,0x404);
-    ImageCache_GiveMemoryDelayed(*puVar3 + uVar6,*puVar3 + uVar4);
+    XPhysicalProtect((void *)(*piVar5 + uVar2),uVar3 - uVar2,0x404);
+    ImageCache_GiveMemoryDelayed((uchar *)(*piVar5 + uVar2),(uchar *)(*piVar5 + uVar3));
   }
-  puVar3[iVar2 * 0x43 + 3] = puVar7[iVar1 * 2 + 4];
-  if (puVar3[iVar2 * 0x43 + 2] == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x363,0,0xffffffff82000f98,0xffffffff8217d1dc);
+  piVar5[iVar4 * 0x43 + 3] = piVar9[iVar8 * 2 + 4];
+  if (piVar5[iVar4 * 0x43 + 2] == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x363,0,"%s");
   }
-  uVar5 = puVar3[iVar2 * 0x43 + 2] - 1;
-  puVar3[iVar2 * 0x43 + 2] = uVar5;
-  if ((uVar5 != 0) && (puVar7[uVar5 * 2 + 1] == 0)) {
-    MyAssertHandler(0xffffffff8217ce88,0x368,0,0xffffffff82000f98,0xffffffff8217d1ac);
+  iVar8 = piVar5[iVar4 * 0x43 + 2] + -1;
+  piVar5[iVar4 * 0x43 + 2] = iVar8;
+  if ((iVar8 != 0) && (piVar9[iVar8 * 2 + 1] == 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x368,0,"%s");
   }
   __restgprlr_24();
   return;
@@ -490,76 +544,88 @@ void PMem_FreeIndex(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 82606260  PMem_FreeInPrim  (universal/physicalmemory.cpp:882)
 
-void PMem_FreeInPrim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+void PMem_FreeInPrim(PhysicalMemory *param_1,char *param_2,uint param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  char *pcVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  int iVar7;
-  uint uVar8;
-  int *piVar9;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  uint uVar10;
+  int *piVar11;
   
-  lVar2 = __savegprlr_24();
-  lVar5 = param_3 * 0x10c + lVar2;
-  uVar8 = 0;
-  iVar1 = (int)lVar5;
-  piVar9 = (int *)(iVar1 + 4);
-  if (*(uint *)(iVar1 + 8) != 0) {
-    lVar5 = lVar5 + 0x10;
-    while ((ulonglong)*(uint *)lVar5 != (param_2 & 0xffffffff)) {
-      uVar8 = uVar8 + 1;
-      lVar5 = lVar5 + 8;
-      if (*(uint *)(iVar1 + 8) <= uVar8) {
+  uVar6 = (ulonglong)(int)param_3;
+  uVar5 = (ulonglong)(int)param_2;
+  lVar4 = __savegprlr_24(param_1);
+  lVar8 = uVar6 * 0x10c + lVar4;
+  uVar10 = 0;
+  iVar3 = (int)lVar8;
+  piVar11 = (int *)(iVar3 + 4);
+  if (*(uint *)(iVar3 + 8) != 0) {
+    lVar8 = lVar8 + 0x10;
+    while ((ulonglong)*(uint *)lVar8 != (uVar5 & 0xffffffff)) {
+      uVar10 = uVar10 + 1;
+      lVar8 = lVar8 + 8;
+      if (*(uint *)(iVar3 + 8) <= uVar10) {
         __restgprlr_24();
         return;
       }
     }
-    if (*piVar9 != 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x32a,0,0xffffffff82000f98,0xffffffff8217d0d0);
+    if (*piVar11 != 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x32a,0,"%s");
     }
-    iVar7 = piVar9[uVar8 * 2 + 3];
-    if (iVar7 == 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x330,0,0xffffffff82000f98,0xffffffff82021a74);
+    pcVar1 = (char *)piVar11[uVar10 * 2 + 3];
+    if (pcVar1 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x330,0,"%s");
     }
-    piVar9[uVar8 * 2 + 3] = 0;
-    if (uVar8 != *(int *)(iVar1 + 8) - 1U) {
-      MyAssertHandler(0xffffffff8217ce88,0x336,0,0xffffffff82065348,0xffffffff8217d258,iVar7);
+    piVar11[uVar10 * 2 + 3] = 0;
+    if (uVar10 != *(int *)(iVar3 + 8) - 1U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x336,0,"%s\n\t(name) = %s");
     }
-    uVar4 = (ulonglong)*(uint *)(iVar1 + 0xc) - (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
-    uVar3 = (ulonglong)((int)uVar4 >> 0x1f);
-    track_physical_alloc(-((uVar4 ^ uVar3) - uVar3),iVar7,10);
-    uVar3 = (ulonglong)*(uint *)(iVar1 + 0xc);
-    uVar4 = (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
-    if (uVar3 != uVar4) {
-      if ((param_3 & 0xffffffff) != 0) {
-        if ((param_3 & 0xffffffff) != 1) {
-          MyAssertHandler(0xffffffff8217ce88,0x343,0,0xffffffff82000f98,0xffffffff8217d238);
+    uVar7 = *(int *)(iVar3 + 0xc) - piVar11[uVar10 * 2 + 4];
+    uVar2 = (int)uVar7 >> 0x1f;
+    track_physical_alloc(-((uVar7 ^ uVar2) - uVar2),pcVar1,10);
+    uVar2 = *(uint *)(iVar3 + 0xc);
+    uVar7 = piVar11[uVar10 * 2 + 4];
+    if (uVar2 != uVar7) {
+      if ((uVar6 & 0xffffffff) != 0) {
+        if ((uVar6 & 0xffffffff) != 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                          ,0x343,0,"%s");
         }
-        uVar4 = (ulonglong)*(uint *)(iVar1 + 0xc);
-        uVar3 = (ulonglong)(uint)piVar9[uVar8 * 2 + 4];
+        uVar7 = *(uint *)(iVar3 + 0xc);
+        uVar2 = piVar11[uVar10 * 2 + 4];
       }
-      if ((uVar4 & 0xffff) != 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x349,0,0xffffffff82000f98,0xffffffff8217d214);
+      if ((uVar7 & 0xffff) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x349,0,"%s");
       }
-      if ((uVar3 & 0xffff) != 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x34a,0,0xffffffff82000f98,0xffffffff8217d1f4);
+      if ((uVar2 & 0xffff) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x34a,0,"%s");
       }
-      XPhysicalProtect(*(uint *)lVar2 + uVar4,uVar3 - uVar4,0x404);
-      uVar6 = (ulonglong)*(uint *)lVar2;
-      ImageCache_GiveMemoryDelayed(uVar6 + uVar4,uVar6 + uVar3);
+      XPhysicalProtect((void *)(*(int *)lVar4 + uVar7),uVar2 - uVar7,0x404);
+      iVar9 = *(int *)lVar4;
+      ImageCache_GiveMemoryDelayed((uchar *)(iVar9 + uVar7),(uchar *)(iVar9 + uVar2));
     }
-    *(int *)(iVar1 + 0xc) = piVar9[uVar8 * 2 + 4];
-    if (*(int *)(iVar1 + 8) == 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x363,0,0xffffffff82000f98,0xffffffff8217d1dc);
+    *(int *)(iVar3 + 0xc) = piVar11[uVar10 * 2 + 4];
+    if (*(int *)(iVar3 + 8) == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x363,0,"%s");
     }
-    iVar7 = *(int *)(iVar1 + 8) + -1;
-    *(int *)(iVar1 + 8) = iVar7;
-    if ((iVar7 != 0) && (piVar9[iVar7 * 2 + 1] == 0)) {
-      MyAssertHandler(0xffffffff8217ce88,0x368,0,0xffffffff82000f98,0xffffffff8217d1ac);
+    iVar9 = *(int *)(iVar3 + 8) + -1;
+    *(int *)(iVar3 + 8) = iVar9;
+    if ((iVar9 != 0) && (piVar11[iVar9 * 2 + 1] == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x368,0,"%s");
     }
   }
   __restgprlr_24();
@@ -569,17 +635,20 @@ void PMem_FreeInPrim(undefined8 param_1,ulonglong param_2,ulonglong param_3)
 
 // 826064B8  PMem_Free  (universal/physicalmemory.cpp:901)
 
-void PMem_Free(undefined8 param_1,ulonglong param_2)
+void PMem_Free(char *param_1,uint param_2)
 
 {
-  undefined8 uVar1;
+  char *pcVar1;
+  ulonglong uVar2;
   
-  uVar1 = __savegprlr_29();
-  if (1 < (param_2 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8217ce88,0x386,0,0xffffffff8217d11c,param_2,2);
+  uVar2 = (ulonglong)(int)param_2;
+  pcVar1 = (char *)__savegprlr_29(param_1);
+  if (1 < (uVar2 & 0xffffffff)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x386,0,"allocType doesn\'t index PHYS_ALLOC_COUNT\n\t%i not in [0, %i)");
   }
-  PMem_FreeInPrim(0xffffffff84123638,uVar1,param_2);
-  PMem_FreeInPrim(0xffffffff84123338,uVar1,param_2);
+  PMem_FreeInPrim(&g_mem,pcVar1,(uint)uVar2);
+  PMem_FreeInPrim(&g_scriptmem,pcVar1,(uint)uVar2);
   __restgprlr_29();
   return;
 }
@@ -587,12 +656,15 @@ void PMem_Free(undefined8 param_1,ulonglong param_2)
 
 // 82606528  PMem_CheckOutOfMemory  (universal/physicalmemory.cpp:913)
 
-void PMem_CheckOutOfMemory(longlong param_1,longlong param_2)
+void PMem_CheckOutOfMemory(uint param_1,uint param_2)
 
 {
-  if (0 < param_1 - param_2) {
-    Com_PrintError(0x10,0xffffffff8217d284);
-    Sys_OutOfMemErrorInternal(7,0xffffffff8217ce88,0x399);
+  if (0 < (longlong)(int)param_1 - (longlong)(int)param_2) {
+    Com_PrintError(0x10,"Need %i more bytes of ram for alloc to succeed\n");
+                    /* WARNING: Subroutine does not return */
+    Sys_OutOfMemErrorInternal
+              (7,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+               0x399);
   }
   return;
 }
@@ -600,232 +672,254 @@ void PMem_CheckOutOfMemory(longlong param_1,longlong param_2)
 
 // 82606570  PMem_AllocFromSource_NoDebug  (universal/physicalmemory.cpp:930)
 
-void PMem_AllocFromSource_NoDebug
-               (undefined8 param_1,ulonglong param_2,ulonglong param_3,int param_4)
+void * PMem_AllocFromSource_NoDebug(uint param_1,uint param_2,uint param_3,PMem_Source param_4)
 
 {
   short sVar1;
-  int iVar2;
-  uint *puVar3;
-  ulonglong uVar4;
-  char cVar7;
+  uchar *puVar2;
+  uint uVar3;
+  PhysicalMemory *pPVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  int *in_r13;
-  uint *puVar8;
-  longlong lVar9;
+  bool bVar9;
+  void *pvVar6;
+  int iVar7;
+  ulong uVar8;
   ulonglong uVar10;
+  int *in_r13;
+  PhysicalMemory *pPVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
   
-  uVar4 = __savegprlr_21();
-  if (param_4 == 3) {
-    puVar3 = &DAT_84123338;
+  uVar10 = (ulonglong)(int)param_3;
+  uVar15 = (ulonglong)(int)param_2;
+  uVar5 = __savegprlr_21(param_1);
+  if (param_4 == PMEM_SOURCE_SCRIPT) {
+    pPVar4 = &g_scriptmem;
   }
   else {
-    puVar8 = (uint *)&DAT_84123638;
-    puVar3 = (uint *)&DAT_84123638;
-    if (param_4 == 2) {
-      uVar5 = 0;
+    pPVar11 = &g_mem;
+    pPVar4 = &g_mem;
+    if (param_4 == PMEM_SOURCE_MOVIE) {
+      uVar16 = 0;
       goto LAB_82606674;
     }
   }
-  puVar8 = puVar3;
-  cVar7 = DB_IsAlloc();
-  if (cVar7 == '\0') {
-    cVar7 = Sys_IsMainThread();
-    if (cVar7 == '\0') {
-      MyAssertHandler(0xffffffff8217ce88,0x3e3,0,0xffffffff82000f98,0xffffffff82010b48);
+  pPVar11 = pPVar4;
+  bVar9 = DB_IsAlloc();
+  if (bVar9) {
+    if ((param_4 == PMEM_SOURCE_EXTERNAL) && (g_dynamicRenderTargetAlloc == 0)) {
+      if ((uVar10 & 0xffffffff) != 4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x3cc,0,"%s\n\t(type) = %i");
+      }
+      pvVar6 = DB_Alloc((uint)uVar5,(uint)uVar15);
+      pvVar6 = (void *)__restgprlr_21(pvVar6);
+      return pvVar6;
     }
-    uVar5 = (param_3 - 4) - ((param_3 - 5) + (ulonglong)(param_3 - 4 == 0));
+    iVar7 = DB_GetAllocType();
+    uVar16 = (ulonglong)iVar7;
   }
   else {
-    if ((param_4 == 0) && (DAT_84123250 == 0)) {
-      if ((param_3 & 0xffffffff) != 4) {
-        MyAssertHandler(0xffffffff8217ce88,0x3cc,0,0xffffffff82065e94,0xffffffff8217d2d0,param_3);
-      }
-      DB_Alloc(uVar4,param_2);
-      __restgprlr_21();
-      return;
+    bVar9 = Sys_IsMainThread();
+    if (!bVar9) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x3e3,0,"%s");
     }
-    uVar5 = DB_GetAllocType();
+    uVar16 = (uVar10 - 4) - ((uVar10 - 5) + (ulonglong)(uVar10 - 4 == 0));
   }
 LAB_82606674:
-  iVar2 = (int)uVar5;
-  if (puVar8[iVar2 * 0x43 + 1] == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x3e9,0,0xffffffff82000f98,0xffffffff8217d2c0);
-  }
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x3ea,0,0xffffffff82000f98,0xffffffff82036204);
-  }
-  if ((param_2 & 0xffffffff) == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x3ec,0,0xffffffff82000f98,0xffffffff8217d2b4);
-  }
-  sVar1 = *(short *)((int)puVar8 + iVar2 * 0x10c + 0xe);
-  param_2 = param_2 - 1;
-  if (*(char *)(iVar2 + 0xf8 + *in_r13) == '\0') {
-    MyAssertHandler(0xffffffff8217ce88,0x3f3,0,0xffffffff8217d0e4,0xffffffff8217d18c,uVar5);
+  iVar7 = (int)uVar16;
+  if (pPVar11->prim[iVar7].allocName == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x3e9,0,"%s");
   }
   if ((uVar5 & 0xffffffff) == 0) {
-    uVar5 = puVar8[iVar2 * 0x43 + 3] + param_2 & ~param_2;
-    uVar10 = uVar5 + uVar4;
-    if (0 < (longlong)(uVar10 - puVar8[0x46])) {
-      Com_PrintError(0x10,0xffffffff8217d284);
-      Sys_OutOfMemErrorInternal(7,0xffffffff8217ce88,0x399);
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x3ea,0,"%s");
+  }
+  if ((uVar15 & 0xffffffff) == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x3ec,0,"%s");
+  }
+  sVar1 = (short)pPVar11->prim[iVar7].pos;
+  uVar15 = uVar15 - 1;
+  if (*(char *)(iVar7 + 0xf8 + *in_r13) == '\0') {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x3f3,0,"%s\n\t(allocType) = %i");
+  }
+  if ((uVar16 & 0xffffffff) == 0) {
+    uVar16 = pPVar11->prim[iVar7].pos + uVar15 & ~uVar15;
+    lVar12 = uVar16 + uVar5;
+    if (0 < (longlong)(lVar12 - (ulonglong)pPVar11->prim[1].pos)) {
+      Com_PrintError(0x10,"Need %i more bytes of ram for alloc to succeed\n");
+                    /* WARNING: Subroutine does not return */
+      Sys_OutOfMemErrorInternal
+                (7,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                 0x399);
     }
-    if (sVar1 != 0) {
-      if ((((puVar8[iVar2 * 0x43 + 3] ^ uVar5) & 0xffff0000) == 0) &&
-         (uVar6 = XQueryMemoryProtect((ulonglong)*puVar8 + (ulonglong)puVar8[iVar2 * 0x43 + 3]),
-         (uVar6 & 0xffffffff) != (param_3 & 0xffffffff))) {
-        uVar5 = uVar5 + 0xffff & 0xffff0000;
-        uVar10 = uVar5 + uVar4;
-        if (0 < (longlong)(uVar10 - puVar8[0x46])) {
-          Com_PrintError(0x10,0xffffffff8217d284);
-          Sys_OutOfMemErrorInternal(7,0xffffffff8217ce88,0x399);
-        }
+    if (((sVar1 != 0) && (uVar14 = pPVar11->prim[iVar7].pos, ((uVar14 ^ uVar16) & 0xffff0000) == 0))
+       && (uVar8 = XQueryMemoryProtect(pPVar11->buf + uVar14),
+          (ulonglong)uVar8 != (uVar10 & 0xffffffff))) {
+      uVar16 = uVar16 + 0xffff & 0xffff0000;
+      lVar12 = uVar16 + uVar5;
+      if (0 < (longlong)(lVar12 - (ulonglong)pPVar11->prim[1].pos)) {
+        Com_PrintError(0x10,"Need %i more bytes of ram for alloc to succeed\n");
+                    /* WARNING: Subroutine does not return */
+        Sys_OutOfMemErrorInternal
+                  (7,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                   ,0x399);
       }
     }
-    uVar4 = (ulonglong)*puVar8;
-    lVar9 = uVar4 + uVar5;
-    ImageCache_FreeMemory(puVar8[iVar2 * 0x43 + 3] + uVar4,uVar4 + uVar10);
-    puVar8[iVar2 * 0x43 + 3] = (uint)uVar10;
+    puVar2 = pPVar11->buf;
+    uVar14 = (uint)lVar12;
+    lVar12 = ZEXT48(puVar2) + uVar16;
+    ImageCache_FreeMemory(puVar2 + pPVar11->prim[iVar7].pos,puVar2 + uVar14);
+    pPVar11->prim[iVar7].pos = uVar14;
   }
   else {
-    if ((uVar5 & 0xffffffff) != 1) {
-      MyAssertHandler(0xffffffff8217ce88,0x415,0,0xffffffff82000f98,0xffffffff8217d238);
+    if ((uVar16 & 0xffffffff) != 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x415,0,"%s");
     }
-    uVar5 = puVar8[iVar2 * 0x43 + 3] - uVar4 & ~param_2;
-    if (0 < (longlong)(puVar8[3] - uVar5)) {
-      Com_PrintError(0x10,0xffffffff8217d284);
-      Sys_OutOfMemErrorInternal(7,0xffffffff8217ce88,0x399);
+    uVar16 = pPVar11->prim[iVar7].pos - uVar5 & ~uVar15;
+    if (0 < (longlong)(pPVar11->prim[0].pos - uVar16)) {
+      Com_PrintError(0x10,"Need %i more bytes of ram for alloc to succeed\n");
+                    /* WARNING: Subroutine does not return */
+      Sys_OutOfMemErrorInternal
+                (7,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                 0x399);
     }
-    uVar10 = uVar5 + uVar4;
-    if (sVar1 != 0) {
-      if ((((uVar10 - 1 ^ (ulonglong)puVar8[iVar2 * 0x43 + 3]) & 0xffff0000) == 0) &&
-         (uVar6 = XQueryMemoryProtect((ulonglong)*puVar8 + (ulonglong)puVar8[iVar2 * 0x43 + 3]),
-         (uVar6 & 0xffffffff) != (param_3 & 0xffffffff))) {
-        uVar5 = uVar5 - (uVar10 & 0xffff) & ~param_2;
-        if (0 < (longlong)(puVar8[3] - uVar5)) {
-          Com_PrintError(0x10,0xffffffff8217d284);
-          Sys_OutOfMemErrorInternal(7,0xffffffff8217ce88,0x399);
-        }
-        uVar10 = uVar5 + uVar4;
+    uVar13 = uVar16 + uVar5;
+    uVar14 = (uint)uVar13;
+    if (((sVar1 != 0) &&
+        (uVar3 = pPVar11->prim[iVar7].pos, ((uVar13 - 1 ^ (ulonglong)uVar3) & 0xffff0000) == 0)) &&
+       (uVar8 = XQueryMemoryProtect(pPVar11->buf + uVar3), (ulonglong)uVar8 != (uVar10 & 0xffffffff)
+       )) {
+      uVar16 = uVar16 - (uVar13 & 0xffff) & ~uVar15;
+      if (0 < (longlong)(pPVar11->prim[0].pos - uVar16)) {
+        Com_PrintError(0x10,"Need %i more bytes of ram for alloc to succeed\n");
+                    /* WARNING: Subroutine does not return */
+        Sys_OutOfMemErrorInternal
+                  (7,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                   ,0x399);
       }
+      uVar14 = (int)uVar16 + (uint)uVar5;
     }
-    lVar9 = *puVar8 + uVar5;
-    ImageCache_FreeMemory(lVar9,(ulonglong)puVar8[iVar2 * 0x43 + 3] + (ulonglong)*puVar8);
-    puVar8[iVar2 * 0x43 + 3] = (uint)uVar5;
+    lVar12 = ZEXT48(pPVar11->buf) + uVar16;
+    ImageCache_FreeMemory((uchar *)lVar12,pPVar11->buf + pPVar11->prim[iVar7].pos);
+    pPVar11->prim[iVar7].pos = (uint)uVar16;
   }
-  XPhysicalProtect((ulonglong)*puVar8 + (uVar5 & 0xffff0000),
-                   (uVar10 + 0xffff & 0xffff0000) - (uVar5 & 0xffff0000),param_3);
-  __restgprlr_21(lVar9);
-  return;
+  uVar3 = (uint)uVar16 & 0xffff0000;
+  XPhysicalProtect(pPVar11->buf + uVar3,(uVar14 + 0xffff & 0xffff0000) - uVar3,(ulong)uVar10);
+  pvVar6 = (void *)__restgprlr_21(lVar12);
+  return pvVar6;
 }
 
 
 // 82606928  PMem_Alloc_NoDebug  (universal/physicalmemory.cpp:1103)
 
-undefined8 PMem_Alloc_NoDebug(size_t param_1)
+void * PMem_Alloc_NoDebug(uint param_1,uint param_2,uint param_3)
 
 {
-  undefined8 uVar1;
+  void *pvVar1;
   
-  uVar1 = PMem_AllocFromSource_NoDebug();
-  memset((void *)uVar1,0x99,param_1);
-  return uVar1;
+  pvVar1 = PMem_AllocFromSource_NoDebug(param_1,param_2,param_3,PMEM_SOURCE_EXTERNAL);
+  memset();
+  return pvVar1;
 }
 
 
 // 82606978  PMem_GetScriptMemory  (universal/physicalmemory.cpp:1116)
 
-undefined4 PMem_GetScriptMemory(undefined4 *param_1)
+uchar * PMem_GetScriptMemory(uint *param_1)
 
 {
   *param_1 = 0;
-  return DAT_84123338;
+  return g_scriptmem.buf;
 }
 
 
 // 82607710  PMem_GetShippingFreeAmount_NoStreaming  (universal/physicalmemory.cpp:1123)
 
-longlong PMem_GetShippingFreeAmount_NoStreaming(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PMem_GetShippingFreeAmount_NoStreaming(void)
 
 {
-  longlong lVar1;
+  uint uVar1;
   
-  lVar1 = ImageCache_GetTotalMemorySize();
-  return lVar1 + 0x8d0000;
+  uVar1 = ImageCache_GetTotalMemorySize();
+  return uVar1 + 0x8d0000;
+}
+
+
+// 82606990  PMem_GetFreeAmount  (universal/physicalmemory.cpp:1143)
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* int __cdecl PMem_GetFreeAmount(void) */
+
+int PMem_GetFreeAmount(void)
+
+{
+  return g_imageCache.totalMemorySize;
 }
 
 
 // 82606998  PMem_GetLegacyFreeAmount  (universal/physicalmemory.cpp:1153)
 
-longlong PMem_GetLegacyFreeAmount(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PMem_GetLegacyFreeAmount(void)
 
 {
-  longlong lVar1;
-  longlong lVar2;
+  uint uVar1;
+  uint uVar2;
   
-  lVar1 = ImageCache_GetTotalMemorySize();
-  lVar2 = DB_StreamUsedMemory();
-  return lVar1 - lVar2;
+  uVar1 = ImageCache_GetTotalMemorySize();
+  uVar2 = DB_StreamUsedMemory();
+  return uVar1 - uVar2;
 }
 
 
 // 826069D0  ConvertToMB  (universal/physicalmemory.cpp:1178)
 
-double ConvertToMB(int param_1)
+float ConvertToMB(int param_1)
 
 {
-  return (double)((float)(longlong)param_1 * 9.536743e-07);
+  return (float)(longlong)param_1 * 9.536743e-07;
 }
 
 
 // 826069F8  PMem_DumpMemStats  (universal/physicalmemory.cpp:1186)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void PMem_DumpMemStats(void)
 
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar4;
-  longlong lVar3;
-  uint uVar6;
-  ulonglong uVar5;
-  double dVar7;
+  ulonglong uVar1;
+  uint uVar2;
   
   __savegprlr_28();
-  uVar6 = 0;
-  dVar7 = 9.5367431640625e-07;
-  if (DAT_8412374c != 0) {
-    piVar4 = &DAT_84123750;
+  uVar2 = 0;
+  if (g_mem.prim[1].allocListCount != 0) {
     do {
-      iVar2 = DAT_84123750;
-      if (uVar6 != DAT_8412374c - 1) {
-        iVar2 = piVar4[4];
-      }
-      piVar1 = piVar4 + 1;
-      piVar4 = piVar4 + 2;
-      Com_Printf(0x10,0xffffffff8217d334,*piVar1,
-                 (double)(float)((double)(longlong)(*piVar4 - iVar2) * dVar7));
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < DAT_8412374c);
+      Com_Printf(0x10,"%-18.18s %5.1f\n");
+      uVar2 = uVar2 + 1;
+    } while (uVar2 < g_mem.prim[1].allocListCount);
   }
-  iVar2 = DB_StreamUsedMemory();
-  Com_Printf(0x10,0xffffffff8217d318,(double)(float)((double)(longlong)iVar2 * dVar7));
-  iVar2 = ImageCache_GetTotalMemorySize();
-  Com_Printf(0x10,0xffffffff8217d2fc,(double)(float)((double)(longlong)iVar2 * dVar7));
-  uVar5 = (ulonglong)DAT_84123640 - 1;
-  if (-1 < (longlong)uVar5) {
-    lVar3 = (uVar5 & 0x1fffffff) * 8 + -0x7bedc9ac;
-    iVar2 = DAT_84123644;
-    do {
-      Com_Printf(0x10,0xffffffff8217d334,*(undefined4 *)((int)lVar3 + -0xc),
-                 (double)(float)((double)(longlong)(iVar2 - *(int *)((int)lVar3 + -8)) * dVar7));
-      lVar3 = lVar3 + -8;
-      iVar2 = *(int *)lVar3;
-      uVar5 = uVar5 - 1;
-    } while (-1 < (longlong)uVar5);
+  DB_StreamUsedMemory();
+  Com_Printf(0x10,"streaming          %5.1f\n");
+  ImageCache_GetTotalMemorySize();
+  Com_Printf(0x10,"free physical      %5.1f\n");
+  uVar1 = (ulonglong)g_mem.prim[0].allocListCount;
+  while (uVar1 = uVar1 - 1, -1 < (longlong)uVar1) {
+    Com_Printf(0x10,"%-18.18s %5.1f\n");
   }
-  Com_Printf(0x10,0xffffffff8217d2e0);
+  Com_Printf(0x10,"------------------------\n");
   __restgprlr_28();
   return;
 }
@@ -833,161 +927,181 @@ void PMem_DumpMemStats(void)
 
 // 82606B78  XMemDebugAlloc  (universal/physicalmemory.cpp:1249)
 
-longlong XMemDebugAlloc(int param_1,longlong param_2)
+void * XMemDebugAlloc(uint param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uint uVar1;
   
-  uVar1 = (ulonglong)DAT_84123858;
-  uVar2 = (ulonglong)DAT_84123630 + (param_2 - 1U) & ~(param_2 - 1U);
-  DAT_84123630 = (int)uVar2 + param_1;
+  uVar1 = DAT_84123630 + (param_2 - 1) & ~(param_2 - 1);
+  DAT_84123630 = uVar1 + param_1;
   if (0x1000 < DAT_84123630) {
-    Sys_OutOfMemErrorInternal(8,0xffffffff8217ce88,0x4e9);
+                    /* WARNING: Subroutine does not return */
+    Sys_OutOfMemErrorInternal
+              (8,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+               0x4e9);
   }
-  return uVar1 + uVar2;
+  return g_debugMemory + uVar1;
 }
 
 
 // 82606BE8  XMemAlloc  (universal/physicalmemory.cpp:1266)
 
-void XMemAlloc(undefined8 param_1,ulonglong param_2)
+void * XMemAlloc(ulong param_1,ulong param_2)
 
 {
-  ulonglong uVar1;
-  char cVar4;
-  ulonglong uVar2;
+  uint uVar1;
+  bool bVar4;
+  void *pvVar2;
   int iVar3;
-  undefined8 uVar5;
-  size_t _Size;
-  undefined8 uVar6;
+  ulonglong uVar5;
+  ulonglong uVar6;
   ulonglong uVar7;
   int *in_r13;
-  longlong lVar8;
+  uint uVar8;
+  uint uVar9;
   
-  uVar1 = __savegprlr_25();
-  cVar4 = Sys_IsDatabaseThread();
-  if ((cVar4 == '\0') && (DAT_84123250 != 0)) {
-    MyAssertHandler(0xffffffff8217ce88,0x4f8,0,0xffffffff82000f98,0xffffffff8217d618);
+  uVar5 = (ulonglong)(int)param_2;
+  uVar1 = __savegprlr_25(param_1);
+  bVar4 = Sys_IsDatabaseThread();
+  if ((!bVar4) && (g_dynamicRenderTargetAlloc != 0)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x4f8,0,"%s");
   }
-  uVar7 = (param_2 & 0xffffffff) >> 0x1f;
-  _Size = (size_t)uVar1;
-  if (uVar7 == 1) {
-    uVar7 = (param_2 & 0xffffffff) >> 0x18 & 0xf;
-    if (uVar7 == 0) {
-      iVar3 = 0x1000;
+  uVar6 = (uVar5 & 0xffffffff) >> 0x1f;
+  if (uVar6 == 1) {
+    uVar6 = (uVar5 & 0xffffffff) >> 0x18 & 0xf;
+    if (uVar6 == 0) {
+      uVar8 = 0x1000;
     }
     else {
-      iVar3 = 1 << (int)uVar7;
+      uVar8 = 1 << (int)uVar6;
     }
-    uVar7 = (param_2 & 0xffffffff) >> 0x1c & 3;
-    if (uVar7 == 0) {
+    uVar6 = (uVar5 & 0xffffffff) >> 0x1c & 3;
+    if (uVar6 == 0) {
 LAB_82606d28:
-      lVar8 = 0x404;
+      uVar9 = 0x404;
     }
     else {
-      if (uVar7 != 2) {
-        if (uVar7 != 3) {
-          if (uVar7 != 1) {
-            MyAssertHandler(0xffffffff8217ce88,0x521,0,0xffffffff8217d5cc,0xffffffff8217d5f4);
+      if (uVar6 != 2) {
+        if (uVar6 != 3) {
+          if (uVar6 != 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                            ,0x521,0,"%s\n\t(attributes.dwMemoryProtect) = %i");
           }
-          if ((param_2 & 0x40000000) != 0) {
-            MyAssertHandler(0xffffffff8217ce88,0x522,0,0xffffffff82000f98,0xffffffff8217d5ac);
+          if ((uVar5 & 0x40000000) != 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                            ,0x522,0,"%s");
           }
           if (DAT_84123330 != 0) {
-            MyAssertHandler(0xffffffff8217ce88,0x523,0,0xffffffff82000f98,0xffffffff8217d594);
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                            ,0x523,0,"%s");
           }
           DAT_84123330 = 1;
-          __restgprlr_25(DAT_84123854);
-          return;
+          pvVar2 = (void *)__restgprlr_25(DAT_84123854);
+          return pvVar2;
         }
         goto LAB_82606d28;
       }
-      lVar8 = 4;
+      uVar9 = 4;
     }
-    if ((param_2 & 0xff0000) == 0x820000) {
-      if ((param_2 & 0x40000000) != 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x52b,0,0xffffffff82000f98,0xffffffff8217d5ac);
+    if ((uVar5 & 0xff0000) == 0x820000) {
+      if ((uVar5 & 0x40000000) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x52b,0,"%s");
       }
       if (*(int *)(*in_r13 + 0xfc) == 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x52c,0,0xffffffff82000f98,0xffffffff8217d564);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x52c,0,"%s");
       }
-      if ((param_2 & 0x1fff) != 7) {
-        MyAssertHandler(0xffffffff8217ce88,0x52d,0,0xffffffff8217d524,param_2 & 0x1fff,7);
+      if ((uVar5 & 0x1fff) != 7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x52d,0,"attributes.dwObjectType == SOUND_PHYSICAL_OBJECT_TYPE\n\t%i, %i");
       }
-      if (lVar8 != 4) {
-        MyAssertHandler(0xffffffff8217ce88,0x52e,0,0xffffffff8217d504,lVar8,4);
+      if (uVar9 != 4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x52e,0,"type == PAGE_READWRITE\n\t%i, %i");
       }
-      if (iVar3 != 0x80) {
-        MyAssertHandler(0xffffffff8217ce88,0x52f,0,0xffffffff8217d4d4,iVar3,0x80);
+      if (uVar8 != 0x80) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x52f,0,"alignment == SOUND_PHYSICAL_ALIGNMENT\n\t%i, %i");
       }
-      uVar2 = Sound_PhysicalAlloc(uVar1);
+      pvVar2 = Sound_PhysicalAlloc(uVar1);
+      uVar7 = (ulonglong)(int)pvVar2;
     }
     else {
-      cVar4 = DB_IsDebugAlloc();
-      if (cVar4 == '\0') {
-        uVar2 = PMem_AllocFromSource_NoDebug(uVar1,iVar3,lVar8,0);
-        memset((void *)uVar2,0x99,_Size);
+      bVar4 = DB_IsDebugAlloc();
+      if (bVar4) {
+        if (g_dynamicRenderTargetAlloc != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                          ,0x536,0,"%s");
+        }
+        pvVar2 = XMemDebugAlloc(uVar1,uVar8);
       }
       else {
-        if (DAT_84123250 != 0) {
-          MyAssertHandler(0xffffffff8217ce88,0x536,0,0xffffffff82000f98,0xffffffff8217d578);
-        }
-        uVar2 = XMemDebugAlloc(uVar1,iVar3);
+        pvVar2 = PMem_AllocFromSource_NoDebug(uVar1,uVar8,uVar9,PMEM_SOURCE_EXTERNAL);
+        memset();
       }
-      if ((param_2 & 0x40000000) != 0) {
-        memset((void *)uVar2,0,_Size);
+      uVar7 = (ulonglong)(int)pvVar2;
+      if ((uVar5 & 0x40000000) != 0) {
+        memset();
       }
     }
-    if ((uVar2 & 0xffffffff) == 0) {
-      Sys_OutOfMemErrorInternal(9,0xffffffff8217ce88,0x548);
-      __restgprlr_25(uVar2);
-      return;
+    if ((uVar7 & 0xffffffff) == 0) {
+                    /* WARNING: Subroutine does not return */
+      Sys_OutOfMemErrorInternal
+                (9,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                 0x548);
     }
     goto LAB_826072c0;
   }
+  if (uVar6 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x54d,1,"%s\n\t(attributes.dwMemoryType) = %i");
+  }
+  uVar7 = (uVar5 & 0xffffffff) >> 0x18 & 0xf;
+  uVar6 = 0x10;
   if (uVar7 != 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x54d,1,0xffffffff8217d490,0xffffffff8217d4b4);
+    uVar6 = uVar7 << 2;
   }
-  uVar2 = (param_2 & 0xffffffff) >> 0x18 & 0xf;
-  uVar7 = 0x10;
-  if (uVar2 != 0) {
-    uVar7 = uVar2 << 2;
+  if ((uVar5 & 0x30000000) != 0x20000000) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x553,0,"%s");
   }
-  if ((param_2 & 0x30000000) != 0x20000000) {
-    MyAssertHandler(0xffffffff8217ce88,0x553,0,0xffffffff82000f98,0xffffffff8217d454);
-  }
-  switch(((uint)(param_2 >> 0x10) & 0xff) - 0x80) {
+  uVar8 = (uint)uVar6;
+  switch(((uint)(uVar5 >> 0x10) & 0xff) - 0x80) {
   case 0:
-    cVar4 = Sys_IsRenderThread();
-    if ((cVar4 != '\0') ||
-       ((cVar4 = Sys_IsDatabaseThread(), cVar4 != '\0' &&
-        (iVar3 = R_HasDeviceOwnership(), iVar3 != 0)))) {
-      if ((param_2 & 0x4000) != 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x561,0,0xffffffff82000f98,0xffffffff8217d438);
+    bVar4 = Sys_IsRenderThread();
+    if ((bVar4) ||
+       ((bVar4 = Sys_IsDatabaseThread(), bVar4 && (iVar3 = R_HasDeviceOwnership(), iVar3 != 0)))) {
+      if ((uVar5 & 0x4000) != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x561,0,"%s");
       }
       iVar3 = R_HasDeviceOwnership();
       if (iVar3 == 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x563,0,0xffffffff82000f98,0xffffffff8217d420);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x563,0,"%s");
       }
-      uVar2 = ZEXT48(DAT_84123554);
-      if (uVar2 == 0) {
-        DAT_84123554 = HeapCreate((DWORD)DAT_84123554,0x10000,0);
-        uVar2 = (ulonglong)(int)DAT_84123554;
-        if (DAT_84123554 == (HANDLE)0x0) {
-          MyAssertHandler(0xffffffff8217ce88,0x568,0,0xffffffff82000f98,0xffffffff8217d414);
-          uVar2 = ZEXT48(DAT_84123554);
-        }
+      if ((g_xmemHeap == (void *)0x0) &&
+         (g_xmemHeap = HeapCreate(0,0x10000,0), g_xmemHeap == (void *)0x0)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x568,0,"%s");
       }
-      uVar2 = RtlAllocateHeap(uVar2,0,uVar1);
-      if ((uVar2 & 0xffffffff) == 0) {
-        Sys_OutOfMemErrorInternal(10,0xffffffff8217ce88,0x56b);
+      pvVar2 = RtlAllocateHeap(g_xmemHeap,0,uVar1);
+      uVar7 = (ulonglong)(int)pvVar2;
+      if (pvVar2 == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+        Sys_OutOfMemErrorInternal
+                  (10,
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                   0x56b);
       }
-      trapWord(6,uVar7,0);
-      if (uVar2 != (longlong)(int)((uVar2 & 0xffffffff) / uVar7) * (longlong)(int)uVar7) {
-        MyAssertHandler(0xffffffff8217ce88,0x56c,0,0xffffffff82000f98,0xffffffff8217d3e4);
-        __restgprlr_25(uVar2);
-        return;
+      trapWord(6,uVar6,0);
+      if (uVar7 != (longlong)(int)(ZEXT48(pvVar2) / uVar6) * (longlong)(int)uVar8) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x56c,0,"%s");
+        pvVar2 = (void *)__restgprlr_25(uVar7);
+        return pvVar2;
       }
       goto LAB_826072c0;
     }
@@ -995,113 +1109,125 @@ LAB_82606d28:
   case 1:
   case 7:
   case 0xd:
-    cVar4 = Sys_IsMainThread();
-    if (cVar4 == '\0') {
-      uVar5 = 0x57a;
-      uVar6 = 0xffffffff82010b48;
+    bVar4 = Sys_IsMainThread();
+    if (!bVar4) {
+      iVar3 = 0x57a;
 LAB_82607238:
-      MyAssertHandler(0xffffffff8217ce88,uVar5,0,0xffffffff82000f98,uVar6);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,iVar3,0,"%s");
     }
     break;
   case 2:
     if (*(int *)(*in_r13 + 0xfc) == 0) {
-      cVar4 = Sys_IsDatabaseThread();
-      if (cVar4 != '\0') {
-        MyAssertHandler(0xffffffff8217ce88,0x58b,0,0xffffffff82000f98,0xffffffff8217d380);
+      bVar4 = Sys_IsDatabaseThread();
+      if (bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x58b,0,"%s");
       }
-      lVar8 = PMem_AllocFromSource_NoDebug(uVar7 + uVar1,uVar7,4,0);
-      memset((void *)lVar8,0x99,(size_t)(uVar7 + uVar1));
-      uVar2 = lVar8 + uVar7;
-      if ((param_2 & 0x40000000) != 0) {
-        memset((void *)uVar2,0,_Size);
+      pvVar2 = PMem_AllocFromSource_NoDebug(uVar8 + uVar1,uVar8,4,PMEM_SOURCE_EXTERNAL);
+      memset();
+      uVar7 = (longlong)(int)pvVar2 + uVar6;
+      if ((uVar5 & 0x40000000) != 0) {
+        memset();
       }
-      if ((uVar2 & 0xffffffff) == 0) goto LAB_8260729c;
-      *(size_t *)((int)(void *)uVar2 + -4) = _Size;
+      if ((uVar7 & 0xffffffff) == 0) goto LAB_8260729c;
+      *(uint *)((int)uVar7 + -4) = uVar1;
     }
     else {
-      if ((param_2 & 0x1fff) != 6) {
-        MyAssertHandler(0xffffffff8217ce88,0x585,0,0xffffffff82000f98,0xffffffff8217d3b4);
+      if ((uVar5 & 0x1fff) != 6) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x585,0,"%s");
       }
-      if ((param_2 & 0x40000000) == 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x586,0,0xffffffff82000f98,0xffffffff8217d398);
+      if ((uVar5 & 0x40000000) == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x586,0,"%s");
       }
-      uVar2 = Sound_Alloc(uVar1);
+      pvVar2 = Sound_Alloc(uVar1);
+      uVar7 = (ulonglong)(int)pvVar2;
     }
     goto LAB_82607294;
   default:
-    cVar4 = Sys_IsDatabaseThread();
-    if (cVar4 != '\0') {
-      uVar5 = 0x59a;
-      uVar6 = 0xffffffff8217d380;
+    bVar4 = Sys_IsDatabaseThread();
+    if (bVar4) {
+      iVar3 = 0x59a;
       goto LAB_82607238;
     }
     break;
   case 0x13:
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x595,0,0xffffffff8217d364);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x595,0,"X File Cache not supported.");
     }
-    uVar2 = 0;
     goto LAB_8260729c;
   }
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (uVar1 == 0) {
     uVar1 = 1;
   }
 LAB_82607254:
-  uVar2 = PMem_AllocFromSource_NoDebug(uVar1,uVar7,4,0);
-  memset((void *)uVar2,0x99,(size_t)uVar1);
-  if ((param_2 & 0x40000000) != 0) {
-    memset((void *)uVar2,0,(size_t)uVar1);
+  pvVar2 = PMem_AllocFromSource_NoDebug(uVar1,uVar8,4,PMEM_SOURCE_EXTERNAL);
+  uVar7 = (ulonglong)(int)pvVar2;
+  memset();
+  if ((uVar5 & 0x40000000) != 0) {
+    memset();
   }
 LAB_82607294:
-  if ((uVar2 & 0xffffffff) == 0) {
+  if ((uVar7 & 0xffffffff) == 0) {
 LAB_8260729c:
-    Com_Printf(0x10,0xffffffff8217d344,uVar1);
-    Sys_OutOfMemErrorInternal(0xb,0xffffffff8217ce88,0x5a6);
+    Com_Printf(0x10,"Failed to allocate %i bytes\n");
+                    /* WARNING: Subroutine does not return */
+    Sys_OutOfMemErrorInternal
+              (0xb,"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+               0x5a6);
   }
 LAB_826072c0:
-  __restgprlr_25(uVar2);
-  return;
+  pvVar2 = (void *)__restgprlr_25(uVar7);
+  return pvVar2;
 }
 
 
 // 826072D0  XMemSize  (universal/physicalmemory.cpp:1457)
 
-undefined4 XMemSize(int param_1,ulonglong param_2)
+ulong XMemSize(void *param_1,ulong param_2)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
   int *in_r13;
   
   if ((param_2 & 0x80000000) == 0x80000000) {
     if ((param_2 & 0xff0000) == 0x820000) {
       if ((param_2 & 0x1fff) != 7) {
-        MyAssertHandler(0xffffffff8217ce88,0x5c2,0,0xffffffff82000f98,0xffffffff8217d668);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x5c2,0,"%s");
       }
       return 0x2100;
     }
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x5c5,0,0xffffffff8217d650);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x5c5,0,"unsupported allocation");
     }
     return 0;
   }
-  uVar1 = (param_2 & 0xffffffff) >> 0x10 & 0xff;
+  uVar1 = param_2 >> 0x10 & 0xff;
   if (uVar1 == 0x82) {
     if (*(int *)(*in_r13 + 0xfc) != 0) {
       if ((param_2 & 0x1fff) != 6) {
-        MyAssertHandler(0xffffffff8217ce88,0x5d3,0,0xffffffff82000f98,0xffffffff8217d3b4);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x5d3,0,"%s");
       }
       return 0x960;
     }
-    return *(undefined4 *)(param_1 + -4);
+    return *(ulong *)((int)param_1 + -4);
   }
   if (uVar1 != 0x93) {
-    if (DAT_84013128 == 0) {
-      MyAssertHandler(0xffffffff8217ce88,0x5d9,0,0xffffffff8217d650);
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x5d9,0,"unsupported allocation");
     }
     return 0;
   }
-  if (DAT_84013128 == 0) {
-    MyAssertHandler(0xffffffff8217ce88,0x5ce,0,0xffffffff8217d364);
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp",
+                    0x5ce,0,"X File Cache not supported.");
   }
   return 0;
 }
@@ -1109,54 +1235,62 @@ undefined4 XMemSize(int param_1,ulonglong param_2)
 
 // 82607478  XMemFree  (universal/physicalmemory.cpp:1503)
 
-void XMemFree(undefined8 param_1,ulonglong param_2)
+void XMemFree(void *param_1,ulong param_2)
 
 {
-  undefined8 uVar1;
-  char cVar2;
+  void *pvVar1;
+  bool bVar2;
   ulonglong uVar3;
+  ulonglong uVar4;
   int *in_r13;
   
-  uVar1 = __savegprlr_28();
-  if ((param_2 & 0x80000000) == 0x80000000) {
-    if ((param_2 & 0xff0000) == 0x820000) {
-      if ((param_2 & 0x1fff) != 7) {
-        MyAssertHandler(0xffffffff8217ce88,0x5f2,0,0xffffffff82000f98,0xffffffff8217d668);
+  uVar3 = (ulonglong)(int)param_2;
+  pvVar1 = (void *)__savegprlr_28(param_1);
+  if ((uVar3 & 0x80000000) == 0x80000000) {
+    if ((uVar3 & 0xff0000) == 0x820000) {
+      if ((uVar3 & 0x1fff) != 7) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x5f2,0,"%s");
       }
       if (*(int *)(*in_r13 + 0xfc) == 0) {
-        MyAssertHandler(0xffffffff8217ce88,0x5f3,0,0xffffffff82000f98,0xffffffff8217d564);
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                        ,0x5f3,0,"%s");
       }
-      Sound_PhysicalFree(uVar1);
+      Sound_PhysicalFree(pvVar1);
       __restgprlr_28();
       return;
     }
   }
   else {
-    if ((param_2 & 0x30000000) != 0x20000000) {
-      MyAssertHandler(0xffffffff8217ce88,0x5fb,0,0xffffffff82000f98,0xffffffff8217d454);
+    if ((uVar3 & 0x30000000) != 0x20000000) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x5fb,0,"%s");
     }
-    uVar3 = (param_2 & 0xffffffff) >> 0x10 & 0xff;
-    if (uVar3 == 0x80) {
-      cVar2 = Sys_IsRenderThread();
-      if (cVar2 != '\0') {
-        if (DAT_84123554 == 0) {
-          MyAssertHandler(0xffffffff8217ce88,0x603,0,0xffffffff82000f98,0xffffffff8217d414);
+    uVar4 = (uVar3 & 0xffffffff) >> 0x10 & 0xff;
+    if (uVar4 == 0x80) {
+      bVar2 = Sys_IsRenderThread();
+      if (bVar2) {
+        if (g_xmemHeap == (void *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                          ,0x603,0,"%s");
         }
-        RtlFreeHeap(DAT_84123554,0,uVar1);
+        RtlFreeHeap(g_xmemHeap,0,pvVar1);
       }
     }
-    else if (uVar3 == 0x82) {
+    else if (uVar4 == 0x82) {
       if (*(int *)(*in_r13 + 0xfc) != 0) {
-        if ((param_2 & 0x1fff) != 6) {
-          MyAssertHandler(0xffffffff8217ce88,0x60c,0,0xffffffff82000f98,0xffffffff8217d3b4);
+        if ((uVar3 & 0x1fff) != 6) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                          ,0x60c,0,"%s");
         }
-        Sound_Free(uVar1);
+        Sound_Free(pvVar1);
         __restgprlr_28();
         return;
       }
     }
-    else if ((uVar3 == 0x93) && (DAT_84013128 == 0)) {
-      MyAssertHandler(0xffffffff8217ce88,0x612,0,0xffffffff8217d364);
+    else if ((uVar4 == 0x93) && (alwaysfails == 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\physicalmemory.cpp"
+                      ,0x612,0,"X File Cache not supported.");
       __restgprlr_28();
       return;
     }

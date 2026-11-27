@@ -2,132 +2,145 @@
 
 // 82486968  TRACK_g_mover  (game/g_mover.cpp:36)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
 void TRACK_g_mover(void)
 
 {
-  track_static_alloc_internal(0xffffffff83583828,0x16000,0xffffffff820759e0,9);
+  track_static_alloc_internal(pushed,0x16000,"pushed",9);
   return;
 }
 
 
 // 82486988  G_TestEntityPosition  (game/g_mover.cpp:50)
 
-void G_TestEntityPosition(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+gentity_s * G_TestEntityPosition(gentity_s *param_1,float *param_2)
 
 {
-  uint *puVar2;
+  uint *puVar1;
+  gentity_s *pgVar2;
   int iVar3;
-  ulonglong uVar1;
-  uint *puVar4;
-  uint *puVar5;
-  uint uVar6;
-  longlong lVar7;
-  double dVar8;
-  double dVar9;
+  uint uVar4;
+  ushort uVar5;
+  uint *puVar6;
+  uint *puVar7;
+  uint uVar8;
+  longlong lVar9;
+  double dVar10;
+  double dVar11;
   uint uStack_94;
-  undefined1 local_90 [12];
-  float local_84;
-  float local_80;
-  float local_7c;
-  undefined1 auStack_70 [46];
-  char local_42;
-  char local_41;
+  Bounds local_90;
+  trace_t atStack_70 [2];
   
-  puVar2 = (uint *)__savegprlr_27();
-  uVar6 = puVar2[99];
-  if (uVar6 == 0) {
-    uVar6 = 0x811;
+  puVar1 = (uint *)__savegprlr_27(param_1);
+  uVar8 = puVar1[99];
+  if (uVar8 == 0) {
+    uVar8 = 0x811;
   }
-  else if ((puVar2[0x47] & 0x4000000) != 0) goto LAB_824869bc;
-  puVar4 = &uStack_94;
-  puVar5 = puVar2 + 0x40;
-  lVar7 = 6;
+  else if ((puVar1[0x47] & 0x4000000) != 0) goto LAB_824869bc;
+  puVar6 = &uStack_94;
+  puVar7 = puVar1 + 0x40;
+  lVar9 = 6;
   do {
-    puVar5 = puVar5 + 1;
-    puVar4 = puVar4 + 1;
-    *puVar4 = *puVar5;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  dVar9 = 0.0;
-  if (local_84 < 0.0) {
-    MyAssertHandler(0xffffffff82073e28,0x353,0,0xffffffff82000f98,0xffffffff8200ca58);
+    puVar7 = puVar7 + 1;
+    puVar6 = puVar6 + 1;
+    *puVar6 = *puVar7;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  dVar11 = 0.0;
+  if (local_90.halfSize[0] < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x353,0,"%s");
   }
-  if ((double)local_80 < dVar9) {
-    MyAssertHandler(0xffffffff82073e28,0x354,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  if ((double)local_90.halfSize[1] < dVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x354,0,"%s");
   }
-  dVar8 = (double)local_7c;
-  if (dVar8 < dVar9) {
-    MyAssertHandler(0xffffffff82073e28,0x355,0,0xffffffff82000f98,0xffffffff8200ca20);
-    dVar8 = (double)local_7c;
+  dVar10 = (double)local_90.halfSize[2];
+  if (dVar10 < dVar11) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x355,0,"%s");
+    dVar10 = (double)local_90.halfSize[2];
   }
-  dVar9 = (double)local_84;
-  if ((float)((double)local_84 - (double)local_80) < 0.0) {
-    dVar9 = (double)local_80;
+  dVar11 = (double)local_90.halfSize[0];
+  if ((float)((double)local_90.halfSize[0] - (double)local_90.halfSize[1]) < 0.0) {
+    dVar11 = (double)local_90.halfSize[1];
   }
-  local_84 = (float)dVar9;
-  local_80 = (float)dVar9;
-  if ((float)(dVar9 - dVar8) < 0.0) {
-    dVar9 = dVar8;
+  local_90.halfSize[0] = (float)dVar11;
+  local_90.halfSize[1] = (float)dVar11;
+  if ((float)(dVar11 - dVar10) < 0.0) {
+    dVar11 = dVar10;
   }
-  local_7c = (float)dVar9;
-  if (puVar2[1] == 4) {
-    iVar3 = EntHandle__isDefined(puVar2 + 0x54);
+  local_90.halfSize[2] = (float)dVar11;
+  if (puVar1[1] == 4) {
+    iVar3 = EntHandle::isDefined((EntHandle *)(puVar1 + 0x54));
     if (iVar3 == 0) {
-      uVar1 = 0x7ff;
+      uVar4 = 0x7ff;
     }
     else {
-      uVar1 = EntHandle__entnum(puVar2 + 0x54);
+      uVar4 = EntHandle::entnum((EntHandle *)(puVar1 + 0x54));
     }
   }
   else {
-    uVar1 = (ulonglong)*puVar2;
+    uVar4 = *puVar1;
   }
-  G_TraceCapsule(auStack_70,param_2,param_2,local_90,uVar1,uVar6);
-  uVar1 = Trace_GetEntityHitId(auStack_70);
-  if ((local_41 != '\0') || (local_42 != '\0')) {
-    __restgprlr_27(((uVar1 & 0xffff) + (uVar1 & 0xffff) * 4) * 0x80 + -0x7cc8c980);
-    return;
+  G_TraceCapsule(atStack_70,param_2,param_2,&local_90,uVar4,uVar8);
+  uVar5 = Trace_GetEntityHitId(atStack_70);
+  if ((atStack_70[0].startsolid != false) || (atStack_70[0].allsolid != false)) {
+    pgVar2 = (gentity_s *)
+             __restgprlr_27(((ulonglong)uVar5 + (ulonglong)uVar5 * 4) * 0x80 + -0x7cc8c980);
+    return pgVar2;
   }
 LAB_824869bc:
-  __restgprlr_27(0);
-  return;
+  pgVar2 = (gentity_s *)__restgprlr_27(0);
+  return pgVar2;
 }
 
 
 // 82486B48  G_CreateRotationMatrix  (game/g_mover.cpp:96)
 
-void G_CreateRotationMatrix(undefined8 param_1,int param_2)
+void G_CreateRotationMatrix(float *param_1,float (*param_2) [3])
 
 {
-  AngleVectors(param_1,param_2,param_2 + 0xc,param_2 + 0x18);
-  *(float *)(param_2 + 0xc) = -*(float *)(param_2 + 0xc);
-  *(float *)(param_2 + 0x10) = -*(float *)(param_2 + 0x10);
-  *(float *)(param_2 + 0x14) = -*(float *)(param_2 + 0x14);
+  float fVar1;
+  float fVar2;
+  
+  AngleVectors(param_1,*param_2,param_2[1],param_2[2]);
+  fVar1 = param_2[1][1];
+  fVar2 = param_2[1][2];
+  param_2[1][0] = -param_2[1][0];
+  param_2[1][1] = -fVar1;
+  param_2[1][2] = -fVar2;
   return;
 }
 
 
 // 82486BA0  G_TransposeMatrix  (game/g_mover.cpp:110)
 
-void G_TransposeMatrix(undefined4 *param_1,undefined4 *param_2)
+void G_TransposeMatrix(float (*param_1) [3],float (*param_2) [3])
 
 {
-  *param_2 = *param_1;
-  param_2[1] = param_1[3];
-  param_2[2] = param_1[6];
-  param_2[3] = param_1[1];
-  param_2[4] = param_1[4];
-  param_2[5] = param_1[7];
-  param_2[6] = param_1[2];
-  param_2[7] = param_1[5];
-  param_2[8] = param_1[8];
+  (*param_2)[0] = (*param_1)[0];
+  (*param_2)[1] = param_1[1][0];
+  (*param_2)[2] = param_1[2][0];
+  param_2[1][0] = (*param_1)[1];
+  param_2[1][1] = param_1[1][1];
+  param_2[1][2] = param_1[2][1];
+  param_2[2][0] = (*param_1)[2];
+  param_2[2][1] = param_1[1][2];
+  param_2[2][2] = param_1[2][2];
   return;
 }
 
 
 // 82486BF0  G_RotatePoint  (game/g_mover.cpp:131)
 
-void G_RotatePoint(float *param_1,float *param_2)
+void G_RotatePoint(float *param_1,float (*param_2) [3])
 
 {
   float fVar1;
@@ -137,28 +150,31 @@ void G_RotatePoint(float *param_1,float *param_2)
   fVar1 = *param_1;
   fVar2 = param_1[1];
   fVar3 = param_1[2];
-  *param_1 = param_2[2] * fVar3 + param_2[1] * fVar2 + *param_2 * fVar1;
-  param_1[1] = param_2[5] * fVar3 + param_2[4] * fVar2 + param_2[3] * fVar1;
-  param_1[2] = param_2[8] * fVar3 + param_2[7] * fVar2 + param_2[6] * fVar1;
+  *param_1 = (*param_2)[2] * fVar3 + (*param_2)[1] * fVar2 + (*param_2)[0] * fVar1;
+  param_1[1] = param_2[1][2] * fVar3 + param_2[1][1] * fVar2 + param_2[1][0] * fVar1;
+  param_1[2] = param_2[2][2] * fVar3 + param_2[2][1] * fVar2 + param_2[2][0] * fVar1;
   return;
 }
 
 
 // 82486C58  G_TryPushingEntity  (game/g_mover.cpp:152)
 
-void G_TryPushingEntity(undefined8 param_1,int *param_2,float *param_3,undefined8 param_4)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+int G_TryPushingEntity(gentity_s *param_1,gentity_s *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  float *pfVar2;
-  int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  undefined4 *puVar6;
-  float *pfVar7;
-  longlong lVar8;
-  double dVar9;
-  double dVar10;
+  float fVar2;
+  gclient_s *pgVar3;
+  gentity_s *pgVar4;
+  longlong lVar5;
+  gentity_s *pgVar6;
+  int iVar7;
+  float *pfVar8;
+  undefined4 *puVar9;
+  longlong lVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -175,6 +191,8 @@ void G_TryPushingEntity(undefined8 param_1,int *param_2,float *param_3,undefined
   double dVar24;
   double dVar25;
   double dVar26;
+  double dVar27;
+  double dVar28;
   float local_1a0;
   float local_19c;
   float local_198;
@@ -182,10 +200,7 @@ void G_TryPushingEntity(undefined8 param_1,int *param_2,float *param_3,undefined
   float local_18c;
   float local_188;
   undefined4 uStack_184;
-  undefined1 local_180 [12];
-  float local_174;
-  float local_170;
-  float local_16c;
+  Bounds local_180;
   float local_160;
   float local_15c;
   float local_158;
@@ -201,264 +216,271 @@ void G_TryPushingEntity(undefined8 param_1,int *param_2,float *param_3,undefined
   float local_118;
   float local_114;
   float local_110;
-  float local_100 [64];
+  trace_t local_100 [4];
   
-  __savegprlr_26();
-  iVar3 = __savefpr();
-  local_1a0 = *param_3 + *(float *)(iVar3 + 0x138);
-  pfVar7 = (float *)(iVar3 + 0x138);
-  local_19c = param_3[1] + *(float *)(iVar3 + 0x13c);
-  local_198 = param_3[2] + *(float *)(iVar3 + 0x140);
+  lVar5 = __savegprlr_26(param_1);
+  __savefpr();
+  pgVar4 = (gentity_s *)lVar5;
+  local_1a0 = *param_3 + (pgVar4->r).currentOrigin[0];
+  pfVar8 = (pgVar4->r).currentOrigin;
+  local_19c = param_3[1] + (pgVar4->r).currentOrigin[1];
+  local_198 = param_3[2] + (pgVar4->r).currentOrigin[2];
   AngleVectors(param_4,&local_160,&local_154,&local_148);
-  dVar10 = (double)(local_1a0 - (float)param_2[0x4e]);
-  puVar5 = &uStack_184;
-  dVar11 = (double)(local_19c - (float)param_2[0x4f]);
-  dVar13 = (double)local_158;
-  puVar6 = (undefined4 *)(iVar3 + 0x100);
-  dVar17 = (double)local_160;
-  dVar15 = (double)local_15c;
-  dVar9 = -(double)local_154;
-  dVar19 = -(double)local_150;
+  dVar12 = (double)(local_1a0 - (param_2->r).currentOrigin[0]);
+  puVar9 = &uStack_184;
+  dVar13 = (double)(local_19c - (param_2->r).currentOrigin[1]);
+  dVar15 = (double)local_158;
+  lVar5 = lVar5 + 0x100;
+  dVar19 = (double)local_160;
+  dVar17 = (double)local_15c;
+  dVar11 = -(double)local_154;
+  dVar21 = -(double)local_150;
   local_118 = local_158;
-  local_154 = (float)dVar9;
-  local_150 = (float)dVar19;
-  local_12c = (float)dVar9;
-  local_120 = (float)dVar19;
-  dVar16 = (double)local_148;
-  lVar8 = 6;
-  dVar14 = (double)local_144;
-  dVar12 = (double)local_140;
+  local_154 = (float)dVar11;
+  local_150 = (float)dVar21;
+  local_12c = (float)dVar11;
+  local_120 = (float)dVar21;
+  dVar18 = (double)local_148;
+  lVar10 = 6;
+  dVar16 = (double)local_144;
+  dVar14 = (double)local_140;
   local_11c = local_144;
   local_110 = local_140;
-  dVar21 = (double)(local_198 - (float)param_2[0x50]);
-  dVar18 = -(double)local_14c;
-  local_14c = (float)dVar18;
-  local_114 = (float)dVar18;
-  local_190 = (float)(dVar16 * dVar21 +
-                     (double)(float)(dVar9 * dVar11 + (double)(float)(dVar17 * dVar10)));
-  local_18c = (float)(dVar14 * dVar21 +
-                     (double)(float)(dVar19 * dVar11 + (double)(float)(dVar15 * dVar10)));
-  local_188 = (float)(dVar12 * dVar21 +
-                     (double)(float)(dVar18 * dVar11 + (double)(float)(dVar13 * dVar10)));
-  local_1a0 = (float)((double)local_190 - dVar10) + local_1a0;
-  local_19c = (float)((double)local_18c - dVar11) + local_19c;
-  local_198 = (float)((double)local_188 - dVar21) + local_198;
+  dVar23 = (double)(local_198 - (param_2->r).currentOrigin[2]);
+  dVar20 = -(double)local_14c;
+  local_14c = (float)dVar20;
+  local_114 = (float)dVar20;
+  local_190 = (float)(dVar18 * dVar23 +
+                     (double)(float)(dVar11 * dVar13 + (double)(float)(dVar19 * dVar12)));
+  local_18c = (float)(dVar16 * dVar23 +
+                     (double)(float)(dVar21 * dVar13 + (double)(float)(dVar17 * dVar12)));
+  local_188 = (float)(dVar14 * dVar23 +
+                     (double)(float)(dVar20 * dVar13 + (double)(float)(dVar15 * dVar12)));
+  local_1a0 = (float)((double)local_190 - dVar12) + local_1a0;
+  local_19c = (float)((double)local_18c - dVar13) + local_19c;
+  local_198 = (float)((double)local_188 - dVar23) + local_198;
   do {
-    puVar6 = puVar6 + 1;
-    puVar5 = puVar5 + 1;
-    *puVar5 = *puVar6;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  dVar10 = 0.0;
-  if (local_174 < 0.0) {
-    MyAssertHandler(0xffffffff82073e28,0x353,0,0xffffffff82000f98,0xffffffff8200ca58);
+    lVar5 = lVar5 + 4;
+    puVar9 = puVar9 + 1;
+    *puVar9 = *(undefined4 *)lVar5;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  dVar12 = 0.0;
+  if (local_180.halfSize[0] < 0.0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x353,0,"%s");
   }
-  if ((double)local_170 < dVar10) {
-    MyAssertHandler(0xffffffff82073e28,0x354,0,0xffffffff82000f98,0xffffffff8200ca3c);
+  if ((double)local_180.halfSize[1] < dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x354,0,"%s");
   }
-  dVar11 = (double)local_16c;
-  if (dVar11 < dVar10) {
-    MyAssertHandler(0xffffffff82073e28,0x355,0,0xffffffff82000f98,0xffffffff8200ca20);
-    dVar11 = (double)local_16c;
+  dVar13 = (double)local_180.halfSize[2];
+  if (dVar13 < dVar12) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                    ,0x355,0,"%s");
+    dVar13 = (double)local_180.halfSize[2];
   }
-  iVar4 = *(int *)(iVar3 + 0x18c);
-  dVar21 = (double)local_174;
-  if ((float)((double)local_174 - (double)local_170) < 0.0) {
-    dVar21 = (double)local_170;
+  iVar7 = pgVar4->clipmask;
+  dVar23 = (double)local_180.halfSize[0];
+  if ((float)((double)local_180.halfSize[0] - (double)local_180.halfSize[1]) < 0.0) {
+    dVar23 = (double)local_180.halfSize[1];
   }
-  local_174 = (float)dVar21;
-  local_170 = (float)dVar21;
-  if ((float)(dVar21 - dVar11) < 0.0) {
-    dVar21 = dVar11;
+  local_180.halfSize[0] = (float)dVar23;
+  local_180.halfSize[1] = (float)dVar23;
+  if ((float)(dVar23 - dVar13) < 0.0) {
+    dVar23 = dVar13;
   }
-  local_16c = (float)dVar21;
-  if (iVar4 == 0) {
-    iVar4 = 0x811;
+  local_180.halfSize[2] = (float)dVar23;
+  if (iVar7 == 0) {
+    iVar7 = 0x811;
   }
-  G_TraceCapsule(local_100,pfVar7,&local_1a0,local_180,*param_2,iVar4);
-  local_1a0 = (local_1a0 - *pfVar7) * local_100[0] + *pfVar7;
-  local_19c = (local_19c - *(float *)(iVar3 + 0x13c)) * local_100[0] + *(float *)(iVar3 + 0x13c);
-  local_198 = (local_198 - *(float *)(iVar3 + 0x140)) * local_100[0] + *(float *)(iVar3 + 0x140);
-  iVar4 = G_TestEntityPosition(iVar3,&local_1a0);
-  pfVar2 = (float *)param_4;
-  if (iVar4 == 0) {
-    if (*(int *)(iVar3 + 0x80) != *param_2) {
-      *(undefined4 *)(iVar3 + 0x80) = 0x7ff;
+  G_TraceCapsule(local_100,pfVar8,&local_1a0,&local_180,(param_2->s).number,iVar7);
+  fVar1 = (pgVar4->r).currentOrigin[1];
+  fVar2 = (pgVar4->r).currentOrigin[2];
+  local_1a0 = (local_1a0 - *pfVar8) * local_100[0].fraction + *pfVar8;
+  local_19c = (local_19c - fVar1) * local_100[0].fraction + fVar1;
+  local_198 = (local_198 - fVar2) * local_100[0].fraction + fVar2;
+  pgVar6 = G_TestEntityPosition(pgVar4,&local_1a0);
+  if (pgVar6 == (gentity_s *)0x0) {
+    if ((pgVar4->s).groundEntityNum != (param_2->s).number) {
+      (pgVar4->s).groundEntityNum = 0x7ff;
     }
-    *pfVar7 = local_1a0;
-    *(float *)(iVar3 + 0x13c) = local_19c;
-    *(float *)(iVar3 + 0x140) = local_198;
-    *(float *)(iVar3 + 0x18) = local_1a0;
-    *(float *)(iVar3 + 0x1c) = local_19c;
-    *(float *)(iVar3 + 0x20) = local_198;
-    iVar4 = *(int *)(iVar3 + 0x158);
-    if (iVar4 != 0) {
-      *(float *)(iVar4 + 100) = pfVar2[1] + *(float *)(iVar4 + 100);
-      iVar4 = *(int *)(iVar3 + 0x158);
-      *(float *)(iVar4 + 0x1c) = local_1a0;
-      *(float *)(iVar4 + 0x20) = local_19c;
-      *(float *)(iVar4 + 0x24) = local_198;
+    *pfVar8 = local_1a0;
+    (pgVar4->r).currentOrigin[1] = local_19c;
+    (pgVar4->r).currentOrigin[2] = local_198;
+    (pgVar4->s).lerp.pos.trBase[0] = local_1a0;
+    (pgVar4->s).lerp.pos.trBase[1] = local_19c;
+    (pgVar4->s).lerp.pos.trBase[2] = local_198;
+    pgVar3 = pgVar4->client;
+    if (pgVar3 != (gclient_s *)0x0) {
+      (pgVar3->ps).delta_angles[1] = param_4[1] + (pgVar3->ps).delta_angles[1];
+      pgVar3 = pgVar4->client;
+      (pgVar3->ps).origin[0] = local_1a0;
+      (pgVar3->ps).origin[1] = local_19c;
+      (pgVar3->ps).origin[2] = local_198;
     }
-    if (*(int *)(iVar3 + 4) == 4) {
-      *(float *)(iVar3 + 0x144) = *pfVar2 + *(float *)(iVar3 + 0x144);
-      *(float *)(iVar3 + 0x148) = *(float *)(iVar3 + 0x148) + pfVar2[1];
-      *(float *)(iVar3 + 0x14c) = *(float *)(iVar3 + 0x14c) + pfVar2[2];
-      *(float *)(iVar3 + 0x3c) = *pfVar2 + *(float *)(iVar3 + 0x3c);
-      *(float *)(iVar3 + 0x40) = *(float *)(iVar3 + 0x40) + pfVar2[1];
-      *(float *)(iVar3 + 0x44) = *(float *)(iVar3 + 0x44) + pfVar2[2];
-      dVar10 = (double)*(float *)(iVar3 + 0x1bc);
-      dVar11 = (double)*(float *)(iVar3 + 0x1c0);
-      dVar21 = (double)*(float *)(iVar3 + 0x1b8);
-      *(float *)(iVar3 + 0x1b8) =
-           (float)(dVar11 * dVar16 +
-                  (double)(float)(dVar10 * dVar9 + (double)(float)(dVar21 * dVar17)));
-      *(float *)(iVar3 + 0x1bc) =
-           (float)(dVar14 * dVar11 +
-                  (double)(float)(dVar15 * dVar21 + (double)(float)(dVar19 * dVar10)));
-      *(float *)(iVar3 + 0x1c0) =
-           (float)(dVar12 * dVar11 +
-                  (double)(float)(dVar13 * dVar21 + (double)(float)(dVar18 * dVar10)));
+    if ((pgVar4->s).eType == 4) {
+      (pgVar4->r).currentAngles[0] = *param_4 + (pgVar4->r).currentAngles[0];
+      (pgVar4->r).currentAngles[1] = (pgVar4->r).currentAngles[1] + param_4[1];
+      (pgVar4->r).currentAngles[2] = (pgVar4->r).currentAngles[2] + param_4[2];
+      (pgVar4->s).lerp.apos.trBase[0] = *param_4 + (pgVar4->s).lerp.apos.trBase[0];
+      (pgVar4->s).lerp.apos.trBase[1] = (pgVar4->s).lerp.apos.trBase[1] + param_4[1];
+      (pgVar4->s).lerp.apos.trBase[2] = (pgVar4->s).lerp.apos.trBase[2] + param_4[2];
+      dVar12 = (double)(pgVar4->field31_0x1ac).missile.surfaceNormal[1];
+      dVar13 = (double)(pgVar4->field31_0x1ac).missile.surfaceNormal[2];
+      dVar23 = (double)(pgVar4->field31_0x1ac).missile.surfaceNormal[0];
+      (pgVar4->field31_0x1ac).missile.surfaceNormal[0] =
+           (float)(dVar13 * dVar18 +
+                  (double)(float)(dVar12 * dVar11 + (double)(float)(dVar23 * dVar19)));
+      (pgVar4->field31_0x1ac).missile.surfaceNormal[1] =
+           (float)(dVar16 * dVar13 +
+                  (double)(float)(dVar17 * dVar23 + (double)(float)(dVar21 * dVar12)));
+      (pgVar4->field31_0x1ac).missile.surfaceNormal[2] =
+           (float)(dVar14 * dVar13 +
+                  (double)(float)(dVar15 * dVar23 + (double)(float)(dVar20 * dVar12)));
     }
-    DAT_83599828 = DAT_83599828 + 0x2c;
-    __restfpr(1);
-    __restgprlr_26();
-    return;
+    pushed_p = pushed_p + 1;
+    __restfpr();
+    iVar7 = __restgprlr_26();
+    return iVar7;
   }
-  dVar12 = 0.5;
-  dVar11 = (double)(*(float *)(iVar3 + 0x110) * 0.5);
-  dVar9 = 4.0;
-  if (4.0 < dVar11) {
-    dVar14 = (double)local_1a0;
-    dVar18 = (double)local_19c;
-    dVar13 = (double)local_198;
-    if (dVar10 < dVar11) {
-      dVar19 = 2.0;
-      dVar11 = dVar10;
+  dVar14 = 0.5;
+  dVar13 = (double)((pgVar4->r).box.halfSize[0] * 0.5);
+  dVar11 = 4.0;
+  if (4.0 < dVar13) {
+    dVar16 = (double)local_1a0;
+    dVar20 = (double)local_19c;
+    dVar15 = (double)local_198;
+    if (dVar12 < dVar13) {
+      dVar21 = 2.0;
+      dVar13 = dVar12;
       do {
-        dVar20 = -dVar11;
-        dVar21 = dVar9;
-        if (dVar20 <= dVar11) {
+        dVar22 = -dVar13;
+        dVar23 = dVar11;
+        if (dVar22 <= dVar13) {
           do {
-            dVar9 = dVar21;
-            if (dVar21 < (double)(float)((double)*(float *)(iVar3 + 0x110) * dVar12)) {
+            dVar11 = dVar23;
+            if (dVar23 < (double)(float)((double)(pgVar4->r).box.halfSize[0] * dVar14)) {
               do {
-                dVar22 = -dVar21;
-                if (dVar22 <= dVar21) {
+                dVar24 = -dVar23;
+                if (dVar24 <= dVar23) {
                   do {
-                    dVar25 = dVar9;
-                    if (dVar9 < (double)(float)((double)*(float *)(iVar3 + 0x110) * dVar12)) {
+                    dVar27 = dVar11;
+                    if (dVar11 < (double)(float)((double)(pgVar4->r).box.halfSize[0] * dVar14)) {
                       do {
-                        dVar26 = -dVar25;
-                        if (dVar26 <= dVar25) {
-                          dVar24 = (double)(float)(dVar14 + dVar22);
-                          dVar23 = (double)(float)(dVar13 + dVar20);
+                        dVar28 = -dVar27;
+                        if (dVar28 <= dVar27) {
+                          dVar26 = (double)(float)(dVar16 + dVar24);
+                          dVar25 = (double)(float)(dVar15 + dVar22);
                           do {
-                            local_18c = (float)(dVar18 + dVar26);
-                            local_190 = (float)dVar24;
-                            local_188 = (float)dVar23;
-                            iVar4 = G_TestEntityPosition(iVar3,&local_190);
-                            if (iVar4 == 0) {
-                              if (*(int *)(iVar3 + 0x80) != *param_2) {
-                                *(undefined4 *)(iVar3 + 0x80) = 0x7ff;
+                            local_18c = (float)(dVar20 + dVar28);
+                            local_190 = (float)dVar26;
+                            local_188 = (float)dVar25;
+                            pgVar6 = G_TestEntityPosition(pgVar4,&local_190);
+                            if (pgVar6 == (gentity_s *)0x0) {
+                              if ((pgVar4->s).groundEntityNum != (param_2->s).number) {
+                                (pgVar4->s).groundEntityNum = 0x7ff;
                               }
-                              *pfVar7 = local_190;
-                              *(float *)(iVar3 + 0x13c) = local_18c;
-                              *(float *)(iVar3 + 0x140) = local_188;
-                              *(float *)(iVar3 + 0x18) = local_190;
-                              *(float *)(iVar3 + 0x20) = local_188;
-                              *(float *)(iVar3 + 0x1c) = local_18c;
-                              iVar4 = *(int *)(iVar3 + 0x158);
-                              if (iVar4 != 0) {
-                                *(float *)(iVar4 + 100) = pfVar2[1] + *(float *)(iVar4 + 100);
-                                iVar4 = *(int *)(iVar3 + 0x158);
-                                *(float *)(iVar4 + 0x1c) = local_190;
-                                *(float *)(iVar4 + 0x20) = local_18c;
-                                *(float *)(iVar4 + 0x24) = local_188;
+                              *pfVar8 = local_190;
+                              (pgVar4->r).currentOrigin[1] = local_18c;
+                              (pgVar4->r).currentOrigin[2] = local_188;
+                              (pgVar4->s).lerp.pos.trBase[0] = local_190;
+                              (pgVar4->s).lerp.pos.trBase[2] = local_188;
+                              (pgVar4->s).lerp.pos.trBase[1] = local_18c;
+                              pgVar3 = pgVar4->client;
+                              if (pgVar3 != (gclient_s *)0x0) {
+                                (pgVar3->ps).delta_angles[1] =
+                                     param_4[1] + (pgVar3->ps).delta_angles[1];
+                                pgVar3 = pgVar4->client;
+                                (pgVar3->ps).origin[0] = local_190;
+                                (pgVar3->ps).origin[1] = local_18c;
+                                (pgVar3->ps).origin[2] = local_188;
                               }
-                              if (*(int *)(iVar3 + 4) == 4) {
-                                fVar1 = *(float *)(iVar3 + 0x1bc);
-                                dVar9 = (double)*(float *)(iVar3 + 0x1b8);
-                                dVar10 = (double)*(float *)(iVar3 + 0x1c0);
-                                *(float *)(iVar3 + 0x1bc) =
-                                     (float)((double)local_11c * dVar10 +
-                                            (double)(float)(dVar15 * dVar9 +
+                              if ((pgVar4->s).eType == 4) {
+                                fVar1 = (pgVar4->field31_0x1ac).missile.surfaceNormal[1];
+                                dVar11 = (double)(pgVar4->field31_0x1ac).missile.surfaceNormal[0];
+                                dVar12 = (double)(pgVar4->field31_0x1ac).missile.surfaceNormal[2];
+                                (pgVar4->field31_0x1ac).missile.surfaceNormal[1] =
+                                     (float)((double)local_11c * dVar12 +
+                                            (double)(float)(dVar17 * dVar11 +
                                                            (double)(local_120 * fVar1)));
-                                *(float *)(iVar3 + 0x1b8) =
-                                     (float)(dVar10 * dVar16 +
-                                            (double)(fVar1 * local_12c + (float)(dVar9 * dVar17)));
-                                *(float *)(iVar3 + 0x1c0) =
-                                     (float)((double)local_110 * dVar10 +
-                                            (double)(float)((double)local_118 * dVar9 +
+                                (pgVar4->field31_0x1ac).missile.surfaceNormal[0] =
+                                     (float)(dVar12 * dVar18 +
+                                            (double)(fVar1 * local_12c + (float)(dVar11 * dVar19)));
+                                (pgVar4->field31_0x1ac).missile.surfaceNormal[2] =
+                                     (float)((double)local_110 * dVar12 +
+                                            (double)(float)((double)local_118 * dVar11 +
                                                            (double)(local_114 * fVar1)));
                               }
-                              DAT_83599828 = DAT_83599828 + 0x2c;
-                              __restfpr(1);
-                              __restgprlr_26();
-                              return;
+                              pushed_p = pushed_p + 1;
+                              __restfpr();
+                              iVar7 = __restgprlr_26();
+                              return iVar7;
                             }
-                            dVar26 = (double)(float)(dVar25 * dVar19 + dVar26);
-                          } while (dVar26 <= dVar25);
+                            dVar28 = (double)(float)(dVar27 * dVar21 + dVar28);
+                          } while (dVar28 <= dVar27);
                         }
-                        dVar25 = (double)(float)(dVar25 + dVar9);
-                      } while (dVar25 < (double)(float)((double)*(float *)(iVar3 + 0x110) * dVar12))
-                      ;
+                        dVar27 = (double)(float)(dVar27 + dVar11);
+                      } while (dVar27 < (double)(float)((double)(pgVar4->r).box.halfSize[0] * dVar14
+                                                       ));
                     }
-                    dVar22 = (double)(float)(dVar21 * dVar19 + dVar22);
-                  } while (dVar22 <= dVar21);
+                    dVar24 = (double)(float)(dVar23 * dVar21 + dVar24);
+                  } while (dVar24 <= dVar23);
                 }
-                dVar21 = (double)(float)(dVar21 + dVar9);
-              } while (dVar21 < (double)(float)((double)*(float *)(iVar3 + 0x110) * dVar12));
+                dVar23 = (double)(float)(dVar23 + dVar11);
+              } while (dVar23 < (double)(float)((double)(pgVar4->r).box.halfSize[0] * dVar14));
             }
-          } while ((dVar20 != dVar10) &&
-                  (dVar20 = (double)(float)(dVar11 * dVar19 + dVar20), dVar21 = dVar9,
-                  dVar20 <= dVar11));
+          } while ((dVar22 != dVar12) &&
+                  (dVar22 = (double)(float)(dVar13 * dVar21 + dVar22), dVar23 = dVar11,
+                  dVar22 <= dVar13));
         }
-        dVar11 = (double)(float)(dVar11 + dVar9);
-      } while (dVar11 < (double)(float)((double)*(float *)(iVar3 + 0x110) * dVar12));
+        dVar13 = (double)(float)(dVar13 + dVar11);
+      } while (dVar13 < (double)(float)((double)(pgVar4->r).box.halfSize[0] * dVar14));
     }
   }
-  iVar4 = G_TestEntityPosition(iVar3,pfVar7);
-  if (iVar4 == 0) {
-    *(undefined4 *)(iVar3 + 0x80) = 0x7ff;
-    __restfpr(1);
-    __restgprlr_26();
-    return;
+  pgVar6 = G_TestEntityPosition(pgVar4,pfVar8);
+  if (pgVar6 == (gentity_s *)0x0) {
+    (pgVar4->s).groundEntityNum = 0x7ff;
+    __restfpr();
+    iVar7 = __restgprlr_26();
+    return iVar7;
   }
-  __restfpr(0);
-  __restgprlr_26();
-  return;
+  __restfpr();
+  iVar7 = __restgprlr_26();
+  return iVar7;
 }
 
 
 // 824872B0  G_MoverPush  (game/g_mover.cpp:298)
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
-void G_MoverPush(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined4 *param_4)
+bool G_MoverPush(gentity_s *param_1,float *param_2,float *param_3,gentity_s **param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  undefined4 *puVar5;
+  int iVar4;
+  pushed_t *ppVar5;
   ulonglong uVar6;
-  int *piVar7;
-  char cVar10;
-  int *piVar8;
-  int iVar9;
-  float *pfVar11;
-  longlong lVar12;
-  int iVar13;
-  undefined8 uVar14;
-  int iVar15;
+  gentity_s *pgVar7;
+  bool bVar11;
+  int iVar8;
+  gentity_s *pgVar9;
+  int iVar10;
+  undefined1 uVar12;
+  entityShared_t *peVar13;
+  longlong lVar14;
+  undefined8 uVar15;
   int iVar16;
   longlong lVar17;
   longlong lVar18;
-  undefined4 *puVar19;
-  longlong lVar20;
-  double dVar21;
-  double dVar22;
+  float *pfVar19;
+  Bounds *pBVar20;
+  float *pfVar21;
+  longlong lVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -467,246 +489,261 @@ void G_MoverPush(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefi
   double dVar28;
   double dVar29;
   double dVar30;
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
+  double dVar31;
+  double dVar32;
+  double dVar33;
   undefined1 auVar34 [16];
   undefined1 auVar35 [16];
   undefined1 auVar36 [16];
   undefined1 auVar37 [16];
   undefined1 auVar38 [16];
+  undefined1 auVar39 [16];
+  undefined1 auVar40 [16];
+  undefined1 auVar41 [16];
+  Weapon in_stack_ffffbe58;
+  undefined1 in_stack_ffffbe5f;
+  hitLocation_t in_stack_ffffbe60;
+  uint in_stack_ffffbe64;
+  uint in_stack_ffffbe68;
+  int in_stack_ffffbe6c;
   float local_4130;
   float local_412c;
   float local_4128;
   float local_4124;
   float local_4120;
   float local_411c;
+  Bounds local_4110;
+  Bounds aBStack_40f0 [342];
+  int local_20d0 [2100];
   
   uVar6 = ZEXT48(&stack0x00000000);
-  __savegprlr_16();
-  piVar7 = (int *)__savefpr_24();
-  *param_4 = 0;
-  lVar20 = 6;
-  uVar14 = 1;
-  piVar8 = piVar7 + 0x40;
-  lVar12 = uVar6 - 0x4134;
+  __savegprlr_16(param_1);
+  pgVar7 = (gentity_s *)__savefpr_24();
+  *param_4 = (gentity_s *)0x0;
+  lVar22 = 6;
+  uVar15 = 1;
+  peVar13 = &pgVar7->r;
+  lVar14 = uVar6 - 0x4134;
   do {
-    piVar8 = piVar8 + 1;
-    lVar12 = lVar12 + 4;
-    *(int *)lVar12 = *piVar8;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  if (((piVar7[1] == 6) && (*(short *)(piVar7 + 0x5a) != 0)) &&
-     (cVar10 = G_GetModelBounds(*(short *)(piVar7 + 0x5a),uVar6 - 0x40f0), cVar10 != '\0')) {
-    auVar38 = loadVectorRightIndexed(uVar6 - 0x4120);
-    auVar37 = loadVectorLeftIndexed(uVar6 - 0x4130);
-    auVar36 = loadVectorRightIndexed(uVar6 - 0x4114);
-    auVar35 = loadVectorLeftIndexed(uVar6 - 0x4124);
-    auVar34 = loadVectorRightIndexed(uVar6 - 0x40e0);
-    auVar33 = loadVectorLeftIndexed(uVar6 - 0x40f0);
-    auVar32 = loadVectorRightIndexed(uVar6 - 0x40d4);
-    auVar31 = loadVectorLeftIndexed(uVar6 - 0x40e4);
-    auVar37 = (auVar37 | auVar38) & _DAT_8404f950;
-    auVar35 = (auVar35 | auVar36) & _DAT_8404f950;
-    auVar33 = (auVar33 | auVar34) & _DAT_8404f950;
-    auVar31 = (auVar31 | auVar32) & _DAT_8404f950;
-    auVar32 = vectorSubtractFloatingPoint128(auVar37,auVar35);
-    auVar37 = vectorAddFloatingPoint128(auVar37,auVar35);
-    auVar35 = vectorSubtractFloatingPoint128(auVar33,auVar31);
-    auVar31 = vectorAddFloatingPoint128(auVar33,auVar31);
-    auVar35 = vectorMinimumFloatingPoint128(auVar35,auVar32);
-    auVar31 = vectorMaximumFloatingPoint128(auVar31,auVar37);
-    auVar31 = vectorAddFloatingPoint128(auVar35,auVar31);
-    auVar31 = vectorMultiplyFloatingPoint(auVar31,_DAT_8217a060);
-    auVar32 = vectorSubtractFloatingPoint128(auVar31,auVar35);
-    auVar37 = vectorSplatWord(auVar31,0);
-    auVar35 = vectorSplatWord(auVar31,1);
-    auVar31 = vectorSplatWord(auVar31,2);
-    storeVectorElementWordIndexed(auVar37,uVar6 - 0x4130);
-    storeVectorElementWordIndexed(auVar35,uVar6 - 0x412c);
-    storeVectorElementWordIndexed(auVar31,uVar6 - 0x4128);
-    auVar37 = vectorSplatWord(auVar32,0);
-    auVar35 = vectorSplatWord(auVar32,1);
-    auVar31 = vectorSplatWord(auVar32,2);
-    storeVectorElementWordIndexed(auVar37,uVar6 - 0x4124);
-    storeVectorElementWordIndexed(auVar35,uVar6 - 0x4120);
-    storeVectorElementWordIndexed(auVar31,uVar6 - 0x411c);
+    peVar13 = (entityShared_t *)&peVar13->box;
+    lVar14 = lVar14 + 4;
+    *(float *)lVar14 = ((Bounds *)peVar13)->midPoint[0];
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
+  if ((((pgVar7->s).eType == 6) && (pgVar7->model != 0)) &&
+     (bVar11 = G_GetModelBounds((uint)pgVar7->model,aBStack_40f0), bVar11)) {
+    auVar41 = loadVectorRightIndexed(uVar6 - 0x4120);
+    auVar40 = loadVectorLeftIndexed(uVar6 - 0x4130);
+    auVar39 = loadVectorRightIndexed(uVar6 - 0x4114);
+    auVar38 = loadVectorLeftIndexed(uVar6 - 0x4124);
+    auVar37 = loadVectorRightIndexed(uVar6 - 0x40e0);
+    auVar36 = loadVectorLeftIndexed(uVar6 - 0x40f0);
+    auVar35 = loadVectorRightIndexed(uVar6 - 0x40d4);
+    auVar34 = loadVectorLeftIndexed(uVar6 - 0x40e4);
+    auVar40 = (auVar40 | auVar41) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar38 = (auVar38 | auVar39) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar36 = (auVar36 | auVar37) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar34 = (auVar34 | auVar35) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar35 = vectorSubtractFloatingPoint128(auVar40,auVar38);
+    auVar40 = vectorAddFloatingPoint128(auVar40,auVar38);
+    auVar38 = vectorSubtractFloatingPoint128(auVar36,auVar34);
+    auVar34 = vectorAddFloatingPoint128(auVar36,auVar34);
+    auVar38 = vectorMinimumFloatingPoint128(auVar38,auVar35);
+    auVar34 = vectorMaximumFloatingPoint128(auVar34,auVar40);
+    auVar34 = vectorAddFloatingPoint128(auVar38,auVar34);
+    auVar34 = vectorMultiplyFloatingPoint(auVar34,(undefined1  [16])g_oneHalf.field0_0x0);
+    auVar35 = vectorSubtractFloatingPoint128(auVar34,auVar38);
+    auVar40 = vectorSplatWord(auVar34,0);
+    auVar38 = vectorSplatWord(auVar34,1);
+    auVar34 = vectorSplatWord(auVar34,2);
+    storeVectorElementWordIndexed(auVar40,uVar6 - 0x4130);
+    storeVectorElementWordIndexed(auVar38,uVar6 - 0x412c);
+    storeVectorElementWordIndexed(auVar34,uVar6 - 0x4128);
+    auVar40 = vectorSplatWord(auVar35,0);
+    auVar38 = vectorSplatWord(auVar35,1);
+    auVar34 = vectorSplatWord(auVar35,2);
+    storeVectorElementWordIndexed(auVar40,uVar6 - 0x4124);
+    storeVectorElementWordIndexed(auVar38,uVar6 - 0x4120);
+    storeVectorElementWordIndexed(auVar34,uVar6 - 0x411c);
   }
-  dVar29 = 0.0;
-  pfVar4 = (float *)param_3;
-  if (((((float)piVar7[0x51] == 0.0) && ((float)piVar7[0x52] == 0.0)) &&
-      (((float)piVar7[0x53] == 0.0 && ((*pfVar4 == 0.0 && (pfVar4[1] == 0.0)))))) &&
-     (pfVar4[2] == 0.0)) {
-    fVar2 = local_412c + (float)piVar7[0x4f];
-    fVar1 = local_4130 + (float)piVar7[0x4e];
-    dVar21 = (double)(local_4124 + 1.0);
-    fVar3 = local_4128 + (float)piVar7[0x50];
-    dVar22 = (double)(local_411c + 1.0);
-    dVar24 = (double)(local_4120 + 1.0);
+  pfVar19 = (pgVar7->r).currentAngles;
+  dVar32 = 0.0;
+  if (((((pgVar7->r).currentAngles[0] == 0.0) && ((pgVar7->r).currentAngles[1] == 0.0)) &&
+      (((pgVar7->r).currentAngles[2] == 0.0 && ((*param_3 == 0.0 && (param_3[1] == 0.0)))))) &&
+     (param_3[2] == 0.0)) {
+    fVar2 = local_412c + (pgVar7->r).currentOrigin[1];
+    fVar1 = local_4130 + (pgVar7->r).currentOrigin[0];
+    dVar23 = (double)(local_4124 + 1.0);
+    fVar3 = local_4128 + (pgVar7->r).currentOrigin[2];
+    dVar27 = (double)(local_411c + 1.0);
+    dVar28 = (double)(local_4120 + 1.0);
   }
   else {
-    fVar1 = (float)piVar7[0x4e];
-    fVar2 = (float)piVar7[0x4f];
-    fVar3 = (float)piVar7[0x50];
-    dVar21 = (double)(SQRT((ABS(local_4130) + local_4124) * (ABS(local_4130) + local_4124) +
+    fVar1 = (pgVar7->r).currentOrigin[0];
+    fVar2 = (pgVar7->r).currentOrigin[1];
+    fVar3 = (pgVar7->r).currentOrigin[2];
+    dVar23 = (double)(SQRT((ABS(local_4130) + local_4124) * (ABS(local_4130) + local_4124) +
                            (ABS(local_4128) + local_411c) * (ABS(local_4128) + local_411c) +
                            (ABS(local_412c) + local_4120) * (ABS(local_412c) + local_4120)) + 1.0);
-    dVar22 = dVar21;
-    dVar24 = dVar21;
+    dVar27 = dVar23;
+    dVar28 = dVar23;
   }
-  dVar30 = 1.0;
-  pfVar11 = (float *)param_2;
-  dVar28 = (double)(*pfVar11 + fVar1);
-  dVar27 = (double)(pfVar11[1] + fVar2);
-  dVar26 = (double)(pfVar11[2] + fVar3);
-  SV_UnlinkEntity(piVar7);
-  lVar12 = CM_AreaEntities(uVar6 - 0x4110,uVar6 - 0x20d0,0x800,0x6000180);
-  piVar7[0x4e] = (int)(*pfVar11 + (float)piVar7[0x4e]);
-  piVar7[0x4f] = (int)(pfVar11[1] + (float)piVar7[0x4f]);
-  piVar7[0x50] = (int)(pfVar11[2] + (float)piVar7[0x50]);
-  piVar7[0x51] = (int)((float)piVar7[0x51] + *pfVar4);
-  piVar7[0x52] = (int)((float)piVar7[0x52] + pfVar4[1]);
-  piVar7[0x53] = (int)(pfVar4[2] + (float)piVar7[0x53]);
-  SV_LinkEntity(piVar7);
-  lVar20 = 0;
-  if (0 < (int)lVar12) {
+  dVar33 = 1.0;
+  dVar31 = (double)(float)((double)*param_2 + (double)fVar1);
+  dVar30 = (double)(float)((double)param_2[1] + (double)fVar2);
+  dVar29 = (double)(float)((double)param_2[2] + (double)fVar3);
+  pfVar21 = (pgVar7->r).currentOrigin;
+  dVar26 = (double)(float)((double)*param_2 * 0.5);
+  dVar24 = (double)(float)((double)param_2[2] * 0.5);
+  dVar25 = (double)(float)((double)param_2[1] * 0.5);
+  local_4110.midPoint[0] = (float)((double)fVar1 + dVar26);
+  local_4110.midPoint[1] = (float)((double)fVar2 + dVar25);
+  local_4110.midPoint[2] = (float)((double)fVar3 + dVar24);
+  local_4110.halfSize[0] = (float)(ABS(dVar26) + dVar23);
+  local_4110.halfSize[2] = (float)(ABS(dVar24) + dVar27);
+  local_4110.halfSize[1] = (float)(ABS(dVar25) + dVar28);
+  SV_UnlinkEntity(pgVar7);
+  iVar8 = CM_AreaEntities(&local_4110,local_20d0,0x800,0x6000180);
+  lVar14 = (longlong)iVar8;
+  *pfVar21 = *param_2 + *pfVar21;
+  (pgVar7->r).currentOrigin[1] = param_2[1] + (pgVar7->r).currentOrigin[1];
+  (pgVar7->r).currentOrigin[2] = param_2[2] + (pgVar7->r).currentOrigin[2];
+  *pfVar19 = *pfVar19 + *param_3;
+  (pgVar7->r).currentAngles[1] = (pgVar7->r).currentAngles[1] + param_3[1];
+  (pgVar7->r).currentAngles[2] = param_3[2] + (pgVar7->r).currentAngles[2];
+  SV_LinkEntity(pgVar7);
+  lVar22 = 0;
+  if (0 < iVar8) {
     lVar17 = uVar6 - 0x40d4;
     lVar18 = uVar6 - 0x20d0;
     do {
-      iVar15 = *(int *)lVar18;
-      iVar13 = iVar15 * 0x280;
-      iVar16 = (&DAT_83373684)[iVar15 * 0xa0];
+      iVar8 = *(int *)lVar18;
+      iVar16 = g_entities[iVar8].s.eType;
       if ((((iVar16 == 4) || (iVar16 == 3)) || (iVar16 == 1)) ||
-         ((iVar16 == 0xe || ((&DAT_833737ea)[iVar13] != '\0')))) {
-        if ((&DAT_83373700)[iVar15 * 0xa0] != *piVar7) {
-          if ((float *)(&DAT_833737a0 + iVar13) == (float *)0x0) {
-            MyAssertHandler(0xffffffff82073e28,0x223,0,0xffffffff82000f98,0xffffffff82025b34);
+         ((iVar16 == 0xe || (g_entities[iVar8].physicsObject != '\0')))) {
+        if (g_entities[iVar8].s.groundEntityNum != (pgVar7->s).number) {
+          pBVar20 = &g_entities[iVar8].r.absBox;
+          if (pBVar20 == (Bounds *)0x0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
+                            ,0x223,0,"%s");
           }
-          dVar23 = dVar29;
-          if (ABS((float)((double)*(float *)(&DAT_833737a0 + iVar13) - dVar28)) -
-              (float)((double)*(float *)(&DAT_833737ac + iVar13) + dVar21) < 0.0) {
-            dVar23 = dVar30;
+          dVar24 = dVar32;
+          if (ABS((float)((double)pBVar20->midPoint[0] - dVar31)) -
+              (float)((double)g_entities[iVar8].r.absBox.halfSize[0] + dVar23) < 0.0) {
+            dVar24 = dVar33;
           }
-          dVar25 = dVar29;
-          if (ABS((float)((double)*(float *)(&DAT_833737a4 + iVar13) - dVar27)) -
-              (float)((double)*(float *)(&DAT_833737b0 + iVar13) + dVar24) < 0.0) {
-            dVar25 = dVar23;
+          dVar25 = dVar32;
+          if (ABS((float)((double)g_entities[iVar8].r.absBox.midPoint[1] - dVar30)) -
+              (float)((double)g_entities[iVar8].r.absBox.halfSize[1] + dVar28) < 0.0) {
+            dVar25 = dVar24;
           }
-          dVar23 = dVar29;
-          if (ABS((float)((double)*(float *)(&DAT_833737a8 + iVar13) - dVar26)) -
-              (float)((double)*(float *)(&DAT_833737b4 + iVar13) + dVar22) < 0.0) {
-            dVar23 = dVar25;
+          dVar24 = dVar32;
+          if (ABS((float)((double)g_entities[iVar8].r.absBox.midPoint[2] - dVar29)) -
+              (float)((double)g_entities[iVar8].r.absBox.halfSize[2] + dVar27) < 0.0) {
+            dVar24 = dVar25;
           }
-          if ((dVar23 == dVar29) ||
-             (piVar8 = (int *)G_TestEntityPosition
-                                        (&DAT_83373680 + iVar15 * 0xa0,&DAT_833737b8 + iVar15 * 0xa0
-                                        ), piVar8 != piVar7)) goto LAB_82487770;
+          if ((dVar24 == dVar32) ||
+             (pgVar9 = G_TestEntityPosition(g_entities + iVar8,g_entities[iVar8].r.currentOrigin),
+             pgVar9 != pgVar7)) goto LAB_82487770;
         }
-        lVar20 = lVar20 + 1;
+        lVar22 = lVar22 + 1;
         lVar17 = lVar17 + 4;
         *(int *)lVar17 = *(int *)lVar18;
       }
 LAB_82487770:
-      lVar12 = lVar12 + -1;
+      lVar14 = lVar14 + -1;
       lVar18 = lVar18 + 4;
-    } while (lVar12 != 0);
+    } while (lVar14 != 0);
   }
-  iVar15 = (int)lVar20;
-  if (0 < iVar15) {
-    lVar12 = uVar6 - 0x40d4;
-    lVar17 = lVar20;
+  iVar8 = (int)lVar22;
+  if (0 < iVar8) {
+    lVar14 = uVar6 - 0x40d4;
+    lVar17 = lVar22;
     do {
-      lVar12 = lVar12 + 4;
-      SV_UnlinkEntity(((ulonglong)*(uint *)lVar12 + ((ulonglong)*(uint *)lVar12 & 0x3fffffff) * 4 &
-                      0x1ffffff) * 0x80 + -0x7cc8c980);
+      lVar14 = lVar14 + 4;
+      SV_UnlinkEntity(g_entities + *(int *)lVar14);
       lVar17 = lVar17 + -1;
     } while (lVar17 != 0);
   }
   iVar16 = 0;
-  if (0 < iVar15) {
-    lVar12 = uVar6 - 0x40d0;
+  if (0 < iVar8) {
+    lVar14 = uVar6 - 0x40d0;
     do {
-      iVar13 = *(int *)lVar12;
-      iVar9 = iVar13 * 0x280;
-      puVar19 = &DAT_83373680 + iVar13 * 0xa0;
-      if ((undefined4 *)0x83599827 < DAT_83599828) {
-        MyAssertHandler(0xffffffff82075a0c,0x192,0,0xffffffff82000f98,0xffffffff820759e8);
+      iVar4 = *(int *)lVar14;
+      pgVar9 = g_entities + iVar4;
+      if ((pushed_t *)((int)&pushed[0x7ff].deltayaw + 3) < pushed_p) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_mover.cpp",0x192,0,
+                        "%s");
       }
-      puVar5 = DAT_83599828;
-      *DAT_83599828 = puVar19;
-      puVar5[1] = (&DAT_833737b8)[iVar13 * 0xa0];
-      puVar5[2] = (&DAT_833737bc)[iVar13 * 0xa0];
-      puVar5[3] = (&DAT_833737c0)[iVar13 * 0xa0];
-      puVar5[10] = pfVar4[1];
-      if ((&DAT_83373684)[iVar13 * 0xa0] == 4) {
-        puVar5[7] = *(undefined4 *)(&DAT_83373838 + iVar9);
-        puVar5[8] = *(undefined4 *)(&DAT_8337383c + iVar9);
-        puVar5[9] = *(undefined4 *)(&DAT_83373840 + iVar9);
+      ppVar5 = pushed_p;
+      pushed_p->ent = pgVar9;
+      ppVar5->origin[0] = g_entities[iVar4].r.currentOrigin[0];
+      ppVar5->origin[1] = g_entities[iVar4].r.currentOrigin[1];
+      ppVar5->origin[2] = g_entities[iVar4].r.currentOrigin[2];
+      ppVar5->deltayaw = param_3[1];
+      if (g_entities[iVar4].s.eType == 4) {
+        ppVar5->surfaceNormal[0] = (float)g_entities[iVar4].field31_0x1ac.item[0].weapon;
+        ppVar5->surfaceNormal[1] = g_entities[iVar4].field31_0x1ac.missile.surfaceNormal[1];
+        ppVar5->surfaceNormal[2] = (float)g_entities[iVar4].field31_0x1ac.item[1].ammoCount;
       }
-      iVar9 = G_TryPushingEntity(puVar19,piVar7,param_2,param_3);
-      if (((iVar9 == 0) && ((&DAT_83373684)[iVar13 * 0xa0] != 3)) &&
-         ((&DAT_83373684)[iVar13 * 0xa0] != 4)) {
-        if (((piVar7[3] != 4) && (piVar7[0xc] != 4)) && (piVar7[0x59] == 0)) {
-          *param_4 = puVar19;
-          uVar14 = 0;
+      iVar10 = G_TryPushingEntity(pgVar9,pgVar7,param_2,param_3);
+      if (((iVar10 == 0) && (iVar4 = g_entities[iVar4].s.eType, iVar4 != 3)) && (iVar4 != 4)) {
+        if ((((pgVar7->s).lerp.pos.trType != TR_SINE) && ((pgVar7->s).lerp.apos.trType != TR_SINE))
+           && (pgVar7->physObjId == 0)) {
+          *param_4 = pgVar9;
+          uVar15 = 0;
           break;
         }
-        G_Damage(puVar19,piVar7,piVar7,0,0,99999,0,10);
+        G_Damage(pgVar9,pgVar7,pgVar7,(float *)0x0,(float *)0x0,99999,0,10,in_stack_ffffbe58,
+                 (bool)in_stack_ffffbe5f,in_stack_ffffbe60,in_stack_ffffbe64,in_stack_ffffbe68,
+                 in_stack_ffffbe6c);
       }
       else {
-        SV_LinkEntity(puVar19);
+        SV_LinkEntity(pgVar9);
       }
       iVar16 = iVar16 + 1;
-      lVar12 = lVar12 + 4;
-    } while (iVar16 < iVar15);
-    if (0 < iVar15) {
-      lVar12 = uVar6 - 0x40d4;
+      lVar14 = lVar14 + 4;
+    } while (iVar16 < iVar8);
+    if (0 < iVar8) {
+      lVar14 = uVar6 - 0x40d4;
       do {
-        lVar12 = lVar12 + 4;
-        SV_LinkEntity(((ulonglong)*(uint *)lVar12 + ((ulonglong)*(uint *)lVar12 & 0x3fffffff) * 4 &
-                      0x1ffffff) * 0x80 + -0x7cc8c980);
-        lVar20 = lVar20 + -1;
-      } while (lVar20 != 0);
+        lVar14 = lVar14 + 4;
+        SV_LinkEntity(g_entities + *(int *)lVar14);
+        lVar22 = lVar22 + -1;
+      } while (lVar22 != 0);
     }
   }
-  __restfpr_24(uVar14);
-  __restgprlr_16();
-  return;
+  __restfpr_24(uVar15);
+  uVar12 = __restgprlr_16();
+  return (bool)uVar12;
 }
 
 
 // 82487970  G_MoverSlide  (game/g_mover.cpp:460)
 
-void G_MoverSlide(undefined4 *param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_MoverSlide(gentity_s *param_1)
 
 {
-  int iVar1;
-  float local_40;
-  undefined4 *local_3c;
-  undefined4 *local_38;
-  undefined4 *local_34;
-  undefined1 local_30;
-  undefined1 local_2f;
-  undefined1 local_2e;
-  undefined4 local_2c;
-  undefined4 local_24;
-  uint local_20;
-  code *local_1c;
+  gentity_s *pgVar1;
+  G_StepSlideMoveParams local_40;
   
-  local_24 = *param_1;
-  iVar1 = param_1[0x86];
-  local_3c = param_1 + 0x4e;
-  local_38 = param_1 + 0x71;
-  local_34 = param_1 + 0x6b;
-  local_30 = 1;
-  local_2f = 0;
-  local_2e = 0;
-  local_20 = 0x2810011;
-  local_2c = 0;
-  local_1c = PM_ClipVelocity;
-  local_40 = (float)(longlong)(DAT_83580fac - DAT_83580fb0) * 0.001;
-  for (; iVar1 != 0; iVar1 = *(int *)(*(int *)(iVar1 + 0x214) + 4)) {
-    local_20 = local_20 & ~*(uint *)(iVar1 + 0x11c);
+  local_40.passEntityNum = (param_1->s).number;
+  pgVar1 = param_1->tagChildren;
+  local_40.origin = (param_1->r).currentOrigin;
+  local_40.velocity = (float *)((int)&param_1->field31_0x1ac + 0x18);
+  local_40.bounds = (Bounds *)&param_1->field31_0x1ac;
+  local_40.gravity = true;
+  local_40.hasGround = false;
+  local_40.zerog = false;
+  local_40.clipMask = 0x2810011;
+  local_40.inSolid = (bool *)0x0;
+  local_40.clipVelocityFunc = PM_ClipVelocity;
+  local_40.deltaTime = (float)(longlong)(level.time - level.previousTime) * 0.001;
+  for (; pgVar1 != (gentity_s *)0x0; pgVar1 = pgVar1->tagInfo->next) {
+    local_40.clipMask = local_40.clipMask & ~(pgVar1->r).contents;
   }
   G_StepSlideMove(&local_40);
   return;
@@ -715,20 +752,25 @@ void G_MoverSlide(undefined4 *param_1)
 
 // 82487A48  G_MoverTeam  (game/g_mover.cpp:490)
 
-void G_MoverTeam(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "PhysWorld": Some values do not have unique names */
+
+void G_MoverTeam(gentity_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  gentity_s *pgVar1;
+  gclient_s *pgVar2;
   int iVar3;
-  char cVar4;
-  int *piVar5;
-  int *piVar6;
-  int *piVar7;
-  undefined4 *puVar8;
+  gentity_s *pgVar4;
+  trajectory_t *ptVar5;
+  bool bVar7;
+  trajectory_t *ptVar6;
+  pushed_t *ppVar8;
+  float *pfVar9;
   char in_RESERVE;
   byte in_cr0;
-  undefined4 local_d0 [2];
+  gentity_s *local_d0 [2];
   float local_c8;
   float local_c4;
   float local_c0;
@@ -741,111 +783,117 @@ void G_MoverTeam(void)
   float local_98;
   float local_94;
   float local_90;
-  undefined1 auStack_80 [128];
+  float afStack_80 [32];
   
-  iVar3 = __savegprlr_23();
-  piVar6 = (int *)(iVar3 + 0xc);
-  if (*(int *)(iVar3 + 0xc) != 9) {
-    cVar4 = Com_IsRagdollTrajectory(piVar6);
-    if (cVar4 == '\0') {
-      if (*(int *)(iVar3 + 0x164) != 0) {
-        Phys_ObjGetPosition(*(int *)(iVar3 + 0x164),iVar3 + 0x18,auStack_80);
-        AxisToAngles(auStack_80,iVar3 + 0x3c);
-        *piVar6 = 1;
-        *(undefined4 *)(iVar3 + 0x30) = 1;
+  pgVar4 = (gentity_s *)__savegprlr_23(param_1);
+  ptVar5 = &(pgVar4->s).lerp.pos;
+  if (((pgVar4->s).lerp.pos.trType != TR_PHYSICS) &&
+     (bVar7 = Com_IsRagdollTrajectory(ptVar5), !bVar7)) {
+    if (pgVar4->physObjId != 0) {
+      Phys_ObjGetPosition(pgVar4->physObjId,(pgVar4->s).lerp.pos.trBase,(float (*) [3])afStack_80);
+      AxisToAngles((float (*) [3])afStack_80,(pgVar4->s).lerp.apos.trBase);
+      ptVar5->trType = TR_INTERPOLATE;
+      (pgVar4->s).lerp.apos.trType = TR_INTERPOLATE;
+    }
+    if ((ptVar5->trType != TR_STATIONARY) || ((pgVar4->s).lerp.apos.trType != TR_STATIONARY)) {
+      if ((pgVar4->flags & 0x8000000U) != 0) {
+        G_MoverSlide(pgVar4);
+        __restgprlr_23();
+        return;
       }
-      if ((*piVar6 != 0) || (*(int *)(iVar3 + 0x30) != 0)) {
-        if ((*(uint *)(iVar3 + 0x184) & 0x8000000) != 0) {
-          G_MoverSlide(iVar3);
-          __restgprlr_23();
-          return;
-        }
-        DAT_83599828 = &DAT_83583828;
-        local_d0[0] = 0;
-        BG_EvaluateTrajectory(piVar6,DAT_83580fac,&local_c8);
-        piVar5 = (int *)(iVar3 + 0x30);
-        BG_EvaluateTrajectory(piVar5,DAT_83580fac,&local_b8);
-        local_a8 = local_c8 - *(float *)(iVar3 + 0x138);
-        local_a4 = local_c4 - *(float *)(iVar3 + 0x13c);
-        local_a0 = local_c0 - *(float *)(iVar3 + 0x140);
-        local_98 = local_b8 - *(float *)(iVar3 + 0x144);
-        local_94 = local_b4 - *(float *)(iVar3 + 0x148);
-        local_90 = local_b0 - *(float *)(iVar3 + 0x14c);
-        cVar4 = G_MoverPush(iVar3,&local_a8,&local_98,local_d0);
-        if (cVar4 == '\0') {
-          if (*(int *)(iVar3 + 0x164) != 0) {
-            MyAssertHandler(0xffffffff82075a0c,0x229,0,0xffffffff82000f98,0xffffffff820713b0);
-          }
-          piVar7 = (int *)(DAT_83599828 + -0x2c);
-          if ((undefined *)0x83583827 < DAT_83599828 + -0x2c) {
-            puVar8 = (undefined4 *)(DAT_83599828 + -0x20);
-            do {
-              iVar1 = *piVar7;
-              *(undefined4 *)(iVar1 + 0x138) = puVar8[-2];
-              *(undefined4 *)(iVar1 + 0x13c) = puVar8[-1];
-              *(undefined4 *)(iVar1 + 0x140) = *puVar8;
-              *(undefined4 *)(iVar1 + 0x18) = puVar8[-2];
-              *(undefined4 *)(iVar1 + 0x1c) = puVar8[-1];
-              *(undefined4 *)(iVar1 + 0x20) = *puVar8;
-              iVar2 = *(int *)(iVar1 + 0x158);
-              if (iVar2 != 0) {
-                *(float *)(iVar2 + 100) = *(float *)(iVar2 + 100) - (float)puVar8[7];
-                iVar2 = *(int *)(iVar1 + 0x158);
-                *(undefined4 *)(iVar2 + 0x1c) = puVar8[-2];
-                *(undefined4 *)(iVar2 + 0x20) = puVar8[-1];
-                *(undefined4 *)(iVar2 + 0x24) = *puVar8;
-              }
-              if (*(int *)(iVar1 + 4) == 4) {
-                *(undefined4 *)(iVar1 + 0x1b8) = puVar8[4];
-                *(undefined4 *)(iVar1 + 0x1bc) = puVar8[5];
-                *(undefined4 *)(iVar1 + 0x1c0) = puVar8[6];
-              }
-              SV_LinkEntity();
-              piVar7 = piVar7 + -0xb;
-              puVar8 = puVar8 + -0xb;
-            } while ((int *)((int)&DAT_83583824 + 3) < piVar7);
-          }
-          *(int *)(iVar3 + 0x10) = (*(int *)(iVar3 + 0x10) - DAT_83580fb0) + DAT_83580fac;
-          *(int *)(iVar3 + 0x34) = (DAT_83580fac - DAT_83580fb0) + *(int *)(iVar3 + 0x34);
-          BG_EvaluateTrajectory(piVar6,DAT_83580fac,iVar3 + 0x138);
-          BG_EvaluateTrajectory(piVar5,DAT_83580fac,iVar3 + 0x144);
-          SV_LinkEntity(iVar3);
-          if (*(code **)(&DAT_82969848 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28) != (code *)0x0) {
-            (**(code **)(&DAT_82969848 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28))(iVar3,local_d0[0]);
-            __restgprlr_23();
-            return;
-          }
-        }
-        else if (*(int *)(iVar3 + 0x164) == 0) {
-          if ((*piVar6 != 0) && (*(int *)(iVar3 + 0x14) + *(int *)(iVar3 + 0x10) <= DAT_83580fac)) {
-            if (*(code **)(&DAT_82969844 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28) != (code *)0x0) {
-              (**(code **)(&DAT_82969844 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28))(iVar3);
+      pushed_p = pushed;
+      local_d0[0] = (gentity_s *)0x0;
+      BG_EvaluateTrajectory(ptVar5,level.time,&local_c8);
+      ptVar6 = &(pgVar4->s).lerp.apos;
+      BG_EvaluateTrajectory(ptVar6,level.time,&local_b8);
+      local_a8 = local_c8 - (pgVar4->r).currentOrigin[0];
+      local_a4 = local_c4 - (pgVar4->r).currentOrigin[1];
+      local_a0 = local_c0 - (pgVar4->r).currentOrigin[2];
+      local_98 = local_b8 - (pgVar4->r).currentAngles[0];
+      local_94 = local_b4 - (pgVar4->r).currentAngles[1];
+      local_90 = local_b0 - (pgVar4->r).currentAngles[2];
+      bVar7 = G_MoverPush(pgVar4,&local_a8,&local_98,local_d0);
+      if (bVar7) {
+        if (pgVar4->physObjId == 0) {
+          if ((ptVar5->trType != TR_STATIONARY) &&
+             ((pgVar4->s).lerp.pos.trDuration + (pgVar4->s).lerp.pos.trTime <= level.time)) {
+            if (*(code **)(&DAT_82969844 + (uint)pgVar4->handler * 0x28) != (code *)0x0) {
+              (**(code **)(&DAT_82969844 + (uint)pgVar4->handler * 0x28))(pgVar4);
             }
           }
-          if ((*piVar5 != 0) && (*(int *)(iVar3 + 0x38) + *(int *)(iVar3 + 0x34) <= DAT_83580fac)) {
-            if (*(code **)(&DAT_82969844 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28) != (code *)0x0) {
-              (**(code **)(&DAT_82969844 + (uint)*(byte *)(iVar3 + 0x16d) * 0x28))(iVar3);
+          if ((ptVar6->trType != TR_STATIONARY) &&
+             ((pgVar4->s).lerp.apos.trDuration + (pgVar4->s).lerp.apos.trTime <= level.time)) {
+            if (*(code **)(&DAT_82969844 + (uint)pgVar4->handler * 0x28) != (code *)0x0) {
+              (**(code **)(&DAT_82969844 + (uint)pgVar4->handler * 0x28))(pgVar4);
             }
           }
         }
         else {
-          cVar4 = Phys_ObjIsAsleep();
-          if (cVar4 != '\0') {
-            Phys_ObjDestroy(4,*(undefined4 *)(iVar3 + 0x164));
-            *(undefined4 *)(iVar3 + 0x164) = 0;
+          bVar7 = Phys_ObjIsAsleep(pgVar4->physObjId);
+          if (bVar7) {
+            Phys_ObjDestroy(PHYS_WORLD_LAST_SERVER_WORLD,pgVar4->physObjId);
+            pgVar4->physObjId = 0;
             do {
               if (in_RESERVE != '\0') {
-                DAT_8427b910 = storeWordConditionalIndexed
-                                         ((ulonglong)DAT_8427b910 - 1,0,0xffffffff8427b910);
+                g_entPhysObjCount =
+                     storeWordConditionalIndexed
+                               ((ulonglong)(uint)g_entPhysObjCount - 1,0,0xffffffff8427b910);
                 in_cr0 = 2;
               }
             } while (!(bool)(in_cr0 >> 1 & 1));
-            *piVar6 = 0;
-            *piVar5 = 0;
-            Scr_Notify(iVar3,DAT_835a0c04,0);
+            ptVar5->trType = TR_STATIONARY;
+            ptVar6->trType = TR_STATIONARY;
+            Scr_Notify(pgVar4,scr_const.physics_finished,0);
             __restgprlr_23();
             return;
           }
+        }
+      }
+      else {
+        if (pgVar4->physObjId != 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_mover.cpp",0x229,
+                          0,"%s");
+        }
+        ppVar8 = pushed_p + -1;
+        if ((pushed_t *)((int)&MY_DOT_MAX + 3U) < pushed_p + -1) {
+          pfVar9 = pushed_p[-1].origin + 2;
+          do {
+            pgVar1 = ppVar8->ent;
+            (pgVar1->r).currentOrigin[0] = pfVar9[-2];
+            (pgVar1->r).currentOrigin[1] = pfVar9[-1];
+            (pgVar1->r).currentOrigin[2] = *pfVar9;
+            (pgVar1->s).lerp.pos.trBase[0] = pfVar9[-2];
+            (pgVar1->s).lerp.pos.trBase[1] = pfVar9[-1];
+            (pgVar1->s).lerp.pos.trBase[2] = *pfVar9;
+            pgVar2 = pgVar1->client;
+            if (pgVar2 != (gclient_s *)0x0) {
+              (pgVar2->ps).delta_angles[1] = (pgVar2->ps).delta_angles[1] - pfVar9[7];
+              pgVar2 = pgVar1->client;
+              (pgVar2->ps).origin[0] = pfVar9[-2];
+              (pgVar2->ps).origin[1] = pfVar9[-1];
+              (pgVar2->ps).origin[2] = *pfVar9;
+            }
+            if ((pgVar1->s).eType == 4) {
+              (pgVar1->field31_0x1ac).item[0].weapon = *(Weapon *)(pfVar9 + 4);
+              (pgVar1->field31_0x1ac).missile.surfaceNormal[1] = pfVar9[5];
+              (pgVar1->field31_0x1ac).item[1].ammoCount = (int)pfVar9[6];
+            }
+            SV_LinkEntity(pgVar1);
+            ppVar8 = ppVar8 + -1;
+            pfVar9 = pfVar9 + -0xb;
+          } while ((pushed_t *)((int)&MY_DOT_MAX + 3U) < ppVar8);
+        }
+        iVar3 = (pgVar4->s).lerp.apos.trTime;
+        (pgVar4->s).lerp.pos.trTime =
+             ((pgVar4->s).lerp.pos.trTime - level.previousTime) + level.time;
+        (pgVar4->s).lerp.apos.trTime = (level.time - level.previousTime) + iVar3;
+        BG_EvaluateTrajectory(ptVar5,level.time,(pgVar4->r).currentOrigin);
+        BG_EvaluateTrajectory(ptVar6,level.time,(pgVar4->r).currentAngles);
+        SV_LinkEntity(pgVar4);
+        if (*(code **)(&DAT_82969848 + (uint)pgVar4->handler * 0x28) != (code *)0x0) {
+          (**(code **)(&DAT_82969848 + (uint)pgVar4->handler * 0x28))(pgVar4,local_d0[0]);
+          __restgprlr_23();
+          return;
         }
       }
     }
@@ -857,47 +905,50 @@ void G_MoverTeam(void)
 
 // 82487E58  G_RunMoverNonScriptedAnim  (game/g_mover.cpp:661)
 
-void G_RunMoverNonScriptedAnim(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_RunMoverNonScriptedAnim(gentity_s *param_1)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  double extraout_f1;
+  DObj *pDVar1;
+  XAnimTree *pXVar2;
+  float (*pafVar3) [3];
   double dVar4;
+  float fVar5;
   float local_f0;
   float local_ec;
   float local_e8;
-  undefined1 auStack_e0 [8];
-  undefined1 auStack_d8 [16];
-  undefined1 auStack_c8 [24];
-  undefined1 auStack_b0 [36];
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
-  undefined1 auStack_80 [48];
-  undefined1 auStack_50 [56];
+  float afStack_e0 [2];
+  float afStack_d8 [4];
+  float afStack_c8 [6];
+  float afStack_b0 [9];
+  float local_8c;
+  float local_88;
+  float local_84;
+  float afStack_80 [12];
+  float afStack_50 [14];
   
-  if (*(int *)(param_1 + 0x214) == 0) {
-    uVar1 = Com_GetServerDObjForEnt();
-    if (((uVar1 & 0xffffffff) != 0) && (iVar3 = DObjGetTree(), iVar3 != 0)) {
-      XAnimCalcDelta(uVar1,0,auStack_e0,&local_f0,1);
-      AnglesToAxis(param_1 + 0x144,auStack_b0);
-      dVar4 = 0.0;
-      if (local_f0 * local_f0 + local_ec * local_ec + local_e8 * local_e8 != 0.0) {
-        local_8c = *(undefined4 *)(param_1 + 0x138);
-        local_88 = *(undefined4 *)(param_1 + 0x13c);
-        local_84 = *(undefined4 *)(param_1 + 0x140);
-        MatrixTransformVector43(&local_f0,auStack_b0,auStack_c8);
-        G_SetOrigin(param_1,auStack_c8);
-      }
-      uVar2 = RotationToYaw(auStack_e0);
-      if (extraout_f1 != dVar4) {
-        YawToAxis(uVar2,auStack_80);
-        MatrixMultiply(auStack_80,auStack_b0,auStack_50);
-        AxisToAngles(auStack_50,auStack_d8);
-        G_SetAngle(param_1,auStack_d8);
-      }
+  if (((param_1->tagInfo == (tagInfo_s *)0x0) &&
+      (pDVar1 = Com_GetServerDObjForEnt(param_1), pDVar1 != (DObj *)0x0)) &&
+     (pXVar2 = DObjGetTree(pDVar1), pXVar2 != (XAnimTree *)0x0)) {
+    XAnimCalcDelta(pDVar1,0,afStack_e0,&local_f0,true);
+    AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_b0);
+    dVar4 = 0.0;
+    if (local_f0 * local_f0 + local_ec * local_ec + local_e8 * local_e8 != 0.0) {
+      local_8c = (param_1->r).currentOrigin[0];
+      local_88 = (param_1->r).currentOrigin[1];
+      local_84 = (param_1->r).currentOrigin[2];
+      MatrixTransformVector43(&local_f0,(float (*) [3])afStack_b0,afStack_c8);
+      G_SetOrigin(param_1,afStack_c8);
+    }
+    pafVar3 = (float (*) [3])afStack_e0;
+    fVar5 = RotationToYaw((float *)pafVar3);
+    if ((double)fVar5 != dVar4) {
+      YawToAxis(fVar5,pafVar3);
+      MatrixMultiply((float (*) [3])afStack_80,(float (*) [3])afStack_b0,(float (*) [3])afStack_50);
+      AxisToAngles((float (*) [3])afStack_50,afStack_d8);
+      G_SetAngle(param_1,afStack_d8);
     }
   }
   return;
@@ -906,14 +957,17 @@ void G_RunMoverNonScriptedAnim(int param_1)
 
 // 82487F78  G_RunMover  (game/g_mover.cpp:706)
 
-void G_RunMover(int param_1)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void G_RunMover(gentity_s *param_1)
 
 {
-  if (*(int *)(param_1 + 0x214) == 0) {
-    G_MoverTeam();
+  if (param_1->tagInfo == (tagInfo_s *)0x0) {
+    G_MoverTeam(param_1);
   }
   else {
-    G_GeneralLink();
+    G_GeneralLink(param_1);
   }
   G_RunThink(param_1);
   return;

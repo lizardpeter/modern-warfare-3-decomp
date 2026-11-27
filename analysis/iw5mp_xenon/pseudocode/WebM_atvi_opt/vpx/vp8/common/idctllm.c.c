@@ -2,107 +2,108 @@
 
 // 82812F30  vp8_short_idct4x4llm_c  (WebM_atvi_opt/vpx/vp8/common/idctllm.c:34)
 
-void vp8_short_idct4x4llm_c(undefined8 param_1,short *param_2,int param_3)
+void vp8_short_idct4x4llm_c(short *param_1,short *param_2,int param_3)
 
 {
   short sVar1;
   short sVar2;
-  short sVar3;
+  int iVar3;
   short sVar4;
   short sVar5;
-  short *psVar6;
-  int iVar7;
+  short sVar6;
+  short *psVar7;
   int iVar8;
   int iVar9;
   int iVar10;
+  int iVar11;
   
-  psVar6 = (short *)__savegprlr_23();
-  sVar1 = psVar6[4];
-  sVar2 = psVar6[0xc];
-  param_3 = param_3 >> 1;
-  sVar3 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
-  sVar4 = *psVar6 + psVar6[8];
-  sVar5 = *psVar6 - psVar6[8];
-  *param_2 = sVar3 + sVar4;
+  psVar7 = (short *)__savegprlr_23(param_1);
+  sVar1 = psVar7[4];
+  sVar2 = psVar7[0xc];
+  iVar3 = param_3 >> 1;
+  sVar4 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
+  sVar5 = *psVar7 + psVar7[8];
+  sVar6 = *psVar7 - psVar7[8];
+  *param_2 = sVar4 + sVar5;
   sVar2 = ((short)((uint)(sVar1 * 0x8a8c) >> 0x10) - (short)((uint)(sVar2 * 0x4e7b) >> 0x10)) -
           sVar2;
-  param_2[param_3 * 3] = sVar4 - sVar3;
-  param_2[param_3] = sVar2 + sVar5;
-  param_2[param_3 * 2] = sVar5 - sVar2;
-  sVar1 = psVar6[0xd];
-  sVar2 = psVar6[5];
-  sVar4 = psVar6[1] + psVar6[9];
-  sVar3 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
-  sVar5 = psVar6[1] - psVar6[9];
+  param_2[iVar3 * 3] = sVar5 - sVar4;
+  param_2[iVar3] = sVar2 + sVar6;
+  param_2[iVar3 * 2] = sVar6 - sVar2;
+  sVar1 = psVar7[0xd];
+  sVar2 = psVar7[5];
+  sVar5 = psVar7[1] + psVar7[9];
+  sVar4 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
+  sVar6 = psVar7[1] - psVar7[9];
   sVar1 = ((short)((uint)(sVar2 * 0x8a8c) >> 0x10) - (short)((uint)(sVar1 * 0x4e7b) >> 0x10)) -
           sVar1;
-  param_2[1] = sVar3 + sVar4;
-  param_2[param_3 * 3 + 1] = sVar4 - sVar3;
-  param_2[param_3 + 1] = sVar1 + sVar5;
-  param_2[param_3 * 2 + 1] = sVar5 - sVar1;
-  sVar1 = psVar6[6];
-  sVar2 = psVar6[0xe];
-  sVar3 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
-  sVar4 = psVar6[2] + psVar6[10];
-  sVar5 = psVar6[2] - psVar6[10];
+  param_2[1] = sVar4 + sVar5;
+  param_2[iVar3 * 3 + 1] = sVar5 - sVar4;
+  param_2[iVar3 + 1] = sVar1 + sVar6;
+  param_2[iVar3 * 2 + 1] = sVar6 - sVar1;
+  sVar1 = psVar7[6];
+  sVar2 = psVar7[0xe];
+  sVar4 = (short)((uint)(sVar2 * 0x8a8c) >> 0x10) + (short)((uint)(sVar1 * 0x4e7b) >> 0x10) + sVar1;
+  sVar5 = psVar7[2] + psVar7[10];
+  sVar6 = psVar7[2] - psVar7[10];
   sVar2 = ((short)((uint)(sVar1 * 0x8a8c) >> 0x10) - (short)((uint)(sVar2 * 0x4e7b) >> 0x10)) -
           sVar2;
-  param_2[2] = sVar3 + sVar4;
-  param_2[param_3 * 3 + 2] = sVar4 - sVar3;
-  *(short *)((int)(((longlong)param_3 + 2U & 0xffffffff) << 1) + (int)param_2) = sVar2 + sVar5;
-  param_2[param_3 * 2 + 2] = sVar5 - sVar2;
-  sVar1 = psVar6[0xf];
-  sVar2 = psVar6[7];
-  sVar4 = psVar6[3] + psVar6[0xb];
-  sVar3 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
-  sVar5 = psVar6[3] - psVar6[0xb];
+  param_2[2] = sVar4 + sVar5;
+  param_2[iVar3 * 3 + 2] = sVar5 - sVar4;
+  *(short *)((int)(((longlong)iVar3 + 2U & 0xffffffff) << 1) + (int)param_2) = sVar2 + sVar6;
+  param_2[iVar3 * 2 + 2] = sVar6 - sVar2;
+  sVar1 = psVar7[0xf];
+  sVar2 = psVar7[7];
+  sVar5 = psVar7[3] + psVar7[0xb];
+  sVar4 = (short)((uint)(sVar1 * 0x8a8c) >> 0x10) + (short)((uint)(sVar2 * 0x4e7b) >> 0x10) + sVar2;
+  sVar6 = psVar7[3] - psVar7[0xb];
   sVar1 = ((short)((uint)(sVar2 * 0x8a8c) >> 0x10) - (short)((uint)(sVar1 * 0x4e7b) >> 0x10)) -
           sVar1;
-  param_2[3] = sVar3 + sVar4;
-  param_2[param_3 * 3 + 3] = sVar4 - sVar3;
-  *(short *)((int)(((longlong)param_3 + 3U & 0xffffffff) << 1) + (int)param_2) = sVar1 + sVar5;
-  param_2[param_3 * 2 + 3] = sVar5 - sVar1;
+  param_2[3] = sVar4 + sVar5;
+  param_2[iVar3 * 3 + 3] = sVar5 - sVar4;
+  *(short *)((int)(((longlong)iVar3 + 3U & 0xffffffff) << 1) + (int)param_2) = sVar1 + sVar6;
+  param_2[iVar3 * 2 + 3] = sVar6 - sVar1;
   sVar1 = param_2[1];
   sVar2 = param_2[3];
-  iVar7 = (int)*param_2 + (int)param_2[2];
-  iVar9 = (sVar1 * 0x4e7b >> 0x10) + (sVar2 * 0x8a8c >> 0x10) + (int)sVar1;
-  iVar10 = (int)*param_2 - (int)param_2[2];
-  iVar8 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
-  *param_2 = (short)(iVar9 + iVar7 + 4 >> 3);
-  param_2[3] = (short)((iVar7 - iVar9) + 4 >> 3);
-  param_2[1] = (short)(iVar8 + iVar10 + 4 >> 3);
-  param_2[2] = (short)((iVar10 - iVar8) + 4 >> 3);
-  sVar1 = param_2[param_3 + 3];
-  sVar2 = param_2[param_3 + 1];
-  iVar9 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
-  iVar7 = (int)param_2[param_3 + 2] + (int)param_2[param_3];
-  iVar10 = (int)param_2[param_3] - (int)param_2[param_3 + 2];
-  iVar8 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
-  param_2[param_3] = (short)(iVar9 + iVar7 + 4 >> 3);
-  param_2[param_3 + 3] = (short)((iVar7 - iVar9) + 4 >> 3);
-  param_2[param_3 + 1] = (short)(iVar8 + iVar10 + 4 >> 3);
-  param_2[param_3 + 2] = (short)((iVar10 - iVar8) + 4 >> 3);
-  sVar1 = param_2[param_3 * 2 + 1];
-  sVar2 = param_2[param_3 * 2 + 3];
-  iVar7 = (int)param_2[param_3 * 2 + 2] + (int)param_2[param_3 * 2];
-  iVar9 = (sVar2 * 0x8a8c >> 0x10) + (sVar1 * 0x4e7b >> 0x10) + (int)sVar1;
-  iVar10 = (int)param_2[param_3 * 2] - (int)param_2[param_3 * 2 + 2];
-  iVar8 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
-  param_2[param_3 * 2] = (short)(iVar9 + iVar7 + 4 >> 3);
-  param_2[param_3 * 2 + 3] = (short)((iVar7 - iVar9) + 4 >> 3);
-  param_2[param_3 * 2 + 1] = (short)(iVar8 + iVar10 + 4 >> 3);
-  param_2[param_3 * 2 + 2] = (short)((iVar10 - iVar8) + 4 >> 3);
-  sVar1 = param_2[param_3 * 3 + 3];
-  sVar2 = param_2[param_3 * 3 + 1];
-  iVar10 = (int)param_2[param_3 * 3 + 2] + (int)param_2[param_3 * 3];
-  iVar9 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
-  iVar7 = (int)param_2[param_3 * 3] - (int)param_2[param_3 * 3 + 2];
-  iVar8 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
-  param_2 = param_2 + param_3 * 3;
-  *param_2 = (short)(iVar9 + iVar10 + 4 >> 3);
-  param_2[3] = (short)((iVar10 - iVar9) + 4 >> 3);
-  param_2[1] = (short)(iVar8 + iVar7 + 4 >> 3);
-  param_2[2] = (short)((iVar7 - iVar8) + 4 >> 3);
+  iVar8 = (int)*param_2 + (int)param_2[2];
+  iVar10 = (sVar1 * 0x4e7b >> 0x10) + (sVar2 * 0x8a8c >> 0x10) + (int)sVar1;
+  iVar11 = (int)*param_2 - (int)param_2[2];
+  iVar9 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
+  *param_2 = (short)(iVar10 + iVar8 + 4 >> 3);
+  param_2[3] = (short)((iVar8 - iVar10) + 4 >> 3);
+  param_2[1] = (short)(iVar9 + iVar11 + 4 >> 3);
+  param_2[2] = (short)((iVar11 - iVar9) + 4 >> 3);
+  sVar1 = param_2[iVar3 + 3];
+  sVar2 = param_2[iVar3 + 1];
+  iVar10 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
+  iVar8 = (int)param_2[iVar3 + 2] + (int)param_2[iVar3];
+  iVar11 = (int)param_2[iVar3] - (int)param_2[iVar3 + 2];
+  iVar9 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
+  param_2[iVar3] = (short)(iVar10 + iVar8 + 4 >> 3);
+  param_2[iVar3 + 3] = (short)((iVar8 - iVar10) + 4 >> 3);
+  param_2[iVar3 + 1] = (short)(iVar9 + iVar11 + 4 >> 3);
+  param_2[iVar3 + 2] = (short)((iVar11 - iVar9) + 4 >> 3);
+  sVar1 = param_2[iVar3 * 2 + 1];
+  sVar2 = param_2[iVar3 * 2 + 3];
+  iVar8 = (int)param_2[iVar3 * 2 + 2] + (int)param_2[iVar3 * 2];
+  iVar10 = (sVar2 * 0x8a8c >> 0x10) + (sVar1 * 0x4e7b >> 0x10) + (int)sVar1;
+  iVar11 = (int)param_2[iVar3 * 2] - (int)param_2[iVar3 * 2 + 2];
+  iVar9 = ((sVar1 * 0x8a8c >> 0x10) - (sVar2 * 0x4e7b >> 0x10)) - (int)sVar2;
+  param_2[iVar3 * 2] = (short)(iVar10 + iVar8 + 4 >> 3);
+  param_2[iVar3 * 2 + 3] = (short)((iVar8 - iVar10) + 4 >> 3);
+  param_2[iVar3 * 2 + 1] = (short)(iVar9 + iVar11 + 4 >> 3);
+  param_2[iVar3 * 2 + 2] = (short)((iVar11 - iVar9) + 4 >> 3);
+  sVar1 = param_2[iVar3 * 3 + 3];
+  sVar2 = param_2[iVar3 * 3 + 1];
+  iVar11 = (int)param_2[iVar3 * 3 + 2] + (int)param_2[iVar3 * 3];
+  iVar10 = (sVar1 * 0x8a8c >> 0x10) + (sVar2 * 0x4e7b >> 0x10) + (int)sVar2;
+  iVar8 = (int)param_2[iVar3 * 3] - (int)param_2[iVar3 * 3 + 2];
+  iVar9 = ((sVar2 * 0x8a8c >> 0x10) - (sVar1 * 0x4e7b >> 0x10)) - (int)sVar1;
+  psVar7 = param_2 + iVar3 * 3;
+  *psVar7 = (short)(iVar10 + iVar11 + 4 >> 3);
+  psVar7[3] = (short)((iVar11 - iVar10) + 4 >> 3);
+  psVar7[1] = (short)(iVar9 + iVar8 + 4 >> 3);
+  psVar7[2] = (short)((iVar8 - iVar9) + 4 >> 3);
   __restgprlr_23();
   return;
 }
@@ -110,42 +111,44 @@ void vp8_short_idct4x4llm_c(undefined8 param_1,short *param_2,int param_3)
 
 // 828133E0  vp8_short_idct4x4llm_1_c  (WebM_atvi_opt/vpx/vp8/common/idctllm.c:95)
 
-void vp8_short_idct4x4llm_1_c(short *param_1,undefined2 *param_2,int param_3)
+void vp8_short_idct4x4llm_1_c(short *param_1,short *param_2,int param_3)
 
 {
-  undefined2 uVar1;
+  int iVar1;
+  short *psVar2;
+  short sVar3;
   
-  param_3 = param_3 >> 1;
-  uVar1 = (undefined2)(*param_1 + 4 >> 3);
-  *param_2 = uVar1;
-  param_2[param_3] = uVar1;
-  param_2[1] = uVar1;
-  param_2[2] = uVar1;
-  param_2[3] = uVar1;
-  param_2[param_3 + 1] = uVar1;
-  param_2[param_3 + 2] = uVar1;
-  param_2[param_3 + 3] = uVar1;
-  param_2 = param_2 + param_3 * 2;
-  *param_2 = uVar1;
-  param_2[1] = uVar1;
-  param_2[2] = uVar1;
-  param_2[3] = uVar1;
-  param_2 = param_2 + param_3;
-  *param_2 = uVar1;
-  param_2[1] = uVar1;
-  param_2[2] = uVar1;
-  param_2[3] = uVar1;
+  iVar1 = param_3 >> 1;
+  sVar3 = (short)(*param_1 + 4 >> 3);
+  *param_2 = sVar3;
+  param_2[iVar1] = sVar3;
+  param_2[1] = sVar3;
+  param_2[2] = sVar3;
+  param_2[3] = sVar3;
+  param_2[iVar1 + 1] = sVar3;
+  param_2[iVar1 + 2] = sVar3;
+  param_2[iVar1 + 3] = sVar3;
+  psVar2 = param_2 + iVar1 * 2;
+  *psVar2 = sVar3;
+  psVar2[1] = sVar3;
+  psVar2[2] = sVar3;
+  psVar2[3] = sVar3;
+  psVar2 = psVar2 + iVar1;
+  *psVar2 = sVar3;
+  psVar2[1] = sVar3;
+  psVar2[2] = sVar3;
+  psVar2[3] = sVar3;
   return;
 }
 
 
 // 82813448  vp8_dc_only_idct_add_c  (WebM_atvi_opt/vpx/vp8/common/idctllm.c:113)
 
-void vp8_dc_only_idct_add_c(short param_1,int param_2,undefined1 *param_3,int param_4,int param_5)
+void vp8_dc_only_idct_add_c(short param_1,uchar *param_2,uchar *param_3,int param_4,int param_5)
 
 {
   longlong lVar1;
-  undefined1 *puVar2;
+  uchar *puVar2;
   longlong lVar3;
   longlong lVar4;
   
@@ -154,14 +157,14 @@ void vp8_dc_only_idct_add_c(short param_1,int param_2,undefined1 *param_3,int pa
     lVar4 = 4;
     puVar2 = param_3;
     do {
-      lVar3 = (ulonglong)(byte)puVar2[param_2 - (int)param_3] + (longlong)(param_1 + 4 >> 3);
+      lVar3 = (ulonglong)puVar2[(int)param_2 - (int)param_3] + (longlong)(param_1 + 4 >> 3);
       if (lVar3 < 0) {
         lVar3 = 0;
       }
       else if (0xff < (int)lVar3) {
         lVar3 = 0xff;
       }
-      *puVar2 = (char)lVar3;
+      *puVar2 = (uchar)lVar3;
       puVar2 = puVar2 + 1;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
@@ -259,28 +262,28 @@ void vp8_short_inv_walsh4x4_c(short *param_1,short *param_2)
 
 // 828137B8  vp8_short_inv_walsh4x4_1_c  (WebM_atvi_opt/vpx/vp8/common/idctllm.c:187)
 
-void vp8_short_inv_walsh4x4_1_c(short *param_1,undefined2 *param_2)
+void vp8_short_inv_walsh4x4_1_c(short *param_1,short *param_2)
 
 {
-  undefined2 uVar1;
+  short sVar1;
   
-  uVar1 = (undefined2)(*param_1 + 3 >> 3);
-  *param_2 = uVar1;
-  param_2[1] = uVar1;
-  param_2[2] = uVar1;
-  param_2[3] = uVar1;
-  param_2[4] = uVar1;
-  param_2[5] = uVar1;
-  param_2[6] = uVar1;
-  param_2[7] = uVar1;
-  param_2[8] = uVar1;
-  param_2[9] = uVar1;
-  param_2[10] = uVar1;
-  param_2[0xb] = uVar1;
-  param_2[0xc] = uVar1;
-  param_2[0xd] = uVar1;
-  param_2[0xe] = uVar1;
-  param_2[0xf] = uVar1;
+  sVar1 = (short)(*param_1 + 3 >> 3);
+  *param_2 = sVar1;
+  param_2[1] = sVar1;
+  param_2[2] = sVar1;
+  param_2[3] = sVar1;
+  param_2[4] = sVar1;
+  param_2[5] = sVar1;
+  param_2[6] = sVar1;
+  param_2[7] = sVar1;
+  param_2[8] = sVar1;
+  param_2[9] = sVar1;
+  param_2[10] = sVar1;
+  param_2[0xb] = sVar1;
+  param_2[0xc] = sVar1;
+  param_2[0xd] = sVar1;
+  param_2[0xe] = sVar1;
+  param_2[0xf] = sVar1;
   return;
 }
 

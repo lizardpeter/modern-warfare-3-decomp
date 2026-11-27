@@ -2,20 +2,21 @@
 
 // 828B5A50  XapiThreadStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapithreadstartup.c:38)
 
-LONG XapiThreadStartup(undefined8 param_1,undefined8 param_2)
+void XapiThreadStartup(_func___cdecl_void_void_ptr *param_1,void *param_2)
 
 {
   code *pcVar1;
   undefined4 uVar2;
-  _EXCEPTION_POINTERS *ExceptionInfo;
-  LONG LVar3;
+  _EXCEPTION_POINTERS *p_Var3;
+  longlong lVar4;
   
-  pcVar1 = (code *)__savegprlr_29();
+  lVar4 = (longlong)(int)param_2;
+  pcVar1 = (code *)__savegprlr_29(param_1,lVar4);
   XapiCallThreadNotifyRoutines(1);
-  uVar2 = (*pcVar1)(param_2);
+  uVar2 = (*pcVar1)(lVar4);
   XapiCallThreadNotifyRoutines(0);
-  ExceptionInfo = (_EXCEPTION_POINTERS *)ExTerminateThread(uVar2);
-  LVar3 = UnhandledExceptionFilter(ExceptionInfo);
-  return LVar3;
+  p_Var3 = (_EXCEPTION_POINTERS *)ExTerminateThread(uVar2);
+  UnhandledExceptionFilter(p_Var3);
+  return;
 }
 

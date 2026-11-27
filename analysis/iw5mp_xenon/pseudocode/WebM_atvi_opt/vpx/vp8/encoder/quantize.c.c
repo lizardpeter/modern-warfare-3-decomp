@@ -2,14 +2,14 @@
 
 // 82835690  vp8_fast_quantize_b_c  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:77)
 
-void vp8_fast_quantize_b_c(undefined8 param_1,int *param_2)
+void vp8_fast_quantize_b_c(BLOCK *param_1,BLOCKD *param_2)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
+  short *psVar3;
+  short *psVar4;
+  short *psVar5;
   int iVar6;
   int *piVar7;
   short sVar9;
@@ -18,54 +18,58 @@ void vp8_fast_quantize_b_c(undefined8 param_1,int *param_2)
   int iVar11;
   int iVar12;
   
-  iVar6 = __savegprlr_25();
+  iVar6 = __savegprlr_25(param_1);
   iVar1 = *(int *)(iVar6 + 4);
   iVar2 = *(int *)(iVar6 + 0x18);
   iVar10 = -1;
   iVar6 = *(int *)(iVar6 + 8);
-  iVar3 = *param_2;
-  iVar4 = param_2[1];
-  piVar7 = &DAT_821e74b4;
-  iVar5 = param_2[5];
+  psVar3 = param_2->qcoeff;
+  psVar4 = param_2->dqcoeff;
+  piVar7 = vp8_default_zig_zag1d + 1;
+  psVar5 = param_2->dequant;
   iVar11 = 2;
   do {
-    iVar8 = piVar7[-1] * 2;
-    sVar9 = *(short *)(iVar8 + iVar1);
-    iVar12 = (((int)*(short *)(iVar8 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
-             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar8 + iVar6);
+    iVar8 = piVar7[-1];
+    iVar12 = iVar8 * 2;
+    sVar9 = *(short *)(iVar12 + iVar1);
+    iVar12 = (((int)*(short *)(iVar12 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
+             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar12 + iVar6);
     sVar9 = ((ushort)((uint)iVar12 >> 0x10) ^ sVar9 >> 0xf) - (sVar9 >> 0xf);
-    *(short *)(iVar8 + iVar3) = sVar9;
-    *(short *)(iVar8 + iVar4) = *(short *)(iVar8 + iVar5) * sVar9;
+    psVar3[iVar8] = sVar9;
+    psVar4[iVar8] = psVar5[iVar8] * sVar9;
     if (iVar12 >> 0x10 != 0) {
       iVar10 = iVar11 + -2;
     }
-    iVar8 = *piVar7 * 2;
-    sVar9 = *(short *)(iVar8 + iVar1);
-    iVar12 = (((int)*(short *)(iVar8 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
-             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar8 + iVar6);
+    iVar8 = *piVar7;
+    iVar12 = iVar8 * 2;
+    sVar9 = *(short *)(iVar12 + iVar1);
+    iVar12 = (((int)*(short *)(iVar12 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
+             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar12 + iVar6);
     sVar9 = ((ushort)((uint)iVar12 >> 0x10) ^ sVar9 >> 0xf) - (sVar9 >> 0xf);
-    *(short *)(iVar8 + iVar3) = sVar9;
-    *(short *)(iVar8 + iVar4) = *(short *)(iVar8 + iVar5) * sVar9;
+    psVar3[iVar8] = sVar9;
+    psVar4[iVar8] = psVar5[iVar8] * sVar9;
     if (iVar12 >> 0x10 != 0) {
       iVar10 = iVar11 + -1;
     }
-    iVar8 = piVar7[1] * 2;
-    sVar9 = *(short *)(iVar8 + iVar1);
-    iVar12 = (((int)*(short *)(iVar8 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
-             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar8 + iVar6);
+    iVar8 = piVar7[1];
+    iVar12 = iVar8 * 2;
+    sVar9 = *(short *)(iVar12 + iVar1);
+    iVar12 = (((int)*(short *)(iVar12 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
+             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar12 + iVar6);
     sVar9 = ((ushort)((uint)iVar12 >> 0x10) ^ sVar9 >> 0xf) - (sVar9 >> 0xf);
-    *(short *)(iVar8 + iVar3) = sVar9;
-    *(short *)(iVar8 + iVar4) = *(short *)(iVar8 + iVar5) * sVar9;
+    psVar3[iVar8] = sVar9;
+    psVar4[iVar8] = psVar5[iVar8] * sVar9;
     if (iVar12 >> 0x10 != 0) {
       iVar10 = iVar11;
     }
-    iVar8 = piVar7[2] * 2;
-    sVar9 = *(short *)(iVar8 + iVar1);
-    iVar12 = (((int)*(short *)(iVar8 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
-             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar8 + iVar6);
+    iVar8 = piVar7[2];
+    iVar12 = iVar8 * 2;
+    sVar9 = *(short *)(iVar12 + iVar1);
+    iVar12 = (((int)*(short *)(iVar12 + iVar2) + ((int)sVar9 >> 0x1f ^ (int)sVar9)) -
+             ((int)sVar9 >> 0x1f)) * (int)*(short *)(iVar12 + iVar6);
     sVar9 = ((ushort)((uint)iVar12 >> 0x10) ^ sVar9 >> 0xf) - (sVar9 >> 0xf);
-    *(short *)(iVar8 + iVar3) = sVar9;
-    *(short *)(iVar8 + iVar4) = *(short *)(iVar8 + iVar5) * sVar9;
+    psVar3[iVar8] = sVar9;
+    psVar4[iVar8] = psVar5[iVar8] * sVar9;
     if (iVar12 >> 0x10 != 0) {
       iVar10 = iVar11 + 1;
     }
@@ -73,7 +77,7 @@ void vp8_fast_quantize_b_c(undefined8 param_1,int *param_2)
     iVar8 = iVar11 + 2;
     iVar11 = iVar11 + 4;
   } while (iVar8 < 0x10);
-  param_2[0xc] = iVar10 + 1;
+  param_2->eob = iVar10 + 1;
   __restgprlr_25();
   return;
 }
@@ -81,114 +85,119 @@ void vp8_fast_quantize_b_c(undefined8 param_1,int *param_2)
 
 // 82835868  vp8_regular_quantize_b  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:114)
 
-void vp8_regular_quantize_b(undefined8 param_1,undefined4 *param_2)
+void vp8_regular_quantize_b(BLOCK *param_1,BLOCKD *param_2)
 
 {
   short sVar1;
-  void *_Dst;
-  int iVar2;
+  short *psVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
-  void *_Dst_00;
   int iVar7;
-  int iVar8;
-  int iVar9;
+  short *psVar8;
+  short *psVar9;
   int iVar10;
-  int *piVar11;
-  short *psVar12;
+  int iVar11;
+  int iVar12;
   int iVar13;
-  short sVar14;
-  int iVar15;
-  short *psVar16;
+  int *piVar14;
+  short *psVar15;
+  int iVar16;
+  short sVar17;
+  int iVar18;
+  short *psVar19;
   
-  iVar8 = __savegprlr_20();
-  _Dst = (void *)*param_2;
-  iVar2 = *(int *)(iVar8 + 4);
-  iVar3 = *(int *)(iVar8 + 0x10);
-  iVar4 = *(int *)(iVar8 + 0x18);
-  iVar5 = *(int *)(iVar8 + 8);
-  psVar16 = *(short **)(iVar8 + 0x14);
-  iVar6 = *(int *)(iVar8 + 0xc);
-  _Dst_00 = (void *)param_2[1];
-  iVar7 = param_2[5];
-  sVar1 = *(short *)(iVar8 + 0x1c);
-  vpx_memset(_Dst,0,0x20);
-  vpx_memset(_Dst_00,0,0x20);
-  iVar9 = -1;
-  piVar11 = &DAT_821e74b4;
-  iVar10 = 2;
+  iVar11 = __savegprlr_20(param_1);
+  psVar2 = param_2->qcoeff;
+  iVar3 = *(int *)(iVar11 + 4);
+  iVar4 = *(int *)(iVar11 + 0x10);
+  iVar5 = *(int *)(iVar11 + 0x18);
+  iVar6 = *(int *)(iVar11 + 8);
+  psVar19 = *(short **)(iVar11 + 0x14);
+  iVar7 = *(int *)(iVar11 + 0xc);
+  psVar8 = param_2->dqcoeff;
+  psVar9 = param_2->dequant;
+  sVar1 = *(short *)(iVar11 + 0x1c);
+  vpx_memset(psVar2,0,0x20);
+  vpx_memset(psVar8,0,0x20);
+  iVar12 = -1;
+  piVar14 = vp8_default_zig_zag1d + 1;
+  iVar13 = 2;
   do {
-    psVar12 = psVar16 + 1;
-    iVar15 = piVar11[-1] * 2;
-    sVar14 = *(short *)(iVar15 + iVar2);
-    iVar13 = ((int)sVar14 >> 0x1f ^ (int)sVar14) - ((int)sVar14 >> 0x1f);
-    if ((int)*(short *)(iVar15 + iVar3) + (int)*psVar16 + (int)sVar1 <= iVar13) {
-      iVar13 = *(short *)(iVar15 + iVar4) + iVar13;
-      iVar13 = (*(short *)(iVar15 + iVar5) * iVar13 >> 0x10) + iVar13 >>
-               ((int)*(short *)(iVar15 + iVar6) & 0x3fU);
-      sVar14 = ((ushort)iVar13 ^ sVar14 >> 0xf) - (sVar14 >> 0xf);
-      *(short *)(iVar15 + (int)_Dst) = sVar14;
-      *(short *)(iVar15 + (int)_Dst_00) = *(short *)(iVar15 + iVar7) * sVar14;
-      if (iVar13 != 0) {
-        psVar12 = *(short **)(iVar8 + 0x14);
-        iVar9 = iVar10 + -2;
+    iVar18 = piVar14[-1];
+    psVar15 = psVar19 + 1;
+    iVar10 = iVar18 * 2;
+    sVar17 = *(short *)(iVar10 + iVar3);
+    iVar16 = ((int)sVar17 >> 0x1f ^ (int)sVar17) - ((int)sVar17 >> 0x1f);
+    if ((int)*(short *)(iVar10 + iVar4) + (int)*psVar19 + (int)sVar1 <= iVar16) {
+      iVar16 = *(short *)(iVar10 + iVar5) + iVar16;
+      iVar10 = (*(short *)(iVar10 + iVar6) * iVar16 >> 0x10) + iVar16 >>
+               ((int)*(short *)(iVar10 + iVar7) & 0x3fU);
+      sVar17 = ((ushort)iVar10 ^ sVar17 >> 0xf) - (sVar17 >> 0xf);
+      psVar2[iVar18] = sVar17;
+      psVar8[iVar18] = psVar9[iVar18] * sVar17;
+      if (iVar10 != 0) {
+        psVar15 = *(short **)(iVar11 + 0x14);
+        iVar12 = iVar13 + -2;
       }
     }
-    psVar16 = psVar12 + 1;
-    iVar15 = *piVar11 * 2;
-    sVar14 = *(short *)(iVar15 + iVar2);
-    iVar13 = ((int)sVar14 >> 0x1f ^ (int)sVar14) - ((int)sVar14 >> 0x1f);
-    if ((int)*(short *)(iVar15 + iVar3) + (int)*psVar12 + (int)sVar1 <= iVar13) {
-      iVar13 = *(short *)(iVar15 + iVar4) + iVar13;
-      iVar13 = (*(short *)(iVar15 + iVar5) * iVar13 >> 0x10) + iVar13 >>
-               ((int)*(short *)(iVar15 + iVar6) & 0x3fU);
-      sVar14 = ((ushort)iVar13 ^ sVar14 >> 0xf) - (sVar14 >> 0xf);
-      *(short *)(iVar15 + (int)_Dst) = sVar14;
-      *(short *)(iVar15 + (int)_Dst_00) = *(short *)(iVar15 + iVar7) * sVar14;
-      if (iVar13 != 0) {
-        psVar16 = *(short **)(iVar8 + 0x14);
-        iVar9 = iVar10 + -1;
+    iVar18 = *piVar14;
+    psVar19 = psVar15 + 1;
+    iVar10 = iVar18 * 2;
+    sVar17 = *(short *)(iVar10 + iVar3);
+    iVar16 = ((int)sVar17 >> 0x1f ^ (int)sVar17) - ((int)sVar17 >> 0x1f);
+    if ((int)*(short *)(iVar10 + iVar4) + (int)*psVar15 + (int)sVar1 <= iVar16) {
+      iVar16 = *(short *)(iVar10 + iVar5) + iVar16;
+      iVar10 = (*(short *)(iVar10 + iVar6) * iVar16 >> 0x10) + iVar16 >>
+               ((int)*(short *)(iVar10 + iVar7) & 0x3fU);
+      sVar17 = ((ushort)iVar10 ^ sVar17 >> 0xf) - (sVar17 >> 0xf);
+      psVar2[iVar18] = sVar17;
+      psVar8[iVar18] = psVar9[iVar18] * sVar17;
+      if (iVar10 != 0) {
+        psVar19 = *(short **)(iVar11 + 0x14);
+        iVar12 = iVar13 + -1;
       }
     }
-    psVar12 = psVar16 + 1;
-    iVar15 = piVar11[1] * 2;
-    sVar14 = *(short *)(iVar15 + iVar2);
-    iVar13 = ((int)sVar14 >> 0x1f ^ (int)sVar14) - ((int)sVar14 >> 0x1f);
-    if ((int)*(short *)(iVar15 + iVar3) + (int)*psVar16 + (int)sVar1 <= iVar13) {
-      iVar13 = *(short *)(iVar15 + iVar4) + iVar13;
-      iVar13 = (*(short *)(iVar15 + iVar5) * iVar13 >> 0x10) + iVar13 >>
-               ((int)*(short *)(iVar15 + iVar6) & 0x3fU);
-      sVar14 = ((ushort)iVar13 ^ sVar14 >> 0xf) - (sVar14 >> 0xf);
-      *(short *)(iVar15 + (int)_Dst) = sVar14;
-      *(short *)(iVar15 + (int)_Dst_00) = *(short *)(iVar15 + iVar7) * sVar14;
-      if (iVar13 != 0) {
-        psVar12 = *(short **)(iVar8 + 0x14);
-        iVar9 = iVar10;
+    iVar18 = piVar14[1];
+    psVar15 = psVar19 + 1;
+    iVar10 = iVar18 * 2;
+    sVar17 = *(short *)(iVar10 + iVar3);
+    iVar16 = ((int)sVar17 >> 0x1f ^ (int)sVar17) - ((int)sVar17 >> 0x1f);
+    if ((int)*(short *)(iVar10 + iVar4) + (int)*psVar19 + (int)sVar1 <= iVar16) {
+      iVar16 = *(short *)(iVar10 + iVar5) + iVar16;
+      iVar10 = (*(short *)(iVar10 + iVar6) * iVar16 >> 0x10) + iVar16 >>
+               ((int)*(short *)(iVar10 + iVar7) & 0x3fU);
+      sVar17 = ((ushort)iVar10 ^ sVar17 >> 0xf) - (sVar17 >> 0xf);
+      psVar2[iVar18] = sVar17;
+      psVar8[iVar18] = psVar9[iVar18] * sVar17;
+      if (iVar10 != 0) {
+        psVar15 = *(short **)(iVar11 + 0x14);
+        iVar12 = iVar13;
       }
     }
-    psVar16 = psVar12 + 1;
-    iVar15 = piVar11[2] * 2;
-    sVar14 = *(short *)(iVar15 + iVar2);
-    iVar13 = ((int)sVar14 >> 0x1f ^ (int)sVar14) - ((int)sVar14 >> 0x1f);
-    if ((int)*(short *)(iVar15 + iVar3) + (int)*psVar12 + (int)sVar1 <= iVar13) {
-      iVar13 = *(short *)(iVar15 + iVar4) + iVar13;
-      iVar13 = (*(short *)(iVar15 + iVar5) * iVar13 >> 0x10) + iVar13 >>
-               ((int)*(short *)(iVar15 + iVar6) & 0x3fU);
-      sVar14 = ((ushort)iVar13 ^ sVar14 >> 0xf) - (sVar14 >> 0xf);
-      *(short *)(iVar15 + (int)_Dst) = sVar14;
-      *(short *)(iVar15 + (int)_Dst_00) = *(short *)(iVar15 + iVar7) * sVar14;
-      if (iVar13 != 0) {
-        psVar16 = *(short **)(iVar8 + 0x14);
-        iVar9 = iVar10 + 1;
+    iVar18 = piVar14[2];
+    psVar19 = psVar15 + 1;
+    iVar10 = iVar18 * 2;
+    sVar17 = *(short *)(iVar10 + iVar3);
+    iVar16 = ((int)sVar17 >> 0x1f ^ (int)sVar17) - ((int)sVar17 >> 0x1f);
+    if ((int)*(short *)(iVar10 + iVar4) + (int)*psVar15 + (int)sVar1 <= iVar16) {
+      iVar16 = *(short *)(iVar10 + iVar5) + iVar16;
+      iVar10 = (*(short *)(iVar10 + iVar6) * iVar16 >> 0x10) + iVar16 >>
+               ((int)*(short *)(iVar10 + iVar7) & 0x3fU);
+      sVar17 = ((ushort)iVar10 ^ sVar17 >> 0xf) - (sVar17 >> 0xf);
+      psVar2[iVar18] = sVar17;
+      psVar8[iVar18] = psVar9[iVar18] * sVar17;
+      if (iVar10 != 0) {
+        psVar19 = *(short **)(iVar11 + 0x14);
+        iVar12 = iVar13 + 1;
       }
     }
-    piVar11 = piVar11 + 4;
-    iVar15 = iVar10 + 2;
-    iVar10 = iVar10 + 4;
-  } while (iVar15 < 0x10);
-  param_2[0xc] = iVar9 + 1;
+    piVar14 = piVar14 + 4;
+    iVar18 = iVar13 + 2;
+    iVar13 = iVar13 + 4;
+  } while (iVar18 < 0x10);
+  param_2->eob = iVar12 + 1;
   __restgprlr_20();
   return;
 }
@@ -196,107 +205,112 @@ void vp8_regular_quantize_b(undefined8 param_1,undefined4 *param_2)
 
 // 82835B70  vp8_strict_quantize_b  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:170)
 
-void vp8_strict_quantize_b(undefined8 param_1,undefined4 *param_2)
+void vp8_strict_quantize_b(BLOCK *param_1,BLOCKD *param_2)
 
 {
   short sVar1;
-  void *_Dst;
-  int iVar2;
+  short *psVar2;
   int iVar3;
-  void *_Dst_00;
   int iVar4;
-  ushort uVar5;
-  uint uVar6;
+  short *psVar5;
+  short *psVar6;
   int iVar7;
-  int iVar8;
-  int *piVar9;
+  ushort uVar8;
+  uint uVar9;
   int iVar10;
-  longlong lVar11;
-  int iVar12;
+  int iVar11;
+  int *piVar12;
   int iVar13;
+  longlong lVar14;
+  int iVar15;
+  int iVar16;
   
-  iVar7 = __savegprlr_24();
-  _Dst = (void *)*param_2;
-  iVar2 = *(int *)(iVar7 + 4);
-  iVar3 = *(int *)(iVar7 + 8);
-  iVar13 = -1;
-  iVar7 = *(int *)(iVar7 + 0xc);
-  _Dst_00 = (void *)param_2[1];
-  iVar4 = param_2[5];
-  vpx_memset(_Dst,0,0x20);
-  vpx_memset(_Dst_00,0,0x20);
-  piVar9 = &DAT_821e74b4;
-  iVar8 = 2;
+  iVar10 = __savegprlr_24(param_1);
+  psVar2 = param_2->qcoeff;
+  iVar3 = *(int *)(iVar10 + 4);
+  iVar4 = *(int *)(iVar10 + 8);
+  iVar16 = -1;
+  iVar10 = *(int *)(iVar10 + 0xc);
+  psVar5 = param_2->dqcoeff;
+  psVar6 = param_2->dequant;
+  vpx_memset(psVar2,0,0x20);
+  vpx_memset(psVar5,0,0x20);
+  piVar12 = vp8_default_zig_zag1d + 1;
+  iVar11 = 2;
   do {
-    iVar12 = piVar9[-1] * 2;
-    sVar1 = *(short *)(iVar12 + iVar4);
-    lVar11 = -(((longlong)*(short *)(iVar12 + iVar2) & 0xffffffffU) >> 0x1f);
-    uVar6 = (uint)lVar11;
-    iVar10 = (uVar6 + (int)*(short *)(iVar12 + iVar2) ^ uVar6) + ((int)sVar1 >> 1);
-    if (sVar1 <= iVar10) {
-      iVar10 = (*(short *)(iVar12 + iVar3) * iVar10 >> 0x10) + iVar10 >>
-               ((int)*(short *)(iVar12 + iVar7) & 0x3fU);
-      uVar5 = (ushort)lVar11;
-      uVar5 = (short)iVar10 + uVar5 ^ uVar5;
-      *(ushort *)(iVar12 + (int)_Dst) = uVar5;
-      *(ushort *)(iVar12 + (int)_Dst_00) = uVar5 * sVar1;
-      if (iVar10 != 0) {
-        iVar13 = iVar8 + -2;
+    iVar15 = piVar12[-1];
+    iVar7 = iVar15 * 2;
+    sVar1 = psVar6[iVar15];
+    lVar14 = -(((longlong)*(short *)(iVar7 + iVar3) & 0xffffffffU) >> 0x1f);
+    uVar9 = (uint)lVar14;
+    iVar13 = (uVar9 + (int)*(short *)(iVar7 + iVar3) ^ uVar9) + ((int)sVar1 >> 1);
+    if (sVar1 <= iVar13) {
+      iVar7 = (*(short *)(iVar7 + iVar4) * iVar13 >> 0x10) + iVar13 >>
+              ((int)*(short *)(iVar7 + iVar10) & 0x3fU);
+      uVar8 = (ushort)lVar14;
+      uVar8 = (short)iVar7 + uVar8 ^ uVar8;
+      psVar2[iVar15] = uVar8;
+      psVar5[iVar15] = uVar8 * sVar1;
+      if (iVar7 != 0) {
+        iVar16 = iVar11 + -2;
       }
     }
-    iVar12 = *piVar9 * 2;
-    sVar1 = *(short *)(iVar12 + iVar4);
-    lVar11 = -(((longlong)*(short *)(iVar12 + iVar2) & 0xffffffffU) >> 0x1f);
-    uVar6 = (uint)lVar11;
-    iVar10 = (uVar6 + (int)*(short *)(iVar12 + iVar2) ^ uVar6) + ((int)sVar1 >> 1);
-    if (sVar1 <= iVar10) {
-      iVar10 = (*(short *)(iVar12 + iVar3) * iVar10 >> 0x10) + iVar10 >>
-               ((int)*(short *)(iVar12 + iVar7) & 0x3fU);
-      uVar5 = (ushort)lVar11;
-      uVar5 = (short)iVar10 + uVar5 ^ uVar5;
-      *(ushort *)(iVar12 + (int)_Dst) = uVar5;
-      *(ushort *)(iVar12 + (int)_Dst_00) = uVar5 * sVar1;
-      if (iVar10 != 0) {
-        iVar13 = iVar8 + -1;
+    iVar15 = *piVar12;
+    iVar7 = iVar15 * 2;
+    sVar1 = psVar6[iVar15];
+    lVar14 = -(((longlong)*(short *)(iVar7 + iVar3) & 0xffffffffU) >> 0x1f);
+    uVar9 = (uint)lVar14;
+    iVar13 = (uVar9 + (int)*(short *)(iVar7 + iVar3) ^ uVar9) + ((int)sVar1 >> 1);
+    if (sVar1 <= iVar13) {
+      iVar7 = (*(short *)(iVar7 + iVar4) * iVar13 >> 0x10) + iVar13 >>
+              ((int)*(short *)(iVar7 + iVar10) & 0x3fU);
+      uVar8 = (ushort)lVar14;
+      uVar8 = (short)iVar7 + uVar8 ^ uVar8;
+      psVar2[iVar15] = uVar8;
+      psVar5[iVar15] = uVar8 * sVar1;
+      if (iVar7 != 0) {
+        iVar16 = iVar11 + -1;
       }
     }
-    iVar12 = piVar9[1] * 2;
-    sVar1 = *(short *)(iVar12 + iVar4);
-    lVar11 = -(((longlong)*(short *)(iVar12 + iVar2) & 0xffffffffU) >> 0x1f);
-    uVar6 = (uint)lVar11;
-    iVar10 = (uVar6 + (int)*(short *)(iVar12 + iVar2) ^ uVar6) + ((int)sVar1 >> 1);
-    if (sVar1 <= iVar10) {
-      iVar10 = (*(short *)(iVar12 + iVar3) * iVar10 >> 0x10) + iVar10 >>
-               ((int)*(short *)(iVar12 + iVar7) & 0x3fU);
-      uVar5 = (ushort)lVar11;
-      uVar5 = (short)iVar10 + uVar5 ^ uVar5;
-      *(ushort *)(iVar12 + (int)_Dst) = uVar5;
-      *(ushort *)(iVar12 + (int)_Dst_00) = uVar5 * sVar1;
-      if (iVar10 != 0) {
-        iVar13 = iVar8;
+    iVar15 = piVar12[1];
+    iVar7 = iVar15 * 2;
+    sVar1 = psVar6[iVar15];
+    lVar14 = -(((longlong)*(short *)(iVar7 + iVar3) & 0xffffffffU) >> 0x1f);
+    uVar9 = (uint)lVar14;
+    iVar13 = (uVar9 + (int)*(short *)(iVar7 + iVar3) ^ uVar9) + ((int)sVar1 >> 1);
+    if (sVar1 <= iVar13) {
+      iVar7 = (*(short *)(iVar7 + iVar4) * iVar13 >> 0x10) + iVar13 >>
+              ((int)*(short *)(iVar7 + iVar10) & 0x3fU);
+      uVar8 = (ushort)lVar14;
+      uVar8 = (short)iVar7 + uVar8 ^ uVar8;
+      psVar2[iVar15] = uVar8;
+      psVar5[iVar15] = uVar8 * sVar1;
+      if (iVar7 != 0) {
+        iVar16 = iVar11;
       }
     }
-    iVar12 = piVar9[2] * 2;
-    sVar1 = *(short *)(iVar12 + iVar4);
-    lVar11 = -(((longlong)*(short *)(iVar12 + iVar2) & 0xffffffffU) >> 0x1f);
-    uVar6 = (uint)lVar11;
-    iVar10 = (uVar6 + (int)*(short *)(iVar12 + iVar2) ^ uVar6) + ((int)sVar1 >> 1);
-    if (sVar1 <= iVar10) {
-      iVar10 = (*(short *)(iVar12 + iVar3) * iVar10 >> 0x10) + iVar10 >>
-               ((int)*(short *)(iVar12 + iVar7) & 0x3fU);
-      uVar5 = (ushort)lVar11;
-      uVar5 = (short)iVar10 + uVar5 ^ uVar5;
-      *(ushort *)(iVar12 + (int)_Dst) = uVar5;
-      *(ushort *)(iVar12 + (int)_Dst_00) = uVar5 * sVar1;
-      if (iVar10 != 0) {
-        iVar13 = iVar8 + 1;
+    iVar15 = piVar12[2];
+    iVar7 = iVar15 * 2;
+    sVar1 = psVar6[iVar15];
+    lVar14 = -(((longlong)*(short *)(iVar7 + iVar3) & 0xffffffffU) >> 0x1f);
+    uVar9 = (uint)lVar14;
+    iVar13 = (uVar9 + (int)*(short *)(iVar7 + iVar3) ^ uVar9) + ((int)sVar1 >> 1);
+    if (sVar1 <= iVar13) {
+      iVar7 = (*(short *)(iVar7 + iVar4) * iVar13 >> 0x10) + iVar13 >>
+              ((int)*(short *)(iVar7 + iVar10) & 0x3fU);
+      uVar8 = (ushort)lVar14;
+      uVar8 = (short)iVar7 + uVar8 ^ uVar8;
+      psVar2[iVar15] = uVar8;
+      psVar5[iVar15] = uVar8 * sVar1;
+      if (iVar7 != 0) {
+        iVar16 = iVar11 + 1;
       }
     }
-    piVar9 = piVar9 + 4;
-    iVar12 = iVar8 + 2;
-    iVar8 = iVar8 + 4;
-  } while (iVar12 < 0x10);
-  param_2[0xc] = iVar13 + 1;
+    piVar12 = piVar12 + 4;
+    iVar15 = iVar11 + 2;
+    iVar11 = iVar11 + 4;
+  } while (iVar15 < 0x10);
+  param_2->eob = iVar16 + 1;
   __restgprlr_24();
   return;
 }
@@ -304,7 +318,7 @@ void vp8_strict_quantize_b(undefined8 param_1,undefined4 *param_2)
 
 // 82835DC8  vp8_quantize_mby  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:283)
 
-void vp8_quantize_mby(void)
+void vp8_quantize_mby(MACROBLOCK *param_1)
 
 {
   bool bVar1;
@@ -313,7 +327,7 @@ void vp8_quantize_mby(void)
   int iVar4;
   longlong lVar5;
   
-  iVar2 = __savegprlr_26();
+  iVar2 = __savegprlr_26(param_1);
   if ((**(int **)(iVar2 + 0x1c70) == 4) || (bVar1 = true, **(int **)(iVar2 + 0x1c70) == 9)) {
     bVar1 = false;
   }
@@ -336,7 +350,7 @@ void vp8_quantize_mby(void)
 
 // 82835E58  vp8_quantize_mb  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:296)
 
-void vp8_quantize_mb(void)
+void vp8_quantize_mb(MACROBLOCK *param_1)
 
 {
   int iVar1;
@@ -344,7 +358,7 @@ void vp8_quantize_mb(void)
   int iVar3;
   int iVar4;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   if ((**(int **)(iVar1 + 0x1c70) == 4) || (lVar2 = 1, **(int **)(iVar1 + 0x1c70) == 9)) {
     lVar2 = 0;
   }
@@ -366,7 +380,7 @@ void vp8_quantize_mb(void)
 
 // 82835EC8  vp8_quantize_mbuv  (WebM_atvi_opt/vpx/vp8/encoder/quantize.c:307)
 
-void vp8_quantize_mbuv(void)
+void vp8_quantize_mbuv(MACROBLOCK *param_1)
 
 {
   int iVar1;
@@ -374,7 +388,7 @@ void vp8_quantize_mbuv(void)
   int iVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_28();
+  iVar1 = __savegprlr_28(param_1);
   iVar2 = iVar1 + 0x940;
   iVar3 = iVar1 + 0x19ec;
   lVar4 = 8;

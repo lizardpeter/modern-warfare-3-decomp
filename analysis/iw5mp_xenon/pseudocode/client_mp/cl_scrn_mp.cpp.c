@@ -2,6 +2,8 @@
 
 // 82353428  TRACK_cl_srcn  (client_mp/cl_scrn_mp.cpp:60)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void TRACK_cl_srcn(void)
 
 {
@@ -11,17 +13,20 @@ void TRACK_cl_srcn(void)
 
 // 82353430  SCR_DrawSmallStringExt  (client_mp/cl_scrn_mp.cpp:76)
 
-void SCR_DrawSmallStringExt(undefined8 param_1,int param_2,undefined8 param_3)
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void SCR_DrawSmallStringExt(int param_1,int param_2,char *param_3,float *param_4)
 
 {
   int iVar1;
   int iVar2;
   
-  iVar1 = __savegprlr_27();
-  iVar2 = R_TextHeight(DAT_82aa2964);
-  R_AddCmdDrawText((double)(longlong)iVar1,
-                   (double)(float)((double)(longlong)iVar2 + (double)(longlong)param_2),
-                   0x3ff0000000000000,0x3ff0000000000000,0,param_3,0x7fffffff,DAT_82aa2964);
+  iVar1 = __savegprlr_27(param_1);
+  iVar2 = R_TextHeight(cls.consoleFont);
+  R_AddCmdDrawText(param_3,0x7fffffff,cls.consoleFont,(float)(longlong)iVar1,
+                   (float)(longlong)iVar2 + (float)(longlong)param_2,1.0,1.0,0.0,
+                   (float *)&IMAGE_DOS_HEADER_82000000,-0x7e000000);
   __restgprlr_27();
   return;
 }
@@ -29,45 +34,54 @@ void SCR_DrawSmallStringExt(undefined8 param_1,int param_2,undefined8 param_3)
 
 // 823534D8  SCR_Init  (client_mp/cl_scrn_mp.cpp:87)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SCR_Init(void)
 
 {
-  DAT_82b3f84c = 1;
+  scr_initialized = 1;
   return;
 }
 
 
 // 823534E8  SCR_DrawDemoRecording  (client_mp/cl_scrn_mp.cpp:98)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void SCR_DrawDemoRecording(void)
 
 {
-  longlong lVar1;
-  char cVar3;
-  undefined8 uVar2;
-  double dVar4;
+  bool bVar2;
+  ScreenPlacement *pSVar1;
+  float *pfVar3;
+  float *pfVar4;
   float local_430;
   float local_42c;
   float local_428;
   float local_424;
-  undefined1 auStack_420 [16];
+  float afStack_420 [4];
   char acStack_410 [1024];
   
-  if (DAT_82966e98 == 0) {
-    lVar1 = CL_GetLocalClientConnection(0);
-    cVar3 = CL_Demo_IsRecording(0);
-    if (cVar3 != '\0') {
-      sprintf(acStack_410,"RECORDING %s",lVar1 + 0x40148);
-      CL_LookupColor(0,0x37,auStack_420);
+  if (cl_multi_gamepads_enabled == 0) {
+    CL_GetLocalClientConnection(LOCAL_CLIENT_0);
+    bVar2 = CL_Demo_IsRecording(LOCAL_CLIENT_0);
+    if (bVar2) {
+      sprintf(acStack_410,"RECORDING %s");
+      CL_LookupColor(LOCAL_CLIENT_0,'7',afStack_420);
       local_42c = 5.0;
       local_430 = 479.0;
-      dVar4 = (double)R_NormalizedTextScale(0x3fd8000000000000,DAT_82aa2964);
-      local_428 = (float)dVar4;
-      local_424 = (float)dVar4;
-      uVar2 = ScrPlace_GetActivePlacement(DAT_82b5c820);
-      ScrPlace_ApplyRect(uVar2,&local_42c,&local_430,&local_428,&local_424,1,1);
-      R_AddCmdDrawText((double)local_42c,(double)local_430,(double)local_428,(double)local_424,0,
-                       acStack_410,0x7fffffff,DAT_82aa2964);
+      local_428 = R_NormalizedTextScale(cls.consoleFont,0.375);
+      local_424 = local_428;
+      pSVar1 = ScrPlace_GetActivePlacement(cl_controller_in_use);
+      pfVar3 = &local_428;
+      pfVar4 = &local_424;
+      ScrPlace_ApplyRect(pSVar1,&local_42c,&local_430,pfVar3,pfVar4,1,1);
+      R_AddCmdDrawText(acStack_410,0x7fffffff,cls.consoleFont,local_42c,local_430,local_428,
+                       local_424,0.0,pfVar3,(int)pfVar4);
     }
   }
   return;
@@ -76,33 +90,39 @@ void SCR_DrawDemoRecording(void)
 
 // 82353600  CL_GetDemoType  (client_mp/cl_scrn_mp.cpp:150)
 
-bool CL_GetDemoType(void)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+DemoType CL_GetDemoType(void)
 
 {
-  char cVar1;
+  DemoType DVar1;
   bool bVar2;
   
-  bVar2 = false;
-  if (DAT_82966e98 == 0) {
-    cVar1 = CL_Demo_IsPlaying(0);
-    bVar2 = cVar1 != '\0';
+  DVar1 = DEMO_TYPE_NONE;
+  if (cl_multi_gamepads_enabled == 0) {
+    bVar2 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+    DVar1 = (DemoType)bVar2;
   }
-  return bVar2;
+  return DVar1;
 }
 
 
 // 82353640  CL_SavePlayerState  (client_mp/cl_scrn_mp.cpp:175)
 
-void CL_SavePlayerState(ulonglong param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void CL_SavePlayerState(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  clientMigState_t cVar1;
   
-  if (3 < (param_1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,param_1,4);
+  if (LOCAL_CLIENT_3 < param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
+                    ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((&DAT_82b3e54c)[(int)param_1 * 0x79] == 10) &&
-     (iVar1 = CL_GetLocalClientMigrationState(param_1), iVar1 != 2)) {
+  if ((clientUIActives[param_1].connectionState == CA_ACTIVE) &&
+     (cVar1 = CL_GetLocalClientMigrationState(param_1), cVar1 != CMSTATE_LIMBO)) {
     CG_SavePlayerState(param_1);
   }
   return;
@@ -111,91 +131,108 @@ void CL_SavePlayerState(ulonglong param_1)
 
 // 823536C8  CL_CGameRendering  (client_mp/cl_scrn_mp.cpp:189)
 
-void CL_CGameRendering(undefined8 param_1,undefined8 param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+int CL_CGameRendering(LocalClientNum_t param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char cVar4;
-  int iVar3;
+  LocalClientNum_t LVar1;
+  clientMigState_t cVar2;
+  clientActive_t *pcVar3;
   bool bVar5;
+  int iVar4;
+  DemoType DVar6;
   
-  uVar1 = __savegprlr_28();
+  LVar1 = __savegprlr_28(param_1);
   Phys_EndFrame();
-  if (3 < (uVar1 & 0xffffffff)) {
-    MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar1,4);
+  if (LOCAL_CLIENT_3 < LVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
+                    ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((&DAT_82b3e54c)[(int)uVar1 * 0x79] == 10) &&
-     (iVar2 = CL_GetLocalClientMigrationState(uVar1), iVar2 != 2)) {
-    iVar2 = CL_GetLocalClientGlobals(uVar1);
-    if (DAT_82966e98 == 0) {
-      cVar4 = CL_Demo_IsPlaying(0);
-      bVar5 = cVar4 != '\0';
+  if (clientUIActives[LVar1].connectionState == CA_ACTIVE) {
+    cVar2 = CL_GetLocalClientMigrationState(LVar1);
+    if (cVar2 != CMSTATE_LIMBO) {
+      pcVar3 = CL_GetLocalClientGlobals(LVar1);
+      if (cl_multi_gamepads_enabled == 0) {
+        bVar5 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+        DVar6 = (DemoType)bVar5;
+      }
+      else {
+        DVar6 = DEMO_TYPE_NONE;
+      }
+      iVar4 = UI_IsFullscreen(LVar1);
+      iVar4 = CG_DrawActiveFrame(LVar1,pcVar3->serverTime,DVar6,CUBEMAPSHOT_NONE,0,
+                                 (uint)LZCOUNT(iVar4) >> 5,param_2);
+      if (iVar4 != 0) {
+        UI_UpdateTime(LVar1,cls.realtime);
+        UI_RefreshViewport(LVar1);
+        R_AddCmdEndOfList();
+        iVar4 = __restgprlr_28(1);
+        return iVar4;
+      }
+      CL_CreateCmdsNoActiveFrame(LVar1);
+      CL_SendCmd(LVar1);
     }
-    else {
-      bVar5 = false;
-    }
-    iVar3 = UI_IsFullscreen(uVar1);
-    iVar2 = CG_DrawActiveFrame(uVar1,*(undefined4 *)(iVar2 + 0x3404),bVar5,0,0,iVar3 == 0,param_2);
-    if (iVar2 != 0) {
-      UI_UpdateTime(uVar1,DAT_82aa1c24);
-      UI_RefreshViewport(uVar1);
-      R_AddCmdEndOfList();
-      __restgprlr_28(1);
-      return;
-    }
-    CL_CreateCmdsNoActiveFrame();
-    CL_SendCmd(uVar1);
   }
-  __restgprlr_28(0);
-  return;
+  iVar4 = __restgprlr_28(0);
+  return iVar4;
 }
 
 
 // 823537E8  CL_DrawFullScreenMenus  (client_mp/cl_scrn_mp.cpp:219)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void CL_DrawFullScreenMenus(void)
 
 {
-  longlong lVar1;
+  LocalClientNum_t LVar1;
   
-  lVar1 = 0;
+  LVar1 = LOCAL_CLIENT_0;
   do {
-    CG_DrawFullScreenUI(lVar1);
-    UI_RefreshFullscreen(lVar1);
-    lVar1 = lVar1 + 1;
-  } while ((int)lVar1 < 4);
+    CG_DrawFullScreenUI(LVar1);
+    UI_RefreshFullscreen(LVar1);
+    LVar1 = LVar1 + LOCAL_CLIENT_1;
+  } while ((int)LVar1 < 4);
   return;
 }
 
 
 // 82353830  CL_DrawScreen  (client_mp/cl_scrn_mp.cpp:236)
 
-void CL_DrawScreen(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CL_DrawScreen(LocalClientNum_t param_1)
 
 {
+  connstate_t cVar1;
   int iVar2;
-  undefined8 uVar1;
+  float fVar3;
   
-  if (DAT_82aa1c08 != 0) {
+  if (cls.rendererStarted != 0) {
     CL_SetFullScreenViewport();
     R_AddCmdProjectionSet2D();
     CL_DrawFullScreenMenus();
-    iVar2 = CL_GetLocalClientConnectionState(param_1);
-    if (iVar2 == 10) {
+    cVar1 = CL_GetLocalClientConnectionState(param_1);
+    if (cVar1 == CA_ACTIVE) {
       Profile_Begin(0x155);
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffffffffffff,0xffffffff8203649c);
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"debug overlays");
       CG_DrawFullScreenDebugOverlays(param_1);
       PIXEndNamedEvent();
-      Profile_EndInternal(0);
+      Profile_EndInternal((double *)0x0);
     }
     else {
-      CG_DrawHostDebugInfo(param_1);
-      CG_DrawLiveDebugInfo(param_1);
+      fVar3 = CG_DrawHostDebugInfo(param_1);
+      CG_DrawLiveDebugInfo(param_1,fVar3);
     }
     GamerProfile_DebugDrawFullscreenInfo();
-    uVar1 = CL_ControllerIndexFromClientNum(param_1);
-    CL_DrawClientsWeCantTalkTo(param_1,uVar1);
+    iVar2 = CL_ControllerIndexFromClientNum(param_1);
+    CL_DrawClientsWeCantTalkTo(param_1,iVar2);
     CL_Demo_DrawProfile(param_1);
     Con_DrawConsole(param_1);
     DevGui_Draw(param_1);
@@ -206,112 +243,122 @@ void CL_DrawScreen(undefined8 param_1)
 
 // 823538F8  SCR_ClearScreen  (client_mp/cl_scrn_mp.cpp:310)
 
-void SCR_ClearScreen(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void SCR_ClearScreen(void)
 
 {
-  R_AddCmdClearScreen(0,0xf,0xffffffff821817d8,param_3,0);
+  uchar in_r5;
+  
+  R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
   return;
 }
 
 
 // 82353918  SCR_DrawScreenField  (client_mp/cl_scrn_mp.cpp:316)
 
-void SCR_DrawScreenField(undefined8 param_1,int param_2)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void SCR_DrawScreenField(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar4;
-  undefined8 uVar2;
-  char cVar6;
-  ulonglong uVar3;
-  uint uVar5;
-  uint local_30 [12];
+  LocalClientNum_t LVar1;
+  int iVar2;
+  bool bVar5;
+  connstate_t cVar3;
+  uchar in_r5;
+  LocalClientNum_t local_30 [12];
+  LocalClientNum_t LVar4;
   
-  uVar1 = __savegprlr_29();
+  LVar1 = __savegprlr_29(param_1);
   ScrPlace_BeginFullScreen();
   R_BeginSharedCmdList();
   R_AddCmdProjectionSet2D();
-  if (DAT_82aa1c14 == 0) {
-    R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
+  if (cls.uiStarted == 0) {
+    R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
     __restgprlr_29();
     return;
   }
-  UI_UpdateTime(uVar1,DAT_82aa1c24);
-  iVar4 = CL_GetLocalClientActiveCount();
-  uVar3 = uVar1;
-  if (iVar4 != 0) {
-    uVar2 = CL_ControllerIndexFromActiveClient(0);
-    cVar6 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,local_30);
-    uVar3 = -(ulonglong)(cVar6 != '\0') & (ulonglong)local_30[0];
-    local_30[0] = (uint)uVar3;
+  UI_UpdateTime(LVar1,cls.realtime);
+  iVar2 = CL_GetLocalClientActiveCount();
+  LVar4 = LVar1;
+  if (iVar2 != 0) {
+    iVar2 = CL_ControllerIndexFromActiveClient(LOCAL_CLIENT_0);
+    bVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
+    local_30[0] = -(uint)bVar5 & local_30[0];
+    LVar4 = local_30[0];
   }
-  uVar5 = CL_GetLocalClientConnectionState(uVar3);
-  iVar4 = UI_IsFullscreen(uVar1);
-  if (iVar4 == 0) {
-    switch(uVar5) {
-    case 0:
-      R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
-      SND_StopSounds(0);
-      cVar6 = Sys_IsMainThread();
-      if (cVar6 == '\0') {
-        cVar6 = CL_AnyLocalClientChallenging();
-        if (cVar6 != '\0') {
-          MyAssertHandler(0xffffffff820364d0,0x177,0,0xffffffff82000f98,0xffffffff82036514);
+  cVar3 = CL_GetLocalClientConnectionState(LVar4);
+  iVar2 = UI_IsFullscreen(LVar1);
+  if (iVar2 == 0) {
+    switch(cVar3) {
+    case CA_DISCONNECTED:
+      R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
+      SND_StopSounds(SND_STOP_ALL);
+      bVar5 = Sys_IsMainThread();
+      if (bVar5) {
+        bVar5 = CL_AllLocalClientsDisconnected();
+        if (!bVar5) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp"
+                          ,0x17a,0,"%s");
         }
       }
       else {
-        cVar6 = CL_AllLocalClientsDisconnected();
-        if (cVar6 == '\0') {
-          MyAssertHandler(0xffffffff820364d0,0x17a,0,0xffffffff82000f98,0xffffffff82031c9c);
+        bVar5 = CL_AnyLocalClientChallenging();
+        if (bVar5) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp"
+                          ,0x177,0,"%s");
         }
       }
       break;
-    case 1:
-      R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
-      SCR_DrawCinematic(uVar1);
+    case CA_CINEMATIC:
+      R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
+      SCR_DrawCinematic(LVar1);
       break;
-    case 2:
-      R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
-      CL_DrawLogo(uVar1);
+    case CA_LOGO:
+      R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
+      CL_DrawLogo(LVar1);
       break;
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-      R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
-      UI_RefreshViewport(uVar1);
-      UI_DrawConnectScreen(uVar1);
+    case CA_CONNECTING:
+    case CA_CHALLENGING:
+    case CA_CONNECTED:
+    case CA_SENDINGSTATS:
+    case CA_REQUESTING_MATCH_RULES:
+    case CA_LOADING:
+    case CA_PRIMED:
+      R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
+      UI_RefreshViewport(LVar1);
+      UI_DrawConnectScreen(LVar1);
       goto LAB_82353c00;
-    case 10:
-      cVar6 = Sys_IsRenderThread();
-      if ((cVar6 != '\0') && (iVar4 = RB_IsInRemoteScreenUpdate(), iVar4 != 0)) {
-        R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
+    case CA_ACTIVE:
+      bVar5 = Sys_IsRenderThread();
+      if ((bVar5) && (iVar2 = RB_IsInRemoteScreenUpdate(), iVar2 != 0)) {
+        R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
       }
       SCR_DrawDemoRecording();
       break;
     default:
 switchD_823539ec_default:
-      Com_Error(0,0xffffffff820364ac);
+      Com_Error(ERR_FATAL,"\x15SCR_DrawScreenField: bad clcState");
     }
   }
   else {
-    if (9 < uVar5) {
-      if (uVar5 != 10) goto switchD_823539ec_default;
-      cVar6 = Sys_IsRenderThread();
-      if ((cVar6 == '\0') || (iVar4 = RB_IsInRemoteScreenUpdate(), iVar4 == 0)) goto LAB_82353bd8;
+    if (CA_PRIMED < cVar3) {
+      if (cVar3 != CA_ACTIVE) goto switchD_823539ec_default;
+      bVar5 = Sys_IsRenderThread();
+      if ((!bVar5) || (iVar2 = RB_IsInRemoteScreenUpdate(), iVar2 == 0)) goto LAB_82353bd8;
     }
-    R_AddCmdClearScreen(0,0xf,0xffffffff821817d8);
+    R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
   }
 LAB_82353bd8:
-  if ((param_2 == 0) && (cVar6 = Key_IsCatcherActive(uVar1,0x10), cVar6 != '\0')) {
-    UI_RefreshViewport(uVar1);
+  if ((param_2 == 0) && (bVar5 = Key_IsCatcherActive(LVar1,0x10), bVar5)) {
+    UI_RefreshViewport(LVar1);
   }
 LAB_82353c00:
-  if (*(int *)(DAT_836b93ac + 0xc) != 0) {
-    Net_DisplayProfile(uVar1);
+  if ((net_showprofile->current).integer != 0) {
+    Net_DisplayProfile(LVar1);
   }
   __restgprlr_29();
   return;
@@ -320,70 +367,81 @@ LAB_82353c00:
 
 // 82353C28  CL_GetMenuBlurRadius  (client_mp/cl_scrn_mp.cpp:453)
 
-undefined8 CL_GetMenuBlurRadius(undefined8 param_1)
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+float CL_GetMenuBlurRadius(LocalClientNum_t param_1)
 
 {
-  char cVar1;
-  undefined8 uVar2;
+  bool bVar1;
+  float fVar2;
   
-  cVar1 = Key_IsCatcherActive(param_1,0x10);
-  if ((cVar1 != '\0') && (DAT_82aa1c14 != 0)) {
-    uVar2 = UI_GetBlurRadius(param_1);
-    return uVar2;
+  bVar1 = Key_IsCatcherActive(param_1,0x10);
+  if ((bVar1) && (cls.uiStarted != 0)) {
+    fVar2 = UI_GetBlurRadius(param_1);
+    return fVar2;
   }
-  return 0;
+  return 0.0;
 }
 
 
 // 82353CA0  SCR_UpdateRumble  (client_mp/cl_scrn_mp.cpp:462)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void SCR_UpdateRumble(void)
 
 {
   int iVar1;
-  int *piVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  connstate_t *pcVar2;
+  int iVar3;
+  LocalClientNum_t LVar4;
   
   __savegprlr_26();
-  if (DAT_83666158 == 0) {
-    MyAssertHandler(0xffffffff820364d0,0x1d4,0,0xffffffff82000f98,0xffffffff82018374);
+  if (cl_paused == (dvar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp",
+                    0x1d4,0,"%s");
   }
-  if (DAT_82966e98 == 0) {
-    iVar1 = CL_ControllerIndexFromClientNum(0);
-    if ((DAT_82b3e54c == 10) && (*(int *)(DAT_83666158 + 0xc) == 0)) {
-      GPad_UpdateRumbles();
+  if (cl_multi_gamepads_enabled == 0) {
+    iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    if ((clientUIActives[0].connectionState == CA_ACTIVE) && ((cl_paused->current).integer == 0)) {
+      GPad_UpdateRumbles(iVar1);
     }
     else {
       iVar1 = -1;
     }
-    lVar3 = 0;
+    iVar3 = 0;
     do {
-      if ((int)lVar3 != iVar1) {
-        GPad_StopRumbles(lVar3);
+      if (iVar3 != iVar1) {
+        GPad_StopRumbles(iVar3);
       }
-      lVar3 = lVar3 + 1;
-    } while ((int)lVar3 < 4);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < 4);
     __restgprlr_26();
     return;
   }
-  uVar4 = 0;
-  piVar2 = &DAT_82b3e54c;
+  LVar4 = LOCAL_CLIENT_0;
+  pcVar2 = &clientUIActives[0].connectionState;
   do {
-    if (3 < (uVar4 & 0xffffffff)) {
-      MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar4,4);
+    if (LOCAL_CLIENT_3 < LVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa
+                      ,0,
+                      "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
     }
-    if ((*piVar2 == 10) && (*(int *)(DAT_83666158 + 0xc) == 0)) {
-      CL_ControllerIndexFromClientNum(uVar4);
-      GPad_UpdateRumbles();
+    if ((*pcVar2 == CA_ACTIVE) && ((cl_paused->current).integer == 0)) {
+      iVar1 = CL_ControllerIndexFromClientNum(LVar4);
+      GPad_UpdateRumbles(iVar1);
     }
     else {
-      CL_ControllerIndexFromClientNum(uVar4);
-      GPad_StopRumbles();
+      iVar1 = CL_ControllerIndexFromClientNum(LVar4);
+      GPad_StopRumbles(iVar1);
     }
-    piVar2 = piVar2 + 0x79;
-    uVar4 = uVar4 + 1;
-  } while ((int)piVar2 < -0x7d4c1324);
+    pcVar2 = pcVar2 + 0x79;
+    LVar4 = LVar4 + LOCAL_CLIENT_1;
+  } while ((int)pcVar2 < -0x7d4c1324);
   __restgprlr_26();
   return;
 }
@@ -391,155 +449,163 @@ void SCR_UpdateRumble(void)
 
 // 82353DF0  SCR_UpdateFrame  (client_mp/cl_scrn_mp.cpp:515)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
 void SCR_UpdateFrame(void)
 
 {
-  int iVar1;
-  bool bVar2;
-  char cVar5;
-  char cVar6;
-  ulonglong uVar3;
-  int iVar4;
-  undefined8 uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  uint uVar11;
+  connstate_t cVar1;
+  bool bVar7;
+  int iVar2;
+  uint uVar3;
+  connstate_t cVar4;
+  int iVar5;
+  LocalClientNum_t LVar6;
+  uint uVar9;
+  uint uVar10;
+  LocalClientNum_t LVar11;
   uint uVar12;
-  int *piVar13;
+  connstate_t *pcVar13;
+  bool bVar8;
   
   __savegprlr_24();
-  cVar5 = Sys_IsMainThread();
-  if ((cVar5 == '\0') && (cVar5 = Sys_IsRenderThread(), cVar5 == '\0')) {
-    MyAssertHandler(0xffffffff820364d0,0x213,0,0xffffffff82000f98,0xffffffff8202e2c8);
+  bVar7 = Sys_IsMainThread();
+  if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp",
+                    0x213,0,"%s");
   }
   R_BeginFrame();
-  cVar5 = '\x03';
+  uVar9 = 3;
   SND_InitFXSounds();
   CG_ClearSoundPlaybackTracking();
-  uVar8 = 0;
-  uVar7 = 0;
-  cVar6 = CL_AllLocalClientsDisconnected();
-  if (cVar6 != '\0') {
-    cVar5 = Sys_IsMainThread();
-    if (cVar5 != '\0') {
-      CL_SavePlayerState(0);
-      uVar7 = CL_CGameRendering(0,3);
-      if ((int)uVar7 != 0) goto LAB_8235405c;
+  LVar6 = LOCAL_CLIENT_0;
+  iVar2 = 0;
+  bVar7 = CL_AllLocalClientsDisconnected();
+  if (bVar7) {
+    bVar7 = Sys_IsMainThread();
+    if (bVar7) {
+      CL_SavePlayerState(LOCAL_CLIENT_0);
+      iVar2 = CL_CGameRendering(LOCAL_CLIENT_0,3);
+      if (iVar2 != 0) goto LAB_8235405c;
       DB_StreamTabulationEnd(1);
     }
-    cVar5 = SND_ExistsPendingRestore();
-    if (cVar5 == '\0') {
+    bVar7 = SND_ExistsPendingRestore();
+    if (!bVar7) {
       CL_UpdateSound();
     }
     R_ToggleSmpFrame();
     R_IssueRenderCommandsBegin(3);
     goto LAB_8235405c;
   }
-  uVar3 = Sys_IsMainThread();
-  uVar3 = uVar3 & 0xff;
-  bVar2 = false;
-  uVar9 = 0;
-  if ((int)uVar3 == 0) {
-LAB_82354084:
-    iVar4 = 0;
-    uVar3 = 0;
-    piVar13 = &DAT_82b3e54c;
+  bVar8 = Sys_IsMainThread();
+  uVar3 = (uint)bVar8;
+  bVar7 = false;
+  uVar10 = 0;
+  if (bVar8) {
+    LVar11 = LOCAL_CLIENT_0;
     do {
-      cVar5 = CL_IsLocalClientActive(uVar3);
-      if (cVar5 != '\0') {
-        if (3 < (uVar3 & 0xffffffff)) {
-          MyAssertHandler(0xffffffff8202c1d8,0x4aa,0,0xffffffff820011a8,uVar3,4);
+      bVar8 = CL_IsLocalClientActive(LVar11);
+      if (bVar8) {
+        cVar4 = CL_GetLocalClientConnectionState(LVar11);
+        uVar3 = cVar4 == CA_ACTIVE & uVar3;
+        uVar10 = (cVar4 == CA_ACTIVE) + uVar10;
+      }
+      LVar11 = LVar11 + LOCAL_CLIENT_1;
+    } while ((int)LVar11 < 4);
+    if (uVar3 == 0) goto LAB_82354084;
+    if (uVar10 != cl_maxLocalClients) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp",
+                      0x24b,0,"activeCount == (uint)cl_maxLocalClients\n\t%i, %i");
+    }
+    if (1 < uVar10) {
+      R_SetInvViewScale(2.0);
+    }
+    LVar11 = LOCAL_CLIENT_0;
+    do {
+      bVar8 = CL_IsLocalClientActive(LVar11);
+      if (bVar8) {
+        CL_SavePlayerState(LVar11);
+      }
+      LVar11 = LVar11 + LOCAL_CLIENT_1;
+    } while ((int)LVar11 < 4);
+    uVar3 = 0;
+    LVar11 = LOCAL_CLIENT_0;
+    do {
+      bVar8 = CL_IsLocalClientActive(LVar11);
+      if (bVar8) {
+        uVar12 = uVar3 + 1;
+        if (uVar12 == uVar10) {
+          if (uVar9 != 3) {
+            uVar9 = 2;
+          }
         }
-        iVar1 = *piVar13;
-        if ((iVar1 != 10) && (iVar4 < iVar1)) {
-          uVar8 = uVar3;
-          iVar4 = iVar1;
+        else {
+          uVar9 = (uint)(uVar3 == 0);
+        }
+        iVar5 = CL_CGameRendering(LVar11,uVar9);
+        if (iVar5 == 0) {
+          LVar6 = CL_GetFirstActiveLocalClient();
+          if (LVar11 == LVar6) {
+            DB_StreamTabulationEnd(1);
+          }
+          R_ToggleSmpFrame();
+          R_IssueRenderCommandsBegin(uVar9);
+        }
+        else {
+          iVar2 = 1;
+          LVar6 = CL_GetFirstActiveLocalClient();
+          if (LVar11 == LVar6) {
+            bVar7 = true;
+          }
+        }
+        LVar6 = LVar11;
+        uVar3 = uVar12;
+        if (uVar12 != uVar10) {
+          R_IssueRenderCommandsEnd();
         }
       }
-      piVar13 = piVar13 + 0x79;
-      uVar3 = uVar3 + 1;
-    } while ((int)piVar13 < -0x7d4c1324);
-    cVar5 = Sys_IsMainThread();
-    if (cVar5 != '\0') {
+      LVar11 = LVar11 + LOCAL_CLIENT_1;
+    } while ((int)LVar11 < 4);
+    if (bVar7) goto LAB_8235405c;
+  }
+  else {
+LAB_82354084:
+    cVar4 = CA_DISCONNECTED;
+    LVar11 = LOCAL_CLIENT_0;
+    pcVar13 = &clientUIActives[0].connectionState;
+    do {
+      bVar7 = CL_IsLocalClientActive(LVar11);
+      if (bVar7) {
+        if (LOCAL_CLIENT_3 < LVar11) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
+                          0x4aa,0,
+                          "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
+                         );
+        }
+        cVar1 = *pcVar13;
+        if ((cVar1 != CA_ACTIVE) && ((int)cVar4 < (int)cVar1)) {
+          LVar6 = LVar11;
+          cVar4 = cVar1;
+        }
+      }
+      pcVar13 = pcVar13 + 0x79;
+      LVar11 = LVar11 + LOCAL_CLIENT_1;
+    } while ((int)pcVar13 < -0x7d4c1324);
+    bVar7 = Sys_IsMainThread();
+    if (bVar7) {
       DB_StreamTabulationEnd(1);
     }
     R_ToggleSmpFrame();
     R_IssueRenderCommandsBegin(3);
   }
-  else {
-    lVar10 = 0;
-    do {
-      cVar6 = CL_IsLocalClientActive(lVar10);
-      if (cVar6 != '\0') {
-        iVar4 = CL_GetLocalClientConnectionState(lVar10);
-        uVar3 = iVar4 == 10 & uVar3;
-        uVar9 = (iVar4 == 10) + uVar9;
-      }
-      lVar10 = lVar10 + 1;
-    } while ((int)lVar10 < 4);
-    if ((int)uVar3 == 0) goto LAB_82354084;
-    if ((uVar9 & 0xffffffff) != (ulonglong)DAT_82aa1ae8) {
-      MyAssertHandler(0xffffffff820364d0,0x24b,0,0xffffffff82036534,uVar9);
-    }
-    if (1 < (uVar9 & 0xffffffff)) {
-      R_SetInvViewScale(0x4000000000000000);
-    }
-    lVar10 = 0;
-    do {
-      cVar6 = CL_IsLocalClientActive(lVar10);
-      if (cVar6 != '\0') {
-        CL_SavePlayerState(lVar10);
-      }
-      lVar10 = lVar10 + 1;
-    } while ((int)lVar10 < 4);
-    uVar11 = 0;
-    uVar3 = 0;
-    do {
-      cVar6 = CL_IsLocalClientActive(uVar3);
-      if (cVar6 != '\0') {
-        uVar12 = uVar11 + 1;
-        if ((ulonglong)uVar12 == (uVar9 & 0xffffffff)) {
-          if (cVar5 != '\x03') {
-            cVar5 = '\x02';
-          }
-        }
-        else {
-          cVar5 = uVar11 == 0;
-        }
-        iVar4 = CL_CGameRendering(uVar3,cVar5);
-        if (iVar4 == 0) {
-          iVar4 = CL_GetFirstActiveLocalClient();
-          if ((int)uVar3 == iVar4) {
-            DB_StreamTabulationEnd(1);
-          }
-          R_ToggleSmpFrame();
-          R_IssueRenderCommandsBegin(cVar5);
-        }
-        else {
-          uVar7 = 1;
-          iVar4 = CL_GetFirstActiveLocalClient();
-          if ((int)uVar3 == iVar4) {
-            bVar2 = true;
-          }
-        }
-        uVar8 = uVar3;
-        uVar11 = uVar12;
-        if ((ulonglong)uVar12 != (uVar9 & 0xffffffff)) {
-          R_IssueRenderCommandsEnd();
-        }
-      }
-      uVar3 = uVar3 + 1;
-    } while ((int)uVar3 < 4);
-    if (bVar2) goto LAB_8235405c;
-  }
-  cVar5 = SND_ExistsPendingRestore();
-  if (cVar5 == '\0') {
+  bVar7 = SND_ExistsPendingRestore();
+  if (!bVar7) {
     CL_UpdateSound();
   }
 LAB_8235405c:
-  SCR_DrawScreenField(uVar8,uVar7);
-  CL_DrawScreen(uVar8);
+  SCR_DrawScreenField(LVar6,iVar2);
+  CL_DrawScreen(LVar6);
   ScrPlace_EndFrame();
   R_EndFrame();
   R_IssueRenderCommandsEnd();
@@ -550,16 +616,17 @@ LAB_8235405c:
 
 // 82354138  SCR_UpdateScreen  (client_mp/cl_scrn_mp.cpp:738)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void SCR_UpdateScreen(void)
 
 {
-  char cVar1;
+  bool bVar1;
   
-  if (((DAT_82b3f850 == '\0') && (DAT_82b3f84c != 0)) && (cVar1 = Com_ErrorEntered(), cVar1 == '\0')
-     ) {
-    DAT_82b3f850 = 1;
+  if (((!updateScreenCalled) && (scr_initialized != 0)) && (bVar1 = Com_ErrorEntered(), !bVar1)) {
+    updateScreenCalled = true;
     SCR_UpdateFrame();
-    DAT_82b3f850 = '\0';
+    updateScreenCalled = false;
   }
   return;
 }
@@ -567,153 +634,169 @@ void SCR_UpdateScreen(void)
 
 // 823541A0  CL_CubemapShotUsage  (client_mp/cl_scrn_mp.cpp:764)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
 void CL_CubemapShotUsage(void)
 
 {
-  Com_Printf(0,0xffffffff82036848);
-  Com_Printf(0,0xffffffff82036800);
-  Com_Printf(0,0xffffffff820367c0);
-  Com_Printf(0,0xffffffff82036794,0x28);
-  Com_Printf(0,0xffffffff82036738);
-  Com_Printf(0,0xffffffff820366f8);
-  Com_Printf(0,0xffffffff820366b8);
-  Com_Printf(0,0xffffffff82036658);
-  Com_Printf(0,0xffffffff820365f8);
-  Com_Printf(0,0xffffffff820365c0);
-  Com_Printf(0,0xffffffff82036568);
+  Com_Printf(0,"Syntax: cubemapShot size basefilename [lighting r g b | fresnel n0 n1]\n");
+  Com_Printf(0,"* size must be a power of 2 that is at least 4 and not more than 1024.\n");
+  Com_Printf(0,"* screenshots will be written to \'env/basefilename_*.tga\'\n");
+  Com_Printf(0,"* basefilename must not exceed %i chars\n");
+  Com_Printf(0,
+             "* If \'lighting\' is specified, a diffuse environment-based lighting cubemap is generated.\n"
+            );
+  Com_Printf(0,"  This takes exponentially longer to make larger image sizes.\n");
+  Com_Printf(0,"  16 is a good iteration size.  32 is a good final image size.\n");
+  Com_Printf(0,
+             "* If \'fresnel\' is specified, the alpha channel of the cubemap contains the reflection factor.\n"
+            );
+  Com_Printf(0,
+             "  n0 and n1 are the index of refraction of the \'air\' and \'water\' surfaces, respectively.\n"
+            );
+  Com_Printf(0,"  The index of refraction must always be 1 or greater.\n");
+  Com_Printf(0,
+             "  This is always calculated, and defaults to air-water interface (n0 = 1, n1 = 1.333).\n"
+            );
   return;
 }
 
 
 // 82354270  CL_CubemapShot_f  (client_mp/cl_scrn_mp.cpp:785)
 
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 void CL_CubemapShot_f(void)
 
 {
-  bool bVar1;
-  undefined8 uVar2;
-  int iVar3;
-  char *pcVar4;
+  char cVar1;
+  bool bVar2;
+  LocalClientNum_t LVar3;
+  int iVar4;
   char *pcVar5;
-  uint uVar6;
-  char cVar7;
-  bool bVar8;
-  longlong lVar9;
-  undefined **ppuVar10;
-  double dVar11;
+  char *pcVar6;
+  uint uVar7;
+  clientActive_t *pcVar8;
+  bool bVar9;
+  DemoType DVar10;
+  CubemapShot CVar11;
   double dVar12;
   double dVar13;
+  double dVar14;
   float local_a0;
   float local_9c;
   float local_98;
   char acStack_90 [144];
   
   __savegprlr_26();
-  Cmd_LocalClientNum();
-  uVar2 = CL_IsCgameInitialized();
-  if ((int)uVar2 == 0) {
-    Com_Printf(uVar2,0xffffffff820368b8);
+  LVar3 = Cmd_LocalClientNum();
+  iVar4 = CL_IsCgameInitialized(LVar3);
+  if (iVar4 == 0) {
+    Com_Printf(0,"must be in a map to use this command\n");
     __restgprlr_26();
     return;
   }
-  iVar3 = Cmd_Argc();
-  if (2 < iVar3) {
-    pcVar4 = (char *)Cmd_Argv(2);
-    pcVar5 = pcVar4;
+  iVar4 = Cmd_Argc();
+  if (2 < iVar4) {
+    pcVar5 = Cmd_Argv(2);
+    pcVar6 = pcVar5;
     do {
-      cVar7 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
-    } while (cVar7 != '\0');
-    if (pcVar5 + (-1 - (int)pcVar4) < (char *)0x29) {
-      pcVar5 = (char *)Cmd_Argv(2);
-      iVar3 = -(int)pcVar5;
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
+    } while (cVar1 != '\0');
+    if (pcVar6 + (-1 - (int)pcVar5) < (char *)0x29) {
+      pcVar6 = Cmd_Argv(2);
+      iVar4 = -(int)pcVar6;
       do {
-        cVar7 = *pcVar5;
-        acStack_90[(int)(pcVar5 + iVar3)] = cVar7;
-        pcVar5 = pcVar5 + 1;
-      } while (cVar7 != '\0');
-      pcVar5 = (char *)Cmd_Argv(1);
-      uVar6 = atoi(pcVar5);
-      if (((3 < (int)uVar6) && ((int)uVar6 < 0x401)) && ((uVar6 - 1 & uVar6) == 0)) {
-        bVar1 = false;
+        cVar1 = *pcVar6;
+        pcVar6[(int)(acStack_90 + iVar4)] = cVar1;
+        pcVar6 = pcVar6 + 1;
+      } while (cVar1 != '\0');
+      pcVar6 = Cmd_Argv(1);
+      uVar7 = atoi(pcVar6);
+      if (((3 < (int)uVar7) && ((int)uVar7 < 0x401)) && ((uVar7 - 1 & uVar7) == 0)) {
+        bVar2 = false;
         local_a0 = 0.0;
         local_9c = 0.0;
         local_98 = 0.0;
-        dVar13 = 1.0;
-        dVar12 = 1.3329999446868896;
-        dVar11 = dVar13;
-        iVar3 = Cmd_Argc();
-        if (iVar3 == 7) {
-          uVar2 = Cmd_Argv(3);
-          iVar3 = I_stricmp(uVar2,0xffffffff820368a8);
-          if (iVar3 == 0) {
-            pcVar5 = (char *)Cmd_Argv(4);
-            dVar11 = atof(pcVar5);
-            local_a0 = (float)dVar11;
-            pcVar5 = (char *)Cmd_Argv(5);
-            dVar11 = atof(pcVar5);
-            local_9c = (float)dVar11;
-            pcVar5 = (char *)Cmd_Argv(6);
-            dVar11 = atof(pcVar5);
-            local_98 = (float)dVar11;
-            bVar1 = true;
+        dVar14 = 1.0;
+        dVar13 = 1.3329999446868896;
+        dVar12 = dVar14;
+        iVar4 = Cmd_Argc();
+        if (iVar4 == 7) {
+          pcVar6 = Cmd_Argv(3);
+          iVar4 = I_stricmp(pcVar6,"lighting");
+          if (iVar4 == 0) {
+            pcVar6 = Cmd_Argv(4);
+            dVar12 = atof(pcVar6);
+            local_a0 = (float)dVar12;
+            pcVar6 = Cmd_Argv(5);
+            dVar12 = atof(pcVar6);
+            local_9c = (float)dVar12;
+            pcVar6 = Cmd_Argv(6);
+            dVar12 = atof(pcVar6);
+            local_98 = (float)dVar12;
+            bVar2 = true;
 LAB_82354460:
             R_SyncRenderThread();
-            uVar2 = Cmd_LocalClientNum();
-            iVar3 = CL_GetLocalClientGlobals();
-            lVar9 = 1;
+            LVar3 = Cmd_LocalClientNum();
+            pcVar8 = CL_GetLocalClientGlobals(LVar3);
+            CVar11 = CUBEMAPSHOT_RIGHT;
             do {
-              R_BeginCubemapShot(uVar6,1);
+              R_BeginCubemapShot(uVar7,1);
               R_BeginFrame();
               R_ToggleSmpFrame();
               R_BeginSharedCmdList();
-              if (DAT_82966e98 == 0) {
-                cVar7 = CL_Demo_IsPlaying(0);
-                bVar8 = cVar7 != '\0';
+              if (cl_multi_gamepads_enabled == 0) {
+                bVar9 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+                DVar10 = (DemoType)bVar9;
               }
               else {
-                bVar8 = false;
+                DVar10 = DEMO_TYPE_NONE;
               }
-              CG_DrawActiveFrame(uVar2,*(undefined4 *)(iVar3 + 0x3404),bVar8,lVar9,uVar6,1,3);
+              CG_DrawActiveFrame(LVar3,pcVar8->serverTime,DVar10,CVar11,uVar7,1,3);
               R_ClearClientCmdList2D();
               R_EndFrame();
               R_IssueRenderCommandsEnd();
-              R_EndCubemapShot(lVar9);
-              lVar9 = lVar9 + 1;
-            } while ((int)lVar9 < 7);
-            if (bVar1) {
+              R_EndCubemapShot(CVar11);
+              CVar11 = CVar11 + CUBEMAPSHOT_RIGHT;
+            } while ((int)CVar11 < 7);
+            if (bVar2) {
               R_LightingFromCubemapShots(&local_a0);
             }
-            lVar9 = 1;
-            ppuVar10 = &PTR_s_ui_bombtimer_b_82965d6c;
+            CVar11 = CUBEMAPSHOT_RIGHT;
+            iVar4 = -0x7d69a294;
             do {
-              uVar2 = va(0xffffffff82036890,acStack_90,*ppuVar10);
-              R_SaveCubemapShot(dVar13,dVar12,uVar2,lVar9);
-              ppuVar10 = ppuVar10 + 1;
-              lVar9 = lVar9 + 1;
-            } while ((int)ppuVar10 < -0x7d69a27c);
+              pcVar6 = va("env/%s%s.tga");
+              R_SaveCubemapShot(pcVar6,CVar11,(float)dVar14,(float)dVar13);
+              iVar4 = iVar4 + 4;
+              CVar11 = CVar11 + CUBEMAPSHOT_RIGHT;
+            } while (iVar4 < -0x7d69a27c);
             __restgprlr_26();
             return;
           }
         }
         else {
-          iVar3 = Cmd_Argc();
-          if (iVar3 == 6) {
-            uVar2 = Cmd_Argv(3);
-            iVar3 = I_stricmp(uVar2,0xffffffff820368a0);
-            if (iVar3 == 0) {
-              pcVar5 = (char *)Cmd_Argv(4);
-              dVar13 = atof(pcVar5);
+          iVar4 = Cmd_Argc();
+          if (iVar4 == 6) {
+            pcVar6 = Cmd_Argv(3);
+            iVar4 = I_stricmp(pcVar6,"fresnel");
+            if (iVar4 == 0) {
+              pcVar6 = Cmd_Argv(4);
+              dVar14 = atof(pcVar6);
+              dVar14 = (double)(float)dVar14;
+              pcVar6 = Cmd_Argv(5);
+              dVar13 = atof(pcVar6);
               dVar13 = (double)(float)dVar13;
-              pcVar5 = (char *)Cmd_Argv(5);
-              dVar12 = atof(pcVar5);
-              dVar12 = (double)(float)dVar12;
-              if ((dVar11 <= dVar13) && (dVar11 <= dVar12)) goto LAB_82354460;
+              if ((dVar12 <= dVar14) && (dVar12 <= dVar13)) goto LAB_82354460;
             }
           }
           else {
-            iVar3 = Cmd_Argc();
-            if (iVar3 == 3) goto LAB_82354460;
+            iVar4 = Cmd_Argc();
+            if (iVar4 == 3) goto LAB_82354460;
           }
         }
       }

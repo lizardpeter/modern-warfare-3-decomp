@@ -2,40 +2,72 @@
 
 // 822C4310  CG_RegisterImpactEffects_FastFile  (cgame/cg_effects_load_obj.cpp:546)
 
-void CG_RegisterImpactEffects_FastFile(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+FxImpactTable * CG_RegisterImpactEffects_FastFile(char *param_1)
 
 {
-  DB_FindXAssetHeader(0x1e,0xffffffff820068af,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMPACT_FX,"",1);
+  return XVar1.impactFx;
 }
 
 
 // 822C4328  CG_RegisterSurfaceEffects_FastFile  (cgame/cg_effects_load_obj.cpp:552)
 
-void CG_RegisterSurfaceEffects_FastFile(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+SurfaceFxTable * CG_RegisterSurfaceEffects_FastFile(char *param_1)
 
 {
-  DB_FindXAssetHeader(0x1f,0xffffffff820068af,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SURFACE_FX,"",1);
+  return XVar1.surfaceFx;
 }
 
 
 // 822C4340  CG_RegisterImpactEffects  (cgame/cg_effects_load_obj.cpp:559)
 
-void CG_RegisterImpactEffects(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+FxImpactTable * CG_RegisterImpactEffects(char *param_1)
 
 {
-  DB_FindXAssetHeader(0x1e,0xffffffff820068af,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_IMPACT_FX,"",1);
+  return XVar1.impactFx;
 }
 
 
 // 822C4358  CG_RegisterSurfaceEffects  (cgame/cg_effects_load_obj.cpp:565)
 
-void CG_RegisterSurfaceEffects(void)
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
+/* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+
+SurfaceFxTable * CG_RegisterSurfaceEffects(char *param_1)
 
 {
-  DB_FindXAssetHeader(0x1f,0xffffffff820068af,1);
-  return;
+  XAssetHeader XVar1;
+  
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_SURFACE_FX,"",1);
+  return XVar1.surfaceFx;
 }
 

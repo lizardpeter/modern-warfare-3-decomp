@@ -7,7 +7,7 @@ void __unwind_71267(void)
 {
   int in_r12;
   
-  bdTaskResult___bdTaskResult(*(undefined4 *)(in_r12 + 0x14));
+  bdTaskResult::~bdTaskResult(*(bdTaskResult **)(in_r12 + 0x14));
   return;
 }
 
@@ -19,7 +19,7 @@ void __unwind_71312(void)
 {
   int in_r12;
   
-  bdTaskResult___bdTaskResult(*(undefined4 *)(in_r12 + 0x14));
+  bdTaskResult::~bdTaskResult(*(bdTaskResult **)(in_r12 + 0x14));
   return;
 }
 
@@ -31,7 +31,8 @@ void __unwind_71349(void)
 {
   int in_r12;
   
-  bdReference<bdByteBuffer>___bdReference<bdByteBuffer>(*(undefined4 *)(in_r12 + 0x1c));
+  bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
+            (*(bdReference<bdByteBuffer> **)(in_r12 + 0x1c));
   return;
 }
 

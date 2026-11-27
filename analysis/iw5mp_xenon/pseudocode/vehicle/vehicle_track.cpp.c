@@ -2,13 +2,17 @@
 
 // 826CBA10  Vehicle_UpdateTrackMove  (vehicle/vehicle_track.cpp:1144)
 
-void Vehicle_UpdateTrackMove(void)
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+
+void Vehicle_UpdateTrackMove(Vehicle *param_1)
 
 {
-  if (DAT_84013128 != 0) {
+  if (alwaysfails != 0) {
     return;
   }
-  MyAssertHandler(0xffffffff821a1d28,0x4a7,0,0xffffffff821a1d6c);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_track.cpp",0x4a7
+                  ,0,"Vehicle_UpdateTrackMove: Not supported without VEH_TRACK");
   return;
 }
 

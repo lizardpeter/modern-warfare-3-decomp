@@ -2,31 +2,31 @@
 
 // 8292BE58  FileTimeToSystemTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/filetimetosystemtime.c:45)
 
-BOOL FileTimeToSystemTime(FILETIME *lpFileTime,LPSYSTEMTIME lpSystemTime)
+int FileTimeToSystemTime(_FILETIME *param_1,_SYSTEMTIME *param_2)
 
 {
-  DWORD local_30;
-  DWORD local_2c;
-  WORD local_20;
-  WORD local_1e;
-  WORD local_1c;
-  WORD local_1a;
-  WORD local_18;
-  WORD local_16;
-  WORD local_14;
-  WORD local_12;
+  ulong local_30;
+  ulong local_2c;
+  ushort local_20;
+  ushort local_1e;
+  ushort local_1c;
+  ushort local_1a;
+  ushort local_18;
+  ushort local_16;
+  ushort local_14;
+  ushort local_12;
   
-  local_2c = lpFileTime->dwHighDateTime;
-  local_30 = lpFileTime->dwLowDateTime;
+  local_2c = param_1->dwLowDateTime;
+  local_30 = param_1->dwHighDateTime;
   RtlTimeToTimeFields(&local_30,&local_20);
-  lpSystemTime->wYear = local_20;
-  lpSystemTime->wMonth = local_1e;
-  lpSystemTime->wDay = local_1c;
-  lpSystemTime->wDayOfWeek = local_12;
-  lpSystemTime->wHour = local_1a;
-  lpSystemTime->wMinute = local_18;
-  lpSystemTime->wSecond = local_16;
-  lpSystemTime->wMilliseconds = local_14;
+  param_2->wYear = local_20;
+  param_2->wMonth = local_1e;
+  param_2->wDay = local_1c;
+  param_2->wDayOfWeek = local_12;
+  param_2->wHour = local_1a;
+  param_2->wMinute = local_18;
+  param_2->wSecond = local_16;
+  param_2->wMilliseconds = local_14;
   return 1;
 }
 

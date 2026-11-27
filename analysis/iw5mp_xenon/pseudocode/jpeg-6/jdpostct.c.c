@@ -2,69 +2,78 @@
 
 // 827C45E8  start_pass_dpost  (jpeg-6/jdpostct.c:74)
 
-void start_pass_dpost(int *param_1,int param_2)
+void start_pass_dpost(jpeg_decompress_struct *param_1,J_BUF_MODE param_2)
 
 {
-  int iVar1;
-  undefined4 uVar2;
+  jpeg_d_post_controller *pjVar1;
+  uchar **ppuVar2;
   code *pcVar3;
   
-  iVar1 = param_1[0x65];
-  if (param_2 == 0) {
-    if (*(char *)((int)param_1 + 0x52) != '\0') {
-      *(code **)(iVar1 + 4) = post_process_1pass;
-      if (*(int *)(iVar1 + 0xc) == 0) {
-        uVar2 = (**(code **)(param_1[1] + 0x1c))
-                          (param_1,*(undefined4 *)(iVar1 + 8),0,*(undefined4 *)(iVar1 + 0x10),1);
-        *(undefined4 *)(iVar1 + 0xc) = uVar2;
+  pjVar1 = param_1->post;
+  if (param_2 == JBUF_PASS_THRU) {
+    if (param_1->quantize_colors != '\0') {
+      pjVar1->post_process_data = post_process_1pass;
+      if (pjVar1[1].post_process_data ==
+          (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_ptr_uint_uchar_ptr_ptr_uint_ptr_uint
+           *)0x0) {
+        ppuVar2 = (*param_1->mem->access_virt_sarray)
+                            ((jpeg_common_struct *)param_1,
+                             (jvirt_sarray_control *)pjVar1[1].start_pass,0,
+                             (uint)pjVar1[2].start_pass,'\x01');
+        pjVar1[1].post_process_data =
+             (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_ptr_uint_uchar_ptr_ptr_uint_ptr_uint
+              *)ppuVar2;
       }
       goto LAB_827c46f4;
     }
-    pcVar3 = *(code **)(param_1[0x6a] + 4);
+    pcVar3 = param_1->upsample->upsample;
   }
-  else if (param_2 == 2) {
-    if (*(int *)(iVar1 + 8) == 0) {
-      *(undefined4 *)(*param_1 + 0x14) = 4;
-      (**(code **)*param_1)();
+  else if (param_2 == JBUF_CRANK_DEST) {
+    if (pjVar1[1].start_pass == (_func___cdecl_void_jpeg_decompress_struct_ptr_J_BUF_MODE *)0x0) {
+      param_1->err->msg_code = 4;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
     pcVar3 = post_process_2pass;
   }
   else {
-    if (param_2 != 3) {
-      *(undefined4 *)(*param_1 + 0x14) = 4;
-      (**(code **)*param_1)();
+    if (param_2 != JBUF_SAVE_AND_PASS) {
+      param_1->err->msg_code = 4;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       goto LAB_827c46f4;
     }
-    if (*(int *)(iVar1 + 8) == 0) {
-      *(undefined4 *)(*param_1 + 0x14) = 4;
-      (**(code **)*param_1)();
+    if (pjVar1[1].start_pass == (_func___cdecl_void_jpeg_decompress_struct_ptr_J_BUF_MODE *)0x0) {
+      param_1->err->msg_code = 4;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
     pcVar3 = post_process_prepass;
   }
-  *(code **)(iVar1 + 4) = pcVar3;
+  pjVar1->post_process_data = pcVar3;
 LAB_827c46f4:
-  *(undefined4 *)(iVar1 + 0x18) = 0;
-  *(undefined4 *)(iVar1 + 0x14) = 0;
+  pjVar1[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr_J_BUF_MODE *)0x0;
+  pjVar1[2].post_process_data =
+       (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_ptr_uint_uchar_ptr_ptr_uint_ptr_uint
+        *)0x0;
   return;
 }
 
 
 // 827C4360  post_process_1pass  (jpeg-6/jdpostct.c:131)
 
-void post_process_1pass(void)
+void post_process_1pass(jpeg_decompress_struct *param_1,uchar ***param_2,uint *param_3,uint param_4,
+                       uchar **param_5,uint *param_6,uint param_7)
 
 {
   int iVar1;
   int iVar2;
-  longlong in_r7;
-  uint *in_r8;
+  longlong lVar3;
   
-  iVar2 = __savegprlr_28();
+  lVar3 = (longlong)(int)param_5;
+  iVar2 = __savegprlr_28(param_1,param_2,param_3,param_4,lVar3);
   iVar1 = *(int *)(iVar2 + 0x194);
   (**(code **)(*(int *)(iVar2 + 0x1a8) + 4))(iVar2);
   (**(code **)(*(int *)(iVar2 + 0x1b0) + 4))
-            (iVar2,*(undefined4 *)(iVar1 + 0xc),((ulonglong)*in_r8 & 0x3fffffff) * 4 + in_r7,0);
-  *in_r8 = *in_r8;
+            (iVar2,*(undefined4 *)(iVar1 + 0xc),((ulonglong)*param_6 & 0x3fffffff) * 4 + lVar3,0);
+  *param_6 = *param_6;
   __restgprlr_28();
   return;
 }
@@ -73,8 +82,8 @@ void post_process_1pass(void)
 // 827C43F8  post_process_prepass  (jpeg-6/jdpostct.c:163)
 
 void post_process_prepass
-               (undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
-               undefined8 param_5,int *param_6)
+               (jpeg_decompress_struct *param_1,uchar ***param_2,uint *param_3,uint param_4,
+               uchar **param_5,uint *param_6,uint param_7)
 
 {
   int iVar1;
@@ -82,30 +91,37 @@ void post_process_prepass
   int iVar3;
   undefined4 uVar4;
   longlong lVar5;
-  uint *puVar6;
+  longlong lVar6;
+  longlong lVar7;
+  longlong lVar8;
+  uint *puVar9;
   
-  iVar3 = __savegprlr_24();
+  lVar7 = (longlong)(int)param_6;
+  lVar6 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_3;
+  lVar8 = (longlong)(int)param_2;
+  iVar3 = __savegprlr_24(param_1,lVar8,lVar5,lVar6,param_5,lVar7,param_7);
   iVar1 = *(int *)(iVar3 + 0x194);
-  puVar6 = (uint *)(iVar1 + 0x18);
+  puVar9 = (uint *)(iVar1 + 0x18);
   if (*(int *)(iVar1 + 0x18) == 0) {
     uVar4 = (**(code **)(*(int *)(iVar3 + 4) + 0x1c))
                       (iVar3,*(undefined4 *)(iVar1 + 8),*(undefined4 *)(iVar1 + 0x14),
                        *(undefined4 *)(iVar1 + 0x10),1);
     *(undefined4 *)(iVar1 + 0xc) = uVar4;
   }
-  uVar2 = *puVar6;
+  uVar2 = *puVar9;
   (**(code **)(*(int *)(iVar3 + 0x1a8) + 4))
-            (iVar3,param_2,param_3,param_4,*(undefined4 *)(iVar1 + 0xc),puVar6,
+            (iVar3,lVar8,lVar5,lVar6,*(undefined4 *)(iVar1 + 0xc),puVar9,
              *(undefined4 *)(iVar1 + 0x10));
-  if ((ulonglong)uVar2 < (ulonglong)*puVar6) {
-    lVar5 = (ulonglong)*puVar6 - (ulonglong)uVar2;
+  if ((ulonglong)uVar2 < (ulonglong)*puVar9) {
+    lVar8 = (ulonglong)*puVar9 - (ulonglong)uVar2;
     (**(code **)(*(int *)(iVar3 + 0x1b0) + 4))
-              (iVar3,((ulonglong)uVar2 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(iVar1 + 0xc),0,lVar5
+              (iVar3,((ulonglong)uVar2 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(iVar1 + 0xc),0,lVar8
               );
-    *param_6 = *param_6 + (int)lVar5;
+    *(int *)lVar7 = *(int *)lVar7 + (int)lVar8;
   }
-  if (*(uint *)(iVar1 + 0x10) <= *puVar6) {
-    *puVar6 = 0;
+  if (*(uint *)(iVar1 + 0x10) <= *puVar9) {
+    *puVar9 = 0;
     *(uint *)(iVar1 + 0x14) = *(int *)(iVar1 + 0x14) + *(uint *)(iVar1 + 0x10);
   }
   __restgprlr_24();
@@ -115,20 +131,22 @@ void post_process_prepass
 
 // 827C44F0  post_process_2pass  (jpeg-6/jdpostct.c:207)
 
-void post_process_2pass(void)
+void post_process_2pass(jpeg_decompress_struct *param_1,uchar ***param_2,uint *param_3,uint param_4,
+                       uchar **param_5,uint *param_6,uint param_7)
 
 {
   int iVar1;
   int iVar2;
   undefined4 uVar3;
-  longlong in_r7;
-  uint *in_r8;
-  longlong in_r9;
-  ulonglong uVar4;
-  uint uVar5;
+  longlong lVar4;
+  longlong lVar5;
   ulonglong uVar6;
+  uint uVar7;
+  ulonglong uVar8;
   
-  iVar2 = __savegprlr_27();
+  lVar5 = (longlong)(int)param_7;
+  lVar4 = (longlong)(int)param_5;
+  iVar2 = __savegprlr_27(param_1,param_2,param_3,param_4,lVar4);
   iVar1 = *(int *)(iVar2 + 0x194);
   if (*(int *)(iVar1 + 0x18) == 0) {
     uVar3 = (**(code **)(*(int *)(iVar2 + 4) + 0x1c))
@@ -136,23 +154,23 @@ void post_process_2pass(void)
                        *(undefined4 *)(iVar1 + 0x10),0);
     *(undefined4 *)(iVar1 + 0xc) = uVar3;
   }
-  uVar4 = in_r9 - (ulonglong)*in_r8;
-  uVar6 = (ulonglong)*(uint *)(iVar1 + 0x10) - (ulonglong)*(uint *)(iVar1 + 0x18);
-  if ((uVar4 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    uVar6 = uVar4;
+  uVar6 = lVar5 - (ulonglong)*param_6;
+  uVar8 = (ulonglong)*(uint *)(iVar1 + 0x10) - (ulonglong)*(uint *)(iVar1 + 0x18);
+  if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    uVar8 = uVar6;
   }
-  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x68) - (ulonglong)*(uint *)(iVar1 + 0x14);
-  if ((uVar4 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    uVar6 = uVar4;
+  uVar6 = (ulonglong)*(uint *)(iVar2 + 0x68) - (ulonglong)*(uint *)(iVar1 + 0x14);
+  if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
+    uVar8 = uVar6;
   }
   (**(code **)(*(int *)(iVar2 + 0x1b0) + 4))
             (iVar2,((ulonglong)*(uint *)(iVar1 + 0x18) & 0x3fffffff) * 4 +
-                   (ulonglong)*(uint *)(iVar1 + 0xc),((ulonglong)*in_r8 & 0x3fffffff) * 4 + in_r7,
-             uVar6);
-  *in_r8 = *in_r8 + (int)uVar6;
-  uVar5 = *(int *)(iVar1 + 0x18) + (int)uVar6;
-  *(uint *)(iVar1 + 0x18) = uVar5;
-  if (*(uint *)(iVar1 + 0x10) <= uVar5) {
+                   (ulonglong)*(uint *)(iVar1 + 0xc),((ulonglong)*param_6 & 0x3fffffff) * 4 + lVar4,
+             uVar8);
+  *param_6 = *param_6 + (int)uVar8;
+  uVar7 = *(int *)(iVar1 + 0x18) + (int)uVar8;
+  *(uint *)(iVar1 + 0x18) = uVar7;
+  if (*(uint *)(iVar1 + 0x10) <= uVar7) {
     *(undefined4 *)(iVar1 + 0x18) = 0;
     *(uint *)(iVar1 + 0x14) = *(int *)(iVar1 + 0x14) + *(uint *)(iVar1 + 0x10);
   }
@@ -163,39 +181,42 @@ void post_process_2pass(void)
 
 // 827C4718  jinit_d_post_controller  (jpeg-6/jdpostct.c:251)
 
-void jinit_d_post_controller(undefined8 param_1,ulonglong param_2)
+void jinit_d_post_controller(jpeg_decompress_struct *param_1,uchar param_2)
 
 {
-  int iVar1;
+  long lVar1;
+  int iVar2;
   int iVar3;
   undefined4 *puVar4;
-  undefined8 uVar2;
-  undefined4 uVar5;
+  long lVar5;
+  undefined4 uVar6;
+  ulonglong uVar7;
   
-  iVar3 = __savegprlr_28();
+  uVar7 = (ulonglong)(char)param_2;
+  iVar3 = __savegprlr_28(param_1);
   puVar4 = (undefined4 *)(*(code *)**(undefined4 **)(iVar3 + 4))(iVar3,1,0x1c);
   *(undefined4 **)(iVar3 + 0x194) = puVar4;
   puVar4[2] = 0;
   *puVar4 = start_pass_dpost;
   puVar4[3] = 0;
   if (*(char *)(iVar3 + 0x52) != '\0') {
-    uVar5 = *(undefined4 *)(iVar3 + 0x11c);
-    puVar4[4] = uVar5;
-    if ((param_2 & 0xff) != 0) {
-      iVar1 = *(int *)(iVar3 + 4);
-      uVar2 = jround_up(*(undefined4 *)(iVar3 + 0x68),uVar5);
-      uVar5 = (**(code **)(iVar1 + 0x10))
+    lVar1 = *(long *)(iVar3 + 0x11c);
+    puVar4[4] = lVar1;
+    if ((uVar7 & 0xff) != 0) {
+      iVar2 = *(int *)(iVar3 + 4);
+      lVar5 = jround_up(*(long *)(iVar3 + 0x68),lVar1);
+      uVar6 = (**(code **)(iVar2 + 0x10))
                         (iVar3,1,0,
-                         (longlong)*(int *)(iVar3 + 0x6c) * (longlong)*(int *)(iVar3 + 100),uVar2,
-                         uVar5);
-      puVar4[2] = uVar5;
+                         (longlong)*(int *)(iVar3 + 0x6c) * (longlong)*(int *)(iVar3 + 100),lVar5,
+                         lVar1);
+      puVar4[2] = uVar6;
       __restgprlr_28();
       return;
     }
-    uVar5 = (**(code **)(*(int *)(iVar3 + 4) + 8))
+    uVar6 = (**(code **)(*(int *)(iVar3 + 4) + 8))
                       (iVar3,1,(longlong)*(int *)(iVar3 + 0x6c) * (longlong)*(int *)(iVar3 + 100),
-                       uVar5);
-    puVar4[3] = uVar5;
+                       lVar1);
+    puVar4[3] = uVar6;
   }
   __restgprlr_28();
   return;
